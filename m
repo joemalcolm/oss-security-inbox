@@ -1,91 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/2
-Message-ID: <51D66EDD.6030106@lsexperts.de>
-Date: Fri, 05 Jul 2013 08:59:41 +0200
-From: "LSE Leading Security Experts GmbH (Security Advisories)" <advisories@...xperts.de>
-To: bugtraq@...urityfocus.com
-Cc: full-disclosure@...ts.grok.org.uk, bugs@...uritytracker.com, oss-security@...ts.openwall.com
-Subject: LSE Leading Security Experts GmbH - LSE-2013-07-03 - rsyslog ElasticSearch Plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/5
+Message-ID: <51132202.20400@redhat.com>
+Date: Wed, 06 Feb 2013 20:39:46 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Sebastian Pipping <sebastian@...ping.org>
+Subject: Re: CVE request: Insecure default log file path in xNBD
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-=== LSE Leading Security Experts GmbH - Security Advisory 2013-07-03 ===
+On 02/06/2013 09:48 AM, Sebastian Pipping wrote:
+> Hello oss-security!
+> 
+> 
+> Target software ===============
+> 
+> xNBD upstream https://bitbucket.org/hirofuchi/xnbd
+> 
+> Official Debian packages 
+> http://packages.debian.org/sid/xnbd-server
+> 
+> 
+> Description ===========
+> 
+> xnbd-server (and xnbd-wrapper in some releases) use /tmp/xnbd.log 
+> for logging when parameter --daemonize (and no --logpath FILE) is
+> given.
+> 
+> The file is opened using flags O_WRONLY | O_CREAT | O_APPEND so
+> there is a vulnerability against symlinks attacks.
+> 
+> 
+> Demonstration =============
+> 
+> Here is an exploitation example:
+> 
+> $ ln -s "${HOME}"/ATTACK_TARGET /tmp/xnbd.log
+> 
+> $ touch DISK $ truncate --size=$((100*1024**2)) DISK
+> 
+> $ /usr/sbin/xnbd-server --daemonize --target DISK 
+> xnbd-server(12462) msg: daemonize enabled xnbd-server(12462) msg:
+> cmd target mode xnbd-server(12462) msg: disk DISK size 104857600 B
+> (100 MB) xnbd-server(12462) msg: xnbd master initialization done 
+> xnbd-server(12462) msg: logfile /tmp/xnbd.log
+> 
+> $ ls -l ~/ATTACK_TARGET -rw------- 1 user123 user123 653 Feb  1
+> 16:41 \ /home/user123/ATTACK_TARGET
+> 
+> 
+> Affected versions =================
+> 
+> The latest code in the upstream Mercurial repository is not
+> affected since it does not use logging to /tmp/xnbd.log (or any
+> default location) any more.
+> 
+> ----------------------------------------------------------------------
+>
+> 
+Version                        Status
+> ----------------------------------------------------------------------
+>
+> 
+0.0.x                          not analyzed
+> 0.1.0-pre                      VULNERABLE (xnbd-server only) 
+> 0.1.0-pre-hg20-e75b93a47722-2  VULNERABLE (xnbd-server and
+> -wrapper) Mercurial tip                  not vulnerable 
+> ----------------------------------------------------------------------
+>
+> 
+> 
+> Options for a fix =================
+> 
+> a) Use syslog with --daemonize and no default file location in
+> general (i.e. what upstream did)
+> 
+> b) Use /var/log/xnbd-server.log and /var/log/xnbd-wrapper.log for
+> the hard-coded defaults
+> 
+> c) Replace flag O_APPEND by O_EXCL  (secure but reducing
+> functionality)
+> 
+> The attached patch applies approach (b) to version 
+> 0.1.0-pre-hg20-e75b93a47722.
+> 
+> 
+> Best,
+> 
+> 
+> 
+> Sebastian
 
-rsyslog ElasticSearch Plugin - Double Free Memory Corruption
-- ------------------------------------------------------------
+Please use CVE-2013-0265  for this issue.
 
-Affected Version
-================
-rsyslog 7.4.0 stable <= 7.4.1 stable
-rsyslog 7.3.2 devel  <= 7.5.1 devel
-
-Problem Overview
-================
-Technical Risk: high
-Likelihood of Exploitation: low
-Vendor: Adiscon GmbH, Nathan Scott, Rainer Gerhards
-Credits: LSE Leading Security Experts GmbH employee Markus Vervier and
-Marius Ionescu
-Advisory URL: http://www.lsexperts.de/advisories/lse-2013-07-03.txt
-Advisory Status: Public
-CVE-Number: CVE-2013-4758
-
-Problem Impact
-==============
-While conducting a code review, a double free memory corruption
-vulnerability was discovered in the ElasticSearch plugin of rsyslog.
-This could allow a remote attacker to crash rsyslog and possibly
-execute code if he can manipulate JSON responses from ElasticSearch.
-
-Problem Description
-===================
-A double free memory corruption exists in all implementations of the
-rsyslog omelasticsearch plugin up to 7.4.1 stable and 7.5.1 devel
-having the "errorfile" parameter explicitly set for local logging.
-The variable "rendered" in function writeDataError of
-omelasticsearch.c is freed twice. This allows heap corruption and
-possible code execution if an attacker is able to control memory
-between subsequent calls to free.
-
-Temporary Workaround and Fix
-============================
-It is advised to update to version 7.4.2 stable or 7.5.2 of rsyslog as
-soon as possible.
-
-As a workaround the "errorfile" configuration parameter should be
-disabled, as is the default in rsyslog.
-
-History
-=======
-2013-06-27  Problem discovery during code review at customer
-2013-07-03  Original vendor contacted
-2013-07-03  Vulnerability confirmed by vendor
-2013-07-03  Fix released
-2013-07-04  CVE-2013-4758 assigned
-2013-07-05  Coordinated advisory release
 - -- 
-http://www.lsexperts.de
-LSE Leading Security Experts GmbH, Postfach 100121, 64201 Darmstadt
-Tel.: +49 (0) 6151 86086-0, Fax: -299,
-Unternehmenssitz: Weiterstadt, Amtsgericht Darmstadt: HRB8649
-Geschäftsführer: Oliver Michel, Sven Walther, Dr. Peter Schill
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Icedove - http://www.enigmail.net/
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-iQIcBAEBAgAGBQJR1m7aAAoJEDgSCSGZ4yd8qAcQAJlG0E7t2jnqXvxS3QUCgyF9
-lMuADOj7/wbNw/oetbBLukzh9OXOKB2q2QLney6XosZOMh7/dfSXuOdJsaEufutS
-5BFGHUOglixACmqju3ZcWvWYsKYrtnKyy+/GJvXR3fZjP7Jf6UEHeBlffEwYhqEe
-kjA/ha5EHeljehHbqc+zm+O8iSVte40dJD87/D76UwzI6cMG6eFbFRgDYxaFSGh6
-0JMdBA0PqkkkF9fdrlJ00VYrPU41RUMPeiv23OyIiQgWvAbWV8RMkTetkVaqxCys
-ms8/s8+FlA4xBKZPiHB64i7oznKHV1AeqXjCm9AahXxCg1NWQx/DkShTZd/zWg30
-uI8+2NIb/YMyPrdth44+ucpjcF1v76G3c/WBSBniIXPwUvzHTxD0DHBYX6g0i2Jr
-HvtD1kZaWUjk/ofD52CZ1pcUIsqyiO6hoS1vYA83EiC9KW/Yp2lrf/apoE5VgdJ8
-jN4JTSU7NEIKY/S+GDFBUDqpnIJeG+VHVC2dmWa+fSfRqx5Wlk9YwE0K0KI/BU+D
-MrmzwO4/Fx0EdxhKxOaMAJTVAas2paW07ewrXKTRCja2mAZLaK3eeuKfdwvqVa4J
-SwBNnbyPPoY9H8fjx9J8rrYirfZnQ4UKiV7cgOfaXG+ZfFzaS/iZZ3i+USdMJtDS
-fwuOw+xvnSrruDiP1Dho
-=HJxe
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJREyICAAoJEBYNRVNeJnmTL1MQAKARq2UGnD671ZfOdM2COAdP
+cQkAT8VD9mBIm1ybe2YwQ0vqpoflOdpIhoW9CsQvvtb3FvDC60kM/2nnAMBv3Ujp
+HgLquNw1wtnzIO3M2N/qfpYtYVoBxHB9TSwBsXMyinJtgg4zjYwjkuflE4Ko6rgr
+dQ2jjAESgeIGZPWkUGcfRJsZGagO5PGIIv3FWgfsOR+M9dkkN+jdY/fGqCqp+NlP
+8UbCdwYEJG73aHn+sI7wEGlpKCsuJzOCFo8FBc8C6N3DpvwFZbyRh45DGVhS3D9k
+cNIES1RNmjwsdBsW0k9cQfP+YCTmR6O3IT/3ruXIalF15hkoIkeJT4/y+1gMqWnQ
+kfqcDqcCFiezMCvhB0WDNp0OnJAfrcjfleZhNcathImxZqENfcaWpwI5OnIPRwLJ
+asn5Og54RdRL4QZsBHLb7cSSNQyeoNRBsdAqz8tQGoZ5DIX22prMCSjrJ4jUnJWg
+HCD0Z/xCO4ZAp6lU+Sf4nfYTbent5xBgH1ap88IRFbOEriZisqS14fnsA6++jQZs
+dtr6yDoMlvCwlIwAxkMeUz5JLTRI6zWlHpe/doIyEoxjmr18GKx1OPExr0LzetzI
+qB9TN4oWTHyhotPdkidlFQ4lXM4HTmYmoI+wF9rE1ulnGIqUTZpWffkzItX2pbaO
+HLOXt5NW5Y+8xWz0l6Of
+=L+gz
 -----END PGP SIGNATURE-----
