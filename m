@@ -1,48 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/30/2
-Message-ID: <5108FD2F.8080501@redhat.com>
-Date: Wed, 30 Jan 2013 11:59:59 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/10
+Message-ID: <20130207131959.71f21aa9@melee>
+Date: Thu, 7 Feb 2013 13:19:59 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: Salvatore Bonaccorso <carnil@...ian.org>
-Subject: Re: CVE request: hs-tls: Basic constraints vulnerability
+Cc: cve-assign@...re.org
+Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
 Content-Type: text/plain; charset=utf-8
 
-On 01/20/2013 01:32 PM, Salvatore Bonaccorso wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> For hs-tls (TLS/SSL implementation in haskell) it was announced the following
-> advisory[0]:
->
-> ----cut---------cut---------cut---------cut---------cut---------cut-----
-> Hi cafe,
->
-> this is a security advisory for tls-extra < 0.6.1 which are all vulnerable to bad
-> certificate validation.
->
-> Some part of the certificate validation procedure were missing (relying on the
-> work-in-progress x509 v3 extensions), and because of this anyone with a correct
-> end-entity certificate can issue certificate for any arbitrary domain, i.e.
-> acting as a CA.
->
-> This problem has been fixed in tls-extra 0.6.1, and I advise everyone to upgrade as
-> soon as possible.
->
-> Despite a very serious flaw in the certificate validation, I'm happy that the
-> code is seeing some audits, and would want to thanks Ertugrul Söylemez for the
-> findings [1].
->
-> [1] https://github.com/vincenthz/hs-tls/issues/29
-> ----cut---------cut---------cut---------cut---------cut---------cut-----
+Can you assign one more for matrixssl?
 
-I believe an alternative description of the impact is: hs-tls-extras 
-does not check the Basic Constraints attribute of a certificate in 
-certificate chain procession, and any certificate is treated as a CA 
-certificate, which means that anyone who has a valid certificate can use 
-it to sign another one (with an arbitrary subject DN/domain name 
-embedded into it) and have it accepted by hs-tls.  This eventually 
-allows MITM attacks on TLS connections.
+http://www.matrixssl.org/news.html
 
-Kurt, is this more to your liking? 8-)
+- -- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
 
--- 
-Florian Weimer / Red Hat Product Security Team
+iQIcBAEBCAAGBQJRE5vyAAoJEKWIAHK7tR5C7JQP/297MYlHEisJGceH/MvttO6M
+s1lcycIE3cGslllF/u1SLZ3PmvWc/xEVpQLjMq6dtr6MlXh1XovRtlId5DPGkniP
+jLxS1HHlEiPfE6/wP/hYwg6UnpKkbI5gykAjo7pN8O4i7TnLqK4qURIM+qDtvvW5
+Wdy0iS5pKRYp6Q9yboji9j8Anf2x6tHifVZBk5AUlsKf/JsT0V6ag6Mk+obU3nr0
+e2/yNpkasU5hU6LQhZzLsDshQyYZ5n+EtdlqAHmJYqt7ufW0rkeDQWxs/+lRZ8Bi
+XyGCYNKmksewsekrNj2x7o1tErIysqtBBp+xppBUJopVkgUdahAl9pn1vlSj4c3G
+HrBzTanV61pF2dv0erG3PN4umOmMe8O59eZDw933chvJKnvn2XR4vzZ72YrN+jtE
+afci87jvH3nX+dLoarHooGXyTo+4NzEP01jlCSwznKq9xjdefC8CcicszielhLTm
+URPSHVkQGNUYixI4JlBw1BmzRGTaYXy947kQJQf3jOeoog2Py4wcIz/s/InPfwFM
+yj6otJY5b23UOPs7fFH/kcPUZJeSO4MkH5ECMpNFj1DMic8ZyZYyqcqlcsXDvDfb
+OYZ6Vlz1t2Kav/l5pZuSlLiEjSkFuGfgPmCWVJWf9GPAWtv/LMpo7kVZgMMfOH9V
+WghTsD7xJYOG+i7x3sKA
+=4hro
+-----END PGP SIGNATURE-----
