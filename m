@@ -1,70 +1,129 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/17/3
-Message-ID: <5237B023.2000202@redhat.com>
-Date: Mon, 16 Sep 2013 19:28:03 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/4
+Message-ID: <51131176.8020603@redhat.com>
+Date: Wed, 06 Feb 2013 19:29:10 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Alexander Cherepanov <cherepan@...me.ru>, dammer2k@...il.com, drbrain@...ment7.net
-Subject: Re: CVE-2013-4287 Algorithmic complexity vulnerability in RubyGems 2.0.7 and older
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: A small backlog of vulnerabilities in Chicken Scheme
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/14/2013 03:11 PM, Alexander Cherepanov wrote:
-> On 2013-09-10 09:32, Eric Hodel wrote:
->> The vulnerability can be fixed by changing the first grouping to
->> an atomic grouping in Gem::Version::VERSION_PATTERN in
->> lib/rubygems/version.rb.  For RubyGems 2.0.x:
->> 
->> -  VERSION_PATTERN =
->> '[0-9]+(\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
->> :nodoc: +  VERSION_PATTERN =
->> '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
->> :nodoc:
->> 
->> For RubyGems 1.8.x:
->> 
->> -  VERSION_PATTERN = '[0-9]+(\.[0-9a-zA-Z]+)*' # :nodoc: +
->> VERSION_PATTERN = '[0-9]+(?>\.[0-9a-zA-Z]+)*' # :nodoc:
+Sorry for the delay, it's been a crazy couple of weeks.
+
+On 02/02/2013 06:59 AM, Peter Bex wrote:
+> Hello all,
 > 
-> This is not enough. The following script:
+> Recently a handful of security bugs have been found and fixed in
+> the Chicken Scheme compiler (http://www.call-cc.org).  We (the core
+> team) have decided we'd like to start using CVE identifiers for the
+> benefit of our users and distributions.
 > 
-> # Regexes are from 
-> https://github.com/rubygems/rubygems/blob/master/lib/rubygems/version.rb#L150
+> I'd like to request CVEs for the currently known security bugs:
+> 
+> * POSIX select() buffer overrun, fixed on in Chicken 4.8.2
+> (development snapshot) by switching to POSIX poll() on platforms
+> where supported. This is also fixed in 4.8.0.1 (stability
+> release).
+> 
+> Original announcement, with workaround (followed by preliminary
+> patch): 
+> http://lists.nongnu.org/archive/html/chicken-users/2012-06/msg00031.html
 >
 > 
-VERSION_PATTERN =
-> '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
-> :nodoc: ANCHORED_VERSION_PATTERN =
-> /\A\s*(#{VERSION_PATTERN})*\s*\z/ # :nodoc: 
-> '1111111111111111111111111111.' =~ ANCHORED_VERSION_PATTERN
+Final patch:
+> http://lists.nongnu.org/archive/html/chicken-hackers/2012-11/msg00075.html
+
+Can
 > 
-> takes ~1m on my machine. The problem is not in VERSION_PATTERN but
-> in its possible repetition inside ANCHORED_VERSION_PATTERN.
+you list the versions released that included the broken and
+correct patch? thanks.
+
+> * Poisoned NUL byte injection due to incomplete protection by
+> missing checks in some procedures, fixed in Chicken 4.8.0: 
+> http://lists.nongnu.org/archive/html/chicken-users/2012-09/msg00004.html
+>
+>  * Broken randomization procedure on 64-bit platforms (it returned
+> a constant value).  This function wasn't used for security
+> purposes (and is advertised as being unsuitable), so I'm unsure a
+> CVE is needed: 
+> http://lists.nongnu.org/archive/html/chicken-hackers/2012-02/msg00084.html
+>
+> 
+Fixed in 4.8.0.
+
+no problem here, will assign once other Q's are answered.
+
+> * Vulnerability to algorithmic complexity attacks due to hash
+> table collisions.  Fixed in 4.8.0. First public confirmation of the
+> issue, with preliminary (broken) patch: 
+> http://lists.nongnu.org/archive/html/chicken-hackers/2012-01/msg00002.html
+>
+>
+> 
+Proper fix:
+> http://lists.nongnu.org/archive/html/chicken-hackers/2012-01/msg00020.html
+
+Can
+> 
+you list the versions released that included the broken and
+correct patch? thanks.
+
+> Please let me know if more info is required or if this is even the 
+> proper way to request CVEs.
+> 
+> I'd also like to know if it's possible to get CVE numbers assigned 
+> *before* issuing a security advisory, but without immediate full 
+> disclosure, so an initial advisory can be complete with CVE
+> number.
+
+Yup see the HOWTO. Initially I'll require full info up front to make
+sure CVE split/merge is done correct, but this wouldn't go past me,
+and if you can't trust me, well, then you go to Mitre I guess =).
+Longer term depends on the quality of CVE requests, basically if you
+learn to do them right and do them consistently right I'll require
+less info/trust you.
+
+> The CVE can be updated afterwards with the link to the advisory
+> when it is issued.  This should make it easier for users to find
+> information about the bug.  This list's Openwall wiki seems to
+> imply that it's only possible to request a CVE for an issue given
+> all the information immediately, but a recent message from Kurt
+> Seifried in a thread about Jenkins says that it can be done.  If
+> it's indeed okay to e-mail Kurt directly, it would be helpful to
+> include this in the documentation wiki.
+> 
+> Finally, how do CVE entries in MITRE and/or the NVD get updated? I
+> couldn't find anything about this in the FAQ.  For example, if we 
+> find and fix a noncritical vulnerability but the fix is rather 
+> complicated and needs to be thoroughly tested, the fix might
+> appear in a release after CVE and advisory are issued.  How will
+> this be reflected in the information once the version in which the
+> fix appears is finally known?
+> 
+> Cheers, Peter Bex (on behalf of the Chicken core team)
 > 
 
-Great, I guess we're going to need a new CVE. Before I assign one can
-we make sure we fix this so more fiddly expressions don't cause
-problems? Thanks.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSN7AjAAoJEBYNRVNeJnmT364QANqrjzrwEwdP3gJvjNY2e8j6
-/uSyVCeka3ipjvDnq/JMOVNMRmOuic54BXcJKxPaVhTSs1F6qn1yhz5loFbN7Iy7
-ra6J+VUGIPiRVJmNHZy5h6vXeugyhT72/WAUxOLHzpByZIswACIWU//+K4Wq3Tuq
-n6sFffsSyL4sVFul37wc9uKP3moP45tAd/VRoX2Puj7srfuTJ3NrmS4PhaMsgI60
-t1bh7I46IBxMjb0xLEDtw5EDe014hcN2MDfyPuvs8CYKDUPnYT37mauS7YjHyXO2
-/A6HvcI0oOIHrWqZD43gsf+mtWyEAmLvU0M+2mlFEnvAYRDXKHX5YWUwdRTgsQgd
-DOOmxktlFrwUxvcga/YiYzjxydg64x35II9C/ueVr8SWX9NYuKDCSZejXt/9wkQZ
-Ajmkvzdx7vpRVcCgxhyf0Qs0gcSp2t0KBidh/HKdmCeLW7iyEL2W4MChK6UOSZk/
-pNEFnGx4/3Le+MhU8a2vcSfMGXOjYNefsSTWUJl3AbcrJcWNFjGElCH4rjBZydwm
-PGEM38TOVHdeodQTCW0TIGNMhp/sNBR3J8wkh8Pv59xUD6X54JQf3C8NnIBQJ9yX
-nRxy9lVmPn6WxbQtsiS44N14a3yqvy5jsqTKuafFj6SdmvrdG0Fblb0C9dvLGzx9
-9GXwOmzhTqeVEOi2InYg
-=tciT
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRExF2AAoJEBYNRVNeJnmT45cQANPD4gylbfQa5YOX6aMK3fW2
+uOC/fveK74HIyE1Yl8R/wUwOUjIl8otDbR4EQHDr/j7lW1tCKeom+307qsbZGL70
+7mVijwNP7rlpBXAweCc4D0EIt+ViulDupxhi0XelpYyE5RKMUEUXl7RkXvpsgq+T
+AirCqOYWJyA+teN31GeOgscVU52yLswYr8fu7+xuqqwcRayeSVSHSrKSim9ZsLG3
+5bUZKdn0qgJ8D6VJlO9AD+DHV+y8pEI4mFGTuh7/RKXlFd0lLnO2bfoIDjmxdKbX
+taMaAn+SvrS8W3OnV1WKE/nHLuS77XlpeTssKJgw+ADTnALnwL7BnotL5JFbkaQm
+vrQdQqLzOfew1gyDUkugsY8KwXlbbqw45VVB0wYeJDpn5a232/Vv+78F7pzpAeZ7
+ZXSpL18V7dp0sJAf9UirKJGxYQLPJIJEyWM7uWlpxjvYyrzzSY1BunLXMRZSk3jp
+pkhj8YcwZ80BXV4eSiRSKC0wSga/apjgJVXF4Xtb/63VVJrF/x2RHUuUE1SW93S2
+83KShfHTw9vscRfgL13nnd3vYjchlyPH09mLu17WF5DIu/73X4qjnxao6gizWvCZ
+t4fehWfNDSFuZ5gTJH2bkpXHZdiEqwGf3oyPQ6xsYNOzqack62o0/IlXTi0DqdUa
+HLgqbnum5Ukx1fnJcXgn
+=2hwi
 -----END PGP SIGNATURE-----
