@@ -1,79 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/16/1
-Message-ID: <511F202B.2020700@msgid.tls.msk.ru>
-Date: Sat, 16 Feb 2013 09:59:07 +0400
-From: Michael Tokarev <mjt@....msk.ru>
-To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>,  Matthias Weckbecker <mweckbecker@...e.de>
-Subject: Re: CVE# request: pigz creates temp file with insecure permissions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/14
+Message-Id: <201302071933.r17JXXJP011224@linus.mitre.org>
+Date: Thu, 7 Feb 2013 14:33:33 -0500 (EST)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
 Content-Type: text/plain; charset=utf-8
 
-15.02.2013 23:33, Kurt Seifried wrote:
-> On 02/15/2013 06:43 AM, Matthias Weckbecker wrote:
->> On Friday 15 February 2013 09:33:30 Michael Tokarev wrote:
->>> I think this one well deserves a CVE#.  I just submitted the
->>> following bug #700608 to Debian BTS:
-> 
->> Not sure if this qualifies for a CVE. At least similar issues did
->> not get one in the past.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+>Can you assign one more for matrixssl?
 
-> From the last discussion of this:
-> 
-> http://www.openwall.com/lists/oss-security/2012/09/24/4
-> http://www.openwall.com/lists/oss-security/2012/09/24/8
-> http://www.openwall.com/lists/oss-security/2012/09/24/9
-> http://www.openwall.com/lists/oss-security/2012/09/26/6
-> 
-> Basically I pointed out we need to define what information
-> MUST/SHOULD/SHOULD NOT/MUST NOT be marked as sensitive/etc so we can
-> apply appropriate file permissions and the discussion died.
-> 
-> So no CVE for this. Set your umask to be safe for now (and probably
-> forever =).
+>http://www.matrixssl.org/news.html
 
-This is definitely wrong.  In my opinion, anyway.
+The short answer is that you should map that MatrixSSL changelog
+to CVE-2013-0169.
 
-I remember well the gnupg discussion.  That one is really questionable.
-Especially when it creates an encrypted file from non-encrypted but
-protected data - the result is not necessary to be protected with
-file permissions since it is encrypted.
+Here's how MITRE is currently looking at the set of issues:
 
-Gnupg deals with security data explicitly.  When you encrypt/decrypt
-data using it, you expect to be aware of when you cross encryption
-boundaries and deal with the consequences using umask.  But even
-there, I expect to have all temp files with strong permissions, so
-I don't have to deal with these _too_.
+CVE-2013-0169 is the identifier for the multi-vendor issue in the
+TLS and DTLS protocols discussed in the
+http://www.isg.rhul.ac.uk/tls/TLStiming.pdf paper.
 
-Here, the utility is not crossing any encryption boundaries like gnupg
-does, and its aim (and end result) is to _preserve_ attributes (incl.
-permission bits).  What it have in-process - to end-user anywa - looks
-like an internal temp file (that's why I used this word in the subject).
-Ie, the result is correct (the permission bits), but a temp file is
-insecure.  I just don't expect to have a widely open temp file which
-reveals my secrets!
+We anticipate that several more vendors will release changelogs,
+with various levels of detail, mapping to that paper:
 
-pigz here does not differ from, say, cp utility - when I ask it to copy
-foo to bar, I expect it to keep bar at least as private as foo is, --
-the result AND the temp file during copy.  If cp(1) behaved this way,
-creating destination file with 0666&umask and chmod'ing it when the
-copy is done, that'd be insane.
+ -- If the changelog simply reports a new release to address that
+    paper's issue, MITRE will consider that changelog to be a
+    CVE-2013-0169 reference. A new CVE will not be created for that
+    single vendor or a single product.
 
-Suggesting to have "safe" umask is entirely unpractical in this context.
-I do have safe umask which lets me to do my work and share it with others.
-Making it to drop permissions for !me means lots of headaches in other
-places, much more than necessary or tolerable.  And thinking and especially
-choosing which umask to use for EVERY process is, again, completely
-unpractical.
+ -- If the vendor states that it uses a codebase corresponding to
+    one of the other
+    http://openwall.com/lists/oss-security/2013/02/05/24 CVEs (aka
+    side issues), then the changelog will become a reference for
+    that CVE.
 
-I just expect a tool to not reveal information more than it already is,
-and, well, to implement common sence.  This, and other examples of cp,
-gzip, etc, always creating temp files with restricted permission -- all
-are good examples of common sence, where pigz does not follow the
-natural expected practice.  And it _hides_ that fact by creating only
-the "temp" file insecurely, -- the result is secured properly and looking
-there, users are unusupected that they private data has been already read.
+ -- If the vendor makes any other statement about a vulnerability
+    fix for a side issue, a new CVE will be created for the new side
+    issue.
 
-Thanks,
+This approach should enable MITRE to provide reasonably consistent CVE
+abstraction without detailed study of each vendor's code.
 
-/mjt
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJRFADmAAoJEGvefgSNfHMdC1AH/A2Fr8fg2pZP49U513DBwQhp
+7zdffXlwA/FF5dv2D7Pl3UJeGOgWtmott9kvrpIh1tKKnGFoNgqvQwAsaEL9/1rd
+Smr1dJisFvy7qDjrZEM96EiOM/3+J90StXFE3cVn72KGGs03g/e3+sUI3D8dp7Z3
+SxJTNLgiVCxDCld06f5CmMwinl2DUx/VkuNgbfHUg+NnNzhw3WmIj8NMT0Om+OxZ
+0UDCbWZ3SgH3DrIH75l+W3wKma0KgyQD+M2voUuCqmlSENI1Hkc6LhSKjxVaHeo/
+ALJ4bWrpYtAv5JpyWL5mEY6NXOVcc0nl3M4EDsI9CKqeR8gtb0rjyK/gLQ4lydE=
+=LRzJ
+-----END PGP SIGNATURE-----
