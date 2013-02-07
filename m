@@ -1,28 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/22/4
-Message-ID: <1041054839.13184469.1363958601700.JavaMail.root@redhat.com>
-Date: Fri, 22 Mar 2013 09:23:21 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/9
+Message-ID: <20130207105518.GX9348@dhcp-25-225.brq.redhat.com>
+Date: Thu, 7 Feb 2013 11:55:19 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Drupal Security Team <security@...pal.org>
-Subject: CVE Request -- drupal7-views : SA-CONTRIB-2013-035 - Views - Cross Site Scripting (XSS)
+Cc: Kurt Seifried <kseifrie@...hat.com>, spender@...ecurity.net
+Subject: CVE request -- Linux kernel: x86/msr: /dev/cpu/*/msr local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, Drupal Security Team, vendors,
+Access to /dev/cpu/*/msr was protected only using filesystem checks. A
+local uid 0 (root) user with all capabilities dropped could use this
+flaw to execute arbitrary code in kernel mode.
 
-  Drupal upstream has released:
-  [1] http://drupal.org/node/1948358
+Upstream commit:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=c903f0456bc69176912dee6dd25c6a66ee1aed00
 
-and updated version of the Views module (Views 7.x-3.6):
-[2] http://drupal.org/node/1948354
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=908693
+http://grsecurity.net/~spender/msr32.c
 
-correcting one cross-site scripting (XSS) flaw.
-
-AFAICT from [1], there doesn't seem to be a CVE identifier
-for this issue yet.
-
-Could you allocate one?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
