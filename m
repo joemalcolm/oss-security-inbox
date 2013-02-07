@@ -1,19 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/2
-Message-ID: <52A66785.6010404@redhat.com>
-Date: Tue, 10 Dec 2013 11:59:49 +1100
-From: Garth Mollett <gmollett@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/11
+Message-ID: <20130207185032.489d9451@melee>
+Date: Thu, 7 Feb 2013 18:50:32 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Please REJECT CVE-2013-2215
+Subject: CVE request: XSS in roundcube before 0.8.5
 Content-Type: text/plain; charset=utf-8
 
-Please REJECT CVE-2013-2215, this was assigned in error to an issue that
-under further analysis is considered as hardening and not vuln.
+Release notes:
+http://sourceforge.net/news/?group_id=139281&id=310213
 
+Corresponding bug:
+http://trac.roundcube.net/ticket/1488850
+
+Commit:
+https://github.com/roundcube/roundcubemail/commit/74cd0a9b62f11bc07c5a1d3ba0098b54883eb0ba
+
+Please assign CVE.
 
 -- 
-Garth Mollett / Red Hat Security Response Team
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
