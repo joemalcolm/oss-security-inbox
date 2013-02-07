@@ -1,30 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/6
-Message-ID: <52985C6A.1060307@gentoo.org>
-Date: Fri, 29 Nov 2013 13:20:42 +0400
-From: Sergey Popov <pinkbyte@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: ClamAV vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/7
+Message-ID: <20130207084910.GH23092@frohike.homeunix.org>
+Date: Thu, 7 Feb 2013 09:49:10 +0100
+From: Peter Bex <Peter.Bex@...all.nl>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: A small backlog of vulnerabilities in Chicken Scheme
 Content-Type: text/plain; charset=utf-8
 
-It's a bit late, but i would like to request CVE for two
-vulnerabilities, that present in ClamAV before 0.97.7[1]:
+On Wed, Feb 06, 2013 at 07:29:10PM -0700, Kurt Seifried wrote:
+> Sorry for the delay, it's been a crazy couple of weeks.
 
-1) A double-free error exists within the "unrar_extract_next_prepare()"
-function (libclamunrar_iface/unrar_iface.c) when parsing a RAR file.
+No problem.  Thanks for all your efforts!
 
-2) An unspecified error within the "wwunpack()" function
-(libclamav/wwunpack.c) when unpacking a WWPack file can be exploited to
-corrupt heap memory.
+> On 02/02/2013 06:59 AM, Peter Bex wrote:
+> > I'd like to request CVEs for the currently known security bugs:
+> > 
+> > * POSIX select() buffer overrun, fixed on in Chicken 4.8.2
+> > (development snapshot) by switching to POSIX poll() on platforms
+> > where supported. This is also fixed in 4.8.0.1 (stability
+> > release).
+> 
+> Can you list the versions released that included the broken and
+> correct patch? thanks.
 
-[1] - https://secunia.com/advisories/52647/
+The preliminary patch was correct but not portable (so not broken in
+the sense of being vulnerable).  Because of portability problems it was
+never committed.  I decided to include the link to the other patch for
+completeness, and for reference (useful for people reading the CVE and
+studying the bug's history).  Sorry if this caused some confusion.
 
+The correct patch was committed and ended up in stable
+release 4.8.0.1 and development snapshot 4.8.2. 
+
+Effectively this means that 4.8.0 and earlier is vulnerable, plus the
+development snapshot 4.8.1 (but *not* 4.8.0.1 - the fix was pulled up
+into our stability branch).
+
+Maybe it helps if I explain our current versioning scheme.  Our stable
+releases end in a zero (ex: 4.7.0, 4.8.0).  We periodically release
+stability patchlevel upgrades, which end up as minor version suffixes.
+This means that 4.8.0 is stable, followed by 4.8.0.1, 4.8.0.2 etc.
+
+While working on the next major release (which will be 4.9.0), snapshots
+are built which will have minor versions like 4.8.1, 4.8.2 etc.
+The 4.8.0.n versions contain only bugfixes that went into 4.8.x
+snapshots which were deemed important enough to pull up into the minor
+stable release cycle.
+
+> > * Vulnerability to algorithmic complexity attacks due to hash
+> > table collisions.  Fixed in 4.8.0. First public confirmation of the
+> > issue, with preliminary (broken) patch: 
+> > http://lists.nongnu.org/archive/html/chicken-hackers/2012-01/msg00002.html
+> > 
+> Proper fix:
+> > http://lists.nongnu.org/archive/html/chicken-hackers/2012-01/msg00020.html
+> 
+> Can you list the versions released that included the broken and
+> correct patch? thanks.
+
+No versions contained the preliminary patch, it was made available for
+testing only.  I also included this one for reference.  I'll try make
+this clearer the next time.
+
+The correct patch ended up in snapshot 4.7.4 and, thus, in stable
+release 4.8.0; This means that anything before 4.7.4 is vulnerable.
+
+> > Finally, how do CVE entries in MITRE and/or the NVD get updated? I
+> > couldn't find anything about this in the FAQ.
+
+I would still appreciate an answer to this question.
+
+Cheers,
+Peter
 -- 
-Best regards, Sergey Popov
-Gentoo developer
-Gentoo Desktop Effects project lead
-Gentoo Qt project lead
-Gentoo Proxy maintainers project lead
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
+http://sjamaan.ath.cx
