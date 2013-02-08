@@ -1,59 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/5
-Message-ID: <524E5B06.2030500@redhat.com>
-Date: Fri, 04 Oct 2013 00:07:02 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/08/6
+Message-ID: <51154278.9070206@redhat.com>
+Date: Fri, 08 Feb 2013 11:22:48 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Donald Stufft <donald@...fft.io>
-CC: oss-security@...ts.openwall.com
-Subject: Re: A note on cookie based sessions
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: XSS flaws fixed in ganglia
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/03/2013 11:26 PM, Donald Stufft wrote:
-> I don't think this really is a vulnerability is it? I mean it's
-> basically how the internet works. The only difference between a
-> cooke backed session and a regular session is that there's no
-> server side session to destroy. At least in Django's case, It's not
-> a permanent session though, they are only good for a limited amount
-> of time before the signature on the cookie expires.
+On 02/08/2013 11:06 AM, Vincent Danen wrote:
+> A number of XSS issues were fixed in ganglia's web ui:
 > 
-> If you have access to the session cookie you've already won the
-> game, you've gotten an XSS or MITM and can do much worse then a
-> session cookie.
+> https://github.com/ganglia/ganglia-web/commit/31d348947419058c43b8dfcd062e2988abd5058e
+>
+>  https://bugzilla.redhat.com/show_bug.cgi?id=892823
+> 
+> I think one CVE would cover all of these since they were fixed at
+> the same time, in the same commit.
+> 
+> Thanks.
 > 
 
-Apologies I should have been more explicit. The difference is that
-with a stateful backend when the user  hits log out they are logged
-out in the back end, so the cookie can't be used any more. With these
-stateless solutions there is no way to prevent cookie reply other than
-encoding a time out in the cookie (so I guess you could encode like a
-short time out and keep rotating the cookie to close the window of
-opportunity).
-
-The concern is people using public terminals, cookie stealing attacks,
-XSS in the website you're using, etc allowing an attacker to snag your
-cookie and use it post "log out".
-
+Please use CVE-2013-0275 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSTlsGAAoJEBYNRVNeJnmTTowQALWeB44M2xq1l6XZPYxfzoS3
-EqRmHP2FT0ZrZH5wSiq4gTzecyke/nIf7JnrrcdNeirPPAl+NNqPS6TaOeguL20g
-SS5oqpC2rsEu1XveZC6M8YenqaPn8UQ04PYH8dCkyIholUKrh+bET5sTa5N90s33
-wzYE80vAh9jdS9BH93iye+eFMzF+wfrEtgRsIg4kmD0Rt4L0f1KUkLoAQcdPq8tN
-0Md4RocD0dQibKZ3j54ToxB7NxiEThYztf9pQLrJUYjuo9lIlIk9JCDkjQfGaIuR
-CgpB5LgX9eYnIgi+yI9DmPJHLNkwJE2dGWZPGaFnzmuw5cUKyLL5IEzOpRRgGraR
-b90lEP1R4/WAAfOWGyQ9eOoPQDm5WMfvjpfGw/djpuIPRAywAo3X+HnQwTVhHD8y
-kfuoYLQn+ymse9WEZPzKEOvW+AhSx/7LQ3vc+RNLr043zSaCzcaBWX8C3GhYAH+E
-ACwipVV0LQHto3KY8Oi86/nj7IvLU5uevpzdfSiUnRI1seGgj964Ka4nGcRL5tuw
-ZGsAj+h+vsiWFm2n9HS0OanKE+XU5XgMxzoC3HTrU0QZyIH0s8hebR8HzB8BVFW9
-4uwvni/8AbhPY3ZUnNH2+/OTZvHm5V9O3frobA/c6eOOTG85JHpMnUR+pgur4rqV
-WsBNRKn596piipDwn1AS
-=Tqge
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRFUJ4AAoJEBYNRVNeJnmTcdIP/RMNBm2LriJjSA7tL8QWLECs
+6YAbg/npMptHRzWu7vZmC4BDa+3b89w7ofvvEHX4iSG3cHekjrTZgWSRfLIYkKTj
+6FXgsQd0Bv3SRBfGhbCV0SAp7jD7+UXFlo3j6jGWLPm99VfBL1eOrN+Kp3ckh51I
+IeLWYVSi4SUD/E73S6guqDvBpQpXqZmi3GthNtz3A5k5DIcfgerzKNGISy0NKfGv
+9IPzo+pKmZ8vnt/gqh5fDbiaZ9YOXSwFECwAUpop6bxk610smddy+0W6rbEDcePe
+e/Lcaqh4Jef9MUqwlbL3JsatxVk6CW0Q6vbyC4R4lYF5EI852gucdiBPdncKqFck
+tWOhrSuddWFftmbwBU9yuJfXzRA4CAW7tFlSYz+6xLlMCNeYuQ20ZONd2RPMBqFa
+ADaGWYcGl1dbH1sJj3R8W81MHOENV5e6tOBIeB7437e8ajft6VjHZZHTYOfIw/0e
+3/aMAzdQq5VUQenS5p5lQGLvVyUljEmuRJflpaZ1vzUYkmyVuwdtASGaUvQMr+R+
+z/rxnnyOegMDREWo8ceAXu9Ebh8cMyOvUEI7nfUcaiHi1hEujbNcuju0qMjPqzvt
+1kJJ2rRCR4T2xZoJ8eyTW+z84Hb5uUcExQPWKPnS4uUtQMthq5qRJQZMhw3DzixK
+4cr2V7PIVoGz+EZyWgBF
+=kBKp
 -----END PGP SIGNATURE-----
