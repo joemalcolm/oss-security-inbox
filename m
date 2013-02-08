@@ -1,28 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/29/2
-Message-ID: <CAD6CYKNeeF7ODUMLXqDf_GrbPgRvBX7d01JChvyqh9_r_GCYWw@mail.gmail.com>
-Date: Mon, 29 Jul 2013 09:48:39 +0200
-From: Alexandre Dulaunoy <a@....be>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/08/5
+Message-ID: <20130208180656.GQ3397@redhat.com>
+Date: Fri, 8 Feb 2013 11:06:56 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE missing? for "Exim with Dovecot: Typical Misconfiguration Leads to Remote Command Execution"
+Subject: CVE request: XSS flaws fixed in ganglia
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+A number of XSS issues were fixed in ganglia's web ui:
 
-I couldn't find the CVE number for the following vulnerability/misconfiguration:
+https://github.com/ganglia/ganglia-web/commit/31d348947419058c43b8dfcd062e2988abd5058e
+https://bugzilla.redhat.com/show_bug.cgi?id=892823
 
-https://www.redteam-pentesting.de/en/advisories/rt-sa-2013-001/-exim-with-dovecot-typical-misconfiguration-leads-to-remote-command-execution
+I think one CVE would cover all of these since they were fixed at the
+same time, in the same commit.
 
-Is there a CVE assigned for this combo vulnerability in Exim/Dovecot?
-or as this is a configuration matter there is no CVE assigned (even if
-this "recommended configuration" was in the wiki of the vendor)?
-
-Thanks for any feedback,
-
-Cheers
+Thanks.
 
 -- 
---                   Alexandre Dulaunoy (adulau) -- http://www.foo.be/
---                             http://www.foo.be/cgi-bin/wiki.pl/Diary
---         "Knowledge can create problems, it is not through ignorance
---                                that we can solve them" Isaac Asimov
+Vincent Danen / Red Hat Security Response Team 
