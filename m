@@ -1,39 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/3
-Message-ID: <1516728290.1074389.1364991799818.JavaMail.root@redhat.com>
-Date: Wed, 3 Apr 2013 08:23:19 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/08/1
+Message-ID: <51149823.6050205@redhat.com>
+Date: Thu, 07 Feb 2013 23:16:03 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Breno Silva <breno.silva@...il.com>
-Subject: CVE Request -- ModSecurity (X < 2.7.3): Vulnerable to XXE attacks
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: XSS in roundcube before 0.8.5
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, Breno, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  ModSecurity upstream has released v2.7.3 version:
-[1] https://github.com/SpiderLabs/ModSecurity/blob/master/CHANGES
+On 02/07/2013 10:50 AM, Hanno B￶ck wrote:
+> Release notes: 
+> http://sourceforge.net/news/?group_id=139281&id=310213
+> 
+> Corresponding bug: http://trac.roundcube.net/ticket/1488850
+> 
+> Commit: 
+> https://github.com/roundcube/roundcubemail/commit/74cd0a9b62f11bc07c5a1d3ba0098b54883eb0ba
+>
+>  Please assign CVE.
+> 
 
-correcting one security flaw (from [2]):
-"It was reported that the XML files parser of ModSecurity,
-a security module for the Apache HTTP Server, was vulnerable
-to XML External Entity attacks. A remote attacker could
-provide a specially-crafted XML file that, when processed
-might lead to local files disclosure or, potentially,
-excessive resources (memory, CPU) consumption."
+Please use CVE-2012-6121 for this issue.
 
-References:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=947842
-[3] https://bugs.gentoo.org/show_bug.cgi?id=464188
-[4] https://secunia.com/advisories/52847/
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Relevant upstream patch (seems to be the following):
-[5] https://github.com/SpiderLabs/ModSecurity/commit/d4d80b38aa85eccb26e3c61b04d16e8ca5de76fe
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Could you allocate a CVE id [*] for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-[*] According to: https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ModSecurity
-    there doesn't seem to have been a CVE id allocated for this issue yet.
+iQIcBAEBAgAGBQJRFJgjAAoJEBYNRVNeJnmTjggP/3G1qmOK4YgR/fbb7woNwfyl
+dMhGYcPcPOIte7onPjYGO1L79ui0xKezPi8/bwdd8EIe30/EkpPzUGulRp0/T5nL
+ptQ1CKM0Ra58zg/gY4iGnRPAxDFGjZpRIaKfY3o490rk07QQqfTApQjmUYRJWRe4
+ugQGmoWPj9SMIiDzlk+2WnMSqOk4Rb472neXExjdb24ufrSwo2ZraRNkhkhgBneM
+XufOPPCyfwjzuGIoK/nSVeJKioprtAlvXpaoCGG3mJ3iP+bLcLSbBQOKe/6V/d7F
+14u1jhfNEMcJw2j4uyQmPu5R9j2wFfPp2CYfJdDDoWNaSXyTb3IpoNRvuVtELJ9G
+jluPdkP1Bk68TFPBt/YzVLVfmv1Rcp7h/Ik8XU7WIiOr6pLrx5Bmo4ADyy7D2Fq3
+d0hk/iINhbB1AOnsg4PJPgI871TWa7yM3e+23UZgb+jQQD88iULvDmV6hpKFOWwc
+OvJeXTq91rZccMwXUQ4baBqCufgu7cDQeCT0qDXWEJFlAMgz69P8Zn1eTYfhPnFs
+lKLbVcHYRySaPBdpsJ1VBXWuk/wyOXWrq0NjxPluaVzu9SvU6spumg/B0UYl+/P1
+SnYdnLFa/BBPiMpZBK0gUA8Aap8oe3Hf+dKeqY8t6eeU9ARWLZRAoP/xuGQL7jzR
+ISag3l/Pl0vxM2xnM2jS
+=OpIt
+-----END PGP SIGNATURE-----
