@@ -1,93 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/05/3
-Message-ID: <5185FF88.8050909@redhat.com>
-Date: Sun, 05 May 2013 00:43:20 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Salvatore Bonaccorso <carnil@...ian.org>
-CC: oss-security@...ts.openwall.com, Mark Panaghiston <markp@...pyworm.com>, hello@...pyworm.com
-Subject: Re: Re: CVE-2013-1942 jPlayer 2.2.19 XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/08/4
+Message-ID: <CALMiPQDsdpi=KFoOyO9m7txEWSwuJRYQTxFzgEsT97eEEYebiQ@mail.gmail.com>
+Date: Thu, 7 Feb 2013 19:34:47 -0800
+From: James Tucker <raggi@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2013-0263: Rack all versions, Timing attack in cookie sessions
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/03/2013 11:39 AM, Salvatore Bonaccorso wrote:
-> Hi Kurt
-> 
-> Have a question about the CVE assignments for these issues:
-> 
-> On Mon, Apr 29, 2013 at 01:30:09PM -0600, Kurt Seifried wrote:
->> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->> 
->> On 04/20/2013 11:19 AM, Mark Panaghiston wrote:
->>> jPlayer 2.3.0 has been released that officially fixes this
->>> issue:
->>> 
->>> http://www.jplayer.org/ https://github.com/happyworm/jPlayer
->>> 
->>> Tagged as *2.3.0* on GitHub. 
->>> https://github.com/happyworm/jPlayer/commit/c1c7a4dfa63bb6684d3670202e4a65d400dfce86
->>>
->>>
->>> 
-Full Release Notes for jPlayer 2.3.0:
->>> http://www.jplayer.org/2.3.0/release-notes/
->>> 
->>> In particular these fixes addressed security issues. Listed
->>> with their GitHub commits for code reference:
->>> 
->>> [2.2.20] Security Fix: The Flash SWF had a security
->>> vulnerability that enabled XSS (Cross Site Scripting). Reported
->>> by Malte Batram. Security reference CVE-2013-1942 
->>> <https://access.redhat.com/security/cve/>. 
->>> https://github.com/happyworm/jPlayer/commit/e8ca190f7f972a6a421cb95f09e138720e40ed6d
->>
->>
->>> 
-Sorry
->>> 
->> for the late reply. Please use CVE-2013-2022 for this issue.
-> 
-> In [1] CVE-2013-1942 was assigned, referencing the same commit.
-> 
-> [1] http://marc.info/?l=oss-security&m=136570964825921&w=2
-> 
-> Should CVE-2013-1942 thus only be used for owncloud reference, and
-
-CVE-2013-1942 was assigned for jPlayer 2.2.19 XSS, which is included
-in ownCloud (and possibly other things?).
-
-> CVE-2013-2022 and CVE-2013-2023 on other side for jplayer itself?
-
-CVE-2013-2022 is for jPlayer 2.2.20 XSS
-
-CVE-2013-2023 is for jPlayer 2.2.23 XSS
-
-So XSS's in 3 different versions of jPlayer.
-
-> Thanks a lot in advance for clarification!
-> 
-> Regards, Salvatore
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE: CVE-2013-0263
+Software: Rack (rack.github.com)
+Type of vulnerability: Timing attack, leading to potential RCE
+Vulnerable code:
+https://github.com/rack/rack/blob/master/lib/rack/session/cookie.rb#L149
+Patch: https://github.com/rack/rack/commit/0cd7e9aa397f8ebb3b8481d67dbac8b4863a7f07
+and https://github.com/rack/rack/commit/9a81b961457805f6d1a5c275d053068440421e11
+Versions affected: All prior versions.
+Versions fixed: 1.1.6, 1.2.8, 1.3.10, 1.4.5, 1.5.2
+Reporter: Ben Murphy
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.12 (Darwin)
 
-iQIcBAEBAgAGBQJRhf+IAAoJEBYNRVNeJnmTwysP/ijU/g4q3xhC/ifamEIRGw2I
-2gseRc4FIhzhK+hubYU/jgMZGJICX2kIPrKBvjkZ4Z4Zu/oS+a9ixVBfdftgQSSz
-xCBfQWNq4mSe1cdnvVk9xJYXLcomVectiQwbFsAnLqMwPGJVvWEuggPV05BSrQB2
-l5Xt2s0SyU15t8DzGs7OffEgQWaVE2q9q1B6Q2cYoAmKKc/7CrCipxOj6pbvVrqb
-+wThxpbakSm8rUgOaeZoPQieD6S0Eu6RIYNEtfOga2p21AUHX27ai+0npd7lL/ZH
-SBZv2XtpBEDxkADqinbF/iaIUH3TqxvBbmMUMNHU1+Q9jTsWFb25zQXx83XXZvbL
-ii3YnfnEjzQNeYJVUOjoESMy47ZsCXuYx6FVuw6v/SGwmYBoCAhgbyfcmTuaJjE9
-+U9Zsr4LifPgTa2y5tPDAzTjKMuPwMAmHAK3F7A9kmkpxlE5wTCYHqOiCxb7tvfW
-l3KHpOziaHMghOyEsIvuv07V92RzddaS5FMRGCfRl64wtzX11zdnDt/CJuKYL2R3
-p+rLW6REAsiZG8XGAus8YgNcO+nles7Fw1rFdEz6f2RaE7Fc9vijxdNxHYk5xeXN
-ZamJGoUVlDQEuiWwLpTkkauYwUsI52TwzUxhuH0mPx0GL5BpGKa6Xz9HxTvZ0DDU
-zWjmUP7DYhXy/GVmxy6a
-=p3dO
+iQEcBAEBAgAGBQJRFHIMAAoJELphsezQxofDmlwH/1vqc5a8UoyyqQJW9FcWisKt
++M/2xboWI5tXJ/XYEzp1hLenTEmUVRK0YpezgROCJPCTCi0RkRW00cHW8Jo7vDs1
+8xxId6vlCDAgtWvJX3oRlCIQ7ot/CrcDFvTtLDjtdgkzydv534GUMAPiZphF2Mrz
+TuU0LVCKx8P2GYnT0wid6bmgLhtHS9XYWTN+K/QRmwqJlhMMeK061CzhTwPESWyE
+9xgwH0v7W3HpAo5NAA227/Z5i0s89tNCYHbTrt6B75K0MRaKbsTszLk0E0H3qBg9
+rvJoaXOv2Z9IqvvZMpOR/Gg89vIE1LXtTZixR3BgJQazLKFPH1wByy7jMlzC3F0=
+=wEzk
 -----END PGP SIGNATURE-----
