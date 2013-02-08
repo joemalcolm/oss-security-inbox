@@ -1,22 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/14/7
-Message-ID: <CA+rthh9y56D09z6pkcFyBSQ49Zwj2y=Rv+JckcOw+L0SvSD3zw@mail.gmail.com>
-Date: Thu, 14 Feb 2013 19:39:23 +0100
-From: Mathias Krause <minipli@...glemail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/08/3
+Message-ID: <CALMiPQCzZ3GcZeXFzjOb8bqYQxYg9zKAwxknMAgnuFObpnjNjg@mail.gmail.com>
+Date: Thu, 7 Feb 2013 19:32:52 -0800
+From: James Tucker <raggi@...gle.com>
 To: oss-security@...ts.openwall.com
-Cc: Eric Dumazet <edumazet@...gle.com>, "David S. Miller" <davem@...emloft.net>,  Brad Spengler <spender@...ecurity.net>
-Subject: CVE Request: kernel -- local DOS (endless loop with interrupts disabled)
+Subject: CVE-2013-0262: Rack versions 1.4.0-1.5.1, Symlink path traversal.
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Eric Dumazet recently fixed a local DOS in commit 77c1090 "net: fix
-infinite loop in __skb_recv_datagram()"? An unprivileged local user
-can easily trigger this bug and lock-up the system.
+CVE: CVE-2013-0262
+Software: Rack (rack.github.com)
+Type of vulnerability: Information Disclosure
+Vulnerable code: https://github.com/rack/rack/blob/master/lib/rack/file.rb#L56
+Patch: https://github.com/rack/rack/commit/6f237e4c9fab649d3750482514f0fde76c56ab30
+Versions affected: All versions after 1.4.0
+Versions fixed: 1.4.5, 1.5.2
+Reporter: Ben Murphy
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (Darwin)
 
-A reproducer is attached.
-
-Thanks,
-Mathias
-
-View attachment "sock_lock.c" of type "text/x-csrc" (1030 bytes)
+iQEcBAEBAgAGBQJRFHFpAAoJELphsezQxofD0LUIAITA1X8+uJdAU0RkgFN0RXR5
+zIpdeLFDqzPNd7Sfvo4titYHbXGYSQ0tQg6dZv4p+HzVRohDTNgUWuNPcnS+UDv/
+sLrrrUOhVLyE+Ae2K0IhcJ4xZM0OPGOS07revtkGrKoFtOeWdrFT2zkjqxyFExIy
+PW4PBsmHJTiKhoi83rtccMJFjefmkVXe0mbvS/QbekdTfbio08DeuOtsoEaoi0xA
+gxPSam1kieyIkaKxFx8mQsqRhgaoIE3yMf6JuZvdX4k/hCSPSVBOmRKJqUN+cQRQ
+Hb0U6zPF4DP32PjWh263f1cavhHvv0v3iikub/ekdJqQHRoW/sBLyZS4NonuXKU=
+=g7UL
+-----END PGP SIGNATURE-----
