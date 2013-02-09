@@ -1,61 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/12
-Message-ID: <alpine.LFD.2.03.1301162315300.8305@redhat.com>
-Date: Wed, 16 Jan 2013 23:40:16 +0530 (IST)
-From: P J P <ppandit@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/09/1
+Message-ID: <CAH_aqbvKO3v1jKdk4idWTmDyAJKY5p3NYYSZvNN9wPyWMw3MJg@mail.gmail.com>
+Date: Sat, 9 Feb 2013 11:47:18 -0200
+From: Henrique Montenegro <typoon@...il.com>
 To: oss-security@...ts.openwall.com
-cc: kargig@...d.gr
-Subject: Re: Linux kernel handling of IPv6 temporary addresses
+Subject: Wordpress Pinboard theme XSS
 Content-Type: text/plain; charset=utf-8
 
+Hello!
 
-  Hello George,
+I am writing to notify you about a XSS I have found in the free Pinboard
+1.0.6 theme for Wordpress. This XSS happens in one of the administration
+pages so it can only be triggered by authenticated users.
 
-+-- On Wed, 16 Jan 2013, George Kargiotakis wrote --+
-| what distro/kernel version are you trying ? I'm using latest ubuntu 12.10 with 3.5.7.
-| The messages I'm mentioning certainly appear upon testing with ubuntu 12.10 live CD for example.
+Here is the part of the code that is compromised
+(includes/theme-options.php):
 
-  I'm using RHEL-6.3 with kernel-2.6.32.
+<?php $tab = ( isset( $_GET['tab'] ) ? $_GET['tab'] : 'general' ); ?>
+    <input name="pinboard_theme_options[submit-<?php echo $tab; ?>]"
+type="submit" class="button-primary" value="<?php _e( 'Save Settings',
+'pinboard' ); ?>" />
+    <input name="pinboard_theme_options[reset-<?php echo $tab; ?>]"
+type="submit" class="button-secondary" value="<?php _e( 'Reset Defaults',
+'pinboard' ); ?>" />
 
-| Your new patch works "better", but still the main problem hasn't been
-| eliminated. And I explain myself.
-| 
-| While flooding with RAs the following appears in the dmesg:
-| [  117.721878] IPv6: ipv6_create_tempaddr: ipv6 temporary address upper limit reached
-| 
-| which is what your patch is supposed to do. But acquired addresses
-| from flooding all seem to have the tentative flag on:
-|     inet6 fd00:966f:7996:c731:9191:a3ce:99bc:897e/64 scope global temporary tentative dynamic 
+The issue happens because the variable $_GET['tab'] is not being properly
+escaped, causing the issue.
 
-  Yes, I too observed similar output, not sure it's because of the patch 
-though. I guess problem is somewhere else, I'm looking.
+Here is a proof of concept:
 
+http://wordpress_site_with_active_pinboard_theme/wp-admin/themes.php?page=pinboard_options&tab=
+]"><script>alert(document.cookie)</script>
 
-| what I also find wrong here is that all temporary addresses (dynamic) 
-| acquired have gotten the same last 64bits. I don't think this is OK per RFC 
-| 4941 even if not explicitly defined there. Every temp. address created 
-| should be different per prefix from the rest.
-| 
-| use_tempaddr for the iface still has '2' as its value
-| # cat /proc/sys/net/ipv6/conf/eth0/use_tempaddr 
-| 2
-| 
-| then after taking the interface down and up again even the new addresses acquired still have the tentative flag enabled:
-| 
-| dmesg reports:
-| [  322.195426] IPv6: ipv6_create_tempaddr: regeneration time exceeded - disabled temporary address support
-| 
-| use_tempaddr for the iface now has '-1' as its value though
-| # cat /proc/sys/net/ipv6/conf/eth0/use_tempaddr 
-| -1
-| 
-| And so there actually isn't any IPv6 connectivity from then on until a reboot.
-| Flooding triggers something that corrupts ipv6 functionality.
+For accessing the URL directly, Firefox should be used as Chrome seems to
+have some anti-XSS protections in place.
 
-  I see, I'll try to look for these clues, will get back asap.
+Could a CVE please be assigned to this?
 
+Regards,
 
-Thanks so much.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+Henrique
+
