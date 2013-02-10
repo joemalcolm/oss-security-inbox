@@ -1,26 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/2
-Message-Id: <20130812065225.80735C04C8@smtp.hushmail.com>
-Date: Mon, 12 Aug 2013 08:52:25 +0200
-From: "Adéla Goldová" <roguecoder@...h.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - HMS Testimonials 2.0.10 WP plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/10/1
+Message-ID: <5116F47B.5050506@redhat.com>
+Date: Sat, 09 Feb 2013 18:14:35 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Raphael Geissert <geissert@...ian.org>
+Subject: CVE request: piwigo XSS in password.php
 Content-Type: text/plain; charset=utf-8
 
-I noticed how I managed to spell the name really wrong in the message text. I just wanted to fix it to avoid confusion.
-The name should be HMS Testimonials.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 8/10/2013 at 6:31 PM, "Adéla Goldová" <roguecoder@...h.com> wrote:
->
->Hello
->
->The HMS Tesminoalis version 2.0.10 plugin for WordPress contains 
->multiple CSRF and XSS vulnerabilities.
->This can be used in many different ways, like defacement of both 
->public site and the admin area (only the HMS 
->Testimonials plugin area will be affected), modify settings to set 
->a lower role as moderator (very harmful on sites 
->with open registrations), etc. Could CVE's be assigned to this?
->
->1: http://seclists.org/fulldisclosure/2013/Aug/96
+So Henri Salo pointed out that I never assigned a CVE for this:
 
+http://www.openwall.com/lists/oss-security/2012/10/06/2
+
+Which raises a good note: do not be afraid to bug me if some time goes
+by without an answer or at least a reply/question.
+
+> Hi,
+> 
+> A XSS vulnerability has been reported in piwigo's password.php
+> before 2.4.4: http://piwigo.org/bugs/view.php?id=0002750 
+> http://secunia.com/advisories/50510/
+> 
+> However, as stated in the Secunia advisory, the fix does not
+> entirely address the issue. For context, the
+> stripslashes/strip_tags'ed POST variable is included in the
+> template as following: <input type="text" id="username_or_email"
+> name="username_or_email" ... value="{$username_or_email}">
+> 
+> (some parts redacted for clarity)
+> 
+> So, two ids are needed. Thanks in advance.
+> 
+> Piwigo 2.3.1 also seems to be affected but 2.1.2 doesn't.
+> 
+> -- Raphael Geissert - Debian Developer www.debian.org -
+> get.debian.net
+
+Please use CVE-2012-6126 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRFvR7AAoJEBYNRVNeJnmTRWAQAKWh7eI79o0iOrfHh0lyBg5h
+aQTaKzguxScUSlHtoxdjtUoV5y8W2jTx7lT1t+ZT5M91LRMhkRtKlUrBu074w+uF
+cC7rvNzLhAfxf66v32JeBndrkQP3+qprUQVykaOlY//cyN4cLUKtt4YbJuQ6OCo+
+xjYlO8JsdJ6d6J9pJQU4lVjSxx6oNwwZPJAo85w/4l9aJ6PzraI0NHV27KJzPs0n
+pJ+bvO/ysdkiA7N7yrsINF3WPooSFdK2P6eI9Rup18KrGs5Fh7d93iZgjR8RRnb4
+JiKhulKugwSF+CvkRs5qmbaqF5ZHVoyFYU+lDAf2gqYqtrVfdJZ5NoIMa1zvtxP8
+6OtPvBQwJoa0+oe7R8M8EhSKjEXUfZimuNJI0xMbB2GsDZ3wzVr7CPsTuxnKJ1HY
+CyAmTGUqZcDZoaw9DdDqBvyL/hHrV+LmXH0bHXHgvcwVpbmF2QHXB60cu/paaA4/
+F7EdVN0fsWBSETQnRJyEQvLbLQ019QLmgopfhqrIBdmT/8zWx0+nUjG3PpcgfYTz
+kxaCcB491C1on8+2fBEBDTankdAhxRJu6OxOttz094FhP0TECOHmGd+Yio6z1YrF
+Oy6pzEXNjUMBQNyS/icQ5f46haa86i6bSTXg8yyXE9eRAUfQTVrWQIQtDz1Vhoxh
+NULD/c1cFjBNWFZ+iB0y
+=yOI7
+-----END PGP SIGNATURE-----
