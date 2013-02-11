@@ -1,60 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/25/2
-Message-ID: <1372194797.8189.33.camel@scapa>
-Date: Tue, 25 Jun 2013 23:13:17 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: Peter de Ridder <peter@...e.org>, oss-security@...ts.openwall.com
-Cc: LightDM Mailing List <lightdm@...ts.freedesktop.org>
-Subject: Re: [LightDM] light-locker 0.1.0 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/11/7
+Message-ID: <20130211182653.GC79156@higgins.local>
+Date: Mon, 11 Feb 2013 10:26:53 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
+Subject: Denial of Service and Unsafe Object Creation Vulnerability in JSON [CVE-2013-0269]
 Content-Type: text/plain; charset=utf-8
 
-I'm cross-posting this to oss-sec so people there have a chance to look
-at the audit request.
+Denial of Service and Unsafe Object Creation Vulnerability in JSON
 
-On mar., 2013-06-25 at 10:47 +0200, Peter de Ridder wrote:
-> light-locker 0.1.0 is now available for download from
-> 
->  http://rhaalovely.net/stuff/light-locker-0.1.0.tar.bz2
-> 
->  SHA1: 7c2639d4f6a113f97143d530a5696984be66238d
->  MD5:  52984b8c7066b63e1c5398859e36a255
-> 
-> What is light locker?
-> =====================
-> light-locker is a simple locker (forked from gnome-screensaver) that aims
-> to have simple, sane, secure defaults and be well integrated with the
-> desktop while not carrying any desktop-specific dependencies.
-> 
-> It relies on lightdm for locking and unlocking your session via
-> ConsoleKit/UPower or logind/systemd.
-> 
-> Release notes for 0.1.0
-> =======================
-> [Please note that this is a development release.]
-> 
-> light-locker source code is hosted on
-> http://github.com/the-cavalry/light-locker
-> Issues and pull request can be placed on github.  We don't take feature
-> requests for the 1.0.0 version.  These will be postponed to later versions.
-> 
->   Request for audit:
-> light-locker aims to bring security to locked sessions.  Important here is
-> that the locker should not crash as this would expose the locked session.
-> 
->   Request for translations:
-> Since the fork of gnome-screensaver many translation-strings were removed
-> but 2 new strings were added.  Translators can send changes with a
-> github pull request or mail the new .po file to simon@...e.org.
-> Please remove the fuzzy tags from the translations as strings marked as
-> fuzzy won't be translated in the application.
-> To preview the lock screen run `./src/preview` for the source tree.
->  However, this requires translations to be installed.
-> _______________________________________________
-> LightDM mailing list
-> LightDM@...ts.freedesktop.org
-> http://lists.freedesktop.org/mailman/listinfo/lightdm
+There is a denial of service and unsafe object creation vulnerability in the json gem. This vulnerability has been assigned the CVE identifier CVE-2013-0269.
+
+Versions Affected:  All. This includes JSON that ships with Ruby 1.9.X-pXXX.
+Not affected:       NONE
+Fixed Versions:     1.7.7, 1.6.8, 1.5.5
+
+Impact 
+------ 
+When parsing certain JSON documents, the JSON gem can be coerced in to creating Ruby symbols in a target system.  Since Ruby symbols are not garbage collected, this can result in a denial of service attack.
+
+The same technique can be used to create objects in a target system that act like internal objects.  These "act alike" objects can be used to bypass certain security mechanisms and can be used as a spring board for SQL injection attacks in Ruby on Rails.
+
+Impacted code looks like this:
+
+    JSON.parse(user_input)
+
+Where the `user_input` variable will have a JSON document like this:
+
+    {"json_class":"foo"}
+
+The JSON gem will attempt to look up the constant "foo".  Looking up this constant will create a symbol.
+
+In JSON version 1.7.x, objects with arbitrary attributes can be created using JSON documents like this:
+
+    {"json_class":"JSON::GenericObject","foo":"bar"}
+
+This document will result in an instance of JSON::GenericObject, with the attribute "foo" that has the value "bar".  Instantiating these objects will result in arbitrary symbol creation and in some cases can be used to bypass security measures.
+
+PLEASE NOTE: this behavior *does not change* when using `JSON.load`.  `JSON.load` should *never* be given input from unknown sources.  If you are processing JSON from an unknown source, *always* use `JSON.parse`.
+
+All users running an affected release should either upgrade or use one of the work arounds immediately. 
+
+Releases 
+-------- 
+The FIXED releases are available at the normal locations.
+
+Workarounds 
+----------- 
+For users that cannot upgrade, please use the attached patches.  If you cannot use the attached patches, change your code from this:
+
+    JSON.parse(json)
+
+To this:
+
+    JSON.parse(json, :create_additions => false)
+
+If you cannot change the usage of `JSON.parse` (for example you're using a gem which depends on `JSON.parse` like multi_json), then apply this monkey patch:
+
+    module JSON
+      class << self
+        alias :old_parse :parse
+        def parse(json, args = {})
+          args[:create_additions] = false
+          old_parse(json, args)
+        end
+      end
+    end
+
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the three supported release series.  They are in git-am format and consist of a single changeset. 
+
+* 1-7-VULN.patch - Patch for the 1.7 series
+* 1-6-VULN.patch - Patch for the 1.6 series
+* 1-5-VULN.patch - Patch for the 1.5 series
+
+Credits 
+------- 
+A huge thanks goes to the following people for responsibly disclosing this issue and working with the Rails team to get it fixed:
+
+* Thomas Hollstegge of Zweitag (www.zweitag.de)
+* Ben Murphy
 
 -- 
-Yves-Alexis
+Aaron Patterson
+http://tenderlovemaking.com/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+View attachment "1-5-denial-of-service.patch" of type "text/plain" (47714 bytes)
+
+View attachment "1-6-denial-of-service.patch" of type "text/plain" (27638 bytes)
+
+View attachment "1-7-denial-of-service.patch" of type "text/plain" (19644 bytes)
+
+Content of type "application/pgp-signature" skipped
