@@ -1,62 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/04/2
-Message-Id: <CBF1BD51-82D9-412F-97CA-9DF290A7092D@stufft.io>
-Date: Sat, 3 Aug 2013 20:41:55 -0400
-From: Donald Stufft <donald@...fft.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/11/1
+Message-ID: <51187856.3040205@redhat.com>
+Date: Sun, 10 Feb 2013 21:49:26 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Insecure Software Download in pip
+CC: Raphael Geissert <geissert@...ian.org>, Mitre CVE assign department <cve-assign@...re.org>
+Subject: Re: CVE request: piwigo XSS in password.php
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Jul 31, 2013, at 5:11 AM, Donald Stufft <donald@...fft.io> wrote:
+On 02/09/2013 06:14 PM, Kurt Seifried wrote:
+> So Henri Salo pointed out that I never assigned a CVE for this:
+> 
+> http://www.openwall.com/lists/oss-security/2012/10/06/2
+> 
+> Which raises a good note: do not be afraid to bug me if some time
+> goes by without an answer or at least a reply/question.
+> 
+>> Hi,
+> 
+>> A XSS vulnerability has been reported in piwigo's password.php 
+>> before 2.4.4: http://piwigo.org/bugs/view.php?id=0002750 
+>> http://secunia.com/advisories/50510/
+> 
+>> However, as stated in the Secunia advisory, the fix does not 
+>> entirely address the issue. For context, the 
+>> stripslashes/strip_tags'ed POST variable is included in the 
+>> template as following: <input type="text" id="username_or_email" 
+>> name="username_or_email" ... value="{$username_or_email}">
+> 
+>> (some parts redacted for clarity)
+> 
+>> So, two ids are needed. Thanks in advance.
+> 
+>> Piwigo 2.3.1 also seems to be affected but 2.1.2 doesn't.
+> 
+>> -- Raphael Geissert - Debian Developer www.debian.org - 
+>> get.debian.net
+> 
+> Please use CVE-2012-6126 for this issue.
 
-> 
-> On Jul 31, 2013, at 4:33 AM, Raphael Geissert <geissert@...ian.org> wrote:
-> 
->> On 31 July 2013 10:11, Kurt Seifried <kseifried@...hat.com> wrote:
->>> On 07/30/2013 12:44 PM, Donald Stufft wrote:
->>>> There was a CVE for pip not verifying TLS,
->>>> https://access.redhat.com/security/cve/CVE-2013-1629 However that
->>>> says it was RESERVED so I'm not sure how to make that unreserved?
->>>> I've not done much with requesting CVEs before.
->>> 
->>> Ok I have no info on that CVE, is it embargoed? I can't find it in
->>> google after a quick search. I need to see that one before I can
->>> assign anything.
->> 
->> From the bugzilla info: "source=debian", and looking at our tracker:
->> https://security-tracker.debian.org/tracker/CVE-2013-1629 points to:
->> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=710163
->> 
->> I don't know who assigned the id, however.
->> 
->> Cheers,
->> -- 
->> Raphael Geissert - Debian Developer
->> www.debian.org - get.debian.net
-> 
-> Ha, Awesome. This CVE is some sort of ghost ;)
-> 
-> Debian bug links to https://security-tracker.debian.org/tracker/CVE-2013-1629
-> 
-> Which links to.. This conversation in oss-sec, NVD which says it doesn't exist, The RedHat Bugzilla, Gentoo which says it doesn't exist, Ubuntu which says it does but doesn't give any more info other than linking to the page on Mitre that just says the reserved bit.
-> 
-> A google search turns up http://www.reddit.com/r/Python/comments/17rfh7/warning_dont_use_pip_in_an_untrusted_network_a/c8ay4xt but it's unclear if that person requested the CVE or not.
-> 
-> So uh how do we figure it out? Can I as a pip developer contact Mitre and release data for it?
-> 
-> -----------------
-> Donald Stufft
-> PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
-> 
+Someone (who wishes to remain anonymous, but they rock!) pointed out
+that this was already assigned:
 
+http://seclists.org/oss-sec/2012/q4/98
+
+Please REJECT CVE-2012-6126 and use CVE-2012-4525/CVE-2012-4526 as
+mentioned above instead. Thanks to my anonymous benefactor.
 
 
-Trying to close the loop on this, what's the next step forward?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+iQIcBAEBAgAGBQJRGHhVAAoJEBYNRVNeJnmT4wgQAJtQ+ew7WmUw0PWp0UkQ9Tpg
++tf85hIklvunyv88g7i9vh0NtPaP08J4CT8BWDhUMDOkMP72/+30i5gViayO/o3k
+FpgXZRnJupMUBe4/nz290xM/mjPomU8VTT7YJHT3Q9+y3rZ/D6SJj2JUs9jkfbD9
+ySU8v8l4bEH4NZegU1Xy4L55SaZ7vr9IBJ+V+1PNP/XdgGucIO0Lq6K00vad7QtV
+Nh8yUtyXcLv9M3v3UQeRnm912JDjxr50Mw/yNASAcqFYd9UzVUyvhAfcKA1VdFBy
+FPBO0ZotylLNyypShptmw3UgMQtrtDIDhdU4yv2nkjz08bipZEQJ5afl7PIUS2Mf
+U05HiNIcF5tXESCdEl2N/MW1QTaUs8UZ24snWMbHIfCfdDaAsbnU/xFg8pZrvxRw
+/Wg43w1TC9XzO0vSGYKEilh0BTbEpNhjatcqwQ1NYHdVs0CJjt9MX4tVh4P/PFKo
+VJIJB3dD0yItNJdzumYQRL2JGmHurRV8TlZ5GXf6nsSZkSd7l3EOdUz+CNSMr4t6
+nqxAysO1aP0LsxFyWg26aRvSfir6Q+TUTub0g1u/VySYwgZ4EoE+0IcCZ4SAUX7R
+8Af5sqTm38RY0F/4AldsQnbfVDx3HSmSa8MORisWBi5ZeH4yllczr6S5ZQ6/12Wa
+iX1Dq3juckHbhicDWiI2
+=3Bp6
+-----END PGP SIGNATURE-----
