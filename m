@@ -1,43 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/23/2
-Message-Id: <201301230238.r0N2cAtd005039@linus.mitre.org>
-Date: Tue, 22 Jan 2013 21:38:10 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/11/3
+Message-ID: <20130211111258.GB30292@kludge.henri.nerv.fi>
+Date: Mon, 11 Feb 2013 13:12:58 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request for Movable Type
+Subject: CVE request: Trac Ticket Modification Workflow Permission Restriction Bypass
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
->> Movable Type 4.38 has been released ...
+>From Secunia: A security issue has been reported in Trac, which can be exploited
+by malicious users to bypass certain security restrictions. The security issue
+is caused due to the application not properly checking workflow permissions
+before modifying a ticket, which can be exploited to change the status and
+resolution of tickets without having proper permissions.
 
->Please use CVE-2013-0209 for this issue.
+http://secunia.com/advisories/39123/
+http://osvdb.org/show/osvdb/63317
 
-We decided to keep CVE-2013-0209 instead of the other CVE that was
-reserved for this through MITRE a while ago. Also, we decided to cover
-this with one CVE entry even though the various issues discussed ("OS
-command injection and SQL injection" in the vendor advisory, and "perl
-code injection" in the researcher's advisory) can perhaps be
-interpreted in other ways.
+The security issue is reported in versions prior to 0.11.7.
+http://trac.edgewall.org/wiki/ChangeLog#a0.11.7
 
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2013-0209
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-6315
+Could you assign CVE-2010-XXXX, thank you. Please double verify this hasn't been
+assigned. I tried my best to avoid duplicates :)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJQ/0tEAAoJEGvefgSNfHMdTdEH/ReXfWbrwCYE97+W9y8uAHyW
-+EfPHRUmEfmIOfH61IakvsHp1RbBCkoLakZkI4fU0mXoIhuD1pNT5wpj/G+EIzs4
-pHDLm3qxI7iqe0r2gG747RDuAVwHxbxVqbwJqlarD9Dct6lTIrb5h5tXyL0j08ph
-SHYl3JoJeBzbImJmwMLdI37dRYPXNaLbB4tt7CbwX6xeLDJ3RzxmpYUuw6UKq9ZM
-dJbDNLFePUQsQDofrgv77ZRn6A+92TKMI9ecA7abcAs4OTgIQ24TxwA+gSi9n3rp
-f581/R4oR3Qz5rRnYlWtoMNynmFxIH5vFfWJAAkZ7v381Hr51a4YCIvTo1PiU0g=
-=ys3d
------END PGP SIGNATURE-----
+--
+Henri Salo
