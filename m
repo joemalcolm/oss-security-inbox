@@ -1,121 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/24/3
-Message-ID: <519F16ED.7080905@redhat.com>
-Date: Fri, 24 May 2013 01:29:49 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Thijs Kinkhorst <thijs@...ian.org>
-Subject: Re: CVE request: MediaWiki chunked uploads vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/11/5
+Message-ID: <20130211182328.GA79156@higgins.local>
+Date: Mon, 11 Feb 2013 10:23:28 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
+Subject: Circumvention of attr_protected [CVE-2013-0276]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Circumvention of attr_protected
 
-On 05/22/2013 03:30 AM, Thijs Kinkhorst wrote:
-> Hi,
-> 
-> Can a CVE name be assigned for the following MediaWiki issue
-> please?
+There is a vulnerability in the attr_protected method in ActiveRecord. This vulnerability has been assigned the CVE identifier CVE-2013-0276.
 
-Nope, see below. email me if you want to become the official mediawiki
-requester.
+Versions Affected:  All.
+Not affected:       Applications using attr_accessible
+Fixed Versions:     3.2.12, 3.1.11, 2.3.17
 
-> 
-> Thanks, Thijs
-> 
-> ----------  Doorgestuurd bericht  ----------
-> 
-> Onderwerp: [MediaWiki-announce] MediaWiki Security Release: 1.20.6
-> and 1.19.7 Datum: dinsdag 21 mei 2013, 22:14:52 Van: Chris Steipp
-> <csteipp@...imedia.org> Aan:
-> mediawiki-announce@...ts.wikimedia.org, "MediaWiki-l" <mediawiki- 
-> l@...ts.wikimedia.org>, Wikimedia developers
-> <wikitech-l@...ts.wikimedia.org>
-> 
-> I would like to announce the release of MediaWiki 1.20.6 and
-> 1.19.7. These releases fix a security related issue that could
-> affect users of MediaWiki. Download links are given at the end of
-> this email.
-> 
-> * MediaWiki user Marco discovered that security checks for file 
-> uploads were not being run when the file was uploaded in chunks 
-> through the API. This option has been available to users who can 
-> upload files since MediaWiki 1.19. 
-> <https://bugzilla.wikimedia.org/show_bug.cgi?id=48306>
-> 
-> Full release notes for 1.20.6: 
-> <https://www.mediawiki.org/wiki/Release_notes/1.20>
-> 
-> Full release notes for 1.19.7: 
-> <https://www.mediawiki.org/wiki/Release_notes/1.19>
-> 
-> For information about how to upgrade, see 
-> <https://www.mediawiki.org/wiki/Manual:Upgrading>
-> 
-> 
-> **********************************************************************
->
-> 
-1.20.6
-> **********************************************************************
->
-> 
-Download:
-> http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.6.tar.gz
->
->  Patch to previous version (1.20.5): 
-> http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.6.patch.gz
->
->  GPG signatures: 
-> http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.6.tar.gz.sig
->
-> 
-http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.6.patch.gz.sig
-> 
-> Public keys: https://secure.wikimedia.org/keys.html
-> 
-> 
-> **********************************************************************
->
-> 
-1.19.7
-> **********************************************************************
->
-> 
-Download:
-> http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.7.tar.gz
->
->  Patch to previous version (1.19.6): 
-> http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.7.patch.gz
->
->  GPG signatures: 
-> http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.7.tar.gz.sig
->
-> 
-http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.7.patch.gz.sig
-> 
-> Public keys: https://secure.wikimedia.org/keys.html
+Impact 
+------
+The attr_protected method allows developers to specify a blacklist of model attributes which users should not be allowed to assign to.  By using a specially crafted request, attackers could circumvent this protection and alter values that were meant to be protected.
 
-Please use CVE-2013-2114 for this issue.
+All users running an affected release should either upgrade or use one of the work arounds immediately.  Users should also consider switching from attr_protected to the whitelist method attr_accessible which is not vulnerable to this attack.
 
+Releases 
+-------- 
+The 3.2.12, 3.1.11, and 2.3.17 releases are available at the normal locations. 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Workarounds 
+----------- 
+The only feasible work around for this issue is to convert the application to use attr_accessible instead of attr_protected.
 
-iQIcBAEBAgAGBQJRnxbtAAoJEBYNRVNeJnmT4lUQANETyonIDnJ7oD/DuGWsWhUU
-K8VGbItSuTl0KI2rMCN3g5+EgM1K8ZZknpVI56ErWRqD4UPOm3EYwKjstMOVxjAw
-w2MzjHkd2G9SDTSls3xhe+Jp8RAe0BOeYyxZpaVyvusfoisznqrVFBVacqjj1AcP
-/2lS+vgRLxRWwBUkegBVbCBsJsWnefAKcugzh02GkgD98nnbNrfCESzZDQjP0LFE
-v65RpIv2a4Pkj9tosEIBc3Q5aMJgxqSBtFohLG+gk0ibGf2CA84fE6S0As+TEW9m
-QLUDq/zL09Bl7wbKQnOoWjIcvNRzXzQgzwXXg26VD8WJAXsHdnLC8wBggxVrqmfS
-dbGFJaFn5Hv5gYdct2GVcnzQd03pnNSbHkGyZYsYgkDZqJ8F22TNy5oSKp9B9f9N
-9iH+x8t860r7pvUJ6VDfz30Olx4LieXmNAvOz3pvR7gEPutWvAjOHa7Pqb6kwBAY
-hR3aMa3vw2eRoUJLZPPn9bXv2hitNhLS8e/ioD0fObRDHKxLO54Ct6aVjVB/buPo
-LowwCqKc2mYVeM1r8mulHoMvO3v+FbUr3BGCraFGETrScP53qedH0LH7O6mdOnhQ
-/TbsnCH+Dium8p7DBug68u2crgH8wsO7LxO664oApMyJKaU1JYoFFEgxKGZH8k3m
-YwVIiJ90AXVyQtKP65se
-=hF8t
------END PGP SIGNATURE-----
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
+
+* 3-2-attr_protected.patch - Patch for 3.2 series 
+* 3-1-attr_protected.patch - Patch for 3.1 series 
+* 3-0-attr_protected.patch - Patch for 3.0 series
+* 2-3-attr_protected.patch - Patch for 2.3 series
+
+Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+Credits 
+-------
+Thanks to joernchen of Phenoelit and Ryan Koppenhaver of Matasano Security for reporting the vulnerability to us and working closely with us on a fix.
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "2-3-attr_protected.patch" of type "text/plain" (2730 bytes)
+
+View attachment "3-0-attr_protected.patch" of type "text/plain" (1841 bytes)
+
+View attachment "3-1-attr_protected.patch" of type "text/plain" (1805 bytes)
+
+View attachment "3-2-attr_protected.patch" of type "text/plain" (1748 bytes)
+
+Content of type "application/pgp-signature" skipped
