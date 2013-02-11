@@ -1,25 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/8
-Message-ID: <CACDKJ9qrQ60e=TzrXDRBVDyUHmnfPmeC4dFZVxdcGOLZwXs-yw@mail.gmail.com>
-Date: Wed, 21 Aug 2013 17:49:25 +0200
-From: Alessandro Cresto Miseroglio <alex179ohm@...il.com>
-To: Stephen Röttger <stephen.roettger@...il.com>
-Cc: oss-security <oss-security@...ts.openwall.com>, gcc <gcc@....gnu.org>
-Subject: Re: PoC: Function Pointer Protection in C Programs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/11/8
+Message-ID: <20130211185017.GB80480@higgins.local>
+Date: Mon, 11 Feb 2013 10:50:17 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
+Subject: Patch update for [CVE-2013-0269]
 Content-Type: text/plain; charset=utf-8
 
-I'm terrible sorry, I've just seen the first couple of pages and I was
-wrong...thanks.
+Hi,
 
+I've attached an updated patch for the JSON gem.  This patch is for the
+1.7.x series.  The difference in this patch is changing the version
+number.
 
-On 21 August 2013 17:38, Stephen Röttger <stephen.roettger@...il.com> wrote:
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
 
-> The pdf is in english, just parts of the cover and the affirmation are
-> in german.
->
-> On 21.08.2013 17:28, Alessandro Cresto Miseroglio wrote:
-> > in English?
-> > (http://zero-entropy.de/fpp.pdf is in Deutsch)
-> >
->
+View attachment "0001-Security-fix-create_additons-JSON-GenericObject.patch" of type "text/plain" (35196 bytes)
 
+Content of type "application/pgp-signature" skipped
