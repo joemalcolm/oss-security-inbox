@@ -1,36 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/03/4
-Message-ID: <20131103163252.GL26456@ngolde.de>
-Date: Sun, 3 Nov 2013 17:32:52 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/11/9
+Message-ID: <87d2w6ljbd.fsf@mid.deneb.enyo.de>
+Date: Mon, 11 Feb 2013 20:52:22 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: some unstracked linux kernel security fixes
+Cc: Mike Miller <mtmiller@...e.org>
+Subject: CVE request: openconnect buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Fabian Yamaguchi and myself stumbled upon a few kernel issues.
+Kevin Cernekee discovered that a malicious VPN gateway can send a very
+long hostname/path (for redirects) or cookie list (in general), which
+OpenConnect will attempt to write on a fixed length buffer.
 
-Can someone assign CVE ids for these?
+Upstream commit:
 
-drivers/uio/uio.c: mapping of physical memory to user space without proper size check
-drivers/video/au1100fb.c: integer overflow in checking of range when mapping physical memory to user space
-drivers/video/au1200fb.c: integer overflow in checking of range when mapping physical memory to user space
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7314e613d5ff
+<http://git.infradead.org/users/dwmw2/openconnect.git/commitdiff/26f752c3dbf69227679fc6bebb4ae071aecec491>
 
-arch/um/kernel/exitcode.c: buffer overflow in write syscall handler
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=201f99f170df14ba52ea4c52847779042b7a623b
-
-drivers/staging/ozwpan/ozcdev.c: buffer overflow in write syscall handler
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c2c65cd2e14ada6de44cb527e7f1990bede24e15
-
-drivers/staging/wlags49_h2/wl_priv.c: buffer overflow when setting station name
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b5e2f339865fb443107e5b10603e53bbc92dc054
-
-drivers/staging/bcm/Bcmchar.c: kernel memory disclosure via uninitialized structure members
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=8d1e72250c847fa96498ec029891de4dc638a5ba
-
-drivers/staging/sb105x/sb_pci_mp.c: kernel memory disclosure via uninitialized structure members
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a8b33654b1e3b0c74d4a1fed041c9aae50b3c427
-
-Thanks
-Nico
+This needs a CVE name from 2012.
