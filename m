@@ -1,79 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/13
-Message-ID: <50F085C8.1040909@igalia.com>
-Date: Fri, 11 Jan 2013 22:36:08 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: WHK Yan <yan.uniko.102@...il.com>
-CC: Kurt Seifried <kseifried@...hat.com>, submit@...ecurity.com,  submissions@...ketstormsecurity.com, vuldb@...urityfocus.com,  1337 Exploit DataBase <mr.inj3ct0r@...il.com>, vuln@...unia.com, oss-security@...ts.openwall.com
-Subject: Re: Re: [Full-disclosure] File Disclosure in SimpleMachines Forum <= 2.0.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/11/4
+Message-ID: <1828157696.494253.1360590449549.JavaMail.root@redhat.com>
+Date: Mon, 11 Feb 2013 08:47:29 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Josselin Mouette <joss@...ian.org>
+Subject: Re: CVE request: Transmission can be made to crash remotely
 Content-Type: text/plain; charset=utf-8
 
-On 09/01/13 01:28, Kurt Seifried wrote:
-> I apologize but I am having a heck of a time parsing that last
-> sentence. If you want to send it in your native language I can
-> probably get it translated from another Red Hat employee.
->
+Hello Yves-Alexis,
 
-I'm Spanish native speaker. Let me translate this for you. This is a
-free translation. I split it on several paragraphs for better readability.
+  to follow up on this one. The source of the issue
+seems to be underlying libutp code:
+[1] https://trac.transmissionbt.com/ticket/5002#comment:22
 
-On 09/01/13 02:33, WHK Yan wrote:
-> disculpa, estaba utilizando google translator, hablo español. te explicaba
-> que en ocaciones hay administradores que necesitan ayuda para administrar
-> secciones de foros como en un smf, en mi caso soy parte de la comunidad de
-> elhacker.net donde hay un solo administrador y varios coadministradores,
-> ahora... el administrador no confia ni en su propia sombra y ha creado un
-> grupo especial de usuarios desde el panel de grupos de usuarios llamado
-> coadmin, este tipo de usuarios ha sido creado basado en los permisos de un
-> administrador con la exepcion de instalar paquetes y cualquier cosa que
-> pueda permitir tomar el control total del servidor y restringirlos
-> unicamente a tareas del foro en si.
+more specifically the way how libutp (previously) handled
+selective acknowledgements, which resulted in following two
+(libutp) patches:
+[2] https://github.com/bittorrent/libutp/issues/38
+[3] https://github.com/bittorrent/libutp/issues/37
 
-""" Excuse me, I was trying to use google translator. I speak spanish. I
-was explaining you that sometimes there are administrators that need
-help to administer forum sections of SMF. In my case I'm part of the
-elhacker.net community where there is only one administrator and several
-co-administrators. However, the administrator is very wary and he don't
-trusts anybody, so he has created an special group of users from the
-users panel group called coadmin. This coadmin users are created with
-the typical forum administrator rights, with the exception that they are
-not allowed to install packages or anything that could allow them to
-take control over the forum. """
+Transmission upstream corrected this issue in v2.74:
+[4] https://trac.transmissionbt.com/query?milestone=2.74&group=component&order=severity
 
-> con esta falla de seguridad un usuario
-> como este coadministrador podria acceder al archivo de configuraciones y
-> leer la base de datos pudiendo obtener el hash de sesion del admistrador
-> para luego subir una shell maliciosa como una c99.php.
+with the following patch:
+[5] https://trac.transmissionbt.com/changeset/13646
 
-""" With this security flaw, one of this untrusted "coadministrators"
-could access to the config file of the site and could obtain the
-database passwords, and then he could get the session hash of the
-administrator from the DB. Then he could upload an evil shell like
-c99.php """
+Ad assigning CVE ids - I think one CVE id is enough.
+The problem is in libutp code, and Transmission upstream
+seems to commit their own change only due to libutp
+(un)responsiveness:
+[6] https://trac.transmissionbt.com/ticket/5002#comment:32
 
-> este esenario se
-> repite en multiples foros donde yo visito tales como portalhacker.net y
-> el-hacker.com entre muchos otros. por eso pienso que es una falla de
-> seguridad importante ya que si smf esta diseñado para proteger directorios
-> y no lo hace correctamente permitiendo la lectura de archivos de forma
-> arbitraria es porque para nosotros no es un caso aislado o tan simple de
-> ver, es como el tipico esenario de "un xss es impacto alto o bajo?", todo
-> depende del esenario y en nuestros casos es algo critico. gracias por su
-> atencion señor Kurt.
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-""" Scenarios like this happen on many forums that I visit like
-portalhacker.net or el-hacker.com, among others. I think that this
-security flaw is important. SMF is designed to protect directory and
-file access, and if it don't works as expected and allows reading any
-file then the security implications are high.
+P.S.: All the links from above at one place are at:
+      [7] https://bugzilla.redhat.com/show_bug.cgi?id=909934
 
-I think this is like the typical question of "Is an XSS of high or low
-impact?". All depends of the scenario and use case, and in our personal
-use cases this is something critical. Thanks for your attention Mr. Kurt """
-
-
-Best regards!
--------------
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
+----- Original Message -----
+On dim., 2013-02-10 at 11:50 +0100, Josselin Mouette wrote:
+> Package: transmission-daemon
+> Version: 2.52-3
+> Severity: grave
+> Tags: security patch upstream
+> Justification: user security hole
+> 
+> The transmission-daemon package in wheezy crashes regularly. According 
+> to upstream this is a remote security hole (at least a remote DoS, but 
+> most probably there is a way to take control of the process).
+> 
+> https://trac.transmissionbt.com/ticket/5044
+> https://trac.transmissionbt.com/ticket/5002
+> 
+> Apparently there is no CVE assigned. The bug is fixed upstream and I’m 
+> attaching the patch. I’m currently testing a patched package, and will 
+> report whether the fix is sufficient.
+> 
+> Could a CVE be assigned for this?
+> 
+> Thanks in advance,
+> -- 
+> Yves-Alexis
