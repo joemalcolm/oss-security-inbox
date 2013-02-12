@@ -1,66 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/4
-Message-ID: <52669A31.8060009@openstack.org>
-Date: Tue, 22 Oct 2013 17:30:57 +0200
-From: Thierry Carrez <thierry@...nstack.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: [OSSA 2013-027] Glance image_download policy not enforced for cached images (CVE-2013-4428)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/12/3
+Message-Id: <201302121643.r1CGgva5006498@linus.mitre.org>
+Date: Tue, 12 Feb 2013 11:42:57 -0500 (EST)
+From: cve-assign@...re.org
+To: fw@...eb.enyo.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: e1000e/82574L hardware erratum
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-OpenStack Security Advisory: 2013-027
-CVE: CVE-2013-4428
-Date: October 22, 2013
-Title: Glance image_download policy not enforced for cached images
-Reporter: Stuart McLaren (HP)
-Products: Glance
-Affects: Grizzly, Folsom (and earlier versions)
+>It's been reported that some Intel 82574L network controllers can be
+>brought into a non-processing state by receiving certain Ethernet
+>frames:
+>
+><http://blog.krisk.org/2013/02/packets-of-death.html>
+>
+>The packet is not malformed at the lower layers and will travel over
+>the Internet.
 
-Description:
-Stuart McLaren from HP reported a vulnerability in Glance download_image
-policy enforcement in the case of cached images. Deployers may opt to
-set a download_image policy to restrict image download to specific
-roles. However, when an image is previously cached by an authorized
-download, any authenticated user could download image contents if it can
-determine the image UUID, bypassing any download_image policy
-restrictions. This could result in disclosure of image contents that
-were thought to be protected by the download_image policy setting. Only
-setups making use of the download_image policy are affected.
-
-The Havana release (2013.2) is not affected.
-
-Grizzly fix (included in 2013.1.4 recent release):
-https://review.openstack.org/#/c/50103/
-
-Folsom fix:
-https://review.openstack.org/#/c/50860/
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4428
-https://bugs.launchpad.net/glance/+bug/1235378
-
-Regards,
+Use CVE-2013-1634.
 
 - -- 
-Thierry Carrez
-OpenStack Vulnerability Management Team
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+Version: GnuPG v1.4.11 (SunOS)
 
-iQIcBAEBCAAGBQJSZpoxAAoJEFB6+JAlsQQjGIcP/jH6o0gGVUxYcZxlE6sOZtCj
-npshvXY1iEdgzegh+IT8CF3rJNSbC/01QOu0oLwmBLxrT/jF5nhgdlcB33ixuutV
-K9bK47nKHJPma4pOaLAXRlJKLoogGJ1BJ4IQGLsQNE5HngTp2atD75+TwSpbifTa
-5yR+Uc8+3zJzvwFkyPrxKRWk4lX2bu1QQkCZWkJCI63QI73N1rJOZ7j2oyX5xxra
-lJEizl5gJ5CiD/I3R2LSH1o0i8BmbnSKUsB4qVv2RDtoW2AW1HW0v85HfAi9K18n
-5Ze2znfl5rsa7aeS1ilSzg5hyYIQWEqccEfMAWxztyr3r99hCbtilFprpjvYM3h5
-9Q1FmL4sWUOozpbqQZ36Jijw9UADxZaNAwi4HyoiZeoe08lST8KsPwXZQuPoy2do
-IFpmKMo32un2NMCQbfyUQ4c3eQOLL1GVEKvbAuho1kX0EJ5BlfzMmS0+GzHrGm5c
-UlJZ+BAvYyPoNNBplk+FHxgBUl5MTIl5hKVPCA5Evrs+xRysr2tTgovRyS1X5O8W
-oNTBFmCI9aFu2cehAp629yR0oVVQBx2NE7UUJd8J9LuhW5YjHlpK9rhZTvyuTt+E
-MNvsnX7NHZJe62pTg3TQl6ZJJWp9hZmZrE0jGDxluxPCSh2lD4TS3+Ree6jnsSrD
-5s5N1mttexTCVndzfFPP
-=y9Fg
+iQEcBAEBAgAGBQJRGm//AAoJEGvefgSNfHMd5TEH/18N0E7vtVxa/yDlXY4rrSio
+PQsemVLwSdDGaDIB1fPczBHJub+qT7IN9Rz7gK2MFMe+t6m5aWSp+B1ZfU5q+vVd
+eHbRZ9ZlKLixoGlfWxwU9T7C42U7EWWgoPf/cxlqD5/U1TlOa6f+lL9G152s0ZWu
+wXoQl4uIn6yICRcs4Paws92oYfLhFoqlPc8W6OL5KKAtBDxExmPpaKmPkWNKaiom
+lS53JE4o5uUNDPNNtWjnS1QI1QzbOZXQPCIyrnRh7QXLxTB/b4RW7LEMYYRV/n1Y
+RCRdFzWOpBIsLliGUqaBjyW0hMzZkYxtY1hOemQjBzP87riGg/aKGDPOQy1B4oA=
+=XTPE
 -----END PGP SIGNATURE-----
