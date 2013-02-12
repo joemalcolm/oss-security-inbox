@@ -1,77 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/4
-Message-ID: <51076E3E.4050905@redhat.com>
-Date: Mon, 28 Jan 2013 23:37:50 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/12/2
+Message-ID: <1292954594.1043511.1360677178154.JavaMail.root@redhat.com>
+Date: Tue, 12 Feb 2013 08:52:58 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Naumann <security@...itz-naumann.com>
-Subject: Re: CVE Request: XSS in Elgg 1.8.12, 1.7.16 (core module "Twitter widget")
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, David Jorm <djorm@...hat.com>
+Subject: [Ignore not a security flaw] Re: CVE Request -- jakarta-commons-httpclient: Wildcard matching in SSL hostname verifier incorrect (a different issue than CVE-2012-5783)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello vendors,
 
-On 01/28/2013 05:15 PM, Moritz Naumann wrote:
-> Hi,
-> 
-> Elgg [1], versions 1.8.12 and 1.7.16 and earlier, bears a
-> persistent script injection vulnerability in its core module
-> "Twitter widget", which allows for XSS attacks.
-> 
-> On installations which have the Twitter widget activated (disabled
-> by default, but in use on many installations), any authenticated
-> user may add the Twitter widget to their activity / dashboard page.
-> Editing its configuration allows the user to set the
-> twitter_username parameter. The value stored in this parameter will
-> be echoed without sanitation [2] when the users' activity /
-> dashboard page is requested (by the same or any other user,
-> authenticated or not).
-> 
-> According to changes committed [3] to their Git repository Elgg 
-> developers will provide a fix for this issue in the upcoming (?)
-> 1.8.13 release.
-> 
-> Reported by: Moritz Naumann http://moritz-naumann.com
-> 
-> A CVE ID has, to my knowledge, not yet been assigned. Secunia has 
-> assigned it SA52007.
-> 
-> A slightly more complete advisory should hit FD and Bugtraq any
-> minute.
-> 
-> Thanks,
-> 
-> Moritz
-> 
-> [1] http://elgg.org/ [2] 
-> http://github.com/Elgg/Elgg/commit/a74a88501c41e89c8bcd7fc650ae2f8cc0a5003d#L2L21
->
-> 
-[3]
-> http://github.com/Elgg/Elgg/commit/19dc507c2fccb378be2a44a762edf6c1e7afa334#L0R11
+  taking back. Looks like we have previously
+investigated this issue with the following conclusion:
 
-Please
-> 
-use CVE-2013-0234  for this issue.
+> /* Should HTTPCLIENT-1255 one be also classified as (another) CVE id? */
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+It is my understanding that this bug will cause valid certificates to be rejected, but not for invalid certificates to be accepted. Therefore I do not think it qualifies for a CVE ID.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+=> not a security flaw. Ignore my previous request.
 
-iQIcBAEBAgAGBQJRB24+AAoJEBYNRVNeJnmTFlgP/2jFTtmzOwILfjUVaRwNN5Ik
-e8trVYZZsnw/V+JL40ewD/2RboWx1WoPwDvF0zVSjXNdFWX6pm4jdWZ5BbTI9gE7
-i+qXbJIu/GnxuuZdzZm3ApVlHvvKidmCM8hhFm4TEGaSHuuv44V87iPumoq5Wfwq
-qnjAKzwLNZK1w6SapvO0PjT7GHszgjvfcVQG9E2FQoAvWqYmu9ZEY7/YIooRrG9m
-S35Oqc8f5/H4YveqJcpQvfTEpoQRiHDzoU/48JBN28pfQlJ/wzWdV6cgjcFmRfQB
-Hej5PJyoM9ItAz1955X46t2J5mwFPBwtB5iiDj6Ta7790+sfyAt0JcW1MecfFc4n
-swIpJXxKnTpTK6+MyBTRGXr/NCC0DI3LjxkU8kVxdcBfaVkzYiA9funa+yySfq6r
-56CuwFTDQsvVNJYqACVkpN9sEBKw4dq+1Lb/EXA/2GzHuyKLN0oJtFevjv7Zt0hh
-fSEI67dABS02tbPmKUBTUvFKhC4HTRm/Tqtir04A34FgKtv6H3+GnkzDLTVzx6VV
-JEDKQoIPBboGuxwpsWUfJ8fJQlbxvS45RNbdv2ZUUMa/OI6j6WsOCeQb+QKoZCbo
-mlB0rbGxrnLuVd7hLSLEpvetsz+gJloEsgaogo02icEdga6j1ARYGEnXd0kVcgrT
-TMf84SPAaJh4HXPzWPj/
-=4nBC
------END PGP SIGNATURE-----
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+----- Original Message -----
+Hello Kurt, Steve, vendors,
+
+  Originally, Common Vulnerabilities and Exposures
+assigned an identifier CVE-2012-5783 to the following
+vulnerability:
+
+Apache Commons HttpClient 3.x, as used in Amazon Flexible
+Payments Service (FPS) merchant Java SDK and other products,
+does not verify that the server hostname matches a domain
+name in the subject's Common Name (CN) or subjectAltName field
+of the X.509 certificate, which allows man-in-the-middle
+attackers to spoof SSL servers via an arbitrary valid certificate.
+
+Later it was found, that the SSL hostname verifier implementation
+(CVE-2012-5783 fix) contained a bug in wildcard matching:
+[1] https://issues.apache.org/jira/browse/HTTPCLIENT-1255
+
+which still allowed certain type of certificates checks to pass,
+even if they shouldn't.
+
+Relevant upstream patches:
+[2] https://fisheye6.atlassian.com/changelog/httpcomponents?cs=1406213
+    (against 4.2.x branch)
+[3] https://fisheye6.atlassian.com/changelog/httpcomponents?cs=1406217
+    (against trunk)
+
+References:
+[4] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=700268
+[5] https://bugzilla.redhat.com/show_bug.cgi?id=910358
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
