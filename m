@@ -1,54 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/8
-Message-Id: <201312120520.rBC5KE6D026698@linus.mitre.org>
-Date: Thu, 12 Dec 2013 00:20:14 -0500 (EST)
-From: cve-assign@...re.org
-To: ratulg@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: monitorix: HTTP server 'handle_request()' session fixation & XSS vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/12/4
+Message-ID: <CAF6rxgmK7Bpqw4rDOi=+eG57b--o23o2_TSZRQEMW9daUQqJLQ@mail.gmail.com>
+Date: Tue, 12 Feb 2013 11:51:14 -0500
+From: Eitan Adler <lists@...anadler.com>
+To: oss-security@...ts.openwall.com
+Cc: fw@...eb.enyo.de, cve-assign@...re.org
+Subject: Re: Re: e1000e/82574L hardware erratum
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 12 February 2013 11:42,  <cve-assign@...re.org> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>>It's been reported that some Intel 82574L network controllers can be
+>>brought into a non-processing state by receiving certain Ethernet
+>>frames:
+>>
+>><http://blog.krisk.org/2013/02/packets-of-death.html>
+>>
+>>The packet is not malformed at the lower layers and will travel over
+>>the Internet.
+>
+> Use CVE-2013-1634.
 
-> https://github.com/mikaku/Monitorix/issues/30
-> allowable characters in the $target and $target_cgi variables
-> in lib/HTTPServer.pm
+It should be noted that this is motherboard specific.  In particular
+only motherboard manufacturers that ignored Intel guidelines are
+affected (acc' to intel).
 
-Use CVE-2013-7070.
-
-Note that, at the moment, we think there isn't sufficient evidence
-that "session fixation" in this context is an independent
-vulnerability, and thus there is no CVE ID for that.
+Their official statement is here:
+http://communities.intel.com/community/wired/blog/2013/02/07/intel-82574l-gigabit-ethernet-controller-statement
 
 
-> http://www.monitorix.org/news.html also says "3.4.0 version
-> released ... 02-Dec-2013 ... This version also fixes an important
-> number of bugs and two security issues ... not covered yet in the
-> previous 3.3.1 version."
-
-For the XSS issue for the PATH_INFO (aka the $url variable), fixed in
-3.4.0, use CVE-2013-7071.
-
-For the other issue (the unspecified issue of the "two security
-issues") fixed in 3.4.0, use CVE-2013-7072.
-
-For the out-of-context reference to go.cgi in GoScript, use
-CVE-2004-2776.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSqUcEAAoJEKllVAevmvmswZAH/1leJqwAxCnc5u7RKLAWRzHB
-88Gu/cWfoEdKPEidBENINQC/sctPkfXz6DEf7r6wtzbMfqtRANnB+GVra0dvDeTj
-tkukvV6+QibUDzcIpuqOdEVTorFSF0Vf3bQg2czjJ4vDkPKjgTWz5DCjeBn508Pq
-HE/veUJivmWj1xE+cux7muiuHZTpBO9t2IF6/18O2Fzhm0rlpfWWEZWF5UlpmZu0
-o1NG+n80+KSSVhYVNczzjPpDEIxelLfcgTvlZWUuKwnOWG9VA4jgu0bBNBDOAHwJ
-20o1APNWCWshOrgmvg8CRhneMvKAcQTjiKQDLCkjwFfwB3o/HHNBIusgqSEXG2w=
-=f/e4
------END PGP SIGNATURE-----
+-- 
+Eitan Adler
