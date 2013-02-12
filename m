@@ -1,50 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/15/1
-Message-ID: <20130715081827.GB30861@suse.de>
-Date: Mon, 15 Jul 2013 10:18:27 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/12/1
+Message-ID: <485076142.1024861.1360675388971.JavaMail.root@redhat.com>
+Date: Tue, 12 Feb 2013 08:23:08 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: mancha1@...h.com
-Subject: Re: CVE request: Cyrus-sasl NULL ptr. dereference
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, David Jorm <djorm@...hat.com>
+Subject: CVE Request --  jakarta-commons-httpclient: Wildcard matching in SSL hostname verifier incorrect (a different issue than CVE-2012-5783)
 Content-Type: text/plain; charset=utf-8
 
+Hello Kurt, Steve, vendors,
 
-Hi,
+  Originally, Common Vulnerabilities and Exposures
+assigned an identifier CVE-2012-5783 to the following
+vulnerability:
 
-Even if it won't be a DoS, it could potentially be an
-auth bypass. What if you can alloc so much memory in
-one of the threads that one alloc would return
-(and actually alloc space at) NULL which
-you could fill with your own pwd struct? I am not so deep
-in the glibc heap to know whether this could still work
-(also to mention mmap_min_addr).
+Apache Commons HttpClient 3.x, as used in Amazon Flexible
+Payments Service (FPS) merchant Java SDK and other products,
+does not verify that the server hostname matches a domain
+name in the subject's Common Name (CN) or subjectAltName field
+of the X.509 certificate, which allows man-in-the-middle
+attackers to spoof SSL servers via an arbitrary valid certificate.
 
-Sebastian
+Later it was found, that the SSL hostname verifier implementation
+(CVE-2012-5783 fix) contained a bug in wildcard matching:
+[1] https://issues.apache.org/jira/browse/HTTPCLIENT-1255
 
-On Fri, Jul 12, 2013 at 07:35:07PM +0400, Solar Designer wrote:
-> On Fri, Jul 12, 2013 at 03:27:18PM +0000, mancha wrote:
-> > Starting with glibc 2.17 (eglibc 2.17), crypt() fails with
-> > EINVAL (w/ NULL return) if the salt violates specifications.
-> > Additionally, on FIPS-140 enabled Linux systems, DES/MD5-encrypted
-> > passwords passed to crypt() fail with EPERM (w/ NULL return).
-> > 
-> > When authenticating against Cyrus-sasl via mechanisms that use
-> > glibc's crypt (e.g. getpwent or shadow auth. mechs), and this
-> > crypt() returns a NULL as glibc 2.17+ does on above-described
-> > input, the client crashes the authentication daemon resulting
-> > in a DoS.
-> 
-> Does this really crash the entire daemon process rather than just one of
-> its children (where a new one would be spawned for another request)?
-> 
-> I think this needs to be clarified, and the answer will affect whether
-> we have a security issue (CVE-worthy) or not.
-> 
-> Alexander
+which still allowed certain type of certificates checks to pass,
+even if they shouldn't.
 
--- 
+Relevant upstream patches:
+[2] https://fisheye6.atlassian.com/changelog/httpcomponents?cs=1406213
+    (against 4.2.x branch)
+[3] https://fisheye6.atlassian.com/changelog/httpcomponents?cs=1406217
+    (against trunk)
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+References:
+[4] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=700268
+[5] https://bugzilla.redhat.com/show_bug.cgi?id=910358
 
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
