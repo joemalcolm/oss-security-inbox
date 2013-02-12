@@ -1,50 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/15/4
-Message-ID: <5142B919.60308@redhat.com>
-Date: Fri, 15 Mar 2013 00:00:57 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/12/7
+Message-ID: <511AB410.9040504@redhat.com>
+Date: Tue, 12 Feb 2013 14:28:48 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, "Christey, Steven M." <coley@...re.org>, security@...cle.com
-Subject: CVE-2013-1861 for MySQL/MariaDB: geometry query crashes mysqld
+To: oss-security@...ts.openwall.com
+CC: Florian Weimer <fw@...eb.enyo.de>, Mike Miller <mtmiller@...e.org>
+Subject: Re: CVE request: openconnect buffer overflow
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-So I was hoping Oracle would assign a CVE for this publicly since it
-also affects MySQL but it's been a week and we haven't seen anything
-from them anywhere (public or private).
+On 02/11/2013 12:52 PM, Florian Weimer wrote:
+> Kevin Cernekee discovered that a malicious VPN gateway can send a
+> very long hostname/path (for redirects) or cookie list (in
+> general), which OpenConnect will attempt to write on a fixed length
+> buffer.
+> 
+> Upstream commit:
+> 
+> <http://git.infradead.org/users/dwmw2/openconnect.git/commitdiff/26f752c3dbf69227679fc6bebb4ae071aecec491>
+>
+>  This needs a CVE name from 2012.
 
-So for the MySQL/MariaDB geometry issues:
+Please use CVE-2012-6128 for this issue.
 
-https://mariadb.atlassian.net/browse/MDEV-4252
-http://bugs.mysql.com/bug.php?id=68591
-http://lists.askmonty.org/pipermail/commits/2013-March/004371.html
-https://bugzilla.redhat.com/show_bug.cgi?id=919247
-
-So we've assigned CVE-2013-1861 for this issue.
-
-I apologize in advance if Oracle has assigned a CVE for this issue,
-but they haven't communicated it to anyone, so in future this problem
-can easily be avoided by simply posting the assigned CVE to
-OSS-Security and everyone will know.
+It should be noted that this can be executed by a man in the middle
+attacker (which is exactly why you're using a VPN Usually =).
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRQrkYAAoJEBYNRVNeJnmTtIwP/A66nP+n7jtlMR8QZhKme1Pl
-Mnmw7bKy7byPWvoqwq6F61CCWmdtF0XEdjnhtafBZF45qTMgRitpy5rKfKoTbl5f
-m5NjahPQIOOn2IXJ1WaNsVMQjskJ/wXXJW4CW24Lc6M39Dmk8rYhHKa98G5rmdFh
-jh3T/agIkRBla2wzFDDBqXh96Clkhunm7GbiRzzwdIXLWSbnnq452EatRql5Y0hT
-eQA+/oz3iNlqlIFO5elylwJyna222Q2vehT2rZe+n60rFIP9CrSK4XFgQsR3RaQ5
-cV1r4mpX4v5V61f3RhhjPcYRZPM/Gjhcf+TdhNc2dZkbSPl8axjP5G9PGje35sAO
-5MbT6zRru2oAglew7agm1Bc2UQv9ZcI+1/HaOhIeFIX6iA3kK3n3pJ/mdJVRWOkM
-dVTuI6gajVTMOxEVZFAqOzUxhW7w/tqdWJl78IhFjcsRMLr8Kn2b1sHKXTDKiG/Y
-xLhoD13WCslqqsjW/KvrnKAqKLjCXe7kNOUJmq6J+ndBBmB6dFrGn8pRA2FhOnu+
-zZrYk6N3lpgf3fCQfBBsK9nXGV9JGvqjJRp2Ky487nDMYNky1hFYHHHjj4epV3ID
-9+lfOSh1lT17c+K+Yf/ulbj28IexUjid5x1W9M8FNN/LUtnNUE1/rWy4Q6gDW5S9
-K0g3b7TFx1oe42UrHCyt
-=Wtjr
+iQIcBAEBAgAGBQJRGrQQAAoJEBYNRVNeJnmTPGwQAINZYQzKx4N77zOpEqm7iHWI
+kJV82S4bRs44X8aavpZjndxlaPG21W2pxciS52cVMd6He5nL3dEi6ftXayIeSYWy
+deQ15soD0+/oGPOq76u0Mql4D+tCrS+/U75X0jwY9RsdcOso47Bm+zQnVgYuvxBh
+AdnyB3MFxk1VGilt+jdKoys3P1Vj9Wsgq0rJ9UN1+aVu7McVndc8Y19ZjTXMIYHi
+6z9buUz88mVCzTTDcgq3m/4/ikOeOIgRjpBV1/xpdffj/Vixws0K8a9lHO6McJ+5
+WYZtQ2V8NgEeq6D0zZtgqDpasee/sVQYAtDgmFerItVFdTqQcyc7CPtqN4TZUkcH
+SCRabgE8XQ9sw7Umop7lyG2H+fhM6LmYwdWSq4hqeOGrehceYDv6/e0BWd0+pp2d
+daNcV+beaFg5+b/ndbVF+KqFgcAUSAtz7zrP5uagoJdY+T1eYVl0fPb+wibgCfUE
+vxkRTt1/Y2sKGm/L83fSW87suflYWF0qbntcpu8BZBLyI/V2F3rTn8LRK30Ca9dO
+tWXJ9c8OyDRFwtHHdTzETVr6gsKvFTin5qzjgheWmKPLQm+k8uRiGvezWbEGQ9ct
+8sjIFZqcWk3bPUnBTPjQfJGYvquG4OIW0liGfolaA6YPUG8kAc0pmX/c0/LzURIH
+7wgL41jESIpDLC3zRouv
+=5wZF
 -----END PGP SIGNATURE-----
