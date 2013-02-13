@@ -1,45 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/23/3
-Message-ID: <alpine.LFD.2.03.1304231358430.15649@redhat.com>
-Date: Tue, 23 Apr 2013 14:23:16 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: cve-assign@...re.org, Petr Matousek <pmatouse@...hat.com>
-Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/13/9
+Message-ID: <511B6502.90400@redhat.com>
+Date: Wed, 13 Feb 2013 03:03:46 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henrique Montenegro <typoon@...il.com>
+Subject: Re: Wordpress Pinboard theme XSS
 Content-Type: text/plain; charset=utf-8
 
-  Hello Mathias,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-+-- On Mon, 22 Apr 2013, Mathias Krause wrote --+
-| No. It is capped in move_addr_to_user() to the actual size -- if set by the 
-| protocol -- or sizeof(struct sockaddr_storage) -- whichever is smaller.
+On 02/09/2013 06:47 AM, Henrique Montenegro wrote:
+> Hello!
+> 
+> I am writing to notify you about a XSS I have found in the free
+> Pinboard 1.0.6 theme for Wordpress. This XSS happens in one of the
+> administration pages so it can only be triggered by authenticated
+> users.
+> 
+> Here is the part of the code that is compromised 
+> (includes/theme-options.php):
+> 
+> <?php $tab = ( isset( $_GET['tab'] ) ? $_GET['tab'] : 'general' );
+> ?> <input name="pinboard_theme_options[submit-<?php echo $tab;
+> ?>]" type="submit" class="button-primary" value="<?php _e( 'Save
+> Settings', 'pinboard' ); ?>" /> <input
+> name="pinboard_theme_options[reset-<?php echo $tab; ?>]" 
+> type="submit" class="button-secondary" value="<?php _e( 'Reset
+> Defaults', 'pinboard' ); ?>" />
+> 
+> The issue happens because the variable $_GET['tab'] is not being
+> properly escaped, causing the issue.
+> 
+> Here is a proof of concept:
+> 
+> http://wordpress_site_with_active_pinboard_theme/wp-admin/themes.php?page=pinboard_options&tab=
+>
+> 
+]"><script>alert(document.cookie)</script>
+> 
+> For accessing the URL directly, Firefox should be used as Chrome
+> seems to have some anti-XSS protections in place.
+> 
+> Could a CVE please be assigned to this?
+> 
+> Regards,
+> 
+> Henrique
 
-  Yep, it seems to take the protocol value from ulen parameter, which is 
-pointing to users - msg->msg_namelen - field. And if ulen is greater than 
-kernel address length, it is set to klen. Either way, does not seem to leak 
-kernel memory, for it's capped at len = klen OR sizeof(addr).
+Can you please post the download links/have you notified upstream? THanks.
 
-===
-    int __user *uaddr_len;
-    uaddr_len = COMPAT_NAMELEN(msg);
-    ...
-    err = get_user(len, ulen);
-    ...
-    if (len > klen)
-        len = klen;
-===
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Leak seems to happen only when addr is not initialised: mode = VERIFY_WRITE.
- 
-| Yes, but see this discussion: http://thread.gmane.org/gmane.linux.kernel/1472604
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-  Aha...EXCELLENT!! I've been wanting to ask this very question that why 
-aren't variables initialised in the kernel. This explains it!
-
-It also explains whey `addr' is selectively initialised for VERIFY_READ and 
-not for VERIFY_WRITE. Interesting!
-
-Thanks so much! :)
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+iQIcBAEBAgAGBQJRG2UCAAoJEBYNRVNeJnmT9vUQAKwtiUFoa2uNAZM8b5zf/v9R
+TmTNbYnQpjcau8CUIhlYOBkJbSJBcOAT5YggpWw3jeHjC1HpcKrWwFx963gzx+Ai
+e+gu/Q5+gD6cIGktXKXHyPrGsXXJjOVwYNoVxyIQ7iuGD1PWEpbploWODyMN4YbN
+YhHovtljdwI4U/srtNf0zRvFqQTvppeB3xK3A8JTwjc/3W/0PjvKwGIB6C/dhYEi
+Jzf5P7MiDN9G69zZan3zDEMLhofu2O6aqMf9cTliAp+gHkTvYImkZRKGQ0kRZbfu
+UjLEG6vY85H+kwFiPRqnlLKmMLM0eNizZs8k2f35mZwu6+Vo/TxLX5a/Vg8q4fwc
+x9CuSBgR/y93bf+lXMcrcotoXnZ+Prk3MaLphrdkqoW5bb7yu1n9X/shllFLwn/c
+m1k54Ok7Ec3/332WDVW2YQyhhAg3snbHlltYaYz85pzvFiEh9Zw5OXcBGvhvwKml
+YrgpuRdW2Rw/eJQcK/fz0AQxspGQE/PA3lOgYj5If/+ELaKi1koyJYSIjWFmjSmC
+oyLn2tXJHL05CdkLlKyD3Z+7OseOolkrxX7CsucXMLEVgO1DSU77T4QA1DyU+/y9
+J6F4zrcYxhfZoGBz6wa9s907HxfBgS4t6Vs5+sNhxPJBgAHdSJi3PYCfP6Gw3TWK
+/W8bTp/sz/cPILgnsZS5
+=xtL+
+-----END PGP SIGNATURE-----
