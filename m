@@ -1,66 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/22/1
-Message-ID: <51ECECB4.4060200@redhat.com>
-Date: Mon, 22 Jul 2013 02:26:28 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/13/8
+Message-ID: <511B649D.2080704@redhat.com>
+Date: Wed, 13 Feb 2013 03:02:05 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: OpenJDK and lcms2 2.5 release fixes various denial of service issues in lcms2
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Michel Alexandre Salim <michel+fdr@...vestre.me>, Richard Jones <richard@...hanicalcat.net>, Ralf Schlatterbeck <rsc@...tux.com>
+Subject: Re: CVE Request -- roundup: Multiple XSS flaws plus other security related fixes corrected in upstream 1.4.20 version
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/18/2013 06:40 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> The lcms2 2.4 -> 2.5 version upgrade fixes various crashes that
-> could be used by attackers to crash (NULL ptr deref) programs using
-> lcms2, like e.g. OpenJDK 7
-> 
-> This was found in the embedded copy within OpenJDK7 first, then
-> merged to lcms2.
-> 
-> http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2013-July/023895.html
->
->  lcms2 related issues in there: * S8007925: Improve
-> cmsStageAllocLabV2ToV4curves * S8007926: Improve cmsPipelineDup *
-> S8007927: Improve cmsAllocProfileSequenceDescription * S8007929:
-> Improve CurvesAlloc * S8009654: Improve stability of cmsnamed
-> 
-> All covered by lcms2 in this commit (I think): 
-> https://github.com/mm2/Little-CMS/commit/91c2db7f2559be504211b283bc3a2c631d6f06d9
->
->  These probably can get just 1 CVE, although I do not know the
-> OpenJDK IcedTea side of the story.
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=826097#c9 has the
-> research into more of these stability commits in lcms2 by my
-> colleague Stanislav Brabec. Not sure if they should get seperate
-> CVEs or not.
-> 
-> Ciao, Marcus
+On 11/10/2012 04:42 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 
-Please use CVE-2013-4160 for this issue.
+Ok some questions/comments inline
+
+> Roundup upstream has released new upstream 1.4.20 version, 
+> correcting multiple cross-site scripting (XSS) flaws (and couple of
+> other security related issues): [1]
+> http://pypi.python.org/pypi/roundup [2]
+> https://bugzilla.redhat.com/show_bug.cgi?id=722672
+> 
+> More from [1] (plus relevant tickets inlined too, where possible to
+> find out): 
+> --------------------------------------------------------- [A] *
+> issue2550729: Fix password history display for anydbm backend, 
+> thanks to Ralf Hemmecke for reporting. (Ralf) [3]
+> http://issues.roundup-tracker.org/issue2550729
+
+rsc@...tux.com
+
+[A] Doesn't have security implications if roundup is correnctly
+configured. The bug would create a python backtrace. Unless the "debug"
+option in section [web] is set (which is explicitly discouraged) this
+will only display "an error has occurred" in the web-interface. Even if
+someone sets the debug option in a production release only the hashed
+password could be disclosed. Note that this bug only affects the anydbm
+backend which should not be used for a production version either.
+
+
+> [B] * issue2550684 Fix XSS vulnerability when username contains
+> HTML code, thanks to Thomas Arendsen Hein for reporting and patch.
+> (Ralf) [4] http://issues.roundup-tracker.org/issue2550684
+
+Please use CVE-2012-6130 for this issue
+
+> [C] * issue2550711 Fix XSS vulnerability in @action parameter, 
+> thanks to "om" for reporting. (Ralf) [5]
+> http://issues.roundup-tracker.org/issue2550711
+
+Please use CVE-2012-6131 for this issue
+
+> [D] * Fix wrong execute permissions on some files, thanks to Cheer
+> Xiao for the patch. (Ralf)
+
+rsc@...tux.com
+
+[D] No security implications: Fixed some permissions on files in
+roundup/cgi and locale directories. These are not accessible via the
+web-server. So this doesn't constitute a remote vulnerability. Local
+users don't gain anything executing these files as no privilege
+escalation is involved (they could copy the file which is readable
+anyway and make their local copy executable).
+
+> [E] * Fix another XSS with the "otk" parameter, thanks to Jesse
+> Ruderman for reporting. (Ralf)
+
+Please use CVE-2012-6132 for this issue
+
+> [F] * Mark cookies HttpOnly and -- if https is used -- secure.
+> Fixes issue2550689, but is untested if this really works in
+> browsers. Thanks to Joseph Myers for reporting. (Ralf) [6]
+> http://issues.roundup-tracker.org/issue2550689
+
+This appears to be security hardening, not a vulnerability, is that
+correct?
+
+> [G] * Fix another XSS with the ok- and error message, see
+> issue2550724. We solve this differently from the proposals in the
+> bug-report by not allowing any html-tags in ok/error messages 
+> anymore. Thanks to David Benjamin for the bug-report and to Ezio
+> Melotti for several proposed fixes. (Ralf) [7]
+> http://issues.roundup-tracker.org/issue2550724
+
+Please use CVE-2012-6133 for this issue
+
+> Cc-ed Ralf Schlatterbeck on this post too to clarify, if issues [A]
+> and [D] would also have security implications / IOW if those would
+> be security flaws too. Ralf please clarify. Thank you, Jan.
+> 
+> Could you allocate CVE ids for these (once clarified)?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR7Oy0AAoJEBYNRVNeJnmTI3UP/ilQRQCahbiqxisBhukMHQ2B
-aV7tM+nHl5gA91hugA8uPn3HJ6NSRG1J2KDRCn066ZsRxHwy8WAerTM7xzq2sMyB
-MPH5svDq+xcu4FlbdI+dz7/2DB0RBxsNZjQIr86GzdhucpTQeLch85rN8wrj/phu
-P1O7/UpmF5iaq+SJJLqsWlzZLp3C2RD6o/SoNwh2J2AXdro5owpkgrK26+QBL0Bs
-3vtpH9tWpe0qROLVV7Q18lco9G4XLbQufXLKRIDI+r76UfySOgR9qi4Pl6b6Jz76
-5jWbUinbPXCBHX4icDedK+qjqUkt79ydpTqDhJX5lGaZfoKmTitGUhItoqstfyxp
-Wx04wDYzIHHCsJSBNVTySmY/XJYKfGTK6mivSfsrDJbeAVbQ6qTFfDEaeUktWkA4
-ivSxh/7LzqwKv+BOdIAOJgKwixEa8m4zv0zi8pslb0W9lkHLZJPy0iQr7FTytgh9
-pXJ5hN3aFRiqKtrNIOD8dMaO+wP3SgM/QaIOAPLgHcK14tJxS23jdogPeKJFXAWi
-c2KxYG8U5P/kHxnwu/VTtUYUHIO9g3meVhizRaNGZIkCnjxjjH9Q4kpGObLTn3+M
-a9o13wPtU78ESyC3AaJmFSpcGJUIE2KmMiHqCdzfCZeKvNJPeaBY/ZJnOQubnH3b
-MuqH4HxRmnfYgYPaUMmO
-=8u9n
+iQIcBAEBAgAGBQJRG2ScAAoJEBYNRVNeJnmTJ8oQAMp2mTStjRiKohBQ05VMfxzp
+YHCB4CxfxXQ8Y1KOm76jGcXV/ti+dpLL8guc8UnwzRbdodBcYvzxzIN/y9zYlOby
+uPlqdal8i/MIswDHk4vMwt4qh5CKmwZhGHzS6E+qckfjeznwBJJAYOIXU6k4sgUQ
+ZZqbeYfv7J2KnDk3eFBq7iWv9gNy2pnsZcgZr/yoxUFWTFR8eVsLDX8fPDEsi/zR
+N14lH//p8Q2ejY+cKRR1gRn35L8UOsfC3+EYAt2vhW31Bcwt3HVbo6fojSAYkMqK
+YrTSnSAKWvyjZ7imjHlf7i3BNYh3jxUVRdnWyLYp/2Zr0w04wrIzjaxaiXn75T5u
+OUj8gNOUPBFvIgfVHP931WPiDQVCNGZ6AM9XkThQhMRoaBqalshb59ukKPZn2j7i
+oC72Dgw0iv+wW1N1KBUA/OPMvKIMlvJ/laRDRVpigzOPuRSOrcI0TislTF/YBCp/
+TrnQ7XAr2HQPmDUQKRXMzUMLiDdHQFq7nTOqtSZ3jxryE9uWQqG5DehnfHQ/qW1j
+b5cLXImV49Y5D2iRgWzsc6MAa9R5w4jryh3BD6WKGE40Zp2YhuZj3b5yXcoNV+9Z
+ZOobITtM+gi4vbKTkFkIj8rK8ebWGCyg645XCthi+D4eSNOpq4eqqKKDl3MPgl3q
+UN3HD3nphRFZ1iEjxzVb
+=dlUe
 -----END PGP SIGNATURE-----
