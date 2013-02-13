@@ -1,98 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/11
-Message-ID: <20130122154746.GD2637@redhat.com>
-Date: Tue, 22 Jan 2013 08:47:46 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: Sebastian Krahmer <krahmer@...e.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request coreutils
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/13/1
+Message-ID: <511AD9CF.9030908@redhat.com>
+Date: Tue, 12 Feb 2013 17:09:51 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, Josselin Mouette <joss@...ian.org>
+Subject: Re: CVE request: Transmission can be made to crash remotely
 Content-Type: text/plain; charset=utf-8
 
-* [2013-01-22 08:25:23 +0100] Sebastian Krahmer wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->Generally, I see your point. However sometimes services running as
->root 'sort' or 'uniq' user input e.g. via grepping logfiles etc,
->so there is indeed a real chance to indirectly trigger a privilege
->escalation. The past shows that segfaults can be turned into a
->code exec often. Its a stack overflow after all.
-
-Do you believe this would be the case with modern GCC/Glibc hardening
-though?  Wouldn't this just be rendered a crash?
-
-But even then, if we're talking about logfiles (which is a reasonable
-case) you'd have to be allowing user-controlled input to your logs,
-which would mean you'd have another problem.
-
-I'm also assuming, based on the comments in the first bug, that you need
-a really large line (not just an entire file, but one line).  How likely
-is it that you would be grepping a log file with ~10MB of data on one
-line?
-
-Perhaps root grepping/sorting/etc. a logfile is a valid use-case and
-some user-supplied input could be stored in there (perhaps a crafted
-apache url, etc. or maybe a local user running logger to inject a custom
-log entry), but do these programs even allow for a ~10MB in length URL
-or data?
-
-(I've not looked, maybe they do?)
-
->On Mon, Jan 21, 2013 at 06:33:07PM -0700, Kurt Seifried wrote:
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA1
->>
->> On 01/21/2013 01:39 PM, Vincent Danen wrote:
->> > * [2013-01-21 19:17:49 +0100] Moritz Muehlenhoff wrote:
->> >
->> >>> Can someone assign a CVE id for a buffer overflow in
->> >>> coreutils? Its the same code snippet (coreutils-i18n.patch) and
->> >>> it affects sort, uniq and join:
->> >>>
->> >>> https://bugzilla.novell.com/show_bug.cgi?id=798538
->> >>> https://bugzilla.novell.com/show_bug.cgi?id=796243
->> >>> https://bugzilla.novell.com/show_bug.cgi?id=798541
->> >>
->> >> Could you send the faulty patch to the list so that distros can
->> >> validate that they don't include it themselves?
->> >
->> > Red Hat/Fedora do include this patch, so it's more than just SUSE
->> > that ships them.  However, when I was looking at them last week,
->> > this struck me as just a non-exploitable crash and unless I'm
->> > missing something, I think it would be quite the stretch to call it
->> > a security flaw.
->>
->> Agreed, there is no significant impact of exploitation and there is no
->> real easy way to trick a victim into doing this (and even if you do,
->> so what? now if it was code exec we might be talking about something
->> interesting).
->>
->> - --
->> Kurt Seifried Red Hat Security Response Team (SRT)
->> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->>
->> -----BEGIN PGP SIGNATURE-----
->> Version: GnuPG v1.4.12 (GNU/Linux)
->>
->> iQIcBAEBAgAGBQJQ/exTAAoJEBYNRVNeJnmTrW0P/3B/L/SE7akzCPUU6TW9wy1L
->> Rpb8IIITLCz1qkb/gkUayUFJHQDjpEfmxNPJQWm1fJBrWI0bFr0wvHRuGHgyXZEA
->> Bl+js2w0uu7kAEEf1bHjZjf7zVHZ2tvoAdzi8ypLASZisxXwSa4acy++sqmPTrSf
->> oNOu3ChqG919VSLfD8Zf5AsGFs6G3tRzNEmYtvllt9liUFKgL6WsCNWNWUZdpWm2
->> crZPdyf343VvQcG5p7vYPEJLUBmnUSIauakssYPxGSp1vNBDNCC8xuVnyf1KOLfc
->> r3BHDPRX5ooe8EcoK/zgo1owK7tP9d7FT94gIsJte3OUOP5dq6LR/R0ZMMUsneNA
->> EjJScDCkh0hcZYCdJkqtah5aoAYI6IQvXJVtbwDM+rAvHfoMV2nkbWVZL0SgCMW/
->> B/hvhQJejFN3dd0wfiO5sQf5o2UxxYyIIpTE+GQP/pe8Q7F1BzR5nV87Jd3sWQY8
->> J873KRADBgt4RwbVUpI7dUL67UeRZCN4FiNtYYEuD5BeJWMSVoVXRHP7zBkx8GhG
->> vgfUc02+IyxS0HTO5HIxSJnLYOSa++SxJ4/w85aqcWPLrLHhL4s1k4GELPg/JhdW
->> Um35zAkcLNnxsxySCMIWZKEUTZ3xdpBspc3QVkw/IoyZpk+QhQTM2S/C3yWv4Q0z
->> xwHEEqesvl8l7UlpQ2mC
->> =rw4/
->> -----END PGP SIGNATURE-----
+On 02/11/2013 06:47 AM, Jan Lieskovsky wrote:
+> Hello Yves-Alexis,
+> 
+> to follow up on this one. The source of the issue seems to be
+> underlying libutp code: [1]
+> https://trac.transmissionbt.com/ticket/5002#comment:22
+> 
+> more specifically the way how libutp (previously) handled selective
+> acknowledgements, which resulted in following two (libutp)
+> patches: [2] https://github.com/bittorrent/libutp/issues/38 [3]
+> https://github.com/bittorrent/libutp/issues/37
+> 
+> Transmission upstream corrected this issue in v2.74: [4]
+> https://trac.transmissionbt.com/query?milestone=2.74&group=component&order=severity
 >
->-- 
->
->~ perl self.pl
->~ $_='print"\$_=\47$_\47;eval"';eval
->~ krahmer@...e.de - SuSE Security Team
->
+>  with the following patch: [5]
+> https://trac.transmissionbt.com/changeset/13646
+> 
+> Ad assigning CVE ids - I think one CVE id is enough. The problem is
+> in libutp code, and Transmission upstream seems to commit their own
+> change only due to libutp (un)responsiveness: [6]
+> https://trac.transmissionbt.com/ticket/5002#comment:32
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+> P.S.: All the links from above at one place are at: [7]
+> https://bugzilla.redhat.com/show_bug.cgi?id=909934
+> 
+> ----- Original Message ----- On dim., 2013-02-10 at 11:50 +0100,
+> Josselin Mouette wrote:
+>> Package: transmission-daemon Version: 2.52-3 Severity: grave 
+>> Tags: security patch upstream Justification: user security hole
+>> 
+>> The transmission-daemon package in wheezy crashes regularly.
+>> According to upstream this is a remote security hole (at least a
+>> remote DoS, but most probably there is a way to take control of
+>> the process).
+>> 
+>> https://trac.transmissionbt.com/ticket/5044 
+>> https://trac.transmissionbt.com/ticket/5002
+>> 
+>> Apparently there is no CVE assigned. The bug is fixed upstream
+>> and I’m attaching the patch. I’m currently testing a patched
+>> package, and will report whether the fix is sufficient.
+>> 
+>> Could a CVE be assigned for this?
+>> 
+>> Thanks in advance, -- Yves-Alexis
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Please use CVE-2012-6129  for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRGtnOAAoJEBYNRVNeJnmTt20P/39GwILNRCBJUhOR/CYtypJB
+5ORIowSXw4tJ0/MqlgTac3wcFfeM9X1GGxsYvfDBc1xVsXdchPBUsccZh5NnzVXQ
+bzuQCJFfRg3K4IEcxdyC4jYPxuKCGyk/KN0AZSjer122kXcskMnd2VGPOrgwgq9n
+F22j+2rXk9D5YoXAKpQituzJV0+hy9D209rVRyQ/CIEmq7FxNyPsN48x+liBfmwu
+XqXmIKPR0XtgK72obIBTiUmQO2C+maptpRBlkqUKHSL+mE+D0mLdAb+BzzU65/Iq
+s3ktGniPYuW9lm1QvDSfmWACevT48RHoLEYrOEzxAO47v3NGr0jKOdXwNNK1GvPV
+r9MDaPnVee27jpHORhDMPLBnRSWWwGJP51sSZCJtne3RFjeORfiwulk2umkL+27i
+L6023aEgur6UwmTtkrpAqLGz7RT8l0r/h1dVB3q4CeaEyAlJyrHggy/Mey1bpqVC
+Tz4J6IHxU/SbHPFcBLFG9xpqmfhUDG4jdUP/dSRMeF5LsizLORkKtyhrl+SMLClW
+dVcWCJrj1QQOmXrxdpI6W0U6rCnOsJ/UAE1hbxFyFvOeDv7JaF4xmnsuF7OGHTj9
+SVegAoQO+fWllQHHRvhtl/I1Ga7MG5qJOI6V0oumyGp4mO+I2j2y3kPAFcblGSfp
+wk/1pgPxBMi92k7KPx0+
+=ZqrS
+-----END PGP SIGNATURE-----
