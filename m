@@ -1,38 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/07/6
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF0699D30F@IMCMBX01.MITRE.ORG>
-Date: Thu, 7 Mar 2013 18:09:52 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/13/5
+Message-ID: <511AEA71.8040008@redhat.com>
+Date: Wed, 13 Feb 2013 11:20:49 +1000
+From: David Jorm <djorm@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request --  jakarta-commons-httpclient: Wildcard matching in SSL hostname verifier incorrect (a different issue than CVE-2012-5783)
 Content-Type: text/plain; charset=utf-8
 
-This is a major challenge for CVE, but to do bug-based assignments will make CVE too dependent on the amount of vulnerability details that are available at the time of a CVE request - and those details vary widely.  While it is a problem for the distros, I have generally had the perspective that it is ultimately their responsibility to track which portions of a CVE are fixed, and when.
+On 02/13/2013 10:29 AM, Kurt Seifried wrote:
+>> Please use CVE-2012-6127 for this issue.
+> Ok I should have looked into this deeper, it looks like it may not be
+> a security issue but I'm not 100% certain, so for now I will leave
+> this, and if someone can show there is no security impact I'll reject
+> it. Sorry for the mixup.
 
-Note - the more fundamental problem here is that CVE is being used much earlier in the disclosure process than it used to be, and it's basically being used as a universal bug ID.  I strongly encourage the Linux community to consider adopting their own ID scheme.
+This bug will cause valid certificates to be rejected, but not for invalid certificates to be accepted. Please reject the CVE.
 
-I made comments similar to this a couple years ago, but I can't easily find the reference right now.
+Thanks
+David
 
-- Steve
 
 
------Original Message-----
-From: Solar Designer [mailto:solar@...nwall.com] 
-Sent: Thursday, March 07, 2013 4:19 AM
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
-
-Kurt -
-
-On Thu, Mar 07, 2013 at 02:13:37AM -0700, Kurt Seifried wrote:
-> Bundling the following into a single CVE:
-[...]
-> Please use CVE-2012-6138 for these issues.
-
-I think this is wrong.  I would understand if those issues were all in
-the same subsystem at least (or if you assigned per-subsystem CVE IDs
-for these), but this is not the case.  Many distros will fix some, but
-not the others, or not all at the same time.  There's room for a little
-bit of bundling here, but not that much.
-
-Alexander
