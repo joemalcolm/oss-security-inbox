@@ -1,68 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/1
-Message-ID: <519C6EF4.9020502@redhat.com>
-Date: Wed, 22 May 2013 01:08:36 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Tomas Hoger <thoger@...hat.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Ian Weller <ianweller@...oraproject.org>
-Subject: Re: CVE Request (minor) -- Python 3.2: DoS when matching certificate with many '*' wildcard characters {was: CVE Request (minor) --  python-backports-ssl_match_hostname: Denial of service when matching certificate with many '*' wildcard characters }
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/13/10
+Message-Id: <E1U5fXd-0004ML-2n@xenbits.xen.org>
+Date: Wed, 13 Feb 2013 16:50:41 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 42 (CVE-2013-0228) - Linux kernel hits general protection if %ds is corrupt for 32-bit PVOPS.
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/20/2013 01:21 PM, Tomas Hoger wrote:
-> On Wed, 15 May 2013 19:51:38 -0600 Kurt Seifried wrote:
-> 
->> On 05/15/2013 05:28 AM, Jan Lieskovsky wrote:
-> 
->>> Replying to myself here. Issue is present in Python 3.2 code
->>> too - so the CVE should be allocated for the original (Python
->>> 3.2) code, rather than to python-backports-ssl_match_hostname
->>> package.
-> 
-> ...
-> 
->> Please use CVE-2013-2099 for this issue.
-> 
-> There should be no need for two separate CVEs for this issue. 
-> Problematic match_hostname was developed in Python 3.  As its 
-> functionality is needed by Python 2 users, and it is not provided
-> by the standard library, Python 3 implementation was made available
-> via different module.  It's the same code, packaged in python (3.x)
-> and python-backports-ssl_match_hostname packages.  The same CVE
-> should apply to both.
-> 
-> Given that CVE-2013-2099 was assigned to Python 3 ssl,
-> CVE-2013-2098 seems like the one to reject as dupe.
+	     Xen Security Advisory CVE-2013-0228 / XSA-42
+                            version 2
+
+ Linux kernel hits general protection if %ds is corrupt for 32-bit PVOPS.
 
 
-My reasoning here was that Python 2 and 3 constitute "forked" or
-separate code bases, so fall under CVE SPLIT.evidence includes:
+UPDATES IN VERSION 2
+====================
 
-1) Python 2to3, a lot of Python code needs work to move from 2 to 3
-2) This feature was added as standard in Python 3 and then later back
-ported to 2
+Public release.
 
-Steve, can we get a referees decision here? Thanks.
+ISSUE DESCRIPTION
+=================
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Linux kernel when returning from an iret assumes that %ds segment is safe
+and uses it to reference various per-cpu related fields. Unfortunately
+the user can modify the LDT and provide a NULL one. Whenever an iret is called
+we end up in xen_iret and try to use the %ds segment and cause an
+general protection fault.
+
+IMPACT
+======
+
+Malicious or buggy unprivileged user space can cause the guest kernel to
+crash, or permit a privilege escalation within the guest, or operate
+erroneously.
+
+VULNERABLE SYSTEMS
+==================
+
+All 32bit PVOPS versions of Linux are affected, since the introduction
+of Xen PVOPS support in 2.6.23.  Classic-Xen kernels are not vulnerable.
+
+MITIGATION
+==========
+
+This can be mitigated by not running 32bit PVOPS Linux guests.
+
+32bit classic-Xen guests, all 64bit PV guests and all HVM guests are
+unaffected.
+
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+
+$ sha256sum xsa42*.patch
+a931fdc161653fb1a3a6d8c1cf6d2c9954c5aec134b610be6e9699552a659eb8  xsa42-pvops-0001-x86-xen-don-t-assume-ds-is-usable-in-xen_iret-for-32.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRnG70AAoJEBYNRVNeJnmTpEYP/jfly9dWKELpKrVdjXr7pKaU
-KxwJSr2PlNA0p0vN91ESKZYsCBcGV/jnPU8YqhyW6WiFbTcpM7s8Kv7QGN+urQkB
-NK0R7QNcZHb0e7/5NGkMyVFHZMivICsyOpjn8RgX39CC+OypjLCVln5cBctKvBvF
-uYjf1GNOVW3EImTxGDa6xe04pqXRW1+g9E4jwaeDLNQSaB60j4QU2XmoSwsxvcor
-LH2OAU3ZTaGztxLzQHfptaqV8XzeWvR8lRKduFcI8Yo6Y0peicBkTirzitLC+vDi
-ZD6WX+ru7pyxNlMwfIss7H+xXQon/zCZO8Q8DTRGRTweLSMGyzVh7I2h6Xx2PfMo
-2JFTJP6mEokPa9OEHZdEwkfwQGFGG2vKemrKgu7Ya+sDoNmSpNmU3jQAefUClW0b
-1FGVGB2Q2gg4v2ZXyYGWSoYVBb9+Bg/d4eaJjNr2OxJh7Xlgc26f1aa9pbka6Xg/
-M5sgMQwMD8ZMSuX2SY0RbiAcswQDbb5MWzcJZaeTsSqRZ5aEh+4y0VdMHAoXyiSm
-+P6NcKQHYgOP/lnR7CRYjy6PgGVGW00RK0bufpR3bVbKLRAwbomVpyicJkreQag5
-dO2RTGTdUnYdyFkvXUGGjrYrDi28yNt9ELn5N0fv3ChwK+dYJBMnxcQF2tIgyI9g
-UdInSDJvngF8rE2QhQ0+
-=tg8P
+iQEcBAEBAgAGBQJRG8PxAAoJEIP+FMlX6CvZC3gH/0v/9nr3jXbsMHZlkBRtCx9n
+np1ed8btQGpmmk/WqbyLj/KcTNlXLIa1zwhTSPUgXlVIoDPuzstfGXm96gBNfYhS
+hl56QYTruhHPAvvrAwE8SNIlMUH+n7Wq1BThkXFU1yBnjXxzTi4SdmUwy4gAA/SE
+Xp35RAcIV6IwLRMMY12aat7XKnVx4S5n+gCC5eu0WZ+n73Ecrlqmsq+2X2ZHo3wP
+nu9UN+PChmBJHfcA8OhelY/X4X4DV1HNPuFkj9ypyPrvXIrl6M0D5TfGoyRNXMHq
+izAn51ro8gTGND6xY+s3auelquKiJkyl/5AXnfd0y9bSewGJS6oxoRzFdctJqxM=
+=mgHb
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa42-pvops-0001-x86-xen-don-t-assume-ds-is-usable-in-xen_iret-for-32.patch" of type "application/octet-stream" (4959 bytes)
