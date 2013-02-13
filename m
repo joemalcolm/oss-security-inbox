@@ -1,60 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/9
-Message-ID: <CAH5b-BVLE1DiHVuWTU2qgU5mrsFFP19YOdziE2EcrsMEzpnjyg@mail.gmail.com>
-Date: Fri, 26 Apr 2013 08:58:48 +0200
-From: yersinia <yersinia.spiros@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/13/2
+Message-ID: <511ADAC1.3090102@redhat.com>
+Date: Tue, 12 Feb 2013 17:13:53 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE request: Trac Ticket Modification Workflow Permission Restriction Bypass
 Content-Type: text/plain; charset=utf-8
 
-Rpm5 had all, and more, these features from many years. But noone
-care, and these days is not so important anymore.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Best and sorry for the top posting
+On 02/11/2013 04:12 AM, Henri Salo wrote:
+> Hello,
+> 
+> From Secunia: A security issue has been reported in Trac, which can
+> be exploited by malicious users to bypass certain security
+> restrictions. The security issue is caused due to the application
+> not properly checking workflow permissions before modifying a
+> ticket, which can be exploited to change the status and resolution
+> of tickets without having proper permissions.
+> 
+> http://secunia.com/advisories/39123/ 
+> http://osvdb.org/show/osvdb/63317
+> 
+> The security issue is reported in versions prior to 0.11.7. 
+> http://trac.edgewall.org/wiki/ChangeLog#a0.11.7
+> 
+> Could you assign CVE-2010-XXXX, thank you. Please double verify
+> this hasn't been assigned. I tried my best to avoid duplicates :)
+> 
+> -- Henri Salo
 
-2013/4/25, nicolas vigier <boklm@...s-attacks.org>:
-> On Wed, 24 Apr 2013, Eric H. Christensen wrote:
->
->> On Sun, Apr 21, 2013 at 12:39:39AM +0400, Solar Designer wrote:
->> > i just found this recent blog post by Allan McRae of Arch Linux:
->> >
->> > http://allanmcrae.com/2012/04/how-secure-is-the-source-code/
->>
->> This is a great article and I really appreciate the work that went into
->> the research.
->>
->> > I think that placing both "MD5 checksum provided on same site as
->> > download" and "PGP signature, key difficult to verify" in the same
->> > "yellow" category is inconvenient for us.  "MD5 checksum provided on
->> > same site as download" only helps verify downloads from mirrors against
->> > the master site, whereas "PGP signature, key difficult to verify"
->> > achieves a lot more - once a distro is already including the package
->> > (and has already taken the risk of it having been tampered with), then
->> > verifying further updates to the package becomes almost as reliable as
->> > it would have been with proper signing (with a "readily verifiable"
->> > key).
->> > So we need four categories, or simply "MD5 checksum provided on same
->> > site as download" should be in "red", not in "yellow".
->>
->> This is a good discussion to have.  I've recently started working on "best
->> practices" articles at Red Hat and feel this would make an excellent
->> article on how we can all improve the security of our source code that
->> inevitably gets pushed into the various distributions.
->>
->> What is really the best, most proper way of desiminating releases?  I
->> really don't like the use of MD5 for checksums (I'd prefer something out
->> of the SHA-2 or SHA-3 family of hashing algorithms) and I really *do* like
->> the use of PGP for signing the code.  I do foresee some practices within
->> the use of PGP that might not be great, though.
->>
->> So what is the best way of authenticating the source code?
->
-> The good thing about PGP signed tarballs is that an automated check
-> could be integrated in package build, with some standard macros or
-> script to make it easy to check signature from a specific key. If it's
-> easy and does not cost time then more packagers will do it.
->
->
+Please use CVE-2010-5108 for this issue.
 
--- 
-Inviato dal mio dispositivo mobile
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRGtrBAAoJEBYNRVNeJnmTIgAP/1XW61JAB9uYh1yK7Dytpdd+
+mPA4vQRTyx4nylnlPQbrw/Pig+tkl8C8i627Oh/8pPkfAhGQynWIcSFiR8SFvJpa
+zTrsvJghXXHtiDoYV+Ot7fIH/L0HH3IbZJxRIOd0t/trRgOVymkEutEQcIzEeLWB
+mLg15oumIMO4CNf4f4OFXXoFiIz2z0D2PlAWo6hP35kaKaKla+FU0IgfrFMljFeE
+jHj6fQuQKYf9ryHjuMJDd12qBVV3pi2RwCLdHPkkvbb7LxKzAa0umEHTxnLMBKUu
+KRbrTNEYDd5CKMaZu7tnlE6iIiuv+ov6Atrj8eI0E8zhjDXAbnHooIaUQ9nYzu/o
+egbHXADFEMgLii99bSZcNu0NBelwX8k+dCYtS+FB9i1zPD7KoIMjq86Wde6dqIQS
+TLO/TKo/TJCMqmrz4xxMlTSkBuMRbIImJj8QGYQkQu7XkjlxdNicFvyjheNDdMBV
+mCiYJ4GGn+j2LUYm/AhfwfNO38ZZ79djYwiCujeVsdJcNSowrU81FHPAcgf0KZFZ
+MF8Np2wX09mVbrhbNQ2SQTnPKI8iGov0vGaKGvrz6nBOWtHCWxl5B7dmKSy/e3kH
+8s7Sm1oSoGtBywUkhkjPIwbqIvCzGvqvxggchaTGU294NwPS0cAm4z19A/Or2HTI
+r+ftIYjQBVAFKBd4phkx
+=80fD
+-----END PGP SIGNATURE-----
