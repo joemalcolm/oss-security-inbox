@@ -1,36 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/29/3
-Message-ID: <1199474359.8390821.1375119761052.JavaMail.root@redhat.com>
-Date: Mon, 29 Jul 2013 13:42:41 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/13/3
+Message-ID: <511ADAF5.4090100@redhat.com>
+Date: Tue, 12 Feb 2013 17:14:45 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, phpMyAdmin security team <security@...myadmin.net>, Mitre CVE assign department <cve-assign@...re.org>
-Subject: CVE Request -- phpMyAdmin 3.5.8.2 and 4.0.4.2 are released
+Subject: Re: CVE request: piwigo XSS in password.php
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, phpMyAdmin security team, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  phpMyAdmin upstream has recently released 3.5.8.2 and 4.0.4.2 of phpMyAdmin
-administration too:
-  [1] http://www.phpmyadmin.net/home_page/news.php#phpMyAdmin_3.5.8.2_and_4.0.4.2_are_released
+On 02/11/2013 12:24 AM, Henri Salo wrote:
+> On Sat, Feb 09, 2013 at 06:14:35PM -0700, Kurt Seifried wrote:
+>> http://www.openwall.com/lists/oss-security/2012/10/06/2
+> 
+> Sorry about duplicate! Does your sources know if
+> http://www.openwall.com/lists/oss-security/2012/10/06/3 ever got
+> assigned?
+> 
+> -- Henri Salo
 
-correcting multiple security flaws (PMASA-2013-10.php is reserved for future use, see [1]):
-* http://www.phpmyadmin.net/home_page/security/PMASA-2013-8.php
-* http://www.phpmyadmin.net/home_page/security/PMASA-2013-9.php
-* http://www.phpmyadmin.net/home_page/security/PMASA-2013-11.php
-* http://www.phpmyadmin.net/home_page/security/PMASA-2013-12.php
-* http://www.phpmyadmin.net/home_page/security/PMASA-2013-13.php
-* http://www.phpmyadmin.net/home_page/security/PMASA-2013-14.php
-* http://www.phpmyadmin.net/home_page/security/PMASA-2013-15.php
+http://www.openwall.com/lists/oss-security/2012/10/18/5
 
-Doesn't look CVE identifiers have been already allocated to these?
+Never heard a reply so it got lost and forgotten I guess.
 
-Could you assign them? (Cc-ing phpMyAdmin security team to confirm
-these weren't assigned yet [and Mitre's CVE assigning department
-since having an impression, we have previously discussed this and
-the conclusion was Mitre CVE department will assign them {but maybe
-it wasn't case of phpMyAdmin, not sure right now}]).
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRGtr0AAoJEBYNRVNeJnmT/gMP/iq8niltJln0R3npSQST0ivp
+hNtYGuUdMSdfSBcASw+yc+SvFTpnBPlm3H1MJXq1vrExZQzurvZPD6WcoiN7vA/R
+qb35AC5/zd6qxlPxx4nyPbiHGiNyU2M+2Cwt5+fQmKlNyA7/EX2wfxd/dp3gJc2u
+ixGvGKdFrcUfFU654yF72+LeupGsqaW/nPYFEhxL/7Xtv1scAvuenOmuy06QNqNm
+lqrULjnZ8FGjrLsiEpBf9N18KjPO/tb1k+8dz7ru5ltMpygs0BDvBq8ILTh/HNsg
+6vJCTk8TKfkVLjpLRd46vOzh/DH9hYwBpbPnD8Zs/pHFflCeYu6mCwvpcGp55a+B
+HJa+s7tJqUg3NYCLM0fQNuHo4s6b0Way01YlXmN3ZKYUdGwfr4BE/PxfEN+NXJPC
+QfeaiySWCxzr7C+2c27GPwR2hDTeJvuBRRdEGPzFh+UuO1K4p8hBrCfCNqrvsVqk
+/UP+iBvQ7dUlKWJChhwpBFa/xaP+1k3prtsgFhFMlJxFb+LTHg7uzz/+YgNfzcGd
+Wu237W3w3/vx2Zqe8O3v89QLUtHYvKooauSRq/Md7UF3YHXUTtDSgv3f+Q62r/6U
+YNJajWicvAH0KggvDnMtKbnr/ml4zcTFpIs3C67MKaeAnGMNoNg5x3zezuERNL4a
+TKxmPamE9nvMp5PbqpEU
+=8i4B
+-----END PGP SIGNATURE-----
