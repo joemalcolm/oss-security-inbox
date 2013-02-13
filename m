@@ -1,45 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/12
-Message-ID: <alpine.DEB.2.10.1308201338140.23686@vincent-weaver-1.um.maine.edu>
-Date: Tue, 20 Aug 2013 13:47:38 -0400 (EDT)
-From: Vince Weaver <vincent.weaver@...ne.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/13/7
+Message-ID: <511B62E2.3000902@redhat.com>
+Date: Wed, 13 Feb 2013 02:54:42 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: linux-kernel priviledge escalation on ARM/perf
+CC: chevalier 3as <chevalier3as@...il.com>
+Subject: Re: Potential HTTP Header Injection in Apache HTTPClient
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 14 Aug 2013, Vince Weaver wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> One of the oopses can lead to a local privilege escalation on ARM-perf.
-> This fix can be found here:
->   http://www.arm.linux.org.uk/developer/patches/viewpatch.php?id=7809/1
-> The discussion thread is:
->   https://lkml.org/lkml/2013/8/7/259 
+On 01/10/2013 07:38 AM, chevalier 3as wrote:
+> Hi,
+> 
+> As I'm not sure if this is a vulnerability or simply a 'feature',
+> I'm posting the details for more information.
+> 
+> The addRequestHeader method of the Apache HTTPClient module
+> version 3.x seems to allow the injection of more than a header
+> (potentilally the latest version 4.x too for addHeader method):
+> 
+> Using the following code, it includes a third header in the
+> request: HttpClient client = new HttpClient(); PostMethod method =
+> new PostMethod("http://www.google.fr"); 
+> method.addRequestHeader("header1", "value1\r\nheader3: value3"); 
+> method.addRequestHeader("header2","value2");
+> 
+> 
+> The real risk is adding a second request using a similar code: 
+> req.addRequestHeader("Content-Length:0\r\n\r\n" + 
+> "POST\t/anotherpath\tHTTP/1.1\r\n" + "Host:host\r\n" + 
+> "Referer:faked\r\n" + "User-Agent:faked\r\n" + 
+> "Content-Type:faked\r\n" + "Content-Length:3\r\n" + "\r\n" + 
+> "foo\n", "bar");
+> 
+> Because of the Content-Length header, the sever will consider it as
+> a seperate request.
+> 
+> Iis this an expected behavior ? if so developpers should be aware
+> of the risk letting a user input values.
+> 
+> A similar advisory for Flash is available here: 
+> http://www.rapid7.com/resources/advisories/R7-0026.jsp
+> 
+> My 2 cents, As
+> 
 
-More info on this ( CVE-2013-4254 )
+Has anyone investigated this/can comment on this? thanks.
 
-The fix has been committed to linus-git and will be in 3.11-rc6:
-    c95eb3184ea1a3a2551df57190c81da695e2144b
-It is also in the recent 3.10.8 stable release.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-I've been doing further tests on this exploit, and it turns out it
-is very hard to exploit; it depends on having a very exact kernel
-memory layout with a user-mappable address at exactly the right place.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Thus despite the vulnerability being there from 3.2 through 3.11-rc6 I've
-only been able to exploit it on 3.11-rc kernels, which probably limits the 
-exposure from this bug (it does oops on all kernels, but doesn't call
-into user code exept on 3.11-rc1 and newer).
-
-Since the bug is now fixed and the exploit seems unlikely to trigger on
-non-3.11-rc kernels, I've released my code describing the issue in more 
-detail.
-
-See my perf_event_tests package:
-   https://github.com/deater/perf_event_tests
-
-A simple test for the bug can be found under:
-   crashes/arm_validate_event_oops.c
-And the exploit (with details in the source code comments) is here:
-   exploits/arm_perf_exploit.c
-
-Vince
+iQIcBAEBAgAGBQJRG2LhAAoJEBYNRVNeJnmTYwcP/2PgkHgVU4K2dMzA0eRoseQF
+jZLY1geucutLHWBEhIxLRLsvtiT1ac/ejVMn9w2Bw9No8bplJ7ElAjlGv4+a7aHS
+TeNd9rV73DQq3SWibuonaXpODRONq6pTuoUMRhcGMdoYzOiSnHsLR+tix4ntJm4F
+qS1hGwTJ1Zly5SXmOftrNt9Hwv/S/aDXdDh+v9OTz3G45MD8+4mihefxQneWMPOT
+h0Q9g8aILoVAFaVo8YRXWI96MZ3atkPndzHUVrHR3MFiGDvJyvBEV9JdXJmxHjSA
+jt9eOjE7jhLOw3L0YBjZ/XZh66okyP+D2ofjFbzDE4+VTWV9PqgyOyPNpUPB445L
+pPDne0kxH+dVMOhQ3dtPGaP0KhYCKmza4spp00xD4WDI+FAaHeI3mhrSUn/7UShM
+ee201bktkCnXL/gXIih+QQnc9ehmzCFGhuVYktHDjecGmyRarre0xcZy8wW6jd7/
+qpL4znOo7NzA6Q/PVKVPuH1eyvr3J/RF3PPDTIIgjKhT7RHTs0m7Ff+dvON4HENM
+38iLtItj6ntRZ3BL5ke6Z9qkxj8qdBVWUTbcL6JRu+9mo4fCzlGQ9MzDnvHk7svs
+s0uvaeMbb6Qj86L+D9hr6kvFtu0HgftOILW/ygxLupZkEk9q4HJhZr+sHAeTRarN
+HNxkOdjxQZG9FUNCdZ6o
+=kiym
+-----END PGP SIGNATURE-----
