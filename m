@@ -1,33 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/6
-Message-ID: <52A59319.4020604@redhat.com>
-Date: Mon, 09 Dec 2013 15:23:29 +0530
-From: Ratul Gupta <ratulg@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/14/7
+Message-ID: <CA+rthh9y56D09z6pkcFyBSQ49Zwj2y=Rv+JckcOw+L0SvSD3zw@mail.gmail.com>
+Date: Thu, 14 Feb 2013 19:39:23 +0100
+From: Mathias Krause <minipli@...glemail.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: monitorix: HTTP server 'handle_request()' session fixation & XSS vulnerabilities
+Cc: Eric Dumazet <edumazet@...gle.com>, "David S. Miller" <davem@...emloft.net>,  Brad Spengler <spender@...ecurity.net>
+Subject: CVE Request: kernel -- local DOS (endless loop with interrupts disabled)
 Content-Type: text/plain; charset=utf-8
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1038071
+Hi,
 
-Monitorix, an open source system monitoring tool, was found to be 
-vulnerable to two XSS vulnerabilities, which could allow attackers to 
-execute arbitrary script code in a user's browser in the context of the 
-Web server process, access sensitive data, or hijack a user's session.
+Eric Dumazet recently fixed a local DOS in commit 77c1090 "net: fix
+infinite loop in __skb_recv_datagram()"? An unprivileged local user
+can easily trigger this bug and lock-up the system.
 
-The issue is that the built-in HTTP server failed to adequately sanitize 
-request strings of malicious JavaScript. So by leveraging this issue, an 
-attacker may be able to inject arbitrary cookies. The same issue could 
-also cause arbitrary HTML and script code to be executed in a user's 
-browser within the security context of the affected site. Input passed 
-via requests to the "handle_request()" function (lib/HTTPServer.pm) is 
-not properly sanitised before being returned to the user. This can be 
-exploited to execute arbitrary HTML and script code in a user's browser 
-session in context of an affected site.
+A reproducer is attached.
 
-Can a CVE be assigned to this issue?
+Thanks,
+Mathias
 
--- 
-Regards,
-
-Ratul Gupta / Red Hat Security Response Team
-
+View attachment "sock_lock.c" of type "text/x-csrc" (1030 bytes)
