@@ -1,62 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/12
-Message-ID: <CAAAAxQ0vUwLN6fCYa3DfK5Z+Womsv_CwcoA+2NC4J8m=vqPOvQ@mail.gmail.com>
-Date: Fri, 11 Oct 2013 07:25:10 -0700
-From: aaron guzman <aaron23yankees@...il.com>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: Joel Weinberger <jww@...omium.org>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: Re: browser document.cookie DoS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/14/1
+Message-ID: <511C4E5B.5090009@redhat.com>
+Date: Wed, 13 Feb 2013 19:39:23 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, maxim@...oillogical.com
+Subject: Some rubygems related CVEs
 Content-Type: text/plain; charset=utf-8
 
-Google is now paying for patches for apps like Chromium. This was announced
-yesterday. Patches are to be sent to security-patches@...gle.com according
-to this link here
-http://www.tomsguide.com/us/google-software-bounty,news-17676.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+https://github.com/rubysec/ruby-advisory-db/issues/7
+
+=====================
+omniauth-oauth2 CSRF
+
+omniauth-oauth2 intridea/omniauth-oauth2#25
+https://github.com/intridea/omniauth-oauth2/pull/25
+https://gist.github.com/homakov/3673012
+CSRF vulnerability, injecting state in session
+
+Please use CVE-2012-6134 for this issue.
+
+=====================
+newrelic_rpm information disclosure
+
+newrelic_rpm
+https://newrelic.com/docs/ruby/ruby-agent-security-notification
+A bug in the Ruby agent causes database connection information and raw
+SQL statements to be transmitted to New Relic servers. The database
+connection information includes the database IP address, username, and
+password. The information is not stored or retransmitted by New Relic
+and is immediately discarded.
+
+Please use CVE-2013-0284 for this issue.
+
+=====================
+nori parameter parsing remote code execution
+
+nori savonrb/nori@...f526 (related to 2013-0156)
+ Fix for remote code execution bug. For more in-depth information,
+read about the recent [Rails
+hotfix](https://groups.google.com/forum/?fromgroups=#!topic/rubyonrails-security/61bkgvnSGTQ).
+Please make sure to upgrade now!
+
+Please use CVE-2013-0285 for this issue.
 
 
-On Thu, Oct 10, 2013 at 10:44 PM, Kurt Seifried <kseifried@...hat.com>wrote:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 09/25/2013 09:42 AM, Kurt Seifried wrote:
-> > On 09/20/2013 09:52 AM, Joel Weinberger wrote:
-> >> Just an FYI, we have fixed this in tip of the tree Chromium:
-> >> https://src.chromium.org/viewvc/chrome?revision=224268&view=revision
-> >
-> >>
-> >
-> > https://code.google.com/p/chromium/issues/detail?id=238041
-> >> --Joel
-> >
-> >
-> > So I assume Google will not be handling CVE assignments for
-> > chromium?
-> >
->
-> Ping. Does anyone know if Google is acting as the CNA for Chromium? I
-> assume they are, but I also see no CVE for this.
->
->
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (GNU/Linux)
->
-> iQIcBAEBAgAGBQJSV5BSAAoJEBYNRVNeJnmTEkMQAJQhHCzOKxhgJELgagAm3O2g
-> 23pSmKNeXh27Px9Dq+RllMM/qN+jETPHQ/59y1l9GE4nMymqeMBBDbK0Ws5q050+
-> Ay9aZTPr3vleClhmoqyFOZIU+oDlbZ0/IamoM0th9F8r4hjVHbzFVO0GXkTSaGk4
-> CJKRP3fqli+yX+Wk8twUOXkr4Nr1bg4Ty7LugxeMlHCVrsMo4Lpbv2YcRVg/6x7f
-> V6x326z9c00txtpKxbP0IgON7qeR7BBkPDgbf6APFcWSp/TSZIeXk2y/xgMVXiMd
-> 3IJt6HeKqhLzb35PlHeZJrcJjKlUHkrZniY61Ig3gc/GviwgegFuAwP3O9kUDxvc
-> GYS6t7bUfJ/Mhwaki4tAW5JeYc6WV3zhCU31UeJmr/tqNJfunI6uxASQnW0IzzVf
-> eS5AV20nHJn6PtJTB54jxw4EuYDvzpXor+9WB5KP76z+wgZhUjitHR4PHDHUIeyY
-> jc9nJ7EOs2aqj1k7UGd1STRDE2xG0Rki37Yvf7oPIPulGLjHmPxL6kKCpSTt+pIM
-> OaOomM1uZSSejG8BMWXZ4vNTzc0yFUN1C2h226E2i2Q5CykCdENIOXLXjFASfPQR
-> aVS+IvRrYFy7+9DjAXU3vK2uoW9vnDUoidSkd76jToCinfkJ6uAYUhH23RJBB1Xe
-> /oZA/ZljHxv2mqbc/XMM
-> =XRg2
-> -----END PGP SIGNATURE-----
->
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
+iQIcBAEBAgAGBQJRHE5aAAoJEBYNRVNeJnmTmAYP/0Ih7uVNmA+OEhWCEbPA824J
+AAy4x3S5EBjhPKwbCtc5rF6Lggt4uL6k6AKLDilSasMc+UCI7YBnKNOg5Y5GfbCz
+8VjoQ/4iNf3VOV+SOmDq5dob0LDhgLRJtkaWiKRwiXRCwYHakJGGLAYGBGCfFDX4
+Em75BMA2964DpBkdMfat4bGnS3Xip3i/yUJq8RikwkBQgTiB1NBShwjZ6yQ0wioA
+UonyOP1RZprsn1UZRus+/TcpFAR+JS9bZ0zko9s7k+Fxlk/tvMDQdYuFrnp89h68
+ucq3xS3MzYejoMADVvQkyDj4mPrzzACf7/1rHXFB1isrRJmKimUAwJELlbdOv43v
+iyCqWrGgpYgo9Krln9p1rEp57g8xHV0gZ4KikAD5TpRlaAhtKh4V1HWpVGSi77G+
+MIapr+ChCuRr2VJl8zf8/c6S9RFivZqpk1lFA4CNuUisD0EtgL4vDSUEp8u9SYHP
+OekmQhZ71FAda3+m4pQQ2zYqFbal7KH84hPQc1s+j6h6LOQ40OXfkSaqf1Eh7wuM
+aLZecAesDEzNseZyqaqoqAaYz6UckrrgQR7OAE7rKcSKeUXe61WgbzqUL5wx2/Gw
+VeI0AhXe3ZNLVpyaFHCSTR+b3CVwlA/ENYQeKgIMDKxLxoK9fZFR44dRco9GOxck
+/4zn0zP/MSk5YGNrw3wu
+=RGNy
+-----END PGP SIGNATURE-----
