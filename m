@@ -1,42 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/18/2
-Message-ID: <628080642.11882035.1358515894069.JavaMail.root@redhat.com>
-Date: Fri, 18 Jan 2013 08:31:34 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/11
+Message-ID: <20130215192822.GB11793@suse.cz>
+Date: Fri, 15 Feb 2013 20:28:24 +0100
+From: Miklos Vajna <vmiklos@...galware.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Tomas Hozza <thozza@...hat.com>, Josh Stone <jistone@...hat.com>
-Subject: CVE Request -- dnsmasq: Incomplete fix for the CVE-2012-3411 issue
+Subject: Re: (linux-)distros membership changes
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hi Solar,
 
-  the CVE-2012-3411 identifier has been originally assigned to the
-following issue:
+On Wed, Sep 05, 2012 at 06:28:30AM +0400, Solar Designer <solar@...nwall.com> wrote:
+> Frugalware: 1
 
-When dnsmasq is used in conjunctions with certain configurations of libvirtd, network packets from prohibited networks (e.g. packets that should not be passed in) may be sent to the dnsmasq application and processed. This can result in DNS amplification attacks for example.
-[1] http://www.openwall.com/lists/oss-security/2012/07/12/5
+Please unsubscribe me from the distros list. I handed over maintenance
+of Frugalware security issues to James Buren, but he's not releasing
+security advisories[1] nor taking part of such discussions actively, so my
+membership is no longer useful and it's no point in askig for membership
+for him.
 
-Later it was found:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=894486
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=894486#c3
+Thanks,
 
-the upstream patch for CVE-2012-3411 it not to be working properly,
-as it still allowed (from [3]):
+Miklos
 
-* replies to remote TCP-protocol based DNS queries
-(UDP protocol ones were corrected, but TCP ones not)
-from prohibited networks, when the --bind-dynamic option was used,
+[1] http://article.gmane.org/gmane.linux.frugalware.devel/11553
 
-* when --except-interface lo option was used dnsmasq didn't
-answer local or remote UDP DNS queries, but still allowed
-TCP protocol based DNS queries,
-
-* when --except-interface lo option was not used local / remote
-TCP DNS queries were also still answered by dnsmasq.
-
-Could you allocate a new CVE identifier for this? (as an
-incomplete fix for CVE-2012-3411 issue)
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
