@@ -1,28 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/8
-Message-ID: <515C45CE.6060904@redhat.com>
-Date: Wed, 03 Apr 2013 17:07:58 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/12
+Message-ID: <511E8D8D.5030201@redhat.com>
+Date: Fri, 15 Feb 2013 12:33:33 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: glibc getaddrinfo() stack overflow
+CC: Matthias Weckbecker <mweckbecker@...e.de>
+Subject: Re: CVE# request: pigz creates temp file with insecure permissions
 Content-Type: text/plain; charset=utf-8
 
-On 04/03/2013 04:55 PM, Sebastian Krahmer wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> glibc resolver surprisingly seems to accept indeed larger
-> UDP packets than DNS servers would send without EDNS0.
-> But depending on setup its probably hard to get such large
-> packets through your local recursive DNS, not to speak
-> about the firewall. Maybe its possible to signal truncation
-> and force a TCP connect?
+On 02/15/2013 06:43 AM, Matthias Weckbecker wrote:
+> On Friday 15 February 2013 09:33:30 Michael Tokarev wrote:
+>> I think this one well deserves a CVE#.  I just submitted the
+>> following bug #700608 to Debian BTS:
+>> 
+> 
+> Not sure if this qualifies for a CVE. At least similar issues did
+> not get one in the past.
+> 
+>> Thanks!
+>> 
+>> /mjt
+> 
+> Thanks, Matthias
+> 
 
-Yes, this is with the TCP transport.  With a suitably prepared zone, I 
-can get up to
+- From the last discussion of this:
 
-$ getent hosts  ... | wc -l
-4093
+http://www.openwall.com/lists/oss-security/2012/09/24/4
+http://www.openwall.com/lists/oss-security/2012/09/24/8
+http://www.openwall.com/lists/oss-security/2012/09/24/9
+http://www.openwall.com/lists/oss-security/2012/09/26/6
 
-A records (over DNS, just to be clear).
+Basically I pointed out we need to define what information
+MUST/SHOULD/SHOULD NOT/MUST NOT be marked as sensitive/etc so we can
+apply appropriate file permissions and the discussion died.
 
--- 
-Florian Weimer / Red Hat Product Security Team
+So no CVE for this. Set your umask to be safe for now (and probably
+forever =).
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRHo2MAAoJEBYNRVNeJnmT2DgP/iUbj6zMd+lnCq4zOvLeLI1X
+m9jRcG7XT47Wdc9eQUgxG9iY3Nvf77LxgWtFEOtWmiVhBYPJkvUd+ipsQ71tx1Hy
+b1GkxVe9I6h3d2i0M9ytpuMV6d/vQAHwWeGNOL0LfapaBIFBC4aIdMem66iyCJKe
+QHdRLAbx6Cipx1obr6Y5VO6QFqe01UsekMOP321IrppIJxk5PmBkyZH2qmGxnE86
+yYQVYL5K+RJiStSt18ZQT+1vtVfazmsjn/A/GfgUnqgfuwGZyL5TGO1FlErQQ7TL
+SRGN4HvNvXNlab9vfBFw4zT7ekHUdFdYf6AMbdVzrTvH6N2GT0vlemTjWwofBF25
+1mT/Qcjv+MI7V4TT1Yz92n9vxLLpF3bRvUb0dv9+48Er9izzFPXFhRc1SZh99oBn
+sQXEAchMvP84UV1dwb/BgQuxXYNdaY93Q1Zvj50WcQKFbtq28qvRgDVHCSUVSM+d
+MMggkwYOUCw4qrCv4BfBQMbqdF6vJOexJkCNR6rOkOwSAg9uFhIOdOFEO1ztSXsO
+wD69xTEQPXheVSi9kUk9Nf5b4OOb006ZiEbjvknbZ3yZurtBNgMH++tWbRK8y7z1
+05JZjmTKuSyWACa2JVTmP+POvMXYLj9ZoWarTlJOqWHPB0AN2/Mnd2TqYpH+inUz
+yK9qJBYIEHB2jAfmlAoS
+=kUni
+-----END PGP SIGNATURE-----
