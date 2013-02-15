@@ -1,41 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/5
-Message-ID: <51F0E5DA.50009@redhat.com>
-Date: Thu, 25 Jul 2013 02:46:18 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/10
+Message-ID: <511E715F.1040105@collabora.co.uk>
+Date: Fri, 15 Feb 2013 17:33:19 +0000
+From: Simon McVittie <simon.mcvittie@...labora.co.uk>
 To: oss-security@...ts.openwall.com
-CC: Paul <pawlkt@...il.com>
-Subject: Re: CVE request: timing leak in bitcoind
+CC: "dbus@...ts.freedesktop.org" <dbus@...ts.freedesktop.org>,  ftp-release@...ts.freedesktop.org
+Subject: CVE-2013-0292: authentication bypass due to insufficient checks in dbus-glib < 0.100.1
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-On 07/24/2013 10:16 AM, Paul wrote:
-> Low risk issue in RPC auth. code, described here: 
-> https://github.com/bitcoin/bitcoin/issues/2838
+Sebastian Krahmer discovered and published an authentication bypass
+vulnerability in pam_fprintd, caused by a bug in dbus-glib. It is
+possible that other users of dbus-glib can be exploited in the same
+way. CVE-2013-0292 has been allocated for this vulnerability.
 
+This vulnerability is fixed in dbus-glib version 0.100.1 by git commit
+166978a. All users of dbus-glib should upgrade.
 
-Please use CVE-2013-4165  for this issue.
+<http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.100.1.tar.gz>
+<http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.100.1.tar.gz.asc>
+<http://cgit.freedesktop.org/dbus/dbus-glib/commit/?id=166978a09cf5edff4028e670b6074215a4c75eca>
 
+The D-Bus maintainers consider use of dbus-glib to be deprecated. We
+encourage GLib application and library authors to switch to GDBus, which
+has been part of GLib since 2.26.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Thanks to Sebastian Krahmer and Bastien Nocera for bringing this
+vulnerability to our attention, and the Red Hat Security Response Team
+for allocating a CVE ID.
+
+Regards,
+    S
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR8OXaAAoJEBYNRVNeJnmTZJwP/1WTYcAm9h91upY8dHoxq5UV
-KFpeVtv/m1/3gHk12oCkieCFAp0D0MLw6KlqfGuwPpNM2GUAjuSoTgUD8i+aO7Zr
-tmzkxl3qGAzZnGdhzMIh2UiuH5NUzaagVQpt1N56ivPs2VMH4QVYmjxLYXh2CeSf
-T9rnDBFq37fJ7nfbQHHeAynMlYy/Uab/kis2ff0k2ryYqTuCkrC6rlTxm89dqN64
-nRTyKwK5DCsobRQPykgcrPgOBwYdauE+8YVtxTvm96ihCBK2JJAyNhfXK2opQI2F
-1cG1iLzmzsN0P0/X4OXfZzbiWZwrzckHmpTi1rrEN4zVDK9zp86y6b/ussrdDIUY
-kLJxJ5i6Xdw29+QRWrVdKz2PVh+IYye2RZ8dhDYuzFKN8C12BK9sl00VMiuR0/pT
-u1VA07h+jKB/rnnKS9IrxzLmHKTHqZ+znzPV3i2wOzLmYcFaPX8aKlMi2ybu3wAB
-he58iQGS206aZm8uJkDXvedOOzYfCiX4qsraFryLGdJzSIp3UPiD7ZVea+sjXElS
-rpgcxYC2HIujNGyC3zeUlykc5FCKxbRBESATTS94eYXlFWX4Z57cCBsIyK3kcCeS
-0eGR1RtJNBZ7tj4MCuaSJQldLFdqFYV/qdNTWKb4BCFAm58+2u3zxgpexaiWL+6X
-fsSMIhlQcP4NsRtZMhcs
-=G2hb
+iQIVAwUBUR5xU03o/ypjx8yQAQj5hg//aY5om9cxEgRclJ8zbcy57iQGM1vLgm4l
+bBLqvj2PgS8viumcTfrOg4WRpS6/IqROW/5rY+/knJX0HxgGXueo04Vt9gI2cH8C
+uPIb1OOO5+Aym8pvF4zHGk7HUu7vi76c0FeiA0ftDY8iqgJln9tKTACTgTD1DgIE
+ktGwEDWbJEBQoGpheu/5my7XTx+GHt9Jc0ERA3XAFYrbvw52oV2oLHoKwuPkVjip
+jMQL4+swp3uDtM3P4wSnzXQogchK5k8o2h4CmAPhsrayYXUGMB8eCZW/QdO/Z/bv
+US3bRSitV1isXpAMyYMxvXPrwgliwEJYDufkOTt2KmWsVa9JdEl4FjZkugng/TJo
+NCK2LM36AySOSoLd6drDLLlcqZ/639/szxm1+Q2wDq7zVD/m7MRbEzTZmiYiuJxr
++0bLl8SgZ/wJf+k08esFDNTNSvEOIUpXiIhWqlEtYW7nsgjZts/0ki2l6xnARqfO
+6zc0fVpK5yWCX1x2r1IBTgMfXxzEXIG8HFHHNmUVAtYqwPVGFpYi7qibUH98qSUC
+7HeJN7vffTLAj5FObyKa+YbNFjJRotX5TX805YIaZuxM6H3xChQfD/eHyuMiP/gf
+ehJlsYE535gYGVVOodPCQQ6VNvTnYLSsHyXghHlaoAH/fm6vGOVtA898YpNP8ORL
+uxxF6c7yPa4=
+=Dr98
 -----END PGP SIGNATURE-----
