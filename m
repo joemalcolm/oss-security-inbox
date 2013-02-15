@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/1
-Message-ID: <1371181824.4354.16.camel@goat.lightspeed>
-Date: Thu, 13 Jun 2013 22:50:24 -0500
-From: John Lightsey <john@...nuts.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/8
+Message-ID: <20130215163414.627346c3@redhat.com>
+Date: Fri, 15 Feb 2013 16:34:14 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: MovableType before 5.2.6
+Cc: ago@...too.org
+Subject: Re: CVE request: unauthorized SSL certificates by Türktrust discovered
 Content-Type: text/plain; charset=utf-8
 
-Hi everyone,
+On Fri, 15 Feb 2013 12:45:16 +0100 Agostino Sarubbo wrote:
 
-The 5.2.6 release of MovableType fixed a vulnerability in the handling
-of comments to blog posts. The 'comment_state' parameter is processed by
-MovableType's unserialize() function which can be used to send data into
-Storable::thaw().
+> Title:        unauthorized SSL certificates by Türktrust discovered
+> Risk Rating:  Medium
+> Platforms:    All
+> Modules:      QtNetwork
+> Versions:     All
+> Author:       Peter Hartmann
+> Date:         7th January 2013
+> 
+> More info and code commit at:
+> http://lists.qt-project.org/pipermail/announce/2013-January/000021.html
+> 
+> I don't see a cve for it, please assign one.
 
+This is not expected to have CVE, see:
 
-As documented by the perl-security team recently, Storable::thaw is
-unsafe to use on untrusted inputs.
+https://bugzilla.mozilla.org/show_bug.cgi?id=825022#c67
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-0743
 
-http://perl5.git.perl.org/perl.git/commit/664f237a84176c09b20b62dbfe64dd736a7ce05e
-
-
-The MovableType 5.2.6 release notes document the fix for this
-vulnerability as:
-
-"109458 Currently un-used parameters are unintentionally deleted when a
-comment is posted"
-
-http://www.movabletype.org/documentation/appendices/release-notes/movable-type-526-release-notes.html
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+-- 
+Tomas Hoger / Red Hat Security Response Team
