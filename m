@@ -1,66 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/6
-Message-ID: <522DF8C8.70705@redhat.com>
-Date: Mon, 09 Sep 2013 10:35:20 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: Torque privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/5
+Message-Id: <E1U6JfM-0003Qu-0l@xenbits.xen.org>
+Date: Fri, 15 Feb 2013 11:41:20 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 38 (CVE-2013-0215) - oxenstored incorrect handling of certain Xenbus ring states
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/09/2013 04:14 AM, Agostino Sarubbo wrote:
-> From the torque advisory 
-> http://www.supercluster.org/pipermail/torqueusers/2013-September/016098.html
-> :
-> 
-> *Vulnerability:* A non-privileged user who can run jobs or login to
-> a node running pbs_server or pbs_mom can submit an arbitrary job to
-> the cluster; that job can run as root. The user can submit a
-> command directly to a pbs_mom daemon to queue and run a job. A
-> malicious user could use this vulnerability to remotely execute
-> code as root on the cluster.
-> 
-> 
-> *Versions Affected:* All versions of TORQUE
-> 
-> 
-> *Mitigating Factors:*
-> 
-> - The user must be logged in on a node that is already legitimately
-> able to contact pbs_mom daemons or submit jobs.
-> 
-> - If a user submits a job via this defect and pbs_server is
-> running, pbs_server will kill the job unless job syncing is
-> disabled. It may take up to 45 seconds for pbs_server to kill the
-> job.
-> 
-> - There are no known instances of this vulnerability being
-> exploited.
-> 
+         Xen Security Advisory CVE-2013-0215 / XSA-38
+			      version 3
 
-Please include links to the vulns/source code fixes/original
-information thanks.
+    oxenstored incorrect handling of certain Xenbus ring states
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+UPDATES IN VERSION 3
+====================
+
+The patch supplied contained an error which would cause a failure when
+the ring became full. An updated patch is attached. The incremental
+fix can be found at:
+    http://xenbits.xen.org/hg/staging/xen-unstable.hg/rev/759574df84a6
+
+ISSUE DESCRIPTION
+=================
+
+The oxenstored daemon (the ocaml version of the xenstore daemon) does
+not correctly handle unusual or malicious contents in the xenstore
+ring.  A malicious guest can exploit this to cause oxenstored to read
+past the end of the ring (and very likely crash) or to allocate large
+amounts of RAM.
+
+IMPACT
+======
+
+A malicious guest administrator can mount a denial of service attack
+affecting domain control and management functions.
+
+In more detail:
+
+A malicious guest administrator can cause oxenstored to crash; after
+this many host control operations (for example, starting and stopping
+domains, device hotplug, and some monitoring functions), will be
+unavailable.  Domains which are already running are not directly
+affected.
+
+Such an attacker can also cause a memory exhaustion in the domain
+running oxenstored; often this will make the host's management
+functions unavailable.
+
+Information leak of control plane data is also theoretically possible.
+
+VULNERABLE SYSTEMS
+==================
+
+Any system running oxenstored is vulnerable. oxenstored was introduced
+in Xen version 4.1.
+
+oxenstored was made the default in Xen 4.2.if a suitable ocaml
+toolchain was installed at build time.
+
+Systems running a 32-bit oxenstored are vulnerable only to the crash
+and not to the large memory allocation issue.
+
+MITIGATION
+==========
+
+Running the C version of xenstored will avoid this issue.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa38.patch             Xen 4.1.x, Xen 4.2.x, xen-unstable
+
+$ sha256sum xsa38*.patch
+9912d3239a6f784418fcec53fad7c316588a421e352462f661cd1070fcf21d4b  xsa38.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSLfjFAAoJEBYNRVNeJnmTmsEP/2VnQVuLVoVLzFuJRRQovcjf
-Iu50e5Bk2WEWLsibhdjuYbp14gZ4smNHHk1wjRxMKV12kbBzQ4ivndR13TukcCns
-CEkYSKbHgJqBvpBVIXjXqBtSovc26UaZd6Zz0jrrgBsKhX1r+opqmRMispZ5f7sn
-sK9fTwHnySIwuBHO8cm0RLDcoOY04UVk75gq8iemPcNnAWB4a1zRKPNk+ir5G6vg
-PrbWpfTFEiqe5LWpJADAUQj8dAHMpbJGZuis5krUGCe7ZLM+uCCPKBkU0sVsiHu6
-wM3bPnFt8ifBvRxG9gM7sRZ6/rHeK3DHvE53j10JjGA+HCgy6jSceWJzl4d0LXPj
-AQpsjW/Q7zcFY8Amx5wyL0DYwtWDwz/ZnQKRQINwoy7PzMb0lUOtxaOmcSiT5unE
-NHsW4Pi3u9KVV75PztWDc2367/B+gpRrVugR/fFJUylz32wofIzv/Jo6otXAyGe2
-gZcrx+9ekO1dCX+jMNaqvQL2WzjgILh4ZfbBVTYeNmb4JyrVCGsdVrw9b3l+QKqs
-yG/V44cZaNh18lMXwVm8Iv8fwfxIqzETVaUDnrAqdDxU3ol67mZ/GpSc3JXBtYtF
-fIVrreD7pEYFEy5jLskdwb1+H/FbU7u88Z2h4cGwSwphPNWK2FJA3xx1bIkIX1bF
-vOpu/OmXp43+Mn8JXUIP
-=UMc5
+iQEcBAEBAgAGBQJRHh6yAAoJEIP+FMlX6CvZekUH/AsBw9dg8t2QLsPd391zxX6C
+XUJGW616979+tVCGVr+ahyRKnE2T598LBD+Vojvi7/jL+k59/j48jOkJIen9NfV6
+aawnCrDWICa1Hq4/7xoj1ZagmdQuRuESbdsV6VbzF7v6eBybzKHjhFLNg2cSw6YB
+Zhay6tqpQGQIZrqWZla0OzNf34gWFZAnD4SL3CzlQaMlUb4gab1qprb2kOHttfcK
+wlPxy+U3CPppiRHR5Zs9RmGqnRCA9YpZF2JjxuunrZhFtvY1v+udLCiMkdUGblss
+tKimBDyxC1Qlthye6MTVftvRSsmBmhRJV7R9Wia3s7iAW4KASeobxS+4wicbcHM=
+=GBLo
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa38.patch" of type "application/octet-stream" (2515 bytes)
