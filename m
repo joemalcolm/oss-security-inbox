@@ -1,56 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/10
-Message-ID: <51272F4E.1010507@redhat.com>
-Date: Fri, 22 Feb 2013 01:41:50 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/14
+Message-ID: <20130215194835.GA23111@openwall.com>
+Date: Fri, 15 Feb 2013 23:48:35 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: gremlin@...mlin.ru
-Subject: Re: nginx world-readable logdir
+Subject: Re: (linux-)distros membership changes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Feb 15, 2013 at 08:28:24PM +0100, Miklos Vajna wrote:
+> Please unsubscribe me from the distros list. I handed over maintenance
+> of Frugalware security issues to James Buren, but he's not releasing
+> security advisories[1] nor taking part of such discussions actively, so my
+> membership is no longer useful and it's no point in askig for membership
+> for him.
 
-On 02/22/2013 01:15 AM, gremlin@...mlin.ru wrote:
-> On 22-Feb-2013 00:29:48 -0700, Kurt Seifried wrote:
-> 
->>>> I just noticed my nginx logdir and its content are 
->>>> world-readable: What do you think about?
->>> About misconfiguration? Nothing: % grep create
->>> /etc/logrotate.d/nginx create 640 root wheel
->> What are the initial permissions prior to log rotation?
-> 
-> Of course, exactly the same - 640, root:wheel :-)
-> 
-> I've built my own package (for Openwall GNU/*/Linux, not yet in
-> mainstream), and there I use explicit log file creation in the
-> %post section (touch && chown && chmod) without relying on a umask
-> (although in Owl it's restrictive by default: 077).
-> 
-> So I think that ${subject} is just a misconfiguration.
-> 
-> 
+I've unsubscribed you.  Thank you for letting us know!
 
-Welp I confirmed it on Fedora 16. So at least some things are affected.
+I've also unsubscribed the rPath person, since the rPath website and
+mail appear to be down for maybe a couple of weeks now.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+I'll remove both Frugalware and rPath from the list of linux-distros
+list members on the wiki.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRJy9OAAoJEBYNRVNeJnmTqeoQAJsmGuKwYm5nVMAfTuiu7QVk
-NOCgaa32zYOTeBCCVcMUf3m1f95EgSUUMun939PkEdIEdF67HPaO2uqOsxIv/GUo
-oAsdGfX3vnnYBHBOdiGaixhkctl8oPGHKELQ8QgVKYCsWq7XMvS+shoIh0nMfPQo
-BqPcMzdwwJoV8A1zCVVf9KlXefRP+MJf/9oJF4j6WQhCCcdJU6XKWvRNXayY1rj1
-Zqp9wASZwe45oBSi+VFLZmCYmNxWU5+0SA3myEk29MdI1AZwE8UZ69YFaPVPPOwa
-yy4k7LKiNgzJFRxtBixEJDBQ5/Ne8hKlmLoIbGDqQx/6GWcVYciJ1uck4imukXwC
-ci0W99z3ekMFHMTpFkizYK1+tBhSHgm1x5HUktwB0vzXQm2jC97gdA1O0zYs2oV4
-4CTGOBPxeLvXobmUh2I9wDivjmUZ5VEgMhSfifeq2Gft3kxMDWiJYaGxZbASv3JF
-uBejrSx/YFbBZLhOrVf8fI9zl1JB0XBs2w3moQL6Kf+3/3bayQiZcD2zuLiLNpGM
-AIELvuDzTdw8fV2oWFNgHbBmNYVmS//rWqFtoJ9lHfDsr7TYsZt3RFm4PPtIgPwE
-6J8WPc9KNWgWTkrC97IC8HJ8eOAwGCsE3TDtnTJrrfL0YsUhhoV0k2UOfYSoefeI
-o4Ru/tkD7PuCHqTFbjWh
-=BISb
------END PGP SIGNATURE-----
+Alexander
