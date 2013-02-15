@@ -1,14 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/3
-Message-ID: <5244FD9B.7090809@directi.com>
-Date: Fri, 27 Sep 2013 09:08:03 +0530
-From: "donesh.l" <donesh.l@...ecti.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/18
+Message-ID: <Pine.GSO.4.64.1302151648390.5929@faron.mitre.org>
+Date: Fri, 15 Feb 2013 16:49:42 -0500 (EST)
+From: "Steven M. Christey" <coley@...re.org>
 To: oss-security@...ts.openwall.com
-Subject: Trend micro contact details
+cc: Matthias Weckbecker <mweckbecker@...e.de>, mjt@....msk.ru
+Subject: Re: CVE# request: pigz creates temp file with insecure permissions
 Content-Type: text/plain; charset=utf-8
 
-Hi Guys,
 
-I need contact details for trend micro feedback loop... Does anybody has it.
+Kurt,
 
--- Donesh
+As Michael describes the issue: "When [pigz] finishes, it correctly 
+applies original file permissions to the newly created file."
+
+By changing the permissions of the file AFTER compression, pigz is clearly 
+trying to implement a security policy of "preserve the permissions of the 
+original file."  It is not properly obeying its own security policy 
+because of the race condition, so this is a more clear argument for 
+assigning a CVE than in the general case where a program's default policy 
+may be "rely on the umask."
+
+So, pigz should have a CVE.
+
+Going forward, maybe the guidelines could look something like:
+
+- if the program tries to implement a security-relevant policy but
+   fails - assign CVE
+
+- if the program has functionality that is clearly for secrecy,
+   e.g. gnupg - assign CVE (it should have a policy that preserves
+   secrecy)
+
+- if the program's vendor explicitly states that the issue is a
+   vulnerability - assign CVE (this is stating an explicit security
+   policy)
+
+- otherwise, if the program defaults to umask but does not have any
+   inherent secrecy requirements or explicit policies, or if the vendor
+   treats the issue as "hardening" but not a strict vulnerability -
+   maybe no CVE
+
+
+Your past suggestions for MUST/SHOULD language could be one mechanism
+for getting more clear about "security policy" in the future.
+
+- Steve
