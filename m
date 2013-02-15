@@ -1,18 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/15/9
-Message-ID: <87ehhmtez6.fsf@mid.deneb.enyo.de>
-Date: Tue, 15 Jan 2013 20:37:17 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com,  Salvatore Bonaccorso <carnil@...ian.org>,  team@...urity.debian.org
-Subject: Re: CVE request: Digest::SHA double free when using load subroutine
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/19
+Message-ID: <20130215235343.GG3015@redhat.com>
+Date: Fri, 15 Feb 2013 16:53:43 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: "Christey, Steven M." <coley@...re.org>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: python-pyrad insecurities
 Content-Type: text/plain; charset=utf-8
 
-* Kurt Seifried:
+* [2013-02-15 19:51:07 +0000] Christey, Steven M. wrote:
 
-> I'm not clear, how would an attacker exploit this? They'd need to be
-> able to specify the file that gets hashed, and the file would have to
-> be not present and would thus trigger the crash? Are there any real
-> world examples of an affected application? (web based?)
+>These two issues were fixed in the same diff and reflect poor randomness - should we have only assigned one CVE?  (If the RADIUS feature was introduced in different versions than the authenticator-password feature, then maybe the SPLIT is acceptable.)
 
-My hunch is that this is just a bug, not a security issue.
+I'm not sure.  I didn't go digging to see when they were introduced --
+both features may have been introduced at the same time (or not).
+
+Ok, so doing a quick peek at the first full blob of it in git:
+
+https://github.com/wichert/pyrad/blob/c206b1dfc362db8b0ef9c256814377bde8ed91cf/pyrad/packet.py
+
+The use of random.randrange() is in both the CreateAuthenticator() and
+CreateID() functions, so I would bet that they've been like that the
+whole time (that blob is from Sept 2007).  So I guess one CVE is
+probably sufficient.
+
+I only noted them as two issues as we had two separate bug reports about
+them.
+
+>-----Original Message-----
+>From: Kurt Seifried [mailto:kseifried@...hat.com]
+>Sent: Friday, February 15, 2013 2:37 PM
+>To: oss-security@...ts.openwall.com
+>Cc: Vincent Danen
+>Subject: Re: [oss-security] CVE request: python-pyrad insecurities
+>
+>-----BEGIN PGP SIGNED MESSAGE-----
+>Hash: SHA1
+>
+>On 02/15/2013 09:14 AM, Vincent Danen wrote:
+>> Could a CVE be assigned to the following two issues please?
+>>
+>> #1: https://bugzilla.redhat.com/show_bug.cgi?id=911682
+>>
+>> Nathaniel McCallum of Red Hat reported that pyrad was using
+>> Python's random module in a number of places to generate
+>> pseudo-random data.  In the case of the authenticator data, it was
+>> being used to secure a password sent over the wire.  Because
+>> Python's random module is not really suited for this purpose (not
+>> random enough), it could lead to password hashing that may be
+>> predictable.
+>
+>Please use CVE-2013-0294 for this issue.
+>
+>
+>> #2: https://bugzilla.redhat.com/show_bug.cgi?id=911685
+>>
+>> Nathaniel McCallum of Red Hat reported that pyrad was creating
+>> serialized RADIUS packet IDs in the CreateID() function in
+>> packet.py. This is not suitable for RADIUS as the RFC specifies
+>> that the ID must not be predictable.  As a result, the ID of the
+>> next packet sent can be spoofed.
+>
+>Please use CVE-2013-0295 for this issue.
+>
+>>
+>> These have been corrected in upstream's forthcoming version 2.1
+>> via:
+>>
+>> https://github.com/wichert/pyrad/commit/38f74b36814ca5b1a27d9898141126af4953bee5
+>>
+>>
+>>
+>
+>
+>- --
+>Kurt Seifried Red Hat Security Response Team (SRT)
+>PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
+>-----BEGIN PGP SIGNATURE-----
+>Version: GnuPG v1.4.13 (GNU/Linux)
+>
+>iQIcBAEBAgAGBQJRHo5KAAoJEBYNRVNeJnmT32YP/RUrucNudALgorUcvGb12Btf
+>Xtp5JPu+nYZDWq+i1au4ZMc1TZv12LKSErrvxaQZT04f6K6NvD74drqtHXf1a5ck
+>NWAsk/RIRFrNmSvwkmL02352LWzKlPLfM7ZsiJgU73XEPmkLYdVCTopgGzKYaWYe
+>vWKd7C3l1a/2b2I2C+O2OT2jyi89K3LQSzdZVSd7Mf81gDtDnkyQ8RT5QpcCPVRa
+>XbfKdfzVdLNEw26n5k8/alpjvBARyv4KA7ZA4qQzaI9P32Nw1DFE/8zBbrHkrhj5
+>V83HyOtQyqrYryreNahGkBtLc1LQZ8b81pOvNaE2FRVgA7M5VA4JH4OaL8NCornJ
+>ozicUuB/U32D24Ox7UqR+nkScPCBAhj/iVz+lkKac3WHLNGJGSa25WwWjoaWPrip
+>YaFZHzyijIAdYsr7tHoxTncKNhqtCClyiX6RZdPKKAfDGFV4hPfktwOY8Di6u+hM
+>B8ANPe+nDi7kB4BQcm5Qj7RJ7KY0eixxYgv4ynhvvmdDlpFJwGh8rIilmCCGdVMa
+>GDYjVzgR/SXTFOYWZ9pWc90Ixa3wNtqiCHNwUqKmKldHZvyph0XS4K0HM/o0IQny
+>0aHSg04nSM9jlUOczlCwShhTrRHmTkkuRkXsVlv0ibtORTwcotD/9xghkLK9ktHb
+>3HiFhtqk0CvJBtNMFcRG
+>=z9JH
+>-----END PGP SIGNATURE-----
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
