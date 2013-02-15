@@ -1,111 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/09/5
-Message-ID: <20130709141412.GV6058@nb4>
-Date: Tue, 9 Jul 2013 16:14:12 +0200
-From: Michael Niedermayer <michaelni@....at>
-To: Moritz Muehlenhoff <jmm@...til.org>
-Cc: oss-security@...ts.openwall.com, kseifried@...hat.com, Moritz Muehlenhoff <jmm@...ian.org>, ffmpeg-security@...peg.org
-Subject: Re: new FFMpeg stuff
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/4
+Message-ID: <511DF2DA.7010706@msgid.tls.msk.ru>
+Date: Fri, 15 Feb 2013 12:33:30 +0400
+From: Michael Tokarev <mjt@....msk.ru>
+To: oss-security@...ts.openwall.com
+Subject: CVE# request: pigz creates temp file with insecure permissions
 Content-Type: text/plain; charset=utf-8
 
-Hi
+I think this one well deserves a CVE#.  I just submitted the following
+bug #700608 to Debian BTS:
 
-On Tue, Jul 09, 2013 at 06:49:34AM +0200, Moritz Muehlenhoff wrote:
-> Kurt Seifried wrote:
-> 
-> > -----BEGIN PGP SIGNED MESSAGE-----
-> > Hash: SHA1
-> > 
-> > https://bugs.gentoo.org/show_bug.cgi?id=476218
-> > 
-> > http://git.videolan.org/?p=ffmpeg.git;a=commit;h=38229362529ed1619d8ebcc81ecde85b23b45895
+When asked to compress a file with restricted permissions (like
+mode 0600), the .gz file pigz creates while doing this has
+usual mode derived from umask (like 0644).  If the file is
+large enough (and why we would use pigz instead of gzip for
+small files), this results in the original content being
+readable for everyone until the compression finishes.
 
-This should have been fixed by b21ba20cc83c80fe56192fee3626a8087f37d806 in ffmpeg (Apr 22 2012)
+Here's the deal:
 
+$ fallocate -l 1G foo
+$ chmod 0600 foo
+$ pigz foo &
+$ ls -l foo foo.gz
+-rw------- 1 mjt mjt 1073741824 Feb 15 12:27 foo
+-rw-rw-r-- 1 mjt mjt     502516 Feb 15 12:27 foo.gz
 
-> > http://git.videolan.org/?p=ffmpeg.git;a=commit;h=e30b068ef79f604ff439418da07f7e2efd01d4ea
+When it finishes, it correctly applies original file permissions
+to the newly created file, but it is already waaay too late.
 
-This should have been fixed by 780d45473c32fa356c8ce385c3ea4692567c3228 in ffmpeg (Sep 24 2011)
+Other one-file archivers (gzip, xz, bzip2, ...) usually create
+the temp file with very strict permissions first, and change it
+to the right perms only when done, so only the current user can
+read it.
 
+Thanks!
 
-> > http://git.videolan.org/?p=ffmpeg.git;a=commit;h=6765ee7b9cba46818a45b051438b2552f0a1b70a
-
-This seems listed as buffer overflow but as far as i can tell it fixes
-just a null pointer dereference. If you want to assign CVEs to all
-null pointer dereferences and out of array reads that got fixed then
-quiete a few more CVEs are needed.
-
-Also see: a9456c7c5ca883b5a3947e59a9fba5587e18e119
-
-
-> > http://git.videolan.org/?p=ffmpeg.git;a=commit;h=b36e1893ef3430f039c1eaddeedcbb378f9c4444
-
-This was fixed in 4b35ee0b7c0c4cbac3541a25a5e8c00b657c8f95 in ffmpeg (Dec 28 2011)
-
-
-> > http://git.videolan.org/?p=ffmpeg.git;a=commit;h=7388c0c58601477db076e2e74e8b11f8a644384a
-
-
-> > http://git.videolan.org/?p=ffmpeg.git;a=commit;h=95a57d26d8653d21f0dab1aff3558ee944853dbf
-
-This was fixed in c49d94487c6135325930cbc4a8cd96d38ef6653e in ffmpeg (Jun 6 2013)
-Note, this issue shouldnt affect any ffmpeg releases as the code was
-added more recently
-
-
-> > http://git.videolan.org/?p=ffmpeg.git;a=commit;h=b564784a207b1395d2b5a41e580539df04651096
-
-Same as above jpeg2000dec.c wasnt in any releases yet as of today,
-what was in the releases was j2kdec.c but that was marked as
-experimental
-
-
-> > http://git.videolan.org/?p=ffmpeg.git;a=commit;h=78962d3df49afe5011b572656ecfe940bd5fbf2e
-> > http://git.videolan.org/?p=ffmpeg.git;a=commit;h=cf04af2086be105ff86088357b83d672d38417d9
-> > http://git.videolan.org/?p=ffmpeg.git;a=commit;h=eae63e3c156f784ee0612422f0c95131ea913c14
-> > http://git.videolan.org/?p=ffmpeg.git;a=commit;h=fd54dd028bc9f7bfb80ebf823a533dc84b73f936
-
-Same as above
-
-
-
-> > 
-> > Correct me if I'm wrong but most of these seem to deserve CVEs and
-> > none have been assigned, correct?
-> > 
-> > http://ffmpeg.org/security.html
-> 
-> These appear to be new, but I'm not sure how previous CVE IDs were assigned for ffmpeg/libav.
-> E.g. CVE-2013-0878 seems to be from a Google CNA, right? (At least CVE-2013-0879 is for Chrome)
-> 
-> All these issues (and all the ones in previous rounds) were found through fuzzing done
-> at Google by Mateusz "j00ru" Jurczyk and Gynvael Coldwind.
-
-I dont know about the libav side, for the ffmpeg side CVEs where
-provided by "google" for all serious issues that where found. Which
-issues where serious could in general only be assesed after the issues
-where fixed so values where available only after the fixes where
-commited.
-
-
-> 
-> It would be very, very welcome if CVE assignments from either ffmpeg or libav for any
-> such issues would have a reference to the filename of the fuzzed file triggering the problem.
-> 
-
-> With the diverging code bases between ffmpeg and libav [1] it becomes very complicated
-> to properly track down if one of the two is affected.
-
-yes, its a big headache for us as well. Especialy for me as iam always
-merging all improvments and fixes from libav into ffmpeg ...
-
-[...]
-
-Thanks
-
--- 
-Michael     GnuPG fingerprint: 9FF2128B147EF6730BADF133611EC787040B0FAB
-
-Observe your enemies, for they first find out your faults. -- Antisthenes
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+/mjt
