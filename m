@@ -1,24 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/8
-Message-ID: <CAA7hUgG-FHa58OksWdudn5bg6YnQH97KBzBQMg7GWd1yRYGCJg@mail.gmail.com>
-Date: Mon, 9 Dec 2013 14:46:51 +0100
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/1
+Message-ID: <511DA697.2010907@redhat.com>
+Date: Fri, 15 Feb 2013 13:08:07 +1000
+From: David Jorm <djorm@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: pam: password hashes aren't compared case-sensitively
+CC: Kurt Seifried <kseifried@...hat.com>, chevalier 3as <chevalier3as@...il.com>
+Subject: Re: Potential HTTP Header Injection in Apache HTTPClient
 Content-Type: text/plain; charset=utf-8
 
-Hi Solar,
+On 02/13/2013 07:54 PM, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 01/10/2013 07:38 AM, chevalier 3as wrote:
+>> Hi,
+>>
+>> As I'm not sure if this is a vulnerability or simply a 'feature',
+>> I'm posting the details for more information.
+>>
+>> The addRequestHeader method of the Apache HTTPClient module
+>> version 3.x seems to allow the injection of more than a header
+>> (potentilally the latest version 4.x too for addHeader method):
+>>
+>> Using the following code, it includes a third header in the
+>> request: HttpClient client = new HttpClient(); PostMethod method =
+>> new PostMethod("http://www.google.fr");
+>> method.addRequestHeader("header1", "value1\r\nheader3: value3");
+>> method.addRequestHeader("header2","value2");
+>>
+>>
+>> The real risk is adding a second request using a similar code:
+>> req.addRequestHeader("Content-Length:0\r\n\r\n" +
+>> "POST\t/anotherpath\tHTTP/1.1\r\n" + "Host:host\r\n" +
+>> "Referer:faked\r\n" + "User-Agent:faked\r\n" +
+>> "Content-Type:faked\r\n" + "Content-Length:3\r\n" + "\r\n" +
+>> "foo\n", "bar");
+>>
+>> Because of the Content-Length header, the sever will consider it as
+>> a seperate request.
+>>
+>> Iis this an expected behavior ? if so developpers should be aware
+>> of the risk letting a user input values.
+>>
+>> A similar advisory for Flash is available here:
+>> http://www.rapid7.com/resources/advisories/R7-0026.jsp
+>>
+>> My 2 cents, As
+>>
+> Has anyone investigated this/can comment on this? thanks.
 
-On 9 December 2013 13:39, Solar Designer <solar@...nwall.com> wrote:
-> [...]  I hope people aren't using it because it looks unsuitable
-> for use, but I'm probably wrong.
+I do not think this qualifies as a vulnerability. The addRequestHeader 
+method isn't stripping out CRLF, allowing for a potential header 
+splitting attack if an application passes unsanitized user input to 
+addRequestHeader. The onus should be on the application to sanitize user 
+input appropriately. If we called this a vulnerability, then we'd have 
+to say a database interface that lets you pass an SQL string might allow 
+for SQL injection, or something that lets you print a string to the body 
+of a HTTP response might allow for XSS.
 
-This one is going to be hard to kill, it's all over the internet in
-the usual "HOWTO [not] forge", like:
+Having an optional parameter to addRequestHeader to sanitize CRLF values 
+might be a nice feature, but I'd call it a feature request rather than a 
+vulnerability.
 
-https://help.ubuntu.com/community/vsftpd#Create_The_Virtual_Users_Database
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Thanks
+David
