@@ -1,30 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/1
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF33E106CE@IMCMBX01.MITRE.ORG>
-Date: Fri, 11 Oct 2013 04:35:26 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "kseifried@...hat.com" <kseifried@...hat.com>, Assign a CVE Identifier <cve-assign@...re.org>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: 2 CVE's to be rejected
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/13
+Message-ID: <511E8E4A.2050608@redhat.com>
+Date: Fri, 15 Feb 2013 12:36:42 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: python-pyrad insecurities
 Content-Type: text/plain; charset=utf-8
 
->> [cve-assign@...re]
->> We would want this information even if the correct CVE ID still
->> refers to an embargoed issue.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 02/15/2013 09:14 AM, Vincent Danen wrote:
+> Could a CVE be assigned to the following two issues please?
+> 
+> #1: https://bugzilla.redhat.com/show_bug.cgi?id=911682
+> 
+> Nathaniel McCallum of Red Hat reported that pyrad was using
+> Python's random module in a number of places to generate
+> pseudo-random data.  In the case of the authenticator data, it was
+> being used to secure a password sent over the wire.  Because
+> Python's random module is not really suited for this purpose (not
+> random enough), it could lead to password hashing that may be
+> predictable.
+
+Please use CVE-2013-0294 for this issue.
+
+
+> #2: https://bugzilla.redhat.com/show_bug.cgi?id=911685
+> 
+> Nathaniel McCallum of Red Hat reported that pyrad was creating 
+> serialized RADIUS packet IDs in the CreateID() function in
+> packet.py. This is not suitable for RADIUS as the RFC specifies
+> that the ID must not be predictable.  As a result, the ID of the
+> next packet sent can be spoofed.
+
+Please use CVE-2013-0295 for this issue.
+
+> 
+> These have been corrected in upstream's forthcoming version 2.1
+> via:
+> 
+> https://github.com/wichert/pyrad/commit/38f74b36814ca5b1a27d9898141126af4953bee5
 >
->[Kurt]
->The duplicate issue is still embargoed, the other one is also an
->embargoed issue. 
+> 
+> 
 
-To be (hopefully) more clear, we do not need to "populate" the CVE description or references for the (still-valid) embargoed issue; we only want to refer to its ID from the REJECTed CVE.  That way, if for any reason the REJECTed CVE is used in public, there will be a clear link to the appropriate CVE.  We don't feel that the reference to the still-embargoed issue is an information leak of any sort, given that Red Hat is likely to be working on dozens of not-yet-disclosed vulnerabilities at any point in time, and you've already publicly stated that CVE-2013-1870 (or CVE-2013-4398?) is a dupe of *something*.
 
-While it's unusual to do a REJECT of one CVE and say that it's a duplicate of another CVE that's still not public and still shows up as RESERVED, this action still gives useful information to certain CVE consumers who rely on the CVE IDs to coordinate vulnerability information between diverse parties (which is, after all, CVE's primary goal).
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Similarly, while it's unusual to publicly claim a REJECT of one CVE because it's not a security issue, in the past we have supported various "private" REJECTs that occur when the original CVE requester determines that the issue is just a "bug" (or "feature") and not a vulnerability before the issue was ever published.  It doesn't seem like much of an information leak to know *that* a particular CVE ID was REJECTed because further research showed that the issue was not a vulnerability.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-As such, it doesn't seem like there would be any loss of privacy/secrecy if we knew which of (CVE-2013-1870 or CVE-2013-4398) was a duplicate [of some other CVE, whose ID would be nice to know even if the issue isn't public yet], and which of (CVE-2013-1870 or CVE-2013-4398) should be REJECTed because it's not a CVE-qualifying vulnerability at all.
-
-I recognize that we might not have sufficient insight into the situation at hand, so any clarification would be welcome.
-
-- Steve
-
+iQIcBAEBAgAGBQJRHo5KAAoJEBYNRVNeJnmT32YP/RUrucNudALgorUcvGb12Btf
+Xtp5JPu+nYZDWq+i1au4ZMc1TZv12LKSErrvxaQZT04f6K6NvD74drqtHXf1a5ck
+NWAsk/RIRFrNmSvwkmL02352LWzKlPLfM7ZsiJgU73XEPmkLYdVCTopgGzKYaWYe
+vWKd7C3l1a/2b2I2C+O2OT2jyi89K3LQSzdZVSd7Mf81gDtDnkyQ8RT5QpcCPVRa
+XbfKdfzVdLNEw26n5k8/alpjvBARyv4KA7ZA4qQzaI9P32Nw1DFE/8zBbrHkrhj5
+V83HyOtQyqrYryreNahGkBtLc1LQZ8b81pOvNaE2FRVgA7M5VA4JH4OaL8NCornJ
+ozicUuB/U32D24Ox7UqR+nkScPCBAhj/iVz+lkKac3WHLNGJGSa25WwWjoaWPrip
+YaFZHzyijIAdYsr7tHoxTncKNhqtCClyiX6RZdPKKAfDGFV4hPfktwOY8Di6u+hM
+B8ANPe+nDi7kB4BQcm5Qj7RJ7KY0eixxYgv4ynhvvmdDlpFJwGh8rIilmCCGdVMa
+GDYjVzgR/SXTFOYWZ9pWc90Ixa3wNtqiCHNwUqKmKldHZvyph0XS4K0HM/o0IQny
+0aHSg04nSM9jlUOczlCwShhTrRHmTkkuRkXsVlv0ibtORTwcotD/9xghkLK9ktHb
+3HiFhtqk0CvJBtNMFcRG
+=z9JH
+-----END PGP SIGNATURE-----
