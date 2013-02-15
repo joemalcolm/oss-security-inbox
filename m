@@ -1,16 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/10
-Message-ID: <CABbbngAe5BK1Z_+XOyTwX4iJjF3b-tv9up-f8qt5yQUgAaGAuA@mail.gmail.com>
-Date: Mon, 9 Dec 2013 09:34:27 -0800
-From: Forest Monsen <forest.monsen@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request for Drupal core, and contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/6
+Message-ID: <2782705.Hb6UTGg8DW@devil>
+Date: Fri, 15 Feb 2013 12:45:16 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: unauthorized SSL certificates by Türktrust discovered
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Dec 7, 2013 at 8:48 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+Hello,
 
-> Earliest notification is best notification.
+as per the Qt Project Security Advisory:
+
+Title:        unauthorized SSL certificates by Türktrust discovered
+Risk Rating:  Medium
+Platforms:    All
+Modules:      QtNetwork
+Versions:     All
+Author:       Peter Hartmann
+Date:         7th January 2013
+
+More info and code commit at: http://lists.qt-
+project.org/pipermail/announce/2013-January/000021.html
 
 
-Hah! Thanks, got it.
-
+I don't see a cve for it, please assign one.
+-- 
+Agostino Sarubbo / ago -at- gentoo.org
+Gentoo Linux Developer
