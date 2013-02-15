@@ -1,45 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/04/3
-Message-ID: <510F34E1.4010503@redhat.com>
-Date: Sun, 03 Feb 2013 21:11:13 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/17
+Message-ID: <20130215212052.GN9942@yuggoth.org>
+Date: Fri, 15 Feb 2013 21:20:53 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: latd
+Subject: Re: (linux-)distros membership changes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 2013-02-15 23:48:35 +0400 (+0400), Solar Designer wrote:
+[...]
+> I've also unsubscribed the rPath person, since the rPath website and
+> mail appear to be down for maybe a couple of weeks now.
+[...]
 
-On 02/03/2013 04:48 AM, Nico Golde wrote:
-> Hey, latd suffers of a buffer overflow when processing the version
-> header and generating an error message.
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=699625
-> 
-> Can we get a CVE id for this?
-> 
-> Cheers Nico
-
-Please use CVE-2013-0251 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRDzThAAoJEBYNRVNeJnmThhkQAIWPQaNRQVxaCUfAV9utdKeN
-LyohmjDKRq1oV+f7Ac3xAUJ0U3pxFEKXsoyXK5U9UToLDn1NRq1u8Rx34VTsfgXc
-qbg95SImRZVvvWPWvwcDHq4pnW6Q4Ismbyl8kjEe08U5TV4taiLyUX+qGI7Hgi1s
-UEat9IvR7Ey6EYu5459calBCsxkKkcnQHOF0M34wF17JbFnZajAOZ7bMXRKqblHP
-OlxxdhpkaWp3jYT8eAKurDhSIeHn5qzPeAm9Q7Kb+E9VnEmkaqHfs6np7EPU070T
-FvNKtHlSUddETmC4tht1EiL/jCmc3qzRs+dANd7gLMKdVLykW3dkk8MncTZpGTgv
-64eZhTZ5jnMOQOsAsOqSiM76LrfKmL+1lDK1Gxijs0WLdXOg/ouTIT1q3PXnfiXF
-a8TN1jRSvJYX27/3V5VX3fMjN1exikvtNLwPcyKZ9G9kwNC/+aqPc5Rq8RjEfe7R
-0S/s45PzsA0aojgWr/3oe4wbYFTlg0dVIT/MIAAOLch85vKafCdlESd1Gp12zT61
-3a8xBaDD0e/BRx5cSxSVBvMAUOT/maZI1jdtlKCgcaNR6c9lL3NsdX82p0HCpmKF
-UW7SpyQ1KiPDGvIK754KykAfGKyU5bm2vmRYAK52Qrb2uG8k+F0e+FT8cBzIwShk
-riC6tyAc3LICc+HZArgy
-=U5vX
------END PGP SIGNATURE-----
+Yes, their intellectual property and staff were acquired by SAS a
+couple months ago, who has basically shut down what used to be rPath
+Linux in the days since.
+-- 
+{ PGP( 48F9961143495829 ); FINGER( fungi@...ulhu.yuggoth.org );
+WWW( http://fungi.yuggoth.org/ ); IRC( fungi@....yuggoth.org#ccl );
+WHOIS( STANL3-ARIN ); MUD( kinrui@...arsis.mudpy.org:6669 ); }
