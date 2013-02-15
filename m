@@ -1,37 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/19/4
-Message-ID: <BLU0-SMTP189F66C12CE03D0E67DF46CEF420@phx.gbl>
-Date: Tue, 20 Aug 2013 02:33:54 +0430
-From: Hamid Zamani <me@...idx9.ir>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/2
+Message-ID: <511DC26B.4090102@redhat.com>
+Date: Thu, 14 Feb 2013 22:06:51 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request : NAS v1.9.3 multiple Vulnerabilites
+CC: Mathias Krause <minipli@...glemail.com>, Eric Dumazet <edumazet@...gle.com>, "David S. Miller" <davem@...emloft.net>, Brad Spengler <spender@...ecurity.net>
+Subject: Re: CVE Request: kernel -- local DOS (endless loop with interrupts disabled)
 Content-Type: text/plain; charset=utf-8
 
-On 08/20/2013 12:48 AM, Kurt Seifried wrote:
-> 
-> 
-> Ok so we got a total of three kinds of vulns, so same
-> version/researcher I'm CVE MERGEing them:
-> 
-> Buffer Overflows please use CVE-2013-4256
-> Heap Overflow please use CVE-2013-4257
-> Format String please use CVE-2013-4258
-> 
-> As for "Possible Race Condition and symlink attack:" can we confirm
-> it's a security issue?
-> 
-> 
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thank you.
+On 02/14/2013 11:39 AM, Mathias Krause wrote:
+> Hi,
+> 
+> Eric Dumazet recently fixed a local DOS in commit 77c1090 "net:
+> fix infinite loop in __skb_recv_datagram()"? An unprivileged local
+> user can easily trigger this bug and lock-up the system.
+> 
+> A reproducer is attached.
+> 
+> Thanks, Mathias
 
-Actually not, i just mentioned it according to fixes and announcing.
-it's just about some special OSs not all of them.	
+Nice, I can confirm this works quite well on Fedora 18.
 
--- 
-Regards,
-Hamid Zamani (aka HAMIDx9)
-Ashiyane Digital Security Team
+Please use CVE-2013-0290 for this issue.
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRHcJrAAoJEBYNRVNeJnmTkWIQAKwGNealGpHBZ3r4R717eQCt
+6QKhFbc+pdj04VAC9bhZA1Yeszphqh9pgQI3NHukaNHQ7xzyK50nKO3r2lo4Khgh
+Ox5Fb4FtfmiCnFFM+YopFHQI6UAzSa+Ue0TOP/1Npkb6AcuwZjx2Cb0X7obwCtr6
+APp2bXDXlPzOBpjO9Pu9xjXtyVQOATRvtKqfijTFv2iChNF2Di2i+L8IAZ6IrNkl
+YN+eLXbHBr3qSyUnvyHagrqr6YGvLhq8q3yb6JxhqDrQ5EFy+iVlbNIYpE3Vlc9R
+2QSyGnsY2D9GZWC+M0dMz+boNUIIO/vhNJgp5BteV2FZ5hBqOPYbTmBSF4rwOkWv
+YsegcsuyvikLZSOsSCFqnn2/PIvw9sK+mw7xZjXGPVyhM9X/r3BatHeJTRgmlq8b
+qgiJ8Hc/G3VUTL4/0TkTgCSocpOGAvP1vuIGtwqHnuBjLrI6gDnJgo6/tYeLzaNP
+sMSMqgPjSBTHECBw0IxCqY7GJLCK1j6FD3IfzSMAZZ/MuRrfXIap9WNaxjGMwfUk
+Z5/uK0rqwQaf4eB7vm8aHKltX/bVj1ZVxXaG1+T1plkiQMo0KtGJqyEpA1+0xx0f
+5wQMHyvcqn41WVKTzcRDjAZyIvM/2vZm+Ly7Ntzu/EWe74HcSUmI8b1eAJmfO4y6
+PhD2jRd+YaOBNxMo9IDW
+=TGRd
+-----END PGP SIGNATURE-----
