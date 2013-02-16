@@ -1,32 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/10
-Message-ID: <50EFDD38.2060900@redhat.com>
-Date: Fri, 11 Jan 2013 10:36:56 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/16/1
+Message-ID: <511F202B.2020700@msgid.tls.msk.ru>
+Date: Sat, 16 Feb 2013 09:59:07 +0400
+From: Michael Tokarev <mjt@....msk.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: gnome-keyring does not discard stored secrets in some cases
+CC: Kurt Seifried <kseifried@...hat.com>,  Matthias Weckbecker <mweckbecker@...e.de>
+Subject: Re: CVE# request: pigz creates temp file with insecure permissions
 Content-Type: text/plain; charset=utf-8
 
-On 01/11/2013 08:38 AM, Kurt Seifried wrote:
-> On 01/10/2013 11:45 PM, Florian Weimer wrote:
->> I had trouble finding a caller of this function, but the submitter
->> indicated that gnome-power-manager uses it in older versions:
->>
->> <http://git.gnome.org/browse/gnome-power-manager/tree/src/gpm-control.c?h=gnome-2-32#n162>
->>
->>   I'm not sure if this needs a CVE, but it's probably worth fixing
->> anyway.
->
-> What security violation occurs/what trust boundary is crossed?
+15.02.2013 23:33, Kurt Seifried wrote:
+> On 02/15/2013 06:43 AM, Matthias Weckbecker wrote:
+>> On Friday 15 February 2013 09:33:30 Michael Tokarev wrote:
+>>> I think this one well deserves a CVE#.  I just submitted the
+>>> following bug #700608 to Debian BTS:
+> 
+>> Not sure if this qualifies for a CVE. At least similar issues did
+>> not get one in the past.
 
-I think the expectation was that key material is discarded on 
-suspend/hibernate.  This seems quite desirable for hibernate without 
-encrypted swap.
 
-I've verified that Fedora 17 (GNOME 3.4) does not discard cached keys on 
-suspend and hibernate, either.  (Swap is encrypted, though, at least I 
-selected that in the installer.)  However, I suspect that users expect 
-that suspend (but perhaps not hibernate) does not discard keys.
+> From the last discussion of this:
+> 
+> http://www.openwall.com/lists/oss-security/2012/09/24/4
+> http://www.openwall.com/lists/oss-security/2012/09/24/8
+> http://www.openwall.com/lists/oss-security/2012/09/24/9
+> http://www.openwall.com/lists/oss-security/2012/09/26/6
+> 
+> Basically I pointed out we need to define what information
+> MUST/SHOULD/SHOULD NOT/MUST NOT be marked as sensitive/etc so we can
+> apply appropriate file permissions and the discussion died.
+> 
+> So no CVE for this. Set your umask to be safe for now (and probably
+> forever =).
 
--- 
-Florian Weimer / Red Hat Product Security Team
+This is definitely wrong.  In my opinion, anyway.
+
+I remember well the gnupg discussion.  That one is really questionable.
+Especially when it creates an encrypted file from non-encrypted but
+protected data - the result is not necessary to be protected with
+file permissions since it is encrypted.
+
+Gnupg deals with security data explicitly.  When you encrypt/decrypt
+data using it, you expect to be aware of when you cross encryption
+boundaries and deal with the consequences using umask.  But even
+there, I expect to have all temp files with strong permissions, so
+I don't have to deal with these _too_.
+
+Here, the utility is not crossing any encryption boundaries like gnupg
+does, and its aim (and end result) is to _preserve_ attributes (incl.
+permission bits).  What it have in-process - to end-user anywa - looks
+like an internal temp file (that's why I used this word in the subject).
+Ie, the result is correct (the permission bits), but a temp file is
+insecure.  I just don't expect to have a widely open temp file which
+reveals my secrets!
+
+pigz here does not differ from, say, cp utility - when I ask it to copy
+foo to bar, I expect it to keep bar at least as private as foo is, --
+the result AND the temp file during copy.  If cp(1) behaved this way,
+creating destination file with 0666&umask and chmod'ing it when the
+copy is done, that'd be insane.
+
+Suggesting to have "safe" umask is entirely unpractical in this context.
+I do have safe umask which lets me to do my work and share it with others.
+Making it to drop permissions for !me means lots of headaches in other
+places, much more than necessary or tolerable.  And thinking and especially
+choosing which umask to use for EVERY process is, again, completely
+unpractical.
+
+I just expect a tool to not reveal information more than it already is,
+and, well, to implement common sence.  This, and other examples of cp,
+gzip, etc, always creating temp files with restricted permission -- all
+are good examples of common sence, where pigz does not follow the
+natural expected practice.  And it _hides_ that fact by creating only
+the "temp" file insecurely, -- the result is secured properly and looking
+there, users are unusupected that they private data has been already read.
+
+Thanks,
+
+/mjt
