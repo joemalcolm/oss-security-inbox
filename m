@@ -1,85 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/1
-Message-ID: <524E44CC.7020709@redhat.com>
-Date: Thu, 03 Oct 2013 22:32:12 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/16/2
+Message-ID: <511F27F6.9040900@redhat.com>
+Date: Fri, 15 Feb 2013 23:32:22 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Pedro Ribeiro <pedrib@...il.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: Re: CVE request - VLC 2.0.0 to 2.0.8
+CC: "Steven M. Christey" <coley@...re.org>, Matthias Weckbecker <mweckbecker@...e.de>, mjt@....msk.ru
+Subject: Re: CVE# request: pigz creates temp file with insecure permissions
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/03/2013 02:52 PM, Pedro Ribeiro wrote:
-> On 1 October 2013 16:20, Pedro Ribeiro <pedrib@...il.com> wrote:
->> Hi,
->> 
->> I have discovered a denial of service / possible code execution
->> in VLC via a crafted ASF file. This has been reported to VLC and
->> was apparently fixed unintentionally in 2.0.8 with the entry
->> "Improve handling of corrupt ASF files". Version 2.1.0 is not
->> affected.
->> 
->> The file contains a crafted ASF packet that causes VLC to crash
->> on a read operation, with control of EDI and EAX. In the file
->> attached you will find at starting offset 0x157AD the hex values
->> 17 DE B4 71 in little endian, which attempts to use for a read
->> operation. Control of other variables in the Demux function in
->> asf.c is also possible by changing packet values before and after
->> the offset as per the ASF specification.
->> 
->> The file is located here: 
->> https://github.com/pedrib/PoC/blob/master/vlc-crash.asf
->> 
->> I have not been able to obtain any program control so far, so at
->> the moment this only crashes VLC. However someone more skilled
->> might be able to control it.
->> 
->> Can you please provide a CVE for this?
->> 
->> Regards Pedro
+On 02/15/2013 02:49 PM, Steven M. Christey wrote:
 > 
+> Kurt,
 > 
-> Hi,
+> As Michael describes the issue: "When [pigz] finishes, it
+> correctly applies original file permissions to the newly created
+> file."
 > 
-> Do you need more information on this, do not consider it CVE-worthy
-> or just swamped with work at the moment? :)
+> By changing the permissions of the file AFTER compression, pigz is 
+> clearly trying to implement a security policy of "preserve the 
+> permissions of the original file."  It is not properly obeying its
+> own security policy because of the race condition, so this is a
+> more clear argument for assigning a CVE than in the general case
+> where a program's default policy may be "rely on the umask."
 > 
-> Regards, Pedro
-> 
+> So, pigz should have a CVE.
 
-Sorry forgot to reply. I'm not sure this is CVE worthy. In general
-crash bugs in services are CVE worthy, but crashes in client software
-are usually limited to things like email clients or web browsers where
-there is a high potential for processing untrusted data without much
-user interaction (e.g. displaying some random email or web page) whre
-you also have the potential to lose work (so there is an impact).
+Agreed, I read to quickly and sort of glossed over it.
 
-In the case of VLC you load a nasty file, it crashes, you don't do it
-again. There's not really any impact. You don't lose any work.
+> Going forward, maybe the guidelines could look something like:
+> 
+> - if the program tries to implement a security-relevant policy but 
+> fails - assign CVE
+> 
+> - if the program has functionality that is clearly for secrecy, 
+> e.g. gnupg - assign CVE (it should have a policy that preserves 
+> secrecy)
 
-Now the question becomes "possible code execution" is how possible?
-This is based on the fact that memory corruption occurs, or is there
-more evidence?
+So as a rule of thumb:
+
+1) private encryption keys/certificates/tokens
+2) non hashed passwords for sure
+
+And less certain:
+
+3) hashed passwords (/etc/shadow being readable = security vuln)
+4) configuration data (of a sensitive nature?)
+5) User data (e.g. email/web files?)
+
+> - if the program's vendor explicitly states that the issue is a 
+> vulnerability - assign CVE (this is stating an explicit security 
+> policy)
+> 
+> - otherwise, if the program defaults to umask but does not have
+> any inherent secrecy requirements or explicit policies, or if the
+> vendor treats the issue as "hardening" but not a strict
+> vulnerability - maybe no CVE
+
+So just to be clear in the following situation:
+
+1) we have a file "foo" with permissions of say 0640 (-rw-r-----.)
+2) we have a umask that is less restrictive (e.g. 0007)
+3) we run a program "bar" on file "foo" which creates an output of say
+"baz"
+
+ANY program that operates on fiz and creates the output baz with the
+permissions of the umask (so 0660 or whatever) is not automatically
+considered to have a security vulnerable, we would then need to apply
+knowledge of the intent of the program/the data it handles.
+
+> Your past suggestions for MUST/SHOULD language could be one
+> mechanism for getting more clear about "security policy" in the
+> future.
+
+The benefit here would be projects/vendors could then state security
+policy and we would have a more clear situation (it would fall under
+your third point "if the program's vendor explicitly states that the
+issue is a vulnerability - assign CVE (this is stating an explicit
+security policy").
+
+> - Steve
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSTkTLAAoJEBYNRVNeJnmTl8QQALyLEkBcN6TXi6UHp19HXjfw
-Iigyag+FoFseJtIO1MdB8Qq4PYhLXCUJJ/6Lhe4ZLZJ3XdAQL9EjXqH2ehWfgWQh
-V5qnKT+wlrUb8WTrTFTiOQHzmyd/Z/Q+Sp66+OGJ2upSp0ZutA0/1WVFK6U9SE2V
-YEPQzgh15g8WRufiJut1y+yUpiVpoSU8XQniLTFnxROkRSMXAx4pDtILRdYPvNNv
-QVk3/pV+c8qJzy5T+BrC4dV2dC5gKsRZH0NZdUDU7t0Zp87AOdVEQpuZrmmjbaby
-8N6/c+G70GUcZ0U0Pqsecf8UYrbD+Mw379gbZQDRFMBrZxLH4fS8i5moYnM7scsh
-twDQKFPZ7IwUe1cT16bFHBog9joZm+DBMk4kf96rEudhsEF8uiv+moZt0ZDAODZx
-8ZQmBeFpQ+hfv8n9gkwehT4FaJ/o6kK+PHDFHOCplA5ljbFuUufg7HzSsOb8mSHV
-GeChKkdEbdqAFgBwIUjMgBHq47Irz4ZMgIhwni+3knczwvuhdJTFDwn777LdlbIg
-VjL+Ws2fTUsVFVQ7VpWwrJ24Rk3DP5dlk9BLNIGkvw6Z9fzUievwBjotdlFrwczo
-XyfY2bi4ms6nLGyct0L1OTwoFQ9P4NxmVSSgRNW8kZlLPmEKInpf5q990oZX3hX7
-+rRU7rmQlA1pjBCxBNh1
-=qnq6
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRHyf1AAoJEBYNRVNeJnmTxF4P/0jjkPSEhqRSTQk7Q7Nqe0vV
+VcHf8efCwlx7QahNpDrz86Jf5xmaDIxi5ogmZ34fBFos47LnIdedGzEE3q1bbkOD
+6YDUXRWlEb66vJa4Ci7iSpxCfkGAKomAbfQi3lAJt8PnP+o9zhpQdVKZ3HJUXC31
+SjzZAzzeF1Nmz70vLkYE+B9iqPd+VR2gzHhJG01b1VbId2HMwWZigozBSQj0tt6C
+leNR/79533cZQcKmgCt4ABHHIsxyk2Kr8Gcqeha/QhIsC30A1cRK7P653SwX23fz
+acUfBQyvY+XLs/jERhFm0PrQ3KVMqZgj8CphAQsEFRyKipqSLjFmLETmCVFb8vBF
+GQiWJMSNjk++yvfk/8TrVDVcleK7FCc/pc6/42N73cO98g8g0m8WkVuLWSv1vhX1
+YEZ0B8Z2IK865wlya96zQuI6Naeh2tupYiOEMDL7piL/ZEAIbZq3XooJd3R9C9ie
+WffixWnijrroGm1zJyv+EQ+Tlr+k4v4V5QqZaYK7J+vORHZ9OLkrpSOpJdxx2mMO
+rOISNQ+IhIr/23k+nbQJDuwAdVAQZRd07Tr6Rqvl6tkZr/B/keuYxayJ9bp/S2TY
+99Muj9E6sXYmHFd3RUSdF3eM9wX+0wgo74T+BRbGEFjzcEtGaIXBdNtu6M9vd5iA
+ae6bLkzCk/bnCbbiwnlX
+=WsN8
 -----END PGP SIGNATURE-----
