@@ -1,44 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/10
-Message-ID: <20130828203921.GX32641@redhat.com>
-Date: Wed, 28 Aug 2013 14:39:21 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/16/3
+Message-ID: <511F284F.2050304@redhat.com>
+Date: Fri, 15 Feb 2013 23:33:51 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: CVE oops in GLSA 201308-05 (wireshark)
+CC: Michael Tokarev <mjt@....msk.ru>
+Subject: Re: CVE# request: pigz creates temp file with insecure permissions
 Content-Type: text/plain; charset=utf-8
 
-* [2013-08-28 14:10:10 -0400] cve-assign@...re.org wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->-----BEGIN PGP SIGNED MESSAGE-----
->Hash: SHA1
->
->>I just saw via a Gentoo bug report that their GLSA 201308-05 advisory
->>mentioned some CVEs as related to wireshark that were incorrect.
->>
->>Instead of mentioning CVE-2013-{3560,3561,3562} they mentioned
->>CVE-2013-{3540,3541,3542}. I checked on MITRE's site and those three
->>are still reserved.
->>
->>I don't know who those three (354[012]) are assigned to, but you might
->>want to see if they've been used already or not and dupe them against
->>356[012] if they have not.
->
->Those are in use:
->
->http://archives.neohapsis.com/archives/fulldisclosure/2013-06/0085.html
->
->Airlive
->CVE-2013-3540. Cross Site Request Forgery(CWE-352) and Clickjacking(CAPEC-103)
->CVE-2013-3541. Relative Path Traversal(CWE-23)
->
->Grandstream
->CVE-2013-3542. Backdoor in Telnet Protocol(CAPEC-443)
+On 02/15/2013 01:33 AM, Michael Tokarev wrote:
+> I think this one well deserves a CVE#.  I just submitted the
+> following bug #700608 to Debian BTS:
+> 
+> When asked to compress a file with restricted permissions (like 
+> mode 0600), the .gz file pigz creates while doing this has usual
+> mode derived from umask (like 0644).  If the file is large enough
+> (and why we would use pigz instead of gzip for small files), this
+> results in the original content being readable for everyone until
+> the compression finishes.
+> 
+> Here's the deal:
+> 
+> $ fallocate -l 1G foo $ chmod 0600 foo $ pigz foo & $ ls -l foo
+> foo.gz -rw------- 1 mjt mjt 1073741824 Feb 15 12:27 foo -rw-rw-r--
+> 1 mjt mjt     502516 Feb 15 12:27 foo.gz
+> 
+> When it finishes, it correctly applies original file permissions to
+> the newly created file, but it is already waaay too late.
+> 
+> Other one-file archivers (gzip, xz, bzip2, ...) usually create the
+> temp file with very strict permissions first, and change it to the
+> right perms only when done, so only the current user can read it.
 
-Ok.  I suspect that Gentoo has or will fix any self-published copies of
-their GLSA but the ones that are archived still contain the incorrect
-references.  Not sure if you need/want to do anything... I just sent the
-email as a heads-up for you.
+Apologies for my first misreading of this. Please use CVE-2013-0296
+for this issue.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+> 
+> Thanks!
+> 
+> /mjt
+> 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRHyhPAAoJEBYNRVNeJnmT/58QANpX3fNSN/DV2k2h6/TMreid
+gnqYXxndMTo6D63+4jWkKyMb+XsJjNJ52jvN3wAYwKGVk7MtrDzKydDFn5qFMBJ0
+4Ysp+cVsD5HE4QRc6cJPkBNaoKA6t+cj0fInu/hqkXMTAZpUDEPn9p4FUjB0OSrJ
+nOFz4PWbAPX8KItMNUmMCu/r2OnOQ7vhJDHk37GIXhEwvZE9Hf2m2mNtBfBHHrlw
+7x8fO0lEmYi3aOhkvm+ka0U/YplmNWxWXjF0xoxzwQgEeJV+xSiCgk7Wk4YzYLTm
+i4TPI/RHvvuXgKs2mzHXE6qu5F0ADif0Vhl2iEasl8X3Zjeb6nZ7i6r+eTAMmsXf
+pJvDbC28PnPGSC+u9J4oibDbugu7FJXyYDWtDz6ylQTFDJZ6nXPKGfUUbq2i/7vn
+G84r/1LsrF8PxBFu8fFCD/+tZtyoCMU8qosfiTFHi4sgVF/4jGBVmICkyn6IE+3e
+VL/bcutjWd9gGg9S8MaAO+TDnEmaJbvluPlBandKNdZIV18e7bDed6fsGwXiyJ12
+XGIC5A9IgxioG4yFguwB1LutVaBMW80UxjMZQDOoeTOLWLS6dLqFuLbWz3DK0b3a
+aqh+tH1OvYNHgpu9UFDFFVvGCMziXL8k95dPb/8BbHF0YB4GGP9K0V77BEvRBJkC
+jAPHv+UOIAjW2xXDwTyK
+=OByZ
+-----END PGP SIGNATURE-----
