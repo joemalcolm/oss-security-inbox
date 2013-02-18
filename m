@@ -1,62 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/1
-Message-ID: <51E770A8.5090504@redhat.com>
-Date: Wed, 17 Jul 2013 22:35:52 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/18/1
+Message-ID: <51219868.2000406@redhat.com>
+Date: Sun, 17 Feb 2013 19:56:40 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: ISC DHCP client and unsolicited DHCP options
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, kk@...suke.org
+Subject: Jenkins CVE request for Jenkins Security Advisory 2013-02-16
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/17/2013 01:21 PM, Florian Weimer wrote:
-> Somewhat surprisingly, ISC DHCP does not check if a server
-> response contains options which have not been requested.  As a
-> result, removing items from dhclient.conf (say, DNS servers or
-> route requests) does not provide any additional security.
-> 
-> This is not a CVE assignment request.  I just want to share this
-> to give distributions the opportunity to update their
-> configuration scripts (the actual interface configuration is
-> implemented in shell, in case you wonder).  Upstream version 4.2.5
-> adds additional environment variables which allow the script to
-> check what was requested in dhclient.conf:
-> 
-> | - The client now passes information about the options it
-> requested |   from the server to the script code via environment
-> variables. |   These variables are of the form
-> requested_<option_name>=1 with |   the option name being the same
-> as used in the new_* and old_* |   variables. |   [ISC-Bugs
-> #29068]
-> 
-> (Using NetworkManager may still bypass dhclient.conf settings, see 
-> Debian bug 717158.)
-> 
+I'm trying to sort out this security advisory so CVE #'s can be
+assigned to it, can you (kk@) please comment on this? thanks.
 
-Do any DHCP clients process and use options passed to them that are
-not explicitly wanted? Might be worth setting up a DHCP server that
-hands out every possible options (there's a lot) and see what happens
-on various clients.
+https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2013-02-16
+
+==============
+One of the vulnerabilities allows cross-site request forgery (CSRF)
+attacks on Jenkins master, which causes an user to make unwanted
+actions on Jenkins.
+
+Another vulnerability enables cross-site scripting (XSS) attacks,
+which has the similar consequence.
+
+Another vulnerability allowed an attacker to bypass the CSRF
+protection mechanism in place, thereby mounting more CSRF attackes.
+These attacks allow an attacker without direct access to Jenkins to
+mount an attack.
+
+In the fourth vulnerability, a malicious user of Jenkins can trick
+Jenkins into building jobs that he does not have direct access to.
+
+And lastly, a vulnerability allows a malicious user of Jenkins to
+mount a denial of service attack by feeding a carefully crafted
+payload to Jenkins.
+================
+
+So it sounds like 2 CSRF, 1 XSS, 1 "can trick Jenkins into building
+jobs that he does not have direct access to" (permissions bypass?) and
+a denial of service.
+
+The 2 CSRF ones, were they discovered by separate researchers or the
+same person? Can you provide the code patches that fix them so I can
+see more details? Thanks.
+
+Also if you want to get CVE #'s for Jenkins advisories please do not
+hesitate to contact me/secalert@...hat.com, this will make tracking
+these issues a lot easier!
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR53CoAAoJEBYNRVNeJnmTGw0P/ifiXZNt56f0JaBOaq4J3ZOM
-xQICpvZiOJ5meCYyVwJHxB3Ket4GXxEjLlwFi4RTWc5So5tlH9diINQq4q1oeUHF
-ajOs2vb0dXA7bxUOaug2BU+35GQYncQ9ns4XcP0U0aMP23z7JAolXcwkELM3TN3p
-kQICLwdcPK/x9zT8avmX37LTE41N0zSltxVRxw60iTy1QyHwlFVP+VG8VHNKeu+i
-20zUsVpMUajhwzOm1xnzvJIjSdlZrVBMcLNorFRlbDkqKZpwAd50IfSAvGmcbpfu
-JlZUn+xJfGLSNhjx7TvbuLAaADUUH0ZVOYkHvkFGp4wPvYpwLnDMkWUiN+TdUyD2
-rKQa5SEDIQ45YeZLhAIwAimabQdMUOYLnCQXMlWlryJK4Oog3X8eBaQMwKuxlMfm
-6pbSrBrfdfhPwFjLaUXEQCwHb4IKNDp3pH32/WyDuo49D7q0iRAQrZg3gQ0N0cg7
-Ua9YtUt5FJNqkDE7M26ANjrgPCONHgqOXvvH1qAWvTiNpxDtKwwOykwVAYQ4yAcP
-A3wvmJ5WsUj6o10toTfuNrlZzj37eqY1ppiyd9e9J36fQ82Tl2FkQcWTJhDxu3Dc
-ah6ymoXURH/d2JdTHdUvIgBFoRjHmZNWSMzPjt/50p5RdhfP/jgujlO5g6Me4KTa
-lLAMAGNWCipXHmCCGamO
-=LDL/
+iQIcBAEBAgAGBQJRIZhoAAoJEBYNRVNeJnmTlrIP/23i8gBuaR+Aaswxgj90+Goa
+slw1CGNbgt0BT6ABqUrpKgidkB/g20xa0dKL6X0gdu5qdDxTJ7aJ3dkhAlSQeD9w
+zNItfmU37NyDaZJ8PW+B05kNkijLMPnsJM7emKC6WsLO3K3iHQgYqS1t7/Oz33gA
+f3mnfeRYsH7s1nuW44710JhCk0BIW5cmado9CM3xwioXahDyWKc5MPs9/7FyNSVj
+LzjM2Z8Inwu5bk1HoS9E7dCvBTq9oCre3KiLfEWOrQSLXu9uE/yVVmcTzfMKP+QT
+Jw1cRUK2SjpeC/yu+A/0ZaE5JgT7xy4QguprHwjaYHwklAq+TTE6MuJa/pgd6urc
+0gbnPIWMldNndvS+GJFshuoTO7T4/A7dfbuzGxdECfFaYUzNEXx4UxL9VPzxYXI0
+98Bl1agTc/I2BMkg8K77jRfAhVhd9nPG8wdXxu3wG8oQm5bp9tUyDUu6Hsgs56AY
+7PoDxlzkZtD5XyoxEyktW6mz/rz3U0lZvN1TuXy5bxNRAxjXMH7TyKZ1bbodykae
+ZWM7ZJHo5H/F96jKtq/SrF8d6Zd+rQ98Lam2urH6C2z6YCZgt5MHuNAF8li5mjEZ
+sw4adnNKKc635j8pZVEf9gjlBNuXB5nKg5XIWHfyHpXY4TnicUMGAsFVBafcFm1Z
+ZoPZscPPjk6ygGSnyPga
+=wF04
 -----END PGP SIGNATURE-----
