@@ -1,52 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/09/1
-Message-ID: <51DB7ABD.5090506@redhat.com>
-Date: Mon, 08 Jul 2013 20:51:41 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Moritz Muehlenhoff <jmm@...ian.org>, ffmpeg-security@...peg.org, michaelni@....at
-Subject: new FFMpeg stuff
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/19/2
+Message-ID: <51239F86.60806@openstack.org>
+Date: Tue, 19 Feb 2013 16:51:34 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2013-004] Information leak and Denial of Service using XML entities (CVE-2013-1664, CVE-2013-1665)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-https://bugs.gentoo.org/show_bug.cgi?id=476218
+OpenStack Security Advisory: 2013-004
+CVE: CVE-2013-1664, CVE-2013-1665
+Date: February 19, 2013
+Title: Information leak and Denial of Service using XML entities
+Reporter: Jonathan Murray (NCC Group), Joshua Harlow (Yahoo!), Stuart
+Stent
+Products: Keystone, Nova, Cinder (see note)
+Affects: All versions
 
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=38229362529ed1619d8ebcc81ecde85b23b45895
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=e30b068ef79f604ff439418da07f7e2efd01d4ea
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=6765ee7b9cba46818a45b051438b2552f0a1b70a
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=b36e1893ef3430f039c1eaddeedcbb378f9c4444
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=7388c0c58601477db076e2e74e8b11f8a644384a
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=95a57d26d8653d21f0dab1aff3558ee944853dbf
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=b564784a207b1395d2b5a41e580539df04651096
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=78962d3df49afe5011b572656ecfe940bd5fbf2e
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=cf04af2086be105ff86088357b83d672d38417d9
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=eae63e3c156f784ee0612422f0c95131ea913c14
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=fd54dd028bc9f7bfb80ebf823a533dc84b73f936
+Description:
+Jonathan Murray from NCC Group, Joshua Harlow from Yahoo! and Stuart
+Stent independently reported a vulnerabilities in the parsing of XML
+requests in Python XML libraries used in Keystone, Nova and Cinder. By
+using entities in XML requests, an unauthenticated attacker may consume
+excessive resources on the Keystone, Nova or Cinder API servers,
+resulting in a denial of service and potentially a crash
+(CVE-2013-1664). Authenticated attackers may also leverage XML entities
+to read the content of a local file on the Keystone API server
+(CVE-2013-1665). This only affects servers with XML support enabled.
 
-Correct me if I'm wrong but most of these seem to deserve CVEs and
-none have been assigned, correct?
+Note:
+The vulnerabilities are actually in the various affected Python XML
+libraries, but we provide OpenStack patches working around the issues.
 
-http://ffmpeg.org/security.html
+Grizzly (development branch) fixes:
+Nova: https://review.openstack.org/#/c/22309/
+Cinder: https://review.openstack.org/#/c/22310/
+Keystone: https://review.openstack.org/#/c/22315/
 
+Folsom fixes:
+Nova: https://review.openstack.org/#/c/22312/
+Cinder: https://review.openstack.org/#/c/22311/
+Keystone: https://review.openstack.org/#/c/22314/
+
+Essex fixes:
+Nova: https://review.openstack.org/#/c/22313/
+Keystone: https://review.openstack.org/#/c/22316/
+
+References:
+https://bugs.launchpad.net/nova/+bug/1100282
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-1664
+https://bugs.launchpad.net/keystone/+bug/1100279
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-1665
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJR23q9AAoJEBYNRVNeJnmTU2QP/iaL/vPtPgR5XbnabRZQBCC7
-jbHtHQS9Fp6iTDTxAgX6aUVDI5TEglUQoTvoz9aqEpybcZkyq1RV+Mb5aUHdmoTo
-CwdxtUpGwnfH5ESdR38SvvU4Ir82hb6eR9U568QjCEE3f76YKbPixZaxpFSOMJgn
-k2mLrtn7Serz5z2bAzQFk+Uezkt5EYKnjGrZr+Mc4TvWRs51CDpiaidFFfaHBCzq
-Wz5Y4NvRHlBJBcit3V6bv2j/knNzURaxHaxV3EkceS01E93Ex2oZ3nD7eioVEuA/
-uJ4axV24fwcQaYyD9vW/HM/QY5bvMPC/a6XhHVhRndReScn1jndWDkGhLfG2N7oY
-xtVuOTbwqTvFGWAzsYfPGD2eP+zSfFPFwhH2Kp0tARG8u41UspHmikyO45PE+hA+
-xIVn2lFSXoL02F5MWBxijqERfc4XxwG4dMqz0SqVYXPimVYnuboLCsDIVqcDU3Ek
-5brxvel3fW9rYM4cg2KrceyzhzEDfAHTFZrTqwzEPVDy754zhHo7RW0T5JSj5J3X
-av8rab7o+ztN8n7nIGY1xtQEXuI90p0zPAy9k5LxLZcfIpaXr/mdbgs49xsM4MXc
-6ufIhajBqXxiENNNAd+0HR/qaEjd0qccmi1AlooOHf1p8seG1nvC7RyH86rTtQdn
-KHZKCduIzam3jwNmvAQJ
-=CA1m
+iQIcBAEBCAAGBQJRI5+DAAoJEFB6+JAlsQQj2fQQALLE9GEOIRGcj9gXXQ5mDS3l
+/CWI6ljTlVWxXy143lAUbkpvW0AHx0S6wVU38Hh/wS6D3u4JpxC2lERcI6KB7XyF
+R6F7qWzdwulh+0GX9n+8rO0qLVkqhB6hn3bCVUKu20N+cromJHsSgzDU6lvVlUAU
+dwc9eFWmg2d7bpESUdltDo9yEnz0jXxzOpCseC5/zfSo5RnJU1Oi4ZaiXPzbRqqb
+bQzKRGevLddHAMKJnKrYvpg5471LQ8bC7rMYwq44c4HH0+ZhwQVgwyBxdeyNGISI
+kJ1LhTGlDdTN1SBV3QDc0//pai2tQtcY96sQJ+1FWl9wrAMft+hSyCmRlsX2O4O1
+zbN/iUEVmZRP1/JuD8tk+TDUlBdTSZai3pV9bVlRQ7GWUKSreDI38T87d+ZZe0Uz
+f63hafBSKGqQ/GD8s5HnJopvGK1vY2zgiNuORJc5PH8iPo/75YVRM3Ct6lFwooIe
+uPow6AbydISEVUbsK1AcLESQ6Uq4CufsNUColi1o+2PRlc2/Jt/ZXaFx2LfsE6ka
+m6cXJMIZZ6Mrz6ogtYnEYDkzPPQ7/oLXzVxoS3NCoh/LLxs838eqiAZ+mVVboAaO
+LOARFrqYw8wfg45JLqQ2mb/Oe10hPZdMwc+lQa2ccDYLBJXkrMKz7vHW8W47bM1H
+i5g9RJ8pkA5wFKxBgfKj
+=pNuW
 -----END PGP SIGNATURE-----
