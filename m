@@ -1,47 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/30/2
-Message-ID: <517F1BCC.7060108@redhat.com>
-Date: Mon, 29 Apr 2013 19:18:04 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: memcached remote seg fault
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/19/3
+Message-ID: <5123B9DB.9060603@openstack.org>
+Date: Tue, 19 Feb 2013 18:43:55 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2013-005] Keystone EC2-style authentication accepts disabled user/tenants (CVE-2013-0282)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-So this was brought to my attention:
+OpenStack Security Advisory: 2013-005
+CVE: CVE-2013-0282
+Date: February 19, 2013
+Keystone EC2-style authentication accepts disabled user/tenants
+Reporter: Nathanael Burton (National Security Agency)
+Products: Keystone
+Affects: All versions
 
-http://insecurety.net/?p=872
+Description:
+Nathanael Burton reported a vulnerability in EC2-style authentication in
+Keystone. Keystone fails to check whether a user, tenant, or domain is
+enabled before authenticating a user using the EC2 api. Authenticated,
+but disabled users (or authenticated users in disabled tenants or
+domains) could therefore retain access rights that were thought removed.
+Only setups enabling EC2-style authentication are affected. To disable
+EC2-style authentication to work around the issue, remove the EC2
+extension (keystone.contrib.ec2:Ec2Extension.factory) from the keystone
+API pipeline in keystone.conf.
 
-Memcached remote DoS (segmentation fault)
+Grizzly (development branch) fix:
+https://review.openstack.org/#/c/22319/
 
-Works like a charm on Fedora 18 running Memcached 1.4.15 (the latest
-stable).
+Folsom fix:
+https://review.openstack.org/#/c/22320/
 
-Please use CVE-2013-2026 for this issue. I guess the good news is that
-because memcached basically has no security most people run it within
-closed networks, hopefully no-one is running these things publicly
-like a lot of people used to (http://www.sensepost.com/blog/4873.html).
+Essex fix:
+https://review.openstack.org/#/c/22321/
 
+References:
+https://bugs.launchpad.net/keystone/+bug/1121494
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-0282
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJRfxvMAAoJEBYNRVNeJnmTsLwQAKwV9n23cW0nCpReGYHSPBKH
-y7wXHUyQufhcUdvfG1+sqTKR94T34nSz9HrmXLxmP4bZ0yIpkM/ogzWzlLCsn5w0
-6MaAiUuVIxKIn4KO0FkQgQfPm7tm0ARx1ZwEv4DXyA9PpoijpGLo31NiTI6ULC7b
-3sVDdtSiAAFPFqnaaWmzWDIufRK2NvG3wPQnO1WFtHhRQ/E2WOHN6WXYlrvDO/Rj
-hFq14XITEUo0jaAunlV7CVHGvBge/WXSV7gVPZFux9Ra0om2YweaSqNT1YfMvs+r
-B1yYTfrZx/uMmAho4Pl18ZFfu7QShViQrfp6iBAOxs4Wlu7vPN8HPXSR0cEIlprr
-HU6WLy6DvHf6HnewP1gZHU8wk9wlG+Q9vS8zXBmiMyKt+sOMQSnva5qFVvPUGj9t
-4yEgF5rBy01mUSTsfteTV41cbNGSQxwA2t75Xrs5IQj24Rt+lbm0oPJWG/I6IFzK
-LPqgXh+cWcqUyA2ppBwalsAjaQHZbhhyqNl/RalV69zI0auR4o2Yss5jyDWcgBLl
-Q82uhczXtgh4Z4M0LYomI/FLdyOz8QTXy62UJY7sLkp8KGJ6/M8lZc0UMzZJ5Qwr
-o2LLDXjejgs4w9/Rz3LrpmOTs1nxfcBbmSM2fESOH04/HnRFxEhvtccEpVrTHIUe
-j+tBbmXL3toah7k0HV16
-=UiU8
+iQIcBAEBCAAGBQJRI7nbAAoJEFB6+JAlsQQjGHgP/2yHBH4Yvzl3Q0P4oMr2Vskb
+9xroi6sEQTgP/KaidIiV2lORdgSqYZZlylW3EbHnR1Io9natqCLfYkkEdpagTUxM
+WcYXAJtBHbHN+hpeGiYojPsV1LmgIX81UrausX1k5U1ZtFkvOhrfhcXWPOozREkM
+WwhYjaGl14dmIusE7h0uY7VNTiQMI9LAft18OfJMNFTwA/FmkxlPO/Jea8CUwDIl
+LSLv+MRFw2M01TnsAYlnFsa9O7175q2DpNPCqXYjh38ewNBJHuArtuASkA7hHrMA
+wYUzAS3lho9WuGVG/GwZk1V//GQhpzn/VWxRCmuOS3tpwTksbkXF36kwOnP5Vu5N
+uo9jLBAovHIqfr0QGXGYMXA9Bu9jW5geUIuDNvpKkAFIiQVS3JcDWsqsu7otgjHY
+HKUKmYF66BAJmmaM7aXPswGs61B6F3SLIZCneOp9N8PnT3PCR57++zMEjEWBYuLw
+E4BDKPa1k2Q822hxWizhXAmkfc5t+AVk2kKPa9a5sMY2oNNrqtRR4+jMjXiS9CmU
+gQs9VbXrmMy577zcCkzj7ci7fY0iFUtHW7PhFKUpHf2Mpr2/vLwc4p8g5da8bTwU
+2swDuJ/KPsd66oEYjQW0CGBymMTkmbZWUX4InAj1ZynESW46cb/CAaS8oGk2I6dC
+F3MMfAjNkfhO9srLLNoC
+=fWOa
 -----END PGP SIGNATURE-----
