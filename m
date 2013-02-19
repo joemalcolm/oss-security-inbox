@@ -1,95 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/7
-Message-ID: <CA+5g0SK70uFgQHTPv03nk7kpJmH855+GdPRoE+Xvosz6NiG=6A@mail.gmail.com>
-Date: Fri, 14 Jun 2013 15:40:54 -0300
-From: Felipe Pena <felipensp@...il.com>
-To: "Christey, Steven M." <coley@...re.org>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: FD leakage for cgi program on Monkey HTTPD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/19/6
+Message-ID: <20130219210125.GA27485@openwall.com>
+Date: Wed, 20 Feb 2013 01:01:25 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel race condition with PTRACE_SETREGS (CVE-2013-0871)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Feb 19, 2013 at 12:40:50PM -0800, Julien Tinnes wrote:
+> On Sat, Feb 16, 2013 at 2:49 AM, Solar Designer <solar@...nwall.com> wrote:
+> > I haven't looked into this closely yet, but at first glance it looks
+> > like the worst Linux kernel vulnerability in a few years.
+> 
+> The good news is that the race is not trivial to win in an exploit. It
+> also requires access to ptrace() (but unfortunately most distros don't
+> limit ptrace()).
 
-2013/6/14 Christey, Steven M. <coley@...re.org>:
-> Felipe,
->
-> Sorry if this is a dumb question.
->
-> If you are using "file descriptor leak" in the sense of "malicious parties can directly access the file descriptor" - then that doesn't seem to be the case here, because permissions are limited only to you.
->
-> If you are using "file descriptor leak" in the sense of "the program does not close a file after opening it, consuming too many file descriptors," then how can a program take control of Monkey HTTPD?
->
-> - Steve
->
->
+Yeah.  To clarify why the vulnerability looks so bad to me: for our
+kernel builds and usage, it appears to be the worst since CVE-2010-3081
+(compat_alloc_user_space() missing sanity checks), although it is
+probably trickier to exploit in the wild (due to the race).  There were
+other local vulnerabilities in the Linux kernel discovered in those ~2.5
+years, but they were in more obscure subsystems (which we generally
+don't expose) or/and they required that the local attacker would execute
+a SUID/SGID program.  This one, however, is in an (almost) core kernel
+component and is self-contained (no dependency on the userland being
+non-perfect), which makes it almost as bad as CVE-2010-3081, except that
+it's a race.  On the other hand, CVE-2010-3081 did not affect 32-bit
+only kernel builds, whereas this new vulnerability probably does.
 
-Actually the server is running using my user, because this you see my
-name as user there.
-I just did a test running the server as root, it used the user in the
-configuration file, but the cgi program still using the same user than
-the server.
+> > Are all architectures affected?  The ptrace code in the kernel is
+> > naturally somewhat arch-specific, so _maybe_ not all are affected.
+> 
+> We don't know of any other architecture other that x86 affected, but
+> again, I don't think anyone spent time trying to figure this out. It's
+> possible that the same mistake was made on another architecture.
 
-On my PoC (which uses leaked networkd socket fd to accepts connections
-and write to them) I just was able to write the response to the next
-requests instead of the HTTPD server.
+Have you looked into whether 32-bit x86 kernel builds are affected to
+the same extent?
 
+Thanks,
 
->>-----Original Message-----
->>From: Felipe Pena [mailto:felipensp@...il.com]
->>Sent: Friday, June 14, 2013 1:24 PM
->>To: oss-security@...ts.openwall.com
->>Subject: [oss-security] CVE request: FD leakage for cgi program on Monkey
->>HTTPD
->>
->>I've identified a fd leakage when running a program via Monkey HTTPD -
->>CGI plugin.
->>
->>By runninng `ls -lah /proc/<pid>/fd/` on the CGI program we can see:
->>
->>total 0
->>dr-x------ 2 felipe felipe 0 Jun 14 14:00 .
->>dr-xr-xr-x 8 felipe felipe 0 Jun 14 14:00 ..
->>lr-x------ 1 felipe felipe 64 Jun 14 14:00 0 -> pipe:[239545]
->>l-wx------ 1 felipe felipe 64 Jun 14 14:00 1 -> pipe:[239546]
->>lrwx------ 1 felipe felipe 64 Jun 14 14:00 10 -> anon_inode:[eventpoll]
->>lr-x------ 1 felipe felipe 64 Jun 14 14:00 11 -> pipe:[242960]
->>lrwx------ 1 felipe felipe 64 Jun 14 14:00 12 -> anon_inode:[eventpoll]
->>lrwx------ 1 felipe felipe 64 Jun 14 14:00 13 -> anon_inode:[eventpoll]
->>lrwx------ 1 felipe felipe 64 Jun 14 14:00 14 -> anon_inode:[eventpoll]
->>lrwx------ 1 felipe felipe 64 Jun 14 14:00 15 -> anon_inode:[eventpoll]
->>lrwx------ 1 felipe felipe 64 Jun 14 14:00 16 -> anon_inode:[eventpoll]
->>lrwx------ 1 felipe felipe 64 Jun 14 14:00 17 -> anon_inode:[eventpoll]
->>lrwx------ 1 felipe felipe 64 Jun 14 14:00 18 -> anon_inode:[eventpoll]
->>lrwx------ 1 felipe felipe 64 Jun 14 14:00 19 -> anon_inode:[eventpoll]
->>l-wx------ 1 felipe felipe 64 Jun 14 14:00 2 -> /dev/null
->>lrwx------ 1 felipe felipe 64 Jun 14 14:00 3 -> socket:[240797]
->>lrwx------ 1 felipe felipe 64 Jun 14 14:00 4 ->
->>/home/felipe/audit/monkey/monkey/logs/monkey.pid.2001
->>lr-x------ 1 felipe felipe 64 Jun 14 14:00 5 -> pipe:[240798]
->>l-wx------ 1 felipe felipe 64 Jun 14 14:00 6 -> pipe:[240798]
->>lr-x------ 1 felipe felipe 64 Jun 14 14:00 7 -> pipe:[240799]
->>l-wx------ 1 felipe felipe 64 Jun 14 14:00 8 -> pipe:[240799]
->>lrwx------ 1 felipe felipe 64 Jun 14 14:00 9 -> socket:[242784]
->>
->>Hence a malicious program can take control of Monkey HTTP request response
->>through a network socket related file descriptor, etc.
->>
->>
->>Report
->>------
->>http://bugs.monkey-project.com/ticket/187
->>
->>
->>CREDITS
->>-------
->>Felipe Pena
->>
->>--
->>Regards,
->>Felipe Pena
-
-
-
---
-Regards,
-Felipe Pena
+Alexander
