@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/30/3
-Message-ID: <20130130163732.GJ13319@dhcp-25-225.brq.redhat.com>
-Date: Wed, 30 Jan 2013 17:37:32 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifrie@...hat.com>
-Subject: CVE request -- qxl: synchronous io guest DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/19/1
+Message-ID: <20130219094731.GA925@elende>
+Date: Tue, 19 Feb 2013 10:47:31 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE request: zoneminder: local file inclusion vulnerability
 Content-Type: text/plain; charset=utf-8
 
-A flaw was found in the way spice connection breakups were handled in
-the qemu-kvm qxl driver. Some of the qxl port i/o commands were waiting
-for the spice server to complete the actions, while the corresponding
-thread holds qemu_mutex mutex, potentially blocking other threads in the
-guest's qemu-kvm process. An user able to initiate spice connection to
-the guest could use this flaw to make guest temporarily unavailable or,
-in case kernel.softlockup_panic in the guest was set, crash the guest.
+Hi
 
-Upstream fixes:
-xf86-video-qxl commit
-http://cgit.freedesktop.org/xorg/driver/xf86-video-qxl/commit/?id=30b4b72cdbdf9f0e92a8d1c4e01779f60f15a741
+In zoneminder forum the following announce was done already in 2011:
 
-which relies on qemu-kvm functionality introduced by commit
-http://git.kernel.org/?p=virt/kvm/qemu-kvm.git;a=commit;h=5ff4e36c
+ http://www.zoneminder.com/forums/viewtopic.php?f=1&t=17979
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=906032
+where zoneminder is prone to a local file inclusion vulnerability.
+>From upstream versions prior to 1.24.4 are affected and the issue was
+fixed in 1.24.4 and 1.25.0.
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+SVN commits fixing this issue for the 1.24.x versions are r3483 and
+r3488, and patches:
+
+http://www.zoneminder.com/downloads/lfi-patch.txt
+http://www.zoneminder.com/downloads/lfi-patch2.txt
+
+I haven't found a CVE assigned to this already. In case I did not miss
+something, could you allocate a CVE for this issue?
+
+Debian Bug: http://bugs.debian.org/700912
+
+Regards,
+Salvatore
