@@ -1,52 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/10
-Message-ID: <20130313175032.GG12501@outflux.net>
-Date: Wed, 13 Mar 2013 10:50:32 -0700
-From: Kees Cook <keescook@...omium.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CLONE_NEWUSER|CLONE_FS root exploit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/19/4
+Message-ID: <5123C761.50105@redhat.com>
+Date: Tue, 19 Feb 2013 11:41:37 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Steven Christey <coley@...re.org>
+Subject: REJECT CVE-2013-0278, CVE-2013-0279 and CVE-2013-0280
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 13, 2013 at 04:39:56PM +0100, Sebastian Krahmer wrote:
-> Seems like CLONE_NEWUSER|CLONE_FS might be a forbidden
-> combination.
-> During evaluating the new user namespace thingie, it turned out
-> that its trivially exploitable to get a (real) uid 0,
-> as demonstrated here:
-> 
-> http://stealth.openwall.net/xSports/clown-newuser.c
-> 
-> The trick is to setup a chroot in your CLONE_NEWUSER,
-> but also affecting the parent, which is running
-> in the init_user_ns, but with the chroot shared.
-> Then its trivial to get a rootshell from that.
-> 
-> Tested on a openSUSE12.1 with a custom build 3.8.2 (x86_64).
-> 
-> I hope I didnt make anything wrong, mixing up the UIDs,
-> or disabled important checks during kernel build on my test
-> system. ;)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Nice. :)
+- From Thierry Carrez:
+====
+After discussion with the Python security team and Kurt, we'll use the
+following common CVEs:
 
-The good news is that getting userns on 3.8 looks hard (if you build any of
-the blacklisted filesystems). The bad news is that this is all fixed on 3.9
-so userns is available there easily.
+CVE-2013-1664 Unrestricted entity expansion induces DoS
+vulnerabilities in Python XML libraries (XML bomb)
+^ affects Keystone, Cinder, Nova
 
-Regardless, on 3.9 it seems to need an explicit uid mapping to get set
-up. Once that was added to your PoC, it worked for me on 3.9 too.
+CVE-2013-1665 External entity expansion in Python XML libraries
+inflicts potential security flaws and DoS vulnerabilities
+^ affects Keystone
 
-Also note that if hardlink restrictions were enabled by default, this
-exploit would be blocked:
-[-] link: Operation not permitted
+The vulnerabilities are actually in those Python libraries, they are
+just being worked around in OpenStack patches. The description will be
+updated to clarify this (see below).
+====
 
-I sure hope any distro shipping modern kernels is shipping with these
-sysctl settings:
-fs.protected_symlinks=1
-fs.protected_hardlinks=1
+As you can see from the advisories:
 
--Kees
+http://seclists.org/oss-sec/2013/q1/338
+CVE: CVE-2013-1664, CVE-2013-1665
 
--- 
-Kees Cook
-Chrome OS Security
+They were correctly referenced in the OpenStack advisories, however
+the CVE's did get used elsewhere:
+
+http://blog.python.org/2013/02/announcing-defusedxml-fixes-for-xml.html
+
+CVE-2013-0278
+    OpenStack Keystone
+CVE-2013-0279
+    Cinder
+CVE-2013-0280
+    Nova
+
+So please REJECT CVE-2013-0278, CVE-2013-0279 and CVE-2013-0280 and
+use CVE-2013-1664, CVE-2013-1665 as appropriate instead to identify
+these issues. Sorry for the confusion.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRI8dgAAoJEBYNRVNeJnmTTMIP/18XTcCcIcl20hXe00Fwav+2
+QPta6YzTikKc4dKlA40+3HwCX1uNwfC5CwndJVbLHDvsf8iC1cCOeFqeMIfmvPNW
++NSOOpAfceNAwpoSskvjQlsaNhp8oBhjNLQinsAEIYEwtxxfKzKUrejX5S8OG52n
++12WH4k4mn4SCkLL3A34hwzmNUHXTE0sl9/OC7+T66lsfMuWUAVzrZrw1g1J+hb0
+kfIPaSKeyCi/ycKCtDTQEFD6JevK43mmuyYkPvG2wwLNYFvnWsHwWfaN4Bo7ax1L
+fPhfHhmgAG5Imnp8m57Ne4ZXzpaPuPxvGUfWqPYSAbtHKDNRX5qOoamcyQQDlR1e
+6qjc4ia8EtPwadV1p4Qu7KxqKF2N8I4xbaWmaFEeULMJtKUpQhRZCNolJf0yd6Qu
+8pakJbz9m8pyj49IGBqeX2odJ3VfkPnR9Ct4VuDD+QT7SqOCCYuR992h1naQhTTz
+QP6ItgeWMR6vhGw/QTU2Ersg99Gqv8200hIVpvNNV9qq8Fb2R7F1MaBn0C8Yc9CA
+ndjEVnjwy9ifnByeiIDnhRB5MHP4M1ziXyF2zdxaHHTVyDqd+NK/uzxYOB7Wx3Am
+zI/2zoPxHattfPEVHs7GGsdOTS/LwNVNiO++yhJtnCECY5fbIVCe/YYl3s9EllSB
+uaoA++URDNHIsKXCd4if
+=3Edi
+-----END PGP SIGNATURE-----
