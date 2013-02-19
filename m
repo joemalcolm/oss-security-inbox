@@ -1,38 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/11/2
-Message-ID: <20130611111031.3c0e1826@devil>
-Date: Tue, 11 Jun 2013 11:10:31 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/19/5
+Message-ID: <CAPZmFhq2WwXD-=tb5ijynth3QgZRSTt8XF58y_pRA9kPVGfW6g@mail.gmail.com>
+Date: Tue, 19 Feb 2013 12:40:50 -0800
+From: Julien Tinnes <julien@....org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: resin: Cross site scripting
+Subject: Re: Linux kernel race condition with PTRACE_SETREGS (CVE-2013-0871)
 Content-Type: text/plain; charset=utf-8
 
-From the secunia advisory SA53749 [1]:
+On Sat, Feb 16, 2013 at 2:49 AM, Solar Designer <solar@...nwall.com> wrote:
+> I haven't looked into this closely yet, but at first glance it looks
+> like the worst Linux kernel vulnerability in a few years.
 
-Description
-Gjoko Krstic has discovered a vulnerability in Caucho Resin, which can
-be exploited by malicious people to conduct cross-site scripting
-attacks.
+The good news is that the race is not trivial to win in an exploit. It
+also requires access to ptrace() (but unfortunately most distros don't
+limit ptrace()).
 
-Input appended to the URL after /resin-admin/ is not properly sanitised
-before being returned to the user. This can be exploited to execute
-arbitrary HTML and script code in a user's browser session in context
-of an affected site.
+> For distro
+> vendor kernels (rather than mainline, which was patched almost a month
+> ago), this is a 0-day.  We need to figure out a few things:
+>
+> What's the oldest affected kernel version?
 
-The vulnerability is confirmed in version 4.0.36. Other versions may
-also be affected.
+I didn't spend much time looking at that, but I think it may pre-date 2.6.
 
+> Which "stable" and distro vendor kernels are affected?  This does not
+> appear to be e.g. on Red Hat's Bugzilla yet ... but it's already on HN:
 
-Solution
-No official solution is currently available.
+I don't know, but probably all / most ?
 
-Provided and/or discovered by
-Gjoko Krstic (LiquidWorm)
+> Are all architectures affected?  The ptrace code in the kernel is
+> naturally somewhat arch-specific, so _maybe_ not all are affected.
 
-Original Advisory
-ZSL-2013-5143:
-http://www.zeroscience.mk/en/vulnerabilities/ZSL-2013-5143.php
+We don't know of any other architecture other that x86 affected, but
+again, I don't think anyone spent time trying to figure this out. It's
+possible that the same mistake was made on another architecture.
 
-[1]: https://secunia.com/advisories/53749/
+> The mainline commits from January are by Oleg Nesterov of Red Hat.  Why
+> wasn't(?) the issue handled with due severity within Red Hat, then -
+> such that Red Hat would at the very least have a statement on whether
+> and which of their kernels are affected by now.  My guess is that the
+> full severity of the issue might not have been understood by Oleg at the
+> time, but it's only a guess.
 
-The original advisory contains a poc.
+That's the eternal debate :) Since upstream doesn't want to handle
+security and disclosure, I sure wish that distro vendors could
+regroup, step-up and do it.
+
+As for why it took so long for me to send this e-mail after the patch
+went public: there is no good answer, mostly we were busy with other
+things. Sorry about that.
+
+Julien
