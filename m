@@ -1,53 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/9
-Message-ID: <20131210134925.GA22804@lorien.valinor.li>
-Date: Tue, 10 Dec 2013 14:49:25 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: Axel Beckert <abe@...ian.org>
-Subject: CVE Request: ack-grep: potential remote code execution via per-project .ackrc files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/11
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF0697FE9E@IMCMBX01.MITRE.ORG>
+Date: Wed, 20 Feb 2013 13:02:44 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: Kurt Seifried <kseifried@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Handling CVEs for the XML entity expansion issues
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Kurt,
 
-I would like to request a CVE for the following vulnerability in
-ack-grep:
+I'm reviewing this issue with the rest of the cve-assign team.  We will get back to you with an answer shortly.
 
- https://github.com/petdance/ack2/issues/399
+- Steve
 
-Upstream for ack-grep fixed a security issue which could possibly lead
-to a remote code execution:
 
-2.12    Tue Dec  3 07:05:02 CST 2013
-====================================
-[SECURITY FIXES]
-This verison of ack prevents the --pager, --regex and --output
-options from being used from project-level ackrc files.  It is
-possible to execute malicious code with these options, and we want
-to prevent the security risk of acking through a potentially malicious
-codebase, such as one downloaded from an Internet site or checked
-out from a code repository.
- 
-The --pager, --regex and --output options may still be used from
-the global /etc/ackrc, your own private ~/.ackrc, the ACK_OPTIONS
-environment variable, and of course from the command line.
+-----Original Message-----
+From: Kurt Seifried [mailto:kseifried@...hat.com] 
+Sent: Wednesday, February 20, 2013 3:22 AM
+To: oss-security@...ts.openwall.com; Christey, Steven M.
+Subject: Handling CVEs for the XML entity expansion issues
 
-The relevant commit seems to be
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://github.com/petdance/ack2/commit/a9233abad71225c1cfb300c03841c723bceb0f07
+https://bitbucket.org/tiran/defusedxml
+http://blog.python.org/2013/02/announcing-defusedxml-fixes-for-xml.html
 
-(plus some adjusting the testsuite).
+So two generic vulnerabilities have been found in XML libraries/parsers:
 
-Reference in the Debian Bugtracker:
+1) Unrestricted entity expansion induces DoS vulnerabilities in Python
+XML libraries (XML bomb)
+- - this can be referred to as the billion laughs / exponential entity
+expansion, but can also be done linearly and still impact the system.
+For example libxml fixed the billion laughs attack version of this,
+but linear expansion (that eats up say a few hundred k of ram per
+second) will still cause problems. This issue will not be CVE split
+however since it's the same issue (expansion of entities).
 
- http://bugs.debian.org/731848
+For Python XML parsing this was assigned CVE-2013-1664
 
-See also https://github.com/petdance/ack2/issues/414 which contains further
-restrictions to the command line options.
 
-Could a CVE be assigned to this issue?
+2) External entity expansion in Python XML libraries inflicts
+potential security flaws and DoS vulnerabilities
+- - XML documents can include references to external entities, e.g.
+http:// resources:
+<!ENTITY ee SYSTEM "http://www.example.org/some.xml">
 
-Regards,
-Salvatore
+For Python XML parsing this was assigned CVE-2013-1665
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+So questions:
+======================
+
+We need more CVE's, I think for each XML prasing library/etc we should
+obviously assign a CVE (e.g. libxml, expat, internal Python parsers),
+obviously fixing it at the root is ideal, but disabling external
+entities for example in the library for all things using that library
+is not possible.
+
+But then we run into the issue where we can fix this issue within the
+application (OpenStack, using Python):
+
++PARSER = etree.XMLParser(
++    resolve_entities=False,
++    remove_comments=True,
++    remove_pis=True)
++
++# NOTE(dolph): lxml.etree.Entity() is just a callable that currently
+returns an
++# lxml.etree._Entity instance, which doesn't appear to be part of the
++# public API, so we discover the type dynamically to be safe
++ENTITY_TYPE = type(etree.Entity('x'))
++
+
+- -        dom = etree.fromstring(xml_str.strip())
++        dom = etree.fromstring(xml_str.strip(), PARSER)
+
+Which disables entity parsing in the application thus avoiding all the
+entity expansion problems. Now I'm inclined in this case to say no CVE
+(I had earlier, erroneously assigned CVE's for these fixes in
+OpenStack). But now I'm not as sure, if an underlying library has an
+unsafe/insecure behaviour that is on by default, BUT can be disabled
+easily then does that vulnerability count as being in the library? If
+not then I'd be inclined to say we need CVE's for all the vulnerable
+applications, but in this case that's thousands (millions?) of
+applications.
+
+So Steve, I think we need some guidance on how to assign the CVEs here.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRJIebAAoJEBYNRVNeJnmTDN4QAIgwf74T2M6+4S6wj4h5EZP1
+k/Cg0WW2AVPtN7nOsGg5Y5QdUCsGHtBoP9h/SWT21lch+DW3uYUhqgvtDpeyiGjc
+XzDu8DNcmHnIFbq49RS5UTRpSdR35Y3oqd0lUi7yiRpiT4XpgfSHwI7BNR9L2Wm0
+FUiwQDL9BULkD4wcq6NsagPiZCsaRmmezfUb/g5PxgYW84p56fYa5tg4SEQ7O4M/
+lLNYDChfIis7gJVgqoLjbNClV36a2UWIGxIg/TCP8hVpmUpDMv04cxIbmtGWJ/tp
+2iKzLNn25INaN80T6t0pzhC//R+jpWTkr9eFP4W7X+CA2Rs3sY0BA9Xvnyl9FPCF
+gaQUTd7PyefKEM1Fm7OqFn1XbrtcKpOBThNI+NL5c/mrmud96DQwy8MMRaKDYhr1
+W+fGxHBFD/Ztcffh/Dz1t/Ycm7T9BWzKQxitsubudZuEDQ7XfUilzLWQgy1X998J
+T/Yjzsym8tkOoMvOe343caqDHTtBpq7eIFSXtJTTlXHIc5MiAT72406rak4/WVt0
+qvrmhAxyOtWy8fOt2j/Qj9/rn8qYum9gBUFwHb4LWYRLADyK3lqThY3la/gMFYTi
+y+KvwZf1FBtbXaJYZ3keO9ouMKNsvv9ll20Tke6wckFYPkLXRCs17quTHCx3Hh9J
+MfZCwfOGm5G7O38k+vZ6
+=V2n9
+-----END PGP SIGNATURE-----
