@@ -1,66 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/2
-Message-ID: <51BFF86E.5010901@redhat.com>
-Date: Tue, 18 Jun 2013 00:04:30 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/5
+Message-ID: <51241C74.3090604@redhat.com>
+Date: Tue, 19 Feb 2013 17:44:36 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Thoughts on a vuln/CVE?
+To: oss-security@...ts.openwall.com, Kurt Seifried <kseifrie@...hat.com>
+Subject: Re: CVE request -- Linux kernel: net: CIPSO_V4_TAG_LOCAL tag NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-So I know technically CVEs are for software and not for services. But
-in this case:
+On 02/19/2013 05:41 PM, Petr Matousek wrote:
+> The skb argument to cipso_v4_validate() is NULL when called via
+> the setsockopt() syscall. An local user able to set CIPSO IP
+> options on the socket could use this flaw to crash the system.
+> 
+> Upstream fix: 
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=89d7ae34cdda4195809a5a987f697a517a2a3177
+>
+>  References: https://bugzilla.redhat.com/show_bug.cgi?id=912900
+> 
+> Thanks,
+> 
 
-===================
-http://bits.debian.org/2013/06/remove-debian-multimedia.html
-
-The unofficial third party repository Debian Multimedia stopped using
-the domain debian-multimedia.org some months ago. The domain expired
-and it is now registered again by someone unknown to Debian. (If we're
-wrong on this point, please sent us an email so we can take over the
-domain! ;) )
-
-This means that the repository is no longer safe to use, and you
-should remove the related entries from your sources.list file.
-
-After all, the need of an external repository for multimedia related
-packages has been greatly reduced with the release of Wheezy, which
-features many new and updated codecs and multimedia players.
-
-Not sure if you're using the debian-multimedia repository? You can
-easily check it by running:
-
-grep -i debian-multimedia.org /etc/apt/sources.list
-/etc/apt/sources.list.d/*
-
-If you can see debian-multimedia.org line in output, you should remove
-all the lines including it.
-===================
-
-We have software with a now insecure configuration as it points to a
-site that may or may not be under attacker control. It seems to me
-like this might be a candidate for a CVE. Thoughts and comments for
-and against are welcome (I'm on the fence myself).
+Please use CVE-2013-0310 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRv/htAAoJEBYNRVNeJnmTq7gP/3jjmPLrs4CHC48Vv4dF4E64
-FO8zIcqmr+0pxHNmTc34Yd+5/sCYE25EYe7diAvL0LSv5ZSz4aM8yv+sCaARJFah
-bYdOr5HIMHNR5x0pl+ysqQL1RVpzArqrYL1NGCeYCxrtxwkvZ85ZxH47Kg3hdvT5
-JL0HJyCi8cWGSbnBQce2WUm9rSFtJIIH1hTesewZEi3bJmEJ0fHeti7ZBxMDFLIs
-EKduQFNZnEZh7juGULf6lp32t9s62A1XgKdubQqoiMk1UKFW2ScEEjgc8frAlo1y
-POeEvGAEjF9pohfK5jnPjhUW/HcezJPv9ZarA0nGdPPjRVnLqPygN6qPRktklY+f
-pVb2Zb41CaK0JBvm8fbLv1xifA2d4YitekVTwbsnkv1Jc8actyyC5u2U5GBoeiwr
-fAlTGCRq0NMQslNygjaifsULBLva3hHYgfm7PejCUpDT/uxfliSurgA6zEMqLOQd
-GAolEwypDzQCo2Nf4QId8JG22TRFXIH1C00RTSBYsgUECZzhUBs9VMJLKSpGLdxb
-wZFhpmNBirnbeWbSLRCI+bs9st87ERwmmn12+lESJ3CWRhzwpQJBvKPfWAC+sHqF
-DyTSsjqcLKV9R1B8pZ8YKKqZ4R1Svo9MYQnkNxTPvm+/DBDUIGeHRd2v4CukrLHX
-69/x4Oom1eyYXI42YPE5
-=blKB
+iQIcBAEBAgAGBQJRJBx0AAoJEBYNRVNeJnmTiBwQAJlmqgsWghKYK01u84yZ62HL
+wkMK0AXgZdQnv6teM9+33P/VEArPa2oIrZj7JtvLgn8ajM7hL7z+BphJSviZsYl3
+lMx/tZRah+XSAxnksDm9q7ZN7BI05tzSMIDaeoKk9x+6WX7xHVc2VfhcUIUOnh/G
+FbhSyEIw4LU9Ogj086KAepXqwHht9Ez/LvelP4yXEwd6vKIJgdC3zJ1ff+2GT3M7
+tQaWT9OhWlFlxLIEh8X2t7qRbBNjmrNZDRWCnmHfKmN6+SDeWJkhsw9NBaFLscX2
+Q5Ti2E1uRGW5XXuphhBQbOhMiOkj9glwu3pqVm+ci4TbWSjNOxThQgEEZa5XIrdJ
+uMaW6ENMQT9GqF393R9cM0mU93WK2qTWq879o7hvgERxboboYYcP1MdLho0qORUL
+rTR3sjkw1GlALHJ8iqMCo2NF2XF1bWl6X4Dh/J8d5bNMWHRhK7nlfL+weN/7BtLz
+h+mfUholnRJQ/aokIsYS2IPK0xOqn0bTKsOwBxAo9v5qU9MZWrODLp1L14uYht9E
+mrmLaeXDRbpzCADUBKCzlHo5CmUPNxBceTBKQLZNvzcH9aAmAeJZ+tZLocz2Q87l
+AahSKmmNdJd3SVorjcbU1jBp8GE6CQ4+bE+ElsGdplEYrabUKXMQoIouyG3e/s4w
+aejzDsAENgdsjYW68f81
+=f/iD
 -----END PGP SIGNATURE-----
