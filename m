@@ -1,37 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/12/4
-Message-ID: <1371067252.4059.6.camel@scapa>
-Date: Wed, 12 Jun 2013 22:00:52 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/2
+Message-ID: <20130220004108.GT14748@dhcp-25-225.brq.redhat.com>
+Date: Wed, 20 Feb 2013 01:41:09 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fail2ban 0.8.9, Denial of Service (Apache rules only)
+Cc: Kurt Seifried <kseifrie@...hat.com>
+Subject: CVE request -- Linux kernel: net: CIPSO_V4_TAG_LOCAL tag NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Can someone assign a CVE for this fail2ban issue?
+The skb argument to cipso_v4_validate() is NULL when called via the
+setsockopt() syscall. An local user able to set CIPSO IP options on the
+socket could use this flaw to crash the system.
 
-On sam., 2013-06-08 at 07:44 +0200, Krzysztof Katowicz-Kowalewski wrote:
-> Version 0.8.9 (latest) of Fail2ban allows to perform remote denial of
-> service for arbitrary chosen IP address. Address listed on Fail2ban's
-> whitelist are not affected. The vulnerability exists in Apache rules
-> and it is caused by improper validation of a log file by regular
-> expression. Malicious user can easily inject his own data to analyzed
-> logs and deceive monitoring engine.
-> 
-> Affected files:
-> /filter.d/apache-auth.conf
-> /filter.d/apache-nohome.conf
-> /filter.d/apache-noscript.conf
-> /filter.d/apache-overflows.conf
-> 
-> Time frames:
-> 01.06.2013 - Cyril Jaquier (contact section) has been informed about the vulnerability (no response)
-> 08.06.2013 - The vulnerability has been released to the public.
-> 
-> More information, including proof of concept and patches is available here:
-> https://vndh.net/note:fail2ban-089-denial-service
+Upstream fix:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=89d7ae34cdda4195809a5a987f697a517a2a3177
 
-Thanks in advance,
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=912900
+
+Thanks,
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Petr Matousek / Red Hat Security Response Team
