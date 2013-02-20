@@ -1,60 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/13/2
-Message-ID: <5209A032.5040602@redhat.com>
-Date: Mon, 12 Aug 2013 20:55:46 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/1
+Message-ID: <20130220004017.GS14748@dhcp-25-225.brq.redhat.com>
+Date: Wed, 20 Feb 2013 01:40:18 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Murray McAllister <mmcallis@...hat.com>, security@...hon.org, security@...y-lang.org, cve-assign@...re.org
-Subject: Re: CVE Request -- Python SSL module does not handle certificates that contain hostnames with NULL bytes
+Cc: Kurt Seifried <kseifrie@...hat.com>
+Subject: CVE request -- Linux kernel: mm: thp: pmd_present and PROT_NONE local DoS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Most VM places are using pmd_none but a few are still using pmd_present.
+The meaning is about the same for the pmd. However pmd_present would
+return the wrong value on PROT_NONE ranges. When the code using
+pmd_present gets a false negative, the kernel will crash.
 
-On 08/12/2013 08:37 PM, Murray McAllister wrote:
-> Good morning,
-> 
-> An issue similar to CVE-2013-4073[1] was found in Python:
-> 
-> https://bugs.mageia.org/show_bug.cgi?id=10989 
-> http://bugs.python.org/issue18709
-> 
-> Could a CVE for the Python instance of this flaw please be assigned
-> (if one has not already been assigned)?
-> 
-> Thanks.
-> 
-> [1] 
-> <http://www.ruby-lang.org/en/news/2013/06/27/hostname-check-bypassing-vulnerability-in-openssl-client-cve-2013-4073/>
->
-> 
-> 
-> <https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-4073>
-> 
-> -- Murray McAllister / Red Hat Security Response Team
+An unprivileged local user could use this flaw to crash the system.
 
-Yup just to be clear: CVE-2013-4073 is for Ruby. Python needs a new
-CVE (different code base and all that).
+Upstream fix:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=027ef6c8
 
-Please use CVE-2013-4238 for this issue in Python.
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=912898
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSCaAxAAoJEBYNRVNeJnmTqNYP/10PaxPrr6YJDT0W+Dwmjjp3
-yHiY0kJ1pjHgIiGKEqRkBv5+05c9cn9LKES1Kj+CePFiiq1VEO+28z/y6PhQBg8b
-0Ifad4ph5+SAhYthj9M7JzwXMSVmuCXNtGHQRkgSD72Xkn4Rgqj6vYaixCdbkSpO
-qvMkKhBDcde57rTrdnifs3w4EUKWi2eVkRMuN2twPQLOx6MiB/EKKFLqxR69LtZo
-qOd40LBqoEWtR3/J7C3oZkqYK26lAn7mnaTY67mPIuG78SGU9aFxe/AYwQ4pmb2Q
-k3fT73xNyoUyajYq+QfrqwNHkwk1sGtev6M6+ltgovN0ymZmUdIsYgBDEPJqaUSk
-D1ut2LOndsYomlCfEhvdOWWunG6V63qTsMdOy1z9fBh2evggNKedPpCNIWb6IG6t
-Lq3P67pzg+C2Auiv/m6hw6Q/ptUPt4N0/RgKReFtUqqEAjznUAarl4ldP1egL/W7
-4yFsIXqkTIcVExLcUYXlh5y1vfIUgl21xOp78u5Qtdhq1Mj7kobp3/uuFbbxFdtM
-tCgAnwRayVTwKQY1MQX1R3qRAArLvzAy0jI/bAfls11oRFJ9B2ZCoq31kUlUnEYj
-Cwvg3nrpl/Qyn1gpgaRNQT/RnSIi2ygKmPLd3nbXvpdlV9jQwqECSZk/mtBlLbxB
-oH8DuHHxhUqapitBg6LL
-=V3F8
------END PGP SIGNATURE-----
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
