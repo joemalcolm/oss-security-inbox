@@ -1,56 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/23/5
-Message-ID: <50FFAEFB.7040402@redhat.com>
-Date: Wed, 23 Jan 2013 02:35:55 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/10
+Message-ID: <5124879B.7060607@redhat.com>
+Date: Wed, 20 Feb 2013 01:21:47 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: predictable /tmp filename in git-extras
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Steven Christey <coley@...re.org>
+Subject: Handling CVEs for the XML entity expansion issues
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/22/2013 01:27 AM, Helmut Grohne wrote:
-> Please assign a CVE identifier for the obvious predictable /tmp
-> filename used in git-effort[1] and git-changelog[2]. The latter was
-> discovered by Jonathan Wiltshire after my initial discovery of the
-> former. The issue is already tracked within Debian[3] and there
-> also is a solution[4].
-> 
-> Thanks
-> 
-> Helmut
-> 
-> [1]
-> https://github.com/visionmedia/git-extras/blob/master/bin/git-effort
->
-> 
-[2] https://github.com/visionmedia/git-extras/blob/master/bin/git-changelog
-> [3] http://bugs.debian.org/698490 [4]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=32;filename=git-extras-1.7.0-1.2-nmu.diff;att=1;bug=698490
+https://bitbucket.org/tiran/defusedxml
+http://blog.python.org/2013/02/announcing-defusedxml-fixes-for-xml.html
 
-Please
-> 
-use CVE-2012-6114 for this issue.
+So two generic vulnerabilities have been found in XML libraries/parsers:
 
+1) Unrestricted entity expansion induces DoS vulnerabilities in Python
+XML libraries (XML bomb)
+- - this can be referred to as the billion laughs / exponential entity
+expansion, but can also be done linearly and still impact the system.
+For example libxml fixed the billion laughs attack version of this,
+but linear expansion (that eats up say a few hundred k of ram per
+second) will still cause problems. This issue will not be CVE split
+however since it's the same issue (expansion of entities).
+
+For Python XML parsing this was assigned CVE-2013-1664
+
+
+2) External entity expansion in Python XML libraries inflicts
+potential security flaws and DoS vulnerabilities
+- - XML documents can include references to external entities, e.g.
+http:// resources:
+<!ENTITY ee SYSTEM "http://www.example.org/some.xml">
+
+For Python XML parsing this was assigned CVE-2013-1665
+
+So questions:
+======================
+
+We need more CVE's, I think for each XML prasing library/etc we should
+obviously assign a CVE (e.g. libxml, expat, internal Python parsers),
+obviously fixing it at the root is ideal, but disabling external
+entities for example in the library for all things using that library
+is not possible.
+
+But then we run into the issue where we can fix this issue within the
+application (OpenStack, using Python):
+
++PARSER = etree.XMLParser(
++    resolve_entities=False,
++    remove_comments=True,
++    remove_pis=True)
++
++# NOTE(dolph): lxml.etree.Entity() is just a callable that currently
+returns an
++# lxml.etree._Entity instance, which doesn't appear to be part of the
++# public API, so we discover the type dynamically to be safe
++ENTITY_TYPE = type(etree.Entity('x'))
++
+
+- -        dom = etree.fromstring(xml_str.strip())
++        dom = etree.fromstring(xml_str.strip(), PARSER)
+
+Which disables entity parsing in the application thus avoiding all the
+entity expansion problems. Now I'm inclined in this case to say no CVE
+(I had earlier, erroneously assigned CVE's for these fixes in
+OpenStack). But now I'm not as sure, if an underlying library has an
+unsafe/insecure behaviour that is on by default, BUT can be disabled
+easily then does that vulnerability count as being in the library? If
+not then I'd be inclined to say we need CVE's for all the vulnerable
+applications, but in this case that's thousands (millions?) of
+applications.
+
+So Steve, I think we need some guidance on how to assign the CVEs here.
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ/677AAoJEBYNRVNeJnmT8nUP/RuaKd3yOUgn9B7RM3TfsNah
-LJN6GS2KmnUFZkmrCeXpXN6lCF+eMZ4AT/2sCiRjcj+03oj5iV0VOpuP1Y8T+maE
-ACIc8Ba6Kev1Uw8jTSOd+nGFGqyMUWNAa+8FVBsg6Vb5tfwEkXyJ3w1vOhiei2NM
-Ha+eJh6Pqv02AAN9Ttv1Kycm2ol+7IzYVqLPdY978PIHTFkJmgLY9KxC1NAi+p75
-dwiHcngRdgUOnQQC7hQyYqpbHJVMp1Bn1LDC8Ca/NtEeGPA6kPwFsDe+uedv+DUb
-KNVAXqh7Sc1NocrQaMSi+wRQ5BrHUeMivedQEmfnHKlBAk7ATsWp4hyX4SdrZkcz
-+A0lBzSb52ZM0euFKd8jLaToFAH4vL3TUX6Sd4gOmctIOpVoLvOZfnVNgabUYOUc
-nfLzhOERgfAwgR6vucl80MGS4LDG+PcHNYCSZmblpyiK+RRrr8rYcw01MeAG0jGV
-c/Y1ItJBxQNZo9cISgqj4jCBTtKkHhbFLL3ySGz4Wnnf2FIymC7mI3gknoZHg8fN
-Uz+WnVAeayHl5rNnhtncKPZaDVreFc+d5BVpZhWmo/eHvsEaF6EpV333IM35ZdJh
-DzK1JXa4F1PC9uGqUtSpy+DiMzrzv8O9YJfA2e+C3sfa1RAbxZvM16EbhVZ97ANQ
-kM0Y+3hXhjhFFFmRs33a
-=u50i
+iQIcBAEBAgAGBQJRJIebAAoJEBYNRVNeJnmTDN4QAIgwf74T2M6+4S6wj4h5EZP1
+k/Cg0WW2AVPtN7nOsGg5Y5QdUCsGHtBoP9h/SWT21lch+DW3uYUhqgvtDpeyiGjc
+XzDu8DNcmHnIFbq49RS5UTRpSdR35Y3oqd0lUi7yiRpiT4XpgfSHwI7BNR9L2Wm0
+FUiwQDL9BULkD4wcq6NsagPiZCsaRmmezfUb/g5PxgYW84p56fYa5tg4SEQ7O4M/
+lLNYDChfIis7gJVgqoLjbNClV36a2UWIGxIg/TCP8hVpmUpDMv04cxIbmtGWJ/tp
+2iKzLNn25INaN80T6t0pzhC//R+jpWTkr9eFP4W7X+CA2Rs3sY0BA9Xvnyl9FPCF
+gaQUTd7PyefKEM1Fm7OqFn1XbrtcKpOBThNI+NL5c/mrmud96DQwy8MMRaKDYhr1
+W+fGxHBFD/Ztcffh/Dz1t/Ycm7T9BWzKQxitsubudZuEDQ7XfUilzLWQgy1X998J
+T/Yjzsym8tkOoMvOe343caqDHTtBpq7eIFSXtJTTlXHIc5MiAT72406rak4/WVt0
+qvrmhAxyOtWy8fOt2j/Qj9/rn8qYum9gBUFwHb4LWYRLADyK3lqThY3la/gMFYTi
+y+KvwZf1FBtbXaJYZ3keO9ouMKNsvv9ll20Tke6wckFYPkLXRCs17quTHCx3Hh9J
+MfZCwfOGm5G7O38k+vZ6
+=V2n9
 -----END PGP SIGNATURE-----
