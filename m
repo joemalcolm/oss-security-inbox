@@ -1,28 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/11/2
-Message-ID: <CANu=DmiJPziPFDCBojv=29UPnc=N+LpRWtVNSda8izMYBjir0A@mail.gmail.com>
-Date: Wed, 11 Sep 2013 12:49:04 +0100
-From: Will Newton <will.newton@...aro.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/12
+Message-ID: <20130220163937.GK2859@redhat.com>
+Date: Wed, 20 Feb 2013 09:39:37 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Three integer overflows in glibc memory allocator
+Subject: Re: isync/mbsync security advisory: missing SSL subject verification (CVE-2013-0289)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* [2013-02-20 09:19:04 +0100] Oswald Buddenhagen wrote:
 
-I recently discovered three integer overflow issues in the glibc
-memory allocator functions pvalloc, valloc and
-posix_memalign/memalign/aligned_alloc. These issues cause a large
-allocation size to wrap around and cause a wrong sized allocation and
-heap corruption. The issues are fixed in glibc mainline.
+>Christian Schneider <software [at] chschneider [dot] eu> discovered that
+>isync does no SSL subject (hostname) verification.
+>
+>This means that any host with a valid certificate could pretend to be
+>the wanted host, as long as the certificate store contained the relevant
+>root certificate. This could be used for man-in-the-middle attacks, which
+>could be used to steal passwords.
+>
+>Workaround: Specify a CertificateFile which contains only the wanted
+>host's certificate, thus disabling trust chain based verification. Early
+>versions of isync's SSL support tried to enforce this mode of operation.
+>
+>Isync releases 0.4 up to including 1.0.5 are affected. Version 1.0.6 has
+>been just released to address the issue.
+>
+>Download: https://sourceforge.net/projects/isync/files/isync/1.0.6/
+>Patch: http://isync.git.sourceforge.net/git/gitweb.cgi?p=isync/isync;a=patch;h=914ede18664980925628a9ed2a73ad05f85aeedb
 
-The relevant glibc bugzilla entries are here:
-
-https://sourceware.org/bugzilla/show_bug.cgi?id=15855
-https://sourceware.org/bugzilla/show_bug.cgi?id=15856
-https://sourceware.org/bugzilla/show_bug.cgi?id=15857
-
-Thanks,
+Note that this was disclosed to the distros@ list previously and had
+been assigned the name CVE-2013-0289 (which the referenced patch notes
+as well).
 
 -- 
-Will Newton
-Toolchain Working Group, Linaro
+Vincent Danen / Red Hat Security Response Team 
