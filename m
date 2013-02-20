@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/15/6
-Message-ID: <330551683.1868534.1368616773600.JavaMail.root@redhat.com>
-Date: Wed, 15 May 2013 07:19:33 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/3
+Message-ID: <20130220004159.GU14748@dhcp-25-225.brq.redhat.com>
+Date: Wed, 20 Feb 2013 01:41:59 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Ian Weller <ianweller@...oraproject.org>
-Subject: CVE Request (minor) --  python-backports-ssl_match_hostname: Denial of service when matching certificate with many '*' wildcard characters
+Cc: Kurt Seifried <kseifrie@...hat.com>
+Subject: CVE request -- Linux kernel: vhost: fix length for cross region descriptor
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+If a single descriptor crosses a region, the second chunk length should
+be decremented by size translated so far, instead it includes the full
+descriptor length. A privileged guest user could use this flaw to crash
+the host or, potentially, corrupt host memory.
 
-  A denial of service flaw was found in the way python-backports-ssl_match_hostname,
-an implementation that brings the ssl.match_hostname() function from Python 3.2 to
-users of earlier versions of Python, performed matching of the certificate's name
-in the case it contained many '*' wildcard characters. A remote attacker, able to
-obtain valid certificate [*] with its name containing a lot of '*' wildcard characters,
-could use this flaw to cause denial of service (excessive CPU time consumption) by
-issuing request to validate that certificate for / in an application using the
-python-backports-ssl_match_hostname functionality.
-
-Upstream bug report (no patch yet):
-[1] http://bugs.python.org/issue17980
+Upstream fix:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=bd97120fc3d1a11f3124c7c9ba1d91f51829eb85
 
 References:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=963186
+https://bugzilla.redhat.com/show_bug.cgi?id=912905
 
-Credit: Issue was found by Florian Weimer of Red Hat Product Security Team
-
-Could you allocate a CVE identifier for this (it's possible that 
-Python 3.2 implementation is vulnerable to the same problem too,
-will check that case yet)?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
---
-[*] Would be minor issue because ability to obtain such valid certificate would
-    mean the necessity to use some compromised CA. On the other hand though
-    being corner case, can't be completely excluded.
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
