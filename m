@@ -1,75 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/17/1
-Message-ID: <CALuSjqYcm73nVmt43vw_h23JxkrHDZJLPgE56A4WKqHf7MN_cA@mail.gmail.com>
-Date: Wed, 17 Apr 2013 11:07:06 +0800
-From: Doraemon Sk8ers <doraemon.sk8ers@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/14
+Message-ID: <51251A56.9080602@redhat.com>
+Date: Wed, 20 Feb 2013 11:47:50 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: Multiple Vulnerabilities in Simple HRM system v2.3 and below
+CC: Tim <tim-security@...tinelchicken.org>
+Subject: Re: RE: Handling CVEs for the XML entity expansion issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-There is a Blind SQL injection vulnerability and Cookie Integrity
-Protection Vulnerability in Simple HRM system v2.3 and below.
-The 2 vulnerabilities had been assigned the CVE identifier CVE-2013-2498
-and CVE-2013-2499 respectively.
+On 02/20/2013 10:24 AM, Tim wrote:
+> 
+> Hi Kurt and Steve,
+> 
+> I have been investigating XXE issues and how they may be exploited
+> off and on for the last year.  Most modern/maintained XML libraries
+> enable parsing of inline DTDs (in DOCTYPE headers), as well as
+> external entities defined there, by default.  Indeed, this is
+> something that the XML standard includes
+> (http://www.w3.org/TR/REC-xml/) and I'm guessing library
+> implementors have a strong desire to comply.
+> 
+> This is stupid, on two levels:
+> 
+> - Most applications that actually apply DTD or schema validation
+> will be working from a predefined definition.  Many applications
+> don't bother to do any up-front validation.  In either case, what
+> is the point in allowing a DTD (or schema) to be defined *within*
+> the document that is being supplied?  From a security perspective,
+> this is like say "Hey Mallory, I need to validate that search
+> string input field.  Could you supply me with the regex so I can
+> validate your data?"  I'm sure there are some odd contexts where
+> XML developers find this feature useful, but I'm pretty sure they
+> are few and far between. DTDs should be ignored by default by
+> libraries unless supplied separately through the API.
+> 
+> - External entities are a pretty dumb idea indeed.  I mean, I 
+> understand why someone might want them.  Makes it easy to stitch 
+> together multiple documents.  But in the vast majority of cases
+> I've discussed XXE with developers, they have no idea that you can
+> even define custom XML entities, let alone external ones.  These,
+> too, should be off by default.
 
-# Vendor Homepage: http://www.simplehrm.com/
-# Software Link: http://sourceforge.net/projects/simplehrm/
-# Version: 2.2/2.3
-# Tested on: 2.2 & 2.3
-# CVE : CVE-2013-2498, CVE-2013-2499
+Docbook uses it quite a bit, e.g. each chapter is a file, then you use
+external entities to put them all together, also for graphics/etc.
+Breaking Docbook would make me a sad panda.
 
+> Kurt, in regard to your question, my current opinion is that if an
+> XML library doesn't make it easy/possible to disable these
+> features, then yes they should be hit with a CVE.  But if they do
+> make it possible, then it is the application developer's
+> responsibility to turn these things off explicitly.  No, this isn't
+> a good long-term solution, but it doesn't make sense to slap a CVE
+> on a library that at least gives you the option.
 
-Details:
------------
-*
-*
-*CVE-2013-2498*
+I tend to agree, however for the billion laughs/linear attack that can
+be somewhat addressed, libxml for example addressed it by stopping all
+non linear expansion a few years ago, so while still vulnerable they
+are less vulnerable.
 
-Simple HRM system is vulnerable to sqli attacks in their login page.
-Carefully crafted requests can use the scope to inject arbitrary
-SQLthrough the login form and obtain information such as password
-hash.
-
-*Attack URL:* http://localhost/simplehrm/index.php/user/setLogin
-*Method:* POST
-*Vuln Parameter: *username=*(SQL INJECTION)*&password=abcdef
-*Vuln Type*: unsanitised input argument *($name)* in
-
-*Vuln **File:* simlehrm/flexycms/modules/user/user_manager.php
-*Line:* 84
-    $res_company = getsingleindexrow('CALL
-get_search_sql("'.TABLE_PREFIX.'company","email_id = \''.$name.'\' AND
-isactive = 1 LIMIT 1")');
-
-*CVE-2013-2499*
-
-We discovered that if an attacker were to grab hold of the user's password
-hash, the attacker can easily spoof a cookie and impersonate as anyone to
-access the system. Together with the blind sql injection stated above, an
-attacker can simply blind the password hash, userid, username and recreate
-a cookie.
-
-*Vuln **File:* simlehrm/flexycms/modules/user/user_manager.php
-*Line:* 215
-    $v_user_password =
-md5($info['id_user'].$info['username'].$info['password']);
-
-This vuln effectively defeats one of the primary purposes of password hashing.
-
-*
-*
-
-Timeline:
--------------
-
-Date Discovered: 07 March 2013
-Vendor notified: 12 march 2013
-Advisory posted: 12 April 2013 (No response from Vendor, published)
+> HTH, tim
 
 
-Regards
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Team Doraemon.Sk8ers
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
+iQIcBAEBAgAGBQJRJRpWAAoJEBYNRVNeJnmT6CwQAJyxHDaddzK2peMokwAL+Yu5
+VuAm5PAZ9NPe32NkD+W4kaCQZhMbfZxgV7l9w7P43igJ7cc9JRkCOZsYP8qqD1lH
+0AGTI/9TTsCLxfgYqlT6Ypq9q0cgLMz6J5Z57IoQIW6/fPn7AdZIh61Xe44Fmmap
+yHXwpnF/tBItSd8dCKUFN//q/VmaCy7QPp1aHt2pJP8IAJ/LPeIAS7kWyHKZ2FbH
+fHbA9fCGoJdPgjoCf8h8CNLQDKpL+95IbVkZSRtauEfn2RGhEbPF6yqdFDq0bAR3
+g5X+OXaGl3wkmmQiayS0TCS92768dlV8ZR6gPBUX39XqGUKUHJ94spDfgW6UIPRh
+rjbnsmjVCWy+QosSLl29GSNGy09j4wTgtELIz3knMJF2FeXDaY45O0R2gRq/4jsK
+Upvkh0Ct2vLkSd771iEZNg01pXL6NH7+oqEkNhfMIhCkm+K8hxz1OPbq7aIJIPnB
+zvnsGF0uh8+28AyQywUHWYzab2sFbwPq+AgKz3vfvMGysRAM64+44dN85Mb6IJD/
+B/qeVVnHL7a12QYBw52XS+9VmiMXUI/otITDQaWEc+xtFZR27FgnNYh/Yr8LOcfc
+MNtlfINvYcB75re5iUUgr56453nuuyB4tQqGgqVlYxpDUHbY6UH0qYlBNqUAgeMH
+FylXLZxER+fg8u/mN3FJ
+=Bc6o
+-----END PGP SIGNATURE-----
