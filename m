@@ -1,53 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/11
-Message-ID: <52658C0D.9050100@redhat.com>
-Date: Mon, 21 Oct 2013 14:18:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: gitolite world writable files for fresh installs of v3.5.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/19
+Message-ID: <20130220210748.GQ2766@sentinelchicken.org>
+Date: Wed, 20 Feb 2013 13:07:48 -0800
+From: Tim <tim-security@...tinelchicken.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: RE: Handling CVEs for the XML entity expansion issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 10/20/2013 10:54 PM, Sitaram Chamarty wrote:
-> Announcement: 
-> https://groups.google.com/forum/#!topic/gitolite/Tu1sjaf7A4A/discussion
->
->  Code change: 
-> https://github.com/sitaramc/gitolite/commit/3dad4f8e3214d6ab5f71823019a624fa48b055a3
->
+Hi Kurt,
+
+> Yeah I'm pretty sure that's a less than ideal solution. Less ideal in
+> the sense of "breaking a whole bunch of customer software without much
+> warning, some of which is probably closed source and can't be modified
+> so that it works with these new "improved" xml libraries" is not the
+> way to go. So that's not gonna happen for most major Linux vendors (in
+> other words we'll have to find better ways to fix this).
 > 
-(or)
-> http://code.google.com/p/gitolite/source/detail?r=3dad4f8e3214d6ab5f71823019a624fa48b055a3#
->
->  Brief description (main points of announcement): Fresh installs
-> between fa06a34 (approx Sep 3rd) and v3.5.3, inclusive, create a
-> few world writable files.  Sites which installed before that date
-> are not affected, even if they subsequently upgraded to the faulty
-> commit or beyond.  Affected sites need to run a one-time 'chmod -R'
-> to fix.
-> 
+> Like Linus says, we can't just start breaking things. That's not how
+> you fix things.
 
-Please use CVE-2013-4451 for this issue.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Yeah, Linus has a lot of opinions.  Some of them are great.
 
-iQIcBAEBAgAGBQJSZYwMAAoJEBYNRVNeJnmTykwQANeDVBkzMykOucoXevV3pd99
-YQS6Agd7sF+zgkVkq6YdYperQX2MlXgo7kFwIsGazxpRRswk4i4prpD9CATYwg5V
-XdCf5i3DFr1mQ/hPnFoD59f354gLK7CBK/BfkUnURFoA/TSVH3R8RuTWsfQ6wIGl
-pgVp5X+9WiBZazsSFiEM8fCuCgBGY34RBucLhJL45guZE05mJb06fyaLK2dOYLgz
-neHHiClmeBmb85Vgjy7anCNnOpgkm6h8wsW5DZOd+9hlchoZiv6dc9Jc04tUpS7f
-/AX+w/TWonIDfy9PtyIons4xt4rvs+G5le2xSIAsRxM9HkAANLcsm/HAWTcM1I3m
-Z61KOe2Visi/5Yh3C7lW+MQBS5SmjEkX5N5VhLI3UIg3BPVpTfZTVNScIkYcOZm3
-gmW+uS/5BmSugooA6Clnh79Q7gIuVY6aFPchy8S5VGDjVSnw+Cbbvjy0kfoUaH8m
-4CKA+nPfkHqoSxGaNOSSCOt89gHIOZ3ZYOvD3qBwbMASPnIAf7xZ34XfimOP3ryl
-EYysT4PIM3gk55Ksl+4NLs/mkZ1m36FEzE3NaIQlAx3uwa9qqD7QiugSWv4Tp6Oy
-TksAcQZKU7D5BnYxiSAIC1tbmMmSAnp0dNo8F8HoSbyOa15MLqt/53FXNv664mD2
-hQX/wBlo8ZJi6mrc6W64
-=jdn1
------END PGP SIGNATURE-----
+The fact of the matter is, any time you offer programmers an API where
+the most obvious way to do something is the insecure way (and doing it
+securely requires extra knowledge and effort), then you are virtually
+guaranteeing that a significant percentage of coders will screw up.
+
+Let me give you an example:  Several years ago most web frameworks
+would allow you to set HTTP response headers that included new lines.
+These would not be escaped/encoded, so if you weren't careful, user
+supplied values could sneak malicious values into those headers
+allowing for HTTP header injection and response splitting.  At the
+time, many apps that did an HTTP redirect using a dynamic URL or set
+the Content-Disposition header based on user file names would be
+vulnerable to header injection.  This was bad.  On the other hand,
+there may have been a handful of apps out there that needed this
+capability. Consider that a single HTTP header *can* have legal new
+lines in continuations, which may be necessary for longer headers.
+
+Within the span of just a year or so, most web frameworks began
+forbidding newlines in HTTP headers set by applications.  Now the bugs
+are gone.  Did it break backward compatibility?  Yes.  Who complained?
+
+
+When it comes to securing APIs, you really *do* need to look at the
+greater good and how the *public* is affected.  Programmers aren't
+the ones who are really hurt by vulnerabilities, but when a single API
+design mistake is made, this is, multiplied N times for each
+application that ends up vulnerable, and again M times for each user
+using those apps.  Trying to address this by educating programmers
+helps, but every year more programmers come out of school that need to
+be trained.
+
+
+Taking a closer look at the negative impact created by making API
+changes, let us do a breakdown of applications that use XML libraries
+and how they would be affected by a the change I propose:
+
+A. Applications that don't need inline DTDs and entities.
+
+B. Applications that do rely on inline DTDs or entities and are
+currently maintained.
+
+C. Applications that do rely on inline DTDs or entities and are not
+maintained.
+
+
+For (A), there is no problem.  This is the *vast* majority of
+applications I see, and I test a lot of apps.
+
+For (B), the maintainers will need to make a one or two line change to
+their apps.  Do they need to do this overnight?  NO!  I don't propose
+breaking things "without much warning".  Any API change in a library
+must come in a major version change with good documentation on what it
+takes to upgrade.  Transitions like this don't happen over night.  But
+they do happen *all the time* in popular libraries. Dependency
+management to the rescue.
+
+For (C), these apps just continue relying on an old version of the
+library.  Dependency management to the rescue.
+
+
+Also note that many XML developers consider DTDs and external entities
+to be *deprecated* in the first place.  The sexy thing is to use
+schemas which don't allow entity definition, so most recent
+applications don't need to worry about any of this.
+
+
+You mentioned this is a less than ideal solution.  Yeah, well when
+standards orgs make mistakes, there are never easy fixes.  Recent
+SSL/TLS protocol flaws are a good recent example of that (we've had to
+disable SSL/TLS features, and ram through new RFCs).  But that doesn't
+mean we should stick our head in the sand and hope programmers get the
+message over the next decade.  The OWASP top 10 is still more than
+most developers can handle (SQLi and XSS are well over 10 years old).
+XXE can be more serious than most people understand and we need to nip
+it in the bud.
+
+
+Respectfully,
+tim
