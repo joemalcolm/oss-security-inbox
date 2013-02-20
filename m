@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/04/3
-Message-ID: <51858A2C.6090802@nixnuts.net>
-Date: Sat, 04 May 2013 17:22:36 -0500
-From: John Lightsey <john@...nuts.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/8
+Message-ID: <20130220025039.GA32551@kroah.com>
+Date: Tue, 19 Feb 2013 18:50:39 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: YaBB 2.5.2 and earlier arbitrary code execution
+Subject: Re: Linux kernel race condition with PTRACE_SETREGS (CVE-2013-0871)
 Content-Type: text/plain; charset=utf-8
 
-Hi everyone,
+On Tue, Feb 19, 2013 at 05:47:23PM -0800, Greg KH wrote:
+> On Tue, Feb 19, 2013 at 12:40:50PM -0800, Julien Tinnes wrote:
+> > On Sat, Feb 16, 2013 at 2:49 AM, Solar Designer <solar@...nwall.com> wrote:
+> > > The mainline commits from January are by Oleg Nesterov of Red Hat.  Why
+> > > wasn't(?) the issue handled with due severity within Red Hat, then -
+> > > such that Red Hat would at the very least have a statement on whether
+> > > and which of their kernels are affected by now.  My guess is that the
+> > > full severity of the issue might not have been understood by Oleg at the
+> > > time, but it's only a guess.
+> > 
+> > That's the eternal debate :) Since upstream doesn't want to handle
+> > security and disclosure, I sure wish that distro vendors could
+> > regroup, step-up and do it.
+> 
+> I know some people don't "like" how the kernel team handles bug reports
+> and fixes, but seriously, this should have been pretty obvious by anyone
+> watching the stable kernel releases, which all distros do.  The fact
+> that the distros didn't notify others is not the kernel community's
+> fault, sorry.
 
-Yet another Bulletin Board (YaBB) 2.5.2 and earlier allow arbitrary code
-execution through a combination of file uploads with predictable
-locations and unsanitized use of the "guestlanguage" cookie in file paths.
+Ick, my appologies Julien, it seems we are in violent agreement here
+about the role that distros should be playing.  Sorry about that.
 
-This problem is similar to CVE-2007-3295.
-
-
-References:
-
-http://www.yabbforum.com/community/YaBB.pl?num=1367511332
-
-http://www.carsten-dalgaard.dk/cgi-bin/yabb2/YaBB.pl?num=1367511256
-
-
-The vulnerability can be mitigated by setting the $enable_guestlanguage
-variable to 0 in the YaBB configuration or applying the patch provided
-in the links.
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
+greg k-h
