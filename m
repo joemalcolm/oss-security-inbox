@@ -1,55 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/24/1
-Message-ID: <52687839.4000105@redhat.com>
-Date: Wed, 23 Oct 2013 19:30:33 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/4
+Message-ID: <51241C69.1090501@redhat.com>
+Date: Tue, 19 Feb 2013 17:44:25 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE for Wordpress plugin Portable-phpmyadmin
+To: oss-security@...ts.openwall.com, Kurt Seifried <kseifrie@...hat.com>
+Subject: Re: CVE request -- Linux kernel: mm: thp: pmd_present and PROT_NONE local DoS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/22/2013 09:00 PM, Anant Shrivastava wrote:
-> Exactly, You request the proper url and it lets you in as well as
-> let you perform all database level operations available on that
-> specific file. some sample screenshots should clear the issue
-> (attached for reference). [while phpmyadmin requires a valid userid
-> and password for mysql db these credentials are pulled from
-> wp-config.php (wordpress config fle) file directly in this plugin]
+On 02/19/2013 05:40 PM, Petr Matousek wrote:
+> Most VM places are using pmd_none but a few are still using pmd_present.
+> The meaning is about the same for the pmd. However pmd_present would
+> return the wrong value on PROT_NONE ranges. When the code using
+> pmd_present gets a false negative, the kernel will crash.
 > 
-> Besides these two, there are a large number of full path disclosure
-> on the whole project also however as wordpress itself doesn't
-> consider that as a security issue rather mark it as a configuration
-> issue 
-> (http://codex.wordpress.org/Security_FAQ#Why_are_there_path_disclosures_when_directly_loading_certain_files.3F)
->  Hence those are not reported.
+> An unprivileged local user could use this flaw to crash the system.
 > 
+> Upstream fix:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=027ef6c8
 > 
-> Anant Shrivastava GWAPT | CEH | RHCE Mob : 91-9880166033 E-mail :
-> anant@...ntshri.info <mailto:anant@...ntshri.info> Web :
-> http://anantshri.info
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=912898
+> 
+> Thanks,
+> 
 
-Please use CVE-2013-4462 for the auth bypass portion of these
-vulnerabilitties.
+Please use CVE-2013-0309 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSaHg5AAoJEBYNRVNeJnmTQksP/2NlMC93l36a3Oe/ymjuXWcz
-7dwAleXexfiLpAAANOtyT6c2G5yZSgAzUp3A2W6My2JgQE1i5gtgIBcpuegggXlE
-lhuQaZN0Xg/2aLsB8VV1lNRfmr+t+/4MzdMxfJ+ssuTCPi/o/5V/kQy5pKJMUjP7
-lh1O+OfjFqtdk5q23elS5hvd6IQFIF+zv7H6s3UAiydcN5FYIbzVikVJdKwX0ldW
-SuU3JLOsuVbfiqdjcP34ao56PP7Oc3kDNTduD6s9QO85/yGmKjP9JzEKjWGLvl9+
-4GRliHW1hAYC3f177hfrgf0umWpyesA64i7FbfRCNoGONyEDOR8ow7/t5cIg0lkY
-ZaLkBAMPXQrxxoDeGOUXNgL1YJv8iZfHTNi6FuapaZ2CWOetu1SmBft2aSUoeXAx
-nM4iOpWJ6aZOzAgCgU8Axcn6BjIHZb1K4+QTbt5kVrHa3L8ByjwhyzIqUc/Jq3d4
-G4GvnXlA60UnpcTFb+ju1fFVwI/Mnr5GmR8ef0/+blLUGsB+gp1VR+2Xo7JlRONQ
-Gy93p6VCsTuFwT9jNIz0dvsV0xs8xGhaEIkuIq5DL0n6TGyDw9B/VLygEAy322X2
-Eaa/4AB/epPwtBEh3acS7Xn+l2VCg3S+cQsRxhMPj8JhqEM0sUuI9lNYZzUXSBqO
-Y66NUitSzjzNWAZ2XxFf
-=epl0
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRJBxoAAoJEBYNRVNeJnmTm78QAI7TPTsN/KryK4REJ2RGiSoP
+GJcxRCNPwx0LiVuI2/mg/9T7cWi443tePXqJeHx57xgbjo0rGDVgKeTDC7z4F9wL
+NFuYJo9kFswWfKdVx78mfDk38f4OJIuLUbEB4bUxEqpSXhnJ0c9NTtJzdVuBCXNR
+So/B5Ejoh5fjws9rbknc9jjghdpr4b7OVIJ9RWu2s3rD4/V15zY5bSI44bAUPz7+
+jug5QROihSmcxt+nfioGuIzfKKKOEQWNkdBCJI3T/MAx0JNW7tnWkNs+l83rR5bm
+FNrronR3ohDnMFkxP/AsKbwgI8qCnP1bULWgk3Lm4zp9jnCx6300kQfwNKGBNb8j
+YJxyGKl0GpxzjoFNamXE3FMi59fLfNf/jfWlywEdw1jLMbYVZeNts4tVKou8jcNR
+D2iuQR4/jEu8QQSutfqUbii0PIM589o1WpyE2XCMWBAEYYqJFeTdw0lWfXGFjIWH
+XGgqVpFQKtSqvcwIjgV3OuCG89kDZnhzLfWnvWrOtAKOS5xrKyg1zlvD/s2Vt8Rp
+HliCxdYTYGITzFlQCadStbO5pwgiWbepkHHdNqq6nq3mO7oQqL3wdMeP90182sLs
+slmNc7Qc8Ei6oObrvAOfy2T1hWxPxLxbHz6MG3UIRc30qUWv6AQFxpbOi/TWIhbm
+wT8JFMB9xYDmW4D5hiwz
+=Idk5
 -----END PGP SIGNATURE-----
