@@ -1,62 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/15
-Message-ID: <5141F768.5050503@openstack.org>
-Date: Thu, 14 Mar 2013 17:14:32 +0100
-From: Thierry Carrez <thierry@...nstack.org>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA 2013-007] Backend credentials leak in Glance v1 API (CVE-2013-1840)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/18
+Message-ID: <5125327C.2060703@redhat.com>
+Date: Wed, 20 Feb 2013 13:30:52 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Tim <tim-security@...tinelchicken.org>
+CC: oss-security@...ts.openwall.com
+Subject: Re: RE: Handling CVEs for the XML entity expansion issues
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-OpenStack Security Advisory: 2013-007
-CVE: CVE-2013-1840
-Date: March 14, 2013
-Title: Backend credentials leak in Glance v1 API
-Reporter: Stuart McLaren (HP)
-Products: Glance
-Affects: All versions
+On 02/20/2013 01:06 PM, Tim wrote:
+> 
+>> Docbook uses it quite a bit, e.g. each chapter is a file, then
+>> you use external entities to put them all together, also for
+>> graphics/etc. Breaking Docbook would make me a sad panda.
+> 
+> Well sure, some minority of apps will break.  Libraries release
+> notes merely need to say "next version breaks backward
+> compatibility for apps that use entities and inline DTDs.  If your
+> app uses these, explicitly enable with ..."  Once again, "off by
+> default", not removed.
 
-Description:
-Stuart McLaren from HP reported a vulnerability in the information
-potentially returned to the user in Glance v1 API. If an authenticated
-user requests, through the v1 API, an image that is already cached, the
-headers returned may disclose the Glance operator's backend credentials
-for that endpoint. Only setups accepting the Glance v1 API and using
-either the single-tenant Swift store or S3 store are affected.
+Yeah I'm pretty sure that's a less than ideal solution. Less ideal in
+the sense of "breaking a whole bunch of customer software without much
+warning, some of which is probably closed source and can't be modified
+so that it works with these new "improved" xml libraries" is not the
+way to go. So that's not gonna happen for most major Linux vendors (in
+other words we'll have to find better ways to fix this).
 
-Grizzly (development branch) fix:
-https://review.openstack.org/24437
+Like Linus says, we can't just start breaking things. That's not how
+you fix things.
 
-Folsom fix:
-https://review.openstack.org/24438
+>> I tend to agree, however for the billion laughs/linear attack
+>> that can be somewhat addressed, libxml for example addressed it
+>> by stopping all non linear expansion a few years ago, so while
+>> still vulnerable they are less vulnerable.
+> 
+> Yes, but this is by far the least interesting attack scenario for
+> most XML libraries.  Since libxml2 is pretty limited in it's
+> entities support and network capabilities to begin with, it isn't
+> as interesting of a case for XXE generally.  However, other
+> libraries leverage many platform network capabilities that make for
+> some much more interesting attacks.
+> 
+> tim
+> 
 
-Essex fix:
-https://review.openstack.org/24439
-
-References:
-https://bugs.launchpad.net/glance/+bug/1135541
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-1840
 
 - -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-iQIcBAEBCAAGBQJRQfdoAAoJEFB6+JAlsQQj0g4QAL+tmSjDHukvwPZ1D72ClLIR
-NKV9ceVNT+qus1W5Og2GOKjnrib8X4qkoR/P/Wp+nEoWYosch4YTMvpxc8hamm9P
-OohMdT4RFxQut//ZR6sn/TC2qLgErovlZRMxBKA43sFqHNbirprF5b9A4fF7glp6
-atPAAM7rIHTJDXHvE+a8Qe8qOPKJKP1pOXrSZDL94ZMPq6uAy/0M0v/r/++aAUHy
-Qr7p2ITuVepJ3IM9/sZ+RQ1PXFya0BGBpLBEgaotBmmOMI/FNbthS3PT8W1ywX0S
-gpgcBLiXMXoNsMZCmsLeYirzldaT+ZtqjOxYqZYiAjn5cIQ5XXjFPq8w9vlh83An
-8IVnanVl4C1M4hnYo3sCeFsCnh5sLdM/LVnd19Wz1k1PHTCM7vrNtU0wqAMQFj2C
-BQqNMMcQvFZdEjvzYymlm365DP07DHOi/jgK59EWCfeaEHx4Vs4fL0a9nnoxs/fV
-8SysPv4A3iAaXDOan+0s+T0dac2/KU2FBio0+cuvV4qASYWN5CHAR9/6icWJQ2qh
-InUWIqcgwcOqR6azhQHg/ARw7iNZtv+omVvVOYZu6HOiK4BDj8RkQmPyWsis/ekU
-4Ez6AyKSDmRHtoR9w7GcM14xCrHyqFfbaGUp+qDI73NNGmbXXtXlVEO8/g2ywbKc
-F0k3S2Z5fLOPFeo9ll4C
-=BmKh
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRJTJ8AAoJEBYNRVNeJnmToUkQAMiGDsOlh2iP/a7JfqADtoJD
+ZXKu2WZn7bl0B7pAL2oRwKN7rajgBCYpj7NGa3dPhT0q1HewR3m5Sz+ITSOCCSYt
+BMfk6IKh/Tq26rcxcjBDjS6tlXCW3qr0gej+5DhUZ7v51IPmP17PEVFOETCBG0V0
+/uL7eC/yWOtEPy+ckY9F95AMqfOVqeHWteFek2BZCTZZBiXa+7pLelTWaggzP2JS
+n2J9fdQqXQfiOpajB63JSNj+E5tvLLIHwjniLyW5WuLoMvJ/bSiWm58VYJUzm5Nu
+YkV8++fsHV6Y2Am6pzKkkXg42v9PULrlmgbETUYqbvj4xzFnt+3w3GJuFY6I9Gqr
+HoobjtuXCa+NmAihJ//orJk5oi90pOOoU4eqLivHWqTM+4+wR6f6p/Hn4RroL1pq
+M75KrzAiXhphQ+yyrTeGYYFRWbNCjXm0yvmeU+X1+kFCgPKN32ecSlPbiW9jdDM0
+p6UnCff/8mha54oFgaX356f+6cvXMjFki66pDWFFpuCEpZZ/7p0Z8geWP2OcmpdS
+TwcF3qNYwxtNm8PSg1cei7a053xYnkT3eoHpETVlDzv2oB8Edg41AOp74T2OkAqZ
+4CybIbDQtVwG0GZHWAReM83YX4EaiLWTIwOkhb/ld8kyEElT6sIh/b4ILZAm4O+O
+PYSRsPw9DW2x//mgcb2k
+=Nl21
 -----END PGP SIGNATURE-----
