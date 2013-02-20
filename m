@@ -1,62 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/13/3
-Message-ID: <51B9EDB4.5000209@openstack.org>
-Date: Thu, 13 Jun 2013 18:05:08 +0200
-From: Thierry Carrez <thierry@...nstack.org>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA 2013-015] Authentication bypass when using LDAP backend (CVE-2013-2157)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/9
+Message-ID: <20130220081904.GA27144@ugly.local>
+Date: Wed, 20 Feb 2013 09:19:04 +0100
+From: Oswald Buddenhagen <ossi@....org>
+To: oss-security@...ts.openwall.com
+Subject: isync/mbsync security advisory: missing SSL subject verification (CVE-2013-0289)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Christian Schneider <software [at] chschneider [dot] eu> discovered that
+isync does no SSL subject (hostname) verification.
 
-OpenStack Security Advisory: 2013-015
-CVE: CVE-2013-2157
-Date: June 13, 2013
-Title: Authentication bypass when using LDAP backend
-Reporter: Jose Castro Leon (CERN)
-Products: Keystone
-Affects: Folsom, Grizzly
+This means that any host with a valid certificate could pretend to be
+the wanted host, as long as the certificate store contained the relevant
+root certificate. This could be used for man-in-the-middle attacks, which
+could be used to steal passwords.
 
-Description:
-Jose Castro Leon from CERN reported a vulnerability in the way the
-Keystone LDAP backend authenticates users. When provided with an empty
-password, the backend would perform an anonymous LDAP bind that would
-result in successfully authenticating the user. An attacker could
-therefore easily impersonate and get valid tokens for any user. Only
-Keystone setups using LDAP authentication backend are affected.
+Workaround: Specify a CertificateFile which contains only the wanted
+host's certificate, thus disabling trust chain based verification. Early
+versions of isync's SSL support tried to enforce this mode of operation.
 
-Havana (development branch) fix:
-https://review.openstack.org/#/c/32896/
+Isync releases 0.4 up to including 1.0.5 are affected. Version 1.0.6 has
+been just released to address the issue.
 
-Grizzly fix:
-https://review.openstack.org/#/c/32895/
-
-Folsom fix:
-https://review.openstack.org/#/c/32894/
-
-References:
-https://bugs.launchpad.net/keystone/+bug/1187305
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2157
-
-- -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJRue20AAoJEFB6+JAlsQQjiHQP/1Jd8p9Zezo70Vdm4oZksDzH
-IPuFfeCRUhLvDC1ygz33/7CbRkFtmJS8C+PG+WxiG/49bsCBfIN5fHlOf3DY2X1U
-9zgodo3Tm/LwKCrpdceu4VCABt7CtO/CsHnuQGWBOf06MLDTqDvz3LQKpcPXO50l
-1OHiOWEX9nbCkNKRCPfK4QfrzbJM5GufEeoEEfKk8ZctivvI2M56OcSiGMdOhGK8
-Xw+0bGzBBZzBMhiMq2iw7y0JqWtRLTND/AAP1eyjbHL/xDG/rTtECGaGuONXjpSk
-WQRpWMznJY83fBnxnVAvKvf6OxG8IW8YNicvTgfx5v9gvX0U00r59y24ClnmvBxb
-oRWES8bRLHmjf8vTtfZwcATEfUUFZZK+9VUsaIRsRF6+gF/fbQq39SdVESQACvks
-Sf9/f/Tu6u+58Je2JaTmx3LLV6u12ellP/GUr31OyihKAxFGK4Y1tdrO3v4+u2ZF
-lSC361D5r5cczTosmXy5HjXwfjATaGuMb1ycDKCmO+98gsluQ1exDFnIXCw38weN
-KWJIp5zVCdTF0rqZCr3xDBSe4aukX8niBJNnvgJwELAddIWZ6FHUuEsgl3UPs7ZD
-E+issrQHaGtOJpNvoj17uxxnTY2VrtJ2AjxiU7y+hmt9tHh78rx+OhAdn7zPdoeT
-EEJ4OWpjLDKre9HsJVxX
-=kubz
------END PGP SIGNATURE-----
+Download: https://sourceforge.net/projects/isync/files/isync/1.0.6/
+Patch: http://isync.git.sourceforge.net/git/gitweb.cgi?p=isync/isync;a=patch;h=914ede18664980925628a9ed2a73ad05f85aeedb
