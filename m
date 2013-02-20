@@ -1,29 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/04/1
-Message-ID: <CANTw=MMXv-udc7wSAsWr0oiDdv3vbQ=UYDpfL=WGAHBA6DNTLw@mail.gmail.com>
-Date: Fri, 3 May 2013 23:07:07 -0400
-From: Michael Gilbert <mgilbert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re-emergence of CVE-2008-4796 in Nagios current
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/6
+Message-ID: <51241C81.7040502@redhat.com>
+Date: Tue, 19 Feb 2013 17:44:49 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Kurt Seifried <kseifrie@...hat.com>
+Subject: Re: CVE request -- Linux kernel: vhost: fix length for cross region descriptor
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 30, 2013 at 7:28 PM, David Jorm wrote:
->> CVE-2008-4796 snoopy: command execution via shell metacharacters
->>
->> Was found in Nagios core by Grant Murphy.
->>
->> Filed upstream: http://tracker.nagios.org/view.php?id=449
->>
->> We really need to start thinking about ways to find vulnerable copies
->> of code and fixing them everywhere people have embedded them.
->
-> Debian uses clonewise:
->
-> https://github.com/silviocesare/Clonewise
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-There is also a human-researched list, which is never really up to
-date or anywhere near comprehensive:
-http://anonscm.debian.org/viewvc/secure-testing/data/embedded-code-copies?view=co
+On 02/19/2013 05:41 PM, Petr Matousek wrote:
+> If a single descriptor crosses a region, the second chunk length
+> should be decremented by size translated so far, instead it
+> includes the full descriptor length. A privileged guest user could
+> use this flaw to crash the host or, potentially, corrupt host
+> memory.
+> 
+> Upstream fix: 
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=bd97120fc3d1a11f3124c7c9ba1d91f51829eb85
+>
+>  References: https://bugzilla.redhat.com/show_bug.cgi?id=912905
+> 
+> Thanks,
+> 
 
-Best wishes,
-Mike
+Please use CVE-2013-0311 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRJByBAAoJEBYNRVNeJnmTea0P/1akjtxNBrfflQqyg4OgiTSE
+lg81INRbEtk4Pxxlux9+2LeJhi3nnA/mx9+QJeSTNCbI3TLVCYf5tQYaafpIrs9p
+Fw/+N1b6bvNxan/ipXKqBKss/ZI1vUp4k9uoiJSHU0TAGkYpNZVn2Jt2tcfcwuFz
+vJL9EFmQPlFV8MLPAIX1hfR/WxRCqrylfmFlIFdgDWZU+K9LKbEvZSmUR+uWWNt8
+QKP55vpsxJ1wVIgdmsTMooAZRk2PXizBgDDeFp1U0+6YCSzDjKouqKqVLwTGx4B3
+xIC+ghoPsF+utECY8xNbK5gkh1OSitOC0eWghlwJuE0jpwpyaoJT1OoOKEIM+Ntm
+RXLUTKx0qKhrvX2z6r5H9++RcVUf4CpQzJylEdUrerp5r/RBKEtHoGkBNVc1OL3b
+EC5AiYuyodWHtT8nb3WcDIKEmMAh+QZqJJ/rWZCtmWWB2zFbjp/V0eNFBSVpH7Wm
+kLLODBaqE0eRpXaBrJR6oRKT4XWhSd88pL9LlaH2lskUYcnpZysu+cDdNcEa5kLI
+IIm4xKjZfyA5hYCPXsx+uQi3URaowo6CfOAJcdkGc9VhgIfOg/swf9OWJVMZKV1p
+O8Ay3Bg5OoIhsTTfubvOF7t+0pjfhD4a00gmVxaU2nAwFxX2wZiGp3rmA5W1uagh
+2dEHCTtkOWMYYG631iLS
+=WntS
+-----END PGP SIGNATURE-----
