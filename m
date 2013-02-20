@@ -1,33 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/09/3
-Message-ID: <20130109040118.GP3139@redhat.com>
-Date: Tue, 8 Jan 2013 21:01:19 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/16
+Message-ID: <51252141.4060602@redhat.com>
+Date: Wed, 20 Feb 2013 12:17:21 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Sebastian Krahmer <krahmer@...e.de>
-Subject: Re: CVE Request: cronie fd leak
+CC: P J P <ppandit@...hat.com>
+Subject: Re: CVE request - Linux kernel: evm: NULL pointer de-reference flaw
 Content-Type: text/plain; charset=utf-8
 
-* [2013-01-08 13:56:40 +0100] Sebastian Krahmer wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->"Hello Kurt, Steve, vendors,"
+On 02/20/2013 12:09 PM, P J P wrote:
+> Hello,
+> 
+> Linux kernel built with Extended Verification Module(EVM) and
+> configured properly, is vulnerable to a NULL pointer de-reference
+> flaw, caused by accessing extended attribute routines of sockfs
+> inode object.
+> 
+> An unprivileged user/program could use this to crash the kernel, 
+> resulting in DoS.
+> 
+> Upstream fix: ->
+> https://git.kernel.org/linus/a67adb997419fb53540d4a4f79c6471c60bc69b6
 >
->cronie leaks read-only fd's, please check here:
->
->https://bugzilla.novell.com/show_bug.cgi?id=786096
->
->can someone assign a CVE?
+>  Reference: -> https://bugzilla.redhat.com/show_bug.cgi?id=913266
 
-Sebastian, do you have a specific command that you're using?  I'm trying
-to reproduce this in Fedora and RHEL using lvdisplay (maybe a bad
-choice?) and also using "lvm vgck -v vg_thor && lvm pvs" in
-/etc/crontab.
+Please use CVE-2013-0313for this issue.
 
-The output is mailed to me fine with no warnings?  Can you share what
-command was being used to reproduce this?  It's possible that something
-you added (or we added) makes this a non-issue on other platforms.
+> Thank you. -- Prasad J Pandit / Red Hat Security Response Team DB7A
+> 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
 
-Has upstream been informed of this yet?
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRJSFAAAoJEBYNRVNeJnmTGp8QAMhrgMc45wgfynP+WhUesws6
+dUB+acCrE9a0TCnAvJAV03ula/hqy5SZmoyZgSZI14Szy5ocZZQesauprKyWzJc3
+KQqr8pp3isiACJWz7ZjOyGYpEweP1df1q/WLyfAa4uzdHjQ8S1CP7kIlIrV3yfyB
+RUBIkR9PLi3CtAwzn08BIIJHOXLhNL0U3eFd47G83fdsb549BHcF56/wo4MaMtF2
+CgShhhQjOl+N5zIs0NR1qwtQoFHO0B4QJPAAqPPK0jdWul/+XBXWxvCh6SPIZHjy
+ty7YJ2+lP54J1ZMAQUDXlKwjHqqwPmnGk1BRZ2ARfOtDUhkDPObYiqMjXbuE/DPQ
+Vz0Hs8hmx8RSfCqrhcOUL72Sr+4WlkMLiGsNp+zS+pGCOIe3bCTpnA9I+Ef4Z4vl
+Z+amEM0+5c+9JTMxuvvO/ScOKUkSRIgbXf0qswduBoy+r5pGn+cR2qdLAmwFUZdF
+aXJwoE5C85PxnsAMSsVuSD6w4S9AceQhFnVJz4tOT85OuBjUTWkWkEAMpi/ZjS+m
+YRR39qQZ590zJxYNi7c3XwG0Wzx/ZIANLkzxy5qm7CJeAaYtpmBIn4Q39+KJPOmb
+cM6pDRdWfIZcApHcgzqUlHo2ZTCFJKKYJNsoqDtv5a1Ijg09Je95TycAVKflMsMd
+oEUiQX1871yzYMbaDsBr
+=iYQK
+-----END PGP SIGNATURE-----
