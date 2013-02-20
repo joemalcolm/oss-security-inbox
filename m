@@ -1,34 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/1
-Message-ID: <529EA687.50306@canonical.com>
-Date: Tue, 03 Dec 2013 21:50:31 -0600
-From: Jamie Strandboge <jamie@...onical.com>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Duplicate OpenStack CVEs for Horizon?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/15
+Message-ID: <alpine.LFD.2.03.1302202337560.6910@redhat.com>
+Date: Thu, 21 Feb 2013 00:39:10 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request - Linux kernel: evm: NULL pointer de-reference flaw
 Content-Type: text/plain; charset=utf-8
 
+   Hello,
 
-Hi,
+Linux kernel built with Extended Verification Module(EVM) and configured 
+properly, is vulnerable to a NULL pointer de-reference flaw, caused by 
+accessing extended attribute routines of sockfs inode object.
 
-I was looking at https://bugs.launchpad.net/ossa/+bug/1247675 and it looks like
-upstream Horizon got CVE-2013-6406 assigned (referenced in the bug).
+An unprivileged user/program could use this to crash the kernel, resulting in 
+DoS.
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=730752 also references this
-Launchpad bug, but does not reference a CVE.
+Upstream fix:
+  -> https://git.kernel.org/linus/a67adb997419fb53540d4a4f79c6471c60bc69b6
 
-Secunia http://secunia.com/advisories/55770 references CVE-2013-6406.
+Reference:
+  -> https://bugzilla.redhat.com/show_bug.cgi?id=913266
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-6858 references the
-Launchpad bug and the Secunia advisory, but has a different CVE. The only
-reference I found to CVE-2013-6858 was the RedHat bug.
-
-Is CVE-2013-6858 simply a duplicate of CVE-2013-6406 or were these supposed to
-be split out for some reason?
-
-Thanks
-
--- 
-Jamie Strandboge                 http://www.ubuntu.com/
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
