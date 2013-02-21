@@ -1,31 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/03/1
-Message-ID: <20130703090213.GC2896@suse.de>
-Date: Wed, 3 Jul 2013 11:02:13 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: Earlier AF_KEY in key_notify_policy_flush
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/21
+Message-ID: <51267B10.3070003@redhat.com>
+Date: Thu, 21 Feb 2013 12:52:48 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: security curmudgeon <jericho@...rition.org>
+Subject: Re: Two more ZoneMinder that need CVE
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Michal Hocko identified an earlier patch for an AF_KEY information leak,
-in nearly the same place as CVE-2013-2234.
+On 02/21/2013 12:10 PM, security curmudgeon wrote:
+> 
+> re: Kurt's response about ZoneMinder: 
+> http://seclists.org/oss-sec/2013/q1/369
+> 
+> OSVDB has two more ZoneMinder issues that do not have CVE:
+> 
+> 74198      2011-08-01     ZoneMinder index.php view Parameter
+> Traversal Local File Inclusion
 
-Due to different time of fix and different researcher probably
-needs a new CVE.
+I think this is the CVE I Just assigned.
 
-Ciao, Marcus
+> 89546      2009-02-09     ZoneMinder Multiple Default Credentials
 
-commit 85dfb745ee40232876663ae206cba35f24ab2a40
-Author: Nicolas Dichtel <nicolas.dichtel@...nd.com>
-Date:   Mon Feb 18 16:24:20 2013 +0100
+By default, ZoneMinder installs with default user credentials
+(username/password combination). The 'zmuser' account has a password
+of 'zmpass' and the 'admin' account has a password of 'admin', both of
+which are publicly known and documented. This allows remote attackers
+to trivially access the program or system and gain privileged access.
 
-    af_key: initialize satype in key_notify_policy_flush()
-    
-    This field was left uninitialized. Some user daemons perform check against this
-    field.
-    
-    Signed-off-by: Nicolas Dichtel <nicolas.dichtel@...nd.com>
-    Signed-off-by: Steffen Klassert <steffen.klassert@...unet.com>
+so it doesn't qualify for a CVE.
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRJnsQAAoJEBYNRVNeJnmTatsP/Rn0uyabjN7rOB+mlDBGoL7K
+Qo00ZZrdRQGVrswWnFgsaZqJYdbuGNi3Mwe9RQIZ0x8YvRH+8z4UCJ95OqtBqgxf
+Ff+Osgd7op317skAQjspqV9d6My5v9HQHeT3bBz9PpqMIXTKqFG8VfgELvkQRfOa
+AhFUJX04pbX9tWCDZ6xxfl6Kd+JsYpAIk34+d2DaRhXPEBouN0fBKxUo/SlRY6jW
+jOXr7P9nNlS9M6CgibCTCafPAoufeU5auT5YWI7sMsr0YYTi8cT/qiw4iEGorVxI
+aB4PsjldKnY3a+mIkIwEHPFhPqj/jkhVaNdO76f/JCAzyRaG+tc/rNeiC5GqAU/8
+XDWEziJLZntwdtQS7SaraS5Re3ApNH1pMn6jx/zDNe+0ubpez6GBZmcpe3ZnfeB1
+tJpX2exWvoIBJO59LSxtIgapsWR8WjZucx+H2NI9d4YirFpoaT8qhIp+yRIuXzkn
+uD97VVE3xG6I8JwsJCyxRD4zhFxVG8Icily5MQhmd1iPXAb/D+wblfrRgAr2M/ay
+bV2snuxBayPKgY8UJxSHI99U55euK66uiWKE62qNVzcz7H9ny9TKXxGD2CLwnUR4
+MTWn0GGjtf1ULHzxhX0WYGiR1cNvC7uZ5awGvzZqK3g8/wplVdX4sUW5o8dPwpK9
+/iGY57kibh/YPtCiWQM9
+=yYZ4
+-----END PGP SIGNATURE-----
