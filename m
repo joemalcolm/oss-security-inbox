@@ -1,51 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/3
-Message-ID: <1360226839.52825502.1357227136530.JavaMail.root@redhat.com>
-Date: Thu, 3 Jan 2013 10:32:16 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Jan Wielemaker <J.Wielemaker@...vu.nl>, Petr Pisar <ppisar@...hat.com>
-Subject: CVE Request - SWI-Prolog / pl (X < 6.2.5): Multiple (stack-based) buffer overflows in patch canonisation code and when expanding file-names with long paths
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/14
+Message-Id: <E1U8X3b-0007ni-Cw@xenbits.xen.org>
+Date: Thu, 21 Feb 2013 14:23:31 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 36 (CVE-2013-0153) - interrupt remap entries shared and old ones not cleared on AMD IOMMUs
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  SWI-Prolog upstream has released [2] 6.2.5 / 6.3.7 versions,
-correcting the following two security flaws:
+	     Xen Security Advisory CVE-2013-0153 / XSA-36
+			      version 4
 
-* Issue #1 (from [2]):
-=======================
-* FIXED: Possible buffer overrun in patch canonisation code.
-Pushes pointers on an automatic array without checking for
-overflow.  Can be used for DoS attacks. Will be extremely
-hard to make it execute arbitrary code.
+  interrupt remap entries shared and old ones not cleared on AMD IOMMUs
 
-Relevant upstream patch:
-[1] http://www.swi-prolog.org/git/pl.git/commitdiff/a9a6fc8a2a9cf3b9154b490a4b1ffaa8be4d723c
+UPDATES IN VERSION 4
+====================
 
-References:
-[2] https://lists.iai.uni-bonn.de/pipermail/swi-prolog/2012/009428.html
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=891577
+Updated patches, to deal with a boot time crash resulting from the earlier
+changes on systems with firmware broken in a way not previously accounted
+for.
 
-* Issue #2 - from [2]:
-======================
-* SECURITY: Possible buffer overflows when expanding file-names with
-long paths.  Affects expand_file_name/2.  Can lead to crashes
-(DoS attacks) and possibly execution of arbitrary code if an attacker
-can control the names of the files searched for, e.g., if
-expand_file_name/2 is used in a directory to which an attacker can
-upload files for which he can control the name.
+ISSUE DESCRIPTION
+=================
 
-Relevant upstream patch:
-[4] http://www.swi-prolog.org/git/pl.git/commitdiff/b2c88972e7515ada025e97e7d3ce3e34f81cf33e
+To avoid an erratum in early hardware, the Xen AMD IOMMU code by
+default chooses to use a single interrupt remapping table for the
+whole system.  This sharing implies that any guest with a passed
+through PCI device that is bus mastering capable can inject interrupts
+into other guests, including domain 0.
 
-References:
-[5] https://lists.iai.uni-bonn.de/pipermail/swi-prolog/2012/009428.html
-[6] https://bugzilla.redhat.com/show_bug.cgi?id=891577
+Furthermore, regardless of whether a shared interrupt remapping table
+is in use, old entries are not always cleared, providing opportunities
+(which accumulate over time) for guests to inject interrupts into
+other guests, again including domain 0.
 
-Could you allocate CVE ids for these? (iilc two should be
-enough)
+In a typical Xen system many devices are owned by domain 0 or driver
+domains, leaving them vulnerable to such an attack. Such a DoS is
+likely to have an impact on other guests running in the system.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+IMPACT
+======
+
+A malicious domain which is given access to a physical PCI device can
+mount a denial of service attack affecting the whole system.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 3.3 onwards are vulnerable.  Earlier Xen versions do not
+implement interrupt remapping, and hence do not support secure AMD-Vi
+PCI passthrough in any case.
+
+Only systems using AMD-Vi for PCI passthrough are vulnerable.
+
+Any domain which is given access to a PCI device can take advantage of
+this vulnerability.
+
+MITIGATION
+==========
+
+This issue can be avoided by not assigning PCI devices to untrusted
+guests.
+
+In Xen versions 4.1.3 and above the sharing of the interrupt remapping
+table (and hence the more severe part of this problem) can be avoided
+by passing "iommu=amd-iommu-perdev-intremap" as a command line option
+to the hypervisor.  This option is not fully functional on earlier
+hypervisors.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that on certain systems (SP5100 chipsets with erratum 28 present,
+or such with broken IVRS ACPI table) these patches will result in the
+IOMMU not being enabled anymore.  This should be dealt with by a BIOS
+update, if available.  Alternatively the check can be overridden by
+specifying "iommu=no-amd-iommu-perdev-intremap" on the Xen command
+line ("iommu=amd-iommu-global-intremap" on 4.1.x), at the price of
+re-opening the security hole addressed by these patches.
+
+xsa36-unstable.patch              Xen unstable
+xsa36-4.2.patch                   Xen 4.2.x
+xsa36-4.1.patch                   Xen 4.1.x
+
+$ sha256sum xsa36*.patch
+4bdc0f1f94f82c6bc6c777971f22ef915215b72b98b29f9064e4df65c0efc6f4  xsa36-4.1.patch
+dd32ecaa84edbf6d11241045f40ba53ec4a3bc6c24f719bc21204067c4eb8964  xsa36-4.2.patch
+7c0b3a1b332a24a830c7a436b065943f60c54cd5b7e746c440e2992a7b5cfe41  xsa36-unstable.patch
+$
+
+Incremental patches on top of what was provided in version 3 can also be
+taken from the respective mercurial trees:
+
+http://xenbits.xen.org/hg/xen-unstable.hg/rev/e68f14b9e739
+http://xenbits.xen.org/hg/staging/xen-4.2-testing.hg/rev/6a03b38b9cd6
+http://xenbits.xen.org/hg/staging/xen-4.1-testing.hg/rev/4d522221fa77
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJRJf98AAoJEIP+FMlX6CvZ5ocH/jNY92kLw7BOencxa9R3TGTn
+20O0+j1id+xi2vjVVF2xm2SJ7g/6Egx5WURUfy2cu+I8GdDHKmRrp3Vkazltzcnd
+6AlI5aiPC2H1rFkU0FpneRk3mrluABLZO8Q5YcSJs24hwqded0W+SivH63aInki/
+PsDGoBu8HUjYMWjXyqCJVJIGToLS9ApaQ8+iTylWb1ZocRm2VcPS8yJI7z82kj3A
+zRNADG36oAFawSJsE9z3ykVoYv9UYckOaWkaXh7jZPHAvIjvP2wLb9gmMkMXbIOP
+ICpJJFf0w7oW6KTY3g9n8CxUMBMoUw/9Fv+CQBzOf0ZZY/vIE8q65A0NhCcWixo=
+=vmpB
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa36-4.1.patch" of type "application/octet-stream" (14403 bytes)
+
+Download attachment "xsa36-4.2.patch" of type "application/octet-stream" (12586 bytes)
+
+Download attachment "xsa36-unstable.patch" of type "application/octet-stream" (12528 bytes)
