@@ -1,54 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/1
-Message-ID: <51402E8E.9030303@redhat.com>
-Date: Wed, 13 Mar 2013 01:45:18 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: almanah does not encrypt its database
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/4
+Message-ID: <5125A5A7.6090702@gmail.com>
+Date: Wed, 20 Feb 2013 20:42:15 -0800
+From: Forest Monsen <forest.monsen@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: CVE request for Drupal Core and contributed modules
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Kurt,
 
-On 03/12/2013 03:48 PM, Vincent Danen wrote:
-> Could a CVE be assigned to the following?
-> 
-> 
-> It was reported that Almanah does not encrypt its database when it 
-> closes, due to GApplication no longer using the quit_main_loop()
-> event since GIO 2.32.  This will keep the database unencrypted when
-> it should be encrypted.  The upstream bug report has a patch
-> attached which corrects the issue.
-> 
-> References:
-> 
-> https://bugzilla.gnome.org/show_bug.cgi?id=695117 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=702905 
-> https://bugzilla.redhat.com/show_bug.cgi?id=920848
-> 
-> 
-> Thanks!
+Here's a request for CVE identifiers for several issues:
 
-Please use CVE-2013-1853 for this issue.
+SA-CORE-2013-002 - Drupal core - Denial of service
+http://drupal.org/SA-CORE-2013-002
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+SA-CONTRIB-2013-015 - Manager Change for Organic Groups - Cross site
+scripting (XSS)
+http://drupal.org/node/1916312
 
-iQIcBAEBAgAGBQJRQC6OAAoJEBYNRVNeJnmT0aYQALRuVmbRm8e2BKk8RTNLQndp
-T87ZYXRALdvQ18BJDjFfnf8JVMAszEPQujUTNnoStYNbIhHdPM23JRKMeHnU/0OZ
-8d2maOEW68SRRmsIhlvqDv3nLrkJcvuRXkojlF0frv03HHBsqyxqcYQ3WrWPDMLN
-OXArymEP52+x6RJGEFAhmktelvGqmWBdczfbtwS9uIgbzUFFVPGFZxxRp3lI1DdK
-8OhzXSR0R+idFNMmqhOTGegiHGfTl+xXOhJs28Pm/IYAvBihx0r5V7buu0zBerUv
-Rd8ry895OmnSUEhVbEh4dFuwj4jR9HDWUFTQ+L87+iqkox3vrq5Nd6/dVTSEyO0J
-CgBG8x1Q9fVUCfqYUYzx7mKRKz5+tQAbuam3mEzManJ1h59xEmYeYoN9cJgz2Ri7
-SjFCyMKF9jgbT9pvdvqHeg3L9mg2Ay6B5UwBRmsG0U/bAJSiN6NMLdDUakTtlQMF
-681JFkiec2MwXGCd0HyEm7GsoPmH6GMHpSlLAx7y/aj8jc3gCUjRFReMCzbXoZVv
-fPNOdf/nc9d6TbpKUfO4PztfQ77Z8r69yfARsVlO0KzX7m21CFpLzZS7lEzP8vAh
-6cykJyr1ZJFCbwdbGga5gyyv87et7YFbCPNPPOdwXFmhSG9/iXvKSHuvc3uWwpD4
-XXggh+4MYIHwAJj0BNSb
-=klwP
------END PGP SIGNATURE-----
+SA-CONTRIB-2013-016 - Banckle Chat - Access bypass - Unsupported
+http://drupal.org/node/1916370
+
+SA-CONTRIB-2013-017 - Yandex.Metrics - Cross site scripting (XSS)
+http://drupal.org/node/1922400
+
+SA-CONTRIB-2013-018 - Taxonomy Manager - Cross Site Request Forgery (CSRF)
+http://drupal.org/node/1922410
+
+SA-CONTRIB-2013-019 - Ubercart Views - Cross site scripting (XSS)
+http://drupal.org/node/1922416
+
+SA-CONTRIB-2013-020 - Ubercart - Cross site scripting (XSS)
+http://drupal.org/node/1922418
+
+SA-CONTRIB-2013-021 - Display Suite - Cross Site Scripting (XSS)
+http://drupal.org/node/1922438
+
+SA-CONTRIB-2013-022 - Menu Reference - Cross site scripting (XSS)
+http://drupal.org/node/1922446
+
+SA-CONTRIB-2013-023 - Varnish module - Cross Site Scripting (XSS)
+http://drupal.org/node/1922756
+
+Thanks!
+
+Forest
