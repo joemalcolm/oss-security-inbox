@@ -1,62 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/18
-Message-ID: <527800DB.9080105@redhat.com>
-Date: Mon, 04 Nov 2013 13:17:31 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/10
+Message-ID: <CAA7hUgH4zcwH9MMJ4EmxT8nTRSR-COwCW9jxzg6qKjY5DgqW9g@mail.gmail.com>
+Date: Thu, 21 Feb 2013 11:47:10 +0100
+From: Raphael Geissert <atomo64@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Seth <seth@...rl-i-gig.com>
-Subject: Re: XSS in CollectiveAccess 1.3 and earlier
+Cc: 700158@...s.debian.org, 700159@...s.debian.org
+Subject: Re: CVE request: XSS flaws fixed in ganglia
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 11/04/2013 11:32 AM, Daniel Kahn Gillmor wrote:
-> There was a cross-site scripting (XSS) vulnerability in 
-> CollectiveAccess, a web-based archive cataloging system written in
-> PHP.
-> 
-> CollectiveAccess 1.3.1 was released including this fix.
-> 
-> http://www.collectiveaccess.org/news/collectiveaccess-version-1-3-1-released/
+On 8 February 2013 19:06, Vincent Danen <vdanen@...hat.com> wrote:
+> A number of XSS issues were fixed in ganglia's web ui:
 >
-> 
-> 
-> The issue was reported at:
-> 
-> http://clangers.collectiveaccess.org/jira/browse/PROV-638
-> 
-> (the PROV-638 ticket may not be accessible to the public)
-> 
-> The changeset fixing it is:
-> 
-> https://github.com/collectiveaccess/providence/commit/b54e01419966c8d8f23db532caad91304c977776
->
-> 
-> 
-> Regards,
-> 
-> --dkg
+> https://github.com/ganglia/ganglia-web/commit/31d348947419058c43b8dfcd062e2988abd5058e
 
-Please use CVE-2013-4507 for this issue.
+I've a hunch that there are a few issues with the changes. A quick
+look at the patch shows that the change here breaks the preg_replace
+call:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+- $query_string = preg_replace("/(&trendhistory=)(\d+)/", "", $query_string);
++ $query_string = preg_replace("/(&trendhistory=)(\d+)/", "",
+htmlspecialchars($query_string, ENT_QUOTES) );
 
-iQIcBAEBAgAGBQJSeADbAAoJEBYNRVNeJnmTURYP/0ZSFU1OC2O5JFkaCRvVhgzF
-ypKBkBlPVHQggxnXq77E3HjPjqRBPJtea3zISPwLk0mBFaCPnmGSVSNwicxo2ry7
-QR3cxv5QPl8wWni23xNGByoEwI7RqNUTmrhriSP3wWQ3tsFuu9Bio+L3Mjr/OqG7
-YuosmpfSv0zTKWBGmhAJzRtyhqmp4INC1uu/omTc2fELrOKaL9lhnpPGJdehZnRB
-DqjG9lNpwpLK+7YknTlSwVd6HN4ZNONy0gsEG6Uo19O/l8fSuDn2gcV61Sse92F7
-Lc4mVSluWBoforQlE9KrE4PDI6rcXh/32hZAjeXezVa3bweGWg+9A/94aau+cDsF
-FRSkoruw094//8+Xg9O2EqoIhuaZBIzFleNp0EdxAxDFOJ51pBvQpJD08H9OHjqJ
-rUrdj2HiIItFnpPl178c/YYoewiNDnyCAYp90K5EVRpWnQsoYQMiTJTYQCdwuQXv
-eHPcrwLbUEGyIzPUQxrYseslQIWq+Cr/110nYq0QU8iBkxI4bDxkV2QeyuOPbPtn
-4TmH5C7Auq7DFEtMaj1BXgd1DeJvaPTj2oEPt0JGgMzEwBo9iBDpD7PFopFcLsv7
-oGAHd0+KMr/W/RnhRh6IxuCcGti1zYWbmi3z/t+XSJeTDuqKEdEqAtHY8n+iDCjP
-E4IcaBRlRbgotx8407bW
-=jRnU
------END PGP SIGNATURE-----
+It looks as if the htmlspecialchars call was misplaced.  Not that it
+is a security issue, but it's a bug.
+
+Can anyone forward this upstream? I will try to take a look at the
+rest of the patch later.
+
+Cheers,
+-- 
+Raphael Geissert
