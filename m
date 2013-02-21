@@ -1,48 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/9
-Message-ID: <5151EC9D.8020501@redhat.com>
-Date: Tue, 26 Mar 2013 12:44:45 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/12
+Message-ID: <CAA7hUgHW=VwfsffPfFxvhZ=fS5fPf=79jZ-tdsCkZJgEfEksjA@mail.gmail.com>
+Date: Thu, 21 Feb 2013 14:50:13 +0100
+From: Raphael Geissert <atomo64@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>, "Larry W. Cashdollar" <larry0@...com>
-Subject: Re: CVE request: ibutils improper use of files in /tmp
+Cc: 700158@...s.debian.org, 700159@...s.debian.org
+Subject: Re: CVE request: XSS flaws fixed in ganglia
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi again,
 
-On 03/26/2013 08:51 AM, Vincent Danen wrote:
-> * [2013-03-26 08:28:53 -0600] Vincent Danen wrote:
-> 
-> Yeah, you're right.  It was pointed out to me that it was noted
-> here:
-> 
-> http://www.openwall.com/lists/oss-security/2013/03/19/8
-> 
-> Can CVE-2013-1894 be rejected?  Sorry about this, I didn't notice
-> that it was assigned one already.
+On 21 February 2013 11:47, Raphael Geissert <atomo64@...il.com> wrote:
+> On 8 February 2013 19:06, Vincent Danen <vdanen@...hat.com> wrote:
+>> A number of XSS issues were fixed in ganglia's web ui:
+>>
+>> https://github.com/ganglia/ganglia-web/commit/31d348947419058c43b8dfcd062e2988abd5058e
+>
+> I've a hunch that there are a few issues with the changes. A quick
+> look at the patch shows that the change here breaks the preg_replace
+> call:
 
-Please REJECT CVE-2013-1894 and use CVE-2013-1894 instead.
+Forgot the reference, here's the exact code:
+https://github.com/ganglia/ganglia-web/commit/31d348947419058c43b8dfcd062e2988abd5058e#L7R17
+
+[Salvatore, thanks for forwarding it]
+
+Some other notes:
+
+* https://github.com/ganglia/ganglia-web/commit/31d348947419058c43b8dfcd062e2988abd5058e#L9R35
+
+This is a directory traversal issue that requires authentication, but
+there doesn't seem to be a CSRF protection in place (unless I'm
+missing something).
+The (stored) XSS part of it is not entirely fixed for the case where
+an attacker successfully took advantage of it since the sanitation is
+only performed when storing to the .json file.
+
+The other operations related to views (in views_view.php) are all
+still vulnerable to XSS via the view_name GET parameter.
 
 
+The authentication cookie uses a persistent token for every user (no
+session ids or any sort of nonce), which is an issue on its own, but
+it also doesn't verify that the group stored in the cookie actually
+corresponds to the user. As of 3.5.7 the groups feature still doesn't
+seem to be in use, however.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRUeydAAoJEBYNRVNeJnmT7lAP/1Tiy0NKyDlfjPHeeI5b88GN
-TuT7zv08IYaEEhDvmyk4sP8ynz//Yv1GlJ4LyhUPeyF/onN6mjCqbQZXATLVjqoU
-Wfg5wIV3y7iFqRrCW6Jr2ywiw8QacNiikSkE3C7bZ6WxH3L87f+6AzwQOk1rVOde
-JHP+UMaJ8mvyZlABKBsllHM6umB6n0AZN7/yX3xca7mokpHOB2w6DJLp9mVdmzXi
-abfoVJ9DwA71V3IR3sWxTatK16TEFYL7W6d42azDBZ5fHpXNyTBKm/XmE2CC1agL
-gXSuoGGy0EeG7mBT5GDHC/Qn9/pOeZA1OIWGnLBZ/spOCp7Ip8vggaqyKQSTK32T
-/Vo/gEtITPEMmpeaz0P6z7WZTk6LcTI1OczpJMu4fVEDpxGnLtLY1vsQmuNS62Hj
-iEtAH+Bg7O3HpWIaSdh7B+h5DkzHAKr3OZiNKjvJgMAnB+md8ShvZBzS7Pmu+dYJ
-C6ZoRFkN0jwCTWeuHY2RQXKu2CCaHHmTvZ1ULTJxwPKzjo5KTSekQpK78a5fI0nX
-sxB1LSJGb+xJaED402TWTWopZ0rR0/mLShc9MuRsTEFDyL7i3YOqA28YkZWFdYvv
-QxR9WdC662Vxw4AVWIAg33HWUXgNcEIjnf/pBd4DCb9VO3ziignQfJsYVGMHJpXF
-VYMfi2PsNMeW48XEfvDa
-=jBGc
------END PGP SIGNATURE-----
+So I guess we are going to need at least one more CVE id for the
+remaining XSS issues in views_view.php and I leave the rest up to the
+opinion of others (upstream included).
+
+Cheers,
+-- 
+Raphael Geissert
