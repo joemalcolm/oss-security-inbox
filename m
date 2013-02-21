@@ -1,104 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/15
-Message-ID: <CABPqkBTw+qoYQmgiTDwgN18fUb2iV3d1F+cfCEzjde0wAGqmcQ@mail.gmail.com>
-Date: Wed, 5 Jun 2013 15:53:52 +0200
-From: Stephane Eranian <eranian@...gle.com>
-To: Peter Zijlstra <a.p.zijlstra@...llo.nl>, Stephane Eranian <eranian@...gle.com>,  "ak@...ux.intel.com" <ak@...ux.intel.com>, security@...nel.org,  Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: More perf security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/23
+Message-ID: <51268360.4040507@redhat.com>
+Date: Thu, 21 Feb 2013 13:28:16 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Christey, Steven M." <coley@...re.org>, security curmudgeon <jericho@...rition.org>
+Subject: Re: Two more ZoneMinder that need CVE
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 5, 2013 at 3:35 PM, Petr Matousek <pmatouse@...hat.com> wrote:
-> On Wed, Jun 05, 2013 at 03:02:53PM +0200, Peter Zijlstra wrote:
->> On Wed, Jun 05, 2013 at 02:38:56PM +0200, Petr Matousek wrote:
->> > On Wed, Jun 05, 2013 at 02:15:59PM +0200, Peter Zijlstra wrote:
->> > > On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
->> > > > Hello, Peter.
->> > > >
->> > > > On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
->> > > > > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
->> > > > >
->> > > > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
->> > > > >
->> > > > > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
->> > > > > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
->> > > > > Date:   Fri May 3 14:11:25 2013 +0200
->> > > > >
->> > > > >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
->> > > > >
->> > > > >     We should always have proper privileges when requesting kernel
->> > > > >     data.
->> > > > >
->> > > > >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
->> > > > >     Cc: <stable@...nel.org>
->> > > > >     Cc: Andi Kleen <ak@...ux.intel.com>
->> > > > >     Cc: eranian@...gle.com
->> > > > >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
->> > > > >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
->> > > > >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
->> > > > >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
->> > > >
->> > > > There is similar check in perf_copy_attr() which is called from
->> > > > perf_event_open syscall --
->> > > >
->> > > >                 /* kernel level capture: check permissions */
->> > > >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
->> > > >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
->> > > >                         return -EACCES;
->> > > >
->> > > > It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
->> > > > missing something?
->> > > >
->> > >
->> > > I overlooked it, also its slightly broken. See the discussion at:
->> > >   https://lkml.org/lkml/2013/5/21/166
->> >
->> > Got it, thanks for the pointer. So it is safe to say there never was a
->> > leak in this case (and thus no security issue worth CVE)?
->>
->> There was a leak, notice how Stephane's patch did a
->> s/PERF_SAMPLE_BRANCH_PERM_PLM/PERF_SAMPLE_BRANCH_KERNEL/
->
-> PERF_SAMPLE_BRANCH_PERM_PLM is a superset of PERF_SAMPLE_BRANCH_KERNEL:
->
-> #define PERF_SAMPLE_BRANCH_PERM_PLM \
->         (PERF_SAMPLE_BRANCH_KERNEL |\
->          PERF_SAMPLE_BRANCH_HV)
->
->
->> but also places
->> the check _after_ we propagate the event PLM levels in the case none
->> were LBR specific.
->
-> Assuming the leak does occur only when PERF_SAMPLE_BRANCH_KERNEL is set,
-> that does not matter:
->
->                /* kernel level capture: check permissions */
->                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
->                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
->                         return -EACCES;
->
-> ^^^ this assures proper permission check if PERF_SAMPLE_BRANCH_KERNEL
-> is explicitly set
->
->
->                 /* propagate priv level, when not set for branch */
->                 if (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) {
->
->                         /* exclude_kernel checked on syscall entry */
->                         if (!attr->exclude_kernel)
->                                 mask |= PERF_SAMPLE_BRANCH_KERNEL;
->
-> And following check in perf_event_open syscall assures the permission
-> are right for (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) code:
->
->         if (!attr.exclude_kernel) {
->                 if (perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
->                         return -EACCES;
->         }
->
-Yes, your analysis is correct. If the branch has not explicit priv
-level mask, then
-it is inherited from the event branches are requested from.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> --
-> Petr Matousek / Red Hat Security Response Team
+On 02/21/2013 01:03 PM, Christey, Steven M. wrote:
+> Actually, CVE covers default accounts and passwords, although known
+> passwords from 1999 and earlier are not covered.
+> 
+> While this is arguably "configuration," in 2013, products are
+> expected to have other mechanisms of securing themselves out of the
+> box, such as forcing a credentials change during installation, plus
+> there is usually a race condition between when the product is
+> installed and when the administrator changes the credentials.
+> 
+> - Steve
+
+So then as I said in:
+
+http://seclists.org/oss-sec/2013/q1/155
+
+> 1) The default account/password is well documented. The services 
+> forces you to change the password when first run and will refuse
+> to run until you do change the password. Generally not considered a
+> vuln.
+
+> 2) The default account/password is well documented. The services
+> does not force you to change the password when first run. Generally
+> not considered a vuln as it falls into the "don't do stupid things"
+> class of issues.
+
+#2 needs a CVE?
+
+> 3) The default account/password is not well documented or not 
+> documented at all but can be changed. Generally this would be 
+> considered a vulnerability.
+
+> 4) The default account/password is not well documented or not 
+> documented at all and can NOT be changed. Generally this would be 
+> considered a vulnerability.
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRJoNgAAoJEBYNRVNeJnmTHGAQAIzzGsK/XPbuwqU0mNZz8eAi
+DJIGnNB8mhstKkB0y1P7zGb6e7UNcYdT01E34lU3gS9IBTZ3aBnHk7T8JC9TfbAa
++nM/S1lpRb8O0LSSDNXFQQtSesEk4fHiz2A/AAhcRDcrRX8bG62mcRWhJW398NTM
+ZlnI9NNAv7MORrzxN1ZmW/oK1hbglNobjGWVlAQCGtKIVaYt89HVne9WP9Z4ab5D
+jHHLa9s4Y6EcaCcIjnY4/KrYCOFtjGUe875QhV70T4it9OjyYgmNLHztvbNA0Y5A
+EWxJVd9tPIoIDw6Acmu0fVpHw59AocS4t6b/se2/FXskt1D17nJ2xhnbVIVnhzdV
+66GdK6huYMOiyOjolT2SyrokI0nkHmV56xJ+6OAdjPEEjKX1tqvLIy6kaTGcA7pF
+/AHGpXZDPsSlxV0fBJ6p9M2RYB9anNhWCsMnG/wJx4sm0j8CM5RdPvcASz38JAsE
+HrwCn0EDhNhj1umb1hCYZrJ5fb4+z5rmBT6MRE0znj9nHsyGgMMDvaNOw2mWCwC5
+k/TlTKQZxsl7JHK2HbWaXA/dJH780unp5sE3N/aUYE95KHvMVXlGFQ9aFyNhVMRM
+Efl9fd0aLnZR9sI21zfKQv0SUWkGg7C5wT2fxN6IiN47BbnbGAE/FDPf+md7geCH
+PmqUsV7/4j5avi4iF7/s
+=qj3J
+-----END PGP SIGNATURE-----
