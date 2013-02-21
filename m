@@ -1,58 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/9
-Message-ID: <50E5D058.4020302@redhat.com>
-Date: Thu, 03 Jan 2013 11:39:20 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/8
+Message-ID: <5125C5EE.3050000@redhat.com>
+Date: Wed, 20 Feb 2013 23:59:58 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Panu Matilainen <pmatilai@...hat.com>
-Subject: Re: CVE Request -- rpm (X >= 4.10 and X < 3d74c43 commit): Signature checking function returned success on (possibly malicious ) rpm packages
+CC: Salvatore Bonaccorso <carnil@...ian.org>
+Subject: Re: CVE request: zoneminder: local file inclusion vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/03/2013 10:30 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+On 02/19/2013 02:47 AM, Salvatore Bonaccorso wrote:
+> Hi
 > 
-> RPM upstream has corrected the following security issue: [1]
-> https://bugzilla.novell.com/show_bug.cgi?id=796375 Relevant
-> upstream patch: [2]
-> http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=3d74c43
+> In zoneminder forum the following announce was done already in
+> 2011:
 > 
-> Affected rpm versions include rpm >= 4.10.0 [3] and < than [2]
-> commit.
-> 
-> An attacker could use this flaw to create a syntactically valid
-> rpm package, that could bypass the signature check.
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
-> [3] http://rpm.org/wiki/Releases/4.10.0
-> 
+> http://www.zoneminder.com/forums/viewtopic.php?f=1&t=17979
 
-Please use CVE-2012-6088 for this issue.
+Stupid Q, is there like an official security page? POsting stuff to a
+forum is not exactly the easiest place to find things, can they setup
+like zoneminder.com/security/ and at least list all the security
+issues and link to them there so people don't have to dig through the
+forums?
+
+I say this because this is the first cve request I've ever seen for
+zoneminder since I started assigning, and indeed, since 2008, so I'm
+guessing there's a few more missing ones......
+
+If someone wants to big through the forums to find them and post them
+here that would probably be helpful (seriously, wanna pad your resume
+and get a reference from me? first person to make 100 good CVE
+requests wins).
+
+> where zoneminder is prone to a local file inclusion vulnerability. 
+> From upstream versions prior to 1.24.4 are affected and the issue
+> was fixed in 1.24.4 and 1.25.0.
+> 
+> SVN commits fixing this issue for the 1.24.x versions are r3483
+> and r3488, and patches:
+> 
+> http://www.zoneminder.com/downloads/lfi-patch.txt 
+> http://www.zoneminder.com/downloads/lfi-patch2.txt
+> 
+> I haven't found a CVE assigned to this already. In case I did not
+> miss something, could you allocate a CVE for this issue?
+> 
+> Debian Bug: http://bugs.debian.org/700912
+
+Please use CVE-2013-0332 for this issue.
+
+> Regards, Salvatore
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ5dBYAAoJEBYNRVNeJnmTvyMQALo4kVCZmXqkCeGnhmsgJm40
-qXebd64x0dtzul2+TCwE/WHzq859kn5P3GMfMw5xSIcIctx5H4PixJ+gqN0W8reG
-Wha3cUc3mIrrUYL431wIV4OWwnuFFm18bZv7KNWSrK9jBYvhTShZUWVpkIp3h/Yf
-C881pStk19vL8OYjCeKfbr6Z8wH7Uo5LcUgtP96uqkCXJcvDHL0jhC8SY3Sc9WVV
-OLXQPqBimrgJ28iArND2+KNImn8G1IgrtbZ23uRYCePJtljOh+lStBPBZ0996i17
-gUdrndqu7+HnaD6Xw/mnCWA4th/9q37Zq+JxftKslD0PJf9ppLHwc0hNbb7ExdFF
-wPW2NbZgd4SnpQNgltiF6tSU8uUn+TzOEBWdmPn3QAtMUUdIZBD4uTyVcNDu4F6r
-MdHYxRtKoKhXVeYAOrKub6NDO7Ya58rQRYo4RaoRIHSsDx+ZZYbCsth6XabJu4Kl
-VdQNTqs4Cs+wpBwZtcnfst/hpdrikTykvn90TEA6KqsSHt2GbKpikg/89UjyN+2/
-mrzHYfEYnou4Az5zocZoVfqokCVo6vEBcKWUWKnXWBSJgRfCRunzdCgw4QxOvXQP
-AeVu/m5zODVXhYFR1jmUFMqQItTjO5q9m72mv8FholvnKaRJtUIImXne1KtI6dhc
-Owy3zwjbTA+N0Zlwmu4N
-=/Y2G
+iQIcBAEBAgAGBQJRJcXuAAoJEBYNRVNeJnmTxIAP/RppcXyl48K0o/7PRBeLBc5J
+ShUjF0h2tZc5RDNcjDDyeESkcHCeT9iI1IGdXe0xN4sLIGnUcwEV8TsRVHiwP0lw
+FYr1hDKn/OII2bwokCcvg60HN4BOzU0ZGyL/EhBMlv+eU+HsGEtZeKUqaEWTr3FS
+39zXzkfFHd0SRfqye1FSVA4magi7f4bY58gu74dhd/uchu7+Hf8+NEyRsN2Nw8aM
+bSEENydNsVS4xuihsmsPr6FD+FGPSI8D+HXAHyzYkp+WS9sSx+Sv1nsDQ/T4N1Tn
+DYB/U+3x8QO2naf43uKh9GEtseTWtZTfCMghm6Bjh2ocbNDKHvhzF5jGa7/I9Yie
+KQGLzPxvJkN45qJ/b8Lse0jPe6aQjJfFifzYQG0tNxGFF97A9hMynTGyRIPW+nNA
+Jxnc4fKwPvGbqGbixEpHAUsmnR6IBFWOBzBbv8sUgiwYAzAPzuj/+97LMjD5cchJ
+a/Et6jrbn2c/4n6241YjKsOe/TY/sK/NT/HtnksqM5A0RaElnelEbkSPt/9jZi0+
+ncqAJ0Ta8HbptZCcuuI/xSGIHiANucQQfIFJp+w9Gb8yXfNRIP7GOvlgvryf9ZFR
+wJN/+KPklkEPO/Xdpsp6bnilVN8gVKfZnf5o6WucBQGXKsiKLpEjIdWjn//6wXrH
+2b8Gicemt1WgV6/F0tKV
+=axec
 -----END PGP SIGNATURE-----
