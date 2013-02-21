@@ -1,36 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/16
-Message-ID: <CAJ_zFk+2r5EjTFqRUoiD4DFgKfvr415V+3Pekh63c2_qKAGoQg@mail.gmail.com>
-Date: Thu, 22 Aug 2013 13:05:11 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: Harald van Dijk <harald@...awatt.nl>
-Cc: dash@...r.kernel.org, oss-security@...ts.openwall.com
-Subject: Re: [PATCH] implement privmode support in dash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/1
+Message-ID: <5125696F.2030201@redhat.com>
+Date: Wed, 20 Feb 2013 17:25:19 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Christey, Steven M." <coley@...re.org>
+Subject: Re: RE: Handling CVEs for the XML entity expansion issues
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 22, 2013 at 12:59 PM, Harald van Dijk <harald@...awatt.nl> wrote:
-> On 22/08/13 19:59, Tavis Ormandy wrote:
->> Hello, this is a patch to add privmode support to dash. privmode attempts to
->> drop privileges by default if the effective uid does not match the uid. This
->> can be disabled with -p, or -o nopriv.
->
-> Hi Tavis,
->
-> Your approach definitely has my support (FWTW), but there are two
-> aspects that surprised me, and are different from bash and FreeBSD's sh:
->
-> You named the option nopriv, while bash and FBSD use the name
-> privileged. I think it is likely to confuse people if "bash -o
-> privileged" and "dash -o nopriv" do the same thing, and that it would be
-> better to match bash and give the option a positive name, such as
-> "priv", or perhaps even match them exactly and use "privileged".
->
-> In bash and FBSD, after starting with -p, set +p can be used to drop
-> privileges. With your patch, dash accepts set +p, but silently ignores it.
->
-> How does something like the attached, to be applied on top of your
-> patch, look?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks Harald, those changes make sense to me.
+On 02/20/2013 06:02 AM, Christey, Steven M. wrote:
+> Kurt,
+> 
+> I'm reviewing this issue with the rest of the cve-assign team.  We
+> will get back to you with an answer shortly.
+> 
+> - Steve
 
-Tavis.
+Any movement on this? I'm now sitting on a huge pile of stuff that
+will need CVEs.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRJWlvAAoJEBYNRVNeJnmTRwcP/25newzMZJMtWV8PEm+3b4Sm
+bNdnDAQjbP82V7RBBqVQ/MlPHs9dFFXSwzZzjrHigT/lT/pe7db6oK4g75uL1+Y9
+BSHuLK5OziJPLOczc/1YUZ17sk6+YzvubBCZQ1wzZ/OxcENYHtJ8h5g7ljFLpT9S
+wkg8vAMdaGZ+tA30kfyfEwiswp/a2we4AN3MwmV2e2WYnMmkBuWxO8xKkpjrKtO/
+iK2ZlQV+WNVDelujpWMOfwJkCuHo66VZsgs/sC1g7DTPaG67ceboK8UVuY7q0vw1
+vGkwHKQcclCOZjnUfLbgFXY/DWpWRi713brS9oTQUVV7JNTvnem1OjnzaJn4JOoa
+IS8RLi1XwYbMd7IYkreng+XODuf7+qZ9gTD/otDDjqSxX3ahq7Vnk7KDvXVgthJ4
+tcUo9nlhKI34FY8wTwECs+CyVdluK42zOpa0Lx2dBK9kf4VE4ZlH+0qTzJl+5H0h
+rh+xzi2MOgs1cM2qUYSAiHRDsoOS0648xXcxe7vTR4m1eeHk/WF6z3umcXQ8yKSq
+RAFNvdpXnnLQZVNqUbl1dJG+hjHKf9klOWdPH6eDWn1PKv5G3RRMMmBviGIHPAUS
+DMl8RSu2VpzV0muqmeuSUSGrCS+SZPN/43CiGfClUVj0nNXmTw+28+8Ku/nQGNtM
+ldp8ePKKDs4yYbKe99Rt
+=uieQ
+-----END PGP SIGNATURE-----
