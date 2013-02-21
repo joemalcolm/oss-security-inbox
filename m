@@ -1,159 +1,300 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/12
-Message-ID: <20130725085235.GA9457@videolan.org>
-Date: Thu, 25 Jul 2013 10:52:35 +0200
-From: Jean-Baptiste Kempf <jb@...eolan.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Michael Niedermayer <michaelni@....at>, Moritz Muehlenhoff <jmm@...til.org>, Moritz Muehlenhoff <jmm@...ian.org>, ffmpeg-security@...peg.org, security@...eolan.org
-Subject: Re: new FFMpeg stuff
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/17
+Message-ID: <CAD1NwhiB_YKeScZsX3qzJHGnx1PR2BYgksRMzY6iYVxgoSkC8w@mail.gmail.com>
+Date: Thu, 21 Feb 2013 19:09:27 +0100
+From: Lukas Reschke <lukas@...cloud.org>
+To: oss-security@...ts.openwall.com
+Cc: "security@...cloud.com" <security@...cloud.com>
+Subject: ownCloud Security Advisories (2013-003, 2013-004, 2013-005, 2013-006, 2013-007)
 Content-Type: text/plain; charset=utf-8
 
-On 25 Jul, Kurt Seifried wrote :
-> Can the VLC security team confirm/correct this as needed so we can
-> ensure it's correct before I assign CVEs? thanks.
+# Multiple XSS vulnerabilities (oC-SA-2013-003)
+Web: http://owncloud.org/about/security/advisories/oC-SA-2013-003/
 
-Why the VLC security team should be involved in that?
+## CVE IDENTIFIERS
+- CVE-2013-0297, CVE-2013-0307 (4.0 & 4.5)
+- CVE-2013-0298 (4.5)
 
+## AFFECTED SOFTWARE
+- ownCloud Server < 4.5.7
+- ownCloud Server < 4.0.12
 
-> On 07/09/2013 08:14 AM, Michael Niedermayer wrote:
-> > Hi
-> > 
-> > On Tue, Jul 09, 2013 at 06:49:34AM +0200, Moritz Muehlenhoff
-> > wrote:
-> >> Kurt Seifried wrote:
-> >> 
-> >>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
-> >>> 
-> >>> https://bugs.gentoo.org/show_bug.cgi?id=476218
-> >>> 
-> >>> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=38229362529ed1619d8ebcc81ecde85b23b45895
-> >
-> >>> 
-> > This should have been fixed by
-> > b21ba20cc83c80fe56192fee3626a8087f37d806 in ffmpeg (Apr 22 2012)
-> > 
-> > 
-> >>> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=e30b068ef79f604ff439418da07f7e2efd01d4ea
-> >
-> >>> 
-> > This should have been fixed by
-> > 780d45473c32fa356c8ce385c3ea4692567c3228 in ffmpeg (Sep 24 2011)
-> > 
-> > 
-> >>> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=6765ee7b9cba46818a45b051438b2552f0a1b70a
-> >
-> >>> 
-> > This seems listed as buffer overflow but as far as i can tell it
-> > fixes just a null pointer dereference. If you want to assign CVEs
-> > to all null pointer dereferences and out of array reads that got
-> > fixed then quiete a few more CVEs are needed.
-> > 
-> > Also see: a9456c7c5ca883b5a3947e59a9fba5587e18e119
-> > 
-> > 
-> >>> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=b36e1893ef3430f039c1eaddeedcbb378f9c4444
-> >
-> >>> 
-> > This was fixed in 4b35ee0b7c0c4cbac3541a25a5e8c00b657c8f95 in
-> > ffmpeg (Dec 28 2011)
-> > 
-> > 
-> >>> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=7388c0c58601477db076e2e74e8b11f8a644384a
-> >
-> >>> 
-> > 
-> >>> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=95a57d26d8653d21f0dab1aff3558ee944853dbf
-> >
-> >>> 
-> > This was fixed in c49d94487c6135325930cbc4a8cd96d38ef6653e in
-> > ffmpeg (Jun 6 2013) Note, this issue shouldnt affect any ffmpeg
-> > releases as the code was added more recently
-> > 
-> > 
-> >>> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=b564784a207b1395d2b5a41e580539df04651096
-> >
-> >>> 
-> > Same as above jpeg2000dec.c wasnt in any releases yet as of today, 
-> > what was in the releases was j2kdec.c but that was marked as 
-> > experimental
-> > 
-> > 
-> >>> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=78962d3df49afe5011b572656ecfe940bd5fbf2e
-> >>>
-> >>> 
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=cf04af2086be105ff86088357b83d672d38417d9
-> >>> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=eae63e3c156f784ee0612422f0c95131ea913c14
-> >>>
-> >>> 
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=fd54dd028bc9f7bfb80ebf823a533dc84b73f936
-> > 
-> > Same as above
-> > 
-> > 
-> > 
-> >>> 
-> >>> Correct me if I'm wrong but most of these seem to deserve CVEs
-> >>> and none have been assigned, correct?
-> >>> 
-> >>> http://ffmpeg.org/security.html
-> >> 
-> >> These appear to be new, but I'm not sure how previous CVE IDs
-> >> were assigned for ffmpeg/libav. E.g. CVE-2013-0878 seems to be
-> >> from a Google CNA, right? (At least CVE-2013-0879 is for Chrome)
-> >> 
-> >> All these issues (and all the ones in previous rounds) were found
-> >> through fuzzing done at Google by Mateusz "j00ru" Jurczyk and
-> >> Gynvael Coldwind.
-> > 
-> > I dont know about the libav side, for the ffmpeg side CVEs where 
-> > provided by "google" for all serious issues that where found.
-> > Which issues where serious could in general only be assesed after
-> > the issues where fixed so values where available only after the
-> > fixes where commited.
-> > 
-> > 
-> >> 
-> >> It would be very, very welcome if CVE assignments from either
-> >> ffmpeg or libav for any such issues would have a reference to the
-> >> filename of the fuzzed file triggering the problem.
-> >> 
-> > 
-> >> With the diverging code bases between ffmpeg and libav [1] it
-> >> becomes very complicated to properly track down if one of the two
-> >> is affected.
-> > 
-> > yes, its a big headache for us as well. Especialy for me as iam
-> > always merging all improvments and fixes from libav into ffmpeg
-> > ...
-> > 
-> > [...]
-> > 
-> > Thanks
-> > 
-> 
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.13 (GNU/Linux)
-> 
-> iQIcBAEBAgAGBQJR8OZpAAoJEBYNRVNeJnmTKiIQAKKJ7n2IDcEqzM2fjw1uglU7
-> EBGubJYkMCGgmpuT1NdtLs8l0QKDx+IxYr+OyB70DWuITVdZQY1onwl8pd7LXTnp
-> Q2ymemb5KqtJlopSJWTAF78/I87M1gyt4739b2YmZ/QiCBkZO2CBVO4rcOf0F09T
-> QhL2MgRYbSGL6K0FbrmfEF9DvwNi40IWeV+8R86txWbJsNdxUvtf6USFhbyREHZV
-> 01BopGXA6YVYregRKjgH1yyfJzDamwXpXPDEx4gJOJNYLBroBLON0uEoentlVIhs
-> q+5pQPL4AKSYbgAz3yBkVlmvn+JHtSg821Jl9viAIKCj4qLI+ujUXV2UihZCH2/T
-> EeevJAQdN+gFDo85OsaXQs8JleyL14qbUcO0gpo+/xefKeRXJiwVE4TPl/K7cxd9
-> fss0Rh5ZYP3PuNm0ULFjgNhierDt0afewWmWWzW+YY8vyKO/X8aPdpd7MSnJOsbn
-> 0kc8dkus6d/uu3+NDWEtUr9ookpRogFToipvs87uP0Cp29TyySY02syWZItiFtIt
-> AK3wpasLw5lLiQv1faMt3hM9Cvvl2+xUUv4fkjmCwbF4J6GxNPQg85DaqhVRb2e5
-> vxZpSr08HAX7RMCmnBXl/2NcpbYWgNswuShzU
+## DESCRIPTION
+Multiple cross-site scripting (XSS) vulnerabilities in ownCloud 4.5.6
+and 4.0.11 and all prior versions allow remote attackers to inject
+arbitrary web script or HTML via
 
--- 
-Best regards,
+- the "site_name" and "site_url" POST parameters to setsites.php in
+/apps/external/ajax/ (CVE-2013-0297
+  - Commits:  e0140a (stable45), 1fbb89a (stable4)
+  - Risk: Low
+  - Note: Successful exploitation of this stored XSS requires the
+"external" app to be enabled (disabled by default) and administrator
+privileges.
+- the group input field to settings.php (CVE-2013-0307)
+  - Commits:  e2faa92 (stable45), 57f40b2 (stable4)
+  - Risk: Low
+  - Note: Successful exploitation of this DOM based self XSS requires
+administrator privileges.
 
--- 
-Jean-Baptiste Kempf
-http://www.jbkempf.com/ - +33 672 704 734
-Sent from my Electronic Device
+Multiple cross-site scripting (XSS) vulnerability in ownCloud 4.5.6
+and all prior versions (except 4.0.x) allow remote attackers to inject
+arbitrary web script or HTML via
+
+- the import of a specially crafted iCalendar file via the calendar
+application (CVE-2013-0298)
+  - Commits: 6608da2 (stable45)
+  - Risk: High
+  - Note: Successful exploitation of this stored XSS requires the
+"calendar" app to be enabled (enabled by default), an attacker may be
+able to share this crafted event with other users.
+- the "dir" and "file" GET parameter to viewer.php in
+/apps/files_pdfviewer/ (CVE-2013-0298)
+  - Commits: 04cbec7 (stable45)
+  - Risk: Medium
+  - Note: Successful exploitation of this reflected XSS requires the
+"files_pdfviewer" app to be enabled (enabled by default).
+- the "mountpoint" POST parameter to addMountPoint.php in
+/apps/files_external/ (CVE-2013-0298)
+  - Commits: / (stable45)
+  - Risk: Low
+  - Note: Successful exploitation of this reflected XSS requires the
+"files_external" app to be enabled (disabled by default).
+
+## Credits
+The ownCloud Team would like to thank Sabari Selvan
+(http://www.ehackingnews.com) for discovering a XSS vulnerability
+(CVE-2013-0307).</p>
+
+## RESOLUTION
+Update to ownCloud Server 4.5.7 or 4.0.12
+http://mirrors.owncloud.org/releases/owncloud-4.5.7.tar.bz2
+http://mirrors.owncloud.org/releases/owncloud-4.0.12.tar.bz2
+
+---------------------------------------
+
+# Multiple CSRF vulnerabilities (oC-SA-2013-004)
+Web: http://owncloud.org/about/security/advisories/oC-SA-2013-004/
+
+## CVE IDENTIFIERS
+- CVE-2013-0299 (4.0 & 4.5)
+- CVE-2013-0300 (4.5)
+- CVE-2013-0301 (4.0)
+
+## AFFECTED SOFTWARE
+- ownCloud Server < 4.5.7
+- ownCloud Server < 4.0.12
+
+## DESCRIPTION
+
+Multiple cross-site request forgery (CSRF) vulnerabilities in ownCloud
+4.5.6 and 4.0.11 and all prior versions before allows remote attackers
+to hijack the authentication for users via
+
+- the "lat" and "lng" POST parameters to guesstimezone.php in
+/apps/calendar/ajax/settings/ (CVE-2013-0299)
+  - Commits:  452a626 (stable45), 015ac6a (stable4)
+  - Risk: Negligible
+  - Note: Successful exploitation of this CSRF requires the "calendar"
+app to be enabled (enabled by default).
+  - Impact: An attacker may be able to change the timezone of the user.
+- the "timezonedetection" POST parameter to timezonedetection.php in
+/apps/calendar/ajax/settings/ (CVE-2013-0299)
+  - Commits:  452a626 (stable45), 97d0cee (stable4)
+  - Risk: Negligible
+  - Note: Successful exploitation of this CSRF requires the "calendar"
+app to be enabled (enabled by default).
+  - Impact: An attacker may be able to disable or enable the automatic
+timezone detection.
+- the "admin_export" POST parameter to settings.php in
+/apps/admin_migrate/ (CVE-2013-0299)
+
+  - Commits: bc93744 (stable45), 28dc89e (stable4)
+  - Risk: Moderate
+  - Note: Successful exploitation of this CSRF requires the
+"admin_migrate" app to be enabled (disabled by default).
+  - Impact: An attacker may be able to import an user account.
+- the "operation" POST parameter to export.php in
+/apps/user_migrate/ajax/ (CVE-2013-0299)
+  - Commits: 2de405a (stable45), de9befd (stable4)
+  - Risk: Moderate
+  - Note: Successful exploitation of this CSRF requires the
+"user_migrate" app to be enabled (disabled by default).
+  - Impact: An attacker may be able to overwrite files of the logged in user.
+- multiple unspecified POST parameters to settings.php in
+/apps/user_ldap/ (CVE-2013-0299)
+  - Commits: 5ec272d (stable45), b966095 (stable4)
+  - Risk: High
+  - Note: Successful exploitation of this CSRF requires the
+"user_ldap" app to be enabled (disabled by default).
+  - Impact: An attacker may be able to change the authentication server URL.
+
+Multiple cross-site request forgery (CSRF) vulnerabilities in ownCloud
+4.5.6 and all prior versions (except 4.0.x) allows remote attackers to
+hijack the authentication for users via
+
+- the "v" POST parameter to changeview.php in /apps/calendar/ajax/
+(CVE-2013-0300)
+  - Commits:  452a626 (stable45)
+  - Risk: Negligible
+  - Note: Successful exploitation of this CSRF requires the "calendar"
+app to be enabled (enabled by default).
+  - Impact: An attacker may be able to change the default view of an user.
+- multiple unspecified parameters to addRootCertificate.php,
+dropbox.php and google.php in /apps/files_external/ajax/
+(CVE-2013-0300)
+  - Commits:  2e819d6 (stable45)
+  - Risk: Medium
+  - Note: Successful exploitation of this CSRF requires the
+"files_external" app to be enabled (disabled by default).
+  - Impact: An attacker may be able to mount arbitrary Google Drive or
+Dropbox folders to the internal filesystem.
+- multiple unspecified POST parameters to settings.php in
+/apps/user_webdavauth/ (CVE-2013-0300)
+  - Commits: 9282641 (stable45)
+  - Risk: High
+  - Note: Successful exploitation of this CSRF requires the
+"user_webdavauth" app to be enabled (disabled by default).
+  - Impact: An attacker may be able to change the authentication server URL.
+
+A cross-site request forgery (CSRF) vulnerability in ownCloud 4.0.11
+and all prior versions allows remote attackers to hijack the
+authentication for users via
+
+- the "timezone" POST parameter to settimezone.php in
+/apps/calendar/ajax/settings/ (CVE-2013-0301)
+  - Commits:  452a626 (stable45)
+  - Risk: Negligible
+  - Note: Successful exploitation of this CSRF requires the "calendar"
+app to be enabled (enabled by default).
+  - Impact: An attacker may be able to change the timezone of an user.
+
+## RESOLUTION
+Update to ownCloud Server 4.5.7 or 4.0.12
+http://mirrors.owncloud.org/releases/owncloud-4.5.7.tar.bz2
+http://mirrors.owncloud.org/releases/owncloud-4.0.12.tar.bz2
+
+---------------------------------------
+
+# Information disclosure (oC-SA-2013-005)
+Web: http://owncloud.org/about/security/advisories/oC-SA-2013-005/
+
+## CVE IDENTIFIER
+- CVE-2013-0302
+
+## AFFECTED SOFTWARE
+- ownCloud Server < 4.5.7
+
+## RISK
+Low
+
+## Commits
+- c67261fe (stable45)
+
+## DESCRIPTION
+Due to the inclusion of the Amazon SDK testing suite an
+unauthenticated attacker is able to gain additional informations about
+the server including:
+
+- the PHP version
+- the cURL version
+- informations wether the following functions/modules are available:
+  - SimpleXML
+  - DOM
+  - SPL
+  - JSON
+  - PCRE
+  - File System Read/Write
+  - OpenSSL
+  - Zlib
+  - APC
+  - XCache
+  - Memcache
+  - Memcached
+  - PDO
+  - PDO-SQLite
+  - SQLite 2
+  - SQLite 3
+- the following PHP settings:
+  - open_basedir
+  - safe_mode
+  - zend.enable_gc
+- the server architecture (32bit/64bit)
+
+## RESOLUTION
+Update to ownCloud Server 4.5.7
+http://mirrors.owncloud.org/releases/owncloud-4.5.7.tar.bz2
+
+---------------------------------------
+
+# Multiple code executions (oC-SA-2013-006)
+Web: http://owncloud.org/about/security/advisories/oC-SA-2013-006/
+
+## CVE IDENTIFIER
+- CVE-2013-0303
+
+## AFFECTED SOFTWARE
+- ownCloud Server < 4.5.7
+- ownCloud Server < 4.0.12
+
+## RISK
+Critical
+
+## DESCRIPTION
+A code executions vulnerability in ownCloud 4.5.6 and 4.0.11 and all
+prior versions allow authenticated remote attackers to execute
+arbitrary PHP code via
+
+- unspecified POST parameters to translations.php in /core/ajax/
+  - Commits: 74e73bc (stable4), ece08cd (stable45)
+  - Risk: Critical
+
+A code executions vulnerability in ownCloud 4.5.6 and all prior
+versions (except ownCloud 4.0.x) allow authenticated remote attackers
+to execute arbitrary PHP code via
+
+- unspecified POST parameters to settings.php in /core/
+  - Commits: 746aa0 (stable45)
+  - Risk: Critical
+
+## RESOLUTION
+Update to ownCloud Server 4.5.7 or 4.0.12
+http://mirrors.owncloud.org/releases/owncloud-4.5.7.tar.bz2
+http://mirrors.owncloud.org/releases/owncloud-4.0.12.tar.bz2
+
+---------------------------------------
+
+# Privilege escalation in the calendar application (oC-SA-2013-007)
+Web: http://owncloud.org/about/security/advisories/oC-SA-2013-007/
+
+## CVE IDENTIFIER
+- CVE-2013-0304
+
+## AFFECTED SOFTWARE
+- ownCloud Server < 4.5.7
+
+## RISK
+High
+
+## COMMIT
+- d4802d8 (stable45)
+
+## DESCRIPTION
+Due to not properly checking the ownership of an calendar, an
+authenticated attacker is able to download calendars of other users
+via the "calid" GET parameter to export.php in /apps/calendar/
+
+Note: Successful exploitation of this CSRF requires the "calendar" app
+to be enabled (enabled by default).
+
+## CREDITS
+The ownCloud Team would like to thank Romain Severin
+(http://www.intrinsec.com/) for discovering this vulnerability.
+
+## RESOLUTION
+Update to ownCloud Server 4.5.7
+http://mirrors.owncloud.org/releases/owncloud-4.5.7.tar.bz2
+
+--
+ownCloud
+Your Cloud, Your Data, Your Way!
