@@ -1,29 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/3
-Message-id: <F2F0C2DD-8F71-47DF-BC09-19D96CAFB644@me.com>
-Date: Tue, 26 Mar 2013 07:23:03 -0400
-From: larry Cashdollar <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Ruby gem Thumbshooter 0.1.5 remote code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/16
+Message-ID: <20130221180606.GE17951@kludge.henri.nerv.fi>
+Date: Thu, 21 Feb 2013 20:06:06 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: nginx world-readable logdir
 Content-Type: text/plain; charset=utf-8
 
-Ruby gem Thumbshooter 0.1.5 remote code execution
+On Thu, Feb 21, 2013 at 06:50:14PM +0100, Agostino Sarubbo wrote:
+> I just noticed my nginx logdir and its content are world-readable:
+> 
+> What do you think about?
 
-3/25/2013
-Generates thumbshots of URLs by using Webkit and QT4.
+Not good.
 
-https://github.com/digineo/thumbshooter
-
-Specially crafted URLs can result in remote code execution if the URL contains shell metacharacters.
-
-We see that the url is passed directly to the shell in the following code snippet from ./thumbshooter-0.1.5/lib/thumbshooter.rb lines:
-
- 1012 command << "xvfb-run -a --server-args='-screen 0, #{screen}x24' " 
- 1015 command << "{WEBKIT2PNG} '{url}' {args}"
- 1017 img = `{command} 2>&1`
-Larry W. Cashdollar
-@_larry0
-http://vapid.dhs.org/advisories/thumbshooter-ruby-gem-remoteexec.html
-
-
-Larry C$
+--
+Henri Salo
