@@ -1,44 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/11
-Message-ID: <5217568F.5040408@suse.de>
-Date: Fri, 23 Aug 2013 14:33:19 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/15
+Message-ID: <8680757.FSMgODTajn@devil>
+Date: Thu, 21 Feb 2013 18:50:14 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: [PATCH] implement privmode support in dash
+Subject: nginx world-readable logdir
 Content-Type: text/plain; charset=utf-8
 
-Simon McVittie wrote:
-> On 22/08/13 18:59, Tavis Ormandy wrote:
-> After researching this sort of thing a bit a few months ago, I'm of the
-> opinion that any set*id executable that doesn't filter its environment
-> through a whitelist is Doing It Wrong.
+Hello,
 
-I'd go one step further and claim that anyone using a setuid program to
-solve anything is doing it wrong in the first place :-)
+I just noticed my nginx logdir and its content are world-readable:
 
-> Unfortunately, many set*id executables don't do that: notably, many
-> su(8) implementations call into PAM (and hence into arbitrary
-> distribution- or sysadmin-chosen libraries) with a caller-supplied
-> environment. I think sudo might do the same, but it wasn't clear to me.
+drwxr-xr-x  2 root root  4096 Jan 10 00:11 .
+drwxr-xr-x 16 root root  4096 Feb 21 17:46 ..
+-rw-r--r--  1 root root 69415 Feb 21 17:46 error_log
+-rw-r--r--  1 root root 93017 Feb 18 22:03 localhost.access_log
+-rw-r--r--  1 root root 86227 Feb 18 22:03 localhost.error_log
 
-That's kind of mandatory. Some pam modules rely on having access to the
-calling user's environment (pam_xauth or pam_krb5 for example IIRC).
-
-> I asked the PAM mailing list what their security policy is[1] but
-> haven't seen any reply so far.
-
-I doubt there is any policy. Has PAM evolved at all the last few years?
-
-Wrt su IMHO replacing that setuid binary with an implementation that
-uses a client/server model (think of a local ssh) is long overdue.
-su (and sudo) as is just doesn't fit into todays world anymore. The
-security issues are just one symptom of that.
-
-cu
-Ludwig
+What do you think about?
 
 -- 
-  (o_   Ludwig Nussel
-  //\
-  V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Agostino Sarubbo / ago -at- gentoo.org
+Gentoo Linux Developer
