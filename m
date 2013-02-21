@@ -1,33 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/18/3
-Message-ID: <52395BFD.3010207@gmail.com>
-Date: Wed, 18 Sep 2013 09:53:33 +0200
-From: etienne <etiennehelluy@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request : poppler < 0.13.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/9
+Message-ID: <20130221082823.GA11718@elende>
+Date: Thu, 21 Feb 2013 09:28:23 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: zoneminder: local file inclusion vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Kurt
 
-Hi,
-I'd like to request a CVE number for the following issue
-http://cgit.freedesktop.org/poppler/poppler/commit/poppler/DCTStream.cc?id=fc071d800cb4329a3ccf898d7bf16b4db7323ad8
+Thank you for the CVE assignment!
 
-The bug has been fixed in poppler 0.13.3, back in 2010, though it is
-still present and exploitable in several distributions.
+On Wed, Feb 20, 2013 at 11:59:58PM -0700, Kurt Seifried wrote:
+> > Hi
+> > 
+> > In zoneminder forum the following announce was done already in
+> > 2011:
+> > 
+> > http://www.zoneminder.com/forums/viewtopic.php?f=1&t=17979
+> 
+> Stupid Q, is there like an official security page? POsting stuff to a
+> forum is not exactly the easiest place to find things, can they setup
+> like zoneminder.com/security/ and at least list all the security
+> issues and link to them there so people don't have to dig through the
+> forums?
+> 
+> I say this because this is the first cve request I've ever seen for
+> zoneminder since I started assigning, and indeed, since 2008, so I'm
+> guessing there's a few more missing ones......
 
-Thanks,
+I further know about the wikipage with the ChangeLog, but there is no
+patch referenced (thus the forum post). It's here:
 
-Etienne
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+ [1] http://www.zoneminder.com/wiki/index.php/Change_History
 
-iEYEARECAAYFAlI5W/cACgkQCRpgAcXwxOcbEQCgoa8IZSrKjVjEfJRXBBLcNpom
-mggAmQGZmKXz/5eYy5JVETtWxVB/rH4Y
-=uavz
------END PGP SIGNATURE-----
+But I have not read trough yet, to see if there are more changes
+indicating some security implication. For the one of my request there
+was only
 
+FIX - Fixed Local File Inclusion (LFI) vulnerability. Please note a
+patch for this is also available for 1.24.4 which the 1.24.4 tarball
+also contains for recent downloads.
 
-Download attachment "0xC5F0C4E7.asc" of type "application/pgp-keys" (1371 bytes)
+> If someone wants to big through the forums to find them and post them
+> here that would probably be helpful (seriously, wanna pad your resume
+> and get a reference from me? first person to make 100 good CVE
+> requests wins).
+
+I can check indeed if I find more. The the forum post for
+CVE-2013-0232 there is still no answer from upstream[2]
+
+ [2]: http://www.zoneminder.com/forums/viewtopic.php?f=29&t=20771
+
+Regards,
+Salvatore
