@@ -1,30 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/3
-Message-ID: <20130828152444.GV32641@redhat.com>
-Date: Wed, 28 Aug 2013 09:24:44 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/26
+Message-ID: <CAHohh88tPm7F+Sxp3jZ6X-sftZp0_jx_MoGNzPnebqh2y7Ccxg@mail.gmail.com>
+Date: Thu, 21 Feb 2013 23:51:16 +0100
+From: Anders Petersson <anders@....se>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...re.org>, cve-assign@...re.org
-Subject: CVE oops in GLSA 201308-05 (wireshark)
+Cc: Henri Salo <henri@...v.fi>, Agostino Sarubbo <ago@...too.org>, security-alert@...nx.org
+Subject: Re: CVE request: nginx world-readable logdir
 Content-Type: text/plain; charset=utf-8
 
-I just saw via a Gentoo bug report that their GLSA 201308-05 advisory
-mentioned some CVEs as related to wireshark that were incorrect.
+2013/2/21 Anders Petersson <anders@....se>
 
-Instead of mentioning CVE-2013-{3560,3561,3562} they mentioned
-CVE-2013-{3540,3541,3542}.  I checked on MITRE's site and those three
-are still reserved.
+> However on Debian Squeeze the logs themselves are not world-readable (at
+> least on my system):
+>
+> $ ls -la /var/log/nginx/
+> total 452
+> drwxr-xr-x 2 root     root  4096 Feb 21 06:25 .
+> drwxr-xr-x 9 root     root  4096 Feb 21 06:25 ..
+> -rw-r----- 1 www-data adm    934 Feb 21 18:40 access.log
+> -rw-r----- 1 www-data adm  20134 Feb 21 03:46 access.log.1
+>
 
-I don't know who those three (354[012]) are assigned to, but you might
-want to see if they've been used already or not and dupe them against
-356[012] if they have not.
+Apologies for the noise, Henri is absolutely correct. nginx on Debian
+Squeeze is affected. My observation is merely an artifact of the
+logrotation which fixes the permissions in a cron-job (hence if you have
+the logrotate package installed on Debian Squeeze the logs will have
+correct permissions as soon as the logs have been rotated once, but left to
+it's own devices nginx will create the log file world-readable, also the
+nginx package does not depend on the logrotate package so it may not be
+installed).
 
-See:
+# rm /var/log/nginx/access.log
+# service nginx restart
+$ ls -l /var/log/nginx/
+total 1088
+-rw-r--r-- 1 root     root     0 Feb 21 23:31 access.log
 
-http://www.net-security.org/advisory.php?id=16517
-https://bugs.gentoo.org/show_bug.cgi?id=482794
+--
+Anders Petersson
 
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
