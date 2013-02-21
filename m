@@ -1,35 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/18/2
-Message-ID: <1929565351.4029588.1361208554968.JavaMail.root@redhat.com>
-Date: Mon, 18 Feb 2013 12:29:14 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Arthur de Jong <arthur@...hurdejong.org>, Garth Mollett <garth.mollett@...registry.com.au>, Nalin Dahyabhai <nalin@...hat.com>, Jakub Hrozek <jhrozek@...hat.com>
-Subject: CVE-2013-0288 nss-pam-ldapd: FD_SET array index error, leading to stack-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/3
+Message-ID: <51256B57.4070603@redhat.com>
+Date: Wed, 20 Feb 2013 17:33:27 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "Christey, Steven M." <coley@...re.org>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: RE: Handling CVEs for the XML entity expansion issues
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  an array index error, leading to stack-based buffer overflow
-flaw was found in the way nss-pam-ldapd, a PAM and nsswitch module
-which uses directory servers, performed management of file descriptors
-when performing file descriptors activity wait. An attacker could use
-this flaw to cause processes with a large number of opened file
-descriptors, that performed name lookups to crash or, potentially,
-execute arbitrary code with the privileges of the user running the process.
+On 02/20/2013 05:28 PM, Christey, Steven M. wrote:
+> Kurt,
+> 
+> This is a big and complicated scenario.  I will *privately* send
+> you the draft that I'm working on right now.
+> 
+> Sorry to the rest of the list - but the combination of new vuln
+> types, "DoS" debates, libraries, and missing details have all
+> combined to make this rather complicated.  We will post something
+> that should help address these specific situations, and others in
+> the foreseeable future.  I hope to do this within 24 hours.
 
-Upstream advisory (with patches and further details)
-[1] http://arthurdejong.org/nss-pam-ldapd/CVE-2013-0288
+Yeah, I sort of knew it was a live hand grenade which is why I handed
+it off to you (and you jumped on that hand grenade like a champ =).
 
-References:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-0288
+> - Steve
 
-Credit: This issue was found by Garth Mollett.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Red Hat would like to thank Garth Mollett for reporting this
-issue, and Arthur de Jong of nss-pam-ldapd upstream for help
-with coordination of this advisory.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQIcBAEBAgAGBQJRJWtXAAoJEBYNRVNeJnmThvUQAIJeCp8KiPsQgJb3d/jdD7kJ
+IWeYy7hXpAfEBAkAoz79y45OTFfdx2qf75ABDhYFgbKBZQLaAhrxVZN8sXC7PnMa
+gUOeK88UzuJ/I4DvLfAGNiTOBbegN7nBEOaTyXShZ4EKWjGj9kMSRk4jKJRTHh6I
+lsrGEAHGyB68pph8yJjdRJhwcgam+jvphvNh40dHYrrmRzrxowAb0JUH71Q2CaqE
+jwFqZROTF9h4+p6S/JXy1y2s06pEcoTWWkSOtQnTc8BTDu5d1bIm0xMsnHl03Wz5
+CLIzoNOWwdg16hHV01FvaGKAxGZNjpOkCUfTXVpw4ll3B9cff5Je11MByxjzypZD
+TjUM5VtdH82/Fnu7BFhG1PPbupCXWnGrP7+o1rbw5g8p8bwWBrNEIfmpfKef0h5w
+BIDf+F+YrBrePmxA6a6DweR8OxwAN2h9WF9ANhc4GoT26qKFjLZ4BuSvfVjdAXSl
+vZ46vilBF2OiQ4DjGtZjIEUK2PmWGFaCPM784PoL09YYiEZ8yPLcH9osAmswsoDZ
+FTEsT6m16GR8tn8Ur5l6ITNb0/wCl2lkY8QBA+lFX1GO1FfACO6P/q6ymrjhxPKg
+e4/R726e+y3MVIGrxdj9NEI6sQ1b+irQHEiSiPo3olkW0MoSb8HEPDqf+pPnD1Mf
+7neX7sFvORC/6K5Jhw1X
+=1bLk
+-----END PGP SIGNATURE-----
