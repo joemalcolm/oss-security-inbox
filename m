@@ -1,32 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/16/2
-Message-ID: <BLU0-SMTP34261588C13E17191A14751EF470@phx.gbl>
-Date: Fri, 16 Aug 2013 11:14:27 +0430
-From: Hamid Zamani <me@...idx9.ir>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request : NAS v1.9.3 multiple Vulnerabilites
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/22
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF06981072@IMCMBX01.MITRE.ORG>
+Date: Thu, 21 Feb 2013 20:03:24 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: security curmudgeon <jericho@...rition.org>
+Subject: RE: Two more ZoneMinder that need CVE
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Actually, CVE covers default accounts and passwords, although known passwords from 1999 and earlier are not covered.
 
-recently i reported some vulnerabilities in Network Audio System (NAS) -
-v1.9.3
+While this is arguably "configuration," in 2013, products are expected to have other mechanisms of securing themselves out of the box, such as forcing a credentials change during installation, plus there is usually a race condition between when the product is installed and when the administrator changes the credentials.
 
-These vulnerabilities reported at :
+- Steve
 
-http://radscan.com/pipermail/nas/2013-August/001270.html
 
-and 3 fix on upstream :
+-----Original Message-----
+From: Kurt Seifried [mailto:kseifried@...hat.com] 
+Sent: Thursday, February 21, 2013 2:53 PM
+To: oss-security@...ts.openwall.com
+Cc: security curmudgeon
+Subject: Re: [oss-security] Two more ZoneMinder that need CVE
 
-https://sourceforge.net/p/nas/code/288/
-https://sourceforge.net/p/nas/code/287/tree//trunk/server/os/utils.c?diff=517ad7dc2718467b12eafbad:286
-https://sourceforge.net/p/nas/code/289/tree//trunk/server/os/connection.c?diff=517ad7dc2718467b12eafbad:288
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-is it possible to assign a CVE for these ?
+On 02/21/2013 12:10 PM, security curmudgeon wrote:
+> 
+> re: Kurt's response about ZoneMinder: 
+> http://seclists.org/oss-sec/2013/q1/369
+> 
+> OSVDB has two more ZoneMinder issues that do not have CVE:
+> 
+> 74198      2011-08-01     ZoneMinder index.php view Parameter
+> Traversal Local File Inclusion
 
-Thank you
+I think this is the CVE I Just assigned.
 
--- 
-Regards,
-Hamid Zamani (aka HAMIDx9)
-Ashiyane Digital Security Team
+> 89546      2009-02-09     ZoneMinder Multiple Default Credentials
+
+By default, ZoneMinder installs with default user credentials
+(username/password combination). The 'zmuser' account has a password
+of 'zmpass' and the 'admin' account has a password of 'admin', both of
+which are publicly known and documented. This allows remote attackers
+to trivially access the program or system and gain privileged access.
+
+so it doesn't qualify for a CVE.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRJnsQAAoJEBYNRVNeJnmTatsP/Rn0uyabjN7rOB+mlDBGoL7K
+Qo00ZZrdRQGVrswWnFgsaZqJYdbuGNi3Mwe9RQIZ0x8YvRH+8z4UCJ95OqtBqgxf
+Ff+Osgd7op317skAQjspqV9d6My5v9HQHeT3bBz9PpqMIXTKqFG8VfgELvkQRfOa
+AhFUJX04pbX9tWCDZ6xxfl6Kd+JsYpAIk34+d2DaRhXPEBouN0fBKxUo/SlRY6jW
+jOXr7P9nNlS9M6CgibCTCafPAoufeU5auT5YWI7sMsr0YYTi8cT/qiw4iEGorVxI
+aB4PsjldKnY3a+mIkIwEHPFhPqj/jkhVaNdO76f/JCAzyRaG+tc/rNeiC5GqAU/8
+XDWEziJLZntwdtQS7SaraS5Re3ApNH1pMn6jx/zDNe+0ubpez6GBZmcpe3ZnfeB1
+tJpX2exWvoIBJO59LSxtIgapsWR8WjZucx+H2NI9d4YirFpoaT8qhIp+yRIuXzkn
+uD97VVE3xG6I8JwsJCyxRD4zhFxVG8Icily5MQhmd1iPXAb/D+wblfrRgAr2M/ay
+bV2snuxBayPKgY8UJxSHI99U55euK66uiWKE62qNVzcz7H9ny9TKXxGD2CLwnUR4
+MTWn0GGjtf1ULHzxhX0WYGiR1cNvC7uZ5awGvzZqK3g8/wplVdX4sUW5o8dPwpK9
+/iGY57kibh/YPtCiWQM9
+=yYZ4
+-----END PGP SIGNATURE-----
