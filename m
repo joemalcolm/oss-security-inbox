@@ -1,102 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/6
-Message-ID: <51F36FBF.2020101@redhat.com>
-Date: Sat, 27 Jul 2013 00:59:11 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/11
+Message-ID: <20130221114811.GA27599@elende>
+Date: Thu, 21 Feb 2013 12:48:11 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Sebastian Pipping <sebastian@...ping.org>
-Subject: Re: CVE request: mysecureshell: information disclosure (or worse)
+Cc: 700158@...s.debian.org, 700159@...s.debian.org
+Subject: Re: CVE request: XSS flaws fixed in ganglia
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Raphael
 
-On 07/25/2013 03:44 AM, Sebastian Pipping wrote:
-> Hello Kurt,
+On Thu, Feb 21, 2013 at 11:47:10AM +0100, Raphael Geissert wrote:
+> Hi,
 > 
+> On 8 February 2013 19:06, Vincent Danen <vdanen@...hat.com> wrote:
+> > A number of XSS issues were fixed in ganglia's web ui:
+> >
+> > https://github.com/ganglia/ganglia-web/commit/31d348947419058c43b8dfcd062e2988abd5058e
 > 
-> On 25.07.2013 10:33, Kurt Seifried wrote:
->> On 07/23/2013 11:17 AM, Sebastian Pipping wrote:
->>> mysecureshell [1] is an SFTP-only shell to be used with sshd.
->> 
->>> The latest release 1.31 makes use of shared memory to maintain
->>> 128 slots with one struct for each connection/process. Access
->>> to that block of shared memory is not (or not properly)
->>> synchronized, so two or more processes might end up occupying
->>> the very same slot when process scheduling wants that to
->>> happen.  The effective permissions of the process remain
->>> untouched, though.  So it's logging in as someone else and it
->>> isn't.
->>> 
->>> The relevant code from SftpServer/SftpWho.c (lines 106 and
->>> after) is:
->>> 
->>> [cut out, same code below]
->>> 
->>> The symptoms of this bug have been reported earlier at [2] by
->>> forum user "voleg".  To my best knowledge, there is no CVE
->>> number assigned yet. [..] [1]
->>> http://mysecureshell.sourceforge.net/ [2]
->>> http://mysecureshell.free.fr/forum/viewtopic.php?id=655
->> 
->> 
->> To reiterate: so I can confirm CVE assignments, and prevent
->> duplicate assignments you *MUST* provide links to the code
->> commits/vulnerable code. I don't have the time to go hunting
->> through your source code for them. People need to start making
->> better CVE requests, or you're not going to get CVEs from me.
+> I've a hunch that there are a few issues with the changes. A quick
+> look at the patch shows that the change here breaks the preg_replace
+> call:
 > 
-> Upstream tarball ================ 
-> http://mysecureshell.free.fr/repository/index.php/debian/pool/main/m/mysecureshell/mysecureshell_1.31.tar.gz
->
+> - $query_string = preg_replace("/(&trendhistory=)(\d+)/", "", $query_string);
+> + $query_string = preg_replace("/(&trendhistory=)(\d+)/", "",
+> htmlspecialchars($query_string, ENT_QUOTES) );
 > 
+> It looks as if the htmlspecialchars call was misplaced.  Not that it
+> is a security issue, but it's a bug.
 > 
-> Issue ===== Race condition, lack of synchronization, user may end
-> up in another directory.
-> 
-> 
-> Guilty code ===========
-> 
-> Online ~~~~~~ 
-> http://mysecureshell.cvs.sourceforge.net/viewvc/mysecureshell/mysecureshell/SftpServer/SftpWho.c?revision=1.3&view=markup#l107
->
->  Inlined  (from SftpServer/SftpWho.c, lines 107 and after) 
-> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ for (i =
-> 0; i < SFTPWHO_MAXCLIENT; i++) if (who[i].status == SFTPWHO_EMPTY) 
-> { (void) usleep(100); if (who[i].status == SFTPWHO_EMPTY) { //clean
-> all old infos memset(&who[i], 0, sizeof(*who)); //marked structure
-> as occuped who[i].status = SFTPWHO_IDLE; return (&who[i]); } }
-> 
-> 
-> Please let me know if you need anything more.  Thanks for your
-> time!
-> 
-> Best,
-> 
-> 
-> 
-> Sebastian
-> 
+> Can anyone forward this upstream? I will try to take a look at the
+> rest of the patch later.
 
-Perfect! Please use CVE-2013-4176 for this issue.
+Done as issue #157 for ganglia-web[1].
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+ [1]: https://github.com/ganglia/ganglia-web/issues/157
 
-iQIcBAEBAgAGBQJR82+/AAoJEBYNRVNeJnmThkMP/jWgKyNVGCxwpmRDg5SRVcl6
-J1kxIYH3CZeANoy7HWqaABq4S+qLTImsfT/6/THUPEUqnN4sEzOKabwp0EDdt7xR
-R6nCEgo9Nsju5dHwe5dpJJDS3vWw5pu/KdLtTZ5ynmIvhsgW6Cu7vFMbOkOH5qgL
-3jUtilE2bZPoC/ifY7RljgO0OL2IvYqYP80du+iLBPMWLKxr376Smhdd6uvXxHAC
-U/tExCZs6LWJkH+1VPP7dywEBN95PY7XdEbKyBKAYtGiu+GH0mR1KtsbthGYio6U
-xZn5xZdDH8HBUkVeZLAknFUnNpdKYqOeVXieXhXDg6STFNDRsRKcx6iqRY+FlSwd
-YBRhnNcVS8Bsc3HeK1RIxX6rOQkM7e7cUlkJVUm4+zhm9xb31LOiy1hEi8yXbNTb
-Exu30w0yxWCEdiyLiy45jGlBBQXEQMC3PkGBdcx8Fla2cthI0Pa+OWUOluYvCurV
-oJGSf5bQsEVlL8ZU2zoyEt1OKb1zMoyEtgMFxwFNnCAvwcLZHlq1J4bh1I8wMMNs
-Je3Es+xNVa2BAF1VuYvGcxbGLR4HYoS3krOB15wmHWydekH0DeLqSFQBARc/vGjE
-eUj2fjTVZuQR3smund8XdpYKejxeO00CifJA0R8t+YlmRTP+ouDgKzrddLrmAOPS
-bMNGh6fOM8PtCqo8N8Is
-=yM09
------END PGP SIGNATURE-----
+Regards,
+Salvatore
