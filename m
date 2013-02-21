@@ -1,79 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/05/6
-Message-ID: <52000E0E.1060503@redhat.com>
-Date: Mon, 05 Aug 2013 14:41:50 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, tim.kosse@...ezilla-project.org
-Subject: Update for CVE-2013-4852: PuTTY SSH handshake heap overflow (FileZilla reportedly embeds a copy)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/2
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF06980649@IMCMBX01.MITRE.ORG>
+Date: Thu, 21 Feb 2013 00:28:11 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: Kurt Seifried <kseifried@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: RE: Handling CVEs for the XML entity expansion issues
 Content-Type: text/plain; charset=utf-8
+
+Kurt,
+
+This is a big and complicated scenario.  I will *privately* send you the draft that I'm working on right now.
+
+Sorry to the rest of the list - but the combination of new vuln types, "DoS" debates, libraries, and missing details have all combined to make this rather complicated.  We will post something that should help address these specific situations, and others in the foreseeable future.  I hope to do this within 24 hours.
+
+- Steve
+
+
+-----Original Message-----
+From: Kurt Seifried [mailto:kseifried@...hat.com] 
+Sent: Wednesday, February 20, 2013 7:25 PM
+To: oss-security@...ts.openwall.com
+Cc: Christey, Steven M.
+Subject: Re: [oss-security] RE: Handling CVEs for the XML entity expansion issues
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=718800
+On 02/20/2013 06:02 AM, Christey, Steven M. wrote:
+> Kurt,
+> 
+> I'm reviewing this issue with the rest of the cve-assign team.  We
+> will get back to you with an answer shortly.
+> 
+> - Steve
 
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: Debian Bug Tracking System <submit@...s.debian.org>
-Subject: filezilla: CVE-2013-4852: PuTTY SSH handshake heap overflow
-Date: Mon, 05 Aug 2013 17:37:22 +0200
-Package: filezilla
-Severity: grave
-Tags: security patch upstream
-
-Hi,
-
-the following vulnerability was published for putty, but filezilla
-embedds putty source:
-
-CVE-2013-4852[0]:
-PuTTY SSH handshake heap overflow
-
-See the advisory [1] for details referring to putty commit [2].
-AFAICS filezilla embedding putty in vulnerable version is used in
-build for fzsftp. See [3] for the corresponding bugreport for putty
-itself.
-
-If you fix the vulnerability please also make sure to include the
-CVE (Common Vulnerabilities & Exposures) id in your changelog entry.
-
-For further information see:
-
-[0] http://security-tracker.debian.org/tracker/CVE-2013-4852
-[1] http://www.search-lab.hu/advisories/secadv-20130722
-[2] http://svn.tartarus.org/sgt?view=revision&sortby=date&revision=9896
-[3] http://bugs.debian.org/718779
-
-Please adjust the affected versions in the BTS as needed.
-
-Regards,
-Salvatore
-
-==============
-
-Personal comment: it would be great if software embedded other
-software/code (e.g. libxml2/expat are common ones, as is zlib and
-other compressors) could be listed in a semi standard fashion in the
-source code (e.g. maybe an "EMBEDDED.txt" or something?) along with
-the date/version that was embedded.
-
+Any movement on this? I'm now sitting on a huge pile of stuff that
+will need CVEs.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSAA4NAAoJEBYNRVNeJnmTZqgP/iwh6pswIFAHbu6aw8XFWAms
-k5JC/7YHMkK+YqVIGHLdxAvjJ/uHRpg6wzTF86t3BbtcPSCugqU6ON6LT8wfZO13
-n2jd4CQfSKMKTNyTH2PDZGVBUy6zy1DrUF309wHsQ+visVMQRxvU0mKNNDOQnYET
-CypSrt3D5NdTk5s764PEz/vIBoghX1utJh5NGt9OQLmgObsmDvKZJ6mFmuwvxDVb
-hszA+7Z96q4qISoQGicoMWETCbMdwlVnRBBMlpZOjj39uW+IbfYwpgRl79l3Gl+J
-PyAJ8fIKLL26rHLInITtgbaHGf3WCUr/qY3wEZNTibTsUqPnyM0RsscbINWIxcfJ
-VhwjzbZLGxZ996k3aGyTB36gBFU0/lWMHUC1DPrBgjGKdZci4F95zPP9zfLRf4Gg
-yLaRSsCF0U/TZYXUeOeuUTwKyQlXsAXgHmyGkvWKmXMt244k6L+Wwu/lvmrHoMx+
-Ud5N2ho1kwCWNWZNLznHkdKECRYXB/2Eyaym/sVZ71FfCuKB4SSY89btSAlRriai
-CSa06w1P/0mNBWPFymn9dWnUthMcENWqa3r57CH2kAeCF3VukMGh6razWoWlnRAf
-4kSsvggR5sU2HJCMtaUWoZUKRCpoAy6eS97T1GbHlQNtEeyePAALAAIUiHoHkezb
-TZnDaBnvH7vTW4d6xJJ8
-=LlIe
+iQIcBAEBAgAGBQJRJWlvAAoJEBYNRVNeJnmTRwcP/25newzMZJMtWV8PEm+3b4Sm
+bNdnDAQjbP82V7RBBqVQ/MlPHs9dFFXSwzZzjrHigT/lT/pe7db6oK4g75uL1+Y9
+BSHuLK5OziJPLOczc/1YUZ17sk6+YzvubBCZQ1wzZ/OxcENYHtJ8h5g7ljFLpT9S
+wkg8vAMdaGZ+tA30kfyfEwiswp/a2we4AN3MwmV2e2WYnMmkBuWxO8xKkpjrKtO/
+iK2ZlQV+WNVDelujpWMOfwJkCuHo66VZsgs/sC1g7DTPaG67ceboK8UVuY7q0vw1
+vGkwHKQcclCOZjnUfLbgFXY/DWpWRi713brS9oTQUVV7JNTvnem1OjnzaJn4JOoa
+IS8RLi1XwYbMd7IYkreng+XODuf7+qZ9gTD/otDDjqSxX3ahq7Vnk7KDvXVgthJ4
+tcUo9nlhKI34FY8wTwECs+CyVdluK42zOpa0Lx2dBK9kf4VE4ZlH+0qTzJl+5H0h
+rh+xzi2MOgs1cM2qUYSAiHRDsoOS0648xXcxe7vTR4m1eeHk/WF6z3umcXQ8yKSq
+RAFNvdpXnnLQZVNqUbl1dJG+hjHKf9klOWdPH6eDWn1PKv5G3RRMMmBviGIHPAUS
+DMl8RSu2VpzV0muqmeuSUSGrCS+SZPN/43CiGfClUVj0nNXmTw+28+8Ku/nQGNtM
+ldp8ePKKDs4yYbKe99Rt
+=uieQ
 -----END PGP SIGNATURE-----
