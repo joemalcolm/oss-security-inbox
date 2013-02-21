@@ -1,28 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/24/2
-Message-ID: <20131024140409.GF13413@suse.de>
-Date: Thu, 24 Oct 2013 16:04:10 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: gnutls/libdane buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/6
+Message-ID: <alpine.LFD.2.03.1302211158180.6999@redhat.com>
+Date: Thu, 21 Feb 2013 11:58:51 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: evm: NULL pointer de-reference flaw
 Content-Type: text/plain; charset=utf-8
 
-Hi,
++-- On Wed, 20 Feb 2013, Kurt Seifried wrote --+
+| >  Reference: -> https://bugzilla.redhat.com/show_bug.cgi?id=913266
+| Please use CVE-2013-0313 for this issue.
 
-GNUTLS just posted a security adivsory which needs a CVE:
-
-http://www.gnutls.org/security.html#GNUTLS-SA-2013-3
-GNUTLS-SA-2013-3
-Denial of service
-This vulnerability affects the DANE library of gnutls 3.1.x and gnutls
-3.2.x. A server that returns more 4 DANE entries could corrupt the memory
-of a requesting client.  Recommendation: Upgrade to the latest gnutls
-version (3.1.15 or 3.2.5)
-
-Commit for 3.1:
-https://gitorious.org/gnutls/gnutls/commit/916deedf41604270ac398314809e8377476433db
-
-Commit for 3.2:
-https://gitorious.org/gnutls/gnutls/commit/ed51e5e53cfbab3103d6b7b85b7ba4515e4f30c3
-
-Ciao, Marcus
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
