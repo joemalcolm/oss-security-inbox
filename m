@@ -1,54 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/08/6
-Message-ID: <527D3A96.5000906@redhat.com>
-Date: Fri, 08 Nov 2013 12:25:10 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/20
+Message-ID: <51267909.2040504@redhat.com>
+Date: Thu, 21 Feb 2013 12:44:09 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: drupalauth module for simpleSAMLphp trivial impersonation
+CC: Henri Salo <henri@...v.fi>, Agostino Sarubbo <ago@...too.org>, security-alert@...nx.org
+Subject: Re: CVE request: nginx world-readable logdir
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/05/2013 01:54 AM, Thijs Kinkhorst wrote:
-> Hi,
+On 02/21/2013 11:17 AM, Henri Salo wrote:
+> On Thu, Feb 21, 2013 at 06:50:14PM +0100, Agostino Sarubbo wrote:
+>> Hello,
+>> 
+>> I just noticed my nginx logdir and its content are
+>> world-readable:
+>> 
+>> drwxr-xr-x  2 root root  4096 Jan 10 00:11 . drwxr-xr-x 16 root
+>> root  4096 Feb 21 17:46 .. -rw-r--r--  1 root root 69415 Feb 21
+>> 17:46 error_log -rw-r--r--  1 root root 93017 Feb 18 22:03
+>> localhost.access_log -rw-r--r--  1 root root 86227 Feb 18 22:03
+>> localhost.error_log
+>> 
+>> What do you think about?
+>> 
+>> -- Agostino Sarubbo / ago -at- gentoo.org Gentoo Linux Developer
 > 
-> Alan Barrett reported an issue in the drupalauth module for simpleSAMLphp,
-> which takes the username out of a cookie which is obviously under control
-> of the user.
+> Also affects Debian squeeze package. I will report a bug. Can we
+> get a CVE assigned for this issue, thank you.
 > 
-> Report and patch:
-> http://code.google.com/p/drupalauth/issues/detail?id=9
-> 
-> (Note that this is an independently developed module not part of the
-> simpleSAMLphp core distribution. Note also that this module is used for
-> Drupal as an authentication source, and is not related to using Drupal
-> with simpleSAMLphp as an SP).
-> 
-> 
-> Cheers,
-> Thijs
+> -- Henri Salo
 > 
 
-Please use CVE-2013-4552 for this issue.
+Ok is this like standard HTTPD style logs? If so then they would
+generally be considered sensitive (GET strings, etc.). Adding nginx to
+the cc so they know.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSfTqWAAoJEBYNRVNeJnmT5NAQAMQOyN4OE1whskacsjO8mBMH
-iWmRZNjFA2ab/Wjhn4i6uPKEeVtx556EgavwNYkihsXGifi5wNpjHmWAbYxISSvE
-XgLZvrh4lF9+v6fEDL5KSjvnGDEAdIwu5/aw1nC9CqIDtk7xoROIpCPIZJOT7y9l
-TUVr+I0Dn6EMeCab3OILpUXtOyyxB+2HWlViBHdJSmxPE7qI9XeOib1IQ+wuHU+c
-h0/tuNOU8ATrJL4/LP1AnmFkBZvuNzEZD1JhOPn5DvbCY1CVHrW4BTM0OpY0PSt4
-UPHJhYUqOZZisxqAOAMKEsm36G1EoKe/grMfI+YGdQjPhudncoZyHQzP/2F8EPn4
-do3SRLd/c21w7LnKuoJpbJvjFwMYBmlx6CJB6kV0QdzQfPZ6wHR3Jpop1awsEB0f
-vYS1eZyJ7swfgGWDgmpr413jp9H3wb17Pl0J3kNm96m8AVWQL2FO4oXHzI+xn84J
-3f99vnB76Wha35NsVLkkNH74BLQbMzyVQKS4Uo5jkvOCubIOcjAZieiB4s1COmCG
-c7oKjquHEkoJuEeUElx0zQCQYQ++U+z6dFoBo10uSNI8NGbMjALFI3eEQ7/uB/BT
-TpqE3RWah433NzEs3uBnakvA0B1h/SPE3C1ijCSQaH1hyUNRVX1eMk7pSenk+RAI
-xemOhTv7B7j4Wl6dDRpm
-=6UjU
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRJnkJAAoJEBYNRVNeJnmTogYQAIjhxGUtaPwlhIi7kwjlPJHh
+sZltN3ggmrz5KRCAhMPMYYxNoBR99Wsmdw/zLHTxKWCFUTrhP2d6g7VIuWum9947
+KMpkkVLRmToVt9YVLiXvfHp+N0zdVKsMSNW0G8OxrpFCiecV3GzMuy++oQDUV57L
+w/5sHyG1qOM/0yXh0tVnnFGbw4RnOb+hlWfvDV3AyyxJBw7BoNP6+O/a0Z+6H85N
+cPSFEzsrZjhrb9oPwNq/am4IGxC+6/QaejcftUPuMSgGCuYVqd4l/17zcHU0v2P/
+7oKExsx93lapJr2aYlIs1BabAM4AN3zfbadTXrQGHCLuIgDoWHODA+9Uu3Lfvbr8
+GoW6l+CaF4b4Q7LsC8ArPBiRp+wB0QKTfMsj2Y3TAunor6oytr+umB9Ph43yb2hG
+38ViPFYVAEk0FDnf8BpJrWbTivZxgU0ATRu+VW5Hn5ZGsBR8X7kZRAzhvTdFFU2g
+6Fb0GSdNwHaaqz42v2ZQDPpGj9TzxZMvIaeMU1BYxVdEdG8IKm94caAUhGzCKhSc
+Evj8ag49KqyjAD2pej58b4QY/g9yEEkptWr+LqrikimeRVpqXZCJJ4+b0p9pEvU5
+qbTG/HsaucXO7hKdwC996palugLoA8RaSgUmocmCQl5yPiXo43rAhAC0gTyUpTN5
+323PDSl7MT6RS70Lkxj4
+=kJtZ
 -----END PGP SIGNATURE-----
