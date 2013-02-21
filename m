@@ -1,36 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/4
-Message-ID: <17454854.nADZ7fCYU2@devil>
-Date: Mon, 09 Sep 2013 12:14:51 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/13
+Message-Id: <201302211354.20740.tmb@65535.com>
+Date: Thu, 21 Feb 2013 13:54:19 +0000
+From: Tim Brown <tmb@...35.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Torque privilege escalation
+Cc: Kurt Seifried <kseifried@...hat.com>, "Christey, Steven M." <coley@...re.org>
+Subject: Re: RE: Handling CVEs for the XML entity expansion issues
 Content-Type: text/plain; charset=utf-8
 
->From the torque advisory 
-http://www.supercluster.org/pipermail/torqueusers/2013-September/016098.html :
+On Thursday 21 Feb 2013 00:25:19 Kurt Seifried wrote:
+> On 02/20/2013 06:02 AM, Christey, Steven M. wrote:
+> > Kurt,
+> > 
+> > I'm reviewing this issue with the rest of the cve-assign team.  We
+> > will get back to you with an answer shortly.
+> > 
+> > - Steve
+> 
+> Any movement on this? I'm now sitting on a huge pile of stuff that
+> will need CVEs.
 
-*Vulnerability:* A non-privileged user who can run jobs or login to a
-node running
-pbs_server or pbs_mom can submit an arbitrary job to the cluster; that job
-can run as root. The user can submit a command directly to a pbs_mom daemon
-to queue and run a job. A malicious user could use this vulnerability to
-remotely execute code as root on the cluster.
+To declare, I put forwards a candiate on another language platform to Kurt and 
+Steve which would be affected by a decision to assign CVEs for XXE capable 
+libraries.  In this instance, the library has no way to disable XXE at the API 
+level.  Below the surface it can use various XML parsers, both native and pure 
+$language.  These do not appear to support disabling resolving entities either 
+(although the middleware between the two does :/).  I'm am pinging the 
+security team responsible and directing them to this thread.
 
-
-*Versions Affected:* All versions of TORQUE
-
-
-*Mitigating Factors:*
-
-- The user must be logged in on a node that is already legitimately able to
-contact pbs_mom daemons or submit jobs.
-
-- If a user submits a job via this defect and pbs_server is running,
-pbs_server will kill the job unless job syncing is disabled. It may take up
-to 45 seconds for pbs_server to kill the job.
-
-- There are no known instances of this vulnerability being exploited.
+Tim
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Tim Brown
+<mailto:tmb@...35.com>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
