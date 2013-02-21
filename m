@@ -1,66 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/26/3
-Message-ID: <51CA9107.6060402@redhat.com>
-Date: Wed, 26 Jun 2013 16:58:15 +1000
-From: Garth Mollett <gmollett@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/25
+Message-ID: <CAHohh89ha6v1kO44rgGUo5UKwmYVBvYtAu6C-hwBuKcRnk69fw@mail.gmail.com>
+Date: Thu, 21 Feb 2013 21:05:12 +0100
+From: Anders Petersson <anders@....se>
 To: oss-security@...ts.openwall.com
-Subject: Re: KDE Paste Applet
+Cc: Henri Salo <henri@...v.fi>, Agostino Sarubbo <ago@...too.org>, security-alert@...nx.org
+Subject: Re: CVE request: nginx world-readable logdir
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+2013/2/21 Kurt Seifried <kseifried@...hat.com>
 
-On 06/26/2013 03:06 PM, Kurt Seifried wrote:
-> On 06/25/2013 10:39 PM, Michael Samuel wrote:
->> On 13 June 2013 10:02, Michael Samuel <mik@...net.net> wrote:
-> 
->>> Ok, so the fix for this uses KRandom::random()...
->>> 
->>> I suggest leaving the KDE Paste fix as-is and replacing
->>> KRandom with something that just fills an integer from
->>> /dev/urandom - then we can save a few CVE numbers for the rest
->>> of the year.
->>> 
->>> qrand() should probably also do the same, especially since 
->>> cnonces for HTTP auth are using it - that means there's only
->>> 2^32 (at best) possible cnonces...
->>> 
->>>> 
->>>> 
->> Fedora and Ubuntu have both pushed out this patch.  Requesting a 
->> new CVE for "KRandom::random() isn't a secure PRNG", since the
->> KDE guys are convinced that it is.
-> 
->> Regards, Michael
-> 
-> So the thing is it can be completely random, just like a coin
-> flip. But the search space might be to small (e.g. a 1 bit key
-> based on a coin flip wouldn't be "secure"). I suspect 2^32 isn't
-> enough any more either, assuming a 480 core GPU, if you can run 250
-> cracking attempts per second per core you can brute force a 2^32
-> search space in 10 hours or so. Needless to say GPUs are getting
-> pretty cheap. So this appears to be a textbook example of CWE-334
-> "Small Space of Random Values".
-> 
-> Please use CVE-2013-2213 for KDE KRandom::random() CWE-334: Small 
-> Space of Random Values.
-> 
-> 
+> On 02/21/2013 11:17 AM, Henri Salo wrote:
+> > On Thu, Feb 21, 2013 at 06:50:14PM +0100, Agostino Sarubbo wrote:
+> >> Hello,
+> >>
+> >> I just noticed my nginx logdir and its content are
+> >> world-readable:
+> >>
+> >> drwxr-xr-x  2 root root  4096 Jan 10 00:11 . drwxr-xr-x 16 root
+> >> root  4096 Feb 21 17:46 .. -rw-r--r--  1 root root 69415 Feb 21
+> >> 17:46 error_log -rw-r--r--  1 root root 93017 Feb 18 22:03
+> >> localhost.access_log -rw-r--r--  1 root root 86227 Feb 18 22:03
+> >> localhost.error_log
+> >>
+> >> What do you think about?
+> >>
+> >> -- Agostino Sarubbo / ago -at- gentoo.org Gentoo Linux Developer
+> >
+> > Also affects Debian squeeze package. I will report a bug. Can we
+> > get a CVE assigned for this issue, thank you.
+> >
+> > -- Henri Salo
+> >
+>
+> Ok is this like standard HTTPD style logs? If so then they would
+> generally be considered sensitive (GET strings, etc.). Adding nginx to
+> the cc so they know.
+>
 
-If /dev/urandom can't be opened it looks even worse:
+They are httpd-style logs:
 
-00041             // No /dev/urandom... try something else.
-00042             srand(getpid());
-00043             seed = rand()+time(0);
+$ tail -1 /var/log/nginx/access.log
+85._._._ - - [21/Feb/2013:18:_:_ +0100] "GET /w00tw00t.at.ISC.SANS.DFind:)
+HTTP/1.1" 400 172 "-" "-"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+However on Debian Squeeze the logs themselves are not world-readable (at
+least on my system):
 
-iQEcBAEBAgAGBQJRypEHAAoJEPjpLwZKQ8Gp3boIAMy5abrxcwaSuPQYswPtrD2j
-Xhj8qYmvwoRQDN5TDaT6uzEMZOSsC7cCv7RarueCiQwX+TOMz/XaxiFE8n37khTk
-MgVuBDJc759QNfIIeyYedg7WrT0c3rbqbD/CHjKicJrnpDSTBqxz7um0CejtQzMP
-dC1gk2PHYbHzQR75xEYhHPZsY30tsIeY/cP6/x+nN3h7xcVOwKNSLEHEAFzpxH6i
-zgCSUj277b0LpmddMIaLvO+qXDEAZ+RT6JN14uqfSYFbQ1F+oM4x4x/k5IOCoHNQ
-aAGLSfpxQ+MiborqQKCpGvoMsP9Hdw1s6pnPeDFoLD8tIjxr4Pcem0r5ebiT+zQ=
-=Vgdc
------END PGP SIGNATURE-----
+$ ls -la /var/log/nginx/
+total 452
+drwxr-xr-x 2 root     root  4096 Feb 21 06:25 .
+drwxr-xr-x 9 root     root  4096 Feb 21 06:25 ..
+-rw-r----- 1 www-data adm    934 Feb 21 18:40 access.log
+-rw-r----- 1 www-data adm  20134 Feb 21 03:46 access.log.1
+
+--
+Anders Petersson
+
