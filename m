@@ -1,152 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/19/4
-Message-ID: <51C15AE2.7080206@redhat.com>
-Date: Wed, 19 Jun 2013 01:16:50 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/17
+Message-ID: <5465194.f4VyigCCre@devil>
+Date: Fri, 22 Feb 2013 14:09:44 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-CC: TYPO3 Security Team <security@...o3.org>
-Subject: Re: Re: [Ticket#2012111110000015] TYPO3-CORE-SA-2012-005: Several Vulnerabilities in TYPO3 Core
+Subject: Re: CVE request: webfs world-readable log
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Friday 22 February 2013 14:04:54 you wrote:
+> Hello,
+> 
+> webfs[1], a Lightweight HTTP server for static content creates its log with
+> world-readable permission:
+> 
+> # ls /var/log/webfsd.log -la
+> -rw-r--r-- 1 root root 0 Feb 22 14:02 /var/log/webfsd.log
+> 
+> Please assign a CVE.
 
-On 06/16/2013 05:46 AM, TYPO3 Security Team wrote:
-> Dear Kurt Seifried,
-> 
-> Thank you for your request.
-> 
-> I'm a bit embarrassed about our response time :(
-> 
-> Very sorry for that. Things will vastly improve in the near
-> future!
-> 
-> 12/10/2012 22:40 - Kurt Seifried wrote:
-> 
->> Can the Typo3 security team please confirm the following:
->> 
->>> Component Type: TYPO3 Core Affected Versions: 4.5.0 up to
->>> 4.5.20, 4.6.0 up to 4.6.13, 4.7.0 up
->> to 4.7.5 and development releases of the 6.0 branch.
->>> Vulnerability Types: SQL Injection, Cross-Site Scripting,
->> Information Disclosure
->> 
->> so no CVE's needed for this, this is simply a summary of the
->> below issues?
-> 
-> True!
-> 
->>> Vulnerable subcomponent: TYPO3 Backend History Module
->>> Vulnerability Type: SQL Injection, Cross-Site Scripting
->>> Solution: Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6
->>> that
->> fix the problem described!
->>> Credits: Credits go to Thomas Worm who discovered and reported
->>> the
->> issue.
->> 
->> Did he discover both the SQL Injection and the Cross-Site
->> Scripting issues?
-> 
-> No, he only discovered the XSS. We discovered the SQLi while fixing
-> the XSS.
-> 
->> Can you provide a link to the specific code fixes?
-> 
-> Here it is. https://review.typo3.org/16304
-> 
->> so 2 cve's needed correct?
-> 
-> Yes.
-> 
->>> Vulnerable subcomponent: TYPO3 Backend History Module
->>> Vulnerability Type: Information Disclosure
->> Solution: Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6
->> that fix the problem described!
->>> Credits: Credits go to Core Team Member Oliver Hader who 
->>> discovered
->> and fixed the issue.
->> 
->> so one cve needed here? Can you provide a link to the specific
->> code fixes?
-> 
-> Yes.
-> 
-> It's also fixed in the same change: https://review.typo3.org/16304
-> 
->>> Vulnerable subcomponent: TYPO3 Backend API Vulnerability Type: 
->>> Cross-Site Scripting Solution: Update to the TYPO3 version
->>> 4.5.21, 4.6.14 or 4.7.6 that
->> fix the problem described!
->>> Credits: Credits go to Johannes Feustel who discovered and 
->>> reported
->> the issue.
->> 
->> so one cve needed here? Can you provide a link to the specific
->> code fixes?
-> 
-> Yes: https://review.typo3.org/16305
-> 
->>> Vulnerability Type: Cross-Site Scripting Solution: Update to
->>> the TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
->> fix the problem described!
->>> Credits: Credits go to Richard Brain who discovered and
->>> reported the
->> issue.
->> 
->> so one cve needed here? Can you provide a link to the specific
->> code fixes?
-> 
-> Yes: https://review.typo3.org/16300
-> 
-> 
-> Regards,
-> 
-> Helmut Hummel Member of the TYPO3 Security Team
-> 
-> -- TYPO3 Security Team homepage: http://typo3.org/teams/security/
-> 
-> E-Mail: security@...o3.org
-> 
-> Please note: When replying to this e-mail, please leave the header
-> intact.
-> 
-
-k so in summary then:
-
-CVE-2012-6144 TYPO3-CORE-SA-2012-005: Backend History Module SQL
-Injection TYPO3 internal
-
-CVE-2012-6145 TYPO3-CORE-SA-2012-005: Backend History Module
-Cross-Site Scripting Thomas Worm
-
-CVE-2012-6146 TYPO3-CORE-SA-2012-005: Backend History Module
-Information Disclosure Oliver Hader
-
-CVE-2012-6147 TYPO3-CORE-SA-2012-005: Backend API Cross-Site Scripting
-Johannes Feustel
-
-CVE-2012-6148 TYPO3-CORE-SA-2012-005: Backend API Cross-Site Scripting
-Richard Brain
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRwVriAAoJEBYNRVNeJnmTb5cP/Ak8xgGQDdVelQ4cvLwPuTfH
-+2UEnqcBZEWHKT3ib9tNDUAar0DLihASl51H/lX3PjgBB9hOwur9nAgvhyGCaP0o
-xbAQ7caIjpT30nMWf6icX4DAFs2t0KU4vXm5DxAWlbMaiwpCGXIRQpzaz1XiRWic
-9SnsVxSoDL8O8M4ayLHdbNsdvqdoMIJeo8luikJr+9RXMJCnnKw4Nn0wPqQM4UJG
-4NL4Fw1giqZQbYuBvu/Z0cshYlLj8zDFWR5r7NXkWoVWUwSVPIkLBuaeIA88wA3J
-mCszK56aRbmFV54Tmojqc1lzORuzN8/Pf6auoftNAL5sa8C6K7SbkesNXTUAX4J/
-nup6XNKzU3UbFekqVyDoak5R/dWtA/I3FUhOuXO/HksfZLwkOv+OPyTDZ7TDHopW
-a7xeN8cCkD3ds7AhOzV+yAo81Ak+EBeeROoIsIJ/MYPO9jNzuB6hbO8NWrHwztOn
-MG3IibbUL2BSSp+yToCSoEpmZGQMqX3749DlGtbR/475AK1AQ/47aPd0Pceilxgy
-I5n2xRJ4v59hOUPW20V+PADYSI9Y/8LYy+aTW2tIH8xcSWAeEPTZeZRRu7NwAOPN
-NlrabGczpfuLFyYi/DvyF93M+o9RIjGEzyCEW+XimdzisKSIGTqFdU3JbiqKXtIf
-sciyPmOfkbV9J4kWMBgs
-=I/oC
------END PGP SIGNATURE-----
+I forgot to mention the upstream website, 
+http://linux.bytesex.org/misc/webfs.html
+and I forgot to mention that it should be gentoo-related because the logfile 
+is created by our own init script.
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
