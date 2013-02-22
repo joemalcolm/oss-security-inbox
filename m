@@ -1,90 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/12/5
-Message-ID: <20130912173446.GA9496@hunt>
-Date: Thu, 12 Sep 2013 10:34:46 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com, chuck.short@...onical.com
-Subject: cve requests for python-oauth2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/6
+Message-ID: <51271B2E.3090100@redhat.com>
+Date: Fri, 22 Feb 2013 00:15:58 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Eric Dumazet <eric.dumazet@...il.com>
+CC: bhutchings@...arflare.com, Greg KH <gregkh@...uxfoundation.org>, ppandit@...hat.com, YOSHIFUJI Hideaki <yoshfuji@...ux-ipv6.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Linux kernel handling of IPv6 temporary addresses
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, all, I recently gave python-oauth2 a quick audit and believe
-it needs three CVE entries:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-- _check_signature() ignores the nonce value when validating signed urls
+Please use CVE-2013-0343 for Linux kernel handling of IPv6 temporary
+addresses
 
-    def _check_signature(self, request, consumer, token):
-        timestamp, nonce = request._get_timestamp_nonce()
-        self._check_timestamp(timestamp)
-        signature_method = self._get_signature_method(request)
+Original threads:
 
-        try:
-            signature = request.get_parameter('oauth_signature')
-        except:
-            raise MissingSignature('Missing oauth_signature.')
-
-        # Validate the signature.
-        valid = signature_method.check(request, consumer, token, signature)
-
-        if not valid:
-            key, base = signature_method.signing_base(request, consumer, token)
-
-            raise Error('Invalid signature. Expected signature base '
-                'string: %s' % base)
-
-Ignoring the nonce value enables replay attacks.
-
-This appears to already be known (ignoring the misleading title):
-https://github.com/simplegeo/python-oauth2/issues/129
-
-- _check_timestamp() does not constrain how far into the future times may be,
-  (also does not prevent negative times, but probably not relevant for a CVE)
-
-    def _check_timestamp(self, timestamp):
-        """Verify that timestamp is recentish."""
-        timestamp = int(timestamp)
-        now = int(time.time())
-        lapsed = now - timestamp
-        if lapsed > self.timestamp_threshold:
-            raise Error('Expired timestamp: given %d and now %s has a '
-                'greater difference than threshold %d' % (timestamp, now,
-                    self.timestamp_threshold))
-
-The timestamps are probably most useful to limit the number of nonces
-that must be stored and compared but it seems generally useful to prevent
-timestamps from the distant future from being allowed.
+http://seclists.org/oss-sec/2012/q4/292
+http://seclists.org/oss-sec/2013/q1/92
 
 
-- make_nonce(), generate_nonce(), and generate_verifier() use a poor prng:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-    @classmethod
-    def make_nonce(cls):
-        """Generate pseudorandom number."""
-        return str(random.randint(0, 100000000))
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-
-    def generate_nonce(length=8):
-        """Generate pseudorandom number."""
-        return ''.join([str(random.randint(0, 9)) for i in range(length)])
-    
-    
-    def generate_verifier(length=8):
-        """Generate pseudorandom number."""
-        return ''.join([str(random.randint(0, 9)) for i in range(length)])
-
-Nonces may not need full-blown /dev/urandom but the Python 'random'
-documentation clearly states the results are repeatable. The lack of
-seeding in this module makes me think this is too weak for this use.
-
-The safety of oauth depends upon the verifier being unguessable, and
-this is both too short, with too few character choices, and probably
-does need full-blown /dev/urandom style randomness.
-
-The poor PRNG for the nonce has been known since 2010-04-24 (silly github, 
-hover your _mouse pointer_ over the "3 years ago" text in the bug report):
-https://github.com/simplegeo/python-oauth2/issues/9
-
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+iQIcBAEBAgAGBQJRJxsuAAoJEBYNRVNeJnmTsyMQAMiatRT1NyiTkkMastN7D0S+
+lcCJ9yMt+fradBTMAmzn2VhIA9ipzMv628Yppv0ATrkugkIxBEQJg72yYpvCH3na
+a/nDJXRKxoyfx90GxFTs514669t+eF//5vdu7AIBG60LatBWBGbnpCCqSYd/WbEi
+NBCQ2xc6iVX+4CIrvTTwBszKSHuCbhfPsnkLJOuJxNFMFZskiAFRjnsPMua1F2kk
+dKXmNi6eU5HHKv8rU6aXgERppqLD2BpA6drwmIivPbQ7lDqkUQDyvnMSPJ7yk1h0
+nAI8gbbY71EAsjYPgelaoDRi++cKcyBDDdSvywcZ+78a3PIjoCpCMaODeWX9K+AN
+CrblSiVdpL2/akVVzlvA1NBlqprG+NzZulrnRGF4XqOE4hsqQtXJ7glre+soriMA
+BF0wMpshe+gZOed8xwJKaVYat6Fye88gTCSTjMsy9sC/FYOQoi2YhmFJb1OCLmHp
+oeCeEir1l5hlPn62kV21vBjs7xyAakbADUNgr8IDRKbAz1nyEJe6GJHqqjZ77XIy
++JaysTazzWSXHC88oZ/5d/auv/CgC5CHU3ybXU2Am0C/1WsXnzZCrdDTFXNvKWDw
+1X3+1AMTVwb8qElGxQOc/rJVhitrymlFLOG30CIy3Mllp0PbpBpkCk/pidMjnd/s
+JUjhpoRibwaiR/rg3xxz
+=l50l
+-----END PGP SIGNATURE-----
