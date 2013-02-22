@@ -1,49 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/10
-Message-ID: <51D1CF4F.8050008@redhat.com>
-Date: Mon, 01 Jul 2013 12:49:51 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, libvirt-security@...hat.com
-Subject: Re: CVE-2013-2218 -- libvirt: crash when listing network interfaces with filters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/9
+Message-ID: <20130222081530.GB27037@gremlin.ru>
+Date: Fri, 22 Feb 2013 12:15:30 +0400
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: nginx world-readable logdir
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 22-Feb-2013 00:29:48 -0700, Kurt Seifried wrote:
 
-On 07/01/2013 09:21 AM, Petr Matousek wrote:
-> The virConnectListAllInterfaces method has a double-free of the 
-> 'struct netcf_if' object when any of the filtering flags cause an
-> interface to be skipped over. For example when running the command
-> 'virsh iface-list --inactive'
-> 
-> Upstream fix: 
-> http://libvirt.org/git/?p=libvirt.git;a=commit;h=244e0b8cf15ca2ef48d82058e728656e6c4bad11
->
->  References: https://bugzilla.redhat.com/show_bug.cgi?id=980112
-> 
-> Thanks,
-> 
+ >>> I just noticed my nginx logdir and its content are
+ >>> world-readable: What do you think about?
+ >> About misconfiguration? Nothing:
+ >> % grep create /etc/logrotate.d/nginx
+ >> create 640 root wheel
+ > What are the initial permissions prior to log rotation?
 
-Please use CVE-2013-2229 for this issue.
+Of course, exactly the same - 640, root:wheel :-)
+
+I've built my own package (for Openwall GNU/*/Linux, not yet
+in mainstream), and there I use explicit log file creation in
+the %post section (touch && chown && chmod) without relying
+on a umask (although in Owl it's restrictive by default: 077).
+
+So I think that ${subject} is just a misconfiguration.
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJR0c9PAAoJEBYNRVNeJnmTSY4P/ilsf0ieJ07XJrtl3G7sWgcZ
-70tHmnhyu8R4I1shc6mQgFVUCwObfbCGm20pT4vThcC9ntcMMErNPViUU7yAALlT
-4L6Z6Lu45YFgQsEG9mjEOTgLq7pKkjyvsPugB5838sDO+8pd1VXL4CrcjP1yX6BE
-gIh+qo8CR9wqEXc/yPcnLs9X7mV4sgxoh8EZcw9MIblEUasdLBUr1QvzCvoXHepV
-j5H9n8jKMOuPXoHOfm7WcpX72tlZcfFy2M9cLfSn2P2ctaIvi3uXRiJDgaxve8aa
-fOZjOgf8bao+BDgbQ3eihF/5N486KS9oD9QwzY05/4urp6DyrkWqDER7y1lOtsCb
-IxAtwa3bEsmUflYvJlsdsZiiF/iO8R8Bw0jVIiQKK1VzdhWN7iTJ8o9Pzr1FoaZc
-VgYCyNftBUsHIi+rD0m2HdKBB7MMzH1/heS8/26zaj1gW7bBC1PEiO/MFRA/pX79
-Vts/DjghNZR43SGULuc2wDodMhI0S+pcO2DI7Y+fcFU05xxRskKfQYf9je0VKauJ
-euUk4Dpm548Fs2JfDhSuGd45VAVbrPhCmm31fyOI3AAkbvhaoQWKA9tTNMmMOBCT
-mvtrioGrlAfkc2g5ZXmCGv0ZQ7AuQ32nYBUX+CFYlgHHAdK5ORxL7zcLwn9043as
-3g4NK6/2vam9wBfOGfDm
-=OVns
------END PGP SIGNATURE-----
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
