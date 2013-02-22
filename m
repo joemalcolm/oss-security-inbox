@@ -1,56 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/11
-Message-ID: <CA+rthh8WNMCU21QxA9CXJcGepnaWQLn2+BOPkPaABzz05jQpYg@mail.gmail.com>
-Date: Mon, 25 Feb 2013 20:18:42 +0100
-From: Mathias Krause <minipli@...glemail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/7
+Message-ID: <20130222071710.GA27037@gremlin.ru>
+Date: Fri, 22 Feb 2013 11:17:10 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
+Subject: Re: nginx world-readable logdir
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 25, 2013 at 8:07 PM, Dan Rosenberg
-<dan.j.rosenberg@...il.com> wrote:
-> On 02/25/2013 01:59 PM, Mathias Krause wrote:
->> On Mon, Feb 25, 2013 at 7:53 PM, Dan Rosenberg
->> <dan.j.rosenberg@...il.com> wrote:
->>> On 02/25/2013 01:45 PM, Mathias Krause wrote:
->>>> Did you even try to run the exploit on a v3.2 kernel? Or even more
->>>> simple, looked at the code of a v3.2 kernel? There is no sock_diag
->>>> anywhere in the kernel; there is only inet_diag. And inet_diag hadn't
->>>> and still does not have the out-of-bounds access issue. So no, this
->>>> bug is non-existent on a v3.2 kernel.
->>>>
->>>> Thanks,
->>>> Mathias
->>>>
->>> The bug was introduced with this commit:
->>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=d366477a52f1df29fa066ffb18e4e6101ee2ad04
->>>
->>> This commit took place during kernel version 3.2.0-rc4, so yes, it does
->>> seem to affect 3.2 kernels.
->>
->> $ git describe --contains d366477a52f1df29fa066ffb18e4e6101ee2ad04
->> v3.3-rc1~182^2~326
->>
->> Is git lying to me or what?
->>
->>
->> Cheers,
->> Mathias
->>
->
-> Apparently so. Linux 3.3-rc1 was released on January 19, 2012, while the
-> patch to introduce sock_diag was applied December 6, 2011.
+On 21-Feb-2013 18:50:14 +0100, Agostino Sarubbo wrote:
 
-Dude, have you even *tried* to confirm what you're claiming?
+ > I just noticed my nginx logdir and its content are world-readable:
+ > What do you think about?
 
-$ git grep sock_diag_handler v3.2 | wc -l
-0
-$ git checkout v3.2; grep -rw sock_diag_handler . | wc -l
-0
+About misconfiguration? Nothing:
 
-So either my git tree is horribly broken or your arguments are. Ever
-heard of net-next.git -- containing commits that should end up in the
-*next* version of Linux?
+% grep create /etc/logrotate.d/nginx
+    create 640 root wheel
+%
 
-Cheers,
-Mathias
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
