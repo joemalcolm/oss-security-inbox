@@ -1,61 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/17/1
-Message-ID: <51E633B9.90805@redhat.com>
-Date: Wed, 17 Jul 2013 00:03:37 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/12
+Message-ID: <alpine.LFD.2.03.1302221531540.11508@redhat.com>
+Date: Fri, 22 Feb 2013 15:35:20 +0530 (IST)
+From: P J P <ppandit@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contrib modules
+Subject: CVE request: Linux kernel: Bluetooth HIDP information disclosure
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+    Hello,
 
-On 07/16/2013 03:36 PM, Forest Monsen wrote:
-> Hi there,
-> 
-> I'd like to request CVE identifiers for:
-> 
-> SA-CONTRIB-2013-055 - Hatch - Cross Site Scripting 
-> https://drupal.org/node/2038363
+Linux kernel built with Bluetooth stack and HIDP support HCONFIG_BT=y/m & 
+CONFIG_BT_HIDP=y/m is vulnerable to an information disclosure flaw caused by 
+wrongly initializing the hid_device->name, physical location and unique 
+identifier variables. Information leakage happens if these variables are not 
+NULL('\0') terminated.
 
-Please use CVE-2013-4138 for this issue.
+An unprivileged user/program could cause this via ioctl(HIDPCONNADD) call.
 
-> SA-CONTRIB-2013-056 - Stage File Proxy - Denial of Service 
-> https://drupal.org/node/2038801
+Upstream fix:
+  -> https://git.kernel.org/linus/0a9ab9bdb3e891762553f667066190c1d22ad62b
 
+Reference:
+  -> https://bugzilla.redhat.com/show_bug.cgi?id=914298
 
-Please use CVE-2013-4139 for this issue.
-
-> SA-CONTRIB-2013-057 - TinyBox - Cross Site Scripting (XSS) 
-> https://drupal.org/node/2038807
-
-
-Please use CVE-2013-4140 for this issue.
-
-> Thanks!
-> 
-> Forest
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJR5jO5AAoJEBYNRVNeJnmTrqcP/0I1Q++UVyJlYnfMYFjllcpJ
-1YVURdWIazG/12bx5RIBPK5FFDKbsTpgLdFW9bJ8kqquUC3AVawGxbVh7mcdMHOQ
-qqGmY2pKTuESTCzGmXYA6Ktyelfdbo5mr9KzrewHLdMCzUyRS50jmTZWUobKK3du
-yvOT8hPfPoZB/1xP2bI7dNufcYCapMCgSJBwg9pOPCsXA2kFRIvtmuxKFpjC69LC
-xZeQkNxfQL1Dv3oXzjxeOJTZiNQeCcnu0oSjsGr/axccpEpMKSgUaKa8Wx+F1hG4
-6VjAXiVpcjWuu/A9u8Ms/blUht/EeGFTqXnjxvK2Kfepu4EgAcdMrwzZLawlx/z+
-SgnbJXh6XRNYOIDPyiBsmpJkakn/xdZe/vk25KxafUg6f3OhSePR04ZE2xCYDa5m
-xsdVFycKlQkLzCnQFwp2VtUelX59pjW2X35oLBkU2AGwbrFk9XGWseMYXcDwIG4I
-e17Y01nMIt2eLSh2sgNhzbjqxpA6owV5ItAzRb28CfGG1fIag1O3uBKowZjiu+R7
-1wJLU/Ww7ILho7C6ZeG4B6yaFzdipzJclVA++/OhxNpd/2je0Kt3x34xoEnPkHam
-A51m6spUf5TZhpIj7ZQuUhmgLf/DYTUcCujagRFKocZXYf/1M5/NH7ItK/6uBoY2
-HbnvcvT8zJFcII7IkhHi
-=MTgT
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
