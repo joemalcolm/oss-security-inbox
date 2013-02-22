@@ -1,187 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/11
-Message-ID: <5283E742.5070606@redhat.com>
-Date: Wed, 13 Nov 2013 13:55:30 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/3
+Message-ID: <512705C8.6080908@redhat.com>
+Date: Thu, 21 Feb 2013 22:44:40 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: RE: [vs-plain] Request for CVE Identifiers
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Mitre CVE assign department <cve-assign@...re.org>
+Subject: CVEs for libxml2 and expat internal and external XML entity expansion
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Thanks for posting, this makes life easier for everyone (especially
-the vulnerability aggregation services).
+So here are the CVE's for the two big ones, libxml2 and expat. Both
+are affected by the expansion of internal entities (which can be used
+to consume resources) and external entities (which can cause a denial
+of service against other services, be used to port scan, etc.).
 
-On 11/13/2013 10:14 AM, Jenny Han Donnelly wrote:
-> Hi Kurt,
-> 
-> Thanks for your help. We now have CVE IDs for YUI-related security
-> vulnerabilities. We're updating the site with them now. For your
-> reference, I've pasted them here:
-> 
-> 
-> CVE-2013-6780 
-> https://yuilibrary.com/support/20131111-vulnerability/ use.
-> 
-> 
-> 
-> CVE-2012-5881 
-> http://www.yuiblog.com/blog/2012/10/30/security-announcement-swf-vulnerability-in-yui-2/
->
-> 
-http://www.yuiblog.com/blog/2012/11/05/post-mortem-swf-vulnerability-in-yui-2/
-> http://yuilibrary.com/support/20121030-vulnerability/
-> 
-> Cross-site scripting (XSS) vulnerability in the Flash component
-> infrastructure in YUI 2.4.0 through 2.9.0 allows remote attackers
-> to inject arbitrary web script or HTML via vectors related to
-> charts.swf, a similar issue to CVE-2010-4207.
-> 
-> 
-> 
-> CVE-2012-5882 
-> http://www.yuiblog.com/blog/2012/10/30/security-announcement-swf-vulnerability-in-yui-2/
->
-> 
-http://www.yuiblog.com/blog/2012/11/05/post-mortem-swf-vulnerability-in-yui-2/
-> http://yuilibrary.com/support/20121030-vulnerability/
-> 
-> Cross-site scripting (XSS) vulnerability in the Flash component
-> infrastructure in YUI 2.5.0 through 2.9.0 allows remote attackers
-> to inject arbitrary web script or HTML via vectors related to
-> uploader.swf, a similar issue to CVE-2010-4208.
-> 
-> 
-> 
-> CVE-2012-5883 
-> http://www.yuiblog.com/blog/2012/10/30/security-announcement-swf-vulnerability-in-yui-2/
->
-> 
-http://www.yuiblog.com/blog/2012/11/05/post-mortem-swf-vulnerability-in-yui-2/
-> http://yuilibrary.com/support/20121030-vulnerability/
-> 
-> Cross-site scripting (XSS) vulnerability in the Flash component
-> infrastructure in YUI 2.8.0 through 2.9.0, as used in Bugzilla
-> 3.7.x and 4.0.x before 4.0.9, 4.1.x and 4.2.x before 4.2.4, and
-> 4.3.x and 4.4.x before 4.4rc1, allows remote attackers to inject
-> arbitrary web script or HTML via vectors related to swfstore.swf, a
-> similar issue to CVE-2010-4209.
-> 
-> 
-> 
-> CVE-2013-4939 
-> http://yuilibrary.com/support/20130515-vulnerability/
-> 
-> Cross-site scripting (XSS) vulnerability in io.swf in the IO
-> Utility component in Yahoo! YUI 3.0.0 through 3.9.1, as used in
-> Moodle through 2.1.10, 2.2.x before 2.2.11, 2.3.x before 2.3.8,
-> 2.4.x before 2.4.5, 2.5.x before 2.5.1, and other products, allows
-> remote attackers to inject arbitrary web script or HTML via a
-> crafted string in a URL.
-> 
-> 
-> 
-> CVE-2013-4940 
-> http://yuilibrary.com/support/20130515-vulnerability/
-> 
-> Cross-site scripting (XSS) vulnerability in io.swf in the IO
-> Utility component in Yahoo! YUI 3.10.2, as used in Moodle through
-> 2.1.10, 2.2.x before 2.2.11, 2.3.x before 2.3.8, 2.4.x before
-> 2.4.5, 2.5.x before 2.5.1, and other products, allows remote
-> attackers to inject arbitrary web script or HTML via a crafted
-> string in a URL.  NOTE: this vulnerability exists because of a
-> CVE-2013-4939 regression.
-> 
-> 
-> 
-> CVE-2013-4941 
-> http://yuilibrary.com/support/20130515-vulnerability/
-> 
-> Cross-site scripting (XSS) vulnerability in uploader.swf in the
-> Uploader component in Yahoo! YUI 3.2.0 through 3.9.1, as used in
-> Moodle through 2.1.10, 2.2.x before 2.2.11, 2.3.x before 2.3.8,
-> 2.4.x before 2.4.5, 2.5.x before 2.5.1, and other products, allows
-> remote attackers to inject arbitrary web script or HTML via a
-> crafted string in a URL.
-> 
-> 
-> 
-> CVE-2013-4942 
-> http://yuilibrary.com/support/20130515-vulnerability/
-> 
-> Cross-site scripting (XSS) vulnerability in flashuploader.swf in
-> the Uploader component in Yahoo! YUI 3.5.0 through 3.9.1, as used
-> in Moodle through 2.1.10, 2.2.x before 2.2.11, 2.3.x before 2.3.8,
-> 2.4.x before 2.4.5, 2.5.x before 2.5.1, and other products, allows
-> remote attackers to inject arbitrary web script or HTML via a
-> crafted string in a URL.
-> 
-> 
-> 
-> -----Original Message----- From: Kurt Seifried
-> [mailto:kseifried@...hat.com] Sent: Thursday, August 01, 2013 8:12
-> PM To: michaeld@...dle.com; security@...library.com; Open Source
-> Security Subject: Re: [vs-plain] Request for CVE Identifiers
-> 
-> On 07/05/2013 12:01 AM, Michael de Raadt wrote:
->> Hi, Kurt.
-> 
->> Thanks for getting back to me.
-> 
->> The YUI issue (reported as Moodle security issue MSA-13-0025)
->> seems to have affected YUI versions 3.0.0 through 3.10.0 and was
->> fixed in 3.10.1. There was a smaller related problem still in 
->> 3.10.2 that they also fixed. Here are some links to the YUI 
->> announcements...
-> 
-> Hi YUI guys, can we get the CVE situation for YUI sorted out please
-> and thank you? I'd be happy to assign CVEs or to help you get them
-> from Mitre.
-> 
-> 
->> http://www.yuiblog.com/blog/2013/05/14/yui-3-10-1-released-to-fix-swf-
->>
->> 
-vulnerability/
-> 
-> 
-> http://yuilibrary.com/support/20130515-vulnerability/
-> 
->> I couldn't find an existing CVE for this. Perhaps there is not
->> one yet.  Michael de Raadt /BSci(Hons), PhD/ *Development
->> Manager, Moodle HQ <http://moodle.com/hq/>* Availability:
->> Calendar <http://dl.dropbox.com/u/11561272/calendar.html> Web: 
->> moodle.com/michaeld <http://moodle.com/michaeld> Blog: 
->> salvetore.wordpress.com <http://salvetore.wordpress.com/> Email: 
->> michaeld@...dle.com <mailto:michaeld@...dle.com> LinkedIn: 
->> linkedin.com/in/michaelderaadt 
->> <http://linkedin.com/in/michaelderaadt> Twitter:  	@salvetore 
->> <https://twitter.com/salvetore>
-> 
->> <http://moodle.org>
-> 
-> 
-> 
-> 
+To be clear:
+
+====================
+Internal entity expansion refers to the exponential/quadratic/fast
+linear expansion of XML entities, e.g.:
+====================
+<!DOCTYPE xmlbomb [
+<!ENTITY a "1234567890" >
+<!ENTITY b "&a;&a;&a;&a;&a;&a;&a;&a;">
+<!ENTITY c "&b;&b;&b;&b;&b;&b;&b;&b;">
+<!ENTITY d "&c;&c;&c;&c;&c;&c;&c;&c;">
+]>
+<bomb>&d;</bomb>
+
+or
+
+<!DOCTYPE bomb [
+<!ENTITY a "xxxxxxx... a couple of ten thousand chars">
+]>
+<bomb>&a;&a;&a;... repeat</bomb>
+
+Which causes resources to be consumed
+
+
+
+====================
+External entity expansion refers to the loading of external resources
+such as XML entities from another server or a local file:
+====================
+<!DOCTYPE external [
+<!ENTITY ee SYSTEM "http://www.example.org/some.xml">
+]>
+<root>&ee;</root>
+
+
+<!DOCTYPE external [
+<!ENTITY ee SYSTEM "file:///PATH/TO/simple.xml">
+]>
+<root>&ee;</root>
+
+Which can cause resources to be consumed or can result in port
+scanning /application scanning information being sent to the attacker.
+
+
+So the CVE's to use:
+
+Please use CVE-2013-0338 for libxml2 internal entity expansion
+
+Please use CVE-2013-0339 for libxml2 external entities expansion
+
+Please use CVE-2013-0340 for expat internal entity expansion
+
+Please use CVE-2013-0341 for expat external entities expansion
+
+
+If you know of other XML libraries that are vulnerable (and open
+source =) please let oss-sec know so we can assign CVEs.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSg+dCAAoJEBYNRVNeJnmTRKkP/0gh/c14qP9O8ZXeWcBWbOwQ
-wbWzoku3wWKnTrOpLUjZk+jdCzzvaJepCUyGXBTjmo0454q+hut52MCWntHHa3dy
-cScsUQIU5y+NWgKu3gbk+wXXTSgLJFCgvGcQ29gueAjNjuJoknTtePyFaVJrsORI
-J+t6ONkrXvYIjMzsThhyobFC4NouUGOnCg9vb7YqtCflP30U03ZgzNNhMQKLjZ7N
-nlLCV+SqYRVEgGxAe8YRUQPmNNEO5c0M+mmMBD4rzn3XL/MeADtoEfdfDilgMQrw
-plbeYvawqYL3xoxa1Sh8LewVUFFqW6NGCuF9whUnwKy2JsybBJaNf+9jDyOmUcfS
-DTmz/wfijtuRrUe5tL8OTMjk3M/UhwM8iltuEmebbiDVpk/X9WE/nIgt7GPb/LFZ
-onde4/4fBPC1ftNwPk5NkQwcRFniyrhYYRN7czGBizUhv6GEfXiJQoFi/kge5UoW
-pzPWlAMX3hjNv8VExygYn3E8KAXaK3aWKbYjVBRlP6DR0k9P+cqYZK735MLm5MFR
-Z6ZT2bVpRVaEaqLGgVKXKc8Sq93GwdNOM+qdA/zVO86nOtJ7xgtUeZmF1CFyTHxe
-e+vzau+qiXAIYQueDSr6sjhlrEzgAhIETsaR8l+JY9k6MvUH8X9i8O5sSDM/XQtv
-eVb7bTBUvjOVt0c9cC6W
-=oSh1
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRJwXIAAoJEBYNRVNeJnmTYUMP/3gJtHt6GFt+J6fG03TIQMOA
+3NE7YfmU34/ZPxgFDHDiU7dOJc8uX6VMSQO0fyoFVW40iP/1PTxMow30E1qYBnDL
+nXl9Kxl1q/8uqWEpm0CN569a9aU3svCxtcC28m1ziTZ/DwNq/d+fbw/m76Mua9gd
+ZpL6hUeMcij47imYOtOgbMiYSt0F+JWTnHoBOwtIdZxkwWEzTIHC6eTNbKAe9Quo
+km8fLdpXA14WIWGeqS/K7qI4ie4JOSoJvHCp9YSF3gIVPxHXNqf6Yu1EAJbRRns9
+kLG8QH1agRxzV+ZmLobZmtY9D1zB+IjXGGQEd2U5gStYZNIAUxKnXPTKEsJJ4gyd
+iw7qp+ubNcO2X5leILNpGAJNtrDbRBcyrtLInM397Pl2xq3IGqX0/H74t+9paUPl
+xQexOko7btBmH0oFHJZNLwDjl97HevfLWab/izLCjANpuGwzPtP3h0GGfmQQ22nP
+dN9Cc0keFYbd+k9piihQqlHo25ZRW7Haqi5I1c2YK7lpvw8EcjsAc4Ggwk3waM+D
+S4oxQGHF5i4RvVvTRIJ5ShoHJMs8jS02XlUR+LoCsr3oP/UMkt/lzAkhnm/T0aLr
+WQ69a1is2p+yoQv9ASHA512ggxq/Zp1yNE/P97nK4nM01dx6vddr++Yxrq3cMVFZ
+42S90AvngWmywpPfKOQI
+=3XLg
 -----END PGP SIGNATURE-----
