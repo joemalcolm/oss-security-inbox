@@ -1,35 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/17
-Message-ID: <20131010133819.GR4394@ucc.gu.uwa.edu.au>
-Date: Thu, 10 Oct 2013 21:38:19 +0800
-From: Matt Johnston <matt@....asn.au>
-To: Marcus Meissner <meissner@...e.de>
-Cc: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: dropbear sshd daemon 2013.59 release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/18
+Message-ID: <1528506.5oroF307i7@devil>
+Date: Fri, 22 Feb 2013 14:12:52 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: sthttpd world-redable logdir
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hello,
 
-On Thu, Oct 10, 2013 at 03:27:07PM +0200, Marcus Meissner wrote:
-> has this changes entry:
-> - Limit the size of decompressed payloads, avoids memory exhaustion denial
->   of service 
->   https://secure.ucc.asn.au/hg/dropbear/rev/0bf76f54de6f
+sthttps[1], a fork of thttpd, a small, fast, multiplexing webserver.
+creates its log as world-redable:
 
-That's the right patch.
+# ls -la /var/log/thttpd.log 
+-rw-r--r-- 1 thttpd thttpd 0 Feb 22 14:05 /var/log/thttpd.log  
 
-> It also has this changes entry which might need one:
-> - Avoid disclosing existence of valid users through inconsistent delays
->   https://secure.ucc.asn.au/hg/dropbear/rev/a625f9e135a4
+It should be only gentoo-related because the log is created by our own init-
+script. Please assign a CVE.
 
-That should be https://secure.ucc.asn.au/hg/dropbear/rev/d7784616409a 
-for the user disclosure.
 
-I don't think the constant-time memcmp (a625f9e135a4) is
-worth noting with a CVE. The packet HMAC is non-repeatable
-for an attacker. The password crypt comparison has too long
-a delay between tries, I think the majority of programs
-would use straight strcmp().
-
-Cheers,
-Matt
+[1]: http://opensource.dyc.edu/sthttpd
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
