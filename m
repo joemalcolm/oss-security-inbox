@@ -1,26 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/21/3
-Message-ID: <20131121151507.GP2523@redhat.com>
-Date: Thu, 21 Nov 2013 08:15:07 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/11
+Message-ID: <20130222084937.GW17951@kludge.henri.nerv.fi>
+Date: Fri, 22 Feb 2013 10:49:38 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: 389-ds DoS due to improper handling of ger attr searches (CVE-2013-4485)
+Subject: Re: nginx world-readable logdir
 Content-Type: text/plain; charset=utf-8
 
-A flaw in how 389-ds-base and Red Hat Directory Server handled the
-checking of access rights on entries using GER (Get Effective Rights), a
-way to extend directory searches to also display what access rights a
-user has to a specified entry.  When an attribute list is given in the
-search request, and if there are several attributes whose names contain
-the '@' character, 389-ds-base and Red Hat Directory Server would crash.
-An attacker able to contact the server would be able to submit this type
-of search request with no authentication required.
+On Fri, Feb 22, 2013 at 01:41:50AM -0700, Kurt Seifried wrote:
+> > So I think that ${subject} is just a misconfiguration.
+> 
+> Welp I confirmed it on Fedora 16. So at least some things are affected.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-4485
+Some distros are affected. Good to hear not all are. This is not just
+misconfiguration.
 
-
-(Obviously no CVE is required, posting here as this was previously sent
-to the distros@ mailing list)
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+--
+Henri Salo
