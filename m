@@ -1,29 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/18/3
-Message-ID: <20131118151728.GP22293@dhcp-25-225.brq.redhat.com>
-Date: Mon, 18 Nov 2013 16:17:29 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/1
+Message-ID: <5126F1C8.50706@redhat.com>
+Date: Thu, 21 Feb 2013 21:19:20 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifrie@...hat.com>
-Subject: CVE-2013-4592 -- Linux kernel: kvm: memory leak when memory slot is moved with assigned device
+CC: Anders Petersson <anders@....se>, Henri Salo <henri@...v.fi>, Agostino Sarubbo <ago@...too.org>, security-alert@...nx.org
+Subject: Re: CVE request: nginx world-readable logdir
 Content-Type: text/plain; charset=utf-8
 
-When a user memory slot is moved (ie. the base_gfn changes), iommu pages
-are neither unpinned nor unmapped.  The memory for these pages then
-cannot be recovered without rebooting the system.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Local user with ability to assign device (with access to PCI sysfs files
-for a device) could use this flaw to DoS the system.
+On 02/21/2013 03:51 PM, Anders Petersson wrote:
+> 2013/2/21 Anders Petersson <anders@....se>
+> 
+>> However on Debian Squeeze the logs themselves are not
+>> world-readable (at least on my system):
+>> 
+>> $ ls -la /var/log/nginx/ total 452 drwxr-xr-x 2 root     root
+>> 4096 Feb 21 06:25 . drwxr-xr-x 9 root     root  4096 Feb 21 06:25
+>> .. -rw-r----- 1 www-data adm    934 Feb 21 18:40 access.log 
+>> -rw-r----- 1 www-data adm  20134 Feb 21 03:46 access.log.1
+>> 
+> 
+> Apologies for the noise, Henri is absolutely correct. nginx on
+> Debian Squeeze is affected. My observation is merely an artifact of
+> the logrotation which fixes the permissions in a cron-job (hence if
+> you have the logrotate package installed on Debian Squeeze the logs
+> will have correct permissions as soon as the logs have been rotated
+> once, but left to it's own devices nginx will create the log file
+> world-readable, also the nginx package does not depend on the
+> logrotate package so it may not be installed).
+> 
+> # rm /var/log/nginx/access.log # service nginx restart $ ls -l
+> /var/log/nginx/ total 1088 -rw-r--r-- 1 root     root     0 Feb 21
+> 23:31 access.log
+> 
+> -- Anders Petersson
+> 
 
-Upstream fixes:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=12d6e7538e2d418c08f082b1b44ffa5fb7270ed8
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=e40f193f5bb022e927a57a4f5d5194e4f12ddb74
+Please use CVE-2013-0337 for nginx world readable log files. Also
+Fedora 16 (and I assume 17/18) are affected by this:
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=1031702
+# ls -la /var/log/nginx/
+total 8
+drwxr-xr-x.  2 root root 4096 Feb 21 21:18 .
+drwxr-xr-x. 28 root root 4096 Feb 21 21:17 ..
+- -rw-r--r--.  1 root root    0 Feb 21 21:18 access.log
+- -rw-r--r--.  1 root root    0 Feb 21 21:18 error.log
 
--- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+Sigh. I'm guessing a lot of other web servers are vulnerable by
+default on Linux and BSD distros too. Anyone care to make such a list
+and send it in?
 
-Content of type "application/pgp-signature" skipped
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRJvHIAAoJEBYNRVNeJnmT1rsQAJSVBiqLEn9jQ4cuflgP7zdK
+3s0Ji2Ayzvw4YSnCS8mOcnPmZfushiGbuRm/TD+GQ3176TXq5oMNAe7vOOMmuaBA
+QZc9YTdPzpzG+/9DWsFu9rTukYzCLM+mOyskrJ/eThixhSAjburd0hr0eLrdk8tI
+obXTJHAQ0jDuQaDAd35tM+xh8LDtN7pKrgXIDXro9cXexyjLv/WDrK2RGlQIUdMw
+9AewLBZV+8xiaTjW18LNPSlji8+xr/wMWnF2HlZUUlBO9WaeK5fc+hZzjLUBHUI4
+RMPBLJ5aTWQqMb27sOq74HvPULRUuO+i7gK7ULWhWOxlU+puv/Sd/FylCnEcI14D
+zZISw8criXkt9/LF/VUEvqtGfC0tnmhTQKf73tZ3LN3kKer5WaysqHWQAbp84bTF
+12tDSCO6PqQ0Qk6T9v5rhF66YlWYl5rPQkcqtNB8damjKX8SCbsCPtpguNb97EyM
+Rk3sQikaU1ANYmVGFczJZNpl5h6wXagujqw77hju0ujEHzPQL/oFwjH7nZvEzCcm
+N75ItOCS43aqTI5x+XAMaKKWrTN/K1BisS49JmNCGKTQhps3qg/1JfwOuhlvbwj3
+9LiuiAhbAsXjPn5BSMq31xac+incnItwomwacYQ4P4ZkAUrXVQNoRouWMKacmPiN
+j9RB/0Tktk3UBx1mwcA9
+=2HIG
+-----END PGP SIGNATURE-----
