@@ -1,50 +1,133 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/6
-Message-ID: <20130326145131.GE5378@redhat.com>
-Date: Tue, 26 Mar 2013 08:51:31 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: "Larry W. Cashdollar" <larry0@...com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ibutils improper use of files in /tmp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/2
+Message-ID: <5127035E.5000205@redhat.com>
+Date: Thu, 21 Feb 2013 22:34:22 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>, "Christey, Steven M." <coley@...re.org>
+Subject: Re: CVE request: python-pyrad insecurities
 Content-Type: text/plain; charset=utf-8
 
-* [2013-03-26 08:28:53 -0600] Vincent Danen wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Yeah, you're right.  It was pointed out to me that it was noted here:
-
-http://www.openwall.com/lists/oss-security/2013/03/19/8
-
-Can CVE-2013-1894 be rejected?  Sorry about this, I didn't notice that
-it was assigned one already.
-
->* [2013-03-26 12:10:31 +0000] Larry W. Cashdollar wrote:
->
->>I doubled checked this, i???t looks like this was already assigned  CVE-2013-2561
->
->Do you have a reference for that assignment?  Because I couldn't find
->any CVE references when I was looking for it initially.
->
->>On Mar 25, 2013, at 08:09 PM, Kurt Seifried <kseifried@...hat.com> wrote:
->>
->>>-----BEGIN PGP SIGNED MESSAGE-----
->>>Hash: SHA1
+On 02/21/2013 04:12 PM, Vincent Danen wrote:
+> * [2013-02-15 23:36:21 -0700] Kurt Seifried wrote:
+> 
+>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>> 
+>> On 02/15/2013 04:53 PM, Vincent Danen wrote:
+>>> * [2013-02-15 19:51:07 +0000] Christey, Steven M. wrote:
+>>> 
+>>>> These two issues were fixed in the same diff and reflect
+>>>> poor randomness - should we have only assigned one CVE?  (If
+>>>> the RADIUS feature was introduced in different versions than
+>>>> the authenticator-password feature, then maybe the SPLIT is 
+>>>> acceptable.)
+>>> 
+>>> I'm not sure.  I didn't go digging to see when they were
+>>> introduced -- both features may have been introduced at the
+>>> same time (or not).
+>>> 
+>>> Ok, so doing a quick peek at the first full blob of it in git:
+>>> 
+>>> https://github.com/wichert/pyrad/blob/c206b1dfc362db8b0ef9c256814377bde8ed91cf/pyrad/packet.py
 >>>
->>>On 03/25/2013 03:49 PM, Vincent Danen wrote:
->>>>It was reported on full-disclosure that ibutils suffers from
->>>>improper use of files /tmp that could allow a user to clobber files
->>>>as the user running ibutils (probably usually root).
->>>>
->>>>I didn't see a CVE request for this or anything show up here; if
->>>>one hasn't been assigned, could it be?
->>>>
->>>>Thanks.
->>>>
->>>>References:
->>>>
->>>>http://seclists.org/fulldisclosure/2013/Mar/87
->>>>https://bugzilla.redhat.com/show_bug.cgi?id=927430
 >>>
->>>Please use CVE-2013-1894 for this issue.
+>>>
+>>>
+>>>
+>>> 
+The use of random.randrange() is in both the CreateAuthenticator()
+>>> and CreateID() functions, so I would bet that they've been
+>>> like that the whole time (that blob is from Sept 2007).  So I
+>>> guess one CVE is probably sufficient.
+>>> 
+>>> I only noted them as two issues as we had two separate bug
+>>> reports about them.
+>>> 
+>>>> -----Original Message----- From: Kurt Seifried 
+>>>> [mailto:kseifried@...hat.com] Sent: Friday, February 15,
+>>>> 2013 2:37 PM To: oss-security@...ts.openwall.com Cc: Vincent
+>>>> Danen Subject: Re: [oss-security] CVE request: python-pyrad 
+>>>> insecurities
+>>>> 
+>>> On 02/15/2013 09:14 AM, Vincent Danen wrote:
+>>>>>> Could a CVE be assigned to the following two issues
+>>>>>> please?
+>>>>>> 
+>>>>>> #1: https://bugzilla.redhat.com/show_bug.cgi?id=911682
+>>>>>> 
+>>>>>> Nathaniel McCallum of Red Hat reported that pyrad was
+>>>>>> using Python's random module in a number of places to
+>>>>>> generate pseudo-random data.  In the case of the
+>>>>>> authenticator data, it was being used to secure a
+>>>>>> password sent over the wire. Because Python's random
+>>>>>> module is not really suited for this purpose (not random
+>>>>>> enough), it could lead to password hashing that may be
+>>>>>> predictable.
+>>> 
+>>> Please use CVE-2013-0294 for this issue.
+>>> 
+>>> 
+>>>>>> #2: https://bugzilla.redhat.com/show_bug.cgi?id=911685
+>>>>>> 
+>>>>>> Nathaniel McCallum of Red Hat reported that pyrad was 
+>>>>>> creating serialized RADIUS packet IDs in the CreateID() 
+>>>>>> function in packet.py. This is not suitable for RADIUS as
+>>>>>> the RFC specifies that the ID must not be predictable.
+>>>>>> As a result, the ID of the next packet sent can be
+>>>>>> spoofed.
+>>> 
+>>> Please use CVE-2013-0295 for this issue.
+>> 
+>> Please REJECT CVE-2013-0295 and use CVE-2013-0294 for both
+>> issues (same code issue, same version, same reporter).
+> 
+> Ok, so the reporter indicated that the patch noted does not fix
+> both issues.  It fixed one issue and the other CreateID() function
+> referenced wasn't actually the CreateID() function he meant:
+> 
+> https://github.com/wichert/pyrad/blob/38f74b36814ca5b1a27d9898141126af4953bee5/pyrad/packet.py#L518
+>
+> 
+> 
+> Different function and you can see that:
+> 
+> CurrentID = (CurrentID + 1) % 256 return CurrentID
+> 
+> isn't that great.
+> 
+> Now that CVE-2012-0295 has been rejected, I suppose we cannot
+> re-use it for this, but I think we need another CVE for the "real"
+> CreateID() sequential RADIUS packet ID issue.
+> 
+> Sorry about this.  I hadn't realized there was more than one
+> CreateID() function in there and the original report was short on
+> details.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Please use CVE-2013-0342 for pyrad CreateID() packet ID issue. We
+cannot reuse CVE's that have been rejected, it will anger the CVE gods
+(well, mostly Steve, and all the vendors using this stuff =).
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRJwNeAAoJEBYNRVNeJnmTZ7cQANeKFf6prru6yqztYBoTXwy3
+3dkV3ejwN4mbV1V+VD6ZNnGLlhepoydJHFfqmFWDLvqcicBAX7/yvGAz6pCuvsf6
+dfxzcx0CfIySemFW1vSdOhj/UOnVXf95zeYSEjRzJfCVx/6bbgcUNbcBIerHlMVq
+XDnWsFWwmYA1KLK2GzERVy1vYNoI2GMEP/MWgcdmOL1UdaO8E8gFvtHFtpiE3Tdk
+IaKdKHFgXEseOvTqVLVG/A/9yhTEpnnDeonaFtoWsFwdNFExPyvCzNZB5UVeSzIR
+xEZf7IkG7J11Zq7IsClEEA2KvZmQlIx+9g4m3R081ebI+r68deM0zR/w/vDt+sNd
+9frHmqftyw+AIElqCf3lquboWieL5teYVkcHRi9ymB9qZZ/s5/vF1/n4T9z2lu/O
+fE/M2btB0+UdvXztr7pdX4XwOXhySntcB2rle3YOZUJTjT9LCNPUbz5NJVuL3iZI
+FC+E8IKBkFUFtjEzf5tgnog6E+vI9wU9jvkn3MZGxc2HVo8AkUsDopiJQ/ddpgkh
+XCYWzAe7u72KI+fptQPa5AGy4ivUa3RT5UxTKC6fEVpEBD+DZSHpqPv4NkGFfXbp
+WPiRz1SKTSpEIx73AttjUlMMPQ2mKBSzh+WkSEdJU9DaWtbzEBf1yzI3fJ5gcTVJ
+eGLAzOjmLq6UfYZfYAQ4
+=iS7i
+-----END PGP SIGNATURE-----
