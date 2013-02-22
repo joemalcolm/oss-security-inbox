@@ -1,42 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/14/3
-Message-ID: <511C83A2.4040400@redhat.com>
-Date: Wed, 13 Feb 2013 23:26:42 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/4
+Message-ID: <512705C8.9020101@redhat.com>
+Date: Thu, 21 Feb 2013 22:44:40 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Reed Loden <reed@...dloden.com>
-CC: oss-security@...ts.openwall.com, maxim@...oillogical.com
-Subject: Re: Some rubygems related CVEs
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Mitre CVE assign department <cve-assign@...re.org>
+Subject: CVEs for libxml2 and expat internal and external XML entity expansion
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/13/2013 07:55 PM, Reed Loden wrote:
-> On Wed, 13 Feb 2013 19:39:23 -0700 Kurt Seifried
-> <kseifried@...hat.com> wrote:
-> 
->> newrelic_rpm information disclosure
-> 
->> newrelic_rpm 
->> https://newrelic.com/docs/ruby/ruby-agent-security-notification A
->> bug in the Ruby agent causes database connection information and
->> raw SQL statements to be transmitted to New Relic servers. The
->> database connection information includes the database IP address,
->> username, and password. The information is not stored or
->> retransmitted by New Relic and is immediately discarded.
-> 
->> Please use CVE-2013-0284 for this issue.
-> 
-> This issue was disclosed on 2012-12-06, so it should actually have
-> a CVE-2012-XXXX assignment.
-> 
-> ~reed
+So here are the CVE's for the two big ones, libxml2 and expat. Both
+are affected by the expansion of internal entities (which can be used
+to consume resources) and external entities (which can cause a denial
+of service against other services, be used to port scan, etc.).
 
-Well the entry had no date and I couldn't find out one way or the
-other so 2013 it is.
+To be clear:
 
-Just a general note: please put published dates on your web pages. It
-makes life ever so much easier.
+====================
+Internal entity expansion refers to the exponential/quadratic/fast
+linear expansion of XML entities, e.g.:
+====================
+<!DOCTYPE xmlbomb [
+<!ENTITY a "1234567890" >
+<!ENTITY b "&a;&a;&a;&a;&a;&a;&a;&a;">
+<!ENTITY c "&b;&b;&b;&b;&b;&b;&b;&b;">
+<!ENTITY d "&c;&c;&c;&c;&c;&c;&c;&c;">
+]>
+<bomb>&d;</bomb>
+
+or
+
+<!DOCTYPE bomb [
+<!ENTITY a "xxxxxxx... a couple of ten thousand chars">
+]>
+<bomb>&a;&a;&a;... repeat</bomb>
+
+Which causes resources to be consumed
+
+
+
+====================
+External entity expansion refers to the loading of external resources
+such as XML entities from another server or a local file:
+====================
+<!DOCTYPE external [
+<!ENTITY ee SYSTEM "http://www.example.org/some.xml">
+]>
+<root>&ee;</root>
+
+
+<!DOCTYPE external [
+<!ENTITY ee SYSTEM "file:///PATH/TO/simple.xml">
+]>
+<root>&ee;</root>
+
+Which can cause resources to be consumed or can result in port
+scanning /application scanning information being sent to the attacker.
+
+
+So the CVE's to use:
+
+Please use CVE-2013-0338 for libxml2 internal entity expansion
+
+Please use CVE-2013-0339 for libxml2 external entities expansion
+
+Please use CVE-2013-0340 for expat internal entity expansion
+
+Please use CVE-2013-0341 for expat external entities expansion
+
+
+If you know of other XML libraries that are vulnerable (and open
+source =) please let oss-sec know so we can assign CVEs.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -45,17 +80,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRHIOiAAoJEBYNRVNeJnmTkzkP/AgvWQIsMLbeI3GlqhpwKdvo
-iTP9Xzi9t1e1y9e+y31IAjpL4Z3J0rVY+JVneedih6XgjRUWJz6wvmlJj7C3lFi4
-MrMdovbzhpk4evmm4TcnKM2gypz40D14Zr+HZPxNtICDKQs06V0gFGurfX7hBOH6
-LEkveaXs9QY0lgsQ737XPaSbsGblC6/zjXLI0yruLSAkTCsS7niEyRuqYBidFtux
-lsxBL+wERFybfhxydENh3YbEboZyEggg609p5DjCcYnZ/em1dKwUUKp48gIaSmFJ
-O5Cnf4STFzdBiixpHOGrqUEvD+FheHe5/WZi4lh1iJUt0/bB/KkfdzNQyECdZsAz
-9W1Sdepe9H8dmRYnExEmEaro55BON1d9GtDdKwUfwGaB3AOffENo4HiPKXs7xI/Q
-s84TSbsSzoYnJOi9f3/Be2kPaq6BEI6fobeeq7JGkWCFCNn+7c7ZMHbrGsrxdM96
-uOAcjVmdvIl0WbJ6whXzGxRJV1QQ7mI0lygxx0WYjMRh4uUwaClpp1uWpfDAEMVG
-wzUC2lcvCs931E15bvIKQdcZCKYyXtmBdX+RruHbsZ0VxJG81KuaSqcH/p2SctTp
-MF90UzTkowNQjxCceUMRgvMg1DWM90wNP+4BQTaEDTqwZsN4hWBP4CPvwDQCcdKZ
-RCQnwfO3umlXqq/IGUUQ
-=6NM3
+iQIcBAEBAgAGBQJRJwXIAAoJEBYNRVNeJnmTYUMP/3gJtHt6GFt+J6fG03TIQMOA
+3NE7YfmU34/ZPxgFDHDiU7dOJc8uX6VMSQO0fyoFVW40iP/1PTxMow30E1qYBnDL
+nXl9Kxl1q/8uqWEpm0CN569a9aU3svCxtcC28m1ziTZ/DwNq/d+fbw/m76Mua9gd
+ZpL6hUeMcij47imYOtOgbMiYSt0F+JWTnHoBOwtIdZxkwWEzTIHC6eTNbKAe9Quo
+km8fLdpXA14WIWGeqS/K7qI4ie4JOSoJvHCp9YSF3gIVPxHXNqf6Yu1EAJbRRns9
+kLG8QH1agRxzV+ZmLobZmtY9D1zB+IjXGGQEd2U5gStYZNIAUxKnXPTKEsJJ4gyd
+iw7qp+ubNcO2X5leILNpGAJNtrDbRBcyrtLInM397Pl2xq3IGqX0/H74t+9paUPl
+xQexOko7btBmH0oFHJZNLwDjl97HevfLWab/izLCjANpuGwzPtP3h0GGfmQQ22nP
+dN9Cc0keFYbd+k9piihQqlHo25ZRW7Haqi5I1c2YK7lpvw8EcjsAc4Ggwk3waM+D
+S4oxQGHF5i4RvVvTRIJ5ShoHJMs8jS02XlUR+LoCsr3oP/UMkt/lzAkhnm/T0aLr
+WQ69a1is2p+yoQv9ASHA512ggxq/Zp1yNE/P97nK4nM01dx6vddr++Yxrq3cMVFZ
+42S90AvngWmywpPfKOQI
+=3XLg
 -----END PGP SIGNATURE-----
