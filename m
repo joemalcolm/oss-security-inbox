@@ -1,62 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/1
-Message-ID: <51943770.6010001@redhat.com>
-Date: Wed, 15 May 2013 19:33:36 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE-2013-2097: zPanel themes remote command execution as root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/21
+Message-ID: <20130222182412.GC14906@sentinelchicken.org>
+Date: Fri, 22 Feb 2013 10:24:12 -0800
+From: Tim <tim-security@...tinelchicken.org>
+To: oss-security@...ts.openwall.com
+Cc: Mitre CVE assign department <cve-assign@...re.org>
+Subject: Re: CVEs for libxml2 and expat internal and external XML entity expansion
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-So I saw this earlier today:
+>  > Please use CVE-2013-0338 for libxml2 internal entity expansion
+> 
+> Hasn't libxml2 got countermeasures for that?
 
-http://www.reddit.com/r/netsec/comments/1ee0eg/zpanel_support_team_calls_forum_user_fucken/
+Yeah, I believe so.  Last I looked, I came up with recommendations for
+folks to use xmlCtxtUseOptions with XML_PARSE_NOENT, XML_PARSE_NONET,
+and XML_PARSE_DTDLOAD set appropriately.  However, it wasn't 100%
+clear to me at the time if these addressed all edge cases.  In
+particular, I didn't care much about the DoS cases at the time, but
+hopefully if DTDs are ignored, then it wouldn't be an issue.  
 
-and flipped through the forum thread on the zpanel site, but didn't
-have time until now to deal with it. So first off: I saw all this
-stuff and read it before it was removed from the site (actually the
-entire site appears to be down now).
-
-So long and short: you upload a template with the following code:
-
-<& bogus ']; exec("/etc/zpanel/panel/bin/zsudo touch /root/derp");
-echo $value['bogus &>
-
-and the command gets executed as root. From googling it appears that
-zPanel won't work with SELinux enabled, which makes sense (most web
-applications fail to ship an SELinux policy, so if they need to do
-strange things outside the default policy they generally tell you to
-simply disable SELinux). So if you run zPanel it would be normal to
-disable SELinux (to make zPanel work), so this root level access won't
-be restricted.
-
-This issue has been assigned CVE-2013-2097.
-
-There is also a mention of a CSRF but I couldn't find any additional
-information on it, if anyone knows about this please email
-me/oss-security with details.
+I'd love to hear from an expert on this matter.  For sure the
+documentation needs to be improved...
 
 
+>  > Please use CVE-2013-0341 for expat external entities expansion
+> 
+> I don't think expat resolves external entities at all.  Therefore, the
+> vulnerability resides entirely in the code which uses expat.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Last I checked, I came to the same conclusion.
 
-iQIcBAEBAgAGBQJRlDdwAAoJEBYNRVNeJnmTp6oQAJLBXZOkw5nhXRQDQ87mJWUh
-n+R5fEOGktbAzZMMAYlAaj5UaHlOsMBh9zOyEXDNFWFKFkh8vNOzoAA0famjbyCG
-qpGyXoBJlDEntFLU0W5Z+cEClzMo1Y1eIOYXczRhKpPsgbhwou97HZrg6eIv2SWk
-38sD8nJjKID1wqfWCy0jtjoZ9DKSGviU5t/lPH78sftOTw6BxV3g7pvSKffKnVA4
-2A8sqCPLhW3ZxTvSPUXLK2SK6r8SaOR+hV4yxNJSAO6QMwPLPE71M54KAatqwzi8
-uWYrO1SLQtUK9TbTXUg7acd9x5o5eFMfNIVvyyfmbD4j+vLoaM7y1rSjWwDUGL3p
-lFrsxxe3EFg7cYunf4dz5pi/0JBNhbfs5vSs0vYTWAtUdkGs8ygU4DSyAkTV7+sI
-h5pMPP1NBGIdEqQIS/Jlbu11v/pXJG0ZBtwDTDmID9jnxletITvtE201rfZ/V9Jh
-61NEtPhXso50K9hJF560hzXsyDXPxhpFpwGo71NkMxfOIrP/0QFClitLV6aRRPlu
-Zep9OAZYxrMc77H+daTumF7Wie4wxSHuQF/V51YeD9aY40gQRLwBeAJirkw6IxJI
-yX1zFWa5Du1l1/B/sQtMWOjfRONeY4lk153E3penDzzcfpJO1hJ5BvZIxFpXLFdT
-KsvJPzXsHEzGA/G7wNMV
-=K5om
------END PGP SIGNATURE-----
+
+tim
