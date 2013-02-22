@@ -1,78 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/9
-Message-Id: <E1USqZL-0005h1-D2@xenbits.xen.org>
-Date: Thu, 18 Apr 2013 15:16:15 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 50 (CVE-2013-1964) - grant table hypercall acquire/release imbalance
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/5
+Message-ID: <51270990.6010608@redhat.com>
+Date: Thu, 21 Feb 2013 23:00:48 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, bugtraq <bugtraq@...urityfocus.com>, full-disclosure <full-disclosure@...ts.grok.org.uk>, luislavena@...il.com, ryand-ruby@...spider.com, rubyforge@...1.net, rubysec@...glegroups.com
+Subject: CVE-2013-0162 rubygem-ruby_parser: incorrect temporary file usage / Public Service Announcement
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-	     Xen Security Advisory CVE-2013-1964 / XSA-50
+This is a relatively minor issue, hence no embargo.
 
-            grant table hypercall acquire/release imbalance
+Michael Scherer (mscherer@...hat.com) of Red Hat found:
 
-ISSUE DESCRIPTION
-=================
+Looking for incorrect /tmp/ usage, I found the following piece of code
+in /usr/share/gems/gems/ruby_parser-2.0.4/lib/gauntlet_rubyparser.rb
+(https://rubygems.org/gems/ruby_parser)
 
-When releasing a non-v1 non-transitive grant after doing a grant copy
-operation, Xen incorrectly recurses (as if for a transitive grant) and
-releases an unrelated grant reference.
+  def diff_pp o1, o2
+    require 'pp'
 
-IMPACT
-======
+    File.open("/tmp/a.#{$$}", "w") do |f|
+      PP.pp o1, f
+    end
 
-A malicious guest administrator can cause undefined behaviour;
-depending on the dom0 kernel a host crash is possible, but information
-leakage or privilege escalation cannot be ruled out.
+    File.open("/tmp/b.#{$$}", "w") do |f|
+      PP.pp o2, f
+    end
 
-VULNERABLE SYSTEMS
-==================
+    `diff -u /tmp/a.#{$$} /tmp/b.#{$$}`
+  ensure
+    File.unlink "/tmp/a.#{$$}" rescue nil
+    File.unlink "/tmp/b.#{$$}" rescue nil
+  end
 
-Xen 4.0 and 4.1 are vulnerable.  Any kind of guest can trigger the
-vulnerability.
+This was assigned CVE-2013-0162. The current version of ruby_parser is
+3.1.1 and is affected. Fixing this is simple:
 
-Xen 4.2 and xen-unstable, as well as Xen 3.x and earlier, are not
-vulnerable.
+diff --git a/lib/gauntlet_rubyparser.rb b/lib/gauntlet_rubyparser.rb
+index 4463c38..85137f9 100755
+- --- a/lib/gauntlet_rubyparser.rb
++++ b/lib/gauntlet_rubyparser.rb
+@@ -35,18 +35,19 @@ class RubyParserGauntlet < Gauntlet
+   def diff_pp o1, o2
+     require 'pp'
 
-MITIGATION
-==========
+- -    File.open("/tmp/a.#{$$}", "w") do |f|
+- -      PP.pp o1, f
+- -    end
++    file_a = Tempfile.new('ruby_parser_a')
++    PP.pp o1, file_a
++    file_a.close
++
++    file_b = Tempfile.new('ruby_parser_b')
++    PP.pp o2, file_b
++    file_b.close
 
-Using only trustworthy guest kernels will avoid the vulnerability.
+- -    File.open("/tmp/b.#{$$}", "w") do |f|
+- -      PP.pp o2, f
+- -    end
 
-Using a debug build of Xen will eliminate the possible information
-leak or privilege violation; instead, if the vulnerability is
-attacked, Xen will crash.
+- -    `diff -u /tmp/a.#{$$} /tmp/b.#{$$}`
++    `diff -u #{file_a.path} #{file_b.path}`
+   ensure
+- -    File.unlink "/tmp/a.#{$$}" rescue nil
+- -    File.unlink "/tmp/b.#{$$}" rescue nil
++    file_a.unlink
++    file_b.unlink
+   end
 
-NOTE REGARDING EMBARGO
-======================
+CC'ing the 3 people listed on ruby_parser as "owners".
 
-A crash resulting from this bug has been reported by a user on the
-public xen-devel mailing list.  There is therefore no embargo.
+Also I will be auditing a number of rubygems for various easy things,
+as a reminder tmp file vulns are EASY to fix, just use the functions
+listed in:
 
-RESOLUTION
-==========
+http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
 
-Applying the attached patch resolves this issue.
+===============================
+Public Service Announcement
+===============================
 
-xsa50-4.1.patch
+For public issues please start CC'ing oss-security@ (especially if it
+needs a CVE), and also rubysec@...glegroups.com which will notify the
+Ruby Security people (and then cool things like their tools will warn
+users of outdated/insecure versions and so on).
 
-$ sha256sum xsa50-*.patch
-29f76073311a372dd30dd4788447850465d2575d5ff7b2c10912a69e4941fb21  xsa50-4.1.patch
-$
+For private/embargoed issues the rubygems.org/community is considering
+some ways to make it easier to report security issues in gems, we'll
+keep you posted.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJRcA4pAAoJEIP+FMlX6CvZHhsIAK2RYhWr4CQ2ziTh3o1cbkXe
-HfDcWHjLTe1+zoULCKbptUHcoH6/oPxwZBklAfNSECFT47a4FKZu/ARCP1IBtot2
-o6cuTTlYgLMMpSfVW//aDJQ59YivhcwN5omLEp4G8N/YHw0IA1W58/IpNKXVbNNy
-pmMEqus/QUH8EzGaxLfwIfSrJR96x96QKOlG94lohY5P5aipx/5vXzUPyRFXLbOZ
-jr8Ve+woNuYAeBx3zue7TNfhePVuDUl8b7ufhsuYdwkODzEXCNLcJM93Z3eaKfPp
-CVDBE38GUO9hr5CpBh5QgGeCCeMhxwI8jXTXUb6N8KFrwgbq04HP7BOmVI4O8Xs=
-=jiz6
+iQIcBAEBAgAGBQJRJwmQAAoJEBYNRVNeJnmTtiUQALQ80GH11AWQS+YmGKA6Yhk/
+dZ65MdEDAHvyAJ/LewY/URShpEJmwtxOIu2rzlniKwzPSpNZtz15u/jUeNA94ez+
+1glzGc5pYF19yL6E/aUf181ZzIhJaI2h9iWNjElui2+l/vkZKuEoygu6fB1CqxUv
+d2ykR13dRP+IMj7BLBduLO8WztQ7maOncI9eIv6JgvgysRfffPqbhrUHQyvsow8q
+fRSa52cMVvM+4Y6Zc4UvjWlEZwBC8DFt4UlJsa0OoY+UMjqqiKwWIK4/OjgPtd43
+ID5CxtjT6x2ANPNLE9UJXoJPKgjvgbghN5wbdOthA8N3jM1s1tbvXDhvKl8zA90d
+Eymjelo2iGhHiuQNaAsNqRmab1UlJDcy2UuiIg9IMH7qSMd5l6gosWMHpx4gM39c
+moUdNucdpEX0Y33VNMhmjQEhFWy93uGALeHmQZeAAjO+k2/San78nF8luaHyUTXL
+qba5VNHdBsWfL0ttHv1XhkWlWT/osRtgQLutLngr9h0nXDGqSJ0RvFOtAsGpvhCh
+SfQMAHWPu6GUjhNG+7MedQX/P7kWfDy4qvdDu9kUN++EVcjtK4IOxXBx9KAF8Hj4
+//xobZYswtp3zOFzVy5kWqLa5NyqNKye8ZAuqIpDGYfBlR/T5jGM8cMqqRtYyKkE
+trGaadlo3zHW1K0Rplea
+=FAr9
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa50-4.1.patch" of type "application/octet-stream" (6789 bytes)
