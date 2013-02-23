@@ -1,19 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/11
-Message-ID: <20130222084937.GW17951@kludge.henri.nerv.fi>
-Date: Fri, 22 Feb 2013 10:49:38 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/23/4
+Message-ID: <512857EE.9020707@redhat.com>
+Date: Fri, 22 Feb 2013 22:47:26 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: nginx world-readable logdir
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: varnish world-readable logdir
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 22, 2013 at 01:41:50AM -0700, Kurt Seifried wrote:
-> > So I think that ${subject} is just a misconfiguration.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 02/22/2013 05:55 AM, Agostino Sarubbo wrote:
+> Hello, varnish[1], an high-performance HTTP accelerator, has a world-readable 
+> log/logdir. Please assign a CVE
 > 
-> Welp I confirmed it on Fedora 16. So at least some things are affected.
+> 
+> # ls -la /var/log/varnish/    
+> total 8                                                                                                                                                                             
+> drwxr-xr-x 2 root root 4096 Feb 22 13:48 .                                                                                                                                          
+> drwxr-xr-x 8 root root 4096 Feb 22 13:50 ..                                                                                                                                         
+> -rw-r--r-- 1 root root    0 Feb 22 13:48 access.log   
+> 
+> 
+> [1]: https://www.varnish-cache.org/
 
-Some distros are affected. Good to hear not all are. This is not just
-misconfiguration.
+Please use CVE-2013-0345 for this issue.
 
---
-Henri Salo
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRKFfuAAoJEBYNRVNeJnmTpYEQALqOoWSvDZmyKWrqLG6vdcJY
+DZU9wYdpq/u8Dy7x2Q2EMRNorb7VzTtmWMWyjPyoYgN0le1IL/Eer7rfJK9Zzfnw
+/siLFkyt1TzZ3vvcBmDkCf2QyMpjKC4n1W3WczRhM2z7b8qfOZRTu+1Y2JaNoZTm
+azDT4Fb3W4rmQ5y7Yi9sUxEmMCxBrMor74nqk1lgjhDQ8NoG5CaEfdjtu9/P+8Vo
+QtdywuLb3M7vGL+W1ZnzyszVbs4do2tJL1bHeqH4FWcvbwqzGuYOGZjoelx+XOh3
+FUUsxbXLvQgGAYDvWy84gN7evguAn5z6fX8RSyXoOR7lUP0/LR6SeQmB3gORDJ+e
+5ilxPjUYjqrgv0e9Ik0csvxGoBuXSNW6B1S1B1uxM+22gW4WyhOlIu6qZTrjGnJk
+l27dMwCDkV5/YUbIn6LzwF7i1RZZUKU4wTq9D+JeahzK4xFLKb9BWJhMM4Zdyk/z
+doK/AfglZvxelGW9WlsAF6zFfVnlBIaiI34n/cMPnKFfxxUTBzeI2b7PTVnJY3EC
+IUJHK5T2YQX6oUuhbmI8i4GjdZ0RaKeb3dBS51/djx+3jwSRqzdFoglGZcnWGhC5
+qftZ7bmL83GGVgMEZxGuNZQMQiKdY7J6pZ4QqXrbh9hU1B5hBHnOh8YAxKuPG1nh
+DuWPoKMtkf4dLiAg6VCn
+=DWGc
+-----END PGP SIGNATURE-----
