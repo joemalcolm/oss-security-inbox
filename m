@@ -1,49 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/14/3
-Message-ID: <898704202.7067748.1358179719160.JavaMail.root@redhat.com>
-Date: Mon, 14 Jan 2013 11:08:39 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Michael Scherer <misc@...b.org>
-Subject: CVE Request -- redis: Two insecure temporary file use flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/23/9
+Message-ID: <20130223073447.GA23632@suse.de>
+Date: Sat, 23 Feb 2013 08:34:47 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: PackageKit"update" allows downgrade of packages when using the "zypp" backend
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hi,
 
-Issue #1:
-=========
+On openSUSE we have started to allow local logged in users to install
+online updates (but not install new packages or remove ones), as this
+seems a common and secure operation to us.
+(Also done in light of the Linus Torvalds flame posting.)
 
-  Michael Scherer in the following Red Hat bugzilla:
-  [1] https://bugzilla.redhat.com/show_bug.cgi?id=894659
+PolicyKit rules in PackageKit also allow this in the vanilla version:
+	org.freedesktop.packagekit.system-update
+shipping default is "yes" for local logged-in active users.
 
-pointed out, Redis, a persistent key-value database of version 2.4
-to be prone to temporary file use in src/redis.c:
 
-  server.vm_swap_file = zstrdup("/tmp/redis-%p.vm");
+So far we assumed that the update operation only allows upgrading versions.
 
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=894659#c0
+The enforcement of this rule did not fully work, so at least the "zypp"
+backend of PackageKit allowed downgrade of packages using this call.
+The "update" method also allowed installing non-update resolvables like
+patterns or even new packages.
 
-Note: This problem was fix by the patch [3] below.
+We have not checked the other backends, they might also be affected.
 
-Issue #2:
-=========
-When searching for a patch, that corrected the issue [2]
-above, found out it was patch
+https://bugzilla.novell.com/show_bug.cgi?id=804983
+https://bugs.freedesktop.org/show_bug.cgi?id=61231
+https://gitorious.org/packagekit/packagekit/commit/d3d14631042237bcfe6fb30a60e59bb6d94af425
 
-[3] https://github.com/antirez/redis/commit/697af434fbeb2e3ba2ba9687cd283ed1a2734fa5 ,
 
-but it also introduced another insecure temporary flaw in
-src/redis.c:
+As the default assumed secure behaviour is violated, this requires a CVE.
 
-  776 	+    server.ds_path = zstrdup("/tmp/redis.ds");
-
-Note: Issue #2 is also fixed in recent upstream 2.6.7 / 2.6.8
-      versions. If you want me to find exact patch, which
-      corrected the second problem, let me know and i will
-      provide the commit id.
-
-Could you allocate (two) CVE ids for these issues?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Ciao, Marcus
