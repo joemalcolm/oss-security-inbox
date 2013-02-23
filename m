@@ -1,27 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/22/3
-Message-ID: <CAJzxam+htS2d0p_8qdA2h7qoD+a8A4Cb=kbdVs7+ReOLmk6odg@mail.gmail.com>
-Date: Fri, 22 Mar 2013 19:20:36 +1100
-From: David Black <disclosure@....org>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: python-pip insecure temporary directory handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/23/6
+Message-ID: <51285812.7000000@redhat.com>
+Date: Fri, 22 Feb 2013 22:48:02 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: Re: CVE request: webfs world-readable log
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 22, 2013 at 5:28 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 03/20/2013 08:13 AM, David Black wrote:
->> Prior to version 1.3 pip used '/tmp/pip-build' as a temporary
->> directory and as per the report in
->> https://github.com/pypa/pip/issues/725 would follow a symbolic
->> link placed at '/tmp/pip-build' when writing temporary files.
->>
->
-> Is this the one actually fixed in
-> https://github.com/pypa/pip/pull/780/files
->
-> ? thanks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Yes it is.
+On 02/22/2013 06:09 AM, Agostino Sarubbo wrote:
+> On Friday 22 February 2013 14:04:54 you wrote:
+>> Hello,
+>> 
+>> webfs[1], a Lightweight HTTP server for static content creates
+>> its log with world-readable permission:
+>> 
+>> # ls /var/log/webfsd.log -la -rw-r--r-- 1 root root 0 Feb 22
+>> 14:02 /var/log/webfsd.log
+>> 
+>> Please assign a CVE.
+> 
+> I forgot to mention the upstream website, 
+> http://linux.bytesex.org/misc/webfs.html and I forgot to mention
+> that it should be gentoo-related because the logfile is created by
+> our own init script.
+
+Please use CVE-2013-0347 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRKFgSAAoJEBYNRVNeJnmTO/kQAM+HX/X+xx53fTJ+jAaDD0S5
+ycX0p+GJolmzMZqo7ksu7vvhyS1tTo8K7bifDS3CTQawxXsKCmNY4E1aBTB1RuT5
+1RcQsvvlmdvk4wN6JijljdmLvJW+tLalyHUfEo5W3wpbyC6QOAK6+I8nvjdSO5D8
+3pMJoUzOZmsWfjwnFTWsEep14J0UNqGQHK57GAOKLHy+1Znpfgu3J/zxVMBZVNg0
+pGuajGoSkDLXdQS2R8SN/FApyfFpRj1SynZ98mv4lJNLBpMBQnVRAZFrXgotygL0
+IxDjMSvK+Drvssw6+qjTV6U+ynAvsCbdoKxZWP9aZsuUZXzoj73rmpfIAEZ7GV/6
+uXvr0FQcv0mIMITssnziFnHFlvNXv3+4xOK7LNld/36792jn/CGSxHc7UruMTuNC
+AXka1NOSYACH3GYxn0iEg98ekRJ6nUdJjPjRUXDdDXEusWU2KtGuwEExJUev3wVr
+6gSCjhFPCaQvHZnwLKEMW1JAdd03CkXg6n4hBjFwDnbS3YVjXxrlZXO7cg/JGJch
+GW0ctSy/rQ8DuTF61w2XXnxoYZFUPU+KsdZP4OW7f4+aP6pOmtbl1JrZmQ2dVGl0
+bkTEWgg6DTmxCF4Xi+hfK80/ORn5MK13jb9tkhlxUU1Co2J/vVkBgTDNRwC4/Ha/
+IPR8DAUUNpAxRxzqllbe
+=0LXE
+-----END PGP SIGNATURE-----
