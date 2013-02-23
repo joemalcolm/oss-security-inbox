@@ -1,24 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/7
-Message-ID: <CAA7hUgEJ2j9FP-5w5PaLBK-A2X4Qz3UG9bcE9nmzD816bS4AtA@mail.gmail.com>
-Date: Wed, 20 Mar 2013 10:40:59 +0100
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/23/2
+Message-ID: <512855F4.70607@redhat.com>
+Date: Fri, 22 Feb 2013 22:39:00 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: XSS flaws fixed in ganglia
+Subject: Re: CVEs for libxml2 and expat internal and external XML entity expansion
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 26 February 2013 21:33, Kurt Seifried <kseifried@...hat.com> wrote:
-> Sorry I forgot about this after all the XML excitement. Please use
-> CVE-2013-1770 for this issue.
+On 02/22/2013 08:20 AM, Jakub Wilk wrote:
+> 
+> That'd be CVE-2003-1564, fixed in 2.7.0.
 
-FTR, this is supposed to be fixed by the following commit by upstream:
-https://github.com/ganglia/ganglia-web/commit/552965f33bf79d41ccbec3f1f26840c8bab54ad6
+Against exponential, but not quadratic/fast linear.
 
-I haven't reviewed it, though.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRKFX0AAoJEBYNRVNeJnmT6kEP/1/twnDxFJC2jjII31sxsaaf
+QNtizYtIvI/6xQmolf9U0zTp7miq32JpLIedt0sGrI0bpe31zXMbgN1Xu4ZW/QCh
+MHQy+ETwXRoixTB6AcJ6jZtK5brnyzEY/b+wtkmp9bUMW2XcI3Sgx3nIY8vBTDYs
+bH8Cq+j0LRgJzQelhPPeMvTg/5dXMW+H7izjl42Vc8GIKwROrqN+JuR6sMdJ1/cD
+O0xmWRdT6NypbxoZ9PO5pJ6WiSvHve8zVtgIvfoXxG+MEznVNvYB6y/lpjT4B96P
+JSArEC4ePDU9/KZ0LyYTxFwsAPsoAvqkKrm85GFPupLDc7/gnzfqPzn9hZ4A7ZqR
+oR0yKtSIz1oz6zjY265wKS5Am3CATwZVauHuz8GmIqq1m0658XcZhJtvZmdz9JjH
+ksCpo9c2r/ARXNbCiq/dejSvoHMCq0KDxAbEbJ4h+pBRFH0cFC2bZfoXxxcxTWPZ
+LdPiUgkpsIVtzItw3owL51OkWWBJYzdbr9jY8xFPGtZXUJkYiCbGBM4WOb9yHJPJ
+PeFmxQNlcu8/BaRrxn6TR00/Jcnbn0iHQuQkgIbpvOZ/52AE6bXa/xOiiXf0De9V
+sC8x8yFzrgRc73Hi7ERRbipUKsqfWz246H3TX2LbsHw12IJXBObozfDX3ihHaExO
+bH8wL7cQt23yPJO2abS4
+=IjhS
+-----END PGP SIGNATURE-----
