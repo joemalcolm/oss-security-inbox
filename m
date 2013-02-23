@@ -1,143 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/23
-Message-ID: <51F17A56.80002@redhat.com>
-Date: Thu, 25 Jul 2013 13:19:50 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/23/5
+Message-ID: <51285803.3040403@redhat.com>
+Date: Fri, 22 Feb 2013 22:47:47 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-CC: oss-security@...ts.openwall.com, Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: CVE Request: evolution mail client GPG key selection issue
+To: oss-security@...ts.openwall.com
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: Cve request: tomcat world-readable logdir
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/25/2013 11:05 AM, Daniel Kahn Gillmor wrote:
-> On 07/25/2013 04:46 AM, Kurt Seifried wrote:
->> Yeah this was discussed internally a bit at Red Hat after you
->> filed the bug, it's a messy problem. I think one concern was
->> where do you want to place policy decisions for key usage and
->> trust, in GPG, in the app using it, or something else?
+On 02/22/2013 05:59 AM, Agostino Sarubbo wrote:
+> Hello,
 > 
-> This is a critical observation.  there currently exists a lot of 
-> infrastructure which uses gpg as the backend for dealing with
-> keys. Moving those decision processes out of gpg and into frontends
-> means that any tool which relies on gpg itself won't be able to
-> make use of those policy decisions implemented only in a frontend.
-
-One problem moving it to the backend is I may trust your key to sign
-email, but not to sign code and vice versa. At least for RPM this is
-handled internally (you install the key into RPM) so that's one less
-worry.
-
->> One concern I have is I sometimes used to (not any more!)
->> download all the signing keys for keys I was using to see if I
->> could establish a web of trust.
+> Tomcat 7 have a world readable log/logdir:
 > 
-> Do you refresh your keyring regularly?  If not, you risk not
-> receiving
-
-Yup. Key management sucks even with good software, and we don't have
-good software for this. Witness CRL/OCSP and then all the vendors
-shipping browser updates to specifically blacklist compromised
-certificates.
-
-> notification of revocation and other updates.  If you do refresh
-> your keyring regularly, then you are also vulnerable to arbitrary
-> user ID and subkey injection, since keys are fetched by keyid or
-> fingerprint (including by subkey) and anyone can graft someone
-> else's primary key to their own key as a subkey (even an expired
-> one, or one without proper usage flags).
-
-Yeah the use of KeyIDs is just stupid (although I get why they did it,
-I still think it was stupid), they're to short. We should be using
-fingerprints only. Sigh.
-
-> In short: if anyone is relying on their local keyring as a "safe" 
-> storage place for keys they believe are valid, they're in an
-> untenable position.
-
-True, and trust me if my key ever gets compromised (and I know about
-it) I'll be phoning certain people and not relying on key revocation
-to let them know.
-
-> GnuPG needs the user to explicitly indicate which keys are valid,
-> and user agents which use GnuPG to encrypt messages need to only
-> send to keys which are known to be validly bound (by a trusted
-> certifier) to the User ID in question.
-
-The problem here is the all or nothing trust setting. I may trust your
-key enough to use it to encrypt email to you, but not to accept signed
-email from you for example. To steal a phrase from Moxie Marlinspike
-"no trust agility".
-
-> This can be done by either (a) designating certain keys with
-> strong enough "ownertrust" and then being willing to rely on their 
-> certifications, or by the user themselves certifying keys that
-> they believe to be valid.  If the user is the only trusted
-> certifier, and they have a key that they are willing to use for a
-> remote peer but they do not want to publish their certification,
-> they can make a non-exportable certification (a.k.a. "local
-> signature") to indicate to gpg that the peer's key is valid for
-> their address.
-
-Also for what kind of usage.
-
->> Any ways for evolutions please use CVE-2013-4166 for this issue.
->> Has anyone checked other popular mail clients like
->> thunderbird/mutt/etc?
+> drwxr-xr-x 2 ago  ago  4096 Feb 22 13:50 .
+>  drwxr-xr-x 8 root root 4096 Feb 22 13:50 ..
+>  -rw-r--r-- 1 ago  ago  5919 Feb 22 13:51 catalina.2013-02-22.log
+>  -rw-r--r-- 1 ago  ago     0 Feb 22 13:50
+> host-manager.2013-02-22.log
+>  -rw-r--r-- 1 ago  ago     0 Feb 22 13:50 localhost.2013-02-22.log
+>  -rw-r--r-- 1 ago  ago     0 Feb 22 13:50
+> localhost_access_log.2013-02-22.txt
+>  -rw-r--r-- 1 ago  ago     0 Feb 22 13:50 manager.2013-02-22.log
 > 
-> Thunderbird's enigmail plugin has a user preference (in the
-> "advanced" pane of the expert preferences dialog, in the config
-> editor as extensions.enigmail.hushMailSupport) that says "Use '<'
-> and '>' to specify email addresses".  The help text also mentions
-> "disable if recipients have old hushmail keys" -- this defaults to
-> being checked (the config option is "false" when the checkbox is
-> checked, confusingly).  So by default enigmail is "fixing" things
-> in the same way as the proposed evolution fix, if i understand the
-> bug report correctly.
+> I'd like to have a confirm on what is the behavior on the other
+> distros because it could be gentoo-related.
 
-Yah, enigmail is surprisingly decent.
-
-> However, enigmail also has an option (under the "sending" pane of
-> the hexpert preferences dialog, in the config editor as 
-> extensions.enigmail.alwaysTrustSend) which says "Always trust
-> people's keys", with the help text of "Do not use the Web of Trust
-> to determine the validaty of keys".  this defaults to "true"
-> (checked), which means that enigmail will happily send mail to a
-> key that gpg does not believe belongs to the recipient address (i
-> just tested this; it looks like with the default settings, enigmail
-> will encrypt to the first key returned by gpg that has the given
-> user ID, even if a later matching key has a higher validity).
-
-from enigmail's perspective why is that key present at all, so I can
-see defaulting to trusting it, basically the policy sounds like "if
-the user bothers to grab a key lets use it" which is probably not the
-safest implicit policy, but does get things working.
-
-> This is a separate issue from the User ID matching issue
-> originally raised in this thread though.
-> 
-> --dkg
-> 
-
+Please use CVE-2013-0346 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR8XpWAAoJEBYNRVNeJnmTDFkQANZnkX7p9qhGjQammJYHRgHa
-/EgVMOvahJLTQSquB5oKfmOwOop44ICElTAyq+d7MIJKdPElC18i7ZZeQu4eFitk
-Y7CohxLr+yHxtPMdGlFZSW5xLjEIsK8pXtAVCRhi+VyImptj98SikklwHaEpjUoo
-tmttKKjEkfpHHZClTKphQ+sCGxMcNKSsu/uVh5ARvwaZ5vpv/OreT+dLJRIHxe13
-i2IqHePnTYFB6O7aXxNqEL12UW7IA95k7OHJfosVQtunRBJfdyX2w+9WRA/0JZ1o
-y+h+eG4wgfgiSnNDAer3RpfVdApRCbXdJVIZ15J1c+TVsHZKS5rsz4PL5r3jmt8t
-06dpgtyVd0aTqoj4Nq9tv2hFel5AyuI0veKN8IkFtM+BJhC6sZ5sMCgMmS12c6EZ
-SBQVathsDKXm/k0eXQQLqKdRFxQgpy/VfJeqt3RY0W98bRNjPWKP+fjSu+Y1Em5E
-wiRleThYO3cy77zS48Py0XDewEONB3iZLhbdXVqawvwOkfvXGKehKFdOmWH1sgcL
-X+H5fZ6BVxfQw7S8Nypg+TXryEQvpCacQFQhXk2fbGjbhSJOcYeIPyGmGtdH00p8
-h6Ta8GDG1XGy1PwNXWNXWmPOZB7wpZEdJJNRKB2y+s9Ygu1gFDbIQeXVEkZ6uzeD
-GlONfZHgVbYNTVTDDrQR
-=Yfio
+iQIcBAEBAgAGBQJRKFgDAAoJEBYNRVNeJnmTNCoP/i9b4pJnVxGFxGyotDh/m8jy
+/gCFHhLudK7w+i/5uDhYIPafANXU3NEZRPJqGF5E2NZOpSltXo+MgvxI33szlOGC
+nVEPWtrm71vLnFaPoTTvMBQJM/XKX2SzSoh4jiHZpYto4bPmcqX0T22Nl3xKVsK5
+LD1YhnzlPiM8CJ26V3SN0ms6mRA841LvFK/pa4YxQ6bMs6hXYKVSdL3ouyxbBu36
+5BPpaRCnVOc1GLgCDvwhyml4AkA0vabyvV7iXZX35tfDCiV/8PpQhOnb6mA0xRDN
+SP3NK+h0f5TiyBvztBZGNT0TD/NN8kZleXup3k4NBopQ0GOwSyuFGevX7Bxht2Qy
+XCQv/8W2HtIx/GTzF3TDzD7l3xYS/Xj+0cSkikw3te9Rkov4YtVwJ06DA3pRwmqm
+rCK63Ig8tSTNTQhjEz/ch1Y7ohSq2TL3NcPpGnZcaluwF06acPVmYmfakEJwCnur
+VocgcMRqyQBnYse1/IKUQdzcRvfNtSO/ucJkqyLNhxXqONacViNf+HtIsfOaSelh
+qmTdaHbO6HntZXJXSTeV6ZASnUgQAIWsn108ZQwuuVlE91khPN8HzbJm8xsjl8tM
+YV3bGBrDe0fbQ3LaVlIFmooR94MUsr/9feCOoWFOgh58knE/RU2qffBsro5fCEM8
+fRYBuVzcB7fH9MeyW2Xq
+=mL9N
 -----END PGP SIGNATURE-----
