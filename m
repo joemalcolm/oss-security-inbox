@@ -1,38 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/20
-Message-ID: <CABniQZM9nSxyhnyebOBrVhJmN+3nfskMib5X8Tt9GaJTfLDEjQ@mail.gmail.com>
-Date: Tue, 5 Feb 2013 23:36:34 +0800
-From: Shawn <citypw@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/23/3
+Message-ID: <512857BD.9000503@redhat.com>
+Date: Fri, 22 Feb 2013 22:46:37 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: nadhem.alfardan.2009@...l.ac.uk, kenny.paterson@...l.ac.uk
-Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
+CC: P J P <ppandit@...hat.com>
+Subject: Re: CVE request: Linux kernel: Bluetooth HIDP information disclosure
 Content-Type: text/plain; charset=utf-8
 
-hi Matthias,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Tue, Feb 5, 2013 at 5:34 PM, Matthias Weckbecker <mweckbecker@...e.de> wrote:
-> Hi,
+On 02/22/2013 03:05 AM, P J P wrote:
+> Hello,
+> 
+> Linux kernel built with Bluetooth stack and HIDP support
+> HCONFIG_BT=y/m & CONFIG_BT_HIDP=y/m is vulnerable to an information
+> disclosure flaw caused by wrongly initializing the
+> hid_device->name, physical location and unique identifier
+> variables. Information leakage happens if these variables are not
+> NULL('\0') terminated.
+> 
+> An unprivileged user/program could cause this via
+> ioctl(HIDPCONNADD) call.
+> 
+> Upstream fix: ->
+> https://git.kernel.org/linus/0a9ab9bdb3e891762553f667066190c1d22ad62b
 >
-> has there already been a CVE assigned for the recent "lucky 13" timing
-> flaw that affects various SSL / TLS implementations (including GnuTLS)?
->
->   http://www.isg.rhul.ac.uk/tls/
->   http://www.gnutls.org/security.html#GNUTLS-SA-2013-1
->
-> I think this could qualify for CVE for each open source implementation
-> that's prone.
->
-According to "OpenSSL Security Advisory [05 Feb 2013]":
-http://www.openssl.org/news/secadv_20130204.txt
+>  Reference: -> https://bugzilla.redhat.com/show_bug.cgi?id=914298
+> 
+> Thank you. -- Prasad J Pandit / Red Hat Security Response Team DB7A
+> 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
 
-It seems already had a CVE-id. But I couldn't find by googled...
+Please use CVE-2013-0349 for this issue.
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
--- 
-GNU powered it...
-GPL protect it...
-God blessing it...
-
-regards
-Shawn
+iQIbBAEBAgAGBQJRKFe9AAoJEBYNRVNeJnmTHnQP+OmTd2WoXZD596XCnJxDWHsw
+3Ow2krRQfQOondYjToxEDEjkRBVNVo/xHN2ENwagOVG0slxoG6D+iuXyABTaesAc
+k8EEuMtM4uDr6degu0ka+28z4yDDkPmo9+OTkCeT6fDdTzFeSC2fUv7EoahsgphR
+qmW1sedRKqHWCk51wrDMlGJ8F7pAvWVAv25/1sGoXRctudBdHh2OserNkWXujzIR
+bojUGIfyxmsa7ItWiBVYSTkWP8Me2QtjHtyxGWJZRXnPSefagJqpgvwf+n8+Xtit
+gyI1ZQMMv4+ebpson1W280Rd6qPeUpxMv8wWvIJnuJoleOYASiPh8f7jFmf9eNoy
+yhn776nBUjo+NV3pZsh71EwkXI28LUapshnONt7ZJG63cG3cqNmrlN4J2YgrRHfG
+qVo5ZS5oC1zfyGqZX2FUuCI0Ee+5s4t5qwAdEzLyOzY+JOFKTt+QWYUF5iHDWv+Z
+aYWSkpS4D42byGGKZkWGEQ17jmHLWPlJ8qxMVk1kOVMBpBFPKVAFnvJZK+M4ob/2
+HO8bSTDAuDaolUT5hhu3Ttdk/0bl/f+2DUx2HcbBMEM53e5wY8x7Zl3v9u6tl38A
+zmwobf6qRnf84cnb7g5JSpkOjHjUDUmeWzhbX4lXCSRHrGSZuWoVdaR9C3SuuF+/
+uPTr+zpbKco/8sZGQhk=
+=V1ib
+-----END PGP SIGNATURE-----
