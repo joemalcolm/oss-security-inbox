@@ -1,91 +1,139 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/25/1
-Message-ID: <5269BAE7.4090502@redhat.com>
-Date: Thu, 24 Oct 2013 18:27:19 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/23/8
+Message-ID: <51285E51.8040308@redhat.com>
+Date: Fri, 22 Feb 2013 23:14:41 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: VICIDIAL 2.7 - SQL Injection, Command Injection
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, sven@...nhartge.de, jari.aalto@...te.net
+Subject: CVE-2013-0350 for pktstat: writes content from TCP streams to public readable file /tmp/smtp.log
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/23/2013 12:52 AM, Adam Caudill wrote:
-> 
-> Requestor: Adam Caudill, adam@...mcaudill.com
-> <mailto:adam@...mcaudill.com> Software: VICIDIAL
-> (http://www.vicidial.org/vicidial.php) Vendor: The Vicidial Group
-> (http://www.vicidial.com/) Vulnerability Type: Authenticated SQL
-> Injection, Authenticated Command Injection
-> 
-> Source Code:
-> http://sourceforge.net/projects/astguiclient/files/astguiclient_2.7rc1.zip/download
->
-> 
-Flaws exist in /www/agc/manager_send.php
-> SQL Injection: Line 285 Command Injection: Line 429
-> 
-> Affected Versions: 2.7RC1, 2.7, 2.8-403a (others likely)
-> 
-> Current released version is vulnerable; vendor confirmed issue on
-> 6/3, set timeline for mid-July release, has delayed continually.
-> Vendor has deployed fixes to users of their hosted service, still
-> no updates or advisory for OSS users.
-> 
-> Affected lines of code:
-> 
-> manager_send.php:285 $stmt="SELECT count(*) from
-> web_client_sessions where session_name='$session_name' and
-> server_ip='$server_ip';";
+Please use CVE-2013-0350 for this issue:
 
-Please use CVE-2013-4467 for the SQL injection
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=701211
 
-> manager_send.php:429 passthru("/usr/local/bin/sipsak -M -O desktop
-> -B \"$SIPSAK_prefix$campaign\" -r 5060 -s sip:$extension@...one_ip
-> > /dev/null");
+pktstat: writes content from TCP streams to public readable file
+/tmp/smtp.log
 
 
-Please use CVE-2013-4468 for the command injection
+Sven Hartge <sven@...nhartge.de> reports:
 
-> In both of these cases, parameters are passed through without
-> validation or escaping.
-> 
-> During setup, two accounts with hard-coded passwords are created
-> (VDAD, VDCL), these can be used to bypass the authentication check,
-> allowing access to where the SQL Injection vulnerability is, which
-> can be used to bypass an additional check, thus giving access to
-> the Command Injection vulnerability. The output from shell commands
-> are returned in the server response.
-> 
-> There are MANY other issues of various types in this software, but
-> I am not documenting them.
+Package: pktstat
+Version: 1.8.5-2
+Severity: normal
+Tags: security
 
-Security vulns rarely come alone or just in pairs, usually they travel
-in packs :P.
+Hi!
 
-> -- Adam Caudill adam@...mcaudill.com <mailto:adam@...mcaudill.com> 
-> http://adamcaudill.com/
-> 
-> 
+I noticed pktstat creates a file with a fixed name in /tmp and writes
+debugging
+info gathered from the sniffed TCP streams into it:
+
+redacted:/tmp# ls -al smtp.log
+- -rw-r--r-- 1 root root 236726 Feb 22 21:30 smtp.log
+
+Content is something like this:
+
+- -----------8<---------------------
+smpt_line [EHLO mail.example.com]
+normalized to [EHLO mail.example.com]
+set desc to: [EHLO mail.example.com]
+smpt_line [STARTTLS]
+normalized to [STARTTLS]
+set desc to: [STARTTLS]
+smpt_line [EHLO mail.example.com]
+normalized to [EHLO mail.example.com]
+set desc to: [EHLO mail.example.com]
+smpt_line [STARTTLS]
+normalized to [STARTTLS]
+set desc to: [STARTTLS]
+smpt_line [EHLO mail.example.com]
+normalized to [EHLO mail.example.com]
+set desc to: [EHLO mail.example.com]
+- -----------8<---------------------
+
+This is troublesome on several levels in my opinion:
+
+a) the filename is always the same. Since pktstat is normally run as
+root, this
+   can be used for a symlink attack, at least to overwrite important
+files with
+   garbage
+
+b) the file is normally world readable, depending on root's umask and
+may contain
+   sensitive information.
+
+c) if pktstat is left running for some time on a busier network
+interface, this
+   logfile can get quite big and possibly fill /tmp or /.
+
+The code responsible is in tmp_smtp.c:
+
+oweh@...tname:~/apt/pktstat-1.8.5$ grep log *
+tcp_smtp.c:FILE*log;
+tcp_smtp.c:if ((log = fopen("/tmp/smtp.log", "a")))
+tcp_smtp.c:   fprintf(log, "smpt_line [%s]\n", line);
+tcp_smtp.c:if (log)fprintf(log, "normalized to [%s]\n", line);
+tcp_smtp.c:if (log)fprintf(log, "from_addr = [%s]\n", state->from_addr);
+tcp_smtp.c:if (log)fprintf(log, "to_addr = [%s]\n", state->to_addr);
+tcp_smtp.c:if (log)fprintf(log, "set desc to: [%s]\n", f->desc);
+tcp_smtp.c:if (log)fclose(log);
+
+> From the indention and formatting of said code I gather it is
+leftover debug
+code, never intended to be released.
+
+Just removing all of the above lines is sufficient to close this bug.
+
+Gr￼￟e,
+Sven.
+
+
+- -- System Information:
+Debian Release: 7.0
+  APT prefers unstable
+  APT policy: (600, 'unstable'), (500, 'experimental'), (400, 'testing')
+Architecture: i386 (x86_64)
+Foreign Architectures: amd64
+
+Kernel: Linux 3.7-trunk-amd64 (SMP w/12 CPU cores)
+Locale: LANG=de_DE.utf8, LC_CTYPE=de_DE.utf8 (charmap=UTF-8)
+Shell: /bin/sh linked to /bin/dash
+
+Versions of packages pktstat depends on:
+ii  libc6        2.13-38
+ii  libncurses5  5.9-10
+ii  libpcap0.8   1.3.0-1
+ii  libtinfo5    5.9-10
+
+pktstat recommends no packages.
+
+pktstat suggests no packages.
+
+- -- no debconf information
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSabrmAAoJEBYNRVNeJnmToo8P/286FkhTdcRYLv7rBd35v/Kr
-dyH8/BCWDB2OIBdT1wHyuKk7aB15HuxYLb2rPfuqe2c1PlX2o6ebIDu0CsuukBEl
-E4G8kUU7eXlsBeF+HHQGyExiz76GtlNn8SRedSQ72Z9D9tnMfqXFDIgM8oZaJvks
-mmfy0ldqsvRirT8C0IqjPXuMU8AFOrA2dYTU2A7eUclHmIT+DqJWPgbsA1lorUha
-jXKP35IsHN5NjGpJToKOHxxn1aAWTZj5XOIcRuF8yni8EMxxV0ytmubmNAlxmHKz
-Ek+PpFejWGrpFGn4yaurcq0MDip3RYdzYKRzr1/N7i1agM33y17UpedSq7WhpEm0
-GkCWCectaHCBCAJEkidu144ZSm9t3OEzvTsLoY76RNFepN+8UoZMMpiLcEm3UX2w
-nCwiVpamoCMn5ou5KuEhwGrFk7XXfn4b5GPbMXPSbh0B8ZC3v8eDlWiinj3Cv6F3
-kbF9l4NT9W0dz3h7Kkd3iqKPrv+pDJ58l/5QaFIgOPmGIKR6qENiRtp0kKSf25L6
-lgYp+R1L3lRvDzjZFLOIOX5TrHJi+8UMIaYwwMqyVpA/fddzSnbVaVhleNC0TpeB
-jqTGY881xQ7CdLpKXB6MEYPJ6nPRMJoulvmRtR8wWRTQQ44Z1ar1NfuFQcAE7+J0
-dnEfFt009+5pk4InyM+6
-=BxGQ
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRKF5RAAoJEBYNRVNeJnmTpNUQAKtUGX1w05EW68y7njFx4HH/
+jco1g4gSRvUD0SZmG3FkElfj9O9YnIcTuzTUskQgNn23WS+aS4K9LpGPo5lPdS0q
+5X5Gd+/oYtOKn0q2DqIDtTPte75xPGhGpx3miLA/MBYultEbrugKBo/UVRgoP5YI
+fHvwzQFMQKM32wHepE0FRaF3iH9XwhSrqebPtj5MzxOM+ioNaoMUqe3nM++7+ypI
+fmCgqHh3ov4ZzL+ukS6cJSdNmMPgKrbnJ6d6DjfwU0peHQd2iHqcMDaha1ycc+Gx
+KcuL5+JFvMo8b1ut/SVR8nsTl9jucXyL/y5O/wttzP0pfEznWC7RaV9SUZ15Gh+x
+I65gkzCOeaCUdr7SxQjp9i1ntbWT0xv68LOWeqsCUm7Vup4lkcTHKpkf70E0pJx1
+g+IEyjqYjTBecQoYtNKx6hvg7Gm41ROJJumX/8a7t2XTziPC8NNpUTFnJqQWf/iT
+ZPqdJjW07oBsiSUcTcNksH8163cAfZQcSWwR5jCEW0NwAyLOW5JQEsI9BWYzKeW+
+GdljKOA4971BYjrXSlepkWj7FY+PqWr2lgG5ymNHAYkVY4nNknIvqLahknilDDB6
+yamM2yHhWcqSpX6aLzAjS57g8qqVD55EERQBy6E+oNNVyr6Co/OxVNSt0qZh1yv8
+iN+YJAvs4L5pN8s6OahR
+=5Z7R
 -----END PGP SIGNATURE-----
