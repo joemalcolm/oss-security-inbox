@@ -1,36 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/13
-Message-Id: <201302211354.20740.tmb@65535.com>
-Date: Thu, 21 Feb 2013 13:54:19 +0000
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/23/1
+Message-ID: <51284B3B.4060602@redhat.com>
+Date: Fri, 22 Feb 2013 21:53:15 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, "Christey, Steven M." <coley@...re.org>
-Subject: Re: RE: Handling CVEs for the XML entity expansion issues
+CC: Florian Weimer <fweimer@...hat.com>, Mitre CVE assign department <cve-assign@...re.org>
+Subject: Re: CVEs for libxml2 and expat internal and external XML entity expansion
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 21 Feb 2013 00:25:19 Kurt Seifried wrote:
-> On 02/20/2013 06:02 AM, Christey, Steven M. wrote:
-> > Kurt,
-> > 
-> > I'm reviewing this issue with the rest of the cve-assign team.  We
-> > will get back to you with an answer shortly.
-> > 
-> > - Steve
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 02/22/2013 07:25 AM, Florian Weimer wrote:
+>> Please use CVE-2013-0338 for libxml2 internal entity expansion
 > 
-> Any movement on this? I'm now sitting on a huge pile of stuff that
-> will need CVEs.
+> Hasn't libxml2 got countermeasures for that?
 
-To declare, I put forwards a candiate on another language platform to Kurt and 
-Steve which would be affected by a decision to assign CVEs for XXE capable 
-libraries.  In this instance, the library has no way to disable XXE at the API 
-level.  Below the surface it can use various XML parsers, both native and pure 
-$language.  These do not appear to support disabling resolving entities either 
-(although the middleware between the two does :/).  I'm am pinging the 
-security team responsible and directing them to this thread.
+Against exponential, but not quadratic/fast linear.
 
-Tim
--- 
-Tim Brown
-<mailto:tmb@...35.com>
+>> Please use CVE-2013-0341 for expat external entities expansion
+> 
+> I don't think expat resolves external entities at all.  Therefore,
+> the vulnerability resides entirely in the code which uses expat.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+Yes but I think it's common enough to warrant it (this is one of those
+cases where things don't map super cleanly):
+
+Handling External Entity References
+
+Expat does not read or parse external entities directly. Note that
+any external DTD is a special case of an external entity.  If you've
+set no <code>ExternalEntityRefHandler</code>, then external entity
+references are silently ignored. Otherwise, it calls your handler with
+the information needed to read and parse the external entity.
+
+Your handler isn't actually responsible for parsing the entity, but
+it is responsible for creating a subsidiary parser with <code><a href=
+"#XML_ExternalEntityParserCreate"
+> XML_ExternalEntityParserCreate</a></code> that will do the job.
+> This
+returns an instance of <code>XML_Parser</code> that has handlers and
+other data structures initialized from the parent parser. You may then
+use <code><a href= "#XML_Parse" >XML_Parse</a></code> or <code><a
+href= "#XML_ParseBuffer">XML_ParseBuffer</a></code> calls against this
+parser.  Since external entities my refer to other external entities,
+your handler should be prepared to be called recursively.
+
+Parsing DTDs
+
+In order to parse parameter entities, before starting the parse,
+you must call <code><a href= "#XML_SetParamEntityParsing"
+> XML_SetParamEntityParsing</a></code> with one of the following
+arguments:
+
+ *<code>XML_PARAM_ENTITY_PARSING_NEVER</code>
+Don't parse parameter entities or the external subset
+
+ *<code>XML_PARAM_ENTITY_PARSING_UNLESS_STANDALONE</code>
+Parse parameter entites and the external subset unless
+<code>standalone</code> was set to "yes" in the XML declaration.
+
+ *<code>XML_PARAM_ENTITY_PARSING_ALWAYS</code>
+Always parse parameter entities and the external subset
+
+In order to read an external DTD, you also have to set an external
+entity reference handler as described above.
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRKEs7AAoJEBYNRVNeJnmT+hcQAMH0JsGT6V4D4Zd8gU7oWKR3
+zYeu/JeowUCceH/F7HQl4dySUYPNO2TWboX8u/6CGN/8IcmwdtM9W4yZPQ2KyXTO
+UKFnhztW4gD5DQ6q18uc9YKDMbGJPmRWAkaoAGGXU3m0fLRmRqZ9eMblQK22zeAH
+RFOIqZMJ7G7slrs2cFOJ6Wb7ZQb3wKgItP0B46ueyGe1MU/LRLykXLJfKBXltWNz
+3x4UzXWSCR/3bZcUJV43Nh7gUSBNJ2chOvIU+DUz625sSeanf3RQIgzJw3eQIgip
+W/4h8xwyoP+w9zaJE6/J1iNhNjpiEmeVkoEcsHFjtSHQ87wp3niqE7QxNvpO1XAA
+T61jUsZUNGCgqZlmA64gT7OFNAMClQ6w3g0EzQ5/lukpFA6uwItvTnnfyC2XzJC8
+pkAANcL5fOQowxPTkdjRZdlY02F65HbpGGQO0OZXokw1XDKlz5EDavwVJfGi8kvt
+VHfuqursFe4H7vnoWj+IX+ZYaydf9pwGRCxqTpI7B1JEC9syxwQce+B007dMlgcm
+faswtrbgM5TO6snjBJLzZKA0nvHBRMasR3f+wCXq7JrgmgiOqrPxxizZm0HlM18s
+olw4e+DOWpIN9wrvFNNlvkmc6fwMiEJfjp7W5N7SnI5TR+EbZGxQI/av1anjWR78
+231jJXfRNAxMh8tj5I/X
+=uJuT
+-----END PGP SIGNATURE-----
