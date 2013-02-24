@@ -1,80 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/10
-Message-ID: <517828C2.4060106@redhat.com>
-Date: Wed, 24 Apr 2013 12:47:30 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/24/6
+Message-ID: <512A7715.1010200@redhat.com>
+Date: Sun, 24 Feb 2013 13:24:53 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: security@...dpress.org, donncha@...oimh.ie
-Subject: Re: WP-Super-Cache XSS and Remote Code Exec
+CC: gremlin@...mlin.ru
+Subject: Re: nginx CVE-2013-0337 world-readable logs
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/24/2013 12:30 PM, Kurt Seifried wrote:
-> Is there any way to get the WordPress community involved in
-> actually handling security issues properly? E.g. requesting CVE's,
-> or heck, I'll settle for being notified via email directly. I found
-> out about this stuff on Reddit (linked to Tony Perez's blog
-> posting) so I read the code and voila:
+On 02/24/2013 12:34 AM, gremlin@...mlin.ru wrote:
+> On 22-Feb-2013 15:46:15 +0400, I wrote:
 > 
-> ===============================================================
+>>> Some distros are affected.
 > 
-> WP-Super-Cache XSS 1.3 Fixed in 1.3.1 with code changes like: 
-> -<form name="wp_manager" action="<?php echo $_SERVER[ "REQUEST_URI"
-> ]; ?>" method="post"> +<form name="wp_manager" action=""
-> method="post">
+>> Alas for them... But the solution is simple.
 > 
-> Please use CVE-2013-2008 for this issue.
+>>> This is not just misconfiguration.
 > 
-> ===============================================================
+>> This issue isn't related to the nginx itself. However, I'd agree
+>> that nginx could use restrictive mode for its' log files: +++
+>> nginx-1.2.7/src/core/ngx_log.c @@ -325,7 +325,7 @@ -
+>> NGX_FILE_DEFAULT_ACCESS); +  NGX_FILE_USR_GRP_ACCESS);
 > 
-> WP-Super-Cache 1.2 Remote Code Execution Fixed in 1.3: +2013-04-11
-> 10:39  donncha + +       * wp-cache.php: Remove mfunc, mclude and
-> dynamic-cached-content +         tags from comments. Props Frank
-> Goossen + 
-> (http://blog.futtta.be/2013/04/10/wp-safer-cache-stopgap-for-wordpress-cache-plugins-vulnerability/)
->
+> I've contacted the nginx team via their security-alert@ and got the
+> "won't fix" answer by Maxim Dounin:
 > 
-+         and kisscsaby
-> +         (http://wordpress.org/support/topic/pwn3d?replies=6)
+>> We are fine with default permissions used for log files. If in a
+>> particular configuration stricter permissions are required, this
+>> may be done either by creating appropriate log files with needed
+>> permissions, or by restricting access to a directory with log
+>> files.
 > 
-> http://blog.sucuri.net/2013/04/update-wp-super-cache-and-w3tc-immediately-remote-code-execution-vulnerability-disclosed.html
->
->  To test leave a comment like: <!?mfunc echo PHP_VERSION;
-> ?><!?/mfunc?>
+> Although respecting the umask value could be a better solution (and
+> I'll try once again to convince the developers in that), the
+> developers' opinion is clear: pre-creating the logs is the expected
+> method to fix the ${subject}.
 > 
-> To fix it they added a mfunc filter in
-> wp-super-cache-1.3/wp-cache.php:
 > 
-> +add_filter( 'preprocess_comment','no_mfunc_in_comments' ); 
-> +add_filter( 'comment_text','no_mfunc_in_comments' ); +add_filter(
-> 'comment_excerpt','no_mfunc_in_comments' ); +add_filter(
-> 'comment_text_rss','no_mfunc_in_comments' );
-> 
-> Please use CVE-2013-2009 for this issue.
 
-Forgot to include link to source code:
-http://wordpress.org/extend/plugins/wp-super-cache/
-
+I somewhat disagree for the simple fact that web servers MUST log
+sensitive information (e.g. GET strings) to be of any use. This goes
+back to the discussion regarding programs such as gpg. Personally I
+would rather see the log files (ALL log files for ALL programs
+actually) created using a default permission that is safe (e.g. 0600
+or 0660 if it writes to it with the group permissions), but can be
+configured and easily overridden in a config file (e.g. nginx.conf) so
+that people that have a legitimate need for world readable log files
+can do so easily.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJReCjCAAoJEBYNRVNeJnmT/FkP/0T/8f6I+LZyvT1hRLGK2YrW
-If+fHmm8th+K+Bz2sP1FHovABKcfJEupDncEqlj8wobK3Up0HHfpykYYLhlvp7S2
-ldkAiC/mHd2O/JwB4ZZkmjccHS0kqmYJ0MOokO+iphRD1URUKxQgQT+G+w6dGOeO
-6v48WDwZmVSB82Ttp0waJp0XtJ1rQGoKGVgCE0ytdrBG1MIjDI5g1U2VquaApL8+
-75rUECFtdRCxIpZ/uZ+l/uW7C/jWOzSnKFtWG/kvXypgVtcTH7EFIClvbf+sJkYh
-0NFzpWLl+B66XG7YBKtvWvQzF2h0tuKCsio8kOYZhP3nMzqhIoSnaDaor6gEMK4h
-L45rTI0ql/Kgoh2FZiAsG89z961AhdHdL479LC/jING3xDQwWQF6I4lHfzWxwPdD
-ZajFH+1bS804UNdYLaNzxMMUF3+vaVLycfdQWF7WFjCVzh2eikBgq0nAacLBWLGn
-JC5WUgf6BY7ZfEMmyhGIGiwOCIPjQZ6SRmybZ10c+x5WxRkrGFkOIYe2noUvJwh7
-S2GogHA4oRkWF3ZVyXWrcqPGSgpZRGVsK8kUEv7VOtFP8wB/oRPJwUDCfiNu9+C3
-b3lNPt/a0Z64lmKBpvQbMFyW3bmCu+T6JOVFB9+wh6ao9StkwKenRZSsA22J/U7X
-/nfV/pyjwQubk3/nifp2
-=/PBV
+iQIcBAEBAgAGBQJRKncVAAoJEBYNRVNeJnmT1J0QAITraA2TQQ75m+Kje4vzp3b+
+db+q3RbrEaY+5VdrtWCq16LNIzpU08Zh6qhoHx15KTrk9QJ996foYDfhiuuDaXT5
+vvtDjPv4ddgzuh4iQbz1BVpI/XQ2PBuac9rbvZmExQqxA4Bis5IJGckgoVY299Os
+gnEQcoU04+nAntMH3lH/6rAJ7GM00Y05Tca7dXc6Y1aKi9coRcIlqZgMO+Fkzgys
+nYTFLoR7BA2O5znWxVBqPHNeXFLZgh0JPPnCfyCtAKiVr8cKuDfX36IKz8wCD66c
+Dw6204V3MnkN/xNZUguFnbkbROfzAaCt6JXWRC0Ye2AcsWvHqbagYfXaOQ/5UMNT
+2QEB6LvWzfcmIAOguEffCYLYDWoMsQI2M5whK7VAO/nniHN+3frOSkz2SHqpfqSe
+fEyre6oVf3i/1IJaWPWKEst7RZVSte8Pgwnef2C7sGjnuINt2FBH9RQLHLDV79E5
+7Bbd6KWmC6mZULGZvwZm7jdMpwnPj0gyJiumXPXdFcPfMGw3Sc/8aIB6kEUM4Puf
+F7UCPRene3OaI5xtAXXC3RglBBD3kHLSF146Ng2Qvo/zUj3mNj5pa6qouiMJ3Kkb
+cqIp59Sbn0zWCkOVWhgsvDMgL/5F0bmw178ttRA17fBzb178ox2VY0NnUmQWBytz
+Q4OBraQ+yCIzS3cGO+FA
+=EBGC
 -----END PGP SIGNATURE-----
