@@ -1,40 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/8
-Message-ID: <529E1AE2.5000809@canonical.com>
-Date: Tue, 03 Dec 2013 11:54:42 -0600
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/24/2
+Message-ID: <CA+rthh-9kouDr_Y8BFcE4aOrFsT-78bKQBnweeWf4q-Ph09_2Q@mail.gmail.com>
+Date: Sun, 24 Feb 2013 10:10:45 +0100
+From: Mathias Krause <minipli@...glemail.com>
 To: oss-security@...ts.openwall.com
-CC: security <security@...ntu.com>, xorg_security@...rg
-Subject: CVE Request: xorg-server and pixman
+Subject: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
 Content-Type: text/plain; charset=utf-8
 
+An unprivileged user can send a netlink message resulting in an
+out-of-bounds access of the sock_diag_handlers[] array which, in turn,
+allows userland to take over control while in kernel mode.
 
-Hi,
+Patch (already in net/master):
+http://thread.gmane.org/gmane.linux.network/260061
 
-This bug has been public since August but I could find a CVE for it:
-https://launchpad.net/bugs/1197921
+Affected versions:
+v3.3 - v3.8
 
-There are two bugs - Xorg can be made to crash and pixman can trigger the
-aformentioned Xorg crash. A simplified reproducer is in the pixman patches with
-another reproducer in the Launchpad bug. The xorg
-
-xorg-server - exa: only draw valid trapezoids
-The patch was submitted in October but doesn't seem to be applied yet, so I'm
-CC'ing xorg_security. Patch references the pixman f.d.o bug, but doesn't seem to
-have an associated xorg bug.
-http://patchwork.freedesktop.org/patch/14769/
-http://lists.x.org/archives/xorg-devel/2013-October/037996.html
-
-Pixman - Corrupted CustomShape crashes Xorg
-https://bugs.freedesktop.org/show_bug.cgi?id=67484
-Patch:
- - 5e14da97f16e421d084a9e735be21b1025150f0c (fix)
- - 2f876cf86718d3dd9b3b04ae9552530edafe58a1 (test case)
-
-Thanks!
-
--- 
-Jamie Strandboge                 http://www.ubuntu.com/
+PoC is not attached this time but can be requested on demand. Hint:
+Works well on Fedora 18, bypassing all mmap_min_addr checks. ;)
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
+Thanks,
+Mathias
