@@ -1,26 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/10/5
-Message-ID: <20130510213105.GA28682@hunt>
-Date: Fri, 10 May 2013 14:31:05 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com
-Subject: CVE Request: kdelibs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/24/4
+Message-ID: <1587819.rHkApXHazp@devil>
+Date: Sun, 24 Feb 2013 19:45:59 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: skunkweb world-readable logdir
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, all,
+skunkweb, a robust Python web application server, produces a world-readable 
+log.
 
-A bug in our Launchpad [1] refers to KDE Bug 319428 [2] as fixing a
-security issue: displaying raw URLs, including passwords, in a handful
-of error messages. A patch is in git [3] to sanitize URLs before
-displaying them in the affected error messages.
+# ls -la /var/log/skunkweb/sw.log 
+-rw-r--r-- 1 skunkweb skunkweb 4529 Feb 24 19:41 /var/log/skunkweb/sw.log
 
-1: https://bugs.launchpad.net/ubuntu/+source/kde4libs/+bug/1178286
-2: https://bugs.kde.org/show_bug.cgi?id=319428
-3: http://commits.kde.org/kdelibs/65d736dab592bced4410ccfa4699de89f78c96ca
+The development seems dead.
+Upstream site: http://skunkweb.sourceforge.net/
 
-Please assign a CVE number for this issue. Thank you.
-
-Seth
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
