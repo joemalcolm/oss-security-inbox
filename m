@@ -1,26 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/49
-Message-ID: <512E941A.2050307@fifthhorseman.net>
-Date: Wed, 27 Feb 2013 15:17:46 -0800
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/24/3
+Message-ID: <20130224134930.GB1722@dhcp-25-225.brq.redhat.com>
+Date: Sun, 24 Feb 2013 14:49:31 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Jason A. Donenfeld" <Jason@...c4.com>
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
 Content-Type: text/plain; charset=utf-8
 
-On 02/27/2013 03:00 PM, Jason A. Donenfeld wrote:
-> it takes your brain less than a single cycle to realize this or
-> that memory corruption can lead to priv escalation. 
+On Sun, Feb 24, 2013 at 10:10:45AM +0100, Mathias Krause wrote:
+> An unprivileged user can send a netlink message resulting in an
+> out-of-bounds access of the sock_diag_handlers[] array which, in turn,
+> allows userland to take over control while in kernel mode.
+> 
+> Patch (already in net/master):
+> http://thread.gmane.org/gmane.linux.network/260061
+> 
+> Affected versions:
+> v3.3 - v3.8
+> 
+> PoC is not attached this time but can be requested on demand. Hint:
+> Works well on Fedora 18, bypassing all mmap_min_addr checks. ;)
 
-Even if this were true, it takes much more than a single cycle to write
-up a decent security report that can be understood by other people.
-Communication takes time and effort.  Good communication takes even more
-time and effort.
+Please use CVE-2013-1763.
 
-I want this work to happen as much as you do, but it doesn't help to
-trivialize the work you are asking others to do.
-
-	--dkg
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
