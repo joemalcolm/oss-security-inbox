@@ -1,88 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/24/4
-Message-Id: <E1V1xNG-00008D-Po@xenbits.xen.org>
-Date: Wed, 24 Jul 2013 11:36:55 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 60 (CVE-2013-2212) - Excessive time to disable caching with HVM guests with PCI passthrough
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/24/5
+Message-ID: <1629487.68S4Xka9K7@devil>
+Date: Sun, 24 Feb 2013 20:00:57 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: monkeyd world-readable logdir
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Monkeyd, a small, fast, and scalable web server, produces, at least on gentoo 
+a world-readable log.
 
-             Xen Security Advisory CVE-2013-2212 / XSA-60
-                             version 4
+# ls /var/log/monkeyd/master.log -la
+-rw-r--r-- 1 root root 0 Feb 24 19:56 /var/log/monkeyd/master.log
 
-   Excessive time to disable caching with HVM guests with PCI passthrough
+Upstream site: http://www.monkey-project.com/
 
-UPDATES IN VERSION 4
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-HVM guests are able to manipulate their physical address space such that
-processing a subsequent request by that guest to disable caches takes an
-extended amount of time changing the cachability of the memory pages assigned
-to this guest. This applies only when the guest has been granted access to
-some memory mapped I/O region (typically by way of assigning a passthrough
-PCI device).
-
-This can cause the CPU which processes the request to become unavailable,
-possibly causing the hypervisor or a guest kernel (including the domain 0 one)
-to halt itself ("panic").
-
-For reference, as long as no patch implementing an approved alternative
-solution is available (there's only a draft violating certain requirements
-set by Intel's documentation), the problematic code is the function
-vmx_set_uc_mode() (in that it calls ept_change_entry_emt_with_range() with
-the full guest GFN range, which the guest has control over, but which also
-would be a problem with sufficiently large but not malicious guests).
-
-IMPACT
-======
-
-A malicious domain, given access to a device with memory mapped I/O
-regions, can cause the host to become unresponsive for a period of
-time, potentially leading to a DoS affecting the whole system.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen version 3.3 onwards is vulnerable.
-
-Only systems using the Intel variant of Hardware Assisted Paging (aka EPT) are
-vulnerable.
-
-MITIGATION
-==========
-
-This issue can be avoided by not assigning PCI devices to untrusted guests, or
-by running HVM guests with shadow mode paging (through adding "hap=0" to the
-domain configuration file).
-
-CREDITS
-=======
-
-Konrad Wilk found the issue as a bug, which on examination by the
-Xenproject.org Security Team turned out to be a security problem.
-
-RESOLUTION
-==========
-
-There is currently no resolution to this issue.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJR77wrAAoJEIP+FMlX6CvZB5MH/ibfpjHuoGOIo7mWukld4NM5
-UVIKC+rTrnkYhbF2f+xIM833+WAUjPuXZKZ6/EirDAPAAQCut2DouNvVdVnZ5cBx
-rq0N8l9wy0/dq/7kCyI3kAGFlJ3VYz7aM5+TTPFGfO7Yq3ohUNu2EE4vv/t5KVjD
-H4reh8UaA5QuRbdh3evCM9Vdt2syqi8JQwB5D2CJqrgAuFPwEVle8MLKSXWWb/+V
-KUy+mRAb1tN3jbWIev0TZ7Hm3x61yO60/WFzsQzkmkd+qWvC5btkWDg05K5DHC+Q
-yvFU3Y5u7J/ub00ZO4e9wjNDG5+ItQUK4xp8y5s65qx27P/eK9VLi8dvnHVMk04=
-=HUbY
------END PGP SIGNATURE-----
-
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
