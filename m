@@ -1,71 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/27/2
-Message-ID: <52BD026E.7040901@redhat.com>
-Date: Thu, 26 Dec 2013 21:30:38 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/24/1
+Message-ID: <20130224073447.GA7419@gremlin.ru>
+Date: Sun, 24 Feb 2013 11:34:47 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: rubygem-nokogiri Multiple DoS vulnerabilities
+Subject: nginx CVE-2013-0337 world-readable logs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 22-Feb-2013 15:46:15 +0400, I wrote:
 
-On 12/26/2013 12:47 PM, Ratul Gupta wrote:
+ >> Some distros are affected.
 
-I double checked these issues, they are subtly different, one is
-infinite loop from error parsing and the other fails to apply limits.
+ > Alas for them... But the solution is simple.
 
-> Hello,
-> 
-> 1) https://bugzilla.redhat.com/show_bug.cgi?id=1046663
-> 
-> Nokogiri gem for Ruby was found to be affected by a DoS
-> vulnerability, where an error when parsing XML documents can be
-> exploited by an attacker to cause an infinite loop and subsequently
-> exhaust memory and cause a crash via a specially crafted XML
-> document.
+ >> This is not just misconfiguration.     
 
-Please use CVE-2013-6460 for this issue.
+ > This issue isn't related to the nginx itself.
+ > However, I'd agree that nginx could use restrictive mode for
+ > its' log files:
+ > +++ nginx-1.2.7/src/core/ngx_log.c
+ > @@ -325,7 +325,7 @@
+ > -  NGX_FILE_DEFAULT_ACCESS);
+ > +  NGX_FILE_USR_GRP_ACCESS);
 
-> 2) https://bugzilla.redhat.com/show_bug.cgi?id=1046664
-> 
-> Nokogiri gem for Ruby was found to be affected by a DoS
-> vulnerability, where an error when parsing XML entities and can be
-> exploited to exhaust memory and cause a crash via a specially
-> crafted XML document including external entity references.
+I've contacted the nginx team via their security-alert@ and got
+the "won't fix" answer by Maxim Dounin:
 
-Please use CVE-2013-6461 for this issue.
+ > We are fine with default permissions used for log files.
+ > If in a particular configuration stricter permissions are
+ > required, this may be done either by creating appropriate
+ > log files with needed permissions, or by restricting access
+ > to a directory with log files.
 
-> Can CVE's please be assigned to these issues?
-
-Please note original references:
-
-References:
-https://bugs.gentoo.org/show_bug.cgi?id=495218
-
-Original Advisory:
-https://groups.google.com/forum/#!topic/ruby-security-ann/DeJpjTAg1FA
+Although respecting the umask value could be a better solution
+(and I'll try once again to convince the developers in that),
+the developers' opinion is clear: pre-creating the logs is the
+expected method to fix the ${subject}.
 
 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSvQJuAAoJEBYNRVNeJnmT+QoP/1c2L1HrrqrCWwk+sM60P1WB
-iqVF+N643XkNsNgFbK/3eAa2T1Bsj3uOKqxyEGLePPGblqH3+kPzqlT+IPCPy/0H
-UiiPSjO43WFv8kmSHo6hzIzn7us7oww8DNK4xBWItLYMfP/5SK/ANv5viFJBTCTu
-K5nrbUvTOIwWueAUMY/DgXLpfcssdITp7VH70uFrSgF+LzDtXGeOdscIMpu85FVU
-5+sqJQy2yE939Q3XlEZzN1IeTwLghZkVb2WX5HLUBGEVBkFRvB8bY+nl4OtERSS1
-R+ya6X4h9XAVyKXE3lgvHI1MFA3D8gotJqK8xPFjnuLBvcR0Scx63DfSf2hatcqI
-dbyQ8xR/qVYJGcOXpAENAPjrfyBCnd1GiozjECgZfB2A1T8+ahK4LWawd037lWbx
-+izFHURKFThLpdikdiwZ3hAZVjQpR3oHlxbEW83QlZPu2xCGDn66GtfFDtjHm8DA
-xxrgkMEkBlvRRCstVJsU7op5TBoCBofi8rXzpdWd/vtwuTg/PHV6fVb63PEPFkVd
-aBsL9oxFPW1WjJwU0JRYfSo2EeBg1laGWIbfy29xVX3deVOdMTWb2h3v9xAMhkEs
-qtTO8bLgB6Dym5wkugaj05PniZEGUoBHPOcli0ApjEFys4tLkctP1tBcwD39sPfc
-Xea35dJTkozZtlrQMBAU
-=Wrs6
------END PGP SIGNATURE-----
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
