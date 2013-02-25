@@ -1,23 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/16/8
-Message-Id: <20130716191807.3E701600C4@smtp.hushmail.com>
-Date: Tue, 16 Jul 2013 19:18:07 +0000
-From: "mancha" <mancha1@...h.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/15
+Message-ID: <20130225193555.GA5127@waldi.eu.org>
+Date: Mon, 25 Feb 2013 20:36:19 +0100
+From: Bastian Blank <waldi@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request - xlockmore 5.43 fixes a security flaw
+Subject: CVE request: libvirt kvm-group writable storage
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, vendors, et al.
+Hi
 
-xlockmore 5.43 released 2 days ago with a fix for a security
-flaw related to potential NULL pointer dereferences when
-authenticating via glibc 2.17+ crypt() and OSF/1 C2 security's
-dispcrypt().
+libvirtd in privileged (root) mode runs qemu/kvm guests with a different
+user. It set owner/group of storage used by this guests to this user and
+group. In Debian this is libvirt-qemu:kvm.
 
-Under certain conditions the NULL pointers can trigger a crash
-in xlockmore effectively bypassing the screen lock.
+| brw-rw---T 1 libvirt-qemu kvm  254, 11 Feb 25 17:08 /dev/dm-11
+| brw-rw---T 1 libvirt-qemu kvm  254, 12 Feb 25 17:50 /dev/dm-12
 
-[1] http://www.tux.org/~bagleyd/xlock/xlockmore.README
+The kvm group is used for generic access control on /dev/kvm, so a lot
+of users may have access to this group.
 
---mancha
+| crw-rw---T 1 root kvm 10, 232 Feb 25 18:04 kvm
 
+This allows write access to unrelated users to this storage.
+
+Affected is at least Debian Squeeze (0.8.3-5+squeeze2) and Debian
+experimental (1.0.1-2). Reference is http://bugs.debian.org/701649
+
+Please assign a CVE.
+
+Bastian
+
+-- 
+Oh, that sound of male ego.  You travel halfway across the galaxy and
+it's still the same song.
+		-- Eve McHuron, "Mudd's Women", stardate 1330.1
