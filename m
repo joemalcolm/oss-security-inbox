@@ -1,38 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/14
-Message-ID: <1970861107.5816983.1369237599522.JavaMail.root@redhat.com>
-Date: Wed, 22 May 2013 11:46:39 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/10
+Message-ID: <512BB67E.3080002@gmail.com>
+Date: Mon, 25 Feb 2013 14:07:42 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Apostolis Bessas <mpessas@...nsifex.com>, Ilias Vrachnis <vid@...nsifex.com>, Radek Vokal <rvokal@...hat.com>, Florian Weimer <fweimer@...hat.com>
-Subject: CVE-2013-2073 transifex-client: Does not validate HTTPS server certificate (fixed in transifex-client v0.9)
+Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+On 02/25/2013 01:59 PM, Mathias Krause wrote:
+> On Mon, Feb 25, 2013 at 7:53 PM, Dan Rosenberg
+> <dan.j.rosenberg@...il.com> wrote:
+>> On 02/25/2013 01:45 PM, Mathias Krause wrote:
+>>> Did you even try to run the exploit on a v3.2 kernel? Or even more
+>>> simple, looked at the code of a v3.2 kernel? There is no sock_diag
+>>> anywhere in the kernel; there is only inet_diag. And inet_diag hadn't
+>>> and still does not have the out-of-bounds access issue. So no, this
+>>> bug is non-existent on a v3.2 kernel.
+>>>
+>>> Thanks,
+>>> Mathias
+>>>
+>> The bug was introduced with this commit:
+>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=d366477a52f1df29fa066ffb18e4e6101ee2ad04
+>>
+>> This commit took place during kernel version 3.2.0-rc4, so yes, it does
+>> seem to affect 3.2 kernels.
+> 
+> $ git describe --contains d366477a52f1df29fa066ffb18e4e6101ee2ad04
+> v3.3-rc1~182^2~326
+> 
+> Is git lying to me or what?
+> 
+> 
+> Cheers,
+> Mathias
+> 
 
-  It was found that Transifex command-line client, a command line tool for Transifex
-translation management, did not perform X.509 certificate verification when using
-secured SSL connection. A man-in-the-middle attacker could use this flaw to spoof
-a Transifex server via an arbitrary certificate.
+Apparently so. Linux 3.3-rc1 was released on January 19, 2012, while the
+patch to introduce sock_diag was applied December 6, 2011.
 
-The CVE identifier of CVE-2013-2073 has been allocated to this issue.
-
-Acknowledgements:
-  This issue was discovered by Florian Weimer of the Red Hat Product Security Team.
-
-  Red Hat would like to thank Apostolis Bessas and Ilias Vrachnis of Transifex
-  for prompt replies and patches.
-
-Fixed in: transifex-client v0.9:
-            https://pypi.python.org/pypi/transifex-client/0.9
-            http://blog.transifex.com/post/51072109836/new-version-of-the-transifex-client-has-been-released
-
-Upstream patches are as follows:
-[1] https://github.com/transifex/transifex-client/commit/e24ea954373874962f22f63a7311d04d6ff56d84
-[2] https://github.com/transifex/transifex-client/commit/f237dd7d3f4f08be7160f32eb99edafe2769aad1
-[3] https://github.com/transifex/transifex-client/commit/5246f188b0abcc1a4c20894fcab88f7a6cd6cfd9
-[4] https://github.com/transifex/transifex-client/commit/ad29a9dbe869e0c7d861826a82c9ce2f022face4
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-Dan
