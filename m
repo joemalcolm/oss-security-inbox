@@ -1,24 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/21/1
-Message-ID: <20130721171004.54932a97@melee>
-Date: Sun, 21 Jul 2013 17:10:04 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: cve request: cms made simple XSS before 1.11.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/21
+Message-ID: <512BD67B.9020708@redhat.com>
+Date: Mon, 25 Feb 2013 14:24:11 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>, plugins@...dpress.org
+Subject: Re: CVE request: WordPress plugin smart-flv jwplayer.swf XSS
 Content-Type: text/plain; charset=utf-8
 
-cmsmadesimple 1.11.7 fixes an XSS. Not much info though:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://twitter.com/LeakFree/status/336942367351394305
-http://forum.cmsmadesimple.org/viewtopic.php?f=1&t=66590&p=299356#p299356
+On 02/24/2013 03:23 PM, Henri Salo wrote:
+> Hello list,
+> 
+> With wpscan-team I noticed that file jwplayer.swf in WordPress
+> plugin smart-flv is vulnerable to reflected XSS vulnerability.
+> 
+> URL: http://wordpress.org/extend/plugins/smart-flv/ 
+> 416d0313c5f286c3a8e9daff520a9f44439b93f7
+> http://plugins.svn.wordpress.org/smart-flv/trunk/jwplayer.swf
+> 
+> With user interaction (clicking the page): 
+> https://example.com/wp-content/plugins/smart-flv/jwplayer.swf?file=1.mp4&link=javascript:alert%28%22horse%22%29&linktarget=_self&displayclick=link
+>
+> 
+No interaction:
+> https://example.com/wp-content/plugins/smart-flv/jwplayer.swf?playerready=alert%28%22horse%22%29
+>
+>  WordPress guys could you report this to the developer since I
+> don't know his/her email address, thanks? Could you also tell me if
+> there is a way to contact plugin developers directly, thank you.
+> Please include CVE to changelog if possible.
+> 
+> -- Henri Salo ps. http://paste.nerv.fi/36167527-horse.jpeg
+> 
 
-Please assign CVE.
+Please use CVE-2013-1765 for this issue.
 
--- 
-Hanno Böck
-http://hboeck.de/
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+iQIcBAEBAgAGBQJRK9Z7AAoJEBYNRVNeJnmTK/oQAJRZhdrqkZrjC1G9dQecij/h
+Mppys3gLTZn5R2lAzlKwIILfnJ2706syENtwPkkzelN7VWikTySbhfXSbMwFgthR
+2c8JKBwyhbhrn/TlXTzTpc2tlTXHWl3Kzg4Dm5zs3kj1qOykE5nrsTWdrzejQFvI
+L16b5g7aBI6O5T9EStXWwcpRDb5csZhOoFp2qOsf/1q0SLf87QNDPXSLFYxwmQTm
+k/kSWY5WcWHrhTOnH+MSOHlXaH2xR3RBScFGv3jLjZEkdeGrlGZid06EayXk0air
+A18vesG/5mWdVxkFMD7yF9i2qziuRXFJyBuFj2TlVyDUY8qVcO2inQW4WGKX/kJd
+ShedIY9yde+6HPlD5bWJiyEJhNmHtyIDrXFfVt1EFF7TnbllEyB+MKGBJAv7sE7X
+K99U2IQKOwgUCqlyWsNNZYOZmHp1OAD30tCNWOe4rGnsPlSOGjniVLO5KO+deJJr
+QGgGK1VmZaylaXlv8S2+Qo8vwltG2UVbMX5+PTj4IVF4cBgEd6jQ70fJa+UnBUIv
+ow4C8bnGlFCDwQmdomzS4byAtUHBHTDoPOrQ0n3cv3v1jtTOhJLJ5YYxTNuM8U/b
+F4oGZCNsMGyQ2NLTD1OTbIs6TwF+XHNm52YbFPmAcSkKgOgny/yppLbK4cP92ufm
+e7o/5gGSWHjX8NjYlSUr
+=u+Fn
+-----END PGP SIGNATURE-----
