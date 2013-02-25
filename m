@@ -1,80 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/9
-Message-ID: <51AE37E4.3080906@redhat.com>
-Date: Tue, 04 Jun 2013 12:54:28 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/17
+Message-ID: <20130225202855.GA6788@openwall.com>
+Date: Tue, 26 Feb 2013 00:28:55 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Gallery < 3.0.8 - Improper stripping of URL fragments in uploadify and flowplayer SWF files might lead to replay attacks
+Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 06/04/2013 06:51 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+On Mon, Feb 25, 2013 at 11:43:57AM +0100, Marcus Meissner wrote:
+> On Mon, Feb 25, 2013 at 02:13:49PM +0400, Solar Designer wrote:
+> > On Sun, Feb 24, 2013 at 10:10:45AM +0100, Mathias Krause wrote:
+> > > Affected versions:
+> > > v3.3 - v3.8
+> > 
+> > Nice find!  Do you happen to know of distro backports of the affected
+> > code to older kernels?  When you wrote that the bug is "in there for
+> > ages", did you mean that 3.3 has been out "for ages" or something else?
 > 
-> Gallery 3 upstream has released v3.0.8 version: [1]
-> http://sourceforge.net/mailarchive/message.php?msg_id=30925931 [2]
-> http://galleryproject.org/gallery_3_0_8
-> 
-> correcting one security flaw (or two if you would consider
-> uploadify and flowplayer SWF files as two separate cases):
-> 
-> A security flaw was found in the way uploadify and flowplayer SWF
-> files handling functionality of Gallery version 3, an open source
-> project with the goal to develop and support leading photo sharing
-> web application solutions, processed certain URL fragments passed
-> to these files (certain URL fragments were not stripped properly
-> when these files were called via direct URL request(s)). A remote
-> attacker could use this flaw to conduct replay attacks.
+> We did not backport the sock_diag code to SUSE Linux Enterprise Server 11 SP2.
 
-uploadify/flowplayer are def different upstream projects, but the
-flaws are appear to be the same basic type and same researcher, so CVE
-MERGE
+Thank you.  There's also a "not vulnerable" statement for "the kernel
+package as shipped with Red Hat Enterprise Linux 5, 6 and Red Hat
+Enterprise MRG 2":
 
-> Relevant upstream tickets (and patches): * uploadify case: [3]
-> http://sourceforge.net/apps/trac/gallery/ticket/2068 [4]
-> https://github.com/gallery/gallery3/commit/80bb0f2222dd99ed2ce59e804b833bab63cc376a
->
->
-> 
-* flowplayer case:
-> [5] http://sourceforge.net/apps/trac/gallery/ticket/2070 [6]
-> https://github.com/gallery/gallery3/commit/3e5bba2cd4febe8331c0158c11ea418f21c72efa
->
-> 
-[7]
-https://github.com/gallery/gallery3/commit/12e51694fdc39c752cc439424cf309866f9f914a
+https://bugzilla.redhat.com/show_bug.cgi?id=915052#c4
 
-Please use CVE-2013-2138 for this issue.
-
-> References: [8] https://bugzilla.redhat.com/show_bug.cgi?id=970596
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRrjfjAAoJEBYNRVNeJnmTifkQALn0QYVYVLI9kLY0Ch9oblZn
-2soJXB66OOW6M2UUYK/5M1tjQ3vpgcyY9W41Y+VXt+U/nsPO/l/lyY4ONKmjpyzY
-u2DEcBUJOFXp4lWl3KFQhycn5YdDTq0oNji9fHbVDzT2BT6G7A10gnvktoBjHNMh
-bk0c31jwlnHq8Dy9Fkc4Xl5+uITlD5Nw6/d0NWUzBK5WOgOmLTCuyGdckmkYpZy4
-jzVTrpW9K48CPKx9nMzmAlrEn7UyZVpuZBKC0yB2dRSgV/X97f/A9TJF+xhFxWKZ
-WqLyFJrRFZ5ns1qee5F5DPvyw/ilKlVmSPMal1j/i63BmvXCEbI6P6GpKQAP2AyY
-MD2+n8X2QfilLG+PlKxKXtQ4epLuxstF8o5jVU69BYBo6qSUFLQWxkhEXmAcZVqW
-Bnmdjz2LLEa+OzRllYMD1pZXrXQNnG5oc4Iqg7tliT5wVQZUAGU04zd6nnrQLmog
-gBZ08QmJEt7WJ+fHlun+cuxk1HEr4pOfqkZ0I0cwOhJweAFbaMhYkaYqNy/+L/C+
-tbTqSxYw3jAeL2aEY+tdJ9axJnJJj3o00DevYjLjzkqtdCStOyvYrNC1u35WOB9N
-c7HvJ8/EKXEzZ45yG9I9hg+1r6+EYY0XTWMwzijpAS2WcL1U8Ga2RPL8ks+IVT3U
-L+8ZAwfGCNDgLg3oQCHb
-=k1aT
------END PGP SIGNATURE-----
+Alexander
