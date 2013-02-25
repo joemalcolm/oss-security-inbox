@@ -1,49 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/9
-Message-ID: <425021829.2414948.1366894500871.JavaMail.root@redhat.com>
-Date: Thu, 25 Apr 2013 08:55:00 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/7
+Message-ID: <CA+rthh9En-qqvBrO+MaWHG8rEUu-YN8CDCueBE0wEydzm-pOgA@mail.gmail.com>
+Date: Mon, 25 Feb 2013 19:45:01 +0100
+From: Mathias Krause <minipli@...glemail.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
 Content-Type: text/plain; charset=utf-8
 
-> 
-> So, all in all, what you have is a digest, signed by someone who knows
-> the key, or who has access to the creds (if any) for the key, or who
-> has found out the key creds, albeit with timestamp info for when the
-> signature took place.
-> 
-> I'm not sure what using PGP gains us?
-> 
+On Mon, Feb 25, 2013 at 5:12 PM, Solar Designer <solar@...nwall.com> wrote:
+> On Mon, Feb 25, 2013 at 11:41:33AM +0100, Mathias Krause wrote:
+>> But sorry, I won't disclose any further details, to not get into legal
+>> issues. In Germany it's quite hairy to do things like that :/
+>> But I can provide you my PoC in a private email -- for security evaluation.
+>
+> This is not necessary since we don't use these "too recent" kernels, but
+> thanks for offering.
+>
+> Here's a curious tweet:
+>
+> <_argp> Since full-disclosure has been DDoSed to oblivion, here's huku's sock_diag 1 year-old exploit: http://pastebin.com/gwn1qErx
 
-I'm going to take a hard stance against this statement and use it as my
-soapbox for a bit here.
+So it looks like those guys have been exploiting this bug for quite a
+while. Good that it's fixed, now!
 
-This attitude is really dangerous in the world of security (but it has
-infected our universe). Security is hard, we all know that, but I think we
-like to draw a line at 100% and say "it's this or nothing". No, PGP isn't
-perfect, but it gains us a ton. It's a way we can say "this was signed by
-someone with the key". Did the bad guy have they key? Maybe, the goal isn't
-to get to 100%, it's to make the job of an attacker harder, which this
-would do.
+>
+> The pastebin has:
+>
+> ---
+> Who the fuck DDoS'ed full-disclosure? ;)
+>
+> http://sysc.tl/mpougatsa_me_krema_kai_milko.tgz
+>
+> ---------- Forwarded message ----------
+> From: huku <huku@...ack.net>
+> Date: Mon, 25 Feb 2013 01:18:38 +0200
+> Subject: CVE-2013-1763 local root exploit
+> To: full-disclosure@...ts.grok.org.uk
+>
+> Greetings fly to Daphne Rosen, Gianna Michaels and Carmella Bing.
+>
+> ./hk
+> ---
+>
+> SHA-1:
+> c5904fdaea3e212bb84592e6e2ce3a640b14308c  mpougatsa_me_krema_kai_milko.tgz
+>
+> Two of the files in the tarball have timestamps of 2012-07-14.  Of
+> course, this is no proof, but it does appear that the bug was privately
+> known since about July 2012.  The README says:
+>
+> "A trimmed down version of an old exploit for the recently published
+> `sock_diag_handlers[]' vulnerability :("
+>
+> The code contains:
+>
+>   printf("Linux kernel >= 3.2 NETLINK_INET_DIAG 0day\n");
+>   printf("by huku <huku _at_ grhack _dot_ net>\n");
+>
+> Is ">= 3.2" an error (should have been ">= 3.3" as your original posting
+> in here said)?  (The difference may be whether Ubuntu 12.04 is affected.)
 
-There is no system that exists in this instance that is 100% safe. What we
-need to do isn't talk about how useless PGP is (which it isn't), we need to
-talk about what's right about it and give advice so people understand how
-to avoid silly mistakes.
+Did you even try to run the exploit on a v3.2 kernel? Or even more
+simple, looked at the code of a v3.2 kernel? There is no sock_diag
+anywhere in the kernel; there is only inet_diag. And inet_diag hadn't
+and still does not have the out-of-bounds access issue. So no, this
+bug is non-existent on a v3.2 kernel.
 
-A great example is to use a smart card. If a project is using a smart card,
-and tells us they're using a smart card, that would be helpful in letting
-us know their signatures are probably trustworthy. We would certainly know
-their signatures are more trustworthy than a project who uses a private key
-shared between 10 people. Is the smart card a perfect solution? Certainly
-not, but it's better than not using a smart card. How many non security
-people really understand this? How many of us have tried to explain it in a
-calm and understanding manner?
+Thanks,
+Mathias
 
-This is Red Hat's goal here. We want to help folks understand what some
-easy wins are. Security is hard, it will never be 100%. I'd rather see us
-all working together to improve what we can.
-
--- 
-Josh Bressers / Red Hat Product Security Team
+>
+> Alexander
