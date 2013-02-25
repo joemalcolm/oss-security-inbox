@@ -1,17 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/12/1
-Message-Id: <201305121724.49249.luciano@debian.org>
-Date: Sun, 12 May 2013 17:24:49 +0200
-From: Luciano Bello <luciano@...ian.org>
-To: oss-security@...ts.openwall.com, tw-public@....de
-Cc: Henrique de Moraes Holschuh <hmh@...ian.org>
-Subject: CVE request: MoinMoin Wiki (remote code execution vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/13
+Message-ID: <512BB9CA.4010806@gmail.com>
+Date: Mon, 25 Feb 2013 14:21:46 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
-    The section 0x06 of http://www.exploit-db.com/papers/25306/ mention a 
-exploit for moinmoin, which looks connected with this vulnerability 
-http://www.securityfocus.com/bid/59728
-    Can you please assign a CVE to it?
+On 02/25/2013 02:18 PM, Mathias Krause wrote:
+> On Mon, Feb 25, 2013 at 8:07 PM, Dan Rosenberg
+> <dan.j.rosenberg@...il.com> wrote:
+>> On 02/25/2013 01:59 PM, Mathias Krause wrote:
+>>> On Mon, Feb 25, 2013 at 7:53 PM, Dan Rosenberg
+>>> <dan.j.rosenberg@...il.com> wrote:
+>>>> On 02/25/2013 01:45 PM, Mathias Krause wrote:
+>>>>> Did you even try to run the exploit on a v3.2 kernel? Or even more
+>>>>> simple, looked at the code of a v3.2 kernel? There is no sock_diag
+>>>>> anywhere in the kernel; there is only inet_diag. And inet_diag hadn't
+>>>>> and still does not have the out-of-bounds access issue. So no, this
+>>>>> bug is non-existent on a v3.2 kernel.
+>>>>>
+>>>>> Thanks,
+>>>>> Mathias
+>>>>>
+>>>> The bug was introduced with this commit:
+>>>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=d366477a52f1df29fa066ffb18e4e6101ee2ad04
+>>>>
+>>>> This commit took place during kernel version 3.2.0-rc4, so yes, it does
+>>>> seem to affect 3.2 kernels.
+>>>
+>>> $ git describe --contains d366477a52f1df29fa066ffb18e4e6101ee2ad04
+>>> v3.3-rc1~182^2~326
+>>>
+>>> Is git lying to me or what?
+>>>
+>>>
+>>> Cheers,
+>>> Mathias
+>>>
+>>
+>> Apparently so. Linux 3.3-rc1 was released on January 19, 2012, while the
+>> patch to introduce sock_diag was applied December 6, 2011.
+> 
+> Dude, have you even *tried* to confirm what you're claiming?
+> 
+> $ git grep sock_diag_handler v3.2 | wc -l
+> 0
+> $ git checkout v3.2; grep -rw sock_diag_handler . | wc -l
+> 0
+> 
+> So either my git tree is horribly broken or your arguments are. Ever
+> heard of net-next.git -- containing commits that should end up in the
+> *next* version of Linux?
+> 
+> Cheers,
+> Mathias
+> 
 
-Cheers, luciano
+Relax, no need to get so worked up. ;-)
+
+Of course you're right, my head wasn't working. Sorry for the noise.
+
+Regards,
+Dan
