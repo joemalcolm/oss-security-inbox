@@ -1,40 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/7
-Message-ID: <20130314063259.GA29394@gremlin.ru>
-Date: Thu, 14 Mar 2013 10:32:59 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/18
+Message-ID: <512BD0E6.9030800@redhat.com>
+Date: Mon, 25 Feb 2013 14:00:22 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel + devtmpfs automount == insecure /dev/{,u}random mode
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: skunkweb world-readable logdir
 Content-Type: text/plain; charset=utf-8
 
-On 13-Mar-2013 15:54:15 +0400, gremlin@...mlin.ru wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- >> http://lkml.indiana.edu/hypermail/linux/kernel/0012.2/0502.html
- > Yes, I've found that while investigating the possible impact. Also,
- > the random.c doesn't use the data directly, but instead hashes it.
+On 02/24/2013 11:45 AM, Agostino Sarubbo wrote:
+> skunkweb, a robust Python web application server, produces a
+> world-readable log.
+> 
+> # ls -la /var/log/skunkweb/sw.log -rw-r--r-- 1 skunkweb skunkweb
+> 4529 Feb 24 19:41 /var/log/skunkweb/sw.log
+> 
+> The development seems dead. Upstream site:
+> http://skunkweb.sourceforge.net/
+> 
 
-And that has some impact: the malicious (or just curious) unprivileged
-user may run flood the devices with garbage, and the kernel will spend
-resources hashing it.
+This is not maintained/used much, not assigning a CVE for now.
 
-Try this: `dd bs=1M if=/dev/zero of=/dev/urandom`
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-On a Core i5-2400 3.10GHz CPU, only 16 processes running for several
-minutes result in all cores loaded at 99% and the load average of 20.
-My workstation has survived the experiment, but heavy-loaded servers
-may dislike that :-)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
- > But my opinion stays exactly the same: devices should be 0644, and
- > only trusted random data sources should be used to add entropy to
- > the pool via add_device_randomness().
- > So, I'll just restrict the access to /dev/{,u}random locally :-)
-
-... and recommend others do the same.
-
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBAgAGBQJRK9DmAAoJEBYNRVNeJnmTOo0P/RjyKdNoYacl23sSapKWCumQ
+i0TwRj0A9q2jcJJ4xKiKrMmfqhL7OAZuvyWz1Pm3KuzQdxhZ3Sne1rRy4501Bp+4
+TkREQOv50SByHEdozarM3Z5Nos5ysknW4yJIJtCHCFatAxPt0Ksizd+LLeQf7ic7
+wSOOzFJPxkRORlTU118+iO+CwWUokuPGxPLiYBFTNtWYCRb+GUH+CdsP+qq64dHa
+aWhFouUaCvl+M4uwkSwEAzhe1d4L7BpiRmffJVZKW+ELRkcEyXh1lq848Y8qhBOX
+st59h+SJ9NIXrsvO6CSFcHmM2Xk1+sqGLBIZybWUJmn740HVlrE1UdruGE3XUlG1
+q3oDBLkUuMb9G0OnsnQjxBzgFRIAemOa7Muv2Lpa7O9PNKJAzcare1Kh+tKfqFrM
+QocRESKgXmssg+I+bo8/qOTRNTvnFO2mvogZVqunqFgVOQto3xxq0f8xCVbQh20+
+FASnNx59qcEnmPSrxCKfU/Q2WbiF0A48Oobm+8W1zs/6duiqaX0twswSYcmFMcOE
+HWonorW8JqMQ6dRbjahcOI9Xo6Gr25yFQN511XcUvukz6kX1SdERo4fMPVup6YKZ
+kouTdcyjSNGgHCnCJZ71/ywaSsos3oTdPC6IaWEevC9vzPrwyevN+4cKoFOOSiT2
+XwMMxurOOpzoFEAfMxx2
+=as7y
+-----END PGP SIGNATURE-----
