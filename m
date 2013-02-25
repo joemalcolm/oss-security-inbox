@@ -1,32 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/20/3
-Message-ID: <20130420202919.GA31505@openwall.com>
-Date: Sun, 21 Apr 2013 00:29:19 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/1
+Message-ID: <20130225101349.GA392@openwall.com>
+Date: Mon, 25 Feb 2013 14:13:49 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Request for linux-distros list membership
+Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
 Content-Type: text/plain; charset=utf-8
 
-Hi Allan -
+On Sun, Feb 24, 2013 at 10:10:45AM +0100, Mathias Krause wrote:
+> An unprivileged user can send a netlink message resulting in an
+> out-of-bounds access of the sock_diag_handlers[] array which, in turn,
+> allows userland to take over control while in kernel mode.
+> 
+> Patch (already in net/master):
+> http://thread.gmane.org/gmane.linux.network/260061
+> 
+> Affected versions:
+> v3.3 - v3.8
 
-On Sat, Apr 20, 2013 at 06:58:14PM +1000, Allan McRae wrote:
-> I would like to request membership to the linux-distros mailing list
-> representing Arch Linux.
+Nice find!  Do you happen to know of distro backports of the affected
+code to older kernels?  When you wrote that the bug is "in there for
+ages", did you mean that 3.3 has been out "for ages" or something else?
 
-Normally, I'd ask an existing security contact or a project leader to
-approve this, but there don't appear to be people with roles like these
-at Arch Linux - or are there, and who are they?  (Apparently, there was
-a leader until 2007.)
+> PoC is not attached this time but can be requested on demand. Hint:
+> Works well on Fedora 18, bypassing all mmap_min_addr checks. ;)
 
-https://www.archlinux.org/developers/ lists you as "Toolchain
-Maintainer, Pacman Developer", which sounds like a sufficiently core
-role for you to appoint yourself (or someone else) as a security contact
-for Arch Linux, if/since there's no security contact nor a leader.
+SynQ posted a (different?) PoC here:
 
-Please add Arch Linux information to:
+https://rdot.org/forum/showthread.php?p=30828
 
-http://oss-security.openwall.org/wiki/vendors
-
-How do you expect to use the information arriving via linux-distros?
+Apparently, high values of mmap_min_addr (like 131072) happen to work
+against this one, but they might not work against other attack vectors
+or/and kernel builds.  The bug is not a NULL+offset dereference, so
+mmap_min_addr was not supposed to help against its exploitation - it
+just happens to, sometimes.
 
 Alexander
