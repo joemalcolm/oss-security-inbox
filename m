@@ -1,29 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/15
-Message-ID: <alpine.LFD.2.03.1304261728090.15651@redhat.com>
-Date: Fri, 26 Apr 2013 17:33:51 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: Linux kernel: ext4: hang during mount(8)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/14
+Message-ID: <CAHmME9qJjrLNsJMx4y-O2arjatg0VSkkHt-f0hnSEQZW6m3Zsw@mail.gmail.com>
+Date: Mon, 25 Feb 2013 20:50:12 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: kernel: tmpfs use-after-free
 Content-Type: text/plain; charset=utf-8
 
-   Hi,
+Hey all,
 
-Linux kernel built with an Ext4 filesystem is vulnerable to a system hang 
-situation. It occurs while [auto]mounting a non-journal filesystem with an 
-orphan list of inodes to clear.
+While everyone's going wild hndl->dump'ing with CVE-2013-1763, there's
+apparently been another silent security fix with
+5f00110f7273f9ff04ac69a5f85bb535a4fd0987 [1]:
 
-A user could use this flaw to stall the kernel resulting in DoS.
+> tmpfs: fix use-after-free of mempolicy object
+>
+> The tmpfs remount logic preserves filesystem mempolicy if the mpol=M
+> option is not specified in the remount request.  A new policy can be
+> specified if mpol=M is given.
+>
+> Before this patch remounting an mpol bound tmpfs without specifying
+> mpol= mount option in the remount request would set the filesystem's
+> mempolicy object to a freed mempolicy object.
+>
+> How far back does this issue go? I see it in both 2.6.36 and 3.3.  I did
+> not look back further.
 
-Upstream fix:
--------------
-  -> https://git.kernel.org/linus/0e9a9a1ad619e7e987815d20262d36a2f95717ca
 
-Reference:
-----------
-  -> https://bugzilla.redhat.com/show_bug.cgi?id=957123
+The commit message goes on with details on how to trigger it. Note
+that as of 5eaf563e53294d6696e651466697eb9d491f3946 [2], you can now
+mount filesystems as an unprivileged user after a call to
+unshare(CLONE_NEWUSER | CLONE_NEWNS), or a similar clone(2) call. This
+means all those random random filesystem bugs you have laying around
+in the junk bin are now quite useful. ++tricks;
 
-Thank you.
+Cheers,
+Jason
+
+
+[1] http://git.zx2c4.com/linux/commit/?id=5f00110f7273f9ff04ac69a5f85bb535a4fd0987
+[2] http://git.zx2c4.com/linux/commit/?id=5eaf563e53294d6696e651466697eb9d491f3946
+
 --
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+Jason A. Donenfeld
+www.zx2c4.com
