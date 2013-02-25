@@ -1,64 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/13/7
-Message-ID: <51BA5C45.2030407@redhat.com>
-Date: Thu, 13 Jun 2013 17:56:53 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/9
+Message-ID: <CA+rthh8+hiLbPa74rz+txqJuODKxGpTUuJHVacH34VMWD4+R8Q@mail.gmail.com>
+Date: Mon, 25 Feb 2013 19:59:01 +0100
+From: Mathias Krause <minipli@...glemail.com>
 To: oss-security@...ts.openwall.com
-CC: Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: Re: Fail2ban 0.8.9, Denial of Service (Apache rules only)
+Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Feb 25, 2013 at 7:53 PM, Dan Rosenberg
+<dan.j.rosenberg@...il.com> wrote:
+> On 02/25/2013 01:45 PM, Mathias Krause wrote:
+>> Did you even try to run the exploit on a v3.2 kernel? Or even more
+>> simple, looked at the code of a v3.2 kernel? There is no sock_diag
+>> anywhere in the kernel; there is only inet_diag. And inet_diag hadn't
+>> and still does not have the out-of-bounds access issue. So no, this
+>> bug is non-existent on a v3.2 kernel.
+>>
+>> Thanks,
+>> Mathias
+>>
+> The bug was introduced with this commit:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=d366477a52f1df29fa066ffb18e4e6101ee2ad04
+>
+> This commit took place during kernel version 3.2.0-rc4, so yes, it does
+> seem to affect 3.2 kernels.
 
-On 06/12/2013 02:00 PM, Yves-Alexis Perez wrote:
-> Can someone assign a CVE for this fail2ban issue?
-> 
-> On sam., 2013-06-08 at 07:44 +0200, Krzysztof Katowicz-Kowalewski
-> wrote:
->> Version 0.8.9 (latest) of Fail2ban allows to perform remote
->> denial of service for arbitrary chosen IP address. Address listed
->> on Fail2ban's whitelist are not affected. The vulnerability
->> exists in Apache rules and it is caused by improper validation of
->> a log file by regular expression. Malicious user can easily
->> inject his own data to analyzed logs and deceive monitoring
->> engine.
->> 
->> Affected files: /filter.d/apache-auth.conf 
->> /filter.d/apache-nohome.conf /filter.d/apache-noscript.conf 
->> /filter.d/apache-overflows.conf
->> 
->> Time frames: 01.06.2013 - Cyril Jaquier (contact section) has
->> been informed about the vulnerability (no response) 08.06.2013 -
->> The vulnerability has been released to the public.
->> 
->> More information, including proof of concept and patches is
->> available here: 
->> https://vndh.net/note:fail2ban-089-denial-service
-> 
-> Thanks in advance,
-> 
+$ git describe --contains d366477a52f1df29fa066ffb18e4e6101ee2ad04
+v3.3-rc1~182^2~326
+
+Is git lying to me or what?
 
 
-Please use CVE-2013-2178 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRulxFAAoJEBYNRVNeJnmT2J8P/RZPvm4voCHNwELGb+e9OGkV
-nbu7DyGhjYyOzzD3I0NrTgPlS6siz3nI10xZIvhs953CP2r6yDEqR8YP4rosreOZ
-lhZd8nNvPZmcvw+l/8q8JdLZ7q1RU+TGyMELR3l+FN9frqo3vPPsFbqh1QGBsJhD
-ngzHRMBGEyMDo42xzDTCGQmyS901s6Q+lh0GiTb2tKhfk6JqkbFtQ0r8TH4Z4nXY
-+lKA+Qxl/4Shhhb6xtWm2B7E9eqqLfb8lyNh5HVkVwEhI+BM6PUQSpx+Fu2J2Puj
-Ue9XvozzmIR6FWWztlNl1PrNh8tC/F6HFIW2vHSP16pNkIJOWBtgjBA0aMDIQFPt
-lO2Sx4mmV5ZbZBKNgR+D3sg1CXnDT+eo56xm6W8NDWNmpcWu7uZ2YP2R3x8Bbntp
-v/uUQc52P/SXirFCv73ltPpAVv6TCx2QqmPaRfYLVeflCLJ5ypxkNdeFy8UpOH5m
-0cb324X6MSv6UxaMe2hRH2Wg6QKYfUKXAdcpGfuFoi2Qq4MDPiPPa7zQ/zSD8mzb
-cpa4++TgL2GKpB+L8aKPqLdFzC71a+C9bfDe0JIVWnYo5SgTy3xdWJ5R+3k1eh3Y
-q5LuM4MCnpP5ACjBMIbJyLxpPe12WnoQB9nl3dXES6DXde4NAEpKKZkqnUzGv8/1
-C7RXa1N9VgB60t+FSu4z
-=QT9k
------END PGP SIGNATURE-----
+Cheers,
+Mathias
