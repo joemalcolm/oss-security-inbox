@@ -1,23 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/13/5
-Message-ID: <511AEA71.8040008@redhat.com>
-Date: Wed, 13 Feb 2013 11:20:49 +1000
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/6
+Message-ID: <20130225161208.GA3026@openwall.com>
+Date: Mon, 25 Feb 2013 20:12:08 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request --  jakarta-commons-httpclient: Wildcard matching in SSL hostname verifier incorrect (a different issue than CVE-2012-5783)
+Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
 Content-Type: text/plain; charset=utf-8
 
-On 02/13/2013 10:29 AM, Kurt Seifried wrote:
->> Please use CVE-2012-6127 for this issue.
-> Ok I should have looked into this deeper, it looks like it may not be
-> a security issue but I'm not 100% certain, so for now I will leave
-> this, and if someone can show there is no security impact I'll reject
-> it. Sorry for the mixup.
+On Mon, Feb 25, 2013 at 11:41:33AM +0100, Mathias Krause wrote:
+> But sorry, I won't disclose any further details, to not get into legal
+> issues. In Germany it's quite hairy to do things like that :/
+> But I can provide you my PoC in a private email -- for security evaluation.
 
-This bug will cause valid certificates to be rejected, but not for invalid certificates to be accepted. Please reject the CVE.
+This is not necessary since we don't use these "too recent" kernels, but
+thanks for offering.
 
-Thanks
-David
+Here's a curious tweet:
 
+<_argp> Since full-disclosure has been DDoSed to oblivion, here's huku's sock_diag 1 year-old exploit: http://pastebin.com/gwn1qErx
 
+The pastebin has:
 
+---
+Who the fuck DDoS'ed full-disclosure? ;)
+
+http://sysc.tl/mpougatsa_me_krema_kai_milko.tgz
+
+---------- Forwarded message ----------
+From: huku <huku@...ack.net>
+Date: Mon, 25 Feb 2013 01:18:38 +0200
+Subject: CVE-2013-1763 local root exploit
+To: full-disclosure@...ts.grok.org.uk
+
+Greetings fly to Daphne Rosen, Gianna Michaels and Carmella Bing.
+
+./hk
+---
+
+SHA-1:
+c5904fdaea3e212bb84592e6e2ce3a640b14308c  mpougatsa_me_krema_kai_milko.tgz
+
+Two of the files in the tarball have timestamps of 2012-07-14.  Of
+course, this is no proof, but it does appear that the bug was privately
+known since about July 2012.  The README says:
+
+"A trimmed down version of an old exploit for the recently published
+`sock_diag_handlers[]' vulnerability :("
+
+The code contains:
+
+  printf("Linux kernel >= 3.2 NETLINK_INET_DIAG 0day\n");
+  printf("by huku <huku _at_ grhack _dot_ net>\n");
+
+Is ">= 3.2" an error (should have been ">= 3.3" as your original posting
+in here said)?  (The difference may be whether Ubuntu 12.04 is affected.)
+
+Alexander
