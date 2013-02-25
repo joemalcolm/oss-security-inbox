@@ -1,113 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/30/4
-Message-id: <2dd16187-e488-4fe8-8f37-943c1d018a14@me.com>
-Date: Fri, 30 Aug 2013 12:42:06 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: YingZhi Python Programming Language for iOS ftp .. bug & httpd arbitrary upload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/24
+Message-ID: <20130225233430.GA9203@openwall.com>
+Date: Tue, 26 Feb 2013 03:34:30 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: kernel: tmpfs use-after-free
 Content-Type: text/plain; charset=utf-8
 
-On Aug 29, 2013, at 11:46 PM, cve-assign@...re.org wrote:
+On Mon, Feb 25, 2013 at 08:50:12PM +0100, Jason A. Donenfeld wrote:
+> While everyone's going wild hndl->dump'ing with CVE-2013-1763, there's
+> apparently been another silent security fix with
+> 5f00110f7273f9ff04ac69a5f85bb535a4fd0987 [1]:
+> 
+> > tmpfs: fix use-after-free of mempolicy object
+> >
+> > The tmpfs remount logic preserves filesystem mempolicy if the mpol=M
+> > option is not specified in the remount request.  A new policy can be
+> > specified if mpol=M is given.
+> > 
+> > Before this patch remounting an mpol bound tmpfs without specifying
+> > mpol= mount option in the remount request would set the filesystem's
+> > mempolicy object to a freed mempolicy object.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Apparently, the bug is only triggerable on builds with CONFIG_NUMA.
+Otherwise mpol_parse_str() is dummy, so it never sets the mpol pointer
+(which I guess is then left at NULL both at original mount and at any
+remount).
 
-I'd like to request a CVE for these vulnerabilities I disclosed back
-on Sept 27 2012.
-http://vapid.dhs.org/advisories/python_for_ipad.html
-YingZhi Python Programming Language for iOS
-Vendor: XiaoWen Huang, YingZhi Python for iOS.
-Ver 1.9.
-OSVDB IDs: 96719 & 96720
-Product Websites
-http://sosilen.blog.163.com
-http://www.iphoneappstorm.com/iphone-apps/utilities/com.yingzhi.python/yingzhipython.php?id=493505744 YingZhi
-Python Interpreter is a native python development application for the
-iPad/iPhone. It is available for iOS 4 and above.
-The product is packaged with its own httpd and ftpd servers. Enabling
-the local daemons for development by Touching Computer<->This Machine
-starts up an httpd server and ftpd server, both daemons are bound to
-device IP not localhost.
+> > How far back does this issue go? I see it in both 2.6.36 and 3.3.  I did
+> > not look back further.
 
-httpd server allows upload of arbitrary files to root WWW directory.
-Browsing to http://<target_ip>:8080/ presents an index page in which
-anyone can upload files to the web servers root directory.
+RHEL5'ish kernels appear not vulnerable: they directly use a couple of
+integers in place of mpol struct pointers.  I did not check RHEL6.
 
-Use CVE-2013-5654. Support for anonymous upload is, at least, rare in
-HTTP servers and this behavior would seem to violate reasonable user
-expectations.
+> The commit message goes on with details on how to trigger it. Note
+> that as of 5eaf563e53294d6696e651466697eb9d491f3946 [2], you can now
+> mount filesystems as an unprivileged user [...]
 
-If you have any further information about the specific statements in
-OSVDB entry 96720, please let us know. For example, have you confirmed
-that the default configuration of this HTTP server enables a PHP
-interpreter, such that uploads of .php files are especially dangerous?
- 
+This is also relevant to OpenVZ (and perhaps to other container-based
+virtualization systems/patches for Linux), where in-container root can
+mount/remount tmpfs.  While I did not check RHEL6 kernel code yet, I
+just had a quick look at OpenVZ's default config for those kernels, and
+it does include CONFIG_NUMA=y.  So if the code has the vulnerability,
+then OpenVZ based on these kernels is likely affected.  (Need to check
+this when I have more time, or maybe someone else will.  Luckily, we're
+still at RHEL5'ish OpenVZ kernels in released Owl versions, and we also
+don't build them with CONFIG_NUMA.)
 
-I just checked and it appears the http server doesn't interpret .php, .cgi or .py, it only serves basic content.
-
-
-telnet 192.168.0.15 8080
-Trying 192.168.0.15...
-Connected to 192.168.0.15.
-Escape character is '^]'.
-GET /i.php HTTP/1.0
-
-HTTP/1.1 200 OK
-Accept-Ranges: bytes
-Content-Length: 39
-Date: Fri, 30 Aug 2013 12:11:32 GMT
-
-<?php 
-echo '<p>Hello World</p>'; 
-?> 
-Connection closed by foreign host.
-
-
-bos-mp5r9:Documents larry$ curl  -I http://192.168.0.15:8080
-HTTP/1.1 200 OK
-Transfer-Encoding: chunked
-Accept-Ranges: bytes
-Date: Fri, 30 Aug 2013 12:28:48 GMT
-
-
-
-
-
-ftp server vulnerable to ../ bug
-The ftp server doesn't sanitize user input and allows remote users to
-read and possibly write to the devices storage.
-ftp://192.168.0.24:10000/../../../../../../../private/etc/passwd
-
-Use CVE-2013-5655.
-
-
-The ftp server doesn't bother authenticating users, any
-username/password combination will allow you in.
-
-We're not immediately assigning a CVE ID for this authentication
-behavior because it might be an intentional part of the vendor's
-design, and might have been reasonable in the vendor's envisioned
-development environment. If there is any documentation suggesting that
-this is instead an authentication bypass (e.g., the product allows the
-user to configure a username/password combination), the assignment can
-of course be reconsidered.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSID68AAoJEGvefgSNfHMdbt4IALFMSBoUA/WIybOGhq6wXFV+
-hc1S9kiDnKxjtR/IEnSnmjEBkF+iOdYoh2KOM41veWZD5hfoDgE2jgU3CRVHXEC7
-OAhievWB9Bx5SZghIyJFjfqAwhLjS/9DmDonDFN8EBIguflaN36e7clr3+/ixzZ5
-tzKElNelBcbgjf0WaQqfPpHRB46JJQFQ3AvqRMOyi1YbcG2LJ+uC8bylqvhXYbta
-g/LqwJ8UaxZ886Hd+V1k/+sYUL9S/VzgGnkQd4QPZJXVsAfFcEELubpnEyO0m3g+
-OQaKqLjvhA6YTfe6GuY2LJgh583UUrl8Bv+dUuP4nsiELpcZQDHa6AZjbbFJVSw=
-=pgG9
------END PGP SIGNATURE-----
-
-Content of type "text/html" skipped
+Alexander
