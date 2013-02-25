@@ -1,63 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/2
-Message-ID: <521DF711.8030704@openstack.org>
-Date: Wed, 28 Aug 2013 10:11:45 -0300
-From: Thierry Carrez <thierry@...nstack.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: [OSSA 2013-024] Resource limit circumvention in Nova private flavors (CVE-2013-4278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/16
+Message-ID: <20130225201023.GA6537@openwall.com>
+Date: Tue, 26 Feb 2013 00:10:23 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, Feb 25, 2013 at 07:45:01PM +0100, Mathias Krause wrote:
+> Did you even try to run the exploit on a v3.2 kernel? Or even more
+> simple, looked at the code of a v3.2 kernel?
 
-OpenStack Security Advisory: 2013-024
-CVE: CVE-2013-4278
-Date: August 28, 2013
-Title: Resource limit circumvention in Nova private flavors
-Reporter: Ken'ichi Ohmichi (NEC)
-Products: Nova
-Affects: All versions
+No.  I think my role in this discussion is to bring up the right
+questions and have you answer them, for others to have those answers.
+I hope you don't mind. :-)  Personally, I don't care about this specific
+bug much (not relevant), but I do care about handling of Linux kernel
+bugs in general.
 
-Description:
-Ken'ichi Ohmichi from NEC reported that the fix for OSSA 2013-019
-(CVE-2013-2256) was incomplete. Any tenant was still able to boot any
-other tenant's private flavors by guessing a flavor ID. This potentially
-allowed circumvention of any resource limits enforced through the
-os-flavor-access:is_public property.
+While we're at it, I notice that lately many of us use "kernel" in the
+Subject to refer to the Linux kernel.  I wonder if this little detail
+makes this mailing list a little less comfortable for non-Linux folks.
+Maybe we should put "Linux" or "Linux kernel" into the Subject on those
+occasions, not to discourage non-Linux discussions in here.
 
-Havana (development branch) fix:
-https://review.openstack.org/#/c/42922/
+> There is no sock_diag
+> anywhere in the kernel; there is only inet_diag. And inet_diag hadn't
+> and still does not have the out-of-bounds access issue. So no, this
+> bug is non-existent on a v3.2 kernel.
 
-Grizzly fix:
-https://review.openstack.org/#/c/43281/
+Thanks!
 
-Folsom fix:
-https://review.openstack.org/#/c/43296/
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4278
-https://bugs.launchpad.net/nova/+bug/1212179
-
-Regards,
-
-- -- 
-Thierry Carrez
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJSHfcRAAoJEFB6+JAlsQQjpvQP/j1I8/ZNLxCB14BBIYOio9Ra
-ZIWcHAEwlZG0z0AtN2YACBnE/kXXu5lCy4fmQ8tQWpPAicKFp5zzFTBnz4Pt9BiD
-KtcDHe9keOfmGfIo1dWCZ3UIZt3dmoAuN0BDnS3XZpniufeczZDw3HInQJD17nn1
-yrdHIZBt+0SL/wRRGQYcHy8e5EdCD2a2MNEsbYqDqptgBRHL51hUhRyxX8LMEtOI
-LsCOvLqnBwOgUlkgRKtkKaYRwxAvHaD3JejWveNqlFXIf6i+j+jrPCophaAYOvTT
-ET2pmtEbY4yA6Os64yLALFm01I3L4fYeph4FMo7V96PYU13Xfda4Fql4trKzIwxq
-8NCRYMrEyM1Tqi8rjyMA4ed4N3QU83ZHjDYpUO2cz8cH2KNMGCIDuLDoLXIyFOs+
-rskNXzVIbQSi0iCS1I0bFfCevOjOyDral+tXW/0bXoRZiIAytq0jWPbr9rC5jmGt
-w7PXlW5g94pn6somugggfQTYcO1OawGXcTz+5wfjvadSk+RCY0hdHSwcw3DcuRoY
-UsZulKplYN/STawQ0ZoM8vqz1QnbcqNw5asRfSXRZ0j38Y7ZrLBUuNWS9bQJ1rN6
-ZYy6cf5uNDkOEsiQu9JuG+CsZUz05GZPgclM+HHjGIatUneKfAm8fqfzPASPsTaX
-Crc4E9EcihvoDeqISjdQ
-=UGXf
------END PGP SIGNATURE-----
+Alexander
