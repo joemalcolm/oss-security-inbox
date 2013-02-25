@@ -1,38 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/23/9
-Message-ID: <20130223073447.GA23632@suse.de>
-Date: Sat, 23 Feb 2013 08:34:47 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: PackageKit"update" allows downgrade of packages when using the "zypp" backend
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/2
+Message-ID: <CA+rthh9U_gVARki=eUHP=R8Lm9X2pT4J059gBFmdrqUFdYjKyQ@mail.gmail.com>
+Date: Mon, 25 Feb 2013 11:41:33 +0100
+From: Mathias Krause <minipli@...glemail.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Feb 25, 2013 at 11:13 AM, Solar Designer <solar@...nwall.com> wrote:
+> On Sun, Feb 24, 2013 at 10:10:45AM +0100, Mathias Krause wrote:
+>> An unprivileged user can send a netlink message resulting in an
+>> out-of-bounds access of the sock_diag_handlers[] array which, in turn,
+>> allows userland to take over control while in kernel mode.
+>>
+>> Patch (already in net/master):
+>> http://thread.gmane.org/gmane.linux.network/260061
+>>
+>> Affected versions:
+>> v3.3 - v3.8
+>
+> Nice find!  Do you happen to know of distro backports of the affected
+> code to older kernels?
 
-On openSUSE we have started to allow local logged in users to install
-online updates (but not install new packages or remove ones), as this
-seems a common and secure operation to us.
-(Also done in light of the Linus Torvalds flame posting.)
+No. I haven't investigated this any further. So I don't know.
 
-PolicyKit rules in PackageKit also allow this in the vanilla version:
-	org.freedesktop.packagekit.system-update
-shipping default is "yes" for local logged-in active users.
+>  When you wrote that the bug is "in there for
+> ages", did you mean that 3.3 has been out "for ages" or something else?
+
+Kind of. The missing upper bound check was (and still is) in there in
+older kernels as well, at times as this code was still living in
+inet_diag.c. But it wasn't (and isn't) vulnerable as the
+inet_diag_handlers[] array is 256 elements big. So userland cannot
+exploit this as the type for the family is __u8.
+
+>> PoC is not attached this time but can be requested on demand. Hint:
+>> Works well on Fedora 18, bypassing all mmap_min_addr checks. ;)
+>
+> SynQ posted a (different?) PoC here:
+>
+> https://rdot.org/forum/showthread.php?p=30828
+>
+> Apparently, high values of mmap_min_addr (like 131072) happen to work
+> against this one, but they might not work against other attack vectors
+> or/and kernel builds.  The bug is not a NULL+offset dereference, so
+> mmap_min_addr was not supposed to help against its exploitation - it
+> just happens to, sometimes.
+
+Well, my Russian is actually non-existent but from reading the code,
+they should use other values to get much more reliable and, for that
+matter, higher addresses ;)
+In fact, on x86-64 one can generate addresses far, far away from mmap_min_addr.
+But sorry, I won't disclose any further details, to not get into legal
+issues. In Germany it's quite hairy to do things like that :/
+But I can provide you my PoC in a private email -- for security evaluation.
 
 
-So far we assumed that the update operation only allows upgrading versions.
-
-The enforcement of this rule did not fully work, so at least the "zypp"
-backend of PackageKit allowed downgrade of packages using this call.
-The "update" method also allowed installing non-update resolvables like
-patterns or even new packages.
-
-We have not checked the other backends, they might also be affected.
-
-https://bugzilla.novell.com/show_bug.cgi?id=804983
-https://bugs.freedesktop.org/show_bug.cgi?id=61231
-https://gitorious.org/packagekit/packagekit/commit/d3d14631042237bcfe6fb30a60e59bb6d94af425
-
-
-As the default assumed secure behaviour is violated, this requires a CVE.
-
-Ciao, Marcus
+Mathias
