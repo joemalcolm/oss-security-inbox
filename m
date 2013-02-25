@@ -1,96 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/2
-Message-ID: <51130132.9030109@redhat.com>
-Date: Wed, 06 Feb 2013 18:19:46 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/22
+Message-ID: <512BD689.8090908@redhat.com>
+Date: Mon, 25 Feb 2013 14:24:25 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Michael Koziarski <michael@...iarski.com>, rubyonrails-security@...glegroups.com, Steven Christey <coley@...re.org>
-Subject: Re: Potential Query Manipulation with Common Rails Practises
+To: Bastian Blank <waldi@...ian.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: libvirt kvm-group writable storage
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Just a heads up, the CVE situation for these issues is complicated
-(multiple languages/interfaces/backends/applications are affected in
-various combinations). Mitre is aware of it and working on a response,
-so until then I'm holding off on assigning any CVEs.
+On 02/25/2013 12:36 PM, Bastian Blank wrote:
+> Hi
+> 
+> libvirtd in privileged (root) mode runs qemu/kvm guests with a
+> different user. It set owner/group of storage used by this guests
+> to this user and group. In Debian this is libvirt-qemu:kvm.
+> 
+> | brw-rw---T 1 libvirt-qemu kvm  254, 11 Feb 25 17:08 /dev/dm-11 |
+> brw-rw---T 1 libvirt-qemu kvm  254, 12 Feb 25 17:50 /dev/dm-12
+> 
+> The kvm group is used for generic access control on /dev/kvm, so a
+> lot of users may have access to this group.
+> 
+> | crw-rw---T 1 root kvm 10, 232 Feb 25 18:04 kvm
+> 
+> This allows write access to unrelated users to this storage.
+> 
+> Affected is at least Debian Squeeze (0.8.3-5+squeeze2) and Debian 
+> experimental (1.0.1-2). Reference is http://bugs.debian.org/701649
+> 
+> Please assign a CVE.
+> 
+> Bastian
+> 
 
-On 02/06/2013 03:51 PM, Michael Koziarski wrote:
-> Common patterns used in Ruby on Rails applications could allow an 
-> attacker to generate SQL that, when combined with some database 
-> server's typecasting code, generates queries that match incorrect
-> records.
-> 
-> Note: This is a code and best-practise advisory, there is no patch
-> to apply or updated version to install.
-> 
-> Databases Affected:  MySQL, SQLServer and some configurations of
-> DB2 Not affected:        SQLite, PostgreSQL, Oracle
-> 
-> Outline ------- When comparing two values of differing types most
-> databases will either generate an error or return 'false'.  Other
-> databases will attempt to convert those values to a common type to
-> enable comparison.
-> 
-> For example in MySQL comparing a string with an integer will cast
-> the string into an integer.  Given that any string which isn't an
-> invalid integer will convert to 0, this could allow an attacker to
-> bypass certain queries.
-> 
-> If your application has XML or JSON parameter parsing enabled, an 
-> attacker will be able to generate queries like this unless you
-> take care to typecast your input values.  For example:
-> 
-> User.where(:login_token=>params[:token]).first
-> 
-> Could be made to generate the query:
-> 
-> SELECT * FROM `users` WHERE `login_token` = 0 LIMIT 1;
-> 
-> Which will match the first value which doesn't contain a valid 
-> integer. This vulnerability affects multiple programming
-> languages, and multiple databases, be sure to audit your other
-> applications to see if they suffer the same issues.
-> 
-> Work Arounds ------------ There are two options to avoid these
-> problems.  The first is to disable JSON and XML parameter parsing.
-> Depending on the version of rails you use you will have to place
-> one of the following snippets in an application initializer
-> 
-> Rails 3.2, 3.1 and 3.0: 
-> ActionDispatch::ParamsParser::DEFAULT_PARSERS.delete(Mime::XML) 
-> ActionDispatch::ParamsParser::DEFAULT_PARSERS.delete(Mime::JSON)
-> 
-> Rails 2.3: ActionController::Base.param_parsers.delete(Mime::XML) 
-> ActionController::Base.param_parsers.delete(Mime::JSON)
-> 
-> If your application relies on accepting these formats you will have
-> to take care to explicitly convert parameters to their intended
-> types. For example:
-> 
-> User.where(:login_token=>params[:token].to_s)
-> 
-> 
-> Fixes ----- Unfortunately it is not possible for ActiveRecord to
-> automatically protect against all instances of this attack due to
-> the API we expose. For example:
-> 
-> User.where("login_token = ? AND expires_at > ?", params[:token], 
-> Time.now)
-> 
-> Without parsing the SQL fragments it is not possible to determine
-> what type params[:token] should be cast to.
-> 
-> Future releases of Rails will contain changes to mitigate the risk
-> of this class of vulnerability, however as long as this feature is
-> still supported this risk will remain.
-> 
-> Credits ------- Thanks to joernchen of Phenoelit for reporting this
-> to us and to Jonathan Rudenberg for helping to review the
-> advisory.
-> 
-> 
+Please use CVE-2013-1766 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -99,17 +44,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJREwEyAAoJEBYNRVNeJnmT4TMP/j5/9uvcYvXUsJJKe6bPrYh+
-E1Cqf5+VI0j3runz6GmPj9acg7y3DJYVajKJFmJfebvfIx7WABXo9it04wNDGb3a
-7AIJYmFSyJSP8gMfsj03uOQRD/c7xOMtMjQTbaLNbj5vzV1n80ACym4XxT87+v5L
-R7nxjBa1bgKuu/dc0BNMHRwynibBVPuTD38M42CLa9tfPBVP7vKGj5F/fVVAyPtk
-h6/+VAmIAxeCDeNhcdKaL690yGgTADAGznPvLi1UIEYynCFX6/I+Sd+9+PqN4vfB
-blXfHU0eqPxJWWGRHK4hXfcy0Xn2sguZvik1dJD74pnv4hsk9fxibtias+7odmL1
-eVQIW0wnBDHwS/591u5c90ngsOTCHEzR6CG9D9DdtNdcn/BUcyi+3ZCUu/3JTJyv
-I+sqNhDTEI17VSuKlxY4+9u/tH8f7A1GUuyN8RbCx9aj6/cpQyqbE7P3N6mChIdy
-k9ClB9+6TDcNXLcNpaAuRrcv9fIPVTM9ss+GknG8UJcEcKJTMHGMrxK16rB7ty3W
-tnPWEBvcSsteJnzQPz7I+KuD5YLuH1XTmzjjhuGXDF5bAb40dG3jXjx8qoeSdZP7
-Geu0OioG9fY8eOCRwEaZlCFOW+Q0NBNNVdHhaGpVaN9GKcDcuTIW+viSH6RfcDj2
-iUIs7ozTugG3z0WHMWBT
-=Zxvd
+iQIcBAEBAgAGBQJRK9aIAAoJEBYNRVNeJnmT8EMQAMa1H0ohO260tA037ynQsPZt
+xsgfjODQyH5DvC0u6/TaenkqdC91wgWuD5pRCgtTzIUOzuXGCYuyKqn9s+MTS1RW
+TN8vbuBnEZEZNssm1cCntTEuClJlD2ZoctwKVGN4WqGJpQhhN6wuLt0Kh2pgt+bm
+eJ8zhtvREpncjnt/GIOACIsshSysQONup4tWDOaag3RyBbkM1QDTV8CoA9STjBu4
+8/1NZ4+C9qsI94dV+F3C0cijZgDn8Ev62reZKsSYSxBUxreDhwj3DwKAA37bSpf5
+WKbjcfDlkuw2TNdwzPPm/NdJs+q8RiMOzCeIUD/vXzzXsfW8qjNDR2veG16+p1cw
+w+dLf7ggto00cSgTvNnwrEr14lCE73JVRvg6K+LUsHR5soNuyNGGYMIelvNcj6sh
+0xLSSIqREvFW2sVX2LKmOtRMz9YXmQgs4uqGqxMMh8mMcRZeJuTv2X05WydejLKc
+mYxc2hwL3urP7JhB28BYhF6KGZRbtcE5X3835cRuwH0AZIL5GW6V63d8FiEPHYMV
+Zn0pxOylVGqc2Jr8fzfUlmePh3fVY/H7jRmK+Q8Hrg15SbMho1XAwSw15mfSuNXA
+VKvMdoWuN7bFry2FG1/rf033B0E84Nl6P3HD+qjTvBsyT4yFNV9zdZ2vaJkzOCAK
+D4mwa1UNIq0b7ncoXGFI
+=S4IS
 -----END PGP SIGNATURE-----
