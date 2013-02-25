@@ -1,68 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/13/9
-Message-ID: <51BA5C6C.8080706@redhat.com>
-Date: Thu, 13 Jun 2013 17:57:32 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/12
+Message-ID: <CAHmME9pWu6VH9vZvAqChEdZX_d+DQqwQv3_tirm=QS46fjs2Zw@mail.gmail.com>
+Date: Mon, 25 Feb 2013 20:21:17 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, plugins@...dpress.org, moderators@...db.org
-Subject: Re: CVE request: WordPress plugin uk-cookie CSRF
+Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Easy easy, you're both right.
 
-On 06/06/2013 11:44 AM, Henri Salo wrote:
-> Hello,
-> 
-> While reproducing CVE-2012-5856[1][2] I noticed there is CSRF
-> security vulnerability in uk-cookie plugin and abusing it attacker
-> can insert XSS to front page of WordPress installation. Version 1.1
-> is the latest and I did not test older versions. OSVDB item[3]
-> should be updated. Plugin is currently disabled in WordPress plugin
-> repository so vendor URL is currently 404.
-> 
-> PoC:
-> https://github.com/wpscanteam/wpscan/issues/184#issuecomment-19038566
->
-> 
-Product: Uk Cookie Plugin for WordPress
-> Vendor URL: http://wordpress.org/plugins/uk-cookie/ Vendor SVN:
-> http://plugins.svn.wordpress.org/uk-cookie/trunk/ Vulnerability
-> Type: CWE-352 Vulnerable Versions: 1.1 and probably earlier Fixed
-> Version: N/A
-> 
-> Kurt, could you assign CVE-identifier for CSRF vulnerability,
-> thanks.
-> 
-> 1: http://seclists.org/bugtraq/2012/Nov/50 2:
-> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-5856 3:
-> http://osvdb.org/87561
-> 
-> Similar plugins are available:
-> http://wordpress.org/plugins/uk-cookie-consent/
-> 
-> -- Qentinel, Henri Salo http://www.qentinel.com/en/
-> 
+The original code in the aforementioned commit was written during the
+v3.2-rc4 days, as Dan said, but it wasn't merged into Linus' tree
+until the following January, in time for the v3.3 release with
+9753dfe19a85e7e45a34a56f4cb2048bb4f50e27, as Mathias said.
 
-Please use CVE-2013-2180 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRulxsAAoJEBYNRVNeJnmTEDMP/2oKFX6X2D4pjglDAKmyqZOq
-vNnQhX77xYDvjfi4VkDfDRk+Ja3v9VWP4oA/sF5GkHGQq2wdUWzTztvz92GY7vB+
-eKYr9rJb47wUt4wwPSzP6xMBIP2fzpA8Znl4UiNhJKsCPLEgc4tNq2qeIJGv8Izd
-1FM4pqyZaiGaADvSuwY5CcH+3CmJlmkaufr9b8OV1AB/S5TMiDUZuTUTdvtXVy0J
-Np0yiRESrp1qRbALTS3cFteSWRFMiowfha3WzOXQRwfVoQaRZw2n2b8PqRuF/saf
-cRsBI/5hKigD9NwaGPsdRk/MHVar77dC+/87XJF1OVjcY1W5V7qQyG+9I4aIkJ2n
-2591jL9lkgVRanuc73lZY1sGT6UvjE2g6fNXGzzx9UpoCr7WLUPanJ83WXObdMzF
-TdHrDXCoVGJQbsCM9Ar94tDPbV32tEdEzxVLkZOMpniJUk4/ZN6ihKMHiiVBaiwu
-7owPdBHhbW56MXZbTRfEB+mOuJ2e/gYfFbXw+DzvivzynOAuoFZJ88ylO7K7Gdgv
-PPR8nYui7mPv2tQLkgcfv7jgmRsq+BfOfm1nkYdd/DvImggCz6TvG9qDY1cvz/wk
-Hvc0hlyFXyuwT3B202t+GkAFV1JzGggLD4jgYBPoupaqDjHRJWqQIk+blAguW56G
-HJ9H3jNuSimcj6s+VRU3
-=lS9g
------END PGP SIGNATURE-----
+Jason
