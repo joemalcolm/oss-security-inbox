@@ -1,59 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/14/6
-Message-ID: <50F459AA.9080400@redhat.com>
-Date: Mon, 14 Jan 2013 12:16:58 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/5
+Message-ID: <20130225132745.GA3202@alf.mars>
+Date: Mon, 25 Feb 2013 14:27:47 +0100
+From: Helmut Grohne <helmut@...divi.de>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: memcached DoS when printing out keys to be deleted in verbose mode
+Cc: Roland Mas <lolando@...ian.org>
+Subject: fusionforge CVE-2013-1423 multiple privilege escalations
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 01/14/2013 10:13 AM, Vincent Danen wrote:
-> We got a report about a DoS in memcached when run with -vv
-> (verbose mode) and a request to delete a key is sent to the server
-> (via memrm). Because memcached doesn't null terminate the keys as
-> it prints them, fprintf may run off the end of the buffer.
-> 
-> This isn't a very significant issue (even without
-> SSP/FORTIFY_SOURCE if you could do something more malicious,
-> memcached won't run as root). Also note the docs indicate that
-> memcached should only be accessible via trusted users/hosts and not
-> the internet at large, so the exposure should be minimal.
-> 
-> References:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=895054 
-> https://code.google.com/p/memcached/issues/detail?id=306 
-> https://code.google.com/p/memcached/issues/attachmentText?id=306&aid=3060004000&name=0001-Fix-buffer-overrun-when-logging-key-to-delete-in-bin.patch&token=3GEzHThBL5cxmUrsYANkW03RrNY%3A1358179503096
->
-> 
-> 
-> Could a CVE be assigned for this?  Thanks.
-> 
+I am publicly disclosing fusionforge CVE-2013-1423 today. On the 25th of
+January I reported one of these issues to the Debian security team and
+the fusionforge maintainers. In the process of fixing the issue a number
+of further issues surfaced. All of these issues currently covered by the
+single CVE-2013-1423 have in common that they related to privileged
+operations not properly checking their environment and thus leading to
+privilege escalation. Let me give an easy to exploit example.
 
-Please use CVE-2013-0179 for this issue.
+Quoting deb-specific/user_dump_update.pl (fusionforge 5.2-1):
+|       $home_dir = $homedir_prefix.'/'.$username;
+|       unless (-d $home_dir.'/incoming') {
+|           mkdir $home_dir.'/incoming', 0755;
+|       }
+|
+|       my $realuid=get_file_owner_uid($home_dir);
+|       if ($uid eq $realuid){
+|               system("chown $uid $home_dir/incoming");
+|               system("chmod 0755 $home_dir/incoming");
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+This code is executed as root in a cron job. By replacing ~/incoming
+with a hard link to some other file (.e.g. an .ssh/authorized_keys file
+from a different user) an attacker can gain ownership of files.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+The initial report related to plugins/scmcvs/cronjobs/ssh_create.php
+which contained a chown to ~user/.ssh which is user controlled.
 
-iQIcBAEBAgAGBQJQ9FmpAAoJEBYNRVNeJnmTrZ0QAMSuV4tfSGZbLqn8KgBikAbF
-iSYVVHQarteb0qNQcOvmr0DxW+3OVLZjwP4bcQ8T9K3rwZh6FG+u8hE+9JdDrOQ7
-VFhan/fB38Xan6MYEdzZrEKebMwZWDDRi+gMM1HMPIxuakIcRpTh4mRZR8a1zHNi
-C4Jp0Z4zQ+PxiB0IzojlimtNuWVYeFvf2wHGdcIGPEOBn9+9ook2vJnhiJubdjqX
-YbrzQHDak8tt9ZkUmUORVud3I08sstP8tq5BcJZtQijfA6H1vOwW8324Up4g4x7p
-B8nmeDR/yWiKBSRdYXtDiIWBeWKtsYSBFRHuOzxOTsCXs7JWW1H1HmY10lXPgGtq
-iGghVdGg5jQNRO3VqrWpQ3O8jQkZehq00nYF5GIxYgqJxaQoyUpCnnvH9PtN2zvl
-YrFGL9/vFKwp4pChwBdKoZuvUUiQkU6LvKAuGbLLtvl1bi5fRz1vycVjSeKBVJyz
-hP7e/MNkJz7jpmAYp1zuKwGyZDAL8k3qsVyPK16nR9JL4frnCtE6un4B9InW+qZg
-IKGrgu+OsYcrQAs/Zq2mDuIZ4OZtgixr7dVIqiN32pgt/hRwVwTTOzIWDP6rmtEY
-Di4/YK0xVuULHD8Eama5hGu6u0mzXrIhEI+JXwl+l6LlxlOkDtap7HaHfsU94YNh
-/7Drc1Ky4Th3NsxNNbcT
-=CI8z
------END PGP SIGNATURE-----
+Most of the issues relate to usage of chown or chmod on objects
+controlled by a user. These issues have been avoided carrying out
+operations on user controlled files with the effective permission of the
+user (seteuid). Another source was TOCTOU race conditions which have
+been avoided by using O_EXCL which is file mode "x" in php. Also some
+file permission were only fixed after closing the file (information
+disclosure) which is now done at open time by using umask.
+
+Roland Mas iteratively updated the sources with me giving feedback on
+issues. The resulting patches have been commited to the respective git
+branches. Please have a look at those patches for further details.
+
+5.0: https://fusionforge.org/plugins/scmgit/cgi-bin/gitweb.cgi?p=fusionforge/fusionforge.git;a=commitdiff;h=0cc51b3aca51fa915a35195fdf729bcdb903f2af
+5.1: https://fusionforge.org/plugins/scmgit/cgi-bin/gitweb.cgi?p=fusionforge/fusionforge.git;a=commitdiff;h=9937b9d94ab60ff67fe249c1b9a6c8e3fc1778ba
+5.2: https://fusionforge.org/plugins/scmgit/cgi-bin/gitweb.cgi?p=fusionforge/fusionforge.git;a=commitdiff;h=1fc730b97c797e03b89cd37823ab345d35286cf4
+
+Here is a list of files affected:
+
+contrib/gforge-3.0-cronjobs.patch (removed)
+cronjobs/homedirs.php
+deb-specific/fileforge.pl (removed)
+deb-specific/group_dump_update.pl
+deb-specific/ssh_dump_update.pl
+deb-specific/user_dump_update.pl
+plugins/scmbzr/common/BzrPlugin.class.php
+plugins/scmcvs/common/CVSPlugin.class.php
+plugins/scmcvs/cronjobs/cvs.php
+plugins/scmcvs/cronjobs/ssh_create.php
+plugins/scmgit/common/GitPlugin.class.php
+plugins/scmsvn/common/SVNPlugin.class.php
+plugins/wiki/cronjobs/create_groups.php
+utils/cvs1/cvscreate.sh (removed)
+utils/include.pl
+
+Finally I would like to thank Roland Mas for his thorough work on these
+issues, his quick reaction and the nice interaction.
+
+Helmut
