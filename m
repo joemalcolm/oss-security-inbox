@@ -1,53 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/9
-Message-ID: <5178289B.5050804@redhat.com>
-Date: Wed, 24 Apr 2013 12:46:51 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/23
+Message-ID: <512BD6F1.3040809@redhat.com>
+Date: Mon, 25 Feb 2013 14:26:09 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, security@...dpress.org
-Subject: W3 Total Cache 0.9.2.8 Remote Code Exec
+To: oss-security@...ts.openwall.com
+CC: "Jason A. Donenfeld" <Jason@...c4.com>
+Subject: Re: kernel: tmpfs use-after-free
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Is there any way to get the WordPress community involved in actually
-handling security issues properly? E.g. requesting CVE's, or heck,
-I'll settle for being notified via email directly. I found out about
-this stuff on Reddit (linked to Tony Perez's blog posting) so I read
-the code and voila:
+On 02/25/2013 12:50 PM, Jason A. Donenfeld wrote:
+> Hey all,
+> 
+> While everyone's going wild hndl->dump'ing with CVE-2013-1763,
+> there's apparently been another silent security fix with 
+> 5f00110f7273f9ff04ac69a5f85bb535a4fd0987 [1]:
+> 
+>> tmpfs: fix use-after-free of mempolicy object
+>> 
+>> The tmpfs remount logic preserves filesystem mempolicy if the
+>> mpol=M option is not specified in the remount request.  A new
+>> policy can be specified if mpol=M is given.
+>> 
+>> Before this patch remounting an mpol bound tmpfs without
+>> specifying mpol= mount option in the remount request would set
+>> the filesystem's mempolicy object to a freed mempolicy object.
+>> 
+>> How far back does this issue go? I see it in both 2.6.36 and 3.3.
+>> I did not look back further.
+> 
+> 
+> The commit message goes on with details on how to trigger it. Note 
+> that as of 5eaf563e53294d6696e651466697eb9d491f3946 [2], you can
+> now mount filesystems as an unprivileged user after a call to 
+> unshare(CLONE_NEWUSER | CLONE_NEWNS), or a similar clone(2) call.
+> This means all those random random filesystem bugs you have laying
+> around in the junk bin are now quite useful. ++tricks;
+> 
+> Cheers, Jason
+> 
+> 
+> [1]
+> http://git.zx2c4.com/linux/commit/?id=5f00110f7273f9ff04ac69a5f85bb535a4fd0987
+>
+> 
+[2]
+http://git.zx2c4.com/linux/commit/?id=5eaf563e53294d6696e651466697eb9d491f3946
+> 
+> -- Jason A. Donenfeld www.zx2c4.com
+> 
 
-http://wordpress.org/extend/plugins/w3-total-cache/
-
-+* Improved security for mfunc, now disabled by default and requires
-security string in order to execute
-
-+        if (!defined('W3TC_DYNAMIC_SECURITY'))
-+            return;
-+        $buffer = preg_replace_callback('~<!--\s*mfunc\s*' .
-W3TC_DYNAMIC_SECURITY . '(.*)-->(.*)<!--\s*/mfunc\s*' .
-W3TC_DYNAMIC_SECURITY . '\s*-->~Uis', array(
-
-Please use CVE-2013-2010 for this issue.
-
-
+Please use CVE-2013-1767 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJReCibAAoJEBYNRVNeJnmTVJYP/1kkvewSW9TCa+4j7fg+1YOG
-YD3noZd9vttAkJBhR7y30Wi4/16WwtMHfrmTVxRjh7o6ZSv2fvZMZI0GrICdWIFE
-pLStD6eKe8eIumV/1iAVL5514Qm50oJ/ZcCGVTmfz7Isf8df1s5Udz6VMqLIZpjG
-nosnQfSyOr7rcycmGPbXdTMguCczrj4aRPLOcH5PdY1T9JCiJar/2UmqWYZw2M0U
-fA1BE38++tDYmSNi7XoLkfpUt6Z7Bk19QzGCDBBpqY7aWefo4UWEQ9Amx3mj6TCL
-gFv5F9n763UeEzXRYHu2gawF+eXfW21Iz+EzsSyP/UvNqqfYe+/oaieb7yh8Iqq2
-icrXAhCe/5gbyx2DG98ldoE7Zj1CEsN1Wqmc+3SHWGoBI3el/TG6iCRBZeGk/Vje
-xG2U0wwXvO7jInaurLt7SsK5MKU2ALh/22MhX8t+1wsuOtC20FKTh5F9TCThmtxu
-evYMi+tyEcNvNE2E9F52VK5t+/QGWMeXVS8lH2y3nw02a3Vv9hUvQz1JwQ2dZQNr
-hEsBZBDR15TAt+umbEDUSobDtB8xX+NT9rZ6F7dAkJ8O3kTB5ZQRAcpAL7kdWYOL
-pv14kiwJFXEV3JWYRhU1FKti99QHWVgP4iR2a9wThJ8WSNhkQGzusv4fz8xarpgl
-vEyGkNH3sBenzVmbbxQj
-=h+jS
+iQIcBAEBAgAGBQJRK9bxAAoJEBYNRVNeJnmT+KAP/2kWFMI53p1OVhS3/kIAySJl
+ScgB7KUoi7MbqG9yMlk2bN1/xsfea8fsZpGLRZKzHrzZ3b39EUKMSEH4hGqadlNm
+gYS4qcsSHK9h1ZXqtIboC8EtrJ/FabRw0rgD++LhqkoUhaDgjiwgHPBM4bd4E7TM
+Pq3Ch8aZawS4vB2CMHpXhFzpQv/r+S/PHl2ckfvrEOdhfLpEWyAF6e9FMJYI6H7+
+UKOT8C39uFvHxtI2ktzdU+kvu8OdXq+xXYegcNld6oUQ3+8l1Nxscf49+SqqROM0
+XaS272Rq4ABeMMTaPreRk+879vbUrDi2TbfbH863x5ZGQMMMHjTusSg/6/18kB4Q
+y6ZghNCNj9gzx2EmmS8GIt+JBVtYuQNiGZRVRdFW9McFgYS5eE9hydaa6SR/q7EI
+ZRteWVWfHsSt/ZFAL3EWbUQPNzEFg/M2z9q1Y2uDFYzWyzvIHYI+PWji45IO0bvw
+tq+k/3AqjZrSKPlO4rb8D4Mf7TMGgu6IDLye+6aBGklvZthW1qBXqS29dxctbhi7
+w48Q8kUXCX72ha3EfHmDvek1OX/HBiKX3SRFH6TlvnRuyVUkoRssA0KyIxAuKqE0
+71DUh9FACoHgiIsxsDruFVOLOo2EA8ZRkOhyPa7nZ3DcnJBU923pQY/FodIn7RI6
+dein18BQzW+5i0yxZLXB
+=sB1j
 -----END PGP SIGNATURE-----
