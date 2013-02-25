@@ -1,90 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/27/2
-Message-ID: <517B4FCB.40906@redhat.com>
-Date: Fri, 26 Apr 2013 22:10:51 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/20
+Message-ID: <512BD671.6080509@redhat.com>
+Date: Mon, 25 Feb 2013 14:24:01 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Alistair Crooks <agc@...src.org>
-CC: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>
-Subject: Re: upstream source code authenticity checking
+To: oss-security@...ts.openwall.com
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: PackageKit"update" allows downgrade of packages when using the "zypp" backend
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/26/2013 07:01 PM, Alistair Crooks wrote:
-> No, not really.  My point was that people seem to think that, just 
-> because something is signed, it must be 100% good from the right 
-> person.  I will agree that most of the time this is the case - 
-> however, relying on this to be the case would be imprudent.
-> There's
+On 02/23/2013 12:34 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> On openSUSE we have started to allow local logged in users to install
+> online updates (but not install new packages or remove ones), as this
+> seems a common and secure operation to us.
+> (Also done in light of the Linus Torvalds flame posting.)
+> 
+> PolicyKit rules in PackageKit also allow this in the vanilla version:
+> 	org.freedesktop.packagekit.system-update
+> shipping default is "yes" for local logged-in active users.
+> 
+> 
+> So far we assumed that the update operation only allows upgrading versions.
+> 
+> The enforcement of this rule did not fully work, so at least the "zypp"
+> backend of PackageKit allowed downgrade of packages using this call.
+> The "update" method also allowed installing non-update resolvables like
+> patterns or even new packages.
+> 
+> We have not checked the other backends, they might also be affected.
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=804983
+> https://bugs.freedesktop.org/show_bug.cgi?id=61231
+> https://gitorious.org/packagekit/packagekit/commit/d3d14631042237bcfe6fb30a60e59bb6d94af425
+> 
+> 
+> As the default assumed secure behaviour is violated, this requires a CVE.
+> 
+> Ciao, Marcus
+> 
 
-But they must already think that it's trustworthy or they wouldn't
-CARE about whether or not the software is signed because they wouldn't
-even be looking at it or care that it exists. The only reason you
-would care if the software is signed is if you intend to use it in
-some way (or you're the 0.0001% of crazy security researchers, which
-is basically no-one).
-
-> As to unsigned code being wide open, we have previous versions to 
-> compare against (and, in the sense that we're discussing it here,
-> the
-
-This assumes they have not been compromised already and the
-compromised bits brought forwards. This also assumes everyone runs
-diff -ru version1 version2 and audits the ouput. This is PROOVABLY not
-the case otherwise people would catch NORMAL security flaws being
-introduced.
-
-> people who will be comparing are the packagers for the Linux 
-> distributions, or the BSD packagers).  They are perfectly capable
-> of doing that, and should be.  As part of updating packages, they
-> should
-
-HAHAHAHAHAHAHAHAHAA MUAHAHAHA SNORT HAHAHAHAHAHA
-
-No. No as a rule they don't. Again if people audited source code
-changes for security flaws, by definition no new security flaws would
-be introduced (well they would be, but people would catch them).
-Seriously, think about it.
-
-> That wasn't my intention, so I'm sorry if it came across that way.
-> But can we also get away from the "we have signed distfiles now, so
-> everything is guaranteed to be safe for evermore"? Thanks.
-
-Most of us never said that (and I apologize if we didn't make it
-clear). We said "more secure", not "completely secure so stop
-worrying". If we didn't spell it out, we should have, but I think it's
-obvious from my post, Josh's post, etc that that is the intent.
-
-Right now we have code written by who knows what/who running on
-millions of servers with no oversight/audits/checks. Witness this
-weeks WP-Super-Cache debacle, or the timthumb.php thing. If peple
-actually audited the code changes they would have gone "wow...
-mfunc... wait.. can't this result in code exec..?".
-
-Oh and I've had NO response from the WP-Super-Cache guy so far. good
-thing he cares about security. And all the people that use his software.
-
-> Regards, Alistair
-
+Please use CVE-2013-1764 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRe0/LAAoJEBYNRVNeJnmTMNgP/2FPVVNNyfx75gGlae45QKpt
-CDJPA3klag33Y1j4mr+1D+pNKgsrHYStbn+RHCfx45QpJ2SqqfTpWP8WW3MTzuQX
-OjDlfNHfyTejiaXveNpCwhHEjyySNQCLRKNeo/G7j2Zh2cZH84kDuZPaEswTZbvU
-Jwmh1K6oIZE1ceH+mbSUXglwsmrZ7W+0bgCV9QrNn5m79NB71AbcjAb1+pnOVR7K
-x/msccsea+Pd17+PXS2vqDeVP2sS50xvtjekjvb2Hd27gHBeg2kBAg+JkrsslQhc
-kXSqxnUALDGTBTcjo6uHlO1IF9QHqzEeWC3G/gMHFsG04IZdfO2nIEi46/983rz+
-v6zLUXMsVwAlMouv/W09ZV0PwME1M5njKezrESz6OjbJiyhyOf1/gDWJUpbWpoNs
-FCbmtuZPKShBBKEhRyabUYV7cThsRm0gogo7wuLHXkgy2WiqRD4k2bpc0ptfEN8i
-ZiA0T7OGwcKjTtrZ1PPpI0+7oano9/gCguNcwaYAQ2u0vYbv9jQghN80d6eh3Sfs
-vibzqmx0bp3zQAgYJkwWrxAfe1SGpqd7kHBZ92LV5EJr4G7yYBjfYYUuvbr3NzAI
-Z1Z8xgNOCzW8A3+AsWtLcIvP2p/UKijxm7Ochk/9XxnauyS5OCTkvjfkwfOMv/14
-5SIBdo52tmSjuduu3jXo
-=9qZN
+iQIcBAEBAgAGBQJRK9ZxAAoJEBYNRVNeJnmTvgUQAMcAT3QN0a6dDWzK+2Y5pJEG
+ozK1TrS2/X9k5MatjGm9zfldI3Dodo8cvn++zHIWn21aRNSmUF+v5x+UNKEX/AoC
+fOS8kTRSe0D+KvsaHLGmB8ZwxTl5M2kMx82cky015ZDNB77fPpsaZOCMOEmYSNlU
+dt85EZkt6845sz+AEo1DaEnpvbxR3koEnA61unQUtVdbNv6xmh9WuPi7pX7vQ6Mb
+UqwWFNaGeqEbiygBc6RnGatcb0iqsH3Bv9huXhHhgT+o/oBoZ9yaFka2hbuSHe6p
+uOmtXiAKPItpOObUA3fHTOBXwCzF+QO+qzOzHleQotFfJCwkOHphmeDq08tZLwku
+zPG7L4fB/OL6MhwxiO2cBfV3MnmwmR3km7Yv/RpQ/g+IL3DL5cerhujWT0Zn7YTU
+kk5zE20baS8K4MFEEdApER3QpgNZZfnxCXRkp1gx058cvzdfrx8f9VOusSS2OLbH
++i65gTYzqhwJJVWJaCsagHh05311KkBdBtdvDhh/2GqRTsIxEKvBFZRsi4tQTc0C
+twJpP63Poy2OazO76esQRG8vlt2WGggWA+E87HIp/P8s8Msz0Ezd8kJgwpU3LzXW
+2Zy4mQA7dS68j2LaFy8n+nUu9EgolrsO7xSMegm1wYAFtFAEjjsemtGucvQhXR52
+gIyQM7ZqELbUrWTZ9TnR
+=EYRJ
 -----END PGP SIGNATURE-----
