@@ -1,51 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/1
-Message-ID: <51511180.1080706@redhat.com>
-Date: Mon, 25 Mar 2013 21:09:52 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/3
+Message-ID: <20130226113904.GN1722@dhcp-25-225.brq.redhat.com>
+Date: Tue, 26 Feb 2013 12:39:05 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: ibutils improper use of files in /tmp
+Subject: CVE request -- Linux kernel: call_console_drivers() Function Log Prefix Stripping buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+A buffer overflow flaw was found in kernels from 3.0 to 3.4 when calling
+log_prefix() function from call_console_drivers().
+    
+This bug existed in previous releases but has been revealed with commit
+162a7e7500f9664636e649ba59defe541b7c2c60 (2.6.39 => 3.0) that made
+changes about how to allocate memory for early printk buffer (use of
+memblock_alloc). It disappears with commit
+7ff9554bb578ba02166071d2d487b7fc7d860d62 (3.4 => 3.5) that does a
+refactoring of printk buffer management.
 
-On 03/25/2013 03:49 PM, Vincent Danen wrote:
-> It was reported on full-disclosure that ibutils suffers from
-> improper use of files /tmp that could allow a user to clobber files
-> as the user running ibutils (probably usually root).
-> 
-> I didn't see a CVE request for this or anything show up here; if
-> one hasn't been assigned, could it be?
-> 
-> Thanks.
-> 
-> References:
-> 
-> http://seclists.org/fulldisclosure/2013/Mar/87 
-> https://bugzilla.redhat.com/show_bug.cgi?id=927430
+In log_prefix(), the access to "p[0]", "p[1]", "p[2]" or
+"simple_strtoul(&p[1], &endp, 10)" may cause a buffer overflow as this
+function is called from call_console_drivers by passing
+"&LOG_BUF(cur_index)" where the index must be masked to do not exceed
+the buffer's boundary.
 
-Please use CVE-2013-1894  for this issue.
+Note: /dev/kmsg is root writable only (at least on RHEL/Fedora), but it
+still might cause issues in restricted root environments.
 
+References:
+https://bugs.gentoo.org/458780
+https://secunia.com/advisories/52366/
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRURF/AAoJEBYNRVNeJnmTLAEQAJAJTUMELV+Cb1TO5VZ3bPXi
-r+QmVkNQ3UmiOghXSrEli6xSam++o8BElOV0U8QvFNXgA+li+Q0cO2Q0Mr3tJul1
-cN03uk2TqN23VE00zd6e+2cl+NNmNCe0b6qGuIJVjaz3CSMGGQ+IZXmbHFVxMeK3
-fICzq94S0r/3PPhondXmX8QIaudaCa4pQey4dR0vWaIcoq7WN/QKk2p2zvDX+sVk
-+2wKg4tKTP3luIHlF53VRGlIW0jYryI6s7Lcen15gELMa3AbcgYNAqMmiGAUlBBJ
-lRe3W82FZM2vTh4fAjQU6hsmeXaJ6WYGg9btO4Br1Vubn3F5J6wChW8LTUMJaI7v
-MB9glPv7LdY+L+0qDpLWbdq0DlIWRmBDZNL7Mwvh4ZSJIsCTENdp+FgRNaNoCMWP
-uGybDpL3PIlam4XwhzYKgjMr31lwIc1nNzr6QVGRZOijSo+ZaLkV3It0ZG2a7JCf
-41Gdqjer3gyN3zSH5WQ33GA/UT0QHchJYmf+AnEQROMhsOGIZBvTpMmkEOQmcS00
-sp7omCvootJIAmaHesKIo1U3lwZ4kbIYO+j0dbl/lmHewoL0O/zmULL/BHwdZc5s
-S9EO7Qh/VZ03dM4rvnuRt3+zw+qWzzXqs1+wJS4IWMLKohbnHz364l3pLsQz2Gaa
-PP1j2t5J9pE9URLDnfwF
-=a+Xw
------END PGP SIGNATURE-----
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
