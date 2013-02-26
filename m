@@ -1,53 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/13/7
-Message-ID: <511B62E2.3000902@redhat.com>
-Date: Wed, 13 Feb 2013 02:54:42 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/9
+Message-ID: <512D1BDC.7040408@redhat.com>
+Date: Tue, 26 Feb 2013 13:32:28 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: chevalier 3as <chevalier3as@...il.com>
-Subject: Re: Potential HTTP Header Injection in Apache HTTPClient
+Subject: Re: CVE request -- Linux kernel: call_console_drivers() Function Log Prefix Stripping buffer overflow
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/10/2013 07:38 AM, chevalier 3as wrote:
-> Hi,
+On 02/26/2013 04:39 AM, Petr Matousek wrote:
+> A buffer overflow flaw was found in kernels from 3.0 to 3.4 when
+> calling log_prefix() function from call_console_drivers().
 > 
-> As I'm not sure if this is a vulnerability or simply a 'feature',
-> I'm posting the details for more information.
+> This bug existed in previous releases but has been revealed with
+> commit 162a7e7500f9664636e649ba59defe541b7c2c60 (2.6.39 => 3.0)
+> that made changes about how to allocate memory for early printk
+> buffer (use of memblock_alloc). It disappears with commit 
+> 7ff9554bb578ba02166071d2d487b7fc7d860d62 (3.4 => 3.5) that does a 
+> refactoring of printk buffer management.
 > 
-> The addRequestHeader method of the Apache HTTPClient module
-> version 3.x seems to allow the injection of more than a header
-> (potentilally the latest version 4.x too for addHeader method):
+> In log_prefix(), the access to "p[0]", "p[1]", "p[2]" or 
+> "simple_strtoul(&p[1], &endp, 10)" may cause a buffer overflow as
+> this function is called from call_console_drivers by passing 
+> "&LOG_BUF(cur_index)" where the index must be masked to do not
+> exceed the buffer's boundary.
 > 
-> Using the following code, it includes a third header in the
-> request: HttpClient client = new HttpClient(); PostMethod method =
-> new PostMethod("http://www.google.fr"); 
-> method.addRequestHeader("header1", "value1\r\nheader3: value3"); 
-> method.addRequestHeader("header2","value2");
+> Note: /dev/kmsg is root writable only (at least on RHEL/Fedora),
+> but it still might cause issues in restricted root environments.
 > 
+> References: https://bugs.gentoo.org/458780 
+> https://secunia.com/advisories/52366/
 > 
-> The real risk is adding a second request using a similar code: 
-> req.addRequestHeader("Content-Length:0\r\n\r\n" + 
-> "POST\t/anotherpath\tHTTP/1.1\r\n" + "Host:host\r\n" + 
-> "Referer:faked\r\n" + "User-Agent:faked\r\n" + 
-> "Content-Type:faked\r\n" + "Content-Length:3\r\n" + "\r\n" + 
-> "foo\n", "bar");
-> 
-> Because of the Content-Length header, the sever will consider it as
-> a seperate request.
-> 
-> Iis this an expected behavior ? if so developpers should be aware
-> of the risk letting a user input values.
-> 
-> A similar advisory for Flash is available here: 
-> http://www.rapid7.com/resources/advisories/R7-0026.jsp
-> 
-> My 2 cents, As
-> 
+> Thanks,
 
-Has anyone investigated this/can comment on this? thanks.
+Please use CVE-2013-1772 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -56,17 +44,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRG2LhAAoJEBYNRVNeJnmTYwcP/2PgkHgVU4K2dMzA0eRoseQF
-jZLY1geucutLHWBEhIxLRLsvtiT1ac/ejVMn9w2Bw9No8bplJ7ElAjlGv4+a7aHS
-TeNd9rV73DQq3SWibuonaXpODRONq6pTuoUMRhcGMdoYzOiSnHsLR+tix4ntJm4F
-qS1hGwTJ1Zly5SXmOftrNt9Hwv/S/aDXdDh+v9OTz3G45MD8+4mihefxQneWMPOT
-h0Q9g8aILoVAFaVo8YRXWI96MZ3atkPndzHUVrHR3MFiGDvJyvBEV9JdXJmxHjSA
-jt9eOjE7jhLOw3L0YBjZ/XZh66okyP+D2ofjFbzDE4+VTWV9PqgyOyPNpUPB445L
-pPDne0kxH+dVMOhQ3dtPGaP0KhYCKmza4spp00xD4WDI+FAaHeI3mhrSUn/7UShM
-ee201bktkCnXL/gXIih+QQnc9ehmzCFGhuVYktHDjecGmyRarre0xcZy8wW6jd7/
-qpL4znOo7NzA6Q/PVKVPuH1eyvr3J/RF3PPDTIIgjKhT7RHTs0m7Ff+dvON4HENM
-38iLtItj6ntRZ3BL5ke6Z9qkxj8qdBVWUTbcL6JRu+9mo4fCzlGQ9MzDnvHk7svs
-s0uvaeMbb6Qj86L+D9hr6kvFtu0HgftOILW/ygxLupZkEk9q4HJhZr+sHAeTRarN
-HNxkOdjxQZG9FUNCdZ6o
-=kiym
+iQIcBAEBAgAGBQJRLRvbAAoJEBYNRVNeJnmTDCEQANEgFCyRak8EKxS2KUItFiKT
+4k9/higKDji8ng7xLQS+0kgp4OwuSnS7xSmI+IkPCWwH0bSj4GXnVJmOMf9kRNhk
+eQr+VGtPZzIgAoqsVfKwU6fXR0xsG5pmzPwMwcTp4kuMG1IhjKTtRN4iYLp7hrmy
+sjORjoRNfHvCpC0k4Sc9IpFRHAZ/SxH5EX0kJmdDQuICbMDt61fbVneI1JhyHNFc
+V+3ZLBWFpHPyHNJewEfE3+/c5jY+X2J63g9UUxKp5bcSW0l/Sl+SkNuI8eeRdPMK
+lUNnOLx9I0SzSuvILd14LHmi6kMpATFa+mjhWIqbzjAlv/QfiTChZI5uTFAEQkgC
+VgPUk7TvS7Zt4ej9q4H9lqjVXycxUzaCfuio8062bC3s/G2VUrfMmD93wlimFi7s
+gpDdNjiYfjymNVAcxe5gcyoIKSVBOFHzxxEsliwh7/08YKDgihnalP3IH8wsODNy
+E7pSvsJerfybwiGC8UQvjKIIRh0n2AU0pWejcfnSWpgy458TLx3+ONtLNZ+mil+c
+E0WPdylU8+DsE+cwO4Rg6t4FEWv1JX/AOYLbP0j+Cq4HEhJNeao7xpMJpbHNCLCi
+Vbb9QDzIPXK52qGr8rQ22iWbGYQvNQp/awKL7tWyGfYtvRM1Whr/dRcnpUj0hAV8
+HvPyfMvPvcQhbbUNwuX0
+=i24c
 -----END PGP SIGNATURE-----
