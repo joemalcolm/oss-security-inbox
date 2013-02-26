@@ -1,69 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/3
-Message-ID: <20130426054147.GE23082@nef.pbox.org>
-Date: Fri, 26 Apr 2013 07:41:47 +0200
-From: Alistair Crooks <agc@...src.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/10
+Message-ID: <512D1BF0.90902@redhat.com>
+Date: Tue, 26 Feb 2013 13:32:48 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+CC: Moritz Muehlenhoff <jmm@...ian.org>, Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: monkeyd world-readable logdir
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 25, 2013 at 03:40:46PM +0200, nicolas vigier wrote:
-> On Thu, 25 Apr 2013, Alistair Crooks wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 02/26/2013 02:52 AM, Moritz Muehlenhoff wrote:
+> On Mon, Feb 25, 2013 at 02:02:00PM -0700, Kurt Seifried wrote:
+>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>> 
+>> On 02/24/2013 12:00 PM, Agostino Sarubbo wrote:
+>>> Monkeyd, a small, fast, and scalable web server, produces, at
+>>> least on gentoo a world-readable log.
+>>> 
+>>> # ls /var/log/monkeyd/master.log -la -rw-r--r-- 1 root root 0
+>>> Feb 24 19:56 /var/log/monkeyd/master.log
+>>> 
+>>> Upstream site: http://www.monkey-project.com/
+>>> 
+>> 
+>> This also doesn't look to be very active/widely used.
 > 
-> > 
-> > Q4. where's the public key for this?
-> > 
-> > A4. could be anywhere. If it's on one of the HKP servers, then cool.
-> > Not, however, that it can be verified - I know of at least one person
-> > who has had pubkey information uploaded to the key servers for a key
-> > he had no knowledge about. Anyone can put whatever email address into
-> > the userid that they want. If it came with the tarball, ho hum.
+> This is part of Debian stable, please do assign a CVE ID for proper
+> tracking.
 > 
-> Even if the key comes with the tarball, if the tarball is always signed
-> with the same key for all releases, then it's useful. You download the
-> key the first time, keep it somewhere (for instance in the package
-> source) and use it again to check next releases. And if a new release is
-> signed with a different key you know you need to be more careful and
-> can check if the key change is legitimate.
-
-Possibly. You actually know very little about the key before and after the
-signing took place; so you have no way of ascertaining whether the key has
-been used to sign other things fraudulently. Where a role account is used
-to sign packages, this is more worrying.
-
-But, yes, I'm being alarmist here again. I do agree that signing things
-is way better than not; but I am also well aware that just because something
-is signed does not mean that it should be treated as being without need of
-security.
- 
-> > Q5. what was signed?
-> > 
-> > A5.  if it comes out as a text document, according to RFC 4880, it has
-> > some weird properties; hopefully all tar files will be binary. 
-> > Whatever, what was signed was something with the same digest as the
-> > tarball.  Default algorithm is SHA1.  Second pre-image attacks on SHA1
-> > are getting closer to being possible, and there are means to modify
-> > entries in the tarball so that an attack is much easier.
-> > 
-> > Q6. Is this a DSA key?  (DSA keys rely on good entropy at signing
-> > time) If so, how good was the entropy on the machine used to generate
-> > the signature?
-> > 
-> > A6.  Again, unknown.
-> > 
-> > Q7. Has someone found the k value for Q6/A6 previously?
-> > 
-> > A7. They might have done. We'd only know if they told us.
-> > 
+> Cheers, Moritz
 > 
-> Same could be said about ssh, tls or almost anything using cryptography ...
 
-Absolutely, they share the same building blocks - see the Karlsruhe
-2010 proceedings for how to interchange ssh and pgp keys for signing
-and verification.  And the only difference between SSL and PGP is the
-assurance model - whether a trusted third party should be used (FSVO
-"trusted"), or whether that should be crowdsourced to the web of trust
-model.
+Please use CVE-2013-1771 for this issue.
 
-Regards,
-Alistair
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRLRvwAAoJEBYNRVNeJnmTKgQQAJzXSyFBVWemJUzvOwSb7BwM
+zPLb3l/gxAWimB65e/+KdtENFHeKnRSnVm97WFWPMi8+QZ+fIqtiuGevTbxxB4ts
+riWFjb5oo8g02C72QJUI3biXXesd9+5fEqOs/eGypma0Q43iZ+hVyr9wFrhRS5du
+1FPV15HTWHWBKlvChgzDILNo0xc7miSO8NrIBqwvDAm4LYybLySAg03jqPILyWWG
+CyzVpaSb3RuYfmD/tLNuKzgi2o30mTXBIyqCkINacBEfk6/4vf3N0SxdbTagT9ws
+LLnHMwgDfN1tkFH2eKRaACGrNH7ME3fsqFXs1ZhfC4cZoXvcqpn9n5sclKEB3pLp
+zYIeEtILRyMLyIiX6Js74kNNhO5+2IXsePuEDV/doiUNiQ2BcV9Z1xb3GzLWDy/8
+lWaSlBF6ZI0hznHq+VdTF96dLXVrhY0qlPdKKEuisbO8aZWzYNVgJF8MHu4jSzVq
+Bv3NrnBgb8aC1kdGdJIV+0UF5AgN8uC1I1JR5TjwV3oEZZvm5QxuXl5CFw8lVED/
+1Uh1wFT0kg1fPc1szEM1n1uIYFQaQ/QRDaTlc4HwEW967xe2wjAuei/wEVxxivhI
+d5NiRiRS+lurwicYnNZ8YIm06DKDo6+mcGpHXBvMbU4Bgw5GPIK9J+5IKR7Q1ptc
+WJYlgoEdz8LJPyQu3yLq
+=4lMW
+-----END PGP SIGNATURE-----
