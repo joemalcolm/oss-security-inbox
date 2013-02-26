@@ -1,26 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/23/4
-Message-Id: <63DC1E14-12C0-4EE7-A6B3-161310502AF7@redhat.com>
-Date: Mon, 23 Dec 2013 10:55:35 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE request: denial of service in Nagios (process_cgivars())
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/1
+Message-ID: <1572267.ZAauxAabhU@devil>
+Date: Tue, 26 Feb 2013 10:44:14 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE request: monkeyd world-readable logdir
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned to the following flaw?
+On Monday 25 February 2013 14:02:00 Kurt Seifried wrote:
+> This also doesn't look to be very active/widely used.
 
-A flaw was reported and fixed in Nagios, which can be exploited to cause a denial of service.  This vulnerability is caused due to an off-by-one error within the process_cgivars() function, which can be exploited to cause an out-of-bounds read by sending a specially-crafted key value to the Nagios web UI.
-
-References:
-https://secunia.com/advisories/55976/
-http://sourceforge.net/p/nagios/nagioscore/ci/d97e03f32741a7d851826b03ed73ff4c9612a866/
-https://bugs.gentoo.org/show_bug.cgi?id=495132
-https://bugzilla.redhat.com/show_bug.cgi?id=1046113
-
-Thanks.
-
+I don't see this as a valid reason to don't assign a CVE.
 -- 
-Vincent Danen / Red Hat Security Response Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (671 bytes)
+Agostino Sarubbo
+Gentoo Linux Developer
