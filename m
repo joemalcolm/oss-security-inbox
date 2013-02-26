@@ -1,77 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/19/2
-Message-ID: <51239F86.60806@openstack.org>
-Date: Tue, 19 Feb 2013 16:51:34 +0100
-From: Thierry Carrez <thierry@...nstack.org>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA 2013-004] Information leak and Denial of Service using XML entities (CVE-2013-1664, CVE-2013-1665)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/18
+Message-ID: <20330483.qpQBG611Ln@devil>
+Date: Wed, 27 Feb 2013 00:38:22 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: psi+ stores the cache file as world-readable
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tuesday 26 February 2013 14:27:23 Seth Arnold wrote:
+> Are there environments where ~/.cache isn't 0700 by default?
+I don't know
 
-OpenStack Security Advisory: 2013-004
-CVE: CVE-2013-1664, CVE-2013-1665
-Date: February 19, 2013
-Title: Information leak and Denial of Service using XML entities
-Reporter: Jonathan Murray (NCC Group), Joshua Harlow (Yahoo!), Stuart
-Stent
-Products: Keystone, Nova, Cinder (see note)
-Affects: All versions
-
-Description:
-Jonathan Murray from NCC Group, Joshua Harlow from Yahoo! and Stuart
-Stent independently reported a vulnerabilities in the parsing of XML
-requests in Python XML libraries used in Keystone, Nova and Cinder. By
-using entities in XML requests, an unauthenticated attacker may consume
-excessive resources on the Keystone, Nova or Cinder API servers,
-resulting in a denial of service and potentially a crash
-(CVE-2013-1664). Authenticated attackers may also leverage XML entities
-to read the content of a local file on the Keystone API server
-(CVE-2013-1665). This only affects servers with XML support enabled.
-
-Note:
-The vulnerabilities are actually in the various affected Python XML
-libraries, but we provide OpenStack patches working around the issues.
-
-Grizzly (development branch) fixes:
-Nova: https://review.openstack.org/#/c/22309/
-Cinder: https://review.openstack.org/#/c/22310/
-Keystone: https://review.openstack.org/#/c/22315/
-
-Folsom fixes:
-Nova: https://review.openstack.org/#/c/22312/
-Cinder: https://review.openstack.org/#/c/22311/
-Keystone: https://review.openstack.org/#/c/22314/
-
-Essex fixes:
-Nova: https://review.openstack.org/#/c/22313/
-Keystone: https://review.openstack.org/#/c/22316/
-
-References:
-https://bugs.launchpad.net/nova/+bug/1100282
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-1664
-https://bugs.launchpad.net/keystone/+bug/1100279
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-1665
-
-- -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJRI5+DAAoJEFB6+JAlsQQj2fQQALLE9GEOIRGcj9gXXQ5mDS3l
-/CWI6ljTlVWxXy143lAUbkpvW0AHx0S6wVU38Hh/wS6D3u4JpxC2lERcI6KB7XyF
-R6F7qWzdwulh+0GX9n+8rO0qLVkqhB6hn3bCVUKu20N+cromJHsSgzDU6lvVlUAU
-dwc9eFWmg2d7bpESUdltDo9yEnz0jXxzOpCseC5/zfSo5RnJU1Oi4ZaiXPzbRqqb
-bQzKRGevLddHAMKJnKrYvpg5471LQ8bC7rMYwq44c4HH0+ZhwQVgwyBxdeyNGISI
-kJ1LhTGlDdTN1SBV3QDc0//pai2tQtcY96sQJ+1FWl9wrAMft+hSyCmRlsX2O4O1
-zbN/iUEVmZRP1/JuD8tk+TDUlBdTSZai3pV9bVlRQ7GWUKSreDI38T87d+ZZe0Uz
-f63hafBSKGqQ/GD8s5HnJopvGK1vY2zgiNuORJc5PH8iPo/75YVRM3Ct6lFwooIe
-uPow6AbydISEVUbsK1AcLESQ6Uq4CufsNUColi1o+2PRlc2/Jt/ZXaFx2LfsE6ka
-m6cXJMIZZ6Mrz6ogtYnEYDkzPPQ7/oLXzVxoS3NCoh/LLxs838eqiAZ+mVVboAaO
-LOARFrqYw8wfg45JLqQ2mb/Oe10hPZdMwc+lQa2ccDYLBJXkrMKz7vHW8W47bM1H
-i5g9RJ8pkA5wFKxBgfKj
-=pNuW
------END PGP SIGNATURE-----
+You are completely right, but in case the .cache dir is not 0700, if these 
+files are not world-readable the problem never exist.
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
