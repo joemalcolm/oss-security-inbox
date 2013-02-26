@@ -1,33 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/6
-Message-Id: <201312120504.rBC54l3S026549@linus.mitre.org>
-Date: Thu, 12 Dec 2013 00:04:47 -0500 (EST)
-From: cve-assign@...re.org
-To: thierry@...nstack.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for a vulnerability in OpenStack Nova
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/14
+Message-ID: <1361914726.4116.2.camel@scapa>
+Date: Tue, 26 Feb 2013 22:38:46 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On mar., 2013-02-26 at 14:05 -0700, Kurt Seifried wrote:
+> The problem with security is you have to basically do it 100%
+> correctly 100% of the time
 
->writeable to all local users
+You can also look at other, more proactives approaches (hardening the
+memory layout, enforcing W^X etc.). Even hardening userland might help
+here.
 
-Use CVE-2013-7048.
+This is basically what's done in hardening patches like PaX/Grsecurity
+(with active exploit response on top). And yes, it comes at a cost, like
+everything.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Regards,
+-- 
+Yves-Alexis
 
-iQEcBAEBAgAGBQJSqUO7AAoJEKllVAevmvmsEX0IAI/IoYtztvePAIg0t3GukVng
-4Awl+bzlpsNyLuw/nfFeOFbiOZSMFAooiy5n7B6gQumWVPnKxDtuZ1PPbFdsJDkW
-mhIEAWJc1txJ9fV82jiFPCxxU2MGH7SbWz0FpWoWK8ktVRGoDt8yMOcOQOnjbKO1
-+TpJ/UyhPJxk6lr+YeThylFkijBeLMtRY9ndgwOkH5qIASQW79Il1aoaTsnseeVs
-RpOsWWIS2zs0hjymipDtkJjGs7rUD/GO3XGuDR8rjsdUXFYYK1VekNh3+6tLI/YP
-08CEqDkk65XyUkVFstZAcVJ8TLwqJ/X93DXJkbJmZXgtb23+SCyg1zDnHs0GRKE=
-=9tew
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
