@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/02/1
-Message-ID: <20130102180201.GA5867@pisco.westfalen.local>
-Date: Wed, 2 Jan 2013 19:02:01 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/15
+Message-ID: <5123276.QYWy9rty4J@devil>
+Date: Tue, 26 Feb 2013 23:04:24 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Curl insecure usage
+Subject: CVE request: psi+ stores the cache file as world-readable
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 26, 2012 at 12:38:19PM +0100, Moritz Muehlenhoff wrote:
-> On Thu, Nov 29, 2012 at 10:44:36PM +0100, Moritz Mühlenhoff wrote:
-> > > Also can someone collate and post a list of all the other apps using
-> > > curl insecurely and need CVE's with appropriate links to the
-> > > upstreams/etc? Thanks.
-> > 
-> > There are some, which are potentially affected, but where discussion
-> > with upstream is still pending.
- 
-Here are two more. These are the last two remaining issues found by 
-Alessandro Ghedini:
-Please assign CVE IDs:
+Psi+, a fork of psi, stores its files in ~/.cache/psi+ as world-readable.
 
-1. Zabbix
-https://support.zabbix.com/browse/ZBX-5924
+~/.cache $ ls -la psi+/
+total 52
+drwxr-xr-x 5 ago ago  4096 feb 25 09:41 .
+drwx------ 5 ago ago  4096 feb 24 23:58 ..
+drwxr-xr-x 2 ago ago  4096 feb 25 09:41 avatars
+drwxr-xr-x 2 ago ago  4096 feb 25 09:33 bob
+-rw-r--r-- 1 ago ago 32610 feb 25 09:41 caps.xml
+drwxr-xr-x 3 ago ago  4096 feb 24 23:58 profiles
 
-2. Moodle
-This one is two-fold. First of all Moodle embeds PHP-Cas and Moodle is thus
-affected by CVE-2012-5583 as well. (Same code, so same CVE ID).
+An unauthorized user could read sensitive informations in such dir.
 
-Additionally there's another issue specific to Moodle, which requires a CVE
-ID:
-https://github.com/tpyo/amazon-s3-php-class/pull/36
-
-Cheers,
-        Moritz
+Probably psi is affected as well.
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
