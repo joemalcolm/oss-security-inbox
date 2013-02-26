@@ -1,22 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/19
-Message-ID: <20130227161726.GD21645@kroah.com>
-Date: Wed, 27 Feb 2013 08:17:26 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/2
+Message-ID: <20130226095249.GA15401@inutil.org>
+Date: Tue, 26 Feb 2013 10:52:49 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Cc: Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: monkeyd world-readable logdir
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 02:59:17PM +0000, Benji wrote:
-> Ah the logic. Open source software, hidden secret hush hush no public
-> reporting patches.
+On Mon, Feb 25, 2013 at 02:02:00PM -0700, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 02/24/2013 12:00 PM, Agostino Sarubbo wrote:
+> > Monkeyd, a small, fast, and scalable web server, produces, at least
+> > on gentoo a world-readable log.
+> > 
+> > # ls /var/log/monkeyd/master.log -la -rw-r--r-- 1 root root 0 Feb
+> > 24 19:56 /var/log/monkeyd/master.log
+> > 
+> > Upstream site: http://www.monkey-project.com/
+> > 
+> 
+> This also doesn't look to be very active/widely used.
 
-Every single patch we make to the kernel is public, it is up to you to
-determine if you feel it is a "security fix" or not.  And to do so is a
-non-trivial task, something that I sure don't want to be responsible for
-trying to do.  And since no one else has ever stepped up to want to do
-it either, there's not much more that can be done.
+This is part of Debian stable, please do assign a CVE ID for proper tracking.
 
-Are you willing to do it?
-
-greg k-h
+Cheers,
+        Moritz
