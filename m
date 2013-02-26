@@ -1,29 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/14
-Message-ID: <1381530369.13764.484.camel@liliana.cdg.redhat.com>
-Date: Sat, 12 Oct 2013 00:26:09 +0200
-From: Michael Scherer <misc@...b.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/4
+Message-ID: <CAE6fNrJ9GFamcNnvbbZgfWOpromHSjnWGEgPgi_o_Nyy01J2sQ@mail.gmail.com>
+Date: Tue, 26 Feb 2013 15:56:04 +0100
+From: sd <sd@...ksheep.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for saltstack minion identity usurpation
+Subject: Archlinux/x86-64 3.1.x-3.7.x x86-64 CVE-2013-1763 sock_diag_handlers[] warez
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+http://pastebin.com/a9BrSGFY
 
-While looking for saltstack issues on github, i stumbled on this pull
-request :
-https://github.com/saltstack/salt/pull/7356
+I'd guess some might find this useful, worked on every x86-64 Arch
+encountered since 3.3. Might be fun to port this to detect other
+distros (since arch is the only rolling kernel widely used, the need
+never arose).
 
-It seems that saltstack, a client/server configuration system ( like
-puppet, chef, cfengine ) allowed to have any minions ( agent on the
-server to be configured ) to masquerade itself as any others agents when
-requesting stuff from the master ( ie, main server ).
-While I didn't fully check, this would permit a compromised server to
-request data from another server, thus leading to potential informations
-leak ( like passwword, etc ).
-
-Can a CVE be assigned, and I will pass it to upstream on the bug
-report ?
-
--- 
-Michael Scherer
-
+View attachment "archer.c" of type "text/x-csrc" (1676 bytes)
