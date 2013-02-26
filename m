@@ -1,33 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/04/1
-Message-ID: <1904201237.53293871.1357313344781.JavaMail.root@redhat.com>
-Date: Fri, 4 Jan 2013 10:29:04 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/5
+Message-ID: <20130226175601.GA5984@dq>
+Date: Tue, 26 Feb 2013 11:56:02 -0600
+From: "Joshua J. Drake" <oss-sec-vfat@...p.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Tim Waugh <twaugh@...hat.com>, Jiri Popelka <jpopelka@...hat.com>
-Subject: CVE Request - cups:  'Listen localhost:631' option not honoured correctly on IPv6-enabled systems when systemd used for CUPS socket activation
+Subject: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+All,
 
-  during the process of CUPS socket activation code refactoring in favour
-of systemd capability a security flaw was found in the way CUPS service
-honoured Listen localhost:631 cupsd.conf configuration option. The setting
-was recognized properly for IPv4-enabled systems, but failed to be correctly
-applied for IPv6-enabled systems. As a result, a remote attacker could use
-this flaw to obtain (unauthorized) access to the CUPS web-based administration
-interface.
+I'd like to request a CVE for an issue leading to a buffer overflow of
+a slab allocated buffer in the VFAT file system code. The issue
+manifests when converting UTF8 characters to UTF16 inside the
+"utf8s_to_utf16s" function. Reaching this code requires writing to a
+VFAT partition that has been mounted with the "utf8" option. Ubuntu
+10.04 mounts USB sticks with this option by default. Most Android
+devices mount eMMC/SD cards/etc with this option.
 
-References:
-[1] https://bugzilla.novell.com/show_bug.cgi?id=795624
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=891942
+The issue affects kernels prior to 3.2. Many Android devices remain
+affected today.
 
-Note: Obviously this would affect only instances, where CUPS was instructed
-to pass its socket activation code to systemd (instances not using systemd
-would not be affected by this problem).
+I'm not entirely sure when the issue was introduced at this moment. It
+appears to have been introduced here:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=74675a58507e769beee7d949dbed788af3c4139d
 
-Could you allocate a CVE identifier for this?
+The issue was fixed here:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=0720a06a7518c9d0c0125bd5d1f3b6264c55c3dd
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+The issue was partially disclosed here (this spurred my investigation):
+http://www.exploit-db.com/exploits/23248/
+
+Props to G13 for finding it. It's pretty disappointing that
+Google/Android security teams (and of course Linux maintainers) didn't
+responsibly disclose the issue so other Linux kernel packagers could
+package a fix.
+
+If anyone wishes to contact me off-list with questions or concerns,
+feel free. 
+
+Thanks,
+
+Joshua J. Drake
+jduck
+
+Download attachment "signature.asc" of type "application/pgp-signature" (191 bytes)
