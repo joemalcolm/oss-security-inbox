@@ -1,57 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/13/1
-Message-ID: <51E0EEB4.6040409@redhat.com>
-Date: Sat, 13 Jul 2013 00:07:48 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/16
+Message-ID: <20130226222723.GA13610@hunt>
+Date: Tue, 26 Feb 2013 14:27:23 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-CC: mancha <mancha1@...h.com>, solar@...nwall.com
-Subject: Re: CVE request: Cyrus-sasl NULL ptr. dereference
+Subject: Re: CVE request: psi+ stores the cache file as world-readable
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 07/12/2013 09:47 AM, mancha wrote:
-> On Fri, 12 Jul 2013 15:35:22 +0000 "Solar Designer" wrote:
->> Does this really crash the entire daemon process rather than just
->> one of its children (where a new one would be spawned for another
->> request)?
->> 
->> I think this needs to be clarified, and the answer will affect 
->> whether we have a security issue (CVE-worthy) or not.
->> 
->> Alexander
+On Tue, Feb 26, 2013 at 11:04:24PM +0100, Agostino Sarubbo wrote:
+> Psi+, a fork of psi, stores its files in ~/.cache/psi+ as world-readable.
 > 
-> That is a good question. The short answer is there isn't a re-spawn
-> of crashed processes. The longer answer is cyrus-sasl's saslauthd
-> defaults to starting up 5 round-robin listening threads
-> (configurable via -n switch).
-> 
-> Under a default scenario, authentication would continue to be 
-> available until the 5th NULL ptr. dereference.
-> 
-> --mancha
-> 
+> ~/.cache $ ls -la psi+/
+> total 52
+> drwxr-xr-x 5 ago ago  4096 feb 25 09:41 .
+> drwx------ 5 ago ago  4096 feb 24 23:58 ..
 
-Please use CVE-2013-4122 for this issue.
+It appears my ~/.cache and your ~/.cache are mode 0700. Directories
+underneath are already unaccessible by other users, except if one of your
+programs passes a filedescriptor to a directory to another user's process
+(say, cwd is in ~/.cache/psi+ and then executes a setuid program, or
+uses unix(7) SCM_RIGHTS to pass a directory file descriptor to another
+program).
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Are there environments where ~/.cache isn't 0700 by default?
 
-iQIcBAEBAgAGBQJR4O60AAoJEBYNRVNeJnmTwZoQAKoEBUomTUuBgTRp4cCrxhm4
-ksvJj51XX7jQ47UZonjjAEsTJpOX4fUROjWozCajBJEeHaUJJTN4+kPr7P3RSSIi
-n3xc461ShNIZix4nOkM9hwy7wYjVi+bWDWHmQuIqslvDb/0EEKvmNihm4UzNzQXu
-hPkJm4ruG0FlbyBrYRhbQUi67+BDefUCHujNEcratKFF26pD8VSUBNiRSsB8aO5H
-ZRvI31YdvTby4Tj6xoiPvJsl26VQ6Zz3W64ttaEu0M+J/lWkhu8a4WnFtUPkmtRt
-bxrYEEg2rULDicB+EFClBK9yMeCKvj9SsWcqCoC+RR84S0j9GbhpvEfS6caP0IXu
-NH89aGWnpte2yJzhG0/oguebTkXdnHCn6DFy5ExYEZzPMUHrthl89fGVcmDvAXHI
-azYdfgyqP2dfNHSPeL16XejFwx7YnTKIKAn4KN3WYTTuLPcUOXReaAp1Xmzn8yP5
-u2X1luMhpoqGNHknRTd/+eiHioOlH/8HduO1OuXQoenZWbKoIxh9tq8gCQZraXz/
-6F26UDQ3QZdKr4FITPB2Wx+YV3Q0gq2N7JTJIVHI4qIbWWKHTzw/mwSa4zPMNBMi
-/f4EXSwg/SvRgLAA9yuMdUYpSitmvcRt0hjlLziSUsTHfbIAd6hnYiEpb5BJbo22
-EpaAXVTngIOWvrdmclDw
-=EBY6
------END PGP SIGNATURE-----
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
