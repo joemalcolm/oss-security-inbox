@@ -1,141 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/12/3
-Message-ID: <20130912100402.GO11152@dhcp-25-225.brq.redhat.com>
-Date: Thu, 12 Sep 2013 12:04:02 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/6
+Message-ID: <20130226181654.GA16055@kroah.com>
+Date: Tue, 26 Feb 2013 10:16:54 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: Kees Cook <keescook@...omium.org>, linux-distros@...openwall.org, Kurt Seifried <kseifrie@...hat.com>, Michael Tsirkin <mtsirkin@...hat.com>, Jason Wang <jasowang@...hat.com>
-Subject: Fwd: Use-after-free in TUNSETIFF
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Upon agreement Kurt assigned CVE and was supposed to forward the message
-below to oss-sec. Didn't arrive yet, so forwarding too.
-
-The CVE for this issue is CVE-2013-4343.
-
-Thanks,
-Petr
-
------ Forwarded message from Petr Matousek <pmatouse@...hat.com> -----
-
-Date: Thu, 12 Sep 2013 09:39:08 +0200
-To: Kees Cook <keescook@...omium.org>
-From: Petr Matousek <pmatouse@...hat.com>
-Subject: Re: [vs-plain] Fwd: Use-after-free in TUNSETIFF
-CC: linux-distros@...openwall.org
-
-On Wed, Sep 11, 2013 at 01:28:57PM -0700, Kees Cook wrote:
-> CAP_NET_ADMIN to ring-0 use-after-free. This may end up getting taken
-> public to the netdev list, but here's a heads-up anyway.
-
-This is public already --
-http://www.spinics.net/lists/netdev/msg250066.html.
-
-Patch is at http://permalink.gmane.org/gmane.linux.kernel/1559873.
-
-I'm going to request CVE on oss-sec shortly.
-
-Petr
-
+On Tue, Feb 26, 2013 at 11:56:02AM -0600, Joshua J. Drake wrote:
+> All,
 > 
-> -Kees
+> I'd like to request a CVE for an issue leading to a buffer overflow of
+> a slab allocated buffer in the VFAT file system code. The issue
+> manifests when converting UTF8 characters to UTF16 inside the
+> "utf8s_to_utf16s" function. Reaching this code requires writing to a
+> VFAT partition that has been mounted with the "utf8" option. Ubuntu
+> 10.04 mounts USB sticks with this option by default. Most Android
+> devices mount eMMC/SD cards/etc with this option.
 > 
-> ---------- Forwarded message ----------
-> From: Andrew Morton <akpm@...ux-foundation.org>
-> Date: Tue, Sep 10, 2013 at 4:42 PM
-> Subject: Re: Use-after-free in TUNSETIFF
-> To: Wannes Rombouts <wannes.rombouts@...tech.eu>
-> Cc: security@...nel.org, Kevin Soules <kevin.soules@...tech.eu>, David
-> Miller <davem@...emloft.net>, Maxim Krasnyansky
-> <maxk@....qualcomm.com>
+> The issue affects kernels prior to 3.2. Many Android devices remain
+> affected today.
 > 
+> I'm not entirely sure when the issue was introduced at this moment. It
+> appears to have been introduced here:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=74675a58507e769beee7d949dbed788af3c4139d
 > 
-> (cc's added)
+> The issue was fixed here:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=0720a06a7518c9d0c0125bd5d1f3b6264c55c3dd
 > 
-> (tun_set_iff->tun_flow_init leaves a timer running after tun_set_iff()
-> failure)
+> The issue was partially disclosed here (this spurred my investigation):
+> http://www.exploit-db.com/exploits/23248/
 > 
-> On Wed, 11 Sep 2013 01:35:39 +0200 Wannes Rombouts
-> <wannes.rombouts@...tech.eu> wrote:
-> 
-> > Hi,
-> >
-> > I would like to report what I believe could be a potential CAP_NET_ADMIN
-> > to ring0 privilege escalation.
-> >
-> > The bug is in the way tuntap interfaces are initialized, when given an
-> > invalid name they cause a use after free. Also software like vmware
-> > allows for at least a freeze or kernel panic by a simple user but might
-> > also allow privilege escalation.
-> >
-> > Very simple to test, this causes a crash:
-> > # ip tuntap add dev %% mode tap
-> > If it doesn't crash immediately wait a few seconds and try again.
-> >
-> >
-> > We haven't managed to exploit the use after free yet, but we are still
-> > working on it. At least it crashes even with the latest kernel 3.11 and
-> > on different distros. (tested on Debian, Ubuntu and Arch) Looking at the
-> > source the bug seems quite old.
-> >
-> >
-> > Here is our analysis:
-> >
-> > A user with CAP_NET_ADMIN calls ioctl with TUNSETIFF and an invalid name
-> > for example "%d%d".
-> >
-> > tun_set_iff starts to initialize the tun_struct.
-> > http://lxr.free-electrons.com/source/drivers/net/tun.c#L1589
-> >
-> > It calls tun_flow_init which starts a timer with tun_flow_cleanup as
-> > callback. http://lxr.free-electrons.com/source/drivers/net/tun.c#L852
-> >
-> > After this tun_set_iff calls register_netdevice which returns an error
-> > because of the invalid name.
-> >
-> > This error causes the goto err_free_dev and the call to free_netdev.
-> > This will free the tun_struct.
-> >
-> > Later, once the callback gets called it uses bad memory. Sometimes it
-> > doesn___t get called because the timer_list has been compromised and we
-> > get a kernel panic at:
-> > http://lxr.free-electrons.com/source/kernel/timer.c?v=2.6.33#L949
-> >
-> > But it is possible to get some memory from userland that overlaps only
-> > the beginning of the tun_struct without overwriting the timer_list
-> > because there is a big array before it. Then it might be possible to
-> > exploit tun_flow_cleanup when it is called, but we didn't succeed yet.
-> >
-> > ------------------------------------------------------------------------
-> >
-> >
-> > This is the first time we try to exploit the kernel so we basically suck
-> > at this. I don't know if someone more skilled could do this easily or
-> > not, but we'll keep trying and I'll let you know if we manage it.
-> >
-> > In the mean time please let us know what you think of this and of course
-> > we are very interested in the way this is patched. Please keep us in the
-> > loop.
-> >
-> > Of course we will be happy to assist in any way we can, feel free to
-> > ask! Also we would like to know when you think it would be reasonable to
-> > disclose and talk about this bug.
-> >
-> > Regards,
-> >
-> > Wannes 'wapiflapi' Rombouts
-> > Kevin 'eax64' Soules
-> 
-> -- 
-> Kees Cook
-> Chrome OS Security
+> Props to G13 for finding it. It's pretty disappointing that
+> Google/Android security teams (and of course Linux maintainers) didn't
+> responsibly disclose the issue so other Linux kernel packagers could
+> package a fix.
 
+Ok, how could the Linux maintainers have done anything about this, when
+the developers involved in creating this patch didn't even realize it
+was a "security" issue in the first place?
 
--- 
-Petr Matousek / Red Hat Security Response Team
+I'm tired of people complaining about how the Linux kernel developers
+handle security issues, when no one seems to have a suggestion as to how
+anything could actually be done better.
 
+And note, I was one of the people involved in this patch, and I didn't
+notice anything special about it, so if you want to blame anyone, blame
+me for not tagging it for inclusion in the stable kernel releases.
 
------ End forwarded message -----
-
--- 
-Petr Matousek / Red Hat Security Response Team
+greg k-h
