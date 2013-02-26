@@ -1,90 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/7
-Message-ID: <844613362.1049060.1365499602092.JavaMail.root@redhat.com>
-Date: Tue, 9 Apr 2013 05:26:42 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Breno Silva <breno.silva@...il.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com, Athmane Madjoudj <athmanem@...il.com>
-Subject: Re: Re: CVE Request -- ModSecurity (X < 2.7.3): Vulnerable to XXE attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/13
+Message-ID: <512D239F.6080402@redhat.com>
+Date: Tue, 26 Feb 2013 14:05:35 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Henri Salo <henri@...v.fi>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi Breno,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  (Cc-ing Athmane on this due reasons which will get obvious below).
+On 02/26/2013 01:42 PM, Henri Salo wrote:
+> On Tue, Feb 26, 2013 at 01:31:59PM -0700, Kurt Seifried wrote:
+>> I suspect part of the problem is scale. Most people don't
+>> understand the scale at which the Linux Kernel and vendors handle
+>> bug fixes and code changes. External people simply see a few
+>> poorly handled security related issues and probably think "well
+>> how hard can it be to properly a few extra security flaws?" but
+>> they don't see that those 5 security issues were buried in 10,000
+>> other code fixes. The resources needed to audit every code change
+>> for a security impact simply aren't available (and even if we had
+>> enough talented people who exactly is going to pay them all?).
+> 
+> Why should they be paid? I'd say problem is that there isn't lots
+> of people who understand aspects needed to notice a security
+> vulnerability in Linux kernel and it's even more difficult to fix
+> it without breaking something else.
+> 
+> Money is not the only thing getting stuff done.
+> 
+> -- Henri Salo
 
-  thank you for checking with us.
+The problem with security is you have to basically do it 100%
+correctly 100% of the time, otherwise things fall through the cracks
+(like this VFAT thing). That tends to fall outside of what most people
+like to do as a hobby. Plus the volume needed, I think you
+underestimate how long code reviews take especially with the volume
+the Linux Kernel deals with. Hence the need to pay people so when they
+spend 40-80 hours a week doing this they can also afford food and whatnot.
 
-AFAICT to fix this in Fedora and Fedora EPEL-6 versions, we have
-just rebased to latest upstream 2.7.3 version. But you are truly
-right (assuming this being the reason you are checking with us),
-that on Fedora EPEL-5 we are shipping older (2.6.8 based version
-of ModSecurity).
+I've seen various attempts at crowd sourcing security, it doesn't work
+so well for the simple fact that most security people are very busy,
+and anyone that shows talent/good work ethic tends to get hired by a
+company and get even more busy.
 
-FWIHL:
-  [1] https://bugzilla.redhat.com/show_bug.cgi?id=947842#c1
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-it's wasn't immediately clear how the backported upstream patch
-would look like in / against that version (and not completely
-sure we can just rebase in that product too - Athmane could you
-clarify here if we can rebase or would rather want upstream patch
-form against 2.6.8 version?)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Breno, so if you are willing to help (and Athmane would confirm
-we need patch against 2.6.8 version), it would be appreciated
-if you could provide it.
-
-That's just for our expectations. Obviously other vendors might
-be interested in upstream patch backports against different versions
-yet (but I will let them to speak out their needs by themselves).
-
-Thank you for your time / check anyway. It's appreciated.
-
-Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
------ Original Message -----
-Hello Jan,
-
-Are you guys backporting de patch to old versions of ModSecurity ?
-
-Thanks
-
-Breno
-
-
-On Wed, Apr 3, 2013 at 9:23 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
-
-> Hello Kurt, Steve, Breno, vendors,
->
->   ModSecurity upstream has released v2.7.3 version:
-> [1] https://github.com/SpiderLabs/ModSecurity/blob/master/CHANGES
->
-> correcting one security flaw (from [2]):
-> "It was reported that the XML files parser of ModSecurity,
-> a security module for the Apache HTTP Server, was vulnerable
-> to XML External Entity attacks. A remote attacker could
-> provide a specially-crafted XML file that, when processed
-> might lead to local files disclosure or, potentially,
-> excessive resources (memory, CPU) consumption."
->
-> References:
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=947842
-> [3] https://bugs.gentoo.org/show_bug.cgi?id=464188
-> [4] https://secunia.com/advisories/52847/
->
-> Relevant upstream patch (seems to be the following):
-> [5]
-> https://github.com/SpiderLabs/ModSecurity/commit/d4d80b38aa85eccb26e3c61b04d16e8ca5de76fe
->
-> Could you allocate a CVE id [*] for this?
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> [*] According to:
-> https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ModSecurity
->     there doesn't seem to have been a CVE id allocated for this issue yet.
->
+iQIcBAEBAgAGBQJRLSOfAAoJEBYNRVNeJnmT/T4QANo1QYxgNvHI+pRvVR0QIkrZ
+94BBnDxf28U6ul0mtlY9aXQK/uDMjjRXvhffLRTOOdmQr/ERj09zLTdw48NgA5SG
+HO+3Wwdv+mvSmPyS4z2TiXHMl6A+nxSvUgZnhwmQ1iTbZdFxK5Gd19pb3oSVFF7d
+Bb14dE/gXcRhia0NXOoF1pP3JQhaHpX5FNXJv61I56UcFqVM+5ONERHReLCMMD0P
+IQTZ0uEWX4TZIRi0UuoOD4lZzxcrLW+CJXuncUsxK+Ii9rEqYOrgshgeXAUfFSuw
+ox0BMeSbsSFALxlDJ+BGEvOnP47zM1YRGx6mCXzuUkmXYAhyGK4ByD3vRX1hua9h
+RYrpxmEi4v1SlZuI64DIM90OAmaeyDqvieKXQAA197tZ+YPOxeRb2ZSQYSvQ4ciU
+WimhedarciDKrghU6jRZzrqRIwf1oUpv+ibg6rjE1LhKurc641omNWGjWG0v6Iuw
+o+ZNSIoFxkzje3r0RzIM9EWB9Vix7+wf28zU6Mxt4mKFKw5D7o1rxWN95BJtVAG9
+9DGWBFfGUB+/OPhbFrTBGzTdPvbr4JupdPqpdfwmkL3sRHM903a9rZBJ+zcP1mhc
+a7WxVpvcwXUGHvO3lvNMEhNZEkla2ZwFYnx+xHWizwWYPcWsz/H6VnH9JEs2T4T/
+u7t6vfJcGBGK2vgYf7Wk
+=PFow
+-----END PGP SIGNATURE-----
