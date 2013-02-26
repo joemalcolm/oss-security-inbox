@@ -1,55 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/5
-Message-ID: <20130116135810.0cdaedd8@lola.kot>
-Date: Wed, 16 Jan 2013 13:58:10 +0200
-From: George Kargiotakis <kargig@...d.gr>
-To: P J P <ppandit@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: Linux kernel handling of IPv6 temporary addresses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/8
+Message-ID: <512D1BBF.3040102@redhat.com>
+Date: Tue, 26 Feb 2013 13:31:59 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Greg KH <greg@...ah.com>
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-You can reproduce the bug with a new option for flood_router26 that has been added to the thc-ipv6 toolkit v2.1.
-# ./flood_router26 -A eth0
+On 02/26/2013 11:16 AM, Greg KH wrote:
+> On Tue, Feb 26, 2013 at 11:56:02AM -0600, Joshua J. Drake wrote:
+>> All,
+>> 
+>> I'd like to request a CVE for an issue leading to a buffer
+>> overflow of a slab allocated buffer in the VFAT file system code.
+>> The issue manifests when converting UTF8 characters to UTF16
+>> inside the "utf8s_to_utf16s" function. Reaching this code
+>> requires writing to a VFAT partition that has been mounted with
+>> the "utf8" option. Ubuntu 10.04 mounts USB sticks with this
+>> option by default. Most Android devices mount eMMC/SD cards/etc
+>> with this option.
+>> 
+>> The issue affects kernels prior to 3.2. Many Android devices
+>> remain affected today.
+>> 
+>> I'm not entirely sure when the issue was introduced at this
+>> moment. It appears to have been introduced here: 
+>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=74675a58507e769beee7d949dbed788af3c4139d
+>>
+>>
+>> 
+The issue was fixed here:
+>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=0720a06a7518c9d0c0125bd5d1f3b6264c55c3dd
+>>
+>>
+>> 
+The issue was partially disclosed here (this spurred my investigation):
+>> http://www.exploit-db.com/exploits/23248/
+>> 
+>> Props to G13 for finding it. It's pretty disappointing that 
+>> Google/Android security teams (and of course Linux maintainers)
+>> didn't responsibly disclose the issue so other Linux kernel
+>> packagers could package a fix.
 
+Please use CVE-2013-1773 for this issue.
 
-I've applied your patch to 3.5.7 and unless I've done something wrong, it doesn't seem to work. Actually I can't
-get any temporary address assignment with it. This is what I get upon booting with your patch:
+> Ok, how could the Linux maintainers have done anything about this,
+> when the developers involved in creating this patch didn't even
+> realize it was a "security" issue in the first place?
+> 
+> I'm tired of people complaining about how the Linux kernel
+> developers handle security issues, when no one seems to have a
+> suggestion as to how anything could actually be done better.
+> 
+> And note, I was one of the people involved in this patch, and I
+> didn't notice anything special about it, so if you want to blame
+> anyone, blame me for not tagging it for inclusion in the stable
+> kernel releases.
+> 
+> greg k-h
 
-[   35.045299] sky2 0000:01:00.0: eth0: Link is up at 100 Mbps, full duplex, flow control both
-[   35.045765] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
-[   36.985436] IPv6: ipv6_create_tempaddr: ipv6 temporary address upper limit reached
-[   36.985474] IPv6: ipv6_create_tempaddr: ipv6 temporary address upper limit reached
-[   63.204196] IPv6: ipv6_create_tempaddr: ipv6 temporary address upper limit reached
-[   63.204241] IPv6: ipv6_create_tempaddr: ipv6 temporary address upper limit reached
-[   86.125990] Netfilter messages via NETLINK v0.30.
-[   86.883815] IPv6: ipv6_create_tempaddr: ipv6 temporary address upper limit reached
-[   86.883850] IPv6: ipv6_create_tempaddr: ipv6 temporary address upper limit reached
-[  114.611839] IPv6: ipv6_create_tempaddr: regeneration time exceeded - disabled temporary address support
+I suspect part of the problem is scale. Most people don't understand
+the scale at which the Linux Kernel and vendors handle bug fixes and
+code changes. External people simply see a few poorly handled security
+related issues and probably think "well how hard can it be to properly
+a few extra security flaws?" but they don't see that those 5 security
+issues were buried in 10,000 other code fixes. The resources needed to
+audit every code change for a security impact simply aren't available
+(and even if we had enough talented people who exactly is going to pay
+them all?).
 
-# cat /proc/sys/net/ipv6/conf/eth0/use_tempaddr 
--1
+While things are not perfect (and likely never will be) I think they
+are pretty good overall considering how much code and code change the
+Linux Kernel handles.
 
-As I've already said to Eric Dumazet who's also been trying to provide a patch for the issue
-I think that the correct way to resolve the issue would be to follow the recommendations of 
-draft-gont-opsec-ipv6-nd-security-00 section 3.6.4
-<quote>
-   Even if hosts do enforce a limit on the number of IPv6 addresses
-   configured, an attacker might try to cause victim hosts to ignore
-   legitimate prefixes previously advertised for address configuration
-   by legitimate routers.  Hereby we recommend hosts to not discard
-   previously configured addresses if new prefixes for address auto-
-   configuration are advertised and the limit for the maximum number of
-   configured addresses (per interface) has been reached.  When such
-   limit is hit, the newly advertised prefixes for address auto-
-   configuration should be ignored.
-</quote>
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Best Regards,
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-P.S. please CC me in your answers
--- 
-George Kargiotakis
-https://void.gr
-GPG KeyID: 0xE4F4FFE6
-GPG Fingerprint: 9EB8 31BE C618 07CE 1B51 818D 4A0A 1BC8 E4F4 FFE6
+iQIcBAEBAgAGBQJRLRu/AAoJEBYNRVNeJnmTbZsP/RWINtKLJwZW4iQwiNC6ax6W
+vgdLP1xmcwytVXn+z7NasD2z7Q+25hYLyZcQ3WjFSyUEhMusBMlpuw7wy2w8lK7d
+JwgvXCES+qfgmUyn9DQwOCxnF0V71AjLhxlFRXMzlcD1zXbk1urXzaxgLW58Wltt
+d7WnpwolcMRj6iRVVe6RKIKKqg5UVJEtcVwWMyq0IFkLq6lEvFQ0/ABZv++HSZ4v
+LmChrvfqX+gesZ8+uMhI707eXq1T0m3AZHUyNIjGVPwDpv3Gy3DY2ARD49nAONpl
+aw+4FH8NdN906IuzzpVMOiB0Xdc/PfcdwZSEbk+tPwdcnc1a9fG75cGL+A5yusVT
+UfaocKhFkBVAv4LK5lSBZwTi24UMa1QXkosEGzrB5aw22dfmbgbFGkVJlcd9Zg6g
+1fq9ZtS5PmsGjKpqIr8/2CfJLFWHTw4wQoRQb5LbfZeoM5bfmOYhVNFSBnJxDzEz
+79QtHv0f1GKnas9jUKO6RN4ULfBghv30fBtEEQ2aGyH/AR2BQXm8JJFsx2d+FhZi
+9SI66s+vESJqAgGu4oBNrKwwH6yyRAp36g9M4wwVV5dHYtbQQTMMfmjZhmpbt90P
+cujU4WMEHXAKiU9vuxsErmhHBPvmgtUAYuEJo7cMpeVL5fLCn//yrzIx2QgJxwfW
+tyQMZRl3tMeUTBD03CL3
+=SQJ7
+-----END PGP SIGNATURE-----
