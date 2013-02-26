@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/6
-Message-ID: <1854202304.2159179.1373461845560.JavaMail.root@redhat.com>
-Date: Wed, 10 Jul 2013 09:10:45 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Marc-André Moreau <marcandre.moreau@...il.com>, Bernhard Miklautz <bmiklautz@...nstuff.at>, Martin Fleisz <mfleisz@...nstuff.at>
-Subject: CVE Request -- FreeRDP: Multiple security fixes in 1.1.0-beta1 version
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/12
+Message-ID: <20130226204241.GB19936@kludge.henri.nerv.fi>
+Date: Tue, 26 Feb 2013 22:42:41 +0200
+From: Henri Salo <henri@...v.fi>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On Tue, Feb 26, 2013 at 01:31:59PM -0700, Kurt Seifried wrote:
+> I suspect part of the problem is scale. Most people don't understand
+> the scale at which the Linux Kernel and vendors handle bug fixes and
+> code changes. External people simply see a few poorly handled security
+> related issues and probably think "well how hard can it be to properly
+> a few extra security flaws?" but they don't see that those 5 security
+> issues were buried in 10,000 other code fixes. The resources needed to
+> audit every code change for a security impact simply aren't available
+> (and even if we had enough talented people who exactly is going to pay
+> them all?).
 
-  (some time ago) FreeRDP upstream has released 1.1.0-beta1 version:
-  [1] http://sourceforge.net/mailarchive/message.php?msg_id=30591956
+Why should they be paid? I'd say problem is that there isn't lots of people who
+understand aspects needed to notice a security vulnerability in Linux kernel
+and it's even more difficult to fix it without breaking something else.
 
-correcting multiple security flaws:
-* library / client side fixes:
-    https://github.com/FreeRDP/FreeRDP/pull/887
-    https://github.com/FreeRDP/FreeRDP/commit/0dc22d5a30a1c7d146b2a835b2032668127c33e9
-    https://github.com/FreeRDP/FreeRDP/commit/bceec083677a609ba2f06cc75924ab0accac5388
+Money is not the only thing getting stuff done.
 
-* server side fixes:
-    https://github.com/FreeRDP/FreeRDP/commit/7d58aac24fe20ffaad7bd9b40c9ddf457c1b06e7
-    https://github.com/FreeRDP/FreeRDP/commit/0773bb9303d24473fe1185d85a424dfe159aff53
-
-CC-ed Marc-Andre, Bernhard and Martin of FreeRDP upstream to clarify
-if the above list of patches is complete wrt to security fixes, corrected
-within 1.0.1-beta1 version. Marc-Andre, Bernhard, Martin, please complete
-the set of security fixes if / where necessary.
-
-Kurt / Steve, could you allocate CVE ids for these?
-
-Thank you && Regards, Jan.
 --
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: Thanks goes to Florian Weimer of Red Hat Product Security Team for pointing these
-      out.
+Henri Salo
