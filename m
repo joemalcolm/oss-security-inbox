@@ -1,63 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/14
-Message-Id: <201302071933.r17JXXJP011224@linus.mitre.org>
-Date: Thu, 7 Feb 2013 14:33:33 -0500 (EST)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/48
+Message-ID: <20130227230732.GB32694@kroah.com>
+Date: Wed, 27 Feb 2013 15:07:32 -0800
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Feb 28, 2013 at 12:00:27AM +0100, Jason A. Donenfeld wrote:
+> On Wed, Feb 27, 2013 at 10:44 PM, Greg KH <greg@...ah.com> wrote:
+> > That's the whole problem here, who is going to do such a classification,
+> > and after that, the notification?  The first part is the toughest to do,
+> > as discussed elsewhere in this thread.
+> 
+> May I just bluntly call out shenanigans here? Yes, some bugs are
+> esoteric and it's not immediately obvious that they are security
+> related. But there are so many bugs that are _clearly_
+> security-related.
 
->Can you assign one more for matrixssl?
+Really?  Ok then, please go ahead and try doing this yourself if you
+feel it is so "obvious" to do.
 
->http://www.matrixssl.org/news.html
+> Kernel developers are super smart -- some of the brightest guys out
+> there.
 
-The short answer is that you should map that MatrixSSL changelog
-to CVE-2013-0169.
+Nope, we are dumb, we do uninteresting, boring work, dealing with broken
+hardware and demanding users every day.  If we were smarter, we wouldn't
+be doing this type of thing.
 
-Here's how MITRE is currently looking at the set of issues:
+sorry,
 
-CVE-2013-0169 is the identifier for the multi-vendor issue in the
-TLS and DTLS protocols discussed in the
-http://www.isg.rhul.ac.uk/tls/TLStiming.pdf paper.
-
-We anticipate that several more vendors will release changelogs,
-with various levels of detail, mapping to that paper:
-
- -- If the changelog simply reports a new release to address that
-    paper's issue, MITRE will consider that changelog to be a
-    CVE-2013-0169 reference. A new CVE will not be created for that
-    single vendor or a single product.
-
- -- If the vendor states that it uses a codebase corresponding to
-    one of the other
-    http://openwall.com/lists/oss-security/2013/02/05/24 CVEs (aka
-    side issues), then the changelog will become a reference for
-    that CVE.
-
- -- If the vendor makes any other statement about a vulnerability
-    fix for a side issue, a new CVE will be created for the new side
-    issue.
-
-This approach should enable MITRE to provide reasonably consistent CVE
-abstraction without detailed study of each vendor's code.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJRFADmAAoJEGvefgSNfHMdC1AH/A2Fr8fg2pZP49U513DBwQhp
-7zdffXlwA/FF5dv2D7Pl3UJeGOgWtmott9kvrpIh1tKKnGFoNgqvQwAsaEL9/1rd
-Smr1dJisFvy7qDjrZEM96EiOM/3+J90StXFE3cVn72KGGs03g/e3+sUI3D8dp7Z3
-SxJTNLgiVCxDCld06f5CmMwinl2DUx/VkuNgbfHUg+NnNzhw3WmIj8NMT0Om+OxZ
-0UDCbWZ3SgH3DrIH75l+W3wKma0KgyQD+M2voUuCqmlSENI1Hkc6LhSKjxVaHeo/
-ALJ4bWrpYtAv5JpyWL5mEY6NXOVcc0nl3M4EDsI9CKqeR8gtb0rjyK/gLQ4lydE=
-=LRzJ
------END PGP SIGNATURE-----
+greg k-h
