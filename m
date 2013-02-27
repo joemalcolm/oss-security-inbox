@@ -1,82 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/6
-Message-ID: <20131126121838.GG9509@dhcp-25-225.brq.redhat.com>
-Date: Tue, 26 Nov 2013 13:18:39 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: Greg Kroah-Hartman <gregkh@...uxfoundation.org>, "Hans J. Koch" <hjk@...sjkoch.de>
-Cc: Nico Golde <oss-security+ml@...lde.de>, oss-security@...ts.openwall.com, security@...nel.org, Dan Carpenter <dan.carpenter@...cle.com>
-Subject: kernel: uio: CVE-2013-6763 [was: Re: some unstracked linux kernel security fixes]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/27
+Message-ID: <20130227180248.GA31167@kroah.com>
+Date: Wed, 27 Feb 2013 10:02:48 -0800
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Adding Greg as he's also UIO maintainer (at least according to
-MAINTAINERS).
+On Wed, Feb 27, 2013 at 06:46:30PM +0100, Jason A. Donenfeld wrote:
+> On Wed, Feb 27, 2013 at 5:17 PM, Greg KH <greg@...ah.com> wrote:
+> > Are you willing to do it?
+> 
+> If it's a patch for an issue sent to security@, then it is, in fact, a
+> "trivial task" as to whether or not it was a security fix. There's no
+> issue of responsibility of judgement, at all.
 
-On Thu, Nov 14, 2013 at 05:52:12PM +0100, Petr Matousek wrote:
-> On Thu, Nov 14, 2013 at 04:25:39PM +0300, Dan Carpenter wrote:
-> > On Thu, Nov 14, 2013 at 11:33:10AM +0100, Petr Matousek wrote:
-> > > On Tue, Nov 12, 2013 at 11:10:32AM +0100, Petr Matousek wrote:
-> > > > Hi,
-> > > > 
-> > > > On Sun, Nov 03, 2013 at 05:32:52PM +0100, Nico Golde wrote:
-> > > > > drivers/uio/uio.c: mapping of physical memory to user space without proper size check
-> > > > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7314e613d5ff
-> > > > 
-> > > > there is a size check in uio_mmap() (the only caller of uio_mmap_physical()):
-> > > > 
-> > > >         requested_pages = vma_pages(vma);
-> > > >         actual_pages = ((idev->info->mem[mi].addr & ~PAGE_MASK)
-> > > >                         + idev->info->mem[mi].size + PAGE_SIZE -1) >> PAGE_SHIFT;
-> > > >         if (requested_pages > actual_pages)
-> > > >                 return -EINVAL;
-> > > > 
-> > > > why it wasn't sufficient?
-> > > 
-> > > Apparently there was a CVE split [1] and this is now CVE-2013-6763.
-> > > 
-> > >   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6763
-> > > 
-> > > I still think this is a non-issue based on the above mentioned size
-> > > check. Can I please get second opinion from someone more knowledgeable
-> > > on this?
-> > > 
-> > >
-> > 
-> > Added Hans to the CC list since he's the maintainer.  Petr is asking if
-> > the size checks in uio_mmap() and uio_mmap_physical() are duplicative.
-> > 
-> > > Isn't the size check redundant because of 
-> > > 
-> > >         requested_pages = vma_pages(vma);
-> > >         actual_pages = ((idev->info->mem[mi].addr & ~PAGE_MASK)
-> > >                         + idev->info->mem[mi].size + PAGE_SIZE -1) >> PAGE_SHIFT;
-> > >         if (requested_pages > actual_pages)
-> > >                 return -EINVAL;
-> > 
-> > That check is worrying requested_pages is rounded down to the nearest
-> > page
-> 
-> Is there any rounding down happening? I would expect both vma->vm_start
-> and vma->vm_end to be page aligned.
-> 
-> > but actual_pages is rounded up. I don't understand why we are
-> > adding "(mem[mi]addr % PAGE_SIZE)" to the pre rounded up actual_pages.
-> 
-> Imagine addr and size are not page aligned and
-> ((addr & ~PAGE_MASK) + (size & ~PAGE_MASK)) > PAGE_SIZE.
-> We need to round up two pages instead of one in that case.
-> 
-> > So, yeah, it seems like we do check the size twice now except the first
-> > time we do it wrong.
-> 
-> With unaligned addr and/or size we can end up with mapping memory 
-> not belonging to the UIO_MEM_PHYS registered region, but that is something
-> you expect when using this interface from the drivers and/or userspace,
-> because you want access to the whole region to properly handle the
-> device, no?
-> 
-> IOW, with the current changes, isn't the functionality broken for
-> non page-aligned addr and/or size?
+That's not true at all, lots of things sent to security@ end up not
+being security issues when they are fixed.  Then there's the issue of
+"what is and is not a security fix", and that is a discussion that we
+aren't going to have here, sorry.
 
--- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+One problem is that there are very few things reported and fixed through
+security@.  Maybe one patch every other kernel release or so.  And some
+subsystems (i.e. networking) refuse to go through the security alias.
+
+The _large_ majority of all fixes go through their individual subsystem
+development process, and those are the ones you should be searching
+through the commit logs for, as this patch itself proves.
+
+thanks,
+
+greg k-h
