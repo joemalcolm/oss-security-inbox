@@ -1,75 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/22
-Message-Id: <201302271623.r1RGNT1l002961@core.courtesan.com>
-Date: Wed, 27 Feb 2013 11:23:29 -0500
-From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: sudo authentication bypass when clock is reset
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/25
+Message-ID: <CAHmME9p6HmVKkUy_aXM54oB5H_TZbJotNFPaimG4ov3QiahDNQ@mail.gmail.com>
+Date: Wed, 27 Feb 2013 18:43:24 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Sudo 1.8.6p7 and 1.7.10p7 are now available which include a fix
-for the following bug:
+On Wed, Feb 27, 2013 at 3:48 PM, Greg KH <greg@...ah.com> wrote:
+> That's not going to happen, and you know that, to do so would be totally
+> irresponsible of us and directly harm your users.
 
-Sudo authentication bypass when clock is reset
-
-Summary:
-    When a user successfully authenticates with sudo, a time stamp
-    file is updated to allow that user to continue running sudo
-    without requiring a password for a preset time period (five
-    minutes by default).  The user's time stamp file can be reset
-    using "sudo -k" or removed altogether via "sudo -K".
-
-    A user who has sudo access and is able to control the local
-    clock (common in desktop environments) can run a command via
-    sudo without authenticating as long as they have previously
-    authenticated themselves at least once by running "sudo -k" and
-    then setting the clock to the epoch (1970-01-01 01:00:00).
-
-    The vulnerability does not permit a user to run commands other
-    than those allowed by the sudoers policy.
-
-Sudo versions affected:
-    Sudo 1.6.0 through 1.7.10p7 and sudo 1.8.0 through 1.8.6p7.
-
-Details:
-    By default, sudo displays a lecture when the user's time stamp
-    file is not present.  In sudo 1.6, the -k option was changed
-    to reset the time stamp file to the epoch rather than remove
-    it to prevent the lecture from being displayed the next time
-    sudo was run.  No special case was added for handling a time
-    stamp file set to the epoch since the clock should never
-    legitimately be set to that value.
-
-    However, there are two common ways for the clock to be reset
-    to the epoch.  The first way is when the clock is reset due to
-    a fully drained battery on some systems.  The other way is by
-    a user logged in to a desktop environment that allows changes
-    to the date and time.
-
-    As long as the user has successfully run sudo before, they are
-    able to run "sudo -k" to reset the time stamp file.  This action
-    does not require a password and is not logged.  If the user is
-    also able to reset the date and time to the epoch (1970-01-01
-    01:00:00), they will be able to run sudo without having to
-    authenticate.
-
-Impact:
-    The flaw may allow someone with physical access to a machine
-    that is not password-protected to run sudo commands without
-    knowing the logged in user's password.  On systems where sudo
-    is the principal way of running commands as root, such as on
-    Ubuntu and Mac OS X, there is a greater chance that the logged
-    in user has run sudo before and thus that an attack would
-    succeed.
-
-Fix:
-    The bug is fixed in sudo 1.8.6p7 and 1.7.10p7.  These versions
-    will ignore a time stamp file that is set to the epoch.
-
-Workaround:
-    Using "sudo -K" instead of "sudo -k" will completely remove the
-    time stamp file instead of just resetting it.
-
-Credit:
-    I'd like to thank Marco Schoepl for finding and reporting this
-    long-standing bug.
+At least send oss-sec an email after the commit goes into the tree.
+The people who are up to no good will see the commit and notice it (if
+they didn't already notice it when the vuln was committed prior).
+Might as well let distros and CVE people know about it too so they can
+backport it into whatever stable kernel they maintain. Right now
+there'll be a commit in the public repo for a bug sent to security@,
+and oss-sec isn't informed.
