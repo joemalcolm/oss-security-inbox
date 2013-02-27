@@ -1,28 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/24/4
-Message-ID: <5241DAE4.9010506@gentoo.org>
-Date: Tue, 24 Sep 2013 14:33:08 -0400
-From: Chris Reffett <creffett@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/9
+Message-ID: <1361946763.4116.7.camel@scapa>
+Date: Wed, 27 Feb 2013 07:32:43 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: X2Go server
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
-I couldn't find a CVE, so I would like to request one for a
-vulnerability in X2Go Server. The vendor reported an issue where a
-remote user could execute arbitrary code as the x2go user, apparently by
-leveraging a setgid executable which did not have a hardcoded path to
-"libx2go-server-db-sqlite3-wrapper.pl". [1] is the commit fixing the
-vulnerable code, [2] is the upstream release announcement.
+On mar., 2013-02-26 at 23:29 -0700, Kurt Seifried wrote:
+> I was referring to security process, not security technology, sorry I
+> should have been more clear.
 
-Thanks,
-Chris Reffett
+That's right, but maybe technology can buy you more time when process
+“fails”.
+-- 
+Yves-Alexis
 
-
-[1]
-http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=42264c88d7885474ebe3763b2991681ddfcfa69a
-[2]
-https://lists.berlios.de/pipermail/x2go-announcement/2013-May/000125.html
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (394 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
