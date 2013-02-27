@@ -1,36 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/17
-Message-ID: <5297A34D.9020805@openttd.org>
-Date: Thu, 28 Nov 2013 21:10:53 +0100
-From: Rubidium <rubidium@...nttd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/3
+Message-ID: <CANTw=MOLjFg+J-ABr+C8u-37+zHKCLygnW6aohmghTfdzVYA5A@mail.gmail.com>
+Date: Tue, 26 Feb 2013 23:41:53 -0500
+From: Michael Gilbert <mgilbert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for OpenTTD
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hello folks,
+On Tue, Feb 26, 2013 at 6:05 PM, Jason A. Donenfeld wrote:
+> On Tue, Feb 26, 2013 at 10:05 PM, Kurt Seifried
+>> The problem with security is you have to basically do it 100%
+>> correctly 100% of the time, otherwise things fall through the cracks
+>> (like this VFAT thing).
+>
+> Also, what about the tmpfs one from yesterday? Nobody involved in the
+> patch reported that as a security bug to this list, until I saw it
+> myself, just by chance, as a random person on the internet, and posted
+> it to the list. In that case, it was clearly marked "use-after-free",
+> but nobody involved requested a CVE.
 
-the OpenTTD team and contributors have discovered several a security
-vulnerability in OpenTTD. Please be so kind to allocate a CVE id for
-the issues detailed below:
+I actually see Greg KH's recent interest in oss-sec as a positive
+sign.  For years and years kernel developers have been stuck at the
+first stage of grieving (denial).  Thanks to recent public shaming,
+the second stage (anger) is seeming to set in, which at the very least
+is progress.  Personally, I'm hoping to see bargaining in fewer than
+the 20 years it took to get here.  There are five stages total, so if
+each takes as long as the first, there is the distinct possibility
+that we'll be waiting a century for a high-quality kernel security
+posture ;)
 
-Denial of service (server) using forcefully crashed aircrafts
+Anyway, on a more serious note, at some point, acceptance will look
+something like a real kernel-sec team that does essentially what you
+just did, but on a continual basis: reviewing most/all commits for
+potential security concerns and forwarding them to oss-sec to increase
+identification and awareness to be applied downstream.  Unfortunately
+a person/group needs to want to scratch that particular itch, and more
+importantly be able to deal with leaders antipathetic to their work.
+Also, as Kurt was alluding to, the rewards don't seem to be there, and
+of course there is a lot of potential for pain (i.e. dealing with the
+anger).
 
-A missing validation allows remote attackers to cause a denial of 
-service (crash) by forcefully crashing aircraft near the corner of the 
-map. This triggers a corner case where data outside of the allocated map 
-array is accessed.
-
-A test case, and simple guide how to reproduce it can be found in the 
-issue in our bug tracker at http://bugs.openttd.org/task/5820
-
-Vulnerability is present since 0.3.6 and will be fixed in the upcoming
-1.3.3 release.
-
-Once the CVE id is allocated, the issue will be fully documented at
-http://security.openttd.org/en/CVE-2013-xxxx
-
-Thanks,
-Remko 'Rubidium' Bijker
-
-[Please CC me, I'm not subscribed.]
-
+Best wishes,
+Mike
