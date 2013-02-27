@@ -1,53 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/15/3
-Message-ID: <50F4B532.6000201@redhat.com>
-Date: Mon, 14 Jan 2013 18:47:30 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/12
+Message-ID: <20130227132416.GB10080@suse.de>
+Date: Wed, 27 Feb 2013 14:24:16 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: poppler 0.22.1 security fixes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 01/11/2013 12:49 PM, Forest Monsen wrote:
-> Hi there -- I'd like to request CVE identifiers for two issues
-> with Drupal contributed modules:
-> 
-> SA-CONTRIB-2013-001 - Search API - Cross Site Scripting 
-> https://drupal.org/node/1884332
+poppler 0.22.1 was released without much ado, it however contains various security fixes.
 
-Please use CVE-2013-0181 for this issue.
+The security fixes apparently come from AdressSanitizer work and fuzzing provided
+by the Google Security Team.
 
-> SA-CONTRIB-2013-002 - Payment - Access Bypass 
-> https://drupal.org/node/1884360
+The page:
+http://j00ru.vexillium.org/?p=1507
 
-Please use CVE-2013-0182 for this issue.
+explains most of it, and while it focuses on Adobe Acrobat Reader, they also covered
+poppler testing inside.
 
-> Thanks!
-> 
-> Forest
-> 
+So far I see:
+http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=8b6dc55e530b2f5ede6b9dfb64aafdd1d5836492
+	Fix invalid memory access in 1150.pdf.asan.8.69
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=e14b6e9c13d35c9bd1e0c50906ace8e707816888
+	Fix invalid memory access in 2030.pdf.asan.69.463
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=0388837f01bc467045164f9ddaff787000a8caaa
+	Fix another invalid memory access in 1091.pdf.asan.72.42
 
-iQIcBAEBAgAGBQJQ9LUyAAoJEBYNRVNeJnmT57EQAIZTDxngkA0K4ksfcYM32tCC
-fLU2+X4JJyJ0FJzssfTzlUNsufA0EmlQTXwW1lSaQPe9IHnuF5lp/RO6QkElAL8a
-wUK9weJUsLZDetoOqfv7xyggCmdOWSwnQ+cOH5mWhXCgGlEcyMhaefgJUqy1DeEO
-enIq6Sc8cwAWdvaVIVmUp/X6rINI0pxdJWlMyuzWk9Mjy87aBnZpLSO1rOvQql4i
-Xrc+OhJsfYNd9S3kqjlKkGiTcU9ApBo9uXCEe2RUKjHX9bOgglEYZGtFR8WWUvnn
-6ZP+sCH/SjbSpqxli1EW5j+X3Z1FYZsbEwiAt753+rtuGGp56jB7P+GyzfePwzZ3
-ysQGRposFDgp/+8cnXuEIh285xA6MR/Z8Avl50ip+8k/irOdSvwt72ae2hIjhOVE
-733x7XxYzMJsBTxFm3ZRiLs8YA4m1O38+Qhd0x//4erMoVqGLy7xNDtq7ocK4hj2
-o0ezyykvmzsrdAVONbNNCbZMLYO9pJ4kprWSe19jFkzuJERn7v/InCMuXz+UlmD9
-/saREH/HAkXgTwZEYU5qhr+Fkk/+jRRZKSdWQNQwf2BWxoFc/yEJltmtt0zBG1Zc
-AaL2a9s9IEpTyujBLo4zkUsBZGcJG8nNL9Erq6zfQ8RG/VSFZIgLoC+PzemUX48q
-sLoGPmoW/h1JLOvIjepU
-=OzSX
------END PGP SIGNATURE-----
+http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=957aa252912cde85d76c41e9710b33425a82b696
+	Fix invalid memory accesses in 1091.pdf.asan.72.42
+
+http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=bbc2d8918fe234b7ef2c480eb148943922cc0959
+	Fix invalid memory accesses in 1036.pdf.asan.23.17
+
+http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a9b8ab4657dec65b8b86c225d12c533ad7e984e2
+	Fix crash in broken file 1031.pdf.asan.48.15
+
+http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a205e71a2dbe0c8d4f4905a76a3f79ec522eacec
+	Do not crash in broken documents like 1007.pdf.asan.48.4
+
+http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=b1026b5978c385328f2a15a2185c599a563edf91
+	Initialize refLine totally
+	Fixes uninitialized memory read in 1004.pdf.asan.7.3 
+
+As the blog page mentions "Huzaifa Sidhpurwala from RedHat Security", perhaps Redhat has assigned CVEs already.
+
+Otherwise one ore more CVEs are required. 
+
+Ciao, Marcus
