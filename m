@@ -1,54 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/15/5
-Message-ID: <525D83BB.7070607@redhat.com>
-Date: Tue, 15 Oct 2013 12:04:43 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/53
+Message-ID: <alpine.LRH.2.00.1302280030170.30582@twin.jikos.cz>
+Date: Thu, 28 Feb 2013 00:33:00 +0100 (CET)
+From: Jiri Kosina <jikos@...os.cz>
 To: oss-security@...ts.openwall.com
-CC: sebi@...ecware.net, j.wielicki@...ecware.net
-Subject: Re: CVE request: pyxtrlock
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, 27 Feb 2013, Greg KH wrote:
 
-On 10/15/2013 07:14 AM, Leon Weber wrote:
-> Hi,
+> > Hmm, I wonder if perhaps the solution here isn't about spending a lot
+> > of time analyzing hundreds of potentially serious bugs and notifying
+> > the world about them all in an accurate way.  Perhaps the solution is
+> > changing the development model or architecture of the kernel such that
+> > there aren't so many bugs with *serious* impact in the first place.
+> > 
+> > Ooops... did I say that out loud?  
 > 
-> On 25.09.2013 21:28:46, Leon Weber wrote:
->> two security issues were found and fixed in pyxtrlock[1], a
->> lightweight X screen locker.
+> There's nothing wrong with that, and we have made many changes in the
+> kernel to help mitigate problems before they occur.
 > 
-> Do you think this isn't CVE worthy, or was the request just lost
-> between other work? :-)
-> 
-> -- Leon.
-> 
+> If you know of any other ways that we can do this, please let us know.
 
-Sorry, meant to reply, forgot. This was the one where I was wondering
-how many people us it. Debian doesn't ship it, nor does Red Hat,
-Fedora. When I searched it in Google it tries to correct me to
-"xtrlock", and for the term I get 644 results, so I'm thinking this
-falls into the "not enough people use it to make a CVE worthwhile"
-category, is that correct, or is there a large user pool/other factors
- I'm unaware of?
+- W^X
+- not letting kernel dereference userspace pointers (and PMAP is not 
+  available everywhere, unfortunately)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSXYO7AAoJEBYNRVNeJnmTZsYQAIkcalpsTie4nFQx+mgL7ctM
-RbTeSchNXuhdLGB2KKi/8AL/4K9yFU0ewGAqbM34nCY0WdvdfzHLqMUtNbWd00hy
-1aU6433ch/I63RVav1LvhVgYbSUW5tDq6SX8CIkNz0JGDSpcbLJBjiFlEYkirkyD
-2FcYQK3T8ShxDQNi3B1HbGBLBzK2FyXwcSRXC4DImCvElvMUytYbI2Oakl1OKZzL
-dy5UCdj3Z/ydPCr3STezHZHKhetBVyWNqch2FHuXyCocpRz8Kf2jWifCEQmKRmeL
-iPUuzj0NYk3Vad6FnP6eDKPCZVVQiWcdkNuwu26w8Fkywr0r4yv+38CJs2p2QCrv
-nthXhBsGM7KuGni2JV2VZtO4ZfjH8VUUYjl6fZyxpgJnW7JIfGPrQt7wHFNfvaWJ
-25AY+XGdKdx+c5wB+rqGJIR1WS/q5K0ag3ymfc7vLOmewI95rpveq1QB5WKt91Tt
-gF/hg+6G3D1UPLu5aKZnwnLRvzTPzElLbWkPgXVPxRy4S1zDDFZwwMXTlGSsbwJN
-GBnINunxdDIdF14UIytPtJ2sco1yOOJpZJP9lODeF2/X62gpQjSuUrBckBzcSnIm
-rDWQUsVqQ0szmSDjWKWLWoi/5IDg2oEicoIyHjVLaovkFRp7gCy70w/ywB9yUsuN
-t6wEu4CJuW5tE6U3rzDv
-=LBVC
------END PGP SIGNATURE-----
+-- 
+Jiri Kosina
