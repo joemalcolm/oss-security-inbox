@@ -1,22 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/15
-Message-ID: <d7b0b0f38b856835a6e273fb56e9c2ae.squirrel@aphrodite.kinkhorst.nl>
-Date: Thu, 25 Jul 2013 13:38:44 +0200
-From: "Thijs Kinkhorst" <thijs@...ian.org>
-To: "Open Source Security" <oss-security@...ts.openwall.com>
-Subject: CVE request: GnuPG side-channel attack on RSA secret keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/52
+Message-ID: <alpine.LRH.2.00.1302280014370.30582@twin.jikos.cz>
+Date: Thu, 28 Feb 2013 00:28:48 +0100 (CET)
+From: Jiri Kosina <jikos@...os.cz>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi list,
+On Wed, 27 Feb 2013, Greg KH wrote:
 
-I'd like to request a CVE name for the side channel attack described in
-attached release announcements of GnuPG and Libgrypt.
+> > May I just bluntly call out shenanigans here? Yes, some bugs are
+> > esoteric and it's not immediately obvious that they are security
+> > related. But there are so many bugs that are _clearly_
+> > security-related.
+> 
+> Really?  Ok then, please go ahead and try doing this yourself if you
+> feel it is so "obvious" to do.
 
+What Jason is asking for (at least to my understanding) is that if we are 
+fixing a bug from a known-to-automatically-be-security-issue, we let the 
+world know explicitly.
+We are not pro-actively doing that now, are we?
 
-Thanks,
-Thijs
-Download attachment "[Announce] [security fix] GnuPG
- 1.4.14 released.eml" of type "message/rfc822" (12532 bytes)
+Yes, there are going to be lots and lots of bugs which turn out to be 
+security issues once analyzed by super-smart guys wearing their 
+darker-coloured hats, and that's unavoidable.
+Killing all the efforts that try to mitigate this effect with as little 
+investments as possible seems to be slightly counter-productive though.
 
-Download attachment "[Announce] [security fix]
- Libgcrypt 1.5.3 released.eml" of type "message/rfc822" (6966 bytes)
+We are not going to be perfect at it, ever, sure. Perfect is the enemy of 
+good.
+Also, defining the list in a sensible way is challenging of course, but 
+let's have this for starters:
+
+- use-after-free
+- null(+epsilon) pointer dereference
+- array access overflow
+- signedness problem in sizeof() with argument coming from userspace
+- operating VMAs without mmap_sem
+- ...
+
+Hmm?
+
+-- 
+Jiri Kosina
