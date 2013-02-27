@@ -1,22 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/11/8
-Message-ID: <20130211185017.GB80480@higgins.local>
-Date: Mon, 11 Feb 2013 10:50:17 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
-Subject: Patch update for [CVE-2013-0269]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/38
+Message-ID: <20130227191750.GC21286@kroah.com>
+Date: Wed, 27 Feb 2013 11:17:50 -0800
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Feb 27, 2013 at 11:36:32AM -0800, Tim wrote:
+> 
+> 
+> Hmm, I wonder if perhaps the solution here isn't about spending a lot
+> of time analyzing hundreds of potentially serious bugs and notifying
+> the world about them all in an accurate way.  Perhaps the solution is
+> changing the development model or architecture of the kernel such that
+> there aren't so many bugs with *serious* impact in the first place.
+> 
+> Ooops... did I say that out loud?  
 
-I've attached an updated patch for the JSON gem.  This patch is for the
-1.7.x series.  The difference in this patch is changing the version
-number.
+There's nothing wrong with that, and we have made many changes in the
+kernel to help mitigate problems before they occur.
 
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
+If you know of any other ways that we can do this, please let us know.
 
-View attachment "0001-Security-fix-create_additons-JSON-GenericObject.patch" of type "text/plain" (35196 bytes)
+thanks,
 
-Content of type "application/pgp-signature" skipped
+greg k-h
