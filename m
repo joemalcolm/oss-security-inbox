@@ -1,21 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/9
-Message-ID: <CAN_LGv1CB91rSS-RChGyvVKiv9CEvN95g1Sjh8DEBnqSi7NX2g@mail.gmail.com>
-Date: Wed, 13 Mar 2013 22:04:59 +0600
-From: "Alexander E. Patrakov" <patrakov@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/2
+Message-ID: <87r4k2fm93.fsf@windlord.stanford.edu>
+Date: Tue, 26 Feb 2013 19:50:48 -0800
+From: Russ Allbery <rra@...nford.edu>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2013-0913 Linux kernel i915 integer overflow
+Subject: Re: CVE request: psi+ stores the cache file as world-readable
 Content-Type: text/plain; charset=utf-8
 
-2013/3/12 Kees Cook <keescook@...omium.org>:
-> This flaw could lead to a kernel heap overflow by processes with access to
-> the DRM driver:
->
-> https://lkml.org/lkml/2013/3/11/501
+gremlin@...mlin.ru writes:
+> On 26-Feb-2013 23:04:24 +0100, Agostino Sarubbo wrote:
 
-Given that FreeBSD also has some sort of i915kms kernel driver now, is
-it also vulnerable?
+>  > Psi+, a fork of psi, stores its files in ~/.cache/psi+ as
+>  > world-readable.
+
+> That's normal - users' home directories are normally accessible
+> only by users themselves, and never by othe users:
+
+> gremlin@...n:~ > ls -ld .
+> drwx-----x 47 gremlin users 20480 2013-02-26 17:48 ./
+
+That is one possible convention of many for structuring user home
+directory permissions.  It is certainly not universal, and no software
+should assume that home directory permissions are structured that way when
+deciding on the permissions of other files created under the user's home
+directory.
+
+Some of us who have been using UNIX for long enough that we originally
+learned the permissions system when sharing was emphasized over security
+do still use world-readable home directories, with specific directories
+under it restricted.  We would like software, when creating private files,
+to not assume that it can be careless about permissions of individual
+files because "of course" the user's home directory is private.
 
 -- 
-Alexander E. Patrakov
-Not running FreeBSD
+Russ Allbery (rra@...nford.edu)             <http://www.eyrie.org/~eagle/>
