@@ -1,59 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/09/7
-Message-ID: <CAMoU6ubVd=32BHAisZVgu2M9avy33fMmHVJW+H8o0FNc9rt5KQ@mail.gmail.com>
-Date: Wed, 9 Oct 2013 18:48:01 +0200
-From: Bas Pape <baspape@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/41
+Message-ID: <512E6279.3050003@fifthhorseman.net>
+Date: Wed, 27 Feb 2013 11:46:01 -0800
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request - Quassel IRC SQL injection
+CC: "Jason A. Donenfeld" <Jason@...c4.com>
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On 02/27/2013 11:26 AM, Jason A. Donenfeld wrote:
 
-Please assign a CVE to the following issue:
-Quassel IRC is vulnerable to SQL injection on all current versions
-(0.9.0 being the latest at the time of writing), if used with Qt 4.8.5
-(the vulnerability is caused by a change in its postgres driver[1,2])
-and PostgreSQL 8.2 or later with standard_conforming_strings enabled
-(which is the default in those versions). The vulnerability allows
-anyone to trick the core into executing SQL queries, which includes
-cascade deleting the entire database. It is tracked upstream in bug
-#1244 [3]. It was firstly noticed by due to minor issues with
-migration to postgres and problems with certain messages, a simple
-test with an unmodified installation of postgres and quassel showed
-that it was indeed possible to drop tables.
+> "If you see something, say something."
 
-No upstream fix is available at this time, although the below patch
-does fix the current issue.
+I'd love it if it were this simple, but it's not.  It's work.  Look at
+the examples of good security reports on this list (e.g. ones that were
+issued CVEs with no extra discussion needed).
 
-Regards,
-Bas Pape (Tucos)
+These reports require thoughtful analysis, testing, and a good sense of
+what the tradeoffs are for making the fixes.  this takes time (and
+skill).  Sometimes all the work and analysis leads to a conclusion that
+the failure was not actually exploitable in any significant way.  And
+not every fix has obvious security implications -- some only become
+apparent after the investigative work is done.
 
-[1] https://qt.gitorious.org/qt/qtbase/commit/e3c5351d06ce8a12f035cd0627356bc64d8c334a
-[2] https://bugreports.qt-project.org/browse/QTBUG-30076
-[3] http://bugs.quassel-irc.org/issues/1244
+Some fixes are simple, fixing them has no obvious side effects, and
+there is clear evidence not fixing it could lead to an exploit.  You
+could even argue that the issue that started this thread is one of them
+(though i haven't spent enough time to understand it well enough to know
+if that's the case).
 
-commit 7c64ed0d05718d907770d11a38436aa4ed65f2bb
-Author: Bas Pape <baspape@...il.com>
-Date:   Mon Oct 7 19:51:52 2013 +0200
+If *every* bug fix were reported to oss-security without this work, as
+something like "i'm not sure, but this might be security-related", then
+this list would drown in noise (the NYC MTA's supposed anti-terrorism
+campaign suffers this same flaw, btw).
 
-    Detect the need for standard_conforming_strings.
+So, we have a culture of asking people to report security flaws only
+after doing some level of work to ensure that the report is correct and
+understood.
 
-diff --git a/src/core/postgresqlstorage.cpp b/src/core/postgresqlstorage.cpp
-index 3965704..70bf894 100644
---- a/src/core/postgresqlstorage.cpp
-+++ b/src/core/postgresqlstorage.cpp
-@@ -101,6 +101,15 @@ void PostgreSqlStorage::initDbSession(QSqlDatabase &db)
-     // this blows... but unfortunately Qt's PG driver forces us to this...
-     db.exec("set standard_conforming_strings = off");
-     db.exec("set escape_string_warning = off");
-+
-+    // Fortunately things can always blow more. Refer to the commit message for
-+    // the juicy details, tread lightly.
-+    // First standard_conforming_strings are turned off, because
-that's what used
-+    // to be necessary, here the actual behaviour is tested.
-+    QSqlQuery query = db.exec("SELECT '\\\\' x");
-+    if (query.first())
-+        if (query.value(0).toString() == "\\")
-+            db.exec("set standard_conforming_strings = on");
- }
+We have to acknowledge that this is extra work, and not everyone has the
+time (or skill) to do it properly.
+
+	--dkg
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
