@@ -1,32 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/20/4
-Message-ID: <20130420203939.GB31505@openwall.com>
-Date: Sun, 21 Apr 2013 00:39:39 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: upstream source code authenticity checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/17
+Message-ID: <20130227161306.GP1722@dhcp-25-225.brq.redhat.com>
+Date: Wed, 27 Feb 2013 17:13:06 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: Greg KH <greg@...ah.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Feb 27, 2013 at 06:48:34AM -0800, Greg KH wrote:
+> On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
+> > For starters, security@...nel.org submissions should be posted to
+> > oss-security or any other security related public mailing list when
+> > the
+> > patch is being committed.
+> 
+> That's not going to happen, and you know that, to do so would be
+> totally
+> irresponsible of us and directly harm your users.  That's what
+> vendor-sec (or whatever it is called now) is for.
 
-I just found this recent blog post by Allan McRae of Arch Linux:
+linux-distros [1] is vendor-sec replacement for Linux related issues.
 
-http://allanmcrae.com/2012/04/how-secure-is-the-source-code/
+  [1] http://oss-security.openwall.org/wiki/mailing-lists/distros
 
-Thank you for doing this, Allan!  Are you contacting the upstream
-authors to request that they start to properly sign their releases?
-(I've been doing that on some occasions, sometimes with success.)
+> Hasn't that been
+> happening for a while now, or has no one been notifying that list of
+> these issues?
 
-I think that placing both "MD5 checksum provided on same site as
-download" and "PGP signature, key difficult to verify" in the same
-"yellow" category is inconvenient for us.  "MD5 checksum provided on
-same site as download" only helps verify downloads from mirrors against
-the master site, whereas "PGP signature, key difficult to verify"
-achieves a lot more - once a distro is already including the package
-(and has already taken the risk of it having been tampered with), then
-verifying further updates to the package becomes almost as reliable as
-it would have been with proper signing (with a "readily verifiable" key).
-So we need four categories, or simply "MD5 checksum provided on same
-site as download" should be in "red", not in "yellow".
+Regrettably no. No notifications of Linux kernel security issues
+reported to security@...nel.org mailing list to linux-distros (former
+vendor-sec) are happening on regular basis. I (speaking as Red Hat
+Security Response Team member in charge of kernel security issues) would
+really appreciate the notifications. Even marking commits that were
+committed as a result of security@...nel.org submission as sko
+originated would be really helpful.
 
-Alexander
+The linux-distros/oss-sec members can make sure that each issue gets CVE
+and it's properly publicly communicated at the right time (preferably
+when the issue is public -- when it is committed).
+
+Should you consider this approach, is there anything I can help with to
+make that happen?
+
+Thank you,
+-- 
+Petr Matousek / Red Hat Security Response Team
+
