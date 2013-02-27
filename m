@@ -1,76 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/11/8
-Message-ID: <5230D6DB.1080903@redhat.com>
-Date: Wed, 11 Sep 2013 14:47:23 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/33
+Message-ID: <20130227181454.GS1722@dhcp-25-225.brq.redhat.com>
+Date: Wed, 27 Feb 2013 19:14:55 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marc Deslauriers <marc.deslauriers@...onical.com>
-Subject: Re: CVE Request: lightdm incorrect .Xauthority permissions
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Feb 27, 2013 at 10:05:20AM -0800, Greg KH wrote:
+> On Wed, Feb 27, 2013 at 05:13:06PM +0100, Petr Matousek wrote:
+> > On Wed, Feb 27, 2013 at 06:48:34AM -0800, Greg KH wrote:
+> > > On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
+> > > > For starters, security@...nel.org submissions should be posted to
+> > > > oss-security or any other security related public mailing list when
+> > > > the
+> > > > patch is being committed.
+> > > 
+> > > That's not going to happen, and you know that, to do so would be
+> > > totally
+> > > irresponsible of us and directly harm your users.  That's what
+> > > vendor-sec (or whatever it is called now) is for.
+> > 
+> > linux-distros [1] is vendor-sec replacement for Linux related issues.
+> > 
+> >   [1] http://oss-security.openwall.org/wiki/mailing-lists/distros
+> 
+> Yes, sorry, I couldn't remember the name of it at the moment :)
+> 
+> > > Hasn't that been
+> > > happening for a while now, or has no one been notifying that list of
+> > > these issues?
+> > 
+> > Regrettably no. No notifications of Linux kernel security issues
+> > reported to security@...nel.org mailing list to linux-distros (former
+> > vendor-sec) are happening on regular basis. I (speaking as Red Hat
+> > Security Response Team member in charge of kernel security issues) would
+> > really appreciate the notifications. Even marking commits that were
+> > committed as a result of security@...nel.org submission as sko
+> > originated would be really helpful.
+> > 
+> > The linux-distros/oss-sec members can make sure that each issue gets CVE
+> > and it's properly publicly communicated at the right time (preferably
+> > when the issue is public -- when it is committed).
+> > 
+> > Should you consider this approach, is there anything I can help with to
+> > make that happen?
+> 
+> Yes, I need someone to actually do this.  There used to be a Red Hat
+> security team member that did this, or so I thought.
 
-On 09/11/2013 07:05 AM, Marc Deslauriers wrote:
-> Hello,
-> 
-> lightdm before 1.4.3, 1.6.2 and 1.7.14 created .Xauthority files
-> with world-readable permissions.
-> 
-> Fixed by the following commits:
-> 
-> 1.4.x: 
-> http://bazaar.launchpad.net/~lightdm-team/lightdm/1.4/revision/1571
->
-> 
-http://bazaar.launchpad.net/~lightdm-team/lightdm/1.4/revision/1576
-> http://bazaar.launchpad.net/~lightdm-team/lightdm/1.4/revision/1577
->
->  1.6.x: 
-> http://bazaar.launchpad.net/~lightdm-team/lightdm/1.6/revision/1641
->
-> 
-http://bazaar.launchpad.net/~lightdm-team/lightdm/1.6/revision/1652
-> http://bazaar.launchpad.net/~lightdm-team/lightdm/1.6/revision/1653
->
->  1.7.x: 
-> http://bazaar.launchpad.net/~lightdm-team/lightdm/trunk/revision/1675
->
-> 
-http://bazaar.launchpad.net/~lightdm-team/lightdm/trunk/revision/1780
-> http://bazaar.launchpad.net/~lightdm-team/lightdm/trunk/revision/1781
->
->  Bug reports: 
-> https://bugs.launchpad.net/ubuntu/+source/lightdm/+bug/1175023 
-> https://bugs.launchpad.net/lightdm/+bug/685212 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=721744
-> 
-> Could a CVE please be assigned to this issue?
-> 
-> Thanks,
-> 
-> Marc.
+That was most probably Eugene Teo, he's no longer in Red Hat. I am not
+subscribed to security@...nel.org.
 
-Please use CVE-2013-4331 for this issue.
+> What happened to
+> that process?  I'll ask on security@...nel.org if someone wants to
+> volunteer to do this, but if not, are you, or anyone else you know/trust
+> willing to do so?
 
+Yes, I am definitely willing to do so.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSMNbbAAoJEBYNRVNeJnmT0GwP/jdCZQzEbvqF/cdj3isPxdwC
-PBDIUKbLp0rJg2tnMg9RGPYWj5O6h72i1Dc6UunbBhyHr2JXA0TLyadXhSvVRRTN
-Mo/kP1Tz92zicUjmzgpLQTGDsKp0QbMQUq3Lo+hHLtGeSaKKVudToVSNm4qhX3/C
-TryB4a+olKQZ3V49DB+RO6e/2PVYr9Ihs1/BtT4ThxpsoC98OOHGz/YCDXoQLIyU
-AhXCc+vAlNYnLewL06Dh5OneHuGQzn7DXfn0TJQ8N+Qc9Lit6SbHR+vPOmAL8WXk
-7u029cYtQ2YH1q1x7yx8Icdv4RHcIV8chtP5NsmPAxjqUKT+oYb9TPOoVyXBmJfT
-rRk/4GhfzoX71Jzx4GC1pr0s9ODKGSZROxuzHRyQVoUNL06ya+nZaPC8FOU/yk7F
-Uk6bGq2b5HJBcH9FInu8SO399uMYs3fZwRz7Ts1llN4FyVqY9jUY1ymMMUIn+OtW
-DvBXN+F+jbN3v47j8+wFPFW4D+JLaQeinuAJ/ISCaJxix0RNxkr55amNO1hqYnEj
-IN9KoGvYzGdN/F817ygY2/1/egEbGvmGhxAFwbJyg3F/gtKpGgWAOq3FClcHxlWt
-c6utr90j1IhMO61khFziiEzz87rWN3BSmdUvE/DtPagf4RSuMVSVq4uqkAxU4unS
-5DMkHVOjT6kFx9gEJnTi
-=garn
------END PGP SIGNATURE-----
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
