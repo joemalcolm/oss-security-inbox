@@ -1,58 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/21
-Message-ID: <5278011E.30002@redhat.com>
-Date: Mon, 04 Nov 2013 13:18:38 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/45
+Message-ID: <20130227214400.GC27224@kroah.com>
+Date: Wed, 27 Feb 2013 13:44:00 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, security@...ian.org
-Subject: Re: possible CVE request: Tryton client input sanitization flaw
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Feb 27, 2013 at 10:26:16PM +0100, Yves-Alexis Perez wrote:
+> On mer., 2013-02-27 at 10:05 -0800, Greg KH wrote:
+> > Yes, I need someone to actually do this.  There used to be a Red Hat
+> > security team member that did this, or so I thought.  What happened to
+> > that process?  I'll ask on security@...nel.org if someone wants to
+> > volunteer to do this, but if not, are you, or anyone else you
+> > know/trust
+> > willing to do so?
+> 
+> And do you think it'd be possible to have the same kind of notifications
+> for (know security) issues not on security@k.o but committed to the
+> tree?
 
-On 11/04/2013 03:43 AM, Murray McAllister wrote:
-> Hello,
-> 
-> An input sanitization flaw was found in the Tryton client:
-> 
-> http://lists.debian.org/debian-security-announce/2013/msg00203.html
->
-> 
-https://bugs.tryton.org/issue3446
-> http://hg.tryton.org/tryton/rev/357d0a4d9cb8
-> 
-> A malicious server could use this flaw to write to files accessible
-> to the user running the Tryton client.
-> 
-> There is some discussion in issue3446 about why a CVE may not be
-> needed (starting at msg14493), and msg14507 notes a CVE could have
-> possibly been assigned via OpenBSD ... so I defer to the CVE
-> experts.
-> 
-> Cheers,
-> 
-> -- Murray McAllister / Red Hat Security Response Team
+That's the whole problem here, who is going to do such a classification,
+and after that, the notification?  The first part is the toughest to do,
+as discussed elsewhere in this thread.
 
-Please use CVE-2013-4510 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSeAEeAAoJEBYNRVNeJnmTGG0QAIP55On+rsuPXfpErvUo4jms
-Ipku19ts/zeMWtFhtrj/5e54tZwtGowlAqTAUaraQC29537ImKwwWIbC3fjrr5nZ
-ynZ/h6EYUtpvbTITZhSQZYmq/Y9vWYPWH5qaga4R7A1rnZu6VdOcb2eR9YqB3ZPO
-SBVmlhryDT+/i+UY2Gyfb2odX6cUq/xHq7CF8g6TO9wtT2Ar48vNy4vXxK2oe0eB
-e/Qjib+ouLIRoBdGAH5Dw67jjjL3e1qQo7DDiVBGteJGcgn8jU5mvP2hLnU/v+F5
-8WBWPfI6e9F4NAJxLJB0JMwdZklLkyIXYDd38yRE1ZaXp+hyxfuvt1bVaRFIVfqn
-om/sFLLjttlgPNoJSX6f1Hv9C7OmJx33holsGjnW1x/NmCh7ffBPqNCdVNvtqDxl
-7m0fXdizZFxRms/YEdpirDTx8RZNzddiu8B7XSVvDyKK3Yydo3UoWZ/VvUb+PSKR
-q0mxrh5oiUEl3BJaOOFPmFUj/QqqdNQFnUamIztPPTHfO5YavIwKigBFtzvaKizB
-jQFfHu/OHzi0OgoJ335g9ZFhdFutr5Qqnby90b5gG40wP2kFiPuZ6/drIoLfMt27
-CYPDNhe+MqTpQUUF6LJw7yFca+hZHN1obXdZ33Dzrl34m4HGxKIMVfVuidCqWfTi
-3/qMQReJ+USpGIPfCTq4
-=i5Rz
------END PGP SIGNATURE-----
+greg k-h
