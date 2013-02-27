@@ -1,17 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/24/7
-Message-ID: <51EFFDEB.5010805@gmail.com>
-Date: Wed, 24 Jul 2013 18:16:43 +0200
-From: Paul <pawlkt@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: timing leak in bitcoind
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/16
+Message-Id: <33972CB6-DA72-4F08-8164-1616291796D8@b3nji.com>
+Date: Wed, 27 Feb 2013 14:59:17 +0000
+From: Benji <me@...ji.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Low risk issue in RPC auth. code, described here:
-https://github.com/bitcoin/bitcoin/issues/2838
+Ah the logic. Open source software, hidden secret hush hush no public reporting patches.
 
--- 
-Regards,
-Paul
+Sent from my iPhone
 
+On 27 Feb 2013, at 14:48, Greg KH <greg@...ah.com> wrote:
 
+> On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
+>> On Tue, Feb 26, 2013 at 09:03:46PM -0800, Greg KH wrote:
+>>> On Tue, Feb 26, 2013 at 11:41:53PM -0500, Michael Gilbert wrote:
+>>>> Anyway, on a more serious note, at some point, acceptance will look
+>>>> something like a real kernel-sec team that does essentially what you
+>>>> just did, but on a continual basis: reviewing most/all commits for
+>>>> potential security concerns and forwarding them to oss-sec to increase
+>>>> identification and awareness to be applied downstream.
+>>> 
+>>> I will say flat out that this is an impossible task to accomplish.
+>>> 
+>>> As proof of that, I suggest you do this for just one major kernel
+>>> release cycle (2-3 months long).
+>>> 
+>>> You do know the number of patches applied to the Linux kernel every
+>>> hour, right?
+>>> 
+>>> Would you have caught the patch that started this thread?  I sure
+>>> didn't, and I was the one who originally applied it to the kernel tree
+>>> in the first place.  Doing "root-cause" research for every patch is
+>>> non-trivial, as I know you realize.
+>> 
+>> For starters, security@...nel.org submissions should be posted to
+>> oss-security or any other security related public mailing list when the
+>> patch is being committed.
+> 
+> That's not going to happen, and you know that, to do so would be totally
+> irresponsible of us and directly harm your users.  That's what
+> vendor-sec (or whatever it is called now) is for.  Hasn't that been
+> happening for a while now, or has no one been notifying that list of
+> these issues?
+> 
+> greg k-h
