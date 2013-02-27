@@ -1,23 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/18
-Message-ID: <20130121181749.GA16580@inutil.org>
-Date: Mon, 21 Jan 2013 19:17:49 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/20
+Message-ID: <CAEJizbaWFCGt8sHEv6i83v+=AyjVyukBnad-Q3FVZpe4sMm8nw@mail.gmail.com>
+Date: Wed, 27 Feb 2013 16:21:04 +0000
+From: Benji <me@...ji.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request coreutils
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi Sebastian,
+My response was directly due to this line for known security patches
+"That's not going to happen, and you know that, to do so would be totally
+irresponsible of us and directly harm your users."
 
-> Can someone assign a CVE id for a buffer overflow in coreutils?
-> Its the same code snippet (coreutils-i18n.patch) and it affects sort, uniq and join:
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=798538
-> https://bugzilla.novell.com/show_bug.cgi?id=796243
-> https://bugzilla.novell.com/show_bug.cgi?id=798541
+As I have said to someone else already who queried my comment, as we have
+seen before, hiding patches does not protect users and thus I'm not sure
+where the 'directly harm your users' comes into this. I'd be interested to
+hear how you think making security patches obvious, when they are obviously
+marked as such, is going to cause harm or danger to users.
 
-Could you send the faulty patch to the list so that distros can validate
-that they don't include it themselves?
+Regards
 
-Cheers,
-        Moritz
+
+On Wed, Feb 27, 2013 at 4:17 PM, Greg KH <greg@...ah.com> wrote:
+
+> On Wed, Feb 27, 2013 at 02:59:17PM +0000, Benji wrote:
+> > Ah the logic. Open source software, hidden secret hush hush no public
+> > reporting patches.
+>
+> Every single patch we make to the kernel is public, it is up to you to
+> determine if you feel it is a "security fix" or not.  And to do so is a
+> non-trivial task, something that I sure don't want to be responsible for
+> trying to do.  And since no one else has ever stepped up to want to do
+> it either, there's not much more that can be done.
+>
+> Are you willing to do it?
+>
+> greg k-h
+>
+
