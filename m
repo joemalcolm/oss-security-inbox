@@ -1,44 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/05/2
-Message-ID: <20131105100235.19a5cf16@chromobil.localdomain>
-Date: Tue, 5 Nov 2013 10:02:35 +0100
-From: Stefan Bühler <stbuehler@...httpd.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: openssl default ciphers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/34
+Message-ID: <20130227182638.GT1722@dhcp-25-225.brq.redhat.com>
+Date: Wed, 27 Feb 2013 19:26:39 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: Greg KH <greg@...ah.com>, Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 04 Nov 2013 21:02:44 +0100
-leToff <letoff@...il.com> wrote:
+On Wed, Feb 27, 2013 at 10:05:20AM -0800, Greg KH wrote:
+> On Wed, Feb 27, 2013 at 05:13:06PM +0100, Petr Matousek wrote:
+> > On Wed, Feb 27, 2013 at 06:48:34AM -0800, Greg KH wrote:
+> > > On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
+> > > > For starters, security@...nel.org submissions should be posted to
+> > > > oss-security or any other security related public mailing list when
+> > > > the
+> > > > patch is being committed.
+> > > 
+> > > That's not going to happen, and you know that, to do so would be
+> > > totally
+> > > irresponsible of us and directly harm your users.  That's what
+> > > vendor-sec (or whatever it is called now) is for.
+> > 
+> > linux-distros [1] is vendor-sec replacement for Linux related issues.
+> > 
+> >   [1] http://oss-security.openwall.org/wiki/mailing-lists/distros
 
-> On 04/11/2013 20:40, Eric H. Christensen wrote:
-> >
-> > BEAST is now mitigated on most browsers so we can drop the very
-> > broken RC4 cipher.
-> I guess Stephan is working with Safari...
-> 
-> leToff
+Greg, FYI. The linux-distros mailing list has strict rules about the
+maximum embargo period. It is ~14 days. I hope that ~14 days are
+acceptable as a grace period for you when the commit goes public. At the
+end of the embargo period the info is always sent to oss-sec with CVE id
+assigned. 
 
-This is certainly not about which browser I am using, or what clients
-I have to support with my servers. Also the latest Safari versions
-support TLS1.2 (this itself doesn't mitigate BEAST on TLS1.0
-connections, yes...)
+Also, Alexander, are you willing to accept the semi-public nature of the
+sko submissions to linux-distros and treat them as embargoed even though
+the commit is already public?
 
+For me, this solutions is not optimal as we usually treat any issue that
+has public commit as public one, but it would at least avoid
+CVE-2013-0871 like problems.
 
-I didn't mention this in my first post: this is not only about setting
-a default cipher suite in a new software, but also about what I propose
-to dist maintainers to backport.
-
-So in my case (lighttpd SNI bug) I could add "HIGH:!aNULL@...ENGTH" as
-default cipher string in the patch fixing the SNI bug. Do you who
-voted so fast for dropping MEDIUM also vote for backporting such
-change to all long term support dists?
-
-In this case I think it would be better if instead openssl gets fixed
-to use "HIGH:!aNULL@...ENGTH" as default (including backporting this
-fix), fixing all applications using openssl at once.
-
-
-regards,
-Stefan
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
