@@ -1,23 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/7
-Message-ID: <20131129111232.GB23653@kludge.henri.nerv.fi>
-Date: Fri, 29 Nov 2013 13:12:32 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/11
+Message-ID: <4130432.CH2LlkanmL@devil>
+Date: Wed, 27 Feb 2013 10:20:33 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: UnrealIRCd remote DoS
+Subject: Re: CVE request: psi+ stores the cache file as world-readable
 Content-Type: text/plain; charset=utf-8
 
-Can I get two CVEs for new issues in UnrealIRCd, thank you.
+On Wednesday 27 February 2013 07:41:28 gremlin@...mlin.ru wrote:
+> That's normal - users' home directories are normally accessible
+> only by users themselves, and never by othe users:
+> 
+> gremlin@...n:~ > ls -ld .
+> drwx-----x 47 gremlin users 20480 2013-02-26 17:48 ./
 
-Release notification: http://forums.unrealircd.com/viewtopic.php?f=2&t=8221
-Release notes: http://www.unrealircd.com/txt/unreal3_2_10_2_release_notes.txt
-Fixed in: 3.2.10.2
-Secunia: http://secunia.com/advisories/55839/
-
-http://osvdb.org/100353 Unspecified NULL Pointer Dereference Remote DoS
-http://osvdb.org/100352 Unspecified Use-after-free Remote DoS
-
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+The default permission for the home is not 0700, but is 0755. So, for the 
+stuff that resides in .cache which should always be .0700, is ok, for the 
+stuff in e.g. .config the problem exist because it is 0755.
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
