@@ -1,24 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/10
-Message-ID: <20130815084657.GA26928@kludge.henri.nerv.fi>
-Date: Thu, 15 Aug 2013 11:46:57 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/7
+Message-ID: <512DA7B6.5020209@redhat.com>
+Date: Tue, 26 Feb 2013 23:29:10 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: rubygems insecure download (and other problems)
+CC: Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 15, 2013 at 10:37:45AM +0200, Marcus Meissner wrote:
-> So the implicit assumption "installing gems is secure" is violated here, which would
-> require a CVE I think.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 02/26/2013 02:38 PM, Yves-Alexis Perez wrote:
+> On mar., 2013-02-26 at 14:05 -0700, Kurt Seifried wrote:
+>> The problem with security is you have to basically do it 100% 
+>> correctly 100% of the time
 > 
-> Ciao, Marcus
+> You can also look at other, more proactives approaches (hardening
+> the memory layout, enforcing W^X etc.). Even hardening userland
+> might help here.
 
-This deserves CVE. There is already CVEs for similar issues. CVE per software if
-I am correct not one CVE for all similar issues.
+I was referring to security process, not security technology, sorry I
+should have been more clear.
 
-Kurt, comments?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
----
-Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQIcBAEBAgAGBQJRLae2AAoJEBYNRVNeJnmTFicP/R1mzoiCLtPWlwy9JEDJuYK6
+/K1p7UD1CmxyFdP/tkNoDDjv9QSIqw4Savg0hD1nvpYR/Wm7nB4006dkDCNRZVXr
+XcgwKRKMHbX6cDLRONOLrCgplAnq+QR5A8V3hqpnRyRLq/OFvbuQO9JaKkM8t4+u
+J1tip7qgZyTFtC5E5h47L3DoCTnb7+r3xF77lnuXn3xRrH1zWogKS/1rhsGURH5Z
+7lbITT5yjaOoKENZnllYGXBOcaadgnJ8j0TobTrPTLEUZJyjgB5Lh6KM9QFzQ4VZ
+lrKwyfc0+vt72ATd1650c7GBvQKXQanWLsONmqx90Kx1JXXQK5ubTWzPAkO7BS8f
+9P8BJT0vGrUIgBNvUKQipbiDVJqoLmcNmwdMTEJBN67Vti+H8UHI7WuM6XJrqvGX
+oygDGsJGqcU2vsS0SPtM0scoA74zVLv3N8Z74iRcDytEJmcosUcxmMpDIQ25tWDc
+CpFPKTGY/2ioBvZRIo/Q7Unbsxuh+QfmHqDy2uPg7ABnzpAo60Awof17mN3F/OcE
+jXTui92H7ylfePok3jS9GML68LHM0Ajcy9LbENT22q7QtNSj7sXFAtQNjHYWOxBL
+6dId7Zuk3TdVA9dtjirhkMXe+3ezTq98tyP5bXgBToImXRVf56b6ukcZtvhg0LrU
+XO/mTbiIdJ8nhIz6jA67
+=1I97
+-----END PGP SIGNATURE-----
