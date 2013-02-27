@@ -1,27 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/05/1
-Message-ID: <529FFAD6.2030600@redhat.com>
-Date: Thu, 05 Dec 2013 15:02:30 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: meissner@...e.de, Kurt Seifried <kseifrie@...hat.com>
-Subject: CVE needed for hplip insecure auto update feature?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/51
+Message-ID: <CAHmME9qGH4xSP1EfqY3J-Kp=yi5Rojw3X9nXMqnmXd5Lfe-czQ@mail.gmail.com>
+Date: Thu, 28 Feb 2013 00:27:09 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Thu, Feb 28, 2013 at 12:17 AM, Daniel Kahn Gillmor
+<dkg@...thhorseman.net> wrote:
+> Even if this were true, it takes much more than a single cycle to write
+> up a decent security report that can be understood by other people.
+> Communication takes time and effort.  Good communication takes even more
+> time and effort.
 
-https://bugzilla.novell.com/show_bug.cgi?id=853405 talks about an
-upgrade feature in hplip downloading (via HTTP) a binary and executing
-it. Is a CVE needed for that?
-
-Along with the versions in
-<https://bugzilla.novell.com/show_bug.cgi?id=853405#c6>, the hplip 1.6.7
-and hplip3 3.9.8 versions I looked at did not have the upgrade.py file
-in the source (newer version like 3.13.11 had it in the source but the
-RPM spec file looks to remove it at build time, so it is not provided in
-the binary RPMs).
-
-Thanks,
-
---
-Murray McAllister / Red Hat Security Response Team
+I agree with this. I was referring to Greg's first mentioned stage of
+classifying the bug, which for some cases is easy, though, as I said,
+not in all cases. What you refer to is Greg's mentioned second stage,
+of notification. This often can indeed be time consuming, as you
+mentioned.
