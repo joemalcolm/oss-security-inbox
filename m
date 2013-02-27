@@ -1,20 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/6
-Message-ID: <alpine.LFD.2.03.1304091232450.18291@redhat.com>
-Date: Tue, 9 Apr 2013 12:33:44 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/21
+Message-ID: <CAEJizbb5LLWvWkxEzsbSm-T9SB04R7uTCf5PhD56Ey_pV=pkCA@mail.gmail.com>
+Date: Wed, 27 Feb 2013 16:22:48 +0000
+From: Benji <me@...ji.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-+-- On Tue, 9 Apr 2013, Dan Carpenter wrote --+
-| I don't know which arches are affected by this information leak or
-| even if there are any.
+Apparently I've misunderstood the post, sorry for the noise if that is the
+case.
 
-  Yep, same here.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+On Wed, Feb 27, 2013 at 4:21 PM, Benji <me@...ji.com> wrote:
+
+> My response was directly due to this line for known security patches
+> "That's not going to happen, and you know that, to do so would be totally
+> irresponsible of us and directly harm your users."
+>
+> As I have said to someone else already who queried my comment, as we have
+> seen before, hiding patches does not protect users and thus I'm not sure
+> where the 'directly harm your users' comes into this. I'd be interested to
+> hear how you think making security patches obvious, when they are obviously
+> marked as such, is going to cause harm or danger to users.
+>
+> Regards
+>
+>
+> On Wed, Feb 27, 2013 at 4:17 PM, Greg KH <greg@...ah.com> wrote:
+>
+>> On Wed, Feb 27, 2013 at 02:59:17PM +0000, Benji wrote:
+>> > Ah the logic. Open source software, hidden secret hush hush no public
+>> > reporting patches.
+>>
+>> Every single patch we make to the kernel is public, it is up to you to
+>> determine if you feel it is a "security fix" or not.  And to do so is a
+>> non-trivial task, something that I sure don't want to be responsible for
+>> trying to do.  And since no one else has ever stepped up to want to do
+>> it either, there's not much more that can be done.
+>>
+>> Are you willing to do it?
+>>
+>> greg k-h
+>>
+>
+>
+
