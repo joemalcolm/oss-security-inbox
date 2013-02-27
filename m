@@ -1,74 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/13
-Message-ID: <CAGyNYUNFXcwM5UC_RyK9dkBTXQr6Nu3qj0QkbQ7fP6EJxX+M4Q@mail.gmail.com>
-Date: Thu, 14 Mar 2013 21:51:29 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request/Guidance: Linux kernel cdc-wdm buffer overflow triggered by device
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/24
+Message-ID: <20130227170608.GQ1722@dhcp-25-225.brq.redhat.com>
+Date: Wed, 27 Feb 2013 18:06:08 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi Marcus,
+On Wed, Feb 27, 2013 at 08:15:47AM -0800, Greg KH wrote:
+> On Wed, Feb 27, 2013 at 07:08:58PM +0400, Solar Designer wrote:
+> > On Wed, Feb 27, 2013 at 06:48:34AM -0800, Greg KH wrote:
+> > > On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
+> > > > For starters, security@...nel.org submissions should be posted to
+> > > > oss-security or any other security related public mailing list when the
+> > > > patch is being committed.
+> > > 
+> > > That's not going to happen, and you know that, to do so would be totally
+> > > irresponsible of us and directly harm your users.
+> > 
+> > Huh?!  Maybe you misread what Petr wrote?  Note: "when the patch is
+> > being committed".  At this point, the security issue is public, and it
+> > just needs to be properly communicated to all those interested
+> > (including distros, sysadmins, etc.), such as via oss-security.  Not
+> > doing this favors those few who spend time to review commits on their
+> > own; some of them do it for purposes other than informing the public.
+> 
+> We (the kernel team) well know this, and have been over this topic
+> numerous times in the past.  We have come to the conclusion that it is
+> not good for us to be publicly stating "here look, here's how you
+> exploit the kernel!" at the exact moment we commit the patch to the
+> public tree because suddenly you now have shown how all systems in the
+> world are exploitable, with no chance for anyone to have protected their
+> systems ahead of time.
+> 
+> Instead, we have no problem with groups like vendor-sec being notified
+> of these issues, and allowing them to push out updates, before _they_
+> notify the world of the problem.  And, for a long time, I thought
+> vendor-sec was being notified of all of the issues that
+> security@...nel.org knew about, if this has suddenly changed, please let
+> me know and I will be glad to resolve it.
 
-On Thursday, 14 March 2013, Marcus Meissner wrote:
+As stated in my previous comment, this is not happening.
 
-> Hi,
->
-> I am wondering ... do we consider attacks with special attack taylored USB
-> devices as CVE worthy?
->
-> There is only some precedence in the CVE DB, but not much.
->
-> I stumbled over this fix from one of my colleagues where a specifically
-> made USB device reporting the "cdc-wdm" USB class could cause a kernel
-> heap overflow.
->
-> "Malicious attached devices" might fall into several categories:
->
-> 1. Attaching the device causes the issue directly within the kernel /
-> autoloaded
->    module, without user interaction. (here the case)
->
->
-> 2. Attaching the device causes the issue when userspace, dependend on
->    e.g. desktop system, does initiate a seperate action (like an automount
->    and then exploitation of something) (so not direct a kernel, but a
->    kernel + GNOME/KDE interaction).
->
->
-> 3. User needs to do something with the attached device (like click on
->    a file on a USB disk)
->
->
-> I would consider (1) and (2) CVE worthy at least, not so sure with (3).
-
-
-I agree with (1) and (2). I have seen (3) with CVE names too. If a local,
-unprivileged user can cause an issue by accessing a file or listing a set
-of files in a directory due to a flaw in the underlying file system, I
-think it should have a CVE name assigned.
-
-Thanks, Eugene
-
-
->
-> Ciao, Marcus
->
-> commit c0f5ecee4e741667b2493c742b60b6218d40b3aa
-> Author: Oliver Neukum <oneukum@...e.de <javascript:;>>
-> Date:   Tue Mar 12 14:52:42 2013 +0100
->
->     USB: cdc-wdm: fix buffer overflow
->
->     The buffer for responses must not overflow.
->     If this would happen, set a flag, drop the data and return
->     an error after user space has read all remaining data.
->
->     Signed-off-by: Oliver Neukum <oliver@...kum.org <javascript:;>>
->     CC: stable@...nel.org <javascript:;>
->     Signed-off-by: Greg Kroah-Hartman <gregkh@...uxfoundation.org<javascript:;>
-> >
->
->
->
->
-
+-- 
+Petr Matousek / Red Hat Security Response Team
