@@ -1,89 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/7
-Message-ID: <89555bf83fbb374e70bab82aba41a3bc@imap.steindlberger.de>
-Date: Wed, 04 Sep 2013 13:45:33 +0200
-From: Jonas Meurer <jonas@...esources.org>
-To: Andreas Ericsson <ae@....se>
-Cc: oss-security@...ts.openwall.com, nagios-devel@...ts.sourceforge.net, Vincent Danen <vdanen@...hat.com>, Kurt Seifried <kseifried@...hat.com>, contribute@...ios.org
-Subject: Re: Security bug or feature? Servicegroups leak hostnames to unauthorized users (Was: CVE request: unauthorized host/service views displayed in servicegroup view)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/30
+Message-ID: <512E4ABF.9040201@redhat.com>
+Date: Wed, 27 Feb 2013 11:04:47 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Todd C. Miller" <Todd.Miller@...rtesan.com>
+Subject: Re: CVE request: sudo authentication bypass when clock is reset
 Content-Type: text/plain; charset=utf-8
 
-Am 2013-09-04 11:03, schrieb Andreas Ericsson:
-> On 2013-09-04 10:31, Jonas Meurer wrote:
->> Hey list and fellow Nagios developers,
->> 
->> as you might have noticed, there's a discussion ongoing on 
->> oss-security[1]
->> regarding bug report #456[2].
->> 
->> I'm the one who discovered the described issue, and I still believe 
->> that
->> it's a bug with security implications, even though not everyone seems 
->> to
->> be convinced.
->> 
->> I'll try to give a brief description of the issue:
->> 
->> The Nagios status.cgi (at all 3.4* and 4.0* versions I checked) leaks
->> hostnames to unauthorized users as part of servicegroups. All of
->> servicegroup overview, summary and grid list each and every hostname 
->> that
->> is part of a servicegroup, regardless whether the HTTP user is listed 
->> in
->> contacts/contactgroups for this host.
->> 
->> In my opinion this is a security issue - at least on multi-user (e.g.
->> multi-customer) Nagios-setups. I guess that most ISPs which give their
->> customers access to the Nagios CGIs don't want to provide a full list
->> of monitored hosts to their customers as a side-effect.
->> 
->> One reason for confusion is the following entry from Nagios3 
->> changelog[3]:
->> 
->> 3.4.0 - 05/04/2012
->> ENHANCEMENTS
->> [...]
->> - Users can now see hostgroups and servicegroups that contain at least
->>    one host or service they are authorized for, instead of having to
->>    be authorized for them all (Ethan Galstad)
->> 
->> 
->> The indisputable part of this change is, that users are allowed to see
->> hostgroups and servicegroups with at least one authorized host or
->> service. Unclear is, whether this means "group and all its group
->> members", or "group and only authorized group members".
->> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 02/27/2013 09:23 AM, Todd C. Miller wrote:
+> Sudo 1.8.6p7 and 1.7.10p7 are now available which include a fix
+> for the following bug:
 > 
-> It should mean "group and only authorized group members, except also
-> hosts for services where one is authorized to see the service".
-
-Ok, so if this was intended, then there indeed is a bug.
-
->> You can find my patch at the Nagios Issue Tracker.
+> Sudo authentication bypass when clock is reset
 > 
-> Ah, right. Care to provide a link? Mostly, I prefer to get patches to
-> this mailing list, since I don't spend a lot of time hunting them down
-> from the (underused) tracker.
-
-Sure, my original mail already had it as footnote. Here you find patches
-for Nagios 3.4.4 and 4 (master from 26.06.2013):
-
-http://tracker.nagios.org/view.php?id=456
-
->> A comment about this issue by the Nagios Developers whould be highly
->> appreciated. In case that the described (and critizised) behaviour of
->> status.cgi is intended, the distribution security teams can move on.
->> 
+> Summary:
+>     When a user successfully authenticates with sudo, a time stamp
+>     file is updated to allow that user to continue running sudo
+>     without requiring a password for a preset time period (five
+>     minutes by default).  The user's time stamp file can be reset
+>     using "sudo -k" or removed altogether via "sudo -K".
 > 
-> Well, it *was* by design, but now I'm changing the design. It's a good
-> time for it, since 4.0 is about to come out. I think the security teams
-> can move on and we'll consider this "changed" rather than "fixed" for
-> 4.0, where we do some security tightening.
+>     A user who has sudo access and is able to control the local
+>     clock (common in desktop environments) can run a command via
+>     sudo without authenticating as long as they have previously
+>     authenticated themselves at least once by running "sudo -k" and
+>     then setting the clock to the epoch (1970-01-01 01:00:00).
+> 
+>     The vulnerability does not permit a user to run commands other
+>     than those allowed by the sudoers policy.
+> 
+> Sudo versions affected:
+>     Sudo 1.6.0 through 1.7.10p7 and sudo 1.8.0 through 1.8.6p7.
+> 
+> Details:
+>     By default, sudo displays a lecture when the user's time stamp
+>     file is not present.  In sudo 1.6, the -k option was changed
+>     to reset the time stamp file to the epoch rather than remove
+>     it to prevent the lecture from being displayed the next time
+>     sudo was run.  No special case was added for handling a time
+>     stamp file set to the epoch since the clock should never
+>     legitimately be set to that value.
+> 
+>     However, there are two common ways for the clock to be reset
+>     to the epoch.  The first way is when the clock is reset due to
+>     a fully drained battery on some systems.  The other way is by
+>     a user logged in to a desktop environment that allows changes
+>     to the date and time.
+> 
+>     As long as the user has successfully run sudo before, they are
+>     able to run "sudo -k" to reset the time stamp file.  This action
+>     does not require a password and is not logged.  If the user is
+>     also able to reset the date and time to the epoch (1970-01-01
+>     01:00:00), they will be able to run sudo without having to
+>     authenticate.
+> 
+> Impact:
+>     The flaw may allow someone with physical access to a machine
+>     that is not password-protected to run sudo commands without
+>     knowing the logged in user's password.  On systems where sudo
+>     is the principal way of running commands as root, such as on
+>     Ubuntu and Mac OS X, there is a greater chance that the logged
+>     in user has run sudo before and thus that an attack would
+>     succeed.
+> 
+> Fix:
+>     The bug is fixed in sudo 1.8.6p7 and 1.7.10p7.  These versions
+>     will ignore a time stamp file that is set to the epoch.
+> 
+> Workaround:
+>     Using "sudo -K" instead of "sudo -k" will completely remove the
+>     time stamp file instead of just resetting it.
+> 
+> Credit:
+>     I'd like to thank Marco Schoepl for finding and reporting this
+>     long-standing bug.
+> 
 
-At least when I checked last (26.06.2013), Nagios 4 was still affected
-by the bug. Did you change the way status.cgi checks for authentication
-in the meantime?
+Please use CVE-2013-1775 for this issue.
 
-Kind regards,
-  jonas
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRLkq/AAoJEBYNRVNeJnmTiDcQANR8k6W1zRF1otKXMobCjS5P
+Jost0kmGEC0M32NbR4CYXz//noUTsZR6Zbh1C4Kt/lsjARv7NkJgFKKUi6hqXoig
+YGmUQtMDaI8Y8kmI09gr4XMrr/urmo0ifd8cWDULBxnPGT9zWbfpALXkJ5iI2bm2
+tTIhKEaYz7nyqRxZkwDX8OTJ4glikhd+XfEeP1wqUxT6fsYFJu4o8yJyHkoCg2ML
+cGfHm/nSf/Gg1I0Ze6VvDbg8zGeynPo3uCzHVL0sUbn3PXRYDAEF+gL0sOFPMjpw
+ObJNjJxBUaHasZL7gLLGKdqzXOH19WzsAhXuizbeBC6qLytiKojakt2vfEcbKpE1
+kvnb/RZUJgeJ713C2Zr7uTJ5IVP+k13f86lNUJA5TqKsbnTCPCHOlStgFIQFU3wa
+sTQpfS+6h6wZI95UZ4WTA0In1PyoB9hNIK+5xpOXw5j7mau/jCuL773XgZc+yK6p
+JgadFbfOY674ORPxrnBXNM6N9yCNQrvSRRmmr88efQo4U4SFx30cDZYrET7wsR5B
+MrqNGLP7dQtDbfB3ap0tqyTTXzModg4xcvObHa6F3w9UbsI+fTpkDsaUpZRf9PTT
+JwAklksljHsJA4oVvhAhS0MQqyV9H34v8tbQhT7pEbtOpXRluCM8nEoIrV6kn/1v
+24TzEDeKW4PHX2R2aXvN
+=kQGP
+-----END PGP SIGNATURE-----
