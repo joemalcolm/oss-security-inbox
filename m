@@ -1,20 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/9
-Message-ID: <loom.20130304T174633-80@post.gmane.org>
-Date: Mon, 4 Mar 2013 16:47:26 +0000 (UTC)
-From: Damien Regad <damien.regad@...ckgroup.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/19
+Message-ID: <20130227161726.GD21645@kroah.com>
+Date: Wed, 27 Feb 2013 08:17:26 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: MantisBT before 1.2.13 "Change Status To" feature allows unauthorised workflow changes
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...> writes:
-> Please use CVE-2013-1811 for this issue.
+On Wed, Feb 27, 2013 at 02:59:17PM +0000, Benji wrote:
+> Ah the logic. Open source software, hidden secret hush hush no public
+> reporting patches.
 
-Thanks. The corresponding Mantis issue has been updated accordingly.
+Every single patch we make to the kernel is public, it is up to you to
+determine if you feel it is a "security fix" or not.  And to do so is a
+non-trivial task, something that I sure don't want to be responsible for
+trying to do.  And since no one else has ever stepped up to want to do
+it either, there's not much more that can be done.
 
-> regarding the past email ctrl-c, ctrl-v, same thing right?
+Are you willing to do it?
 
-Not sure what you mean by that
-
-
-
+greg k-h
