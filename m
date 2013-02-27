@@ -1,87 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/30/3
-Message-Id: <E1VQcDB-0000Pk-DR@xenbits.xen.org>
-Date: Mon, 30 Sep 2013 12:04:25 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 66 (CVE-2013-4361) - Information leak through fbld instruction emulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/35
+Message-ID: <CAHmME9rVSzE2o95wB1FCLvRb+Y8c8zyRMvr=H26w62HC=+DvAg@mail.gmail.com>
+Date: Wed, 27 Feb 2013 20:06:18 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Feb 27, 2013 at 5:17 PM, Greg KH <greg@...ah.com> wrote:
+> Every single patch we make to the kernel is public, it is up to you to
+> determine if you feel it is a "security fix" or not.  And to do so is a
+> non-trivial task, something that I sure don't want to be responsible for
+> trying to do.  And since no one else has ever stepped up to want to do
+> it either, there's not much more that can be done.
+>
+> Are you willing to do it?
+>
 
-              Xen Security Advisory CVE-2013-4361 / XSA-66
-                              version 3
-
-           Information leak through fbld instruction emulation
-
-UPDATES IN VERSION 3
-====================
-
-Public Release.
-
-ISSUE DESCRIPTION
-=================
-
-The emulation of the fbld instruction (which is used during I/O
-emulation) uses the wrong variable for the source effective address.
-As a result, the actual address used is an uninitialised bit pattern
-from the stack.
-
-A malicious guest might be able to find out information about the
-contents of the hypervisor stack, by observing which values are
-actually being used by fbld and inferring what the address must have
-been.  Depending on the actual values on the stack this attack might
-be very difficult to carry out.
-
-IMPACT
-======
-
-A malicious guest might conceivably gain access to sensitive data
-relating to other guests.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 3.3.x and later are vulnerable.
-
-Only HVM guests can take advantage of this vulnerability.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this issue.
-
-There is no mitigation available for HVM guests.  We believe this
-vulnerability would require significant research to exploit.
-
-CREDITS
-=======
-
-Jan Beulich discovered this issue.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa66.patch             Xen 4.2.x, Xen 4.3.x, xen-unstable
-
-
-$ sha256sum xsa66.patch
-3a9b6bf114eb19d708b68dd5973763ac83b57840bc0f6fbd1fe487797eaffed4  xsa66.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJSSUhOAAoJEIP+FMlX6CvZdTsIAISzxoVv5PVKcT3RlikuDPdS
-AN4b5d/AJHGUcVg0K8CAd5UpvP0y5UfVhMFc+LCNDoeTE6a+4PsS/2V49HX259tT
-oX1HDZUxzfDbNTgZL5/hS3RUNZvTlWxVS0E5SMRW5jDrScPFUOqliD9hNj2cyvlq
-Ne362V5VFFb9AcZsMPnl2V4FerUyyuTCncxcvsvDshFIhBaqBY8G/LBqIHE7CKZF
-qCK9688RIMlwgNag7fbSloCLOifC7Jrfp9k+wfhAUdLj6R6l2SuyItYa7KufTAof
-/bWddQVFxhxcapYMDiNExZNxbHoM51rAeSkC3eYn6BGWKjqfIetA4X+uzfP3LNc=
-=PSEF
------END PGP SIGNATURE-----
-
-Download attachment "xsa66.patch" of type "application/octet-stream" (839 bytes)
+Yes! Sign me up, I volunteer. I'd be happy to watch the coordination
+between security@ and the git repo, and sent oss-sec an email when
+they align. Pencil me in.
