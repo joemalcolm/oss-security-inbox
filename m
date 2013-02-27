@@ -1,24 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/3
-Message-ID: <20130220004159.GU14748@dhcp-25-225.brq.redhat.com>
-Date: Wed, 20 Feb 2013 01:41:59 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/32
+Message-ID: <20130227180520.GC31167@kroah.com>
+Date: Wed, 27 Feb 2013 10:05:20 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifrie@...hat.com>
-Subject: CVE request -- Linux kernel: vhost: fix length for cross region descriptor
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-If a single descriptor crosses a region, the second chunk length should
-be decremented by size translated so far, instead it includes the full
-descriptor length. A privileged guest user could use this flaw to crash
-the host or, potentially, corrupt host memory.
+On Wed, Feb 27, 2013 at 05:13:06PM +0100, Petr Matousek wrote:
+> On Wed, Feb 27, 2013 at 06:48:34AM -0800, Greg KH wrote:
+> > On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
+> > > For starters, security@...nel.org submissions should be posted to
+> > > oss-security or any other security related public mailing list when
+> > > the
+> > > patch is being committed.
+> > 
+> > That's not going to happen, and you know that, to do so would be
+> > totally
+> > irresponsible of us and directly harm your users.  That's what
+> > vendor-sec (or whatever it is called now) is for.
+> 
+> linux-distros [1] is vendor-sec replacement for Linux related issues.
+> 
+>   [1] http://oss-security.openwall.org/wiki/mailing-lists/distros
 
-Upstream fix:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=bd97120fc3d1a11f3124c7c9ba1d91f51829eb85
+Yes, sorry, I couldn't remember the name of it at the moment :)
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=912905
+> > Hasn't that been
+> > happening for a while now, or has no one been notifying that list of
+> > these issues?
+> 
+> Regrettably no. No notifications of Linux kernel security issues
+> reported to security@...nel.org mailing list to linux-distros (former
+> vendor-sec) are happening on regular basis. I (speaking as Red Hat
+> Security Response Team member in charge of kernel security issues) would
+> really appreciate the notifications. Even marking commits that were
+> committed as a result of security@...nel.org submission as sko
+> originated would be really helpful.
+> 
+> The linux-distros/oss-sec members can make sure that each issue gets CVE
+> and it's properly publicly communicated at the right time (preferably
+> when the issue is public -- when it is committed).
+> 
+> Should you consider this approach, is there anything I can help with to
+> make that happen?
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Yes, I need someone to actually do this.  There used to be a Red Hat
+security team member that did this, or so I thought.  What happened to
+that process?  I'll ask on security@...nel.org if someone wants to
+volunteer to do this, but if not, are you, or anyone else you know/trust
+willing to do so?
+
+thanks,
+
+greg k-h
