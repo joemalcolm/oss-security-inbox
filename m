@@ -1,111 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/15/4
-Message-ID: <50F4B68C.4030200@redhat.com>
-Date: Mon, 14 Jan 2013 18:53:16 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/10
+Message-ID: <20130227074913.GB3756@gremlin.ru>
+Date: Wed, 27 Feb 2013 11:49:13 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: 3 DoS conditions in Rake
+Subject: Re: CVE request: psi+ stores the cache file as world-readable
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 26-Feb-2013 19:50:48 -0800, Russ Allbery wrote:
 
-On 01/14/2013 05:20 PM, Vincent Danen wrote:
-> Three issues were noted in recent release of upstream Rake.  All
-> are DoS issues.
-> 
-> From https://bugzilla.redhat.com/show_bug.cgi?id=895277 (2
-> issues):
-> 
-> Upstream released [1] Rack 1.4.2, 1.3.7, 1.2.6, and 1.1.4 to fix a 
-> denial of service condition when Rack parses content with a
-> certain Content-Disposition header as noted in the original report
-> [2].
-> 
-> This has been fixed in git [3].
+ >>> Psi+, a fork of psi, stores its files in ~/.cache/psi+ as
+ >>> world-readable.
 
-Please use CVE-2012-6109 for this issue (fixed in Rack 1.4.2 and so on)
+ >> That's normal - users' home directories are normally accessible
+ >> only by users themselves, and never by othe users:
+ >> gremlin@...n:~ > ls -ld .
+ >> drwx-----x 47 gremlin users 20480 2013-02-26 17:48 ./
 
-> Additionally, a second flaw that was fixed in 1.4.4, 1.3.9, 1.2.7,
-> and 1.1.5 was also announced [4] that creates a minor denial of
-> service condition, this time in the Rack::Auth::AbstractRequest,
-> where it symbolized arbitrary strings (apparently this has
-> something to do with authentication, but there is no further
-> information provided other than the fix [5] itself, which is noted
-> as "a breaking API change").
+ > That is one possible convention of many for structuring user
+ > home directory permissions. It is certainly not universal, and
+ > no software should assume that home directory permissions are
+ > structured that way when deciding on the permissions of other
+ > files created under the user's home directory.
 
-Please use CVE-2013-0184 for this issue (fixed in Rack 1.4.4 and so on)
+If something is stored in the user's home directory, it's under
+user's responsibility.
 
-> [1] http://rack.github.com/ [2] 
-> https://groups.google.com/forum/#!msg/rack-devel/1w4_fWEgTdI/XAkSNHjtdTsJ
->
-> 
-[3]
-> https://github.com/rack/rack/commit/4fc44671b3cad569421f4f8b775c0590b86f575e
->
->  [4] 
-> https://groups.google.com/forum/#!topic/rack-devel/ImYOqcGiksw/discussion
->
-> 
-[5]
-> https://github.com/rack/rack/commit/0c76175fcccad74ba2f991c487d3669c28a297c8
+ > Some of us who have been using UNIX for long enough that we
+ > originally learned the permissions system when sharing was
+ > emphasized over security do still use world-readable home
+ > directories, with specific directories under it restricted.
 
+Yes, I also did that - in previous century :-)
 
-=====================
+ > We would like software, when creating private files, to not
+ > assume that it can be careless about permissions of individual
+ > files because "of course" the user's home directory is private.
 
->
-> 
-And from https://bugzilla.redhat.com/show_bug.cgi?id=895282:
-> 
-> Upstream released [1] Rack 1.4.3 and 1.3.8 to fix a denial of
-> service condition due to a malicious client sending excessively
-> long lines that trigger an out-of-memory error in Rack.
-> 
-> This has been fixed in git [2].
+The safer way will be not assuming anything, but instead enforce
+it - at least using the restrictive umask like 077.
 
-Please use CVE-2013-0183 for this issue (fixed in Rack 1.4.3 and so on)
+gremlin@...n:~ > ls -ld .ssh
+drwx------ 2 gremlin users 4096 2012-12-24 12:56 .ssh/
 
+Just in case...
 
-> [1] 
-> https://groups.google.com/forum/#!topic/rack-devel/-MWPHDeGWtI/discussion
->
-> 
-[2]
-> https://github.com/rack/rack/commit/f95113402b7239f225282806673e1b6424522b18
-
-Please
-> 
-use CVE-2012-6109 for this issue (fixed in Rack 1.4.2, released
-in 2012 so 2012 CVE)
-
-
-
-> 
-> 
-> 
-> Could three CVEs be assigned for these issues please?  Thanks.
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ9LaMAAoJEBYNRVNeJnmTmV0P/ihQNH1ta7ju4e5QvkhV2AQT
-k+AlM+tyrS8lIFQ5ywrydnKUPemm/LSh3mFyMnqG2JxYR4B9aooC86VBoR8il/wF
-a3UJv4nlmqOCXY4v+px7YoCcsIUK5saf5NGTsdCG3oej+d2xgpiVdVvZoD9dx9Ih
-RN42/KhPJzGE+s/Mi5DTz2IVVG/s1Egu7UlEM8ySwWyHCLQhIITccidR54dwbla5
-ATOAx23WDeVTG35vvgMPXVZUgzHl6fg2n027ZTQrLABuYZ7dDKM5aspI1f2lLPoc
-bli6bIveH2XPoMME+E39gYcWktF5E+Mocoks1QlAzULJOZiABZKj5lnVE41mbFOm
-2oUljrZ0b2LWwXMAnfCW6xzWDUFmFiUe/Yu8AS/6X4uPSJ9Wrkq6arOjzm6sEEP+
-7efhPvPnY/zPDzOJAAG+ggGvBxKd1iWWzimg1pMwrXyEuEwWSnxlfTguWGRqC1f0
-CBFsLqdMUgY4+DxyJYhZCfnhYzUjve1fPBLm/U6ADDxvWliNVFyyW8QXAHNYOUG4
-/3NIKWYhMt/9clV7DtdV38w5/sp+uHdooPAKhpv2ZZ7n/M1mEBlfjHoG0+OPfYVh
-jJcxfaF08gM67XaT6poyRzsna7kTZbCmUotMFuPKfHxq/ikuKEF53NEG0ahFa4Kh
-tucpKur4ikJaT5hMixng
-=n42W
------END PGP SIGNATURE-----
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
