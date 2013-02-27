@@ -1,68 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/10/2
-Message-ID: <5205BBEC.6080706@redhat.com>
-Date: Fri, 09 Aug 2013 22:05:00 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/14
+Message-ID: <20130227144834.GA2858@kroah.com>
+Date: Wed, 27 Feb 2013 06:48:34 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Pedro Ribeiro <pedrib@...il.com>, Frank Warmerdam <warmerdam@...ox.com>
-Subject: Re: CVE Request -- Four (stack-based) buffer overflows and one use-after-free in libtiff v4.0.3 reported by Pedro Ribeiro
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 08/08/2013 12:06 PM, Jan Lieskovsky wrote:
-> Hello vendors,
+On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
+> On Tue, Feb 26, 2013 at 09:03:46PM -0800, Greg KH wrote:
+> > On Tue, Feb 26, 2013 at 11:41:53PM -0500, Michael Gilbert wrote:
+> > > Anyway, on a more serious note, at some point, acceptance will look
+> > > something like a real kernel-sec team that does essentially what you
+> > > just did, but on a continual basis: reviewing most/all commits for
+> > > potential security concerns and forwarding them to oss-sec to increase
+> > > identification and awareness to be applied downstream.
+> > 
+> > I will say flat out that this is an impossible task to accomplish.
+> > 
+> > As proof of that, I suggest you do this for just one major kernel
+> > release cycle (2-3 months long).
+> > 
+> > You do know the number of patches applied to the Linux kernel every
+> > hour, right?
+> > 
+> > Would you have caught the patch that started this thread?  I sure
+> > didn't, and I was the one who originally applied it to the kernel tree
+> > in the first place.  Doing "root-cause" research for every patch is
+> > non-trivial, as I know you realize.
 > 
-> since Kurt asked for it, below is the summary of the issues.
-> 
->> 
->> Hello Kurt, Steve, vendors,
->> 
->> Pedro Ribeiro has recently reported the following five security 
->> flaws being present in the tools of TIFF library: [1]
->> http://www.asmail.be/msg0055359936.html
-> 
-> * Issue #1 (tools/gif2tiff.c): Stack-based buffer overflow in the
-> gif2tiff tool when reading GIF extension block on crafted GIF
-> image * Issue #2 (tools/gif2tiff.c): Stack-based buffer overflow in
-> the gif2tiff tool when decoding a GIF raster image * Issue #3
-> (tools/gif2tiff.c): Stack-based buffer overflow in the gif2tiff
-> tool when decoding a GIF raster image (same routine like in case
-> #2, just different line code) * Issue #4 (tools/tiff2pdf.c): Use
-> after free in tiff2pdf tool when reading TIFF file raster image
-> data and writing them to the output PDF XObject's image dictionary
-> stream * Issue #5 (tools/rgb2ycbcr.c): Stack-based buffer overflow
-> in the rgb2ycbcr tool when performing RGBA to YCbCr conversion
-> (converting non-YCbCr TIFF image to a YCbCr one) when processing
-> crafted rasted date of provided TIFF image file
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+> For starters, security@...nel.org submissions should be posted to
+> oss-security or any other security related public mailing list when the
+> patch is being committed.
 
-CVE MERGE'ing all the stack based buffer overflows into a single CVE.
+That's not going to happen, and you know that, to do so would be totally
+irresponsible of us and directly harm your users.  That's what
+vendor-sec (or whatever it is called now) is for.  Hasn't that been
+happening for a while now, or has no one been notifying that list of
+these issues?
 
-CVE-2013-4231 libtiff v4.0.3 Stack-based buffer overflow (4 in total)
-
-CVE-2013-4232 libtiff v4.0.3 use after free
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSBbvrAAoJEBYNRVNeJnmTEzsP/0rhpyNeTtLiW5eV620dGj8Z
-WFvNDMV+V1a1LnqxFmAl00Lcp/6o8CdZLIuNOCMS22jGAK56W32lNYGMtNCSUytj
-nJNybYkF08mFkVtttVdXcV8ftMEStEEEelYRF+xotsrVFRi31bf5YgnQLkDpB2MM
-1IGBiQ7wAkOIRCxrvR6lcL/7LlcfPKwqK1z02dFWMlS/nhANuTOdkct+Ea9MWp6a
-iPKM5o/nnHAbeM5WRPsG5DQ+c99dJiEv/L9nW/+J8NbFwHlHshKRL1uvthernV4l
-Xd/VhcPH+0VpX2kT8bB3DjEbxiAPQGHGLlFbxT0dNy5SJ9BsboeFRVUZpBazyvxa
-88ygSemgwdbPAiUpcP7cZWtj5b3IN0tlHl7tejGzyyVXcw3pQtz0nQ+A5XA8Tb/E
-SBuoubOYKlJRctqqsPQQNAlncuXGPoZ1Fbt8nt9qvtR55wv8GVYzfx1XMu8+lFis
-MYQFA8o8JUzaTe5Q8H3a7/G79nKveTK/0Fd7evow/wiq+7PYSR1ntPJ85QP2kav8
-F8cKz3+IdBknHNQ0Sdw6aJ7jF6t5PpmEHBtzVT8ZHf5U8YQRbE5yNJBPDbcfpfRq
-41dCuKxDfc7SeTdpyF0Xz2jvIbdhOxj1Owq4IIfEgauNbGzX8q5MvEuIdwp7IFwT
-ywg3WrIBvjYxPw9SJfDu
-=k4i3
------END PGP SIGNATURE-----
+greg k-h
