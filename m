@@ -1,74 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/24/6
-Message-ID: <512A7715.1010200@redhat.com>
-Date: Sun, 24 Feb 2013 13:24:53 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/18
+Message-ID: <20130227161547.GC21645@kroah.com>
+Date: Wed, 27 Feb 2013 08:15:47 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-CC: gremlin@...mlin.ru
-Subject: Re: nginx CVE-2013-0337 world-readable logs
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Feb 27, 2013 at 07:08:58PM +0400, Solar Designer wrote:
+> On Wed, Feb 27, 2013 at 06:48:34AM -0800, Greg KH wrote:
+> > On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
+> > > For starters, security@...nel.org submissions should be posted to
+> > > oss-security or any other security related public mailing list when the
+> > > patch is being committed.
+> > 
+> > That's not going to happen, and you know that, to do so would be totally
+> > irresponsible of us and directly harm your users.
+> 
+> Huh?!  Maybe you misread what Petr wrote?  Note: "when the patch is
+> being committed".  At this point, the security issue is public, and it
+> just needs to be properly communicated to all those interested
+> (including distros, sysadmins, etc.), such as via oss-security.  Not
+> doing this favors those few who spend time to review commits on their
+> own; some of them do it for purposes other than informing the public.
 
-On 02/24/2013 12:34 AM, gremlin@...mlin.ru wrote:
-> On 22-Feb-2013 15:46:15 +0400, I wrote:
-> 
->>> Some distros are affected.
-> 
->> Alas for them... But the solution is simple.
-> 
->>> This is not just misconfiguration.
-> 
->> This issue isn't related to the nginx itself. However, I'd agree
->> that nginx could use restrictive mode for its' log files: +++
->> nginx-1.2.7/src/core/ngx_log.c @@ -325,7 +325,7 @@ -
->> NGX_FILE_DEFAULT_ACCESS); +  NGX_FILE_USR_GRP_ACCESS);
-> 
-> I've contacted the nginx team via their security-alert@ and got the
-> "won't fix" answer by Maxim Dounin:
-> 
->> We are fine with default permissions used for log files. If in a
->> particular configuration stricter permissions are required, this
->> may be done either by creating appropriate log files with needed
->> permissions, or by restricting access to a directory with log
->> files.
-> 
-> Although respecting the umask value could be a better solution (and
-> I'll try once again to convince the developers in that), the
-> developers' opinion is clear: pre-creating the logs is the expected
-> method to fix the ${subject}.
-> 
-> 
+We (the kernel team) well know this, and have been over this topic
+numerous times in the past.  We have come to the conclusion that it is
+not good for us to be publicly stating "here look, here's how you
+exploit the kernel!" at the exact moment we commit the patch to the
+public tree because suddenly you now have shown how all systems in the
+world are exploitable, with no chance for anyone to have protected their
+systems ahead of time.
 
-I somewhat disagree for the simple fact that web servers MUST log
-sensitive information (e.g. GET strings) to be of any use. This goes
-back to the discussion regarding programs such as gpg. Personally I
-would rather see the log files (ALL log files for ALL programs
-actually) created using a default permission that is safe (e.g. 0600
-or 0660 if it writes to it with the group permissions), but can be
-configured and easily overridden in a config file (e.g. nginx.conf) so
-that people that have a legitimate need for world readable log files
-can do so easily.
+Instead, we have no problem with groups like vendor-sec being notified
+of these issues, and allowing them to push out updates, before _they_
+notify the world of the problem.  And, for a long time, I thought
+vendor-sec was being notified of all of the issues that
+security@...nel.org knew about, if this has suddenly changed, please let
+me know and I will be glad to resolve it.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Yes, this does seem to favor those who pay closer attention to the
+commits going into the tree than those who do not, but we do this to try
+to balance the needs of the larger majority of users.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+It's a tough problem, full of grey areas, like the real world requires,
+and I personally wrestle with it all the time.  At the moment, I feel
+this is the best that we have come up with, and I know that others
+strongly disagree, which is fine, debate about stuff like this is good
+to have.
 
-iQIcBAEBAgAGBQJRKncVAAoJEBYNRVNeJnmT1J0QAITraA2TQQ75m+Kje4vzp3b+
-db+q3RbrEaY+5VdrtWCq16LNIzpU08Zh6qhoHx15KTrk9QJ996foYDfhiuuDaXT5
-vvtDjPv4ddgzuh4iQbz1BVpI/XQ2PBuac9rbvZmExQqxA4Bis5IJGckgoVY299Os
-gnEQcoU04+nAntMH3lH/6rAJ7GM00Y05Tca7dXc6Y1aKi9coRcIlqZgMO+Fkzgys
-nYTFLoR7BA2O5znWxVBqPHNeXFLZgh0JPPnCfyCtAKiVr8cKuDfX36IKz8wCD66c
-Dw6204V3MnkN/xNZUguFnbkbROfzAaCt6JXWRC0Ye2AcsWvHqbagYfXaOQ/5UMNT
-2QEB6LvWzfcmIAOguEffCYLYDWoMsQI2M5whK7VAO/nniHN+3frOSkz2SHqpfqSe
-fEyre6oVf3i/1IJaWPWKEst7RZVSte8Pgwnef2C7sGjnuINt2FBH9RQLHLDV79E5
-7Bbd6KWmC6mZULGZvwZm7jdMpwnPj0gyJiumXPXdFcPfMGw3Sc/8aIB6kEUM4Puf
-F7UCPRene3OaI5xtAXXC3RglBBD3kHLSF146Ng2Qvo/zUj3mNj5pa6qouiMJ3Kkb
-cqIp59Sbn0zWCkOVWhgsvDMgL/5F0bmw178ttRA17fBzb178ox2VY0NnUmQWBytz
-Q4OBraQ+yCIzS3cGO+FA
-=EBGC
------END PGP SIGNATURE-----
+thanks,
+
+greg k-h
