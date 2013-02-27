@@ -1,59 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/17/4
-Message-ID: <5237BDF8.1010708@redhat.com>
-Date: Mon, 16 Sep 2013 20:27:04 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/6
+Message-ID: <512DA780.6070704@redhat.com>
+Date: Tue, 26 Feb 2013 23:28:16 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fweimer@...hat.com>
-Subject: Re: Re: CVE Request: glibc getaddrinfo() stack overflow
+Subject: Re: CVE request: psi+ stores the cache file as world-readable
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/14/2013 04:56 AM, Florian Weimer wrote:
-> On 08/22/2013 09:18 AM, Florian Weimer wrote:
->> On 07/04/2013 09:06 PM, Maksymilian wrote:
->>>> Perhaps there are some missing CVE ids?
->>> 
->>> In 2011 the problem with alloca() was not defined as a
->>> vulnerability.
->>> 
->>> http://sourceware.org/bugzilla/show_bug.cgi?id=12671
+On 02/26/2013 03:27 PM, Seth Arnold wrote:
+> On Tue, Feb 26, 2013 at 11:04:24PM +0100, Agostino Sarubbo wrote:
+>> Psi+, a fork of psi, stores its files in ~/.cache/psi+ as
+>> world-readable.
 >> 
->> I believe the analysis in this bug report is incorrect.  The
->> security implications are unclear.  A straight copy of a long
->> name to a stack buffer should trigger a crash because it hits the
->> guard page, but even that could be a problem for daemons.
->> 
->> On the other hand, it's impossible to know for sure that no GCC
->> version ever lays out the stack in such a way that we end up with
->> a problem. Multi-threaded programs linking in script interpreters
->> are more exposed to these problems, too.
+>> ~/.cache $ ls -la psi+/ total 52 drwxr-xr-x 5 ago ago  4096 feb
+>> 25 09:41 . drwx------ 5 ago ago  4096 feb 24 23:58 ..
 > 
-> Kurt told me that the above didn't make it sufficiently clear that
-> I consider this issue CVE-worthy.
+> It appears my ~/.cache and your ~/.cache are mode 0700.
+> Directories underneath are already unaccessible by other users,
+> except if one of your programs passes a filedescriptor to a
+> directory to another user's process (say, cwd is in ~/.cache/psi+
+> and then executes a setuid program, or uses unix(7) SCM_RIGHTS to
+> pass a directory file descriptor to another program).
+> 
+> Are there environments where ~/.cache isn't 0700 by default?
+> 
+> Thanks
 
-I prefer things to be explicit rather than assumed =).
-Please use CVE-2013-4357  for this issue.
+In general if a program respects umask and creates files in ~/ then
+it's really unlikely that I'm going to assign a CVE for it unless it's
+something really significant like say an SSH client creating keys or
+similar.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSN733AAoJEBYNRVNeJnmT378P/1+MwskEw1/W62U4GiP6OvEM
-Jwx+NagiRoW1vSzmMxMeg623qH+oc5KrmtYHv8X/vG18CTm89gIf7Di4usKKWfOa
-2YL5nIwJZrmHVf8kBsH/J8TPZYzzIpkcLHW/w8uqpXQJrDjjJUuHAD5PNHJE+rYA
-ir1jK09r/Bbv+eGgPQyWMadvxHKRuyhTGNamz5URXJDggEhzlgs9DJkMlVZRmF8M
-apSWDXWwqf6851aPNornYq78aJEy6itVR5k59e/vFCl19irELj9/7yUDhOcNb8Fk
-R62uTP4KIOkYIiJONdJlfjvFNN1shhhnZGyiqR7JrD20S7qhLyUWLbIap+l9L0GV
-0S1uCrvYhd6spNEmMD2xPdQqF/x1hRqviWcBVtZ32J/jJznb7DRbzhalDxaCCdFr
-POfK3vo4REPp7rJZSOM68Synltc4uYMImY4YYGd4Ib7biGciKG+PdeFeqcCXfRtS
-RC3Af3c+yE3BpUuJO/ce3BKIRYw/K7LtUxEHVGfG86mn0teze/m3ghOCE62c1vOv
-A3zn79ykd2peuSyNOh3masCsuK3AiJG0F9N2U4KPYlDUvVzwJUPH1QAhYPBVPrYI
-yKz45S1HxeYacrOaf55a5eNSvUqIvvEs7Q7xoSWiV/WTqUO4EDp2jo1QuVgwpAFM
-2MObiF6IKdmIsKIZVF1i
-=Xt7J
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRLaeAAAoJEBYNRVNeJnmTP5cQANiJhZ4ShyxtFp0r5xTo79AH
+g6XtO9Ruof0Qf3cNXbpK5zMV8Y2wAWknYIxH8clljpl8C+jUx6+27r99FTJRPShN
+YDzcLDH3H7n65wcNGGaqqU3qqmXTI30lbixcNHFBoeI0NsxMQDgL6tfZoiYPgoT+
+5P46tLVDSbFaM7SEAR4TPVRSkZa7JYPJh84cO8g3NII5Jyu/1YsXlIkXfHFQ6CZG
+AdW4pPcMbcOuPByUFqJEhVIQyggvsnlwsXCYNu3IFGWtvQ6yVNn6XDZSJ1i2QJh4
+im1JJ1eOB/ZKRB59AW5k3qeNe5WpnESvJMT7zTOuBiVGhKmyziQAVWgudCdzGax0
+E3qekAfJYVLEmEj7kAfDnInWdTsdFzfAqXT1PBE90vNXDwwhAFOpJiMKIXil4PKH
+kNP1cMe41U4Wzoe6NRiQt/SKAM7lFxSmFHbbQMri9Jupi/CgT1uw2rqOWSHfMnFM
+9QGWpqj2PXrNAfISg97QtoopY4grfmm5/b9DGDTHSaSiPA5eJHFPEH8pKZR9vjYl
+JZVFXpbQggX/0f96QS+QfmeeHUdQIBv1veAlwpqrCHR9ct3RdI39kKWguYwJ+dVQ
+0+verQjS6U2YMQsYyoVa2LLva0iwgJyLfROhN8d5hHfA6J8ifSYvqPfXhLtskwMl
+q7rq0CjWb00cWVPj8j4/
+=/Q8U
 -----END PGP SIGNATURE-----
