@@ -1,79 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/17
-Message-ID: <5182B021.8050206@redhat.com>
-Date: Thu, 02 May 2013 12:27:45 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/15
+Message-ID: <20130227150858.GA23550@openwall.com>
+Date: Wed, 27 Feb 2013 19:08:58 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, "Eric S. Raymond" <esr@...rsus.com>, Miroslav Lichvar <mlichvar@...hat.com>
-Subject: Re: CVE Request -- gpsd 3.9 fixing a denial of service flaw
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Feb 27, 2013 at 06:48:34AM -0800, Greg KH wrote:
+> On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
+> > For starters, security@...nel.org submissions should be posted to
+> > oss-security or any other security related public mailing list when the
+> > patch is being committed.
+> 
+> That's not going to happen, and you know that, to do so would be totally
+> irresponsible of us and directly harm your users.
 
-On 05/02/2013 03:58 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, Eric, Miroslav, vendors,
-> 
-> GPSD upstream has released 3.9 version: [1]
-> http://lists.nongnu.org/archive/html/gpsd-dev/2013-05/msg00000.html
->
->  correcting one denial of service problem [2]: A denial of service
-> flaw was found in the way AIS driver packet parser of gpsd, a
-> service daemon for mediating access to a GPS, processed certain 
-> malformed packets. A remote attacker could provide a
-> specially-crafted device input that, when processed would lead to
-> gpsd's packet parser crash (gpsd daemon termination).
-> 
-> References: [2] https://bugzilla.redhat.com/show_bug.cgi?id=958717
-> 
-> Candidate upstream patches [*]: [3]
-> http://git.savannah.gnu.org/cgit/gpsd.git/commit/?id=08edc49d8f63c75bfdfb480b083b0d960310f94f
->
-> 
-[4]
-http://git.savannah.gnu.org/cgit/gpsd.git/commit/?id=dd9c3c2830cb8f8fd8491ce68c82698dc5538f50
-> 
-> -- [*] Candidate because upstream #38511 is private currently: 
-> http://savannah.nongnu.org/bugs/?38511 => hard to say if [3] is
-> fixing this issue, or the DoS would be caused by the malformed
-> packet crash / sample, as listed in [4].
-> 
-> @Eric - Eric, could you please help us to solve this doubt? (which 
-> of the patches is the correct one to fix the above mentioned DoS /
-> security issue)
-> 
-> Thanks: Goes to Miroslav Lichvar for bringing this one to my
-> attention.
-> 
-> Kurt, could you allocate a CVE identifier for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
+Huh?!  Maybe you misread what Petr wrote?  Note: "when the patch is
+being committed".  At this point, the security issue is public, and it
+just needs to be properly communicated to all those interested
+(including distros, sysadmins, etc.), such as via oss-security.  Not
+doing this favors those few who spend time to review commits on their
+own; some of them do it for purposes other than informing the public.
 
-Just a quick note, at least on Fedora when you plug in a USB GPS
-device, by default the OS handles it, fires up gpsd. So with this you
-could make a crash usb stick or something.
+We have a similar policy for the distros and linux-distros private
+lists.  When an issue initially brought up there is finally made public,
+it must be brought up on oss-security.  I must admit there were a few
+cases where we failed to do that, but they were just that - failures.
+I'd appreciate help of other distros/linux-distros list members to
+ensure that each and every issue is brought to oss-security when it is
+being made public (even if only via commits of the fixes).  Formally,
+this is responsibility of the original reporter:
 
-Please use CVE-2013-2038 for this issue.
+http://oss-security.openwall.org/wiki/mailing-lists/distros
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+"When the security issue is finally to be made public, it is your (the
+original reporter's) responsibility to post about it to oss-security
+(indeed, you and others may also post to any other mailing lists, etc.)"
 
-iQIcBAEBAgAGBQJRgrAhAAoJEBYNRVNeJnmTH8UP/jLHRJHc60N5tyzUvPPVahza
-jzIPKFvTZvGwsZ2Qw8Ai13W6IglezZWHKEjlJdDIQWrCfppw/9aOvbRYFlsj84dp
-c86wiYG07eOk1btH+oNRK0sm1h3q3SmrzykNNC6bY3UmuG8JdmUhUc+O6QAOVAug
-7ziIbYdAEM6AQlQfk+0NJ+0UlF91YXrcVN/AnbFkf07MOWgPEGQ6Gqh+FMuOsqE2
-u5DfmXyLaywwXI96wtvym0LAE6+807u3E6Cb1dHQ2ZTBKAtFPq2kR9IGVxvz3TXd
-OV0RZpImddkTrmfI1oxlM4sSAPk6++RWrkUpoMC90Y2ATCDlpshfenLs0rWP5e2p
-HoVIWNagiOJeiYc1uMxptlA0GJUBetxJ+Fywc3QW04LGYk6eL2bYRm/xorSESEPU
-31LjVvPL7SWEbUXrLQ+rB9Jun6xOxJc1Zfubq6aNBHfkB9oU/6vf9QFkCIXGXKoP
-TpMYE/Ne6CfcRRalTIAXWm6Pzgm3oMOjlUOa9H4rs04T1pARKWp3d4cd1ZDXk1nZ
-SW41fZdSpabmKFBUej5hb8x8FWadpprqkAhwCV5K32UVw07Ls56Hmp9BFknNdhWQ
-F3fCAoaLVITqKAsiMvXrb7kMqsTZ+fSl/gGr3ExfLsXHctFYdWOlp+ckA4LQOCgN
-DNBrg+pnk4rQpx6LBeyB
-=Bn4W
------END PGP SIGNATURE-----
+but in practice the original reporter sometimes fails to do that, in
+which case the list members should remind the reporter and/or take care
+of bringing the issue to oss-security themselves.
+
+I think security@...nel.org should adopt a similar policy, and someone
+on that list should be enforcing it.
+
+Alexander
