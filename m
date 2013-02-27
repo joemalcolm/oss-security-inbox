@@ -1,51 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/3
-Message-ID: <51256B57.4070603@redhat.com>
-Date: Wed, 20 Feb 2013 17:33:27 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "Christey, Steven M." <coley@...re.org>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: RE: Handling CVEs for the XML entity expansion issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/47
+Message-ID: <CAHmME9otG1bE_WsvOOCx2FfucP7EnHxN0ZNwHtta9vzEvpJ0Xg@mail.gmail.com>
+Date: Thu, 28 Feb 2013 00:00:27 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Feb 27, 2013 at 10:44 PM, Greg KH <greg@...ah.com> wrote:
+> That's the whole problem here, who is going to do such a classification,
+> and after that, the notification?  The first part is the toughest to do,
+> as discussed elsewhere in this thread.
 
-On 02/20/2013 05:28 PM, Christey, Steven M. wrote:
-> Kurt,
-> 
-> This is a big and complicated scenario.  I will *privately* send
-> you the draft that I'm working on right now.
-> 
-> Sorry to the rest of the list - but the combination of new vuln
-> types, "DoS" debates, libraries, and missing details have all
-> combined to make this rather complicated.  We will post something
-> that should help address these specific situations, and others in
-> the foreseeable future.  I hope to do this within 24 hours.
-
-Yeah, I sort of knew it was a live hand grenade which is why I handed
-it off to you (and you jumped on that hand grenade like a champ =).
-
-> - Steve
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRJWtXAAoJEBYNRVNeJnmThvUQAIJeCp8KiPsQgJb3d/jdD7kJ
-IWeYy7hXpAfEBAkAoz79y45OTFfdx2qf75ABDhYFgbKBZQLaAhrxVZN8sXC7PnMa
-gUOeK88UzuJ/I4DvLfAGNiTOBbegN7nBEOaTyXShZ4EKWjGj9kMSRk4jKJRTHh6I
-lsrGEAHGyB68pph8yJjdRJhwcgam+jvphvNh40dHYrrmRzrxowAb0JUH71Q2CaqE
-jwFqZROTF9h4+p6S/JXy1y2s06pEcoTWWkSOtQnTc8BTDu5d1bIm0xMsnHl03Wz5
-CLIzoNOWwdg16hHV01FvaGKAxGZNjpOkCUfTXVpw4ll3B9cff5Je11MByxjzypZD
-TjUM5VtdH82/Fnu7BFhG1PPbupCXWnGrP7+o1rbw5g8p8bwWBrNEIfmpfKef0h5w
-BIDf+F+YrBrePmxA6a6DweR8OxwAN2h9WF9ANhc4GoT26qKFjLZ4BuSvfVjdAXSl
-vZ46vilBF2OiQ4DjGtZjIEUK2PmWGFaCPM784PoL09YYiEZ8yPLcH9osAmswsoDZ
-FTEsT6m16GR8tn8Ur5l6ITNb0/wCl2lkY8QBA+lFX1GO1FfACO6P/q6ymrjhxPKg
-e4/R726e+y3MVIGrxdj9NEI6sQ1b+irQHEiSiPo3olkW0MoSb8HEPDqf+pPnD1Mf
-7neX7sFvORC/6K5Jhw1X
-=1bLk
------END PGP SIGNATURE-----
+May I just bluntly call out shenanigans here? Yes, some bugs are
+esoteric and it's not immediately obvious that they are security
+related. But there are so many bugs that are _clearly_
+security-related. Kernel developers are super smart -- some of the
+brightest guys out there. When you're committing a fix for a
+use-after-free, or an array indexing error, or something clearly
+security-related, the claim, "well I'm not really a big security bug
+classifier sort of guy..." just doesn't ring honest. You all are super
+smart; it takes your brain less than a single cycle to realize this or
+that memory corruption can lead to priv escalation. I admit there are
+some bugs where it's not so obvious, but for so many cases, the
+classification step can be done by many diverse kernel devs.
