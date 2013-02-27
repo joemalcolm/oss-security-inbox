@@ -1,53 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/3
-Message-ID: <51076928.6040106@redhat.com>
-Date: Mon, 28 Jan 2013 23:16:08 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/1
+Message-ID: <20130227034128.GA3756@gremlin.ru>
+Date: Wed, 27 Feb 2013 07:41:28 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-CC: Reed Loden <reed@...dloden.com>
-Subject: Re: CVE request for 'devise' ruby gem
+Subject: Re: CVE request: psi+ stores the cache file as world-readable
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 26-Feb-2013 23:04:24 +0100, Agostino Sarubbo wrote:
 
-On 01/28/2013 05:38 PM, Reed Loden wrote:
-> Devise is a flexible authentication solution for Rails.
-> 
-> Security announcement made earlier today:
-> 
-> http://blog.plataformatec.com.br/2013/01/security-announcement-devise-v2-2-3-v2-1-3-v2-0-5-and-v1-5-3-released/
->
->  """" Using a specially crafted request, an attacker could trick
-> the database type conversion code to return incorrect records. For
-> some token values this could allow an attacker to bypass the proper
-> checks and gain control of other accounts. """"
-> 
-> I don't see a CVE yet for this issue, so could one be assigned,
-> please?
-> 
-> Thanks, ~reed
+ > Psi+, a fork of psi, stores its files in ~/.cache/psi+ as
+ > world-readable.
 
-Please use CVE-2013-0233 for this issue.
+That's normal - users' home directories are normally accessible
+only by users themselves, and never by othe users:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+gremlin@...n:~ > ls -ld .
+drwx-----x 47 gremlin users 20480 2013-02-26 17:48 ./
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+This is the most loosy home directory mode I use - that's for
+accessing ~/www by httpd. Even there I use umask 027 and at
+other (non-http) servers it's 077.
 
-iQIcBAEBAgAGBQJRB2knAAoJEBYNRVNeJnmT2LQQANxuOli0XQBJcfiXImV8pPP+
-EAZnqDjGbt2o3S+P6JtNAOxj7hg9odtzJyC5ihvcBuu4GPjstSZgheaH1ICLiQTh
-QRa5fHxCwJnoJpNcpDjI3wDjI4RJgD7q+bBPixB9r4hiAuM1DjNbmEBJeErrD1Kh
-SxYKocivxMoEgIborwZwdcts3CtHQsaG8ARVILIdmFtLeFf2TtfrLZhGYxKXl/32
-y5p6ixynUwRbG0c6WG82iakk3It0DmpwGxwZtncdJfgbPCcwLUp613AQCYZBuL0c
-sENIK31j3fgDFU6yp4bLIxatx7H6IrZLW4SVfKk9qcWSalqVBD7SuywfByl/aRTe
-dARz6FwvPQpqV3CSJ3y9YRKKGEYsnKlOtnBXsDY1huSxQ/pBDhjSBWuZcCBADhyd
-CUBCx7U5W10iisER1f+t20ccppsP3NjLbHFa949uGXjpPOkqxImu23bgu7aBLp1Z
-AhozbY644hRPty4kKHVLhuBlbz5s81StOkx+DNshOKC3iN+983IsWsky1oEj7XuW
-pBBrnd9UXxOn9NvKiz6rJMy9GHxJgUAdchtF/ClKcCoPNlTXNvAYGJZiurH/Y/k4
-ICQT40ESFtkDCGDHxJQHnusdj1eMhUf4NSFK7Hk363oo4HpLRKIv8343y3XK5FqZ
-J8ixqRAGaYAaeeB/Jsu1
-=mlUv
------END PGP SIGNATURE-----
+Also, please check the umask setting in this case - I guess
+psi+ respects it when creating files.
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
