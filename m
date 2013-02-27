@@ -1,77 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/16/1
-Message-ID: <51E4CE5F.5030606@redhat.com>
-Date: Mon, 15 Jul 2013 22:38:55 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Linux kernel: bridge: BUG at kernel/timer.c:729
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/23
+Message-Id: <201302271623.r1RGNa5l010275@core.courtesan.com>
+Date: Wed, 27 Feb 2013 11:23:36 -0500
+From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request: potential bypass of sudo tty_tickets constraints
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Sudo 1.8.6p7 and 1.7.10p6 are now available which include a fix for
+the following bug:
 
-On 07/15/2013 03:12 PM, Petr Matousek wrote:
-> Several people reported the oops: "kernel BUG at
-> kernel/timer.c:729!" and the stack trace is:
-> 
-> #7 [ffff880214d25c10] mod_timer+501 at ffffffff8106d905 #8
-> [ffff880214d25c50] br_multicast_del_pg.isra.20+261 at 
-> ffffffffa0731d25 [bridge] #9 [ffff880214d25c80]
-> br_multicast_disable_port+88 at ffffffffa0732948 [bridge] #10
-> [ffff880214d25cb0] br_stp_disable_port+154 at ffffffffa072bcca 
-> [bridge] #11 [ffff880214d25ce8] br_device_event+520 at
-> ffffffffa072a4e8 [bridge] #12 [ffff880214d25d18]
-> notifier_call_chain+76 at ffffffff8164aafc #13 [ffff880214d25d50]
-> raw_notifier_call_chain+22 at ffffffff810858f6 #14
-> [ffff880214d25d60] call_netdevice_notifiers+45 at ffffffff81536aad 
-> #15 [ffff880214d25d80] dev_close_many+183 at ffffffff81536d17 #16
-> [ffff880214d25dc0] rollback_registered_many+168 at 
-> ffffffff81537f68 #17 [ffff880214d25de8] rollback_registered+49 at
-> ffffffff81538101 #18 [ffff880214d25e10]
-> unregister_netdevice_queue+72 at ffffffff815390d8 #19
-> [ffff880214d25e30] __tun_detach+272 at ffffffffa074c2f0 [tun] #20
-> [ffff880214d25e88] tun_chr_close+45 at ffffffffa074c4bd [tun] #21
-> [ffff880214d25ea8] __fput+225 at ffffffff8119b1f1 #22
-> [ffff880214d25ef0] ____fput+14 at ffffffff8119b3fe #23
-> [ffff880214d25f00] task_work_run+159 at ffffffff8107cf7f #24
-> [ffff880214d25f30] do_notify_resume+97 at ffffffff810139e1 #25
-> [ffff880214d25f50] int_signal+18 at ffffffff8164f292
-> 
-> The bug was usually hit when shutting down a KVM guest.
-> 
-> Upstream fix: 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c7e8e8a8f7a70b343ca1e0f90a31e35ab2d16de1
->
->  Introduced by: 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=9f00b2e7cf241fa389733d41b6
->
->  Introduced in upstream version: v3.11-rc1 (but we had it in Fedora
-> because of bz#880035)
-> 
-> References: https://bugzilla.redhat.com/show_bug.cgi?id=984743 
-> https://bugzilla.redhat.com/show_bug.cgi?id=980254 
-> http://pkgs.fedoraproject.org/cgit/kernel.git/commit/?h=f19&id=a993279a9bb538ae524fca69ec23c5c1b428f47e
->
-> 
-Please use CVE-2013-4129 for this issue.
+Potential bypass of sudo tty_tickets constraints
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Summary:
+    When a user successfully authenticates with sudo, a time stamp
+    file is updated to allow that user to continue running sudo
+    without requiring a password for a preset time period (five
+    minutes by default).
 
-iQIcBAEBAgAGBQJR5M5fAAoJEBYNRVNeJnmTdfQP/jTf5JrZPdnseaAHCieVx9Fp
-8N1vX8yIENjs9axhYex2kS/2YqJEy+9XFLeepdvVZsXsY8hwKzXP8rEfgSI9vvAT
-fj0lBQPFZMflnoRlH1pRlleiAV+ooCJFKevTtH5s5oj7hpNVwJ5jptmeE+HCy94p
-xwnm4A5GE7pe3ZIx8bc2JTfDxmt+Sol6RE2kzVhSZjBkvp9p1BHE5iptgp0i7OnL
-wuK48tMezMxhCzqsHlISCzlIsIzWMvSlAS7mA3+6GVeaTz15vB7pyDGrUNgwNREq
-BN/AYgzjgFJ0qcCgLO3WNuD/ZSrIL6F2DnXJiP75Vbxq6VqUSZ5ZR8r7SAH1m7ED
-7Ycig3f3ix0o20cqTc3qmsnbiaZMbfxxp7i12UG6UgXxHytz6q6uAF/NL1DEo2Yf
-xww8kyUVcM1/UO3cvZGry/CVuytK+pMIpX9YJQ8lMSz/ViODXMEvjY5vr6gvICM1
-LTkLxgajg6xtl/tvEVX7z/l+9M1KmLy/Wrfy0BBB/AyEzWsu+HkO7bCQ3fAyMyD6
-1xlk/zMIUbhEeLJgF0Z1r5Zis4e9TLPVHZlGIziAlP+8fhSEHkh9KungH89wknxx
-KLgRWjJhGm5M/ckH+u97rqqwijr3buKd/yfNwyBmZPkZyZSNRhULuPkaNft8e+yE
-jQK2mulRmj9Gy116FClW
-=XDNd
------END PGP SIGNATURE-----
+    This time stamp file can either be common to all of a user's
+    terminals, or it can be specific to the particular terminal the
+    user authenticated themselves on.  The terminal-specific time
+    stamp file behavior can be controlled using the "tty_tickets"
+    option in the sudoers file.  This option has been enabled by
+    default since sudo 1.7.4.  Prior to sudo 1.7.4, the default was
+    to use a single time stamp for all the user's sessions.
+
+    A vulnerability exists because the user can control which
+    terminal the standard input, output and error file descriptors
+    (0-2) refer to.  A malicious user could use this to run commands
+    via sudo without authenticating, so long as there exists a
+    terminal the user has access to where a sudo command was
+    successfully run by that same user within the password timeout
+    period (usually five minutes).
+
+    The vulnerability does not permit a user to run commands other
+    than those allowed by the sudoers policy.
+
+Sudo versions affected:
+    Sudo 1.3.5 through 1.7.10p6 and sudo 1.8.0 through 1.8.6p7 when
+    the "tty_tickets" option is enabled.  This option is enabled
+    by default in sudo 1.7.4 and above.
+
+Details:
+    The vulnerability can be triggered when the standard input,
+    output and error file descriptors (0-2) of a process are closed
+    and a different terminal device is opened and connected to those
+    descriptors.  When sudo tries to determine the terminal device
+    via the ttyname() function, it will get the name of the other
+    terminal instead.  The core problem is that while ttyname() can
+    be used to determine the name of the terminal device connected
+    to a specific file descriptor, there is no portable way to
+    determine the name of the terminal associated with the session
+    the process belongs to.  However, on many systems it is possible
+    to determine this by using the /proc file system or the sysctl()
+    function.
+
+    Most operating systems that have the /proc file system provide
+    a way to determine the controlling terminal device number for
+    a process; this information is used by the ps command for
+    example.  On Linux, this is the tty_nr field in /proc/self/stat
+    (the seventh entry).  On systems with an SVR4-style /proc, this
+    is the pr_ttydev member of struct psinfo, which comes from
+    /proc/self/psinfo.  Most BSD systems that support the sysctl()
+    function also provide a way to get the terminal device number
+    via the KERN_PROC_PID sysctl.  By mapping this device number
+    to a file name, it is possible to get the name of the terminal
+    file without resorting to ttyname().  Sudo began using this
+    method to determine the process's terminal starting with version
+    1.8.5 and 1.7.10.
+
+    However, sudo still used the ttyname() function as a fall back
+    when no controlling terminal was found via /proc or sysctl().
+    This allowed a malicious process to cause sudo to use ttyname()
+    simply by creating a new session without a controlling tty
+    before executing sudo.  In sudo 1.8.6p6 and 1.7.10p5, this fall
+    back behavior was removed.  This fixed the vulnerability for
+    systems where the process's controlling terminal could be
+    determined via /proc or sysctl().
+
+    Sudo 1.8.6p7 and 1.7.10p6 contain an additional fix for systems
+    without /proc or sysctl() that stores the POSIX session ID in
+    the time stamp file itself.  The controlling terminal is specific
+    to the POSIX session it is associated with.  It is not possible
+    for two processes in different sessions to have the same
+    controlling terminal.  Sudo will now compare the current session
+    ID with the one in the time stamp file and ignore the time stamp
+    file if the session ID does not match.  This has the additional
+    benefit of making it much less likely that a user will be able
+    to reuse the time stamp file after logging out and back in again
+    on the same terminal.
+
+Impact:
+    A (potentially malicious) program run by a user with sudo access
+    may be able to bypass the "tty_ticket" constraints.  In order
+    for this to succeed there must exist on the machine a terminal
+    device that the user has previously authenticated themselves
+    on via sudo within the last time stamp timeout (5 minutes by
+    default).
+
+    This program may use sudo's -n flag to "probe" the terminals
+    in question to see if there is an active time stamp file for
+    the user.  Prior to sudo 1.8.6 and 1.7.10, if a password was
+    required when the -n flag was specified the failure would not
+    be logged, allowing the program to perform such probes without
+    being detected.  The successful command (if any), would still
+    be logged.
+
+Fix:
+    The bug is fixed in sudo 1.8.6p7 and 1.7.10p6.
+
+Credit:
+    Ryan Castellucci brought the initial ttyname() issue to my
+    attention.  Subsequently, James Ogden discovered that using
+    setsid() to create a new session would cause sudo to fall back
+    to using ttyname().
+
+    Other shortcomings in sudo's "tty_tickets" functionality have
+    been known and discussed openly for some time.  There is a long
+    discussion about them at:
+	https://bugs.launchpad.net/ubuntu/+source/sudo/+bug/87023
