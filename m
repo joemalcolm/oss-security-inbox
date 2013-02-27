@@ -1,35 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/22/1
-Message-ID: <528EC75E.3060200@redhat.com>
-Date: Thu, 21 Nov 2013 19:54:22 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/5
+Message-ID: <512DA6C1.5010608@redhat.com>
+Date: Tue, 26 Feb 2013 23:25:05 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Please REJECT CVE-2013-6377
+To: oss-security@...ts.openwall.com
+CC: "Jason A. Donenfeld" <Jason@...c4.com>
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Please REJECT CVE-2013-6377, I assigned it to an issue that turned out
-to be security hardening, not a proper vuln.
+On 02/26/2013 04:05 PM, Jason A. Donenfeld wrote:
+> On Tue, Feb 26, 2013 at 10:05 PM, Kurt Seifried
+>> The problem with security is you have to basically do it 100% 
+>> correctly 100% of the time, otherwise things fall through the
+>> cracks (like this VFAT thing).
+> 
+> Also, what about the tmpfs one from yesterday? Nobody involved in
+> the patch reported that as a security bug to this list, until I saw
+> it myself, just by chance, as a random person on the internet, and
+> posted it to the list. In that case, it was clearly marked
+> "use-after-free", but nobody involved requested a CVE.
+
+That's my point. We're not doing this 100% of the time 100% correctly
+due to resource constraints, and I highly doubt we ever will, again
+due to resource constraints. That and reality, proving negatives is
+hard and all that.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSjsdeAAoJEBYNRVNeJnmTFI0P/jHgqUtOrADzZU0fdZRyEe0+
-JkuDHW0maLpILpuUMx6UFMNGezR0VaLXxva6oSNQM5lDZBZaWmBNyO/BGqfldbEd
-9kCmn89vP5AL2tn4FqFghdJd0mYSggO5YD+SdobzeqL6KwvLeZhYgTxzh7Rcp7k4
-BGxuVGXR2m6a0WHpbetcKWJjoIcmbfJ5OQa9Tt9M7HjbMvO0oxujWzn3dWNM1AVU
-JpY9xsR4zygjMjAMvn6BmIQ+w+KvhmADC35B9EbVkV5PxFSq940A8QqetXMfQc6X
-QUqZAZg0E4c7zzNhkmTwljVhO8LV/ylYVPAGNAOSK1jb7fbDZGDPBd9MHwH89f/i
-LFtziGqApfhMpCttGYU8K9KjNvfXx+LcRQ6BXs3cmvQ3YjK9f15rTjqdDYSY5Kpx
-+JV2IV1xVZoMp69KllAvLV3UYkGEMOZBXnb00tnaYsxeH1xG1L54q+fYVgqr66JA
-E2Z4bhJ2pZJO20MegQbPNJdp8s+ZzfP63kUlUOHIqy8q63wfjxz3zVv+panoBv07
-43paHUXk6qZOO6gHdadrYWcRDYVDt1ZgrZvVaAWMuGDiZWzOCkXJBL7UO3REKYLH
-TzHYQpLIYHnJ+On9Hf0c8ozHVQoCJpgWuRi8eeahT5OGcCZByZb1gRCc8uC4cdfM
-ly2KOP0/SX+ujETz1Dnw
-=4A89
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRLabBAAoJEBYNRVNeJnmT2qsQANeImRW8lghq8GbUC8XRo6CY
+OFybn2zn9pFQwB/hdlkq9ziXVwv0LiyRPkOLy89+FxC0TuTTYCb5Pa2bmowgLmVW
+52IqinnNuW2IpFG5njNC0i0YDWekYXg++kzpBDWmmGGhW4CxlvS8prI14c/xTgaR
+1CEQblDWs4HGru1ieKVTdLZRKTvXQo+HGvVjYHTAdh/4OPwnlDz9KS+q55qbLeKC
+E5D398Tz0cR4vPh0SgXoeMEezjAQgbcGB34CQpN/YLmwGozTzo0VOwh3EAh966Ja
+wsbWil0sFSfl8CAGf72C53q4o+zFExmhMLzCD50ytyl7P1lmS5JK+NPlg0YPHEB2
+24vv/65pyg5QSWfrZC7a/auo7y0CzNavDoJNzO2WENdsYF1M/UyycUwzI92O+Sdv
+5ALo3t89pedtVgfyUVRyBa4+dUTJcT/ym4rBcLcqsPGdUN9tZtYQd1P7t7eQCicM
+r0y/+vMRYkG3QEyLvvVKGrU/Kap+64vjfV6bF/ZrtIOrn4kNZoL1Rq6qEWD6u97k
+Mr0y0ur3KlAH24R72H1fdOgMkXjGOCVvKWh/4OaNlV0vpvw5NfiEfppuND87ZRzA
+Dxjr7K0HycCRrjBhX8ZBq1OikoKDgx/48D8pk+XmhERbpt+bL5GmJjMZaCDQOgvx
+JgqgVa2ZfZlzitfaThU9
+=UfRA
 -----END PGP SIGNATURE-----
