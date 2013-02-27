@@ -1,64 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/4
-Message-ID: <5212EC61.3020007@redhat.com>
-Date: Mon, 19 Aug 2013 22:11:13 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/44
+Message-ID: <1362000376.4116.15.camel@scapa>
+Date: Wed, 27 Feb 2013 22:26:16 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: "Eric H. Christensen" <echriste@...hat.com>, security@...tgresql.org, kevin@...ye.com
-Subject: Re: PostgreSQL insecure install via yum (multiple problems)
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On mer., 2013-02-27 at 10:05 -0800, Greg KH wrote:
+> Yes, I need someone to actually do this.  There used to be a Red Hat
+> security team member that did this, or so I thought.  What happened to
+> that process?  I'll ask on security@...nel.org if someone wants to
+> volunteer to do this, but if not, are you, or anyone else you
+> know/trust
+> willing to do so?
 
-On 08/19/2013 07:19 PM, Eric H. Christensen wrote:
-> On Mon, Aug 19, 2013 at 06:58:22PM -0600, Kurt Seifried wrote:
->> Signing RPM's isn't very useful if you never make the signing
->> key available!
-> 
-> You mean like this:
-> http://keys.fedoraproject.org/pks/lookup?search=0x442df0f8&op=vindex
->
->  I'm pretty sure pgp.mit.edu isn't the best source for PGP keys any
-> longer, unfortunately.
+And do you think it'd be possible to have the same kind of notifications
+for (know security) issues not on security@k.o but committed to the
+tree? As I understand it networking subsystem patches don't go through
+security@k.o so for example I guess the sock_diag_handlers[] one didn't
+go through security@k.o but was still identified (at least for some
+people) as a security commit?
 
-Dunno who to ask, so adding Scrye: can we make sure Google indexes the
-Fedora key server? This actually raises a good point, what are the key
-servers now? The big 3 used to be:
+Regards,
+-- 
+Yves-Alexis
 
-http://pgp.mit.edu/
-http://keyserver.pgp.com/
-http://sks-keyservers.net/
-
-and it's not on any of them =( Even if the key is uploaded PostgreSQL
-doesn't list the key fingerprint anywhere securely, the key ID can be
-spoofed, so yeah there might be keys with the ID 442df0f8 but I got no
-clue if they're legitimate or not =(.
-
-Really all we need is an HTTPS server (easy) and a web page listing
-the key/fingerprint, ideally the full text of the key. I understand
-small projects may not do this, but PostgreSQL is pretty big and
-professional.
-
-> -- Eric
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSEuxhAAoJEBYNRVNeJnmTH00P/jBTD4aZJMvFOaVZst62zoA2
-5wp27Soz7UTVnLUeJVvkZBxwYfsEYhJVYOSlMMQ0g6sSbCnkuD1SxabXhLwutumi
-3umptqntOieXQClqsVzOpqMc53UxusjQKC9qjhjSa44l5AYrb7vD7mQuTAfO2jYL
-U+lXf7tti7t9EMnPN61jIdao9oySMEwwYBBKtgnnUifns5zv/S4rYQ7fx4Kq+rG1
-VyZW5EvReVD+uQMKAaLual4i5Ghn9LV7vbwT99Pv3hiN6hjhdeE44RjQ+0kaJikN
-XTFAzhReYuCswGMN/Cetofaayi1DKrd8+koMwLBz8lnpoE5zJ2YOdA3Cp3dC1/8Z
-a3UGLmnvXVCrUNhWE29tDi3ccUMpHEjV6I1zrzYnvNA0U23imkwi9y73zqj1qD9N
-rA6URIAlGT8yFYv8PIwDGzQcldsMUAblC71evynTrrhscdtAa6Lw6gWWdLVJHsbl
-eOaxkBAwlOPyxYgCteIIUcbqEMtY0ij/hA7rHV8KPfUdGOQz6WbnLa516/NYxwMw
-Ojw3UyOj+s4M0bIb3DKmgAieVg18YfKpK0n/rzdMC6+XAMzRG6coY1fP2eVMf2G8
-wr6RaqDThYs8CHAExL+ghsyC6tALq2/l996AtA3p7/5fOPYE9b30eqVEaD2ug257
-QhFEfUq2ycyncMChZDnl
-=UiGf
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
