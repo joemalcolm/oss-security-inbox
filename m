@@ -1,25 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/30/10
-Message-ID: <1762732498.4418861.1367364508771.JavaMail.root@redhat.com>
-Date: Tue, 30 Apr 2013 19:28:28 -0400 (EDT)
-From: David Jorm <djorm@...hat.com>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: Re-emergence of CVE-2008-4796 in Nagios current
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/54
+Message-ID: <20130227235757.GA1991@kroah.com>
+Date: Wed, 27 Feb 2013 15:57:57 -0800
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-> CVE-2008-4796 snoopy: command execution via shell metacharacters
+On Thu, Feb 28, 2013 at 12:33:00AM +0100, Jiri Kosina wrote:
+> On Wed, 27 Feb 2013, Greg KH wrote:
 > 
-> Was found in Nagios core by Grant Murphy.
+> > > Hmm, I wonder if perhaps the solution here isn't about spending a lot
+> > > of time analyzing hundreds of potentially serious bugs and notifying
+> > > the world about them all in an accurate way.  Perhaps the solution is
+> > > changing the development model or architecture of the kernel such that
+> > > there aren't so many bugs with *serious* impact in the first place.
+> > > 
+> > > Ooops... did I say that out loud?  
+> > 
+> > There's nothing wrong with that, and we have made many changes in the
+> > kernel to help mitigate problems before they occur.
+> > 
+> > If you know of any other ways that we can do this, please let us know.
 > 
-> Filed upstream: http://tracker.nagios.org/view.php?id=449
-> 
-> We really need to start thinking about ways to find vulnerable copies
-> of code and fixing them everywhere people have embedded them.
+> - W^X
 
-Debian uses clonewise:
+I thought we tried this, and had to revert it due to problems it caused
+with some dyanmic code generators.  Or am I totally mistaken here?
 
-https://github.com/silviocesare/Clonewise
+> - not letting kernel dereference userspace pointers (and PMAP is not 
+>   available everywhere, unfortunately)
 
-It is the best solution I've seen so far. It's been on my TODO list forever and a day to get it running for Fedora.
+What do you mean by this?
 
-David
+thanks,
+
+greg k-h
