@@ -1,57 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/8
-Message-ID: <50E5D04A.7030209@redhat.com>
-Date: Thu, 03 Jan 2013 11:39:06 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/37
+Message-ID: <20130227191705.GB21286@kroah.com>
+Date: Wed, 27 Feb 2013 11:17:05 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-CC: Daniel Kahn Gillmor <dkg@...thhorseman.net>, nginx-devel@...nx.org
-Subject: Re: nginx http proxy module does not verify peer identity of https origin server
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Feb 27, 2013 at 08:06:18PM +0100, Jason A. Donenfeld wrote:
+> On Wed, Feb 27, 2013 at 5:17 PM, Greg KH <greg@...ah.com> wrote:
+> > Every single patch we make to the kernel is public, it is up to you to
+> > determine if you feel it is a "security fix" or not.  And to do so is a
+> > non-trivial task, something that I sure don't want to be responsible for
+> > trying to do.  And since no one else has ever stepped up to want to do
+> > it either, there's not much more that can be done.
+> >
+> > Are you willing to do it?
+> >
+> 
+> Yes! Sign me up, I volunteer. I'd be happy to watch the coordination
+> between security@ and the git repo, and sent oss-sec an email when
+> they align. Pencil me in.
 
-On 01/03/2013 08:36 AM, Daniel Kahn Gillmor wrote:
-> nginx offers the ability for its http proxy module to talk to an
-> origin server over https.  However, it does not verify the identity
-> of the origin server in this case, which leaves it subject to MITM
-> attacks between the proxy and the origin server.
-> 
-> Sadly, this appears to be unfixed for over a year after it was
-> first reported:
-> 
-> http://trac.nginx.org/nginx/ticket/13
-> 
-> some patch review starts over here, but doesn't seem to reach any 
-> resolution:
-> 
-> http://mailman.nginx.org/pipermail/nginx-devel/2011-September/001182.html
->
->  As far as i can tell, there is no CVE assigned for this yet.
-> 
-> --dkg
-> 
+No, I'm saying you need to watch the public commits, not the security@
+traffic (which is very low), as that is where the huge majority of fixes
+are made.
 
-Yup. Please use CVE-2011-4968 for this issue.
+See my other responses about how the members of security@ are going to
+notify the linux-distros list, not oss-sec.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ5dBKAAoJEBYNRVNeJnmTk10P/RUE7xS+vKvTitanyBfK88OZ
-rApBQlDm0v4yFQw3Wr9YZRAOWcla8aiaGe9txK1t2NzHRcKtv4kidXk4VtbfG3El
-LGdourO0zi2Z3Vho48p/OkeVzpTr0eGNPduiJQdDmbD1M0ngmM5CCFxfpCf9hUb8
-1Ph8ZZsVhcvbxhKA6zOtKUVHi8LX+EUdF4XzNPP59gx0UHQhIiLfElbmz4wLoPuN
-p8xLnzEia94VGlFYVWxET34RL8V4uljaGsHIKZOOcFGSrPofzvipnyowfoRVB5dG
-YmNtnWGihpC+Bp54YD81ItsI99TtPCjQfdrUQW6qkdZivMP+SQSqwhc/QZLe7jsI
-/ATkfp28QRTi5fYvJpwAJUo4L6+bXYz4dMa5F3IdZyxBfqGxzwuvf6i4dobYyDnU
-fgtd7H1KbyxGZojNiA5MzY5WCdZYIqjbfrOo2M+maYVrAC/deqEZ8R5JJEK8vhYt
-mfPYs+49Qj8k8aC0AJPC3djbnh6odcG76gcyouweXvSMpPsYKi15Cxa1pmEnC2Ll
-JmTaAvj6MhKviaJekROjBDnPe4g3VNOjPykfN0O9564f3IBWtsgLFN1NmIrA/NvA
-e/7ndDg2JM8sJm3y23gjH14jxyDRMSAn1Bn8WiFX6F3O9WHz7dmImMX4LHEjx94I
-DCv+ThLcl5lpyFQ5UO3m
-=/tAU
------END PGP SIGNATURE-----
+greg k-h
