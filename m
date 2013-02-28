@@ -1,38 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/7
-Message-ID: <20130814162615.GA13548@kludge.henri.nerv.fi>
-Date: Wed, 14 Aug 2013 19:26:15 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: security@...o3.org
-Subject: CVE request: TYPO3 remote code execution by arbitrary file creation TYPO3-CORE-SA-2013-002
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/28/11
+Message-Id: <201302281024.r1SAO13r004834@core.courtesan.com>
+Date: Thu, 28 Feb 2013 05:24:01 -0500
+From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: sudo authentication bypass when clock is reset
 Content-Type: text/plain; charset=utf-8
 
-Can we assign CVE for remote code execution by arbitrary file creation
-vulnerability in TYPO3, thanks.
+On Wed, 27 Feb 2013 11:23:29 EST, "Todd C. Miller" wrote:
 
-http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2013-002/
-Advisory ID: TYPO3-CORE-SA-2013-002
-Vulnerable subcomponent: Backend File Upload / File Abstraction Layer
-Vulnerability Type: Remote Code Execution by arbitrary file creation
-Affected Versions: All versions from 6.0.0 up to the development branch of 6.2
-Severity: Critical
-Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:C/I:C/A:C/E:F/RL:O/RC:C
+> Sudo versions affected:
+>     Sudo 1.6.0 through 1.7.10p7 and sudo 1.8.0 through 1.8.6p7.
 
-Problem Description: The file upload component and the File Abstraction Layer
-are failing to check for denied file extensions, which allows authenticated
-editors (even with limited permissions) to upload php files with arbitrary code,
-which can then be executed in web server's context.
+The affected versions are actually:
 
-Solution: Update to the TYPO3 version 6.0.8 or 6.1.3 that fix the problem
-described!
+    Sudo 1.6.0 through 1.7.10p6 and sudo 1.8.0 through 1.8.6p6 inclusive.
 
-Credits: Credits go to Sebastian Nerz who discovered and reported the issue.
-
-Please note that XSS issue in the advisory already has CVE. TYPO3 team also
-verified that this hasn't been requested already.
-
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+ - todd
