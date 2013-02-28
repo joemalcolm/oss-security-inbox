@@ -1,55 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/05/2
-Message-ID: <5185FE38.5020801@redhat.com>
-Date: Sun, 05 May 2013 00:37:44 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/28/2
+Message-ID: <512EB70B.5040407@redhat.com>
+Date: Wed, 27 Feb 2013 18:46:51 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux kernel: chipidea: allow disabling streaming in host mode
+CC: "Jason A. Donenfeld" <Jason@...c4.com>
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/03/2013 05:22 AM, P J P wrote:
-> Hello,
+On 02/27/2013 04:24 PM, Jason A. Donenfeld wrote:
+> On Thu, Feb 28, 2013 at 12:07 AM, Greg KH <greg@...ah.com> wrote:
+>> Really?  Ok then, please go ahead and try doing this yourself if
+>> you feel it is so "obvious" to do.
 > 
-> Linux kernel built with the ChipIdia Highspeed Dual Role
-> Controller (CONFIG_USB_CHIPIDEA) along with the ChipIdea host
-> controller (CONFIG_USB_CHIPIDEA_HOST) modules, is vulnerable to a
-> kernel crash. It occurs while streaming content over network via
-> USB/Ethernet adapter
-> 
-> A user/program could use this flaw to crash the kernel resulting in
-> DoS.
-> 
-> Upstream fix: ------------- ->
-> https://git.kernel.org/linus/929473ea05db455ad88cdc081f2adc556b8dc48f
->
->  Reference: ---------- ->
-> https://bugzilla.redhat.com/show_bug.cgi?id=959210
-> 
-> Thank you. -- Prasad J Pandit / Red Hat Security Response Team DB7A
-> 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+> I did yesterday, actually. I saw some commit that said "use after 
+> free!", saw that it was triggerable by an unpriv'd user, and sent
+> it into the list. Kurt took a look at it, agreed with the
+> assessment, and assigned a CVE. The commit itself said "use after
+> free" -- I didn't even have to do any heavy lifting or
+> hair-splitting investigation.
 
-Please use CVE-2013-2058 for this issue.
+No I didn't. This is why I require good quality requests, anything
+else is a waste of my time. If it doesn't meet an easy "definitely a
+security bug" I push it back to people and keep poking them with
+annoying questions, in some cases this takes weeks or months to be
+resolved (some are quite subtle, like that IPv6 Kernel stuff).
+
+I assigned 1600-2000 CVEs last year, it will be more this year. At one
+hour per CVE that would be a full years work right there. Even at 1-5
+minutes per CVE it's still a huge time sink. The Kernel people are
+working with roughly an order or two magnitude more bug reports to
+assess (because even trivial looking things can turn out to have nasty
+consequences or even represent entirely new classes of flaws, just
+look at the recent Ruby stuff or XML stuff).
+
+>> Nope, we are dumb, we do uninteresting, boring work, dealing with
+>> broken hardware and demanding users every day.  If we were
+>> smarter, we wouldn't be doing this type of thing.
+> 
+> Come on...
+
+This also goes for security people. If we had any sense we'd go live
+in the woods in a cabin and drink moonshine and go hunting. I'm still
+assigning CVE's for /tmp file vulns. That's just inexcusably stupid.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRhf43AAoJEBYNRVNeJnmTo70QAIjmIO1HKrT9wpyI3D/tIYt4
-pKgMGJeXNExHoyLFm8YNk+C1PrOGMG/KLNQIg/uUZRPEVpEWZgCdEnrNIoWX6AIb
-/ezLMXyQCKkwIgS/G1JSx5818b5D6/LSM6PNtHvbrc3135EARjNM2C7IpTDPTgw1
-4D83WsouNVVmpDeLht6EWX2Fno+B6BlrpJwFkx9ptvwZ9WLmtxSC4NTxM1QXZPP/
-9CJw+QD5Slna6KoBJ8cgI/OfhcthMa2qPMb3IfqfMDToRLaQmEXH4KTXir2CbLHj
-F2mPRnBxzp67ySvyYlpahK1njR1whN57I2fFIBgYY96F9tRES4dgAH4AIv662vur
-inM+EYwU1Yym7cWLaRUK+vbu3Dm0JHTqwkyW6JEL6WvfXjh/87np4VvA/7D1uKsu
-jD2MpgQO5xunDlK12DlqdYNYbhr0la/U/e1NUEEb2dhk0YNLE5KOjOv/W5uMXdtw
-T6ckR/uVd27MlS3NSUXrvVFsDT+T2FvhAzo1d7EbDePfHRxLkJlIw36IabFN6NJr
-sjLh+uT2hdtrdPO5O19wX4v5JZ7RwQDoykC6/RHjBoVPNmhYUDpe144aD2qSF0zi
-YSIXZhcZ85iSA8+0nY0vDdhkSSObH6qAMbEVuJlVNJPHcy6be/1Yil/Y9tO4SHyA
-xlEGTV7FoBcI5VWmLJY4
-=8d7C
+iQIcBAEBAgAGBQJRLrcLAAoJEBYNRVNeJnmTzlwP/3RD6L9k60EmE43kt/NMQK8N
+sbG3eKCuDug7Z81FS5qMsu6tNSFSvSPF1zkt1XtYFoaPPAiSCJ5iJWtsZHiBpMcQ
+UG4fbtkZIwbmaijSB455hGRryKC8XhnTy9kjOj+VLiHenjOYYDLGEjJm+stsN6t9
+K2uacEKWugzHVPXSoexjRyIS7lai8f04FifMHav/N9ZG8tlbsNA6zr2mx9QDgAfO
+B+Hmy0mjFXcY9zzyUPlLUOfIQzAxv8DzYF7tUY1Nybttno+ul85OQNSsShJHH10E
+M34/tLIaMorku/oB00H9hveEi1zgOcVotVIk6tJ/qCnBffOHZ0MWEFYte3ou98D2
+yjjjd6nDcu2LAK7cTlbV306oA9F69cWQJ8wWd019Fvmln51z7OCX3fOmjKzz3F4z
+BmVeBtd0XK65BpHXwU/EewWklTcoATzkr0dZdBupB50PEejF4cDOTgN+g/z4FWjj
+GKeu06LwlSZcyeQ55S8DLwEK1K8ZvbZhRCwFHISjX7W7G1yWarUZ2jZV333Spv4O
+81s3t5haDASbLmNNclZayxhs0wTqGEFRDrFCu4r/hKUvcdTuvFgcBDoMJP6jZC+A
+8FnCbVnE4kt1buIhbXWj/YwhpbguhCKebwCtAT135jONn8gs085VhUaGaOoc0vnS
+PN5pIr8yoEf2QuGt+3UI
+=H3sd
 -----END PGP SIGNATURE-----
