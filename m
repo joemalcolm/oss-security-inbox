@@ -1,45 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/10/1
-Message-ID: <20130610101642.GA19371@surtsey.monkey.lab>
-Date: Mon, 10 Jun 2013 12:16:42 +0200
-From: Alexander Bergmann <abergmann@...e.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/28/3
+Message-ID: <512EBECC.60709@redhat.com>
+Date: Wed, 27 Feb 2013 19:19:56 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: libraw: multiple issues
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE Request for Drupal Contributed Modules
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 04, 2013 at 03:51:14PM +0200, Raphael Geissert wrote:
-> Hi again,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 02/27/2013 03:19 PM, Forest Monsen wrote:
+> Hi Kurt,
 > 
-> On 29 May 2013 20:00, Kurt Seifried <kseifried@...hat.com> wrote:
-> > On 05/29/2013 03:18 AM, Raphael Geissert wrote:
-> >> On 28 May 2013 19:58, Kurt Seifried <kseifried@...hat.com> wrote:
-> >>> On 05/28/2013 02:43 AM, Raphael Geissert wrote:
-> >>>> So there's a double-free (fixed in 0.15.2[3])
-> >>
-> >> https://github.com/LibRaw/LibRaw/commit/19ffddb0fe1a4ffdb459b797ffcf7f490d28b5a6
-> >
-> > Please use CVE-2013-2126 for this issue.
+> I'd like to request CVE identifiers for several issues in
+> contributed modules:
+
+Top posting, lazy, etc.
+
+CVE-2013-1778 Drupal SA-CONTRIB-2013-024 - Creative Theme - Cross Site
+Scripting (XSS)
+
+CVE-2013-1779 Drupal SA-CONTRIB-2013-025 - Fresh Theme - Cross Site
+Scripting (XSS)
+
+CVE-2013-1780 Drupal SA-CONTRIB-2013-026 - Best Responsive Theme -
+Cross Site Scripting (XSS)
+
+CVE-2013-1781 Drupal SA-CONTRIB-2013-027 - Professional theme - Cross
+Site Scripting (XSS)
+
+CVE-2013-1782 Drupal SA-CONTRIB-2013-028 - Responsive Blog Theme -
+Cross Site Scripting (XSS)
+
+CVE-2013-1783 Drupal SA-CONTRIB-2013-029 - Business theme - Cross Site
+Scripting (XSS)
+
+CVE-2013-1784 Drupal SA-CONTRIB-2013-030 - Clean Theme - Cross Site
+Scripting (XSS)
+
+CVE-2013-1785 Drupal SA-CONTRIB-2013-031 - Premium Responsive theme -
+Cross Site Scripting (XSS)
+
+CVE-2013-1786 Drupal SA-CONTRIB-2013-032 - Company theme - Cross Site
+Scripting (XSS)
+
+CVE-2013-1787 Drupal SA-CONTRIB-2013-033 - Simple Corporate theme -
+Cross Site Scripting (XSS)
+
+> SA-CONTRIB-2013-024 - Creative Theme - Cross Site Scripting (XSS) 
+> http://drupal.org/node/1929474
 > 
-> FWIW, I've noticed that libkdcraw and darktable embed copies of libraw
-> that are vulnerable to the double free.
+> SA-CONTRIB-2013-025 - Fresh Theme - Cross Site Scripting (XSS) 
+> http://drupal.org/node/1929482
+> 
+> SA-CONTRIB-2013-026 - Best Responsive Theme - Cross Site Scripting
+> (XSS) http://drupal.org/node/1929484
+> 
+> SA-CONTRIB-2013-027 - Professional theme - Cross Site Scripting
+> (XSS) http://drupal.org/node/1929486
+> 
+> SA-CONTRIB-2013-028 - Responsive Blog Theme - Cross Site Scripting
+> (XSS) http://drupal.org/node/1929488
+> 
+> SA-CONTRIB-2013-029 - Business theme - Cross Site Scripting (XSS) 
+> http://drupal.org/node/1929496
+> 
+> SA-CONTRIB-2013-030 - Clean Theme - Cross Site Scripting (XSS) 
+> http://drupal.org/node/1929500
+> 
+> SA-CONTRIB-2013-031 - Premium Responsive theme - Cross Site
+> Scripting (XSS) http://drupal.org/node/1929508
+> 
+> SA-CONTRIB-2013-032 - Company theme - Cross Site Scripting (XSS) 
+> http://drupal.org/node/1929512
+> 
+> SA-CONTRIB-2013-033 - Simple Corporate theme - Cross Site Scripting
+> (XSS) http://drupal.org/node/1929514
+> 
+> Thanks! Forest
+> 
 
-In which libraw version was this problem actually introduced?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-darktable uses embedded libraw 0.14.7
-libkdcraw uses embedded libraw 0.15.0
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-I found a commit that introduced the "// allocate image as temporary 
-buffer, size" stuff within commit 1a8e92ff, and that was part of 0.14.0.
-
-
-Regards,
-Alex
-
--- 
-Alexander Bergmann <abergmann@...e.com>
-Security Software Engineer
-SUSE Linux GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer HRB 16746 (AG Nürnberg)
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+iQIcBAEBAgAGBQJRLr7MAAoJEBYNRVNeJnmTvVgQAJLPqEWbzGuJ0ozs9Y0rAP5h
+Ez7opdb/ZZVaIC6hZ7q7Bjsnww9N2fGAvd+rTbo/Nbpmu2jHb3gwB/C52FtC6d1Q
+nALg/ZbC/VJ776QjVL21iRQq/lR0y8BIH4JKWPMiF5Ir1lKfAE3VAQnMbTB4s3GE
+IyGVDct+vkMVWpr1SfXCOk0Bn/+pzF6S7pwqAGdWgVluYAgFmUZoRSnZpYJiRGQu
+OhjbZPqx6NSJ2sl880cZhMfOsOyscNdWjnoARokwxtqlYuf6MfDxj0S2jda409mf
+z4XBsy+JS3bk09hy6faWT1EsN9fCGrnlYwzK9o0XlMO1/UACsAN050Ia++c6z43o
+Nuz565BKTQgr7PIYD47kMTesHzchXmtFbXB0jeELpkqKrE+7u6+GjtNlzgo4ysE8
+3evFe603ofmUdhQB9vv3h9NeLFFKWDyaxd2p7GMaEEqx4siivH4tUrJgHN3QajrK
+lni7dLTtzHsgBC7Rv5gFVO9TrJth8zpltG6sQzlslFFaS+acGkxnq1iMwS78EcOa
+GP4LV+6eEr9eGNySKDABDKsRp7MwuALneJF4JeN1NozsKG6HWyE/+b8jUYuJCwVe
+DEWc4wo7c+OllN0QcCx/k5tmxz2mfLi6LBPVGBg1qEnFeFvOENH3VrTcmSYjBq00
+mq9W2kmQnCo/iNISqEcv
+=i0PB
+-----END PGP SIGNATURE-----
