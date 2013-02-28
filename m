@@ -1,43 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/1
-Message-ID: <20130814053100.GA11543@inutil.org>
-Date: Wed, 14 Aug 2013 07:31:00 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/28/1
+Message-ID: <alpine.LRH.2.00.1302280123380.30582@twin.jikos.cz>
+Date: Thu, 28 Feb 2013 01:31:56 +0100 (CET)
+From: Jiri Kosina <jikos@...os.cz>
 To: oss-security@...ts.openwall.com
-Subject: [CVE request] Django 1.4.6 security release
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-this needs two CVE assignments:
-https://www.djangoproject.com/weblog/2013/aug/13/security-releases-issued/ :
+On Wed, 27 Feb 2013, Greg KH wrote:
 
-Cheers,
-        Moritz
+> > > If you know of any other ways that we can do this, please let us know.
+> > 
+> > - W^X
+> 
+> I thought we tried this, and had to revert it due to problems it caused
+> with some dyanmic code generators.  Or am I totally mistaken here?
 
+Userspace is problematic in this respect, agreed (because of all the JIT 
+stuff, for example).
 
-Issue: Cross-site scripting (XSS) in admin interface
+I am speaking more in terms of kernel now. I.e. having clear separation of 
+kernel RO-data and kernel code. Basically what grsecurity/PAX is doing 
+with their CONFIG_PAX_KERNEXEC, but with hardware support whenever 
+possible (i.e. minimizing runtime performance penalty).
 
-The Django administrative application, django.contrib.admin, provides functionality for CRUD (Creation, Retrieval, Updating and Deleting) operations by trusted users, including facilities for both automatic and customized data-manipulation interfaces.
+> > - not letting kernel dereference userspace pointers (and PMAP is not 
+> >   available everywhere, unfortunately)
+> 
+> What do you mean by this?
 
-When displaying the value of a URLField -- a model field type for storing URLs -- this interface treated the values of such fields as safe, thus failing to properly accommodate the potential for dangerous values. A proof-of-concept application has been provided to the Django project, showing how this can be exploited to perform XSS in the administrative interface.
+If you trick kernel into derefereing pointer outside it's mapped space 
+(i.e. address lower than TASK_SIZE, thus fully controller by potentially 
+evil userspace), it'll happily do that (modulo incomplete 
+counter-measures, such as vm.mmap_min_addr sysctl).
 
-In a normal Django deployment, this will only affect the administrative interface, as the incorrect handling occurs only in form-widget code in django.contrib.admin. It is, however, possible that other applications may be affected, if those applications make use of form widgets provided by the admin interface.
+Thanks,
 
-To remedy this issue, the widget in question -- django.contrib.admin.widgets.AdminURLFieldWidget -- has been corrected to treat its value the same as any other potentially-user-supplied value; in other words, it will be treated as unsafe, and subject to Django's (enabled by default) output escaping.
-
-Thanks to Łukasz Langa for reporting this issue to us.
-
-
-
-
-Issue: Possible XSS via is_safe_url
-
-A common pattern in Django applications is for a view to accept, via querystring parameter, a URL to redirect to upon successful completion of the view's processing. This pattern is used in code bundled with Django itself; for example, the login view in django.contrib.auth.views, which accepts such a parameter to determine where to send a user following successful login.
-
-A utility function -- django.utils.http.is_safe_url() -- is provided and used to validate that this URL is on the current host (either via fully-qualified or relative URL), so as to avoid potentially dangerous redirects from maliciously-constructed querystrings.
-
-The is_safe_url() function works as intended for HTTP and HTTPS URLs, but due to the manner in which it parses the URL, will permit redirects to other schemes, such as javascript:. While the Django project is unaware of any demonstrated ability to perform cross-site scripting attacks via this mechanism, the potential for such is sufficient to trigger a security response.
-
-To remedy this issue, the is_safe_url() function has been modified to properly recognize and reject URLs which specify a scheme other than HTTP or HTTPS.
-
-Thanks to Nick Bruun for reporting this issue to us.
+-- 
+Jiri Kosina
