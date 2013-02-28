@@ -1,59 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/25
-Message-ID: <CAHohh89ha6v1kO44rgGUo5UKwmYVBvYtAu6C-hwBuKcRnk69fw@mail.gmail.com>
-Date: Thu, 21 Feb 2013 21:05:12 +0100
-From: Anders Petersson <anders@....se>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/28/8
+Message-ID: <512F06D6.5060409@redhat.com>
+Date: Thu, 28 Feb 2013 00:27:18 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Henri Salo <henri@...v.fi>, Agostino Sarubbo <ago@...too.org>, security-alert@...nx.org
-Subject: Re: CVE request: nginx world-readable logdir
+CC: Salvatore Bonaccorso <carnil@...ian.org>, Marcus Meissner <meissner@...e.de>, Steven Christey <coley@...re.org>
+Subject: Re: CVE Request: poppler 0.22.1 security fixes
 Content-Type: text/plain; charset=utf-8
 
-2013/2/21 Kurt Seifried <kseifried@...hat.com>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On 02/21/2013 11:17 AM, Henri Salo wrote:
-> > On Thu, Feb 21, 2013 at 06:50:14PM +0100, Agostino Sarubbo wrote:
-> >> Hello,
-> >>
-> >> I just noticed my nginx logdir and its content are
-> >> world-readable:
-> >>
-> >> drwxr-xr-x  2 root root  4096 Jan 10 00:11 . drwxr-xr-x 16 root
-> >> root  4096 Feb 21 17:46 .. -rw-r--r--  1 root root 69415 Feb 21
-> >> 17:46 error_log -rw-r--r--  1 root root 93017 Feb 18 22:03
-> >> localhost.access_log -rw-r--r--  1 root root 86227 Feb 18 22:03
-> >> localhost.error_log
-> >>
-> >> What do you think about?
-> >>
-> >> -- Agostino Sarubbo / ago -at- gentoo.org Gentoo Linux Developer
-> >
-> > Also affects Debian squeeze package. I will report a bug. Can we
-> > get a CVE assigned for this issue, thank you.
-> >
-> > -- Henri Salo
-> >
->
-> Ok is this like standard HTTPD style logs? If so then they would
-> generally be considered sensitive (GET strings, etc.). Adding nginx to
-> the cc so they know.
->
+On 02/27/2013 11:53 PM, Salvatore Bonaccorso wrote:
+> Hi Kurt
+> 
+> Just noticed the following and wanted to ask:
+> 
+> On Wed, Feb 27, 2013 at 08:39:40PM -0700, Kurt Seifried wrote:
+>>> So far I see: 
+>>> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=8b6dc55e530b2f5ede6b9dfb64aafdd1d5836492
+>>>
+>>>
+>>
+>>> 
+Fix invalid memory access in 1150.pdf.asan.8.69
+>>> 
+>>> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=e14b6e9c13d35c9bd1e0c50906ace8e707816888
+>>>
+>>>
+>>
+>>> 
+Fix invalid memory access in 2030.pdf.asan.69.463
+>>> 
+>>> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=0388837f01bc467045164f9ddaff787000a8caaa
+>>>
+>>>
+>>
+>>> 
+Fix another invalid memory access in 1091.pdf.asan.72.42
+>>> 
+>>> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=957aa252912cde85d76c41e9710b33425a82b696
+>>>
+>>>
+>>
+>>> 
+Fix invalid memory accesses in 1091.pdf.asan.72.42
+>>> 
+>>> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=bbc2d8918fe234b7ef2c480eb148943922cc0959
+>>>
+>>>
+>>
+>>> 
+Fix invalid memory accesses in 1036.pdf.asan.23.17
+>> 
+>> Please use CVE-2013-1788 for these invalid memory issues.
+> ^^^^^^^^^^^^^
+>> 
+>>> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a9b8ab4657dec65b8b86c225d12c533ad7e984e2
+>>>
+>>>
+>>
+>>> 
+Fix crash in broken file 1031.pdf.asan.48.15
+>>> 
+>>> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a205e71a2dbe0c8d4f4905a76a3f79ec522eacec
+>>>
+>>>
+>>
+>>> 
+Do not crash in broken documents like 1007.pdf.asan.48.4
+>> 
+>> Please use CVE-2013-1788 for these crash issues.
+> ^^^^^^^^^^^^^
 
-They are httpd-style logs:
+Typo, that last one should be CVE-2013-1789.
 
-$ tail -1 /var/log/nginx/access.log
-85._._._ - - [21/Feb/2013:18:_:_ +0100] "GET /w00tw00t.at.ISC.SANS.DFind:)
-HTTP/1.1" 400 172 "-" "-"
 
-However on Debian Squeeze the logs themselves are not world-readable (at
-least on my system):
+> Was this intentional that there where both assigned CVE-2013-1788,
+> for both the 'invalid memory issues' and the 'crash issues'?
 
-$ ls -la /var/log/nginx/
-total 452
-drwxr-xr-x 2 root     root  4096 Feb 21 06:25 .
-drwxr-xr-x 9 root     root  4096 Feb 21 06:25 ..
--rw-r----- 1 www-data adm    934 Feb 21 18:40 access.log
--rw-r----- 1 www-data adm  20134 Feb 21 03:46 access.log.1
+Typo, didn't see it, derp! Thanks for catching.
 
---
-Anders Petersson
+> Regards, Salvatore
+> 
 
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRLwbWAAoJEBYNRVNeJnmTROoQANy7oeqXP64yfblQw6D1ze6v
+dNVroZzAx3EbYvmqKZFrykFfGn+YYlpgkIm38GZnfxWAplCAVJHrgtKVvW5Ufoj+
+nAoXzePWID4TPPt89xXGPB2WBmO3YbFnE7ONdmz6OqcII/mIvP+oi47Cs4ewcxzU
+8Q126S47HThLgDKJ/IWWi5CzAi47vjDs5Lfbk2LPoYeJfQu2iZ7CiC+JI3P18v6L
+GGy2wo++7Qp3KOnj0NyVT/FGhwlnssLNADI9pIlvgqSE4H1kM9kWQj2UTwW5QRGa
+/SyMjdHweFP4ck1Yt83DOpPz/ny5MRcsFotX0xfutIde4X1xQps8i6QPQEi6tSBy
+dY4OQtIVWYpPuhMKIFGY3E7xWtO4p0mV0KaVKgvjdqQwQ+GmbxLwwwputm3lNxgw
+6TIHRowdrQZvoE+LTFWSfLaa7wp3zQSo4lD1FxUCyE/12/OnisKHCoP1QxMzgBA+
+WJBpFrBUK/4O+AYUr5niSgr086ngudsnuXW3RtksRbg7ACj36VOm3r91VY7BpT9e
+erWAPBUlrhituxawcOwcCnjDvKUouXr7Q9yly66YN+mcbulrTo0wUDPsO4VAn/2S
+NjZriEpMimaRTsJ6isECKRElE6BmOYFOAZLICUL/pWjVPENNi9za9X0BsigoTivA
+QvJzRb/5mc+Hu2AAbSTS
+=mtdX
+-----END PGP SIGNATURE-----
