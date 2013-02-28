@@ -1,73 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/6
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF26F53771@IMCMBX01.MITRE.ORG>
-Date: Fri, 14 Jun 2013 18:20:59 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "felipensp@...il.com" <felipensp@...il.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: CVE request: FD leakage for cgi program on Monkey HTTPD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/28/5
+Message-ID: <20130228065316.GA5094@elende>
+Date: Thu, 28 Feb 2013 07:53:16 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: poppler 0.22.1 security fixes
 Content-Type: text/plain; charset=utf-8
 
-Felipe,
+Hi Kurt
 
-Sorry if this is a dumb question.
+Just noticed the following and wanted to ask:
 
-If you are using "file descriptor leak" in the sense of "malicious parties can directly access the file descriptor" - then that doesn't seem to be the case here, because permissions are limited only to you.
+On Wed, Feb 27, 2013 at 08:39:40PM -0700, Kurt Seifried wrote:
+> > So far I see: 
+> > http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=8b6dc55e530b2f5ede6b9dfb64aafdd1d5836492
+> >
+> > 
+> Fix invalid memory access in 1150.pdf.asan.8.69
+> > 
+> > http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=e14b6e9c13d35c9bd1e0c50906ace8e707816888
+> >
+> > 
+> Fix invalid memory access in 2030.pdf.asan.69.463
+> > 
+> > http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=0388837f01bc467045164f9ddaff787000a8caaa
+> >
+> > 
+> Fix another invalid memory access in 1091.pdf.asan.72.42
+> > 
+> > http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=957aa252912cde85d76c41e9710b33425a82b696
+> >
+> > 
+> Fix invalid memory accesses in 1091.pdf.asan.72.42
+> > 
+> > http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=bbc2d8918fe234b7ef2c480eb148943922cc0959
+> >
+> > 
+> Fix invalid memory accesses in 1036.pdf.asan.23.17
+> 
+> Please use CVE-2013-1788 for these invalid memory issues.
+             ^^^^^^^^^^^^^
+> 
+> > http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a9b8ab4657dec65b8b86c225d12c533ad7e984e2
+> >
+> > 
+> Fix crash in broken file 1031.pdf.asan.48.15
+> > 
+> > http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a205e71a2dbe0c8d4f4905a76a3f79ec522eacec
+> >
+> > 
+> Do not crash in broken documents like 1007.pdf.asan.48.4
+> 
+> Please use CVE-2013-1788 for these crash issues.
+             ^^^^^^^^^^^^^
 
-If you are using "file descriptor leak" in the sense of "the program does not close a file after opening it, consuming too many file descriptors," then how can a program take control of Monkey HTTPD?
+Was this intentional that there where both assigned CVE-2013-1788, for
+both the 'invalid memory issues' and the 'crash issues'?
 
-- Steve
-
-
->-----Original Message-----
->From: Felipe Pena [mailto:felipensp@...il.com]
->Sent: Friday, June 14, 2013 1:24 PM
->To: oss-security@...ts.openwall.com
->Subject: [oss-security] CVE request: FD leakage for cgi program on Monkey
->HTTPD
->
->I've identified a fd leakage when running a program via Monkey HTTPD -
->CGI plugin.
->
->By runninng `ls -lah /proc/<pid>/fd/` on the CGI program we can see:
->
->total 0
->dr-x------ 2 felipe felipe 0 Jun 14 14:00 .
->dr-xr-xr-x 8 felipe felipe 0 Jun 14 14:00 ..
->lr-x------ 1 felipe felipe 64 Jun 14 14:00 0 -> pipe:[239545]
->l-wx------ 1 felipe felipe 64 Jun 14 14:00 1 -> pipe:[239546]
->lrwx------ 1 felipe felipe 64 Jun 14 14:00 10 -> anon_inode:[eventpoll]
->lr-x------ 1 felipe felipe 64 Jun 14 14:00 11 -> pipe:[242960]
->lrwx------ 1 felipe felipe 64 Jun 14 14:00 12 -> anon_inode:[eventpoll]
->lrwx------ 1 felipe felipe 64 Jun 14 14:00 13 -> anon_inode:[eventpoll]
->lrwx------ 1 felipe felipe 64 Jun 14 14:00 14 -> anon_inode:[eventpoll]
->lrwx------ 1 felipe felipe 64 Jun 14 14:00 15 -> anon_inode:[eventpoll]
->lrwx------ 1 felipe felipe 64 Jun 14 14:00 16 -> anon_inode:[eventpoll]
->lrwx------ 1 felipe felipe 64 Jun 14 14:00 17 -> anon_inode:[eventpoll]
->lrwx------ 1 felipe felipe 64 Jun 14 14:00 18 -> anon_inode:[eventpoll]
->lrwx------ 1 felipe felipe 64 Jun 14 14:00 19 -> anon_inode:[eventpoll]
->l-wx------ 1 felipe felipe 64 Jun 14 14:00 2 -> /dev/null
->lrwx------ 1 felipe felipe 64 Jun 14 14:00 3 -> socket:[240797]
->lrwx------ 1 felipe felipe 64 Jun 14 14:00 4 ->
->/home/felipe/audit/monkey/monkey/logs/monkey.pid.2001
->lr-x------ 1 felipe felipe 64 Jun 14 14:00 5 -> pipe:[240798]
->l-wx------ 1 felipe felipe 64 Jun 14 14:00 6 -> pipe:[240798]
->lr-x------ 1 felipe felipe 64 Jun 14 14:00 7 -> pipe:[240799]
->l-wx------ 1 felipe felipe 64 Jun 14 14:00 8 -> pipe:[240799]
->lrwx------ 1 felipe felipe 64 Jun 14 14:00 9 -> socket:[242784]
->
->Hence a malicious program can take control of Monkey HTTP request response
->through a network socket related file descriptor, etc.
->
->
->Report
->------
->http://bugs.monkey-project.com/ticket/187
->
->
->CREDITS
->-------
->Felipe Pena
->
->--
->Regards,
->Felipe Pena
+Regards,
+Salvatore
