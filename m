@@ -1,60 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/18/4
-Message-ID: <20130318172215.GC46041@higgins.local>
-Date: Mon, 18 Mar 2013 10:22:15 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2013-1856] XML Parsing Vulnerability affecting JRuby users
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/28/9
+Message-ID: <alpine.LRH.2.00.1302280930200.30582@twin.jikos.cz>
+Date: Thu, 28 Feb 2013 09:31:40 +0100 (CET)
+From: Jiri Kosina <jikos@...os.cz>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-XML Parsing Vulnerability affecting JRuby users
+On Thu, 28 Feb 2013, Yves-Alexis Perez wrote:
 
-There is a vulnerability in the JDOM backend to ActiveSupport's XML parser.  This could allow an attacker to perform a denial of service attack or gain access to files stored on the application server.  This vulnerability has been assigned the CVE identifier CVE-2013-1856.
+> > > - not letting kernel dereference userspace pointers (and PMAP is
+> > not 
+> > >   available everywhere, unfortunately)
+> > 
+> > What do you mean by this?
+> 
+> This looks like PaX KERNEXEC/UDEREF (which uses segmentation on i386 and
+> code instrumentation through gcc plugins on x86_64). 
 
-Versions Affected:  3.0.0 and All Later Versions when using JRuby
-Not affected:       Applications not using JRuby or JRuby applications not using the JDOM backend.	
-Fixed Versions:     3.2.13, 3.1.12
+Yes, exactly. You can now apparently also add ARM to the list of 
+architectures where it's been made available [1] by the grsecurity folks.
 
-Impact 
------- 
-The ActiveSupport XML parsing functionality supports multiple pluggable backends.  One backend supported for JRuby users is ActiveSupport::XmlMini_JDOM which makes use of the javax.xml.parsers.DocumentBuilder class.
+[1] http://forums.grsecurity.net/viewtopic.php?f=7&t=3292
 
-In some JVM configurations the default settings of that class can allow an attacker to construct XML which, when parsed, will contain the contents of arbitrary URLs including files from the application server.  They may also allow for various denial of service attacks.
+> On Ivy Bridge processors you have SMEP which will also prevent ring0 to
+> execute code from unprivileged pages and on Haswell there will be SMAP
+> which tries to prevent ring0 to access ring3 pages read/write when not
+> needed (outside of copy_{to,from}_user for example but there are
+> others).
+> 
+> But, as Jiri said, this is not available everywhere so people with more
+> ancient hardware can't benefit from those extensions.
 
-If you are using JRuby and have an affected JVM, you should upgrade or use one of the work arounds immediately.
+Yup, sorry for my typo above, I of course meant SMAP, not PMAP.
 
-Releases 
--------- 
-The 3.2.13 and 3.1.12 releases are available at the normal locations. 
-
-Workarounds 
------------ 
-If you are unable to upgrade, you can place this code in an application initializer to prevent this issue:
-
-  ActiveSupport::XmlMini.backend="REXML"
-
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
-
-* 3-2-jdom.patch - Patch for 3.2 series 
-* 3-1-jdom.patch - Patch for 3.1 series 
-* 3-0-jdom.patch - Patch for 3.0 series 
-
-Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
-Credits 
--------
-Thanks to Ben Murphy for reporting this vulnerability to us and working with us to inform other affected libraries and programming languages.
+Thanks,
 
 -- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "3-0-jdom.patch" of type "text/plain" (4804 bytes)
-
-View attachment "3-2-jdom.patch" of type "text/plain" (4739 bytes)
-
-View attachment "3-1-jdom.patch" of type "text/plain" (4740 bytes)
-
-Content of type "application/pgp-signature" skipped
+Jiri Kosina
