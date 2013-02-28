@@ -1,36 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/23/2
-Message-ID: <20130523141714.GY27789@lister.brianlane.com>
-Date: Thu, 23 May 2013 07:17:14 -0700
-From: "Brian C. Lane" <bcl@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2013-2069 livecd-tools: improper handling of passwords 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/28/10
+Message-ID: <20130228085033.GA348@meddwl.fritz.box>
+Date: Thu, 28 Feb 2013 09:50:33 +0100
+From: Sergei Golubchik <serg@...monty.org>
+To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
+Cc: full-disclosure@...ts.grok.org.uk, Steven Christey <coley@...re.org>, security@...iadb.org
+Subject: Re: [Full-disclosure] MySQL Denial of Service Zeroday PoC
 Content-Type: text/plain; charset=utf-8
 
-https://bugzilla.redhat.com/show_bug.cgi?id=964299
+Hi, Kurt!
 
-The livecd-tools package provides support for reading and executing
-Kickstart files in order to create a system image. It was discovered
-that livecd-tools gave the root user an empty password rather than
-leaving the password locked in situations where no 'rootpw' directive
-was used or when the 'rootpw --lock' directive was used within the
-Kickstart file, which could allow local users to gain access to the
-root account. (CVE-2013-2069)
+> > Cheerio, Kingcope
+> 
+> So normally for MySQL issues Oracle would assign the CVE #. However in
+> this case we have a bit of a time constraint (it's a weekend and this
+> is blowing up quickly)  and the impacts are potentially quite severe.
+> So I've spoken with some other Red Hat SRT members and we feel it is
+> best to get CVE #'s assigned for these issues quickly so we can refer
+> to them properly.
+> 
+> I am also adding MySQL, Oracle, MariaDB, OSS-SEC, Steven Christey,
+> cve-assign and OSVDB to the CC so that everyone is aware of what is
+> going on.
+> 
+> http://seclists.org/fulldisclosure/2012/Dec/7
 
-Please note that livecd-tools is also used by appliance-tools to create
-images used for virtual machines, USB based systems, and so on.
-Additionally, the Python script components of livecd-tools have been
-broken out into a separate package named python-imgcreate on some
-distributions (such as Fedora).
+I've just looked at CVE-2012-5614 - it's not quite correct:
 
-Acknowledgements:
+* it claims the bug was in UpdateXML - if you look at the exploit,
+  you'll see that it sends an invalid packet to the server, the
+  UpdateXML part is after the exit statement, so it's a dead code.
 
-Red Hat would like to thank Amazon Web Services for reporting this
-issue. 
-Amazon Web Services acknowledges Sylvain Beucler as the original
-reporter.
+* it references https://mariadb.atlassian.net/browse/MDEV-3910
+  which is about the invalid packet, not about UpdateXML
 
--- 
-Brian C. Lane | Anaconda Team | IRC: bcl #anaconda | Port Orchard, WA (PST8PDT)
+* but MDEV-3910 also mentions that this invalid packet crash was
+  introduced in MySQL-5.5.18 and fixed in MySQL-5.5.21. While CVE entry
+  says that MySQL 5.5.19 and MariaDB 5.5.28a are vulnerable.
 
-Content of type "application/pgp-signature" skipped
+* UpdateXML on the other hand, was vulnerable only in MySQL, starting
+  from 5.6.6 and fixed in 5.6.10. Earlier MySQL versions and all MariaDB
+  are not affected.
+
+Regards,
+Sergei
+
