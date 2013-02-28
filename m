@@ -1,92 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/10
-Message-Id: <E1U2iMe-00089M-1r@xenbits.xen.org>
-Date: Tue, 05 Feb 2013 13:15:08 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 38 (CVE-2013-0215) - oxenstored incorrect handling of certain Xenbus ring states
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/28/4
+Message-ID: <512ED17C.4080507@redhat.com>
+Date: Wed, 27 Feb 2013 20:39:40 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: poppler 0.22.1 security fixes
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-         Xen Security Advisory CVE-2013-0215 / XSA-38
-			      version 2
+On 02/27/2013 06:24 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> poppler 0.22.1 was released without much ado, it however contains
+> various security fixes.
+> 
+> The security fixes apparently come from AdressSanitizer work and
+> fuzzing provided by the Google Security Team.
+> 
+> The page: http://j00ru.vexillium.org/?p=1507
+> 
+> explains most of it, and while it focuses on Adobe Acrobat Reader,
+> they also covered poppler testing inside.
 
-    oxenstored incorrect handling of certain Xenbus ring states
+Ok so these issues were found and processed by a team of people at
+Google (gratzi!) and Red Hat (booyah!) so for the purposes of CVE I'm
+considering the team to be a single team (which makes CVE assignment
+much easier =).
 
-UPDATES IN VERSION 2
-====================
+> So far I see: 
+> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=8b6dc55e530b2f5ede6b9dfb64aafdd1d5836492
+>
+> 
+Fix invalid memory access in 1150.pdf.asan.8.69
+> 
+> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=e14b6e9c13d35c9bd1e0c50906ace8e707816888
+>
+> 
+Fix invalid memory access in 2030.pdf.asan.69.463
+> 
+> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=0388837f01bc467045164f9ddaff787000a8caaa
+>
+> 
+Fix another invalid memory access in 1091.pdf.asan.72.42
+> 
+> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=957aa252912cde85d76c41e9710b33425a82b696
+>
+> 
+Fix invalid memory accesses in 1091.pdf.asan.72.42
+> 
+> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=bbc2d8918fe234b7ef2c480eb148943922cc0959
+>
+> 
+Fix invalid memory accesses in 1036.pdf.asan.23.17
 
-Public release.
+Please use CVE-2013-1788 for these invalid memory issues.
 
-ISSUE DESCRIPTION
-=================
+> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a9b8ab4657dec65b8b86c225d12c533ad7e984e2
+>
+> 
+Fix crash in broken file 1031.pdf.asan.48.15
+> 
+> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a205e71a2dbe0c8d4f4905a76a3f79ec522eacec
+>
+> 
+Do not crash in broken documents like 1007.pdf.asan.48.4
 
-The oxenstored daemon (the ocaml version of the xenstore daemon) does
-not correctly handle unusual or malicious contents in the xenstore
-ring.  A malicious guest can exploit this to cause oxenstored to read
-past the end of the ring (and very likely crash) or to allocate large
-amounts of RAM.
+Please use CVE-2013-1788 for these crash issues.
 
-IMPACT
-======
 
-A malicious guest administrator can mount a denial of service attack
-affecting domain control and management functions.
+> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=b1026b5978c385328f2a15a2185c599a563edf91
+>
+> 
+Initialize refLine totally
+> Fixes uninitialized memory read in 1004.pdf.asan.7.3
 
-In more detail:
+Please use CVE-2013-1790 for this uninitialized memory read issue.
 
-A malicious guest administrator can cause oxenstored to crash; after
-this many host control operations (for example, starting and stopping
-domains, device hotplug, and some monitoring functions), will be
-unavailable.  Domains which are already running are not directly
-affected.
+> As the blog page mentions "Huzaifa Sidhpurwala from RedHat
+> Security", perhaps Redhat has assigned CVEs already.
 
-Such an attacker can also cause a memory exhaustion in the domain
-running oxenstored; often this will make the host's management
-functions unavailable.
+Nope, although hopefully in future we'll coordinate CVEs better before
+hand.
 
-Information leak of control plane data is also theoretically possible.
+> Otherwise one ore more CVEs are required.
 
-VULNERABLE SYSTEMS
-==================
+Yup.
 
-Any system running oxenstored is vulnerable. oxenstored was introduced
-in Xen version 4.1.
+> Ciao, Marcus
+> 
 
-oxenstored was made the default in Xen 4.2.if a suitable ocaml
-toolchain was installed at build time.
 
-Systems running a 32-bit oxenstored are vulnerable only to the crash
-and not to the large memory allocation issue.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-MITIGATION
-==========
-
-Running the C version of xenstored will avoid this issue.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa38.patch             Xen 4.1.x, Xen 4.2.x, xen-unstable
-
-$ sha256sum xsa38*.patch
-7d7a5746bc76da747bf61eb87b3303a8f3abb0d96561f35a706c671317ebe4eb  xsa38.patch
-$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJREQI0AAoJEIP+FMlX6CvZ6wAIAJdVEbDm51534QlQBGEE160O
-beOVzi6J0y1XOV3iDVnPlSxynhhBn3HcNWl0p0ERRAJt+FbZrH/WLMZ/9XLLbzZO
-LWVQHPiKkTYxbgxYsNXt/64CxKN8We2lffuBZn6DUQt1ZiV7T9L4SYVTWHeKo5vW
-mvs4j4VvlGgQTxIy0a724bEEPbBXNCu76+b6uwbJCkocnul1QMxyMK5mCJK/n/dv
-Q4KCXjJ9sfRHcKR8jteU0v45MP3VXbgEjrW70nvqXed3ly01SdBt/OJVAadmiG38
-/EPJiFDT9cqPbl9591yQ6tQqRH5B4J3VoT7vl/hcV9AI8cduHVkQ8nLhfo71lLg=
-=CAag
+iQIcBAEBAgAGBQJRLtF8AAoJEBYNRVNeJnmTh/YP/jmwGLJ0IS8rTTmRhRXw8yYX
+McSfWbdn4WJO3zeELgpmUJue0qfsFF66iXKUoVRfvpvoT5EtDWPp02Wubkd26Z77
+DCsWJ2AYwvbwZNfnrAbP/sSnNu7W1HEQUIEcsLuoffbw9ZONMuWF1EOgZ6JZKvsB
+cHQjg1fzXXqPGaNSU5QEkIhVzZrEm8vAhHai0sEgKDYGGIjX4QKefiYdrzKCnCZa
+yV9qUb7knv9qqNB0iyE625cmqaoskdjdyaqDNFjSDzpeYKB9I/iQYvvD4dyw/dhM
+JIx1MwfZXX9C69KXxCLrQuwgSXgi/HmuDdIdnuoTdZIsk9UO5jzkIkWOIbVsc1Eo
+C7SWxmBvS7DoHgH7jLpo7BlxmuDRupbdeOxLPfyJzu/bdYaeeusCOGRcaMXVB0/C
+H/inAQVn5m1cAR1YEp76ZpqG9E/VMHcdC3cO+KDDMitPeMY5LVSN/IRPgCGDf/hB
+MZyToi0YrFg5t4U7M/2CKhumK7ivwjPg7kKnWSwBsYt6ECsSknRAsWqEuMVc1PmK
+E31or9K4qe/f4igQ0Xm7r5/sZhB3oTVHvGb7+yTIGUaWJXEGRazFVPxk7lryUroY
+SNrSXFkKyCRO6nNvp+De0+xL/fyQfq0NZIK671gbR9i24GXLhIgO75v1GQFrbhJ6
+2nWKQJCoJhxRF3mn/3et
+=MQpu
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa38.patch" of type "application/octet-stream" (2515 bytes)
