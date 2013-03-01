@@ -1,45 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/20
-Message-ID: <20131115222314.GM28665@sentinelchicken.org>
-Date: Fri, 15 Nov 2013 14:23:14 -0800
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: cryptographic primitive choices [was: Re: Microsoft Warns Customers Away From RC4 and SHA-1]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/01/1
+Message-ID: <CAGyNYUPFaRFKP6KgpXT0n4QTUFfkm_6ec5MHNPQugGNY_-1mGg@mail.gmail.com>
+Date: Fri, 1 Mar 2013 11:26:34 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-> You cannot easily update an openssl 0.x version to 1.0.x if you ahd
-> no symbol versioning set up as the symbols overlap and you would need
-> to rebuild _all_ software using libssl, inlcuding libcrypto.
+>
+> > > The linux-distros/oss-sec members can make sure that each issue gets
+> CVE
+> > > and it's properly publicly communicated at the right time (preferably
+> > > when the issue is public -- when it is committed).
+> > >
+> > > Should you consider this approach, is there anything I can help with to
+> > > make that happen?
+> >
+> > Yes, I need someone to actually do this.  There used to be a Red Hat
+> > security team member that did this, or so I thought.
+>
+> That was most probably Eugene Teo, he's no longer in Red Hat. I am not
+> subscribed to security@...nel.org.
+>
 
+I heard my name being mentioned. I used to do all that background work but
+I can't afford to do this full-time anymore. It's not easy but definitely
+do-able. It can be rather tiring too. Someone needs to be proactive, and
+make this happen. Petr has worked with me for a few years, and I think he
+can do this.
 
-These are all good points.  SSL/TLS truly are used all over the place
-and updating is not easy.
+I also want to bring back my cve-tagged kernel tree. I'm willing to work
+with any distro's security team who is willing to supply me with the CVE
+names, and the relevant commits/references. Talk to me if you are
+interested...
 
+Eugene
 
-But I don't think the act of assigning a CVE has anything to do with
-"is it hard to fix?", does it?  In assigning CVEs for weak crypto,
-MITRE and the community is saying "there's a problem here".  Vendors
-don't *have* to fix it.  Users don't *have* to listen to MITRE.  Will
-it put pressure on vendors and users to fix?  Sure, of course, and
-that's a good thing.  But difficulty of providing backward
-compatibility should not be a consideration in my view.
-
-
-With that said, I still stand by previous argument that we must assign
-CVEs for this kind of thing judiciously, and only when there's a
-demonstrable attack.  At least a sound argument must exist, in theory,
-that a real attack could be conducted.
-
-
-And a final note about backward compatibility:  If I use an SSL/TLS
-library that supports RC4, but only chooses RC4 as a last resort
-during negotiation, aren't I ok?  I was under the impression that the
-SSL/TLS handshake validated that no one could tamper with the list of
-supported cipher suites advertised by each end of the conversation.
-So, if a library only falls back to RC4 for compatibility, then I
-don't think such a thing deserves a CVE.  The CVEs should be assigned
-to implementations that *prefer* weak ciphers or support *only* weak
-ciphers.
-
-Cheers,
-tim
