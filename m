@@ -1,29 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/09/3
-Message-ID: <CAA7hUgFtVMOpHHSLE=RB9D=PYhpNqtc-mQAFQ160r6dbydOvZg@mail.gmail.com>
-Date: Wed, 9 Oct 2013 11:27:51 +0200
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/01/2
+Message-ID: <51303FB9.905@redhat.com>
+Date: Thu, 28 Feb 2013 22:42:17 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Source of bad password hashing practices? MySQL manual...
+CC: kk@...suke.org
+Subject: Re: Jenkins CVE request for Jenkins Security Advisory 2013-02-16
 Content-Type: text/plain; charset=utf-8
 
-On 9 October 2013 01:57, Rich Felker <dalias@...ifal.cx> wrote:
->   "Do not store cleartext passwords in your database. If your computer
->   becomes compromised, the intruder can take the full list of
->   passwords and use them. Instead, use SHA2(), SHA1(), MD5(), or some
->   other one-way hashing function and store the hash value."
->
->   (http://dev.mysql.com/doc/refman/5.7/en/security-guidelines.html)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-They probably don't mention the use of ENCRYPT (think of it as an
-alias to crypt(3)) because it is not portable to Windows-based
-systems, but I find the following bit quite amusing:
+On 02/20/2013 11:35 PM, Kurt Seifried wrote:
+> Ok no reply from anyone on this so I'm moving ahead.
+> 
+> On 02/17/2013 07:56 PM, Kurt Seifried wrote:
+>> I'm trying to sort out this security advisory so CVE #'s can be 
+>> assigned to it, can you (kk@) please comment on this? thanks.
+> 
+>> https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2013-02-16
 
-http://sources.debian.net/src/mysql-5.5/5.5.33+dfsg-1/sql/item_strfunc.cc?hl=1877#L1889
+Also
+>> 
+David Jorm (djorm@...hat.com) reports the following issues were
+fixed in this release:
 
-(yeah, that's in their implementation of ENCRYPT())
+=============================================
+* Jenkins included spring 2.5.0. This is vulnerable to CVE-2010-1622
+and CVE-2011-2730, flaws which can allow for arbitrary remote code
+execution:
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+http://support.springsource.com/security/cve-2010-1622
+http://support.springsource.com/security/cve-2011-2730
+
+The way that Jenkins uses spring does not seem to expose an
+exploitable use case, but nonetheless it is dangerous to distribute a
+component with known serious vulnerabilities. I suggest upgrading to
+spring 2.5.6.SEC03 to mitigate these flaws.
+
+* Jenkins included:
+
+jenkins.war (unzip)
+- -> WEB-INF/plugin/maven-plugin.hpi (unzip)
+- -> WEB-INF/lib/xercesImpl-2.9.1.jar
+
+This copy of xerces is vulnerable to CVE-2009-2625. I have tested with
+a reproducer and confirmed it is vulnerable. The flaw relates to how
+xerces processes the SYSTEM identifier in DTDs. A remote attacker
+could provide a specially-crafted XML file, which once parsed by an
+application using xerces, would lead to a denial of service
+(application hang due to excessive CPU use). This would be exploitable
+on jenkins so long as an attacker can somehow provide an XML file that
+jenkins will process using the vulnerable copy of xerces. It seems to
+me that this would be possible, but I could be wrong.
+
+Either way, upgrading to xerces >= 2.10.1 will resolve this flaw:
+
+http://xerces.apache.org/xerces2-j/releases.html
+
+=============================================
+
+So three more reasons to update =)
+
+Also does anyone know if kk@...suke.org is the correct email for
+Kohsuke Kawaguchi or if there is a better one?
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRMD+5AAoJEBYNRVNeJnmTnJQP/jI7/2WdeRVVDhvpo8m75oTr
+7NQIDzzjtes45P+kBoqzjzNWGYtLID3K+8PY1VuKekm8G+41weY58M15+GYEqD8i
+uwiDlqSFvwtY60dZqWU4cXp7zRFDMyjqLnSTlmMyADAzHdfdQkPf40ZodRsvG8Ju
+BGZYdsAH4C+N34mCqeW5JtugTWwPgwK0hHKwG52L53MyLbq2fquDa/d5KqtydWM/
+Rd92XoNAg2P1Zb8laafBPTrdxtYg5ndFqbApYmKeo0i6nsT+I0l3AauqGKqn5TSW
+3z3t6FBorqJc5et1N1cWVNve4FGbaI9DPwolHVuSdK45LdXVHmRr/Kf48bJMPEFC
+RYacJPtwfSWOi4OebbGoayqediVE3BejWS/4AJlDJDdtWJXh7o6JD1WkA31cig+z
+vJaTGfmOyPklkGYQ7jGAUKvs5SgWr+Trk00aQS9CG9WKA4+XfVnokx8flzShjmR/
+rzi+4Hzkj9+OVBD8FzVrN3PVgYSqacHlNJzxVBLS0GvSQA1hA2ckIRLbs4cXW94F
+FL4U4c1bdwU/hQwq3vDOJG4bBNnutC9dYPUrlylfazhYFbAxuq5cis5COL4Gep3j
+GIKMWyYcLEgxMUNQLLbM1z7O7mPMzFzY22QJZRS2D58A/o/ad62yPJL/KeOcmGu+
+n/L4ezNf6vMbq7sk6dhq
+=oomf
+-----END PGP SIGNATURE-----
