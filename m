@@ -1,66 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/8
-Message-Id: <E1TvUJf-0002Qy-Qt@xenbits.xen.org>
-Date: Wed, 16 Jan 2013 14:50:11 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 40 (CVE-2013-0190) - Linux stack corruption in xen_failsafe_callback for 32bit PVOPS guests.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/01/6
+Message-ID: <20130301164301.GA19358@suse.de>
+Date: Fri, 1 Mar 2013 17:43:01 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: various gems in aftermath of rubygem actionpack issue
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-             Xen Security Advisory CVE-2013-0190 / XSA-40
+I think these rubygem updates have got no CVE entry/ies yet:
+https://support.cloud.engineyard.com/entries/22915701-january-14-2013-security-vulnerabilities-httparty-extlib-crack-nori-update-these-gems-immediately
 
- Linux stack corruption in xen_failsafe_callback for 32bit PVOPS guests.
+Or should we use the Rubygem Action Pack CVE ids for it too (CVE-2013-0156)?
 
-ISSUE DESCRIPTION
-=================
-
-xen_failsafe_callback incorrectly sets up its stack if an iret fault is
-injected by the hypervisor.
-
-IMPACT
-======
-
-Malicious or buggy unprivileged userspace can cause the guest kernel to
-crash, or operate erroneously.
-
-VULNERABLE SYSTEMS
-==================
-
-All 32bit PVOPS versions of Linux are affected, since the introduction
-of Xen PVOPS support in 2.6.23.  Classic-Xen kernels are not vulnerable.
-
-MITIGATION
-==========
-
-This can be mitigated by not running 32bit PVOPS Linux guests.
-
-32bit classic-Xen guests, all 64bit PV guests and all HVM guests are
-unaffected.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa40.patch
-
-$ sha256sum xsa40*.patch
-b6aa67b4605f6088f757ca28093d265c71e456906619d81d129bf656944ed721  xsa40.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQ9r4HAAoJEIP+FMlX6CvZhIMIAKa3l8CMZ4Di0gyp1cVi95es
-0Pzq8qV5Qwla+NZEuz1O91UAxzwke8mrVsKK9PQCUVqdrmKbIrWjGX3b/KNIoa3d
-hCGBd1wkTld7XmQxNfr+0BcfybqM92dww623rhv6G2jPaehOMVGWl28vomwkMU9E
-iT/z2dqYJuAkcq6hobJ02tyfABl5sWNDE+HvI6EFxTptzeUGQtaPm9q6qbdbw1pT
-InAae/VU7u+qAZTr0MY8kncFiK3206LvJX2Wq6YBI6LCFw4eaOvTFfJiAvFojqQb
-nl5PT2KXH3IbiZEAiSOENBRiudkzxY0OfGyTnyuwsZuJa7SaI47pN1Sp5YtRPf0=
-=9uNq
------END PGP SIGNATURE-----
-
-Download attachment "xsa40.patch" of type "application/octet-stream" (2107 bytes)
+Ciao, Marcus
