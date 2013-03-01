@@ -1,72 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/8
-Message-ID: <5132D156.1020106@redhat.com>
-Date: Sat, 02 Mar 2013 21:28:06 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/01/3
+Message-ID: <20130301112748.GX14246@ngolde.de>
+Date: Fri, 1 Mar 2013 12:27:48 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>, Steven Christey <coley@...re.org>
-Subject: Re: CVE request: ruby-openid XML denial of service attack
+Subject: CVE id request: busybox
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
+busyboxy is creating parts of the directory tree with incorrect permissions 
+when creating device nodes in nested directories:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=701965
 
-On 03/01/2013 08:50 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> ruby-openid is affected by a XML denial of service (Entity
-> Expansion Attack / out of memory) attack as recently described.
-> 
-> https://github.com/openid/ruby-openid/commit/a3693cef06049563f5b4e4824f4d3211288508ed
->
-> 
-https://github.com/openid/ruby-openid/pull/43
-> https://bugzilla.novell.com/show_bug.cgi?id=804717
-> 
-> Ciao, Marcus
+Can we get a CVE id for this please?
 
-Hrmm yeah. They disable entity expansion (which seems like a safe bet
-for OpenID based XML stuff).
+Cheers
+Nico
 
-Please use CVE-2013-1812 for this issue, specifically for XIE (XML
-Internal Entity expansion).
-
-Just a note on XML External Entity (XXE) expansion in ruby-openid
-which uses rexml, according to:
-
-https://pypi.python.org/pypi/defusedxml/0.3
-
-Ruby's REXML document parser is vulnerable to entity expansion attacks
-(both quadratic and exponential) but it doesn't do external entity
-expansion by default. In order to counteract entity expansion you have
-to disable the feature:
-
-REXML::Document.entity_expansion_limit = 0
-
-libxml-ruby and hpricot don't expand entities in their default
-configuration. So in general the CVEs I'm assigning to ruby stuff will
-be for internal entity expansion and not for external entity expansion
-since a protective mechanism exists that the application can use.
-Steve does that sound right?
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRMtFWAAoJEBYNRVNeJnmTtwsQANEQx507H3QFM79mfBdvLWVc
-WZ8PSosOjd6Iazrv57JzgHsN3/cLINN/b5Kw4YVYvOELjn2U8+eJ2HpXsRBQWtVP
-axNBWNqrCWSeVmOiBPOThEthcwTi5udn9g/xs8AlOiDY91/HQ6DPwda6uaCq2cMA
-2HQaARCM+az2Zq/qIx4bSZ+jZFtIdbyHsQGyNjbDA6Y542OJ/EtDh10RXMf0tdlz
-6pu/sWPmaEh0NLt/8hoWyGMYrxnbO/1epa20kGYG5cA8ztAoZc4rmi3DK6wliHzI
-UDnM9O+P0d0rvAZLGI4wnEgtP25I3Qda2xkjESquYvD8beRSxVco+m+XjqDJJJ4y
-X+HzhnicEsHRbNsvqdmCgzcKIhdgPwUxXuuM+v+8qnCMTciowd/+IKp0WkLIyaWR
-hYgCAhh1yGAmJj4TevyiI+k4tHLQW+4io5zvf5UhVCNNpkzOEPbHDBEAooG5WyHq
-VyKkHYk/852yXCNQJeG/4cwpnsM3UoLP2fmbfFVJwvCi7xxjllhFtKKJIhDK7L32
-qIWYxmIs6rAwQaSBuhxlxhJbJwS/jEFyT16JmZmB+vtX2gX4ywN/KywLFFW7TOUe
-VYjNo2Mt1+Upk0b14Wl3ETpspfIVOaeVQ46aey/t0YR2bz7fixA45kzul/XbF3O0
-GJ/stSkpOTP6J+V1SE4Y
-=RW+7
------END PGP SIGNATURE-----
+-- 
+Nico Golde - XMPP: nion@...ber.ccc.de - GPG: 0xA0A0AAAA
