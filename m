@@ -1,48 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/18/1
-Message-ID: <1358508663.2243.31@d.hx.id.au>
-Date: Fri, 18 Jan 2013 22:31:03 +1100
-From: David Hicks <d@...id.au>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/01/4
+Message-ID: <1362147503.4116.27.camel@scapa>
+Date: Fri, 01 Mar 2013 15:18:23 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Jakub Galczyk <jakub.galczyk@...il.com>
-Subject: CVE request: MantisBT before 1.2.13 match_type XSS vulnerability
+Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi list,
+On mer., 2013-02-27 at 13:44 -0800, Greg KH wrote:
+> On Wed, Feb 27, 2013 at 10:26:16PM +0100, Yves-Alexis Perez wrote:
+> > On mer., 2013-02-27 at 10:05 -0800, Greg KH wrote:
+> > > Yes, I need someone to actually do this.  There used to be a Red Hat
+> > > security team member that did this, or so I thought.  What happened to
+> > > that process?  I'll ask on security@...nel.org if someone wants to
+> > > volunteer to do this, but if not, are you, or anyone else you
+> > > know/trust
+> > > willing to do so?
+> > 
+> > And do you think it'd be possible to have the same kind of notifications
+> > for (know security) issues not on security@k.o but committed to the
+> > tree?
+> 
+> That's the whole problem here, who is going to do such a classification,
+> and after that, the notification?  The first part is the toughest to do,
+> as discussed elsewhere in this thread.
 
-Jakub Galczyk discovered[1][2] a cross site scripting (XSS)
-vulnerability in MantisBT 1.2.12 and earlier versions that allows a
-malicious person to trick the browser of a target user into executing
-arbitrary JavaScript via the URL: search.php?match_type="><script...
+I might have been not clear, but I was merely speaking of *already
+known* security issues, not “to be classified (or not)” ones. I do know
+classification is hard, but if I understand correctly:
 
-This vulnerability is particularly wide reaching due to search.php being
-usable by anonymous users on public facing installations of MantisBT (no
-user account required).
+- there are issues which are known to be security ones at commit times
+- some of them have been sent before to security@k.o
+- some of them have not because subsystems maintainers don't want (like
+networking) to go through that alias (why?)
 
-Patches against 1.2.x and master branches are attached and alternatively
-available at [2].
+I was merely speaking of those latter issues.
 
-References:
-[1]
-http://hauntit.blogspot.de/2013/01/en-mantis-bug-tracker-1212-persistent.html
-[2] http://www.mantisbt.org/bugs/view.php?id=15373
+Regards,
+-- 
+Yves-Alexis
 
-The MantisBT project will release MantisBT 1.2.13 shortly and advise
-popular Linux distributions packaging MantisBT to either apply the patch
-or bump package versions to 1.2.13.
-
-Can a CVE ID please be assigned to this issue?
-
-With thanks,
-David Hicks
-MantisBT Developer
-#mantisbt irc.freenode.net
-http://www.mantisbt.org/bugs/
-
-Bcc: mantisbt-dev@...ts.sourceforge.net
-
-View attachment "master-1.2.x_0001-Fix-15373-match_type-XSS-vulnerability.patch" of type "text/x-patch" (1571 bytes)
-
-View attachment "master_0001-Fix-15373-match_type-XSS-vulnerability.patch" of type "text/x-patch" (1573 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
