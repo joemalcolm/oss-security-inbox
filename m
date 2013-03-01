@@ -1,35 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/23/9
-Message-Id: <E1B8D029-0E61-4B34-8CEA-FAEE3EC07C14@redhat.com>
-Date: Mon, 23 Dec 2013 14:01:04 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: cve-assign@...re.org
-Cc: OSS Security List <oss-security@...ts.openwall.com>, carnil@...ian.org
-Subject: Re: CVE request: denial of service in Nagios (process_cgivars())
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/01/8
+Message-ID: <20130301101030.6680baa7.reed@reedloden.com>
+Date: Fri, 1 Mar 2013 10:10:30 -0800
+From: Reed Loden <reed@...dloden.com>
+To: oss-security@...ts.openwall.com
+Cc: meissner@...e.de
+Subject: Re: CVE Request: various gems in aftermath of rubygem actionpack issue
 Content-Type: text/plain; charset=utf-8
 
+On Fri, 1 Mar 2013 17:43:01 +0100
+Marcus Meissner <meissner@...e.de> wrote:
 
-On Dec 23, 2013, at 1:19 PM, cve-assign@...re.org wrote:
+> I think these rubygem updates have got no CVE entry/ies yet:
+> https://support.cloud.engineyard.com/entries/22915701-january-14-2013-security-vulnerabilities-httparty-extlib-crack-nori-update-these-gems-immediately
 
-> Signed PGP part
-> > http://sourceforge.net/p/nagios/nagioscore/ci/d97e03f32741a7d851826b03ed73ff4c9612a866/
-> 
-> Relative to CVE-2013-7108, Nagios changed two files that Icinga did
-> not change. If the additional changes are vulnerability fixes, we will
-> assign two more CVE IDs. (The vulnerability types would not be the
-> same.) We are currently coordinating with Icinga upstream on this. In
-> any case, CVE-2013-7108 will represent a set of off-by-one error
-> issues that are common to Icinga and Nagios, and were all announced at
-> the same time. CVE-2013-7108 is not specific to only Icinga.
+nori got assigned CVE-2013-0285. I don't see any assignments on the
+list for httparty, extlib, or crack, though.
 
-I was unaware of any Icinga issues, but I guess that makes sense (we don't ship Icinga so have no reason to look at it).
+Also see https://github.com/rubysec/ruby-advisory-db/issues/7
 
-Can you please advise if any additional CVE(s) will be assigned to this commit in Nagios then?  In the meantime I'll associate CVE-2013-7108 with our bug.
-
-Thanks!
-
--- 
-Vincent Danen / Red Hat Security Response Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (671 bytes)
+~reed
