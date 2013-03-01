@@ -1,72 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/14
-Message-ID: <CAB8Fin-YXafn==c1nTb_AqncfCSYQsAo4RDsj7TyXbo37E1GDA@mail.gmail.com>
-Date: Mon, 4 Nov 2013 19:58:15 +0100
-From: Jacob Vosmaer <jacob@...lab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/01/11
+Message-ID: <513121DD.2080005@redhat.com>
+Date: Fri, 01 Mar 2013 14:47:09 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2013-4489 Remote code execution vulnerability in the code search feature of GitLab
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: various gems in aftermath of rubygem actionpack issue
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA1
 
-Remote code execution vulnerability in the code search feature of GitLab
+On 03/01/2013 09:43 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> I think these rubygem updates have got no CVE entry/ies yet: 
+> https://support.cloud.engineyard.com/entries/22915701-january-14-2013-security-vulnerabilities-httparty-extlib-crack-nori-update-these-gems-immediately
+>
+>  Or should we use the Rubygem Action Pack CVE ids for it too
+> (CVE-2013-0156)?
+> 
+> Ciao, Marcus
+> 
 
-There is a remote code execution vulnerability in the code search feature
-of GitLab. This vulnerability has been assigned the CVE identifier
-CVE-2013-4489.
+I need details before I can assign CVEs for those. Can you maybe
+generate diffs that show the code fixes and post them? thanks.
 
-Versions affected: 5.2, 5.3, 5.4, 6.0, 6.1, 6.2
 
-Not affected: 5.1 and earlier
-
-Fixed Versions: 5.4.1, 6.2.3
-
-Impact
-- ---
-The Grit gem which serves as the Git backend for GitLab has an unsafe code
-path for internal use which allows strings to be evaluated by the Bourne
-shell. In affected versions, the GitLab code search feature exposes this
-unsafe code path to user input from the search box. Code search in GitLab
-is only available for authenticated users.
-
-All users running an affected release should upgrade immediately or disable
-code search using the workaround below.
-
-Releases
-- ---
-The 5.4.1 and 6.2.3 releases are available from
-https://github.com/gitlabhq/gitlabhq and
-https://gitlab.com/gitlab-org/gitlab-ce .
-
-Workarounds
-- ---
-If you are unable to upgrade, you can disable code search by deleting the
-following line from `app/contexts/search_context.rb` and restarting GitLab:
-
-result[:blobs] = project.repository.search_files(query,
-params[:repository_ref]) unless project.empty_repo?
-
-Credits
-- ---
-Thanks to joernchen of http://www.phenoelit.org/ for reporting the
-vulnerability to us.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBCgAGBQJSd+4EAAoJEB2vXw0YK62WiKgH/j3qNmEVhYwxN8tJTqbrfg17
-S74xVZDujeTinYdyo6qfjQA2xmOG4dbQb+HyfwcFatKPLXFfHwqrYI1T5Edd9Xyi
-Qn+nVmOEzIqYwj6r4k4wZeYp57T0rRjhPN/6yOvqW3SGY8HR6e2MOq8XYCuTBUXE
-+pT1KKHwJxQF1xhupGIULcNyWBZDJYk9gwB5ccxbdajfPsLP54RFUCBmOfZ7m9bc
-KSMkJJ0tuuaAs1NZCvqhpxA8oNv/zqkailc0b97Pj6VJMsW1Zv6lxw+hnqa688tL
-a73xAHXkTKNW2kRfTTpdrMo47E+P1eYXO/LtyqzEEfz0fEdOrGFtbUEdznMXx5Q=
-=ds23
+iQIcBAEBAgAGBQJRMSHdAAoJEBYNRVNeJnmT++EQAMFrGA3xK63k8hnei6SlCbzr
+4NtLcwXMMbDLGiqUQU85TVwLZoqpCvD2AYee6BmvpFLMQK4x8MjS5fzqo2sU7ziO
+Q53nIed/brfvdC8b7Y0PnetIuH9wjS1zN7vwLrQAPuadH8jLvpYLE18daw7Yhg1R
+EHR8ZsFp4tt3zBAGHOATvHgZYUl235ZfJHf4YNy8kbNABgqkz7/h4/UdB8iW6oXO
+aQzV18Ote93+Zr0YB6TKBhKanCVOP06mX/QO8M5UpF8EGlci71pODy/VQdC9hfTn
+HEXYgr9zLTqItk//5xDKss1mjYg6+uTD50isO6vST/zpdK/K5pFehfRRN7dTb+7B
+XppJehNxJdtRxy4JRGBgbMjYydsrXKqkD2knOcBOCSm7bZ/UYYq4kdsiZrkrUHxs
+3QFidLOiOwxn0S5HrAmSYfpQ4KAnX9TzMZqjxAuvj4ehaGg12NsoU3uxC8YC53Nz
+woCBC3vAvx/C0WdVviLEkPSMfFh25fGlBR/B1ViNnYMrBEVKnyISVBhIdPqRyno2
+xHrvj0/Y19CCMLyHEIli4JnPlW1AwbkxAj88G82p/24HEB3VP8Bx0lQHyieTGm5E
+I2s1XxraGAqB+mn1i4EAQax3p0FoC4uU9rkd7FGefl0O9hMETafROLEsX7lSiB0B
+cp/rdxYeZrSB44XUjqOd
+=DtfD
 -----END PGP SIGNATURE-----
-
-
-Best regards,
-
-Jacob Vosmaer
-GitLab.com
-
