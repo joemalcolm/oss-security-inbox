@@ -1,89 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/6
-Message-Id: <E1USp0i-0002mC-Gc@xenbits.xen.org>
-Date: Thu, 18 Apr 2013 13:36:24 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 46 (CVE-2013-1919) - Several access permission issues with IRQs for unprivileged guests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/01/10
+Message-ID: <20130301183343.GB29447@elende>
+Date: Fri, 1 Mar 2013 19:33:43 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Damien Regad <damien.regad@...ckgroup.com>
+Subject: Re: CVE request: MantisBT before 1.2.13 "Change Status To" feature allows unauthorised workflow changes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Kurt
 
-             Xen Security Advisory CVE-2013-1919 / XSA-46
-                              version 3
+Noticed that the following CVE request did not got a CVE. Would it be
+possible to assign a CVE to this?
 
-     Several access permission issues with IRQs for unprivileged guests
+On Sat, Jan 19, 2013 at 11:35:06AM +1100, David Hicks wrote:
+> Hello again list,
+> 
+> Damien Regad (MantisBT developer) discovered and fixed[1] an access
+> control/permissions bug in MantisBT that exists in MantisBT version
+> 1.2.12 and prior.
+> 
+> A MantisBT user with "Reporter" permissions (enabling them to
+> report/create new issues) can modify the workflow status of any issue to
+> "New" even if they do not have the necessary permission to make this
+> change.
+> 
+> Details of the bug, including steps to reproduce and patches are
+> available at [1].
+> 
+> References:
+> [1] http://www.mantisbt.org/bugs/view.php?id=15258
+> 
+> As per previous e-mails to this list within the past 24 hours, MantisBT
+> 1.2.13 is expected to be released early next week.
+> 
+> Can a CVE ID please be assigned to this issue?
+> 
+> With thanks,
+> David Hicks
+> MantisBT Developer
+> #mantisbt irc.freenode.net
+> http://www.mantisbt.org/bugs/
 
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Various IRQ related access control operations may not have the
-intended effect, thus potentially permitting a stub domain to grant
-its client domain access to an IRQ it doesn't have access to itself.
-
-IMPACT
-======
-
-Malicious or buggy stub domains kernels can mount a denial of service
-attack possibly affecting the whole system.
-
-VULNERABLE SYSTEMS
-==================
-
-Only Xen systems using stub domains are vulnerable.
-
-Only guests with passed-through IRQs or PCI devices are able to
-exploit the vulnerability.
-
-It is remotely possible that PV guests with passthrough IRQs or
-devices may also be able to exploit this vulnerability, although we
-think this is unlikely.
-
-MITIGATION
-==========
-
-Servicing HVM guests with passthrough IRQs or PCI devices in dom0 (ie,
-not using a stub domain device model) should avoid this vulnerability.
-
-Reconfiguring the system to disable IRQ/PCI passthrough and instead
-providing the guests with appropriate paravirtualised facilities will
-avoid this vulnerability.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa46-4.1.patch             Xen 4.1.x
-xsa46-4.2.patch             Xen 4.2.x
-xsa46-unstable.patch        xen-unstable
-
-$ sha256sum xsa46*.patch
-3b2ea317c1cf2ba428cc14946d030d38294747fef2beeb16eba30bcf3b1bc2cc  xsa46-4.1.patch
-822da2303f1fc69648d7a29eb72fdda8e64baab3edc0e1548456d31e66ed1d7c  xsa46-4.2.patch
-6987201720ef8af89a4682bddc33f639e1f87dc12f1ea7aee1f2e0481b1e909c  xsa46-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJRb/aXAAoJEIP+FMlX6CvZV94IAJPB3B2qnny5zhfOqp2yO17+
-nMJ+Hk3EBuMWXJVF8apjxsgfrZa0paNSU0zyhQIFV0ObVU9B90tfJfb3L+L7+t8G
-3Z9vPzE6aHZ32+OlMOIHWIvHZiiDZhM7siqayYqPphJbYW0l2jvogY9BO+00ALkr
-ctoFPzMhweVf1EK5WMLC4py8Xa06qddaOKj0Jg+DuLQzlgCyeuAfFtg/UmKFUL2k
-yDpIXTYt3/7uleR60VMEmRZWQqQN/j1jGS+XQyOzgIDaM1DRvCE+fUmmULCsd0Je
-0m/4lHm6O69XZ/z3TZ4bKqlzr8KRM2YEEzKk9L3MpRgdVh1mRLAwrsW8gwGBbyc=
-=rw/Y
------END PGP SIGNATURE-----
-
-Download attachment "xsa46-4.1.patch" of type "application/octet-stream" (8573 bytes)
-
-Download attachment "xsa46-4.2.patch" of type "application/octet-stream" (9844 bytes)
-
-Download attachment "xsa46-unstable.patch" of type "application/octet-stream" (9818 bytes)
+Regards,
+Salvatore
