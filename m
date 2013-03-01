@@ -1,52 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/09/11
-Message-ID: <51DC9EF2.2090403@redhat.com>
-Date: Tue, 09 Jul 2013 17:38:26 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Adam D. Barratt" <adam@...m-barratt.org.uk>
-Subject: Re: CVE request: FreeSWITCH regex substitution 3 buffer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/01/7
+Message-ID: <20130301164642.GA20979@suse.de>
+Date: Fri, 1 Mar 2013 17:46:44 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: rubygem passenger security issue
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 07/09/2013 03:07 PM, Adam D. Barratt wrote:
-> On Tue, 2013-07-09 at 23:05 +0400, Michael Tokarev wrote:
->> A week has been passed away.
->> 
->> But actually I'm not sure I understand the process.  What is 
->> needed to, first, assign a CVE#, and second, to fill it in?
-> 
-> For the avoidance of doubt, you did get a reply from Kurt with a
-> CVE assignment in it, last week.
-> 
-> Regards,
-> 
-> Adam
-> 
+https://bugzilla.novell.com/show_bug.cgi?id=804722
+https://github.com/FooBarWidget/passenger/commit/8c6693e0818772c345c979840d28312c2edd4ba4#commitcomment-2643541
 
-And that is why I also sign them, and issue them publicly on OSS-SEC
-as much as possible (easy to verify/confirm it went out). The system
-works!
+Quoting:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+There is a security issue regarding passenger that has been fixed in  
+master. However, this does only apply if you deploy arbitrary  
+untrusted apps on you server. Very unlikely for us but still I thought  
+it was worth to inform you.
 
-iQIcBAEBAgAGBQJR3J7xAAoJEBYNRVNeJnmT4hoP/jSXejY8e+jhEpTPyuy66YxB
-4di/YsqmUrGwzRWzQoU2AnFudMgTbrn3I+Kg6CTa24IZvBtXqMpcGNwkArpUBGXH
-dhWjySPC7brdv4uaJfbHnJu3dsMmjd4n+Ideh/daGaZDPe61CqitDFLxE1FeutUz
-q0KTNZLeg5aIyl70G9WyeE98oBVJvJ1iuY7OQ3B83PnlsYx7l64le99OvuLqVhHo
-0Q3JvSl6t2jks+4jiEDoDGKE3lpRLHma5z1jxcBJmroQLiNNCcGBxxYsKDxMO7Kk
-Xbygy2DsCHJclofu3UHEg1sJKHDj8Zenf+wtaUWY8jWqxdpg/U10oKPtjvi5JHLc
-o0wLUkQJ1ZfST0ol31mL0hU4sCvujKMTgNinqNfcuYUbaf0WfRAlaHRNIQMvvztZ
-oYFEjsrMsD1ZNrPIa8bmfUWJMuj4SJt4rDKRvoB8RVhntxfHdi4CwNBX4UThNrDm
-q3nKb1EeT60rPJ0cW/eLdsiCWm2tHOnIKHq3Qb092NNXnmeVEuWaM/enQXeinlix
-gS5pyEt8a7lnkVtdJyhxEmLMdrWGe4d5MWYHWT/SOjvxL5ajlt6kPjVCSJ+YqeiN
-wvFGg0hut5mBfnISONecvvuW2LbodRKWX7vGXb226KS4W5yS8JPySSzujeZfp1we
-Sb5oQW7RHsYSwXvPDZ5x
-=FHki
------END PGP SIGNATURE-----
+It fixes a security issue, but unless you're on a shared environment it's not a
+grave issue. It allows an application process to delete an arbitrary file, even
+a file it does not have permi
+ssion to, but only during application startup (i.e. during evaluation of
+config.ru). Once the application is started, it cannot be exploited, so
+external visitors cannot influence this. If 
+you deploy arbitrary untrusted apps on your server then this issue can be a
+problem. If all your apps are trusted (e.g. because your organization wrote)
+them then there's no problem.
+
+Unquote
+
+I am not sure this warrants a CVE.
+
+Ciao, Marcus
