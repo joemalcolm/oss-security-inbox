@@ -1,74 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/8
-Message-Id: <B9688A2D-7F5D-4E9E-BA74-A41B35B7DD73@iki.fi>
-Date: Wed, 22 May 2013 15:24:59 +0300
-From: Timo Sirainen <tss@....fi>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: Agostino Sarubbo <ago@...too.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: dovecot : "APPEND" Parameters Processing Denial of Service Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/02/2
+Message-ID: <21F6F0D90EED413C8323E3CE062D844D@gmail.com>
+Date: Sat, 2 Mar 2013 00:19:50 +0100
+From: Olivier Gonzalez <gonzoyumo@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: various gems in aftermath of rubygem actionpack issue
 Content-Type: text/plain; charset=utf-8
 
-On 22.5.2013, at 15.17, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+hi,
 
-> ----- Original Message -----
->> From: "Agostino Sarubbo" <ago@...too.org>
->> To: oss-security@...ts.openwall.com
->> Sent: Tuesday, May 21, 2013 8:58:04 PM
->> Subject: [oss-security] CVE request: dovecot : "APPEND" Parameters Processing Denial of Service Vulnerability
->> 
->> From the secunia advisory SA53492[1] :
->> 
->> Description
->> A vulnerability has been reported in Dovecot, which can be exploited by
->> malicious users to cause a DoS (Denial of Service).
->> 
->> The vulnerability is caused due to an error within IMAP functionality when
->> processing the "APPEND" parameters and can be exploited to cause a hang.
-> 
-> Timo, in relation with the previous (similar) one (thanks to Tomas Hoger for
-> pointing out):
->  [1] http://thread.gmane.org/gmane.comp.security.oss.general/8916/focus=8934
->  [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695138#15
-> 
-> this time the CVE identifier should be allocated / issue is valid, right?
-> 
-> While in the former [1], [2] case just the connection for the user issuing
-> the command would crash, this time (assuming) either whole dovecot daemon
-> might hang or even if the whole daemon wouldn't hang (and request is handled
-> within a thread), that request would made the particular thread to consume
-> excessive amount of CPU due to infinite loop, right?
+this is probably what you're looking for:
 
-A logged in user can cause his own IMAP connection process to eat 100% CPU, so it won't immediately hang other users. By default users can log in max. 10 times from the same IP, so attacker requires many IPs to cause a real DoS. And of course a valid user account, which means it will be immediately visible to admin who is causing the system to slow down.
+crack: https://github.com/jnunemaker/crack/commit/e3da1212a1f84a898ee3601336d1dbbf118fb5f6  
+httparty: https://github.com/jnunemaker/httparty/commit/53a812426dd32108d6cba4272b493aa03bc8c031
+extlib: https://github.com/datamapper/extlib/compare/b4f98174ec35ac96f76a08d5624fad05d22879b5…4540e7102b803624cc2eade4bb8aaaa934fc31c5 (https://github.com/datamapper/extlib/compare/b4f98174ec35ac96f76a08d5624fad05d22879b5...4540e7102b803624cc2eade4bb8aaaa934fc31c5)
 
-> Timo, can you confirm / disprove a CVE identifier should be assigned to this?
+Thanks
 
-I'm not against it, but I don't see this as that big of an issue, especially with v2.2 still not being widely used.
 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
->> 
->> The vulnerability is reported in version 2.2.
->> 
->> 
->> Solution
->> Update to version 2.2.2.
->> 
->> Provided and/or discovered by
->> Reported by the vendor.
->> 
->> Original Advisory
->> http://www.dovecot.org/list/dovecot-news/2013-May/000255.html
->> 
->> Commit:
->> http://hg.dovecot.org/dovecot-2.2/rev/ea0390e1789f
->> 
->> [1]: https://secunia.com/advisories/53492/
->> 
->> --
->> Agostino Sarubbo
->> Gentoo Linux Developer
->> 
-> 
+--  
+Olivier Gonzalez
+
+
+Le vendredi 1 mars 2013 à 22:47, Kurt Seifried a écrit :
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>  
+> On 03/01/2013 09:43 AM, Marcus Meissner wrote:
+> > Hi,
+> >  
+> > I think these rubygem updates have got no CVE entry/ies yet:  
+> > https://support.cloud.engineyard.com/entries/22915701-january-14-2013-security-vulnerabilities-httparty-extlib-crack-nori-update-these-gems-immediately
+> >  
+> > Or should we use the Rubygem Action Pack CVE ids for it too
+> > (CVE-2013-0156)?
+> >  
+> > Ciao, Marcus
+>  
+> I need details before I can assign CVEs for those. Can you maybe
+> generate diffs that show the code fixes and post them? thanks.
+>  
+>  
+> - --  
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>  
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.13 (GNU/Linux)
+>  
+> iQIcBAEBAgAGBQJRMSHdAAoJEBYNRVNeJnmT++EQAMFrGA3xK63k8hnei6SlCbzr
+> 4NtLcwXMMbDLGiqUQU85TVwLZoqpCvD2AYee6BmvpFLMQK4x8MjS5fzqo2sU7ziO
+> Q53nIed/brfvdC8b7Y0PnetIuH9wjS1zN7vwLrQAPuadH8jLvpYLE18daw7Yhg1R
+> EHR8ZsFp4tt3zBAGHOATvHgZYUl235ZfJHf4YNy8kbNABgqkz7/h4/UdB8iW6oXO
+> aQzV18Ote93+Zr0YB6TKBhKanCVOP06mX/QO8M5UpF8EGlci71pODy/VQdC9hfTn
+> HEXYgr9zLTqItk//5xDKss1mjYg6+uTD50isO6vST/zpdK/K5pFehfRRN7dTb+7B
+> XppJehNxJdtRxy4JRGBgbMjYydsrXKqkD2knOcBOCSm7bZ/UYYq4kdsiZrkrUHxs
+> 3QFidLOiOwxn0S5HrAmSYfpQ4KAnX9TzMZqjxAuvj4ehaGg12NsoU3uxC8YC53Nz
+> woCBC3vAvx/C0WdVviLEkPSMfFh25fGlBR/B1ViNnYMrBEVKnyISVBhIdPqRyno2
+> xHrvj0/Y19CCMLyHEIli4JnPlW1AwbkxAj88G82p/24HEB3VP8Bx0lQHyieTGm5E
+> I2s1XxraGAqB+mn1i4EAQax3p0FoC4uU9rkd7FGefl0O9hMETafROLEsX7lSiB0B
+> cp/rdxYeZrSB44XUjqOd
+> =DtfD
+> -----END PGP SIGNATURE-----
+>  
+>  
+
+
 
