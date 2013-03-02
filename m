@@ -1,57 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/29/7
-Message-ID: <20130729211914.GA10698@openwall.com>
-Date: Tue, 30 Jul 2013 01:19:14 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/02/3
+Message-ID: <5131B79E.8090504@redhat.com>
+Date: Sat, 02 Mar 2013 01:26:06 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security-officer@...eBSD.org
-Subject: Re: FreeBSD Security Advisory FreeBSD-SA-13:07.bind
+CC: Olivier Gonzalez <gonzoyumo@...il.com>, Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: various gems in aftermath of rubygem actionpack issue
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 29, 2013 at 10:45:50PM +0200, Tomas Hoger wrote:
-> Are FreeBSD advisories now going to be posted to oss-security?  They
-> were not posted here before.  The list charter strongly discourages
-> posting of vendor security advisories:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 03/01/2013 04:19 PM, Olivier Gonzalez wrote:
+> hi,
 > 
-> http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+> this is probably what you're looking for:
 
-Tomas is referring to:
+Perfect, that's exactly what I need
 
-"Security advisories aimed at end-users only are not welcome (e.g.,
-those from a distribution vendor announcing new pre-built packages).
-There has to be desirable information for others in the Open Source
-community (e.g., an upstream maintainer may announce a new version of
-their software with security fixes to be picked up by distributors)."
+> crack:
+> https://github.com/jnunemaker/crack/commit/e3da1212a1f84a898ee3601336d1dbbf118fb5f6
+> 
+Please use CVE-2013-1800 for this issue.
 
-This guideline exists largely to avoid content duplication (as far as
-non-end-users are concerned), which we'd see here if multiple distro
-vendors were announcing their updates in here (since many if not most of
-those updates would be for packages based on shared upstream code, and
-thus for upstream code vulnerabilities that have already been reported
-in here separately).
+> httparty:
+> https://github.com/jnunemaker/httparty/commit/53a812426dd32108d6cba4272b493aa03bc8c031
 
-Given the above, I think it makes some sense to allow/encourage distro
-vendor advisories for their own distro-specific issues to be posted in
-here.  This may seem counter-intuitive at first, but note that there's
-no content duplication problem with those, and the distro is acting as a
-(potential) upstream when they're announcing their own
-vulnerability/update (relevant to be picked up by other distros who may
-have reused that component or have otherwise similar code, and relevant
-to all of us as an opportunity to learn from and potentially avoid
-making a similar mistake or whatever the cause of the vulnerability was).
+Please
+> 
+use CVE-2013-1801 for this issue.
 
-Looking at two recent FreeBSD advisories, I think
-FreeBSD-SA-13:08.nfsserver is desirable for oss-security.
-FreeBSD-SA-13:07.bind is less so.  Was the underlying BIND issue
-mentioned in here, though?  It should have been!  If this was in fact
-the first mention, then better to have it in this form than none at all.
+> extlib:
+> https://github.com/datamapper/extlib/compare/b4f98174ec35ac96f76a08d5624fad05d22879b5…4540e7102b803624cc2eade4bb8aaaa934fc31c5
+> (https://github.com/datamapper/extlib/compare/b4f98174ec35ac96f76a08d5624fad05d22879b5...4540e7102b803624cc2eade4bb8aaaa934fc31c5)
 
-Now, I realize that selective posting of a distro vendor's security
-advisories to a mailing list could be confusing (an end-user could then
-expect to see all advisories from the vendor, and would possibly not
-subscribe to an appropriate channel as a result of such confusion).
-So maybe for things like FreeBSD-SA-13:08.nfsserver non-end-user /
-non-advisory postings will work better, even if they refer to the
-end-user advisory for more info.
+Please
+> 
+use CVE-2013-1802 for this issue.
 
-Alexander
+> Thanks
+
+No, thank you!
+
+> 
+> 
+> -- Olivier Gonzalez
+> 
+> 
+> Le vendredi 1 mars 2013 à 22:47, Kurt Seifried a écrit :
+> 
+> On 03/01/2013 09:43 AM, Marcus Meissner wrote:
+>>>> Hi,
+>>>> 
+>>>> I think these rubygem updates have got no CVE entry/ies yet:
+>>>>  
+>>>> https://support.cloud.engineyard.com/entries/22915701-january-14-2013-security-vulnerabilities-httparty-extlib-crack-nori-update-these-gems-immediately
+>>>>
+>>>>  Or should we use the Rubygem Action Pack CVE ids for it too 
+>>>> (CVE-2013-0156)?
+>>>> 
+>>>> Ciao, Marcus
+> 
+> I need details before I can assign CVEs for those. Can you maybe 
+> generate diffs that show the code fixes and post them? thanks.
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRMbeYAAoJEBYNRVNeJnmThgsQAM5P+LtYMk6QDqudEofNnKB2
+qNwq2+K00orUhiRIfagvDKHdFBwl2bW5nVz+hpSlm3oY5Ty8SYHJEOlXkRr7YRHS
+k8zU7G9Hcj2Bs54wvTReccZn6mm4aS3qyEIWddKh6eTToL53Qmw6FVhGKir/i4Yn
+UC89ckVDUGiProf80FLow4sjkFsF9BaKHvsQ3Jb2pnh/ssKW+fJ8BMrFdlxpvb7x
+8KPGuM4O5G8auSUVkIzV4T8bYZqtD3M/emK9nsAP2H7mez/cOgMdMK/J7XZCIhsO
+3yzya1t+34TIE5E71Q0BGP/m4Z+90M3gTxSsfzz9Z2MwKrPTOGl11bpzV9PsWVPC
+sNxYvGmZoMBKWZ5JMP8Whf9KnrAdzWwrX6ZVYx1uGBdDGgfebYVQIwqIQioce33c
+vaCSO50Cf5nemJJ7bOD9pQjbwWKFNTBxCvXaZLDxHWt7I6TIYnuylVpflM60Qt3+
+bTaQVRsDunT38iDqwpWQAaWbEzsxKD49XIF3prHDg6Kyu0GYQg66wgue3c0OzUaI
+lG6OmfoebDy2L8b9J3z8mVk6r90r0tI2C9jfJdQAWKEiLnuTKGRcxF81WfVfFSyb
+sHLnYVQ950NlUSlhgsdjf/vZLvZALzbOfZWkg0HSlf7u+Ls6Q+4Btb6TcM81gdro
+H2P7lTrwu6o7ccbFWv93
+=lYo5
+-----END PGP SIGNATURE-----
