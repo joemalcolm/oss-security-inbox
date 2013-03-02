@@ -1,81 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/17/5
-Message-ID: <20130617224101.GA4968@1wt.eu>
-Date: Tue, 18 Jun 2013 00:41:01 +0200
-From: Willy Tarreau <w@....eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/02/1
+Message-ID: <51315259.4020405@redhat.com>
+Date: Fri, 01 Mar 2013 18:14:01 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2013-2175 : haproxy may crash when using header occurrences relative to the tail
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: rubygem passenger security issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-David Torgerson reported an haproxy crash with enough traces to diagnose
-the cause as being related to the use of a negative occurrence number in
-a header extraction, which is used to extract an entry starting from the
-last occurrence.
+On 03/01/2013 09:46 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=804722 
+> https://github.com/FooBarWidget/passenger/commit/8c6693e0818772c345c979840d28312c2edd4ba4#commitcomment-2643541
+>
+>  Quoting:
+> 
+> There is a security issue regarding passenger that has been fixed
+> in master. However, this does only apply if you deploy arbitrary 
+> untrusted apps on you server. Very unlikely for us but still I
+> thought it was worth to inform you.
+> 
+> It fixes a security issue, but unless you're on a shared
+> environment it's not a grave issue. It allows an application
+> process to delete an arbitrary file, even a file it does not have
+> permi ssion to, but only during application startup (i.e. during
+> evaluation of config.ru). Once the application is started, it
+> cannot be exploited, so external visitors cannot influence this. If
+>  you deploy arbitrary untrusted apps on your server then this issue
+> can be a problem. If all your apps are trusted (e.g. because your
+> organization wrote) them then there's no problem.
 
---- summary ---
+PaaS. Third party apps, etc. I'm gonna go with a yes. Just because you
+deploy a poorly written/hostile app doesn't mean it should be able to
+hose your system completely.
 
-Configurations at risk are those which make use of "hdr_ip(name,-1)" (in
-1.4) or any hdr_* variant with a negative occurrence count in 1.5, or
-the "usesrc hdr_ip(name)" statement in both 1.4 and 1.5. These
-configurations may be crashed when run with haproxy 1.4.4 to 1.4.23 or
-development versions up to and including 1.5-dev18. Versions 1.4.24 and
-1.5-dev19 are safe.
+Please use CVE-2012-6135 for this issue.
 
---- quick workaround ---
+> Unquote
+> 
+> I am not sure this warrants a CVE.
+> 
+> Ciao, Marcus
+> 
 
-A workaround consists in rejecting dangerous requests early using
-hdr_cnt(<name>), which is available both in 1.4 and 1.5 :
-    
-       block if { hdr_cnt(<name>) ge 10 }
 
---- details ---
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-When a config makes use of hdr_ip(x-forwarded-for,-1) or any such thing
-involving a negative occurrence count, the header is still parsed in the
-order it appears, and an array of up to MAX_HDR_HISTORY entries is created.
-When more entries are used, the entries simply wrap and continue this way.
-    
-A problem happens when the incoming header field count exactly divides
-MAX_HDR_HISTORY, because the computation removes the number of requested
-occurrences from the count, but does not care about the risk of wrapping
-with a negative number. Thus we can dereference the array with a negative
-number and randomly crash the process.
-    
-The bug is located in http_get_hdr() in haproxy 1.5, and get_ip_from_hdr2()
-in haproxy 1.4. It affects configurations making use of one of the following
-functions with a negative <value> occurence number :
-    
-   - hdr_ip(<name>, <value>)  (in 1.4)
-   - hdr_*(<name>, <value>)   (in 1.5)
-    
-It also affects "source" statements involving "hdr_ip(<name>)" since that
-statement implicitly uses -1 for <value> :
-    
-   - source 0.0.0.0 usesrc hdr_ip(<name>)
-    
-This bug has been present since the introduction of the negative offset
-count in 1.4.4 via commit bce70882.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-CVE-2013-2175 was assigned to this bug.
-
-Special thanks to David Torgerson who provided a significant number of
-traces, and to Ryan O'Hara from Red Hat for providing a CVE id.
-    
---- links ---
- 1.4-stable patch for version <= 1.4.23 :
- http://git.1wt.eu/web?p=haproxy-1.4.git;a=commitdiff;h=f534af74ed
- 1.4.24 source code: 
- http://haproxy.1wt.eu/download/1.4/src/haproxy-1.4.24.tar.gz
- 
- 1.5-dev patch for versions <= 1.5-dev18 :
- http://git.1wt.eu/web?p=haproxy.git;a=commitdiff;h=67dad2715b
- 1.5-dev19 source code:
- http://haproxy.1wt.eu/download/1.5/src/devel/haproxy-1.5-dev19.tar.gz
-
-Please check with your distro vendor for packaged updates.
-
-Thanks,
-Willy Tarreau
-
+iQIcBAEBAgAGBQJRMVJZAAoJEBYNRVNeJnmTTy0P/1L2D/jZW2Tfu3VHUCkZGIGj
+F7tV0XRR0WM4U+ODOKXXbuaefxHfPk7jJbQH0nfSa01KXCE/RwO/Qm482w/3KeHD
+LXASONIfc1IQnTOWFTA7wMToB2m/P4MWFJNmKeDZEbYxVshBpuzLsN6ZKQghntaG
+ArHtHN1ul8A2ZD7o8aDHR7s9Jh5ml60MgFtzujUcX4eL25JdD6TLoMxywlob8WVo
+YWKgmCGbYrpIsz7m1xbEtrKw2v/F1l91E24HXILa/FcpRr6Wn2VLnyMA58XR7rKR
+JAh6dbSG58X9hlu2DMXWWvcFvVozmNoqQo23AXtRzdC/CIoau750Pw8g1PftDAk8
+20CCM6yFwhFrRQZPvPa/VpD6mAzGfbdzWhGqI3og04SGyA3quKA5tmohenO3ouOB
+ezQiM2fseYNxOh/ru1UTxh8FXOgeKs4kizj6BCdwoNrxOycMwA5Etm8XU4Lmrg1q
+w9Wtwz9cZ0d/X76HNJhIY/+QeT+52AQZlDfNMxx2PZ9fL0Y8xJuD5Z+Ap1j/pSui
+Rbt90I6eKEfbcTD7ATcyvFWZsTMdx6rUPTGihX9UEYhlYqV0rK8GLuJRr8x6/moE
+DHApL7DNeGjoCHg96BfzegV+c0ps9V5tg6zeoey3bVMCU3pJDmf5psDtjC10kyVZ
+vRLgujtWhoVcvsypttTe
+=eLao
+-----END PGP SIGNATURE-----
