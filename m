@@ -1,36 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/07/4
-Message-ID: <51891186.40602@redhat.com>
-Date: Tue, 07 May 2013 16:36:54 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/1
+Message-ID: <20130303000220.GA5591@kludge.henri.nerv.fi>
+Date: Sun, 3 Mar 2013 02:02:20 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Andrew Alexeev <andrew@...nx.com>
-Subject: Re: nginx security advisory (CVE-2013-2028)
+Cc: come2waraxe@...oo.com
+Subject: CVE request: PHP-Fusion waraxe-2013-SA#097
 Content-Type: text/plain; charset=utf-8
 
-On 05/07/2013 02:44 PM, Andrew Alexeev wrote:
-> Hello!
->
-> Greg MacManus, of iSIGHT Partners Labs, found a security problem
-> in several recent versions of nginx.  A stack-based buffer
-> overflow might occur in a worker process while handling a
-> specially crafted request, potentially resulting in arbitrary code
-> execution (CVE-2013-2028).
->
-> The problem affects nginx 1.3.9 - 1.4.0.
+Hello list,
 
-Isn't similar code in older version (say, 1.2.6) in 
-src/http/modules/ngx_http_proxy_module.c?
+Can I get CVEs for vulnerabilities fixed in PHP-Fusion version 7.02.06, thanks.
 
-> The problem is fixed in nginx 1.5.0, 1.4.1.
->
-> Patch for the problem can be found here:
->
-> http://nginx.org/download/patch.2013.chunked.txt
+http://www.waraxe.us/advisory-97.html waraxe-2013-SA#097
 
-I think this fix is not quite correct because it is not possible to 
-detect signed integer overflow in C after it has happened.  (Curiously, 
-the original fix for CVE-2002-0392 had the same issue.)
+OSVDB ID    title
+90714     PHP-Fusion /downloads.php orderby Parameter SQL Injection
+90713     PHP-Fusion /forum/postedit.php delete_attach_* Parameter SQL Injection 
+90712     PHP-Fusion /forum/postnewthread.php poll_opts Parameter SQL Injection 
+90711     PHP-Fusion /administration/settings_messages.php Multiple Parameter SQL Injection 
+90710     PHP-Fusion /administration/settings_photo.php Multiple Parameter SQL Injection 
+90709     PHP-Fusion /administration/bbcodes.php enable Parameter SQL Injection 
+90708     PHP-Fusion /forum/viewthread.php highlight Parameter XSS 
+90707     PHP-Fusion /messages.php Multiple Parameter XSS 
+90706     PHP-Fusion /infusions/shoutbox_panel/shoutbox_admin.php message Parameter XSS 
+90705     PHP-Fusion /administration/news.php message Parameter XSS 
+90704     PHP-Fusion /administration/panel_editor.php panel_list Parameter XSS 
+90703     PHP-Fusion /administration/phpinfo.php User-Agent HTTP Header XSS
+90702     PHP-Fusion /administration/bbcodes.php __BBCODE__ Parameter XSS 
+90701     PHP-Fusion /administration/article_cats.php Multiple Parameter XSS 
+90700     PHP-Fusion /administration/download_cats.php Multiple Parameter XSS 
+90699     PHP-Fusion /administration/news_cats.php Multiple Parameter XSS 
+90698     PHP-Fusion /administration/weblink_cats.php Multiple Parameter XSS 
+90697     PHP-Fusion /administration/articles.php Multiple Parameter XSS 
+90696     PHP-Fusion /administration/db_backup.php file Parameter Traversal Arbitrary File Deletion 
+90695     PHP-Fusion /administration/news.php Multiple Parameter SQL Injection 
+90694     PHP-Fusion /maincore.php user_theme Parameter Traversal Local File Inclusion
+90693     PHP-Fusion /administration/articles.php article_id Parameter SQL Injection 
+90692     PHP-Fusion /administration/user_fields.php enable Parameter Traversal Local File Inclusion
+90691     PHP-Fusion /administration/db_backup.php Database Backup Direct Request Information Disclosure
+90359     PHP-Fusion includes/classes/Authenticate.class.php Multiple Cookie SQL Injection
 
--- 
-Florian Weimer / Red Hat Product Security Team
+--
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
