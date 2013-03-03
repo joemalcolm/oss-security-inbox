@@ -1,37 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/7
-Message-ID: <5277DB10.8050803@fifthhorseman.net>
-Date: Mon, 04 Nov 2013 12:36:16 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/4
+Message-ID: <5132BBC1.6060202@redhat.com>
+Date: Sat, 02 Mar 2013 19:56:01 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: openssl default ciphers
+CC: Salvatore Bonaccorso <carnil@...ian.org>
+Subject: Re: CVE Request: Gambas Directory hijack vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 11/04/2013 12:16 PM, Stefan Bühler wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> while working on the lighttpd SNI bug I realized that openssl defaults
-> to a very bad set of ciphers.
->
-> I also couldn't find a sane recommendation from upstream openssl to use
-> as default, as "DEFAULT" obviously is not a good choice. (I also don't
-> see any reason why "DEFAULT" includes export and "LOW" ciphers...)
->
-> Is 'DEFAULT@...ENGTH:!LOW:!EXP' (should
-> be similar to 'HIGH:MEDIUM:!aNULL') a reasonably default?
->
-> I don't want to enforce PFS or break compatibility on purpose; so I
-> think the default could be a little bit less "secure" than what I would
-> actually recommend to use.
->
-> So I'm not interested in how to get a super extra secure cipher set
-> (there are many cipher strings in the wild by various folks for that),
-> but more in a reasonable lower bound.
+On 03/01/2013 02:53 PM, Salvatore Bonaccorso wrote:
+> Hi Kurt
+> 
+> It was found that Gambas is vulnerable to a (temorary files)
+> directory hijack vulnerability. Here two references:
+> 
+> http://seclists.org/fulldisclosure/2013/Feb/116 (fulldisclosure) 
+> http://code.google.com/p/gambas/issues/detail?id=365 (upstream 
+> bugtracker)
+> 
+> Upstream also mentioned the following in their changelog for 3.4.0 
+> release:
+> 
+> * BUG: Ensure that the interpreter temporary directory is owned by
+> the current user and that its rights are accurate. Otherwise
+> abort. * BUG: When creating the process temporary directory, check
+> the permissions of both the top directory (gambas.) and the process
+> directory inside.
+> 
+> http://gambasdoc.org/help/doc/release/3.4.0?view
+> 
+> Upstream fixes done via #5438 and #5464:
+> 
+> http://sourceforge.net/p/gambas/code/5438/ 
+> http://sourceforge.net/p/gambas/code/5464/
+> 
+> Can a CVE be assigned to this?
+> 
+> Regards, Salvatore
 
-There is ongoing discussion on one of the major users of OpenSSL 
-(apache) about what the defaults should be for that user:
+This is one root issue, failure to create tmp dir safely, please use
+CVE-2013-1809 for this issue. Also please refer to:
 
-  https://issues.apache.org/bugzilla/show_bug.cgi?id=49559#c11
+http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
 
-I agree that the OpenSSL defaults seem too lax.
+also if anyone has languages they'd like to see listed there that
+aren't let me know.
 
-	--dkg
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRMrvBAAoJEBYNRVNeJnmTjp0P/iJyJyvW1/blF7EotqC+zIyw
+z5Mqi7qDr6+49PvdfK+lW5/R471+MHxUoYqn2bG2PeO31x6S0AUtdXpsfYAiXL/t
+j1YMD2sMXHb58/uxU9EBLS7s6qIHPyyI3EWxv9tX2d3t6PWLwtudIBh/fmDh3HBu
+Y4agivoPKrmh6kJQ8CwShasBTmv0bbdf5UpZ8uNHYmpbpAqRr0su1b9EtQ8VbACZ
+k+Nho7aoTIRtr7QeHE9PknCM4IFJ/I0tCm/9FLjr7yF4O5tGLpbYA5w19lfD57M5
+QvBgVxeNEGth5NTqy9P9oCECvyu5F+hu4zp6TcR9PkuG6yTyjr8/5UNn0pqI4H9a
+ODP1bUxpv7dpSTg/5EDHUGNEg/0LZ46Zg3AtiPpa35TXjorH90svsE8uwkDJ8iIN
+xXnf9fmzUIQilYt9J5eSRzm/iL7dzU8wA4TF66IMQbVWgBmpMG1g1O6xzp3LtrH2
+67nla72V69xVPkgjmJsYA6g1UAc+qAb4eAtmJ5vujH0eZyT6khvBucdzeCiVNh8Y
+UmToh+9GjXP5wNacCq4/WzG031Lv2e5IUdtnmbDBqojLJGANNd3qAXH3RoNTHNAv
+CtsEZ5cpOipgsayC7LORF2JTtvJzb70xDulAPdOJXA2GHjnpVIlVPIKDCdqt9A1U
+AQAc1QQif3MjOoWlkUcA
+=q6hc
+-----END PGP SIGNATURE-----
