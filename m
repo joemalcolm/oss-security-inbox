@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/11
-Message-ID: <20130103204759.GA18586@hunt>
-Date: Thu, 3 Jan 2013 12:47:59 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Carlos Alberto Lopez Perez <clopez@...lia.com>
-Cc: oss-security@...ts.openwall.com, Aaron Patterson <tenderlove@...y-lang.org>, rubyonrails-security@...glegroups.com
-Subject: Re: SQL Injection Vulnerability in Ruby on Rails (CVE-2012-5664)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/11
+Message-ID: <513323AA.2010404@msgid.tls.msk.ru>
+Date: Sun, 03 Mar 2013 14:19:22 +0400
+From: Michael Tokarev <mjt@....msk.ru>
+To: oss-security@...ts.openwall.com
+CC: gremlin@...mlin.ru
+Subject: Re: CVE id request: busybox
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 03, 2013 at 05:43:46PM +0100, Carlos Alberto Lopez Perez wrote:
-> On 03/01/13 13:30, Carlos Alberto Lopez Perez wrote:
-> > CVE-2012-5664 literally says:
+03.03.2013 12:27, gremlin@...mlin.ru wrote:
+> On 02-Mar-2013 21:43:53 -0700, Kurt Seifried wrote:
+> 
+>  >> Hi, busyboxy is creating parts of the directory tree with
+>  >> incorrect permissions when creating device nodes in nested
+>  >> directories:
+>  >> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=701965
+[]
+>  > It's 2013, I shouldn't be assigning CVEs for this problem still :P.
+> 
+> That's Debian, they are still in the past century... :-)
 
-> > And both Debian and Ubuntu have marked this CVE as NOT-FOR-US because of
-> > this (they don't ship Authlogic gem).
-> So I think the description for CVE-2012-5664 is incorrect and should be
-> amended ASAP. Otherwise it will lead to confusion. People not using
-> Authlogic would believe (wrongly) that they are not affected.
+What it has to do with Debian, besides that debian was first
+to actually submit this bug into its own bug tracker?
 
-Thank you for the clarifying email and link to the very useful blog
-post. I had indeed said NOT-FOR-US because we don't ship authlogic, but
-we certainly do ship Active Record. I've updated Ubuntu's triage data.
+Thanks,
 
-> http://blog.phusion.nl/2013/01/03/rails-sql-injection-vulnerability-hold-your-horses-here-are-the-facts
-
-Thanks!
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+/mjt
