@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/6
-Message-ID: <87ob75pnuw.fsf@mid.deneb.enyo.de>
-Date: Fri, 04 Oct 2013 08:11:03 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/15
+Message-ID: <CANTw=MOMnUyD89VQ9PBcoGgWevujBnwyuijbVFAEqsNv18KTGg@mail.gmail.com>
+Date: Sun, 3 Mar 2013 15:06:09 -0500
+From: Michael Gilbert <mgilbert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: A note on cookie based sessions
+Subject: Re: CVE id request: busybox
 Content-Type: text/plain; charset=utf-8
 
-* Kurt Seifried:
+On Sun, Mar 3, 2013 at 2:50 PM, Kurt Seifried wrote:
+> This actually raises a good point, due to Debian being a secondary
+> source in most cases (e.g. upstream has a bug report which is then
+> copied into Debian's bug tracker since Debian ships it) the dates and
+> sometimes information is wrong.
 
-> That's a problem, but also an inherent limitation of how such session
-> handling works. The advantages are a stateless backend, no need for
-> state DB, if you have many backends, especially distributed, logins
-> just work no matter which server you connect to.
+Aren't these problems true for any source whether it be primary,
+secondary, tertiary, or so on?
 
-The downside is that you rely on cryptography in an essential way,
-which is never a good idea.
+> I will no longer be issuing CVE's for
+> issues brought up through the Debian bugtracker without an original
+> source to back it up, otherwise more mistakes will happen which is not
+> good.
 
-> the documentation can maybe be improved (especially mentioning
-> HTTPS/HSTS to prevent sniffing of the cookie) but generally speaking
-> this is covered, so no CVEs here.
+I don't understand the purpose of excluding an entire project's
+sources.  Should redhat's bugzilla, gentoo, etc. also be excluded for
+the same reason?  If not, why do they get special treatment?
 
-What about applications built on top of those stacks which do not
-document this?  Would they receive a CVE?  (Probably no, but I'd like
-to point out that documentation of features with a security impact is
-not an absolute thing.)
+Is there really a problem at all?  The debian report included the
+upstream commit, so you had a link to a primary resource anyway.  So,
+I think a simple solution to this 'problem' of secondary sources is
+follow them to the primary one?
+
+Best wishes,
+Mike
