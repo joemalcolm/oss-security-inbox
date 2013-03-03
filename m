@@ -1,31 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/7
-Message-ID: <CAH_aqbtnoV+mqDSFc5i7Gj-Nswx+1Cc+YOhbLD3-ubjiq_oPxw@mail.gmail.com>
-Date: Mon, 21 Jan 2013 08:59:06 -0200
-From: Henrique Montenegro <typoon@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/13
+Message-ID: <513365C6.7030905@msgid.tls.msk.ru>
+Date: Sun, 03 Mar 2013 19:01:26 +0400
+From: Michael Tokarev <mjt@....msk.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Wordpress 3.5 Full-path disclosure vulnerability
+CC: Piotr Karbowski <piotr.karbowski@...il.com>
+Subject: Re: CVE id request: busybox
 Content-Type: text/plain; charset=utf-8
 
-The issue can be seen only when PHP's display_errors is set to On.
-I have setup a default installation of wordpress 3.5 to display the issue.
- It can be accessed via the URL: http://blog.gilgalab.com.br/?s[]=1
+03.03.2013 18:33, Piotr Karbowski wrote:
+> On 03/03/2013 11:19 AM, Michael Tokarev wrote:
+>> What it has to do with Debian, besides that debian was first
+>> to actually submit this bug into its own bug tracker?
+> 
+> Acctualy not the first, the bug was reported to busybox mailinglist on 18 Dec 2012.
 
-Regards,
+That's where I noticed it and submitted a bugreport to
+Debian BTS from there.
 
-Henrique
+Note that I didn't want to request a CVE# for that, and used a
+somewhat low severify value for the report in the Debian BTS
+(which was quite some time after the initial report).
 
+If I thought it deserves a CVE, I'd request one right after
+seeing the discussion in question :)
 
+But I guess we're muddling waters for too much already.  I
+merely commented on the joke about Debian, -- the issue is
+definitely not debian-specific, Debian does not even use
+mdev from busybox (but allows to use it to the users).
 
-On Mon, Jan 21, 2013 at 7:59 AM, Agostino Sarubbo <ago@...too.org> wrote:
+Thanks,
 
-> On Monday 21 January 2013 00:11:54 Kurt Seifried wrote:
-> > I can't get this to work anywhere. Does it require a specific theme or
-> > configuration? Do you have details that can aid in reproduction?
->
-> I can't reproduce too.
-> --
-> Agostino Sarubbo / ago -at- gentoo.org
-> Gentoo Linux Developer
->
-
+/mjt
