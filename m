@@ -1,103 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/7
-Message-ID: <517A24DA.9040807@redhat.com>
-Date: Fri, 26 Apr 2013 00:55:22 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/5
+Message-ID: <5132C6B3.6020809@redhat.com>
+Date: Sat, 02 Mar 2013 20:42:43 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Alistair Crooks <agc@...src.org>
-CC: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>
-Subject: Re: upstream source code authenticity checking
+To: oss-security@...ts.openwall.com
+CC: Salvatore Bonaccorso <carnil@...ian.org>, Damien Regad <damien.regad@...ckgroup.com>
+Subject: Re: CVE request: MantisBT before 1.2.13 "Change Status To" feature allows unauthorised workflow changes
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/25/2013 11:57 PM, Alistair Crooks wrote:
-> On Thu, Apr 25, 2013 at 01:30:23AM -0600, Kurt Seifried wrote:
->> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->> 
->> On 04/24/2013 11:55 PM, Alistair Crooks wrote:
->>> I'm not sure what using PGP gains us?
->>> 
->>> Regards, Alistair
->> 
->> So some possible outcomes are:
->> 
->> 1) They do PGP/GPG and don't get compromised. Long term outcome:
->> we come out way ahead.
->> 
->> 2) They do PGP/GPG and do get compromised. Long term outcome: we
->> trust bad things and lose, hopefully this gets spotted quickly
->> and dealt with.
+On 03/01/2013 11:33 AM, Salvatore Bonaccorso wrote:
+> Hi Kurt
 > 
-> Sure.  I actually agree with you.  But I'd also like it if we
-> could bear in mind that, with PGP, trust is earned, trust
-> signatures are snapshots in time, and trust levels are private,
-> best guessses by people.  All people can see from a key listing is
-> who trusted them and when, not how much, or whether the trust was
-> warranted.
+> Noticed that the following CVE request did not got a CVE. Would it
+> be possible to assign a CVE to this?
 
-This makes no sense. So you don't trust their signature because they
-have to "earn trust", but you do trust their software and you compile
-and run it? That's literally insane.
+Yeah odd, I assigned one and then moved the other one to my archive,
+not sure why.
 
-Unless you actually audit every bit of source code you download and
-audit before compiling/usage then by definition you are already
-blindly trusting a lot of people (the software project, the host
-serving it, every intermediate network, etc.).
+> On Sat, Jan 19, 2013 at 11:35:06AM +1100, David Hicks wrote:
+>> Hello again list,
+>> 
+>> Damien Regad (MantisBT developer) discovered and fixed[1] an
+>> access control/permissions bug in MantisBT that exists in
+>> MantisBT version 1.2.12 and prior.
+>> 
+>> A MantisBT user with "Reporter" permissions (enabling them to 
+>> report/create new issues) can modify the workflow status of any
+>> issue to "New" even if they do not have the necessary permission
+>> to make this change.
+>> 
+>> Details of the bug, including steps to reproduce and patches are 
+>> available at [1].
+>> 
+>> References: [1] http://www.mantisbt.org/bugs/view.php?id=15258
+>> 
+>> As per previous e-mails to this list within the past 24 hours,
+>> MantisBT 1.2.13 is expected to be released early next week.
+>> 
+>> Can a CVE ID please be assigned to this issue?
 
-I a seriously confused that a lot of people seem to think unsigned
-code is somehow ok, but if we sign the code we have to do it perfectly
-to have any value. This simply isn't true. Right now unsigned code is
-wide open, and detecting changes is expensive (you need a full copy to
-compare against, and if you have a copy why would you care? =).
-SIgning releases with PGP/GPG makes this problem a lot easier to
-handle and even if it fails, by definition the attacker would have
-been able to pull the attack off any ways.
+ccc
 
-Can we please get over this "security must be done perfect or not at
-all" and maybe actually get on with making things better? We have to
-start somewhere. Sitting here going "well we won't do it unless we can
-do it completely correctly" is just stupid and pointless. Seriously.
-We need to start raising the bar and teaching people, this is far
-better than refusing to do anything since it won't be perfect.
-
-A perfect example of this is CVE assignments. Most projects do not do
-them well or at all. Should I give up? Or should I try to educate them
-and hand hold as needed so that they learn how to do it and start
-doing it properly? This is what I have been doing and you may notice
-that XEN, OwnCloud, OpenStack and a few others are now shipping
-advisories with CVE's already assigned. And most of them are doing CVE
-requests in a way that is efficient and scalable.
-
-And next month (hopefully) you'll be getting even more CVEs (due to
-more vendors doing CVE requests properly and easily for me), and then
-at some point we'll bring OSVDB into the fold (once Steven figures out
-how =) and it'll get even better.
-
-Got to start somewhere. And if you want to go build some perfect
-system I wish you luck, but I suspect like most attempts at perfection
-it won't get very far.
-
-> Regards, Alistair
+>> 
+>> With thanks, David Hicks MantisBT Developer #mantisbt
+>> irc.freenode.net http://www.mantisbt.org/bugs/
+> 
+> Regards, Salvatore
+> 
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJReiTaAAoJEBYNRVNeJnmTRsAP/1iWLLLjBBUrjeiywOqzloxf
-1vErJD1xBibLszAWbYQtJT77gPGTKChjKomzen2lXEsMiTaH9TbW9V8uw1+urjUL
-Xg4h/ZGPygt5dF86PylJevws+cAy1zAjaXsc3kqz4pagdW/8GzvDn4IroW00pZs2
-K+rs73Gkmz3FU227tWlMz5Y6miTkFU49cVVbvD3N+hT01ARJ1fWxFoJl3Tnv5lSb
-REqDORC90vho7yBOQzeVqDe2C7OaiT9LZoqJlYNt1fTQl9oiMY3DiHHD+HK4w2In
-5bJBvflp0pyycsPJ/k0413y3PWTfHwrBhLFrU6CNAMN6Wvj8jjhp3l16x6hgHsyq
-tgA9ajQ33kzvm/lr5xCWDEe71GWsY/l2M4bBgJSlOB1yr5dnahRpGhnHskpdFChm
-CWT89C63lKptLHyGKmNVmaZvOG+NhR0G0fvaCB2ye5XZdzArxVgMmYCxc75OE6hB
-bsMXjtCfwOBe3Pac7FjzdG9Mr5/Ne+TvVihGw3URid6+UDygg9hET94+Lwrrhohn
-BslVtW+6asZHAB/60w8Rt//DSac1m/GenGihsYt+AP7jF2tifKFyjm77fFxGQpIk
-M1Ya3fqnZfL0NcPKK+Tu7LWAdYuEwaH1ZK6hl4N/lt94cVr4odTAvzSFZRwVGMxS
-1FuyGVgTKSQwJocmlBX1
-=J2Vw
+iQIcBAEBAgAGBQJRMsazAAoJEBYNRVNeJnmTY/AP/1R6Vt4ATt0WGTjlq3L1Expe
+yXEdYDCTn5+QL7uXIzM72vEsX00HKIHBIKpga1J/PGCOC7s9cuypWwPKsByENIL4
+zUW7fYq+9GQ3GKhhLaAXEKInSzevrhTq3RMV6cIFWsI8oKcT/hvxJu/sPP5LH+NS
+rz08+nt5rNuYvRQULZiqSeHdwy8kOsrIYEV0+msqnj92kfPdmIOpWWe/xsQKbNeb
+hB2yYvDKnmxkuigkwBsEdeGbTmDah/eiFr3gDlLHgpYKSQRGppSf7rtVhUeMvCT9
+31j3+uqbSssALc3k3uOzSD7ytzUzladgrMVnhdSGs0JBFDvD3RMD48TEL9DT/zKm
+E65/4lwjl9sbGpdsD2I0/WRKkzuS+yOcefbXszZekR6dRQ/RLypb1/86XJtoPQGu
+2rFrj7/5XzkmXVlD68vOHDOcP3qciKgddRCmYkLbgYqdt2KJBfNflVj4tEuvlUFD
++JZvEDJF74Guw2L9ag3Z1kJYzB/aqXLpS+5cnWe5J8y4oTSWFRrH1SdhInI0FUyX
+dJzhr+OonElp8UZnXmU/5TZ5pffzvw1qQvYA4DTP5BpFxUDrA2LqTzFhSQmE/Jcp
+6ffi6tH5SJJT7sY2WTjoTJDSRjnLPyTtUc+CdXdfrup+LGF4nr8DXzSNav8k+3BU
+ocWlaK1JT+9/gK2pPsX/
+=P2vN
 -----END PGP SIGNATURE-----
