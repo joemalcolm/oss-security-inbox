@@ -1,81 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/19
-Message-ID: <517EDAA0.3030304@redhat.com>
-Date: Mon, 29 Apr 2013 14:40:00 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/10
+Message-ID: <20130303082703.GA24607@gremlin.ru>
+Date: Sun, 3 Mar 2013 12:27:03 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-CC: Simon McVittie <smcv@...ian.org>
-Subject: Re: CVE(-2007-xxxx?) request: telepathy-idle does not check SSL certificates
+Subject: Re: CVE id request: busybox
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 02-Mar-2013 21:43:53 -0700, Kurt Seifried wrote:
 
-On 04/29/2013 01:37 PM, Kurt Seifried wrote:
-> On 04/24/2013 08:35 AM, Simon McVittie wrote:
->> In versions prior to 0.1.15, telepathy-idle, an IRC backend for 
->> the Telepathy framework, does not check the server's SSL/TLS 
->> certificate for validity[1]. A network intermediary could use
->> this flaw to carry out man-in-the-middle attacks on IRC users.
-> 
->> This flaw has existed, and been flagged in the source code[2], 
->> since at least 2007 (the year in which telepathy-idle moved from 
->> Sourceforge to freedesktop.org). I don't know whether that means
->> it should get an ID of the form CVE-2007-xxxx?
-> 
->> The upcoming version 0.1.15 will fix this vulnerability.
-> 
->> Versions 0.1.11 to 0.1.14 (which use GLib for TLS) carried out 
->> some cursory checks on the certificate, but did not check that
->> the issuer was a trusted CA, that the identity matched the
->> server's hostname, or that the certificate had not expired. A
->> minimal patch to correct this is to delete the call to 
->> g_socket_client_set_tls_validation_flags() (this will make one 
->> regression test fail).
-> 
->> Versions 0.1.10 and older (which use OpenSSL for TLS) do not
->> have any support for certificate verification at all.
-> 
-> In general if you support SSL the assumption is you do it sanely,
-> e.g. verify certificates/hostnames/etc, because if not the whole
-> thing is useless since an attacker can MitM you easily (generally
-> the thing SSL is designed to stop). So worthy of a CVE generally.
-> 
-> Please use CVE-2013-2025for this issue.
+ >> Hi, busyboxy is creating parts of the directory tree with
+ >> incorrect permissions when creating device nodes in nested
+ >> directories:
+ >> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=701965
 
-Oops cut and paste the wrong one, obviously CVE-2013-2025 is for the
-Ushahidi Web XSS (bug 1009).
+ > Just a quick note:
+ > find / -perm +0002
+ > should show a very minimal list (/tmp, /var/tmp, some spool dirs,
+ > and symbolic links),
 
-Please use CVE-2007-6746 for the telepathy SSL verification flaw.
+`find -L / -perm /0002` will perform better, following the symlinks.
 
-> 
->> Regards, S
-> 
->> [1] https://bugs.freedesktop.org/show_bug.cgi?id=63810 [2] "TODO 
->> sometime in the future implement certificate verification"
-> 
-> 
-> 
-> 
-> 
+ > please run this on your packages/systems to ensure nothing silly
+ > is going out the door.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+For that, I'd recommend checking for "-perm /0022": group-writable
+directories (primarily) and files are about to cause trouble as well.
 
-iQIcBAEBAgAGBQJRftqgAAoJEBYNRVNeJnmTg9QP/RRHjoiznsm/74+jT6caBy8Z
-2nip9e9HvFM0z72I6lazQjcGPbrdKeoOyVVcOx9AHQyoU9xqBDYGi8nsO+XHFE1m
-sXD0TLBnPsH7EdkPOHxT+OEV2ABnx8QatKfvTI2GIENAmgW3WEJvUwaEL7rUOzZf
-aHjyPm/j9tergeqqXG8zMGkRWSU6Gvqn75yViD3ayJwTYXKKSCcWv5Iyex23P3Ug
-42IIiBm0V1GMX+gcepdbL4ImB9SI89+ena/7KPknEqKzN2GS5oTjBcBGvRxPgiXu
-mNX8Y3NWdHPdaykHdQKswSzIwGLDUktIIFREBsl/pOkSZMDrjSIT3AlNmomFPBup
-jouAip1Q2fTpGB/kvn7LPkxqPr2mymjR6o549GyJkliBwGiRzNeo4xwBhzB1fD7s
-39YVJ7VSce408507+o35D4uQD8fiYcY93qwI30qOklPVJgT+M/ntfS7QBaJtjo5w
-mfOrdi/KLCwm37K5c5tMt31PMHV+IZ3AES7R2JAffX3Xl/44VjEQyhC85ekvwH5W
-ubprGmOhqd+qtU9YFYaIIdeah9dc7k0CPeP20UyLxdELNceL+zxhQ38YA6t1KLKz
-iPDV9VLZn1+0EVC251WWTqEVSX4HGUxgtiOvAdUY3K3vAa74wdHdquOOhvDVroXz
-nle83CkOn7S86LvT7fTn
-=OCtO
------END PGP SIGNATURE-----
+ > It's 2013, I shouldn't be assigning CVEs for this problem still :P.
+
+That's Debian, they are still in the past century... :-)
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
