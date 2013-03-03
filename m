@@ -1,60 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/30/4
-Message-ID: <52712DC8.1070502@redhat.com>
-Date: Wed, 30 Oct 2013 10:03:20 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/9
+Message-ID: <5132D509.2070804@redhat.com>
+Date: Sat, 02 Mar 2013 21:43:53 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, vdavydov@...allels.com, khorenko@...allels.com, vvs@...allels.com
-Subject: Re: CVE Request -- Linux kernel: ipc: ipc_rcu_putref refcount races
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: busybox
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/30/2013 08:52 AM, Petr Matousek wrote:
-> A flaw was found in the way ipc_rcu_putref() function handled
-> reference counter decrementing. Without external synchronization
-> reference counter might not be adjusted properly, as presented with
-> the freeque() vs do_msgsnd() race, leading to memory leaks.
+On 03/01/2013 04:27 AM, Nico Golde wrote:
+> Hi,
+> busyboxy is creating parts of the directory tree with incorrect permissions 
+> when creating device nodes in nested directories:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=701965
 > 
-> An unprivileged local user could use this flaw to cause OOM
-> conditions, potentially crashing the system.
+> Can we get a CVE id for this please?
 > 
-> References: https://bugzilla.redhat.com/show_bug.cgi?id=1024854 
-> https://wiki.openvz.org/Download/kernel/rhel6-testing/042stab084.3
-> 
-> Upstream patch: 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6062a8
->
-> 
-(making the refcounter atomic hunks)
-> 
-> Acknowledgements:
-> 
-> Red Hat would like to thank Vladimir Davydov (Parallels) for
-> reporting this issue.
-> 
-> Thanks,
+> Cheers
+> Nico
 
-Please use CVE-2013-4483 for this issue.
+Please use CVE-2013-1813 for this issue.
+
+Just a quick note:
+
+find / -perm +0002
+
+should show a very minimal list (/tmp, /var/tmp, some spool dirs, and
+symbolic links), please run this on your packages/systems to ensure
+nothing silly is going out the door. It's 2013, I shouldn't be assigning
+CVEs for this problem still :P.
+
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJScS3HAAoJEBYNRVNeJnmTmZYQAIBteZ3rBeIJY/+3uE9XAiFN
-CfLKl2IgNbqvZC+6Jgf+fcAlpyUOWCLklondkYfpqQKab+w9tniXahLl24vO5a5G
-aBRSbhb3vOVwljBdJ9LW8CDsFTQMZJWONOHaHhpp5oyFKonygWbev8bAoVN5e90y
-bYDYeDTrzUH+JHBuNfukuJvbpwTzZ48kdHpuZ3Dh5EANAfXWVczCvDvFaw4XSJBp
-gl3RuxgOy2oJCkAGwlf2InF+VtdW8vKQIyZBU/ps0Winron9zTBxBCOIOANyWeDV
-9uieaWE2PbbM+TZHBUOHgC/Z9dbAvza6qyHzSOf7DNiyCab7HrUcaneznJHKGpzF
-cQ9/sadWuhjvUphF/Imf8kSUOHSwX+pwW6E3892TS3JpW0d++BRiCv6+HAOwDEJk
-in2RV2i4M00kNy4hL76TyGgtZezVuUQUCwv+vampC0CtGM1rUq8h8nGHpjzDUNFT
-Muf4k6xW3xOBiYQHFGFN2vF7zyzeQnD/N+0TR5uBctdlXpg7YI40+cvrW5lh9FLc
-HYSPOeFxOOwc4cvEdn8Id4E11el9o8tvV3JH/0xK26MXkOyiJAba5nc03wfO95+E
-jn9+RgwHrOUrjrX6n0blzM3AxSt6EDt1oUOcw0PcFnzHJWIaZGvBMr32fHKyAeBo
-95rJddPETqid9nshxkRC
-=5AIf
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRMtUJAAoJEBYNRVNeJnmTtxwP/2SWV7ap1o3l8dJ0PbkWWsBm
+a1f8xQZ7/ir4XPF0aYTFXuq95qghTqjBHsJSm+MzS42rzULYeq7rJ7mI+ZOOlAIo
+z3PaRYnMxy2XsjJJu87C9fFAfJbYxsLfLEKWSD3s32jQhtSHgjeSDHUfmRVerYyT
+vf13i0UWhHyCvXfP4TJW8Kd3Eepa5HVrYkzBL22BkfYqW9qdKWL0i4DbENyuHPjk
+O+ycYKJi7s7NslwpKWxvs8GQEVUUN3RCj4PT5JottB8Sx3inyx6A07t+llQ0WwEb
+VFI+NYsx04TVxVVXiBfE1tF81AIdNcEvQIeIJxsDkiCvPhNxgWDLALBmDMZQrxYp
+fvJmstoLlZ8+eZDhMHMbD34VhmmAijKdd4wBSdEC77j+euw7K3HTYKPlKuobY3BV
+pFu3P9uViJdaciKBNW+RqzlruJDmJnub+gdTD/0o2R8XQkM4q6J8C7vzYSQLqKsP
+4P820VlfttBKotQU3AmXdehYxqR5JavBbc94dvLUs+ENbn1S3BhbaBMQAAFVR/tm
+UO47DKQr+fHludhAQTrPhryS70dHkWYvTKWBxRJS4BczmtuqtBTvcj6YG7hFIP7W
+trOTRSgHSxxlufD4/g6aM2hHzxM+JBRB/Ligbx7qGCj1lLxPX4T4LQAkdWc2riyO
+jRYIu8P8veSaYNpCiGsD
+=V9L1
 -----END PGP SIGNATURE-----
