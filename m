@@ -1,32 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/6
-Message-ID: <alpine.LFD.2.03.1307240031140.938@redhat.com>
-Date: Wed, 24 Jul 2013 00:48:02 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE Request: Linux kernel: panic while pushing pending data out of an IPv6 socket with UDP_CORK enabled.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/7
+Message-ID: <5132C707.5050008@redhat.com>
+Date: Sat, 02 Mar 2013 20:44:07 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Salvatore Bonaccorso <carnil@...ian.org>, Roland Becker <roland@...ol.de>, Robert Munteanu <robert.munteanu@...il.com>
+Subject: Re: CVE request: MantisBT 1.2.12 only summary.php category/project names XSS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-   Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Linux kernel built with IPv6 networking is vulnerable to a crash while sending 
-data as a single datagram over IPv6 socket when UDP_CORK option set. UDP_CORK 
-enables accumulating data and sending it as a single datagram.
+On 03/01/2013 11:31 AM, Salvatore Bonaccorso wrote:
+> Hi Kurt
+> 
+> Noticed that this ruequest did not got a CVE. Can one be assigned? 
+> Note that this only seems to affect exactly one version 1.2.12:
+> 
+> On Sat, Jan 19, 2013 at 10:21:11AM +1100, David Hicks wrote:
+>> Hi list,
+>> 
+>> Roland Becker (MantisBT Developer) discovered[1] a XSS
+>> vulnerability introduced in MantisBT 1.2.12 with the display of
+>> category/project names on the summary.php page. Versions of
+>> MantisBT other than 1.2.12 are not affected by this
+>> vulnerability.
+>> 
+>> A malicious MantisBT user holding privileged
+>> manager/administrator permissions could create a category or
+>> project name that contains JavaScript code. Any user visiting
+>> summary.php from that point on may then be exposed to having the
+>> malicious JavaScript execute within their browser environment.
+>> 
+>> The severity of this issue is limited by the need to hold
+>> privileged manager/administrator permissions in order to modify
+>> category and project names. However -- there are many use cases
+>> where MantisBT installations can have hundreds of sub-projects,
+>> each managed by different people/parties that can not or should
+>> not be fully trusted.
+>> 
+>> Refer to previous commits 3ca8a164[2] and 6ec3f693[3] to trace
+>> back the origin of this vulnerability.
+>> 
+>> References: [1] http://www.mantisbt.org/bugs/view.php?id=15384 
+>> [2] 
+>> https://github.com/mantisbt/mantisbt/commit/3ca8a164641951aba2a459364e656ca0996f8a2b
+>>
+>> 
+[3]
+>> https://github.com/mantisbt/mantisbt/commit/6ec3f693d6d212d6bba788681a206c14df43569f
+>>
+>>
+>> 
+Discussion on the MantisBT Developer Mailing List has indicated that a
+>> release of MantisBT 1.2.13 (resolving both this vulnerability
+>> and CVE-2013-0197 which was announced on this list ~12 hours ago)
+>> will not occur until early next week. As such, a patch is
+>> attached for distributions packaging MantisBT 1.2.12. It is
+>> recommended this patch be applied as soon as possible.
+>> 
+>> Can a CVE ID please be assigned to this issue?
 
-Upstream fix:
--------------
-  -> https://git.kernel.org/linus/8822b64a0fa64a5dd1dfcf837c5b0be83f8c05d1
+Please use CVE-2013-1810 for this issue.
 
-Reference:
-----------
-  -> https://bugzilla.redhat.com/show_bug.cgi?id=987627
-
-Acknowledgement:
------------------
-Red Hat would like to thank Hannes Frederic Sowa for reporting this issue.
+> 
+> Regards, Salvatore
+> 
 
 
-Thank you!
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRMscHAAoJEBYNRVNeJnmTbIcP/1ldp1Tw9wi86tmpqpteKIbA
+e4YP3uiw2LK1U5zUsaQbQBHnvzsATWMKCmY9NWY1N/JoWVlc6zyIbseRAlz/aHQU
+6BxlZqLriMEg85rgRgQ+B2fkFUASsdjUXajBq7263S7RmKDHeB+5mMhvsyzcqO6m
+zBl7DDK9cBDu9Rud1V8MlmHXr7BaC4rqWiAnPVBfQEScTwi53c6ZbmOKZRGZzIwo
+vfB0ripJYJF+kQf3+aZCJcBuXyZgUTuiywKwNasLa1sLA07WZaiFOaDS/O/5Tt5d
+GXsRBLHLXjTszLGgvvOoBky+uEU2v2arkrXloHxR5B86RyexGxYwkaQyQZf0nPwt
+81Np6qcnoqLxWTs78byFZ5abVhn6Lv3XrvRx+WXZKvkNsnVzrq4Nev/UswFA/hQU
+icjBfMUq1Su3dV1V7CY6O3aYtH5wJQo4JpphrQAcmaSDapsRjfh9bi8f+bdCmR9z
+74OtF2BagVt25PHr33xjOdaTNtH8VLhypQhil1fydlF/cqU94rhxLk9X2xuurw9/
+hvn/sxfkFDo2LNF40foJd+0q+UYSvJFVuxqEYdNXSMg+P8AyO0x96Mp/lkD4HZ1C
+kxE7OLm0GNvlukGYdwTv5UXzm2DuwVOf3jVMimtxa9KvTdhQjrhrVHCFJOT9kI+i
+JbQlkk2cG6hlD7Q73dAO
+=7tI8
+-----END PGP SIGNATURE-----
