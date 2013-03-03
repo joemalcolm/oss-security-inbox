@@ -1,89 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/15/3
-Message-ID: <5142ACD7.2040701@redhat.com>
-Date: Thu, 14 Mar 2013 23:08:39 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/14
+Message-ID: <5133A987.4040605@redhat.com>
+Date: Sun, 03 Mar 2013 12:50:31 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request/Guidance: Linux kernel cdc-wdm buffer overflow triggered by device
+CC: Michael Tokarev <mjt@....msk.ru>, Piotr Karbowski <piotr.karbowski@...il.com>
+Subject: Re: CVE id request: busybox
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/14/2013 07:43 AM, Marcus Meissner wrote:
-> Hi,
+On 03/03/2013 08:01 AM, Michael Tokarev wrote:
+> 03.03.2013 18:33, Piotr Karbowski wrote:
+>> On 03/03/2013 11:19 AM, Michael Tokarev wrote:
+>>> What it has to do with Debian, besides that debian was first to
+>>> actually submit this bug into its own bug tracker?
+>> 
+>> Acctualy not the first, the bug was reported to busybox
+>> mailinglist on 18 Dec 2012.
 > 
-> I am wondering ... do we consider attacks with special attack
-> taylored USB devices as CVE worthy?
-
-Yes. I know vendors (like us) hand out USB keys at events (I think
-most of ours are live bootable systems, so we should probably make
-sure that users can safely plug them in without hosing their systems
-if they want to look at what is on it =).
-
-> There is only some precedence in the CVE DB, but not much.
+> That's where I noticed it and submitted a bugreport to Debian BTS
+> from there.
 > 
-> I stumbled over this fix from one of my colleagues where a
-> specifically made USB device reporting the "cdc-wdm" USB class
-> could cause a kernel heap overflow.
+> Note that I didn't want to request a CVE# for that, and used a 
+> somewhat low severify value for the report in the Debian BTS (which
+> was quite some time after the initial report).
 > 
-> "Malicious attached devices" might fall into several categories:
+> If I thought it deserves a CVE, I'd request one right after seeing
+> the discussion in question :)
 > 
-> 1. Attaching the device causes the issue directly within the kernel
-> / autoloaded module, without user interaction. (here the case)
+> But I guess we're muddling waters for too much already.  I merely
+> commented on the joke about Debian, -- the issue is definitely not
+> debian-specific, Debian does not even use mdev from busybox (but
+> allows to use it to the users).
 > 
+> Thanks,
 > 
-> 2. Attaching the device causes the issue when userspace, dependend
-> on e.g. desktop system, does initiate a seperate action (like an
-> automount and then exploitation of something) (so not direct a
-> kernel, but a kernel + GNOME/KDE interaction).
-> 
-> 
-> 3. User needs to do something with the attached device (like click
-> on a file on a USB disk)
-> 
-> 
-> I would consider (1) and (2) CVE worthy at least, not so sure with
-> (3).
-> 
-> Ciao, Marcus
-> 
-> commit c0f5ecee4e741667b2493c742b60b6218d40b3aa Author: Oliver
-> Neukum <oneukum@...e.de> Date:   Tue Mar 12 14:52:42 2013 +0100
-> 
-> USB: cdc-wdm: fix buffer overflow
-> 
-> The buffer for responses must not overflow. If this would happen,
-> set a flag, drop the data and return an error after user space has
-> read all remaining data.
-> 
-> Signed-off-by: Oliver Neukum <oliver@...kum.org> CC:
-> stable@...nel.org Signed-off-by: Greg Kroah-Hartman
-> <gregkh@...uxfoundation.org>
+> /mjt
 > 
 
-Please use CVE-2013-1860 for this issue.
-
-
+This actually raises a good point, due to Debian being a secondary
+source in most cases (e.g. upstream has a bug report which is then
+copied into Debian's bug tracker since Debian ships it) the dates and
+sometimes information is wrong. I will no longer be issuing CVE's for
+issues brought up through the Debian bugtracker without an original
+source to back it up, otherwise more mistakes will happen which is not
+good.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRQqzXAAoJEBYNRVNeJnmT7NQP/j404btfFLur3fX66QuMOYia
-Nr2a7QRRrYKEMzu/OFQ9myPiTBOw5ARZHx0Ul0YFjW3ImuCNPSNGI/P2zkJR0EHB
-5qws3cn/TMwqBvLQRLQIIareG3Uu2ZnjsB00IBhY4z6TtYLnDv/V91XHXqXa1wFn
-un7iWqsjEF0jLITzNbkizBLs6OYdxMtbw+gva1aEoMeiwoNmzR91+/mAyHztxgpS
-Tfrhy4YmXs0577s9s5qxkWrxPtxF6hgA8ok6heUr1HOTfqHHOzNMIwnEXtyEKeGQ
-EuQjkkUwpm9PRsdaSu4V/nNuRvAsfJG1IwS58mLXHbLK0fiT9OS9yZa/Cn0Fnt9S
-9RNCyCjye8RSeSd406E3e4S7rGy5qoRM938NUT8ZREZCoyguNh/GAMn8PygEGvCk
-H85rRwWmrgpbwX0Y1RtP8gMSRqOvO1Y1FmbjwyHSjR2hlqeQd7A/2iSCFJzJ5KIV
-pPQBJWYRPIrrhsgqKnBIZ3GNEcGrhHOxoY04igCl/yPPOHEfflmvkKzfe7rrhIZF
-xjZwzAfs1q7QFmv59ZZj1/yQbyJ1znQ2J2ZPxUe7/QrwTEDJ3Wh7F7U9tGlMTP5w
-FIwpLnXmGdmuZ2XCxMOl7SXriilSU+4h8BMx8lrn4wrsj7sEmecf0nQwnoW0Vm7y
-naK0uqG3zFu3N7i46jI9
-=9mvb
+iQIcBAEBAgAGBQJRM6mHAAoJEBYNRVNeJnmTM8cQAJZqQPpzsLaicBfyFwsnZ6gK
+8IOdtaqDZdE6oYoV10QgvQa018ASXjED+blG8lvZptF2wVuXjVi3+C5uGY8J6UH7
+REGCRShlplJ9798XzGxmFVcSezkOGQmZUvV8QSQRZHIqNfPuwSMsM6uwnXRlfDF3
+VACwecuo76dSZ1+q3E2DUz9WcUYEnvRMoFwsJiTe/+uxCfcH4xMFYI9raofHAYRf
+FC3q34Elc+AXxzxF1MC1WE9HjrwmUYNx2bxhcuuGhzyv3TQztgrxO+8RCd9xXcc2
+6Gt5ErQHY16LQ7DTv0I/1OpXEb5DgFrP6wDBb0RbONiZcm/k5QYgxpV+fInZylDT
+oBzNeUopyC0y7ZLVQDx++iKAeD7Dt+qhCPNtiHAPGvyj9cyIm+Kkt2t5KsQtOfkF
+vy35FGM3aXs6ZPaqtbQZ3CxUX8Bg0rBLjV9sF79yUyx+5ybg9U7NbnxEp27kKlZN
+OTXmwvwsQ3uCf3uv7/9uNCVD4Q95K+gfZAZtH9zgVFjwzbzAsVu6yNNQvz9/ShzM
+TjcGb77wW/IrGwFi7tslRlNARzSVWGBMbl8wsdum3Xctus4ZfYM6JSKhD9KlmM5L
+MxV596WPUb3mlqh2AhEOA2XBzv19jMejcH+EL7UnJONC+bf8FV32msmxtyRDVl97
+V0DINRevLl/L+OxxMifm
+=lwSO
 -----END PGP SIGNATURE-----
