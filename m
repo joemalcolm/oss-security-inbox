@@ -1,40 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/01/5
-Message-ID: <20130801155620.GZ1472@yuggoth.org>
-Date: Thu, 1 Aug 2013 15:56:21 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/8
+Message-ID: <5132D156.1020106@redhat.com>
+Date: Sat, 02 Mar 2013 21:28:06 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Requesting CVE-ID(s) for Python's pip
+CC: Marcus Meissner <meissner@...e.de>, Steven Christey <coley@...re.org>
+Subject: Re: CVE request: ruby-openid XML denial of service attack
 Content-Type: text/plain; charset=utf-8
 
-On 2013-08-01 14:03:35 +0000 (+0000), isis agora lovecruft wrote:
-> On Jul 30, 2013, at 2:29 AM, Kurt Seifried <kseifried@...hat.com> wrote:
-> [...]
-> > I'm not sure in this case MD5 alone is a security vulnerability,
-> > I think previously it had been decided that just because it uses
-> > MD5 wasn't ernough to get a CVE, it had to have some specific
-> > use that made MD5 a problem.
-[...]
-> Marc Stevens recently published a paper on using probabilistic
-> conditionals to control differential computation for two-block MD5
-> collisions
-[...]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-But as we discussed the last time this came up, realistic attack
-vectors like "pad my malicious payload so that it hashes to the same
-value as the official uploaded content from the real author" require
-a second preimage attack. The paper you cited is merely about
-improving the time needed to mount a collision attack (picking two
-datasets which hash to the same value).
+On 03/01/2013 08:50 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> ruby-openid is affected by a XML denial of service (Entity
+> Expansion Attack / out of memory) attack as recently described.
+> 
+> https://github.com/openid/ruby-openid/commit/a3693cef06049563f5b4e4824f4d3211288508ed
+>
+> 
+https://github.com/openid/ruby-openid/pull/43
+> https://bugzilla.novell.com/show_bug.cgi?id=804717
+> 
+> Ciao, Marcus
 
-    https://en.wikipedia.org/wiki/Preimage_attack
+Hrmm yeah. They disable entity expansion (which seems like a safe bet
+for OpenID based XML stuff).
 
-So the worst exploit I can envision from this is that a malicious
-author constructs two programs. One is benign, and gets code
-reviewed and uploaded. Then at some point the second, which is
-malicious in nature, is surreptitiously uploaded in place of the
-first and nobody notices the switch.
--- 
-{ PGP( 48F9961143495829 ); FINGER( fungi@...ulhu.yuggoth.org );
-WWW( http://fungi.yuggoth.org/ ); IRC( fungi@....yuggoth.org#ccl );
-WHOIS( STANL3-ARIN ); MUD( kinrui@...arsis.mudpy.org:6669 ); }
+Please use CVE-2013-1812 for this issue, specifically for XIE (XML
+Internal Entity expansion).
+
+Just a note on XML External Entity (XXE) expansion in ruby-openid
+which uses rexml, according to:
+
+https://pypi.python.org/pypi/defusedxml/0.3
+
+Ruby's REXML document parser is vulnerable to entity expansion attacks
+(both quadratic and exponential) but it doesn't do external entity
+expansion by default. In order to counteract entity expansion you have
+to disable the feature:
+
+REXML::Document.entity_expansion_limit = 0
+
+libxml-ruby and hpricot don't expand entities in their default
+configuration. So in general the CVEs I'm assigning to ruby stuff will
+be for internal entity expansion and not for external entity expansion
+since a protective mechanism exists that the application can use.
+Steve does that sound right?
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRMtFWAAoJEBYNRVNeJnmTtwsQANEQx507H3QFM79mfBdvLWVc
+WZ8PSosOjd6Iazrv57JzgHsN3/cLINN/b5Kw4YVYvOELjn2U8+eJ2HpXsRBQWtVP
+axNBWNqrCWSeVmOiBPOThEthcwTi5udn9g/xs8AlOiDY91/HQ6DPwda6uaCq2cMA
+2HQaARCM+az2Zq/qIx4bSZ+jZFtIdbyHsQGyNjbDA6Y542OJ/EtDh10RXMf0tdlz
+6pu/sWPmaEh0NLt/8hoWyGMYrxnbO/1epa20kGYG5cA8ztAoZc4rmi3DK6wliHzI
+UDnM9O+P0d0rvAZLGI4wnEgtP25I3Qda2xkjESquYvD8beRSxVco+m+XjqDJJJ4y
+X+HzhnicEsHRbNsvqdmCgzcKIhdgPwUxXuuM+v+8qnCMTciowd/+IKp0WkLIyaWR
+hYgCAhh1yGAmJj4TevyiI+k4tHLQW+4io5zvf5UhVCNNpkzOEPbHDBEAooG5WyHq
+VyKkHYk/852yXCNQJeG/4cwpnsM3UoLP2fmbfFVJwvCi7xxjllhFtKKJIhDK7L32
+qIWYxmIs6rAwQaSBuhxlxhJbJwS/jEFyT16JmZmB+vtX2gX4ywN/KywLFFW7TOUe
+VYjNo2Mt1+Upk0b14Wl3ETpspfIVOaeVQ46aey/t0YR2bz7fixA45kzul/XbF3O0
+GJ/stSkpOTP6J+V1SE4Y
+=RW+7
+-----END PGP SIGNATURE-----
