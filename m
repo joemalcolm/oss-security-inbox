@@ -1,82 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/04/4
-Message-ID: <51D4EDE7.6030504@redhat.com>
-Date: Wed, 03 Jul 2013 21:37:11 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/11
+Message-ID: <87boaz3qk9.fsf@windlord.stanford.edu>
+Date: Mon, 04 Mar 2013 11:36:38 -0800
+From: Russ Allbery <rra@...nford.edu>
 To: oss-security@...ts.openwall.com
-CC: Michael Tokarev <mjt@....msk.ru>, Michael Jerris <mike@...ris.com>, Ken Rice <krice@...eswitch.org>
-Subject: Re: CVE request: FreeSWITCH regex substitution 3 buffer overflows
+Subject: Re: Reverse lookup issue in Net::Server
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Remi Gacogne <rgacogne-bugs@...edump.fr> writes:
 
-On 07/01/2013 02:46 PM, Michael Tokarev wrote:
-> Hello.
-> 
-> Yesterday I started thinking for the first time about some VOIP 
-> solution for our office, and come across FreeSWITCH software -- 
-> www.freeswitch.org.  After talking on IRC a bit, I decided to take
-> a look at the source, because a question asked by one of the users
-> looked interesting to me.
-> 
-> And immediately I discovered 3 buffer overflows in the _first_ 
-> function I ever saw in the source of this software.
-> 
-> http://jira.freeswitch.org/browse/FS-5566 - it is the original 
-> bugreport which looked innocent enough initially.
-> 
-> http://jira.freeswitch.org/secure/attachment/18855/0001-regex_subst-allow-n-in-regex-substitutions-and-fix-3.patch
-> -- this is a patch of mine that fixes initial bug and also 3 buffer
-> overflows I found when dealing with the issue.
-> 
-> Some context.  FreeSWITCH's routing mechanism is based almost 
-> entirely on regular expressions and uses substring matches in the
-> core routing (dialplan).  So the regexps are matched against
-> untrusted input (which is especially mentioned in the docs).  But
-> ofcourse users aren't easy with writing regexps correctly, always
-> constraining the length of the input properly.
-> 
-> So, if there are any references to unconstrained input in any
-> dialplan expressions -- that is, instead of \d{10}, \d+ is used,
-> we're getting a remotely triggerable buffer overflows with good
-> potential of remote code execution.
-> 
-> As simple as that.
-> 
-> It _looks_ like the default configuration isn't affected since
-> apparently all regexes there are constrained.  But we can't be sure
-> for all user configs.
-> 
-> I haven't studied actual potential for code execution, but from a
-> quick view it appears quite possible.
-> 
-> Thanks,
-> 
-> /mjt
+> I think there is a security issue in the way the access control feature
+> of Net::Server (http://search.cpan.org/perldoc?Net%3A%3AServer) works.
+> Net::Server is used by various projects including Munin, Postgrey and
+> SQLgrey.
 
-Same researcher/version/vuln type so CVE MERGE. Please use
-CVE-2013-2238 for this issue.
+> The issue lies in the fact that the allow / deny access control does not
+> perform a valid DNS check when given a hostname parameter and the
+> 'reverse_lookups' option is enabled.  The current code only checks that
+> the incoming connection source IP address has a reverse DNS matching the
+> given hostname, but does not check that the hostname resolves back to
+> this source IP address (see how the $prop->{'peerhost'} property is set
+> in get_client_info(), lib/Net/Server.pm:553, then used in allow_deny(),
+> lib/Net/Server.pm:597).  As it is trivial for an attacker to be able to
+> set his own source IP's reverse DNS, the current check is not safe (this
+> probably matches CWE-807: Reliance on Untrusted Inputs in a Security
+> Decision).
 
+This is a very weak security measure, but yes, the need to check the
+reverse DNS results with a forward DNS query to make the security check at
+all useful has been well-known going all the way back to the days when TCP
+wrappers was the UNIX firewalling system of choice.  I remember discussion
+of this in security contexts in 1994, and I'm sure it was an old
+discussion even then.
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJR1O3mAAoJEBYNRVNeJnmTwA4QAMVxd81ar5PHUNo/NRf+giHU
-EQhYZBvIQIysyFeOn3SAmeAcO4j0+t+t06Hmm23gR7YKHhj04PvHhCHCo+12WKt5
-3susjMf9XfR0hlXoGK0Buzn9ICx7GzR8Gxq9omevNkacJHySdhHrUVbjpd/lLjtK
-iR0IUG/+7w/5guznzT+NaKVPc1jkxjE+agH4gIO553V1ZgmN7U9S16/FylL8Z9PD
-0uRyzztah/4pE4Ic/OMhwRUMX2B1s894oW0NxIqS4nhsp6Wwzqbp5+SDQLt18Vcc
-EzrrnAd8JGWswqZylZTmgOGOG0uuXtkq+WIKqKDx4B6I+RdBipQ/+3GGWY+giaAT
-P6vfSMU+VvzjJ6iYQRanRzJIiZQogfmRIhDXHjtOBR32/uZinZdSPm1GWMaBcRFq
-ZLbUEjtIjN3zVffYF2lZtYspQ1iIy4OHddanpYBlcBNQSqgpW5ChNQB0/+JkwE3h
-fOV/PEs+TAK7U/exVshWnF93Hr85B167q274ViWb+9/VOjfiUvHGcjbkYiVthv5P
-xkBkj4PNkYssdncXlRCH43ImO0APAy3dDbOUozEgJ8iPU9hIDWb+3/J5uODY/tz+
-Tmbk8Ni69hIe3F4uMk0B5HOapTAfbcOzp+Gz1CPfMhZ2xpEZJNnHgqJ7j4b7kGAr
-0/y4JDV6gsCe7QAKaaID
-=HSFr
------END PGP SIGNATURE-----
+-- 
+Russ Allbery (rra@...nford.edu)             <http://www.eyrie.org/~eagle/>
