@@ -1,25 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/17/8
-Message-ID: <CAA7hUgEJ4RjDX_B+nUhDRT7F+Ju-VKeB9VU=6p6KY-dcdKnQTg@mail.gmail.com>
-Date: Tue, 17 Sep 2013 10:30:38 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: Kurt Seifried <kseifried@...hat.com>, Florian Weimer <fweimer@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: glibc getaddrinfo() stack overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/3
+Message-ID: <51340651.7020109@redhat.com>
+Date: Sun, 03 Mar 2013 19:26:25 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Michael Gilbert <mgilbert@...ian.org>
+Subject: Re: CVE id request: busybox
 Content-Type: text/plain; charset=utf-8
 
-On 17 September 2013 04:27, Kurt Seifried <kseifried@...hat.com> wrote:
-> I prefer things to be explicit rather than assumed =).
-> Please use CVE-2013-4357  for this issue.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-What exactly is that id meant to cover? do you have commit references
-for the issue (singular)?
-(also note that glibc#12671 is from 2011)
+On 03/03/2013 01:06 PM, Michael Gilbert wrote:
+> On Sun, Mar 3, 2013 at 2:50 PM, Kurt Seifried wrote:
+>> This actually raises a good point, due to Debian being a
+>> secondary source in most cases (e.g. upstream has a bug report
+>> which is then copied into Debian's bug tracker since Debian ships
+>> it) the dates and sometimes information is wrong.
+> 
+> Aren't these problems true for any source whether it be primary, 
+> secondary, tertiary, or so on?
 
-Or is the whole bunch of patches from extend_alloca supposed to be
-CVE-noisy^Wworthy?
+Sorry yeah I should have been more clear. This goes for all the major
+secondary sources (Debian, SUSE, etc.).
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+>> I will no longer be issuing CVE's for issues brought up through
+>> the Debian bugtracker without an original source to back it up,
+>> otherwise more mistakes will happen which is not good.
+> 
+> I don't understand the purpose of excluding an entire project's 
+> sources.  Should redhat's bugzilla, gentoo, etc. also be excluded
+> for the same reason?  If not, why do they get special treatment?
+
+I didn't say I;'m excluding them. I simply will require an original
+source, in this case the year is probably wrong.
+
+> Is there really a problem at all?  The debian report included the 
+> upstream commit, so you had a link to a primary resource anyway.
+> So, I think a simple solution to this 'problem' of secondary
+> sources is follow them to the primary one?
+
+Yeah, and people can post them to the list. As stated before, I assign
+a lot of CVEs. One minute extra per CVE is about 20 hours a year. It
+adds up. So from now on I'll be needing original source confirmation
+in the emails to oss-sec.
+
+> Best wishes, Mike
+> 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRNAZRAAoJEBYNRVNeJnmTbvQQALqxYvC4wPlsezpAib1KJN5B
+/Whn1VfNA63qZ/+RpoVRWRvbx1aC+6hBtdeMyYzNJoq7FGnq33tHuSzW3xW4iQl3
+zJjPd3yuxB4Om3arSqNmewW8aKGM0Z3jPP8wQjh7coxKzwGDd1yY/NQojPxZZTKF
+WTVV6c3JPVeNqZriDem5XXpySCjfufg7CYZzkMrmmsHPWAfpe+X5csa2Ks6P6vzi
+5zsrYY4ucWDdyyjJ5uCxzqxyw/MigI8P4Aj1jOgM3VJdwCsj8UWGmLb6InzceBHP
+97JgGCu4HlviVdFU7XNiG4/fVy9N6lTq8tE0ypTNWQzBHWVnhFqI4KvJlnJRW9FT
+IZN35NsyB3jPv3+6X4aZjhtzZ0bkU7MpqStOtHq4JZfLWwnFviiUJRRl/h26YRc/
+tOGMlbhEsTpOYrwCBh6MSkmf+eQDgzJZO3kQ8Q9Xa4jkowUc5aFDwUkSELhU6G45
+P5ayRml66ylv6leR4qYuaZLktLjc9ytqvfl+Cj39sspKyKBTO1Fhtt6bjy/EYEc4
+8TTPvtuLT900djCnzu3uDurlPBnPGAbP22DBAn+6ElxFQdI3X6Nx/XAOJt5X7ULW
+qW2ZfXfPy+wP4WafT9G3P3FGRsz+4mdIMZWWtndGYskzCvrDHxnYUycKJofT2eUV
+kMnABc62ZstYHtE5dfez
+=trUJ
+-----END PGP SIGNATURE-----
