@@ -1,29 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/6
-Message-ID: <86y5c8otxk.fsf@ds4.des.no>
-Date: Wed, 24 Apr 2013 17:00:07 +0200
-From: Dag-Erling Smørgrav <des@....no>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Advisory dates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/6
+Message-ID: <20130304034858.GB1274@kroah.com>
+Date: Mon, 4 Mar 2013 11:48:58 +0800
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: handling of Linux kernel vulnerabilities (was: CVE request - Linux kernel: VFAT slab-based buffer overflow)
 Content-Type: text/plain; charset=utf-8
 
-I'm curious as to what kind of policies various distros have in place
-wrt release dates for advisories.  We (FreeBSD) have a list of dates to
-avoid, which include major religious holidays, New Year's Day etc., and
-try to avoid releasing advisories on or immediately before these dates.
-But May is often problematic, with May Day (May 1st) and Liberation Day
-(May 8th in Western Europe, May 9th in Eastern Europe) clustered
-together.  An early Easter adds Ascension to the mix (May 17th last
-year, May 9th this year).  A late Easter is even worse: the Holy Week in
-late April, followed by a four-day week, with the next week cut short by
-May 1st and the one after that amputated by May 8th / 9th.
+On Sun, Mar 03, 2013 at 10:39:30PM -0500, Michael Gilbert wrote:
+> I was getting encouraged by the recent anger-centric posts, the "what
+> is it that we're supposed to do better?" ones. That gave me some
+> encouragement that there was the possibility of positive change, but
+> the "we're not going to make users more unsafe by telling them about
+> issues affecting them" is a persistence of the denial state.  That
+> logic completely violates the known idiom that knowledge is power:
+> give users the knowledge that they need to protect themselves, and
+> they will; starve them of that knowledge, and they remain vulnerable.
 
-Not to mention national or regional holidays such as Cinco de Mayo (May
-5th, obviously) or Norway's Constitution Day (May 17th)...
+That's a load of crap.
 
-How do you deal with situations like this?  And do you have documented
-policies or guidelines?
+Seriously, you know it only benefits the "bad guys" if I were to say,
+"This patch just went into Linus's tree that fixes a security problem
+that you can exploit in this manner".  No user would have a chance to
+fix their systems before the vulnerability was added to the
+"ultra-sploit" tool and everyone would have their systems trashed.
 
-DES
--- 
-Dag-Erling Smørgrav - des@....no
+If you so strongly believe this, why is there a linux-distros list in
+the first place?
+
+Come on, be realistic people.
+
+greg k-h
