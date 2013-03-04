@@ -1,65 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/2
-Message-ID: <5215AD7A.9030303@redhat.com>
-Date: Thu, 22 Aug 2013 00:19:38 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/9
+Message-ID: <loom.20130304T174633-80@post.gmane.org>
+Date: Mon, 4 Mar 2013 16:47:26 +0000 (UTC)
+From: Damien Regad <damien.regad@...ckgroup.com>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed modules
+Subject: Re: CVE request: MantisBT before 1.2.13 "Change Status To" feature allows unauthorised workflow changes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Kurt Seifried <kseifried@...> writes:
+> Please use CVE-2013-1811 for this issue.
 
-On 08/21/2013 05:45 PM, Forest Monsen wrote:
-> Hi there,
-> 
-> I'd like to request CVE identifiers for...
-> 
-> SA-CONTRIB-2013-067 - BOTCHA - Information Disclosure (potential
-> Privilege Escalation) https://drupal.org/node/2065057
-> 
-> SA-CONTRIB-2013-068 - Entity API - Access Bypass 
-> https://drupal.org/node/2065207
-> 
-> SA-CONTRIB-2013-069 - Password Policy - XSS 
-> https://drupal.org/node/2065387
-> 
-> SA-CONTRIB-2013-070 - Zen - Cross Site Scripting 
-> https://drupal.org/node/2071157
-> 
-> Thanks!
-> 
-> Best, Forest
-> 
+Thanks. The corresponding Mantis issue has been updated accordingly.
 
-CVE-2013-4272 Drupal SA-CONTRIB-2013-067 - BOTCHA - Information
-Disclosure (potential Privilege Escalation)
+> regarding the past email ctrl-c, ctrl-v, same thing right?
 
-CVE-2013-4273 Drupal SA-CONTRIB-2013-068 - Entity API - Access Bypass
-
-CVE-2013-4274 Drupal SA-CONTRIB-2013-069 - Password Policy - XSS
-
-CVE-2013-4275 Drupal SA-CONTRIB-2013-070 - Zen - Cross Site Scripting
+Not sure what you mean by that
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSFa16AAoJEBYNRVNeJnmTtoYQAJ+ORNMfzoSVG97NuUVQ0bh6
-+RqN8r2ntquC/QQEI8DRD50E0Z5hciWOvKJt7oXyhqAhqCzw9Dr0z95hSw5TmmCz
-vJ6nyiUXxLf+ohHk9Q+Ar9MukxjBY/SUhVtb8F98DM49tekI9BcCd42LcRgsKAsq
-fvB3aNZBHA8mvHyOqgZCT7ChcseMXGBYCXY8M0Nqai0Tm3Oakj+88wdZdxeJdICs
-wqDiwIjo2CMH94dchraq+f7/qCG4S/9M75whWP/BBDBLItZbEBfDfCnIFPCjza73
-QFUG0Bx5EkfqB6bJC6lMCBds2pLltCSGAd3/xz/BmBO6drUaV15hlLf/AjOoVCwQ
-uis34vny+5Y0knKvFYPhDWTyUO/k1uIz/NTLHdyRevcSca8m7fQ5X4m+Z4m9oYN3
-kTPf2H3G2TF/L9aQgKhnzLYfk3GY1kJYpdtNNnZmp9PEmu2ZipMHR04gJDMCQ7Xj
-y64cMfoNnbV9uc4CNSpHmR6eJYruYN3eRi+ZVz+Bqurass8kWWCQeVilzXBMW1Q7
-wGox7BI+t8Fv3mCOhCWcuyBjRWJqEjQ/s4CWlWgYrRHJG3rhbwoHX1V5SQllG3f9
-BJNA/jcfTfP0lrWJq65guaCaZyBvOb/ZXIMqapn+JyA8u2ojg3teX1JbQOavNvuu
-ici312vXQs4ii8q2F4LP
-=BchA
------END PGP SIGNATURE-----
