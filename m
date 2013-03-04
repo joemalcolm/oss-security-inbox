@@ -1,59 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/11/5
-Message-ID: <20130211182328.GA79156@higgins.local>
-Date: Mon, 11 Feb 2013 10:23:28 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
-Subject: Circumvention of attr_protected [CVE-2013-0276]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/5
+Message-ID: <CANTw=MOkHJvDhyfQyH87s447JMyWP_BW+km1fu-AiP_z3or1Cg@mail.gmail.com>
+Date: Sun, 3 Mar 2013 22:39:30 -0500
+From: Michael Gilbert <mgilbert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: handling of Linux kernel vulnerabilities (was: CVE request - Linux kernel: VFAT slab-based buffer overflow)
 Content-Type: text/plain; charset=utf-8
 
-Circumvention of attr_protected
+On Sun, Mar 3, 2013 at 9:12 PM, Greg KH wrote:
+> On Mon, Mar 04, 2013 at 05:44:38AM +0400, Solar Designer wrote:
+>> In my opinion, it'd be best if Linus, Greg, et al. would reconsider
+>> their approach.
+>
+> Reconsider just what specifically?  You bring up a bunch of issues that
+> the distros need to consider, what can the Linux kernel security team do
+> differently?  We were asked to notify the linux-distro list, and now we
+> will be doing that.  Should we not and just go back to how things were
+> before?
 
-There is a vulnerability in the attr_protected method in ActiveRecord. This vulnerability has been assigned the CVE identifier CVE-2013-0276.
+Please reconsider the quasi-secret denial state that has been the
+kernel security posture for the past 20 years: i.e. the persistent
+inability to recognize that the existing approach serves to do more
+harm than it does good.  Argument supporting that idea follows.
 
-Versions Affected:  All.
-Not affected:       Applications using attr_accessible
-Fixed Versions:     3.2.12, 3.1.11, 2.3.17
+Malicious actors/organizations (the bad guys) have resources, skill,
+time, and most importantly motivation (i.e. profit) to be able to
+study a sufficient subset of all kernel commits to be able to find a
+few that provide them the avenue they need to achieve their malevolent
+goals.
 
-Impact 
-------
-The attr_protected method allows developers to specify a blacklist of model attributes which users should not be allowed to assign to.  By using a specially crafted request, attackers could circumvent this protection and alter values that were meant to be protected.
+The good guys have none of those.  They have day jobs, have to produce
+new code (rather than reviews) most of the time, have tons of other
+bugs to deal with, and most importantly have no monetary incentive to
+sit there and study every kernel commit message/patch.  Instead, the
+good guys rely on a system of trust and generosity, which seems to be
+working fairly well on oss-sec in general, but definitely not with the
+kernel-land.  The persistent secrecy is in direct opposition to trust,
+and refusals to spend the little time to write blurbs about issues is
+a disservice to users (an ungenerous act), who if they were in the
+know, could use that information to be able to solve those problems on
+their own (note that's often done by a distro kernel-sec team).
 
-All users running an affected release should either upgrade or use one of the work arounds immediately.  Users should also consider switching from attr_protected to the whitelist method attr_accessible which is not vulnerable to this attack.
+And of course there is that other kicker, the bad guys only need
+discover a few bugs.  The good guys need to find (and fix) them all,
+and that requires information.  By keeping that information in this
+quasi-secret state, you are guaranteeing a certain (large subset) of
+users remain in the dark while some of the malevolent actors are in
+the light.  That is wrong.
 
-Releases 
--------- 
-The 3.2.12, 3.1.11, and 2.3.17 releases are available at the normal locations. 
+I was getting encouraged by the recent anger-centric posts, the "what
+is it that we're supposed to do better?" ones. That gave me some
+encouragement that there was the possibility of positive change, but
+the "we're not going to make users more unsafe by telling them about
+issues affecting them" is a persistence of the denial state.  That
+logic completely violates the known idiom that knowledge is power:
+give users the knowledge that they need to protect themselves, and
+they will; starve them of that knowledge, and they remain vulnerable.
 
-Workarounds 
------------ 
-The only feasible work around for this issue is to convert the application to use attr_accessible instead of attr_protected.
-
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
-
-* 3-2-attr_protected.patch - Patch for 3.2 series 
-* 3-1-attr_protected.patch - Patch for 3.1 series 
-* 3-0-attr_protected.patch - Patch for 3.0 series
-* 2-3-attr_protected.patch - Patch for 2.3 series
-
-Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
-Credits 
--------
-Thanks to joernchen of Phenoelit and Ryan Koppenhaver of Matasano Security for reporting the vulnerability to us and working closely with us on a fix.
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "2-3-attr_protected.patch" of type "text/plain" (2730 bytes)
-
-View attachment "3-0-attr_protected.patch" of type "text/plain" (1841 bytes)
-
-View attachment "3-1-attr_protected.patch" of type "text/plain" (1805 bytes)
-
-View attachment "3-2-attr_protected.patch" of type "text/plain" (1748 bytes)
-
-Content of type "application/pgp-signature" skipped
+Best wishes,
+Mike
