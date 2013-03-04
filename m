@@ -1,57 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/15/4
-Message-ID: <51E4290B.7000907@redhat.com>
-Date: Mon, 15 Jul 2013 10:53:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Hannes Frederic Sowa <hannes@...essinduktion.org>
-Subject: Re: CVE Request -- Linux kernel: ipv6: BUG_ON in fib6_add_rt2node()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/10
+Message-ID: <alpine.DEB.2.00.1303042019330.9653@legendary.xserve.fr>
+Date: Mon, 4 Mar 2013 20:31:14 +0100 (CET)
+From: Remi Gacogne <rgacogne-bugs@...edump.fr>
+To: oss-security@...ts.openwall.com
+Subject: Reverse lookup issue in Net::Server
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 07/15/2013 10:24 AM, Petr Matousek wrote:
-> If two router advertisment speaker announce seperate default
-> gateways with infinite timeout the kernel currently packs these
-> routes together into an ecmp route set. If one of the RA speaker
-> now changes the advertised expiration to a lower value and a third
-> route with infinite timeout pops up we end up with a BUG_ON.
-> 
-> Remote attacker could use this flaw to crash the system.
-> 
-> Fixed by: 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=307f2fb95e9b96b3577916e73d92e104f8f26494
->
->  Introduced by: 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=51ebd3181572af8d5076808dab2682d800f6da5d
->
->  Introduced in upstream version: v3.7-rc1
-> 
-> Acknowledgements:
-> 
-> Red Hat would like to thank Hannes Frederic Sowa for reporting
-> this issue.
-> 
+Hi,
 
-Please use CVE-2013-4125 for this issue.
+I think there is a security issue in the way the access control feature
+of Net::Server (http://search.cpan.org/perldoc?Net%3A%3AServer) works.
+Net::Server is used by various projects including Munin, Postgrey and 
+SQLgrey.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+The issue lies in the fact that the allow / deny access control
+does not perform a valid DNS check when given a hostname parameter
+and the 'reverse_lookups' option is enabled.
+The current code only checks that the incoming connection source IP
+address has a reverse DNS matching the given hostname, but does not
+check that the hostname resolves back to this source IP address (see
+how the $prop->{'peerhost'} property is set in get_client_info(),
+lib/Net/Server.pm:553, then used in allow_deny(), lib/Net/Server.pm:597).
+As it is trivial for an attacker to be able to set his own
+source IP's reverse DNS, the current check is not safe (this probably
+matches CWE-807: Reliance on Untrusted Inputs in a Security Decision).
 
-iQIcBAEBAgAGBQJR5CkLAAoJEBYNRVNeJnmTEnMQAIkV1aERL6D2GPTq5d8ePlt6
-+SVUkkDJBn8q71jNC+1fvrkxtdmSgr2Ob+mLMQQucfisyRH6T8hn61nJW2Z4xM6q
-LcQvvBLXIZNAbdeYPGuOqbh07d+Ax4uzmDXbo8ubo6BWa9Q7i3ZEUWLumsTqB+Pt
-IOlGNCL5zldy2TAEzWigmJTFgeJfMEMUQI4IRmwbAIBHU8SFzrAVlUTP8VZT0MHt
-dU0LIavp/9xPkNARNYR0Bbw0Eqe6f1TlfCOD1A8Ah9tIA15obJD8zhQvooFQt0b9
-rGEQvRtt+AQ7r7YM4TBLI1Y5az0icBLFf8j+BVmMd744n3jj4Df9r0xmebKmP7CM
-/DwuBlWhxDoIkIJ5Y0lGwZmwKUZyB3fTO4DojGgyPsRPGwzT9/VTI8G+i9JelW7b
-Mzjr090zcPzztbrn0X6PWvD8wSRHcf+Mg3rxP2KtLSfWrbWRt0cbmTJ+e8AmGhmY
-ZqrWapUxwMJ07RHjgmj39ZBndPAC8VCaxu0XyEw77+qpmic50s6hRCkXUKSZM1lL
-qcyBEXwgJHIP0ZG58WnaOZeku4iOHJpLqv3ph1AK6hDygKQxiGb9ErSJSr5f66ZK
-vLjm6rRKqeOLkOtjQsW+EnFiiFJOBx3yrMpobG0gKtZUeUmxC86I/HDnKhTaSbq7
-jDatx2lHNYGyzqKXXgeS
-=l/xc
------END PGP SIGNATURE-----
+I think that the valid way would be to do the same checks as
+Apache HTTPd does for the Allow / Deny directives (see do_double_reverse()
+and ap_get_remote_host() in server/core.c for more information):
+"It will do a reverse DNS lookup on the IP address to find the
+associated hostname, and then do a forward lookup on the hostname
+to assure that it matches the original IP address.
+Only if the forward and reverse DNS are consistent and the hostname
+matches will access be allowed."
+
+At the very least, the documentation of Net:Server should be updated to
+specify exactly what is checked by Net:Server access control, as many
+people seem to assume that the check is done in the same way as in Apache 
+HTTPd.
+
+So far, I have been unable to reach the Net-Server maintener to discuss 
+this matter.
+
+--
+Regards,
+
+Remi Gacogne
+
