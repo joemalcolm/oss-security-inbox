@@ -1,49 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/6
-Message-ID: <CAEWn2o_ojrp412C-oL5qedtaAfqOskYa2ED69q7OytGeuo=Ztw@mail.gmail.com>
-Date: Thu, 10 Oct 2013 07:04:15 +0200
-From: Naufragium Est <naufragium.est@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/7
+Message-ID: <20130304035254.GC1274@kroah.com>
+Date: Mon, 4 Mar 2013 11:52:54 +0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Integer overflow in libtar (<= 1.2.19)
+Subject: Re: handling of Linux kernel vulnerabilities (was: CVE request - Linux kernel: VFAT slab-based buffer overflow)
 Content-Type: text/plain; charset=utf-8
 
-The announcement of version 1.2.20 can be found at
-https://lists.feep.net:8080/pipermail/libtar/2013-October/000361.html
+On Mon, Mar 04, 2013 at 06:57:23AM +0400, Solar Designer wrote:
+> Greg,
+> 
+> Note that I am not even asking you to reconsider.  I have little hope
+> that you would, as you appeared to have a firm opinion on this.
+> I merely mentioned this aspect, with no intent to prompt a discussion of
+> it.  That said, I've commented inline, just to clear up your confusion.
 
+Thanks for doing this.
 
-2013/10/10 Huzaifa Sidhpurwala <huzaifas@...hat.com>
+> > You bring up a bunch of issues that
+> > the distros need to consider, what can the Linux kernel security team do
+> > differently?
+> 
+> Post to oss-security on commit day.
 
-> Hi All,
->
-> Forwarding information from the linux-distros list to oss-sec, since
-> the issue is public now
->
-> Details:
->
-> An integer overflow vulnerability was identified in libtar 1.2.19 (and
-> olders) that can possibly be exploited for arbitrary code execution when
-> extracting a specially crafted tar file.
->
-> A coordinated release date (CRD) of October 9th has been agreed with
-> Chris Frey (libtar developer).
->
-> This issue is assigned CVE-2013-4397.
-> This issue is fixed in libtar-1.2.20
->
-> Reference:
->
-> Upstream patch:
->
-> http://repo.or.cz/w/libtar.git/commit/45448e8bae671c2f7e80b860ae0fc0cedf2bdc04
->
-> Announcement: This is an announcement about the release on
-> libtar list, but strangely i cant access the list archives.
-> (i am subscribed to the mailing list though)
->
-> Red Hat bugzilla:
-> https://bugzilla.redhat.com/show_bug.cgi?id=1014492
->
-> --
-> Huzaifa Sidhpurwala / Red Hat Security Response Team
->
+You know why we will not do that, sorry.
 
+> Optionally, also notify linux-distros a few days before the commit.
+
+We don't usually have "days" before things are committed.  We find out
+about a problem, we make up a fix, and it is committed.  Usually all
+within 1-2 days.  Sometimes things take longer to fix, but usually it's
+prettty fast.
+
+> > > Overall, I think we should bite the bullet and accept sko's
+> > > notifications to linux-distros, with a grace period of up to 7 days.
+> > > Whenever a distro is ready to release an update, they should be able to
+> > > insist on doing so within another 1 day, even if the initially planned
+> > > grace period would expire later.  Would sko be OK with this?  Greg?
+> > 
+> > Again, I don't think anyone that is part of security@...nel.org minds
+> > about having the issues publicized, after linux-distro has their time
+> > to get things fixed and to their users.  If the linux-distro people care
+> > about that, that does not seem to be a security@...nel.org group issue,
+> > right?
+> 
+> Right, but since you previously refused to notify oss-security right
+> away, I thought that you could possibly stipulate that you'd only keep
+> notifying linux-distros if the linux-distros folks keep the issues from
+> hitting oss-security for at least a certain amount of time, or at least
+> until fixes are available (from at least one distro? from all?), or
+> whatever.  If you're fine with letting linux-distros decide on this
+> fully on their own, and you would not stop notifying linux-distros if
+> you deem that they fully-disclose the issues publicly "too soon", that's
+> great (and logical)!
+
+As far as I am concerned, I trust linux-distros to manage this in a sane
+and proper manner, and they can notify the world when they decide to do
+so.  If that trust is somehow broken, we can revisit the issue in the
+future.
+
+thanks,
+
+greg k-h
