@@ -1,27 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/11
-Message-ID: <20130215192822.GB11793@suse.cz>
-Date: Fri, 15 Feb 2013 20:28:24 +0100
-From: Miklos Vajna <vmiklos@...galware.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: (linux-)distros membership changes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/8
+Message-ID: <51349582.2050706@collabora.co.uk>
+Date: Mon, 04 Mar 2013 12:37:22 +0000
+From: Will Thompson <will.thompson@...labora.co.uk>
+To: Telepathy <telepathy@...ts.freedesktop.org>,  oss-security@...ts.openwall.com
+Subject: CVE-2013-1769: remotely-triggered NULL pointer dereference in telepathy-gabble
 Content-Type: text/plain; charset=utf-8
 
-Hi Solar,
+Hi,
 
-On Wed, Sep 05, 2012 at 06:28:30AM +0400, Solar Designer <solar@...nwall.com> wrote:
-> Frugalware: 1
+I've just released two new versions of telepathy-gabble which fix a 
+family of remotely-triggered NULL pointer dereference bugs in 
+telepathy-gabble: specifically, in its implementation of the hashing 
+algorithm specified in <http://xmpp.org/extensions/xep-0115.html>. These 
+bugs existed in essentially all previous versions of telepathy-gabble. A 
+malicious user can trigger the bug for any of their contacts who use 
+Gabble by publishing caps which trigger the bug, or for anyone whose JID 
+they know.
 
-Please unsubscribe me from the distros list. I handed over maintenance
-of Frugalware security issues to James Buren, but he's not releasing
-security advisories[1] nor taking part of such discussions actively, so my
-membership is no longer useful and it's no point in askig for membership
-for him.
+In the current stable release series, the bug is fixed in 
+telepathy-gabble 0.16.5 (release announcement: 
+<http://lists.freedesktop.org/archives/telepathy/2013-March/006377.html>).
 
-Thanks,
+In the current unstable release series, the bug is fixed in 
+telepathy-gabble 0.17.3 (release announcement: 
+<http://lists.freedesktop.org/archives/telepathy/2013-March/006378.html>).
 
-Miklos
+Simon McVittie has prepared some patches which apply to the 0.12 series 
+of telepathy-gabble. Interested parties can find them, and more 
+information, on the bug report: 
+<https://bugs.freedesktop.org/show_bug.cgi?id=61433>. That said, I 
+recommend that distributors of 0.12 upgrade to the 0.16 stable series if 
+possible.
 
-[1] http://article.gmane.org/gmane.linux.frugalware.devel/11553
+Thanks to Kurt Seifried of the Red Hat Security Response Team for 
+allocating a CVE ID for this issue.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+-- 
+Will
