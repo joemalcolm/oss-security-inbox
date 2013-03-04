@@ -1,65 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/13
-Message-ID: <512BB9CA.4010806@gmail.com>
-Date: Mon, 25 Feb 2013 14:21:46 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/1
+Message-ID: <20130304014438.GA27575@openwall.com>
+Date: Mon, 4 Mar 2013 05:44:38 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
+Subject: handling of Linux kernel vulnerabilities (was: CVE request - Linux kernel: VFAT slab-based buffer overflow)
 Content-Type: text/plain; charset=utf-8
 
-On 02/25/2013 02:18 PM, Mathias Krause wrote:
-> On Mon, Feb 25, 2013 at 8:07 PM, Dan Rosenberg
-> <dan.j.rosenberg@...il.com> wrote:
->> On 02/25/2013 01:59 PM, Mathias Krause wrote:
->>> On Mon, Feb 25, 2013 at 7:53 PM, Dan Rosenberg
->>> <dan.j.rosenberg@...il.com> wrote:
->>>> On 02/25/2013 01:45 PM, Mathias Krause wrote:
->>>>> Did you even try to run the exploit on a v3.2 kernel? Or even more
->>>>> simple, looked at the code of a v3.2 kernel? There is no sock_diag
->>>>> anywhere in the kernel; there is only inet_diag. And inet_diag hadn't
->>>>> and still does not have the out-of-bounds access issue. So no, this
->>>>> bug is non-existent on a v3.2 kernel.
->>>>>
->>>>> Thanks,
->>>>> Mathias
->>>>>
->>>> The bug was introduced with this commit:
->>>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=d366477a52f1df29fa066ffb18e4e6101ee2ad04
->>>>
->>>> This commit took place during kernel version 3.2.0-rc4, so yes, it does
->>>> seem to affect 3.2 kernels.
->>>
->>> $ git describe --contains d366477a52f1df29fa066ffb18e4e6101ee2ad04
->>> v3.3-rc1~182^2~326
->>>
->>> Is git lying to me or what?
->>>
->>>
->>> Cheers,
->>> Mathias
->>>
->>
->> Apparently so. Linux 3.3-rc1 was released on January 19, 2012, while the
->> patch to introduce sock_diag was applied December 6, 2011.
+On Wed, Feb 27, 2013 at 07:26:39PM +0100, Petr Matousek wrote:
+> Greg, FYI. The linux-distros mailing list has strict rules about the
+> maximum embargo period. It is ~14 days. I hope that ~14 days are
+> acceptable as a grace period for you when the commit goes public. At the
+> end of the embargo period the info is always sent to oss-sec with CVE id
+> assigned. 
 > 
-> Dude, have you even *tried* to confirm what you're claiming?
+> Also, Alexander, are you willing to accept the semi-public nature of the
+> sko submissions to linux-distros and treat them as embargoed even though
+> the commit is already public?
 > 
-> $ git grep sock_diag_handler v3.2 | wc -l
-> 0
-> $ git checkout v3.2; grep -rw sock_diag_handler . | wc -l
-> 0
-> 
-> So either my git tree is horribly broken or your arguments are. Ever
-> heard of net-next.git -- containing commits that should end up in the
-> *next* version of Linux?
-> 
-> Cheers,
-> Mathias
-> 
+> For me, this solutions is not optimal as we usually treat any issue that
+> has public commit as public one, but it would at least avoid
+> CVE-2013-0871 like problems.
 
-Relax, no need to get so worked up. ;-)
+It's a tradeoff that I would rather not be making because it's primarily
+a workaround for the difference of opinion between linux-distros and sko
+folks.  Also, it's not just me.  Is everyone on linux-distros OK with
+treating the partially public issues that would be coming from sko as
+embargoed?  And for how long?  If a certain linux-distros member is not
+OK with that, it's a reason to decline sko's offer, not to unsubscribe
+that member - well, or to start a separate list with a subset of
+linux-distros members who are OK with treating sko issues specially.
 
-Of course you're right, my head wasn't working. Sorry for the noise.
+I think that, if all linux-distros members agree, we may choose to give
+a shorter grace period to issues disclosed to linux-distros from sko,
+for which fixes have already been committed publicly (just not fully
+documented as security).  I think that allowing up to ~14 days is too
+much for these.
 
-Regards,
-Dan
+What grace period would be reasonable?  Here's one way to look at it:
+would we provide any grace period, and how much, in case an issue
+brought to linux-distros is fixed in the upstream author's public
+repository before the CRD?  Not necessarily a Linux kernel issue, but in
+general.  My guess, from past experience (including vendor-sec), is that
+we might reasonably provide a grace period of a couple of days.
+
+Now, if we make this literally 2 days only, it won't be enough time for
+the larger distro vendors' QA.  For Red Hat this is probably less of an
+issue since a Red Hat person will be on sko.  For other larger distro
+vendors it is probably a serious issue, making these "two days in
+advance" notifications nearly useless.  For some smaller distro vendors,
+these notifications would probably be helpful.
+
+Can we do more than 2 days?  Maybe 7?  What exactly will be happening
+during this time?  Are distros free to commit their own fixes, just not
+announce them as security yet (mimic the Linux kernel's approach), or do
+they have to knowingly accept the elevated risk that someone will figure
+out the vulnerability (from upstream's commit) and start exploiting it
+on the users' systems?  Either is arguably negligent towards the users:
+not informing them that they need to upgrade for security vs. not
+providing such upgrades yet.
+
+Maybe a less unethical workaround to sko's policy would be for distros
+to explicitly state that an update is for security, but not to provide
+any detail until the grace period (of a few days?) is over.
+Unfortunately, this makes sko's approach even more ridiculous, almost
+killing its purported advantages.
+
+(Of course, all of these approaches have been known for decades.)
+
+In my opinion, it'd be best if Linus, Greg, et al. would reconsider
+their approach.  Since this is unlikely to happen, the question is
+whether there's a reasonable workaround that we can use to mitigate the
+impact, without introducing other issues that would be as bad (or
+worse).  From a purely technical perspective, perhaps accepting sko's
+notifications to linux-distros and giving a grace period may help reduce
+the number of systems compromised per year (although we'll never know it
+reliably).  In this respect, not going for it may be unethical.  On the
+other hand, going for it is unethical in other ways as I described above.
+
+Overall, I think we should bite the bullet and accept sko's
+notifications to linux-distros, with a grace period of up to 7 days.
+Whenever a distro is ready to release an update, they should be able to
+insist on doing so within another 1 day, even if the initially planned
+grace period would expire later.  Would sko be OK with this?  Greg?
+
+Alexander
