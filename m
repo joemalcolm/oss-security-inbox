@@ -1,30 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/22/3
-Message-ID: <20131222104247.GA11108@openwall.com>
-Date: Sun, 22 Dec 2013 14:42:47 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/1
+Message-ID: <20130305012049.GB21499@kroah.com>
+Date: Tue, 5 Mar 2013 09:20:49 +0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE REJECTS
+Subject: Re: handling of Linux kernel vulnerabilities (was: CVE request - Linux kernel: VFAT slab-based buffer overflow)
 Content-Type: text/plain; charset=utf-8
 
-Kurt, all -
-
-On Wed, Dec 18, 2013 at 11:29:23PM -0700, Kurt Seifried wrote:
-> CVE-2013-4403 - turns out CVE-2013-4404 covered the issue, no need for
-> 4403.
+On Mon, Mar 04, 2013 at 10:12:56PM +0100, Eric Lacombe wrote:
+> Hi,
 > 
-> CVE-2013-4418 - turns out to be security hardening, not a security
-> flaw, just like CVE-2013-4417
+> Le lundi 4 mars 2013 11:48:58, Greg KH a écrit :
+> > On Sun, Mar 03, 2013 at 10:39:30PM -0500, Michael Gilbert wrote:
+> > > I was getting encouraged by the recent anger-centric posts, the "what
+> > > is it that we're supposed to do better?" ones. That gave me some
+> > > encouragement that there was the possibility of positive change, but
+> > > the "we're not going to make users more unsafe by telling them about
+> > > issues affecting them" is a persistence of the denial state.  That
+> > > logic completely violates the known idiom that knowledge is power:
+> > > give users the knowledge that they need to protect themselves, and
+> > > they will; starve them of that knowledge, and they remain vulnerable.
+> > 
+> > That's a load of crap.
+> > 
+> > Seriously, you know it only benefits the "bad guys" if I were to say,
+> > "This patch just went into Linus's tree that fixes a security problem
+> > that you can exploit in this manner".  No user would have a chance to
+> > fix their systems before the vulnerability was added to the
+> > "ultra-sploit" tool and everyone would have their systems trashed.
+> 
+> I think there's a difference between disclosing the vulnerability and 
+> disclosing it with a related exploit. The first one allows to fulfill what 
+> Michael Gilbert explains without the consequences that you focus on.
 
-While I greatly appreciate your work on CVE assignments, I'd appreciate
-it if you and others include at least project names and preferably also
-vulnerability types and/or brief descriptions along with CVE IDs in
-postings such as the above.  That would make them a lot more useful to
-those of us who are not focused on CVE as much, but may nevertheless be
-interested in findings about the actual security issues.  We're unlikely
-to go and look up each CVE ID mentioned without detail just in case it's
-relevant to our projects.
+You really think there is a difference?  I assert that there is none,
+and history has shown that this is the case, but feel free to prove me
+wrong.
 
-Thanks,
+> And as Michael Gilbert insisted on, I deeply think that the asymmetry of the 
+> problem should be taken into account for defining the way of dealing with 
+> security flaws.
 
-Alexander
+Then why do we even have the linux-distros list at all?
+
+greg k-h
