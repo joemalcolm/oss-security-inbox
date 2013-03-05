@@ -1,114 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/15/3
-Message-Id: <E1URlkk-0007dC-4q@xenbits.xen.org>
-Date: Mon, 15 Apr 2013 15:55:34 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 48 (CVE-2013-1922) - qemu-nbd format-guessing due to missing format specification
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/8
+Message-ID: <5135BD95.5030409@suse.de>
+Date: Tue, 05 Mar 2013 10:40:37 +0100
+From: Thomas Biege <thomas@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: busybox
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-	     Xen Security Advisory CVE-2013-1922 / XSA-48
-			      version 2
+Am 05.03.2013 10:27, schrieb Thomas Biege:
+> Hi Kurt,
+> 
+> Am 04.03.2013 03:26, schrieb Kurt Seifried:
+>> On 03/03/2013 01:06 PM, Michael Gilbert wrote:
+>>> On Sun, Mar 3, 2013 at 2:50 PM, Kurt Seifried wrote:
+>>>> This actually raises a good point, due to Debian being a 
+>>>> secondary source in most cases (e.g. upstream has a bug
+>>>> report which is then copied into Debian's bug tracker since
+>>>> Debian ships it) the dates and sometimes information is
+>>>> wrong.
+> 
+>>> Aren't these problems true for any source whether it be
+>>> primary, secondary, tertiary, or so on?
+> 
+>> Sorry yeah I should have been more clear. This goes for all the 
+>> major secondary sources (Debian, SUSE, etc.).
+> 
+> I understand this. You provide a very valuable service for free
+> here on the list and we should make as easy as possible for you to
+> do your job.
+> 
+> 
+>>>> I will no longer be issuing CVE's for issues brought up 
+>>>> through the Debian bugtracker without an original source to 
+>>>> back it up, otherwise more mistakes will happen which is not 
+>>>> good.
+> 
+>>> I don't understand the purpose of excluding an entire project's
+>>>  sources.  Should redhat's bugzilla, gentoo, etc. also be 
+>>> excluded for the same reason?  If not, why do they get special 
+>>> treatment?
+> 
+>> I didn't say I;'m excluding them. I simply will require an 
+>> original source, in this case the year is probably wrong.
+> 
+>>> Is there really a problem at all?  The debian report included
+>>> the upstream commit, so you had a link to a primary resource 
+>>> anyway. So, I think a simple solution to this 'problem' of 
+>>> secondary sources is follow them to the primary one?
+> 
+>> Yeah, and people can post them to the list. As stated before, I 
+>> assign a lot of CVEs. One minute extra per CVE is about 20 hours
+>> a year. It adds up. So from now on I'll be needing original
+>> source confirmation in the emails to oss-sec.
+> 
+> Unfortunately this will neither reduce your work-load nor increase
+> the speed. Every CVE request should state exactly the source of the
+> issue instead. I believe that the frequent posters on this list
+> have no problem doing this.
 
-         qemu-nbd format-guessing due to missing format specification
+After reading it again, that is what you already meant.
 
-UPDATES IN VERSION 2
-====================
+Thomas
 
-Public release.
+> 
+> Best, Thomas
+> 
+> 
 
-ISSUE DESCRIPTION
-=================
-
-The qemu-nbd tool (shipped in the Xen hypervisor tools distribution as
-qemu-nbd-xen) autodetects the image format.
-
-If a particular disk image is intended to be raw, a guest operating
-system administrator could write a header to the image, describing
-another format than original one.  This could lead to a scenario in
-which after restart of that guest, qemu-nbd would detect the new
-apparent format of the image, including a specified backing file or
-device, which could allow the guest to read any file on the host.
-
-IMPACT
-======
-
-qemu-nbd (qemu-nbd-xen) is not used by the toolstack software supplied
-with the Xen tree.  However, it is built and installed, and so might
-be used by host administrators or by toolstacks other than libxl or
-xend.
-
-If qemu-nbd is used, a malicious guest administrator may be able to
-read any file on the host, depending exactly how.
-
-VULNERABLE SYSTEMS
-==================
-
-For Xen systems using libxl (xl) or xend (xm): if neither qemu-nbd-xen
-nor qemu-nbd (since qemu-nbd-xen is installed under the latter name in
-/usr/lib/xen/bin) is explicitly invoked by scripts or other software
-not supplied by the Xen project, the system is not vulnerable.
-
-Xen systems using other toolstacks may be vulnerable if those
-toolstacks use qemu-nbd[-xen].
-
-A guest administrator who runs qemu-nbd-xen by hand on a guest may be
-exposing themselves to this vulnerability.
-
-Only qemu-xen-upstream is vulnerable; qemu-xen-traditional has a fix
-which makes this bug not apply.  However, the Xen build system builds
-and installs both by default, in some arbitrary order, to the same
-filename.  So which is installed and might be used is not predictable
-unless the qemu-xen-upstream build is entirely disabled.
-
-Only systems with Xen 4.2 and later installed are vulnerable (by
-virtue of the presence of Xen) as earlier versions of Xen do not build
-qemu-xen-upstream at all.
-
-MITIGATION
-==========
-
-No mitigation is available for users of qemu-nbd[-xen].  If you are
-using qemu-nbd[-xen] from qemu-xen-upstream on raw image files, then
-arranging to use qemu-xen-traditional instead will fail.
-
-If you wish enhanced assurance, removing all copies of of qemu-nbd and
-qemu-nbd-xen will provide confidence that this vulnerable utility is
-not being used.
-
-RESOLUTION
-==========
-
-To resolve the problem, it is necessary to apply the attached patch
-(to the qemu-xen-upstream tree).
-
-It is ALSO NECESSARY to ensure that all invocations of qemu-nbd are
-provided with an appropriate -f (--format) option.  Invoking qemu-nbd
-without this option remains unsafe and the patch does not prevent it.
-
-xsa48-4.2.patch         Xen 4.2.x (Xen's qemu-upstream-4.2-testing.git)
-xsa48-unstable.patch    Xen unstable (Xen's qemu-upstream-unstable.git)
-
-$ sha256sum xsa48*
-11e5d1f576770fde67e80e3e8c30f9a1af404fe6d07f1c37e96d68677f31435c  xsa48-4.2.patch
-20dac78bff584951cb706bb76a3394b47525749655dba2f68a6d923faf168fe8  xsa48-unstable.patch
-$
+- -- 
+Thomas Biege <thomas@...e.de>, Teamlead MaintenanceSecurity, CSSLP
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
+21284 (AG Nürnberg)
+- --
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Version: GnuPG v2.0.19 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-iQEcBAEBAgAGBQJRbBX6AAoJEIP+FMlX6CvZBusIALRc+Cl0DUCJAbGkO8dmzOqA
-C7F9i1mD5gXZEmj0vBc8DEKivHFy3jgicL+j/SeUVMGouSi/FfntIUcevPHa3R1B
-1cPr+oZq9OYZgs/QFbLMPXEeeA0zQiWVJB0AA0h/q+FX5aFE2VpHvi66dcOoBeTL
-kJHOSEjLmuMEa+Gn1r+Y7nL7XXb5osZKMBoIv5wNX1XNv4PH/yEChTuZ5VD0ScU0
-Haib8k2SLDiDiZl/zF/6EdTb/13ceSE7WdBkaJqbbnI8KRbdAc8ERJBuoxupcnAW
-gPaVwlQ8RrGJrySofoiYozbZcAjbFQAUoxR2Vi6DxB/Lnn7V3PeFEwyXMQcx8ko=
-=Nel4
+iQEcBAEBAgAGBQJRNb2VAAoJEJqHoVJVjr8DF/cIAIuKAHu5Z8ZklZA5PZA469I9
+jWUid+XsdhDN6DGVMn2kGkujDmHEYW7Nz6iYKe+lDb3sEm/PlHGmcw+AWRQKSplQ
+inMyyL+NO2HBJq9NYCY6Tr+Jgn0jazM/4/xif40wexZNTnYMM35qL829ymEYZFj5
+rm+DbthL50pY9WkZ1foqK/5BOIu4mvfkjgFZhpq1GUvUyZuWjABX0VCmeD3tETC9
+WpsRhPbn/CDm9i+LA6Z7gtpBlWLAfnPhD2DpfM8PPfSnJCLyXkzVCtDBoC7kLvdK
+tHAJP3UxD1y+pArn5etD6VntcpcBaPLQv38H/tL/FFXbczegoMYVSzqmYOA/lPU=
+=E+/g
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa48-4.2.patch" of type "application/octet-stream" (3786 bytes)
-
-Download attachment "xsa48-unstable.patch" of type "application/octet-stream" (3787 bytes)
