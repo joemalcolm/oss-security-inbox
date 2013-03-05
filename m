@@ -1,16 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/8
-Message-ID: <86txiighrr.fsf@nine.des.no>
-Date: Thu, 22 Aug 2013 12:08:08 +0200
-From: Dag-Erling Smørgrav <des@....no>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/14
+Message-ID: <1362523737.4083.22.camel@tardis>
+Date: Wed, 06 Mar 2013 08:48:57 +1000
+From: Noel Butler <noel.butler@...ics.net>
 To: oss-security@...ts.openwall.com
-Cc: freebsd-security@...ebsd.org
-Subject: Re: FreeBSD Security Advisory FreeBSD-SA-13:10.sctp
+Subject: Re: handling of Linux kernel vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-This also affects third-party software (Firefox, at the very least) that
-incorporates FreeBSD's SCTP implementation.
+On Tue, 2013-03-05 at 07:50 +0400, Solar Designer wrote:
 
-DES
--- 
-Dag-Erling Smørgrav - des@....no
+> All -
+> 
+> On Mon, Mar 04, 2013 at 08:10:22PM -0700, Kurt Seifried wrote:
+> > If you want to discuss the theoretical/philosophical nature of
+> > information security as applied to the Linux kernel I'd be happy to
+> > set up a separate list for that, OSS-Security isn't really the right
+> > venue.
+> 
+> The above is Kurt's opinion, which he is indeed entitled to, but it is
+
+
+
+I kinda agree with Kurt, this thread is like flogging a dead horse, so
+much so Im starting to skip most posts in this thread, cause if I want
+to put to sleep Ill go outside and watch the grass grow :)
+
+current way of doing things has worked for a long time, and, if it aint
+broke, dont break it.
+
+apart from that, it reads to me that some here just want to increase
+their own importance and inflate their own egos, sorry, but that is
+EXACTLY how I see things, like your insistence that Greg et al, post
+notices about commits here days before publishing them.
+
+the net's got enough ego tripsters now, thanks, I left other security
+lists because of people with inflated heads, sorry if thats not your
+intention, but, that is how it comes across, and you know what they say,
+never does just one person think something.
+
+
+
+
+Content of type "text/html" skipped
+
+Download attachment "face-smile.png" of type "image/png" (873 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
