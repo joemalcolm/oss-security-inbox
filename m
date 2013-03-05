@@ -1,29 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/16
-Message-ID: <20130226222723.GA13610@hunt>
-Date: Tue, 26 Feb 2013 14:27:23 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/7
+Message-ID: <5135BA84.7090601@suse.de>
+Date: Tue, 05 Mar 2013 10:27:32 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: psi+ stores the cache file as world-readable
+Subject: Re: CVE id request: busybox
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 26, 2013 at 11:04:24PM +0100, Agostino Sarubbo wrote:
-> Psi+, a fork of psi, stores its files in ~/.cache/psi+ as world-readable.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Hi Kurt,
+
+Am 04.03.2013 03:26, schrieb Kurt Seifried:
+> On 03/03/2013 01:06 PM, Michael Gilbert wrote:
+>> On Sun, Mar 3, 2013 at 2:50 PM, Kurt Seifried wrote:
+>>> This actually raises a good point, due to Debian being a 
+>>> secondary source in most cases (e.g. upstream has a bug report 
+>>> which is then copied into Debian's bug tracker since Debian
+>>> ships it) the dates and sometimes information is wrong.
 > 
-> ~/.cache $ ls -la psi+/
-> total 52
-> drwxr-xr-x 5 ago ago  4096 feb 25 09:41 .
-> drwx------ 5 ago ago  4096 feb 24 23:58 ..
+>> Aren't these problems true for any source whether it be primary,
+>>  secondary, tertiary, or so on?
+> 
+> Sorry yeah I should have been more clear. This goes for all the
+> major secondary sources (Debian, SUSE, etc.).
 
-It appears my ~/.cache and your ~/.cache are mode 0700. Directories
-underneath are already unaccessible by other users, except if one of your
-programs passes a filedescriptor to a directory to another user's process
-(say, cwd is in ~/.cache/psi+ and then executes a setuid program, or
-uses unix(7) SCM_RIGHTS to pass a directory file descriptor to another
-program).
+I understand this. You provide a very valuable service for free here
+on the list and we should make as easy as possible for you to do your job.
 
-Are there environments where ~/.cache isn't 0700 by default?
 
-Thanks
+>>> I will no longer be issuing CVE's for issues brought up
+>>> through the Debian bugtracker without an original source to
+>>> back it up, otherwise more mistakes will happen which is not
+>>> good.
+> 
+>> I don't understand the purpose of excluding an entire project's 
+>> sources.  Should redhat's bugzilla, gentoo, etc. also be
+>> excluded for the same reason?  If not, why do they get special
+>> treatment?
+> 
+> I didn't say I;'m excluding them. I simply will require an
+> original source, in this case the year is probably wrong.
+> 
+>> Is there really a problem at all?  The debian report included the
+>>  upstream commit, so you had a link to a primary resource
+>> anyway. So, I think a simple solution to this 'problem' of
+>> secondary sources is follow them to the primary one?
+> 
+> Yeah, and people can post them to the list. As stated before, I
+> assign a lot of CVEs. One minute extra per CVE is about 20 hours a
+> year. It adds up. So from now on I'll be needing original source
+> confirmation in the emails to oss-sec.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Unfortunately this will neither reduce your work-load nor increase the
+speed. Every CVE request should state exactly the source of the issue
+instead. I believe that the frequent posters on this list have no
+problem doing this.
+
+Best,
+Thomas
+
+- -- 
+Thomas Biege <thomas@...e.de>, Teamlead MaintenanceSecurity, CSSLP
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
+21284 (AG Nürnberg)
+- --
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJRNbqEAAoJEJqHoVJVjr8D8ugH/2I3nQcNGeVWHXRAVlplZyEq
+tsiAxWWizYeaQtpQ9jS/pG2bPS/TDg0rOgFJdaVdXhTNDO4Kge29i8mkL/VsKNGW
+6O7GZQJodCuKFFHIKmcMy3G4VzRkyt9wTLUZnGHFWgn4cd73q+ODyE56AI+Sen7N
+pw9W807vgNLtXpHrJ+S8IzVW4bcyAQAe6ihUuxB9uR/JCWFxqPpMSLrxjsWbCuRJ
+U0wtJ3byDAQY0akMZ6T2Rt9OHF1VxiYGoyR+X5StJgpUWM+4em+akzQB8cpl8ZQq
+3fkKBUdVMY6avLWjHWCL9GOcgIQTUigvqKJKocOnOg9YF6uYMJyoseoIlwrww5Y=
+=rHSx
+-----END PGP SIGNATURE-----
