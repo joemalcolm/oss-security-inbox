@@ -1,59 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/9
-Message-ID: <51082645.1020201@openstack.org>
-Date: Tue, 29 Jan 2013 20:43:01 +0100
-From: Thierry Carrez <thierry@...nstack.org>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA 2013-001] Boot from volume allows access to random volumes (CVE-2013-0208)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/9
+Message-ID: <alpine.LFD.2.03.1303051535280.9898@redhat.com>
+Date: Tue, 5 Mar 2013 15:38:49 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request: Linux kernel: xfs: _xfs_buf_find NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
-OpenStack Security Advisory: 2013-001
-CVE: CVE-2013-0208
-Date: January 29, 2013
-Title: Boot from volume allows access to random volumes
-Reporter: Phil Day (HP)
-Products: Nova
-Affects: Essex, Folsom
+Linux kernel built with support for XFS file system is vulnerable to a NULL
+pointer dereference flaw. This occurs while accessing blocks beyond the end
+of the file system, possibly on a corrupted device.
 
-Description:
-Phil Day from HP reported a vulnerability in volume attachment in
-nova-volume, affecting the boot-from-volume feature. By passing a
-specific volume ID, an authenticated user may be able to boot from a
-volume he doesn't own, potentially resulting in full access to that
-3rd-party volume contents. Folsom setups making use of Cinder are not
-affected.
+A user able to mount the file system could use this flaw to crash the kernel, 
+resulting in DoS.
 
-Folsom fix (included in upcoming Nova 2012.2.3 stable update):
-http://github.com/openstack/nova/commit/317cc0af385536dee43ef2addad50a91357fc1ad
+Upstream fix:
+-------------
+  -> https://git.kernel.org/linus/eb178619f930fa2ba2348de332a1ff1c66a31424
 
-Essex fix:
-http://github.com/openstack/nova/commit/243d516cea9d3caa5a8267b12d2f577dcb24193b
+Reference:
+----------
+  -> https://bugzilla.redhat.com/show_bug.cgi?id=918009
 
-References:
-https://bugs.launchpad.net/nova/+bug/1069904
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-0208
-
-- -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJRCCZCAAoJEFB6+JAlsQQjDSYQALrBUhPwUbxFtVrTSGhjDK7A
-Donl1ykZy1CtsykGiXa5NuREw+xtoKZl/NteLDVRo/C0tWcGe2L2rk5FxMboKdRu
-2I0CXXQ65liHySvZqzlZE6M5TfAhGWCJBOpZArbF6PcB/ZP/F/a/2/BU6HbHonSn
-g58Lq8wKK2JErU5djee9B22wkUTlxiZv2JThOGr/VRoR2F3Zxdmd3UbBC+9Db5tg
-OQMBHlGLXgSCvUZBkzMZwyfxvovf6fpTlmFU/8Ff9OWA4fMxtpsybIcD9BoaLZAd
-2U2/f5qoIbh3soZGF5DH1ucVym0js8NtAf9E+9FVzg2SfHX0sF8Qo1sLowEb/43d
-n8WdBQBYLzfLjKqDGkvNUjfhDHkzO6ujekUQCdMtADBk1tBI6IdfSzyJkhMWXF5S
-Rs3Fpkr1gkXq0xuNf9UQPuA1op2TiBxKa5Z8svOfXnHa7m/NOsYHJ3S4hL5e9E6S
-osJ5LlZDvX+xUGIzRTpViAx0YGwNykRlInhtLJrAoKLWWV/3EA9ap4Bl6XB/ZFsO
-UbUeCDGpepAianOnx2S6p7JhERkcT7R0DHVWI7b5U5hPemt1B6bfkTzgwpwIstDv
-XtSwzVvUuNMfDUG2bMSfXmPqdzZBwdh4iKjIJzT5PecFQ5qBOJOvhF5/aCB2UtI2
-LaVsd1b7v/7C3ln4j/bB
-=eX8i
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
