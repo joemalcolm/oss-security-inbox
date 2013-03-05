@@ -1,28 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/10/3
-Message-ID: <20130510142555.GP14653@dhcp-25-225.brq.redhat.com>
-Date: Fri, 10 May 2013 16:25:55 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/11
+Message-ID: <CAA7hUgHF3g75qfkWwyxmCM=8c_+-zceareiJ4Ns-YaGU_sEqyA@mail.gmail.com>
+Date: Tue, 5 Mar 2013 14:30:39 +0100
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux kernel: tuntap refuse to re-attach to different tun_struct
+Subject: Re: CVE id request: busybox
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 10, 2013 at 05:33:37PM +0530, P J P wrote:
-> Linux kernels built with Universal TUN/TAP device driver(CONFIG_TUN)
-> that includes multiqueue - ioctl(TUNSETQUEUE) - support, is
-> vulnerable to a kernel crash while attaching a device to a new
-> queue.
-> 
-> A user/program could use this flaw to crash the system resulting in DoS.
-> 
-> Upstream fix:
-> -------------
->   -> https://git.kernel.org/linus/6e331f4c83021e4de2a2fc4981574b5d5b16c425
->   -> https://git.kernel.org/linus/7c0c3b1a8a175437991ccc898ed66ec5e4a96208
+Hi Kurt,
 
-As both multiqueue support and fix for this issue were committed in 3.8
-rc versions ((rc1 and rc4, respectively), please reject this request.
+On 4 March 2013 03:26, Kurt Seifried <kseifried@...hat.com> wrote:
+[...]
+> I didn't say I;'m excluding them. I simply will require an original
+> source, in this case the year is probably wrong.
 
-Thanks,
+Not bikeshedding here, but sometimes those bug reports *are* the
+original source.
+And with all due respect, it has happened before that you've asked for
+an "original source" (upstream commit or bug report) when there exists
+none. All it has lead is to the CVE request becoming stalled or even
+abandoned.
+
+What can we do about it?
+
+We already have a quite long list of issues without a CVE id and this
+is not good for anybody:
+https://security-tracker.debian.org/tracker/data/fake-names
+
+(nb. some of the issues in the list might already have an id but the
+temporary entry hasn't been removed or it was decided that no id
+should be assigned)
+
+Regards,
 -- 
-Petr Matousek / Red Hat Security Response Team
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
