@@ -1,70 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/26/8
-Message-ID: <51F2CB9C.4040005@redhat.com>
-Date: Fri, 26 Jul 2013 13:18:52 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/15
+Message-ID: <20130305232739.GA12420@openwall.com>
+Date: Wed, 6 Mar 2013 03:27:39 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>, Andreas Nilsson <andreas.nilsson@...en.com>, Florian <floriangaultier@...il.com>, "A. Jesse Jiryu Davis" <jesse@...en.com>, "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE Request - MongoDB <=2.4.4 uninitialized object
+Subject: Re: handling of Linux kernel vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Noel -
 
-On 07/18/2013 11:00 PM, Moritz Muehlenhoff wrote:
-> On Thu, Jul 18, 2013 at 08:14:39AM -0400, Dan Pasette wrote:
->> We already requested CVE-2013-2132 for this and it was fixed in version
->> 2.4.5.
->>
->> We announced it on mongodb-announce and have it listed in our alerts page
->> here: http://www.mongodb.org/about/alerts/
-> 
-> CVE-2013-2132 was already assigned to this issue in the Python driver:
-> http://www.openwall.com/lists/oss-security/2013/05/31/6
-> https://jira.mongodb.org/browse/PYTHON-532
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-2132
-> 
-> While "your" CVE-2013-2132 refers to
-> https://jira.mongodb.org/browse/SERVER-9878, which AFAICS is a different
-> issue.
-> 
-> Cheers,
->         Moritz
-> 
+On Wed, Mar 06, 2013 at 08:48:57AM +1000, Noel Butler wrote:
+> I kinda agree with Kurt, this thread is like flogging a dead horse, so
+> much so Im starting to skip most posts in this thread,
 
-Can upstream please confirm/deny what is going on here, I'm pressed
-for time recently and don't have time to wade through the code to
-determine what's up, as I see it:
+Apparently, your skipping got to the point where you don't realize
+what's being discussed, as evidenced by some of the confusion below in
+your posting. ;-)  I'll try to explain (below).
 
-1) did a CVE number get recycled? E.g. you fixed the issue referred to
-in CVE-2013-4142 in mongodb but then label it with CVE-2013-2132?
+> cause if I want to put to sleep Ill go outside and watch the grass grow :)
 
-2) are these in fact in need of a CVE merge? (seems unlikely since one
-is mongodb, and the other is the python driver, so different code bases)
+Thank you for sharing your opinion.  The reason why I felt I needed to
+comment on Kurt's posting was that it (inadvertently) sounded like a
+list moderator's, whereas it was not, and that it said that oss-security
+was not the right venue, which was not true (again, this error on Kurt's
+part was not intentional, as he explained to me off-list).
 
-3) some other option?
+> current way of doing things has worked for a long time, and, if it aint
+> broke, dont break it.
 
-I guess my biggest concern right now is confirming that CVE-2013-4142
-( http://blog.scrt.ch/2013/06/04/mongodb-rce-by-databasespraying/) is
-in fact fixed in release 2.4.5 of mongoDB. Thanks!
+We've just had several examples of the current way of handling Linux
+kernel vulnerabilities not working as well as many of us would have
+liked it to, and, as many of us think, as it could work.  This is
+precisely what prompted the discussion.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+> apart from that, it reads to me that some here just want to increase
+> their own importance and inflate their own egos, sorry, but that is
+> EXACTLY how I see things, like your insistence that Greg et al, post
+> notices about commits here days before publishing them.
 
-iQIcBAEBAgAGBQJR8sucAAoJEBYNRVNeJnmThyoP/1iLNar6Ebax4ini7ZsUIDOP
-fQVtXD0H5soEMmaqtgVLvmpobvCmcKdk1Yx6GbARgvCiR9aRxODRr6uUHTqWYo8l
-YkH7RHLXBNPfo31itzvF2psKkS0rcfhNw9eWIYkx7wbKd4eGSi64s/F8+A/Ewtql
-7ZDo6lwxlmY8vEDaAo98Ts+Cavs0lF1EOFQ3z3nF6gDkZWKMER1R/WnZXnnop/j7
-kc5xVWifdHJWkJOJ90wlhthZmyp+YijAMKINScPBv+/tgCZT5OKBM+7+VJFGKJLg
-ZngwIcEkRRfqd/G9l+fQ1q6lMQPzKcFIIONeGSzIjxUay++uHBHUbxSS1A4YYwSW
-VoOj7IZZ5BG+UZfG/Z8fQunG074W+QHKI8mx9XnmuZnZA9zo4MJ8PdvaVxhQE+mL
-ACdOjBQQtHCyT46hOpPVE3RVXuFdzI3uDXaTN3YaWo63I03220vytr3gFkbT5Vv2
-5+v2vE1wDQixXoH+92Y6fJkEoyk43s26BhEHrhvnKXzorxV7OUPvnIcOaWZR/JQA
-cdetu9duQa3Kn95x0GS4OU/qE9CJ6WC+gsO90SD4p/8B9/6eARVZ+DzUaw798eaP
-+X4SbvNu0+eUO85hMfGhDT3STrr8E7MzVTBYSn70QZduzA8FXpzM0p42h8KTbo8S
-Cyp09K0HbsPMTte1nuNN
-=qHRK
------END PGP SIGNATURE-----
+I never insisted that Greg et al. "post notices about commits here days
+before publishing them".  (How would that even be possible?  Posting in
+here is publishing.)
+
+I said that I wished (not insisted) that Greg et al. posted notices
+about commits in here on the commit day (not "before", but at about the
+same time with commits - even a few hours later is OK, just on same
+day).  I also said that I had little hope they would, as they said so
+before, so I did not argue about that (others had done plenty of it).
+
+Thus, in my posting I focused on what we should do given that Greg et
+al. won't be notifying oss-security, but would only be notifying
+linux-distros.  This was not a repeat of any past discussion, as far as
+I'm aware, although the general and fundamental issues involved are very
+old indeed.
+
+I am referring to this posting:
+
+http://www.openwall.com/lists/oss-security/2013/03/04/1
+
+As you can see, I made this posting in response to a specific question
+from Petr.  The question was directly addressed to me and thus required
+a response, and a public one.  I also asked Greg a practically relevant
+question, and got his response: namely, that linux-distros "can notify
+the world when they decide to do so".  Before that point, it was unclear
+to me (and apparently to Petr as well) whether linux-distros would be
+required to keep the info private (despite of the public commits...) for
+at least a certain minimum time period.  This will have impact on how we
+proceed.  It's not just blabbering.
+
+> the net's got enough ego tripsters now, thanks, I left other security
+> lists because of people with inflated heads, sorry if thats not your
+> intention, but, that is how it comes across, and you know what they say,
+> never does just one person think something.
+
+I think your impression is in part a result of you not paying attention
+to what's actually being discussed.  Perhaps you saw some "trigger
+words" and some familiar rhetoric in some of the postings, and stopped
+paying attention at that point.  And yes, I'm sure some others reading
+this thread have similar impression.
+
+Besides the likely pointless arguing (as it is unlikely anyone's opinion
+will change), we're discussing very practical issues that will affect
+how and to whom information on Linux kernel vulnerabilities is
+communicated and with what delays.
+
+Alexander
