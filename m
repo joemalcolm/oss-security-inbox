@@ -1,59 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/18/6
-Message-ID: <50F9AA55.5020907@redhat.com>
-Date: Fri, 18 Jan 2013 13:02:29 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org
-Subject: Re: CVE Request: PHP openssl_encrypt memory disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/13
+Message-ID: <CA+rthh9xW3Wcmp+sOax69+GXyre151359XcvpcOKtTA6w3w6Kw@mail.gmail.com>
+Date: Tue, 5 Mar 2013 21:52:30 +0100
+From: Mathias Krause <minipli@...glemail.com>
+To: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>
+Subject: CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Kurt,
 
-On 01/18/2013 08:59 AM, Marc Deslauriers wrote:
-> Hello,
-> 
-> PHP 5.3.9 to 5.3.13 disclose arbitrary memory when an empty $data
-> string is passed to openssl_encrypt.
-> 
-> It was introduced with the following commit: 
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=095cbc48a8f0090f3b0abc6155f2b61943c9eafb
->
->  and was fixed in 5.3.14 with the following: 
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=270a406ac94b5fc5cc9ef59fc61e3b4b95648a3e
->
->  Bugs:
-> 
-> https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1099793 
-> https://bugs.php.net/bug.php?id=61413
-> 
-> Could a CVE please be assigned to this issue?
-> 
-> Thanks,
-> 
-> Marc.
+I don't care much about info leaks beyond merely fixing them. But
+Alexander asked me to request a CVE ID for the recent crypto fix of
+mine and as I did quite a few of such fixes in the recent past, I'll
+just list them all here. The information might be a bit scarce for a
+CVE ID request but as I don't expect any CVE IDs anyway, I didn't
+wanted to do too much unnecessary work. ;)
 
-Please use CVE-2012-6113 for this issue.
+9a5467b crypto: user - fix info leaks in report API
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+This is quite a big info leak of heap, stack and .text memory. No
+crypto material, though. Also, as the crypto user API is protected by
+capable(CAP_NET_ADMIN), it's not as critical as is might sound on the
+first sight. It affects all versions from the introduction of the
+crypto user API -- that is v3.2 - v3.8.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ+apUAAoJEBYNRVNeJnmTNT0P/iUJSudEE5cbicav6oL75pJE
-pGbL0naByi6OmtbtczJ23TJqXkfLoAtvXEvUP0jxRJPAyyx9nOzFSKAWL9ET8FVP
-7TOESNW78DqXga4rlkFcpZgJgFS718gWl/wRfs5ssmnxb5Sl8fk7RhJh00ApzX6z
-WDx8db1r32WI+q25W1ATCzrII9pxhxO0sUjJOmFYcsxaU5lgKh5zsZp0CROACKLI
-O0n47CDvlBazAKCmlvgnvEvVpYvZV1R+HmKy9dRV9PgOIcyDVAENifwBYo3fBYg1
-YuBg9Wd+jpiuarkcNvGLHf5hpHBX9wvc3D+vV3K2BdmfoLujUuAxGeOTpQGVMpg0
-AAgZmOHKI7Cfr/u9FngccN3ktByCqnsPf/+gpk1mlw0PJguQEyj4CrOFX6aklFMg
-OYs7sgaVXwYsyH82a2OCbFEf4vQoMJd6Zbn+YfJJD59B3ZiniK0GbmbJgMdI1zxD
-PY2eGuokDB2Aj9ECiSPNTHl92EtUg8u5FQjX0ZC6AnFUwZ4FatkNsmiYmNNjnIKn
-xxC7kHjhTaZ9T4rr5PGj3MHrOwY4Dispfe/Kxo9XphGsLBKq0qJjF3GpYz4aYtVn
-6xizt1n8YEeYAp2RxQsyyvPMs6eGjrqozi05ZELpNDe2sFke5PeTlZUAxPGmqhRJ
-VydAk2tlSUTXgUJkzItG
-=a2aY
------END PGP SIGNATURE-----
+Older info leak fixes follow. All of them ended up in v3.6 and were
+backported to the stable/longterm kernels at the time:
+
+ecd7918 xfrm_user: ensure user supplied esn replay window is valid
+What: Leaks up to ~3.5kb heap memory. Was protected by
+capable(CAP_NET_ADMIN) at the time.
+
+1f86840 xfrm_user: fix info leak in copy_to_user_tmpl()
+What: Minor leak of stack memory. Was protected by
+capable(CAP_NET_ADMIN) at the time.
+
+7b78983 xfrm_user: fix info leak in copy_to_user_policy()
+What: Minor leak of heap memory. Was protected by
+capable(CAP_NET_ADMIN) at the time.
+
+f778a63 xfrm_user: fix info leak in copy_to_user_state()
+What: Minor leak of heap memory. Was protected by
+capable(CAP_NET_ADMIN) at the time.
+
+4c87308 xfrm_user: fix info leak in copy_to_user_auth()
+What: Leak of heap memory. Was protected by capable(CAP_NET_ADMIN) at the time.
+
+43da5f2 net: fix info leak in compat dev_ifconf()
+What: Minor leak of stack memory.
+
+2d8a041 ipvs: fix info leak in getsockopt(IP_VS_SO_GET_TIMEOUT)
+What: Minor leak of stack memory.
+
+7b07f8e dccp: fix info leak via getsockopt(DCCP_SOCKOPT_CCID_TX_INFO)
+What: Minor leak of stack memory.
+
+3592aae llc: fix info leak via getsockname()
+What: Major leak of stack memory (up to 128 bytes).
+
+04d4fbc l2tp: fix info leak via getsockname()
+What: Minor leak of stack memory.
+
+792039c Bluetooth: L2CAP - Fix info leak via getsockname()
+What: Minor leak of stack memory.
+
+9344a97 Bluetooth: RFCOMM - Fix info leak via getsockname()
+What: Minor leak of stack memory.
+
+f9432c5 Bluetooth: RFCOMM - Fix info leak in ioctl(RFCOMMGETDEVLIST)
+What: Minor leak of heap memory.
+
+9ad2de4 Bluetooth: RFCOMM - Fix info leak in getsockopt(BT_SECURITY)
+What: Minor leak of stack memory.
+
+3f68ba0 Bluetooth: HCI - Fix info leak via getsockname()
+What: Minor leak of stack memory.
+
+e15ca9a Bluetooth: HCI - Fix info leak in getsockopt(HCI_FILTER)
+What: Minor leak of stack memory.
+
+3c0c5cf atm: fix info leak via getsockname()
+What: Minor leak of stack memory.
+
+e862f1a atm: fix info leak in getsockopt(SO_ATMPVC)
+What: Minor leak of stack memory.
+
+a117dac net/tun: fix ioctl() based info leaks
+What: Leak of 36 bytes of stack memory.
+
+0143fc5 udf: avoid info leak on export
+What: Minor leak of heap memory.
+
+fe685aa isofs: avoid info leak on export
+What: Minor leak of heap memory.
+
+
+Now do follow a few NULL ptr derefs ending up in privilege escalation
+if a user is able to map page 0 or probably a DoS otherwise. Also
+those have all been fixed in v3.6 and backported to the corresponding
+stable/longterm kernels at the time:
+
+864745d xfrm_user: return error pointer instead of NULL
+What: Wrong return of NULL leads to wrong path in calling function
+leading to NULL pointer deref of skb.
+
+276bdb8 dccp: check ccid before dereferencing
+What: Missing NULL pointer check leads to NULL function pointer.
+
+
+That's all. Enough, I guess ;)
+
+
+While we are at it: Do we care about getting CVE IDs for info leaks?
+If so, all of them or only for the ones with leaks above a certain
+threshold (>= 16 bytes, e.g.)?
+
+
+Regards,
+Mathias
