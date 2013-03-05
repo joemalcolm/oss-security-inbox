@@ -1,21 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/06/1
-Message-ID: <20130906162823.GR5194@redhat.com>
-Date: Fri, 6 Sep 2013 10:28:23 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: pyOpenSSL hostname check bypassing vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/4
+Message-ID: <51358E9D.6040705@redhat.com>
+Date: Mon, 04 Mar 2013 23:20:13 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, security@...imedia.org
+Subject: CVE's for MediaWiki 1.20.2 / 1.19.2
 Content-Type: text/plain; charset=utf-8
 
-pyOpenSSL suffers from the same NULL-byte truncation issue that ruby,
-python, php, etc. suffered from (like ruby CVE-2013-4073).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-0.13.1 was recently released to correct this.  Could a CVE be assigned?
+In future if Mediawiki security wants to get CVEs easily just contact
+secalert@...hat.com and we can provide you with CVE's in advance.
 
-References:
+http://www.mediawiki.org/wiki/Release_notes/1.20
+http://www.mediawiki.org/wiki/Release_notes/1.19
 
-https://mail.python.org/pipermail/pyopenssl-users/2013-September/000478.html
-https://bugzilla.redhat.com/show_bug.cgi?id=1005325
+(bug 44135/bug 42441) Pass '2' instead of 'true' to CURLOPT_SSL_VERIFYHOST
+https://bugzilla.wikimedia.org/show_bug.cgi?id=44135
+https://bugzilla.wikimedia.org/show_bug.cgi?id=42441
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Please use CVE-2013-1816 for this issue.
+
+
+
+(bug 43518) API action=unblock should return the user name, not the
+full user object
+https://bugzilla.wikimedia.org/show_bug.cgi?id=43518
+
+Please use CVE-2013-1817 for this issue.
+
+
+1.20.2 only:
+(Bug 45355) Prevent read of arbitrary files through mwdoc-filter.php
+https://bugzilla.wikimedia.org/show_bug.cgi?id=45355
+
+Please use CVE-2013-1818 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRNY6dAAoJEBYNRVNeJnmT8D4QAInmJBxHEo/gQA7UYjk6wZMG
+7VR33+qwyYKLkxGsj81I+ExQLKpxQhTC6P33F69n8wr9aNBTMBkHKytzou13HWgJ
+qNYT2NmactiH2m3ha8mMP5lPPC4QY7ljm3VLf1p83G/jKMBXR6sBz8J0llf0XS3r
+PUypBPVXc7ffq0PE81T4DG6f0kk3KFOPaXEZ3FNWtjVBv9YRlIKintGjRprqTddP
+SIq2iZGXYkKoidNQk4x8oSJ/4XppwsxGA1oz2yBrYCVbAqATqnfSfodwuXQgiuKn
+nlHNvcDxQaes6vLg8KTTHmkqrwkaCvR47hKOpTPdTvjnifoTdKwp/QvBrn9H2nNZ
+lujdm7xqbHElHUgmYpGVd0W99mXCHYey/vFTDqcqU+TnjkW4m/3Jwc8/EpdbJB74
+B5TBBR5EDLO9n/u+29E/u5XLAMyxySYZpgctSdQdy5dETzS7kfRAiFJbN18N5Fgw
+CK5+p2EFRz9pWUhVZSamjGWHLE1aHluQeae9f8rhFnFdaomcJt3DwK9IdCU30l3o
+wR8Mvsc7b2n06UpG6vffF2akNM/jIfhc0DC3Yq0hr5WzDDhNRyvRmblh4wvbUDFL
+7KBsPAeIRbE59Vl9uD0k8/epLQwnbX0cK40CW8+vjp3fBw+498aRT/ANZ+WIAQIZ
+KepwQx0eZNkluvUba35G
+=/tFb
+-----END PGP SIGNATURE-----
