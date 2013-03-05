@@ -1,30 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/53
-Message-ID: <alpine.LRH.2.00.1302280030170.30582@twin.jikos.cz>
-Date: Thu, 28 Feb 2013 00:33:00 +0100 (CET)
-From: Jiri Kosina <jikos@...os.cz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/3
+Message-ID: <20130305035013.GA6465@openwall.com>
+Date: Tue, 5 Mar 2013 07:50:13 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Subject: Re: handling of Linux kernel vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 27 Feb 2013, Greg KH wrote:
+All -
 
-> > Hmm, I wonder if perhaps the solution here isn't about spending a lot
-> > of time analyzing hundreds of potentially serious bugs and notifying
-> > the world about them all in an accurate way.  Perhaps the solution is
-> > changing the development model or architecture of the kernel such that
-> > there aren't so many bugs with *serious* impact in the first place.
-> > 
-> > Ooops... did I say that out loud?  
-> 
-> There's nothing wrong with that, and we have made many changes in the
-> kernel to help mitigate problems before they occur.
-> 
-> If you know of any other ways that we can do this, please let us know.
+On Mon, Mar 04, 2013 at 08:10:22PM -0700, Kurt Seifried wrote:
+> If you want to discuss the theoretical/philosophical nature of
+> information security as applied to the Linux kernel I'd be happy to
+> set up a separate list for that, OSS-Security isn't really the right
+> venue.
 
-- W^X
-- not letting kernel dereference userspace pointers (and PMAP is not 
-  available everywhere, unfortunately)
+The above is Kurt's opinion, which he is indeed entitled to, but it is
+not a list moderators' statement.  Thus, please do not be
+significantly discouraged to discuss "the theoretical/philosophical
+nature of information security as applied to the Linux kernel" in here
+just because of Kurt's posting. :-)  Indeed, if that's the general
+feeling of list members, we may have to put an end to the discussion,
+but I am not seeing that yet.  In fact, I think the discussion will
+happily clam down on its own.
 
--- 
-Jiri Kosina
+Discussions such as this one are in fact on-topic here, despite of them
+being relatively rare.  This is the right venue.  I do not think we need
+a separate venues for these things yet (if ever).
+
+Thanks,
+
+Alexander
