@@ -1,31 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/01/2
-Message-ID: <20130601165401.GH17379@outflux.net>
-Date: Sat, 1 Jun 2013 09:54:01 -0700
-From: Kees Cook <keescook@...omium.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/10
+Message-ID: <5135CAAD.7030504@redhat.com>
+Date: Tue, 05 Mar 2013 03:36:29 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2013-2850: Linux kernel iSCSI target heap overflow
+CC: P J P <ppandit@...hat.com>
+Subject: Re: CVE request: Linux kernel: xfs: _xfs_buf_find NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-I found an unauthenticated remote heap buffer overflow in the Linux
-iSCSI target subsystem. If there is a target configured and listening
-on the network, a remote attacker can corrupt heap memory, and almost
-certainly gain kernel execution control. I only got as far as proving
-it could Oops the server.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It has been fixed in the upstream iscsi tree:
+On 03/05/2013 03:08 AM, P J P wrote:
+> Hello,
+> 
+> Linux kernel built with support for XFS file system is vulnerable
+> to a NULL pointer dereference flaw. This occurs while accessing
+> blocks beyond the end of the file system, possibly on a corrupted
+> device.
+> 
+> A user able to mount the file system could use this flaw to crash
+> the kernel, resulting in DoS.
+> 
+> Upstream fix: ------------- ->
+> https://git.kernel.org/linus/eb178619f930fa2ba2348de332a1ff1c66a31424
+>
+>  Reference: ---------- ->
+> https://bugzilla.redhat.com/show_bug.cgi?id=918009
+> 
+> Thank you. -- Prasad J Pandit / Red Hat Security Response Team DB7A
+> 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
 
-http://git.kernel.org/cgit/linux/kernel/git/nab/target-pending.git/commit/?id=cea4dcfdad926a27a18e188720efe0f2c9403456
+Please use CVE-2013-1819 for this issue.
 
-A follow-up has been posted fixing similar anti-pattern uses of
-strncpy(dst, src, strlen(src)) in the rest of the kernel:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-https://lkml.org/lkml/2013/5/31/406
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Thanks,
-
--Kees
-
--- 
-Kees Cook
-Chrome OS Security
+iQIcBAEBAgAGBQJRNcqsAAoJEBYNRVNeJnmTNWAP/iVgzKLALr90GoEczhWQXMWt
+xFE/DyzNpjR1qm3S3gPJ2MUozGYX4UgF6+68F3dpJJY85woXY0k40rdK8KPctlfE
+5dVHOeSAVxvEV0SfEK0rT6+L1KD5rCjnoOR1l2QyCYX2Qww04PLOIN/uZlJeEklY
+BjdZ6JueSQfyJNaCBpDyURwpY1GNk69TpHJ9+NHcOJ/BmsspVcMN5aOd4XN94U8M
+0D3s5mWj8hBsoPLFziNanFbJJNHZx6PrJoQyNwr6XOoGD3AwlhIUgVtHERMyxGxF
+wh3d1GdSqWhjPvrFr1DlQD0Pi4h5Pgp0YwOetREpjzPaWzkIinvNTZwHmGTHGNVL
+2U36DFi/N67xqZgZ+isRdIl1LsEuLueUJlZB813iYbG1mRQpCyZ/5nX5uliwqAlX
+mO7mg1Nj1mgvjFrb7M8wRU9tW1es364u6Rproa7qx2BATrfvqZMUPFDW3xGBVTqA
+fqIpgLjvYq+DXTJPGAPN1R9sP3kFtoudh1UzYeoTu20cEJhpThSoRLsHQWTZFaOB
+RW5QVs0MQphxRvGjCL/DsLRad6Ofv7C18NUpeOE6E4rYX7OzfUDEiQcfD5P++PkZ
+1U46TLXlfZlSFv6Ba/OzDrRuKJrY3VHBe7voIb/0iyfTEyundsGlvSd/o8afSvs3
+Kml2h0N0OZMp2C/WXIs8
+=8keL
+-----END PGP SIGNATURE-----
