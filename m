@@ -1,80 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/4
-Message-ID: <alpine.LFD.2.03.1301161449530.18563@redhat.com>
-Date: Wed, 16 Jan 2013 15:03:02 +0530 (IST)
-From: P J P <ppandit@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/12
+Message-ID: <5136377C.1000401@redhat.com>
+Date: Tue, 05 Mar 2013 11:20:44 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel handling of IPv6 temporary addresses
+CC: Raphael Geissert <geissert@...ian.org>
+Subject: Re: CVE id request: busybox
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  Hello,
+On 03/05/2013 06:30 AM, Raphael Geissert wrote:
+> Hi Kurt,
+> 
+> On 4 March 2013 03:26, Kurt Seifried <kseifried@...hat.com> wrote: 
+> [...]
+>> I didn't say I;'m excluding them. I simply will require an
+>> original source, in this case the year is probably wrong.
+> 
+> Not bikeshedding here, but sometimes those bug reports *are* the 
+> original source. And with all due respect, it has happened before
+> that you've asked for an "original source" (upstream commit or bug
+> report) when there exists none. All it has lead is to the CVE
+> request becoming stalled or even abandoned.
 
-+-- On Wed, 14 Nov 2012, Greg KH wrote --+
-| > [183.793393] ipv6_create_tempaddr(): retry temporary address
-| > regeneration [183.793405] ipv6_create_tempaddr(): retry temporary
-| > address regeneration [183.793411] ipv6_create_tempaddr(): retry
-| > temporary address regeneration
-| > 
-| > After 'regen_max_retry' is reached the kernel completely disables
-| > temporary address generation for that interface.
-| > 
-| > [183.793413] ipv6_create_tempaddr(): regeneration time exceeded -
-| > disabled temporary address support
+Then say so. Basically I don't want people making lazy requests and
+forcing me to do the basic research.
 
-  I was trying to reproduce this with the `thc-ipv6-2.0' toolkit, by sending 
-ICMPv6 RA requests. Kernel logs following message, not the above ones
+> What can we do about it?
+> 
+> We already have a quite long list of issues without a CVE id and
+> this is not good for anybody: 
+> https://security-tracker.debian.org/tracker/data/fake-names
 
-...kernel: ICMPv6 RA: ndisc_router_discovery() failed to add default route
+So research them and post the requests here, problem solved! It's not
+like I'm unwilling to give out CVEs or something. I simply can't spend
+an hour researching each one.
 
-| > A malicious LAN user can send a limited amount of RA prefixes and thus
-| > disable IPv6 temporary address creation for any Linux host.
+> (nb. some of the issues in the list might already have an id but
+> the temporary entry hasn't been removed or it was decided that no
+> id should be assigned)
 
-  is there a RA parameter I need to pass to reproduce above message from 
-ipv6_create_tempaddr() ?
+And that's why I'm not going to deal with them myself, it would eat up
+all my time. I need some help here in other words.
 
-| > 
-| > The kernel should at least differentiate between the two cases of
-| > reaching max_addresses and being unable to create new addresses, due to
-| > DAD conflicts for example.
+> Regards,
 
-  Does this patch seem right?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-===
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 420e563..742d66a 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -1046,12 +1046,19 @@ retry:
- 	if (ifp->flags & IFA_F_OPTIMISTIC)
- 		addr_flags |= IFA_F_OPTIMISTIC;
- 
--	ift = !max_addresses ||
--	      ipv6_count_addresses(idev) < max_addresses ?
--		ipv6_add_addr(idev, &addr, tmp_plen,
--			      ipv6_addr_type(&addr)&IPV6_ADDR_SCOPE_MASK,
--			      addr_flags) : NULL;
--	if (!ift || IS_ERR(ift)) {
-+    ift = NULL;
-+    if (!max_addresses || ipv6_count_addresses(idev) < max_addresses)
-+        ipv6_add_addr(idev, &addr, tmp_plen,
-+                        ipv6_addr_type(&addr) & IPV6_ADDR_SCOPE_MASK,
-+                        addr_flags);
-+    if (!ift) {
-+        in6_ifa_put(ifp);
-+        in6_dev_put(idev);
-+        pr_info("%s: ipv6 temporary address upper limit reached\n", __func__);
-+        ret = -1;
-+        goto out;
-+    }
-+    else if (IS_ERR(ift)) {
- 		in6_ifa_put(ifp);
- 		in6_dev_put(idev);
- 		pr_info("%s: retry temporary address regeneration\n", __func__);
-===
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+iQIcBAEBAgAGBQJRNjd8AAoJEBYNRVNeJnmTVGYQAKFMMAYOE7ruEg1stN7tzAQs
+7tDDLCam7a8j2AHGBVogmI4I6ADfRwcqwjNBv7DOv63AQZbkw+OiVGbPADMGlKDP
+8ZIdiwZvt2Z6OBprH6k0vVMGpSF9aQcirDF0qdXplGjo8sxiyXG8S8YZy0/b/y7Q
+QJo5qezE5+5djiG9EGNQi97VnARo514eZGLqdo8kWE2FHV+js64oSkUcH5Veu02C
+NAQRQziKZNpWf3ZCVZ4ByOEigbSuy8198lFqCjB3XoXrEIYk+eT2g1Fx41KdToQk
+ZLQ5mfAqWN/9wMLBRPRcMnojNFMHaOhCZ1AULcQyAsngu36hmvAPwFidVsDJTBwG
+M9UANh5Lq9Mkwu4zqF43/v3raen2Y1vQcFa7YBneHoXxtZQEDFHhK+QiZFHhLaMe
+TBmiuzu+N+WAhPtrGYd23BQRrOytepuFzjG2NFbxYiao8fYgFZ0rB+4Yn/W9b7t/
+kCmfJttKVPwgtoS6+Oj4a/FrgVhMiWrcjonv6njxleiWvS6gsziChp4+pp+grEr3
+ygFgogDtJgC2/yKlwV/ycz4rG2iiAHqkHXmebn21Nwfsxr3WnaVYQd8sJ3eOyczI
+pi49oU1L98678JlopgvifZhut803cqIH5sFT8hZvNIgVPH+eUfqvAGH1tI2q8ewN
+eA3Gc1vXdzMF19rRFlEL
+=b60Q
+-----END PGP SIGNATURE-----
