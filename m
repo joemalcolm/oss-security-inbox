@@ -1,61 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/14
-Message-ID: <51D1F685.5050608@redhat.com>
-Date: Mon, 01 Jul 2013 15:37:09 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Question about signed email
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/5
+Message-ID: <51359A99.5040907@op5.se>
+Date: Tue, 05 Mar 2013 08:11:21 +0100
+From: Andreas Ericsson <ae@....se>
+To: oss-security@...ts.openwall.com
+CC: Eric Lacombe <goretux@...il.com>
+Subject: Re: handling of Linux kernel vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi list. I work for a sub-vendor who ships one of the major distros as
+part of an appliance. Just thought I'd chip in with my €0.02.
 
-- -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 03/04/2013 10:12 PM, Eric Lacombe wrote:
+> Hi,
+> 
+> Le lundi 4 mars 2013 11:48:58, Greg KH a écrit :
+>> On Sun, Mar 03, 2013 at 10:39:30PM -0500, Michael Gilbert wrote:
+>>> I was getting encouraged by the recent anger-centric posts, the "what
+>>> is it that we're supposed to do better?" ones. That gave me some
+>>> encouragement that there was the possibility of positive change, but
+>>> the "we're not going to make users more unsafe by telling them about
+>>> issues affecting them" is a persistence of the denial state.  That
+>>> logic completely violates the known idiom that knowledge is power:
+>>> give users the knowledge that they need to protect themselves, and
+>>> they will; starve them of that knowledge, and they remain vulnerable.
+>>
+>> That's a load of crap.
+>>
+>> Seriously, you know it only benefits the "bad guys" if I were to say,
+>> "This patch just went into Linus's tree that fixes a security problem
+>> that you can exploit in this manner".  No user would have a chance to
+>> fix their systems before the vulnerability was added to the
+>> "ultra-sploit" tool and everyone would have their systems trashed.
+> 
+> I think there's a difference between disclosing the vulnerability and
+> disclosing it with a related exploit. The first one allows to fulfill what
+> Michael Gilbert explains without the consequences that you focus on.
+> 
 
-This message is properly signed right? Can people reply privately and
-tell me what it looks like in their email client, e.g. if it looks
-properly signed or not? Screen shots welcome. Thanks
+Writing and testing an exploit for a "usable" security issue takes all of
+an hour or two. Coming up with a proper patch, testing it, packaging it
+and releasing it to users takes at least a week, and I personally think
+that's erring optimistically.
 
+For parts of a system that really *can't* be disabled without making the
+system completely unusable (kernel, glibc and to some extent ssh tools),
+I think a longer shush-time than "time of commit" is suitable for full
+disclosure announcement. Note "announcement" here. People who're really
+interested can ofcourse see in the patch and commit-message how the bug
+can be triggered.
 
-- -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Otoh, where workarounds can be applied that prevent the bug from happening
+the issue, I believe protection information should be released immediately.
+Writing exploits (or test-cases) from workaround information is a *lot*
+harder than from full disclosure listings.
 
+-- 
+Andreas Ericsson                   andreas.ericsson@....se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-- - --
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-- -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJR0fZeAAoJEBYNRVNeJnmTTkIQAIr6OkoHbkKCx0LMZQve4oIJ
-fjUHHx3WqOyQR5I1OStrt2RLoJeWzIpFUPrQTRFoPvpyCUXW/sNvGoILTjZftD3l
-1A6andojNuNSXZmL7TWZ9Ce1YdOh+C5cbd6edYLbpkwOt9ZrPya6xsrPpztJLDvT
-d9jx8/lxnmDo0K8zFuk+k0a2G8Z4N5xkA/JpR8WqA28sD4X6S1RbA/Rq360/qw//
-4zEkDFlNODlplGVNKxuSLfNR8D2eFleDF8ZMovJM1JPT7E4fQEi4E4wVHzD/Y8qk
-dsGF2OEBjpvLcehH2PA9w/IxB5yJdToiHM9aRyz5drjOT+pYkRktFLPSrpsc7z24
-EPHCv1SlIRoYxSeTtFxOg/K8T67uBwmNerWSh4WKicy1dWmMm9UqytRQLo76t0Cz
-tKxOuzEDU8X+uh8uQK1wsE3x5kzHTISJHmzZ6WIGTpIjOyznt7nXgCbP9u0GU+8X
-Cx0EJD+gou2QyqBfW1/3JtSa+pE/WuOJG5Gh35idvxoZC+znzKSs5KfDE+UJ2fP5
-p7ctLubLO4gR5GfB02R37ayGFNiBg+ww0Z5NoN6RpA70J7s4KGxM00XqFeZiuIon
-GQXsYUgrIaptx04SORR2/Dvsv98dh0/PHMUVzeVkQwUQHqsAgrkBvuIGbI1n+NoR
-cSWpEf0XM5mYxRtMGSrU
-=bCBE
-- -----END PGP SIGNATURE-----
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJR0faFAAoJEBYNRVNeJnmTboEQAI8jWhNRneMvevZfN3CntW+L
-6Edx1pypmgHHFjdnBPpXF5R1NNFy0QTY3HYW/ADWeWA7U7cmDFupESETTqyMFx1h
-k37Q5nOZcQtKWz2RUzGRBiNfZ+lDs9tCWzSAmGSfuuKXEm+fSL+dS9xNICgc3s91
-KJURWjTbKFyIbguAbHTxSZJ9eADICEfEpDvMkbOJnfdXtJ0JM7vLj3+aD/fDKnG9
-uYiTXr0oHKnJDD+8f7w66+WKCYeuNwdalc0TZAsOvwr58ws1JetJBE4x68T0rbCW
-95UjMO4adU0VwEzeBrVgY4UL+K0sep2j9V+1+Q3NxF+jzdBQ5sPswXnh1yeLj1Ug
-7iQTgk+qPMJ8gooWiB6cbrcvwztKTPmVjVZBDwwiiMNQctMBrPmDFLgiN3aWjeLm
-ukatP23eS569vsI00UKD+vSC6Mm60ofAPJHADOKPWGVNUujGCeJROvHwurfK+tP9
-qO2Ly/PDX1peWh3w/48pHtPFBsnsXd2Iw+v4xttCnpjd08ppkCAFDycQv0jmqHA1
-qOnL3F02523+7IgAQJW12ozTGWjqaGSkJRevSK9oMBGFtHfhElfxpejsYRgkbx+y
-1N82HR7xq8FJMMUx7l4Fs4QZfTg2e8Qo2XG9uPA9dx7t2faJPQ8mYlN4tpMZCOx7
-xt1XD0jUnQ5tG82c9RS9
-=YcTM
------END PGP SIGNATURE-----
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
