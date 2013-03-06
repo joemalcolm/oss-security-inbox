@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/6
-Message-ID: <20131113163722.GD28665@sentinelchicken.org>
-Date: Wed, 13 Nov 2013 08:37:22 -0800
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Microsoft Warns Customers Away From RC4 and SHA-1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/06/1
+Message-ID: <5136BA40.1030604@newcomlink.com>
+Date: Tue, 5 Mar 2013 21:38:40 -0600
+From: Alton Moore <alton.moore@...comlink.com>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: handling of Linux kernel vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 13, 2013 at 11:09:10AM -0500, Eric H. Christensen wrote:
-> On Wed, Nov 13, 2013 at 07:57:51AM -0800, Tim wrote:
-> > > I'm inclined to agree. The question I suppose is, like DES (and
-> > > 3DES/MD5) at what point do we start assigning CVE's for some of this?
-> > > thoughts and comments welcome.
-> > 
-> > Using a weak encyption algorithm alone isn't a sufficient condition to
-> > issue a CVE against software, since often the context of the usage
-> > matters a lot.  If you use MD5 or SHA-1 for password hashing (with
-> > lots of salt and rounds), then there's no vulnerability.  If you use
-> > them for HMACs, then there's also likely no problem.  But if you use
-> > them for a signature with a public key, there is.
-> 
-> It's answers like this that make it difficult for non-security-literate system administrators to make good decisions.  I completely understand and agree with what you wrote but I wonder if we're making it harder for people to understand how to protect themselves.
-> 
-> After having many similar conversations with people that manage systems I find that it's usually easier to say "MD5 bad, SHA-256 good" and then just walk away.  Perhaps some sort of chart should be published that allows people to make better decisions?
+I think this is a fairly meaningful discussion, not that I feel all that 
+qualified to speak to some of its particulars.
 
-Oh sure, I totally agree with you.  But sysadmins and programmers
-don't make the decisions on when to assign a CVE.  My recommendation
-here applies to security people trying to decide whether or not to
-call the baby ugly.  Once the CVE is published (with a description of
-actual risk) , sysadmins can just apply the patch.
+Everyone being well intentioned here, the question is how to put forward 
+the least amount of effort (work) and get the most results (overall 
+security).  When that issue gets hazy, it's often useful to fall back 
+upon some fundamental tenets that we as computer guys usually believe 
+in.  "Openness" springs to mind at the moment, although other similarly 
+respected concepts might be equally applicable.
 
-tim
+Not taking sides or anything; just suggesting that, all other things 
+being equal, the most philosophically appealing course might turn out to 
+be the best one.  Seems to work for physics.  :-)
+
+Regards,
+Alton Moore
+
+
