@@ -1,50 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/10/6
-Message-ID: <20130610183048.GA25650@devzero.fr>
-Date: Mon, 10 Jun 2013 20:30:48 +0200
-From: vladz <vladz@...zero.fr>
-To: oss-security@...ts.openwall.com
-Cc: Raphael Geissert <geissert@...ian.org>
-Subject: Re: Insecure temp files usage in phusion passenger (other than CVE-2013-2119)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/06/5
+Message-ID: <51378A09.8000307@redhat.com>
+Date: Wed, 06 Mar 2013 11:25:13 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, Ruby Security Team <security@...y-lang.org>
+Subject: CVE for Ruby Entity expansion DoS vulnerability in REXML (XML bomb)
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hi,
+http://www.ruby-lang.org/en/news/2013/02/22/rexml-dos-2013-02-22/
 
-On Mon, Jun 10, 2013 at 04:54:21PM +0200, Raphael Geissert wrote:
-> While looking at  CVE-2013-2119 I noticed that Phusion Passenger
-> 2.2.11's ext/common/Utils.cpp makeDirTemp() uses mkdir(1) to create
-> directories in /tmp (e.g. /tmp/phusion.$$) for use by the application
-> and web server.
+=====
 
-I think you meant makeDirTree() for the function name and not
-makeDirTemp(), am I correct?  
+Unrestricted entity expansion can lead to a DoS vulnerability in
+REXML. (The CVE identifier will be assigned later.) We strongly
+recommend to upgrade ruby.
+Details
 
-I don't know much about the tool but snipped the code around the mkdir()
-function for other people to see:
+When reading text nodes from an XML document, the REXML parser can be
+coerced in to allocating extremely large string objects which can
+consume all of the memory on a machine, causing a denial of service.
 
-  $ cat -n ruby-passenger-3.0.13debian/ext/common/Utils.cpp
-  [...]
-  486                 do {
-  487                         ret = mkdir(current.c_str(), modeBits);
-  488                 } while (ret == -1 && errno == EINTR);
-  489                 if (ret == -1) {
-  490                         if (errno == EEXIST) {
-  491                                 // Ignore error and don't chmod/chown.
-  492                                 continue;
-  493                         } else {
-  494                                 int e = errno;
-  495                                 throw FileSystemException("Cannot create directory '" + current + "'",
-  496                                         e, current);
-  497                         }
-  498                 }
+Impacted code will look something like this:
 
-> Does anyone know enough about phusion passenger to know what the
-> impact could be?
-> (and depending on that, assigning CVE id(s))
+document = REXML::Document.new some_xml_doc
+document.root.text
 
-I don't see any problem here.  The mkdir() return code appears to be
-checked correctly and chmod/chown ignored if directory was previously
-created.
+When the `text` method is called, entities will be expanded. An
+attacker can send a relatively small XML document that, when the
+entities are resolved, will consume extreme amounts of memory on the
+target system.
 
-Cheers.
+Note that this attack is similar to, but different from the Billion
+Laughs attack. This is also related to CVE-2013-1664 of Python.
+
+All users running an affected release should either upgrade or use one
+of the work arounds immediately.
+
+=====
+
+Please use CVE-2013-1821 for this issue. I apologize in advance if a
+CVE was requested through other channels but we need a CVE for this
+ASAP. Also for future reference you can get CVEs via
+
+http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRN4oIAAoJEBYNRVNeJnmTEZwP/iySaWdApYtMK6qKs2eSuAXX
+u4jcoYy9zr1WX6H9Qxk5rfJLYN1RNZVLLAlyMECHop2rAf+SR6SDtleVqbiumFWn
+R22NmyhLwEE2z8o2bBEiX45C85L0ljSzmPnM+n1uxiGfXnJFrIpOHTi9iTxJMz5q
+sVhQr643hxERGLbn6mbvwrrz86dBj4mJ+c9oDrRnWTP4k8mPn7LQ0ARafHsEBL8m
+ymFP00/iLK+09UtYcMAtVnBx7BQghU4GodeN5jwaeUPYTsiQpLtceQ0ptdAO/8W+
+7f8gjdSotsPKYyJzmQAOtjWHi2Z7tGNiJYRFp4Aichzq7FSjBYZ4ExJp4fusi8Vq
+Am170qKY9AREu7xumaewp4I6iiVUkPiiOuZNXnYkgNpkgHa9yVQ4TlwSw8pEvAKT
+alCEcPuyeYr9bBw162DdOTCHnc78j2QPwia8gEbC0iigMcfY3sy5l+Quhe1UHDOG
+zPlHIm5k592hQgiGeZrDe/TdkYAAOEMgzG11WGCuhnR0/LfSV5ryKAA97CBQ+a6V
+ohmYnReCuGztjnz0DNuKj6ukTZSiHsWlzg5Qb+51D9SzEWoZqmLPnXSgtxwrpD2q
+eGNg7dLXrp9pyBCDpAH7oEbh00S1RVLd0W5mfh4r1/cEvUNc88qkkQj/K4qI9EuG
+RfoX/MgkndCKc6mKxdnS
+=7jHF
+-----END PGP SIGNATURE-----
