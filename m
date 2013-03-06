@@ -1,158 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/22/1
-Message-Id: <a05b64b1-22d2-4de5-a043-7d7501c1b5a3@googlegroups.com>
-Date: Sun, 22 Dec 2013 01:29:58 -0800 (PST)
-From: nick@...edev.com
-To: ruby-security-ann@...glegroups.com
-Cc: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com,  tenderlove@...y-lang.org
-Subject: Re: [CVE-2013-4491] Reflective XSS Vulnerability in Ruby on Rails
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/06/4
+Message-ID: <CAA7hUgH43nyVFgps-VCXKXkiRvhm2oKfJ1o12KXM+1H_U6MPjA@mail.gmail.com>
+Date: Wed, 6 Mar 2013 15:36:40 +0100
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: busybox
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Kurt,
 
-I am trying to upgrade but the suggested error handler doesn't work. Even if I shorten the `call` method to:
+On 5 March 2013 19:20, Kurt Seifried <kseifried@...hat.com> wrote:
+> On 03/05/2013 06:30 AM, Raphael Geissert wrote:
+>> What can we do about it?
+>>
+>> We already have a quite long list of issues without a CVE id and
+>> this is not good for anybody:
+>> https://security-tracker.debian.org/tracker/data/fake-names
+>
+> So research them and post the requests here, problem solved! It's not
+> like I'm unwilling to give out CVEs or something. I simply can't spend
+> an hour researching each one.
+>
+>> (nb. some of the issues in the list might already have an id but
+>> the temporary entry hasn't been removed or it was decided that no
+>> id should be assigned)
+>
+> And that's why I'm not going to deal with them myself, it would eat up
+> all my time. I need some help here in other words.
 
-```
-def call(exception, locale, key, options) 
-  key
-end 
-``` 
+Sure thing; I'm not asking you to go through that list. It's just that
+it is a kind of indicator that there are potentially quite a number of
+issues that aren't being tracked properly.
 
-Missing translations are still wrapped in span.missing_translation tag. I have also reported this on github here: https://github.com/rails/rails/issues/13429
+And thanks for clarifying your position regarding the original sources
+of information. I hope that in the future there won't be any such
+cases where an id isn't assigned due to miscommunication.
 
-Maybe it worth adding a "default_fallback_locale" setting so it doesn't raise errors for the missing keys in this locale? 
-
-On Wednesday, December 4, 2013 2:08:00 AM UTC+7, Aaron Patterson wrote:
-> Reflective XSS Vulnerability in Ruby on Rails
-> 
-> 
-> 
-> There is a vulnerability in the internationalization component of Ruby on Rails. Under certain common configurations an attacker can provide specially crafted input which will execute a reflective XSS attack.  This vulnerability has been assigned the CVE identifier CVE-2013-4491.
-> 
-> 
-> 
-> Versions Affected:  3.0.6 and all later versions.
-> 
-> Not affected:       3.0.5 and earlier 3.0.x versions.
-> 
-> Fixed Versions:     4.0.2, 3.2.16.
-> 
-> 
-> 
-> The root cause of this issue is a vulnerability in the i18n gem which has been assigned the identifier CVE-2013-4492. For this reason applications are also not affected if they have upgraded to the following i18n versions: 
-> 
-> * i18n-0.6.6 for Rails 4.0.x and 3.2.x applications
-> 
-> * i18n-0.5.1 for Rails 3.1.x and 3.0.x applications
-> 
-> 
-> 
-> Impact 
-> 
-> ------ 
-> 
-> When the i18n gem is unable to provide a translation for a given string, it creates a fallback HTML string.  Under certain common configurations this string can contain user input which would allow an attacker to execute a reflective XSS attack.
-> 
-> 
-> 
-> All users running an affected release should either upgrade or use one of the workarounds immediately. 
-> 
-> 
-> 
-> Releases 
-> 
-> -------- 
-> 
-> The 4.0.2 and 3.2.16 releases are available at the normal locations. 
-> 
-> 
-> 
-> Workarounds 
-> 
-> ----------- 
-> 
-> To work around this issue you must replace the standard i18n exception handler with a fixed one.  Place the following code into a file in the config/initializers directory of your project and restart the server.
-> 
-> 
-> 
->   require 'i18n'
-> 
-> 
-> 
->   # Override exception handler to more carefully html-escape missing-key results.
-> 
->   class HtmlSafeI18nExceptionHandler
-> 
->     Missing = I18n.const_defined?(:MissingTranslation) ? I18n::MissingTranslation : I18n::MissingTranslationData
-> 
-> 
-> 
->     def initialize(original_exception_handler)
-> 
->       @original_exception_handler = original_exception_handler
-> 
->     end
-> 
-> 
-> 
->     def call(exception, locale, key, options)
-> 
->       if exception.is_a?(Missing) && options[:rescue_format] == :html
-> 
->         keys = exception.keys.map { |k| Rack::Utils.escape_html k }
-> 
->         key = keys.last.to_s.gsub('_', ' ').gsub(/\b('?[a-z])/) { $1.capitalize }
-> 
->         %(<span class="translation_missing" title="translation missing: #{keys.join('.')}">#{key}</span>)
-> 
->       else
-> 
->         @original_exception_handler.call(exception, locale, key, options)
-> 
->       end
-> 
->     end
-> 
->   end
-> 
-> 
-> 
->   I18n.exception_handler = HtmlSafeI18nExceptionHandler.new(I18n.exception_handler)
-> 
-> 
-> 
-> This initializer has also been attached to this message as html_safe_i18n_exception_handler.rb
-> 
-> 
-> 
-> Patches 
-> 
-> ------- 
-> 
-> To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
-> 
-> 
-> 
-> * 4-0-i18n_xss.patch - Patch for 4.0 series 
-> 
-> * 3-2-i18n_xss.patch - Patch for 3.2 series 
-> 
-> 
-> 
-> Please note that only the 4.0.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-> 
-> 
-> 
-> Credits 
-> 
-> ------- 
-> 
-> Thanks to Peter McLarnan of Matasano Security for reporting the issue to us, and to Sven Fuchs and Christopher Dell for working with us on the fix.
-> 
-> 
-> 
-> -- 
-> 
-> Aaron Patterson
-> 
-> http://tenderlovemaking.com/
+Regards,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
