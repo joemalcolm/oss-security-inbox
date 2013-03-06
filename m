@@ -1,66 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/17/6
-Message-ID: <516EE889.4090604@redhat.com>
-Date: Wed, 17 Apr 2013 12:23:05 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Thomas Biege <thomas@...e.de>
-Subject: Re: debian: gpg --verify suggests entire file was verified, even if file contains auxiliary data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/06/3
+Message-ID: <CA+rthh_cLHOzWhOFLH3wEq5s+mZxcJ_h-hS-Fuv8ArOq+9owfw@mail.gmail.com>
+Date: Wed, 6 Mar 2013 10:14:46 +0100
+From: Mathias Krause <minipli@...glemail.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Mar 6, 2013 at 9:46 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 03/05/2013 01:52 PM, Mathias Krause wrote:
+>> Hi Kurt,
+>>
+>> I don't care much about info leaks beyond merely fixing them. But
+>> Alexander asked me to request a CVE ID for the recent crypto fix
+>> of mine and as I did quite a few of such fixes in the recent past,
+>> I'll just list them all here. The information might be a bit scarce
+>> for a CVE ID request but as I don't expect any CVE IDs anyway, I
+>> didn't wanted to do too much unnecessary work. ;)
+>
+> CVE ID's prompt people to back port these security fixes which is a
+> good thing indeed =).
 
-On 04/17/2013 03:54 AM, Thomas Biege wrote:
-> Hi, this might possibly need a CVE-ID. 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=704645 
-> https://bugs.g10code.com/gnupg/issue1486
-> 
-> 
-> Itself it might be no issue but in conjunction with other
-> applications this could become a vulnerability.
-> 
-> Bye, Thomas
+M'kay. Might be the case for the crypto fix as it wasn't Cc'ed to
+stable, albeit I asked Herbert for it :/
+(see <http://www.mail-archive.com/linux-crypto@vger.kernel.org/msg08339.html>).
 
-I've run into this before, sadly enigmail (Thunderbird gpg plugin)
-displays the same green bar for message signed ok, but displays the
-text as "Part of the message signed" so unless you're really paying
-attention, you'll miss it.
+>> 9a5467b crypto: user - fix info leaks in report API
+gitweb: https://git.kernel.org/linus/9a5467b
 
-My thinking is this:
+>> ecd7918 xfrm_user: ensure user supplied esn replay window is valid
+gitweb: https://git.kernel.org/linus/ecd7918
 
-1) It's pretty easy to find signed content for people using GPG
-2) It's pretty easy to append/embed signed content into a larger message
+>> 1f86840 xfrm_user: fix info leak in copy_to_user_tmpl()
+gitweb: https://git.kernel.org/linus/1f86840
 
-So the attack would be: create malicious content/email, embed/append a
-valid message harvested from somewhere. Send to user. The user
-verifies then reads the message, unless they are really paying
-attention they probably won't notice that the content isn't signed
-properly (e.g. have an email, ton of whitespace, then the signed
-message). Personally I'm inclined to assign a CVE, enigmail for
-example does mostly the right thing (makes a distinction between fully
-signed and partially signed). I think GPG should too.
-Thoughts/comments before I assign this?
+>> 7b78983 xfrm_user: fix info leak in copy_to_user_policy()
+gitweb: https://git.kernel.org/linus/7b78983
+
+>> f778a63 xfrm_user: fix info leak in copy_to_user_state()
+gitweb: https://git.kernel.org/linus/f778a63
+
+>> 4c87308 xfrm_user: fix info leak in copy_to_user_auth()
+gitweb: https://git.kernel.org/linus/4c87308
+
+>> 43da5f2 net: fix info leak in compat dev_ifconf()
+gitweb: https://git.kernel.org/linus/43da5f2
+
+>> 2d8a041 ipvs: fix info leak in getsockopt(IP_VS_SO_GET_TIMEOUT)
+gitweb: https://git.kernel.org/linus/2d8a041
+
+>> 7b07f8e dccp: fix info leak via getsockopt(DCCP_SOCKOPT_CCID_TX_INFO)
+gitweb: https://git.kernel.org/linus/7b07f8e
+
+>> 3592aae llc: fix info leak via getsockname()
+gitweb: https://git.kernel.org/linus/3592aae
+
+>> 04d4fbc l2tp: fix info leak via getsockname()
+gitweb: https://git.kernel.org/linus/04d4fbc
+
+>> 792039c Bluetooth: L2CAP - Fix info leak via getsockname()
+gitweb: https://git.kernel.org/linus/792039c
+
+>> 9344a97 Bluetooth: RFCOMM - Fix info leak via getsockname()
+gitweb: https://git.kernel.org/linus/9344a97
+
+>> f9432c5 Bluetooth: RFCOMM - Fix info leak in ioctl(RFCOMMGETDEVLIST)
+gitweb: https://git.kernel.org/linus/f9432c5
+
+>> 9ad2de4 Bluetooth: RFCOMM - Fix info leak in getsockopt(BT_SECURITY)
+gitweb: https://git.kernel.org/linus/9ad2de4
+
+>> 3f68ba0 Bluetooth: HCI - Fix info leak via getsockname()
+gitweb: https://git.kernel.org/linus/3f68ba0
+
+>> e15ca9a Bluetooth: HCI - Fix info leak in getsockopt(HCI_FILTER)
+gitweb: https://git.kernel.org/linus/e15ca9a
+
+>> 3c0c5cf atm: fix info leak via getsockname()
+gitweb: https://git.kernel.org/linus/3c0c5cf
+
+>> e862f1a atm: fix info leak in getsockopt(SO_ATMPVC)
+gitweb: https://git.kernel.org/linus/e862f1a
+
+>> a117dac net/tun: fix ioctl() based info leaks
+gitweb: https://git.kernel.org/linus/a117dac
+
+>> 0143fc5 udf: avoid info leak on export
+gitweb: https://git.kernel.org/linus/0143fc5
+
+>> fe685aa isofs: avoid info leak on export
+gitweb: https://git.kernel.org/linus/fe685aa
+
+>> 864745d xfrm_user: return error pointer instead of NULL
+gitweb: https://git.kernel.org/linus/864745d
+
+>> 276bdb8 dccp: check ccid before dereferencing
+gitweb: https://git.kernel.org/linus/276bdb8
+
+> can you provide the full git id/link to these?
+
+Links are inlined above. The pattern how to create web-links is pretty
+obvious, though.
+
+> Also were they all
+> discovered by the same researcher?
+
+All of the bugs were discovered and fixed by me. But I'm no
+researcher. It's more a hobby of mine ;)
+
+>> While we are at it: Do we care about getting CVE IDs for info
+>> leaks? If so, all of them or only for the ones with leaks above a
+>> certain threshold (>= 16 bytes, e.g.)?
+>
+> Yes please. Much like DNA fragments you can potentially string them
+> together to reveal larger things.
+
+Okay. I'll continue posting my findings, then.
 
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRbuiJAAoJEBYNRVNeJnmTRjMQAKI4PYs4ofrvXDr0kEeAEbBB
-YHQJiaHlnbKtkTaje9e6PTAMr07JsRyPkESF5FnOtQOzSHbRoBGuIdD6kvx5GhkP
-mAqS5fU6j3AiA0Tmh/Cm68NR1x03RAvKpNRKPwrtRE8maz3OeDn6LnFX5+fTzaH5
-UbyS7yvJmy41xVfP4EV54te6Tq9LRLiy7LjUb8o04v1qj5MyhCjpXmVnJMYftk/r
-W1a5AAGPBT5h9JkTWRpAujrdxwJArgokCPRxL/r7GALok8xdEEctXvEOklHMMp0g
-8crWJikItfLVaLO/CdbJgvUX+B6YUfnls/x6Lk8xIiH7bdld3D9+z+PkhJPwebko
-anT6erI0Xr8nOvChaLZ/vSzSl+9m2omVlKZDuKaiMhQVcFhibpY35AgP4PDIOS26
-Z4u+fcr08lxpC7TSjbkECcP6mxmDcUqKd/V59JcahsXM9jsRBR7bxx9vU7upufAq
-b4GIDbH5+0l053gkcfGuDMo+WFStFxsSYeGOhLpIyuKvyl7JmPnGg1WOadpEOpUU
-1sXTeTJIKJuM0gWx0ebbUzHXwSxLbw774NucO/CWJMLXUm4epouKOtP/vunfS00J
-AIwT6cUG90jXGj8P50LBkeYamIcijuiRVomWjS1/rU+d7DK0r1sO6PxOCF7zUSml
-Y4HSdjoEcEW0NGWmi7gt
-=WY9K
------END PGP SIGNATURE-----
+Regards,
+Mathias
