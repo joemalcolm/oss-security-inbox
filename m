@@ -1,56 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/12
-Message-ID: <CAA7hUgHW=VwfsffPfFxvhZ=fS5fPf=79jZ-tdsCkZJgEfEksjA@mail.gmail.com>
-Date: Thu, 21 Feb 2013 14:50:13 +0100
-From: Raphael Geissert <atomo64@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/07/4
+Message-ID: <51385E3C.2060808@redhat.com>
+Date: Thu, 07 Mar 2013 02:30:36 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: 700158@...s.debian.org, 700159@...s.debian.org
-Subject: Re: CVE request: XSS flaws fixed in ganglia
+CC: Solar Designer <solar@...nwall.com>, Steven Christey <coley@...re.org>
+Subject: Re: CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
 Content-Type: text/plain; charset=utf-8
 
-Hi again,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 21 February 2013 11:47, Raphael Geissert <atomo64@...il.com> wrote:
-> On 8 February 2013 19:06, Vincent Danen <vdanen@...hat.com> wrote:
->> A number of XSS issues were fixed in ganglia's web ui:
->>
->> https://github.com/ganglia/ganglia-web/commit/31d348947419058c43b8dfcd062e2988abd5058e
->
-> I've a hunch that there are a few issues with the changes. A quick
-> look at the patch shows that the change here breaks the preg_replace
-> call:
+On 03/07/2013 02:19 AM, Solar Designer wrote:
+> Kurt -
+> 
+> On Thu, Mar 07, 2013 at 02:13:37AM -0700, Kurt Seifried wrote:
+>> Bundling the following into a single CVE:
+> [...]
+>> Please use CVE-2012-6138 for these issues.
+> 
+> I think this is wrong.  I would understand if those issues were all
+> in the same subsystem at least (or if you assigned per-subsystem
+> CVE IDs for these), but this is not the case.  Many distros will
+> fix some, but not the others, or not all at the same time.  There's
+> room for a little bit of bundling here, but not that much.
+> 
+> Alexander
 
-Forgot the reference, here's the exact code:
-https://github.com/ganglia/ganglia-web/commit/31d348947419058c43b8dfcd062e2988abd5058e#L7R17
-
-[Salvatore, thanks for forwarding it]
-
-Some other notes:
-
-* https://github.com/ganglia/ganglia-web/commit/31d348947419058c43b8dfcd062e2988abd5058e#L9R35
-
-This is a directory traversal issue that requires authentication, but
-there doesn't seem to be a CSRF protection in place (unless I'm
-missing something).
-The (stored) XSS part of it is not entirely fixed for the case where
-an attacker successfully took advantage of it since the sanitation is
-only performed when storing to the .json file.
-
-The other operations related to views (in views_view.php) are all
-still vulnerable to XSS via the view_name GET parameter.
+This raises a valid point, Steve what do we consider to be "same
+codebase"? Linux Kernel? Various subsystems? In general I have applied
+it at the project level typically (e.g. samba contains a server, a
+client and utilities but I consider it to be one code base).
 
 
-The authentication cookie uses a persistent token for every user (no
-session ids or any sort of nonce), which is an issue on its own, but
-it also doesn't verify that the group stored in the cookie actually
-corresponds to the user. As of 3.5.7 the groups feature still doesn't
-seem to be in use, however.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-So I guess we are going to need at least one more CVE id for the
-remaining XSS issues in views_view.php and I leave the rest up to the
-opinion of others (upstream included).
-
-Cheers,
--- 
-Raphael Geissert
+iQIcBAEBAgAGBQJROF48AAoJEBYNRVNeJnmTE4kQAIrsT+xItxI8awk2BvSOtumW
+ZrgPVuOFw+zXEnRuAgTA/nvacjixcuL4KajWtEUFmZu8rffPS76CcFRRdd0xapi2
+TZwhZmlkszF5kMT1U12YN1K7m0u15tQ7Kw+iNmUtZ4b9Ghyq9Fonlp6Czsb73nVS
+pg4Y7a44JBsgIssTcQGbeGLzRH4/e7rrAYwx/3K0Gq1KvWFlKsTO/fX8npjzu809
+YSVfWxPpANcDx3NV9jbDilPReFEcqoOwOdf8zEjlMuCc9kVx8aopFeNAfkLY+mys
+R0xnJ7rR0X07ve4SL9om4i6YYMygBb/jmDku9Wx78Ba+Cc7kSdhl5s3JobfwW+56
+o78PN4Bd6o3+UJOubpUBrRbrWzncTnG1HPSaVfkazUNO4OvHgh/uZK8y+dpXDyct
+wm6tj3bajyob+tAD4pIqV7/Vx9MY+Tw0NEaLZdHiOvMavD82P1hl0YJIXinqtBtK
++mpYuxK1hw6PMbPvgg/b39GoFPu3nSRxLosdPbABHUV/iyN5dRD/6TBXe8UMPkF8
+XpO1hv+22T/Jd+e4HBJ7KZXVgpgsct0Pz+zPfeflyMsKDa9vbRRjOJdl0nPv/Vdr
+dhe8bG4h7DAo1mArll8pNC/NFnw0zC4T4iZHrPfsDUbnENxBhyNASCfZACdn00zM
+MIcPRnp0+wAQ/ANPNzET
+=C+ij
+-----END PGP SIGNATURE-----
