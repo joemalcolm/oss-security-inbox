@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/30/1
-Message-ID: <CAA7hUgHxQGo36UL5GER=ZzEc2BBnHKUYUjRbV4shGhYMp78gEQ@mail.gmail.com>
-Date: Thu, 30 May 2013 10:50:20 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: znc: null pointer dereference in webadmin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/07/1
+Message-ID: <alpine.LFD.2.03.1303071252490.10446@redhat.com>
+Date: Thu, 7 Mar 2013 13:05:37 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2013-1792 Linux kernel: KEYS: race with concurrent install_user_keyrings()
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+    Hello,
 
-A null pointer dereference was found in ZNC 1.0 in the webadmin module
-which can be triggered by non-admins and cause denial of service[0].
+Mateusz Guzik of Red Hat discovered a race condition in 
+install_user_keyrings() routine, leading to a NULL pointer dereference. It 
+occurs during parallel invocation of the install_user_keyrings & 
+lookup_user_key routines, for the same user, if `uid' and `uid-session' 
+keyrings are not yet created.
 
-Could a CVE id be assigned please?
+An unprivileged user could use this flaw to crash the system, resulting in 
+DoS.
 
-Thanks in advance.
+Upstream fix:
+-------------
+  -> https://lkml.org/lkml/2013/3/6/535
 
-References:
-[0] https://github.com/znc/znc/commit/2bd410ee5570cea127233f1133ea22f25174eb28
-[1] https://secunia.com/advisories/53450/
+Reference:
+----------
+  -> https://bugzilla.redhat.com/show_bug.cgi?id=916646
 
-Cheers,
+Thank you.
 --
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
