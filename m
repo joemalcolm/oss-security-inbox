@@ -1,55 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/11
-Message-ID: <5243043D.5000409@redhat.com>
-Date: Wed, 25 Sep 2013 09:41:49 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/07/7
+Message-ID: <20130307194816.GA412@openwall.com>
+Date: Thu, 7 Mar 2013 23:48:16 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Chris Reffett <creffett@...too.org>, mike.gabriel@...-netzwerkteam.de
-Subject: Re: CVE request: X2Go server
+Subject: Re: CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Steve,
 
-On 09/24/2013 12:33 PM, Chris Reffett wrote:
-> Hi all, I couldn't find a CVE, so I would like to request one for
-> a vulnerability in X2Go Server. The vendor reported an issue where
-> a remote user could execute arbitrary code as the x2go user,
-> apparently by leveraging a setgid executable which did not have a
-> hardcoded path to "libx2go-server-db-sqlite3-wrapper.pl". [1] is
-> the commit fixing the vulnerable code, [2] is the upstream release
-> announcement.
-> 
-> Thanks, Chris Reffett
-> 
-> 
-> [1] 
-> http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=42264c88d7885474ebe3763b2991681ddfcfa69a
->
-> 
-[2]
-> https://lists.berlios.de/pipermail/x2go-announcement/2013-May/000125.html
->
-> 
-Please use CVE-2013-4376 for this issue.
+On Thu, Mar 07, 2013 at 06:09:52PM +0000, Christey, Steven M. wrote:
+> This is a major challenge for CVE, but to do bug-based assignments [...]
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+What about per-subsystem assignments?  (In Linux kernel context and in
+general.)  I think this is what would make sense here.  Kurt assigned
+just one CVE ID for 21 bugs across multiple subsystems, with the only
+things in common being that these are infoleak bugs and that they were
+brought to oss-security at once.  With per-subsystem assignments, we'd
+have up to 11 CVE IDs for these 21 bugs, or maybe fewer (depending on
+what to count as separate subsystems) - but definitely not just 1.
 
-iQIcBAEBAgAGBQJSQwQ9AAoJEBYNRVNeJnmTOecP/jwT6Mm4bCyevHTlX4dFE7s2
-8WYVKrPnMAInp2cZmPRj8U7H/tsd4JO13ZLz7FdeG4uXWwoOUMn9RFEGPZ3WKN+S
-Ey5+OHT1ZHIc9OJLgnTpoMNY+B7u72F3p0EeXhPPjIPtv3WBw7ZTDk3Bb/X3bcKy
-AoUv3WJ56OSR/bB5N97PmhC+7+cXW725bWGQg7E3aSYV8zSDAv8UbGJU0GZNPMEq
-XV0e1Ah/ys+rvHkVYN46/pdg2HqkVk/fSDGwDQsP9sh7mSHJw8cZ1NnXRXPrJE5W
-cVBe9mHZCQE7g9GEdJtUThsCcY2rjkjIfTsHhGUvhR8+9pQbtZCiYzZbuw+GfufD
-ErgBZzzHnBbH6lDvWQsj8emsTuhcSFXAgLI9Oj9iq5O1K/NdGBOuEsE/qCrIKdey
-WTQvGLZLm9tSRAPN83inlw5mroVvjcLzj8mapqRL/FfuUe3s/vYGzrHeLpAts4vd
-HvuGDOdlBCRI2FpO3Kxh7qb/i+mPRxC8539J1sygKHcj792bPlRfuXfOjtS+uN+e
-6QXup9ODfbsGCvZJoh1JK46X/cp81UEXSwQX1+LVLtzbBn6vpIUAizOmjvy3FG46
-4N1dFZ1C2b0pYVj0U58xik0cIsdVTr22IgshIBgwcygCXhIitXDV7k62vRvof8WG
-VP0c3pp8zBgwCaiVcaBf
-=N2gC
------END PGP SIGNATURE-----
+> Note - the more fundamental problem here is that CVE is being used much earlier in the disclosure process than it used to be, and it's basically being used as a universal bug ID.
+
+Maybe CVE should support such use to the extent that it is reasonable
+for CVE to do so.
+
+Alexander
