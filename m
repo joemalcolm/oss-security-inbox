@@ -1,96 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/8
-Message-Id: <E1VlM2l-0002YF-0k@xenbits.xen.org>
-Date: Tue, 26 Nov 2013 17:03:23 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 74 (CVE-2013-4553) - Lock order reversal between page_alloc_lock and mm_rwlock
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/07/6
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF0699D30F@IMCMBX01.MITRE.ORG>
+Date: Thu, 7 Mar 2013 18:09:52 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+This is a major challenge for CVE, but to do bug-based assignments will make CVE too dependent on the amount of vulnerability details that are available at the time of a CVE request - and those details vary widely.  While it is a problem for the distros, I have generally had the perspective that it is ultimately their responsibility to track which portions of a CVE are fixed, and when.
 
-             Xen Security Advisory CVE-2013-4553 / XSA-74
-                              version 3
+Note - the more fundamental problem here is that CVE is being used much earlier in the disclosure process than it used to be, and it's basically being used as a universal bug ID.  I strongly encourage the Linux community to consider adopting their own ID scheme.
 
-          Lock order reversal between page_alloc_lock and mm_rwlock
+I made comments similar to this a couple years ago, but I can't easily find the reference right now.
 
-UPDATES IN VERSION 3
-====================
+- Steve
 
-Public release.
 
-ISSUE DESCRIPTION
-=================
+-----Original Message-----
+From: Solar Designer [mailto:solar@...nwall.com] 
+Sent: Thursday, March 07, 2013 4:19 AM
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
 
-The locks page_alloc_lock and mm_rwlock are not always taken in
-the same order.  This raises the possibility of deadlock.
+Kurt -
 
-The incorrect order occurs only in the implementation of the
-deprecated domctl hypercall XEN_DOMCTL_getmemlist.
+On Thu, Mar 07, 2013 at 02:13:37AM -0700, Kurt Seifried wrote:
+> Bundling the following into a single CVE:
+[...]
+> Please use CVE-2012-6138 for these issues.
 
-IMPACT
-======
+I think this is wrong.  I would understand if those issues were all in
+the same subsystem at least (or if you assigned per-subsystem CVE IDs
+for these), but this is not the case.  Many distros will fix some, but
+not the others, or not all at the same time.  There's room for a little
+bit of bundling here, but not that much.
 
-A malicious guest administrator may be able to deny service to the
-entire host.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 3.4.x and later are vulnerable.
-Xen 3.3.x and earlier are not vulnerable.
-
-Only systems where a privileged domain frequently or predictably uses
-XEN_DOMCTL_getmemlist are vulnerable.  (Its use by manually invoked
-debugging and stress testing tools is not a security problem.)
-
-We are not aware of any toolstack software which has relevant (and
-hence vulnerable) uses of this hypercall.  xend, libxl, xapi and
-libvirt are known not to do so.
-
-We are therefore not aware of any deployed Xen-based systems which are
-vulnerable.  We are issuing this advisory primarily for the benefit of
-any Xen-derived systems using unusual toolstack software.
-
-MITIGATION
-==========
-
-If you are using a toolstack (or other software) which uses
-XEN_DOMCTL_getmemlist, disabling the relevant feature or functions may
-be possible, and would avoid the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Coverity Scan and diagnosed by Andrew
-Cooper.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa74-4.3-unstable.patch    Xen 4.3.x, xen-unstable
-xsa74-4.1-4.2.patch         Xen 4.1.x, Xen 4.2.x
-
-$ sha256sum xsa74*.patch
-0f7d0bbfbd7f3f1b6f6005321fa45081524dad438587f691e6892cc393327f89  xsa74-4.1-4.2.patch
-b505cdba662b1b1cd91d5611fac998c6b4e89e366780c6b9864b6965075afb38  xsa74-4.3-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEbBAEBAgAGBQJSlNQrAAoJEIP+FMlX6CvZ0mQH91vaeR1HM9utM5SJqnVMVp9T
-lUsZRRsrI95Dh7dDaNl9IJC0vCWlIbdA4zMaSblYQtTkS8d6zx6psi9udjgkHGPj
-ZzKuJHN+qccXzphGe/pyIoA/Lpxk4at/JmNXzbXBonf1IOs6S9rVRkofyNswSWZC
-2y8rKSrhXDMqrRKw42VEVWnmhiY8oV9Bez/+N0fEL1rhH8TxJYiQVGTlryquR6ye
-1kvBsVYRQtYzjAWqj51wjFdeJnK9/l1W1jYDgPEZbe4fWUlhF1IlRLJVm+e9VpJd
-CdWGG4oBpVcXGig0mYFJ3Bmw5gmOi9zseXEDXbo7b0Xfw1tOIGujaHKN6eFj7A==
-=B5QR
------END PGP SIGNATURE-----
-
-Download attachment "xsa74-4.1-4.2.patch" of type "application/octet-stream" (1499 bytes)
-
-Download attachment "xsa74-4.3-unstable.patch" of type "application/octet-stream" (1389 bytes)
+Alexander
