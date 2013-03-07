@@ -1,53 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/18/6
-Message-ID: <20131018165014.0593708239.qww314159@soup>
-Date: Fri, 18 Oct 2013 16:50:16 -0400
-From: Jay Berkenbilt <ejb@...org>
-To: oss-security@...ts.openwall.com
-Subject: qpdf 5.0.1 has some security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/07/5
+Message-ID: <CAAg+Fzp9Y9W_gHiEvGx92LTtZaPFLw48ZBwBfGLnR-N_9Evq+Q@mail.gmail.com>
+Date: Thu, 7 Mar 2013 13:01:38 +0100
+From: jordi gemsstatus <jordigemsstatus@...il.com>
+To: rubyonrails-security@...glegroups.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Denial of Service and Unsafe Object Creation Vulnerability in JSON [CVE-2013-0269]
 Content-Type: text/plain; charset=utf-8
 
-I have released qpdf 5.0.1 today.  This release includes some security
-fixes and hardening changes as suggested by Florian Weimer of Red Hat.
-Red Hat's security team analyzed the software and decided that there
-were no issues serious enough to warrant issuing any CVEs or creating
-any embargoed issues, so all the fixes are published on
-https://github.com/qpdf/qpdf
+What about json_pure gem?
 
-Here are the commits that are relevant:
+2013/2/11 Aaron Patterson <tenderlove@...y-lang.org>
 
-ac9c1f0 Security: replace operator[] with at
-4229457 Security: use a secure random number generator
-0bfe902 Security: avoid pre-allocating vectors based on file data
-10bceb5 Security: sanitize /W in xref stream
-3eb4b06 Security: better bounds checks for linearization data
-b097d7a Security: handle empty name in normalizeName
-eb1b126 Security: fix potential multiplication overflow
-c2e91d8 Security: keep cur_byte pointing into bytes array
+> Denial of Service and Unsafe Object Creation Vulnerability in JSON
+>
+> There is a denial of service and unsafe object creation vulnerability in
+> the json gem. This vulnerability has been assigned the CVE identifier
+> CVE-2013-0269.
+>
+> Versions Affected:  All. This includes JSON that ships with Ruby
+> 1.9.X-pXXX.
+> Not affected:       NONE
+> Fixed Versions:     1.7.7, 1.6.8, 1.5.5
+>
+> Impact
+> ------
+> When parsing certain JSON documents, the JSON gem can be coerced in to
+> creating Ruby symbols in a target system.  Since Ruby symbols are not
+> garbage collected, this can result in a denial of service attack.
+>
+> The same technique can be used to create objects in a target system that
+> act like internal objects.  These "act alike" objects can be used to bypass
+> certain security mechanisms and can be used as a spring board for SQL
+> injection attacks in Ruby on Rails.
+>
+> Impacted code looks like this:
+>
+>     JSON.parse(user_input)
+>
+> Where the `user_input` variable will have a JSON document like this:
+>
+>     {"json_class":"foo"}
+>
+> The JSON gem will attempt to look up the constant "foo".  Looking up this
+> constant will create a symbol.
+>
+> In JSON version 1.7.x, objects with arbitrary attributes can be created
+> using JSON documents like this:
+>
+>     {"json_class":"JSON::GenericObject","foo":"bar"}
+>
+> This document will result in an instance of JSON::GenericObject, with the
+> attribute "foo" that has the value "bar".  Instantiating these objects will
+> result in arbitrary symbol creation and in some cases can be used to bypass
+> security measures.
+>
+> PLEASE NOTE: this behavior *does not change* when using `JSON.load`.
+>  `JSON.load` should *never* be given input from unknown sources.  If you
+> are processing JSON from an unknown source, *always* use `JSON.parse`.
+>
+> All users running an affected release should either upgrade or use one of
+> the work arounds immediately.
+>
+> Releases
+> --------
+> The FIXED releases are available at the normal locations.
+>
+> Workarounds
+> -----------
+> For users that cannot upgrade, please use the attached patches.  If you
+> cannot use the attached patches, change your code from this:
+>
+>     JSON.parse(json)
+>
+> To this:
+>
+>     JSON.parse(json, :create_additions => false)
+>
+> If you cannot change the usage of `JSON.parse` (for example you're using a
+> gem which depends on `JSON.parse` like multi_json), then apply this monkey
+> patch:
+>
+>     module JSON
+>       class << self
+>         alias :old_parse :parse
+>         def parse(json, args = {})
+>           args[:create_additions] = false
+>           old_parse(json, args)
+>         end
+>       end
+>     end
+>
+> Patches
+> -------
+> To aid users who aren't able to upgrade immediately we have provided
+> patches for the three supported release series.  They are in git-am format
+> and consist of a single changeset.
+>
+> * 1-7-VULN.patch - Patch for the 1.7 series
+> * 1-6-VULN.patch - Patch for the 1.6 series
+> * 1-5-VULN.patch - Patch for the 1.5 series
+>
+> Credits
+> -------
+> A huge thanks goes to the following people for responsibly disclosing this
+> issue and working with the Rails team to get it fixed:
+>
+> * Thomas Hollstegge of Zweitag (www.zweitag.de)
+> * Ben Murphy
+>
+> --
+> Aaron Patterson
+> http://tenderlovemaking.com/
+>
 
-5.0.0 and earlier used random() or rand() from the standard library for
-random numbers, but the TODO file for qpdf had mentioned this from the
-beginning.  qpdf 5.0.1 uses /dev/urandom on Linux MS Windows Crypto on
-Windows, and tries to find a suitable random device for other
-platforms.  It can fall back to insecure random only when configured
-with --enable-insecure-random.
-
-Since there are no CVEs issued for this, I have not provided backports
-to other versions that some distributions may contain, but I was able to
-backport the changes into the 2.x releases in a throw-away branch.  The
-"replace operator[] with at" change was programmatically generated and
-wouldn't make sense to backport.  Instead, it could be regenerated for
-older versions.  If any distributions decide that they want to issue
-security bulletins for any of these issues, I can assist with doing
-backports.  To my knowledge, qpdf is a leaf node in every distribution
-that carries any version older than 4.0.0, which is the first version
-that was a dependency of open printing.  Most of the issues found in the
-qpdf code were in parts of the code that are not used by open printing.
-That said, the changes can be relatively easily backported to versions
-as recent as that.
-
-For any debian security team members who may receive this, I have
-already upload qpdf 5.0.1 to debian unstable.
-
--- 
-Jay Berkenbilt <ejb@...org>
