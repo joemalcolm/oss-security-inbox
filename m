@@ -1,46 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/7
-Message-ID: <1227819386.4933950.1367488728684.JavaMail.root@redhat.com>
-Date: Thu, 2 May 2013 05:58:48 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/08/5
+Message-ID: <51397220.3090803@redhat.com>
+Date: Thu, 07 Mar 2013 22:07:44 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, "Eric S. Raymond" <esr@...rsus.com>, Miroslav Lichvar <mlichvar@...hat.com>
-Subject: CVE Request -- gpsd 3.9 fixing a denial of service flaw
+Subject: Re: CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, Eric, Miroslav, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  GPSD upstream has released 3.9 version:
-  [1] http://lists.nongnu.org/archive/html/gpsd-dev/2013-05/msg00000.html
+On 03/07/2013 09:55 PM, Petr Matousek wrote:
+> On Thu, Mar 07, 2013 at 01:19:05PM +0400, Solar Designer wrote:
+>> Kurt -
+>> 
+>> On Thu, Mar 07, 2013 at 02:13:37AM -0700, Kurt Seifried wrote:
+>>> Bundling the following into a single CVE:
+>> [...]
+>>> Please use CVE-2012-6138 for these issues.
+>> 
+>> I think this is wrong.  I would understand if those issues were
+>> all in the same subsystem at least (or if you assigned
+>> per-subsystem CVE IDs for these), but this is not the case.  Many
+>> distros will fix some, but not the others, or not all at the same
+>> time.  There's room for a little bit of bundling here, but not
+>> that much.
+> 
+> In the past we've usually assigned one CVE per issue even for info
+> leak bugs. Or at least one CVE per subsystem, as Alexander says. I
+> agree with Alexander that one CVE for about ~20 issues is not
+> right.
 
-correcting one denial of service problem [2]:
-A denial of service flaw was found in the way AIS driver packet parser of
-gpsd, a service daemon for mediating access to a GPS, processed certain
-malformed packets. A remote attacker could provide a specially-crafted
-device input that, when processed would lead to gpsd's packet parser
-crash (gpsd daemon termination).
+Agreed (I was wrong, not much more to say than that =). It sounds like
+Mitre will be handling the additional CVEs for this issue as I
+understand it.
 
-References:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=958717
+Now my question is how concise do we go with the Linux kernel as far
+as subsystems go? E.g. file subsystem vs network subsystem seems
+obvious, and say ext4 vs. MSDOS file system code seems obvious but
+what about network drivers (same chipset? same maker, different
+chipsets? or like ext2 vs ext3 vs ext4).
 
-Candidate upstream patches [*]:
-[3] http://git.savannah.gnu.org/cgit/gpsd.git/commit/?id=08edc49d8f63c75bfdfb480b083b0d960310f94f
-[4] http://git.savannah.gnu.org/cgit/gpsd.git/commit/?id=dd9c3c2830cb8f8fd8491ce68c82698dc5538f50
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
---
-[*] Candidate because upstream #38511 is private currently:
-    http://savannah.nongnu.org/bugs/?38511 => hard to say
-    if [3] is fixing this issue, or the DoS would be caused
-    by the malformed packet crash / sample, as listed in [4].
-    
-@Eric - Eric, could you please help us to solve this doubt? (which
-of the patches is the correct one to fix the above mentioned DoS
-/ security issue)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Thanks: Goes to Miroslav Lichvar for bringing this one to my attention.
-
-Kurt, could you allocate a CVE identifier for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQIcBAEBAgAGBQJROXIgAAoJEBYNRVNeJnmTb8kP/2UlLcj4Z9u2Xqbd1ODKUZbZ
+ghaSLU6NitjBrxTuMeqsDC5H1BV36F86b06hEsI/jMMcqfdKSbNu+gdxeNCwAOm9
+t+heG418AuHhabEDaCt9goxhkdlbFYHjoz7XZMV3qsy2q7sLHNVCcwV/9EMtcR3Z
+SL9Vuj/Nj7ymk46Y9B3oCqtziHwIRkJXDZTkzopbB7hVrn+ov32dKS67KuIgvcP5
+RogZetM9iedzL3AbFY49Kv1CwtaEkJ1ueCorxVY4tPoSdduDKRy4Qn0pL9TratSq
+8voTl3V+Lj0KOAHTAZy5H140GtPhvjkB4QPEgDh9U3bgFsbZvOvS4iSdG/q/075J
+XjwOubGOH/Y/Q9F1k5xC99lEjm1T+7lNcU2lEZxtMMW9hSsLeFS2tGpGzy0EcY32
+nQz7Jt5cAvDqX2laNnN/ZOWx+3EDmbZ4ezf21l2jG4t+3Y/RzmESoOvqfgWhWNZ3
++QdZugO1fEsnd28U9GvW1qEaAXt1cuE/lm+x0WhRFnqxUO1yCXl7QCJdtZcpoMl5
+apL/NLLXQJlFE4jU9+tvfR1JMCegmSZVJkYAsIhc5FbHRCTFXR7HV0SkRvLE2ZZc
+p2I7TLyubaf5x233O5Sn8FzdBDAFBk/zBDg5RKt/TPjWUO9KCZDuiAHM5OfRGp7t
+w7dXLHgsrv71uaSBN2xO
+=BGxQ
+-----END PGP SIGNATURE-----
