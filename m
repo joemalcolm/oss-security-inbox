@@ -1,39 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/05/6
-Message-ID: <20130905082349.GA5658@mwanda>
-Date: Thu, 5 Sep 2013 11:23:49 +0300
-From: Dan Carpenter <dan.carpenter@...cle.com>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: Agostino Sarubbo <ago@...too.org>, Kees Cook <keescook@...omium.org>
-Subject: Re: CVE request: Kernel PID Spoofing Privilege Escalation Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/08/4
+Message-ID: <20130308045543.GE20032@dhcp-25-225.brq.redhat.com>
+Date: Fri, 8 Mar 2013 05:55:44 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 04, 2013 at 08:30:05PM -0600, Kurt Seifried wrote:
-> Please use CVE-2013-4300 for this issue.
+On Thu, Mar 07, 2013 at 01:19:05PM +0400, Solar Designer wrote:
+> Kurt -
 > 
-> Stupid Q, any reason why this couldn't be sent to
-> http://oss-security.openwall.org/wiki/mailing-lists/distros to give
-> vendors a heads up (also we can get it a CVE prior to public release
-> then)?
+> On Thu, Mar 07, 2013 at 02:13:37AM -0700, Kurt Seifried wrote:
+> > Bundling the following into a single CVE:
+> [...]
+> > Please use CVE-2012-6138 for these issues.
 > 
+> I think this is wrong.  I would understand if those issues were all in
+> the same subsystem at least (or if you assigned per-subsystem CVE IDs
+> for these), but this is not the case.  Many distros will fix some, but
+> not the others, or not all at the same time.  There's room for a little
+> bit of bundling here, but not that much.
 
-The original patch was sent to netdev and lkml publicly from the start.
+In the past we've usually assigned one CVE per issue even for info leak
+bugs. Or at least one CVE per subsystem, as Alexander says. I agree with
+Alexander that one CVE for about ~20 issues is not right.
 
-https://lkml.org/lkml/2013/8/22/462
-
-We do have someone who is supposed to forwarding security bugs from
-security@...nel.org to distros.  I'm not on distros but apparently this
-wasn't happening properly so we've recently assigned another person to
-help with this.
-
-We're reviewing our security policies for the during the kernel summit,
-in October btw.  So far the main points are that people want less
-secrecy and more public reviews and better testing.  Kees wants to keep
-a record of CVEs in the kernel.
-
-https://lists.linuxfoundation.org/pipermail/ksummit-2013-discuss/2013-August/001050.html
-
-It's not clear if anything will actually change though.
-
-regards,
-dan carpenter
+-- 
+Petr Matousek / Red Hat Security Response Team
