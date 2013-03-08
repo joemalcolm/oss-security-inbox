@@ -1,86 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/03/2
-Message-ID: <51FC94AC.5020009@redhat.com>
-Date: Fri, 02 Aug 2013 23:27:08 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/08/7
+Message-ID: <513A0280.5030100@suse.de>
+Date: Fri, 08 Mar 2013 16:23:44 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-CC: "Larry W. Cashdollar" <larry0@...com>
-Subject: Re: Rgpg Ruby Gem Remote Command Injection (CVE Request)
+Subject: Re: CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/02/2013 01:12 AM, Larry W. Cashdollar wrote:
-> Title: *Rgpg Ruby Gem Remote Command Injection*
+Am 08.03.2013 06:07, schrieb Kurt Seifried:
+> On 03/07/2013 09:55 PM, Petr Matousek wrote:
+>> On Thu, Mar 07, 2013 at 01:19:05PM +0400, Solar Designer wrote:
+>>> Kurt -
+>>> 
+>>> On Thu, Mar 07, 2013 at 02:13:37AM -0700, Kurt Seifried wrote:
+>>>> Bundling the following into a single CVE:
+>>> [...]
+>>>> Please use CVE-2012-6138 for these issues.
+>>> 
+>>> I think this is wrong.  I would understand if those issues
+>>> were all in the same subsystem at least (or if you assigned 
+>>> per-subsystem CVE IDs for these), but this is not the case.
+>>> Many distros will fix some, but not the others, or not all at
+>>> the same time.  There's room for a little bit of bundling here,
+>>> but not that much.
 > 
-> 
-> Date: 7/31/2013
-> 
-> 
-> Advisory Author: Larry W. Cashdollar, @_larry0
-> 
-> 
-> CVE: TBD
-> 
-> 
-> Download: https://rubygems.org/gems/rgpg
-> 
-> 
-> Description:
-> 
-> 
-> "A simple Ruby wrapper around gpg command for file encryption.
-> 
-> rgpg is a simple API for interacting with the gpg tool. It is 
-> specifically designed to avoid altering global keyring state by
-> creating temporary public and secret keyrings on the fly for
-> encryption and decryption."
-> 
-> 
-> Vulnerability:
-> 
-> 
-> The following code snippet does not sanitize user supplied input
-> before passing it to the System () function for execution. If this
-> API is used in the context of a rails application remote commands
-> can be injected into the shell if the user supplies shell meta
-> characters like ; and &.
-> 
-> in lib/rgpg/gpg_helper.rb:
-> 
-> 68       begin 69         output/file.close 70         result =
-> system("#{command/line} > #{output_file.path} 2>&1") 71
-> ensure
-> 
-> Author: Notified 8/1/2013.
-> 
-> 
-> Fixed: in 0.2.3. 8/1/2013.
-> 
-> 
-> Greets to all@...CON21.
-> 
+>> In the past we've usually assigned one CVE per issue even for
+>> info leak bugs. Or at least one CVE per subsystem, as Alexander
+>> says. I agree with Alexander that one CVE for about ~20 issues is
+>> not right.
 
-Please use CVE-2013-4203 for this issue.
+So, are all CVE-IDs assigned before are invalid now? I just want to
+make sure I didn't pollute our databases. :)
+
+Cheers,
+Thomas
+
+
+
+> 
+> Agreed (I was wrong, not much more to say than that =). It sounds
+> like Mitre will be handling the additional CVEs for this issue as
+> I understand it.
+> 
+> Now my question is how concise do we go with the Linux kernel as
+> far as subsystems go? E.g. file subsystem vs network subsystem
+> seems obvious, and say ext4 vs. MSDOS file system code seems
+> obvious but what about network drivers (same chipset? same maker,
+> different chipsets? or like ext2 vs ext3 vs ext4).
+> 
+> 
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Thomas Biege <thomas@...e.de>, Teamlead MaintenanceSecurity, CSSLP
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
+21284 (AG Nürnberg)
+- --
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v2.0.19 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJR/JSsAAoJEBYNRVNeJnmTJ1UP/i07yMMuth0XEJjDoyWGb0AK
-ov+h6eAEBS0GmCwwzyP71J0bZiGhJ3OVpfD9+gFCYwlJRrgQPG1fCfxTbg2jMuZG
-NmrmPbNvNA4P4EdmQrAd8B52c0Bj+HsBm43vC1BkBcgL91KK3JzcqzOy+LGfa2tL
-VJYmrzBPkbCYGYe1e6pSYKsOuFMQ2epBbaV4K5nnJBr8SVL1hE7PC06f4rsRwsDg
-N7Mn4g9+L+cChRxe464U3jJh1fc7kM/UW2pe50Lqf7gJXi5H2WdNimS0STrzZxcN
-dTlufNylobuIwAQXJ2ZfQ19JCLCm49JFLDDXbKcbvFPsKmZ7OS9GTZP423M5eUN9
-UnI30FF9SkmU1mWh9+o6xxO9BfLz40cRhYsk++oln48djVpjvJcyzklpbwieRh4A
-9KO2T5txo5pl6jt20mzzQZyuatsl1mfQCIQ1ltxOqNXzs1Bw7km7jQWCP3qeZjMD
-NRtrOagtzFf01oX7b/hUNKxpdN/fwJciSf737eAsi8ys6KJJMwWbO+u8Hq8JtK/O
-LULbsUGIPgcih5mpLj7d9+d5zlRc8WcNwYHwNeFon2BQFYuIHzJ72ErDQzGIi4Ly
-oS9EwxfoQX/6WJw2yQSvs7wUiOyxWIPKunPOnm8OYrBmxiVbiVLllEhylMf40f02
-RgKNyJnxWZPPEFf/XkUM
-=KV4E
+iQEcBAEBAgAGBQJROgKAAAoJEJqHoVJVjr8DPUYIAN1Bhf+JkBFGH9xEFrrNCZ9m
+9w21VJ3RKRPvKdK7I5+9xDTLxHsPuAwEkFMQY27Gs8ALGj4pYukiZ5ifCHJJX5wc
+7EaXi5lI9c/wh7PMgVxqoIPQExq4LCHV6/W+b5yPra0A7faFcCkiQNeJfR4qd19z
+3YaSEA0u7op0HugvgcOueCEt1b/dRBp6eGfM/ERQ+jNzAJPJoFtnz/x4Chsk+SE7
+vKe0Z6RWngUaRsKG0Np+0rXl+HvKLhyL49J1MU2GAsBkYnTzjlalortLZHn0h7PE
+jxBDgm6g3axhrQ7ZpbyHdW2xRThTuYthPJI+w85SvXlnPBfLmalpATcqKVhcXSQ=
+=NVp2
 -----END PGP SIGNATURE-----
