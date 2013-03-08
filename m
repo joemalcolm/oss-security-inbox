@@ -1,243 +1,150 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/23/1
-Message-Id: <201301230034.r0N0YJUr005513@faron.mitre.org>
-Date: Tue, 22 Jan 2013 19:34:19 -0500 (EST)
-From: cve-id-change@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/08/6
+Message-ID: <Pine.GSO.4.64.1303080956290.14630@faron.mitre.org>
+Date: Fri, 8 Mar 2013 09:57:00 -0500 (EST)
+From: "Steven M. Christey" <coley@...re.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE ID Syntax Change - Call for Public Feedback
+Subject: CVE abstraction choices and the Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-CVE ID Syntax Change - Call for Public Feedback
------------------------------------------------
-January 22, 2013
 
-Due to the increasing volume of public vulnerability reports, the
-Common Vulnerabilities and Exposures (CVE) project will change the
-syntax of its standard vulnerability identifiers so that CVE can track
-more than 10,000 vulnerabilities in a single year.  The current
-syntax, CVE-YYYY-NNNN, only supports a maximum of 9,999 unique
-identifiers per year.
+Apologies to all for the long post, but this discussion might
+significantly impact how CVE assignment occurs in the future, and I
+intend to reference it heavily.
 
-Since a change in the ID syntax will affect many parties including end
-users and vendors, the CVE project is soliciting feedback from the
-public before making this change.
+We (MITRE CVE) specifically request feedback from members of the
+various Linux distributions on this list, since they will be affected
+most directly, although input from anybody is welcome.
 
-The public feedback period will continue through the RSA Conference in
-February 2013, where attendees will be able to speak with CVE
-personnel from MITRE and members of the CVE Editorial Board.  After a
-formal Editorial Board vote, the final selection will be made and the
-public will be notified, probably in March 2013.
+In the "Linux kernel: various info leaks, some NULL ptr derefs"
+thread, Petr Matousek said:
 
-The syntax change is scheduled to go into effect on January 1, 2014,
-so that people will have enough time to change their processes and
-software to handle the new ID syntax.
+>In the past we've usually assigned one CVE per issue even for info leak
+>bugs. Or at least one CVE per subsystem, as Alexander says. I agree with
+>Alexander that one CVE for about ~20 issues is not right.
 
-With guidance from the CVE Editorial Board, we have identified three
-options for a new ID syntax, summarized as follows:
+Established CVE practice does not dictate assigning a separate ID for
+each bug.  While this is useful for some people, it's not useful for
+others, and many times this information is not even available - or it
+can change over time.  Although it often looks like one CVE is
+assigned per issue, that is by accident, and there are other drivers
+that decide how many CVEs should be assigned.  More explanation later
+in this post.
 
-*) Option A (Year + 6 digits, with leading 0's)
+The "spirit" of CVE content decisions is documented here:
 
-   Examples: CVE-2014-000001, CVE-2014-009999, CVE-2014-123456
+http://cve.mitre.org/cve/editorial_policies/cd_abstraction.html
 
-*) Option B (Year + arbitrary digits, no leading 0's except IDs 1 to 999)
+In the first couple years of CVE, we tried to assign unique IDs for
+each vulnerability, but there was too much inconsistency and too much
+uncertainty.  In many cases, we simply did not have enough data to
+know how many vulnerabilities there even were.  Or, we might choose
+to assign "X" number of IDs to a multi-issue disclosure, and then 2
+weeks later, more details would come out that would really suggest
+needing a different number of IDs than we had originally assigned.
+You see this kind of "counting uncertainty" on oss-security on a
+regular basis, even today.  So, CVE needs to operate in a space where
+the amount of detail varies widely.
 
-   Examples: CVE-2014-0001, CVE-2014-54321, CVE-2014-123456
+CVE also needs to be usable to many communities with different
+needs.  Its primary role is to help these communities to coordinate
+vulnerability information with each other - that is, CVE acts as a
+"coordination ID."  Different vulnerability-information consumers
+operate at different levels of abstraction.  For example, many system
+administrators don't necessarily care about individual kernel bugs,
+but they might care much more about a single patch action as implied
+by a single vendor advisory that updates to a new kernel version;
+these admins may operate on the "advisory ID" level of abstraction.
+On the opposite end of the spectrum is the open source community,
+which has effectively started using CVE as a "universal bug ID" -
+that is, they operate at the "bug ID" level of abstraction.  This is
+useful for coordination between distro maintainers, but not for
+coordination with other communities that CVE serves.
 
-*) Option C (Year + arbitrary digits + check digit)
+With respect to the number of IDs that get assigned to a disclosure
+of one or more bugs/vulnerabilities, CVE's abstraction has evolved to
+be somewhere in between that of the vendor ID and the bug ID.  Since
+CVE's primary role is to support coordination across many communities
+who operate at different levels of abstraction, being "in the middle"
+maximizes CVE's utility to all of these communities - but it also
+means that it is rarely a perfect match for each individual
+community.
 
-   Examples: CVE-2014-1-8, CVE-2014-9999-3, CVE-2014-123456-5
+For CVE, we knowingly combine multiple vulnerabilities into the same
+ID, if they (1) are the same vulnerability type, (2) affect the same
+code versions, and (3) were disclosed at the same time by the same
+person/organization.  (Note that this is a simplification.)  We have
+found that these details are usually available in disclosures, they
+are provided very early in the disclosure process, and they don't
+often change significantly over time.  With these guidelines, it is
+easier for different people to consistently assign the same number of
+CVE IDs.  The system is not perfect, and CVE Numbering Authorities
+(CNAs) don't always follow these guidelines, but it works pretty well
+to keep CVEs usable as coordination IDs.
 
-One of these options will be selected as the new syntax for CVE
-identifiers.  More details are available at the end of this message.
+Whatever decision MITRE makes on how to go forward, we will be
+following the spirit of these well-established practices.  I know
+this conflicts with the open source community's need for a "universal
+bug ID," and that's why I'm suggesting the creation of a separate bug
+ID system, perhaps centered around a scheme such as a commit ID/hash
+(which is often used already, such as in the original CVE request
+that prompted this message).
 
-If you wish to comment on any of these options, you can:
+There is still a question about how CVE can reasonably handle
+disclosures of multiple issues for the Linux kernel and other
+complex, large software that is heavily reused and adapted.  Such
+code may be maintained by a single upstream developer, but as we all
+know, each distribution has its own practices and maintains its own
+versions.  For the Linux kernel, this is a special challenge.
 
-*) Email your commeent to to cve-id-change@...re.org, which is
-   monitored by CVE team members at MITRE.
+Let's take Kurt's assignment of CVE-2012-6138 for the kernel
+info-leak issues discovered by Mathias Krause.  Mathias said that he
+did not investigate these too closely, which is completely
+understandable - yet now we have some very raw, detailed, public
+information that is not necessarily expressed in ways that help CVE
+to make appropriate decisions about the number of IDs to assign.
 
-*) Post to a new, public discussion list that is focused on the CVE ID
-   change.  To subscribe, send email to listserv@...ts.mitre.org .  In
-   the body of the email, type:
+With respect to CVE's practice of "SPLIT by vuln type," while the
+issues are all information leaks, note that an "information leak" is
+a *consequence* of a bug, not an actual *type* of bug.  There are
+many different bug types that can lead to the disclosure of
+potentially-sensitive information.  The issues reported by Mathias
+appear to contain problems like out-of-bounds reads and
+improperly-uninitialized data, so a closer investigation would likely
+produce a SPLIT.
 
-        subscribe CVE-ID-SYNTAX-DISCUSS-LIST
+With respect to CVE's practice of "SPLIT by version," we don't know
+for sure which bugs affect which versions.  We know when the bugs got
+fixed, but not necessarily when they were introduced - it's too early
+in the disclosure.  And the distributions are likely to handle these
+groups of bugs differently, so even if they are fixed in the same
+upstream kernel version, there are likely to be variations in which
+issues are fixed by each distro in their "local" (downstream) kernel
+versions.
 
-*) Reply on any of the public mailing lists to which this announcement
-   has been posted.
+While it would be convenient to assume that each bug might affect
+some slightly different version in at least one distro, assigning a
+unique CVE ID for each bug would increase the volume of CVEs to a
+point where it hurts the usability of CVE to other consumers outside
+the distro-maintenance community.
 
-Due to the high volume of replies that we expect to receive, we will
-not be able to respond to every email message; however, we will
-publish a summary of responses.
+Solar Designer's suggestion of per-subsystem SPLITs is an intriguing,
+approximate solution to CVE's "version" problem in widely-shared code
+like the Linux kernel.  It seems likely that many subsystems are
+introduced in different upstream kernel versions, and probably
+updated in different versions.  Some subsystems might be enabled or
+disabled by sysadmins.  By using the directory structure of the
+source code tree, subsystems might be reasonably inferred on a
+consistent basis.  It is by no means perfect, but it should be fairly
+repeatable.
 
-Thank you to the entire community for supporting CVE, and we look
-forward to your feedback.
+Considering the Krause kernel info-leaks as an example, this might
+suggest about 11 CVEs for crypto, xfrm_user, net (including net/tun),
+ipvs, dccp, llc, l2tp, Bluetooth, atm, udf, and isofs.  There might
+be additional SPLITs based on bug type.
 
-Regards,
-The CVE Project
+What do people think?  To the distro maintainers: given that CVE
+cannot support per-bug IDs for the reasons I've already described,
+are per-subsystem SPLITs workable?
 
-
-------------------------------------------------------------
-Option A: Year + 6 digits, with leading 0's
-------------------------------------------------------------
-
-Example identifiers:
-
-  CVE-2014-000001, CVE-2014-000999, CVE-2014-001234, CVE-2014-009999,
-  CVE-2014-010000, CVE-2014-054321, CVE-2014-099999,
-  CVE-2014-100000, CVE-2014-123456, CVE-2014-999999
-
-Strengths:
-
-  This CVE ID syntax will seem familiar to consumers who are used to
-  the old-style syntax from 1999 through 2013, since there are 6
-  digits instead of 4.  This might make adoption easier and minimize
-  confusion.
-
-  The syntax would avoid some ID parsing problems that could occur
-  with the other schemes, such as inadvertent truncation or
-  fixed-length assumptions that would cause the wrong ID to be
-  extracted.  It would also support the use of multiple consecutive
-  IDs that can be easily sorted and displayed without special logic.
-  The fixed length might be a desirable property to some consumers or
-  CVE-processing implementers; the other options have variable-length
-  IDs.
-
-  Some CVE-processing software that automatically extracts or
-  publishes CVE identifiers might not need to be changed, if it
-  already assumes that more than 4 digits could be used.
-
-  There will be enough IDs to support up to 1 million vulnerabilities
-  per year.  This is effectively future-proof for CVE, because CVE's
-  scope is expected to remain largely restricted to vulnerabilities
-  that have been analyzed by humans.  If more than 1 million IDs are
-  required, this would represent such a large paradigm shift in
-  vulnerability disclosure and tracking that the entire industry would
-  not be able to manage the volume using today's practices.
-
-Limitations:
-
-  Immediately upon the first publication of an ID using this syntax,
-  many CVE programs that assume the old-style syntax would stop
-  functioning correctly.
-
-  The larger number of digits could increase the risk of typos,
-  especially with the leading zeroes.  Some consumers might
-  intentionally remove leading zeroes, assuming the old-style 4-digit
-  number.
-
-
-
----------------------------------------------------------------------
-Option B: Year + arbitrary digits, no leading 0's except IDs 1 to 999
----------------------------------------------------------------------
-
-Note: in this option, extra digits would not be added until at least
-10,000 IDs are needed.  When necessary, only one additional digit is
-added.  For IDs 1 through 999, leading 0's would be used to expand the
-number to use 4 digits.
-
-Example identifiers:
-
-  CVE-2014-0001, CVE-2014-0999, CVE-2014-1234, CVE-2014-9999,
-  CVE-2014-10000, CVE-2014-54321, CVE-2014-99999,
-  CVE-2014-100000, CVE-2014-123456, CVE-2014-999999, CVE-2014-1234567
-
-Strengths:
-
-  This CVE ID syntax will seem familiar to consumers who are used to
-  the old-style syntax from 1999 through 2013; the numeric portion
-  will just contain extra digits.  This might make adoption easier and
-  minimize confusion.
-
-  The initial change to 5 digits would support up to 100,000
-  identifiers in a single year; 6 digits would support up to 1 million
-  identifiers per year.
-
-  Some CVE-processing software that automatically extracts or
-  publishes CVE identifiers might not need to be changed, if it
-  already assumes that more than 4 digits could be used.
-
-  The ID syntax will not have an obvious change until 10,000
-  identifiers are needed, which might give extra time to CVE users to
-  adjust to a syntax change.  (Note that CVE might not require 10,000
-  identifiers this year.)
-
-Limitations:
-
-  The ID does not have a fixed length, and ID parsing errors are
-  likely.  Some CVE programs would incorrectly truncate the wrong IDs
-  because of the assumption of 4 digits, which would cause confusion
-  and incorrect mappings.  For example, CVE-2014-123456 might be
-  truncated as CVE-2014-1234, which would identify a completely
-  different vulnerability.
-
-  This syntax is less "future-proof" than others.  If a change is
-  needed from 5 digits to 6, some CVE-processing software might break
-  because of built-in assumptions about 5 digits.  Thus, for this
-  option, there would be two different periods of transition of the
-  CVE ID syntax: the transition to 5 digits, and the transition to 6
-  digits.  However, the second transition would be less severe, since
-  it would only affect implementations that were not correctly fixed
-  in the first transition.  Option C would only have one transition,
-  and Option A would only have one transition unless there is a
-  radical change in vulnerability disclosure practices that would
-  require more than 1 million IDs a year.
-
-  Because there is no apparent change to the syntax until 10,000 IDs
-  are needed, this might prevent some CVE implementers from making
-  changes until it is too late and the change has already happened.
-
-
-------------------------------------------------------------
-Option C: Year + arbitrary digits + check digit
-------------------------------------------------------------
-
-Note: the ID would consist of the year, a hyphen, a sequence number of
-1 or more digits, another hyphen, and a single check digit calculated
-using the Luhn Check Digit Algorithm, which is used in other
-identification schemes such as credit card numbers.  This syntax is
-similar to that used by the Common Configuration Enumeration (CCE);
-see http://cce.mitre.org/about/faqs.html#B2 for more information.
-
-Example identifiers:
-
-  CVE-2014-1-8, CVE-2014-999-3, CVE-2014-1234-3, CVE-2014-9999-3,
-  CVE-2014-10000-8,   CVE-2014-54321-5,   CVE-2014-123456-5,
-  CVE-2014-999999-5, CVE-2014-1234567-4
-
-Strengths:
-
-  This ID syntax supports arbitrary numbers of vulnerabilities, and as
-  a result, it is future-proof.  The trailing hyphen and check digit
-  serve as an unambiguous boundary that clearly decomposes the ID into
-  three distinct parts, regardless of length.  CVE implementations
-  that conform to this syntax would not need to be changed when the
-  number of digits changes.
-
-  The check digit would be useful for automatically detecting typos in
-  identifiers.  Because of the widespread use of CVE, identifier typos
-  cause significant confusion and maintenance costs to resolve,
-  although the frequency with which this occurs is not clear.  Since
-  there is a trend towards large-scale automation for managing
-  vulnerabilities, the check digit would be very useful as part of a
-  data integrity check of CVE IDs during computer-to-computer
-  interaction.
-
-Limitations:
-
-  Immediately upon the first publication of an ID using this syntax,
-  many CVE programs that assume the old-style syntax would stop
-  functioning correctly.
-
-  This ID syntax is the most radical change to the old-style syntax.
-  It could cause confusion among CVE consumers who are unaware of the
-  syntax change, since "CVE-2014-1-1" would appear to be a malformed
-  ID compared to the old-style ID.
-
-  Compared to other options, this ID would be more difficult to use in
-  human-to-human communications.
-
-  Parties who are familiar with the old-style ID syntax might
-  inadvertently omit the check digit.  This could increase
-  implementation costs or reduce usability for implementations that
-  assume that IDs have the check digit.
-
+- Steve & the CVE-Assign Team
