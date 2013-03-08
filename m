@@ -1,92 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/3
-Message-Id: <E1VdK0N-0008Mz-P5@xenbits.xen.org>
-Date: Mon, 04 Nov 2013 13:15:44 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 73 (CVE-2013-4494) - Lock order reversal between page allocation and grant table locks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/08/2
+Message-ID: <51395BB3.8090602@redhat.com>
+Date: Thu, 07 Mar 2013 20:32:03 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, spender@...ecurity.net, Kurt Seifried <kseifrie@...hat.com>
+Subject: Re: CVE Request -- Linux kernel: sctp: SCTP_GET_ASSOC_STATS stack overflow
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-              Xen Security Advisory CVE-2013-4494 / XSA-73
-                              version 3
+On 03/07/2013 08:23 PM, Petr Matousek wrote:
+> A local user could use the missing size check in 
+> sctp_getsockopt_assoc_stats() function to escalate their
+> privileges. On x86 this might be mitigated by destination object
+> size check as the destination size is known at compile time.
+> 
+> Upstream fix: 
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=726bc6b0
+>
+>  Introduced by: 
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=196d6759
+>
+>  Introduced in: v3.8-rc1
+> 
+> References: 
+> https://twitter.com/grsecurity/status/309805924749541376 
+> http://grsecurity.net/~spender/sctp.c
+> 
+> Thanks,
 
-    Lock order reversal between page allocation and grant table locks
+Please use CVE-2013-1828 for this issue.
 
-UPDATES IN VERSION 3
-====================
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-The issue has been assigned CVE-2013-4494.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-While the response to this issue was being prepared by the security
-team, the bug was independently discovered by a third party who
-publicly disclosed it without realising the security impact.
-
-ISSUE DESCRIPTION
-=================
-
-The locks page_alloc_lock and grant_table.lock are not always taken in
-the same order.  This opens the possibility of deadlock.
-
-IMPACT
-======
-
-A malicious guest administrator can deny service to the entire host.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions going back to at least Xen 3.2 are vulnerable.
-
-To exploit the vulnerability, the attacker must have control of more
-than one vcpu, either by controlling a malicious multi-vcpu guest, or
-by controlling more than one guest.
-
-MITIGATION
-==========
-
-There is no practical mitigation for this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Coverity Scan and diagnosed by Andrew
-Cooper.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa73-4.3-unstable.patch    Xen 4.3.x, xen-unstable
-xsa73-4.2.patch             Xen 4.2.x
-xsa73-4.1.patch             Xen 4.1.x
-
-$ sha256sum xsa73*.patch
-519eb1d2815c41d73c775324f43d1a7d75615775194bd0f6584147b45d04250b  xsa73-4.1.patch
-9eab1db170dc13bdd4da76bc2184399f705d124acd14b364428f012ea5c3a281  xsa73-4.2.patch
-1c070e66d1bea3c109f22ea4db2e8828f0f4b016d51d6d88667b775eec340514  xsa73-4.3-unstable.patch
-$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSd53SAAoJEIP+FMlX6CvZAMgH/1JgLDhHB5A7w0iVJbHSv4ff
-9oxmch/DfMFj1A+Cuhq5YU25I19ocSiqiEU4n7IuADCH4UCetH6UMXqRQ7qj/HPq
-RZTGxmPkBNkIVkZd9IqRZEoWy4ENDhdDOa8ViNLqXCTCra0swfeTAav+BtTanpFQ
-jca18Ry0o4qo9A/ZNZniAgMV1OXxZkETRm6jVc7tCNzx0daPyAo4xesUDLNJ/EcW
-yYv7pIRY1Ct7X5CD3carkRBm0k3PmZ0IClZf5aBWKV8PE95oOk/m8HBIPFGvBp7o
-cPBHt7Nra2pWDG76Vtzg0QZuV9XPwaRtPk4U4w9s9K4BpRwDza8mXCBgaRLX9aU=
-=RphO
+iQIcBAEBAgAGBQJROVuzAAoJEBYNRVNeJnmTgrEP/1t7nexDh1neyWVu91vPpLSa
+Y4yTteT4upyPE5icg6zobUW6FV/gOxsleduj427zn+uq7IcwspAc3QH3QAjgeaIj
+0vlYlD7PBwk9HnIMjH03+ttbJolP7JGdU/Qh43LH+wDoxDI5OfmGNoN3+znpMXKn
+vplIYvFtqBsVrk3ead6f4MTPrdvv5+v/kSiXaXBD6GHL0uQP1+RR2XfnkUTiuJhQ
+ggd35oUz5IUMGVgwEoLCh93n/KdTq1f80gNZSQU9exjHwS45TQ7iS1bdm5adS4eq
+U6QNX9BHTZNGGq3edajHsmdmr/DKsYrul8bzTOWnfjCpdmCLzYQ9GKemvzlTM4+J
+E+53TTAFDAkhDzbzNo6TX9jN71Iv4CYHITu3N0qa7PL3Q/B5He/1NRK2Tx5bKJIv
+YsJRiojwTg/6hcv+tQEEnrnWeNj0BZeQ8B4RI/Y8uZavuKffG0rZx2/iRtLty/TE
+vzMWLuyZgNaIZ6xMF0lTveHUaNYggoCtkLR7crY+s4qeltao1WdARYAWWRM2/2mv
+kZBWApR3sQbsNbJtxj4RmEegKaK+Hyoq+SRN/YIGlIzhsAIpuzNUOEj8MCbyZ7T8
+E7uQdR9z/BL8wDlmwgcKSGVnLqy9RkoKFGOrPLvTD2RumtwqfcWUQ2T9z/+NT+LP
+LxHxLq9KgHOCIxSEfZN6
+=Mtxy
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa73-4.1.patch" of type "application/octet-stream" (3742 bytes)
-
-Download attachment "xsa73-4.2.patch" of type "application/octet-stream" (3772 bytes)
-
-Download attachment "xsa73-4.3-unstable.patch" of type "application/octet-stream" (3723 bytes)
