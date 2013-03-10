@@ -1,46 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/10/3
-Message-ID: <20130310094737.GC5220@kludge.henri.nerv.fi>
-Date: Sun, 10 Mar 2013 11:47:37 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/10/4
+Message-ID: <20130310141824.2da88e84@melee>
+Date: Sun, 10 Mar 2013 14:18:24 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2009-4168: WordPress plugin snazzy-archives XSS vulnerability
+Subject: CVE request: XSS in piwik 1.11
 Content-Type: text/plain; charset=utf-8
 
-Plugin URL: http://wordpress.org/extend/plugins/snazzy-archives/
-Versions affected: 1.7.1 and below
-Reported to WordPress plugins team: 2013-02-03
-Status: Plugin currently disabled by WordPress plugins team. Not fixed by plugin maintainer.
+Quote:
+"Security: We would like to thank the Security Researcher Leone
+Pontorieri who responsibly disclosed a XSS vulnerability (which we’ve
+fixed) as part of our Security Bug Bounty Program."
 
-PoC: wp-content/plugins/snazzy-archives/i/tagcloud.swf?mode=tags&tagcloud=%3Ctags%3E%3Ca+href=%27javascript:alert%28%22oss-security%20is%20great!%22%29%27+style=%27font-size:+40pt%27%3Efree%20pr0n%3C/a%3E%3C/tags%3E
+from
+http://piwik.org/blog/2013/03/piwik-1-11/
 
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/0.6.1/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/0.5.2/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.3/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/0.4/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.6.2/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.5.1/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.4.1/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.4/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/0.5.1/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.2.3/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.5.2/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.0/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.7.1/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.5/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.3.1/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.2.1/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.6.3/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/0.5/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.2/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.7.0/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.3.2/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.0.1/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/1.2.2/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/tags/0.6/i/tagcloud.swf
-faa1b18d043ab7653e0f79d44450b802d2b6627e  ./snazzy-archives/trunk/i/tagcloud.swf
+As we already discussed here recently, the piwik devs are fans of
+security by obscurity, so they don't provide further details.
 
---
-Henri Salo
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
