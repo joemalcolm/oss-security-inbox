@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/5
-Message-ID: <51DEF271.5060404@redhat.com>
-Date: Thu, 11 Jul 2013 11:59:13 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/11/7
+Message-ID: <513E3C80.1090804@redhat.com>
+Date: Mon, 11 Mar 2013 14:20:16 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, plugins@...dpress.org, moderators@...db.org
-Subject: Re: CVE request: WordPress plugin category-grid-view-gallery XSS
+To: Amos Jeffries <amos@...enet.co.nz>
+CC: bugtraq@...urityfocus.com, tytusromekiatomek@...hmail.com, oss-security@...ts.openwall.com
+Subject: Re: Squid 3.2.7 DoS (loop, 100% cpu) strHdrAcptLangGetItem() at errorpage.cc
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/10/2013 08:12 PM, Henri Salo wrote:
-> Can I get 2013 CVE identifier for XSS vulnerability in WordPress
-> plugin category-grid-view-gallery, thanks.
+On 03/07/2013 05:37 PM, Amos Jeffries wrote:
+> On 6/03/2013 9:53 a.m., tytusromekiatomek@...hmail.com wrote:
+>> ################################################################ 
+>> # DoS (loop, 100% cpu) strHdrAcptLangGetItem() at errorpage.cc # 
+>> ################################################################ 
+>> # # Authors: # # 22733db72ab3ed94b5f8a1ffcde850251fe6f466 #
+>> c8e74ebd8392fda4788179f9a02bb49337638e7b # AKAT-1 # 
+>> #######################################
+>> 
+>> # Versions: 3.2.5, 3.2.7
 > 
-> Plugin page:
-> http://wordpress.org/plugins/category-grid-view-gallery/ Original
-> advisory: http://seclists.org/bugtraq/2013/Jul/17 Version affected:
-> 2.3.1 (older probably affected too) PoC:
-> https://example.com/wp-content/plugins/category-grid-view-gallery/includes/CatGridPost.php?ID=44%22%3E%3Cimg%20src=%22http://%22%20onerror=alert%28document.cookie%29;%3E
->
->  Not yet fixed as author did not contact vendor. Top 1277 plugin by
-> popularity. WordPress guys could you coordinate this with plugin
-> developer, thanks?
+> Thank you very much for reporting this to us upstream and ensuring
+> a patch was available before publishing it publicly *cough*. This
+> has now been fixed.
 > 
-> --- Henri Salo
+> Would you care to do better on the other ones before someone else
+> has a chance to mail your exploit to our bugs@ address and grab all
+> the discovery glory?
+> 
+> Amos Jeffries Squid Project
 
-Can you confirm the vulnerability? I don't see any follow up
-emails/etc. Thanks.
+Please use CVE-2013-1839 for this issue.
 
 
 - -- 
@@ -37,17 +41,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR3vJxAAoJEBYNRVNeJnmTS9wQAL7y+/GCpvB77YH6eaXjESDo
-ymY4IZS6nq+XN+MjNIivsqJc1YQfST8jlaNQMYuJmjS6NEydp57dVHcb3NfGY13w
-zeVpAnqxQVlxMISpU/NDw33NlHYkHSi71WVJylNtY8ols7Dcq0+2wM93dXRnHNVB
-76pgWQW23RtV0td/7Yk7YnAqYlUIJ6nSIu4RKPdhb7hRAw/JjP9aAcILWY87Ah/U
-sTUjDJVkRH9AufJZ/UygczR8ZQhcWX98nYAoBhqEqU6u/bADz+qEJ8DUdrMsOTvQ
-7zQYviGyDrp+au7xEwOX9rC5YvX9RxYN4CP4uXDh3v1ye4AYLmGpqfFSvAiio+1e
-xoNhdI1DJqblDdifAShtTw0eZY3mWLy/lHqLiZLywrDLo7qF2krEkkZFHgJKzn5J
-/OByTRAFsgeiEfpZrOeihk7y1fnpICTfBF2h3ftp/Tz5vG/jXfw9AbCDer5iNng+
-nGuGfB3/gYZW9FZaEtHC1ge40k40LyePaQL4FdeUwL5nYdGQQJMxGlVm1Z9K0Mj2
-DKcUGf7mswsYO1Cda/NJimtLxGrUdEGl5U+X0lzuk8BQXRraLYOJSN7BRXSxVLDr
-3khCE/LhbFeHRN9wB5kjveT3oNvcVWg/UT4yxJLLLKBirRI8wBQHzjy5Wpn1qY8q
-zQGVAxSCWSvOSRbh5zx0
-=CjqU
+iQIcBAEBAgAGBQJRPjyAAAoJEBYNRVNeJnmT2akP/3a8sbpYdGYNcRfh1diMh8d9
+vXgTIWuCucln7xICDoav+qBJkVwXiRIQSaGlRtA56MdkIJBYj53gSrAOOsr2vOhq
+v8jmc65qQFH/fzt93Q0h/yF7ozY9IYY37frVMUmJeKs+JRsrkWSDvqpiiOgdmJON
+LW7YmW0lkt+p/ye14BMq072zsUikgz8oU4oJhJvbZR1o2El1LSzTj3EbCIxbwbYg
+dHAzPWKiujytkB6pziiU8OFowqhcOksEu/Qod8mMVFgG8L56bjkAhL5BVHdP2uY9
+JFHhPXi5P0XYQ04/975wG2qOZt56W7p9Hp7ji6SRiWC8wZhVe7FFoFk/y3DC3gdY
+ICh3BjtX7rh1hm1BYnf6gE8cC8KZFkpmO+Fltp2blbpd5IGDP64IdZ5Tj5elFI27
+CuvWJ8oY2vHHJ1+NmXRzSWrWkuSaRzSmcvItlOillP8qAXIYvTT8NY6rHbahkM/5
+mCuFo12yhUXVl31ilo0E8Y00mrgI2psDUfHv/Q+FNkRylMykhzpii+/XjW6llHDJ
+GM4XN+H4oLF3TEZ+3mPEBoQl5c0Vc8p0yk3x5tM/MhuRQ68X173+tsjmg4QtxLiv
+1LGYVtNphMsdwprWC01ci/xeh0kfHX4liK/9NY7aS3evScku94jGwHn9X+oVejOT
+XXkwifp3W+pf9AO5b8la
+=NngW
 -----END PGP SIGNATURE-----
