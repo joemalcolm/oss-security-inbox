@@ -1,54 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/13/2
-Message-ID: <50F30F18.4070700@redhat.com>
-Date: Sun, 13 Jan 2013 12:46:32 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>, Steven Christey <coley@...re.org>
-Subject: Re: DoS vulnerability in the BIND resolver (and potentially others)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/11/9
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF09033279@IMCMBX01.MITRE.ORG>
+Date: Mon, 11 Mar 2013 20:51:18 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "kseifried@...hat.com" <kseifried@...hat.com>, "DO-webmaster@...t.gov" <DO-webmaster@...t.gov>
+Subject: RE: *.nist.gov websites gone forever?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I doubt these sites are gone forever.  It's most likely a temporary outage.
 
-On 01/13/2013 03:26 AM, Florian Weimer wrote:
-> Scott Brynen described a behavioral change in some of the UltraDNS 
-> authorative name servers:
-> 
-> <https://lists.dns-oarc.net/pipermail/dns-operations/2013-January/009501.html>
+Note that web.nvd.nist.gov is at least serving up individual CVEs, such as:
+
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-5886
+
+- Steve
+
+>-----Original Message-----
+>From: Kurt Seifried [mailto:kseifried@...hat.com]
+>Sent: Monday, March 11, 2013 1:47 PM
+>To: oss-security@...ts.openwall.com; DO-webmaster@...t.gov
+>Subject: [oss-security] *.nist.gov websites gone forever?
 >
->  Mark Andrews of ISC confirmed that this triggers a denial of
-> service condition in the BIND recursive resolver:
-> 
-> <https://lists.dns-oarc.net/pipermail/dns-operations/2013-January/009506.html>
+>-----BEGIN PGP SIGNED MESSAGE-----
+>Hash: SHA1
 >
->  I think he is right, but this obviously has to be fixed in the 
-> resolver.  Can this be assigned a CVE?
-
-Uhmm I'm going to defer to Steven on this one:
-
-1) is this a security issue? I'm not totally convinced it is. It's
-definitely broken behaviour.
-2) Does this get a single CVE or one per broken client software?
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ8w8YAAoJEBYNRVNeJnmTbZ8P/2rnuErOKNHgQCm93O5vdZze
-eVJK2uP0W4bJrcD+ak6QcWD1i9i0JnEDTkTp/s00PJYy2dwg3UJMPl/5FM363Z/y
-7DWeLql7ekZu+4MTqIB91ZN9FyP7MeT1Jer3ogBfUhx71mC8L8k6A9jBoIfjrXdx
-wl7qKm3UkrEvaL346TqeiT3f9Xk+ZB5eCXIgWyIWLDlDvD0BVWYAzUjnr+yFXgvq
-DxRPJKceNvrIuLCBYWrmCM9lWIsvZdvLRVQSje4XDmUAn31Ca44EYIRvq0+6l4Ub
-lc1LzHlzLLQVfVJH6JFUjooRxWXX8gSAbQiaCfEb6OqRlkXg4WH2ItT/QqCYrqSv
-JDBQXe+wLCtoU4fG9ygOZ4Oh+DsYzDMe9KjtQHY/rrtxeYFNZvoP6CPjzpUdT/BO
-GmeADjKkZhP3xODLGivjnri9A+am+Fo/i5wAf981fW1pScTGRLS9tIOLEuVVE/cH
-UfODsIPCiClK4h9z8guxTroiuj1LO4XEyeoPSeU+JuUJ83+R2r+OCgCmcMr0JCbI
-lxe5WfAWxZYTbG6jeZnaHa4EHKHCWCRqd4V5FdVLYqmjM3Y2PcZ3gOZ5YDcg2fdM
-7wrKbGfZxVU6Bvi8lfiqusKctBG3fB0RUFh+NBQZ5t4TtVlqgg8r1FZt+7pYOI/Q
-M6Dqi9Iyck3Crdf/EZPU
-=JWSN
------END PGP SIGNATURE-----
+>So a bunch of nist.gov websites have been gone now for about 4-5 days:
+>
+>http://web.nvd.nist.gov
+>http://nvd.nist.gov
+>http://scap.nist.gov
+>
+>They are either gone entirely (web.nvd.nist.gov has no server at all),
+>or they have a generic "Site/Page Not Available" error now (they were
+>serving a CFM error over the weekend).
+>
+>This impacts CVE a bit since the two main sites are cve.mitre.org and
+>the web.nvd.nist.gov one. Any one know what is going on or have a
+>contact at nist.gov that can get this sorted out? Are these websites
+>gone forever or are they simply having an extended outage?
+>
+>- --
+>Kurt Seifried Red Hat Security Response Team (SRT)
+>PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>-----BEGIN PGP SIGNATURE-----
+>Version: GnuPG v1.4.13 (GNU/Linux)
+>
+>iQIcBAEBAgAGBQJRPhiXAAoJEBYNRVNeJnmTZgkQAJcBuKbU++LPOr1jyOjyQo
+>Uo
+>Z48pYCxi2TqfmwR9MXGqy0xej27te7cMr3zxRo5/deMACwZfX3BKU176gjuJUO
+>Pt
+>VdzlnyM7GV0SkI8Ea1Dgriklw4r4UXWrxI8yJvYSwoO5FMjEDysttXDaYhbsXGiq
+>tXZSDs8BOQ/6JjfCCBWU9HpI+HMbZb5vm9lCpaS1oq6eyiJ2sGpX4ICZ2XjCNjo5
+>vo1wms22iO+2DrnVfdjQ4pbEVSXTDMAdbWF1Pb8SJdhcEhMddHRQSe/Fylo5t
+>LgY
+>CJoCkWmReYcJ1F5k16mIZ+Mn1Af6K1hY9E+fzQHfxM4IgH6gDrcRa4/bxzLcLkQI
+>E7T94Jgz7giEKebA5md3Xwfk8AsmWNgWAXfqWi4bs1YjBvfjlszohN7SRAd2ul7Q
+>5CcD8rzGGkxupJBZytATEgF07AVu7yHMuqwPoN7IkSgy9uuI0zW9Bfz5PKnrpJR
+>Q
+>QMSDJE2QQc2Fimj8Zp++wcrfx9XbX5cWeKFOPTgHKV7mZ/kPgJw1rg5BaXcn/
+>M32
+>ukOY0ezrfIwSWB2qzUIrKZaMuMLMxToVmUedkE2V5ZjtBUKW2qapDKXpNOR
+>BfGSz
+>piaxUkXRTcsuTY9Q+YV5k7a41yF4kb2NxRACH1dZkLSENwbOfRyheuQPBWZ02
+>Wg+
+>hJrRW8IW9YnTmC8Smmt5
+>=qSEn
+>-----END PGP SIGNATURE-----
