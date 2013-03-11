@@ -1,47 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/1
-Message-ID: <52844D7B.9040905@redhat.com>
-Date: Thu, 14 Nov 2013 15:11:39 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/11/5
+Message-ID: <20130311200325.GN29285@yuggoth.org>
+Date: Mon, 11 Mar 2013 20:03:26 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifrie@...hat.com>, carnil@...ian.org
-Subject: CVE request: ppthtml heap-based buffer overflow
+Subject: Re: CVE Request: MD5 used for Download verification
 Content-Type: text/plain; charset=utf-8
 
-Morning,
+On 2013-03-11 15:32:52 -0400 (-0400), Donald Stufft wrote:
+[...]
+> Setuptools (and it's fork distribute) utilize MD5 in order to
+> verify that a download has not been tampered with.
+[...]
 
-A heap-based buffer overflow flaw was reported in ppthtml:
+While I'll be the first to agree that migrating to a more widely
+accepted modern hashing scheme is a noble goal, I'm unconvinced you
+present a security vulnerability in these tools' use of MD5.
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=729279
+1. Do the authors indicate in their documentation that this is
+intended to protect against malicious actors altering data in
+transit (a la MitM), and not just to identify corrupted downloads?
 
-Looking in xlhtml-0.5-15.fc19.src.rpm, I think the root cause of the 
-problem is in __OLEdecode() with an under allocation here:
+2. These tools are retrieving the checksums and files being
+checksummed from the same location in many (most?) cases, right?
 
-163   BDepot = (U8 *) malloc (0x0200 * (num_bbd_blocks + num_xbbd_blocks));
-
-That still passes this check:
-
-167   assert (num_bbd_blocks <=  (0x0200 / 4 - 1) * num_xbbd_blocks +
-168                              (0x0200 / 4) - 19);
-
-I suspect the overflow eventually occurs in this loop:
-
-184   for (i = 0; i < num_xbbd_blocks; i++)
-
-with:
-
-203       fread (s, 0x0200, 1, input);
-204       test_exitf (!ferror (input), 5, ends ());
-205       s += 0x0200;
-
-continually executed (but haven't tested thoroughly!!!).
-
-Can a CVE please be assigned?
-
-(Cc'ing Salvatore in case there is more information in the Debian report 
-that I cannot see.)
-
-Cheers,
-
---
-Murray McAllister / Red Hat Security Response Team
+3. Can you come up with a reasonable case in which a collision
+attack on MD5 would actually allow for maliciousness in this case
+(note most common scenarios would require a preimage or second
+preimage attack on MD5 instead, which still has yet to be
+demonstrated)?
+-- 
+{ PGP( 48F9961143495829 ); FINGER( fungi@...ulhu.yuggoth.org );
+WWW( http://fungi.yuggoth.org/ ); IRC( fungi@....yuggoth.org#ccl );
+WHOIS( STANL3-ARIN ); MUD( kinrui@...arsis.mudpy.org:6669 ); }
