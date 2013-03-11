@@ -1,75 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/14/11
-Message-ID: <51928DD4.8040407@redhat.com>
-Date: Tue, 14 May 2013 13:17:40 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Larry W. Cashdollar" <larry0@...com>
-Subject: Re: Remote command Injection in Creme Fraiche 0.6 Ruby Gem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/11/2
+Message-Id: <20130311074618.B20FA6EA62@zanzibar.garbagecollect.jp>
+Date: Mon, 11 Mar 2013 16:46:19 +0900
+From: "U.Nakamura" <usa@...bagecollect.jp>
+To: security@...y-lang.org
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>
+Subject: Re: CVE for Ruby Entity expansion DoS vulnerability in REXML (XML bomb)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 05/14/2013 10:59 AM, Larry W. Cashdollar wrote:
-> TITLE: *Remote command Injection in Creme Fraiche 0.6 Ruby Gem*
-> 
-> DATE: 5/14/2013
-> 
-> AUTHOR: Larry W. Cashdollar (@_larry0)
-> 
-> DOWNLOAD: http://rubygems.org/gems/cremefraiche, 
-> http://www.uplawski.eu/technology/cremefraiche/
-> 
-> DESCRIPTION: Converts Email to PDF files.
-> 
-> VENDOR: Notifed on 5/13/2013, provided fix 5/14/2013
-> 
-> FIX: In Version 0.6.1
-> 
-> CVE: TBD (please assign?)
-> 
-> DETAILS: The following lines pass unsanitized user input directly
-> to the command line.
-> 
-> A malicious email attachment with a file name consisting of shell 
-> metacharacters could inject commands into the shell.
-> 
-> If the attacker is allowed to specify a filename (via a web gui) 
-> commands could be injected that way as well.
-> 
-> 218 cmd = "pdftk %s update/info %s output %s" %[pdf, info/file,
-> t/file] 219 @log.debug('pdftk-command is ' << cmd) 220 pdftk/result
-> = system( cmd)
-> 
-> 
-> GREETINGS:
-> @vladz,@quine,@BrandonTansey,@sushidude,@jkouns,@sub_space and
-> @attritionorg
-> 
-> ADVISORY:
-> http://vapid.dhs.org/advisories/cremefraiche-cmd-inj.html
-> 
+Thank you for your information.
+I've just added the CVE identifier to our site now.
 
-Please use CVE-2013-2090 for this issue.
+Sorry for late reply.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRko3UAAoJEBYNRVNeJnmTytsP/0o3nhU7ZgjyPX8RXjlpJ/ub
-sBgcAAv/Zl+x2jntMqnqlNWGPYIRvGrmAKJqxOk+4zdjjd5C/kL/HoW8msM5M2p+
-U2V1irC/+YJ1+CY4Em9jPrfAQhE8KqOSBoqbPy3hG15yo65RIR2Bn4dz3dSZKk8x
-R2SDTCiqO9LuP3wAYjwxHEQ8d4H0M8QZ/CwuSGFFKB6GRejZHFVXNYxKoiAxqU2u
-T8nh1rbjKAoe0JeJVuNW6rqPtpPrJgT0X7Q6xAzNtoyRYjO6EnQmloWqXiX7YoGA
-Vuukjt7wpzAWjYxkLZxGY3zGNJ1QhNm1L5+/bDRUCKLT3/h3HgliDo/OBGP8jQ2x
-77+lsp2un6DF5iFmCRncaTURTWN9OBD7nKHZvxVtoPAWRfW4CgUSoKjRt1dT/29h
-Bz2b+Xc7/IJo4z7AB8kkseE2gdpjUzot+yEzBvCTKbFOHOhZoMRJ4yfL8QexZ8wK
-o2uym+OVX/2vLGZVlMF48m5LJShWxykwNjMSk1uolTyTXGRfsvRiU2MTGAGw51fZ
-wWmBtHOfEhMF7D+6tEqTe3T1hi/79l1Iu06X//GS0q0+UO8aUBJGz9oalil6TZDU
-tA38nMX1eEU12hJKj22oACAUfaDDTukHA0SSgyCHOmXWkIzwJRXzQo6jI6cBymDs
-MdyaHEUbaTVtQlQilqp8
-=pHRy
------END PGP SIGNATURE-----
+In message "CVE for Ruby Entity expansion DoS vulnerability in REXML (XML bomb)"
+    on Mar.07,2013 03:25:13, <kseifried@...hat.com> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> http://www.ruby-lang.org/en/news/2013/02/22/rexml-dos-2013-02-22/
+> 
+> =====
+> 
+> Unrestricted entity expansion can lead to a DoS vulnerability in
+> REXML. (The CVE identifier will be assigned later.) We strongly
+> recommend to upgrade ruby.
+> Details
+> 
+> When reading text nodes from an XML document, the REXML parser can be
+> coerced in to allocating extremely large string objects which can
+> consume all of the memory on a machine, causing a denial of service.
+> 
+> Impacted code will look something like this:
+> 
+> document = REXML::Document.new some_xml_doc
+> document.root.text
+> 
+> When the `text` method is called, entities will be expanded. An
+> attacker can send a relatively small XML document that, when the
+> entities are resolved, will consume extreme amounts of memory on the
+> target system.
+> 
+> Note that this attack is similar to, but different from the Billion
+> Laughs attack. This is also related to CVE-2013-1664 of Python.
+> 
+> All users running an affected release should either upgrade or use one
+> of the work arounds immediately.
+> 
+> =====
+> 
+> Please use CVE-2013-1821 for this issue. I apologize in advance if a
+> CVE was requested through other channels but we need a CVE for this
+> ASAP. Also for future reference you can get CVEs via
+> 
+> http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
+> 
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.13 (GNU/Linux)
+> 
+> iQIcBAEBAgAGBQJRN4oIAAoJEBYNRVNeJnmTEZwP/iySaWdApYtMK6qKs2eSuAXX
+> u4jcoYy9zr1WX6H9Qxk5rfJLYN1RNZVLLAlyMECHop2rAf+SR6SDtleVqbiumFWn
+> R22NmyhLwEE2z8o2bBEiX45C85L0ljSzmPnM+n1uxiGfXnJFrIpOHTi9iTxJMz5q
+> sVhQr643hxERGLbn6mbvwrrz86dBj4mJ+c9oDrRnWTP4k8mPn7LQ0ARafHsEBL8m
+> ymFP00/iLK+09UtYcMAtVnBx7BQghU4GodeN5jwaeUPYTsiQpLtceQ0ptdAO/8W+
+> 7f8gjdSotsPKYyJzmQAOtjWHi2Z7tGNiJYRFp4Aichzq7FSjBYZ4ExJp4fusi8Vq
+> Am170qKY9AREu7xumaewp4I6iiVUkPiiOuZNXnYkgNpkgHa9yVQ4TlwSw8pEvAKT
+> alCEcPuyeYr9bBw162DdOTCHnc78j2QPwia8gEbC0iigMcfY3sy5l+Quhe1UHDOG
+> zPlHIm5k592hQgiGeZrDe/TdkYAAOEMgzG11WGCuhnR0/LfSV5ryKAA97CBQ+a6V
+> ohmYnReCuGztjnz0DNuKj6ukTZSiHsWlzg5Qb+51D9SzEWoZqmLPnXSgtxwrpD2q
+> eGNg7dLXrp9pyBCDpAH7oEbh00S1RVLd0W5mfh4r1/cEvUNc88qkkQj/K4qI9EuG
+> RfoX/MgkndCKc6mKxdnS
+> =7jHF
+> -----END PGP SIGNATURE-----
+
+
+Regards,
+-- 
+U.Nakamura <usa@...bagecollect.jp>
+
+Content of type "application/pgp-signature" skipped
