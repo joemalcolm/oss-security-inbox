@@ -1,42 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/10/3
-Message-ID: <527F913A.1070700@debian.org>
-Date: Sun, 10 Nov 2013 09:59:22 -0400
-From: David Prévot <taffit@...ian.org>
-To: Salvatore Bonaccorso <carnil@...ian.org>
-CC: oss-security@...ts.openwall.com, team@...urity.debian.org
-Subject: Re: CVE Request: multiple vulnerabilities in spip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/11/4
+Message-Id: <BFC437B0-40E5-436B-800C-83F5E558BD6D@stufft.io>
+Date: Mon, 11 Mar 2013 15:32:52 -0400
+From: Donald Stufft <donald@...fft.io>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: MD5 used for Download verification
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+I'd like to request CVE(s?) for the Python software: setuptools[1] and distribute[2]
 
-Hi,
+Setuptools (and it's fork distribute) utilize MD5 in order to verify that a download has not been tampered with. 
 
-Le 10/11/2013 02:23, Salvatore Bonaccorso a écrit :
+As far as I know this affects all versions of both setuptools and distribute. 
 
->  - cross-site request forgery on logout. The patch adds a confirmation
->    button when loggin out.
->    commit for 2.1.24: http://core.spip.org/projects/spip/repository/revisions/20874
->    3.0.x did not contain the fix, and is probably not affected (David
->    can you confirm?)
+It also affects zc.buildout[3] which utilizes the md5 checking from distribute. It does not affect pip[4] as pip has grown it's own handling code outside of setuptools/distribute to allow stronger hashes.
 
-It had been fix in 3.0.10:
-http://core.spip.org/projects/spip/repository/revisions/20593
+[1] https://pypi.python.org/pypi/setuptools/0.6c11
+[2] https://pypi.python.org/pypi/distribute/0.6.35
+[3] https://pypi.python.org/pypi/zc.buildout/2.0.1
+[4] https://pypi.python.org/pypi/pip/1.3.1
 
-Regards
-
-David
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBCAAGBQJSf5E6AAoJEAWMHPlE9r08IlAH/A5cqzSWU+EkjLRgRlzlElYM
-lrlnd78X494bXzkLehyWJC9SSi6FyxEU/q27138jZ0i8DawY1xazpVibWBB4UP8n
-au4yg+0WWR/mcLZ0Tj7cuACyMAVMjZ/85uPZ0KNyTmIdwcIXGe/4+oDPSYOXkLas
-yrWW9UZDzN4bi7DMU3NAlSmHCabHu5wCsS/XQogg65jjVlX315Ko8AjWV5c/XDl9
-Xzft+k2vF8AS1HjGoN0whE9I4xfoscy5Sve8z4CcgLgN1tQcFKKO7q3NrSoTep3s
-WWmI3Z5bwCT7qfUcSQfzH1oPfWMUi90C5tM4yEEQHmvvIfq9yifXTzKh4fjs1rw=
-=bfST
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
