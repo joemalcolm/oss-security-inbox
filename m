@@ -1,58 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/19/1
-Message-ID: <52620BF0.5020808@redhat.com>
-Date: Fri, 18 Oct 2013 22:34:56 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/11/3
+Message-ID: <513E1897.6020507@redhat.com>
+Date: Mon, 11 Mar 2013 11:47:03 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for Drupal contributed modules
+To: oss-security@...ts.openwall.com, DO-webmaster@...t.gov
+Subject: *.nist.gov websites gone forever?
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/18/2013 03:24 PM, Forest Monsen wrote:
-> Hi there,
-> 
-> I'd like to request CVE identifiers for:
-> 
-> SA-CONTRIB-2013-079 - Context - Multiple vulns (Two issues:
-> Arbitrary PHP code execution, and access bypass.) 
-> https://drupal.org/node/2113317
-> 
-> SA-CONTRIB-2013-080 - Simplenews - Cross Site Scripting (XSS) 
-> https://drupal.org/node/2113515
-> 
-> Thanks!
-> 
-> best, Forest
-> 
+So a bunch of nist.gov websites have been gone now for about 4-5 days:
 
-CVE-2013-4445 Drupal SA-CONTRIB-2013-079 - Context - access bypass
+http://web.nvd.nist.gov
+http://nvd.nist.gov
+http://scap.nist.gov
 
-CVE-2013-4446 Drupal SA-CONTRIB-2013-079 - Context - PHP code exec
+They are either gone entirely (web.nvd.nist.gov has no server at all),
+or they have a generic "Site/Page Not Available" error now (they were
+serving a CFM error over the weekend).
 
-CVE-2013-4447 Drupal SA-CONTRIB-2013-080 - Simplenews - Cross Site
-Scripting
-
-Thanks.
+This impacts CVE a bit since the two main sites are cve.mitre.org and
+the web.nvd.nist.gov one. Any one know what is going on or have a
+contact at nist.gov that can get this sorted out? Are these websites
+gone forever or are they simply having an extended outage?
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSYgvwAAoJEBYNRVNeJnmTaBoP/3IxtFysl6iwU0NNSydYD/AB
-ZC/AjIWh17LnEgh5BD26393jTDNJVxSM+8ssEeDNFeQQnzDFUyPaXN0HgIzFLO0W
-b/ymVdK4g/RtsNUf+ai/rzC7U3ldVyVTutRJNJOKxklN7jA/VbJLyofE3b7ldvqO
-lM2nUYuulEdC4PdhjKsfAhxzAEVpMyvxLtZP3wXtckCMp0PeefFLNcRXS8pCI0sf
-eID+pdI6DKKhWfOMmJ3Yr34ypVWo0Y/fiuQxGbnNYu+H5/ugD3e6TaQMMJ7YW8yy
-COv0gZmH/rphGtVxt9JrSkDU7kIZqutnpbYfzs87koBfA/WIR03egskyADsYmDtZ
-Opn1+QOnnDlrZwhquJhovttK66T+urvFAiiTbJiEALDJjNWoxGmx/uoCPa0ke53a
-0jedRvwuImGZY471GF+7MygZHqPUzHShJ2v680olTn3EpGFJBm3Nk/P2wekbE6wc
-gqjMvieM0uO8gNmXJhSuqACJmJRyD6tXENNess4/TFRc7qqxeXfsvAIVOzQA/Wr/
-waqpD5ZhWlpYE3+uKoWfUzcNsbS3D61+Z65DnHunr3WR4XILIcriTiNIu04GL/gk
-wY9xD5x74xCFlCISZLZ8MOJt9ss+rg+mLr7I34zCBaxH6FyxoeEO2OeA1W5Cc3VZ
-6CBCBWoVw4bLN4GpLaHO
-=CN+B
+iQIcBAEBAgAGBQJRPhiXAAoJEBYNRVNeJnmTZgkQAJcBuKbU++LPOr1jyOjyQoUo
+Z48pYCxi2TqfmwR9MXGqy0xej27te7cMr3zxRo5/deMACwZfX3BKU176gjuJUOPt
+VdzlnyM7GV0SkI8Ea1Dgriklw4r4UXWrxI8yJvYSwoO5FMjEDysttXDaYhbsXGiq
+tXZSDs8BOQ/6JjfCCBWU9HpI+HMbZb5vm9lCpaS1oq6eyiJ2sGpX4ICZ2XjCNjo5
+vo1wms22iO+2DrnVfdjQ4pbEVSXTDMAdbWF1Pb8SJdhcEhMddHRQSe/Fylo5tLgY
+CJoCkWmReYcJ1F5k16mIZ+Mn1Af6K1hY9E+fzQHfxM4IgH6gDrcRa4/bxzLcLkQI
+E7T94Jgz7giEKebA5md3Xwfk8AsmWNgWAXfqWi4bs1YjBvfjlszohN7SRAd2ul7Q
+5CcD8rzGGkxupJBZytATEgF07AVu7yHMuqwPoN7IkSgy9uuI0zW9Bfz5PKnrpJRQ
+QMSDJE2QQc2Fimj8Zp++wcrfx9XbX5cWeKFOPTgHKV7mZ/kPgJw1rg5BaXcn/M32
+ukOY0ezrfIwSWB2qzUIrKZaMuMLMxToVmUedkE2V5ZjtBUKW2qapDKXpNORBfGSz
+piaxUkXRTcsuTY9Q+YV5k7a41yF4kb2NxRACH1dZkLSENwbOfRyheuQPBWZ02Wg+
+hJrRW8IW9YnTmC8Smmt5
+=qSEn
 -----END PGP SIGNATURE-----
