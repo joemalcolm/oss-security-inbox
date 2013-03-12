@@ -1,95 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/3
-Message-ID: <5226F74D.50608@op5.se>
-Date: Wed, 04 Sep 2013 11:03:09 +0200
-From: Andreas Ericsson <ae@....se>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/12/4
+Message-ID: <513E96A7.70609@redhat.com>
+Date: Mon, 11 Mar 2013 20:44:55 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jonas Meurer <jonas@...esources.org>,  nagios-devel@...ts.sourceforge.net, Vincent Danen <vdanen@...hat.com>,  Kurt Seifried <kseifried@...hat.com>, contribute@...ios.org
-Subject: Re: Security bug or feature? Servicegroups leak hostnames to unauthorized users (Was: CVE request: unauthorized host/service views displayed in servicegroup view)
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: XSS in piwik 1.11
 Content-Type: text/plain; charset=utf-8
 
-On 2013-09-04 10:31, Jonas Meurer wrote:
-> Hey list and fellow Nagios developers,
->
-> as you might have noticed, there's a discussion ongoing on oss-security[1]
-> regarding bug report #456[2].
->
-> I'm the one who discovered the described issue, and I still believe that
-> it's a bug with security implications, even though not everyone seems to
-> be convinced.
->
-> I'll try to give a brief description of the issue:
->
-> The Nagios status.cgi (at all 3.4* and 4.0* versions I checked) leaks
-> hostnames to unauthorized users as part of servicegroups. All of
-> servicegroup overview, summary and grid list each and every hostname that
-> is part of a servicegroup, regardless whether the HTTP user is listed in
-> contacts/contactgroups for this host.
->
-> In my opinion this is a security issue - at least on multi-user (e.g.
-> multi-customer) Nagios-setups. I guess that most ISPs which give their
-> customers access to the Nagios CGIs don't want to provide a full list
-> of monitored hosts to their customers as a side-effect.
->
-> One reason for confusion is the following entry from Nagios3 changelog[3]:
->
-> 3.4.0 - 05/04/2012
-> ENHANCEMENTS
-> [...]
-> - Users can now see hostgroups and servicegroups that contain at least
->    one host or service they are authorized for, instead of having to
->    be authorized for them all (Ethan Galstad)
->
->
-> The indisputable part of this change is, that users are allowed to see
-> hostgroups and servicegroups with at least one authorized host or
-> service. Unclear is, whether this means "group and all its group
-> members", or "group and only authorized group members".
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It should mean "group and only authorized group members, except also
-hosts for services where one is authorized to see the service".
+On 03/10/2013 07:18 AM, Hanno Böck wrote:
+> Quote: "Security: We would like to thank the Security Researcher
+> Leone Pontorieri who responsibly disclosed a XSS vulnerability
+> (which we’ve fixed) as part of our Security Bug Bounty Program."
+> 
+> from http://piwik.org/blog/2013/03/piwik-1-11/
+> 
+> As we already discussed here recently, the piwik devs are fans of 
+> security by obscurity, so they don't provide further details.
 
-> Unfortunately, no Nagios developer speaked up yet about this issue. Thus
-> there's still a lot confusion about it.
->
+Ayup. Please use CVE-2013-1844 for this issue.
 
-Well, now I have, so confusion dispelled.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-> You can find my patch at the Nagios Issue Tracker.
-
-Ah, right. Care to provide a link? Mostly, I prefer to get patches to
-this mailing list, since I don't spend a lot of time hunting them down
-from the (underused) tracker.
-
-> This patch changes
-> status.cgi behaviour to show only group members (hosts/services) that
-> the user is authorized to see.
->
-> A comment about this issue by the Nagios Developers whould be highly
-> appreciated. In case that the described (and critizised) behaviour of
-> status.cgi is intended, the distribution security teams can move on.
->
-
-Well, it *was* by design, but now I'm changing the design. It's a good
-time for it, since 4.0 is about to come out. I think the security teams
-can move on and we'll consider this "changed" rather than "fixed" for
-4.0, where we do some security tightening.
-
-> If on the other hand you agree with me, that this issue should be
-> fixed, I'll continue to work with the security teams in order to
-> provide patched Nagios packages for their distributions.
->
-> Thanks for your work on Nagios, it's a very valuable piece of software!
->
-
-Thanks for enjoying it.
-
--- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+iQIcBAEBAgAGBQJRPpanAAoJEBYNRVNeJnmTbcEQALxNNVyDUB8V45xjcpKiF+ih
+IykWm9qyukN3uaRUoaIb4O5cqzehAFUMFCYmU53nG3iLiyefp6seLm7rKbTZSIaW
+HEy5e4xXjpb9VvyRGz/2qEyTgxzab9pMsklBI9v0RN7Qk/XJtUThLNPkxwAtXCk9
+QoZk9S8xmJs8oREKN+kuUEZRIvcVjwmjeqf2skL9R8MyUjkFpmBZJD/kOeZPa0d5
+6gvyse/h4FBCeqe+bSOhuelWLc4dsTycOk2OJTlZBnqhFXlD2718fr+v4Pixkvbp
+ZyixzhdIA3RqqKqWlQctp4duTlSRSJZX2eO44y6KxE4uuaMPTxa43zbDDQnZFK0C
+rack282nCqt+rz4gpMyF7JJhznwdT5LeP/0yc0REmutP9yremP8D260evO7S8CUR
+Fv/48NIau3ICIEVaAqpE5rampAwTPYepYquzqsPlx37AqJSmEZlpklcIjTMpMyqT
+LZV7FrWBxq9yvlHThBVOJ5VbvawhcQMbsfc/G1MZoBUE5ROncva8z0opIuy56x4/
+DvaV2INz/0DpQ2iZAqNnkUa24/0U++AMXeLKchLntLbTET8/0WLrWjKxS8VvUES8
+SMiUJ4AFiM1eBzPI32dIhDc4Nlx7rEe3W62NQlMvBv7KC6DGKMu0eRcjub0KnP9O
+EHTVHlujrfKP11brpNAM
+=/pxb
+-----END PGP SIGNATURE-----
