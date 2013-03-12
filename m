@@ -1,46 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/15
-Message-ID: <529E52FD.5020802@redhat.com>
-Date: Tue, 03 Dec 2013 14:54:05 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/12/3
+Message-ID: <513E967A.9090100@redhat.com>
+Date: Mon, 11 Mar 2013 20:44:10 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-CC: rubyonrails-security@...glegroups.com, tenderlove@...y-lang.org, mattaimonetti@...il.com, clemens@...lway.at, svenfucks@...web-design.de, jose.valim@...il.com, stephan.soller@...ionweb.de, saimonmoore@...il.com, chris@...rish.com
-Subject: Re: Re: [CVE-2013-4491] Reflective XSS Vulnerability in Ruby on Rails
+To: oss-security@...ts.openwall.com
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: typo3 sql injection and open redirection
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/03/2013 02:32 PM, kpolitowicz@...onik.ca wrote:
-> Thanks. But what's the deal with I18n.enforce_available_locales ?
+On 03/09/2013 05:31 AM, Marcus Meissner wrote:
+> Hi,
 > 
+> http://typo3.org/support/teamssecuritysecurity-bulletins/security-bulletins-single-view/article/sql-injection-and-open-redirection-in-typo3-core/
+> 
+> 
+> has 2 new security issues without apparent CVE...
 
-That's a good question, the technical side of which I would point you at:
+Please use CVE-2013-1842 for Typo3 Extbase Framework SQL Injection
 
-http://rubygems.org/gems/i18n
+Please use CVE-2013-1843 for Typo3 Access tracking mechanism Open
+Redirection
 
-The latest release fixes security stuff, however they don't do CVE
-announcements/ChangeLog anywhere I can see. Adding them to this email
-CC. Guys, if you need help drafting a security announcements I'd be
-glad to help.
+> Kurt, is this in your scope, or more in Mitres?
+
+I generally handle open source unless they are totally messy (I'm lazy
+=) or they go to Mitre first and I never get a chance any ways.
+
+> Ciao, Marcus
+
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSnlL9AAoJEBYNRVNeJnmTylQQAMRM0bW7cvZXqGxdveD3Gtdf
-IV66MkWeHyMLQllhvUP5v0cc8yhIf5H2/wxC1OHMClfl7GMbCT/zE+yWGer2I7Vx
-FacFh1FpRIU+//FE/4480LgEzGukm/VIECAwgLv/IZEx9CprkQDpCvaE9UfKG+cm
-SGJYSEsFnfRuqJHY/oYTXBK/uRY6xQ0e8gr1LPV4nl3K+W8fHWeZUB+gRIb0GbZH
-6A4PIYYaY5TQRPhMf/kPclySefFiqiGaGW0v2D19wWIdrQVHSDWkeEGh228A7coR
-C32HKZEN/XM3EOGmv0hXfRRKeBMu0GsR0Yd7eoTAKmcpvAsJb6whyoogU0ejegPt
-BnArVapjgzzABM/qXSChrckIw9C5NVCLOnfl0JWiNuLGictGjPDFEKL51CM0uPRj
-LbSYbDgn4JxSOTQvSdoNE7XqqY5Ao34AEuv3NZZXwZ5qHTIPM6jHEeSPF5MJT3ZB
-jQ/iCszUbHIitgkT0Md9NHFv6Brb5LA2i7UoIzKralvnHfcwp+Rjnmtn5g6iGbYv
-Cggj07MnL3zCgcfpXUbLHJVvc4Cgp4TaJGViV2xp6pOkEcBpy0Qn6gI+8lNQlkBp
-UVDDtRKmAWB7xsBwClyxQpDTeOTIT1blwJgfmuap6WaeNzSxjaudtvJDv6Bfo/aZ
-v1oX/WY7gos+m5ixtDWi
-=adoO
+iQIcBAEBAgAGBQJRPpZ6AAoJEBYNRVNeJnmTHXQQAMglUJpq+bfXV0CQn+o8SbA0
+qt36FhAdiwoMmxuXXjP181fjk8MakjpW/7N1psXfOmITOEFVmQUO415UyDqMAhDg
+P+2SHCHwir70WUlCa3Vshdt+xIGU8SPv36CsASnGuDZb0dp0MNuE5bz3vsJnZ/9N
+p5mvkoiOLeXb0WRXp4ALvrFABOBR71xNfQNiBfOzP9vOVZ/O9YUHJZ7Bg5whIxsn
+97yF0kYMEqJNYUSY+MBgl4hfRG7uabZM1Fp+Ydj0keIZDS/vfZrwUA7LIMNzzrwo
+hzCvUOWi0IV4TP1PtPBj9R+G9KXKfUoKShOe6vSWmRiSikgoi5nNBT6Rc7PLIOGI
+uE8Gr7+NNx/JEOK5eCqqE9/5OHV9/bFD70vC5EYkKOO5s2OGlgVb2DDty3K69H/7
+HSxKFR8SUJWRkFLuhuOdYKBaXDByo9DZ0elQPCxjuOTuf5KlItRPFdIO5q7RUct0
+IV7CjGaifbcbayArnq/9ZpI4uFkN/ZP1fRzKXxes/gt48tBg55jUsHjUkm104TFb
+Abvl0xMqnCNCNX5avNy+ZQ3f5XyfscgHyK00fFITXeDx273mDJsHrFHTLoAX1VOT
+4D7qM83Ef0/Xdjlvm4mLQxt2orh8juPjX3UpbQ4qNkET6n2pQJ/5je69qUzM/PY1
+1w2xdDSzoTFA36UI4Jt5
+=cWAY
 -----END PGP SIGNATURE-----
