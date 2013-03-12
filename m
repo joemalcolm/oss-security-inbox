@@ -1,55 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/06/5
-Message-ID: <52A21AC2.2060406@redhat.com>
-Date: Fri, 06 Dec 2013 11:43:14 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/12/2
+Message-ID: <513E9624.1000200@redhat.com>
+Date: Mon, 11 Mar 2013 20:42:44 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux kernel: net: fib: fib6_add: potential NULL pointer dereference
+CC: Russ Allbery <rra@...nford.edu>
+Subject: Re: Reverse lookup issue in Net::Server
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/06/2013 06:46 AM, P J P wrote:
-> Hello,
+On 03/04/2013 12:36 PM, Russ Allbery wrote:
+> Remi Gacogne <rgacogne-bugs@...edump.fr> writes:
 > 
-> Linux kernel built with the IPv6 protocol(CONFIG_IPv6) along with
-> the IPv6 source address based routing support(CONFIG_IPV6_SUBTREE)
-> is vulnerable to a NULL pointer dereference flaw. It could occur
-> while doing an ioctl(SIOCADDRT) call on an IPv6 socket. User would
-> need to have CAP_NET_ADMIN privileges to perform such a call.
+>> I think there is a security issue in the way the access control
+>> feature of Net::Server
+>> (http://search.cpan.org/perldoc?Net%3A%3AServer) works. 
+>> Net::Server is used by various projects including Munin, Postgrey
+>> and SQLgrey.
 > 
-> A user/program with CAP_NET_ADMIN privileges could use this flaw to
-> crash a system resulting in DoS.
+>> The issue lies in the fact that the allow / deny access control
+>> does not perform a valid DNS check when given a hostname
+>> parameter and the 'reverse_lookups' option is enabled.  The
+>> current code only checks that the incoming connection source IP
+>> address has a reverse DNS matching the given hostname, but does
+>> not check that the hostname resolves back to this source IP
+>> address (see how the $prop->{'peerhost'} property is set in
+>> get_client_info(), lib/Net/Server.pm:553, then used in
+>> allow_deny(), lib/Net/Server.pm:597).  As it is trivial for an
+>> attacker to be able to set his own source IP's reverse DNS, the
+>> current check is not safe (this probably matches CWE-807:
+>> Reliance on Untrusted Inputs in a Security Decision).
 > 
-> Upstream fix: ------------- ->
-> https://git.kernel.org/linus/ae7b4e1f213aa659aedf9c6ecad0bf5f0476e1e2
->
->  Reference: ---------- ->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1039054
-> 
-> 
-> Thank you. -- Prasad J Pandit / Red Hat Security Response Team
+> This is a very weak security measure, but yes, the need to check
+> the reverse DNS results with a forward DNS query to make the
+> security check at all useful has been well-known going all the way
+> back to the days when TCP wrappers was the UNIX firewalling system
+> of choice.  I remember discussion of this in security contexts in
+> 1994, and I'm sure it was an old discussion even then.
 
-Please use CVE-2013-6431 for this issue.
+Yup. Please use CVE-2013-1841 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSohrBAAoJEBYNRVNeJnmTGGYP/1wXcro/6xSG8SmKqUUJXC0I
-0WF9oKNyDx2ikUI9gM5f82N3ez2mtHRwygU8WkWRp9rf/XqiE5KvMlVwrRXf+hHB
-CHpaw9Yc9IoPjXIdBbmXSlgurP362I/b9QwG36qNwEQya78f0eHqnWbDb8VSETpm
-lhSB3V/3EvFEY+U2/alaIcShrU22xLBknNdTxmkrW9ydloTUIAYpVKv6HXEv+l1+
-ZkibEsOG/fIlmRrGqHf0yafyXxooB3Cq9V5zfhrCHntFgZ7HVLS8B7/tTMKhphAH
-TJvWnU84BE6zF/CiCy5CdlJVA8/h2VSahxB5zbTBkKcoSerbI0QumsRsF4a71J8K
-xq+PP8eqAVz2LSmfZtul6GD6JirvH6QuHVWN2YhisCUC2wKqcp8uSPI0QneKaf4I
-SchQMAAQiEIqYCrJpGTY2u6NbGnZeih+vkBbBlJgpzH4CXKl5DoPl3/KsBFwd4kK
-7Na8aZWQMYUzvTHywN4WkN/m5OjfyErK89+F0eQqPXFnLUaHKDVOKjzhJ/fcbO2w
-iUKpHUtc4Wu24moi+NNa4ovvuv9XJ6sjl0easlQZVHlU6MiQZ9d/m640nTz270zC
-Gc4/NIAD+7Cco+0FgygBgYENkIazKpm8R6uUm3+4NAIVK7m++zD6t1FBdzH7P0A0
-mSIRRpTRjeGkGHxEhkId
-=yU7W
+iQIcBAEBAgAGBQJRPpYkAAoJEBYNRVNeJnmTo74P/j9Yn/ESKT4ALfNJoAISZgIT
+YSCewtRaMqI+LDr11Rg6kLC9NHO8BKsyo3DvlbEgFITpwkmCCOJKZOvR6PbFm9Ot
+reLseaegLL6y7qDXgAi97hGjWgq2i+vIi+agyfSy1lhzpnR9bk6aa/rdbxxtERPH
+N1CbKFpBvZ6RLHDtBtgEGqMznoswG8JIk5l/q15qLvnXgG1VA3H8PL/ZPsHUQ1iR
+95tOKXWeHw0ZysK2mwwQHbv6xLxo1owpvILqbOMN7x5Jx/WgusahfjDhQ9eyUbpy
+Ffxceha4M5LI8FgavALMFYMvAcymFkkjjuG08z/VhYa2/7FMqqF0gXIq4zuVKzAe
+VJqAt0cd5B6Nx9Kff5f/Yx3WkoZaj+9ErTkIv1O3Rd+X6ubW5j8PdVpKn0hOGEL2
+XKnNdOkKT6ZtWeRqfck1PZCPw4LUu/gBRNVl4vgr2QVPbRIRDjT5+PksIjd6U+dA
+lHgz54FXX+X0Yqy4djhZXD1fC9LRahThkHws1U7GjAMcFzVdoGLjfoAFT7temdzF
+iKpMCcCDoB9H1Pl03cJWk7pPKbZHSgRqYPlnqf6PNmTmJlYCGcqZorihU+S9xw2d
+ziIO+75QPuxvVVb8Hbtv8RHuJbndqSaFtjncbn0MQ1bVU+/JdQQchy4GPlvrrtvi
+kDHwPyl55Mrvy0lQAh7X
+=5u6Y
 -----END PGP SIGNATURE-----
