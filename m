@@ -1,36 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/18/5
-Message-ID: <87sj1kkbd1.fsf@windlord.stanford.edu>
-Date: Sat, 18 May 2013 00:15:06 -0700
-From: Russ Allbery <rra@...ian.org>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com,  Salvatore Bonaccorso <carnil@...ian.org>
-Subject: Re: CVE Request: WebAuth: Authentication credential disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/12/5
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF09033BB9@IMCMBX01.MITRE.ORG>
+Date: Tue, 12 Mar 2013 15:36:24 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE assignments for "weak" crypto (was CVE Request: MD5 used for Download verification)
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...hat.com> writes:
+All,
 
-> I did a Google search, there appear to be other
-> universities/organizations using WebAuth, was the vulnerable version
-> made generally available (e.g. on an ftp site or whatever?).
+This is an informal response, but I wanted to get something out pretty quickly.
 
-Yes, via http://webauth.stanford.edu/ as well as via my personal web site.
-I did issue an advisory (to webauth-announce@...ts.stanford.edu).  There
-were six announced (distributed, tagged, etc.) releases that had this
-vulnerability.
+For CVE, our default position is that "using MD5 for integrity checking of downloads" is a security-hardening issue, and thus should NOT receive a CVE ID.  While MD5 may be "broken" from a theoretical standpoint, and there have been some demonstrations of collisions, and stronger options exist - I do not know of any reliable means of efficiently generating a collision that would also remain a functioning executable.  There is also a strong likelihood of debate as to which method is currently "strongest."
 
-WebAuth is moderately well-used; it's not as popular as some of the other
-web single sign-on systems, but it's been distributed with Debian and
-Ubuntu for quite a while and I know a fair number of sites that use it.
+The fundamental problem is in the MD5 algorithm itself; any implementation of MD5 will suffer from the same problems.  We have multiple CVE identifiers for the various weaknesses of MD5.  Any product that uses MD5 is therefore subject to these weaknesses.
 
-The time interval between the broken and fixed version was relatively
-short (four months -- we're in the middle of a heavy development cycle)
-and the flaw was only in the central server component (which you only run
-one of within any given organization and tend to be conservative about
-upgrading) as opposed to the Apache modules that are installed everywhere,
-so it's possible that no one who met the fairly specific conditions
-required to trigger the bug ever deployed it, but I don't have a way of
-knowing that for certain.
+By a long-running CVE practice, implementations should not receive their own CVEs for a fundamental flaw in a design that they implement.  (Admittedly, CVEs are sometimes assigned accidentally, but this is actively discouraged.)
 
--- 
-Russ Allbery (rra@...ian.org)               <http://www.eyrie.org/~eagle/>
+Admittedly, there can be a fuzzy line between "hardening" and a "vulnerability."  And, as CVE and various security practices get "older," what was once strong at one time may be regarded as weak at a later time.  Further complicating "strong" vs. "weak" is the development of massively-parallel attacks for some algorithms, e.g. password cracking against various hash algorithms that are still very strong, even by today's standards.  I am aware of some efforts in quantifying security of cryptographic algorithms (e.g. by DJ Bernstein), but such work has not reached widespread adoption.
+
+Informally, CVE guidance is as follows.
+
+If a product uses a widely-known, common security algorithm (such as "hashing" or "encryption") that is regarded as "weak" (but not "completely broken"), the product may receive a CVE ID if either:
+
+- the product uses "weak" encryption/hashing when a stronger option is available and implemented [which CVE regards as an issue in the implementation, which should choose the strongest option available unless otherwise directed by the product admin]; OR
+- the product maintainer agrees that use of  "weak" encryption/hashing poses a vulnerability; modifies the product to use a stronger option; and wishes to use a CVE ID to communicate to the product consumers that a fix really should be applied.
+
+In the original request for Python setuptools/distribute, it appears that the issue is the use of MD5 for integrity checking, but we are not told whether the product implements stronger algorithms, or if the vendor has agreed that these pose a vulnerability for the product.  So, at this point in time, there is not enough evidence to assign a CVE.
+
+- Steve
+
+
+>-----Original Message-----
+>From: Donald Stufft [mailto:donald@...fft.io]
+>Sent: Monday, March 11, 2013 3:33 PM
+>To: oss-security@...ts.openwall.com
+>Subject: [oss-security] CVE Request: MD5 used for Download verification
+>
+>I'd like to request CVE(s?) for the Python software: setuptools[1] and
+>distribute[2]
+>
+>Setuptools (and it's fork distribute) utilize MD5 in order to verify that a
+>download has not been tampered with.
+>
+>As far as I know this affects all versions of both setuptools and distribute.
+>
+>It also affects zc.buildout[3] which utilizes the md5 checking from distribute. It
+>does not affect pip[4] as pip has grown it's own handling code outside of
+>setuptools/distribute to allow stronger hashes.
+>
+>[1] https://pypi.python.org/pypi/setuptools/0.6c11
+>[2] https://pypi.python.org/pypi/distribute/0.6.35
+>[3] https://pypi.python.org/pypi/zc.buildout/2.0.1
+>[4] https://pypi.python.org/pypi/pip/1.3.1
+>
+>-----------------
+>Donald Stufft
+>PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372
+>DCFA
+
