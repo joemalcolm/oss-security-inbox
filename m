@@ -1,148 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/10
-Message-ID: <20130116172659.544978d1@lola.kot>
-Date: Wed, 16 Jan 2013 17:26:59 +0200
-From: George Kargiotakis <kargig@...d.gr>
-To: P J P <ppandit@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel handling of IPv6 temporary addresses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/12/1
+Message-ID: <513E95E1.2080304@redhat.com>
+Date: Mon, 11 Mar 2013 20:41:37 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Adam Zabrocki <pi3@....com.pl>, full-disclosure@...ts.grok.org.uk, secalert <secalert@...urityreason.pl>
+Subject: Re: Multiple SQL Injection vulnerabilities in Disk Pool Manager (DPM)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Wed, 16 Jan 2013 18:17:28 +0530 (IST)
-P J P <ppandit@...hat.com> wrote:
-
+On 03/10/2013 12:17 AM, Adam Zabrocki wrote:
+> Name:                 Multiple SQL Injection vulnerabilities in 
+> Disk Pool Manager (DPM) Author:               Adam Zabrocki
+> (<pi3@....com.pl>) Date:                 November 27, 2009 (Yes,
+> it's very old bug ;P)
 > 
->    Hello George,
+> Timeline
 > 
-> +-- On Wed, 16 Jan 2013, George Kargiotakis wrote --+
-> | You can reproduce the bug with a new option for flood_router26 that
-> has been added to the thc-ipv6 toolkit v2.1. | # ./flood_router26 -A
-> eth0
-> 
->   I tried this, it takes quite a while for other hosts to receive the 
-> generated traffic. On the receiving hosts kernel logs
-> 
-> ==
-> ...
-> ...kernel: Neighbour table overflow.
-> ==
-> 
-> no log message from ipv6_create_tempaddr() routine. 
-> 
-Weird because the '-A' flag of flood_router26 sends very few packets so it shouldn't 
-have filled your neighbour table.
-
-what distro/kernel version are you trying ? I'm using latest ubuntu 12.10 with 3.5.7.
-The messages I'm mentioning certainly appear upon testing with ubuntu 12.10 live CD for example.
-
-> 
-> | I've applied your patch to 3.5.7 and unless I've done something
-> wrong, it doesn't seem to work. Actually I can't | get any temporary
-> address assignment with it. This is what I get upon booting with your
-> patch:
-> 
->   Ah, very sorry, I missed to say: ift = ipv6_add_addr(...) : in my
-> last patch. It remains NULL all the time. Please try this fixed
-> version
-> 
-> ===
-> diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-> index 420e563..0aaaa63 100644
-> --- a/net/ipv6/addrconf.c
-> +++ b/net/ipv6/addrconf.c
-> @@ -1046,12 +1046,19 @@ retry:
->  	if (ifp->flags & IFA_F_OPTIMISTIC)
->  		addr_flags |= IFA_F_OPTIMISTIC;
->  
-> -	ift = !max_addresses ||
-> -	      ipv6_count_addresses(idev) < max_addresses ?
-> -		ipv6_add_addr(idev, &addr, tmp_plen,
-> -
-> ipv6_addr_type(&addr)&IPV6_ADDR_SCOPE_MASK,
-> -			      addr_flags) : NULL;
-> -	if (!ift || IS_ERR(ift)) {
-> +    ift = NULL;
-> +    if (!max_addresses || ipv6_count_addresses(idev) < max_addresses)
-> +        ift = ipv6_add_addr(idev, &addr, tmp_plen,
-> +                        ipv6_addr_type(&addr) & IPV6_ADDR_SCOPE_MASK,
-> +                        addr_flags);
-> +    if (!ift) {
-> +        in6_ifa_put(ifp);
-> +        in6_dev_put(idev);
-> +        pr_info("%s: ipv6 temporary address upper limit reached\n",
-> __func__);
-> +        ret = -1;
-> +        goto out;
-> +    }
-> +    else if (IS_ERR(ift)) {
->  		in6_ifa_put(ifp);
->  		in6_dev_put(idev);
->  		pr_info("%s: retry temporary address
-> regeneration\n", __func__); ===
+> 2009-11-27 - Found vulnerability. 2011-08-03 - Vulnerability
+> officialy reported. 2013-02-19 - Updated packages available in the
+> EGI UMD-1 and EGI UMD-2. 2013-03-05 - Public disclosure on vendor's
+> wiki, after allowing sites to upgrade 
+> (https://wiki.egi.eu/wiki/SVG:Advisory-SVG-2012-2683) 2013-03-10 -
+> Release of this advisory.
 > 
 > 
-> Thanks so much.
-> --
-> Prasad J Pandit / Red Hat Security Response Team
-> DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+> 
+> Best regards, Adam Zabrocki
+> 
+> -- http://pi3.com.pl
 
+I'm curious as to why the 2 year delay? I'm going to go with the date
+reported as that is also mentioned in the public advisory, I can't
+confirm the 2009 date.
 
-Your new patch works "better", but still the main problem hasn't been
-eliminated. And I explain myself.
+Please use CVE-2011-4970 for this issue.
 
-While flooding with RAs the following appears in the dmesg:
-[  117.721878] IPv6: ipv6_create_tempaddr: ipv6 temporary address upper limit reached
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-which is what your patch is supposed to do. But acquired addresses
-from flooding all seem to have the tentative flag on:
-
-    inet6 fd00:966f:7996:c731:9191:a3ce:99bc:897e/64 scope global temporary tentative dynamic 
-       valid_lft 131007sec preferred_lft 65471sec
-    inet6 fd00:966f:7996:c731:222:aaff:fecc:1111/64 scope global tentative dynamic 
-       valid_lft 131007sec preferred_lft 65471sec
-    inet6 fd00:966e:7796:c731:9191:a3ce:99bc:897e/64 scope global temporary tentative dynamic 
-       valid_lft 131007sec preferred_lft 65471sec
-    inet6 fd00:966e:7796:c731:222:aaff:fecc:1111/64 scope global tentative dynamic 
-       valid_lft 131007sec preferred_lft 65471sec
-    inet6 fd00:966c:7396:c731:9191:a3ce:99bc:897e/64 scope global temporary tentative dynamic 
-       valid_lft 131007sec preferred_lft 65471sec
-    inet6 fd00:966c:7396:c731:222:aaff:fecc:1111/64 scope global tentative dynamic 
-       valid_lft 131007sec preferred_lft 65471sec
-    inet6 fd00:966b:7196:c731:9191:a3ce:99bc:897e/64 scope global temporary tentative dynamic 
-       valid_lft 131007sec preferred_lft 65471sec
-    inet6 fd00:966b:7196:c731:222:aaff:fecc:1111/64 scope global tentative dynamic 
-       valid_lft 131007sec preferred_lft 65471sec
-
-what I also find wrong here is that all temporary addresses (dynamic) acquired have gotten the same last 64bits.
-I don't think this is OK per RFC 4941 even if not explicitly defined there. Every temp. address created should be different per prefix from the rest.
-
-use_tempaddr for the iface still has '2' as its value
-# cat /proc/sys/net/ipv6/conf/eth0/use_tempaddr 
-2
-
-then after taking the interface down and up again even the new addresses acquired still have the tentative flag enabled:
-    inet6 2001:db8:f00:f00:222:aaff:fecc:1111/64 scope global tentative dynamic 
-       valid_lft 86371sec preferred_lft 3571sec
-    inet6 fdbf:468f:aaa0:474d:222:aaff:fecc:1111/64 scope global tentative dynamic 
-       valid_lft 86371sec preferred_lft 3571sec
-    inet6 fe80::222:aaff:fecc:1111/64 scope link tentative 
-       valid_lft forever preferred_lft forever
-
-dmesg reports:
-[  322.195426] IPv6: ipv6_create_tempaddr: regeneration time exceeded - disabled temporary address support
-
-use_tempaddr for the iface now has '-1' as its value though
-# cat /proc/sys/net/ipv6/conf/eth0/use_tempaddr 
--1
-
-And so there actually isn't any IPv6 connectivity from then on until a reboot.
-Flooding triggers something that corrupts ipv6 functionality.
-
-Best regards,
--- 
-George Kargiotakis
-https://void.gr
-GPG KeyID: 0xE4F4FFE6
-GPG Fingerprint: 9EB8 31BE C618 07CE 1B51 818D 4A0A 1BC8 E4F4 FFE6
+iQIcBAEBAgAGBQJRPpXhAAoJEBYNRVNeJnmTWM4QAIXbXji8kHSgx0HRpLSuOORM
+EQvjEnKiu65WQxNnDsvde1PIqLMjblG+aKL1ui8lXzqqA1qWmgAKbamQ69BaSzMN
+XF1mPsmb7xz+piwUfWUOCJZz/PbOmLBXyp6TRmxOvbne42DC6CBO5mRWmboYLC9k
+an1qK3ymSMyf1WHmJGG+6b68WqfhtcH2Q/fKchn7KvpPHgU4+a4zmlmb587q1cf1
+UVrMCwr6VWX2Jt/hLs3YP9Phb9DEGKQN/QorieNN9pPe1l5KM5/dB0HWtmD632t3
+q44zY4J9cPNHsUcUgrD7iw0q0pYK5Jah72YZjEjPeK29hiBH6BsOtRWcrF5zfUKq
+iVifcrNPsaQ2iDn+eU3BYbw/g4EUD3hlqhJ4gYfWUeZQXWfaxBM1wHOupHDQcLUo
+GJZZgbpd3nE8rN0Wtc3ZbF0Ht8iv5JiI3ZC6ZXA/R7ff6KfQjeP5ncqkfehPLOYR
+sH0arO/Nc/3ek4dtFDYiDCeO1gWNrzx4rZK+ajgtoqMN1zk8I4R5u/3dgmiDirsa
+ZHhgcu8XLjBYx/4mmOO09H+ovNZZELGZnHg43HAdcjbG5piUUSB5DhUXYoBMN5QX
+LEzBHmppsceuOe3LgbEtjbNX93+nk7Ch8JV8nj03AJo490HFpOUS670PF9nCPGfO
+ZKSznOcQlQmvvqUILsaG
+=SR7C
+-----END PGP SIGNATURE-----
