@@ -1,72 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/15
-Message-ID: <517ECC13.80205@redhat.com>
-Date: Mon, 29 Apr 2013 13:37:55 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/13
+Message-ID: <Pine.GSO.4.64.1303131718450.1504@faron.mitre.org>
+Date: Wed, 13 Mar 2013 17:22:22 -0400 (EDT)
+From: "Steven M. Christey" <coley@...re.org>
 To: oss-security@...ts.openwall.com
-CC: Simon McVittie <smcv@...ian.org>
-Subject: Re: CVE(-2007-xxxx?) request: telepathy-idle does not check SSL certificates
+Subject: Temporary Notifications of New CVE Entries During NVD Outage
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 04/24/2013 08:35 AM, Simon McVittie wrote:
-> In versions prior to 0.1.15, telepathy-idle, an IRC backend for
-> the Telepathy framework, does not check the server's SSL/TLS
-> certificate for validity[1]. A network intermediary could use this
-> flaw to carry out man-in-the-middle attacks on IRC users.
-> 
-> This flaw has existed, and been flagged in the source code[2],
-> since at least 2007 (the year in which telepathy-idle moved from
-> Sourceforge to freedesktop.org). I don't know whether that means it
-> should get an ID of the form CVE-2007-xxxx?
-> 
-> The upcoming version 0.1.15 will fix this vulnerability.
-> 
-> Versions 0.1.11 to 0.1.14 (which use GLib for TLS) carried out
-> some cursory checks on the certificate, but did not check that the
-> issuer was a trusted CA, that the identity matched the server's
-> hostname, or that the certificate had not expired. A minimal patch
-> to correct this is to delete the call to
-> g_socket_client_set_tls_validation_flags() (this will make one
-> regression test fail).
-> 
-> Versions 0.1.10 and older (which use OpenSSL for TLS) do not have
-> any support for certificate verification at all.
+As some people know, the National Vulnerability Database (NVD) is
+having a temporary outage.  At http://nvd.nist.gov/, NIST says "We are
+working to restore service as quickly as possible."
 
-In general if you support SSL the assumption is you do it sanely, e.g.
-verify certificates/hostnames/etc, because if not the whole thing is
-useless since an attacker can MitM you easily (generally the thing SSL
-is designed to stop). So worthy of a CVE generally.
+Many people rely on NVD feeds to learn about newly-updated CVEs.  The
+CVE web site does not provide such feeds, since that would duplicate
+NVD functionality.
 
-Please use CVE-2013-2025for this issue.
+However, the CVE project sends notification emails for newly-updated
+CVEs to a limited set of CVE-compatible users, often several times a
+day.  Until NVD service is reliably restored, I will be posting these
+"CVENEW" messages to the Vulnerability Information Managers (VIM)
+list.  While CVENEW messages do not contain the extra data that NVD
+provides, such as CVSS and CPE names, hopefully this will help some
+people to monitor new CVEs.
 
-> Regards, S
-> 
-> [1] https://bugs.freedesktop.org/show_bug.cgi?id=63810 [2] "TODO
-> sometime in the future implement certificate verification"
+CVENEW messages will be found in the VIM archives at:
+
+    http://www.attrition.org/pipermail/vim/2013-March/thread.html
+
+Note that the VIM list is not the place to post general vulnerability 
+announcements; it is specifically for maintainers of vulnerability 
+databases and information services, who use VIM to discuss accuracy 
+problems and other challenges in the post-disclosure analysis of 
+vulnerability announcements.
+
+This is only a temporary action for the convenience of the security
+community.  We will disable the CVENEW announcements to the VIM list
+once NVD service has been restored.
 
 
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRfswTAAoJEBYNRVNeJnmTHmwP/iM+TZURUAWT3J2cckDRvuFX
-Hsv8s0l87/tIaweB9ZerVNoL9K7KUbOvxOP96pcZ5VRD5I+h6lM+IWF3pEt6czEI
-GmuXbhDa4gJ933slwPVlCI0ftoFcOTIVLmu6lRsFOseAtba4Q8D09RcnhQ/CTfeN
-jWqXS29eGgR031N+q6GLNhn2RgfW1HSf7FCeKCwI8O5suNfpIZIQpmcfafw3fmh/
-Pky6FiECzMQLYef7+KP0gLDQWVb75UEAhiUjF/RvwDgQ3nXimP0L+wWJd4eMmn6p
-F/dQmFvGgHQKX+EKxdY/93hI4CU6ovchMvEORnvtX5AW2AwoAhn8zGGUYCOf+X2l
-n/23bFvKL3pL89eQhg5LZyMwk5Xl29nah0XIlgWVlb8rIDLTyQNICjVb8xOWdHst
-Q5ioo2tn7xiha+FY/KGg3yvAA+gM95TwFpSzX8WAh/TdikUZv7jCwonbnUTzqF/d
-wmZZjZc+KGglu5Bzb42DQV91M++HaBAnhlePr4tsupR+nx/PDnMuerKWF+d36GQV
-rBDA+5M12hUFESpTde3nXzqUvJ40sABBaJxGsUwe4BgFXZg4a8iv9RkVodTQXTm0
-jYivAXXqS4FeeB9si4Jsn1uZlvzYHLldLYxIkzh31sdFFVpq/2MJ3eFxYnnESTrf
-yvr6bTPFeCzfNW0n9UXN
-=yTPh
------END PGP SIGNATURE-----
+Regards,
+Steve Christey
+CVE Editor
