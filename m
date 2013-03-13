@@ -1,12 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/6
-Message-ID: <CACDKJ9r_e5MtT2E=nUqPj=b4Dm88veE-A5ihEYGyFsF=nZhHXw@mail.gmail.com>
-Date: Wed, 21 Aug 2013 17:28:08 +0200
-From: Alessandro Cresto Miseroglio <alex179ohm@...il.com>
-To: Stephen Röttger <stephen.roettger@...il.com>
-Cc: oss-security <oss-security@...ts.openwall.com>, gcc <gcc@....gnu.org>
-Subject: Re: PoC: Function Pointer Protection in C Programs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/2
+Message-ID: <20130313083554.GA20033@gremlin.ru>
+Date: Wed, 13 Mar 2013 12:35:54 +0400
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel + devtmpfs automount == insecure /dev/{,u}random mode
 Content-Type: text/plain; charset=utf-8
 
-in English?
-(http://zero-entropy.de/fpp.pdf is in Deutsch)
+linux/drivers/char/mem.c contains the following code:
+
+static const struct memdev {
+  const char *name;
+  umode_t mode;
+  const struct file_operations *fops;
+  struct backing_dev_info *dev_info;
+} devlist[] = {
+// ...
+   [8] = { "random", 0666, &random_fops, NULL },
+   [9] = { "urandom", 0666, &urandom_fops, NULL },
+// ...
+};
+
+This allows writing to these devices by an unprivileged user
+resulting in re-initializing the entropy pool (as described
+in `man 4 random`) and thus making the data predictable.
+
+Just boot the kernel with "init=/bin/sh" parameter and issue
+the `ls -l /dev/*random` command - you'll see something like:
+
+crw-rw-rw- 1 root root 1, 8 Mar 13 08:30 /dev/random
+crw-rw-rw- 1 root root 1, 9 Mar 13 08:30 /dev/urandom
+
+The obvious fix is to create these devices with mode 0644,
+so only root will be able to re-initialize the entropy pool.
+
+Possibly, this even deserves a CVE to be assigned...
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+
+Content of type "application/pgp-signature" skipped
