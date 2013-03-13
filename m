@@ -1,30 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/4
-Message-ID: <52019063.20707@gt.net>
-Date: Tue, 06 Aug 2013 17:10:11 -0700
-From: Nathan March <nathan@...net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/10
+Message-ID: <20130313175032.GG12501@outflux.net>
+Date: Wed, 13 Mar 2013 10:50:32 -0700
+From: Kees Cook <keescook@...omium.org>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>,  Assign a CVE Identifier <cve-assign@...re.org>, "Steven M. Christey" <coley@...re.org>
-Subject: Re: OpenX Ad Server Backdoor CVE?
+Subject: Re: CLONE_NEWUSER|CLONE_FS root exploit
 Content-Type: text/plain; charset=utf-8
 
-On 8/6/2013 4:52 PM, Kurt Seifried wrote:
-> According to a post by Heise Security, a backdoor has been spotted in
-> the popular open source ad software OpenX [1][2]. Appearantly the
-> backdoor has been present since at least November 2012. I tried to
-> download the source to verify the information, but it appears the
-> files have been removed.
+On Wed, Mar 13, 2013 at 04:39:56PM +0100, Sebastian Krahmer wrote:
+> Seems like CLONE_NEWUSER|CLONE_FS might be a forbidden
+> combination.
+> During evaluating the new user namespace thingie, it turned out
+> that its trivially exploitable to get a (real) uid 0,
+> as demonstrated here:
+> 
+> http://stealth.openwall.net/xSports/clown-newuser.c
+> 
+> The trick is to setup a chroot in your CLONE_NEWUSER,
+> but also affecting the parent, which is running
+> in the init_user_ns, but with the chroot shared.
+> Then its trivial to get a rootshell from that.
+> 
+> Tested on a openSUSE12.1 with a custom build 3.8.2 (x86_64).
+> 
+> I hope I didnt make anything wrong, mixing up the UIDs,
+> or disabled important checks during kernel build on my test
+> system. ;)
 
-I can confirm this is in 2.8.10 that was downloaded on July 15th. It's 
-inside the /etc/plugins/openXVideoAds.zip at 
-./plugins/deliveryLog/vastServeVideoPlayer/flowplayer/3.1.1/flowplayer-3.1.1.min.js
+Nice. :)
 
-md5sum on the zip matches 6b3459f16238aa717f379565650cb0cf
+The good news is that getting userns on 3.8 looks hard (if you build any of
+the blacklisted filesystems). The bad news is that this is all fixed on 3.9
+so userns is available there easily.
 
-- Nathan
+Regardless, on 3.9 it seems to need an explicit uid mapping to get set
+up. Once that was added to your PoC, it worked for me on 3.9 too.
+
+Also note that if hardlink restrictions were enabled by default, this
+exploit would be blocked:
+[-] link: Operation not permitted
+
+I sure hope any distro shipping modern kernels is shipping with these
+sysctl settings:
+fs.protected_symlinks=1
+fs.protected_hardlinks=1
+
+-Kees
 
 -- 
-Nathan March<nathan@...net>
-Gossamer Threads Inc. http://www.gossamer-threads.com/
-Tel: (604) 687-5804 Fax: (604) 687-5806
-
+Kees Cook
+Chrome OS Security
