@@ -1,70 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/14/1
-Message-ID: <511C4E5B.5090009@redhat.com>
-Date: Wed, 13 Feb 2013 19:39:23 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, maxim@...oillogical.com
-Subject: Some rubygems related CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/4
+Message-ID: <CANDc0NLKmtDS=TabWyrPrHwUe=WGP34DnwD6YN0SpA1ghQjyKQ@mail.gmail.com>
+Date: Wed, 13 Mar 2013 08:44:47 +0000
+From: Eduardo Tongson <propolice@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel + devtmpfs automount == insecure /dev/{,u}random mode
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Mar 13, 2013 at 8:35 AM,  <gremlin@...mlin.ru> wrote:
+> linux/drivers/char/mem.c contains the following code:
+>
+> static const struct memdev {
+>   const char *name;
+>   umode_t mode;
+>   const struct file_operations *fops;
+>   struct backing_dev_info *dev_info;
+> } devlist[] = {
+> // ...
+>    [8] = { "random", 0666, &random_fops, NULL },
+>    [9] = { "urandom", 0666, &urandom_fops, NULL },
+> // ...
+> };
+>
+> This allows writing to these devices by an unprivileged user
+> resulting in re-initializing the entropy pool (as described
+> in `man 4 random`) and thus making the data predictable.
+>
+> Just boot the kernel with "init=/bin/sh" parameter and issue
+> the `ls -l /dev/*random` command - you'll see something like:
+>
+> crw-rw-rw- 1 root root 1, 8 Mar 13 08:30 /dev/random
+> crw-rw-rw- 1 root root 1, 9 Mar 13 08:30 /dev/urandom
+>
+> The obvious fix is to create these devices with mode 0644,
+> so only root will be able to re-initialize the entropy pool.
+>
+> Possibly, this even deserves a CVE to be assigned...
+>
+>
+> --
+> Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+> GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+> GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
 
-https://github.com/rubysec/ruby-advisory-db/issues/7
+See http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=81748.
 
-=====================
-omniauth-oauth2 CSRF
-
-omniauth-oauth2 intridea/omniauth-oauth2#25
-https://github.com/intridea/omniauth-oauth2/pull/25
-https://gist.github.com/homakov/3673012
-CSRF vulnerability, injecting state in session
-
-Please use CVE-2012-6134 for this issue.
-
-=====================
-newrelic_rpm information disclosure
-
-newrelic_rpm
-https://newrelic.com/docs/ruby/ruby-agent-security-notification
-A bug in the Ruby agent causes database connection information and raw
-SQL statements to be transmitted to New Relic servers. The database
-connection information includes the database IP address, username, and
-password. The information is not stored or retransmitted by New Relic
-and is immediately discarded.
-
-Please use CVE-2013-0284 for this issue.
-
-=====================
-nori parameter parsing remote code execution
-
-nori savonrb/nori@...f526 (related to 2013-0156)
- Fix for remote code execution bug. For more in-depth information,
-read about the recent [Rails
-hotfix](https://groups.google.com/forum/?fromgroups=#!topic/rubyonrails-security/61bkgvnSGTQ).
-Please make sure to upgrade now!
-
-Please use CVE-2013-0285 for this issue.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRHE5aAAoJEBYNRVNeJnmTmAYP/0Ih7uVNmA+OEhWCEbPA824J
-AAy4x3S5EBjhPKwbCtc5rF6Lggt4uL6k6AKLDilSasMc+UCI7YBnKNOg5Y5GfbCz
-8VjoQ/4iNf3VOV+SOmDq5dob0LDhgLRJtkaWiKRwiXRCwYHakJGGLAYGBGCfFDX4
-Em75BMA2964DpBkdMfat4bGnS3Xip3i/yUJq8RikwkBQgTiB1NBShwjZ6yQ0wioA
-UonyOP1RZprsn1UZRus+/TcpFAR+JS9bZ0zko9s7k+Fxlk/tvMDQdYuFrnp89h68
-ucq3xS3MzYejoMADVvQkyDj4mPrzzACf7/1rHXFB1isrRJmKimUAwJELlbdOv43v
-iyCqWrGgpYgo9Krln9p1rEp57g8xHV0gZ4KikAD5TpRlaAhtKh4V1HWpVGSi77G+
-MIapr+ChCuRr2VJl8zf8/c6S9RFivZqpk1lFA4CNuUisD0EtgL4vDSUEp8u9SYHP
-OekmQhZ71FAda3+m4pQQ2zYqFbal7KH84hPQc1s+j6h6LOQ40OXfkSaqf1Eh7wuM
-aLZecAesDEzNseZyqaqoqAaYz6UckrrgQR7OAE7rKcSKeUXe61WgbzqUL5wx2/Gw
-VeI0AhXe3ZNLVpyaFHCSTR+b3CVwlA/ENYQeKgIMDKxLxoK9fZFR44dRco9GOxck
-/4zn0zP/MSk5YGNrw3wu
-=RGNy
------END PGP SIGNATURE-----
+  E
