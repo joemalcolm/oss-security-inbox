@@ -1,22 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/35
-Message-ID: <CAHmME9rVSzE2o95wB1FCLvRb+Y8c8zyRMvr=H26w62HC=+DvAg@mail.gmail.com>
-Date: Wed, 27 Feb 2013 20:06:18 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/7
+Message-ID: <20130313124517.GY5654@dojo.mi.org>
+Date: Wed, 13 Mar 2013 08:45:17 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Subject: Re: CVE assignments for "weak" crypto (was CVE Request: MD5 used for Download verification)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 5:17 PM, Greg KH <greg@...ah.com> wrote:
-> Every single patch we make to the kernel is public, it is up to you to
-> determine if you feel it is a "security fix" or not.  And to do so is a
-> non-trivial task, something that I sure don't want to be responsible for
-> trying to do.  And since no one else has ever stepped up to want to do
-> it either, there's not much more that can be done.
->
-> Are you willing to do it?
->
+steve:The fundamental problem is in the MD5 algorithm itself; any
+steve:implementation of MD5 will suffer from the same problems.  We have
+steve:multiple CVE identifiers for the various weaknesses of MD5.  Any
+steve:product that uses MD5 is therefore subject to these weaknesses.
 
-Yes! Sign me up, I volunteer. I'd be happy to watch the coordination
-between security@ and the git repo, and sent oss-sec an email when
-they align. Pencil me in.
+Multiple?  I did a quick search of MD5 from thE CVE database:
+
+http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=md5
+
+and found only one that *didn't* look tied to a particular implementation.
+Having said that...
+
+tim:I think if an application relies on a cryptographic primitive for a
+tim:property that it does not provide, or that it is KNOWN to be broken
+tim:for (such as MD5 or SHA1 with collision resistance), then there should
+tim:be a CVE assigned.  The cat's out of the bag on these things; there'st
+tim:no excuse to use MD5 for this purpose.  The world knows these hashes
+
+...the one CVE I found involving one of the "various weaknesses of
+MD5" DID involve MD5 collision resistance:
+
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-2761
+
+However, the associated text might be misleading -- caps are mine:
+
+	 The MD5 Message-Digest Algorithm is not collision resistant, which
+	 makes it easier for CONTEXT-DEPENDANT attackers to conduct spoofing
+	 attacks, AS DEMONSTRATED BY ATTACKS ON THE USE OF MD5 IN THE
+	 SIGNATURE ALGORITHM OF AN X.509 CERTIFICATE.
+
+While a careful reading of the text may lead one to conclude "X.509 is
+just one example of MD5 b0rked-ness", someone who implements MD5 in a
+non-X.509 cert context might easily gloss over this one.
+
+Might it make sense to highlight some of these "fundamental" CVEs that
+a diverse range of apps might be prone to?  Just thinking out loud here...
+
+-Mike
+
+-- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Make it so they have to reboot after every typo."     -the Pointy-Haired One
+
+Content of type "application/pgp-signature" skipped
