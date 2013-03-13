@@ -1,46 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/5
-Message-ID: <CAN00zFDemB78NwGXC1qTU9hCpW9Cv4MVtM7dCJ5KfCoxA3eMfA@mail.gmail.com>
-Date: Thu, 18 Apr 2013 14:05:42 +0200
-From: Thomas Pollet <thomas.pollet@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/1
+Message-ID: <51402E8E.9030303@redhat.com>
+Date: Wed, 13 Mar 2013 01:45:18 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: plone, rrdtool, zenoss bugs
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: almanah does not encrypt its database
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I reported a csrf bug in plone pluggable authentication service, fixed in
-4.2.5
-http://plone.org/products/plone/releases/4.2.5
-" CSRF protection for the ZODBUserManager, ZODBGroupManager,
-ZODBRoleManger, and DynamicGroupsPlugin plugins."
+On 03/12/2013 03:48 PM, Vincent Danen wrote:
+> Could a CVE be assigned to the following?
+> 
+> 
+> It was reported that Almanah does not encrypt its database when it 
+> closes, due to GApplication no longer using the quit_main_loop()
+> event since GIO 2.32.  This will keep the database unencrypted when
+> it should be encrypted.  The upstream bug report has a patch
+> attached which corrects the issue.
+> 
+> References:
+> 
+> https://bugzilla.gnome.org/show_bug.cgi?id=695117 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=702905 
+> https://bugzilla.redhat.com/show_bug.cgi?id=920848
+> 
+> 
+> Thanks!
 
+Please use CVE-2013-1853 for this issue.
 
-Also,
-the rrdtool python module crashes on format string exploit
-$ python -c "import rrdtool
-rrdtool.graph('/tmp/out.png','-f','%n%n')"
-Segmentation fault
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-this module is used by zenoss to create graphs (zenoss users are able to
-pass arguments to rrdtool).
-
-On zenoss, I reported some bugs to them (and to this list) which have been
-fixed in the latest release (4.2.3). for example, zenoss displayed syslog
-and snmp input without filtering html characters which results in xss.
-
-example syslog exploit :
-echo '<130>' Aug 29 07:17:34 test '<xss>' | nc -u zenoss 514
-
-another bug was that the test_datasource feature doesn't escape the snmp
-oid which is passed by zenoss to the shell as an argument for the snmpwalk
-command
-example: https://
-[ZENOSS_HOST]/zport/dmd/Devices/rrdTemplates/Device/datasources/sysUpTime/test_datasource?data={%22newId%22:%22DetectedVirus%22,%22oid%22:%22$%28ls%20%3E%20/tmp/pwn%29%22,%22enabled%22:%22on%22,%22testDevice%22:%22127.0.0.1%22,%22uid%22:%22%22}
-
-http://jira.zenoss.com/jira/browse/ZEN-3183
-
-
-Cheers,
-T
-
+iQIcBAEBAgAGBQJRQC6OAAoJEBYNRVNeJnmT0aYQALRuVmbRm8e2BKk8RTNLQndp
+T87ZYXRALdvQ18BJDjFfnf8JVMAszEPQujUTNnoStYNbIhHdPM23JRKMeHnU/0OZ
+8d2maOEW68SRRmsIhlvqDv3nLrkJcvuRXkojlF0frv03HHBsqyxqcYQ3WrWPDMLN
+OXArymEP52+x6RJGEFAhmktelvGqmWBdczfbtwS9uIgbzUFFVPGFZxxRp3lI1DdK
+8OhzXSR0R+idFNMmqhOTGegiHGfTl+xXOhJs28Pm/IYAvBihx0r5V7buu0zBerUv
+Rd8ry895OmnSUEhVbEh4dFuwj4jR9HDWUFTQ+L87+iqkox3vrq5Nd6/dVTSEyO0J
+CgBG8x1Q9fVUCfqYUYzx7mKRKz5+tQAbuam3mEzManJ1h59xEmYeYoN9cJgz2Ri7
+SjFCyMKF9jgbT9pvdvqHeg3L9mg2Ay6B5UwBRmsG0U/bAJSiN6NMLdDUakTtlQMF
+681JFkiec2MwXGCd0HyEm7GsoPmH6GMHpSlLAx7y/aj8jc3gCUjRFReMCzbXoZVv
+fPNOdf/nc9d6TbpKUfO4PztfQ77Z8r69yfARsVlO0KzX7m21CFpLzZS7lEzP8vAh
+6cykJyr1ZJFCbwdbGga5gyyv87et7YFbCPNPPOdwXFmhSG9/iXvKSHuvc3uWwpD4
+XXggh+4MYIHwAJj0BNSb
+=klwP
+-----END PGP SIGNATURE-----
