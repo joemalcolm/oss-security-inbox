@@ -1,56 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/01/9
-Message-ID: <20130301183137.GA29447@elende>
-Date: Fri, 1 Mar 2013 19:31:37 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/3
+Message-Id: <201303130910.44864.tmb@65535.com>
+Date: Wed, 13 Mar 2013 09:10:38 +0000
+From: Tim Brown <tmb@...35.com>
 To: oss-security@...ts.openwall.com
-Cc: Roland Becker <roland@...ol.de>, Robert Munteanu <robert.munteanu@...il.com>
-Subject: Re: CVE request: MantisBT 1.2.12 only summary.php category/project names XSS vulnerability
+Cc: gremlin@...mlin.ru
+Subject: Re: Linux kernel + devtmpfs automount == insecure /dev/{,u}random mode
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt
+On Wednesday 13 Mar 2013 08:35:54 gremlin@...mlin.ru wrote:
 
-Noticed that this ruequest did not got a CVE. Can one be assigned?
-Note that this only seems to affect exactly one version 1.2.12:
+*snip*
 
-On Sat, Jan 19, 2013 at 10:21:11AM +1100, David Hicks wrote:
-> Hi list,
-> 
-> Roland Becker (MantisBT Developer) discovered[1] a XSS vulnerability
-> introduced in MantisBT 1.2.12 with the display of category/project names
-> on the summary.php page. Versions of MantisBT other than 1.2.12 are not
-> affected by this vulnerability.
-> 
-> A malicious MantisBT user holding privileged manager/administrator
-> permissions could create a category or project name that contains
-> JavaScript code. Any user visiting summary.php from that point on may
-> then be exposed to having the malicious JavaScript execute within their
-> browser environment.
-> 
-> The severity of this issue is limited by the need to hold privileged
-> manager/administrator permissions in order to modify category and
-> project names. However -- there are many use cases where MantisBT
-> installations can have hundreds of sub-projects, each managed by
-> different people/parties that can not or should not be fully trusted.
-> 
-> Refer to previous commits 3ca8a164[2] and 6ec3f693[3] to trace back the
-> origin of this vulnerability.
-> 
-> References:
-> [1] http://www.mantisbt.org/bugs/view.php?id=15384
-> [2]
-> https://github.com/mantisbt/mantisbt/commit/3ca8a164641951aba2a459364e656ca0996f8a2b
-> [3]
-> https://github.com/mantisbt/mantisbt/commit/6ec3f693d6d212d6bba788681a206c14df43569f
-> 
-> Discussion on the MantisBT Developer Mailing List has indicated that a
-> release of MantisBT 1.2.13 (resolving both this vulnerability and
-> CVE-2013-0197 which was announced on this list ~12 hours ago) will not
-> occur until early next week. As such, a patch is attached for
-> distributions packaging MantisBT 1.2.12. It is recommended this patch be
-> applied as soon as possible.
-> 
-> Can a CVE ID please be assigned to this issue?
+> The obvious fix is to create these devices with mode 0644,
+> so only root will be able to re-initialize the entropy pool.
 
-Regards,
-Salvatore
+On Debian at least:
+
+/lib/udev/rules.d/91-permissions.rules:KERNEL=="random",                
+MODE="0666"
+/lib/udev/rules.d/91-permissions.rules:KERNEL=="urandom",               
+MODE="0666"
+
+> Possibly, this even deserves a CVE to be assigned...
+
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
