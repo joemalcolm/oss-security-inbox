@@ -1,79 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/15
-Message-ID: <516312A9.9000101@redhat.com>
-Date: Mon, 08 Apr 2013 12:55:37 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/8
+Message-ID: <20130313153956.GA15277@suse.de>
+Date: Wed, 13 Mar 2013 16:39:56 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-CC: "Larry W. Cashdollar" <larry0@...com>
-Subject: Re: Remote Command Injection Ruby Gem Karteek Docsplit 0.5.4
+Subject: CLONE_NEWUSER|CLONE_FS root exploit
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 04/08/2013 06:56 AM, Larry W. Cashdollar wrote:
-> 
-> Remote Command Injection Karteek Docsplit 0.5.4
-> 
-> ------------------------------------------------------------------------
->
->  4/1/2013 Larry W. Cashdollar @_larry0
-> 
-> User supplied input isn't sanitized against shell metacharacters
-> and is fed directly to the shell. If the user is tricked into
-> extracting a file with shell characters in the name code can be
-> executed remotely.
-> 
-> https://rubygems.org/gems/karteek-docsplit
-> 
-> ./karteek-docsplit-0.5.4/lib/docsplit/text_extractor.rb
-> 
-> 59     def extract_from_ocr(pdf, pages) 60       tempdir =
-> Dir.mktmpdir 61       base_path = File.join(@output, @pdf_name) 62
-> if pages 63         pages.each do |page| 64           tiff =
-> "*{tempdir}/*{@..._name}_*{page}.tif" 65           file =
-> "*{base_path}_*{page}" 66           run "MAGICK*_*TMPDIR=*{tempdir}
-> OMP_NUM_THREADS=2 gm convert -despeckle +adjoin #{MEMORY_ARGS}
-> #{OCR_FLAGS} *{pdf}[*{page - 1}] #{tiff} 2>&1" 67           run
-> "tesseract #{tiff} *{file} -l eng 2>&1" 68
-> clean_text(file + '.txt') if @clean_ocr 69
-> FileUtils.remove_entry_secure tiff 70         end 71       else 72
-> tiff = "*{tempdir}/*{@..._name}.tif" 73         run
-> "MAGICK_TMPDIR=*{tempdir} OMP_NUM_THREADS=2 gm convert -despeckle
-> #{MEMORY_ARGS} #{OCR_FLAGS} #{pdf} #{tiff} 2>&1" 74         run
-> "tesseract #{tiff} #{base_path} -l eng 2>&1" 75
-> clean_text(base_path + '.txt') if @clean_ocr 76       end
-> 
-> Run is defined as:
-> 
-> 94     def run(command) 95       result = `#{command}` 96
-> raise ExtractionFailed, result if $? != 0 97       result 98
-> end
-> 
-> This vulnerability doesn't have a CVE yet assigned.
-> 
-> http://vapid.dhs.org/advisories/karteek-docsplit-cmd-inject.html
+Seems like CLONE_NEWUSER|CLONE_FS might be a forbidden
+combination.
+During evaluating the new user namespace thingie, it turned out
+that its trivially exploitable to get a (real) uid 0,
+as demonstrated here:
 
+http://stealth.openwall.net/xSports/clown-newuser.c
 
-Please use CVE-2013-1933 for this issue.
+The trick is to setup a chroot in your CLONE_NEWUSER,
+but also affecting the parent, which is running
+in the init_user_ns, but with the chroot shared.
+Then its trivial to get a rootshell from that.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Tested on a openSUSE12.1 with a custom build 3.8.2 (x86_64).
 
-iQIcBAEBAgAGBQJRYxKpAAoJEBYNRVNeJnmTzrcP/iaPECr8mJVJvwM4JPeHwfm9
-RT0JKcW88hhmKumZJH4Fa/ZMv+ZxXkUfzeTJcoBxCxX26pTeArO6rbuvTt+lP0mi
-VYW6eRF8tj8x3G8P4y28MY0I+Gt+RtdYWKT8JIfSZAzCJ2kE3JawJeoWZnPg2DkI
-GWHwv4IsFQ3qR7LPTXiR8vssSqmbSz/yGhhxw+j8BQX9jZDIIOa8vLa/VvUcD+4b
-o+8Jd2B2z8mtW+0kvOpjS5PWImu6FcW6hIKz3rWuZPwf6V3aFeNUq7o0gQmlTVSQ
-zTn4nNzmO2MUwIjhNcs0tY6ZVHA03UxrOhpQlqHqIuF46ZFCeVcJa2abLUJ/LNnP
-1chRa6DzdoLXnolOZ+Ar2zZgCe5TTuDqBDAptJiil3x746t5diRENTM3ugIgoHB6
-2Yxy2h56FCm/7kUVsxcAfKXhESRW4LlUntRm+/srzzcwC3EaDTSwfZQ6TJ9B3SRN
-6aIFdk5Xslh0HIXdopki1N6ARx4TVnuR1Ig+ZAFpt1qpVacagfEeal/FS165XWoW
-fFQy3/Tmp17Wzo0OVdRB8QJ9rFUl/+n43QC9YTjY7nMXCqOoB0wi9bQxA24rnYAC
-M4cRulVA85Fx9CEYoM6YpPG0BaKBZeFj9V+lp8+iulIrwZhJhPt4XIUE5G82uUpK
-6mlvmh9ms2QtESksk/Un
-=kBd8
------END PGP SIGNATURE-----
+I hope I didnt make anything wrong, mixing up the UIDs,
+or disabled important checks during kernel build on my test
+system. ;)
+
+regards,
+Sebastian
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
