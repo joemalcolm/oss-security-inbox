@@ -1,53 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/11
-Message-ID: <51E96EEC.8020803@redhat.com>
-Date: Fri, 19 Jul 2013 10:53:00 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, libvirt-security@...hat.com
-Subject: Re: CVE request -- libvirt: double free of returned JSON array in qemuAgentGetVCPUs()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/11
+Message-ID: <Pine.GSO.4.64.1303131508090.26480@faron.mitre.org>
+Date: Wed, 13 Mar 2013 15:10:59 -0400 (EDT)
+From: "Steven M. Christey" <coley@...re.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+cc: Russ Allbery <rra@...nford.edu>
+Subject: Re: Reverse lookup issue in Net::Server
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 07/19/2013 10:12 AM, Petr Matousek wrote:
-> A part of the returned monitor response was freed twice and caused
-> crashes of the daemon when using guest agent cpu count retrieval.
-> 
-> A remote user able to issue commands to libvirt daemon could use this
-> flaw to crash libvirtd or, potentially, escalate their privileges to
-> that of libvirtd process.
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=986383
-> https://bugzilla.redhat.com/show_bug.cgi?id=984821
-> https://www.redhat.com/archives/libvir-list/2013-July/msg01035.html
-> 
-> Upstream fix:
-> http://libvirt.org/git/?p=libvirt.git;a=commit;h=dfc692350a04a70b4ca65667c30869b3bfdaf034
-> 
-> Thanks,
-> 
+Trust of the hostname returned by an IP's reverse DNS is better covered by 
+CWE-350: Improperly Trusted Reverse DNS, which should probably be a child 
+of the aforementioned CWE-807, but is not.  (I'll get that fixed.)
 
-Please use CVE-2013-4153 for this issue.
+- Steve
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR6W7sAAoJEBYNRVNeJnmTU0wP/0hqjTDC4k/q78f6dYuyUWub
-dY+rtYt6tFI75ZZU68bmVO6WG6Z+mCB6eIhuD/ZbhHJfTjh3wscANZMe4u+rjTvq
-ST0WuDZqX1eSmLoqIodeUD99Dq8Kp5xq1coFV/E8Oc+RqVsvCcK5nBWElCC/F9zY
-aEI/1PU6govarwQpEd2lsydBmskRba2C+HBrCbdsQ8lLxyi+t6Jm+uSL0MrJ71zK
-LOacxslYkhBUKnRgAq4f32rAFblTF3wOt8Ylq3aiwyM8Fq+3w7tc5c51lcfRrqIq
-lh/O3UmjeJAmFvAQ6QT8uQagcC48awBl4LL5PtgsJk7vSrvqG6vuFbAIEJpH11l/
-qTdg+cBkMf2Pa/TuaaFO+YfQ5b5hHiXbtcWRaTIPZG2jNnfEEGRtXTeXrCkcPypO
-tIHGnDDqfr16D+rA6RvALiwGM2L43sJdCOgEd2XyuHdVTEuDcUYn16oLcBfnpy+f
-e6QCojZ2abzETPBE+yDCLY29qI099dOQPJGV8QfLoHZrAvfdNT7k4Z+EbnKXYMcH
-tJblsh+S6kkTD3atQgzdnui7+Y4V6ekMvgagTwZhl2hiRdh9Az8m3I7tWkSGuxRB
-FWEzDIWd+FhFvyCCjt42eOaJrqtsoZHfXMe84hjoxJCW5hC1KG++DlXKUSFJh9q+
-sMs1rVbzL2JpniwijU0v
-=7o5x
------END PGP SIGNATURE-----
+On Mon, 11 Mar 2013, Kurt Seifried wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 03/04/2013 12:36 PM, Russ Allbery wrote:
+>> Remi Gacogne <rgacogne-bugs@...edump.fr> writes:
+>>
+>>> I think there is a security issue in the way the access control
+>>> feature of Net::Server
+>>> (http://search.cpan.org/perldoc?Net%3A%3AServer) works.
+>>> Net::Server is used by various projects including Munin, Postgrey
+>>> and SQLgrey.
+>>
+>>> The issue lies in the fact that the allow / deny access control
+>>> does not perform a valid DNS check when given a hostname
+>>> parameter and the 'reverse_lookups' option is enabled.  The
+>>> current code only checks that the incoming connection source IP
+>>> address has a reverse DNS matching the given hostname, but does
+>>> not check that the hostname resolves back to this source IP
+>>> address (see how the $prop->{'peerhost'} property is set in
+>>> get_client_info(), lib/Net/Server.pm:553, then used in
+>>> allow_deny(), lib/Net/Server.pm:597).  As it is trivial for an
+>>> attacker to be able to set his own source IP's reverse DNS, the
+>>> current check is not safe (this probably matches CWE-807:
+>>> Reliance on Untrusted Inputs in a Security Decision).
+>>
+>> This is a very weak security measure, but yes, the need to check
+>> the reverse DNS results with a forward DNS query to make the
+>> security check at all useful has been well-known going all the way
+>> back to the days when TCP wrappers was the UNIX firewalling system
+>> of choice.  I remember discussion of this in security contexts in
+>> 1994, and I'm sure it was an old discussion even then.
+>
+> Yup. Please use CVE-2013-1841 for this issue.
+>
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.13 (GNU/Linux)
+>
+> iQIcBAEBAgAGBQJRPpYkAAoJEBYNRVNeJnmTo74P/j9Yn/ESKT4ALfNJoAISZgIT
+> YSCewtRaMqI+LDr11Rg6kLC9NHO8BKsyo3DvlbEgFITpwkmCCOJKZOvR6PbFm9Ot
+> reLseaegLL6y7qDXgAi97hGjWgq2i+vIi+agyfSy1lhzpnR9bk6aa/rdbxxtERPH
+> N1CbKFpBvZ6RLHDtBtgEGqMznoswG8JIk5l/q15qLvnXgG1VA3H8PL/ZPsHUQ1iR
+> 95tOKXWeHw0ZysK2mwwQHbv6xLxo1owpvILqbOMN7x5Jx/WgusahfjDhQ9eyUbpy
+> Ffxceha4M5LI8FgavALMFYMvAcymFkkjjuG08z/VhYa2/7FMqqF0gXIq4zuVKzAe
+> VJqAt0cd5B6Nx9Kff5f/Yx3WkoZaj+9ErTkIv1O3Rd+X6ubW5j8PdVpKn0hOGEL2
+> XKnNdOkKT6ZtWeRqfck1PZCPw4LUu/gBRNVl4vgr2QVPbRIRDjT5+PksIjd6U+dA
+> lHgz54FXX+X0Yqy4djhZXD1fC9LRahThkHws1U7GjAMcFzVdoGLjfoAFT7temdzF
+> iKpMCcCDoB9H1Pl03cJWk7pPKbZHSgRqYPlnqf6PNmTmJlYCGcqZorihU+S9xw2d
+> ziIO+75QPuxvVVb8Hbtv8RHuJbndqSaFtjncbn0MQ1bVU+/JdQQchy4GPlvrrtvi
+> kDHwPyl55Mrvy0lQAh7X
+> =5u6Y
+> -----END PGP SIGNATURE-----
+>
