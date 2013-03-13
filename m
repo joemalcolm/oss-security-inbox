@@ -1,48 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/04/2
-Message-ID: <51D4D8A4.9090301@redhat.com>
-Date: Wed, 03 Jul 2013 20:06:28 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/6
+Message-ID: <20130313115415.GB20033@gremlin.ru>
+Date: Wed, 13 Mar 2013 15:54:15 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-CC: David Lamparter <equinox@...c24.net>
-Subject: Re: CVE request: Quagga OSPF-API stack overrun
+Subject: Re: Linux kernel + devtmpfs automount == insecure /dev/{,u}random mode
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 13-Mar-2013 17:55:07 +0800, Pavel Labushev wrote:
 
-On 07/03/2013 03:14 PM, David Lamparter wrote:
-> Hi,
-> 
-> I guess I need a CVE number for this, we've discovered a local
-> network exploitable stack overrun in Quagga's ospfd.
-> 
-> Reference: 
-> http://lists.quagga.net/pipermail/quagga-dev/2013-July/010621.html
-> 
-> Cheers,
-> 
-> -David (Quagga maintainer)
+ > http://lkml.indiana.edu/hypermail/linux/kernel/0012.2/0502.html
 
-Please use CVE-2013-2236  for this issue.
+Yes, I've found that while investigating the possible impact. Also,
+the random.c doesn't use the data directly, but instead hashes it.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+But my opinion stays exactly the same: devices should be 0644, and
+only trusted random data sources should be used to add entropy to
+the pool via add_device_randomness(). For my own needs, I prefer a
+$5 hardware RNG (consisting of ATtiny85 and LM393) plugged to USB,
+or even several such devices working in parallel.
 
-iQIcBAEBAgAGBQJR1NikAAoJEBYNRVNeJnmTAG4QANY+YzJfkiSoHeuAg7sjlJvt
-iEYl7tGVg3eejA18SrqiBtFv9/QT+8gyvHStlAO8VK/nVwIB1vuH8zbLMDq/77rg
-c94f/NCfUk6LNDhOx8HrjX6hDmrYpJZ3wAF+8cuu2iIew04Bpov2O1VMyWqisshM
-N4zo2cYKObeqlnVjMr8Nq42A11Jk99vXq2QTRDX3IKiZDFKLThue+G4gG25ffGUD
-Rf1vFY99ctcNbNai+CaujkdO+JnlM6t3Na4mK/1RD/ZAqjtLoAHQyJdCmO72dKe6
-K3Ew2z9NcD4tA0IJ6MsF+HbMKdRLxXN89aI95/McKjTxhcImDwVGyOVNCQYfs00E
-y5OKUASrfHauQkvdHfbQ3toeCaYe8pJB+87PBlqq5DWE0QXFqXcqdRoB43m+K1/z
-mvQW8zvlg0VZaozScM9xeVNoRWwHSk+biMCixkbCydb915VKGVCWmAIYIKoTjEQd
-8wEH7rq8W42lgZ/rPhK7bErPbRIIhSQPGgi1PVB6BoImbDx0wrWoauaXaW3zqgSl
-kHszTObV3atTCmAEUzIjYk6rod3mLzl8zvVqfaW9yXfaihBmjJpWuv0jRrmLb5iP
-dq/30TF4rLD2D3liwDocerzDSP8T4Mhd5/BcU/VvQmdKCCR2U7B8Y1rhaxpW4/Aa
-1G5X8ZlaG7HNSdV10VWG
-=/ILj
------END PGP SIGNATURE-----
+So, I'll just restrict the access to /dev/{,u}random locally :-)
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
