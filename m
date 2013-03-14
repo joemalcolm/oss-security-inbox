@@ -1,34 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/4
-Message-Id: <201312120456.rBC4uaIO026136@linus.mitre.org>
-Date: Wed, 11 Dec 2013 23:56:36 -0500 (EST)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: devscripts (uscan) command execution flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/14
+Message-ID: <20130314142325.GA27660@kludge.henri.nerv.fi>
+Date: Thu, 14 Mar 2013 16:23:25 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: US national vulnerability database hacked
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+http://www.theregister.co.uk/2013/03/14/us_malware_catalogue_hacked/
 
-shell metacharacters in
->newfangled debian/copyright-driven repacking
+--
+Henri Salo
 
-Use CVE-2013-7050.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSqUHQAAoJEKllVAevmvmstv8IAL+PGA94uA3UM4SCWJ/6LXp1
-ysAg7LVK0GAryAu5z2u/mia1FLtYsjUlGsEDvHBQvjSIAeIQPmZ55bCo8F7liELK
-ThrHJ/ruI/F2ceW0mCNJU6sCB3/hQfSIRnPUptVCNta16O/jqAMhBmUAn7VzaDl4
-/7bigq53troroN5gHZmFOqP8e3hUuWBrGYU8n5jhZLp32dju60TuEMhUcgeN0QDN
-zquFqGr6ek3FXuwPiIWHyAIedKshC5XUSqLh4x6zGuvkMTzUZ80CHM5lno+jBGOZ
-oX1h+XyyaoxBUgfxCQwKK4inkG/nabJq9vmtribRNhuvZLYbTOl4OxcYEnzjoWI=
-=9Dq3
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
