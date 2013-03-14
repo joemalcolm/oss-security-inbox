@@ -1,121 +1,143 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/11
-Message-ID: <517EC90C.7000608@redhat.com>
-Date: Mon, 29 Apr 2013 13:25:00 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/8
+Message-ID: <CAD1NwhgAcS7wKzFOGmuhz28X8gCvEPMGXjZ-j0VowEtF=BnBUA@mail.gmail.com>
+Date: Thu, 14 Mar 2013 07:36:15 +0100
+From: Lukas Reschke <lukas@...cloud.org>
 To: oss-security@...ts.openwall.com
-CC: Alyssa Milburn <amilburn@...l.org>
-Subject: Re: Multiple vulnerabilities in BOINC
+Cc: "security@...cloud.com" <security@...cloud.com>,  "packaging@...cloud.org Packaging" <packaging@...cloud.org>
+Subject: ownCloud Security Advisories (2013-008, 2013-009, 2013-010)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/28/2013 09:58 AM, Alyssa Milburn wrote:
-> Hi all,
-> 
-> There have been various recent(-ish) vulnerabilities found in the
-> BOINC software for desktop grid computing. The major projects have
-> (hopefully) fixed all of these by now, and the clients should only
-> be vulnerable if they're connected to a hostile server.
-> 
-> The commit ids below are all from the boinc-v2 repository, see 
-> http://boinc.berkeley.edu/trac/browser/boinc-v2 for a web view.
-> 
-> These are the ones I consider to be obviously important:
-> 
-> * CVE-2013-2298: various stack overflow vulnerabilities in the XML
-> parser used by both the client and server software. I think that
-> any 7.x version is vulnerable, but possibly not the 6.12 branch or
-> earlier. No promises.
-> 
-> (Found/reported by me. I notified all public projects I could find
-> who were running obviously-vulnerable copies of the code, in early
-> March.)
-> 
-> http://thread.gmane.org/gmane.comp.distributed.boinc.user/3741 
-> 2fea03824925cbcb976f4191f4d8321e41a4d95b
-> 
-> * Stack overflow in the client code by providing multiple
-> file_signature elements. 6.10.58 and 6.12.34 are vulnerable. 7.x
-> isn't.
-> 
-> (This was fixed back in 2011, possibly accidentally.)
-> 
-> 9a4140ae30a72e5175f3f31646d91f2d58df7156
+# Multiple XSS vulnerabilities (oC-SA-2013-008)
+Web: https://owncloud.org/about/security/advisories/oC-SA-2013-008/
 
-Please use CVE-2013-2019 for this issue.
+## CVE IDENTIFIERS
+- CVE-2013-1822
+
+## AFFECTED SOFTWARE
+- ownCloud Server < 4.5.8
+
+## DESCRIPTION
+Multiple cross-site scripting (XSS) vulnerabilities in ownCloud 4.5.8
+and all prior versions (except 4.0.x) allow remote attackers to inject
+arbitrary web script or HTML via
+
+- the "quota" POST parameter to setquota.php in /core/settings/ajax/
+  - Commits:  2364c79 (stable45)
+  - Risk: Low
+  - Note: Successful exploitation of this stored XSS requires
+administrator privileges.
+- the group input field to settings.php (CVE-2013-0307)
+  - Commits:  4cff6df (stable45)
+  - Risk: Low
+  - Note: Successful exploitation of this DOM based self XSS requires
+group admin privileges.
+- the share with input field
+  - Commits: 7b0a8f4 (stable45)
+  - Risk: Low
+  - Note: Successful exploitation of this DOM based self XSS requires
+group admin privileges.
+
+## RESOLUTION
+Update to ownCloud Server 5.0.0 or 4.5.8
+http://download.owncloud.org/community/owncloud-5.0.0.tar.bz2
+http://download.owncloud.org/community/owncloud-4.5.8.tar.bz2
+
+---------------------------------------
+
+# Contacts: Bypass of file blacklist (oC-SA-2013-009)
+Web: https://owncloud.org/about/security/advisories/oC-SA-2013-009/
+
+## CVE IDENTIFIERS
+- CVE-2013-1850
+
+## RISK:
+- Critical
+
+## COMMITS:
+- stable4: fae5bd3
+- stable45: e294a16, 1314e6d
+
+## AFFECTED SOFTWARE
+- ownCloud Server < 4.5.8
+- ownCloud Server < 4.0.13
+
+## DESCRIPTION
+Incomplete blacklist vulnerability in apps/contacts/import.php and
+apps/contacts/ajax/uploadimport.php in ownCloud before 4.0.13 and
+4.5.8 allows an authenticated remote attacker to upload a .htaccess
+file and therefore the execution of arbitrary PHP code in a standard
+Apache installation.
+
+Note: Successful exploitation of this vulnerability requires the
+calendar application to be enabled (enabled by default) and the data
+directory has to be in the webroot.
+
+## RESOLUTION
+Update to ownCloud Server 5.0.0, 4.5.8 or 4.0.13
+http://download.owncloud.org/community/owncloud-5.0.0.tar.bz2
+http://download.owncloud.org/community/owncloud-4.5.8.tar.bz2
+http://download.owncloud.org/community/owncloud-4.0.13.tar.bz2
+
+---------------------------------------
+
+# user_migrate: Local file disclosure (oC-SA-2013-010)
+Web: https://owncloud.org/about/security/advisories/oC-SA-2013-010/
+
+## CVE IDENTIFIERS
+- CVE-2013-1851
+
+## RISK:
+- High
+
+## COMMITS:
+- stable4: edf7162
+- stable45: 7b6a022
+
+## AFFECTED SOFTWARE
+- ownCloud Server < 4.5.8
+- ownCloud Server < 4.0.13
+
+## DESCRIPTION
+Incomplete blacklist vulnerability in lib/migrate.php in ownCloud
+before 4.0.13 and 4.5.8 allows an authenticated remote attacker to
+import arbitrary files on the server inside his user account.
+
+Note: Successful exploitation of this vulnerability requires the
+user_migrate application to be enabled. (disabled by default)
+
+## RESOLUTION
+Update to ownCloud Server 5.0.0, 4.5.8 or 4.0.13
+http://download.owncloud.org/community/owncloud-5.0.0.tar.bz2
+http://download.owncloud.org/community/owncloud-4.5.8.tar.bz2
+http://download.owncloud.org/community/owncloud-4.0.13.tar.bz2
+
+--
+ownCloud
+Your Cloud, Your Data, Your Way!
+
+GPG: 0xEB32B77BA406BE99
 
 
-> * SQL injections in the server-side scheduler code:
-> 
-> (Found/reported by me. I warned projects about this at the same
-> time as the the above notifications, hopefully they've mostly
-> patched it..)
-> 
-> http://thread.gmane.org/gmane.comp.distributed.boinc.user/3776 
-> 3ced18ddaaea5e03d2cc70f8cce5ab214b4d5635
-> 
-> * SQL injections in the user-facing web scripts: (These were
-> possibly found by Michael Voß, see 
-> http://www.mdr.de/mdr-info/hacker-boinc100.html )
-> 
-> http://thread.gmane.org/gmane.comp.distributed.boinc.user/3658 
-> e8d6c33fe158129a5616e18eb84a7a9d44aca15f 
-> 6e205de096da83b12ffb2f0183b43e51261eb0c4 
-> ce3110489bc139b8218252ba1cb0862d69f72ae3
-
-MERGING these two issues for now. Please use CVE-2013-2018 for this issue.
-
-And ignoring the rest unless someone says otherwise (like was this
-code really used/etc.).
-
-> And some issues I'm not sure are quite so important:
-> 
-> * Stack overflows in the trickle code on server and client side:
-> 
-> (Fixed back in 2011, and these were only present in experimental
-> 6.13.x releases, as far as I know.)
-> 
-> 5b04b249db166ec38c1ee99a9eadcaa300c0f454 
-> ae04b50a71f3e96ee1bc59b76fca97cf0fe976f7
-> 
-> * From a few days ago, a possible format string issue(?) in the
-> client code:
-> 
-> (Noticed by Gianfranco Costamagna/Nicolás Alvarez judging by the
-> thread)
-> 
-> http://thread.gmane.org/gmane.comp.distributed.boinc.devel/6416 
-> 99258dcecba8ef36e1ce0fd6e0dacffe53613ac9
-> 
-> * An SQL injection vulnerability in the locality code (apparently
-> only used by one known project), so I mention this just for
-> completeness just in case anyone happens to be using it:
-> 
-> 2dbfdc55057b2c1f0508b56244044b1ad34e7cdb
-> 
-> - Alyssa
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: OpenPGP.js v.1.20121007
+Comment: http://openpgpjs.org
 
-iQIcBAEBAgAGBQJRfskMAAoJEBYNRVNeJnmTdCgP/0mx6djzHz5ZUPaFN42t1zRb
-sJZYWUWrLlxAgdvx4G5I0kKK6GGehwt7ra2r9Z4/RdM9aTvPyrTPSHkE/ST5yAi8
-G+pWi9L1wO1/N/sm0+H9cjPoUTm4xbQ5e1FyDMeoyK1AXkfR4/WUkYICrtsEz0Hu
-Qk6ZQg8N23vGHx7NLzi05rsOlRivuAAQmRRpNBB41gzk6LeeyOQeMppxo0YPFKw4
-O16+UjOmIUxwEBaCOEoUQu0sSy8W3ynr+7wAB+KVtp9u07bR9Q8JJ/WrBGu6Xj5m
-49K+NUilyJSDXI9MmMgRUJ+LeSu9Oh9ACcMncSJsPpH8Im13ntFOcMlg+7kc8pMd
-AHNBCSRmQVMafwv8Ib/nJKGiX1eX5nogMXR1HM2ARxC65OdNyZ4wjU3mIdRqkLFH
-2U2OLwn+Hikl519th3qzo7yHx/DkkNvW2gMEjQMt+uYQzCJ+7AQA+RHA2HSptg00
-nbXzVoNhZfGnzdUoJVC8mixHnBbhEffZ0NXGFS59z3cOpwElxidl40vRp9RhKd6D
-cRzYYxrnaXhJht2E3BClwAeI1wMp7qxTx1bGShpxmDg+XVPIfgUcBJ9V3NFdy67E
-HN5rOJGAW2W+Ao4KTfvgnl/rNfnh6UkNjhfchMVJCK/MmYMBEkolJfq/NWaQQVPz
-ukNnyMIQvwNx5S8hRQVo
-=ETc4
+wsFcBAEBAgAQBQJRQW+KCRDrMrd7pAa+mQAAD7AP/1n5KCcQv2HFf4iETNfF
+ZFUEPQVppStRCQMwDjzhx3n5LwXciYy6Nk+U12tn4IavacsVYREAsvRUqVRc
+LEPvaap66F7QWjKm+kIeoLbcjcRss0ShCBpGt7lMpI4ZLMu15mlHTZ+1cKcU
+2wRnehR58qxo535B0qmCoBTktOK0eOc3A3XQPWj6Iflvmxj1ZHfDzDTGhORZ
++N5rJIS4lpoS/sFeBiH1N5ZxhZKuGGymjmzFzLkuKOOC6zPu/ZVtHthpsk64
+JLFV9c8avNdHwuLdDbtfzPRO8NrginR7IeqNkn2cLtX7sId7ikc+t4F3ubPw
+AwF+48rDsVwfda6yCMCHpCw7i0bGtDz/lLsT4vfhUBWJ4ew0ZD1fX2mHunc9
+dnKsNqw+f1hoUYAsWq37bAMIj9fM+GKqBaN+OBUDx+lt2PMhrsZHbDohRmXZ
+GTSGfwgMXcyOw72/M7icrtW2hEylIL1PHt/ZJqn3YRh8WMlTYTnhKH0lpzEd
+curBLzICFs7/qN0fyk1BFYj7NPkKksEpnFAEZx7w5xH+gA5ZanoTXM2J5103
+2dm9uvo0lqxt6XoctujH+SN+Cx2tUocO8ahA+kwOiL9QSRphumJ4Va4wZSpX
+2R5k9t5yUmB9jI904KYbbRz6P9M+teLFzb5bpRyt2RW09EFDbmQ0I8FkYdY6
+90CQ
+=9rrE
 -----END PGP SIGNATURE-----
