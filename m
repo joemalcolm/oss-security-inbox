@@ -1,32 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/1
-Message-ID: <CABbbngA7vk2Mbye196NcEDvyiSNGNyaybLPbZPMV-1Rpaf72tQ@mail.gmail.com>
-Date: Mon, 9 Dec 2013 16:25:38 -0800
-From: Forest Monsen <forest.monsen@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/13
+Message-ID: <CAGyNYUNFXcwM5UC_RyK9dkBTXQr6Nu3qj0QkbQ7fP6EJxX+M4Q@mail.gmail.com>
+Date: Thu, 14 Mar 2013 21:51:29 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request for Drupal core, and contributed modules
+Subject: Re: CVE Request/Guidance: Linux kernel cdc-wdm buffer overflow triggered by device
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 6, 2013 at 3:19 PM, Forest Monsen <forest.monsen@...il.com>wrote:
+Hi Marcus,
 
-> Now the contributed modules:
-> SA-CONTRIB-2013-093 - Invitation - Access Bypass
-> https://drupal.org/node/2140097
->
-> SA-CONTRIB-2013-094 - EU Cookie Compliance - Cross Site Scripting (XSS)
-> https://drupal.org/node/2140123
->
-> SA-CONTRIB-2013-095 - Organic Groups - Access bypass
-> https://drupal.org/node/2140217
->
-> SA-CONTRIB-2013-096 - Entity reference - Access bypass
-> https://drupal.org/node/2140237
->
-> SA-CONTRIB-2013-097 - OG Features - Access bypass
-> https://drupal.org/node/2149791
->
+On Thursday, 14 March 2013, Marcus Meissner wrote:
 
-These still require CVE identifiers. Thanks!
+> Hi,
+>
+> I am wondering ... do we consider attacks with special attack taylored USB
+> devices as CVE worthy?
+>
+> There is only some precedence in the CVE DB, but not much.
+>
+> I stumbled over this fix from one of my colleagues where a specifically
+> made USB device reporting the "cdc-wdm" USB class could cause a kernel
+> heap overflow.
+>
+> "Malicious attached devices" might fall into several categories:
+>
+> 1. Attaching the device causes the issue directly within the kernel /
+> autoloaded
+>    module, without user interaction. (here the case)
+>
+>
+> 2. Attaching the device causes the issue when userspace, dependend on
+>    e.g. desktop system, does initiate a seperate action (like an automount
+>    and then exploitation of something) (so not direct a kernel, but a
+>    kernel + GNOME/KDE interaction).
+>
+>
+> 3. User needs to do something with the attached device (like click on
+>    a file on a USB disk)
+>
+>
+> I would consider (1) and (2) CVE worthy at least, not so sure with (3).
 
-Forest
+
+I agree with (1) and (2). I have seen (3) with CVE names too. If a local,
+unprivileged user can cause an issue by accessing a file or listing a set
+of files in a directory due to a flaw in the underlying file system, I
+think it should have a CVE name assigned.
+
+Thanks, Eugene
+
+
+>
+> Ciao, Marcus
+>
+> commit c0f5ecee4e741667b2493c742b60b6218d40b3aa
+> Author: Oliver Neukum <oneukum@...e.de <javascript:;>>
+> Date:   Tue Mar 12 14:52:42 2013 +0100
+>
+>     USB: cdc-wdm: fix buffer overflow
+>
+>     The buffer for responses must not overflow.
+>     If this would happen, set a flag, drop the data and return
+>     an error after user space has read all remaining data.
+>
+>     Signed-off-by: Oliver Neukum <oliver@...kum.org <javascript:;>>
+>     CC: stable@...nel.org <javascript:;>
+>     Signed-off-by: Greg Kroah-Hartman <gregkh@...uxfoundation.org<javascript:;>
+> >
+>
+>
+>
+>
 
