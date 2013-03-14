@@ -1,82 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/12
-Message-ID: <5195213C.6020708@redhat.com>
-Date: Thu, 16 May 2013 12:11:08 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2013-2097: zPanel themes remote command execution as root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/17
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF090470B0@IMCMBX01.MITRE.ORG>
+Date: Thu, 14 Mar 2013 17:36:26 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: CVE Request/Guidance: Linux kernel cdc-wdm buffer overflow triggered by device
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+While perhaps a questionable action in many environments, attaching a USB device is a common use case.  The person attaching the device has a reasonable expectation that code will NOT be executed, and files will NOT be written outside the device, etc. without their explicit permission or configuration.  There is also a reasonable expectation that the operation of the device will not perform actions against the OS without implicit user permission.
 
-On 05/15/2013 07:33 PM, Kurt Seifried wrote:
-> So I saw this earlier today:
-> 
-> http://www.reddit.com/r/netsec/comments/1ee0eg/zpanel_support_team_calls_forum_user_fucken/
+So, scenario 1 would clearly require a CVE.
+
+For other scenarios, it should be considered whether the user/victim uses a "common" operation that is not obviously dangerous.  In scenario 3, clicking on a file in a USB device is a common and reasonable operation, and unless that file is an executable or otherwise automatically implies code execution, then it is likely CVE-worthy if code execution, DoS, or some other operation can be performed that is not within the intended operation of the device.
+
+I'm not sure I understand scenario 2 well enough to give direct advice, but even if the user installing the USB is targeted instead of the kernel, then it may qualify for a CVE.
+
+- Steve
+
+
+>-----Original Message-----
+>From: Eugene Teo [mailto:eugeneteo@...nel.sg]
+>Sent: Thursday, March 14, 2013 9:51 AM
+>To: oss-security@...ts.openwall.com
+>Subject: Re: [oss-security] CVE Request/Guidance: Linux kernel cdc-wdm
+>buffer overflow triggered by device
 >
->  and flipped through the forum thread on the zpanel site, but
-> didn't have time until now to deal with it. So first off: I saw all
-> this stuff and read it before it was removed from the site
-> (actually the entire site appears to be down now).
-> 
-> So long and short: you upload a template with the following code:
-> 
-> <& bogus ']; exec("/etc/zpanel/panel/bin/zsudo touch /root/derp"); 
-> echo $value['bogus &>
-> 
-> and the command gets executed as root. From googling it appears
-> that zPanel won't work with SELinux enabled, which makes sense
-> (most web applications fail to ship an SELinux policy, so if they
-> need to do strange things outside the default policy they generally
-> tell you to simply disable SELinux). So if you run zPanel it would
-> be normal to disable SELinux (to make zPanel work), so this root
-> level access won't be restricted.
-> 
-> This issue has been assigned CVE-2013-2097.
-> 
-> There is also a mention of a CSRF but I couldn't find any
-> additional information on it, if anyone knows about this please
-> email me/oss-security with details.
-
-Ok and "joepie91" on reddit posted:
-
-http://www.reddit.com/r/netsec/comments/1ee0eg/zpanel_support_team_calls_forum_user_fucken/c9zujzt
-
-======
-It's a pretty basic (and more annoying than harmful) CSRF - basically,
-http://zpanel.whatever.com/?logout=anything will log out the user from
-a panel, no matter where it's called from. There's no logout key, and
-no referer checking.
-
-Insert <img src="http://zpanel.whatever.com/?logout=anything"> on any
-site and anyone that visits the page will have their
-zpanel.whatever.com session killed instantly.
-======
-
-I can't verify this, but even if true it appears that there is no real
-trust boundary violation (user clicks the link, they get logged out,
-or JavaScript is used to trigger it, whatever). Unless someone can
-show otherwise not assigning a CVE for this issue.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRlSE7AAoJEBYNRVNeJnmT3eIP/iGnhV/LZ7b3a3ssnhqU4ygz
-BMjN1QAxapzbDP4UHawqhL6oQRhzwAuPr9N4uwM20Q9+XWoVSCxcK3yZ669+xlNM
-QWwK0pboAOaoHMYWjGyjdxkud0l81gCYJG5toHBGYNsRUN26LKY4Bt2JbxuJymhq
-0F0WP8QZhaKNzBU+E0A5J1DTmLnkpnKvViOCtG/PmY3o8gLJzAOMnVgmuT9Fqg+5
-UyRrGSK8NfLh0WY55knmamiKb4RGyaBlqcmf+9vhUljz9k0WFqQGcM39e5QekrUx
-ejcw9CI5s1m0iCwyt6rWo3E7CWrhLGZVdvu9qOjN6W8PiRBxUdV3uE36OAICrxSY
-huFU/ojLopf9L3zwBXWBrXWPkwOZZwNcnq4/p9O5yoPA4rFw1Kn7mGp/57+kXmNH
-B0oPWmVdOIvC2A2iYer64giV+/gc5Z0lv41eIzuRH0xgrFz2dj6w0ubgMjjFxtjJ
-c3/bBGSvHZG6+xxt4D9z++pxYp6aEYs/kJpNp+Fc4Y6PZy5Pp0Hv2u0mGH5CevtG
-KEuKAH3tRlpWL9bQ6wuV4KR871zRY84CQ+KiC+dZooPSLZCn/Ng6ARdCkE+ayR0Z
-5G+5KNn8YVTs3kbQKgRrhbtplTcykf2nDIcpzro4grBCE+zElu8DAFKP0KcTMsSN
-XyeIRmvH6XXyelL+WLq1
-=Td1y
------END PGP SIGNATURE-----
+>Hi Marcus,
+>
+>On Thursday, 14 March 2013, Marcus Meissner wrote:
+>
+>> Hi,
+>>
+>> I am wondering ... do we consider attacks with special attack taylored USB
+>> devices as CVE worthy?
+>>
+>> There is only some precedence in the CVE DB, but not much.
+>>
+>> I stumbled over this fix from one of my colleagues where a specifically
+>> made USB device reporting the "cdc-wdm" USB class could cause a kernel
+>> heap overflow.
+>>
+>> "Malicious attached devices" might fall into several categories:
+>>
+>> 1. Attaching the device causes the issue directly within the kernel /
+>> autoloaded
+>>    module, without user interaction. (here the case)
+>>
+>>
+>> 2. Attaching the device causes the issue when userspace, dependend on
+>>    e.g. desktop system, does initiate a seperate action (like an automount
+>>    and then exploitation of something) (so not direct a kernel, but a
+>>    kernel + GNOME/KDE interaction).
+>>
+>>
+>> 3. User needs to do something with the attached device (like click on
+>>    a file on a USB disk)
+>>
+>>
+>> I would consider (1) and (2) CVE worthy at least, not so sure with (3).
+>
+>
+>I agree with (1) and (2). I have seen (3) with CVE names too. If a local,
+>unprivileged user can cause an issue by accessing a file or listing a set
+>of files in a directory due to a flaw in the underlying file system, I
+>think it should have a CVE name assigned.
+>
+>Thanks, Eugene
+>
+>
+>>
+>> Ciao, Marcus
+>>
+>> commit c0f5ecee4e741667b2493c742b60b6218d40b3aa
+>> Author: Oliver Neukum <oneukum@...e.de <javascript:;>>
+>> Date:   Tue Mar 12 14:52:42 2013 +0100
+>>
+>>     USB: cdc-wdm: fix buffer overflow
+>>
+>>     The buffer for responses must not overflow.
+>>     If this would happen, set a flag, drop the data and return
+>>     an error after user space has read all remaining data.
+>>
+>>     Signed-off-by: Oliver Neukum <oliver@...kum.org <javascript:;>>
+>>     CC: stable@...nel.org <javascript:;>
+>>     Signed-off-by: Greg Kroah-Hartman
+><gregkh@...uxfoundation.org<javascript:;>
+>> >
+>>
+>>
+>>
+>>
