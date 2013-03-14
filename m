@@ -1,53 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/12
-Message-ID: <20130227132416.GB10080@suse.de>
-Date: Wed, 27 Feb 2013 14:24:16 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: poppler 0.22.1 security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/23
+Message-ID: <5142599F.8040506@gmail.com>
+Date: Thu, 14 Mar 2013 16:13:35 -0700
+From: Forest Monsen <forest.monsen@...il.com>
+To: oss-security@...ts.openwall.com
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for a Drupal contributed module
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-poppler 0.22.1 was released without much ado, it however contains various security fixes.
+Hi Kurt,
 
-The security fixes apparently come from AdressSanitizer work and fuzzing provided
-by the Google Security Team.
+Can we get a CVE identifier assigned for this?
 
-The page:
-http://j00ru.vexillium.org/?p=1507
+SA-CONTRIB-2013-034 - Node Parameter Control - Access Bypass
+http://drupal.org/node/1942330
 
-explains most of it, and while it focuses on Adobe Acrobat Reader, they also covered
-poppler testing inside.
+Thanks!
 
-So far I see:
-http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=8b6dc55e530b2f5ede6b9dfb64aafdd1d5836492
-	Fix invalid memory access in 1150.pdf.asan.8.69
+Forest
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=e14b6e9c13d35c9bd1e0c50906ace8e707816888
-	Fix invalid memory access in 2030.pdf.asan.69.463
-
-http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=0388837f01bc467045164f9ddaff787000a8caaa
-	Fix another invalid memory access in 1091.pdf.asan.72.42
-
-http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=957aa252912cde85d76c41e9710b33425a82b696
-	Fix invalid memory accesses in 1091.pdf.asan.72.42
-
-http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=bbc2d8918fe234b7ef2c480eb148943922cc0959
-	Fix invalid memory accesses in 1036.pdf.asan.23.17
-
-http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a9b8ab4657dec65b8b86c225d12c533ad7e984e2
-	Fix crash in broken file 1031.pdf.asan.48.15
-
-http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a205e71a2dbe0c8d4f4905a76a3f79ec522eacec
-	Do not crash in broken documents like 1007.pdf.asan.48.4
-
-http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=b1026b5978c385328f2a15a2185c599a563edf91
-	Initialize refLine totally
-	Fixes uninitialized memory read in 1004.pdf.asan.7.3 
-
-As the blog page mentions "Huzaifa Sidhpurwala from RedHat Security", perhaps Redhat has assigned CVEs already.
-
-Otherwise one ore more CVEs are required. 
-
-Ciao, Marcus
+iEYEARECAAYFAlFCWZQACgkQ/ILCL9e1Br4vXwCgoeGSmtUgMsEiF4ZQLWfpxnH8
+PQ4An2FNM8CAE0J25GqGpJJnI6f8HIKh
+=yNYW
+-----END PGP SIGNATURE-----
