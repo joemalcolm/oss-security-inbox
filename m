@@ -1,33 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/18
-Message-ID: <20130808192059.GA11002@eldamar.local>
-Date: Thu, 8 Aug 2013 21:20:59 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Paul Gevers <elbrus@...ian.org>, Gandalf <gandalf@...ti.net>
-Subject: CVE Request: Regression introduced in cacti with fix for CVE-2013-1435
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/2
+Message-Id: <81E7532F-92B3-4665-8C5D-3CA1893A78B1@kernel.sg>
+Date: Thu, 14 Mar 2013 09:03:20 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CLONE_NEWUSER|CLONE_FS root exploit
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt
+On 14 Mar, 2013, at 8:59 AM, Eugene Teo <eugeneteo@...nel.sg> wrote:
 
-The fix for CVE-2013-1435[1] introduced a regression:
+> On 13 Mar, 2013, at 11:39 PM, Sebastian Krahmer <krahmer@...e.de> wrote:
+> 
+>> Hi,
+>> 
+>> Seems like CLONE_NEWUSER|CLONE_FS might be a forbidden
+>> combination.
+>> During evaluating the new user namespace thingie, it turned out
+>> that its trivially exploitable to get a (real) uid 0,
+>> as demonstrated here:
+>> 
+>> http://stealth.openwall.net/xSports/clown-newuser.c
+>> 
+>> The trick is to setup a chroot in your CLONE_NEWUSER,
+>> but also affecting the parent, which is running
+>> in the init_user_ns, but with the chroot shared.
+>> Then its trivial to get a rootshell from that.
+>> 
+>> Tested on a openSUSE12.1 with a custom build 3.8.2 (x86_64).
+>> 
+>> I hope I didnt make anything wrong, mixing up the UIDs,
+>> or disabled important checks during kernel build on my test
+>> system. ;)
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=aea8b5d1e5c5482e7cdda849dc16d728f7080289
 
- [1] http://svn.cacti.net/viewvc?view=rev&revision=7393
+I realised that the link is incorrect. Will post again when I see the patches.
 
-It was reported in [2] and upstream proposed a fix [3] which was
-confirmed to work by two of the involved people.
+> 
 
- [2] http://sourceforge.net/mailarchive/message.php?msg_id=31262707
- [3] http://sourceforge.net/mailarchive/message.php?msg_id=31262712
-
-The corresponding svn commits should be the following:
-
- [4] http://svn.cacti.net/viewvc?view=rev&revision=7408
- [5] http://svn.cacti.net/viewvc?view=rev&revision=7409
- [6] http://svn.cacti.net/viewvc?view=rev&revision=7413
-
-Does this need a follow-up CVE assignment for the regression part
-introduced?
-
-Regards,
-Salvatore
+Eugene
