@@ -1,65 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/5
-Message-ID: <51359A99.5040907@op5.se>
-Date: Tue, 05 Mar 2013 08:11:21 +0100
-From: Andreas Ericsson <ae@....se>
-To: oss-security@...ts.openwall.com
-CC: Eric Lacombe <goretux@...il.com>
-Subject: Re: handling of Linux kernel vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/12
+Message-ID: <20130314134340.GI11816@suse.de>
+Date: Thu, 14 Mar 2013 14:43:41 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request/Guidance: Linux kernel cdc-wdm buffer overflow triggered by device
 Content-Type: text/plain; charset=utf-8
 
-Hi list. I work for a sub-vendor who ships one of the major distros as
-part of an appliance. Just thought I'd chip in with my €0.02.
+Hi,
 
-On 03/04/2013 10:12 PM, Eric Lacombe wrote:
-> Hi,
-> 
-> Le lundi 4 mars 2013 11:48:58, Greg KH a écrit :
->> On Sun, Mar 03, 2013 at 10:39:30PM -0500, Michael Gilbert wrote:
->>> I was getting encouraged by the recent anger-centric posts, the "what
->>> is it that we're supposed to do better?" ones. That gave me some
->>> encouragement that there was the possibility of positive change, but
->>> the "we're not going to make users more unsafe by telling them about
->>> issues affecting them" is a persistence of the denial state.  That
->>> logic completely violates the known idiom that knowledge is power:
->>> give users the knowledge that they need to protect themselves, and
->>> they will; starve them of that knowledge, and they remain vulnerable.
->>
->> That's a load of crap.
->>
->> Seriously, you know it only benefits the "bad guys" if I were to say,
->> "This patch just went into Linus's tree that fixes a security problem
->> that you can exploit in this manner".  No user would have a chance to
->> fix their systems before the vulnerability was added to the
->> "ultra-sploit" tool and everyone would have their systems trashed.
-> 
-> I think there's a difference between disclosing the vulnerability and
-> disclosing it with a related exploit. The first one allows to fulfill what
-> Michael Gilbert explains without the consequences that you focus on.
-> 
+I am wondering ... do we consider attacks with special attack taylored USB
+devices as CVE worthy?
 
-Writing and testing an exploit for a "usable" security issue takes all of
-an hour or two. Coming up with a proper patch, testing it, packaging it
-and releasing it to users takes at least a week, and I personally think
-that's erring optimistically.
+There is only some precedence in the CVE DB, but not much.
 
-For parts of a system that really *can't* be disabled without making the
-system completely unusable (kernel, glibc and to some extent ssh tools),
-I think a longer shush-time than "time of commit" is suitable for full
-disclosure announcement. Note "announcement" here. People who're really
-interested can ofcourse see in the patch and commit-message how the bug
-can be triggered.
+I stumbled over this fix from one of my colleagues where a specifically
+made USB device reporting the "cdc-wdm" USB class could cause a kernel
+heap overflow.
 
-Otoh, where workarounds can be applied that prevent the bug from happening
-the issue, I believe protection information should be released immediately.
-Writing exploits (or test-cases) from workaround information is a *lot*
-harder than from full disclosure listings.
+"Malicious attached devices" might fall into several categories:
 
--- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1. Attaching the device causes the issue directly within the kernel / autoloaded
+   module, without user interaction. (here the case)
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+
+2. Attaching the device causes the issue when userspace, dependend on
+   e.g. desktop system, does initiate a seperate action (like an automount
+   and then exploitation of something) (so not direct a kernel, but a
+   kernel + GNOME/KDE interaction).
+
+
+3. User needs to do something with the attached device (like click on 
+   a file on a USB disk)
+
+
+I would consider (1) and (2) CVE worthy at least, not so sure with (3).
+
+Ciao, Marcus
+
+commit c0f5ecee4e741667b2493c742b60b6218d40b3aa
+Author: Oliver Neukum <oneukum@...e.de>
+Date:   Tue Mar 12 14:52:42 2013 +0100
+
+    USB: cdc-wdm: fix buffer overflow
+
+    The buffer for responses must not overflow.
+    If this would happen, set a flag, drop the data and return
+    an error after user space has read all remaining data.
+
+    Signed-off-by: Oliver Neukum <oliver@...kum.org>
+    CC: stable@...nel.org
+    Signed-off-by: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
+
+
+
