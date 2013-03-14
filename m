@@ -1,32 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/5
-Message-Id: <201302051040.57310.mweckbecker@suse.de>
-Date: Tue, 5 Feb 2013 10:40:57 +0100
-From: Matthias Weckbecker <mweckbecker@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/18
+Message-ID: <51420B45.3090802@openstack.org>
+Date: Thu, 14 Mar 2013 18:39:17 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2013-008] Nova DoS by allocating all Fixed IPs (CVE-2013-1838)
 Content-Type: text/plain; charset=utf-8
 
-b8391806cd79095fe566f2401d8c7ad85a64b198 seems to be the commit for GnuTLS
-that fixes the issue.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Tuesday 05 February 2013 10:34:23 Matthias Weckbecker wrote:
-> Hi,
->
-> has there already been a CVE assigned for the recent "lucky 13" timing
-> flaw that affects various SSL / TLS implementations (including GnuTLS)?
->
->   http://www.isg.rhul.ac.uk/tls/
->   http://www.gnutls.org/security.html#GNUTLS-SA-2013-1
->
-> I think this could qualify for CVE for each open source implementation
-> that's prone.
->
-> Thanks,
-> Matthias
+OpenStack Security Advisory: 2013-008
+CVE: CVE-2013-1838
+Date: March 14, 2013
+Title: Nova DoS by allocating all Fixed IPs
+Reporter: Vish Ishaya (Nebula)
+Products: Nova
+Affects: All versions
 
--- 
-Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Description:
+Vish Ishaya reported a vulnerability in Nova where there is no quota for
+Fixed IPs. Previously the instance quota acted as a proxy for a Fixed IP
+quota, but if your configuration allows an instance to consume more than
+one Fixed IP via an extension such as multinic then this is no longer
+true. Running out of Fixed IPs would result in not being able to spawn
+new instances.
+
+Grizzly (development branch) fix:
+https://review.openstack.org/#/c/24451/
+
+Folsom fix:
+https://review.openstack.org/#/c/24452/
+
+Essex fix:
+https://review.openstack.org/#/c/24453/
+
+References:
+https://bugs.launchpad.net/nova/+bug/1125468
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-1838
+
+- -- 
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQIcBAEBCAAGBQJRQgtEAAoJEFB6+JAlsQQjf6gP/0Ao3Hq5MSChlbwtjMiUPPlC
+ralE6V5l3/V/jPJ/XiHrSJo2qbwgil4SSrwj6mDx00bwj3lLyYKV9KjRx9FJjwl0
+YuUm/AY1R4/miED8HyjhhteC0xAisqciwZQLrN6DwAdP3YEDZZk0Cfxp3Xw6XxAM
+SAb2Gp0Ranu0lc7jLBNsp0G4idZvF232kXRDEMgpAwcsjmxh1sl97IBUqq87UJax
+RDnI2p/bpPahZXBZK4RPZR92IbdVZ4SE+piC0b4ITESdxAh9NadWfUBIkf4fOdvM
+yVKWFvRMhIFqTFEnpaX/091mOzkHJ8bWRpKImrw3qSLvXzyzlBwuuT0NyL6qDTPQ
+0cY9gkiyqOtlvsAxF7tNDHxnIlq/zy86Tvi3KVoyJcUenGPjZwWNINhyvvFWs03t
+n0W58XQOnXPxYLSI3CG5gUcJUWTbJQKQAapkoMGUASc7kcVCNv334z45Ui4n51o4
+5WUOQTzgWJRskqolull7wpScaNoZtQgnnSTHwtAXt4Pykum4N3FEOEo4C/gHa1uz
+nW8YkZRgoHbGYNypNDDWE6UdPZT/WOO/+RbMQwRVitFJtHzG1FuLa1fNP6mKxDPn
+vpHnp9jBZlW9OjBZgp7/YqFv586l/xrT1hG3i+I6fq2w5G7Gru5PeRhUElzq4qHF
+k+FvT1+nkHkvTbMb8z1z
+=gipy
+-----END PGP SIGNATURE-----
