@@ -1,25 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/19
-Message-Id: <06483F0F-4F15-4AF9-859F-91DA6029479F@audreyt.org>
-Date: Thu, 6 Jun 2013 02:42:10 +0800
-From: 唐鳳 <audreyt@...reyt.org>
-To: Russ Allbery <rra@...nford.edu>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2013-2145: perl Module::Signature code execution vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/11
+Message-ID: <20130314090620.GB12061@kludge.henri.nerv.fi>
+Date: Thu, 14 Mar 2013 11:06:20 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: plugins@...dpress.org
+Subject: Re: WordPress plugins vulnerable to CVE-2013-1808
 Content-Type: text/plain; charset=utf-8
 
-Russ Allbery <rra@...nford.edu> 於 2013/6/6 上午2:24 寫道：
-> Speaking as a CPAN author, the second would be awesome.  For bonus points,
-> once one registers a key with CPAN, CPAN could then even check one's
-> uploads and disallow uploads that aren't signed with the proper key.
+On Sun, Mar 10, 2013 at 10:52:07AM +0200, Henri Salo wrote:
+> Plugin: slidedeck2
+> Version: 2.1.20130306
+> 
+> Affected file: http://plugins.svn.wordpress.org/slidedeck2/trunk/js/zeroclipboard/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
+> PoC: wp-content/plugins/slidedeck2/js/zeroclipboard/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
+> 
+> Affected file: http://plugins.svn.wordpress.org/slidedeck2/trunk/js/zeroclipboard/ZeroClipboard10.swf 1ea0fc0cea30a7d912c2564d51204a816f1e58be
+> PoC: wp-content/plugins/slidedeck2/js/zeroclipboard/ZeroClipboard10.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
 
-Indeed. Note the main design & work for the module was done ~10 years ago, so my recollection is a bit fuzzy, but the module was designed such that it allows this invocation against a hypothetical CPAN OpenPGP server:
+This has been fixed in 2.1.20130306 version. Changelog
+http://wordpress.org/extend/plugins/slidedeck2/changelog/ says:
 
-    env MODULE_SIGNATURE_KEYSERVER=pgp.cpan.org cpansign verify
+2.1.20130306
+Security improvements
 
-At that time PAUSE (the CPAN upload server) was not yet made public, and there were insufficient rounds of tuits to implement this feature as part of my TPF 2003 grant .
+Again no CVE added to changelog and reporter (me) not notified about fixes done.
 
-Now that the PAUSE codebase has been released on GitHub since 2010, one can imagine adding a PGP import functionality into it. That'd be _awesome_.
+--
+Henri Salo
 
-Cheers,
-Audrey
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
