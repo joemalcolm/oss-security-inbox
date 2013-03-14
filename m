@@ -1,36 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/21/1
-Message-ID: <51C3BE11.9040501@redhat.com>
-Date: Thu, 20 Jun 2013 20:44:33 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/9
+Message-ID: <51417BBA.5010403@redhat.com>
+Date: Thu, 14 Mar 2013 01:26:50 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Linux kernel: sctp: duplicate cookie handling NULL pointer dereference
+CC: gremlin@...mlin.ru
+Subject: Re: Linux kernel + devtmpfs automount == insecure /dev/{,u}random mode
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/20/2013 02:16 PM, Petr Matousek wrote:
-> A flaw was found in the way Linux kernel's SCTP network protocol 
-> implementation handled duplicate cookies. A transient empty
-> association is created while processing the duplicate cookie chunk
-> that userspace could query, potentially leading to NULL pointer
-> dereference. A remote attacker able to initiate SCTP connection to
-> the system could use this flaw to create transient conditions that
-> could lead to remote system crash if remote system user is querying
-> SCTP connection info at the time these conditions exist.
+On 03/14/2013 12:32 AM, gremlin@...mlin.ru wrote:
+> On 13-Mar-2013 15:54:15 +0400, gremlin@...mlin.ru wrote:
 > 
-> Upstream fix: 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=f2815633504b442ca0b0605c16bf3d88a3a0fcea
+>>> http://lkml.indiana.edu/hypermail/linux/kernel/0012.2/0502.html
 >
+>>> 
+> Yes, I've found that while investigating the possible impact.
+> Also,
+>> the random.c doesn't use the data directly, but instead hashes
+>> it.
 > 
-(already in stable)
+> And that has some impact: the malicious (or just curious)
+> unprivileged user may run flood the devices with garbage, and the
+> kernel will spend resources hashing it.
 > 
-> References: https://bugzilla.redhat.com/show_bug.cgi?id=976562
+> Try this: `dd bs=1M if=/dev/zero of=/dev/urandom`
 > 
-> Thanks,
+> On a Core i5-2400 3.10GHz CPU, only 16 processes running for
+> several minutes result in all cores loaded at 99% and the load
+> average of 20. My workstation has survived the experiment, but
+> heavy-loaded servers may dislike that :-)
+> 
+>> But my opinion stays exactly the same: devices should be 0644,
+>> and only trusted random data sources should be used to add
+>> entropy to the pool via add_device_randomness(). So, I'll just
+>> restrict the access to /dev/{,u}random locally :-)
+> 
+> ... and recommend others do the same.
 
-Please use CVE-2013-2206 for this issue.
+My test results with `dd bs=1M if=/dev/zero of=/dev/urandom` as a
+normal user:
+
+On a stock Fedora 18 64 bit VM with 3 cpus I tried this with both one
+and three instances of the dd, load average shot up to like 3 but the
+system was responsive, nothing noticeable.
+
+But when I set ulimit -t 10 and ran it, it got killed right away. So
+standard CPU limiting would appear to fix this, so as far as using
+this for a CPU DoS it doesn't appear to be a problem.
+
+Now should it have less permissive permissions? Yes.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -38,17 +59,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRw74RAAoJEBYNRVNeJnmT0OEP/2hg4COJlKdlhHO6fNV26293
-DgmWgNm8gJyqaWEHnc+px2sFQ1B2tnbvsL++IqsRlhmRICFdSrVpWScC5C8kgXpC
-ZUV/5ZuP5UvkGdEc1TXN2IhWE7FO4hcNtwb3Or0rwFpbHqUw1Qnpin36mzwoF5Uw
-m+RDo5mTzfe/6VVQO7savEoyHqCcfDp/Z40BJKhk6ieds6y4cDW2AwbPn1fg8fBb
-cAvZo547znvS2WK0xOtbRrNX/X2GPUbXBNRg5d+k3aq9k9Fomo70JCqfKGo3YWly
-nqu8+HApkLqB0ucI1x+Ore5fCTyzkKzcMT9o4hFuuzVBowXbgYuGhhddrXDFfdOW
-wTVdHL+0aDMRimCwzhGyvMSPnLlmj6ypojn//u1E3/u3iaYiURndf5wD8b3PRLMp
-XtLPyWPaZle0XxMaVeuJIrmjC+ZjM9ewstI7QyGhPgxUmRy0vSrCgvWrfnHNo12g
-aoLx4smNrNVy2QbOKtR37rclzC967JkKv1blKIYyJsC1BAdHvu7xa+XMCYfjqfrN
-9t97r7QNMamO0j+UG5b8EhTdZE9h37WxLCU9xWTpGaogI2bXr9ekFC8hYdWTkPuB
-+ULBzbG1H1DcUBpOg+fEBqdQrr/zFRfMKriVweWOS2RaS52PFYOXVce+ts3cDkJZ
-DJB7sp1Sg8UG10VREC7N
-=gs1G
+iQIcBAEBAgAGBQJRQXu6AAoJEBYNRVNeJnmTSB0QAKp9LGsbAWr8TNxOEdjyfzEe
+T2PC/bZ6fz8nO88EW2+cvg0htBmi5/9YN7yHyYWL4qvogJysU3wB1sKoiuZ14r/y
+JrpkXMMrNcSOkkYLMH4mJLbyofQWfzPEq5YgJeO1d67Y5l+q3MLlA5oFhb3YWvNk
+z5xR9QWY5Fgx++PUxvCIxivgmseL+NrTu7v1rWhmgvJN988lseITkaNgMZYrEt0l
+ZtydmW2IYOpGLLp43XJHNxIp8E3j+2WZsHgb5H/uTdI2q/Lr98n/LwGIXWOHI7Uz
+gVVhKywPLCwHfMoozuB5hJVr/0O8rMwLnlPk6yyNJLSEeAA7CGq4UmTGRgEICEcd
+BZ+hvmHlaYcEpigY4YO6EiuJ5+GkooucQIJSCkC/HcAx096S0ggdxPeJtBD4P9gR
+Ijw8y6auQbHC2g2kLKGBIvAPwizXm2CNODky1z7i8l5IpuUIshQUWJDRP/pR+14Y
+e9pD6NckNYT/0tlMKkNbJyhExuJvZJcUgnDiKRZ9q2bKgGj92Y5D9UMP7QOsPv+Y
+cJkCLF+hw0EdnbNmYlhuFjgRBt+7SaM2F9m+cuV+Qqx1SAcXbCdOt6+7sQ4E2ObI
+I5L2SovHWn5igGjhkgXFIY7BSd8kQntVQhZt1FRUY4biPr64eH600f8uQGgeKOZw
+2/FQX1ZB1TpFXvBaYIcK
+=vNHc
 -----END PGP SIGNATURE-----
