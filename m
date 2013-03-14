@@ -1,25 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/5
-Message-ID: <20130529193251.78fa2003@redhat.com>
-Date: Wed, 29 May 2013 19:32:51 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/7
+Message-ID: <20130314063259.GA29394@gremlin.ru>
+Date: Thu, 14 Mar 2013 10:32:59 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Subject: GnuTLS 2.x Lucky13 fix regression CVE-2013-2116
+Subject: Re: Linux kernel + devtmpfs automount == insecure /dev/{,u}random mode
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On 13-Mar-2013 15:54:15 +0400, gremlin@...mlin.ru wrote:
 
-This upstream gnutls-devel list thread points out an OOB read bug
-introduced via the Lucky13 / CVE-2013-1619 fix for GnuTLS 2.x.
+ >> http://lkml.indiana.edu/hypermail/linux/kernel/0012.2/0502.html
+ > Yes, I've found that while investigating the possible impact. Also,
+ > the random.c doesn't use the data directly, but instead hashes it.
 
-http://thread.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/6753
+And that has some impact: the malicious (or just curious) unprivileged
+user may run flood the devices with garbage, and the kernel will spend
+resources hashing it.
 
-This possibly allows crashing TLS servers using GnuTLS remotely.
-Upstream version 2.12.23 and vendor versions with 2.x patch backported
-should be affected.  Upstream 3.x versions used different patch not
-affected by this issue.
+Try this: `dd bs=1M if=/dev/zero of=/dev/urandom`
 
-CVE-2013-2116 was assigned to this issue.
+On a Core i5-2400 3.10GHz CPU, only 16 processes running for several
+minutes result in all cores loaded at 99% and the load average of 20.
+My workstation has survived the experiment, but heavy-loaded servers
+may dislike that :-)
+
+ > But my opinion stays exactly the same: devices should be 0644, and
+ > only trusted random data sources should be used to add entropy to
+ > the pool via add_device_randomness().
+ > So, I'll just restrict the access to /dev/{,u}random locally :-)
+
+... and recommend others do the same.
+
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+
+Content of type "application/pgp-signature" skipped
