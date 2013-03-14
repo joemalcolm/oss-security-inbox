@@ -1,25 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/14
-Message-ID: <20130116204226.GA19510@elende>
-Date: Wed, 16 Jan 2013 21:42:26 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/4
+Message-ID: <20130314013300.GA9016@kroah.com>
+Date: Wed, 13 Mar 2013 18:33:00 -0700
+From: Greg KH <gregkh@...uxfoundation.org>
 To: oss-security@...ts.openwall.com
-Subject: bcron: cron jobs get access to the temporary output files from all other jobs that are still running
+Subject: Re: CLONE_NEWUSER|CLONE_FS root exploit
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Thu, Mar 14, 2013 at 09:03:20AM +0800, Eugene Teo wrote:
+> On 14 Mar, 2013, at 8:59 AM, Eugene Teo <eugeneteo@...nel.sg> wrote:
+> 
+> > On 13 Mar, 2013, at 11:39 PM, Sebastian Krahmer <krahmer@...e.de> wrote:
+> > 
+> >> Hi,
+> >> 
+> >> Seems like CLONE_NEWUSER|CLONE_FS might be a forbidden
+> >> combination.
+> >> During evaluating the new user namespace thingie, it turned out
+> >> that its trivially exploitable to get a (real) uid 0,
+> >> as demonstrated here:
+> >> 
+> >> http://stealth.openwall.net/xSports/clown-newuser.c
+> >> 
+> >> The trick is to setup a chroot in your CLONE_NEWUSER,
+> >> but also affecting the parent, which is running
+> >> in the init_user_ns, but with the chroot shared.
+> >> Then its trivial to get a rootshell from that.
+> >> 
+> >> Tested on a openSUSE12.1 with a custom build 3.8.2 (x86_64).
+> >> 
+> >> I hope I didnt make anything wrong, mixing up the UIDs,
+> >> or disabled important checks during kernel build on my test
+> >> system. ;)
+> > 
+> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=aea8b5d1e5c5482e7cdda849dc16d728f7080289
+> 
+> I realised that the link is incorrect. Will post again when I see the patches.
 
-I haven't found if there was already a request for this.
+It is commit e66eded8309ebf679d3d3c1f5820d1f2ca332c71 in Linus's tree,
+so replace the sha in the above link with this one instead.
 
-In Debian Bugtracker it was closed [1] today. It is possible due to a
-bug in bcron-exec that cron jobs get access to the temporary output
-files from other jobs that are still running. This is also mentioned
-in upstream's NEWS[2]. The commit to fix this on github should be[3].
-Even it looks bcron is not broadly used, could the above get a CVE?
+Hope this helps,
 
- [1]: http://bugs.debian.org/686650
- [2]: http://untroubled.org/bcron/NEWS
- [3]: https://github.com/bruceg/bcron/commit/7e3b8d7a82a6712f4607aae151a3ba8843dc6c86
-
-Regards,
-Salvatore
+greg k-h
