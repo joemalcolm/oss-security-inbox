@@ -1,36 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/11/4
-Message-ID: <518DAABB.106@redhat.com>
-Date: Fri, 10 May 2013 20:19:39 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/3
+Message-ID: <51412685.1010602@redhat.com>
+Date: Wed, 13 Mar 2013 19:23:17 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: coley@...us.mitre.org, oss-security@...ts.openwall.com, security@...ntu.com
-Subject: Re: CVE Request: kdelibs
+To: oss-security@...ts.openwall.com
+CC: Salvatore Bonaccorso <carnil@...ian.org>, Russ Allbery <rra@...nford.edu>, Remi Gacogne <rgacogne-bugs@...edump.fr>
+Subject: Re: Reverse lookup issue in Net::Server
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/10/2013 03:31 PM, Seth Arnold wrote:
-> Hello Kurt, Steve, all,
-> 
-> A bug in our Launchpad [1] refers to KDE Bug 319428 [2] as fixing
-> a security issue: displaying raw URLs, including passwords, in a
-> handful of error messages. A patch is in git [3] to sanitize URLs
-> before displaying them in the affected error messages.
-> 
-> 1: https://bugs.launchpad.net/ubuntu/+source/kde4libs/+bug/1178286 
-> 2: https://bugs.kde.org/show_bug.cgi?id=319428 3:
-> http://commits.kde.org/kdelibs/65d736dab592bced4410ccfa4699de89f78c96ca
->
->  Please assign a CVE number for this issue. Thank you.
-> 
-> Seth
+On 03/13/2013 02:56 PM, Salvatore Bonaccorso wrote:
+> Hi
 
-Vince asked first =) Please see
+>> Yup. Please use CVE-2013-1841 for this issue.
+> 
+> Thank you Kurt for assinging the CVE. Upstream already answered on 
+> this on the request tracker[1] and Paul mentions they will add an 
+> option to do the forward lookup.
+> 
+> [1]: https://rt.cpan.org/Ticket/Display.html?id=83909
+> 
+> Regards, Salvatore
 
-http://openwall.com/lists/oss-security/2013/05/11/2
+Shouldn't that be the default and not an option?
 
-for the cve (don't want to post it twice, avoid confusion).
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -38,17 +33,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRjaq7AAoJEBYNRVNeJnmTHVEQAJgacBYBW0RZgoyK2EGnj77y
-I6V05qgLiKezPtcmDo2ZZq0WUgFrc4zCkMbxZ2H2VWm4Ezav9Oybj5sAQ1KRKfhh
-p5h7BnxqfuWwDMj7XalQZbTQbC21uZExK2XYmyu+tI3s2Wda1pXYLE+wERip9JhE
-rZ319u2/KeTQwFiYHsB4Yqs4s4VeaowVzwDHOZLOZpd0+vDk5XkI8rZF8c5ZOkn2
-yxOPpX3IFF72Q+LEZJPLcD3dOlZ0TCweCy4BAzhHMjODu+bEbWUX/OLXCfj/jYzZ
-iA6y95uVi8qQv5WUFitXlrG08nx3OcPK+yOxUnkWSPR696MnwPs7A/dgmGpyv6vp
-CaUKS4saDup6mbhy1rLaFGPkp3P/f44QjFl+NENOox5VeaEhhBwkPGu3PFcOoIrS
-uWVK9EIfPOquSIE66ARiS9o6Qja5p2bjo5X7lphzTEaj6oYhz32Y9broVwynqK8t
-f2DJ+avoZjQEa9GlZCaeSmy/N1ZI1jckrXy1iYbhIjjDBO7WxBQDcfK/Guxo/XkR
-c0z98h6VGMne0BoC/l/DT0NEfCDnBCX+fCVJ7nCIXhbMBYtLvVCSFK9OtcVK3RTQ
-pXBwqXRCHKQ1tCnjOgGnul5D7dYYYoCP444zlXNkRNzRaIOqD4jPYcoRQAYmiE/T
-QE02rjsbFbWMJAJt3fcZ
-=ifTt
+iQIcBAEBAgAGBQJRQSaFAAoJEBYNRVNeJnmTPRYQAIs4HQZ12i23N5rfD92zFJBA
+zLYeF6vf57hiqxPOYBlA2por9VLZV8yDRt6ylZBXYfblSezWAC+qNzFO4hfwjA0b
+V2zoyEHlC+VZ7xAbJF4+oXOlmph7nHTGdW4o5iDmIEATOEnINnFnfPFghh//CAhZ
+qgDtYNayzY/t9RR5PMc04CBSDyjoX/I7SSzUA8zFsqQZGBTiHcq00YrRv1YmEpvl
+kyX377EEY7b+C6bt2TFLzfGupUFJ6IywLS6zB9wq0Vu8wBm7Xl7tGPPRBADU/q1h
+1Ve0zMWSAVAzjyERPyIoSt6+pq46IA9xXSs95INuspxAEN5030coKYo4cKrgxCe1
+xhLQCZLBQNag+12ic2f6cu/F8GsnW9JW6gOQIoFsVHx1WuYS316ZomoA2GH9+jqk
+64Xe7dp97m3pzr/YrMLN7KGr13jBBDBXuebiBjRCPjwpP/pcKuuQ8sNqr3wJ6qV4
+lBqTdSPcHRQhLfYoThRfYiKHmH3d7cH9tw04gPKX9PdJ9bHQ509VGOlCX1wsm9yw
+Xz7C0Xb/kbLmKpoO2HxpA2FNS0GHr7MR5mqtrirqytrurfEoDSWIPS6eq9PklScv
+asGbhnjkeRAXJBFq1m2CD0wFCZMDtQW7WZjtGPVcDEW5vT1gazEy8ZtVa4JMis94
+ipyrrSM8zOHT3TmrJ5MT
+=1VhZ
 -----END PGP SIGNATURE-----
