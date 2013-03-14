@@ -1,65 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/9
-Message-ID: <20131128110948.GT10262@nb4>
-Date: Thu, 28 Nov 2013 12:09:48 +0100
-From: Michael Niedermayer <michaelni@....at>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, ffmpeg-security@...peg.org
-Subject: Re: CVE Request: FFmpeg 2.1 multiple problems
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/15
+Message-ID: <5141F768.5050503@openstack.org>
+Date: Thu, 14 Mar 2013 17:14:32 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2013-007] Backend credentials leak in Glance v1 API (CVE-2013-1840)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 28, 2013 at 01:02:52AM -0700, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> Ok tracked down who reported most of these, but two are still unknown:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-[...]
+OpenStack Security Advisory: 2013-007
+CVE: CVE-2013-1840
+Date: March 14, 2013
+Title: Backend credentials leak in Glance v1 API
+Reporter: Stuart McLaren (HP)
+Products: Glance
+Affects: All versions
 
-> https://github.com/FFmpeg/FFmpeg/commit/454a11a1c9c686c78aa97954306fb63453299760
->     avcodec/dsputil: fix signedness in sizeof() comparissions leading
->     to interger overflow and out of array accesses
-> Who reported this?
+Description:
+Stuart McLaren from HP reported a vulnerability in the information
+potentially returned to the user in Glance v1 API. If an authenticated
+user requests, through the v1 API, an image that is already cached, the
+headers returned may disclose the Glance operator's backend credentials
+for that endpoint. Only setups accepting the Glance v1 API and using
+either the single-tenant Swift store or S3 store are affected.
 
-IIRC after i fixed ticket2919, i searched for similar issues in
-the codebase and that was what i found.
+Grizzly (development branch) fix:
+https://review.openstack.org/24437
 
+Folsom fix:
+https://review.openstack.org/24438
 
-> 
-> 
-> 
-> 
-> https://github.com/FFmpeg/FFmpeg/commit/547d690d676064069d44703a1917e0dab7e33445
->     Fixes out of array (on heap) writes in ffv1 decoding
->     https://trac.ffmpeg.org/ticket/2906 ami_stuff
->     Found-by: ami_stuff
-> 
-[...]
+Essex fix:
+https://review.openstack.org/24439
 
-> https://github.com/FFmpeg/FFmpeg/commit/86736f59d6a527d8bc807d09b93f971c0fe0bb07
->     avcodec/pngdsp: fix (un)signed type in end comparission
->     Fixes out of array writes in png decoding
->     https://trac.ffmpeg.org/ticket/2919 ami_stuff
->     Found_by: ami_stuff
-> 
+References:
+https://bugs.launchpad.net/glance/+bug/1135541
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-1840
 
-[...]
+- -- 
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-> https://github.com/FFmpeg/FFmpeg/commit/b05cd1ea7e45a836f7f6071a716c38bb30326e0f
->     ffv1dec: Check bits_per_raw_sample and colorspace for equality in
-> ver 0/1 headers
->     prevents inconsistency and out of array write
-> Who reported this?
-
-IIRC it probably was the result of code review which was done due to
-Ticket 2906
-
-[...]
--- 
-Michael     GnuPG fingerprint: 9FF2128B147EF6730BADF133611EC787040B0FAB
-
-Rewriting code that is poorly written but fully understood is good.
-Rewriting code that one doesnt understand is a sign that one is less smart
-then the original author, trying to rewrite it will not make it better.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQIcBAEBCAAGBQJRQfdoAAoJEFB6+JAlsQQj0g4QAL+tmSjDHukvwPZ1D72ClLIR
+NKV9ceVNT+qus1W5Og2GOKjnrib8X4qkoR/P/Wp+nEoWYosch4YTMvpxc8hamm9P
+OohMdT4RFxQut//ZR6sn/TC2qLgErovlZRMxBKA43sFqHNbirprF5b9A4fF7glp6
+atPAAM7rIHTJDXHvE+a8Qe8qOPKJKP1pOXrSZDL94ZMPq6uAy/0M0v/r/++aAUHy
+Qr7p2ITuVepJ3IM9/sZ+RQ1PXFya0BGBpLBEgaotBmmOMI/FNbthS3PT8W1ywX0S
+gpgcBLiXMXoNsMZCmsLeYirzldaT+ZtqjOxYqZYiAjn5cIQ5XXjFPq8w9vlh83An
+8IVnanVl4C1M4hnYo3sCeFsCnh5sLdM/LVnd19Wz1k1PHTCM7vrNtU0wqAMQFj2C
+BQqNMMcQvFZdEjvzYymlm365DP07DHOi/jgK59EWCfeaEHx4Vs4fL0a9nnoxs/fV
+8SysPv4A3iAaXDOan+0s+T0dac2/KU2FBio0+cuvV4qASYWN5CHAR9/6icWJQ2qh
+InUWIqcgwcOqR6azhQHg/ARw7iNZtv+omVvVOYZu6HOiK4BDj8RkQmPyWsis/ekU
+4Ez6AyKSDmRHtoR9w7GcM14xCrHyqFfbaGUp+qDI73NNGmbXXtXlVEO8/g2ywbKc
+F0k3S2Z5fLOPFeo9ll4C
+=BmKh
+-----END PGP SIGNATURE-----
