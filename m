@@ -1,20 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/13
-Message-ID: <CABbbngAKWqChsW7spqamRHDwsqB+CkrmAg+jGmqajrPb4S_8Kg@mail.gmail.com>
-Date: Fri, 5 Jul 2013 13:54:20 -0700
-From: Forest Monsen <forest.monsen@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/22
+Message-ID: <514247A2.2020802@delphij.net>
+Date: Thu, 14 Mar 2013 14:56:50 -0700
+From: Xin Li <delphij@...phij.net>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE request for Drupal contrib module
+CC: "Alexander E. Patrakov" <patrakov@...il.com>
+Subject: Re: CVE-2013-0913 Linux kernel i915 integer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-I'd like to request a CVE identifier for:
+Hi, Alexander,
 
-SA-CONTRIB-2013-054 - Fast Permissions Administration - Access Bypass
-https://drupal.org/node/2028813
+On 03/13/13 09:04, Alexander E. Patrakov wrote:
+> 2013/3/12 Kees Cook <keescook@...omium.org>:
+>> This flaw could lead to a kernel heap overflow by processes with
+>> access to the DRM driver:
+>> 
+>> https://lkml.org/lkml/2013/3/11/501
+> 
+> Given that FreeBSD also has some sort of i915kms kernel driver now,
+> is it also vulnerable?
 
-Thanks,
-Forest
+Based on our evaluation this also affects FreeBSD and thus we will fix
+it similarly.
 
+However, since users using DRM generally already have physical local
+access to the system, we do not intend to release a security advisory
+for this issue.
+
+Cheers,
+- -- 
+Xin LI
+FreeBSD Deputy Security Officer
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBCgAGBQJRQkeiAAoJEG80Jeu8UPuzf/8H/2ZZJqHvCyZmy04hjnMwtQGD
+ooZRc5fGOdWJu77gFCpK8i5EG77dyF0SbuDzSho91uKkLrRQqyMQwr2dz2xiGU4l
+wIPxt9UcEXe5oP36ZFU7AdAcD6mYnORTBv1kmTUsfv26Cp+99nTM6vTHCB6hBZFO
+SzDsUAaZ6jdl7iemI/QI7WVgKWj5p+ReBFi/WkEcCRaqkrOEDRFyQMvmTwkvTnn2
+Sv6L+x1HwiNk2OYsgdm9mJsx2OsUADs7IznPPNZdd5t1/TYQRJKfDbaMdjuv4QgT
+VyVUs73w73X4x0Ipyxxcpi1OhrIMYiyOBxnnlqPB5/KAXiivSn4SQu5HOtwqf7o=
+=3nVh
+-----END PGP SIGNATURE-----
