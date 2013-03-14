@@ -1,93 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/20/1
-Message-Id: <618072EB-9F9E-49BF-94DF-E7D16F06F171@segment7.net>
-Date: Fri, 20 Sep 2013 00:13:58 -0700
-From: Eric Hodel <drbrain@...ment7.net>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: security@...y-lang.org, "dammer2k@...il.com Sharipov" <dammer2k@...il.com>, kseifried@...hat.com, Alexander Cherepanov <cherepan@...me.ru>
-Subject: Re: CVE-2013-4287 Algorithmic complexity vulnerability in RubyGems 2.0.7 and older
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/19
+Message-ID: <20130314175157.GF31744@dhcp-25-225.brq.redhat.com>
+Date: Thu, 14 Mar 2013 18:51:58 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE abstraction choices and the Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-On Sep 18, 2013, at 18:03, Eric Hodel <drbrain@...ment7.net> wrote:
-> On Sep 18, 2013, at 15:05, Alexander Cherepanov <cherepan@...me.ru> wrote:
->> ...but if you really want to suppress backtracking (say, for
->> optimization) it is easy: either atomic grouping for every repetition
->> (exactly the way you have already done but for other repetitions also)
->> or add extra "+" after each "+" and "*". That's according to
->> http://www.ruby-doc.org/core-2.0.0/Regexp.html .
+On Fri, Mar 08, 2013 at 09:57:00AM -0500, Steven M. Christey wrote:
+<snip>
+> Whatever decision MITRE makes on how to go forward, we will be
+> following the spirit of these well-established practices.  I know
+> this conflicts with the open source community's need for a "universal
+> bug ID," and that's why I'm suggesting the creation of a separate bug
+> ID system, perhaps centered around a scheme such as a commit ID/hash
+> (which is often used already, such as in the original CVE request
+> that prompted this message).
+
+Are you suggesting to create a new ID system for security bugs in
+parallel with CVE that focuses on Linux kernel? As you say, such ID
+system already exists -- the commit hashes. What we really need is a
+(consistent) way of mapping them to CVE, which is the de-facto
+standard for security vulnerabilities tracking.
+
+<snip>
+> Solar Designer's suggestion of per-subsystem SPLITs is an intriguing,
+> approximate solution to CVE's "version" problem in widely-shared code
+> like the Linux kernel.  It seems likely that many subsystems are
+> introduced in different upstream kernel versions, and probably
+> updated in different versions.  Some subsystems might be enabled or
+> disabled by sysadmins.  By using the directory structure of the
+> source code tree, subsystems might be reasonably inferred on a
+> consistent basis.  It is by no means perfect, but it should be fairly
+> repeatable.
 > 
-> Thank you.  I glossed over the * in ANCHORED_VERSION_PATTERN, and this fixes the problem with minimal change (something I would prefer for a security fix).
+> Considering the Krause kernel info-leaks as an example, this might
+> suggest about 11 CVEs for crypto, xfrm_user, net (including net/tun),
+> ipvs, dccp, llc, l2tp, Bluetooth, atm, udf, and isofs.  There might
+> be additional SPLITs based on bug type.
 > 
-> Here is a complete updated patch including the backtracking and extra "-" fixes:
-> 
-> <CVE-2013-XXXX.2.patch>
-> 
-> The same script as my previous message can be used to verify it.
+> What do people think?  To the distro maintainers: given that CVE
+> cannot support per-bug IDs for the reasons I've already described,
+> are per-subsystem SPLITs workable?
 
-Ok, I have a complete set of patches and vulnerability announcement.  Can I get a CVE?
+I'm just wondering what would happen if Mathias sent one email per issue
+and possibly with some arbitrary delay. My guess is that all of the
+issues would get separate CVE.
 
-= Algorithmic complexity vulnerability in RubyGems 2.1.4 and older
+Now Mathias sent them as a batch -- should the way of informing the CNA
+affect the way CVEs are assigned?
 
-The patch for CVE-2013-4287 was insufficiently verified so the combined
-regular expression for verifying gem version remains vulnerable following
-CVE-2013-4287.
+Other than the inconsistency, I think per-subsystem SPLITs for batch
+submissions are workable.
 
-RubyGems validates versions with a regular expression that is vulnerable to
-denial of service due to backtracking.  For specially crafted RubyGems
-versions attackers can cause denial of service through CPU consumption.
-
-RubyGems versions 2.1.4 and older are vulnerable.
-
-Ruby versions 1.9.0 through 2.0.0p247 are vulnerable as they contain embedded
-versions of RubyGems.
-
-It does not appear to be possible to exploit this vulnerability by installing a
-gem for RubyGems 1.8.x or newer.  Vulnerable uses of RubyGems API include
-packaging a gem (through `gem build`, Gem::Package or Gem::PackageTask),
-sending user input to Gem::Version.new, Gem::Version.correct? or use of the
-Gem::Version::VERSION_PATTERN or Gem::Version::ANCHORED_VERSION_PATTERN
-constants.
-
-Notably, users of bundler that install gems from git are vulnerable if a
-malicious author changes the gemspec to an invalid version.
-
-The vulnerability can be fixed by changing the "*" repetition to a "?"
-repetition in Gem::Version::ANCHORED_VERSION_PATTERN in
-lib/rubygems/version.rb.  For RubyGems 2.1.x:
-
-  -  ANCHORED_VERSION_PATTERN = /\A\s*(#{VERSION_PATTERN})*\s*\z/ # :nodoc:
-  +  ANCHORED_VERSION_PATTERN = /\A\s*(#{VERSION_PATTERN})?\s*\z/ # :nodoc:
-
-For RubyGems 2.0.x:
-
-  -  ANCHORED_VERSION_PATTERN = /\A\s*(#{VERSION_PATTERN})*\s*\z/ # :nodoc:
-  +  ANCHORED_VERSION_PATTERN = /\A\s*(#{VERSION_PATTERN})?\s*\z/ # :nodoc:
-
-For RubyGems 1.8.x:
-
-  -  ANCHORED_VERSION_PATTERN = /\A\s*(#{VERSION_PATTERN})*\s*\z/ # :nodoc:
-  +  ANCHORED_VERSION_PATTERN = /\A\s*(#{VERSION_PATTERN})?\s*\z/ # :nodoc:
-
-
-This vulnerability was discovered by Alexander Cherepanov <cherepan@...me.ru>
-
-Here are the patches for:
-
-RubyGems 2.1.x (upcoming release 2.1.5):
-
-
-Download attachment "CVE-2013-XXXX.master.patch" of type "application/octet-stream" (2299 bytes)
-
-
-
-RubyGems 2.0.x (upcoming release 2.0.10):
-
-
-Download attachment "CVE-2013-XXXX.2.0.patch" of type "application/octet-stream" (2277 bytes)
-
-
-
-RubyGems 1.8.x (upcoming release 1.8.27 and 1.8.23.2):
-
-
-Download attachment "CVE-2013-XXXX.1.8.patch" of type "application/octet-stream" (2190 bytes)
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
