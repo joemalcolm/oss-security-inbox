@@ -1,129 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/1
-Message-Id: <201307270341.r6R3fZI3019180@freefall.freebsd.org>
-Date: Sat, 27 Jul 2013 03:41:35 GMT
-From: FreeBSD Security Advisories <security-advisories@...ebsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/16
+Message-ID: <20130314161924.GC31744@dhcp-25-225.brq.redhat.com>
+Date: Thu, 14 Mar 2013 17:19:24 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: FreeBSD Security Advisory FreeBSD-SA-13:08.nfsserver
+Subject: Re: CVE Request/Guidance: Linux kernel cdc-wdm buffer overflow triggered by device
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Marcus,
 
-=============================================================================
-FreeBSD-SA-13:08.nfsserver                                  Security Advisory
-                                                          The FreeBSD Project
+On Thu, Mar 14, 2013 at 02:43:41PM +0100, Marcus Meissner wrote:
+> I am wondering ... do we consider attacks with special attack taylored USB
+> devices as CVE worthy?
+> 
+> There is only some precedence in the CVE DB, but not much.
+> 
+> I stumbled over this fix from one of my colleagues where a specifically
+> made USB device reporting the "cdc-wdm" USB class could cause a kernel
+> heap overflow.
+> 
+> "Malicious attached devices" might fall into several categories:
+> 
+> 1. Attaching the device causes the issue directly within the kernel / autoloaded
+>    module, without user interaction. (here the case)
+> 
+> 
+> 2. Attaching the device causes the issue when userspace, dependend on
+>    e.g. desktop system, does initiate a seperate action (like an automount
+>    and then exploitation of something) (so not direct a kernel, but a
+>    kernel + GNOME/KDE interaction).
+> 
+> 
+> 3. User needs to do something with the attached device (like click on 
+>    a file on a USB disk)
+> 
+> I would consider (1) and (2) CVE worthy at least, not so sure with (3).
 
-Topic:          Incorrect privilege validation in the NFS server
+FWIW, I think all of the three options are CVE worthy. As Eugene said,
+some filesystem bugs fall into (3) and they have been issued CVE
+indentifiers.
 
-Category:       core
-Module:         nfsserver
-Announced:      2013-07-26
-Credits:        Rick Macklem, Christopher Key, Tim Zingelman
-Affects:        FreeBSD 8.3, FreeBSD 9.0 and FreeBSD 9.1
-Corrected:      2012-12-28 14:06:49 UTC (stable/9, 9.2-BETA2)
-                2013-07-26 22:40:23 UTC (releng/9.1, 9.1-RELEASE-p5)
-                2013-01-06 01:11:45 UTC (stable/8, 8.3-STABLE)
-                2013-07-26 22:40:29 UTC (releng/8.3, 8.3-RELEASE-p9)
-CVE Name:       CVE-2013-4851
-
-For general information regarding FreeBSD Security Advisories,
-including descriptions of the fields above, security branches, and the
-following sections, please visit <URL:http://security.FreeBSD.org/>.
-
-I.   Background
-
-The Network File System (NFS) allows a host to export some or all of its
-file systems so that other hosts can access them over the network and mount
-them as if they were on local disks.  FreeBSD includes both server and client
-implementations of NFS.
-
-II.  Problem Description
-
-The kernel incorrectly uses client supplied credentials instead of the one
-configured in exports(5) when filling out the anonymous credential for a
-NFS export, when -network or -host restrictions are used at the same time.
-
-III. Impact
-
-The remote client may supply privileged credentials (e.g. the root user)
-when accessing a file under the NFS share, which will bypass the normal
-access checks.
-
-IV.  Workaround
-
-Systems that do not provide the NFS service are not vulnerable.  Systems that
-do provide the NFS service are only vulnerable when -mapall or -maproot is
-used in combination with network and/or host restrictions.
-
-V.   Solution
-
-Perform one of the following:
-
-1) Upgrade your vulnerable system to a supported FreeBSD stable or
-release / security branch (releng) dated after the correction date.
-
-2) To update your vulnerable system via a source code patch:
-
-The following patches have been verified to apply to the applicable
-FreeBSD release branches.
-
-a) Download the relevant patch from the location below, and verify the
-detached PGP signature using your PGP utility.
-
-# fetch http://security.FreeBSD.org/patches/SA-13:08/nfsserver.patch
-# fetch http://security.FreeBSD.org/patches/SA-13:08/nfsserver.patch.asc
-# gpg --verify nfsserver.patch.asc
-
-b) Apply the patch.
-
-# cd /usr/src
-# patch < /path/to/patch
-
-c) Recompile your kernel as described in
-<URL:http://www.FreeBSD.org/handbook/kernelconfig.html> and reboot the
-system.
-
-3) To update your vulnerable system via a binary patch:
-
-Systems running a RELEASE version of FreeBSD on the i386 or amd64
-platforms can be updated via the freebsd-update(8) utility:
-
-# freebsd-update fetch
-# freebsd-update install
-
-VI.  Correction details
-
-The following list contains the correction revision numbers for each
-affected branch.
-
-Branch/path                                                      Revision
-- -------------------------------------------------------------------------
-stable/8/                                                         r245086
-releng/8.3/                                                       r253694
-stable/9/                                                         r244772
-releng/9.1/                                                       r253693
-- -------------------------------------------------------------------------
-
-To see which files were modified by a particular revision, run the
-following command, replacing XXXXXX with the revision number, on a
-machine with Subversion installed:
-
-# svn diff -cXXXXXX --summarize svn://svn.freebsd.org/base
-
-Or visit the following URL, replacing XXXXXX with the revision number:
-
-<URL:http://svnweb.freebsd.org/base?view=revision&revision=XXXXXX>
-
-VII. References
-
-<URL:http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4851>
-
-The latest revision of this advisory is available at
-http://security.FreeBSD.org/advisories/FreeBSD-SA-13:08.nfsserver.asc
------BEGIN PGP SIGNATURE-----
-
-iEYEARECAAYFAlHzPrkACgkQFdaIBMps37I9YACfSu4orRhgOhol8vacW9kF3ZGP
-jtAAn0t2i14CMo1MT5MztI6RWX3hnUWZ
-=xjf/
------END PGP SIGNATURE-----
+-- 
+Petr Matousek / Red Hat Security Response Team
