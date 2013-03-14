@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/15/2
-Message-ID: <20131015131448.GG32379@dirac.q-ix.net>
-Date: Tue, 15 Oct 2013 15:14:49 +0200
-From: Leon Weber <leon@...nweber.de>
-To: oss-security@...ts.openwall.com
-Cc: sebi@...ecware.net, j.wielicki@...ecware.net
-Subject: Re: CVE request: pyxtrlock
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/1
+Message-Id: <09859221-B36B-4A9B-A961-EC619FB7F18E@kernel.sg>
+Date: Thu, 14 Mar 2013 08:59:04 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CLONE_NEWUSER|CLONE_FS root exploit
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 13 Mar, 2013, at 11:39 PM, Sebastian Krahmer <krahmer@...e.de> wrote:
 
-On 25.09.2013 21:28:46, Leon Weber wrote:
-> two security issues were found and fixed in pyxtrlock[1], a lightweight X
-> screen locker.
+> Hi,
+> 
+> Seems like CLONE_NEWUSER|CLONE_FS might be a forbidden
+> combination.
+> During evaluating the new user namespace thingie, it turned out
+> that its trivially exploitable to get a (real) uid 0,
+> as demonstrated here:
+> 
+> http://stealth.openwall.net/xSports/clown-newuser.c
+> 
+> The trick is to setup a chroot in your CLONE_NEWUSER,
+> but also affecting the parent, which is running
+> in the init_user_ns, but with the chroot shared.
+> Then its trivial to get a rootshell from that.
+> 
+> Tested on a openSUSE12.1 with a custom build 3.8.2 (x86_64).
+> 
+> I hope I didnt make anything wrong, mixing up the UIDs,
+> or disabled important checks during kernel build on my test
+> system. ;)
 
-Do you think this isn't CVE worthy, or was the request just lost between
-other work? :-)
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=aea8b5d1e5c5482e7cdda849dc16d728f7080289
 
-    -- Leon.
+Eugene
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
