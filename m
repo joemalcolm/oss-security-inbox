@@ -1,44 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/7
-Message-ID: <20131211154315.GB2348@openstack.org>
-Date: Wed, 11 Dec 2013 15:43:15 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/10
+Message-ID: <20130314084710.GA12061@kludge.henri.nerv.fi>
+Date: Thu, 14 Mar 2013 10:47:10 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2013-032] Keystone trust circumvention through EC2-style tokens (CVE-2013-6391)
+Cc: plugins@...dpress.org
+Subject: Re: CVE-2009-4168: WordPress plugin vkontakte-api XSS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2013-032
-CVE: CVE-2013-6391
-Date: December 11, 2013
-Title: Keystone trust circumvention through EC2-style tokens
-Reporter: Steven Hardy (Red Hat)
-Products: Keystone
-Affects: Havana and later
+On Mon, Mar 11, 2013 at 09:44:33AM +0200, Henri Salo wrote:
+> Plugin URL: http://wordpress.org/extend/plugins/vkontakte-api/
+> Affected file: tagcloud.swf 368b01e1728111f99d93ac5805d97abbb899a910
+> PoC: wp-content/plugins/vkontakte-api/swf/tagcloud.swf?mode=tags&tagcloud=<tags><a+href=%27javascript:alert%28document.cookie%29%27+style=%27font-size:+40pt%27>oss-security</a></tags>
+> Affected versions: 1.21, 1.22, 1.23, 1.24, 1.25, 1.26, 1.27, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5, 2.7
+> 
+> Currently no fix available.
 
-Description:
-Steven Hardy from Red Hat reported a vulnerability in Keystone
-trusts when used in conjunction with the ec2tokens API. By
-generating EC2 credentials using a trust-scoped token, a trustee may
-retrieve a token not scoped to the trust, therefore elevating
-privileges to all of the trustor's roles. Only Keystone setups
-enabling EC2-style authentication are affected.
+WordPress plugin-guys replied Mon, 11 Mar 2013 21:32:52 +0000
 
-Icehouse (development branch) fix:
-https://review.openstack.org/61419
+"Closed this morning :)"
 
-Havana fix:
-https://review.openstack.org/61425
+Now the changelog says:
 
-Notes:
-This fix will be included in the icehouse-2 development milestone
-and in a future 2013.2.1 release.
+------------------------------------------------------------------------
+r681668 | kowack | 2013-03-14 09:39:40 +0200 (Thu, 14 Mar 2013) | 1 line
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6391
-https://launchpad.net/bugs/1242597
+2.7 to 3.0
+------------------------------------------------------------------------
+r681323 | kowack | 2013-03-13 18:04:13 +0200 (Wed, 13 Mar 2013) | 1 line
 
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
+amen
+------------------------------------------------------------------------
+r681320 | kowack | 2013-03-13 18:01:49 +0200 (Wed, 13 Mar 2013) | 1 line
 
-Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
+major update, may has bugs :(
+------------------------------------------------------------------------
+r568584 | kowack | 2012-07-07 09:49:19 +0300 (Sat, 07 Jul 2012) | 1 line
+
+And it seems that tagcloud.swf is removed from version 3.0 of the plugin.
+Changelog does not include CVE nor notification about security issues fixed.
+Well at least it is fixed.
+
+--
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
