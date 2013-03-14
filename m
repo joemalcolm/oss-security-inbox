@@ -1,45 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/13/4
-Message-ID: <20130613162107.GR29720@openstack.org>
-Date: Thu, 13 Jun 2013 16:21:07 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
-To: openstack-announce@...ts.openstack.org, openstack@...ts.launchpad.net, oss-security@...ts.openwall.com
-Subject: [OSSA 2013-016] Unchecked user input in Swift XML responses (CVE-2013-2161)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/6
+Message-ID: <51416D10.9080601@redhat.com>
+Date: Thu, 14 Mar 2013 00:24:16 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Sebastian Krahmer <krahmer@...e.de>
+Subject: Re: CLONE_NEWUSER|CLONE_FS root exploit
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2013-016
-CVE: CVE-2013-2161
-Date: June 13, 2013
-Title: Unchecked user input in Swift XML responses
-Reporter: Alex Gaynor (Rackspace)
-Products: Swift
-Affects: All versions
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
-Alex Gaynor from Rackspace reported a vulnerability in XML handling
-within Swift account servers. Account strings were unescaped in XML
-listings, and an attacker could potentially generate unparsable or
-arbitrary XML responses which may be used to leverage other
-vulnerabilities in the calling software.
+On 03/13/2013 09:39 AM, Sebastian Krahmer wrote:
+> Hi,
+> 
+> Seems like CLONE_NEWUSER|CLONE_FS might be a forbidden 
+> combination. During evaluating the new user namespace thingie, it
+> turned out that its trivially exploitable to get a (real) uid 0, as
+> demonstrated here:
+> 
+> http://stealth.openwall.net/xSports/clown-newuser.c
+> 
+> The trick is to setup a chroot in your CLONE_NEWUSER, but also
+> affecting the parent, which is running in the init_user_ns, but
+> with the chroot shared. Then its trivial to get a rootshell from
+> that.
+> 
+> Tested on a openSUSE12.1 with a custom build 3.8.2 (x86_64).
+> 
+> I hope I didnt make anything wrong, mixing up the UIDs, or disabled
+> important checks during kernel build on my test system. ;)
+> 
+> regards, Sebastian
 
-Havana (development branch) fix:
-https://review.openstack.org/32905
+Nice find. Please use CVE-2013-1858  for this issue.
 
-Grizzly fix:
-https://review.openstack.org/32909
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Folsom fix:
-https://review.openstack.org/32911
-
-Notes:
-This fix will be included in the next release.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2161
-https://bugs.launchpad.net/swift/+bug/1183884
-
--- 
-Jeremy Stanley (fungi)
-OpenStack Vulnerability Management Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
+iQIcBAEBAgAGBQJRQW0QAAoJEBYNRVNeJnmT13QP/3WAEnBORPsiS8FhPQjRfryR
+h6xVRRVAQWxUgAfCCG0c0lbO9pqXHCJtUASGk3ml+x3LWywYFSFnr7bqeMmGI5/9
+16feyAefwruzTn0gDyPgSJeJrE6orqj1nCQvYgS2wzuP9UzWbhvX8AXPV3KnL6zz
+0l2xv2rjvFJ//vk7VcF0bAnVLfHXG3teP2mhnSs8kJ1g+pdrxMJz81Y445NJNwD+
+FUoIOOLXBIghFuKzd2YM7tpPT4gW/W9tp1SSnazokT1ErXmuqJJ9cboV9ohPPh2p
+k2/1X62DWfe60ANsb/kyYfInxA1Qb6SH4FtbrjOgf4UbLtHO9nbR91XB5ZnUAd+5
+8iWcDqvXSbUXIpCG3fAW9bQTP/VMSiE92d0KfOhHJ/YHIcbtqE6XTPp6jqzMJv2E
+bRtOGGKexbkneCZtnskJk6RNxVzahdtheyyfQYk59b+4yB9m8/+O3KAuUt6xKWDp
+La/U3rTdm9/VFwMQoDFozmdiPJYlmFD7ePGaNQwxHb48BM7W+3htnE0aUqBD4Npn
+GjI7xgz2Bfah+2bxazzhtEBPDnf69T9YSp02jT5wYoWNE7JP2x4rmPRW6U2Y0FR6
+5CcKzmJV0wM0kAKCQp8hMuafsa3op+wgWDiKes2Y1TNgLievjyzZ8N1cS+8kWVdR
+yIPXkaL4FisQsUNSHcmv
+=YjMj
+-----END PGP SIGNATURE-----
