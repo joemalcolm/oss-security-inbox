@@ -1,35 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/24/2
-Message-Id: <201308241445.r7OEj8N8015771@linus.mitre.org>
-Date: Sat, 24 Aug 2013 10:45:08 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/15/7
+Message-ID: <5143550E.9020008@redhat.com>
+Date: Fri, 15 Mar 2013 11:06:22 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2013-5575 LibTIFF through 3.9.5 integer overflow
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: billion laughs flaw in ptlib
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-http://archives.neohapsis.com/archives/fulldisclosure/2013-08/0247.html
-http://www.x90c.org/advisories/xadv_2013001_libtiff.txt
+On 03/15/2013 10:42 AM, Vincent Danen wrote:
+> Ekiga 4.0.1 was released and noted a security fix in ptlib (seems
+> to be embedded in Ekiga) for a "billion laughs" style attack.
+> Could a CVE be assigned to this?
+> 
+> Thanks.
+> 
+> References: 
+> http://www.ekiga.org/news/2013-02-21/ekiga-4.0.1-stable-available 
+> http://opalvoip.svn.sourceforge.net/viewvc/opalvoip?view=revision&revision=28856
+>
+>  https://bugzilla.redhat.com/show_bug.cgi?id=922177
 
-This apparently only affects older versions but seems different from
-CVE-2012-1173 and other CVEs, so it is assigned CVE-2013-5575.
+Please use CVE-2013-1864  for this issue.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSGL/GAAoJEGvefgSNfHMda9gIAIPaWHzYQevX3j0sPCtpBa9j
-ZSjKNJWF9Y+mvrIwwfSpMlk0cRyz58Q3GrQFsxziUDeezmcwWirTwc09OquQ3Bn+
-zczIvA6LUWx/rQIaq35rDVcesfShx+p7bxyyTylHWtLpmJT5ItXtZDBylXBN/AMF
-bFGi0CmsHJGOhJit6JIzuVqXjsw8AoJWocfr8wckV3EGjAhCneSnjJNdoFYyrd+T
-0vURIhb45XMG0kyPVJz6n2fY0tSTgYfFx2Zk7t2adPY15eMyu3x9UoTMTox3lJ9s
-kvETjtwuv2BrJwDhDq7kz2itiZkNg2lPZ5htIxpAnIqBEkojuU3/yHH06yzdl1w=
-=SWt3
+iQIcBAEBAgAGBQJRQ1UOAAoJEBYNRVNeJnmTyf0P/39DtBbi0eRU77J7vXDbkP/6
+gbZC4ivx+76m39lxio57eHrB4QH5pO0d6Ls17POnUWQSqnIn7k6OwBgMIT6XV5Ci
+9L/9u1eaNftbdQ3n/sA72sCObWtQvAxaNgL04vuePXjz+RFuhS+Na6CSQPfWAXBa
+D0/5Gq4FzsffUL0NZCB7phcdhpibu4be1ujbjSMQodGGd5Zw705SpScHaH2yI0an
+nysaFCzojlLJV5pdJS5uTArE8CLXWuy3yhK2UYST0n6T0pjDuDrhFuyZsAap6IMI
+8j8R5Z8rm8ChaBaWFp+SoKneFZarj8+ujq4pBuuzFl/Tyqefnv0K/+H5dPzO4zG1
+hFBsHIB0sFy/ne/v/VBTZq+crjiUv6XWEnHl9wOoA504rbJZ9luyElSHcn62nBrk
++60JnQM6E0f3SiNsrW29okBfW+Dzl6Vax4uZr1kfpo1B9qxYA1bWKMBGqcifzu1d
++a8qMzLt572H6JiMtljChwWfmnd4occP9M40DFCCllDK2l2DhS7HNSRGLDRs+/g+
+ursPDkqIy9AUCKp7ArjrzbEx36o7to8jKbFJXGr6si4a4pFAfvxHIKiSrJrsEHqp
+sgDF2WyreeiTlWcgJBzH5jEbFPy3xTsDEhOR5a/QDVAHs7ziUPAyWyCYxXUb9x3J
+cWmesGGY5QV3d8wVd7PU
+=Mw1G
 -----END PGP SIGNATURE-----
