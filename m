@@ -1,42 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/8
-Message-ID: <20131104174830.GC26778@localhost.localdomain>
-Date: Mon, 4 Nov 2013 12:48:30 -0500
-From: "Eric H. Christensen" <echriste@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: openssl default ciphers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/15/4
+Message-ID: <5142B919.60308@redhat.com>
+Date: Fri, 15 Mar 2013 00:00:57 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, "Christey, Steven M." <coley@...re.org>, security@...cle.com
+Subject: CVE-2013-1861 for MySQL/MariaDB: geometry query crashes mysqld
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA1
 
-On Mon, Nov 04, 2013 at 06:16:30PM +0100, Stefan Bühler wrote:
-> I don't want to enforce PFS or break compatibility on purpose; so I
-> think the default could be a little bit less "secure" than what I would
-> actually recommend to use.
+So I was hoping Oracle would assign a CVE for this publicly since it
+also affects MySQL but it's been a week and we haven't seen anything
+from them anywhere (public or private).
 
-What software would we be breaking compatibility with?  Perhaps it would be a good idea to start a list of software that can't handle HIGH ciphers and attempt to work with those developers to "fix" the problem.
+So for the MySQL/MariaDB geometry issues:
 
-- -- Eric
+https://mariadb.atlassian.net/browse/MDEV-4252
+http://bugs.mysql.com/bug.php?id=68591
+http://lists.askmonty.org/pipermail/commits/2013-March/004371.html
+https://bugzilla.redhat.com/show_bug.cgi?id=919247
 
-- --------------------------------------------------
-Eric "Sparks" Christensen
-Red Hat, Inc - Product Security Team
+So we've assigned CVE-2013-1861 for this issue.
 
-sparks@...hat.com - sparks@...oraproject.org
-097C 82C3 52DF C64A 50C2  E3A3 8076 ABDE 024B B3D1
-- --------------------------------------------------
+I apologize in advance if Oracle has assigned a CVE for this issue,
+but they haven't communicated it to anyone, so in future this problem
+can easily be avoided by simply posting the assigned CVE to
+OSS-Security and everyone will know.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQGcBAEBCgAGBQJSd93nAAoJEB/kgVGp2CYvtsEMAJNeDquQDR670PPp/S6tpc+y
-C4ldVebgQ7fAJjawjq53ZKgi72sUz6yhP713BoLt+j0hZTAy6HXhlpLuaekv+qJo
-wgRIN8uGTvXvK9eY/7EXR5XvWe1SKUROiHvKNHTCtIlONPtdDZqMlbsWgFRwBT3W
-x5GvZdiXKDE5lAfJE2RjlfYauwq/SDZY2fqlRvgVfOLAi1pZr/iIQIllfcgSQXRk
-vqe93WZYkQWAOzk+t5AFmpEK30yXtkOkisbqQfbOGopQVioqj6RgqlE31IiVCj01
-X5LJDe+lzTj0pZkdYnv9zMt/hik+rzGsc386ZW4V6UF/5CziH74OKs7S0w7DdxdX
-UXNpS8pAsasNvbboXKVfutWfE3bf1/tJ7XMD0jG8u4I0a84BJWuiaXk9RzsVvViC
-hIPyYgYNoTbSS9czAgJKnxLSQ//jq25mxns9DyL7Un8O2q5KkqfILqehPhf41BjH
-lFUA6ioW1j2xmI/5FDY9ZkK2AZ4tIiA/Y8UnGPtFHQ==
-=DovG
+iQIcBAEBAgAGBQJRQrkYAAoJEBYNRVNeJnmTtIwP/A66nP+n7jtlMR8QZhKme1Pl
+Mnmw7bKy7byPWvoqwq6F61CCWmdtF0XEdjnhtafBZF45qTMgRitpy5rKfKoTbl5f
+m5NjahPQIOOn2IXJ1WaNsVMQjskJ/wXXJW4CW24Lc6M39Dmk8rYhHKa98G5rmdFh
+jh3T/agIkRBla2wzFDDBqXh96Clkhunm7GbiRzzwdIXLWSbnnq452EatRql5Y0hT
+eQA+/oz3iNlqlIFO5elylwJyna222Q2vehT2rZe+n60rFIP9CrSK4XFgQsR3RaQ5
+cV1r4mpX4v5V61f3RhhjPcYRZPM/Gjhcf+TdhNc2dZkbSPl8axjP5G9PGje35sAO
+5MbT6zRru2oAglew7agm1Bc2UQv9ZcI+1/HaOhIeFIX6iA3kK3n3pJ/mdJVRWOkM
+dVTuI6gajVTMOxEVZFAqOzUxhW7w/tqdWJl78IhFjcsRMLr8Kn2b1sHKXTDKiG/Y
+xLhoD13WCslqqsjW/KvrnKAqKLjCXe7kNOUJmq6J+ndBBmB6dFrGn8pRA2FhOnu+
+zZrYk6N3lpgf3fCQfBBsK9nXGV9JGvqjJRp2Ky487nDMYNky1hFYHHHjj4epV3ID
+9+lfOSh1lT17c+K+Yf/ulbj28IexUjid5x1W9M8FNN/LUtnNUE1/rWy4Q6gDW5S9
+K0g3b7TFx1oe42UrHCyt
+=Wtjr
 -----END PGP SIGNATURE-----
