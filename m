@@ -1,36 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/7
-Message-id: <B5C4D407-25F6-4047-ACEF-562ECBFF75D9@me.com>
-Date: Tue, 19 Mar 2013 08:09:39 -0400
-From: larry Cashdollar <larry0@...com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Remote command execution in Ruby Gem Command Wrap
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/15/3
+Message-ID: <5142ACD7.2040701@redhat.com>
+Date: Thu, 14 Mar 2013 23:08:39 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request/Guidance: Linux kernel cdc-wdm buffer overflow triggered by device
 Content-Type: text/plain; charset=utf-8
 
-Remote command execution in Ruby Gem Command Wrap
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-3/15/2013
-http://rubygems.org/gems/command_wrap
+On 03/14/2013 07:43 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> I am wondering ... do we consider attacks with special attack
+> taylored USB devices as CVE worthy?
 
-Commands executed if the remote URL or filename contains the shell character ';'. The commands will be executed as the client user if tricked into using the malicious URL or filename.
+Yes. I know vendors (like us) hand out USB keys at events (I think
+most of ours are live bootable systems, so we should probably make
+sure that users can safely plug them in without hosing their systems
+if they want to look at what is on it =).
 
-Examining the following lines:
+> There is only some precedence in the CVE DB, but not much.
+> 
+> I stumbled over this fix from one of my colleagues where a
+> specifically made USB device reporting the "cdc-wdm" USB class
+> could cause a kernel heap overflow.
+> 
+> "Malicious attached devices" might fall into several categories:
+> 
+> 1. Attaching the device causes the issue directly within the kernel
+> / autoloaded module, without user interaction. (here the case)
+> 
+> 
+> 2. Attaching the device causes the issue when userspace, dependend
+> on e.g. desktop system, does initiate a seperate action (like an
+> automount and then exploitation of something) (so not direct a
+> kernel, but a kernel + GNOME/KDE interaction).
+> 
+> 
+> 3. User needs to do something with the attached device (like click
+> on a file on a USB disk)
+> 
+> 
+> I would consider (1) and (2) CVE worthy at least, not so sure with
+> (3).
+> 
+> Ciao, Marcus
+> 
+> commit c0f5ecee4e741667b2493c742b60b6218d40b3aa Author: Oliver
+> Neukum <oneukum@...e.de> Date:   Tue Mar 12 14:52:42 2013 +0100
+> 
+> USB: cdc-wdm: fix buffer overflow
+> 
+> The buffer for responses must not overflow. If this would happen,
+> set a flag, drop the data and return an error after user space has
+> read all remaining data.
+> 
+> Signed-off-by: Oliver Neukum <oliver@...kum.org> CC:
+> stable@...nel.org Signed-off-by: Greg Kroah-Hartman
+> <gregkh@...uxfoundation.org>
+> 
 
-command_wrap.rb-7- def self.capture (url, target)
-
-command_wrap.rb-8- command = CommandWrap::Config::Xvfb.command(File.dirname(__FILE__) + "/../bin/CutyCapt --min-width=1024 --min-height=768 --url={url} --out={target}") command_wrap.rb:9: `#{command}`
-command_wrap.rb-10- end
-command_wrap.rb-11-
---
-command_wrap.rb-72- command = CommandWrap::Config::Xvfb.command(File.dirname(__FILE__) + "/../bin/wkhtmltopdf --quiet --print-media-type #{source} #{params} #{target}") command_wrap.rb-73-
-command_wrap.rb:74: `#{command}`
-
-Untrusted data is passed to the command line.
-
-Larry W. Cashdollar
-@_larry0
-http://vapid.dhs.org
+Please use CVE-2013-1860 for this issue.
 
 
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
+iQIcBAEBAgAGBQJRQqzXAAoJEBYNRVNeJnmT7NQP/j404btfFLur3fX66QuMOYia
+Nr2a7QRRrYKEMzu/OFQ9myPiTBOw5ARZHx0Ul0YFjW3ImuCNPSNGI/P2zkJR0EHB
+5qws3cn/TMwqBvLQRLQIIareG3Uu2ZnjsB00IBhY4z6TtYLnDv/V91XHXqXa1wFn
+un7iWqsjEF0jLITzNbkizBLs6OYdxMtbw+gva1aEoMeiwoNmzR91+/mAyHztxgpS
+Tfrhy4YmXs0577s9s5qxkWrxPtxF6hgA8ok6heUr1HOTfqHHOzNMIwnEXtyEKeGQ
+EuQjkkUwpm9PRsdaSu4V/nNuRvAsfJG1IwS58mLXHbLK0fiT9OS9yZa/Cn0Fnt9S
+9RNCyCjye8RSeSd406E3e4S7rGy5qoRM938NUT8ZREZCoyguNh/GAMn8PygEGvCk
+H85rRwWmrgpbwX0Y1RtP8gMSRqOvO1Y1FmbjwyHSjR2hlqeQd7A/2iSCFJzJ5KIV
+pPQBJWYRPIrrhsgqKnBIZ3GNEcGrhHOxoY04igCl/yPPOHEfflmvkKzfe7rrhIZF
+xjZwzAfs1q7QFmv59ZZj1/yQbyJ1znQ2J2ZPxUe7/QrwTEDJ3Wh7F7U9tGlMTP5w
+FIwpLnXmGdmuZ2XCxMOl7SXriilSU+4h8BMx8lrn4wrsj7sEmecf0nQwnoW0Vm7y
+naK0uqG3zFu3N7i46jI9
+=9mvb
+-----END PGP SIGNATURE-----
