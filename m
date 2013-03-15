@@ -1,60 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/9
-Message-ID: <5256411C.2000502@redhat.com>
-Date: Wed, 09 Oct 2013 23:54:36 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: cve-assign@...re.org
-CC: oss-security@...ts.openwall.com
-Subject: Re: 2 CVE's to be rejected
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/15/5
+Message-ID: <1075211583.8128053.1363356499117.JavaMail.root@redhat.com>
+Date: Fri, 15 Mar 2013 10:08:19 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Mateusz ‘j00ru’ Jurczyk <j00ru.vx@...il.com>, "Gynvael \"GynDream\" Coldwind" <gynvael@...dwind.pl>
+Cc: oss-security@...ts.openwall.com
+Subject: Further issue details about flaws corrected in upstream ClamAV 0.97.7 version
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Mateusz, Gynvael, vendors,
 
-On 10/09/2013 11:35 PM, cve-assign@...re.org wrote:
->> The following two CVEs were used internally, one for an issue
->> that turns out not to be an issue (looong story) and one for an
->> issue with the same root cause as another (so duplicate). We
->> could in theory recycle them but I feel it safer to not reuse
->> them in case they leak out and cause confusion.
-> 
->> Please REJECT CVE-2013-1870 Please REJECT CVE-2013-4398
-> 
-> Our current process for rejecting as a duplicate requires that the 
-> REJECT description specify the duplicated CVE ID. Would you be able
-> to say which one (1870 or 4398) had the duplicate/same-root-cause 
-> situation, and the correct CVE ID for the vulnerability with that
-> root cause?
-> 
-> We would want this information even if the correct CVE ID still
-> refers to an embargoed issue.
+  this is due the following ones:
+  [1] https://bugs.mageia.org/show_bug.cgi?id=9399
+  [2] http://blog.clamav.net/2013/03/clamav-0977-has-been-released.html
+  [3] https://github.com/vrtadmin/clamav-devel/blob/0.97/ChangeLog
 
-The duplicate issue is still embargoed, the other one is also an
-embargoed issue. I have made notes in our system to notify
-oss-security/Mitre when they unembargo (so we'll announce the details
-then).
+I have tried to grep CLamAV's git log for further information, but many
+of the commits prior to 2013-02-20 have form of:
 
-In future should we hold CVE reject notifications until we can provide
-the information as to why? I figured sooner was better (but I can also
-see holding off until details can be released being a sane choice).
+'Fix CID#...' :(.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+The only two security related ones seem to be the following two:
+commit b2212def1bb92b5ac45c82da100dc0d1376de6a3
+Author: Steve Morgan <smorgan@...rcefire.com>
+Date:   Thu Feb 14 18:29:53 2013 -0500
 
-iQIcBAEBAgAGBQJSVkEcAAoJEBYNRVNeJnmTUM0P/3CB2RG+KK4ZJXyoX9YJnwRR
-Bb5E4Tyu7fVS/IDZFM+ULLf/pThhZEbtlf4x/iNjq5Ss4qapJpQ5DfUOfAWe5wUl
-QVgCFLNKFVPgSpQdi5/DSWeJPCaYzTVxA5G7FCSIF1m7tOTyHHx2TCwaf2gQZaWZ
-t1U3vaaM/PMH1Qkcs5vvTiwpB6DZEmPWx1K3sw3tEwH/ufZ5FUX7FF5RkVFiWUds
-L0O3SWKWfF08B4sTxA9d0znNKwwQRl5OiKGKCcWavnED/Vt9TWXhAa/n68fcA7ny
-+uBy3hzVDUSjB4PzssODzTmkGyoIvH7DeL801URr40E6vfc4YLYxdrPxIPsAUWvk
-fCtDRJ9e6QbBOay2JN+AEJEPAuLFCxQo35pjCCNAG7x5FhnoTk+BtUgizWVeHRi8
-MaF+jK/6dQX7eO0BklQL3EQvmqxvdOFuDzgIlFYTSkqoandks7JSZJc809hqzsYm
-3kLW/RrpqXfyWWwiTGNmOunjIoisXGyh+uxNWy30PpoVm59mxkuvQQEbEiYDvwNq
-6TfKQhFu6r22OooDwnlNgrAkUO9374dFqV4UvcBaDvKFTAqhoNBemUl+CMXFgfZ1
-yOifSOqnlvpNh1pa8M/s22qGnVNuvlwJu0dAT6p40qMwurvpKJw7n4NUI1isAhgd
-4u6y6uj/wdoTh49O9WC9
-=yOvB
------END PGP SIGNATURE-----
+    cid 10776 - fix double free
+
+commit 71990820d01c246e4e61408a3659dd9d92949b38
+Author: Ryan Pentney <rpentney@...rcefire.com>
+Date:   Fri Feb 15 03:10:50 2013 -0800
+
+    Fixed heap corruption in wwunpack.c
+
+We to be better able to tell, which concrete security flaws
+got corrected in 0.97.7 version and based on that to properly
+allocate CVE identifiers, could you please provide further
+information about:
+a) how many and what kind of issues got corrected in that
+   version?,
+b) links to relevant upstream patches? (since patch log telling
+   CID# wouldn't be enough either to find out the appropriate
+   commits).
+
+Thank you for your time, look && cooperation in advance.
+
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
