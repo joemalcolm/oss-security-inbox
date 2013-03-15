@@ -1,10 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/30/4
-Message-ID: <51D0B4FF.2090507@rack911.com>
-Date: Sun, 30 Jun 2013 15:45:19 -0700
-From: Steven Ciaburri <steve@...k911.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/15/6
+Message-ID: <20130315164238.GO3385@redhat.com>
+Date: Fri, 15 Mar 2013 10:42:38 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Kernel 2.6.32+ IP_RETOPTS Buffer Poisoning DoS
+Subject: CVE request: billion laughs flaw in ptlib
 Content-Type: text/plain; charset=utf-8
 
-We have a bugzilla report in with redhat: #979788 
+Ekiga 4.0.1 was released and noted a security fix in ptlib (seems to be
+embedded in Ekiga) for a "billion laughs" style attack.  Could a CVE be
+assigned to this?
+
+Thanks.
+
+References:
+http://www.ekiga.org/news/2013-02-21/ekiga-4.0.1-stable-available
+http://opalvoip.svn.sourceforge.net/viewvc/opalvoip?view=revision&revision=28856
+https://bugzilla.redhat.com/show_bug.cgi?id=922177
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
