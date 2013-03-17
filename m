@@ -1,27 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/3
-Message-ID: <20131010024135.GF372@yuggoth.org>
-Date: Thu, 10 Oct 2013 02:41:37 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/17/1
+Message-ID: <5145BCA6.9060501@gentoo.org>
+Date: Sun, 17 Mar 2013 08:52:54 -0400
+From: Sean Amoss <ackle@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Source of bad password hashing practices? MySQL manual...
+Subject: CVE Request: VLC Buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-On 2013-10-09 14:16:27 -0700 (-0700), Chris Palmer wrote:
-[...]
-> Does anyone know the right MySQL security contact? It isn't
-> immediately obvious from a few web searches, but maybe
-> secalert_us@...cle.com is right? Making that clear, and maybe
-> publishing a PGP key, is another thing they could do...
+It looks like this issue has not been assigned a CVE ID:
 
-Their vulnerability reporting contact page
-<URL: http://www.oracle.com/us/support/assurance/vulnerability-remediation/reporting-security-vulnerabilities/index.html >
-links to an encrypting key
-<URL: http://www.oracle.com/technetwork/topics/security/encryptionkey-090208.html?ssSourceSiteId=ocomen >
-assuming that's what you're looking for? (I had to get former MySQL
-developers to point me to it, as a cursory search wasn't turning up
-much for me either.)
+VLC media player 2.0.5 addresses buffer overflow flaws in the freetype
+renderer and HTML subtitle parser.
+
+Reference:
+http://www.videolan.org/security/sa1301.html
+
+Upstream fix:
+http://git.videolan.org/?p=vlc/vlc-2.0.git;a=commitdiff;h=9b0414dc7f5c18ff2951175cf076779c444efd70
+
+
+Thanks,
+Sean
+
 -- 
-{ PGP( 48F9961143495829 ); FINGER( fungi@...ulhu.yuggoth.org );
-WWW( http://fungi.yuggoth.org/ ); IRC( fungi@....yuggoth.org#ccl );
-WHOIS( STANL3-ARIN ); MUD( kinrui@...arsis.mudpy.org:6669 ); }
+Sean Amoss
+Gentoo Security | GLSA Coordinator
+E-Mail	  : ackle@...too.org
+GnuPG FP  : E58A AABD DD2D 03AF 0A7A 2F14 1877 72EC E928 357A
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (295 bytes)
