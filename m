@@ -1,26 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/15
-Message-ID: <87zjvuwwdv.fsf@windlord.stanford.edu>
-Date: Thu, 16 May 2013 12:35:40 -0700
-From: Russ Allbery <rra@...ian.org>
-To: Salvatore Bonaccorso <carnil@...ian.org>
-Cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: WebAuth: Authentication credential disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/18/4
+Message-ID: <20130318172215.GC46041@higgins.local>
+Date: Mon, 18 Mar 2013 10:22:15 -0700
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2013-1856] XML Parsing Vulnerability affecting JRuby users
 Content-Type: text/plain; charset=utf-8
 
-Salvatore Bonaccorso <carnil@...ian.org> writes:
+XML Parsing Vulnerability affecting JRuby users
 
-> Could a CVE be assigned for this issue in WebAuth (Cc'ing Russ
-> Allbery):
+There is a vulnerability in the JDOM backend to ActiveSupport's XML parser.  This could allow an attacker to perform a denial of service attack or gain access to files stored on the application server.  This vulnerability has been assigned the CVE identifier CVE-2013-1856.
 
-Ack, sorry, I considered asking for a CVE and then decided not to since I
-wasn't sure anyone would really care given the limited deployment of the
-affected code.  That was probably the wrong decision, particularly based
-on Kurt's comments yesterday, so I probably should have gone ahead and
-done it and included it in the advisory.
+Versions Affected:  3.0.0 and All Later Versions when using JRuby
+Not affected:       Applications not using JRuby or JRuby applications not using the JDOM backend.	
+Fixed Versions:     3.2.13, 3.1.12
 
-I'm happy to include a CVE in the advisory and in the Debian experimental
-changelog going forward.
+Impact 
+------ 
+The ActiveSupport XML parsing functionality supports multiple pluggable backends.  One backend supported for JRuby users is ActiveSupport::XmlMini_JDOM which makes use of the javax.xml.parsers.DocumentBuilder class.
+
+In some JVM configurations the default settings of that class can allow an attacker to construct XML which, when parsed, will contain the contents of arbitrary URLs including files from the application server.  They may also allow for various denial of service attacks.
+
+If you are using JRuby and have an affected JVM, you should upgrade or use one of the work arounds immediately.
+
+Releases 
+-------- 
+The 3.2.13 and 3.1.12 releases are available at the normal locations. 
+
+Workarounds 
+----------- 
+If you are unable to upgrade, you can place this code in an application initializer to prevent this issue:
+
+  ActiveSupport::XmlMini.backend="REXML"
+
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
+
+* 3-2-jdom.patch - Patch for 3.2 series 
+* 3-1-jdom.patch - Patch for 3.1 series 
+* 3-0-jdom.patch - Patch for 3.0 series 
+
+Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+Credits 
+-------
+Thanks to Ben Murphy for reporting this vulnerability to us and working with us to inform other affected libraries and programming languages.
 
 -- 
-Russ Allbery (rra@...ian.org)               <http://www.eyrie.org/~eagle/>
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "3-0-jdom.patch" of type "text/plain" (4804 bytes)
+
+View attachment "3-2-jdom.patch" of type "text/plain" (4739 bytes)
+
+View attachment "3-1-jdom.patch" of type "text/plain" (4740 bytes)
+
+Content of type "application/pgp-signature" skipped
