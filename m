@@ -1,64 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/02/3
-Message-ID: <20130102212222.GA6236@higgins.local>
-Date: Wed, 2 Jan 2013 13:22:22 -0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/18/2
+Message-ID: <20130318171957.GA46041@higgins.local>
+Date: Mon, 18 Mar 2013 10:19:57 -0700
 From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
-Subject: SQL Injection Vulnerability in Ruby on Rails (CVE-2012-5664)
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2013-1854] Symbol DoS vulnerability in Active Record
 Content-Type: text/plain; charset=utf-8
 
-SQL Injection Vulnerability in Ruby on Rails
+Symbol DoS vulnerability in Active Record
 
-There is a SQL injection vulnerability in Active Record in ALL versions. This vulnerability has been assigned the CVE identifier CVE-2012-5664.
+There is a symbol DoS vulnerability in Active Record. This vulnerability has been assigned the CVE identifier CVE-2013-1854.
 
-Versions Affected:  All.
-Not affected:       NONE.
-Fixed Versions:     3.2.10, 3.1.9, 3.0.18
+Versions Affected:  3.2.x, 3.1.x, 2.3.x
+Not affected:       3.0.x
+Fixed Versions:     3.2.13, 3.1.12, 2.3.18
 
 Impact 
 ------ 
-Due to the way dynamic finders in Active Record extract options from method parameters, a method parameter can mistakenly be used as a scope.  Carefully crafted requests can use the scope to inject arbitrary SQL.
+When a hash is provided as the find value for a query, the keys of the hash may be converted to symbols.  In this example,
+
+    User.where(:name => { 'foo' => 'bar' })
+
+the string 'foo' will be converted to a symbol.  Impacted code will look something like this:
+
+    User.where(:name => params[:name])
+
+Carefully crafted requests can coerce `params[:name]` to return a hash, and the keys to that hash may be converted to symbols.
 
 All users running an affected release should either upgrade or use one of the work arounds immediately. 
 
-Impacted code passes user provided data to a dynamic finder like this:
-
-  Post.find_by_id(params[:id])
-
 Releases 
 -------- 
-The  3.2.10, 3.1.9 & 3.0.18 releases are available at the normal locations. 
+The 3.2.13 and 3.1.12 releases are available at the normal locations. 
 
 Workarounds 
 ----------- 
-The issue can be mitigated by explicitly converting the parameter to an expected value.  For example, change this:
+To work around this problem, change code that looks like this:
 
-  Post.find_by_id(params[:id])
+    User.where(:name => params[:name])
 
-to this:
+to code like this:
 
-  Post.find_by_id(params[:id].to_s)
+    User.where(:name => params[:name].to_s)
 
 
 Patches 
 ------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series and two unsupported versions.  They are in git-am format and consist of a single changeset. 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
 
-* 3-2-dynamic_finder_injection.patch - Patch for 3.2 series
-* 3-1-dynamic_finder_injection.patch - Patch for 3.1 series
-* 3-0-dynamic_finder_injection.patch - Patch for 3.0 series
-* 2-3-dynamic_finder_injection.patch - Patch for 2.3 series
+* 3-2-attribute_symbols.patch - Patch for 3.2 series
+* 3-1-attribute_symbols.patch - Patch for 3.1 series
+* 2-3-attribute_symbols.patch - Patch for 2.3 series
 
 Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+Credits 
+------- 
+
+Thanks to Ben Murphy for reporting this!
 
 -- 
 Aaron Patterson
 http://tenderlovemaking.com/
 
-View attachment "2-3-dynamic_finder_injection.patch" of type "text/plain" (2085 bytes)
+View attachment "2-3-attribute_symbols.patch" of type "text/plain" (2627 bytes)
 
-View attachment "3-0-dynamic_finder_injection.patch" of type "text/plain" (2201 bytes)
+View attachment "3-1-attribute_symbols.patch" of type "text/plain" (5491 bytes)
 
-View attachment "3-1-dynamic_finder_injection.patch" of type "text/plain" (2155 bytes)
+View attachment "3-2-attribute_symbols.patch" of type "text/plain" (5492 bytes)
 
-View attachment "3-2-dynamic_finder_injection.patch" of type "text/plain" (2153 bytes)
+Content of type "application/pgp-signature" skipped
