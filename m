@@ -1,59 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/14
-Message-ID: <CABPqkBQuJ-f5EXBJ5EVOH+sjkRL2HGOmkB4GPVpsNsEeKFXCfg@mail.gmail.com>
-Date: Wed, 5 Jun 2013 14:30:13 +0200
-From: Stephane Eranian <eranian@...gle.com>
-To: Peter Zijlstra <peterz@...radead.org>
-Cc: OSS Security List <oss-security@...ts.openwall.com>,  "ak@...ux.intel.com" <ak@...ux.intel.com>, security@...nel.org,  Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: More perf security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/18/3
+Message-ID: <20130318172117.GB46041@higgins.local>
+Date: Mon, 18 Mar 2013 10:21:17 -0700
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2013-1855] XSS vulnerability in sanitize_css in Action Pack
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+XSS vulnerability in sanitize_css in Action Pack
 
+There is an XSS vulnerability in the `sanitize_css` method in Action Pack. This vulnerability has been assigned the CVE identifier CVE-2013-1855.
 
-On Wed, Jun 5, 2013 at 2:15 PM, Peter Zijlstra <peterz@...radead.org> wrote:
-> On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
->> Hello, Peter.
->>
->> On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
->> > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
->> >
->> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
->> >
->> > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
->> > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
->> > Date:   Fri May 3 14:11:25 2013 +0200
->> >
->> >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
->> >
->> >     We should always have proper privileges when requesting kernel
->> >     data.
->> >
->> >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
->> >     Cc: <stable@...nel.org>
->> >     Cc: Andi Kleen <ak@...ux.intel.com>
->> >     Cc: eranian@...gle.com
->> >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
->> >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
->> >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
->> >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
->>
->> There is similar check in perf_copy_attr() which is called from
->> perf_event_open syscall --
->>
->>                 /* kernel level capture: check permissions */
->>                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
->>                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
->>                         return -EACCES;
->>
->> It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
->> missing something?
->>
->
-> I overlooked it, also its slightly broken. See the discussion at:
->   https://lkml.org/lkml/2013/5/21/166
->
-Yes, there was a typo in the constant. Was checking the wrong bits.
-Now it is fixed with the patch referred to by Peter.
+Versions Affected:  All.
+Not affected:       None.
+Fixed Versions:     3.2.13, 3.1.12, 2.3.18
 
->
+Impact 
+------ 
+Carefully crafted text can bypass the sanitization provided in the `sanitize_css` method in Action Pack.  Impacted code will look like this:
+
+    sanitize_css(some_user_input)
+
+All users running an affected release should either upgrade or use one of the work arounds immediately. 
+
+Releases 
+-------- 
+The 3.2.13 and 3.1.12 releases are available at the normal locations. 
+
+Workarounds 
+----------- 
+To work around this issue, you can apply the following monkey patch:
+
+```
+module HTML
+  class WhiteListSanitizer
+      # Sanitizes a block of css code. Used by #sanitize when it comes across a style attribute
+    def sanitize_css(style)
+      # disallow urls
+      style = style.to_s.gsub(/url\s*\(\s*[^\s)]+?\s*\)\s*/, ' ')
+
+      # gauntlet
+      if style !~ /\A([:,;#%.\sa-zA-Z0-9!]|\w-\w|\'[\s\w]+\'|\"[\s\w]+\"|\([\d,\s]+\))*\z/ ||
+          style !~ /\A(\s*[-\w]+\s*:\s*[^:;]*(;|$)\s*)*\z/
+        return ''
+      end
+
+      clean = []
+      style.scan(/([-\w]+)\s*:\s*([^:;]*)/) do |prop,val|
+        if allowed_css_properties.include?(prop.downcase)
+          clean <<  prop + ': ' + val + ';'
+        elsif shorthand_css_properties.include?(prop.split('-')[0].downcase)
+          unless val.split().any? do |keyword|
+            !allowed_css_keywords.include?(keyword) &&
+              keyword !~ /\A(#[0-9a-f]+|rgb\(\d+%?,\d*%?,?\d*%?\)?|\d{0,2}\.?\d{0,2}(cm|em|ex|in|mm|pc|pt|px|%|,|\))?)\z/
+          end
+            clean << prop + ': ' + val + ';'
+          end
+        end
+      end
+      clean.join(' ')
+    end
+  end
+end
+```
+
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
+
+* 3-2-css_sanitize.patch - Patch for 3.2 series 
+* 3-1-css_sanitize.patch - Patch for 3.1 series 
+* 3-0-css_sanitize.patch - Patch for 3.0 series 
+* 2-3-css_sanitize.patch - Patch for 2.3 series 
+
+Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+Credits 
+-------
+
+Thanks to Charlie Somerville for reporting this!
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "2-3-css_sanitize.patch" of type "text/plain" (2655 bytes)
+
+View attachment "3-0-css_sanitize.patch" of type "text/plain" (2463 bytes)
+
+View attachment "3-1-css_sanitize.patch" of type "text/plain" (2463 bytes)
+
+View attachment "3-2-css_sanitize.patch" of type "text/plain" (2464 bytes)
+
+Content of type "application/pgp-signature" skipped
