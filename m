@@ -1,26 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/14
-Message-ID: <1361914726.4116.2.camel@scapa>
-Date: Tue, 26 Feb 2013 22:38:46 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/18/1
+Message-ID: <2252220.kyydmObEyQ@devil>
+Date: Mon, 18 Mar 2013 16:36:40 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Subject: Re: CLONE_NEWUSER|CLONE_FS root exploit
 Content-Type: text/plain; charset=utf-8
 
-On mar., 2013-02-26 at 14:05 -0700, Kurt Seifried wrote:
-> The problem with security is you have to basically do it 100%
-> correctly 100% of the time
+On Wednesday 13 March 2013 18:33:00 Greg KH wrote:
+> On Thu, Mar 14, 2013 at 09:03:20AM +0800, Eugene Teo wrote:
+> > On 14 Mar, 2013, at 8:59 AM, Eugene Teo <eugeneteo@...nel.sg> wrote:
+> > > On 13 Mar, 2013, at 11:39 PM, Sebastian Krahmer <krahmer@...e.de> wrote:
+> > >> Hi,
+> > >> 
+> > >> Seems like CLONE_NEWUSER|CLONE_FS might be a forbidden
+> > >> combination.
+> > >> During evaluating the new user namespace thingie, it turned out
+> > >> that its trivially exploitable to get a (real) uid 0,
+> > >> as demonstrated here:
+> > >> 
+> > >> http://stealth.openwall.net/xSports/clown-newuser.c
+> > >> 
+> > >> The trick is to setup a chroot in your CLONE_NEWUSER,
+> > >> but also affecting the parent, which is running
+> > >> in the init_user_ns, but with the chroot shared.
+> > >> Then its trivial to get a rootshell from that.
+> > >> 
+> > >> Tested on a openSUSE12.1 with a custom build 3.8.2 (x86_64).
+> > >> 
+> > >> I hope I didnt make anything wrong, mixing up the UIDs,
+> > >> or disabled important checks during kernel build on my test
+> > >> system. ;)
+> > > 
+> > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?
+> > > id=aea8b5d1e5c5482e7cdda849dc16d728f7080289> 
+> > I realised that the link is incorrect. Will post again when I see the
+> > patches.
+> It is commit e66eded8309ebf679d3d3c1f5820d1f2ca332c71 in Linus's tree,
+> so replace the sha in the above link with this one instead.
 
-You can also look at other, more proactives approaches (hardening the
-memory layout, enforcing W^X etc.). Even hardening userland might help
-here.
-
-This is basically what's done in hardening patches like PaX/Grsecurity
-(with active exploit response on top). And yes, it comes at a cost, like
-everything.
-
-Regards,
+Someone know exactly in which version the bug appears and which series are 
+affected?
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Agostino Sarubbo
+Gentoo Linux Developer
