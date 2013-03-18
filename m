@@ -1,41 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/4
-Message-ID: <52562EB5.4070105@redhat.com>
-Date: Thu, 10 Oct 2013 10:06:05 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: timo.warns@...il.com, cdfrey@...rsquare.net
-Subject: Integer overflow in libtar (<= 1.2.19)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/18/5
+Message-ID: <20130318172318.GD46041@higgins.local>
+Date: Mon, 18 Mar 2013 10:23:18 -0700
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2013-1857] XSS Vulnerability in the `sanitize` helper of Ruby on Rails
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+XSS Vulnerability in the `sanitize` helper of Ruby on Rails
 
-Forwarding information from the linux-distros list to oss-sec, since
-the issue is public now
+There is an XSS vulnerability in the sanitize helper in Ruby on Rails. This vulnerability has been assigned the CVE identifier CVE-2013-1857.
 
-Details:
+Versions Affected:  All.
+Not affected:       None.
+Fixed Versions:     3.2.13, 3.1.12, 2.3.18
 
-An integer overflow vulnerability was identified in libtar 1.2.19 (and
-olders) that can possibly be exploited for arbitrary code execution when
-extracting a specially crafted tar file.
+Impact
+------
+The sanitize helper in Ruby on Rails is designed to filter HTML and remove all tags and attributes which could be malicious.  The code which ensured that URLs only contain supported protocols contained several bugs which could allow an attacker to embed a tag containing a URL which executes arbitrary javascript code.
 
-A coordinated release date (CRD) of October 9th has been agreed with
-Chris Frey (libtar developer).
+All users running an affected release should either upgrade or use one of the work arounds immediately.
 
-This issue is assigned CVE-2013-4397.
-This issue is fixed in libtar-1.2.20
+Releases
+--------
+The 3.2.13 and 3.1.12 releases are available at the normal locations.
 
-Reference:
+Workarounds
+-----------
+If you are unable to upgrade, you can place the following code into a file in config/initializers and it will replace the method with the correct implementation.
 
-Upstream patch:
-http://repo.or.cz/w/libtar.git/commit/45448e8bae671c2f7e80b860ae0fc0cedf2bdc04
+  module HTML
+    class WhiteListSanitizer
+      self.protocol_separator = /:|(&#0*58)|(&#x70)|(&#x0*3a)|(%|&#37;)3A/i
 
-Announcement: This is an announcement about the release on
-libtar list, but strangely i cant access the list archives.
-(i am subscribed to the mailing list though)
+      def contains_bad_protocols?(attr_name, value)
+        uri_attributes.include?(attr_name) &&
+        (value =~ /(^[^\/:]*):|(&#0*58)|(&#x70)|(&#x0*3a)|(%|&#37;)3A/i && !allowed_protocols.include?(value.split(protocol_separator).first.downcase.strip))
+      end
+    end
+  end
 
-Red Hat bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1014492
+
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset.
+
+* 3-2-sanitize_protocol.patch - Patch for 3.2 series
+* 3-1-sanitize_protocol.patch - Patch for 3.1 series
+* 3-0-sanitize_protocol.patch - Patch for 3.0 series
+* 2-3-sanitize_protocol.patch - Patch for 2.3 series
+
+Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+Credits
+-------
+
+Thanks to Alan Jenkins <alan.christopher.jenkins@...il.com> for reporting the
+vulnerability to us.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "2-3-sanitize_protocol.patch" of type "text/plain" (3550 bytes)
+
+View attachment "3-0-sanitize_protocol.patch" of type "text/plain" (3271 bytes)
+
+View attachment "3-1-sanitize_protocol.patch" of type "text/plain" (3280 bytes)
+
+View attachment "3-2-sanitize_protocol.patch" of type "text/plain" (3281 bytes)
+
+Content of type "application/pgp-signature" skipped
