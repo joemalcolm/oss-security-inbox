@@ -1,44 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/1
-Message-ID: <CACzGpqwTV+RTcTcqWvMxfiJr86aR3q=tzk0D7jJZWvASZ3DZjw@mail.gmail.com>
-Date: Mon, 7 Jan 2013 20:11:11 -0500
-From: adam swanda <adam@...oharbor.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/1
+Message-ID: <20130319061625.GA2759@openwall.com>
+Date: Tue, 19 Mar 2013 10:16:25 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: /dev/ptmx timing
+Subject: Re: CVE Request -- kernel: net: slab corruption due to improper synchronization around inet->opt
 Content-Type: text/plain; charset=utf-8
 
-Don't you need to be running as root for this to be possible? For example,
-I know you can use strace to capture keystroke "writes" for any given PID,
-but unless you want to capture only processes you are running you need to
-be root or use sudo strace <cmd>.
+On Fri, Aug 31, 2012 at 06:11:53PM +0200, Petr Matousek wrote:
+> Description of the problem:
+> Lack proper synchronization to manipulate inet->opt ip_options can lead
+> to system crash.
+> 
+> Problem is that ip_make_skb() calls ip_setup_cork() and ip_setup_cork()
+> possibly makes a copy of ipc->opt (struct ip_options), without any
+> protection against another thread manipulating inet->opt. Another thread
+> can change inet->opt pointer and free old one under us.
+> 
+> Given right server application (setting socket options and processing
+> traffic over the same socket at the same time), remote attacker could
+> use this flaw to crash the system. More likely though, local
+> unprivileged user could use this flaw to crash the system.
 
-It looks like your PoCs fall into the same category. Following that same
-logic, if a user has root access, what would they gain by sniffing password
-character length? Since they can view hashes, change passwords, etc,
-without this method.
+What are our reasons to claim that this is merely a DoS, as opposed to a
+potential for arbitrary code execution with kernel privileges (at least
+in the local attack case)?
 
-I might be completely wrong here but I personally wouldn't classify this as
-a security issue. Just putting in my own opinion, of course, as a casual
-reader of this list.
-On Jan 7, 2013 5:24 PM, "vladz" <vladz@...zero.fr> wrote:
+> Upstream fix:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f6d8bd051c391c1c0458a30b2a7abcd939329259
 
->
-> Hi list,
->
-> I noticed that it was possible to measure inter-keystrokes timing thanks
-> to the /dev/ptmx character device.  Any local user that is using
-> pseudo-terminal can be targeted.
->
-> As it may also be used to disclose sensible information such as password
-> length, I was wondering if it should be treat as a security issue?
->
-> Description + PoC: http://vladz.devzero.fr/013_ptmx-timing.php.
->
-> No sure right now but I think the only way to solve this is to modify
-> the pts handling at kernel level.  Any opinions on that?
->
-> Thanks,
-> vladz.
->
->
+This was assigned CVE-2012-3552:
 
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-3552
+
+Alexander
