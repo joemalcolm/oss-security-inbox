@@ -1,68 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/9
-Message-Id: <5F48E626-4CD6-4477-B57D-80CF03348134@stufft.io>
-Date: Sat, 27 Jul 2013 03:10:24 -0400
-From: Donald Stufft <donald@...fft.io>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: CVE Request: Insecure Software Download in pip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/4
+Message-ID: <514818C8.5050402@redhat.com>
+Date: Tue, 19 Mar 2013 01:50:32 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Sean Amoss <ackle@...too.org>
+Subject: Re: CVE Request: VLC Buffer overflows
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Jul 27, 2013, at 3:08 AM, Kurt Seifried <kseifried@...hat.com> wrote:
-
-> On 07/25/2013 03:09 AM, Donald Stufft wrote:
-> > I'd like to request a CVE for pip
-> > (https://pypi.python.org/pypi/pip/).
-> > 
-> > The mirroring support (-M, --use-mirrors) was implemented without
-> > any sort of authenticity checks and is downloaded over plaintext
-> > HTTP. Further more by default it will dynamically discover the list
-> > of available mirrors by querying a DNS entry and extrapolating from
-> > that data. It does not attempt to use any sort of method of
-> > securing this querying of the DNS like DNSSEC. Software packages
-> > are downloaded over these insecure links, unpacked, and then
-> > typically the setup.py python file inside of them is executed.
-> > 
-> > The vulnerable code is located at: -
-> > https://github.com/pypa/pip/blob/develop/pip/index.py#L60-L64 -
-> > https://github.com/pypa/pip/blob/develop/pip/index.py#L205-L207 -
-> > https://github.com/pypa/pip/blob/develop/pip/index.py#L553-L572 -
-> > https://github.com/pypa/pip/blob/develop/pip/index.py#L999-L1024
-> > 
-> > The affected versions are every released version since 0.8.1 which
-> > are: 0.8.1, 0.8.2, 0.8.3, 1.0, 1.0.1, 1.0.2, 1.1, 1.2, 1.2.1, 1.3,
-> > 1.3.1, 1.4
-> > 
-> > I'm not aware of this issue having ever had a CVE requested for it
-> > and my attempts to search the CVE database did not appear to turn
-> > up anything relevant but the search doesn't appear to be the
-> > greatest so I may have missed it.
-> > 
-> > I'm hoping to land a patch for this in a future release (current
-> > iteration of patch available at
-> > https://github.com/dstufft/pip/compare/remove-mirror-support) but
-> > there is no planned fix version as of yet.
-> > 
-> > ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 7C6B
-> > 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+On 03/17/2013 06:52 AM, Sean Amoss wrote:
+> It looks like this issue has not been assigned a CVE ID:
 > 
-> Was it supposed to be secure (like was this explicitly supposed to be
-> all encrypted/etc.)? This sounds more like security hardening than a
-> security vulnerability.
+> VLC media player 2.0.5 addresses buffer overflow flaws in the
+> freetype renderer and HTML subtitle parser.
 > 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Reference: http://www.videolan.org/security/sa1301.html
+> 
+> Upstream fix: 
+> http://git.videolan.org/?p=vlc/vlc-2.0.git;a=commitdiff;h=9b0414dc7f5c18ff2951175cf076779c444efd70
+>
+> 
+> 
+> Thanks, Sean
 > 
 
-The mirroring protocol explicitly included provisions for verification which
-was not being done.
+Please use CVE-2013-1868 for these issues.
 
-http://www.python.org/dev/peps/pep-0381/#mirror-authenticity
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
+iQIcBAEBAgAGBQJRSBjIAAoJEBYNRVNeJnmToJUP/0RjhDeG77/f++xOk1mTfC3p
+g53cXgcuvhWfbumdZyjuqnuXtv5SjvJ7ZrVQ6+Nr5AQf71vIHe9tsmFj2J7U1hBX
+4Il9gZc88NhDHYcsom6eQQg3X9nJ6gVa7qpiEHGCe1gEK+VzgjRcXe7Zjk5cSppQ
+zryMJb5vdceIaV4zaacMqHkuCK8nphmVBJBzpuhXfCLrfxozYwHN6e1Bb7nPeS4H
+cZ1kHNK62nuG27AjaY40bOkv2hJxGs4I89JZ5mKofWr/tGj67w2Y04oVouJALKYW
+AScZYskKrZYlXwfkqt4GIvTY0oh2mPkWqwBdnOuxuBkdoauETF/YZf3S/YS/tFEr
+97iXiJTwTFCjsxug7WmK9rGWIK/+pJDnjU8Ud+im1/uWuQzoKt2sQEJluOOKdgiA
+7LkhwHhGLIH2lHSxbiuhg3OIResVwE/vBA1vikiIS3p2BTuiS3WFB6ywGHmU2yCc
+NvQundgAmeg8TeS0EtsVrqq3fDXF7eLyPPN4SLfGftDV8nQJEJETsr0yiY0aPukJ
+vTWDEFnQk/h8DIsO+5W9RaSE9YiOoNNo93Saesw8AKIMfCegXvqBErFjlYT3+Fsz
+zo+9f3W3nxlQaz0yhwItQFQZpS3nkOMuYFR4Zht2ZqXdsM7EeKdVX8ft+ZCoxmul
+NfSm8s1+N1KxbpW6Dc0b
+=Khpl
+-----END PGP SIGNATURE-----
