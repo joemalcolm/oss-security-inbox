@@ -1,34 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/4
-Message-ID: <20130605082302.GR8923@twins.programming.kicks-ass.net>
-Date: Wed, 5 Jun 2013 10:23:02 +0200
-From: Peter Zijlstra <peterz@...radead.org>
-To: Andi Kleen <ak@...ux.jf.intel.com>
-Cc: Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>, eranian@...gle.com, security@...nel.org
-Subject: Re: CVE Request: More perf security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/8
+Message-id: <E8E88567-17AF-4801-AC82-0BBB08A60A5A@me.com>
+Date: Tue, 19 Mar 2013 08:16:19 -0400
+From: larry Cashdollar <larry0@...com>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: CVE requests
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 04, 2013 at 10:59:33AM -0700, Andi Kleen wrote:
-> > 3. Information leak (??) via perf LBR filter 
-> 
-> Leak + crash actually.
-> 
-> > 
-> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6e15eb3ba6c0249c9e8c783517d131b47db995ca
-> > 
-> > commit 6e15eb3ba6c0249c9e8c783517d131b47db995ca
-> > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-> > Date:   Fri May 3 14:11:24 2013 +0200
-> > 
-> >     perf/x86/intel/lbr: Fix LBR filter
-> >     
-> >     The LBR 'from' adddress is under full userspace control; ensure
-> >     we validate it before reading from it.
-> 
-> This patch is known broken and causes additional crashes.
-> There's no updated patch for that so far.
+Here is my CVE request I sent to mitre.
 
-And yet there's no crash report in my inbox.. how kind you you andi.
+Begin forwarded message:
 
-And I know you don't agree with the patch, but since you're too lazy to
-provide a better one I didn't think you minded _that_ much :-)
+> From: larry Cashdollar <larry0@...com>
+> Date: March 16, 2013, 8:40:05 AM AST
+> To: "cve-assign@...re.org" <cve-assign@...re.org>
+> Subject: Re: CVE requests
+> 
+> Hi, I've been asked to assign CVEs to the following vulnerabilities.
+> 
+> http://www.osvdb.org/show/osvdb/91232
+> http://www.osvdb.org/show/osvdb/91231
+> http://www.osvdb.org/show/osvdb/91230
+> 
+> Thanks again!
+> 
+> Larry C$
+> 
+> On Mar 15, 2013, at 4:01 PM, cve-assign@...re.org wrote:
+> 
+>> -----BEGIN PGP SIGNED MESSAGE-----
+>> Hash: SHA1
+>> 
+>>> Sorry I missed one:
+>>> 
+>>> http://osvdb.org/show/osvdb/90926
+>> 
+>> Use CVE-2013-2561.
+>> 
+>> 
+>>> I didn't see CVEs for the following issue either:
+>>> 
+>>> http://packetstormsecurity.com/files/108462/mambocms465-permdosdisclose.txt
+>> 
+>> Use CVE-2013-2562 for the storage of the cleartext MySQL database password in the document root.
+>> 
+>> Use CVE-2013-2563 for the storage of the admin password hash with unsafe permissions.
+>> 
+>> Use CVE-2013-2564 for the DoS.
+>> 
+>> Use CVE-2013-2565 for all of the path disclosure issues.
+>> 
+>> 
+>>> Finally, http://osvdb.org/89910 is about a reportedly fixed
+>>> vulnerability in an Oracle product.
+>> 
+>> Unfortunately, we still have not been able to complete our process for
+>> assigning a CVE to this type of an Oracle product vulnerability. We
+>> are continuing to pursue this and will let you know.
+>> 
+>> - -- 
+>> CVE assignment team, MITRE CVE Numbering Authority
+>> M/S M300
+>> 202 Burlington Road, Bedford, MA 01730 USA
+>> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+>> -----BEGIN PGP SIGNATURE-----
+>> Version: GnuPG v1.4.11 (SunOS)
+>> 
+>> iQEcBAEBAgAGBQJRQ31jAAoJEGvefgSNfHMdwdkH/0vJgMovy8W8ydyZZ6OPo6/O
+>> 9wHdQ/oKpa2KTBTyy8ojfoAD/ljAva77pQgNGimI7C02r3RwArbgFiSR7CcUodI7
+>> +icKAATYCuX53jbBxrwhbXbYgOwW/1wg9uMFlTuuLz3EUi4MpO/ksDGgIYGCbRu8
+>> i+MZRFCZp0p28n0Uu6Fy8Os3KXWsILtxPX+u6Su8xqWVE6yJ2yjuovB0OWXgstfD
+>> F3Ca7CUhl5yaBkzdo4hkQded4DuaOXcHqT5ScTmhhf+nrZTrx+Pho4YjkylSJ3dl
+>> Fd6MD6aI+GbRDmP1KdQsuGpB2zVW0KeHoy9QDATVNnLLKHX8/EL2n+Dv13HN9LI=
+>> =94H1
+>> -----END PGP SIGNATURE-----
+
