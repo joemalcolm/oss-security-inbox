@@ -1,90 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/01/3
-Message-ID: <5274148D.3050200@redhat.com>
-Date: Fri, 01 Nov 2013 14:52:29 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/2
+Message-ID: <514810F7.1050404@redhat.com>
+Date: Tue, 19 Mar 2013 01:17:11 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org
-CC: "Xen.org security team" <security@....org>
-Subject: Re: Xen Security Advisory 73 - Lock order reversal between page allocation and grant table locks
+To: oss-security@...ts.openwall.com, "Christey, Steven M." <coley@...re.org>
+Subject: Ruby CVEs
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/01/2013 09:07 AM, Xen.org security team wrote:
-> Xen Security Advisory XSA-73
-> 
-> Lock order reversal between page allocation and grant table locks
-> 
-> NOTE REGARDING LACK OF EMBARGO ==============================
-> 
-> While the response to this issue was being prepared by the
-> security team, the bug was independently discovered by a third
-> party who publicly disclosed it without realising the security
-> impact.
-> 
-> ISSUE DESCRIPTION =================
-> 
-> The locks page_alloc_lock and grant_table.lock are not always taken
-> in the same order.  This opens the possibility of deadlock.
-> 
-> IMPACT ======
-> 
-> A malicious guest administrator can deny service to the entire
-> host.
-> 
-> VULNERABLE SYSTEMS ==================
-> 
-> Xen versions going back to at least Xen 3.2 are vulnerable.
-> 
-> To exploit the vulnerability, the attacker must have control of
-> more than one vcpu, either by controlling a malicious multi-vcpu
-> guest, or by controlling more than one guest.
-> 
-> MITIGATION ==========
-> 
-> There is no practical mitigation for this issue.
-> 
-> CREDITS =======
-> 
-> This issue was discovered by Coverity Scan and diagnosed by Andrew 
-> Cooper.
-> 
-> RESOLUTION ==========
-> 
-> Applying the appropriate attached patch resolves this issue.
-> 
-> xsa73-4.3-unstable.patch    Xen 4.3.x, xen-unstable xsa73-4.2.patch
-> Xen 4.2.x xsa73-4.1.patch             Xen 4.1.x
-> 
-> $ sha256sum xsa73*.patch 
-> b828ff085f2dc1f2042bda1dc8a6c52b56ad1c1e3639c3efe32e5706e4ef424f
-> xsa73-4.1.patch 
-> 10b809c39582a7f29150f0635b78bc2ce40df0bded963b78f42db3e21775da8c
-> xsa73-4.2.patch 
-> 48411cd6b15e4e4fa3c4335298179a4b1094c5e1ae8dc7582bbfb9439d97037b
-> xsa73-4.3-unstable.patch $
-> 
+http://direct.osvdb.org/search?search[vuln_title]=ruby&search[text_type]=titles
 
-Please use CVE-2013-4494 for this issue.
+
+===================
+These 4 are all the ";" URL parsing issues ny larry0@...com
+===================
+http://direct.osvdb.org/show/osvdb/91450
+command_wrap gem
+
+http://direct.osvdb.org/show/osvdb/91232
+fastreader gem
+
+http://direct.osvdb.org/show/osvdb/91231
+MiniMagic gem
+
+http://direct.osvdb.org/show/osvdb/91230
+Curl gem
+
+
+===================
+http://direct.osvdb.org/show/osvdb/90717
+fileutils - has CVE-2013-2516 - where did this come from (I assume
+Mitre?)? Does it cover just this issue or the next 3?
+===================
+
+http://direct.osvdb.org/show/osvdb/90718
+fileutils gem
+code exec
+
+http://direct.osvdb.org/show/osvdb/90716
+fileutils gem
+dir creation
+
+http://direct.osvdb.org/show/osvdb/90715
+fileutils gem
+tmp file creation
+===================
+
+http://direct.osvdb.org/show/osvdb/90206
+typecasting - mysql/etc. - we probably need another long email from
+steve on how to handle this =)
+
+http://direct.osvdb.org/show/osvdb/89612
+gemcutter - Psych YAML parse - do we assign a vuln for psych?
+
+http://direct.osvdb.org/show/osvdb/90946
+libxml2 entity expansion *** see Steven's long posting, I need to
+figure this out yet.
+
+Also am I missing anything else?
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSdBSNAAoJEBYNRVNeJnmTNWMP/REouDdz04PivxYXIwjmkqTF
-2sQJUt6/4Jax9i3aKWJAvB1fpqqS6T0NmtMpZ9yHihYMvTx+8Nmkpc+GRynbQrZx
-t2l7Tcs7P+aHbbVFz3WUY+Z0yprUeCuKAu0GMpILijoykVOTM6IlTsRyDjWke0hl
-f6oJmnhe87BnhglUJkfkLhnXUDHUAnZQjmLqznYMOqEFIxBzK+MbCYWIZ7DALerS
-GtaZnt5Gqxx3KLZFJVVz1dW2AKby9vXqUwCiEH/WJ6rwsb98tVwN34yZPLPjug9k
-hQQDyPKmv/FAd14ieslS88uXnP1fwofxTCbpfYTVYDP4wBropAhBueLIf32pzhrC
-6GSqy2VYvFXqTmY/mKxLYqz/czG6b3DMwvCTqPOqfszOv75R0COPQIeeTmdLuI7L
-ZDdP5ZNcuNVSiLJaXBi6cfiFmRtPFsFEiu4+p1nCt6f0mfia2LqpVvjfaK56FerA
-R0f1LNouRm/4aBbeXtGTVTdMFprF9DDQgZlEPuATrZNjp0b3X/uxQLAtMLWDLAa9
-CYpSCbv9SqGGlot6cL1m4rEtsmMRRcffz+EZUcmXF/cRIPVZxdMHJ+mHyShUALGt
-LPVABCngDF3RTQqhBSZwViUaoyjo/Pora1bcMvNMZoIMxQHz18hg2961OgxOSfeg
-70WfDymdz82cl4k6KZim
-=uAIy
+iQIcBAEBAgAGBQJRSBD3AAoJEBYNRVNeJnmTKIoP/A/hArfD7sNALPrrQhZPg4w1
+0KeAV7sAkfaYw4+g8nikUsAq+/b6wq6uSMjsbhyd/UNp9CR/KBJ0uKRAxHBPSLs1
+QdB/GG6wygFU8mBUXbUBZSvyIepyAKdzAUl3vu0IEyVn2311+kVCa9y+FG3JUiZ4
+3VDeqdlS+tcuryirD2te0LvwNuAYtqC6qiK2p9VQZaibVla8tE0U1L3CjKMy2IKY
+0UYHTrjlBflgSebgebCQPHjYLdeGbCV3CIF1Nn0gCXpD/O/6q6y+FQRXo8dPQ7f4
+YRgy3UgM9pB7m4XIngb9KfPAo7G9jbXb9OwgPHwUyvicr66O3p8+I2oLqOIkDLAH
+CB1HiegYkGOVpBxN6i5WZO2AYCRlMNjRkD7L/IUwX8aiR0dXzm9KRLSSMawkNS02
+xJqaLzKRQ/PceZgStI5tAGcheovhlpbMdTUyE0oKIZ3L6mLd0m4aM7i3CJHRNR+L
+EVDDa+UtNFc0UsKwK3QzttYys7inNk+rrsz9RV3MHY/uAOpI7RYtXLdLhD8O91NP
+BHzQRabZ80uSDDlQp6TefdpvdB7xXxzymr+JAAk/R7x48+rS2YqVmA4mKm6l376o
+kBsIiElclc3D0BnIS7PrzZqC7/7Pw/oYenIX9nqSmcBQr36xgr+QRyfWq9euk0vA
+hYbkyNOwCUyIejv6xze7
+=fU5C
 -----END PGP SIGNATURE-----
