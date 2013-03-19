@@ -1,61 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/23/3
-Message-ID: <20130123074735.GA16754@suse.de>
-Date: Wed, 23 Jan 2013 08:47:35 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/12
+Message-ID: <CA+rthh_wXTo2LNNWJhV1VM07d4XoQkoOGE0rHOwDbWv31FM5tw@mail.gmail.com>
+Date: Tue, 19 Mar 2013 22:15:30 +0100
+From: Mathias Krause <minipli@...glemail.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request coreutils
+Subject: Linux kernel: net - three info leaks in rtnl
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 22, 2013 at 08:47:46AM -0700, Vincent Danen wrote:
-> * [2013-01-22 08:25:23 +0100] Sebastian Krahmer wrote:
->
->> Generally, I see your point. However sometimes services running as
->> root 'sort' or 'uniq' user input e.g. via grepping logfiles etc,
->> so there is indeed a real chance to indirectly trigger a privilege
->> escalation. The past shows that segfaults can be turned into a
->> code exec often. Its a stack overflow after all.
->
-> Do you believe this would be the case with modern GCC/Glibc hardening
-> though?  Wouldn't this just be rendered a crash?
+I fixed a few more info leaks in linux v3.9-rc3. Unprivileged users
+can use the netlink interface to exploit the following issues to
+disclose kernel stack memory:
 
-Are you serious? And since when will CVE's not be assigned because
-some mitigation could possibly prevent a stack overflow being turned
-into code exec?
+29cd8ae dcbnl: fix various netlink info leaks
+http://git.kernel.org/linus/29cd8ae0e1a39e239a3a7b67da1986add1199fc0
 
->
-> But even then, if we're talking about logfiles (which is a reasonable
-> case) you'd have to be allowing user-controlled input to your logs,
-> which would mean you'd have another problem.
+84d73cd rtnl: fix info leak on RTM_GETLINK request for VF devices
+http://git.kernel.org/linus/84d73cd3fb142bf1298a8c13fd4ca50fd2432372
 
-You mean like 'logger -t sshd failed login attempt' ?
+c085c49 bridge: fix mdb info leaks
+http://git.kernel.org/linus/c085c49920b2f900ba716b4ca1c1a55ece9872cc
 
+David Miller did backports for the above issues which are currently
+under review and should end up in the next stable and longterm
+kernels.
 
->
-> I'm also assuming, based on the comments in the first bug, that you need
-> a really large line (not just an entire file, but one line).  How likely
-> is it that you would be grepping a log file with ~10MB of data on one
-> line?
-
-Not very common indeed, but I think its not the point (logfiles were
-just _one_ example).
-
-Nevertheless, you seem to shift your arguments. For each reason/attack vector
-I answer, you bring up two new reasons why this not an issue.
-
-At the end, I did not spot the bug; if the majority thinks its not worth
-a CVE, I can live with it. It would just have made tracking easier.
-
-
-regards,
-Sebastian
-
-PS: Reminds me to the one-year dbus discussion where everyone told me that
-this can never be a problem.
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+Regards,
+Mathias
