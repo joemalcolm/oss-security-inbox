@@ -1,77 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/23/8
-Message-ID: <52672F46.9000108@redhat.com>
-Date: Tue, 22 Oct 2013 20:07:02 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: lightdm no longer confines guest profile with AppArmor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/7
+Message-id: <B5C4D407-25F6-4047-ACEF-562ECBFF75D9@me.com>
+Date: Tue, 19 Mar 2013 08:09:39 -0400
+From: larry Cashdollar <larry0@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Remote command execution in Ruby Gem Command Wrap
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Remote command execution in Ruby Gem Command Wrap
 
-On 10/22/2013 08:00 PM, Marc Deslauriers wrote:
-> On 13-10-22 09:50 PM, Kurt Seifried wrote:
->> On 10/22/2013 12:52 PM, Marc Deslauriers wrote:
->>> Hello,
->> 
->>> Christian Prim discovered that Light Display Manager 1.8.0 and 
->>> later no longer use the appropriate wrapper when launching
->>> guest sessions, resulting in the session not being confined by
->>> AppArmor.
->> 
->>> Bug report: https://bugs.launchpad.net/lightdm/+bug/1243339
->> 
->>> Could a CVE please be assigned to this issue?
->> 
->>> Thanks,
->> 
->>> Marc.
->> 
->> 
->> Ok to confirm the app armor profile is applied by default to
->> lightdm and the guest account, and was meant to prevent guest
->> from touching /home at all? I just wanna confirm this is a
->> security vuln and not security hardening.
->> 
-> 
-> lightdm is supposed to run the guest account through a special
-> wrapper that applies an AppArmor security policy so the guest is
-> confined and has a limited set of files which it can access. Kind
-> of like a sandbox.
-> 
-> The lightdm code was refactored at some point during the 1.8
-> development cycle, and the code no longer executes the wrapper,
-> resulting in the guest account on Ubuntu 13.10 being unconfined and
-> is now able to access user's files, which wasn't the case in
-> earlier Ubuntu versions.
-> 
-> Basically, a security feature that is applied by default got
-> inadvertently dropped in a rewrite.
-> 
-> Marc.
-> 
-> 
+3/15/2013
+http://rubygems.org/gems/command_wrap
 
-Understood, please use CVE-2013-4459 for this issue.
+Commands executed if the remote URL or filename contains the shell character ';'. The commands will be executed as the client user if tricked into using the malicious URL or filename.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Examining the following lines:
 
-iQIcBAEBAgAGBQJSZy9GAAoJEBYNRVNeJnmTPN4P/jtAcXtW9sUaLXNpH3Z7HgUH
-06QNzlHGf2bm+xgtgjFx5sj55VHZyThUw017KoLO9uMZq5DbzJ3wB2qdgAyxBOtX
-vasJY69cBQQJKEC/3iRtvbEHzwro4cKTW4Kr0+1OYUVxGqAoimwYLfDepz/yX7RV
-jgLJcBNqB1jDbMCa6eNx7oGp5a/ZVB1W2HZs1RC8TPrMXNDKy+W5Wqs73yvi4xJk
-JXfGeFsQMYTxRptyoXEwD3XBjXiWNi/Tk2ze1svKdUHeDCa9CvFAJ7u7kXdOJI6l
-mfnhTYupP3YcqFn7vZ4p2CHjHMF8UKFJGezY17oIkIspdFiNgyKmZMzNQnneTyzc
-pooLiaCg5lXDyd3ssSErpRDe+/z/sLsYijKfjeJXP+oY8wmKKQ7zQsg3KwndrVgQ
-6xG2wKMSa9RsN0t9UdRGnxG4DpLqm//SyOP787nNtoJzJauV3TqQOhPlWWb/bhxP
-A5hal7pGZM+6NN7luyTfmtPEoHFhhuYGC7RxLXOsnC4zSbGm+dnJcUx3VjI2y5Xb
-o9AntUvQKsZYytHhCk0YiEGkrfs1zP5c7kHejMSH6PGvtCu+o6ojOA8y/c3z0glR
-pSEjakt39w8ZzY+hx+ck6B46qOHpuUI2Vg/cxJ9A2dK2Kh0RxROTZJBBkuXwY5qj
-Gx3oVuzl3mG/dO3DmtZr
-=nMob
------END PGP SIGNATURE-----
+command_wrap.rb-7- def self.capture (url, target)
+
+command_wrap.rb-8- command = CommandWrap::Config::Xvfb.command(File.dirname(__FILE__) + "/../bin/CutyCapt --min-width=1024 --min-height=768 --url={url} --out={target}") command_wrap.rb:9: `#{command}`
+command_wrap.rb-10- end
+command_wrap.rb-11-
+--
+command_wrap.rb-72- command = CommandWrap::Config::Xvfb.command(File.dirname(__FILE__) + "/../bin/wkhtmltopdf --quiet --print-media-type #{source} #{params} #{target}") command_wrap.rb-73-
+command_wrap.rb:74: `#{command}`
+
+Untrusted data is passed to the command line.
+
+Larry W. Cashdollar
+@_larry0
+http://vapid.dhs.org
+
+
+
+
