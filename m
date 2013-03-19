@@ -1,64 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/14
-Message-Id: <201308231818.r7NIInVQ025321@linus.mitre.org>
-Date: Fri, 23 Aug 2013 14:18:49 -0400 (EDT)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: roundcube 0.9.3 fixes two XSS flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/6
+Message-ID: <51483843.6030906@redhat.com>
+Date: Tue, 19 Mar 2013 04:04:51 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Henri Salo <henri@...v.fi>
+CC: oss-security@...ts.openwall.com, larry0@...com
+Subject: Re: Ruby CVEs
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
->[2] http://trac.roundcube.net/ticket/1489251
+On 03/19/2013 04:00 AM, Henri Salo wrote:
+> Please note that in private email Larry said he will request CVEs
+> for these security vulnerabilities. Adding Larry as CC so he can
+> tell us if he already did that and if he didn't we can assign those
+> in this thread.
 
-As far as we can tell from the
-http://trac.roundcube.net/ticket/1489251 history, the addressbook
-group vulnerability was discovered by dennis1993 and affects only
-version 1.0-git (not version 0.9.2). There is no direct statement that
-the addressbook group vulnerability was fixed. It seems likely that
-the addressbook group vulnerability could cross privilege boundaries
-if the "click on this group after creation" action were performed by
-an administrator who was visiting the addressbook of an unprivileged
-user.
+Ah I did not know that =). Larry for future reference:
 
-The other issues were discovered by und3r and affect version 0.9.2. At
-least one of these issues (JavaScript code in the signature) also
-affects version 1.0-git. There seems to be a dispute about whether
-this signature issue crosses privilege boundaries. Apparently a user
-can use the signature issue to attack himself, but there is no
-discussion of whether an administrator can visit the "identity
-configuration page" of an unprivileged user, and thereby become a
-victim of the XSS attack. The signature issue might be interpreted as
-a CVE-2012-4668 regression. Also, there is some indication that all of
-the issues discovered by und3r might have a root cause of 'This kind
-of problem is present in all parts where there is the "MCE" editor
-(or, more specifically, where there is a <textarea> with the CSS class
-"mce_editor").'
+http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
 
-Thus, so far, it seems that we should have one CVE for the addressbook
-group vulnerability, and one CVE for all of the vulnerabilities
-discovered by und3r. If anyone has established that the
-vulnerabilities discovered by und3r don't all have the same affected
-versions, please let us know. Also, if anyone thinks that the
-vulnerabilities discovered by und3r were actually the responsibility
-of a third-party product (such as TinyMCE), please mention that as
-well.
+> --- Henri Salo
+> 
+
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSF6bnAAoJEGvefgSNfHMdEt8IALe8rCID8NSMFBtIPAxuofy8
-tjDsi1fk19FSrjSxYCP1fsE68a1XMU0EWARdepYRHZuJboj1cBq1Z64cbiOPh+zw
-s9VZPzlTwBPbrjbMZDz/9JhSNMCg6u5WX/HCAn5NlpiZizjZLsCE3Cx7eDq35kFK
-os03AW2wdHz4/VPJGXhd2WEUWi07yaJgP6KyeaQiQBah4eYJnm7ENoDrnnJ8Wc43
-7+UaHAPQAKIgLJRLimKbRHHLMXmQnOj0D8Yek926lG617yfL2tuuVlHpxN2kyLbW
-5CvewSdEM7PJ0Qu/I1PwwsqjqfI871y38zvqUtZmVUxRFlSx6IytsQRHKuIV3qE=
-=WaFU
+iQIcBAEBAgAGBQJRSDhDAAoJEBYNRVNeJnmT7QMQAK7NkOI3pj84aS7TKZNwdx9K
+DeO9UNuz2ROk2ZuHXpB+zTRrkPSRA/U3TBR7zzzbeCWM1umCCH3NtRnJQwboOc4B
+uhq07tf+n6CkXliCp95zjvm2JPscuvg14NTRaavE8bsMcJhnij7xNezcaB6HwnDe
+7HgLGdtnpCg836/4JLY2SAcVA61YKzYRi928bnp+juC1gp0AsE+pzt6SwdbUhH2X
+bP1vsJ9JI/TBDc+gV+pj03npJOY/HqCLniHS1rx1KpcDSlp5ragzx8N4USFU4bb/
+zgWrJOPuC17Nf+cKW1DEjs3pfL6qRmr/lWdQ8JwmNKIOyyQRRzvrdPgNPznyHfUC
+VzjjktDhDw4VceKDCXmu3G66FqJmNW801YdZBHEOhtCfijCMa3VfVYA0Sa+qqmOS
+BFVGZUCFlG0B0DESmBusn9pI1qEL9MG+N+pdFZqMPlZpLnzRRYmfHZxOyJZAanx4
+7Df+LAmnfcAvOOCQ9KEqZ5y1E3IZeeZw4O4wYgFVDCiZkgXXD9U/1oPzgdiy1xKW
+GTTCkz5k6X+c2CG6YJpqps0Xnc+WdsMqPLg/LS4kZYWW/dmP6jT3d3na3upK6U3P
+9HKlufz0G04YumpKISLfA6SX8j9GmMFSNmnIWUm5eXdKc8yRMqvvqctZqFYKnz15
+W5CufiIbUwWYOWwNVy+G
+=/+Vv
 -----END PGP SIGNATURE-----
