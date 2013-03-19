@@ -1,30 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/13
-Message-ID: <20131021211647.GA26203@eldamar.local>
-Date: Mon, 21 Oct 2013 23:16:47 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/9
+Message-id: <4036C1E8-7129-46B8-9B6F-8342114A058B@me.com>
+Date: Tue, 19 Mar 2013 09:49:02 -0400
+From: larry Cashdollar <larry0@...com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: LDAP Account Manager XSS in login.php
+Subject: Fwd: CVE requests
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
 
-Eric Sesterhenn discovered a XSS vulnerability in login.php of
-LDAP Account Manager and reported this to the Debian BTS[1]. It
-requires to send malicious data via POST.
 
- [1] http://bugs.debian.org/726976
+> From: cve-assign@...re.org
+> Date: March 19, 2013, 8:27:40 AM AST
+> To: larry0@...com
+> Cc: cve-assign@...re.org
+> Subject: Re: CVE requests
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> Here are three CVE numbers related to your latest message, and one
+> related to a previous message.
+> 
+>> Hi, I've been asked to assign CVEs to the following vulnerabilities.
+> 
+> http://www.osvdb.org/show/osvdb/91232  fastreader CVE-2013-2615
+> http://www.osvdb.org/show/osvdb/91231  MiniMagic  CVE-2013-2616
+> http://www.osvdb.org/show/osvdb/91230  Curl       CVE-2013-2617
+> 
+>> From: "Larry W. Cashdollar" <larry0@...com>
+>> Subject: CVE requests
+>> Date: Fri, 8 Mar 2013 20:36:20 +0000
+>> Message-ID: <83661761-bee3-49c3-8bf8-acf0d4f8bc22@...com>
+>> 
+>> I was looking to see if the following vulnerabilities could have CVE numbers assigned to them?
+> 
+>> http://osvdb.org/show/osvdb/89910
+> 
+>> 89910 : Oracle Auto Service Request (SUNWswasr) asr Symlink Arbitrary File Overwrite
+> 
+> CVE-2013-1495 is assigned to this Oracle Auto Service Request issue.
+> 
+> - -- 
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.11 (SunOS)
+> 
+> iQEcBAEBAgAGBQJRSFkhAAoJEGvefgSNfHMdXawH/2QxH/nUlmBbeI+ZHzNqQPTx
+> mEMofROmq9/N8Cvb7rewjWo6AgOVgHWUwWlXBoTtCuO7/PSp42RUTdXa2gM90kjv
+> FNtwazw58LB+RZBZTgTdwMiMH5ltSAFIHDjc5agQpJxdQTBNFtxDlbzSMIkTbqSQ
+> wS9rz3r4cHnfPj5cV2WPBMR2B3doQriWeJn20sOBg9C5sTaR5NYLk9PBRRNvLDf+
+> 0XtASjxDppTbwDRuvxWo5H4yAMprtflWlp8wwK86zzvBbU9/qrDzE2WAc8ukb96m
+> VwDM9wrncGVZTSYqQxwGBrElhH4V03XmDSL6CpOwbKfiI2J0Tyk93r1ts5ndX+o=
+> =VCQx
+> -----END PGP SIGNATURE-----
 
-Upstream Bugreport:
-
- [2] http://sourceforge.net/p/lam/bugs/156/
-
-Upstream also has already commited fixes to the VCS:
-
- [3] http://sourceforge.net/p/lam/code/5074/
- [4] http://sourceforge.net/p/lam/code/5075/
-
-Could you please assign a CVE for this issue?
-
-Regards,
-Salvatore
