@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/5
-Message-ID: <CAA7hUgEK9nkbHbeWD9QEGp+kB3uANojwvnSv=WN=FaUZo36mbA@mail.gmail.com>
-Date: Wed, 14 Aug 2013 17:30:44 +0200
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/8
+Message-ID: <20130320095132.GA18899@dhcp-25-225.brq.redhat.com>
+Date: Wed, 20 Mar 2013 10:51:32 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Timo Sirainen <tss@....fi>
-Subject: Possible CVE request: dovecot crash when disconnecting during pop3 LIST
+Subject: CVE-2013-1848 -- Linux kernel: ext3: format string issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+ext3_msg() takes the printk prefix as the second parameter and the
+format string as the third parameter. Two callers of ext3_msg omit the
+prefix and pass the format string as the second parameter and the first
+parameter to the format string as the third parameter. In both cases
+this string comes from an arbitrary source.
 
-Dovecot's 2.2.5 release notes mention a fix for a client-triggered
-assert when disconnecting during a pop3 LIST[1]. Without more details,
-I can't tell if a CVE id should be assigned. Timo, could you please
-shed some more light, or provide a pointer to more details?
+An user able to mount ext3 filesystems could use this flaw to crash the
+system or, potentially, increase their privileges.
 
-Thanks in advance.
+Upstream fix:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=8d0c2d10dd72c5292eda7a06231056a4c972e4cc
 
-[1]http://www.dovecot.org/list/dovecot-news/2013-August/000261.html
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-1848
 
-Regards,
+Thanks,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Petr Matousek / Red Hat Security Response Team
