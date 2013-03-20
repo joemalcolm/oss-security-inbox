@@ -1,26 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/11
-Message-ID: <20130325214901.GB5378@redhat.com>
-Date: Mon, 25 Mar 2013 15:49:01 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/4
+Message-ID: <51497B9E.9000801@redhat.com>
+Date: Wed, 20 Mar 2013 03:04:30 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: ibutils improper use of files in /tmp
+CC: Henri Salo <henri@...v.fi>, larry0@...com, "Christey, Steven M." <coley@...re.org>
+Subject: Re: [Red Hat - Possible Forgery] Re: Ruby CVEs
 Content-Type: text/plain; charset=utf-8
 
-It was reported on full-disclosure that ibutils suffers from improper
-use of files /tmp that could allow a user to clobber files as the user
-running ibutils (probably usually root).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I didn't see a CVE request for this or anything show up here; if one
-hasn't been assigned, could it be?
+On 03/20/2013 02:43 AM, Kurt Seifried wrote:
 
-Thanks.
+Argh I didn't pay attention to Larry's previous emails where he listed
+the CVE's assigned:
 
-References:
+http://www.openwall.com/lists/oss-security/2013/03/19/9
 
-http://seclists.org/fulldisclosure/2013/Mar/87
-https://bugzilla.redhat.com/show_bug.cgi?id=927430
+http://www.osvdb.org/show/osvdb/91232  fastreader CVE-2013-2615
+http://www.osvdb.org/show/osvdb/91231  MiniMagic  CVE-2013-2616
+http://www.osvdb.org/show/osvdb/91230  Curl       CVE-2013-2617
 
+Please don't send requests to oss-sec if you already sent a request to
+Mitre/anyone else. Also I don't seem to have these in my emails from
+Mitre (to VIM list or anywhere else)?
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+> ===================
+>>> These 4 are all the ";" URL parsing issues ny larry0@...com 
+>>> =================== http://direct.osvdb.org/show/osvdb/91450 
+>>> command_wrap gem
+> 
+> Please use CVE-2013-1875 for this issue.
+
+Did this one get a CVE from Mitre?
+
+>>> http://direct.osvdb.org/show/osvdb/91232 fastreader gem
+> 
+> Please use CVE-2013-1876 for this issue.
+
+Please reject, use CVE-2013-2615 instead
+
+>>> http://direct.osvdb.org/show/osvdb/91231 MiniMagic gem
+> 
+> Please use CVE-2013-1877 for this issue.
+
+Please reject, use CVE-2013-2616 instead
+
+>>> http://direct.osvdb.org/show/osvdb/91230 Curl gem
+> 
+> Please use CVE-2013-1878 for this issue.
+
+Please reject, use CVE-2013-2617 instead
+
+> 
+>> Please note that in private email Larry said he will request
+>> CVEs for these security vulnerabilities. Adding Larry as CC so he
+>> can tell us if he already did that and if he didn't we can assign
+>> those in this thread.
+> 
+> As per Larry's previous emails, assigning here.
+> 
+>> --- Henri Salo
+> 
+> 
+> 
+> 
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRSXueAAoJEBYNRVNeJnmTtEMQANNhQAKQ0UGj3uBSz8ny5nhl
+9xAQdE1xyw8O+dRNVQPfKWJofJYVJOmmNF8qaT1ME5MqRMiLU/kwzRGkvhvWx7Oc
+G2KdxhJI4jlw2zpQgKipD4tsLoJ/IzI7eog7BDlS/x6IEVAi8KFGeHD81mkE+pr6
+UxpieuXEOo5DdVLshW1sSm3jTAqi5FUr0SoQ8sqWKav/s13/+yPdn+nzVYubzNtj
+NHnIk3v/WPVT39gT+2PNM2UpgtfOjmYuxuHVk/vBH5ivp5t/ryUsWlsLBRi7I5rd
+VBtfAa6z/ihsyijP4cQtPkITd4n9MHBzoka4h38JKVKHJQua3uiA989XVIDsSqBb
+/6j0RPuaMHBdDuYbpjUyKS1y8tbQPpne+M+6kM+iH6D7rIpDzm2AWGxW0WIPBs5e
+KRCVme6zL73r4d5kzTwPiGwXw93/MAfiX6HndePGD5VRW4OqOiLQgZBXmz3E7vQa
+tZNphYwzqd5xP19eIQeul/MEKhyjqJY7GHbAW9CVJBG4Rm1QP4mtKWohENUtO2DT
+zfSiREBnElLUyjxo5WakO7s1HtrQOPRfqF45DLlTMMPMRaAcx5b0sK4HCZjX2MLG
+7pndRiynI+/LtrBt/aZ6DfDlZiPNYokfKBnmhwaa0txlvsUlOt8ukYuNb0Aj4ynx
+220tPPDf3KpQepiLwJQ+
+=90CE
+-----END PGP SIGNATURE-----
