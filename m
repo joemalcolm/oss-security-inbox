@@ -1,21 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/13
-Message-ID: <3016705.6MkdEvGLZD@devil>
-Date: Thu, 16 May 2013 20:20 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2013-1962 libvirt: DoS (max count of open files exhaustion) due sockets leak in the storage pool
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/10
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF0904DE22@IMCMBX01.MITRE.ORG>
+Date: Wed, 20 Mar 2013 14:03:10 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: Reed Loden <reed@...dloden.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "kseifried@...hat.com" <kseifried@...hat.com>, Henri Salo <henri@...v.fi>, "larry0@...com" <larry0@...com>
+Subject: RE: Re: [Red Hat - Possible Forgery] Re: Ruby CVEs
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 16 May 2013 16:50:13 Petr Matousek wrote:
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-1962
+I agree that oss-security is not just for CVE requests (although that's what it feels like sometimes), but duplicate CVEs are a pain for everybody.  When posting to oss-security, it's reasonable to say whether CVEs have already been requested or not.  There is not a well-established infrastructure or communication channel to closely coordinate CVE assignments between MITRE and Kurt.
 
-Please do not point to a link with the CVE. If for any weird reason the cve 
-will be rejected or so,  the link will be invalid. Please point to the bug 
-number instead.
+- Steve
 
-Thanks
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+
+>-----Original Message-----
+>From: Reed Loden [mailto:reed@...dloden.com]
+>Sent: Wednesday, March 20, 2013 5:19 AM
+>To: oss-security@...ts.openwall.com
+>Cc: kseifried@...hat.com; Henri Salo; larry0@...com; Christey, Steven M.
+>Subject: Re: [oss-security] Re: [Red Hat - Possible Forgery] Re: [oss-security]
+>Ruby CVEs
+>
+>-----BEGIN PGP SIGNED MESSAGE-----
+>Hash: SHA1
+>
+>On Wed, 20 Mar 2013 03:04:30 -0600
+>Kurt Seifried <kseifried@...hat.com> wrote:
+>
+>> Please don't send requests to oss-sec if you already sent a request to
+>> Mitre/anyone else. Also I don't seem to have these in my emails from
+>> Mitre (to VIM list or anywhere else)?
+>
+>To be fair, this list isn't just for CVE requests... It's for security
+>issues in open source software[0]. As somebody who relies on this list
+>and others like it to stay on top of current issues, I definitely
+>appreciate the notification, even if CVEs have already been assigned. :)
+>
+>~reed
+>
+>[0] http://oss-security.openwall.org/wiki/mailing-lists/oss-security
+>-----BEGIN PGP SIGNATURE-----
+>Version: GnuPG v1.4.11 (GNU/Linux)
+>
+>iEYEARECAAYFAlFJfwsACgkQa6IiJvPDPVqSigCfYT4IEI9+DgyaE3UyPCne1/Vb
+>RpkAnAmNO0ivQgqqVQuI6CERrAJULa6L
+>=MCHH
+>-----END PGP SIGNATURE-----
