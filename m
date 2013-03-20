@@ -1,45 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/7
-Message-Id: <201304241718.r3OHHs3D013492@linus.mitre.org>
-Date: Wed, 24 Apr 2013 13:17:54 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2013-3221 can also relate to Microsoft SQL Server and IBM DB2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/5
+Message-ID: <20130320090828.GC2135@kludge.henri.nerv.fi>
+Date: Wed, 20 Mar 2013 11:08:28 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com, "Christey, Steven M." <coley@...re.org>, larry0@...com
+Subject: Re: Ruby CVEs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Mar 20, 2013 at 02:43:21AM -0600, Kurt Seifried wrote:
+> On 03/19/2013 04:00 AM, Henri Salo wrote:
+> > On Tue, Mar 19, 2013 at 01:17:11AM -0600, Kurt Seifried wrote:
+> >> http://direct.osvdb.org/search?search[vuln_title]=ruby&search[text_type]=titles
+> >>
+> >>
+> >>
+> >> 
+> ===================
+> >> These 4 are all the ";" URL parsing issues ny larry0@...com 
+> >> =================== http://direct.osvdb.org/show/osvdb/91450 
+> >> command_wrap gem
+> 
+> Please use CVE-2013-1875 for this issue.
+> 
+> >> http://direct.osvdb.org/show/osvdb/91232 fastreader gem
+> 
+> Please use CVE-2013-1876 for this issue.
+> 
+> >> http://direct.osvdb.org/show/osvdb/91231 MiniMagic gem
+> 
+> Please use CVE-2013-1877 for this issue.
+> 
+> >> http://direct.osvdb.org/show/osvdb/91230 Curl gem
+> 
+> Please use CVE-2013-1878 for this issue.
+> 
+> > Please note that in private email Larry said he will request CVEs
+> > for these security vulnerabilities. Adding Larry as CC so he can
+> > tell us if he already did that and if he didn't we can assign those
+> > in this thread.
+> 
+> As per Larry's previous emails, assigning here.
+> 
+> > --- Henri Salo
+> > 
+> 
+> 
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-In the http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-3221
-entry, what we meant is that CVE-2013-3221 is exclusively about the
-behavior of Ruby on Rails as discussed in the listed
-MLIST:[rubyonrails-security] 20130207 reference. If a reference is
-about a data-type injection impact in an application other than a Ruby
-on Rails application, it should not be mapped to this CVE. However, an
-applicable reference about interaction between Ruby on Rails and
-Microsoft SQL Server (or interaction between Ruby on Rails and IBM
-DB2) should be mapped to this CVE.
+These have been assigned by Mitre in email to Larry:
 
-(There might be a misinterpretation that CVE-2013-3221 is only about
-interaction with MySQL.
-http://twitter.com/dakull/statuses/326633931636084736 possibly
-suggests that, but we're bringing this up mostly because of a comment
-that someone else sent directly to MITRE.)
+http://www.openwall.com/lists/oss-security/2013/03/19/9
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+> http://www.osvdb.org/show/osvdb/91232  fastreader CVE-2013-2615
+> http://www.osvdb.org/show/osvdb/91231  MiniMagic  CVE-2013-2616
+> http://www.osvdb.org/show/osvdb/91230  Curl       CVE-2013-2617
 
-iQEcBAEBAgAGBQJReBIGAAoJEGvefgSNfHMdJpsH/1FRwadPMUtWImCMRTqpUY++
-oc7mACrVbpBhbajI2ZmDayJJKq3BNJ9706ig/084icZ9ToPgiaxNIntVPhl4yLDb
-MrjJ+yx/lgg4BFrr8KcoOFCDqfZ1SNxKh4q/oA10cLqHzFVZ+MjcTEUXU5zJmfKX
-td+x2ITcs6gfOdqD8HHqYO2LKYpvaWkmciGBc+3EEeW0x2G57eKOd7YyHplhKHwK
-Sqar7R1oGL9swinJvgw10fwJlSKBpq0dmNGjHp/x3zj8J7LATzFNcXrhau6d/+/V
-a4fG0AC0GzEXGVscb9Os3Kdg7SD+tkHGuvEwLyEwp4Ay+NqGtsXT97RgpuWrTQY=
-=jViV
------END PGP SIGNATURE-----
+I updated OSVDB items. No idea about http://osvdb.org/91450
+
+Do we REJECT CVE-2013-1876, CVE-2013-1877, CVE-2013-1878?
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
