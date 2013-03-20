@@ -1,135 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/30/2
-Message-ID: <5270917A.4070203@redhat.com>
-Date: Tue, 29 Oct 2013 22:56:26 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/3
+Message-ID: <514976A9.9080602@redhat.com>
+Date: Wed, 20 Mar 2013 02:43:21 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: mmcallis@...hat.com, oss-security@...ts.openwall.com
-CC: carnil@...ian.org
-Subject: Re: CVE Request: sup MUA Command Injection
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>, larry0@...com, "Christey, Steven M." <coley@...re.org>
+Subject: Re: Ruby CVEs
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/29/2013 08:26 PM, Murray McAllister wrote:
-> On 10/30/2013 07:44 AM, Kurt Seifried wrote:
->> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->> 
->> On 10/29/2013 01:30 PM, Salvatore Bonaccorso wrote:
->>> Hi,
->>> 
->>> On full-disclosure list there was reported a command injection 
->>> vulnerability in 'sup', a console-based email client.
->>> 
->>> [0] 
->>> http://rubyforge.org/pipermail/sup-talk/2013-October/004996.html
->>>
->>> 
-[1] http://seclists.org/fulldisclosure/2013/Oct/272
->>> 
->>> For reference quoting the upstream announce:
->>> 
->>> ----cut---------cut---------cut---------cut---------cut---------cut-----
->>>
->>>
+On 03/19/2013 04:00 AM, Henri Salo wrote:
+> On Tue, Mar 19, 2013 at 01:17:11AM -0600, Kurt Seifried wrote:
+>> http://direct.osvdb.org/search?search[vuln_title]=ruby&search[text_type]=titles
 >>
->>> 
-Greetings,
->>> 
->>> Security advisory (#SBU1) for Sup
->>> 
->>> We have been notified of an potential exploit in the somewhat 
->>> careless way Sup treats attachment metadata in received
->>> e-mails. The issues should now be fixed and I have released Sup
->>> 0.13.2.1 and 0.14.1.1 which incorporates these fixes. Please
->>> upgrade immediately and also ensure that your mime-decode or
->>> mime-view hooks are secure [0], [1].
->>> 
->>> This is specifically related to using quotes (',") around
->>> filename or content_type which is already escaped using Ruby 
->>> Shellwords.escape - this means that the string (content_type, 
->>> filename) is intended to be used _without_ any further quotes. 
->>> Please make sure that if you use .mailcap (non OSX systems),
->>> you do not quote the string.
->>> 
->>> Credit goes to: joernchen of Phenoelit (http://phenoelit.de)
->>> who discovered and suggested fixes for these issues.
->>> 
->>> [0]
->>> https://github.com/sup-heliotrope/sup/wiki/Viewing-Attachments 
->>> [1]
->>> https://github.com/sup-heliotrope/sup/wiki/Secure-usage-of-Sup
->>> 
->>> You can use 'gem' to upgrade or install sup. Please report any 
->>> issues to: https://github.com/sup-heliotrope/sup/issues
->>> 
->>> Regards, Gaute 
->>> ----cut---------cut---------cut---------cut---------cut---------cut-----
->>>
->>>
->>> 
-Upstream fixed (as mentioned in announce) the issue in 0.13.2.1
->>> and 0.14.1.1. Commits:
->>> 
->>> [2] 
->>> https://github.com/sup-heliotrope/sup/compare/release-0.13.2...release-0.13.2.1
->>>
->>>
->>>
 >>
->>> 
-[3]
->> https://github.com/sup-heliotrope/sup/compare/release-0.14.1...release-0.14.1.1
 >>
->>>
->>>
 >> 
-Could a CVE be assigned for this issue?
->>> 
->>> Regards, Salvatore
->>> 
->> 
->> Please use CVE-2013-4478 for this issue.
+===================
+>> These 4 are all the ";" URL parsing issues ny larry0@...com 
+>> =================== http://direct.osvdb.org/show/osvdb/91450 
+>> command_wrap gem
+
+Please use CVE-2013-1875 for this issue.
+
+>> http://direct.osvdb.org/show/osvdb/91232 fastreader gem
+
+Please use CVE-2013-1876 for this issue.
+
+>> http://direct.osvdb.org/show/osvdb/91231 MiniMagic gem
+
+Please use CVE-2013-1877 for this issue.
+
+>> http://direct.osvdb.org/show/osvdb/91230 Curl gem
+
+Please use CVE-2013-1878 for this issue.
+
+> Please note that in private email Larry said he will request CVEs
+> for these security vulnerabilities. Adding Larry as CC so he can
+> tell us if he already did that and if he didn't we can assign those
+> in this thread.
+
+As per Larry's previous emails, assigning here.
+
+> --- Henri Salo
 > 
-> To confirm, is this CVE for both the content_type issue and the
-> filename issue?
-> 
-> Thanks,
-> 
-> -- Murray McAllister / Red Hat Security Response Team
 
-CVE-2013-4478 is for the issue specifically covered in
-http://seclists.org/fulldisclosure/2013/Oct/att-272/whatsup.txt
-
-which is
-https://github.com/sup-heliotrope/sup/commit/8b46cdbfc14e07ca07d403aa28b0e7bc1c544785
-(security: shellwords escape attachment file names to prevent remote
-code execution).
-
-I missed that they fixed a second issue:
-
-https://github.com/sup-heliotrope/sup/commit/ca0302e0c716682d2de22e9136400c704cc93e42
-(security: prevent remote command injection in content_type)
-
-Pleas use CVE-2013-4479 for this
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJScJF5AAoJEBYNRVNeJnmT57MQANYex5v0uoNLQ6LfkHM16hnH
-quIf0urWlIC/CwY9KfkON8rh3seP1J9H+0iDcdOIzxCvDqFUXMTY4gJU5G1j1DDh
-SDoXoMW94kzW8xWb8tTJWqqfzSXb/teOUtlqPdcbzper15OjU6R6Ga9wJ6zzuQQZ
-w8dVH27oskgqmEplu/2vT+uop4JIv0fR0um6QiWdKHEpfGsAVjrm81OhEW519cvn
-H4FNSzgNl4Q+KuF3V1cZBsFDT/bCmm+MrMMYccAVn+anGV62H4Az8wM7aaDU4aTZ
-/mhiPgoNxtRbE+NzeAGDbNw9gsNtOzSRI+/t/rd605z3hhwwfNlF0MCyU1wiGhjF
-K2KjKnil4VlyUewjxNhLJRVzJ6wrJtKOrQi/od6eBN6Hv3AJhrK7RqmnzxBWlRQ1
-1/JBRL5qJiYquesgMwd4GPrhpar04p38+FMYnWbCcNkuAlqoNiivI8yt2knvLRKr
-mDjJAJY7FlxWd7Flz0/6GfPj3U0lxRn0vEFEPmy+BhnYZY5qnoP/77Kv1tuyWcbj
-/gzhrGTtkrNMaBEvYJ3UQtKCYlCRpQCvnWnQ9X/aG3aEGUPfxsVCWb42vht66AWg
-03n0GVAjtf7mWgFJ9KVVEgRf0oId6AJcSAGMSmnPqsrT55d7x84tTycqR0SRZ0Fo
-jWuwNu4O8S4oj9Z350z/
-=Zaxg
+iQIcBAEBAgAGBQJRSXaoAAoJEBYNRVNeJnmTBC8QANTC351DE1t2loRuTrKt8lJM
+g/6GYPEX3CohoaaHH/84VNp89v63ewbILDw3R7dCWkc4cjjyLUFM5eJthztWavQb
+fMoMSGgCEYysZQsQZhYL596XUJpqazO1/ITtfvoA6YTM+5nbBG2iGnLszFxbXmRs
+o7iuL7128r6POHd2LzQzDGtCdKQuUdinUbkyF1F9EbWwUgJO554uolSINs9ZYoE1
+Im4e0Lc9E4E458gx/cK8l3m7g4MqWwjO4ILr5JKyiSza11tRET0x/LHDl7u73Oae
+tcDszjgiE0zxFj64vKNU3FoIu6XsG0Wd20BfQo7qp75zz7Lk5KD1f0D9Zf/ZGcGB
+9bHS1W2obN60+jihOBwl+CiKSEpeWWMARbJg1kq3VFkZHxb0BSP/OvLbTg356L0P
+TkT9Icvt9Jup70I8AwFiMwfLyZnLZDgzJ5DfQv/22tn6LQd15pL8+k+eeUHOTkuq
+1SjpWEEfVz9ss292q8nT9+BmL5IP81pEZqfIu+/K8khOHVRVsZtZhW1NMzeM6AWx
+0GWSbHrN8eDhjhExww0Qrw9jpmn7YvxN7MjNfj8YuHIM82571RYFDSg/nZlzpkti
+D5aErdR6r/lOXZtI+r8pq84FEks2LztP9JP6m+O1D+NP2JHydtvEAllWz/6KRmxr
+YUovKvZgJXlg5HQUW68P
+=z+ry
 -----END PGP SIGNATURE-----
