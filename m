@@ -1,70 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/06/5
-Message-ID: <51378A09.8000307@redhat.com>
-Date: Wed, 06 Mar 2013 11:25:13 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, Ruby Security Team <security@...y-lang.org>
-Subject: CVE for Ruby Entity expansion DoS vulnerability in REXML (XML bomb)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/13
+Message-ID: <5149D4E2.1060804@openstack.org>
+Date: Wed, 20 Mar 2013 16:25:22 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2013-009] Keystone PKI tokens online validation bypasses revocation check (CVE-2013-1865)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-http://www.ruby-lang.org/en/news/2013/02/22/rexml-dos-2013-02-22/
+OpenStack Security Advisory: 2013-009
+CVE: CVE-2013-1865
+Date: March 20, 2013
+Title: Keystone PKI tokens online validation bypasses revocation check
+Reporter: Guang Yee (HP)
+Products: Keystone
+Affects: Folsom
 
-=====
+Description:
+Guang Yee from HP reported a vulnerability in the revocation check for
+Keystone PKI tokens. Those tokens are supposed to be validated locally
+using cryptographic checks, but the user also has the option of asking
+the server to validate them. In that case, the online verification of
+PKI tokens would bypass the revocation check, potentially affirming
+revocated tokens are still valid. Only Folsom setups making use of
+online verification of PKI tokens are affected.
 
-Unrestricted entity expansion can lead to a DoS vulnerability in
-REXML. (The CVE identifier will be assigned later.) We strongly
-recommend to upgrade ruby.
-Details
+Folsom fix:
+https://review.openstack.org/#/c/24906/
 
-When reading text nodes from an XML document, the REXML parser can be
-coerced in to allocating extremely large string objects which can
-consume all of the memory on a machine, causing a denial of service.
-
-Impacted code will look something like this:
-
-document = REXML::Document.new some_xml_doc
-document.root.text
-
-When the `text` method is called, entities will be expanded. An
-attacker can send a relatively small XML document that, when the
-entities are resolved, will consume extreme amounts of memory on the
-target system.
-
-Note that this attack is similar to, but different from the Billion
-Laughs attack. This is also related to CVE-2013-1664 of Python.
-
-All users running an affected release should either upgrade or use one
-of the work arounds immediately.
-
-=====
-
-Please use CVE-2013-1821 for this issue. I apologize in advance if a
-CVE was requested through other channels but we need a CVE for this
-ASAP. Also for future reference you can get CVEs via
-
-http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
+References:
+https://bugs.launchpad.net/keystone/folsom/+bug/1129713
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-1865
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJRN4oIAAoJEBYNRVNeJnmTEZwP/iySaWdApYtMK6qKs2eSuAXX
-u4jcoYy9zr1WX6H9Qxk5rfJLYN1RNZVLLAlyMECHop2rAf+SR6SDtleVqbiumFWn
-R22NmyhLwEE2z8o2bBEiX45C85L0ljSzmPnM+n1uxiGfXnJFrIpOHTi9iTxJMz5q
-sVhQr643hxERGLbn6mbvwrrz86dBj4mJ+c9oDrRnWTP4k8mPn7LQ0ARafHsEBL8m
-ymFP00/iLK+09UtYcMAtVnBx7BQghU4GodeN5jwaeUPYTsiQpLtceQ0ptdAO/8W+
-7f8gjdSotsPKYyJzmQAOtjWHi2Z7tGNiJYRFp4Aichzq7FSjBYZ4ExJp4fusi8Vq
-Am170qKY9AREu7xumaewp4I6iiVUkPiiOuZNXnYkgNpkgHa9yVQ4TlwSw8pEvAKT
-alCEcPuyeYr9bBw162DdOTCHnc78j2QPwia8gEbC0iigMcfY3sy5l+Quhe1UHDOG
-zPlHIm5k592hQgiGeZrDe/TdkYAAOEMgzG11WGCuhnR0/LfSV5ryKAA97CBQ+a6V
-ohmYnReCuGztjnz0DNuKj6ukTZSiHsWlzg5Qb+51D9SzEWoZqmLPnXSgtxwrpD2q
-eGNg7dLXrp9pyBCDpAH7oEbh00S1RVLd0W5mfh4r1/cEvUNc88qkkQj/K4qI9EuG
-RfoX/MgkndCKc6mKxdnS
-=7jHF
+iQIcBAEBCAAGBQJRSdTdAAoJEFB6+JAlsQQj9sUQAL0y9zV5xWHDhAFpfaUGobq6
+n5TVeEEf3kb1CIYuVhX6vHuPl2CtoekMSX7MOLehiwmbxGw3B4G7DONZrWuxmzOT
+J9B9kwMew3K5lE3X4oYH3cHjkTC+ZsnlUBzNiJIXEAkBFaGLmCwbt2eCREBcKvU8
+glaPKncO226Y85wMV+Sbe12qDX/82o6TydkcJglhdGF3AYI4813yGb/U41rkKUnq
+zlsg4Zaea4IFUe23fc9EchRDcgR1N+yfZf04+CKRymhvOcYzSLZDNxJpYN+jwzLy
+UcB3Jqak8FR0+w3k28bz41COUWtynrTy5FAoDgvGtLM2m1GedMygNKdMb1yERC9z
+ELWb0P1Z6qt5zZa6BORM185PJ9Dy5zQkOOOH1I7nWjnIa9wFzvbQBKHv5WPARWDu
+rdAM2I55JmGxo6qFJWK6QnpYI6o6PQjQ2s0FC/H2kCMgXPygURD/X101Y2lOFSZ7
+P8OhTKoVYqZf5pImpKCbtm1GHWIpev7BkzWvsFpPhVz4ExHSTsmc1Mk2ugDGQrgO
+tCcF7Eo0eABepY4qVrSUi4euZvpFsWcjl7GzQ0WLCWyMUdPo9271ZfsgxfPxId7l
+CMgn2hgpGv5+yTDDg4p8NSqmUp5hSMo/i6zgDrL9XEn4qx5Rr8pNqV/vUhmYQmzV
+qQqwB3DR57T1eFMlGL7y
+=9dar
 -----END PGP SIGNATURE-----
