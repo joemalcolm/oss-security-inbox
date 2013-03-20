@@ -1,111 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/13
-Message-ID: <20130820175849.GA1307@devzero.fr>
-Date: Tue, 20 Aug 2013 19:58:49 +0200
-From: vladz <vladz@...zero.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/9
+Message-ID: <20130320110953.GB18899@dhcp-25-225.brq.redhat.com>
+Date: Wed, 20 Mar 2013 12:09:53 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: vfs_read()/vfs_write(): potential missing checks (or not?)
+Subject: linux kernel: kvm: CVE-2013-179[6..8]
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* CVE-2013-1796
+Description of the problem:
+If the guest sets the GPA of the time_page so that the request to update
+the time straddles a page then KVM will write onto an incorrect page.
+Thewrite is done byusing kmap atomic to get a pointer to the page for
+the time structure and then performing a memcpy to that page starting at
+an offset that the guest controls.  Well behaved guests always provide a
+32-byte aligned address, however a malicious guest could use this to
+corrupt host kernel memory.
 
-I wanted to discuss some potential missing checks in the Linux kernel
-and more precisely within the read and write syscalls.  From my point of
-view, what will follow here constitutes a vulnerability but I wanted to
-have more opinions on the subject and request a CVE ID if needed.
+Upstream commit:
+https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=c300aa64ddf57d9c5d9c898a64b36877345dd4a9
 
-I noticed that a file descriptor isn't affected when its corresponding
-inode sees its permissions changed.  For instance:
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=917012
 
-    $ whoami
-    vladz               // a non-privileged user
-    $ exec 4>/tmp/test  // opens a file and assign fd 4 to it
- 
-Let say that root wants to own and protect the file:
+* CVE-2013-1797
+Description of the problem:
+There is a potential use after free issue with the handling of
+MSR_KVM_SYSTEM_TIME.  If the guest specifies a GPA in a movable or
+removable memory such as frame buffers then KVM might continue to write
+to that address even after it's removed via KVM_SET_USER_MEMORY_REGION.
+KVM pins the page in memory so it's unlikely to cause an issue, but if
+the user space component re-purposes the memory previously used for the
+guest, then the guest will be able to corrupt that memory.
 
-    # chown root:root /tmp/test
-    # chmod 400 /tmp/test
-    # ls -l /tmp/test
-    -r-------- 1 root root 0 août  18 23:04 /tmp/test
+Upstream commit:
+https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=0b79459b482e85cb7426aa7da683a9f2c97aeae1
 
-We may think that the file is safe from any further modification from
-any user except root.  But it's not, user is still able to update its
-content through the opened file descriptor:
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=917013
 
-    $ du -b /tmp/test
-    0	/tmp/test
-    $ echo 'Hey!' >&4   //redirects strings to fd 4
-    $ du -b /tmp/test
-    5	/tmp/test       // file now contains the string 'Hey!\n' (+5 bytes)
+* CVE-2013-1798
+Description of the problem:
+If the guest specifies a IOAPIC_REG_SELECT with an invalid value and
+follows that with a read of the IOAPIC_REG_WINDOW KVM does not properly
+validate that request.  ioapic_read_indirect contains an
+ASSERT(redir_index < IOAPIC_NUM_PINS), but the ASSERT has no effect in
+non-debug builds.  In recent kernels this allows a guest to cause a
+kernel oops by reading invalid memory.  In older kernels (pre-3.3) this
+allows a guest to read from large ranges of host memory.
 
-Another scenario can allow file content disclosure.  For instance, to
-create a file used to put sensitive content (such as credentials), the
-owner (or the application) will generally proceed with the following
-steps:
+Upstream commit:
+https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=a2c118bfab8bc6b8bb213abfc35201e441693d55
 
-    a) creates the file (perms will depend on umask, usually 022)
-    b) restricts the file permissions (chmod 600)
-    c) opens the file and write sensitive content in it
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=917017
 
-There is a time lapse between a) and b) where someone else can open the
-file in read-only to obtain a file descriptor and later disclose the
-content by accessing the fd:
+All three issues were found and reported by Andrew Honig of Google.
 
-    $ exec 4</etc/credentials
-    [...]
-    $ cat <&4
-    [... file content ...]
-
-Note here that the "cat" command will only display the content once, in
-order to see further updates of this file, user must reposition the fd's
-offset thanks to the lseek() call (cf. catfd.c [1]).
-
-Even if it's preferable and more common to set a restricted umask before
-creating the sensitive file, the scenario above can be found in a bunch
-of softwares.
-
-I haven't spent a lot of time hunting, I've just used regular
-expressions through source packages and post-installation scripts, and
-limited my scope to Debian and RedHat.  Well, without big effort, I
-found 15 potential vulnerable applications, the current listing can be
-obtained on demand.  I don't think those applications have to be
-separately fixed as I think the real problem reside and should be fixed
-in the kernel.
-
-That said, I was unable to find any clear documentation about how
-read/write syscalls should deal with file descriptors.  POSIX's chmod
-page [2] covers the subject a bit saying:
-
-   "Any file descriptors currently open by any process on the file could
-    possibly become invalid if the mode of the file is changed to a
-    value which would deny access to that process. One situation where
-    this could occur is on a stateless file system. This behavior will
-    not occur in a conforming environment."
-
-Looking at the kernel sources, the vfs_read(), vfs_write(), vfs_readv()
-and vfs_writev() functions checks the permissions of the file object
-(file->f_mode) before operating on file descriptor:
-
-    $ cat -n linux-3.10.7/fs/read_write.c
-    [...]
-    353 ssize_t vfs_read(struct file *file, char __user *buf, size_t count, loff_t *pos)
-    354 {
-    355         ssize_t ret;
-    356
-    357         if (!(file->f_mode & FMODE_READ))
-    358                 return -EBADF;
-
-I believe this is insufficient, the inode object should be checked too.
-So that if the file's permissions allow read/write operations, so we can
-perform reading/writing from/to the file descriptor.  I've patched the
-concerned function to do so (cf. patch [3]).
-
-Cheers,
-vladz.
-
-
-Links:
-
-  [1] http://vladz.devzero.fr/svn/codes/misc/catfd.c
-  [2] http://pubs.opengroup.org/onlinepubs/009695399/functions/chmod.html
-  [3] http://vladz.devzero.fr/svn/codes/misc/rw_inode_perms-3.10.6.patch
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
