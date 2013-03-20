@@ -1,23 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/14
-Message-ID: <20130808172147.GA11641@hunt>
-Date: Thu, 8 Aug 2013 10:21:47 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Dan Williams <dcbw@...hat.com>
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>
-Subject: Re: Re: CVE Request -- Four flaws in WiMAX (afaik upstream is dead for this)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/14
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF0904E0FF@IMCMBX01.MITRE.ORG>
+Date: Wed, 20 Mar 2013 17:13:48 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "kseifried@...hat.com" <kseifried@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Henri Salo <henri@...v.fi>, "larry0@...com" <larry0@...com>
+Subject: RE: [Red Hat - Possible Forgery] Re: Ruby CVEs
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 08, 2013 at 12:10:21PM -0500, Dan Williams wrote:
-> There don't have to be public bugs yet, but if nobody writes patches in
-> a reasonable amount of time perhaps they should just be made public.
+http://direct.osvdb.org/show/osvdb/91450 (command_wrap gem) did not get any separate CVEs from MITRE, so the original assignment of CVE-2013-1875 is still valid.
 
-They are public already:
-http://www.openwall.com/lists/oss-security/2013/08/08/10
+We have REJECTed CVE-2013-1876, CVE-2013-1877, and CVE-2013-1878 as originally stated by Kurt.
 
-This is probably for the best, sounds like anyone reliant upon this code
-would be wise to re-write much of it anyway...
+- Steve
 
-Thanks
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+
+>-----Original Message-----
+>From: Kurt Seifried [mailto:kseifried@...hat.com]
+>Sent: Wednesday, March 20, 2013 5:05 AM
+>To: oss-security@...ts.openwall.com
+>Cc: Henri Salo; larry0@...com; Christey, Steven M.
+>Subject: Re: [Red Hat - Possible Forgery] Re: [oss-security] Ruby CVEs
+>
+>-----BEGIN PGP SIGNED MESSAGE-----
+>Hash: SHA1
+>
+>On 03/20/2013 02:43 AM, Kurt Seifried wrote:
+>
+>Argh I didn't pay attention to Larry's previous emails where he listed
+>the CVE's assigned:
+>
+>http://www.openwall.com/lists/oss-security/2013/03/19/9
+>
+>http://www.osvdb.org/show/osvdb/91232  fastreader CVE-2013-2615
+>http://www.osvdb.org/show/osvdb/91231  MiniMagic  CVE-2013-2616
+>http://www.osvdb.org/show/osvdb/91230  Curl       CVE-2013-2617
+>
+>Please don't send requests to oss-sec if you already sent a request to
+>Mitre/anyone else. Also I don't seem to have these in my emails from
+>Mitre (to VIM list or anywhere else)?
+>
+>> ===================
+>>>> These 4 are all the ";" URL parsing issues ny larry0@...com
+>>>> =================== http://direct.osvdb.org/show/osvdb/91450
+>>>> command_wrap gem
+>>
+>> Please use CVE-2013-1875 for this issue.
+>
+>Did this one get a CVE from Mitre?
+>
+>>>> http://direct.osvdb.org/show/osvdb/91232 fastreader gem
+>>
+>> Please use CVE-2013-1876 for this issue.
+>
+>Please reject, use CVE-2013-2615 instead
+>
+>>>> http://direct.osvdb.org/show/osvdb/91231 MiniMagic gem
+>>
+>> Please use CVE-2013-1877 for this issue.
+>
+>Please reject, use CVE-2013-2616 instead
+>
+>>>> http://direct.osvdb.org/show/osvdb/91230 Curl gem
+>>
+>> Please use CVE-2013-1878 for this issue.
+>
+>Please reject, use CVE-2013-2617 instead
+>
+
