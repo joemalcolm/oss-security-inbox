@@ -1,32 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/09/1
-Message-ID: <20130809000249.GE12615@kroah.com>
-Date: Thu, 8 Aug 2013 17:02:49 -0700
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Cc: Petr Matousek <pmatouse@...hat.com>
-Subject: Re: CVE Request: Linux kernel: arm64: unhandled el0 traps
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/2
+Message-ID: <5149763B.3080500@redhat.com>
+Date: Wed, 20 Mar 2013 02:41:31 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: Untrusted startup file inclusion in Chicken Scheme
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 08, 2013 at 03:39:30PM +0530, P J P wrote:
->   Hi,
-> 
-> Linux kernel built for the ARM64(CONFIG_ARM64) platform is
-> vulnerable to a crash when the processor generates trap/esr, that is
-> not handled gracefully, which leads to bad_mode(), wherein it'll
-> die() or oops().
-> 
-> A user/program could use this flaw to crash the kernel resulting in DoS.
-> 
-> Upstream fixes:
-> ===============
->  -> https://git.kernel.org/linus/381cc2b9705512ee7c7f1839cbdde374625a2a9f
->  -> https://git.kernel.org/linus/9955ac47f4ba1c95ecb6092aeaefb40a22e99268
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-CVE requests for code that can only run on a processor that is not
-shipping yet?  Isn't there a rule somewhere about CVEs not being allowed
-for stuff like this?
+On 03/19/2013 01:12 PM, Peter Bex wrote:
+> Hi all,
+> 
+> I'd like to request a CVE identifier for an untrusted code
+> execution problem in Chicken Scheme: The interpreter loads a file
+> called ".csirc" from the current directory on startup, without
+> checking whether it can be trusted.
+> 
+> Versions 4.8.2 after c6750af99ada7fa4815ee834e4e705bcfac9c137 are
+> unaffected, as will 4.8.3 and later.  The first stable release to
+> include a fix will be 4.9.0.
+> 
+> For the upstream advisory info see 
+> http://lists.nongnu.org/archive/html/chicken-announce/2013-03/msg00002.html
+>
+> 
+and (important!) the errata:
+> http://lists.nongnu.org/archive/html/chicken-announce/2013-03/msg00003.html
+>
+>  Cheers, Peter
 
-thanks,
+Please use CVE-2013-1874 for this issue.
 
-greg k-h
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRSXY7AAoJEBYNRVNeJnmTQYkP/2y4/0wOFf0mgDR7ZyDSLupB
+VqsjLq99l8KGGsNmXAkQNCBEo+OEJXzHPzOe5gFjgCxy6C+CAvGF/UIEVHfgsiyG
+gDgk9Nn6E0u+LOBy6kxPC+oiTLxueV1COY/ax0o/+ZqkbeZ9WRAX3ltvBicBFHhI
+vYoMCxXbeuccXVGJHN4vcT9Wyf7+8XI4BQmGqXN8Pp1FyYjdv2ZQM5QrwguiypDQ
+EXffol4xmhBiYHPd/LZxF0k687Y/q3SGxajP1y9bIVbYuvclRG7NcP38M+bK/Z/K
+bC0tgrWE6W67zzi7XLwBQ4aE2WO94bxgZxq4DBqNx4iOZwaZZiO/RrROFBSSUQlw
+aZoPKrhfGm6afPafHqhS4E5VlKB4aSXIaHJ4IQ9sTHdrWacxwe2ed5OFy/tUsrid
+DOXz9oh1nlaAyPrNBrqkAp/TVaclYHABQ6kMy2J/6UzA6ZF8ZoEimppnSGngnHYi
+4GjrCvbqS17hQogQdKJJ/+rBywihoxfaziQQaZcjs8ZT/YWv4OUTmGU6rh1BBl8Y
+2Lu6S0cfBcNs7bG0WBcOFmPzgayy8sjICIXlJSF12uogSnMWYwv5aDb2qMANv3T3
+4gnPi8kNfpuXhiSDMtA40eW0w0eBGTjDYIbvqGaZsNZGQMBkpCqxQwwb5Pvx/9ib
+OD6/ZArF7QXN4taAMkvi
+=wJvU
+-----END PGP SIGNATURE-----
