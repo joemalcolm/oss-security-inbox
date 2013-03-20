@@ -1,16 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/1
-Message-ID: <CAGVo=bE1Q8zRkm9XCqDXYjbpRiFtkKr1Ru51mLbVAT_Pj5=-AQ@mail.gmail.com>
-Date: Wed, 4 Sep 2013 02:14:08 -0400
-From: Eric Wimberley <wimberleyeric@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/12
+Message-ID: <20130320145734.GO3176@redhat.com>
+Date: Wed, 20 Mar 2013 08:57:34 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Watchman - GCC buffer overflow framework
+Subject: CVE-2013-0287: sssd simple access provider flaw prevents intended ACL use when client to an AD provider
 Content-Type: text/plain; charset=utf-8
 
-I'm working on a new framework that does a better job than glibc's malloc
-implementation at preventing overflows. Right now it just does the heap,
-but there are plans to improve upon stack canary checks as well. It's not
-really at a production level yet, but feel free to test it out and comment.
+This was posted to the linux-distros last week and as per the policy I'm
+posting it here now.
 
-https://github.com/ewimberley/Watchman
 
+Kaushik Banerjee discovered that SSSD's "simple" access provider did not
+work as expected when SSSD is configured as an Active Directory client
+when using the new (as of version 1.9.0) Active Directory provider.
+During the PAM account phase, SSSD may not not know the group name of a
+group that the user is a member of, but only the Windows Security
+Identifier.  Because the group name is not known, the simple_deny_groups
+option does not work at all, and will always permit access; if any
+groups are noted in simple_deny_groups, all groups are permitted access.
+In addition, if any groups are noted in simple_allow_groups, access is
+always denied to everyone.
+
+By default, the configuration will allow all users to login (both
+simple_deny_groups and simple_allow_groups are empty).
+
+The Active Directory provider was introduced in version 1.9.0; earlier
+versions of SSSD are not vulnerable to this flaw.
+
+
+Acknowledgements:
+
+This issue was discovered by Kaushik Banerjee of Red Hat.
+
+References:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-0287
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
+
+Content of type "application/pgp-signature" skipped
