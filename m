@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/4
-Message-ID: <8761xc54b4.fsf@windlord.stanford.edu>
-Date: Mon, 17 Jun 2013 23:19:27 -0700
-From: Russ Allbery <rra@...nford.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/7
+Message-ID: <CAA7hUgEJ2j9FP-5w5PaLBK-A2X4Qz3UG9bcE9nmzD816bS4AtA@mail.gmail.com>
+Date: Wed, 20 Mar 2013 10:40:59 +0100
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on a vuln/CVE?
+Subject: Re: CVE request: XSS flaws fixed in ganglia
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...hat.com> writes:
+Hi,
 
-> We have software with a now insecure configuration as it points to a
-> site that may or may not be under attacker control. It seems to me like
-> this might be a candidate for a CVE. Thoughts and comments for and
-> against are welcome (I'm on the fence myself).
+On 26 February 2013 21:33, Kurt Seifried <kseifried@...hat.com> wrote:
+> Sorry I forgot about this after all the XML excitement. Please use
+> CVE-2013-1770 for this issue.
 
-It's possibly worth noting that the repository that was at that site was
-signed and had been for some years, and the key was not compromised.  So
-not only would the site need to be taken over by an attacker for a
-successful exploit, but the affected user would have to ignore the copius
-warnings that APT produces when installing packages from an untrusted
-archive, or have configured APT to not check repository signatures.
+FTR, this is supposed to be fixed by the following commit by upstream:
+https://github.com/ganglia/ganglia-web/commit/552965f33bf79d41ccbec3f1f26840c8bab54ad6
 
+I haven't reviewed it, though.
+
+Cheers,
 -- 
-Russ Allbery (rra@...nford.edu)             <http://www.eyrie.org/~eagle/>
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
