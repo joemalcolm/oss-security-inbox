@@ -1,83 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/02/1
-Message-Id: <201309020043.r820hGQH015179@linus.mitre.org>
-Date: Sun, 1 Sep 2013 20:43:16 -0400 (EDT)
-From: cve-assign@...re.org
-To: roguecoder@...h.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: [CVE Request] IndiaNIC Testimonial 2.2 WP plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/21/4
+Message-ID: <20130321113936.05ad3259@redhat.com>
+Date: Thu, 21 Mar 2013 11:39:36 +0100
+From: Stefan Cornelius <scorneli@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2012-5662 x3270 improper validation of SSL certificates
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> The testimonial plugin by IndiaNIC contains CSRF, XSS and SQLi vulnerabilities.
-> I was able to deface the website, extract user credentials etc through crafted forms.
-> Can someone please assign CVE's to this?
->
-> 1: http://seclists.org/fulldisclosure/2013/Sep/5
+Florian Weimer of the Red Hat Product Security Team reported that x3270
+did not properly validate SSL certificates. When connecting to a host
+that has a mismatched hostname in the certificate, x3270 does not warn
+that there is a problem with the certificate.
 
-> http://wordpress.org/plugins/indianic-testimonial/
+For x3270 versions that implemented SSL certificate verification, but
+did not properly handle the mismatched hostname case (e.g. the 3.3.12
+series prior to 3.3.12ga12), this has been assigned CVE-2012-5662.
 
-The entire disclosure seems to be based on CSRF attacks against an
-admin. Based on what you sent, we are not sure whether XSS is an
-independent vulnerability in this plugin. Is there a usable XSS attack
-that does not require a CSRF vulnerability, and does not require that
-the admin intentionally enter an XSS attack string during an
-authenticated session?
+Please note that CVE-2012-5662 should not be used for older x3270
+versions that supported SSL, but did not implement any kind of
+certificate verification at all. No CVE identifier has been assigned to
+this problem.
 
-The SQL injection:
+Version 3.3.12ga12, which fixes this issue, is available via the
+project's SourceForge page [1].
 
-  name="custom_query" value="1=1) union select 1,2,3,@@version,5,6,7,8,9,10,11,12,13,14#"
+In the new code, host certificate checking is turned off. To turn it
+on, add '-verifycert' to the command line. The checks will include the
+hostname.
 
-is something that we would typically expect is an independent
-vulnerability. A person who has admin access within a web interface is
-not necessarily authorized to execute arbitrary SQL statements. We
-found this code that seems to be relevant:
+References:
+[1] http://sourceforge.net/projects/x3270/files/x3270/3.3.12ga12/
 
-  http://plugins.svn.wordpress.org/indianic-testimonial/trunk/testimonial.php
-  
-      if ($_template_data['custom_query']) {
-        $filter_by = " AND ({$_template_data['custom_query']})";
-      }
+RH bug #889373:
+https://bugzilla.redhat.com/show_bug.cgi?id=889373
 
-      $_testimonial_result = $this->wpdb->get_results(
-      "SELECT * FROM {$this->wpdb->prefix}inic_testimonial WHERE (id NOT IN(" .
-      implode(",", $_current_featured_testimonial_id) . ")){$filter_by}
-      ORDER BY {$_template_data['ord_by']} LIMIT {$_no_of_testimonial}");
-
-So, the outcome at this point is:
-
-  IndiaNIC Testimonial plugin 2.2 for WordPress
-
-  CSRF:           Use CVE-2013-5672.
-  SQL injection:  Use CVE-2013-5673.
-  XSS:            no CVE assigned; waiting for other information that
-                  XSS is an independent primary vulnerability here
-
-MITRE's CVE team does not do vulnerability coordination, but we think
-this disclosure process is not what the vendor would have preferred:
-
-  2013-08-07 - Email sent to IndiaNIC
-  2013-08-08 - Notification left on the plugin's Support board on wordpress.org
-
-Please see the "For a WordPress plugin security issue, email plugins
-[at] wordpress.org" step listed on the
-http://codex.wordpress.org/FAQ_Security web page.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSI91WAAoJEGvefgSNfHMdFzgIAIIIKw5mquHpGMdKVgmEoA/H
-NfKySaxYvWUhxspwxYP4tciasZWpMDI3AL3s8OTlOJ1uEr08GTEvUXd6lBvXvqRu
-w0bQhYwpGBU6A5m71UWiOUKWUy7qKstC9fcUNlxbDysX7s+/tUzFZsqpXmtuTPc7
-a/KFj/LuGcNi4voBqkv0/GZFNvU9jmySjhSVPCOwAiFw02HmU3GbmvJ24CNFvkca
-QJNY3jxLA3h7YSHPk8A0sYxWiiAyKXeyjN5t2o2R0tHBiNpKIoqCZjH+YSjNo1IU
-YuM7i3yfrQm8uGlLc8gB7NmWMMQqokf0BF4Gi3StFGBAsx+WrX3yAu45LvLyjMI=
-=u0kJ
------END PGP SIGNATURE-----
+Thanks,
+-- 
+Stefan Cornelius / Red Hat Security Response Team
