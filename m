@@ -1,54 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/12/3
-Message-ID: <51B8C0F2.60909@redhat.com>
-Date: Wed, 12 Jun 2013 12:41:54 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, vnd@...h.net, security@...dpress.org
-Subject: Re: CVE request: WordPress 3.5.1 denial of service vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/21/5
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF0904EC2B@IMCMBX01.MITRE.ORG>
+Date: Thu, 21 Mar 2013 14:05:13 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "larry Cashdollar" <larry0@...com>
+CC: "kseifried@...hat.com" <kseifried@...hat.com>
+Subject: RE: Ruby CVEs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I agree with Alexander.  The CVE assignment process is never intended to introduce unnecessary delays to the publication of vulnerability information.  Merely noting whether CVEs have already been requested should reduce most of the risk of duplicates without forcing people to delay publication.
 
-On 06/11/2013 07:55 AM, Henri Salo wrote:
-> There is denial of service vulnerability (CWE-400) in WordPress 3.5.1. Could you
-> assign CVE identifier, thanks.
-> 
-> Advisory URL: https://vndh.net/note:wordpress-351-denial-service
-> PoC: https://vndh.net/snippet:wordpress-351-denial-service:wordpress-py
-> Status: Reported to vendor by founder. No reply.
-> Reproduced: https://github.com/wpscanteam/wpscan/issues/219
-> Note: "Exploitation of this vulnerability is possible only when there is at
-> least one password protected post on the blog."
-> 
-> I have no idea how many uses password protected blog posts and there isn't easy
-> way to find out. This might also affect multisite installations. There is patch
-> in advisory, which I did not verify.
-> 
-> ---
-> Henri Salo
-> 
+- Steve
 
-Please use CVE-2013-2173 for this issue.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+>-----Original Message-----
+>From: Solar Designer [mailto:solar@...nwall.com]
+>Sent: Wednesday, March 20, 2013 10:58 PM
+>To: larry Cashdollar
+>Cc: oss-security@...ts.openwall.com; kseifried@...hat.com
+>Subject: Re: [oss-security] Ruby CVEs
+>
+>[snip]
+>Overall, I think all of you have tried to do the right thing, and I
+>would not want to have information withheld from this list merely to
+>avoid duplicate CVE IDs in the future.  CVEs are handy, but the CVE
+>assignment process should not affect what is posted publicly and when.
 
-iQIcBAEBAgAGBQJRuMDyAAoJEBYNRVNeJnmTyYsP/iQS0yEH6Us8d3TcmPUrebKW
-SH6qYMgXAxQJUS+c3haLT92ZbwN+YvWweZSPELOBq+pynG2TrXAnsyy8233mMCNK
-b0U7i22Nld3G8/BTZtRQhzfXw85HPJbYFAJ0WDrq7m3hQSoZucqOc+apXv8Y6LST
-5t4AAs4f8kE68CGupeNvuuOWTLOBaoo1Yk8lVgpSoPDCDBzJ3eby4VhYv6NAggdn
-h9sGyqz0E5nAC+4xMMM3w6OKsbh0vRkFNHU183tOl1Yej5sDwfHHDjbsmmfbFtjQ
-4rpwepr8KvCg3NVmIqZz6Chr67ylrfioY6TDR1cao2iKDyBkWb5EWqBo7V0PAz+w
-ypKH3ykcxeCxSOvecoMLo6nfPZZ/rnasxvag08z6TJ6nraIoQ7NBzgNjoHEVo2s4
-09CLneYlveFrN3N3QdYEx1RZVuNoj+GkvsmvGGl40lxdSIoY8v88Wk1T/2FyrF+s
-AfcHla4iqy5mdrcBI3v8WsojoXXCj2TxPmXV0yBqSyFszt38zUaugIayz1lwJ2hz
-X0d4MAuHPhcUet0NnJDiejsR/9dIthkCr4VoZ9anbrHZSmXyy3NpZb2aCkOJxMgy
-IPk4c0aUPgQm6FS8doe5nl7Mts2FEllURNVg1ZL2fHtGZPz+UGYW8Klaf1Bfl97+
-ZHySQr7HqGvEIZHV+j65
-=lBRl
------END PGP SIGNATURE-----
