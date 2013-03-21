@@ -1,56 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/14
-Message-ID: <1371246029.4482.57.camel@goat.lightspeed>
-Date: Fri, 14 Jun 2013 16:40:29 -0500
-From: John Lightsey <john@...nuts.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/21/6
+Message-ID: <20130321142147.GA4602@kludge.henri.nerv.fi>
+Date: Thu, 21 Mar 2013 16:21:47 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: FD leakage for cgi program on Monkey HTTPD
+Subject: Re: Ruby CVEs
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2013-06-14 at 12:02 -0700, Seth Arnold wrote: 
-> On Fri, Jun 14, 2013 at 06:20:59PM +0000, Christey, Steven M. wrote:
-> > Felipe,
-> > 
-> > Sorry if this is a dumb question.
-> > 
-> > If you are using "file descriptor leak" in the sense of "malicious
-> > parties can directly access the file descriptor" - then that doesn't
-> > seem to be the case here, because permissions are limited only to you.
+On Thu, Mar 21, 2013 at 02:05:13PM +0000, Christey, Steven M. wrote:
+> I agree with Alexander.  The CVE assignment process is never intended to introduce unnecessary delays to the publication of vulnerability information.  Merely noting whether CVEs have already been requested should reduce most of the risk of duplicates without forcing people to delay publication.
 > 
-> I seem to recall this issue came up for Apache around a decade back; it
-> also forgot to close the listening sockets before executing CGI scripts.
-> 
-> These sorts of events brought about a general consensus that scripts
-> or other programmable code executed directly by the webserver was by
-> definition completely trusted. If you don't trust the CGIs or plugin
-> modules as much as the webserver, you'd run them via FastCGI as another
-> user or otherwise use the webserver as a proxy in front of the services.
-> 
-> Yes, a CGI could accept() connections on those sockets and generally
-> muck things up -- but they already run with the full privileges of the
-> webserver.
+> - Steve
 
-CGI scripts don't run with the full privileges of the webserver. They
-typically run with the privileges appropriate to a container inside the
-webserver (a combination of virtualhost configuration directives, URL
-address space, document root and  uid/gid.)
+There hasn't been any delays in publication of this security vulnerability.
+Advisory was made in different mailing list without CVE. This is the reason I
+asked him to request CVE identifier and pointed to oss-security mailing list.
 
-A user on the server that can edit CGI scripts in one context shouldn't
-be able to take over other contexts on the same system. How would shared
-hosting and userdir be possible if CGI scripts were allowed to do this?
+CVE got assigned. List knows about the issue. End of story. Next problem,
+please.
 
-You could certainly argue that some webservers are not written to
-support shared hosting or userdir style functionality, but Monkey
-clearly is written to support it.
+---
+Henri Salo
 
-I don't see how this issue is very different from CVE-2012-4442 and
-CVE-2012-4443. Do you believe those CVEs were not appropriate?
-
-> 
-> The Monkey folks probably should use close-on-exec on their file
-> descriptors for simple reliability reasons. And this should probably
-> not get a CVE -- unless the Monkey server documentation claims there is
-> a trust boundary between the server and CGIs. I'd be surprised.
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
