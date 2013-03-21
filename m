@@ -1,166 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/1
-Message-ID: <50FCA5DF.3030105@moodle.com>
-Date: Mon, 21 Jan 2013 10:20:15 +0800
-From: Michael de Raadt <michaeld@...dle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/21/3
+Message-ID: <loom.20130321T105302-272@post.gmane.org>
+Date: Thu, 21 Mar 2013 10:29:39 +0000 (UTC)
+From: Damien Regad <damien.regad@...ckgroup.com>
 To: oss-security@...ts.openwall.com
-Subject: Moodle security notifications public
+Subject: CVE request: MantisBT text search query can crash site
 Content-Type: text/plain; charset=utf-8
 
-The following security notifications have now been made public. Thanks 
-to OSS members for their cooperation.
+Dear all,
 
-=======================================================================
-MSA-13-0001: Security issue in Google Spellchecker in TinyMCE
+MantisBT user 'jjtest' discovered an issue [1] affecting MantisBT versions
+1.2.12 to 1.2.14 included.
 
-Description:       A security issue was reported by TinyMCE. This fix
-                    has been applied to Moodle.
-Issue summary:     import tinymce spellchecker 2.0.6.1
-Severity/Risk:     Serious
-Versions affected: 2.4, 2.3 to 2.3.3+, 2.2 to 2.2.6+, 2.1 to 2.1.9+
-Reported by:       Petr Škoda
-Issue no.:         MDL-37283
-CVE Identifier:    CVE-2012-6112
-Workaround:        Disable spellchecker plugin
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-37283
+Anybody having access to a MantisBT instance (including anonymous users on
+web-facing applications) may issue a search query on the View Issues page; if a
+filter combining some criteria and a text search with 'any condition' is
+applied, the generated SQL will results in a potentially huge cartesian product
+which, depending on the size of the underlying database, has the potential to
+bring down the site/db server as it runs out of resources.
 
-=======================================================================
-MSA-13-0002: Capability issue with Outcome editing
+The root cause of this behavior is joining a table with a from clause and
+setting the join's criteria in the query's where clause, without taking
+consideration the operator's precedence (AND/OR).
 
-Description:       Users without the appropriate capability were able
-                    to set a custom outcome they had created as a
-                    standard site-wide capability when editing that
-                    outcome.
-Issue summary:     Teachers can set Outcomes to be Standard when
-                    re-editing
-Severity/Risk:     Minor
-Versions affected: 2.4, 2.3 to 2.3.3+, 2.2 to 2.2.6+, 2.1 to 2.1.9+
-                    1.9 to 1.9.19
-Reported by:       Elena Ivanova
-Issue no.:         MDL-27619
-CVE Identifier:    CVE-2012-6098
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-27619
+Full details about this issue can be found in our bugtracker [1].
 
-=======================================================================
-MSA-13-0003: Potential server file access through backup restoration
+A patch for this issue is available [2] in the project's repository on Github,
+and will be included in MantisBT version 1.2.15, which we expect to release in a
+couple of weeks once testing is completed.
 
-Description:       Paths in backups to restorable files were not being
-                    sufficiently validated and could be manipulated to
-                    gain access to files on the server.
-Issue summary:     moodle1 backup converter path not properly validated
-Severity/Risk:     Serious
-Versions affected: 2.4, 2.3 to 2.3.3+, 2.2 to 2.2.6+, 2.1 to 2.1.9+
-Reported by:       Dan Poltawski
-Issue no.:         MDL-36977
-CVE Identifier:    CVE-2012-6099
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-36977
+References:
+[1] http://www.mantisbt.org/bugs/view.php?id=15573
+[2] https://github.com/mantisbt/mantisbt/commit/d16988c3ca232a7
 
-=======================================================================
-MSA-13-0004: Information leak through activity report
+Kindly assign a CVE ID for this issue.
 
-Description:       Under certain circumstances, when last access is
-                    included in a list of fields forced to be hidden,
-                    the Activity report would still reveal users' last
-                    access.
-Issue summary:     Activity Report showing lastaccess even if it is a
-                    hidden field
-Severity/Risk:     Minor
-Versions affected: 2.4, 2.3 to 2.3.3+, 2.2 to 2.2.6+
-Reported by:       Jody Steele
-Issue no.:         MDL-33340
-CVE Identifier:    CVE-2012-6100
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-33340
+Damien Regad
+MantisBT developer
+mailto:mantisbt-dev@...ts.sourceforge.net
+http://www.mantisbt.org/bugs/
 
-=======================================================================
-MSA-13-0005: Potential phishing attack through URL redirects
 
-Description:       Insufficient filtering of return URLs on some pages
-                    was allowing redirects to sites outside Moodle.
-Issue summary:     Open redirect issues
-Severity/Risk:     Minor
-Versions affected: 2.4, 2.3 to 2.3.3+, 2.2 to 2.2.6+
-Reported by:       Simon Coggins
-Issue no.:         MDL-35991
-CVE Identifier:    CVE-2012-6101
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-35991
-
-=======================================================================
-MSA-13-0006: Potential information leak in Assignment module
-
-Description:       Through URL manipulation, students were able to view
-                    feedback comments provided on other student's
-                    submissions.
-Issue summary:     Assignment comment permissions are not being
-                    validated
-Severity/Risk:     Serious
-Versions affected: 2.4, 2.3 to 2.3.3+
-Reported by:       Dan Poltawski
-Issue no.:         MDL-37244
-CVE Identifier:    CVE-2012-6102
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-37244
-
-=======================================================================
-MSA-13-0007: Potential exploit in messaging
-
-Description:       The messaging system was not checking the user's
-                    session correctly when messages are sent.
-Issue summary:     Course message sending can be exploited by CSRF
-Severity/Risk:     Minor
-Versions affected: 2.4, 2.3 to 2.3.3+, 2.2 to 2.2.6+
-Reported by:       Andrew Nicols
-Issue no.:         MDL-36600
-CVE Identifier:    CVE-2012-6103
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-36600
-
-=======================================================================
-MSA-13-0008: Information leak through Blog RSS
-
-Description:       Blog posts that were hidden from guest users in the
-                    Web interface were being included in the related RSS
-                    feed.
-Issue summary:     Guest users can access RSS feed for site level blogs
-Severity/Risk:     Minor
-Versions affected: 2.4, 2.3 to 2.3.3+, 2.2 to 2.2.6+
-Reported by:       Charles Fulton
-Issue no.:         MDL-36620
-CVE Identifier:    CVE-2012-6104
-Workaround:        Disable blogging
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-36620
-
-=======================================================================
-MSA-13-0009: Information leak through Blog RSS
-
-Description:       Blog posts were still accessible via the blog RSS
-                    feed, even after blogging was disabled globally.
-Issue summary:     Blog posts still available via RSS even after the
-                    blogging is disabled
-Severity/Risk:     Minor
-Versions affected: 2.4, 2.3 to 2.3.3+, 2.2 to 2.2.6+, 2.1 to 2.1.9+
-Reported by:       David Mudrak
-Issue no.:         MDL-37467
-CVE Identifier:    CVE-2012-6105
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-37467
-
-=======================================================================
-MSA-13-0010: Failure to check capabilities in calendar
-
-Description:       Students were able to delete course level calendar
-                    subscriptions created by teachers.
-Issue summary:     Student user able to Remove imported calendar from
-                    Manage Subscriptions
-Severity/Risk:     Minor
-Versions affected: 2.4
-Reported by:       David O'Brien
-Issue no.:         MDL-37106
-CVE Identifier:    CVE-2012-6106
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-37106
