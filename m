@@ -1,60 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/10/2
-Message-ID: <522EA80F.2030808@tejimaya.com>
-Date: Tue, 10 Sep 2013 14:03:11 +0900
-From: Kousuke Ebihara <ebihara@...imaya.com>
-To: oss-security@...ts.openwall.com
-CC: security@...npne.jp
-Subject: CVE Request: OpenPNE 3, opWebAPIPlugin, opOpenSocialPlugin -- XXE vulnerability fix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/21/2
+Message-ID: <20130321025754.GA12382@openwall.com>
+Date: Thu, 21 Mar 2013 06:57:54 +0400
+From: Solar Designer <solar@...nwall.com>
+To: larry Cashdollar <larry0@...com>
+Cc: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: Ruby CVEs
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Larry,
 
-I'm a member of OpenPNE security handling team.
+On Wed, Mar 20, 2013 at 09:57:20PM -0400, larry Cashdollar wrote:
+> This was my fault, I should have sent the CVE numbers off list. Sorry all.
 
-We've released our OSS product, OpenPNE 3, opWebAPIPlugin and opOpenSocialPlugin to fix XXE vulnerability.
+Why keep information off-list, when it is of interest to some on the
+list?  That would be worse.  Reviewing the list archives, I see that the
+"Ruby CVEs" thread was started in here by Kurt:
 
-Whould you assign CVEs to them?
+http://www.openwall.com/lists/oss-security/2013/03/19/2
 
-1. OpenPNE 3 XXE Vulnerabilities
-    Affects: 3.8.7, 3.6.11, 3.4.21.1, 3.2.7.6, 3.0.8.5
-    Fixed: 3.8.7.1, 3.6.11.1, 3.4.21.2, 3.2.7.7, 3.0.8.6
-    Commit: https://github.com/openpne/OpenPNE3/commit/6147099848185a82a18d1ba8aa84e69a7eadfcba
-    Security Advisory: http://www.openpne.jp/archives/12091/
-    Original reporter of this vulnerability: Kousuke Ebihara
+Then you posted three additional messages on the same day:
 
-    Access Vector: Network exploitable
-    Access Complexity: Low
-    Authentication: Not required to exploit
-    Impact Type: Allows unauthorized disclosure of information; Allows unauthorized modification; Allows disruption of service
+http://www.openwall.com/lists/oss-security/2013/03/19/7
+http://www.openwall.com/lists/oss-security/2013/03/19/8
+http://www.openwall.com/lists/oss-security/2013/03/19/9
 
-2. opWebAPIPlugin XXE Vulnerabilities
-    Affects: 0.5.1, 0.4.0, 0.1.0
-    Fixed: 0.5.1.1, 0.4.0.1, 0.1.0.1
-    Commit: https://github.com/ebihara/opWebAPIPlugin/commit/8820a4a8d7b8c8fbfa4533cc5645f371d454ca5b
-    Security Advisory: http://www.openpne.jp/archives/12091/
-    Original reporter of this vulnerability: Kousuke Ebihara
+with each of them in its own thread.  Thus, maybe the only thing you
+could have done better on that day (given that you had already requested
+CVEs privately 3 days before) was to reply to the thread started by Kurt,
+thereby making it more likely that he'd see the messages as being
+relevant to his "Ruby CVEs".  I understand that replying to an existing
+thread with a forwarded message may be cumbersome; if so, you could have
+posted the forwarded messages separately (like you did) and then replied
+to the original thread saying that you had just posted a relevant
+message (and preferably including a list archive URL for that message).
 
-    Access Vector: Network exploitable
-    Access Complexity: Low
-    Authentication: Not required to exploit
-    Impact Type: Allows unauthorized disclosure of information; Allows unauthorized modification; Allows disruption of service
+On March 16, you could have done better by requesting the CVEs via
+oss-security rather than in private.  This would also serve to inform
+the list subscribers of the security issues earlier.
 
-3. opOpenSocialPlugin XXE Vulnerabilities
-    Affects: 0.8.2.1, 0.9.9.2, 0.9.13, 1.2.6
-    Fixed: 0.8.2.2, 0.9.9.3, 0.9.13.1, 1.2.6.1
-    Commit: https://github.com/openpne-ospt/opOpenSocialPlugin/commit/a19c02997cf3045ad18b57c14a05465bfb3ae88c
-    Security Advisory: http://www.openpne.jp/archives/12091/
-    Original reporter of this vulnerability: Kousuke Ebihara
+Kurt could have done better by paying attention to other messages on
+this list before assigning CVE IDs.  The traffic in here is not high.
 
-    Access Vector: Network exploitable
-    Access Complexity: Low
-    Authentication: Not required to exploit
-    Impact Type: Allows unauthorized disclosure of information; Allows unauthorized modification; Allows disruption of service
+Overall, I think all of you have tried to do the right thing, and I
+would not want to have information withheld from this list merely to
+avoid duplicate CVE IDs in the future.  CVEs are handy, but the CVE
+assignment process should not affect what is posted publicly and when.
 
 Thanks,
-Kousuke
 
--- 
-Kousuke Ebihara
-ebihara@...imaya.com
+Alexander
