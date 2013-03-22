@@ -1,80 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/23/8
-Message-Id: <E1Ty54I-0003Fr-SW@xenbits.xen.org>
-Date: Wed, 23 Jan 2013 18:29:03 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 35 (CVE-2013-0152) - Nested HVM exposes host to being driven out of memory by guest
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/22/3
+Message-ID: <CAJzxam+htS2d0p_8qdA2h7qoD+a8A4Cb=kbdVs7+ReOLmk6odg@mail.gmail.com>
+Date: Fri, 22 Mar 2013 19:20:36 +1100
+From: David Black <disclosure@....org>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: python-pip insecure temporary directory handling
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Mar 22, 2013 at 5:28 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 03/20/2013 08:13 AM, David Black wrote:
+>> Prior to version 1.3 pip used '/tmp/pip-build' as a temporary
+>> directory and as per the report in
+>> https://github.com/pypa/pip/issues/725 would follow a symbolic
+>> link placed at '/tmp/pip-build' when writing temporary files.
+>>
+>
+> Is this the one actually fixed in
+> https://github.com/pypa/pip/pull/780/files
+>
+> ? thanks.
 
-	     Xen Security Advisory CVE-2013-0152 / XSA-35
-                           version 4
-
-       Nested HVM exposes host to being driven out of memory by guest
-
-UPDATES IN VERSION 4
-====================
-
-Fix corrupt patch xsa35-4.2-with-xsa34.patch.
-
-ISSUE DESCRIPTION
-=================
-
-Guests are currently permitted to enable nested virtualization on
-themselves. Missing error handling cleanup in the handling code makes
-it possible for a guest, particularly a multi-vCPU one, to repeatedly
-invoke this operation, thus causing a leak of - over time - unbounded
-amounts of memory.
-
-IMPACT
-======
-
-A malicious domain can mount a denial of service attack affecting the
-whole system.
-
-VULNERABLE SYSTEMS
-==================
-
-Only Xen 4.2 and Xen unstable are vulnerable. Xen 4.1 and earlier are
-not vulnerable.
-
-The vulnerability is only exposed by HVM guests.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this vulnerability.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-To fix both XSA 34 and XSA 35, first apply xsa34-4.2.patch from XSA 34
-and then *also* apply xsa35-4.2-with-xsa34.patch from this advisory.
-
-To fix this issue without addressing XSA 34, use xsa35.patch.
-
-$ sha256sum xsa35*.patch
-4a103bf14dd060f702289db539a8c6c69496bdfd1de5d0c0468c3aab7b34f6a5  xsa35-4.2-with-xsa34.patch
-e69b01033b0fa4c3d175697566d2f0b161337e8d206654919937f77721dbf866  xsa35.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJRACvBAAoJEIP+FMlX6CvZhWgH/AmojPzrSnLIPmP+kyphQeYk
-Yg00TDSm+rV8cmG6CE66r1WMibi1S/19yEkE6fJ1bgJtSBgcIqGls8NULPD+JvnH
-6WmjktyH85LWcVbqNsjaPYAqyYOQJMMfmLDmW+ksc/SQgEH0zV4xAiA1iLIGJYRT
-oEjIXg/m76hjsq9u/njprxHNIJH81K84Jh4wZkR7LIdZUxJgdIRHFcNIPhjNAEfP
-k9jsfscuudU1bH7qJc/bJBbZFEnd6mw2zqn+M8UsLwow7A70x2JCAjCbplU1Zbxf
-pe1P+E9upNFrsWXQ8O365ve6owaQP/CCcEDS9o2V+Fxc8ZjJ0nYJo3WWKIxQgqk=
-=jAmO
------END PGP SIGNATURE-----
-
-Download attachment "xsa35-4.2-with-xsa34.patch" of type "application/octet-stream" (793 bytes)
-
-Download attachment "xsa35.patch" of type "application/octet-stream" (919 bytes)
+Yes it is.
