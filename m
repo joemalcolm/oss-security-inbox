@@ -1,34 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/15
-Message-ID: <87a9odqmlk.fsf@windlord.stanford.edu>
-Date: Thu, 02 May 2013 11:10:31 -0700
-From: Russ Allbery <rra@...nford.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/22/2
+Message-ID: <514BFABA.70509@redhat.com>
+Date: Fri, 22 Mar 2013 00:31:22 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+CC: Damien Regad <damien.regad@...ckgroup.com>
+Subject: Re: CVE request: MantisBT text search query can crash site
 Content-Type: text/plain; charset=utf-8
 
-Alistair Crooks <agc@...src.org> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> And if you seriously think someone who searches for my public key on a
-> webserver, or through mail, or business card, etc, downloads my public
-> key from one of the servers, imports it into their own pubring, signs it
-> with their own private key, then mails it to me, or uploads it to one of
-> the key servers, all without trusting me in any way, then I'll show you
-> a pretty awful stalker (and fairly inefficient one, due to the need to
-> sign my pubkey), a fan boy (which is hardly likely to happen in my
-> case), or someone who is rather sad. (I'm discounting impaired judgement
-> due to the baroque processes involved here, sorry xkcd).
+On 03/21/2013 04:29 AM, Damien Regad wrote:
+> Dear all,
+> 
+> MantisBT user 'jjtest' discovered an issue [1] affecting MantisBT
+> versions 1.2.12 to 1.2.14 included.
+> 
+> Anybody having access to a MantisBT instance (including anonymous
+> users on web-facing applications) may issue a search query on the
+> View Issues page; if a filter combining some criteria and a text
+> search with 'any condition' is applied, the generated SQL will
+> results in a potentially huge cartesian product which, depending on
+> the size of the underlying database, has the potential to bring
+> down the site/db server as it runs out of resources.
+> 
+> The root cause of this behavior is joining a table with a from
+> clause and setting the join's criteria in the query's where clause,
+> without taking consideration the operator's precedence (AND/OR).
+> 
+> Full details about this issue can be found in our bugtracker [1].
+> 
+> A patch for this issue is available [2] in the project's repository
+> on Github, and will be included in MantisBT version 1.2.15, which
+> we expect to release in a couple of weeks once testing is
+> completed.
+> 
+> References: [1] http://www.mantisbt.org/bugs/view.php?id=15573 [2]
+> https://github.com/mantisbt/mantisbt/commit/d16988c3ca232a7
+> 
+> Kindly assign a CVE ID for this issue.
+> 
+> Damien Regad MantisBT developer 
+> mailto:mantisbt-dev@...ts.sourceforge.net 
+> http://www.mantisbt.org/bugs/
 
-I routinely do this.  It's called a key-signing party.  The only trust
-that I am expressing with that signature is that I have seen and verified,
-to the best of my ability, some form of reliable identification for that
-person (ideally a passport I can verify, or a social environment in which
-it would be very difficult to impersonate someone you are not) in
-combination with a proof that the key I signed belongs to the person whose
-identification I checked.
+Please use CVE-2013-1883 for this issue.
 
-Just because someone attended a key-signing party doesn't mean that I
-would, say, trust them to install software on my system.
 
--- 
-Russ Allbery (rra@...nford.edu)             <http://www.eyrie.org/~eagle/>
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRS/q6AAoJEBYNRVNeJnmTRsEQAMByzsXbSsbpHPMfIdVK8SXS
+sfINVKfjOkin5BEr+jn13GXRIXQdJ1IzuzMkrIhXR+DBf3UrC0tRnWENcg5rNPVQ
+uxT6DZEcfJYFheTzrenF6XkCQmEKrGA3BOw3l/5ov3HGY++Doizoghw3B1+IoPsv
+yEWrwhvdH2lajBZa61pqtPDZGGOVrpi46um1py8zQt+HBaIdGcSWzkgzNubEsNPG
+68Qn8Zycrzxaj04qtfTVI1iQ89he7Xq0TfsDRDiLbcte2sg9DhtMtqodBp9i/ZvM
+tKxjyjFDyoA0w5/jwwCTZfW2hfYIZYhVEOS/wKU1BAV89J7GDS+gRmq55ASVsioY
+FMtD3F8ZrD9SaIhCpHkBAEzltJYE0JIn7b074BTm0FXiwPF7I4u3C78aDv2L4NMJ
+ttNyVrBJtwIyhG4i29un1f6CZljF/QYKJEKrKpYnZNCvdf05XOTv33ms7cTTjEdV
+fkD7SGS8xXk19Z7/KZTqhWHHKZvoyxx55XUXUgt8oEaZfNfQ+FAyn1bqwL4XjfU9
+chuu6x8O51fH2cinJyZkSE6GLSOTv5f4GxEexxXt8QcbQiv0USGICfLwqbTjIiF6
+j4vFZdhXacE5wh+DVS3/xSCsy7T8KOdBLuAekhjnRfw5Khjq9XK5JKu+JPMyBlnR
+V0HVrnr/J0J9jEKs8qPN
+=jAJs
+-----END PGP SIGNATURE-----
