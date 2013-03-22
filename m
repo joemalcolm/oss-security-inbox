@@ -1,45 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/11
-Message-ID: <51D71CE5.8090309@redhat.com>
-Date: Fri, 05 Jul 2013 13:22:13 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/22/1
+Message-ID: <514BFA1C.6040301@redhat.com>
+Date: Fri, 22 Mar 2013 00:28:44 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>, security@...cle.com
-Subject: Re: Possible CVE request: virtualbox virtio-net host DoS
+CC: David Black <disclosure@....org>
+Subject: Re: CVE Request: python-pip insecure temporary directory handling
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/05/2013 04:13 AM, Raphael Geissert wrote:
-> Hi,
+On 03/20/2013 08:13 AM, David Black wrote:
+> Prior to version 1.3 pip used '/tmp/pip-build' as a temporary 
+> directory and as per the report in 
+> https://github.com/pypa/pip/issues/725 would follow a symbolic
+> link placed at '/tmp/pip-build' when writing temporary files.
 > 
-> Quoting [1]:
->> I have discovered a problem with virtio-net that leads to a
->> lockup of the host machine's kernel and the need for a hard reset
->> to make it working again.
-> 
-> The bug is said to be worked around in version 4.2.14 and really
-> fixed in 4.2.16, but the changelog of either version doesn't
-> reference that ticket.
-> 
-> Rumors say that virtualbox makes the host randomly hang, but since 
-> there is an actual bug report and confirmation from upstream this
-> time I guess a CVE id should be assigned.
-> 
-> [1] https://www.virtualbox.org/ticket/11863 [2]
-> https://www.virtualbox.org/wiki/Changelog [3]
-> https://secunia.com/advisories/53858/
-> 
-> Cheers, -- Raphael Geissert - Debian Developer www.debian.org -
-> get.debian.net
 
-Oracle is a CNA so they should handle this:
+Is this the one actually fixed in
+https://github.com/pypa/pip/pull/780/files
 
-http://cve.mitre.org/cve/cna.html
-
-CC'ing them. Can you guys assign one quickly so this can be properly
-tracked? Thanks!
+? thanks.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -47,17 +29,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR1xzlAAoJEBYNRVNeJnmTrrsQALVz10X3jeJXJwZ+Zv5lRsJ9
-GRwxUqpMiRnE1ruslEQYsapH5+AWF5i9PQe10RYGyZP3HMBxPFj+4SYYgNRHjJqI
-5KI3BSmpxwX4nvr6J5OvZpfrclfM/Xk/jEDJv7Ixz6//qi/IfrGn7ybBoQqanJ+T
-Fo18/HyDRHoykS4w5C1zaXtidgM+32kB+8UQKa31A8wsYbZQs58UybGZGGfFX3Ye
-3C24KZp/PFKqtnT1HixNpsOvZIW8WoviYuViz16MJrAGmieZj/yozTrVeN+T/eZb
-omDdXknUvXr11ZBK7oyPTM4qL1jkSXL6ECPTiI0h+jBccRvavpf6jtpJZC/ANZyA
-pi1BxU0sb1+5B6aXPdmFgIpZzXwjUyBybpCXkJ4DdLkjoriExa8uRNe5FXes+RAr
-d4iRwxr0tbXIaEyUHWpor8KCTZWBWxVT++lnjgIIFoA3lfEZ+4DGxUugey2QscJF
-Px3xbp8+AAAuGqUgf03W3IWyYzjlTmMjnut1vcc/BwbtVVtnaLcHgv9sPhjrmCj6
-tRJjCC1gU+BU+b8EF1sRfFqeAb79NZ709xFOAUau0WYb1kR18XCKDGBgmkmBm3ki
-xLWaBdToIX7T8LkOKQGReunVXqJdBu2mYruYf3X3Bu5koJDtuUUzbqqJDgGbTYNn
-E2Ue0NhUPbQZMw379XEE
-=O5Fn
+iQIcBAEBAgAGBQJRS/obAAoJEBYNRVNeJnmTZLoP/jKyjznzB0IIFJ9MP0fR8lh3
+JtxidUWEPpTBBse74c/xEpI3K5k+atITJKryvLDJzCYzeRziNo8vX5MU1j/ok0tP
+wLrSnP9zVd0lRQBdr4C9Ym8m+/D+RLtRmJqhCV9ijXrTuNJblogyEJBC08JR6wuR
+mDGejMmw895KRh+23O5vW38GLR4nk6hyyPHwFVgNWSc+28yrSj/M472Mq9QmnpwV
+l7wcep5G91SoIMMQHV2iDUzBvOktIzdI0kxLfZFZjfyUS9mLJ8lfgCyHXjJ/05fk
+08C3T3bLjjgkl/5F7wtrsnRFfBkzeML348D6H/+A7B6okdPGAsaBtMK1oAe7d/dl
+KrjQqmya4DY53BejghuCzo00NJUfTo1i8FbNPYZCHVj73FivBxjeDss7btVWpFYo
+06lidSqEt5Huy/n6AYGOU8zm9FCebrtm7SfD1KMQnW+3ZOmMfAieztdfuxzNwOeT
+N4+9LYsx1TtVXUZknfMCJQKX1xIPtU7B420gQZMlbvQaPFuyVSx0l7JLlnSaYz45
+PNrVZvqDfdpicacPMdS3HXCJUy6WEYElJetiiZjPrK6ccBeNa3NCuWQBkcMg5Pno
+kT7pMW0n0V5YlCNSHDg2/Itj+hanWp5iK96wqmm+JrKCxRxzOpx0lTp8NCiaHRzh
+ccwj9wn5r/djvEingyi0
+=WU5i
 -----END PGP SIGNATURE-----
