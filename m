@@ -1,21 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/04/1
-Message-ID: <20130703211411.GL298336@jupiter.n2.diac24.net>
-Date: Wed, 3 Jul 2013 23:14:11 +0200
-From: David Lamparter <equinox@...c24.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/22/6
+Message-ID: <514CB888.9090206@gmail.com>
+Date: Fri, 22 Mar 2013 13:01:12 -0700
+From: Forest Monsen <forest.monsen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Quagga OSPF-API stack overrun
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for "Views" (Drupal contributed module)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I guess I need a CVE number for this, we've discovered a local network
-exploitable stack overrun in Quagga's ospfd.
+Hi there,
 
-Reference:
-http://lists.quagga.net/pipermail/quagga-dev/2013-July/010621.html
+I'd like to request a CVE identifier for this:
 
-Cheers,
+SA-CONTRIB-2013-035 - Views - Cross Site Scripting (XSS)
+http://drupal.org/node/1948358
 
--David
-(Quagga maintainer)
+Thanks!
+
+Best,
+Forest
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iEYEARECAAYFAlFMuIEACgkQ/ILCL9e1Br541ACeLYSUKWHcGOEkUbOOS1szyVUR
+G2MAoKKvDkjkwTmQJo6IYMfB+/gUkuWJ
+=orhY
+-----END PGP SIGNATURE-----
