@@ -1,40 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/7
-Message-ID: <5242F42A.3090003@moritz-naumann.com>
-Date: Wed, 25 Sep 2013 14:33:14 +0000
-From: Moritz Naumann <security@...itz-naumann.com>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-CC: security@...plemachines.org
-Subject: Re: CVE request: Simple Machines Forum (SMF) <= 2.0.5 - multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/22/8
+Message-ID: <514CC26B.2020107@redhat.com>
+Date: Fri, 22 Mar 2013 14:43:23 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Drupal Security Team <security@...pal.org>
+Subject: Re: CVE Request -- drupal7-views : SA-CONTRIB-2013-035 - Views - Cross Site Scripting (XSS)
 Content-Type: text/plain; charset=utf-8
 
-On 24.09.2013 14:17 +0000, Henri Salo wrote:
-> On Mon, Sep 16, 2013 at 07:23:52PM -0600, Kurt Seifried wrote:
->> Can you provide a summary of the diff? thanks.
-[..]
-> XSS in index.php?action=admin;area=manageboards;sa=newboard;cat=1 "board_name"
-> Requires admin account
-> PoC: "><BODY ONLOAD=alert('XSS')>
-> Verified in 2.0.4
-> Not fixed in 2.0.5
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 03/22/2013 07:23 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, Drupal Security Team, vendors,
 > 
-> SMF guys, this CSRF should help to verify this issue. Can you fix this in next
-> release? Contact me in case you need help.
+> Drupal upstream has released: [1] http://drupal.org/node/1948358
+
+CVE-2013-1887
+
+> and updated version of the Views module (Views 7.x-3.6): [2]
+> http://drupal.org/node/1948354
 > 
-[..]
+> correcting one cross-site scripting (XSS) flaw.
 
-This CSRF doesn't work for me on two 2.0.4 installations I tested on.
-Both return
-  Unable to verify referring url. Please go back and try again.
+The security issue in views is caused by various places in the views
+UI where a string is not sanitized,
+because it has been assumed to be static and by commiters, though you
+can change some of these strings using other administrative
+permissions. SA-CONTRIB-2013-035 - Views - Cross Site Scripting (XSS)
 
-There seems to be a CSRF protection in this hidden form field:
-  <input type="hidden" name="e2b8c5b3437"
-value="bdcc798a0a86fa141da538f7c3a6ec42" />
+I'm a bit confused, is this via SA-CONTRIB-2013-035 or a separate
+issue as well?
 
-So this doesn't seem exploitable this way (but it also doesn't make the
-XSS bug vanish in the haze, either).
 
-To clarify, I'm a SMF user (and independent tester) not affiliated with
-the SMF developers.
+> AFAICT from [1], there doesn't seem to be a CVE identifier for this
+> issue yet.
+> 
+> Could you allocate one?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
 
-Moritz
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRTMJrAAoJEBYNRVNeJnmTjIUP/0rn+yNqLpAPVoZJOKKjzC/O
+AComiUFEBzLPxWbJGPS8aEY738ABh3G557U3QH0xab0WKHsq4y7pOb8i2iGmUTOM
+9t62qmZssTf80omcPZ0rKMo+dZXIXrwNsQbqB/yApuVixfbbUPKf4vF8PQVraijm
+NaBt/Gjl7G7bpHW5ZqellBNO7eHEUqAt2FQZp+UcWfR7NFASef+8BR6plrco/Sjn
+c75GySKWia99lm7qt65Q8ddT2P9ECQIoDileWzWyrWhqHpsTilWGTe+xyF5fzob4
+Zz6Z/EE0VP/ZIbfLaNip2+8Oa665T1B2tgLuUDV3jrRu11lnB3vcNfAErWdwSULM
+sy98z8NujPPmPhXa2F1jIqZN9adPHjYuvOOEYOdZL+yiA698XxRQKmHkHom4cB4Y
+FpXk/F+YrTE+Qn0XayJZriEUIzVe8z1LWC8lQDA8xWmCEptu81fIVd97A6Tk2MrV
+4Z2pNuJ1Z3EGkZBuFNbf1FZ6M8KTbwE8qz0gEia0GpmNDegecUWewxtlxqRM4xLD
+CVfpYWN3EsS2u2M7Maw2kdHWuWjxaS69xLncVKaDB5oEFrpU61PIhLoglneDdZxH
+BgANfSjucbxvfeOWapjk0GPd9cNKQ5jtKMRZb/x6JtkLBjX+GZTMlDvI82A0BN76
+JOYCC9mTQ1uRfCHsITzV
+=gTiE
+-----END PGP SIGNATURE-----
