@@ -1,92 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/2
-Message-Id: <E1VOkV5-0005Sa-KJ@xenbits.xen.org>
-Date: Wed, 25 Sep 2013 08:31:11 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 62 (CVE-2013-1442) - Information leak on AVX and/or LWP capable CPUs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/22/11
+Message-ID: <514CC340.2010405@nixnuts.net>
+Date: Fri, 22 Mar 2013 15:46:56 -0500
+From: John Lightsey <john@...nuts.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: mod_ruid2 before 0.9.8
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 03/22/2013 03:36 PM, Kurt Seifried wrote:
+> On 03/22/2013 09:08 AM, John Lightsey wrote:
 
-            Xen Security Advisory CVE-2013-1442 / XSA-62
-                              version 2
+>> In versions of mod_ruid2 before 0.9.8, the filedescriptor used to
+>> break out of the chroot is inherited by all Apache subprocesses.
+>> This allows CGI scripts to also to break out of the chroot by
+>> performing a fchdir() across the inherited file descriptor.
+> 
+> 
+>> http://sourceforge.net/mailarchive/forum.php?thread_name=514C503E.4020109%40users.sourceforge.net&forum_name=mod-ruid-announce
+> 
+> Can
+> 
+> you provide a link to the source code fix? thanks.
+> 
 
-            Information leak on AVX and/or LWP capable CPUs
+https://github.com/mind04/mod-ruid2/commit/1fed9dda70cd44d54301df19730a29ae0989e0a2
 
-UPDATES IN VERSION 2
-====================
+The key part of the fix is the block at line 366:
 
-Public release.
+} else if (fcntl(root_handle, F_SETFD, FD_CLOEXEC) < 0) {
+...
 
-ISSUE DESCRIPTION
-=================
 
-When a guest increases the set of extended state components for a vCPU saved/
-restored via XSAVE/XRSTOR (to date this can only be the upper halves of YMM
-registers, or AMD's LWP state) after already having touched other extended
-registers restored via XRSTOR (e.g. floating point or XMM ones) during its
-current scheduled CPU quantum, the hypervisor would make those registers
-accessible without discarding the values an earlier scheduled vCPU may have
-left in them.
-
-IMPACT
-======
-
-A malicious domain may be able to leverage this to obtain sensitive information
-such as cryptographic keys from another domain.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.0 and onwards are vulnerable when run on systems with processors
-supporting AVX and/or LWP.  Any kind of guest can exploit the vulnerability.
-
-In Xen 4.0.2 through 4.0.4 as well as in Xen 4.1.x XSAVE support is disabled by
-default; therefore systems running these versions are not vulnerable unless
-support is explicitly enabled using the "xsave" hypervisor command line option.
-
-Systems using processors supporting neither AVX nor LWP are not vulnerable.
-
-Xen 3.x and earlier are not vulnerable.
-
-MITIGATION
-==========
-
-Turning off XSAVE support via the "no-xsave" hypervisor command line option
-will avoid the vulnerability.
-
-CREDITS
-=======
-
-Jan Beulich discovered this issue.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa62.patch                 Xen 4.2.x, 4.3.x, and unstable
-xsa62-4.1.patch             Xen 4.1.x
-
-$ sha256sum xsa62*.patch
-3cec8ec26552f2142c044422f1bc0f77892e681d789d1f360ecc06e1d714b6bb  xsa62-4.1.patch
-364577f317a714099c068eb1ab771643ada99b5067fdd1eb5149fa5db649b856  xsa62.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJSQp1tAAoJEIP+FMlX6CvZvMYIAKe6fyuMdVlP3gJVqAnttQb7
-E/TuXwIKBgUFNu34SdkGd6g1l13pfSeiovDD56SqNj5kwCD0rb6+LgHu/uqVsxSn
-w+JtPGFXQpAfNzEcDPqYP9ArJIp63ogC9CLwk9KcDoy0FnxpHFD3Ke5C62G83DAJ
-qhjEpknTQCwjXBG6fYXjYKhFR8kzkWHGRpECE3EwlLo1gWxQj8/p/TopY8kzmA5m
-ssDuM/XzBHjI+7NwiB5oNuZfS8Om+UVQUilv+bjarh9zJy55FGSL1gJzdcXGhFx5
-sXw/PcciIAcCC8k8f2+tYY1eN9Orthw81YMh9Q/n6JC4RMgBYK3tkZ9AsOR7H9s=
-=Qbk6
------END PGP SIGNATURE-----
-
-Download attachment "xsa62-4.1.patch" of type "application/octet-stream" (1397 bytes)
-
-Download attachment "xsa62.patch" of type "application/octet-stream" (1350 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
