@@ -1,94 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/28/3
-Message-ID: <5106E789.9020707@koziarski.com>
-Date: Tue, 29 Jan 2013 10:03:05 +1300
-From: Michael Koziarski <michael@...iarski.com>
-To: rubyonrails-security@...glegroups.com
-CC: oss-security@...ts.openwall.com
-Subject: Vulnerability in JSON Parser in Ruby on Rails 3.0 and 2.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/22/9
+Message-ID: <514CC27E.4080805@redhat.com>
+Date: Fri, 22 Mar 2013 14:43:42 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request for "Views" (Drupal contributed module)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-There is a vulnerability in the JSON  code for Ruby on Rails which
-allows attackers to bypass authentication systems, inject arbitrary
-SQL, inject and execute arbitrary code, or perform a DoS attack on a
-Rails application. This vulnerability has been assigned the CVE
-identifier CVE-2013-0333.
+On 03/22/2013 02:01 PM, Forest Monsen wrote:
+> Hi there,
+> 
+> I'd like to request a CVE identifier for this:
+> 
+> SA-CONTRIB-2013-035 - Views - Cross Site Scripting (XSS) 
+> http://drupal.org/node/1948358
+> 
+> Thanks!
+> 
+> Best, Forest
 
-Versions Affected:  2.3.x, 3.0.x
-Not Affected:       3.1.x, 3.2.x, applications using the yajl gem.
-Fixed Versions:     3.0.20, 2.3.16
-
-Impact
-- ------
-The JSON Parsing code in Rails 2.3 and 3.0 support multiple parsing
-backends.  One of the backends involves transforming the JSON into
-YAML, and passing that through the YAML parser.  Using a specially
-crafted payload attackers can trick the backend into decoding a subset
-of YAML.
-
-All users running an affected application should upgrade or use the
-workaround immediately.
-
-Note: This is a separate vulnerability to CVE-2013-0156, if you are
-running a 2.3 or 3.0 application you must still take action to protect
-your application.
-
-Releases
-- --------
-The 3.0.20 and 2.3.16 releases are available at the normal locations.
-
-Workarounds
-- -----------
-If you are unable to upgrade, or apply the patches, you can work
-around this vulnerability by switching backends to the JSONGem
-backend.  Place this code in an application initializer:
-
-  ActiveSupport::JSON.backend = "JSONGem"
-
-If you are running Ruby 1.8 you will need to ensure that the `json` or
-`json_pure` gems are installed and in your application's Gemfile.
-Ruby 1.9 includes this code already.
-
-
-Patches
-- -------
-To aid users who aren't able to upgrade immediately we have provided
-patches for the two supported release series.  They are in git-am
-format and consist of a single changeset.
-
-* 2-3-json-parser.patch - Patch for 2.3 series
-* 3-0-json-parser.patch - Patch for 3.0 series
-
-Please note that only the 2.3.x, 3.1.x and 3.2.x series are supported
-at present.  Users of earlier unsupported releases are advised to
-upgrade as soon as possible as we cannot guarantee the continued
-availability of security fixes for unsupported releases.
-
-Credits
-- -------
-
-Thanks to Lawrence Pit of Mirror42 for discovering the vulnerability
-and working closely with us to ensure we shipped a comprehensive fix.
- Thanks also to the RedHat security response team for helping us with
-regression testing.
+Sorry Jan asked first =)
 
 
 - -- 
-Cheers,
-
-Koz
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (Darwin)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iEYEARECAAYFAlEG54kACgkQ3CszDRD2lfPfbwCgweNGQAAMpvdR74PP8FmN+pKD
-Z3wAnRXLMDuhdQi5RN++N+553BtmKPDY
-=5mPg
+iQIcBAEBAgAGBQJRTMJ+AAoJEBYNRVNeJnmTI+cQAL4GXVMNgX3CfjFLZG+uF1IL
+5EQFsBO2zj1HWO+/mJeW9cuvo1UDxcX1fuSlSqQB5DuyuHbjBt+tEngP/I/soLfs
+Q9lkfOEwOz0BA9+fEWXdO+O1XNOoxpso6KqiQeBeNcTR7AodpAN1T4NUNQL6qn2c
+uLf6xsr/j2rq+jHn+pUxIf39BdrTD2R8g9o5hiz7wAF2wTPUddcxnlLBgGgRJlb1
+WM9rEwvl7WmPbG5ge7ZD9zbUTdb6UlkcERWejwcmp250ILfqq4B6BTtmgjo8MhG5
+Z0Q1yjEsgWiK0zyMgHmM3OhY+QgyB4Mcep6vRbkF5b4qMqbRUCWPNz8FO89738kq
+EO16blYwreDN76ax94PRauEIKiYsBHFXHCyGYWqVp7/uOaRqqosWVc60m7su7icH
+tz3QpQtVdZBW5nrUDcREDSz+0jvvUSirec7iIaAfB9XVB4gp3s3VPluW3Lkh82tx
+YIsyMbPbL8zAZXJot07vhsdc+Q0AMJf/1n9+GmBbzJN2rhOBAZlpxDAXO8IdMRa7
+SCJcKJINv31XJt/Ls2V8cmlqxnUmdQDFjBTnO7RdfOUeO6H+A21lYQftcqutPoz7
+qb22YlRuN6G2p+NdA44O77IGXp9NjEIX5SlXKVNwusOfUdcr+FBnA0GV9KA7t9EI
+TTFBNcSL8+6Bk3E5NjBq
+=2gWb
 -----END PGP SIGNATURE-----
-
-View attachment "2-3-json-parser.patch" of type "text/plain" (22370 bytes)
-
-View attachment "3-0-json-parser.patch" of type "text/plain" (23108 bytes)
