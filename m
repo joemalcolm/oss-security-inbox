@@ -1,19 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/12
-Message-ID: <51D73189.1030208@redhat.com>
-Date: Fri, 05 Jul 2013 14:50:17 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/23/1
+Message-ID: <514D0B3A.7000800@redhat.com>
+Date: Fri, 22 Mar 2013 19:54:02 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, security@...e.de, Sebastian Krahmer <krahmer@...e.de>
-Subject: Question about CVE for X!! DoS
+To: oss-security@...ts.openwall.com
+CC: John Lightsey <john@...nuts.net>
+Subject: Re: CVE request: mod_ruid2 before 0.9.8
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-http://lists.opensuse.org/opensuse-updates/2013-07/msg00023.html
-https://bugzilla.novell.com/show_bug.cgi?id=815583
+On 03/22/2013 02:46 PM, John Lightsey wrote:
+> On 03/22/2013 03:36 PM, Kurt Seifried wrote:
+>> On 03/22/2013 09:08 AM, John Lightsey wrote:
+> 
+>>> In versions of mod_ruid2 before 0.9.8, the filedescriptor used
+>>> to break out of the chroot is inherited by all Apache
+>>> subprocesses. This allows CGI scripts to also to break out of
+>>> the chroot by performing a fchdir() across the inherited file
+>>> descriptor.
+>> 
+>> 
+>>> http://sourceforge.net/mailarchive/forum.php?thread_name=514C503E.4020109%40users.sourceforge.net&forum_name=mod-ruid-announce
+>>
+>>
+>>> 
+Can
+>> 
+>> you provide a link to the source code fix? thanks.
+>> 
+> 
+> https://github.com/mind04/mod-ruid2/commit/1fed9dda70cd44d54301df19730a29ae0989e0a2
+>
+>  The key part of the fix is the block at line 366:
+> 
+> } else if (fcntl(root_handle, F_SETFD, FD_CLOEXEC) < 0) { ...
 
-Lists no CVE? I assume it needs one, or did upstream handle this?
+Please use CVE-2013-1889  for this issue.
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -21,17 +46,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR1zGJAAoJEBYNRVNeJnmTc7QP/1oJyLmTnyqYqo2cJGhLwouf
-8n/90rk5++yRy37RwWURHCtvxW+xolJt5+DsdKB45LdAcGoeZXMlWqswUMMVMByN
-o68Evc9jSuVzTr1BdX79Z5khcwoa4hzVcPHcPwyuhaGhaKe4rzJFxesRvJakd/fz
-ZdBTwi6pD1wcS3iAsCPE1vcohBfuOo7K+Tdk/eSGFKCSUtpFK6juV41rw3c3SkKC
-BHYUV9CZeuiFIEvcIXMkqAFDgJ4HKndPP7eOsI2zqaVOGoX57KvlWEwvzHQgsd1/
-u1dahht5GrG7PxK0Mq6kEOQ2bY4cCSkOUJBNL2Izb1M3G1IDnHauoCiF7v3QChLg
-pBOLRmtwNmuuZwELaHmHyrggmTi3M4AUGnJvvDfLZ/5Sq9aD8y9Jov76q+6dgZf5
-RSHbrkHh7KpDfYKZ/KPBhIauIjWxAPg9vl+HtTS2fnFZsE/uXBOO33042+kCbKct
-01sSz05QWGcfLfavD2GeCiJsv6HJBGzXT43QJZkHdFNMCv5WkjmIIKmGdG2Y1p8U
-fCXZG2Pm8EuuKi2hViOmBXp1eqOIy7yrLuHy5YtiCbtTnruHwHrP5C4oRJeFPu37
-SN6mqbbNs8IrsCRk0+KnPie0Mwf1s0PzEfz1wGZkwyeGPZs02poEdtHfSFeeBhjx
-p+5K5WSdeHOchPqs9u/g
-=LEsZ
+iQIcBAEBAgAGBQJRTQs5AAoJEBYNRVNeJnmTG+MP/A4hqaWgx8sgkUKqHvW++fM6
+g0fcssim88qbs832NflSmY4E0+UrIryvvJvXJJCcMabulFj8zpsYKa/eMqUNq/hp
+hda6byGQlH8hFK7ykgzBiUOsTG9oBkGG3VYyirxB2iRlCuvTIRLwU04iR8EYo4iF
+2jw3PrUfY8bWRW0xGStZc6xhhZmL3DizePrywcm4LAYnM+LJTysZFJYT/dPMvBWZ
+zQphenEXH7UtJpDiB32BcoQzhwYhZiyp+lpfTCLh6noqDqLSTJ3Nd1Yz6bxTnNl7
+8gWVrIjfs4qcxdWU4wVxMBGE0oWLv7x2ZfOQpcPDEOGxqCLuY9khh/0n/gGARz3S
+DmJEmJ6ZI811/2mHPHWDVLuodfeLtTUdbHWfI0tirnWS398C9yjZtU4EPfL4sgqc
+etttqxCaAeRmEKmi2VqBAB4/kB4TzImkLx3ecwpMPJs77hHXDoxdCuYWhMw3mACg
+FDFaXvNPAgKdoX8feKYkgTeFPdzMYvQZLbRVpgvd0B9Ox3KsmfQUHeVynFWYTXZp
+Mmhhidk774GEynFZRPl/2YNmnHv9hvtBf0fy1jRBQ3D9Y04wHNMbPNpigkfSr+p6
+S8828q6100T0g3kX0xTpeLowtwieaYUZgqUaif0EEDS/8pnDg8LXZN7Oe6MNXt86
+V5W4lUEaHZW+xtm5dHbc
+=ROLP
 -----END PGP SIGNATURE-----
