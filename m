@@ -1,65 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/7
-Message-ID: <8b7a4b6fd6d93ea18b0190a3f4542f79@imap.steindlberger.de>
-Date: Wed, 10 Jul 2013 17:17:08 +0200
-From: Jonas Meurer <jonas@...esources.org>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com, Vincent Danen <vdanen@...hat.com>, mejo@...ian.org, contribute@...ios.org
-Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/23/2
+Message-ID: <20130323121922.GA16947@kludge.henri.nerv.fi>
+Date: Sat, 23 Mar 2013 14:19:22 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: come2waraxe@...oo.com
+Subject: CVE request: OpenCart filemanager.php parameter traversal arbitrary file access
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hello Kurt and list members,
 
-Am 2013-07-08 20:16, schrieb Kurt Seifried:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 06/26/2013 01:42 PM, Kurt Seifried wrote:
->> On 06/26/2013 12:36 PM, Vincent Danen wrote:
->>> I don't believe a CVE has been assigned to this issue yet.
->> 
->>> It was reported that Nagios 3.4.4 at least, and possibly earlier
->>>  versions, would allow users with access to Nagios to obtain
->>> full access to the servicegroup overview, even if they are not
->>> authorized to view all of the systems (not configured for this
->>> ability in the authorized_for_* configuration option).  This
->>> includes the servicegroup overview, summary, and grid.
->> 
->>> Provided the user has access to view some services, they will be
->>> able to see all services (including those they should not see).
->>> Note that the user in question must have access to some services
->>> and must have access to Nagios to begin with.
->> 
->>> This has not yet been corrected upstream.
->> 
->>> References:
->> 
->>> http://www.mail-archive.com/nagios-users@lists.sourceforge.net/msg39749.html
->> 
->>>  http://tracker.nagios.org/view.php?id=456
->>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714171
->>> https://bugzilla.redhat.com/show_bug.cgi?id=978531
->> 
->> 
->>> Thanks.
->> 
->> Please use CVE-2013-2214 for this issue.
-> 
-> It appears there are may be some problems with this issue, potentially
-> this may have been a bad configuration and not a source code based
-> problem, however we haven't been able to confirm it yet. I've also not
-> been able to contact upstream about this easily (no security@ address,
-> if anyone know whom to forward this to, please let me know, thanks.
+Can we assign CVE identifier for security vulnerability in OpenCart, thanks.
 
-I'm wondering why you fail to reproduce this issue. I posted some 
-details regarding my setup at the Nagios Tracker: 
-http://tracker.nagios.org/view.php?id=456
+References:
+http://www.waraxe.us/advisory-98.html
+http://osvdb.org/91500
+http://seclists.org/fulldisclosure/2013/Mar/176
 
-Unfortunately Nagios upstream sometimes rather unresponsive. At least 
-that's what I observed.
+Credits: Janek Vind "waraxe"
+Advisory ID: waraxe-2013-SA#098
+Disclosure date: 2013-03-19
+Status: not fixed in upstream
+CVSSv2 Base Score = 5.0
+Affected (from advisory) are all OpenCart versions, from 1.4.7 to 1.5.5.1, maybe
+older too.
 
-Please let me know if you need any further details regarding the bug or 
-advice on how to reproduce it.
+Janek confirmed he has not requested CVE yet. I will contact OpenCart again
+later today and ask status for the fix.
 
-Kind regards,
-  jonas
+--
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
