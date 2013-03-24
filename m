@@ -1,31 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/9
-Message-ID: <20130522132916.GB3827@blema.cz>
-Date: Wed, 22 May 2013 15:29:16 +0200
-From: Vitezslav Cizek <civ@...ma.cz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/24/1
+Message-ID: <514E4A03.2060902@redhat.com>
+Date: Sat, 23 Mar 2013 18:34:11 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: [Full-disclosure] Thttpd 2.25b Directory Traversal Vulnerability
+CC: Henri Salo <henri@...v.fi>, come2waraxe@...oo.com
+Subject: Re: CVE request: OpenCart filemanager.php parameter traversal arbitrary file access
 Content-Type: text/plain; charset=utf-8
 
-* Dne Středa 22. květen 2013, 13:44:09 [CEST] Oden Eriksson napsal:
-> onsdagen den 22 maj 2013 13.06.18 skrev  Matthias Weckbecker:
-> > Hi,
-> > 
-> > has anybody possibly already confirmed this? It might also be worth
-> > to assign a CVE to this if it turns out to be a reproducible issue.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 03/23/2013 06:19 AM, Henri Salo wrote:
+> Hello Kurt and list members,
 > 
-> Confirmed here. Needed to use "lynx -dump ...".
+> Can we assign CVE identifier for security vulnerability in
+> OpenCart, thanks.
 > 
-Are you sure?
-I fail to reproducet the problem.
+> References: http://www.waraxe.us/advisory-98.html 
+> http://osvdb.org/91500 
+> http://seclists.org/fulldisclosure/2013/Mar/176
+> 
+> Credits: Janek Vind "waraxe" Advisory ID: waraxe-2013-SA#098 
+> Disclosure date: 2013-03-19 Status: not fixed in upstream CVSSv2
+> Base Score = 5.0 Affected (from advisory) are all OpenCart
+> versions, from 1.4.7 to 1.5.5.1, maybe older too.
+> 
+> Janek confirmed he has not requested CVE yet. I will contact
+> OpenCart again later today and ask status for the fix.
+> 
+> -- Henri Salo
 
-How do you use lynx?
-Do you prepend "http://" to the url?
-Otherwise lynx won't connect over network
-and will default to local filesystem.
+Please use CVE-2013-1891 for this issue.
 
-For example:
-$ lynx -dump "google.com:80/../../../../etc/passwd"
-wil get you you're local /etc/passwd
 
-  Vita
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRTkoDAAoJEBYNRVNeJnmTyCUQAKKY+PpIw+/FAXkL44eVFv9p
+j7XqFdUVjDvAKzZPlh859hCj8P2AXTJ0is8h2lomFqRIHeJIfHui9truwH/01akF
+u3m1ifWlseNOBJ4xRCt1pxM2nonl4He9BZeg3m6tVUyLqgKILsr8Yxrynh+VAyog
+ZhAYLtpnvDM6+DVo66A5heeKCvNuViUUWJ+Fn5M6yPqLBt2vY3ATuE2BpurmElEM
+AapKo6FYV6lsnQBQUMbSLqOZkC/PiRRxrRtF0PLbtW6zNJIMD0xVfMkEO6Tczfbj
+2Y4dBoEl7V+9lugjTboAo3wxv0DjqYKOqE/gFNmof2kGxV1UCIJXjEviuGXCJl0v
+210bhIHtFs66MPZH6Dlkj5TsdDdp89NNKbl2zU1PytSeoQfBrXsP3sdh+cmcuffY
+8vm5Dw2VTTc7uolXsIoYiTM28PphN2xlma6BzFje49/PyLAiFSY0RSffQunywzki
+6ju97ndQuc+E6FAyE2FvF3kAInSkuyI7ljLXanllDsvz3kB60SvB3Pj155qUBt3D
+wJ0obQkACXCpHbAb3a/tEIEWqas99AoaIrDhzXZZ7pfEkQQ0W3k6Wc+iJbWHn2NU
+kceBMaXwdJCAuwq8I76ZBCFv71EsSqUPJIOwuTxnEH7HTM0fx1yAx8Ew9pepT/YN
+8ZFZj6W5qXr0jsevo65+
+=IZNn
+-----END PGP SIGNATURE-----
