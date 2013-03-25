@@ -1,44 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/19
-Message-ID: <87bo8tnllx.fsf@windlord.stanford.edu>
-Date: Thu, 02 May 2013 14:00:10 -0700
-From: Russ Allbery <rra@...nford.edu>
-To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/5
+Message-ID: <20130325111538.GA28728@inutil.org>
+Date: Mon, 25 Mar 2013 12:15:38 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: Mathias Krause <minipli@...glemail.com>
+Subject: Re: Linux kernel: net - three info leaks in rtnl
 Content-Type: text/plain; charset=utf-8
 
-Alan Coopersmith <alan.coopersmith@...cle.com> writes:
-> On 05/ 2/13 11:10 AM, Russ Allbery wrote:
+Hi,
 
->> I routinely do this.  It's called a key-signing party.  The only trust
->> that I am expressing with that signature is that I have seen and
->> verified, to the best of my ability, some form of reliable
->> identification for that person (ideally a passport I can verify, or a
->> social environment in which it would be very difficult to impersonate
->> someone you are not) in combination with a proof that the key I signed
->> belongs to the person whose identification I checked.
+> On 03/19/2013 03:15 PM, Mathias Krause wrote:
+> > I fixed a few more info leaks in linux v3.9-rc3. Unprivileged
+> > users can use the netlink interface to exploit the following issues
+> > to disclose kernel stack memory:
+> > 
+> > 29cd8ae dcbnl: fix various netlink info leaks 
+> > http://git.kernel.org/linus/29cd8ae0e1a39e239a3a7b67da1986add1199fc0
+> >
+> >  84d73cd rtnl: fix info leak on RTM_GETLINK request for VF devices 
+> > http://git.kernel.org/linus/84d73cd3fb142bf1298a8c13fd4ca50fd2432372
+> >
+> >  c085c49 bridge: fix mdb info leaks 
+> > http://git.kernel.org/linus/c085c49920b2f900ba716b4ca1c1a55ece9872cc
+> >
+> >  David Miller did backports for the above issues which are
+> > currently under review and should end up in the next stable and
+> > longterm kernels.
+> > 
+> > Regards, Mathias
+> 
+> CVE Merge - same researcher/vuln/version. Please use CVE-2013-1873 for
+> these issues.
 
-> Though for many open source projects, having a passport or other
-> government id is not the sort of identity we care about - knowing that
-> you're the person who does git/hg commits under that e-mail address is
-> what we care about - if it's a pseudonym that doesn't match your
-> passport, that doesn't affect whether we accept code from you or not.
-> (The lawyers might care, when it comes to verifying who owns copyright
-> and agreed to release code under a given license, but that's a whole
-> separate mess to unravel.)
+These appeared in the CVE updates under different IDs now:
 
-Right.  And that's part of the problem with using existing PGP key
-signatures.  They don't convey the piece of information that the project
-probably actually cares about.  Open source projects rarely care that I'm
-*actually* Russ Allbery, rather than just using that name on-line while
-actually legally being named Roger McDowell.  Lawyers may care if they
-want to be able to sue me, but that's an edge case.  What projects
-actually care about is that I'm the same person, by whatever name, who has
-an established track record in multiple other projects and an established
-trust basis in the broader community.
+29cd8ae: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2634
+84d73cd: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2635
+c085c49: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2636
 
-You can kind of get there by tying together multiple different pieces of
-data, but it's certainly not directly conveyed by PGP key signatures.
+Which shall we use?
 
--- 
-Russ Allbery (rra@...nford.edu)             <http://www.eyrie.org/~eagle/>
+Cheers,
+        Moritz
