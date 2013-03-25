@@ -1,44 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/17/4
-Message-ID: <526022C3.8040100@mozilla.org>
-Date: Thu, 17 Oct 2013 10:47:47 -0700
-From: Mozilla Security <security@...illa.org>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-CC: jww@...omium.org, stbuehler@...httpd.net,  Mozilla Security <security@...illa.org>
-Subject: Re: browser document.cookie DoS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/10
+Message-ID: <5150B25E.2010402@redhat.com>
+Date: Mon, 25 Mar 2013 14:23:58 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: libxslt "xsltDocumentFunction()" and "xsltAddKey()" Denial of Service Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/17/13 6:53 AM, cve-assign@...re.org wrote:
-> There didn't seem to be further discussion of this, and the public 
-> vendor references don't yet have CVE IDs, so we are assigning
-> these:
+On 03/25/2013 10:04 AM, Agostino Sarubbo wrote:
+> From the secunia advisory: https://secunia.com/advisories/52805/
 > 
-> CVE-2013-6166
-> https://code.google.com/p/chromium/issues/detail?id=238041 
-> CVE-2013-6167 https://bugzilla.mozilla.org/show_bug.cgi?id=858215
+> 1) An error within the "xsltDocumentFunction()" function
+> (libxslt/functions.c) when parsing XSL templates can be exploited
+> to cause a crash.
+> 
+> Commit code: 
+> http://git.gnome.org/browse/libxslt/commit/?id=6c99c519d97e5fcbec7a9537d190efb442e4e833
+>
+>
+> 
+2) A NULL-pointer dereference error within the "xsltAddKey()" function
+> (libxslt/keys.c) when parsing XSL keys can be exploited to cause a
+> crash.
+> 
+> Commit code: 
+> http://git.gnome.org/browse/libxslt/commit/?id=dc11b6b379a882418093ecc8adf11f6166682e8d
+>
+> 
+> 
+> 
+> Both issue are fixed in the version 1.1.28
 
-Acknowledged. Thanks.
+CVE MERGING these two issues since same reporter/vuln/version.
+
+Please use CVE-2012-6139 for these two issues.
+
 
 - -- 
-Al Billings
-Program Manager, Mozilla Security Assurance Team
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG/MacGPG2 v2.0.19 (Darwin)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSYCLCAAoJEBAMm4nfVaFGyV8QAJwQl/ltV0HLxAbIMPGC5Yj2
-cQIWpi2GuSm0c0aJwpjFzZrOB9qP0agEqMnLXNOX6vryzJtJT1NLvOuM0winXKTh
-O6jd+pYPlgm3nqDHA+9/zkBRSe2x4yvMa70G+MjLvTvR8IU9ljOhQFFewGSMXsZq
-Ol2bMTFXxSOVIXjBcWg5EFSOKTbxhFS3LvJSj86H4MLe6J0gZKNyYhz3vkeulYyt
-lENKI9JXk+dKvReQGFl18yUk0ix80ZOWtJ/DkNzysQSvJMWiW7EvQ7NRXo+GWH+i
-vwcGoJIGaEreMxkwe4/UDic8qzbN7XZ5j3ZV9EMlnClmePMWvET3I4C7MHq3ouoc
-z0qCvP0gmsd7EsFMSvGPyDKDxuLXTYgNDG2y5ci6WeFEBM+id7zdcEzvFINUcG9V
-gAQTEPkNKWg0c/SCyR8PMbI5knHUC3SUqc1Ez/0EF13PLDn9mmqmGOJ6kS+PwUlu
-WzIWdVD4DXY7R1fCsSjVaiGVyV4PnKfJ91M0TxWbc8hjP4Z/x7WEsEoa+UboTnKw
-eCYpivUOorzBX8ohaWy1rfPpKZqIGZKP4ATAWDXMv5ChXgDQBLgpSkoXz19MbTxB
-GNqkXDt4oS1piZczl9f5il5hHF8kTh5hRqcJKwhopzbDfgLMZJ3jG+Y+urPZaXuB
-NlnBea+Gna93BCeYaCf5
-=hNi+
+iQIcBAEBAgAGBQJRULJeAAoJEBYNRVNeJnmTbdEP/RFuhNQ1kKhRMXIIpiDDDB71
+SIlt425FLWwotj04DwK3WKdr0t9pr02LWjZ7MzkPDplx1t+0LpI+7TL+RR0Mbox3
+rufPU7O9hv1BvRoQMJpvBJ6XGRut2mzmP8MuNVczqzK1asLORatTRrEaSPnfcJdN
+jrcVgUP9J9wj1I44zfohwFQO2XNGaJTbES11i/tKNdyryE5mlklxyiSFDH0gIsv1
+c38IxMRklmJZck+i4U5XCWOGE2ZMsnbHv8g6oiqAz8p1lAp1vWda+2b+5RGCbV4a
+6BooIP1k3iq5JYTRIP2QAhHkAENh2gJXJkQjKsINWHD2bQtW6nuIhtDDXEOIGDgY
+FpOXkIOdZgABKlbkM7ksmABg9Pm2qamrXLnQlTIcjF8UJzqmCRiSBtwiEFj8CQ6z
+kLyavChywjaNgGKKRg+FtbCAGnzOIjj682j+QIdOLzSiLpdnnEKFAO8eed/MXRqI
+pZLmnVqDFfdUl/hTVq2AmsTSUPS+UjRg0HKW9f8dXeTHZMZrBEkqizX0VB7A/HJD
+0duLmpABquE9Wm8/4uHzH+nK7kGhQC4sWGSdNx9buEKCcjkSVG2POgRNok15RYqr
+h/0iK5T8tNKwVxAkYU+w87oYXcLM5O6KdX5BK2iWBHu8JFEbZzyYPJZPwTGkT0Jc
+uGyN9XIUrzR/KgebxRs6
+=mCe/
 -----END PGP SIGNATURE-----
