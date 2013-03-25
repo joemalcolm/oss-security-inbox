@@ -1,64 +1,174 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/09/8
-Message-ID: <51DC5F10.3000600@msgid.tls.msk.ru>
-Date: Tue, 09 Jul 2013 23:05:52 +0400
-From: Michael Tokarev <mjt@....msk.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/2
+Message-ID: <514FE8C2.2010400@moodle.com>
+Date: Mon, 25 Mar 2013 14:03:46 +0800
+From: Michael de Raadt <michaeld@...dle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: FreeSWITCH regex substitution 3 buffer overflows
+Subject: Moodle security notifications public
 Content-Type: text/plain; charset=utf-8
 
-A week has been passed away.
+The following security notifications are now public. Thanks to OSS 
+members for their cooperation.
 
-But actually I'm not sure I understand the process.  What is
-needed to, first, assign a CVE#, and second, to fill it in?
+=======================================================================
+MSA-13-0011: Calendar subscription capability issue
 
-Thanks,
+Description:       Users without appropriate capabilities were shown
+                    controls to update calendar subscriptions, even
+                    though the were not able to modify subscriptions.
+Issue summary:     Student should not be able to see the subscription
+                    which they cant manage
+Severity/Risk:     Minor
+Versions affected: 2.4 to 2.4.1
+Versions fixed:    2.4.2
+Reported by:       Ankit Agarwal
+Issue no.:         MDL-37338
+CVE Identifier:    CVE-2013-1829
+Workaround:        Avoid course and group calendar subscriptions
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-37338
 
-/mjt
+=======================================================================
+MSA-13-0012: Information leak in course profiles
 
-02.07.2013 00:46, Michael Tokarev wrote:
-> Hello.
-> 
-> Yesterday I started thinking for the first time about some VOIP
-> solution for our office, and come across FreeSWITCH software --
-> www.freeswitch.org.  After talking on IRC a bit, I decided to
-> take a look at the source, because a question asked by one of
-> the users looked interesting to me.
-> 
-> And immediately I discovered 3 buffer overflows in the _first_
-> function I ever saw in the source of this software.
-> 
-> http://jira.freeswitch.org/browse/FS-5566 - it is the original
->  bugreport which looked innocent enough initially.
-> 
-> http://jira.freeswitch.org/secure/attachment/18855/0001-regex_subst-allow-n-in-regex-substitutions-and-fix-3.patch --
->  this is a patch of mine that fixes initial bug and also 3
->  buffer overflows I found when dealing with the issue.
-> 
-> Some context.  FreeSWITCH's routing mechanism is based almost
-> entirely on regular expressions and uses substring matches
-> in the core routing (dialplan).  So the regexps are matched
-> against untrusted input (which is especially mentioned in the
-> docs).  But ofcourse users aren't easy with writing regexps
-> correctly, always constraining the length of the input
-> properly.
-> 
-> So, if there are any references to unconstrained input in
-> any dialplan expressions -- that is, instead of \d{10},
-> \d+ is used, we're getting a remotely triggerable buffer
-> overflows with good potential of remote code execution.
-> 
-> As simple as that.
-> 
-> It _looks_ like the default configuration isn't affected
-> since apparently all regexes there are constrained.  But
-> we can't be sure for all user configs.
-> 
-> I haven't studied actual potential for code execution,
-> but from a quick view it appears quite possible.
-> 
-> Thanks,
-> 
-> /mjt
-> 
+Description:       Course profiles were accessible without logging in
+                    as a real user
+Issue summary:     Course profiles open to google even when
+                    forceloginforprofiles is enabled
+Severity/Risk:     Minor
+Versions affected: 2.4 to 2.4.1, 2.3 to 2.3.4, 2.2 to 2.2.7,
+                    earlier unsupported versions
+Versions fixed:    2.4.2, 2.3.5, 2.2.8
+Reported by:       Helen Foster
+Issue no.:         MDL-37481
+CVE Identifier:    CVE-2013-1830
+Workaround:        Leave autologinguests and opentogoogle settings
+                    disabled (default)
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-37481
 
+=======================================================================
+MSA-13-0013: Server information revealed through exception messages
+
+Description:       Exception messages were revealing server file
+                    system information
+Issue summary:     Server system path revealed through exception
+                    messages
+Severity/Risk:     Minor
+Versions affected: 2.4 to 2.4.1, 2.3 to 2.3.4, 2.2 to 2.2.7,
+                    earlier unsupported versions
+Versions fixed:    2.4.2, 2.3.5, 2.2.8
+Reported by:       Mark Nielsen
+Issue no.:         MDL-36901
+CVE Identifier:    CVE-2013-1831
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-36901
+
+=======================================================================
+MSA-13-0014: Password revealed in WebDav repository
+
+Description:       The password for a WebDav repository was not hidden
+                    on the repository configuration form
+Issue summary:     WebDav repository password field is plain text
+                    allowing admin to see password
+Severity/Risk:     Minor
+Versions affected: 2.4 to 2.4.1, 2.3 to 2.3.4, 2.2 to 2.2.7,
+                    earlier unsupported versions (2.x only)
+Versions fixed:    2.4.2, 2.3.5, 2.2.8
+Reported by:       John Holmes
+Issue no.:         MDL-37681
+CVE Identifier:    CVE-2013-1832
+Workaround:        Avoid WebDav repositories requiring personal
+                    passwords
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-37681
+
+=======================================================================
+MSA-13-0015: Cross-site scripting issue in Filepicker
+
+Description:       It was possible to upload files with filenames
+                    containing HTML and JavaScript
+Issue summary:     Code injection (XSS) possible in File Picker
+Severity/Risk:     Serious
+Versions affected: 2.4 to 2.4.1, 2.3 to 2.3.4, 2.2 to 2.2.7,
+                    earlier unsupported versions (2.x only)
+Versions fixed:    2.4.2, 2.3.5, 2.2.8
+Reported by:       Frédéric Massart
+Issue no.:         MDL-37507
+CVE Identifier:    CVE-2013-1833
+Workaround:        Avoid the filesystem repository on Linux file
+                    systems and the Google Docs/Drive repository
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-37507
+
+=======================================================================
+MSA-13-0016: External Entity Injection through Zend library
+
+Description:       Through the Zend library, clients of Moodle Web
+                    services were potentially able to reveal files
+                    on the server
+Issue summary:     Zend XmlRpc: Local file disclosure via XXE injection
+Severity/Risk:     Serious
+Versions affected: 2.4 to 2.4.1, 2.3 to 2.3.4, 2.2 to 2.2.7,
+                    earlier unsupported versions (2.x only)
+Versions fixed:    2.4.2, 2.3.5, 2.2.8
+Reported by:       Frédéric Massart
+Issue no.:         MDL-34284
+CVE Identifier:    CVE-2012-3363
+Workaround:        Disable Web services
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-34284
+
+=======================================================================
+MSA-13-0017: Form manipulation issue in notes
+
+Description:       By manipulating form elements it was possible to
+                    assign a note to a different user during editing
+Issue summary:     Go to the edit notes form, change userid in the html
+                    with firebug => the targeted note user is changed
+Severity/Risk:     Minor
+Versions affected: 2.4 to 2.4.1, 2.3 to 2.3.4, 2.2 to 2.2.7,
+                    earlier unsupported versions (1.9 onwards)
+Versions fixed:    2.4.2, 2.3.5, 2.2.8
+Reported by:       Jérôme Mouneyrac
+Issue no.:         MDL-37411
+CVE Identifier:    CVE-2013-1834
+Workaround:        Disable notes
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-37411
+
+=======================================================================
+MSA-13-0018: Personal information leak through repositories
+
+Description:       Users able to use "login as" were able to see the
+                    personal repository content of the user they were
+                    impersonating
+Issue summary:     Admin users logged in as another user have access to
+                    the content of their external repositories
+Severity/Risk:     Serious
+Versions affected: 2.4 to 2.4.1, 2.3 to 2.3.4, 2.2 to 2.2.7,
+                    earlier unsupported versions (2.x only)
+Versions fixed:    2.4.2, 2.3.5, 2.2.8
+Reported by:       Andrew Nicols
+Issue no.:         MDL-36426
+CVE Identifier:    CVE-2013-1835
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-36426
+
+=======================================================================
+MSA-13-0019: Unauthorised settings editing through WebDav repository
+
+Description:       Any user able to view WebDav repositories was able
+                    to view, edit and delete site-wide WebDav
+                    repositories
+Issue summary:     Site-wide WebDAV repository instances options are
+                    accessible
+Severity/Risk:     Serious
+Versions affected: 2.4 to 2.4.1, 2.3 to 2.3.4, 2.2 to 2.2.7,
+                    earlier unsupported versions (2.x only)
+Versions fixed:    2.4.2, 2.3.5, 2.2.8
+Reported by:       Frédéric Massart
+Issue no.:         MDL-37852
+CVE Identifier:    CVE-2013-1836
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-37852
