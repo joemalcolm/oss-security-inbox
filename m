@@ -1,40 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/8
-Message-ID: <51349582.2050706@collabora.co.uk>
-Date: Mon, 04 Mar 2013 12:37:22 +0000
-From: Will Thompson <will.thompson@...labora.co.uk>
-To: Telepathy <telepathy@...ts.freedesktop.org>,  oss-security@...ts.openwall.com
-Subject: CVE-2013-1769: remotely-triggered NULL pointer dereference in telepathy-gabble
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/8
+Message-ID: <2124540.XzCnMGLkFZ@devil>
+Date: Mon, 25 Mar 2013 17:04:05 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: libxslt "xsltDocumentFunction()" and "xsltAddKey()" Denial of Service Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+>From the secunia advisory: https://secunia.com/advisories/52805/
 
-I've just released two new versions of telepathy-gabble which fix a 
-family of remotely-triggered NULL pointer dereference bugs in 
-telepathy-gabble: specifically, in its implementation of the hashing 
-algorithm specified in <http://xmpp.org/extensions/xep-0115.html>. These 
-bugs existed in essentially all previous versions of telepathy-gabble. A 
-malicious user can trigger the bug for any of their contacts who use 
-Gabble by publishing caps which trigger the bug, or for anyone whose JID 
-they know.
+1) An error within the "xsltDocumentFunction()" function (libxslt/functions.c) 
+when parsing XSL templates can be exploited to cause a crash.
 
-In the current stable release series, the bug is fixed in 
-telepathy-gabble 0.16.5 (release announcement: 
-<http://lists.freedesktop.org/archives/telepathy/2013-March/006377.html>).
+Commit code:
+http://git.gnome.org/browse/libxslt/commit/?id=6c99c519d97e5fcbec7a9537d190efb442e4e833
 
-In the current unstable release series, the bug is fixed in 
-telepathy-gabble 0.17.3 (release announcement: 
-<http://lists.freedesktop.org/archives/telepathy/2013-March/006378.html>).
 
-Simon McVittie has prepared some patches which apply to the 0.12 series 
-of telepathy-gabble. Interested parties can find them, and more 
-information, on the bug report: 
-<https://bugs.freedesktop.org/show_bug.cgi?id=61433>. That said, I 
-recommend that distributors of 0.12 upgrade to the 0.16 stable series if 
-possible.
+2) A NULL-pointer dereference error within the "xsltAddKey()" function 
+(libxslt/keys.c) when parsing XSL keys can be exploited to cause a crash.
 
-Thanks to Kurt Seifried of the Red Hat Security Response Team for 
-allocating a CVE ID for this issue.
+Commit code:
+http://git.gnome.org/browse/libxslt/commit/?id=dc11b6b379a882418093ecc8adf11f6166682e8d
 
+
+
+Both issue are fixed in the version 1.1.28
 -- 
-Will
+Agostino Sarubbo
+Gentoo Linux Developer
