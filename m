@@ -1,40 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/17
-Message-ID: <kjvd2j$t73$1@ger.gmane.org>
-Date: Mon, 8 Apr 2013 23:30:19 +0200 (CEST)
-From: Damien Regad <damien.regad@...ckgroup.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Multiple CVE requests for MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/7
+Message-ID: <20130325155850.GC22574@suse.de>
+Date: Mon, 25 Mar 2013 16:58:50 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: Mongo DB
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...hat.com>
- Wrote in message:
+Hi,
 
->>>>> 4. XSS issue on Configuration Report page when displaying 
->>>>> complex value
->>>>> 
->>>>> This issue affects Mantis 1.2.0rc1 and later.
->>>>> 
->>>>> Lack of proper string escaping allows users (having admin 
->>>>> access) to enter arbitrary javascript code and have it
->>>>> executed on the user's browser.
->>>>> 
->>>>> Reference: http://www.mantisbt.org/bugs/view.php?id=15416
->>>> 
->>>> Does this count as a proper release or does it fall into the 
->>>> "beta" classification?
->> 
->>> 1.2.0rc1 was a beta release. The first "proper" release affected
->>> by this was 1.2.0
->> 
->> Ok not assigning a CVE then, unless there are a large number of
->> users betas don't get CVEs.
-> 
-> Steve just pointed out I may have misread this. Is 1.2.0 vulnerable,
-> and this is fixed in 1.2.1, or was it fixed in the 1.2.0 release (so
-> ONLY 1.2.0-rc1 was affected)?
+I do not think this has a CVE yet ...
 
-Not sure who Steve is, but he is absolutely correct - this affects
- all versions of Mantis *starting* with rc1 and until 1.2.13
- included, so definitely non-beta releases are vulnerable.
+http://blog.scrt.ch/2013/03/24/mongodb-0-day-ssji-to-rce/
+describes a MongoDB remote exploit.
 
+Ciao, Marcus
