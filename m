@@ -1,32 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/30/7
-Message-ID: <51800C58.9090604@fifthhorseman.net>
-Date: Tue, 30 Apr 2013 14:24:24 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/3
+Message-ID: <20130325070232.GB30528@kludge.henri.nerv.fi>
+Date: Mon, 25 Mar 2013 09:02:32 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, MustLive <mustlive@...security.com.ua>
+Subject: Re: XSS vulnerabilities in ZeroClipboard and multiple web applications
 Content-Type: text/plain; charset=utf-8
 
-On 04/26/2013 01:57 AM, Alistair Crooks wrote:
-> All people can see from a key listing is who trusted them and
-> when, not how much, or whether the trust was warranted.
+Your emails are very hard to read. How many of these did you report to vendor?
+Are you going to track what software fixes this vulnerability in what version?
 
-Just for the record, most OpenPGP key certification listings don't
-indicate anything at all about trust, including "who trusted them".
-they show cryptographically-verifiable assertions of identity and
-control over key material.
+--
+Henri Salo
 
-Put another way, a signature on an OpenPGP key+userid says "I believe
-that this key belongs to this person" -- it doesn't say anything about
-trust in that person (or about their intrinsic trustworthiness).
-
-Sorry for the nit-pick, but the term "trust" is so overused and confused
-in these contexts that i think it's important to clarify it when it's
-getting muddled.
-
-Regards,
-
-	--dkg
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
