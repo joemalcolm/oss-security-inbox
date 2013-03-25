@@ -1,21 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/31/3
-Message-ID: <alpine.LFD.2.10.1312311205550.23034@javelin.pnq.redhat.com>
-Date: Tue, 31 Dec 2013 12:09:24 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Linux kernel: net: memory leak in recvmsg handler msg_name & msg_namelen logic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/11
+Message-ID: <20130325214901.GB5378@redhat.com>
+Date: Mon, 25 Mar 2013 15:49:01 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: ibutils improper use of files in /tmp
 Content-Type: text/plain; charset=utf-8
 
-  Hello,
+It was reported on full-disclosure that ibutils suffers from improper
+use of files /tmp that could allow a user to clobber files as the user
+running ibutils (probably usually root).
 
-+-- On Tue, 10 Dec 2013, Marcus Meissner wrote --+
-| CVE-2013-6405 covers parts of that already I think and could be extended?
+I didn't see a CVE request for this or anything show up here; if one
+hasn't been assigned, could it be?
 
-So, do we use the same CVE for this issue too? Or does it qualify for a 
-separate one?? (just checking) I think a separate CVE would be good, but not 
-sure how such cases are handled previously.
+Thanks.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+References:
+
+http://seclists.org/fulldisclosure/2013/Mar/87
+https://bugzilla.redhat.com/show_bug.cgi?id=927430
+
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
