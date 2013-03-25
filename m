@@ -1,70 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/22/2
-Message-ID: <514BFABA.70509@redhat.com>
-Date: Fri, 22 Mar 2013 00:31:22 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/6
+Message-ID: <20130325111726.GA28771@inutil.org>
+Date: Mon, 25 Mar 2013 12:17:26 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Damien Regad <damien.regad@...ckgroup.com>
-Subject: Re: CVE request: MantisBT text search query can crash site
+Cc: kseifried@...hat.com, Mathias Krause <minipli@...glemail.com>
+Subject: Re: Linux kernel: net - three info leaks in rtnl
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Mar 25, 2013 at 12:15:38PM +0100, Moritz Muehlenhoff wrote:
+> Hi,
+> 
+> > On 03/19/2013 03:15 PM, Mathias Krause wrote:
+> > > I fixed a few more info leaks in linux v3.9-rc3. Unprivileged
+> > > users can use the netlink interface to exploit the following issues
+> > > to disclose kernel stack memory:
+> > > 
+> > > 29cd8ae dcbnl: fix various netlink info leaks 
+> > > http://git.kernel.org/linus/29cd8ae0e1a39e239a3a7b67da1986add1199fc0
+> > >
+> > >  84d73cd rtnl: fix info leak on RTM_GETLINK request for VF devices 
+> > > http://git.kernel.org/linus/84d73cd3fb142bf1298a8c13fd4ca50fd2432372
+> > >
+> > >  c085c49 bridge: fix mdb info leaks 
+> > > http://git.kernel.org/linus/c085c49920b2f900ba716b4ca1c1a55ece9872cc
+> > >
+> > >  David Miller did backports for the above issues which are
+> > > currently under review and should end up in the next stable and
+> > > longterm kernels.
+> > > 
+> > > Regards, Mathias
+> > 
+> > CVE Merge - same researcher/vuln/version. Please use CVE-2013-1873 for
+> > these issues.
+> 
+> These appeared in the CVE updates under different IDs now:
+> 
+> 29cd8ae: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2634
+> 84d73cd: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2635
+> c085c49: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2636
+> 
+> Which shall we use?
 
-On 03/21/2013 04:29 AM, Damien Regad wrote:
-> Dear all,
-> 
-> MantisBT user 'jjtest' discovered an issue [1] affecting MantisBT
-> versions 1.2.12 to 1.2.14 included.
-> 
-> Anybody having access to a MantisBT instance (including anonymous
-> users on web-facing applications) may issue a search query on the
-> View Issues page; if a filter combining some criteria and a text
-> search with 'any condition' is applied, the generated SQL will
-> results in a potentially huge cartesian product which, depending on
-> the size of the underlying database, has the potential to bring
-> down the site/db server as it runs out of resources.
-> 
-> The root cause of this behavior is joining a table with a from
-> clause and setting the join's criteria in the query's where clause,
-> without taking consideration the operator's precedence (AND/OR).
-> 
-> Full details about this issue can be found in our bugtracker [1].
-> 
-> A patch for this issue is available [2] in the project's repository
-> on Github, and will be included in MantisBT version 1.2.15, which
-> we expect to release in a couple of weeks once testing is
-> completed.
-> 
-> References: [1] http://www.mantisbt.org/bugs/view.php?id=15573 [2]
-> https://github.com/mantisbt/mantisbt/commit/d16988c3ca232a7
-> 
-> Kindly assign a CVE ID for this issue.
-> 
-> Damien Regad MantisBT developer 
-> mailto:mantisbt-dev@...ts.sourceforge.net 
-> http://www.mantisbt.org/bugs/
+Ah, I just noticed that 
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1873 has already
+been marked as rejected.
 
-Please use CVE-2013-1883 for this issue.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRS/q6AAoJEBYNRVNeJnmTRsEQAMByzsXbSsbpHPMfIdVK8SXS
-sfINVKfjOkin5BEr+jn13GXRIXQdJ1IzuzMkrIhXR+DBf3UrC0tRnWENcg5rNPVQ
-uxT6DZEcfJYFheTzrenF6XkCQmEKrGA3BOw3l/5ov3HGY++Doizoghw3B1+IoPsv
-yEWrwhvdH2lajBZa61pqtPDZGGOVrpi46um1py8zQt+HBaIdGcSWzkgzNubEsNPG
-68Qn8Zycrzxaj04qtfTVI1iQ89he7Xq0TfsDRDiLbcte2sg9DhtMtqodBp9i/ZvM
-tKxjyjFDyoA0w5/jwwCTZfW2hfYIZYhVEOS/wKU1BAV89J7GDS+gRmq55ASVsioY
-FMtD3F8ZrD9SaIhCpHkBAEzltJYE0JIn7b074BTm0FXiwPF7I4u3C78aDv2L4NMJ
-ttNyVrBJtwIyhG4i29un1f6CZljF/QYKJEKrKpYnZNCvdf05XOTv33ms7cTTjEdV
-fkD7SGS8xXk19Z7/KZTqhWHHKZvoyxx55XUXUgt8oEaZfNfQ+FAyn1bqwL4XjfU9
-chuu6x8O51fH2cinJyZkSE6GLSOTv5f4GxEexxXt8QcbQiv0USGICfLwqbTjIiF6
-j4vFZdhXacE5wh+DVS3/xSCsy7T8KOdBLuAekhjnRfw5Khjq9XK5JKu+JPMyBlnR
-V0HVrnr/J0J9jEKs8qPN
-=jAJs
------END PGP SIGNATURE-----
+Cheers,
+        Moritz
