@@ -1,42 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/2
-Message-ID: <5253943.W4ZRUskLPB@fermion>
-Date: Wed, 27 Nov 2013 22:37:57 +0100
-From: Manuel Nickschas <sputnick@...ssel-irc.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Quassel IRC - manipulated clients can access backlog of all users on a shared core
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/4
+Message-ID: <608296419.13968118.1364205741063.JavaMail.root@redhat.com>
+Date: Mon, 25 Mar 2013 06:02:21 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: kseifried@...hat.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Drupal Security Team <security@...pal.org>, oss-security@...ts.openwall.com, Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE Request -- drupal7-views : SA-CONTRIB-2013-035 - Views - Cross Site Scripting (XSS)
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hi Kurt,
 
-I'd like to request a CVE for the following vulnerability in Quassel IRC:
+  thanks for assigning the CVE id. To follow-up
+on the doubt below yet.
 
-Affected versions: all versions prior to 0.9.2 (released 2013-11-26)
+----- Original Message -----
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 03/22/2013 07:23 AM, Jan Lieskovsky wrote:
+>> Hello Kurt, Steve, Drupal Security Team, vendors,
+>> 
+>> Drupal upstream has released: [1] http://drupal.org/node/1948358
+>
+> CVE-2013-1887
+>
+>> and updated version of the Views module (Views 7.x-3.6): [2]
+>> http://drupal.org/node/1948354
+>> 
+>> correcting one cross-site scripting (XSS) flaw.
+>
+> The security issue in views is caused by various places in the views
+> UI where a string is not sanitized,
+> because it has been assumed to be static and by commiters, though you
+> can change some of these strings using other administrative
+> permissions. SA-CONTRIB-2013-035 - Views - Cross Site Scripting (XSS)
+> 
+> I'm a bit confused, is this via SA-CONTRIB-2013-035 or a separate
+> issue as well?
 
-Description:
+Those are the same issues (it's possible to get from SA-CONTRIB-2013-035
+link to the http://drupal.org/node/1948354 link [just click in at
+Views 7.x-3.6 in SA-CONTRIB-2013-035]).
 
-A Quassel core (server daemon) supports being used by multiple users, who all 
-have independent settings, backlog and so on. The backlog is stored in a 
-database shared by all users on a Quassel core, tagged with a user ID. 
-However, some SQL queries didn't check for the correct user ID being provided.
+In yet other words, looks like CVE-2013-1887 (previously) occurred at
+various places. Relevant upstream patch seems to be this one:
+  http://drupalcode.org/project/views.git/commitdiff/ddf8181bd13f69ffbeeee14ae72168418785d7ac
 
-This has the undesired effect that the Quassel core can be tricked into 
-providing the backlog for an IRC channel or query that does not belong to the 
-user session requesting it. Doing this requires a manipulated client sending 
-appropriately crafted requests to the core. This client also needs to be 
-properly authenticated, i.e. to have supplied valid user credentials for one 
-of the users on the core.
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Credit for finding this issue goes to Andrew Hampe.
+>> AFAICT from [1], there doesn't seem to be a CVE identifier for this
+>> issue yet.
+>> 
+>> Could you allocate one?
 
-Fix [1] has been released in 0.9.2 [2].
-
-This patch can be cleanly applied to any version starting from 0.6.0, and 
-easily backported to even older versions by adapting the schema version 
-number.
-
-Thanks,
-~ Manuel Nickschas (Sput)
-
-[1] <https://github.com/quassel/quassel/commit/a1a24da>
-[2] <http://quassel-irc.org/pub/quassel-0.9.2.tar.bz2>
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.13 (GNU/Linux)
+>
+> iQIcBAEBAgAGBQJRTMJrAAoJEBYNRVNeJnmTjIUP/0rn+yNqLpAPVoZJOKKjzC/O
+> AComiUFEBzLPxWbJGPS8aEY738ABh3G557U3QH0xab0WKHsq4y7pOb8i2iGmUTOM
+> 9t62qmZssTf80omcPZ0rKMo+dZXIXrwNsQbqB/yApuVixfbbUPKf4vF8PQVraijm
+> NaBt/Gjl7G7bpHW5ZqellBNO7eHEUqAt2FQZp+UcWfR7NFASef+8BR6plrco/Sjn
+> c75GySKWia99lm7qt65Q8ddT2P9ECQIoDileWzWyrWhqHpsTilWGTe+xyF5fzob4
+> Zz6Z/EE0VP/ZIbfLaNip2+8Oa665T1B2tgLuUDV3jrRu11lnB3vcNfAErWdwSULM
+> sy98z8NujPPmPhXa2F1jIqZN9adPHjYuvOOEYOdZL+yiA698XxRQKmHkHom4cB4Y
+> FpXk/F+YrTE+Qn0XayJZriEUIzVe8z1LWC8lQDA8xWmCEptu81fIVd97A6Tk2MrV
+> 4Z2pNuJ1Z3EGkZBuFNbf1FZ6M8KTbwE8qz0gEia0GpmNDegecUWewxtlxqRM4xLD
+> CVfpYWN3EsS2u2M7Maw2kdHWuWjxaS69xLncVKaDB5oEFrpU61PIhLoglneDdZxH
+> BgANfSjucbxvfeOWapjk0GPd9cNKQ5jtKMRZb/x6JtkLBjX+GZTMlDvI82A0BN76
+> JOYCC9mTQ1uRfCHsITzV
+> =gTiE
+> -----END PGP SIGNATURE-----
