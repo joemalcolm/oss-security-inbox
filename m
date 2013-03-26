@@ -1,22 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/08/1
-Message-ID: <CABbbngDXDdLuLJ8vjHa03FPvFYjg7vQ-pn+uHr04jH9NG6wmbg@mail.gmail.com>
-Date: Sat, 7 Dec 2013 16:39:17 -0800
-From: Forest Monsen <forest.monsen@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE request for Drupal core, and contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/5
+Message-ID: <20130326142853.GC5378@redhat.com>
+Date: Tue, 26 Mar 2013 08:28:53 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: "Larry W. Cashdollar" <larry0@...com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: ibutils improper use of files in /tmp
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 6, 2013 at 3:54 PM, Henri Salo <henri@...v.fi> wrote:
+* [2013-03-26 12:10:31 +0000] Larry W. Cashdollar wrote:
 
-> These already received CVE IDs. Please see following post:
+>I doubled checked this, i???t looks like this was already assigned  CVE-2013-2561
 
+Do you have a reference for that assignment?  Because I couldn't find
+any CVE references when I was looking for it initially.
 
-Thanks Henri.
+>On Mar 25, 2013, at 08:09 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+>
+>>-----BEGIN PGP SIGNED MESSAGE-----
+>>Hash: SHA1
+>>
+>>On 03/25/2013 03:49 PM, Vincent Danen wrote:
+>>> It was reported on full-disclosure that ibutils suffers from
+>>> improper use of files /tmp that could allow a user to clobber files
+>>> as the user running ibutils (probably usually root).
+>>>
+>>> I didn't see a CVE request for this or anything show up here; if
+>>> one hasn't been assigned, could it be?
+>>>
+>>> Thanks.
+>>>
+>>> References:
+>>>
+>>> http://seclists.org/fulldisclosure/2013/Mar/87
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=927430
+>>
+>>Please use CVE-2013-1894 for this issue.
 
-Kurt, on Drupal Core vulnerabilities, would you like me to wait, or would
-you prefer to be prompted?
-
-Best,
-Forest
-
+-- 
+Vincent Danen / Red Hat Security Response Team 
