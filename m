@@ -1,131 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/10
-Message-ID: <20130326192938.GB15070@kludge.henri.nerv.fi>
-Date: Tue, 26 Mar 2013 21:29:38 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/8
+Message-ID: <20130326182838.GA16301@kludge.henri.nerv.fi>
+Date: Tue, 26 Mar 2013 20:28:38 +0200
 From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: WordPress plugin user-photo file upload arbitrary PHP code execution
+Subject: Re: WordPress plugins vulnerable to CVE-2013-1808
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt and list members,
+Short update.
 
-Can I get CVE identifier for WordPress plugin user-photo file upload arbitrary
-PHP code execution security vulnerability. Different issue than CVE-2012-2920.
+bp-code-snippets fixed in version 2.1
+cleeng fixed in version 2.3.3
+paypal-digital-goods-monetization-powered-by-cleeng fixed in version 2.2.14
+tiny-url fixed in version 1.3.4
+wp-clone-by-wp-academy fixed in version 2.1.2
 
-References:
-    http://osvdb.org/71071
-    http://seclists.org/fulldisclosure/2011/Feb/354
-
-Affected: 0.9.4 (older probably affected too)
-OSVDB currently lists fixed version as 0.9.5.1, but fixed in version is 0.9.5
-Discovery date: 2010-07-01
-Vendor informed date: 2011-01-27
-Time to exploit: 231 days
-
-Someone had fun for a long time. Should get CVE-2011-XXXX, yes?
-
-By looking at the patch for example lines below can be bypassed using null
-character in the filename:
-
-+      else if( !preg_match("/\.(" . join('|', $userphoto_validextensions) . ")$/i", $_FILES['userphoto_image_file']['name']) ){
-+        $error = sprintf(__("The file extension &ldquo;%s&rdquo; is not allowed. Must be one of: %s.", 'user-photo'), preg_replace('/.*\./', '', $_FILES['userphoto_image_file']['name']), join(', ', $userphoto_validextensions));
-+      }
-
-Line below renames the file to e.g. 1.jpg so it should not be executable in well
-configured www-server:
-
-+          $imagefile = "$userID." . preg_replace('{^.+?\.(?=\w+$)}', '', strtolower($_FILES['userphoto_image_file']['name']));
-
-Whole diff below:
-
-"""
- Plugin Name: User Photo
- Plugin URI: http://wordpress.org/extend/plugins/user-photo/
- Description: Allows users to associate photos with their accounts by accessing their "Your Profile" page. Uploaded images are resized to fit the dimensions specified on the options page; a thumbnail image is also generated. New template tags introduced are: <code>userphoto_the_author_photo</code>, <code>userphoto_the_author_thumbnail</code>, <code>userphoto_comment_author_photo</code>, and <code>userphoto_comment_author_thumbnail</code>. Uploaded images may be moderated by administrators.
--Version: 0.9.4
--Author: <a href="http://weston.ruter.net/">Weston Ruter</a>, <a href="http://dev.dave-wagner.com/">Dave Wagner's Dev Site</a>
-+Version: 0.9.5
-+Author: <a href="http://weston.ruter.net/">Weston Ruter</a>
- 
- Original code by Weston Ruter <http://weston.ruter.net> at Shepherd Interactive <http://shepherd-interactive.com>.
--Continued development and maintenance by Dave Wagner <http://dev.dave-wagner.com/>
-+Continued development and maintenance by Dave Wagner (cptnwinky) <http://dev.dave-wagner.com/>
- 
- GNU General Public License, Free Software Foundation <http://creativecommons.org/licenses/GPL/2.0/>
- This program is free software; you can redistribute it and/or modify
-@@ -47,6 +47,7 @@
-   "image/png" => true,
-   "image/x-png" => true
- );
-+$userphoto_validextensions = array('jpeg', 'jpg', 'gif', 'png');
- 
- define('USERPHOTO_PENDING', 0);
- define('USERPHOTO_REJECTED', 1);
-@@ -316,6 +317,7 @@ function userphoto_thumbnail($user, $before = '', $after = '', $attributes = arr
- 
- function userphoto_profile_update($userID){
-   global $userphoto_validtypes;
-+  global $userphoto_validextensions;
-   global $current_user;
-   
-   $userdata = get_userdata($userID);
-@@ -376,10 +378,15 @@ function userphoto_profile_update($userID){
-             $error = __("File upload failed due to unknown error.", 'user-photo');
-         }
-       }
--      else if(!$_FILES['userphoto_image_file']['size'])
-+      else if( !$_FILES['userphoto_image_file']['size'] ){
-         $error = sprintf(__("The file &ldquo;%s&rdquo; was not uploaded. Did you provide the correct filename?", 'user-photo'), $_FILES['userphoto_image_file']['name']);
--      else if(@!$userphoto_validtypes[$_FILES['userphoto_image_file']['type']]) //!preg_match("/\.(" . join('|', $userphoto_validextensions) . ")$/i", $_FILES['userphoto_image_file']['name'])) ||
-+      }
-+      else if( !preg_match("/\.(" . join('|', $userphoto_validextensions) . ")$/i", $_FILES['userphoto_image_file']['name']) ){
-+        $error = sprintf(__("The file extension &ldquo;%s&rdquo; is not allowed. Must be one of: %s.", 'user-photo'), preg_replace('/.*\./', '', $_FILES['userphoto_image_file']['name']), join(', ', $userphoto_validextensions));
-+      }
-+      else if( @!$userphoto_validtypes[$_FILES['userphoto_image_file']['type']] ){
-         $error = sprintf(__("The uploaded file type &ldquo;%s&rdquo; is not allowed.", 'user-photo'), $_FILES['userphoto_image_file']['type']);
-+      }
-       
-       $tmppath = $_FILES['userphoto_image_file']['tmp_name'];
-       
-@@ -414,8 +421,10 @@ function userphoto_profile_update($userID){
-         #umask($umask);
-         
-         if(!$error){
--          #$oldFile = basename($userdata->userphoto_image_file);
--          $imagefile = preg_replace('/^.+(?=\.\w+$)/', $userdata->user_nicename, strtolower($_FILES['userphoto_image_file']['name']));
-+          $oldimagefile = basename($userdata->userphoto_image_file);
-+          $oldthumbfile = basename($userdata->userphoto_thumb_file);
-+          #$imagefile = preg_replace('/^.+(?=\.\w+$)/', $userdata->user_nicename, strtolower($_FILES['userphoto_image_file']['name']));
-+          $imagefile = "$userID." . preg_replace('{^.+?\.(?=\w+$)}', '', strtolower($_FILES['userphoto_image_file']['name']));
-           $imagepath = $dir . '/' . $imagefile;
-           $thumbfile = preg_replace("/(?=\.\w+$)/", '.thumbnail', $imagefile);
-           $thumbpath = $dir . '/' . $thumbfile;
-@@ -448,7 +457,7 @@ function userphoto_profile_update($userID){
-                 $admin = get_userdata($admin_notified);
-                 @wp_mail($admin->user_email,
-                          "User Photo for " . $userdata->display_name . " Needs Approval",
--                         get_option("home") . "/wp-admin/user-edit.php?user_id=" . $userdata->ID . "#userphoto");
-+                         get_option("siteurl") . "/wp-admin/user-edit.php?user_id=" . $userdata->ID . "#userphoto");
-               }
-             }
-             else {
-@@ -460,9 +469,12 @@ function userphoto_profile_update($userID){
-             update_usermeta($userID, "userphoto_thumb_file", $thumbfile);
-             update_usermeta($userID, "userphoto_thumb_width", $thumbinfo[0]);
-             update_usermeta($userID, "userphoto_thumb_height", $thumbinfo[1]);
--      
--            #if($oldFile && $oldFile != $newFile)
--            #  @unlink($dir . '/' . $oldFile);
-+            
-+            //Delete old thumbnail if it has a different filename (extension)
-+            if($oldimagefile != $imagefile)
-+              @unlink($dir . '/' . $oldimagefile);
-+            if($oldthumbfile != $thumbfile)
-+              @unlink($dir . '/' . $oldthumbfile);
-           }
-         }
-       }
-"""
+Is this information something that list wants to receive in future? At least
+this gives some idea of the response time from plugin developers. Some haven't
+done anything yet.
 
 --
 Henri Salo
