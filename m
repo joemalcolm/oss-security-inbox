@@ -1,67 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/13
-Message-ID: <000001cee185$5db2ec30$1918c490$@cs.kuleuven.be>
-Date: Thu, 14 Nov 2013 23:03:34 +0100
-From: "Mathy Vanhoef" <Mathy.Vanhoef@...kuleuven.be>
-To: <oss-security@...ts.openwall.com>
-Subject: CVE request: ath9k_htc improperly updates MAC address
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/9
+Message-ID: <5151EC9D.8020501@redhat.com>
+Date: Tue, 26 Mar 2013 12:44:45 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>, "Larry W. Cashdollar" <larry0@...com>
+Subject: Re: CVE request: ibutils improper use of files in /tmp
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- 
+On 03/26/2013 08:51 AM, Vincent Danen wrote:
+> * [2013-03-26 08:28:53 -0600] Vincent Danen wrote:
+> 
+> Yeah, you're right.  It was pointed out to me that it was noted
+> here:
+> 
+> http://www.openwall.com/lists/oss-security/2013/03/19/8
+> 
+> Can CVE-2013-1894 be rejected?  Sorry about this, I didn't notice
+> that it was assigned one already.
 
-This concerns a bug in the ath9k_htc driver: When a user changes/spoofs
-their MAC address, an attacker can retrieve the original MAC address, which
-is a potential privacy risk. Debian bug report:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=729573
-
- 
-
-Background of the bug:
-http://www.mathyvanhoef.com/2013/11/unmasking-spoofed-mac-address.html
-
- 
-
-The cause of the bug is in ath9k_htc_set_bssid_mask [1]. Here the MAC
-address of one of the virtual interfaces should be picked as the new main
-MAC address of the device. However the main MAC address (stored in
-common->macaddr) is never updated. The ath9k does implement this properly
-and sets the main MAC address to the MAC address of one of the virtual
-interfaces (by first writing it to iter_data->hw_macaddr and then copying it
-over to common->macaddr [2]). Note that ath_hw_setbssidmask updates the main
-MAC address register for both the ath9k and ath9k_htc drivers [3].
-
- 
-
-Can a CVE please be assigned?
-
- 
-
-Cheers,
-
-Mathy
-
- 
-
- 
-
-[1]
-<http://lxr.free-electrons.com/source/drivers/net/wireless/ath/ath9k/htc_drv
-_main.c?a=microblaze#L145>
-http://lxr.free-electrons.com/source/drivers/net/wireless/ath/ath9k/htc_drv_
-main.c?a=microblaze#L145
-
-[2]
-<http://lxr.free-electrons.com/source/drivers/net/wireless/ath/ath9k/main.c#
-L831>
-http://lxr.free-electrons.com/source/drivers/net/wireless/ath/ath9k/main.c#L
-831
-
-[3]
-<http://lxr.free-electrons.com/source/drivers/net/wireless/ath/hw.c#L118>
-http://lxr.free-electrons.com/source/drivers/net/wireless/ath/hw.c#L118
+Please REJECT CVE-2013-1894 and use CVE-2013-1894 instead.
 
 
-Disclaimer: http://www.kuleuven.be/cwis/email_disclaimer.htm
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRUeydAAoJEBYNRVNeJnmT7lAP/1Tiy0NKyDlfjPHeeI5b88GN
+TuT7zv08IYaEEhDvmyk4sP8ynz//Yv1GlJ4LyhUPeyF/onN6mjCqbQZXATLVjqoU
+Wfg5wIV3y7iFqRrCW6Jr2ywiw8QacNiikSkE3C7bZ6WxH3L87f+6AzwQOk1rVOde
+JHP+UMaJ8mvyZlABKBsllHM6umB6n0AZN7/yX3xca7mokpHOB2w6DJLp9mVdmzXi
+abfoVJ9DwA71V3IR3sWxTatK16TEFYL7W6d42azDBZ5fHpXNyTBKm/XmE2CC1agL
+gXSuoGGy0EeG7mBT5GDHC/Qn9/pOeZA1OIWGnLBZ/spOCp7Ip8vggaqyKQSTK32T
+/Vo/gEtITPEMmpeaz0P6z7WZTk6LcTI1OczpJMu4fVEDpxGnLtLY1vsQmuNS62Hj
+iEtAH+Bg7O3HpWIaSdh7B+h5DkzHAKr3OZiNKjvJgMAnB+md8ShvZBzS7Pmu+dYJ
+C6ZoRFkN0jwCTWeuHY2RQXKu2CCaHHmTvZ1ULTJxwPKzjo5KTSekQpK78a5fI0nX
+sxB1LSJGb+xJaED402TWTWopZ0rR0/mLShc9MuRsTEFDyL7i3YOqA28YkZWFdYvv
+QxR9WdC662Vxw4AVWIAg33HWUXgNcEIjnf/pBd4DCb9VO3ziignQfJsYVGMHJpXF
+VYMfi2PsNMeW48XEfvDa
+=jBGc
+-----END PGP SIGNATURE-----
