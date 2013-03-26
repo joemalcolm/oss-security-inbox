@@ -1,76 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/26/1
-Message-ID: <51038364.2010804@redhat.com>
-Date: Sat, 26 Jan 2013 00:19:00 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, WordPress Security Team <security@...dpress.org>
-Subject: Re: CVE request: WordPress 3.5.1 Maintenance and Security Release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/6
+Message-ID: <20130326145131.GE5378@redhat.com>
+Date: Tue, 26 Mar 2013 08:51:31 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: "Larry W. Cashdollar" <larry0@...com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: ibutils improper use of files in /tmp
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* [2013-03-26 08:28:53 -0600] Vincent Danen wrote:
 
-On 01/25/2013 02:13 AM, Henri Salo wrote:
-> From http://wordpress.org/news/2013/01/wordpress-3-5-1/
-> 
-> WordPress 3.5.1 also addresses the following security issues:
+Yeah, you're right.  It was pointed out to me that it was noted here:
 
-Can I get confirmation on details of these issues so I can properly
-assign CVEs? Thanks!
+http://www.openwall.com/lists/oss-security/2013/03/19/8
 
-> - A server-side request forgery vulnerability and remote port
-> scanning using pingbacks. This vulnerability, which could
-> potentially be used to expose information and compromise a site,
-> affects all previous WordPress versions. This was fixed by the
-> WordPress security team. We’d like to thank security researchers
-> Gennady Kovshenin and Ryan Dewhurst for reviewing our work.
+Can CVE-2013-1894 be rejected?  Sorry about this, I didn't notice that
+it was assigned one already.
 
-Basically it applies filters to pingbacks, things like:
+>* [2013-03-26 12:10:31 +0000] Larry W. Cashdollar wrote:
+>
+>>I doubled checked this, i???t looks like this was already assigned  CVE-2013-2561
+>
+>Do you have a reference for that assignment?  Because I couldn't find
+>any CVE references when I was looking for it initially.
+>
+>>On Mar 25, 2013, at 08:09 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+>>
+>>>-----BEGIN PGP SIGNED MESSAGE-----
+>>>Hash: SHA1
+>>>
+>>>On 03/25/2013 03:49 PM, Vincent Danen wrote:
+>>>>It was reported on full-disclosure that ibutils suffers from
+>>>>improper use of files /tmp that could allow a user to clobber files
+>>>>as the user running ibutils (probably usually root).
+>>>>
+>>>>I didn't see a CVE request for this or anything show up here; if
+>>>>one hasn't been assigned, could it be?
+>>>>
+>>>>Thanks.
+>>>>
+>>>>References:
+>>>>
+>>>>http://seclists.org/fulldisclosure/2013/Mar/87
+>>>>https://bugzilla.redhat.com/show_bug.cgi?id=927430
+>>>
+>>>Please use CVE-2013-1894 for this issue.
 
-return new IXR_Error(33, __('The specified target URL cannot be used
-as a target. It either doesn't exist, or it is not a pingback-enabled
-resource.')); so I was largely abl to confirm this one.
-
-> - Two instances of cross-site scripting via shortcodes and post
-> content. These issues were discovered by Jon Cave of the WordPress
-> security team.
-
-I found one instance of esc_attr() to esc_url() on a url used in
-embedded media, I'm guessing this is the XSS mentioned in the
-description as "post content"?
-
-All I'm seeing for shortcodes related junk is in a big JavaScript blob
-wp-35/wp-includes/js/media-editor.min.js. It looks like this might
-need two CVEs if they are widely different.
-
-> - A cross-site scripting vulnerability in the external library
-> Plupload. Thanks to the Moxiecode team for working with us on this,
-> and for releasing Plupload 1.5.5 to address this issue.
-
-The diff for plupload is a mess of JavaScript/binary files so I can't
-confirm much.
-
-Thanks.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRA4NjAAoJEBYNRVNeJnmTjF8P/0dUhP3BeYCZXG4Qwe/p3OWx
-IDzNMUuJIj5K+BytN9gTvMRulexsXAxb792f7BiinQ7RDa1chyohupg4TOYxGjIg
-Lyy+kWYGHQN/ealCYU1iT5YJ0OqAwdKnCkIM0ONKexbcZEZ8Mo9DWr+C6QawMDkb
-DPxocpavQz2vw0BMrCcUeXNCRYTcoLaGT9qbNXsVVYEavAMFJYW09aZX3jfTUQgg
-au8Qblh+/+jQso49gNcfUT3r4ArpZbhFDdB+Ea0uaax9p+Z1REN9EQsMsoqOT3c3
-fIMmVwO8Mh7Xi3sVd/L2yiloHe7Gw+nHLc/WLb18/vVEVFblOJa62cvQKjJ5HF/Y
-OwxMDOU05u9UG4zCarP0/WBSyYlgvGaan+LQlNDJ8etff/1JE56KUQIl9qu9zq/I
-Gv6P6c2LPyqOR4l4kiSaRCRGsSjSXI9zdCmq6OLhRd/6avweBCgRKz+h//Qz0/cR
-IupTTbq1d378L7seJK58KKpNmFJ3tbioL/p8P6oMVuiqH+E+9znCHJSe0kf0wJLw
-dCWmENnvWEmB/ILHjZysMSdMCeFvZDeOzpvWW7/NcT+0qa5W0o0FEgOC9riGT2JG
-KR7aKYwzNLemA5ZIxcBtdVC9Rk5rJc/BiNzzVHqIblWd21hLXtjBwCXuSxyVp3NK
-Fox7ThOGEaKqtsUXPnU+
-=3t5b
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Security Response Team 
