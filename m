@@ -1,117 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/24
-Message-ID: <20130605192308.GM32700@dhcp-25-225.brq.redhat.com>
-Date: Wed, 5 Jun 2013 21:23:08 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: Stephane Eranian <eranian@...gle.com>
-Cc: Peter Zijlstra <a.p.zijlstra@...llo.nl>, "ak@...ux.intel.com" <ak@...ux.intel.com>, security@...nel.org, Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: More perf security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/2
+Message-ID: <51513918.4090401@redhat.com>
+Date: Mon, 25 Mar 2013 23:58:48 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE-2013-1895 py-bcrypt 0.2 concurrency vulnerability (auth bypass)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 05, 2013 at 03:53:52PM +0200, Stephane Eranian wrote:
-> On Wed, Jun 5, 2013 at 3:35 PM, Petr Matousek <pmatouse@...hat.com> wrote:
-> > On Wed, Jun 05, 2013 at 03:02:53PM +0200, Peter Zijlstra wrote:
-> >> On Wed, Jun 05, 2013 at 02:38:56PM +0200, Petr Matousek wrote:
-> >> > On Wed, Jun 05, 2013 at 02:15:59PM +0200, Peter Zijlstra wrote:
-> >> > > On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
-> >> > > > Hello, Peter.
-> >> > > >
-> >> > > > On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
-> >> > > > > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
-> >> > > > >
-> >> > > > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
-> >> > > > >
-> >> > > > > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
-> >> > > > > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-> >> > > > > Date:   Fri May 3 14:11:25 2013 +0200
-> >> > > > >
-> >> > > > >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
-> >> > > > >
-> >> > > > >     We should always have proper privileges when requesting kernel
-> >> > > > >     data.
-> >> > > > >
-> >> > > > >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-> >> > > > >     Cc: <stable@...nel.org>
-> >> > > > >     Cc: Andi Kleen <ak@...ux.intel.com>
-> >> > > > >     Cc: eranian@...gle.com
-> >> > > > >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
-> >> > > > >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
-> >> > > > >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
-> >> > > > >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
-> >> > > >
-> >> > > > There is similar check in perf_copy_attr() which is called from
-> >> > > > perf_event_open syscall --
-> >> > > >
-> >> > > >                 /* kernel level capture: check permissions */
-> >> > > >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
-> >> > > >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
-> >> > > >                         return -EACCES;
-> >> > > >
-> >> > > > It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
-> >> > > > missing something?
-> >> > > >
-> >> > >
-> >> > > I overlooked it, also its slightly broken. See the discussion at:
-> >> > >   https://lkml.org/lkml/2013/5/21/166
-> >> >
-> >> > Got it, thanks for the pointer. So it is safe to say there never was a
-> >> > leak in this case (and thus no security issue worth CVE)?
-> >>
-> >> There was a leak, notice how Stephane's patch did a
-> >> s/PERF_SAMPLE_BRANCH_PERM_PLM/PERF_SAMPLE_BRANCH_KERNEL/
-> >
-> > PERF_SAMPLE_BRANCH_PERM_PLM is a superset of PERF_SAMPLE_BRANCH_KERNEL:
-> >
-> > #define PERF_SAMPLE_BRANCH_PERM_PLM \
-> >         (PERF_SAMPLE_BRANCH_KERNEL |\
-> >          PERF_SAMPLE_BRANCH_HV)
-> >
-> >
-> >> but also places
-> >> the check _after_ we propagate the event PLM levels in the case none
-> >> were LBR specific.
-> >
-> > Assuming the leak does occur only when PERF_SAMPLE_BRANCH_KERNEL is set,
-> > that does not matter:
-> >
-> >                /* kernel level capture: check permissions */
-> >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
-> >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
-> >                         return -EACCES;
-> >
-> > ^^^ this assures proper permission check if PERF_SAMPLE_BRANCH_KERNEL
-> > is explicitly set
-> >
-> >
-> >                 /* propagate priv level, when not set for branch */
-> >                 if (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) {
-> >
-> >                         /* exclude_kernel checked on syscall entry */
-> >                         if (!attr->exclude_kernel)
-> >                                 mask |= PERF_SAMPLE_BRANCH_KERNEL;
-> >
-> > And following check in perf_event_open syscall assures the permission
-> > are right for (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) code:
-> >
-> >         if (!attr.exclude_kernel) {
-> >                 if (perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
-> >                         return -EACCES;
-> >         }
-> >
-> Yes, your analysis is correct. If the branch has not explicit priv
-> level mask, then
-> it is inherited from the event branches are requested from.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I am sorry to re-iterate the question, but does that mean that even
-before your and Peter's changes, it was not possible to set
-PERF_SAMPLE_BRANCH_KERNEL without passing "perf_paranoid_kernel() &&
-!capable(CAP_SYS_ADMIN" check either in perf_copy_attr or 
-perf_event_open (attr.exclude_kernel check)?
+So py-bcrypt 0.2 has a concurrency vulnerability that can lead to auth
+bypass. I looked at the code diff between 0.2 and 0.3, looks ok.
 
-Did your patch change anything at all or it was just refactoring?
+https://pypi.python.org/pypi/py-bcrypt
 
-I must be missing something.
+Please use CVE-2013-1895 for this issue.
 
-Thanks for the patience,
--- 
-Petr Matousek / Red Hat Security Response Team
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRUTkYAAoJEBYNRVNeJnmTXBcQALiB18nHUUBBxJjNJSENoEMh
+vlHilYbylh755S5a1hQueWkD4JXY6YSXv5mraKgKDqUMEvUlucBeC/sG66tCOEF1
+pxUqRNq2P88apmsdlwpB9N44gJNghXYkttz3NjDmIryYogePZRH06l1P73IF6lt+
+LHMrly3uhbXzxxZ385BGsUnMYuLxb4l7EdO3HYppZb6UV9kAEbr2sGh6sipMig4O
+o3LgvdIDPF8GkjEODS9EwpemE1kC1ce8Q7QmbpUWskGdPuRRM1Z/gy2MNLcqA+Cq
+bu/ivdV73dZjMyCHIWo760xYCesdxGy9WLJXBCeGn6POK+7xgky5VphL9QS2CdeV
+NVp83MdQYJrEThSiZn0Ckhhf3zEI8Elv3BRUcsof7DpiLAuoautz3QMgM8u7VSu/
+yiyRe34+0FyG4VDV60zYyaVY7JH7rlJD9uS1ozJYyeZqtGR1zb4IsidtSx/xxkek
+50YFG+vvY6sX1Je58uzogO8qvgUZRFXkzXtZEG2lk9yRp4SkTtrfKHWSOxcgPsP9
+FYjf6o1f/JiG0gRuVIaMZleFbFccfnCUcOmj03yUyxJokZLm5fXBeBZw73kcIMxV
+4tiLSGS7tO936HG8JV0FnW9NKYy1eqfiEi34An/z3mpQO7gezWVq7xyVdIj5TQF7
+tZahCFy47MewIBtSbC9Z
+=bbTJ
+-----END PGP SIGNATURE-----
