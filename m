@@ -1,82 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/7
-Message-ID: <5135BA84.7090601@suse.de>
-Date: Tue, 05 Mar 2013 10:27:32 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/11
+Message-ID: <5151FAE6.9040204@redhat.com>
+Date: Tue, 26 Mar 2013 13:45:42 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: busybox
+CC: Vincent Danen <vdanen@...hat.com>, "Larry W. Cashdollar" <larry0@...com>
+Subject: Re: CVE request: ibutils improper use of files in /tmp
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Hi Kurt,
-
-Am 04.03.2013 03:26, schrieb Kurt Seifried:
-> On 03/03/2013 01:06 PM, Michael Gilbert wrote:
->> On Sun, Mar 3, 2013 at 2:50 PM, Kurt Seifried wrote:
->>> This actually raises a good point, due to Debian being a 
->>> secondary source in most cases (e.g. upstream has a bug report 
->>> which is then copied into Debian's bug tracker since Debian
->>> ships it) the dates and sometimes information is wrong.
+On 03/26/2013 12:44 PM, Kurt Seifried wrote:
+> On 03/26/2013 08:51 AM, Vincent Danen wrote:
+>> * [2013-03-26 08:28:53 -0600] Vincent Danen wrote:
 > 
->> Aren't these problems true for any source whether it be primary,
->>  secondary, tertiary, or so on?
+>> Yeah, you're right.  It was pointed out to me that it was noted 
+>> here:
 > 
-> Sorry yeah I should have been more clear. This goes for all the
-> major secondary sources (Debian, SUSE, etc.).
-
-I understand this. You provide a very valuable service for free here
-on the list and we should make as easy as possible for you to do your job.
-
-
->>> I will no longer be issuing CVE's for issues brought up
->>> through the Debian bugtracker without an original source to
->>> back it up, otherwise more mistakes will happen which is not
->>> good.
+>> http://www.openwall.com/lists/oss-security/2013/03/19/8
 > 
->> I don't understand the purpose of excluding an entire project's 
->> sources.  Should redhat's bugzilla, gentoo, etc. also be
->> excluded for the same reason?  If not, why do they get special
->> treatment?
+>> Can CVE-2013-1894 be rejected?  Sorry about this, I didn't
+>> notice that it was assigned one already.
 > 
-> I didn't say I;'m excluding them. I simply will require an
-> original source, in this case the year is probably wrong.
-> 
->> Is there really a problem at all?  The debian report included the
->>  upstream commit, so you had a link to a primary resource
->> anyway. So, I think a simple solution to this 'problem' of
->> secondary sources is follow them to the primary one?
-> 
-> Yeah, and people can post them to the list. As stated before, I
-> assign a lot of CVEs. One minute extra per CVE is about 20 hours a
-> year. It adds up. So from now on I'll be needing original source
-> confirmation in the emails to oss-sec.
+> Please REJECT CVE-2013-1894 and use CVE-2013-1894 instead.
 
-Unfortunately this will neither reduce your work-load nor increase the
-speed. Every CVE request should state exactly the source of the issue
-instead. I believe that the frequent posters on this list have no
-problem doing this.
+Cut and paste fail.
 
-Best,
-Thomas
+Please REJECT CVE-2013-1894 and use CVE-2013-2561 instead.
+
 
 - -- 
-Thomas Biege <thomas@...e.de>, Teamlead MaintenanceSecurity, CSSLP
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
-21284 (AG Nürnberg)
-- --
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJRNbqEAAoJEJqHoVJVjr8D8ugH/2I3nQcNGeVWHXRAVlplZyEq
-tsiAxWWizYeaQtpQ9jS/pG2bPS/TDg0rOgFJdaVdXhTNDO4Kge29i8mkL/VsKNGW
-6O7GZQJodCuKFFHIKmcMy3G4VzRkyt9wTLUZnGHFWgn4cd73q+ODyE56AI+Sen7N
-pw9W807vgNLtXpHrJ+S8IzVW4bcyAQAe6ihUuxB9uR/JCWFxqPpMSLrxjsWbCuRJ
-U0wtJ3byDAQY0akMZ6T2Rt9OHF1VxiYGoyR+X5StJgpUWM+4em+akzQB8cpl8ZQq
-3fkKBUdVMY6avLWjHWCL9GOcgIQTUigvqKJKocOnOg9YF6uYMJyoseoIlwrww5Y=
-=rHSx
+iQIcBAEBAgAGBQJRUfrmAAoJEBYNRVNeJnmTBOMP/1NCR2VvH/Rh7Ot8P8elT6CD
+gZhAu4P/Mgvsp3i0lPHWG78qDpfP8A1dagJp5k5ZJs7TJHhfOtRvRC94cKslxziO
+qv3nXH6V4ncE71wmWsVjHmCpHPx6Bu+6loA0cVa6uTnfZrojO8vdc076/eXN0y6Y
+tLHBAlRFqrHQRy/IphwTAmx8cmRMWuPpogMdfBWQ9SZIcd+yDy4EoJgctrE/c0Er
+9lFttX34OL2Q5fjqX9qO1tGHV1IAigMivSbx7BJo64+3zSozOupg1QiHr9nhBt/1
+g6hBxmX3a4LYN/RkmyKhyIUuQFs9ASTSHw4yGxK4tAmBIu9dTNMDsDskGrCKlr0x
+NGw4G9kLC/i7zP4PvjYd89WTS+a2xOIukNEWtaE/8QopstvIakhrGHIodgm9VRaO
+LhzV/2jUDMtqP37QK+YHoSBJWzbubFBvf+c2ewTm060Z2s9ydiXntQdbYgWAeI/a
+Bp1GwdxDQdQHf99Vecm6uovx4m2+A4JK1d4NmshWDnaC6THaT6nXlNGAEXrFrVP5
+1P8eCoOaQBUNkSXhcAJaEesqvqILEfmE7KEViTSbpjGFzcc1mjNJJZg1RVilp69L
+3eYJo07ugWLOx5XTEb1DJFOQmCfCsPkW8AvHzVdkg7mMXtNovrrGXaMIiyzCnuG+
+ohgI3IFYTIW9aUowq1pk
+=+KSP
 -----END PGP SIGNATURE-----
