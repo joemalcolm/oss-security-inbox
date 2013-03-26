@@ -1,47 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/01/1
-Message-ID: <51F9F939.2050708@redhat.com>
-Date: Wed, 31 Jul 2013 23:59:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/3
+Message-id: <F2F0C2DD-8F71-47DF-BC09-19D96CAFB644@me.com>
+Date: Tue, 26 Mar 2013 07:23:03 -0400
+From: larry Cashdollar <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Ruby gem Thumbshooter 0.1.5 remote code execution
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Ruby gem Thumbshooter 0.1.5 remote code execution
 
-On 07/31/2013 04:51 PM, Forest Monsen wrote:
-> Hello!
-> 
-> I'd like to request an identifier for:
-> 
-> SA-CONTRIB-2013-061 - Flippy - Access Bypass
-> https://drupal.org/node/2054701
-> 
-> Thanks,
-> Forest
-> 
+3/25/2013
+Generates thumbshots of URLs by using Webkit and QT4.
 
-Please use CVE-2013-4187 for this issue.
+https://github.com/digineo/thumbshooter
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Specially crafted URLs can result in remote code execution if the URL contains shell metacharacters.
 
-iQIcBAEBAgAGBQJR+fk5AAoJEBYNRVNeJnmTt+IP/ilI6saH8Csn65hACOMuOf8x
-i1OaPR35gldWHvq+3UQg5Tg26XjfQ4UORz2yZ8MjYX6U7UhWv7NesvhNyAZ8vO0S
-NInDGDcZwvyRJlIXJ5co43F/dZ2RedsXSysY5C4h6FEK04LYlvJLddwuoV32j/H8
-nHzyLVRg4GPR/pDX1rgUcuDQfb6Q6oUOLbqwgJ6RuWwdRYw/Wa7zQ7WLJ9lWDaf6
-0qUX85lYLpyeZrdzpYPuYAriSsvEmHA0jgrElgqsrI3K8frhDYgXhUTFC5PDqO4D
-6oaYS6E5bnWQZAy+AtSavibPo/v/SutCOD30l8nMv9PiKdPWnQmX64dpFCHpkJvX
-F+va2cfX2Ljuf9SvbHHSroDrgRu3rOz/vZkOjro/5pa7AroNux+kJ8ZI+LbboIfQ
-OfwkTjcGtZQ7xW9d8o34TZp15POpubV9GEdP8wI2o2W1WvZVqV9nP7Nf9qQ7mZDl
-n/U5nGWVt1m6TMYQ8s69RibJdEQiHFeWn+nrPyIwEujbdLbMHXQljBQ4mqwK0HZY
-YvWUA8Ft3M9hp2KWJCi40QOSxeVgkySEoOpOQzK1i3LalKNDcF6EJswTz2ARDY2w
-E/yVunLPkKiJLTjRwx8EgzADVlxfyg/A4KqaW4/4A9wonkQPzxxtuUzaXZ9KQI7q
-y++BlFoIqS1XG1XcjbB6
-=fmO3
------END PGP SIGNATURE-----
+We see that the url is passed directly to the shell in the following code snippet from ./thumbshooter-0.1.5/lib/thumbshooter.rb lines:
+
+ 1012 command << "xvfb-run -a --server-args='-screen 0, #{screen}x24' " 
+ 1015 command << "{WEBKIT2PNG} '{url}' {args}"
+ 1017 img = `{command} 2>&1`
+Larry W. Cashdollar
+@_larry0
+http://vapid.dhs.org/advisories/thumbshooter-ruby-gem-remoteexec.html
+
+
+Larry C$
