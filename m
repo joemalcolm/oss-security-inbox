@@ -1,90 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/10/3
-Message-ID: <5205C4C4.90205@redhat.com>
-Date: Fri, 09 Aug 2013 22:42:44 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/7
+Message-id: <5170ead4-5956-48e3-919d-4ae4910f7b26@me.com>
+Date: Tue, 26 Mar 2013 15:55:51 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
 To: oss-security@...ts.openwall.com
-CC: Florian <floriangaultier@...il.com>
-Subject: Re: CVE Request - LibModPlug <=0.8.8.4 multiple heap overflow
+Subject: Re: Ruby gem Thumbshooter 0.1.5 remote code execution
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello all,
 
-On 08/07/2013 11:29 AM, Florian wrote:
-> On 07/08/2013 19:17, Kurt Seifried wrote:
->> On 08/07/2013 10:24 AM, Florian wrote:
->>> Hi,
->> 
->>> Just a CVE Request for this 
->>> http://blog.scrt.ch/2013/07/24/vlc-abc-parsing-seems-to-be-a-ctf-challenge/
->>
->>>
->>> 
-Thx
->> 
->> 
->> I need a better request. You want one CVE? multiple CVEs? A quick
->> read of the web page indicates multiple different problems. Can
->> you list them here and provide links to the source code? thanks.
->> 
-> 
-> Okay, so the first bug is an integer overflow in j variable, it
-> occurs here : 
-> https://github.com/gardaud/libmodplug/blob/master/src/load_abc.cpp#L1852
+May I please have a CVE assigned to this vulnerability? ﻿
 
-Please
-> 
-use CVE-2013-4233 for this issue.
+Thanks!
 
-> The second bug is a heap overflow and can be triggered in two
-> functions abc_MIDI_drum : 
-> https://github.com/gardaud/libmodplug/blob/master/src/load_abc.cpp#L3211
+On Mar 26, 2013, at 04:23 AM, larry Cashdollar <larry0@...com> wrote:
+
+> Ruby gem Thumbshooter 0.1.5 remote code execution
 >
-> 
-and
-> abc_MIDI_gchord : 
-> https://github.com/gardaud/libmodplug/blob/master/src/load_abc.cpp#L3258
+> 3/25/2013
+> Generates thumbshots of URLs by using Webkit and QT4.
 >
->  h->gchord and h->drum are static buffers and are filled until the
-> copied byte is in the charset (respectively
-> 'fbcz0123456789ghijGHIJ' and 'dz0123456789')
-
-Please use CVE-2013-4234 for this issue.
-
-> It's up to you to open one or multiple CVE.
-
-Nope.
-
-http://cve.mitre.org/cve/editorial_policies/cd_abstraction.html
-
-I gotta follow to rules like everyone else.
-
-> Don't hesitate if you want more information.
-> 
-> Thx
-> 
-> 
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSBcTEAAoJEBYNRVNeJnmT6vEP/R1SVk6KRnwtW7queqL/UDg/
-Ji7SswSe2GBSNKmLdanWnhOJLeJsi2LjVv98U1rRR9bBxKE3BLkat/aTiM3ZACai
-KmFMIDtiSLAO+iz6pAuE6Ddko2fDdCw4K5RaGkAVatdrqVyW6SH98Zfj171yVJED
-GqO1TOm4xEQGPywZd+RKj6Q++yVmOQQxfyZ9cZTX6WHdZDeEhtVJtPJ3zSqquO7q
-En10K6dp8JYfB6l5qLf7yedhuSWchIZUlWqvLcv2dG1t295o5mru3Mri4xcWyFMp
-oluxgu20e7sTMjlxkByJQ2vT/ho8htTXlL3B5YtHtnsSsOspcak9/uQhvwrKeouY
-kAO0KHjVVdhA7uk6wpVyFjnXgVFkweSg1DnMl2sDHMf/GWKnuU+CnyT3kJzGvtAM
-TOQM77YsP+xowGfh62bZWgcz1UJH/00rIbWU/Edht37ZfhSikNhH00b7+QZGLh+K
-LVDWf+Ifpv1GMpshkpcAk/CfZSOp9nOyxFou2InM5EvHvdtWspdI5lxLSUZxBq1I
-bNoc8X5WF+wmjI8gWbiv/tddrX/JP+Qza3ogeG9kOdetr6CHICen3FaEvzMh3OZa
-9rp3iLdLJ+SVhhTpDAK4FcsuplX4yPpjTv5sFSacgrDb9JLqsMGDkjSH5ZiG9Mni
-esHtKi+2ApgHYHbnnpo0
-=x9Ym
------END PGP SIGNATURE-----
+> https://github.com/digineo/thumbshooter
+>
+> Specially crafted URLs can result in remote code execution if the URL contains shell metacharacters.
+>
+> We see that the url is passed directly to the shell in the following code snippet from ./thumbshooter-0.1.5/lib/thumbshooter.rb lines:
+>
+> 1012 command << "xvfb-run -a --server-args='-screen 0, #{screen}x24' "
+> 1015 command << "{WEBKIT2PNG} '{url}' {args}"
+> 1017 img = `{command} 2>&1`
+> Larry W. Cashdollar
+> @_larry0
+> http://vapid.dhs.org/advisories/thumbshooter-ruby-gem-remoteexec.html
+>
+>
+> Larry C$
+Content of type "text/html" skipped
