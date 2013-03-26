@@ -1,36 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/14/3
-Message-ID: <5234D0FC.1050907@mccme.ru>
-Date: Sun, 15 Sep 2013 01:11:24 +0400
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/4
+Message-id: <0c94c850-e9cf-40cc-879b-182eef015423@me.com>
+Date: Tue, 26 Mar 2013 12:10:31 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2013-4287 Algorithmic complexity vulnerability in RubyGems 2.0.7 and older
+Cc: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: ibutils improper use of files in /tmp
 Content-Type: text/plain; charset=utf-8
 
-On 2013-09-10 09:32, Eric Hodel wrote:
-> The vulnerability can be fixed by changing the first grouping to an atomic
-> grouping in Gem::Version::VERSION_PATTERN in lib/rubygems/version.rb.  For
-> RubyGems 2.0.x:
-> 
->   -  VERSION_PATTERN = '[0-9]+(\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' # :nodoc:
->   +  VERSION_PATTERN = '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' # :nodoc:
-> 
-> For RubyGems 1.8.x:
-> 
->   -  VERSION_PATTERN = '[0-9]+(\.[0-9a-zA-Z]+)*' # :nodoc:
->   +  VERSION_PATTERN = '[0-9]+(?>\.[0-9a-zA-Z]+)*' # :nodoc:
+Hi,
 
-This is not enough. The following script:
+I doubled checked this, i﻿t looks like this was already assigned  CVE-2013-2561
 
-  # Regexes are from
-https://github.com/rubygems/rubygems/blob/master/lib/rubygems/version.rb#L150
-  VERSION_PATTERN =
-'[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' # :nodoc:
-  ANCHORED_VERSION_PATTERN = /\A\s*(#{VERSION_PATTERN})*\s*\z/ # :nodoc:
-  '1111111111111111111111111111.' =~ ANCHORED_VERSION_PATTERN
+On Mar 25, 2013, at 08:09 PM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-takes ~1m on my machine. The problem is not in VERSION_PATTERN but in
-its possible repetition inside ANCHORED_VERSION_PATTERN.
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 03/25/2013 03:49 PM, Vincent Danen wrote:
+> > It was reported on full-disclosure that ibutils suffers from
+> > improper use of files /tmp that could allow a user to clobber files
+> > as the user running ibutils (probably usually root).
+> >
+> > I didn't see a CVE request for this or anything show up here; if
+> > one hasn't been assigned, could it be?
+> >
+> > Thanks.
+> >
+> > References:
+> >
+> > http://seclists.org/fulldisclosure/2013/Mar/87
+> > https://bugzilla.redhat.com/show_bug.cgi?id=927430
+>
+> Please use CVE-2013-1894 for this issue.
+>
+>
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.13 (GNU/Linux)
+>
+> iQIcBAEBAgAGBQJRURF/AAoJEBYNRVNeJnmTLAEQAJAJTUMELV+Cb1TO5VZ3bPXi
+> r+QmVkNQ3UmiOghXSrEli6xSam++o8BElOV0U8QvFNXgA+li+Q0cO2Q0Mr3tJul1
+> cN03uk2TqN23VE00zd6e+2cl+NNmNCe0b6qGuIJVjaz3CSMGGQ+IZXmbHFVxMeK3
+> fICzq94S0r/3PPhondXmX8QIaudaCa4pQey4dR0vWaIcoq7WN/QKk2p2zvDX+sVk
+> +2wKg4tKTP3luIHlF53VRGlIW0jYryI6s7Lcen15gELMa3AbcgYNAqMmiGAUlBBJ
+> lRe3W82FZM2vTh4fAjQU6hsmeXaJ6WYGg9btO4Br1Vubn3F5J6wChW8LTUMJaI7v
+> MB9glPv7LdY+L+0qDpLWbdq0DlIWRmBDZNL7Mwvh4ZSJIsCTENdp+FgRNaNoCMWP
+> uGybDpL3PIlam4XwhzYKgjMr31lwIc1nNzr6QVGRZOijSo+ZaLkV3It0ZG2a7JCf
+> 41Gdqjer3gyN3zSH5WQ33GA/UT0QHchJYmf+AnEQROMhsOGIZBvTpMmkEOQmcS00
+> sp7omCvootJIAmaHesKIo1U3lwZ4kbIYO+j0dbl/lmHewoL0O/zmULL/BHwdZc5s
+> S9EO7Qh/VZ03dM4rvnuRt3+zw+qWzzXqs1+wJS4IWMLKohbnHz364l3pLsQz2Gaa
+> PP1j2t5J9pE9URLDnfwF
+> =a+Xw
+> -----END PGP SIGNATURE-----
 
--- 
-Alexander Cherepanov
+Content of type "text/html" skipped
