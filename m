@@ -1,41 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/5
-Message-ID: <52563719.9070200@redhat.com>
-Date: Wed, 09 Oct 2013 23:11:53 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: 2 CVE's to be rejected
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/27/1
+Message-id: <f753c4f2-8690-48c4-8142-0358b7a87c0c@me.com>
+Date: Wed, 27 Mar 2013 00:19:45 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Ruby gem Thumbshooter 0.1.5 remote code execution
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mar 26, 2013, at 04:59 PM, Kurt Seifried <﻿kseifried@...hat.com﻿> wrote:
 
-The following two CVEs were used internally, one for an issue that
-turns out not to be an issue (looong story) and one for an issue with
-the same root cause as another (so duplicate). We could in theory
-recycle them but I feel it safer to not reuse them in case they leak
-out and cause confusion.
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>
+> Please
+> >
+> use CVE-2013-1898 for this issue.
+>
+> > Larry C$
+>
+> I gotta ask, what's with the name?
+ 
+It's my real name.  You can imagine what my childhood was like. 
 
-Please REJECT CVE-2013-1870
-Please REJECT CVE-2013-4398
+"Hey Cashdollar got change for a dollar?" - No sorry I only carry big bills.
+"Hey Cashdollar can I have a dollar?" - No go get a Job.
+"Hey Cashdollar got any cash?".... Eh...geez.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+I was told by my father that it was an American Indian name from the tribe 'Paycheck'. 
 
-iQIcBAEBAgAGBQJSVjcYAAoJEBYNRVNeJnmTlt0P/1Xym2y3kzscDCohP9tx4Pw5
-8HnB1R4if1oIqcnhkQHWqamqX6E4UGECcGVt/scMtajjVUqgIL/LcKyoNZjwQy6D
-ffh5LQ5BQAoEqtdSX01ft1kvL8eVXYpbNPGtDq1cFqnZe94bmELSmJo21K/5BxZf
-epv3NdjVww3wDwMUea+WqGW99CPxJCpEytm6VYzDoPKCQimHv1bo5YkFw49IyykQ
-i75bVT0WYdTY6nIRuGdSqJ3ob3DiuZxhd2nTIXkNnXMmpiaI1jeZuLDgazHF31dn
-HbXvjUEnsICGs3t53S89CRMvSu9slpWa1taoyYWksMYx0cbeAfdQRfEtC9xf7Ilm
-tdIVFJA4olos7jgi5OVTLUd70IbWLel7E59qPIixYMVlL6IKCF2QcmZvqcZ7mlmZ
-Wqh7soRpDJ7HNiLkd7Djfl6A1OtlKSpVZT4zOP3uXpq/xu0TNusEdhewrE8FwCEx
-dP5sZlbAcYXU18E7qu4hC+/fS5WZ/XgDrLT2B6eBGWXVlsOTiQieWrZynLdprI/s
-L4L3IjmHEjJZ3WqrwdUCtnKvPnH4A0nLdIcW2VkfxUBtIj7qvlBtMSsRTxfbHVQk
-drpPz24ESuhJ4AHl9pOhSz/gPd4w4kq5CdCZOKneyjAkhyVx+f+XaxaN+KXQxNGE
-i2cjvnCyusdR+XWIZufX
-=DUxe
------END PGP SIGNATURE-----
+A more realistic answer is it might be dutch for kirchtoller, and was mangled to Cashdollar.
+
+I make up random answers normally when people ask like, I am in the witness protection program etc... I'll spare you the rest
+at this point. ;-)
+
+-- Larry
+Content of type "text/html" skipped
