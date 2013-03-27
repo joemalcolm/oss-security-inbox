@@ -1,18 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/12
-Message-ID: <51335F21.2070308@gmail.com>
-Date: Sun, 03 Mar 2013 15:33:05 +0100
-From: Piotr Karbowski <piotr.karbowski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/27/2
+Message-ID: <20130327150550.GN5378@redhat.com>
+Date: Wed, 27 Mar 2013 09:05:50 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: busybox
+Subject: Denial of service in 389-ds and FreeIPA (CVE-2013-0336)
 Content-Type: text/plain; charset=utf-8
 
-On 03/03/2013 11:19 AM, Michael Tokarev wrote:
-> What it has to do with Debian, besides that debian was first
-> to actually submit this bug into its own bug tracker?
+As this was reported to the distros list on the 23rd of this month, I'm
+sharing the details here now as it is public.
 
-Acctualy not the first, the bug was reported to busybox mailinglist on 
-18 Dec 2012.
+Sumit Bose discovered that FreeIPA's directory server (dirsrv) would
+segfault if an unauthenicated user attempted to connect to it with a
+missing username/dn.  According to RFC 3062, connecting without
+specifying the username/dn is valid.
 
--- Piotr.
+This issue only affects FreeIPA 3.1 and 389-ds 1.3.x; earlier versions
+do not have the vulnerable code.
 
+Reference:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=913751
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
