@@ -1,67 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/07/3
-Message-ID: <50EB3B57.5020901@redhat.com>
-Date: Mon, 07 Jan 2013 14:17:11 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- proFTPD (X < 1.3.5.rc1): Symlink race condition when applying UserOwner to a newly (ProFTPD) created directory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/27/5
+Message-Id: <201303271958.46601.tmb@65535.com>
+Date: Wed, 27 Mar 2013 19:58:38 +0000
+From: Tim Brown <tmb@...35.com>
+To: kernel-hardening@...ts.openwall.com
+Cc: Corey Bryant <coreyb@...ux.vnet.ibm.com>, oss-security@...ts.openwall.com
+Subject: Re: [kernel-hardening] Security vulnerability tools
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 01/07/2013 09:55 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+On Wednesday 27 Mar 2013 19:54:04 Corey Bryant wrote:
+> Hi,
 > 
-> proFTPD upstream has recently released v1.3.5.rc1 release: [1]
-> http://proftpd.org/docs/NEWS-1.3.5rc1 correcting one security
-> issue:
+> I'd like to get a better understanding of tools used in the open source
+> community (kernel and user space) to detect security vulnerabilities.
 > 
-> A time-of-check time-of-use (TOCTOU) race condition flaw was found
-> in the way ProFTPD, flexible, stable and highly-configurable FTP
-> server, handled MKD/XMKD FTP commands when the UserOwner directive
-> was involved. A local attacker could use this flaw to possibly
-> escalate their privileges via symbolic-link attacks on
-> directories, created by ProFTPD prior the UserOwner ownership was
-> applied.
+> I have a list below to get started.  If anyone has any input, I'd
+> appreciate it!
 > 
-> Upstream bug report: [2]
-> http://bugs.proftpd.org/show_bug.cgi?id=3841
-> 
-> Relevant upstream patch: [3]
-> http://bugs.proftpd.org/show_bug.cgi?id=3841#c8
-> 
-> References: [4]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=697524 [5]
-> https://bugzilla.redhat.com/show_bug.cgi?id=892715
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+> I'll plan on updating http://oss-security.openwall.org/wiki/tools with
+> anything it doesn't already have.
 > 
 
-Please use CVE-2012-6095 for this issue.
+Hey Corey,
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+One you might want to add is unix-privesc-check from myself, @inquisb and 
+@pentestmonkey.  There are two versions in existence:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+1.x - @pentestmonkey's quick and dirty with some hacks by me
+trunk - a full blown privesc check framework designed by me with contributions 
+from the other two, it has multiple modes of operation, a standard library 
+which can be leveraged for new checks and (already) enhanced capabilities.   
+Its not perfect yet, I still need to clean it up and port it to the commercial 
+UNIX platforms we support but it should give a good idea of where we're going
 
-iQIcBAEBAgAGBQJQ6ztXAAoJEBYNRVNeJnmTOzcP/3z4cZl+fw20kpE2dRKsuTVC
-El8SgIkwuNAMUJUi2m2SHKqrGqFpJlh+GwneD+hIFsi/eqJR0707ahaEozvqD3f2
-oN8JXGLLYvhe/kUL4hloYEb20FtnN9kgwV9/G1p5CuNB5fz/TZhvAb5uKBqDe2FH
-onqHMOyHC6GSCwJ4gyNAMHTJxuhTz1WuIBuM5acjtprU+EoDkNyLYC278Lk9j8Vf
-MjH5Jnl8FQaDSgpnUeNBHe22sYj8ehBgYrEdLvt1Ths56w61W+M6kXc9Qny6oAmb
-45zAym3zBpIOnD/5kyLxB2pOkjuVrY8tSYwJWBB8M7pw1m1uR1+LyF/yLiPhkwc5
-+hLDj1gAp9JVs8+r48r297TZcsxfa+/h+JIL7FrYOhN8otWCpCe9L8ev+cBWRoF7
-hDso6GFa1sJP2H7WSiLn3PLN6nBNShCKP1K4EC0gnSRWQjTGg/0BzpCWbd01ya5N
-qZWqahLGz0nfX8mUp4WfBuXnbQvecwOSet55bf3ic9Aj0vfXetSc8D5OzZRESIS7
-i161wLBZYSe86JInouBuYydChz7F3ETioGMRK0LVm4YKxmMTB6a+tYbx0g96+hfm
-UGllilhvFg9h4/aQyHY74p8qkpJszp9xm4GfLqfuFV/Rq7NwYM82IkRgR1zBDMeq
-iOMH3avIYe+rA859EzEv
-=Ck6K
------END PGP SIGNATURE-----
+Once I've stabilised the API of trunk, it will become 2.x and we'll open it up 
+formerly for contributions.
+
+It's on Google Code if people want to take a look:
+
+* http://code.google.com/p/unix-privesc-check
+
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
