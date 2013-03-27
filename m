@@ -1,48 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/12
-Message-ID: <5113F137.2090003@redhat.com>
-Date: Thu, 07 Feb 2013 11:23:51 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Kurt Seifried <kseifrie@...hat.com>, spender@...ecurity.net
-Subject: Re: CVE request -- Linux kernel: x86/msr: /dev/cpu/*/msr local privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/27/10
+Message-ID: <515369D7.4090700@linux.vnet.ibm.com>
+Date: Wed, 27 Mar 2013 17:51:19 -0400
+From: Corey Bryant <coreyb@...ux.vnet.ibm.com>
+To: Tim Brown <tmb@...35.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Re: [kernel-hardening] Security vulnerability tools
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 02/07/2013 03:55 AM, Petr Matousek wrote:
-> Access to /dev/cpu/*/msr was protected only using filesystem
-> checks. A local uid 0 (root) user with all capabilities dropped
-> could use this flaw to execute arbitrary code in kernel mode.
-> 
-> Upstream commit: 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=c903f0456bc69176912dee6dd25c6a66ee1aed00
+
+On 03/27/2013 03:58 PM, Tim Brown wrote:
+> On Wednesday 27 Mar 2013 19:54:04 Corey Bryant wrote:
+>> Hi,
+>>
+>> I'd like to get a better understanding of tools used in the open source
+>> community (kernel and user space) to detect security vulnerabilities.
+>>
+>> I have a list below to get started.  If anyone has any input, I'd
+>> appreciate it!
+>>
+>> I'll plan on updating http://oss-security.openwall.org/wiki/tools with
+>> anything it doesn't already have.
+>>
 >
->  References: https://bugzilla.redhat.com/show_bug.cgi?id=908693 
-> http://grsecurity.net/~spender/msr32.c
-> 
-> Thanks,
+> Hey Corey,
+>
+> One you might want to add is unix-privesc-check from myself, @inquisb and
+> @pentestmonkey.  There are two versions in existence:
+>
+> 1.x - @pentestmonkey's quick and dirty with some hacks by me
+> trunk - a full blown privesc check framework designed by me with contributions
+> from the other two, it has multiple modes of operation, a standard library
+> which can be leveraged for new checks and (already) enhanced capabilities.
+> Its not perfect yet, I still need to clean it up and port it to the commercial
+> UNIX platforms we support but it should give a good idea of where we're going
+>
+> Once I've stabilised the API of trunk, it will become 2.x and we'll open it up
+> formerly for contributions.
+>
+> It's on Google Code if people want to take a look:
+>
+> * http://code.google.com/p/unix-privesc-check
+>
+> Tim
+>
 
-Please use CVE-2013-0268 for this issue.
+Thanks Tim.  Sounds nice.  This is the first security audit tool on the 
+list so if we could add more in this category that would be nice.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-- 
+Regards,
+Corey Bryant
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRE/E3AAoJEBYNRVNeJnmTjvIQAJZAOvO1heqIEZXdmxZfCBsW
-y+NjKmN/El8PCPJ4bfGrH0TK7y+lZYBWBfnbaHI1kTZOxs/NuVtPn88D+Am+AABf
-TBa2Jm3Bj19MnqYkkpdGJ+TCNgMpzByu8f1xRKK+lwHdCBkbV4HRKC+I5f7Tej9V
-pVyFTaEyLivdaYqb+6Uq7ndQXVu1W/XBGN+7ulh37WFQ43eS+wP0RFR5BFoToeiR
-rrb2YppjAYZJSEI638Cd72Lo3J/9kSPgu8bKm5XEwngCyMICqRy4uLSPisaw2Crm
-mlXaj2xzT7uGgmxtSLSFJQR0gewqsl0bmelC87Ay/bgyI0tRb+ujcYv9ttxLHUcC
-V6dwWV5sCqxQqdgnEu08Yo8Oaqv33ohvkrxEpiMWrhjsLHE2hw5vjsInIi5fjCGO
-Pzhjx6VOu5Ov5EHE9RWzyiUUzMCutwUsAnt28lsfQvEM2BZCYp408MMBAadezLUB
-sAxmMjaUWnRYwU2bOqG4vKKMK2rm5zBHrdpHWkhigpk5WkH+FNMCfNBTUg7DAu/i
-yZRc0QvpzE//Eg/+bEvIco5g8cH23C20/5lM/IC6GDdhhnSKd0XTXBtHkZpPt6oZ
-QnXsHB5v2SWwLdofuKGFwvaBEkT51LhDuWLqE4JmEXt2rm0PdrfwXTsNt5Gom40X
-PJZB9LRVZ8BuaPabv+9S
-=hulg
------END PGP SIGNATURE-----
