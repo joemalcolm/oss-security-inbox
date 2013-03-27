@@ -1,83 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/18
-Message-ID: <20130815185408.GA2436@gremlin.ru>
-Date: Thu, 15 Aug 2013 22:54:08 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/27/7
+Message-ID: <877gkswpnc.fsf@windlord.stanford.edu>
+Date: Wed, 27 Mar 2013 13:31:35 -0700
+From: Russ Allbery <rra@...nford.edu>
 To: oss-security@...ts.openwall.com
-Subject: Re: HTTPS
+Cc: kernel-hardening@...ts.openwall.com
+Subject: Re: Security vulnerability tools
 Content-Type: text/plain; charset=utf-8
 
-On 15-Aug-2013 06:40:14 -0400, Donald Stufft wrote:
+Corey Bryant <coreyb@...ux.vnet.ibm.com> writes:
 
-[In general, I agree with skipped text - the initial reason for
-starting this subthread was different]
+> Clang
+> -----
+> Static analysis tool for C/C++
 
- >> The valid HTTPS certificate doesn't mean getting valid content -
- >> it only means you've connected to (most likely) the right server.
- > It means you've connected to the right server and no attacker in
- > the middle has modified the data (nor can they see the data). It
- > makes no assertion about if the data the server gave you is
- > correct, it only protects the transport.
+Clang is, properly speaking, a compiler.  It happens to also have a static
+analyzer available as part of the same code base.
 
-Exactly! Now, the next question is: against _what_ does it protect
-the transport?
+If you're going to mention Clang, it's probably also pointing out that
+good old GCC has very extensive warning flags that can, among other
+things, find possible security vulnerabilities by locating variables that
+are used before being set, dangerous printf formats, mismatches between
+printf formats and arguments, and so forth.  For example, I currently use:
 
-For example, if I want to publish something really interesting for
-list subscribers (say, an image at http://hren.tebe.ru/noise.png
-which actually is just a random data), then HTTPS will add nothing
-except our (and all transit) ISPs wouldn't know what did you really
-downloaded from that server, but http://hren.tebe.ru/noise.png.sig
-(or just my note that given file has the size of 6895 bytes and its'
-SHA1 hash is 2542dd740a6030cc8c98ae4d8ab012bec92fce46) together with
-this signed message will prove its' integrity.
+WARNINGS = -g -O -D_FORTIFY_SOURCE=2 -Wall -Wextra -Wendif-labels           \
+        -Wformat=2 -Winit-self -Wswitch-enum -Wdeclaration-after-statement  \
+        -Wshadow -Wpointer-arith -Wbad-function-cast -Wcast-align           \
+        -Wwrite-strings -Wjump-misses-init -Wlogical-op                     \
+        -Wstrict-prototypes -Wmissing-prototypes -Wredundant-decls          \
+        -Wnested-externs -Werror
 
- >>> this would also work for the case where you first use HTTP to
- >>> get a redirect to HTTPS
- >> The most annoying behavior... Should be used only when the
- >> visitor wants to log in. IMHO.
- > This doesn't reflect the state of browser security. You basically
-
-... may...
-
- > need forced HTTPS or a number of attacks are possible against a
- > typical site.
-
-I think we'd agree that heavily depends on site's logic.
-
- >> Hmmmm... It seems that keeping self-signed certificates is even
- >> more safe than relying on "trusted" CAs?
- > Or you can use public key pinning via headers like
- > "Public-Key-Pins", or TLS extensions like TACK. And if you don't
- > want to trust the CAs there are also solutions like convergence.
-
-Yes. But signing the sensitive data is much easier and allows that
-data to be copied elsewhere.
-
- > >> Hence ALWAYS using HTTPS!
- >> Ok. But NEVER force the visitors of your site to use it :-)
- > Completely disagree. HTTPS should by the default and all traffic
- > should be forced over it.
-
-I don't see any really good reason for _forcing_ that.
-
- >> Do public data really need that?
- > Just because data is public doesn't mean you don't want to be
- > assured that nobody has modified the data between the server
- > and your computer. It also completely misses the fact that just
- > because data is public it doesn't mean you want third parties to
- > be able to see that you're accessing that data.
-
-Then protect the data, regardless of the communication channel's
-protection.
-
-Untrusted channel may deliver valid data, and trusted channel may
-deliver invalid data. That's the only idea why I've started this
-subthread.
-
+with GCC (4.6 or later) with all of my software.  Many of those are not
+security-related, of course, but -Wformat=2 certainly is, and some of the
+-Wall and -Wextra warnings are as well.
 
 -- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
-
-Content of type "application/pgp-signature" skipped
+Russ Allbery (rra@...nford.edu)             <http://www.eyrie.org/~eagle/>
