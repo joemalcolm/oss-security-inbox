@@ -1,68 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/20
-Message-ID: <20130821212002.GA16896@order.stressinduktion.org>
-Date: Wed, 21 Aug 2013 23:20:02 +0200
-From: Hannes Frederic Sowa <hannes@...essinduktion.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/27/3
+Message-ID: <377853464.16168232.1364401513541.JavaMail.root@redhat.com>
+Date: Wed, 27 Mar 2013 12:25:13 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: gcc@....gnu.org
-Subject: Re: PoC: Function Pointer Protection in C Programs
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, James Antill <james.antill@...hat.com>, Zdenek Pavlas <zpavlas@...hat.com>
+Subject: CVE Request -- yum: Not removing bad metadata and using it in next run
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hello Kurt, Steve, vendors,
 
-On Wed, Aug 21, 2013 at 04:43:13PM +0200, Stephen Röttger wrote:
-> Approach:
-> The basic idea of the thesis is to record all addresses that are
-> assigned to a function pointer variable at some place in the program (or
-> in one of the shared libraries) and if a function pointer is called,
-> verify that the address has been recorded previously. Thus, if an
-> attacker overwrites the fp variable with either the address of system()
-> or of a stack pivoting gadget, the fp call will fail, since these
-> adresses have never been assigned to a function pointer in the program.
-> The security of the approach relies on the assumption that no function
-> that can be abused for malicious purposes is ever assigned to a function
-> pointer, but this requirement will be weakened under future work.
-> 
-> How this works:
-> The compiler, GCC in my PoC, will register all assignments of function
-> pointer variables in the source code and will create a global variable
-> for the assigned function, which is initialized to the function's
-> address. Then, it replaces the address of the function in the assignment
-> with the address of the newly created variable:
->     fp f = &printf;
-> becomes:
->   printf_var = &printf;
->     ...
->     fp f = &printf_var;
-> Further, a global constructor is created that is run before the main
-> function of the program or before the shared library is loaded. This
-> constructor allocates a memory area where it stores the address of each
-> fp address previously registered. The created global variable is then
-> overwritten to point to the new memory area instead. Finally, the memory
-> area is mapped read only. Also, the variable where the address of this
-> area is stored has to be in read only memory as well to prevent
-> malicious overwrites. Putting it all together, the memory layout looks
-> like this:
->                                     <read only>
->  +-------+    +------------+    +------------------+    +----------+
->  | fp f  | -> | printf_var | -> | protected memory | -> | printf() |
->  +-------+    +------------+    +------------------+    +----------+
-> Additional instructions are emitted by the compiler before function
-> pointer calls. They will verify that the global variable (printf_var)
-> points to the protected memory region, from which it extracts the real
-> function pointer to be called. If an attacker is able to overwrite
-> either the function pointer or the global variable, he will only be able
-> to execute functions contained in the protected memory area (which he
-> can't overwrite since it is mapped read only during normal execution).
+  A security flaw was found in the way Yum package manager
+performed management of repository metadata in certain
+circumstances (bad metadata were not removed properly
+and re-used in subsequent run). An attacker could inject
+a specially-crafted Trojan horse file in the metadata of
+a remote repository, possibly leading to their ability
+to confuse Yum package manager to accept invalid untrusted
+metadata as valid by mistake.
 
-Thanks for doing research in this area! :)
+References:
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=910446
+[2] http://lists.fedoraproject.org/pipermail/package-announce/2013-March/099496.html
+[3] http://lists.fedoraproject.org/pipermail/package-announce/2013-March/100299.html
+[4] https://lwn.net/Articles/540426/ 
+    (and search for 'yum: denial of service' here)
 
-Your approach seems to have some slight similarities with -fvtable-verify:
-<http://gcc.gnu.org/ml/gcc-patches/2012-11/txt00001.txt>
+Relevant upstream patch:
+[5] http://yum.baseurl.org/gitweb?p=yum.git;a=commitdiff;h=c148eb10b798270b3d15087433c8efb2a79a69d0
 
-Maybe some code sharing could be achieved?
+This issue was found by James Antill of Red Hat.
 
-Greetings,
+Could you allocate a CVE id for this?
 
-  Hannes
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
+P.S.: For those possibly wondering why [2] and [3]
+      are public already - it's true this has been fixed
+      some time ago already (but I wasn't around at that time)
+      and better to request later, than never.
+
+      Thank you for your understanding, Jan.
