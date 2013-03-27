@@ -1,40 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/27/5
-Message-ID: <497475886.29391584.1372343485338.JavaMail.root@redhat.com>
-Date: Thu, 27 Jun 2013 10:31:25 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Ralph Loader <suckfish@...g.co.nz>
-Subject: CVE Request --  python-suds: Insecure temporary directory use when initializing file-based URL cache
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/27/8
+Message-ID: <515361D4.4040806@linux.vnet.ibm.com>
+Date: Wed, 27 Mar 2013 17:17:08 -0400
+From: Corey Bryant <coreyb@...ux.vnet.ibm.com>
+To: Solar Designer <solar@...nwall.com>
+CC: kernel-hardening@...ts.openwall.com, oss-security@...ts.openwall.com
+Subject: Re: [kernel-hardening] Re: Security vulnerability tools
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
 
-  based on the public Red Hat Bugzilla report:
-  [1] https://bugzilla.redhat.com/show_bug.cgi?id=978696
+On 03/27/2013 04:12 PM, Solar Designer wrote:
+> Hi,
+>
+> Guys, can we continue this thread on oss-security only, please?  It is a
+> topic for oss-security, but less so for kernel-hardening.  Anyone on
+> kernel-hardening who is interested in this topic should join oss-security.
+>
+> Just drop kernel-hardening from further replies.
+>
 
-by Ralph Loader:
+Sure, sorry about that.  I am interested in tools that are applicable to 
+the kernel too though, if that changes anything.
 
-A insecure temporary directory use flaw was found in the way
-python-suds, a Python SOAP web services client library, performed
-initialization of its internal file-based URL cache (predictable
-location was used for directory to store the cached files). A
-local attacker could use this flaw to conduct symbolic link
-attacks, possibly leading to their ability for example the
-SOAP .wsdl metadata to redirect queries to a different host,
-than originally intended.
+> On Wed, Mar 27, 2013 at 03:54:04PM -0400, Corey Bryant wrote:
+>> I'll plan on updating http://oss-security.openwall.org/wiki/tools with
+>> anything it doesn't already have.
+>
+> Yes, please!
+>
+>> Clang
+>> -----
+>> Static analysis tool for C/C++
+>
+> Clang and very recent GCC also have dynamic "sanitizers":
+>
+> http://clang.llvm.org/docs/AddressSanitizer.html
+> http://clang.llvm.org/docs/ThreadSanitizer.html
+> http://clang.llvm.org/docs/MemorySanitizer.html
 
-The reasons for the current behaviour are detailed at:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=978696#c4
+Great, thanks!
 
-Could you allocate a CVE id for this?
+>
+> Thanks,
+>
+> Alexander
+>
+>
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Regards,
+Corey Bryant
 
-P.S.: There doesn't seem to be an upstream patch available yet (afaik),
-      but the fix is obvious - use more unpredictable routine
-      for file-based URL cache directory location generation than
-      Python's tempfile.gettempdir() (which is case tempfile.tempdir
-      is None, defaults to '/tmp').
