@@ -1,47 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/1
-Message-ID: <20131115000431.GA22216@hunt>
-Date: Thu, 14 Nov 2013 16:04:31 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com
-Subject: CVE Request: grub-mkconfig
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/27/9
+Message-ID: <51536516.6060403@linux.vnet.ibm.com>
+Date: Wed, 27 Mar 2013 17:31:02 -0400
+From: Corey Bryant <coreyb@...ux.vnet.ibm.com>
+To: Russ Allbery <rra@...nford.edu>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Security vulnerability tools
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, all,
-
-Please assign a CVE for grub-mkconfig.
-
-grub-mkconfig on Debian and derivatives sets mode 444 on grub.cfg
-configuration files if there are no plaintext passwords in the
-configuration file. However, the permissions are still set world readable
-if the password_pbkdf2 directive includes a hashed password.
-
-The original bug report and proposed patch is by Francesco Poli:
-
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=632598
-
-Original compressed patch:
-
-http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=safer_grub_cfg_perms.diff.gz;att=1;bug=632598
-
-Patch, uncompressed and inlined:
-
-diff -ruN a/grub-mkconfig b/grub-mkconfig
---- a/grub-mkconfig	2011-05-31 11:33:31.000000000 +0200
-+++ b/grub-mkconfig	2011-07-03 21:15:53.000000000 +0200
-@@ -293,7 +293,7 @@
-   esac
- done
- 
--if [ "x${grub_cfg}" != "x" ] && ! grep -q "^password " ${grub_cfg}.new ; then
-+if [ "x${grub_cfg}" != "x" ] && ! grep -q "^password" ${grub_cfg}.new ; then
-   chmod 444 ${grub_cfg}.new || true
- fi
- 
 
 
+On 03/27/2013 04:31 PM, Russ Allbery wrote:
+> Corey Bryant <coreyb@...ux.vnet.ibm.com> writes:
+>
+>> Clang
+>> -----
+>> Static analysis tool for C/C++
+>
+> Clang is, properly speaking, a compiler.  It happens to also have a static
+> analyzer available as part of the same code base.
+>
+> If you're going to mention Clang, it's probably also pointing out that
+> good old GCC has very extensive warning flags that can, among other
+> things, find possible security vulnerabilities by locating variables that
+> are used before being set, dangerous printf formats, mismatches between
+> printf formats and arguments, and so forth.  For example, I currently use:
+>
+> WARNINGS = -g -O -D_FORTIFY_SOURCE=2 -Wall -Wextra -Wendif-labels           \
+>          -Wformat=2 -Winit-self -Wswitch-enum -Wdeclaration-after-statement  \
+>          -Wshadow -Wpointer-arith -Wbad-function-cast -Wcast-align           \
+>          -Wwrite-strings -Wjump-misses-init -Wlogical-op                     \
+>          -Wstrict-prototypes -Wmissing-prototypes -Wredundant-decls          \
+>          -Wnested-externs -Werror
+>
+> with GCC (4.6 or later) with all of my software.  Many of those are not
+> security-related, of course, but -Wformat=2 certainly is, and some of the
+> -Wall and -Wextra warnings are as well.
+>
 
-Thanks
+Great, thanks for the input.  I don't see any reason to not include gcc 
+warning options.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+-- 
+Regards,
+Corey Bryant
+
