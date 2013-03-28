@@ -1,64 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/33
-Message-ID: <20130227181454.GS1722@dhcp-25-225.brq.redhat.com>
-Date: Wed, 27 Feb 2013 19:14:55 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/1
+Message-ID: <51538CD8.20204@redhat.com>
+Date: Thu, 28 Mar 2013 11:20:40 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: Corey Bryant <coreyb@...ux.vnet.ibm.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Security vulnerability tools
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 10:05:20AM -0800, Greg KH wrote:
-> On Wed, Feb 27, 2013 at 05:13:06PM +0100, Petr Matousek wrote:
-> > On Wed, Feb 27, 2013 at 06:48:34AM -0800, Greg KH wrote:
-> > > On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
-> > > > For starters, security@...nel.org submissions should be posted to
-> > > > oss-security or any other security related public mailing list when
-> > > > the
-> > > > patch is being committed.
-> > > 
-> > > That's not going to happen, and you know that, to do so would be
-> > > totally
-> > > irresponsible of us and directly harm your users.  That's what
-> > > vendor-sec (or whatever it is called now) is for.
-> > 
-> > linux-distros [1] is vendor-sec replacement for Linux related issues.
-> > 
-> >   [1] http://oss-security.openwall.org/wiki/mailing-lists/distros
-> 
-> Yes, sorry, I couldn't remember the name of it at the moment :)
-> 
-> > > Hasn't that been
-> > > happening for a while now, or has no one been notifying that list of
-> > > these issues?
-> > 
-> > Regrettably no. No notifications of Linux kernel security issues
-> > reported to security@...nel.org mailing list to linux-distros (former
-> > vendor-sec) are happening on regular basis. I (speaking as Red Hat
-> > Security Response Team member in charge of kernel security issues) would
-> > really appreciate the notifications. Even marking commits that were
-> > committed as a result of security@...nel.org submission as sko
-> > originated would be really helpful.
-> > 
-> > The linux-distros/oss-sec members can make sure that each issue gets CVE
-> > and it's properly publicly communicated at the right time (preferably
-> > when the issue is public -- when it is committed).
-> > 
-> > Should you consider this approach, is there anything I can help with to
-> > make that happen?
-> 
-> Yes, I need someone to actually do this.  There used to be a Red Hat
-> security team member that did this, or so I thought.
+On 03/28/2013 06:54 AM, Corey Bryant wrote:
+> Hi,
+>
+> I'd like to get a better understanding of tools used in the open source
+> community (kernel and user space) to detect security vulnerabilities.
+>
+> I have a list below to get started.  If anyone has any input, I'd
+> appreciate it!
+>
+> I'll plan on updating http://oss-security.openwall.org/wiki/tools with
+> anything it doesn't already have.
 
-That was most probably Eugene Teo, he's no longer in Red Hat. I am not
-subscribed to security@...nel.org.
+Hi,
 
-> What happened to
-> that process?  I'll ask on security@...nel.org if someone wants to
-> volunteer to do this, but if not, are you, or anyone else you know/trust
-> willing to do so?
+I am sometimes using Splint. From http://www.splint.org/ "Splint is a 
+tool for statically checking C programs for security vulnerabilities and 
+coding mistakes. With minimal effort, Splint can be used as a better 
+lint. If additional effort is invested adding annotations to programs, 
+Splint can perform stronger checking than can be done by any standard lint."
 
-Yes, I am definitely willing to do so.
+Cheers.
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
