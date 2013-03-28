@@ -1,52 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/4
-Message-ID: <1000627254.3615210.1366281932982.JavaMail.root@redhat.com>
-Date: Thu, 18 Apr 2013 06:45:32 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/4
+Message-ID: <2031400889.17112506.1364482047390.JavaMail.root@redhat.com>
+Date: Thu, 28 Mar 2013 10:47:27 -0400 (EDT)
 From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, neoice@...ice.net, Alexander Wirt <formorer@...ian.org>
-Subject: CVE-2012-XXYY Request -- google-authenticator: Information disclosure due insecure requirement on the secrets file
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request -- roundcubemail: Local file inclusion via web UI modification of certain config options
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, Alexander, vendors,
+Hello Kurt, Steve, vendors,
 
-  as noted in [1]:
+  RoundCube Webmail upstream has released 0.8.6 and 0.7.3
+versions to correct one security flaw:
 
-An information disclosure file was found in the way google-authenticator,
-a pluggable authentication module (PAM) which allows login using one-time
-passcodes conforming to the open standards developed by the Initiative for
-Open Authentication (OATH), performed management of its secret / state file
-in certain configurations. Due the lack of 'user=' option the secret file
-was previously required to be user-readable, allowing (in certain cases)
-a local attacker to obtain the (pre)shared client-to-authentication-server
-secret, possibly leading to victim's account impersonation.
-
-A different vulnerability than CVE-2013-0258.
+A local file inclusion flaw was found in the way RoundCube
+Webmail, a browser-based multilingual IMAP client, performed
+validation of the 'generic_message_footer' value provided via
+web user interface in certain circumstances. A remote attacker
+could issue a specially-crafted request that, when processed
+by RoundCube Webmail could allow an attacker to obtain arbitrary
+file on the system, accessible with the privileges of the user
+running RoundCube Webmail client.
 
 References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=666129
-[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=666129#10
-[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=666129#20
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=953505
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=928835
+[2] http://sourceforge.net/news/?group_id=139281&id=310497
+[3] http://lists.roundcube.net/pipermail/dev/2013-March/022328.html
+[4] https://bugs.gentoo.org/show_bug.cgi?id=463554
 
-Relevant upstream patch:
-[5] https://code.google.com/p/google-authenticator/source/detail?r=c3414e9857ad64e52283f3266065ef3023fc69a8
+Upstream patches:
+[5] http://ow.ly/jtQD0
+[6] http://ow.ly/jtQHM
+[7] http://ow.ly/jtQK0
+[8] http://ow.ly/jtQNd
 
-@Alexander - since I am not sure I have described the attack vector above
-             properly, please correct me if / where required.
+Could you allocate a CVE id for this?
 
-@Kurt * the CVE-2012- identifier should be allocated to this issue, since
-        the security implications of this problem are for the first time
-        mentioned here: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=666129#10 (2012-09-22),
-
-      * from what I have looked, there doesn't seem to be:
-          http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=authenticator
-
-        a CVE identifier allocated to this issue yet (as noted above
-        CVE-2013-0258 from that list is different issue).
-
-        => could you allocate one?
-
-Thank you && Regards, Jan.
+Than you && Regards, Jan.
 --
 Jan iankko Lieskovsky / Red Hat Security Response Team
