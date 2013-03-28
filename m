@@ -1,42 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/13/3
-Message-ID: <520A1BA8.30804@debian.org>
-Date: Tue, 13 Aug 2013 13:42:32 +0200
-From: Giuseppe Iuculano <iuculano@...ian.org>
-To: Salvatore Bonaccorso <carnil@...ian.org>
-CC: Vincent Danen <vdanen@...hat.com>,  Kurt Seifried <kseifried@...hat.com>, team@...urity.debian.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: SQL injection and shell escaping issues in Cacti < 0.8.8b
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/3
+Message-ID: <515401BB.7030205@op5.se>
+Date: Thu, 28 Mar 2013 09:39:23 +0100
+From: Andreas Ericsson <ae@....se>
+To: oss-security@...ts.openwall.com
+CC: Corey Bryant <coreyb@...ux.vnet.ibm.com>
+Subject: Re: Security vulnerability tools
 Content-Type: text/plain; charset=utf-8
 
-I confirm this.
-
-Giuseppe.
-
-
-On 07/08/2013 19:33, Salvatore Bonaccorso wrote:
->>> Could you wait a bit with assigning there CVEs? Giuseppe Iuculano from
->>> > >the Debian Security Team should have already assigned two CVEs to them
->>> > >(I'm putting him in the loop), but apparently upstream has not
->>> > >referenced them in the changelog. AFAICS the CVE assigned where:
->>> > >
->>> > >CVE-2013-1434 -> cacti_snmp_sql_injection_CVE-2013-1434.patch
->>> > >
->>> > >CVE-2013-1435 -> cacti_snmp_escape_string_CVE-2013-1435.patch and
->>> > >fix_quoting_in_rrd_command_CVE-2013-1435.patch
->>> > >
->>> > >I will search the mapping patchname -> svn commits and update you.
->> >
->> > Thanks for this, Salvatore.  I'll wait for that mapping before
->> > referencing anything though.
-> Apologies for the off-list posting, but I wanted to avoid some
-> confusion! I have found the mapping which should be as follow:
+On 03/27/2013 08:54 PM, Corey Bryant wrote:
+> Hi,
 > 
-> http://svn.cacti.net/viewvc?view=rev&revision=7392 -> cacti_snmp_escape_string_CVE-2013-1435.patch -> CVE-2013-1435
-> http://svn.cacti.net/viewvc?view=rev&revision=7393 -> fix_quoting_in_rrd_command_CVE-2013-1435.patch -> CVE-2013-1435
-> http://svn.cacti.net/viewvc?view=rev&revision=7394 -> cacti_snmp_sql_injection_CVE-2013-1434.patch -> CVE-2013-1434
+> I'd like to get a better understanding of tools used in the open source community (kernel and user space) to detect security vulnerabilities.
 > 
-> @Guiseppe, can you confirm?
+> I have a list below to get started.  If anyone has any input, I'd appreciate it!
+> 
+> I'll plan on updating http://oss-security.openwall.org/wiki/tools with anything it doesn't already have.
+> 
 
 
+sparse works similarly to clang. It was hacked up by the kernel folks
+for finding potential errors in the linux kernel.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (260 bytes)
+I like it particularly because it has very few false positives, unlike
+most other tools I've tried. That means it's actually viable to strive
+for "no warnings" from it and run it as part of automated testsuites.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@....se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
