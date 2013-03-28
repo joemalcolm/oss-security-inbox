@@ -1,87 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/01/5
-Message-ID: <50E28EC5.1060403@redhat.com>
-Date: Tue, 01 Jan 2013 00:22:45 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/8
+Message-ID: <51548712.6000608@redhat.com>
+Date: Thu, 28 Mar 2013 12:08:18 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: KB Sriram <kbsriram@...il.com>
-CC: bugtraq@...urityfocus.com, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: GnuPG 1.4.12 and lower - memory access errors and keyring database corruption
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- roundcubemail: Local file inclusion via web UI modification of certain config options
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/28/2012 06:06 PM, KB Sriram wrote:
-> Versions of GnuPG <= 1.4.12 are vulnerable to memory access
-> violations and public keyring database corruption when importing
-> public keys that have been manipulated.
+On 03/28/2013 08:47 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-> An OpenPGP key can be fuzzed in such a way that gpg segfaults (or
-> has other memory access violations) when importing the key.
+> RoundCube Webmail upstream has released 0.8.6 and 0.7.3 versions to
+> correct one security flaw:
 > 
-> The key may also be fuzzed such that gpg reports no errors when 
-> examining the key (eg: "gpg the_bad_key.pkr") but importing it
-> causes gpg to corrupt its public keyring database.
+> A local file inclusion flaw was found in the way RoundCube Webmail,
+> a browser-based multilingual IMAP client, performed validation of
+> the 'generic_message_footer' value provided via web user interface
+> in certain circumstances. A remote attacker could issue a
+> specially-crafted request that, when processed by RoundCube Webmail
+> could allow an attacker to obtain arbitrary file on the system,
+> accessible with the privileges of the user running RoundCube
+> Webmail client.
 > 
-> The database corruption issue was first reported on Dec 6th,
-> through the gpg bug tracking system:
+> References: [1] https://bugzilla.redhat.com/show_bug.cgi?id=928835 
+> [2] http://sourceforge.net/news/?group_id=139281&id=310497 [3]
+> http://lists.roundcube.net/pipermail/dev/2013-March/022328.html [4]
+> https://bugs.gentoo.org/show_bug.cgi?id=463554
 > 
-> https://bugs.g10code.com/gnupg/issue1455
+> Upstream patches: [5] http://ow.ly/jtQD0 [6] http://ow.ly/jtQHM [7]
+> http://ow.ly/jtQK0 [8] http://ow.ly/jtQNd
 > 
-> The subsequent memory access violation was discovered and reported
-> in a private email with the maintainer on Dec 20th.
-> 
-> A zip file with keys that causes segfaults and other errors is 
-> available at
-> http://dl.dropbox.com/u/18852638/gnupg-issues/1455.zip and includes
-> a log file that demonstrates the issues [on MacOS X and gpg
-> 1.4.11]
-> 
-> A new version of gpg -- 1.4.13 -- that addressed both these issues,
-> was independently released by the maintainer on Dec 20th.
-> 
-> The simplest solution is to upgrade all gpg installs to 1.4.13.
-> 
-> [Workarounds: A corrupted database may be recovered by manually 
-> copying back the pubring.gpg~ backup file. Certain errors may also
-> be prevented by never directly importing a key, but first just
-> "looking" at the key (eg: "gpg bad_key.pkr"). However, this is not
-> guaranteed to work in all cases; though upgrading to 1.4.13 does
-> work for the issues reported.]
-> 
-> Discovery:
-> 
-> The problem was discovered during a byte-fuzzing test of OpenPGP 
-> certificates for an unrelated application. Each byte in turn was 
-> replaced by a random byte, and the modified certificate fed to the 
-> application to check that it handled errors correctly. Gpg was used
-> as a control, but it itself turned out to have errors related to
-> packet parsing. The errors are generally triggered when fuzzing the
-> length field of OpenPGP packets, which cascades into subsequent
-> errors in certain situations.
-> 
-> -kb
+> Could you allocate a CVE id for this?
 
-Has this been assigned a CVE identifier yet?
+Please use CVE-2013-1904 for this issue.
+
+> Than you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ4o7EAAoJEBYNRVNeJnmTjAAP/2rEPCntRzkWeE6l+LknWkzk
-HiIqNWOpRuJMPJ9cqNBM5Egc4XgXCLPNuzlgLhuVuZOHNdU/s7Ca8x0QpLROiC/H
-0dHUHDD918CnElZ6f5ZEf/9vhnBhSud7cvpmJSDYjVjspfAYR//ehypPSlms/t4n
-Ph3pQh8huWarV4M+Qx+pZsfFYnB6GSZCI2DzUfgVi/69fdbSKsRNRNb7vabmjQ96
-4Y7wOz9P/8WoqDAubvwewk8I7QkTPVbAq4JI0KMJS+2/C/NtkrESYmCZ0//xcox7
-iotd5Sjx/nNKDCNxZlTZ+Zdj61/LzLaXCRJx7o9scBHK4MpucpMUisYoVywlueKk
-hPcC0jCWYchUPbJGyLLP4qOhIx8xY4see2qYLW8eo6GIDvtlYwcGP81FNt8O4XAd
-6kIeewsGA1aF1+ndVlYjqzlf/kAbs+IkSxmNYK/EwFjhvHT+/jfFq+nOJfyo27kr
-T0/00dnrz8zjt8+9nJU+P4YzBrTlU0QhVvBR/FwSuWaxUHSYBz8eXPc29sqMUMiQ
-jTqA9KOwi1XYgLrY0w2g4i6CCI+Ud2imCnNvWN+OeTkIT8gpbjK8cpeY0AjiE7Rd
-leBXcqJ6SmwGJigKeau0fyJQFNyFplstnVi4ZXbKof+PWPq8AElEIIa4Xgn/YFj4
-m0wuEBezBNChTLi5xjvO
-=Ai5t
+iQIcBAEBAgAGBQJRVIcSAAoJEBYNRVNeJnmT1OIQAKUfTbk8G9/EPpYq6Fb1Cnrh
+6LSb9FJQtIwJBmC0PeId8HGOU3H1NSFwkbQT9bdXpA+EITHgtzyTlRME8uMvrz0A
+82L7dlk1hJS9mhgcm5ED460Belue7AHSfolHZ8Ny7i+r2QK4f5kNdubBa9uPu7rg
+hgWAkas2hpTB8MCslXOZR8BanqI3QRCpm2/T+/pP9f5GXTUL6BFEZD+ovyTeYvhQ
+16QdTheiR6hMhL2FKZpZF94FmV/rBe7sFa6VbrmPH4Hbn5AqP+bxuhjf0sRPyj9X
+ivkxc44s4i4MSz/N6iB2XCXKTUxhpD2ZysKP65CJCbMoEMvQPYohi7Bs9Ez+2iN2
+1+18ll29z/IY4a4FyoTD6dsUXZqRiw69SRyZCYG+gqkffGF0pLsyG1U1YWAo0TBy
+9lBu6dq/upUPI4+JzWJAVBewKxcGgf9W3+7rpK//qRDi8/2b1Ruq3NpFVTo8AxiY
+YmUIt2tt0G6xwz9jk09La7T+4iYGAfkRwWO+eXQV6dopapsOxUCOPEell2kefeex
+ozsAmQLY5ciLElj0YRXBNoKFZB0zoBhn6o4ZG4Svjuk7pH/MzR9SbQ0B15hCrK4U
+Mlp5y+AxrrLdLKwltCLnT6mzXK8n1LL60R+8NpQn4JGVoKXh3ZWlN5EORqSD69ZP
+wEbIKM9n8B+9LND0zZks
+=HnvA
 -----END PGP SIGNATURE-----
