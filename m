@@ -1,33 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/10
-Message-ID: <5214F33A.3020509@googlemail.com>
-Date: Wed, 21 Aug 2013 19:04:58 +0200
-From: "Stephen Röttger" <stephen.roettger@...il.com>
-To: Ondřej Bílka <neleai@...nam.cz>
-CC: oss-security@...ts.openwall.com, gcc@....gnu.org
-Subject: Re: PoC: Function Pointer Protection in C Programs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/6
+Message-Id: <201303281619.14981.tmb@65535.com>
+Date: Thu, 28 Mar 2013 16:19:07 +0000
+From: Tim Brown <tmb@...35.com>
+To: Steve Grubb <sgrubb@...hat.com>
+Cc: oss-security@...ts.openwall.com, Corey Bryant <coreyb@...ux.vnet.ibm.com>
+Subject: Re: Re: [kernel-hardening] Security vulnerability tools
 Content-Type: text/plain; charset=utf-8
 
+On Thursday 28 Mar 2013 15:58:32 Steve Grubb wrote:
+> On Wednesday, March 27, 2013 05:51:19 PM Corey Bryant wrote:
+> > Thanks Tim.  Sounds nice.  This is the first security audit tool on the
+> > list so if we could add more in this category that would be nice.
+> 
+> There is also openscap if you are wanting security auditing.
+> http://www.open-scap.org/page/Main_Page
 
-> What is performance impact for program that just qsorts big array? It
-> looks like worst case scenario for me.
+I've already said this to Corey but it bares repeating...
 
-I just put together a quick test program that sorts an array of 10^6
-integers and stopped the execution time using "time". The results are as
-follows (+- 0,01s):
+Having a background in UNIX SecOps, I do a lot of system audits in my current 
+role and whilst I understand the business driver, I really don't like the 
+term.  The main gist is, CIS style audits are worthy but they won't effectively 
+test your controls.
 
-protection disabled, -O0:
-./sort_nofpp_0  0,19s user 0,02s system 98% cpu 0,215 total
+upc is an offensive tool to help identify escalation of privilege vectors 
+(especially on large multi-user system), (there is of course a degree of 
+overlap with a traditional audit).  It started off focussing on the quick wins 
+but it's developing in a more rounded attack tool.  As an example, the trunk 
+version of upc contains plugins to pull up (amongst other things) compiler flag 
+misuse, insecure API usage and other SDL violations, not something a 
+traditional audit would cover but which are pretty useful when you land on a 
+random system and want additional privileges.  Users of upc should not be 
+afraid to write code, or fire up a debugger in the pursuit of root.
 
-protection enabled, -O0
-./sort_fpp_0  0,54s user 0,01s system 99% cpu 0,549 total
+If you wanted to use it in a more systemic fashion, it might be interesting to 
+run it (for example) pre and post package upgrade or as part of distro QA etc 
+- but that's certainly not why we use/develop it (unless maybe we're doing a 
+product assessment where I might use it to model the authorised users attack 
+surface).  I'm sure if people wanted to develop it in that direction, any 
+submitted patches would be looked upon favourably though :).
 
-protection disabled, -O3
-./sort_nofpp_3  0,15s user 0,01s system 98% cpu 0,157 total
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
 
-protection enabled, -O3
-./sort_fpp_3  0,51s user 0,00s system 99% cpu 0,511 total
-
-So this makes quite a difference:
-0,19s -> 0,54s
-0,15s -> 0,51s
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
