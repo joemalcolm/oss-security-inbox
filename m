@@ -1,47 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/14
-Message-ID: <20131128180200.GL4118@order.stressinduktion.org>
-Date: Thu, 28 Nov 2013 19:02:00 +0100
-From: Hannes Frederic Sowa <hannes@...essinduktion.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/9
+Message-ID: <5154A144.9060203@gmail.com>
+Date: Thu, 28 Mar 2013 13:00:04 -0700
+From: Forest Monsen <forest.monsen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux kernel: net: uninitialised memory leakage
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE Request for Drupal contrib modules
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Thu, Nov 28, 2013 at 11:10:46PM +0530, P J P wrote:
-> Linux kernel built with the networking support(CONFIG_NET), is vulnerable 
-> to a memory leakage flaw. It occurs while doing the recvmsg(2), 
-> recvfrom(2), recvmmsg(2) socket calls.
-> 
-> A user/program could use this flaw to leak kernel memory bytes.
-> 
-> Upstream fix:
-> -------------
->  -> 
->  https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=bceaa90240b6019ed73b49965eac7d167610be69
+Hi there,
 
-This patch does break stuff, a follow-up is needed which did not get
-to Linus yet, but is already queued up for stable. Otherwise traceroute
-is broken:
+I'd like to request CVE identifiers for:
 
-https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=85fbaa75037d0b6b786ff18658ddf0b4014ce2a4
+SA-CONTRIB-2013-036 - Zero Point - Cross Site Scripting (XSS)
+http://drupal.org/node/1954588
 
-I found other leaks in non-inet protocols:
+SA-CONTRIB-2013-037 - Rules - Cross Site Scripting (XSS)
+http://drupal.org/node/1954592
 
-https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=f3d3342602f8bcbf37d7c46641cb9bca7618eb1c
+SA-CONTRIB-2013-038 - Commons Groups - Access bypass & Privilege
+escalation
+http://drupal.org/node/1954764
 
-The protocols where I did remove msg_namelen = 0 where actually
-safe. Some of the protocols I did not touch could leak up to 128 bytes
-of uninitialized data from the stack.
+SA-CONTRIB-2013-039 - Commons Wikis - Access bypass & Privilege escalation
+http://drupal.org/node/1954766
 
-Hardening against out-of-bounds writes:
-https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=68c6beb373955da0886d8f4f5995b3922ceda4be
+Thanks!
 
-Also there is a small 2-bytes memory leak in extended error reporting:
-https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=68c6beb373955da0886d8f4f5995b3922ceda4be
+Forest
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-Greetings,
-
-  Hannes
-
+iEYEARECAAYFAlFUoTwACgkQ/ILCL9e1Br692wCfQcf0xrflx2tuuLlBWcXD5JXf
+l5cAoJQKgACueDVwDIznDqM2vPcKT6MR
+=BDK8
+-----END PGP SIGNATURE-----
