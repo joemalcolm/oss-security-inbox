@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/47
-Message-ID: <CAHmME9otG1bE_WsvOOCx2FfucP7EnHxN0ZNwHtta9vzEvpJ0Xg@mail.gmail.com>
-Date: Thu, 28 Feb 2013 00:00:27 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/2
+Message-ID: <20130328073216.GA6962@openwall.com>
+Date: Thu, 28 Mar 2013 11:32:16 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Corey Bryant <coreyb@...ux.vnet.ibm.com>
+Cc: kernel-hardening@...ts.openwall.com, oss-security@...ts.openwall.com
+Subject: Re: Security vulnerability tools
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 10:44 PM, Greg KH <greg@...ah.com> wrote:
-> That's the whole problem here, who is going to do such a classification,
-> and after that, the notification?  The first part is the toughest to do,
-> as discussed elsewhere in this thread.
+On Wed, Mar 27, 2013 at 05:17:08PM -0400, Corey Bryant wrote:
+> On 03/27/2013 04:12 PM, Solar Designer wrote:
+> >Guys, can we continue this thread on oss-security only, please?  It is a
+> >topic for oss-security, but less so for kernel-hardening.  Anyone on
+> >kernel-hardening who is interested in this topic should join oss-security.
+> >
+> >Just drop kernel-hardening from further replies.
+> 
+> Sure, sorry about that.  I am interested in tools that are applicable to 
+> the kernel too though, if that changes anything.
 
-May I just bluntly call out shenanigans here? Yes, some bugs are
-esoteric and it's not immediately obvious that they are security
-related. But there are so many bugs that are _clearly_
-security-related. Kernel developers are super smart -- some of the
-brightest guys out there. When you're committing a fix for a
-use-after-free, or an array indexing error, or something clearly
-security-related, the claim, "well I'm not really a big security bug
-classifier sort of guy..." just doesn't ring honest. You all are super
-smart; it takes your brain less than a single cycle to realize this or
-that memory corruption can lead to priv escalation. I admit there are
-some bugs where it's not so obvious, but for so many cases, the
-classification step can be done by many diverse kernel devs.
+It makes sense for you to post a summary of the relevant ones of your
+updates to http://oss-security.openwall.org/wiki/tools to
+kernel-hardening after this discussion thread on oss-security is mostly
+over.  Other than that, I think it's best to keep the thread on
+oss-security only.  Cross-posting all or almost all of it is a mess.
+
+(Hopefully, this is the last cross-post I have to make in this thread.)
+
+Thanks!
+
+Alexander
