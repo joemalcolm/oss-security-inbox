@@ -1,60 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/15/8
-Message-ID: <50F5996E.3090204@redhat.com>
-Date: Tue, 15 Jan 2013 11:01:18 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/7
+Message-ID: <4227697.E1WEXqzqgd@x2>
+Date: Thu, 28 Mar 2013 11:58:32 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Salvatore Bonaccorso <carnil@...ian.org>, team@...urity.debian.org
-Subject: Re: CVE request: Digest::SHA double free when using load subroutine
+Cc: Corey Bryant <coreyb@...ux.vnet.ibm.com>, Tim Brown <tmb@...35.com>
+Subject: Re: Re: [kernel-hardening] Security vulnerability tools
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wednesday, March 27, 2013 05:51:19 PM Corey Bryant wrote:
+> Thanks Tim.  Sounds nice.  This is the first security audit tool on the 
+> list so if we could add more in this category that would be nice.
 
-On 01/15/2013 02:32 AM, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> The following was fixed in Digest-SHA Perl module in Version 5.81:
-> 
-> 5.81  Mon Jan 14 05:17:08 MST 2013 - corrected load subroutine
-> (SHA.pm) to prevent double-free -- Bug #82655: Security issue -
-> segfault -- thanks to Victor Efimov and Nicholas Clark for
-> technical expertise and suggestions
-> 
-> Upstream bugreport is:
-> https://rt.cpan.org/Public/Bug/Display.html?id=82655
-> 
-> Diff:
-> https://metacpan.org/diff/release/MSHELOR/Digest-SHA-5.80/MSHELOR/Digest-SHA-5.81
->
->  A reproducer is given in the upstream bugreport. Does this
-> warrants a CVE? (It's at least a DoS).
-> 
-> Regards, Salvatore
+There is also openscap if you are wanting security auditing.
+http://www.open-scap.org/page/Main_Page
 
-I'm not clear, how would an attacker exploit this? They'd need to be
-able to specify the file that gets hashed, and the file would have to
-be not present and would thus trigger the crash? Are there any real
-world examples of an affected application? (web based?)
+You can get SCAP content from various places.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+As far as tools, I often look at the collection at the owasp web site:
+https://www.owasp.org/index.php?title=Phoenix/Tools
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+web scarab and sqlmap are good.
 
-iQIcBAEBAgAGBQJQ9ZluAAoJEBYNRVNeJnmTU0cP/1ISe/uIfv1fakGK7PD/Fg0O
-G2esB5d2ueH58eV9f+mZkCFLboHe2e/ec3+7HKO8dvgTH+9fk/epO6XKPHkkXIXd
-4t1AuljuWuvyWX6GyuHxm9GdvoINFolJJY5UAp07NJAFeyhVU2nnYMlR5aA8U1DG
-VxqYRSAAHytnQDx1x/9c2W3Cuts5R0uGL9dTuiDmHc9X0/eM/TkAsRQMazJE5GtA
-CWUbfvr8FmKJ0IYqi/DZhC0vTT5sAkKvFZ0jjM6LSvIE2+CYZiMTpW6YMeqGM+8u
-H4I2znW1WF2RfUVD+Rqh0EKhCYYWldsaZ2r481J+Oo4fy+y6Bgg+w8nx8Qq+eC+h
-B3QnVUcGrXVuKmL3ZIvehOxdAOoe6Jx2pKQlImdNx3kBqA/IfL7Xm9GBOSUpl4GR
-oCfm5JoQrzQwCd6+1pz7krAHQpORtcQAq//RZ7Avow70orNEIAqf8QxBz35094Il
-+E9CaWWMy2E3BcC22B44BABrnz0ORKPfbV3hjbhTpruwJVkr0aMn0dYB03t46x1b
-4s1aJPGZqG+nHc5hyDYswawG3nRSKRss+7h4qQ1FhSVSQkr7EjtOO2G/0w0rNzNP
-zZp1y0bkPPCHAo+bj4sJszjqcy0hZQ7JAgg7CLzb53SOmATLefWvYaM+cbFjNLyo
-cnvF5nxVky8NECksyM95
-=kcrP
------END PGP SIGNATURE-----
+There are lots of tools here as well:
+http://securitytools.wikidot.com/penetration-vulnerability-ids-ips
+
+There are so many tools, its hard to find the ones that are well maintained. 
+Many are good at first and then bit rot over the years.
+
+-Steve
