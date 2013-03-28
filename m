@@ -1,44 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/27/5
-Message-Id: <201312270633.rBR6XWne003964@linus.mitre.org>
-Date: Fri, 27 Dec 2013 01:33:32 -0500 (EST)
-From: cve-assign@...re.org
-To: huzaifas@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Two CVE request for gnome-shell/screensaver issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/5
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF090684C1@IMCMBX01.MITRE.ORG>
+Date: Thu, 28 Mar 2013 15:44:09 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "plugins@...dpress.org" <plugins@...dpress.org>
+Subject: RE: WordPress plugins vulnerable to CVE-2013-1808
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Henri,
 
-> https://bugzilla.gnome.org/show_bug.cgi?id=686740
-> https://git.gnome.org/browse/gnome-shell/log/js/ui/screenShield.js?qt=grep&q=686740
-> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1030431
+It appears that CVE-2013-1463 was previously assigned to an issue that was claimed to exist in WP-Table Reloaded and fixed by that module developer, but the attack vector involves the id parameter to js/tabletools/zeroclipboard.swf, so this is likely a duplicate.  Can you confirm?
 
-The discussion in 686740 focuses on usability problems, not security
-problems. Comment 11 in 1030431 says "typing away at the lock screen
-will now trigger the unlock dialog (and redirect input to the password
-field)." Does this mean that 209014b083dbe86ed0e0860a6016735571b56f94
-is a security fix, and the other screenShield.js commits are usability
-fixes? Or does it mean that 127f10e7a8bbbbd089d217f8cd89971c187ae9c3
-is a security fix because the "will be dropped in the void"
-description isn't always accurate, and "will be dropped into the
-Activities panel" or "will be dropped into the 'Enter a command'
-dialog box" can occur instead?
+If this is a duplicate, we have an unusual situation for how to resolve it.  The older CVE, CVE-2013-1463, is much more widely used than the newer CVE-2013-1808, which would argue for keeping the older CVE-2013-1463.  However, because that older CVE focuses on the wrong product, and CVE-2013-1808 is referenced in Red Hat's Bugzilla and thus "more authoritative," this would argue for keeping CVE-2013-1808.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+- Steve
 
-iQEcBAEBAgAGBQJSvR5OAAoJEKllVAevmvmscS4IAIvJNoHMY3Ew+4SDIZuVzNdw
-nMNx8U89bxWREv5XG17sTN2RuXwLjUjUQsBgS0FGgvQpbBxPp08Xy67t8thBuCRC
-6EG/9cxSQtwXUVOoUGu6yHMrD9H3m2MxocOGPK+IkPHbkLJkpCU+Cp9kyX+wvSS1
-1wwHMeiVlSxZb/pLkBGynrfuHSJ4IkJiuFOo6Z8kVHW1K5FuIS0kKDJ10LlWKi3Z
-gzET39N3PR5cD2rrluYxc4v/LtZnkFvgCPa7aFifknbJFk5LfeJfYqZX6N0F6Oad
-kgO5kNbjuAwm7c1qzbCcruOM+Q1eE/WG031gUVGmmsLedro+eYwr4OF4C+wPNa0=
-=XmWl
------END PGP SIGNATURE-----
+
