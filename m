@@ -1,61 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/25/3
-Message-ID: <5101DB3B.7090007@redhat.com>
-Date: Thu, 24 Jan 2013 18:09:15 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/29/4
+Message-ID: <5155F71E.3050703@redhat.com>
+Date: Fri, 29 Mar 2013 14:18:38 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed modules
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, James Antill <james.antill@...hat.com>, Zdenek Pavlas <zpavlas@...hat.com>
+Subject: Re: CVE Request -- yum: Not removing bad metadata and using it in next run
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/24/2013 01:46 PM, Forest Monsen wrote:
-> Hi, here's a request for CVE IDs for several contributed modules:
+On 03/27/2013 10:25 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-> SA-CONTRIB-2013-006 - Video - Arbitrary Code Execution 
-> https://drupal.org/node/1896714
+> A security flaw was found in the way Yum package manager performed
+> management of repository metadata in certain circumstances (bad
+> metadata were not removed properly and re-used in subsequent run).
+> An attacker could inject a specially-crafted Trojan horse file in
+> the metadata of a remote repository, possibly leading to their
+> ability to confuse Yum package manager to accept invalid untrusted 
+> metadata as valid by mistake.
+> 
+> References: [1] https://bugzilla.redhat.com/show_bug.cgi?id=910446 
+> [2]
+> http://lists.fedoraproject.org/pipermail/package-announce/2013-March/099496.html
+>
+> 
+[3]
+http://lists.fedoraproject.org/pipermail/package-announce/2013-March/100299.html
+> [4] https://lwn.net/Articles/540426/ (and search for 'yum: denial
+> of service' here)
+> 
+> Relevant upstream patch: [5]
+> http://yum.baseurl.org/gitweb?p=yum.git;a=commitdiff;h=c148eb10b798270b3d15087433c8efb2a79a69d0
+>
+>  This issue was found by James Antill of Red Hat.
+> 
+> Could you allocate a CVE id for this?
 
-Please use CVE-2013-0224 for this issue.
+Please use CVE-2013-1910 for this issue.
 
-> SA-CONTRIB-2013-007 User Relationships - Cross Site Scripting (XSS)
-> https://drupal.org/node/1896720
-
-Please use CVE-2013-0225 for this issue.
-
-> SA-CONTRIB-2013-009 - Keyboard Shortcut Utility - Access Bypass - 
-> module unsupported https://drupal.org/node/1896752
-
-Please use CVE-2013-0226 for this issue.
-
-> SA-CONTRIB-2013-010 - Search API sorts - Cross Site Scripting (XSS)
-> https://drupal.org/node/1896782
-
-Please use CVE-2013-0227 for this issue.
-
-> Thanks, Forest
-
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+> P.S.: For those possibly wondering why [2] and [3] are public
+> already - it's true this has been fixed some time ago already (but
+> I wasn't around at that time) and better to request later, than
+> never.
+> 
+> Thank you for your understanding, Jan.
+> 
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRAds7AAoJEBYNRVNeJnmTnU4P/00+nMbQyTti3H+yQvMqU5mJ
-4zavPK8jis23pgBVG4pOLSo8ebf1dhkEaih90OD5UHOXV3183yZYq2hcmuOmZTbk
-53QL5mQciS2mEmihVZ7kTHONi5ga1O4sTVLQz6Vw3qQNAKg0iJRYXOoibwek63FV
-XTastNFyYZXT1h381/lwj5lQHnTTEzeiG6S2ILy5pRzLWrsf7tLmP4G2B0SvN6/i
-W5D9Tq5aJl+Ddwxr5y2yRk0RkayV4YEWRMUBUL1fzX66tTNRhwlpQ3asMeWg/MqW
-0zIFKrSuQlyKVpGnyhdqNRgtiIg5KruOH/pphYc5vKQbmnxkDY502nOIJnGPt1qE
-PLT5kVACbI8QcG4cfYVBAvh+Dj7dZ6J45HbmO87qvEcxj11rRMWVU4NfTl3GgihY
-XthacnpjTOpU2mxNeN0meBTBgdGn3TXGhjFezuj2Mfo+IHHsZT+I+W5wZ/LOvVVz
-ctfgiwq6ag9cEUGJYW8PLB/AgAq04Jruaygb4QkCR9URZdGbz+L0gnrV9VYSF221
-/AfQIScAD9hQwCfWG0JLI1Hg34bnvVSzYwTeXsIxhMTgiVL8jr7dswWvrxrn5hPx
-dKKb+NZlRVEm61Ia1QrFDkefmqgWu20C42PNga/s9fpWUBigYYejrf5Zq5H5ygB6
-beD94iyZWvPUYy2e755E
-=H728
+iQIcBAEBAgAGBQJRVfcdAAoJEBYNRVNeJnmT0icP/2/mj5ZfbwYNExpYMfcdmJM/
+6CS4HpwFnTGXls81EpKejdZm92YmjCAMV4sKgSa46VCjEKnCoVDz17drd9NrgMc5
+YqRbDzCoXI45+wZAGgEP4gjNG9LAuKN1v7Z+9I2Z6nptObmIUDy/d4xlI1ISUelI
+KtfS4fXZktITn4MI/fMIHZzEoctPYRlhz+yeaAJpLcC9VMoBnfp5Ac8bvYFCj4M6
+L7yYB5gED+y44hfxSJc06GSXqCz8YbkNlcPnTcpox1C8C+jj4zyqmFHLOodVcbGI
+qF3ZkYppLrZ5qzDCHKsBwKFcVsrkVAoT689JD//yg4kQAlU5xxiE6+By21MxEzYI
+o6dkM2lFM8+23/Hetm99pOZ2hUh12KlM9zFdNVjPZ30uLaGdmB6MbmiGPqWwt81S
+6Z+q4dFY/hEKE5CFhGEDU/GWyEB4W3zx/3bpCkIwCkpCfJ/JsxwV07Hx+4g+wYky
+W+vvVTSzhPtQSGpSEDz2ADIcFOfdUr69AsbtjVgP2W4Gmkd+5AuipmVQui0aZfHP
+VEmB/SbmgYqGCVU01JAOVkVT8Mh2du4XhNSJp9udivvY8DZioKstrrFtTzJ8W0tZ
+ua28gwLUEXQwlWks7roag0k6zoIh7bVytsVmmvT0TlQYMK9DcSgLcmCu8aejyjZK
+3nKxKHGyJU+M+dfFg/Rc
+=xgnU
 -----END PGP SIGNATURE-----
