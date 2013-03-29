@@ -1,38 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/26/3
-Message-ID: <CAJfirPmVcNiZtTuN-4ZBB=YuKSaibf7-xexmOsmy8hfNZcAL9w@mail.gmail.com>
-Date: Thu, 26 Sep 2013 20:01:45 +0200
-From: Rafael Luque <rafael.luque.leiva@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/29/2
+Message-ID: <51559579.7060105@linux.vnet.ibm.com>
+Date: Fri, 29 Mar 2013 09:22:01 -0400
+From: Corey Bryant <coreyb@...ux.vnet.ibm.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Javamelody blind XSS through X-Forwarded-For header
+Subject: Re: Security vulnerability tools
 Content-Type: text/plain; charset=utf-8
 
-Javamelody [1] includes a blind XSS vulnerability. An attacker could
-provide an specially-crafted "X-Forwarded-For" HTTP header while visiting a
-Java web application monitored with Javamelody that would lead to arbitrary
-HTML or Javascript execution in the context of the administrator user
-monitoring the panel of active sessions in the application.
+Thanks to everyone who provided tooling input.  If anyone else has 
+anything else, please let me know.
 
-The versions affected are the last one 1.46 and all the previous that
-include the session monitoring panel feature.
+Based on the input I've updated the wiki at:
+http://oss-security.openwall.org/wiki/tools
 
-The issue has been reported to the project [2] but whithout response by now.
-
-The proof of concept may use the own Javamelody online demo:
-
-1. Access the demo site [3] using a fake X-Forwarded-For header like the
-following: <script>alert('xss')</script>
-2. Then visit the Javamelody sessions monitoring page at [4] and you should
-see the Javascript running.
-
-Can you allocate a CVE identifier for this?
-
-Thank you && Regards,
-
-Rafael Luque
-
-[1] https://code.google.com/p/javamelody/
-[2] https://code.google.com/p/javamelody/issues/detail?id=346
-[3] http://demo.javamelody.cloudbees.net/
-[4] http://demo.javamelody.cloudbees.net/monitoring?part=sessions
+-- 
+Regards,
+Corey Bryant
 
