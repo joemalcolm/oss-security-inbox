@@ -1,53 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/6
-Message-ID: <50F7B400.3090108@redhat.com>
-Date: Thu, 17 Jan 2013 01:19:12 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Michael de Raadt <michaeld@...dle.com>
-Subject: Request for CVE Identifiers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/29/3
+Message-ID: <CAA7hUgGLXG3GbC1tgQe_D2o5=aK3XEeORKLTTaTnTMpM9crXog@mail.gmail.com>
+Date: Fri, 29 Mar 2013 15:38:40 +0100
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Security vulnerability tools
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 01/11/2013 01:07 AM, Michael de Raadt wrote:
-> Hi, Kurt.
-> 
-> Thanks for providing those CVE identifiers.
-> 
-> In relation to the TinyMCE security issue, I couldn't find it in 
-> the list you suggested 
-> (https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=TinyMCE). The 
-> issue was in the TinyMCE Google spellchecker plugin. Here are some 
-> related links...
-> 
-> http://www.tinymce.com/develop/changelog/?type=phpspell 
-> http://www.tinymce.com/forum/viewtopic.php?id=30036
-> 
-https://github.com/tinymce/tinymce_spellchecker_php/commit/22910187bfb9edae90c26e10100d8145b505b974
-> 
-> I hope that helps.
+On 29 March 2013 14:22, Corey Bryant <coreyb@...ux.vnet.ibm.com> wrote:
+>
+> Thanks to everyone who provided tooling input.  If anyone else has anything else, please let me know.
 
-Please use CVE-2012-6112 for this issue thanks.
+I've a list of other tools at http://qa.debian.org/daca/, but that's
+only a handful of plenty of code analysis tools that exist.
+N.b. some are not directly related security issues and some other
+tools are "just" model checkers.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ97QAAAoJEBYNRVNeJnmTe2kP/1Yla3okNRjv2VkjcAmcltJL
-Cgh46+lWh3RcYg7qzQvYagZMnQiLiVNdLIMTXST7WdZ3ADBmO76ZxZNgpee5RG9i
-KQce10xw/q6/KBrEm/qmsClWRL8oGRYkqTgnmeja3xKnglUHo0v9gXiHSQ6+OBl3
-cW8YzU58aatUodEYZ7rHIL03N5ND3zvgkDt5djF1rpoJeuWOmwkFz1sIpm5b3mlM
-KV2vdaDlQs5KV/MQNbyRpS51QRW1TzIlm3SzSCFCC5aw5ZUM5vbx30oQAaoYJmw5
-TPEo9IYikebm+lqvRBcSnSRCGtIDzlYZd5S7MgAUNCDJxRuMkiTXId6+kpoUfQYm
-ZjHnX/vPH4I7uvSMcwXFr6m/oy1SzzDC/Dfd1wXhVpAA4TZUYd2rUMVdhrfQetUR
-ptCbUg3MucchagWQnjVVU9NsM40iUSUc8UT1tRU67gd+jWUXPmF9ZFlyMnw55NVJ
-syeOzZsJaolvaZLYcNa+09VmSttO/Ytuvp4qMADynOVsvk2U1DLzHNrKzp/b0lCi
-djhyyimi3inQbrodbp5oEo57iKcKbkq6mfCAh2y7+TTwPcJrh8SHfQFG2Jy5rX1D
-/7xQITzCRgLA862MeWaYOUn0+rscdFKzH0sJgB0up40QrfC6hKCJkdPv7rgeKZqt
-W8BW9S3cwa5ge254xhN1
-=RBMX
------END PGP SIGNATURE-----
+Cheers,
+--
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
