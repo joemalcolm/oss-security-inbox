@@ -1,88 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/24/6
-Message-Id: <E1V1zcU-0004Qf-2K@xenbits.xen.org>
-Date: Wed, 24 Jul 2013 14:00:46 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 60 (CVE-2013-2212) - Excessive time to disable caching with HVM guests with PCI passthrough
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/31/1
+Message-id: <e5c674f9-fa62-4517-b3c3-5cc342cc409d@me.com>
+Date: Sun, 31 Mar 2013 16:11:27 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Cc: Packet Storm <packet@...ketstormsecurity.org>
+Subject: Remote command execution in Ruby Gem ldoce 0.0.2
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Remote command execution in Ruby Gem ldoce 0.0.2
+Larry W. Cashdollar
+@_larry0
+3/25/2013
 
-             Xen Security Advisory CVE-2013-2212 / XSA-60
-                             version 5
+Ldoce Ruby Gem:
 
-   Excessive time to disable caching with HVM guests with PCI passthrough
+Easily interface with the Longman Dictionary of Contemporary English API from Ruby:
 
-UPDATES IN VERSION 5
-====================
+NB currently mac only as it depends on the afplay command.
 
-Corrected credit.
+https://github.com/markburns/ldoce
 
-ISSUE DESCRIPTION
-=================
+Ldoce passes an mp3 url to commandline for audio output of the pronunciation of a dictonary word:
 
-HVM guests are able to manipulate their physical address space such that
-processing a subsequent request by that guest to disable caches takes an
-extended amount of time changing the cachability of the memory pages assigned
-to this guest. This applies only when the guest has been granted access to
-some memory mapped I/O region (typically by way of assigning a passthrough
-PCI device).
+If the URL or filename for the mp3 files contain shell met﻿acharacters code can be executed remotely as the client:
 
-This can cause the CPU which processes the request to become unavailable,
-possibly causing the hypervisor or a guest kernel (including the domain 0 one)
-to halt itself ("panic").
+[./ldoce-0.0.2/lib/ldoce/word.rb]
 
-For reference, as long as no patch implementing an approved alternative
-solution is available (there's only a draft violating certain requirements
-set by Intel's documentation), the problematic code is the function
-vmx_set_uc_mode() (in that it calls ept_change_entry_emt_with_range() with
-the full guest GFN range, which the guest has control over, but which also
-would be a problem with sufficiently large but not malicious guests).
+      if mp3?
+        unless File.exists? filename
+          command = "curl #{mp3_url} -silent > {filename}"
+          `{command}`
+        end
+        `afplay #{filename}`
+      end
 
-IMPACT
-======
-
-A malicious domain, given access to a device with memory mapped I/O
-regions, can cause the host to become unresponsive for a period of
-time, potentially leading to a DoS affecting the whole system.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen version 3.3 onwards is vulnerable.
-
-Only systems using the Intel variant of Hardware Assisted Paging (aka EPT) are
-vulnerable.
-
-MITIGATION
-==========
-
-This issue can be avoided by not assigning PCI devices to untrusted guests, or
-by running HVM guests with shadow mode paging (through adding "hap=0" to the
-domain configuration file).
-
-CREDITS
-=======
-
-Zhenzhong Duan found the issue as a bug, which on examination by the
-Xenproject.org Security Team turned out to be a security problem.
-
-RESOLUTION
-==========
-
-There is currently no resolution to this issue.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJR7932AAoJEIP+FMlX6CvZ8pUIAJFFqtelnwQ58gEM3XYmbBdo
-FXF9xPiykqCbRzSfbVohmSj3vmORUsI22m8kk1fsJmSayJr9P8nJaYLqdr4/tcMf
-gqDLqBFWiOf+O48ULFaPf7eDBnVUzYQXBAcEEkfInjenvYgclTmdMQUbFGCtr+/O
-6BI8Y0NU6K5Nawu7n3VZK7j6D7VniwyNnIfgApK+k2PLdb9r9m4GQdQVulYOSw8h
-8H49C3D6c1L6m63he6c3NiyjfLZbFZbcqZuJPMMM5IR/J025Om6Kxyxcmx4wCCog
-nnyOPjCalPe9zOdsQlOEbrvH/UV/4U1EzkiWR2hRLbOS9bFJ2YweQxhvn7k/TVk=
-=rRXP
------END PGP SIGNATURE-----
-
+Content of type "text/html" skipped
