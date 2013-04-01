@@ -1,64 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/01/4
-Message-Id: <201309011625.r81GPHqN007324@linus.mitre.org>
-Date: Sun, 1 Sep 2013 12:25:17 -0400 (EDT)
-From: cve-assign@...re.org
-To: larry0@...com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Remote Command Injection in fog-dragonfly-0.8.2 Ruby Gem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/01/3
+Message-ID: <5159916E.9000503@linux.vnet.ibm.com>
+Date: Mon, 01 Apr 2013 09:53:50 -0400
+From: Corey Bryant <coreyb@...ux.vnet.ibm.com>
+To: "Zhao, Passion" <passion.zhao@...el.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Re: Security vulnerability tools
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
->Remote Command Injection in fog-dragonfly-0.8.2 Ruby Gem
->Download: https://rubygems.org/gems/fog-dragonfly
+
+On 03/31/2013 11:31 PM, Zhao, Passion wrote:
+> For static analysis, suggest to add 'klocwork'
+> For fuzzing, how about adding 'peach'?
+> And openVAS for network vulnerabilities scanning.
+
+Thanks for the input!  I've added these to the wiki.
+
+By the way (and this is not in reply to you, Passion) I've also added a 
+statement to the effect of "no guarantees" to the page, since the list 
+is growing and I don't have time to evaluate all of the tools at the moment.
+
+It would be nice to have a +1 type of feature next to each tool on the wiki.
+
+-- 
+Regards,
+Corey Bryant
+
 >
->"Dragonfly is an on-the-fly Rack-based image handling framework. It is
->suitable for use with Rails, Sinatra and other web frameworks.
 >
->Unescaped user supplied input is passed to the command line for shell
->execution
->
->fog-dragonfly-0.8.2/lib/dragonfly/imagemagickutils.rb:
->
-> 20     def convert(tempobject, args='', format=nil)
-> 21       tempfile = newtempfile(format)
-> 22       run "#{convertcommand} #{args} #{tempobject.path} #{tempfile.path}"
-> 23       tempfile
-> 24     end
+> --
+> Best regards,
+> - Passion
+> iNet: 8751-1986
 >
 >
-> 61     def run(command)
-> 62       log.debug("Running command: #{command}") if ImageMagickUtils.log_commands
-> 63       begin
-> 64         result = #{command}
+> -----Original Message-----
+> From: Corey Bryant [mailto:coreyb@...ux.vnet.ibm.com]
+> Sent: Friday, March 29, 2013 9:22 PM
+> To: oss-security@...ts.openwall.com
+> Subject: [oss-security] Re: Security vulnerability tools
+>
+> Thanks to everyone who provided tooling input.  If anyone else has anything
+> else, please let me know.
+>
+> Based on the input I've updated the wiki at:
+> http://oss-security.openwall.org/wiki/tools
+>
+> --
+> Regards,
+> Corey Bryant
+>
 
-Use CVE-2013-5671 for this vulnerability in the fog-dragonfly gem. As
-far as we can tell, this is a vulnerability in the fog-dragonfly gem,
-not a vulnerability in Dragonfly. We found these possibly related
-fixes in Dragonfly:
-
-  https://github.com/markevans/dragonfly/commit/ff141bb1d921fff506084b62a562f7a83d5e01fe#lib/dragonfly/image_magick/utils.rb
-
-  https://github.com/markevans/dragonfly/commit/47f95bd6b8af11fb0a44d6ab1c6f7d00d880cb68
-
-If the unpatched Dragonfly code has a vulnerability in a common use
-case, this would require a separate CVE ID.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSI2XoAAoJEGvefgSNfHMdv0oH/j0G7m0PMSwn1FvIcVpR39EP
-yKTuTfa9I5MSr2DXejQQ+5lhJN7eTJwjOTPETpGOu0BkDgMkRvcuw81PqgVwkWXc
-bT8DfNM/cO4vM3UjTJiTKYinVRMl3xsjGVzkwxV0E1mYhjbjrKGNUMgzjNPsSnja
-eNYC26v2UDLn3Jw8K7qXTk+ytgFqOE+MiA/KDXBvm6fB1SBOoeeaMGU7NNdCw8A9
-95TdYNzYE3JL7V0zz/5oidqkg0hlznK21KR01hUJK0s/U60rdzgA/73O+g8XSP4q
-vyqN0ykgSDodfAt6JsONR/5wzaXTmc25ZXaB3wMGG9yUxFZiORzVGSsWJ7mlad0=
-=SUlN
------END PGP SIGNATURE-----
