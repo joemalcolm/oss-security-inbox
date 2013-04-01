@@ -1,30 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/4
-Message-ID: <50E5A574.6040809@fifthhorseman.net>
-Date: Thu, 03 Jan 2013 10:36:20 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com, nginx-devel@...nx.org
-Subject: nginx http proxy module does not verify peer identity of https origin server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/01/1
+Message-ID: <6767C9D6F8BD55458FB6C82322547B702465DEA4@SHSMSX102.ccr.corp.intel.com>
+Date: Mon, 1 Apr 2013 03:31:07 +0000
+From: "Zhao, Passion" <passion.zhao@...el.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "Zhao, Passion" <passion.zhao@...el.com>
+Subject: RE: Re: Security vulnerability tools
 Content-Type: text/plain; charset=utf-8
 
-nginx offers the ability for its http proxy module to talk to an origin
-server over https.  However, it does not verify the identity of the
-origin server in this case, which leaves it subject to MITM attacks
-between the proxy and the origin server.
-
-Sadly, this appears to be unfixed for over a year after it was first
-reported:
-
- http://trac.nginx.org/nginx/ticket/13
-
-some patch review starts over here, but doesn't seem to reach any
-resolution:
-
- http://mailman.nginx.org/pipermail/nginx-devel/2011-September/001182.html
-
-As far as i can tell, there is no CVE assigned for this yet.
-
-	--dkg
+For static analysis, suggest to add 'klocwork'
+For fuzzing, how about adding 'peach'?
+And openVAS for network vulnerabilities scanning. 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+--
+Best regards,
+- Passion
+iNet: 8751-1986
+
+
+-----Original Message-----
+From: Corey Bryant [mailto:coreyb@...ux.vnet.ibm.com] 
+Sent: Friday, March 29, 2013 9:22 PM
+To: oss-security@...ts.openwall.com
+Subject: [oss-security] Re: Security vulnerability tools
+
+Thanks to everyone who provided tooling input.  If anyone else has anything
+else, please let me know.
+
+Based on the input I've updated the wiki at:
+http://oss-security.openwall.org/wiki/tools
+
+--
+Regards,
+Corey Bryant
+
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (8618 bytes)
