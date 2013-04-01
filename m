@@ -1,104 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/10
-Message-ID: <20130403175818.2430adab@chromobil.localdomain>
-Date: Wed, 3 Apr 2013 17:58:18 +0200
-From: Stefan Bühler <stbuehler@...httpd.net>
-To: oss-security@...ts.openwall.com
-Subject: browser document.cookie DoS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/01/2
+Message-ID: <51599022.7030307@linux.vnet.ibm.com>
+Date: Mon, 01 Apr 2013 09:48:18 -0400
+From: Corey Bryant <coreyb@...ux.vnet.ibm.com>
+To: Raphael Geissert <geissert@...ian.org>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Re: Security vulnerability tools
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-Chromium 25.0.1364.160 (debian testing), Iceweasel/Firefox 19 and
-probably many other browsers allow javascript to set broken cookie
-values, leading to possible permanent "400 Bad Request" responses. The
-broken value might be set by 3rd party libraries.
-
-For example the google analytics code is vulnerable, as it sets cookie
-values based on parameters in the referer query string. lighttpd does
-not allow control characters in http header values, so any lighttpd
-site using google analytics is vulnerable if you can get the user to
-follow a link (img tag for example) to that site like this:
-
-http://www.example.com/?utm_source=test&utm_medium=test&utm_campaign=te%05st
 
 
-Afaik apache doesn't check the cookie values (or perhaps removes the
-broken characters). Imho they are responsible for this mess :)
-
-To be clear: the bug is in the browser / javascript implementation:
-
-document.cookie MUST NOT allow cookie values which include certain
-control characters. Javascript applications should not use 8-bit
-characters.
-
-(If browser vendors want to allow broken cookie values to be stored,
-they MUST NOT send them to the server; in this case javascript
-applications can still read the broken values. But I don't think this
-is a good idea.)
-
-The safe character set for HTTP header values is: %x20-7E; %x80-FF is
-obsoleted by the current draft.
-
-"A recipient MAY replace any linear white space with a single SP before
-interpreting the field value", so horizontal tabs are not "safe" - they
-might get converted to a space, but are not forbidden (also multiple
-spaces can get replaced by a single one).
-
-I think this could use a CVE.
-
-The problem was reported in our lighttpd bug tracker:
-http://redmine.lighttpd.net/issues/2188
-
-Kind regards,
-Stefan
-
-
-Testing the bug:
-
-Try one of the listed urls in the ticket (the error should trigger
-after a reload). If you have noscript, request policy, referer control
-or similar stuff running you are probably safe; to test the bug in this
-case you need a Javascript console on a lighttpd site
-(http://lighttpd.net for example), and enter:
-
-> document.cookie = "foo=bar\x05test"
-Try to reload the page - it should return a 400 Bad Request page now.
-
-> document.cookie = "foo="
-And it should work again.
-
-
-HTTP references:
-
-http://tools.ietf.org/html/rfc2616
-> message-header = field-name ":" [ field-value ]
-> field-name     = token
-> field-value    = *( field-content | LWS )
-> field-content  = *TEXT | *(token | separators | quoted-string)
-> LWS            = [CRLF] 1*( SP | HTAB )
+On 03/29/2013 10:38 AM, Raphael Geissert wrote:
+> Hi,
 >
-> # TEXT is superset of (token | separators | quoted-string)
-> TEXT = LWS | %x21-7E | %x80-FF
-
-http://tools.ietf.org/html/draft-ietf-httpbis-p1-messaging-22
-> header-field   = field-name ":" OWS field-value BWS
-> field-name     = token
-> field-value    = *( field-content / obs-fold )
-> field-content  = *( HTAB / SP / VCHAR / obs-text )
-> obs-fold       = CRLF ( SP / HTAB )
+> On 29 March 2013 14:22, Corey Bryant <coreyb@...ux.vnet.ibm.com> wrote:
+>>
+>> Thanks to everyone who provided tooling input.  If anyone else has anything else, please let me know.
 >
-> # obsolete text
-> obs-text = %x80-FF
+> I've a list of other tools at http://qa.debian.org/daca/, but that's
+> only a handful of plenty of code analysis tools that exist.
+> N.b. some are not directly related security issues and some other
+> tools are "just" model checkers.
+>
+> Cheers,
+> --
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
+>
+>
+>
 
-Basic definitions:
-> # horizontal tab
-> HTAB = %x09
-> # space
-> SP = %x20
-> # visible ASCII
-> VCHAR = %x21-7E
-> # carriage return + line feed
-> CRLF = %0x0D %0x0A
+I've added a link.  Thanks!
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+-- 
+Regards,
+Corey Bryant
+
