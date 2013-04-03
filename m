@@ -1,28 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/19/1
-Message-ID: <20131119201413.GG31117@inutil.org>
-Date: Tue, 19 Nov 2013 21:14:14 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/6
+Message-ID: <515C4558.1040001@redhat.com>
+Date: Wed, 03 Apr 2013 09:06:00 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests for three Linux kernel issues
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: glibc getaddrinfo() stack overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-"x90c" reported four kernel issues on f-d. One already has a CVE ID assigned,
-can you please assign one for the remainders?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-XADV-2013008 Linux Kernel 3.11.7 <= sk_attach_filter Kernel Heap Corruption
-  http://seclists.org/fulldisclosure/2013/Nov/139
+On 04/03/2013 05:10 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> A customer reported a glibc crash, which turned out to be a stack
+> overflow in getaddrinfo().
+> 
+> getaddrinfo() uses: struct sort_result results[nresults]; with
+> nresults controlled by the nameservice chain (DNS or /etc/hosts).
+> 
+> This will be visible mostly on threaded applications with smaller
+> stacksizes, or operating near out of stack.
+> 
+> Reproducer I tried: $ for i in `seq 1 10000000`; do echo "ff00::$i
+> a1" >>/etc/hosts; done $ ulimit -s 1024 $ telnet a1 Segmentation
+> fault (clean out /etc/hosts again )
+> 
+> 
+> I am not sure you can usually push this amount of addresses via DNS
+> for all setups.
+> 
+> Andreas is currently pushing the patch to glibc GIT.
+> 
+> Reference: https://bugzilla.novell.com/show_bug.cgi?id=813121
+> 
+> Ciao, Marcus
 
-XADV-2013007 Linux Kernel bt8xx Video Driver IOCTL Heap Overflow
-  http://seclists.org/fulldisclosure/2013/Nov/126
+Please use CVE-2013-1914 for this issue.
 
-XADV-2013004 Linux Kernel ipvs Kernel Stack Overflow
-  http://seclists.org/fulldisclosure/2013/Nov/77
--> This was already assigned CVE-2013-4588
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-XADV-2013003 Linux Kernel bt8xx Video Driver IOCTL Heap Overflow 
-  http://seclists.org/fulldisclosure/2013/Nov/75
-
-Cheers,
-        Moritz
+iQIcBAEBAgAGBQJRXEVYAAoJEBYNRVNeJnmTJAwQAJxeNaGDoLRQ0PRzWshaxk/R
+VR/yXYe4DfugtL+lgMgL82T8sQJeSBSWsgBx+f43mnAcGSPhZlHVtPAl5g7Vhe38
+/04kiHRGr5srLrl8HFwNLCMRv8nAbslYdHeID6bu6eUN8VoUrhbp5Nd0Fh7I+gqQ
+9ryci9tfPaMOmV6gxs1Ug97wGmlBHiXcTlzQR/zGYxDnZe1KS+zMBUgrhrvWxI+z
+6L1hZeGJd1aRe61D/HDSZZGuj/olrgSphdN5tUQaKb/TmJlbhfbk1ds2oX4vNcbm
+sjnKnT0ttQHfGJHJCTgYOfO13MK2KwEcEBsnUfhUKvx5HdbpMMnPTMT+3IV4I0+K
+a07asqZ2P6/zdOz2UeUNJyNXIM5Ruprb0Wy9XbPZUcoWaqBBUGYawdbwqdfAENUs
+FTBcqUOhv85igtSoCauYNwpKgBv1xjyYpsxdMRMOMyZsf3b8g4atU2sEumzWxcw3
+Jlu4+Nh9JuZtHvHFfpRmA5JPM9mARqAecEDMGS6ZUdeuTCMKIQBkI29Q7pVZG9Jd
+30U/evCus1p6K/7iWz5S1iazt1EZOBhAJy4ebrnMIM3eGQGaivwjppIQj8EgtTTh
+BIRzW9qVYgf7EpJK9xODx/Oer8AO4+/OYdJ/v9Qq3PCApJRUurBdE/6uc6hTc6cD
+I03eGoB7ue4PmzWCFfDk
+=eAD0
+-----END PGP SIGNATURE-----
