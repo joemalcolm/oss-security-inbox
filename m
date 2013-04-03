@@ -1,41 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/18/7
-Message-ID: <20130518095054.GA8725@kludge.henri.nerv.fi>
-Date: Sat, 18 May 2013 12:50:54 +0300
-From: Henri Salo <henri@...v.fi>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, plugins@...dpress.org
-Subject: Re: CVE request: WordPress plugin wp-cleanfix CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/3
+Message-ID: <1516728290.1074389.1364991799818.JavaMail.root@redhat.com>
+Date: Wed, 3 Apr 2013 08:23:19 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Breno Silva <breno.silva@...il.com>
+Subject: CVE Request -- ModSecurity (X < 2.7.3): Vulnerable to XXE attacks
 Content-Type: text/plain; charset=utf-8
 
-On Sat, May 18, 2013 at 12:54:23AM -0600, Kurt Seifried wrote:
-> Sorry I'm not clear, this appears to be two vulns, a CSRF, and a
-> remote code exec, the remote code exec can be triggered via the CSRF
-> (so remote anon attacker can pull this off with some social
-> engineering/etc.), but can also be done by users with access? Thanks.
+Hello Kurt, Steve, Breno, vendors,
 
-File wpCleanFixAjax.php contains:
+  ModSecurity upstream has released v2.7.3 version:
+[1] https://github.com/SpiderLabs/ModSecurity/blob/master/CHANGES
 
-30         $command = strip_tags( $_POST['command'] );
-31         eval ( $command );
+correcting one security flaw (from [2]):
+"It was reported that the XML files parser of ModSecurity,
+a security module for the Apache HTTP Server, was vulnerable
+to XML External Entity attacks. A remote attacker could
+provide a specially-crafted XML file that, when processed
+might lead to local files disclosure or, potentially,
+excessive resources (memory, CPU) consumption."
 
-and there is:
+References:
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=947842
+[3] https://bugs.gentoo.org/show_bug.cgi?id=464188
+[4] https://secunia.com/advisories/52847/
 
-12 if ( is_admin() && _wpdk_is_ajax() ) {
+Relevant upstream patch (seems to be the following):
+[5] https://github.com/SpiderLabs/ModSecurity/commit/d4d80b38aa85eccb26e3c61b04d16e8ca5de76fe
 
-So it only work when logged in administrator. This is not a security
-vulnerability as is, because WordPress administrator can upload/edit PHP as she
-or he likes.
+Could you allocate a CVE id [*] for this?
 
-There is a CSRF vulnerability, which can be used to execute arbitrary PHP.
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-POST /wordpress/wordpress-351/wp-admin/admin-ajax.php
-action=wpCleanFixAjax&command=echo phpversion();
-
-So in short: two vulnerabilities, but eval can't be used without CSRF as far as
-I can tell.
-
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+[*] According to: https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ModSecurity
+    there doesn't seem to have been a CVE id allocated for this issue yet.
