@@ -1,42 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/06/4
-Message-ID: <CAA7hUgH43nyVFgps-VCXKXkiRvhm2oKfJ1o12KXM+1H_U6MPjA@mail.gmail.com>
-Date: Wed, 6 Mar 2013 15:36:40 +0100
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/5
+Message-ID: <20130403145514.GA24627@suse.de>
+Date: Wed, 3 Apr 2013 16:55:14 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: busybox
+Subject: Re: CVE Request: glibc getaddrinfo() stack overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
 
-On 5 March 2013 19:20, Kurt Seifried <kseifried@...hat.com> wrote:
-> On 03/05/2013 06:30 AM, Raphael Geissert wrote:
->> What can we do about it?
->>
->> We already have a quite long list of issues without a CVE id and
->> this is not good for anybody:
->> https://security-tracker.debian.org/tracker/data/fake-names
+glibc resolver surprisingly seems to accept indeed larger
+UDP packets than DNS servers would send without EDNS0.
+But depending on setup its probably hard to get such large
+packets through your local recursive DNS, not to speak
+about the firewall. Maybe its possible to signal truncation
+and force a TCP connect?
+
+Sebastian
+
+On Wed, Apr 03, 2013 at 04:27:58PM +0200, Florian Weimer wrote:
+> On 04/03/2013 01:10 PM, Marcus Meissner wrote:
 >
-> So research them and post the requests here, problem solved! It's not
-> like I'm unwilling to give out CVEs or something. I simply can't spend
-> an hour researching each one.
+>> I am not sure you can usually push this amount of addresses via DNS for all
+>> setups.
 >
->> (nb. some of the issues in the list might already have an id but
->> the temporary entry hasn't been removed or it was decided that no
->> id should be assigned)
+> Both IPv4 and IPv6 addresses are combined in that array, right?  Then the 
+> protocol limit seems to be around 4000 + 2300 addresses (NAME (2 bytes with 
+> compression) + RCLASS (2) + RTYPE(2) + TTL (4) + RDATALEN(2) + RDATA(4 or 
+> 16) per record, total available space is 64K), which could be used to blow 
+> 128K stacks sometimes used by JVMs.
 >
-> And that's why I'm not going to deal with them myself, it would eat up
-> all my time. I need some help here in other words.
+> -- 
+> Florian Weimer / Red Hat Product Security Team
 
-Sure thing; I'm not asking you to go through that list. It's just that
-it is a kind of indicator that there are potentially quite a number of
-issues that aren't being tracked properly.
-
-And thanks for clarifying your position regarding the original sources
-of information. I hope that in the future there won't be any such
-cases where an id isn't assigned due to miscommunication.
-
-Regards,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
