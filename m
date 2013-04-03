@@ -1,55 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/09/6
-Message-ID: <52558D06.1020608@redhat.com>
-Date: Wed, 09 Oct 2013 11:06:14 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/13
+Message-ID: <515C975F.5010801@gmail.com>
+Date: Wed, 03 Apr 2013 13:55:59 -0700
+From: Forest Monsen <forest.monsen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Slim 1.3.6 fixes a security issue
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/09/2013 07:03 AM, mancha wrote:
-> Hello Kurt, vendors, et al.
-> 
-> Slim 1.3.6 fixes a security flaw related to a potential NULL ptr. 
-> dereference when using crypt() from glibc 2.17+ (eglibc 2.17+). 
-> Without the fix, malformed or unsupported salts crash the login 
-> daemon.
-> 
-> Upstream fix: http://git.berlios.de/cgi- 
-> bin/cgit.cgi/slim/commit/?id=fbdfae3b406b1bb6f4e5e440e79b9b8bb8f071f
->
-> 
-b
-> 
-> Would you please allocate a CVE for this issue?
-> 
-> Regards,
-> 
-> --mancha
-> 
+Hi there,
 
-Please use CVE-2013-4412 for this issue.
+I'd like to request CVE identifiers for the following issues:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+SA-CONTRIB-2013-040 - Commerce Skrill (Formerly Moneybookers) - Access
+bypass
+http://drupal.org/node/1960338
+
+SA-CONTRIB-2013-041 - Chaos tool suite (ctools) - Access bypass
+http://drupal.org/node/1960406
+
+Thanks!
+
+Forest
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJSVY0FAAoJEBYNRVNeJnmTmBUQAI7mc7UsIOY00ZgioN9vK+3T
-rkEsqaWceujRSMZY/f8hrjmVZvwqQ0ycRTXVZ2GZtYVnGLz2gYGnWB9pR3FBNZ+E
-L8XJuBW4ShjVkxuHIZRnWgijB97o3epKRKAKWIipIRYmqtGw9R1Bu4lTebyV3vTt
-TPzsfhC+6VZjtbCPZDr899pWKsRv8CAM2zKLPkjuhEzyQ6BZAK/BiBRDGsseM6Po
-dTwycNHnzJcZ+mzb59WYwAloe8LpJXEzzc7XNLCjvGijMd1F6ID4fy4gnlKJ45pN
-XbnHf0jYlGvOTxAdic9x32r0x5KtMpwqzLukmKoBkntdlBEoLOID4xWy8yBdNGIu
-hZ16HBJarcnGmnzbSeHbhcJ+DW9n782qCoUMZTqdHWVysLXmDfdnoJGjdp9oHRq7
-gEKWtur3y30s8IBjG7kNesdTniOG7ZEA2pZ5S2zLA0AOPc7A7ogBuVjdefGOB6Er
-huvz+as5wgpS/mI7pBfsptrlpaXe1M/aZm90WZf+Q7MFXcvFifDCia1haahwL7nc
-5CiICKV1hlASMfuAEFsdhcTrdZ+fEM8Z3nsa27BPUDUuIOCqNSdPUHxD9CzPPjuT
-KysGsdtEgbe498LUMC6trtidDFeKMcUqPlCXtBK0z2zi8cJ6WN+VJTqe0oKWGSql
-rWPIGof4/DH1P5A3qIzh
-=aKYM
+iEYEARECAAYFAlFcl1kACgkQ/ILCL9e1Br5j/QCcDrHieK3tns9C5ZhcsFQVodHk
++YgAnjYvBsq+Dn4lzZQnWaeNXbvKYycK
+=6YeZ
 -----END PGP SIGNATURE-----
