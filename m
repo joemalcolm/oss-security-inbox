@@ -1,74 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/22
-Message-ID: <20130605191817.GL32700@dhcp-25-225.brq.redhat.com>
-Date: Wed, 5 Jun 2013 21:18:17 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: Stephane Eranian <eranian@...gle.com>
-Cc: Peter Zijlstra <peterz@...radead.org>, "ak@...ux.intel.com" <ak@...ux.intel.com>, security@...nel.org, Marcus Meissner <meissner@...e.de>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: More perf security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/1
+Message-ID: <20130403015109.GA24630@1wt.eu>
+Date: Wed, 3 Apr 2013 03:51:09 +0200
+From: Willy Tarreau <w@....eu>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2013-1912 : haproxy may crash on TCP content inspection rules
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 05, 2013 at 02:30:13PM +0200, Stephane Eranian wrote:
-> Hi,
-> 
-> 
-> On Wed, Jun 5, 2013 at 2:15 PM, Peter Zijlstra <peterz@...radead.org> wrote:
-> > On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
-> >> Hello, Peter.
-> >>
-> >> On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
-> >> > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
-> >> >
-> >> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
-> >> >
-> >> > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
-> >> > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-> >> > Date:   Fri May 3 14:11:25 2013 +0200
-> >> >
-> >> >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
-> >> >
-> >> >     We should always have proper privileges when requesting kernel
-> >> >     data.
-> >> >
-> >> >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-> >> >     Cc: <stable@...nel.org>
-> >> >     Cc: Andi Kleen <ak@...ux.intel.com>
-> >> >     Cc: eranian@...gle.com
-> >> >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
-> >> >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
-> >> >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
-> >> >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
-> >>
-> >> There is similar check in perf_copy_attr() which is called from
-> >> perf_event_open syscall --
-> >>
-> >>                 /* kernel level capture: check permissions */
-> >>                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
-> >>                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
-> >>                         return -EACCES;
-> >>
-> >> It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
-> >> missing something?
-> >>
-> >
-> > I overlooked it, also its slightly broken. See the discussion at:
-> >   https://lkml.org/lkml/2013/5/21/166
-> >
-> Yes, there was a typo in the constant. Was checking the wrong bits.
 
-Before we were checking PERF_SAMPLE_BRANCH_PERM_PLM bits.
-PERF_SAMPLE_BRANCH_PERM_PLM is defined as 
+Hi,
 
-#define PERF_SAMPLE_BRANCH_PERM_PLM \
-        (PERF_SAMPLE_BRANCH_KERNEL |\
-         PERF_SAMPLE_BRANCH_HV)
+Yves Lafon from the W3C reported some random crashes of haproxy with an
+advanced configuration, that we finally considered was a security issue
+as it could remotely be triggered.
 
-Can you please explain why that was considered as wrong bits? Shouldn't
-we also check for PERF_SAMPLE_BRANCH_HV now? I admit that it has now
-more sense that before and it will actually work after you reorganized
-and moved the check the way you did, but ain't we leaking some useful
-privileged info by not checking for PERF_SAMPLE_BRANCH_PERM_PLM but only
-for PERF_SAMPLE_BRANCH_KERNEL?
 
--- 
-Petr Matousek / Red Hat Security Response Team
+--- summary ---
+
+Configurations at risk are those which combine use of HTTP keywords in
+TCP content inspection rules, client-side keep-alive, header rewriting
+rules and which receive pipelined requests. These configurations may be
+remotely crashed when run with haproxy 1.4 up to and including 1.4.22
+or development versions up to and including 1.5-dev17. Versions 1.4.23
+and 1.5-dev18 are safe.
+
+
+--- quick workaround ---
+
+Disable TCP content inspection, or disable HTTP keep-alive by inserting
+"option forceclose" in the affected frontends.
+
+
+--- details ---
+
+During normal HTTP request processing, request buffers are realigned if
+there are less than global.maxrewrite bytes available after them, in
+order to leave enough room for rewriting headers after the request. This
+is done in http_wait_for_request().
+    
+However, if some HTTP inspection happens during a "tcp-request content"
+rule, this realignment is not performed. In theory this is not a problem
+because empty buffers are always aligned and TCP inspection happens at
+the beginning of a connection. But with HTTP keep-alive, it also happens
+at the beginning of each subsequent request. So if a second request was
+pipelined by the client before the first one had a chance to be forwarded,
+the second request will not be realigned. Then, http_wait_for_request()
+will not perform such a realignment either because the request was
+already parsed and marked as such. The consequence of this, is that the
+rewrite of a sufficient number of such pipelined, unaligned requests may
+leave less room past the request been processed than the configured
+reserve, which can lead to a buffer overflow if request processing appends
+some data past the end of the buffer.
+    
+A number of conditions are required for the bug to be triggered :
+   - HTTP keep-alive must be enabled ;
+   - HTTP inspection in TCP rules must be used ;
+   - some request appending rules are needed (reqadd, x-forwarded-for)
+   - since empty buffers are always realigned, the client must pipeline
+     enough requests so that the buffer always contains something till
+     the point where there is no more room for rewriting.
+    
+While such a configuration is quite unlikely to be met (which is
+confirmed by the bug's lifetime), a few people do use these features
+together for very specific usages. And more importantly, writing such
+a configuration and the request to attack it is trivial.
+    
+A quick workaround consists in forcing keep-alive off by adding
+"option httpclose" or "option forceclose" in the frontend. Alternatively,
+disabling HTTP-based TCP inspection rules enough if the application
+supports it.
+    
+At first glance, this bug does not look like it could lead to remote code
+execution, as the overflowing part is controlled by the configuration and
+not by the user. But some deeper analysis should be performed to confirm
+this. And anyway, corrupting the process' memory and crashing it is quite
+trivial.
+    
+Special thanks go to Yves Lafon from the W3C who reported this bug and
+deployed significant efforts to collect the relevant data needed to
+understand it in less than one week, and to Ryan O'Hara from Red Hat
+for providing me with a CVE number.
+    
+CVE-2013-1912 was assigned to this issue.
+
+--- links ---
+1.4-stable patch for version <= 1.4.22 :
+http://git.1wt.eu/web?p=haproxy-1.4.git;a=commitdiff;h=dc80672211
+1.4.23 source code: 
+http://haproxy.1wt.eu/download/1.4/src/haproxy-1.4.23.tar.gz
+
+1.5-dev patch for versions <= 1.5-dev17 :
+http://git.1wt.eu/web?p=haproxy.git;a=commitdiff;h=aae75e3279
+1.5-dev18 source code:
+http://haproxy.1wt.eu/download/1.5/src/devel/haproxy-1.5-dev18.tar.gz
+
+Please check with your distro vendor for packaged updates.
+--
+
+Thanks,
+Willy Tarreau
+
