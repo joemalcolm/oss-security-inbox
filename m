@@ -1,35 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/13
-Message-ID: <CABRvpqBEXHx9D_ipEnHfbzrT0rW7SqGZX=cpTeg17VQxTs0noQ@mail.gmail.com>
-Date: Thu, 18 Jul 2013 17:29:17 -0400
-From: Andrew Nacin <nacin@...dpress.org>
-To: "Christey, Steven M." <coley@...re.org>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Kurt Seifried <kseifried@...hat.com>,  Jay Turla <shipcodez@...il.com>
-Subject: Re: Re: SWFUpload <= (Object Injection/CSRF) Vulnerabilities Multiple flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/14
+Message-ID: <20130403224300.GJ3690@redhat.com>
+Date: Wed, 3 Apr 2013 16:43:00 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: rpc-gssd is vulnerable to DNS spoofing
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 18, 2013 at 5:10 PM, Christey, Steven M. <coley@...re.org> wrote:
-> CVE-2012-2399's only public details are that it's an unspecified vulnerability in Wordpress before 3.3.2, yet http://wordpress.org/news/2012/04/wordpress-3-3-2/ is pretty vague and mentions multiple products (although it does credit Neal Poole for at least one issue).  That said, a statement by a lead developer of Wordpress is important for this clarification ;-)  Andrew, can you confirm for sure that CVE-2012-2399 is *also* the same as CVE-2012-3414 for Neal Poole's movieName vector?
+This has been discussed on the linux-nfs mailing list, so fully public.
+Just cutting and pasting from our bugzilla:
 
-Negative, I was mistaken. Sorry for the confusion. CVE-2012-2399 was a
-separate XSS, affecting buttonText, and reported by Szymon Gruszecki.
-CVE-2012-3414 was Neal Poole's report, affecting movieName.
+It was reported [1],[2] that rpc.gssd in nfs-utils is vulnerable to DNS
+spoofing due to it depending on PTR resolution for GSSAPI
+authentication.  Because of this, if a user where able to poison DNS to
+a victim's computer, they would be able to trick rpc.gssd into talking
+to another server (perhaps with less security) than the intended server
+(with stricter security).  If the victim has write access to the second
+(less secure) server, and the attacker has read access (when they
+normally might not on the secure server), the victim could write files
+to that server, which the attacker could obtain (when normally they
+would not be able to).  To the victim this is transparent because the
+victim's computer asks the KDC for a ticket to the second server due to
+reverse DNS resolution; in this case Krb5 authentication does not fail
+because the victim is talking to the "correct" server.
 
-So, CVE-2013-4145 is a duplicate of CVE-2012-3414, *not* of CVE-2012-2399.
+A patch that prevents this issue has been posted [3].
 
-That said, given that CVE-2012-2399 was not publicly described at the
-time, I would not be surprised if one or more CVEs have been issued
-for the same XSS via buttonText at one point.
+To workaround this issue, set the IP/host pair in /etc/hosts so that it
+cannot be spoofed.
 
-Christey, Steven M. <coley@...re.org> wrote:
-> Since swfupload.swf is apparently widely used, researchers may be finding the same issue over and over again in different packages, and presenting them as if they are new.  Yet there might be some attack variants buried in there, too.
->
-> Because of the amount of attention by researchers who don't check whether an issue has already been disclosed, and/or the number of independent products that use this library, any "new" swfupload.swf issues should be regarded with extreme suspicion while CVE tries to iron out all the existing duplicates.
+A good explanation is also available here [4].
 
-Related, for those who haven't seen, WordPress forked SWFUpload last
-month. Both Neal and Szymon have been helping us with the fork, as
-well. At this point, in terms of issues known to us, only the image
-injection issue is unfixed.
+[1] http://marc.info/?l=linux-nfs&m=136491998607561&w=2
+[2] http://marc.info/?l=linux-nfs&m=136500502805121&w=2
+[3] http://marc.info/?l=linux-nfs&m=136493115612397&w=2
+[4] http://ssimo.org/blog/id_015.html
 
-Fork: https://github.com/wordpress/secure-swfupload
-Post: http://make.wordpress.org/core/2013/06/21/secure-swfupload/
+
+https://bugzilla.redhat.com/show_bug.cgi?id=948072
+
+
+Since this is fairly new, I don't think a CVE would have been requested
+already.  Could one be assigned to this?
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
