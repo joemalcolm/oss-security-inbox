@@ -1,25 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/15/4
-Message-ID: <20131215202327.GN2348@openstack.org>
-Date: Sun, 15 Dec 2013 20:23:27 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/11
+Message-ID: <515C5CC9.2050406@redhat.com>
+Date: Wed, 03 Apr 2013 10:46:01 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Issue with PYTHON_EGG_CACHE
+CC: Gynvael Coldwind <gynvael@...dwind.pl>, Jan Lieskovsky <jlieskov@...hat.com>, Mateusz ‘j00ru’ Jurczyk <j00ru.vx@...il.com>, groebert@...gle.com, "gynvael@...gle.com" <gynvael@...gle.com>, "Christey, Steven M." <coley@...re.org>
+Subject: Re: Further issue details about flaws corrected in upstream ClamAV 0.97.7 version
 Content-Type: text/plain; charset=utf-8
 
-On 2013-12-15 14:47:12 -0500 (-0500), cve-assign@...re.org wrote:
-> This message seems to disclose a vulnerability in an unspecified
-> version of OpenStack Swift.
-[...]
-> Use CVE-2013-7109 for this report about OpenStack Swift. Again,
-> CVE-2013-7109 is not an ID for which setuptools is the affected
-> product.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I don't think this was intended as a CVE request. The OpenStack VMT
-had already determined this was non-exploitable in Swift over the
-course of https://launchpad.net/bugs/1192966 and explicitly decided
-not to request a CVE nor issue an advisory.
--- 
-Jeremy Stanley
+I've not heard anything further on this, I am officially handing it
+over to Steven for sorting out since I'll probably get it wrong (and
+Mitre is pretty good at dealing with these messes).
 
-Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
+
+On 03/19/2013 07:49 AM, Gynvael Coldwind wrote:
+> Hey,
+> 
+> Sorry for the delay.
+> 
+> We've pointed ClamAV guys to this thread, since they can answer
+> this better than us.
+> 
+> At the moment I can point you to this: 
+> https://bugzilla.clamav.net/buglist.cgi?query_format=specific&order=relevance+desc&bug_status=__closed__&product=&content=G_REPORT
+>
+>  Cheers,
+> 
+> 
+> 
+> 
+> On Tue, Mar 19, 2013 at 8:45 AM, Kurt Seifried
+> <kseifried@...hat.com> wrote:
+> 
+> Ping. I haven't seen any reply to this. Anyone have any comments on
+> this?
+> 
+> On 03/15/2013 08:08 AM, Jan Lieskovsky wrote:
+>>>> Hello Mateusz, Gynvael, vendors,
+>>>> 
+>>>> this is due the following ones: [1] 
+>>>> https://bugs.mageia.org/show_bug.cgi?id=9399 [2] 
+>>>> http://blog.clamav.net/2013/03/clamav-0977-has-been-released.html
+>>>>
+>>>> 
+[3] https://github.com/vrtadmin/clamav-devel/blob/0.97/ChangeLog
+>>>> 
+>>>> I have tried to grep CLamAV's git log for further
+>>>> information, but many of the commits prior to 2013-02-20 have
+>>>> form of:
+>>>> 
+>>>> 'Fix CID#...' :(.
+>>>> 
+>>>> The only two security related ones seem to be the following
+>>>> two: commit b2212def1bb92b5ac45c82da100dc0d1376de6a3 Author:
+>>>> Steve Morgan <smorgan@...rcefire.com> Date:   Thu Feb 14
+>>>> 18:29:53 2013 -0500
+>>>> 
+>>>> cid 10776 - fix double free
+>>>> 
+>>>> commit 71990820d01c246e4e61408a3659dd9d92949b38 Author: Ryan 
+>>>> Pentney <rpentney@...rcefire.com> Date:   Fri Feb 15 03:10:50
+>>>> 2013 -0800
+>>>> 
+>>>> Fixed heap corruption in wwunpack.c
+>>>> 
+>>>> We to be better able to tell, which concrete security flaws
+>>>> got corrected in 0.97.7 version and based on that to properly
+>>>> allocate CVE identifiers, could you please provide further
+>>>> information about: a) how many and what kind of issues got
+>>>> corrected in that version?, b) links to relevant upstream
+>>>> patches? (since patch log telling CID# wouldn't be enough
+>>>> either to find out the appropriate commits).
+>>>> 
+>>>> Thank you for your time, look && cooperation in advance.
+>>>> 
+>>>> Regards, Jan. -- Jan iankko Lieskovsky / Red Hat Security
+>>>> Response Team
+>>>> 
+> 
+> 
+>> 
+> 
+> 
+> 
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRXFzJAAoJEBYNRVNeJnmTrroP/ArhAmiaTjLZgaXqN6UdibwD
+dEZxa4VpCSwwylqwNScwO9GQq5a9qpvdP+urVp+9F7pnBKURb8xu4P70BGslJJSn
+YpCqHIFxBi14ee1dukkRuLyYSIPpwvnVytXQ6aOh791yJkvBTT3dG0e4cdRZHSEy
+bfjQzHM65XNN0ocgAlG2k4Zqk/5+9MjkLVdq9gOoP2YPx0qJ0JYO/+zgOWbp4DgA
+0VioMKS6Sv+28YCD3rnUBwzw2tcPU3S1lYQnebglmNT+yPiLDcAMjQx2LODAsKRz
+ctOkP0LfhCFhyrSxWCs04p3jaPJMbMcvBJvq7M6V/N9C2GEnt/cU/cgXbWbsv6Dj
+npTMqMth51ipOexkLneGhhwdTmvwh51tfuNqoBxozz8KCqWN2JIcXRoegjYSsrbV
+h6E9EyqMwrnVONazF5vRDrsMLgMj+zdwGymOMOx/pJFEw28JRbsuGimlAUAJTN50
+3J/gPUOUMpobzdqJcECYL2r9uCrtt52L0K7U6Drd2f04DGm3qCpk8mTIZAc/9svs
+h3Fl3IZRRjljVO42QA7iqgyEiDdg7M1HgkeDT9ptmo+tvwIQOrCbHN58zjGZWhjE
+hN9ZNKWjps9d5EumZsyuuYsgzzg8Dbys7iHE0RG1WYvtxkiDuZmymoL4SorCHM2K
+xb3Bjp+JTbFGaMAj6HX4
+=PyL1
+-----END PGP SIGNATURE-----
