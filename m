@@ -1,33 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/27
-Message-ID: <20130227180248.GA31167@kroah.com>
-Date: Wed, 27 Feb 2013 10:02:48 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/7
+Message-ID: <515C45A7.5010304@redhat.com>
+Date: Wed, 03 Apr 2013 09:07:19 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Subject: Re: CVE Request -- ModSecurity (X < 2.7.3): Vulnerable to XXE attacks
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 06:46:30PM +0100, Jason A. Donenfeld wrote:
-> On Wed, Feb 27, 2013 at 5:17 PM, Greg KH <greg@...ah.com> wrote:
-> > Are you willing to do it?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/03/2013 06:23 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, Breno, vendors,
 > 
-> If it's a patch for an issue sent to security@, then it is, in fact, a
-> "trivial task" as to whether or not it was a security fix. There's no
-> issue of responsibility of judgement, at all.
+> ModSecurity upstream has released v2.7.3 version: [1]
+> https://github.com/SpiderLabs/ModSecurity/blob/master/CHANGES
+> 
+> correcting one security flaw (from [2]): "It was reported that the
+> XML files parser of ModSecurity, a security module for the Apache
+> HTTP Server, was vulnerable to XML External Entity attacks. A
+> remote attacker could provide a specially-crafted XML file that,
+> when processed might lead to local files disclosure or,
+> potentially, excessive resources (memory, CPU) consumption."
+> 
+> References: [2] https://bugzilla.redhat.com/show_bug.cgi?id=947842 
+> [3] https://bugs.gentoo.org/show_bug.cgi?id=464188 [4]
+> https://secunia.com/advisories/52847/
+> 
+> Relevant upstream patch (seems to be the following): [5]
+> https://github.com/SpiderLabs/ModSecurity/commit/d4d80b38aa85eccb26e3c61b04d16e8ca5de76fe
+>
+>  Could you allocate a CVE id [*] for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+> [*] According to:
+> https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ModSecurity there
+> doesn't seem to have been a CVE id allocated for this issue yet.
 
-That's not true at all, lots of things sent to security@ end up not
-being security issues when they are fixed.  Then there's the issue of
-"what is and is not a security fix", and that is a discussion that we
-aren't going to have here, sorry.
+Please use CVE-2013-1915 for this issue.
 
-One problem is that there are very few things reported and fixed through
-security@.  Maybe one patch every other kernel release or so.  And some
-subsystems (i.e. networking) refuse to go through the security alias.
 
-The _large_ majority of all fixes go through their individual subsystem
-development process, and those are the ones you should be searching
-through the commit logs for, as this patch itself proves.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-thanks,
-
-greg k-h
+iQIcBAEBAgAGBQJRXEWnAAoJEBYNRVNeJnmTUZIQAIkhQahuYjc5Ovnbv8ogLOnQ
+MODEgw44qkS+dTisAGjlP7ARbx6qnOKOqIWxc8c1CLKDy8oE8B13wTbopD05XwSq
+uoe0stzq8QQeOeWMa6ix+P50jG5rFOE5MtxH3DmpyGSSHShLe8VogvwgJexb6qX+
+WVP91dFh/+9I5lIY71R2HKKF55sSritF9b+EzY4r3nZnFmnMzMk/ZrHjqIMNJ9wi
+8kmVlXoeEnhs5fhDSH7XDTRgghXKSQClaZApUKLUcCLlDADUGSuY2jQyBZxCEXSd
+SongTe2wMSx9CGVSaQkDq10xcr4iy72DiEjEgUfoxjyKoVWakKSeRtHddXSSXARz
+hh4lM6XU+b2BYnqpUCwNp+PIIwhEcTs839LSPnAbzjCfNBPGqyyAQFNLVOaLpDnG
+e6868FLco4T1LPNXLpbZxmcY40hdXMj3BLyaLYh8Ep1A49tixMiUeBXYuj6brnwe
+c9Agt+zzm2fTWJLaY3IG5lOiL+2tZgFN1u43pb1yjtPFUIl/3QhZ5wVyYYvARDBF
+yHSOQgAFaygHeqT3JhArqbCVO8fLGdVuu82ANU7ze4zGrJsB9NYA6F+kl8Gpr01G
+hDFj1tgcMxUiykfJEbC9HRkJIs8sBye63EJfnWN67b7sUVJ9o6y3Sm8tlpsXKLYm
+P2Wv+gkDRWugYlaw06Sr
+=F1yx
+-----END PGP SIGNATURE-----
