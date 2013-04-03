@@ -1,80 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/03/5
-Message-ID: <52767B91.2010003@redhat.com>
-Date: Sun, 03 Nov 2013 09:36:33 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/4
+Message-ID: <515C3C6E.2090202@redhat.com>
+Date: Wed, 03 Apr 2013 16:27:58 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for Drupal contributed modules
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: glibc getaddrinfo() stack overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 04/03/2013 01:10 PM, Marcus Meissner wrote:
 
-On 11/02/2013 11:37 PM, Forest Monsen wrote:
-> Hi there! I'd like to request CVE identifiers for:
-> 
-> SA-CONTRIB-2013-081 - Spaces - Access bypass 
-> https://drupal.org/node/2118717
+> I am not sure you can usually push this amount of addresses via DNS for all
+> setups.
 
-Please use CVE-2013-4498 for this issue.
+Both IPv4 and IPv6 addresses are combined in that array, right?  Then 
+the protocol limit seems to be around 4000 + 2300 addresses (NAME (2 
+bytes with compression) + RCLASS (2) + RTYPE(2) + TTL (4) + RDATALEN(2) 
++ RDATA(4 or 16) per record, total available space is 64K), which could 
+be used to blow 128K stacks sometimes used by JVMs.
 
-> SA-CONTRIB-2013-082 - Bean - Cross Site Scripting (XSS) 
-> https://drupal.org/node/2118873
-
-Please use CVE-2013-4499 for this issue.
-
-> SA-CONTRIB-2013-083 - Quiz - Access Bypass 
-> https://drupal.org/node/2123995 (This appears to me to be two
-> issues; an access bypass, and an access bypass leading to
-> information disclosure.)
-
-Yes, two issues, two reporters, so CVE SPLIT to two CVE's, I can't
-match the reporter to the issue though without more info, if you can
-post that in a follow up it'd be helpful to Mitre.
-
-Please use  CVE-2013-4500 for Drupal SA-CONTRIB-2013-083 - Quiz -
-Access Bypass in deleting quiz results
-
-Please use CVE-2013-4501 for Drupal SA-CONTRIB-2013-083 - Quiz -
-Access Bypass in viewing quiz results
-
-
-> SA-CONTRIB-2013-084 - FileField Sources - Access Bypass 
-> https://drupal.org/node/2124241
-
-Please use CVE-2013-4502 for this issue.
-
-> SA-CONTRIB-2013-085 - Feed Element Mapper - Cross Site Scripting 
-> https://drupal.org/node/2124279
-
-Please use CVE-2013-4503 for this issue.
-
-> SA-CONTRIB-2013-086 - Monster Menus - Access bypass 
-> https://drupal.org/node/2124289
-
-Please use CVE-2013-4504 for this issue.
-
-> Thanks! Forest
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSdnuRAAoJEBYNRVNeJnmTkxIP/3PfWX7Ocvfa3HiPDAK/LKOR
-XI42NsYmEs77HrdugoJvMQ78Fh/UQD8yxVmlVNBCYqN2xpdfpmcNYiLhtouIRiO4
-1VTUixhehBJtSKPSHfpJJEcnK34Bnw4o+lMgDO0LiEMWNfiyD+aIShewWtNFhnvl
-/r9hqOO6YKe498uqT312sn3tGh2G1Y28YRnALfa5dU9VjrNEk5bECN1+qE7BhrLw
-23H9JkPR8shpP8t8MGHoTfEptnv+/ooWvovnmjqNhoJVpufQEJj9oqbkyhrtK0c2
-BD7PSt3XuS17kQTVsQ1/L9XGB0bD6HS+VABp779yOTg+AX5caRGh1vMYbdzjyrPC
-Ao6J7auwzQiLd/+48gnU3c3gVuaplXxcSuhoK9FiqlFXyts7H8Dp/1LiNiZsMz9d
-TPHxQE3WV18ZLSElJ6FPlz+EL2s5V9bZZ4EKLMsnWuA67tKH5HiSDE0DiVYF0E7e
-wgQPv5W2XgkkUTneaECIF83MSrKnVgp65/q/OMG4agdUPsFhcsREIKa1NgVSjAmq
-EqSJ/cHsP8Aqb8xZyUB2yBMHpwjziwrI7NHmrbv1jwXsw0PrRZlfmR1MPn3rpmO8
-N4n0XQZRREd72Nc8sSAaatRv56b9elvTC2A8mDTyww4yI28Rh6M8NPnMj+jKqQWT
-hMRoULxGSouOrdHoeNkD
-=Keg+
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security Team
