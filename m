@@ -1,146 +1,172 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/12
-Message-Id: <E90E6268-1B35-452F-9514-C56FE93DDDA8@stufft.io>
-Date: Thu, 15 Aug 2013 06:40:14 -0400
-From: Donald Stufft <donald@...fft.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/9
+Message-ID: <515C4EB7.2010000@redhat.com>
+Date: Wed, 03 Apr 2013 09:45:59 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: HTTPS
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE request: WordPress plugin user-photo file upload arbitrary PHP code execution
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Aug 15, 2013, at 6:31 AM, gremlin@...mlin.ru wrote:
+On 03/26/2013 01:29 PM, Henri Salo wrote:
+> Hello Kurt and list members,
+> 
+> Can I get CVE identifier for WordPress plugin user-photo file
+> upload arbitrary PHP code execution security vulnerability.
+> Different issue than CVE-2012-2920.
+> 
+> References: http://osvdb.org/71071 
+> http://seclists.org/fulldisclosure/2011/Feb/354
+> 
+> Affected: 0.9.4 (older probably affected too) OSVDB currently lists
+> fixed version as 0.9.5.1, but fixed in version is 0.9.5 Discovery
+> date: 2010-07-01 Vendor informed date: 2011-01-27 Time to exploit:
+> 231 days
+> 
+> Someone had fun for a long time. Should get CVE-2011-XXXX, yes?
+> 
+> By looking at the patch for example lines below can be bypassed
+> using null character in the filename:
+> 
+> +      else if( !preg_match("/\.(" . join('|',
+> $userphoto_validextensions) . ")$/i",
+> $_FILES['userphoto_image_file']['name']) ){ +        $error =
+> sprintf(__("The file extension &ldquo;%s&rdquo; is not allowed.
+> Must be one of: %s.", 'user-photo'), preg_replace('/.*\./', '',
+> $_FILES['userphoto_image_file']['name']), join(', ',
+> $userphoto_validextensions)); +      }
+> 
+> Line below renames the file to e.g. 1.jpg so it should not be
+> executable in well configured www-server:
+> 
+> +          $imagefile = "$userID." .
+> preg_replace('{^.+?\.(?=\w+$)}', '',
+> strtolower($_FILES['userphoto_image_file']['name']));
+> 
+> Whole diff below:
+> 
+> """ Plugin Name: User Photo Plugin URI:
+> http://wordpress.org/extend/plugins/user-photo/ Description: Allows
+> users to associate photos with their accounts by accessing their
+> "Your Profile" page. Uploaded images are resized to fit the
+> dimensions specified on the options page; a thumbnail image is also
+> generated. New template tags introduced are:
+> <code>userphoto_the_author_photo</code>,
+> <code>userphoto_the_author_thumbnail</code>,
+> <code>userphoto_comment_author_photo</code>, and
+> <code>userphoto_comment_author_thumbnail</code>. Uploaded images
+> may be moderated by administrators. -Version: 0.9.4 -Author: <a
+> href="http://weston.ruter.net/">Weston Ruter</a>, <a
+> href="http://dev.dave-wagner.com/">Dave Wagner's Dev Site</a> 
+> +Version: 0.9.5 +Author: <a href="http://weston.ruter.net/">Weston
+> Ruter</a>
+> 
+> Original code by Weston Ruter <http://weston.ruter.net> at Shepherd
+> Interactive <http://shepherd-interactive.com>. -Continued
+> development and maintenance by Dave Wagner
+> <http://dev.dave-wagner.com/> +Continued development and
+> maintenance by Dave Wagner (cptnwinky)
+> <http://dev.dave-wagner.com/>
+> 
+> GNU General Public License, Free Software Foundation
+> <http://creativecommons.org/licenses/GPL/2.0/> This program is free
+> software; you can redistribute it and/or modify @@ -47,6 +47,7 @@ 
+> "image/png" => true, "image/x-png" => true ); 
+> +$userphoto_validextensions = array('jpeg', 'jpg', 'gif', 'png');
+> 
+> define('USERPHOTO_PENDING', 0); define('USERPHOTO_REJECTED', 1); @@
+> -316,6 +317,7 @@ function userphoto_thumbnail($user, $before = '',
+> $after = '', $attributes = arr
+> 
+> function userphoto_profile_update($userID){ global
+> $userphoto_validtypes; +  global $userphoto_validextensions; global
+> $current_user;
+> 
+> $userdata = get_userdata($userID); @@ -376,10 +378,15 @@ function
+> userphoto_profile_update($userID){ $error = __("File upload failed
+> due to unknown error.", 'user-photo'); } } -      else
+> if(!$_FILES['userphoto_image_file']['size']) +      else if(
+> !$_FILES['userphoto_image_file']['size'] ){ $error =
+> sprintf(__("The file &ldquo;%s&rdquo; was not uploaded. Did you
+> provide the correct filename?", 'user-photo'),
+> $_FILES['userphoto_image_file']['name']); -      else
+> if(@!$userphoto_validtypes[$_FILES['userphoto_image_file']['type']])
+> //!preg_match("/\.(" . join('|', $userphoto_validextensions) .
+> ")$/i", $_FILES['userphoto_image_file']['name'])) || +      } +
+> else if( !preg_match("/\.(" . join('|', $userphoto_validextensions)
+> . ")$/i", $_FILES['userphoto_image_file']['name']) ){ +
+> $error = sprintf(__("The file extension &ldquo;%s&rdquo; is not
+> allowed. Must be one of: %s.", 'user-photo'),
+> preg_replace('/.*\./', '',
+> $_FILES['userphoto_image_file']['name']), join(', ',
+> $userphoto_validextensions)); +      } +      else if(
+> @!$userphoto_validtypes[$_FILES['userphoto_image_file']['type']]
+> ){ $error = sprintf(__("The uploaded file type &ldquo;%s&rdquo; is
+> not allowed.", 'user-photo'),
+> $_FILES['userphoto_image_file']['type']); +      }
+> 
+> $tmppath = $_FILES['userphoto_image_file']['tmp_name'];
+> 
+> @@ -414,8 +421,10 @@ function userphoto_profile_update($userID){ 
+> #umask($umask);
+> 
+> if(!$error){ -          #$oldFile =
+> basename($userdata->userphoto_image_file); -          $imagefile =
+> preg_replace('/^.+(?=\.\w+$)/', $userdata->user_nicename,
+> strtolower($_FILES['userphoto_image_file']['name'])); +
+> $oldimagefile = basename($userdata->userphoto_image_file); +
+> $oldthumbfile = basename($userdata->userphoto_thumb_file); +
+> #$imagefile = preg_replace('/^.+(?=\.\w+$)/',
+> $userdata->user_nicename,
+> strtolower($_FILES['userphoto_image_file']['name'])); +
+> $imagefile = "$userID." . preg_replace('{^.+?\.(?=\w+$)}', '',
+> strtolower($_FILES['userphoto_image_file']['name'])); $imagepath =
+> $dir . '/' . $imagefile; $thumbfile = preg_replace("/(?=\.\w+$)/",
+> '.thumbnail', $imagefile); $thumbpath = $dir . '/' . $thumbfile; @@
+> -448,7 +457,7 @@ function userphoto_profile_update($userID){ $admin
+> = get_userdata($admin_notified); @wp_mail($admin->user_email, "User
+> Photo for " . $userdata->display_name . " Needs Approval", -
+> get_option("home") . "/wp-admin/user-edit.php?user_id=" .
+> $userdata->ID . "#userphoto"); +
+> get_option("siteurl") . "/wp-admin/user-edit.php?user_id=" .
+> $userdata->ID . "#userphoto"); } } else { @@ -460,9 +469,12 @@
+> function userphoto_profile_update($userID){ 
+> update_usermeta($userID, "userphoto_thumb_file", $thumbfile); 
+> update_usermeta($userID, "userphoto_thumb_width", $thumbinfo[0]); 
+> update_usermeta($userID, "userphoto_thumb_height", $thumbinfo[1]); 
+> - -            #if($oldFile && $oldFile != $newFile) -            #
+> @unlink($dir . '/' . $oldFile); + +            //Delete old
+> thumbnail if it has a different filename (extension) +
+> if($oldimagefile != $imagefile) +              @unlink($dir . '/' .
+> $oldimagefile); +            if($oldthumbfile != $thumbfile) +
+> @unlink($dir . '/' . $oldthumbfile); } } } """
+> 
+> -- Henri Salo
 
-> On 15-Aug-2013 01:22:33 -0600, Kurt Seifried wrote:
-> 
->>>> everyone should be enabling HTTPS where possible,
-> 
->>> Very dangerous mistake. HTTPS should be used only for
->>> non-anonymous access, otherwise plain HTTP is preferred.
->>> In any case, let the users choose whether they want to
->>> use it.
-> 
->> This is literally the first time I've ever heard anyone say this,
->> I'm curious though, can you explain your reasoning/evidence for
->> this statement?
-> 
-> The reasoning is simple:
-> 1. Not all interceptions and modifications are evil.
-> 2. Some sites are much more evil than interceptors.
 
-#1 is technically true but because there's no way to programmatically
-determine if a interception or modification is "evil" systems should
-default to disallow and allow the user to allow it (by trusting another
-CA for instance for the interceptor).
-
-I don't understand how #2 relates to HTTPS at all, TLS doesn't state
-anything about the safety of the server you're connecting to only
-the safety of the transport. 
-
-> 
->> You do realize HTTPS can be just as "anonymous" (ignoring the
->> fact you have the persons IP/time stamp, browser string, etc =)
->> as normal HTTP.
-> 
-> Yes. And, just in case: HTTPS is used to bypass content-filtering
-> proxies (ones that cut ads|malware|etc).
-
-This is a false dichotomy. There are plenty of ways to do content-filtering
-proxies with HTTPS in a way that will still work.
-
-> 
->>> Compare to FTP vs SCP/SFTP: first is for getting files from
->>> anyone (into /incoming) and giving files for everyone (from
->>> /pub), second is for transferring your own files. Obviously,
->>> I presume FTP daemon to be configured for anonymous-only access.
-> 
->> Now I'm just confused.
-> 
-> Why?
-> 
->>>> intercepting and modifying HTTP is trivial.
-> 
->>> Yes. But intercepting and modifying HTTPS requires just an
->>> ability to issue client-trusted certificates (sufficient for
->>> 99% of HTTPS applications), so the content signing should
->>> always be preferred over distributor validation.
-> 
->> And now I'm seriously confused. For clients that do not validate
->> hostnames it would be true that you could get an HTTPS cert for
->> any domain name and use it,
-> 
-> The valid HTTPS certificate doesn't mean getting valid content - it
-> only means you've connected to (most likely) the right server.
-
-It means you've connected to the right server and no attacker in the
-middle has modified the data (nor can they see the data). It makes
-no assertion about if the data the server gave you is correct, it only
-protects the transport.
-
-> 
->> this would also work for the case where you first use HTTP to get
->> a redirect to HTTPS
-> 
-> The most annoying behavior... Should be used only when the visitor
-> wants to log in. IMHO.
-
-This doesn't reflect the state of browser security. You basically need
-forced HTTPS or a number of attacks are possible against a typical site.
-
-> 
->> (the attacker intercepts the HTTP and sends you to an attacker
->> controlled HTTPS).
-> 
-> Unlike SSH, the HTTPS clients (which usually are the browsers) do not
-> cache the visited servers' certificates, fully relying on issuing CA's
-> honesty. This introduces a risk of false sence of security.
-> 
-> Hmmmm... It seems that keeping self-signed certificates is even more
-> safe than relying on "trusted" CAs…
-
-Or you can use public key pinning via headers like "Public-Key-Pins",
-or TLS extensions like TACK. And if you don't want to trust the CAs
-there are also solutions like convergence.
-
-> 
->> Hence ALWAYS using HTTPS!
-> 
-> Ok. But NEVER force the visitors of your site to use it :-)
-
-Completely disagree. HTTPS should by the default and all traffic
-should be forced over it.
-
-> 
->> I really suspect you have misunderstood what encrypted network
->> protocols are for. Typically they address three major problems:
->> integrity (attackers modifying traffic en route), confidentiality
->> (by encrypting it)
-> 
-> Do public data really need that?
-
-Just because data is public doesn't mean you don't want to be assured
-that nobody has modified the data between the server and your
-computer. It also completely misses the fact that just because data is
-public it doesn't mean you want third parties to be able to see that you're
-accessing that data.
-
-> 
->> and as an offshoot of these two properties, and the magic of key
->> exchanges you can also handle authentication securely, if desired.
-> 
-> How many sites do use the HTTPS client certificates for authentication?
-> My estimation: less than 1%, as most use trivial username + password
-> over the encrypted connection.
-> 
-> 
-> -- 
-> Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-> GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-> GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+Please use CVE-2013-1916 for this issue.
 
 
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+iQIcBAEBAgAGBQJRXE63AAoJEBYNRVNeJnmT8qgP/22mDvF4/xoOnV3X6S+sBIsP
+mxQ3vA7ve+rH0rL8t/J4/9732BWgP5JpQZAhb6UKDM99nrWuPo+Lziuqy7XY26RR
+O4NRhoxZGLL9Vs2WIjTjNufiIu8esjqqM2iSME3Ax+PJcqvnKEQMrFPGrih4gRou
+kBhB/n8IZJ/dHull5RDx74xp3VV1VyZvSZKHx/Fv+JNoPjTWywaFZ2Kht79YLXYH
+4hXPtr96d4eBE7tZD3Wxx6l1dOMDvO7gPHG7ItstLhT0EW+2LKryGycu6Qi+yiXG
+zrQbv6/1Fi+mfxkteStHANhu/1Ae3wLhPVaQAmB5ecPH5dJHCFWR6f/KjRGf77SG
+TSjV74QluneIpeJbAsyP8zzrSL5394/BgL7zSXqwzoqIGFO+7WQzjJu33gjnAiaM
+46xBwwerxDESdpCd3iP3UGsL8UUS7d9OhVNdKhmMXiI7Di4S68hTMq/QPIF1no/O
+L3fWIkdonohZ27I34fMDf+6ve8q+l5oFv//+1TkBSmS8J2o+WaCp2i9jFksAeT1m
+xqgen9aUB2IhK7kBntJqqvjzcu+iuaciOpjnb4hchb975WPuL7D9hINrzkAmfcwN
+YCz6cN4yA3+nVnUAVbpWVtKLp6UDyGCRtNx4x3cPTYRytsfOGnZu78fUstPSw9Ch
+5r0ouO9WLQXyuCC4bWRQ
+=UuLk
+-----END PGP SIGNATURE-----
