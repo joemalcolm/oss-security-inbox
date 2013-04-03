@@ -1,60 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/26/1
-Message-ID: <CACYkhxgNy0tCbWPih+4_cJnQ8GoV-uAFaCTQok1bQ+fbiARVPw@mail.gmail.com>
-Date: Thu, 26 Sep 2013 11:11:59 +1000
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com
-Subject: RESEND: CVE Request: pwgen
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/2
+Message-ID: <20130403111021.GC6137@suse.de>
+Date: Wed, 3 Apr 2013 13:10:21 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: glibc getaddrinfo() stack overflow
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-No CVEs have been assigned for this, and as far as I can tell no
-distributions have patched.
+A customer reported a glibc crash, which turned out to be a stack overflow in
+getaddrinfo().
 
-On 6 June 2013 14:19, Michael Samuel <mik@...net.net> wrote:
+getaddrinfo() uses:
+	struct sort_result results[nresults];
+with nresults controlled by the nameservice chain (DNS or /etc/hosts).
 
-> I've done some further analysis of the program after reading the previous
-> thread, and I think there needs to be CVEs and fixes for:
->
-> - When used from a non-tty passwords are trivially weak by default (first
-> reported by Solar Designer)
-> - Phonemes mode has heavy bias and is enabled by default (first reported
-> by Solar Designer)
-> - Silent fallback to insecure entropy (first reported by Jean-Michel
-> Vourgère) (Debian bug #672241 - tagged as "wishlist")
-> - Secure mode has bias towards numbers and uppercase letters
->
-> I've attached a patch that fixes most issues - it doesn't solve the bias
-> towards numbers, because it's caused by requiring at-least one number per
-> password - so in an 8 character password there'd have to be 0.1 numbers to
-> avoid bias.  There's an argument to be made for removing the at-least-one
-> rule, but if the system that password is being used with has those rules,
-> it doesn't fix the problem anyway.  Perhaps a separate flag for that?
->
-> The changes are:
->
-> - Print a message and abort() of there's trouble opening or reading
-> /dev/urandom (So apport should pick up any packages that have been using
-> insecure entropy)
-> - Make "-s" the default
-> - Add an argument --insecure-phonemes (or -P)
-> - Non-tty passwords are now as secure as tty
-> - Require lower-case characters be present to even out some bias
-> - Pull in passwdqc as a Suggests on the debian package - pwqgen can
-> generate sane random passphrases
->
-> I can't imagine any reasonable use-case for the non-tty defaults (except
-> maybe combining with espeak as an enhanced interrogation technique), and
-> you can be certain that there's some people out there with it embedded in a
-> script that's generating useless passwords.
->
-> For phonemes mode in general, the bias is extreme, there are a limited
-> number of possible combinations and it is generally not suitable for
-> security purposes.  I have some fairly detailed analysis of it, but I
-> believe this list has a no-exploits policy...
->
-> Regards,
->   Michael
->
+This will be visible mostly on threaded applications with smaller stacksizes,
+or operating near out of stack.
 
+Reproducer I tried:
+	$ for i in `seq 1 10000000`; do echo "ff00::$i a1" >>/etc/hosts; done
+	$ ulimit -s 1024
+	$ telnet a1
+	Segmentation fault
+	(clean out /etc/hosts again )
+
+
+I am not sure you can usually push this amount of addresses via DNS for all
+setups.
+
+Andreas is currently pushing the patch to glibc GIT.
+
+Reference:
+https://bugzilla.novell.com/show_bug.cgi?id=813121
+
+Ciao, Marcus
