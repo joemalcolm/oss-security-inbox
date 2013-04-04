@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/6
-Message-ID: <20131104181630.18e77c19@chromobil.localdomain>
-Date: Mon, 4 Nov 2013 18:16:30 +0100
-From: Stefan Bühler <stbuehler@...httpd.net>
-To: oss-security@...ts.openwall.com
-Subject: openssl default ciphers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/04/4
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF0906F361@IMCMBX01.MITRE.ORG>
+Date: Thu, 4 Apr 2013 16:32:56 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Confused with Drupal CVEs
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Henri,
 
-while working on the lighttpd SNI bug I realized that openssl defaults
-to a very bad set of ciphers.
+While SA-CONTRIB-2013-001 listed only one CVE, CVE-2013-0181, there were two vulnerabilities that were found by different researchers.  While they were originally merged into a single CVE (same vulnerability type), we also have guidelines that SPLIT issues into different groups if they are found by different researchers.  So, the MITRE team SPLIT these CVEs accordingly, after the initial erroneous assignment.  We listed http://www.openwall.com/lists/oss-security/2013/01/15/3 as a reference for the new/split CVE-2013-2715 because this was effectively where the vulnerability was more widely disclosed.
 
-I also couldn't find a sane recommendation from upstream openssl to use
-as default, as "DEFAULT" obviously is not a good choice. (I also don't
-see any reason why "DEFAULT" includes export and "LOW" ciphers...)
+- Steve
 
-Is 'DEFAULT@...ENGTH:!LOW:!EXP' (should
-be similar to 'HIGH:MEDIUM:!aNULL') a reasonably default?
 
-I don't want to enforce PFS or break compatibility on purpose; so I
-think the default could be a little bit less "secure" than what I would
-actually recommend to use.
 
-So I'm not interested in how to get a super extra secure cipher set
-(there are many cipher strings in the wild by various folks for that),
-but more in a reasonable lower bound.
-
-regards,
-Stefan
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+>-----Original Message-----
+>From: Henri Salo [mailto:henri@...v.fi]
+>Sent: Thursday, April 04, 2013 2:58 AM
+>To: oss-security@...ts.openwall.com
+>Subject: [oss-security] Confused with Drupal CVEs
+>
+>Hello,
+>
+>SA-CONTRIB-2013-001 https://drupal.org/node/1884332 CVE-2013-0181
+>
+>Why does http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2715
+>link to http://www.openwall.com/lists/oss-security/2013/01/15/3
+>
+>Duplicate?
+>
+>---
+>Henri Salo
