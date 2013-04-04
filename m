@@ -1,40 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/10/1
-Message-ID: <574542730.3306698.1357831700180.JavaMail.root@redhat.com>
-Date: Thu, 10 Jan 2013 10:28:20 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/04/8
+Message-ID: <loom.20130405T003828-246@post.gmane.org>
+Date: Thu, 4 Apr 2013 23:17:24 +0000 (UTC)
+From: Damien Regad <damien.regad@...ckgroup.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Jeremy Allison <jra@...ba.org>
-Subject: Notification: Samba: NTML with session security handshake attack
+Subject: Multiple CVE requests for MantisBT
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors, Jeremy,
+Greetings,
 
-  Mark Gamache, a security researcher, in his blog post:
-    [1] http://markgamache.blogspot.cz/2013/01/ntlm-challenge-response-is-100-broken.html
+The following 4 issues were discovered in the Mantis Bug Tracker:
 
-has demonstrated a challenge-response cracking attack against the LM, NTLM, and NTLM with session security handshake types of the NT LAN Manager (NTLM) suite of security protocols. A remote attacker, able to obtain NT hash from the challenge and response, could use this attack to obtain the NT hash that have been used for the handshake, and possibly authenticate to the server.
 
-Also, as noted in [1] post NTLMv2 type of handshake is not vulnerable to this kind of attack.
+1. Close button available to users despite workflow restrictions
 
-Samba in the default configuration allows (except NTLMv2) also NTLM with encrypted password response /
-handshake type. The recommendation from Samba upstream (Jeremy Cc-ed) as a preventive-measure for this
-kind of attacks was to disable the 'NTML with the encrypted password' response authentication type,
-i.e. to change the default value from:
+This issue affects Mantis 1.2.12 and later.
 
-  ntml auth = yes
+It allows low-privileged users to close issues even though the workflow
+settings do not permit it.
 
-to:
+Reference: http://www.mantisbt.org/bugs/view.php?id=15453
 
-  ntlm auth = no
 
-Since this is not a security flaw in the Samba tools suite itself (but rather in the NTLM protocol
-implementation itself), to allocate a CVE identifier for this issue (for Samba) would not be appropriate
-(and therefore this post is NOT intended to be a CVE request).
+2. XSS vulnerability when deleting a version
 
-It is just a heads-up for other vendors to apply more secure default option (if they didn't do that
-way yet).
+This issue affects Mantis 1.2.14 only. 
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Arbitrary JavaScript could be executed in the client's browser when deleting
+a version containing embedded code in its name. The criticality of this
+issue is compounded by the fact that a high-privilege account (typically
+project manager or administrator) is required to both to create and delete a
+version.
+
+Reference: http://www.mantisbt.org/bugs/view.php?id=15511
+
+
+3. XSS vulnerability on Configuration Report page
+
+This issue affects Mantis 1.2.13 only [1]. 
+
+If the system defines a Project containing embedded JavaScript code in its
+name, that code would be executed in the client's browser when displaying
+the configuration report page (adm_config_report.php).
+
+The severity of this issue is mitigated by the need to have a
+high-privileged account both to set the project's name and to access the
+configuration report page.
+
+Reference: http://www.mantisbt.org/bugs/view.php?id=15415
+
+
+4. XSS issue on Configuration Report page when displaying complex value
+
+This issue affects Mantis 1.2.0rc1 and later.
+
+Lack of proper string escaping allows users (having admin access) to enter
+arbitrary javascript code and have it executed on the user's browser.
+
+Reference: http://www.mantisbt.org/bugs/view.php?id=15416
+
+
+Issues resolution:
+
+ - 1 & 2 will be fixed in upcoming release 1.2.15, expected to go live 
+   sometime next week (patches are available in the referenced issues)
+
+ - 3 & 4 were both resolved in version 1.2.14, released on 29-Jan-2013 
+
+
+Could you kindly assign CVEs for the above issues ? Thanks in advance.
+
+
+Best regards,
+D. Regad
+MantisBT Developer
+http://www.mantisbt.org
+
+[1] MantisBT version 1.2.13 was tagged in the repository but never formally
+released, as we discovered several critical issues at the last minute and
+decided to pull it and released 1.2.14 a week later instead.
+
+
