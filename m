@@ -1,56 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/10
-Message-ID: <9804024b588141d49791084f850ea8da@BL2PR09MB004.namprd09.prod.outlook.com>
-Date: Fri, 29 Nov 2013 23:16:56 +0000
-From: "Izadjoo, Meisam" <meisam.izadjoo@...t.gov>
-To: Alex Legler <a3li@...too.org>
-CC: nvd <nvd@...t.gov>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Gentoo Linux Security Team <security@...too.org>
-Subject: RE: http://nvd.nist.gov/nvd.cfm?cvename=CVE-XXX URLs result in 404
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/04/1
+Message-ID: <20130404065757.GA8394@kludge.henri.nerv.fi>
+Date: Thu, 4 Apr 2013 09:57:57 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Confused with Drupal CVEs
 Content-Type: text/plain; charset=utf-8
-
-Good evening, this issue has now been resolved. We apologize for any inconvenience.
-
-
-Mase Izadjoo
-National Vulnerability Database
-National Institute of Standards and Technology
-nvd.nist.gov
-
-
------Original Message-----
-From: Izadjoo, Meisam 
-Sent: Friday, November 29, 2013 8:52 AM
-To: 'Alex Legler'
-Cc: nvd; oss-security@...ts.openwall.com; Gentoo Linux Security Team
-Subject: RE: http://nvd.nist.gov/nvd.cfm?cvename=CVE-XXX URLs result in 404
-
-Good morning Alex, the issue you point out below was an unintended result of our upgrade earlier in the week. We will work to have this issue resolved as quickly as possible.
-
-Thank you for bringing this matter to our attention.
-
-
-Mase Izadjoo
-National Vulnerability Database
-National Institute of Standards and Technology nvd.nist.gov
-
-
------Original Message-----
-From: Alex Legler [mailto:a3li@...too.org]
-Sent: Thursday, November 28, 2013 2:35 PM
-To: nvd
-Cc: oss-security@...ts.openwall.com; Gentoo Linux Security Team
-Subject: http://nvd.nist.gov/nvd.cfm?cvename=CVE-XXX URLs result in 404
 
 Hello,
 
-a few days ago, CVE links using the scheme noted in the subject stopped working, and started returning HTTP 404 error codes.
-Is this intended?
+SA-CONTRIB-2013-001 https://drupal.org/node/1884332 CVE-2013-0181
 
-We have been using this URL scheme for our advisories for the better part of 2 years now, and as we publish advisories via mailing lists and several sites import our advisories, we have no way to retroactively change most of the links. If the change was intended, could you at least have the 'old' URLs reply with a permanent redirect to a new, valid URL?
+Why does http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2715 link to http://www.openwall.com/lists/oss-security/2013/01/15/3
 
-Thanks,
+Duplicate?
 
---
-Alex Legler <a3li@...too.org>
-Gentoo Security/Ruby/Infrastructure
+---
+Henri Salo
 
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
