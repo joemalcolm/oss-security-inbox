@@ -1,77 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/6
-Message-ID: <51C001B9.4020307@redhat.com>
-Date: Tue, 18 Jun 2013 00:44:09 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/04/2
+Message-ID: <20130404143931.GA6394@openwall.com>
+Date: Thu, 4 Apr 2013 18:39:31 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...til.org>
-Subject: Re: Thoughts on a vuln/CVE?
+Subject: PostgreSQL security update
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 06/18/2013 12:24 AM, Moritz Muehlenhoff wrote:
-> On Tue, Jun 18, 2013 at 12:04:30AM -0600, Kurt Seifried wrote:
-> 
->> http://bits.debian.org/2013/06/remove-debian-multimedia.html
-> 
-> [..]
-> 
->> We have software with a now insecure configuration as it points
->> to a site that may or may not be under attacker control. It seems
->> to me like this might be a candidate for a CVE. Thoughts and
->> comments for and against are welcome (I'm on the fence myself).
-> 
-> No way. This is not an insecure configuration: This was never a
-> Debian service and people are free to put whatever they want in
-> /etc/apt/sources.list. There are hundreds of external apt sources
-> and everyone of them could have their owner changed at some point.
-> 
-> Also there's no security issue: If a domain is grabbed and someone
-> configures an apt repository on the site, he/she would lack the
-> repository key previously used to sign the repo.
-> 
-> Cheers, Moritz
-> 
+A heads-up in case someone missed today's news:
 
-Ah thanks, I forgot about that (I don't use Debian that often). So
-with the signing key requirement in mind this is not a vuln.
+http://www.postgresql.org/about/news/1456/
+http://www.postgresql.org/support/security/faq/2013-04-04/
 
-However my original question still stands, can/should we consider a
-common configuration of software that goes from being secure to
-insecure to be worthy of a CVE? A lot of things that used to be common
-practice (like shipping every service/server enabled, all accounts
-active, all access enabled, anonymous uploads allowed, etc.) are now
-seen as security vulnerabilities/exposures.
+Prior (non-)announcement:
 
-As for the security of the repo key proving that it it is safe/not
-compromised would be hard, I'm guessing it wasn't held on an HSM, and
-was it securely destroyed, or?
+http://www.postgresql.org/message-id/14040.1364490185@sss.pgh.pa.us
 
-Also part of my thought process is that (for example) this would be a
-good configuration to check for and ensure is disabled, something for
-SCAP for example or the Debian security guide (e.g. a generic "make
-sure all enabled repos are actually working as expected").
+"8.3 has reached EOL in February 2013 [...] there will be no fix for 8.3":
 
+http://www.postgresql.org/message-id/CABUevEyk=_fZG7yQrFz4n18AQRdFbvYE=V2X=sYihUf=cGVnWA@mail.gmail.com
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+http://www.postgresql.org/support/security/ lists pre-9.0 versions as
+only vulnerable to a subset of the issues, though.  I hope this does in
+fact imply that older versions are not vulnerable to the rest of the
+issues.
 
-iQIcBAEBAgAGBQJRwAG5AAoJEBYNRVNeJnmTzDYP/1FG8ALLhiHpoqbBvnrYymfi
-g5De/gVZdn9BGmloP5qFEOtywzxZtEruToQ76ztyf1gCUPjAh8gQrUGFJMNl0n/d
-zgRTOyzHH1U5KBLF9PhZzyxx9thGpBvlJzlgdwnRqOj40qRVAai+SEWVtdiR9Qtg
-4VNDGXKhetuDP4MRhnYjfgCsCJ8WPtbICBhc7g328BtN3SmYc02feXYMFGHr/VfM
-Xn7n5KsANFnI0exVhTP8foFXwaQELBpz0R45J2EvocJnTdLLlSvbr1KQJBRzb5pC
-q0A0EIWn7B/ymqqmsqR/hs+xulqSZ2J0vumZvpXNAWVIjtynoAOIM0a3WO3iSb4L
-xE2pNTr9LOnnq9F6r2U+sU60cWMZu/hLJkt+iDwmIT2vpOZ8TmFjAJfPPFaxvYXb
-IJeqvmxlwcb91sj73yoagBFzBByRo4Ka7akUrrO40lW4GsqjQOlwKkvQsrE/4hv6
-QttA1UW1VcdcrqfNXAVncXwkyEH2wS3lJT/6z05eOcC+Ca8EKNO1W2/3CT7lM0Zi
-ig5VQGqyX/zJTstS7iR2sJNryA/HsFhsrPt05cRxyc99zB1GY4rRWuioU0foyS3D
-V9YzZLJb9c5djZPkwqDo0XrTdeuQCDBy1cgk1pjCaTjj+uCxugwJnXyfNts49oIp
-xW1cbTD0akaJx9imbztz
-=ZYhI
------END PGP SIGNATURE-----
+More detail on the randomness leak:
+
+http://www.postgresql.org/message-id/E1UKzBn-0006c2-Cy@gemulon.postgresql.org
+http://git.postgresql.org/gitweb/?p=postgresql.git;a=commitdiff;h=21ce40c8eab4d0da110fb6e05e9d9ec20d73d8b3
+
+This is a bit puzzling.  What follows is my own thinking on the matter,
+somewhat out of context (as I did not discuss this issue with PostgreSQL
+folks at all, and I did not specifically review the code):
+
+If OpenSSL's CSPRNG constantly mixes in the PID and does so correctly,
+then its output stream after fork() should change in a such a way that
+the stream of another sibling process is not predictable, despite of the
+low entropy of the PID.  However, there's a major exception to this: an
+attacker who can read the process' memory can recover the internal
+state, which does allow to predict a sibling process' random numbers.
+
+If the above is correct, then at least one of the following must be true:
+
+1. PostgreSQL developers assume that memory of a postmaster child
+process may be read by an attacker.  Sub-options:
+
+1.1. Such capability might be there on purpose (does some feature of
+PostgreSQL deliberately expose it?)
+
+1.2. PostgreSQL developers may be making this assumption because the
+existence of bugs of this sort is almost certain in practice, or/and
+just to be on the safe side.
+
+2. There's an issue (or at least a lack of a security feature) in
+OpenSSL's CSPRNG, where the PID mixing is not good enough even in
+absence of memory read features or bugs.  If so, shouldn't we look into
+this closely and consider fixing it in OpenSSL?  Does the code possibly
+avoid obtaining the PID too often for better performance?  If so, that
+may be reasonable, but this (and the impact and the mitigation) need to
+be clearly documented (for OpenSSL).
+
+Also, as far as we may be concerned about fork()'ed process memory
+reads, does RAND_cleanup() (try to) securely wipe the old randomness
+state, including what may be left on stack and in CPU registers? ;-)
+
+3. PostgreSQL developers are confused, and are over-estimating the risk.
+(This is unlikely.)
+
+Alexander
