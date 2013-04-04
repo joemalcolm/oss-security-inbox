@@ -1,36 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/15
-Message-ID: <20131010132707.GA14445@suse.de>
-Date: Thu, 10 Oct 2013 15:27:07 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: matt@....asn.au
-Subject: CVE Request: dropbear sshd daemon 2013.59 release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/04/7
+Message-Id: <E1UNoPX-0000C9-VT@xenbits.xen.org>
+Date: Thu, 04 Apr 2013 17:57:19 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 47 (CVE-2013-1920) - Potential use of freed memory in event channel operations
 Content-Type: text/plain; charset=utf-8
 
-Hi folks, hi Matt,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://matt.ucc.asn.au/dropbear/CHANGES seems to have two CVE worth entries.
+             Xen Security Advisory CVE-2013-1920 / XSA-47
 
-Version 2013.59 - Friday 4 October 2013
+        Potential use of freed memory in event channel operations
 
-has this changes entry:
-- Limit the size of decompressed payloads, avoids memory exhaustion denial
-  of service 
-  Thanks to Logan Lamb for reporting and investigating it
+ISSUE DESCRIPTION
+=================
 
-  Source code fix for this is seems to be:
-  https://secure.ucc.asn.au/hg/dropbear/rev/0bf76f54de6f
+Wrong ordering of operations upon extending the per-domain event
+channel tracking table can cause a pointer to freed memory to be left
+in place, when the hypervisor is under memory pressure and XSM (Xen
+Security Module) is enabled.
 
+IMPACT
+======
 
-It also has this changes entry which might need one:
-- Avoid disclosing existence of valid users through inconsistent delays
-  Thanks to Logan Lamb for reporting
+Malicious guest kernels could inject arbitrary events or corrupt other
+hypervisor state, possibly leading to code execution.
 
-  https://secure.ucc.asn.au/hg/dropbear/rev/a625f9e135a4
+VULNERABLE SYSTEMS
+==================
 
-Matt, if you are interested in requesting CVEs in the future
-for security relevant fixes, feel free to contact us.
-(Kurt, I looked for your howto, but my googlefu today is weak.)
+All Xen versions from 3.2 onwards are vulnerable when making use of
+XSM.  Configurations without XSM or with a dummy module are not
+affected.
 
-Ciao, Marcus
+MITIGATION
+==========
+
+Running without XSM (which is the default) will avoid this
+vulnerability, albeit doing so will likely lower overall security of
+systems that would otherwise have XSM enabled.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa47-4.1.patch             Xen 4.1.x
+xsa47-4.2-unstable.patch    Xen 4.2.x and xen-unstable
+
+$ sha256sum xsa47*.patch
+e49a03e0693de07ec1418eb16191854458e72088febd6948ea5bc1f900a1853a  xsa47-4.1.patch
+c29b59492f9d7e3f74bfc41877a2c5cff70436d3738fd91066f396f969aab0a7  xsa47-4.2-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJRXb5fAAoJEIP+FMlX6CvZ0RwH/AtcVQFvERB+16wSjN3GTguk
+LnakHD3NCVeaDNbkF0G4b4ibR5oOCAGO/9CQwcB1QKj67mvYJm2kglDnGWUmZUQC
+TKWZR5vA9D9YAQvll8mSwd3OdLBoN0IGYPp9AIVUi9zl34zF+ZzbtsC57dvmjQD6
+/E0tMDgOoCsA8ARnuknjbgk+CbfsGi/dbxYGDla4/wMC9wbUhG1wcA9lqNa37azT
+1lRIj8qI3TfWC4aMh1kZKPsljrHZLkfA2VxgkrTCjr7u2Usr7vgUsNT4F0rYouRI
+h5mo1JszJOnM2EHuzVbQrvBmaXlPIFF/S5cRvD6RIavEsOUet5au49Hnhb/ENG4=
+=/g6f
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa47-4.1.patch" of type "application/octet-stream" (860 bytes)
+
+Download attachment "xsa47-4.2-unstable.patch" of type "application/octet-stream" (865 bytes)
