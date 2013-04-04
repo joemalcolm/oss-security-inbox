@@ -1,28 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/19
-Message-ID: <20130121203927.GB2637@redhat.com>
-Date: Mon, 21 Jan 2013 13:39:27 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/04/6
+Message-ID: <515DB200.1000700@redhat.com>
+Date: Thu, 04 Apr 2013 11:01:52 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request coreutils
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-* [2013-01-21 19:17:49 +0100] Moritz Muehlenhoff wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->> Can someone assign a CVE id for a buffer overflow in coreutils?
->> Its the same code snippet (coreutils-i18n.patch) and it affects sort, uniq and join:
->>
->> https://bugzilla.novell.com/show_bug.cgi?id=798538
->> https://bugzilla.novell.com/show_bug.cgi?id=796243
->> https://bugzilla.novell.com/show_bug.cgi?id=798541
->
->Could you send the faulty patch to the list so that distros can validate
->that they don't include it themselves?
+On 04/03/2013 02:55 PM, Forest Monsen wrote:
+> Hi there,
+> 
+> I'd like to request CVE identifiers for the following issues:
+> 
+> SA-CONTRIB-2013-040 - Commerce Skrill (Formerly Moneybookers) -
+> Access bypass http://drupal.org/node/1960338
 
-Red Hat/Fedora do include this patch, so it's more than just SUSE that
-ships them.  However, when I was looking at them last week, this struck
-me as just a non-exploitable crash and unless I'm missing something, I
-think it would be quite the stretch to call it a security flaw.
+Please use CVE-2013-1924 for this issue.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+> SA-CONTRIB-2013-041 - Chaos tool suite (ctools) - Access bypass 
+> http://drupal.org/node/1960406
+
+Please use CVE-2013-1925 for this issue.
+
+> Thanks!
+> 
+> Forest
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRXbIAAAoJEBYNRVNeJnmTXPgQALZIV1Ps06fMqPL1GcciJiTy
+ltT63VfrJatx9jfTeGCXmoo6U7fz2lQltpKgphpltjkuDSj4C6elHe0/PnoYwUlV
+ALL3nsIbCFNucGpvx9kSIYjIRK67jr/ehD2LtrukMvREeRWbiim9Ybc5vB8PeXah
+P4XvCyEmsyolKW5Q1akmVC6xFtFv9W+In8WtnA9qhiicg4Zlexa+y5B61I20lYiz
+xz0/l66+HUHlb9zlXvt39JCsT5GcQHXgDNXiISsrYZFbFo3NEjQOXQAP37Keh4M8
+5gyExaCJI0vjHUiRaJdIsK6GP8oXFI5a1IpIroDSi0pi7p8661W28IMSvCpAe680
+4lxIIyrDWWnvevuPYB6lVCtqfF+yortnbbMpAxWEE/aBV+FJZSFn6xiMQ9hj7MPe
+XITm2HxE9s5Pz9mdgQjZ8yNyDvconXmwMFdntrGF0lzMJatYduarg9HyejvuOmHA
+yJgLdTJl3qxB1Iv4veMFE3DxERA9pq+oQhf6SpnlDKBvtI/JZOlQ8nL6eFxPBatQ
+v9ew1t13J5QVgJ9EXEyN8rRJ70bOsn8/0t26eeLHFLTT3YnSPRanY0SLpGKaQm6l
+SD/7FspVoQLiB4tkYh8T4zpNlVnuZLD/qO65cnMdhyfUn8oqmYhtOyIeaui4Lpux
+H1+ZgZkiEWDzfq1vDpGH
+=zgns
+-----END PGP SIGNATURE-----
