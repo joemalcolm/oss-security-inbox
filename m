@@ -1,52 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/10
-Message-ID: <511E715F.1040105@collabora.co.uk>
-Date: Fri, 15 Feb 2013 17:33:19 +0000
-From: Simon McVittie <simon.mcvittie@...labora.co.uk>
-To: oss-security@...ts.openwall.com
-CC: "dbus@...ts.freedesktop.org" <dbus@...ts.freedesktop.org>,  ftp-release@...ts.freedesktop.org
-Subject: CVE-2013-0292: authentication bypass due to insufficient checks in dbus-glib < 0.100.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/05/3
+Message-ID: <20130405140516.GE26194@suse.de>
+Date: Fri, 5 Apr 2013 16:05:16 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-Sebastian Krahmer discovered and published an authentication bypass
-vulnerability in pam_fprintd, caused by a bug in dbus-glib. It is
-possible that other users of dbus-glib can be exploited in the same
-way. CVE-2013-0292 has been allocated for this vulnerability.
+Should also get a CVE.
 
-This vulnerability is fixed in dbus-glib version 0.100.1 by git commit
-166978a. All users of dbus-glib should upgrade.
+https://github.com/torvalds/linux/commit/12176503366885edd542389eed3aaf94be163fdb
 
-<http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.100.1.tar.gz>
-<http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.100.1.tar.gz.asc>
-<http://cgit.freedesktop.org/dbus/dbus-glib/commit/?id=166978a09cf5edff4028e670b6074215a4c75eca>
+commit 12176503366885edd542389eed3aaf94be163fdb
+Author: Kees Cook <keescook@...omium.org>
+Date:   Thu Oct 25 13:38:16 2012 -0700
 
-The D-Bus maintainers consider use of dbus-glib to be deprecated. We
-encourage GLib application and library authors to switch to GDBus, which
-has been part of GLib since 2.26.
+    fs/compat_ioctl.c: VIDEO_SET_SPU_PALETTE missing error check
 
-Thanks to Sebastian Krahmer and Bastien Nocera for bringing this
-vulnerability to our attention, and the Red Hat Security Response Team
-for allocating a CVE ID.
+    The compat ioctl for VIDEO_SET_SPU_PALETTE was missing an error check
+    while converting ioctl arguments.  This could lead to leaking kernel
+    stack contents into userspace.
 
-Regards,
-    S
+    Patch extracted from existing fix in grsecurity.
 
------BEGIN PGP SIGNATURE-----
-
-iQIVAwUBUR5xU03o/ypjx8yQAQj5hg//aY5om9cxEgRclJ8zbcy57iQGM1vLgm4l
-bBLqvj2PgS8viumcTfrOg4WRpS6/IqROW/5rY+/knJX0HxgGXueo04Vt9gI2cH8C
-uPIb1OOO5+Aym8pvF4zHGk7HUu7vi76c0FeiA0ftDY8iqgJln9tKTACTgTD1DgIE
-ktGwEDWbJEBQoGpheu/5my7XTx+GHt9Jc0ERA3XAFYrbvw52oV2oLHoKwuPkVjip
-jMQL4+swp3uDtM3P4wSnzXQogchK5k8o2h4CmAPhsrayYXUGMB8eCZW/QdO/Z/bv
-US3bRSitV1isXpAMyYMxvXPrwgliwEJYDufkOTt2KmWsVa9JdEl4FjZkugng/TJo
-NCK2LM36AySOSoLd6drDLLlcqZ/639/szxm1+Q2wDq7zVD/m7MRbEzTZmiYiuJxr
-+0bLl8SgZ/wJf+k08esFDNTNSvEOIUpXiIhWqlEtYW7nsgjZts/0ki2l6xnARqfO
-6zc0fVpK5yWCX1x2r1IBTgMfXxzEXIG8HFHHNmUVAtYqwPVGFpYi7qibUH98qSUC
-7HeJN7vffTLAj5FObyKa+YbNFjJRotX5TX805YIaZuxM6H3xChQfD/eHyuMiP/gf
-ehJlsYE535gYGVVOodPCQQ6VNvTnYLSsHyXghHlaoAH/fm6vGOVtA898YpNP8ORL
-uxxF6c7yPa4=
-=Dr98
------END PGP SIGNATURE-----
+Ciao, Marcus
