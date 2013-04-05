@@ -1,33 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/20
-Message-ID: <51AF88B9.4060403@fifthhorseman.net>
-Date: Wed, 05 Jun 2013 14:51:37 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-CC: Russ Allbery <rra@...nford.edu>, audreyt@...reyt.org
-Subject: Re: CVE-2013-2145: perl Module::Signature code execution vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/05/2
+Message-ID: <20130405140035.GD26194@suse.de>
+Date: Fri, 5 Apr 2013 16:00:35 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: tg3 VPD firmware -> driver injection 
 Content-Type: text/plain; charset=utf-8
 
-On 06/05/2013 02:24 PM, Russ Allbery wrote:
+Hi,
 
-> Speaking as a CPAN author, the second would be awesome.  For bonus points,
-> once one registers a key with CPAN, CPAN could then even check one's
-> uploads and disallow uploads that aren't signed with the proper key.
+These slides refer to (cloud) server hardware injecting code into otherwise
+unsuspecting host / guest systems.
 
-As another CPAN contributor (though much less prolific than Russ), i
-also think this would be great.
+Sample is tg3 (around slide 18)
+	http://cansecwest.com/slides/2013/PrivateCore%20CSW%202013.pdf
 
-And wearing my hat as a member of the debian perl module packaging team,
-i would be very happy to see this level of author-specific cryptographic
-integrity checks when were updating packages from CPAN.  I suspect we
-have enough people interested in this within the debian pkg-perl to
-build in automated checks against these certifications during debian
-packaging as well.
+Introduced by:
+commit 184b89044fb6e2a74611dafa69b1dce0d98612c6
+Author: Matt Carlson <mcarlson@...adcom.com>
+Date:   Mon Apr 5 10:19:25 2010 +0000
 
-Thanks for continuing to maintain such a great archive of useful, free code.
+    tg3: Use VPD fw version when present
 
-	--dkg
+which was added during Linux 3.2 development.
+
+Fixed by:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=715230a44310a8cf66fbfb5a46f9a62a9b2de424
+
+commit 715230a44310a8cf66fbfb5a46f9a62a9b2de424
+Author: Kees Cook <keescook@...omium.org>
+Date:   Wed Mar 27 06:40:50 2013 +0000
+
+    tg3: fix length overflow in VPD firmware parsing
+    
+    Commit 184b89044fb6e2a74611dafa69b1dce0d98612c6 ("tg3: Use VPD fw version
+    when present") introduced VPD parsing that contained a potential length
+    overflow.
+    
+    Limit the hardware's reported firmware string length (max 255 bytes) to
+    stay inside the driver's firmware string length (32 bytes). On overflow,
+    truncate the formatted firmware string instead of potentially overwriting
+    portions of the tg3 struct.
+    
+    http://cansecwest.com/slides/2013/PrivateCore%20CSW%202013.pdf
 
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+Ciao, Marcus
