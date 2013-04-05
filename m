@@ -1,79 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/09/6
-Message-ID: <20130109154644.GQ3139@redhat.com>
-Date: Wed, 9 Jan 2013 08:46:44 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/05/4
+Message-ID: <1365157287.11234.38.camel@liliana.cdg.redhat.com>
+Date: Fri, 05 Apr 2013 12:21:27 +0200
+From: Michael Scherer <misc@...b.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: cronie fd leak
+Subject: Zimbra XSS in aspell.php, CVE request
 Content-Type: text/plain; charset=utf-8
 
-* [2013-01-09 09:24:23 +0100] Sebastian Krahmer wrote:
+Hi,
 
->Possible that you have got a different cron implementation.
+While trying to see how hard a bug would be to fix in Zimbra during
+a discussion with a coworker, I stumbled across a XSS flaw in Zimbra, in
+a spell checking external webservice.
 
-No, we're using cronie as well.
+Since I didn't found the public web interface for the source code of
+Zimbra and since perforce is not as straightforward to run on linux than
+git and slow to download the 2G of source code, I recommend to people to
+look at the github mirror, even if this mean losing some information and
+changelog.
 
->There is no hidden info in our bugzilla; the reproducer
->is using lvm commands, but I remember it worked with any
->command. Actually its not about the warnings, a "cat" will probably
->also do, if you check its /proc/$pid/fd when its invoked.
->But cat doesnt emit warnings about open fd's.
->
->Not sure about upstream, probably not.
+The issue is on this file : 
+https://github.com/Zimbra-Community/zimbra-sources/blob/master/main/ZimbraServer/src/php/aspell.php 
 
-Ok, so did some more digging based on some info from one of our
-developers that we had patched this in Fedora.
+The problem is that $dictionary is coming from user input ( from GET
+parameters ), since it is a copy of $_REQUEST. Then if no text is given
+( and so $text is empty ), it is printed back in the html form displayed
+without any kind of sanitization at all ( line133 :
+https://github.com/Zimbra-Community/zimbra-sources/blob/master/main/ZimbraServer/src/php/aspell.php#L133 )
 
-Looks like this patch introduced the leak on 2011-04-28:
+So a attacker could inject javascript/html there just by giving crafted
+link to a user, running as the domain of zimbra ( albeit on a different
+port ). Something like
+http://example.org/aspell.php?disctionnary=><script>
+alert('foo');</script>
 
-http://git.fedorahosted.org/cgit/cronie.git/commit/src/cron.c?id=acdf4ae8456888ed78201906ef528f4c28f54582
+( with proper url encoding of course ).
 
-And this patch reverted it on 2011-06-29:
+Due to typecasting, "" is considered as equal to NULL for '==', while it
+may not be the case in other circumstances.
 
-http://git.fedorahosted.org/cgit/cronie.git/commit/src/cron.c?id=b19007ca9fddd62ecef3af4a7d2d252f1d5e0419
+If I am not wrong, the default location for the spell checking service
+is http://$config{HOSTNAME}:7780/aspell.php, so a improperly secured
+server ( ie, without a firewall ) could be vulnerable to javascript
+injection, which could be used to steal various informations ( like the
+session cookie ).
 
-So it looks like only 1.4.8 was affected by this (which, judging by the
-patch in your bugzilla is the same version you're seeing as affected).
+However, depending on the browser and the security setting, the issue
+could be mitigated, even if it seems we can still steal
+the cookie with a spear phising attempt
+( http://seckb.yehg.net/2012/06/xss-gaining-access-to-httponly-cookie.html )
 
-That might be a better patch to use than what you're using.  Anyways,
-this only affects 1.4.8 (for any others using cronie and concerned as to
-whether or not they might be affected).
+The issue can be tested quite easily, just take any php hosting,
+download the aspell.php file there and run :
 
-This was also reported to our bugzilla here:
+$ curl
+'http://www.example.org/aspell.php?dictionary=insert_html_here_with<blink>'
 
-https://bugzilla.redhat.com/show_bug.cgi?id=717505
+You should see that the html code is inserted back in the form. I didn't
+spent time on writing a trivial exploit for that.
+ 
+Upstream have been notified on 2013-01-12 on a private bug 
+( https://bugzilla.zimbra.com/show_bug.cgi?id=79640 ), with first answer
+on 2013-02-22, along with a fix following on the next hours. However,
+the fix is incorrect, and my attempt to make the coder change his mind
+failed.
 
->On Tue, Jan 08, 2013 at 09:01:19PM -0700, Vincent Danen wrote:
->> * [2013-01-08 13:56:40 +0100] Sebastian Krahmer wrote:
->>
->>> "Hello Kurt, Steve, vendors,"
->>>
->>> cronie leaks read-only fd's, please check here:
->>>
->>> https://bugzilla.novell.com/show_bug.cgi?id=786096
->>>
->>> can someone assign a CVE?
->>
->> Sebastian, do you have a specific command that you're using?  I'm trying
->> to reproduce this in Fedora and RHEL using lvdisplay (maybe a bad
->> choice?) and also using "lvm vgck -v vg_thor && lvm pvs" in
->> /etc/crontab.
->>
->> The output is mailed to me fine with no warnings?  Can you share what
->> command was being used to reproduce this?  It's possible that something
->> you added (or we added) makes this a non-issue on other platforms.
->>
->> Has upstream been informed of this yet?
->>
->> --
->> Vincent Danen / Red Hat Security Response Team
->
->-- 
->
->~ perl self.pl
->~ $_='print"\$_=\47$_\47;eval"';eval
->~ krahmer@...e.de - SuSE Security Team
->
+The fix that was written can be found on a aggregate commit on 
+https://github.com/Zimbra-Community/zimbra-sources/commit/e7682c00be82a0c3ab51ee92f518bdcc1e07536c#L3L148
+
+While that could fix a XSS issue if the code was correctly used, there
+was no security issue since the call of the function is wrong on line
+67, we see 1 parameter is missing and the value of $dictionnary is
+overwrote by the return code and is always 0, so we cannot inject
+anything with it.
+
+As I couldn't convince upstream to correct this, and given that I have
+let enough time to react to them after following the procedure, I
+consider that full disclosure is the next step to have it corrected.
+
+Can someone assign a CVE for it ?
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Michael Scherer
+
