@@ -1,49 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/29/2
-Message-Id: <201308290315.r7T3Etg9020136@linus.mitre.org>
-Date: Wed, 28 Aug 2013 23:14:55 -0400 (EDT)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request, libdigidoc arbitrary file overwrite flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/06/3
+Message-ID: <515F6762.4000106@redhat.com>
+Date: Fri, 05 Apr 2013 18:08:02 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: tg3 VPD firmware -> driver injection
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://www.id.ee/?lang=en&id=34283#3_7_2
-> https://bugs.mageia.org/show_bug.cgi?id=11100
-> https://svn.eesti.ee/projektid/idkaart_public/
-> http://svnweb.mageia.org/packages/updates/3/libdigidoc/current/SOURCES/libdigidoc-3.6.0.0-security-fix-DataFile-name-tag.patch?revision=472660&view=markup
-> https://bugzilla.redhat.com/show_bug.cgi?id=1002299
-> http://code.google.com/p/esteid/source/browse/libdigidoc/trunk/libdigidoc/DigiDocSAXParser.c
+On 04/05/2013 08:00 AM, Marcus Meissner wrote:
+> Hi,
 > 
-> Fixed one critical bug in the DDOC parsing routines. By persuading a
-> victim to open a specially-crafted DDOC file, a remote attacker could
-> exploit this vulnerability to overwrite arbitrary files
+> These slides refer to (cloud) server hardware injecting code into
+> otherwise unsuspecting host / guest systems.
 > 
-> libdigidoc/DigiDocSAXParser.c
+> Sample is tg3 (around slide 18) 
+> http://cansecwest.com/slides/2013/PrivateCore%20CSW%202013.pdf
 > 
-> void handleStartDataFile(SigDocParse* pctx, const xmlChar *name, const xmlChar **atts)
+> Introduced by: commit 184b89044fb6e2a74611dafa69b1dce0d98612c6 
+> Author: Matt Carlson <mcarlson@...adcom.com> Date:   Mon Apr 5
+> 10:19:25 2010 +0000
 > 
->  if(strchr((char*)mbuf1.pMem, '/') || strchr((char*)mbuf1.pMem, '\\')) {
->       ddocDebug(1, "handleStartDataFile", "Invalid filename:
+> tg3: Use VPD fw version when present
+> 
+> which was added during Linux 3.2 development.
+> 
+> Fixed by: 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=715230a44310a8cf66fbfb5a46f9a62a9b2de424
+>
+>  commit 715230a44310a8cf66fbfb5a46f9a62a9b2de424 Author: Kees Cook
+> <keescook@...omium.org> Date:   Wed Mar 27 06:40:50 2013 +0000
+> 
+> tg3: fix length overflow in VPD firmware parsing
+> 
+> Commit 184b89044fb6e2a74611dafa69b1dce0d98612c6 ("tg3: Use VPD fw
+> version when present") introduced VPD parsing that contained a
+> potential length overflow.
+> 
+> Limit the hardware's reported firmware string length (max 255
+> bytes) to stay inside the driver's firmware string length (32
+> bytes). On overflow, truncate the formatted firmware string instead
+> of potentially overwriting portions of the tg3 struct.
+> 
+> http://cansecwest.com/slides/2013/PrivateCore%20CSW%202013.pdf
+> 
+> 
+> Ciao, Marcus
+> 
 
-Use CVE-2013-5648.
+Please use CVE-2013-1929 for this issue.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSHrtVAAoJEGvefgSNfHMdRjUH/0zQyuWch2YyC+2TJPtJfhcJ
-MMLQhFw24q/geXO9tbusFFAd9RlsoCfvLEaqz0/bgv4jIQb99dQDoOC8cBvf97XJ
-gzZ4y0AZaOAAHZbppTSe4HGiTgeWmNEDGc7klcRmPmatalwCCZE2h0Koelw/dGEL
-v54WVQWUpwM5bd5YoXINSbNpw3rgpNtOoE1XUfwNYm0GYEnkT0+FUd2RJWYeANtj
-ARmtoeFEHojXcgFvULtQDYzjAECyjHAl33OcyHUvXK453RvGXRJaa2MzFHNNxIKy
-6XVA66DDP/3nJPJQD7aT4KgoBmW3AaUx6lKvisySY9hj4N6vurcOa4LathxP0wY=
-=EEDP
+iQIcBAEBAgAGBQJRX2diAAoJEBYNRVNeJnmTgEoQAKwJXFDl85FXM563lScOfXnI
+R7yvgo2qIakHv6gfQS/GzxDY3i/4Sky+OsS6IckqWnuNQURWTomnTBZRu5qihfGy
+CSdxFefF0OdQh9xjc5VIB1vJrQmpPt2giU9ZxRfLzXD8Gj8VPMTbP+fTNCWJrgX7
+FPZWAO34tiiLdqPe2E1Fo5emW6d5p47VCSrv1i+9PLqNzXd2JlBAPKChbobDmN1P
+bbDuVN5JuacLAViIHFSeLl1UCLb8UzAT6LNB5NQhCG+UMqir+hfqCxUsr3xBuQ0S
+EcPAT6c2vm00V2w27ITnc0Iayy3JNE1qy3GtZEcwL0FBctkf4YmXRzlfhCAEdAb8
+7CSowCPaVgO6BHZuenhLZF+dakOr0CRoNx9OhmiFS2bdPMgMLXKR8lWo1vOooNnV
+hwR8o9Bhiq2igtDtoNa6wv/EpXmCg5i0tlEREKoLCJiE+/+SMzLYtzB23yhb6rKM
+kHFSLXzO8rh7DYTqlVs2aKJ7w3TYwUDJP++vHSwr315N5O6B2sJ8RMxAcA59ysdg
+hmDQFwFwQ2rqnETr7QFz2ZO3oBMkELr9akY16UPNLYP20BtNqrT6HEEy14uv9i8a
+91ZENd707Kf8Fvn7yGfg5pD40M7/pJgfHNsSX7fbV41wMIkACZple1YZ1owp1aKv
+HgQckD25SZYVpft6QZ/R
+=BouH
 -----END PGP SIGNATURE-----
