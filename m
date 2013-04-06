@@ -1,35 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/13
-Message-ID: <513365C6.7030905@msgid.tls.msk.ru>
-Date: Sun, 03 Mar 2013 19:01:26 +0400
-From: Michael Tokarev <mjt@....msk.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/06/2
+Message-ID: <515F6753.8080906@redhat.com>
+Date: Fri, 05 Apr 2013 18:07:47 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Piotr Karbowski <piotr.karbowski@...il.com>
-Subject: Re: CVE id request: busybox
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
 Content-Type: text/plain; charset=utf-8
 
-03.03.2013 18:33, Piotr Karbowski wrote:
-> On 03/03/2013 11:19 AM, Michael Tokarev wrote:
->> What it has to do with Debian, besides that debian was first
->> to actually submit this bug into its own bug tracker?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/05/2013 08:05 AM, Marcus Meissner wrote:
+> Hi,
 > 
-> Acctualy not the first, the bug was reported to busybox mailinglist on 18 Dec 2012.
+> Should also get a CVE.
+> 
+> https://github.com/torvalds/linux/commit/12176503366885edd542389eed3aaf94be163fdb
+>
+>  commit 12176503366885edd542389eed3aaf94be163fdb Author: Kees Cook
+> <keescook@...omium.org> Date:   Thu Oct 25 13:38:16 2012 -0700
+> 
+> fs/compat_ioctl.c: VIDEO_SET_SPU_PALETTE missing error check
+> 
+> The compat ioctl for VIDEO_SET_SPU_PALETTE was missing an error
+> check while converting ioctl arguments.  This could lead to leaking
+> kernel stack contents into userspace.
+> 
+> Patch extracted from existing fix in grsecurity.
+> 
+> Ciao, Marcus
+> 
 
-That's where I noticed it and submitted a bugreport to
-Debian BTS from there.
+Please use CVE-2013-1928 for this issue.
 
-Note that I didn't want to request a CVE# for that, and used a
-somewhat low severify value for the report in the Debian BTS
-(which was quite some time after the initial report).
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-If I thought it deserves a CVE, I'd request one right after
-seeing the discussion in question :)
-
-But I guess we're muddling waters for too much already.  I
-merely commented on the joke about Debian, -- the issue is
-definitely not debian-specific, Debian does not even use
-mdev from busybox (but allows to use it to the users).
-
-Thanks,
-
-/mjt
+iQIcBAEBAgAGBQJRX2dTAAoJEBYNRVNeJnmT5sEQAKO4lBmSU5A2zBRvSY/+cYwt
+2B94LEDuSpS/vLGwLg0wDbPRgow1qQCmpij4ECXe4/DeQ1b8kpdK6aM35rA0ncPW
+2IUWmIvCoJ40zvZWPP8UY+WYP/tYRvjnAq2/NcDHqDPw2E2AkcKszqOoB5x5Xzk8
+D1w2hoz5DTeI/2Jna0ckBrQ6t7PVa1Hf6oRd8c/hcXKkEllOibVCIisvm8Gx4cPg
+mYVvUBKlBK+PIwlOExI7g6fTwBhWPZhZAKjN11NPxWSI2OIJ9s50Qtvt9Y3efYiX
+kQc6AQ1dOZ0/AoT/THaNQ25it/eXywBRoJt13MIxwlHawqXU4A245mSImBdAoe+u
+dPWRA+erpT+HIwy417gJk9qsVPYlekRDfaXLBPhn788J9bNm6aHBekrki5fCEH1N
+oCpa11I7ItnJx4VrORzl4uvKAROJ/swxbzAsK82TY1LK8amBmfYh3+ZixRy9MTzL
+8TcuBsBAcuuQdmXrYbGMh+gEkQH5uItVlNtZqFAeG7JX6kEhSUiaS6Edc4ayf8Qs
+Nm2VI/E5I/W8u7BaB29NJzVF+5W9t9dwk6ifN1215FeOniPspcYtY6hcJGFLTsYW
+jd2ytymBSxblWvVUjhTZ3M4nBGm7wP2e9QrRDQzp9QtKXKq6gUJZnFl5poRQb1QW
+/HyrqMwANM0Rc05jZIol
+=ZrYy
+-----END PGP SIGNATURE-----
