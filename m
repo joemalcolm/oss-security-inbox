@@ -1,62 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/12
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF26F99157@IMCMBX01.MITRE.ORG>
-Date: Thu, 18 Jul 2013 21:10:15 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "Kurt Seifried" <kseifried@...hat.com>, Andrew Nacin <nacin@...dpress.org>
-CC: Jay Turla <shipcodez@...il.com>
-Subject: RE: Re: SWFUpload <= (Object Injection/CSRF) Vulnerabilities Multiple flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/06/5
+Message-ID: <1365207272.11234.71.camel@liliana.cdg.redhat.com>
+Date: Sat, 06 Apr 2013 02:14:32 +0200
+From: Michael Scherer <misc@...b.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Zimbra XSS in aspell.php, CVE request
 Content-Type: text/plain; charset=utf-8
 
-Kurt etc. - no CVE REJECT decisions yet, please.  We might be dealing with a CVE *triplicate*.
+Le vendredi 05 avril 2013 à 18:05 -0600, Kurt Seifried a écrit :
+> On 04/05/2013 04:21 AM, Michael Scherer wrote:
+> > Hi,
+> > 
+> > While trying to see how hard a bug would be to fix in Zimbra
+> > during a discussion with a coworker, I stumbled across a XSS flaw
+> > in Zimbra, in a spell checking external webservice.
+> > 
+> > Since I didn't found the public web interface for the source code
+> > of Zimbra and since perforce is not as straightforward to run on
+> > linux than git and slow to download the 2G of source code, I
+> > recommend to people to look at the github mirror, even if this mean
+> > losing some information and changelog.
+> > 
+> > The issue is on this file : 
+> > https://github.com/Zimbra-Community/zimbra-sources/blob/master/main/ZimbraServer/src/php/aspell.php
+> > 
+> > 
+> > The problem is that $dictionary is coming from user input ( from
+> > GET parameters ), since it is a copy of $_REQUEST. Then if no text
+> > is given ( and so $text is empty ), it is printed back in the html
+> > form displayed without any kind of sanitization at all ( line133 : 
+> > https://github.com/Zimbra-Community/zimbra-sources/blob/master/main/ZimbraServer/src/php/aspell.php#L133
+> > )
+> > 
+> > So a attacker could inject javascript/html there just by giving
+> > crafted link to a user, running as the domain of zimbra ( albeit on
+> > a different port ). Something like 
+> > http://example.org/aspell.php?disctionnary=><script> 
+> > alert('foo');</script>
+> > 
+> > ( with proper url encoding of course ).
+> > 
+> > Due to typecasting, "" is considered as equal to NULL for '==',
+> > while it may not be the case in other circumstances.
+> > 
+> > If I am not wrong, the default location for the spell checking
+> > service is http://$config{HOSTNAME}:7780/aspell.php, so a
+> > improperly secured server ( ie, without a firewall ) could be
+> > vulnerable to javascript injection, which could be used to steal
+> > various informations ( like the session cookie ).
+> > 
+> > However, depending on the browser and the security setting, the
+> > issue could be mitigated, even if it seems we can still steal the
+> > cookie with a spear phising attempt (
+> > http://seckb.yehg.net/2012/06/xss-gaining-access-to-httponly-cookie.html
+> > )
+> > 
+> > The issue can be tested quite easily, just take any php hosting, 
+> > download the aspell.php file there and run :
+> > 
+> > $ curl 
+> > 'http://www.example.org/aspell.php?dictionary=insert_html_here_with<blink>'
+> >
+> >  You should see that the html code is inserted back in the form. I
+> > didn't spent time on writing a trivial exploit for that.
+> > 
+> > Upstream have been notified on 2013-01-12 on a private bug (
+> > https://bugzilla.zimbra.com/show_bug.cgi?id=79640 ), with first
+> > answer on 2013-02-22, along with a fix following on the next hours.
+> > However, the fix is incorrect, and my attempt to make the coder
+> > change his mind failed.
+> > 
+> > The fix that was written can be found on a aggregate commit on 
+> > https://github.com/Zimbra-Community/zimbra-sources/commit/e7682c00be82a0c3ab51ee92f518bdcc1e07536c#L3L148
+> >
+> >  While that could fix a XSS issue if the code was correctly used,
+> > there was no security issue since the call of the function is wrong
+> > on line 67, we see 1 parameter is missing and the value of
+> > $dictionnary is overwrote by the return code and is always 0, so we
+> > cannot inject anything with it.
+> > 
+> > As I couldn't convince upstream to correct this, and given that I
+> > have let enough time to react to them after following the
+> > procedure, I consider that full disclosure is the next step to have
+> > it corrected.
+> > 
+> > Can someone assign a CVE for it ?
+> > 
+> 
+> Is this also in the open source version?
+> 
+> http://wiki.zimbra.com/wiki/Building_Zimbra_using_Perforce
 
-There have been a lot of disclosures about swfupload.swf lately with... ummm... mixed levels of detail and varying levels of researcher skill and diligence.  For example, the movieName parameter vector was given CVE-2012-3414 by Kurt in July of 2012, for an April 2012 disclosure - https://nealpoole.com/blog/2012/05/xss-and-csrf-via-swf-applets-swfupload-plupload/  (assignment is in http://www.openwall.com/lists/oss-security/2012/07/17/12 but is listed for the "libjs-swfupload" package).  The CVE-2013-4145 that Kurt just assigned also involves the movieName vector.
+I only used the open source version ( since I doubt the other version is
+cloned on github, that would kinda be a license violation ) and I do not
+have access to the closed source one ( or rather, i didn't tried very
+hard to have access to it to check, as I would not be able to link to
+source code for verification )
 
-Since swfupload.swf is apparently widely used, researchers may be finding the same issue over and over again in different packages, and presenting them as if they are new.  Yet there might be some attack variants buried in there, too.
+However, I suspect that's the same for non open source one ( ie, I see
+no reason to have less features in the commercial version )
 
-Because of the amount of attention by researchers who don't check whether an issue has already been disclosed, and/or the number of independent products that use this library, any "new" swfupload.swf issues should be regarded with extreme suspicion while CVE tries to iron out all the existing duplicates.
+-- 
+Michael Scherer
 
-Andrew Nacin said:
-
->CVE-2013-4145 (XSS) is actually CVE-2012-2399.
-
-CVE-2012-2399's only public details are that it's an unspecified vulnerability in Wordpress before 3.3.2, yet http://wordpress.org/news/2012/04/wordpress-3-3-2/ is pretty vague and mentions multiple products (although it does credit Neal Poole for at least one issue).  That said, a statement by a lead developer of Wordpress is important for this clarification ;-)  Andrew, can you confirm for sure that CVE-2012-2399 is *also* the same as CVE-2012-3414 for Neal Poole's movieName vector?
-
-- Steve
-
-
->-----Original Message-----
->From: andrewnacin@...il.com [mailto:andrewnacin@...il.com] On Behalf Of
->Andrew Nacin
->Sent: Thursday, July 18, 2013 4:37 PM
->To: Kurt Seifried
->Cc: Open Source Security; Jay Turla; nacin@...dpress.org
->Subject: [oss-security] Re: SWFUpload <= (Object Injection/CSRF) Vulnerabilities
->Multiple flaws
->
->On Thu, Jul 18, 2013 at 4:25 PM, Kurt Seifried <kseifried@...hat.com> wrote:
->> This was brought to my attention by Jay Turla <shipcodez@...il.com>,
->> after some searching I found:
->>
->> http://bot24.blogspot.ca/2013/04/swfupload-object-injectioncsrf.html
->>
->> and after testing (it works). So please use:
->>
->> CVE-2013-4144 swfupload KedAns-Dz object injection
->> CVE-2013-4145 swfupload KedAns-Dz XSS
->> CVE-2013-4146 swfupload KedAns-Dz CSRF
->
->CVE-2013-4145 (XSS) is actually CVE-2012-2399. And, CVE-2013-4146
->(CSRF) seems to be just the potential for CSRF via XSS -- don't think
->this is a separate issue.
->
->Neither of those are reproducible in
->https://github.com/wordpress/secure-swfupload.
->
->We're aware of CVE-2013-4144 and intend to fix it soon, but it's
->really tough to classify "image injection" as a serious vulnerability
->without there being any actual XSS there to further trick the user.
->
->> Also alerting WordPress.
->
->Thank you.
