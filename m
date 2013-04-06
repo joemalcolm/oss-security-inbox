@@ -1,125 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/23/1
-Message-Id: <201309232116.r8NLGhfM008259@linus.mitre.org>
-Date: Mon, 23 Sep 2013 17:16:43 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, geissert@...ian.org, jmd@...epnet.net, moyo@...epnet.net, info@...ridge.com
-Subject: Re: CVE-2013-5696: split needed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/06/4
+Message-ID: <515F67C1.8000601@redhat.com>
+Date: Fri, 05 Apr 2013 18:09:37 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Damien Regad <damien.regad@...ckgroup.com>
+Subject: Re: Multiple CVE requests for MantisBT
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> On 09/20/2013 02:27 AM, Raphael Geissert wrote:
+On 04/04/2013 05:17 PM, Damien Regad wrote:
+> Greetings,
+> 
+> The following 4 issues were discovered in the Mantis Bug Tracker:
+> 
+> 
+> 1. Close button available to users despite workflow restrictions
+> 
+> This issue affects Mantis 1.2.12 and later.
+> 
+> It allows low-privileged users to close issues even though the
+> workflow settings do not permit it.
+> 
+> Reference: http://www.mantisbt.org/bugs/view.php?id=15453
 
->> GLPI 0.84.2 fixes a few security issues [1], for which
->> CVE-2013-5696 was assigned. However, from the bug tracker[2] it is
->> clear that there are multiple issues:
+Please use CVE-2013-1930 for this issue.
 
->> * SQL Injection * PHP Code Execution * CSRF (seems that it is the
->> vector for the SQL injection)
+> 2. XSS vulnerability when deleting a version
+> 
+> This issue affects Mantis 1.2.14 only.
+> 
+> Arbitrary JavaScript could be executed in the client's browser when
+> deleting a version containing embedded code in its name. The
+> criticality of this issue is compounded by the fact that a
+> high-privilege account (typically project manager or administrator)
+> is required to both to create and delete a version.
+> 
+> Reference: http://www.mantisbt.org/bugs/view.php?id=15511
 
->> So, it looks like the CVE id was originally assigned to the CSRF 
->> vulnerability, then reused for the SQL injections, and the code 
->> execution vulns. were just added to the same bug report but it is 
->> completely independent and not covered by the existing CVE id.
+Please use CVE-2013-1931 for this issue.
 
->> [2]https://forge.indepnet.net/issues/4480
+> 3. XSS vulnerability on Configuration Report page
+> 
+> This issue affects Mantis 1.2.13 only [1].
+> 
+> If the system defines a Project containing embedded JavaScript code
+> in its name, that code would be executed in the client's browser
+> when displaying the configuration report page
+> (adm_config_report.php).
+> 
+> The severity of this issue is mitigated by the need to have a 
+> high-privileged account both to set the project's name and to
+> access the configuration report page.
+> 
+> Reference: http://www.mantisbt.org/bugs/view.php?id=15415
 
-> I assume this was assigned by Mitre, probably best to have them do the
-> split.
+Please use CVE-2013-1932 for this issue.
 
-CVE-2013-5696 was assigned by MITRE, but it was not originally
-assigned for CSRF.
+> 4. XSS issue on Configuration Report page when displaying complex
+> value
+> 
+> This issue affects Mantis 1.2.0rc1 and later.
+> 
+> Lack of proper string escaping allows users (having admin access)
+> to enter arbitrary javascript code and have it executed on the
+> user's browser.
+> 
+> Reference: http://www.mantisbt.org/bugs/view.php?id=15416
 
-The "Associated revisions" column of
-https://forge.indepnet.net/issues/4480 does show different types of
-changes to different parts of the code.
+Does this count as a proper release or does it fall into the "beta"
+classification?
 
-As far as we can tell, install/install.php is part of the distributed
-software but is not intended to be part of the deployed product. In
-0.84.2, it seems that a warning to remove install/install.php is
-displayed to a privileged user every time that the showMyView function
-is executed in a privileged user's session.
+> 
+> Issues resolution:
+> 
+> - 1 & 2 will be fixed in upcoming release 1.2.15, expected to go
+> live sometime next week (patches are available in the referenced
+> issues)
+> 
+> - 3 & 4 were both resolved in version 1.2.14, released on
+> 29-Jan-2013
+> 
+> 
+> Could you kindly assign CVEs for the above issues ? Thanks in
+> advance.
+> 
+> 
+> Best regards, D. Regad MantisBT Developer http://www.mantisbt.org
+> 
+> [1] MantisBT version 1.2.13 was tagged in the repository but never
+> formally released, as we discovered several critical issues at the
+> last minute and decided to pull it and released 1.2.14 a week later
+> instead.
+> 
+> 
 
-The root cause of the reported exploitation outcomes is that
-install/install.php is accessible with the unintended functionality of
-reaching the installation steps after an installation has been
-completed. There is one CVE for that:
-
-  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-5696
-
-Certainly we would assign more CVEs if there are exploitable
-vulnerabilities on a server that does not have the install/install.php
-file.
-
-Other than that, it ultimately reduces to the general problem of CVE
-assignments for web-based installations of web applications, and how
-to decide whether the available behavior crosses privilege boundaries.
-In many common installation processes for web applications, the
-software distribution is extracted into a web-server directory, and
-the entire remainder of the installation process starts with an
-unauthenticated web session from an arbitrary client machine. The
-amount of time after extracting files until a legitimate user starts
-that web session could realistically range from seconds to years. From
-an absolutist perspective, this is always wrong and should always have
-a CVE assignment, because it offers no protection against an initial
-installation by an unauthorized person. In practice, we often don't
-assign CVEs for that. We usually consider it a valid
-usability/security tradeoff.
-
-One principal exception is that we do assign a CVE if the extracted or
-installed web application allows remote code execution -- even if it's
-intentional remote code execution by an admin. In other words, the
-usability/security tradeoff can be invalidated by the nature of the
-application.
-
-The current case is similar. CVE-2013-5696 is the ID associated with
-the root cause of the problem that was actually reported by Navixia.
-At least one other problem was strongly implied but not clearly
-disclosed. Specifically, if no legitimate user ever ran the GLPI
-installation procedure, install/install.php will exist and can be used
-for PHP code injection. So, we think we should assign a second CVE
-for:
-
-   GLPI before 0.84.2, when install/install.php exists because of no
-   installation or an incorrect installation, allows remote attackers
-   to execute arbitrary PHP code via an update_1 action to
-   install/install.php with a crafted databasename parameter, as
-   demonstrated by placing the PHP code after a ';} sequence, followed
-   by a direct request to index.php.
-
-with an additional reference of
-
-   https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/multi/http/glpi_install_rce.rb
-
-Here, "an incorrect installation" is intended to cover all of the
-possibilities: the legitimate user forgot to delete
-install/install.php, the legitimate user planned to delete
-install/install.php but the attack occurred before the deletion, etc.
-
-We're not sure if there's anything else important enough that more
-than two CVEs are really needed. We'll probably wait for the
-https://www.htbridge.com/advisory/HTB23173 update that's scheduled for
-October 2. Again, web-based installations of web applications are
-often inherently characterized by missing authentication, so the
-cutoff for what qualifies for a CVE is a bit different than in normal
-cases of already-installed products.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSQK3XAAoJEKllVAevmvmsbBgH/1HlyQynqKj7mazdxlXarQXv
-GY++bjB0mH1+umPcGfafDtF+ZdWMis2RzFGDftXxCLy5EVhvp3lHuxg7Pxf0uIzT
-lRHlU1mf92NY2i2KTI+juP0bHvc+erPXwNJk6GEQfTlH/XqxPUyX/QrjaaUqGK8/
-008bFC+HkQAwEbsLvzh+WniMyE/Kg3+WPx8we311jNODl+zLr59Pf5I7AHectn0Z
-PkHm0L3oAxPnsaluxnyvz351OZRjhz2CFndOIGZJ3KegGCRdz6soSBh4CsR4lBEE
-9pS3RX7+fCegpUHzzo4Q5bGydqy/sdFCXVvr67c7tY8m6zOpJN44DGxuIuTBsd4=
-=hgB3
+iQIcBAEBAgAGBQJRX2fAAAoJEBYNRVNeJnmTPp4P/Rr4LuoQagM3dEgb+AsOJS04
+aN/EjKNJ70IEjYge2B2k3AxwdAWJAm0C+w27caR/yx+1kxptH31eE5CGyUUbGS95
+kfizE9eIhUufMt97xIV9Mnazfbkk5/faRL5SvgcZmvI2us6RmTROrElND9kpe8eM
+vsfb65SgdnrSCMBmltOYo61o0JgnIsJ9ElpOkyhGySeZbIDlwh9TpITmWdgVF0u1
+PeXS28jjwm0cQgHYUkdT38MjzS3MV0pJyYaIlY31ifAQVcY4UnzNrn5oV07WuLZ/
+YHgM3e/gbnPvVDg052VKjK7uY+OMnohSLB7j+LuEni7i+VmW8vJh6ntdB0Qvjl9D
+lktmvw0ulq6xN175JiOib3v7WhxF6TZYQmuLiTE+3ZGsu+Yt5bvfS6zQkYJE3o2t
+DO8wwudt9QC3H+HxFgTVh8ystDxbzorgxci34vq9cOGogGzEWBWNIc9NVjpiiCaK
+DakOsFVOmwrzeeZpChYtvECl3x36lI1xl/dmvwcci/yTJ/RzYg2h+2tObc5NZgkJ
+PY5FTa2hLJNBHO9CdgL0PfR5KZhzilaI8AlpWR4CkYxFOBMCWV572NfeG6LUg2xS
+7ZUAe9w0hCAkiVwyAaiJUf9aYngLN/kwVGRJQUK0R+p8cZnl4iYjcIvzLwi5lWcT
+Yi9mzFyrPEePbnszIppd
+=cV+p
 -----END PGP SIGNATURE-----
