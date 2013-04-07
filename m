@@ -1,76 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/11
-Message-ID: <20131022215013.GE18735@openwall.com>
-Date: Wed, 23 Oct 2013 01:50:13 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/07/1
+Message-ID: <CAE2SPAYf2oNVHUj096C=h-7CbMSO5eTxNZWbsp_h9=QPMD9DJA@mail.gmail.com>
+Date: Sun, 7 Apr 2013 14:57:21 +0200
+From: Bastien ROUCARIES <roucaries.bastien@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: RESEND: CVE Request: pwgen
+Subject: New vulnerabilty in imagemagick
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 18, 2013 at 12:28:18PM +1100, Michael Samuel wrote:
-> On 16 October 2013 16:59, Kurt Seifried <kseifried@...hat.com> wrote:
-> > CVE-2013-4443 pwgen Secure mode has bias towards numbers and uppercase
-> > letters
-> 
-> Solar Designer picked up that this one should probably not have been assigned.
+Hi,
 
-Michael is referring to discussion that we had off-list.
+Imagemagick url coder is affected by a NULL deference trigerrable by user
 
-My current understanding, based on Michael's messages only, is that the
-bias was only at character level, but not at full password level, given
-the policy-reduced keyspace.  I'll illustrate this by a trivial example:
+It only occurs when you use a URL as an image filename and you can't
+write to the temporary directory which is typically /tmp or whereever
+MAGICK_TMPDIR env variable points.
 
-Suppose we have a password generator configured to produce two character
-long passwords consisting of lowercase and uppercase letters.  It can
-produce four kinds of passwords: LL, LU, UL, UU, where the L's and U's
-denote lowercase and uppercase letters.  These four kinds have equal
-probability, and so do the individual L's and U's.  Now let's add some
-policy enforcement into the generator: have it require at least one
-uppercase letter.  Let's have it implement that by generating a new
-password unless and until the generated password meets the policy, and
-only then to print the password.  This generator may now produce LU, UL,
-and UU.  It is easy to see that U is now more common than L, however
-this is not a security issue on its own (arguably, the keyspace
-reduction might be, but it is expected).  If we look at the full
-passwords within this reduced keyspace, then it is also easy to see that
-all three of LU, UL, and UU are still equally likely.  So there's no
-password-level bias, and this is normally the only kind of bias that
-would actually matter for security.  Thus, no security issue (other than
-the expected keyspace reduction).
+As the debian mainteners I believe this is a security (minor) bug that
+could lead to local dos at least.
 
-The same applies to longer passwords and to additional character
-classes, such as, if I understand its behavior correctly, to pwgen's
-"secure" mode passwords.
+Upstream bug is here
+http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=23117
 
-Michael, is the above correct?  If so, should Kurt reject CVE-2013-4443?
-I think so.
+Could you please open a candidate CVE number ?
 
-To avoid the character-level bias while still requiring at least one
-uppercase letter, we'd have to either introduce password-level bias
-(would be a real security issue) or reduce the keyspace even further
-(require at least one lowercase letter as well).
+Patch here fix the bug.
 
-> The problem wasn't normal bias - it was that it was enforcing
-> "password rules" requiring at-least one uppercase and number, but not
-> lowercase (which was a normal bug).  So the "fix" would technically
-> make the keyspace smaller.
-
-This was not necessarily a bug at all, although I agree that if we
-require at least one uppercase letter and at least one digit, it does
-seem natural to also require at least one lowercase letter.  So
-adjusting the behavior like you did makes sense.
-
-> I added the -R / --no-rules flag to my branch which removes
-> enforcement altogether,
-
-This also makes sense.
-
-> the full diff from 2.06 can be viewed here:
-> https://github.com/therealmik/pwgen/compare/securityfixes
-> 
-> Before using this flag, you should consider the minor negative effects
-> on the keyspace vs. generating passwords which might be "accidentally"
-> cracked while looking for simpler passwords.  Either way, generating a
-> longer password has a far better effect on security.
-
-Alexander
+Download attachment "0001-git-svn-id-https-www.imagemagick.org-subversion-Imag.patch" of type "application/octet-stream" (1176 bytes)
