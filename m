@@ -1,98 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/10
-Message-Id: <E1TvoXy-0002vk-Te@xenbits.xen.org>
-Date: Thu, 17 Jan 2013 12:26:18 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 27 (CVE-2012-5511,CVE-2012-6333) - several HVM operations do not validate the range of their inputs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/17
+Message-ID: <kjvd2j$t73$1@ger.gmane.org>
+Date: Mon, 8 Apr 2013 23:30:19 +0200 (CEST)
+From: Damien Regad <damien.regad@...ckgroup.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Multiple CVE requests for MantisBT
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Kurt Seifried <kseifried@...hat.com>
+ Wrote in message:
 
-      Xen Security Advisory CVE-2012-5511,CVE-2012-6333 / XSA-27
-                           version 5
+>>>>> 4. XSS issue on Configuration Report page when displaying 
+>>>>> complex value
+>>>>> 
+>>>>> This issue affects Mantis 1.2.0rc1 and later.
+>>>>> 
+>>>>> Lack of proper string escaping allows users (having admin 
+>>>>> access) to enter arbitrary javascript code and have it
+>>>>> executed on the user's browser.
+>>>>> 
+>>>>> Reference: http://www.mantisbt.org/bugs/view.php?id=15416
+>>>> 
+>>>> Does this count as a proper release or does it fall into the 
+>>>> "beta" classification?
+>> 
+>>> 1.2.0rc1 was a beta release. The first "proper" release affected
+>>> by this was 1.2.0
+>> 
+>> Ok not assigning a CVE then, unless there are a large number of
+>> users betas don't get CVEs.
+> 
+> Steve just pointed out I may have misread this. Is 1.2.0 vulnerable,
+> and this is fixed in 1.2.1, or was it fixed in the 1.2.0 release (so
+> ONLY 1.2.0-rc1 was affected)?
 
-   several HVM operations do not validate the range of their inputs
+Not sure who Steve is, but he is absolutely correct - this affects
+ all versions of Mantis *starting* with rc1 and until 1.2.13
+ included, so definitely non-beta releases are vulnerable.
 
-UPDATES IN VERSION 5
-====================
-
-The supplied patch for 4.1 was found to contain a bug. The patch has
-been updated. The incremental fix can be found at
-http://lists.xen.org/archives/html/xen-devel/2013-01/msg01193.html
-
-Mitre have asked that two CVEs are used for the issues described here:
- * CVE-2012-5511 now applies only to the stack-based buffer overflow
-   that was fixed in 4.2.
- * CVE-2012-6333 applies to the large input validation issues.
-
-ISSUE DESCRIPTION
-=================
-
-Several HVM control operations do not check the size of their inputs
-and can tie up a physical CPU for extended periods of time.
-
-In addition dirty video RAM tracking involves clearing the bitmap
-provided by the domain controlling the guest (e.g. dom0 or a
-stubdom). If the size of that bitmap is overly large, an intermediate
-variable on the hypervisor stack may overflow that stack.
-
-IMPACT
-======
-
-A malicious guest administrator can cause Xen to become unresponsive
-or to crash leading in either case to a Denial of Service.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions from 3.4 onwards are vulnerable.
-
-However Xen 4.2 and unstable are not vulnerable to the stack
-overflow. Systems running either of these are not vulnerable to the
-crash.
-
-Version 3.4, 4.0 and 4.1 are vulnerable to both the stack overflow and
-the physical CPU hang.
-
-The vulnerability is only exposed to HVM guests.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this vulnerability.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa27-4.1.patch             Xen 4.1.x
-xsa27-4.2.patch             Xen 4.2.x
-xsa27-4.unstable.patch      xen-unstable
-
-
-$ sha256sum xsa27*.patch
-82c9160484165acdebf91e8d80538829c756cf5abc2d8d890c8b4abd9aa4800a  xsa27-4.1.patch
-462eae827944d1d337a6ebf13a36ea952d7fb76b993b9c29946e1d9cfb5ea2a3  xsa27-4.2.patch
-fcb07c6bd78a0d9513a68e2eb3bf0c21ef4d8ff0e6ebf6fdce04a3170303cab6  xsa27-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQ9+vTAAoJEIP+FMlX6CvZYdIIAIydLf9OVKnYmFvbze6CeSTd
-KOp0EgmJu/Da4bbGejn3HKMZD9KsZ8nMAv/rIyQKgfNcSLWd0giMJ0IDyqnoVP0v
-W/UiL5b7IiGToYLhqQJWM21sIxD/YC9rZTyqg00LhSSxO0NPzsPuD5r/qPakuJ8l
-11cJ87oEObZAK/0csyy2X+Eh00UAkcc0pOiAM3+jjamM1lq/lUt/RX4e00VRGLoJ
-K3Cy1B5IesnA1CbgJZn2RSQSLWLFKN5W6/ChtkPUmJDsJzuv60VRHptv4PbD+/Cf
-VtdGChfvs/dDYhPVt2c/kYMmqv/Brz8TzpaeUC4CzYnCLyRxplsQOPtLRzK+46o=
-=NqsN
------END PGP SIGNATURE-----
-
-Download attachment "xsa27-4.1.patch" of type "application/octet-stream" (5861 bytes)
-
-Download attachment "xsa27-4.2.patch" of type "application/octet-stream" (4441 bytes)
-
-Download attachment "xsa27-unstable.patch" of type "application/octet-stream" (3669 bytes)
