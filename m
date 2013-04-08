@@ -1,54 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/01/3
-Message-ID: <5159916E.9000503@linux.vnet.ibm.com>
-Date: Mon, 01 Apr 2013 09:53:50 -0400
-From: Corey Bryant <coreyb@...ux.vnet.ibm.com>
-To: "Zhao, Passion" <passion.zhao@...el.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Re: Security vulnerability tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/2
+Message-ID: <CANTw=MPZFn3minGuJ5xPvXLmM9P5LD57Gzg3ABhW+VRhpM+TTQ@mail.gmail.com>
+Date: Sun, 7 Apr 2013 21:29:43 -0400
+From: Michael Gilbert <mgilbert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Any info on dovecot CVE-2010-0535?
 Content-Type: text/plain; charset=utf-8
 
+I'm in the process of reviewing some older untriaged issues in the
+Debian security tracker.  I came across this Apple id (CVE-2010-0535)
+in dovecot.  Being Apple advisory, there is absolutely no useful
+information included, but based on the text, the issue is dependent on
+Kerberos.
 
+I found no other dovecot CVEs involving Kerberos, so the question I
+have is whether this is still currently an unfixed issue affecting
+dovecot?  Was it Apple-specific?  Generally, what can be done by
+distro security teams about issues with no actionable information?
+Would Mitre be willing to nudge Apple for information?
 
-On 03/31/2013 11:31 PM, Zhao, Passion wrote:
-> For static analysis, suggest to add 'klocwork'
-> For fuzzing, how about adding 'peach'?
-> And openVAS for network vulnerabilities scanning.
-
-Thanks for the input!  I've added these to the wiki.
-
-By the way (and this is not in reply to you, Passion) I've also added a 
-statement to the effect of "no guarantees" to the page, since the list 
-is growing and I don't have time to evaluate all of the tools at the moment.
-
-It would be nice to have a +1 type of feature next to each tool on the wiki.
-
--- 
-Regards,
-Corey Bryant
-
->
->
-> --
-> Best regards,
-> - Passion
-> iNet: 8751-1986
->
->
-> -----Original Message-----
-> From: Corey Bryant [mailto:coreyb@...ux.vnet.ibm.com]
-> Sent: Friday, March 29, 2013 9:22 PM
-> To: oss-security@...ts.openwall.com
-> Subject: [oss-security] Re: Security vulnerability tools
->
-> Thanks to everyone who provided tooling input.  If anyone else has anything
-> else, please let me know.
->
-> Based on the input I've updated the wiki at:
-> http://oss-security.openwall.org/wiki/tools
->
-> --
-> Regards,
-> Corey Bryant
->
-
+Best wishes,
+Mike
