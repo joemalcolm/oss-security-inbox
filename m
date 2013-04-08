@@ -1,56 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/13
-Message-ID: <51C0906F.4050808@redhat.com>
-Date: Tue, 18 Jun 2013 10:53:03 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Moritz Muehlenhoff <jmm@...ian.org>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on a vuln/CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/12
+Message-ID: <20130408184433.GS18466@mwanda>
+Date: Mon, 8 Apr 2013 21:44:33 +0300
+From: Dan Carpenter <dan.carpenter@...cle.com>
+To: P J P <ppandit@...hat.com>
+Cc: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 06/18/2013 10:41 AM, Moritz Muehlenhoff wrote:
-> On Tue, Jun 18, 2013 at 12:44:09AM -0600, Kurt Seifried wrote:
->> Also part of my thought process is that (for example) this would
->> be a good configuration to check for and ensure is disabled,
->> something for SCAP for example or the Debian security guide (e.g.
->> a generic "make sure all enabled repos are actually working as
->> expected").
+On Mon, Apr 08, 2013 at 10:18:30PM +0530, P J P wrote:
+>   Hello Dan,
+> +-- On Mon, 8 Apr 2013, Dan Carpenter wrote --+
+> | The x86 version is ok but asm-generic version of get_user() doesn't clear x.
+> | 
+> | include/asm-generic/uaccess.h
+> | 
+> |    226  #define get_user(x, ptr)                                        \
+> |    227  ({                                                              \
+> |    228          might_sleep();                                          \
+> |    229          access_ok(VERIFY_READ, ptr, sizeof(*ptr)) ?             \
+> |    230                  __get_user(x, ptr) :                            \
+> |    231                  -EFAULT;                                        \
+> |    232  })
 > 
-> Debian doesn't endorse any external repository. During package
-> installation the pre/post installation scripts run with root privs.
-> As such, if you enable a repository you trust the people behind
-> that repository with the equivalent to root access to your system
-> anyway.
+>   Here, following call sequence ensures that 'x' is always initialised with 
+                                                      ^^^^^^ ???
+> user memory contents.
 > 
-> Cheers, Moritz
+>  get_user
+>   -> __get_user
+>    -> __get_user_fn
+>     -> __copy_from_user
 > 
+> Unless `access_ok()' in `__get_user' returns 0, which it does not, OR 
+> sizeof(*ptr) is > 8 bytes.
 
-I care a lot less about what is "officially endorsed" or not endorsed
-and a lot more with what is actually going on. If a large percentage
-of people are exposed to a vuln, even if they "shouldn't" be then it
-would still get a CVE. I see a lot of CVEs that should never be
-exploitable, but people do crazy things/configurations.
+I'm confused why you are using the word "always" and "Unless
+`access_ok()' in `__get_user' returns 0".  I don't understand what
+you are saying.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Anyway, the bottom line is that the x86 version of get_user()
+doesn't have an info leak and the asm-generic version does.
 
-iQIcBAEBAgAGBQJRwJBvAAoJEBYNRVNeJnmTi4QQALcY/VXafOZGoFiLyc5rVKY/
-TCZ76gGyCWhQjDtHNcVlSOV8GVfhWp2GD2vk+ZkI6BxoMQoaAen9REsFjAxU9vAR
-NXRyX05AncoaSItccukYqWXYirIbxlnHWuJ6GWkOPBaqFAbYmmc8qdh8rO6h+0qo
-+/xegig11jf3MQnC4ZyqsntGOZRevI9YtKJ557FLfKz/uqn2R+deNmb0nqcHrP0U
-v8kGDVFqc2Zx+yyrp+XcdNXaEUT9XwTtclNP7d8zxuDNH5E+0OTPFn5BbJ51kcxT
-PP+0Gn0pfbuIm7cYIPqfvRwIFjZlPZe0mJ2rfaFsrdDlmYS2uoQVTRqon2EV6eco
-NSSgi9FTA2pXrEbHjyakcizlnA1FCbrpkHSkBFZyL5zu3rb4o8eOA3pCtJDjYbf8
-+1JSQiKzDL5rCrtOSoEnnmR9lqlCzdx1+zklGbasZjTC91OdOtYJO1Tu3K09U+Ij
-lcsXElnLTes00ac6XX02KQKFDX9egyvt1u2UD0/QClC/nJHp9pRhT58amEDUIS+e
-RqmFrA+6BFD6jIqoZJcxz5JvY/ebrk04AkligIKN3MwzbOuMHh4C7dtP41yqSAsz
-/6uuPCqY1NjHvRrbMkzpkfGabrS1r5xDXttVNw69vGSqjp5b6jE1OBFPMS/HSK6l
-NgXwAOsf5dkLyCvgueXm
-=2e/6
------END PGP SIGNATURE-----
+regards,
+dan carpenter
+
