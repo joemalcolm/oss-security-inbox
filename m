@@ -1,88 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/02/3
-Message-ID: <5131B79E.8090504@redhat.com>
-Date: Sat, 02 Mar 2013 01:26:06 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Olivier Gonzalez <gonzoyumo@...il.com>, Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: various gems in aftermath of rubygem actionpack issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/4
+Message-id: <c1a489cf-688c-40eb-a1a8-4a5e423dc999@me.com>
+Date: Mon, 08 Apr 2013 12:56:01 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Remote Command Injection Ruby Gem Karteek Docsplit 0.5.4
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Remote Command Injection Karteek Docsplit 0.5.4
 
-On 03/01/2013 04:19 PM, Olivier Gonzalez wrote:
-> hi,
-> 
-> this is probably what you're looking for:
+4/1/2013
+Larry W. Cashdollar
+@_larry0
 
-Perfect, that's exactly what I need
+User supplied input isn't sanitized against shell metacharacters and is fed directly to the shell. If the user is tricked into extracting a file with shell characters in the name code can be executed remotely.
 
-> crack:
-> https://github.com/jnunemaker/crack/commit/e3da1212a1f84a898ee3601336d1dbbf118fb5f6
-> 
-Please use CVE-2013-1800 for this issue.
+https://rubygems.org/gems/karteek-docsplit
 
-> httparty:
-> https://github.com/jnunemaker/httparty/commit/53a812426dd32108d6cba4272b493aa03bc8c031
+./karteek-docsplit-0.5.4/lib/docsplit/text_extractor.rb
 
-Please
-> 
-use CVE-2013-1801 for this issue.
+ 59     def extract_from_ocr(pdf, pages)
+ 60       tempdir = Dir.mktmpdir
+ 61       base_path = File.join(@output, @pdf_name)
+ 62       if pages
+ 63         pages.each do |page|
+ 64           tiff = "{tempdir}/{@..._name}{page}.tif"
+ 65           file = "{basepath}{page}"
+ 66           run "MAGICKTMPDIR={tempdir} OMP_NUM_THREADS=2 gm convert -despeckle +adjoin #{MEMORY_ARGS} #{OCR_FLAGS} {pdf}[{page - 1}] #{tiff} 2>&1"
+ 67           run "tesseract #{tiff} {file} -l eng 2>&1"
+ 68           clean_text(file + '.txt') if @clean_ocr
+ 69           FileUtils.remove_entry_secure tiff
+ 70         end
+ 71       else
+ 72         tiff = "{tempdir}/{@..._name}.tif"
+ 73         run "MAGICK_TMPDIR={tempdir} OMP_NUM_THREADS=2 gm convert -despeckle #{MEMORY_ARGS} #{OCR_FLAGS} #{pdf} #{tiff} 2>&1"
+ 74         run "tesseract #{tiff} #{base_path} -l eng 2>&1"
+ 75         clean_text(base_path + '.txt') if @clean_ocr
+ 76       end
 
-> extlib:
-> https://github.com/datamapper/extlib/compare/b4f98174ec35ac96f76a08d5624fad05d22879b5…4540e7102b803624cc2eade4bb8aaaa934fc31c5
-> (https://github.com/datamapper/extlib/compare/b4f98174ec35ac96f76a08d5624fad05d22879b5...4540e7102b803624cc2eade4bb8aaaa934fc31c5)
+Run is defined as:
 
-Please
-> 
-use CVE-2013-1802 for this issue.
+ 94     def run(command)
+ 95       result = `#{command}`
+ 96       raise ExtractionFailed, result if $? != 0
+ 97       result
+ 98     end
 
-> Thanks
+This vulnerability doesn't have a CVE yet assigned.﻿
 
-No, thank you!
+http://vapid.dhs.org/advisories/karteek-docsplit-cmd-inject.html 
 
-> 
-> 
-> -- Olivier Gonzalez
-> 
-> 
-> Le vendredi 1 mars 2013 à 22:47, Kurt Seifried a écrit :
-> 
-> On 03/01/2013 09:43 AM, Marcus Meissner wrote:
->>>> Hi,
->>>> 
->>>> I think these rubygem updates have got no CVE entry/ies yet:
->>>>  
->>>> https://support.cloud.engineyard.com/entries/22915701-january-14-2013-security-vulnerabilities-httparty-extlib-crack-nori-update-these-gems-immediately
->>>>
->>>>  Or should we use the Rubygem Action Pack CVE ids for it too 
->>>> (CVE-2013-0156)?
->>>> 
->>>> Ciao, Marcus
-> 
-> I need details before I can assign CVEs for those. Can you maybe 
-> generate diffs that show the code fixes and post them? thanks.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRMbeYAAoJEBYNRVNeJnmThgsQAM5P+LtYMk6QDqudEofNnKB2
-qNwq2+K00orUhiRIfagvDKHdFBwl2bW5nVz+hpSlm3oY5Ty8SYHJEOlXkRr7YRHS
-k8zU7G9Hcj2Bs54wvTReccZn6mm4aS3qyEIWddKh6eTToL53Qmw6FVhGKir/i4Yn
-UC89ckVDUGiProf80FLow4sjkFsF9BaKHvsQ3Jb2pnh/ssKW+fJ8BMrFdlxpvb7x
-8KPGuM4O5G8auSUVkIzV4T8bYZqtD3M/emK9nsAP2H7mez/cOgMdMK/J7XZCIhsO
-3yzya1t+34TIE5E71Q0BGP/m4Z+90M3gTxSsfzz9Z2MwKrPTOGl11bpzV9PsWVPC
-sNxYvGmZoMBKWZ5JMP8Whf9KnrAdzWwrX6ZVYx1uGBdDGgfebYVQIwqIQioce33c
-vaCSO50Cf5nemJJ7bOD9pQjbwWKFNTBxCvXaZLDxHWt7I6TIYnuylVpflM60Qt3+
-bTaQVRsDunT38iDqwpWQAaWbEzsxKD49XIF3prHDg6Kyu0GYQg66wgue3c0OzUaI
-lG6OmfoebDy2L8b9J3z8mVk6r90r0tI2C9jfJdQAWKEiLnuTKGRcxF81WfVfFSyb
-sHLnYVQ950NlUSlhgsdjf/vZLvZALzbOfZWkg0HSlf7u+Ls6Q+4Btb6TcM81gdro
-H2P7lTrwu6o7ccbFWv93
-=lYo5
------END PGP SIGNATURE-----
+Content of type "text/html" skipped
