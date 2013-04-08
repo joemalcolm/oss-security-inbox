@@ -1,25 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/31/1
-Message-ID: <CAMYfGhAzP+HEDh3N4yus7MkiWoHnx7bcNL05=R2oQznfQC31wA@mail.gmail.com>
-Date: Thu, 31 Oct 2013 18:00:56 +0530
-From: Radhesh Krishnan K <radheshkrishnank@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/10
+Message-ID: <20130408134930.GA10990@mwanda>
+Date: Mon, 8 Apr 2013 16:49:30 +0300
+From: Dan Carpenter <dan.carpenter@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request
+Cc: P J P <ppandit@...hat.com>
+Subject: Re: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Apr 08, 2013 at 06:30:02PM +0530, P J P wrote:
+>   Hi,
+> +-- On Fri, 5 Apr 2013, Marcus Meissner wrote --+
+> | Should also get a CVE.
+> | https://github.com/torvalds/linux/commit/12176503366885edd542389eed3aaf94be163fdb
+> 
+> Comments around get_user() macro say that in case of an error, destination 
+> variable @x is set to zero.
+> 
+>  -> https://github.com/torvalds/linux/blob/master/arch/x86/include/asm/uaccess.h#L134
+> 
+> Just to confirm, is it the same macro that is called from fs/compat_ioctl.c ?
+> 
 
+The x86 verion is ok but asm-generic version of get_user() doesn't
+clear x.
 
-I would like to request a CVE for this bug fix in libgadu[1].
+include/asm-generic/uaccess.h
 
+   226  #define get_user(x, ptr)                                        \
+   227  ({                                                              \
+   228          might_sleep();                                          \
+   229          access_ok(VERIFY_READ, ptr, sizeof(*ptr)) ?             \
+   230                  __get_user(x, ptr) :                            \
+   231                  -EFAULT;                                        \
+   232  })
 
-[1]  http://www.mail-archive.com/libgadu-devel@lists.ziew.org/msg01017.html
-
-
-
-
-<http://www.mail-archive.com/libgadu-devel@lists.ziew.org/msg01017.html>--
-
-Regards,
-Radhesh Krishnan K.
+regards,
+dan carpenter
 
