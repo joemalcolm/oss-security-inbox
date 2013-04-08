@@ -1,51 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/6
-Message-ID: <20130925141929.GA16129@suse.de>
-Date: Wed, 25 Sep 2013 16:19:29 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: Steve Grubb <sgrubb@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Reproducible Builds for Fedora
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/3
+Message-ID: <21db1c05876f566d816cde320ac222fc@mail.adsl.funky-badger.org>
+Date: Mon, 08 Apr 2013 08:19:52 +0100
+From: "Adam D. Barratt" <adam@...m-barratt.org.uk>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: cve request: util-linux
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 08.04.2013 01:28, Michael Gilbert wrote:
+> Please assign an id for a somewhat minor information disclosure in
+> util-linux.  Details (including commit ids) about the problem can be
+> found in the Debian bug report:
+> http://bugs.debian.org/697464
 
-On Wed, Sep 25, 2013 at 09:59:59AM -0400, Steve Grubb wrote:
-> Hello,
-> 
-> On Wednesday, September 25, 2013 10:08:01 AM Sebastian Krahmer wrote:
-> > I was checking the rpm-compare how it actually is doing the compre
-> > and you have:
-> > 
-> > [...]
-> >                 base=`basename $f`
-> >                 objdump -d rpm1/$f | grep -v $base > dump1
-> >                 objdump -d rpm2/$f | grep -v $base > dump2
-> >                 diff -u dump1 dump2 > /dev/null
-> >                 if [ $? -ne 0 ] ; then
-> >                           echo "File disassembly differs $f"
-> >                           cnt=`expr $cnt + 1`
-> >                 fi
-> > [...]
-> > 
-> > for ELF files and doing a sha256sum for other file types. My concern is
-> > that attackers could construct a package that contains function-names that
-> > match the basename of the binary that you are checking.
-> 
-> Thanks for the feedback. I think the 'grep -v' can be replaced with sed 
-> '1,2d'. Its purpose was to delete the file path that objdump inserts at the top 
-> which causes miscompares.
+Isn't that CVE-2013-0157?
 
-What about using NT_GNU_BUILD_ID? By reading the ld source, it looks like all
-ELF sections with content are covered by the hash. Or are there any sections
-you want to skip? (It'd be a more clean solution IMHO, and probably the first
-real use-case for NT_GNU_BUILD_ID.)
+Regards,
 
-Sebastian
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+Adam
