@@ -1,36 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/3
-Message-ID: <5242B0C2.4010004@suse.de>
-Date: Wed, 25 Sep 2013 11:45:38 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/15
+Message-ID: <516312A9.9000101@redhat.com>
+Date: Mon, 08 Apr 2013 12:55:37 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Reproducible Builds for Fedora
+CC: "Larry W. Cashdollar" <larry0@...com>
+Subject: Re: Remote Command Injection Ruby Gem Karteek Docsplit 0.5.4
 Content-Type: text/plain; charset=utf-8
 
-Dhiru Kholia wrote:
-> I have been working on having Reproducible Builds in Fedora for some
-> time.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/08/2013 06:56 AM, Larry W. Cashdollar wrote:
+> 
+> Remote Command Injection Karteek Docsplit 0.5.4
+> 
+> ------------------------------------------------------------------------
 >
-> At this point, I think I have something demoable. Ensuring Reproducible
-> Builds is a big task and I want your feedback, ideas, code and support.
+>  4/1/2013 Larry W. Cashdollar @_larry0
+> 
+> User supplied input isn't sanitized against shell metacharacters
+> and is fed directly to the shell. If the user is tricked into
+> extracting a file with shell characters in the name code can be
+> executed remotely.
+> 
+> https://rubygems.org/gems/karteek-docsplit
+> 
+> ./karteek-docsplit-0.5.4/lib/docsplit/text_extractor.rb
+> 
+> 59     def extract_from_ocr(pdf, pages) 60       tempdir =
+> Dir.mktmpdir 61       base_path = File.join(@output, @pdf_name) 62
+> if pages 63         pages.each do |page| 64           tiff =
+> "*{tempdir}/*{@..._name}_*{page}.tif" 65           file =
+> "*{base_path}_*{page}" 66           run "MAGICK*_*TMPDIR=*{tempdir}
+> OMP_NUM_THREADS=2 gm convert -despeckle +adjoin #{MEMORY_ARGS}
+> #{OCR_FLAGS} *{pdf}[*{page - 1}] #{tiff} 2>&1" 67           run
+> "tesseract #{tiff} *{file} -l eng 2>&1" 68
+> clean_text(file + '.txt') if @clean_ocr 69
+> FileUtils.remove_entry_secure tiff 70         end 71       else 72
+> tiff = "*{tempdir}/*{@..._name}.tif" 73         run
+> "MAGICK_TMPDIR=*{tempdir} OMP_NUM_THREADS=2 gm convert -despeckle
+> #{MEMORY_ARGS} #{OCR_FLAGS} #{pdf} #{tiff} 2>&1" 74         run
+> "tesseract #{tiff} #{base_path} -l eng 2>&1" 75
+> clean_text(base_path + '.txt') if @clean_ocr 76       end
+> 
+> Run is defined as:
+> 
+> 94     def run(command) 95       result = `#{command}` 96
+> raise ExtractionFailed, result if $? != 0 97       result 98
+> end
+> 
+> This vulnerability doesn't have a CVE yet assigned.
+> 
+> http://vapid.dhs.org/advisories/karteek-docsplit-cmd-inject.html
 
-In openSUSE we have reproducible binaries to a certain extend. That
-project was started some years ago with different (non-security)
-intentions. Since the build service rebuilds packages automatically
-if any depending package changes, a way was needed to avoid publishing new
-rpms if the build result result didn't actually change. So there are
-now some scripts that automatically run at the of a new build and
-determine with some heuristics whether the new rpms match the old
-rpms¹. You can see the output of that script in every build log in
-openSUSE:Factory.
 
-cu
-Ludwig
+Please use CVE-2013-1933 for this issue.
 
-https://build.opensuse.org/package/show/openSUSE:Factory/build-compare
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
--- 
-  (o_   Ludwig Nussel
-  //\
-  V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+iQIcBAEBAgAGBQJRYxKpAAoJEBYNRVNeJnmTzrcP/iaPECr8mJVJvwM4JPeHwfm9
+RT0JKcW88hhmKumZJH4Fa/ZMv+ZxXkUfzeTJcoBxCxX26pTeArO6rbuvTt+lP0mi
+VYW6eRF8tj8x3G8P4y28MY0I+Gt+RtdYWKT8JIfSZAzCJ2kE3JawJeoWZnPg2DkI
+GWHwv4IsFQ3qR7LPTXiR8vssSqmbSz/yGhhxw+j8BQX9jZDIIOa8vLa/VvUcD+4b
+o+8Jd2B2z8mtW+0kvOpjS5PWImu6FcW6hIKz3rWuZPwf6V3aFeNUq7o0gQmlTVSQ
+zTn4nNzmO2MUwIjhNcs0tY6ZVHA03UxrOhpQlqHqIuF46ZFCeVcJa2abLUJ/LNnP
+1chRa6DzdoLXnolOZ+Ar2zZgCe5TTuDqBDAptJiil3x746t5diRENTM3ugIgoHB6
+2Yxy2h56FCm/7kUVsxcAfKXhESRW4LlUntRm+/srzzcwC3EaDTSwfZQ6TJ9B3SRN
+6aIFdk5Xslh0HIXdopki1N6ARx4TVnuR1Ig+ZAFpt1qpVacagfEeal/FS165XWoW
+fFQy3/Tmp17Wzo0OVdRB8QJ9rFUl/+n43QC9YTjY7nMXCqOoB0wi9bQxA24rnYAC
+M4cRulVA85Fx9CEYoM6YpPG0BaKBZeFj9V+lp8+iulIrwZhJhPt4XIUE5G82uUpK
+6mlvmh9ms2QtESksk/Un
+=kBd8
+-----END PGP SIGNATURE-----
