@@ -1,28 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/22/9
-Message-ID: <514CC27E.4080805@redhat.com>
-Date: Fri, 22 Mar 2013 14:43:42 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/8
+Message-ID: <5162F7AB.7080301@redhat.com>
+Date: Mon, 08 Apr 2013 11:00:27 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for "Views" (Drupal contributed module)
+CC: Damien Regad <damien.regad@...ckgroup.com>
+Subject: Re: Re: Multiple CVE requests for MantisBT
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/22/2013 02:01 PM, Forest Monsen wrote:
-> Hi there,
+On 04/08/2013 03:47 AM, Damien Regad wrote:
+> Kurt Seifried <kseifried@...> writes:
+>> Please use CVE-2013-1930 for this issue.
 > 
-> I'd like to request a CVE identifier for this:
+> Hi Kurt,
 > 
-> SA-CONTRIB-2013-035 - Views - Cross Site Scripting (XSS) 
-> http://drupal.org/node/1948358
+> Thanks for assigning the 3 CVE's.
 > 
-> Thanks!
+>>> 4. XSS issue on Configuration Report page when displaying
+>>> complex value
+>>> 
+>>> This issue affects Mantis 1.2.0rc1 and later.
+>>> 
+>>> Lack of proper string escaping allows users (having admin
+>>> access) to enter arbitrary javascript code and have it executed
+>>> on the user's browser.
+>>> 
+>>> Reference: http://www.mantisbt.org/bugs/view.php?id=15416
+>> 
+>> Does this count as a proper release or does it fall into the
+>> "beta" classification?
 > 
-> Best, Forest
+> 1.2.0rc1 was a beta release. The first "proper" release affected by
+> this was 1.2.0
 
-Sorry Jan asked first =)
+Ok not assigning a CVE then, unless there are a large number of users
+betas don't get CVEs.
+
+> Hope this clarifies, let me know if you need more info.
+> 
+> Damien
+> 
+> 
 
 
 - -- 
@@ -31,17 +52,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRTMJ+AAoJEBYNRVNeJnmTI+cQAL4GXVMNgX3CfjFLZG+uF1IL
-5EQFsBO2zj1HWO+/mJeW9cuvo1UDxcX1fuSlSqQB5DuyuHbjBt+tEngP/I/soLfs
-Q9lkfOEwOz0BA9+fEWXdO+O1XNOoxpso6KqiQeBeNcTR7AodpAN1T4NUNQL6qn2c
-uLf6xsr/j2rq+jHn+pUxIf39BdrTD2R8g9o5hiz7wAF2wTPUddcxnlLBgGgRJlb1
-WM9rEwvl7WmPbG5ge7ZD9zbUTdb6UlkcERWejwcmp250ILfqq4B6BTtmgjo8MhG5
-Z0Q1yjEsgWiK0zyMgHmM3OhY+QgyB4Mcep6vRbkF5b4qMqbRUCWPNz8FO89738kq
-EO16blYwreDN76ax94PRauEIKiYsBHFXHCyGYWqVp7/uOaRqqosWVc60m7su7icH
-tz3QpQtVdZBW5nrUDcREDSz+0jvvUSirec7iIaAfB9XVB4gp3s3VPluW3Lkh82tx
-YIsyMbPbL8zAZXJot07vhsdc+Q0AMJf/1n9+GmBbzJN2rhOBAZlpxDAXO8IdMRa7
-SCJcKJINv31XJt/Ls2V8cmlqxnUmdQDFjBTnO7RdfOUeO6H+A21lYQftcqutPoz7
-qb22YlRuN6G2p+NdA44O77IGXp9NjEIX5SlXKVNwusOfUdcr+FBnA0GV9KA7t9EI
-TTFBNcSL8+6Bk3E5NjBq
-=2gWb
+iQIcBAEBAgAGBQJRYverAAoJEBYNRVNeJnmTY7MP/AqImz3OEiHIMEJtdTaIe5f/
+d+t9UypinW/nTjV3CCovR93F2om90Z9h891OBWSBvozJdab3NRyHZKFRrjyG275a
+6pdVMP9IXrKjxUn30P58JDLc8D9cUZHazE45hXmhLz8UBs44m/rW2TtqTNkuZwqp
+9jwrH/PbFZj1rIsWpizY5NJW0dpA34Okj2Kj//GpMSHjzocEpSzw0q9NUSMxij63
+WZ2jql+yLihYULjPRF2IeTl+TkhPlmIlhmxitKKt+lV+ZAyR3MAFE5Y2z8WKLiGi
+nf/94izFZLUJ1sMlXRRBTlXV4NfR71jElT0M4JBVQW1Ph7mlULA13f30TFEOjCuS
+hM4DPMPHyWHp5N2nGDGizkh1b99JBawUkMpPOAMlDEJYnwZVar70UgCzoKpjsbuc
+3Yo0s8mS+DdOOWz3oOpaf+PImaFgHfrxgkIyEB/PuIja27vo7aYV/7gYjSeSqn5x
+9sV+4tFD3vLsI7E5KPYGG7s8w/JYw7mfBUnYLJLuOuLu+YpqkTj4ooM/YZNYjHk2
+CoJ4gZMwdeHy6i+MlqCThUthb99xcnVbXhwF5b3in4We0LmCOzmpV9do+wj1VA+L
+HW6JtoaszYaJ0vkLknPwHjuq5eIn0UkSm7EKjVgzfjgbyjMj/PMEnh/YPewSvRyE
+MfUeMokQsR54xX0d8HOb
+=uiSE
 -----END PGP SIGNATURE-----
