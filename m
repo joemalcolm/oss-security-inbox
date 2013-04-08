@@ -1,87 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/2
-Message-ID: <ff65c54d-e709-4721-93a8-ebb36fa51f54@email.android.com>
-Date: Mon, 19 Aug 2013 21:04:07 -0400
-From: Landon Hurley <ljrhurley@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: PostgreSQL insecure install via yum (multiple problems)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/6
+Message-ID: <alpine.LFD.2.03.1304082148570.6859@redhat.com>
+Date: Mon, 8 Apr 2013 22:18:30 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: Dan Carpenter <dan.carpenter@...cle.com>
+cc: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+  Hello Dan,
++-- On Mon, 8 Apr 2013, Dan Carpenter wrote --+
+| The x86 version is ok but asm-generic version of get_user() doesn't clear x.
+| 
+| include/asm-generic/uaccess.h
+| 
+|    226  #define get_user(x, ptr)                                        \
+|    227  ({                                                              \
+|    228          might_sleep();                                          \
+|    229          access_ok(VERIFY_READ, ptr, sizeof(*ptr)) ?             \
+|    230                  __get_user(x, ptr) :                            \
+|    231                  -EFAULT;                                        \
+|    232  })
 
-Kurt Seifried <kseifried@...hat.com> wrote:
->Problem:
->
->So I wanted to install PostgreSQL 9.2 to test something. So I google
->"postgresql 9.2 rpm" and get sent to:
->
->http://yum.postgresql.org/repopackages.php
->
->which is not available by HTTPS at all. Not ideal but ok, I download
->it over HTTP because I can check the signature on the file right?
->
->Wrong, I can't find the key anywhere. I try pgp.mit.edu, I even google
->site:postgresql.org 442df0f8 and all you get are archived emails with
->the warning that the signature can't be checked. No copy of the key.
+  Here, following call sequence ensures that 'x' is always initialised with 
+user memory contents.
 
-Kurt,
-pgp.mit.edu is deprecated. I recommend searching 0x442df0f8 on
- pool.sks-keyservers.net which does return a key.
+ get_user
+  -> __get_user
+   -> __get_user_fn
+    -> __copy_from_user
 
-landon
+Unless `access_ok()' in `__get_user' returns 0, which it does not, OR 
+sizeof(*ptr) is > 8 bytes.
 
-
-
->Solution:
->
->Can PostgreSQL please setup HTTPS immediately for this site, and also
->publish the GPG key used to sign their RPMs in a secure manner (e.g.
->on the HTTPS site)?
->
->To replicate:
->
->$ wget
->https://yum.postgresql.org/9.2/redhat/rhel-6-x86_64/pgdg-centos92-9.2-6.noarch.rpm
->
->Fails.
->
->$ wget
->https://yum.postgresql.org/9.2/redhat/rhel-6-x86_64/pgdg-centos92-9.2-6.noarch.rpm
->
->Gets the file but:
->
->$ rpm -K pgdg-centos92-9.2-6.noarch.rpm
->pgdg-centos92-9.2-6.noarch.rpm: (SHA1) DSA sha1 md5 (GPG) NOT OK
->(MISSING KEYS: GPG#442df0f8)
->
->Signing RPM's isn't very useful if you never make the signing key
->available!
->
->
->--
->Kurt Seifried Red Hat Security Response Team (SRT)
->PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-- --
-Violence is the last refuge of the incompetent.
------BEGIN PGP SIGNATURE-----
-Version: APG v1.0.8
-
-iQJBBAEBCgArBQJSEsCHJBxMYW5kb24gSHVybGV5IDxsanJodXJsZXlAZ21haWwu
-Y29tPgAKCRA3qYf9H1SVrNiiEACZzVMdYrf6LoDKOTaKENvHtJOXYIHzG5QLH+C0
-/uwyC/TES3RdbW5zMyvMT1Nh+zz9w2jSgYIu/BSgFzXt3+GXhySi/s/rftf1+fr5
-K/38OyteKkgbvKJBbvmljTaEoL8rpflXrlR8nL9ozUcv7hLO6If9sQFD+3f5Klfd
-6jx3k0F5g2SLmQLO00o6tC4ro9PhJlU7g05ji75bHQA9S3hwYx8fM75OZN/4hC4U
-fRXHOLLbPfDOOIdM0McHRiMhayMYskoVU7UhV229zZlCf+rD3odcr/eu46wGE/cF
-RmMScyEV3IFuPJAUl4F+ph/j2eKPJ92t73ZtqTbXeIaYL/5AGbbAb8q6BQSoO7oL
-BNftzSdEoisjy9xCCUdrnnih2roNUxVwCzpCyrSRbxbnaagA8+UPOGyvk96jA+Ky
-jAYfgefmIHZ374iaMLhE6KdzqzIcxtZkA3xbjiCgzwJioHbSB0aImsZjaf60G5KX
-TOPwUWc8qFfShhBl0UanTispdMZtdgxEvs+FRluDypQevU0DnFFnu4ZCD7kXEuCO
-cWkORMQt3Av5Nyc7QWi5nhpG6P1d1a9CUGsag9xIGQjbsCaqg4k2X26Uy2M5DPb4
-xfm2jwTvkSd/3fw4eB4hBiqnkWVtKUKUNqIgSa+9uG5fjRy0vdjNLMH2OdHuT5p3
-DgyjGQ==
-=K8qK
------END PGP SIGNATURE-----
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
