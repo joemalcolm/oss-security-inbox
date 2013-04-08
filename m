@@ -1,32 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/2
-Message-ID: <20130328073216.GA6962@openwall.com>
-Date: Thu, 28 Mar 2013 11:32:16 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Corey Bryant <coreyb@...ux.vnet.ibm.com>
-Cc: kernel-hardening@...ts.openwall.com, oss-security@...ts.openwall.com
-Subject: Re: Security vulnerability tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/14
+Message-ID: <51631241.2030808@redhat.com>
+Date: Mon, 08 Apr 2013 12:53:53 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Bastien ROUCARIES <roucaries.bastien@...il.com>
+Subject: Re: New vulnerabilty in imagemagick
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 27, 2013 at 05:17:08PM -0400, Corey Bryant wrote:
-> On 03/27/2013 04:12 PM, Solar Designer wrote:
-> >Guys, can we continue this thread on oss-security only, please?  It is a
-> >topic for oss-security, but less so for kernel-hardening.  Anyone on
-> >kernel-hardening who is interested in this topic should join oss-security.
-> >
-> >Just drop kernel-hardening from further replies.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/07/2013 06:57 AM, Bastien ROUCARIES wrote:
+> Hi,
 > 
-> Sure, sorry about that.  I am interested in tools that are applicable to 
-> the kernel too though, if that changes anything.
+> Imagemagick url coder is affected by a NULL deference trigerrable
+> by user
+> 
+> It only occurs when you use a URL as an image filename and you
+> can't write to the temporary directory which is typically /tmp or
+> whereever MAGICK_TMPDIR env variable points.
+> 
+> As the debian mainteners I believe this is a security (minor) bug
+> that could lead to local dos at least.
+> 
+> Upstream bug is here 
+> http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=23117
+>
+>  Could you please open a candidate CVE number ?
+> 
+> Patch here fix the bug.
 
-It makes sense for you to post a summary of the relevant ones of your
-updates to http://oss-security.openwall.org/wiki/tools to
-kernel-hardening after this discussion thread on oss-security is mostly
-over.  Other than that, I think it's best to keep the thread on
-oss-security only.  Cross-posting all or almost all of it is a mess.
+I'm not seeing any way to trigger this vulnerability reliably (you
+can't send a mangled image, you have to fill up /tmp or something).
+Also the DOS is simply the program can't open the file. Am I missing
+something?
 
-(Hopefully, this is the last cross-post I have to make in this thread.)
 
-Thanks!
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Alexander
+iQIcBAEBAgAGBQJRYxJBAAoJEBYNRVNeJnmTrPgQAKj5T+c11EB/DqF1KCr2JgoG
+BBAJu7JpfTtH+vqZVc6CXySFNOZXrVVzQ66LUmiyyPFvsNIHFgaD58YW3+a3dLuS
+4i1lkvjpMRZ2qoGFad86FwsejWIgUuxeC8Y4VxCssqSxfD35YAE6QP2a/hX+kCv+
+T/eYWb1hR2rHGSAb6d+5QWKr+R/wonpR9QfykM1pbbdp1kUFlmaosL+GwZOk6Ps/
+m/vvyUyUN8gTmNYCdn0inMQslAUAQlFwSjhyNRIkn/5mxJIYPltTGMnRtT5hRo0R
+gQ9ly6X7ICaVEqU6+SgR77gNNxm3pAhEv5OE6koyqiRWgtQmCrC3UYFsy1ryrnyz
+ObfsuM8vIMQh2fVkR094dby/4kMv3mP1alWtQMg8F7AggplbGAko9i5jlD6GL6XJ
+yauMcRJ+tGwAaJlx+I2CiwkxxgMNMXBjJUzfRxMoRbRAGHKsWDzk4AfqWZfSF/sr
+9E111bRls1ph3PqE1NhHc7ZX6KBaeUuOHIstvcsm5FJtR3nPan0QwcDQu5bQL1ZN
+Pi2VGImhL1cPvKFWw5gANnTRoEFXNp+S4sk4TWQY3a/P8Aenzpia4wAjzV47zETo
+BuP07lz44xAT7PhMxyViqDkN/gCQZNpr6Vm14UKoF7OuzP+5qBQ4oP4cigAOdX+9
+aUosZhVuRQbc5/ht+akK
+=rJMU
+-----END PGP SIGNATURE-----
