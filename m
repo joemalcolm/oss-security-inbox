@@ -1,32 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/26/2
-Message-ID: <52BC87E6.4080604@redhat.com>
-Date: Fri, 27 Dec 2013 01:17:50 +0530
-From: Ratul Gupta <ratulg@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/1
+Message-ID: <CANTw=MOxfu5qR+MP86+J4FOxRXzfMRz7qDiepty5xRPsYN_+Tg@mail.gmail.com>
+Date: Sun, 7 Apr 2013 20:28:48 -0400
+From: Michael Gilbert <mgilbert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: rubygem-nokogiri Multiple DoS vulnerabilities
+Subject: cve request: util-linux
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Please assign an id for a somewhat minor information disclosure in
+util-linux.  Details (including commit ids) about the problem can be
+found in the Debian bug report:
+http://bugs.debian.org/697464
 
-1) https://bugzilla.redhat.com/show_bug.cgi?id=1046663
+Based on the git commit log, the relevant commits appear to be first
+included with the v2.23 release.
 
-Nokogiri gem for Ruby was found to be affected by a DoS vulnerability, 
-where an error when parsing XML documents can be exploited by an 
-attacker to cause an infinite loop and subsequently exhaust memory and 
-cause a crash via a specially crafted XML document.
-
-2) https://bugzilla.redhat.com/show_bug.cgi?id=1046664
-
-Nokogiri gem for Ruby was found to be affected by a DoS vulnerability, 
-where an error when parsing XML entities and can be exploited to exhaust 
-memory and cause a crash via a specially crafted XML document including 
-external entity references.
-
-Can CVE's please be assigned to these issues?
-
--- 
-Regards,
-
-Ratul Gupta / Red Hat Security Response Team
-
+Thanks,
+Mike
