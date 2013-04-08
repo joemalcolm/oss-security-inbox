@@ -1,51 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/10
-Message-ID: <20130227074913.GB3756@gremlin.ru>
-Date: Wed, 27 Feb 2013 11:49:13 +0400
-From: gremlin@...mlin.ru
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: psi+ stores the cache file as world-readable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/13
+Message-ID: <20130408184905.GT18466@mwanda>
+Date: Mon, 8 Apr 2013 21:49:05 +0300
+From: Dan Carpenter <dan.carpenter@...cle.com>
+To: P J P <ppandit@...hat.com>
+Cc: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
 Content-Type: text/plain; charset=utf-8
 
-On 26-Feb-2013 19:50:48 -0800, Russ Allbery wrote:
+On Mon, Apr 08, 2013 at 09:44:33PM +0300, Dan Carpenter wrote:
+> On Mon, Apr 08, 2013 at 10:18:30PM +0530, P J P wrote:
+> > 
+> > Unless `access_ok()' in `__get_user' returns 0, which it does not, OR 
+> > sizeof(*ptr) is > 8 bytes.
+> 
 
- >>> Psi+, a fork of psi, stores its files in ~/.cache/psi+ as
- >>> world-readable.
+Oh, you're saying that access_ok() can't fail.  That's true on some
+arches, and not on others.
 
- >> That's normal - users' home directories are normally accessible
- >> only by users themselves, and never by othe users:
- >> gremlin@...n:~ > ls -ld .
- >> drwx-----x 47 gremlin users 20480 2013-02-26 17:48 ./
-
- > That is one possible convention of many for structuring user
- > home directory permissions. It is certainly not universal, and
- > no software should assume that home directory permissions are
- > structured that way when deciding on the permissions of other
- > files created under the user's home directory.
-
-If something is stored in the user's home directory, it's under
-user's responsibility.
-
- > Some of us who have been using UNIX for long enough that we
- > originally learned the permissions system when sharing was
- > emphasized over security do still use world-readable home
- > directories, with specific directories under it restricted.
-
-Yes, I also did that - in previous century :-)
-
- > We would like software, when creating private files, to not
- > assume that it can be careless about permissions of individual
- > files because "of course" the user's home directory is private.
-
-The safer way will be not assuming anything, but instead enforce
-it - at least using the restrictive umask like 077.
-
-gremlin@...n:~ > ls -ld .ssh
-drwx------ 2 gremlin users 4096 2012-12-24 12:56 .ssh/
-
-Just in case...
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+regards,
+dan carpenter
