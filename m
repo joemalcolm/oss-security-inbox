@@ -1,65 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/08/1
-Message-ID: <20130708083150.GK19458@core.inversepath.com>
-Date: Mon, 8 Jul 2013 10:31:50 +0200
-From: Daniele Bianco <danbia@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2013-001] File Roller path sanitization errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/9
+Message-ID: <516304F0.9000104@redhat.com>
+Date: Mon, 08 Apr 2013 11:57:04 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Damien Regad <damien.regad@...ckgroup.com>
+Subject: Re: Re: Multiple CVE requests for MantisBT
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-#2013-001 File Roller path sanitization errors
+On 04/08/2013 11:00 AM, Kurt Seifried wrote:
+> On 04/08/2013 03:47 AM, Damien Regad wrote:
+>> Kurt Seifried <kseifried@...> writes:
+>>> Please use CVE-2013-1930 for this issue.
+> 
+>> Hi Kurt,
+> 
+>> Thanks for assigning the 3 CVE's.
+> 
+>>>> 4. XSS issue on Configuration Report page when displaying 
+>>>> complex value
+>>>> 
+>>>> This issue affects Mantis 1.2.0rc1 and later.
+>>>> 
+>>>> Lack of proper string escaping allows users (having admin 
+>>>> access) to enter arbitrary javascript code and have it
+>>>> executed on the user's browser.
+>>>> 
+>>>> Reference: http://www.mantisbt.org/bugs/view.php?id=15416
+>>> 
+>>> Does this count as a proper release or does it fall into the 
+>>> "beta" classification?
+> 
+>> 1.2.0rc1 was a beta release. The first "proper" release affected
+>> by this was 1.2.0
+> 
+> Ok not assigning a CVE then, unless there are a large number of
+> users betas don't get CVEs.
 
-Description:
+Steve just pointed out I may have misread this. Is 1.2.0 vulnerable,
+and this is fixed in 1.2.1, or was it fixed in the 1.2.0 release (so
+ONLY 1.2.0-rc1 was affected)?
 
-The File Roller archive manager for the GNOME desktop suffers from a
-path traversal vulnerability caused by insufficient path sanitization.
+> 
+>> Hope this clarifies, let me know if you need more info.
+> 
+>> Damien
+> 
+> 
+> 
+> 
+> 
 
-A specially crafted archive file can be used to trigger creation of
-arbitrary files in any location, writable by the user executing the extraction,
-outside the current working directory. This behaviour is triggered when the
-option 'Keep directory structure' is selected from the application 'Extract'
-dialog.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-The issue is present on File Roller installations which have been
-compiled with libarchive support, used to handle tar, cpio, lha, 7zip, ar
-archiving formats and ISO images. The libarchive support is enabled by
-default.
-
-Affected version:
-File Roller >= 3.6.0, >= 3.8.0, >= 3.9.1
-
-Fixed version:
-File Roller >= 3.6.4, >= 3.8.3, >= 3.9.3
-
-Credit: vulnerability report received from Yorick Koster 
-        <yorick.koster AT securify.nl>
-
-CVE: CVE-2013-4668
-
-Timeline:
-2013-05-16: vulnerability report received
-2013-05-20: contacted File Roller maintainer
-2013-05-27: maintainer provides patch for review
-2013-05-28: reporter confirms patch effectiveness
-2013-06-11: oCERT confirms patch effectiveness
-2013-06-17: File Roller 3.9.3 released
-2013-07-02: File Roller 3.6.4, 3.8.3 released
-2013-07-04: contacted affected vendors
-2013-07-04: assigned CVE
-2013-07-08: advisory release
-
-References:
-http://fileroller.sourceforge.net
-http://git.gnome.org/browse/file-roller
-https://git.gnome.org/browse/file-roller/commit/?id=b147281293a8307808475e102a14857055f81631
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2013-001.html
-
---
-  Daniele Bianco      Open Source Computer Security Incident Response Team
-  <danbia@...rt.org>                                  http://www.ocert.org
-
-  GPG Key 0x9544A497
-  GPG Key fingerprint = 88A7 43F4 F28F 1B9D 6F2D  4AC5 AE75 822E 9544 A497
+iQIcBAEBAgAGBQJRYwTwAAoJEBYNRVNeJnmTB3IP/R29jPp63GvWs/kBjEyHgpDc
+QTgMSSNTwLKdn0AWE9tUmh63TWjbBrIqndh3N1Sd2rN7ZFExkOMkgvCndZIzdy+F
+w3kiG38W7zZIObHrBsHTnM112pc40wOWNt/Qxy9zn5ExNP8AtIyb/iHfYSvqyTNh
+tFPZT23849d/RtoKmZ1E7NDACvEHvSCVj4032AzRNFsBjxH+RXT+dF3gWVj257Sf
+MQVLghMBzya4vo/s0vvGdmu2t44+GtNwP1vSh/LWObBx60Yc+DdJvqBS9IcH7na0
+K7pociQ6Gk/LTcB1f0G3w5aNGzTBRk3VPt1/m0tlortH03hQ1elt41YxPGTKXyAA
+K1yfE++VQQ3pBJVR0fNNr2FguPYpAWlGWAufeUkzBJOUKdQNul4iDWzPUaETiyUQ
+QiK8VhWwckR17aI5xVmmA580S11fVGFtwCFwc8lZlk8ayzvq8ZmjKckDv2ZOOSy/
+OyvD6yd3ZNxMrTXXKJsDUdtmKe0dG2fp8YFfpn1tVZXhaKAU5a4kTl3aWGgDBZTa
+X/1FUNK6YCC0dVgHBF6QgFy6Jg7y4xwxL9upGkueerYf9b/kJzHEbRgQ6s/OTf4j
+I2+bDD+5oBMsWly12tNybbGOUItEXDJesO4TYtOqX8aWO3t0gJsa9IZMsqwTaq4t
+TQGvpC+vhflNs2EdknVc
+=gziP
+-----END PGP SIGNATURE-----
