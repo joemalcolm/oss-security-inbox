@@ -1,21 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/16
-Message-ID: <20131115193828.GA8495@hunt>
-Date: Fri, 15 Nov 2013 11:38:28 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/18
+Message-id: <CB8532D5-7A2C-462B-99A5-07CDF94D8874@apple.com>
+Date: Mon, 08 Apr 2013 16:02:39 -0700
+From: Geoff Keating <geoffk@...le.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: cryptographic primitive choices [was: Re: Microsoft Warns Customers Away From RC4 and SHA-1]
+Subject: Re: Any info on dovecot CVE-2010-0535?
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 14, 2013 at 11:58:47PM -0700, Kurt Seifried wrote:
-> Think of all the things that currently use (often older versions of)
-> OpenSSL/PolarSSL/GnuTLS/etc and will never get updated...
+On 07/04/2013, at 6:29 pm, Michael Gilbert <mgilbert@...ian.org> wrote:
 
-This is an argument for agressively assigning CVEs. If we're going to
-have devices on our networks that are known to be a decade behind the
-state of technology we should clearly label them as the security risk
-they are. (TLS 1.2 is over five years old.)
+> I'm in the process of reviewing some older untriaged issues in the
+> Debian security tracker.  I came across this Apple id (CVE-2010-0535)
+> in dovecot.  Being Apple advisory, there is absolutely no useful
+> information included, but based on the text, the issue is dependent on
+> Kerberos.
+> 
+> I found no other dovecot CVEs involving Kerberos, so the question I
+> have is whether this is still currently an unfixed issue affecting
+> dovecot?  Was it Apple-specific?
 
-Thanks
+Hi Michael,
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+This is Apple-specific.  It affects the db-od auth method.
+
+> Generally, what can be done by
+> distro security teams about issues with no actionable information?
+> Would Mitre be willing to nudge Apple for information?
+
+Apple's on this list so you can always just ask...
