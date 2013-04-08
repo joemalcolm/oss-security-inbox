@@ -1,29 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/2
-Message-ID: <CAA7hUgGGZOUX0CueP=AYSYFT14gA-TMnLmvR2pnd=qkV46RhXA@mail.gmail.com>
-Date: Thu, 11 Jul 2013 16:53:12 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: squid-bugs@...id-cache.org
-Subject: CVE request: SQUID-2013:2: buffer overflow in HTTP request handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/5
+Message-ID: <alpine.LFD.2.03.1304081801490.32035@redhat.com>
+Date: Mon, 8 Apr 2013 18:30:02 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+  Hi,
++-- On Fri, 5 Apr 2013, Marcus Meissner wrote --+
+| Should also get a CVE.
+| https://github.com/torvalds/linux/commit/12176503366885edd542389eed3aaf94be163fdb
 
-Squid has released a security advisory[0]:
-> Due to incorrect data validation Squid is vulnerable to a buffer
-> overflow attack when processing specially crafted HTTP requests.
+Comments around get_user() macro say that in case of an error, destination 
+variable @x is set to zero.
 
-[0]http://www.squid-cache.org/Advisories/SQUID-2013_2.txt
+ -> https://github.com/torvalds/linux/blob/master/arch/x86/include/asm/uaccess.h#L134
 
-Could a CVE id be assigned please?
+Just to confirm, is it the same macro that is called from fs/compat_ioctl.c ?
 
-Thanks in advance.
-
-[CC'ing squid's security address so that they can include the id in
-the advisory once assigned]
-
-Cheers,
+Thank you.
 --
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
