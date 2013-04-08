@@ -1,102 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/29/1
-Message-ID: <20131229233801.GB9236@kludge.henri.nerv.fi>
-Date: Mon, 30 Dec 2013 01:38:01 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Zenphoto 1.4.5.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/11
+Message-ID: <CAHQz1rLZgny6GXDyrLj7TgCfsLaeA6N6St-Jw4bgLJpANXPpBw@mail.gmail.com>
+Date: Mon, 8 Apr 2013 15:34:15 -0300
+From: Breno Silva <breno.silva@...il.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- ModSecurity (X < 2.7.3): Vulnerable to XXE attacks
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVEs for following issues in Zenphoto, thanks.
+Hello Jan,
 
-Advisory: http://www.enkomio.com/Advisory/SOJOBO-ADV-13-01
-http://seclists.org/bugtraq/2013/Oct/20
-Advisory ID: SOJOBO-ADV-13-01
-Vendor news: http://www.zenphoto.org/news/zenphoto-1.4.5.4
+Are you guys backporting de patch to old versions of ModSecurity ?
 
-http://osvdb.org/98091
-http://osvdb.org/98092
+Thanks
 
-"""
-A) Cross Site Scripting in mergedRSS.php [Impact: 3/5]
+Breno
 
-Follow a trace to reach the vulnerable code.
 
-File: zp-core\zp-extensions\mergedRSS.php
-43: $MergedRSS = new MergedRSS($feeds,
-strip_tags(get_language_string($gallery->getTitle(), $locale)), FULLWEBPATH, 
-strip_tags(get_language_string($gallery->getDesc(), $locale)), $feed_date);
-..
-46: $MergedRSS->export(false, true, 20);
-..
-98: public function export($return_as_string = true, $output = false, $limit =
-null) {
-..
-140: $xml .= "\t<atom:link
-href=\"http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."\"; rel=\"self\" 
-type=\"application/rss+xml\" />\n";
-..
-165: if ($output) { echo $xml; }
+On Wed, Apr 3, 2013 at 9:23 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
 
-The variable '$_SERVER['PHP_SELF']' is considered a tainted input and can be
-manipulated in order to insert valid HTML 
-code.
+> Hello Kurt, Steve, Breno, vendors,
+>
+>   ModSecurity upstream has released v2.7.3 version:
+> [1] https://github.com/SpiderLabs/ModSecurity/blob/master/CHANGES
+>
+> correcting one security flaw (from [2]):
+> "It was reported that the XML files parser of ModSecurity,
+> a security module for the Apache HTTP Server, was vulnerable
+> to XML External Entity attacks. A remote attacker could
+> provide a specially-crafted XML file that, when processed
+> might lead to local files disclosure or, potentially,
+> excessive resources (memory, CPU) consumption."
+>
+> References:
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=947842
+> [3] https://bugs.gentoo.org/show_bug.cgi?id=464188
+> [4] https://secunia.com/advisories/52847/
+>
+> Relevant upstream patch (seems to be the following):
+> [5]
+> https://github.com/SpiderLabs/ModSecurity/commit/d4d80b38aa85eccb26e3c61b04d16e8ca5de76fe
+>
+> Could you allocate a CVE id [*] for this?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> [*] According to:
+> https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ModSecurity
+>     there doesn't seem to have been a CVE id allocated for this issue yet.
+>
 
-B) Sql Injection in wordpress_import.php [Impact: 1/5]
-
-This vulnerability has various precondition that need to be satisfy in order to
-be exploited. Admin rights are 
-necessary, also
-the user must specify a valid hostname, username and password database
-connection (can be obtained via password 
-guessing). Due 
-to this precondition the impact was lowerd to Very Low. 
-
-Follow a trace to reach the vulnerable code.
-
-File: zp-core\zp-extensions\wordpress_import.php
-76: if(isset($_REQUEST['dbname']) || isset($_REQUEST['dbuser']) ||
-isset($_REQUEST['dbpass']) || 
-isset($_REQUEST['dbhost'])) {
-..
-82: $wp_prefix = sanitize($_REQUEST['tableprefix']);
-..
-120: if(!isset($_GET['refresh'])) {
-121: $cats = wp_query_full_array("SELECT * FROM
-".wp_prefix('terms',$wp_prefix)." as terms, 
-".wp_prefix('term_taxonomy',$wp_prefix)." as tax WHERE tax.taxonomy = 'category'
-AND terms.term_id = 
-tax.term_id",$wpdbconnection);
-..
-55: function wp_query_full_array($sql,$wpconnection) {
-56:             $result = mysql_query($sql,$wpconnection) or die(gettext("Query
-failed : ") . mysql_error());
-
-where 'wp_prefix' is:
-
-67: function wp_prefix($tablename,$wp_prefix) {
-68:     return '`'.$wp_prefix.$tablename.'`';
-69: }
-
-the function 'sanitize' is:
-
-File: zp-core\functions-common.php
-145: function sanitize($input_string, $sanitize_level=3) {
-..
-152: $output_string = sanitize_string($input_string, $sanitize_level);
-..
-177: function sanitize_string($input, $sanitize_level) {
-..
-192: case 3:
-..
-194: return strip_tags($input);
-
-'strip_tags' doesn't validate against SQL Injection vulnerabilities. 
-In order to exploit this vulnerability the user must be logged as admin, this
-precondition severely limits the impact.
-"""
-
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
