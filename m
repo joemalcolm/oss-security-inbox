@@ -1,40 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/28/9
-Message-ID: <alpine.LRH.2.00.1302280930200.30582@twin.jikos.cz>
-Date: Thu, 28 Feb 2013 09:31:40 +0100 (CET)
-From: Jiri Kosina <jikos@...os.cz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/13
+Message-ID: <51644D13.5070509@redhat.com>
+Date: Tue, 09 Apr 2013 11:17:07 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+CC: Salvatore Bonaccorso <carnil@...ian.org>
+Subject: Re: CVE Request: Self-XSS in phpmyadmin fixed in 3.5.8
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 28 Feb 2013, Yves-Alexis Perez wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> > > - not letting kernel dereference userspace pointers (and PMAP is
-> > not 
-> > >   available everywhere, unfortunately)
-> > 
-> > What do you mean by this?
+On 04/09/2013 06:01 AM, Salvatore Bonaccorso wrote:
+> Hi Kurt
 > 
-> This looks like PaX KERNEXEC/UDEREF (which uses segmentation on i386 and
-> code instrumentation through gcc plugins on x86_64). 
-
-Yes, exactly. You can now apparently also add ARM to the list of 
-architectures where it's been made available [1] by the grsecurity folks.
-
-[1] http://forums.grsecurity.net/viewtopic.php?f=7&t=3292
-
-> On Ivy Bridge processors you have SMEP which will also prevent ring0 to
-> execute code from unprivileged pages and on Haswell there will be SMAP
-> which tries to prevent ring0 to access ring3 pages read/write when not
-> needed (outside of copy_{to,from}_user for example but there are
-> others).
+> New phpMyAdmin release (3.5.8) contains the following changelog
+> entry:
 > 
-> But, as Jiri said, this is not available everywhere so people with more
-> ancient hardware can't benefit from those extensions.
+> 3.5.8.0 (2013-04-08) - bug #3828 MariaDB reported as MySQL - bug
+> #3854 Incorrect header for Safari 6.0 - bug #3705 Attempt to open
+> trigger for edit gives NULL - Use HTML5 DOCTYPE - [security]
+> Self-XSS on GIS visualisation page, reported by Janek Vind - bug
+> #3800 Incorrect keyhandler behaviour #2
+> 
+> refering to a XSS vulnerability on the GIS visualisation page. [1]
+> is the reference by Janek Vind, upstream commit afaics [2].
+> 
+> [1]: http://seclists.org/fulldisclosure/2013/Apr/100 [2]:
+> https://github.com/phpmyadmin/phpmyadmin/commit/79089c9bc02c82c15419fd9d6496b8781ae08a5a
+>
+>  Could a CVE be assigned to this issue?
+> 
+> Regards, Salvatore
 
-Yup, sorry for my typo above, I of course meant SMAP, not PMAP.
+Please use CVE-2013-1937 for this issue (perfect CVE request BTW,
+thanks!).
 
-Thanks,
 
--- 
-Jiri Kosina
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRZE0SAAoJEBYNRVNeJnmTO5wQAKWUZnBtTi5F/xp0cakFX2rK
+0NBhcT4NOAxJBdXcUDIAFHb2yfHLvYgTTjrIrSI10Rv+vEl594h51nzYaL427xVJ
+RmKc0Na86bvBd/UxMxXidE1sHb+bqSNAAWEw4UKd/+WHVyTc6BlzPpsVuU+chRI6
+rQ+Iq0+8YWNqXYsRtHnLTEjdZ0B2PiPZGwu+bNA1j30BbXEz/mb6uJWLhCouBJvK
+7w2gan8YMOa7g7JWg+eF0HIdJ2xLHzDxHKN2mAYt6U/t4t0W0ewsTcc61YvoAqx7
+5IWoMcMq7g897Qayg0gbWsVVEQkKbQVLxpkklhn2PW3elai7LeOXcc5ZEAOqut9h
+Mhn0ZU4i9X1fIVFmKnbCERQ2aX5cCZKiWsm7k3TwrzlaevU9zK9hgM0dfZGeAc8E
+kSImV4ATW2AiO0KLBUepEB+FK00x8IvXzvlviIdVaNebvy9BdHIB2Br146tkVPQ9
+eycb8gQDP+1P6IpA9iBQRTmQ2pBqlNXpc3pO156yDrQXAgBL8AW0q23lrjXI7iU8
+Zni4c5sPjZNqCZoDUYMyovDwOit5OZpxxFa9tNqSnfHFxQdVgjViwJQj9GEmsSdV
+m2k/c+MQkEoyxUIFAzVOnpFtwmTpeHCfMrKZES1dVNn6kkfGW0frU2DbVJFuDvYH
+ANAayFplBv1LGSw03HBC
+=M3k7
+-----END PGP SIGNATURE-----
