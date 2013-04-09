@@ -1,17 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/01/6
-Message-ID: <20130301164301.GA19358@suse.de>
-Date: Fri, 1 Mar 2013 17:43:01 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: various gems in aftermath of rubygem actionpack issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/11
+Message-ID: <20130409134125.GA1834@gmail.com>
+Date: Tue, 9 Apr 2013 14:41:26 +0100
+From: Athmane Madjoudj <athmanem@...il.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: Breno Silva <breno.silva@...il.com>, "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request -- ModSecurity (X < 2.7.3): Vulnerable to XXE attacks
 Content-Type: text/plain; charset=utf-8
+
+On Tue, Apr 09, 2013 at 05:26:42AM -0400, Jan Lieskovsky wrote:
+> Hi Breno,
+> 
+>   (Cc-ing Athmane on this due reasons which will get obvious below).
+> 
+>   thank you for checking with us.
+> 
+> AFAICT to fix this in Fedora and Fedora EPEL-6 versions, we have
+> just rebased to latest upstream 2.7.3 version. But you are truly
+> right (assuming this being the reason you are checking with us),
+> that on Fedora EPEL-5 we are shipping older (2.6.8 based version
+> of ModSecurity).
+> 
+> FWIHL:
+>   [1] https://bugzilla.redhat.com/show_bug.cgi?id=947842#c1
+> 
+<...snip...>
 
 Hi,
 
-I think these rubygem updates have got no CVE entry/ies yet:
-https://support.cloud.engineyard.com/entries/22915701-january-14-2013-security-vulnerabilities-httparty-extlib-crack-nori-update-these-gems-immediately
+I forgot to mention in bug report that an EPEL5 update which still uses 2.6.8 release (libxml2 in el5 is too old) is scheduled with backborted patch just like with CVE-2012-4528.
 
-Or should we use the Rubygem Action Pack CVE ids for it too (CVE-2013-0156)?
+Thanks.
 
-Ciao, Marcus
+-- Athmane, Fedora / EPEL mod_security maintainer
