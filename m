@@ -1,114 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/26/1
-Message-ID: <51F1E206.6060409@redhat.com>
-Date: Thu, 25 Jul 2013 20:42:14 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-CC: oss-security@...ts.openwall.com, Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: CVE Request: evolution mail client GPG key selection issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/19
+Message-ID: <516464F4.3030109@msgid.tls.msk.ru>
+Date: Tue, 09 Apr 2013 22:59:00 +0400
+From: Michael Tokarev <mjt@....msk.ru>
+To: oss-security@...ts.openwall.com
+CC: Russ Thompson <russ@...dbit.com>
+Subject: Re: Postfix incorrect permissions on configurations. Request.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+09.04.2013 22:55, Russ Thompson wrote:
+> The scripts inside are -world- executable, is the main concern here.  Certainly this can be changed by the end user but seems like an insecure default.  I've seen discussions and CVE's assigned for past cases where log directories are world readable and vice versa, if this is not the correct place to send, please advise.
 
-On 07/25/2013 02:10 PM, Daniel Kahn Gillmor wrote:
-> On 07/25/2013 03:19 PM, Kurt Seifried wrote:
->> One problem moving it to the backend is I may trust your key to
->> sign email, but not to sign code and vice versa. At least for RPM
->> this is handled internally (you install the key into RPM) so
->> that's one less worry.
+What's wrong with the scripts being world-executable?
+They run with user permissions, if the user can't read
+or write something the script wont do it either.
+There's no need to change the default.
+
+And especially there's no need to change permissions
+for main.cf and master.cf - these files don't contain
+private information (if you use, say, sql map, its
+username+password is stored in a separate file with
+proper permissions).
+
+Please don't top-post.
+
+Thanks,
+
+/mjt
+
+> On Tuesday, April 9, 2013 at 2:19 PM, Michael Tokarev wrote:
 > 
-> gpg doesn't claim to know *anything* about what you "trust" keys to
-> do other than whether you're willing to rely on that key to certify
-> other keys.
-
-Yeah that was why I think in some cases it's better to have the policy
-decision in the front end which would support more subtle distinctions
-than "trust" and "no trust".
-
-> gpg can tell you "this message was signed by dkg" but it cannot
-> (and should not) say "dkg is allowed to upgrade your libc".
-
-True, but as a thought experiment, an extension to GPG or perhaps a
-layer sitting on top of it that let you specify properties with the
-key like "allow signing of sandboxed apps" or "allow signing of core
-system apps" or "allow signing of documents" or "allow signing of
-legal document" and so on, allowing you to keep that policy in one
-spot rather than in your software package manager, your word
-processor, etc. seems like not the worst idea. Although realistically
-it would become hideously complicated and messy and no-one would have
-any idea what their settings were or what they meant (much like
-browser security settings back in the day).
-
-> basically, gpg's job is to handle the authentication side of
-> things (which is all that an MUA cares about) but *not* to handle
-> the authorization side of things.
+>> 09.04.2013 22:08, Russ Thompson wrote:
+>>> Postfix is setting the following permissions by default on Debian Squeeze. I'm seeing roughly the same on RHEL/CentOS 6.x, this appears to be a requirement of "sendmail.postfix" 
+>>>
+>>> 0755 /etc/postfix
+>>> 0644 /etc/postfix/*
+>>> 0755 /etc/postfix-script
+>>> 0755 /etc/post-install
+>>>
+>>> Which allows all users to execute these scripts and read configurations. Setting to tighter/more typical permissions (i.e 640) results in: postfix/sendmail[21007]: fatal: open /etc/postfix/main.cf: Permission denied
+>>
+>> That's all nice, but can you elaborate a bit -- what is wrong
+>> with that? Which request do you have? What it has to do with
+>> oss-security?
+>>
+>> Thanks,
+>>
+>> /mjt 
 > 
-> Authorization is rightly scoped by different uses of the
-> infrastructure, as you suggest.  Some work is being done on this
-> too: Stef Walter's current developments of p11-kit aim at allowing
-> tools in a similar domain (initially, web site X.509 certification
-> and potentially code signing) to share authorization information.
-
-Interesting. For completeness:
-http://p11-glue.freedesktop.org/p11-kit.html
-
->> Yup. Key management sucks even with good software, and we don't
->> have good software for this. Witness CRL/OCSP and then all the
->> vendors shipping browser updates to specifically blacklist
->> compromised certificates.
 > 
-> indeed.  Same sort of problem, same shitty non-scalable solutions
-> :(
 
-Well of all people (not to surprising) it looks like entities like
-CloudFlare might actually be able to provide reliable OCSP responders
-(which sadly no CA ever has AFAIK).
-
->> Yeah the use of KeyIDs is just stupid (although I get why they
->> did it, I still think it was stupid), they're to short. We should
->> be using fingerprints only. Sigh.
-> 
-> even if it uses full fingerprints, the fact that i can associate
-> your primary key as a (revoked) subkey of mine means i can force
-> the keyservers to include one of my keys when anyone goes to
-> refresh yours.
-> 
->> True, and trust me if my key ever gets compromised (and I know
->> about it) I'll be phoning certain people and not relying on key
->> revocation to let them know.
-> 
-> That's a good idea, but i hope you don't see the two tactics as
-> mutually exclusive.  Personal notification is guaranteed to miss
-> some people, especially for people whose key is used publicly (like
-> yours is).
-
-Yup, but I'm not relying on my boss/coworkers/you guys noticing key
-revocation, I'm calling them and whatnot =)
-
-[snip]
-
-> --dkg
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJR8eIGAAoJEBYNRVNeJnmTYeoQAI4JEUEGSKMMvKNoIVwOYTlI
-MZRveV4v+IdYiVYwSiWtl05pqtS9wUO1usnasfR+TqMuf7/60UpK6psMpjF44WM1
-WipIGBDlaLdafI4PbpEbiHv8d4gQeGRAzAqrZ8XCtwOmev0G+Z6JFzLSnzmaZLSG
-khMR9dalRpKLabbOgHQkTSvbfeCLfO1DJ4tYL76bcQ12D6Ru1wmMOzfok3pO9JTd
-9mA/qUwL/8lXbAP2yIgyvYIW0G0x5cqNrvsWbcEFdXq7O3UaQla0QlukelmwWXzg
-9zkB0pE4VmNfIbTI4vE2ZbJcLkywYdTerdJxawEV7dhBo0CDCdkUHGJub4vCp5BB
-mOaZYFMHvymApiLcgRRPoVrwQaFeRYwQUikw364k8HnWXNcmjYIa5kU58x4Pdh1S
-scl6nsMxNXnh05Bl3Td01HIndhfVeZqqcvG3T8FbKYLmDh32cZOij+lUFImqLDKf
-QkeQ5Hmyp4M5iuavV+ACmc5GWHvzMbRh2mHG6O/kb2+g8AgabbOaBBgMbE16scqh
-3N474XqB9qQ8y6BrfBW3m1+KqaJEH+sAgRa7XbQteNuTP37QLAfxINuQRpd5Vd0l
-Nkrmrl1oiBWhq1n8mDDFgoWhKB4DtMNtmWvz0l5F2bdjhCcrzzkL3I/zqiR1AL1h
-bNzQxVXHUhqFGOUjQztH
-=FWjU
------END PGP SIGNATURE-----
