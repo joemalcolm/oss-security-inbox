@@ -1,66 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/3
-Message-ID: <5215AEEF.40800@redhat.com>
-Date: Thu, 22 Aug 2013 00:25:51 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Thijs Kinkhorst <thijs@...ian.org>
-Subject: Re: CVE request: lcms 1.x buffer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/12
+Message-ID: <20130409135810.GB1834@gmail.com>
+Date: Tue, 9 Apr 2013 14:58:11 +0100
+From: Athmane Madjoudj <athmanem@...il.com>
+To: Breno Silva <breno.silva@...il.com>
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request -- ModSecurity (X < 2.7.3): Vulnerable to XXE attacks
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 08/21/2013 02:52 PM, Thijs Kinkhorst wrote:
-> On Wed, August 21, 2013 22:20, Kurt Seifried wrote:
->> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->> 
->> On 08/05/2013 06:49 AM, Raphael Geissert wrote:
->>> On 5 August 2013 07:25, Thijs Kinkhorst <thijs@...ian.org>
->>> wrote:
->>>> Buffer overflows have been reported in Little CMS 1.x: 
->>>> http://bugs.debian.org/718682
->>> 
->>> Just a quick note: one of the affected parts of the code is a 
->>> sample and the other is the tiffdiff(1) tool, where the buffer 
->>> overflow is triggered by the file names passed as arguments.
->>> 
->>> Cheers,
->>> 
->> 
->> can you post the filenames/affected code? thanks.
+On Tue, Apr 09, 2013 at 10:43:48AM -0300, Breno Silva wrote:
+> Good. Do you have any idea when it will be available for users ?
 > 
-> You can find it in this patch: 
-> https://bugzilla.redhat.com/attachment.cgi?id=783274 linked from: 
-> https://bugzilla.redhat.com/show_bug.cgi?id=991757
+> The guy who discovered it want to write a blog post with details. So i ask
+> him to wait at least when we have some packages backported.
+> 
+> Thanks
+> 
+<...snip...>
 
-Ahhh sigh. One note: if anyone sees security related flaws in our BZ
-not marked as such please set the "Security" keyword and SRT will get
-magically notified and we'll take a look at it.
-
-Please use CVE-2013-4276 for this issue.
-
-> Cheers, Thijs
-
+We should have epel5 packages in next 24H, but note that they will not be
+available in stable repos until after 15 days or get enough testing from
+users (EPEL policy).
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Thanks.
 
-iQIcBAEBAgAGBQJSFa7uAAoJEBYNRVNeJnmTkj8QAKScy7a42U0+jiMg5suTTzgn
-21Iyk4z9Rlqmr4I4tBCFy9Z4Ikee3X/1nWfABDnzib1b+kbWpIahG0/GZ7yHkEaa
-sJbu/Igj1AxhEiZm3RPpPNX/BmVL+nrgqBasHLQ4Cj3HXZbNDepffltYaSfgLYz+
-Xt5vsGwF1gbeijoxazPvB0LDruP+cohKU4JcItqg8brgBC3ADqyObcPxjWNTzHV6
-9QeNYv3NA4mIWbw/y4XRpCvxu9pSOtiO30K3wFvG/z1NoVXHVXmj+/fddKjvrCy9
-KVPRukncYD4/8KPRO+6hzYYawLOaBNJDNhs15z13jlgCBVEK1vmlLDCnlx9ObOXk
-WemBb4C7GskDq1TgzNayuTgrNZI8utFYcILIIEHE6q7DQOiqblYdIUbAASLpQ6xZ
-YlXI1V7sInpg+RIQ2EYaV/VIQucy74wA3gPu1mWPsV78wBeng43//wyn++e6drjZ
-1iacao6m0sGh05XcQiM9BkU6ekddAbSijCiSJ8eKNbCPFC0b77B93SFj8/KcehfN
-Ss8gwibQGiS8X21C1vgW6R+OV5d8ldwtdaNdvSlLCdwtLjblOaiQQbTdNk/45Crc
-+mmJcWjpqdaelFdokTRX9pVbO3/J52NDjMTUY4d+AqttvaBi3Y0XlvXVrNei2G9t
-18iFm4e5gQzbPOA2wyJu
-=A+zt
------END PGP SIGNATURE-----
+-- Athmane
