@@ -1,37 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/8
-Message-ID: <20130723194954.GC19764@hunt>
-Date: Tue, 23 Jul 2013 12:49:54 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: P J P <ppandit@...hat.com>
-Cc: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Linux kernel: panic while appending data to a corked IPv6 socket in ip6_append_data_mtu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/1
+Message-ID: <516385B7.4080906@redhat.com>
+Date: Mon, 08 Apr 2013 21:06:31 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Damien Regad <damien.regad@...ckgroup.com>
+Subject: Re: Re: Re: Multiple CVE requests for MantisBT
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 24, 2013 at 01:06:38AM +0530, P J P wrote:
->   Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/08/2013 03:30 PM, Damien Regad wrote:
+> Kurt Seifried <kseifried@...hat.com> Wrote in message:
 > 
-> Linux kernel built with the IPv6 networking support is vulnerable to a crash
-> while appending data to an IPv6 socket with UDP_CORKED option set. UDP_CORK
-
-UDP_CORKED? I don't see this string in my /usr/include/ or recent Linux
-git tree.
-
-Am I missing something?
-
-Thanks
-
-> enables accumulating data and sending it as single datagram.
+>>>>>> 4. XSS issue on Configuration Report page when displaying
+>>>>>>  complex value
+>>>>>> 
+>>>>>> This issue affects Mantis 1.2.0rc1 and later.
+>>>>>> 
+>>>>>> Lack of proper string escaping allows users (having admin
+>>>>>>  access) to enter arbitrary javascript code and have it 
+>>>>>> executed on the user's browser.
+>>>>>> 
+>>>>>> Reference:
+>>>>>> http://www.mantisbt.org/bugs/view.php?id=15416
+>>>>> 
+>>>>> Does this count as a proper release or does it fall into
+>>>>> the "beta" classification?
+>>> 
+>>>> 1.2.0rc1 was a beta release. The first "proper" release
+>>>> affected by this was 1.2.0
+>>> 
+>>> Ok not assigning a CVE then, unless there are a large number
+>>> of users betas don't get CVEs.
+>> 
+>> Steve just pointed out I may have misread this. Is 1.2.0
+>> vulnerable, and this is fixed in 1.2.1, or was it fixed in the
+>> 1.2.0 release (so ONLY 1.2.0-rc1 was affected)?
 > 
-> An unprivileged user/program could use this flaw to crash the
-> kernel, resulting in local DoS.
-> 
-> Upstream fix:
-> -------------
->  -> https://git.kernel.org/linus/75a493e60ac4bbe2e977e7129d6d8cbb0dd236be
-> 
-> Reference:
-> ----------
->  -> https://bugzilla.redhat.com/show_bug.cgi?id=987633
+> Not sure who Steve is, but he is absolutely correct - this affects 
+> all versions of Mantis *starting* with rc1 and until 1.2.13 
+> included, so definitely non-beta releases are vulnerable.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Steve/Steven is coley@...re.org (CVE head honcho).
+
+So:
+
+> Lack of proper string escaping allows users (having admin access)
+> to enter arbitrary javascript code and have it executed on the
+> user's browser.
+
+Please use CVE-2013-1934 for this issue
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRY4W3AAoJEBYNRVNeJnmTvKgQAKAEFc2L4kNxNLUCq9aLh9l2
+RAKnDjrs2pb5kSHyUMXfJ7oN9AhP3U6QXRKZFLwSNbipRVbtuEbFbAHleYAObaiL
+CPCBPyY0HztDiEaFDJ0mls45EBJnB3oa5xitPzT/XFQqoM3ua+wnC8p7yy5wgE/u
+0t4g8UPTW9+mSYOzQq3hbmz5q8SK3KnZc/ff4dXP6+wsvBhezoRR6N12wU0om5Zf
+6tDInYlF4M2Fqc03b97A5KRdJqcvJqzbc09ZLQxQZFZofXB5wy1uut2Iz0oI/4On
+yYTQrxXEVmnu+0ggGYtyvpjmGRcKQ/Eh/XzfKHbKo3VrGaA3dIWiBXC9kdLMJfJV
+/rjrCgvhoyC7aFgQT5c3vBdbIi1xy8eu66wNsay0oohb+pNS99A3iemiZIXMVQXr
+bKz2/kmV1ACLFO0FNDEChkjw4NWlIn3NEStHAgqBz70o/Iv8WTVK6f1jTPzL7JvP
+kKeBwk7hxnScBbVGvGMWTCWNx5rLt2HgLtdbmHzEhfrOscTVojwAkPTgaeZwxjZ2
+9rnd0T0D/pl5j6FKxurj0Q1AVwlepAx3pLc+cqmfD/3MWBdP+5p4l0CUfRlfMQXQ
+ao7qHY27hX2mFrem2d0ZZ7ZYIAvkMThorHsjJJ6qT9ZUgzx/geNbeJX+UNh5j3qI
+vlp2GtzONWjFUhUGKgR/
+=h4sZ
+-----END PGP SIGNATURE-----
