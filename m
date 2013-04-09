@@ -1,75 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/06/3
-Message-ID: <515F6762.4000106@redhat.com>
-Date: Fri, 05 Apr 2013 18:08:02 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: tg3 VPD firmware -> driver injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/9
+Message-ID: <CAHQz1rKAXwB-HG53sKCF9FPT84dwPr95RZ1cMQ=tHpG7JumOWA@mail.gmail.com>
+Date: Tue, 9 Apr 2013 09:17:58 -0300
+From: Breno Silva <breno.silva@...il.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com,  Athmane Madjoudj <athmanem@...il.com>
+Subject: Re: Re: CVE Request -- ModSecurity (X < 2.7.3): Vulnerable to XXE attacks
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Jan,
 
-On 04/05/2013 08:00 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> These slides refer to (cloud) server hardware injecting code into
-> otherwise unsuspecting host / guest systems.
-> 
-> Sample is tg3 (around slide 18) 
-> http://cansecwest.com/slides/2013/PrivateCore%20CSW%202013.pdf
-> 
-> Introduced by: commit 184b89044fb6e2a74611dafa69b1dce0d98612c6 
-> Author: Matt Carlson <mcarlson@...adcom.com> Date:   Mon Apr 5
-> 10:19:25 2010 +0000
-> 
-> tg3: Use VPD fw version when present
-> 
-> which was added during Linux 3.2 development.
-> 
-> Fixed by: 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=715230a44310a8cf66fbfb5a46f9a62a9b2de424
+I'm attaching a patch for 2.5.12. However it is small and i think can help
+you do the same for 2.6.8.
+Let me know if you have any questions.
+
+Thanks
+
+Breno
+
+
+On Tue, Apr 9, 2013 at 6:26 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+
+> Hi Breno,
 >
->  commit 715230a44310a8cf66fbfb5a46f9a62a9b2de424 Author: Kees Cook
-> <keescook@...omium.org> Date:   Wed Mar 27 06:40:50 2013 +0000
-> 
-> tg3: fix length overflow in VPD firmware parsing
-> 
-> Commit 184b89044fb6e2a74611dafa69b1dce0d98612c6 ("tg3: Use VPD fw
-> version when present") introduced VPD parsing that contained a
-> potential length overflow.
-> 
-> Limit the hardware's reported firmware string length (max 255
-> bytes) to stay inside the driver's firmware string length (32
-> bytes). On overflow, truncate the formatted firmware string instead
-> of potentially overwriting portions of the tg3 struct.
-> 
-> http://cansecwest.com/slides/2013/PrivateCore%20CSW%202013.pdf
-> 
-> 
-> Ciao, Marcus
-> 
+>   (Cc-ing Athmane on this due reasons which will get obvious below).
+>
+>   thank you for checking with us.
+>
+> AFAICT to fix this in Fedora and Fedora EPEL-6 versions, we have
+> just rebased to latest upstream 2.7.3 version. But you are truly
+> right (assuming this being the reason you are checking with us),
+> that on Fedora EPEL-5 we are shipping older (2.6.8 based version
+> of ModSecurity).
+>
+> FWIHL:
+>   [1] https://bugzilla.redhat.com/show_bug.cgi?id=947842#c1
+>
+> it's wasn't immediately clear how the backported upstream patch
+> would look like in / against that version (and not completely
+> sure we can just rebase in that product too - Athmane could you
+> clarify here if we can rebase or would rather want upstream patch
+> form against 2.6.8 version?)
+>
+> Breno, so if you are willing to help (and Athmane would confirm
+> we need patch against 2.6.8 version), it would be appreciated
+> if you could provide it.
+>
+> That's just for our expectations. Obviously other vendors might
+> be interested in upstream patch backports against different versions
+> yet (but I will let them to speak out their needs by themselves).
+>
+> Thank you for your time / check anyway. It's appreciated.
+>
+> Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+>
+> ----- Original Message -----
+> Hello Jan,
+>
+> Are you guys backporting de patch to old versions of ModSecurity ?
+>
+> Thanks
+>
+> Breno
+>
+>
+> On Wed, Apr 3, 2013 at 9:23 AM, Jan Lieskovsky <jlieskov@...hat.com>
+> wrote:
+>
+> > Hello Kurt, Steve, Breno, vendors,
+> >
+> >   ModSecurity upstream has released v2.7.3 version:
+> > [1] https://github.com/SpiderLabs/ModSecurity/blob/master/CHANGES
+> >
+> > correcting one security flaw (from [2]):
+> > "It was reported that the XML files parser of ModSecurity,
+> > a security module for the Apache HTTP Server, was vulnerable
+> > to XML External Entity attacks. A remote attacker could
+> > provide a specially-crafted XML file that, when processed
+> > might lead to local files disclosure or, potentially,
+> > excessive resources (memory, CPU) consumption."
+> >
+> > References:
+> > [2] https://bugzilla.redhat.com/show_bug.cgi?id=947842
+> > [3] https://bugs.gentoo.org/show_bug.cgi?id=464188
+> > [4] https://secunia.com/advisories/52847/
+> >
+> > Relevant upstream patch (seems to be the following):
+> > [5]
+> >
+> https://github.com/SpiderLabs/ModSecurity/commit/d4d80b38aa85eccb26e3c61b04d16e8ca5de76fe
+> >
+> > Could you allocate a CVE id [*] for this?
+> >
+> > Thank you && Regards, Jan.
+> > --
+> > Jan iankko Lieskovsky / Red Hat Security Response Team
+> >
+> > [*] According to:
+> > https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ModSecurity
+> >     there doesn't seem to have been a CVE id allocated for this issue
+> yet.
+> >
+>
 
-Please use CVE-2013-1929 for this issue.
+Content of type "text/html" skipped
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRX2diAAoJEBYNRVNeJnmTgEoQAKwJXFDl85FXM563lScOfXnI
-R7yvgo2qIakHv6gfQS/GzxDY3i/4Sky+OsS6IckqWnuNQURWTomnTBZRu5qihfGy
-CSdxFefF0OdQh9xjc5VIB1vJrQmpPt2giU9ZxRfLzXD8Gj8VPMTbP+fTNCWJrgX7
-FPZWAO34tiiLdqPe2E1Fo5emW6d5p47VCSrv1i+9PLqNzXd2JlBAPKChbobDmN1P
-bbDuVN5JuacLAViIHFSeLl1UCLb8UzAT6LNB5NQhCG+UMqir+hfqCxUsr3xBuQ0S
-EcPAT6c2vm00V2w27ITnc0Iayy3JNE1qy3GtZEcwL0FBctkf4YmXRzlfhCAEdAb8
-7CSowCPaVgO6BHZuenhLZF+dakOr0CRoNx9OhmiFS2bdPMgMLXKR8lWo1vOooNnV
-hwR8o9Bhiq2igtDtoNa6wv/EpXmCg5i0tlEREKoLCJiE+/+SMzLYtzB23yhb6rKM
-kHFSLXzO8rh7DYTqlVs2aKJ7w3TYwUDJP++vHSwr315N5O6B2sJ8RMxAcA59ysdg
-hmDQFwFwQ2rqnETr7QFz2ZO3oBMkELr9akY16UPNLYP20BtNqrT6HEEy14uv9i8a
-91ZENd707Kf8Fvn7yGfg5pD40M7/pJgfHNsSX7fbV41wMIkACZple1YZ1owp1aKv
-HgQckD25SZYVpft6QZ/R
-=BouH
------END PGP SIGNATURE-----
+Download attachment "CVE-2013-1915 (1).patch" of type "application/octet-stream" (4277 bytes)
