@@ -1,51 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/6
-Message-ID: <20130226181654.GA16055@kroah.com>
-Date: Tue, 26 Feb 2013 10:16:54 -0800
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/7
+Message-ID: <844613362.1049060.1365499602092.JavaMail.root@redhat.com>
+Date: Tue, 9 Apr 2013 05:26:42 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Breno Silva <breno.silva@...il.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com, Athmane Madjoudj <athmanem@...il.com>
+Subject: Re: Re: CVE Request -- ModSecurity (X < 2.7.3): Vulnerable to XXE attacks
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 26, 2013 at 11:56:02AM -0600, Joshua J. Drake wrote:
-> All,
-> 
-> I'd like to request a CVE for an issue leading to a buffer overflow of
-> a slab allocated buffer in the VFAT file system code. The issue
-> manifests when converting UTF8 characters to UTF16 inside the
-> "utf8s_to_utf16s" function. Reaching this code requires writing to a
-> VFAT partition that has been mounted with the "utf8" option. Ubuntu
-> 10.04 mounts USB sticks with this option by default. Most Android
-> devices mount eMMC/SD cards/etc with this option.
-> 
-> The issue affects kernels prior to 3.2. Many Android devices remain
-> affected today.
-> 
-> I'm not entirely sure when the issue was introduced at this moment. It
-> appears to have been introduced here:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=74675a58507e769beee7d949dbed788af3c4139d
-> 
-> The issue was fixed here:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=0720a06a7518c9d0c0125bd5d1f3b6264c55c3dd
-> 
-> The issue was partially disclosed here (this spurred my investigation):
-> http://www.exploit-db.com/exploits/23248/
-> 
-> Props to G13 for finding it. It's pretty disappointing that
-> Google/Android security teams (and of course Linux maintainers) didn't
-> responsibly disclose the issue so other Linux kernel packagers could
-> package a fix.
+Hi Breno,
 
-Ok, how could the Linux maintainers have done anything about this, when
-the developers involved in creating this patch didn't even realize it
-was a "security" issue in the first place?
+  (Cc-ing Athmane on this due reasons which will get obvious below).
 
-I'm tired of people complaining about how the Linux kernel developers
-handle security issues, when no one seems to have a suggestion as to how
-anything could actually be done better.
+  thank you for checking with us.
 
-And note, I was one of the people involved in this patch, and I didn't
-notice anything special about it, so if you want to blame anyone, blame
-me for not tagging it for inclusion in the stable kernel releases.
+AFAICT to fix this in Fedora and Fedora EPEL-6 versions, we have
+just rebased to latest upstream 2.7.3 version. But you are truly
+right (assuming this being the reason you are checking with us),
+that on Fedora EPEL-5 we are shipping older (2.6.8 based version
+of ModSecurity).
 
-greg k-h
+FWIHL:
+  [1] https://bugzilla.redhat.com/show_bug.cgi?id=947842#c1
+
+it's wasn't immediately clear how the backported upstream patch
+would look like in / against that version (and not completely
+sure we can just rebase in that product too - Athmane could you
+clarify here if we can rebase or would rather want upstream patch
+form against 2.6.8 version?)
+
+Breno, so if you are willing to help (and Athmane would confirm
+we need patch against 2.6.8 version), it would be appreciated
+if you could provide it.
+
+That's just for our expectations. Obviously other vendors might
+be interested in upstream patch backports against different versions
+yet (but I will let them to speak out their needs by themselves).
+
+Thank you for your time / check anyway. It's appreciated.
+
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+----- Original Message -----
+Hello Jan,
+
+Are you guys backporting de patch to old versions of ModSecurity ?
+
+Thanks
+
+Breno
+
+
+On Wed, Apr 3, 2013 at 9:23 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+
+> Hello Kurt, Steve, Breno, vendors,
+>
+>   ModSecurity upstream has released v2.7.3 version:
+> [1] https://github.com/SpiderLabs/ModSecurity/blob/master/CHANGES
+>
+> correcting one security flaw (from [2]):
+> "It was reported that the XML files parser of ModSecurity,
+> a security module for the Apache HTTP Server, was vulnerable
+> to XML External Entity attacks. A remote attacker could
+> provide a specially-crafted XML file that, when processed
+> might lead to local files disclosure or, potentially,
+> excessive resources (memory, CPU) consumption."
+>
+> References:
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=947842
+> [3] https://bugs.gentoo.org/show_bug.cgi?id=464188
+> [4] https://secunia.com/advisories/52847/
+>
+> Relevant upstream patch (seems to be the following):
+> [5]
+> https://github.com/SpiderLabs/ModSecurity/commit/d4d80b38aa85eccb26e3c61b04d16e8ca5de76fe
+>
+> Could you allocate a CVE id [*] for this?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> [*] According to:
+> https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ModSecurity
+>     there doesn't seem to have been a CVE id allocated for this issue yet.
+>
