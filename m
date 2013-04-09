@@ -1,43 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/29/1
-Message-Id: <201308290313.r7T3DPQf020100@linus.mitre.org>
-Date: Wed, 28 Aug 2013 23:13:25 -0400 (EDT)
-From: cve-assign@...re.org
-To: larry0@...com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Command Injection in Ruby Gem Sounder 1.0.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/10
+Message-ID: <CAHQz1rLDkYvtVu6PnfS=4HoE8c+Tb4PAAp-COJdOB7HW35-_ug@mail.gmail.com>
+Date: Tue, 9 Apr 2013 10:43:48 -0300
+From: Breno Silva <breno.silva@...il.com>
+To: Athmane Madjoudj <athmanem@...il.com>
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>,  oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request -- ModSecurity (X < 2.7.3): Vulnerable to XXE attacks
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Good. Do you have any idea when it will be available for users ?
 
-> Download: https://rubygems.org/gems/sounder
-> 
-> lib/sounder/sound.rb:
-> 
->     def play
->       system %{/usr/bin/afplay "#{@...e}" &}
-> 
-> @file = "\"id;/usr/bin/id>/tmp/p;\""
-> system %{/bin/echo "#{@...e}" }
-> 
-> Advisory:  http://vapid.dhs.org/advisories/sounder-ruby-gem-cmd-inj.html
+The guy who discovered it want to write a blog post with details. So i ask
+him to wait at least when we have some packages backported.
 
-Use CVE-2013-5647.
+Thanks
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Breno
 
-iQEcBAEBAgAGBQJSHrqaAAoJEGvefgSNfHMd/c8IAI/FoAwZOdJOzRmo7bpMahwM
-TaA9HfVzBeFd4+ETnkxSE8mC3i88b71nodYp5rW/TRW29VWnISTdSrSojsHaaUSq
-0z2BSDI8QyMnokFdCdAKvCOjglmrcz2yRtdHd1hkF9mwMe7Su/9JOLDxnM9IEjmF
-v+MNewRCWBfN87eALGOA2n8DbVKiXHYwaMPMwhImz94BM+yt+LoyAOAAV17h1jy/
-U1HJrG1VcwTAbHFp444gtnwNuzo6MZjoY1gLBfv4MmJiO5vFtLd/W9DaT6S7PUug
-0FO2ov//HbfgdJgcXzaMqpfamQxKoCseFsDwg/76XtyHrEDW1AIGc9ak7+oEJYI=
-=2al5
------END PGP SIGNATURE-----
+
+On Tue, Apr 9, 2013 at 10:41 AM, Athmane Madjoudj <athmanem@...il.com>wrote:
+
+> On Tue, Apr 09, 2013 at 05:26:42AM -0400, Jan Lieskovsky wrote:
+> > Hi Breno,
+> >
+> >   (Cc-ing Athmane on this due reasons which will get obvious below).
+> >
+> >   thank you for checking with us.
+> >
+> > AFAICT to fix this in Fedora and Fedora EPEL-6 versions, we have
+> > just rebased to latest upstream 2.7.3 version. But you are truly
+> > right (assuming this being the reason you are checking with us),
+> > that on Fedora EPEL-5 we are shipping older (2.6.8 based version
+> > of ModSecurity).
+> >
+> > FWIHL:
+> >   [1] https://bugzilla.redhat.com/show_bug.cgi?id=947842#c1
+> >
+> <...snip...>
+>
+> Hi,
+>
+> I forgot to mention in bug report that an EPEL5 update which still uses
+> 2.6.8 release (libxml2 in el5 is too old) is scheduled with backborted
+> patch just like with CVE-2012-4528.
+>
+> Thanks.
+>
+> -- Athmane, Fedora / EPEL mod_security maintainer
+>
+
