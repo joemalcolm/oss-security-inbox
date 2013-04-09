@@ -1,39 +1,129 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/28/3
-Message-ID: <51CDD10F.9090701@redhat.com>
-Date: Fri, 28 Jun 2013 12:08:15 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/14
+Message-ID: <51644E07.7090500@redhat.com>
+Date: Tue, 09 Apr 2013 11:21:11 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Remi Collet <rcollet@...hat.com>, Adam Harvey <aharvey@....net>
-Subject: Re: CVE Request - PHP PECL Radius (php-pecl-radius) v1.2.7 fixing a security flaw in radius_get_vendor_attr()
+CC: Michael Scherer <misc@...b.org>, security@...are.com, security@...bra.com
+Subject: Re: Zimbra XSS in aspell.php, CVE request
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/28/2013 06:59 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+On 04/05/2013 06:14 PM, Michael Scherer wrote:
+> Le vendredi 05 avril 2013 à 18:05 -0600, Kurt Seifried a écrit :
+>> On 04/05/2013 04:21 AM, Michael Scherer wrote:
+>>> Hi,
+>>> 
+>>> While trying to see how hard a bug would be to fix in Zimbra 
+>>> during a discussion with a coworker, I stumbled across a XSS
+>>> flaw in Zimbra, in a spell checking external webservice.
+>>> 
+>>> Since I didn't found the public web interface for the source
+>>> code of Zimbra and since perforce is not as straightforward to
+>>> run on linux than git and slow to download the 2G of source
+>>> code, I recommend to people to look at the github mirror, even
+>>> if this mean losing some information and changelog.
+>>> 
+>>> The issue is on this file : 
+>>> https://github.com/Zimbra-Community/zimbra-sources/blob/master/main/ZimbraServer/src/php/aspell.php
+>>>
+>>>
+>>>
+>>> 
+The problem is that $dictionary is coming from user input ( from
+>>> GET parameters ), since it is a copy of $_REQUEST. Then if no
+>>> text is given ( and so $text is empty ), it is printed back in
+>>> the html form displayed without any kind of sanitization at all
+>>> ( line133 : 
+>>> https://github.com/Zimbra-Community/zimbra-sources/blob/master/main/ZimbraServer/src/php/aspell.php#L133
+>>>
+>>> 
+)
+>>> 
+>>> So a attacker could inject javascript/html there just by
+>>> giving crafted link to a user, running as the domain of zimbra
+>>> ( albeit on a different port ). Something like 
+>>> http://example.org/aspell.php?disctionnary=><script> 
+>>> alert('foo');</script>
+>>> 
+>>> ( with proper url encoding of course ).
+>>> 
+>>> Due to typecasting, "" is considered as equal to NULL for
+>>> '==', while it may not be the case in other circumstances.
+>>> 
+>>> If I am not wrong, the default location for the spell checking 
+>>> service is http://$config{HOSTNAME}:7780/aspell.php, so a 
+>>> improperly secured server ( ie, without a firewall ) could be 
+>>> vulnerable to javascript injection, which could be used to
+>>> steal various informations ( like the session cookie ).
+>>> 
+>>> However, depending on the browser and the security setting,
+>>> the issue could be mitigated, even if it seems we can still
+>>> steal the cookie with a spear phising attempt ( 
+>>> http://seckb.yehg.net/2012/06/xss-gaining-access-to-httponly-cookie.html
+>>>
+>>> 
+)
+>>> 
+>>> The issue can be tested quite easily, just take any php
+>>> hosting, download the aspell.php file there and run :
+>>> 
+>>> $ curl 
+>>> 'http://www.example.org/aspell.php?dictionary=insert_html_here_with<blink>'
+>>>
+>>>
+>>> 
+You should see that the html code is inserted back in the form. I
+>>> didn't spent time on writing a trivial exploit for that.
+>>> 
+>>> Upstream have been notified on 2013-01-12 on a private bug ( 
+>>> https://bugzilla.zimbra.com/show_bug.cgi?id=79640 ), with
+>>> first answer on 2013-02-22, along with a fix following on the
+>>> next hours. However, the fix is incorrect, and my attempt to
+>>> make the coder change his mind failed.
+>>> 
+>>> The fix that was written can be found on a aggregate commit on
+>>>  
+>>> https://github.com/Zimbra-Community/zimbra-sources/commit/e7682c00be82a0c3ab51ee92f518bdcc1e07536c#L3L148
+>>>
+>>>
+>>> 
+While that could fix a XSS issue if the code was correctly used,
+>>> there was no security issue since the call of the function is
+>>> wrong on line 67, we see 1 parameter is missing and the value
+>>> of $dictionnary is overwrote by the return code and is always
+>>> 0, so we cannot inject anything with it.
+>>> 
+>>> As I couldn't convince upstream to correct this, and given that
+>>> I have let enough time to react to them after following the 
+>>> procedure, I consider that full disclosure is the next step to
+>>> have it corrected.
+>>> 
+>>> Can someone assign a CVE for it ?
+>>> 
+>> 
+>> Is this also in the open source version?
+>> 
+>> http://wiki.zimbra.com/wiki/Building_Zimbra_using_Perforce
 > 
-> PHP PECL upstream has released 1.2.7 version of the Radius client
-> library, correcting one security flaw (from [1]):
+> I only used the open source version ( since I doubt the other
+> version is cloned on github, that would kinda be a license
+> violation ) and I do not have access to the closed source one ( or
+> rather, i didn't tried very hard to have access to it to check, as
+> I would not be able to link to source code for verification )
 > 
-> "- Fix a security issue in radius_get_vendor_attr() by enforcing
-> checks of the VSA length field against the buffer size. (Adam)"
-> 
-> References: [1]
-> http://pecl.php.net/package-changelog.php?package=radius [2]
-> http://pecl.php.net/news/
-> 
-> Relevant upstream patch: [3]
-> https://github.com/LawnGnome/php-radius/commit/13c149b051f82b709e8d7cc32111e84b49d57234
->
->  Can you allocate a CVE identifier for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+> However, I suspect that's the same for non open source one ( ie, I
+> see no reason to have less features in the commercial version )
 > 
 
-Please use CVE-2013-2220  for this issue.
+Ah sorry misread, thought you were testing against a live commercial
+zimbra install the first time. Also added vmware/zimbbra security
+(hopefully those email addresses exist) to the CC.
+
+Please use CVE-2013-1938  for this issue.
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -41,17 +131,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRzdEPAAoJEBYNRVNeJnmT4LAP/3btWxRNzklWtej77KtbxsUW
-2nPKZyH8DGv7NqZ484uH026FY0HnECSU2YVxH0qyEdQqfR5n75eg9pIuMkwl/uBP
-8QNpn7kepoCsyW3KgKg6LR3sU8o6cyOpvAENsVoBCamVbtOUaLAq9zqgLKfPCnGN
-wvaOslhMZF/j3nqGo/JFPPCu/8ZdFVVYD40eQO5K4lwJdY98wmAuO8McYMerfFCL
-WXj5XthGiPXMcIXVtJgB+UmtkKB391ROQ3jqxoTzttP3Lw0+jHXwx3USrRQjErAP
-9p9WXPoqU5XmaFCD6Q2f9ROdGP/ofggIxvL6XEhC9i3bIH+D/TJ0AHBnspcMV0Ul
-/p9MtBlZodzrWmkrKqAScv+mkcYc0/IWrSy4OOtaEIoh5DCEsyFoKvbl7bnw5Joa
-SSLkdPbKoWBvGymrWjj7DznjK2rWcuL7IJvUeV4VbSrxqW8OuthffKxzqhy+wIEw
-RB0IRtlucyC7mqYS9ZaIoABRgz8r9K1t9q5Tj5rKgDmiAszSUROo6rJBQ2fgUsye
-4sbCeQnTg+gTORhcU2QHpJwZaVuonaS9pq9viPukl93nf3UnHuJvQ1UViCPa7t5c
-7TB+Qn/iHSzGIyjaZw2a9INnjT+hUqfaHf4GD+oE3BSLO49eByD/fx5mbPMyIO06
-HaUNBfjEitHxMciu97F4
-=69tY
+iQIcBAEBAgAGBQJRZE4HAAoJEBYNRVNeJnmTDvEQAJvDKrNsmwkPnCACLh61mTcd
+rQr152bq8RQZOmNTL/jfpqH2KX/O8SGFH8Ptc2JBHu1im+s0CVn0ABdjbDylf524
+F2F03A45gpHKX4XF9kRTLC48LopgyQE/1JDL4WYwoV8KR6RVELfyeXMUaP9nCe6r
+UEjyWOE5F8y7TI2MPbtnHaPcGo2sXCDv/giGYikb5Y4L3M33Bd88zRe5NM0G08G4
+KXnoeMRlwCtAQ5KXrV90X+vtPFLPLPQHOdmXBJk4unYXMQuT7ookfzS042bzPR5f
+7m/qgMrc9ra3Ye4zaG6yeUj/cSAyrh2npsF/IJCMBf0SGb3eg7boRB/g8cDb7KyD
+oWLTYCtqn60ALa/6d4igmDrX8ihheunDHMZU5Quy/W5CVl2CfmmVhWBf8RW+RzQN
+W/ZXX1S36QMAcxFG6Y4omhrMPygs2dx8oell1ed/3NpA738DiZf4riZDH0vde3d6
+MN+77inJV82GkiVWDlgaPhxfNYzakV3Bzo/whH5GxUz5RKnBYu4PGinpdPt/waKx
+5Kyb5nhfJlyhhD550BVTtX0YtbBiBWE4rasQO72qaeLoyB27ijETvuIHWa52HZA9
+76oWVQI0SU9b/zZIFohikdrzs2QqvzjsYyN/YdvjBdpQbNayNEYZYHI0QgjNNymp
+z/7/IBCnFvWQ2cP35VE5
+=OXAN
 -----END PGP SIGNATURE-----
