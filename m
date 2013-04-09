@@ -1,80 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/16/1
-Message-ID: <52366375.8060302@moodle.com>
-Date: Mon, 16 Sep 2013 09:48:37 +0800
-From: Michael de Raadt <michaeld@...dle.com>
-To: oss-security@...ts.openwall.com
-Subject: Moodle security notifications public
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/3
+Message-ID: <alpine.LFD.2.03.1304091147300.7191@redhat.com>
+Date: Tue, 9 Apr 2013 11:48:12 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: Dan Carpenter <dan.carpenter@...cle.com>
+cc: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
 Content-Type: text/plain; charset=utf-8
 
-The following security notifications are now public.
++-- On Mon, 8 Apr 2013, Dan Carpenter wrote --+
+| Oh, you're saying that access_ok() can't fail.  That's true on some
+| arches, and not on others.
 
-Thanks to OSS members for their cooperation.
+  Yep. I see.
 
-=======================================================================
-MSA-13-0032: Host verification failure in Amazon S3 repository
-
-Description:       The Amazon S3 repository was not verifying secure
-                    hosts
-Issue summary:     S3 class uses curl insecurely
-Severity/Risk:     Minor
-Versions affected: 2.5 to 2.5.1, 2.4 to 2.4.5, 2.3 to 2.3.8, previous
-                    unsupported versions
-Versions fixed:    2.5.2, 2.4.6 and 2.3.9
-Reported by:       Thijs Kinkhorst
-Issue no.:         MDL-40615
-CVE Identifier:    CVE-2012-6087
-Workaround:        Disable Amazon S3 repository (default)
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-40615
-
-=======================================================================
-MSA-13-0033: Potential SQL injection in Moodle's SQL Server driver
-
-Description:       Null characters were allowed in query strings, which
-                    caused sql statements to terminate and fail
-Issue summary:     null byte causes error in ms sql drivers - potential
-                    sql injection
-Severity/Risk:     Serious
-Versions affected: 2.5 to 2.5.1, 2.4 to 2.4.5, 2.3 to 2.3.8, previous
-                    unsupported versions
-Versions fixed:    2.5.2, 2.4.6 and 2.3.9
-Reported by:       Ryan Giobbi
-Issue no.:         MDL-40676
-CVE Identifier:    CVE-2013-4313
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-40676
-
-=======================================================================
-MSA-13-0034: Object injection through Badges
-
-Description:       Descriptions of external badges were open to
-                    exploitation.
-Issue summary:     Unserialize external input in badges/external.php
-                    allows object injection
-Severity/Risk:     Serious
-Versions affected: 2.5 to 2.5.1
-Versions fixed:    2.5.2
-Reported by:       Emilio Pinna
-Issue no.:         MDL-40924
-CVE Identifier:    CVE-2013-5674
-Workaround:        Disable Badges
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-40924
-
-=======================================================================
-MSA-13-0035: Inadequate filtering in Blog
-
-Description:       Links to external blogs were not being adequately
-                    cleaned
-Issue summary:     XSS in remote blog/rss include
-Severity/Risk:     Serious
-Versions affected: 2.5 to 2.5.1, 2.4 to 2.4.5, 2.3 to 2.3.8, previous
-                    unsupported versions
-Versions fixed:    2.5.2, 2.4.6 and 2.3.9
-Reported by:       Ciaran McNally
-Issue no.:         MDL-41623
-CVE Identifier:    CVE-2013-4341
-Workaround:        Disable Blogs
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-41623
+Thanks for confirming.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
