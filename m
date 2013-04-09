@@ -1,47 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/02/2
-Message-ID: <21148.49637.13497.191457@mariner.uk.xensource.com>
-Date: Mon, 2 Dec 2013 17:22:45 +0000
-From: Ian Jackson <Ian.Jackson@...citrix.com>
-To: <xen-devel@...ts.xen.org>, <oss-security@...ts.openwall.com>
-CC: Xen.org security team <security@....org>
-Subject: Re: Xen Security Advisory 82 (CVE-2013-6885) - Guest triggerable AMD CPU erratum may cause host hang
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/20
+Message-ID: <CAH1ochwyHSx0_KmgzTd+JJnpAoxLOmqHoiJc+0hUpVKGmoEf6Q@mail.gmail.com>
+Date: Tue, 9 Apr 2013 13:47:04 -0600
+From: Mike <mikedawg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Postfix incorrect permissions on configurations. Request.
 Content-Type: text/plain; charset=utf-8
 
-Xen.org security team writes ("Xen Security Advisory 82 (CVE-2013-6885) - Guest triggerable AMD CPU erratum may cause host hang"):
-> This issue was predisclosed under embargo by the Xen Project Security
-> team, on the 27th of November.  We treated the issue as not publicly
-> known because it was not evident from the public sources that this
-> erratum constitutes a vulnerability (particularly, that it was a
-> vulnerability in relation to some Xen configurations).
-> 
-> Since then, the fact that this CPU erratum is likely to constitute a
-> security problem has been publicly disclosed, on the oss-security
-> mailing list.
+Russ,
 
-This is a reference to this message:
-  http://www.openwall.com/lists/oss-security/2013/11/28/1
+Do you also mind providing ownership details of the directories and files
+in question. I assume the directories are root:root; but your post doesn't
+say for sure.
 
-This was sent by MITRE as part of the CVE assignment.  It seems likely
-to us (the Xen Project security team) that the CVE assignment was a
-consequence of our embargoed predisclosure to xen-security-issues.
 
-The effect of this has been that we have had to end the embargo early.
-I think there is room for discussion here about whether we all did the
-right thing.  In particular:
+-- 
+Mike
 
- * Should the Xen Project security te4am have treated this issue with
-   an embargo at all, given that the flaw itself was public ?
-
- * Should we have anticipated that other software would be in a
-   similar position and sent message(s) to some other suitable set of
-   vendor(s) ?  Which vendors, and how ?
-
- * Should MITRE have been asked /not/ to publicly disclose the
-   relationship between CVE-2013-6885 and AMD CPU erratum 793,
-   until the embargo ended ?
-
- * Were we right to treat MITRE's message as a trigger for disclosure ?
-
-Thanks,
-Ian.
