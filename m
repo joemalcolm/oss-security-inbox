@@ -1,86 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/3
-Message-Id: <201305221130.34805.thijs@debian.org>
-Date: Wed, 22 May 2013 11:30:30 +0200
-From: Thijs Kinkhorst <thijs@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: MediaWiki chunked uploads vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/8
+Message-ID: <20130409120124.GA13964@elende>
+Date: Tue, 9 Apr 2013 14:01:24 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: Self-XSS in phpmyadmin fixed in 3.5.8
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Kurt
 
-Can a CVE name be assigned for the following MediaWiki issue please?
+New phpMyAdmin release (3.5.8) contains the following changelog entry:
 
+3.5.8.0 (2013-04-08)
+- bug #3828 MariaDB reported as MySQL
+- bug #3854 Incorrect header for Safari 6.0
+- bug #3705 Attempt to open trigger for edit gives NULL
+- Use HTML5 DOCTYPE 
+- [security] Self-XSS on GIS visualisation page, reported by Janek Vind
+- bug #3800 Incorrect keyhandler behaviour #2
 
-Thanks,
-Thijs
+refering to a XSS vulnerability on the GIS visualisation page. [1] is
+the reference by Janek Vind, upstream commit afaics [2].
 
-----------  Doorgestuurd bericht  ----------
+ [1]: http://seclists.org/fulldisclosure/2013/Apr/100
+ [2]: https://github.com/phpmyadmin/phpmyadmin/commit/79089c9bc02c82c15419fd9d6496b8781ae08a5a
 
-Onderwerp: [MediaWiki-announce] MediaWiki Security Release: 1.20.6 and 1.19.7
-Datum: dinsdag 21 mei 2013, 22:14:52
-Van: Chris Steipp <csteipp@...imedia.org>
-Aan: mediawiki-announce@...ts.wikimedia.org, "MediaWiki-l" <mediawiki-
-l@...ts.wikimedia.org>, Wikimedia developers <wikitech-l@...ts.wikimedia.org>
+Could a CVE be assigned to this issue?
 
-I would like to announce the release of MediaWiki 1.20.6 and 1.19.7.
-These releases fix a security related issue that could affect users of
-MediaWiki. Download links are given at the end of this email.
-
-* MediaWiki user Marco discovered that security checks for file
-uploads were not being run when the file was uploaded in chunks
-through the API. This option has been available to users who can
-upload files since MediaWiki 1.19.
-<https://bugzilla.wikimedia.org/show_bug.cgi?id=48306>
-
-Full release notes for 1.20.6:
-<https://www.mediawiki.org/wiki/Release_notes/1.20>
-
-Full release notes for 1.19.7:
-<https://www.mediawiki.org/wiki/Release_notes/1.19>
-
-For information about how to upgrade, see
-<https://www.mediawiki.org/wiki/Manual:Upgrading>
-
-
-**********************************************************************
-   1.20.6
-**********************************************************************
-Download:
-http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.6.tar.gz
-
-Patch to previous version (1.20.5):
-http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.6.patch.gz
-
-GPG signatures:
-http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.6.tar.gz.sig
-http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.6.patch.gz.sig
-
-Public keys:
-https://secure.wikimedia.org/keys.html
-
-
-**********************************************************************
-   1.19.7
-**********************************************************************
-Download:
-http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.7.tar.gz
-
-Patch to previous version (1.19.6):
-http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.7.patch.gz
-
-GPG signatures:
-http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.7.tar.gz.sig
-http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.7.patch.gz.sig
-
-Public keys:
-https://secure.wikimedia.org/keys.html
-
-_______________________________________________
-MediaWiki announcements mailing list
-To unsubscribe, go to:
-https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce
-
--------------------------------------------------------
-
-Download attachment "signature.asc " of type "application/pgp-signature" (491 bytes)
+Regards,
+Salvatore
