@@ -1,22 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/01/8
-Message-ID: <20130301101030.6680baa7.reed@reedloden.com>
-Date: Fri, 1 Mar 2013 10:10:30 -0800
-From: Reed Loden <reed@...dloden.com>
-To: oss-security@...ts.openwall.com
-Cc: meissner@...e.de
-Subject: Re: CVE Request: various gems in aftermath of rubygem actionpack issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/2
+Message-ID: <alpine.LFD.2.03.1304091039100.7191@redhat.com>
+Date: Tue, 9 Apr 2013 11:47:10 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: Dan Carpenter <dan.carpenter@...cle.com>
+cc: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 1 Mar 2013 17:43:01 +0100
-Marcus Meissner <meissner@...e.de> wrote:
++-- On Mon, 8 Apr 2013, Dan Carpenter wrote --+
+| I'm confused why you are using the word "always" and "Unless
+| `access_ok()' in `__get_user' returns 0".  I don't understand what
+| you are saying.
 
-> I think these rubygem updates have got no CVE entry/ies yet:
-> https://support.cloud.engineyard.com/entries/22915701-january-14-2013-security-vulnerabilities-httparty-extlib-crack-nori-update-these-gems-immediately
+  Well, always because __access_ok as defined in include/asm-generic/uaccess.h 
+always returns true.
 
-nori got assigned CVE-2013-0285. I don't see any assignments on the
-list for httparty, extlib, or crack, though.
+===
+static inline int __access_ok(unsigned long addr, unsigned long size)
+{
+        return 1;
+}
+===
+ 
+| Anyway, the bottom line is that the x86 version of get_user()
+| doesn't have an info leak and the asm-generic version does.
 
-Also see https://github.com/rubysec/ruby-advisory-db/issues/7
+  I see, that's when asm-generic _access_ok is overridden by another 
+definition?
 
-~reed
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
