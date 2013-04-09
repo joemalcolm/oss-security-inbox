@@ -1,83 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/12
-Message-Id: <E1VUFGZ-0002aR-0Q@xenbits.xen.org>
-Date: Thu, 10 Oct 2013 12:22:55 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 70 (CVE-2013-4371) - use-after-free in libxl_list_cpupool under memory pressure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/17
+Message-ID: <51645BCA.4090606@msgid.tls.msk.ru>
+Date: Tue, 09 Apr 2013 22:19:54 +0400
+From: Michael Tokarev <mjt@....msk.ru>
+To: oss-security@...ts.openwall.com
+CC: Russ Thompson <russ@...dbit.com>
+Subject: Re: Postfix incorrect permissions on configurations. Request.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+09.04.2013 22:08, Russ Thompson wrote:
+> Postfix is setting the following permissions by default on Debian Squeeze.  I'm seeing roughly the same on RHEL/CentOS 6.x, this appears to be a requirement of "sendmail.postfix"  
+> 
+> 0755 /etc/postfix
+> 0644 /etc/postfix/*
+> 0755 /etc/postfix-script
+> 0755 /etc/post-install
+> 
+> Which allows all users to execute these scripts and read configurations.  Setting to tighter/more typical permissions (i.e 640) results in:  postfix/sendmail[21007]: fatal: open /etc/postfix/main.cf: Permission denied
 
-             Xen Security Advisory CVE-2013-4371 / XSA-70
-                               version 2
+That's all nice, but can you elaborate a bit -- what is wrong
+with that?  Which request do you have?  What it has to do with
+oss-security?
 
-      use-after-free in libxl_list_cpupool under memory pressure
+Thanks,
 
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-If realloc(3) fails then libxl_list_cpupool will incorrectly return
-the now-free original pointer.
-
-IMPACT
-======
-
-An attacker may be able to cause a multithreaded toolstack using this
-function to race against itself leading to heap corruption and a
-potential DoS.
-
-Depending on the malloc implementation code execution cannot be ruled
-out.
-
-VULNERABLE SYSTEMS
-==================
-
-The flaw is present in Xen 4.2 onwards.
-
-Systems using the libxl toolstack library are vulnerable.
-
-MITIGATION
-==========
-
-Not calling the libxl_list_cpupool function will avoid this issue.
-
-Not allowing untrusted users access to toolstack functionality will
-avoid this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Coverity Scan and Matthew Daley.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa70.patch             Xen 4.3.x, Xen 4.2.x, xen-unstable
-
-
-$ sha256sum xsa70*.patch
-2582d3d545903af475436145f7e459414ad9d9c61d5720992eeeec42de8dde56  xsa70.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJSVpwCAAoJEIP+FMlX6CvZRskH/1fMuZLw8xSFT0L6piYvTudo
-BYqm+xxOR9dFMVKWMb0Pqk9nhLlYXXAn6pZV0KsoUIaA81Qx+fTkRpafVG9FGoD6
-AG2TWijVmG3kyQdEcjxBPKLont2COupTwKUU4wusvLq3adYu7s4CaxUrVLZrhbCf
-q8EfmBA9rf1sLw2SiNXPT1o0XZjXJgiRbf5T4ggjJKUsb5+QMb0qXVFPHIqaAcZ5
-Jf0HGRi+irH5thRx7hY3mprcGNx5WAWTiKOrzvQH6eDJjAlcAeS5YrDpBn1Z8lA2
-ep2c758y6+ZcMfOffU9kHA9wybnZLq+yGIIgS2vcnbpiYHp29JFVEJ6ZIXp/4+4=
-=5x/x
------END PGP SIGNATURE-----
-
-Download attachment "xsa70.patch" of type "application/octet-stream" (1050 bytes)
+/mjt
