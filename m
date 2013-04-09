@@ -1,18 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/8
-Message-ID: <1672767.xGzJSsig4s@devil>
-Date: Mon, 09 Sep 2013 19:31:02 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com
-Subject: Re: CVE request: Torque privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/18
+Message-ID: <1BBED702BB5D4F349B5568A5D57CFC09@wildbit.com>
+Date: Tue, 9 Apr 2013 14:55:39 -0400
+From: Russ Thompson <russ@...dbit.com>
+To: Michael Tokarev <mjt@....msk.ru>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Postfix incorrect permissions on configurations. Request.
 Content-Type: text/plain; charset=utf-8
 
-On Monday 09 September 2013 10:35:20 Kurt Seifried wrote:
-> Please include links to the vulns/source code fixes/original
-> information thanks.
+The scripts inside are -world- executable, is the main concern here.  Certainly this can be changed by the end user but seems like an insecure default.  I've seen discussions and CVE's assigned for past cases where log directories are world readable and vice versa, if this is not the correct place to send, please advise.
 
-Did you see the link that contains the patch?
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+- Russ
+
+
+On Tuesday, April 9, 2013 at 2:19 PM, Michael Tokarev wrote:
+
+> 09.04.2013 22:08, Russ Thompson wrote:
+> > Postfix is setting the following permissions by default on Debian Squeeze. I'm seeing roughly the same on RHEL/CentOS 6.x, this appears to be a requirement of "sendmail.postfix" 
+> > 
+> > 0755 /etc/postfix
+> > 0644 /etc/postfix/*
+> > 0755 /etc/postfix-script
+> > 0755 /etc/post-install
+> > 
+> > Which allows all users to execute these scripts and read configurations. Setting to tighter/more typical permissions (i.e 640) results in: postfix/sendmail[21007]: fatal: open /etc/postfix/main.cf: Permission denied
+> 
+> That's all nice, but can you elaborate a bit -- what is wrong
+> with that? Which request do you have? What it has to do with
+> oss-security?
+> 
+> Thanks,
+> 
+> /mjt 
+
+
