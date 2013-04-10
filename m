@@ -1,44 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/8
-Message-ID: <CAHmME9qqm_6mD7bR6uo1Kius2eCKNQadELU3CKX=OHQwKabuJQ@mail.gmail.com>
-Date: Thu, 6 Jun 2013 15:02:37 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: chroots & uid sharing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/10/2
+Message-ID: <CANTw=MOK60+A2PHkY6O08OJshY2nnV6v_DX4o1GvRpmubTCEGA@mail.gmail.com>
+Date: Wed, 10 Apr 2013 12:21:14 -0400
+From: Michael Gilbert <mgilbert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Any info on dovecot CVE-2010-0535?
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
+On Mon, Apr 8, 2013 at 7:02 PM, Geoff Keating wrote:
+> On 07/04/2013, at 6:29 pm, Michael Gilbert <mgilbert@...ian.org> wrote:
+>
+>> I'm in the process of reviewing some older untriaged issues in the
+>> Debian security tracker.  I came across this Apple id (CVE-2010-0535)
+>> in dovecot.  Being Apple advisory, there is absolutely no useful
+>> information included, but based on the text, the issue is dependent on
+>> Kerberos.
+>>
+>> I found no other dovecot CVEs involving Kerberos, so the question I
+>> have is whether this is still currently an unfixed issue affecting
+>> dovecot?  Was it Apple-specific?
+>
+> Hi Michael,
+>
+> This is Apple-specific.  It affects the db-od auth method.
 
-Some people would be surprised to learn you can ptrace processes from
-inside chroots that exist outside of chroots. So, if there are two
-processes, one chrooted, and one unchrooted, both using the same UID,
-you can ptrace your way out of the chroot pretty easily. Grsecurity
-actually adds a little nob to the kernel to disallow this.
+Thank you very much for the information.
 
-What I wonder is how many distros are shipping various daemons that
-run under the nobody user, with certain ones chrooting and others not.
-How should we handle this?
+>> Generally, what can be done by
+>> distro security teams about issues with no actionable information?
+>> Would Mitre be willing to nudge Apple for information?
+>
+> Apple's on this list so you can always just ask...
 
-More generally, I'm wondering what the attitude should be toward this
-kind of violation when it occurs within a particular daemon. For
-example, OpenSMTPD forks a bunch of processes, and drops privs of some
-and chroots others. But they violate the uid-per-chroot rule,
-rendering the chroots useless. Should this be considered a security
-flaw? Or just a silly design consideration?
+Good to know, thank you for participating.
 
-This disgusting and offensive one-liner shows such flawed chroots:
-
-krantz ~ # for i in /proc/[0-9]*; do echo $(readlink -f $i/root)
-$(stat -c "%u %g" $i 2>/dev/null); done | sort | uniq | egrep "$(for i
-in /proc/[0-9]*; do if [ "$(readlink -f $i/root)" != "/" ]; then stat
--c "%u %g" $i 2>/dev/null; fi; done | sort | uniq | tr '\n' '|' | head
--c -1)" | ( u=""; l=""; while read line; do nu="$(cut -d ' ' -f 2,3
-<<<"$line")"; if [ "$nu" == "$u" ]; then if [ "$l" != "" ]; then echo
-"$l"; fi; echo "$line"; else l="$line"; fi; u="$nu"; done )
-/ 25 25
-/var/empty 25 25
-
-
-Thoughts?
-
-Jason
+Best wishes,
+Mike
