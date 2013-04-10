@@ -1,24 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/11
-Message-ID: <20130618165347.GS21784@sentinelchicken.org>
-Date: Tue, 18 Jun 2013 09:53:47 -0700
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: Thoughts on a vuln/CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/10/3
+Message-id: <dfa4bb3d-fdc5-418c-92f6-e98da615d3e4@me.com>
+Date: Wed, 10 Apr 2013 19:14:43 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Remote command injection in Ruby Gem kelredd-pruview 0.3.8
 Content-Type: text/plain; charset=utf-8
 
-> However my original question still stands, can/should we consider a
-> common configuration of software that goes from being secure to
-> insecure to be worthy of a CVE? A lot of things that used to be common
-> practice (like shipping every service/server enabled, all accounts
-> active, all access enabled, anonymous uploads allowed, etc.) are now
-> seen as security vulnerabilities/exposures.
+﻿Remote command injection in Ruby Gem kelredd-pruview 0.3.8 ﻿
 
-To me, it's a big grey area as far as assigning a CVE for stuff like
-this.
+Larry W. Cashdollar
+4/4/2013
+@_larry0
 
-But there's no reason we shouldn't raise awareness through venues like
-the various CERTs.  Though it seems US-CERT is only really good at
-re-sending microsoft and apple advisories these days. =(
+Description: "A gem to ease generating image previews (thumbnails) of various files."
 
-tim
+https://rubygems.org/gems/kelredd-pruview
+
+Remote commands can be executed if the file name contains shell meta characters.
+
+./kelredd-pruview-0.3.0/lib/pruview/document.rb
+
+In the following code snippet, we see the user input isn't sanitized for shell metacharacters. A malicious file with special characters in the filename could be used to execute commands as the local user.
+
+69       run_system_command("convert -format jpg \"{source}[0]\" \"{@...pfile.path}\"", "Error processing postscript document")
+85       colorspace = run_system_command("identify #{GLOBAL_CMD_ARGS} -format \"%r\" #{image.path}", "Error reading document colorspace")
+
+function run_system_comand() passes user supplied input to the command line.
+
+141     def run_system_command(command, error_message)
+142       output = `{command}`
+143       raise "{error_message}: error given {$?}\n{output}" if $? != 0
+144       return output
+145     end
+
+In kelredd-pruview-0.3.0/lib/pruview/video.rb: Also the video encoding and scaling features are vulnerable as well:
+
+27       run("#{FLVTOOL} -U #{target}", "Unable to add meta-data for #{target}.")
+
+51       run(build_command(@source, target, width, height, get_info(info_yml), scale_static), "Una    ble to convert #{@...rce} to #{target}.")
+
+Run is defined as:
+
+140     def run(command, error_message = "Unknown error.")
+141       raise "Ffmpeg error: " + error_message + " - command: '#{command}'" if !system(command)
+142     end
+
+User controlled data is being sent to the command line with out any shell meta charatcers being escaped.
+
+In kelredd-pruview-0.3.0/lib/pruview/video_image.rb:
+
+13       run(build_command(source, "-ss 00:00:#{duration * 0.1}", 'mjpeg', target), "Unable to get     preview image for #{target}")
+
+30 def self.build_command(source, time_str, format, target) 31 command = %Q{#{Video::FFMPEG} -i "#{source}"} 32 command += " #{time_str}" 33 command += " -f #{format}" if !format.empty? 34 command += " -an -y #{target}" 35 end
+
+where function run() is defined as:
+
+ 37     def self.run(command, error_message = "Unknown error.")
+ 38       raise "Ffmpeg error: " + error_message + " - command: '#{command}'" if !system(command)
+ 39     end 
+
+In line 38 user supplied data is passed to the command line.
+This vulnerability doesn't have a CVE assigned yet.
+
+http://vapid.dhs.org/advisories/kelredd-pruview-cmd-inject.html 
+Content of type "text/html" skipped
