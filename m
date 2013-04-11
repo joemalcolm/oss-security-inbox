@@ -1,35 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/3
-Message-ID: <516F7E2D.1040801@redhat.com>
-Date: Thu, 18 Apr 2013 10:31:33 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/11/3
+Message-Id: <A9E43DB4-BC61-4297-96F0-09C699DC2DB6@rooftopsolutions.nl>
+Date: Thu, 11 Apr 2013 15:12:51 +0200
+From: Evert Pot <evert@...ftopsolutions.nl>
 To: oss-security@...ts.openwall.com
-Subject: Xorg-x11-server: Information disclosure due enabling events from hot-plug devices despite input from the device being momentarily disabled
+Subject: SabreDAV security advisory (CVE-2013-1939)
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
-
-David Airlie and Peter Hutterer of Red Hat found an information
-disclosure flaw was found in the way X.org X11 server used to register
-new hot-plug devices, when X.org X11 server was instructed (for that
-particular moment) not to receive input devices events. Formerly when
-registering new input device, X.org X11 server simultaneously enabled
-retrieval of input from the particular device (regardless of the
-setting).
-A local unsuspecting user, relying on the X.org X11 server disable
-input feature it to properly prohibit acquiring of events from this
-newly added hot-plug device, could supply a sensitive information that,
-due the above bug, would become available to the physically proximate
-attackers.
-
-Upstream patch:
-http://cgit.freedesktop.org/xorg/xserver/commit/?id=6ca03b9161d33b1d2b55a3a1a913cf88deb2343f
-
-Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-1940
-
-This issue has been assigned CVE-2013-1940
+# Local file exposure issue
+Web: 
+https://groups.google.com/forum/?fromgroups=#!topic/sabredav-discuss/ehOUu7wTSGQ
 
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+## CVE IDENTIFIERS
+- CVE-2013-1939
+
+## AFFECTED SOFTWARE
+- SabreDAV < 1.6.8, < 1.7.6, < 1.8.4 running in Windows hosts. 
+
+## DESCRIPTION
+
+It was possible for authenticated users on to read any file on the local
+filesystem, accessible by the webserver.
+
+Thanks to Lukas Reschke for reporting this issue.
+
+## RESOLUTION
+Update to SabreDAV 1.6.9, 1.7.7 or 1.8.5 or turn off the 'Browser plugin'.
+
+Zipballs:
+http://code.google.com/p/sabredav/downloads/list
+
+Or with composer:
+composer update sabre/dav
+
+Regards,
+Evert Pot
