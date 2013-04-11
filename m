@@ -1,56 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/5
-Message-ID: <52984A1A.80909@redhat.com>
-Date: Fri, 29 Nov 2013 01:02:34 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/11/1
+Message-ID: <51661DD5.6060708@redhat.com>
+Date: Wed, 10 Apr 2013 20:20:05 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: team@...urity.debian.org
-Subject: Re: CVE Request: adequate: privilege escalation via tty hijacking
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE-2010-5109 libytnef buffer overflow
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/28/2013 04:41 AM, Salvatore Bonaccorso wrote:
-> Hi Kurt,
-> 
-> I would like to request a CVE for an issue with 'adequate':
-> 
-> http://bugs.debian.org/730691 (adequate: privilege escalation via
-> tty hijacking):
-> 
-> ----cut---------cut---------cut---------cut---------cut---------cut-----
->
-> 
-Package: adequate
-> Version: 0.4 Severity: serious Tags: security Justification: user
-> security hole
-> 
-> If root uses the --user option, then the user can hijack the tty
-> with the TIOCSTI ioctl.
-> 
-> This is similar to CVE-2005-4890.
-> 
+So the nice folks at iSIGHT Partners caught this and notified me.
 
-Please use CVE-2013-6409 for this issue.
+http://lists.fedoraproject.org/pipermail/package-announce/2012-July/083853.html
+
+http://lists.fedoraproject.org/pipermail/package-announce/2012-July/083804.html
+
+https://bugzilla.redhat.com/show_bug.cgi?id=831322
+
+http://sourceforge.net/p/ytnef/bugs/13/
+
+Please use CVE-2010-5109 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSmEoZAAoJEBYNRVNeJnmTPY8P/0vsH+KVUmCJK5CVGDh2EkDX
-GP8JoZjBzdaasyCK0QoNiNtkShrea4Uju6ngOFxMYJouo7xa29mZ4oTI71W+ehIA
-ff6TlDPvbO17DcOwjR+FhhY2vCcbXU3sLyWZGAgbnQAW+GQbxcFyVVF/Ws00Ejc8
-frS9pyvZVkmBJogoWnd2QR1FVRYBajizlJB9KSZMEjiVrPpUo5ARNxKUiRVHEv7n
-glHKF82ZxqSDSNZ1QRhnNlcx7n14XrnhlUia0GsYqzF1hDLh/5M5RmU9dCayZOUe
-noGrLLt3BA21hAIjQMSyURSklQgoQFThjsOynsA7XKu8j/uvCTU49lUClROf75/G
-TmCGQKrzciheRRN/ezstb5GledYNRQtO+8ShcOHeKAaaQ3dMowy4xonSrVBxSw3s
-1lXgtYE1oMPis25FaepSXydcSLU9DdPAujig+2m5v5Fv4t5u39QyKxZcOrkg4a9B
-725mIr3yIkPWfr8ECSCOZqDeK6SOTy8578+jnlkrch1CQxrP21nNoO+cDYpaFmdF
-wM9F3XQb8NOBfOd+gQMBxSBx62S9UHC+6/MzhKgnwzP1eZqojSEDgdWuX60Kt4LL
-idKA5P+bz03nfdPcFTQXLqF9mtX8uvGtlsaKne5SvsBIoox/RQd1QNkxFXFM6f/h
-Duy1GvBKmHcGYH32/vbA
-=U2b4
+iQIcBAEBAgAGBQJRZh3VAAoJEBYNRVNeJnmTKpQQAIqEm83FKFq5r8vpH6tf7m/F
+lq9FIT8yE4raldIgDSHhJHhLsNrh3yFrGc06tPddLLfVkNbPnPAdtKjilmMoNIPt
+abnPzwngKiui846wKlYFxt5/hEvgOSmvM15rdUXrcn3wHd/gnAAYFysynyGJZlRw
+ANkuLeIhkKWf1NBEjJCaxFsmk/D4nNsxhpj1ccPkmvgMMws59ias8DeCE2xdu0MS
+5Lb9zsrj9ewhoef6pt6arVfVqBJy4O8b/RIcPulw+F155VEvKQmbIHJ+HjuIloMx
+y9mBD2Ax3KxPtYgx6fYzj6mTNvk6oEBFHTITHCPffYGciZb0p36NYsWBrXlrmBRZ
+UqDVTF9NKkRZA3ULeX3MNDy1KDBYgL6xVXi43hHnuFsq2uE3kQZdrnErDOW0F0lq
+IbZuS5bSYGfWGAz69CoZ67uxoxQ58FyDWG2hGdxCurFGT6xqJvddFi8lzfPbnaQK
+ebEK6ShRe8JSQsBsl2W3lyG6O0nkxkq1RUCRkQtWMXhwV2I4TQNN4cSrCko8lGjm
+GBOp30aUp2nzwPJTJTmgyKylsJquGXJdLbFVhaoLmjo4iMRtrm6G+DqPtF5vYhyD
+u9qqDtOkJgv40Ifbcc/VoQq3jwK65savIHuZLF/zlJBWXxcjR8dV9wxDeOt7Ladn
+B10gwdklHGCTSFQtVXtf
+=dPsg
 -----END PGP SIGNATURE-----
