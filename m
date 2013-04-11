@@ -1,23 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/36
-Message-ID: <20130227193632.GC28242@sentinelchicken.org>
-Date: Wed, 27 Feb 2013 11:36:32 -0800
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/11/5
+Message-ID: <5167133A.5050803@redhat.com>
+Date: Thu, 11 Apr 2013 13:47:06 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, hello@...pyworm.com
+Subject: CVE-2013-1942 jPlayer 2.2.19 XSS
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+ownCloud brought this to my intention (they use it, I'm guessing other
+people use it as well.
+
+https://github.com/happyworm/jPlayer/commit/e8ca190f7f972a6a421cb95f09e138720e40ed6d
+
+Please use CVE-2013-1942 for this issue. The only contact info I can
+find is hello@...pyworm.com for upstream.
 
 
-Hmm, I wonder if perhaps the solution here isn't about spending a lot
-of time analyzing hundreds of potentially serious bugs and notifying
-the world about them all in an accurate way.  Perhaps the solution is
-changing the development model or architecture of the kernel such that
-there aren't so many bugs with *serious* impact in the first place.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Ooops... did I say that out loud?  
-
-Seriously though, when threads of disagreement erupt like this, often
-taking a step back to look at the root cause is a good approach.
-
-tim
+iQIcBAEBAgAGBQJRZxM6AAoJEBYNRVNeJnmTBOMP/0Pd8JoimqTdjLk2Uv0QDnyW
+Hz9ea3SKVrqFywMqEn+HSM1gH4XmB6wCeSjbkfhsj/TWqmckoH4MW8okKhFYEyHX
+eO5YIHeY/XAquyP+mJhEsChs6FM77SLu5WeuJXgQRfRwC1L7vyvIjYuZdVK+X7g0
+RXc+EyAqKXdhKs08GhORC+DVdzivX0iqBxaNDVBccwVbjilmpGJEyS+REU694nWf
+tei0f+Z2p7BotvJfBRhtGiU+gY2e/TRkwdEDAp44SPOnK7Gj4KcFdZaMiv9WePTd
+cH/GgmhH9iIJGho3sKUc+oH3JttqGc8lbN55Sm9z/vJbavCb1zWFQdwbimXK52ZY
+1PRUUw5HjPRnj9uZtxpLaIcD+kN6NUGgyp2VV+e0iwd0ntHgGyYUMIPGLRRgPlyU
+62JCaMfhX0qrbYdrrK9fUnzi/sqtNgR5cSCWa/XlirG9eYRqE6O9kfl8vZ6NmBjz
+BYRIr1Lb8OpBuA8wHdBXb8SMJBCted9JKcqQi1pt+bLrcuk/xJxZ1hJAhLVaJgn8
+s00Jimu7RUDra9DLM4tS4s9Y0gRpQHU+NbT9U+zzVE/W//NqWsY4LH2K5xAauQD7
+zEv51Qwludnj956lDv4bfC+1vP5JoQI0sk/QsiTig6nFAD1OQrLrPecQFs784gpr
+SPZCBk7V/zcDtKXdBEcz
+=Dt27
+-----END PGP SIGNATURE-----
