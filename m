@@ -1,30 +1,167 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/18
-Message-ID: <5182D29C.5000001@oracle.com>
-Date: Thu, 02 May 2013 13:54:52 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/11/4
+Message-ID: <CAD1NwhgK=_o-RpG=+ACxGs1ey0tKZ5-kLkMJjzs5FzKM_8vtrw@mail.gmail.com>
+Date: Thu, 11 Apr 2013 15:45:30 +0200
+From: Lukas Reschke <lukas@...cloud.org>
 To: oss-security@...ts.openwall.com
-CC: Russ Allbery <rra@...nford.edu>
-Subject: Re: upstream source code authenticity checking
+Cc: Evert Pot <evert@...ftopsolutions.nl>,  "security@...cloud.com" <security@...cloud.com>
+Subject: ownCloud Security Advisories (2013-014, 2013-015, 2013-016)
 Content-Type: text/plain; charset=utf-8
 
-On 05/ 2/13 11:10 AM, Russ Allbery wrote:
-> I routinely do this.  It's called a key-signing party.  The only trust
-> that I am expressing with that signature is that I have seen and verified,
-> to the best of my ability, some form of reliable identification for that
-> person (ideally a passport I can verify, or a social environment in which
-> it would be very difficult to impersonate someone you are not) in
-> combination with a proof that the key I signed belongs to the person whose
-> identification I checked.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Though for many open source projects, having a passport or other government
-id is not the sort of identity we care about - knowing that you're the
-person who does git/hg commits under that e-mail address is what we care
-about - if it's a pseudonym that doesn't match your passport, that doesn't
-affect whether we accept code from you or not.   (The lawyers might care,
-when it comes to verifying who owns copyright and agreed to release code
-under a given license, but that's a whole separate mess to unravel.)
+Some notes at the beginning:
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+- oC-SA-2013-014 affects a vulnerability in the external jPlayer
+plugin, Kurt will send a mail about this later.
+- oC-SA-2013-016 affects a vulnerability in SabreDAV, Evert has
+already posted a notice about that.
+- Please notice that we highly recommend any PostgreSQL user to change
+the database user password due to the insecure generation.  (see
+oC-SA-2013-015)
+
+---------------------------------------
+
+# XSS vulnerability in jPlayer (oC-SA-2013-014)
+Web: https://owncloud.org/about/security/advisories/oC-SA-2013-014/
+
+## CVE IDENTIFIERS
+- CVE-2013-1942 (jPlayer)
+
+## AFFECTED SOFTWARE
+- ownCloud Server < 5.0.4
+- ownCloud Server < 4.5.9
+- ownCloud Server < 4.0.14
+
+## RISK
+- High
+
+## COMMITS
+- 53672a0 (stable5)
+- 8716b7f (stable45)
+- 60f6bfa (stable4)
+
+
+## DESCRIPTION
+A cross-site scripting (XSS) vulnerability in all ownCloud versions
+prior to 5.0.4 including the 4.x branch allows remote attackers to
+execute arbitrary javascript when a user opens a special crafted URL.
+
+This vulnerability exists in the used 3rdparty plugin “jPlayer”,
+“jPlayer” released version 2.2.20 which addresses the problem. This
+version is not yet officially released and only available via their
+GIT repository.
+
+
+## CREDITS
+The ownCloud Team would like to thank Malte Batram (batr.am) for
+discovering this vulnerability and responsibly disclosing this to us
+and upstream.
+
+
+## RESOLUTION
+Update to ownCloud Server 5.0.4, 4.5.9 or 4.0.14
+http://download.owncloud.org/community/owncloud-5.0.4.tar.bz2
+http://download.owncloud.org/community/owncloud-4.5.9.tar.bz2
+http://download.owncloud.org/community/owncloud-4.0.13.tar.bz2
+
+---------------------------------------
+
+# Postgre: Insecure database password generator (oC-SA-2013-015)
+Web: https://owncloud.org/about/security/advisories/oC-SA-2013-015/
+
+## CVE IDENTIFIERS
+- CVE-2013-1941
+
+## AFFECTED SOFTWARE
+- ownCloud Server < 5.0.4
+- ownCloud Server < 4.5.9
+- ownCloud Server < 4.0.14
+
+## RISK
+- Critical
+
+## COMMITS
+- 9a4fe09 (stable5)
+- 463039d (stable45)
+- cdd10ba (stable4)
+
+## DESCRIPTION
+
+Due to using “time()” as random source in the installation routine,
+the entropy of the generated PostgreSQL database user password is very
+low and can be easily guessed.
+
+We recommend every PostgreSQL admin to change the database user
+password as soon as possible!
+
+Note: This vulnerability affects just servers using PostgreSQL as database.
+
+## RESOLUTION
+Update to ownCloud Server 5.0.4, 4.5.9 or 4.0.14
+http://download.owncloud.org/community/owncloud-5.0.4.tar.bz2
+http://download.owncloud.org/community/owncloud-4.5.9.tar.bz2
+http://download.owncloud.org/community/owncloud-4.0.13.tar.bz2
+
+
+ ---------------------------------------
+
+# Windows: Local file disclosure (oC-SA-2013-016)
+Web: https://owncloud.org/about/security/advisories/oC-SA-2013-016/
+
+## CVE IDENTIFIERS
+- CVE-2013-1939 (SabreDAV)
+
+## AFFECTED SOFTWARE
+- ownCloud Server < 5.0.4
+- ownCloud Server < 4.5.9
+- ownCloud Server < 4.0.14
+
+## RISK
+- High
+
+## COMMITS
+- c23a065 (stable5)
+- ade2831 (stable45)
+- 792c5ec (stable4)
+
+## DESCRIPTION
+Due to not rejecting “\” as path separator in all ownCloud versions
+prior to 5.0.4 including the 4.x branch an authenticated remote
+attacker is able to download arbitrary files from the server when
+running under Windows.
+
+This vulnerability exists inside our used DAV implementation
+“SabreDAV” and was found by the ownCloud security team. SabreDAV
+released fixed versions to address this problem.
+
+## RESOLUTION
+Update to ownCloud Server 5.0.4, 4.5.9 or 4.0.14
+http://download.owncloud.org/community/owncloud-5.0.4.tar.bz2
+http://download.owncloud.org/community/owncloud-4.5.9.tar.bz2
+http://download.owncloud.org/community/owncloud-4.0.13.tar.bz2
+
+--
+ownCloud
+Your Cloud, Your Data, Your Way!
+
+GPG: 0xEB32B77BA406BE99
+
+-----BEGIN PGP SIGNATURE-----
+
+wsFcBAEBAgAQBQJRZr5yCRDrMrd7pAa+mQAAsKkP/3Hcp8Y64tjnYzDFBAoz
+R6Vquiz590tHa7mho7lgV+eZzR0IWYZoIRcl8DDe+ofsCu5KIk7dg5TI8TyX
+rMmAWPkVSgQ4VAqbBm3yt+RXxNYYsuxU34DoHvZ4hDnPXNpTWqdiciSl1ZTY
+5eXAVqscYvHU3w4SB4fRKoWYqwxAUuo066Se8TUM142lg9sTDVfcxicvd0XT
+DSDm/eqfzfSG0t1EvSYa0VOu6SRXSPMqK+8mzDMCwJ7MVU2zuCT5PAcaSvCi
+NLJMoSs4WH/5f5MAMaY7AZK3DQ2sOOnNynw2ygRWC5+vVr7eH5ghfyFy26oM
+VXO5OSNGHGBc6Nw1OUMvNX+6KcTRzERAa8xBGYwbpyYafF7JSrwo1C5VMsTw
+m06Ceb65iFBklP4KqUCyY8hXlQ56eo7dM6BBQnEXmNPloUhbzd06aZ+azvn7
+et6daMqvDSISvdJwff6/9p36QA9oPchY47KCdnwU5CdC99/agOv32d/Lv3Cp
+7CsIC/K469jccJ3s+y94lodS86uscIEN3NW/PAl4oxYZas9B5WjFhPF8kIIY
+iskXpkqrrwPjrzqtsD7n9+5FWORnsGHz/Z5sry5ur4IjwCulIXhb7FvVC+vQ
+TkRgw972Ym4KkotKbDFsfYS35cqLIsFqHX6OGnjLBlZMa1S2V0+pmvnwStRA
+yxxc
+=l4xr
+-----END PGP SIGNATURE-----
