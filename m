@@ -1,67 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/09/1
-Message-ID: <50ECB9B0.30101@redhat.com>
-Date: Tue, 08 Jan 2013 17:28:32 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: WHK Yan <yan.uniko.102@...il.com>
-CC: oss-security@...ts.openwall.com, Carlos Alberto Lopez Perez <clopez@...lia.com>, submissions@...ketstormsecurity.com, mr.inj3ct0r@...il.com, submit@...ecurity.com, vuln@...unia.com, vuldb@...urityfocus.com
-Subject: Re: Re: [Full-disclosure] File Disclosure in SimpleMachines Forum <= 2.0.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/12/4
+Message-ID: <20130412194330.GA12353@openwall.com>
+Date: Fri, 12 Apr 2013 23:43:30 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2013-1900 looks like an OpenSSL bug
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Apr 12, 2013 at 09:14:46PM +0200, Florian Weimer wrote:
+> I believe it is wrong to fix this in PostgreSQL.  Rather, this is a
+> bug in the OpenSSL fork protection code.
 
-On 01/08/2013 12:16 PM, WHK Yan wrote:
-> The type and range of user defined smf, a co-manager can be created
-> by an administrator setting custom permissions, does not mean it
-> comes by default. Anyway in some groups smf computer security using
-> caution and have had this in our case was a very dangerous.
+Yes, I suggested this as a possibility here:
 
-I apologize but I am having a heck of a time parsing that last
-sentence. If you want to send it in your native language I can
-probably get it translated from another Red Hat employee.
+http://www.openwall.com/lists/oss-security/2013/04/04/2
 
-> 
-> 2013/1/8 Kurt Seifried <kseifried@...hat.com
-> <mailto:kseifried@...hat.com>>
-> 
-> On 01/08/2013 06:36 AM, WHK Yan wrote:
->> The flaw is not exploitable without privileges. On some
->> occasions there are forums where there are co-admistrators which
->> have privileges to view the error log but not to modify code or
->> at least read the mysql connection.
-> 
-> So is a trust/security boundary crossed here? Can you please
-> confirm that the co-admistrator (or anyone) is not supposed to be
-> able to read arbitrary files accessible to the web server, and that
-> this attack does indeed allow that? Thanks.
-> 
-> Removing full-disclosure@...ts.grok.org.uk 
-> <mailto:full-disclosure@...ts.grok.org.uk> from CC due to reply
-> spam.
-> 
-> 
-> 
-> 
+> It should either install a fork hook,
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+What is a fork hook, and how would it install one?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+> or reseed the PRNG from /dev/urandom if a PID change is detected.
 
-iQIcBAEBAgAGBQJQ7LmwAAoJEBYNRVNeJnmTkWUP/0FeKRu03HvATSfTkox0/DGa
-WTK51zUZQb4yAoVxiUA4DjEc7wIsZ0ygcwMz9OaxM/tRMrx2d6eiMbEf7SDLfPvD
-ZsTUrHkQew1pcL7JvSWJ/d6yVkgaMUiCyFZwJLPUL3NSqjOev1C3Nv5dsNfQdmrv
-yz2gGcFCQFiY4Q7W1PqvJj9AT43zhA4wLZY4Lgs2VaDzsYElWhSBncE4C3GhLAN/
-EZzJUV0STtA71+mutQWKl84itukxgdUZ3Hs4yVKTkBt3s3e9G4ziIMCUwirH2y9T
-V8dn8BRIY8m5pHSLPeDuswnmw1gHOBl4m3++GA1GJvtH8xEYpS68Ca3KA8iiZ6K8
-stjbxQ6S4pItpLPCGYfk9CiIfH5aeW2eYvv+pQzvX+WgRRoVHXbnP0zx6+RvvEIb
-8cvnmMXHnFg6Q2/pZuEMCyRPRcqrbjjyPCy0COn6LlskZw5jq1xfv/GcbN0IBYM0
-T7pepu3H0ORcutaMXeW8o813LQGnxV522N84+L3E1iP3hn93WihPZ4pr56P0QChf
-ZdL+L9pzeGdBOBXyA4QLyf7fkcbegCc03u9rcfjFxDEmKwsJbYlIL9ayOnWG7h4A
-6mCgVXQhOrZmvN7gKOipfJ6kO1q2n6p9R8PmVvWoRaAhjKLsKH86gb6dB8AZ8ePa
-vYw2OJFl9M8r5NcfQPlD
-=1W7j
------END PGP SIGNATURE-----
+Yes, or the PID may simply be mixed in on each and every request for a
+pseudo-random number.  (Isn't this already the case?  Need to check.)
+If such mixing, including of that of the rest of the entropy sources,
+is cryptographically strong, then one sibling process' pseudo-random
+number stream would not reveal another sibling's, unless there's also a
+memory contents leak.  The fact that the PID itself is low-entropy is OK
+as long as sufficient entropy is obtained from other sources (before the
+fork() is OK) and its mixing is cryptographically strong (and was such
+on any pre-fork() requests for random numbers as well), again assuming
+no memory contents leak from any of the processes.
+
+Alexander
