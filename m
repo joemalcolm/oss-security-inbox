@@ -1,67 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/10
-Message-ID: <1933475851.13533125.1375980941329.JavaMail.root@redhat.com>
-Date: Thu, 8 Aug 2013 12:55:41 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/12/2
+Message-ID: <516840F0.7040307@redhat.com>
+Date: Fri, 12 Apr 2013 11:14:24 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Dan Williams <dcbw@...hat.com>
-Subject: CVE Request -- Four flaws in WiMAX (afaik upstream is dead for this)
+CC: "Larry W. Cashdollar" <larry0@...com>
+Subject: Re: Remote command injection in Ruby Gem kelredd-pruview 0.3.8
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  this is some kind of strange CVE request, since WiMAX upstream
-seems to be dead already. Anyway, couple of security flaws were found
-by Florian during security review:
+On 04/10/2013 01:14 PM, Larry W. Cashdollar wrote:
+> 
+> Remote command injection in Ruby Gem kelredd-pruview 0.3.8
+> 
+> ------------------------------------------------------------------------
+>
+>  Larry W. Cashdollar 4/4/2013 @_larry0
+> 
+> *Description*: "A gem to ease generating image previews
+> (thumbnails) of various files."
+> 
+> https://rubygems.org/gems/kelredd-pruview
+> 
+> Remote commands can be executed if the file name contains shell
+> meta characters.
+> 
+> ./kelredd-pruview-0.3.0/lib/pruview/document.rb
+> 
+> In the following code snippet, we see the user input isn't
+> sanitized for shell metacharacters. A malicious file with special
+> characters in the filename could be used to execute commands as the
+> local user.
+> 
+> 69       run_system_command("convert -format jpg \"{source}[0]\"
+> \"{@...pfile.path}\"", "Error processing postscript document") 85
+> colorspace = run_system_command("identify #{GLOBAL_CMD_ARGS}
+> -format \"%r\" #{image.path}", "Error reading document
+> colorspace")
+> 
+> function run_system_comand() passes user supplied input to the
+> command line.
+> 
+> 141     def run_system_command(command, error_message) 142
+> output = `{command}` 143       raise "{error_message}: error given
+> {$?}\n{output}" if $? != 0 144       return output 145     end
+> 
+> In kelredd-pruview-0.3.0/lib/pruview/video.rb: Also the video
+> encoding and scaling features are vulnerable as well:
+> 
+> 27       run("#{FLVTOOL} -U #{target}", "Unable to add meta-data
+> for #{target}.")
+> 
+> 51       run(build_command(@source, target, width, height,
+> get_info(info_yml), scale_static), "Una    ble to convert
+> #{@...rce} to #{target}.")
+> 
+> Run is defined as:
+> 
+> 140     def run(command, error_message = "Unknown error.") 141
+> raise "Ffmpeg error: " + error_message + " - command: '#{command}'"
+> if !system(command) 142     end
+> 
+> User controlled data is being sent to the command line with out
+> any shell meta charatcers being escaped.
+> 
+> In kelredd-pruview-0.3.0/lib/pruview/video_image.rb:
+> 
+> 13       run(build_command(source, "-ss 00:00:#{duration * 0.1}",
+> 'mjpeg', target), "Unable to get     preview image for #{target}")
+> 
+> 30 def self.build_command(source, time_str, format, target) 31
+> command = %Q{#{Video::FFMPEG} -i "#{source}"} 32 command += "
+> #{time_str}" 33 command += " -f #{format}" if !format.empty? 34
+> command += " -an -y #{target}" 35 end
+> 
+> where function run() is defined as:
+> 
+> 37     def self.run(command, error_message = "Unknown error.") 38
+> raise "Ffmpeg error: " + error_message + " - command: '#{command}'"
+> if !system(command) 39     end
+> 
+> In line 38 user supplied data is passed to the command line. This
+> vulnerability doesn't have a CVE assigned yet.
+> 
+> http://vapid.dhs.org/advisories/kelredd-pruview-cmd-inject.html
+> 
 
-* Issue #1: Log file created with insecure (world-writable) permissions
-  https://bugzilla.redhat.com/show_bug.cgi?id=911122
+Please use CVE-2013-1947 for this issue.
 
-  A security flaw was found in the way Trace module of WiMAX, an user space
-  daemon for the Intel 2400m Wireless WiMAX link, used to set permissions
-  when opening the log file (was created with world-readable / writable
-  permissions). A local attacker could use this flaw to, in an unauthorized
-  way, alter the content of WiMAX daemon log file (possibly leading to un-enforced
-  actions to be performed by system administrator).
 
-* Issue #2: (OSAL crypt module): By setting encrypted password writes unencrypted passwords to log files
-  https://bugzilla.redhat.com/show_bug.cgi?id=911121
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-  A security flaw was found in the way OSAL crypt module of WiMAX, an user
-  space daemon for the Intel 2400m Wireless WiMAX link, used to perform
-  its internal encrypted password setting action (a failed attempt to set
-  the encrypted password was logged into the WiMAX's log file with provided
-  password logged in plaintext form). A local attacker could use this flaw
-  to obtain sensitive information or conduct unauthorized actions on behalf
-  of the user setting the encrypted password.
-
-* Issue #3: Supplicant agent ships RSA private key in the package
-  https://bugzilla.redhat.com/show_bug.cgi?id=911126
-
-  A security flaw was found in the way supplicant agent of WiMAX,
-  an user space daemon for the Intel 2400m Wireless WiMAX link, used to
-  manage its private key (private key was shipped together with the source
-  code). A local attacker could use this flaw to obtain security sensitive
-  data or, to conduct actions on behalf of private key owner.
-
-* Issue #4:  Three integer overflows, leading to heap-based buffer overflows when handling PDUs for L5 connections
-  https://bugzilla.redhat.com/show_bug.cgi?id=911129
-
-  Three cases of integer overflow, leading to heap-based buffer overflow flaw,
-  were found in the way socket dispatcher and connector modules for L5
-  connections of WiMAX, an user space daemon for the Intel 2400m Wireless
-  WiMAX link, used to handle certain payload data units (PDUs) for L5
-  connections. A remote attacker could issue a connection request with
-  specially-crafted PDU value that, when processed would lead to socket
-  dispatcher / connector module crash or, potentially, arbitrary code
-  execution with the privileges of the user running these modules.
-
-There are no patches for these issues yet. They were checked previously
-privately with Dan Williams and the suggestion was to file public bugs
-even when there are no patches available for these.
-
-Could you allocate CVE ids for these?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQIcBAEBAgAGBQJRaEDvAAoJEBYNRVNeJnmTbNUP/RN999r1F5FLqP7598zcwJHi
+VkCIeYTDYkBUd1k+RVqYmFZ0kdpUKu2vQQfn82AZyHK6uLkI8R0DWvYgjSLx0Dco
+yL+xGwHGaDF++8k3DQqnAlRwRVk2TDn9AwEAkY3VN92cnb0myKbp2NNHdRTyLhMe
+K1yYeWTgAiHdjkqDbbPdxcUqaZXjBto/AOE0Vb9lPP6PudSKpH1Cc1IRO6wm8Vzq
+wnNRKL9k7wXhrudvl0ZQvDMpAYUuyrVMQjT6LPFViNGm14A0uucnNyFZCLki0t9k
+MZFpAS7yOlzi4cnjaOhy5YzGtU2RPPhSy6P/N+/Jj7Hiq5L9JAOMlQIomALbjclb
+WSBWgd3p16JQu9iHDOJV1m6Gdasgqsn1baKSx2PHkJDddQfqiqGZujhZkT7Osiqq
+8auftxod/7X9vOGaWCNggou4ZHNUYxVKQCmtwK41FshtflhAzd7lnShe3fDksTGJ
+pdnFNnXVzymbOZh84o33+L8lSdq2aPHZUXAHmcH5hY3UV4MWxD0T1V/fHmAujVmJ
+MBmM7o0JafUaSLC+vmA/8BuQ3d4Flfzxc8wuUuGZFIQLjWxAihkss7oPzDo5Ign0
+4L4d9siDJBhnrrVxTeN5O0Y+43A2B/ZWflV3rrI7623naVnLZVxK5fnk/qQQVkMJ
+5oyqRyckUjJWOeUNH07z
+=0xtR
+-----END PGP SIGNATURE-----
