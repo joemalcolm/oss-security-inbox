@@ -1,72 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/18/2
-Message-ID: <20130318171957.GA46041@higgins.local>
-Date: Mon, 18 Mar 2013 10:19:57 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2013-1854] Symbol DoS vulnerability in Active Record
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/12/1
+Message-ID: <51683F42.1040606@redhat.com>
+Date: Fri, 12 Apr 2013 11:07:14 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-Symbol DoS vulnerability in Active Record
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-There is a symbol DoS vulnerability in Active Record. This vulnerability has been assigned the CVE identifier CVE-2013-1854.
+On 04/10/2013 02:47 PM, Forest Monsen wrote:
+> Hello, here's a request for CVE identifier for a Drupal
+> "contributed module":
+> 
+> SA-CONTRIB-2013-042 - RESTful Web Services (RESTWS) - Denial of
+> Service http://drupal.org/node/1966780
 
-Versions Affected:  3.2.x, 3.1.x, 2.3.x
-Not affected:       3.0.x
-Fixed Versions:     3.2.13, 3.1.12, 2.3.18
+Please use CVE-2013-1946 for this issue.
 
-Impact 
------- 
-When a hash is provided as the find value for a query, the keys of the hash may be converted to symbols.  In this example,
-
-    User.where(:name => { 'foo' => 'bar' })
-
-the string 'foo' will be converted to a symbol.  Impacted code will look something like this:
-
-    User.where(:name => params[:name])
-
-Carefully crafted requests can coerce `params[:name]` to return a hash, and the keys to that hash may be converted to symbols.
-
-All users running an affected release should either upgrade or use one of the work arounds immediately. 
-
-Releases 
--------- 
-The 3.2.13 and 3.1.12 releases are available at the normal locations. 
-
-Workarounds 
------------ 
-To work around this problem, change code that looks like this:
-
-    User.where(:name => params[:name])
-
-to code like this:
-
-    User.where(:name => params[:name].to_s)
+> Thanks!
+> 
+> Best, Forest
 
 
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-* 3-2-attribute_symbols.patch - Patch for 3.2 series
-* 3-1-attribute_symbols.patch - Patch for 3.1 series
-* 2-3-attribute_symbols.patch - Patch for 2.3 series
-
-Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
-Credits 
-------- 
-
-Thanks to Ben Murphy for reporting this!
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "2-3-attribute_symbols.patch" of type "text/plain" (2627 bytes)
-
-View attachment "3-1-attribute_symbols.patch" of type "text/plain" (5491 bytes)
-
-View attachment "3-2-attribute_symbols.patch" of type "text/plain" (5492 bytes)
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBAgAGBQJRaD9CAAoJEBYNRVNeJnmT+kQQANLdFUQVelCKv0lNglpMt406
+7JWoK89BCdnen21mpcMrB+/m4JQLpdrLFW9L4qZqspp1ktfX9tVujGycwYOSETD1
+yaFKOHBwgMnR3xQuuCP70NmwxlGW83/MFAINvPuW/LILOQYjOd9/BlxSTBtWe9oc
+Mn1cia4YOjb6j4n6as5F17IHjrliC9/Nxxh7TEonN/WC4YDEAt3XD24Eq6HbsAMU
+1t6zfvYZZ19vYxnLp14duJJEyMJ4obUY4IM3mCNTdiIIljai9vRSt/cdoVggv/sN
+XbdxQBG+w6QzUskhVX/Sic5EHbj+k44H6OH8O9TqKGoZJfcNHLaR1w6xauAZqgRY
+L5NxFLBr3BjfKHkeFN/bNlRoHZqHQGJYvpWmBzG0iSzcioZQ/sZjTyP9QqRww4E9
+c1cLhM/yAh06Q4QxW0G3x9LCPZAyYNt3ETjp2rvkAGPRR8pZCOZ+ZnYq+mpf6l55
+Hn7vORF/YSdUCWewP3DFOxXlcDXhiKAyCSJr9ujVUorfDQCj7uWfnYtuCH5tMHvu
+MvOYdPI0wr0G57kesWXpVoWjfjAedWBBx1y2uDBgBAwzUUM9MwE0YuDcgasV8naG
+NDhChGpoeNqLv0CDsyJIsy/f41O7UtiOcbymkT3ChGOltHbY6cyNDzoTSreiTJGP
+PYfB3sehqVXdLcoB3t+x
+=Kx1k
+-----END PGP SIGNATURE-----
