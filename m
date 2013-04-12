@@ -1,63 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/31/5
-Message-ID: <5272AAB4.2000708@redhat.com>
-Date: Thu, 31 Oct 2013 13:08:36 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, libgadu-devel@...ts.ziew.org, radheshkrishnank@...il.com
-Subject: Re: CVE Request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/12/3
+Message-ID: <87bo9j36jd.fsf@mid.deneb.enyo.de>
+Date: Fri, 12 Apr 2013 21:14:46 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2013-1900 looks like an OpenSSL bug
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I was made aware of this commit to the PostgreSQL sources:
 
-On 10/31/2013 06:30 AM, Radhesh Krishnan K wrote:
-> Hi,
-> 
-> I would like to request a CVE for this bug fix in libgadu[1].
-> 
-> [1]
-> http://www.mail-archive.com/libgadu-devel@lists.ziew.org/msg01017.html
->
->  
-> <http://www.mail-archive.com/libgadu-devel@lists.ziew.org/msg01017.html>--
->
->  Regards, Radhesh Krishnan K.
+commit 0d1ecd6300191a450978ca2fcd12bbbb7c5e65e6
+Author: Tom Lane <tgl@....pgh.pa.us>
+Date:   Wed Mar 27 18:50:21 2013 -0400
 
-Ok. So. Based on this reply:
+    Reset OpenSSL randomness state in each postmaster child process.
+    
+    Previously, if the postmaster initialized OpenSSL's PRNG (which it will do
+    when ssl=on in postgresql.conf), the same pseudo-random state would be
+    inherited by each forked child process.  The problem is masked to a
+    considerable extent if the incoming connection uses SSL encryption, but
+    when it does not, identical pseudo-random state is made available to
+    functions like contrib/pgcrypto.  The process's PID does get mixed into any
+    requested random output, but on most systems that still only results in 32K
+    or so distinct random sequences available across all Postgres sessions.
+    This might allow an attacker who has database access to guess the results
+    of "secure" operations happening in another session.
+    
+    To fix, forcibly reset the PRNG after fork().  Each child process that has
+    need for random numbers from OpenSSL's generator will thereby be forced to
+    go through OpenSSL's normal initialization sequence, which should provide
+    much greater variability of the sequences.  There are other ways we might
+    do this that would be slightly cheaper, but this approach seems the most
+    future-proof against SSL-related code changes.
+    
+    This has been assigned CVE-2013-1900, but since the issue and the patch
+    have already been publicized on pgsql-hackers, there's no point in trying
+    to hide this commit.
+    
+    Back-patch to all supported branches.
+    
+    Marko Kreen
 
-http://www.mail-archive.com/libgadu-devel@lists.ziew.org/msg01018.html
+I believe it is wrong to fix this in PostgreSQL.  Rather, this is a
+bug in the OpenSSL fork protection code.  It should either install a
+fork hook, or reseed the PRNG from /dev/urandom if a PID change is
+detected.
 
-=================
-It was rather a conscious decision. Since libgadu is a
-reverse-engineered implementation of a proprietary protocol, we have no
-control over the certificates used for SSL connections. We don't know
-which certificates will be accepted or rejected by the original client,
-so there is no reliable way to verify their validity in libgadu. But
-since you mentioned it, I guess we should at least add a note to the
-documentation.
-=================
-
-So basically that's good enough for me. Please use CVE-2013-4488 for
-this issue.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJScqq0AAoJEBYNRVNeJnmTXqwP/RftVbN1ae6r/dlY17+lyB8n
-GDRswtNGDY/HqcZnxM+U3Fg0lgCAbpBSqZW09+eoCfYTQRQ9Pdwdb0NEVBN2rE+X
-DzJCYN3WGA/SfqqmXI8Q6x+G9tk7quOL5At6opyNMDiIEV93YWqFw5IGUgUjGTrl
-NCsV8IcKZ3bd5c/pm+38GOR9GP+rGE7MzjqXJK0vSqXEf1YRomwx1V2Dnt9A7DQE
-taFp8SiZSxwqNAAf/HztoLL8x+X9SmaWJITdkwQQTirxSqmsxkq/MjNEwTHh+8gy
-jVOKiehCchqct1BrJtaqktrrnFE5VtW7EQqMcDKKGw19gMRC3hOWZTG0/fwsxNt9
-oI+D7Usjwaxjsh2Siqtxyc3YcGaTZQB7T3JeninmQxE1yrNQXNWr4GwsTGt49VO+
-w7cxPsk3BWGXZCylP5oERC+ha950ylE2mS/tVpeUHKA5QboskEUAo67/nYn47BLR
-yLaNjsIqkn29Bo7WIstK8lXMbKFadvPz7ICOIViv49HV9jBLu1moEm+iKkLYzAEM
-uF3miEdv20/Z32+0yIEIo6OrEgpWlnfMjuJk/n7RcWDkl5BoBBtk8vSTYyFjdgwt
-gk6a42aLHWNCf1v5xgWb16Y7erAC5Pq8G/XB+/B1Brb0ThFM6Z/0ggM+cTTaPEXW
-w9cv1zfq3EA+pET2KlXd
-=vyJN
------END PGP SIGNATURE-----
+Comments?
