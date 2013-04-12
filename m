@@ -1,87 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/1
-Message-ID: <20130304014438.GA27575@openwall.com>
-Date: Mon, 4 Mar 2013 05:44:38 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/12/6
+Message-ID: <Pine.GSO.4.64.1304121857540.22586@faron.mitre.org>
+Date: Fri, 12 Apr 2013 19:02:20 -0400 (EDT)
+From: "Steven M. Christey" <coley@...re.org>
 To: oss-security@...ts.openwall.com
-Subject: handling of Linux kernel vulnerabilities (was: CVE request - Linux kernel: VFAT slab-based buffer overflow)
+Subject: Re-evaluating expat/libxml2 CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 07:26:39PM +0100, Petr Matousek wrote:
-> Greg, FYI. The linux-distros mailing list has strict rules about the
-> maximum embargo period. It is ~14 days. I hope that ~14 days are
-> acceptable as a grace period for you when the commit goes public. At the
-> end of the embargo period the info is always sent to oss-sec with CVE id
-> assigned. 
-> 
-> Also, Alexander, are you willing to accept the semi-public nature of the
-> sko submissions to linux-distros and treat them as embargoed even though
-> the commit is already public?
-> 
-> For me, this solutions is not optimal as we usually treat any issue that
-> has public commit as public one, but it would at least avoid
-> CVE-2013-0871 like problems.
 
-It's a tradeoff that I would rather not be making because it's primarily
-a workaround for the difference of opinion between linux-distros and sko
-folks.  Also, it's not just me.  Is everyone on linux-distros OK with
-treating the partially public issues that would be coming from sko as
-embargoed?  And for how long?  If a certain linux-distros member is not
-OK with that, it's a reason to decline sko's offer, not to unsubscribe
-that member - well, or to start a separate list with a subset of
-linux-distros members who are OK with treating sko issues specially.
+Various CVEs were assigned to XML-related issues in expat and libxml2
+at:
 
-I think that, if all linux-distros members agree, we may choose to give
-a shorter grace period to issues disclosed to linux-distros from sko,
-for which fixes have already been committed publicly (just not fully
-documented as security).  I think that allowing up to ~14 days is too
-much for these.
+http://openwall.com/lists/oss-security/2013/02/22/3
 
-What grace period would be reasonable?  Here's one way to look at it:
-would we provide any grace period, and how much, in case an issue
-brought to linux-distros is fixed in the upstream author's public
-repository before the CRD?  Not necessarily a Linux kernel issue, but in
-general.  My guess, from past experience (including vendor-sec), is that
-we might reasonably provide a grace period of a couple of days.
+CVE-2013-0338 - libxml2 internal entity expansion
 
-Now, if we make this literally 2 days only, it won't be enough time for
-the larger distro vendors' QA.  For Red Hat this is probably less of an
-issue since a Red Hat person will be on sko.  For other larger distro
-vendors it is probably a serious issue, making these "two days in
-advance" notifications nearly useless.  For some smaller distro vendors,
-these notifications would probably be helpful.
+CVE-2013-0339 - libxml2 external entities expansion
 
-Can we do more than 2 days?  Maybe 7?  What exactly will be happening
-during this time?  Are distros free to commit their own fixes, just not
-announce them as security yet (mimic the Linux kernel's approach), or do
-they have to knowingly accept the elevated risk that someone will figure
-out the vulnerability (from upstream's commit) and start exploiting it
-on the users' systems?  Either is arguably negligent towards the users:
-not informing them that they need to upgrade for security vs. not
-providing such upgrades yet.
+CVE-2013-0340 - expat internal entity expansion
 
-Maybe a less unethical workaround to sko's policy would be for distros
-to explicitly state that an update is for security, but not to provide
-any detail until the grace period (of a few days?) is over.
-Unfortunately, this makes sko's approach even more ridiculous, almost
-killing its purported advantages.
+CVE-2013-0341 - expat external entities expansion
 
-(Of course, all of these approaches have been known for decades.)
+As I noted in http://openwall.com/lists/oss-security/2013/02/21/24, for 
+novel situations such as these, sometimes we might change directions after 
+we learn more.
 
-In my opinion, it'd be best if Linus, Greg, et al. would reconsider
-their approach.  Since this is unlikely to happen, the question is
-whether there's a reasonable workaround that we can use to mitigate the
-impact, without introducing other issues that would be as bad (or
-worse).  From a purely technical perspective, perhaps accepting sko's
-notifications to linux-distros and giving a grace period may help reduce
-the number of systems compromised per year (although we'll never know it
-reliably).  In this respect, not going for it may be unethical.  On the
-other hand, going for it is unethical in other ways as I described above.
+After some investigation, the MITRE CNA team believes we should probably 
+REJECT CVE-2013-0341 and shift responsibility to application developers.
 
-Overall, I think we should bite the bullet and accept sko's
-notifications to linux-distros, with a grace period of up to 7 days.
-Whenever a distro is ready to release an update, they should be able to
-insist on doing so within another 1 day, even if the initially planned
-grace period would expire later.  Would sko be OK with this?  Greg?
+For CVE-2013-0340 and CVE-2013-0339, there are "workarounds" available for 
+application developers, although such workarounds may be very expensive to 
+develop, and this might place "too much" responsibility to the developers 
+- so, these assignments may still be OK.  It is still worth discussion.
 
-Alexander
+CVE-2013-0338 still seems OK as is.
+
+
+CVE-2013-0341 - expat external entities expansion
+-------------------------------------------------
+
+In http://openwall.com/lists/oss-security/2013/02/23/1, Kurt says "I
+think it's common enough to warrant [assignment]," but Florian Weimer
+points out that expat doesn't resolve external entities directly.
+Instead - as described (or quoted?) in detail by Kurt - "Expat does
+not read or parse external entities directly."  The developer using
+expat has to explicitly set ExternalEntityRefHandler, then create "a
+subsidiary parser with XML_ExternalEntityParserCreate".
+
+Since the programmer using expat has to do the work to define and set
+up their ExternalEntityRefHandler, we believe that means that
+individual applications are using expat unsafely, so there should be
+separate CVEs for the applications, not expat.
+
+
+CVE-2013-0340 - expat internal entity expansion
+-----------------------------------------------
+
+This probably qualifies for a CVE, but note that the issue came up in
+CVE-2009-1955 (expat as used in Apache APR-util).  The implemented
+solution was to change the application, not expat. See
+
+http://svn.apache.org/viewvc?view=rev&revision=781403
+http://svn.apache.org/viewvc/apr/apr/trunk/xml/apr_xml.c?r1=757729&r2=781403&pathrev=781403&diff_format=h
+
+Apparently, if an application wishes to address this issue, it has to
+call the XML_SetEntityDeclHandler function with the name of an
+alternative function that can handle entities more safely. The
+opportunity to write your own code to process entities is probably
+outside the general intention of our "the library provides an API
+mechanism through which safe operation can be achieved" condition as
+presented in the http://openwall.com/lists/oss-security/2013/02/21/24
+post.
+
+
+
+CVE-2013-0339 - libxml2 external entities expansion
+---------------------------------------------------
+
+This also probably qualifies for a CVE. This may be another situation
+where the library provides the opportunity to write your own code to
+process entities safely. The libxml2 documentation for
+xmlSAX2ResolveEntity says "The entity loader, to control the loading
+of external entities, the application can either: ... override this
+xmlSAX2ResolveEntity() callback in the SAX block ... or better use the
+xmlSetExternalEntityLoader() function to set up it's own entity
+resolution routine." If so, then like CVE-2013-0340, it again would
+arguably be outside the bounds of the "the library provides an API
+mechanism through which safe operation can be achieved" condition.
+
