@@ -1,88 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/04/2
-Message-Id: <E1Tr9he-0007fM-NC@xenbits.xen.org>
-Date: Fri, 04 Jan 2013 16:01:03 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 37 (CVE-2013-0154) - Hypervisor crash due to incorrect ASSERT (debug build only)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/14/2
+Message-ID: <20130414093131.GA20475@elende>
+Date: Sun, 14 Apr 2013 11:31:31 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: VLC Buffer Overflow in ASF Demuxer
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Kurt
 
-	     Xen Security Advisory CVE-2013-0154 / XSA-37
+I have not found a CVE assigned for the following issue already (note
+upstream advisory also has only a CVE reference reference marked):
 
-     Hypervisor crash due to incorrect ASSERT (debug build only)
+VLC Security Advisory 1302 is about Buffer Overflow in ASF Demuxer:
 
-ISSUE DESCRIPTION
-=================
+http://www.videolan.org/security/sa1302.html
 
-A change to an internal interface within the hypervisor invalidated an
-ASSERT in a caller of that API. This code path is exposed to PV guests
-via a hypercall allowing administrators of PV guests to crash the
-hypervisor if it is built with debugging enabled.
+With upstream git commit:
 
-IMPACT
-======
+http://git.videolan.org/?p=vlc.git;a=commitdiff;h=b31ce523331aa3a6e620b68cdfe3f161d519631e
 
-Malicious administrators of PV guests running on hypervisors built
-with the non-default debug=y option can crash the host.
+Can a CVE be assigned to this issue (in case it's not yet in progress)
+to better track the issue?
 
-VULNERABLE SYSTEMS
-==================
-
-Systems running Xen 4.2 and unstable are vulnerable to this issue. Xen
-4.1 and earlier are not vulnerable.
-
-Only systems built with debugging enabled are vulnerable. Debugging is
-not enabled by default.
-
-Systems running PV guests or HVM guests using stubdomains are
-vulnerable. Guests which run only HVM guests without stubdomains are
-not vulnerable.
-
-MITIGATION
-==========
-
-Building the hypervisor without debugging enabled will completely
-avoid this issue. Note that debugging is not enabled by default.
-
-Avoiding running PV guests with untrusted administrators will also
-avoid this issue
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This issue was disclosed publicly on xen-devel; the person reporting
-it did not appreciate that it was a security issue.  Under the
-circumstances the Xen.org security team do not consider that this
-advisory should be embargoed.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa37-4.2.patch             Xen 4.2.x
-xsa37-unstable.patch        xen-unstable
-
-$ sha256sum xsa37*.patch
-beb9406e2d2de7a9768034af443b2eb30f69cd6e4688ceb63305595d2221194d  xsa37-4.2.patch
-161f41f95bd679cdb19e37df4da6a75386af4689118377ec501a9e3d4f66c873  xsa37-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQ5vyNAAoJEIP+FMlX6CvZkGUH/38HiKMfj+95DCgRzQI8dGpu
-6bvyhnHOY1WyGPGmDYuaMfLhOdBIoOdR46qMkC7R4kgaNqRIrev2KmzXSF//UuRq
-w/8eUwby1jGmZ4NnrxjBQfHQMUywkZGO0IdSzK573nCsOBDMH42Ec/vtEpnJsNK/
-vxWibmsPmNvDuZ0l/fhuc78iGcpF1D2T9D5ndujfJQ02cYFKeXVzBLuMtA/+YAPF
-JszVIknZnXYKoVjcXMOf5qokRxZehsI4BsbI6A4AxxZboSBzV1lX+fkPqGZnUury
-oiGTSIzdnTq4UbgrgV3JJGcfsCpB2xm5pDLsmXiggd8Zjo2oW25dWrpmTo5B8dU=
-=bPx0
------END PGP SIGNATURE-----
-
-Download attachment "xsa37-4.2.patch" of type "application/octet-stream" (691 bytes)
-
-Download attachment "xsa37-unstable.patch" of type "application/octet-stream" (691 bytes)
+Regards,
+Salvatore
