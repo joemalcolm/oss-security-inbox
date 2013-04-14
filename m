@@ -1,35 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/14/2
-Message-id: <3C8DA812-61DF-42FD-8478-97154D2A8E1B@me.com>
-Date: Sat, 14 Dec 2013 17:31:49 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Bio Basespace SDK 0.1.7 Ruby Gem exposes API Key via command line
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/14/3
+Message-ID: <CA+rthh-0sfmHAmjqtdCJzwj44m3EsyNJ8o2hPosF5Jrqn8+mEw@mail.gmail.com>
+Date: Sun, 14 Apr 2013 14:16:15 +0200
+From: Mathias Krause <minipli@...glemail.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel: more net info leak fixes for v3.9
 Content-Type: text/plain; charset=utf-8
 
-Title: Bio Basespace SDK 0.1.7 Ruby Gem exposes API Key via command line
+A few more info leaks were fixed. Unprivileged users can make use of
+flaws in the buggy protocols to leak up to 128 bytes of kernel stack
+memory by using recvmsg(2)/recvfrom(2). The root cause for all those
+info leaks is described in the following merge commit:
 
-Date: 11/15/2013
+http://git.kernel.org/linus/f89e8a6432409c6cbd5c2b6bb90ea694fd558de3
 
-Author: Larry W. Cashdollar, @_larry0
+As sys_recvfrom() and sys_recvmsg() behaved this way since the
+introduction of socket address information passing in Linux v1.1.20
+(v1.3.16 for recvmsg) the protocols in question are potentially all
+vulnerable since there introduction. But I haven't investigated this
+any further for any other protocol but ATM and AF_ALG, which are both
+indeed vulnerable since there introduction -- v2.3.15pre3 for ATM,
+v2.6.38 for AF_ALG.
 
-Download: http://rubygems.org/gems/bio-basespace-sdk
+The fixes are the following:
 
-Description:
-"BaseSpace Ruby SDK is a Ruby based Software Development Kit to be used in the development of Apps and scripts for working with Illumina's BaseSpace cloud-computing solution for next-gen sequencing data analysis. The primary purpose of the SDK is to provide an easy-to-use Ruby environment enabling developers to authenticate a user, retrieve data, and upload data/results from their own analysis to BaseSpace."
+9b3e617 atm: update msg_namelen in vcc_recvmsg()
+http://git.kernel.org/linus/9b3e617f3df53822345a8573b6d358f6b9e5ed87
 
-Vulnerability: The API client code passes the API_KEY to a curl command.  This exposes the api key to the shell and process table.  Another user on the system could snag the api key by just monitoring the process table. 
+ef3313e ax25: fix info leak via msg_name in ax25_recvmsg()
+http://git.kernel.org/linus/ef3313e84acbf349caecae942ab3ab731471f1a1
 
-In the following code snippet:
+4683f42 Bluetooth: fix possible info leak in bt_sock_recvmsg()
+http://git.kernel.org/linus/4683f42fde3977bdb4e8a09622788cc8b5313778
 
-bio-basespace-sdk-0.1.7/lib/basespace/api/api_client.rb
-  # +headers+:: Header of the PUT call.
-  # +trans_file+:: Path to the file that should be transferred.
-  def put_call(resource_path, post_data, headers, trans_file)
-    return %x(curl -H "x-access-token:#{@..._key}" -H "Content-MD5:#{headers['Content-MD5'].strip}" -T "#{trans_file}" -X PUT #{resource_path})
-  end
+e11e045 Bluetooth: RFCOMM - Fix missing msg_namelen update in
+rfcomm_sock_recvmsg()
+http://git.kernel.org/linus/e11e0455c0d7d3d62276a0c55d9dfbc16779d691
 
+c8c4991 Bluetooth: SCO - Fix missing msg_namelen update in sco_sock_recvmsg()
+http://git.kernel.org/linus/c8c499175f7d295ef867335bceb9a76a2c3cdc38
 
-Vendor: Notified 11/15/2013
+2d6fbfe caif: Fix missing msg_namelen update in caif_seqpkt_recvmsg()
+http://git.kernel.org/linus/2d6fbfe733f35c6b355c216644e08e149c61b271
 
-Advisory: http://www.vapid.dhs.org/advisories/bio-basespace-sdk.html
+5ae94c0 irda: Fix missing msg_namelen update in irda_recvmsg_dgram()
+http://git.kernel.org/linus/5ae94c0d2f0bed41d6718be743985d61b7f5c47d
+
+a5598bd iucv: Fix missing msg_namelen update in iucv_sock_recvmsg()
+http://git.kernel.org/linus/a5598bd9c087dc0efc250a5221e5d0e6f584ee88
+
+b860d3c l2tp: fix info leak in l2tp_ip6_recvmsg()
+http://git.kernel.org/linus/b860d3cc62877fad02863e2a08efff69a19382d2
+
+c77a4b9c llc: Fix missing msg_namelen update in llc_ui_recvmsg()
+http://git.kernel.org/linus/c77a4b9cffb6215a15196ec499490d116dfad181
+
+3ce5efa netrom: fix info leak via msg_name in nr_recvmsg()
+http://git.kernel.org/linus/3ce5efad47b62c57a4f5c54248347085a750ce0e
+needs also:
+c802d75 netrom: fix invalid use of sizeof in nr_recvmsg()
+http://git.kernel.org/linus/c802d759623acbd6e1ee9fbdabae89159a513913
+
+d26d650 NFC: llcp: fix info leaks via msg_name in llcp_sock_recvmsg()
+http://git.kernel.org/linus/d26d6504f23e803824e8ebd14e52d4fc0a0b09cb
+
+4a18423 rose: fix info leak via msg_name in rose_recvmsg()
+http://git.kernel.org/linus/4a184233f21645cf0b719366210ed445d1024d72
+
+60085c3 tipc: fix info leaks via msg_name in recv_msg/recv_stream
+http://git.kernel.org/linus/60085c3d009b0df252547adb336d1ccca5ce52ec
+
+680d04e VSOCK: vmci - fix possible info leak in vmci_transport_dgram_dequeue()
+http://git.kernel.org/linus/680d04e0ba7e926233e3b9cee59125ce181f66ba
+
+d5e0d0f VSOCK: Fix missing msg_namelen update in vsock_stream_recvmsg()
+http://git.kernel.org/linus/d5e0d0f607a7a029c6563a0470d88255c89a8d11
+
+Still lurking in crypto-2.6.git is the fix for AF_ALG:
+72a763d crypto: algif - suppress sending source address information in recvmsg
+https://git.kernel.org/cgit/linux/kernel/git/herbert/crypto-2.6.git/commit/?id=72a763d805a48ac8c0bf48fdb510e84c12de51fe
+
+All of the above commits are scheduled for the appropriate stable and
+longterm kernels.
+
+Regards,
+Mathias
