@@ -1,22 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/15/6
-Message-ID: <20130315164238.GO3385@redhat.com>
-Date: Fri, 15 Mar 2013 10:42:38 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: billion laughs flaw in ptlib
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/15/3
+Message-Id: <E1URlkk-0007dC-4q@xenbits.xen.org>
+Date: Mon, 15 Apr 2013 15:55:34 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 48 (CVE-2013-1922) - qemu-nbd format-guessing due to missing format specification
 Content-Type: text/plain; charset=utf-8
 
-Ekiga 4.0.1 was released and noted a security fix in ptlib (seems to be
-embedded in Ekiga) for a "billion laughs" style attack.  Could a CVE be
-assigned to this?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks.
+	     Xen Security Advisory CVE-2013-1922 / XSA-48
+			      version 2
 
-References:
-http://www.ekiga.org/news/2013-02-21/ekiga-4.0.1-stable-available
-http://opalvoip.svn.sourceforge.net/viewvc/opalvoip?view=revision&revision=28856
-https://bugzilla.redhat.com/show_bug.cgi?id=922177
+         qemu-nbd format-guessing due to missing format specification
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+UPDATES IN VERSION 2
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+The qemu-nbd tool (shipped in the Xen hypervisor tools distribution as
+qemu-nbd-xen) autodetects the image format.
+
+If a particular disk image is intended to be raw, a guest operating
+system administrator could write a header to the image, describing
+another format than original one.  This could lead to a scenario in
+which after restart of that guest, qemu-nbd would detect the new
+apparent format of the image, including a specified backing file or
+device, which could allow the guest to read any file on the host.
+
+IMPACT
+======
+
+qemu-nbd (qemu-nbd-xen) is not used by the toolstack software supplied
+with the Xen tree.  However, it is built and installed, and so might
+be used by host administrators or by toolstacks other than libxl or
+xend.
+
+If qemu-nbd is used, a malicious guest administrator may be able to
+read any file on the host, depending exactly how.
+
+VULNERABLE SYSTEMS
+==================
+
+For Xen systems using libxl (xl) or xend (xm): if neither qemu-nbd-xen
+nor qemu-nbd (since qemu-nbd-xen is installed under the latter name in
+/usr/lib/xen/bin) is explicitly invoked by scripts or other software
+not supplied by the Xen project, the system is not vulnerable.
+
+Xen systems using other toolstacks may be vulnerable if those
+toolstacks use qemu-nbd[-xen].
+
+A guest administrator who runs qemu-nbd-xen by hand on a guest may be
+exposing themselves to this vulnerability.
+
+Only qemu-xen-upstream is vulnerable; qemu-xen-traditional has a fix
+which makes this bug not apply.  However, the Xen build system builds
+and installs both by default, in some arbitrary order, to the same
+filename.  So which is installed and might be used is not predictable
+unless the qemu-xen-upstream build is entirely disabled.
+
+Only systems with Xen 4.2 and later installed are vulnerable (by
+virtue of the presence of Xen) as earlier versions of Xen do not build
+qemu-xen-upstream at all.
+
+MITIGATION
+==========
+
+No mitigation is available for users of qemu-nbd[-xen].  If you are
+using qemu-nbd[-xen] from qemu-xen-upstream on raw image files, then
+arranging to use qemu-xen-traditional instead will fail.
+
+If you wish enhanced assurance, removing all copies of of qemu-nbd and
+qemu-nbd-xen will provide confidence that this vulnerable utility is
+not being used.
+
+RESOLUTION
+==========
+
+To resolve the problem, it is necessary to apply the attached patch
+(to the qemu-xen-upstream tree).
+
+It is ALSO NECESSARY to ensure that all invocations of qemu-nbd are
+provided with an appropriate -f (--format) option.  Invoking qemu-nbd
+without this option remains unsafe and the patch does not prevent it.
+
+xsa48-4.2.patch         Xen 4.2.x (Xen's qemu-upstream-4.2-testing.git)
+xsa48-unstable.patch    Xen unstable (Xen's qemu-upstream-unstable.git)
+
+$ sha256sum xsa48*
+11e5d1f576770fde67e80e3e8c30f9a1af404fe6d07f1c37e96d68677f31435c  xsa48-4.2.patch
+20dac78bff584951cb706bb76a3394b47525749655dba2f68a6d923faf168fe8  xsa48-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJRbBX6AAoJEIP+FMlX6CvZBusIALRc+Cl0DUCJAbGkO8dmzOqA
+C7F9i1mD5gXZEmj0vBc8DEKivHFy3jgicL+j/SeUVMGouSi/FfntIUcevPHa3R1B
+1cPr+oZq9OYZgs/QFbLMPXEeeA0zQiWVJB0AA0h/q+FX5aFE2VpHvi66dcOoBeTL
+kJHOSEjLmuMEa+Gn1r+Y7nL7XXb5osZKMBoIv5wNX1XNv4PH/yEChTuZ5VD0ScU0
+Haib8k2SLDiDiZl/zF/6EdTb/13ceSE7WdBkaJqbbnI8KRbdAc8ERJBuoxupcnAW
+gPaVwlQ8RrGJrySofoiYozbZcAjbFQAUoxR2Vi6DxB/Lnn7V3PeFEwyXMQcx8ko=
+=Nel4
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa48-4.2.patch" of type "application/octet-stream" (3786 bytes)
+
+Download attachment "xsa48-unstable.patch" of type "application/octet-stream" (3787 bytes)
