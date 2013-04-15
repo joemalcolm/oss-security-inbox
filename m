@@ -1,65 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/12/4
-Message-ID: <5258D189.6040303@redhat.com>
-Date: Fri, 11 Oct 2013 22:35:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Quassel IRC SQL injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/15/5
+Message-ID: <CALCETrWYm7rhz=y8c6jTy2Ry_CFU0ajwjDAx5tDAK42r0rrfZQ@mail.gmail.com>
+Date: Mon, 15 Apr 2013 15:45:31 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: Brian Martin <brian@...nsecurityfoundation.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Summary of security bugs (now fixed) in user namespaces
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 10/11/2013 11:10 AM, Bas Pape wrote:
-> 2013/10/11 Kurt Seifried <kseifried@...hat.com>:
->> On 10/09/2013 10:48 AM, Bas Pape wrote:
->>> No upstream fix is available at this time, although the below 
->>> patch does fix the current issue.
->> 
->> Please use CVE-2013-4422 for this issue.
-> 
-> Thanks, glad to see I didn't botch the request. I am correct in 
-> thinking Mitre will fill the details (e.g. description and
-> references) once they get around to it, or does that require
-> something from my or upstream's end?
-> 
-> For completeness sake, upstream fixed it [1] and announced a new 
-> release (0.9.1 [2]).
-> 
-> [1]
-> https://github.com/quassel/quassel/commit/aa1008be162cb27da938cce93ba533f54d228869
+On Mon, Apr 15, 2013 at 3:34 PM, Brian Martin
+<brian@...nsecurityfoundation.org> wrote:
 >
-> 
-[2] http://quassel-irc.org/node/120
-> 
-> -- Tucos
+> Andy;
+>
+> : I previously reported these bugs privatley.  I'm summarizing them for
+>
+> : the historical record.  These bugs were never exploitable on a
+> : default-configured released kernel, but some 3.8 versions are
+> : vulnerable depending on configuration.
+>
+> Do you know if these were patched, and therefore possibly disclosed via the
+> commits? With these details, it is difficult to line them up to existing
+> reports.
 
-Yes as per
-https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures
+Bug 1 should be fixed in:
 
-Until The CVE is assigned AND Mitre is made aware of it (e.g. the
-embargo passes and the issue is made public) AND Mitre has researched
-the issue and written a description of it entries will show up as "**
-RESERVED **".
+commit 3151527ee007b73a0ebd296010f1c0454a919c7d
+Author: Eric W. Biederman <ebiederm@...ssion.com>
+Date:   Fri Mar 15 01:45:51 2013 -0700
 
+    userns:  Don't allow creation if the user is chrooted
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Bug 2 is should be fixed by these:
 
-iQIcBAEBAgAGBQJSWNGJAAoJEBYNRVNeJnmTL3kP/2Zci9Gha0Pc8+Qo3YAam52j
-sC/XrdVxXpFSZcghl7GJSCwWmEmzNrFiuSPBqHAdzXs4iPcaJI1CKSXNNAd+IWmy
-iu0xJdl1H/tlFbnzV4ivO/BD0hWr49vBfvXQMd08WrfTCfGB3VSIHfSLjOWO1eLh
-pZafi80EwNW38sWqiygKL1FZAIXXZpf2+OSi5wFw+YSmnhsFPdVCBClp+/7/JTnd
-RCJ5iJMeJ9/fMCwywnZlLuNQGJjCDhapfk8+dcuc2O1Jhl2JgXXc0G6ZV0tClXee
-l/l78K8a2ZpgtUm5nDkOXAEcDtUka9CuB+OSx0KkgbupQcH1CFirTmfGBiywDEyu
-ekZA3i20Q00seHi3Eh8cayqgwtoA9M8rZDABx8887Jky5tYpfANlpNCrByNhmD7/
-ds9UX+FbLE5CGcZaRYL7YAxUsNoueLGsByX2a/LORLSXkkwHEwzvmwp409dfbK+d
-6/C5VeuhAERbpRdw59plliD73+xtYqX6lgsk7vfUzfvycCnKcJ2xYzFNqsIig4wZ
-p51POEfZjeKShfwZojhfVhsi4uByP7AY9SbEHN79fpGIE5b7C0btbyVs9V2HvAq+
-MulbaHWIl/v/wpVQQCahtKfCI6w/1xV8LETQpgy3jdXgeD1dcSa4DxibGqJovYjd
-KP4pXpwn3QoseHfLXUrq
-=zx5T
------END PGP SIGNATURE-----
+commit 90563b198e4c6674c63672fae1923da467215f45
+Author: Eric W. Biederman <ebiederm@...ssion.com>
+Date:   Fri Mar 22 03:10:15 2013 -0700
+
+    vfs: Add a mount flag to lock read only bind mounts
+
+commit 132c94e31b8bca8ea921f9f96a57d684fa4ae0a9
+Author: Eric W. Biederman <ebiederm@...ssion.com>
+Date:   Fri Mar 22 04:08:05 2013 -0700
+
+    vfs: Carefully propogate mounts across user namespaces
+
+Bug 3 should be fixed in:
+
+commit 92f28d973cce45ef5823209aab3138eb45d8b349
+Author: Eric W. Biederman <ebiederm@...ssion.com>
+Date:   Fri Mar 15 01:03:33 2013 -0700
+
+    scm: Require CAP_SYS_ADMIN over the current pidns to spoof pids.
+
+Bug 4 isn't yet public... (it's unpatched so far and it's considerably
+more severe than any of these).
+
+--Andy
