@@ -1,58 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/13
-Message-ID: <52094379.8020905@redhat.com>
-Date: Mon, 12 Aug 2013 14:20:09 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Adéla Goldová <roguecoder@...h.com>
-Subject: Re: Re: CVE Request - HMS Testimonials 2.0.10 WP plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/15/1
+Message-ID: <alpine.LFD.2.03.1304151656270.14924@redhat.com>
+Date: Mon, 15 Apr 2013 17:00:52 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request - Linux kernel: tracing NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+   Hi,
 
-On 08/12/2013 12:52 AM, Adéla Goldová wrote:
-> I noticed how I managed to spell the name really wrong in the message text. I just wanted to fix it to avoid confusion.
-> The name should be HMS Testimonials.
-> 
-> On 8/10/2013 at 6:31 PM, "Adéla Goldová" <roguecoder@...h.com> wrote:
->>
->> Hello
->>
->> The HMS Tesminoalis version 2.0.10 plugin for WordPress contains 
->> multiple CSRF and XSS vulnerabilities.
->> This can be used in many different ways, like defacement of both 
->> public site and the admin area (only the HMS 
->> Testimonials plugin area will be affected), modify settings to set 
->> a lower role as moderator (very harmful on sites 
->> with open registrations), etc. Could CVE's be assigned to this?
->>
->> 1: http://seclists.org/fulldisclosure/2013/Aug/96
-> 
+Linux kernels built with Function Tracers and Stack Trackers are vulnerable to 
+a NULL pointer dereference flaw. It occurs while writing to `set_ftrace_pid' 
+and `set_graph_function' files used by the kernel tracers.
 
-CVE MERGE, same researcher/versions, so:
+A privileged user/program could use this flaw to crash the kernel, resulting 
+in DoS.
 
-CVE-2013-4240 HMS Testimonials 2.0.10 CSRF
-CVE-2013-4241 HMS Testimonials 2.0.10 XSS
+Upstream fix:
+-------------
+  -> https://git.kernel.org/linus/6a76f8c0ab19f215af2a3442870eeb5f0e81998d
 
+Reference:
+----------
+  -> https://bugzilla.redhat.com/show_bug.cgi?id=952197
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSCUN5AAoJEBYNRVNeJnmT8/MP/32QsjkC/rXOmSuEwp29Zpr3
-BrMdD0DGkL1+RbdeE1bCvV9G+V3/qMedM8qJDaj7Hhj48cTWLtgTBd1BPNgNCq5L
-TRiLUTfMz2xZtezlW8gu/VFcX3BrMJgCVdddYFp94/DPJf/Y+k224ufYIqO8wCl3
-oeibSCzlFB5DR3br9hQPXvlwj5IgscoS7nZ4078IuM+vWu0QxzAfT35ismtUFru9
-2V64N81RPa0xcBxA6cLxAbC84GDm9dijarrssMsUqK4XBcgN6/2nMJWEXimHRbyO
-OnuM3R6sFRPsYxHZR01oTH4QLD8dpmNPAJ5Nl9mOHyJoDrLJJUjYeJ2f3hQ38kZE
-aCRalHh3rzUd0ZuIG4jQs8ikzdZsgulBWXQ9o5UmdgQwoAyhQUKXWu5So9rX+/Cw
-zHK9R2FMAhTY1RyBHtdrpB6NeECDz3wJfZUKfr9fNarZRVxirfnUfvHt167mHPL0
-Hbf/tmkylZNsX5637Ye/2eUJrzBi0kJVkXdIzBzFY/TNpypSpUulLd/+TwnGa6qV
-sqdsWAT8+JOUg2nYYMZkuiJwENg6AhAkIQ78NUl+5DGfXh4oY5SD+eB9wDcd67jF
-OWmk8bbGvmQtFMv1fQdZWyOlXWToZRn0TxMySS6yQnWZ2PGRF4SLePdPoQmwdmw6
-jtrPW98NPnCCUdNn4ntw
-=LKt4
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
