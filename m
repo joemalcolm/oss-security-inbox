@@ -1,68 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/8
-Message-Id: <14476AB1-6B53-48D7-B4A4-51E7699F454D@nginx.com>
-Date: Mon, 29 Apr 2013 17:41:27 +0400
-From: Andrew Alexeev <andrew@...nx.com>
-To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com, gremlin@...mlin.ru
-Subject: Re: Nginx ngx_http_close_connection function integer overflow - can anyone confirm this?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/15/4
+Message-ID: <alpine.LNX.2.00.1304151733030.4835@forced.attrition.org>
+Date: Mon, 15 Apr 2013 17:34:30 -0500 (CDT)
+From: Brian Martin <brian@...nsecurityfoundation.org>
+To: luto@...capital.net
+cc: oss-security@...ts.openwall.com
+Subject: re: Summary of security bugs (now fixed) in user namespaces
 Content-Type: text/plain; charset=utf-8
 
-On Apr 26, 2013, at 11:15 AM, Andrew Alexeev <andrew@...nx.com> wrote:
 
-> On Apr 26, 2013, at 9:48 AM, Alistair Crooks wrote:
-> 
->> On Thu, Apr 25, 2013 at 11:36:17PM -0600, Kurt Seifried wrote:
->>> -----BEGIN PGP SIGNED MESSAGE-----
->>> Hash: SHA1
->>> 
->>> - From Bugtraq:
->>> 
->>> http://www.securityfocus.com/archive/1/526439/30/0/threaded
->>> 
->>> Website: http://safe3.com.cn
->> 
->> Is this legit?
->> 
->> I downloaded the index.html file with curl, and embedded around line 87
->> was a flash file:
-> 
-> Unfortunately we weren't approached by "Qihoo 360 Web Security Research Team"
-> before this publication went out through bugtraq.
-> 
-> We are now trying to obtain more information from that team without much success.
-> 
-> We've also analyzed their report and we can't conclude this is a real vulnerability yet.
-> From the descriptions provided it still looks like it's somewhat spurious.
-> 
-> We are trying to continue investigation though.
-> 
-> Regrettably responsible disclosure isn't always the case. However, we can't yet confirm
-> it's a full one either.
+Andy;
 
-We've been also directly approached by Qihoo team couple of days ago.
+: I previously reported these bugs privatley.  I'm summarizing them for
+: the historical record.  These bugs were never exploitable on a
+: default-configured released kernel, but some 3.8 versions are
+: vulnerable depending on configuration.
 
-After a thorough examination we can tell the following:
+Do you know if these were patched, and therefore possibly disclosed via 
+the commits? With these details, it is difficult to line them up to 
+existing reports.
 
-http://mailman.nginx.org/pipermail/nginx/2013-April/038701.html
+Thanks,
 
-Basically, we believe that nginx code distributed by Nginx Inc. is not affected by
-the above mentioned report.
-
-
->> <table width="930" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
->> <tr><td>
->> <object type="application/x-shockwave-flash" data="/banner.swf?xml=/banner.xml" width="930" height="180">
->> <param name="movie" value="/banner.swf?xml=/banner.xml"/>
->> </object>
->> </td></tr>
->> <tr>
->> 
->> so I took it to be an attempt at phishing.
->> 
->> Maybe I'm just too paranoid in my old age?
->> 
->> Regards,
->> Alistair
->> 
+Brian
 
