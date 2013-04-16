@@ -1,89 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/31/1
-Message-ID: <CAKWKj9Oy5XQ3iMiQABNAhP2+0Q04pzu0OY=68MgevKOq9qq5Kg@mail.gmail.com>
-Date: Tue, 31 Dec 2013 09:10:11 +0800
-From: Steve Kenworthy <steveyken@...il.com>
-To: cve-assign@...re.org
-Cc: henri@...v.fi, oss-security@...ts.openwall.com, joernchen@...noelit.de
-Subject: Re: CVE request: Fat Free CRM multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/10
+Message-ID: <CALCETrXvZzN4NhGUseu=xcgS5otR-S6PWc=O69oUNS+GKFFJjg@mail.gmail.com>
+Date: Tue, 16 Apr 2013 10:34:23 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com,  Brian Martin <brian@...nsecurityfoundation.org>
+Subject: Re: Re: Summary of security bugs (now fixed) in user namespaces
 Content-Type: text/plain; charset=utf-8
 
-Thanks for assigning.
-
-I can confirm for issue 3 that the disclosure also involves to_xml. Please
-assign the additional CVE ID.
-
-Re: denial of service, I don't believe this is an issue as the exploit only
-relates to read operations.
-
-
-
-On Sat, Dec 28, 2013 at 8:23 PM, <cve-assign@...re.org> wrote:
-
+On Tue, Apr 16, 2013 at 2:01 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 > -----BEGIN PGP SIGNED MESSAGE-----
 > Hash: SHA1
 >
-> > http://www.phenoelit.org/stuff/ffcrm.txt
-> > http://seclists.org/fulldisclosure/2013/Dec/199
-> > https://github.com/fatfreecrm/fat_free_crm/issues/300
-> >
-> https://github.com/fatfreecrm/fat_free_crm/wiki/Fixing-security-vulnerabilities-%2827th-Dec-2013%29
+> On 04/15/2013 04:45 PM, Andy Lutomirski wrote:
+>> On Mon, Apr 15, 2013 at 3:34 PM, Brian Martin
+>> <brian@...nsecurityfoundation.org> wrote:
+>>>
+>>> Andy;
+>>>
+>>> : I previously reported these bugs privatley.  I'm summarizing
+>>> them for
+>>>
+>>> : the historical record.  These bugs were never exploitable on a
+>>> : default-configured released kernel, but some 3.8 versions are :
+>>> vulnerable depending on configuration.
+>>>
+>>> Do you know if these were patched, and therefore possibly
+>>> disclosed via the commits? With these details, it is difficult to
+>>> line them up to existing reports.
+>>
+>> Bug 1 should be fixed in:
+>>
+>> commit 3151527ee007b73a0ebd296010f1c0454a919c7d Author: Eric W.
+>> Biederman <ebiederm@...ssion.com> Date:   Fri Mar 15 01:45:51 2013
+>> -0700
+>>
+>> userns:  Don't allow creation if the user is chrooted
 >
-> > 1. Known Session Secret
-> >
-> https://github.com/fatfreecrm/fat_free_crm/commit/93c182dd4c6f3620b721d2a15ba6a6ecab5669df
+> Can you confirm this has no CVE?
+
+AFAIK it does not.
+
 >
-> Use CVE-2013-7222.
+>> Bug 2 is should be fixed by these:
+>>
+>> commit 90563b198e4c6674c63672fae1923da467215f45 Author: Eric W.
+>> Biederman <ebiederm@...ssion.com> Date:   Fri Mar 22 03:10:15 2013
+>> -0700
+>>
+>> vfs: Add a mount flag to lock read only bind mounts
+>>
+>> commit 132c94e31b8bca8ea921f9f96a57d684fa4ae0a9 Author: Eric W.
+>> Biederman <ebiederm@...ssion.com> Date:   Fri Mar 22 04:08:05 2013
+>> -0700
+>>
+>> vfs: Carefully propogate mounts across user namespaces
 >
+> Can you confirm this has no CVE?
+
+AFAIK it does not.
+
+
 >
-> > 2. Lack of CSRF Protection
-> >
-> https://github.com/fatfreecrm/fat_free_crm/commit/a7fedbb36388bad0c0f32b2346481e0ea126dea6
+>> Bug 3 should be fixed in:
+>>
+>> commit 92f28d973cce45ef5823209aab3138eb45d8b349 Author: Eric W.
+>> Biederman <ebiederm@...ssion.com> Date:   Fri Mar 15 01:03:33 2013
+>> -0700
+>>
+>> scm: Require CAP_SYS_ADMIN over the current pidns to spoof pids.
 >
-> Use CVE-2013-7223.
->
->
-> > 3. Default to_json for models
-> >
-> https://github.com/fatfreecrm/fat_free_crm/commit/cf26a04b356ad2161c4c6160260eb870a3de5328
->
-> Use CVE-2013-7224.
->
->
-> > 4. Multiple SQL Injections
-> >
-> https://github.com/fatfreecrm/fat_free_crm/commit/078035f1ef73ed85285ac9d128c3c5f670cef066
-> >
-> https://github.com/fatfreecrm/fat_free_crm/commit/d4b2de81a4d8c1b201482edcb2488ed9280a65fd
->
-> Use CVE-2013-7225.
->
-> For item 3: if there is an information-disclosure vulnerability
-> involving to_xml, please let us know and we can assign an additional
-> CVE ID. The joernchen advisory mentioned only to_json, and therefore
-> to_xml has a different discoverer and may require a separate CVE ID.
->
-> If there is a denial of service issue involving :delete, please let us
-> know and we can assign an additional CVE ID. The joernchen advisory
-> mentioned only "renders JSON requests with a full JSON object," and
-> therefore :delete has a different discoverer and may require a
-> separate CVE ID.
->
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
->
-> iQEcBAEBAgAGBQJSvsH6AAoJEKllVAevmvmsjksIAMeaH2HBfTrSNt83LAy1Sk0c
-> Q+lexLe6vIsOQLeh02/vk4zk/piqcuQGcmTmpEQ+X5lT+7zwrBoZAe3/g36Nb+mM
-> uJh9gBzsJkq0JUnqRVn84e9gxnJpqXjUB0aRRhaFrMBKB5jdTDFpWzKWS77KVzhI
-> QlgEMBObp4WUQHjAfsZcN+cs+xWjMVvR7+rk1AWJ9hAjT02UBGigVNWe5PmDrb8z
-> /yqcrQiEFTENbdQKSjNxlSSoEFWxEUF1b4PInNl7451ep0Ee2ZKoi9bte8h8pgsP
-> rOzEsPzu0yevLI7Wgrvl+clSdesuvIi6/2kGklv5LTsM23Rw/spat4nkAuFPKlU=
-> =PZmt
-> -----END PGP SIGNATURE-----
+> Can you confirm this has no CVE?
 >
 
+AFAIK it does not.
+
+--Andy
