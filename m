@@ -1,39 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/07/3
-Message-ID: <52A2A9A4.5060504@redhat.com>
-Date: Fri, 06 Dec 2013 21:52:52 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: CVE assignments on OSS-Security for Dec 7-15th handed over the Mitre
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/2
+Message-ID: <20130416085528.GD5828@dhcp-25-225.brq.redhat.com>
+Date: Tue, 16 Apr 2013 10:55:28 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2013-1922 -- qemu: qemu-nbd block format auto-detection vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+A security flaw was found in the way qemu-nbd, the QEMU Disk Network
+Block Device server tool of QEMU, performed detection of image formats
+(the image format has been previously autodetected). A guest operating
+system administrator could write a header to particular raw disk image
+format, describing another format than original one for that disk image,
+leading to scenario in which after restart of that guest, QEMU would
+detect new format of the image, and could allow the guest to read any
+file on the host if QEMU was sufficiently privileged.
 
-I'm taking a week of PTO, so during this time CVE assignments for
-public issues on oss-security will be handled by Mitre
-(cve-assign@...re.org). Assignments on the distros@ list will be
-handled by vdanen@...hat.com. Private assignments sent directly to me
-I will get as possible but it is better to email secalert@...hat.com
-when I am away. Thanks all.
+This issue was found by Daniel Berrange of Red Hat.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=923219
+http://www.openwall.com/lists/oss-security/2013/04/15/3
 
-iQIcBAEBAgAGBQJSoqmjAAoJEBYNRVNeJnmTwnQP/2dp7NgznOz8AaA6XI3/ayVR
-gJsvgs8peUHYt7ZWRo3Nqwz7ZmHZWzQStS5bGslIXecN+d2bI/tXvxalMlHw8BeG
-inUO4YNsQISxfp4R/30kmeGJNEyNuNzQvAMDnnZPwMewvBsIWsv3KyXP5whE3icZ
-FwJs2wp/yaPJ5YxhZASbsp8hD9h1ZXUrpaAnR1ViSJyk+Z2AqOuF+NDTvFdZpUpL
-cl51srY8eZkSd4eutZ04lEZaNJ0hmz97z3+UbXWcFGqPoPvK+yxObiReeVlhCqSH
-az90IG1PUKBIpq81ecDwik+MOs+a+XeADD+XXWsu9W4h67CNEnE01GrcX0QL9NsA
-T+37WB4I9v21ABzwrqyqUTNCuE9yZSlQ5UlO3shKkBqWLaCGHNBQyfuKoAl66l8l
-bRq4NH9xGwqyUCs+4o4aT5K0fk2e0l+jApgc96kBDJbBOuqNDLFsE98qGPb358+A
-Zb+6cL29Pr7HnFFVUvQnQI0m6frv27lTyDsRqvGbdBAMts9c9ZRHKqjabGqch1A9
-0QJjfgK9Ee/0jKQ/2OmyjVj3Hh9yS+qVHSW+nyxbqJ6Y/1CNi3FAUfIYnPLzyOIY
-K+euHUb52PBfxFBkWybnB7DxNZX36vsIdJRFspkLtV+gZtqI8VML2AnQt6XjzUmE
-wR2qf61UuWDEXtWlhjFz
-=znPE
------END PGP SIGNATURE-----
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
