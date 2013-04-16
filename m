@@ -1,29 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/3
-Message-ID: <1371535812.19806.16.camel@scapa>
-Date: Tue, 18 Jun 2013 08:10:12 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: kseifried@...hat.com
-Cc: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: Thoughts on a vuln/CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/8
+Message-ID: <2cedcd8318b3c8bf134f88e463aedda9.squirrel@aphrodite.kinkhorst.nl>
+Date: Tue, 16 Apr 2013 14:00:43 +0200
+From: "Thijs Kinkhorst" <thijs@...ian.org>
+To: "Open Source Security" <oss-security@...ts.openwall.com>
+Subject: CVE Request: MediaWiki Security Releases 1.20.4 and 1.19.5
 Content-Type: text/plain; charset=utf-8
 
-On mar., 2013-06-18 at 00:04 -0600, Kurt Seifried wrote:
-> We have software with a now insecure configuration as it points to a
-> site that may or may not be under attacker control. It seems to me
-> like this might be a candidate for a CVE. Thoughts and comments for
-> and against are welcome (I'm on the fence myself).
+Hi all,
 
-I'm not completely sure what assigning a CVE would give here. Debian
-itself never shipped a package adding this apt source. Some people
-might have shipped some external packages adding it, but I'm not really
-aware of this. Usually the source was added manually by end-users.
+Please assign CVE names for the issues below in Mediawiki.
+The announcement contains references to bug numbers which have all the
+details.
 
-So I'm not too sure what tracking the “issue” would actually give. Maybe
-it can help raise awareness on this, but I'm not too convinced.
 
-Regards,
--- 
-Yves-Alexis
+Thanks,
+Thijs
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+---------------------------- Original Message ----------------------------
+Subject: [MediaWiki-announce] MediaWiki Security Release: 1.20.4 and 1.19.5
+From:    "Chris Steipp" <csteipp@...imedia.org>
+Date:    Mon, April 15, 2013 22:37
+To:      mediawiki-announce@...ts.wikimedia.org
+         "MediaWiki-l" <mediawiki-l@...ts.wikimedia.org>
+         "Wikimedia developers" <wikitech-l@...ts.wikimedia.org>
+--------------------------------------------------------------------------
+
+I would like to announce the release of MediaWiki 1.20.4 and 1.19.5.
+These releases fix 3 security related bugs that could affect users of
+MediaWiki. Download links are given at the end of this email.
+
+* An internal review discovered that specially crafted Lua function
+names could lead to XSS.
+<https://bugzilla.wikimedia.org/show_bug.cgi?id=46084>
+
+* Daniel Franke reported that during SVG parsing, MediaWiki failed to
+prevent XML external entity (XXE) processing. This could lead to local
+file disclosure, or potentially remote command execution in
+environments that have enabled expect:// handling.
+<https://bugzilla.wikimedia.org/show_bug.cgi?id=46859>
+
+* Internal review also discovered that Special:Import, and
+Extension:RSS failed to prevent XML external entity (XXE) processing.
+<https://bugzilla.wikimedia.org/show_bug.cgi?id=47251>
+
+
+Full release notes for 1.20.4:
+<https://www.mediawiki.org/wiki/Release_notes/1.20>
+
+Full release notes for 1.19.5:
+<https://www.mediawiki.org/wiki/Release_notes/1.19>
+
+For information about how to upgrade, see
+<https://www.mediawiki.org/wiki/Manual:Upgrading>
+
+
+**********************************************************************
+   1.20.4
+**********************************************************************
+Download:
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.4.tar.gz
+
+Patch to previous version (1.20.3):
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.4.patch.gz
+
+GPG signatures:
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.4.tar.gz.sig
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.4.patch.gz.sig
+
+Public keys:
+https://secure.wikimedia.org/keys.html
+
+
+**********************************************************************
+   1.19.5
+**********************************************************************
+Download:
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.5.tar.gz
+
+Patch to previous version (1.19.4):
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.5.patch.gz
+
+GPG signatures:
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.5.tar.gz.sig
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.5.patch.gz.sig
+
+Public keys:
+https://secure.wikimedia.org/keys.html
+
+**********************************************************************
+   Extension:RSS
+**********************************************************************
+Information and Download:
+https://www.mediawiki.org/wiki/Extension:RSS
+
+_______________________________________________
+MediaWiki announcements mailing list
+To unsubscribe, go to:
+https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce
+
