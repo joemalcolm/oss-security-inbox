@@ -1,48 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/22/4
-Message-ID: <20131222185128.GA7136@alf.mars>
-Date: Sun, 22 Dec 2013 19:51:29 +0100
-From: Helmut Grohne <helmut@...divi.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/9
+Message-ID: <516D41C5.9080009@redhat.com>
+Date: Tue, 16 Apr 2013 14:19:17 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [SECURITY] [DSA 2826-1] denyhosts security update
+CC: Andy Lutomirski <luto@...capital.net>, "linux-kernel@...r.kernel.org" <linux-kernel@...r.kernel.org>
+Subject: Re: Summary of security bugs (now fixed) in user namespaces
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Dec 22, 2013 at 07:26:15PM +0100, Yves-Alexis Perez wrote:
-> Helmut Grohne discovered that denyhosts, a tool preventing SSH
-> brute-force attacks, could be used to perform remote denial of service
-> against the SSH daemon. Incorrectly specified regular expressions used
-> to detect brute force attacks in authentication logs could be exploited
-> by a malicious user to forge crafted login names in order to make
-> denyhosts ban arbitrary IP addresses.
+On 04/13/2013 07:16 PM, Andy Lutomirski wrote:
+> I previously reported these bugs privatley.  I'm summarizing them for
+> the historical record.  These bugs were never exploitable on a
+> default-configured released kernel, but some 3.8 versions are
+> vulnerable depending on configuration.
 
-A bit of background on this issue:
+Looking at this list, is there some way to restrict this new 
+functionality to, say, membership in a certain group?  At present, most 
+system users (daemons) do not need this functionality, so it would make 
+sense to restrict access to it.
 
-I discovered the issue on the 19th of December ant contacted:
- * Debian security team
- * Maintainer of the Debian package: Kyle Willmon
- * Upstream: Phil Schwartz
+Or is the expectation that we disable CONFIG_USER_NS until things 
+stabilize further?
 
-Example exploit:
-
-ssh -l 'Invalid user root from 123.123.123.123' 21.21.21.21
-
-This causes a log line of the form
-
-sshd[123]: input_userauth_request: invalid user Invalid user root from 123.123.123.123 [preauth]
-
-and results in both IP addresses being blocked.
-
-CVE-2013-6890 was assigned from the Debian pool.
-
-The proposed solution is to tighten up the regular expressions for
-matching log file entries. Specifically including the $ pattern to match
-the end of log lines. For your convenience I attach the final patch.
-
-The Debian security advisory is the initial public disclosure.
-
-I am not aware of any upstream response to this issue and the last
-denyhosts release is from 2008.
-
-Helmut
-
-View attachment "13_CVE-2013-6890.patch" of type "text/x-diff" (3566 bytes)
+-- 
+Florian Weimer / Red Hat Product Security Team
