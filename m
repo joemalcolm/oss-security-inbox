@@ -1,32 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/17/1
-Message-ID: <5145BCA6.9060501@gentoo.org>
-Date: Sun, 17 Mar 2013 08:52:54 -0400
-From: Sean Amoss <ackle@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/3
+Message-ID: <516D1267.9060502@redhat.com>
+Date: Tue, 16 Apr 2013 02:57:11 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: VLC Buffer overflows
+CC: Murray McAllister <mmcallis@...hat.com>
+Subject: Re: autotrace: stack-based buffer overflow in bmp parser
 Content-Type: text/plain; charset=utf-8
 
-It looks like this issue has not been assigned a CVE ID:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-VLC media player 2.0.5 addresses buffer overflow flaws in the freetype
-renderer and HTML subtitle parser.
+On 04/16/2013 01:13 AM, Murray McAllister wrote:
+> Good morning,
+> 
+> There is a stack-based buffer overflow in autotrace 0.31.1 in 
+> Fedora[1]. In input-bmp.c, the input_bmp_reader() function creates
+> a buffer on the stack:
+> 
+> 91   unsigned char buffer[64];
+> 
+> Later on
+> 
+> 169   else if (Bitmap_File_Head.biSize <= 64) /* Probably OS/2 2.x
+> */ 170     { 171       if (!ReadOK (fd, buffer,
+> Bitmap_File_Head.biSize - 4))
+> 
+> We control Bitmap_File_Head.biSize. A value of 0 meets the <=64 
+> requirements, and 0 - 4 should result in almost 4294967295 bytes
+> being read into the buffer.
+> 
+> I am told:
+> 
+> "" The same code is in Gimp, it was introduced in commit 
+> d9c6f88141aecf956c5d721168f795de0e3027b8 and accidentally fixed in 
+> 57f805a159874107c6c98065f9aa648c3634b8fd:
+> 
+> https://git.gnome.org/browse/gimp/commit/?h=d9c6f88141aecf956c5d7 
+> https://git.gnome.org/browse/gimp/commit/?h=57f805a159874107c6c98
+> 
+> Similar code can also be found in sam2p. ""
+> 
+> On Fedora 18, the issue was caught by FORTIFY_SOURCE.
+> 
+> Murray.
+> 
+> [1] http://koji.fedoraproject.org/koji/buildinfo?buildID=340458
 
-Reference:
-http://www.videolan.org/security/sa1301.html
+Please use CVE-2013-1953 for this issue.
 
-Upstream fix:
-http://git.videolan.org/?p=vlc/vlc-2.0.git;a=commitdiff;h=9b0414dc7f5c18ff2951175cf076779c444efd70
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-
-Thanks,
-Sean
-
--- 
-Sean Amoss
-Gentoo Security | GLSA Coordinator
-E-Mail	  : ackle@...too.org
-GnuPG FP  : E58A AABD DD2D 03AF 0A7A 2F14 1877 72EC E928 357A
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (295 bytes)
+iQIcBAEBAgAGBQJRbRJnAAoJEBYNRVNeJnmTyTUQALq73LhHHyNIrOBq4O8ExhGi
+k59+nIh2hl4MLY5gTLzLPpJF582BLfcNuEIdsucHj/5heBofhDFe9E6sXqRV1d2o
+ymiT7JDzO4NpWnyln/XbBss0aI5TPVflHaax3/SHC44p5hifudLKZae6Rvh8qFGp
+8eqY38tH5fIIqAU3g4ZvQnJrVdRFhojHpdMHBLsdNC1fxMPkN/ksywdr2V1u5l38
+sl1DEFJZopGQ7VECTT1//5db0urSqMIBtTs2XR9VkBRX5+4QyJczqzk2m88UNi4q
+iuaZ3I9pwN/09V3chkD2B1S3EErRvBD/ql26LZIz5WUtRgAQDW4/F7wFPU0ek0T8
+bQbaZUmSxgEO7VPYB+FetjPGCe0pa3U51cViRRXYzWcGxhKZIsWAacxIQQUEvhah
+75UHuP7UQf61H5aj7u/RygJU2wo8eevEiVlvRFQgEFZWcWUHKPrt4gqAXBJ/OgaG
+ugp/eScOqXVwiW31421cKJzFf4+5OpVAZNkX7UC8H4lxd+BIiSgxhigG2zees+pU
+yYP81H0I5rkuuG66OddIOdqBQ//X5MDoWDDcGw+pyd4SGcc3TsxV3wcZi8HhbQOd
+k0DpNnIT+9RaTf7HZ6Ir3egwv1Q56LmBBeV9+xJmiThHqPEdANRhcGAyAp7zDSYH
+F6S18MuKRRaNZ1h0Pdpv
+=Ar0e
+-----END PGP SIGNATURE-----
