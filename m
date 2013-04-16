@@ -1,49 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/16/1
-Message-ID: <20130316033828.GA28903@openwall.com>
-Date: Sat, 16 Mar 2013 07:38:28 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/5
+Message-ID: <516D1578.80805@redhat.com>
+Date: Tue, 16 Apr 2013 03:10:16 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel race condition with PTRACE_SETREGS (CVE-2013-0871)
+CC: Salvatore Bonaccorso <carnil@...ian.org>
+Subject: Re: CVE Request: VLC Buffer Overflow in ASF Demuxer
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 20, 2013 at 01:01:25AM +0400, Solar Designer wrote:
-> On Tue, Feb 19, 2013 at 12:40:50PM -0800, Julien Tinnes wrote:
-> > The good news is that the race is not trivial to win in an exploit. It
-> > also requires access to ptrace() (but unfortunately most distros don't
-> > limit ptrace()).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/14/2013 03:31 AM, Salvatore Bonaccorso wrote:
+> Hi Kurt
 > 
-> Yeah.  To clarify why the vulnerability looks so bad to me: for our
-> kernel builds and usage, it appears to be the worst since CVE-2010-3081
-> (compat_alloc_user_space() missing sanity checks), although it is
-> probably trickier to exploit in the wild (due to the race).  There were
-> other local vulnerabilities in the Linux kernel discovered in those ~2.5
-> years, but they were in more obscure subsystems (which we generally
-> don't expose) or/and they required that the local attacker would execute
-> a SUID/SGID program.  This one, however, is in an (almost) core kernel
-> component and is self-contained (no dependency on the userland being
-> non-perfect), which makes it almost as bad as CVE-2010-3081, except that
-> it's a race.  On the other hand, CVE-2010-3081 did not affect 32-bit
-> only kernel builds, whereas this new vulnerability probably does.
+> I have not found a CVE assigned for the following issue already
+> (note upstream advisory also has only a CVE reference reference
+> marked):
+> 
+> VLC Security Advisory 1302 is about Buffer Overflow in ASF
+> Demuxer:
+> 
+> http://www.videolan.org/security/sa1302.html
+> 
+> With upstream git commit:
+> 
+> http://git.videolan.org/?p=vlc.git;a=commitdiff;h=b31ce523331aa3a6e620b68cdfe3f161d519631e
+>
+>  Can a CVE be assigned to this issue (in case it's not yet in
+> progress) to better track the issue?
+> 
+> Regards, Salvatore
+> 
 
-There's now a non-free exploit for the PTRACE_SETREGS vulnerability
-(CVE-2013-0871) that is reported to work on Linux 2.6.29+ on x86_64 in
-VMs (failing to win the race on bare metal?)
+Please use CVE-2013-1954 for this issue.
 
-http://immunityproducts.blogspot.com/2013/03/immunity-releases-exploit-for-linux.html
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-"We do have a 32 bit version and a 2.x version which we'll finish
-testing and release at some point in the near future. And we'll try to
-fix the 64 bit version to work on non-VM's."
-
-Since the (in)security community only got this far in 1 month, probably
-I have somewhat overestimated the severity of this bug.  Formally, its
-prerequisites are minimal and the impact is grave, but the difficult to
-win race presumably happened to give a grace period of 1+ month for
-everyone to patch... which, of course, most sysadmins did not do yet,
-although updates from major distro vendors are now available.
-
-Of course, it is entirely possible that more powerful exploits are
-already being used privately, but I have not heard of any yet.
-
-Alexander
+iQIcBAEBAgAGBQJRbRV4AAoJEBYNRVNeJnmTC04P/1Qjt5AijujDhJsizf3Cx6+e
+qVm6oq/iSZhCpjRdVttJW3nCgydsDbqkoVtQBw7w3/3ZgMPkK/UZmPUsqkD8VGuR
+IhFO5eFHKB9xhFR+432IVcXOGsrPuq5mzE257c1BqQDO0Iudo5rVshMSyzLu6WAu
+SwzwPlXMQYkjKUWAr+L+TdpOYBCEGwB00TCVjmVH7V6n3Af8bUQAmCXaogBh9Uk3
+lG4jo6SsQnwAvCo68VuYUOD+LaCwfwiWEmhOdSUbEZ5UkwREsKwFidlrmvv4bQgf
++VppZMmOutz1kw7nqLwI0Xj0P7YKTYtsi+E0tZH+jr0mSr7H5vwAPcPwLj8LoC2r
+4euClCDtI4I1B2N34tdYSXWCQJ/aY+UkM8Uyw5+e37vnhEREOdOyMZyQNt587lET
+JddJGs9eGyxN8n9uZoojSGIrx70SXq/y8sfwhUTKJBHivzwUOQSIIiJZWf7SJem/
+EgQaLgVUClBo3rRcGexbRV4BnNE6+4BrYrM2AxabCbqTsme2N730SNzXlM30y4Ux
+W62oIXWW0e2zooX53ImbLPgoymeqR0NAx8UMmZ/re6GzUbkcDjD4ZJPQsiYlgrc0
+pBsOhaG+jCGVo2Z2VLC5yhlOmqh1ZCSG0xKdvgu+rC3UQX3Rkt4qCaVl2HZ7fQLi
++oDcJb2KFuZczVl6NeoM
+=0Q5f
+-----END PGP SIGNATURE-----
