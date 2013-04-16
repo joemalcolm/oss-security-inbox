@@ -1,37 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/14/2
-Message-ID: <525B97E8.7090408@redhat.com>
-Date: Mon, 14 Oct 2013 18:06:16 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>, Assign a CVE Identifier <cve-assign@...re.org>, Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Subject: Re: Re: browser document.cookie DoS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/7
+Message-ID: <516D169A.1000308@redhat.com>
+Date: Tue, 16 Apr 2013 03:15:06 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: A note on CVE assignment timelines
 Content-Type: text/plain; charset=utf-8
 
-On 10/12/2013 03:32 PM, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 10/11/2013 11:34 AM, Joel Weinberger wrote:
->> Hi there. Yes, we do CVEs, but in this case, we consider this very
->> low severity and will not be creating a CVE for it. Sorry for the
->> delayed response for it! --Joel
->
-> So to confirm you are saying this is NOT a security issue in any way
-> shape or form? I find this odd because DoS's in web browsers are often
-> considered CVE worthy. Is there something in this issue that prevent
-> exploitation/etc? If not then it deserves a CVE even if it is a "low"
-> issue.
->
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I don't think web browser dos's are suppose to be CVE worthy. Our (Red 
-Hat) advisories for Firefox and Thunderbird mention "crash...", but they 
-probably should not (my fault, sorry ;)).
+I'm trying to not work on the weekends (I know, crazy huh?) so in
+general CVE requests sent in later on Friday or any time on Saturday
+and Sunday (north american time) won't be handled until Monday at the
+earliest. Also please send private requests as early as possible,
+sometimes they take time to handle so giving me 1-2 hours prior to a
+public release is probably not enough (assuming I'm even awake/at my
+computer/reading email).
 
-Adding Huzaifa to Cc.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
---
-Murray McAllister / Red Hat Security Response Team
+iQIcBAEBAgAGBQJRbRaaAAoJEBYNRVNeJnmTxy8P/iU06V4tlWvitSq5/A7wkMl9
+22vfWUlYGrIyZCG3bAnUpX3c6FfGWA0SVClImCPPwm7kWG2j7ws2DsuzAixx/6XI
+ZYa8WmeUS4R/6vMvfZvwupvxzfoGzD/p76myZrpf8QvahL+5Yo9UsjT7+mUhoChh
+t8lTtlJEAsF+Wmz6WT0YLpm4aIqRo/f2vLmRNdIZYZ0fhJZbAA1HkBdvzJKMRkTS
+Z153FFygkMiwGNedXbFDVcfdZM66/1in2OLe9IlCwr2sn8sdYuDVmhkBfT61GPOC
+bbSD+nNIi0i7cm0IHH2EeTh3HqXBEEfW7VWXJ7S3UU16Iipy37WFW61TwoVoMEoN
+kI/WCGeZOVGWX2Hf2ES/CjlN3xMhC8e8ZVwPkH114YEbTGmgTg68f52KVN+jjCu9
+4SZ1l52adqx/cqmtVDREs2XuJ3XGO0o8/NBlzGJrZNiFPQ3GccLx+icXDVXUXerW
+B5nxAfOOSVqYVQ/VnUwSE6blIG/iFMcDyDmEyuG+BZpAote2+I3GrpY3gA+uFo1s
+M45dYHZ0r5D1PaSFGJMn5/pHRRu6nl3RPw7xRayOQ2QVKqT1tREdZZcFa1aZrRJs
+tFn8nIpTe8OSTKyUxccIi32amrpeoX79OTpsTCKynLKyp/+0v7qVGistaOUMXuaM
+7Ve1SHY/XB7fDunFrwny
+=9gvc
+-----END PGP SIGNATURE-----
