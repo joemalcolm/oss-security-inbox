@@ -1,138 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/30/9
-Message-ID: <621abcf0f5708ccc77ba822fe6e4e96d@imap.steindlberger.de>
-Date: Fri, 30 Aug 2013 17:47:13 +0200
-From: Jonas Meurer <jonas@...esources.org>
-To: Vincent Danen <vdanen@...hat.com>
-Cc: oss-security@...ts.openwall.com, kseifried@...hat.com, contribute@...ios.org
-Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/11
+Message-ID: <516D9C6E.4050305@redhat.com>
+Date: Tue, 16 Apr 2013 12:46:06 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Andy Lutomirski <luto@...capital.net>, Brian Martin <brian@...nsecurityfoundation.org>
+Subject: Re: Re: Summary of security bugs (now fixed) in user namespaces
 Content-Type: text/plain; charset=utf-8
 
-Any news on that?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I still believe that there's a misunderstanding. I still consider the 
-bug I found as security relevant. Hostnames are leaked to unauthorized 
-nagios-cgi users.
-
-In case that you don't agree with what I've written below, please 
-explain.
-
-Honestly, I cannot believe that it was meant as a _feature_ by nagios 
-devs that _all_ hostnames are displayed for _all_ users, regardless 
-whether they're listed in contacts/contactgroups.
-
-I don't consider this issue too important, but still a CVE would be 
-appropriative in my opinion. It should be fixed in future uploads of 
-nagios3 to the major distributions. Most nagios admins might be unaware 
-of this issue.
-
-Kind regards,
-  jonas
-
-
-Am 2013-08-04 02:40, schrieb Jonas Meurer:
-> Hello,
-> 
-> sorry, I'm on holidays and cannot work on this issue for the next two
-> weeks. But I think that there is a missunderstanding. See my short
-> comment below.
-> 
-> Am 02.08.2013 19:27, schrieb Vincent Danen:
->> * [2013-07-10 17:17:08 +0200] Jonas Meurer wrote:
+On 04/16/2013 11:34 AM, Andy Lutomirski wrote:
+> On Tue, Apr 16, 2013 at 2:01 AM, Kurt Seifried
+> <kseifried@...hat.com> wrote:
+>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
 >> 
->>> Hello,
->>> 
->>> Am 2013-07-08 20:16, schrieb Kurt Seifried:
->>>> -----BEGIN PGP SIGNED MESSAGE-----
->>>> Hash: SHA1
+>> On 04/15/2013 04:45 PM, Andy Lutomirski wrote:
+>>> On Mon, Apr 15, 2013 at 3:34 PM, Brian Martin 
+>>> <brian@...nsecurityfoundation.org> wrote:
 >>>> 
->>>> On 06/26/2013 01:42 PM, Kurt Seifried wrote:
->>>>> On 06/26/2013 12:36 PM, Vincent Danen wrote:
->>>>>> I don't believe a CVE has been assigned to this issue yet.
->>>>> 
->>>>>> It was reported that Nagios 3.4.4 at least, and possibly earlier
->>>>>> versions, would allow users with access to Nagios to obtain
->>>>>> full access to the servicegroup overview, even if they are not
->>>>>> authorized to view all of the systems (not configured for this
->>>>>> ability in the authorized_for_* configuration option).  This
->>>>>> includes the servicegroup overview, summary, and grid.
->>>>> 
->>>>>> Provided the user has access to view some services, they will be
->>>>>> able to see all services (including those they should not see).
->>>>>> Note that the user in question must have access to some services
->>>>>> and must have access to Nagios to begin with.
->>>>> 
->>>>>> This has not yet been corrected upstream.
->>>>> 
->>>>>> References:
->>>>> 
->>>>>> http://www.mail-archive.com/nagios-users@lists.sourceforge.net/msg39749.html
->>>>>> 
->>>>> 
->>>>>> http://tracker.nagios.org/view.php?id=456
->>>>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714171
->>>>>> https://bugzilla.redhat.com/show_bug.cgi?id=978531
->>>>> 
->>>>> 
->>>>>> Thanks.
->>>>> 
->>>>> Please use CVE-2013-2214 for this issue.
+>>>> Andy;
 >>>> 
->>>> It appears there are may be some problems with this issue, 
->>>> potentially
->>>> this may have been a bad configuration and not a source code based
->>>> problem, however we haven't been able to confirm it yet. I've also 
->>>> not
->>>> been able to contact upstream about this easily (no security@ 
->>>> address,
->>>> if anyone know whom to forward this to, please let me know, thanks.
+>>>> : I previously reported these bugs privatley.  I'm
+>>>> summarizing them for
+>>>> 
+>>>> : the historical record.  These bugs were never exploitable
+>>>> on a : default-configured released kernel, but some 3.8
+>>>> versions are : vulnerable depending on configuration.
+>>>> 
+>>>> Do you know if these were patched, and therefore possibly 
+>>>> disclosed via the commits? With these details, it is
+>>>> difficult to line them up to existing reports.
 >>> 
->>> I'm wondering why you fail to reproduce this issue. I posted some
->>> details regarding my setup at the Nagios Tracker:
->>> http://tracker.nagios.org/view.php?id=456
+>>> Bug 1 should be fixed in:
 >>> 
->>> Unfortunately Nagios upstream sometimes rather unresponsive. At least
->>> that's what I observed.
+>>> commit 3151527ee007b73a0ebd296010f1c0454a919c7d Author: Eric
+>>> W. Biederman <ebiederm@...ssion.com> Date:   Fri Mar 15
+>>> 01:45:51 2013 -0700
 >>> 
->>> Please let me know if you need any further details regarding the bug
->>> or advice on how to reproduce it.
+>>> userns:  Don't allow creation if the user is chrooted
 >> 
->> To close the loop on this, the CVE should probably be rejected.
->> According to upstream, this is done by design.  One of our users noted
->> it in our bugzilla:
+>> Can you confirm this has no CVE?
+
+Please use CVE-2013-1956 for Linux Kernel namespaces userns:  Don't
+allow creation if the user is chrooted
+
 >> 
->> https://bugzilla.redhat.com/show_bug.cgi?id=978531#c11
+>>> Bug 2 is should be fixed by these:
+>>> 
+>>> commit 90563b198e4c6674c63672fae1923da467215f45 Author: Eric
+>>> W. Biederman <ebiederm@...ssion.com> Date:   Fri Mar 22
+>>> 03:10:15 2013 -0700
+>>> 
+>>> vfs: Add a mount flag to lock read only bind mounts
+>>> 
+>>> commit 132c94e31b8bca8ea921f9f96a57d684fa4ae0a9 Author: Eric
+>>> W. Biederman <ebiederm@...ssion.com> Date:   Fri Mar 22
+>>> 04:08:05 2013 -0700
+>>> 
+>>> vfs: Carefully propogate mounts across user namespaces
 >> 
->> He has a thorough explanation, but the bottom line is this seems to be
->> by design, as noted in the changelog:
+>> Can you confirm this has no CVE?
+
+Please use CVE-2013-1957 for Linux Kernel namespaces vfs: Carefully
+propogate mounts across user namespaces
+
+
 >> 
->> http://www.nagios.org/projects/nagioscore/history/core-3x
+>>> Bug 3 should be fixed in:
+>>> 
+>>> commit 92f28d973cce45ef5823209aab3138eb45d8b349 Author: Eric
+>>> W. Biederman <ebiederm@...ssion.com> Date:   Fri Mar 15
+>>> 01:03:33 2013 -0700
+>>> 
+>>> scm: Require CAP_SYS_ADMIN over the current pidns to spoof
+>>> pids.
 >> 
->> * Users can now see hostgroups and servicegroups that contain at least
->>   one host or service they are authorized for, instead of having to be
->>   authorized for them all (Ethan Galstad)
+>> Can you confirm this has no CVE?
+>> 
+
+Please use CVE-2013-1958 for Linux Kernel namespaces scm: Require
+CAP_SYS_ADMIN over the current pidns to spoof pids
+
+
+As for the fourth bug he sent me details privately and a CVE was assigned.
+
+> --Andy
 > 
-> As I understand this changelog entry, it means the following:
-> 
-> Hostgroups and servicegroups are listed with all the _authorized_
-> members if the user is authorized to see at least one member.
-> 
-> To me it doesn't mean the following (which was the case without my 
-> patch):
-> 
-> Servicegroups are listed with all members (regardless wether authorized
-> or unauthorized) if the user is authorized to see at least one member.
-> 
-> Another argument for my point of view is that the nagios maintainers
-> (silently) accepted my patch (at least if I remember correctly, it has
-> been incorporated into the upstream development repository).
-> Unfortunately there's still not one single statement from upstream 
-> about
-> the issue, that I'm aware of.
-> 
->> I suspect this CVE should be rejected as this is done by design.
-> 
-> Like explained above, I disagree with this suggestion :)
-> 
-> Kind regards,
->  jonas
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRbZxuAAoJEBYNRVNeJnmTBf0P/iSfWW//lBQGsljdiadvlbsN
+RwFJMk5K1E/fIRm6OOHZljrpsMelxQMHZHMZvyo1RE8HEHjO/v7XuWLzewFFKB3b
+N4ALuNXl3pA6fJmSCfo0WCO17ilBRiliLVcGyaW9ChHEvUQXZqwUs69wFu6uluPr
+AJjRXUbEiUI3/7SfKD7QjlAAHAuZ6EHO6zWej8Apc5LnDlyxOnEEgUfYaRulgevw
+iAb0w5e3wA+MMjuqPdxrS9hhjQTWTzUHTm+b4kXaD++5OypI/cEwNU7iuwcYEE/i
+T1WKgsDu+babpu+Izo3XjSlQIFHURB4cMyKlaNESJ+h0Rnm1l/OT+VEEWE3inWK/
+UEaFoFBUxe58oqCt+f9wouIFYB5z9fbg+mlcbtnFpb29j6xUI/hJzcbmjxwlxMp8
+0cgfYEea6dqyRxpkYoQKlowUtlfBx3omjieCLiAifY+WnGvmWgvd1FzC3zZ2nBFn
+kjwnnaFFxI9y6pX3QnXT+MFPqxNUHyVwNwc4GJErza0WfZuUBzZZk+Dfr6ZGLLGw
+FKJq2OmhI/nUES7PWGuech/UpvRrW9mJQWUnHEwyYSjCNz0pCa6UiS442pL7mutw
+G3Hs8JDMCWBHsVsetYKhEsSbdIr0qGLaVKDJKdbFN9NelZTXqgp/NRegtFNNMci3
+nU/3Fi8qsBf3m3aquJBZ
+=RRBe
+-----END PGP SIGNATURE-----
