@@ -1,47 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/04/2
-Message-ID: <510F34D2.4060802@redhat.com>
-Date: Sun, 03 Feb 2013 21:10:58 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/4
+Message-ID: <516D136F.1080106@redhat.com>
+Date: Tue, 16 Apr 2013 03:01:35 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Michael Gilbert <mgilbert@...ian.org>
-Subject: Re: CVE id request: boost
+CC: Andy Lutomirski <luto@...capital.net>, Brian Martin <brian@...nsecurityfoundation.org>
+Subject: Re: Re: Summary of security bugs (now fixed) in user namespaces
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/03/2013 06:50 PM, Michael Gilbert wrote:
-> Hi,
+On 04/15/2013 04:45 PM, Andy Lutomirski wrote:
+> On Mon, Apr 15, 2013 at 3:34 PM, Brian Martin 
+> <brian@...nsecurityfoundation.org> wrote:
+>> 
+>> Andy;
+>> 
+>> : I previously reported these bugs privatley.  I'm summarizing
+>> them for
+>> 
+>> : the historical record.  These bugs were never exploitable on a 
+>> : default-configured released kernel, but some 3.8 versions are :
+>> vulnerable depending on configuration.
+>> 
+>> Do you know if these were patched, and therefore possibly
+>> disclosed via the commits? With these details, it is difficult to
+>> line them up to existing reports.
 > 
-> Boost has issued a security advisory for a UTF-8 validation issue/exposure:
-> http://www.boost.org/users/news/boost_locale_security_notice.html
+> Bug 1 should be fixed in:
 > 
-> Please assign an id.
+> commit 3151527ee007b73a0ebd296010f1c0454a919c7d Author: Eric W.
+> Biederman <ebiederm@...ssion.com> Date:   Fri Mar 15 01:45:51 2013
+> -0700
 > 
-> Thanks,
-> Mike
+> userns:  Don't allow creation if the user is chrooted
 
-Please use CVE-2013-0252 for this issue.
+Can you confirm this has no CVE?
+
+> Bug 2 is should be fixed by these:
+> 
+> commit 90563b198e4c6674c63672fae1923da467215f45 Author: Eric W.
+> Biederman <ebiederm@...ssion.com> Date:   Fri Mar 22 03:10:15 2013
+> -0700
+> 
+> vfs: Add a mount flag to lock read only bind mounts
+> 
+> commit 132c94e31b8bca8ea921f9f96a57d684fa4ae0a9 Author: Eric W.
+> Biederman <ebiederm@...ssion.com> Date:   Fri Mar 22 04:08:05 2013
+> -0700
+> 
+> vfs: Carefully propogate mounts across user namespaces
+
+Can you confirm this has no CVE?
+
+> Bug 3 should be fixed in:
+> 
+> commit 92f28d973cce45ef5823209aab3138eb45d8b349 Author: Eric W.
+> Biederman <ebiederm@...ssion.com> Date:   Fri Mar 15 01:03:33 2013
+> -0700
+> 
+> scm: Require CAP_SYS_ADMIN over the current pidns to spoof pids.
+
+Can you confirm this has no CVE?
+
+> Bug 4 isn't yet public... (it's unpatched so far and it's
+> considerably more severe than any of these).
+> 
+> --Andy
+
+Sorry bug #4? not public yet I assume means no details publicly
+officially? I can't do a CVE with no details (you can ask for one from
+me privately).
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRDzTRAAoJEBYNRVNeJnmT2eYQAMLjBjPvk+dpc93XvRIPSohS
-9sXzRUVmAjtD8UK7M4W3nkcXu1nI/KH3Z80BmkJCoWUq3OtyYlD5wx7o5nOTmYFK
-jPBqpWITtNWCNssZ+DflUdeuHASSon+BNSTnpeY1zeKA5pqEL83r6KDwy80Psyut
-5H6GkDxby6nbDhmW7Mfl2LrS+UuEksSXlv6QZPsWr23L1gebBMPKj6x4a0cvYmRd
-OFnON/cK85uYEGlFkT8XDXJxTkWTM0+99OuFN6SAGlfqdqsqvooSWAKDlMJFbav7
-dfWvCALRL6nSAvQ06dVwQhOE14+I22SSYeCdH0756u7PKs/+cSlNcVZo5LsET89C
-3S3TcramBZ6UllPUo6W3s0GDyfERnfN8xNdaMU/yz7g5ZTVmShggBMLqdjywNyFI
-wti8QdgZ4nseyNezCkB9HCaz3hk56NrGWgapNxD6YLzmXAL2fajz/VE+DR7c7D+p
-eYcn/K9/vAPqxwdDzXx/xo/DhE24epoe31rZKYCmyZMPn2IKXh92UeICKbe69h67
-4jHBJHz2lr1E4yvS+x1GgvYTD0A5FZkJDYJCXGKBmO/RvkkBKa4bC6z84f1Cd6Ky
-ZUUhS1HjxV62C8mQg1wZcsD9or9tY9CjhnApSRHgrCy/ezqAoudTIQc8QmkSG6ie
-DeqhEmnWc93PVZuaRLx8
-=04LH
+iQIcBAEBAgAGBQJRbRNvAAoJEBYNRVNeJnmTPPMQALMGm16U5aHQFSTXUCQWy7SX
++2qX+Y3TjiLqt/QN5s/nzMQf9Oj4VRjY2iyXSgX7achWDQn8tN8YOdN/ySeUaXmx
+4ZIzn+0IzRTsLPiCVLce9dWIO/jIPgmwKVYfk/uWjONq6kjA1CudQg0AxXrzEbKo
+SadbekIdouxJWzTBnnvTuxFVFLv6JhAPrJjllv5mXcfOhWSSPOoXr88M9OIEPWPc
++2r/diOmJPirQbixwMOCk6AoWQmqAk8s7yrQ4HXI4cgWlaSNHoIFVCVL4hODuxYy
+RdfPOVQQGfIOmJY/qSUEidhSpXMix9iNwGO7B9QQ3WtCU4DrKxKxm3Pgt0YDy6pi
+OWpNxb7xtGl2O5SvxzkAvDcOXKrYs3nYS3T7d8E92pyhj8E9EJNfoORGSJZjFM2C
+/8VobBGBVDGSxOLiMKNbXdGnd6sxdvuzHs2c9JvdbCp4zIxYaBA6o8Envue+htMS
+4toQuDrXUm7Xi9oeckokMZIJwA89S36Q0BlJ2uvOlN1FvrxH1r7jZ15O4xPfiaZT
+btdMecpHxbfJ0AxAzXUKHut+qWtPlvuPtwbMTgAicmjEVwSocz1qyup0L+hXzfXG
+GsNP5gRk2Rnpa0fvVPNof2CKCXYnwUKgsZTBHCxJzR7xqwOZBKX8wBxKfjbB1OWw
+Sl0m7dyNR3NcUvCL0LOm
+=QIkR
 -----END PGP SIGNATURE-----
