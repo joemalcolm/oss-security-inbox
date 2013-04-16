@@ -1,74 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/18/5
-Message-ID: <20130318172318.GD46041@higgins.local>
-Date: Mon, 18 Mar 2013 10:23:18 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2013-1857] XSS Vulnerability in the `sanitize` helper of Ruby on Rails
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/1
+Message-ID: <516CFA37.7060606@redhat.com>
+Date: Tue, 16 Apr 2013 17:13:59 +1000
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: autotrace: stack-based buffer overflow in bmp parser
 Content-Type: text/plain; charset=utf-8
 
-XSS Vulnerability in the `sanitize` helper of Ruby on Rails
+Good morning,
 
-There is an XSS vulnerability in the sanitize helper in Ruby on Rails. This vulnerability has been assigned the CVE identifier CVE-2013-1857.
+There is a stack-based buffer overflow in autotrace 0.31.1 in
+Fedora[1]. In input-bmp.c, the input_bmp_reader() function creates a
+buffer on the stack:
 
-Versions Affected:  All.
-Not affected:       None.
-Fixed Versions:     3.2.13, 3.1.12, 2.3.18
+91   unsigned char buffer[64];
 
-Impact
-------
-The sanitize helper in Ruby on Rails is designed to filter HTML and remove all tags and attributes which could be malicious.  The code which ensured that URLs only contain supported protocols contained several bugs which could allow an attacker to embed a tag containing a URL which executes arbitrary javascript code.
+Later on
 
-All users running an affected release should either upgrade or use one of the work arounds immediately.
+169   else if (Bitmap_File_Head.biSize <= 64) /* Probably OS/2 2.x */
+170     {
+171       if (!ReadOK (fd, buffer, Bitmap_File_Head.biSize - 4))
 
-Releases
---------
-The 3.2.13 and 3.1.12 releases are available at the normal locations.
+We control Bitmap_File_Head.biSize. A value of 0 meets the <=64
+requirements, and 0 - 4 should result in almost 4294967295 bytes being
+read into the buffer.
 
-Workarounds
------------
-If you are unable to upgrade, you can place the following code into a file in config/initializers and it will replace the method with the correct implementation.
+I am told:
 
-  module HTML
-    class WhiteListSanitizer
-      self.protocol_separator = /:|(&#0*58)|(&#x70)|(&#x0*3a)|(%|&#37;)3A/i
+""
+The same code is in Gimp, it was introduced in commit
+d9c6f88141aecf956c5d721168f795de0e3027b8 and accidentally fixed in
+57f805a159874107c6c98065f9aa648c3634b8fd:
 
-      def contains_bad_protocols?(attr_name, value)
-        uri_attributes.include?(attr_name) &&
-        (value =~ /(^[^\/:]*):|(&#0*58)|(&#x70)|(&#x0*3a)|(%|&#37;)3A/i && !allowed_protocols.include?(value.split(protocol_separator).first.downcase.strip))
-      end
-    end
-  end
+https://git.gnome.org/browse/gimp/commit/?h=d9c6f88141aecf956c5d7
+https://git.gnome.org/browse/gimp/commit/?h=57f805a159874107c6c98
 
+Similar code can also be found in sam2p.
+""
 
+On Fedora 18, the issue was caught by FORTIFY_SOURCE.
 
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset.
+Murray.
 
-* 3-2-sanitize_protocol.patch - Patch for 3.2 series
-* 3-1-sanitize_protocol.patch - Patch for 3.1 series
-* 3-0-sanitize_protocol.patch - Patch for 3.0 series
-* 2-3-sanitize_protocol.patch - Patch for 2.3 series
-
-Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
-Credits
--------
-
-Thanks to Alan Jenkins <alan.christopher.jenkins@...il.com> for reporting the
-vulnerability to us.
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "2-3-sanitize_protocol.patch" of type "text/plain" (3550 bytes)
-
-View attachment "3-0-sanitize_protocol.patch" of type "text/plain" (3271 bytes)
-
-View attachment "3-1-sanitize_protocol.patch" of type "text/plain" (3280 bytes)
-
-View attachment "3-2-sanitize_protocol.patch" of type "text/plain" (3281 bytes)
-
-Content of type "application/pgp-signature" skipped
+[1] http://koji.fedoraproject.org/koji/buildinfo?buildID=340458
