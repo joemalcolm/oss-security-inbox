@@ -1,93 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/06/2
-Message-ID: <5112897B.4040603@pipping.org>
-Date: Wed, 06 Feb 2013 17:48:59 +0100
-From: Sebastian Pipping <sebastian@...ping.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/17/7
+Message-ID: <516EEAC4.4060709@fifthhorseman.net>
+Date: Wed, 17 Apr 2013 14:32:36 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Insecure default log file path in xNBD
+CC: Kurt Seifried <kseifried@...hat.com>, Thomas Biege <thomas@...e.de>
+Subject: Re: debian: gpg --verify suggests entire file was verified, even if file contains auxiliary data
 Content-Type: text/plain; charset=utf-8
 
-Hello oss-security!
+On 04/17/2013 02:23 PM, Kurt Seifried wrote:
+> I've run into this before, sadly enigmail (Thunderbird gpg plugin)
+> displays the same green bar for message signed ok, but displays the
+> text as "Part of the message signed" so unless you're really paying
+> attention, you'll miss it.
+> 
+> My thinking is this:
+> 
+> 1) It's pretty easy to find signed content for people using GPG
+> 2) It's pretty easy to append/embed signed content into a larger message
+> 
+> So the attack would be: create malicious content/email, embed/append a
+> valid message harvested from somewhere. Send to user. The user
+> verifies then reads the message, unless they are really paying
+> attention they probably won't notice that the content isn't signed
+> properly (e.g. have an email, ton of whitespace, then the signed
+> message). Personally I'm inclined to assign a CVE, enigmail for
+> example does mostly the right thing (makes a distinction between fully
+> signed and partially signed). I think GPG should too.
+> Thoughts/comments before I assign this?
+
+A similar attack (related to PGP/MIME) has been under discussion on the
+enigmail list last month.  see the thread starting at:
+
+ https://lists.enigmail.net/pipermail/enigmail-users_enigmail.net/2013-March/000721.html
+
+I think the enigmail issues are distinct from the gpg issues, and i
+don't think they should be conflated into the same CVE.
+
+In particular, i see the enigmail issues as (security-related) UI/UX
+problems, but i see the gpg problems as (security-related)
+API/programmatic-use problems.
+
+By comparison with enigmail, thunderbird's native S/MIME verification
+routines display no cryptographic indicators at all if only part of a
+message is signed.  This means that S/MIME-signed messages sent through
+common mailing list software which attaches a text/plain MIME footer
+(like mailman) will not indicate that they are verifiable at all.
+
+it's not a pretty set of tradeoffs. :/
+
+	--dkg
 
 
-Target software
-===============
-
-xNBD upstream
-   https://bitbucket.org/hirofuchi/xnbd
-
-Official Debian packages
-   http://packages.debian.org/sid/xnbd-server
-
-
-Description
-===========
-
-xnbd-server (and xnbd-wrapper in some releases) use /tmp/xnbd.log
-for logging when parameter --daemonize (and no --logpath FILE) is given.
-
-The file is opened using flags O_WRONLY | O_CREAT | O_APPEND so there
-is a vulnerability against symlinks attacks.
-
-
-Demonstration
-=============
-
-Here is an exploitation example:
-
-   $ ln -s "${HOME}"/ATTACK_TARGET /tmp/xnbd.log
-
-   $ touch DISK
-   $ truncate --size=$((100*1024**2)) DISK
-
-   $ /usr/sbin/xnbd-server --daemonize --target DISK
-   xnbd-server(12462) msg: daemonize enabled
-   xnbd-server(12462) msg: cmd target mode
-   xnbd-server(12462) msg: disk DISK size 104857600 B (100 MB)
-   xnbd-server(12462) msg: xnbd master initialization done
-   xnbd-server(12462) msg: logfile /tmp/xnbd.log
-
-   $ ls -l ~/ATTACK_TARGET
-   -rw------- 1 user123 user123 653 Feb  1 16:41 \
-     /home/user123/ATTACK_TARGET
-
-
-Affected versions
-=================
-
-The latest code in the upstream Mercurial repository is not affected
-since it does not use logging to /tmp/xnbd.log (or any default
-location) any more.
-
-----------------------------------------------------------------------
-   Version                        Status
-----------------------------------------------------------------------
-   0.0.x                          not analyzed
-   0.1.0-pre                      VULNERABLE (xnbd-server only)
-   0.1.0-pre-hg20-e75b93a47722-2  VULNERABLE (xnbd-server and -wrapper)
-   Mercurial tip                  not vulnerable
-----------------------------------------------------------------------
-
-
-Options for a fix
-=================
-
-  a) Use syslog with --daemonize and no default file location in general
-     (i.e. what upstream did)
-
-  b) Use /var/log/xnbd-server.log and /var/log/xnbd-wrapper.log
-     for the hard-coded defaults
-
-  c) Replace flag O_APPEND by O_EXCL  (secure but reducing functionality)
-
-The attached patch applies approach (b) to version 
-0.1.0-pre-hg20-e75b93a47722.
-
-
-Best,
-
-
-
-Sebastian
-
-View attachment "xnbd-0.1.0-pre-hg20-e75b93a47722-insecure-logging-location.patch" of type "text/x-patch" (6162 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
