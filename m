@@ -1,22 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/17
-Message-ID: <20130215212052.GN9942@yuggoth.org>
-Date: Fri, 15 Feb 2013 21:20:53 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/17/1
+Message-ID: <CALuSjqYcm73nVmt43vw_h23JxkrHDZJLPgE56A4WKqHf7MN_cA@mail.gmail.com>
+Date: Wed, 17 Apr 2013 11:07:06 +0800
+From: Doraemon Sk8ers <doraemon.sk8ers@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: (linux-)distros membership changes
+Subject: Fwd: Multiple Vulnerabilities in Simple HRM system v2.3 and below
 Content-Type: text/plain; charset=utf-8
 
-On 2013-02-15 23:48:35 +0400 (+0400), Solar Designer wrote:
-[...]
-> I've also unsubscribed the rPath person, since the rPath website and
-> mail appear to be down for maybe a couple of weeks now.
-[...]
+Hi,
 
-Yes, their intellectual property and staff were acquired by SAS a
-couple months ago, who has basically shut down what used to be rPath
-Linux in the days since.
--- 
-{ PGP( 48F9961143495829 ); FINGER( fungi@...ulhu.yuggoth.org );
-WWW( http://fungi.yuggoth.org/ ); IRC( fungi@....yuggoth.org#ccl );
-WHOIS( STANL3-ARIN ); MUD( kinrui@...arsis.mudpy.org:6669 ); }
+There is a Blind SQL injection vulnerability and Cookie Integrity
+Protection Vulnerability in Simple HRM system v2.3 and below.
+The 2 vulnerabilities had been assigned the CVE identifier CVE-2013-2498
+and CVE-2013-2499 respectively.
+
+# Vendor Homepage: http://www.simplehrm.com/
+# Software Link: http://sourceforge.net/projects/simplehrm/
+# Version: 2.2/2.3
+# Tested on: 2.2 & 2.3
+# CVE : CVE-2013-2498, CVE-2013-2499
+
+
+Details:
+-----------
+*
+*
+*CVE-2013-2498*
+
+Simple HRM system is vulnerable to sqli attacks in their login page.
+Carefully crafted requests can use the scope to inject arbitrary
+SQLthrough the login form and obtain information such as password
+hash.
+
+*Attack URL:* http://localhost/simplehrm/index.php/user/setLogin
+*Method:* POST
+*Vuln Parameter: *username=*(SQL INJECTION)*&password=abcdef
+*Vuln Type*: unsanitised input argument *($name)* in
+
+*Vuln **File:* simlehrm/flexycms/modules/user/user_manager.php
+*Line:* 84
+    $res_company = getsingleindexrow('CALL
+get_search_sql("'.TABLE_PREFIX.'company","email_id = \''.$name.'\' AND
+isactive = 1 LIMIT 1")');
+
+*CVE-2013-2499*
+
+We discovered that if an attacker were to grab hold of the user's password
+hash, the attacker can easily spoof a cookie and impersonate as anyone to
+access the system. Together with the blind sql injection stated above, an
+attacker can simply blind the password hash, userid, username and recreate
+a cookie.
+
+*Vuln **File:* simlehrm/flexycms/modules/user/user_manager.php
+*Line:* 215
+    $v_user_password =
+md5($info['id_user'].$info['username'].$info['password']);
+
+This vuln effectively defeats one of the primary purposes of password hashing.
+
+*
+*
+
+Timeline:
+-------------
+
+Date Discovered: 07 March 2013
+Vendor notified: 12 march 2013
+Advisory posted: 12 April 2013 (No response from Vendor, published)
+
+
+Regards
+
+Team Doraemon.Sk8ers
+
