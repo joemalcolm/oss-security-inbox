@@ -1,44 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/3
-Message-ID: <20131021093745.GA13128@kludge.henri.nerv.fi>
-Date: Mon, 21 Oct 2013 12:37:45 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/17/3
+Message-ID: <516E713C.5000900@suse.de>
+Date: Wed, 17 Apr 2013 11:54:04 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Forest Monsen <forest.monsen@...il.com>, Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE duplicates SA-CONTRIB-2013-075
+Subject: debian: gpg --verify suggests entire file was verified, even if file contains auxiliary data
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 18, 2013 at 02:16:31PM -0700, Forest Monsen wrote:
-> On Sat, Oct 5, 2013 at 4:10 AM, Henri Salo <henri@...v.fi> wrote:
-> 
-> > Advisory https://drupal.org/node/2087055 says:
-> >
-> > CVE-2013-4381 (XSS)
-> > CVE-2013-4382 (CSRF)
-> >
-> > Are these duplicate CVEs with CVEs below or is there something I am
-> > missing?
-> >
-> 
-> Henri, it certainly looks like these are duplicates. However, Kurt
-> facilitated CVE assignment in
-> http://www.openwall.com/lists/oss-security/2013/09/27/6 , so it's not clear
-> to me how the NVD catalogued different identifiers.
-> 
-> Best,
-> Forest
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Kurt, could you REJECT (or rotate) another CVEs, thanks.
+Hi,
+this might possibly need a CVE-ID.
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=704645
+https://bugs.g10code.com/gnupg/issue1486
 
-You assigned these, which are currently used by Drupal project:
-CVE-2013-4381, CVE-2013-4382
 
-From NVD:
-CVE-2013-5937, CVE-2013-5938
+Itself it might be no issue but in conjunction with other applications
+this could become a vulnerability.
 
-How do we avoid this in the future?
+Bye,
+Thomas
 
----
-Henri Salo
+- -- 
+Thomas Biege <thomas@...e.de>, Team Leader MaintenanceSecurity, CSSLP
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
+21284 (AG Nürnberg)
+- --
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQEcBAEBAgAGBQJRbnE8AAoJEJqHoVJVjr8DBcMH/ic5gyrlMeuFpLQGnSHQ0VEm
+pDSSHXG7SHA25y27yXQMof/tofsJtFgoHypjTXoDm7008B/TtUPulgjib7uEujV6
+pnrzjkfc///NkEKBMdC/zFd9QrigqTbqYd/Xvy9QhNXieexT50eeMmcJi79rZXbA
+5P/wlTTgIHz0KFPTYHgmy+9+qwB+T4eagL2iUH2RdDc15M81EQ4QSlY6+fKHGEfv
+UvmN95yqXO68Yb69s/Tet3Hg6zKfBIJH0xyaTrKtIjjCdVjEVCitZqkW8WQGpVYf
+4yzu7+4BTbtMWLIiBRHdydHWEu8k9diqXwpbbdxEaj0LVMgkkA1V5G7CYn28Qec=
+=WqQL
+-----END PGP SIGNATURE-----
