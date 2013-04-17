@@ -1,48 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/18
-Message-ID: <Pine.GSO.4.64.1302151648390.5929@faron.mitre.org>
-Date: Fri, 15 Feb 2013 16:49:42 -0500 (EST)
-From: "Steven M. Christey" <coley@...re.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/17/6
+Message-ID: <516EE889.4090604@redhat.com>
+Date: Wed, 17 Apr 2013 12:23:05 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: Matthias Weckbecker <mweckbecker@...e.de>, mjt@....msk.ru
-Subject: Re: CVE# request: pigz creates temp file with insecure permissions
+CC: Thomas Biege <thomas@...e.de>
+Subject: Re: debian: gpg --verify suggests entire file was verified, even if file contains auxiliary data
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Kurt,
+On 04/17/2013 03:54 AM, Thomas Biege wrote:
+> Hi, this might possibly need a CVE-ID. 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=704645 
+> https://bugs.g10code.com/gnupg/issue1486
+> 
+> 
+> Itself it might be no issue but in conjunction with other
+> applications this could become a vulnerability.
+> 
+> Bye, Thomas
 
-As Michael describes the issue: "When [pigz] finishes, it correctly 
-applies original file permissions to the newly created file."
+I've run into this before, sadly enigmail (Thunderbird gpg plugin)
+displays the same green bar for message signed ok, but displays the
+text as "Part of the message signed" so unless you're really paying
+attention, you'll miss it.
 
-By changing the permissions of the file AFTER compression, pigz is clearly 
-trying to implement a security policy of "preserve the permissions of the 
-original file."  It is not properly obeying its own security policy 
-because of the race condition, so this is a more clear argument for 
-assigning a CVE than in the general case where a program's default policy 
-may be "rely on the umask."
+My thinking is this:
 
-So, pigz should have a CVE.
+1) It's pretty easy to find signed content for people using GPG
+2) It's pretty easy to append/embed signed content into a larger message
 
-Going forward, maybe the guidelines could look something like:
-
-- if the program tries to implement a security-relevant policy but
-   fails - assign CVE
-
-- if the program has functionality that is clearly for secrecy,
-   e.g. gnupg - assign CVE (it should have a policy that preserves
-   secrecy)
-
-- if the program's vendor explicitly states that the issue is a
-   vulnerability - assign CVE (this is stating an explicit security
-   policy)
-
-- otherwise, if the program defaults to umask but does not have any
-   inherent secrecy requirements or explicit policies, or if the vendor
-   treats the issue as "hardening" but not a strict vulnerability -
-   maybe no CVE
+So the attack would be: create malicious content/email, embed/append a
+valid message harvested from somewhere. Send to user. The user
+verifies then reads the message, unless they are really paying
+attention they probably won't notice that the content isn't signed
+properly (e.g. have an email, ton of whitespace, then the signed
+message). Personally I'm inclined to assign a CVE, enigmail for
+example does mostly the right thing (makes a distinction between fully
+signed and partially signed). I think GPG should too.
+Thoughts/comments before I assign this?
 
 
-Your past suggestions for MUST/SHOULD language could be one mechanism
-for getting more clear about "security policy" in the future.
 
-- Steve
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRbuiJAAoJEBYNRVNeJnmTRjMQAKI4PYs4ofrvXDr0kEeAEbBB
+YHQJiaHlnbKtkTaje9e6PTAMr07JsRyPkESF5FnOtQOzSHbRoBGuIdD6kvx5GhkP
+mAqS5fU6j3AiA0Tmh/Cm68NR1x03RAvKpNRKPwrtRE8maz3OeDn6LnFX5+fTzaH5
+UbyS7yvJmy41xVfP4EV54te6Tq9LRLiy7LjUb8o04v1qj5MyhCjpXmVnJMYftk/r
+W1a5AAGPBT5h9JkTWRpAujrdxwJArgokCPRxL/r7GALok8xdEEctXvEOklHMMp0g
+8crWJikItfLVaLO/CdbJgvUX+B6YUfnls/x6Lk8xIiH7bdld3D9+z+PkhJPwebko
+anT6erI0Xr8nOvChaLZ/vSzSl+9m2omVlKZDuKaiMhQVcFhibpY35AgP4PDIOS26
+Z4u+fcr08lxpC7TSjbkECcP6mxmDcUqKd/V59JcahsXM9jsRBR7bxx9vU7upufAq
+b4GIDbH5+0l053gkcfGuDMo+WFStFxsSYeGOhLpIyuKvyl7JmPnGg1WOadpEOpUU
+1sXTeTJIKJuM0gWx0ebbUzHXwSxLbw774NucO/CWJMLXUm4epouKOtP/vunfS00J
+AIwT6cUG90jXGj8P50LBkeYamIcijuiRVomWjS1/rU+d7DK0r1sO6PxOCF7zUSml
+Y4HSdjoEcEW0NGWmi7gt
+=WY9K
+-----END PGP SIGNATURE-----
