@@ -1,68 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/30/2
-Message-ID: <51A76822.3080903@collabora.co.uk>
-Date: Thu, 30 May 2013 15:54:26 +0100
-From: Simon McVittie <simon.mcvittie@...labora.co.uk>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2013-1431: telepathy-gabble: TLS bypass via use of legacy Jabber
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/7
+Message-Id: <E1USp0d-0002lj-Ax@xenbits.xen.org>
+Date: Thu, 18 Apr 2013 13:36:19 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 44 (CVE-2013-1917) - Xen PV DoS vulnerability with SYSENTER
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-Maksim Otstavnov reported a vulnerability in the Wocky submodule used by
-telepathy-gabble, an XMPP client implementation for the Telepathy
-framework. A network intermediary could use this vulnerability to bypass
-TLS verification and perform a man-in-the-middle attack. The Debian
-security team has allocated CVE-2013-1431 for this vulnerability.
+             Xen Security Advisory CVE-2013-1917 / XSA-44
+                              version 2
 
-This vulnerability is fixed in telepathy-gabble 0.16.6 [0]. All
-versions since 0.9.x are believed to be vulnerable. The patch
-described below is likely to apply to all affected versions without
-modification.
+                Xen PV DoS vulnerability with SYSENTER
 
-If you use an unencrypted connection to a "legacy Jabber" (pre-XMPP)
-server, fixed versions of telepathy-gabble will not connect to that
-server until you make one of these configuration changes:
+UPDATES IN VERSION 2
+====================
 
-• upgrade the server software to something that supports XMPP 1.0; or
-• use an encrypted "old SSL" connection, typically on port 5223
-  (old-ssl); or
-• turn off "Encryption required (TLS/SSL)" (require-encryption).
+Public release.
 
-Since the vulnerable code is in a git submodule, distributors with
-tarball-based builds for telepathy-gabble will need to apply a patch
-with suitably adjusted paths. A suitable patch[1] is available from
-the Telepathy bug report[2]. Distributors who will patch the Wocky
-submodule directly can take the patch from the git commit[3].
+ISSUE DESCRIPTION
+=================
 
-In the current development branch, versions 0.17.0 to 0.17.3 are
-vulnerable; the upcoming 0.17.4 release will fix this vulnerability.
+The SYSENTER instruction can be used by PV guests to accelerate system
+call processing. This instruction, however, leaves the EFLAGS register
+mostly unmodified - in particular, the NT flag doesn't get cleared. If
+the hypervisor subsequently uses IRET to return to the guest (which it
+will always do if the guest is a 32-bit one), that instruction will
+cause a #GP fault to be raised, but the recovery code in the
+hypervisor will again try to use IRET without intermediately clearing
+the NT flag. The #GP fault raised on this second IRET is a fatal
+event, causing the hypervisor to crash.
 
-Regards,
-    Simon
+IMPACT
+======
 
-[0]
-http://telepathy.freedesktop.org/releases/telepathy-gabble/telepathy-gabble-0.16.6.tar.gz
+Malicious or buggy unprivileged user space can cause the entire host to crash.
 
-http://telepathy.freedesktop.org/releases/telepathy-gabble/telepathy-gabble-0.16.6.tar.gz.asc
-[1] https://bugs.freedesktop.org/attachment.cgi?id=79894
-[2] https://bugs.freedesktop.org/show_bug.cgi?id=65036
-[3]
-cgit.freedesktop.org/wocky/commit/?id=ff317a2783058e8e90fac21bd8ba18359c5401f9
+VULNERABLE SYSTEMS
+==================
+
+All 64-bit Xen versions from 3.1 onwards running on Intel CPUs are
+vulnerable.  32-bit Xen is not affected, as it doesn't permit the use
+of SYSENTER by PV guests. 64-bit Xen run on AMD CPUs isn't affected
+since AMD CPUs don't allow the use of SYSENTER in long mode.
+
+The vulnerability is only exposed by PV guests.
+
+MITIGATION
+==========
+
+Running only HVM guests, or running PV guests on only 32-bit hosts or only AMD
+CPUs will avoid this vulnerability.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa44-4.1.patch             Xen 4.1.x
+xsa44-4.2.patch             Xen 4.2.x
+xsa44-unstable.patch        xen-unstable
+
+$ sha256sum xsa44*.patch
+3dbf47224be0f8fc66ba08d8a46b910bd9a3e672ffe864aa77c698bef0e27783  xsa44-4.1.patch
+c6c3afa228426d78e0484b7ac34210f642f79add35c4a04ca5ff7db5f2539e49  xsa44-4.2.patch
+0e6ad83da75dc207a165411844c0985fd7f9588d92c2c95911c245485351bf36  xsa44-unstable.patch
+$
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iQIVAwUBUadoIk3o/ypjx8yQAQjp2g//ahF56sVtw5M0z7SVR8HXgXpvgwkoiV9C
-9jAdfp12d4fePF0tmUjglnINRCvz1V0qwq40uYTD5i9KDgQ3sRbLJ0ND/AB3kxDn
-6/xZnKdRaQrOC9yGoR5ukQcLdsZn92tBBcprLhy6Xb/fOh53ekGNxrlmUACGRR9s
-yD4m1/5Yhxr2cCxBppcJAQp9Ml1Zk8+aO7TG7GK1dU58r0kDkOqCBei0mwSRVL0V
-cO1sMyofOw+SOouwXne+XHwxY2/T2LaXq9jqm/hCZGMYwYr2Tg/ttysnkeJ40cNS
-E2Bx8AUCjwhfNfS2RWZCea2XlyHyzxNMMQV8NsABbvFp4Ab0BVRr7wEazZAJIv88
-IGrpzHLndfD/7zxEdDAnurJiHEaypaY6RzFh1vXeb8JMZJfbTlZFYj5GWpQvsX2G
-zVdiOOkaC/82PqYO8+c+xPXQKdfsMmyTDq6Wz+QC6gyFmUJu6VR4xMC5WR74DmK3
-bCG1VDy44d50/IbFBD8iNWhBfPbjEimuIIzwnwSYD8vUuNbbBvMuQwpCbYd9CduP
-lZSnqkG7xG25Pvx0bbzUtFuZvaT+wxYRo2ggG8WiJ9lRs0x4LvhM/y8WMeBFkt/5
-sT9RhAmLzEaUyIreOdK2JgzG0p+FtRAxvBsaVwlDTdSpwBZAK7VCgnPOqmaK+zey
-eW5Zap6A7wM=
-=YXtV
+iQEcBAEBAgAGBQJRb/ZcAAoJEIP+FMlX6CvZCwMH/iTJCG4P9d+0nADT6YB3JmPl
+e9eO+cE+rGHBy5pdKAh1UF1JG9VvQe76hlJP3YS0QaXMNtN6k2dxoHZEj1hpSzKJ
+Q+KfS/R9yvVlputbfsVPSYYTl1bzDzMlWqyy/cZUZZVpGkMhVw1dLjJp4NvohCWb
+OABvchlbY1tW2Vk4tNWy4vhVGHdzxegrtttEuAIBoXHtCIIeH3/0nwqokahfKzog
+cKr5+y9K0JgbFSGP25POu/e7s9+sUKjJfUsFVw3+HknBW+zgJZ8fcu+/J0eJlgb5
+0tkq749p+DtRE+kqS4sSM71+iGmnpWh+a0lsBmhARa6pyKVN+ccMvzvh809ItQg=
+=w315
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa44-4.1.patch" of type "application/octet-stream" (2844 bytes)
+
+Download attachment "xsa44-4.2.patch" of type "application/octet-stream" (2843 bytes)
+
+Download attachment "xsa44-unstable.patch" of type "application/octet-stream" (1670 bytes)
