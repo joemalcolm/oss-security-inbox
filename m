@@ -1,71 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/13
-Message-ID: <20130606205955.GA17379@outflux.net>
-Date: Thu, 6 Jun 2013 13:59:55 -0700
-From: Kees Cook <keescook@...omium.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/4
+Message-ID: <1000627254.3615210.1366281932982.JavaMail.root@redhat.com>
+Date: Thu, 18 Apr 2013 06:45:32 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel format string flaws
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, neoice@...ice.net, Alexander Wirt <formorer@...ian.org>
+Subject: CVE-2012-XXYY Request -- google-authenticator: Information disclosure due insecure requirement on the secrets file
 Content-Type: text/plain; charset=utf-8
 
-I've found two issues in how Linux uses format strings:
+Hello Kurt, Steve, Alexander, vendors,
 
+  as noted in [1]:
 
-CVE-2013-2852: b43 wireless driver
+An information disclosure file was found in the way google-authenticator,
+a pluggable authentication module (PAM) which allows login using one-time
+passcodes conforming to the open standards developed by the Initiative for
+Open Authentication (OATH), performed management of its secret / state file
+in certain configurations. Due the lack of 'user=' option the secret file
+was previously required to be user-readable, allowing (in certain cases)
+a local attacker to obtain the (pre)shared client-to-authentication-server
+secret, possibly leading to victim's account impersonation.
 
-The b43 driver reports error strings that can be interpreted as format
-strings. Under normal conditions, this is not a problem, but it is
-possible for the "fwpostfix" module parameter to change the filenames
-used to fetch firmware. When such a file is not found, the filename
-will be processed as a format string. This flaw could potentially allow
-escalation from uid-0 to ring-0, so except for certain environments,
-it is not too serious.
+A different vulnerability than CVE-2013-0258.
 
-If b43 hardware is available, this should show itself easily. I don't have
-any available for testing, but it seems it would show itself like this:
-# rmmod b43
-# modprobe b43 fwpostfix=AA%xBB
-...
-# dmesg
-...
-b43-0 ERROR: Firmware file "b43AAdeff80ccBB/a0g1bsinitvals5.fw" not found
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=666129
+[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=666129#10
+[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=666129#20
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=953505
 
-Using %n instead of %x would lead to exciting crashes. :)
+Relevant upstream patch:
+[5] https://code.google.com/p/google-authenticator/source/detail?r=c3414e9857ad64e52283f3266065ef3023fc69a8
 
-It has been fixed in the upstream wireless tree:
+@Alexander - since I am not sure I have described the attack vector above
+             properly, please correct me if / where required.
 
-http://git.kernel.org/cgit/linux/kernel/git/linville/wireless.git/commit/?id=9538cbaab6e8b8046039b4b2eb6c9d614dc782bd
+@Kurt * the CVE-2012- identifier should be allocated to this issue, since
+        the security implications of this problem are for the first time
+        mentioned here: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=666129#10 (2012-09-22),
 
+      * from what I have looked, there doesn't seem to be:
+          http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=authenticator
 
-CVE-2013-2851: block layer
+        a CVE identifier allocated to this issue yet (as noted above
+        CVE-2013-0258 from that list is different issue).
 
-The block layer uses the "disk_name" field as a format
-string in a number of places. While this is normally not a problem due
-to how disk names are created (statically or incrementally), there
-is currently at least one way to define nearly arbitrary names via
-md. Instead of filtering md, this should be fixed within the kernel's
-interfaces. This flaw could potentially allow escalation from uid-0 to
-ring-0, so except for certain environments, it is not too serious.
+        => could you allocate one?
 
-The test case is trivial:
-# echo md_%x.%x.%x.%x > /sys/module/md_mod/parameters/new_array
-# ls /dev/md_*
-/dev/md_c12cc370.df66d800.df66d80c.c13da45b
-
-Using %n instead of %x leads to exciting crashes. :)
-
-The fix has been sent upstream:
-http://marc.info/?l=linux-kernel&m=137055204522556&w=2
-
-
-With the above fixes, a series of additional format string related clean
-ups has also been sent upstream:
-http://marc.info/?l=linux-kernel&m=137055207522563&w=2
-
-
-Thanks,
-
--Kees
-
--- 
-Kees Cook
-Chrome OS Security
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
