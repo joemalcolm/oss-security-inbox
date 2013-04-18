@@ -1,166 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/13
-Message-ID: <20130220172434.GC1851@sentinelchicken.org>
-Date: Wed, 20 Feb 2013 09:24:34 -0800
-From: Tim <tim-security@...tinelchicken.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/13
+Message-ID: <5170555B.4060801@redhat.com>
+Date: Thu, 18 Apr 2013 14:19:39 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: RE: Handling CVEs for the XML entity expansion issues
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hi Kurt and Steve,
+On 04/17/2013 02:36 PM, Forest Monsen wrote:
+> Hi there,
+> 
+> I'd like to request CVE identifiers for...
+> 
+> SA-CONTRIB-2013-043 - MP3 Player - Cross Site Scripting (XSS) 
+> http://drupal.org/node/1972804
 
-I have been investigating XXE issues and how they may be exploited off
-and on for the last year.  Most modern/maintained XML libraries enable
-parsing of inline DTDs (in DOCTYPE headers), as well as external
-entities defined there, by default.  Indeed, this is something that
-the XML standard includes (http://www.w3.org/TR/REC-xml/) and I'm
-guessing library implementors have a strong desire to comply.
+Please use CVE-2013-1971 for this issue.
 
-This is stupid, on two levels:
+> SA-CONTRIB-2013-044 - elFinder file manager - Cross Site Request
+> Forgery (CSRF) http://drupal.org/node/1972942
 
-- Most applications that actually apply DTD or schema validation will
-be working from a predefined definition.  Many applications don't
-bother to do any up-front validation.  In either case, what is the
-point in allowing a DTD (or schema) to be defined *within* the
-document that is being supplied?  From a security perspective, this is
-like say "Hey Mallory, I need to validate that search string input
-field.  Could you supply me with the regex so I can validate your
-data?"  I'm sure there are some odd contexts where XML developers find
-this feature useful, but I'm pretty sure they are few and far between.
-DTDs should be ignored by default by libraries unless supplied
-separately through the API.
+Please use CVE-2013-1972 for this issue.
 
-- External entities are a pretty dumb idea indeed.  I mean, I
-understand why someone might want them.  Makes it easy to stitch
-together multiple documents.  But in the vast majority of cases I've
-discussed XXE with developers, they have no idea that you can even
-define custom XML entities, let alone external ones.  These, too,
-should be off by default.
+> SA-CONTRIB-2013-045 - Autocomplete Widgets for Text and Number
+> Fields - Access bypass http://drupal.org/node/1972976
+
+Please use CVE-2013-1973 for this issue.
+
+> Thanks!
+> 
+> Forest
+> 
 
 
-So clearly this combination is pretty serious and this is why XXE is
-*everywhere*.  You can ask library developers to turn them off of
-course, but since these features are in the standards with no clear
-language indicating that these are optional or dangerous (that I'm
-aware of), then of course there can be significant reluctance in
-disabling them.  Yet is is also rediculous to ask every application
-developer to explicitly disable these features each time they use XML.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-
-Kurt, in regard to your question, my current opinion is that if an XML
-library doesn't make it easy/possible to disable these features, then
-yes they should be hit with a CVE.  But if they do make it possible,
-then it is the application developer's responsibility to turn these
-things off explicitly.  No, this isn't a good long-term solution, but
-it doesn't make sense to slap a CVE on a library that at least gives
-you the option.
-
-
-HTH,
-tim
-
-
-
-On Wed, Feb 20, 2013 at 01:02:44PM +0000, Christey, Steven M. wrote:
-> Kurt,
-> 
-> I'm reviewing this issue with the rest of the cve-assign team.  We will get back to you with an answer shortly.
-> 
-> - Steve
-> 
-> 
-> -----Original Message-----
-> From: Kurt Seifried [mailto:kseifried@...hat.com] 
-> Sent: Wednesday, February 20, 2013 3:22 AM
-> To: oss-security@...ts.openwall.com; Christey, Steven M.
-> Subject: Handling CVEs for the XML entity expansion issues
-> 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> https://bitbucket.org/tiran/defusedxml
-> http://blog.python.org/2013/02/announcing-defusedxml-fixes-for-xml.html
-> 
-> So two generic vulnerabilities have been found in XML libraries/parsers:
-> 
-> 1) Unrestricted entity expansion induces DoS vulnerabilities in Python
-> XML libraries (XML bomb)
-> - - this can be referred to as the billion laughs / exponential entity
-> expansion, but can also be done linearly and still impact the system.
-> For example libxml fixed the billion laughs attack version of this,
-> but linear expansion (that eats up say a few hundred k of ram per
-> second) will still cause problems. This issue will not be CVE split
-> however since it's the same issue (expansion of entities).
-> 
-> For Python XML parsing this was assigned CVE-2013-1664
-> 
-> 
-> 2) External entity expansion in Python XML libraries inflicts
-> potential security flaws and DoS vulnerabilities
-> - - XML documents can include references to external entities, e.g.
-> http:// resources:
-> <!ENTITY ee SYSTEM "http://www.example.org/some.xml">
-> 
-> For Python XML parsing this was assigned CVE-2013-1665
-> 
-> So questions:
-> ======================
-> 
-> We need more CVE's, I think for each XML prasing library/etc we should
-> obviously assign a CVE (e.g. libxml, expat, internal Python parsers),
-> obviously fixing it at the root is ideal, but disabling external
-> entities for example in the library for all things using that library
-> is not possible.
-> 
-> But then we run into the issue where we can fix this issue within the
-> application (OpenStack, using Python):
-> 
-> +PARSER = etree.XMLParser(
-> +    resolve_entities=False,
-> +    remove_comments=True,
-> +    remove_pis=True)
-> +
-> +# NOTE(dolph): lxml.etree.Entity() is just a callable that currently
-> returns an
-> +# lxml.etree._Entity instance, which doesn't appear to be part of the
-> +# public API, so we discover the type dynamically to be safe
-> +ENTITY_TYPE = type(etree.Entity('x'))
-> +
-> 
-> - -        dom = etree.fromstring(xml_str.strip())
-> +        dom = etree.fromstring(xml_str.strip(), PARSER)
-> 
-> Which disables entity parsing in the application thus avoiding all the
-> entity expansion problems. Now I'm inclined in this case to say no CVE
-> (I had earlier, erroneously assigned CVE's for these fixes in
-> OpenStack). But now I'm not as sure, if an underlying library has an
-> unsafe/insecure behaviour that is on by default, BUT can be disabled
-> easily then does that vulnerability count as being in the library? If
-> not then I'd be inclined to say we need CVE's for all the vulnerable
-> applications, but in this case that's thousands (millions?) of
-> applications.
-> 
-> So Steve, I think we need some guidance on how to assign the CVEs here.
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.13 (GNU/Linux)
-> 
-> iQIcBAEBAgAGBQJRJIebAAoJEBYNRVNeJnmTDN4QAIgwf74T2M6+4S6wj4h5EZP1
-> k/Cg0WW2AVPtN7nOsGg5Y5QdUCsGHtBoP9h/SWT21lch+DW3uYUhqgvtDpeyiGjc
-> XzDu8DNcmHnIFbq49RS5UTRpSdR35Y3oqd0lUi7yiRpiT4XpgfSHwI7BNR9L2Wm0
-> FUiwQDL9BULkD4wcq6NsagPiZCsaRmmezfUb/g5PxgYW84p56fYa5tg4SEQ7O4M/
-> lLNYDChfIis7gJVgqoLjbNClV36a2UWIGxIg/TCP8hVpmUpDMv04cxIbmtGWJ/tp
-> 2iKzLNn25INaN80T6t0pzhC//R+jpWTkr9eFP4W7X+CA2Rs3sY0BA9Xvnyl9FPCF
-> gaQUTd7PyefKEM1Fm7OqFn1XbrtcKpOBThNI+NL5c/mrmud96DQwy8MMRaKDYhr1
-> W+fGxHBFD/Ztcffh/Dz1t/Ycm7T9BWzKQxitsubudZuEDQ7XfUilzLWQgy1X998J
-> T/Yjzsym8tkOoMvOe343caqDHTtBpq7eIFSXtJTTlXHIc5MiAT72406rak4/WVt0
-> qvrmhAxyOtWy8fOt2j/Qj9/rn8qYum9gBUFwHb4LWYRLADyK3lqThY3la/gMFYTi
-> y+KvwZf1FBtbXaJYZ3keO9ouMKNsvv9ll20Tke6wckFYPkLXRCs17quTHCx3Hh9J
-> MfZCwfOGm5G7O38k+vZ6
-> =V2n9
-> -----END PGP SIGNATURE-----
+iQIcBAEBAgAGBQJRcFVbAAoJEBYNRVNeJnmTTzEQANS9vYnNx7tl981gaOmOXxF9
+INr6aWHA6vpa2W7Ng+CxW3FOv89U4pZj8d6Qsr/QXu0+fO/e/JmJXVEH0Uo3HCyr
+KtBfeM6QPuzykvPvdSDmgVa5xbw0OuaqYImPrjpCon5DYv81EgmQTMYMscZwuxFd
+bxyBDepY3wVmM6MCoQwhNQLDO4tWHSfOkJcl6akvopNebelLjPrsQ6aPiXbwd+SQ
+6QdhotHijf28UXtByGP8021uKFDKz2EsGHjg/tav0LsIamhLGYntE5BMiHIhIGWq
+nFknlPDpr7XqJ+kyNiVeU/bMpDdNi61sbGI/9Hzr/8enFPQvzzyD82p4SqlRUkz9
+cWVDfgVKbQ/4v2K8xlv1/nXCu7KMYY0kQaQcPXixgv/9wjy/lB+iiegY2ZfweGGM
+wYS5MBmIHAMuuVVF1rE6bbUQi9pYVtNEmFADrbZflQcrrvuymmDDzoXrWCjrB9Cr
+8veCPUdamTb4J9o4ddovwmdOyNUKOfufDxJWyBG50H+Ylb91tzqicUPq2JofTTCB
+FswCcLTqdQ0SbzYVUm/M1h1ppz5TfqOo92DNnFfefVhCRD3U2X6OPBdiXIX7DL5o
+PupmCmnoMthBJBczhFg2RONA/bhzKatYGpcw7hiLh03QKg6UxTyekuL+6+SCQqwk
+tygZ/0q/GPaZgtTOso+G
+=qeLa
+-----END PGP SIGNATURE-----
