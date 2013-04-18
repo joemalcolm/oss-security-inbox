@@ -1,41 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/14
-Message-ID: <5182A035.8000601@redhat.com>
-Date: Thu, 02 May 2013 11:19:49 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/12
+Message-ID: <517054AB.9080102@redhat.com>
+Date: Thu, 18 Apr 2013 14:16:43 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Alistair Crooks <agc@...src.org>
-Subject: Re: upstream source code authenticity checking
+CC: Agostino Sarubbo <ago@...too.org>, veillard@...hat.com
+Subject: Re: CVE request : libxml2 Multiple Use-After-Free Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/02/2013 09:24 AM, Alistair Crooks wrote:
-> And if you seriously think someone who searches for my public key
-> on a webserver, or through mail, or business card, etc, downloads
-> my public key from one of the servers, imports it into their own
-> pubring, signs it with their own private key, then mails it to me,
-> or uploads it to one of the key servers, all without trusting me in
-> any way, then I'll show you a pretty awful stalker (and fairly
-> inefficient one, due to the need to sign my pubkey), a fan boy
-> (which is hardly likely to happen in my case), or someone who is
-> rather sad. (I'm discounting impaired judgement due to the baroque
-> processes involved here, sorry xkcd).
-
-
-http://pgp.mit.edu:11371/pks/lookup?op=vindex&search=0x160D45535E267993
-
-It happens, I have no idea who Rafael Alfredo Capucho
-<rafael.capucho@...il.com> is.
-
+On 04/17/2013 06:45 AM, Agostino Sarubbo wrote:
+> From the secunia advisory SA53061[1]:
 > 
-> i.e. no-one goes to that kind of trouble just to say "I know this 
-> person" - that's what facebook and google+ are for.
-> 
-> Regards, Alistair
-> 
+> 1) An use-after-free error in "htmlParseChunk()" can be exploited
+> to dereference already freed memory.
 
+Please use CVE-2013-1969 for this issue.
+
+> 2) Two use-after-free errors in "xmldecl_done()" can be exploited
+> to dereference already freed memory.
+
+Please use CVE-2013-1970 for this issue.
+
+> The vulnerabilities are reported in version 2.9.0. Other versions
+> may also be affected.
+> 
+> Commit: 
+> https://git.gnome.org/browse/libxml2/commit/?id=de0cc20c29cb3f056062925395e0f68d2250a46f
+>
+>  [1]: https://secunia.com/advisories/53061/
+
+Thanks
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -43,17 +40,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRgqA0AAoJEBYNRVNeJnmTzKcP/2CpEfgyC7tm8nMgPcK62ZWK
-1sKctmYKbUiv/UIhXR92CyoT/A94Tqi0rZmdj5uCVpyrvyy/T/99WyNUMsv/s5Nf
-zeoEVgdI5+ErayhusJ5MjxgvRHRlmT/JMYDPuxkXB4ePhnWihndbUjHZyEPEa3Py
-JkAA4fveTTM1lE17W1ZQbAJTLfa1+0Tzr3OvpzUu7axpBktJJ0LgeaJrHteqpi5j
-fizKWSznTXvKFwxS7YUmed1un2VA4fnlRQ9MXFxyowzWBJ6ujf1D0F6lCRn3S9SO
-mmFrkXqGmmk66UN/R8vCictGhXSBm5B/V4+bBXl6tegoHM/7nDpMh40nXRvjAoa8
-PErtrgD5vkC/NnCK3Nuwnz8tpXe8BXHfwOWblcT47KcpzP3+czzclTTyivJpWLP2
-XvfvUL9GoOr7AL3BMxux5QN9gpPfPK0LUls8T+GCqBrPdzmyuupHSpbd44TG6h6r
-sSzG5nraQIKJBYcf2/ANdmNtF8noxBJkK37/1EhfnhJzaLNO/il43Rt0FT5jQ/El
-Je4kZu53clZBm5N0oguLl/gHb7dX1TwyqCkuWuQ7qfs6IzI59HM/puSKyWFONIUt
-/7aqDxEahHZxK3rMOZuSj570UgIkXGvourH6130ue1Awa1htn/ivniOOBMiemvnK
-1A34F5DQzDxqez/NfBKJ
-=9FnX
+iQIcBAEBAgAGBQJRcFSrAAoJEBYNRVNeJnmT7FIQAILwU3b8RiSi+4dxRfhBR7cy
+CxTLquS7ORT6LJFmcZlMki+1hgOPIrHItM4Mh6xTQZFQaGkkxS4x/zP6G+4iIN6O
+h4jtGu913B9EfSS55r5t8gZ4KtfyJHYyS+Rwoo9UiFLqTXKtB/6kU1t2wK/wCGOh
+8WMTtCt+6NMUu3l7v30buzdng2AzDLiAT+vdYTNH6hDvqeiJZDzfvI1qejxWsCvl
+ACGN4gJi3EqHqVdu29nRZ2YXp1ov4FAjvomY6oT2gN3VKSSDZ9arb+S6QIKztLUA
+9AecGgsguiq29Yp76MFpy4kCfXwx32cs2Hl/pG3fRDMmpYVVjoNv2exV11hRYSAs
+ogRFDbZeYMUAXCbX361vCuIDN7YoVg5E+0sGg0BGWVmRnfcKN8hcuSLozP/Q66qC
+YMvqqDzKZhdbjrIVVyHGL+zRdTDVAf789rr+oM027XBtQZMw00bbn0BPYUjbvte/
+UJbML28BXrbLt/cLQTbtcdBU0+6uI5VNZGd7OfRc/4WEiumiRkHGFuPbWOJ0XMmQ
+Ur3vkloUAeCyUo+SZccUOXsFdUbckgQK/EgTbHe8JgDOmL0mlQMmZ14uYwVYNWj+
+8iUwLHGKKCJzaCt4YkRQg9wGyMYQtOmV14E8Ab9qFA5PLYrLeg/smPSJzs5Ad5jf
+7NXfslgDwwrDVCrJ+NsY
+=JuAb
 -----END PGP SIGNATURE-----
