@@ -1,43 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/16
-Message-ID: <20130205165539.GQ3443@redhat.com>
-Date: Tue, 5 Feb 2013 09:55:39 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: nadhem.alfardan.2009@...l.ac.uk, kenny.paterson@...l.ac.uk, cve-assign@...re.org
-Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/6
+Message-Id: <E1USp0i-0002mC-Gc@xenbits.xen.org>
+Date: Thu, 18 Apr 2013 13:36:24 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 46 (CVE-2013-1919) - Several access permission issues with IRQs for unprivileged guests
 Content-Type: text/plain; charset=utf-8
 
-* [2013-02-05 16:54:54 +0100] Marcus Meissner wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->On Tue, Feb 05, 2013 at 10:34:23AM +0100, Matthias Weckbecker wrote:
->> Hi,
->>
->> has there already been a CVE assigned for the recent "lucky 13" timing
->> flaw that affects various SSL / TLS implementations (including GnuTLS)?
->>
->>   http://www.isg.rhul.ac.uk/tls/
->>   http://www.gnutls.org/security.html#GNUTLS-SA-2013-1
->>
->> I think this could qualify for CVE for each open source implementation
->> that's prone.
->
->openssl has released updated packages with a CVE assigned, unclear
->whether it covers just openssl or also the others.
->
->http://www.openssl.org/news/secadv_20130205.txt
+             Xen Security Advisory CVE-2013-1919 / XSA-46
+                              version 3
 
-cc'ing cve-assign to see if they can provide some guidance here.  I also
-noticed that OpenSSL has a CVE for this (I'm assuming that the
-CVE-2012-2686 issue is _not_ the same thing, but that CVE-2013-0169 is
-this issue).
+     Several access permission issues with IRQs for unprivileged guests
 
-Since it's a weakness in TLS/DTLS itself, from my understanding, and not
-necessarily in a particular implementation, I'm not sure if this
-qualifies as one CVE for the weakness, or if it needs one per
-implementation.
+UPDATES IN VERSION 3
+====================
 
-MITRE, can someone provide some guidance on this?
+Public release.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+ISSUE DESCRIPTION
+=================
+
+Various IRQ related access control operations may not have the
+intended effect, thus potentially permitting a stub domain to grant
+its client domain access to an IRQ it doesn't have access to itself.
+
+IMPACT
+======
+
+Malicious or buggy stub domains kernels can mount a denial of service
+attack possibly affecting the whole system.
+
+VULNERABLE SYSTEMS
+==================
+
+Only Xen systems using stub domains are vulnerable.
+
+Only guests with passed-through IRQs or PCI devices are able to
+exploit the vulnerability.
+
+It is remotely possible that PV guests with passthrough IRQs or
+devices may also be able to exploit this vulnerability, although we
+think this is unlikely.
+
+MITIGATION
+==========
+
+Servicing HVM guests with passthrough IRQs or PCI devices in dom0 (ie,
+not using a stub domain device model) should avoid this vulnerability.
+
+Reconfiguring the system to disable IRQ/PCI passthrough and instead
+providing the guests with appropriate paravirtualised facilities will
+avoid this vulnerability.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa46-4.1.patch             Xen 4.1.x
+xsa46-4.2.patch             Xen 4.2.x
+xsa46-unstable.patch        xen-unstable
+
+$ sha256sum xsa46*.patch
+3b2ea317c1cf2ba428cc14946d030d38294747fef2beeb16eba30bcf3b1bc2cc  xsa46-4.1.patch
+822da2303f1fc69648d7a29eb72fdda8e64baab3edc0e1548456d31e66ed1d7c  xsa46-4.2.patch
+6987201720ef8af89a4682bddc33f639e1f87dc12f1ea7aee1f2e0481b1e909c  xsa46-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJRb/aXAAoJEIP+FMlX6CvZV94IAJPB3B2qnny5zhfOqp2yO17+
+nMJ+Hk3EBuMWXJVF8apjxsgfrZa0paNSU0zyhQIFV0ObVU9B90tfJfb3L+L7+t8G
+3Z9vPzE6aHZ32+OlMOIHWIvHZiiDZhM7siqayYqPphJbYW0l2jvogY9BO+00ALkr
+ctoFPzMhweVf1EK5WMLC4py8Xa06qddaOKj0Jg+DuLQzlgCyeuAfFtg/UmKFUL2k
+yDpIXTYt3/7uleR60VMEmRZWQqQN/j1jGS+XQyOzgIDaM1DRvCE+fUmmULCsd0Je
+0m/4lHm6O69XZ/z3TZ4bKqlzr8KRM2YEEzKk9L3MpRgdVh1mRLAwrsW8gwGBbyc=
+=rw/Y
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa46-4.1.patch" of type "application/octet-stream" (8573 bytes)
+
+Download attachment "xsa46-4.2.patch" of type "application/octet-stream" (9844 bytes)
+
+Download attachment "xsa46-unstable.patch" of type "application/octet-stream" (9818 bytes)
