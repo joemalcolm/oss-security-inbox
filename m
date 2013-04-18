@@ -1,55 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/6
-Message-ID: <50EFC171.4030306@redhat.com>
-Date: Fri, 11 Jan 2013 00:38:25 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: gnome-keyring does not discard stored secrets in some cases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/8
+Message-Id: <E1USpEl-00036n-C9@xenbits.xen.org>
+Date: Thu, 18 Apr 2013 13:50:55 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 44 (CVE-2013-1917) - Xen PV DoS vulnerability with SYSENTER
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/10/2013 11:45 PM, Florian Weimer wrote:
-> We've received a bug report that gnome-keyring client library does
-> not instruct the daemon to discard secrets when using the 
-> gnome_keyring_lock_all_sync function:
-> 
-> <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=697896> 
-> <https://bugzilla.gnome.org/show_bug.cgi?id=690466>
-> 
-> The function is simply not implemented.
-> 
-> I had trouble finding a caller of this function, but the submitter 
-> indicated that gnome-power-manager uses it in older versions:
-> 
-> <http://git.gnome.org/browse/gnome-power-manager/tree/src/gpm-control.c?h=gnome-2-32#n162>
->
->  I'm not sure if this needs a CVE, but it's probably worth fixing 
-> anyway.
-> 
+             Xen Security Advisory CVE-2013-1917 / XSA-44
+                              version 3
 
-What security violationoccurs/what trust boundary is crossed?
+                Xen PV DoS vulnerability with SYSENTER
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+UPDATES IN VERSION 3
+====================
 
+Backported patch for 4.0 now available.
+
+ISSUE DESCRIPTION
+=================
+
+The SYSENTER instruction can be used by PV guests to accelerate system
+call processing. This instruction, however, leaves the EFLAGS register
+mostly unmodified - in particular, the NT flag doesn't get cleared. If
+the hypervisor subsequently uses IRET to return to the guest (which it
+will always do if the guest is a 32-bit one), that instruction will
+cause a #GP fault to be raised, but the recovery code in the
+hypervisor will again try to use IRET without intermediately clearing
+the NT flag. The #GP fault raised on this second IRET is a fatal
+event, causing the hypervisor to crash.
+
+IMPACT
+======
+
+Malicious or buggy unprivileged user space can cause the entire host to crash.
+
+VULNERABLE SYSTEMS
+==================
+
+All 64-bit Xen versions from 3.1 onwards running on Intel CPUs are
+vulnerable.  32-bit Xen is not affected, as it doesn't permit the use
+of SYSENTER by PV guests. 64-bit Xen run on AMD CPUs isn't affected
+since AMD CPUs don't allow the use of SYSENTER in long mode.
+
+The vulnerability is only exposed by PV guests.
+
+MITIGATION
+==========
+
+Running only HVM guests, or running PV guests on only 32-bit hosts or only AMD
+CPUs will avoid this vulnerability.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa44-4.0.patch             Xen 4.0.x
+xsa44-4.1.patch             Xen 4.1.x
+xsa44-4.2.patch             Xen 4.2.x
+xsa44-unstable.patch        xen-unstable
+
+$ sha256sum xsa44*.patch
+4de554d29adbae41a65d401becd9d074be27932ad9f3e0ed78ecb89de3ed35b5  xsa44-4.0.patch
+3dbf47224be0f8fc66ba08d8a46b910bd9a3e672ffe864aa77c698bef0e27783  xsa44-4.1.patch
+c6c3afa228426d78e0484b7ac34210f642f79add35c4a04ca5ff7db5f2539e49  xsa44-4.2.patch
+0e6ad83da75dc207a165411844c0985fd7f9588d92c2c95911c245485351bf36  xsa44-unstable.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ78FxAAoJEBYNRVNeJnmTJYYQAJ0/+QATzrHed6H3Mu58jqDD
-oP6414l5SHw8i43y7IbDNXO8vK5MBLHODbKrQRG3o3VZWwSxN5olZhKd0xXaweJu
-Xw0s7EJVsvqZx10V271ZmJejpkVXXPBvxjKbHEwHAMz7JFck4vpCY//Scd1bXC5b
-tQFvZ7RakkYvc3yNp/BwHUQOYhhMifdS14pPXiVdJlolbtOlp2FwMubYRehuWrhL
-kMC65K0X52dX053mGNVpeT/WQPZoS2HggzADK7RPw5tnq70tVAcglklqfu+9O0wn
-vfFLgA+tUJpV0Nj2B678ABjmnJZ9OLNPu6aKR2l4FvosuAstqY5bNqxOVKMloQIT
-C1GMRYyC5olmhco0DzGw/ECXbcVwjxAjTkYZa0PN04VmMqph/YdqjMygbTgJMuUb
-OXTWzLo0XG68veNsq6brB/Wr3Dgm1S2QBPl2s3EcIvKU3OQuiSxb1mQOwo+iMSvM
-bYchq6Fl/USezF70JMC+/O5lV1KmGl2SqFjKZdXRPeNUqyQ8cG9yxpWSPSHK1HS3
-gYZtCHnBLT8/Etl8pDhFfunMArmvS6mTUuQ2iE9nwuuSu6nPWNvWVGMcjnB/p0vG
-09KFnNZplSLPncTro6LKqoO92UsiMmAUaYc+OkhbKuUyqws6loL2n46Czk9rv8g0
-OQwQ/zjHD2MgopKbwRXF
-=+WA1
+iQEcBAEBAgAGBQJRb/oqAAoJEIP+FMlX6CvZ9EYH/2OAz/GRAX4A2Y52HoUfslN9
+lZa4YNJOtPOuLITMeapu7MXBgRJYA/GPFzfBVlAoPNQTNpUD0Mfxvwz9mVGIUtNX
+t0Mriz/oFGDqHzvz3rksmvG9y6tMfwa++srXms/uTXd3T1CxeGIHA4hMuvCRkMAU
+HQHQ1pfsK6XGHV+ITeJVBGEwKh+aDxBfqIXDU1yhgTA9djpsHXWNAsu5mNRBsb0i
+zMVxZg+x1maHhxigLwsEm1poxneWhkq+0pvTo/hCdK2XcK9NaUXNAALMZfQn5kgK
+IwaC52V3FJSxErIWlZz6IW6Zq4tugzu/VJ92hrM0fubd04mfFG15+buc+NdUmvk=
+=qSef
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa44-4.0.patch" of type "application/octet-stream" (3220 bytes)
+
+Download attachment "xsa44-4.1.patch" of type "application/octet-stream" (2844 bytes)
+
+Download attachment "xsa44-4.2.patch" of type "application/octet-stream" (2843 bytes)
+
+Download attachment "xsa44-unstable.patch" of type "application/octet-stream" (1670 bytes)
