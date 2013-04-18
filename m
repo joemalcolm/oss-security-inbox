@@ -1,33 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/12
-Message-ID: <20130424195335.GA12258@kludge.henri.nerv.fi>
-Date: Wed, 24 Apr 2013 22:53:35 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: WP-Super-Cache XSS and Remote Code Exec
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/9
+Message-Id: <E1USqZL-0005h1-D2@xenbits.xen.org>
+Date: Thu, 18 Apr 2013 15:16:15 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 50 (CVE-2013-1964) - grant table hypercall acquire/release imbalance
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 24, 2013 at 12:30:57PM -0600, Kurt Seifried wrote:
-> http://blog.sucuri.net/2013/04/update-wp-super-cache-and-w3tc-immediately-remote-code-execution-vulnerability-disclosed.html
-> 
-> To test leave a comment like: <!?mfunc echo PHP_VERSION; ?><!?/mfunc?>
-> 
-> To fix it they added a mfunc filter in wp-super-cache-1.3/wp-cache.php:
-> 
-> +add_filter( 'preprocess_comment','no_mfunc_in_comments' );
-> +add_filter( 'comment_text','no_mfunc_in_comments' );
-> +add_filter( 'comment_excerpt','no_mfunc_in_comments' );
-> +add_filter( 'comment_text_rss','no_mfunc_in_comments' );
-> 
-> Please use CVE-2013-2009 for this issue.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I was going to request CVEs for these today. No idea why WordPress guys aren't
-doing this, but they probably think it will take too much time and in some days
-it might. There is a lot of plugins and also lots of vulnerabilities in them.
+	     Xen Security Advisory CVE-2013-1964 / XSA-50
 
-Should CVE-2013-2009 be used also for w3-total-cache issue?
+            grant table hypercall acquire/release imbalance
 
----
-Henri Salo
+ISSUE DESCRIPTION
+=================
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+When releasing a non-v1 non-transitive grant after doing a grant copy
+operation, Xen incorrectly recurses (as if for a transitive grant) and
+releases an unrelated grant reference.
+
+IMPACT
+======
+
+A malicious guest administrator can cause undefined behaviour;
+depending on the dom0 kernel a host crash is possible, but information
+leakage or privilege escalation cannot be ruled out.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.0 and 4.1 are vulnerable.  Any kind of guest can trigger the
+vulnerability.
+
+Xen 4.2 and xen-unstable, as well as Xen 3.x and earlier, are not
+vulnerable.
+
+MITIGATION
+==========
+
+Using only trustworthy guest kernels will avoid the vulnerability.
+
+Using a debug build of Xen will eliminate the possible information
+leak or privilege violation; instead, if the vulnerability is
+attacked, Xen will crash.
+
+NOTE REGARDING EMBARGO
+======================
+
+A crash resulting from this bug has been reported by a user on the
+public xen-devel mailing list.  There is therefore no embargo.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa50-4.1.patch
+
+$ sha256sum xsa50-*.patch
+29f76073311a372dd30dd4788447850465d2575d5ff7b2c10912a69e4941fb21  xsa50-4.1.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJRcA4pAAoJEIP+FMlX6CvZHhsIAK2RYhWr4CQ2ziTh3o1cbkXe
+HfDcWHjLTe1+zoULCKbptUHcoH6/oPxwZBklAfNSECFT47a4FKZu/ARCP1IBtot2
+o6cuTTlYgLMMpSfVW//aDJQ59YivhcwN5omLEp4G8N/YHw0IA1W58/IpNKXVbNNy
+pmMEqus/QUH8EzGaxLfwIfSrJR96x96QKOlG94lohY5P5aipx/5vXzUPyRFXLbOZ
+jr8Ve+woNuYAeBx3zue7TNfhePVuDUl8b7ufhsuYdwkODzEXCNLcJM93Z3eaKfPp
+CVDBE38GUO9hr5CpBh5QgGeCCeMhxwI8jXTXUb6N8KFrwgbq04HP7BOmVI4O8Xs=
+=jiz6
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa50-4.1.patch" of type "application/octet-stream" (6789 bytes)
