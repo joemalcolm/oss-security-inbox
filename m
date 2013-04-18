@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/29/6
-Message-ID: <20130829141959.GD13998@dhcp-25-225.brq.redhat.com>
-Date: Thu, 29 Aug 2013 16:20:00 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/3
+Message-ID: <516F7E2D.1040801@redhat.com>
+Date: Thu, 18 Apr 2013 10:31:33 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: libvirt-security@...hat.com
-Subject: CVE request -- libvirt: virBitmapParse out-of-bounds read access
+Subject: Xorg-x11-server: Information disclosure due enabling events from hot-plug devices despite input from the device being momentarily disabled
 Content-Type: text/plain; charset=utf-8
 
-The virBitmapParse function was calling virBitmapIsSet() function that
-requires the caller to check the bounds of the bitmap without checking
-them. This resulted into crashes when parsing a bitmap string that was
-exceeding the bounds used as argument.
+Hi All,
 
-Introduced by:
-http://libvirt.org/git/?p=libvirt.git;a=commit;h=0fc89098a68f0f6962de8be4fc03ddd960ffbf08
+David Airlie and Peter Hutterer of Red Hat found an information
+disclosure flaw was found in the way X.org X11 server used to register
+new hot-plug devices, when X.org X11 server was instructed (for that
+particular moment) not to receive input devices events. Formerly when
+registering new input device, X.org X11 server simultaneously enabled
+retrieval of input from the particular device (regardless of the
+setting).
+A local unsuspecting user, relying on the X.org X11 server disable
+input feature it to properly prohibit acquiring of events from this
+newly added hot-plug device, could supply a sensitive information that,
+due the above bug, would become available to the physically proximate
+attackers.
 
-Upstream fix:
-http://libvirt.org/git/?p=libvirt.git;a=commit;h=47b9127e883677a0d60d767030a147450e919a25
+Upstream patch:
+http://cgit.freedesktop.org/xorg/xserver/commit/?id=6ca03b9161d33b1d2b55a3a1a913cf88deb2343f
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=997367
+Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-1940
 
-Thanks,
+This issue has been assigned CVE-2013-1940
+
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+Huzaifa Sidhpurwala / Red Hat Security Response Team
