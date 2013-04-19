@@ -1,53 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/12/2
-Message-ID: <20130712005549.GA27860@scheep.thinstuff.com>
-Date: Fri, 12 Jul 2013 02:55:49 +0200
-From: Bernhard Miklautz <bmiklautz@...nstuff.at>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Marc-André Moreau <marcandre.moreau@...il.com>, Martin Fleisz <mfleisz@...nstuff.at>
-Subject: Re: CVE Request -- FreeRDP: Multiple security fixes in 1.1.0-beta1 version
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/19/2
+Message-ID: <5170EA62.3000208@redhat.com>
+Date: Fri, 19 Apr 2013 00:55:30 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, Thierry Carrez <thierry@...nstack.org>
+Subject: CVE-2013-1977  - OpenStack keystone.conf insecure file permissions
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Thu, Jul 11, 2013 at 12:48:19PM -0600, Kurt Seifried wrote:
-> > (some time ago) FreeRDP upstream has released 1.1.0-beta1 version: 
-> > [1] http://sourceforge.net/mailarchive/message.php?msg_id=30591956
-to clarify our current stable version is 1.0.2. FreeRDP version 1.1.0 is *beta* and 
-still under development and therefore not stable or production ready and 
-subject to frequent changes (as [1] also stated).
+As reported:
+https://bugs.launchpad.net/keystone/+bug/1168252
 
-> > correcting multiple security flaws: * library / client side fixes: 
-> > https://github.com/FreeRDP/FreeRDP/pull/887
-> Can someone from upstream confirm if these are hardening or a security fix?
-Hardening.
+The password configuration of LDAP and admin_token in keystone.conf
+should be secret to protect security information:
 
-> > https://github.com/FreeRDP/FreeRDP/commit/0dc22d5a30a1c7d146b2a835b2032668127c33e9
-> > https://github.com/FreeRDP/FreeRDP/commit/bceec083677a609ba2f06cc75924ab0accac5388
-> Can someone from upstream confirm if these are hardening or a security fix?
-Neither nor.
+[ldap]
+# url = ldap://localhost
+# user = dc=Manager,dc=example,dc=com
+# password = None <- should be secrect
+# suffix = cn=example,cn=com
+# use_dumb_member = False
+# allow_subtree_delete = False
+# dumb_member = cn=dumb,dc=example,dc=com
 
-> > * server side fixes: 
-> > https://github.com/FreeRDP/FreeRDP/commit/7d58aac24fe20ffaad7bd9b40c9ddf457c1b06e7
-> Please use CVE-2013-4118 for this issue.
+[DEFAULT]
+admin_token = passw0rd <- should be secrect
 
-> > https://github.com/FreeRDP/FreeRDP/commit/0773bb9303d24473fe1185d85a424dfe159aff53
-> Please use CVE-2013-4119 for this issue.
 
-There might also be some misunderstanding. The initial CVE request stated that
-1.1.0-beta1 corrected these flaws but as a matter of fact only the commits from pull request 
-887 and commit 7d58aac24fe20ffaad7bd9b40c9ddf457c1b06e7 are contained. - The other issues are 
-fixed in our git master branch. 
 
-We've created a snapshot that contains all the fixes mentioned above:
+Red Hat has a modified installer, we install the file as:
+- -rw-------. 1 keystone keystone 10235 Apr 19 00:21
+/etc/keystone/keystone.conf
 
-http://pub.freerdp.com/releases/freerdp-1.1.0-beta+2013071101.tar.gz
-md5: 108f8404b210ea789226cbca65c43724
-sha1: a79d0174b0487abb900601c67572aa6dbfc12629
+Unfortunately when we hardened our installer I didn't check the
+upstream distribution for the same flaw, something I should have done.
+I'm now going to review the other hardening we did to ensure upstream
+is aware of these potential problems.
 
-We will also review our current stable version to check if the issues 
-exist there as well and publish an update if required.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Thank you,
-best regards,
-Bernhard
+iQIcBAEBAgAGBQJRcOphAAoJEBYNRVNeJnmTBe4QAKTD9ZwlHAxy4T8Yvyx3kf9L
+gKnO6/YjLPZfgX0YFw6jseUJ9dYkPwHNEBhPISTgW+ZYHvITD2c32SsbBtHwp41y
+DgJkYuvUy7QL0h9JUKz922pIMsTCTw1vxudVA1v9szUFOeNUkuxYp+sOU+XjLVcX
+12sWjhlrclpyKeVjxehE2gK+X8HONdHG/iyuYYm3Xjx9U0w5T3GZ/LJuBipaW/K6
+N8DNygS5cUX7QXjQ5Cpm3JTW9fTu4Lkx+XL6EoSPlkE5uYeoxLRV2aGdCwtgKLJl
+dwJXO5pgQMSXEee2c6j2JrbcFlY0Pu3GZF2BP5ZRvFcOJs2A8VgmJYZJoNX9vLAd
+gtLuUNcAN3GJnhpvNUzf2UO4im/3+Y/7y6xQ+F54ud/3jE3BaPezoA3CSGeUg924
+ygPSivWWztCYxTzxfadiJ382Lv77kFvu2+TGODa6HSm5EIa2PfgTwfq5kTYpbpqL
+ULdgwBrCPrcPzCe6uCt/DVumyOLVVdooYecHFop5+XtyliX1ja0Bl3dKCFoI3sSy
+lumhNJdPH/Q/0guyTqimTeTmLwc3WWqL9rhBLblKqSE138DqgaCJ3befjgyZt8mB
+5sAQp7NvHu/UsoT4gJ0qjfetAo5ZLKpC3HCc6LIDpH3A4K4UtB5HAIANtgb9x+i4
+B9A+8D2OtoJMwlh8To8A
+=Z0kN
+-----END PGP SIGNATURE-----
