@@ -1,46 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/11/4
-Message-ID: <52306A83.3020904@canonical.com>
-Date: Wed, 11 Sep 2013 09:05:07 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/19/1
+Message-ID: <5170B9B2.8060206@redhat.com>
+Date: Thu, 18 Apr 2013 21:27:46 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: lightdm incorrect .Xauthority permissions
+CC: Agostino Sarubbo <ago@...too.org>, veillard@...hat.com
+Subject: Re: CVE request : libxml2 Multiple Use-After-Free Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-lightdm before 1.4.3, 1.6.2 and 1.7.14 created .Xauthority files with
-world-readable permissions.
+On 04/18/2013 02:16 PM, Kurt Seifried wrote:
+> On 04/17/2013 06:45 AM, Agostino Sarubbo wrote:
+>> From the secunia advisory SA53061[1]:
+> 
+>> 1) An use-after-free error in "htmlParseChunk()" can be
+>> exploited to dereference already freed memory.
+> 
+> Please use CVE-2013-1969 for this issue.
+> 
+>> 2) Two use-after-free errors in "xmldecl_done()" can be
+>> exploited to dereference already freed memory.
+> 
+> Please use CVE-2013-1970 for this issue.
+> 
+>> The vulnerabilities are reported in version 2.9.0. Other
+>> versions may also be affected.
+> 
+>> Commit: 
+>> https://git.gnome.org/browse/libxml2/commit/?id=de0cc20c29cb3f056062925395e0f68d2250a46f
+>
+>>  [1]: https://secunia.com/advisories/53061/
+> 
+> Thanks
 
-Fixed by the following commits:
+Please REJECT CVE-2013-1970, these two issues should have been merged,
+I derped and for some reason SPLIT instead of MERGE'ing these as it
+should have been. So just use CVE-2013-1969 for both issues.
 
-1.4.x:
-http://bazaar.launchpad.net/~lightdm-team/lightdm/1.4/revision/1571
-http://bazaar.launchpad.net/~lightdm-team/lightdm/1.4/revision/1576
-http://bazaar.launchpad.net/~lightdm-team/lightdm/1.4/revision/1577
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-1.6.x:
-http://bazaar.launchpad.net/~lightdm-team/lightdm/1.6/revision/1641
-http://bazaar.launchpad.net/~lightdm-team/lightdm/1.6/revision/1652
-http://bazaar.launchpad.net/~lightdm-team/lightdm/1.6/revision/1653
-
-1.7.x:
-http://bazaar.launchpad.net/~lightdm-team/lightdm/trunk/revision/1675
-http://bazaar.launchpad.net/~lightdm-team/lightdm/trunk/revision/1780
-http://bazaar.launchpad.net/~lightdm-team/lightdm/trunk/revision/1781
-
-Bug reports:
-https://bugs.launchpad.net/ubuntu/+source/lightdm/+bug/1175023
-https://bugs.launchpad.net/lightdm/+bug/685212
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=721744
-
-Could a CVE please be assigned to this issue?
-
-Thanks,
-
-Marc.
-
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+iQIcBAEBAgAGBQJRcLmyAAoJEBYNRVNeJnmT9hIQAL7pm6XqRrzZxx92St7Aozfq
+eKPtZT8joPDBKVEw+NwDZhoVBv220tI+S1gajZ6CdBveP+3Ev93CcsPF7MdJWTvE
+xU5Dl5+awxZjG4M9YPPQJhhuNDCeCPlplaeCube2KQj2mwchYjaLUQf5z4S7lmdz
+zFvSPqIr3TmQDIW5ikAtcPpC7mt6zQn//hjB/+74ZKD5fdkfzfW7tp77OFN6O4d1
+/wOvTRx8b2Elf2g1iVsZLr8Y0c5CLiRc7HAeSZh6mUD88bCR9CAVCfoA4UmLnBOU
+NKgARNJeUCSoXx1p3Uk+ctLaz3IwtXf82VHoTxAO45zyKvN5K6ua2KyXwCVupJTK
+I7yEsKzKQNXlUs/4Q6eCpg1wO7odGCgeoN1O625tKQ4RgwCgzmDwQlg++qrbiFRp
+5qk5eyqpcCOe2+T/B+DzPBwrkzkweCW4W5u0pPw5SgkRGyVcjaCxG8n4epXHuYhS
+GWD+DQ4rBwmZZBCz+TAF8qAZAgqbSQBeOEz/w9jrJaG7nxUjy3jArqhPtCVnx+7O
+LtcDgCAMgjDWkjpYtXFc4kRKXxNMyNg8mdvmuGsc8GDfa1CH+3FZbZbs4eYkBpO8
+M+w7VdgxNpC3OzN0dD26nZuWkSbZ4BYr58c1KGwzX/wJzh9j4qi3A8OxCksC3vjq
+tIvWv8W8XEJ1psjcWJh+
+=03FD
+-----END PGP SIGNATURE-----
