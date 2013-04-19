@@ -1,72 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/08/2
-Message-ID: <51DB01E2.8060702@redhat.com>
-Date: Mon, 08 Jul 2013 12:16:02 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/19/3
+Message-ID: <20130419134905.GA2579@openwall.com>
+Date: Fri, 19 Apr 2013 17:49:05 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>, mejo@...ian.org, contribute@...ios.org
-Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
+Subject: distros list news
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 06/26/2013 01:42 PM, Kurt Seifried wrote:
-> On 06/26/2013 12:36 PM, Vincent Danen wrote:
->> I don't believe a CVE has been assigned to this issue yet.
-> 
->> It was reported that Nagios 3.4.4 at least, and possibly earlier
->>  versions, would allow users with access to Nagios to obtain
->> full access to the servicegroup overview, even if they are not 
->> authorized to view all of the systems (not configured for this 
->> ability in the authorized_for_* configuration option).  This 
->> includes the servicegroup overview, summary, and grid.
-> 
->> Provided the user has access to view some services, they will be 
->> able to see all services (including those they should not see). 
->> Note that the user in question must have access to some services 
->> and must have access to Nagios to begin with.
-> 
->> This has not yet been corrected upstream.
-> 
->> References:
-> 
->> http://www.mail-archive.com/nagios-users@lists.sourceforge.net/msg39749.html
->
->>  http://tracker.nagios.org/view.php?id=456 
->> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714171 
->> https://bugzilla.redhat.com/show_bug.cgi?id=978531
-> 
-> 
->> Thanks.
-> 
-> Please use CVE-2013-2214 for this issue.
+Here are some news items pertaining to the distros and linux-distros
+mailing lists:
+http://oss-security.openwall.org/wiki/mailing-lists/distros
 
-It appears there are may be some problems with this issue, potentially
-this may have been a bad configuration and not a source code based
-problem, however we haven't been able to confirm it yet. I've also not
-been able to contact upstream about this easily (no security@ address,
-if anyone know whom to forward this to, please let me know, thanks.
+1. I've just subscribed Dag-Erling Smorgrav to the distros list, as the
+new FreeBSD Security Officer.  (Also subscribed are two other members of
+the FreeBSD security team.)
 
+2. I've just removed Pardus from the linux-distros list, since mail to
+both contacts for Pardus has been bouncing for a couple of weeks now (I
+wish they informed us of their resignation(?) themselves).
 
+3. A while ago, I've removed CentOS from the linux-distros list, since
+the only subscriber for CentOS has resigned from a security role there
+(and informed me of that - thanks!)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+4. There was some unscheduled downtime for the distros and linux-distros
+lists yesterday and today.  The SMTP response was "451 4.7.1 Service
+unavailable - try again later".  Checking the logs, I see that only two
+messages were affected - one by a person who informed me of the issue
+(and who I think will resend the message now), and the other probably a
+spam message from a Google Apps user (the message was correctly processed
+and rejected with "5.7.1 Missing the [vs] anti-spam tag, see
+http://oss-security.openwall.org/wiki/mailing-lists/distros" once the
+issue causing the soft-rejects was corrected).  So the downtime did not
+cause much harm, yet I am sorry for it.
 
-iQIcBAEBAgAGBQJR2wHiAAoJEBYNRVNeJnmTs/0QAMMyuwkHenEjvSiMEOdT/tbD
-Mitf+HiLRLntvjW1EXhebWxgiv6xWpRS76pN+sHrzFGPIq0rgvWYKVEl8RCBQRAw
-SJcXtsBmFYuIJurQclNXd/IzGrM8mUGZoNp/9Pfe/WT+gWdlDO0bnIdnRIDF03QD
-4AOsVpdWcXBjFgdAky01fJxQUUIi5VZAa3HrEDHrr/Fb4RZcaFo2zXPfMI/4075v
-LJZ6LZkCx/TdzS8X9KeKk/pZ1xjtuuB+f4AS7NOK870wX4KTbnswb8AWxGy83njJ
-F2feI/GGhSUGVmis6ga2s7VnaeksofPBPnOQStUmWDVpXfWxyjaAqs1+GYL6I/y8
-rMc5/6k+fsoSSUcG2lVgekc4fonWG9n+/dC6tWNZ50miwK3gfqonAIg+OzClk9wz
-t4SVpoaRts8rKpgx1K9AoUU4Oupwi3OZgmYmo89rgQlA40Fyozq7+kNoqv2r2UNb
-ZiYY+aPNrPpmQPdZtjqizvow1i4RDcJ6ACYApw3f6ukjvK8BHUWTr4YERjOIRESK
-w4oTgurswASOBif1LlKbIKwzbqZQr8e9nlRlpr5o74T7mwuWY26ZGawvY59jj+T6
-ehu+j/4/oqr6oXuv8a+QWczqE/784jOaIGbDJ5HUuEcNyL8IA5NR39m9W0cfb+g4
-duXD5YZitwgywViO2C75
-=P9k9
------END PGP SIGNATURE-----
+Alexander
