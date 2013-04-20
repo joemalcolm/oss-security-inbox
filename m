@@ -1,68 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/11/9
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF09033279@IMCMBX01.MITRE.ORG>
-Date: Mon, 11 Mar 2013 20:51:18 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "kseifried@...hat.com" <kseifried@...hat.com>, "DO-webmaster@...t.gov" <DO-webmaster@...t.gov>
-Subject: RE: *.nist.gov websites gone forever?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/20/4
+Message-ID: <20130420203939.GB31505@openwall.com>
+Date: Sun, 21 Apr 2013 00:39:39 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
-I doubt these sites are gone forever.  It's most likely a temporary outage.
+Hi,
 
-Note that web.nvd.nist.gov is at least serving up individual CVEs, such as:
+I just found this recent blog post by Allan McRae of Arch Linux:
 
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-5886
+http://allanmcrae.com/2012/04/how-secure-is-the-source-code/
 
-- Steve
+Thank you for doing this, Allan!  Are you contacting the upstream
+authors to request that they start to properly sign their releases?
+(I've been doing that on some occasions, sometimes with success.)
 
->-----Original Message-----
->From: Kurt Seifried [mailto:kseifried@...hat.com]
->Sent: Monday, March 11, 2013 1:47 PM
->To: oss-security@...ts.openwall.com; DO-webmaster@...t.gov
->Subject: [oss-security] *.nist.gov websites gone forever?
->
->-----BEGIN PGP SIGNED MESSAGE-----
->Hash: SHA1
->
->So a bunch of nist.gov websites have been gone now for about 4-5 days:
->
->http://web.nvd.nist.gov
->http://nvd.nist.gov
->http://scap.nist.gov
->
->They are either gone entirely (web.nvd.nist.gov has no server at all),
->or they have a generic "Site/Page Not Available" error now (they were
->serving a CFM error over the weekend).
->
->This impacts CVE a bit since the two main sites are cve.mitre.org and
->the web.nvd.nist.gov one. Any one know what is going on or have a
->contact at nist.gov that can get this sorted out? Are these websites
->gone forever or are they simply having an extended outage?
->
->- --
->Kurt Seifried Red Hat Security Response Team (SRT)
->PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->-----BEGIN PGP SIGNATURE-----
->Version: GnuPG v1.4.13 (GNU/Linux)
->
->iQIcBAEBAgAGBQJRPhiXAAoJEBYNRVNeJnmTZgkQAJcBuKbU++LPOr1jyOjyQo
->Uo
->Z48pYCxi2TqfmwR9MXGqy0xej27te7cMr3zxRo5/deMACwZfX3BKU176gjuJUO
->Pt
->VdzlnyM7GV0SkI8Ea1Dgriklw4r4UXWrxI8yJvYSwoO5FMjEDysttXDaYhbsXGiq
->tXZSDs8BOQ/6JjfCCBWU9HpI+HMbZb5vm9lCpaS1oq6eyiJ2sGpX4ICZ2XjCNjo5
->vo1wms22iO+2DrnVfdjQ4pbEVSXTDMAdbWF1Pb8SJdhcEhMddHRQSe/Fylo5t
->LgY
->CJoCkWmReYcJ1F5k16mIZ+Mn1Af6K1hY9E+fzQHfxM4IgH6gDrcRa4/bxzLcLkQI
->E7T94Jgz7giEKebA5md3Xwfk8AsmWNgWAXfqWi4bs1YjBvfjlszohN7SRAd2ul7Q
->5CcD8rzGGkxupJBZytATEgF07AVu7yHMuqwPoN7IkSgy9uuI0zW9Bfz5PKnrpJR
->Q
->QMSDJE2QQc2Fimj8Zp++wcrfx9XbX5cWeKFOPTgHKV7mZ/kPgJw1rg5BaXcn/
->M32
->ukOY0ezrfIwSWB2qzUIrKZaMuMLMxToVmUedkE2V5ZjtBUKW2qapDKXpNOR
->BfGSz
->piaxUkXRTcsuTY9Q+YV5k7a41yF4kb2NxRACH1dZkLSENwbOfRyheuQPBWZ02
->Wg+
->hJrRW8IW9YnTmC8Smmt5
->=qSEn
->-----END PGP SIGNATURE-----
+I think that placing both "MD5 checksum provided on same site as
+download" and "PGP signature, key difficult to verify" in the same
+"yellow" category is inconvenient for us.  "MD5 checksum provided on
+same site as download" only helps verify downloads from mirrors against
+the master site, whereas "PGP signature, key difficult to verify"
+achieves a lot more - once a distro is already including the package
+(and has already taken the risk of it having been tampered with), then
+verifying further updates to the package becomes almost as reliable as
+it would have been with proper signing (with a "readily verifiable" key).
+So we need four categories, or simply "MD5 checksum provided on same
+site as download" should be in "red", not in "yellow".
+
+Alexander
