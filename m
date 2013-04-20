@@ -1,35 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/10/2
-Message-ID: <1360498948.12723.7.camel@scapa>
-Date: Sun, 10 Feb 2013 13:22:28 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/20/3
+Message-ID: <20130420202919.GA31505@openwall.com>
+Date: Sun, 21 Apr 2013 00:29:19 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: 700234@...s.debian.org, Josselin Mouette <joss@...ian.org>
-Subject: CVE request: Transmission can be made to crash remotely
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-On dim., 2013-02-10 at 11:50 +0100, Josselin Mouette wrote:
-> Package: transmission-daemon
-> Version: 2.52-3
-> Severity: grave
-> Tags: security patch upstream
-> Justification: user security hole
-> 
-> The transmission-daemon package in wheezy crashes regularly. According 
-> to upstream this is a remote security hole (at least a remote DoS, but 
-> most probably there is a way to take control of the process).
-> 
-> https://trac.transmissionbt.com/ticket/5044
-> https://trac.transmissionbt.com/ticket/5002
-> 
-> Apparently there is no CVE assigned. The bug is fixed upstream and I’m 
-> attaching the patch. I’m currently testing a patched package, and will 
-> report whether the fix is sufficient.
-> 
-Could a CVE be assigned for this?
+Hi Allan -
 
-Thanks in advance,
--- 
-Yves-Alexis
+On Sat, Apr 20, 2013 at 06:58:14PM +1000, Allan McRae wrote:
+> I would like to request membership to the linux-distros mailing list
+> representing Arch Linux.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Normally, I'd ask an existing security contact or a project leader to
+approve this, but there don't appear to be people with roles like these
+at Arch Linux - or are there, and who are they?  (Apparently, there was
+a leader until 2007.)
+
+https://www.archlinux.org/developers/ lists you as "Toolchain
+Maintainer, Pacman Developer", which sounds like a sufficiently core
+role for you to appoint yourself (or someone else) as a security contact
+for Arch Linux, if/since there's no security contact nor a leader.
+
+Please add Arch Linux information to:
+
+http://oss-security.openwall.org/wiki/vendors
+
+How do you expect to use the information arriving via linux-distros?
+
+Alexander
