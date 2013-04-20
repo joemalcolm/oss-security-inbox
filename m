@@ -1,39 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/13
-Message-Id: <201309042308.r84N7wHa001693@linus.mitre.org>
-Date: Wed, 4 Sep 2013 19:07:58 -0400 (EDT)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/20/1
+Message-ID: <517258A6.5080902@archlinux.org>
+Date: Sat, 20 Apr 2013 18:58:14 +1000
+From: Allan McRae <allan@...hlinux.org>
+To: oss-security@...ts.openwall.com
+Subject: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> I think the first question is what constitutes a security flaw --
-> once that is defined, then I think what upstream does is irrelevant.
-> If it's a flaw, it's a flaw.
+I would like to request membership to the linux-distros mailing list
+representing Arch Linux.
 
-CVE assignment by MITRE doesn't look at flaws in quite that way. If a
-vendor has developed and released software and then sends us a report
-that the software had a security-relevant mistake, or violated that
-vendor's intended security policy, that's usually enough for a CVE.
-Reports from third parties are viewed much more restrictively.
+Here is my GPG fingerprint:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+pub   2048R/EAE999BD 2011-06-03
+      Key fingerprint = 6645 B0A8 C700 5E78 DB1D  7864 F99F FE0F EAE9 99BD
+uid                  Allan McRae <me@...anmcrae.com>
+uid                  Allan McRae (Developer) <allan@...hlinux.org>
+sub   2048R/753CCF8D 2011-06-03
 
-iQEcBAEBAgAGBQJSJ7raAAoJEGvefgSNfHMdG6IH/RaOwVRMz+RWNEbF/ofeAWKV
-mVCfX+dzdvgsl3vr8r2aDL+K7hHV7RMwUial7ioyOCruTvtvBTRfssXcJrcLzLSF
-zejR2luTtNNzFIVbjc134gDOis9/Xr2dPwheP0RNHBFRI655tnCWt+gIisPhJujz
-E/FfW67K7up0/c+dDuzgdHfO1n+PG0Us3SdAnQwKGS181agM4flsWL64XXaITFs4
-0Xx8l6UPN6G7ybMikJlsUbiLQZ70au6W0eEqTCvuLILbx0oEFRK47cLxGJSn190N
-lOIh5F1YwVPeZivXjEc0kdFxY+pypc8v1AxXHzQnzwap+wtxsshmgyadqiiiXD8=
-=5ycL
------END PGP SIGNATURE-----
+Thanks,
+Allan McRae
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
