@@ -1,96 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/03/1
-Message-Id: <E1UjXm9-0000i6-47@xenbits.xen.org>
-Date: Mon, 03 Jun 2013 16:38:29 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 52 (CVE-2013-2076) - Information leak on XSAVE/XRSTOR capable AMD CPUs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/21/1
+Message-ID: <517335F2.4070409@archlinux.org>
+Date: Sun, 21 Apr 2013 10:42:26 +1000
+From: Allan McRae <allan@...hlinux.org>
+To: oss-security@...ts.openwall.com
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 21/04/13 06:29, Solar Designer wrote:
+> Hi Allan -
+> 
+> On Sat, Apr 20, 2013 at 06:58:14PM +1000, Allan McRae wrote:
+>> I would like to request membership to the linux-distros mailing list
+>> representing Arch Linux.
+> 
+> Normally, I'd ask an existing security contact or a project leader to
+> approve this, but there don't appear to be people with roles like these
+> at Arch Linux - or are there, and who are they?  (Apparently, there was
+> a leader until 2007.)
+> 
+> https://www.archlinux.org/developers/ lists you as "Toolchain
+> Maintainer, Pacman Developer", which sounds like a sufficiently core
+> role for you to appoint yourself (or someone else) as a security contact
+> for Arch Linux, if/since there's no security contact nor a leader.
 
-	     Xen Security Advisory CVE-2013-2076 / XSA-52
-                            version 3
+We do have a project leader who is Aaron Griffin, although his role
+tends to be limited to administrative things these days.  But as your
+research suggested, I am in a position to appoint myself as security
+contact and messages to security@...hlinux.org will be sent to me.
 
-           Information leak on XSAVE/XRSTOR capable AMD CPUs
+> Please add Arch Linux information to:
+> 
+> http://oss-security.openwall.org/wiki/vendors
 
-UPDATES IN VERSION 3
-====================
+Will do.
 
-Public release.
+> How do you expect to use the information arriving via linux-distros?
 
-ISSUE DESCRIPTION
-=================
+I am intending to form a more official security response in Arch Linux
+rather than the quite adhoc process we have at the moment.  The
+information on linux-distros will be used to prepare updates to be
+released at the end of relevant embargo.
 
-On AMD processors supporting XSAVE/XRSTOR (family 15h and up), when an
-exception is pending, these instructions save/restore only the FOP,
-FIP, and FDP x87 registers in FXSAVE/FXRSTOR.  This allows one domain
-to determine portions of the state of floating point instructions of
-other domains.
+Allan
 
-NOTE: This is the documented behavior of AMD64 processors, but it is
-inconsistent with Intel processors in a security-relevant fashion that
-was not addressed by the original implementation of XSAVE support on
-Xen.
-
-This vulnerability is similar to CVE-2006-1056, concerning
-FXSAVE/FXRSTOR on AMD processors.
-
-IMPACT
-======
-
-A malicious domain may be able to leverage this to obtain sensitive
-information such as cryptographic keys from another domain.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.0 and onwards are vulnerable when run on systems with AMD
-processors supporting XSAVE.  Any kind of guest can exploit the
-vulnerability.
-
-In Xen 4.0.2 through 4.0.4 as well as in Xen 4.1.x XSAVE support is
-disabled by default; therefore systems running these versions are not
-vulnerable unless support is explicitly enabled using the "xsave"
-hypervisor command line option.
-
-Systems not using AMD processors, or using AMD processors not
-supporting XSAVE (i.e. families prior to 15h), are not vulnerable.
-
-Xen 3.x and earlier are not vulnerable.
-
-MITIGATION
-==========
-
-Turning off XSAVE support via the "no-xsave" hypervisor command line
-option will avoid the vulnerability.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa52-4.1.patch             Xen 4.1.x
-xsa52-4.2-unstable.patch    Xen 4.2.x, xen-unstable
-
-$ sha256sum xsa52-*.patch
-058741aae8881774cfe8f8d193fee9b92da62e61459b1e9617798ccee2ce8d75  xsa52-4.1.patch
-5b8582185bf90386729e81db1f7780c69a891b074a87d9a619a90d6f639bea13  xsa52-4.2-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJRrMHCAAoJEIP+FMlX6CvZIX8H/ihEr/Pd3hbtHs7dNvm61b6W
-+0sKx6RxMxZOVe5G0tWaiJEXzyT78kqtYAuI3m5pZdGZ0+40L1vWEN8mTKErfTmX
-igN5kUtPaoMT0wWO+/2XKBs/VBF1AzOmBgFntClm+lXpwPBSXVoqv8BKUzxIH/yN
-aaoSPzV2cIRJh/Vt5aEInjd25kwJ4Leh+pQ+gyxedu4ImqQeEud/z5C1YM5RwXco
-ixy9Gd11Uk1NIXnPYCYj4CUh5NmCWeWf1CXkIkz+HfjUtH/Qr71uSb0SyXgdKM9B
-fUXp45TRHzhtzhYERo0lTVHnd6gaT34gT7f6PAKBEMBh398tV+LKvJQf3xU1jE8=
-=XL1m
------END PGP SIGNATURE-----
-
-Download attachment "xsa52-4.1.patch" of type "application/octet-stream" (1929 bytes)
-
-Download attachment "xsa52-4.2-unstable.patch" of type "application/octet-stream" (1945 bytes)
