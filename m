@@ -1,72 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/30/10
-Message-ID: <51D0BE81.8050009@redhat.com>
-Date: Sun, 30 Jun 2013 17:25:53 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>, jmd@...epnet.net, moyo@...epnet.net
-Subject: Re: CVE request: GLPI, multiple issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/21/6
+Message-ID: <011d01ce3ed0$eb3371e0$9b7a6fd5@pc>
+Date: Sun, 21 Apr 2013 23:42:36 +0300
+From: "MustLive" <mustlive@...security.com.ua>
+To: <submissions@...ketstormsecurity.org>, <full-disclosure@...ts.grok.org.uk>, "1337 Exploit DataBase" <mr.inj3ct0r@...il.com>, "Open Source Security" <oss-security@...ts.openwall.com>
+Subject: Vulnerabilities in jPlayer
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello list!
 
-On 06/27/2013 10:04 AM, Raphael Geissert wrote:
-> Hi,
-> 
-> [CC'ing upstream for complimentary information]
-> 
-> Multiple SQL injections have been reported in GLPI: 
-> http://packetstormsecurity.com/files/122097/GLPI-0.83.8-SQL-Injection.html
->
->  (note that the original advisory was hosted at www.zeroscience.mk
-> but it 404s as of the time of writing)
+I want to inform you about multiple vulnerabilities in jPlayer. These are 
+Cross-Site Scripting and Content Spoofing and vulnerabilities in jPlayer. 
+Which is used at tens thousands of web sites and in multiple web 
+applications.
 
-Please use CVE-2013-2226 for this issue.
+-------------------------
+Affected products:
+-------------------------
 
-> And a local file inclusion vulnerability was also reported: 
-> http://packetstormsecurity.com/files/122087/GLPI-0.83.7-Parameter-Traversal-Arbitrary-File-Access.html
+Vulnerable are versions before jPlayer 2.2.23. Version 2.2.23 and the last 
+released version 2.3.0 are not vulnerable to mentioned XSS, except CS via JS 
+and XSS via JS callbacks. Also there are other bypass methods which work in 
+version 2.3.0, but the developers haven't fixed them besides attack via 
+alert. About that I've wrote to developers already in March and reminded 
+again. So wait for new version with fixing of these vulnerabilities.
 
-Please
-> 
-use CVE-2013-2227 for this issue.
+-------------------------
+Affected vendors:
+-------------------------
 
-> (same note as for the above issue)
-> 
-> I'm not aware of related commits or bug reports other than the 
-> following (but this is me trying to connect dots): 
-> https://forge.indepnet.net/issues/4372 which was marked as fixed at
-> least in (0.83.9): 
-> https://forge.indepnet.net/projects/glpi/versions/915 But the bug
-> report also refers to the fix in trunk and the 0.85 branch.
-> 
-> Could CVE ids be assigned please?
-> 
-> Note that this is a different request than the one for the one
-> about the use of unserialize on untrusted data.
-> 
-> Thanks in advance, -- Raphael Geissert - Debian Developer 
-> www.debian.org - get.debian.net
-> 
+Happyworm
+http://www.jplayer.org
+
+----------
+Details:
+----------
+
+Cross-Site Scripting (WASC-08):
+
+In different versions of jPlayer there are different XSS vulnerabilities.
+
+0.2.1 - 1.2.0:
+
+http:/site/Jplayer.swf?id=%22))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//
+
+2.0.0:
+
+http:/site/Jplayer.swf?id=%27))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//
+
+2.1.0:
+
+http:/site/Jplayer.swf?jQuery=)}catch(e){}if(!self.a)self.a=!alert(document.cookie)//
+
+http:/site/Jplayer.swf?id=%27))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//
+
+In version 2.2.0 these XSS vulnerabilities were fixed (the developers was 
+informed about hole in jQuery parameter and made a fix, which protected from 
+both attacks). But Malte Batram (in version 2.2.19) and I (in version 
+2.2.20) have found new ones.
+
+2.2.0 - 2.2.19 (and previous versions):
+
+Attack works in Firefox (all versions and browsers on Gecko engine), IE6 and 
+Opera 10.62.
+
+http:/site/Jplayer.swf?jQuery=document.write&id=%3Cimg%20src=1%20onerror=alertu0028document.cookieu0029%3E
+
+2.2.20 - 2.2.22 (and previous versions):
+
+http:/site/Jplayer.swf?jQuery=alert&id=XSS
+
+Content Spoofing (WASC-12):
+
+It's possible to conduct CS (inclusion of audio/video files from external 
+resources) via JS and XSS via JS callbacks. This requires HTML Injection 
+vulnerability at the site. The attack is similar to XSS attacks via 
+callbacks in JW Player (http://securityvulns.ru/docs28176.html).
+
+Because this attack vector requires separate vulnerability at target site to 
+conduct CS and XSS attacks with using of jPlayer, the developers didn't do 
+anything to fix it. The same as developers JW Player. So protection from 
+this attack scenario lies solely on web sites owners.
+
+------------
+Timeline:
+------------ 
+
+2013.01.31 - found vulnerabilities in jPlayer at multiple web sites (in 
+version 2.1.0).
+2013.03.14 - announced at my site.
+2013.03.19 - informed developers.
+2013.03.19-30 - discussed with developers different vulnerabilities in 
+different versions of jPlayer and at their sites.
+2013.03.21 - developers was informed by Malte Batram's about XSS hole in 
+2.2.19.
+2013.03.21 - developers fixed Malte's XSS hole in 2.2.20 in github 
+(CVE-2013-1942).
+2013.03.22 - informed developers about new hole, which works in 2.2.20.
+2013.03.23 - sent details of new XSS and warned about possibility for other 
+XSS attacks and gave recommendations about proper fixing of XSS to prevent 
+any future XSS.
+2013.03.30 - reminded developers about last hole.
+2013.04.12 - developers fixed my XSS hole in 2.2.23 in github.
+2013.04.20 - developers released jPlayer 2.3.0 
+(http://www.jplayer.org/2.3.0/release-notes/) and informed me.
+2013.04.20 - disclosed at my site about jPlayer 
+(http://websecurity.com.ua/6379/).
+2013.04.21 - tested version 2.3.0 and found that developers fixed only one 
+attack vector and didn't make complete fix, as I recommended in March, so I 
+reminded them and sent them examples of two new XSS.
+
+Best wishes & regards,
+MustLive
+Administrator of Websecurity web site
+http://websecurity.com.ua 
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJR0L6BAAoJEBYNRVNeJnmTwUwP/1WPDS0lMBng3M3YnvbGBChi
-Y8rzR8nBEQNbqH9b/UFN0RfRJX8KDHhjmowOkKBh02QDDtvFza3FxjWDCgGzvkkY
-XkoxlBaLybYuNsaoAIJWJ8wUlM1O39qmHYwB2RXAyy0UHlbCahpj2u9DK6y3o2C6
-6geZHZs5sZP56P+utCtfoVVoiLL6/n2vUlZj5pNYaPnc8kgBE6ubJlN4XufVIiSF
-h2O296HT1Db6iKwDs2t7/n+pl/+ojagcQMrg7Ve82wGmFGhKhmllg7Z7k6TxJ5D6
-ViYNdhmkb6MU7h5gpe9JoJ+Mw8uy6bwl8qmz8D3MmXGK+1SL1rq/1qNx0trVJi+b
-mS6t2OwZEDwSaF+bd1moZS0dnXTVR1nx4bEzWkqhMvw8NzoewKybbV5uh41MsQDJ
-1aa3z/ObYWgR2zKT1kWaCWG3CYbjNkftLmOsi6FM1Utl7AcqEqlV12nLfTLtMOev
-qPcOD3ivzm0FfVRqudMAU9/vUVkq55nxWex5c51RS/wQuidZIC9tbYOKz1QlHz+d
-cwf53a351d0GME+7ypiglbZvaNRs6lQScRGV3tvFJ22j+Eu1eM9HR7Cx2nrdUFt8
-VahIRzZR66/3tLgozuyobtFLPaxEKLPoleEDlgu+GSxPjRcRAQZ2nL7Z6mnAil0l
-h0ipXcjxycJacxuZ922Z
-=EKG1
------END PGP SIGNATURE-----
