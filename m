@@ -1,66 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/7
-Message-ID: <52452245.7020206@redhat.com>
-Date: Fri, 27 Sep 2013 00:14:29 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: Buffer overrun vulnerability in CHICKEN Scheme
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/21/4
+Message-ID: <20130421185929.GB16719@suse.de>
+Date: Sun, 21 Apr 2013 20:59:29 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 09/26/2013 03:27 PM, Peter Bex wrote:
-> Hi all,
-> 
-> I'd like to request a CVE for a recently discovered vulnerability
-> in CHICKEN Scheme.  It affects a very particular, not very common
-> use of the read-string! procedure.  If given a buffer and #f (the
-> Scheme value for "false") as the buffer's size (which should
-> trigger automatic size detection but doesn't), it will read beyond
-> the buffer, until the input port (file, socket, etc) is exhausted.
-> This may result in the typical potential remote code execution or
-> denial of service; in CHICKEN, these buffers are initially
-> allocated on the stack and moved to the heap upon GC.
-> 
-> In normal usage, users would usually pass in the buffer's size.
-> This is also the workaround for this bug.
-> 
-> For the official announcement, see 
-> http://lists.nongnu.org/archive/html/chicken-announce/2013-09/msg00000.html
+On Sun, Apr 21, 2013 at 10:05:53AM -0700, Alan Coopersmith wrote:
+> On 04/20/13 01:39 PM, Solar Designer wrote:
+>> I just found this recent blog post by Allan McRae of Arch Linux:
+>>
+>> http://allanmcrae.com/2012/04/how-secure-is-the-source-code/
+>>
+>> Thank you for doing this, Allan!  Are you contacting the upstream
+>> authors to request that they start to properly sign their releases?
+>> (I've been doing that on some occasions, sometimes with success.)
 >
->  The discussion thread's final accepted patch is at 
-> http://lists.nongnu.org/archive/html/chicken-hackers/2013-09/msg00009.html
+> Coming from one of the common upstreams (X.Org), it would really be
+> helpful if there was a "Best Practices" page we could reference, since
+> we've gotten a couple complaints that we're not doing enough, but not
+> concrete enough suggestions that we can go modify our release script to
+> implement them.   (Currently we include MD5, SHA1, & SHA256 checksums in
+> the release announcement e-mails, which we tell maintainers to pgp sign
+> with their own keys when sending - though unfortunately most of the
+> mailing list archives break the ability to verify when they mangle
+> email addresses to prevent spam harvesting from their archives.)
 >
-> 
-which got applied as
-http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commit;h=cd1b9775005ebe220ba11265dbf5396142e65f26
-> 
-> All versions of CHICKEN prior to 4.8.0.5 and 4.8.3 (not yet
-> released) are affected.
-> 
-> Cheers, Peter Bex
-> 
+> If there was a common standard, with instructions, we'd be far more
+> likely to spend the time to adopt it, than just a "make signatures
+> appear somewhere, in an unspecified format".
 
-Please use CVE-2013-4385 for this issue.
+SUSE has started to adjust its spec files to help here,
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+1. we use full Source URLs for the download tarballs.
 
-iQIcBAEBAgAGBQJSRSJFAAoJEBYNRVNeJnmTp1EP/0zsOAo2k2c4DnwSk7K0XFiU
-uBz9zeIi+y+o2ejZrts0dkc0AFg05V1nbSnAc9Hq/mFNx8kOP+ZB3H+ExFechRLj
-PnE+Tl9dD/I8oKR2d8Rn95rY/z2gBZj0GoBla+EkERPwsXnXGwBklJOtjFYa1DFZ
-wqOg2WD17E3/P5ZdK8LoBMi86ZBwibXhWgdmNcJWGtpKWbdbO0Z7Tj6CYNLQrJMQ
-Nb9LqnBO5Mh2xq0unb8QegxcUdhTWPz23PciUrcml5tyL3SGrMiaBGWzunKN770B
-oiSV490xOpGyuoLHOAHuQcBysLYHGZ1wfOExAWvPGmuEJpjnma4KX96SCQW16PLl
-nfH0PpQso9D9PyATOq87hoQwtvDwR/Ez2ak0reAXyC6+kDEbpilY7r3TOiSRwrBM
-1uYVt5pLFfblo6MbzgotdvdOJfAmD3pUkU4OOGT6n60CoQSb5hH0HrY16uiTatmb
-nQvTJNjdPA+eZ1yp1p8x0n7wVkDWcA2C56OBNVHXby/sNUd38vg3za9xRu+UQ9vJ
-uKuhX/m5+SkVIXhcwBDc+6kAlV15I4EfDYjBS15PryWyapmFkyimA6APsQmDswCB
-a3NH1w28+ToJeIeL6bmrahOp+jnepiquJwD3eJLdkPwcLUMEN5P2+M/9cVCYpXbE
-8SCqKFuqKxPBAOVnpOvG
-=tO27
------END PGP SIGNATURE-----
+   This can ensure that the tarballs do not change, or if they change
+   a warning can pop up.
+
+2. We are trying GPG signature checking, in cases where parallel to the tarball
+   lies a .sig or .asc file and there is a known keyring.
+
+   started here:
+   http://lists.opensuse.org/opensuse-factory/2012-12/msg00235.html
+
+   In case they are provided:
+
+   a. We refer the .sig/.asc file as with Source URL in the .spec file
+   b. We store the keyring in the package sources, also as a Source (no URL)
+   c. We use RPM macros to verify the gpg signature during build.
+
+   Our source review team has to check when the keyring changes. 
+
+This has the usual problems:
+- Usage of gpg causes buildcycles if you do full transient builds of the distribution.
+
+- Need to verify the keyring at begin and also when it changes somehow.
+
+
+But yes, for upstream source providers I think it would really be nice if
+they would also sign their binaries and upload the signature in parallel.
+
+And also publish their keyring and let some keys be in the chain of trust
+that could be gained from e.g. Linux fairs/conferences (LinuxTag usually
+does keysigning etc.)
+
+Savannah hosting does parts of that already, the hosting service also
+offers the keyring per project.
+
+Ciao, Marcus
