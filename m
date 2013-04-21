@@ -1,42 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/23/5
-Message-ID: <CA+rthh9mT9m8_3OTH1aE0ufW6x3Fwho-=L4YiigJWAPhTUrbtQ@mail.gmail.com>
-Date: Tue, 23 Apr 2013 13:23:22 +0200
-From: Mathias Krause <minipli@...glemail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/21/7
+Message-ID: <20130421221307.GA1502@yuggoth.org>
+Date: Sun, 21 Apr 2013 22:13:08 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 23, 2013 at 12:22 PM, P J P <ppandit@...hat.com> wrote:
-> +-- On Mon, 22 Apr 2013, cve-assign@...re.org wrote --+
-> | ef3313e84acbf349caecae942ab3ab731471f1a1 CVE-2013-3223
->
->    *sax = (struct sockaddr_ax25 *)msg->msg_name;
->
-> Here, - *sax - seems to point to users `msg_name' object, no?
+On 2013-04-21 10:05:53 -0700 (-0700), Alan Coopersmith wrote:
+[...]
+> If there was a common standard, with instructions, we'd be far more
+> likely to spend the time to adopt it, than just a "make signatures
+> appear somewhere, in an unspecified format".
 
-no ;)
+For my own software I've been providing detached signatures of every
+release tarball, along the lines of:
 
-> Because of the earlier copy_from_user in net/socket.h:
+    gpg --armor --detach-sign --output foo-1.2.3.xz.pgp foo-1.2.3.xz
 
-net/socket.c, I guess. The copy_from_user is followed by
-verify_iovec() that sets msg_name to "addr" -- a kernel stack
-variable.
+Then I document that users should verify downloads with my key
+(after obtaining it from a reputable keyserver):
 
->
-> ===
->   get_compat_msghdr(msg_sys, msg_compat)
->    OR
->   copy_from_user(msg_sys, msg, sizeof(struct msghdr)
-> ===
->
-> Is - memset(sax, 0, sizeof(full_sockaddr_ax25)) - setting users memory area?
+    gpg --verify foo-1.2.3.xz.pgp foo-1.2.3.xz
 
-No, for the above reason.
-
-Please ask your colleagues at RedHat for any further explanations of
-the code. AFAIK, oss-sec is no kernel hacker newbie forum ;)
-
-
-Mathias
+I also dump sha512sum and md5sum lists of all the release tarballs
+to a checksum file and sign that in the same way, for completeness.
+Of course this doesn't stop a new user from being hoodwinked if an
+attacker compromises my Web server and replaces all the signatures
+with their own (updating the README to match their key ID), but
+anyone who knew they already had my key in their keyring should
+hopefully spot the name on the signature when checking a new
+download (porters and distro packagers in particular).
+-- 
+{ PGP( 48F9961143495829 ); FINGER( fungi@...ulhu.yuggoth.org );
+WWW( http://fungi.yuggoth.org/ ); IRC( fungi@....yuggoth.org#ccl );
+WHOIS( STANL3-ARIN ); MUD( kinrui@...arsis.mudpy.org:6669 ); }
