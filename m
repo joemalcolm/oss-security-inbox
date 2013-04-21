@@ -1,39 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/8
-Message-ID: <20130313153956.GA15277@suse.de>
-Date: Wed, 13 Mar 2013 16:39:56 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/21/9
+Message-ID: <20130421225153.GA7113@openwall.com>
+Date: Mon, 22 Apr 2013 02:51:53 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CLONE_NEWUSER|CLONE_FS root exploit
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Sun, Apr 21, 2013 at 10:42:26AM +1000, Allan McRae wrote:
+> On 21/04/13 06:29, Solar Designer wrote:
+> > How do you expect to use the information arriving via linux-distros?
+> 
+> I am intending to form a more official security response in Arch Linux
+> rather than the quite adhoc process we have at the moment.  The
+> information on linux-distros will be used to prepare updates to be
+> released at the end of relevant embargo.
 
-Seems like CLONE_NEWUSER|CLONE_FS might be a forbidden
-combination.
-During evaluating the new user namespace thingie, it turned out
-that its trivially exploitable to get a (real) uid 0,
-as demonstrated here:
+OK, I've just subscribed you.
 
-http://stealth.openwall.net/xSports/clown-newuser.c
+I think it wouldn't have been unreasonable for the oss-security
+community to expect you "to form a more official security response"
+before joining linux-distros, so now you're sort of in debt. ;-)
 
-The trick is to setup a chroot in your CLONE_NEWUSER,
-but also affecting the parent, which is running
-in the init_user_ns, but with the chroot shared.
-Then its trivial to get a rootshell from that.
+Specifically, there doesn't appear to be an announcement channel for
+Arch Linux security updates, nor even an issue tracker or change log
+with security issues and fixes clearly marked as such.  You've listed a
+bug tracker URL at:
 
-Tested on a openSUSE12.1 with a custom build 3.8.2 (x86_64).
+http://oss-security.openwall.org/wiki/vendors#arch-linux
 
-I hope I didnt make anything wrong, mixing up the UIDs,
-or disabled important checks during kernel build on my test
-system. ;)
+which is:
 
-regards,
-Sebastian
+https://bugs.archlinux.org
 
--- 
+Going to that URL, I see a list of all sorts of bugs.  Searching it for
+"security", I find only 2 bugs.  Perhaps there were many more security
+issues that you've actually dealt with, and you need to start
+documenting them as such for your users.
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+Alexander
