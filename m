@@ -1,26 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/30/6
-Message-id: <986e0489-3103-4a59-9199-97f27ae279ab@me.com>
-Date: Fri, 30 Aug 2013 13:16:47 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/21/10
+Message-ID: <20130421232700.GF17095@nef.pbox.org>
+Date: Mon, 22 Apr 2013 01:27:00 +0200
+From: Alistair Crooks <agc@...src.org>
 To: oss-security@...ts.openwall.com
-Subject: YingZhi Lua Programming Language for iOS ftp .. bug & httpd arbitrary upload
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Sun, Apr 21, 2013 at 12:39:39AM +0400, Solar Designer wrote:
+> Hi,
+> 
+> I just found this recent blog post by Allan McRae of Arch Linux:
+> 
+> http://allanmcrae.com/2012/04/how-secure-is-the-source-code/
+> 
+> Thank you for doing this, Allan!  Are you contacting the upstream
+> authors to request that they start to properly sign their releases?
+> (I've been doing that on some occasions, sometimes with success.)
+> 
+> I think that placing both "MD5 checksum provided on same site as
+> download" and "PGP signature, key difficult to verify" in the same
+> "yellow" category is inconvenient for us.  "MD5 checksum provided on
+> same site as download" only helps verify downloads from mirrors against
+> the master site, whereas "PGP signature, key difficult to verify"
+> achieves a lot more - once a distro is already including the package
+> (and has already taken the risk of it having been tampered with), then
+> verifying further updates to the package becomes almost as reliable as
+> it would have been with proper signing (with a "readily verifiable" key).
+> So we need four categories, or simply "MD5 checksum provided on same
+> site as download" should be in "red", not in "yellow".
 
-During further investigation of the Python programming language by XiaoWen for ipad/iphone I discovered a new Lua / Perl / Ruby programming application in the apple application store all written by XiaoWen Huang that suffers from the http file upload vulnerabilities.  It appears the ../ has been fixed for these other applications.
+The BSD ports and packages systems have had this checking in place
+since day 1, and with different checksums - FreeBSD now use sha256,
+pkgsrc uses sha1 and rmd160, and I don't know what OpenBSD uses;
+the digests are all held as part of the packaging system itself.
 
-Download Locations:
+One of the side benefits of this is recognising when upstream changes
+tarballs without changing version numbers.
 
-https://itunes.apple.com/us/app/perl-programming-language/id578116006?mt=8&ls=1
+I think the Arch Linux people could leverage the work done here.
 
-https://itunes.apple.com/us/app/ruby-programming-language/id581732143?mt=8&ls=1
-
-https://itunes.apple.com/us/app/lua-programming-language/id505972017?mt=8&ls=1
-
--- Larry
-
-
-
-Content of type "text/html" skipped
+Regards,
+Alistair
