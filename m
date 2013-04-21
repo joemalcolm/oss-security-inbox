@@ -1,46 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/06/4
-Message-ID: <20130506163338.GC11795@redhat.com>
-Date: Mon, 6 May 2013 10:33:38 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: OpenVPN use of non-constant-time memcmp in HMAC comparison in openvpn_decrypt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/21/5
+Message-ID: <20130421191126.GL13072@frohike.xs4all.nl>
+Date: Sun, 21 Apr 2013 21:11:26 +0200
+From: Peter Bex <Peter.Bex@...all.nl>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: OS command injection vulnerability in Chicken Scheme
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned to this issue?  Copying and pasting from the
-upstream announcement:
+Hello,
 
+I'd like to request a CVE identifier for a bug in Chicken Scheme which
+allows a malicious user to cause shell command execution through
+injection of a pipe symbol and possibly other shell meta characters.
 
-Exploit summary
-OpenVPN 2.3.0 and earlier running in UDP mode are subject to chosen
-ciphertext injection due to a non-constant-time HMAC comparison
-function. Plaintext recovery may be possible using a padding oracle
-attack on the CBC mode cipher implementation of the crypto library,
-optimistically at a rate of about one character per 3 hours. PolarSSL
-seems vulnerable to such an attack; the vulnerability of OpenSSL has not
-been verified or tested.
+This bug is present in all versions of CHICKEN.  It will be fixed
+in 4.8.3 and 4.8.2 as per commit 58684f69572453acc6fed7326fa9df39be98760e.
+Version 4.9.0 will likely be the first stable release to include this
+fix, unless it is decided to backport this fix to the stability release.
 
-Severity
-OpenVPN servers are typically configured to silently drop packets with
-the wrong HMAC. For this reason measuring the processing time of the
-packets is not trivial without a MITM position. In practice, the attack
-likely needs some target-specific information to be effective.
+The full announcement is here:
+http://lists.nongnu.org/archive/html/chicken-announce/2013-04/msg00000.html
 
-The severity of this vulnerability can be considered low. Only if
-OpenVPN is configured to use a null-cipher, arbitrary plain-text can be
-injected which can completely open up this attack vector.
+By the way, I'm confused as to why the CVEs I've requested so far don't
+show up in NVD.  For example,
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-6122
+says the CVE does not exist, but Kurt assigned it in February:
+http://www.openwall.com/lists/oss-security/2013/02/08/2
 
-Affected versions
-OpenVPN 2.3.0 and earlier are vulnerable. A fix (commit
-f375aa67cc) is included in OpenVPN 2.3.1 and later.
+The other CVE numbers in that mail produce a "not found" page as well and
+an NVD database search for "chicken" turns up nothing related to
+Chicken Scheme.  The page says the database was last updated
+April 19th 2013, so that's not the cause either.
 
-
-References:
-
-https://community.openvpn.net/openvpn/wiki/SecurityAnnouncement-f375aa67cc
-https://github.com/OpenVPN/openvpn/commit/11d21349a4e7e38a025849479b36ace7c2eec2ee
-https://bugs.gentoo.org/show_bug.cgi?id=468756
-https://bugzilla.redhat.com/show_bug.cgi?id=960192
-
+Cheers,
+Peter Bex
 -- 
-Vincent Danen / Red Hat Security Response Team 
+http://www.more-magic.net
