@@ -1,41 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/25/6
-Message-ID: <20131025231704.GA29781@eldamar.local>
-Date: Sat, 26 Oct 2013 01:17:04 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/21/8
+Message-ID: <517467AB.1070905@archlinux.org>
+Date: Mon, 22 Apr 2013 08:26:51 +1000
+From: Allan McRae <allan@...hlinux.org>
 To: oss-security@...ts.openwall.com
-Cc: joeyh@...ian.org
-Subject: [Notification] CVE-2013-6047: ikiwiki-hosting: XSS in site creation interface
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 21/04/13 06:39, Solar Designer wrote:
+> Hi,
+> 
+> I just found this recent blog post by Allan McRae of Arch Linux:
+> 
+> http://allanmcrae.com/2012/04/how-secure-is-the-source-code/
+> 
+> Thank you for doing this, Allan!  Are you contacting the upstream
+> authors to request that they start to properly sign their releases?
+> (I've been doing that on some occasions, sometimes with success.)
 
-This is a notification for the following assigned CVE:
+I have for a couple, but nothing across the whole board.
 
-CVE-2013-6047: ikiwiki-hosting: XSS in site creation.
+> I think that placing both "MD5 checksum provided on same site as
+> download" and "PGP signature, key difficult to verify" in the same
+> "yellow" category is inconvenient for us.  "MD5 checksum provided on
+> same site as download" only helps verify downloads from mirrors against
+> the master site, whereas "PGP signature, key difficult to verify"
+> achieves a lot more - once a distro is already including the package
+> (and has already taken the risk of it having been tampered with), then
+> verifying further updates to the package becomes almost as reliable as
+> it would have been with proper signing (with a "readily verifiable" key).
+> So we need four categories, or simply "MD5 checksum provided on same
+> site as download" should be in "red", not in "yellow".
 
-The XSS only affects ikiwiki-hosting installations
-that have a controlsite set up with the makesite plugin enabled. This
-vulnerability was found by Gopal Bisht.
+I had yellow as "at least they tried...".  The could be categorised in
+other ways, but that was a really quick survey of some core Linux
+software, so I did not put that much thought into it.
 
-XSS fixed in ikiwiki-hosting 0.20131025[1].
+Allan
 
- [1] http://packages.qa.debian.org/i/ikiwiki-hosting/news/20131025T224825Z.html
-
-Upstream commits can be found in the upstream git repository:
-
-git://ikiwiki-hosting.branchable.com/
-
-in commits 83b221799e409b407c60fd246fd883d068775016 and
-060f1b7728a0983cc010eacebdb94f0a440d98f1.
-
-(attached for this notification).
-
-Regards,
-Salvatore
-
-View attachment "0001-Fix-XSS-in-site-creation-interface.-Thanks-Gopal-Bis.patch" of type "text/x-diff" (4869 bytes)
-
-View attachment "0002-also-need-to-escape-the-HOSTNAME.patch" of type "text/x-diff" (2901 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
