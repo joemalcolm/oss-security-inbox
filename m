@@ -1,26 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/13
-Message-Id: <F285ED6D-5788-4CB0-BF9C-CA5B2428CBBE@petdance.com>
-Date: Tue, 10 Dec 2013 08:01:31 -0600
-From: Andy Lester <andy@...dance.com>
-To: Axel Beckert <abe@...ian.org>
-Cc: oss-security@...ts.openwall.com, Debian Security Team <team@...urity.debian.org>, 731848@...s.debian.org
-Subject: Re: CVE request for remote code execution in ack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/1
+Message-ID: <517489B0.9010705@archlinux.org>
+Date: Mon, 22 Apr 2013 10:52:00 +1000
+From: Allan McRae <allan@...hlinux.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
+On 22/04/13 09:27, Alistair Crooks wrote:
+> On Sun, Apr 21, 2013 at 12:39:39AM +0400, Solar Designer wrote:
+>> Hi,
+>>
+>> I just found this recent blog post by Allan McRae of Arch Linux:
+>>
+>> http://allanmcrae.com/2012/04/how-secure-is-the-source-code/
+>>
+>> Thank you for doing this, Allan!  Are you contacting the upstream
+>> authors to request that they start to properly sign their releases?
+>> (I've been doing that on some occasions, sometimes with success.)
+>>
+>> I think that placing both "MD5 checksum provided on same site as
+>> download" and "PGP signature, key difficult to verify" in the same
+>> "yellow" category is inconvenient for us.  "MD5 checksum provided on
+>> same site as download" only helps verify downloads from mirrors against
+>> the master site, whereas "PGP signature, key difficult to verify"
+>> achieves a lot more - once a distro is already including the package
+>> (and has already taken the risk of it having been tampered with), then
+>> verifying further updates to the package becomes almost as reliable as
+>> it would have been with proper signing (with a "readily verifiable" key).
+>> So we need four categories, or simply "MD5 checksum provided on same
+>> site as download" should be in "red", not in "yellow".
+> 
+> The BSD ports and packages systems have had this checking in place
+> since day 1, and with different checksums - FreeBSD now use sha256,
+> pkgsrc uses sha1 and rmd160, and I don't know what OpenBSD uses;
+> the digests are all held as part of the packaging system itself.
+> 
+> One of the side benefits of this is recognising when upstream changes
+> tarballs without changing version numbers.
+> 
+> I think the Arch Linux people could leverage the work done here.
 
-On Dec 10, 2013, at 8:00 AM, Axel Beckert <abe@...ian.org> wrote:
+Arch Linux does have similar system (our package building infrastructure
+uses PGP signature verification if available, any of a variety of
+checksums).
 
-> It would be nice if you could add the CVE-ID to the Changes file of
-> ack retroactively as soon as it's known so that it's part of the
-> Changes file in further ack releases.
+The point of my post was that if upstream does not provide anything when
+they release a tarball, then they really do not help that much...  It
+just verifies that the source the packager downloaded is the same as the
+source you have.  It does not save you if the source was altered before
+the packager obtained it.
 
-
-OK.  Just help me through this and I’ll do what needs to be done.  I’m glad to do whatever is necessary to help y’all.
-
-xoa
-
---
-Andy Lester => andy@...dance.com => www.petdance.com => AIM:petdance
-
+Allan
 
