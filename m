@@ -1,40 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/30/12
-Message-ID: <51F7DE33.4070408@gmail.com>
-Date: Tue, 30 Jul 2013 17:39:31 +0200
-From: Dieter Adriaenssens <dieter.adriaenssens@...il.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-CC: cve-assign@...re.org, oss-security@...ts.openwall.com,  security@...myadmin.net
-Subject: Re: [Phpmyadmin-security] Re: CVE Request -- phpMyAdmin 3.5.8.2 and 4.0.4.2 are released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/5
+Message-ID: <2650419.lEoOq43ulC@devil>
+Date: Mon, 22 Apr 2013 13:01:17 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: libxmp MASI Parsing Buffer Overflow Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+>From the secunia advisory SA53114[1]:
 
-Thanks for the CVE IDs.
+Description
+A vulnerability has been reported in libxmp, which can be exploited by 
+malicious people to compromise an application using the library.
 
-On 2013-07-30 11:39, Jan Lieskovsky wrote:
->>>> * http://www.phpmyadmin.net/home_page/security/PMASA-2013-8.php
-> 
-> Use CVE-2013-4995.
-> 
-> As far as we can tell, this should be the only CVE needed for
-> PMASA-2013-8; however, this link gives us a 404 error:
-> 
->   "The following commits have been made on the 3.5 branch to
->   fix this issue: 51f343b91908d1b1bacaebe6db87c3d7aa522581"
-> 
->> The proper link wrt to PMASA-2013-8 fix in phpMyAdmin v3.5.x seems to be
->> the following:
->>   https://github.com/phpmyadmin/phpmyadmin/commit/01d35b3558e47fba947719857bd71f6fd9e5dce8
+The vulnerability is caused due to a boundary error in the "get_dsmp"() 
+function (src/loaders/masi_load.c) when parsing MASI files, which can be 
+exploited to cause a buffer overflow.
 
-The link to the fix for phpMyAdmin 3.5.x was updated in PMASA-2013-8.
+Successful exploitation may allow execution of arbitrary code.
 
-Thanks for noticing.
-
-Kind regards,
-
-Dieter Adriaenssens
-for the phpMyAdmin security team
+The vulnerability is reported in versions prior to 4.1.0.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (900 bytes)
+Solution
+Update to version 4.1.0.
+
+Provided and/or discovered by
+The vendor credits Douglas Carmichael.
+
+Original Advisory
+http://sourceforge.net/projects/xmp/files/libxmp/4.1.0/Changelog/view
+
+Commit:
+http://sourceforge.net/p/xmp/libxmp/ci/a015fdfb478a60172fd225632a11bbd02870fc40/
+
+
+[1]: https://secunia.com/advisories/53114/
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
