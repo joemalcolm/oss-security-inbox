@@ -1,53 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/27/8
-Message-ID: <515361D4.4040806@linux.vnet.ibm.com>
-Date: Wed, 27 Mar 2013 17:17:08 -0400
-From: Corey Bryant <coreyb@...ux.vnet.ibm.com>
-To: Solar Designer <solar@...nwall.com>
-CC: kernel-hardening@...ts.openwall.com, oss-security@...ts.openwall.com
-Subject: Re: [kernel-hardening] Re: Security vulnerability tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/6
+Message-ID: <alpine.LFD.2.03.1304221742160.18433@redhat.com>
+Date: Mon, 22 Apr 2013 17:43:02 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: cve-assign@...re.org, Petr Matousek <pmatouse@...hat.com>
+Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
 Content-Type: text/plain; charset=utf-8
 
+  Hello,
++-- On Mon, 22 Apr 2013, cve-assign@...re.org wrote --+
+| 9b3e617f3df53822345a8573b6d358f6b9e5ed87 CVE-2013-3222
 
-On 03/27/2013 04:12 PM, Solar Designer wrote:
-> Hi,
->
-> Guys, can we continue this thread on oss-security only, please?  It is a
-> topic for oss-security, but less so for kernel-hardening.  Anyone on
-> kernel-hardening who is interested in this topic should join oss-security.
->
-> Just drop kernel-hardening from further replies.
->
+Is the following call sequence correct..?
 
-Sure, sorry about that.  I am interested in tools that are applicable to 
-the kernel too though, if that changes anything.
+  recvmsg
+   -> __sys_recvmsg
+    -> sock_recvmsg_nosec/sock_recvmsg
+     -> __sock_recvmsg_nosec
+      -> sock->ops->recvmsg
+       -> vcc_recvmsg
 
-> On Wed, Mar 27, 2013 at 03:54:04PM -0400, Corey Bryant wrote:
->> I'll plan on updating http://oss-security.openwall.org/wiki/tools with
->> anything it doesn't already have.
->
-> Yes, please!
->
->> Clang
->> -----
->> Static analysis tool for C/C++
->
-> Clang and very recent GCC also have dynamic "sanitizers":
->
-> http://clang.llvm.org/docs/AddressSanitizer.html
-> http://clang.llvm.org/docs/ThreadSanitizer.html
-> http://clang.llvm.org/docs/MemorySanitizer.html
+If yes, *msg seems to hold the user space msghdr values. (Just to confirm)
 
-Great, thanks!
-
->
-> Thanks,
->
-> Alexander
->
->
-
--- 
-Regards,
-Corey Bryant
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
