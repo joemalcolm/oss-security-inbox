@@ -1,144 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/30/3
-Message-ID: <51F75AAD.4020706@redhat.com>
-Date: Tue, 30 Jul 2013 00:18:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Christey, Steven M." <coley@...re.org>, Evan Teitelman <teitelmanevan@...il.com>, "scottydroid@...il.com" <scottydroid@...il.com>
-Subject: Re: CVE Request - Coin Widget serves code over plain http.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/8
+Message-ID: <alpine.LFD.2.03.1304221852190.20599@redhat.com>
+Date: Mon, 22 Apr 2013 19:27:18 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: cve-assign@...re.org, Petr Matousek <pmatouse@...hat.com>
+Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
++-- On Mon, 22 Apr 2013, Mathias Krause wrote --+
+| partly... Have a look at verify_iovec()/verify_compat_iovec(). They're
+| updating the msg_name and msg_iov pointers.
 
-On 07/28/2013 06:07 PM, Christey, Steven M. wrote:
-> Kurt Seifried said:
-> 
->> The problem is not in the code, the problem is in how the code
->> is served/distributed. CVE is traditionally for software and not
->> for services. So under a simplistic reading of that strict
->> definition I would say this doesn't deserve a CVE.
-> 
-> tl;dr I've looked into this issue some more and in general, I
-> agree.
-> 
-> I suspect there are a couple issues here; note that these are some
-> of my impressions and not anything "official" from CVE:
-> 
-> 1) The downloading and execution of code from an "http://" URL is
-> subject to various attacks, including DNS spoofing and MITM.  To my
-> way of thinking, the main issue is that the code is not downloaded
-> in a way that preserves its integrity AND ensures that it was
-> downloaded from a trusted source.  For CVE, a core question for
-> inclusion is, "does this download of code WITHOUT an integrity
-> check (CWE-494) happen automatically, or is there a documented
-> manual step in which the administrator is expected to verify the
-> integrity?"
-> 
-> 2) With Coin Widget in particular, the widget is available in
-> github, and people can download the code and install it on their
-> own servers (see the "Download the Source Code" link from the main
-> page at http://coinwidget.com/).  Thus Coin Widget can be offered
-> as a customer-controlled "product" (not just a service) and, as a
-> product, could qualify for a CVE, but read on...
-> 
-> 3) However, from http://coinwidget.com/, it appears that the Coin
-> Widget installation documentation tells the installer to modify
-> widget/coin.js to point to an admin-controlled source.  This
-> suggests that it's an admin-controlled configuration, which may
-> exclude it from CVE.
-> 
-> 4) The "Wizard" that generates Coin Widget code for people is out
-> of scope - this is inherently "site-specific" in that there would
-> be no customer actions to fix a vulnerability; the Coin Widget
-> admins could modify their code to avoid use of http:// URLs
-> entirely, without any action on behalf of customers.
-> 
-> 5) One could argue that this issue is due to a fundamental problem
-> in HTTP, and as such, HTTP should be "blamed" for not having
-> integrity checks; but, to assign a CVE to every commonly-used
-> protocol that doesn't use encryption is not necessarily
-> appropriate, either.
-> 
-> All in all, for now, it seems to me that this particular Coin
-> Widget issue is out of CVE's scope because of the
-> software-as-a-service and configuration considerations, but the
-> general issue of "reading and executing scripting code from http://
-> links without verification" may qualify.
+  I did, both seem to use user supplied `msg_namelen' value to copy contents 
+from user `msg_name' to `sockaddr_storage addr' variable. And when 
+`msg_namelen' is zero(0) msg_name is set to NULL. Later same `msg_namelen' 
+bytes are copied to user area, right?
 
-So like CVE-2009-3555 we have a single CVE for the issue and any
-future instances can be submitted to cve-assign@ for addition? Problem
-is this CVE would become monstrously huge and unwieldy.
+Ah..right, both are called with `mode = VERIFY_WRITE' and both initialise 
+`addr' variable when mode = VERIFY_READ.
 
->> However the world is changing, for example a program that
->> included an auto-updater component that was advertised as being
->> "Secure" but went over HTTP would probably qualify for a CVE.
-> 
-> It probably would, but since this might theoretically affect any
-> software that's 5 years old or more and downloads anything over
-> unencrypted channels without integrity checks, the raw number of
-> CVEs that could be assigned is rather daunting.
+If it's copying user data to `addr', why selectively do it when mode = 
+VERIFY_READ?
 
-Yup. Maybe only apply it to common software/software that advertises
-"Secure" updates? Seems like a cop out (I vote we do it right or not
-at all, but first define what "right" is =).
+Also, wouldn't - memset(addr, 0, sizeof(addr)) - fix this leak for all 
+definitions of <proto>_recvmsg() routine??
 
->> Steve I'm bouncing this to you, I'm inclined to NOT assign a CVE
->> since it opens up a huge can of worms (every single bit of
->> JavaScript served from HTTP and not available via HTTPS ever),
->> but I can also see how it should maybe get a CVE.
-> 
-> My gut reaction is that you might be treating this as a more
-> complex issue than it really is.  Simple delivery of code over HTTP
-> might affect Coin Widget and many other packages, regardless of
-> whether *some* code is delivered over HTTPS.
-
-One thing I've been thinking about is all the software on the planet
-that I have no real clue as to how secure/well developed it (to say
-nothing of how well a packager like
-Fedora/Debian/Ubuntu/Dreamhost[1]/etc cares for it). Some signals
-exist, like do they have a security@ contact that actually replies? Do
-they have a bug tracker? Do they offer updates? Did they set static
-SSH host keys? In general we have no way of knowing, perhaps
-OSVDB/someone wants to start collecting data on known good and known
-bad software projects in addition to vulnerability info (e.g. has
-"bugtracker, URL is at, bonus point for supporting security bugs that
-are private)"? But then the legal issues "you said something mean
-about us so we're taking you to court in the UK for libel" come up and
-I basically give up since I have no answer for that one =).
-
-[1]
-http://missingm.co/2013/07/identical-droplets-in-the-digitalocean-regenerate-your-ubuntu-ssh-host-keys-now/
-
->> The good news is that future versions of Firefox are implementing
->> a security policy that when loading a page from HTTPS they will
->> not load page components from HTTP, which would fix this issue.
->> Hopefully all the browsers do this.
-> 
-> While there are no formal rules, CVE generally considers "typical
-> behavior of market-leading browsers" as acceptable considerations
-> for determining a vulnerability; e.g., many XSS attack variants
-> only apply to 1 or 2 browsers.
-> 
-> - Steve
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJR91qtAAoJEBYNRVNeJnmTMGUP/R4dlw/wmJlRQ+IhafhHHbSC
-MieUlzIT1BraEzvzmv0O7/0WqEB4wtS48aCEGaMoDrF06AZEfkLKSGwe4BVWwXY3
-X3ZUokssCYT0EaljAQUv6LBphiaKs7GXNI3ZSZcjcgX7t7Z4Gz4GoBk2NYdfcdtD
-IrRaxfEf1I2j2RE1phe07ej6baEqOyqlPbEmMkQx+VRnVizLSD0u0+yqJkepF+AN
-CaZ8a5mjBvw+Sqfq68BdlCyFNshqCRycqDFqtdUdCOhCOtBJAwOsPjkDDqXH1KUb
-XAOpjmxCqxBbFTjn49dhEDQ9578SyPaftPsMI9h36eus7gOxLyYd9NupGKv3SaAV
-soPlyxQLVc2zrJ0GpnlgwtKCsnLjaDp3iNDxifgJExT+BlW30NNTuxGQf4oacpw5
-2a4nboDp1NByvAXr5OmaSRpC+i3JZofX/MnyxNYV05R3yMUFz+c5v07W0ux9+0tg
-aSMsbFTt2r6mOkvDV92ehsS1Z8+2NXcZUGEWamnFdmWjt6YdJrmg6xPDgJZZYiWe
-Y7DsU0RZ/PgYNPr5AEI8ukavwwpGk8NgbrR8GopzePwHChH21hg0IxqAcB8Ma+f3
-2r13pDxHdsLNas3CtlRTyyVYtd1hRSDRVoRD0CqfWwJLf4YivqHdlhcTx9+wGHzk
-x4+obiAU2D47KECC7mJo
-=5cNU
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
