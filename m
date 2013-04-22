@@ -1,37 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/2
-Message-ID: <52832895.7050604@fifthhorseman.net>
-Date: Wed, 13 Nov 2013 02:21:57 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/7
+Message-ID: <CA+rthh9K+P2JHSqoNi6WJHKR8S7q9CDztip5F6aSUcLd-uRV_w@mail.gmail.com>
+Date: Mon, 22 Apr 2013 14:29:48 +0200
+From: Mathias Krause <minipli@...glemail.com>
 To: oss-security@...ts.openwall.com
-CC: 729028@...s.debian.org, Simon Horman <horms@...ge.net.au>
-Subject: perdition: ssl_outgoing_ciphers not applied to STARTTLS connections
+Cc: cve-assign@...re.org, Petr Matousek <pmatouse@...hat.com>
+Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
 Content-Type: text/plain; charset=utf-8
 
-Perdition, the IMAP and POP proxy server, fails to apply the
-administrator's specified ciphersuite preferences when making outbound
-connections to IMAP and POP servers using STARTTLS.  For these outbound
-connections, it applies the administrator's listening ciphersuite
-preferences, which in many cases may be significantly weaker.
+On Mon, Apr 22, 2013 at 2:13 PM, P J P <ppandit@...hat.com> wrote:
+>   Hello,
+> +-- On Mon, 22 Apr 2013, cve-assign@...re.org wrote --+
+> | 9b3e617f3df53822345a8573b6d358f6b9e5ed87 CVE-2013-3222
+>
+> Is the following call sequence correct..?
+>
+>   recvmsg
+>    -> __sys_recvmsg
+>     -> sock_recvmsg_nosec/sock_recvmsg
+>      -> __sock_recvmsg_nosec
+>       -> sock->ops->recvmsg
+>        -> vcc_recvmsg
 
-This was first noted publicly on the debian BTS:
+looks reasonable
 
-  http://bugs.debian.org/729028
+> If yes, *msg seems to hold the user space msghdr values. (Just to confirm)
 
-All versions of perdition up to 2.0 appear to be affected, and the fix
-is a one-line patch.
-
-This is not a critical vulnerability (it can be mitigated, for example,
-by enforcing a strict minimalist ciphersuite on the backend server), but
-in the absence of any such mitigation, it may cause the connections
-between the proxy server and the backend server to negotiate a weaker
-ciphersuite than the administrator's stated intent.
-
-Could a CVE be issued for this issue?
-
-Thanks,
-
-	--dkg
+partly... Have a look at verify_iovec()/verify_compat_iovec(). They're
+updating the msg_name and msg_iov pointers.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+Mathias
