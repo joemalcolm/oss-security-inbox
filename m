@@ -1,66 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/30/2
-Message-ID: <51F75790.6020201@redhat.com>
-Date: Tue, 30 Jul 2013 00:05:04 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Alexandre Dulaunoy <a@....be>
-Subject: Re: CVE missing? for "Exim with Dovecot: Typical Misconfiguration Leads to Remote Command Execution"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/14
+Message-ID: <20130422180210.GA2204@kroah.com>
+Date: Mon, 22 Apr 2013 11:02:10 -0700
+From: Greg KH <greg@...ah.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 07/29/2013 01:48 AM, Alexandre Dulaunoy wrote:
-> Hi All,
+On Mon, Apr 22, 2013 at 01:43:17PM -0400, cve-assign@...re.org wrote:
+> >On Mon, Apr 22, 2013 at 01:44:17AM -0400, cve-assign@...re.org wrote:
+> >> 680d04e0ba7e926233e3b9cee59125ce181f66ba CVE-2013-3236
+> >> d5e0d0f607a7a029c6563a0470d88255c89a8d11 CVE-2013-3237
+> >
+> >Please explain how these can get a CVE number when the code involved has
+> >never even been in a kernel.org release yet?
 > 
-> I couldn't find the CVE number for the following
-> vulnerability/misconfiguration:
+> MITRE has never had any restrictions on CVEs for issues that exist
+> only in release-candidate software or only in beta software. See for
+> example "Attendees agreed that CVE should include problems in beta
+> software, provided that the beta code was intended for public
+> dissemination" in the
+> http://cve.mitre.org/data/board/archives/2000-03/msg00007.html post.
 > 
-> https://www.redteam-pentesting.de/en/advisories/rt-sa-2013-001/-exim-with-dovecot-typical-misconfiguration-leads-to-remote-command-execution
->
->  Is there a CVE assigned for this combo vulnerability in
-> Exim/Dovecot? or as this is a configuration matter there is no CVE
-> assigned (even if this "recommended configuration" was in the wiki
-> of the vendor)?
+> These CVEs tend to be rare, possibly because they are useful to fewer
+> people. Recent examples in which a major vendor specifically chose to
+> assign a CVE name to an issue affecting only beta software are:
 > 
-> Thanks for any feedback,
+>   CVE-2009-2968 - VMware Studio 2.0 public beta
 > 
-> Cheers
+>   CVE-2010-0113 - Symantec Norton Mobile Security 1.0 Beta
 > 
+> A few months ago, MITRE started to draft some rough guidelines for a
+> case of a vendor who was considering use of CVEs during beta testing.
+> That case seems mostly inapplicable to the current question
+> (CVE-2013-3236, CVE-2013-3237, etc. weren't in any sense based on
+> "vendor" requests), but we might be able to share guidelines at some
+> point if any vendor here is in a similar position.
 
-I'm inclined to give this a CVE since it's "official"/"recommended"
-documentation, and my thought is vendor documentation should be safe,
-and where it is not safe it should be explicit that there are risks. A
-great example of this is:
+Thanks for the explanation, but, given the rate-of-churn[1] in the Linux
+kernel -rc releases, I would be really wary to start wanting to assign
+CVEs to things that only show up in these types of kernel releases.
 
-http://docs.python.org/2/library/pickle.html
+Unless you really want to be swamped with requests, it's your choice :)
 
-In red right at the top:
+Linux kernel -rc releases are for developers, and for those people
+wanting to help with Linux kernel development, they are not for anyone
+to run on any system that they do not to expect to immediately explode
+into a bunch of pieces, let alone expect to be "perfect" from a security
+standpoint.
 
-Warning The pickle module is not intended to be secure against
-erroneous or maliciously constructed data. Never unpickle data
-received from an untrusted or unauthenticated source.
+These releases are much different from the two closed-source products
+you list above, which are not developed in the open, and rely on "public
+beta" releases to do some of their testing on real-world systems.  As
+the Linux kernel is developed entirely in the open, starting to want to
+assign CVE entries to issues that show up in one -rc release, and are
+fixed before the final kernel release, seems a bit odd.
 
-Does anyone disagree/have strong feelings regarding this?
+But hey, it's your system, not mine, good luck.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+greg k-h
 
-iQIcBAEBAgAGBQJR91eQAAoJEBYNRVNeJnmTvkUQAMuPqSPQgt6rF6uPgFXj4k18
-4nRFLUMkVAQqYU3L37gqW+Kcv7MRI3FSDBOVbg+AiBjEMTox3F75DkAdWVv+kzEg
-cUEN3blGFRtUbBeeyKO73zgDq9HA5FXDFnQQQB1ARn6f518OsRYiUx6r1ej7FFSt
-Sc4BuOoRwvDaMhet3RvqaOtzJvtC4S2GBtjD4kKVj/Fa3SeTCY2NEklWfWQ+oYx9
-85d19gXmPBoOBm63dNwK0WxuwWzACLO4B1A6e/GX4sBTAXPYelt0WJ7ibs3Gk5sQ
-aDVE2A/yzDI7NwakMwbNqi7A6LBctZeDy+0ecoR64R4SpF8XKfWgT6npzy5DSgPA
-OP1u1S+k8XRr4u1DU3kNQNiT9fYqgQUWDwcEjVXi/jW1QQeHqpobHilkTc124c+H
-695YvyBELKkSMUbSH3xfBp78k+5YGrE+qj9bt0X5rU98NOVMrAa11S2pvsK3So2t
-4OJXsYUNrYUJUjGFJ+B0sE2B3cfZqzsZtNPll2002FNAduJhPHU0xVTbQylFoCF4
-cBNyIoKxuzYTrkiIY4sf6bDw1efQtJEbHyGqVdad9Rxo4J7wi1fblT2aRkZpdtC6
-xBEHDNxRSHDe+aReG15ze8s+GfXW8Cp3nAjVZ2D+H/jZVyC/ZmBHP6EtehEGDRLn
-jEH+0cWXsh4hbeaG+kTg
-=KryW
------END PGP SIGNATURE-----
+[1] You do realize just how fast it is, right?  Faster than you can ever
+    imagine, or even want to think about, and almost impossible to keep
+    up with.
