@@ -1,39 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/5
-Message-Id: <201305221306.18495.mweckbecker@suse.de>
-Date: Wed, 22 May 2013 13:06:18 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/9
+Message-ID: <44571994.539723.1366643699484.JavaMail.root@redhat.com>
+Date: Mon, 22 Apr 2013 11:14:59 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: [Full-disclosure] Thttpd 2.25b Directory Traversal Vulnerability
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Steve Dickson <steved@...hat.com>
+Subject: [CVE assignment notification] CVE-2013-1950 libtirpc: Invalid pointer free leads to rpcbind daemon crash  (A different vulnerability than CVE-2003-0028)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello SteveCh, SteveD, vendors,
 
-has anybody possibly already confirmed this? It might also be worth
-to assign a CVE to this if it turns out to be a reproducible issue.
+  originally Common Vulnerabilities and Exposures assigned the CVE-2003-0028 identifier
+to the following flaw:
+[1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2003-0028
 
-Thanks,
-Matthias
+Testing original CVE-2003-0028 reproducer against recent rpcbind code, 
+resulted into an invalid pointer free flaw to be found:
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=948378#c0
 
-----------  Forwarded Message  ----------
+Further issue context [3]:
+--------------------------
+An invalid pointer free flaw was found in the way server side code
+implementation for connectionless RPC requests of libtirpc, a library
+implementing Transport-Independent RPC (TI-RPC), (previously) performed
+arguments retrieval (due to a regression in commit 82cc2e61 svc_dg_getargs()
+routine callers would crash with invalid pointer free). A remote attacker
+could issue a specially-crafted Sun RPC request that, when processed,
+would lead to rpcbind daemon crash.
 
-Subject: [Full-disclosure] Thttpd 2.25b Directory Traversal Vulnerability
-Date: Sunday 19 May 2013
-From: "metropolis haxor" <metrOpolis@...uxmail.org>
-To: full-disclosure@...ts.grok.org.uk
+A different vulnerability than CVE-2003-0028.
 
-Hi guys,
-You can find the software affected at 
-http://www.acme.com/software/thttpd/thttpd-2.25b.tar.gz 
-Thanks,
-Metropolis
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=948378#c13
 
--------------------------------------------------------
+Particular upstream patch:
+[4] http://git.infradead.org/users/steved/libtirpc.git/commitdiff/a9f437119d79a438cb12e510f3cadd4060102c9f
 
--- 
-Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Note: While the original CVE-2003-0028 issue has been reported to possibly
+      allow / lead to arbitrary code execution under certain circumstances,
+      the current (CVE-2013-1950) is believed to be able to cause (remote)
+      rpcbind daemon crash "only".
 
-View attachment "Thttpd 2.25b Directory Traversal Vulnerability.txt" of type "text/plain" (2345 bytes)
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
