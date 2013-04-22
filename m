@@ -1,22 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/8
-Message-ID: <20130122082746.GB28839@alf.mars>
-Date: Tue, 22 Jan 2013 09:27:46 +0100
-From: Helmut Grohne <helmut@...divi.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/2
+Message-ID: <20130422013214.GG17095@nef.pbox.org>
+Date: Mon, 22 Apr 2013 03:32:14 +0200
+From: Alistair Crooks <agc@...src.org>
 To: oss-security@...ts.openwall.com
-Subject: predictable /tmp filename in git-extras
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
-Please assign a CVE identifier for the obvious predictable /tmp filename
-used in git-effort[1] and git-changelog[2]. The latter was discovered by
-Jonathan Wiltshire after my initial discovery of the former. The issue
-is already tracked within Debian[3] and there also is a solution[4].
+On Mon, Apr 22, 2013 at 10:52:00AM +1000, Allan McRae wrote:
+> Arch Linux does have similar system (our package building infrastructure
+> uses PGP signature verification if available, any of a variety of
+> checksums).
 
-Thanks
+Right - and, as your blog post mentions, the necessary effectiveness
+of the public key is germane to the issues here.  How is revocation or
+expiry of keys handled?
+ 
+> The point of my post was that if upstream does not provide anything when
+> they release a tarball, then they really do not help that much...  It
+> just verifies that the source the packager downloaded is the same as the
+> source you have.  It does not save you if the source was altered before
+> the packager obtained it.
 
-Helmut
+Well, the package maintainers are asked to provide a summary of changes
+when any updates are made. Personally, I like to diff old and new sources
+to see what has changed; I'd like to think it's not just me doing that.
+So the old version is used as leverage for the newer version.
 
-[1] https://github.com/visionmedia/git-extras/blob/master/bin/git-effort
-[2] https://github.com/visionmedia/git-extras/blob/master/bin/git-changelog
-[3] http://bugs.debian.org/698490
-[4] http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=32;filename=git-extras-1.7.0-1.2-nmu.diff;att=1;bug=698490
+However, the threat vector is an interesting one; in the past we've
+seen trojaned versions of software (typically exploited in the
+configure stage) occur, but the trojaned versions trail the official
+release by some time.  As an aside -- if the builder is running
+"./configure" as root, then they deserve a lot of the stuff that's
+coming their way.  The other thing to note is that, in these cases,
+the digests have been sufficient to pick up the changes in the
+distributed tar files.  And simply adding more weight and complexity
+to the signature (it's more than likely a SHA1 digest that gets
+signed, right?) doesn't add any more protection, and demands
+up-to-date public keys of the tarball packager.
+
+So, all in all, I'm not sure what benefits a signature provides over digests
+for this use case.
+
+Regards,
+Alistair
