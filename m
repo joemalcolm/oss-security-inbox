@@ -1,36 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/3
-Message-ID: <51E77E27.70909@redhat.com>
-Date: Wed, 17 Jul 2013 23:33:27 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Please REJECT CVE-2013-4141
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/13
+Message-Id: <201304221743.r3MHhH9c017446@linus.mitre.org>
+Date: Mon, 22 Apr 2013 13:43:17 -0400 (EDT)
+From: cve-assign@...re.org
+To: greg@...ah.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Please REJECT CVE-2013-4141, it was assigned privately, it is a
-duplicate of CVE-2013-4125
+>On Mon, Apr 22, 2013 at 01:44:17AM -0400, cve-assign@...re.org wrote:
+>> 680d04e0ba7e926233e3b9cee59125ce181f66ba CVE-2013-3236
+>> d5e0d0f607a7a029c6563a0470d88255c89a8d11 CVE-2013-3237
+>
+>Please explain how these can get a CVE number when the code involved has
+>never even been in a kernel.org release yet?
 
+MITRE has never had any restrictions on CVEs for issues that exist
+only in release-candidate software or only in beta software. See for
+example "Attendees agreed that CVE should include problems in beta
+software, provided that the beta code was intended for public
+dissemination" in the
+http://cve.mitre.org/data/board/archives/2000-03/msg00007.html post.
+
+These CVEs tend to be rare, possibly because they are useful to fewer
+people. Recent examples in which a major vendor specifically chose to
+assign a CVE name to an issue affecting only beta software are:
+
+  CVE-2009-2968 - VMware Studio 2.0 public beta
+
+  CVE-2010-0113 - Symantec Norton Mobile Security 1.0 Beta
+
+A few months ago, MITRE started to draft some rough guidelines for a
+case of a vendor who was considering use of CVEs during beta testing.
+That case seems mostly inapplicable to the current question
+(CVE-2013-3236, CVE-2013-3237, etc. weren't in any sense based on
+"vendor" requests), but we might be able to share guidelines at some
+point if any vendor here is in a similar position.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.11 (SunOS)
 
-iQIcBAEBAgAGBQJR534mAAoJEBYNRVNeJnmTjnUP/iA1KN05Q6eoAhqB2HuyHdHf
-rGHEOMRkT4dDi00b8YGmBc0jHFY9no7G+H7sJPdWHl+T0xSaX5eXDS8w/iT5GkAo
-0hb7M3CU5+m+HdhKZcVDIhTx1CW6NT/ls6hIN2BrilOY4ctWoFxv5wTaDW9hy5hU
-kqs6r4YrHrFzpn4XwnTwL1kpmcwoHpxoNiF13liN/Ejm5g8ol86tiP7PK+NeRhcd
-pQ1FUR96Bml3G/AVtoyH7AJnnSyUpsmZPMZWxsQcAGy4r4RizZKAuJtHtdcWf5Sw
-35G7SLHno5Fyoz8SY+YjIovxowcf2XQEw7p4G0H996sqTjUt8+3+UXlkSLVPCEe0
-RtqXVDa+Vl9wvJoAyOLKUO1hzovmK2V6rk5wGrkdRYBCNsV4R+j49MvODB8xzatS
-JdtPbub4mvrobn0EbLDDrJM2wPTnIwWW0xEciJ7VkOo/PJ8Or2YwttauwR82YnU9
-6BNTpA1L0Ui9KHCRwl2RJQ1WmZt8ayM0r2IFe+ZQFNKQ7Wk5SAz/KEfrrPA60gLN
-Bi4BMdgi/7z+EgMBJ9xSCHuwd6mp8x622bEkgVw00M4G4amPdriRGIhp6L3srr6/
-+gme1gBy75CqmnBzO0NJY/FZlKlMYjBeIMfqRaXy15bV68WNJ78H86Xnzyz5eFl2
-kwHQD0PXR9TFQsOHejM1
-=2yJc
+iQEcBAEBAgAGBQJRdXVZAAoJEGvefgSNfHMdK6EH/i8LOO8e8rfzLjqNCJxJNopV
+Cw+wWSczx6zX/TtNhv1yguZtiGAFatZPqkAJPO9e/9SLHVahStxkIJSKUdTWFUl2
+NrhJOAtJYRn40N8Bo2eMndRNo5ySaAEe2Hi2Ndz82umoKPF6K1e8A+cZUiJ4j+W0
+BAJz8mct7Q29b6P8+yYEvt+irJPDNUC82rPAATvcNNGSIc0WVfSwC+vNB7oWME5s
+4YeZLTnak/b0Dl1gj+rfCNYs56rO46Gnvc6Zs11J7MrQsaYkI/EVViIqLlQnnzyk
+HSqQSr+1IOi9kCZyaGGDcjsVPVuc648xvFJhVqM5WTXwtnHszP5L5tTyqZyrWCE=
+=UeL+
 -----END PGP SIGNATURE-----
