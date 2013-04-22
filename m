@@ -1,55 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/19/3
-Message-ID: <52620C13.8020800@redhat.com>
-Date: Fri, 18 Oct 2013 22:35:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/10
+Message-ID: <CA+rthh-WFr9J19Fx6HAbjM4wgcdfGsQUJxVuffbj6+H2h-nC2A@mail.gmail.com>
+Date: Mon, 22 Apr 2013 17:53:02 +0200
+From: Mathias Krause <minipli@...glemail.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: slapd segfaults on certain queries with rwm overlay enabled
+Cc: cve-assign@...re.org, Petr Matousek <pmatouse@...hat.com>
+Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Apr 22, 2013 at 3:57 PM, P J P <ppandit@...hat.com> wrote:
+> +-- On Mon, 22 Apr 2013, Mathias Krause wrote --+
+> | partly... Have a look at verify_iovec()/verify_compat_iovec(). They're
+> | updating the msg_name and msg_iov pointers.
+>
+>   I did, both seem to use user supplied `msg_namelen' value to copy contents
+> from user `msg_name' to `sockaddr_storage addr' variable. And when
+> `msg_namelen' is zero(0) msg_name is set to NULL. Later same `msg_namelen'
+> bytes are copied to user area, right?
 
-On 10/16/2013 03:49 PM, Vincent Danen wrote:
-> The following was reported to us, but has already been reported 
-> publicly upstream.  Could a CVE be assigned to it?
-> 
-> It was discovered that OpenLDAP, with the rwm overlay to slapd,
-> could segfault if a user were able to query the directory and
-> immediately unbind from the server.  This seems to be due to the
-> rwm overlay not doing reference counting properly, so
-> rwm_conn_destroy frees the session context while rwm_op_search is
-> using it.  This condition also seems to require multiple cores/CPUs
-> to trigger.
-> 
-> 
-> References:
-> 
-> http://www.openldap.org/its/index.cgi/Incoming?id=7723 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1019490
-> 
-> This is currently not fixed upstream.
-> 
+No. It is capped in move_addr_to_user() to the actual size -- if set
+by the protocol -- or sizeof(struct sockaddr_storage) -- whichever is
+smaller.
 
-Please use CVE-2013-4449 for this issue.
+> Ah..right, both are called with `mode = VERIFY_WRITE' and both initialise
+> `addr' variable when mode = VERIFY_READ.
+>
+> If it's copying user data to `addr', why selectively do it when mode =
+> VERIFY_READ?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+It's called with VERIFY_READ in __sys_sendmsg() because in this case
+"addr" is an input parameter. For recvmsg() it's an output parameter
+so doesn't need to be read, but only written to.
 
-iQIcBAEBAgAGBQJSYgwTAAoJEBYNRVNeJnmTT6AP/R28qsuwa1PEK9gwGsQCN0h7
-wScSfy1biQ9EVz/HkgXNHTUBiogAKRAbKX42/FWMjBzt0p5NUW1zRCJdcWfXOPZ7
-dfqHPsB7XV+gAsZZNydS3AqGFqiKgTY9VBZn26V2q+RKnStfFyKnBpZJxMoYtzxS
-dfse3qLREGIPwH1ljpOEaW0hpGIEnpiAoDU1kRCG2bg2GH1Wx8T7OjjcvVGGW38o
-yNF0g9AYgJoLiWLxYagOjqNJeDRG6Jiu015p40Ta3AG5wrJfpx2xlW+0/PXOu+Vv
-8o96LwqAtu9WO0kmAZaSF7vBcOApBceoyMHf+478Um6ZIhKhozUMpVw6QeHl6l77
-saoD8rp01vrgjttKtWym/cdQM/khedTuT9JFvcHkWgKIMjd8tFp0fF+ExMMpbYt+
-51Gnwrh8DZ0z4FIne9dib8vxbTkyscGGuhrlj3jmCYYd3b1E24+WpVfRkbLe9aVG
-kj3ubTngaaKdlSPxoYI9qHVVnGswc57Y6WI3ZX8wgg9FLyyfmBMVc7+wINzsgIFN
-i862DdNtz7B5fASLDEQGYUihcKRe+/bmiuZCHfixCiu8Hdb/3sSFr+edS+yo8AkL
-H6xgwe7p4DKM4QIDAymT5zRbdntAWhcGhXFbk63y1tliChvHm+5sOz4QPw9qeKQb
-9sYVfzINsHtXegCKGrvZ
-=NzM8
------END PGP SIGNATURE-----
+> Also, wouldn't - memset(addr, 0, sizeof(addr)) - fix this leak for all
+> definitions of <proto>_recvmsg() routine??
+
+Yes, but see this discussion: http://thread.gmane.org/gmane.linux.kernel/1472604
+
+
+Mathias
