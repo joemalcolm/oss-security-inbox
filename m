@@ -1,85 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/13
-Message-Id: <E1VUFGT-0002ZU-HA@xenbits.xen.org>
-Date: Thu, 10 Oct 2013 12:22:49 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 69 (CVE-2013-4370) - misplaced free in ocaml xc_vcpu_getaffinity stub
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/4
+Message-ID: <20130422085252.GG1588@symphytum.spacehopper.org>
+Date: Mon, 22 Apr 2013 09:52:52 +0100
+From: Stuart Henderson <sthen@...nbsd.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 2013/04/22 01:27, Alistair Crooks wrote:
+> On Sun, Apr 21, 2013 at 12:39:39AM +0400, Solar Designer wrote:
+> > Hi,
+> > 
+> > I just found this recent blog post by Allan McRae of Arch Linux:
+> > 
+> > http://allanmcrae.com/2012/04/how-secure-is-the-source-code/
+> > 
+> > Thank you for doing this, Allan!  Are you contacting the upstream
+> > authors to request that they start to properly sign their releases?
+> > (I've been doing that on some occasions, sometimes with success.)
+> > 
+> > I think that placing both "MD5 checksum provided on same site as
+> > download" and "PGP signature, key difficult to verify" in the same
+> > "yellow" category is inconvenient for us.  "MD5 checksum provided on
+> > same site as download" only helps verify downloads from mirrors against
+> > the master site, whereas "PGP signature, key difficult to verify"
+> > achieves a lot more - once a distro is already including the package
+> > (and has already taken the risk of it having been tampered with), then
+> > verifying further updates to the package becomes almost as reliable as
+> > it would have been with proper signing (with a "readily verifiable" key).
+> > So we need four categories, or simply "MD5 checksum provided on same
+> > site as download" should be in "red", not in "yellow".
+> 
+> The BSD ports and packages systems have had this checking in place
+> since day 1, and with different checksums - FreeBSD now use sha256,
+> pkgsrc uses sha1 and rmd160, and I don't know what OpenBSD uses;
+> the digests are all held as part of the packaging system itself.
+> 
+> One of the side benefits of this is recognising when upstream changes
+> tarballs without changing version numbers.
+> 
+> I think the Arch Linux people could leverage the work done here.
+> 
+> Regards,
+> Alistair
 
-             Xen Security Advisory CVE-2013-4370 / XSA-69
-                               version 2
+OpenBSD changed to sha256 for this 5 years ago, we also check file size.
+This does cause some problems for projects which rely on dynamically
+generated tarballs though; in the past we've had trouble with github and
+bitbucket (they seem to be somewhat stable at the moment but I'm not
+convinced it won't happen again). Has anyone come up with a better way
+to handle that situation?
 
-           misplaced free in ocaml xc_vcpu_getaffinity stub
+I wonder if it might be worth looking at infrastructure to verify PGP
+signatures as part of the framework too though, this is potentially
+useful for updates.
 
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The ocaml binding for the xc_vcpu_getaffinity function incorrectly
-frees a pointer before using it and subsequently freeing it again
-afterwards. The code therefore contains a use-after-free and
-double-free flaws.
-
-IMPACT
-======
-
-An attacker may be able to cause a multithreaded toolstack written in
-ocaml and using this function to race against itself leading to heap
-corruption and a potential DoS.
-
-Depending on the malloc implementation code execution cannot be ruled
-out.
-
-VULNERABLE SYSTEMS
-==================
-
-The flaw is present in Xen 4.2 onwards.
-
-Systems using an ocaml based toolstack (e.g. xapi) are vulnerable.
-
-MITIGATION
-==========
-
-Not calling the vcpu_getaffinity function will avoid this issue.
-
-Not allowing untrusted users access to toolstack functionality will
-avoid this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Coverity Scan and Matthew Daley.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa69.patch             Xen 4.3.x, Xen 4.2.x, xen-unstable
-
-
-$ sha256sum xsa69*.patch
-d3beb662aacf628b6a25ff6cfcd9526ab689aa43a56cf25e792a001f89b4edbc  xsa69.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJSVpv9AAoJEIP+FMlX6CvZDDsIALyFWH1+Ox87+kncvYUHu6UJ
-m4r85Jqp7pD97hAWP0mbVu/RxZgIE2mUaLDruuRvyaA940HtmsYxYRd010uqxUGQ
-ouFdaChJpfyGAgKn15INEQnj7giX5Kd6tPFyza5N4TBm8HbK1N83rpGHDT8+unzA
-MTAPk5KXCiIJ0LBU23Ce5ryXwXIkDjwPP+hJ+G0Axv1UpBTn6BhxE135m7cTOemU
-oWHSrYbrM4zBpVPQHl1NX8YGtjbBILwDZOmtfJD/EDI2i7iqiIbVAAEoY6xFIHmL
-nk0ZSN/rLSBXV+FH+sdJJunQzj4MOXg+nTx6ptO2T1pzTssEVsz6JOgUcCEMIy8=
-=4eSf
------END PGP SIGNATURE-----
-
-Download attachment "xsa69.patch" of type "application/octet-stream" (995 bytes)
