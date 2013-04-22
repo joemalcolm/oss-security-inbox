@@ -1,54 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/28/1
-Message-ID: <1382984271.3170.221.camel@banzai>
-Date: Mon, 28 Oct 2013 19:17:51 +0100
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/11
+Message-ID: <20130422164620.GA7143@kroah.com>
+Date: Mon, 22 Apr 2013 09:46:20 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: libxml2 external parsed entities issue
+Cc: cve-assign@...re.org
+Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
 Content-Type: text/plain; charset=utf-8
 
->>libxml2 earlier than 2.9.0 fetches external parsed entities by
->>default, with no way to disable the behaviour.
->>
->>Fixed by the following commit:
->>https://git.gnome.org/browse/libxml2/commit/?id=4629ee02ac649c27f9c0cf98ba017c6b5526070f 
+On Mon, Apr 22, 2013 at 01:44:17AM -0400, cve-assign@...re.org wrote:
+> 680d04e0ba7e926233e3b9cee59125ce181f66ba CVE-2013-3236
+> d5e0d0f607a7a029c6563a0470d88255c89a8d11 CVE-2013-3237
 
-[...]
+Please explain how these can get a CVE number when the code involved has
+never even been in a kernel.org release yet?
 
-> Hrm, I would have thought CVE-2013-0339 was for the entities expansion DoS issue
-> fixed by this commit:
-> 
-> https://git.gnome.org/browse/libxml2/commit/?id=23f05e0c33987d6605387b300c4be5da2120a7ab
-> 
-> The other one is for external entities expansion being enabled by default with
-> no way to turn it off. You would lump them together?
+confused,
 
-It's still unclear to me what exactly CVE-2013-0339 covers.
-
-Patch for the entity expansion DoS:
-https://git.gnome.org/browse/libxml2/commit/?id=23f05e0c33987d6605387b300c4be5da2120a7ab
-
-Patch for not expanding external entities by default:
-https://git.gnome.org/browse/libxml2/commit/?id=4629ee02ac649c27f9c0cf98ba017c6b5526070f
-
-Are both patches covered? The second one is quite important as it kills
-the classic XXE vector <!ENTITY foo SYSTEM "/etc/passwd">
-
-For Ubuntu, CVE-2013-0339 covers the XXE attack.
-https://bugs.launchpad.net/ubuntu/%2Bsource/libxml2/%2Bbug/1194410
-
-For Debian, it's "large memory consumption" only:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=702260
-
-For RedHat, it covers both but "libxml2 already provides mechanisms to
-disable external entities which applications can use. Closing this flaw
-as 'wontfix'": https://bugzilla.redhat.com/show_bug.cgi?id=915149
-
-And the official page for the CVE isn't helpful:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-0339
-
-Regards,
-Nicolas Grégoire
-
-
-
+greg k-h
