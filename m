@@ -1,25 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/1
-Message-ID: <20130711021215.GA17959@kludge.henri.nerv.fi>
-Date: Thu, 11 Jul 2013 05:12:15 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/23/8
+Message-ID: <51770573.4080105@ushahidi.com>
+Date: Wed, 24 Apr 2013 10:04:35 +1200
+From: Robbie Mackay <robbie@...ahidi.com>
 To: oss-security@...ts.openwall.com
-Cc: plugins@...dpress.org, moderators@...db.org
-Subject: CVE request: WordPress plugin category-grid-view-gallery XSS
+Subject: CVE Request for XSS vulnerability in Ushahidi Web
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2013 CVE identifier for XSS vulnerability in WordPress plugin
-category-grid-view-gallery, thanks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Plugin page: http://wordpress.org/plugins/category-grid-view-gallery/
-Original advisory: http://seclists.org/bugtraq/2013/Jul/17
-Version affected: 2.3.1 (older probably affected too)
-PoC: https://example.com/wp-content/plugins/category-grid-view-gallery/includes/CatGridPost.php?ID=44%22%3E%3Cimg%20src=%22http://%22%20onerror=alert%28document.cookie%29;%3E
+Hi,
 
-Not yet fixed as author did not contact vendor. Top 1277 plugin by popularity.
-WordPress guys could you coordinate this with plugin developer, thanks?
+Robb Driscoll (ohrodr) has reported an exploitable XSS bug with report
+descriptions in Ushahidi_Web (https://github.com/ushahidi/Ushahidi_Web).
 
----
-Henri Salo
+Original bug report https://github.com/ushahidi/Ushahidi_Web/issues/1009
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+This will be fixed in the next release Ushahidi 2.7, along with other
+general XSS issues. We've done a general overhaul of our XSS
+protection and  https://github.com/ushahidi/Ushahidi_Web/pull/1056
+
+Would a CVE normally be assigned just for the specific issue? or for
+the general fixes to XSS protection as well?
+
+Regards,
+Robbie Mackay
+
+Software Developer, External Projects
+Ushahidi Inc
+e: robbie@...ahidi.com
+skype: robbie.mackay
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (Darwin)
+Comment: GPGTools - http://gpgtools.org
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJRdwVzAAoJEKnxsxigzOTXTi0H/Aw7An7XmKVrE74HA/W6Qx98
+RfM3FwR6N4JaUYQrpLeUkq2VOuSnFzwX2u0DftK6pOYKYH7VeNnXqchhHcD3DdVa
++uSh5uCVdMQD6/eKv6akJR5O8jjq3IYAwyjXk26yAjmOd7Vyl31MXkRuv9hnu9+S
+sbgGMjIr+hHrAFIyX56H3e7BefJVx/F1K/R3KPI8pMcLhrnF7q8sb1tlYVCPWdLo
+rSyo0Igpctx/KQuDYsDGAjF7NomHuT51jjZWL6PGl5czmC637/s4AzGcoMhNlMn5
+NNPeogW6JuZQPN9/MX03QfI2Ots5XkjE/fIE0gdgt1Uc3Yjlrs4/+CwCj2X+8l8=
+=17Qf
+-----END PGP SIGNATURE-----
