@@ -1,43 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/2
-Message-ID: <20130723143306.GA7183@eldamar.local>
-Date: Tue, 23 Jul 2013 16:33:06 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: security@...ngoproject.com
-Subject: Re: CVE Request: Django: Account enumeration through timing attack in password verification in django.contrib.auth
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/23/4
+Message-ID: <alpine.LFD.2.03.1304231505540.16790@redhat.com>
+Date: Tue, 23 Apr 2013 15:52:32 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: cve-assign@...re.org
+Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
 Content-Type: text/plain; charset=utf-8
 
-Hi
++-- On Mon, 22 Apr 2013, cve-assign@...re.org wrote --+
+| ef3313e84acbf349caecae942ab3ab731471f1a1 CVE-2013-3223
 
-On Mon, Jul 22, 2013 at 05:04:44PM +0200, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> Cc'ing security@...ngoproject.com
-> 
-> From [1] in Django accounts can be enumerated trough timing attacks:
-> 
-> > When attempting to authenticate using django.contrib.auth, if a user does not
-> > exist the authenticate() function returns None nearly instantaneously, while
-> > when a user exists it takes much longer as the attempted password gets hashed
-> > and compared with the stored password. This allows for an attacker to infer
-> > whether or not a given account exists based upon the response time of an
-> > authentication attempt.  This can be seen much more clearly when the number of
-> > rounds on the password hasher is set to something high like 100000.
-> 
->  [1] https://code.djangoproject.com/ticket/20760
-> 
-> A proposed patch is at [2] but not yet a commit in upstream git repository.
-> 
->  [2] https://code.djangoproject.com/attachment/ticket/20760/20760_fix_hash_once.diff
-> 
-> Does this needs a CVE asignment?
+   *sax = (struct sockaddr_ax25 *)msg->msg_name;
 
-Only a update: this was now fixed in [1] in master branch, and in [2]
-as backport for 1.6.x.
+Here, - *sax - seems to point to users `msg_name' object, no? Because of 
+the earlier copy_from_user in net/socket.h:
 
- [1] https://github.com/django/django/commit/5dbca13f3baa2e1bafd77e84a80ad6d8a074712e
- [2] https://github.com/django/django/commit/4525eab0779a2946063288224dcebb61ba382976
+===
+  get_compat_msghdr(msg_sys, msg_compat)
+   OR
+  copy_from_user(msg_sys, msg, sizeof(struct msghdr)
+===
 
-Regards,
-Salvatore
+Is - memset(sax, 0, sizeof(full_sockaddr_ax25)) - setting users memory area? 
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
