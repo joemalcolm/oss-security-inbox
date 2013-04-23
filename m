@@ -1,28 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/8
-Message-ID: <512BB31C.50003@gmail.com>
-Date: Mon, 25 Feb 2013 13:53:16 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/23/3
+Message-ID: <alpine.LFD.2.03.1304231358430.15649@redhat.com>
+Date: Tue, 23 Apr 2013 14:23:16 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: cve-assign@...re.org, Petr Matousek <pmatouse@...hat.com>
+Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
 Content-Type: text/plain; charset=utf-8
 
-On 02/25/2013 01:45 PM, Mathias Krause wrote:
-> Did you even try to run the exploit on a v3.2 kernel? Or even more
-> simple, looked at the code of a v3.2 kernel? There is no sock_diag
-> anywhere in the kernel; there is only inet_diag. And inet_diag hadn't
-> and still does not have the out-of-bounds access issue. So no, this
-> bug is non-existent on a v3.2 kernel.
->
-> Thanks,
-> Mathias
->
-The bug was introduced with this commit:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=d366477a52f1df29fa066ffb18e4e6101ee2ad04
+  Hello Mathias,
 
-This commit took place during kernel version 3.2.0-rc4, so yes, it does
-seem to affect 3.2 kernels.
++-- On Mon, 22 Apr 2013, Mathias Krause wrote --+
+| No. It is capped in move_addr_to_user() to the actual size -- if set by the 
+| protocol -- or sizeof(struct sockaddr_storage) -- whichever is smaller.
 
-Regards,
-Dan
+  Yep, it seems to take the protocol value from ulen parameter, which is 
+pointing to users - msg->msg_namelen - field. And if ulen is greater than 
+kernel address length, it is set to klen. Either way, does not seem to leak 
+kernel memory, for it's capped at len = klen OR sizeof(addr).
 
+===
+    int __user *uaddr_len;
+    uaddr_len = COMPAT_NAMELEN(msg);
+    ...
+    err = get_user(len, ulen);
+    ...
+    if (len > klen)
+        len = klen;
+===
+
+Leak seems to happen only when addr is not initialised: mode = VERIFY_WRITE.
+ 
+| Yes, but see this discussion: http://thread.gmane.org/gmane.linux.kernel/1472604
+
+  Aha...EXCELLENT!! I've been wanting to ask this very question that why 
+aren't variables initialised in the kernel. This explains it!
+
+It also explains whey `addr' is selectively initialised for VERIFY_READ and 
+not for VERIFY_WRITE. Interesting!
+
+Thanks so much! :)
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
