@@ -1,83 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/14/7
-Message-ID: <50F47B07.7050301@redhat.com>
-Date: Mon, 14 Jan 2013 14:39:19 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Michael Scherer <misc@...b.org>
-Subject: Re: CVE Request -- redis: Two insecure temporary file use flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/23/7
+Message-ID: <5176A334.3030608@openstack.org>
+Date: Tue, 23 Apr 2013 17:05:24 +0200
+From: Thierry Carrez <thierry@...nstack.org>
+To: kseifried@...hat.com
+CC: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2013-1977  - OpenStack keystone.conf insecure file permissions
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-On 01/14/2013 12:16 PM, Kurt Seifried wrote:
-> On 01/14/2013 09:08 AM, Jan Lieskovsky wrote:
->> Hello Kurt, Steve, vendors,
+Kurt Seifried wrote:
+> As reported: https://bugs.launchpad.net/keystone/+bug/1168252
+> 
+> The password configuration of LDAP and admin_token in
+> keystone.conf should be secret to protect security information: 
+> [...]
 
-Sorry misread the affected versions, this needs two CVEs:
+See my comment on the bug... now at
+https://bugs.launchpad.net/devstack/+bug/1168252
 
->> Issue #1: =========
-> 
->> Michael Scherer in the following Red Hat bugzilla: [1] 
->> https://bugzilla.redhat.com/show_bug.cgi?id=894659
-> 
->> pointed out, Redis, a persistent key-value database of version
->> 2.4 to be prone to temporary file use in src/redis.c:
-> 
->> server.vm_swap_file = zstrdup("/tmp/redis-%p.vm");
+This is actually not a Keystone issue, it's a packaging/deployment
+issue that affects a number of distributions of OpenStack, including
+the devstack installer.
 
-Please use CVE-2013-0178 for the first issue as previously assigned.
-
->> [2] https://bugzilla.redhat.com/show_bug.cgi?id=894659#c0
-> 
->> Note: This problem was fix by the patch [3] below.
-> 
->> Issue #2: ========= When searching for a patch, that corrected
->> the issue [2] above, found out it was patch
-> 
->> [3] 
->> https://github.com/antirez/redis/commit/697af434fbeb2e3ba2ba9687cd283ed1a2734fa5
->>
->> 
-,
-> 
->> but it also introduced another insecure temporary flaw in 
->> src/redis.c:
-> 
->> 776 	+    server.ds_path = zstrdup("/tmp/redis.ds");
-> 
->> Note: Issue #2 is also fixed in recent upstream 2.6.7 / 2.6.8 
->> versions. If you want me to find exact patch, which corrected
->> the second problem, let me know and i will provide the commit
->> id.
-> 
->> Could you allocate (two) CVE ids for these issues?
-> 
->> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat 
->> Security Response Team
-
-
-Please use CVE-2013-0180 for this second issue.
+Looks like we could issue a "security note" about it, mentioning that
+CVE, to raise the profile of this.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQ9HsHAAoJEBYNRVNeJnmTLusQAJaKRWdl2HrQntMdky1D2rpv
-KsxYbdUSYKj71yJY5cScCfPqWjGB6mCHmqjxS9mceHKCaNpwus6wJ+BfSGytdXIC
-xYcOG1xJwuMTHF2EI7M1jLLfaoRthobkBPmao2EdIPH4pyuPiFXFw29y2vHdA2gS
-her2drPWbQcwY1GqA/5r82FUbtaYpeUyS8RTyfFy0Uha5HNoH+HmPI7cpJ8lvFx4
-Uf2IFoP2EcSh4aMIsHmR9NiwgeQUZB5gJcYsRWCztoDAEQZNYj2C7042iJBxlcOG
-35PrmrAy16EchKKFRp5Le63L9VA9Q1PgAeW2jqUtAeVBsO6w3nTD3RLUEanmwEd6
-kug2BPgNJ/ObkKSbjUbhMKC5OPg3r29OIV5FTeq5mJDWhEaKp/VCSSWTEP9np2vB
-MSpD2up12YRAWOcvJa6qn8MBiZcsktmcsaVcOwVGk2mxvEtIRs0qKq9l2T6o0774
-eKIP5q0Z4frlY6cFGGIMAp9FPXjbKUkFmxzH00rkLdJnedMt0EykwOjcNZrLRevS
-dRoHXRukCo+swXpfyfrFAu2Okf1rf6so30OJ8405p9Djf2rC/iakvXagRcy4xwZ7
-a4PFcfJGBQEWHKgRHiU9JLM2l0CRmuHnoyj9pPP8FqzRCr5jqlh4I8Vw/DNl5IUq
-j8x8XuWLTF4aEApunXaM
-=/WSg
+iQIcBAEBCAAGBQJRdqM0AAoJEFB6+JAlsQQjqN4QAKrpIaBdwvMV37G7E8XckhAT
+G8kRr44VAp17JQXVrRCapDd14jllpkmWfvZDgkhEbKQqNXjTk+3l/xtuC1uSCmu3
+FjzNpGBD5IhIPmJiUvjGsSTSOVtxH+uncPCt0PiKL7BZ80nYer37hI0FNaRwoZ3k
+07jcyDY23aJEEQymbb2QofMK2o6v3oUuM6rnpqqQNDHLvpOesQToNN1SAqHECvZL
+960r7NlNUqXnpO+qNPdzOixf2672DL3KwrfUDmgxzzRr1Z3RJHk7YFVYd4bO2iVC
+wENNR6OjJwyGgoIO/Xy/dk/t1PBR7Rg6l2oDgd4rE/ZiE1gEJSgoBsRrCS4Pcsnm
+L0wdesB4r/mzMqSdgNzDKqMR21p5MCwBAZU9lYOH6cGBr/CRM8ecRnSS7gwindm0
+j8t9rrnLH7/EoWCJRoWxFDuiCH/9naUd2J1UIDK/Ny9r0Sdq8kfR2KC7wNPi92rY
+/68tDD/K8zarogU8TfR5WPlodcWWm2XPgytdeADVDDq71/tof+2BYOS90VTn7c9X
+7lHSrfJ3VZZQ+WdFTICa0VKl6WpeYDA43Ja9+XeVsow4Wyo22mQmlGubgt9CXQyu
+VTZmbCAbSI0+D59b2B8rjIxsUENVNSqSKViNXS3UeklawuJo3hU29pKFprkRLFE5
+aOaRb0o0TVda4sSdybR8
+=AamC
 -----END PGP SIGNATURE-----
