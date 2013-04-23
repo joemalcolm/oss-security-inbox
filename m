@@ -1,72 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/01/1
-Message-ID: <CACy=+Dvw4zOn1UVxbMRfS78GDp4jDmiVX918KWXqrCrzrMmsxw@mail.gmail.com>
-Date: Tue, 1 Jan 2013 01:57:40 +0400
-From: Mustapha Rabiu <muztapha@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/23/5
+Message-ID: <CA+rthh9mT9m8_3OTH1aE0ufW6x3Fwho-=L4YiigJWAPhTUrbtQ@mail.gmail.com>
+Date: Tue, 23 Apr 2013 13:23:22 +0200
+From: Mathias Krause <minipli@...glemail.com>
 To: oss-security@...ts.openwall.com
-Subject: Charybdis: Improper assumptions in the server handshake code may lead to a remote crash
+Cc: cve-assign@...re.org
+Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
 Content-Type: text/plain; charset=utf-8
 
-Hi.
+On Tue, Apr 23, 2013 at 12:22 PM, P J P <ppandit@...hat.com> wrote:
+> +-- On Mon, 22 Apr 2013, cve-assign@...re.org wrote --+
+> | ef3313e84acbf349caecae942ab3ab731471f1a1 CVE-2013-3223
+>
+>    *sax = (struct sockaddr_ax25 *)msg->msg_name;
+>
+> Here, - *sax - seems to point to users `msg_name' object, no?
+
+no ;)
+
+> Because of the earlier copy_from_user in net/socket.h:
+
+net/socket.c, I guess. The copy_from_user is followed by
+verify_iovec() that sets msg_name to "addr" -- a kernel stack
+variable.
+
+>
+> ===
+>   get_compat_msghdr(msg_sys, msg_compat)
+>    OR
+>   copy_from_user(msg_sys, msg, sizeof(struct msghdr)
+> ===
+>
+> Is - memset(sax, 0, sizeof(full_sockaddr_ax25)) - setting users memory area?
+
+No, for the above reason.
+
+Please ask your colleagues at RedHat for any further explanations of
+the code. AFAIK, oss-sec is no kernel hacker newbie forum ;)
 
 
-Can we get a CVE for the following
-
---
-
-Access vector: network
-Access complexity: low
-Authentication requirement: none
-
-Confidentiality impact: none
-Integrity impact: none
-Availability impact: complete
-
-CVSSv2 temporal score: 6.4
-
-Exploitability: functional exploit exists
-Remediation level: official fix
-Report confidence: confirmed
-
-Summary:
-
-All versions of Charybdis are vulnerable to a remotely-triggered crash bug
-caused by code originating from ircd-ratbox 2.0.  (Incidentally, this means all
-versions since ircd-ratbox 2.0 are also vulnerable.)
-
-The bug has to do with server capability negotiation.  A malformed request will
-trigger a crash due to invalid assumptions.
-
-Mitigation:
-
-A patch for all affected versions of ircd-ratbox and charybdis is available from
-the charybdis GIT repository:
-  https://github.com/atheme/charybdis/commit/ac0707aa61d9c20e9b09062294701567c9f41595.patch
-
-To apply the patch, go to your IRCd source tree and run the following commands:
-  $ patch -p1 < /path/to/downloaded/patchfile.patch
-  $ make
-  $ make install
-
-Then you may hotfix the IRCd by running /MODRESTART as a server admin.
-
-Details:
-
-In ratbox-2, the following code was added to m_capab.c:
-  char *t = LOCAL_COPY(parv[i]);
-
-The other logic was then modified to make use of that stack-allocated
-buffer rather
-than the original.  LOCAL_COPY() is a macro which expands to alloca()
-and strlcpy(),
-and the bug effectively is caused by this expansion calling strlen(NULL).
-
-
---
-
-
-Thanks.
-
-
-Mustapha Rabiu
-
+Mathias
