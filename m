@@ -1,18 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/04/1
-Message-ID: <CANTw=MNF+272nH+6caEyJ8V4C_psEYqv=F6i6a02tF3xGMH+ZA@mail.gmail.com>
-Date: Sun, 3 Feb 2013 20:50:27 -0500
-From: Michael Gilbert <mgilbert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/13
+Message-ID: <20130424195929.GB12258@kludge.henri.nerv.fi>
+Date: Wed, 24 Apr 2013 22:59:29 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: boost
+Subject: Re: WP-Super-Cache XSS and Remote Code Exec
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Apr 24, 2013 at 10:53:35PM +0300, Henri Salo wrote:
+> Should CVE-2013-2009 be used also for w3-total-cache issue?
 
-Boost has issued a security advisory for a UTF-8 validation issue/exposure:
-http://www.boost.org/users/news/boost_locale_security_notice.html
+Answer: No. http://www.openwall.com/lists/oss-security/2013/04/24/9
 
-Please assign an id.
-
-Thanks,
-Mike
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
