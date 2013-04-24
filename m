@@ -1,170 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/5
-Message-ID: <d531af465dc75824188fe42289cdf981.squirrel@aphrodite.kinkhorst.nl>
-Date: Wed, 4 Sep 2013 12:18:36 +0200
-From: "Thijs Kinkhorst" <thijs@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: "Chris Steipp" <csteipp@...imedia.org>
-Subject: CVE request: MediaWiki Security Release: 1.21.2, 1.20.7 and 1.19.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/1
+Message-ID: <517771F6.7090900@redhat.com>
+Date: Tue, 23 Apr 2013 23:47:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, Thierry Carrez <thierry@...nstack.org>
+Subject: CVE-2013-2006 OpenStack keystone LDAP password disclosure in log files
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Mediawiki has announced the following security releases. The message
-contains a link to the patches for various release branches.
+So as part of https://bugs.launchpad.net/ossn/+bug/1168252 we have
+CVE-2013-1977 for the insecure file permissions (devstack/etc.). We
+also have the password being logged and exposed in the log files:
 
-Can CVE names be assigned please?
+https://review.openstack.org/#/c/26826/2/keystone/common/config.py
 
+Please use CVE-2013-2006 for this issue (password being logged to the
+log file).
 
-thanks,
-Thijs
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
----------------------------- Original Message ----------------------------
-Subject: [MediaWiki-announce] MediaWiki Security Release: 1.21.2, 1.20.7
-and 1.19.8
-From:    "Chris Steipp" <csteipp@...imedia.org>
-Date:    Tue, September 3, 2013 22:50
-To:      mediawiki-announce@...ts.wikimedia.org
-         "MediaWiki-l" <mediawiki-l@...ts.wikimedia.org>
-         "Wikimedia developers" <wikitech-l@...ts.wikimedia.org>
---------------------------------------------------------------------------
-
-I would like to announce the release of MediaWiki 1.21.2, 1.20.7 and
-1.19.8. These releases fix 3 security related bugs that could affect users
-of MediaWiki. Download links are given at the end of this email.
-
-* Mozilla, and other developers, reported a full path disclosure in
-MediaWiki, when an invalid language is specified in ResourceLoader
-<https://bugzilla.wikimedia.org/show_bug.cgi?id=46332>
-
-* An internal review found several API modules allowed anti-CSRF tokens to
-be accessed via JSONP.
-<https://bugzilla.wikimedia.org/show_bug.cgi?id=49090>
-
-* Andreas Peetz reported an issue with the MediaWiki API where an invalid
-property name could be used for XSS with older versions of Internet
-Explorer.
-<https://bugzilla.wikimedia.org/show_bug.cgi?id=52746>
-
-
-Additionally, the following extensions have been updated to fix security
-issues:
-
-* CentralAuth: An internal review found an authentication regression that
-allowed an attacker to bypass authentication
-<https://bugzilla.wikimedia.org/show_bug.cgi?id=52338>
-
-* SyntaxHighlight_GeSHi: Mateusz Goik reported an XSS in the included
-example.php script
-<https://bugzilla.wikimedia.org/show_bug.cgi?id=49070>
-
-* CheckUser: Alex Monk reported and fixed that CheckUser didn't require
-anti-CSRF tokens for checking users
-<https://bugzilla.wikimedia.org/show_bug.cgi?id=45019>
-
-* Wikibase: Liangent reported and fixed an XSS
-<https://bugzilla.wikimedia.org/show_bug.cgi?id=53472>
-
-* LiquidThreads: Alex Monk reported and fixed an XSS
-<https://bugzilla.wikimedia.org/show_bug.cgi?id=53320>
-
-
-
-Full release notes for 1.21.2:
-<https://www.mediawiki.org/wiki/Release_notes/1.21>
-
-Full release notes for 1.20.7:
-<https://www.mediawiki.org/wiki/Release_notes/1.20>
-
-Full release notes for 1.19.8:
-<https://www.mediawiki.org/wiki/Release_notes/1.19>
-
-For information about how to upgrade, see
-<https://www.mediawiki.org/wiki/Manual:Upgrading>
-
-
-**********************************************************************
-   1.21.2
-**********************************************************************
-Download:
-http://download.wikimedia.org/mediawiki/1.21/mediawiki-1.21.2.tar.gz
-
-Patch to previous version (1.21.1):
-http://download.wikimedia.org/mediawiki/1.21/mediawiki-1.21.2.patch.gz
-
-GPG signatures:
-http://download.wikimedia.org/mediawiki/1.21/mediawiki-core-1.21.2.tar.gz.sig
-http://download.wikimedia.org/mediawiki/1.21/mediawiki-1.21.2.tar.gz.sig
-http://download.wikimedia.org/mediawiki/1.21/mediawiki-1.21.2.patch.gz.sig
-
-Public keys:
-https://www.mediawiki.org/keys/keys.html
-
-**********************************************************************
-   1.20.7
-**********************************************************************
-Download:
-http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.7.tar.gz
-
-Patch to previous version (1.20.6):
-http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.7.patch.gz
-
-GPG signatures:
-http://download.wikimedia.org/mediawiki/1.20/mediawiki-core-1.20.7.tar.gz.sig
-http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.7.tar.gz.sig
-http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.7.patch.gz.sig
-
-Public keys:
-https://www.mediawiki.org/keys/keys.html
-
-**********************************************************************
-   1.19.8
-**********************************************************************
-Download:
-http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.8.tar.gz
-
-Patch to previous version (1.19.7):
-http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.8.patch.gz
-
-GPG signatures:
-http://download.wikimedia.org/mediawiki/1.19/mediawiki-core-1.19.8.tar.gz.sig
-http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.8.tar.gz.sig
-http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.8.patch.gz.sig
-
-Public keys:
-https://www.mediawiki.org/keys/keys.html
-
-**********************************************************************
-   Extension:CentralAuth
-**********************************************************************
-Information and Download:
-https://www.mediawiki.org/wiki/Extension:CentralAuth
-
-**********************************************************************
-   Extension:SyntaxHighlight_GeSHi
-**********************************************************************
-Information and Download:
-https://www.mediawiki.org/wiki/Extension:SyntaxHighlight_GeSHi
-
-**********************************************************************
-   Extension:CheckUser
-**********************************************************************
-Information and Download:
-https://www.mediawiki.org/wiki/Extension:CheckUser
-
-**********************************************************************
-   Extension:Wikibase
-**********************************************************************
-Information and Download:
-https://www.mediawiki.org/wiki/Extension:Wikibase
-
-**********************************************************************
-   Extension:LiquidThreads
-**********************************************************************
-Information and Download:
-https://www.mediawiki.org/wiki/Extension:LiquidThreads
-_______________________________________________
-MediaWiki announcements mailing list
-To unsubscribe, go to:
-https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce
-
+iQIcBAEBAgAGBQJRd3H2AAoJEBYNRVNeJnmTrvYP/0TiNMzFbXIMNG3xIiMbK7pi
+mnyfT/ZMNPCnmg1KD2sk51v5ieiw8n5A1HUENULQhJSbGdZQGKnbkPSdWdGGyl6i
+TA21oZYuiOuArUnpn2H0awyzjLQpotOvXk0cmCcNBAS0EFqx4+i5T33kzN/vgaN2
+2Q1XviUb5lkj5xQOLm63aUIZhg1iEKuHmIWJlzurlIEA2J1Bbq2GZ3bLi03k6DZC
+uV+bhB2FNfOH59TFqDiqglaJhVgtM1dVUiHLaVknS9D/IVlD4y86QKZ+fXZdXBuV
+pcVVchgQ8EfS+fXwRnEbKrv/4KvsvFkuVZN5+kUYJNtObhnckR7xa93yR0V05rC1
+jVaxqeivlv2tTHet3uFnNgVQi1xipjQR+Nakqa+D++BoNP7p4EpiyU8u3NjiYzHP
+4zn8LalDSY50lT+khQSYmf/4pJTGLBPkXaOqkw7FMUxJDSlshRvXBCdggFij6LDl
+xjjwKFVcfOUFkoLg7UgI/QH3+Ks2jdocr0Hb2I8qDJ3LEs5hQ5Y6xz+8tX+vwAWr
+OPbha4MOjPILcqUqvf0quKqr7Zc4qCp6cYE7tzVMdPSvhKOmPlNYob3ul/jGj9ym
+7zJ6iWFJwVQamzB0xSBwBtKOoEIopIdVgy8f1p0uJJLh9PsBuBeHyW4GNP26WS7x
+Owv0UuGMa8gvDio+BY5c
+=UhCV
+-----END PGP SIGNATURE-----
