@@ -1,87 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/7
-Message-ID: <52090CDD.6080806@redhat.com>
-Date: Mon, 12 Aug 2013 10:27:09 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/8
+Message-ID: <517824E1.4080005@redhat.com>
+Date: Wed, 24 Apr 2013 12:30:57 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>, Henri Salo <henri@...v.fi>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: CVE request for Drupal contributed modules
+To: Open Source Security <oss-security@...ts.openwall.com>, security@...dpress.org, donncha@...oimh.ie
+Subject: WP-Super-Cache XSS and Remote Code Exec
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/11/2013 10:06 PM, Forest Monsen wrote:
-> Good, thanks Henri.
-> 
-> 
-> On Sat, Aug 10, 2013 at 12:38 AM, Henri Salo <henri@...v.fi>
-> wrote:
-> 
->> On Fri, Aug 09, 2013 at 10:02:59PM -0600, Kurt Seifried wrote:
->>> On 08/09/2013 05:29 PM, Forest Monsen wrote:
->>>> Hi there,
->>>> 
->>>> I'd like to request CVE identifiers for...
->>>> 
->>>> SA-CONTRIB-2013-061 - Flippy - Access Bypass 
->>>> https://drupal.org/node/2054701
->>>> 
->>>> SA-CONTRIB-2013-062 - RESTful Web Services (RESTWS) - Access 
->>>> Bypass https://drupal.org/node/2059603
->>>> 
->>>> SA-CONTRIB-2013-063 - Authenticated User Page Caching
->>>> (Authcache) - Information Disclosure
->>>> https://drupal.org/node/2059589
->>>> 
->>>> SA-CONTRIB-2013-064 - Persona - Cross site request forgery
->>>> (CSRF) https://drupal.org/node/2059599
->>>> 
->>>> SA-CONTRIB-2013-065 - Organic Groups - Access Bypass 
->>>> https://drupal.org/node/2059765
->>>> 
->>>> SA-CONTRIB-2013-066 - Monster Menus - Multiple
->>>> Vulnerabilities (Looks like two here: XSS, and an Access
->>>> Bypass vuln) https://drupal.org/node/2059823
->>>> 
->>>> Thanks!
->>>> 
->>>> Best, Forest
->>>> 
->>> 
->>> Yup
->>> 
->>> CVE-2013-4224 SA-CONTRIB-2013-061 - Flippy - Access Bypass
->>> 
->>> CVE-2013-4225 SA-CONTRIB-2013-062 - RESTful Web Services
->>> (RESTWS) - Access Bypass
->>> 
->>> CVE-2013-4226 SA-CONTRIB-2013-063 - Authenticated User Page
->>> Caching (Authcache) -Information Disclosure
->>> 
->>> CVE-2013-4227 SA-CONTRIB-2013-064 - Persona - Cross site
->>> request forgery (CSRF)
->>> 
->>> CVE-2013-4228 SA-CONTRIB-2013-065 - Organic Groups - Access
->>> Bypass
->>> 
->>> CVE-2013-4229 SA-CONTRIB-2013-066 - Monster Menus XSS
->>> 
->>> CVE-2013-4230 SA-CONTRIB-2013-066 - Monster Menus Access
->>> Bypass
->> 
->> CVE-2013-4187 has been assigned already for
->> SA-CONTRIB-2013-061[1]. CVE-2013-4224 should be REJECTED if I am
->> correct, thanks.
->> 
->> 1: http://www.openwall.com/lists/oss-security/2013/08/01/1
->> 
->> --- Henri Salo
->> 
-> 
+Is there any way to get the WordPress community involved in actually
+handling security issues properly? E.g. requesting CVE's, or heck,
+I'll settle for being notified via email directly. I found out about
+this stuff on Reddit (linked to Tony Perez's blog posting) so I read
+the code and voila:
 
-Thanks all for catching it. Please REJECT CVE-2013-4224, use the
-originally assigned CVE-2013-4187 please.
+===============================================================
+
+WP-Super-Cache XSS 1.3
+Fixed in 1.3.1 with code changes like:
+- -<form name="wp_manager" action="<?php echo $_SERVER[ "REQUEST_URI" ];
+?>" method="post">
++<form name="wp_manager" action="" method="post">
+
+Please use CVE-2013-2008 for this issue.
+
+===============================================================
+
+WP-Super-Cache 1.2 Remote Code Execution
+Fixed in 1.3:
++2013-04-11 10:39  donncha
++
++       * wp-cache.php: Remove mfunc, mclude and dynamic-cached-content
++         tags from comments. Props Frank Goossen
++
+(http://blog.futtta.be/2013/04/10/wp-safer-cache-stopgap-for-wordpress-cache-plugins-vulnerability/)
++         and kisscsaby
++         (http://wordpress.org/support/topic/pwn3d?replies=6)
+
+http://blog.sucuri.net/2013/04/update-wp-super-cache-and-w3tc-immediately-remote-code-execution-vulnerability-disclosed.html
+
+To test leave a comment like: <!?mfunc echo PHP_VERSION; ?><!?/mfunc?>
+
+To fix it they added a mfunc filter in wp-super-cache-1.3/wp-cache.php:
+
++add_filter( 'preprocess_comment','no_mfunc_in_comments' );
++add_filter( 'comment_text','no_mfunc_in_comments' );
++add_filter( 'comment_excerpt','no_mfunc_in_comments' );
++add_filter( 'comment_text_rss','no_mfunc_in_comments' );
+
+Please use CVE-2013-2009 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -89,17 +58,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSCQzdAAoJEBYNRVNeJnmTDGoP/0rbe9yEUlqBXeBXNAem/3C4
-CF7tKsx+EDTHegRWtFZgmiRqNWzCJfLoWGLO79Klu5HT/pmmnHX6ESMdFJqcjlDV
-CmNSU8di/K8JJdZGIgAwp3JyEiIRlRVnMwKy/AeintaiPRGxl5qSy3N4qVWwdUz/
-Zn3ss5wjNDyPrq106wTtbFY+BiKprR5RvIx+bBMXmP0D6sqEuXb73laWnv9nRPgz
-HoYL65aoEGVWZq3SIyKVF5lNaIPZhKbHSyXp1cmO0sy29aPwl1hjJTvoimyTUBka
-5CRmUAg25NR/GJdP8GYMCQiU/Az8Lu3UVrxzgRyzZYjpVcoD3l/icdJqs/PiD/TW
-w/85sWoIbSoZX9ZaHQFc0rzj3NiGVxKi2x/2FUBouFgf7Vxlfn/dva5oLiPNdQgL
-ADCW92Pbgp4Bk3N0YH++f1vrhYzZ+W6D4wQgaFhH0nqXv7LfjDsXnSfHV0kid83+
-qGi8FCA8+N88gfwBzQfpnIq9nsWanuOQO9BMdgFZXKEFxSsYnWGNLx5UWL444x7F
-ojka3OHBc8A+/i+Ty+g5qXhL7wWrCAgo6UYLMZ4hXIJjNlLeO9lpLNe+dAQ+y6Jm
-pBEUgiLoYBHSmtpavQv2UVmkfKcwXoY+7+NO5Z/4kQUAZBKCGSNKIz4oIS0KXmK+
-zTkz+Hb03mnBrR/LOndZ
-=8/DX
+iQIcBAEBAgAGBQJReCTgAAoJEBYNRVNeJnmT/GsQALYk6SgqA/WmmXXCSoOxlwgV
+zn1S47llVum5CPC7G90jH0+bOt7MfYx2vApxsd0IjWAgOfyPdx7Du51MQOoOglnG
+rWbKTzxQ2w0d23r9PHbr+ydKueqoROzulPTsuGgwzyAh1F2Z3UALTZ+Rx/7jIgOG
+LVgi3jpSFEM4vsjwTKXvZ5dDAb6qwpPPXgY6zwB+6fVbxTMXfU8wpdCrrUoBA58F
+/HualHi5RjNgl4ayk/7CVLIVPtOpYIavotZu7zZWYvU/9Ib8zZyVnK7lxW4kCOs/
+5UqqXaoaR00Dyb05T87ygIh4mD0SpTuq6hXQxbrALz9muoEeQZSDrNEbqyemhluz
+LAoS0giVdjKcIg6sBR8DCbcrRNR61rWCFN7B3qJoi2o+hhnjO7Kd3bgELEWJ31Vk
+e5uOrARoEGuUnb08p49g3MTMaQWhyTHK+pMsciy5XPResYwS2SrAm/M92HRxW1H/
+Q5nI8x4AZdg5XRFwYDw1p9RPyr1C9pODz/qzedOIoibGy/mh9+DlQjq0EheEM/9X
+lXnNQosF9hj+OoUdS19rnEMVPqpdZDuuVlhiWXrVh9/9MSbKqUl2aPVj9EbQCOUJ
+6OKQTvGN5xgIn3bVf++R1fGVNxaQWbQ/qIg72ex6oOPuDKzs3pt3JJYPnWPK2EKl
+IaeZazUMlSVb0nb9iSiQ
+=qtlM
 -----END PGP SIGNATURE-----
