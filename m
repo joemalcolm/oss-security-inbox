@@ -1,39 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/1
-Message-ID: <20130821002548.GC3732@nb4>
-Date: Wed, 21 Aug 2013 02:25:48 +0200
-From: Michael Niedermayer <michaelni@....at>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/6
+Message-ID: <86y5c8otxk.fsf@ds4.des.no>
+Date: Wed, 24 Apr 2013 17:00:07 +0200
+From: Dag-Erling Smørgrav <des@....no>
 To: Open Source Security <oss-security@...ts.openwall.com>
-Cc: ffmpeg-security@...peg.org
-Subject: CVE Request: FFmpeg 2.0.1 multiple problems
+Subject: Advisory dates
 Content-Type: text/plain; charset=utf-8
 
-Hi
+I'm curious as to what kind of policies various distros have in place
+wrt release dates for advisories.  We (FreeBSD) have a list of dates to
+avoid, which include major religious holidays, New Year's Day etc., and
+try to avoid releasing advisories on or immediately before these dates.
+But May is often problematic, with May Day (May 1st) and Liberation Day
+(May 8th in Western Europe, May 9th in Eastern Europe) clustered
+together.  An early Easter adds Ascension to the mix (May 17th last
+year, May 9th this year).  A late Easter is even worse: the Holy Week in
+late April, followed by a four-day week, with the next week cut short by
+May 1st and the one after that amputated by May 8th / 9th.
 
-Id like to request CVE(s) for FFmpeg 2.0.1, for the changes below:
+Not to mention national or regional holidays such as Cinco de Mayo (May
+5th, obviously) or Norway's Constitution Day (May 17th)...
 
+How do you deal with situations like this?  And do you have documented
+policies or guidelines?
 
-https://github.com/FFmpeg/FFmpeg/commit/e43a0a232dbf6d3c161823c2e07c52e76227a1bc
-Out of array (on heap) write
-Found-by: wm4
-
-
-https://github.com/FFmpeg/FFmpeg/commit/2960576378d17d71cc8dccc926352ce568b5eec1
-https://trac.ffmpeg.org/ticket/2842
-testcase and valgrind output on bugtracker above
-Out of array (on heap) write
-Found-by: Piotr Bandurski <ami_stuff@...pl>
-
-
-https://github.com/FFmpeg/FFmpeg/commit/c94f9e854228e0ea00e1de8769d8d3f7cab84a55
-Found-by: Laurent Butti <laurentb@...il.com>
-Wrong return code that could lead to NULL+offset to be written to after memory
-allocation failure
-
-Thanks
+DES
 -- 
-Michael     GnuPG fingerprint: 9FF2128B147EF6730BADF133611EC787040B0FAB
-
-There will always be a question for which you do not know the correct answer.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Dag-Erling Smørgrav - des@....no
