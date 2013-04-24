@@ -1,41 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/1
-Message-ID: <517771F6.7090900@redhat.com>
-Date: Tue, 23 Apr 2013 23:47:34 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Thierry Carrez <thierry@...nstack.org>
-Subject: CVE-2013-2006 OpenStack keystone LDAP password disclosure in log files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/15
+Message-ID: <20130425002730.56357d24@melee>
+Date: Thu, 25 Apr 2013 00:27:30 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Cc: kseifried@...hat.com, security@...dpress.org, donncha@...oimh.ie
+Subject: Re: WP-Super-Cache XSS and Remote Code Exec
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-So as part of https://bugs.launchpad.net/ossn/+bug/1168252 we have
-CVE-2013-1977 for the insecure file permissions (devstack/etc.). We
-also have the password being logged and exposed in the log files:
+On Wed, 24 Apr 2013 12:30:57 -0600
+Kurt Seifried <kseifried@...hat.com> wrote:
 
-https://review.openstack.org/#/c/26826/2/keystone/common/config.py
+> WP-Super-Cache 1.2 Remote Code Execution
+> Fixed in 1.3:
 
-Please use CVE-2013-2006 for this issue (password being logged to the
-log file).
+There are two different changelog entries that look like they belong to
+this issue:
+https://wordpress.org/extend/plugins/wp-super-cache/changelog/
+
+1.3 says:
+"mfunc tags could be executed in comments. Fixed."
+
+and 1.3.2 says:
+"Any mfunc/mclude/dynamic-cached-content tags in comments are now
+removed."
+
+To me this looks like 1.3 contained an incomplete fix that got
+completed in 1.3.2 (?), but I don't know. If that's the case, we should
+probably have another CVE for the incomplete fix.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v2.0.19 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRd3H2AAoJEBYNRVNeJnmTrvYP/0TiNMzFbXIMNG3xIiMbK7pi
-mnyfT/ZMNPCnmg1KD2sk51v5ieiw8n5A1HUENULQhJSbGdZQGKnbkPSdWdGGyl6i
-TA21oZYuiOuArUnpn2H0awyzjLQpotOvXk0cmCcNBAS0EFqx4+i5T33kzN/vgaN2
-2Q1XviUb5lkj5xQOLm63aUIZhg1iEKuHmIWJlzurlIEA2J1Bbq2GZ3bLi03k6DZC
-uV+bhB2FNfOH59TFqDiqglaJhVgtM1dVUiHLaVknS9D/IVlD4y86QKZ+fXZdXBuV
-pcVVchgQ8EfS+fXwRnEbKrv/4KvsvFkuVZN5+kUYJNtObhnckR7xa93yR0V05rC1
-jVaxqeivlv2tTHet3uFnNgVQi1xipjQR+Nakqa+D++BoNP7p4EpiyU8u3NjiYzHP
-4zn8LalDSY50lT+khQSYmf/4pJTGLBPkXaOqkw7FMUxJDSlshRvXBCdggFij6LDl
-xjjwKFVcfOUFkoLg7UgI/QH3+Ks2jdocr0Hb2I8qDJ3LEs5hQ5Y6xz+8tX+vwAWr
-OPbha4MOjPILcqUqvf0quKqr7Zc4qCp6cYE7tzVMdPSvhKOmPlNYob3ul/jGj9ym
-7zJ6iWFJwVQamzB0xSBwBtKOoEIopIdVgy8f1p0uJJLh9PsBuBeHyW4GNP26WS7x
-Owv0UuGMa8gvDio+BY5c
-=UhCV
+iQIcBAEBCAAGBQJReFxUAAoJEKWIAHK7tR5CdxUP/RfFa1T9gRurS0xwrRgGZ6dn
+QK8zLJMxXARrvZv8idL/qgFh/KCclxfHi+4d4YS5RTXoHO5mpLmh62/lwGwRCSYZ
+KZ5KNk8Okn68tMeRb5QhiaKwEG4vFBeLzxWJGlQ30NX78eG5sF2X68zqAR7yFqDA
+JPaZIlQg7t7fpPNuwUEgRAJeS8PgXcGdSdUzzfgDpjy13ws8PSWzgc1LVZ/yQE+O
+zOCNktpRQ7Ds61XltcT7v1GmE6p3cQGLNWsD8QGAKqDOQ0PKhurmf0RGMXPsu9SR
+NTmjq2Y7OUJ9pfrKpOkOxOzUbGS5CNV8lSpLawYvSWnZjFVkthY2E4CPLNk84l/J
+7GM7roXtJkZs/qboe7l9fIeF1+Ar/2VZab6jqVBGbfdls7PKP22QnMxOYviUHjZb
+IE59/fGcuQGjBGXZgfXHGUvQEyvuQj2NZfQ9IKi5kA671VgyaLjYMFLlKdrUoNca
+oY8cQGNVMrrdt1gJcXUf46e1oyNkJWP9zWG06roKhRPfeaVYLAUyAdLJldpcraEO
+69FoCmgJP3Nyu56NhjDqlZDge+SYrk9cwjPs8CyDYppKUMD6PMWg6iiDzgbAe+0a
+xzVfVOtv1r1e4RVH1l3pmNdwCrWPou+YGwDa+w97GRzVYaU4t1xOWyg4+j0uNQP8
+7UdD9Wip1zYdhpVyfF5F
+=DIVv
 -----END PGP SIGNATURE-----
