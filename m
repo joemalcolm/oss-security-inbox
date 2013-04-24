@@ -1,47 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/31/3
-Message-ID: <5109EC7A.5060102@redhat.com>
-Date: Wed, 30 Jan 2013 21:00:58 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/11
+Message-ID: <51782922.5000308@redhat.com>
+Date: Wed, 24 Apr 2013 12:49:06 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: jQuery 1.6.2 XSS CVE assignment
+To: oss-security@...ts.openwall.com
+CC: Dag-Erling Smørgrav <des@....no>
+Subject: Re: Advisory dates
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-http://blog.jquery.com/2011/09/01/jquery-1-6-3-released/
+On 04/24/2013 09:00 AM, Dag-Erling Smørgrav wrote:
+> I'm curious as to what kind of policies various distros have in
+> place wrt release dates for advisories.  We (FreeBSD) have a list
+> of dates to avoid, which include major religious holidays, New
+> Year's Day etc., and try to avoid releasing advisories on or
+> immediately before these dates. But May is often problematic, with
+> May Day (May 1st) and Liberation Day (May 8th in Western Europe,
+> May 9th in Eastern Europe) clustered together.  An early Easter
+> adds Ascension to the mix (May 17th last year, May 9th this year).
+> A late Easter is even worse: the Holy Week in late April, followed
+> by a four-day week, with the next week cut short by May 1st and the
+> one after that amputated by May 8th / 9th.
+> 
+> Not to mention national or regional holidays such as Cinco de Mayo
+> (May 5th, obviously) or Norway's Constitution Day (May 17th)...
+> 
+> How do you deal with situations like this?  And do you have
+> documented policies or guidelines?
 
-Fix an XSS attack vector: User ma.la reported a common pattern that
-many sites are using to select elements using location.hash that
-allows someone to inject script into the page. This practice seemed
-widespread enough that we decided to modify the selector recognition
-to prevent script injection for the most common case. Any string
-passed to $() cannot contain HTML tags (and thus no script) if it has
-a ?#? character preceding them. See the ticket linked above for more
-information and a test case.
+Ultimately if we start scoring off major holidays we've have no
+release dates left ;)
 
-Please use CVE-2011-4969 for this issue.
+In general Red Hat goes by major North American statutory holidays
+(many of which tend to be global, e.g. Christmas). We also do our best
+to avoid North American Friday (which is Saturday in Europe/Asia) and
+North American Saturday/Sunday as well. Other than that we tend to
+release as needed:
+
+https://www.redhat.com/archives/rhsa-announce/2013-April/date.html
+
+and so on. Also some historical data on which weekdays/times are the
+busiest:
+
+http://www.awe.com/mark/blog/20111111.html
+
+> DES
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRCex6AAoJEBYNRVNeJnmT11YQALSADLnn7aJWe1tUteN496vh
-ZqZyPrG6X0FGCOx6avLQV9NRUReX01y/ED2Z5mN/oOujCXBIYReOlbdLAXmvl9kU
-zLSwQ1cyrOUjXRv2Cdwg9Dg8O1VLARg0v0jr30i1WCZGa3ZZxgxh9YXb3u7k3+oJ
-M5mv+4ztTB6qjcj8k62d0CFEVHRqoU58Quni9qwJ4tKDeidGabg5bFvR5v80LIvq
-HHdyZLbmOQ+yfpRxEHAkpjncBOhhhCG7oM622qMZFnSYnkA0bf7uLv2KEXHTGrvJ
-zNOzLinvgDyKZfXR+CFCljb9QxnjyKSeSaVAarOR3iVrSMu46Y/3RgTGClxcv3ay
-j4MLAVwfKODkIRZw42FvG2Kc/HIc2zFzMo06YSmX8ku8TLwY7ixfj87qksI/K/tg
-InbJAzbF9gcSmcJHleFjksvE5HfQNncxDHLQvREcILck/lpuLk1K9fEmcy1uBhEw
-p6WZdBb2ZFQYc4nmYIC+GIHF7j4on5f1+z0CjGDyVvPeOIsLrOJbkld9P/WyWaeh
-o0DnM/kw4UdghoK1gKnoIJ+JdloxmhPbqWsYST4uHCbPn+D2hCNVS1Js+aTAj47T
-EsZASWr4O0Bn4eRuAY28MxllNHws9dWiXYCofHnRZ0Nsxuqf2bBXy+nEMLGBTDz8
-LNa27cSc2/YJ3xIZJKMl
-=c6pH
+iQIcBAEBAgAGBQJReCkiAAoJEBYNRVNeJnmTFq4P/0KfKYmig+pL8S/6hDXN42L/
+fBUFP+l7vFGbVRcY4ycWRrTHUR+k0WrsP4SsVbkNDWHTT9x83lzRLSlAlHJ6Uw0C
+YFN6uBQpNjpeh/qqzUSxg3jx0O1y/TyY+yB2U6Mu5JY+2tZMHzC2/NI/hxBbKAbz
+hjEN7vZOnmSa6cw83x0ps6Zuz4RnzIi6Eon51AMZ+xuqhREM1q08SsLlaLERj+a3
+D0jzAQAv8sscO+ROlCA/hTW1UTkzsSWTBRb55RS6WzlYXwZ28fn7mLh8zE7FwIAC
+yBJAqy1awSpktCEBmMayiohI7ZHAV70cNmP7crJZIACrfElmHp9F0Dpuuf24abv3
+qXsm3d9i8a3QslIc77kYO7W2ya5NJfmQ0gIOBvLXLsvEBPNDu2KZtiY1tHfoe++l
+FMHP1OFsLEIftFH5UxIljQcvVPw5DFimFPW5UA+QwzNJVm2hzf4hZb0LjLqayPIW
+qG/CC0yrWC3ohh5Mh2y8GD5MRxROxkKluFM1s7+A/bXfF0E4IHY0zDsSrNawaRsF
+GCsb4Y1Zn+YmD+WxoSa6Tqk9ysii8+g7O21cUeNBRskXp5xYVlTuM4n9V96FJXFs
+Pyzwy5IfHDdAm26oB4eOiD0Y3I5arlORgB8mIg0R6YMwsT6US6j5SONIdn/nHr+H
+fFCT7x5pmGXQkkU3LaQn
+=JOPE
 -----END PGP SIGNATURE-----
