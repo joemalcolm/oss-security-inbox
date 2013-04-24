@@ -1,33 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/10
-Message-ID: <20130516145946.GE19291@kludge.henri.nerv.fi>
-Date: Thu, 16 May 2013 17:59:46 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: plugins@...dpress.org
-Subject: CVE request: WordPress plugin wp-cleanfix CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/9
+Message-ID: <5178289B.5050804@redhat.com>
+Date: Wed, 24 Apr 2013 12:46:51 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, security@...dpress.org
+Subject: W3 Total Cache 0.9.2.8 Remote Code Exec
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Can I get CVE for CSRF vulnerability in WordPress plugin wp-cleanfix, thanks.
-Attacker can execute arbitrary PHP code using eval() in wpCleanFixAjax.php with
-CSRF. I also noticed the plugin contains wp-cleanfix.php:
+Is there any way to get the WordPress community involved in actually
+handling security issues properly? E.g. requesting CVE's, or heck,
+I'll settle for being notified via email directly. I found out about
+this stuff on Reddit (linked to Tony Perez's blog posting) so I read
+the code and voila:
 
-<script type="text/javascript" src="http://blog.wpxtre.me/widget/?<?php echo
-time() ?>"></script>
+http://wordpress.org/extend/plugins/w3-total-cache/
 
-Tested: 2.4.4
++* Improved security for mfunc, now disabled by default and requires
+security string in order to execute
 
-Information posted originally 11 months ago, but eval() alone is not dangerous.
-Not sure if this should be 2012 or 2013 CVE.
++        if (!defined('W3TC_DYNAMIC_SECURITY'))
++            return;
++        $buffer = preg_replace_callback('~<!--\s*mfunc\s*' .
+W3TC_DYNAMIC_SECURITY . '(.*)-->(.*)<!--\s*/mfunc\s*' .
+W3TC_DYNAMIC_SECURITY . '\s*-->~Uis', array(
 
-References:
-http://wordpress.org/support/topic/plugin-wp-cleanfix-remote-code-execution-warning
-https://github.com/wpscanteam/wpscan/issues/186
-http://wordpress.org/extend/plugins/wp-cleanfix/
+Please use CVE-2013-2010 for this issue.
 
----
-Henri Salo
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJReCibAAoJEBYNRVNeJnmTVJYP/1kkvewSW9TCa+4j7fg+1YOG
+YD3noZd9vttAkJBhR7y30Wi4/16WwtMHfrmTVxRjh7o6ZSv2fvZMZI0GrICdWIFE
+pLStD6eKe8eIumV/1iAVL5514Qm50oJ/ZcCGVTmfz7Isf8df1s5Udz6VMqLIZpjG
+nosnQfSyOr7rcycmGPbXdTMguCczrj4aRPLOcH5PdY1T9JCiJar/2UmqWYZw2M0U
+fA1BE38++tDYmSNi7XoLkfpUt6Z7Bk19QzGCDBBpqY7aWefo4UWEQ9Amx3mj6TCL
+gFv5F9n763UeEzXRYHu2gawF+eXfW21Iz+EzsSyP/UvNqqfYe+/oaieb7yh8Iqq2
+icrXAhCe/5gbyx2DG98ldoE7Zj1CEsN1Wqmc+3SHWGoBI3el/TG6iCRBZeGk/Vje
+xG2U0wwXvO7jInaurLt7SsK5MKU2ALh/22MhX8t+1wsuOtC20FKTh5F9TCThmtxu
+evYMi+tyEcNvNE2E9F52VK5t+/QGWMeXVS8lH2y3nw02a3Vv9hUvQz1JwQ2dZQNr
+hEsBZBDR15TAt+umbEDUSobDtB8xX+NT9rZ6F7dAkJ8O3kTB5ZQRAcpAL7kdWYOL
+pv14kiwJFXEV3JWYRhU1FKti99QHWVgP4iR2a9wThJ8WSNhkQGzusv4fz8xarpgl
+vEyGkNH3sBenzVmbbxQj
+=h+jS
+-----END PGP SIGNATURE-----
