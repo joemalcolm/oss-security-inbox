@@ -1,69 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/16/4
-Message-ID: <51E570C5.9020602@redhat.com>
-Date: Tue, 16 Jul 2013 10:11:49 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- kde-workspace 4.10.5 fixing two security flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/2
+Message-ID: <5177A206.20201@openstack.org>
+Date: Wed, 24 Apr 2013 11:12:38 +0200
+From: Thierry Carrez <thierry@...nstack.org>
+To: kseifried@...hat.com
+CC: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2013-2006 OpenStack keystone LDAP password disclosure in log files
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-On 07/16/2013 09:49 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+Kurt Seifried wrote:
+> So as part of https://bugs.launchpad.net/ossn/+bug/1168252 we have 
+> CVE-2013-1977 for the insecure file permissions (devstack/etc.).
+> We also have the password being logged and exposed in the log
+> files:
 > 
-> while not listed in the announcement: [1]
-> http://www.kde.org/announcements/announce-4.10.5.php
+> https://review.openstack.org/#/c/26826/2/keystone/common/config.py
 > 
-> looks like kde-workspace v4.10.5 fixed two security flaws (the
-> second one a minor one):
-> 
-> * Issue #1 - Possible NULL pointer dereference in KDM and
-> KCheckPass when glibc 2.17 (eglibc 2.17) or FIPS enabled system
-> used Bug: https://git.reviewboard.kde.org/r/111261/ Relevant
-> patches: 
-> https://projects.kde.org/projects/kde/kde-workspace/repository/revisions/45b7f137fbc0b942fd2c9b4e8d8c1f0293e64ba7
->
-> 
-https://projects.kde.org/projects/kde/kde-workspace/repository/revisions/7777194da6154375fc8103b8c4e29e385cd7ae2e
+> Please use CVE-2013-2006 for this issue (password being logged to
+> the log file).
 
-Please use CVE-2013-4132 for this issue.
-
-> * Issue #2 - Plasma desktop is leaking memory in X if some system
-> tray icon is blinking Bug:
-> https://bugs.kde.org/show_bug.cgi?id=314919 Relevant patch: 
-> https://projects.kde.org/projects/kde/kde-workspace/repository/revisions/2c810db3e41d56ad7dd8ec3436f3cf3abcc31983
-
-Please
-> 
-use CVE-2013-4133 for this issue.
-
-> Could you allocate CVE ids for these?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
-
+This is tracked at https://bugs.launchpad.net/keystone/+bug/1172195
+Note that it only affects DEBUG level logs.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Thierry Carrez (ttx)
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJR5XDFAAoJEBYNRVNeJnmTLfIP/RVTSMmLYJumi0W8x/E30KZ2
-3cUMqoaG5u5SHV8yMgqM+rCshGIyrmnsNvGo7GCVR2ARCfhYJcphVhfKswKKlzty
-8mTS/0NHdqoOUhkPCHeN6PuLcN6RhPxJuCiCyknIYscLBiBVwyCK9jqx/nzjN3/A
-FKXXho67VI3CkXgrrSV/xjMa4suP2dtvqrQva+VBuk4jrYRSQUdO9IvS0lAMc2Mt
-ztiaLlEfKIXBg+M7SrDVaiYcSHQq1pEjeS2XBAMhcg4LDdEkrUzEnNlNJVxLQaVM
-rhnz1kgf+xl0z0kX1mQFI/svsQLr0TAXeQapux61YFOTlaW2RGeg9IIXPm2syptJ
-VZTd+iO678y0rk5OhSD1KQsnB/noE+cLlWCZAkOGh4NUnYjjhn/WjLHpHTrnuiop
-wzg7HNEBYg+q39kCb6sOSzBu1HiHX0i95klwaxSK0TXDk0Css1s5jOiuA+GdXJdg
-WAC0XF3vOlQiLGzj3qJnVYTDgdI9e8YqzO1ntSnkah5v1o5/cnAL4BjYd8n+JC5o
-42WcMVPvtO7Zf7MzLPLAuBRNk7T6aF8YV2xZVbJI2FYhMhZKntxYMneXIow45WV1
-wRkwAcSB+tkgY/Fk5CP3fRjBVDzjPF2jpzL5SKJfmcZyKili8oTqo0M+g80JXR4Q
-/71x+Y7C1a8MxylbH9Jf
-=1Pm8
+iQIcBAEBCAAGBQJRd6IDAAoJEFB6+JAlsQQjPTgP/0O+/scukQmmSf4LZ1ORtabK
+Y7i+9yGPlFmm0EYCgbsr67Wj64uzUnWpLxpWPX33BqHRv+qSJeIMpi6qQ7kpPqFa
+bDO3PrVdgicOn3sthTmhjOk2xds1V9cv7J7KwibcWRGTsBzdz3/9QgIvNWsyTFY5
+s4KDXdjArHx2/POOFnEc54AlQdOZmSySRiSbYYoz8r6BF8y88S2eqAnxmrPh3oUW
+fIQGA+SUahgEbNOLVI6/WrrjSJ9mAs4+9mRO/g5oGbXe1Q48O7LRlDPchPpCqO1d
+2MH+w3n6gC64WVZksogn6P9KiI0tkd1er2AN1waMMtlfuYVz2kz++UGflqmbZr1e
+Y34GNA1DLnK7nYhxP00ii1F4UtdBWQfg2AXrdiCeGP9iZ5S5oX/XAFHYsIVi4Hsv
+l+h6achLa5g/0ujccT0lukMtTLsQky4uakhaiO+m1ur1iQ14dKwunBIeTpjCcBUe
+TL3pc3hNL1e0MQf8FQbBoVpzSPXi7faiS448M/aB1cOUPGmiMhm0sb8n2yC+AHmq
+PXPCjdkxWZt4H9+/HVQm760rA3bkUcE74ONUiW9wQUtY0YMTFENAFlw+J/xYaBkn
+uiLuRXplLmnZ4iNBiUVVFpuT9UQgNhLhD+o32p1m5MprX8GSwRBWAjV9fHZqHevf
+r/bT692V4jdx9SFYaGgW
+=7BAD
 -----END PGP SIGNATURE-----
