@@ -1,66 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/3
-Message-ID: <520C45F0.6000703@redhat.com>
-Date: Wed, 14 Aug 2013 21:07:28 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/10
+Message-ID: <517828C2.4060106@redhat.com>
+Date: Wed, 24 Apr 2013 12:47:30 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Oden Eriksson <oeriksson@...driva.com>
-Subject: Re: CVE Request -- php - handling of certs with null bytes
+CC: security@...dpress.org, donncha@...oimh.ie
+Subject: Re: WP-Super-Cache XSS and Remote Code Exec
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/14/2013 02:47 AM, Oden Eriksson wrote:
-> Hello, A similar flaw as in ruby and python was discovered and
-> fixed for php.
+On 04/24/2013 12:30 PM, Kurt Seifried wrote:
+> Is there any way to get the WordPress community involved in
+> actually handling security issues properly? E.g. requesting CVE's,
+> or heck, I'll settle for being notified via email directly. I found
+> out about this stuff on Reddit (linked to Tony Perez's blog
+> posting) so I read the code and voila:
 > 
-> ruby - CVE-2013-4073 python - CVE-2013-4238 php - CVE-2013-????
+> ===============================================================
 > 
-> http://www.ruby-lang.org/en/news/2013/06/27/hostname-check-bypassing-vulnerability-in-openssl-client-cve-2013-4073/[1]
->
->  Upstream fixes:
+> WP-Super-Cache XSS 1.3 Fixed in 1.3.1 with code changes like: 
+> -<form name="wp_manager" action="<?php echo $_SERVER[ "REQUEST_URI"
+> ]; ?>" method="post"> +<form name="wp_manager" action=""
+> method="post">
 > 
-> http://git.php.net/?p=php-src.git;a=commit;h=dcea4ec698dcae39b7bba6f6aa08933cbfee6755[2]
->
->  
-> http://git.php.net/?p=php-src.git;a=commit;h=2874696a5a8d46639d261571f915c493cd875897[3]
->
+> Please use CVE-2013-2008 for this issue.
 > 
+> ===============================================================
 > 
-> _https://bugs.mageia.org/show_bug.cgi?id=10997_
-> 
-> Cheers.
-> 
-> -------- [1]
-> http://www.ruby-lang.org/en/news/2013/06/27/hostname-check-bypassing-vulnerability-in-openssl-client-cve-2013-4073/
->
-> 
-[2]
-http://git.php.net/?p=php-src.git;a=commit;h=dcea4ec698dcae39b7bba6f6aa08933cbfee6755
-> [3]
-> http://git.php.net/?p=php-src.git;a=commit;h=2874696a5a8d46639d261571f915c493cd875897
+> WP-Super-Cache 1.2 Remote Code Execution Fixed in 1.3: +2013-04-11
+> 10:39  donncha + +       * wp-cache.php: Remove mfunc, mclude and
+> dynamic-cached-content +         tags from comments. Props Frank
+> Goossen + 
+> (http://blog.futtta.be/2013/04/10/wp-safer-cache-stopgap-for-wordpress-cache-plugins-vulnerability/)
 >
 > 
-Please use CVE-2013-4248 for this issue.
++         and kisscsaby
+> +         (http://wordpress.org/support/topic/pwn3d?replies=6)
+> 
+> http://blog.sucuri.net/2013/04/update-wp-super-cache-and-w3tc-immediately-remote-code-execution-vulnerability-disclosed.html
+>
+>  To test leave a comment like: <!?mfunc echo PHP_VERSION;
+> ?><!?/mfunc?>
+> 
+> To fix it they added a mfunc filter in
+> wp-super-cache-1.3/wp-cache.php:
+> 
+> +add_filter( 'preprocess_comment','no_mfunc_in_comments' ); 
+> +add_filter( 'comment_text','no_mfunc_in_comments' ); +add_filter(
+> 'comment_excerpt','no_mfunc_in_comments' ); +add_filter(
+> 'comment_text_rss','no_mfunc_in_comments' );
+> 
+> Please use CVE-2013-2009 for this issue.
+
+Forgot to include link to source code:
+http://wordpress.org/extend/plugins/wp-super-cache/
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSDEXwAAoJEBYNRVNeJnmTX/YP+wT0llGEspdTT6wBYCIs++TI
-QRrEDmZMlNinVtipL9pMBEElIIIiF+qsvNS/v6yaDnGk+oOvyl2HrmV/ZUhEXX+s
-QN2t/FcXFddn3/uWJqCmpcf84cJB0Tyo1yh9HXqEcp6vNP13IoFVKfK2EXUY9tDT
-GcjkpLJLYtqa3nLnNkkLwlBukZH2T2sJs7oBdpfbOuKYeJSKD10waekRz0CK/X44
-wdw2c1hhhkI2EGIyhrcM4KP9+WV2eh7QRvSXVaVLANlzMVQmlxqRimvrX8mbo2VD
-n3SeMXV0Yx/ULi2vYI7pqj454B5BaOkszg6kRN1GyBO/0DY5ae605uRuHERs2ks3
-82BMATyOUvohOacTFjWegDG5zsKW94zBBHIIG3DcHzbaN+Wogn0F8Hh5g5ZnD8ie
-uUMyTVI0NlC6wFLIir8HUf2wDvG0QjCp5cwM6prqQJM0Pmp0vNJ8SLhux1beUpwT
-zEy8BFCcqIexso5njRO7BJ+rjmh0AOohL8OXDXTjbwP/HMTv7zg0QKHeKp4QUx8J
-RlArRX96ITWXQwXDubcxXOAlvqmILLhwXLQC+RYGekRhuHzUSlQGpT2zQT1PbraZ
-lIfdUuQnTgxu3pGkcu6xS0T63nTiuovGRRKZlFuIrj/27j+/44a0Uqd9U5FyuXoA
-ygv/GCkJSgcSjaRl1+gx
-=QgvB
+iQIcBAEBAgAGBQJReCjCAAoJEBYNRVNeJnmT/FkP/0T/8f6I+LZyvT1hRLGK2YrW
+If+fHmm8th+K+Bz2sP1FHovABKcfJEupDncEqlj8wobK3Up0HHfpykYYLhlvp7S2
+ldkAiC/mHd2O/JwB4ZZkmjccHS0kqmYJ0MOokO+iphRD1URUKxQgQT+G+w6dGOeO
+6v48WDwZmVSB82Ttp0waJp0XtJ1rQGoKGVgCE0ytdrBG1MIjDI5g1U2VquaApL8+
+75rUECFtdRCxIpZ/uZ+l/uW7C/jWOzSnKFtWG/kvXypgVtcTH7EFIClvbf+sJkYh
+0NFzpWLl+B66XG7YBKtvWvQzF2h0tuKCsio8kOYZhP3nMzqhIoSnaDaor6gEMK4h
+L45rTI0ql/Kgoh2FZiAsG89z961AhdHdL479LC/jING3xDQwWQF6I4lHfzWxwPdD
+ZajFH+1bS804UNdYLaNzxMMUF3+vaVLycfdQWF7WFjCVzh2eikBgq0nAacLBWLGn
+JC5WUgf6BY7ZfEMmyhGIGiwOCIPjQZ6SRmybZ10c+x5WxRkrGFkOIYe2noUvJwh7
+S2GogHA4oRkWF3ZVyXWrcqPGSgpZRGVsK8kUEv7VOtFP8wB/oRPJwUDCfiNu9+C3
+b3lNPt/a0Z64lmKBpvQbMFyW3bmCu+T6JOVFB9+wh6ao9StkwKenRZSsA22J/U7X
+/nfV/pyjwQubk3/nifp2
+=/PBV
 -----END PGP SIGNATURE-----
