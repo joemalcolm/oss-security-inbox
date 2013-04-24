@@ -1,61 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/9
-Message-ID: <20130605130253.GK27176@twins.programming.kicks-ass.net>
-Date: Wed, 5 Jun 2013 15:02:53 +0200
-From: Peter Zijlstra <peterz@...radead.org>
-To: eranian@...gle.com, ak@...ux.intel.com, security@...nel.org, Marcus Meissner <meissner@...e.de>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: More perf security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/4
+Message-ID: <20130424134927.GA29461@kludge.henri.nerv.fi>
+Date: Wed, 24 Apr 2013 16:49:27 +0300
+From: Henri Salo <henri@...v.fi>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: Felix Groebert <groebert@...gle.com>, "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: Multiple potential security issues fixed in ClamAV 0.97.8 - any further details?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 05, 2013 at 02:38:56PM +0200, Petr Matousek wrote:
-> On Wed, Jun 05, 2013 at 02:15:59PM +0200, Peter Zijlstra wrote:
-> > On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
-> > > Hello, Peter.
-> > > 
-> > > On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
-> > > > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
-> > > > 
-> > > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
-> > > > 
-> > > > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
-> > > > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-> > > > Date:   Fri May 3 14:11:25 2013 +0200
-> > > > 
-> > > >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
-> > > > 
-> > > >     We should always have proper privileges when requesting kernel
-> > > >     data.
-> > > > 
-> > > >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-> > > >     Cc: <stable@...nel.org>
-> > > >     Cc: Andi Kleen <ak@...ux.intel.com>
-> > > >     Cc: eranian@...gle.com
-> > > >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
-> > > >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
-> > > >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
-> > > >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
-> > > 
-> > > There is similar check in perf_copy_attr() which is called from
-> > > perf_event_open syscall --
-> > > 
-> > >                 /* kernel level capture: check permissions */
-> > >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
-> > >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
-> > >                         return -EACCES;
-> > > 
-> > > It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
-> > > missing something?
-> > > 
-> > 
-> > I overlooked it, also its slightly broken. See the discussion at: 
-> >   https://lkml.org/lkml/2013/5/21/166
+On Wed, Apr 24, 2013 at 07:59:04AM -0400, Jan Lieskovsky wrote:
+> Hello Felix,
 > 
-> Got it, thanks for the pointer. So it is safe to say there never was a
-> leak in this case (and thus no security issue worth CVE)?
+>   this is due the ClamAV 0.97.8 release:
+>   [1] http://blog.clamav.net/2013/04/clamav-0978-has-been-released.html
+>   [2] https://github.com/vrtadmin/clamav-devel/blob/0.97/ChangeLog
+>   [3] https://bugzilla.redhat.com/show_bug.cgi?id=956176
+>   [4] https://bugzilla.novell.com/show_bug.cgi?id=816865
+> 
+> Could you clarify how many and what kind of possible security issues
+> has been corrected within this release? (so we would know how many
+> CVE identifiers should be allocated to these)
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-There was a leak, notice how Stephane's patch did a
-s/PERF_SAMPLE_BRANCH_PERM_PLM/PERF_SAMPLE_BRANCH_KERNEL/ but also places
-the check _after_ we propagate the event PLM levels in the case none
-were LBR specific.
+Information from Joel Esler. No CVEs assigned yet.
 
+commit 270e368b99e93aa5447d46c797c92c3f9f39f375
+commit 24ff855c82d3f5c62bc5788a5776cefbffce2971
+commit c6870a6c857dd722dffaf6d37ae52ec259d12492
+commit 3cbd8b5668bd0f262a8c00b1fd57eb03c117b00a
 
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
