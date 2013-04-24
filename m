@@ -1,63 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/11/5
-Message-ID: <52308FD9.6050602@openstack.org>
-Date: Wed, 11 Sep 2013 17:44:25 +0200
-From: Thierry Carrez <thierry@...nstack.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: [OSSA 2013-025] Token revocation failure using Keystone memcache/KVS backends (CVE-2013-4294)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/3
+Message-ID: <1338841942.1598214.1366804744754.JavaMail.root@redhat.com>
+Date: Wed, 24 Apr 2013 07:59:04 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Felix Groebert <groebert@...gle.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Multiple potential security issues fixed in ClamAV 0.97.8 - any further details?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello Felix,
 
-OpenStack Security Advisory: 2013-025
-CVE: CVE-2013-4294
-Date: September 11, 2013
-Title: Token revocation failure using Keystone memcache/KVS backends
-Reporter: Kieran Spear (University of Melbourne)
-Products: Keystone
-Affects: Folsom, Grizzly
+  this is due the ClamAV 0.97.8 release:
+  [1] http://blog.clamav.net/2013/04/clamav-0978-has-been-released.html
+  [2] https://github.com/vrtadmin/clamav-devel/blob/0.97/ChangeLog
+  [3] https://bugzilla.redhat.com/show_bug.cgi?id=956176
+  [4] https://bugzilla.novell.com/show_bug.cgi?id=816865
 
-Description:
-Kieran Spear from the University of Melbourne reported a vulnerability
-in Keystone memcache and KVS token backends. The PKI token revocation
-lists stored the entire token instead of the token ID, triggering
-comparison failures, ultimately resulting in revoked PKI tokens still
-being considered valid. Only Folsom and Grizzly Keystone setups making
-use of PKI tokens with the memcache or KVS token backends are affected.
-Havana setups, setups using UUID tokens, or setups using PKI tokens with
-the SQL token backend are all unaffected.
+Could you clarify how many and what kind of possible security issues
+has been corrected within this release? (so we would know how many
+CVE identifiers should be allocated to these)
 
-Grizzly fix:
-https://review.openstack.org/#/c/46080/
-
-Folsom fix:
-https://review.openstack.org/#/c/46079/
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4294
-https://bugs.launchpad.net/keystone/+bug/1202952
-
-Regards,
-
-- -- 
-Thierry Carrez
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJSMI/ZAAoJEFB6+JAlsQQjgtUQAIh7h+yJQbBsdTGMVeM6Skv0
-bUSJBWx03m2JtUVVuWpWeByG9fdiLVFs9tGep5JuiOv4pqz7GhvOM5JSS30yaV+V
-yT34B/IFsvW8I6E2OMBeQSaANE22kcQMje9v1TnWrTJNLtTrHsO18lb/pkF+nbl1
-G0Jn+d4VnkGzaZ8+YvaeGt1qxbiYy9jkS5j8/UIf2KOeOCj3wXv4gXC7OIudP+6g
-NMWHCtNqeU36u9bhDwTH2huw8p7SUMh58sepiSniZ8QWrlc7BVbEpyR6SanGtzej
-CPpCKjkSNt7bBngVF2GyVZWgS8LeSbNoapNk3+K4Gt2dEPAqxoc1qtTAp68Vb2Fe
-LQh2sGvvhpLeFClGew5e6dBUdj3qmokMxPqLhj+QRZCP6Ub7x/d1lkW8L2f9Bk1/
-dgNc10GcWpiySxofs5HpIeFBoHqB22D2WybEgJ4ruJXc1dJc7l3szUKMoBMbqZ1k
-qcZYWxJUdY9d0q4SRjPQIvUQEl4vTqGGECl4pwIxx+PgVJSRbTjMKK2bBrNtvt2P
-B12XBNdz3GUCLtY5DF9SQEdCqIfciOJ5gYH+zuO2dbOyeH9Mptl+3Ze6XLL4EVql
-ctEOeWGHAh7atc7bL9GxMvNnGWbbqNmH7Mq5I0hhDsWt2MHHvnRSxvYRgVp0kr+X
-FPGguJy1K/Kfyquy60Oe
-=1rfx
------END PGP SIGNATURE-----
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
