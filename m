@@ -1,40 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/17
-Message-ID: <a33dba902cd6202e1d87c839e023c348@chewa.net>
-Date: Thu, 25 Jul 2013 11:08:45 +0200
-From: Rémi Denis-Courmont <remi@...lab.net>
-To: <kseifried@...hat.com>
-Cc: Jean-Baptiste Kempf <jb@...eolan.org>, <oss-security@...ts.openwall.com>,  Michael Niedermayer <michaelni@....at>,  Moritz Muehlenhoff <jmm@...til.org>, Moritz Muehlenhoff <jmm@...ian.org>,  <ffmpeg-security@...peg.org>, <security@...eolan.org>
-Subject: Re: new FFMpeg stuff
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/11
+Message-ID: <20130425140315.GP21938@mars-attacks.org>
+Date: Thu, 25 Apr 2013 16:03:15 +0200
+From: nicolas vigier <boklm@...s-attacks.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 25 Jul 2013 03:01:33 -0600, Kurt Seifried <kseifried@...hat.com>
-wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 07/25/2013 02:52 AM, Jean-Baptiste Kempf wrote:
->> On 25 Jul, Kurt Seifried wrote :
->>> Can the VLC security team confirm/correct this as needed so we
->>> can ensure it's correct before I assign CVEs? thanks.
->> 
->> Why the VLC security team should be involved in that?
-> 
-> Because they want to help make sure the CVEs get correctly assigned?
-> 
-> If you guys don't care about getting CVE's done properly well that's
-> your choice I guess and I'll assign the CVEs as best I can. But I was
-> hoping VLC upstream might help out.
+On Wed, 24 Apr 2013, Eric H. Christensen wrote:
 
-It's not that we don't care about CVE IDs. But "upstream VLC" is upstream
-VLC, i.e. the VLC code base. We just do not have the resources and
-expertise to evaluate FFmpeg/libav security issues individually.
+> On Sun, Apr 21, 2013 at 12:39:39AM +0400, Solar Designer wrote:
+> > i just found this recent blog post by Allan McRae of Arch Linux:
+> > 
+> > http://allanmcrae.com/2012/04/how-secure-is-the-source-code/
+> 
+> This is a great article and I really appreciate the work that went into the research.
+> 
+> > I think that placing both "MD5 checksum provided on same site as
+> > download" and "PGP signature, key difficult to verify" in the same
+> > "yellow" category is inconvenient for us.  "MD5 checksum provided on
+> > same site as download" only helps verify downloads from mirrors against
+> > the master site, whereas "PGP signature, key difficult to verify"
+> > achieves a lot more - once a distro is already including the package
+> > (and has already taken the risk of it having been tampered with), then
+> > verifying further updates to the package becomes almost as reliable as
+> > it would have been with proper signing (with a "readily verifiable" key).
+> > So we need four categories, or simply "MD5 checksum provided on same
+> > site as download" should be in "red", not in "yellow".
+> 
+> This is a good discussion to have.  I've recently started working on "best practices" articles at Red Hat and feel this would make an excellent article on how we can all improve the security of our source code that inevitably gets pushed into the various distributions.  
+> 
+> What is really the best, most proper way of desiminating releases?  I really don't like the use of MD5 for checksums (I'd prefer something out of the SHA-2 or SHA-3 family of hashing algorithms) and I really *do* like the use of PGP for signing the code.  I do foresee some practices within the use of PGP that might not be great, though.
+> 
+> So what is the best way of authenticating the source code?
 
-Besides, VLC can be linked dynamically with many different FFmpeg or libav
-versions. So keeping track of their security issues within the context of
-VLC is more or less impossible. That is up to the VLC binary packagers, not
-to upstream developers.
+The good thing about PGP signed tarballs is that an automated check
+could be integrated in package build, with some standard macros or
+script to make it easy to check signature from a specific key. If it's
+easy and does not cost time then more packagers will do it.
 
--- 
-Rémi Denis-Courmont
-Sent from my collocated server
