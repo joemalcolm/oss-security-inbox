@@ -1,36 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/16/4
-Message-ID: <20130816105834.GB20884@gremlin.ru>
-Date: Fri, 16 Aug 2013 14:58:34 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/5
+Message-ID: <20130425055559.GM17095@nef.pbox.org>
+Date: Thu, 25 Apr 2013 07:55:59 +0200
+From: Alistair Crooks <agc@...src.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: HTTPS
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
-On 15-Aug-2013 13:34:57 +0000, Jeremy Stanley wrote:
+On Wed, Apr 24, 2013 at 10:19:15PM -0400, Eric H. Christensen wrote:
+> This is a good discussion to have.  I've recently started working on
+> "best practices" articles at Red Hat and feel this would make an
+> excellent article on how we can all improve the security of our
+> source code that inevitably gets pushed into the various
+> distributions. 
+> 
+> What is really the best, most proper way of desiminating releases? 
+> I really don't like the use of MD5 for checksums (I'd prefer
+> something out of the SHA-2 or SHA-3 family of hashing algorithms)
+> and I really *do* like the use of PGP for signing the code.  I do
+> foresee some practices within the use of PGP that might not be
+> great, though.
+> 
+> So what is the best way of authenticating the source code?
 
- >> Unlike SSH, the HTTPS clients (which usually are the browsers)
- >> do not cache the visited servers' certificates, fully relying
- >> on issuing CA's honesty. This introduces a risk of false sence
- >> of security.
- >> Hmmmm... It seems that keeping self-signed certificates is even
- >> more safe than relying on "trusted" CAs...
+My apologies - obviously I didn't make myself clear previously.
 
- > Dragging this back onto the original topic, hopefully, the above
- > concerns are far less relevant for a tool focused on downloading
- > packages from a single site. The gem utility could absolutely
- > pin its validation expectations to a single signing authority or
- > even to a single server certificate (and make it a configurable
- > list to support private package repositories and mirrors where
- > desired). The transport security implications for a system with
- > basically one distribution endpoint offer significantly different
- > solutions than a many-to-many association like Web browsing.
+Verifying a signature on a (SHA1, by default) digest will get you the
+information that a person with access to the private key said that the
+digest was calculated at a certain time.  It also leads to the
+following questions:
 
-Yes - that's exactly the point why I started this subthread: signing
-files is much more important than forcing people to connect via HTTPS.
+Q1. who has access to the private key?
 
+A1.  divulgence of creds and the key itself may be known or not, so
+even with the most stringent key protection and hygiene in place, the
+answer to (1) is "unknown"
 
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+Q2. is the key protected by a passphrase?
+
+A2. We'll never know. It's irrelevant too, due to Q1/A1
+
+Q3. has the key expired or been revoked?
+
+A3. At last, one we can answer. Of course we'll know when it expires.
+Unfortunately, revocation may make itself to key servers, maybe not.
+And even if it did, what was the last time of refresh for the public
+key that we have?
+
+Q4. where's the public key for this?
+
+A4. could be anywhere. If it's on one of the HKP servers, then cool.
+Not, however, that it can be verified - I know of at least one person
+who has had pubkey information uploaded to the key servers for a key
+he had no knowledge about. Anyone can put whatever email address into
+the userid that they want. If it came with the tarball, ho hum.
+
+Q5. what was signed?
+
+A5.  if it comes out as a text document, according to RFC 4880, it has
+some weird properties; hopefully all tar files will be binary. 
+Whatever, what was signed was something with the same digest as the
+tarball.  Default algorithm is SHA1.  Second pre-image attacks on SHA1
+are getting closer to being possible, and there are means to modify
+entries in the tarball so that an attack is much easier.
+
+Q6. Is this a DSA key?  (DSA keys rely on good entropy at signing
+time) If so, how good was the entropy on the machine used to generate
+the signature?
+
+A6.  Again, unknown.
+
+Q7. Has someone found the k value for Q6/A6 previously?
+
+A7. They might have done. We'd only know if they told us.
+
+Q8. Did anyone have root access to the machine where gpgagent was
+running?
+
+A8. unknown
+
+So, all in all, what you have is a digest, signed by someone who knows
+the key, or who has access to the creds (if any) for the key, or who
+has found out the key creds, albeit with timestamp info for when the
+signature took place.
+
+I'm not sure what using PGP gains us?
+
+Regards,
+Alistair
