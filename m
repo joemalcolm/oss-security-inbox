@@ -1,32 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/11
-Message-ID: <20130314090620.GB12061@kludge.henri.nerv.fi>
-Date: Thu, 14 Mar 2013 11:06:20 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/1
+Message-ID: <51787BB2.2070801@redhat.com>
+Date: Wed, 24 Apr 2013 18:41:22 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: plugins@...dpress.org
-Subject: Re: WordPress plugins vulnerable to CVE-2013-1808
+CC: Hanno Böck <hanno@...eck.de>, security@...dpress.org, donncha@...oimh.ie
+Subject: Re: WP-Super-Cache XSS and Remote Code Exec
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Mar 10, 2013 at 10:52:07AM +0200, Henri Salo wrote:
-> Plugin: slidedeck2
-> Version: 2.1.20130306
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/24/2013 04:27 PM, Hanno Böck wrote:
+> On Wed, 24 Apr 2013 12:30:57 -0600 Kurt Seifried
+> <kseifried@...hat.com> wrote:
 > 
-> Affected file: http://plugins.svn.wordpress.org/slidedeck2/trunk/js/zeroclipboard/ZeroClipboard.swf 406ca1ec9595fd96424e6c8f3802bc898f080116
-> PoC: wp-content/plugins/slidedeck2/js/zeroclipboard/ZeroClipboard.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
+>> WP-Super-Cache 1.2 Remote Code Execution Fixed in 1.3:
 > 
-> Affected file: http://plugins.svn.wordpress.org/slidedeck2/trunk/js/zeroclipboard/ZeroClipboard10.swf 1ea0fc0cea30a7d912c2564d51204a816f1e58be
-> PoC: wp-content/plugins/slidedeck2/js/zeroclipboard/ZeroClipboard10.swf?id=\"))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
+> There are two different changelog entries that look like they
+> belong to this issue: 
+> https://wordpress.org/extend/plugins/wp-super-cache/changelog/
+> 
+> 1.3 says: "mfunc tags could be executed in comments. Fixed."
+> 
+> and 1.3.2 says: "Any mfunc/mclude/dynamic-cached-content tags in
+> comments are now removed."
+> 
+> To me this looks like 1.3 contained an incomplete fix that got 
+> completed in 1.3.2 (?), but I don't know. If that's the case, we
+> should probably have another CVE for the incomplete fix.
 
-This has been fixed in 2.1.20130306 version. Changelog
-http://wordpress.org/extend/plugins/slidedeck2/changelog/ says:
+I'm not going to spend time researching this. If you want to, feel
+free, based on your results I can assign a CVE if needed.
 
-2.1.20130306
-Security improvements
 
-Again no CVE added to changelog and reporter (me) not notified about fixes done.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
---
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQIcBAEBAgAGBQJReHuxAAoJEBYNRVNeJnmT3N0QAMxpGryTu5OCnQg8M7gSeyk5
+moiAo3LznDf2zu57PHOUPI3UnpIIdjsluEOgn6Sbo/BoP/keT6dpG9wg4oVKd/k0
+ZlMRUKHjQlPRjBaWvkrwSpDvPil9AcBAWHTNgnA9RsSy0y0gRF3wq4wPydGR6CE6
+1U8oM7Ikl9A7GU0//OREscLI4/+q2lqesLWvYlVyFk9lA5bDoOU0JTKnNvtTJb9L
+iFKbtmVN/5KlyilTny2yD9HwnW+gY+8qA12uVj/q1i9xFUeHZvUW4TA+As2yomMp
+WSn+mNz1FKi1qzEWMIO1pJj6RncubWkF9DBqDL42VWe2POWvp62KcVbc9hHN7pbe
+SMobyp+Vl9/mAlg1jdsSbf7jjHj9MptM7EfXcJL7hM2zwqdHgXIglEi8lZfffvcY
+MCqzzN89abpz1YNqaicWR3fkjMSi1/YogaWuGZglmGQdx3cCoD70EinA7H0UCok/
+l2Eh9Ikz9d0dpevQLWwm49G7dtuKBEy1XsxF11vKKq8GRoiG6+0+YfHVO4s3Imyn
+GjjFKHNKByeXk/i5rw71O3cV0lcMgaxCjt0v01R1i1ATjyVdjjWS0+c1ow/pGaC/
++/wbkFFxN8MtWwJdvQas3e/5oe+fu5RyWfcWqM3w3WTGePYKqzQM6/sn0t7SzkhQ
+bTwqcH2ybUk5tfQnwt3f
+=VCth
+-----END PGP SIGNATURE-----
