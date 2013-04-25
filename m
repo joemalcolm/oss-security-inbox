@@ -1,45 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/5
-Message-ID: <20130325111538.GA28728@inutil.org>
-Date: Mon, 25 Mar 2013 12:15:38 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: Mathias Krause <minipli@...glemail.com>
-Subject: Re: Linux kernel: net - three info leaks in rtnl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/6
+Message-ID: <5178C862.5080705@archlinux.org>
+Date: Thu, 25 Apr 2013 16:08:34 +1000
+From: Allan McRae <allan@...hlinux.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-> On 03/19/2013 03:15 PM, Mathias Krause wrote:
-> > I fixed a few more info leaks in linux v3.9-rc3. Unprivileged
-> > users can use the netlink interface to exploit the following issues
-> > to disclose kernel stack memory:
-> > 
-> > 29cd8ae dcbnl: fix various netlink info leaks 
-> > http://git.kernel.org/linus/29cd8ae0e1a39e239a3a7b67da1986add1199fc0
-> >
-> >  84d73cd rtnl: fix info leak on RTM_GETLINK request for VF devices 
-> > http://git.kernel.org/linus/84d73cd3fb142bf1298a8c13fd4ca50fd2432372
-> >
-> >  c085c49 bridge: fix mdb info leaks 
-> > http://git.kernel.org/linus/c085c49920b2f900ba716b4ca1c1a55ece9872cc
-> >
-> >  David Miller did backports for the above issues which are
-> > currently under review and should end up in the next stable and
-> > longterm kernels.
-> > 
-> > Regards, Mathias
+On 25/04/13 15:55, Alistair Crooks wrote:
+> On Wed, Apr 24, 2013 at 10:19:15PM -0400, Eric H. Christensen wrote:
+>> This is a good discussion to have.  I've recently started working on
+>> "best practices" articles at Red Hat and feel this would make an
+>> excellent article on how we can all improve the security of our
+>> source code that inevitably gets pushed into the various
+>> distributions. 
+>>
+>> What is really the best, most proper way of desiminating releases? 
+>> I really don't like the use of MD5 for checksums (I'd prefer
+>> something out of the SHA-2 or SHA-3 family of hashing algorithms)
+>> and I really *do* like the use of PGP for signing the code.  I do
+>> foresee some practices within the use of PGP that might not be
+>> great, though.
+>>
+>> So what is the best way of authenticating the source code?
 > 
-> CVE Merge - same researcher/vuln/version. Please use CVE-2013-1873 for
-> these issues.
+> My apologies - obviously I didn't make myself clear previously.
+> 
+> Verifying a signature on a (SHA1, by default) digest will get you the
+> information that a person with access to the private key said that the
+> digest was calculated at a certain time.  It also leads to the
+> following questions:
+> 
+> Q1. who has access to the private key?
+> 
+> A1.  divulgence of creds and the key itself may be known or not, so
+> even with the most stringent key protection and hygiene in place, the
+> answer to (1) is "unknown"
+> 
+> Q2. is the key protected by a passphrase?
+> 
+> A2. We'll never know. It's irrelevant too, due to Q1/A1
+> 
+> Q3. has the key expired or been revoked?
+> 
+> A3. At last, one we can answer. Of course we'll know when it expires.
+> Unfortunately, revocation may make itself to key servers, maybe not.
+> And even if it did, what was the last time of refresh for the public
+> key that we have?
+> 
+> Q4. where's the public key for this?
+> 
+> A4. could be anywhere. If it's on one of the HKP servers, then cool.
+> Not, however, that it can be verified - I know of at least one person
+> who has had pubkey information uploaded to the key servers for a key
+> he had no knowledge about. Anyone can put whatever email address into
+> the userid that they want. If it came with the tarball, ho hum.
+> 
+> Q5. what was signed?
+> 
+> A5.  if it comes out as a text document, according to RFC 4880, it has
+> some weird properties; hopefully all tar files will be binary. 
+> Whatever, what was signed was something with the same digest as the
+> tarball.  Default algorithm is SHA1.  Second pre-image attacks on SHA1
+> are getting closer to being possible, and there are means to modify
+> entries in the tarball so that an attack is much easier.
+> 
+> Q6. Is this a DSA key?  (DSA keys rely on good entropy at signing
+> time) If so, how good was the entropy on the machine used to generate
+> the signature?
+> 
+> A6.  Again, unknown.
+> 
+> Q7. Has someone found the k value for Q6/A6 previously?
+> 
+> A7. They might have done. We'd only know if they told us.
+> 
+> Q8. Did anyone have root access to the machine where gpgagent was
+> running?
+> 
+> A8. unknown
+> 
+> So, all in all, what you have is a digest, signed by someone who knows
+> the key, or who has access to the creds (if any) for the key, or who
+> has found out the key creds, albeit with timestamp info for when the
+> signature took place.
+> 
+> I'm not sure what using PGP gains us?
+> 
 
-These appeared in the CVE updates under different IDs now:
+Despite PGPs limitations, what I really like to see when a release is
+made is a PGP signed release announcement email to the relevant mailing
+list with decent checksums and the file size in it.  Bonus points if
+that email gets mirrored or at least archived on a different server than
+the source code.
 
-29cd8ae: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2634
-84d73cd: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2635
-c085c49: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2636
+I figure for most open source software, a false release email would be
+spotted fairly quickly...
 
-Which shall we use?
+Allan
 
-Cheers,
-        Moritz
+
