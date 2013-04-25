@@ -1,38 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/7
-Message-ID: <loom.20130408T114452-904@post.gmane.org>
-Date: Mon, 8 Apr 2013 09:47:13 +0000 (UTC)
-From: Damien Regad <damien.regad@...ckgroup.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/8
+Message-ID: <86txmustd2.fsf@ds4.des.no>
+Date: Thu, 25 Apr 2013 14:11:05 +0200
+From: Dag-Erling Smørgrav <des@....no>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple CVE requests for MantisBT
+Cc: kseifried@...hat.com
+Subject: Re: Advisory dates
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...> writes:
-> Please use CVE-2013-1930 for this issue.
+Kurt Seifried <kseifried@...hat.com> writes:
+> Dag-Erling Smørgrav <des@....no> writes:
+> > I'm curious as to what kind of policies various distros have in
+> > place wrt release dates for advisories.  We (FreeBSD) have a list
+> > of dates to avoid, which include major religious holidays, New
+> > Year's Day etc., and try to avoid releasing advisories on or
+> > immediately before these dates.  [...]
+> Ultimately if we start scoring off major holidays we've have no
+> release dates left ;)
 
-Hi Kurt,
+True, so we have to strike a balance.  The problem is that we've caught
+a lot of flak in the past for releasing advisories during or immediately
+prior to public holidays.  Maybe our users are more argumentative than
+yours :)
 
-Thanks for assigning the 3 CVE's.
-
-> > 4. XSS issue on Configuration Report page when displaying complex
-> > value
-> > 
-> > This issue affects Mantis 1.2.0rc1 and later.
-> > 
-> > Lack of proper string escaping allows users (having admin access)
-> > to enter arbitrary javascript code and have it executed on the
-> > user's browser.
-> > 
-> > Reference: http://www.mantisbt.org/bugs/view.php?id=15416
-> 
-> Does this count as a proper release or does it fall into the "beta"
-> classification?
-
-1.2.0rc1 was a beta release. 
-The first "proper" release affected by this was 1.2.0
-
-Hope this clarifies, let me know if you need more info.
-
-Damien
-
-
+DES
+-- 
+Dag-Erling Smørgrav - des@....no
