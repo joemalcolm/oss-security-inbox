@@ -1,25 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/3
-Message-ID: <1338841942.1598214.1366804744754.JavaMail.root@redhat.com>
-Date: Wed, 24 Apr 2013 07:59:04 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Felix Groebert <groebert@...gle.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: Multiple potential security issues fixed in ClamAV 0.97.8 - any further details?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/4
+Message-ID: <5178A7A9.3060500@redhat.com>
+Date: Wed, 24 Apr 2013 21:48:57 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, donncha@...oimh.ie, security@...dpress.org
+Subject: WP-Super-Cache 1.3.1 Remote Code Exec - properly fixed?
 Content-Type: text/plain; charset=utf-8
 
-Hello Felix,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  this is due the ClamAV 0.97.8 release:
-  [1] http://blog.clamav.net/2013/04/clamav-0978-has-been-released.html
-  [2] https://github.com/vrtadmin/clamav-devel/blob/0.97/ChangeLog
-  [3] https://bugzilla.redhat.com/show_bug.cgi?id=956176
-  [4] https://bugzilla.novell.com/show_bug.cgi?id=816865
+So it turns out the attempted fix for CVE-2013-2009 was incomplete. To
+quote reddit:
 
-Could you clarify how many and what kind of possible security issues
-has been corrected within this release? (so we would know how many
-CVE identifiers should be allocated to these)
+"Erm, you forgot about escaping markdown metachars. Here, the fixed
+version, edit it in: \*\^_\^\*"
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+http://www.reddit.com/r/netsec/comments/1czzyx/update_wp_super_cache_and_w3tc_immediately_remote/c9lvxn8
+
+And to quote the WP-Super-Cache 1.3.2 ChangeLog:
+
++= 1.3.2 =
+
+
++* Any mfunc/mclude/dynamic-cached-content tags in comments are now
+removed.
+
+So please use CVE-2013-2011 for this issue.
+
+NOTE: this issue exists because of an incomplete fix for CVE-2013-2009.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJReKepAAoJEBYNRVNeJnmTujUQANF2fv8z1ewjFXCHDkippSn1
+SYpl4pXTWuL5CL/RIL6zbIlhMx6KJMTkC8vJKFKA0OZ7MLn2nJyBvg1DqXUVcI4d
+XvyPQHe53bqjlA6XMD2ldvN4Va3rYAmPQLOlLFJq2tY4VVaa2jW+iEpoTEdXDfwC
+XtkluA33f8vVJE97uwAgMWbh/TQ8dBxESPUEgxgusuQAGNWa5g1T/2ydHYjElb4X
+YH0yIaMh24Ygl9R5UQ8Fs6U5wttHKLYl1bkKCg1RpRgqiQwRc7Zu15hvIHprtOeO
+syKp+R0Xaubv82hZKvMs6SphhNL5u8EOkTVh5iov5BJG4oGj2ZmuaUYXcvn/FTS8
+pIhzEKr1nnmQ56xxrMa91fQdbprEb7JmPtSdl4lyTUZOFn+iLVbP+6mmVZW/lodT
+zOWeiy1lgx+dVBDijvYpaYh7iZuuK+MmtWMkPio3KPQtKnmSRpqpSFxTIdTadNj2
+CB5G0Oy0UT68n7eDrWWYZZR39pCbfwD6WC31MD9QVINHyIqXlBPPlcOKeeDjbGRZ
+OBjR91PHbv/DjVdUQjApgLjP46/9/YfnnVobO8IhYIttauxkMitVcmFhbdtAMYiU
+xKU47/aoBH8oXAzWiGMLLCAgPMNhVgTBFvUwzqmTDdbgZ6waLr2n9fr2qw333CXN
+H5gUmctO2sllcgD1OYb6
+=I8Sy
+-----END PGP SIGNATURE-----
