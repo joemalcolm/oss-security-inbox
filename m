@@ -1,58 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/9
-Message-ID: <516304F0.9000104@redhat.com>
-Date: Mon, 08 Apr 2013 11:57:04 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/7
+Message-ID: <5178DB8F.3010401@redhat.com>
+Date: Thu, 25 Apr 2013 01:30:23 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Damien Regad <damien.regad@...ckgroup.com>
-Subject: Re: Re: Multiple CVE requests for MantisBT
+CC: Alistair Crooks <agc@...src.org>, Josh Bressers <bressers@...hat.com>
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/08/2013 11:00 AM, Kurt Seifried wrote:
-> On 04/08/2013 03:47 AM, Damien Regad wrote:
->> Kurt Seifried <kseifried@...> writes:
->>> Please use CVE-2013-1930 for this issue.
+On 04/24/2013 11:55 PM, Alistair Crooks wrote:
+> I'm not sure what using PGP gains us?
 > 
->> Hi Kurt,
-> 
->> Thanks for assigning the 3 CVE's.
-> 
->>>> 4. XSS issue on Configuration Report page when displaying 
->>>> complex value
->>>> 
->>>> This issue affects Mantis 1.2.0rc1 and later.
->>>> 
->>>> Lack of proper string escaping allows users (having admin 
->>>> access) to enter arbitrary javascript code and have it
->>>> executed on the user's browser.
->>>> 
->>>> Reference: http://www.mantisbt.org/bugs/view.php?id=15416
->>> 
->>> Does this count as a proper release or does it fall into the 
->>> "beta" classification?
-> 
->> 1.2.0rc1 was a beta release. The first "proper" release affected
->> by this was 1.2.0
-> 
-> Ok not assigning a CVE then, unless there are a large number of
-> users betas don't get CVEs.
+> Regards, Alistair
 
-Steve just pointed out I may have misread this. Is 1.2.0 vulnerable,
-and this is fixed in 1.2.1, or was it fixed in the 1.2.0 release (so
-ONLY 1.2.0-rc1 was affected)?
+So some possible outcomes are:
 
-> 
->> Hope this clarifies, let me know if you need more info.
-> 
->> Damien
-> 
-> 
-> 
-> 
-> 
+1) They do PGP/GPG and don't get compromised. Long term outcome: we
+come out way ahead.
+
+2) They do PGP/GPG and do get compromised. Long term outcome: we trust
+bad things and lose, hopefully this gets spotted quickly and dealt with.
+
+At a minimum this raises the bar for attackers when trying to insert a
+fake release/whatever. The real problem however is the cost of doing
+this. Key creation/storage/management/backup/etc is all non trivial
+and not free. Is the cost of this worth it?
+
+I think if we are going to push this we need to come up with a pretty
+good set of guidelines that are easy to follow and implement. Things
+like creation of keys, usage, storage, how to handle key roll overs,
+lost keys, etc. Maybe even have a trusted party signs packages sent to
+them, confirms the package with the project through some other trusted
+channel like secure email or because they know the guy in real life/etc.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -60,17 +42,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRYwTwAAoJEBYNRVNeJnmTB3IP/R29jPp63GvWs/kBjEyHgpDc
-QTgMSSNTwLKdn0AWE9tUmh63TWjbBrIqndh3N1Sd2rN7ZFExkOMkgvCndZIzdy+F
-w3kiG38W7zZIObHrBsHTnM112pc40wOWNt/Qxy9zn5ExNP8AtIyb/iHfYSvqyTNh
-tFPZT23849d/RtoKmZ1E7NDACvEHvSCVj4032AzRNFsBjxH+RXT+dF3gWVj257Sf
-MQVLghMBzya4vo/s0vvGdmu2t44+GtNwP1vSh/LWObBx60Yc+DdJvqBS9IcH7na0
-K7pociQ6Gk/LTcB1f0G3w5aNGzTBRk3VPt1/m0tlortH03hQ1elt41YxPGTKXyAA
-K1yfE++VQQ3pBJVR0fNNr2FguPYpAWlGWAufeUkzBJOUKdQNul4iDWzPUaETiyUQ
-QiK8VhWwckR17aI5xVmmA580S11fVGFtwCFwc8lZlk8ayzvq8ZmjKckDv2ZOOSy/
-OyvD6yd3ZNxMrTXXKJsDUdtmKe0dG2fp8YFfpn1tVZXhaKAU5a4kTl3aWGgDBZTa
-X/1FUNK6YCC0dVgHBF6QgFy6Jg7y4xwxL9upGkueerYf9b/kJzHEbRgQ6s/OTf4j
-I2+bDD+5oBMsWly12tNybbGOUItEXDJesO4TYtOqX8aWO3t0gJsa9IZMsqwTaq4t
-TQGvpC+vhflNs2EdknVc
-=gziP
+iQIcBAEBAgAGBQJReNuPAAoJEBYNRVNeJnmTLXQQAKpQNKy4ABZcJz6H2TJQNk00
+sVKFtBAhMh8reAG4eTzsoIs3LmMpca0XaOsgdWp/HeUBUUZ6L7ru0C7vtJIFy2FE
+lx+os7UoR8SJpOddXkx94lgwx1dN/lzqJahWLdIUwJ569ezVqyloQkPUEDXym9Rt
+qPkRCbHyrH4yQKrL0/gwKOOyVchS223pRzuvl0EkoQN3FvugBQvAIgUPUXve2S8L
++QLTmyf6KxDHR9S9E6HZwsc68XzgJgljzcZtb9TZ9Wx4njrKezx/Tm/npxq+/DGr
+AfOG1/7ojXzACeuen0FBw8xjHrIX0ok6VX8bo+jIsPTYq7vaKnaZQDwDqpkq7Qwo
+XR+n665+4gjlNkyc+GP2RK4HBwpyivu7gUpAlmxlum1KGLKihCYWT2zOVn5YYbNL
+0hQWq0KvN5YaUrcqlIxtWnOdz1yeqNpIR1+aMfzGNFSVzMq7Z91MtOn3HEb2v4Nu
+wQt4ARUU4dK+viXT8uFCuZQmSF6EvaK9Q4EXfZujuZQxB4s1bhRHxoSIySQksNPZ
+A9nm3OKHXlKGaGx/iYOHX7S4m9cBTwmiqS44WzrijGDHRwMtll4Of+9algBNFXda
+AUAsXtm+fgow02AfKMJuPYW7cMZLbn7qNLi6PT/E9Zsoqcs+ZEZwvv6LRR2I83uH
+IcPFjgi4UUUBJOgLl0aw
+=695G
 -----END PGP SIGNATURE-----
