@@ -1,79 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/10
-Message-ID: <50E5E6A6.70909@redhat.com>
-Date: Thu, 03 Jan 2013 13:14:30 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/12
+Message-ID: <517939B4.2040207@fifthhorseman.net>
+Date: Thu, 25 Apr 2013 22:12:04 +0800
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request (maybe): magento before 1.7.0.2
+CC: Kurt Seifried <kseifried@...hat.com>,  Alistair Crooks <agc@...src.org>, Josh Bressers <bressers@...hat.com>
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 04/25/2013 03:30 PM, Kurt Seifried wrote:
 
-On 12/31/2012 02:32 AM, Hanno Böck wrote:
-> Hi,
-> 
-> 
-> http://www.magentocommerce.com/download/release_notes 1.7.0.2
-> changelog lists this: "Fixed: Security vulnerability in Zend_XmlRpc
-> - http://framework.zend.com/security/advisory/ZF2012-01 "
-> 
-> I don't know if we consider bundled libs issues as extra CVE. The 
-> original one is CVE-2012-3363.
-> 
-> 
-> Also, Magento 1.7.0.1 has this: "Fixed: Several potential security
-> vulnerabilities"
-> 
-> Yeah, I like it if vendors are so verbose about their 
-> vulnerabilities... And here are some people defending the "security
-> by obscurity standpoint of magento: 
-> http://www.magentocommerce.com/boards/viewthread/284896/#t397006
-> 
-> (I seriosly consider this is an issue that should be highlighted
-> more - we recently had piwik devs arguing in a similar way for
-> obsurity - free software doesn't protect you from dumb developers
-> thinking that obscurity may be a good idea)
+> At a minimum this raises the bar for attackers when trying to insert a
+> fake release/whatever. The real problem however is the cost of doing
+> this. Key creation/storage/management/backup/etc is all non trivial
+> and not free. Is the cost of this worth it?
 
-Honestly I'm not going to waste any time on tracking these down, it
-would take hours to go through the above mentioned 1.8 meg diff file
-that contains these security flaws. So with this in mind:
+Yes, this cost is worth it.  People who take the time to publish source
+code on the dirty dirty internet have a responsibility to their users to
+take the integrity of their publications seriously.
 
-http://www.magentocommerce.com/download/release_notes
-Release Notes - Magento 1.7.0.1 (Jun 20, 2012)
-Fixed: Several potential security vulnerabilities
+The simple workflow of "the release manager has the OpenPGP key for the
+project on the keyring of her personal development machine" (while
+probably less robust than the ideal scenario), has an extremely low cost
+to implement and raises the bar for an attack significantly.
 
-Please use CVE-2012-6091 for these issues.
+> I think if we are going to push this we need to come up with a pretty
+> good set of guidelines that are easy to follow and implement. Things
+> like creation of keys, usage, storage, how to handle key roll overs,
+> lost keys, etc. 
 
-But here's a hint: it would only take a few hours to hunt down the
-flaws. And according to the argument "these sites handle large volumes
-of money" it would be worth an attackers time to read the diff file,
-so this obscurity argument only hurts the users/admins since they will
-have to waste time figuring out if they need to apply this patch or
-not or if there is a workaround, or what they should do to see if they
-have already been attacked/etc.
+These would be great things to have, but many projects aren't even
+signing their releases yet.  I don't want us to spec out a byzantine
+ruleset that would put people off from *starting* to sign their
+releases.  Maybe such a policy could break out the sophisticated stuff
+into the form of "baseline", "level 1", "level 2", etc.
 
-Feel free to post a copy of this on their forums.
+That way we could encourage all projects to get to the "baseline" (which
+should be short and simple) without requiring them to "level up" right
+away (to offline key storage, key transition statements, etc).
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Some existing ideas about "best-practice" for maintaining an openpgp key
+(and public keyring) have been collected here, though they aren't
+specific to software publishers:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+  https://we.riseup.net/debian/openpgp-best-practices
 
-iQIcBAEBAgAGBQJQ5eamAAoJEBYNRVNeJnmTeecQAJDK6zWT3prklzbLpAks6OwW
-Pe3G1kZWO7ABgm9S5LWJYXQdi4LByD7aXK4N5sowTUAEtefnfQrF3GKDGeiIX+sm
-5rVn1NFqwD6Q+SiK9mkBg0FWxUUBY0y0Q7AcahH4VTifsrCce+rQWG9p79cQQm1H
-alBBF5fvQh1pT5kA9/rAIyO8ZeYJ08ziqDBZGlif4Eyonj1XPT5Q2hKcQ+UL27Lc
-rLynXkrvzCqmBUYO5cjHf57VfX9ePowQcDTouNXUf6tMAhSvrh2t4Neb9NKheRI1
-JDXF9z72qovUXXtX8eV8S00kHEGE14B25mS4mQjWBEqetGy72MpK8EcHsy26XOgr
-1PwcSNpbI3Leu57H8DdrrB8eNPdccbBiHOS0IfLccOsVJIGhVXUJGTV7lfc2PW85
-HcGFStMwWoUOvj00uaes+m7Jjk4yDB2g0SUPJ7AJvKJDQFGRJYiPiJhdqcnqx+lG
-nbVvddnXh4uGNB9IPN8gK/cYjcYffs4/teI52vyhcFFQPwXcsWtnUgEqyUBrYQWL
-Sp+PQsXkZPGulhUSuoQZhItaeziJd0F7ldvR9HbuChbaP/q9xC/6V4ug5CaiECjG
-pNGS7ix8c9I4AuX8KA61PpZVBlAHN/h3TZ4UXA1njJPyiMYdYtwrCMk+7VryPil5
-uDfS/UySiC/aA3hvUNL6
-=tvfI
------END PGP SIGNATURE-----
+(it's a wiki, folks are invited/encouraged to improve it)
+
+> Maybe even have a trusted party signs packages sent to
+> them, confirms the package with the project through some other trusted
+> channel like secure email or because they know the guy in real life/etc.
+
+i'm not sure who "the guy" is, but there's nothing stopping anyone with
+intimate knowledge of the free software ecosystem (e.g. maybe one of the
+foundational distros?) from certifying packaged releases and publishing
+them.  Arguably, the distros that sign their source manifests are
+already doing this work, though they may be in different forms from one
+another or from upstream.
+
+for public third-party assertions to be useful in the real world,
+though, there needs to be easy/public audit infrastructure that anyone
+can run to catch the appearance of malicious/variant versions.
+
+Regards,
+
+	--dkg
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
