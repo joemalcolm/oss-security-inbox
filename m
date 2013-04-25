@@ -1,60 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/20/2
-Message-ID: <20130120170248.1b168985@lola.kot>
-Date: Sun, 20 Jan 2013 17:02:48 +0200
-From: George Kargiotakis <kargig@...d.gr>
-To: P J P <ppandit@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel handling of IPv6 temporary addresses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/14
+Message-ID: <5179747E.10207@redhat.com>
+Date: Thu, 25 Apr 2013 12:22:54 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, William Ting <william.h.ting@...il.com>, Zbigniew Jędrzejewski-Szmek <zbyszek@...waw.pl>, Jan Pokorny <jpokorny@...hat.com>, Thibault North <thibault.north@...il.com>
+Subject: Re: CVE Request -- autojump: autojump profile will load random stuff from a directory called custom_install
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-and sorry for the late reply...
-
-On Thu, 17 Jan 2013 18:43:26 +0530 (IST)
-P J P <ppandit@...hat.com> wrote:
-
-> +-- On Thu, 17 Jan 2013, George Kargiotakis wrote --+
-> | Extensions as far as I know. On your RHEL it's '0' and that's why
-> you | weren't seeing any 'ipv6_create_tempaddr' as previously
-> mentioned on your | emails. If you change this value to '2' you'll
-> also see those kernel | messages.
+On 04/25/2013 10:22 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
->   Yep, worked! I manged to reproduce the log messages. So the patch
-> earlier does seem to fix this issue, doesn't it? It avoids retry once
-> reaching the max_addresses limit.
+> a security flaw was found in the way autojump, a tool for faster
+> filesystem navigation from the command line, used to honour content
+> of custom_install directory when global and local autojump
+> installations were not found, and $SHELL variable was unset or set
+> to different value than bash or zsh. If an unsuspecting autojump
+> user was tricked into running autojump script from the directory a
+> local attacker has write access to, this flaw could be used for
+> arbitrary (Python) code execution with the privileges of the user 
+> running the autojump binary / script.
+> 
+> Relevant (final) upstream patches are as follows: [1]
+> https://github.com/joelthelion/autojump/commit/ad09ee27d402be797b3456abff6edeb4291edfec
+>
+> 
+[2]
+https://github.com/joelthelion/autojump/commit/c763b2afadb188ab52849c21d43d2e8fe5b8800a
+> 
+> References: [3] https://bugzilla.redhat.com/show_bug.cgi?id=950777
+> 
+> Credit: This issue was found and reported to Red Hat Bugzilla [3]
+> by Zbigniew Jędrzejewski-Szmek. Thanks also goes to Jan Pokorny for
+> bringing this one to my attention, and to William Ting of autojump
+> upstream for promptly fixing the issue.
+> 
+> Could you allocate a CVE identifier for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 > 
 
-Yes and no. When flooding finishes everything still works ok,
-temp. addresses haven't been disabled, but when the preferred timer
-of the temp. address of the original acquired prefix expires, the kernel
-won't be able to acquire a new temporary address because the interface
-is already full with 16 addresses from flooding. An already acquired
-address only gets removed when it's validity timer expires. So, the
-host will be left using the global non-temp address acquired by slaac
-until another 'slot' (from the default 16) becomes free/expires.
+Please use CVE-2013-2012 for this issue.
 
-Summarizing, one is still able to remotely, inside a LAN, cause
-problems to another host, that is make it lose it's temp. address
-functionality at least for some time.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-The solution to this problem is not that simple and I've already
-referenced a possible solution in one of my previous emails. Maybe a
-change of logic from max_addresses per interface to max_prefixes per
-interface would help.
-
-> For the dynamic tentative settings of the interface, I think another
-> patch would be required.
-> 
-> Thanks so much!
-> --
-> Prasad J Pandit / Red Hat Security Response Team
-> DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
-
-Regards,
--- 
-George Kargiotakis
-https://void.gr
-GPG KeyID: 0xE4F4FFE6
-GPG Fingerprint: 9EB8 31BE C618 07CE 1B51 818D 4A0A 1BC8 E4F4 FFE6
+iQIcBAEBAgAGBQJReXR+AAoJEBYNRVNeJnmTCr4P/jpGf2Z6HSi5B3Kx+a3bVum7
+x5Q+ScJbiFCAUYKEKJz+vChbkgw4UBhd2MGE4r25NvTM/72XsSlKd7ceq85Cvx/h
+5v6g2+dFh8aI2Qc0aq/t3Mr04qWzSngTAwBVZLSc5NIz0mmy4xd8VbMNHlowV7IY
+VFaRFe4sUFbx+hZi6kwQ8W9HdJ5sx4yxEZHqyAuUx/5XB3xrXyB6d80vDxAO2R0z
+qfriGh0mYr2DM6A0LznW3MnxPTAKRqOclR1rKqcHWOk7Db8ZBWpxJDDfIUtGGLkN
+EEJ/5oRPNCxu5OwVRM7tg2jlT4PTbAWY1hGdCAGqnHeIcwXsjdU+aRE/VYnXvxGd
+MJz8sDJhVm4t27rapStIjFNBtORVgw9lC5whKs/CWEY+8wQYJI+fFw08YRhz3JvA
+fH61zwNsmCxehjgjVSrJZECZN2Qb6s7B8d/hVPT4FsYdigCsqON9UiCcr6rxl0dK
+1P5GSGq/17uVPGrfJCAnruovXOj3gubIsm43uehWtmHeoMFvwLN69IE/4B2EQvRj
+m7HfYE6hnEBlARxO2am/Xz1fW7rYblu8IRkKIPuHAVJBaKyIeYRAg3cuEdgGLpKG
+BSbL1rrLVIlXa2or2c1Jlflo/JTwktreDTCyL3U14MEpgE+HkNSGYb8ryv8ISSpX
+51NsFEhtTbaC/RcoF57I
+=jWFO
+-----END PGP SIGNATURE-----
