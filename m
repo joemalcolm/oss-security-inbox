@@ -1,81 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/10/1
-Message-ID: <5205BB73.4090201@redhat.com>
-Date: Fri, 09 Aug 2013 22:02:59 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/9
+Message-ID: <425021829.2414948.1366894500871.JavaMail.root@redhat.com>
+Date: Thu, 25 Apr 2013 08:55:00 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed modules
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 08/09/2013 05:29 PM, Forest Monsen wrote:
-> Hi there,
 > 
-> I'd like to request CVE identifiers for...
+> So, all in all, what you have is a digest, signed by someone who knows
+> the key, or who has access to the creds (if any) for the key, or who
+> has found out the key creds, albeit with timestamp info for when the
+> signature took place.
 > 
-> SA-CONTRIB-2013-061 - Flippy - Access Bypass 
-> https://drupal.org/node/2054701
-> 
-> SA-CONTRIB-2013-062 - RESTful Web Services (RESTWS) - Access
-> Bypass https://drupal.org/node/2059603
-> 
-> SA-CONTRIB-2013-063 - Authenticated User Page Caching (Authcache)
-> - Information Disclosure https://drupal.org/node/2059589
-> 
-> SA-CONTRIB-2013-064 - Persona - Cross site request forgery (CSRF) 
-> https://drupal.org/node/2059599
-> 
-> SA-CONTRIB-2013-065 - Organic Groups - Access Bypass 
-> https://drupal.org/node/2059765
-> 
-> SA-CONTRIB-2013-066 - Monster Menus - Multiple Vulnerabilities 
-> (Looks like two here: XSS, and an Access Bypass vuln) 
-> https://drupal.org/node/2059823
-> 
-> Thanks!
-> 
-> Best, Forest
+> I'm not sure what using PGP gains us?
 > 
 
-Yup
+I'm going to take a hard stance against this statement and use it as my
+soapbox for a bit here.
 
-CVE-2013-4224 SA-CONTRIB-2013-061 - Flippy - Access Bypass
+This attitude is really dangerous in the world of security (but it has
+infected our universe). Security is hard, we all know that, but I think we
+like to draw a line at 100% and say "it's this or nothing". No, PGP isn't
+perfect, but it gains us a ton. It's a way we can say "this was signed by
+someone with the key". Did the bad guy have they key? Maybe, the goal isn't
+to get to 100%, it's to make the job of an attacker harder, which this
+would do.
 
-CVE-2013-4225 SA-CONTRIB-2013-062 - RESTful Web Services (RESTWS) -
-Access Bypass
+There is no system that exists in this instance that is 100% safe. What we
+need to do isn't talk about how useless PGP is (which it isn't), we need to
+talk about what's right about it and give advice so people understand how
+to avoid silly mistakes.
 
-CVE-2013-4226 SA-CONTRIB-2013-063 - Authenticated User Page Caching
-(Authcache) -Information Disclosure
+A great example is to use a smart card. If a project is using a smart card,
+and tells us they're using a smart card, that would be helpful in letting
+us know their signatures are probably trustworthy. We would certainly know
+their signatures are more trustworthy than a project who uses a private key
+shared between 10 people. Is the smart card a perfect solution? Certainly
+not, but it's better than not using a smart card. How many non security
+people really understand this? How many of us have tried to explain it in a
+calm and understanding manner?
 
-CVE-2013-4227 SA-CONTRIB-2013-064 - Persona - Cross site request
-forgery (CSRF)
+This is Red Hat's goal here. We want to help folks understand what some
+easy wins are. Security is hard, it will never be 100%. I'd rather see us
+all working together to improve what we can.
 
-CVE-2013-4228 SA-CONTRIB-2013-065 - Organic Groups - Access Bypass
-
-CVE-2013-4229 SA-CONTRIB-2013-066 - Monster Menus XSS
-
-CVE-2013-4230 SA-CONTRIB-2013-066 - Monster Menus Access Bypass
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSBbtzAAoJEBYNRVNeJnmTEvwQAM2rw6CmcsPea8E6KXbgxKgZ
-ahuaP4zCV/Nc966X8otYKyQrS6kFtJE4LtqmX7fksaZXg5t7yonRMOrUQr5hF0G9
-asw9gsjpOpZHOsW+PNw4JboIb61I52jX9kJw065HLMDr8oaKMVwXd2LOQcIG75Sf
-1ZKK/Z1UEdHvc2xX0mL5tzy/lbcVNyu0tCTPDQIcVqUGu45E+qeFOi+ecsxiL6ke
-GmgGJt2WQJlOgmbhtUM47H4jfAQBa2AZ7KK+3TY5vvz5/1TOGvYL/N6jsoF4EydZ
-3uawKi3M1+rX8DzCJyn4t9wyUD20C7tb79ZFl63tGsyJOC6LoDWWFkyNAjF61uSu
-XsTtEBr4xNIjXM78ZU12EC4KXFfkQznAtm6NtZwojopP+gJ6BFqAc/qmQgxmJiQB
-J+j8F11YcojhgipH8Zy+Jp1J1dvXpDKPfWnGI8MD+0zCGxBqbUxgcGz9gcRyEJgE
-Gob2XHf0LrXC30bbyOIWMEbni9o9QKZvekyI6gHYo0wBXBcutcD2Av24f9WR0Xpk
-RAudEd21ySi9PrSW49G5vzTjALg0CPYOxEWPkBMkduyN7xFzyEYuNxiPl0M1XLNX
-xS93+odiaaNMecIXvGH+mnh8j7VJiNpCwycYDfT5NpvIFYMFBHoVUO/k7rrloNnw
-0Y8SAoNaA4NFBvdDOEjv
-=hVqb
------END PGP SIGNATURE-----
+-- 
+Josh Bressers / Red Hat Product Security Team
