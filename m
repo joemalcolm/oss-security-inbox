@@ -1,48 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/12
-Message-ID: <517A3EDF.5040800@redhat.com>
-Date: Fri, 26 Apr 2013 02:46:23 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/13
+Message-ID: <275490696.2320667.1366906978544.JavaMail.root@redhat.com>
+Date: Thu, 25 Apr 2013 12:22:58 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Dag-Erling Smørgrav <des@....no>, Alistair Crooks <agc@...src.org>, Josh Bressers <bressers@...hat.com>
-Subject: Re: upstream source code authenticity checking
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, William Ting <william.h.ting@...il.com>, Zbigniew Jędrzejewski-Szmek <zbyszek@...waw.pl>, Jan Pokorny <jpokorny@...hat.com>, Thibault North <thibault.north@...il.com>
+Subject: CVE Request -- autojump: autojump profile will load random stuff from a directory called custom_install
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-On 04/26/2013 02:25 AM, Dag-Erling Smørgrav wrote:
-> Kurt Seifried <kseifried@...hat.com> writes:
->> This makes no sense. So you don't trust their signature because
->> they have to "earn trust", but you do trust their software and
->> you compile and run it? That's literally insane.
-> 
-> This is exactly the logic used by web browsers to justify scaring
-> users away from https sites that haven't payed the Verisign tax...
-> 
-> DES
+  a security flaw was found in the way autojump, a tool for faster filesystem
+navigation from the command line, used to honour content of custom_install
+directory when global and local autojump installations were not found,
+and $SHELL variable was unset or set to different value than bash or zsh.
+If an unsuspecting autojump user was tricked into running autojump script
+from the directory a local attacker has write access to, this flaw could be
+used for arbitrary (Python) code execution with the privileges of the user
+running the autojump binary / script.
 
-Huh? That makes no sense. There's at least one free CA that has a root
-cert in most browsers (http://cert.startcom.org/). I'm sorry but your
-comment in this context doesn't appear to make any sense.
+Relevant (final) upstream patches are as follows:
+[1] https://github.com/joelthelion/autojump/commit/ad09ee27d402be797b3456abff6edeb4291edfec
+[2] https://github.com/joelthelion/autojump/commit/c763b2afadb188ab52849c21d43d2e8fe5b8800a
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+References:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=950777
 
-iQIcBAEBAgAGBQJRej7eAAoJEBYNRVNeJnmTaWEP/jQqCT87jW2ck+/aWMmgsgvb
-W/LKA5TfJQhFyHmthYTy696imwShlETBPbfHzddJTiT3HSRe8ThxeXttq/c0yYC0
-ZDNI92fYTIqnmeou9DpuyNmliJIWlSfPUVU0tNGQMYvvxyy38wy9iYoand3v5M0R
-JtUwFgHW51u5LZnH68cXT9zal8nEUtJ3L054sttyZGvRLMI8c9ZF194iLWJj29aE
-gDrub9BAfaxo/4q65HdwL8WToCPEFwVH5i0Vp2mbbizvDANqTikULcrznkKnyYTp
-boGQ2mQTF2NvWYlwbXCt6MvJXLMegSgGUeKcebuLtMPizhpGuACRMyJ2ALL/VYzG
-8xmnrUqA54xnrRhi9j1CcdqYi4GPoAnLtrSW4pw0ljH0FNHb45sq4km+l+UUghOp
-uzPXqhDVApCy6FtTNc6D9kYxigyJipL0Qb5A1r2nRIiIVi2nW9Hcl5IkdGhCjnK0
-hDEuq+FqkbiBsH9nGvFHBCMYPBFnd6n9cZdYIu7aM4EG0of4KIBadkdO9Biyt8fW
-t8IFDPzUoERRp7DqByD1PQntTezaRNHsdmQEiQT7RyAAXM9pyeIIB2ph49UQFsl2
-GsTKOoTSIyR3zdwsnk+AVKoVHp9AzpfQFyEeLd/D+uCM/XcHdAou70KpmJRxHwKT
-JCYXHqRQD3/isSd4Nzf8
-=ZrkE
------END PGP SIGNATURE-----
+Credit: This issue was found and reported to Red Hat Bugzilla [3] by Zbigniew Jędrzejewski-Szmek.
+        Thanks also goes to Jan Pokorny for bringing this one to my attention,
+        and to William Ting of autojump upstream for promptly fixing the issue.
+
+Could you allocate a CVE identifier for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
