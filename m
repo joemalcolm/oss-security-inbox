@@ -1,48 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/27/5
-Message-Id: <201303271958.46601.tmb@65535.com>
-Date: Wed, 27 Mar 2013 19:58:38 +0000
-From: Tim Brown <tmb@...35.com>
-To: kernel-hardening@...ts.openwall.com
-Cc: Corey Bryant <coreyb@...ux.vnet.ibm.com>, oss-security@...ts.openwall.com
-Subject: Re: [kernel-hardening] Security vulnerability tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/3
+Message-ID: <20130425021915.GB9862@localhost.localdomain>
+Date: Wed, 24 Apr 2013 22:19:15 -0400
+From: "Eric H. Christensen" <sparks@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 27 Mar 2013 19:54:04 Corey Bryant wrote:
-> Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+On Sun, Apr 21, 2013 at 12:39:39AM +0400, Solar Designer wrote:
+> i just found this recent blog post by Allan McRae of Arch Linux:
 > 
-> I'd like to get a better understanding of tools used in the open source
-> community (kernel and user space) to detect security vulnerabilities.
-> 
-> I have a list below to get started.  If anyone has any input, I'd
-> appreciate it!
-> 
-> I'll plan on updating http://oss-security.openwall.org/wiki/tools with
-> anything it doesn't already have.
-> 
+> http://allanmcrae.com/2012/04/how-secure-is-the-source-code/
 
-Hey Corey,
+This is a great article and I really appreciate the work that went into the research.
 
-One you might want to add is unix-privesc-check from myself, @inquisb and 
-@pentestmonkey.  There are two versions in existence:
+> I think that placing both "MD5 checksum provided on same site as
+> download" and "PGP signature, key difficult to verify" in the same
+> "yellow" category is inconvenient for us.  "MD5 checksum provided on
+> same site as download" only helps verify downloads from mirrors against
+> the master site, whereas "PGP signature, key difficult to verify"
+> achieves a lot more - once a distro is already including the package
+> (and has already taken the risk of it having been tampered with), then
+> verifying further updates to the package becomes almost as reliable as
+> it would have been with proper signing (with a "readily verifiable" key).
+> So we need four categories, or simply "MD5 checksum provided on same
+> site as download" should be in "red", not in "yellow".
 
-1.x - @pentestmonkey's quick and dirty with some hacks by me
-trunk - a full blown privesc check framework designed by me with contributions 
-from the other two, it has multiple modes of operation, a standard library 
-which can be leveraged for new checks and (already) enhanced capabilities.   
-Its not perfect yet, I still need to clean it up and port it to the commercial 
-UNIX platforms we support but it should give a good idea of where we're going
+This is a good discussion to have.  I've recently started working on "best practices" articles at Red Hat and feel this would make an excellent article on how we can all improve the security of our source code that inevitably gets pushed into the various distributions.  
 
-Once I've stabilised the API of trunk, it will become 2.x and we'll open it up 
-formerly for contributions.
+What is really the best, most proper way of desiminating releases?  I really don't like the use of MD5 for checksums (I'd prefer something out of the SHA-2 or SHA-3 family of hashing algorithms) and I really *do* like the use of PGP for signing the code.  I do foresee some practices within the use of PGP that might not be great, though.
 
-It's on Google Code if people want to take a look:
+So what is the best way of authenticating the source code?
 
-* http://code.google.com/p/unix-privesc-check
+- --Eric
 
-Tim
--- 
-Tim Brown
-<mailto:tmb@...35.com>
+- --------------------------------------------------
+Eric "Sparks" Christensen
+Red Hat, Inc - Product Security Team
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+sparks@...hat.com - sparks@...oraproject.org
+097C 82C3 52DF C64A 50C2  E3A3 8076 ABDE 024B B3D1
+- --------------------------------------------------
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQGcBAEBCgAGBQJReJKfAAoJEB/kgVGp2CYvKFUL/RP5T8bQd6gnZiduldsgBPLd
+07k/7VNB5shjtaaweKRRBahJ780ELusJ5bYSKsJxFkPkWBu+JR3A/ilz0VINMdR8
+jhPXpXUiBC5VsK3DIBe+MgQkXcnRBPZ751X1ENAEyf3qIKK54Wr2+UgMcLg9Wf3U
+FPemO3bcW2A6kEfyAvt1yrjatuR2bTg8xjDACE07ly7JodqwlpFrYC9zgS331SF0
+y+SRdV+vhCcBQ10AE4Ho81xfHpTvfBT1Odyzn5KYgFRePYMmLgCiUHwaJ9nb+nJR
+0pcZmj40ZSK/DTWuO8bgp/0xoNRKqFmL5Imn1may4HTmFuc02kExE6b2+MKxKO6H
+FhJVnPRrXAV2nxcjRNG6loUYA49wSUtfrxXelMX2KtYUBEZccs6P5VtA4sBFOAqv
+SYk9pJ+kyzCjHzcXpnQdEixJD/RnjP0FukcY5W59V/3hvJVD0lyi5aLmHS7D0dIb
+RtoqU4fPu++x7MIMkdgxlLZQYY5RzVwSuYKx8Ynftw==
+=WovK
+-----END PGP SIGNATURE-----
