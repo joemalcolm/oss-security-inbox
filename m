@@ -1,82 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/14/4
-Message-ID: <511C848D.6060206@redhat.com>
-Date: Wed, 13 Feb 2013 23:30:37 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/11
+Message-ID: <20130426083410.GD30089@suse.de>
+Date: Fri, 26 Apr 2013 10:34:10 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Henrique Montenegro <typoon@...il.com>
-Subject: Re: Wordpress Pinboard theme XSS
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Apr 25, 2013 at 08:55:00AM -0400, Josh Bressers wrote:
+> > 
+> > So, all in all, what you have is a digest, signed by someone who knows
+> > the key, or who has access to the creds (if any) for the key, or who
+> > has found out the key creds, albeit with timestamp info for when the
+> > signature took place.
+> > 
+> > I'm not sure what using PGP gains us?
+> > 
+> 
+> I'm going to take a hard stance against this statement and use it as my
+> soapbox for a bit here.
+> 
+> This attitude is really dangerous in the world of security (but it has
+> infected our universe). Security is hard, we all know that, but I think we
+> like to draw a line at 100% and say "it's this or nothing". No, PGP isn't
+> perfect, but it gains us a ton. It's a way we can say "this was signed by
+> someone with the key". Did the bad guy have they key? Maybe, the goal isn't
+> to get to 100%, it's to make the job of an attacker harder, which this
+> would do.
+> 
+> There is no system that exists in this instance that is 100% safe. What we
+> need to do isn't talk about how useless PGP is (which it isn't), we need to
+> talk about what's right about it and give advice so people understand how
+> to avoid silly mistakes.
+> 
+> A great example is to use a smart card. If a project is using a smart card,
+> and tells us they're using a smart card, that would be helpful in letting
+> us know their signatures are probably trustworthy. We would certainly know
+> their signatures are more trustworthy than a project who uses a private key
+> shared between 10 people. Is the smart card a perfect solution? Certainly
+> not, but it's better than not using a smart card. How many non security
+> people really understand this? How many of us have tried to explain it in a
+> calm and understanding manner?
+> 
+> This is Red Hat's goal here. We want to help folks understand what some
+> easy wins are. Security is hard, it will never be 100%. I'd rather see us
+> all working together to improve what we can.
 
-On 02/13/2013 03:03 AM, Kurt Seifried wrote:
-> On 02/09/2013 06:47 AM, Henrique Montenegro wrote:
->> Hello!
-> 
->> I am writing to notify you about a XSS I have found in the free 
->> Pinboard 1.0.6 theme for Wordpress. This XSS happens in one of
->> the administration pages so it can only be triggered by
->> authenticated users.
-> 
->> Here is the part of the code that is compromised 
->> (includes/theme-options.php):
-> 
->> <?php $tab = ( isset( $_GET['tab'] ) ? $_GET['tab'] : 'general'
->> ); ?> <input name="pinboard_theme_options[submit-<?php echo
->> $tab; ?>]" type="submit" class="button-primary" value="<?php _e(
->> 'Save Settings', 'pinboard' ); ?>" /> <input 
->> name="pinboard_theme_options[reset-<?php echo $tab; ?>]" 
->> type="submit" class="button-secondary" value="<?php _e( 'Reset 
->> Defaults', 'pinboard' ); ?>" />
-> 
->> The issue happens because the variable $_GET['tab'] is not being 
->> properly escaped, causing the issue.
-> 
->> Here is a proof of concept:
-> 
->> http://wordpress_site_with_active_pinboard_theme/wp-admin/themes.php?page=pinboard_options&tab=
->
->> 
-> 
-> ]"><script>alert(document.cookie)</script>
-> 
->> For accessing the URL directly, Firefox should be used as Chrome 
->> seems to have some anti-XSS protections in place.
-> 
->> Could a CVE please be assigned to this?
-> 
->> Regards,
-> 
->> Henrique
-> 
-> Can you please post the download links/have you notified upstream?
-> THanks.
+I have to agree here, with additions:
 
-He replied offlist.
+Security must not be thought of a state, but a process.
 
-Please use CVE-2013-0286 for this issue.
+It is a continuous and stepwise process and each small step counts.
 
+Sourceverification, regardless what method, is a small step to avoid
+this existing threat of modified tarballs.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+We have the technology available to do this, and it clearly is the GPG
+signatures in this case.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+That they must be used securely and consistently is yet another step. 
 
-iQIcBAEBAgAGBQJRHISNAAoJEBYNRVNeJnmTdGwP/2HY1EXDcaRGAM8qbWspiN4X
-d37xZhc51LoIChigL4qv9jUajIVln6XVDuitl2J8dx38k6WsZjmj2DuRMgtAh06u
-lQ1/THswm18R8lMvExCaXs9BQw2qZ9oj8OTBebOv9OxD+4EOvATjhuoFPYhSYAZ+
-rn3sKqY0mWRU/TuvHiB2IFepCyfvoH7Ca9BYW185HILIKHebe44ZGVNR20499nCp
-wgAnuZCzurp3n2/weoW0HMsyyZdi/koiuUrgv6qJ3/UPNDn7wj0IjBHm8FQTKSPO
-c0ah/OQVXOBgLJaBuM9gmrD31Au9OyByBnYbkBeIjxNhnfmQci0M+c/x9VVwxx+U
-ec8b1tMaq7WLwJQ1pRLNmuoQ69KR9R/1k6T7iu1o2x1Z9EA2hb3vW7N/vY2zSiyp
-BbQj+e40XfoC0knPxQOl9k7alC5ZOAumzxbnEwnFfXu79aYWYCw83SqVB8NXj0fo
-xFQQGYFlkUh52XiWEQFDOVg8p1Y8Z+V/nOvpOzX8+flgjr19eHjH5/wpelNyUe0B
-vI6r2ZTB0fwBSrWfP1b+nnoLJpNTbK6/gTRqEdUlNWJ/oRQp2iNAEdVH64nYmK/o
-nO/UD6AFUgdzERcVTX7ECpcqcGMJxUSp8nyoHVu+OOOP7N2umW5nDbBQ6TDxX/4y
-8W4iocXsfxZ/BvQ8PfaB
-=6BmL
------END PGP SIGNATURE-----
+Ciao, Marcus
