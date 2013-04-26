@@ -1,91 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/4
-Message-Id: <201308281659.r7SGxhHq028090@linus.mitre.org>
-Date: Wed, 28 Aug 2013 12:59:43 -0400 (EDT)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: roundcube 0.9.3 fixes two XSS flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/5
+Message-ID: <20130426055705.GG23082@nef.pbox.org>
+Date: Fri, 26 Apr 2013 07:57:05 +0200
+From: Alistair Crooks <agc@...src.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Apr 25, 2013 at 01:30:23AM -0600, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 04/24/2013 11:55 PM, Alistair Crooks wrote:
+> > I'm not sure what using PGP gains us?
+> > 
+> > Regards, Alistair
+> 
+> So some possible outcomes are:
+> 
+> 1) They do PGP/GPG and don't get compromised. Long term outcome: we
+> come out way ahead.
+> 
+> 2) They do PGP/GPG and do get compromised. Long term outcome: we trust
+> bad things and lose, hopefully this gets spotted quickly and dealt with.
 
->[2] http://trac.roundcube.net/ticket/1489251
+Sure.  I actually agree with you.  But I'd also like it if we could
+bear in mind that, with PGP, trust is earned, trust signatures are
+snapshots in time, and trust levels are private, best guessses by
+people.  All people can see from a key listing is who trusted them and
+when, not how much, or whether the trust was warranted.
+ 
+> At a minimum this raises the bar for attackers when trying to insert a
+> fake release/whatever. The real problem however is the cost of doing
+> this. Key creation/storage/management/backup/etc is all non trivial
+> and not free. Is the cost of this worth it?
+> 
+> I think if we are going to push this we need to come up with a pretty
+> good set of guidelines that are easy to follow and implement. Things
+> like creation of keys, usage, storage, how to handle key roll overs,
+> lost keys, etc. Maybe even have a trusted party signs packages sent to
+> them, confirms the package with the project through some other trusted
+> channel like secure email or because they know the guy in real life/etc.
 
-The first CVE assignment for this is CVE-2013-5645. The scope of this
-CVE includes:
+I do like this idea, although think there should be more than one "trusted"
+party. But the tools we have don't do that kind of third-party verification;
+it would be good to get that in there.
 
-  http://trac.roundcube.net/changeset/93b0a30c1c8aa29d862b587b31e52bcc344b8d16/github
-
-  Fix XSS vulnerability when editing a message "as new" or draft
-
-  "rcmail_wash_html($body, array('safe' => 1), $cid_map);"
-  added in compose.inc
-
-The scope of this CVE also includes:
-
-  http://trac.roundcube.net/changeset/ce5a6496fd6039962ba7424d153278e41ae8761b/github
-
-  Fix XSS vulnerability when saving HTML signatures
-
-  "rcmail_wash_html($save_data['signature']);"
-  added in save_identity.inc
-
-to the extent that this can cross privilege boundaries within the
-Roundcube webmail product.
-
-All aspects of CVE-2013-5645 were discovered by und3r. These are all
-CVE-2013-5645 references:
-
-  http://trac.roundcube.net/wiki/Changelog#RELEASE0.9.3
-  http://trac.roundcube.net/ticket/1489251
-  http://trac.roundcube.net/changeset/ce5a6496fd6039962ba7424d153278e41ae8761b/github
-  http://trac.roundcube.net/changeset/93b0a30c1c8aa29d862b587b31e52bcc344b8d16/github
-
-
-The scope of CVE-2013-5645 does not include any additional
-exploitation approaches (if any) in Roundcube webmail, or other
-products, that are related to:
-
-  'This kind of problem is present in all parts where there is
-  the "MCE" editor (or, more specifically, where there is a
-  <textarea> with the CSS class "mce_editor").'
-
-That may possibly have other CVE assignments if someone investigates
-it at a later time.
-
-
-Finally, there is a separate CVE assignment of CVE-2013-5646 for this
-other issue with different affected versions:
-
-  As far as we can tell from the
-  http://trac.roundcube.net/ticket/1489251 history, the
-  addressbook group vulnerability was discovered by dennis1993
-  and affects only version 1.0-git (not version 0.9.2). There is
-  no direct statement that the addressbook group vulnerability
-  was fixed. It seems likely that the addressbook group
-  vulnerability could cross privilege boundaries if the "click on
-  this group after creation" action were performed by an
-  administrator who was visiting the addressbook of an
-  unprivileged user.
-
-http://trac.roundcube.net/ticket/1489251 is the only CVE-2013-5646
-reference that we know of at the moment.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSHif2AAoJEGvefgSNfHMdcrEH/3cAf2Qn9FvArkhmvwGWhPmI
-ddWBmTh0aoPNzuOYsNXT6ZMsBEFzRAFpcbCx4Mf32UvKO3tK/BJeQLC+eEk1XuzQ
-0+59K2KKM5y/l13qwYP3I02RyvbQEDGzKsh1EsHlKwY2vcoPoHoETYutHPtQ6HEP
-v2JgqyCMwaF+NGtqx2hK/eeiR0xBVf339ODHnii296d1KqCpcIAAPyoVGX75YZ3O
-djG9lND36wHZ9S+Huy1APi1rx/SZnPxHjaBdtVU2GGAiGpu26zZpstN3HmVbMI+v
-8jyYNpJstorjmgZqO/GwFoJ+M47YIwnISiMvCeItAClC2EwKKVRd1RLOZmGkeUM=
-=vhpO
------END PGP SIGNATURE-----
+Regards,
+Alistair
