@@ -1,41 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/04/4
-Message-ID: <510FEEB2.8060308@gmail.com>
-Date: Mon, 04 Feb 2013 09:24:02 -0800
-From: Forest Monsen <forest.monsen@...il.com>
-To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/2
+Message-ID: <517A1251.8080602@redhat.com>
+Date: Thu, 25 Apr 2013 23:36:17 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, gremlin@...mlin.ru
+Subject: Nginx ngx_http_close_connection function integer overflow - can anyone confirm this?
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Hi there,
+- From Bugtraq:
 
-Here's a request for CVE identifiers for several issues with Drupal
-contributed modules. Thank you Kurt.
+http://www.securityfocus.com/archive/1/526439/30/0/threaded
 
-SA-CONTRIB-2013-011 - email2image - Access Bypass - Unsupported
-http://drupal.org/node/1903264
+Website: http://safe3.com.cn
 
-SA-CONTRIB-2013-012 - Google Authenticator login - Access Bypass
-http://drupal.org/node/1903282
+I. BACKGROUND
+- ---------------------
 
-SA-CONTRIB-2013-013 - Boxes - Cross site scripting (XSS)
-http://drupal.org/node/1903300
+Nginx is an HTTP and reverse proxy server, as well as a mail proxy
+server, written by Igor Sysoev. For a long time, it has been running
+on many heavily loaded Russian sites including Yandex, Mail.Ru,
+VKontakte, and Rambler. According to Netcraft nginx served or proxied
+12.96% busiest sites in April 2013. Here are some of the success
+stories: Netflix, Wordpress.com, FastMail.FM.
 
-SA-CONTRIB-2013-014 - Drush Debian Packaging - Information Disclosure
-- - Unsupported
-http://drupal.org/node/1903324
+II. DESCRIPTION
+- ---------------------
 
+Qihoo 360 Web Security Research Team discovered a critical
+vulnerability in nginx.
 
-Forest
+The vulnerability is caused by a int overflow error within the Nginx
+ngx_http_close_connection function when r->count is less then 0 or
+more then 255, which could be exploited
+by remote attackers to compromise a vulnerable system via malicious
+http requests.
+
+III. AFFECTED PRODUCTS
+- ---------------------------
+
+Nginx all latest version
+
+IV. Exploits/PoCs
+- ---------------------------------------
+
+In-depth technical analysis of the vulnerability and a fully
+functional remote code execution exploit are available through the
+safe3q (at) gmail (dot) com [email concealed]
+In src\http\ngx_http_request_body.c ngx_http_discard_request_body
+function,we can make r->count++.
+
+V. VUPEN Threat Protection Program
+- -----------------------------------
+
+VI. SOLUTION
+- ----------------
+
+Validate the r->count input.
+
+VII. CREDIT
+- --------------
+
+This vulnerability was discovered by Safe3 of Qihoo 360.
+
+VIII. ABOUT Qihoo 360
+- ---------------------------
+
+Qihoo 360 is the leading provider of defensive and offensive web cloud
+security of China.
+
+IX. REFERENCES
+- ----------------------
+http://nginx.org/en/
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iEYEARECAAYFAlEP7qYACgkQ/ILCL9e1Br76dgCfcNlFxyeS//VPaSxKzPD5wQhP
-hmwAnAzloJOdaZPOYosHXcfh9y1DTngE
-=wpto
+iQIcBAEBAgAGBQJRehJQAAoJEBYNRVNeJnmTC8oP/1ueYNmvM+qx+60uYkB3+zzc
+zlV3w7ejZ09rXtV3Tl4x/znxSSai82E08I32Xgpx30E2fYpVjNhj9prJwWU8pZtp
++pIGos9ZdEulmexn9A1snFgzjbF1foECpBPuSu8b1VZE7WjEBS3E0LWQg/UwC4cp
+AkvG8MGBJclg0HD+GzJVG9vVpOLeyDUyaqWV+6+nBNneqUo5dZRaLDm3iPEt2pDX
+9wLMA0Ov0xKnhpzzcoca91IkES05p179feqoBH1CrF9sTCM0grj85JVyd3oyFFUB
+Espl6+OR2Tci1ckay5B0u00oRuYmaIOKCp4Njt0jBe0Kr8dFyTnCRZKTFQvumuTs
+GykmOesRxlTP6KEAypBxigVPuvp0rnnGKr3OJUnrCcGy4aGmRSICs8dYZ1+vsfWW
+aVze6ccjCOe0n6VUIlELNfOw2vn4A/P5BxkZUqxfkmb+8uorkK2ewwlwpWhdEPss
+OOyS7YDVmY0Z8/cdcEFzSB7pRY0SBYV7dDA22Vrl6RANAiDN83ZHY0p5hB00iqOt
+AtxHmPCHc9zzyWiyQdaRUcB6Z7AKdsWPxO9dbVaaA6dmB78ujd5+7hOLN0IWwAFs
+sZf6qMhNUUgAiAoqtEoO90bftbvFHshAvVf5yVC8JLoi8VWRiSHfli82TlwEjoFD
+O5Mk8mGHU5janXRMOfVi
+=I7C/
 -----END PGP SIGNATURE-----
