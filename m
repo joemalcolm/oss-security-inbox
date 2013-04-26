@@ -1,50 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/4
-Message-ID: <52984A09.20203@redhat.com>
-Date: Fri, 29 Nov 2013 01:02:17 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/16
+Message-ID: <517AB435.5060108@redhat.com>
+Date: Fri, 26 Apr 2013 11:07:01 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: incorrect parsing of access control file in nbd-server
+CC: P J P <ppandit@...hat.com>
+Subject: Re: CVE request: Linux kernel: ext4: hang during mount(8)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/28/2013 09:46 AM, Wouter Verhelst wrote:
+On 04/26/2013 06:03 AM, P J P wrote:
 > Hi,
 > 
-> nbd-server has the ability to deny connection requests to clients
-> unless their IP addresses are listed in a tcpwrappers-style
-> configuration file. Due to incorrect use of strncmp() in the parser
-> for this file, however, it would allow clients to connect so long
-> as their IP address in ASCII representation would start with
-> something in the ACL file; e.g., 198.51.100.12 would be allowed if
-> 198.51.100.1 was listed.
+> Linux kernel built with an Ext4 filesystem is vulnerable to a
+> system hang situation. It occurs while [auto]mounting a non-journal
+> filesystem with an orphan list of inodes to clear.
 > 
-> I'd like a CVE id for this.
+> A user could use this flaw to stall the kernel resulting in DoS.
 > 
-> Thanks,
+> Upstream fix: ------------- ->
+> https://git.kernel.org/linus/0e9a9a1ad619e7e987815d20262d36a2f95717ca
+>
+>  Reference: ---------- ->
+> https://bugzilla.redhat.com/show_bug.cgi?id=957123
 > 
+> Thank you. -- Prasad J Pandit / Red Hat Security Response Team DB7A
+> 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
 
-Please use CVE-2013-6410 for this issue.
+Please use CVE-2013-2015 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSmEoJAAoJEBYNRVNeJnmTmxQP/1TRAXPoxfwk7rL1DDAIejWP
-Zxwqa/6heBDkGBccg1p1NBV810dnK0URhp6XoYwto8XPkhVcRQtxBDdJ5iTI8waW
-j/aoAtIByOidWP6ZNm7NA1f0ltsrs036htehoT3IfbBJTrRjtGkW2GejGUBM60bs
-hxVYtp2+WsPZfe3I15iouwB40gLe72e18vPU/apyW9M/T4yf2ptsdS5Q9nL1t/B4
-KkYmv66QkY+ibQTV+xqPZ0nAW76ikO0TyxZqLEXQyhB3kt00Julz3vSfEVOVGYK/
-8/RfarCOvkpDKdDqPfMdvDyfZoJ+Pz6J2BKTBO/aHsBkifcoSKqi7HpZBHZyTaMh
-hOP01ucUha5lORYyWG+U/eKlXuY5ah/FA43U6vU+sSZqHXPTvlzVeDtg4f39wMXx
-Af5b89czqb6z2poTKzAGp3sj1kgcGTCggAr2yEHjpgNLmB+vM0SrOgPUV/bb+X5X
-NZtCoZiyoTp3eMg9HZYRCzGYA7UC+KzuZdBlMsuZ1p+NFKlCWNirjDS+94nszZPD
-aBLN2r7IGTqkmJ3Spgg29AW8C6WCsbkzTMJ/irdWpAzIAwRzngi7HVGa/nMMnNfL
-aUd3FLZVtVsrCvMa+3Nsc/ORKDK0Le152XwSGGyNDlt7HyiPvica0oprQLJDqevW
-0QjTGtPChKTNLDejiOgr
-=XH9a
+iQIcBAEBAgAGBQJRerQ1AAoJEBYNRVNeJnmT7gMQAJy++hdzwaUj4XiYWOlPWz9S
+VrnKu5nP2949EgA6CndcHzKIDe+HP6hS5Q6Zcmw5g2dofTsvz672mLMXCh7FGc8f
+4y1CEBzJ1Ov4AZ9xR5BFH2I9FhdggWPDtalnpygbBoB0n9F8uBPvhD2NpLYLR8dd
+R2XW8rOU4d8VC85542MmeLQ/5b0tmoI//pWdk4uI7H8PMrNJKxFJiDzvWtaGi65U
+s15ceIjIobkRZ1ZtExWp4j5+cDKD7iCKOaXAiXQkMeGKy4ohMVZJ7JUIQfwOfZIM
+ZnR12cJPIgMEvFIkSE5wFg/iQfk8Or4tUfVMdJ9ctwZvYCyMuv+V7qjDoWePmW3f
+6cQ36PfUjLgaheG4BLxiV4HMbxLHiGaRCg/h8KGWR7FK9FbhYhu4puKhB5DBDu+y
+gJdX/2OTVPvDFzk70hTKcvxL9DjVzzaFERlADMHM3+hMKW1mV6xmR2TxTjxeq6ri
+cBQNb5qWrVj3h1ApqPBrHvwnrJZ07UA6tVJ6UjlPX2ByrhgwC3s0pPqmGbm6jZBZ
+++MZ++J6jVGJb2TpatBZkYT7Ou2Gd2ZN4rhzKsGaQqK4SUrH2Otna54JA2vxJO9k
+3vvJCeh3KaAdceadSWbPqs+cWOZZ9tYZO8vq+ZdmyEr60nFDEC5MmRXFRhoLYCRI
+dtuVHCQuwTB9BEMboMXF
+=SP8D
 -----END PGP SIGNATURE-----
