@@ -1,54 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/16/1
-Message-ID: <20131216101033.19fb8c82@redhat.com>
-Date: Mon, 16 Dec 2013 10:10:33 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, mpessas@...nsifex.com, vid@...nsifex.com, rvokal@...hat.com, fweimer@...hat.com
-Subject: Re: Re: CVE-2013-2073 transifex-client: Does not validate HTTPS server certificate (fixed in transifex-client v0.9)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/4
+Message-ID: <20130426054841.GF23082@nef.pbox.org>
+Date: Fri, 26 Apr 2013 07:48:41 +0200
+From: Alistair Crooks <agc@...src.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: gremlin@...mlin.ru
+Subject: Re: Nginx ngx_http_close_connection function integer overflow - can anyone confirm this?
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 15 Dec 2013 15:19:54 -0500 (EST) cve-assign@...re.org wrote:
-
-> > The way certificate check was implemented to fix CVE-2013-2073 was
-> > incorrect (check was done on "probe" connection, but not the actual
-> > connection used to transfer data).
+On Thu, Apr 25, 2013 at 11:36:17PM -0600, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> To have two CVEs assigned in response to two different patches for the
-> same security problem, it's generally necessary for the first patch to
-> fix some aspect of the problem. If the first patch accomplished
-> nothing, a total of only one CVE is used.
+> - From Bugtraq:
+> 
+> http://www.securityfocus.com/archive/1/526439/30/0/threaded
+> 
+> Website: http://safe3.com.cn
 
-That's not consistent with guidance I've seen in the past - if update
-is released claiming to fix some issue without actually fixing it, new
-CVE is needed.  Not doing so leads to inconsistent security update data
-with two different updates or package versions of the same component
-being listed as fixing the same CVE.  Release text can probably explain
-id reuse, and consider it sufficient for human consumption, but it's
-probably more upsetting to tools processing machine readable versions
-of update notifications (e.g. OVAL).
+Is this legit?
 
-> Here, it seems that the first patch might help with a situation in
-> which the attacker doesn't have complete man-in-the-middle access, but
-> the attacker can replace the server. In that case, the attacker
-> perhaps can't avoid having the probe connection and the later
-> connection go to the same server. Because of that, checking only the
-> probe connection might have a security benefit.
+I downloaded the index.html file with curl, and embedded around line 87
+was a flash file:
 
-Yes, I can agree with that.  Previous patch makes it more difficult for
-MITM attacker to perform their attack, as they can no longer intercept
-all connections, but they need to let certain connections pass through
-and intercept other.
+<table width="930" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+<tr><td>
+<object type="application/x-shockwave-flash" data="/banner.swf?xml=/banner.xml" width="930" height="180">
+<param name="movie" value="/banner.swf?xml=/banner.xml"/>
+</object>
+</td></tr>
+<tr>
 
-> If the above analysis is incorrect, and there are absolutely no cases
-> in which the original patch had any security benefit, we will reject
-> one of the two CVEs.
+so I took it to be an attempt at phishing.
 
-As mentioned above, I believe the fact that 0.9 was previously
-announced to fix CVE-2013-2073 should be sufficient to trigger new CVE
-assignment regardless of how incomplete the original fix is.
+Maybe I'm just too paranoid in my old age?
 
-Thank you!
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Regards,
+Alistair
