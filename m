@@ -1,93 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/27/3
-Message-ID: <52BD02DB.4050501@redhat.com>
-Date: Thu, 26 Dec 2013 21:32:27 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/7
+Message-ID: <517A24DA.9040807@redhat.com>
+Date: Fri, 26 Apr 2013 00:55:22 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Christian Heimes <christian@...imes.de>, psrt@...hon.org, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: CVE issues with recent python flaws
+To: Alistair Crooks <agc@...src.org>
+CC: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/23/2013 04:41 PM, Vincent Danen wrote:
-> So I've been detangling some python issues that we were alerted to
-> around this time last year, along with some other vendors.
+On 04/25/2013 11:57 PM, Alistair Crooks wrote:
+> On Thu, Apr 25, 2013 at 01:30:23AM -0600, Kurt Seifried wrote:
+>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>> 
+>> On 04/24/2013 11:55 PM, Alistair Crooks wrote:
+>>> I'm not sure what using PGP gains us?
+>>> 
+>>> Regards, Alistair
+>> 
+>> So some possible outcomes are:
+>> 
+>> 1) They do PGP/GPG and don't get compromised. Long term outcome:
+>> we come out way ahead.
+>> 
+>> 2) They do PGP/GPG and do get compromised. Long term outcome: we
+>> trust bad things and lose, hopefully this gets spotted quickly
+>> and dealt with.
 > 
-> The work, and CVEs that were assigned (not sure by whom), are all
-> public and since there are some issues that probably warrant a few
-> more CVEs, I'm bringing this up on the list here (and also because
-> no real announcements ever came out of the python camp regarding
-> these).
-> 
-> It's all noted in our bug
-> (https://bugzilla.redhat.com/show_bug.cgi?id=1046174):
-> 
-> * httplib [1] (fixed in 2.7.4 [2], 2.6.9 [3], and 3.3.3 [4]) *
-> ftplib [5] (fixed in 2.7.6 [6], 2.6.9 [7], 3.3.3 [8]) * imaplib [9]
-> (not yet fixed in 2.7.x, fixed in 2.6.9 [10], 3.3.3 [11]) * nntplib
-> [12] (fixed in 2.7.6 [13], 2.6.9 [14], 3.3.3 [15]) * poplib [16]
-> (not yet fixed in 2.7.x, fixed in 2.6.9 [17], 3.3.3 [18]) * smtplib
-> [19] (not yet fixed in 2.7.x, fixed in 2.6.9 [20], not yet fixed in
-> 3.3.x)
-> 
-> [1] http://bugs.python.org/issue16037 [2]
-> http://hg.python.org/cpython/rev/8a22a2804a66/ [3]
-> http://hg.python.org/cpython/rev/582e5072ff89 [4]
-> http://hg.python.org/cpython/rev/e445d02e5306/ [5]
-> http://bugs.python.org/issue16038 [6]
-> http://hg.python.org/cpython/rev/44ac81e6d584/ [7]
-> http://hg.python.org/cpython/rev/8b19e7d0be45/ [8]
-> http://hg.python.org/cpython/rev/38db4d0726bd/ [9]
-> http://bugs.python.org/issue16039 [10]
-> http://hg.python.org/cpython/rev/4190568ceda0/ [11]
-> http://hg.python.org/cpython/rev/4b0364fc5711/ [12]
-> http://bugs.python.org/issue16040 [13]
-> http://hg.python.org/cpython/rev/36680a7c0e22/ [14]
-> http://hg.python.org/cpython/rev/731abf7834c4/ [15]
-> http://hg.python.org/cpython/rev/fc88bd80d925/ [16]
-> http://bugs.python.org/issue16041 [17]
-> http://hg.python.org/cpython/rev/7214e3324a45/ [18]
-> http://hg.python.org/cpython/rev/68029048c9c6/ [19]
-> http://bugs.python.org/issue16042 [20]
-> http://hg.python.org/cpython/rev/8a6def3add5b/
-> 
-> 
-> One CVE (CVE-2013-1752) as assigned to all of these, which would
-> have been perfectly reasonable if they had _all_ been fixed
-> simultaneously (or at least in the same version).
-> 
-> My post here is two-fold: a) to let other vendors know about these
-> issues so they can update/patch their own packages, and b) to see
-> if MITRE wants to do anything with regards to the CVE assignments
-> for these issues as it seems like we might need 3-4 CVEs here as
-> only nntplib and ftplib carry the same fixed-in-versions across the
-> board.
-> 
+> Sure.  I actually agree with you.  But I'd also like it if we
+> could bear in mind that, with PGP, trust is earned, trust
+> signatures are snapshots in time, and trust levels are private,
+> best guessses by people.  All people can see from a key listing is
+> who trusted them and when, not how much, or whether the trust was
+> warranted.
 
-I'm leaving this one up to Mitre, my personal take: these are very
-different code modules (different protocols) so CVE split, but I defer
-to Mitre.
+This makes no sense. So you don't trust their signature because they
+have to "earn trust", but you do trust their software and you compile
+and run it? That's literally insane.
+
+Unless you actually audit every bit of source code you download and
+audit before compiling/usage then by definition you are already
+blindly trusting a lot of people (the software project, the host
+serving it, every intermediate network, etc.).
+
+I a seriously confused that a lot of people seem to think unsigned
+code is somehow ok, but if we sign the code we have to do it perfectly
+to have any value. This simply isn't true. Right now unsigned code is
+wide open, and detecting changes is expensive (you need a full copy to
+compare against, and if you have a copy why would you care? =).
+SIgning releases with PGP/GPG makes this problem a lot easier to
+handle and even if it fails, by definition the attacker would have
+been able to pull the attack off any ways.
+
+Can we please get over this "security must be done perfect or not at
+all" and maybe actually get on with making things better? We have to
+start somewhere. Sitting here going "well we won't do it unless we can
+do it completely correctly" is just stupid and pointless. Seriously.
+We need to start raising the bar and teaching people, this is far
+better than refusing to do anything since it won't be perfect.
+
+A perfect example of this is CVE assignments. Most projects do not do
+them well or at all. Should I give up? Or should I try to educate them
+and hand hold as needed so that they learn how to do it and start
+doing it properly? This is what I have been doing and you may notice
+that XEN, OwnCloud, OpenStack and a few others are now shipping
+advisories with CVE's already assigned. And most of them are doing CVE
+requests in a way that is efficient and scalable.
+
+And next month (hopefully) you'll be getting even more CVEs (due to
+more vendors doing CVE requests properly and easily for me), and then
+at some point we'll bring OSVDB into the fold (once Steven figures out
+how =) and it'll get even better.
+
+Got to start somewhere. And if you want to go build some perfect
+system I wish you luck, but I suspect like most attempts at perfection
+it won't get very far.
+
+> Regards, Alistair
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSvQLbAAoJEBYNRVNeJnmTlAMP/ilFiZ370HGfXUU5ON8EgToY
-Dq6d2jPBlI77UF/igg1zYbjktDMWmA1M3v98gQ0iA0xV2q+kdwBKlb9sLVOZqe2V
-/PCao9VX3GLonzcj2hUgqR/VTFvIoqibAiDaw2wWQohFzcweuKFCWJmkdI5Snzej
-8j/2nJdAIEAO10LHGvoMgYh3MHNTC02dxe0SvrlYNfgE8yrQhm5CEtw+s2zAqEGT
-8c20SbUgNrcwqDrVTjTDJ7hFHg27GC9plY4B3cSTg9gn/dwVMMH0N4xEMyAgoHVq
-SL2lDC7kpcIshmvOQtZyHPY7ws6NWV4frHt9e2U61HeLhI8AZEJp/U6lfs0eeOcJ
-UlRei61ACCd9GNTjGYzign46r4nbpqJJ0hbd1PZlhk1jKa6IVrsSyehWvd2JeYz7
-2CDEWB4dleFIpfV3o1k1aeGwkEX9EEWGlv/k9nD6H68U1I3xMwEH7G/BXveITKYF
-tltUU1JyYVt2BdurzduuaM+aR1b2AP7JtGKr5jLpBnIpBIx1mreGwPjDE2VFF2av
-3VjnyQrmnOX7TLV23B2RW64+g4drml57VRhearyJpSacQcyNenpIn2F3KY730CCC
-Q0Cx7IaT8SqN/CJ06JWsMiQkihG50Uqg/TADc11cJ12JMhRTjObGfaVDCSmhARJx
-pER4ZFf1q/ub5o3dv4QO
-=gatT
+iQIcBAEBAgAGBQJReiTaAAoJEBYNRVNeJnmTRsAP/1iWLLLjBBUrjeiywOqzloxf
+1vErJD1xBibLszAWbYQtJT77gPGTKChjKomzen2lXEsMiTaH9TbW9V8uw1+urjUL
+Xg4h/ZGPygt5dF86PylJevws+cAy1zAjaXsc3kqz4pagdW/8GzvDn4IroW00pZs2
+K+rs73Gkmz3FU227tWlMz5Y6miTkFU49cVVbvD3N+hT01ARJ1fWxFoJl3Tnv5lSb
+REqDORC90vho7yBOQzeVqDe2C7OaiT9LZoqJlYNt1fTQl9oiMY3DiHHD+HK4w2In
+5bJBvflp0pyycsPJ/k0413y3PWTfHwrBhLFrU6CNAMN6Wvj8jjhp3l16x6hgHsyq
+tgA9ajQ33kzvm/lr5xCWDEe71GWsY/l2M4bBgJSlOB1yr5dnahRpGhnHskpdFChm
+CWT89C63lKptLHyGKmNVmaZvOG+NhR0G0fvaCB2ye5XZdzArxVgMmYCxc75OE6hB
+bsMXjtCfwOBe3Pac7FjzdG9Mr5/Ne+TvVihGw3URid6+UDygg9hET94+Lwrrhohn
+BslVtW+6asZHAB/60w8Rt//DSac1m/GenGihsYt+AP7jF2tifKFyjm77fFxGQpIk
+M1Ya3fqnZfL0NcPKK+Tu7LWAdYuEwaH1ZK6hl4N/lt94cVr4odTAvzSFZRwVGMxS
+1FuyGVgTKSQwJocmlBX1
+=J2Vw
 -----END PGP SIGNATURE-----
