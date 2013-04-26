@@ -1,47 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/06/1
-Message-Id: <201302060108.r1618iQJ023669@linus.mitre.org>
-Date: Tue, 5 Feb 2013 20:08:44 -0500 (EST)
-From: cve-assign@...re.org
-To: nadhem.alfardan.2009@...l.ac.uk, kenny.paterson@...l.ac.uk, bugs@...tls.org, security@...illa.org, maintainer@...arssl.org, p.j.bakker@...spark.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/6
+Message-ID: <517A1E8C.60904@redhat.com>
+Date: Fri, 26 Apr 2013 00:28:28 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, Thierry Carrez <thierry@...nstack.org>
+Subject: CVE-2013-2013 - OpenStack keystone password disclosure on command line
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-If you are interested in the CVE name assignments for the recent TLS
-and DTLS disclosure at http://www.isg.rhul.ac.uk/tls/TLStiming.pdf
-please see:
+While auditing OpenStack bugs for flaws needing CVE's I came across
+this (as of yet unfixed) one:
 
-  http://openwall.com/lists/oss-security/2013/02/05/24
+https://bugs.launchpad.net/python-keystoneclient/+bug/938315
 
-This references:
+[root@...s ~]# keystone user-password-update --user=jake
+usage: keystone user-password-update --pass <password> <user-id>
+keystone user-password-update: error: too few arguments
 
-  Mozilla Network Security Services (NSS)  CVE-2013-1620
-  GnuTLS                                   CVE-2013-1619
-  PolarSSL                                 three CVEs (see below)
+This class of vuln typically gets a CVE.
 
-    PolarSSL - TLS and DTLS protocol issue:      CVE-2013-0169
-    PolarSSL - out-of-bounds comparisons:        CVE-2013-1621
-    PolarSSL - lack of MAC check in some cases:  CVE-2013-1622
+http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=command+line+password
 
-and other products.
+CVE text:
+
+OpenStack keystone places a username and password on the command line,
+which allows local users to obtain credentials by listing the process.
+
+Please use CVE-2013-2013 for this issue.
+
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJREanXAAoJEGvefgSNfHMdRSkH/jDVd3wagUKNvjO2mTVo1Jdy
-MYvKStezZTgVDMw4f5zLJcEM7Cm/74tvbst/DdIgHiMI188z9v1CZ5XgBCft3LSm
-DninOatvTcB/8CHhJ80q4vRH7EqiAVVWdq+SAPSU0v+e43rxIE1S1z+axOkG4xpt
-O6vxiXeaD9jZcNJx93nbBVceC6fphmq7Oz/eWdcYMf/BKsADxinxpTpLX/8U9vJH
-cdBAG4I5PUAgnWbHj/Fk/oeVKjYGLmiejMO9WU+/5NpxILUJP2hHz4Fqz8qR4Ovq
-eME40QIIfaumyJ1puY5jJ0jTmbxMkPT7irmZ/YlHnLB5s9CfwJEec0tfkCZcBgM=
-=2FcO
+iQIcBAEBAgAGBQJReh6MAAoJEBYNRVNeJnmTOwMQALncWYbJlDodfKDEbQdqE8aW
+JrnFGx+Jm2D8UCUlTIObKbjhhk1Puacc9M9VhQ+Z9/sKuXeP8NwEhVqz8vm1nXul
+p7jqPi9DN83+Mg3KGBIATvNFwQb5y0k4GXiOBMuPSew5nfljK8M8PG5VaZ9maBRW
+sEmrBUfse1/cnXK/CkHwzT2wbxFZ7z54NHW4cB8CNyF34Wg1saZqAnImJshuVbcF
+nPo2TbI6GrpoNzPoBhuWeB2bp48NfZlznL5agTgjLFodpms9qr/cWxpbYlYXlYeV
+ENZCpR5ABNvLCxiREE31+0a9q3N7Vi8hpws1ErWKx4HAlsH0cmoqsypvNUIJckhG
+Z8UCxOfzpO4QwE2vSQDzz1tpCRyBeWX2USoMqKqIJ2LxbkQCQJROkQ9GMZLvtocL
+emLHivjO24tqf+EQAmh6rO5MH2S4kPIQS8x7/tIFoWn+OA1IAUqI2zjSDdLXpiOQ
+xwFJ4hVgmEPKOOWEwMhJpLAuwS+m5L9VEo75tFjUKM8OyJB4omtibrqKkoW6sV41
+uTiqH9htSuaOwhSqg/Rq0qy/OgOuftQOGBFF9eWsI2ydGZzqUggA7B8B0NBuY7aD
+43z8RBCvKeDBpbSZQTBFaoMbeNTNLK4WsdY8zqY1JDDJHby6B3g3ETIKy/KA/4Oc
+YmObot4YI6Lo4BOu63U7
+=TdT1
 -----END PGP SIGNATURE-----
