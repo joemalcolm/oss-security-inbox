@@ -1,31 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/08/3
-Message-ID: <CALMiPQCzZ3GcZeXFzjOb8bqYQxYg9zKAwxknMAgnuFObpnjNjg@mail.gmail.com>
-Date: Thu, 7 Feb 2013 19:32:52 -0800
-From: James Tucker <raggi@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2013-0262: Rack versions 1.4.0-1.5.1, Symlink path traversal.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/13
+Message-ID: <8638udlj2o.fsf@ds4.des.no>
+Date: Fri, 26 Apr 2013 11:47:27 +0200
+From: Dag-Erling Smørgrav <des@....no>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com,  Alistair Crooks <agc@...src.org>,  Josh Bressers <bressers@...hat.com>
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Kurt Seifried <kseifried@...hat.com> writes:
+> Dag-Erling Smørgrav <des@....no> writes:
+> > This is exactly the logic used by web browsers to justify scaring
+> > users away from https sites that haven't payed the Verisign tax...
+> Huh? That makes no sense. There's at least one free CA that has a root
+> cert in most browsers (http://cert.startcom.org/). I'm sorry but your
+> comment in this context doesn't appear to make any sense.
 
-CVE: CVE-2013-0262
-Software: Rack (rack.github.com)
-Type of vulnerability: Information Disclosure
-Vulnerable code: https://github.com/rack/rack/blob/master/lib/rack/file.rb#L56
-Patch: https://github.com/rack/rack/commit/6f237e4c9fab649d3750482514f0fde76c56ab30
-Versions affected: All versions after 1.4.0
-Versions fixed: 1.4.5, 1.5.2
-Reporter: Ben Murphy
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (Darwin)
+I wasn't aware of StartCom.  I've been using CACert, which is not
+included in browsers.
 
-iQEcBAEBAgAGBQJRFHFpAAoJELphsezQxofD0LUIAITA1X8+uJdAU0RkgFN0RXR5
-zIpdeLFDqzPNd7Sfvo4titYHbXGYSQ0tQg6dZv4p+HzVRohDTNgUWuNPcnS+UDv/
-sLrrrUOhVLyE+Ae2K0IhcJ4xZM0OPGOS07revtkGrKoFtOeWdrFT2zkjqxyFExIy
-PW4PBsmHJTiKhoi83rtccMJFjefmkVXe0mbvS/QbekdTfbio08DeuOtsoEaoi0xA
-gxPSam1kieyIkaKxFx8mQsqRhgaoIE3yMf6JuZvdX4k/hCSPSVBOmRKJqUN+cQRQ
-Hb0U6zPF4DP32PjWh263f1cavhHvv0v3iikub/ekdJqQHRoW/sBLyZS4NonuXKU=
-=g7UL
------END PGP SIGNATURE-----
+My point was that browsers go to great lengths to prevent users from
+visiting sites that use self-signed certificates, or certificates signed
+by a CA which the browser does not know / trust, but will happily let
+users submit forms on unencrypted sites without even a warning.  This is
+the same "no security is better than imperfect security" logic.
+
+DES
+-- 
+Dag-Erling Smørgrav - des@....no
