@@ -1,50 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/28/1
-Message-ID: <20130728133024.GA28830@alf.mars>
-Date: Sun, 28 Jul 2013 15:30:27 +0200
-From: Helmut Grohne <helmut@...divi.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/12
+Message-ID: <517A3EDF.5040800@redhat.com>
+Date: Fri, 26 Apr 2013 02:46:23 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: ISC DHCP client and unsolicited DHCP options
+CC: Dag-Erling Smørgrav <des@....no>, Alistair Crooks <agc@...src.org>, Josh Bressers <bressers@...hat.com>
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 17, 2013 at 10:35:52PM -0600, Kurt Seifried wrote:
-> Do any DHCP clients process and use options passed to them that are
-> not explicitly wanted? Might be worth setting up a DHCP server that
-> hands out every possible options (there's a lot) and see what happens
-> on various clients.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-At least on Debian, the default configuration requests the host-name option.
-The dhclient-script then evaluates this option and thereby enables a DHCP
-server to change the hostname if the current hostname is "(none)", "localhost"
-or a previously sent hostname. Changing the hostname can have undesired
-consequences such as breaking a running X11 session (can be considered remote
-denial of service).
+On 04/26/2013 02:25 AM, Dag-Erling Smørgrav wrote:
+> Kurt Seifried <kseifried@...hat.com> writes:
+>> This makes no sense. So you don't trust their signature because
+>> they have to "earn trust", but you do trust their software and
+>> you compile and run it? That's literally insane.
+> 
+> This is exactly the logic used by web browsers to justify scaring
+> users away from https sites that haven't payed the Verisign tax...
+> 
+> DES
 
-That is why a number of people (including me) remove host-name from the
-requested options. Now given the new findings, a DHCP server can still change
-the hostname of a connecting client by first sending an unsolicited host-name
-option with the current hostname and then changing the hostname in a RENEW.
-Guessing the current hostname should be easy in the presence of avahi or
-similar services.
+Huh? That makes no sense. There's at least one free CA that has a root
+cert in most browsers (http://cert.startcom.org/). I'm sorry but your
+comment in this context doesn't appear to make any sense.
 
-Since the bug breaks the assumption, that removing an option from the
-request list causes it not to be processed, and this can result in the
-xserver rejecting new connections, I think the issue should receive a
-CVE identifier.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Quoting the relevant dhclient-script part:
-| if [ -n "$new_host_name" ]; then
-|     current_hostname=$(hostname)
-| 
-|     # current host name is empty, '(none)' or 'localhost' or differs from new one from DHCP
-|     if [ -z "$current_hostname" ] ||
-|        [ "$current_hostname" = '(none)' ] ||
-|        [ "$current_hostname" = 'localhost' ] ||
-|        [ "$current_hostname" = "$old_host_name" ]; then
-|        if [ "$new_host_name" != "$old_host_name" ]; then
-|            hostname "$new_host_name"
-|        fi
-|     fi
-| fi
-
-Helmut
+iQIcBAEBAgAGBQJRej7eAAoJEBYNRVNeJnmTaWEP/jQqCT87jW2ck+/aWMmgsgvb
+W/LKA5TfJQhFyHmthYTy696imwShlETBPbfHzddJTiT3HSRe8ThxeXttq/c0yYC0
+ZDNI92fYTIqnmeou9DpuyNmliJIWlSfPUVU0tNGQMYvvxyy38wy9iYoand3v5M0R
+JtUwFgHW51u5LZnH68cXT9zal8nEUtJ3L054sttyZGvRLMI8c9ZF194iLWJj29aE
+gDrub9BAfaxo/4q65HdwL8WToCPEFwVH5i0Vp2mbbizvDANqTikULcrznkKnyYTp
+boGQ2mQTF2NvWYlwbXCt6MvJXLMegSgGUeKcebuLtMPizhpGuACRMyJ2ALL/VYzG
+8xmnrUqA54xnrRhi9j1CcdqYi4GPoAnLtrSW4pw0ljH0FNHb45sq4km+l+UUghOp
+uzPXqhDVApCy6FtTNc6D9kYxigyJipL0Qb5A1r2nRIiIVi2nW9Hcl5IkdGhCjnK0
+hDEuq+FqkbiBsH9nGvFHBCMYPBFnd6n9cZdYIu7aM4EG0of4KIBadkdO9Biyt8fW
+t8IFDPzUoERRp7DqByD1PQntTezaRNHsdmQEiQT7RyAAXM9pyeIIB2ph49UQFsl2
+GsTKOoTSIyR3zdwsnk+AVKoVHp9AzpfQFyEeLd/D+uCM/XcHdAou70KpmJRxHwKT
+JCYXHqRQD3/isSd4Nzf8
+=ZrkE
+-----END PGP SIGNATURE-----
