@@ -1,62 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/15
-Message-Id: <201312092345.rB9NjKDK029036@linus.mitre.org>
-Date: Mon, 9 Dec 2013 18:45:20 -0500 (EST)
-From: cve-assign@...re.org
-To: pinkbyte@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: ClamAV vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/14
+Message-ID: <517A4DBA.6050208@redhat.com>
+Date: Fri, 26 Apr 2013 11:49:46 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 04/25/2013 07:55 AM, Alistair Crooks wrote:
+> So, all in all, what you have is a digest, signed by someone who knows
+> the key, or who has access to the creds (if any) for the key, or who
+> has found out the key creds, albeit with timestamp info for when the
+> signature took place.
+>
+> I'm not sure what using PGP gains us?
 
-> I know that there are no details provided here, but secunia advisory
-> also points on 'unspecified vulnerabilities'.
+We can tell that the new tarball passed through some of the same steps 
+that the old tarball did.  It is better than just downloading it from 
+the same site as before because some middlemen have already demonstrated 
+that they can be unreliable, and the OpenPGP signature cuts them out. 
+(Large source code hosting sites have been compromised, or serve their 
+content exclusively over a mirror network which literally anyone can join.)
 
-It is possible to have a CVE ID for multiple unspecified
-vulnerabilities but this can usually only occur when the expectation
-is that no details will be available. In this case, a previous message
-said:
+Merely looking for key continuity means that we don't have to wonder if 
+"Rodent of Unusual Size" is authorized to spin new releases of Apache httpd.
 
->> From: Kurt Seifried <kseifried@...hat.com>
->> 
->> Just a heads up I know at least one person is trying to get details
->> from SourceFire (they bought ClamAV some time back). Until I can match
->> issues up I can't assign CVEs.
-
-suggesting that some information gathering may be in progress.
-
-Although these items:
-
->> 1) A double-free error exists within the "unrar_extract_next_prepare()"
->> function (libclamunrar_iface/unrar_iface.c) when parsing a RAR file.
->> 
->> 2) An unspecified error within the "wwunpack()" function
->> (libclamav/wwunpack.c) when unpacking a WWPack file can be exploited to
->> corrupt heap memory.
-
-can have CVE IDs, we can't correctly define the scope of any CVE ID
-until more is known about what was fixed in 0.9.7. For example, in
-some cases, two different double-free issues fixed in 0.9.7 would be
-covered by a single CVE ID.
-
-So, it is probably best to wait a short time for the information
-gathering.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSplJmAAoJEKllVAevmvms+dkH/inM5aP+TvcychU/CygZUIBo
-eCaMOYwaoCgq1PIAKAIHkSxe8RQMvcZqF4W4V2YzXMDYFGRDOocOv7celNz213tJ
-Ur2vbIBN7eq9ZenenYZ4kr1mv9E84tRpVIm69Th5tBwEbPKbQiJcCVFsmHmMKQ80
-C/aDHpVngu6gCkcEdgUX2GTaC7xAc+QkHlFFcaDbxdr860lpiJB7FaF5BysCs69M
-035c9SQEr0S/eiRJnNFRFNu+rcJvLSCK+NBsiPXGZqS0u9riUx2//0V0ilXNZzt1
-K7dPazHgVvb5cwWMqfVHCwOGN5Nk/xqCOgDNBffNjGC+SaZggCWq/NLM+5foeMM=
-=hkx8
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security Team
