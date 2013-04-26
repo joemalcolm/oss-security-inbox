@@ -1,63 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/8
-Message-ID: <51D1CCC8.8040108@redhat.com>
-Date: Mon, 01 Jul 2013 12:39:04 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/8
+Message-Id: <00F23841-9165-4690-AE0B-6EA70F6EA15A@nginx.com>
+Date: Fri, 26 Apr 2013 11:15:21 +0400
+From: Andrew Alexeev <andrew@...nx.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>, Sona Sarmadi <sona.sarmadi@...a.com>, Dejan Bucar <dejan.bucar@...a.com>
-Subject: Re: Request for linux-distros list membership
+Cc: kseifried@...hat.com, gremlin@...mlin.ru
+Subject: Re: Nginx ngx_http_close_connection function integer overflow - can anyone confirm this?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Apr 26, 2013, at 9:48 AM, Alistair Crooks wrote:
 
-On 07/01/2013 11:01 AM, Solar Designer wrote:
-> Hi Sona,
+> On Thu, Apr 25, 2013 at 11:36:17PM -0600, Kurt Seifried wrote:
+>> -----BEGIN PGP SIGNED MESSAGE-----
+>> Hash: SHA1
+>> 
+>> - From Bugtraq:
+>> 
+>> http://www.securityfocus.com/archive/1/526439/30/0/threaded
+>> 
+>> Website: http://safe3.com.cn
 > 
-> On Mon, Jul 01, 2013 at 11:25:37AM +0000, Sona Sarmadi wrote:
->> Please add Enea Linux information to: 
->> http://oss-security.openwall.org/wiki/vendors
+> Is this legit?
 > 
-> You're the one to add your information to the wiki (just register
-> for an account and edit the page), and this is desirable regardless
-> of whether you'd be on the private distros list or not.  I went to
-> your website at http://www.enea.com and was not able to (quickly)
-> find any information on your security response, advisories,
-> software updates, etc.  Without such information, we cannot even
-> consider you for membership of the private list.
+> I downloaded the index.html file with curl, and embedded around line 87
+> was a flash file:
+
+Unfortunately we weren't approached by "Qihoo 360 Web Security Research Team"
+before this publication went out through bugtraq.
+
+We are now trying to obtain more information from that team without much success.
+
+We've also analyzed their report and we can't conclude this is a real vulnerability yet.
+From the descriptions provided it still looks like it's somewhat spurious.
+
+We are trying to continue investigation though.
+
+Regrettably responsible disclosure isn't always the case. However, we can't yet confirm
+it's a full one either.
+
+
+> <table width="930" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+> <tr><td>
+> <object type="application/x-shockwave-flash" data="/banner.swf?xml=/banner.xml" width="930" height="180">
+> <param name="movie" value="/banner.swf?xml=/banner.xml"/>
+> </object>
+> </td></tr>
+> <tr>
 > 
-> Thanks,
+> so I took it to be an attempt at phishing.
 > 
-> Alexander
+> Maybe I'm just too paranoid in my old age?
+> 
+> Regards,
+> Alistair
 > 
 
-Speaking personally, not on behalf of Red Hat here, yeah, I can't find
-ANY security related info on your website for your products.
-Personally speaking, I would strongly oppose membership even if they
-throw up some security related web pages as it's obvious that this
-isn't a long term effort but "oh we should join distros@, throw some
-web pages up? ok, done!" Until a vendor has shown some long term
-effort to do security properly I suspect letting them onto distros@
-would only increase the chances of a leak and devaluing the list in
-general.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJR0czIAAoJEBYNRVNeJnmT2TQQAJvwGuVe2QjrMhJIsha4UViS
-XCtv12fsNiXTRrTVmr2itD69Z/mBeeuXzr6MX7hl+iKpMevaa2Cu+Hut4mKi6wyj
-teKkaaQm5FuopCXoCG2/+RhiRf3YfaxPWvBnfnr2XWs0O4clVoS6zP1EZuGIBmw/
-oN92gFU7DQ8r3DQhSddk8s2bE2yEEsqCVv29Qi/zi1Iyvz+q0erONSBR4rjZyc5l
-hk/5xlqJxa8SDOEwMM6rnDF/uf0bFMMqdT83cEv2ni30ZdgQFHgczAQwe31scZnS
-VnwVztuxQ1cWL701Mbiv8kTB6Yy4JfQbmcuNOoLSbG8EOeomFtXsG0Zsl0ZAOOQL
-9KIi09kpUveEylF1gWvm26+p2UwuIpaE0sZEtsg+IUmZDp5meaCyWIv5iglV1WqY
-1TFjZT4VSabO/O2bAibJ/IsS5+xMog+QsB3NQ5n8ECC8FP1mMkhx6M8raZmbWFnm
-kSuXFPx8xEXH/PE2o8HMCVGe1WMky7tP21INYky+iLXmOOXaS4ZscQC/2Z7KbGFc
-GkKpir3SCKZSDDVr0JudcNTGl3Iuh4kBAB64fvZTmLEjPn1fJcdw2wM6UL2oyXhz
-Ztg2WQhwxbY5jBUOB3iHVL1+M8Y6gQXY/mA3ZKlBPgqyjAxB3B+Oeb1oM/+NN3zU
-yLnLJB081yBxv6f0paUF
-=Caum
------END PGP SIGNATURE-----
