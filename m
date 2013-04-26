@@ -1,75 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/11
-Message-ID: <Pine.GSO.4.64.1303131508090.26480@faron.mitre.org>
-Date: Wed, 13 Mar 2013 15:10:59 -0400 (EDT)
-From: "Steven M. Christey" <coley@...re.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-cc: Russ Allbery <rra@...nford.edu>
-Subject: Re: Reverse lookup issue in Net::Server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/9
+Message-ID: <CAH5b-BVLE1DiHVuWTU2qgU5mrsFFP19YOdziE2EcrsMEzpnjyg@mail.gmail.com>
+Date: Fri, 26 Apr 2013 08:58:48 +0200
+From: yersinia <yersinia.spiros@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
+Rpm5 had all, and more, these features from many years. But noone
+care, and these days is not so important anymore.
 
-Trust of the hostname returned by an IP's reverse DNS is better covered by 
-CWE-350: Improperly Trusted Reverse DNS, which should probably be a child 
-of the aforementioned CWE-807, but is not.  (I'll get that fixed.)
+Best and sorry for the top posting
 
-- Steve
-
-
-On Mon, 11 Mar 2013, Kurt Seifried wrote:
-
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+2013/4/25, nicolas vigier <boklm@...s-attacks.org>:
+> On Wed, 24 Apr 2013, Eric H. Christensen wrote:
 >
-> On 03/04/2013 12:36 PM, Russ Allbery wrote:
->> Remi Gacogne <rgacogne-bugs@...edump.fr> writes:
+>> On Sun, Apr 21, 2013 at 12:39:39AM +0400, Solar Designer wrote:
+>> > i just found this recent blog post by Allan McRae of Arch Linux:
+>> >
+>> > http://allanmcrae.com/2012/04/how-secure-is-the-source-code/
 >>
->>> I think there is a security issue in the way the access control
->>> feature of Net::Server
->>> (http://search.cpan.org/perldoc?Net%3A%3AServer) works.
->>> Net::Server is used by various projects including Munin, Postgrey
->>> and SQLgrey.
+>> This is a great article and I really appreciate the work that went into
+>> the research.
 >>
->>> The issue lies in the fact that the allow / deny access control
->>> does not perform a valid DNS check when given a hostname
->>> parameter and the 'reverse_lookups' option is enabled.  The
->>> current code only checks that the incoming connection source IP
->>> address has a reverse DNS matching the given hostname, but does
->>> not check that the hostname resolves back to this source IP
->>> address (see how the $prop->{'peerhost'} property is set in
->>> get_client_info(), lib/Net/Server.pm:553, then used in
->>> allow_deny(), lib/Net/Server.pm:597).  As it is trivial for an
->>> attacker to be able to set his own source IP's reverse DNS, the
->>> current check is not safe (this probably matches CWE-807:
->>> Reliance on Untrusted Inputs in a Security Decision).
+>> > I think that placing both "MD5 checksum provided on same site as
+>> > download" and "PGP signature, key difficult to verify" in the same
+>> > "yellow" category is inconvenient for us.  "MD5 checksum provided on
+>> > same site as download" only helps verify downloads from mirrors against
+>> > the master site, whereas "PGP signature, key difficult to verify"
+>> > achieves a lot more - once a distro is already including the package
+>> > (and has already taken the risk of it having been tampered with), then
+>> > verifying further updates to the package becomes almost as reliable as
+>> > it would have been with proper signing (with a "readily verifiable"
+>> > key).
+>> > So we need four categories, or simply "MD5 checksum provided on same
+>> > site as download" should be in "red", not in "yellow".
 >>
->> This is a very weak security measure, but yes, the need to check
->> the reverse DNS results with a forward DNS query to make the
->> security check at all useful has been well-known going all the way
->> back to the days when TCP wrappers was the UNIX firewalling system
->> of choice.  I remember discussion of this in security contexts in
->> 1994, and I'm sure it was an old discussion even then.
+>> This is a good discussion to have.  I've recently started working on "best
+>> practices" articles at Red Hat and feel this would make an excellent
+>> article on how we can all improve the security of our source code that
+>> inevitably gets pushed into the various distributions.
+>>
+>> What is really the best, most proper way of desiminating releases?  I
+>> really don't like the use of MD5 for checksums (I'd prefer something out
+>> of the SHA-2 or SHA-3 family of hashing algorithms) and I really *do* like
+>> the use of PGP for signing the code.  I do foresee some practices within
+>> the use of PGP that might not be great, though.
+>>
+>> So what is the best way of authenticating the source code?
 >
-> Yup. Please use CVE-2013-1841 for this issue.
+> The good thing about PGP signed tarballs is that an automated check
+> could be integrated in package build, with some standard macros or
+> script to make it easy to check signature from a specific key. If it's
+> easy and does not cost time then more packagers will do it.
 >
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.13 (GNU/Linux)
 >
-> iQIcBAEBAgAGBQJRPpYkAAoJEBYNRVNeJnmTo74P/j9Yn/ESKT4ALfNJoAISZgIT
-> YSCewtRaMqI+LDr11Rg6kLC9NHO8BKsyo3DvlbEgFITpwkmCCOJKZOvR6PbFm9Ot
-> reLseaegLL6y7qDXgAi97hGjWgq2i+vIi+agyfSy1lhzpnR9bk6aa/rdbxxtERPH
-> N1CbKFpBvZ6RLHDtBtgEGqMznoswG8JIk5l/q15qLvnXgG1VA3H8PL/ZPsHUQ1iR
-> 95tOKXWeHw0ZysK2mwwQHbv6xLxo1owpvILqbOMN7x5Jx/WgusahfjDhQ9eyUbpy
-> Ffxceha4M5LI8FgavALMFYMvAcymFkkjjuG08z/VhYa2/7FMqqF0gXIq4zuVKzAe
-> VJqAt0cd5B6Nx9Kff5f/Yx3WkoZaj+9ErTkIv1O3Rd+X6ubW5j8PdVpKn0hOGEL2
-> XKnNdOkKT6ZtWeRqfck1PZCPw4LUu/gBRNVl4vgr2QVPbRIRDjT5+PksIjd6U+dA
-> lHgz54FXX+X0Yqy4djhZXD1fC9LRahThkHws1U7GjAMcFzVdoGLjfoAFT7temdzF
-> iKpMCcCDoB9H1Pl03cJWk7pPKbZHSgRqYPlnqf6PNmTmJlYCGcqZorihU+S9xw2d
-> ziIO+75QPuxvVVb8Hbtv8RHuJbndqSaFtjncbn0MQ1bVU+/JdQQchy4GPlvrrtvi
-> kDHwPyl55Mrvy0lQAh7X
-> =5u6Y
-> -----END PGP SIGNATURE-----
->
+
+-- 
+Inviato dal mio dispositivo mobile
