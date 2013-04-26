@@ -1,39 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/8
-Message-ID: <loom.20130117T095257-379@post.gmane.org>
-Date: Thu, 17 Jan 2013 09:13:38 +0000 (UTC)
-From: Mark Shelor <mshelor@...n.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/3
+Message-ID: <20130426054147.GE23082@nef.pbox.org>
+Date: Fri, 26 Apr 2013 07:41:47 +0200
+From: Alistair Crooks <agc@...src.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Digest::SHA double free when using load subroutine
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...> writes:
-
-> On 01/15/2013 12:37 PM, Florian Weimer wrote:
-> > * Kurt Seifried:
-> > 
-> >> I'm not clear, how would an attacker exploit this? They'd need to
-> >> be able to specify the file that gets hashed, and the file would
-> >> have to be not present and would thus trigger the crash? Are
-> >> there any real world examples of an affected application? (web
-> >> based?)
-> > 
-> > My hunch is that this is just a bug, not a security issue.
+On Thu, Apr 25, 2013 at 03:40:46PM +0200, nicolas vigier wrote:
+> On Thu, 25 Apr 2013, Alistair Crooks wrote:
 > 
-> I'll leave it for now, if anyone comes up with a security impact/etc.
-> let us know! (I bet this never happens, ah well =).
+> > 
+> > Q4. where's the public key for this?
+> > 
+> > A4. could be anywhere. If it's on one of the HKP servers, then cool.
+> > Not, however, that it can be verified - I know of at least one person
+> > who has had pubkey information uploaded to the key servers for a key
+> > he had no knowledge about. Anyone can put whatever email address into
+> > the userid that they want. If it came with the tarball, ho hum.
+> 
+> Even if the key comes with the tarball, if the tarball is always signed
+> with the same key for all releases, then it's useful. You download the
+> key the first time, keep it somewhere (for instance in the package
+> source) and use it again to check next releases. And if a new release is
+> signed with a different key you know you need to be more careful and
+> can check if the key change is legitimate.
 
+Possibly. You actually know very little about the key before and after the
+signing took place; so you have no way of ascertaining whether the key has
+been used to sign other things fraudulently. Where a role account is used
+to sign packages, this is more worrying.
 
-Digest::SHA is part of the Perl core, so there's a similarity between this case
-and CVE-2008-1927: double-free vulnerability in Perl 5.8.8 allowing a DoS
-(memory corruption and crash).
+But, yes, I'm being alarmist here again. I do agree that signing things
+is way better than not; but I am also well aware that just because something
+is signed does not mean that it should be treated as being without need of
+security.
+ 
+> > Q5. what was signed?
+> > 
+> > A5.  if it comes out as a text document, according to RFC 4880, it has
+> > some weird properties; hopefully all tar files will be binary. 
+> > Whatever, what was signed was something with the same digest as the
+> > tarball.  Default algorithm is SHA1.  Second pre-image attacks on SHA1
+> > are getting closer to being possible, and there are means to modify
+> > entries in the tarball so that an attack is much easier.
+> > 
+> > Q6. Is this a DSA key?  (DSA keys rely on good entropy at signing
+> > time) If so, how good was the entropy on the machine used to generate
+> > the signature?
+> > 
+> > A6.  Again, unknown.
+> > 
+> > Q7. Has someone found the k value for Q6/A6 previously?
+> > 
+> > A7. They might have done. We'd only know if they told us.
+> > 
+> 
+> Same could be said about ssh, tls or almost anything using cryptography ...
 
-Currently I see no way for an attacker to exploit this bug to allow arbitrary
-execution of code from user space.  Any vulnerability of that type would appear
-to require preexisting vulnerabilities in the Perl/glibc memory allocators.
+Absolutely, they share the same building blocks - see the Karlsruhe
+2010 proceedings for how to interchange ssh and pgp keys for signing
+and verification.  And the only difference between SSL and PGP is the
+assurance model - whether a trusted third party should be used (FSVO
+"trusted"), or whether that should be crowdsourced to the web of trust
+model.
 
-Regards, Mark (Digest::SHA upstream)
-
-
-
-
+Regards,
+Alistair
