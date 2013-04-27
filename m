@@ -1,61 +1,147 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/06/6
-Message-ID: <52A21AEB.5080203@redhat.com>
-Date: Fri, 06 Dec 2013 11:43:55 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Kernel: ping: NULL pointer dereference on write to msg_name
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/27/1
+Message-ID: <20130427010158.GN23082@nef.pbox.org>
+Date: Sat, 27 Apr 2013 03:01:58 +0200
+From: Alistair Crooks <agc@...src.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 12/06/2013 07:01 AM, Vasily Kulikov wrote:
-> Hi,
+On Fri, Apr 26, 2013 at 12:55:22AM -0600, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> On Fri, Dec 06, 2013 at 19:13 +0530, P J P wrote:
->> Linux kernel built with the TCP/IP networking support(CONFIG_NET)
->> is vulnerable to a NULL pointer dereference flaw. It could occur
->> via a plain read(2) call on a ping socket. Usage of ping sockets
->> is generally restricted to privileged users.
->> 
->> A user/program able to read from ping sockets could use this flaw
->> to crash a system resulting in DoS.
->> 
->> Upstream fix: ------------- ->
->> https://git.kernel.org/linus/cf970c002d270c36202bd5b9c2804d3097a52da0
->>
->>
->> 
-Reference:
->> ---------- ->
->> https://bugzilla.redhat.com/show_bug.cgi?id=1039046
+> On 04/25/2013 11:57 PM, Alistair Crooks wrote:
+> > On Thu, Apr 25, 2013 at 01:30:23AM -0600, Kurt Seifried wrote:
+> >> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+> >> 
+> >> On 04/24/2013 11:55 PM, Alistair Crooks wrote:
+> >>> I'm not sure what using PGP gains us?
+> >>> 
+> >>> Regards, Alistair
+> >> 
+> >> So some possible outcomes are:
+> >> 
+> >> 1) They do PGP/GPG and don't get compromised. Long term outcome:
+> >> we come out way ahead.
+> >> 
+> >> 2) They do PGP/GPG and do get compromised. Long term outcome: we
+> >> trust bad things and lose, hopefully this gets spotted quickly
+> >> and dealt with.
+> > 
+> > Sure.  I actually agree with you.  But I'd also like it if we
+> > could bear in mind that, with PGP, trust is earned, trust
+> > signatures are snapshots in time, and trust levels are private,
+> > best guessses by people.  All people can see from a key listing is
+> > who trusted them and when, not how much, or whether the trust was
+> > warranted.
 > 
-> The bug was introduced with ping6 sockets implementation in:
+> This makes no sense. So you don't trust their signature because they
+> have to "earn trust", but you do trust their software and you compile
+> and run it? That's literally insane.
+
+No, not really.  (Well, not at all, but I'm feeling charitable today). 
+I know lots of people who write software.  Some of their personal
+lives are train wrecks.  Some I wouldn't trust to sit the right way on
+a toilet seat.  But, for various reasons, such as mentoring,
+peer-programming, peer review, stringent regression tests, personal
+audits of their work, or because of random audits, etc, I would trust
+the software they write.
+
+I don't think that's "literally insane".
+
+I don't know if you've ever done one of the key signing parties, where
+you get handed government id, and that is supposed to define someone's
+identity.  It tells age, name, and ability to keep a dead pan face in
+front of a camera.  It says nothing about how trust-worthy someone is,
+in the sense that I would compile/run software written by them. On top of
+all this is the problem of mutt updating your pubring with various
+people's public keys when you read an email from them (yes, it can be
+turned off).  However, given that I'm on some "unusual" (read
+"precious") mailing lists, that behavior can mean that someone can
+send out email to a list, and now their key appears on my pubring.  An
+attempt to verify a signature on something unrelated could mean that
+their pub key is used to verify something. 
+
+> I a seriously confused that a lot of people seem to think unsigned
+> code is somehow ok, but if we sign the code we have to do it perfectly
+> to have any value. This simply isn't true. Right now unsigned code is
+> wide open, and detecting changes is expensive (you need a full copy to
+> compare against, and if you have a copy why would you care? =).
+> SIgning releases with PGP/GPG makes this problem a lot easier to
+> handle and even if it fails, by definition the attacker would have
+> been able to pull the attack off any ways.
+
+No, not really.  My point was that people seem to think that, just
+because something is signed, it must be 100% good from the right
+person.  I will agree that most of the time this is the case -
+however, relying on this to be the case would be imprudent. There's
+also the unusual case where we get pub keys from a "third-party" HKP
+server, thereby rendering it more difficult for keys to be misused,
+and yet I've seen people saying that just distributing the pub key
+with the distribution is fine.  This is in a world where DNSsec is not
+yet fully deployed, and there are ways of working around certs. No, it's
+not likely, but it is possible.
+
+As to unsigned code being wide open, we have previous versions to
+compare against (and, in the sense that we're discussing it here, the
+people who will be comparing are the packagers for the Linux
+distributions, or the BSD packagers).  They are perfectly capable of
+doing that, and should be.  As part of updating packages, they should
+be taking steps to ensure that some things have not changed.  We
+should learn from our previous mistakes, and get this right.  As I
+said originally, we saw some attempts at trojans during the
+"configure" stages of building packages; admittedly this was 13 years
+ago (at least). That kind of thing was caught, and our defences against
+that kind of thing are much better these days (only running certain steps
+as root - like package installation - building in chroots, building on
+VMs, signing results, even CI and things like hudson and jenkins).
+ 
+> Can we please get over this "security must be done perfect or not at
+> all" and maybe actually get on with making things better? We have to
+> start somewhere. Sitting here going "well we won't do it unless we can
+> do it completely correctly" is just stupid and pointless. Seriously.
+> We need to start raising the bar and teaching people, this is far
+> better than refusing to do anything since it won't be perfect.
+
+That wasn't my intention, so I'm sorry if it came across that way. But
+can we also get away from the "we have signed distfiles now, so everything
+is guaranteed to be safe for evermore"? Thanks.
+ 
+> A perfect example of this is CVE assignments. Most projects do not do
+> them well or at all. Should I give up? Or should I try to educate them
+> and hand hold as needed so that they learn how to do it and start
+> doing it properly? This is what I have been doing and you may notice
+> that XEN, OwnCloud, OpenStack and a few others are now shipping
+> advisories with CVE's already assigned. And most of them are doing CVE
+> requests in a way that is efficient and scalable.
 > 
-> https://git.kernel.org/linus/6d0bfe22611602f36617bc7aa2ffa1bbb2f54c67
->
->  Thanks,
+> And next month (hopefully) you'll be getting even more CVEs (due to
+> more vendors doing CVE requests properly and easily for me), and then
+> at some point we'll bring OSVDB into the fold (once Steven figures out
+> how =) and it'll get even better.
+> 
+> Got to start somewhere. And if you want to go build some perfect
+> system I wish you luck, but I suspect like most attempts at perfection
+> it won't get very far.
 
-Please use CVE-2013-6432 for this issue.
+I think this misrepresents my position just a tad.  I don't want
+everything to be perfect, and I realise that won't ever happen.  But
+I'm also against a feeling of false security, and concerned lest we
+all fall into that trap.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+I'm also enthusiastic about whatever OSVDB (vulnerability DB?) is, and
+thank you for your work with CVE assignment, management, and
+evangelisation.  It is not an easy job, and you deserve all of our
+thanks.
 
-iQIcBAEBAgAGBQJSohrrAAoJEBYNRVNeJnmT1ecQAJWe9HwJpAqrLECRlH7WfKQ4
-fCdBn7NtbJDfEJiLrWEPL6VRh/kRGUQwWmT3ZgfBmz8xRBYUSPmt7mMJL8ruf7k5
-S9NDS1rv0OPiIivCc73+g36Tk2TPG27FET2y2pEIwnln80zVm4zc0uhM6aFR3gG9
-Bs17kw3+L9jRronXncoM6VR8X4BEg5Aydg23cqnuGbYAZDoX5YeGQhQV29ooGgjN
-ZE9C3xjzfSw9JhgIBMncID1iQt0F0YP8hcjyIJw8cnRVb+FbEY98TkRopSWufxhM
-pnZJmUKoyCl8qm2Kb72IZQlm9Wt6veABdf5LOleLHlJfk1MadYyEZdM/cEHOHjgC
-2GprLuF4p/UJkm+t7Z9XySWnG2bWMurDJWM773379qYmOpJ1QC1CqAM1RHIQuHBy
-yaqAGvEP4HXgHjWkeIEaxloKsTh04fFRnlKr/+hquKcdew6zvy74VuqiOKyRGKxr
-5x07k4JpkQt2C8ZxJOUfCc8ZqZVqdmbaxixwKMO1KTZYD4fxn+5BmFWkG4b3fKya
-J9zlJ+iQMzguWwh0IYIVgvKDmBmMSYau51bSN4n4gV+/YdBuIHyTc/ViSLSHqgNO
-xPsB7i0ThTcN6wpfDHXAPNDRuEpZjgfroGlh55tdkvEUrNmZm411OojjbkM0biGa
-NbeYrvJcCaf+1C3kj3jB
-=/c5r
------END PGP SIGNATURE-----
+As for me, I'm continuing to develop using PGP - I believe in it. I
+still want better processes and procedures around key usage, though.
+
+(If anyone has made it through to this point, I thank you, and
+congratulate you.  The horse is dead, and I am fed up beating it - it
+can go for hamburgers in the UK now).
+
+Regards,
+Alistair
