@@ -1,48 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/19
-Message-ID: <ksqq8t$s6m$1@ger.gmane.org>
-Date: Thu, 25 Jul 2013 10:14:12 +0100
-From: Matthew Wilkes <matthew@...thewwilkes.co.uk>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - PloneFormGen, multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/27/3
+Message-ID: <CADR5acJGf2FjniZhTxJrihS3ttAUS+5c+82evsv=nopngFAxMg@mail.gmail.com>
+Date: Sat, 27 Apr 2013 15:49:09 -0700
+From: Felix Gröbert <groebert@...gle.com>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com, Henri Salo <henri@...v.fi>,  Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, draynor@...rcefire.com
+Subject: Re: Multiple potential security issues fixed in ClamAV 0.97.8 - any further details?
 Content-Type: text/plain; charset=utf-8
 
-> But I also want to make sure CVE's get assigned correctly. So three
-> main problems arise
+Hi,
 
-Kurt, I get it. Really. I'll make sure code commits are included in 
-future. I don't think anyone's being deliberately obstructive here, I 
-know I certainly try my best to give you clear, short descriptions so 
-that you don't have to waste time going through others' code if you 
-don't need to. I'm not trying to make your job harder, I'm trying to help.
+sorry for the delayed response, I'm OOO.
 
-> Having QUICK access to the source code vulns/corrections makes all the
-> above much much easier.
+The bugs should be public now:
 
-Sure, I'll make sure you have it it future. From my point of view, 
-however, a lot of these things are caused by subtle interactions of 
-various mistakes that would be harmless on their own. That makes it 
-harder to provide useful source code as it could easily look correct. 
-For example, the Zope application server uses the presence of 
-documentation as an in-band marker of if something is public or private; 
-just sending you a link to the removal of docs would be pretty confusing.
+https://bugzilla.clamav.net/show_bug.cgi?id=7055
+heap corruption, potentially exploitable.
 
-> You're not asking for CVE's in a vacuum. CVE's are widely used by
-> literally millions of people and organizations, we need to make sure
-> they are done right or we will cause an obscene amount of time and
-> money to be wasted.
+https://bugzilla.clamav.net/show_bug.cgi?id=7053
+overflow due to PDF key length computation. Potentially exploitable.
 
-The reason I write descriptions and include my estimates of CWE 
-identifiers and CVSS scores is precisely because I know lots of people 
-read these lists, and it matters to me to reduce the amount of work they 
-have to go through.  I'd be surprised to learn that more people care 
-about the commits themselves rather than the information in an easy to 
-consume format.
+https://bugzilla.clamav.net/show_bug.cgi?id=7054
+NULL pointer dereference in sis parsing.
 
-> CVE assignment to follow tomorrow because it's 3am here.
+When building clamav I recommend disabling legacy or unneeded features
+(e.g. sis). I guess that's common sense though.
 
-Thank you, it's appreciated.
-
-Matt
-
+Cheers
+Felix
 
