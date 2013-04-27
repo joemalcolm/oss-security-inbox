@@ -1,70 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/04/6
-Message-ID: <50E72EE7.5000300@redhat.com>
-Date: Fri, 04 Jan 2013 12:35:03 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/27/2
+Message-ID: <517B4FCB.40906@redhat.com>
+Date: Fri, 26 Apr 2013 22:10:51 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Rex Dieter <rdieter@...h.unl.edu>
-Subject: Re: CVE Request -- qt: QSslSocket might report inappropriate errors when certificate verification fails
+To: Alistair Crooks <agc@...src.org>
+CC: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/04/2013 09:16 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> Qt upstream has recently announced (upcoming) availability of Qt
-> 4.8.5, Qt 4.7.6 and Qt 4.6.5 which (between other things) should 
-> correct also the following security flaw:
-> 
-> A security flaw was found in the way QSslSocket implementation of
-> the Qt, a software toolkit for applications development, performed
-> certificate verification callbacks, when Qt libraries were used
-> with different OpenSSL version than the one, they were compiled
-> against. In such scenario, this would result in a connection error,
-> but with the SSL error list to contain QSslError:NoError instead of
-> proper reason of the error. This might result in a confusing error
-> being presented to the end users, possibly encouraging them to
-> ignore the SSL errors for the site the connection was initiated
-> against.
-> 
-> References: [1]
-> http://lists.qt-project.org/pipermail/announce/2013-January/000020.html
->
-> 
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=891955
-> 
-> Relevant upstream patch: [3]
-> https://codereview.qt-project.org/#change,42461
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
+On 04/26/2013 07:01 PM, Alistair Crooks wrote:
+> No, not really.  My point was that people seem to think that, just 
+> because something is signed, it must be 100% good from the right 
+> person.  I will agree that most of the time this is the case - 
+> however, relying on this to be the case would be imprudent.
+> There's
 
-Please use CVE-2012-6093 for this issue. The QT bug is from 2012 and
-mentions the security impact.
+But they must already think that it's trustworthy or they wouldn't
+CARE about whether or not the software is signed because they wouldn't
+even be looking at it or care that it exists. The only reason you
+would care if the software is signed is if you intend to use it in
+some way (or you're the 0.0001% of crazy security researchers, which
+is basically no-one).
+
+> As to unsigned code being wide open, we have previous versions to 
+> compare against (and, in the sense that we're discussing it here,
+> the
+
+This assumes they have not been compromised already and the
+compromised bits brought forwards. This also assumes everyone runs
+diff -ru version1 version2 and audits the ouput. This is PROOVABLY not
+the case otherwise people would catch NORMAL security flaws being
+introduced.
+
+> people who will be comparing are the packagers for the Linux 
+> distributions, or the BSD packagers).  They are perfectly capable
+> of doing that, and should be.  As part of updating packages, they
+> should
+
+HAHAHAHAHAHAHAHAHAA MUAHAHAHA SNORT HAHAHAHAHAHA
+
+No. No as a rule they don't. Again if people audited source code
+changes for security flaws, by definition no new security flaws would
+be introduced (well they would be, but people would catch them).
+Seriously, think about it.
+
+> That wasn't my intention, so I'm sorry if it came across that way.
+> But can we also get away from the "we have signed distfiles now, so
+> everything is guaranteed to be safe for evermore"? Thanks.
+
+Most of us never said that (and I apologize if we didn't make it
+clear). We said "more secure", not "completely secure so stop
+worrying". If we didn't spell it out, we should have, but I think it's
+obvious from my post, Josh's post, etc that that is the intent.
+
+Right now we have code written by who knows what/who running on
+millions of servers with no oversight/audits/checks. Witness this
+weeks WP-Super-Cache debacle, or the timthumb.php thing. If peple
+actually audited the code changes they would have gone "wow...
+mfunc... wait.. can't this result in code exec..?".
+
+Oh and I've had NO response from the WP-Super-Cache guy so far. good
+thing he cares about security. And all the people that use his software.
+
+> Regards, Alistair
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ5y7mAAoJEBYNRVNeJnmTjmEQAKKJZAeiG7SKzTnsYtIFJkaV
-zCYr+BHrauzWSSs+jm6PZjnoBQhdPyVfEl5+B0QsitjVq6hm+MYv6J3zbWmkStST
-GPFun1JyZsUWEbQveEmrv8Rd/NcvdkBL9caIAZCAJ04VVLfNgsH5b7MUTCKVDIlC
-BKXiyAUhJWbsHEjBwa7Rp5OzoOz+I6wCOpSqk6ZI4sX86Snl9gIk5ff3w3AWlKnq
-SpcGYw5J1XqQk2j7rhhfMvUvoE5W2KdvHA4xEeF7+ipOYVCRKq3uUyqmLObZ0h/v
-Hu2HuOLtulso2p7Ab/iDXzPMkiyPRs9fTfs70HXt6LTkhNvf/ZfSnSGFgeAQDEZG
-OcJuLzOMhrEx53xo00ybUhdZelPI1rIhNhc/1LKtCjJAHPBk3ePGudLCMvM1bWp6
-9BPNNY+8n0Wf8THxtBtKgnhI02NZZ2UFcm/Z48+ime1gtMZKk0H2nz72DKMX7IWM
-0fBjLeHuyMMOKSut/PzVp/mMO9Qsg61MadCVqZMRLSbYOeBcoaSx+8izCeVAHNvK
-g6DvPtWT1NFQQvAUvdbNoieImadmfpdjQVZXsfqzxIIAfTpYeJ3HGUhqgC39j1hs
-4+BMjDYEGrAcXLMNyInr8loxqr6fbgm0KWbyW87TRSLyOKeHr4FeKh4iJF2oIxNi
-1CIfKBjIeROfUfs9Bmxp
-=5EAw
+iQIcBAEBAgAGBQJRe0/LAAoJEBYNRVNeJnmTMNgP/2FPVVNNyfx75gGlae45QKpt
+CDJPA3klag33Y1j4mr+1D+pNKgsrHYStbn+RHCfx45QpJ2SqqfTpWP8WW3MTzuQX
+OjDlfNHfyTejiaXveNpCwhHEjyySNQCLRKNeo/G7j2Zh2cZH84kDuZPaEswTZbvU
+Jwmh1K6oIZE1ceH+mbSUXglwsmrZ7W+0bgCV9QrNn5m79NB71AbcjAb1+pnOVR7K
+x/msccsea+Pd17+PXS2vqDeVP2sS50xvtjekjvb2Hd27gHBeg2kBAg+JkrsslQhc
+kXSqxnUALDGTBTcjo6uHlO1IF9QHqzEeWC3G/gMHFsG04IZdfO2nIEi46/983rz+
+v6zLUXMsVwAlMouv/W09ZV0PwME1M5njKezrESz6OjbJiyhyOf1/gDWJUpbWpoNs
+FCbmtuZPKShBBKEhRyabUYV7cThsRm0gogo7wuLHXkgy2WiqRD4k2bpc0ptfEN8i
+ZiA0T7OGwcKjTtrZ1PPpI0+7oano9/gCguNcwaYAQ2u0vYbv9jQghN80d6eh3Sfs
+vibzqmx0bp3zQAgYJkwWrxAfe1SGpqd7kHBZ92LV5EJr4G7yYBjfYYUuvbr3NzAI
+Z1Z8xgNOCzW8A3+AsWtLcIvP2p/UKijxm7Ochk/9XxnauyS5OCTkvjfkwfOMv/14
+5SIBdo52tmSjuduu3jXo
+=9qZN
 -----END PGP SIGNATURE-----
