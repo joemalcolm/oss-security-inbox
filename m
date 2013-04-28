@@ -1,38 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/01/3
-Message-Id: <201309011623.r81GNkPN007293@linus.mitre.org>
-Date: Sun, 1 Sep 2013 12:23:46 -0400 (EDT)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: serendipity before 1.7.3 XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/28/1
+Message-ID: <CABniQZP9uZF5Fssc+UTM0sX_SRUYRuuowsN+dnPHs2FudCfoug@mail.gmail.com>
+Date: Sun, 28 Apr 2013 13:01:39 +0800
+From: Shawn <citypw@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Nginx ngx_http_close_connection function integer overflow - can anyone confirm this?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+hey Andrew,
 
-> Serendipity blog software contains an XSS in the shipped
-> htmlarea-code for spell checking.
-> 
-> http://osvdb.org/87395
-> http://blog.s9y.org/archives/250-Serendipity-1.7.3-released.html
-> https://github.com/s9y/Serendipity/commit/d7dbe7757371c7f25a39463d1b924604785ae475
+I wrote a test program[1] that would generate a bunch of random bytes
+as http post payload. I ran it for hours but only make the
+r->count==>4. It seems like Nginx community not confirm this issue
+yet. I tried to contact 360 guys but didn't get reply.
 
-Use CVE-2013-5670.
+[1] https://github.com/citypw/arsenal-4-sec-testing/blob/master/http/http_request/http_post_payload_fuzzing.py
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+On Fri, Apr 26, 2013 at 3:15 PM, Andrew Alexeev <andrew@...nx.com> wrote:
+> On Apr 26, 2013, at 9:48 AM, Alistair Crooks wrote:
+>
+>> On Thu, Apr 25, 2013 at 11:36:17PM -0600, Kurt Seifried wrote:
+>>> -----BEGIN PGP SIGNED MESSAGE-----
+>>> Hash: SHA1
+>>>
+>>> - From Bugtraq:
+>>>
+>>> http://www.securityfocus.com/archive/1/526439/30/0/threaded
+>>>
+>>> Website: http://safe3.com.cn
+>>
+>> Is this legit?
+>>
+>> I downloaded the index.html file with curl, and embedded around line 87
+>> was a flash file:
+>
+> Unfortunately we weren't approached by "Qihoo 360 Web Security Research Team"
+> before this publication went out through bugtraq.
+>
+> We are now trying to obtain more information from that team without much success.
+>
+> We've also analyzed their report and we can't conclude this is a real vulnerability yet.
+> From the descriptions provided it still looks like it's somewhat spurious.
+>
+> We are trying to continue investigation though.
+>
+> Regrettably responsible disclosure isn't always the case. However, we can't yet confirm
+> it's a full one either.
+>
+>
+>> <table width="930" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+>> <tr><td>
+>> <object type="application/x-shockwave-flash" data="/banner.swf?xml=/banner.xml" width="930" height="180">
+>> <param name="movie" value="/banner.swf?xml=/banner.xml"/>
+>> </object>
+>> </td></tr>
+>> <tr>
+>>
+>> so I took it to be an attempt at phishing.
+>>
+>> Maybe I'm just too paranoid in my old age?
+>>
+>> Regards,
+>> Alistair
+>>
+>
 
-iQEcBAEBAgAGBQJSI2aJAAoJEGvefgSNfHMdbWgH/1gF/pZXsQ6sHgUg0UXHc5GZ
-0qZUQS2zmlKoNGl/hboXfNjOIv6VwsJ6g0IHMOKfg7NCyfeq33ELTXd7V1fQxAx+
-9zeXWHrnLVmK/QIksycsZFACqGcws6eJhEDCNUL2u9l4yKkSmwCF7/LnGaBDOOr7
-H7QcA3pRJnvxlN8Ps8sOUaWgB0GJr6Bjo7N6Z/e7muJJlz/fbqX40oF/kLopRkba
-AiCif4q0PwR8tmGoU2lk8a8ZpVQtP3o/N22Lke/8qmio81fWPos4bwn8obRBygrp
-p3wPJq+v+zk8bmBCdxnXWN9ECwxzC5BEXm+WbAq6G9rVyzzjrN3Q9Dj05ygJiJg=
-=Cvft
------END PGP SIGNATURE-----
+
+
+--
+GNU powered it...
+GPL protect it...
+God blessing it...
+
+regards
+Shawn
