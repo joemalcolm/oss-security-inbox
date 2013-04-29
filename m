@@ -1,44 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/19/6
-Message-ID: <20130219210125.GA27485@openwall.com>
-Date: Wed, 20 Feb 2013 01:01:25 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel race condition with PTRACE_SETREGS (CVE-2013-0871)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/17
+Message-ID: <20130429202005.GA2009@elende>
+Date: Mon, 29 Apr 2013 22:20:05 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: Felix Gröbert <groebert@...gle.com>, Henri Salo <henri@...v.fi>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, draynor@...rcefire.com
+Subject: Re: Multiple potential security issues fixed in ClamAV 0.97.8 - any further details?
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 19, 2013 at 12:40:50PM -0800, Julien Tinnes wrote:
-> On Sat, Feb 16, 2013 at 2:49 AM, Solar Designer <solar@...nwall.com> wrote:
-> > I haven't looked into this closely yet, but at first glance it looks
-> > like the worst Linux kernel vulnerability in a few years.
+Hi Kurt
+
+On Mon, Apr 29, 2013 at 01:27:18PM -0600, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> The good news is that the race is not trivial to win in an exploit. It
-> also requires access to ptrace() (but unfortunately most distros don't
-> limit ptrace()).
-
-Yeah.  To clarify why the vulnerability looks so bad to me: for our
-kernel builds and usage, it appears to be the worst since CVE-2010-3081
-(compat_alloc_user_space() missing sanity checks), although it is
-probably trickier to exploit in the wild (due to the race).  There were
-other local vulnerabilities in the Linux kernel discovered in those ~2.5
-years, but they were in more obscure subsystems (which we generally
-don't expose) or/and they required that the local attacker would execute
-a SUID/SGID program.  This one, however, is in an (almost) core kernel
-component and is self-contained (no dependency on the userland being
-non-perfect), which makes it almost as bad as CVE-2010-3081, except that
-it's a race.  On the other hand, CVE-2010-3081 did not affect 32-bit
-only kernel builds, whereas this new vulnerability probably does.
-
-> > Are all architectures affected?  The ptrace code in the kernel is
-> > naturally somewhat arch-specific, so _maybe_ not all are affected.
+> On 04/27/2013 04:49 PM, Felix Gröbert wrote:
+> > Hi,
+> > 
+> > sorry for the delayed response, I'm OOO.
+> > 
+> > The bugs should be public now:
+> > 
+> > https://bugzilla.clamav.net/show_bug.cgi?id=7055 heap corruption,
+> > potentially exploitable.
 > 
-> We don't know of any other architecture other that x86 affected, but
-> again, I don't think anyone spent time trying to figure this out. It's
-> possible that the same mistake was made on another architecture.
+> Please use CVE-2013-2020 for this issue.
+> 
+> > https://bugzilla.clamav.net/show_bug.cgi?id=7053 overflow due to
+> > PDF key length computation. Potentially exploitable.
+> 
+> Please use CVE-2013-2020 for this issue.
 
-Have you looked into whether 32-bit x86 kernel builds are affected to
-the same extent?
+Should these get separates CVE (as two different types)? Only would
+like to confirm, in case this was a typo.
 
-Thanks,
-
-Alexander
+Regards,
+Salvatore
