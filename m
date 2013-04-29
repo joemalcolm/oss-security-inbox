@@ -1,90 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/12/6
-Message-ID: <Pine.GSO.4.64.1304121857540.22586@faron.mitre.org>
-Date: Fri, 12 Apr 2013 19:02:20 -0400 (EDT)
-From: "Steven M. Christey" <coley@...re.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/11
+Message-ID: <517EC90C.7000608@redhat.com>
+Date: Mon, 29 Apr 2013 13:25:00 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re-evaluating expat/libxml2 CVE assignments
+CC: Alyssa Milburn <amilburn@...l.org>
+Subject: Re: Multiple vulnerabilities in BOINC
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Various CVEs were assigned to XML-related issues in expat and libxml2
-at:
+On 04/28/2013 09:58 AM, Alyssa Milburn wrote:
+> Hi all,
+> 
+> There have been various recent(-ish) vulnerabilities found in the
+> BOINC software for desktop grid computing. The major projects have
+> (hopefully) fixed all of these by now, and the clients should only
+> be vulnerable if they're connected to a hostile server.
+> 
+> The commit ids below are all from the boinc-v2 repository, see 
+> http://boinc.berkeley.edu/trac/browser/boinc-v2 for a web view.
+> 
+> These are the ones I consider to be obviously important:
+> 
+> * CVE-2013-2298: various stack overflow vulnerabilities in the XML
+> parser used by both the client and server software. I think that
+> any 7.x version is vulnerable, but possibly not the 6.12 branch or
+> earlier. No promises.
+> 
+> (Found/reported by me. I notified all public projects I could find
+> who were running obviously-vulnerable copies of the code, in early
+> March.)
+> 
+> http://thread.gmane.org/gmane.comp.distributed.boinc.user/3741 
+> 2fea03824925cbcb976f4191f4d8321e41a4d95b
+> 
+> * Stack overflow in the client code by providing multiple
+> file_signature elements. 6.10.58 and 6.12.34 are vulnerable. 7.x
+> isn't.
+> 
+> (This was fixed back in 2011, possibly accidentally.)
+> 
+> 9a4140ae30a72e5175f3f31646d91f2d58df7156
 
-http://openwall.com/lists/oss-security/2013/02/22/3
-
-CVE-2013-0338 - libxml2 internal entity expansion
-
-CVE-2013-0339 - libxml2 external entities expansion
-
-CVE-2013-0340 - expat internal entity expansion
-
-CVE-2013-0341 - expat external entities expansion
-
-As I noted in http://openwall.com/lists/oss-security/2013/02/21/24, for 
-novel situations such as these, sometimes we might change directions after 
-we learn more.
-
-After some investigation, the MITRE CNA team believes we should probably 
-REJECT CVE-2013-0341 and shift responsibility to application developers.
-
-For CVE-2013-0340 and CVE-2013-0339, there are "workarounds" available for 
-application developers, although such workarounds may be very expensive to 
-develop, and this might place "too much" responsibility to the developers 
-- so, these assignments may still be OK.  It is still worth discussion.
-
-CVE-2013-0338 still seems OK as is.
-
-
-CVE-2013-0341 - expat external entities expansion
--------------------------------------------------
-
-In http://openwall.com/lists/oss-security/2013/02/23/1, Kurt says "I
-think it's common enough to warrant [assignment]," but Florian Weimer
-points out that expat doesn't resolve external entities directly.
-Instead - as described (or quoted?) in detail by Kurt - "Expat does
-not read or parse external entities directly."  The developer using
-expat has to explicitly set ExternalEntityRefHandler, then create "a
-subsidiary parser with XML_ExternalEntityParserCreate".
-
-Since the programmer using expat has to do the work to define and set
-up their ExternalEntityRefHandler, we believe that means that
-individual applications are using expat unsafely, so there should be
-separate CVEs for the applications, not expat.
+Please use CVE-2013-2019 for this issue.
 
 
-CVE-2013-0340 - expat internal entity expansion
------------------------------------------------
+> * SQL injections in the server-side scheduler code:
+> 
+> (Found/reported by me. I warned projects about this at the same
+> time as the the above notifications, hopefully they've mostly
+> patched it..)
+> 
+> http://thread.gmane.org/gmane.comp.distributed.boinc.user/3776 
+> 3ced18ddaaea5e03d2cc70f8cce5ab214b4d5635
+> 
+> * SQL injections in the user-facing web scripts: (These were
+> possibly found by Michael Voß, see 
+> http://www.mdr.de/mdr-info/hacker-boinc100.html )
+> 
+> http://thread.gmane.org/gmane.comp.distributed.boinc.user/3658 
+> e8d6c33fe158129a5616e18eb84a7a9d44aca15f 
+> 6e205de096da83b12ffb2f0183b43e51261eb0c4 
+> ce3110489bc139b8218252ba1cb0862d69f72ae3
 
-This probably qualifies for a CVE, but note that the issue came up in
-CVE-2009-1955 (expat as used in Apache APR-util).  The implemented
-solution was to change the application, not expat. See
+MERGING these two issues for now. Please use CVE-2013-2018 for this issue.
 
-http://svn.apache.org/viewvc?view=rev&revision=781403
-http://svn.apache.org/viewvc/apr/apr/trunk/xml/apr_xml.c?r1=757729&r2=781403&pathrev=781403&diff_format=h
+And ignoring the rest unless someone says otherwise (like was this
+code really used/etc.).
 
-Apparently, if an application wishes to address this issue, it has to
-call the XML_SetEntityDeclHandler function with the name of an
-alternative function that can handle entities more safely. The
-opportunity to write your own code to process entities is probably
-outside the general intention of our "the library provides an API
-mechanism through which safe operation can be achieved" condition as
-presented in the http://openwall.com/lists/oss-security/2013/02/21/24
-post.
+> And some issues I'm not sure are quite so important:
+> 
+> * Stack overflows in the trickle code on server and client side:
+> 
+> (Fixed back in 2011, and these were only present in experimental
+> 6.13.x releases, as far as I know.)
+> 
+> 5b04b249db166ec38c1ee99a9eadcaa300c0f454 
+> ae04b50a71f3e96ee1bc59b76fca97cf0fe976f7
+> 
+> * From a few days ago, a possible format string issue(?) in the
+> client code:
+> 
+> (Noticed by Gianfranco Costamagna/Nicolás Alvarez judging by the
+> thread)
+> 
+> http://thread.gmane.org/gmane.comp.distributed.boinc.devel/6416 
+> 99258dcecba8ef36e1ce0fd6e0dacffe53613ac9
+> 
+> * An SQL injection vulnerability in the locality code (apparently
+> only used by one known project), so I mention this just for
+> completeness just in case anyone happens to be using it:
+> 
+> 2dbfdc55057b2c1f0508b56244044b1ad34e7cdb
+> 
+> - Alyssa
+> 
 
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-CVE-2013-0339 - libxml2 external entities expansion
----------------------------------------------------
-
-This also probably qualifies for a CVE. This may be another situation
-where the library provides the opportunity to write your own code to
-process entities safely. The libxml2 documentation for
-xmlSAX2ResolveEntity says "The entity loader, to control the loading
-of external entities, the application can either: ... override this
-xmlSAX2ResolveEntity() callback in the SAX block ... or better use the
-xmlSetExternalEntityLoader() function to set up it's own entity
-resolution routine." If so, then like CVE-2013-0340, it again would
-arguably be outside the bounds of the "the library provides an API
-mechanism through which safe operation can be achieved" condition.
-
+iQIcBAEBAgAGBQJRfskMAAoJEBYNRVNeJnmTdCgP/0mx6djzHz5ZUPaFN42t1zRb
+sJZYWUWrLlxAgdvx4G5I0kKK6GGehwt7ra2r9Z4/RdM9aTvPyrTPSHkE/ST5yAi8
+G+pWi9L1wO1/N/sm0+H9cjPoUTm4xbQ5e1FyDMeoyK1AXkfR4/WUkYICrtsEz0Hu
+Qk6ZQg8N23vGHx7NLzi05rsOlRivuAAQmRRpNBB41gzk6LeeyOQeMppxo0YPFKw4
+O16+UjOmIUxwEBaCOEoUQu0sSy8W3ynr+7wAB+KVtp9u07bR9Q8JJ/WrBGu6Xj5m
+49K+NUilyJSDXI9MmMgRUJ+LeSu9Oh9ACcMncSJsPpH8Im13ntFOcMlg+7kc8pMd
+AHNBCSRmQVMafwv8Ib/nJKGiX1eX5nogMXR1HM2ARxC65OdNyZ4wjU3mIdRqkLFH
+2U2OLwn+Hikl519th3qzo7yHx/DkkNvW2gMEjQMt+uYQzCJ+7AQA+RHA2HSptg00
+nbXzVoNhZfGnzdUoJVC8mixHnBbhEffZ0NXGFS59z3cOpwElxidl40vRp9RhKd6D
+cRzYYxrnaXhJht2E3BClwAeI1wMp7qxTx1bGShpxmDg+XVPIfgUcBJ9V3NFdy67E
+HN5rOJGAW2W+Ao4KTfvgnl/rNfnh6UkNjhfchMVJCK/MmYMBEkolJfq/NWaQQVPz
+ukNnyMIQvwNx5S8hRQVo
+=ETc4
+-----END PGP SIGNATURE-----
