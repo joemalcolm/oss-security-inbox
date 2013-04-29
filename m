@@ -1,27 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/17
-Message-ID: <51645BCA.4090606@msgid.tls.msk.ru>
-Date: Tue, 09 Apr 2013 22:19:54 +0400
-From: Michael Tokarev <mjt@....msk.ru>
-To: oss-security@...ts.openwall.com
-CC: Russ Thompson <russ@...dbit.com>
-Subject: Re: Postfix incorrect permissions on configurations. Request.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/13
+Message-ID: <517ECAF8.4010500@redhat.com>
+Date: Mon, 29 Apr 2013 13:33:12 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: OS command injection vulnerability in Chicken Scheme
 Content-Type: text/plain; charset=utf-8
 
-09.04.2013 22:08, Russ Thompson wrote:
-> Postfix is setting the following permissions by default on Debian Squeeze.  I'm seeing roughly the same on RHEL/CentOS 6.x, this appears to be a requirement of "sendmail.postfix"  
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/21/2013 01:11 PM, Peter Bex wrote:
+> Hello,
 > 
-> 0755 /etc/postfix
-> 0644 /etc/postfix/*
-> 0755 /etc/postfix-script
-> 0755 /etc/post-install
+> I'd like to request a CVE identifier for a bug in Chicken Scheme
+> which allows a malicious user to cause shell command execution
+> through injection of a pipe symbol and possibly other shell meta
+> characters.
 > 
-> Which allows all users to execute these scripts and read configurations.  Setting to tighter/more typical permissions (i.e 640) results in:  postfix/sendmail[21007]: fatal: open /etc/postfix/main.cf: Permission denied
+> This bug is present in all versions of CHICKEN.  It will be fixed 
+> in 4.8.3 and 4.8.2 as per commit
+> 58684f69572453acc6fed7326fa9df39be98760e. Version 4.9.0 will likely
+> be the first stable release to include this fix, unless it is
+> decided to backport this fix to the stability release.
+> 
+> The full announcement is here: 
+> http://lists.nongnu.org/archive/html/chicken-announce/2013-04/msg00000.html
 
-That's all nice, but can you elaborate a bit -- what is wrong
-with that?  Which request do you have?  What it has to do with
-oss-security?
+Please
+> 
+use CVE-2013-2024 for this issue.
 
-Thanks,
+> By the way, I'm confused as to why the CVEs I've requested so far
+> don't show up in NVD.  For example, 
+> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-6122 says
+> the CVE does not exist, but Kurt assigned it in February: 
+> http://www.openwall.com/lists/oss-security/2013/02/08/2
+> 
+> The other CVE numbers in that mail produce a "not found" page as
+> well and an NVD database search for "chicken" turns up nothing
+> related to Chicken Scheme.  The page says the database was last
+> updated April 19th 2013, so that's not the cause either.
 
-/mjt
+Because Mitre has a large backlog of CVE's to research and write up.
+Submitting researched/written entries to them will probably result in
+your entries being posted faster. Try to remember that CVE pushed
+thousands of these a year, the volume is considerable.
+
+> Cheers, Peter Bex
+
+Apologies for the late reply
+
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRfsr4AAoJEBYNRVNeJnmTUeQP/jyLkpkuLZZ/fgYUOj13X4UG
+TxnD3Yt8szD7xca/g/0f8SEFRH5+MinlUzYBjB/WS8ZZH2jMR2mJef/GJso48UXZ
+MKq9bEfBtyHL92RZwjIlzZyTMEK9l7/7nQX5psfr10NkA4UrHF9OXmyI4xrqi6+p
+CspfDaHlct8LkMjnQGCeXlT49onbsn2Ujq3vOCrHi0EcRArFHbSyplwnKC/zNj90
+/jPjuv/A6S5bpebv2ygFMGVGzNIOMoJn/R0wFMvDpztrCl87jJiErMaYVzyZA9KA
+PEvR+sbB5niIRjEHSW0Vp42ZTUbnryZXNsR7LHOKO7J+qupx76eYuW4kuslnYNx2
+GukDDLmI9/3wkcYqUmAX40srYzn3p8QE4hRjnLAl4fti0VMLTiBrYebF0VLk5H3A
+4EobmqUK4EtfeFheQuVX+515wDmGbAd1RXZQ0uMGmwNvGDE8lTRkPItPcGa55EMz
+PVDSt8fX4BeXZIXGi+NZ4Ul3UhNRfJLXNEa27DUvFeg89uwOT2Pgz5MNjtTgUAD+
+21XlfWp41+ChPikw+mfTPnXoHNwL47bPfqHTKlhI7KRhnkQTLUiqP7U7N+CNvfaJ
+P9sCOgTqTrqlBiOBJ72pOVfq0Cd0ZGGWmWaN12BkzA+qQces6vZrpxpO+HZsCpwq
+jJAcO+jUToZh+7u0UcpS
+=1CAw
+-----END PGP SIGNATURE-----
