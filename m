@@ -1,95 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/17/2
-Message-Id: <E1UdMql-0006J9-O2@xenbits.xen.org>
-Date: Fri, 17 May 2013 15:45:43 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 56 (CVE-2013-2072) - Buffer overflow in xencontrol Python bindings affecting xend
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/9
+Message-ID: <20130429140600.GC9543@localhost.localdomain>
+Date: Mon, 29 Apr 2013 10:06:00 -0400
+From: "Eric H. Christensen" <sparks@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Kurt Seifried <kseifried@...hat.com>, Josh Bressers <bressers@...hat.com>
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA512
 
-	     Xen Security Advisory CVE-2013-2072 / XSA-56
-                              version 2
+On Sat, Apr 27, 2013 at 03:01:58AM +0200, Alistair Crooks wrote:
+> I don't know if you've ever done one of the key signing parties, where
+> you get handed government id, and that is supposed to define someone's
+> identity.  It tells age, name, and ability to keep a dead pan face in
+> front of a camera.  It says nothing about how trust-worthy someone is,
+> in the sense that I would compile/run software written by them. On top of
+> all this is the problem of mutt updating your pubring with various
+> people's public keys when you read an email from them (yes, it can be
+> turned off).  However, given that I'm on some "unusual" (read
+> "precious") mailing lists, that behavior can mean that someone can
+> send out email to a list, and now their key appears on my pubring.  An
+> attempt to verify a signature on something unrelated could mean that
+> their pub key is used to verify something. 
 
-     Buffer overflow in xencontrol Python bindings affecting xend
+I think you are confusing verifying someone's identity and work to verifying someone's ability to do work.
 
-UPDATES IN VERSION 2
-====================
+If I know that Kurt is an outstanding developer then I'll want to make sure that what I receive is what he sent me.  If I've already signed his key at a key signing party then I've already verified his identity (or really that the face I know is associated with the keys he uses) and can trust that the code he releases is from him.
 
-Public release.
+Having many public keys on your keyring doesn't mean that you trust those keys.  Mutt does a good job letting you know if the signature is valid and whether or not you trust the key (again, those are separate things).  And there is no problem with using that public key that you received from an email to verify a signature on a tarball.  You are trying to establish that the tarball came from the person and hasn't been modified inroute.  You establish a trust of their code outside of a trust of their identity.
 
-ISSUE DESCRIPTION
-=================
+> > I a seriously confused that a lot of people seem to think unsigned
+> > code is somehow ok, but if we sign the code we have to do it perfectly
+> > to have any value. This simply isn't true. Right now unsigned code is
+> > wide open, and detecting changes is expensive (you need a full copy to
+> > compare against, and if you have a copy why would you care? =).
+> > SIgning releases with PGP/GPG makes this problem a lot easier to
+> > handle and even if it fails, by definition the attacker would have
+> > been able to pull the attack off any ways.
+> 
+> No, not really.  My point was that people seem to think that, just
+> because something is signed, it must be 100% good from the right
+> person.  I will agree that most of the time this is the case -
+> however, relying on this to be the case would be imprudent. There's
+> also the unusual case where we get pub keys from a "third-party" HKP
+> server, thereby rendering it more difficult for keys to be misused,
+> and yet I've seen people saying that just distributing the pub key
+> with the distribution is fine.  This is in a world where DNSsec is not
+> yet fully deployed, and there are ways of working around certs. No, it's
+> not likely, but it is possible.
 
-The Python bindings for the xc_vcpu_setaffinity call do not properly
-check their inputs. Systems which allow untrusted administrators to
-configure guest vcpu affinity may be exploited to trigger a buffer
-overrun and corrupt memory.
+And that's why these key signing parties are important (to an extent).  If someone starts sending mail from my email address with a PGP signature that says it's from my email address I'm hoping that people notice it's not my key that's signing them.  The only way that you can verify that is if we have met and we have signed each other's keys (or you can use the web-of-trust and blah blah blah).  Again, you have to look at the trust aspect here and understand what you are trusting.
 
-IMPACT
-======
-
-An attacker who is able to configure a specific vcpu affinity via a
-toolstack which uses the Python bindings is able to exploit this
-issue.
-
-Exploiting this issue leads to memory corruption which may result in a
-DoS against the system by crashing the toolstack. The possibility of
-code execution (privilege escalation) has not been ruled out.
-
-The xend toolstack passes a cpumap to this function without
-sanitization. xend allows the cpumap to be configured via the guest
-configuration file or the SXP/XenAPI interface. Normally these
-interfaces are not considered safe to expose to non-trusted
-parties. However systems which attempt to allow guest administrator
-control of VCPU affinity in a safe way via xend may expose this issue.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen version 4.0 and later contain this flaw.
-
-Only systems which allow the specification of cpu affinity masks by
-untrusted guest administrators are vulnerable.  Normally the cpu
-affinity is specified by the host administrator as part of the guest
-configuration; there is then no vulnerability.
-
-Only systems which use the libxc Python bindings, are vulnerable.
-Toolstacks which do not use Python, such as xl or xapi, are not
-vulnerable.
-
-MITIGATION
-==========
-
-Not allowing untrusted guest administrators to configure VCPU affinity
-will avoid exposure.
-
-Where possible switching to a toolstack which does not use Python will
-also avoid exposure to this vulnerability.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa56.patch             Xen 4.1.x, Xen 4.2.x, xen-unstable
-
-$ sha256sum xsa56*.patch
-a691c5f5332a42c0d38ddb4dc037eb902f01ba31033b64c47d02909a8de0257d  xsa56.patch
-$
+- --Eric
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJRlk9eAAoJEIP+FMlX6CvZIOMIAJFcMxxknbjo9oT9Plv8I9TA
-agEEaUV/cbZTUWHCdGLj6G8kHp4Td8mfKzHy9ZKlNn0GJ0vgezi08enxjgjSlloG
-7KAsLAYYlrwjtSmu74CC48EDKF5KTy3xhxGIMT14fJAyDUAStwgHHZbcE8dNvaXk
-sfygb5epW+ZzQBkOxhKQkNDt5yoGVZ+Zb4Z/pmBXb+e8SVx+4i005HPuB8aIFowi
-1nlbo2cSkFj6/NP5olhDQOYM5LEqzO8GPgHjTXJmIoTxA0Zuu4P53qjLsose5DCy
-4OQY1v76lMP419t0I3UwA/KUott3PaUc3kzE24/3AmVxsh27k6cyVxovV4jsvf0=
-=5dzZ
+iQGcBAEBCgAGBQJRfn5FAAoJEB/kgVGp2CYvQBsMAJZ3mbCwVE5JNxIZY0sx7QHG
+lhezTTxn2V4AvOCdVD70XqNyNMsZA2bulZ2VSueAZQmrPvDs7D8fX18Qs1FHHN0V
+PdvNQyn10ljVZgWbFAMSojM+Rbvqx5f4TYGUljFiqR4GRjwhXmCERoFyrDCweZtP
+Y6tXYUzV1EMAh9vOos1kx3T4YfQYgBWMfA0JUqa6UbPc/cFYRBwmLVdkytFaI5/w
+dK1E5SivjGGXCQxJ4s1dqF4H2XvjA0n0nIp79GRNp4TSmZCldIL+rHEwOAcL/qja
+7yDOSaGypMWmeJqy+pvhgwn1RjmFE89BzDyraqLlWerynL1XEhz3fIVlRVt45OT5
+obf8P0ixYDNT+MkffAu5W7/T9YTKKBQwNrOqyIUXpyhg7VV9sbBCKhvf/VNyb/yh
+8pPTTluUd1zfIph5Ex5/qlxzHtmWNpy/V+jl5fH2AeCqljdkNKFuvRxy7Z4S1oZT
+L4rUXq6H+L2JSB5xRdt8ljxiDI8d2M3WiReiQ83isA==
+=4coA
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa56.patch" of type "application/octet-stream" (1748 bytes)
