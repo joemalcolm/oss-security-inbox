@@ -1,62 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/16/3
-Message-ID: <20130816105614.GA20884@gremlin.ru>
-Date: Fri, 16 Aug 2013 14:56:14 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/12
+Message-ID: <517EC996.9000601@redhat.com>
+Date: Mon, 29 Apr 2013 13:27:18 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: HTTPS
+CC: Felix Gröbert <groebert@...gle.com>, Henri Salo <henri@...v.fi>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, draynor@...rcefire.com
+Subject: Re: Multiple potential security issues fixed in ClamAV 0.97.8 - any further details?
 Content-Type: text/plain; charset=utf-8
 
-On 15-Aug-2013 13:38:01 +0200, Florian Weimer wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- > > > 1. Not all interceptions and modifications are evil.
- > > > 2. Some sites are much more evil than interceptors.
+On 04/27/2013 04:49 PM, Felix Gröbert wrote:
+> Hi,
+> 
+> sorry for the delayed response, I'm OOO.
+> 
+> The bugs should be public now:
+> 
+> https://bugzilla.clamav.net/show_bug.cgi?id=7055 heap corruption,
+> potentially exploitable.
 
- > > #1 is technically true but because there's no way
- > > to programmatically determine if a interception or
- > > modification is "evil" systems should default to
- > > disallow and allow the user to allow it (by trusting
- > > another CA for instance for the interceptor).
+Please use CVE-2013-2020 for this issue.
 
-Quite simple: I am permitted to intercept my traffic, others
-are not. Creating own CA is as easy as several invocations of
-/usr/bin/openssl, but I don't see any good reasons for that.
+> https://bugzilla.clamav.net/show_bug.cgi?id=7053 overflow due to
+> PDF key length computation. Potentially exploitable.
 
- > > I don't understand how #2 relates to HTTPS at all,
- > > TLS doesn't state anything about the safety of the
- > > server you're connecting to only the safety of the
- > > transport.
+Please use CVE-2013-2020 for this issue.
 
- > If you can't intercept, you don't know what's going on inside
- > the TLS channel. A malicious peer might successfully attack
- > your user, and you could have thwarted the attack if you had
- > access to plaintext communications. (Yes, I understand what
- > that sounds like.)
+> https://bugzilla.clamav.net/show_bug.cgi?id=7054 NULL pointer
+> dereference in sis parsing.
 
-/me too. But I consider that normal for my own network.
+I can't view this bug so no details/no CVE. Can you open the bug up?
+Thanks.
 
- > It used to be the case that little malicious content was hosted
- > on major (HTTPS) sites, so analysis based on IP addresses and
- > domain names was quite effective. This might have changed, though?
-
-It looks like it did... :-/
-
- > all that is needed is one single, large HTTPS-enabled service
- > provider that doesn't have adequate abuse mitigation. But I still
- > don't think that this is a valid reason not to use HTTPS.
-
-Using the HTTPS is normal. Forcing others to use it is not.
-
-And once again, just to get back on topic: if you get the data with
-valid digital signature over the unsafe communication channel, you
-can be sure the data wasn't modified in transit, but if you get the
-data without digital signature over the trusted communication channel,
-you can't be sure at all.
-
-Protect the data, not the communications.
+> 
+> When building clamav I recommend disabling legacy or unneeded
+> features (e.g. sis). I guess that's common sense though.
+> 
+> Cheers Felix
+> 
 
 
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRfsmWAAoJEBYNRVNeJnmTBFAP/j2Ccm0unfgN99v+ijDdpgTo
+IGB1WxGAdVi2NtWYA+jTrPlabMVR1ywnNJuNTFXJOmH/zWVMulM7f4ejmnM+yS4m
+I3c6Z1rlAjuJ76oJR2C2qPX2sFRrJP5N0UEv4GxOF3suuFBpiqktef4tZVpmx5Uj
+D5TIg+3Vjyh0QMJ93mNsZPohMT6/KUBD9TtNaEnqv//eTDx/BI24MtcVUADwX4R7
+Fbh7d1v9wvtTdVtKiLVlkNDB9GfH0/YuzMR7NZ2JNrhKVtWH6G68fYyt6HgbTmmE
+IT2CQgiqIuHGKfuRlDRcpdl2xNNl0MJwXZzozWYUi07+CXBO1UCw/wS1/w9LQxR2
+LgiulBhUiX+m7D8bRUoD64DNX74RhZrKMQrVIHuQfiFnCR/NXwOqqCcTSUDWb/vw
+mVu7i07zGZsPjwT8Wt6p+vQUwGbjVoLlMlbNjR7HR+INYYoEtcd8Ip9+txUIzZ1d
+Vymsw11J0F3quBo5lv9ngi6k0koBCtZEyJuVg3Y6w1nBcWOpYsNxno1fkoxOfIrj
+pkhu6yooL4C/6qTwL3e8VhrYhIATPu7nAh0U9fnMjF1ohaBIA1uUefNc1A7nmOSU
+wiRNJoBm0YXxZgCRu6FMrBosUVJ3jxtEx3tN2AyroG+PgAX+899XACzs7Dnozb2Z
+iJ3J/DetrQjrbG4JrxoM
+=l4CM
+-----END PGP SIGNATURE-----
