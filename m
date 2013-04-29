@@ -1,52 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/31/2
-Message-ID: <51A83DE9.3080300@redhat.com>
-Date: Fri, 31 May 2013 00:06:33 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: kseifried@...hat.com
-CC: oss-security@...ts.openwall.com, Thomas Pollet <thomas.pollet@...il.com>
-Subject: Re: plone, rrdtool, zenoss bugs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/16
+Message-ID: <20130429195023.GA18654@frohike.xs4all.nl>
+Date: Mon, 29 Apr 2013 21:50:23 +0200
+From: Peter Bex <Peter.Bex@...all.nl>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: OS command injection vulnerability in Chicken Scheme
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 04/18/2013 02:08 PM, Kurt Seifried wrote:
-> On 04/18/2013 06:05 AM, Thomas Pollet wrote:
->> Hi,
+On Mon, Apr 29, 2013 at 01:33:12PM -0600, Kurt Seifried wrote:
+> > The full announcement is here: 
+> > http://lists.nongnu.org/archive/html/chicken-announce/2013-04/msg00000.html
 > 
->> I reported a csrf bug in plone pluggable authentication service, 
->> fixed in 4.2.5 http://plone.org/products/plone/releases/4.2.5 " 
->> CSRF protection for the ZODBUserManager, ZODBGroupManager, 
->> ZODBRoleManger, and DynamicGroupsPlugin plugins."
+> Please use CVE-2013-2024 for this issue.
+
+Thank you.
+
+> > By the way, I'm confused as to why the CVEs I've requested so far
+> > don't show up in NVD.  For example, 
+> > http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-6122 says
+> > the CVE does not exist, but Kurt assigned it in February: 
+> > http://www.openwall.com/lists/oss-security/2013/02/08/2
+> > 
+> > The other CVE numbers in that mail produce a "not found" page as
+> > well and an NVD database search for "chicken" turns up nothing
+> > related to Chicken Scheme.  The page says the database was last
+> > updated April 19th 2013, so that's not the cause either.
 > 
-> Was this previously exploitable, or is this just a hardening
-> measure?
-> 
->> Also, the rrdtool python module crashes on format string exploit
->> $ python -c "import rrdtool 
->> rrdtool.graph('/tmp/out.png','-f','%n%n')" Segmentation fault
+> Because Mitre has a large backlog of CVE's to research and write up.
+> Submitting researched/written entries to them will probably result in
+> your entries being posted faster. Try to remember that CVE pushed
+> thousands of these a year, the volume is considerable.
 
-Sorry for the delay, please use CVE-2013-2131 for this issue.
+What sort of information would they require, besides the advisory
+I posted in my mail?  If there's something I can do better to make
+their lives easier, I will certainly consider it!
 
+> Apologies for the late reply
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+No problem!
 
-iQIcBAEBAgAGBQJRqD3pAAoJEBYNRVNeJnmT+7MQALBzzuaAz12sDTeRTGdFrIpG
-9wq8ejh5wFpWoFmkWIRSDqhXPBjcq98l0GB3Zh4O1YltD1q4DcsopyuHWxjzzB5o
-wzib/Vs2JpKlv+gqD32F6gAIJ6UTjUFYMt5me6PiJ0UaIctGywz5TWiw65O+/cpo
-9m9tzeplm4a9D5i1w+jMS/PemBJbTo5ER0lBo84Dvso1FEJ1R4pU4Pt9nxPF1HEi
-7Hwr9RFFbSO5j/KR7DwZ/OIJpJ2+PX+BSi7rBBwcUVIR/9S3KCy8HzaZcwCxKZ6H
-/p9kqqWqh6UFtJw7QEjMwQY096VMHj2c5LEL750ky2/xRFHop1lbiMj1T45Jku2P
-GcGlWrru4Rw3+jUdl90bXeCcDAxYHzb4qvns4jUTCKZ7bvWEsl7eth/S7zsW3w6Y
-zAZttK+ZgZ6Fx8k7IShHBJ9y0qygQ3Je6ZUbTYrpkYgdOAhfjRgfd9SGlbulV3yA
-fN7b0oTHh3iKVwAlr7Qe/0ib3rERN4DioNbEsexbUX5sb9DotKv6/WOSq+Ww/jxi
-g5T/RJJS4a5sJOIxm7kXawSp/gvLNvLMnJY4pZpJkaLP5PKiHdPFpX+rgu9GIfC1
-P+Hlqe0NaPSKjZ3riJM1fsWHTXKI513dDlWjxyLFzh+oNyljeMT3kLuIvV5608gR
-sqqsQqn+K+tLVxH6kDxH
-=jR/J
------END PGP SIGNATURE-----
+Cheers,
+Peter
+-- 
+http://www.more-magic.net
