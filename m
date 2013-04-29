@@ -1,38 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/28/3
-Message-ID: <CAA7hUgHfBzXkotPwMaodTe4iOPvSfQf-rFaXiv2KnQ+YFT5A9w@mail.gmail.com>
-Date: Tue, 28 May 2013 10:43:48 +0200
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/14
+Message-ID: <517ECB54.4090903@redhat.com>
+Date: Mon, 29 Apr 2013 13:34:44 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libraw: multiple issues
+CC: Robbie Mackay <robbie@...ahidi.com>
+Subject: Re: CVE Request for XSS vulnerability in Ushahidi Web
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->From [1]:
-> LibRaw 0.15.1 (26-05-2013)
-This should be 0.15.2
->
-> Fixed possible double-free() on error recovery on damaged full-color (Foveon, sRAW) files.
-> wchar_t* file interface disabled for MinGW32 compilation
->
-> LibRaw 0.15.1 (24-05-2013)
->
-> fixed wrong data maximum calculation for Panasonic files
-> check for possible buffer overrun in exposure correction code
+On 04/23/2013 04:04 PM, Robbie Mackay wrote:
+> Hi,
+> 
+> Robb Driscoll (ohrodr) has reported an exploitable XSS bug with
+> report descriptions in Ushahidi_Web
+> (https://github.com/ushahidi/Ushahidi_Web).
+> 
+> Original bug report
+> https://github.com/ushahidi/Ushahidi_Web/issues/1009
 
-So there's a double-free (fixed in 0.15.2[3]) and a buffer overflow
-(fixed in 0.15.1[2]).
+Please use CVE-2013-2025 for this issue.
 
-Could CVE ids be assigned please?
+> This will be fixed in the next release Ushahidi 2.7, along with
+> other general XSS issues. We've done a general overhaul of our XSS 
+> protection and  https://github.com/ushahidi/Ushahidi_Web/pull/1056
+> 
+> Would a CVE normally be assigned just for the specific issue? or
+> for the general fixes to XSS protection as well?
 
-References:
-[1]http://www.libraw.org/download
-[2]http://www.libraw.org/news/libraw-0-15-1
-[3]http://www.libraw.org/news/libraw-0-15-2
-http://secunia.com/advisories/53547/
+Are these exploitable currently, or is this hardening?
 
-Cheers,
---
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+> 
+> Regards, Robbie Mackay
+> 
+> Software Developer, External Projects Ushahidi Inc e:
+> robbie@...ahidi.com skype: robbie.mackay
+> 
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRfstTAAoJEBYNRVNeJnmTEyUP+wciRDiLHkI9zj20ObikZTzh
+Q192ePay4Pf67FBECSZWEIEC3rC3WX2p6iVfreYBSwHBPvAdZRaMeXQZiR3XiivW
+pmeCrAO+P+IGpukQly3Vqz9ju7QYiz3gfKamtlf319n1THVf+4AmwwecELN1NqKj
+sbI0f/CQOzuL4zFnjSpwaWDFveXY++72VljedDE/T2NFDIv2Tx57Ev7EXt0D7Xp3
+kO1os1V1j53kOlmFzSjMEx9eLDND7OTowmGlcMYjatSV5TuHt9VfZrNHA9nRoX86
+jGKgzsIFJvrT4YS0iM/NSMY3rerhc4D/ie2XGXdHVrsJnRl/5/YbwDCh4wRdLupI
+3Iw9K4NE2IgtoHwtr6tuj/wkYh2KFIJP4jImbAq3CmRbBN1Ysr6O+GhiMyLIbfUK
+T+6ub9rtW3aOxkY9E93sWiGqdjKjOU52YmxIQo0+ufugjR0Y4c6ylGSFM2LbG/dU
+TIF4lxlxJalRfNP31mFcahscGiMbGwNN6dBwX6B9ulbYcGtawl97kUgk51nMmEOy
+cb7I9YmTOegbOkdgiDT1RLKJV5OQIqUrmep4sGuUJvRYk8P3nKuXC/okKY3D5Y61
+XtrsfUtX++NLW/iz9ZE/Ke0rP2KpRhu+N1i+Ulm4ClZ7DKYxM7qimU8/zWeJNztZ
+vuRyB6xWBoXs5xbfdpgR
+=ZLSp
+-----END PGP SIGNATURE-----
