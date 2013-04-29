@@ -1,46 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/12/6
-Message-ID: <loom.20130912T193559-75@post.gmane.org>
-Date: Thu, 12 Sep 2013 17:40:07 +0000 (UTC)
-From: mancha <mancha1@...h.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/19
+Message-ID: <517EDAA0.3030304@redhat.com>
+Date: Mon, 29 Apr 2013 14:40:00 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Three integer overflows in glibc memory allocator
+CC: Simon McVittie <smcv@...ian.org>
+Subject: Re: CVE(-2007-xxxx?) request: telepathy-idle does not check SSL certificates
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...> writes:
-> On 09/11/2013 05:49 AM, Will Newton wrote:
-> > Hi,
-> > 
-> > I recently discovered three integer overflow issues in the glibc 
-> > memory allocator functions pvalloc, valloc and 
-> > posix_memalign/memalign/aligned_alloc. These issues cause a large 
-> > allocation size to wrap around and cause a wrong sized allocation
-> > and heap corruption. The issues are fixed in glibc mainline.
-> > 
-> > The relevant glibc bugzilla entries are here:
-> > 
-> > https://sourceware.org/bugzilla/show_bug.cgi?id=15855 
-> > https://sourceware.org/bugzilla/show_bug.cgi?id=15856 
-> > https://sourceware.org/bugzilla/show_bug.cgi?id=15857
-> > 
-> > Thanks,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/29/2013 01:37 PM, Kurt Seifried wrote:
+> On 04/24/2013 08:35 AM, Simon McVittie wrote:
+>> In versions prior to 0.1.15, telepathy-idle, an IRC backend for 
+>> the Telepathy framework, does not check the server's SSL/TLS 
+>> certificate for validity[1]. A network intermediary could use
+>> this flaw to carry out man-in-the-middle attacks on IRC users.
 > 
-> CVE MERGE, same researcher, version and vuln type.
+>> This flaw has existed, and been flagged in the source code[2], 
+>> since at least 2007 (the year in which telepathy-idle moved from 
+>> Sourceforge to freedesktop.org). I don't know whether that means
+>> it should get an ID of the form CVE-2007-xxxx?
 > 
-> Please use CVE-2013-4332  for this issue.
+>> The upcoming version 0.1.15 will fix this vulnerability.
+> 
+>> Versions 0.1.11 to 0.1.14 (which use GLib for TLS) carried out 
+>> some cursory checks on the certificate, but did not check that
+>> the issuer was a trusted CA, that the identity matched the
+>> server's hostname, or that the certificate had not expired. A
+>> minimal patch to correct this is to delete the call to 
+>> g_socket_client_set_tls_validation_flags() (this will make one 
+>> regression test fail).
+> 
+>> Versions 0.1.10 and older (which use OpenSSL for TLS) do not
+>> have any support for certificate verification at all.
+> 
+> In general if you support SSL the assumption is you do it sanely,
+> e.g. verify certificates/hostnames/etc, because if not the whole
+> thing is useless since an attacker can MitM you easily (generally
+> the thing SSL is designed to stop). So worthy of a CVE generally.
+> 
+> Please use CVE-2013-2025for this issue.
 
-Kurt, vendors, et al. -
+Oops cut and paste the wrong one, obviously CVE-2013-2025 is for the
+Ushahidi Web XSS (bug 1009).
 
-I've consolidated upstream fixes for these three integer
-overflow vulnerabilities in a port to glibc 2.17 and placed
-it here:
+Please use CVE-2007-6746 for the telepathy SSL verification flaw.
 
-http://sourceforge.net/projects/miscellaneouspa/files/misc/glibc-2.17_CVE-2013-4332.diff
+> 
+>> Regards, S
+> 
+>> [1] https://bugs.freedesktop.org/show_bug.cgi?id=63810 [2] "TODO 
+>> sometime in the future implement certificate verification"
+> 
+> 
+> 
+> 
+> 
 
-Upstream fixes:
-* https://sourceware.org/git/?p=glibc.git;a=commit;h=1159a193696a
-* https://sourceware.org/git/?p=glibc.git;a=commit;h=55e17aadc1ef
-* https://sourceware.org/git/?p=glibc.git;a=commit;h=b73ed247781d
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
---mancha
-
+iQIcBAEBAgAGBQJRftqgAAoJEBYNRVNeJnmTg9QP/RRHjoiznsm/74+jT6caBy8Z
+2nip9e9HvFM0z72I6lazQjcGPbrdKeoOyVVcOx9AHQyoU9xqBDYGi8nsO+XHFE1m
+sXD0TLBnPsH7EdkPOHxT+OEV2ABnx8QatKfvTI2GIENAmgW3WEJvUwaEL7rUOzZf
+aHjyPm/j9tergeqqXG8zMGkRWSU6Gvqn75yViD3ayJwTYXKKSCcWv5Iyex23P3Ug
+42IIiBm0V1GMX+gcepdbL4ImB9SI89+ena/7KPknEqKzN2GS5oTjBcBGvRxPgiXu
+mNX8Y3NWdHPdaykHdQKswSzIwGLDUktIIFREBsl/pOkSZMDrjSIT3AlNmomFPBup
+jouAip1Q2fTpGB/kvn7LPkxqPr2mymjR6o549GyJkliBwGiRzNeo4xwBhzB1fD7s
+39YVJ7VSce408507+o35D4uQD8fiYcY93qwI30qOklPVJgT+M/ntfS7QBaJtjo5w
+mfOrdi/KLCwm37K5c5tMt31PMHV+IZ3AES7R2JAffX3Xl/44VjEQyhC85ekvwH5W
+ubprGmOhqd+qtU9YFYaIIdeah9dc7k0CPeP20UyLxdELNceL+zxhQ38YA6t1KLKz
+iPDV9VLZn1+0EVC251WWTqEVSX4HGUxgtiOvAdUY3K3vAa74wdHdquOOhvDVroXz
+nle83CkOn7S86LvT7fTn
+=OCtO
+-----END PGP SIGNATURE-----
