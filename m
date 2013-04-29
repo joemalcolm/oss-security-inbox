@@ -1,46 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/23/8
-Message-ID: <51770573.4080105@ushahidi.com>
-Date: Wed, 24 Apr 2013 10:04:35 +1200
-From: Robbie Mackay <robbie@...ahidi.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request for XSS vulnerability in Ushahidi Web
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/4
+Message-Id: <201304290554.r3T5sIVp027152@linus.mitre.org>
+Date: Mon, 29 Apr 2013 01:54:18 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Linux kernel: cifs: NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Hi,
+>a NULL pointer dereference flaw ... during a re-connection attempt.
 
-Robb Driscoll (ohrodr) has reported an exploitable XSS bug with report
-descriptions in Ushahidi_Web (https://github.com/ushahidi/Ushahidi_Web).
+>  -> https://git.kernel.org/linus/ea702b80e0bbb2448e201472127288beb82ca2fe
 
-Original bug report https://github.com/ushahidi/Ushahidi_Web/issues/1009
+Use CVE-2013-3302.
 
-This will be fixed in the next release Ushahidi 2.7, along with other
-general XSS issues. We've done a general overhaul of our XSS
-protection and  https://github.com/ushahidi/Ushahidi_Web/pull/1056
-
-Would a CVE normally be assigned just for the specific issue? or for
-the general fixes to XSS protection as well?
-
-Regards,
-Robbie Mackay
-
-Software Developer, External Projects
-Ushahidi Inc
-e: robbie@...ahidi.com
-skype: robbie.mackay
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (Darwin)
-Comment: GPGTools - http://gpgtools.org
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Version: GnuPG v1.4.11 (SunOS)
 
-iQEcBAEBAgAGBQJRdwVzAAoJEKnxsxigzOTXTi0H/Aw7An7XmKVrE74HA/W6Qx98
-RfM3FwR6N4JaUYQrpLeUkq2VOuSnFzwX2u0DftK6pOYKYH7VeNnXqchhHcD3DdVa
-+uSh5uCVdMQD6/eKv6akJR5O8jjq3IYAwyjXk26yAjmOd7Vyl31MXkRuv9hnu9+S
-sbgGMjIr+hHrAFIyX56H3e7BefJVx/F1K/R3KPI8pMcLhrnF7q8sb1tlYVCPWdLo
-rSyo0Igpctx/KQuDYsDGAjF7NomHuT51jjZWL6PGl5czmC637/s4AzGcoMhNlMn5
-NNPeogW6JuZQPN9/MX03QfI2Ots5XkjE/fIE0gdgt1Uc3Yjlrs4/+CwCj2X+8l8=
-=17Qf
+iQEcBAEBAgAGBQJRfgnSAAoJEGvefgSNfHMdNY4IAJBlodzbEfdmKsjsjo2kvvfz
+g8I88MT/VAoC9Ux/oVpwD8Z73ux/5ySc5CLmDnZ17BI6M3tq0D1W8HuTdTp4aHbI
+yWDglMsj51tAx+RRtJQzh4Yft7ZQVRkRv/mA861nwL/0h8+ttiBW03Co/+ziZ0VU
+a/GISUiuOcEZFbsTx3kRYD4ZnBNCoszdUovK7WA7YPrBaut9/g6No1OZWkeRVPIB
+Rc2kHSVhsrWIVUBQ9FDxZa7eig6kWjnMZqNBf9cn/d/oeHuVrwTbyWZUitBBQBm1
+xqI1TXpzQvBtklC4bYN8zvju7mR1FS9bf4dIfLO24VGl+rxSb/CsmG84WjUzO0A=
+=WADH
 -----END PGP SIGNATURE-----
