@@ -1,34 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/09/3
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF26F4C40E@IMCMBX01.MITRE.ORG>
-Date: Sun, 9 Jun 2013 22:17:14 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/22
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF09093C50@IMCMBX01.MITRE.ORG>
+Date: Mon, 29 Apr 2013 21:18:00 +0000
 From: "Christey, Steven M." <coley@...re.org>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "gremlin@...mlin.ru" <gremlin@...mlin.ru>
-Subject: RE: CVE request: Debian's package "mysql-server" leaks credential information
+Subject: RE: OS command injection vulnerability in Chicken Scheme
 Content-Type: text/plain; charset=utf-8
 
->From: Daniel Kahn Gillmor [mailto:dkg@...thhorseman.net]
->Sent: Saturday, June 08, 2013 1:28 PM
->To: oss-security@...ts.openwall.com
->Cc: gremlin@...mlin.ru
->Subject: Re: [oss-security] CVE request: Debian's package "mysql-server"
->leaks credential information
->
->On 06/08/2013 07:00 AM, gremlin@...mlin.ru wrote:
->
->> That's not a security issue, but a misconfiguration
->
->I consider this a security bug in the debian package's maintainer
->scripts: it is a race condition that leaks confidential information to a
->user who "wins" the race.  It is *not* a misconfiguration; it is a bug
->with security implications.
+Despite popular perception, the presence of useful details does not necessarily get CVEs published more quickly (although missing or conflicting details certainly make things worse, and poorly-written advisories can reduce overall throughput).  We have particular description styles and analytical requirements that are not visible to the general public.  We have a process where we actively monitor public sources including oss-security, and we prioritize which CVE entries are published first.  Priorities are currently guided by
+http://cve.mitre.org/data/board/archives/2012-09/msg00000.html, but other disclosures are certainly considered as well.
 
-This is the CVE perspective, as well.  Even though "setting permissions and ownership of a file" is clearly a configuration operation, as Kurt said, we do sometimes cover such issues.
-
-Looking at the code extract for the installation script in Debian bug 711600, it is clear that debian.cnf is expected to have certain ownership and permissions; this is part of a "security policy" that is specified by the code with the chown/chmod commands, which override the default umask.  Due to the race condition, an attacker can violate this policy, which argues strongly for inclusion in CVE.  We have maybe 10 to 20 previous CVEs that involve insufficient control of permissions during installation or copies (for example, extracting a lot of files from an archive, or doing a recursive directory copy, and changing the permissions only *after* they have all been extracted.)
-
-There has been some past discussion on oss-security about when reliance on a default umask is sufficient for inclusion in CVE or not.  See September 2012 discussion about gpg and vim starting at http://www.openwall.com/lists/oss-security/2012/09/21/4 , with my commentary at http://www.openwall.com/lists/oss-security/2012/09/24/9 and Kurt's at http://www.openwall.com/lists/oss-security/2012/09/26/6 .  While there aren't any hard-and-fast rules, a file containing private keys or credentials is typically expected to be readable only by the intended user of the program, so creation of a file with insecure permissions due to reliance on a default umask would likely qualify for a CVE.
+We are currently focused on working with the CVE Editorial Board on extending the CVE ID syntax to handle more than 10,000 vulnerabilities per year, and we are also training several new hires.  We expect our output to rise noticeably within a few months, and we will continue to refine our analysis and publication processes to improve our production in a way that balances the needs of CVE's many diverse users.
 
 - Steve
 
+
+>-----Original Message-----
+>From: Peter Bex [mailto:Peter.Bex@...all.nl]
+>Sent: Monday, April 29, 2013 3:50 PM
+>To: Open Source Security
+>Subject: Re: [oss-security] OS command injection vulnerability in Chicken
+>Scheme
+>
+>On Mon, Apr 29, 2013 at 01:33:12PM -0600, Kurt Seifried wrote:
+>> > The full announcement is here:
+>> > http://lists.nongnu.org/archive/html/chicken-announce/2013-
+>04/msg00000.html
+>>
+>> Please use CVE-2013-2024 for this issue.
+>
+>Thank you.
+>
+>> > By the way, I'm confused as to why the CVEs I've requested so far
+>> > don't show up in NVD.  For example,
+>> > http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-6122 says
+>> > the CVE does not exist, but Kurt assigned it in February:
+>> > http://www.openwall.com/lists/oss-security/2013/02/08/2
+>> >
+>> > The other CVE numbers in that mail produce a "not found" page as
+>> > well and an NVD database search for "chicken" turns up nothing
+>> > related to Chicken Scheme.  The page says the database was last
+>> > updated April 19th 2013, so that's not the cause either.
+>>
+>> Because Mitre has a large backlog of CVE's to research and write up.
+>> Submitting researched/written entries to them will probably result in
+>> your entries being posted faster. Try to remember that CVE pushed
+>> thousands of these a year, the volume is considerable.
+>
+>What sort of information would they require, besides the advisory
+>I posted in my mail?  If there's something I can do better to make
+>their lives easier, I will certainly consider it!
+>
+>> Apologies for the late reply
+>
+>No problem!
+>
+>Cheers,
+>Peter
+>--
+>http://www.more-magic.net
