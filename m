@@ -1,53 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/8
-Message-ID: <alpine.LFD.2.03.1308150036300.7082@redhat.com>
-Date: Thu, 15 Aug 2013 00:37:00 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Petr Matousek <pmatouse@...hat.com>
-Subject: CVE Request: Linux kernel: cifs: off-by-one bug in build_unc_path_to_root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/10
+Message-ID: <517EC860.7020808@redhat.com>
+Date: Mon, 29 Apr 2013 13:22:08 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request -- Linux kernel: veth: double-free in case of congestion
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-   Hello,
+On 04/29/2013 05:06 AM, Petr Matousek wrote:
+> Description of the problem: A flaw was found in the way Virtual
+> Ethernet driver implementation in the Linux kernel handled skbs in
+> case of congestion.
+> 
+> A remote attacker could potentially use this flaw to crash the
+> system.
+> 
+> Introduced in: 2.6.33-rc1
+> 
+> Fixed in: 2.6.34
+> 
+> Upstream fix: 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6ec82562ffc6f297d0de36d65776cff8e5704867
+>
+>  References: 
+> http://marc.info/?l=linux-netdev&m=127310770900442&w=3
+> 
+> Thanks,
+> 
 
-Linux kernel built with the Common Internet File System (CONFIG_CIFS) support 
-along with a feature to access Distributed File Systems 
-(CONFIG_CIFS_DFS_UPCALL), is vulnerable to a memory corruption flaw caused by 
-writing one byte past an allocated memory area. It occurs while mounting a DFS 
-share wherein the server provides DFS referral names of certain length. The 
-memory corruption leads to an unresponsive kernel and subsequent crash 
-resulting in Denial of Service.
+Please use CVE-2013-2017for this issue.
 
-An user/program able to mount a file system could use this flaw to crash the 
-kernel resulting in DoS.
-
-Upstream fix:
-- -------------
-  -> https://git.kernel.org/linus/1fc29bacedeabb278080e31bb9c1ecb49f143c3b
-
-
-Thank you.
-- --
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
-
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSC9VUAAoJENBIeGA2VWAr93EP/1NadVJm8NJb8UV8b0iKX9/R
-+hBsCcfz8ihuXl1XuCmuFg2wqwUmWXNDbn4wHZb/cu74k3sENSL6XMBd8bFFwEEq
-0fXS+Z5oe4q0oZxP5Utabh98JKzcSNAWPzEIyikyBu3XM1iN20EXVb9Clnu1Xu50
-m/69+6tyHpGa2Hz1K5ID3GTbhx8cqYIsNWaWo04goAjTaws65/iE8xZVX6J5agzs
-j8vyJ4uK6O6a3yVGQeeglYAKq6h9Vc87IktLvDuvmx0TXhWYFjyexsxePI1kBXFU
-ssPqlQceUA8Q5vr7MCPfZLAUunQ9nnA/9sNOziWUvLvFftOo89p+7Yg4D/B9VEpq
-5wg2DqIV0cNnTK7dWi8NEVn2DG3YtNXUUbid5HrdRgqnYVOp63wOOkel3KLALzkJ
-o4X7SvcwYQsoH6THbBMc5OW+BXH42zcXhLQ1Lg8B9sOpd/WAtUPuhaDiqbiWNDTl
-/SX35ewxocORUuc4jCRQxmKMCkrNEaRO4QLoACl3FxaBHCeLSYiO2/V7ESVAwfPu
-BDWJCr1evuZtJsDA6eauwigu1wKK7d4BWNmQhPdg/2j/gcPEJiaYSDdOopw9PjPB
-iY6up4AYxaXYsYLKmUUG7MSgJAYeBf1P08RjvTGeOAysHAhX0EbI+WNgTpyIL+lv
-RCzQuD7AvBeM25tEKsMo
-=VarQ
+iQIcBAEBAgAGBQJRfshgAAoJEBYNRVNeJnmTRwgP/RSfX9Tvi02MIsggTFqOxrny
+21CM4h0oeOCDRQPCe4aABj52Uya5nn4x02+XACbEMCkpC9b+L3ktfSZe+g8H56iw
+eVYeNDY7fTNcVq/xOYpFwefiDH+6JUgBYN/Fiz5fXIAdxipvrKbEAOsWqpjETFN7
+0iN0K+DQGm6b63sy0z2yzqnprjyLeMBKQNhpGyk+0Dy7ggYIMyli9GDO9J52LtDg
+8Wc4dpxLVPOuArtwQjG7tVaw+E4irBE6z8hnZ1/mGwLRGQI3sFTaFk2HnCV7E4fA
+jeAkP+W3pBQnbgcqtqH5412Md5KUPBk2zYUpy973NtUWCvd0pnBhOQGB7qLYhEBX
+8QFK7hv8d9+vC47WZrliMDHJV2cMisN142qxkgXuIm7rmM7+lc6l6HfZHKvqoE1n
+5kLTejvHVYcyEzt61vYZAAXAYEsaTEya+Jw2fQL21guobEX82hg219XhrK1RwU3/
+7rT2ah0TTDZTy3WE7Qf6zu9zufvZHTboI8+iEOSaZaR0wUYsJCT82oEE0abGu1V+
+vu4bJ374KO+a36pIPVPncgysTPMHoj/vyuJu7sRPjwoOhwFMXJUJ/AlkHXD2uy/W
+R7MO4RtyBcJuVdSZxE3pMoawSUxwtl2261TqR0wfzY1PnLGhdcazVdGNX98l9fkX
+DFrZqBasDaHQeKnuvJ+n
+=IVmh
 -----END PGP SIGNATURE-----
