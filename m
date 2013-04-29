@@ -1,37 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/11
-Message-id: <F31EE7CA-D16C-451B-BD2E-E6F6E3F13802@me.com>
-Date: Thu, 12 Dec 2013 13:55:22 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Command injection in Ruby Gem Webbynode 1.0.5.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/3
+Message-Id: <201304290553.r3T5rMJU027144@linus.mitre.org>
+Date: Mon, 29 Apr 2013 01:53:22 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request - Linux kernel: tracing NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Command injection in Ruby Gem Webbynode 1.0.5.3
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Date: 11/11/2014 
+>writing to `set_ftrace_pid' and `set_graph_function' files
 
-Author: Larry W. Cashdollar, @_larry0
+>  -> https://git.kernel.org/linus/6a76f8c0ab19f215af2a3442870eeb5f0e81998d
 
-Download: http://rubygems.org/gems/webbynode 
+Use CVE-2013-3301.
 
-Vulnerability Description: 
-The following code located in: ./webbynode-1.0.5.3/lib/webbynode/notify.rb doesn't fully sanitize user supplied input before passing it to the shell via %x.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
-Messages via the growlnotify command line can possibly be used to execute shell commands if the message contains shell meta characters.
-
-def self.message(message)
-  if self.installed? and !$testing
-    message = message.gsub(/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]/, "")
-    %x(growlnotify -t "#{TITLE}" -m "#{message}" --image "#{IMAGE_PATH}")
-  end
-end
-
-The message.gsub regex strips ANSI encoded characters from the #{message} variable, it doesn't strip characters like ;&| etc. If the attacker can control the contents of #{message}, #{TITLE} or #{IMAGE_PATH} they can possibly inject shell commands and execute them as the client user.
-
-
-Vendor: Notified 11/11/2013
-
-I also submitted a pull request 
-
-Advisory: http://www.vapid.dhs.org/advisories/webbynode-command-inj.html
+iQEcBAEBAgAGBQJRfgnNAAoJEGvefgSNfHMde+IH+QFBlfFwREWpUB2mu9/2QboM
+tOVnZdMGcByqsfoLGOt67RAJfMtyoN7hUhR84sxFwQoOt0k92CXdOnFs9DDf+yui
+CZypA+t1qPtuYQMht1vHUzH1FoOtgJ2USvCPXdNS3Vpu1RSBxNeV/0LDiYB/zn4d
+IQISca+p6n5SXD8c8GHdDnUDkVch1nDr1/RdhjMBm0ijDdWo05n8XY/32luqe7OA
+E64mm1Lj4YWK6UyKC3MAvoxUwTcjRZ0NCui8CtAOWyla3JpHOlYXdSaWhCGHy9aA
+ybtFPWDMoKMksARFqBFe/c1/3aAh6u7L4Q5bsQm8dACtwRbt71fsu8z8M0SJ4Uk=
+=RaAZ
+-----END PGP SIGNATURE-----
