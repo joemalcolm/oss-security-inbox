@@ -1,25 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/6
-Message-ID: <20131230124640.GB53544@dojo.mi.org>
-Date: Mon, 30 Dec 2013 07:46:40 -0500
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/8
+Message-Id: <14476AB1-6B53-48D7-B4A4-51E7699F454D@nginx.com>
+Date: Mon, 29 Apr 2013 17:41:27 +0400
+From: Andrew Alexeev <andrew@...nx.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE to the ntp monlist DDoS issue?
+Cc: kseifried@...hat.com, gremlin@...mlin.ru
+Subject: Re: Nginx ngx_http_close_connection function integer overflow - can anyone confirm this?
 Content-Type: text/plain; charset=utf-8
 
-There's a recent rash of DDoS involving the monlist functionality
-in older ntp.org ntp.  Has anyone thought about assigning a CVE to
-this?  It looks like the issue may have been addressed back in 2010, 
-but only in the context of ntp.org's "dev" tree, not "stable".  
+On Apr 26, 2013, at 11:15 AM, Andrew Alexeev <andrew@...nx.com> wrote:
 
-http://bugs.ntp.org/show_bug.cgi?id=1532
-https://cert.litnet.lt/en/docs/ntp-distributed-reflection-dos-attacks
-http://www.symantec.com/connect/blogs/hackers-spend-christmas-break-launching-large-scale-ntp-reflection-attacks
+> On Apr 26, 2013, at 9:48 AM, Alistair Crooks wrote:
+> 
+>> On Thu, Apr 25, 2013 at 11:36:17PM -0600, Kurt Seifried wrote:
+>>> -----BEGIN PGP SIGNED MESSAGE-----
+>>> Hash: SHA1
+>>> 
+>>> - From Bugtraq:
+>>> 
+>>> http://www.securityfocus.com/archive/1/526439/30/0/threaded
+>>> 
+>>> Website: http://safe3.com.cn
+>> 
+>> Is this legit?
+>> 
+>> I downloaded the index.html file with curl, and embedded around line 87
+>> was a flash file:
+> 
+> Unfortunately we weren't approached by "Qihoo 360 Web Security Research Team"
+> before this publication went out through bugtraq.
+> 
+> We are now trying to obtain more information from that team without much success.
+> 
+> We've also analyzed their report and we can't conclude this is a real vulnerability yet.
+> From the descriptions provided it still looks like it's somewhat spurious.
+> 
+> We are trying to continue investigation though.
+> 
+> Regrettably responsible disclosure isn't always the case. However, we can't yet confirm
+> it's a full one either.
+
+We've been also directly approached by Qihoo team couple of days ago.
+
+After a thorough examination we can tell the following:
+
+http://mailman.nginx.org/pipermail/nginx/2013-April/038701.html
+
+Basically, we believe that nginx code distributed by Nginx Inc. is not affected by
+the above mentioned report.
 
 
--- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"To collect sulphur, hold a deacon over a flame..."        -Anguished English
+>> <table width="930" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+>> <tr><td>
+>> <object type="application/x-shockwave-flash" data="/banner.swf?xml=/banner.xml" width="930" height="180">
+>> <param name="movie" value="/banner.swf?xml=/banner.xml"/>
+>> </object>
+>> </td></tr>
+>> <tr>
+>> 
+>> so I took it to be an attempt at phishing.
+>> 
+>> Maybe I'm just too paranoid in my old age?
+>> 
+>> Regards,
+>> Alistair
+>> 
 
-Content of type "application/pgp-signature" skipped
