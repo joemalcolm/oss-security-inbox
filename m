@@ -1,30 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/11/5
-Message-ID: <51B7B71C.1090006@oracle.com>
-Date: Tue, 11 Jun 2013 16:47:40 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/2
+Message-ID: <20130429032557.GA6839@openwall.com>
+Date: Mon, 29 Apr 2013 07:25:57 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: "X.Org Security Team" <xorg-security@...ts.x.org>, mancha1@...h.com, "X.Org Development" <xorg-devel@...ts.x.org>
-Subject: CVE request for possible NULL ptr deref in XDM when using crypt() from glibc 2.17+
+Subject: distros vs. linux-distros lists
 Content-Type: text/plain; charset=utf-8
 
-It's been suggested we get a CVE id assigned for this recent fix to the xdm
-display/login manager from X.Org:
+Hi,
 
-http://cgit.freedesktop.org/xorg/app/xdm/commit/?id=8d1eb5c74413e4c9a21f689fc106949b121c0117
+Guys, before posting to these closed lists, please take a moment to
+think whether to report a given issue to distros (currently includes
+FreeBSD and NetBSD, as well as all of linux-distros members) or to
+linux-distros (Linux only).  Last week, Linux kernel issues were
+needlessly posted to distros (yes, the ones Andy has just made public in
+here), and today an issue not specific to Linux is posted to
+linux-distros (should be resent to distros now, I think).
 
-Without this fix, if xdm is built to use raw crypt() authentication, instead
-of a higher level system such as PAM or BSD Auth, and that crypt() function
-can return a NULL pointer (as glibc 2.17+ does for invalid input, such as
-when an account is locked by prepending a "!" to the password field), then
-attempting to login to such an account via xdm can crash the xdm daemon.
+Thanks,
 
-For single user console machines, this generally just means you get the 
-text console login prompt instead.   For machines set up to support multiple
-seats, remote XDMCP access, or X terminals (such as LTSP setups using xdm),
-this may be a denial of service for users on those other seats/terminals
-/devices.
-
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+Alexander
