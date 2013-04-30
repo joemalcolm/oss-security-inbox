@@ -1,66 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/10
-Message-ID: <51702048.3010106@redhat.com>
-Date: Thu, 18 Apr 2013 10:33:12 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/30/2
+Message-ID: <517F1BCC.7060108@redhat.com>
+Date: Mon, 29 Apr 2013 19:18:04 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, neoice@...ice.net, Alexander Wirt <formorer@...ian.org>
-Subject: Re: CVE-2012-XXYY Request -- google-authenticator: Information disclosure due insecure requirement on the secrets file
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: memcached remote seg fault
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/18/2013 04:45 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, Alexander, vendors,
-> 
-> as noted in [1]:
-> 
-> An information disclosure file was found in the way
-> google-authenticator, a pluggable authentication module (PAM) which
-> allows login using one-time passcodes conforming to the open
-> standards developed by the Initiative for Open Authentication
-> (OATH), performed management of its secret / state file in certain
-> configurations. Due the lack of 'user=' option the secret file was
-> previously required to be user-readable, allowing (in certain
-> cases) a local attacker to obtain the (pre)shared
-> client-to-authentication-server secret, possibly leading to
-> victim's account impersonation.
-> 
-> A different vulnerability than CVE-2013-0258.
-> 
-> References: [1]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=666129 [2]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=666129#10 [3]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=666129#20 [4]
-> https://bugzilla.redhat.com/show_bug.cgi?id=953505
-> 
-> Relevant upstream patch: [5]
-> https://code.google.com/p/google-authenticator/source/detail?r=c3414e9857ad64e52283f3266065ef3023fc69a8
->
->  @Alexander - since I am not sure I have described the attack
-> vector above properly, please correct me if / where required.
-> 
-> @Kurt * the CVE-2012- identifier should be allocated to this issue,
-> since the security implications of this problem are for the first
-> time mentioned here:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=666129#10
-> (2012-09-22),
-> 
-> * from what I have looked, there doesn't seem to be: 
-> http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=authenticator
-> 
-> a CVE identifier allocated to this issue yet (as noted above 
-> CVE-2013-0258 from that list is different issue).
-> 
-> => could you allocate one?
+So this was brought to my attention:
 
-Please use CVE-2012-6140 for this new issue.
+http://insecurety.net/?p=872
 
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
+Memcached remote DoS (segmentation fault)
+
+Works like a charm on Fedora 18 running Memcached 1.4.15 (the latest
+stable).
+
+Please use CVE-2013-2026 for this issue. I guess the good news is that
+because memcached basically has no security most people run it within
+closed networks, hopefully no-one is running these things publicly
+like a lot of people used to (http://www.sensepost.com/blog/4873.html).
 
 
 - -- 
@@ -69,17 +31,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRcCBIAAoJEBYNRVNeJnmTS94QANxJrniYl6j2ZzpUVLi3WQ9M
-XiYGNctPbJu8duZUqYQVp0Wzj93BnlvDsJ2Ea+lf1fIdwps+qitTDxLcaDAz06qN
-bJi3795Mf5JBb81fNzSa8T3igwCO4hpgZvneajsFswbPzUrnSjbTjOn44YHP34L+
-pM6OFVsL0I+0ymXbu7oqaMRjfnhBDM1LSYZXKPO7a/Swzl8VRiiqCXKM0xIscFdP
-zcRBYQiFn1P5e8zWMkgGVxt+dVB3I5Ly+QkkiNeJRhP5HeBRwod65hTIBZqgLVDm
-9qKukd4M2RCHocLSZKLEHqtaEat3ytgpSKKkfRthd+sxiMQRjZZI2o0SNqlnkx5o
-I0or7V41GYF9y98pz5zFDc9TMaMfp4OM4gl8KrSu3jw/qNKVfZkiEuC3ybJb10eA
-dCOnTetwu8UosUrlRHsC93+urFRmFfkqWXcVvtzTkmcr+MvddBld9IO9d3UKSLW7
-NPK2Rzlg7O6QK6fH1g3GzxTLDoXRTelZPosb5t0L4PVoEE0ZjSDCUdLc8/OLDLQv
-r61/63HVUJQfuYxuSubSQ14TKlmgbftdZC1p3uerKPojATW7F/tGCoUeMgZAt8bH
-UPbF7OxFxxplsNjNaCHM7ZzAsNQHa84m8DWkJMwjKbGvMzZhfwQqXUyN/5TDmxpM
-joCyN77TKUyx/A8Th80n
-=Z0KR
+iQIcBAEBAgAGBQJRfxvMAAoJEBYNRVNeJnmTsLwQAKwV9n23cW0nCpReGYHSPBKH
+y7wXHUyQufhcUdvfG1+sqTKR94T34nSz9HrmXLxmP4bZ0yIpkM/ogzWzlLCsn5w0
+6MaAiUuVIxKIn4KO0FkQgQfPm7tm0ARx1ZwEv4DXyA9PpoijpGLo31NiTI6ULC7b
+3sVDdtSiAAFPFqnaaWmzWDIufRK2NvG3wPQnO1WFtHhRQ/E2WOHN6WXYlrvDO/Rj
+hFq14XITEUo0jaAunlV7CVHGvBge/WXSV7gVPZFux9Ra0om2YweaSqNT1YfMvs+r
+B1yYTfrZx/uMmAho4Pl18ZFfu7QShViQrfp6iBAOxs4Wlu7vPN8HPXSR0cEIlprr
+HU6WLy6DvHf6HnewP1gZHU8wk9wlG+Q9vS8zXBmiMyKt+sOMQSnva5qFVvPUGj9t
+4yEgF5rBy01mUSTsfteTV41cbNGSQxwA2t75Xrs5IQj24Rt+lbm0oPJWG/I6IFzK
+LPqgXh+cWcqUyA2ppBwalsAjaQHZbhhyqNl/RalV69zI0auR4o2Yss5jyDWcgBLl
+Q82uhczXtgh4Z4M0LYomI/FLdyOz8QTXy62UJY7sLkp8KGJ6/M8lZc0UMzZJ5Qwr
+o2LLDXjejgs4w9/Rz3LrpmOTs1nxfcBbmSM2fESOH04/HnRFxEhvtccEpVrTHIUe
+j+tBbmXL3toah7k0HV16
+=UiU8
 -----END PGP SIGNATURE-----
