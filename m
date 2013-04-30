@@ -1,31 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/08/1
-Message-ID: <20130308032348.GC20032@dhcp-25-225.brq.redhat.com>
-Date: Fri, 8 Mar 2013 04:23:49 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: spender@...ecurity.net, Kurt Seifried <kseifrie@...hat.com>
-Subject: CVE Request -- Linux kernel: sctp: SCTP_GET_ASSOC_STATS stack overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/30/9
+Message-ID: <51802FA0.2040407@redhat.com>
+Date: Tue, 30 Apr 2013 14:54:56 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re-emergence of CVE-2008-4796 in Nagios current
 Content-Type: text/plain; charset=utf-8
 
-A local user could use the missing size check in
-sctp_getsockopt_assoc_stats() function to escalate their privileges. On
-x86 this might be mitigated by destination object size check as the
-destination size is known at compile time.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Upstream fix:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=726bc6b0
+CVE-2008-4796 snoopy: command execution via shell metacharacters
 
-Introduced by:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=196d6759
+Was found in Nagios core by Grant Murphy.
 
-Introduced in:
-v3.8-rc1
+Filed upstream: http://tracker.nagios.org/view.php?id=449
 
-References:
-https://twitter.com/grsecurity/status/309805924749541376
-http://grsecurity.net/~spender/sctp.c
+We really need to start thinking about ways to find vulnerable copies
+of code and fixing them everywhere people have embedded them.
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRgC+gAAoJEBYNRVNeJnmTUtAP/RXsDNAwMBHpqOjoIKC6OUh2
+17Ps1HzPQ1ecfAQcAVxv3GSO1BmlALU00JGcjqk8RBYwe8Y2aj8XvHKuW3wGLPHL
+5/1YMxg+rRS8OfE6RpKzJG8G70ie30p+WAVca7T+ah/GHNxUcVqOOdtQb3C4uujm
+GyLybXVDq8+nsOyMUqJKupDhEutMoqk4KhYfjAHNqd7f5/urFdSdajdiu2xBZFQE
+TTeuzIXvw2KuGIStOzp0SLZdgZ+1iXholZjMv5pm5O3NlpBKziDZCBAWfpDuNUMm
+PAnT36mxzdg8EtirP9bXC34aXiE5lF6+Nt1nXwO0lu/UhccN5G6R0QpEI3GsporK
+SajVT9Ql5oSp2RUYWu9CESm7ZvG3gznFtjBLh432ikwv8XTDNeRb7eoGJMGn4IVG
+zacORWR4dKDYfRlQyOUGvGZG9/n42tJYn4x3WzGu+dAM2ZGSiYci7y/zzkSlikBx
+F/UNinjVRyzL5eemqufEl0rGw00+9FjLMngeMJUI1FT2u4sADcrn2pTr12jOM7ZF
+kKCNVV1qKC3AyXLIqtQupPW3CHIgUUVAtVlrkZ1oxYXfZnHEDEi0sROK3Y2Nko1G
+vBUuB+akVUnKV1rE/dJzN3W+LWbR8s8/cGyA3Lv9NsSykQz1o8nnbdRZAvpeiY3J
+TOh0g6HhB6VVgqOpIccH
+=rZhm
+-----END PGP SIGNATURE-----
