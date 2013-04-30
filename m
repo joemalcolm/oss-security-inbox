@@ -1,49 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/09/10
-Message-ID: <CALi+ztF57T3J5N_kYvNLL1b6vCjL1=Bcd9=P3T5E=ym_6kRX=g@mail.gmail.com>
-Date: Wed, 9 Oct 2013 14:16:27 -0700
-From: Chris Palmer <snackypants@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Rich Felker <dalias@...ifal.cx>
-Subject: Re: Source of bad password hashing practices? MySQL manual...
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/30/5
+Message-ID: <CAGVYHsXtMODq8-EnmObam0OB8AzbvtSthA0Jkfz6SO=zh4wQmA@mail.gmail.com>
+Date: Tue, 30 Apr 2013 11:11:26 -0500
+From: Andrés Gómez Ramírez <andresgomezram7@...il.com>
+To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: Flightgear remote format string
 Content-Type: text/plain; charset=utf-8
 
-There is more bad advice on that page:
+Hi,
 
-"""
-...Even passwords like“xfish98” are very bad. Much better is “duag98”
-which contains the same word “fish” but typed one key to the left on a
-standard QWERTY keyboard. ...
-"""
+Introduction:
 
-And then a rather wacky assertion:
+FlightGear is an open-source flight simulator.  It supports a variety of
+popular platforms (Windows, Mac, Linux, etc.) and is developed by skilled
+volunteers from around the world.  Source code for the entire project is
+available and licensed under the GNU General Public License.
 
-"""Invest in a firewall. This protects you from at least 50% of all
-types of exploits in any software. Put MySQL behind the firewall or in
-a demilitarized zone (DMZ)."""
+Bug:
 
-Ideally, someone (Seth Arnold started; want to finish?) should rewrite
-all the bad stuff on that page, and send it to MySQL's security
-contact as a patch. I'd remove the password creation advice completely
-(other sources do a better job), and change the firewall thing to just
-say something along the lines of, "Avoid exposing MySQL to the
-internet... if you must, require authentication... if you must, use
-TLS or an SSH tunnel... If you use TLS, make sure the client correctly
-authenticates your server, such as by checking for a specific
-end-entity certificate/key or a specific issuer certificate/key...".
+Flightgear allows remote control through Property tree.  It is vulnerable
+to remote format string vulnerability when some special parameters related
+with clouds are changed.  This could allow to crash the application or
+potentially execute arbitrary code under certain conditions.
 
-Part of the rewrite should be some advice along the lines of, "MySQL
-offers a delightful built-in function you can use for storing
-passwords, SCRYPT(). Prefer SCRYPT to other mechanisms like MD5(),
-ENCRYPT(), or ... Please note that the ENCRYPT() function is not safe
-and has been deprecated as of... To verify passwords, check that
-SCRYPT(...) = scrypted_password in your WHERE clause... Do not log
-plaintext passwords..." And then give them a patch to implement SCRYPT
-and to log a deprecation warning when ENCRYPT is used.
+Fix:
 
-Easier said than done, of course; but I wanted to make the point that
-Rich was right to raise this issue here (or, at least, somewhere).
-Does anyone know the right MySQL security contact? It isn't
-immediately obvious from a few web searches, but maybe
-secalert_us@...cle.com is right? Making that clear, and maybe
-publishing a PGP key, is another thing they could do...
+No fix.
+
+References:
+
+http://kuronosec.blogspot.com/2013/04/flightgear-remote-format-string.html
+
