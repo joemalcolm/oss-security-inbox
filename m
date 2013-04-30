@@ -1,41 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/10
-Message-ID: <20131114204948.GM2305@openstack.org>
-Date: Thu, 14 Nov 2013 20:49:49 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/30/1
+Message-ID: <517F1702.9000705@redhat.com>
+Date: Mon, 29 Apr 2013 18:57:38 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2013-030] XenAPI security groups not kept through migrate or resize (CVE-2013-4497)
+CC: "Christey, Steven M." <coley@...re.org>, Josh Bressers <bressers@...hat.com>
+Subject: Re: OS command injection vulnerability in Chicken Scheme
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2013-030
-CVE: CVE-2013-4497
-Date: November 14, 2013
-Title: XenAPI security groups not kept through migrate or resize
-Reporter: Chris Behrens (Rackspace) and Vangelis Tasoulas
-Products: Nova
-Affects: All supported versions prior to Havana
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
-Chris Behrens with Rackspace and Vangelis Tasoulas reported a set of
-vulnerabilities in OpenStack Nova's XenAPI hypervisor backend. When
-migrating or resizing an instance, including live migration,
-existing security groups may not be reapplied after the operation
-completes. This can lead to unintentional network exposure for
-virtual machines. Only setups using the XenAPI backend are affected.
+On 04/29/2013 03:18 PM, Christey, Steven M. wrote:
+> Despite popular perception, the presence of useful details does not
+> necessarily get CVEs published more quickly (although missing or
+> conflicting details certainly make things worse, and poorly-written
+> advisories can reduce overall throughput).  We have particular
+> description styles and analytical requirements that are not visible
+> to the general public.  We have a process where we actively monitor
+> public sources including oss-security, and we prioritize which CVE
+> entries are published first.  Priorities are currently guided by 
+> http://cve.mitre.org/data/board/archives/2012-09/msg00000.html, but
+> other disclosures are certainly considered as well.
+> 
+> We are currently focused on working with the CVE Editorial Board on
+> extending the CVE ID syntax to handle more than 10,000
+> vulnerabilities per year, and we are also training several new
+> hires.  We expect our output to rise noticeably within a few
+> months, and we will continue to refine our analysis and publication
+> processes to improve our production in a way that balances the
+> needs of CVE's many diverse users.
+> 
+> - Steve
 
-The Havana release (2013.2) is not affected.
+One thing I think would help is having a 1-2 page advisory guideline,
+e.g. what do we need for assigning CVE's/writing CVEs up and in
+general what do the end users/etc want. I set this up as a bare
+minimum type thing:
 
-Grizzly fixes (will be included in a future stable point release):
-https://review.openstack.org/52987
-https://review.openstack.org/52991
+https://cveform-kseifried.rhcloud.com/cve-request-form/
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4497
-https://launchpad.net/bugs/1073306
-https://launchpad.net/bugs/1202266
+Not all fields are required. If anyone else has comments/etc please
+email me and I'll see about getting this written up as a short HOWTO.
 
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
+iQIcBAEBAgAGBQJRfxcBAAoJEBYNRVNeJnmTEo4P/2AZGkmdfVj5rG/AU8jigFC9
+j4yYZRlcWAzs9GNTcZIk1NRnQXNtwu16C9hKurKzjZ1Angyir+3f4mEd6UjkVeTp
+bbD2FJ6zQATiRuRBpsZvd3HrYll2Jcl+qtBc1FVWeM7PX/5nGzsffgwvz5JD5qPg
+i461pLQ3A5qrthbIGMeZr7CfP6frP+oecaJHqi0aw8CDC+fGOeTG1jqvOyi7BKah
+2w3M3VnBod5M+OkHbANRKUF4VjqkkshjMWa9kgSSB4665SEsm3l2uEuRXCKlIsAZ
+W92RIm9cM379qlLyMmW3v7ifwU1rxEn4fkIZyPl4ja+29xdk1GiMCOeZ14cGAwSg
+m7Vb9oj2ufJkxM86pKyXdlZC9kDzspzj7jbP8r5hoqoFhbufv3SYbk8LTbukudxi
+y+E/QRN1YRZ2lmd1+RaQO8GAEEZd84o5FVsiqv1SKvNhkdVdg8blU9nyfhaskkPk
+gl2mVzPy2Nz6acRe2l9/fYtWpoYB7kxA8ZGW/pU8Nm2IENxudVOOcE9V4rp4bky7
+AQw2qlP6cY4cvVmbOGgHYA+p/E0OqW9SQp3CLSS8E1+1KlHcloMyOp3gHCQqRNbl
+8fk245nvLZNAg4thJNARR3O1nBY2zVJhxPRK/aE1Y0TN5yW8iblEUf8SvgFqfGbk
+OQvXab9S2ClFXNg2EQ/t
+=GQFz
+-----END PGP SIGNATURE-----
