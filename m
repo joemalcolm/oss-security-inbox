@@ -1,84 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/03/5
-Message-ID: <CABN7HML37VDv1oM09gLo3jg9HkzotTa7ECmE7KbKGnN183957Q@mail.gmail.com>
-Date: Mon, 3 Jun 2013 10:01:03 -0700
-From: Lloyd Dewolf <lloydostack@...il.com>
-To: Jeremy Stanley <jeremy@...nstack.org>
-Cc: OpenStack Mailing List <openstack@...ts.launchpad.net>, oss-security@...ts.openwall.com
-Subject: Re: [Openstack] [OSSA 2013-013] Keystone client local information disclosure (CVE-2013-2013)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/30/7
+Message-ID: <51800C58.9090604@fifthhorseman.net>
+Date: Tue, 30 Apr 2013 14:24:24 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
-I appreciate that it often isn't appropriate, but in this case it
-might have been beneficial to include python-keystoneclient version
-0.2.4 where this is first resolved.
+On 04/26/2013 01:57 AM, Alistair Crooks wrote:
+> All people can see from a key listing is who trusted them and
+> when, not how much, or whether the trust was warranted.
 
-Thank you,
-Lloyd
+Just for the record, most OpenPGP key certification listings don't
+indicate anything at all about trust, including "who trusted them".
+they show cryptographically-verifiable assertions of identity and
+control over key material.
 
+Put another way, a signature on an OpenPGP key+userid says "I believe
+that this key belongs to this person" -- it doesn't say anything about
+trust in that person (or about their intrinsic trustworthiness).
 
-On Thu, May 23, 2013 at 1:52 PM, Jeremy Stanley <jeremy@...nstack.org> wrote:
-> OpenStack Security Advisory: 2013-013
-> CVE: CVE-2013-2013
-> Date: May 23, 2013
-> Title: Keystone client local information disclosure
-> Reporter: Jake Dahn (Nebula)
-> Products: python-keystoneclient
-> Affects: All versions
->
-> Description:
-> Jake Dahn from Nebula reported a vulnerability that the keystone
-> client only allows passwords to be updated in a clear text
-> command-line argument, which may enable other local users to obtain
-> sensitive information by listing the process and potentially leaves
-> a record of the password within the shell command history.
->
-> Fix:
-> https://review.openstack.org/28702
->
-> Notes:
-> A fix has already been merged to the python-keystoneclient master
-> branch on 2013-05-21 (commit f2e0818) which adds an interactive
-> password prompt, and will appear in the next release of
-> python-keystoneclient.
->
-> References:
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2013
-> https://bugs.launchpad.net/python-keystoneclient/+bug/938315
->
-> --
-> Jeremy Stanley (fungi)
-> OpenStack Vulnerability Management Team
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.10 (GNU/Linux)
->
-> iQJ8BAEBCgBmBQJRnoF7XxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-> ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQ5N0FFNDk2RkMwMkRFQzlGQzM1M0IyRTc0
-> OEY5OTYxMTQzNDk1ODI5AAoJEEj5lhFDSVgp0egP/1ulEpWpQ+PGB3wnu3mFHJqU
-> yx9hV1vgQok7+bo9IpYJg5fKbiG+xfK5F3DOAaeuLFH5qidLPTPeSLozRtJAyMfa
-> lU7uuNA5e1oVDWDjEKaeeoC05cj9gaCx6GF1cdX6HIbMWVtZhBOiBZWEGU3l0lKV
-> 9dpb0RbJ0xNa7m5NN7N7D7Qg42QGglTalolTAyzOyR7/EnM+iQNKlxIIdhKm3Lrb
-> 512NnEsPpn2gB3zDU/IKxE6Pvy65dbBDzEos9anE4H7BuSm3QyP4RwWk21QPp+H8
-> BQenDw3gahj3YBw14e5qaZgG5V4wdRkru7OOrIuzfPDcsydSD/9xGKmEs6MXXtBh
-> rCpQ9iUApd1QBtrFWfnmsGrr6H3gGfHzFvBCOg2oWX4t1/cbP01EMTPswO0lpL4B
-> HobIqng1eg0rKUIfLc4TQRpNBungfatjsBt5lb4ee2ywE3ABOQ47drN/fhVopKT7
-> 6OojreEuOdaY0t3u68jwTYafdyqzlvUEirewJE4BYVuDl8ML9UyLhwQOrhUxhk+l
-> q6aZ6oyMHlL6HLmQoukFzWt5J922QnxYJNq8izfDKHTte5BAyIdOHoV/nMgkyXTN
-> nOt+tO+lByflI+Jy0K4ppWaaCuBCakWW8GTa7QLi6drxGIjA+vtIROLYsIk1rIDS
-> byjR9eRNCwVNvv94gXZi
-> =eJME
-> -----END PGP SIGNATURE-----
->
-> _______________________________________________
-> Mailing list: https://launchpad.net/~openstack
-> Post to     : openstack@...ts.launchpad.net
-> Unsubscribe : https://launchpad.net/~openstack
-> More help   : https://help.launchpad.net/ListHelp
->
+Sorry for the nit-pick, but the term "trust" is so overused and confused
+in these contexts that i think it's important to clarify it when it's
+getting muddled.
+
+Regards,
+
+	--dkg
 
 
-
--- 
---
-@lloyddewolf
-http://www.pistoncloud.com/
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
