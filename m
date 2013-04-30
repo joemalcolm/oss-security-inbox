@@ -1,61 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/01/4
-Message-ID: <51FA81D3.1020502@fifthhorseman.net>
-Date: Thu, 01 Aug 2013 11:42:11 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>,  Donald Stufft <donald@...fft.io>, isis@...project.org, cve-assign@...re.org
-Subject: Re: Requesting CVE-ID(s) for Python's pip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/30/8
+Message-ID: <51802AE0.60502@redhat.com>
+Date: Tue, 30 Apr 2013 14:34:40 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE-2013-2029: Nagios RPM nagios.upgrade_to_v3.sh
 Content-Type: text/plain; charset=utf-8
 
-On 07/30/2013 02:29 AM, Kurt Seifried wrote:
-> I'm not sure in this case MD5 alone is a security vulnerability, I
-> think previously it had been decided that just because it uses MD5
-> wasn't ernough to get a CVE, it had to have some specific use that
-> made MD5 a problem. OTOH DES is at this point worthy of a CVE since
-> you can crack it in a reasonable amount of time on AWS/etc for a few
-> hundred bucks or less. Personally I would assign a CVE to everything
-> using MD5 by default to try and help kill it off, but that would be a
-> lot of CVEs.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Maybe it's worth examining what sort of attack vectors are possible when
-MD5 is relied upon that are not possible if stronger digests are required.
+This was found by Grant Murphy
 
-MD5 is currently known to be vulnerable to collision attacks, but no one
-(to my knowledge) has published anything close to an effective pre-image
-attack yet.
+So most Nagios RPM files seem to include a copy of
+"nagios.upgrade_to_v3.sh" which contains the following code:
 
-I'm assuming that pip is checking the digests of a source tarball
-fetched from a mirror based on a manifest that is signed by a well-known
-key (if my understanding of the architecture is wrong, please correct me!)
+ tmp1=/tmp/nagioscfg.$$.tmp
+...
+cat $nagios_cfg | sed --regexp-extended
+"s/^(\s*check_result_buffer_slots\s*=\s*)/# Line Commented out for
+Nagios v3 Compatibility\n#\1/g" > $tmp1
+...
+diff_output=`diff -u $nagios_cfg $tmp1`
+...
+   mv $tmp1 $nagios_cfg
 
-here's one conceivable attack that exploits MD5's failed collision
-resistance:
+Oops.
 
-Consider an attacker who can upload a python module to the pypi
-repository to get them included in the manifest, and who can tamper with
-a mirror or can modify traffic on their victim's network.
+Covered in https://bugzilla.redhat.com/show_bug.cgi?id=958015
 
-This attacker could craft two versions of their module that have the
-same MD5 digest, but one of them is innocuous and the other is malicious.
-
-The attacker then uploads the innocuous one to the main archive, it is
-vetted by whatever is the normal pypi policy, and its MD5 sum is
-included in the standard signed manifest.  Then the victim goes to fetch
-it, the attacker replaces the download with the malicious version.
-
-If pip is only checking MD5 digests, it sees that the digest is correct,
-and the victim has no idea that they received anything different than
-the innocuous version.  The general public never sees the malicious code.
-
-This attack requires that the attacker already have a significant set of
-dangerous powers (uploading to pypi, control of the victim's chosen
-mirror or network), but it enables them to pull off the attack in
-secrecy at least.
-
-Regards,
-
-	--dkg
+Please use CVE-2013-2029 for this issue.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRgCrgAAoJEBYNRVNeJnmTAsMQAL0d2qJCKO24AP15MT7Au4I7
+71VGuuUs2qcfrKBgCBkC+zIOn50e8P+k/MSTXcfbbSlzfr/LFGF4FJfEAEM9vnlv
+QJ++YJwDdSiqznwAPJEF3fXj2kflkAAqd8mPTLHBMh6Ow33e6vmBzl0JBcd8W96A
+mKlx5dX/7ICCxzNWBZxIP31FaBwvaLGOkbe5cFtBr6LYH2KEmlHCEg6NgFi3BCZJ
+a61d3WgoUjEd1M0H10sbM+di1VJFKgzgpXOkNW93b+XjPLan0Dmvc/9wAAWq0NMX
+E+tKMUxQc8Pwbpu/QhUs34gFvh2myMhUeLlvW39ccpaWclfqkn7pMeWPJKmYE4Ew
+FcSl8SOm4HVK1I1II2w/NCnpsqO/XgAEtAVaG0622jzUICZhf6c7NYoxoO5/kPjO
+WK4T3vUPcSkrR2xTYJb3uKkEiKOo80uDGS4MHwVwhsz93oX2T15RP+2yGDwePPPs
+NdfzRVUPiLFz1BHECvF7D58HXb056nbexlj8GYt0NKkipi0YHraMu+dprumX4YEk
+2H9RXaGGLEc4s7XCurOqF8L2TnOmvbFnOS62oCYm0rrdGtxKhhv+MEm/yJBbsWLi
+4kO1V23IVl4TuUVBri4wzeVBMBCxJPaABN1D30TaXwBAy0eTGzxM60hWacVeyrBP
+SljhlBPyI9nTtM5TMcMQ
+=8bFP
+-----END PGP SIGNATURE-----
