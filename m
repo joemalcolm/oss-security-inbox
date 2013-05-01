@@ -1,33 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/48
-Message-ID: <20130227230732.GB32694@kroah.com>
-Date: Wed, 27 Feb 2013 15:07:32 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/01/2
+Message-ID: <51815850.5060700@redhat.com>
+Date: Wed, 01 May 2013 12:00:48 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+CC: Hanno Böck <hanno@...eck.de>, security@...iawiki.org
+Subject: Re: Mediawiki CVE request ( was Fw: [MediaWiki-announce] MediaWiki Security Release: 1.20.5 and 1.19.6)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 28, 2013 at 12:00:27AM +0100, Jason A. Donenfeld wrote:
-> On Wed, Feb 27, 2013 at 10:44 PM, Greg KH <greg@...ah.com> wrote:
-> > That's the whole problem here, who is going to do such a classification,
-> > and after that, the notification?  The first part is the toughest to do,
-> > as discussed elsewhere in this thread.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 05/01/2013 01:42 AM, Hanno Böck wrote:
+> Two CVEs for mediawiki please.
+
+Thanks, Mediawiki guys, please feel free to request these in advance.
+
+http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
+
+> Begin forwarded message:
 > 
-> May I just bluntly call out shenanigans here? Yes, some bugs are
-> esoteric and it's not immediately obvious that they are security
-> related. But there are so many bugs that are _clearly_
-> security-related.
+> Date: Tue, 30 Apr 2013 13:14:43 -0700 From: Chris Steipp
+> <csteipp@...imedia.org> To: mediawiki-announce@...ts.wikimedia.org,
+> MediaWiki-l <mediawiki-l@...ts.wikimedia.org>,      Wikimedia
+> developers <wikitech-l@...ts.wikimedia.org> Subject:
+> [MediaWiki-announce] MediaWiki Security Release: 1.20.5 and 1.19.6
+> 
+> 
+> I would like to announce the release of MediaWiki 1.20.5 and
+> 1.19.6. These releases fix 2 security related issues that could
+> affect users of MediaWiki. Download links are given at the end of
+> this email.
+> 
+> * Jan Schejbal / Hatforce.com reported that SVG script filtering
+> could be bypassed for Chrome and Firefox clients by using an
+> encoding that MediaWiki understood, but these browsers interpreted
+> as UTF-8. <https://bugzilla.wikimedia.org/show_bug.cgi?id=47304>
 
-Really?  Ok then, please go ahead and try doing this yourself if you
-feel it is so "obvious" to do.
+Please use CVE-2013-2031 for this issue.
 
-> Kernel developers are super smart -- some of the brightest guys out
-> there.
+> * Internal review discovered that extensions were not given the 
+> opportunity to disable a password reset, which could lead to 
+> circumvention of two-factor authentication. 
+> <https://bugzilla.wikimedia.org/show_bug.cgi?id=46590>
 
-Nope, we are dumb, we do uninteresting, boring work, dealing with broken
-hardware and demanding users every day.  If we were smarter, we wouldn't
-be doing this type of thing.
+Please use CVE-2013-2032  for this issue.
 
-sorry,
 
-greg k-h
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRgVhQAAoJEBYNRVNeJnmTtScP/A+qFEv4P2YxTiuEkaO+GStY
+7H0MlvJAF4eO7/Pq1bTthbuSWmYIbxFp2E/aZDb5LVk0qS6QgDC/IyQrKHs/wOWz
+DQhbXZ18bQ0QZHxjXjqZ/McE/x3kkCZbAkBI5e9ngEhjdq4/39mfg2DPrzFInj7w
+Sh2Nn6Bs6fMx+18LEOlLgUVSscHwgmv4cVMV/ST3bSagV4GCqQCoAcDhtoPrX/sb
+bOKQcHAGup/q//WZyrgLzNs4S0sHlAx9L5Z0qRErpYrfGMObvvLL/+5UHOFFzD/T
+/IyaWL+em3UvvfdnePOsVhTgnL9oXoo2yAu3Fl7SZoPuHBYXWuBmcHamYkmaP2xl
+QLGVbZe0DDYA2ubPWThXltxNpCueu6HUMSOfqye1mMNWpWiaojkr4zeucTfO47re
++Wg1Doo18CIv/RsCimb5VggKrk/QCopC1yNWYaXRxeM3SEGuDOAhB5OhVqst4Lnf
+VUWcaK4tDQIwPfh3ooarvgIWoaVcFeauIGlZ0Sf5cE3x5WhKb/D3LDdRdYU63Jwl
+FinbRJ6Kk+6DeZJe9d+rnaS2Z67EQXH2i7uP5lk6WWm9ngzU244phUy9Lgjx2szw
+yaOiNuhzMHlwVTEkc5/IC96vVU10Dqq3RbEQ2vLP5OraXbZlUP5i4NOS8Hn20aVO
+vasVO7cSxySLbKc3cq8P
+=WPVE
+-----END PGP SIGNATURE-----
