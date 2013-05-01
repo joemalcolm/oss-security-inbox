@@ -1,18 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/15/7
-Message-ID: <87r4lmtfmt.fsf@mid.deneb.enyo.de>
-Date: Tue, 15 Jan 2013 20:23:06 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/01/1
+Message-ID: <20130501094249.7e304284@melee>
+Date: Wed, 1 May 2013 09:42:49 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: pam-pgsql NULL password handling issue
+Subject: Mediawiki CVE request ( was Fw: [MediaWiki-announce] MediaWiki Security Release: 1.20.5 and 1.19.6)
 Content-Type: text/plain; charset=utf-8
 
-Lucas Clemente Vella discovered that pam-pgsql (aka pam_pgsql) might
-allow login with any password the SQL query for the password returns
-NULL.
+Two CVEs for mediawiki please.
 
-Bug report: <https://sourceforge.net/p/pam-pgsql/bugs/13/>
-Patch: <https://sourceforge.net/u/lvella/pam-pgsql/ci/9361f5970e5dd90a747319995b67c2f73b91448c/>
 
-As usual, I'm not sure if this constitutes a security bug, but we'll
-probably fix this nevertheless if we get the opportunity.
+
+Begin forwarded message:
+
+Date: Tue, 30 Apr 2013 13:14:43 -0700
+From: Chris Steipp <csteipp@...imedia.org>
+To: mediawiki-announce@...ts.wikimedia.org,      MediaWiki-l
+<mediawiki-l@...ts.wikimedia.org>,      Wikimedia developers
+<wikitech-l@...ts.wikimedia.org> Subject: [MediaWiki-announce]
+MediaWiki Security Release: 1.20.5 and 1.19.6
+
+
+I would like to announce the release of MediaWiki 1.20.5 and 1.19.6.
+These releases fix 2 security related issues that could affect users
+of MediaWiki. Download links are given at the end of this email.
+
+* Jan Schejbal / Hatforce.com reported that SVG script filtering could
+be bypassed for Chrome and Firefox clients by using an encoding that
+MediaWiki understood, but these browsers interpreted as UTF-8.
+<https://bugzilla.wikimedia.org/show_bug.cgi?id=47304>
+
+* Internal review discovered that extensions were not given the
+opportunity to disable a password reset, which could lead to
+circumvention of two-factor authentication.
+<https://bugzilla.wikimedia.org/show_bug.cgi?id=46590>
+
+Full release notes for 1.20.5:
+<https://www.mediawiki.org/wiki/Release_notes/1.20>
+
+Full release notes for 1.19.6:
+<https://www.mediawiki.org/wiki/Release_notes/1.19>
+
+For information about how to upgrade, see
+<https://www.mediawiki.org/wiki/Manual:Upgrading>
+
+
+**********************************************************************
+   1.20.5
+**********************************************************************
+Download:
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.5.tar.gz
+
+Patch to previous version (1.20.4), without interface text:
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.5.patch.gz
+Interface text changes:
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-i18n-1.20.5.patch.gz
+
+GPG signatures:
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.5.tar.gz.sig
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.5.patch.gz.sig
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-i18n-1.20.5.patch.gz.sig
+
+Public keys:
+https://secure.wikimedia.org/keys.html
+
+
+**********************************************************************
+   1.19.6
+**********************************************************************
+Download:
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.6.tar.gz
+
+Patch to previous version (1.19.5), without interface text:
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.6.patch.gz
+Interface text changes:
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-i18n-1.19.6.patch.gz
+
+GPG signatures:
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.6.tar.gz.sig
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.6.patch.gz.sig
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-i18n-1.19.6.patch.gz.sig
+
+Public keys:
+https://secure.wikimedia.org/keys.html
+
+_______________________________________________
+MediaWiki announcements mailing list
+To unsubscribe, go to:
+https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce
+
+
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
