@@ -1,52 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/16
-Message-ID: <51DDBC86.7070002@redhat.com>
-Date: Wed, 10 Jul 2013 13:56:54 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/01/4
+Message-ID: <CA+O_gMyxU+pRkz_5Q30WM2wzktqoVJUDMxASJWi6DDx2C5VqKw@mail.gmail.com>
+Date: Thu, 2 May 2013 10:02:36 +1200
+From: Robbie MacKay <robbie@...ahidi.com>
 To: oss-security@...ts.openwall.com
-CC: Matthew Wilkes <matthew@...thewwilkes.co.uk>
-Subject: Re: Re: CVE Request - PloneFormGen, multiple vulnerabilities
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I'd just like to +1 creating a good set of guidelines for signing releases.
+Especially if it gives a "baseline", "level 1", "level 2", etc. set of
+standards.
+I'm an open source developer working in a small team. We need to improve
+our processes but sometimes don't have the time to figure out the best way.
+Guidelines would speed that up for us and give me something I can point at
+to convince my team mates.
 
-On 07/10/2013 10:01 AM, Matthew Wilkes wrote:
-> On 2013-07-04 21:54, Matthew Wilkes wrote:
->> Hello all,
->> 
->> I'd like to request some CVE identifiers for the following 
->> vulnerabilities, recently patched in PloneFormGen[1]
-> 
-> Anything I can do to unblock this?
-> 
-> Thanks,
-> 
-> Matt
-> 
-> 
 
-Ah sorry can you reply to your first message with links to the code
-commits and who discovered them so I can confirm these
-issues/split/merge them as needed? Thanks.
+On Wed, May 1, 2013 at 6:24 AM, Daniel Kahn Gillmor
+<dkg@...thhorseman.net>wrote:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+> On 04/26/2013 01:57 AM, Alistair Crooks wrote:
+> > All people can see from a key listing is who trusted them and
+> > when, not how much, or whether the trust was warranted.
+>
+> Just for the record, most OpenPGP key certification listings don't
+> indicate anything at all about trust, including "who trusted them".
+> they show cryptographically-verifiable assertions of identity and
+> control over key material.
+>
+> Put another way, a signature on an OpenPGP key+userid says "I believe
+> that this key belongs to this person" -- it doesn't say anything about
+> trust in that person (or about their intrinsic trustworthiness).
+>
+> Sorry for the nit-pick, but the term "trust" is so overused and confused
+> in these contexts that i think it's important to clarify it when it's
+> getting muddled.
+>
+> Regards,
+>
+>         --dkg
+>
+>
 
-iQIcBAEBAgAGBQJR3byFAAoJEBYNRVNeJnmTZ4QP/i0c4w0hqH0OkPIkDZ60UAxh
-H6/x3ZXwjwK33FNvPGHV4eLZfQSC93932RGPBX6nbNteRNia3i9YFqexUSqto10t
-2bJ3dhvr2yGrcOOkZgf8tKekXS6TCpd7xj5EQVrRmWrFjeDObWZOtBqI8P+/IwMR
-z+e5YOc3lamnlqQhEZWsAggm8xKyS549vev383rlsLV6cvpEYKhJmSlv4Qbeo8i+
-btfTux29oTrA6ThKPaS0c7bd9zTwB2JGAOYLxMXK8Fp2S7vyvXf/VMnMRMbMPzi4
-xkS4BCMKAgcYcPKtaEGZbMQ+Vd/HmSdvFcaLYpcDPdBNBHzzn3SJAHbOIVhkBK9g
-YbRC4arQ3N6t4hb+LKbxtpxsBcet+MnDEoxtCc/9px4+S23mCKKtT230HqUFzDHP
-y8on5JjmfmrHZrr8bg8sA+2pH2SFsH/K65d/CsrXmz6rXn0BtUEhH+fdc4pvQ5sz
-Wq1NmRts91dktw7c5XNzbxQ8rG1UBDq0p73cciq4n8vNURXl6VgIIxBqruV4+3yw
-Rn/DBXTR6Zv0RXfHW8OoQ8X6mT/EuoohQ7KaKyWzKBTz5hQPjjSQQ6EuCDTYyIch
-cxUQ1Bit1f18aQforebn3lQ3/WSfX9XoKCYV3iQFIjZdJd+1adj9HKx0Fr6zO3+/
-IHg/vGIrGNWqKpuCHhBO
-=isYe
------END PGP SIGNATURE-----
+
+-- 
+Robbie Mackay
+
+Software Developer, External Projects
+Ushahidi Inc
+m: +64 27 576 2243
+e: robbie@...ahidi.com
+skype: robbie.mackay
+
