@@ -1,67 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/11
-Message-ID: <51083A45.208@redhat.com>
-Date: Tue, 29 Jan 2013 14:08:21 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/7
+Message-ID: <1227819386.4933950.1367488728684.JavaMail.root@redhat.com>
+Date: Thu, 2 May 2013 05:58:48 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, moderators@...db.org
-Subject: Re: ircd-hybrid: Denial of service vulnerability in hostmask.c:try_parse_v4_netmask()
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, "Eric S. Raymond" <esr@...rsus.com>, Miroslav Lichvar <mlichvar@...hat.com>
+Subject: CVE Request -- gpsd 3.9 fixing a denial of service flaw
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, Eric, Miroslav, vendors,
 
-On 01/29/2013 08:37 AM, Henri Salo wrote:
-> Mr. Bob Nomnomnom from Torland reported a denial of service
-> security vulnerability in ircd-hybrid. Function
-> hostmask.c:try_parse_v4_netmask() is using strtoul to parse masks.
-> Documentation says strtoul can parse "-number" as well. Validation
-> of input does not catch evil bits. I can give proof of concept if
-> needed.
-> 
-> Fixed in commit:
-> http://svn.ircd-hybrid.org:8000/viewcvs.cgi/ircd-hybrid/trunk/src/hostmask.c?r1=1786&r2=1785&pathrev=1786
->
-> 
-Fixed in: ircd-hybrid 8.0.6
-> 
-> I have requested CVE identifier for this vulnerability in another
-> email to Kurt. Other ircds are using the same code. Consider this
-> email as official advisory. I tried to embargo this issue, but the
-> commit is out already.
+  GPSD upstream has released 3.9 version:
+  [1] http://lists.nongnu.org/archive/html/gpsd-dev/2013-05/msg00000.html
 
-A yeah sorry dealing with ruby the last little while. I was going to
-reply to you to post this publicly on oss-sec =)
+correcting one denial of service problem [2]:
+A denial of service flaw was found in the way AIS driver packet parser of
+gpsd, a service daemon for mediating access to a GPS, processed certain
+malformed packets. A remote attacker could provide a specially-crafted
+device input that, when processed would lead to gpsd's packet parser
+crash (gpsd daemon termination).
 
-Please use CVE-2013-0238 for this issue.
+References:
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=958717
 
-> Program received signal SIGSEGV, Segmentation fault. 
-> 0x000000000041c799 in try_parse_v4_netmask (text=<value optimized
-> out>, addr=0x113e270, b=0x113e2f8) at hostmask.c:229 229
-> addb[bits / 8] &= ~((1 << (8 - bits % 8)) - 1);
-> 
-> -- Henri Salo
-> 
+Candidate upstream patches [*]:
+[3] http://git.savannah.gnu.org/cgit/gpsd.git/commit/?id=08edc49d8f63c75bfdfb480b083b0d960310f94f
+[4] http://git.savannah.gnu.org/cgit/gpsd.git/commit/?id=dd9c3c2830cb8f8fd8491ce68c82698dc5538f50
 
+--
+[*] Candidate because upstream #38511 is private currently:
+    http://savannah.nongnu.org/bugs/?38511 => hard to say
+    if [3] is fixing this issue, or the DoS would be caused
+    by the malformed packet crash / sample, as listed in [4].
+    
+@Eric - Eric, could you please help us to solve this doubt? (which
+of the patches is the correct one to fix the above mentioned DoS
+/ security issue)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Thanks: Goes to Miroslav Lichvar for bringing this one to my attention.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Kurt, could you allocate a CVE identifier for this?
 
-iQIcBAEBAgAGBQJRCDpFAAoJEBYNRVNeJnmTVRwP/1y8nF5g/xAKXyA+XcfJUuDB
-f9ojCk5SV1YtHZlKoLL7ByxMzyIb172B06138pjN+haQw0mtmMj3nauJ0JjSfb74
-hNibV2u3iRxhFsB2bLaz0ksPSoo8ZZ811fHwDlt3iZFqOw5/pagYKLlo+Q4a3yUW
-c64V6wfbW6OTc6SrdYey76/PH8blk6riNtA8yiKUoCIcMTeQ+2LioVsXX9qzRVgG
-gRZeoxPwf0EeaPSG/2Yv/4FveHQqBreq8b2qINkjguDrou5BO5yubMM2xrrbbb2Y
-+FQYHLdIOepLI0LLrf5xC//4elER1Ju1OntZoii3ppX3wsIAiHQDLqvZg7tfAYKN
-hfKwmhr9lAsQJLstC2NuW30av4SDM23xn9nHop3mdTxdrRo4IKR0IXcibrIsaeox
-i9wzlj+AcG07XS7FmFe4v2xCw4CMUF4OMF6EC1sayYg3xTr7pyJEWltvYwH5PmZU
-H69MKyhdD7KfcqmU0l6F+UO7PsJHinjwFcuSTSCCkUuoFjpN4QN1zkNeUmUKMCAO
-vz9cuqCMT1HbPxT8/+FlO8VX4tdRcJP/EskQVfG4YL9i28BjjUZMg2/dvVcPMPtT
-k+eTlZs958Q95f1nhloMaR6N/zZ8wTwxhYPACqE7+g7ENe8k4m4MurxcSF2AudXV
-Hj342LKJmiThU/B8kvNX
-=mtdB
------END PGP SIGNATURE-----
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
