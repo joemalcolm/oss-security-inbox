@@ -1,50 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/6
-Message-ID: <51241C81.7040502@redhat.com>
-Date: Tue, 19 Feb 2013 17:44:49 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/6
+Message-ID: <5181F885.1090902@redhat.com>
+Date: Wed, 01 May 2013 23:24:21 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Kurt Seifried <kseifrie@...hat.com>
-Subject: Re: CVE request -- Linux kernel: vhost: fix length for cross region descriptor
+To: oss-security@...ts.openwall.com
+CC: Marc Deslauriers <marc.deslauriers@...onical.com>
+Subject: Re: CVE Request: httplib2 ssl cert incorrect error handling
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/19/2013 05:41 PM, Petr Matousek wrote:
-> If a single descriptor crosses a region, the second chunk length
-> should be decremented by size translated so far, instead it
-> includes the full descriptor length. A privileged guest user could
-> use this flaw to crash the host or, potentially, corrupt host
-> memory.
+On 05/01/2013 05:15 PM, Marc Deslauriers wrote:
+> Hello,
 > 
-> Upstream fix: 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=bd97120fc3d1a11f3124c7c9ba1d91f51829eb85
->
->  References: https://bugzilla.redhat.com/show_bug.cgi?id=912905
+> httplib2 only validates SSL certificates on the first request to a 
+> connection, and doesn't report validation failures on subsequent
+> requests.
+> 
+> Bugs:
+> 
+> http://code.google.com/p/httplib2/issues/detail?id=282 
+> https://bugs.launchpad.net/httplib2/+bug/1175272
+> 
+> Could a CVE please be assigned to this issue?
 > 
 > Thanks,
 > 
+> Marc.
 
-Please use CVE-2013-0311 for this issue.
+Please use CVE-2013-2037 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRJByBAAoJEBYNRVNeJnmTea0P/1akjtxNBrfflQqyg4OgiTSE
-lg81INRbEtk4Pxxlux9+2LeJhi3nnA/mx9+QJeSTNCbI3TLVCYf5tQYaafpIrs9p
-Fw/+N1b6bvNxan/ipXKqBKss/ZI1vUp4k9uoiJSHU0TAGkYpNZVn2Jt2tcfcwuFz
-vJL9EFmQPlFV8MLPAIX1hfR/WxRCqrylfmFlIFdgDWZU+K9LKbEvZSmUR+uWWNt8
-QKP55vpsxJ1wVIgdmsTMooAZRk2PXizBgDDeFp1U0+6YCSzDjKouqKqVLwTGx4B3
-xIC+ghoPsF+utECY8xNbK5gkh1OSitOC0eWghlwJuE0jpwpyaoJT1OoOKEIM+Ntm
-RXLUTKx0qKhrvX2z6r5H9++RcVUf4CpQzJylEdUrerp5r/RBKEtHoGkBNVc1OL3b
-EC5AiYuyodWHtT8nb3WcDIKEmMAh+QZqJJ/rWZCtmWWB2zFbjp/V0eNFBSVpH7Wm
-kLLODBaqE0eRpXaBrJR6oRKT4XWhSd88pL9LlaH2lskUYcnpZysu+cDdNcEa5kLI
-IIm4xKjZfyA5hYCPXsx+uQi3URaowo6CfOAJcdkGc9VhgIfOg/swf9OWJVMZKV1p
-O8Ay3Bg5OoIhsTTfubvOF7t+0pjfhD4a00gmVxaU2nAwFxX2wZiGp3rmA5W1uagh
-2dEHCTtkOWMYYG631iLS
-=WntS
+iQIcBAEBAgAGBQJRgfiFAAoJEBYNRVNeJnmTg+UQAL5ueIwrbq6ns/GXuiJgvxYN
+YjI/jX1scN6SEKWUzLdJx6Mewmj4sbHZ2hR2wtcICcc7OuyeZqtqTC3eEPPF04a9
+3Y5eX5hzFbRBY6TXGgbxX4ZpzSbhri1Ro1NiGnR4xVbdyvtSr+Y8uBZBol2A7E+q
+aEmq+iNO2yzlzoK8xOzi0mIGNVo50mMnEdFOt8xVKOQLwL+oY8IXul30VMm79CHK
+0VCIXY9W9CAdBxXo5UYm8Wb9l9w6l5A0e3G/czxxGnuXcKB1HQPUUyVAFlqEaSoD
+sAvXJ3POKzC9g/2LdNFfcSl7GBVsfWK1/RQyeUgUYullePKy2GVjgvKyN1DESscj
+VP1unLjS4gNyDaCXWTLbSgcFA5Rv0wL4H3aZ+qzDVgZd2l9a8DsR0Y/Lj93ldpAA
+bn6OVRaj41spYiLgS0ncAcORh6eDTIHjefvzOGuU22+NS7S+WfG81KYROgligUjg
+jkrkyjups6Hq9QrroH5L/1QzjICxBKjaE63bI0zxH4xBTUpktEzpeeIcbLE+WZKn
+9WPTG2W3Wpq82GLtoPDGLScM5vIEKnuRxTZJdEMrpAAALQenWeDdRzgeQgPLI7wD
+mCNibsd7iEk39GCkMc2wAa6P2AF81oZ2tmpJEbC9SWW7h8hzwDFvpudi18IYNIdg
+G8IvkreCuaSIiwqm9kQG
+=cTrc
 -----END PGP SIGNATURE-----
