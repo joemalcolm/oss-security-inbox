@@ -1,37 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/04/3
-Message-ID: <122688110.53315746.1357316179256.JavaMail.root@redhat.com>
-Date: Fri, 4 Jan 2013 11:16:19 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/19
+Message-ID: <87bo8tnllx.fsf@windlord.stanford.edu>
+Date: Thu, 02 May 2013 14:00:10 -0700
+From: Russ Allbery <rra@...nford.edu>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Rex Dieter <rdieter@...h.unl.edu>
-Subject: CVE Request -- qt: QSslSocket might report inappropriate errors when certificate verification fails
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Alan Coopersmith <alan.coopersmith@...cle.com> writes:
+> On 05/ 2/13 11:10 AM, Russ Allbery wrote:
 
-  Qt upstream has recently announced (upcoming) availability of 
-Qt 4.8.5, Qt 4.7.6 and Qt 4.6.5 which (between other things) should
-correct also the following security flaw:
+>> I routinely do this.  It's called a key-signing party.  The only trust
+>> that I am expressing with that signature is that I have seen and
+>> verified, to the best of my ability, some form of reliable
+>> identification for that person (ideally a passport I can verify, or a
+>> social environment in which it would be very difficult to impersonate
+>> someone you are not) in combination with a proof that the key I signed
+>> belongs to the person whose identification I checked.
 
-A security flaw was found in the way QSslSocket implementation of the Qt,
-a software toolkit for applications development, performed certificate
-verification callbacks, when Qt libraries were used with different OpenSSL
-version than the one, they were compiled against. In such scenario, this
-would result in a connection error, but with the SSL error list to contain
-QSslError:NoError instead of proper reason of the error. This might result
-in a confusing error being presented to the end users, possibly encouraging
-them to ignore the SSL errors for the site the connection was initiated against.
+> Though for many open source projects, having a passport or other
+> government id is not the sort of identity we care about - knowing that
+> you're the person who does git/hg commits under that e-mail address is
+> what we care about - if it's a pseudonym that doesn't match your
+> passport, that doesn't affect whether we accept code from you or not.
+> (The lawyers might care, when it comes to verifying who owns copyright
+> and agreed to release code under a given license, but that's a whole
+> separate mess to unravel.)
 
-References:
-[1] http://lists.qt-project.org/pipermail/announce/2013-January/000020.html
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=891955
+Right.  And that's part of the problem with using existing PGP key
+signatures.  They don't convey the piece of information that the project
+probably actually cares about.  Open source projects rarely care that I'm
+*actually* Russ Allbery, rather than just using that name on-line while
+actually legally being named Roger McDowell.  Lawyers may care if they
+want to be able to sue me, but that's an edge case.  What projects
+actually care about is that I'm the same person, by whatever name, who has
+an established track record in multiple other projects and an established
+trust basis in the broader community.
 
-Relevant upstream patch:
-[3] https://codereview.qt-project.org/#change,42461
+You can kind of get there by tying together multiple different pieces of
+data, but it's certainly not directly conveyed by PGP key signatures.
 
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Russ Allbery (rra@...nford.edu)             <http://www.eyrie.org/~eagle/>
