@@ -1,70 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/09/9
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF33E0E6A4@IMCMBX01.MITRE.ORG>
-Date: Wed, 9 Oct 2013 19:03:07 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "Rich Felker" <dalias@...ifal.cx>
-Subject: RE: Source of bad password hashing practices? MySQL manual...
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/20
+Message-ID: <20130502194151.GA30044@thyrsus.com>
+Date: Thu, 2 May 2013 15:41:51 -0400
+From: "Eric S. Raymond" <esr@...rsus.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Miroslav Lichvar <mlichvar@...hat.com>
+Subject: Re: CVE Request -- gpsd 3.9 fixing a denial of service flaw
 Content-Type: text/plain; charset=utf-8
 
-The following is my personal opinion and does not represent any official MITRE CNA policy.
+Kurt Seifried <kseifried@...hat.com>:
+> On 05/02/2013 03:58 AM, Jan Lieskovsky wrote:
+> > @Eric - Eric, could you please help us to solve this doubt? (which 
+> > of the patches is the correct one to fix the above mentioned DoS /
+> > security issue)
 
-In this particular case, MySQL documentation is giving "bad advice" to application developers.  Any developer who follows this advice and publicly distributes a software product might be subject to a CVE for that particular application, depending on other factors that I'll get into momentarily.  While there are a couple CVEs for "bad documentation," I believe that those CVEs have always been relevant to a specific product for which the documentation was intended.
+There are two critical patches which solve two different DoSes (well,
+one certain and one potential).  Yes, it's a strange coincidence that
+both bugs were characterized at almost the same time after we haven't
+had a crash bug since 2007.
 
-The act of "using MD5" likely affects thousands of products and would not necessarily be useful (or usable) to the general public if we had CVEs for every single product that uses MD5; yet, we are clearly in a transition point where stronger alternatives exist, attacks against MD5 are more realistic, etc.  Currently, we only have a handful of CVEs for "use of MD5," typically when the developer has made a stronger algorithm available.  We have a good number of CVEs relevant to leaks of MD5 hashes or bad implementations that use MD5 incorrectly, but that's not directly relevant to this discussion.
+The crash bug was in the NMEA driver.  There's particular kind of malformed
+packet, sometimes emitted by SiRFStar-III receivers, that looks like this:
 
-In cases where a product already supports stronger algorithms but somehow "downgrades" to MD5/etc., these are reasonable for CVE inclusion because of the violation of an implicit security policy that "the product should use the strongest encryption that is available for all interested parties."  This is one reason why downgrade attacks are acceptable for CVE inclusion.  Generally, I am personally not in favor of assigning "use of MD5" CVEs to products that *only* support MD5 or other weak algorithms.
+$GPGGA,030130$GPGLL,2638.1728,N,08011.3893,W,030131.000,A,A*41\r\n
 
-Putting on my CWE hat for a moment - some leaders in the web application security consulting space have observed that lots of public documents give bad security advice and theorized that this may be part of the cause for insecure software development.  Near as I can tell (and as reflected in CWE-916: Use of Password Hash With Insufficient Computational Effort), it appears that Seth's suggestion to "use PBKDF2, bcrypt, or scrypt" is acceptable "real-world developer" advice at this time, although advances in password cracking continue.  (Looking forward to whatever Solar has to say on the topic ;-)
+See the incomplete GGA without trailing \r\n  at the front?  Usually 
+that was harmless and would be silently discarded. Under rare circumstances
+it could core dump (but not any more, I now have a regression test to check
+this case).
 
-We are getting to a point of maturity in vulnerability tracking where once-strong-enough protection mechanisms begin to fall out of favor; it is not always clear when something crosses from "questionable practices" to "outright vulnerability" and so, there can be a long period in which repositories such as CVE do not have concrete, consistent approaches [1].
+That fix was commit dd9c3c2830cb8f8fd8491ce68c82698dc5538f50.
 
-- Steve
+The potential crash/DoS was in the AIS driver.
 
-[1] Old-timers may counter "wasn't DES a precedent? How is this different?" to which I say yes, and it's not really different to me, but IMO, DES fell out of favor well before the vulnerability-information industry became an "industry" and had to deal with long-term shifts in vulnerability and attack knowledge.
+The first stage of what it does is un-armor an AIVDM ASCII packet
+representation into an equivalent binary packet which is then examined
+for data at specific bit offsets.
 
+The un-armoring logic was not properly bounds-checked, potentially
+opening up a hole. In theory, an overlong armored packet could be
+crafted to overrun the binary-packet buffer.
 
->-----Original Message-----
->From: Seth Arnold [mailto:seth.arnold@...onical.com]
->Sent: Wednesday, October 09, 2013 2:09 PM
->To: Rich Felker
->Cc: oss-security@...ts.openwall.com
->Subject: Re: [oss-security] Source of bad password hashing practices? MySQL
->manual...
->
->On Tue, Oct 08, 2013 at 07:57:52PM -0400, Rich Felker wrote:
->> It's come to my attention recently that the MySQL reference manual is
->> recommending very poor password hashing practices as part of its
->> security guidelines:
->>
->>   "Do not store cleartext passwords in your database. If your computer
->>   becomes compromised, the intruder can take the full list of
->>   passwords and use them. Instead, use SHA2(), SHA1(), MD5(), or some
->>   other one-way hashing function and store the hash value."
->>
->>   (http://dev.mysql.com/doc/refman/5.7/en/security-guidelines.html)
->>
->> With MySQL being one of the major traditional "LAMP stack" components,
->> I wonder if this is the source from which many web developers are
->> getting their ideas on how to do password hashing. What is the proper
->> procedure for publicizing documentation bugs like this which are
->> leading to poor security practice, and for getting them fixed?
->
->I don't know if we can realistically assign a CVE number to bad advice
->on the Internet :) , but it would be immensely useful if this paragraph
->could be updated to say:
->
->   "Do not store cleartext passwords in your database. If your computer
->   becomes compromised, the intruder can take the full list of
->   passwords and use them. Instead, use PBKDF2, bcrypt, or scrypt to
->   compute unique hash values suitable for storing in the database."
->
->A further change that might be nice would change "If your computer becomes
->compromised ..." to "When your computer becomes compromised ..." but I
->could understand if the MySQL team doesn't share my pessimism and choses
->to ignore this small change.
->
->But please, MySQL team, feel free to use my proposed paragraph under
->whatever license you wish. The old one has to go.
->
->Thanks
+I'm not sure that one was exploitable; there are other properties of
+the code (notably the bounds-checked maximum length of the AIVDM ASCII
+packet buffer) that seem to guarantee the end of the binary packet
+buffer could never be reached.
+
+I put in a check anyway, because (a) I could be wrong about that, (b)
+supposing I'm right, that invariant could get silently broken by a future 
+code change.
+
+That was commit 08edc49d8f63c75bfdfb480b083b0d960310f94f, responding 
+to Savannah bug #38511.
+
+Note: neither of these have privilege-escalation possibilities.  gpsd
+needs root to initialize, but drops it long before either of these 
+code defects could fire.
+
+If you have any other questions, do not hesitate to ask.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+
+Download attachment "signature.asc" of type "application/pgp-signature" (191 bytes)
