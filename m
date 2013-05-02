@@ -1,56 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/07/4
-Message-ID: <51385E3C.2060808@redhat.com>
-Date: Thu, 07 Mar 2013 02:30:36 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/17
+Message-ID: <5182B021.8050206@redhat.com>
+Date: Thu, 02 May 2013 12:27:45 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>, Steven Christey <coley@...re.org>
-Subject: Re: CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, "Eric S. Raymond" <esr@...rsus.com>, Miroslav Lichvar <mlichvar@...hat.com>
+Subject: Re: CVE Request -- gpsd 3.9 fixing a denial of service flaw
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/07/2013 02:19 AM, Solar Designer wrote:
-> Kurt -
+On 05/02/2013 03:58 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, Eric, Miroslav, vendors,
 > 
-> On Thu, Mar 07, 2013 at 02:13:37AM -0700, Kurt Seifried wrote:
->> Bundling the following into a single CVE:
-> [...]
->> Please use CVE-2012-6138 for these issues.
+> GPSD upstream has released 3.9 version: [1]
+> http://lists.nongnu.org/archive/html/gpsd-dev/2013-05/msg00000.html
+>
+>  correcting one denial of service problem [2]: A denial of service
+> flaw was found in the way AIS driver packet parser of gpsd, a
+> service daemon for mediating access to a GPS, processed certain 
+> malformed packets. A remote attacker could provide a
+> specially-crafted device input that, when processed would lead to
+> gpsd's packet parser crash (gpsd daemon termination).
 > 
-> I think this is wrong.  I would understand if those issues were all
-> in the same subsystem at least (or if you assigned per-subsystem
-> CVE IDs for these), but this is not the case.  Many distros will
-> fix some, but not the others, or not all at the same time.  There's
-> room for a little bit of bundling here, but not that much.
+> References: [2] https://bugzilla.redhat.com/show_bug.cgi?id=958717
 > 
-> Alexander
+> Candidate upstream patches [*]: [3]
+> http://git.savannah.gnu.org/cgit/gpsd.git/commit/?id=08edc49d8f63c75bfdfb480b083b0d960310f94f
+>
+> 
+[4]
+http://git.savannah.gnu.org/cgit/gpsd.git/commit/?id=dd9c3c2830cb8f8fd8491ce68c82698dc5538f50
+> 
+> -- [*] Candidate because upstream #38511 is private currently: 
+> http://savannah.nongnu.org/bugs/?38511 => hard to say if [3] is
+> fixing this issue, or the DoS would be caused by the malformed
+> packet crash / sample, as listed in [4].
+> 
+> @Eric - Eric, could you please help us to solve this doubt? (which 
+> of the patches is the correct one to fix the above mentioned DoS /
+> security issue)
+> 
+> Thanks: Goes to Miroslav Lichvar for bringing this one to my
+> attention.
+> 
+> Kurt, could you allocate a CVE identifier for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
 
-This raises a valid point, Steve what do we consider to be "same
-codebase"? Linux Kernel? Various subsystems? In general I have applied
-it at the project level typically (e.g. samba contains a server, a
-client and utilities but I consider it to be one code base).
+Just a quick note, at least on Fedora when you plug in a USB GPS
+device, by default the OS handles it, fires up gpsd. So with this you
+could make a crash usb stick or something.
 
+Please use CVE-2013-2038 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJROF48AAoJEBYNRVNeJnmTE4kQAIrsT+xItxI8awk2BvSOtumW
-ZrgPVuOFw+zXEnRuAgTA/nvacjixcuL4KajWtEUFmZu8rffPS76CcFRRdd0xapi2
-TZwhZmlkszF5kMT1U12YN1K7m0u15tQ7Kw+iNmUtZ4b9Ghyq9Fonlp6Czsb73nVS
-pg4Y7a44JBsgIssTcQGbeGLzRH4/e7rrAYwx/3K0Gq1KvWFlKsTO/fX8npjzu809
-YSVfWxPpANcDx3NV9jbDilPReFEcqoOwOdf8zEjlMuCc9kVx8aopFeNAfkLY+mys
-R0xnJ7rR0X07ve4SL9om4i6YYMygBb/jmDku9Wx78Ba+Cc7kSdhl5s3JobfwW+56
-o78PN4Bd6o3+UJOubpUBrRbrWzncTnG1HPSaVfkazUNO4OvHgh/uZK8y+dpXDyct
-wm6tj3bajyob+tAD4pIqV7/Vx9MY+Tw0NEaLZdHiOvMavD82P1hl0YJIXinqtBtK
-+mpYuxK1hw6PMbPvgg/b39GoFPu3nSRxLosdPbABHUV/iyN5dRD/6TBXe8UMPkF8
-XpO1hv+22T/Jd+e4HBJ7KZXVgpgsct0Pz+zPfeflyMsKDa9vbRRjOJdl0nPv/Vdr
-dhe8bG4h7DAo1mArll8pNC/NFnw0zC4T4iZHrPfsDUbnENxBhyNASCfZACdn00zM
-MIcPRnp0+wAQ/ANPNzET
-=C+ij
+iQIcBAEBAgAGBQJRgrAhAAoJEBYNRVNeJnmTH8UP/jLHRJHc60N5tyzUvPPVahza
+jzIPKFvTZvGwsZ2Qw8Ai13W6IglezZWHKEjlJdDIQWrCfppw/9aOvbRYFlsj84dp
+c86wiYG07eOk1btH+oNRK0sm1h3q3SmrzykNNC6bY3UmuG8JdmUhUc+O6QAOVAug
+7ziIbYdAEM6AQlQfk+0NJ+0UlF91YXrcVN/AnbFkf07MOWgPEGQ6Gqh+FMuOsqE2
+u5DfmXyLaywwXI96wtvym0LAE6+807u3E6Cb1dHQ2ZTBKAtFPq2kR9IGVxvz3TXd
+OV0RZpImddkTrmfI1oxlM4sSAPk6++RWrkUpoMC90Y2ATCDlpshfenLs0rWP5e2p
+HoVIWNagiOJeiYc1uMxptlA0GJUBetxJ+Fywc3QW04LGYk6eL2bYRm/xorSESEPU
+31LjVvPL7SWEbUXrLQ+rB9Jun6xOxJc1Zfubq6aNBHfkB9oU/6vf9QFkCIXGXKoP
+TpMYE/Ne6CfcRRalTIAXWm6Pzgm3oMOjlUOa9H4rs04T1pARKWp3d4cd1ZDXk1nZ
+SW41fZdSpabmKFBUej5hb8x8FWadpprqkAhwCV5K32UVw07Ls56Hmp9BFknNdhWQ
+F3fCAoaLVITqKAsiMvXrb7kMqsTZ+fSl/gGr3ExfLsXHctFYdWOlp+ckA4LQOCgN
+DNBrg+pnk4rQpx6LBeyB
+=Bn4W
 -----END PGP SIGNATURE-----
