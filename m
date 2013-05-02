@@ -1,58 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/13
-Message-Id: <201304221743.r3MHhH9c017446@linus.mitre.org>
-Date: Mon, 22 Apr 2013 13:43:17 -0400 (EDT)
-From: cve-assign@...re.org
-To: greg@...ah.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/12
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF09095EAF@IMCMBX01.MITRE.ORG>
+Date: Thu, 2 May 2013 15:48:36 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "kseifried@...hat.com" <kseifried@...hat.com>, "andresgomezram7@...il.com" <andresgomezram7@...il.com>
+Subject: RE: Flightgear remote format string
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Andrés,
 
->On Mon, Apr 22, 2013 at 01:44:17AM -0400, cve-assign@...re.org wrote:
->> 680d04e0ba7e926233e3b9cee59125ce181f66ba CVE-2013-3236
->> d5e0d0f607a7a029c6563a0470d88255c89a8d11 CVE-2013-3237
+Here is my interpretation of the problem.  I believe there is some confusion because people don't usually think that a flight simulator could be accessible from a "remote" location.
+
+Is the following correct?
+
+1) The Flightgear package includes a network server.  This server can be run using fgfs.exe and specifying a port number using the "-telnet" argument, for example.
+
+2) The format string problem is in the server.
+
+3) Your exploit makes a connection to the server (on port 5501).
+
+4) The exploit sends a number of format strings in the cloud names (using the "property tree").  For some reason, it sends the same command 5 times, and it sends this command for "layers" 1 through 5. 
+
+5) The exploit causes the server to crash.
+
+- Steve
+
+>-----Original Message-----
+>From: Andrés Gómez Ramírez [mailto:andresgomezram7@...il.com]
+>Sent: Thursday, May 02, 2013 11:13 AM
+>To: kseifried@...hat.com
+>Cc: oss-security@...ts.openwall.com
+>Subject: Re: [oss-security] Flightgear remote format string
 >
->Please explain how these can get a CVE number when the code involved has
->never even been in a kernel.org release yet?
-
-MITRE has never had any restrictions on CVEs for issues that exist
-only in release-candidate software or only in beta software. See for
-example "Attendees agreed that CVE should include problems in beta
-software, provided that the beta code was intended for public
-dissemination" in the
-http://cve.mitre.org/data/board/archives/2000-03/msg00007.html post.
-
-These CVEs tend to be rare, possibly because they are useful to fewer
-people. Recent examples in which a major vendor specifically chose to
-assign a CVE name to an issue affecting only beta software are:
-
-  CVE-2009-2968 - VMware Studio 2.0 public beta
-
-  CVE-2010-0113 - Symantec Norton Mobile Security 1.0 Beta
-
-A few months ago, MITRE started to draft some rough guidelines for a
-case of a vendor who was considering use of CVEs during beta testing.
-That case seems mostly inapplicable to the current question
-(CVE-2013-3236, CVE-2013-3237, etc. weren't in any sense based on
-"vendor" requests), but we might be able to share guidelines at some
-point if any vendor here is in a similar position.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJRdXVZAAoJEGvefgSNfHMdK6EH/i8LOO8e8rfzLjqNCJxJNopV
-Cw+wWSczx6zX/TtNhv1yguZtiGAFatZPqkAJPO9e/9SLHVahStxkIJSKUdTWFUl2
-NrhJOAtJYRn40N8Bo2eMndRNo5ySaAEe2Hi2Ndz82umoKPF6K1e8A+cZUiJ4j+W0
-BAJz8mct7Q29b6P8+yYEvt+irJPDNUC82rPAATvcNNGSIc0WVfSwC+vNB7oWME5s
-4YeZLTnak/b0Dl1gj+rfCNYs56rO46Gnvc6Zs11J7MrQsaYkI/EVViIqLlQnnzyk
-HSqQSr+1IOi9kCZyaGGDcjsVPVuc648xvFJhVqM5WTXwtnHszP5L5tTyqZyrWCE=
-=UeL+
------END PGP SIGNATURE-----
+>>
+>> So it's not on by default? Is there any documentation specifically you
+>> can point me to regarding enabling/securing it?
+>>
+>
+>Hi,
+>the detailed info is in the reference:
+>
+>http://kuronosec.blogspot.com/2013/04/flightgear-remote-format-
+>string.html
+>
+>if you need more info, please let me know.
