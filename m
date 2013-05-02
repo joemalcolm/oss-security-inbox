@@ -1,23 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/18
-Message-ID: <CAA7hUgGrddQmF_Hfi+CJncgapLHjbpmBqEE42uy0y+M6FA1mDw@mail.gmail.com>
-Date: Thu, 10 Oct 2013 17:09:22 +0200
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/16
+Message-ID: <5182AF44.5060506@debian.org>
+Date: Thu, 02 May 2013 19:24:04 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mahara 1.7.3
+Subject: Re: OpenPGP certifications are identity assertions [was: Re: upstream source code authenticity checking]
 Content-Type: text/plain; charset=utf-8
 
-On 8 October 2013 12:16, Raphael Geissert <geissert@...ian.org> wrote:
-[...]
-> To Hugh and the other mahara security people: please chime in if you
-> have already requested ids to somebody else.
+On 02/05/13 17:42, Daniel Kahn Gillmor wrote:
+> most OpenPGP signatures in the current web of trust are *not*
+> trust signatures, and trust packets aren't emitted or transferred
+> publicly (they're private indicators used for local keyring
+> storage).
 
-After a few mail exchanges with thee mahara security team it appears
-that the didn't request ids.
+Some PGP publications try to avoid mentioning "trust" altogether: they
+talk about "[user ID] validity" and "ownertrust".
 
-(their mail address goes to RT)
+"User ID validity" is when you sign something with semantics similar
+to "I am reasonably confident that the key 4096R/4DE8FF2A63C7CC90
+belongs to Simon McVittie whose address is smcv@...ian.org". That's
+what happens in keysigning.
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+"Ownertrust" is when you configure gpg with things like "if Simon says
+a user ID is valid, assume that it is" (full ownertrust), or "if Simon
+and two others with partial ownertrust all agree that a user ID is
+valid, assume that it is" (partial ownertrust).
+
+Both of those are orthogonal to whether you can trust that I haven't
+deliberately included malicious code in a software package signed by
+my key, whether you can trust that I haven't accidentally included
+dangerously insecure code in that package, or whether I even have the
+authority to be saying "this is a release" on behalf of the project
+from which it purports to be a release.
+
+    S
