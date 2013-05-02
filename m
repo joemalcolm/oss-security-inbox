@@ -1,50 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/8
-Message-ID: <51AE3548.2050706@redhat.com>
-Date: Tue, 04 Jun 2013 12:43:20 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/5
+Message-ID: <5181F830.8050403@redhat.com>
+Date: Wed, 01 May 2013 23:22:56 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: libsrtp buffer overflow flaw
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE Request for Drupal contributed module
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/04/2013 09:51 AM, Vincent Danen wrote:
-> A buffer overflow flaw was reported in libsrtp, Cisco's reference 
-> implementation of the Secure Real-time Transport Protocol (SRTP),
-> in how the crypto_policy_set_from_profile_for_rtp() function
-> applies cryptographic profiles to an srtp_policy.  This could allow
-> for a crash of a client linked against libsrtp (like asterisk or
-> linphone).
+On 05/01/2013 07:54 PM, Forest Monsen wrote:
+> Hi there! How about a CVE identifier for:
 > 
-> A pull request in git has a patch to correct this issue (doesn't
-> look like it's been merged into master yet though).
-> 
-> References:
-> 
-> http://seclists.org/fulldisclosure/2013/Jun/10 
-> https://github.com/cisco/libsrtp/pull/26 
-> https://bugzilla.redhat.com/show_bug.cgi?id=970697
+> SA-CONTRIB-2013-046 - Filebrowser - Reflected Cross Site Scripting
+> (XSS) http://drupal.org/node/1984212
 
-Please use CVE-2013-2139 for this issue.
+Please use CVE-2013-2036 for this issue.
 
-> As an aside, when I was poking around in github, I also found this
-> but I don't know anything about libsrtp so I don't know if this is
-> something that can be triggered by a remote user or if this is just
-> a hardening thing, but the commit message is "Security fix to not
-> ignore RTCP encryption, if required."
+> Thanks!
 > 
-> https://github.com/cisco/libsrtp/commit/8ad50a05279b61a382da3cc730ff1560ab4272e8
->
+> Best, Forest
 > 
-> 
-> Is there someone more familiar with libsrtp that might be able to 
-> comment on whether or not this is a flaw (so can a remote user
-> request to disable encryption and do ... something?)
-
-
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -52,17 +30,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRrjVIAAoJEBYNRVNeJnmTklAQAK+rZnt2RWV69S6aJaU+713u
-+cVYub01gDCoMFaG5Jlcsw6KAr/8fbxkPcCuPcTGSMglQk3NNKEXZsIEsEynRgaw
-7GMrsQqtIMWG6dNtoNZfsuaql9pF4g4sMAdt2YMKvluCod3P/NxS5zmZrQ1MJ7dc
-PmFt94LEN/uoNnFDPJGdqeQOGLAUjINOb/9EFS1PXsZRfgGNVzyUsLby1Ep+kbal
-BRv8BXY93g7nf/VB575yz0LynQyYHPn0Q1iLDpgTV/SYuF6ia/s5RpqHvxg2SvKi
-xq5yOVdAXMTuXp3XjHAau6MKIdi3aHMvTFBoGoiGl9FcWfo0Q1DH0pkg9gHPymBb
-sC++tBBr9/Awoavjykryz0zW9P2QMlSzqbvFRy8+h8oQAMoB706BUTPpSwkSQLgQ
-HU9bYyFayUBAdlWPbDmnXK2yA4tBBb/A8MWghzUJqtu8209arJpwUJtYenDnXadM
-9IIcNFPb3w7LRL5VReh6fqRQ9Udmf7BoTJ32P69Ib+E6fomRFVYm5fxQzqxlwt0W
-qWorSL7OmJcaOBcSzfxXTRxtRYYT+mMidWdOGhE7l7ejgwryI1/qcOjEuWT5jCHF
-1YS79vBSFNaeocJMTBX6pIDGcUGsSmJjPVOaX5vxLFWRPRG5aEBZUePTfCwctP4k
-ygVFUXI7n/RxN42He/Lr
-=zJ6m
+iQIcBAEBAgAGBQJRgfgvAAoJEBYNRVNeJnmTQ/UP/1mK5HUrHw+//GmpMeF9VDyN
+gDtTAIa0jcpjINAeZKl1oAHh8d2O1JzMM3rpfrEoM1UR58zdz8PBfQ2k0GwKcAzQ
+mFCGrzeByUt4GWcVhAf4y+1XtIfUjBIrqfkyftzNYg5uQCY+LAGP9NJbu46tw0lN
+rjvrVUQsB6koQBTgS4sOxaboWe7BAtHbLvfmqXboWgz8pRSXLOC0o/dZxJtfCZFt
+bhGRoZkpOybGagff+y5D225VX5Ka2QJydcOY88x0MpvezI+BvzoFQ8Pjj4R+qdoH
+84jX/A7ZfiAIudKkEZstdM6Ng1gIXnrNqRpWVDeFg6ZwLmD2ChTUdN1DT/jHaQjl
+c6Wj1uv6/IZgLx/GLYVnsb7E8w/8B5y9zf6CreQxF5vjNCRWdmEIrkjNitL5wu+3
+kgBc+w/Yw1ezIIuWhVFDzXriWdiVS75yOV6cBfvgiPq86Lh8m611qK5yeqiDfTdN
+Lb8yRc+luFr8gSKL1fyt0xsYG2pFu7qibzOXr4TfCTPd3iSTvVncP4fHlUtvt0iY
+J8lfq/5kGDTKvzOnsklHSm6zW3JmyEbhqwxlUJtGCAV3gOWdVFBvNkiQAbAnXZJd
+/dAprHndRntKSNJKbI3HZyre3GYdqv5wRKcR86dgFY39Uza/fxL8Ii76sTSBDsnn
+XGLZnTqLsdgylJUCZCHM
+=QdtE
 -----END PGP SIGNATURE-----
