@@ -1,36 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/5
-Message-ID: <5177ED9F.9030203@debian.org>
-Date: Wed, 24 Apr 2013 15:35:11 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/15
+Message-ID: <87a9odqmlk.fsf@windlord.stanford.edu>
+Date: Thu, 02 May 2013 11:10:31 -0700
+From: Russ Allbery <rra@...nford.edu>
 To: oss-security@...ts.openwall.com
-Subject: CVE(-2007-xxxx?) request: telepathy-idle does not check SSL certificates
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
-In versions prior to 0.1.15, telepathy-idle, an IRC backend for the
-Telepathy framework, does not check the server's SSL/TLS certificate for
-validity[1]. A network intermediary could use this flaw to carry out
-man-in-the-middle attacks on IRC users.
+Alistair Crooks <agc@...src.org> writes:
 
-This flaw has existed, and been flagged in the source code[2], since at
-least 2007 (the year in which telepathy-idle moved from Sourceforge to
-freedesktop.org). I don't know whether that means it should get an ID of
-the form CVE-2007-xxxx?
+> And if you seriously think someone who searches for my public key on a
+> webserver, or through mail, or business card, etc, downloads my public
+> key from one of the servers, imports it into their own pubring, signs it
+> with their own private key, then mails it to me, or uploads it to one of
+> the key servers, all without trusting me in any way, then I'll show you
+> a pretty awful stalker (and fairly inefficient one, due to the need to
+> sign my pubkey), a fan boy (which is hardly likely to happen in my
+> case), or someone who is rather sad. (I'm discounting impaired judgement
+> due to the baroque processes involved here, sorry xkcd).
 
-The upcoming version 0.1.15 will fix this vulnerability.
+I routinely do this.  It's called a key-signing party.  The only trust
+that I am expressing with that signature is that I have seen and verified,
+to the best of my ability, some form of reliable identification for that
+person (ideally a passport I can verify, or a social environment in which
+it would be very difficult to impersonate someone you are not) in
+combination with a proof that the key I signed belongs to the person whose
+identification I checked.
 
-Versions 0.1.11 to 0.1.14 (which use GLib for TLS) carried out some
-cursory checks on the certificate, but did not check that the issuer was
-a trusted CA, that the identity matched the server's hostname, or that
-the certificate had not expired. A minimal patch to correct this is to
-delete the call to g_socket_client_set_tls_validation_flags() (this will
-make one regression test fail).
+Just because someone attended a key-signing party doesn't mean that I
+would, say, trust them to install software on my system.
 
-Versions 0.1.10 and older (which use OpenSSL for TLS) do not have any
-support for certificate verification at all.
-
-Regards,
-    S
-
-[1] https://bugs.freedesktop.org/show_bug.cgi?id=63810
-[2] "TODO sometime in the future implement certificate verification"
+-- 
+Russ Allbery (rra@...nford.edu)             <http://www.eyrie.org/~eagle/>
