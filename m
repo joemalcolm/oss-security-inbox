@@ -1,48 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/08/2
-Message-ID: <52A3FA25.8030905@redhat.com>
-Date: Sat, 07 Dec 2013 21:48:37 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/2
+Message-ID: <5181E657.1000707@redhat.com>
+Date: Wed, 01 May 2013 22:06:47 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for Drupal core, and contributed modules
+CC: Andrés Gómez Ramírez <andresgomezram7@...il.com>
+Subject: Re: Flightgear remote format string
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/07/2013 05:39 PM, Forest Monsen wrote:
-> On Fri, Dec 6, 2013 at 3:54 PM, Henri Salo <henri@...v.fi> wrote:
+On 05/01/2013 02:18 PM, Andrés Gómez Ramírez wrote:
+>> What is the default setting for flight tree? does it listen t
+>> the network public interface, localhost, is it disabled by
+>> default, or? Thanks.
+>> 
 > 
->> These already received CVE IDs. Please see following post:
 > 
+> It has to be configured by command line, but it is not an uncommon
+> usage.
 > 
-> Thanks Henri.
-> 
-> Kurt, on Drupal Core vulnerabilities, would you like me to wait, or
-> would you prefer to be prompted?
-> 
-> Best, Forest
+> http://wiki.flightgear.org/Property_Tree
 > 
 
-Earliest notification is best notification.
+So it's not on by default? Is there any documentation specifically you
+can point me to regarding enabling/securing it?
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSo/okAAoJEBYNRVNeJnmTIPQQALjHNjREAapYwp/eMOxoBuXC
-H3G+Z7EWcq0sr+pdOf2GDndB0DjeWdrH5wCT7ROBqayoYRyBX0E1yEtycASWSeDk
-QQ0S4PZ+rCXhNZDS+slkahbtOt4VOAw0hWcir11Rgtm7uaj21VAcxTt0JTzSBGr1
-bKPxRta6oa0hh/Y++iabzyGE+RnFN/pQLXkvb1pJ5jE+AtpD0Q452ZIZ7NKpyd57
-s/81CaiScHntLBOM53BZHCvgcwC8uhlVIESyc3PKQS2WrS2I2Svwr9V6K6gVcD70
-z6XNOJ6MMRAWXRhsQrmKQkOVrLzECFI3C8FH8muIM2WWGPvHrxeozPPilOgKdPKS
-lhFw+jORNqtXXQfqEmXjLmB4Q1gx3tKIMGYmeqar6mIOrfmbEhktM5Uh5fVgaaN4
-/H6I5H021q33B8sNjYuymZ9ZqAvO66i1PbP0wBLnHjp+uYcJb9ftpXw2P+3PdB1/
-+g1AAR2GeZjC+Ag8Kft3GmKm3ZqWDGU4/fAypWDTLfxh5ELQ6lQtN5UNGcFoX7Gj
-lhve4x1wVt+qghlO72O6mC5QAMpIwcIgZ/h1YZe+j87+pFV3K7ePVNAgoXJgAxTG
-LSBkCJtBIRdIIkOnJbj4Df6p5QsLBfDVwtHMDcbfYXdKQMB69+++6zjE7rWJdT4Q
-zTcqEREZzRlFQj6QTqXw
-=e+dt
+iQIcBAEBAgAGBQJRgeZXAAoJEBYNRVNeJnmTL2AP/iXZD//2zHdsTRqF1ob/DtuL
+NVEVT5FXcqkI0BDtB/X4ibZHRWZbc1nwKYixNz+4QqRlZLktx0e9NK/8Xq2LXLtP
+muQzEQch3p2H7LE1Dn7GOE5EPPwefXJSDKw4aWmRvigN7+J4z65oXKpZ5oKTQNWv
+SHqql8e+1YRTV7sd5k2zfaOLuZbNd06wgK4t4NvfJLxw1PzJdDjn7LT1EQsYUdvl
+HVkV2cQiSdhrjvZY896eN4JfllDNt/2xgr9XWqIUiMbkVdesQ7mlpQ+rpX0XyFDH
+HTkqCTiDJcacP9LLkyrOZwZHU6ZhC3jIjRH6E11Wsq84lYnKv/AFChtFmFgXh3EA
+r2eOS9rEvzqir/fPTlmsMsaJs1mSyLBExlHcpP7TtxOOH4bvVBGgZ17N2i2WTlL7
+5eugcZqamj0jnh021nuebINxPjRI07fn2/8u6koh2C7TI2cDv7sE/9g3FMbRCxOa
+5zL/2zfo6e77ISp5wyNhfuXNVkWZLQOBGzrbWAswplByR6jCWPD7HjEKF4GRQAPM
+dA3r2S6lwx7VVhfsEX89Cjv7oN95lrGD7wph0BrGCAv+CUS1wYg20odbNGBUmo6Z
+v4yb5jL6V+S9oC/erY3lSmsXwjUTt5+/F59nNc1GRtONf8QxKTwlzifccgNaHw4S
+u+eyT5zD/BTqKFsyKs6/
+=sOfA
 -----END PGP SIGNATURE-----
