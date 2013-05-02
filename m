@@ -1,77 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/23
-Message-ID: <512BD6F1.3040809@redhat.com>
-Date: Mon, 25 Feb 2013 14:26:09 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/4
+Message-ID: <5181E4DA.8050301@redhat.com>
+Date: Thu, 02 May 2013 09:30:26 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Jason A. Donenfeld" <Jason@...c4.com>
-Subject: Re: kernel: tmpfs use-after-free
+Subject: Two libtiff (tiff2pdf flaws)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi all,
 
-On 02/25/2013 12:50 PM, Jason A. Donenfeld wrote:
-> Hey all,
-> 
-> While everyone's going wild hndl->dump'ing with CVE-2013-1763,
-> there's apparently been another silent security fix with 
-> 5f00110f7273f9ff04ac69a5f85bb535a4fd0987 [1]:
-> 
->> tmpfs: fix use-after-free of mempolicy object
->> 
->> The tmpfs remount logic preserves filesystem mempolicy if the
->> mpol=M option is not specified in the remount request.  A new
->> policy can be specified if mpol=M is given.
->> 
->> Before this patch remounting an mpol bound tmpfs without
->> specifying mpol= mount option in the remount request would set
->> the filesystem's mempolicy object to a freed mempolicy object.
->> 
->> How far back does this issue go? I see it in both 2.6.36 and 3.3.
->> I did not look back further.
-> 
-> 
-> The commit message goes on with details on how to trigger it. Note 
-> that as of 5eaf563e53294d6696e651466697eb9d491f3946 [2], you can
-> now mount filesystems as an unprivileged user after a call to 
-> unshare(CLONE_NEWUSER | CLONE_NEWNS), or a similar clone(2) call.
-> This means all those random random filesystem bugs you have laying
-> around in the junk bin are now quite useful. ++tricks;
-> 
-> Cheers, Jason
-> 
-> 
-> [1]
-> http://git.zx2c4.com/linux/commit/?id=5f00110f7273f9ff04ac69a5f85bb535a4fd0987
->
-> 
-[2]
-http://git.zx2c4.com/linux/commit/?id=5eaf563e53294d6696e651466697eb9d491f3946
-> 
-> -- Jason A. Donenfeld www.zx2c4.com
-> 
+Two flaws were reported to us in tiff2pdf utility shipped with the
+libtiff library. Details as follows:
 
-Please use CVE-2013-1767 for this issue.
+1. CVE-2013-1961 libtiff (tiff2pdf): Stack-based buffer overflow with
+malformed image-length and resolution
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+A stack-based buffer overflow was found in the way tiff2pdf, a TIFF
+image to a PDF document conversion tool, of libtiff, a library of
+functions for manipulating TIFF (Tagged Image File Format) image format
+files, performed write of TIFF image content into particular PDF
+document file, when malformed image-length and resolution values are
+used in the TIFF file. A remote attacker could provide a specially-
+crafted TIFF image format file, that when processed by tiff2pdf would
+lead to tiff2pdf executable crash.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Reference: https://bugzilla.redhat.com/show_bug.cgi?id=952131
 
-iQIcBAEBAgAGBQJRK9bxAAoJEBYNRVNeJnmT+KAP/2kWFMI53p1OVhS3/kIAySJl
-ScgB7KUoi7MbqG9yMlk2bN1/xsfea8fsZpGLRZKzHrzZ3b39EUKMSEH4hGqadlNm
-gYS4qcsSHK9h1ZXqtIboC8EtrJ/FabRw0rgD++LhqkoUhaDgjiwgHPBM4bd4E7TM
-Pq3Ch8aZawS4vB2CMHpXhFzpQv/r+S/PHl2ckfvrEOdhfLpEWyAF6e9FMJYI6H7+
-UKOT8C39uFvHxtI2ktzdU+kvu8OdXq+xXYegcNld6oUQ3+8l1Nxscf49+SqqROM0
-XaS272Rq4ABeMMTaPreRk+879vbUrDi2TbfbH863x5ZGQMMMHjTusSg/6/18kB4Q
-y6ZghNCNj9gzx2EmmS8GIt+JBVtYuQNiGZRVRdFW9McFgYS5eE9hydaa6SR/q7EI
-ZRteWVWfHsSt/ZFAL3EWbUQPNzEFg/M2z9q1Y2uDFYzWyzvIHYI+PWji45IO0bvw
-tq+k/3AqjZrSKPlO4rb8D4Mf7TMGgu6IDLye+6aBGklvZthW1qBXqS29dxctbhi7
-w48Q8kUXCX72ha3EfHmDvek1OX/HBiKX3SRFH6TlvnRuyVUkoRssA0KyIxAuKqE0
-71DUh9FACoHgiIsxsDruFVOLOo2EA8ZRkOhyPa7nZ3DcnJBU923pQY/FodIn7RI6
-dein18BQzW+5i0yxZLXB
-=sB1j
------END PGP SIGNATURE-----
+2.  CVE-2013-1960 libtiff (tiff2pdf): Heap-based buffer overflow in
+t2_process_jpeg_strip()
+
+A heap-based buffer overflow flaw was found in the way tiff2pdf, a TIFF
+image to a PDF document conversion tool, of libtiff, a library of
+functions for manipulating TIFF (Tagged Image File Format) image format
+files, performed write of TIFF image content into particular PDF
+document file, in the tp_process_jpeg_strip() function. A remote
+attacker could provide a specially-crafted TIFF image format file, that
+when processed by tiff2pdf would lead to tiff2pdf executable crash or,
+potentially, arbitrary code execution with the privileges of the user
+running the tiff2pdf binary.
+
+Reference: https://bugzilla.redhat.com/show_bug.cgi?id=952158
+
+The enclosed bugs contains the relevant patches.
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
