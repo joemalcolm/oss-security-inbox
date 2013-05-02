@@ -1,78 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/8
-Message-Id: <201312301506.rBUF68PW028543@linus.mitre.org>
-Date: Mon, 30 Dec 2013 10:06:08 -0500 (EST)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: cmsmadesimple before 1.11.8 / bad upstream behaviour vs. CVE assignment
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/14
+Message-ID: <5182A035.8000601@redhat.com>
+Date: Thu, 02 May 2013 11:19:49 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Alistair Crooks <agc@...src.org>
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> Can we get this assigned?
+On 05/02/2013 09:24 AM, Alistair Crooks wrote:
+> And if you seriously think someone who searches for my public key
+> on a webserver, or through mail, or business card, etc, downloads
+> my public key from one of the servers, imports it into their own
+> pubring, signs it with their own private key, then mails it to me,
+> or uploads it to one of the key servers, all without trusting me in
+> any way, then I'll show you a pretty awful stalker (and fairly
+> inefficient one, due to the need to sign my pubkey), a fan boy
+> (which is hardly likely to happen in my case), or someone who is
+> rather sad. (I'm discounting impaired judgement due to the baroque
+> processes involved here, sorry xkcd).
 
-> Diff between 1.11.7 and 1.11.8: http://paste.nerv.fi/61005941.txt
 
-The paste includes:
+http://pgp.mit.edu:11371/pks/lookup?op=vindex&search=0x160D45535E267993
 
-> +Version 1.11.8 - Fioreana
-> +Core - Bug Reports
-> +  - #8807 Section headers are accessible through changing URL
+It happens, I have no idea who Rafael Alfredo Capucho
+<rafael.capucho@...il.com> is.
 
-Does anyone here have a dev.cmsmadesimple.org account (possibly
-available through http://dev.cmsmadesimple.org/signup registration)
-and want to comment on the contents of 8807?
+> 
+> i.e. no-one goes to that kind of trouble just to say "I know this 
+> person" - that's what facebook and google+ are for.
+> 
+> Regards, Alistair
+> 
 
-(A CVE assignment based solely on "a minor security issue" is not
-impossible, but checking the listed bug numbers first is often
-useful.)
-
-MITRE, in general, can't take responsibility for doing original
-research on every diff of every product to determine what changes are
-vulnerability fixes. Possibly we, or others, could suggest a guess in
-case someone more familiar with the product can quickly confirm or
-reject that. So, here is a guess offered with VERY LOW confidence:
-
-The paste also includes:
-
->  function expandall()
->  {
-> 	$userid = get_userid();
-> -	$contentops = cmsms()->GetContentOperations();
-> -	$all = $contentops->GetAllContent(false);
-> -	$cs = '';
-> -	foreach ($all as $thisitem)
-> +	$hiermanager = cmsms()->GetHierarchyManager();
-
-suggesting that expandall is now done in a different way. The source
-code says:
-
-> $lang['admin']['expandall'] = 'Expand All Sections';
-
-so maybe it's possible that incorrect expandall behavior has some
-relationship to the visibility of private "Section headers" referenced
-in 8807. In other words, if expandall is done unsafely, maybe the
-information produced later by the display_content_list function can
-contain unintended section headers if there's a URL manipulation
-(adding "&expandall=1" or whatever). If any of this is relevant (and,
-quite possibly, it's not), this would seem consistent with the
-vendor's "minor security issue" wording.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSwYteAAoJEKllVAevmvmsHPkH/iPq6iwsAwATjeernEUqi7oF
-Apsc6ZwlirR+QY742Na4S6pjdweOjfcpmC1r3JcomPykVr1aLb372OrwVU7h6Kk+
-39W8iRI+A28DTj4QyHXr9x+tdq4h8f1E8CxLA0HflqJCZ3eMOa4deGvArQnxs9nC
-LPxpW/Remn+nARkNJE0W2pUr6CjLN3hrJwtGk1Lu8SUg39V8E26A+hWiVdkPxk9g
-dJ5wyuBktIuX3zM8VOs0I6GJVHddr0+ROxC9Ubue+2AaKMwr6XbSWgm0OmLtJhmc
-c1WU17ukL+ygVEeO1iWqSmD9/7x50g9Hc4w++lqAqsn3WSEydID2Hq5FuO3VDVA=
-=GyJT
+iQIcBAEBAgAGBQJRgqA0AAoJEBYNRVNeJnmTzKcP/2CpEfgyC7tm8nMgPcK62ZWK
+1sKctmYKbUiv/UIhXR92CyoT/A94Tqi0rZmdj5uCVpyrvyy/T/99WyNUMsv/s5Nf
+zeoEVgdI5+ErayhusJ5MjxgvRHRlmT/JMYDPuxkXB4ePhnWihndbUjHZyEPEa3Py
+JkAA4fveTTM1lE17W1ZQbAJTLfa1+0Tzr3OvpzUu7axpBktJJ0LgeaJrHteqpi5j
+fizKWSznTXvKFwxS7YUmed1un2VA4fnlRQ9MXFxyowzWBJ6ujf1D0F6lCRn3S9SO
+mmFrkXqGmmk66UN/R8vCictGhXSBm5B/V4+bBXl6tegoHM/7nDpMh40nXRvjAoa8
+PErtrgD5vkC/NnCK3Nuwnz8tpXe8BXHfwOWblcT47KcpzP3+czzclTTyivJpWLP2
+XvfvUL9GoOr7AL3BMxux5QN9gpPfPK0LUls8T+GCqBrPdzmyuupHSpbd44TG6h6r
+sSzG5nraQIKJBYcf2/ANdmNtF8noxBJkK37/1EhfnhJzaLNO/il43Rt0FT5jQ/El
+Je4kZu53clZBm5N0oguLl/gHb7dX1TwyqCkuWuQ7qfs6IzI59HM/puSKyWFONIUt
+/7aqDxEahHZxK3rMOZuSj570UgIkXGvourH6130ue1Awa1htn/ivniOOBMiemvnK
+1A34F5DQzDxqez/NfBKJ
+=9FnX
 -----END PGP SIGNATURE-----
