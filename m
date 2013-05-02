@@ -1,62 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/8
-Message-ID: <50EFC758.3060400@redhat.com>
-Date: Fri, 11 Jan 2013 01:03:36 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, coley@...us.mitre.org, security@...ntu.com
-Subject: Re: CVE Request -- Axis2/c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/18
+Message-ID: <5182D29C.5000001@oracle.com>
+Date: Thu, 02 May 2013 13:54:52 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com
+CC: Russ Allbery <rra@...nford.edu>
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 05/ 2/13 11:10 AM, Russ Allbery wrote:
+> I routinely do this.  It's called a key-signing party.  The only trust
+> that I am expressing with that signature is that I have seen and verified,
+> to the best of my ability, some form of reliable identification for that
+> person (ideally a passport I can verify, or a social environment in which
+> it would be very difficult to impersonate someone you are not) in
+> combination with a proof that the key I signed belongs to the person whose
+> identification I checked.
 
-On 01/10/2013 08:47 PM, Seth Arnold wrote:
-> Hello Kurt, Steve, all,
-> 
-> In November, I asked if a CVE had been assigned to Axis2/C for
-> failing to check hostnames when validating SSL/TLS certificates: 
-> http://www.openwall.com/lists/oss-security/2012/11/07/1 This was
-> part of the fallout from this paper: 
-> http://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf
-> 
-> I was not confident enough in my reading of the source code to say
-> that Axis2/C was vulnerable, so I did not pursue the issue at the
-> time.
-> 
-> Since then, I have re-read the code, emailed three developers
-> privately, emailed the axis-c-dev mail list, and filed a JIRA bug
-> report. None of these communications have received any kind of
-> response.
-> 
-> https://issues.apache.org/jira/browse/AXIS2C-1619 
-> http://mail-archives.apache.org/mod_mbox/axis-c-dev/201301.mbox/browser
->
->  Please assign a CVE for Axis2/C for failing to validate hostnames
-> when checking SSL certificates.
-> 
-> Thank you
-> 
+Though for many open source projects, having a passport or other government
+id is not the sort of identity we care about - knowing that you're the
+person who does git/hg commits under that e-mail address is what we care
+about - if it's a pseudonym that doesn't match your passport, that doesn't
+affect whether we accept code from you or not.   (The lawyers might care,
+when it comes to verifying who owns copyright and agreed to release code
+under a given license, but that's a whole separate mess to unravel.)
 
-Please use CVE-2012-6107 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ78dYAAoJEBYNRVNeJnmTaeEQAKDZY/mbWcZxRV1QEPXJcYuF
-h0Z/Fjr2TqJOL4kia9zLufQZGB93zmaND0QJzJOZmnah0W3MBx24U0+alOrmZE9R
-zy29hvt72epTZi8AeYd0IsF4ZfGslBN6mIcNjZ5unw4SyoFB3T9Io65BAFHf9+8e
-+Ay0Ajch+Qw75/EwyiQt48In0a9XAaaP6+ZD//TqJxQHvHX0zvgTuSMz16d870MD
-XyyfY/WdeJdrMojZUFysJKo1Yc9lW5a0e8fmGtlnZEq4mKPsgue2pfBc+UyUm1TN
-M3hiOuipzipJm8lAiYse7+OG3hrDxrHqGf1+hlZhg6gX49zyp5s7RvOLqNSgMPJw
-YhFf0XUwOoQJLARw1RDNqHYTELz8iKK6HwszBVmb7Z6W67QGUZkzLpXPh8kDQYAs
-aIg9oIdOr6A3tla6LomXKbbLdr25G5/3HzQcjX5MWHhCi6HkBKK3KSOCStuG5Zxy
-636mgvt8mkBSI6GkNRq1qnTTMmOit16Jhf65DtoHZjJoLh5mbBcGIU2ARQIqUhGW
-e8CFLqbs8VgGYzybCjiPPDKxh6GNu85sRSKdLMsmrPTraatHW33vUPVJL8rEG4GT
-5rT0xD4/oyrtYP2xeZd3NPNbAS8GhYTp8fSYXao9+RTHjJScrM0xgwRzf63CSP9C
-xs+WPycu1KzXx5XEC79a
-=iK3V
------END PGP SIGNATURE-----
+-- 
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
