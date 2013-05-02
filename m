@@ -1,28 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/11/4
-Message-Id: <BFC437B0-40E5-436B-800C-83F5E558BD6D@stufft.io>
-Date: Mon, 11 Mar 2013 15:32:52 -0400
-From: Donald Stufft <donald@...fft.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/13
+Message-ID: <5182975C.5060109@fifthhorseman.net>
+Date: Thu, 02 May 2013 12:42:04 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: MD5 used for Download verification
+Subject: OpenPGP certifications are identity assertions [was: Re: upstream source code authenticity checking]
 Content-Type: text/plain; charset=utf-8
 
-I'd like to request CVE(s?) for the Python software: setuptools[1] and distribute[2]
+On 05/02/2013 11:24 AM, Alistair Crooks wrote:
 
-Setuptools (and it's fork distribute) utilize MD5 in order to verify that a download has not been tampered with. 
+> Oh, I'm not muddled, I was using the word "trust" as it appears (34
+> times) in RFC 4880 - mostly relating to 5.2.3.13 "Trust Signature" and
+> 5.10 "Trust Packet".
 
-As far as I know this affects all versions of both setuptools and distribute. 
+most OpenPGP signatures in the current web of trust are *not* trust
+signatures, and trust packets aren't emitted or transferred publicly
+(they're private indicators used for local keyring storage).
 
-It also affects zc.buildout[3] which utilizes the md5 checking from distribute. It does not affect pip[4] as pip has grown it's own handling code outside of setuptools/distribute to allow stronger hashes.
+So what you're seeing from the public keyservers doesn't have any
+"trust" information in these senses at all.  It is just identity assertions.
 
-[1] https://pypi.python.org/pypi/setuptools/0.6c11
-[2] https://pypi.python.org/pypi/distribute/0.6.35
-[3] https://pypi.python.org/pypi/zc.buildout/2.0.1
-[4] https://pypi.python.org/pypi/pip/1.3.1
+> And if you seriously think someone who searches for my public key on a
+> webserver, or through mail, or business card, etc, downloads my public
+> key from one of the servers, imports it into their own pubring, signs
+> it with their own private key, then mails it to me, or uploads it to
+> one of the key servers, all without trusting me in any way, then I'll show
+> you a pretty awful stalker (and fairly inefficient one, due to the
+> need to sign my pubkey), a fan boy (which is hardly likely to happen
+> in my case), or someone who is rather sad. (I'm discounting impaired
+> judgement due to the baroque processes involved here, sorry xkcd).
+>
+> i.e. no-one goes to that kind of trouble just to say "I know this
+> person" - that's what facebook and google+ are for.
 
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+Hm, i'm not sure which category i fall into here, but i definitely make
+my OpenPGP signatures as identity assertions ("i believe this key
+belongs to the person named in this User ID"), and nothing more.  I
+believe that's what other people should be doing too.
+
+If you see that i've signed someone else's key, please do *not* assume
+that this says anything about what i think about their character, their
+politics, their technical skill, their taste in food or clothing, their
+financial acumen, or anything else.
+
+If you try to infer anything more complex than identity from an OpenPGP
+certification (i'll call these "identity++" assertions), a number of
+problems arise:
+
+ 0) it becomes much more difficult to decide to make (and to decide when
+to revoke) an "identity++" OpenPGP certification, since your belief
+about someone's technical skill or competence as a babysitter might
+change much more frequently (and with more nuance) than your belief in
+their named identity; as a result, people will make fewer identity++
+certifications, which will make the entire certification network less
+useful in identifying peers over an untrusted network.
+
+ 1) Some people might be making "identity++" assertions based on
+financial acumen (they only care about money) and other people might be
+making them based on culinary expertise (they only care about food), so
+the system becomes much more difficult to reason about, since each
+certification has wildly different semantics.
+
+ 2) With "identity++" assertions, the system starts to leak
+significantly more detailed information related to the social graph,
+other than just "i have confirmed the identity of this person".  This is
+reckless and worrisome from the perspective of global surveillance
+(though it's clear that most people don't care much about global
+surveillance, given that most facebook and g+ data contains
+significantly more detailed information than even an "identity++"
+assertion, so maybe this aspect is largely irrelevant).
+
+Please just use OpenPGP certifications as identity assertions, not
+"identity++" assertions.  Anyone who wants to say "this person makes a
+truly delicious quiche" can say so in some other medium (e.g. g+ or
+facebook or signed e-mail or whatever).
+
+Regards,
+
+	--dkg
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
