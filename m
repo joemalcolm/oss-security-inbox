@@ -1,34 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/15
-Message-ID: <CANTw=MOMnUyD89VQ9PBcoGgWevujBnwyuijbVFAEqsNv18KTGg@mail.gmail.com>
-Date: Sun, 3 Mar 2013 15:06:09 -0500
-From: Michael Gilbert <mgilbert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/11
+Message-ID: <20130502152442.GD16749@nef.pbox.org>
+Date: Thu, 2 May 2013 17:24:42 +0200
+From: Alistair Crooks <agc@...src.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: busybox
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Mar 3, 2013 at 2:50 PM, Kurt Seifried wrote:
-> This actually raises a good point, due to Debian being a secondary
-> source in most cases (e.g. upstream has a bug report which is then
-> copied into Debian's bug tracker since Debian ships it) the dates and
-> sometimes information is wrong.
+On Tue, Apr 30, 2013 at 02:24:24PM -0400, Daniel Kahn Gillmor wrote:
+> On 04/26/2013 01:57 AM, Alistair Crooks wrote:
+> > All people can see from a key listing is who trusted them and
+> > when, not how much, or whether the trust was warranted.
+> 
+> Just for the record, most OpenPGP key certification listings don't
+> indicate anything at all about trust, including "who trusted them".
+> they show cryptographically-verifiable assertions of identity and
+> control over key material.
+> 
+> Put another way, a signature on an OpenPGP key+userid says "I believe
+> that this key belongs to this person" -- it doesn't say anything about
+> trust in that person (or about their intrinsic trustworthiness).
+> 
+> Sorry for the nit-pick, but the term "trust" is so overused and confused
+> in these contexts that i think it's important to clarify it when it's
+> getting muddled.
 
-Aren't these problems true for any source whether it be primary,
-secondary, tertiary, or so on?
+Oh, I'm not muddled, I was using the word "trust" as it appears (34
+times) in RFC 4880 - mostly relating to 5.2.3.13 "Trust Signature" and
+5.10 "Trust Packet".
 
-> I will no longer be issuing CVE's for
-> issues brought up through the Debian bugtracker without an original
-> source to back it up, otherwise more mistakes will happen which is not
-> good.
+And if you seriously think someone who searches for my public key on a
+webserver, or through mail, or business card, etc, downloads my public
+key from one of the servers, imports it into their own pubring, signs
+it with their own private key, then mails it to me, or uploads it to
+one of the key servers, all without trusting me in any way, then I'll show
+you a pretty awful stalker (and fairly inefficient one, due to the
+need to sign my pubkey), a fan boy (which is hardly likely to happen
+in my case), or someone who is rather sad. (I'm discounting impaired
+judgement due to the baroque processes involved here, sorry xkcd).
 
-I don't understand the purpose of excluding an entire project's
-sources.  Should redhat's bugzilla, gentoo, etc. also be excluded for
-the same reason?  If not, why do they get special treatment?
+i.e. no-one goes to that kind of trouble just to say "I know this
+person" - that's what facebook and google+ are for.
 
-Is there really a problem at all?  The debian report included the
-upstream commit, so you had a link to a primary resource anyway.  So,
-I think a simple solution to this 'problem' of secondary sources is
-follow them to the primary one?
-
-Best wishes,
-Mike
+Regards,
+Alistair
