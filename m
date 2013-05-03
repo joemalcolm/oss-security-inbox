@@ -1,26 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/11
-Message-ID: <20130606181703.GA13184@hunt>
-Date: Thu, 6 Jun 2013 11:17:03 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: chroots & uid sharing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/03/1
+Message-ID: <CAGVYHsVR8BuDcUMEYQH4WdL35_JTx3V7q4h9QhJNxoxq=6OArA@mail.gmail.com>
+Date: Thu, 2 May 2013 21:40:22 -0500
+From: Andrés Gómez Ramírez <andresgomezram7@...il.com>
+To: "Christey, Steven M." <coley@...re.org>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "kseifried@...hat.com" <kseifried@...hat.com>
+Subject: Re: Flightgear remote format string
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 06, 2013 at 03:02:37PM +0200, Jason A. Donenfeld wrote:
-> What I wonder is how many distros are shipping various daemons that
-> run under the nobody user, with certain ones chrooting and others not.
-> How should we handle this?
+Hi,
 
-We can handle nobody well enough by correcting its mis-use every time
-we spot it. There are enough purpose-specific users on a typical system
-these days to just give the impression that any new service should get
-its own corresponding user, so the temptation to use 'nobody' is lower
-than it used to be.
+The format string bug is located in the core functionality of flightgear.
+What may differ is the way you can access the property tree, and so the
+vulnerable code:
 
-Of course, if a different user account gets abused for both chrooted and
-non-chrooted use, that's harder to combat, short of reminding people
-that chroot is filesystem and _only_ filesystem..
+* The remote way, which is not activated by default, is accessible when
+"telnet" or "props" options are passed to the program.
+
+* The local way (not too interesting), the user modifies cloud parameters
+through GUI window.
+
+* And a third way I just realized out. Flightgear uses a script language
+called Nasal. Nasal allows, among other things, to edit the property tree.
+These scripts can be used directly from the models , aircrafts, airports,
+etc - without any security check -
+(http://wiki.flightgear.org/Howto:Nasal_in_scenery_object_XML_files)
+so by loading a specially crafted model, the vulnerability can be thrown.
+
+By the way reading a little more about Nasal (http://wiki.flightgear.org/
+Howto:Making_HTTP_Requests_from_Nasal) it seems to be that you can do a lot
+of weird things like make HTTP requests ... WTF!
+
+So I theoretically could create an aircraft which does a lot of creative
+web requests :\
+
+Yes, one don't usually think that a flight simulator has those advanced
+features.
+
+Regards.
+
+On Thu, May 2, 2013 at 10:48 AM, Christey, Steven M. <coley@...re.org>wrote:
+
+> Andrés,
+>
+> Here is my interpretation of the problem.  I believe there is some
+> confusion because people don't usually think that a flight simulator could
+> be accessible from a "remote" location.
+>
+> Is the following correct?
+>
+> 1) The Flightgear package includes a network server.  This server can be
+> run using fgfs.exe and specifying a port number using the "-telnet"
+> argument, for example.
+>
+> 2) The format string problem is in the server.
+>
+> 3) Your exploit makes a connection to the server (on port 5501).
+>
+> 4) The exploit sends a number of format strings in the cloud names (using
+> the "property tree").  For some reason, it sends the same command 5 times,
+> and it sends this command for "layers" 1 through 5.
+>
+> 5) The exploit causes the server to crash.
+>
+> - Steve
+>
+> >-----Original Message-----
+> >From: Andrés Gómez Ramírez [mailto:andresgomezram7@...il.com]
+> >Sent: Thursday, May 02, 2013 11:13 AM
+> >To: kseifried@...hat.com
+> >Cc: oss-security@...ts.openwall.com
+> >Subject: Re: [oss-security] Flightgear remote format string
+> >
+> >>
+> >> So it's not on by default? Is there any documentation specifically you
+> >> can point me to regarding enabling/securing it?
+> >>
+> >
+> >Hi,
+> >the detailed info is in the reference:
+> >
+> >http://kuronosec.blogspot.com/2013/04/flightgear-remote-format-
+> >string.html
+> >
+> >if you need more info, please let me know.
+>
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+
+-- 
+Andrés Gómez Ramírez | Analista de Diagnóstico
+Fluidsignal Group S.A. | Where Security Meets Business
+http://www.fluidsignal.com/ | ISO 9001:2008 / ISO 27001:2005
+
