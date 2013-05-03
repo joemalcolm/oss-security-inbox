@@ -1,38 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/21/5
-Message-ID: <20130421191126.GL13072@frohike.xs4all.nl>
-Date: Sun, 21 Apr 2013 21:11:26 +0200
-From: Peter Bex <Peter.Bex@...all.nl>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: OS command injection vulnerability in Chicken Scheme
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/03/4
+Message-ID: <20130503173916.GA21231@elende>
+Date: Fri, 3 May 2013 19:39:16 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: Mark Panaghiston <markp@...pyworm.com>, hello@...pyworm.com
+Subject: Re: Re: CVE-2013-1942 jPlayer 2.2.19 XSS
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi Kurt
 
-I'd like to request a CVE identifier for a bug in Chicken Scheme which
-allows a malicious user to cause shell command execution through
-injection of a pipe symbol and possibly other shell meta characters.
+Have a question about the CVE assignments for these issues:
 
-This bug is present in all versions of CHICKEN.  It will be fixed
-in 4.8.3 and 4.8.2 as per commit 58684f69572453acc6fed7326fa9df39be98760e.
-Version 4.9.0 will likely be the first stable release to include this
-fix, unless it is decided to backport this fix to the stability release.
+On Mon, Apr 29, 2013 at 01:30:09PM -0600, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 04/20/2013 11:19 AM, Mark Panaghiston wrote:
+> > jPlayer 2.3.0 has been released that officially fixes this issue:
+> > 
+> > http://www.jplayer.org/ https://github.com/happyworm/jPlayer
+> > 
+> > Tagged as *2.3.0* on GitHub. 
+> > https://github.com/happyworm/jPlayer/commit/c1c7a4dfa63bb6684d3670202e4a65d400dfce86
+> >
+> >  Full Release Notes for jPlayer 2.3.0: 
+> > http://www.jplayer.org/2.3.0/release-notes/
+> > 
+> > In particular these fixes addressed security issues. Listed with
+> > their GitHub commits for code reference:
+> > 
+> > [2.2.20] Security Fix: The Flash SWF had a security vulnerability
+> > that enabled XSS (Cross Site Scripting). Reported by Malte Batram.
+> > Security reference CVE-2013-1942
+> > <https://access.redhat.com/security/cve/>. 
+> > https://github.com/happyworm/jPlayer/commit/e8ca190f7f972a6a421cb95f09e138720e40ed6d
+> 
+> Sorry
+> > 
+> for the late reply. Please use CVE-2013-2022 for this issue.
 
-The full announcement is here:
-http://lists.nongnu.org/archive/html/chicken-announce/2013-04/msg00000.html
+In [1] CVE-2013-1942 was assigned, referencing the same commit.
 
-By the way, I'm confused as to why the CVEs I've requested so far don't
-show up in NVD.  For example,
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-6122
-says the CVE does not exist, but Kurt assigned it in February:
-http://www.openwall.com/lists/oss-security/2013/02/08/2
+ [1] http://marc.info/?l=oss-security&m=136570964825921&w=2
 
-The other CVE numbers in that mail produce a "not found" page as well and
-an NVD database search for "chicken" turns up nothing related to
-Chicken Scheme.  The page says the database was last updated
-April 19th 2013, so that's not the cause either.
+Should CVE-2013-1942 thus only be used for owncloud reference, and
+CVE-2013-2022 and CVE-2013-2023 on other side for jplayer itself?
 
-Cheers,
-Peter Bex
--- 
-http://www.more-magic.net
+Thanks a lot in advance for clarification!
+
+Regards,
+Salvatore
