@@ -1,62 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/01/4
-Message-id: <26cf27b8-4d43-453c-9139-b2278c60a02f@me.com>
-Date: Mon, 01 Apr 2013 14:16:53 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
-To: oss-security@...ts.openwall.com
-Cc: "Zhao, Passion" <passion.zhao@...el.com>, oss-security@...ts.openwall.com
-Subject: Re: Re: Security vulnerability tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/04/2
+Message-ID: <87obcrkt8p.fsf@alice.fifthhorseman.net>
+Date: Sat, 04 May 2013 05:08:06 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: nicolas vigier <boklm@...s-attacks.org>, oss-security@...ts.openwall.com
+Subject: Re: upstream source code authenticity checking
 Content-Type: text/plain; charset=utf-8
 
-I've used fsnoop ﻿http://vladz.devzero.fr/fsnoop.php for /tmp file use auditing.
+On Thu 2013-04-25 10:03:15 -0400, nicolas vigier wrote:
 
+> The good thing about PGP signed tarballs is that an automated check
+> could be integrated in package build, with some standard macros or
+> script to make it easy to check signature from a specific key. If it's
+> easy and does not cost time then more packagers will do it.
 
+For debian, this suggestion was made in http://bugs.debian.org/610712
+for the "uscan" tool, which looks for new upstream releases.
 
-On Apr 01, 2013, at 06:53 AM, Corey Bryant <coreyb@...ux.vnet.ibm.com> wrote:
+I've just supplied a patch to that bug with a simple implementation for
+the common case where the signatures are distributed alongside the
+tarballs with a similar name, and are made by one of a small set of
+known keys.
 
->
->
-> On 03/31/2013 11:31 PM, Zhao, Passion wrote:
-> > For static analysis, suggest to add 'klocwork'
-> > For fuzzing, how about adding 'peach'?
-> > And openVAS for network vulnerabilities scanning.
->
-> Thanks for the input! I've added these to the wiki.
->
-> By the way (and this is not in reply to you, Passion) I've also added a
-> statement to the effect of "no guarantees" to the page, since the list
-> is growing and I don't have time to evaluate all of the tools at the moment.
->
-> It would be nice to have a +1 type of feature next to each tool on the wiki.
->
-> -- 
-> Regards,
-> Corey Bryant
->
-> >
-> >
-> > --
-> > Best regards,
-> > - Passion
-> > iNet: 8751-1986
-> >
-> >
-> > -----Original Message-----
-> > From: Corey Bryant [mailto:coreyb@...ux.vnet.ibm.com]
-> > Sent: Friday, March 29, 2013 9:22 PM
-> > To: oss-security@...ts.openwall.com
-> > Subject: [oss-security] Re: Security vulnerability tools
-> >
-> > Thanks to everyone who provided tooling input. If anyone else has anything
-> > else, please let me know.
-> >
-> > Based on the input I've updated the wiki at:
-> > http://oss-security.openwall.org/wiki/tools
-> >
-> > --
-> > Regards,
-> > Corey Bryant
-> >
->
+It has some flaws, but it's certainly better than doing nothing.  I
+welcome review and/or feedback and suggestions on that bug report.
 
-Content of type "text/html" skipped
+Regards,
+
+        --dkg
+
+Content of type "application/pgp-signature" skipped
