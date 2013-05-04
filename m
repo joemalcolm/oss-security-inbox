@@ -1,27 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/4
-Message-ID: <CACYkhxiNS5rhFzyDRxSbn2ZE2H+aoKz7=Z15hVmxJcdXUNu7=Q@mail.gmail.com>
-Date: Fri, 23 Aug 2013 15:59:08 +1000
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/04/3
+Message-ID: <51858A2C.6090802@nixnuts.net>
+Date: Sat, 04 May 2013 17:22:36 -0500
+From: John Lightsey <john@...nuts.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: [PATCH] implement privmode support in dash
+Subject: CVE Request: YaBB 2.5.2 and earlier arbitrary code execution
 Content-Type: text/plain; charset=utf-8
 
-On 23 August 2013 15:42, Seth Arnold <seth.arnold@...onical.com> wrote:
+Hi everyone,
 
-> Regardless of the answer, it is probably worth using bash's mitigation
-> in dash, but I'm curious if we'll make discovering future bugs in setuid
-> programs more difficult to spot by happenstance by doing so.
->
+Yet another Bulletin Board (YaBB) 2.5.2 and earlier allow arbitrary code
+execution through a combination of file uploads with predictable
+locations and unsanitized use of the "guestlanguage" cookie in file paths.
 
-I know of one instance where this has fooled a developer into thinking that
-'nice' drops privileges (because they were executing a shell script through
-nice).
+This problem is similar to CVE-2007-3295.
 
-One could argue that the developer is at fault and that programs that use
-suid bits require extra-special care - but it's often not the developer
-that needs protecting.
 
-Could an alert (via stderr or syslog) be presented when the mitigation is
-activated implicitly?
+References:
 
+http://www.yabbforum.com/community/YaBB.pl?num=1367511332
+
+http://www.carsten-dalgaard.dk/cgi-bin/yabb2/YaBB.pl?num=1367511256
+
+
+The vulnerability can be mitigated by setting the $enable_guestlanguage
+variable to 0 in the YaBB configuration or applying the patch provided
+in the links.
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
