@@ -1,57 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/13
-Message-ID: <20131203191037.GE27953@higgins.local>
-Date: Tue, 3 Dec 2013 11:10:37 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2013-6416] XSS Vulnerability in simple_format helper
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/04/1
+Message-ID: <CANTw=MMXv-udc7wSAsWr0oiDdv3vbQ=UYDpfL=WGAHBA6DNTLw@mail.gmail.com>
+Date: Fri, 3 May 2013 23:07:07 -0400
+From: Michael Gilbert <mgilbert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re-emergence of CVE-2008-4796 in Nagios current
 Content-Type: text/plain; charset=utf-8
 
-XSS Vulnerability in simple_format helper 
+On Tue, Apr 30, 2013 at 7:28 PM, David Jorm wrote:
+>> CVE-2008-4796 snoopy: command execution via shell metacharacters
+>>
+>> Was found in Nagios core by Grant Murphy.
+>>
+>> Filed upstream: http://tracker.nagios.org/view.php?id=449
+>>
+>> We really need to start thinking about ways to find vulnerable copies
+>> of code and fixing them everywhere people have embedded them.
+>
+> Debian uses clonewise:
+>
+> https://github.com/silviocesare/Clonewise
 
-There is a vulnerability in the simple_format helper in Ruby on Rails. This vulnerability has been assigned the CVE identifier CVE-2013-6416.
+There is also a human-researched list, which is never really up to
+date or anywhere near comprehensive:
+http://anonscm.debian.org/viewvc/secure-testing/data/embedded-code-copies?view=co
 
-Versions Affected:  4.0.0 & 4.0.1
-Not affected:       Versions prior to 4.0
-Fixed Versions:     4.0.2
-
-Impact 
------- 
-The simple_format helper converts user supplied text into html text which is intended to be safe for display.  A change  made to the implementation of this helper means that any user provided HTML attributes will not be escaped correctly.  As a result of this error, applications which pass user-controlled data to be included as html attributes will be vulnerable to an XSS attack.
-
-All users running an affected release and passing user-controlled html attributes to simple_format should either upgrade or use one of the work arounds immediately. 
-
-Releases 
--------- 
-The 4.0.2 release is available at the normal locations. 
-
-Workarounds 
------------ 
-To work around this issue, take care to escape any user provided data before passing it to simple_format.  For example, instead of:
-
-  simple_format(some_text, class: params[:class])
-
-You should use
-
-  simple_format(some_text, class: h(params[:class]))
-
-
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided a patch for the 4.0 release series.  It is in git-am format and consists of a single changeset. 
-
-* 4-0-simple_format_xss.patch - Patch for 4.0 series 
-
-Please note that only the 4.0.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
-Credits 
-------- 
-Thanks to Kevin Reintjes for reporting the vulnerability to us and helping us work on a fix.
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "4-0-simple_format_xss.patch" of type "text/plain" (1137 bytes)
-
-Content of type "application/pgp-signature" skipped
+Best wishes,
+Mike
