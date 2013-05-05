@@ -1,64 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/12
-Message-ID: <511E8D8D.5030201@redhat.com>
-Date: Fri, 15 Feb 2013 12:33:33 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/05/1
+Message-ID: <5185FE25.7070308@redhat.com>
+Date: Sun, 05 May 2013 00:37:25 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Matthias Weckbecker <mweckbecker@...e.de>
-Subject: Re: CVE# request: pigz creates temp file with insecure permissions
+CC: John Lightsey <john@...nuts.net>
+Subject: Re: CVE Request: YaBB 2.5.2 and earlier arbitrary code execution
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/15/2013 06:43 AM, Matthias Weckbecker wrote:
-> On Friday 15 February 2013 09:33:30 Michael Tokarev wrote:
->> I think this one well deserves a CVE#.  I just submitted the
->> following bug #700608 to Debian BTS:
->> 
+On 05/04/2013 04:22 PM, John Lightsey wrote:
+> Hi everyone,
 > 
-> Not sure if this qualifies for a CVE. At least similar issues did
-> not get one in the past.
+> Yet another Bulletin Board (YaBB) 2.5.2 and earlier allow arbitrary
+> code execution through a combination of file uploads with
+> predictable locations and unsanitized use of the "guestlanguage"
+> cookie in file paths.
 > 
->> Thanks!
->> 
->> /mjt
+> This problem is similar to CVE-2007-3295.
 > 
-> Thanks, Matthias
 > 
+> References:
+> 
+> http://www.yabbforum.com/community/YaBB.pl?num=1367511332
+> 
+> http://www.carsten-dalgaard.dk/cgi-bin/yabb2/YaBB.pl?num=1367511256
+>
+> 
+> 
+> The vulnerability can be mitigated by setting the
+> $enable_guestlanguage variable to 0 in the YaBB configuration or
+> applying the patch provided in the links.
 
-- From the last discussion of this:
-
-http://www.openwall.com/lists/oss-security/2012/09/24/4
-http://www.openwall.com/lists/oss-security/2012/09/24/8
-http://www.openwall.com/lists/oss-security/2012/09/24/9
-http://www.openwall.com/lists/oss-security/2012/09/26/6
-
-Basically I pointed out we need to define what information
-MUST/SHOULD/SHOULD NOT/MUST NOT be marked as sensitive/etc so we can
-apply appropriate file permissions and the discussion died.
-
-So no CVE for this. Set your umask to be safe for now (and probably
-forever =).
+Please use CVE-2013-2057 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRHo2MAAoJEBYNRVNeJnmT2DgP/iUbj6zMd+lnCq4zOvLeLI1X
-m9jRcG7XT47Wdc9eQUgxG9iY3Nvf77LxgWtFEOtWmiVhBYPJkvUd+ipsQ71tx1Hy
-b1GkxVe9I6h3d2i0M9ytpuMV6d/vQAHwWeGNOL0LfapaBIFBC4aIdMem66iyCJKe
-QHdRLAbx6Cipx1obr6Y5VO6QFqe01UsekMOP321IrppIJxk5PmBkyZH2qmGxnE86
-yYQVYL5K+RJiStSt18ZQT+1vtVfazmsjn/A/GfgUnqgfuwGZyL5TGO1FlErQQ7TL
-SRGN4HvNvXNlab9vfBFw4zT7ekHUdFdYf6AMbdVzrTvH6N2GT0vlemTjWwofBF25
-1mT/Qcjv+MI7V4TT1Yz92n9vxLLpF3bRvUb0dv9+48Er9izzFPXFhRc1SZh99oBn
-sQXEAchMvP84UV1dwb/BgQuxXYNdaY93Q1Zvj50WcQKFbtq28qvRgDVHCSUVSM+d
-MMggkwYOUCw4qrCv4BfBQMbqdF6vJOexJkCNR6rOkOwSAg9uFhIOdOFEO1ztSXsO
-wD69xTEQPXheVSi9kUk9Nf5b4OOb006ZiEbjvknbZ3yZurtBNgMH++tWbRK8y7z1
-05JZjmTKuSyWACa2JVTmP+POvMXYLj9ZoWarTlJOqWHPB0AN2/Mnd2TqYpH+inUz
-yK9qJBYIEHB2jAfmlAoS
-=kUni
+iQIcBAEBAgAGBQJRhf4lAAoJEBYNRVNeJnmTL5AP/2Z2wXCLxbZzHFkcjB4Jh9Vp
+nC51XBu2wgI9oNccIqu0A2uqoOATW9KxedEDw3ZNXFQoc0TfFXGBIKOxH+GC+dhz
+mEjzbMu8KAMqtCDctLKhZntE6VXBcGdiOUiz/joJPp5taclt0ybMZbHULnsbdd9z
+R/UXc1y9y2XZax7RZ6Ma/p1JoOy/Z3fT0t327VZB9xATDQpyuBaYU7ULN6jkP+oJ
+u2wOYnegIbhWNOWPoMVn1f0fyXlIqhlPkR1mjHWiDqnTQCyoFma4V7GP/MqiE2qQ
+RtctRD5FvsBiZ7GFcqOmvGYdXHik9mYJYcVTZ3sfr+4gRX5YF8PAWl1C2gsyxbjj
+lagjMulTIC2yThFx+2tf0f/NOs7oA2mcjGDTaEffR1EP3gkpMnWLx7qfqItw0dhv
+tbHNOwutcgVjHiY09AukHKU+K/y47FC2QrPhLzvHYtcvdijdgn18ABpMfZC4VGPb
+0Bwl2Z7TUpXiuQBDxZCCv4Jzslgor67R243ixmwzAHm6jLvYH/XJXJA7vvSErG3x
+LUuOiSqBmi9Wsq4ADZG+H3SR74fSw7vBNST9AVNa27cAyOmsKwDFKaebq/dQGWLN
+8raZtOhOmOXhgQoTFyKC5VVGtCWcQGaj0c1dTKJ6SlBdEfwv22yE1XjYLH0D0hZh
+msqo2vMgLuRox2yxebpJ
+=JaOH
 -----END PGP SIGNATURE-----
