@@ -1,28 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/10
-Message-ID: <20131212152749.0b6fcf01@redhat.com>
-Date: Thu, 12 Dec 2013 15:27:49 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/06/3
+Message-ID: <20130506154807.GA11656@kroah.com>
+Date: Mon, 6 May 2013 08:48:07 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Reject augeas CVE-2012-6607
+Cc: kseifried@...hat.com
+Subject: Re: CVE request: Linux kernel: chipidea: allow disabling streaming in host mode
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Mon, May 06, 2013 at 05:40:24PM +0200, Marcus Meissner wrote:
+> On Sun, May 05, 2013 at 12:37:44AM -0600, Kurt Seifried wrote:
+> > On 05/03/2013 05:22 AM, P J P wrote:
+> > > Hello,
+> > > 
+> > > Linux kernel built with the ChipIdia Highspeed Dual Role
+> > > Controller (CONFIG_USB_CHIPIDEA) along with the ChipIdea host
+> > > controller (CONFIG_USB_CHIPIDEA_HOST) modules, is vulnerable to a
+> > > kernel crash. It occurs while streaming content over network via
+> > > USB/Ethernet adapter
+> > > 
+> > > A user/program could use this flaw to crash the kernel resulting in
+> > > DoS.
+> > > 
+> > > Upstream fix: ------------- ->
+> > > https://git.kernel.org/linus/929473ea05db455ad88cdc081f2adc556b8dc48f
+> > >
+> > >  Reference: ---------- ->
+> > > https://bugzilla.redhat.com/show_bug.cgi?id=959210
+> > > 
+> > > Thank you. -- Prasad J Pandit / Red Hat Security Response Team DB7A
+> > > 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+> > 
+> > Please use CVE-2013-2058 for this issue.
+> 
+> JFYI, the respective code was added in Linux 3.5 as far as I see.
 
-I'd like to request rejection of augeas CVE-2012-6607, which was
-assigned by Mitre as an issue separate from CVE-2012-0786.  I tried to
-figure out what is the different vector mentioned in the description
-for CVE-2012-6607.  My notes, along with comment form upstream, are in
-the following bug:
+And given the hardware involved, I really doubt any desktop/server
+distro ever enabled the driver.  Or if they did, I doubt they had any
+users with this hardware present, it's an embedded USB controller core,
+so maybe a few Android systems might have it present.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1034243#c1
+thanks,
 
-It seems the id was assigned to something that wasn't a problem
-before.  Can the id be rejected, or can I get further info on what 
-CVE-2012-6607 is meant to refer to if my analysis in the above bug is
-incorrect.
-
-Thank you!
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+greg k-h
