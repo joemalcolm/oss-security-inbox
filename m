@@ -1,61 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/15/8
-Message-ID: <525D8FF9.1090304@openstack.org>
-Date: Tue, 15 Oct 2013 20:56:57 +0200
-From: Thierry Carrez <thierry@...nstack.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE request for a vulnerability in OpenStack Glance
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/06/2
+Message-ID: <20130506154024.GR28231@suse.de>
+Date: Mon, 6 May 2013 17:40:24 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: CVE request: Linux kernel: chipidea: allow disabling streaming in host mode
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sun, May 05, 2013 at 12:37:44AM -0600, Kurt Seifried wrote:
+> On 05/03/2013 05:22 AM, P J P wrote:
+> > Hello,
+> > 
+> > Linux kernel built with the ChipIdia Highspeed Dual Role
+> > Controller (CONFIG_USB_CHIPIDEA) along with the ChipIdea host
+> > controller (CONFIG_USB_CHIPIDEA_HOST) modules, is vulnerable to a
+> > kernel crash. It occurs while streaming content over network via
+> > USB/Ethernet adapter
+> > 
+> > A user/program could use this flaw to crash the kernel resulting in
+> > DoS.
+> > 
+> > Upstream fix: ------------- ->
+> > https://git.kernel.org/linus/929473ea05db455ad88cdc081f2adc556b8dc48f
+> >
+> >  Reference: ---------- ->
+> > https://bugzilla.redhat.com/show_bug.cgi?id=959210
+> > 
+> > Thank you. -- Prasad J Pandit / Red Hat Security Response Team DB7A
+> > 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+> 
+> Please use CVE-2013-2058 for this issue.
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public,
-although an advisory was not sent yet.
+JFYI, the respective code was added in Linux 3.5 as far as I see.
 
-"""
-Title: Glance image_download policy not enforced for cached images
-Reporter: Stuart McLaren (HP)
-Products: Glance
-Affects: Folsom, Grizzly
-
-Description:
-Stuart McLaren from HP reported a vulnerability in Glance download_image
-policy enforcement in the case of cached images. Deployers may opt to
-set a download_image policy to restrict image download to specific
-roles. However, when an image is previously cached by an authorized
-download, any authenticated user could download image contents if it can
-determine the image UUID, bypassing any download_image policy
-restrictions. This could result in disclosure of image contents that
-were thought to be protected by the download_image policy setting. Only
-setups making use of the download_image policy are affected.
-"""
-
-References:
-https://bugs.launchpad.net/glance/+bug/1235378
-
-Thanks in advance,
-
-- -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJSXY/1AAoJEFB6+JAlsQQjzaQQAMA8y6U5MocsXSLbIduRruEl
-eu30WiUlpZFtrbHvsdxDuZdm0qH55cIAFLEnsvhtqcLCVMQz78/dYfNbH35awywc
-sT4t9kSuK05Ahx9j9J9GLO0Pw2krZP69ht3UphwrlbwyrbC9i1AwIhB8I1+BGNDo
-XnD/MvyHnKE4IYnXm4io2vhXEU4K92l8kRyqAgglmrZmOlgWINecXgbFalyNRMQZ
-FveYjv/4yODR2IAKCJIGKI3bF4GAions6dXAmyaMZ9Y6H08xS91sFgS7TqFraK9p
-W3OAbTglx12zdjGOh2KO8HC3C46g2JDTt6Vt1eYaaJDSZiWs3u1U+JI7ob5KuWEo
-xqRSVfPRNzdbO/NSJ80LbDFFrCfu61hO+HYmuLlCDs6Db1Wt0zIYjma2JtMsbl4L
-5Semh3J0UcxwoRK5+pMmKuzJ+Q+Qbr8FNIAx4rHbCXnPRTAHnecd+5WFIzHAezuf
-wW2z5j7jHqofSmPDcaoEZsw9Ar6LE3Edf9L3li1D7A2klI+vULRsd+41SzH4WgG0
-+SeNogL+2SH8dB8KCLYpxayBMr8iCvHhr8DohkLJfRRJy0+ib1avuilnq3xDTIZq
-BvrvcSoJS3CiJg51M29upGXjH5fOyu5zhAYdq6nF6srmx5Lqd8AHLbYu/uxcMwmp
-A6Nm2aQI48wT5J3gJ21i
-=uDpa
------END PGP SIGNATURE-----
+Ciao, Marcus
