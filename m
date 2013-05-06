@@ -1,79 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/10
-Message-ID: <522E293F.6010108@redhat.com>
-Date: Mon, 09 Sep 2013 14:02:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/06/4
+Message-ID: <20130506163338.GC11795@redhat.com>
+Date: Mon, 6 May 2013 10:33:38 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Larry W. Cashdollar" <larry0@...com>
-Subject: Re: Features 0.3.0 Ruby gem /tmp file injection vulnerability
+Subject: CVE request: OpenVPN use of non-constant-time memcmp in HMAC comparison in openvpn_decrypt
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Could a CVE be assigned to this issue?  Copying and pasting from the
+upstream announcement:
 
-On 09/09/2013 11:38 AM, Larry W. Cashdollar wrote:
-> Hi, May I have a CVE for the following vulnerability? * * * * 
-> *Title: Features 0.3.0 Ruby gem /tmp file injection vulnerability*
-> 
-> Date: 9/1/2013 Author: Larry W. Cashdollar @_larry0 Download:
-> http://rubygems.org/gems/features
-> 
-> CVE: TBD
-> 
-> Description: "Plaintext User Stories Parser supporting native 
-> programming languages. Especially Objective-C"
-> 
-> Same vulnerability as
-> http://vapid.dhs.org/advisories/show_in_browser.html
-> 
-> By a malicious user creating /tmp/out.html first and repeatedly
-> writing to it they can inject malicious html into the file right
-> before it is about to be opened.
-> 
-> PoC:
-> 
-> nobody () sp0rk:/$ while (true); do echo "<script> alert('Hello');
-> </script>" >> /tmp/out.html; done
-> 
-> Will pop up a java script alert in other gem users browser. 
-> *Code:*
-> 
-> Vulnerabile code in ./features-0.3.0/lib/suite.rb
-> 
-> 
-> html = parse_results(results).html
-> 
-> %x(touch '/tmp/out.html' && echo '#{html}' > /tmp/out.html && open 
-> '/tmp/out.html' ) end
-> 
-> def parse_results_and_open_in_safari(results) -- end
-> 
-> def open_in_safari(html) %x(touch '/tmp/out.html' && echo '#{html}'
-> > /tmp/out.html && open '/tmp/out.html' ) end
-> 
-> 
-> Vendor: Not notified
-> 
 
-Please use CVE-2013-4318 for this issue.
+Exploit summary
+OpenVPN 2.3.0 and earlier running in UDP mode are subject to chosen
+ciphertext injection due to a non-constant-time HMAC comparison
+function. Plaintext recovery may be possible using a padding oracle
+attack on the CBC mode cipher implementation of the crypto library,
+optimistically at a rate of about one character per 3 hours. PolarSSL
+seems vulnerable to such an attack; the vulnerability of OpenSSL has not
+been verified or tested.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Severity
+OpenVPN servers are typically configured to silently drop packets with
+the wrong HMAC. For this reason measuring the processing time of the
+packets is not trivial without a MITM position. In practice, the attack
+likely needs some target-specific information to be effective.
 
-iQIcBAEBAgAGBQJSLik/AAoJEBYNRVNeJnmTUmoP/2+N+caUJ9zjzUgIx6L5rj/C
-KML2+N8o1MkwN6u/35K2kpx5aFV6PZtWhk7nSXzuG4j88P/GmTjkzg76tJeObAVT
-kjqrJONVdQaANtQ0Pru3JXUOY3zSEKa5NWqnC0+Y1J5XBQCXC7CU6HPNCaiIQ6nK
-u7IHn+GE7unO4Oan9+0QGGaE9CycvSNxt5YNxGYzz4VoFMD4ThHd9gCGpL4UVeLc
-5PPNp59xRi34cxrWKoYXo/fCSCg60rY8pfTcFv8qjSp/WV3dAH9mO1V10uXPbzQG
-C/BeocH/eTmzn6P7PuqRKyxPQ4kkAuclB4mfinw4xtZddBM3Q2d1uwbxZmMXE3U2
-6bJ2Ssl9g98MKvNFpipHdoNFYd+1sOX2eCLSSLww5FnurDN2sgzfjIj6KtXz9dOY
-mAwG7pNhI9NYB73OSfuVaJdtl7GHsnJ+TX434mVc85QL5/pqn9m6vyKR4icgg109
-LwGhcmLLMrvZOM8MrPdJjQhWaHpOif5ySgdUXioREY0y6zo3O9XJAFSTI3TO+zzy
-PT4dtEWHZaqO6aZCo5mjq0Ni6QDOFEcg6fVMfOaIz0yMBG0LdXk44MFkP4Ui0uc1
-ZS1uE8EjUl7TPcUJJ30BL01I+NJ6U+yPFmnd9nkpLA+GUMxlMOI6GqGrMhg0goEB
-ddrRKuuRula0ELEbD55+
-=GPJC
------END PGP SIGNATURE-----
+The severity of this vulnerability can be considered low. Only if
+OpenVPN is configured to use a null-cipher, arbitrary plain-text can be
+injected which can completely open up this attack vector.
+
+Affected versions
+OpenVPN 2.3.0 and earlier are vulnerable. A fix (commit
+f375aa67cc) is included in OpenVPN 2.3.1 and later.
+
+
+References:
+
+https://community.openvpn.net/openvpn/wiki/SecurityAnnouncement-f375aa67cc
+https://github.com/OpenVPN/openvpn/commit/11d21349a4e7e38a025849479b36ace7c2eec2ee
+https://bugs.gentoo.org/show_bug.cgi?id=468756
+https://bugzilla.redhat.com/show_bug.cgi?id=960192
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
