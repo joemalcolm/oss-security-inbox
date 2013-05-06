@@ -1,62 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/4
-Message-ID: <50EBBB21.1060306@redhat.com>
-Date: Mon, 07 Jan 2013 23:22:25 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE request: Havalite CMS 1.1.7 stored XSS vulnerability in comments of blog posts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/06/5
+Message-Id: <E1UZSpZ-0000Hh-7F@xenbits.xen.org>
+Date: Mon, 06 May 2013 21:20:21 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 51 (CVE-2013-2007) - qemu guest agent (qga) insecure file permissions
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/06/2013 07:20 AM, Henri Salo wrote:
-> Havalite CMS has stored XSS vulnerability in comments of blog
-> posts. Example:
-> 
-> POST http://example.com/?p=1 "comment" with value
-> %E2%80%9C%3E%3Cscript%3Ealert%28document.cookie%29%3C%2Fscript%3E
-> 
-> Tested in 1.1.7 (cbd391e913d04224225cf924a7fcb2b5), which was
-> uploaded 2012-11-07 to sourceforge.net. I tried to contact vendor
-> without response.
-> 
-> https://sourceforge.net/projects/havalite/files/
-> 
-> Some other notes: - CVE-2012-5919 still not fixed in 1.1.7 version 
-> - CVE-2012-5893 does not work without administrator privileges, but
-> uploaded files are executed (for example PHP) - Typos in
-> "readme.html" - 777 modes not needed even it was in several places.
-> 711 is enough for content directories
-> 
-> I recommend not to use this software before these vulnerabilities
-> are fixed.
+	     Xen Security Advisory CVE-2013-2007 / XSA-51
+                              version 2
 
-Please use CVE-2013-0161 for this issue.
+           qemu guest agent (qga) insecure file permissions
 
-> --- Henri Salo ps. I have regression tests for these issues if
-> someone needs :) pss. Please note that havalite.com is not affected
-> by this issue for some reason
+UPDATES IN VERSION 2
+====================
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Public release.
 
+ISSUE DESCRIPTION
+=================
+
+The qemu guest agent creates files with insecure permissions when
+started in daemon mode.
+
+IMPACT
+======
+
+The qemu guest agent is not used by default in Xen systems.
+
+If it is used in a particular guest, unprivileged guest processes
+might be able to escalate their privilege to that of the guest.
+
+VULNERABLE SYSTEMS
+==================
+
+We are not aware of any Xen installations using the qemu guest agent.
+
+However, the program is built and installed (as the executable
+`qemu-ga') as part of the Xen management tools by the Xen build
+system.  It is possible that a system administrator, or downstream
+system integrator, might have arranged to execute qemu-ga.
+
+If you have not taken steps to run qemu-ga, you are not vulnerable.
+
+MITIGATION
+==========
+
+Disabling the guest agent will eliminate the vulnerability.
+
+RESOLUTION
+==========
+
+Patches to resolve this problem are available from the upstream qemu
+project via the usual channels.  The Xen Project Security Team do not
+intend to provide or distribute patches for this vulnerability.
+
+DETAILS
+=======
+
+At the time of writing the information we have about this
+vulnerability is as follows:
+
+  Subject: [PATCH] qga: set umask 0077 when daemonizing (CVE-2013-2007)
+
+  The qemu guest agent creates a bunch of files with insecure permissions
+  when started in daemon mode. For example:
+
+    -rw-rw-rw- 1 root root /var/log/qemu-ga.log
+    -rw-rw-rw- 1 root root /var/run/qga.state
+    -rw-rw-rw- 1 root root /var/log/qga-fsfreeze-hook.log
+
+  In addition, at least all files created with the "guest-file-open" QMP
+  command, and all files created with shell output redirection (or
+  otherwise) by utilities invoked by the fsfreeze hook script are affected.
+
+  ...
+
+For authoritative further information, and patches, please refer to
+the information provided by the qemu upstream project.
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ67shAAoJEBYNRVNeJnmThmEQAL1DFLb+iDP4aOsIo0+NTydd
-e+N4VgL7PIzJR2Z/8TZx0+q0DdKCni2Y8h4X9hLZl7OUgs74iTbV5hZMnVnpa8LQ
-8EUfrlGRjVsT/INtQ6Lb3K9cDEka2bzxnhMw4HrA4vuTW2MPw9U18kd9EMFogQwV
-dzmOofDVY/k+kkIfW826nKE/1JVy8bGw2Tv/94V1Wvwcpfiu7D0qZgMYPgeqvjf1
-4vJPkyi/eErGdPvK5UsOlV7dZ9ebIyCO6IDUMgNKP8NgLUnOKhI1Q6wBH9k+vuCn
-vljphpdyqQqamhFvkjAV0OG0MxAbO8KAaCFxjzaLCep+uDTiUBwljvPp2diSIFYo
-YSrTyYMSgnPzITXPEUcgEUszZD9kq98a4Wrkn3X8yUVzDZ4GvtmGPUuNb5UYKAn1
-h9VaO6PPQbj/p0XTgfxJ/JGtDrlNDhAv3sTpnwPBc9sZAzJ1qNQYkCRHM+kN+SWN
-aNAUR6EolzI2fmnIQd5royfY2TTaAyRr01mnshRVlpmFeOqwtdZXee8vc1ohjgcq
-uvvvDqsIrnCzxouQF8NxkuO2ZuKL5cYIvoCTP7eF/zuyaqSLEctiTA7xPdetHgh9
-lnfMFJo1+II3DOYYMTPvmxYsmW7zPwGEiMKnJu/PVgQyQN9B/lvetCErOH1XXyAN
-nTStZIZwx4+tK+yluo+W
-=2vPd
+iQEcBAEBAgAGBQJRiB3/AAoJEIP+FMlX6CvZq5wH/3Jsx5JbsgRtpnKYFBzz/zg/
+Lps97aIflPh13FoyXi12eImErF6xBHzhca21Sh15m039hxmkW4ehTD/jPGyVLR8D
+d6rlN5GXHqBLhZWRFESQowRgyLZ1rgOUR5feqYFf8lzP7U+jP+qcZoKj+Rplx52n
+EFuD+hBFxq1wpnja2hvBfFDTChO6SncV4EO5MSjH4bnSLVrmdarLFtfpKd4A61f1
+zn7xkk0+uua1EJScMtydmhfoiCK/6KIg1YjnQ36i7wekkc14p2Nvmu0UGvR4Rf2y
+y2UDB/7shCieedhV3BHWezIx4CMPLHtWHJZSvgBQzkVzUkz67NiblzhHCSv9FkU=
+=Nsga
 -----END PGP SIGNATURE-----
+
