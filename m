@@ -1,62 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/9
-Message-ID: <20130320110953.GB18899@dhcp-25-225.brq.redhat.com>
-Date: Wed, 20 Mar 2013 12:09:53 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/06/1
+Message-ID: <20130506060617.GA27494@kludge.henri.nerv.fi>
+Date: Mon, 6 May 2013 09:06:17 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: linux kernel: kvm: CVE-2013-179[6..8]
+Cc: Elites0ft <admin@...tes0ft.com>
+Subject: CVE request: WordPress advanced-xml-reader XXE
 Content-Type: text/plain; charset=utf-8
 
-* CVE-2013-1796
-Description of the problem:
-If the guest sets the GPA of the time_page so that the request to update
-the time straddles a page then KVM will write onto an incorrect page.
-Thewrite is done byusing kmap atomic to get a pointer to the page for
-the time structure and then performing a memcpy to that page starting at
-an offset that the guest controls.  Well behaved guests always provide a
-32-byte aligned address, however a malicious guest could use this to
-corrupt host kernel memory.
+Can I get 2013 CVE for issue:
 
-Upstream commit:
-https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=c300aa64ddf57d9c5d9c898a64b36877345dd4a9
+Advanced XML Reader Plugin for WordPress contains an XXE (Xml eXternal Entity)
+injection flaw that is triggered during the parsing of XML data. The issue is
+due to an incorrectly configured XML parser accepting XML external entities from
+an untrusted source. By sending specially crafted XML data, a remote attacker
+can gain access to arbitrary files.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=917012
+http://osvdb.org/92904
 
-* CVE-2013-1797
-Description of the problem:
-There is a potential use after free issue with the handling of
-MSR_KVM_SYSTEM_TIME.  If the guest specifies a GPA in a movable or
-removable memory such as frame buffers then KVM might continue to write
-to that address even after it's removed via KVM_SET_USER_MEMORY_REGION.
-KVM pins the page in memory so it's unlikely to cause an issue, but if
-the user space component re-purposes the memory previously used for the
-guest, then the guest will be able to corrupt that memory.
+This issue is not yet fixed.
 
-Upstream commit:
-https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=0b79459b482e85cb7426aa7da683a9f2c97aeae1
+---
+Henri Salo
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=917013
-
-* CVE-2013-1798
-Description of the problem:
-If the guest specifies a IOAPIC_REG_SELECT with an invalid value and
-follows that with a read of the IOAPIC_REG_WINDOW KVM does not properly
-validate that request.  ioapic_read_indirect contains an
-ASSERT(redir_index < IOAPIC_NUM_PINS), but the ASSERT has no effect in
-non-debug builds.  In recent kernels this allows a guest to cause a
-kernel oops by reading invalid memory.  In older kernels (pre-3.3) this
-allows a guest to read from large ranges of host memory.
-
-Upstream commit:
-https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=a2c118bfab8bc6b8bb213abfc35201e441693d55
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=917017
-
-All three issues were found and reported by Andrew Honig of Google.
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
