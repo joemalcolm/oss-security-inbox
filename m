@@ -1,80 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/18/7
-Message-ID: <528A7C70.4090404@redhat.com>
-Date: Mon, 18 Nov 2013 13:45:36 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/07/2
+Message-ID: <339959935.7575501.1367916964477.JavaMail.root@redhat.com>
+Date: Tue, 7 May 2013 04:56:04 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Eric S. Raymond" <esr@...rsus.com>
+Cc: Kurt Seifried <kseifried@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Miroslav Lichvar <mlichvar@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- gpsd 3.9 fixing a denial of service flaw
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Eric,
 
-Top posting because lazy:
+  since there have doubts appeared:
+    https://bugs.mageia.org/show_bug.cgi?id=9969#c2
 
-CVE-2013-4594 SA-CONTRIB-2013-087 - Payment for Webform - Access Bypass
+which upstream patch has been the CVE-2013-2038 identifier assigned
+to, could you confirm / disprove the latter?
 
-CVE-2013-4595 SA-CONTRIB-2013-088 - Secure Pages - Missing Encryption
-of Sensitive Data
+* The true crash was in the NMEA(2000) driver, with upstream patch:
+  http://git.savannah.gnu.org/cgit/gpsd.git/commit/?id=dd9c3c2830cb8f8fd8491ce68c82698dc5538f50
 
-CVE-2013-4596 SA-CONTRIB-2013-089 - Node Access Keys - Access Bypass
+  This one should be referenced under CVE-2013-2038.
 
-CVE-2013-4597 SA-CONTRIB-2013-090 - Revisioning - Access Bypass
+* While the hypothetical one was in the AIS driver, with upstream patch:
+  http://git.savannah.gnu.org/cgit/gpsd.git/commit/?id=08edc49d8f63c75bfdfb480b083b0d960310f94f
 
-CVE-2013-4598 SA-CONTRIB-2013-091 - Groups, Communities and Co (GCC) -
-Access Bypass
+  Upstream 3.9 announcement "Armor the AIS driver against an implausible overrun attack."
+  would support this.
 
-CVE-2013-4599 SA-CONTRIB-2013-092 - Misery - Denial of Service (DOS)
-vulnerability
+Thank you for your time && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-
-On 11/17/2013 10:34 PM, Forest Monsen wrote:
-> Hi there, I'd like to request CVEs for:
+----- Original Message -----
+> From: "Jan Lieskovsky" <jlieskov@...hat.com>
+> To: esr@...rsus.com, "Kurt Seifried" <kseifried@...hat.com>
+> Cc: "Steven M. Christey" <coley@...us.mitre.org>, "Miroslav Lichvar" <mlichvar@...hat.com>,
+> oss-security@...ts.openwall.com
+> Sent: Friday, May 3, 2013 6:31:08 PM
+> Subject: Re: [oss-security] CVE Request -- gpsd 3.9 fixing a denial of service flaw
 > 
-> SA-CONTRIB-2013-087 - Payment for Webform - Access Bypass 
-> https://drupal.org/node/2129373
 > 
-> SA-CONTRIB-2013-088 - Secure Pages - Missing Encryption of
-> Sensitive Data https://drupal.org/node/2129381
+> Thank you for your time && reply, Eric.
 > 
-> SA-CONTRIB-2013-089 - Node Access Keys - Access Bypass 
-> https://drupal.org/node/2129379
+> ----- Original Message -----
+> > From: "Eric S. Raymond" <esr@...rsus.com>
+> > To: "Kurt Seifried" <kseifried@...hat.com>
+> > Cc: oss-security@...ts.openwall.com, "Jan Lieskovsky"
+> > <jlieskov@...hat.com>, "Steven M. Christey"
+> > <coley@...us.mitre.org>, "Miroslav Lichvar" <mlichvar@...hat.com>
+> > Sent: Thursday, May 2, 2013 9:41:51 PM
+> > Subject: Re: [oss-security] CVE Request -- gpsd 3.9 fixing a denial of
+> > service flaw
+> > 
+> > Kurt Seifried <kseifried@...hat.com>:
+> > > On 05/02/2013 03:58 AM, Jan Lieskovsky wrote:
+> > > > @Eric - Eric, could you please help us to solve this doubt? (which
+> > > > of the patches is the correct one to fix the above mentioned DoS /
+> > > > security issue)
+> > 
+> > There are two critical patches which solve two different DoSes (well,
+> > one certain and one potential).  Yes, it's a strange coincidence that
+> > both bugs were characterized at almost the same time after we haven't
+> > had a crash bug since 2007.
+> > 
+> > The crash bug was in the NMEA driver.  There's particular kind of malformed
+> > packet, sometimes emitted by SiRFStar-III receivers, that looks like this:
+> > 
+> > $GPGGA,030130$GPGLL,2638.1728,N,08011.3893,W,030131.000,A,A*41\r\n
+> > 
+> > See the incomplete GGA without trailing \r\n  at the front?  Usually
+> > that was harmless and would be silently discarded. Under rare circumstances
+> > it could core dump (but not any more, I now have a regression test to check
+> > this case).
+> > 
+> > That fix was commit dd9c3c2830cb8f8fd8491ce68c82698dc5538f50.
 > 
-> SA-CONTRIB-2013-090 - Revisioning - Access Bypass 
-> https://drupal.org/node/2135257
+> So this is observed / experienced DoS, right? Kurt, assuming the
+> CVE-2013-2038 identifier:
+>   http://www.openwall.com/lists/oss-security/2013/05/02/17
 > 
-> SA-CONTRIB-2013-091 - Groups, Communities and Co (GCC) - Access
-> Bypass https://drupal.org/node/2135267
+> has been assigned to this sub-case, correct?
 > 
-> SA-CONTRIB-2013-092 - Misery - Denial of Service (DOS)
-> vulnerability https://drupal.org/node/2135273 (Says multiple, but
-> it seems to me this is really just a single DoS vuln.)
-
-Agreed.
-
-> Thanks Kurt.
+> > 
+> > The potential crash/DoS was in the AIS driver.
+> > 
+> > The first stage of what it does is un-armor an AIVDM ASCII packet
+> > representation into an equivalent binary packet which is then examined
+> > for data at specific bit offsets.
+> > 
+> > The un-armoring logic was not properly bounds-checked, potentially
+> > opening up a hole. In theory, an overlong armored packet could be
+> > crafted to overrun the binary-packet buffer.
+> > 
+> > I'm not sure that one was exploitable; there are other properties of
+> > the code (notably the bounds-checked maximum length of the AIVDM ASCII
+> > packet buffer) that seem to guarantee the end of the binary packet
+> > buffer could never be reached.
 > 
-> Best, Forest
+> Meaning this wouldn't be a DoS attack vector? (asking to know if a
+> separate / second CVE identifier is needed for this case yet, or not)
 > 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSinxwAAoJEBYNRVNeJnmTfsYQAKDd6OXXbuBLaimNkuLSc0Np
-xnfjCJJy991BduMAzzya2hbW5GSP4pwW+yPInf5HeDZTbGfmncoss4HE3EUHbOrI
-8DXhRtLHbUOHii0jONB6ESxMGT5F45oQQO5R4LmIzVsJ1ImPa3kcUUCE8/okibx5
-LlozL5GDTo4YMGD0VrlUkEi7j3Ec1Eel/DMPytmI5dUJE+OFIw7Hm2TsvwrKp55y
-422pwFI/sBQHwcZRKNlteQ8W3nK+nMd7ll88o5ewf3fynkoj5GILGnaV4wSKVbQm
-iPXj/Wa/dUsGOR4VUZpMdD6fmKvTjLtLPrTSm/qARbqS4qAiuv9V9e3ZqUskD8Xy
-RL/iglLv27wnOl3oj0PKHlJJNjmXnL5s/BW5ctJauiwSjKD0diA4qBjCyxwaNxIq
-1f2LWcUq0pX1199tachsp7BKB7GoZDaSaV5PA+MXd4uPYpTswvNIiRgtf8KX6kq6
-rFstkjpDM7W/f2YLsKgtGw9OrLmBNSUJBCWFpEk35FrEO/8tla/jJAMaSkHAjc3I
-N1tLDpN+0O0h1CSDkyN5oB9UcC32uF9FIMdqdPNz+1Fy6ypusgjGS4OgamOf1NcB
-PQ7Tv1bBWbZkkKsFkUdrHvamgXxBihubFL2mjpzaDEql0YC1DK73tiakix3CWU6m
-sZ3Ka4UuFzwMuqYJI2Z9
-=6vwF
------END PGP SIGNATURE-----
+> > 
+> > I put in a check anyway, because (a) I could be wrong about that, (b)
+> > supposing I'm right, that invariant could get silently broken by a future
+> > code change.
+> > 
+> > That was commit 08edc49d8f63c75bfdfb480b083b0d960310f94f, responding
+> > to Savannah bug #38511.
+> 
+> Application of the patch looks reasonable. Just would be good to know
+> if it was applied just like a preventive measure (no DoS right now, just
+> prevent its [possible] occurrence in the future in case of code change)
+> or if under certain circumstances it might be used to DoS gpsd too?
+> 
+> > 
+> > Note: neither of these have privilege-escalation possibilities.  gpsd
+> > needs root to initialize, but drops it long before either of these
+> > code defects could fire.
+> 
+> Ok, good.
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> > 
+> > If you have any other questions, do not hesitate to ask.
+> > --
+> > 		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+> > 
+> 
