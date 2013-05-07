@@ -1,54 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/15
-Message-ID: <20130425002730.56357d24@melee>
-Date: Thu, 25 Apr 2013 00:27:30 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com, security@...dpress.org, donncha@...oimh.ie
-Subject: Re: WP-Super-Cache XSS and Remote Code Exec
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/07/1
+Message-ID: <51889C27.8020806@redhat.com>
+Date: Tue, 07 May 2013 00:16:07 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE-2013-2060 OpenShift Origin: Potential remote command execution vulnerability in download cart url
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-On Wed, 24 Apr 2013 12:30:57 -0600
-Kurt Seifried <kseifried@...hat.com> wrote:
+CVE-2013-2060 OpenShift Origin: Potential remote command execution
+vulnerability in download cart url
 
-> WP-Super-Cache 1.2 Remote Code Execution
-> Fixed in 1.3:
+https://bugzilla.redhat.com/show_bug.cgi?id=960363
 
-There are two different changelog entries that look like they belong to
-this issue:
-https://wordpress.org/extend/plugins/wp-super-cache/changelog/
-
-1.3 says:
-"mfunc tags could be executed in comments. Fixed."
-
-and 1.3.2 says:
-"Any mfunc/mclude/dynamic-cached-content tags in comments are now
-removed."
-
-To me this looks like 1.3 contained an incomplete fix that got
-completed in 1.3.2 (?), but I don't know. If that's the case, we should
-probably have another CVE for the incomplete fix.
+The code hasn't made it into OpenShift Online/Origin yet, just the
+upstream source code, so unlikely many people are affected.
 
 - -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBCAAGBQJReFxUAAoJEKWIAHK7tR5CdxUP/RfFa1T9gRurS0xwrRgGZ6dn
-QK8zLJMxXARrvZv8idL/qgFh/KCclxfHi+4d4YS5RTXoHO5mpLmh62/lwGwRCSYZ
-KZ5KNk8Okn68tMeRb5QhiaKwEG4vFBeLzxWJGlQ30NX78eG5sF2X68zqAR7yFqDA
-JPaZIlQg7t7fpPNuwUEgRAJeS8PgXcGdSdUzzfgDpjy13ws8PSWzgc1LVZ/yQE+O
-zOCNktpRQ7Ds61XltcT7v1GmE6p3cQGLNWsD8QGAKqDOQ0PKhurmf0RGMXPsu9SR
-NTmjq2Y7OUJ9pfrKpOkOxOzUbGS5CNV8lSpLawYvSWnZjFVkthY2E4CPLNk84l/J
-7GM7roXtJkZs/qboe7l9fIeF1+Ar/2VZab6jqVBGbfdls7PKP22QnMxOYviUHjZb
-IE59/fGcuQGjBGXZgfXHGUvQEyvuQj2NZfQ9IKi5kA671VgyaLjYMFLlKdrUoNca
-oY8cQGNVMrrdt1gJcXUf46e1oyNkJWP9zWG06roKhRPfeaVYLAUyAdLJldpcraEO
-69FoCmgJP3Nyu56NhjDqlZDge+SYrk9cwjPs8CyDYppKUMD6PMWg6iiDzgbAe+0a
-xzVfVOtv1r1e4RVH1l3pmNdwCrWPou+YGwDa+w97GRzVYaU4t1xOWyg4+j0uNQP8
-7UdD9Wip1zYdhpVyfF5F
-=DIVv
+iQIcBAEBAgAGBQJRiJwnAAoJEBYNRVNeJnmTdUAP/iS1YhK5hHF0J4P1dgpcHRjg
+TnbsZSHc8Og8nXjoaCd6+0f32FpbYuZHMHxv6ObHI9P2hBYoGFHfB6mJf/z94X3t
+mKfs8yDYY/QPZtIayBKYKjLZmKpUAl8f3aNCZEgXSw3jzJy6uQy1t5sQJ15IMbUM
+pwj5ajatw8jx5Dk3YbirI9jw8MjTbipHP6z0CBif/q/pKCJDx6h7w2CG7EosKTC6
+VfjZIA8w4SAlBnErLpHbgxcZmNZFOCE0xwY5Hs2kGk78PLMbHE+jB/7mefcx0jgQ
+OzlDHm+LV5uimLPKmPN6yL7r/rhL+IItCid5CKdmQhnmIK+MWwQ4RCdtQngwjq21
+eVe8SDDZCtA32COOesykLJSIn3hWNagQmnQ94+rTucHwYD/4goQWcQG3T8pwu3h+
+lF84Hi/BsDBdvTpqwiJhj0HdJcnsDMgm1UvFHv9RSnxo3XOj8bXU8GWitxdYVyfs
+FnKtDBE8I8CsX3s4FOHFGEcN8ZHCthkC8mkYEHLoWY213EVAaJw7zSiK8F3orvph
+t88ZaD3/21ymz1JTy0GMPNuIa7iwqKvbUCQ3opQlQze9l6X157tFgzsKW/5eEuH7
++OJ/Ft1k7FhZxlabLRRK0oaxdSOqgKapUbL2/L15v68Kniep93FclMrUn2Ufke9/
+ipUfyYZbv38c7Km5iXmK
+=zblB
 -----END PGP SIGNATURE-----
