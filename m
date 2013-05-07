@@ -1,48 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/15
-Message-ID: <20130227150858.GA23550@openwall.com>
-Date: Wed, 27 Feb 2013 19:08:58 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/07/4
+Message-ID: <51891186.40602@redhat.com>
+Date: Tue, 07 May 2013 16:36:54 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+CC: Andrew Alexeev <andrew@...nx.com>
+Subject: Re: nginx security advisory (CVE-2013-2028)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 06:48:34AM -0800, Greg KH wrote:
-> On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
-> > For starters, security@...nel.org submissions should be posted to
-> > oss-security or any other security related public mailing list when the
-> > patch is being committed.
-> 
-> That's not going to happen, and you know that, to do so would be totally
-> irresponsible of us and directly harm your users.
+On 05/07/2013 02:44 PM, Andrew Alexeev wrote:
+> Hello!
+>
+> Greg MacManus, of iSIGHT Partners Labs, found a security problem
+> in several recent versions of nginx.  A stack-based buffer
+> overflow might occur in a worker process while handling a
+> specially crafted request, potentially resulting in arbitrary code
+> execution (CVE-2013-2028).
+>
+> The problem affects nginx 1.3.9 - 1.4.0.
 
-Huh?!  Maybe you misread what Petr wrote?  Note: "when the patch is
-being committed".  At this point, the security issue is public, and it
-just needs to be properly communicated to all those interested
-(including distros, sysadmins, etc.), such as via oss-security.  Not
-doing this favors those few who spend time to review commits on their
-own; some of them do it for purposes other than informing the public.
+Isn't similar code in older version (say, 1.2.6) in 
+src/http/modules/ngx_http_proxy_module.c?
 
-We have a similar policy for the distros and linux-distros private
-lists.  When an issue initially brought up there is finally made public,
-it must be brought up on oss-security.  I must admit there were a few
-cases where we failed to do that, but they were just that - failures.
-I'd appreciate help of other distros/linux-distros list members to
-ensure that each and every issue is brought to oss-security when it is
-being made public (even if only via commits of the fixes).  Formally,
-this is responsibility of the original reporter:
+> The problem is fixed in nginx 1.5.0, 1.4.1.
+>
+> Patch for the problem can be found here:
+>
+> http://nginx.org/download/patch.2013.chunked.txt
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros
+I think this fix is not quite correct because it is not possible to 
+detect signed integer overflow in C after it has happened.  (Curiously, 
+the original fix for CVE-2002-0392 had the same issue.)
 
-"When the security issue is finally to be made public, it is your (the
-original reporter's) responsibility to post about it to oss-security
-(indeed, you and others may also post to any other mailing lists, etc.)"
-
-but in practice the original reporter sometimes fails to do that, in
-which case the list members should remind the reporter and/or take care
-of bringing the issue to oss-security themselves.
-
-I think security@...nel.org should adopt a similar policy, and someone
-on that list should be enforcing it.
-
-Alexander
+-- 
+Florian Weimer / Red Hat Product Security Team
