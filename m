@@ -1,78 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/11
-Message-Id: <E1U2iPa-0008EE-IS@xenbits.xen.org>
-Date: Tue, 05 Feb 2013 13:18:10 +0000
-From: Xen.org security team <security@....org>
-To: oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 43 (CVE-2013-0231) - Linux pciback DoS via not rate limited log messages.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/08/3
+Message-ID: <20130508210702.GH6040@frohike.xs4all.nl>
+Date: Wed, 8 May 2013 23:07:02 +0200
+From: Peter Bex <Peter.Bex@...all.nl>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE request: CHICKEN Scheme incomplete fix for CVE-2012-6122 (select() fs_set buffer overrun)
 Content-Type: text/plain; charset=utf-8
 
-(Copy of previously sent advisory)
+Hi all,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I'd like to request a CVE for a select() fd_set buffer overrun problem
+in CHICKEN Scheme before 4.8.2 and all stable versions up to and
+including 4.8.0.3, on non-Windows systems.
 
-             Xen Security Advisory CVE-2013-0231 / XSA-43
-			      version 2
+The bug exists due to an incomplete fix for CVE-2012-6122.  Originally,
+only the userland thread scheduler's use of select() was rewritten to
+use POSIX poll().  It was later discovered by Florian Zumbiehl and Joerg
+Wittenberger that select() was still being used in three other places.
 
-         Linux pciback DoS via not rate limited log messages.
+This bug is remotelye xploitable in networking code, under the right
+conditions (if the "ulimit -n" value exceeds FD_SETSIZE).
 
-UPDATES IN VERSION 2
-====================
+The announcement can be found at
+http://lists.nongnu.org/archive/html/chicken-announce/2013-05/msg00000.html
 
-Public release.
+There are two commits which together fix the bug:
+http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commitdiff;h=9e2022652258e8a30e5cedbf0abc9cd85a0f6af7
+http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commitdiff;h=556108092774086b6c86c2e27daf3f740ffec091
 
-ISSUE DESCRIPTION
-=================
-
-Xen's PCI backend drivers in Linux allow a guest with assigned PCI device(s)
-to cause a DoS through a flood of kernel messages, potentially affecting other
-domains in the system.
-
-IMPACT
-======
-
-A malicious guest can mount a DoS affecting the entire system.
-
-VULNERABLE SYSTEMS
-==================
-
-All systems running guests with access to passed through PCI devices are
-vulnerable.
-
-Both mainline ("pvops") and classic-Xen patch kernels are affected.
-
-MITIGATION
-==========
-
-This issue can be avoided by not assigning PCI devices to untrusted
-guests.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa43-pvops.patch            Apply to mainline Linux 3.8-rc5.
-xsa43-classic.patch          Apply to linux-2.6.18-xen tree.
-
-$ sha256sum xsa43*.patch
-4dec2d9b043bce2b8b54578573ba254fa7e6cbf4640cd100f40d8bf8a5a6a470  xsa43-classic.patch
-6efe83c9951dcba20f18095814d19089e19230c6876bbdab32cc2f1165bb07c8  xsa43-pvops.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJREQI+AAoJEIP+FMlX6CvZkoEH/2sIEO+1qLiHTde/UJznrvr8
-R8MDNC5tqXVLtbPjScoTItMHaPfz33lcypz9UFknHepdwZKhRrcuqy4E79lxeXDG
-BybbbbfNfJPeUG44O1fkyJTJys0xRBnAGzWInZZwq+gWRaJv+JNhzinFujvLNDJV
-4m2ObnSwT1mx/9CjRxWGakKDhPcZSGmWIicyN5tueNKdWbAjSqiR/J8N5W+QJiCm
-+BzjzYpfUqn0vKOlARQIMshzqFjYVTnoHFZf/4Hl7ogIibxfGGo5t05pzBoAlIgj
-nTizW2Bxs9XM1NaFsZ2ESg8KVDTFSHS+jsMtdl0bWoHwRs6nNMQJJTjTPHXspCQ=
-=5o5U
------END PGP SIGNATURE-----
-
-Download attachment "xsa43-classic.patch" of type "application/octet-stream" (884 bytes)
-
-Download attachment "xsa43-pvops.patch" of type "application/octet-stream" (1786 bytes)
+Cheers,
+Peter Bex
