@@ -1,66 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/26/4
-Message-ID: <20130726120316.GD6700@patternsinthevoid.net>
-Date: Fri, 26 Jul 2013 12:03:16 +0000
-From: isis agora lovecruft <isis@...project.org>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Requesting CVE-ID(s) for Python's pip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/08/1
+Message-ID: <20130508013001.GB21927@thyrsus.com>
+Date: Tue, 7 May 2013 21:30:01 -0400
+From: "Eric S. Raymond" <esr@...rsus.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: Kurt Seifried <kseifried@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Miroslav Lichvar <mlichvar@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- gpsd 3.9 fixing a denial of service flaw
 Content-Type: text/plain; charset=utf-8
 
-I would also like to request CVE assignment(s) for two issues in pip
-(https://github.com/pypa/pip/), related to Donald Stufft's.
+Jan Lieskovsky <jlieskov@...hat.com>:
+> Hello Eric,
+> 
+>   since there have doubts appeared:
+>     https://bugs.mageia.org/show_bug.cgi?id=9969#c2
 
-First issue:
-------------
-  Python's pip versions 1.4.x and earlier are vulnerable to an Arbitrary Code
-  Execution Attack due to incorrect regexp parsing of external download links
-  in the following functions in pip/index.py:
+Sorry, seem I missed some earlier mail, probably due to my DNS being
+temporarily deranged after I upgraded to Ubuntu 13.04.  
+ 
+> which upstream patch has been the CVE-2013-2038 identifier assigned
+> to, could you confirm / disprove the latter?
+> 
+> * The true crash was in the NMEA(2000) driver, with upstream patch:
+>   http://git.savannah.gnu.org/cgit/gpsd.git/commit/?id=dd9c3c2830cb8f8fd8491ce68c82698dc5538f50
+> 
+>   This one should be referenced under CVE-2013-2038.
 
-    * PackageFinder._get_pages() https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L232
-    * PackageFinder._sort_links() https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L272
-    * PackageFinder._package_versions() https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L285
-    * PackageFinder._link_package_versions() https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L290
+Not quite right.  The problem was with NMEA0183, not with NMEA2000.  But yes,
+this crash has been seen in the wild, though not in conjenction with an 
+identified attack.
 
-  Which allow an attacker with the ability to Man-in-the-Middle external
-  package URIs (which often include external HTTP URIs, and can include the
-  module author's personal website, see
-  https://github.com/pypa/pip/commit/a3584d176697bd4c83390de1857679d44389e00d#L0L265)
-  to specify an arbitrarily high package version number and gain code
-  execution.
+> * While the hypothetical one was in the AIS driver, with upstream patch:
+>   http://git.savannah.gnu.org/cgit/gpsd.git/commit/?id=08edc49d8f63c75bfdfb480b083b0d960310f94f
+> 
+>   Upstream 3.9 announcement "Armor the AIS driver against an implausible overrun attack."
+>   would support this.
 
-  Uptream bugtracker reports: https://github.com/pypa/pip/issues/425#issuecomment-20639993
-                              https://github.com/pypa/pip/issues/425#issuecomment-20640890
+Correct.  The potential AIS overrun has *not* been observed.  The
+possibility was reported by someone reading the code.
 
-  Other mentions: https://github.com/pypa/pip/commit/9ccd5f0bb37508f03e6a19be58af7384eede2157
-                  https://paste.debian.net/7309/
+> > Application of the patch looks reasonable. Just would be good to know
+> > if it was applied just like a preventive measure (no DoS right now, just
+> > prevent its [possible] occurrence in the future in case of code change)
+> > or if under certain circumstances it might be used to DoS gpsd too?
 
-  This issue is fixed in pip>=1.5.x by Donald Stufft in the following commits:
-  https://github.com/pypa/pip/commit/0e1da584f418ae0088b43d01248572e2ff53d3a1
-  https://github.com/pypa/pip/commit/9ccd5f0bb37508f03e6a19be58af7384eede2157
-
-Second issue:
--------------
-  Python's pip versions 1.5.x and earlier use MD5 hashes for verification of
-  package integrity against PyPI (which defaults to providing MD5).
-
-These issues appear to be unrelated to Donald Stufft's CVE ID request filed
-earlier today, and additionally unrelated to the following already assigned
-CVEs:
-
-  * CVE-2013-1888 Pip builds in /tmp 
-    https://security-tracker.debian.org/tracker/CVE-2013-1888
-    https://bugzilla.redhat.com/show_bug.cgi?id=923974
-    http://seclists.org/oss-sec/2013/q1/704
-
-  * CVE-2013-1629 Pip<1.3.0 uses a default package index without SSL
-    https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1629
-    https://bugzilla.redhat.com/show_bug.cgi?id=968059
-
+It is a preventive measure.  I don't think it is presently exploitable,
+but I'm not *certain* it isn't.
 -- 
- ♥Ⓐ isis agora lovecruft
-_________________________________________________________
-GPG: 4096R/A3ADB67A2CDB8B35
-Current Keys: https://blog.patternsinthevoid.net/isis.txt
-
-Download attachment "signature.asc" of type "application/pgp-signature" (916 bytes)
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
