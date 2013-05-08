@@ -1,85 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/9
-Message-ID: <CAJfirP=aPxvzzQWXb70GtioRnVETgohdb-vrkPu8Z9Pc60Di=g@mail.gmail.com>
-Date: Fri, 27 Sep 2013 10:29:34 +0200
-From: Rafael Luque <rafael.luque.leiva@...il.com>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Javamelody blind XSS through X-Forwarded-For header
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/08/2
+Message-ID: <518AAADA.1060301@redhat.com>
+Date: Wed, 08 May 2013 13:43:22 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: When does resource consumption become a security vulnerability?
 Content-Type: text/plain; charset=utf-8
 
-The issue has already been fixed in the trunk (revision 3515):
-http://code.google.com/p/javamelody/source/detail?r=3515
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It's ready for the next release (1.47) and a new build including the fix
-it's available at:
-https://javamelody.googlecode.com/files/javamelody-20130927.jar
+When does resource consumption become a security vulnerability?
 
-The release 1.47, including that fix, is supposed to be released in just a
-few days from now.
+"It's not a tumour!"
 
-Rafa
+Originally posted as
+https://bugs.launchpad.net/nova/+bug/1175193/comments/9
+
+Ok so this is one of those lovely grey areas of information security,
+this is obviously a security related issue, but is this a security
+vulnerability (requiring CVE and full security treatment) or is this a
+security hardening issue (thus no CVE or full security treatment)?
+
+So first let's look at trust boundaries. Now the end problem here is
+that the database gets filled up by spurious log entries. What level
+of access is needed to accomplish this? Luckily in this case it
+requires authenticated access, this cannot be done as a non
+authenticated user from what I am told (if this isn't true please let
+us know ASAP!). As such if an anonymous user was able to remotely
+flood the database that would be an obvious security problem, they
+could kill the system remotely which usually falls into the category
+of security vulnerability.
+
+But in this case it requires authenticated access, and in general
+users are allowed to consume system resources, however typically we do
+not want to allow a single user, or even a group of users to consume
+resources in a way that renders the system unstable or unusable. In
+this case filling up the database has a very negative effect on the
+system.
+
+So this issue falls into the grey area of "is it security or
+hardening?" and then further falls down the rabbit hole of "how much
+and how quickly do we allow a user to consume system resources before
+we call it a security vulnerability?" So clearly the amount of data
+logged has a significant impact on this. For example if each
+pause/unpause/etc action generated say a megabyte of logged data this
+would be extremely easy to use to fill up the database (even a large
+database would fill quickly at 1meg/entry). In this case it's
+approximately 1k per entry, which is enough to make it interesting,
+assuming a few gigabytes are available then it would take some time
+for the attacker to exploit this enough times to cause a problem.
+Additionally because it requires authenticated access it is easy to
+track down who did it and censor them (e.g. tell them not to do it,
+remove their account, whatever).
+
+So with this in mind I am inclined to classify this as a security
+hardening issue, and not a security vulnerability. This may of course
+change if new information comes to light (e.g. unauthenticated access
+allows exploitation, or the amount of data logged per entry can be
+increased somehow).
+
+Now a note on fixing this: there are several strategies used in
+logging systems to deal with attacks like this. The first one is a
+classic syslog "the last message was repeated X times", this allows
+multiple identical log entries to be consolidated quickly and easily,
+reducing the amount of logging space required and can work well with
+flooding attacks. The second strategy is to rotate and archive the
+logs once they hit a certain size (log files typically compress really
+well). Of course neither of these solutions will completely stop
+resources from being used, but they will reduce the amount of some of
+the resources used (e.g. disk space) at the cost of CPU time (to
+rotate/compress logs).
+
+There are other solutions that will prevent resources from being
+abused, but will compromise the integrity of the data available, e.g.
+using a ring buffer per user (log the last 10000 events and then
+overwrite the oldest event once you get more than 10000). This would
+allow an attacker to attack the system in ways that are typically
+logged, and then cause the log of these activities to be overwritten
+by executing 10000 non malicious logged events for example. You can
+also trade off availability for logging data, for example by blocking
+actions that can't be logged because the logging is full or has
+failed. I suspect in almost every use case instance of OpenStack this
+is not an acceptable trade off.
+
+TLDR: this is probably security hardening and not a security flaw. We
+should fix it by rotating the database entries out and compressing
+them, as configured by the user.
 
 
-2013/9/27 Kurt Seifried <kseifried@...hat.com>
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 09/26/2013 12:01 PM, Rafael Luque wrote:
-> > Javamelody [1] includes a blind XSS vulnerability. An attacker
-> > could provide an specially-crafted "X-Forwarded-For" HTTP header
-> > while visiting a Java web application monitored with Javamelody
-> > that would lead to arbitrary HTML or Javascript execution in the
-> > context of the administrator user monitoring the panel of active
-> > sessions in the application.
-> >
-> > The versions affected are the last one 1.46 and all the previous
-> > that include the session monitoring panel feature.
-> >
-> > The issue has been reported to the project [2] but whithout
-> > response by now.
-> >
-> > The proof of concept may use the own Javamelody online demo:
-> >
-> > 1. Access the demo site [3] using a fake X-Forwarded-For header
-> > like the following: <script>alert('xss')</script> 2. Then visit the
-> > Javamelody sessions monitoring page at [4] and you should see the
-> > Javascript running.
-> >
-> > Can you allocate a CVE identifier for this?
-> >
-> > Thank you && Regards,
-> >
-> > Rafael Luque
-> >
-> > [1] https://code.google.com/p/javamelody/ [2]
-> > https://code.google.com/p/javamelody/issues/detail?id=346 [3]
-> > http://demo.javamelody.cloudbees.net/ [4]
-> > http://demo.javamelody.cloudbees.net/monitoring?part=sessions
-> >
->
-> Please use CVE-2013-4378 for this issue.
->
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (GNU/Linux)
->
-> iQIcBAEBAgAGBQJSRSIPAAoJEBYNRVNeJnmTESUP/03uh70VX0qS3yLBakwMFrpB
-> zUKnQElyqJzMh7N7Q0wBUk+eJPB5scJYqMeoi7HnCgyQPeuk0NGk3cmQT/DP/uXo
-> fs1ajYEX4KJS4ydKAdytvj1qI9aJdJF6cLoIf0ri7ZHtcbaFnFclYeaTXf9269L9
-> R1qJaM5+d3if8a3FGOXQbhDTFiY7ohzDzl/OsRybHTll8Z4UxaC+IlMgbMkDscHU
-> VVqQ6y0w7vqTyeG4vNhuE+XEeUmZxKdxNUQTsMqOhYGi4AS+unm553aQ+DAMeD9y
-> MODbkdAolh2CJkZsWdI8tfLQmWkRZ0FP8L5TQXkcu+EeE8aFdtlxoWPVU4PTXAak
-> LXCuMNQEG5ig/MNdYkNwTudBgRCUYKi50ek3XSf4tkovyNP+L9Lw3t/+5/EWpWg3
-> Y58hpzOKpL8ieRlrIFzW8rxOV0xFitn+aontZKuwxFv6wa+Av/Ku9eUvEZlkYmx1
-> LKzERCCz2V9dtjn0W/zpWf8Mg3A+KqST+7M22M0m9G4OwmIFwyWifs9TvigDwg/r
-> X4QbiJ9G8eWCk2Lpw1DNFVPoamIPoynYfRcOfQeC/P81QqeAyJ9yeejeIosR5TDc
-> 9yP2VPJJZ7ufGMqwy/u8k/3VkKNSMQykX03u/t7GpyriZnw4DNvjd/PTynNvZMsL
-> IfKZCYKOkAqx7SqL+tD6
-> =Id6a
-> -----END PGP SIGNATURE-----
->
-
+iQIcBAEBAgAGBQJRiqraAAoJEBYNRVNeJnmTXS0P/25Eswo3r4/xeOZYoDEFtlk3
+WTnnlN8HECFu/6uxZ3XEUcKz9VTL+de23A0Fk3vYf9mwqTmE60d9AO2tIiLH5E7r
+337593rjxOR0dpmmybIx92p4PGtLids0QszQ2FcoqiubClq7gJ3yNS4S1uih3n3z
+pJkdnr7kflIJwUy4v4nbB/JUdE9GtGI8ukgZyTgbJHSmMvVQ5A6lJ7uS8bjOTPp9
+GH8R/TBwRxYTORwDBMa7itCeFkSejWMxl+s84TpYQUGXRj8433oTtjbZe9lOZIe6
+26ldWR5JvVHbzdTtwoh2/TVej2nUR4oyiG7pCqscMMcsJGCMfjAwmLosHO0jspOU
+DnvFAUcU3WukAxljZqNDrg1QPOH3BahkraBSlBub7jq25fInGjryaDRYKfj0tiVz
+XXb1lPDe7TOoW0Mc7nky97geJQA6Z9AsNixWjwRaCrVLeC+7ZPGz0sFNFfNY4uFk
+PQ9XRmKTwWwUDBM88KZAEWjD8oIMxbnIlFBBprOH2GESLIY0DPOtN0vtinH4Vl8n
+yinypRzSKVni0ykP4+L0anHe2jLsTjwHmAPXtW3VTXMUyQMTlD7stLI3xdHVovr1
+vapw7q5c7R52pIGp34Xpq4Oj1rvOW4DnDxqa+w7LBNAJ49YZcIKj0cDx6rNyshK/
+kmtK9QBs7TZ3GMTAOuJ3
+=5Dy6
+-----END PGP SIGNATURE-----
