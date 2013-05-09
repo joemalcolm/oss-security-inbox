@@ -1,174 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/15
-Message-ID: <525E2B5F.9050904@redhat.com>
-Date: Tue, 15 Oct 2013 23:59:59 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: RESEND: CVE Request: pwgen
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/09/2
+Message-ID: <518BBDA0.7040008@openstack.org>
+Date: Thu, 09 May 2013 17:15:44 +0200
+From: Thierry Carrez <thierry@...nstack.org>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2013-010] Nova uses insecure keystone middleware tmpdir by default (CVE-2013-2030)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-On 10/11/2013 09:34 PM, Solar Designer wrote:
-> Kurt, Steve, all -
-> 
-> On Thu, Oct 10, 2013 at 03:35:09PM +0200, Marcus Meissner wrote:
->> It might just not be that CVE worthy. But I saw no replies...
-> 
-> I now think it is CVE worthy.
-> 
->> (CVE worthyness: It does not fully meet the security expectations
->> of generating a non-weak password by default.... )
->> 
->> Solar? Kurt?
-> 
-> Kurt was "sitting on the fence for this one":
-> 
-> http://www.openwall.com/lists/oss-security/2012/01/17/12
-> 
-> At the time, I replied that it was too early for the CVE aspect, as
-> I was still figuring out the magnitude of the problem:
-> 
-> http://www.openwall.com/lists/oss-security/2012/01/17/14
-> 
-> Steve replied that having an insecure feature documented does not
-> always preclude from CVE assignment:
-> 
-> http://www.openwall.com/lists/oss-security/2012/01/17/15
-> 
-> To this, I can add that although the phoneme mode is documented as
-> being less secure, the magnitude and ways in which it is less
-> secure are unclear from the documentation.  Specifically, there's
-> no mention that the distribution of generated passwords is highly
-> non-uniform, and indeed this is not clear from merely looking at a
-> handful of passwords. (I guess this non-uniformity was not expected
-> by the author, and thus it is a bug.)
-> 
-> Also, without looking at the documentation, it is not even
-> immediately clear (to a new user of the program) that phonemes are
-> being used. At first glance, the passwords look like they could
-> potentially use the full 62^8 keyspace - but this is actually not
-> the case, by far.  So the program's default behavior is
-> misleading.
-> 
-> The thread ended here, with some figures showing just how bad the 
-> problem is:
-> 
-> http://www.openwall.com/lists/oss-security/2012/01/22/6
-> 
-> The CVE aspect was not revisited.
-> 
-> Here are the figures for pwgen's defaults with output to tty:
-> 
-> Top 1 million of unique passwords from my 1 billion training set
-> cracks 3.7% of passwords in the test set.
-> 
-> Top 10 million cracks 14.5%.
-> 
-> Top 44 million cracks 21%.  (I chose this as an optimal wordlist
-> size.)
-> 
-> Top 100 million cracks 26.3%.
-> 
-> With pwgen's defaults with output to non-tty:
-> 
-> Top 45.5 million cracks 75%.  (Ouch!)
-> 
-> These results can be improved a little bit (slightly higher
-> percentages cracked per same wordlist size) by using a larger
-> training set (beyond 1 billion) or by considering all of the
-> phoneme probabilities, etc. and creating a program that would
-> output pwgen's possible passwords in an optimal order (this proves
-> to be a non-trivial task so far, yet someone may do it).
-> 
-> Alexander
-> 
->> On Thu, Sep 26, 2013 at 11:11:59AM +1000, Michael Samuel wrote:
->>> Hi,
->>> 
->>> No CVEs have been assigned for this, and as far as I can tell
->>> no distributions have patched.
->>> 
->>> On 6 June 2013 14:19, Michael Samuel <mik@...net.net> wrote:
->>> 
->>>> I've done some further analysis of the program after reading
->>>> the previous thread, and I think there needs to be CVEs and
->>>> fixes for:
->>>> 
->>>> - When used from a non-tty passwords are trivially weak by
->>>> default (first reported by Solar Designer) - Phonemes mode
->>>> has heavy bias and is enabled by default (first reported by
->>>> Solar Designer) - Silent fallback to insecure entropy (first
->>>> reported by Jean-Michel Vourg?re) (Debian bug #672241 -
->>>> tagged as "wishlist") - Secure mode has bias towards numbers
->>>> and uppercase letters
->>>> 
->>>> I've attached a patch that fixes most issues - it doesn't
->>>> solve the bias towards numbers, because it's caused by
->>>> requiring at-least one number per password - so in an 8
->>>> character password there'd have to be 0.1 numbers to avoid
->>>> bias.  There's an argument to be made for removing the
->>>> at-least-one rule, but if the system that password is being
->>>> used with has those rules, it doesn't fix the problem anyway.
->>>> Perhaps a separate flag for that?
->>>> 
->>>> The changes are:
->>>> 
->>>> - Print a message and abort() of there's trouble opening or
->>>> reading /dev/urandom (So apport should pick up any packages
->>>> that have been using insecure entropy) - Make "-s" the
->>>> default - Add an argument --insecure-phonemes (or -P) -
->>>> Non-tty passwords are now as secure as tty - Require
->>>> lower-case characters be present to even out some bias - Pull
->>>> in passwdqc as a Suggests on the debian package - pwqgen can 
->>>> generate sane random passphrases
->>>> 
->>>> I can't imagine any reasonable use-case for the non-tty
->>>> defaults (except maybe combining with espeak as an enhanced
->>>> interrogation technique), and you can be certain that there's
->>>> some people out there with it embedded in a script that's
->>>> generating useless passwords.
->>>> 
->>>> For phonemes mode in general, the bias is extreme, there are
->>>> a limited number of possible combinations and it is generally
->>>> not suitable for security purposes.  I have some fairly
->>>> detailed analysis of it, but I believe this list has a
->>>> no-exploits policy...
->>>> 
->>>> Regards, Michael
+OpenStack Security Advisory: 2013-010
+CVE: CVE-2013-2030
+Date: May 9, 2013
+Title: Nova uses insecure keystone middleware tmpdir by default
+Reporter: Grant Murphy (Red Hat), Anton Lundin
+Products: Nova
+Affects: Folsom, Grizzly
 
-Welp I can't argue with data (well I could, but that would be silly).
+Description:
+Grant Murphy from Red Hat and Anton Lundin both independently reported a
+vulnerability in Nova's default location for the Keystone middleware
+signing directory (signing_dir). By previously setting up a malicious
+directory structure, an attacker with local shell access on the Nova
+node could potentially issue forged tokens that would be accepted by the
+middleware. Only setups that use the default value for signing_dir are
+affected. Note that future versions of the Keystone middleware will
+issue a warning if an insecure signing directory is used.
 
-Please use:
+Havana (development branch) fix:
+https://review.openstack.org/#/c/28568/
 
-CVE-2013-4440 pwgen non-tty passwords are trivially weak by default
+Grizzly fix:
+https://review.openstack.org/#/c/28569/
 
-CVE-2013-4441 pwgen Phonemes mode has heavy bias and is enabled by default
+Folsom fix:
+https://review.openstack.org/#/c/28570/
 
-CVE-2013-4442 pwgen Silent fallback to insecure entropy
-
-CVE-2013-4443 pwgen Secure mode has bias towards numbers and uppercase
-letters
-
+References:
+https://bugs.launchpad.net/nova/+bug/1174608
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-2030
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJSXiteAAoJEBYNRVNeJnmTDn0P/2uUVFMCYJcJ8L5vWWAlrSG5
-n10+s7NqviQ/qrRh+zkgM1kYpFropXrRJgjqschANmP04DbUoo1j4dYFAkO4EwFQ
-FYgic/DmOO/XD6KNkd6NLl4HQIp0ceTabO0uubBWheL0uCH+GFP4MhGBPMmGeyOs
-JKLCM5EK7KfzZY8bIEfkoU0qiPZGqPNTnjxW+wFVVY9cgnkuQ7yrmZVjN3uc0jfK
-MEOsZQ2dLCru4Sh+AS+2xlkNO6DxgxpuH0uHONm88hEbm0Uvg7pb8oiLQpooNUKt
-BCetRvr2nZqxVysjUzzs9OL0IDdnqP/ItAT4a1Bi2s+GVhlfWPMr6zbjo/47sP4X
-IFeGUnb0XCA06l4lSxyqm/NDIxxx/vO13kCIeVmjj7lUn28qu/A2Mj/e/xEN38QU
-joC1h3CLsRfCr8c0ZVBos4yH4vt4Ex1aMNBtghb64mB5oG0WHzjov3HmODieqVIk
-YkvAbLeX88rQFNkoO6VuQzIG1v95Gn0XR/MU/wIf+zMLbgCGkWI6gGLk1Rgg2ARJ
-VejHsrXjOIcJRaHQ9AfE5Ye54efVvfmZrHA9IXmdZB/VgI6DdGLzIlZSgqGHP0E2
-C/nTvaHBNlOPtFyL8Dep4h83JSvlmWNPoLMfDwbPMQVQ3mt4F/HZH/ST2vzdnlLt
-C3eVQaCGgtX/+eNGHJUR
-=dq17
+iQIcBAEBCAAGBQJRi72dAAoJEFB6+JAlsQQjJZAQAJ5w/+BoBD4em8YklBsxU6wU
+Bn1wWu3W5ngCNuHwr4ydWzC3U1TT1zWtogWJpv/+87m2KPESWhs7YGCkTIE9tLpA
+sNOniOG9hGUsWwRgtUqjA8/8QzLgbNJ/PDJx0lrNPNkvMbHwP/jxotx353edhelQ
+QAPJwVPBqu0vn2VZOeFWYNO/AnWNcjTXE0po92qaFvw3HWL3ykMd30w4Ejxv9clC
+VjBjaNkReSkmcd/BaArtr1IenyYyVqM7nv/VWl5O5Up02+uvAozDmy6Cyc1O5VOW
+6m9nRH2WKE/bFXcTEG4rpH+/BZxG2RuyklUBvVtSaEAQOWYFSwQKzjxGM3rItsWt
+iuQYrakl6H69tRS3HS9pAXWdxSikSb8CqmVJauf3RG1/EQ7GtCO0kXVPi8fYBaTX
+GpLmpY8bj6o2iY1Kh1bozZ2oYVLgPrhP2R4oj+4iaSN++gy2qs0d3AvIK0BzBKT+
+fd7wAUpdxltM9eZS82VEQxIaOGUDqnGompEu3nPRv9KD5kZqgz/L/jp5I+PR3y1D
+Uaj8W+FfF/AZtMRLJHl3I0kUHRhfuIusir5zja7UCoR6UEeipLvBzbi/DSGfBCRY
+/VbBv9ZZBeQ+Kw4EwS4/7G5nw1RX4/bKGSi0zcwwmD2unB7Plm9MjI65yR4oFidl
+uOpCYFwNk6PqCFED/mCz
+=wjZ/
 -----END PGP SIGNATURE-----
