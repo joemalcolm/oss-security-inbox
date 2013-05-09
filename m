@@ -1,62 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/18
-Message-ID: <51420B45.3090802@openstack.org>
-Date: Thu, 14 Mar 2013 18:39:17 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/09/3
+Message-ID: <518BC514.9040902@openstack.org>
+Date: Thu, 09 May 2013 17:47:32 +0200
 From: Thierry Carrez <thierry@...nstack.org>
 To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA 2013-008] Nova DoS by allocating all Fixed IPs (CVE-2013-1838)
+Subject: [OSSA 2013-011] Keystone tokens not immediately invalidated when user is deleted (CVE-2013-2059)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-OpenStack Security Advisory: 2013-008
-CVE: CVE-2013-1838
-Date: March 14, 2013
-Title: Nova DoS by allocating all Fixed IPs
-Reporter: Vish Ishaya (Nebula)
-Products: Nova
+OpenStack Security Advisory: 2013-011
+CVE: CVE-2013-2059
+Date: May 9, 2013
+Title: Keystone tokens not immediately invalidated when user is deleted
+Reporter: Sam Stoelinga
+Products: Keystone
 Affects: All versions
 
 Description:
-Vish Ishaya reported a vulnerability in Nova where there is no quota for
-Fixed IPs. Previously the instance quota acted as a proxy for a Fixed IP
-quota, but if your configuration allows an instance to consume more than
-one Fixed IP via an extension such as multinic then this is no longer
-true. Running out of Fixed IPs would result in not being able to spawn
-new instances.
+Sam Stoelinga reported a vulnerability in Keystone. When users are
+deleted through Keystone v2 API, existing tokens for those users are not
+immediately invalidated and remain valid for the duration of the token's
+life (by default, up to 24 hours). This may result in users retaining
+access when the administrator of the system thought them disabled. You
+can workaround this issue by disabling a user before deleting it: in
+that case the tokens belonging to the disabled user are immediately
+invalidated. Keystone setups using the v3 API call to delete users are
+unaffected.
 
-Grizzly (development branch) fix:
-https://review.openstack.org/#/c/24451/
+Havana (development branch) fix:
+https://review.openstack.org/#/c/28677/
+
+Grizzly fix:
+https://review.openstack.org/#/c/28678/
 
 Folsom fix:
-https://review.openstack.org/#/c/24452/
-
-Essex fix:
-https://review.openstack.org/#/c/24453/
+https://review.openstack.org/#/c/28679/
 
 References:
-https://bugs.launchpad.net/nova/+bug/1125468
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-1838
+https://bugs.launchpad.net/keystone/+bug/1166670
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-2059
 
 - -- 
 Thierry Carrez (ttx)
 OpenStack Vulnerability Management Team
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-iQIcBAEBCAAGBQJRQgtEAAoJEFB6+JAlsQQjf6gP/0Ao3Hq5MSChlbwtjMiUPPlC
-ralE6V5l3/V/jPJ/XiHrSJo2qbwgil4SSrwj6mDx00bwj3lLyYKV9KjRx9FJjwl0
-YuUm/AY1R4/miED8HyjhhteC0xAisqciwZQLrN6DwAdP3YEDZZk0Cfxp3Xw6XxAM
-SAb2Gp0Ranu0lc7jLBNsp0G4idZvF232kXRDEMgpAwcsjmxh1sl97IBUqq87UJax
-RDnI2p/bpPahZXBZK4RPZR92IbdVZ4SE+piC0b4ITESdxAh9NadWfUBIkf4fOdvM
-yVKWFvRMhIFqTFEnpaX/091mOzkHJ8bWRpKImrw3qSLvXzyzlBwuuT0NyL6qDTPQ
-0cY9gkiyqOtlvsAxF7tNDHxnIlq/zy86Tvi3KVoyJcUenGPjZwWNINhyvvFWs03t
-n0W58XQOnXPxYLSI3CG5gUcJUWTbJQKQAapkoMGUASc7kcVCNv334z45Ui4n51o4
-5WUOQTzgWJRskqolull7wpScaNoZtQgnnSTHwtAXt4Pykum4N3FEOEo4C/gHa1uz
-nW8YkZRgoHbGYNypNDDWE6UdPZT/WOO/+RbMQwRVitFJtHzG1FuLa1fNP6mKxDPn
-vpHnp9jBZlW9OjBZgp7/YqFv586l/xrT1hG3i+I6fq2w5G7Gru5PeRhUElzq4qHF
-k+FvT1+nkHkvTbMb8z1z
-=gipy
+iQIcBAEBCAAGBQJRi8UUAAoJEFB6+JAlsQQjarMQAL64x2OlW3SbgOoCUDhi91lv
+JdBStMO6/6H1Njjv0cLEAOE/50rAJSFLsdLlzSkXHimD9NWnXogpbaKj+gWd/Jbm
+xDOgVtRDa8IgmaXVgA88tAO0/C6QHTQMBwBce8hVzMRRDZZ6zW7SAvofTBjdjmEj
+tC8nwhxF/QAx/lHwIyWHQsGCip+z9JQxT+UCQ5ytQQbSnYI/wmRWMHCCcst7XFqn
+H6Y9LQ8cLQAOZk0fHZx7wsFFVJ9XIiQcZxYSGPDn5/aRXlbbF6cWTy4UPB3jmMkp
+wJ7XSjpXzPLsTCimXwYT9CkhUYjvC7Y9Yu2XF3VycFL+bifobIfPQ2ABNBqkd/U1
+2iIMq8rCTIG+GEhgBMHyrBdXJclsdzY/mFOHZhOdCsLH2pO6EPCUjO3Zs6BPtYfk
+zBNPRzrUXAnay+xjJhjQqxCOuskx/gxt2kOF00G1c/jZTytqzx7M4yf5GL9DYD6g
+LLUZpb+Ia5voocBpK2484fXlouVoQY+encQopnSZb5GarsMgO1hRK8qtExeeR3+o
+NPxeat15YaSvVaCgSL2msqnjIr6g3wXI1vLGdvmGny4hvNnLd+UeeQ9eT0Nc7LN9
+aotaXRhDeYz71aFd8ZCYpUtoZ6I50/XnRT9+FrQ2QZ7cEKSVZjUv+mcEn0mCvZpC
+hqKVwOK6strcPXDlQwZr
+=e4jK
 -----END PGP SIGNATURE-----
