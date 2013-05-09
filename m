@@ -1,82 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/25/1
-Message-ID: <5101D792.3050805@redhat.com>
-Date: Thu, 24 Jan 2013 17:53:38 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [Security hardening] [Notification] haproxy (previously) failed to drop supplementary groups after setuid / setgid calls properly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/09/4
+Message-ID: <D6182642CE6D2D4FBFCDF99946E249883B2FF461@G4W3299.americas.hpqcorp.net>
+Date: Thu, 9 May 2013 16:02:24 +0000
+From: "Miller, Mark M (EB SW Cloud - R&D - Corvallis)" <mark.m.miller@...com>
+To: Thierry Carrez <thierry@...nstack.org>, "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "openstack-announce@...ts.openstack.org" <openstack-announce@...ts.openstack.org>
+Subject: RE: [Openstack] [OSSA 2013-011] Keystone tokens not immediately invalidated when user is deleted (CVE-2013-2059)
 Content-Type: text/plain; charset=utf-8
 
+General question:
+
+Looks like a fix has been written for Grizzly. Is there an official Grizzly patch release coming out that contains this and other fixes? 
+
+Regards,
+
+Mark Miller
+
+-----Original Message-----
+From: Openstack [mailto:openstack-bounces+mark.m.miller=hp.com@...ts.launchpad.net] On Behalf Of Thierry Carrez
+Sent: Thursday, May 09, 2013 8:48 AM
+To: openstack@...ts.launchpad.net; oss-security@...ts.openwall.com; openstack-announce@...ts.openstack.org
+Subject: [Openstack] [OSSA 2013-011] Keystone tokens not immediately invalidated when user is deleted (CVE-2013-2059)
+
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-On 01/23/2013 09:25 AM, Jan Lieskovsky wrote:
-> Hello vendors,
-> 
-> just FYI notification that haproxy upstream has recently corrected
-> [2] improper dropping of supplementary groups [1] after setuid /
-> setgid calls.
-> 
-> We have further investigated this issue and have reasons to believe
-> that by itself this is NOT a security issue (another flaw would
-> need to be found in haproxy this to be actually possible to use for
-> something interesting).
-> 
-> For now we are considering this fix to be a preventive measure /
-> security hardening (but took the time to notify you explicitly
-> about this as you might still want to backport it into affected
-> versions).
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
-> P.S.: [1] https://bugzilla.redhat.com/show_bug.cgi?id=894626 [2]
-> http://git.1wt.eu/web?p=haproxy.git;a=commitdiff;h=ab012dd3
-> 
+OpenStack Security Advisory: 2013-011
+CVE: CVE-2013-2059
+Date: May 9, 2013
+Title: Keystone tokens not immediately invalidated when user is deleted
+Reporter: Sam Stoelinga
+Products: Keystone
+Affects: All versions
 
-So to be clear: haproxy fails to properly drop group privileges. Why
-isn't this classified as a security vulnerability?
+Description:
+Sam Stoelinga reported a vulnerability in Keystone. When users are
+deleted through Keystone v2 API, existing tokens for those users are not
+immediately invalidated and remain valid for the duration of the token's
+life (by default, up to 24 hours). This may result in users retaining
+access when the administrator of the system thought them disabled. You
+can workaround this issue by disabling a user before deleting it: in
+that case the tokens belonging to the disabled user are immediately
+invalidated. Keystone setups using the v3 API call to delete users are
+unaffected.
 
-Well there is no way to exploit this that we're aware of, if you know
-a way to exploit this please let us know.
+Havana (development branch) fix:
+https://review.openstack.org/#/c/28677/
 
-What would make this a security vulnerability? Let's say for example
-haproxy had an option to read or write to a file and did this with the
-privileges it failed to drop (granting the attacker privilege
-escalation) then it would be a security vulnerability.
+Grizzly fix:
+https://review.openstack.org/#/c/28678/
 
-So again, if you know of a way to exploit this please let us know,
-otherwise we will continue to consider this a security hardening issue
-and not a security vulnerability.
+Folsom fix:
+https://review.openstack.org/#/c/28679/
 
-So as for this tweet:
-
-"@chort0 http://seclists.org/oss-sec/2013/q1/174 … I didn't know about
-that claim -- I guess it explains why such great effort was made to
-not call it a vuln"
-
-I wasn't aware of this claim by haproxy and to be honest I don't care.
-I assigned something like 1,600 CVE's last year, trust me, I'm not
-afraid to annoy people by assigning CVEs that might embarrass them.
+References:
+https://bugs.launchpad.net/keystone/+bug/1166670
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-2059
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJRAdeSAAoJEBYNRVNeJnmTzUAQAJ8zJnXdcC65GcXgKw8niVag
-g394V6cIYIxXQ299eJLENKXPM64sqL/WEt8JrdIOQwaU9xntxVp9Z7JT5wKmgbLa
-HICqLd9pHKfrlZngbId/61uc3P+u6BtIq3fUZfBNMePfUm+Rk18DHNerqZSXZZ9t
-epFz2E/T5RCN+SOzH1ov6WGqB02+aY2JuoWDICYdFX8iDiMA0ZJI4pPCMhX9maNE
-dLwiP1RtmHP2WbBmFZKC9faGgIsOFAoMLdJ2d0qMzQV1QgUNNkUYsFQe+PoeJNjY
-NGfDoFbezZurJvfbfRYmva0Ze/JVfUsTEwSm7OwnTpNvKNZv7N+G8aAvQap5taVH
-8JreDNp0YC4ByuNzRzKtR2iuKxu2ILSYhr1xtzt8uQhERmZvMol/Z6jvBhAJgRZK
-J9WP0xXE8476XDCvo7KQafTEBESApEBkcMXL3DDunyQPNbquzG5lk+RV71I1HsJZ
-TJg+CLgOEllVD2+CXjF6yuvRlnZRLiBCa0H81YuvmzgKFX4uMYJxBTjI9TnklnNN
-MNZQ9o2sQaHj36mNl3/kJftBtveRCDZSmVXhwls8eBp0ysN4mkdycRyTMOITSywu
-OJIaKcFe7NtflqWU9sZFgchMsMO0WUlVTOK1Jm896/aJs+nNM9Z4/STceFGvsZmq
-W40gi3vx3MUWF0Rbp1i7
-=77BF
+iQIcBAEBCAAGBQJRi8UUAAoJEFB6+JAlsQQjarMQAL64x2OlW3SbgOoCUDhi91lv
+JdBStMO6/6H1Njjv0cLEAOE/50rAJSFLsdLlzSkXHimD9NWnXogpbaKj+gWd/Jbm
+xDOgVtRDa8IgmaXVgA88tAO0/C6QHTQMBwBce8hVzMRRDZZ6zW7SAvofTBjdjmEj
+tC8nwhxF/QAx/lHwIyWHQsGCip+z9JQxT+UCQ5ytQQbSnYI/wmRWMHCCcst7XFqn
+H6Y9LQ8cLQAOZk0fHZx7wsFFVJ9XIiQcZxYSGPDn5/aRXlbbF6cWTy4UPB3jmMkp
+wJ7XSjpXzPLsTCimXwYT9CkhUYjvC7Y9Yu2XF3VycFL+bifobIfPQ2ABNBqkd/U1
+2iIMq8rCTIG+GEhgBMHyrBdXJclsdzY/mFOHZhOdCsLH2pO6EPCUjO3Zs6BPtYfk
+zBNPRzrUXAnay+xjJhjQqxCOuskx/gxt2kOF00G1c/jZTytqzx7M4yf5GL9DYD6g
+LLUZpb+Ia5voocBpK2484fXlouVoQY+encQopnSZb5GarsMgO1hRK8qtExeeR3+o
+NPxeat15YaSvVaCgSL2msqnjIr6g3wXI1vLGdvmGny4hvNnLd+UeeQ9eT0Nc7LN9
+aotaXRhDeYz71aFd8ZCYpUtoZ6I50/XnRT9+FrQ2QZ7cEKSVZjUv+mcEn0mCvZpC
+hqKVwOK6strcPXDlQwZr
+=e4jK
 -----END PGP SIGNATURE-----
+
+_______________________________________________
+Mailing list: https://launchpad.net/~openstack
+Post to     : openstack@...ts.launchpad.net
+Unsubscribe : https://launchpad.net/~openstack
+More help   : https://help.launchpad.net/ListHelp
