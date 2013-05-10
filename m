@@ -1,19 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/2
-Message-ID: <20130110165637.745c0d60.reed@reedloden.com>
-Date: Thu, 10 Jan 2013 16:56:37 -0800
-From: Reed Loden <reed@...dloden.com>
-To: <oss-security@...ts.openwall.com>
-Subject: CVE request for multi_xml ruby gem (has same problem as CVE-2013-0156)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/10/3
+Message-ID: <20130510142555.GP14653@dhcp-25-225.brq.redhat.com>
+Date: Fri, 10 May 2013 16:25:55 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Linux kernel: tuntap refuse to re-attach to different tun_struct
 Content-Type: text/plain; charset=utf-8
 
-Apparently, the multi_xml ruby gem has the same issue as CVE-2013-0156.
+On Fri, May 10, 2013 at 05:33:37PM +0530, P J P wrote:
+> Linux kernels built with Universal TUN/TAP device driver(CONFIG_TUN)
+> that includes multiqueue - ioctl(TUNSETQUEUE) - support, is
+> vulnerable to a kernel crash while attaching a device to a new
+> queue.
+> 
+> A user/program could use this flaw to crash the system resulting in DoS.
+> 
+> Upstream fix:
+> -------------
+>   -> https://git.kernel.org/linus/6e331f4c83021e4de2a2fc4981574b5d5b16c425
+>   -> https://git.kernel.org/linus/7c0c3b1a8a175437991ccc898ed66ec5e4a96208
 
-Can a new CVE be assigned to track it specifically as well, or would
-policy dictate that this issue be considered part of the original CVE?
+As both multiqueue support and fix for this issue were committed in 3.8
+rc versions ((rc1 and rc4, respectively), please reject this request.
 
-https://gist.github.com/d7f6d9f4925f413621aa
-https://github.com/sferik/multi_xml/pull/34
-https://news.ycombinator.com/item?id=5040457
-
-~reed
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
