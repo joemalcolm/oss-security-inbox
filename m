@@ -1,19 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/11
-Message-Id: <C4C0398D-AED3-4892-AA54-F26B18748DE6@stufft.io>
-Date: Wed, 7 Aug 2013 13:20:47 -0400
-From: Donald Stufft <donald@...fft.io>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Reserved CVE for pip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/10/5
+Message-ID: <20130510213105.GA28682@hunt>
+Date: Fri, 10 May 2013 14:31:05 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: kdelibs
 Content-Type: text/plain; charset=utf-8
 
-So I was researching pip's CVE's some more and I came across CVE-2013-1888 which Kurt assigned http://www.openwall.com/lists/oss-security/2013/03/22/10 but which shows up as RESERVED https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1888.
+Hello Kurt, Steve, all,
 
-Can you fix this so it's not RESERVED Kurt?
+A bug in our Launchpad [1] refers to KDE Bug 319428 [2] as fixing a
+security issue: displaying raw URLs, including passwords, in a handful
+of error messages. A patch is in git [3] to sanitize URLs before
+displaying them in the affected error messages.
 
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+1: https://bugs.launchpad.net/ubuntu/+source/kde4libs/+bug/1178286
+2: https://bugs.kde.org/show_bug.cgi?id=319428
+3: http://commits.kde.org/kdelibs/65d736dab592bced4410ccfa4699de89f78c96ca
 
+Please assign a CVE number for this issue. Thank you.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Seth
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
