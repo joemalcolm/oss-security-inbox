@@ -1,110 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/7
-Message-Id: <E1U2iMY-00088X-Tl@xenbits.xen.org>
-Date: Tue, 05 Feb 2013 13:15:02 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 36 (CVE-2013-0153) - interrupt remap entries shared and old ones not cleared on AMD IOMMUs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/10/4
+Message-ID: <20130510212833.GB30055@redhat.com>
+Date: Fri, 10 May 2013 15:28:33 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: password exposure in kdelibs when showing "internal server error" messages
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I've not seen this yet; could a CVE be assigned to the following issue?
 
-	     Xen Security Advisory CVE-2013-0153 / XSA-36
-			      version 3
+It was reported that when KDE encounters an "internal server error"
+and also prints out the URL that caused the error that it would include
+the username and password (if supplied) to the resource that caused the
+error.  For instance, it would show
+"https://user:password@...otehost.com" or similar.  This is due to
+kioslave/http/http.cpp using m_request.url.url() rather than the
+sanitized m_request.url.prettyUrl().  This issue is fixed in git.
 
-  interrupt remap entries shared and old ones not cleared on AMD IOMMUs
+Note that this information is printed out to the local user actively
+using the computer.
 
-UPDATES IN VERSION 3
-====================
+References:
 
-Public release.
+https://bugs.kde.org/show_bug.cgi?id=319428
+https://projects.kde.org/projects/kde/kdelibs/repository/revisions/65d736dab592bced4410ccfa4699de89f78c96ca/diff/kioslave/http/http.cpp
+https://bugs.mageia.org/show_bug.cgi?id=10037
+https://bugzilla.redhat.com/show_bug.cgi?id=961981
 
-ISSUE DESCRIPTION
-=================
 
-To avoid an erratum in early hardware, the Xen AMD IOMMU code by
-default chooses to use a single interrupt remapping table for the
-whole system.  This sharing implies that any guest with a passed
-through PCI device that is bus mastering capable can inject interrupts
-into other guests, including domain 0.
-
-Furthermore, regardless of whether a shared interrupt remapping table
-is in use, old entries are not always cleared, providing opportunities
-(which accumulate over time) for guests to inject interrupts into
-other guests, again including domain 0.
-
-In a typical Xen system many devices are owned by domain 0 or driver
-domains, leaving them vulnerable to such an attack. Such a DoS is
-likely to have an impact on other guests running in the system.
-
-IMPACT
-======
-
-A malicious domain which is given access to a physical PCI device can
-mount a denial of service attack affecting the whole system.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 3.3 onwards are vulnerable.  Earlier Xen versions do not
-implement interrupt remapping, and hence do not support secure AMD-Vi
-PCI passthrough in any case.
-
-Only systems using AMD-Vi for PCI passthrough are vulnerable.
-
-Any domain which is given access to a PCI device can take advantage of
-this vulnerability.
-
-MITIGATION
-==========
-
-This issue can be avoided by not assigning PCI devices to untrusted
-guests.
-
-In Xen versions 4.1.3 and above the sharing of the interrupt remapping
-table (and hence the more severe part of this problem) can be avoided
-by passing "iommu=amd-iommu-perdev-intremap" as a command line option
-to the hypervisor.  This option is not fully functional on earlier
-hypervisors.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that on certain systems (SP5100 chipsets with erratum 28 present,
-or such with broken IVRS ACPI table) these patches will result in the
-IOMMU not being enabled anymore.  This should be dealt with by a BIOS
-update, if available.  Alternatively the check can be overridden by
-specifying "iommu=no-amd-iommu-perdev-intremap" on the Xen command
-line ("iommu=amd-iommu-global-intremap" on 4.1.x), at the price of
-re-opening the security hole addressed by these patches.
-
-xsa36-unstable.patch              Xen unstable
-xsa36-4.2.patch                   Xen 4.2.x
-xsa36-4.1.patch                   Xen 4.1.x
-
-$ sha256sum xsa36*.patch
-2254fa46dcbc164d2d55ad9d519e7aa4ac5b83e9fb8d8e1f224114d08fe44237  xsa36-4.1.patch
-6848712b560b522f7d3cede53e29e799624311e7dee6e450f0c02c165a590783  xsa36-4.2.patch
-0e5d53c0b2bbbf07ef07bf31d8adeca4c043c0277f122f74557b018dc7348b74  xsa36-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJREQItAAoJEIP+FMlX6CvZapMH/i+AeMV4Mi9EAe97JWto2xrg
-bCBdq7LEJ1cIpXGbhpXwTRzmsEGJmFR2VwkaxEtk+BuC7bzJ/KRjWYg6viQ7v+0t
-thHEMtaRYTOIIel8YZ5t+v8oMdEUos7Oo94xhCk+n7ioH6PO+quUTI+aGd0+lcJm
-d/5TC5f8w+HZNTB0nCQX9tQx5d4veQXghKs1NbKHeMyZ66nMZiqUqVUwQNTaFhUO
-9eWyGOik5/mFctRrMxoOZHQm3d36AnDisiOku2CaG1xYYwDaAnOe/u6QcBZcVX3M
-Q9COmTAWnOfIKYMIFnXRnyHSiw2+oZL6PTD5nX4O68B6hZ8pemVa+lFhSTvxsXM=
-=5jP3
------END PGP SIGNATURE-----
-
-Download attachment "xsa36-4.1.patch" of type "application/octet-stream" (12462 bytes)
-
-Download attachment "xsa36-4.2.patch" of type "application/octet-stream" (10700 bytes)
-
-Download attachment "xsa36-unstable.patch" of type "application/octet-stream" (10642 bytes)
+-- 
+Vincent Danen / Red Hat Security Response Team 
