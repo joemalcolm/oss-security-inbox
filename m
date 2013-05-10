@@ -1,36 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/14
-Message-Id: <201301112152.r0BLqMbj003422@linus.mitre.org>
-Date: Fri, 11 Jan 2013 16:52:22 -0500 (EST)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Confirming CVE for ettercap buffer overflow flaw (CVE-2012-0722?)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/10/2
+Message-ID: <alpine.LFD.2.03.1305101722130.22064@redhat.com>
+Date: Fri, 10 May 2013 17:33:37 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request: Linux kernel: tuntap refuse to re-attach to different tun_struct
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+   Hello,
 
->This isn't on MITRE's site (reserved), and the initial advisory
->indicates that this has a CVE of CVE-2012-0722.
+Linux kernels built with Universal TUN/TAP device driver(CONFIG_TUN) that 
+includes multiqueue - ioctl(TUNSETQUEUE) - support, is vulnerable to a kernel 
+crash while attaching a device to a new queue.
 
-Thanks very much for asking about this. The correct ID was
-CVE-2013-0722 and regrettably CVE-2012-0722 needed to be rejected in
-favor of CVE-2013-0722.
+A user/program could use this flaw to crash the system resulting in DoS.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Upstream fix:
+-------------
+   -> https://git.kernel.org/linus/6e331f4c83021e4de2a2fc4981574b5d5b16c425
+   -> https://git.kernel.org/linus/7c0c3b1a8a175437991ccc898ed66ec5e4a96208
 
-iQEcBAEBAgAGBQJQ8IlFAAoJEGvefgSNfHMd6LEIAKrbeX/RyjUMwt/SAoaX9cw+
-oiIEgGJxIkksqYcWeXLZfoSqkyC9yCbN+BNsfoLsqCr7uYCVpTiTUIDxdlFLMHwl
-VbHNtd1PkQkDO0p42YTf4tJso7sYs2EZgF/Mca/yEbMpE6fTw8zZMik1x3N+VYgc
-SYsh9BZ+sKFZ+E71ik87324puBsYHMvfnxbidntiybPuqgmAQPgAzXz0pakQMjc1
-A6U9zeooc7HXekbVidVWhfBjwW/64SxT7seiE9ykYx+/KMWYaa01TCaeFtdCM+x4
-8EcrpyO5ov3eyP0Gbdgs7PtI11ktvT1LxDBqRQ2ZZFq2K2JkK40S+apGYAowu80=
-=hCuw
------END PGP SIGNATURE-----
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
