@@ -1,36 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/01/6
-Message-ID: <20131001095559.GB15214@suse.de>
-Date: Tue, 1 Oct 2013 11:55:59 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: [CVE request] systemd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/11/3
+Message-ID: <518DAA73.3000900@redhat.com>
+Date: Fri, 10 May 2013 20:18:27 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: CHICKEN Scheme incomplete fix for CVE-2012-6122 (select() fs_set buffer overrun)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 01, 2013 at 12:56:23PM +0530, Huzaifa Sidhpurwala wrote:
-> Hi All,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 05/09/2013 07:03 AM, Peter Bex wrote:
+> On Wed, May 08, 2013 at 11:07:02PM +0200, Peter Bex wrote:
+>> There are two commits which together fix the bug: 
+>> http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commitdiff;h=9e2022652258e8a30e5cedbf0abc9cd85a0f6af7
+>>
+>> 
+http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commitdiff;h=556108092774086b6c86c2e27daf3f740ffec091
 > 
-> I would like to request CVE ids for 4 systemd issues.
-> 
-> 1. systemd: Integer overflow, leading to heap-based buffer overflow by
-> processing native messages
-> https://bugzilla.redhat.com/show_bug.cgi?id=859051
-> 
-> 2. systemd: TOCTOU race condition when updating file permissions and
-> SELinux security contexts
-> https://bugzilla.redhat.com/show_bug.cgi?id=859060
+> Correction, this introduced a bug on systems where connect() can
+> return EINPROGRESS, resulting in an exception being raised when
+> connecting to a socket and immediately writing to it.  A third
+> patch is required to fix this bug: 
+> http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commitdiff;h=766056cd5f26b1d529405705449cb534609c113f
+>
+>  Cheers, Peter
 
-That sounds interesting. Do you have a patch for this one? I cannot
-access the bug as is (at least I see no link to a real discussion
-or patch-link).
+Please use CVE-2013-2075 for this issue.
 
-thx,
-Sebastian
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+iQIcBAEBAgAGBQJRjapyAAoJEBYNRVNeJnmTFKEP/ikEqJ3WOxMEo1EhvggwY6QV
+oTo5T14w6XVMTvbo+MTunojqHPqBUC2l4W0fYPFsTaLF3UTlJl7GiAf+v0d4YVDG
+Y/4GJg13Fef93IW5dQaAXn8gcxf6zswwmS619tbjE6Qi3IThlGK6pdoNnBjYbDIG
+m+3m2JR3pXXdDtzuJVtRjhz/LZA5aj3ZHGxyKsbT4kB1LEXBS4JJJBVPtRCAb9/B
+yntXaccjneaH2ngxe8oxv6PVTqX5f7mhMWZQUM770OkyOgeDZmd7qQhIGQlCKskl
+qye6zGRuOYstSYo9Symnv4UXebvrGmgcMmMsKnmiCLwd4zGHe1JB6u6F/6rF/rV+
+olli432bHI78rTUkRByNw509iD0gSKbhOn3+QGaTcZyzkXHqvib+W69qduLAl8kr
+11njmoWuTpf3+8B84KUJEqpSyKCZ2iidYge46utiFlgVIEnGYAnMT5G/rvU8a4nv
+sk4zt894rJIIVp5+S4Siz1kQP5hlplEKJlhH3lR77lXRhCGQZcFerJ8nIh6RHM3k
+l91X+Kd/NITybydAby5tA9RhT1xXuacbgehY5zYeuc2nSQl0N29Y4CRNJuZATChM
+V7iC1pyGPnlEH1CIIl7toJm2fEdnm+5tN6YYbF8fKJDoawZpOdTVkclAwkrYv6n0
+iNzGpGaeC2/pd/VtWTPB
+=YGIN
+-----END PGP SIGNATURE-----
