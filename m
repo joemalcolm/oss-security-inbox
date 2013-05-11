@@ -1,60 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/23/6
-Message-ID: <52672EC1.6040702@redhat.com>
-Date: Tue, 22 Oct 2013 20:04:49 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/11/4
+Message-ID: <518DAABB.106@redhat.com>
+Date: Fri, 10 May 2013 20:19:39 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Simple Machines Forum (SMF) Remote file inclusion vulnerability
+To: coley@...us.mitre.org, oss-security@...ts.openwall.com, security@...ntu.com
+Subject: Re: CVE Request: kdelibs
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/22/2013 01:40 PM, Kevin Pawloski wrote:
-> https://github.com/SimpleMachines/SMF2.1/issues/701
+On 05/10/2013 03:31 PM, Seth Arnold wrote:
+> Hello Kurt, Steve, all,
 > 
-> Affects 2.0.X and 2.1.X.
+> A bug in our Launchpad [1] refers to KDE Bug 319428 [2] as fixing
+> a security issue: displaying raw URLs, including passwords, in a
+> handful of error messages. A patch is in git [3] to sanitize URLs
+> before displaying them in the affected error messages.
 > 
-> Could a CVE please be assigned to this issue?
+> 1: https://bugs.launchpad.net/ubuntu/+source/kde4libs/+bug/1178286 
+> 2: https://bugs.kde.org/show_bug.cgi?id=319428 3:
+> http://commits.kde.org/kdelibs/65d736dab592bced4410ccfa4699de89f78c96ca
+>
+>  Please assign a CVE number for this issue. Thank you.
 > 
-> Thank you.
-> 
-> ------------------------------ Kevin Pawloski Lead Information
-> Security Engineer www.demandmedia.com 310.319.6810 pgp DD26 4747
-> 6091 7F0A C30F F985 D3FF 0C70 4780 1669 
-> ------------------------------
-> 
-> 
-> 
-> Please NOTE: This electronic message, including any attachments,
-> may include privileged, confidential and/or inside information
-> owned by Demand Media, Inc. Any distribution or use of this
-> communication by anyone other than the intended recipient(s) is
-> strictly prohibited and may be unlawful.  If you are not the
-> intended recipient, please notify the sender by replying to this
-> message and then delete it from your system. Thank you.
+> Seth
 
-I am not sure if I'm the intended recipient of this email (it's not
-addressed to me) so you'll have to remove this footer from your email
-if you want a CVE from me.
+Vince asked first =) Please see
+
+http://openwall.com/lists/oss-security/2013/05/11/2
+
+for the cve (don't want to post it twice, avoid confusion).
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSZy7AAAoJEBYNRVNeJnmTYzEP/0bnG/zflvln1A6hDhsEuz9Z
-uSghjQtGIU0ZmeNPgoC+qnv2ZFkbveeH+KOFTM5K6ZzVlLDXkDy/VxBRqFuX8JyM
-bdog4ATIidkHxyqkQa93YC69yLjQn/XbiIi6F+EDO8p9HiCn/s01xP+VOxIBwAhK
-fx5EV1EEuru2nbkQdzSO8SOgOVbOM0arCotKXyTqFbUP5rsaP8t+TQUo+1HoQ4yZ
-+nzldoo8AfdscBOkkIuFN8wMzoxBcQlfwHBzOcVEDiq5CW6lZm8OWtOdLIJyJ7YH
-pxnWhgaFyEv3Ui0qAChfaiagkTWNeTbZDNJJT0OZVQmXMgBQxvhrL8oOgyvhXE53
-f8DnR6OWAfTonp5KcIVhLon5sqnrZt5mZXYF6IaCihykkxeuUyNzAmblwzlIl0Ug
-LBfVOYM++sikGSyvz5B4ujJp0vf/KkVj2FMA/12SH3AmNDYsJV05j760TdAQp9Wk
-YJJwgrPSwzp4VCZPnLu+WEHukVFS2zuq7huxPpl/ujsLP/xQoEmtbwnSEJreZBdd
-I+ntAIlA1MhgwOi5/wJ44gKHw5qT98WMd1s3whNp1HW5iI/HfuthOPL8+P/xwIK7
-K6bTMdW8rc6SrySD66cvDaVgRsUjDOzDUHg73AQwZpl9gNZb7NIQ7Qpd9FRQfYHZ
-1a6AGiECukVAK7ksltWK
-=3Ok/
+iQIcBAEBAgAGBQJRjaq7AAoJEBYNRVNeJnmTHVEQAJgacBYBW0RZgoyK2EGnj77y
+I6V05qgLiKezPtcmDo2ZZq0WUgFrc4zCkMbxZ2H2VWm4Ezav9Oybj5sAQ1KRKfhh
+p5h7BnxqfuWwDMj7XalQZbTQbC21uZExK2XYmyu+tI3s2Wda1pXYLE+wERip9JhE
+rZ319u2/KeTQwFiYHsB4Yqs4s4VeaowVzwDHOZLOZpd0+vDk5XkI8rZF8c5ZOkn2
+yxOPpX3IFF72Q+LEZJPLcD3dOlZ0TCweCy4BAzhHMjODu+bEbWUX/OLXCfj/jYzZ
+iA6y95uVi8qQv5WUFitXlrG08nx3OcPK+yOxUnkWSPR696MnwPs7A/dgmGpyv6vp
+CaUKS4saDup6mbhy1rLaFGPkp3P/f44QjFl+NENOox5VeaEhhBwkPGu3PFcOoIrS
+uWVK9EIfPOquSIE66ARiS9o6Qja5p2bjo5X7lphzTEaj6oYhz32Y9broVwynqK8t
+f2DJ+avoZjQEa9GlZCaeSmy/N1ZI1jckrXy1iYbhIjjDBO7WxBQDcfK/Guxo/XkR
+c0z98h6VGMne0BoC/l/DT0NEfCDnBCX+fCVJ7nCIXhbMBYtLvVCSFK9OtcVK3RTQ
+pXBwqXRCHKQ1tCnjOgGnul5D7dYYYoCP444zlXNkRNzRaIOqD4jPYcoRQAYmiE/T
+QE02rjsbFbWMJAJt3fcZ
+=ifTt
 -----END PGP SIGNATURE-----
