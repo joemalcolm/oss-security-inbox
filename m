@@ -1,62 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/31/2
-Message-Id: <201301310355.r0V3tkD1012410@linus.mitre.org>
-Date: Wed, 30 Jan 2013 22:55:46 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/11/2
+Message-ID: <518DAA59.1010005@redhat.com>
+Date: Fri, 10 May 2013 20:18:01 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Wireshark before 1.8.5 (etc.) wnpa-sec-2013-01 through wnpa-sec-2013-09
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: password exposure in kdelibs when showing "internal server error" messages
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Here are the CVE assignments for the issues covered in the recent
-Wireshark advisories
-(found at http://www.wireshark.org/security/wnpa-sec-2013-01.html
-through wnpa-sec-2013-09.html).
+On 05/10/2013 03:28 PM, Vincent Danen wrote:
+> I've not seen this yet; could a CVE be assigned to the following
+> issue?
+> 
+> It was reported that when KDE encounters an "internal server
+> error" and also prints out the URL that caused the error that it
+> would include the username and password (if supplied) to the
+> resource that caused the error.  For instance, it would show 
+> "https://user:password@...otehost.com" or similar.  This is due to 
+> kioslave/http/http.cpp using m_request.url.url() rather than the 
+> sanitized m_request.url.prettyUrl().  This issue is fixed in git.
+> 
+> Note that this information is printed out to the local user
+> actively using the computer.
+> 
+> References:
+> 
+> https://bugs.kde.org/show_bug.cgi?id=319428 
+> https://projects.kde.org/projects/kde/kdelibs/repository/revisions/65d736dab592bced4410ccfa4699de89f78c96ca/diff/kioslave/http/http.cpp
+>
+>  https://bugs.mageia.org/show_bug.cgi?id=10037 
+> https://bugzilla.redhat.com/show_bug.cgi?id=961981
+> 
+> 
 
-wnpa-sec-2013-01 bug 8036  CVE-2013-1572
-wnpa-sec-2013-01 bug 8037  CVE-2013-1573
-wnpa-sec-2013-01 bug 8038  CVE-2013-1574
-wnpa-sec-2013-01 bug 8040  CVE-2013-1575
-wnpa-sec-2013-01 bug 8041  CVE-2013-1576
-wnpa-sec-2013-01 bug 8042  CVE-2013-1577
-wnpa-sec-2013-01 bug 8043  CVE-2013-1578
-wnpa-sec-2013-01 bug 8198  CVE-2013-1579
-wnpa-sec-2013-01 bug 8199  CVE-2013-1580
-wnpa-sec-2013-01 bug 8222  CVE-2013-1581
-
-wnpa-sec-2013-02 bug 7871  CVE-2013-1582
-
-wnpa-sec-2013-03 bug 7945 r46577  CVE-2013-1583
-wnpa-sec-2013-03 bug 7945 r46579  CVE-2013-1584
-
-wnpa-sec-2013-04 bug 8112  CVE-2013-1585
-
-wnpa-sec-2013-05 bug 8111  CVE-2013-1586
-
-wnpa-sec-2013-06 bug 7679  CVE-2013-1587
-
-wnpa-sec-2013-07 bug 8213  CVE-2013-1588
-
-wnpa-sec-2013-08 bug 8197  CVE-2013-1589
-
-wnpa-sec-2013-09 (no bug number listed)  CVE-2013-1590
+Please use CVE-2013-2074 for this issue.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJRCenJAAoJEGvefgSNfHMdkocH/R7JrCwxQqWhfS2sgdOvJEXX
-loEG+050LDAzOAfkjVPhZJvJq1/hSpjkt0LdDKt+eKO0+OFJ06z6vTBpfaUKk9HX
-c09i7ZCSUzrFqgkVyH3XeOKTCN22D/My9CKw1tEsCn/675TsfX5+eC1twzgbuE3F
-Oxs0DWOWfv1Gx1Y3KPXC8zR62XKlTsVe5nr6JNGW2mkDdIQN0IQEkgLH6nmE9ppO
-23FCGpwrsQKG2fpcDtsOFJnldJuE/2xj2ZwryHFHrCYAJVImd9ME8bPC8lrVhBDb
-k+W8yQ3dYNRMlte1j0ginZ3/IGc+q8Y4PaWPRUTU5mtDc8ftujOQ2JyYhgjKGDM=
-=NIG4
+iQIcBAEBAgAGBQJRjapZAAoJEBYNRVNeJnmTMSoQAKX07giXr7vCKkYmdqU5Yt4c
+vLW9McS7aGUQSHaqryf5KlBcI8UouzOozicZhC9ixf0tekkMZym26tLW9+1Y71+h
+FKevk4cizXVcYDtArXmbQqn4VZOfioxFTyjycADM5kpoTEK2l9GbN/GcGsyHu6+L
+IzOUFLG8nKeP2uzahWZ1wbrjoK6Y0MtBg4FdK7F8qO1A5n2B7eWGCQnrbQYgOcYE
+trPVR7MElJ+5LnTwft9gUcyaur0cwp6NnHOESM9jlA8ZWenOl4SMJ15NrBa4PLbh
+fXNBkUBMjyXhqOoRNCFEanQA7923yZ8oUnRq+sw99ZAx8SyEEyea2GezCbCuUonA
+XWC2JDN7nJJDgCCkTbuLvhG6lZ+tNM4DNK13mH+RiPBYZ53Y7pMRLDN6dax6ThxQ
+69FgnxkNvv22A6IYzCP1DISD3tlXciJ7tbIfi1v65NnuixSqofeVCwAaP1ZtZ5So
+7vmZPXYNP0/8kr5f3ntyy0YgZZXgJ/xRXWLUQ3abIWji2osS61sfyxSRL4tknexd
+EwhzbIv9BdQEQiMvzvO6CbEV9b9Q7bf7QcpXjevqH2nt/SghoV89lz6PzvdcQacc
+oFXbVJsVZfV5StJG8T8FFdBAZxoTI3/ZeChaE9WPcIJKg2LZJNqlxFRBOQixyvmN
+m6DpYYFKzTIEYEVj9Shz
+=9j9m
 -----END PGP SIGNATURE-----
