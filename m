@@ -1,33 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/29/5
-Message-ID: <20130729224550.2f3a8734@redhat.com>
-Date: Mon, 29 Jul 2013 22:45:50 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: security-officer@...eBSD.org
-Cc: OSS Security <oss-security@...ts.openwall.com>
-Subject: Re: FreeBSD Security Advisory FreeBSD-SA-13:07.bind
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/12/2
+Message-Id: <201305121722.34545.luciano@debian.org>
+Date: Sun, 12 May 2013 17:22:34 +0200
+From: Luciano Bello <luciano@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Henrique de Moraes Holschuh <hmh@...ian.org>, security@...ian.org, tw-public@....de
+Subject: CVE request: MoinMoin Wiki (remote code execution vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hi there,
+    The section 0x06 of http://www.exploit-db.com/papers/25306/ mention a 
+exploit for moinmoin, which looks connected with this vulnerability 
+http://www.securityfocus.com/bid/59728
+    Can you please assign a CVE to it?
 
-On Sat, 27 Jul 2013 03:41:28 GMT FreeBSD Security Advisories wrote:
-
-> FreeBSD-SA-13:07.bind                                Security Advisory
->                                                    The FreeBSD Project
-> 
-> Topic:          BIND remote denial of service
-> 
-> Category:       contrib
-> Module:         bind
-> Announced:      2013-07-26
-> Credits:        Maxim Shudrak and the HP Zero Day Initiative, ISC
-> Affects:        FreeBSD 8.4-RELEASE and FreeBSD 9.x
-
-Are FreeBSD advisories now going to be posted to oss-security?  They
-were not posted here before.  The list charter strongly discourages
-posting of vendor security advisories:
-
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Cheers, luciano
