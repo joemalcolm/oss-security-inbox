@@ -1,50 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/2
-Message-ID: <52010CA1.4010406@redhat.com>
-Date: Tue, 06 Aug 2013 08:48:01 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: security@...nel.org, oss-security@...ts.openwall.com
-Subject: Re: CLONE_NEWUSER local DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/12/3
+Message-ID: <518FB596.3010503@waldmann-edv.de>
+Date: Sun, 12 May 2013 17:30:30 +0200
+From: Thomas Waldmann <tw@...dmann-edv.de>
+To: Luciano Bello <luciano@...ian.org>
+CC: oss-security@...ts.openwall.com,  Henrique de Moraes Holschuh <hmh@...ian.org>, security@...ian.org, tw-public@....de
+Subject: Re: CVE request: MoinMoin Wiki (remote code execution vulnerability)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> The section 0x06 of http://www.exploit-db.com/papers/25306/ mention a 
+> exploit for moinmoin, which looks connected with this vulnerability 
+> http://www.securityfocus.com/bid/59728
+> Can you please assign a CVE to it?
 
-On 08/06/2013 08:31 AM, Petr Matousek wrote:
-> Hello,
-> 
-> spender reported [1] a local DoS triggerable by unprivileged user
-> when user namespaces are enabled (CONFIG_USER_NS).
-> 
-> [1] https://twitter.com/grsecurity/status/364566062336978944
-> 
-> Reproducer:
-> 
-> b836010000bb00000010cd80ebf2 is for(;;)unshare(1<<28);
-> 
-> Best regards,
-> 
+This is old news (and even the exploit code was out there before this
+"publication", one just needed google to find it on some pastebins).
+Back in December, CVE-2012-6081 was assigned for that and we fixed it
+with the release of MoinMoin 1.9.6, see: https://moinmo.in/SecurityFixes
 
-Confirmed with Petr that he confirmed this issue. Please use
-CVE-2013-4205 for this issue.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSAQyhAAoJEBYNRVNeJnmT4B0P/A+XAjTt9KdAWV3cyAGj6YLe
-3ew+tsXjVXp94QM0ab2eODKlg1HD82v+yd1l5SjpweqQVcHwAT1kw2vHB4IPcjrT
-1G9Rqzt0BSU95vNcpvIiOAjm34s7JBjVe6goItnxOJ53+La2YmzyqI/r3EUIRtfe
-TvdO27J9AY7VDnBYtKARZ1QYkxlGNz39H038V06HdtBKLrh+ta88JQDqhoO0gKNq
-3Ud4VJy+RFiDOYb3S42v3luPG3sE4lcfTQtrAms+iLlRhI3IeqsuSvF0MQdAfOl7
-enIhm3q6gJAYstTJGCwln1/dk/RnzkNzMFDq37vc2s/Fs3G9miIH5DnXH+ecS2Mb
-7niBoXJD5J6ahywAQjmpwXyKB6g2RUHpOavpUZqH7PmlO6rp0ABnsohXax0YjFys
-4eVb4Cwu2jBoACH4LaziBH7mGcGYwBKFp826yiqQ2S+c8CFThn4of9eYeCwAn/Cp
-7MGbCLHlqRx0f+/8eRXZ0F04+EtJRWb7kVW5oyHbq6/aSfeQvoqv/wwAef+TWF4Y
-kLGtxpAEoOvKH2I3PiFiJ+gzpM2XNNWTZzLkA6VvhtflsU+a+7/pMd3bNVftA74t
-xC4SfscWQvqqBjMtUh66vwH0TJ8XxibX+RMsiD0WitrfGEpRvuf41dntOAqmvw8r
-yn21AfyfhYgnp6FR/c9i
-=H7i9
------END PGP SIGNATURE-----
