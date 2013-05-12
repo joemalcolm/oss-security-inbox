@@ -1,25 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/22/5
-Message-ID: <CABbbngCCTsRA+LGuCxjwSSw1NrdphmCpaspiXL=zOLThWPoeQg@mail.gmail.com>
-Date: Mon, 22 Jul 2013 09:53:23 -0700
-From: Forest Monsen <forest.monsen@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/12/1
+Message-Id: <201305121724.49249.luciano@debian.org>
+Date: Sun, 12 May 2013 17:24:49 +0200
+From: Luciano Bello <luciano@...ian.org>
+To: oss-security@...ts.openwall.com, tw-public@....de
+Cc: Henrique de Moraes Holschuh <hmh@...ian.org>
+Subject: CVE request: MoinMoin Wiki (remote code execution vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-Hi there, I'd like to request CVE identifiers for two modules:
+Hi there,
+    The section 0x06 of http://www.exploit-db.com/papers/25306/ mention a 
+exploit for moinmoin, which looks connected with this vulnerability 
+http://www.securityfocus.com/bid/59728
+    Can you please assign a CVE to it?
 
-SA-CONTRIB-2013-058 - MRBS - Abandoned - Mutliple
-vulnerabilities<https://drupal.org/node/2044173>
-https://drupal.org/node/2044173
-
-SA-CONTRIB-2013-059 - Hostmaster (Aegir) - Access Bypass
-https://drupal.org/node/2044299
-
-The first one has been abandoned.
-
-Thanks!
-
-Forest
-
+Cheers, luciano
