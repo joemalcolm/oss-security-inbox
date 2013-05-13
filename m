@@ -1,71 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/23/6
-Message-ID: <50FFAB40.9090708@redhat.com>
-Date: Wed, 23 Jan 2013 02:20:00 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/13/2
+Message-ID: <20130513072855.GH2824@kludge.henri.nerv.fi>
+Date: Mon, 13 May 2013 10:28:55 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Matthias Weckbecker <mweckbecker@...e.de>
-Subject: Re: CVE Request coreutils
+Cc: moderators@...db.org
+Subject: CVE request: Gallery multiple XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 01/22/2013 02:07 AM, Matthias Weckbecker wrote:
-> On Monday 21 January 2013 15:59:48 Michael Tokarev wrote:
->> 21.01.2013 18:54, Sebastian Krahmer wrote:
->>> Hi,
->>> 
->>> Can someone assign a CVE id for a buffer overflow in
->>> coreutils? Its the same code snippet (coreutils-i18n.patch) and
->>> it affects sort, uniq and join:
->> 
->> It's probably worth to mention that these are SuSE-specific and
->> not in upstream, if I understand correctly.
->> 
-> 
-> Tough to say unless you really looked into every single
-> distribution out there. Just assuming something is dangerous.
-> 
->>> https://bugzilla.novell.com/show_bug.cgi?id=798538 
->>> https://bugzilla.novell.com/show_bug.cgi?id=796243 
->>> https://bugzilla.novell.com/show_bug.cgi?id=798541
->> 
->> Thanks,
->> 
->> /mjt
-> 
-> Thanks, Matthias
+Two XSS vulnerabilities have been fixed in gallery 3.0.7.
 
-Please use CVE-2013-0221 for SuSE Bug 798538 - VUL-1: coreutils:
-segmentation fault in "sort -d" and "sort -M" with long line input
+http://osvdb.org/92691
+http://osvdb.org/92740
 
-Please use CVE-2013-0222 for SuSE Bug 796243 - VUL-1: coreutils:
-segmentation fault in "uniq" with long line input
+One CVE-2013-XXXX is enough as these are fixed in the same version and same
+issue type.
 
-Please use CVE-2013-0223 for SuSE Bug 798541 - VUL-1: coreutils:
-segmentation fault in "join -i" with long line input
+If I am correct:
+http://osvdb.org/92789 should be removed as duplicate of http://osvdb.org/92691
+http://osvdb.org/92690 should be removed as duplicate of http://osvdb.org/92740
 
+Please ask if you have questions.
 
+Diff between 3.0.6 - 3.0.7 below:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+"""
+git diff aa89aa0dc1610931674530169be8fd1edfceafde df9a412c5a18414ec52550e04f9672693f06421f
+diff --git a/gallery3/README b/gallery3/README
+index 7c58b69..18a2663 100644
+--- a/gallery3/README
++++ b/gallery3/README
+@@ -1,4 +1,4 @@
+-Gallery 3.0.6 (Rive Gauche)
++Gallery 3.0.7 (Rive Droite)
+ ===========================
+ 
+ About
+diff --git a/gallery3/modules/gallery/controllers/movies.php b/gallery3/modules/gallery/controllers/movies.php
+index ca332f6..5607571 100644
+--- a/gallery3/modules/gallery/controllers/movies.php
++++ b/gallery3/modules/gallery/controllers/movies.php
+@@ -67,7 +67,7 @@ class Movies_Controller extends Items_Controller {
+ 
+       log::success("content", "Updated movie", "<a href=\"{$movie->url()}\">view</a>");
+       message::success(
+-        t("Saved movie %movie_title", array("movie_title" => $movie->title)));
++        t("Saved movie %movie_title", array("movie_title" => html::purify($movie->title))));
+ 
+       if ($form->from_id->value == $movie->id) {
+         // Use the new url; it might have changed.
+diff --git a/gallery3/modules/gallery/helpers/gallery.php b/gallery3/modules/gallery/helpers/gallery.php
+index f3382fa..81f406d 100644
+--- a/gallery3/modules/gallery/helpers/gallery.php
++++ b/gallery3/modules/gallery/helpers/gallery.php
+@@ -18,8 +18,8 @@
+  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+  */
+ class gallery_Core {
+-  const VERSION = "3.0.6";
+-  const CODE_NAME = "Rive Gauche";
++  const VERSION = "3.0.7";
++  const CODE_NAME = "Rive Droite";
+   const RELEASE_CHANNEL = "release";
+   const RELEASE_BRANCH = "3.0.x";
+ 
+diff --git a/gallery3/modules/gallery/views/error_admin.html.php b/gallery3/modules/gallery/views/error_admin.html.php
+index cd1bd56..036e204 100644
+--- a/gallery3/modules/gallery/views/error_admin.html.php
++++ b/gallery3/modules/gallery/views/error_admin.html.php
+@@ -289,7 +289,7 @@
+               <tr>
+                 <td class="key">
+                   <code>
+-                    <?= $key?>
++                    <?= html::purify($key) ?>
+                   </code>
+                 </td>
+                 <td class="value">
+"""
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+---
+Henri Salo
 
-iQIcBAEBAgAGBQJQ/6tAAAoJEBYNRVNeJnmT+1MP/2Wpws+D7H1woEHxmZEKQIil
-tHEOi/lEQRHQQFILqL7pIlhOnz2Kv7MC2CzWNviZ8IRzfz2mFFCk/gpqPDn0MbgA
-KlMLn8lytFq4vsMX0LgfVAJNbG+W+VQYuw54mLu2svenPUys5rzA38tAS6aF9OD7
-5qAVnXazqriPOmshFpBNC3HQw0MKJWORco69H7uGDI3fpz29mE1OSezbubaaQB+T
-x68l8Rzils7e8uuow5fktGV1YoT0+O0FT3KFzkYBOHQLJBZ3UUyZVDkccSpd5o0t
-/yAVoOpR8QdNXVSD5RiC5SFucKiw2Hhosh4DubqdEFHHAEBHyhAksR1i4ZutROXR
-5JUDfnZNKxwO6G2HqoWA2ImlMOcWP7NzYQmi2fsPrDEwggdB894SwciU5R+sjhDy
-zWhX1dS4qdMqOGVNKq3etWTiPVIEBBC5F6HEEtJEGTjLAodwTU3rSXBpZe9YFM4s
-h3BWs3pnAqcs+8fFXBAPnN89Y13DgaclIxOPrMrVE+ws3SE3+JO/XUa7PNHfbxlL
-awkFGjw2IMCG7nkfuEKikfHF0WnrnwxUKc3JkAzY492Q4Rc5f3IZjaF7D6+K8+Jo
-T45dm+GCbUXuLFZKqobvSyiIdcCP8YCPBufiCzmfWoFiLKPSenrV8YIilXCmWdsc
-l+6UXRP1n/52ifyH7/mE
-=5e0x
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
