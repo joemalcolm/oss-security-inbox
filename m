@@ -1,42 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/26/4
-Message-Id: <201308261652.r7QGqQvm004300@linus.mitre.org>
-Date: Mon, 26 Aug 2013 12:52:26 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux Kernel: ARM: KVM: NULL pointer dereferences
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/13/1
+Message-ID: <51905242.1080201@nixnuts.net>
+Date: Sun, 12 May 2013 21:38:58 -0500
+From: John Lightsey <john@...nuts.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Storable::thaw called on cookie data in multiple CPAN modules
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi everyone,
 
-> Linux kernel built for the ARM(CONFIG_ARM) platform along with the Kernel
-> based Virtual Machine support(CONFIG_KVM), is vulnerable to a NULL pointer
-> dereference flaw. It occurs while performing an ioctl(KVM_GET_REG_LIST) call
-> on the KVM device, without first properly initialising a vCPU.
-> 
-> An unprivileged user/program could use this flaw to crash the kernel resulting
-> in DoS.
-> 
-> Upstream fix:
->   -> https://git.kernel.org/linus/e8180dcaa8470ceca21109f143876fdcd9fe050a
+Several CPAN modules follow the same pattern of calling Storable::thaw()
+on session data stored client side with no signature verification
+mechanisms in place to prevent tampering. Perl's Storable module was
+recently documented as being unsafe for use with untrusted inputs:
 
-Use CVE-2013-5634.
+http://perl5.git.perl.org/perl.git/commit/664f237a84176c09b20b62dbfe64dd736a7ce05e
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJSG4afAAoJEGvefgSNfHMdiiUH/R9Y7Hn2tI0UUFA0FJluFNdx
-xgZ0u1hxFkpEJ69O6FM5qKmH+TSfF/Jq27WIIjAwLPYA44bAqn3VeVukt/VpZPQj
-FCHGcJIDNnwV8n+R29rUPUMQ6VaENDM0aJSWuDlo3puTndNiXX/6vGyh1QXNBfBm
-uQHjvwIpOOErQibj2yReJoRJeIZkOJyf8oxJYp0yc+oE1ICbJ+yCCVfTCNBOQXhW
-U6EzqiMKAsg1+IgMgJXlD9imf8q8X7kDGnhMq/iWzODeFTpNXtgtAEVp5Ng0irNm
-08/zGfMH8F2u+OxFIwzcOc4Y+GYXUcGHHS2GKT399HXwrLUt64sxL5fOots/YxM=
-=cONI
------END PGP SIGNATURE-----
+The vulnerable modules are:
+
+Both App::Session::Cookie and App::Session::HTMLHidden in the
+App::Context bundle.
+https://rt.cpan.org/Ticket/Display.html?id=85215
+
+
+HTML::EP::Session::Cookie in the HTML::EP bundle.
+https://rt.cpan.org/Ticket/Display.html?id=85216
+
+
+Spoon::Cookie in the Spoon bundle.
+https://rt.cpan.org/Ticket/Display.html?id=85217
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
