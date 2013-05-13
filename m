@@ -1,45 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/11/4
-Message-ID: <20130611161602.GS3638@redhat.com>
-Date: Tue, 11 Jun 2013 10:16:02 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Russ Allbery <rra@...nford.edu>, audreyt@...reyt.org, Daniel Kahn Gillmor <dkg@...thhorseman.net>
-Subject: Re: CVE-2013-2145: perl Module::Signature code execution vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/13/3
+Message-Id: <5D1373C6-9E71-46EE-8CB1-2F8917EBF561@nginx.com>
+Date: Mon, 13 May 2013 08:07:59 -0700
+From: Andrew Alexeev <andrew@...nx.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: nginx security advisory (CVE-2013-2070)
 Content-Type: text/plain; charset=utf-8
 
-* [2013-06-05 14:51:37 -0400] Daniel Kahn Gillmor wrote:
+Hello!
 
->On 06/05/2013 02:24 PM, Russ Allbery wrote:
->
->> Speaking as a CPAN author, the second would be awesome.  For bonus points,
->> once one registers a key with CPAN, CPAN could then even check one's
->> uploads and disallow uploads that aren't signed with the proper key.
->
->As another CPAN contributor (though much less prolific than Russ), i
->also think this would be great.
->
->And wearing my hat as a member of the debian perl module packaging team,
->i would be very happy to see this level of author-specific cryptographic
->integrity checks when were updating packages from CPAN.  I suspect we
->have enough people interested in this within the debian pkg-perl to
->build in automated checks against these certifications during debian
->packaging as well.
->
->Thanks for continuing to maintain such a great archive of useful, free code.
+A security problem related to CVE-2013-2028 was identified,
+affecting some previous nginx versions if proxy_pass to 
+untrusted upstream HTTP servers is used.
 
-I guess the big question then is what is the way forward?  I'm not that
-familiar with CPAN other than occasionally using it, but is there some
-kind of governing body that this can be brought up to?  I imagine
-someone is going to have to host this and start the wheels moving, but
-I honestly have no idea who that might be.
+The problem may lead to a denial of service or a disclosure of a
+worker process memory on a specially crafted response from an
+upstream proxied server.
 
-I think it would be ideal to do something like this (in fact, I wish
-that all of the module repositories for various programming languages
-would do the same).  It might be a great opportunity to show some
-leadership in this area so that other languages may adopt something
-similar.
+The problem affects nginx 1.1.4 - 1.2.8, 1.3.0 - 1.4.0.
 
+The problem is already fixed in nginx 1.5.0, 1.4.1.  Version 1.2.9
+was released to address the issue in the 1.2.x legacy branch.
+
+Patch for nginx 1.3.9 - 1.4.0 is the same as for CVE-2013-2028:
+
+http://nginx.org/download/patch.2013.chunked.txt
+
+Patch for older nginx versions (1.1.4 - 1.2.8, 1.3.0 - 1.3.8)
+can be found here:
+
+http://nginx.org/download/patch.2013.proxy.txt
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Andrew Alexeev
+Nginx, Inc.
+
+
