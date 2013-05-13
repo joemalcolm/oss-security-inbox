@@ -1,51 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/23/5
-Message-ID: <52672DC1.4090007@canonical.com>
-Date: Tue, 22 Oct 2013 22:00:33 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/13/4
+Message-ID: <20130513205349.GH22446@redhat.com>
+Date: Mon, 13 May 2013 14:53:49 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: lightdm no longer confines guest profile with AppArmor
+Subject: CVE-2002-2443: Kerberos kpasswd UDP ping-pong vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 13-10-22 09:50 PM, Kurt Seifried wrote:
-> On 10/22/2013 12:52 PM, Marc Deslauriers wrote:
->> Hello,
-> 
->> Christian Prim discovered that Light Display Manager 1.8.0 and
->> later no longer use the appropriate wrapper when launching guest
->> sessions, resulting in the session not being confined by AppArmor.
-> 
->> Bug report: https://bugs.launchpad.net/lightdm/+bug/1243339
-> 
->> Could a CVE please be assigned to this issue?
-> 
->> Thanks,
-> 
->> Marc.
-> 
-> 
-> Ok to confirm the app armor profile is applied by default to lightdm
-> and the guest account, and was meant to prevent guest from touching
-> /home at all? I just wanna confirm this is a security vuln and not
-> security hardening.
-> 
+This flaw has commonly been referred to as CVE-1999-0103 because that
+CVE also describes a UDP ping-pong attack.  The same type of issue
+exists in kadmind's kpasswd handling, but unfortunately no one told
+upstream for the last decade.  CVE-1999-0103 never mentioned krb5 in any
+way other than with regards to a Nessus plugin that tests for the
+CVE-1999-0103 weakness in kpasswd handling.
 
-lightdm is supposed to run the guest account through a special wrapper that
-applies an AppArmor security policy so the guest is confined and has a limited
-set of files which it can access. Kind of like a sandbox.
+Upstream now knows and a fix is available.  Cut-n-paste from our bug
+report follows:
 
-The lightdm code was refactored at some point during the 1.8 development cycle,
-and the code no longer executes the wrapper, resulting in the guest account on
-Ubuntu 13.10 being unconfined and is now able to access user's files, which
-wasn't the case in earlier Ubuntu versions.
 
-Basically, a security feature that is applied by default got inadvertently
-dropped in a rewrite.
+A flaw in certain programs that handle UDP traffic was discovered and
+assigned the name CVE-1999-0103 (that CVE specifically mentions echo and
+chargen as vulnerable).  In 2002, a Nessus plugin was included [1] that
+reference this CVE name, but was for the kpasswd service.  Until
+recently, this issue had not been reported upstream.  This issue has
+since been reported upstream [2] and is now fixed [3].
 
-Marc.
+If a malicious remote user were to spoof their IP address to that of
+another server running kadmind with the password change port (kpasswd,
+port 464), or to the target server's IP address itself), kpasswd will
+pass UDP packets to the spoofed address and reply each time.  This can
+be used to consume bandwidth and CPU on the affected servers running
+kadmind.
 
+This should be fixed in the for krb5-1.11.3 release.
+
+[1] http://marc.info/?l=nessus&m=102418951803893&w=2
+[2] http://krbdev.mit.edu/rt/Ticket/Display.html?id=7637
+[3] https://github.com/krb5/krb5/commit/cf1a0c411b2668c57c41e9c4efd15ba17b6b322c
+
+
+After discussing with upstream and MITRE, it was decided that this issue
+needed its own CVE name, so it was assigned CVE-2002-2443.
+
+I can't find an email address for Tenable, so I'll probably just use
+their contact form and post to the archive for this message so they can
+adjust the name of that particular script.
 
 -- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+Vincent Danen / Red Hat Security Response Team 
