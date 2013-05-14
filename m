@@ -1,118 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/5
-Message-ID: <51132202.20400@redhat.com>
-Date: Wed, 06 Feb 2013 20:39:46 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/14/5
+Message-ID: <CAA7hUgHOvdJapwVqXEWKCE_1jva4SccAxE0gA8a6oJfXd6zz0w@mail.gmail.com>
+Date: Tue, 14 May 2013 14:32:35 +0200
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Sebastian Pipping <sebastian@...ping.org>
-Subject: Re: CVE request: Insecure default log file path in xNBD
+Subject: Re: CVE Request: linux kernel perf out-of-bounds access
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 14 May 2013 14:25, Marc Deslauriers <marc.deslauriers@...onical.com> wrote:
+[...]
+> (BTW, there is currently an exploit for this going around...)
 
-On 02/06/2013 09:48 AM, Sebastian Pipping wrote:
-> Hello oss-security!
-> 
-> 
-> Target software ===============
-> 
-> xNBD upstream https://bitbucket.org/hirofuchi/xnbd
-> 
-> Official Debian packages 
-> http://packages.debian.org/sid/xnbd-server
-> 
-> 
-> Description ===========
-> 
-> xnbd-server (and xnbd-wrapper in some releases) use /tmp/xnbd.log 
-> for logging when parameter --daemonize (and no --logpath FILE) is
-> given.
-> 
-> The file is opened using flags O_WRONLY | O_CREAT | O_APPEND so
-> there is a vulnerability against symlinks attacks.
-> 
-> 
-> Demonstration =============
-> 
-> Here is an exploitation example:
-> 
-> $ ln -s "${HOME}"/ATTACK_TARGET /tmp/xnbd.log
-> 
-> $ touch DISK $ truncate --size=$((100*1024**2)) DISK
-> 
-> $ /usr/sbin/xnbd-server --daemonize --target DISK 
-> xnbd-server(12462) msg: daemonize enabled xnbd-server(12462) msg:
-> cmd target mode xnbd-server(12462) msg: disk DISK size 104857600 B
-> (100 MB) xnbd-server(12462) msg: xnbd master initialization done 
-> xnbd-server(12462) msg: logfile /tmp/xnbd.log
-> 
-> $ ls -l ~/ATTACK_TARGET -rw------- 1 user123 user123 653 Feb  1
-> 16:41 \ /home/user123/ATTACK_TARGET
-> 
-> 
-> Affected versions =================
-> 
-> The latest code in the upstream Mercurial repository is not
-> affected since it does not use logging to /tmp/xnbd.log (or any
-> default location) any more.
-> 
-> ----------------------------------------------------------------------
->
-> 
-Version                        Status
-> ----------------------------------------------------------------------
->
-> 
-0.0.x                          not analyzed
-> 0.1.0-pre                      VULNERABLE (xnbd-server only) 
-> 0.1.0-pre-hg20-e75b93a47722-2  VULNERABLE (xnbd-server and
-> -wrapper) Mercurial tip                  not vulnerable 
-> ----------------------------------------------------------------------
->
-> 
-> 
-> Options for a fix =================
-> 
-> a) Use syslog with --daemonize and no default file location in
-> general (i.e. what upstream did)
-> 
-> b) Use /var/log/xnbd-server.log and /var/log/xnbd-wrapper.log for
-> the hard-coded defaults
-> 
-> c) Replace flag O_APPEND by O_EXCL  (secure but reducing
-> functionality)
-> 
-> The attached patch applies approach (b) to version 
-> 0.1.0-pre-hg20-e75b93a47722.
-> 
-> 
-> Best,
-> 
-> 
-> 
-> Sebastian
+It is in ycombinator, it can't be any more public:
+https://news.ycombinator.com/item?id=5703758
 
-Please use CVE-2013-0265  for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJREyICAAoJEBYNRVNeJnmTL1MQAKARq2UGnD671ZfOdM2COAdP
-cQkAT8VD9mBIm1ybe2YwQ0vqpoflOdpIhoW9CsQvvtb3FvDC60kM/2nnAMBv3Ujp
-HgLquNw1wtnzIO3M2N/qfpYtYVoBxHB9TSwBsXMyinJtgg4zjYwjkuflE4Ko6rgr
-dQ2jjAESgeIGZPWkUGcfRJsZGagO5PGIIv3FWgfsOR+M9dkkN+jdY/fGqCqp+NlP
-8UbCdwYEJG73aHn+sI7wEGlpKCsuJzOCFo8FBc8C6N3DpvwFZbyRh45DGVhS3D9k
-cNIES1RNmjwsdBsW0k9cQfP+YCTmR6O3IT/3ruXIalF15hkoIkeJT4/y+1gMqWnQ
-kfqcDqcCFiezMCvhB0WDNp0OnJAfrcjfleZhNcathImxZqENfcaWpwI5OnIPRwLJ
-asn5Og54RdRL4QZsBHLb7cSSNQyeoNRBsdAqz8tQGoZ5DIX22prMCSjrJ4jUnJWg
-HCD0Z/xCO4ZAp6lU+Sf4nfYTbent5xBgH1ap88IRFbOEriZisqS14fnsA6++jQZs
-dtr6yDoMlvCwlIwAxkMeUz5JLTRI6zWlHpe/doIyEoxjmr18GKx1OPExr0LzetzI
-qB9TN4oWTHyhotPdkidlFQ4lXM4HTmYmoI+wF9rE1ulnGIqUTZpWffkzItX2pbaO
-HLOXt5NW5Y+8xWz0l6Of
-=L+gz
------END PGP SIGNATURE-----
+--
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
