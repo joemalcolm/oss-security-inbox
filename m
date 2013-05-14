@@ -1,59 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/15/3
-Message-Id: <201312152020.rBFKJsbt021584@linus.mitre.org>
-Date: Sun, 15 Dec 2013 15:19:54 -0500 (EST)
-From: cve-assign@...re.org
-To: thoger@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, mpessas@...nsifex.com, vid@...nsifex.com, rvokal@...hat.com, fweimer@...hat.com
-Subject: Re: CVE-2013-2073 transifex-client: Does not validate HTTPS server certificate (fixed in transifex-client v0.9)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/14/3
+Message-ID: <5191E29B.9050703@redhat.com>
+Date: Tue, 14 May 2013 01:07:07 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: chevalier 3as <chevalier3as@...il.com>, Florian HENRY <florian.henry@...n-concept.pro>
+Subject: Re: Re: CVE Request: Dolibarr - Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> The way certificate check was implemented to fix CVE-2013-2073 was
-> incorrect (check was done on "probe" connection, but not the actual
-> connection used to transfer data).
+On 05/11/2013 01:11 PM, chevalier 3as wrote:
+> I've failed to mention command injection, fix can be found here:
 > 
-> This should get a new CVE.
+> https://github.com/Dolibarr/dolibarr/commit/526a80dd202bbca396687a502d52c27e06e97fff
 
-To have two CVEs assigned in response to two different patches for the
-same security problem, it's generally necessary for the first patch to
-fix some aspect of the problem. If the first patch accomplished
-nothing, a total of only one CVE is used.
+Please
+> 
+use CVE-2013-2093 for Dolibarr command injection
 
-Here, it seems that the first patch might help with a situation in
-which the attacker doesn't have complete man-in-the-middle access, but
-the attacker can replace the server. In that case, the attacker
-perhaps can't avoid having the probe connection and the later
-connection go to the same server. Because of that, checking only the
-probe connection might have a security benefit.
 
-(https://github.com/transifex/transifex-client/issues/42 says "MITM
-attacker should be able to steal all transferred data by allowing
-"probe" connection opened by verify_ssl to connect to the real
-transifex server and only intercept subsequent urllib2 connection.")
+> 2013/5/11 chevalier 3as <chevalier3as@...il.com>
+> 
+>> Hello Kurt, Steve, All,
+>> 
+>> I'd like to request a CVE for two vulnerabilties in Dolibarr 3.3
+>> and 3.4:
+>> 
+>> 1- SQL injection in 'pays' parameter, correction details can be
+>> found here:
+>> 
+>> 
+>> https://github.com/Dolibarr/dolibarr/commit/9427e32e2ed54c1a2bc519a88c057207836df489
 
-Use CVE-2013-7110 for the vulnerability in the "actual connection used
-to transfer data."
+Please
+>> 
+use CVE-2013-2091 for Dolibarr SQL injection in 'pays' parameter
 
-If the above analysis is incorrect, and there are absolutely no cases
-in which the original patch had any security benefit, we will reject
-one of the two CVEs.
+>> 
+>> 2- XSS vulnerabilty in several parameters, correction details can
+>> be found here:
+>> 
+>> 
+>> https://github.com/Dolibarr/dolibarr/commit/8a90598b23e1b2689848187941f7a96b04907005
+
+Please
+>> 
+use CVE-2013-2092 for Dolibarr XSS vulnerabilty in several
+parameters
+
+>> Cheers, Alaeddine Mesbahi
+
+
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSrg4fAAoJEKllVAevmvms4aMH/RhyyOIEV1btaidX23WeV67a
-Sv2ROQV0WI66YmdKiGHnNafZfTKt5XluKEQ/DNOJcD/v67sJipiY3eagYWo+01W8
-cjNSUvuU5I1qTcSm/86cebip+gRVd+PeMDWItZpR7V/HojQUy1MjrAAXm0q1Td6i
-ghbmbVVaUQl8Vuj0nnf5b1+rhZura9huT5KhnTovjgHIvCiKddA6/kKhSahFiTtB
-J0vAcI4AQnjqJ/96RXJYTHjdMyWw2vKCib43Cbx5UKahoSIlup+GOFIEsMdHOeId
-H3AXB4K5oMi8G2wLzlgEx2yiFzK8tWJkaaSnt0zv9tKehk25JIXwyr25W8wq0F8=
-=hLDC
+iQIcBAEBAgAGBQJRkeKbAAoJEBYNRVNeJnmTq0QQAJsGFL9tU9tldK8G4SZJmCo8
+N6x8oVBY4GKNsXwrQWQyjmJTiSYDZG9JvjS9ZP7NtKQ+mO0Ujofy8+nySR76/55u
+xuhUgzWasG/zWtbVVrlTTV8UXyjNKLRCv9xHu+O/5CqgHDDe4Sc5EswqR3XpiV12
+3dVhpPyqaapkw3E5kkQYDQXnQdUsLznjtWbIngljjjQxGAlDN09I0bBszi1K/PRZ
+TTj3J1qcT+oHjxSupWy4BftOe4A7nj/rSMHZ5jPRUOx58iR5h5t4k36jLPgYAzUX
+muEkt51j4RE9XPyb/zQXa7RZLh8QpudpLElLxPPXY7fg1InUVNqKDjHDP+NG7eTX
+ju0bDlkaTDyDf9JM/uCvg8mWHcS0rdxqOD6HSxizQmvadpGejzEcAzmSMk67XuuD
+/RKgBpGs4A428hx3AApS7OxMMTIxyKXXkCl/Mj6Glu0IKtusCJaZzAy5yJc5s16v
+9cISObNuNffzVS461k1TjHMlMftiI8/26I55KKNFZVXvijcGt9XR/ekF9puM/R/1
+IMCz9lNSU4v+40ZhdoTpjToR7qiSD3EC05iPDICm9Vu79L7sIG4ZcBgkGXuUdiSp
+Es5YXLqype+vqZvnJGYHlRS07OK9Q1fOBkIiSVS3BW/Xq044ukP1c/DgiLeWUKh0
+1xzaw++50ZNDcevQ+U6q
+=D+FC
 -----END PGP SIGNATURE-----
