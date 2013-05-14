@@ -1,55 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/20
-Message-ID: <20130822203500.GA21467@stack.nl>
-Date: Thu, 22 Aug 2013 22:35:00 +0200
-From: Jilles Tjoelker <jilles@...ck.nl>
-To: Harald van Dijk <harald@...awatt.nl>
-Cc: Tavis Ormandy <taviso@...gle.com>, dash@...r.kernel.org, oss-security@...ts.openwall.com
-Subject: Re: [PATCH] implement privmode support in dash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/14/2
+Message-ID: <5191E261.5090406@redhat.com>
+Date: Tue, 14 May 2013 01:06:09 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: John Lightsey <john@...nuts.net>
+Subject: Re: CVE Request: Storable::thaw called on cookie data in multiple CPAN modules
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 22, 2013 at 09:59:36PM +0200, Harald van Dijk wrote:
-> On 22/08/13 19:59, Tavis Ormandy wrote:
-> > Hello, this is a patch to add privmode support to dash. privmode attempts to
-> > drop privileges by default if the effective uid does not match the uid. This
-> > can be disabled with -p, or -o nopriv.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Your approach definitely has my support (FWTW), but there are two
-> aspects that surprised me, and are different from bash and FreeBSD's sh:
+On 05/12/2013 08:38 PM, John Lightsey wrote:
+> Hi everyone,
+> 
+> Several CPAN modules follow the same pattern of calling
+> Storable::thaw() on session data stored client side with no
+> signature verification mechanisms in place to prevent tampering.
+> Perl's Storable module was recently documented as being unsafe for
+> use with untrusted inputs:
+> 
+> http://perl5.git.perl.org/perl.git/commit/664f237a84176c09b20b62dbfe64dd736a7ce05e
+>
+> 
+> 
+> The vulnerable modules are:
+> 
+> Both App::Session::Cookie and App::Session::HTMLHidden in the 
+> App::Context bundle. 
+> https://rt.cpan.org/Ticket/Display.html?id=85215
 
-> You named the option nopriv, while bash and FBSD use the name
-> privileged. I think it is likely to confuse people if "bash -o
-> privileged" and "dash -o nopriv" do the same thing, and that it would be
-> better to match bash and give the option a positive name, such as
-> "priv", or perhaps even match them exactly and use "privileged".
+Please use CVE-2012-6141 for this issue
 
-I think there is no reason to deviate from other shells here. Therefore,
-please call it "privileged".
+> HTML::EP::Session::Cookie in the HTML::EP bundle. 
+> https://rt.cpan.org/Ticket/Display.html?id=85216
 
-> In bash and FBSD, after starting with -p, set +p can be used to drop
-> privileges. With your patch, dash accepts set +p, but silently ignores it.
 
-> How does something like the attached, to be applied on top of your
-> patch, look?
+Please use CVE-2012-6142  for this issue
 
-> [snip]
-> +	if (!on && (uid != geteuid() || gid != getegid())) {
-> +		setuid(uid);
-> +		setgid(gid);
-> +		/* PS1 might need to be changed accordingly. */
-> +		choose_ps1();
-> +	}
-> +}
+> Spoon::Cookie in the Spoon bundle. 
+> https://rt.cpan.org/Ticket/Display.html?id=85217
 
-This code tries to use setuid() and setgid() to drop all privilege,
-which is only correct if the privilege to be dropped is UID 0, or on BSD
-systems. It would be better to use setresuid() or setreuid(), and change
-the GID before changing the UID.
+Please use CVE-2012-6143 for this issue
 
-Apart from that, it is better to check the return value from setuid()
-and similar functions. In particular, some versions of Linux may fail
-setuid() for [EAGAIN], leaving the process running with the same
-privileges.
 
--- 
-Jilles Tjoelker
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRkeJhAAoJEBYNRVNeJnmT60oQAJC41gsGkHU1SkjCkdNYkgcH
+av4WLfibJX+c2otdNJP7V88mytskcWw61SDMtS1EfS/EmZyGiZk+e0lDeg9x3yF/
+W9h8Bx5WElKSEb5aAus/m3Wddk41vNEAITwPv8DH3kNKZbOhHOthEVYio8PLO3bd
+KNW1hsQ+Pt5F7/GqNDKDEt3EyXkHIWGy9HjKPJddkFz+OwOgvWC1Ud6Wr0lSNBIM
+cGyMOrJjbnj/MAQG5RLXggGAinRUpYObzVdw7M7dx1J33dGVxjsNOpNdhGdzVa8B
+VWxXdoCatDf9WJzJ6Vgezs5CDIZpInA4ulclQhxFgQXOCDQwk0KRuV4rEG41EDsb
+VTiCCN86dWC5mgM5NKGC/xElZNl9R1qRIm5wCJ+HKo9Pe+vI8Og1X8lfXXLzGldL
+R+fkQ1m9fV49Ew4puTmngOx/4w249f99DGgrzDEUwt6V/QE7jAu5PtW/eBvOY7rU
+S4D9r27L9yJPGM+IXbkUGmyG9BFmWJvZ0OF5I8Bp8DbV+rJ2mlotNL0mSwhKAr/l
+Z5SKnNPBbwT8SDokvqyf33KUl92ngThGLUCF9ZZP5LPPr8n7mi2d+ksGDgELBEy9
+g2LM//sXKXIjvahKUBsz4KKDQCM0xwHLe6A6wYSu3cbBl5HjpmyA5hHRrgZfcjSH
+u0VVTwb16RR3fQk6Ys0Y
+=MBVM
+-----END PGP SIGNATURE-----
