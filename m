@@ -1,27 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/17
-Message-ID: <5465194.f4VyigCCre@devil>
-Date: Fri, 22 Feb 2013 14:09:44 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/14/9
+Message-ID: <20130514165042.GL22446@redhat.com>
+Date: Tue, 14 May 2013 10:50:42 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: webfs world-readable log
+Cc: George Theall <gtheall@...able.com>
+Subject: Re: Re:  CVE-2002-2443: Kerberos kpasswd UDP ping-pong vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Friday 22 February 2013 14:04:54 you wrote:
-> Hello,
-> 
-> webfs[1], a Lightweight HTTP server for static content creates its log with
-> world-readable permission:
-> 
-> # ls /var/log/webfsd.log -la
-> -rw-r--r-- 1 root root 0 Feb 22 14:02 /var/log/webfsd.log
-> 
-> Please assign a CVE.
+* [2013-05-14 13:40:53 +0000] George Theall wrote:
 
-I forgot to mention the upstream website, 
-http://linux.bytesex.org/misc/webfs.html
-and I forgot to mention that it should be gentoo-related because the logfile 
-is created by our own init script.
+>On May 13, 2013, at 2:53:49 PM, <vdanen@...hat com>
+> wrote:
+>
+>> I can't find an email address for Tenable, so I'll probably just use
+>> their contact form and post to the archive for this message so they can
+>> adjust the name of that particular script.
+>
+>Thanks for posting this. We've updated the Nessus plugin to use the new CVE / OSVDB and reference the upstream fix.
+
+Fantastic.  Thank you for this, George.
+
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Vincent Danen / Red Hat Security Response Team 
