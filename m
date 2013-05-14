@@ -1,64 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/6
-Message-ID: <52859C15.9080704@redhat.com>
-Date: Thu, 14 Nov 2013 20:59:17 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/14/6
+Message-ID: <20130514123719.GE19206@dhcp-25-225.brq.redhat.com>
+Date: Tue, 14 May 2013 14:37:22 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: 729028@...s.debian.org, Simon Horman <horms@...ge.net.au>
-Subject: Re: perdition: ssl_outgoing_ciphers not applied to STARTTLS connections
+Subject: Re: CVE Request: linux kernel perf out-of-bounds access
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, May 14, 2013 at 08:25:54AM -0400, Marc Deslauriers wrote:
+> Is there a CVE for this? If not, could one be assigned, please?
 
-On 11/13/2013 12:21 AM, Daniel Kahn Gillmor wrote:
-> Perdition, the IMAP and POP proxy server, fails to apply the 
-> administrator's specified ciphersuite preferences when making
-> outbound connections to IMAP and POP servers using STARTTLS.  For
-> these outbound connections, it applies the administrator's
-> listening ciphersuite preferences, which in many cases may be
-> significantly weaker.
-> 
-> This was first noted publicly on the debian BTS:
-> 
-> http://bugs.debian.org/729028
-> 
-> All versions of perdition up to 2.0 appear to be affected, and the
-> fix is a one-line patch.
-> 
-> This is not a critical vulnerability (it can be mitigated, for
-> example, by enforcing a strict minimalist ciphersuite on the
-> backend server), but in the absence of any such mitigation, it may
-> cause the connections between the proxy server and the backend
-> server to negotiate a weaker ciphersuite than the administrator's
-> stated intent.
-> 
-> Could a CVE be issued for this issue?
-> 
-> Thanks,
-> 
-> --dkg
-> 
+Please use CVE-2013-2094.
 
-Please use CVE-2013-4584for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJShZwUAAoJEBYNRVNeJnmTBjwP/A2Vlei1HYf9w8wFNcOkwyLd
-1ZDKp4zaRymcVlrWYvm4bDXuHh0VWe84o1bGM5YHpQ5RXNSAQ7nzwHtIKKp9vbL8
-r7Zd5bUwTHLIAs2J+fA10CIDaOma7LJFeUKLPMr2IJtV+ZssKVlazVm+oniQPEkR
-PoQZyWYAM/kjs4KOsabW6c1eRLcew4BCimKdnFEfg+JWyC84Jn9DWMD09RwpUexN
-vkiMs3oohqkfXFSS6LnSnYN9h/Ni1otJmbjp0tyFu/+MMCk5w2XehnIUB3RuPdwW
-HaVxjyXzALQWIMn4PZ9xowtmXjyj1/tsKEfYh/2jkb1ll7t+PUnE3NtxXKnzLAXb
-JXa9zmyOZ4TS1j9bfL8A99BgkcdQcfQeWpx/5IgN4yiNcPpRDSKKUUpUVUuknydP
-rf9hzvIh/F0kzgSIHbPZ6HwlC6AWksx8jdwQ8+Xvpks97CP3OA/2pLgdfpKSjwPX
-giEWeFjkxEdinYZr9jeoz/tSz/NwVVkC/R7kc3ncRPOBuzucm8sFhwJQ4T8QWTDd
-Kz09I1twWnoY4kTCdeVdKMwVmsz6YRwka3XIjQnmJEIGb0tDxFbZDozLFQxYgkic
-t1ireQQPK084k9wAVjvh2ZrcHJXnjZ6MyFvgucrPgQWJXXy084xC8kNpO/6eFAFs
-GDFmRUBuNGPWzDmKl2yt
-=J/Xd
------END PGP SIGNATURE-----
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
