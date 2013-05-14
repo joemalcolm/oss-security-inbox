@@ -1,85 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/10
-Message-Id: <E1VUFGK-0002Xa-D5@xenbits.xen.org>
-Date: Thu, 10 Oct 2013 12:22:40 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 67 (CVE-2013-4368) - Information leak through outs instruction emulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/14/11
+Message-ID: <51928DD4.8040407@redhat.com>
+Date: Tue, 14 May 2013 13:17:40 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Larry W. Cashdollar" <larry0@...com>
+Subject: Re: Remote command Injection in Creme Fraiche 0.6 Ruby Gem
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-             Xen Security Advisory CVE-2013-4368 / XSA-67
-                              version 2
+On 05/14/2013 10:59 AM, Larry W. Cashdollar wrote:
+> TITLE: *Remote command Injection in Creme Fraiche 0.6 Ruby Gem*
+> 
+> DATE: 5/14/2013
+> 
+> AUTHOR: Larry W. Cashdollar (@_larry0)
+> 
+> DOWNLOAD: http://rubygems.org/gems/cremefraiche, 
+> http://www.uplawski.eu/technology/cremefraiche/
+> 
+> DESCRIPTION: Converts Email to PDF files.
+> 
+> VENDOR: Notifed on 5/13/2013, provided fix 5/14/2013
+> 
+> FIX: In Version 0.6.1
+> 
+> CVE: TBD (please assign?)
+> 
+> DETAILS: The following lines pass unsanitized user input directly
+> to the command line.
+> 
+> A malicious email attachment with a file name consisting of shell 
+> metacharacters could inject commands into the shell.
+> 
+> If the attacker is allowed to specify a filename (via a web gui) 
+> commands could be injected that way as well.
+> 
+> 218 cmd = "pdftk %s update/info %s output %s" %[pdf, info/file,
+> t/file] 219 @log.debug('pdftk-command is ' << cmd) 220 pdftk/result
+> = system( cmd)
+> 
+> 
+> GREETINGS:
+> @vladz,@quine,@BrandonTansey,@sushidude,@jkouns,@sub_space and
+> @attritionorg
+> 
+> ADVISORY:
+> http://vapid.dhs.org/advisories/cremefraiche-cmd-inj.html
+> 
 
-         Information leak through outs instruction emulation
+Please use CVE-2013-2090 for this issue.
 
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The emulation of the outs instruction for 64-bit PV guests uses an
-uninitialized variable as the segment base for the source data if an FS: or
-GS: segment override is used, and if the segment descriptor the respective
-non-null selector in the corresponding selector register points to cannot be
-read by the emulation code (this is possible if the segment register was
-loaded before a more recent GDT or LDT update, i.e. the segment register
-contains stale data).
-
-A malicious guest might be able to get hold of contents of the hypervisor
-stack, through the fault address passed to the page fault handler if the outs
-raises such a fault (which is mostly under guest control).  Other methods for
-indirectly deducing information also exist.
-
-IMPACT
-======
-
-A malicious 64-bit PV guest might conceivably gain access to sensitive data
-relating to other guests.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 3.1.x and later are vulnerable.
-
-Only 64-bit PV guests can take advantage of this vulnerability.
-
-MITIGATION
-==========
-
-Running only HVM or 32-bit PV guests will avoid this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Coverity Scan and Matthew Daley.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa67.patch             Xen 4.2.x, Xen 4.3.x, xen-unstable
-
-$ sha256sum xsa67*.patch
-7de3ac9baa6cd9fead46e68912dfa0189e900095317645d0e33d85346fc8a028  xsa67.patch
-$
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSVpv2AAoJEIP+FMlX6CvZBl4H/RAC7wtn0iA5AGj8197NJC0q
-kZDOT0h9QAgecWtYLaZ249MIWeFRGDLjw5IQKxQG+0c/BJyTZzyvLqbfAA/rjjX2
-FVSi9+6qtr23WTIgoMKDuSvO/MaC55Y2hkZ/9+j8c+jUD9OyOdbGpjYMF+n3ARB7
-GYJkDomxTD/5N8D25wCciaR3fKepM4eaBayXrjIVP2S/k6aQ8QQCjSLP+ito8EG8
-RD+MaRlYyBYrO3Q9hZdNju6AREKphpS0WEHqlChmql8Ij8+88ZFYXVHHmhw70G6D
-1d6OSm1kFikmroWby9AD97qDwX+estTA4kwKnXYxmcrgyWvkE7O9/uVQJbGGNwg=
-=thOF
+iQIcBAEBAgAGBQJRko3UAAoJEBYNRVNeJnmTytsP/0o3nhU7ZgjyPX8RXjlpJ/ub
+sBgcAAv/Zl+x2jntMqnqlNWGPYIRvGrmAKJqxOk+4zdjjd5C/kL/HoW8msM5M2p+
+U2V1irC/+YJ1+CY4Em9jPrfAQhE8KqOSBoqbPy3hG15yo65RIR2Bn4dz3dSZKk8x
+R2SDTCiqO9LuP3wAYjwxHEQ8d4H0M8QZ/CwuSGFFKB6GRejZHFVXNYxKoiAxqU2u
+T8nh1rbjKAoe0JeJVuNW6rqPtpPrJgT0X7Q6xAzNtoyRYjO6EnQmloWqXiX7YoGA
+Vuukjt7wpzAWjYxkLZxGY3zGNJ1QhNm1L5+/bDRUCKLT3/h3HgliDo/OBGP8jQ2x
+77+lsp2un6DF5iFmCRncaTURTWN9OBD7nKHZvxVtoPAWRfW4CgUSoKjRt1dT/29h
+Bz2b+Xc7/IJo4z7AB8kkseE2gdpjUzot+yEzBvCTKbFOHOhZoMRJ4yfL8QexZ8wK
+o2uym+OVX/2vLGZVlMF48m5LJShWxykwNjMSk1uolTyTXGRfsvRiU2MTGAGw51fZ
+wWmBtHOfEhMF7D+6tEqTe3T1hi/79l1Iu06X//GS0q0+UO8aUBJGz9oalil6TZDU
+tA38nMX1eEU12hJKj22oACAUfaDDTukHA0SSgyCHOmXWkIzwJRXzQo6jI6cBymDs
+MdyaHEUbaTVtQlQilqp8
+=pHRy
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa67.patch" of type "application/octet-stream" (1307 bytes)
