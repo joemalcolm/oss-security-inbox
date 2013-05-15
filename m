@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/31/5
-Message-ID: <20131231070501.GA5874@kroah.com>
-Date: Mon, 30 Dec 2013 23:05:01 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/15/8
+Message-ID: <5193DF25.7080105@gmail.com>
+Date: Wed, 15 May 2013 12:16:53 -0700
+From: Forest Monsen <forest.monsen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - kernel: char: Int overflow in lp_do_ioctl()
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for a Drupal contributed module
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 31, 2013 at 02:33:57PM +0800, Yongjian Xu wrote:
-> Hi,
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/next/linux-next.git/commit/?id=1c2de820d66d704c7d6fffdd872b7670eb4e29bb
-> 
-> This is an integer overflow, and can be controlled via ioctl.
-> 
-> arg comes from user-space, so int overflow may occur in this:
-> LP_TIME(minor) = arg * HZ/100;
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-What exactly can happen if you set that value to a really high number?
-(hint, I really don't think anything happens at all, no matter what you
-set that value to...)
+Hi there,
 
-How does this warrent a CVE?
+I'd like to request a CVE identifier for an issue in a contributed module:
 
-thanks,
+SA-CONTRIB-2013-047 - Google Authenticator login - Access Bypass
+https://drupal.org/node/1995706
 
-greg k-h
+Thanks!
+
+Forest
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iEYEARECAAYFAlGT3x8ACgkQ/ILCL9e1Br6UqACfYbTvEQC46vMMM8Ccs21Wk3Ix
+tRsAniZNCjMNyYef5HfpbgqzM1i35MJK
+=lXO8
+-----END PGP SIGNATURE-----
