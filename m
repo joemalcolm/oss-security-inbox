@@ -1,72 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/14
-Message-ID: <525E3018.2000007@redhat.com>
-Date: Wed, 16 Oct 2013 00:20:08 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Michael Scherer <mscherer@...hat.com>, info@...tstack.com
-Subject: Re: CVE request for saltstack minion identity usurpation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/15/3
+Message-ID: <20130515044733.GA2667@kroah.com>
+Date: Wed, 15 May 2013 00:47:33 -0400
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: linux kernel perf out-of-bounds access
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, May 15, 2013 at 09:26:30AM +0800, Eugene Teo wrote:
+> On Tue, May 14, 2013 at 8:25 PM, Marc Deslauriers <
+> marc.deslauriers@...onical.com> wrote:
+> 
+> > Hello,
+> >
+> > Is there a CVE for this? If not, could one be assigned, please?
+> >
+> > https://patchwork.kernel.org/patch/2441281/
+> >
+> > 8176cced706b5e5d15887584150764894e94e02f
+> >
+> > (BTW, there is currently an exploit for this going around...)
+> >
+> 
+> Nowhere did it say it is a security fix. Fix available since April 13.
+> s@...s not aware too. Awesome.
+> 
+> Seriously, surely by now we should all know that silent fixes are not the
+> wisest thing to do.
 
-On 10/15/2013 11:54 PM, Kurt Seifried wrote:
-> On 10/11/2013 04:26 PM, Michael Scherer wrote:
->> Hi,
-> 
->> While looking for saltstack issues on github, i stumbled on this 
->> pull request : https://github.com/saltstack/salt/pull/7356
-> 
->> It seems that saltstack, a client/server configuration system ( 
->> like puppet, chef, cfengine ) allowed to have any minions (
->> agent on the server to be configured ) to masquerade itself as
->> any others agents when requesting stuff from the master ( ie,
->> main server ). While I didn't fully check, this would permit a
->> compromised server to request data from another server, thus
->> leading to potential informations leak ( like passwword, etc ).
-> 
->> Can a CVE be assigned, and I will pass it to upstream on the bug
->>  report ?
-> 
-> Ok mmcallis@ researched these and found:
-> 
-> CVE-2013-4435 saltstack Insufficient argument validation in
-> several modules
-> 
-> CVE-2013-4436 saltstack MITM ssh attack on salt-ssh
-> 
-> CVE-2013-4437 saltstack Insecure usage of a predictable directory
-> in /tmp and on minion (CVE MERGE of two tmp issues)
-> 
-> CVE-2013-4438 saltstack pillar.ext or qemu_nbd.clear yaml string
-> RCE
+I do not think anyone realized it was a "security" fix.  It was never
+mentioned to the security@...nel.org alias, and I only picked it up
+for the stable releases because someone said, "hey, here's another
+trinity bugfix that userspace can trigger".  We fix those all the time,
+every single stable kernel release.
 
-Argh. The above are currently embargoed, I misunderstood and thought
-they were public (along with the following one). My apologies,
-especially to upstream and users of saltstack. Adding saltstack info@
-to the CC (can't find a security address).
+The only thing different this time is someone took the time to develop a
+simple exploit for others to use.
 
-> CVE-2013-4439 saltstack minion identity usurpation
+So I don't think this was any more or less "silent" than the normal
+kernel bug fixes that happen every single week.
 
+thanks,
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSXjAYAAoJEBYNRVNeJnmTlQUQAJ2p5btZvrhosi1HbD6CX6uJ
-aBefrIXWWTxtuStZX9qSYhBbaKmlI3oOwgEmtJGocohnRL5zKNVyHnEftTpehaah
-7d2ulGzUZNs1MSQt7YWY13A4aMda2i2DTvJrj5SNqJKQoEkmVGPbeJfbKH57olEj
-hxuwZB98JnW9lWpR9RiiZiCjFHiI5v7gUZyzrn5tJg1v7s0iXAE9W41SPV6H4bNi
-XvO1jJQEegnyxaH1s5g92t4aDSl2D0CJLBArj/ewD74NjKUts5s3t7F8O1d7gAkP
-xnhUsBUMLyj/yXW1t7dwMu9P0W1dupltE7Hv1gPflSUeKSBTX0BnmUmztZPW+/TK
-7Yu9UeMX5IF2+z56mB2C/AukDra+GEXek7EhKc4471x6bBvpY806WqIH6922LGiE
-398SxAl6Ni+8P6aqcxTyXIriPJv/Z0wzPyiSWwoI65QEBt7YdKNKzhYFzpZP4JNq
-8Ka145g8uylct7T9NAGPArSLZIxttBinVxz1uGRghpQvTn+X0Q5dNHb9OKc6E/Aj
-bhfOXxufK0inwZtdAARgHQhIr6JnzaeGuJLtwf/FrihjWE7/m9+7e6EmlaSzhtnZ
-SrwKoi24xS5WMb09rHRPqnH40+xuijrPES90R/V84NadPamH1yM39W3yoTdHJC3f
-Vnoec4ScyFDL19mM2/n6
-=nPX+
------END PGP SIGNATURE-----
+greg k-h
