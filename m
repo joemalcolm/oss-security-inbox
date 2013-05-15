@@ -1,80 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/1
-Message-ID: <5216AC19.80309@redhat.com>
-Date: Thu, 22 Aug 2013 18:26:01 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-CC: oss-security@...ts.openwall.com, Andrey Korolyov <andrey@...l.ru>
-Subject: Re: Possibly insecure permissions on sshd_config in Debian-based distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/15/4
+Message-ID: <CAE6fNr+8q-2Jw9wPn54V4fdHqMjmAWGOuK06dH+zbWKXZeKvDQ@mail.gmail.com>
+Date: Wed, 15 May 2013 08:08:47 +0200
+From: sd <sd@...ksheep.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: linux kernel perf out-of-bounds access
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 08/22/2013 03:07 PM, Daniel Kahn Gillmor wrote:
-> On 08/22/2013 04:36 PM, Andrey Korolyov wrote:
->> On Fri, Aug 23, 2013 at 12:20 AM, Kurt Seifried
->> <kseifried@...hat.com> wrote:
-> 
->>> Well the default file config would of course be known. I'm
->>> reading the man page and nothing super secret pops out, e.g. no
->>> passwords get embedded. Can you give an example of sensitive
->>> information in sshd_config?
->> 
->> AllowUsers/AllowGroups/PermitEmptyPasswords
->> 
->> Obtaining such information can shorten time of bruteforce remote
->> attacks.
-> 
-> I don't think these rise to the level of being worth hiding at
-> all.
-> 
-> PermitEmptyPasswords is one additional password to test against
-> each user account, which i don't think is significant.  And a user
-> with local access to the machine can already radically shorten
-> bruteforce enumeration of possible accounts with just with "getent
-> passwd".  the gap from there to AllowUsers isn't particularly
-> significant by comparison.
-> 
-> I don't know of any history of any serious high-entropy secrets 
-> (passphrases, secret keys, etc) being stored in sshd_config, and i
-> would imagine the ssh developers would resist any configuration
-> that encourages that sort of thing.
-> 
-> Having your config files world-readable by default eases debugging,
-> and can communicate to savvy users what your policies are without
-> needing to exchange e-mail or chat.
-> 
-> Administrators who want to make that tradeoff are free to make it,
-> of course, but if a proposal was made within debian to do something
-> like "chmod go-r sshd_config",  i would object to it.
-> 
-> This doesn't warrant a CVE.
-> 
-> --dkg
-
-Yup, the information would help a bit, but not enough to warrant a CVE
-I think. Unless someone comes up with something new for this no CVE.
+Frankly, that there was not a CVE for this came as a surprise to me later
+as I simply hit the release button each time I spot my bug killed when I'm
+auditing the git commit backlog - usually there is fully armed exploit and
+advisory already.
 
 
+2013/5/15 Greg KH <greg@...ah.com>
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+> On Wed, May 15, 2013 at 09:26:30AM +0800, Eugene Teo wrote:
+> > On Tue, May 14, 2013 at 8:25 PM, Marc Deslauriers <
+> > marc.deslauriers@...onical.com> wrote:
+> >
+> > > Hello,
+> > >
+> > > Is there a CVE for this? If not, could one be assigned, please?
+> > >
+> > > https://patchwork.kernel.org/patch/2441281/
+> > >
+> > > 8176cced706b5e5d15887584150764894e94e02f
+> > >
+> > > (BTW, there is currently an exploit for this going around...)
+> > >
+> >
+> > Nowhere did it say it is a security fix. Fix available since April 13.
+> > s@...s not aware too. Awesome.
+> >
+> > Seriously, surely by now we should all know that silent fixes are not the
+> > wisest thing to do.
+>
+> I do not think anyone realized it was a "security" fix.  It was never
+> mentioned to the security@...nel.org alias, and I only picked it up
+> for the stable releases because someone said, "hey, here's another
+> trinity bugfix that userspace can trigger".  We fix those all the time,
+> every single stable kernel release.
+>
+> The only thing different this time is someone took the time to develop a
+> simple exploit for others to use.
+>
+> So I don't think this was any more or less "silent" than the normal
+> kernel bug fixes that happen every single week.
+>
+> thanks,
+>
+> greg k-h
+>
 
-iQIcBAEBAgAGBQJSFqwZAAoJEBYNRVNeJnmTqxQQAJuvFkRfb6jdL4uds9iEkUC+
-vOrG/Onic46gmDnecjW6xMljLgemT3DAOJhq753QZJvFQH49wnXcf1DgdXxpXbDH
-82DleaQU/oUUyswV/whOdTwqsLiWpoAQ9occ32RZWBseLyzmXJelRnlcT1ba/aNM
-azrAUoLAFQLLBQFkRi0GawcTSVRzzZtJn5CWcHuigzsyc0YKYSKcJhK5q2L8cQuQ
-7oXAcvg3OJBOGNDybUajhR1E/PF2aSJ8CiGGZZSrOzEB2h2FkaBzD+/Pbdp/ndq7
-u0aG90E9MusOMRxVeMMWzVKq6FAAqMhS+IS/qwGX7tdcjwFMzGXM6J5H1mgaTbPY
-ctKH6s1Uz37PilHQITpGUfoI0UK6WAz6cK52uw5GFxWYMh+ZBeeHOFScHnmWXKwH
-vhZp6e4AdXzR3Ey9D8ts+ZAgpvc+1t57PEk1+k1bGDwiKkQmmqha8jn9dgrM1wPr
-/1Hcm62VPeUblLjevbhH/z2VXr7lzk0V9LdRjU5oDGeCN0lMrHoUpTGT061URUQk
-GzdFnn0QWtH9LxUYcKJ0693IndWq7AiCBLQtNtdp/+1V05N1y4SnMVrOPiDsQV0I
-fWOHCbnO5+1YtDDpZNhEJWXe8rhNRYs9aQ0RfqTNKD3xn5bYTj1lPQcWKflTvqYq
-jGg5+tp9EV2Da6wL66/4
-=/Yx9
------END PGP SIGNATURE-----
