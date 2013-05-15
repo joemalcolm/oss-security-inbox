@@ -1,47 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/09/9
-Message-ID: <CA+T2pCGDU-OJ8t_aO-YCb9UVfXyvKn3Ahnf8D0m=pw-jL-StyA@mail.gmail.com>
-Date: Fri, 9 Aug 2013 13:42:16 -0500
-From: William Pitcock <nenolod@...eferenced.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: nullmailer world readable /etc/nullmailer/remotes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/15/7
+Message-ID: <613240865.1871835.1368617318295.JavaMail.root@redhat.com>
+Date: Wed, 15 May 2013 07:28:38 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Ian Weller <ianweller@...oraproject.org>
+Subject: CVE Request (minor) -- Python 3.2: DoS when matching certificate with many '*' wildcard characters {was: CVE Request (minor) --  python-backports-ssl_match_hostname: Denial of service when matching certificate with many '*' wildcard characters }
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+----- Original Message -----
+> From: "Jan Lieskovsky" <jlieskov@...hat.com>
+> To: oss-security@...ts.openwall.com
+> Cc: "Steven M. Christey" <coley@...us.mitre.org>, "Florian Weimer" <fweimer@...hat.com>, "Ian Weller"
+> <ianweller@...oraproject.org>
+> Sent: Wednesday, May 15, 2013 1:19:33 PM
+> Subject: [oss-security] CVE Request (minor) --  python-backports-ssl_match_hostname: Denial of service when matching
+> certificate with many '*' wildcard characters
+> 
+> Hello Kurt, Steve, vendors,
+> 
+>   A denial of service flaw was found in the way
+>   python-backports-ssl_match_hostname,
+> an implementation that brings the ssl.match_hostname() function from Python
+> 3.2 to
+> users of earlier versions of Python, performed matching of the certificate's
+> name
+> in the case it contained many '*' wildcard characters. A remote attacker,
+> able to
+> obtain valid certificate [*] with its name containing a lot of '*' wildcard
+> characters,
+> could use this flaw to cause denial of service (excessive CPU time
+> consumption) by
+> issuing request to validate that certificate for / in an application using
+> the
+> python-backports-ssl_match_hostname functionality.
+> 
+> Upstream bug report (no patch yet):
+> [1] http://bugs.python.org/issue17980
+> 
+> References:
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=963186
+> 
+> Credit: Issue was found by Florian Weimer of Red Hat Product Security Team
+> 
+> Could you allocate a CVE identifier for this (it's possible that
+> Python 3.2 implementation is vulnerable to the same problem too,
+> will check that case yet)?
 
-/etc/nullmailer/remotes may contain SMTP authentication information as
-arguments provided to the requested nullmailer sending module, e.g.:
+Replying to myself here. Issue is present in Python 3.2 code too - so
+the CVE should be allocated for the original (Python 3.2) code, rather
+than to python-backports-ssl_match_hostname package.
 
-smtp.gmail.com smtp --username=foo --password=bar --starttls --port=587
+Updated subject of the request to reflect this.
 
-William
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-On Fri, Aug 9, 2013 at 12:16 PM, Christey, Steven M. <coley@...re.org> wrote:
-> Agostino,
->
-> Out of curiosity, what types of sensitive information are contained in this file that cause world-readable permissions to pose a vulnerability?
->
-> - Steve
->
->
->>-----Original Message-----
->>From: Agostino Sarubbo [mailto:ago@...too.org]
->>Sent: Friday, August 09, 2013 1:15 PM
->>To: oss-security@...ts.openwall.com
->>Subject: [oss-security] CVE request: nullmailer world readable
->>/etc/nullmailer/remotes
->>
->>Hello,
->>
->>On Gentoo, the file /etc/nullmailer/remotes is installed with wrong
->>permissions:
->>
->>~ # ls -la /etc/nullmailer/remotes
->>-rw-r--r-- 1 root root 971 Aug  9 18:58 /etc/nullmailer/remotes
->>
->>Nullmailer-1.11-r2 contains the fix, all prior versions are affected.
->>
->>Please assign a CVE.
->>--
->>Agostino Sarubbo
->>Gentoo Linux Developer
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> --
+> [*] Would be minor issue because ability to obtain such valid certificate
+> would
+>     mean the necessity to use some compromised CA. On the other hand though
+>     being corner case, can't be completely excluded.
+> 
