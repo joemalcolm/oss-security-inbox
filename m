@@ -1,47 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/21/1
-Message-ID: <517335F2.4070409@archlinux.org>
-Date: Sun, 21 Apr 2013 10:42:26 +1000
-From: Allan McRae <allan@...hlinux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/12
+Message-ID: <5195213C.6020708@redhat.com>
+Date: Thu, 16 May 2013 12:11:08 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: Request for linux-distros list membership
+Subject: Re: CVE-2013-2097: zPanel themes remote command execution as root
 Content-Type: text/plain; charset=utf-8
 
-On 21/04/13 06:29, Solar Designer wrote:
-> Hi Allan -
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 05/15/2013 07:33 PM, Kurt Seifried wrote:
+> So I saw this earlier today:
 > 
-> On Sat, Apr 20, 2013 at 06:58:14PM +1000, Allan McRae wrote:
->> I would like to request membership to the linux-distros mailing list
->> representing Arch Linux.
+> http://www.reddit.com/r/netsec/comments/1ee0eg/zpanel_support_team_calls_forum_user_fucken/
+>
+>  and flipped through the forum thread on the zpanel site, but
+> didn't have time until now to deal with it. So first off: I saw all
+> this stuff and read it before it was removed from the site
+> (actually the entire site appears to be down now).
 > 
-> Normally, I'd ask an existing security contact or a project leader to
-> approve this, but there don't appear to be people with roles like these
-> at Arch Linux - or are there, and who are they?  (Apparently, there was
-> a leader until 2007.)
+> So long and short: you upload a template with the following code:
 > 
-> https://www.archlinux.org/developers/ lists you as "Toolchain
-> Maintainer, Pacman Developer", which sounds like a sufficiently core
-> role for you to appoint yourself (or someone else) as a security contact
-> for Arch Linux, if/since there's no security contact nor a leader.
-
-We do have a project leader who is Aaron Griffin, although his role
-tends to be limited to administrative things these days.  But as your
-research suggested, I am in a position to appoint myself as security
-contact and messages to security@...hlinux.org will be sent to me.
-
-> Please add Arch Linux information to:
+> <& bogus ']; exec("/etc/zpanel/panel/bin/zsudo touch /root/derp"); 
+> echo $value['bogus &>
 > 
-> http://oss-security.openwall.org/wiki/vendors
+> and the command gets executed as root. From googling it appears
+> that zPanel won't work with SELinux enabled, which makes sense
+> (most web applications fail to ship an SELinux policy, so if they
+> need to do strange things outside the default policy they generally
+> tell you to simply disable SELinux). So if you run zPanel it would
+> be normal to disable SELinux (to make zPanel work), so this root
+> level access won't be restricted.
+> 
+> This issue has been assigned CVE-2013-2097.
+> 
+> There is also a mention of a CSRF but I couldn't find any
+> additional information on it, if anyone knows about this please
+> email me/oss-security with details.
 
-Will do.
+Ok and "joepie91" on reddit posted:
 
-> How do you expect to use the information arriving via linux-distros?
+http://www.reddit.com/r/netsec/comments/1ee0eg/zpanel_support_team_calls_forum_user_fucken/c9zujzt
 
-I am intending to form a more official security response in Arch Linux
-rather than the quite adhoc process we have at the moment.  The
-information on linux-distros will be used to prepare updates to be
-released at the end of relevant embargo.
+======
+It's a pretty basic (and more annoying than harmful) CSRF - basically,
+http://zpanel.whatever.com/?logout=anything will log out the user from
+a panel, no matter where it's called from. There's no logout key, and
+no referer checking.
 
-Allan
+Insert <img src="http://zpanel.whatever.com/?logout=anything"> on any
+site and anyone that visits the page will have their
+zpanel.whatever.com session killed instantly.
+======
 
+I can't verify this, but even if true it appears that there is no real
+trust boundary violation (user clicks the link, they get logged out,
+or JavaScript is used to trigger it, whatever). Unless someone can
+show otherwise not assigning a CVE for this issue.
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRlSE7AAoJEBYNRVNeJnmT3eIP/iGnhV/LZ7b3a3ssnhqU4ygz
+BMjN1QAxapzbDP4UHawqhL6oQRhzwAuPr9N4uwM20Q9+XWoVSCxcK3yZ669+xlNM
+QWwK0pboAOaoHMYWjGyjdxkud0l81gCYJG5toHBGYNsRUN26LKY4Bt2JbxuJymhq
+0F0WP8QZhaKNzBU+E0A5J1DTmLnkpnKvViOCtG/PmY3o8gLJzAOMnVgmuT9Fqg+5
+UyRrGSK8NfLh0WY55knmamiKb4RGyaBlqcmf+9vhUljz9k0WFqQGcM39e5QekrUx
+ejcw9CI5s1m0iCwyt6rWo3E7CWrhLGZVdvu9qOjN6W8PiRBxUdV3uE36OAICrxSY
+huFU/ojLopf9L3zwBXWBrXWPkwOZZwNcnq4/p9O5yoPA4rFw1Kn7mGp/57+kXmNH
+B0oPWmVdOIvC2A2iYer64giV+/gc5Z0lv41eIzuRH0xgrFz2dj6w0ubgMjjFxtjJ
+c3/bBGSvHZG6+xxt4D9z++pxYp6aEYs/kJpNp+Fc4Y6PZy5Pp0Hv2u0mGH5CevtG
+KEuKAH3tRlpWL9bQ6wuV4KR871zRY84CQ+KiC+dZooPSLZCn/Ng6ARdCkE+ayR0Z
+5G+5KNn8YVTs3kbQKgRrhbtplTcykf2nDIcpzro4grBCE+zElu8DAFKP0KcTMsSN
+XyeIRmvH6XXyelL+WLq1
+=Td1y
+-----END PGP SIGNATURE-----
