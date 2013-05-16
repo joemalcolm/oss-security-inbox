@@ -1,70 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/28/2
-Message-ID: <512EB70B.5040407@redhat.com>
-Date: Wed, 27 Feb 2013 18:46:51 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/2
+Message-ID: <5194394C.3060901@redhat.com>
+Date: Wed, 15 May 2013 19:41:32 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Jason A. Donenfeld" <Jason@...c4.com>
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for a Drupal contributed module
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/27/2013 04:24 PM, Jason A. Donenfeld wrote:
-> On Thu, Feb 28, 2013 at 12:07 AM, Greg KH <greg@...ah.com> wrote:
->> Really?  Ok then, please go ahead and try doing this yourself if
->> you feel it is so "obvious" to do.
+On 05/15/2013 01:16 PM, Forest Monsen wrote:
+> Hi there,
 > 
-> I did yesterday, actually. I saw some commit that said "use after 
-> free!", saw that it was triggerable by an unpriv'd user, and sent
-> it into the list. Kurt took a look at it, agreed with the
-> assessment, and assigned a CVE. The commit itself said "use after
-> free" -- I didn't even have to do any heavy lifting or
-> hair-splitting investigation.
-
-No I didn't. This is why I require good quality requests, anything
-else is a waste of my time. If it doesn't meet an easy "definitely a
-security bug" I push it back to people and keep poking them with
-annoying questions, in some cases this takes weeks or months to be
-resolved (some are quite subtle, like that IPv6 Kernel stuff).
-
-I assigned 1600-2000 CVEs last year, it will be more this year. At one
-hour per CVE that would be a full years work right there. Even at 1-5
-minutes per CVE it's still a huge time sink. The Kernel people are
-working with roughly an order or two magnitude more bug reports to
-assess (because even trivial looking things can turn out to have nasty
-consequences or even represent entirely new classes of flaws, just
-look at the recent Ruby stuff or XML stuff).
-
->> Nope, we are dumb, we do uninteresting, boring work, dealing with
->> broken hardware and demanding users every day.  If we were
->> smarter, we wouldn't be doing this type of thing.
+> I'd like to request a CVE identifier for an issue in a contributed
+> module:
 > 
-> Come on...
+> SA-CONTRIB-2013-047 - Google Authenticator login - Access Bypass 
+> https://drupal.org/node/1995706
+> 
+> Thanks!
+> 
+> Forest
 
-This also goes for security people. If we had any sense we'd go live
-in the woods in a cabin and drink moonshine and go hunting. I'm still
-assigning CVE's for /tmp file vulns. That's just inexcusably stupid.
+This sounds like two separate issues:
+
+Accidental removal of account configuration.
+
+In certain scenarios, Google Authenticator login incorrectly
+determines the user's account name. The change in account name could
+cause the two-factor authentication for existing accounts to be lost,
+allowing users to log in using just username and password.
+
+This vulnerability is mitigated by the fact while Google Authenticator
+login's additional verification is by-passed, a username and password
+are still required to log in.
+
+One Time Password (OTP) replay
+
+If an attacker can intercept a login request with a username, password
+and OTP, an attacker could use this same data again to login to the
+website.
+
+This vulnerability is mitigated by the fact that an attacker who can
+intercept a login request with this level of detail can usually also
+intercept the ongoing session identifying token.
+
+
+can you send me the code patches fixing this so I can make sure it
+gets the correct SPLIT/MERGE treatment? Thanks.
+
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRLrcLAAoJEBYNRVNeJnmTzlwP/3RD6L9k60EmE43kt/NMQK8N
-sbG3eKCuDug7Z81FS5qMsu6tNSFSvSPF1zkt1XtYFoaPPAiSCJ5iJWtsZHiBpMcQ
-UG4fbtkZIwbmaijSB455hGRryKC8XhnTy9kjOj+VLiHenjOYYDLGEjJm+stsN6t9
-K2uacEKWugzHVPXSoexjRyIS7lai8f04FifMHav/N9ZG8tlbsNA6zr2mx9QDgAfO
-B+Hmy0mjFXcY9zzyUPlLUOfIQzAxv8DzYF7tUY1Nybttno+ul85OQNSsShJHH10E
-M34/tLIaMorku/oB00H9hveEi1zgOcVotVIk6tJ/qCnBffOHZ0MWEFYte3ou98D2
-yjjjd6nDcu2LAK7cTlbV306oA9F69cWQJ8wWd019Fvmln51z7OCX3fOmjKzz3F4z
-BmVeBtd0XK65BpHXwU/EewWklTcoATzkr0dZdBupB50PEejF4cDOTgN+g/z4FWjj
-GKeu06LwlSZcyeQ55S8DLwEK1K8ZvbZhRCwFHISjX7W7G1yWarUZ2jZV333Spv4O
-81s3t5haDASbLmNNclZayxhs0wTqGEFRDrFCu4r/hKUvcdTuvFgcBDoMJP6jZC+A
-8FnCbVnE4kt1buIhbXWj/YwhpbguhCKebwCtAT135jONn8gs085VhUaGaOoc0vnS
-PN5pIr8yoEf2QuGt+3UI
-=H3sd
+iQIcBAEBAgAGBQJRlDlMAAoJEBYNRVNeJnmToZwP/1P6vCp4MIxHapkAo0QeQTLN
+/kECmFiS/BZD6V0bDoZNLqkhcFRjtNhDlyXhpsqph05lD1zLqTyV8jktDETO8Rym
+iRw7QRzWKpTIxV1EpcZ1WeivLWFB32xbwE3oI4bHuzwlu2pawrxGR16RT4+imsFC
+UW+9Ld9uC8XuT1++IILKp3Ml874SmfNIiD9gW33qBSeJMKBri068i5UQ6zqZuCMi
+zS91SJxYo7018eI9TyqAtGeqB0cpkOqNPcDEerWo/dxfute7/d8tdB4ShGniVXUq
+nw0aodDuwDftGqKp9fH1MNOJ1e4wfoqc54zGcmD/vLouPYJumAa5ugMaG5RsIkVN
+lBsPvTG9NJlukerNOnMwEd+D+Dut/0NUBkJZxK0KFUblGH6Goxaw2kUfbFIqhNDL
+g8jX4EWSBLfNhgg8oUXiZkDBGLyKIv/Hum5tavQwnwtd6c/DZ/ey87phkD/2H375
+slyHXxtmMHqbYMU90B9WjRVNc+R3uEtQhycvvA0qI0qS4z687pBjaCqqknxgX57n
+3D8d8JdWC7PaU2m9P0m6uk4M/FEJqQG8VCsBHHfTJUq9fCKeyuhPFQgPbLpGv3Qi
+RRTszagI1cQC5+pRDhZg9R2JStMe5TOO1WIfk9L7AMfOm56KFmQLS3n7O0mzczDD
+iKM9mASPzBJxap18rwD7
+=l4Tt
 -----END PGP SIGNATURE-----
