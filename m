@@ -1,34 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/03/4
-Message-ID: <20130603173743.GL1472@yuggoth.org>
-Date: Mon, 3 Jun 2013 17:37:44 +0000
-From: Jeremy Stanley <fungi@...goth.org>
-To: oss-security@...ts.openwall.com, openstack@...ts.launchpad.net
-Subject: Re: [Openstack] [OSSA 2013-013] Keystone client local information disclosure (CVE-2013-2013)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/16
+Message-ID: <519543E0.6010800@fifthhorseman.net>
+Date: Thu, 16 May 2013 16:38:56 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE-2013-2097: zPanel themes remote command execution as root
 Content-Type: text/plain; charset=utf-8
 
-On 2013-06-03 10:01:03 -0700 (-0700), Lloyd Dewolf wrote:
-> I appreciate that it often isn't appropriate, but in this case it
-> might have been beneficial to include python-keystoneclient
-> version 0.2.4 where this is first resolved.
+On 05/16/2013 02:11 PM, Kurt Seifried wrote:
+> Ok and "joepie91" on reddit posted:
+> 
+> http://www.reddit.com/r/netsec/comments/1ee0eg/zpanel_support_team_calls_forum_user_fucken/c9zujzt
+> 
+> ======
+> It's a pretty basic (and more annoying than harmful) CSRF - basically,
+> http://zpanel.whatever.com/?logout=anything will log out the user from
+> a panel, no matter where it's called from. There's no logout key, and
+> no referer checking.
+> 
+> Insert <img src="http://zpanel.whatever.com/?logout=anything"> on any
+> site and anyone that visits the page will have their
+> zpanel.whatever.com session killed instantly.
+> ======
+> 
+> I can't verify this, but even if true it appears that there is no real
+> trust boundary violation (user clicks the link, they get logged out,
+> or JavaScript is used to trigger it, whatever). Unless someone can
+> show otherwise not assigning a CVE for this issue.
 
-What's the better way to do that, do you think? Delay the
-announcement until a new release is tagged, guess what the release
-will be numbered (possibly doable with the assistance of the
-developers as long as they don't change their minds), or follow up
-to the announcement after the fact? I opted for expediency and
-accuracy, indicating the date and commit hash stating "will appear
-in the next release," but am happy to entertain alternative
-approaches there.
+Kurt: just to be clear, joepie91's attack didn't require javascript or
+link-clicking or anything of the kind, because it's an img src -- as
+long as your browser loads images automatically from non-origin hosts,
+it will trigger this behavior.
 
-I agree it's less than ideal for end users reading the announcement
-and trying to decide whether they're running a new enough version of
-the client to have access to that feature, though I guess the
-manpage or --help output is the first place I would look as a user
-if it came into question. Also, with many users running
-stable-distribution-packaged clients with fixes backported, upstream
-version numbers can be fairly irrelevant to those users in the short
-term as they may have the fix in a client reporting to be running an
-older version.
--- 
-Jeremy Stanley
+That said, I agree with Kurt's general assessment here: this kind of DoS
+is the nicest possible thing an attacker can do with a CSRF.
+
+	--dkg
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
