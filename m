@@ -1,19 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/23/3
-Message-ID: <CABbbngD6B+0jdaa353ph=YovS380ZNcHO3m5ebu8QxKjdZYuYg@mail.gmail.com>
-Date: Sat, 23 Mar 2013 14:11:23 -0700
-From: Forest Monsen <forest.monsen@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for "Views" (Drupal contributed module)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/11
+Message-ID: <20130516153159.GF19291@kludge.henri.nerv.fi>
+Date: Thu, 16 May 2013 18:31:59 +0300
+From: Henri Salo <henri@...v.fi>
+To: "Christey, Steven M." <coley@...re.org>
+Cc: oss-security@...ts.openwall.com;, plugins@...dpress.org
+Subject: Re: WordPress plugins vulnerable to CVE-2013-1808
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 22, 2013 at 1:43 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+On Thu, Mar 28, 2013 at 03:44:09PM +0000, Christey, Steven M. wrote:
+> Henri,
+> 
+> It appears that CVE-2013-1463 was previously assigned to an issue that was claimed to exist in WP-Table Reloaded and fixed by that module developer, but the attack vector involves the id parameter to js/tabletools/zeroclipboard.swf, so this is likely a duplicate.  Can you confirm?
+> 
+> If this is a duplicate, we have an unusual situation for how to resolve it.  The older CVE, CVE-2013-1463, is much more widely used than the newer CVE-2013-1808, which would argue for keeping the older CVE-2013-1463.  However, because that older CVE focuses on the wrong product, and CVE-2013-1808 is referenced in Red Hat's Bugzilla and thus "more authoritative," this would argue for keeping CVE-2013-1808.
+> 
+> - Steve
 
-> Sorry Jan asked first =)
+I'm not sure if wp-table-reloaded used custom version of the zeroclipboard or
+not, but by looking at the checksums so did other plugins too. Let's REJECT
+CVE-2013-1463 and use CVE-2013-1808.
 
+http://osvdb.org/90374
 
-Well, look at that! You're right. Thanks anyway. :)
+---
+Henri Salo
 
-Best,
-Forest
-
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
