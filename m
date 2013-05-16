@@ -1,38 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/10
-Message-Id: <201312301620.rBUGKmGU009451@linus.mitre.org>
-Date: Mon, 30 Dec 2013 11:20:48 -0500 (EST)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Zenphoto 1.4.5.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/4
+Message-ID: <51943AE3.7010104@redhat.com>
+Date: Wed, 15 May 2013 19:48:19 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: sd <sd@...ksheep.org>
+Subject: Re: CVE Request: linux kernel perf out-of-bounds access
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> A) Cross Site Scripting in mergedRSS.php [Impact: 3/5]
+On 05/15/2013 12:08 AM, sd wrote:
+> Frankly, that there was not a CVE for this came as a surprise to me
+> later as I simply hit the release button each time I spot my bug
+> killed when I'm auditing the git commit backlog - usually there is
+> fully armed exploit and advisory already.
 
-Use CVE-2013-7241.
+If you think you find a CVE worthy flaw in the Linux kernel please let
+me know and I can get it a CVE asap. Same goes for most anything Open
+Source. If I'm away email secalert@...hat.com and someone else on the
+SRT team will attend to the CVE request.
 
+We (Red Hat SRT) really, really like giving CVEs to issues, it makes
+life so much easier for all concerned. We'd rather deal with a false
+positive than miss something (like this one sort of got missed a bit =(.
 
-> B) Sql Injection in wordpress_import.php [Impact: 1/5]
-
-Use CVE-2013-7242.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSwZ0jAAoJEKllVAevmvms9PkIAICNVU0zW1Pp1A8O2Sto1wG1
-NFGNe/TMB9H0pOlsorxhg5u/11V4rX0iHSEETu5TsX1W84cVWAFrZ615vP7AEF7w
-7pjPWYvV8HFyBUagK2fXxE8lm/XLztPWlQsd4DEMeseg5I0fwEqpsgXSk+afw87x
-V1x6AcPViaxE2H6MQfMHLmoAEADFXwAySVITI6QquipyR8Z20YrQiIkDZl2+KY5h
-7M6x+jPduGD9gj/8f00Zbhs0J0pTTH0vsUHaUahRej+8DwsNoSqPsjqy3LVVd3N/
-PUXr2gm/8rAtPHJV2SnUHxcesnJtrVnxvydThqfVV0I4kPKfP5GBjaXafnldy34=
-=OKfh
+iQIcBAEBAgAGBQJRlDrjAAoJEBYNRVNeJnmTnY0P/j1at21RoqLtGOEms2+kunNF
+PJJLFs/ypNw/leelkrPv5kqx5DXyPy4ZlwT+HNZxMzmL+j09XB0rVfHSzq2YJbvJ
+dyyCTc1YD8FAhyD7ENJjk4i2jnKT78Mi936mnd2nCxmQGj5hlkCW896B4eoSpx5O
+wth6W2bvqunJSpkUmKIkNrKUrY0HQcMjpjV4X9P06KiRcBajz4OwUgtTUnfwfkHZ
+oHpDYeP9AdIl6C6ibF5m9wBvOHJ7+bJct1UNmbMRV1pEv2AXTEM93CpE0jluvxeq
+oT1IbryIzZJ7sAkCRL7Q4XqCM101HKhjVZ5tZ6V1tekVujGVixk3YghtqeisMFAL
+WLr5asvbvw5SJvYkwp9flvnSZl7O+BgWv7wkj6zc2rdKsWgQ36cc9My9qdXcrE3U
+/N6AwKXa/sbuJtgeCOTLO30srHf/92uyOVEvEk2PoRDcl99OJU44CNNIADkLP5+Y
+iq9EzcHQhWL7hwn2I4V/tlI3WT6zwgbxwnZSBVGddA5vlkbYpx7AHEGD25ms33u1
+WeTY1YWpU+fZYRDY0cBAkgCwrJZmbYedb9rarACOZrXcMH514vCe7jdrqa+upJCE
+2gldxvt6XTjyl+P7aUBs9Bcyo8y0SYjdry+d9CkGyTGHbwfpb1VUKMCV07ahpY5z
+aVgVohbsiT5qzOGcnsnu
+=GE/R
 -----END PGP SIGNATURE-----
