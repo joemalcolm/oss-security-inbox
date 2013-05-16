@@ -1,43 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/13
-Message-ID: <50F6FED1.40108@msgid.tls.msk.ru>
-Date: Wed, 16 Jan 2013 23:26:09 +0400
-From: Michael Tokarev <mjt@....msk.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/10
+Message-ID: <20130516145946.GE19291@kludge.henri.nerv.fi>
+Date: Thu, 16 May 2013 17:59:46 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: "Xen.org security team" <security@....org>,  xen-announce@...ts.xen.org, xen-devel@...ts.xen.org,  xen-users@...ts.xen.org
-Subject: Re: Xen Security Advisory 41 (CVE-2012-6075) - qemu (e1000 device driver): Buffer overflow when processing large packets
+Cc: plugins@...dpress.org
+Subject: CVE request: WordPress plugin wp-cleanfix CSRF
 Content-Type: text/plain; charset=utf-8
 
-16.01.2013 18:50, Xen.org security team пишет:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> 	     Xen Security Advisory CVE-2012-6075 / XSA-41
->   qemu (e1000 device driver): Buffer overflow when processing large packets
->
-> SUMMARY AND SOURCES OF INFORMATION
-> ==================================
->
-> An issue in qemu has been disclosed which we believe affects some
-> users of Xen.
->
-> The Qemu project has not itself issued an advisory. More information
-> may be available in the advisories published by the distros:
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=889301
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=696051
-[]
-> RESOLUTION
-> ==========
->
-> The patch is this git commit:
->    http://git.qemu.org/?p=qemu.git;a=commitdiff;h=b0d9ffcd0251161c7c92f94804dcf599dfa3edeb
+Hello,
 
-Please note: there are TWO patches required in there.  That's
-first, the second is
+Can I get CVE for CSRF vulnerability in WordPress plugin wp-cleanfix, thanks.
+Attacker can execute arbitrary PHP code using eval() in wpCleanFixAjax.php with
+CSRF. I also noticed the plugin contains wp-cleanfix.php:
 
-   http://git.qemu.org/?p=qemu.git;a=commitdiff;h=2c0331f4f7d241995452b99afaf0aab00493334a
+<script type="text/javascript" src="http://blog.wpxtre.me/widget/?<?php echo
+time() ?>"></script>
 
-Thanks,
+Tested: 2.4.4
 
-/mjt
+Information posted originally 11 months ago, but eval() alone is not dangerous.
+Not sure if this should be 2012 or 2013 CVE.
+
+References:
+http://wordpress.org/support/topic/plugin-wp-cleanfix-remote-code-execution-warning
+https://github.com/wpscanteam/wpscan/issues/186
+http://wordpress.org/extend/plugins/wp-cleanfix/
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
