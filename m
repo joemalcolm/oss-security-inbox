@@ -1,41 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/5
-Message-ID: <2650419.lEoOq43ulC@devil>
-Date: Mon, 22 Apr 2013 13:01:17 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: libxmp MASI Parsing Buffer Overflow Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/15
+Message-ID: <87zjvuwwdv.fsf@windlord.stanford.edu>
+Date: Thu, 16 May 2013 12:35:40 -0700
+From: Russ Allbery <rra@...ian.org>
+To: Salvatore Bonaccorso <carnil@...ian.org>
+Cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: WebAuth: Authentication credential disclosure
 Content-Type: text/plain; charset=utf-8
 
->From the secunia advisory SA53114[1]:
+Salvatore Bonaccorso <carnil@...ian.org> writes:
 
-Description
-A vulnerability has been reported in libxmp, which can be exploited by 
-malicious people to compromise an application using the library.
+> Could a CVE be assigned for this issue in WebAuth (Cc'ing Russ
+> Allbery):
 
-The vulnerability is caused due to a boundary error in the "get_dsmp"() 
-function (src/loaders/masi_load.c) when parsing MASI files, which can be 
-exploited to cause a buffer overflow.
+Ack, sorry, I considered asking for a CVE and then decided not to since I
+wasn't sure anyone would really care given the limited deployment of the
+affected code.  That was probably the wrong decision, particularly based
+on Kurt's comments yesterday, so I probably should have gone ahead and
+done it and included it in the advisory.
 
-Successful exploitation may allow execution of arbitrary code.
+I'm happy to include a CVE in the advisory and in the Debian experimental
+changelog going forward.
 
-The vulnerability is reported in versions prior to 4.1.0.
-
-
-Solution
-Update to version 4.1.0.
-
-Provided and/or discovered by
-The vendor credits Douglas Carmichael.
-
-Original Advisory
-http://sourceforge.net/projects/xmp/files/libxmp/4.1.0/Changelog/view
-
-Commit:
-http://sourceforge.net/p/xmp/libxmp/ci/a015fdfb478a60172fd225632a11bbd02870fc40/
-
-
-[1]: https://secunia.com/advisories/53114/
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Russ Allbery (rra@...ian.org)               <http://www.eyrie.org/~eagle/>
