@@ -1,68 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/02/1
-Message-ID: <186789772.18307680.1372750780822.JavaMail.root@redhat.com>
-Date: Tue, 2 Jul 2013 03:39:40 -0400 (EDT)
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: Question about signed email
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/7
+Message-ID: <5194A114.5030302@stillhq.com>
+Date: Thu, 16 May 2013 19:04:20 +1000
+From: Michael Still <mikal@...llhq.com>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2013-012] Nova fails to verify image virtual size (CVE-2013-2096)
 Content-Type: text/plain; charset=utf-8
 
-It doesn't look properly signed to me because there are two signatures in it, see below.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
------ Original Message -----
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> - -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> This message is properly signed right? Can people reply privately and
-> tell me what it looks like in their email client, e.g. if it looks
-> properly signed or not? Screen shots welcome. Thanks
-> 
-> 
-> - -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> 
-> - - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> - -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.13 (GNU/Linux)
-> 
-> iQIcBAEBAgAGBQJR0fZeAAoJEBYNRVNeJnmTTkIQAIr6OkoHbkKCx0LMZQve4oIJ
-> fjUHHx3WqOyQR5I1OStrt2RLoJeWzIpFUPrQTRFoPvpyCUXW/sNvGoILTjZftD3l
-> 1A6andojNuNSXZmL7TWZ9Ce1YdOh+C5cbd6edYLbpkwOt9ZrPya6xsrPpztJLDvT
-> d9jx8/lxnmDo0K8zFuk+k0a2G8Z4N5xkA/JpR8WqA28sD4X6S1RbA/Rq360/qw//
-> 4zEkDFlNODlplGVNKxuSLfNR8D2eFleDF8ZMovJM1JPT7E4fQEi4E4wVHzD/Y8qk
-> dsGF2OEBjpvLcehH2PA9w/IxB5yJdToiHM9aRyz5drjOT+pYkRktFLPSrpsc7z24
-> EPHCv1SlIRoYxSeTtFxOg/K8T67uBwmNerWSh4WKicy1dWmMm9UqytRQLo76t0Cz
-> tKxOuzEDU8X+uh8uQK1wsE3x5kzHTISJHmzZ6WIGTpIjOyznt7nXgCbP9u0GU+8X
-> Cx0EJD+gou2QyqBfW1/3JtSa+pE/WuOJG5Gh35idvxoZC+znzKSs5KfDE+UJ2fP5
-> p7ctLubLO4gR5GfB02R37ayGFNiBg+ww0Z5NoN6RpA70J7s4KGxM00XqFeZiuIon
-> GQXsYUgrIaptx04SORR2/Dvsv98dh0/PHMUVzeVkQwUQHqsAgrkBvuIGbI1n+NoR
-> cSWpEf0XM5mYxRtMGSrU
-> =bCBE
-> - -----END PGP SIGNATURE-----
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.13 (GNU/Linux)
-> 
-> iQIcBAEBAgAGBQJR0faFAAoJEBYNRVNeJnmTboEQAI8jWhNRneMvevZfN3CntW+L
-> 6Edx1pypmgHHFjdnBPpXF5R1NNFy0QTY3HYW/ADWeWA7U7cmDFupESETTqyMFx1h
-> k37Q5nOZcQtKWz2RUzGRBiNfZ+lDs9tCWzSAmGSfuuKXEm+fSL+dS9xNICgc3s91
-> KJURWjTbKFyIbguAbHTxSZJ9eADICEfEpDvMkbOJnfdXtJ0JM7vLj3+aD/fDKnG9
-> uYiTXr0oHKnJDD+8f7w66+WKCYeuNwdalc0TZAsOvwr58ws1JetJBE4x68T0rbCW
-> 95UjMO4adU0VwEzeBrVgY4UL+K0sep2j9V+1+Q3NxF+jzdBQ5sPswXnh1yeLj1Ug
-> 7iQTgk+qPMJ8gooWiB6cbrcvwztKTPmVjVZBDwwiiMNQctMBrPmDFLgiN3aWjeLm
-> ukatP23eS569vsI00UKD+vSC6Mm60ofAPJHADOKPWGVNUujGCeJROvHwurfK+tP9
-> qO2Ly/PDX1peWh3w/48pHtPFBsnsXd2Iw+v4xttCnpjd08ppkCAFDycQv0jmqHA1
-> qOnL3F02523+7IgAQJW12ozTGWjqaGSkJRevSK9oMBGFtHfhElfxpejsYRgkbx+y
-> 1N82HR7xq8FJMMUx7l4Fs4QZfTg2e8Qo2XG9uPA9dx7t2faJPQ8mYlN4tpMZCOx7
-> xt1XD0jUnQ5tG82c9RS9
-> =YcTM
-> -----END PGP SIGNATURE-----
-> 
+OpenStack Security Advisory: 2013-012
+CVE: CVE-2013-2096
+Date: May 16, 2013
+Title: Nova fails to verify image virtual size
+Reporter: Loganathan Parthipan
+Products: Nova
+Affects: All versions
 
--- 
-Florian Weimer / Red Hat Product Security Team
+Description:
+Loganathan Parthipan publicly reported a vulnerability in Nova. Nova
+did not implement checking for the virtual size of a qcow2 image used
+as ephemeral storage for instances. It is therefore possible for a
+user to create an image which has a large virtual size, but little
+data. Once the instance is created, the user can then proceed to fill
+the virtual disk, and consume all available disk on the host node file
+system.
+
+Havana (development branch) fix:
+https://review.openstack.org/28717
+
+Grizzly fix:
+https://review.openstack.org/28901
+
+Folsom fix:
+https://review.openstack.org/29192
+
+References:
+https://bugs.launchpad.net/nova/+bug/1177830
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-2096
+
+Thanks,
+Michael Still
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iEYEARECAAYFAlGUoRQACgkQlhS32Mrx3702BgCeKZUDDA/W6Nj/xgC1a1n9vHvP
+vvoAnRfIOXnuvJ01c7IxGyXON7LIh5kt
+=YfoG
+-----END PGP SIGNATURE-----
