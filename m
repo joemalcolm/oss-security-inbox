@@ -1,40 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/7
-Message-ID: <20130122092031.GA22505@suse.de>
-Date: Tue, 22 Jan 2013 10:20:31 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/9
+Message-ID: <20130516145012.GJ22048@dhcp-25-225.brq.redhat.com>
+Date: Thu, 16 May 2013 16:50:13 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request coreutils
+Subject: CVE-2013-1962 libvirt: DoS (max count of open files exhaustion) due sockets leak in the storage pool
 Content-Type: text/plain; charset=utf-8
 
+A denial of service flaw was found in the way storage pool manager of
+libvirt, a C toolkit to interact with the virtualization capabilities of
+recent versions of Linux (and other OSes), performed management of
+socket file descriptors when 'to list all volumes for the particular
+pool' request was issued (two socket file descriptors were leaked per
+"list all pool volumes" request). An uprivileged user could use this
+flaw to cause denial of service (make libvirtd daemon to exhaust / reach
+the maximum count of open file descriptors, the libvirtd daemon process
+was allowed to open, possibly preventing other users from use of
+libvirtd services till the libvirtd daemon was restarted).
 
-I think its this one:
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-1962
 
-http://bit.ly/UOzlmT
+Upstream patch:
+https://www.redhat.com/archives/libvir-list/2013-May/msg01222.html
 
-and the alloca() inside it.
-
-Sebastian
-
-On Mon, Jan 21, 2013 at 07:17:49PM +0100, Moritz Muehlenhoff wrote:
-> Hi Sebastian,
-> 
-> > Can someone assign a CVE id for a buffer overflow in coreutils?
-> > Its the same code snippet (coreutils-i18n.patch) and it affects sort, uniq and join:
-> > 
-> > https://bugzilla.novell.com/show_bug.cgi?id=798538
-> > https://bugzilla.novell.com/show_bug.cgi?id=796243
-> > https://bugzilla.novell.com/show_bug.cgi?id=798541
-> 
-> Could you send the faulty patch to the list so that distros can validate
-> that they don't include it themselves?
-> 
-> Cheers,
->         Moritz
-
+Thanks,
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+Petr Matousek / Red Hat Security Response Team
