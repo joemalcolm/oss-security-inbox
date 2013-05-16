@@ -1,39 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/10
-Message-ID: <20130606174409.GB23288@kludge.henri.nerv.fi>
-Date: Thu, 6 Jun 2013 20:44:09 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, plugins@...dpress.org, moderators@...db.org
-Subject: CVE request: WordPress plugin uk-cookie CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/1
+Message-ID: <51943770.6010001@redhat.com>
+Date: Wed, 15 May 2013 19:33:36 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE-2013-2097: zPanel themes remote command execution as root
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-While reproducing CVE-2012-5856[1][2] I noticed there is CSRF security
-vulnerability in uk-cookie plugin and abusing it attacker can insert XSS to
-front page of WordPress installation. Version 1.1 is the latest and I did not
-test older versions. OSVDB item[3] should be updated. Plugin is currently
-disabled in WordPress plugin repository so vendor URL is currently 404.
+So I saw this earlier today:
 
-PoC: https://github.com/wpscanteam/wpscan/issues/184#issuecomment-19038566
-Product: Uk Cookie Plugin for WordPress
-Vendor URL: http://wordpress.org/plugins/uk-cookie/
-Vendor SVN: http://plugins.svn.wordpress.org/uk-cookie/trunk/
-Vulnerability Type: CWE-352
-Vulnerable Versions: 1.1 and probably earlier
-Fixed Version: N/A
+http://www.reddit.com/r/netsec/comments/1ee0eg/zpanel_support_team_calls_forum_user_fucken/
 
-Kurt, could you assign CVE-identifier for CSRF vulnerability, thanks.
+and flipped through the forum thread on the zpanel site, but didn't
+have time until now to deal with it. So first off: I saw all this
+stuff and read it before it was removed from the site (actually the
+entire site appears to be down now).
 
-1: http://seclists.org/bugtraq/2012/Nov/50
-2: http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-5856
-3: http://osvdb.org/87561
+So long and short: you upload a template with the following code:
 
-Similar plugins are available: http://wordpress.org/plugins/uk-cookie-consent/
+<& bogus ']; exec("/etc/zpanel/panel/bin/zsudo touch /root/derp");
+echo $value['bogus &>
 
---
-Qentinel, Henri Salo
-http://www.qentinel.com/en/
+and the command gets executed as root. From googling it appears that
+zPanel won't work with SELinux enabled, which makes sense (most web
+applications fail to ship an SELinux policy, so if they need to do
+strange things outside the default policy they generally tell you to
+simply disable SELinux). So if you run zPanel it would be normal to
+disable SELinux (to make zPanel work), so this root level access won't
+be restricted.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+This issue has been assigned CVE-2013-2097.
+
+There is also a mention of a CSRF but I couldn't find any additional
+information on it, if anyone knows about this please email
+me/oss-security with details.
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRlDdwAAoJEBYNRVNeJnmTp6oQAJLBXZOkw5nhXRQDQ87mJWUh
+n+R5fEOGktbAzZMMAYlAaj5UaHlOsMBh9zOyEXDNFWFKFkh8vNOzoAA0famjbyCG
+qpGyXoBJlDEntFLU0W5Z+cEClzMo1Y1eIOYXczRhKpPsgbhwou97HZrg6eIv2SWk
+38sD8nJjKID1wqfWCy0jtjoZ9DKSGviU5t/lPH78sftOTw6BxV3g7pvSKffKnVA4
+2A8sqCPLhW3ZxTvSPUXLK2SK6r8SaOR+hV4yxNJSAO6QMwPLPE71M54KAatqwzi8
+uWYrO1SLQtUK9TbTXUg7acd9x5o5eFMfNIVvyyfmbD4j+vLoaM7y1rSjWwDUGL3p
+lFrsxxe3EFg7cYunf4dz5pi/0JBNhbfs5vSs0vYTWAtUdkGs8ygU4DSyAkTV7+sI
+h5pMPP1NBGIdEqQIS/Jlbu11v/pXJG0ZBtwDTDmID9jnxletITvtE201rfZ/V9Jh
+61NEtPhXso50K9hJF560hzXsyDXPxhpFpwGo71NkMxfOIrP/0QFClitLV6aRRPlu
+Zep9OAZYxrMc77H+daTumF7Wie4wxSHuQF/V51YeD9aY40gQRLwBeAJirkw6IxJI
+yX1zFWa5Du1l1/B/sQtMWOjfRONeY4lk153E3penDzzcfpJO1hJ5BvZIxFpXLFdT
+KsvJPzXsHEzGA/G7wNMV
+=K5om
+-----END PGP SIGNATURE-----
