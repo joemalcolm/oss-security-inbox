@@ -1,55 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/6
-Message-ID: <52271148.4000906@op5.se>
-Date: Wed, 04 Sep 2013 12:54:00 +0200
-From: Andreas Ericsson <ae@....se>
-To: Jochen Bern <Jochen.Bern@...works.de>
-CC: Nagios Developers List <nagios-devel@...ts.sourceforge.net>,  oss-security@...ts.openwall.com, Vincent Danen <vdanen@...hat.com>,  contribute@...ios.org, Kurt Seifried <kseifried@...hat.com>
-Subject: Re: [Nagios-devel] Security bug or feature? Servicegroups leak hostnames to unauthorized users (Was: CVE request: unauthorized host/service views displayed in servicegroup view)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/17/1
+Message-ID: <20130517064618.GN22048@dhcp-25-225.brq.redhat.com>
+Date: Fri, 17 May 2013 08:46:19 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2013-1962 libvirt: DoS (max count of open files exhaustion) due sockets leak in the storage pool
 Content-Type: text/plain; charset=utf-8
 
-On 2013-09-04 11:37, Jochen Bern wrote:
-> On 04.09.2013 11:03, Andreas Ericsson wrote:
->> On 2013-09-04 10:31, Jonas Meurer wrote:
->>> The indisputable part of this change is, that users are allowed to see
->>> hostgroups and servicegroups with at least one authorized host or
->>> service. Unclear is, whether this means "group and all its group
->>> members", or "group and only authorized group members".
->>
->> It should mean "group and only authorized group members, except also
->> hosts for services where one is authorized to see the service".
-> [...]
->> Well, it *was* by design, but now I'm changing the design. It's a good
->> time for it, since 4.0 is about to come out. I think the security teams
->> can move on and we'll consider this "changed" rather than "fixed" for
->> 4.0, where we do some security tightening.
->
-> Since you do seem to be willing to ponder the system of access rights
-> and its security implications: I haven't checked the 4.x prereleases
-> yet, does being authorized to see a host's information still necessarily
-> provide access to *all* services on it?
->
+On Thu, May 16, 2013 at 08:20:00PM +0200, Agostino Sarubbo wrote:
+> On Thursday 16 May 2013 16:50:13 Petr Matousek wrote:
+> > References:
+> > https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-1962
+> 
+> Please do not point to a link with the CVE. If for any weird reason the cve 
+> will be rejected or so,  the link will be invalid. Please point to the bug 
+> number instead.
 
-AFAIK, yes. Please understand that I'm very uninterested in changes to
-the UI though, and I'd be much (much) happier if UI and core were
-split into two different components.
+Makes complete sense, even though we usually keep aliases even for
+rejected CVEs in our bugzilla. 
 
-> In the "customers accessing provider's Nagios" scenario, I suppose that
-> the customer might be interested in seeing "application is running" but
-> not, say, "the snmpd that ties this machine to the provider's NMS is
-> acting up" ...
->
+This was more of an copy&paste overlook than anything else as I usually
+send non-alias bug ids.
 
-I agree. The problem is that with access to the host comes access to
-commands that affect all services on that host as well, so it's not
-necessarily as clearcut as "disable viewing here and we're done", if
-one wants to do things properly.
-
+Thanks,
 -- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Petr Matousek / Red Hat Security Response Team
