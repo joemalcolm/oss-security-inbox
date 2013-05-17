@@ -1,32 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/07/1
-Message-ID: <alpine.LFD.2.03.1303071252490.10446@redhat.com>
-Date: Thu, 7 Mar 2013 13:05:37 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2013-1792 Linux kernel: KEYS: race with concurrent install_user_keyrings()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/17/2
+Message-Id: <E1UdMql-0006J9-O2@xenbits.xen.org>
+Date: Fri, 17 May 2013 15:45:43 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 56 (CVE-2013-2072) - Buffer overflow in xencontrol Python bindings affecting xend
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Mateusz Guzik of Red Hat discovered a race condition in 
-install_user_keyrings() routine, leading to a NULL pointer dereference. It 
-occurs during parallel invocation of the install_user_keyrings & 
-lookup_user_key routines, for the same user, if `uid' and `uid-session' 
-keyrings are not yet created.
+	     Xen Security Advisory CVE-2013-2072 / XSA-56
+                              version 2
 
-An unprivileged user could use this flaw to crash the system, resulting in 
-DoS.
+     Buffer overflow in xencontrol Python bindings affecting xend
 
-Upstream fix:
--------------
-  -> https://lkml.org/lkml/2013/3/6/535
+UPDATES IN VERSION 2
+====================
 
-Reference:
-----------
-  -> https://bugzilla.redhat.com/show_bug.cgi?id=916646
+Public release.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+ISSUE DESCRIPTION
+=================
+
+The Python bindings for the xc_vcpu_setaffinity call do not properly
+check their inputs. Systems which allow untrusted administrators to
+configure guest vcpu affinity may be exploited to trigger a buffer
+overrun and corrupt memory.
+
+IMPACT
+======
+
+An attacker who is able to configure a specific vcpu affinity via a
+toolstack which uses the Python bindings is able to exploit this
+issue.
+
+Exploiting this issue leads to memory corruption which may result in a
+DoS against the system by crashing the toolstack. The possibility of
+code execution (privilege escalation) has not been ruled out.
+
+The xend toolstack passes a cpumap to this function without
+sanitization. xend allows the cpumap to be configured via the guest
+configuration file or the SXP/XenAPI interface. Normally these
+interfaces are not considered safe to expose to non-trusted
+parties. However systems which attempt to allow guest administrator
+control of VCPU affinity in a safe way via xend may expose this issue.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen version 4.0 and later contain this flaw.
+
+Only systems which allow the specification of cpu affinity masks by
+untrusted guest administrators are vulnerable.  Normally the cpu
+affinity is specified by the host administrator as part of the guest
+configuration; there is then no vulnerability.
+
+Only systems which use the libxc Python bindings, are vulnerable.
+Toolstacks which do not use Python, such as xl or xapi, are not
+vulnerable.
+
+MITIGATION
+==========
+
+Not allowing untrusted guest administrators to configure VCPU affinity
+will avoid exposure.
+
+Where possible switching to a toolstack which does not use Python will
+also avoid exposure to this vulnerability.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa56.patch             Xen 4.1.x, Xen 4.2.x, xen-unstable
+
+$ sha256sum xsa56*.patch
+a691c5f5332a42c0d38ddb4dc037eb902f01ba31033b64c47d02909a8de0257d  xsa56.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJRlk9eAAoJEIP+FMlX6CvZIOMIAJFcMxxknbjo9oT9Plv8I9TA
+agEEaUV/cbZTUWHCdGLj6G8kHp4Td8mfKzHy9ZKlNn0GJ0vgezi08enxjgjSlloG
+7KAsLAYYlrwjtSmu74CC48EDKF5KTy3xhxGIMT14fJAyDUAStwgHHZbcE8dNvaXk
+sfygb5epW+ZzQBkOxhKQkNDt5yoGVZ+Zb4Z/pmBXb+e8SVx+4i005HPuB8aIFowi
+1nlbo2cSkFj6/NP5olhDQOYM5LEqzO8GPgHjTXJmIoTxA0Zuu4P53qjLsose5DCy
+4OQY1v76lMP419t0I3UwA/KUott3PaUc3kzE24/3AmVxsh27k6cyVxovV4jsvf0=
+=5dzZ
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa56.patch" of type "application/octet-stream" (1748 bytes)
