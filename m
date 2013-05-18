@@ -1,54 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/13
-Message-ID: <529782BE.6030309@redhat.com>
-Date: Thu, 28 Nov 2013 10:51:58 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux kernel: net: uninitialised memory leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/18/10
+Message-ID: <20130518205000.GC8473@kludge.henri.nerv.fi>
+Date: Sat, 18 May 2013 23:50:00 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: Doraemon Sk8ers <doraemon.sk8ers@...il.com>
+Subject: Re: Multiple vulnerabilities in PHP Address Book v8.2.5
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, May 10, 2013 at 08:14:34PM -0600, Kurt Seifried wrote:
+> > CVE-2013-1748 #1 does seems to be similar with CVE-2008-2565, the
+> > only difference is the increase in the number of columns To our
+> > knowledge, CVE-2013-1748 #2 and #3 has not been published before
+> 
+> So can we confirm that CVE-2013-1748 #1 is duplicate of CVE-2008-2565
+> and that #2 and #3 are new? if so can we just use CVE-2013-1748 for #2
+> and #3 Steve?
 
-On 11/28/2013 10:40 AM, P J P wrote:
-> Hello,
-> 
-> Linux kernel built with the networking support(CONFIG_NET), is 
-> vulnerable to a memory leakage flaw. It occurs while doing the 
-> recvmsg(2), recvfrom(2), recvmmsg(2) socket calls.
-> 
-> A user/program could use this flaw to leak kernel memory bytes.
-> 
-> Upstream fix: ------------- -> 
-> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=bceaa90240b6019ed73b49965eac7d167610be69
->
-> 
-> 
-> Reference: ---------- ->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1035875
-> 
-> 
-> Thank you. -- Prasad J Pandit / Red Hat Security Response Team
+As far as I can tell - yes.
 
-Please use CVE-2013-6405 for this issue.
+---
+Henri Salo
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSl4K9AAoJEBYNRVNeJnmTM30QAIYom/aiW5mrTDybMrMptahv
-k8/Hw+ReosACc8nHGc8WJNaMUnuxqH9j4735skEHZyE+mS3nXRNadLx+tFqKmg7M
-SOuZAZHyM7pKUKx/pdzJv7AsTT0BleH8T5sJtud468cQYrG/2qRvCuctalpHnswb
-Y04KFRndCehnYM/amH9/5LJjSRTjvz5CMDn2QCuf/K1jBny9XOIql9fWY3DjzM95
-3yoQul846P6Mz6c56iCJcH5mSCa+HW8LS+8iNjTb4Yx7Wi4Y8wEB46psDeQ1hdB3
-LeVOo1KlmclNynRKd0Fut5DDQtrAaRU/XtfJKIEgfyktw7RJLJD6GHy150KwEBmC
-yIgV0REfuQxlhdEWwxURE7PhdFt6xmF4X4e73vE4GoVzOllf8bGRlW5J9GNcKOyP
-BPdKYw87E4Y1fbTyoFTNgR09rrglaQA97o6/AWMS4Mh6Z/Ri27+I/zwVfjnREVjH
-Z0mgncZrHD9FRjH3UA1ua4VHxU1GY/De3it05jaiUZ5NUY6lZQl30ofPRua/W3JY
-0xqSqATtrpUe2J501qYQx8oVTg0SkbTi8qDHMiQB2JdTUvW19AKtlbH3EHOC4cys
-Hm8iw1iUfDxdRE9STKu4dbn3q+y3DOvR8oXlxcGNoawYiMFM4i4OKXqEjtR6jimj
-OT7FO7eRm5IL0HqO3JLz
-=DqvJ
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
