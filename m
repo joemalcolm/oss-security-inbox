@@ -1,27 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/2
-Message-ID: <5244E4BC.9040007@google.com>
-Date: Thu, 26 Sep 2013 18:51:56 -0700
-From: Paul Pluzhnikov <ppluzhnikov@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/18/11
+Message-ID: <5197EAAD.40409@redhat.com>
+Date: Sat, 18 May 2013 14:55:09 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Alexander Cherepanov <cherepan@...me.ru>
-Subject: Re: Reproducible Builds for Fedora
+CC: Henri Salo <henri@...v.fi>, plugins@...dpress.org
+Subject: Re: CVE request: WordPress plugin wp-cleanfix CSRF
 Content-Type: text/plain; charset=utf-8
 
-On 9/26/13 6:36 PM, Alexander Cherepanov wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> The choice is simple -- produce byte-for-byte identical builds. Both Tor
-> and Debian aim at it.
+On 05/18/2013 03:50 AM, Henri Salo wrote:
+> On Sat, May 18, 2013 at 12:54:23AM -0600, Kurt Seifried wrote:
+>> Sorry I'm not clear, this appears to be two vulns, a CSRF, and a 
+>> remote code exec, the remote code exec can be triggered via the
+>> CSRF (so remote anon attacker can pull this off with some social 
+>> engineering/etc.), but can also be done by users with access?
+>> Thanks.
+> 
+> File wpCleanFixAjax.php contains:
+> 
+> 30         $command = strip_tags( $_POST['command'] ); 31
+> eval ( $command );
+> 
+> and there is:
+> 
+> 12 if ( is_admin() && _wpdk_is_ajax() ) {
+> 
+> So it only work when logged in administrator. This is not a
+> security vulnerability as is, because WordPress administrator can
+> upload/edit PHP as she or he likes.
+> 
+> There is a CSRF vulnerability, which can be used to execute
+> arbitrary PHP.
+> 
+> POST /wordpress/wordpress-351/wp-admin/admin-ajax.php 
+> action=wpCleanFixAjax&command=echo phpversion();
+> 
+> So in short: two vulnerabilities, but eval can't be used without
+> CSRF as far as I can tell.
+> 
+> --- Henri Salo
 
-FWIW, when we build compilers (and then all other binaries) at Google, 
-we don't just aim for, but actually achieve bit-identical rebuilds.
 
-New GCC releases often break this, but a few patches later the 
-capability is restored. Latest example: 
-http://comments.gmane.org/gmane.comp.gcc.devel/127875
+Ok this is a slightly messy one. Normally yes, WP admin can modify the
+site and thus execute arbitrary PHP, so a remote flaw that allows php
+command execution only for admin would be a security flaw (e.g. worth
+of hardening) but not typically a security vulnerability (e.g. worthy
+of a CVE and full security treatment).
 
-The ability to do bit-identical rebuild is critical to our build system 
-(http://google-engtools.blogspot.com/2011/09/build-in-cloud-distributing-build-steps.html) 
-and in particular the high cache hit rates it achieves.
+However in this case it is exploitable, the CSRF provides a vector for
+exploitation. So it's gets a separate CVE.
 
+So please use CVE-2013-2108 for the WordPress plugin wp-cleanfix CSRF
 
+And please use CVE-2013-2109 for the WordPress plugin wp-cleanfix Code
+Execution
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIbBAEBAgAGBQJRl+qtAAoJEBYNRVNeJnmT8aEP93mY/3AQjDkAdaflQVO1jkAH
+YRl8t9HJgwqvSYHhzb7cRNXVUBiIjXp/p2CeCFr6YZVwMWwNj2I2J5nvWSl4SZ0a
+Q7XsEFzYk5IzM0H+tkG6o9k4+2kHbSbSLgIAY66NmmqRH2yrFI0yGbZmh6rnOQew
+YShWETw+cBBkRE6eaFGGY3HwrgRnrxSLhq4ZbeXJw5JTQSmBJuvcFcRwMDtik1xb
+WdlDPRPZ2QXstHYUnHhr1ar8v1H8T0xegbcLqa0mYO6x0hJTlEjizon6OxSOYCf9
+nxQxIGceMbky30YmuN/4+D77gKLQONPdrK3KhSmlI7BPpxG4uv3IQbNwtjTooj3f
+bG4ogr2E7tPSVIzjFv/oHGyattFUkkOK7pQxthrWxXaQOsy0ULjHuPXKOwxByT9n
+t6QaF+TXYZgg3esoKlWBI40sHDJEVpskMxnlq+2RX4KIk6rmINMqk1Dk/5AqwkhL
+CqeN2SbBVUZ/iII2DbDV7sPK6YYMGQJH1/mSaWzZiFaGDnoZltnofvkJgQe9/x1E
+vYkJlyl0gi1q49Olz9MprIv2t4vxg1mS+4bnyPnRJ4xrw8OBheevmT4tTCsIDXF2
+oFbtEnwJdekBf6d1tjOUbEnj8aJlSYQ2UdCwRwg4PjgnGAfqvolk7joGC0rawHna
+H59nYKmVh8R/YiPKQ5o=
+=jXn+
+-----END PGP SIGNATURE-----
