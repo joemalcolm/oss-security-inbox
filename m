@@ -1,47 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/27/9
-Message-ID: <51536516.6060403@linux.vnet.ibm.com>
-Date: Wed, 27 Mar 2013 17:31:02 -0400
-From: Corey Bryant <coreyb@...ux.vnet.ibm.com>
-To: Russ Allbery <rra@...nford.edu>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Security vulnerability tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/18/5
+Message-ID: <87sj1kkbd1.fsf@windlord.stanford.edu>
+Date: Sat, 18 May 2013 00:15:06 -0700
+From: Russ Allbery <rra@...ian.org>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com,  Salvatore Bonaccorso <carnil@...ian.org>
+Subject: Re: CVE Request: WebAuth: Authentication credential disclosure
 Content-Type: text/plain; charset=utf-8
 
+Kurt Seifried <kseifried@...hat.com> writes:
 
+> I did a Google search, there appear to be other
+> universities/organizations using WebAuth, was the vulnerable version
+> made generally available (e.g. on an ftp site or whatever?).
 
-On 03/27/2013 04:31 PM, Russ Allbery wrote:
-> Corey Bryant <coreyb@...ux.vnet.ibm.com> writes:
->
->> Clang
->> -----
->> Static analysis tool for C/C++
->
-> Clang is, properly speaking, a compiler.  It happens to also have a static
-> analyzer available as part of the same code base.
->
-> If you're going to mention Clang, it's probably also pointing out that
-> good old GCC has very extensive warning flags that can, among other
-> things, find possible security vulnerabilities by locating variables that
-> are used before being set, dangerous printf formats, mismatches between
-> printf formats and arguments, and so forth.  For example, I currently use:
->
-> WARNINGS = -g -O -D_FORTIFY_SOURCE=2 -Wall -Wextra -Wendif-labels           \
->          -Wformat=2 -Winit-self -Wswitch-enum -Wdeclaration-after-statement  \
->          -Wshadow -Wpointer-arith -Wbad-function-cast -Wcast-align           \
->          -Wwrite-strings -Wjump-misses-init -Wlogical-op                     \
->          -Wstrict-prototypes -Wmissing-prototypes -Wredundant-decls          \
->          -Wnested-externs -Werror
->
-> with GCC (4.6 or later) with all of my software.  Many of those are not
-> security-related, of course, but -Wformat=2 certainly is, and some of the
-> -Wall and -Wextra warnings are as well.
->
+Yes, via http://webauth.stanford.edu/ as well as via my personal web site.
+I did issue an advisory (to webauth-announce@...ts.stanford.edu).  There
+were six announced (distributed, tagged, etc.) releases that had this
+vulnerability.
 
-Great, thanks for the input.  I don't see any reason to not include gcc 
-warning options.
+WebAuth is moderately well-used; it's not as popular as some of the other
+web single sign-on systems, but it's been distributed with Debian and
+Ubuntu for quite a while and I know a fair number of sites that use it.
+
+The time interval between the broken and fixed version was relatively
+short (four months -- we're in the middle of a heavy development cycle)
+and the flaw was only in the central server component (which you only run
+one of within any given organization and tend to be conservative about
+upgrading) as opposed to the Apache modules that are installed everywhere,
+so it's possible that no one who met the fairly specific conditions
+required to trigger the bug ever deployed it, but I don't have a way of
+knowing that for certain.
 
 -- 
-Regards,
-Corey Bryant
-
+Russ Allbery (rra@...ian.org)               <http://www.eyrie.org/~eagle/>
