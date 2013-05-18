@@ -1,77 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/18
-Message-ID: <5215237D.6070506@redhat.com>
-Date: Wed, 21 Aug 2013 14:30:53 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Donald Stufft <donald@...fft.io>
-Subject: Re: CVE Request: Insecure Software Download in pip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/18/7
+Message-ID: <20130518095054.GA8725@kludge.henri.nerv.fi>
+Date: Sat, 18 May 2013 12:50:54 +0300
+From: Henri Salo <henri@...v.fi>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, plugins@...dpress.org
+Subject: Re: CVE request: WordPress plugin wp-cleanfix CSRF
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sat, May 18, 2013 at 12:54:23AM -0600, Kurt Seifried wrote:
+> Sorry I'm not clear, this appears to be two vulns, a CSRF, and a
+> remote code exec, the remote code exec can be triggered via the CSRF
+> (so remote anon attacker can pull this off with some social
+> engineering/etc.), but can also be done by users with access? Thanks.
 
-On 08/21/2013 02:28 PM, Donald Stufft wrote:
-> 
-> On Aug 21, 2013, at 4:19 PM, Kurt Seifried <kseifried@...hat.com>
-> wrote:
-> 
->> Signed PGP part On 08/07/2013 11:23 AM, Donald Stufft wrote:
->>> 
->>> On Jul 31, 2013, at 4:11 AM, Kurt Seifried
->>> <kseifried@...hat.com <mailto:kseifried@...hat.com>> wrote:
->>> 
->>>> Ok I have no info on that CVE, is it embargoed? I can't find
->>>> it in google after a quick search. I need to see that one
->>>> before I can assign anything. As for the reserved thing:
->>> 
->>> This CVE has been fixed, and it is for the issue where pip
->>> prior to 1.3 did not download from the central repository using
->>> TLS
->>> 
->>> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1629
->>> 
->>> So back to the question of mirroring, possible to get a CVE
->>> for that now? :)
->>> 
->>> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA //
->>> 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
->>> 
->> 
->> Ack sorry catching up. Please use CVE-2013-4266  for the
->> insecure mirroring stuff. Can you post the Python bug URL for
->> this again? thanks.
->> 
->> - -- Kurt Seifried Red Hat Security Response Team (SRT) PGP:
->> 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->> 
-> 
-> @Kurt can you reject CVE-2013-4266,
-> 
-> I had assumed you weren't going to assign one so I contacted
-> cve-assign@...re and they assigned CVE-2013-5123
+File wpCleanFixAjax.php contains:
 
-Ack,I deserved that =) Please REJECT CVE-2013-4266, use CVE-2013-5123
-instead.
+30         $command = strip_tags( $_POST['command'] );
+31         eval ( $command );
 
+and there is:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+12 if ( is_admin() && _wpdk_is_ajax() ) {
 
-iQIcBAEBAgAGBQJSFSN9AAoJEBYNRVNeJnmTXr0P/2sg0b4pj9GvOOeuyJWZTcRK
-qN5ZVhLttna0RkyjsxXMsDOCvEFyHV3UsjYhXh+W/qbkmtUlUUNam8J3O09SNRS1
-2HieU8NRAHO3PoXTUFsOUAMbX9kBGAdrXrGowLpWDN0Xe+h1fe1nwdzMclXsHjIe
-uiieM+rlLXXCUf8sUGqdYoqN6yFp9Lq/WrVevUiQbWwF3ICNhQbP3JwPd6OXn4uG
-UETjH4bHkmNecS/TubcwbRCeCct9DnxcxvqUenfbgCZamfDEGqhxoDGg2YWdGTIs
-UqcdjIegJD79k+DYQd7BZ10O3KgoRv3Imneb/Xknk3d6jzb2RG/Ou5URvP97Q7NE
-40HZysvV/kSAx0JrJbaYBcl2OhDWzMwKvW+TaWmjlf88LGN1p8BAho7hY4esr8/r
-D1p9QApTI4Z+PwPgbXdcb8S80i4ne5e/mFos3e1V4RjuJImgFp7jvU7m1dbeB+X9
-kb0k0XcovDSN10TtDiaJEKPSrCuG4OPxN/u1SfttOOkrpVQjgv2F1OS5xFSCtnas
-wNR+BFYQmlhT9u3OWJlx9d1TiQsc+lNlwWUqV4tLG48S0lLMFKgAL3QG6sdmOsUh
-MsSJ1Hh91ru7mr4W0XXFIHgEQ3CcnM15DE4kC0tqn49EgH1IBmunS7dZGUplYWto
-JnGLAa05rii4Tex4G08P
-=+jrH
------END PGP SIGNATURE-----
+So it only work when logged in administrator. This is not a security
+vulnerability as is, because WordPress administrator can upload/edit PHP as she
+or he likes.
+
+There is a CSRF vulnerability, which can be used to execute arbitrary PHP.
+
+POST /wordpress/wordpress-351/wp-admin/admin-ajax.php
+action=wpCleanFixAjax&command=echo phpversion();
+
+So in short: two vulnerabilities, but eval can't be used without CSRF as far as
+I can tell.
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
