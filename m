@@ -1,45 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/4
-Message-ID: <20130314013300.GA9016@kroah.com>
-Date: Wed, 13 Mar 2013 18:33:00 -0700
-From: Greg KH <gregkh@...uxfoundation.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/18/3
+Message-ID: <51972701.3050009@redhat.com>
+Date: Sat, 18 May 2013 01:00:17 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CLONE_NEWUSER|CLONE_FS root exploit
+CC: Salvatore Bonaccorso <carnil@...ian.org>, Russ Allbery <rra@...ian.org>
+Subject: Re: CVE Request: WebAuth: Authentication credential disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 14, 2013 at 09:03:20AM +0800, Eugene Teo wrote:
-> On 14 Mar, 2013, at 8:59 AM, Eugene Teo <eugeneteo@...nel.sg> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 05/16/2013 12:58 PM, Salvatore Bonaccorso wrote:
+> Hi Kurt
 > 
-> > On 13 Mar, 2013, at 11:39 PM, Sebastian Krahmer <krahmer@...e.de> wrote:
-> > 
-> >> Hi,
-> >> 
-> >> Seems like CLONE_NEWUSER|CLONE_FS might be a forbidden
-> >> combination.
-> >> During evaluating the new user namespace thingie, it turned out
-> >> that its trivially exploitable to get a (real) uid 0,
-> >> as demonstrated here:
-> >> 
-> >> http://stealth.openwall.net/xSports/clown-newuser.c
-> >> 
-> >> The trick is to setup a chroot in your CLONE_NEWUSER,
-> >> but also affecting the parent, which is running
-> >> in the init_user_ns, but with the chroot shared.
-> >> Then its trivial to get a rootshell from that.
-> >> 
-> >> Tested on a openSUSE12.1 with a custom build 3.8.2 (x86_64).
-> >> 
-> >> I hope I didnt make anything wrong, mixing up the UIDs,
-> >> or disabled important checks during kernel build on my test
-> >> system. ;)
-> > 
-> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=aea8b5d1e5c5482e7cdda849dc16d728f7080289
+> Could a CVE be assigned for this issue in WebAuth (Cc'ing Russ 
+> Allbery):
 > 
-> I realised that the link is incorrect. Will post again when I see the patches.
+> ----cut---------cut---------cut---------cut---------cut---------cut-----
+>
+> 
+WebAuth 4.4.1 was changed to use a persistent CGI::Application object
+> for the WebLogin application when run under FastCGI. However, 
+> CGI::Application does not reset header state automatically between 
+> FastCGI requests, and WebLogin was not modified to do so. In most 
+> situations, this caused no problems, since WebLogin overrode the 
+> previous header state with new values when answering the request. 
+> However, it did not do so when redirecting a user for REMOTE_USER 
+> authentication using the $REMUSER_REDIRECT WebLogin option.
+> 
+> Therefore, if WebLogin were configured with the $REMUSER_REDIRECT 
+> option and running under FastCGI, a user using REMOTE_USER 
+> authentication may receive WebLogin cookies intended for a
+> previous user of the same FastCGI login.fcgi process, enabling them
+> to authenticate to other web sites as the previous user. 
+> ----cut---------cut---------cut---------cut---------cut---------cut-----
+>
+>  Upstream advisory:
+> 
+> [1] http://webauth.stanford.edu/security/2013-05-15.html
+> 
+> Versions affected: 4.4.1 through 4.5.2 Versions fixed:	   4.5.3 and
+> later
+> 
+> Upstream patch for the issue is referenced at [2].
+> 
+> [2] http://webauth.stanford.edu/security/2013-05-15.patch
+> 
+> Even tought advisory says "For Debian and Ubuntu users, all
+> versions of WebAuth with this vulnerability were only uploaded to
+> Debian experimental and did not appear in any release. For Stanford
+> users, no version of WebLogin with this vulnerability was ever
+> deployed in production.", would it make sense nevertheless to
+> assign a CVE to this issue?
+> 
+> Regards, Salvatore
 
-It is commit e66eded8309ebf679d3d3c1f5820d1f2ca332c71 in Linus's tree,
-so replace the sha in the above link with this one instead.
+I did a Google search, there appear to be other
+universities/organizations using WebAuth, was the vulnerable version
+made generally available (e.g. on an ftp site or whatever?).
 
-Hope this helps,
 
-greg k-h
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRlycBAAoJEBYNRVNeJnmTNvgQAKFLYqRaxIkEU8a4R7kOMJyf
+cld4weMGow+fQK45V7HFHE+dHugASH6TWQHozucJ7gfXgBk5V8HWAXMceo+MCo7h
+cbPsMiWOxiJOOJlffGs6Y/dvKM5dURj3WZDam21RDI8rPR28WJX1DAjprXByqTUr
+BgzVcH2inh0rDBPo+jeK/UPiEzQXEE4NJpkTTijDLhkqvuk40k9P1Ftxb/STN/yf
+tKse0cDJ7K5+petk5r1/Q8LiCJx1f3KejvZN2vNKUnU3/7v7KcYFINio0PQhV60X
+HZOFcByUDSoLpkiLwr8s+/Z7cmIvU3lMBfoBbQJFlXcyLlz5Hc+IBXbqQP6xAquO
+IbxP2bgMZWDlkAxiyJUiZeAqD4e71AXTjalXPLQ7nEUSgS3fhBi1Kv4x8N+dFiY4
+LPrY4UvnnVKUFSqB8zqcPduEeqx8e3110Dqbd1EvdjMHQYXDjQA6dG1hxMFsyjS9
+N4SKd5smxzQUoXm49cgvxmU7qi5DO2bFpckqrsNX4tcAmWOaeeYS+IHvzWJeXyua
+IbOjLEH5U7s411d5J2xERYXbw/zAj2oA+B7cBEKhSAtlpRwAJvTXB3vvSju+OihY
+Mys9eN6BBVNPopD34MLeaiLVZC+r0tGKC08UT39SAgNIoLXwtz8/9S1Gy6MoJeub
+MjjqRYuoI3Tlnqit5KHl
+=umo+
+-----END PGP SIGNATURE-----
