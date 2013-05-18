@@ -1,43 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/15/1
-Message-ID: <CAA7hUgH2+YdcjJ7z5Gc+Pb2F6KpohSjX120H98TXWBG4cHcbGQ@mail.gmail.com>
-Date: Tue, 15 Oct 2013 14:18:48 +0200
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/18/4
+Message-ID: <51972720.5080606@redhat.com>
+Date: Sat, 18 May 2013 01:00:48 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mahara 1.7.3
+CC: "Larry W. Cashdollar" <larry0@...com>
+Subject: Re: Show In Browser 0.0.3 Ruby Gem /tmp file injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-So, the commits...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 8 October 2013 12:16, Raphael Geissert <geissert@...ian.org> wrote:
-> Hi,
->
-> Multiple vulnerabilities have been discovered and fixed in the 1.7.3
-> release of Mahara:
->
-> From [1]
->> * Bug #1211758 Arbitrary image download
+On 05/17/2013 10:34 AM, Larry W. Cashdollar wrote:
+> TITLE: *Show In Browser 0.0.3 Ruby Gem /tmp file injection
+> vulnerability*
+> 
+> DATE: 5/15/2023
+> 
+> AUTHOR: Larry W. Cashdollar (@_larry0)
+> 
+> DOWNLOAD: https://rubygems.org/gems/show_in_browser
+> 
+> DESCRIPTION: Opens arbitrary text in your browser
+> 
+> VENDOR: Jonathan Leung
+> 
+> FIX: N/A
+> 
+> CVE: TBD
+> 
+> DETAILS: The following code uses the temporary file
+> "/tmp/browser.html" insecurely.
+> 
+> |  2   FILE_LOCATION = "/tmp/browser.html" 3 4   class << self 5 6
+> def show(html) 7       file = File.open(FILE_LOCATION, 'w') 8
+> file.write(html) 9       file.close 10 11       `open
+> #{FILE_LOCATION}` |
+> 
+> By a malicious user creating /tmp/browser.html first and
+> repeatedly writing to it they can inject malicious html into the
+> file right before it is about to be opened.
+> 
+> PoC:
+> 
+> | nobody@...ter:/$ while (true); do echo "<script> alert('Hello');
+> </script>" >> /tmp/browser.html; done|
+> 
+> Will pop up a java script alert in other gem users browser.
 
-https://bazaar.launchpad.net/~mahara-release/mahara/1.7_STABLE/revision/5833
+Please use CVE-2013-2105 for this issue.
 
->> * Bug #1175446 user supplied $_SERVER['HTTP_HOST'] can be used for injections
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-https://bazaar.launchpad.net/~mahara-release/mahara/1.7_STABLE/revision/5830
-
->> * Bug #1233500 Not checking ownership of blocks before editing them
-
-https://bazaar.launchpad.net/~mahara-release/mahara/1.7_STABLE/revision/5832
-
-
-And while at I found the following:
-
-https://bugs.launchpad.net/mahara/+bug/1034180
-https://bazaar.launchpad.net/~mahara-release/mahara/1.7_STABLE/revision/5831
-
-Which doesn't appear to be mentioned in the changelog, but the bug
-report clearly states it was meant to be handled as a security issue.
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+iQIcBAEBAgAGBQJRlycgAAoJEBYNRVNeJnmTTnMP/00aBMhjLsdQfBaer0VHe09o
+YVJFI0iMfx7ilxSKgK36aJ2KTi2Cg4Aaiv1o85RehDlQG62Nt5SGrl8ayzjbtlJE
+7NPixqsrg/dz6f9ZKX9AopX3b3gAnbBHkxd3sczsgs5RLyDzhmHjS+atUtnZZvI6
+RCJxPEaPRZXrAbrYGYEPZZUARLN6wZRugWOSx3NJdyYK6/0XTj8rarv9WjOGysrN
+qJxhA7tGvy1cXEaZuLjMz8FVWweFDIcI0OPBLrMOt2RKTxh3k/GYQwpitEy6BmQ4
+kr1/j9L0Pt52R5TwH0UTWvFhJtOgUTT57BpMIDWiMf03S8UK8hOyRrKDHzAUfPhf
+1PHP/7u+Y7S2WNe4tLc3US7opskPaNo3nISi0noQM5Ksm09Ymmk8AyXEkPfqfMRo
+dQ72FLqUq1HAhvQlouhQqiquxBMCt0yWfkkJwdlw2Oi25E/fUCrrsjM1iEB+MhlV
+KYcTBTIdzVq87kDF5D9Ec6yv3vRxfD7Cn+EBQBESXS0c0/cuHzhPPrH47vwMzbT+
+mdacFxPcuxfhPRGgVDNGhn6AtTUYJU3gpCRWD98AiFdCX4f/Mh2RGfsvMOrZdMit
+y851IP3Y+eyU+A9aiH+HS0+fm9qAotcyzWLz2ZzVhmcaZepdVB4Da+toKeeFUWtC
+JVMdEjeH0nKSTJMJotgX
+=L06d
+-----END PGP SIGNATURE-----
