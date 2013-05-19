@@ -1,66 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/18/3
-Message-ID: <51972701.3050009@redhat.com>
-Date: Sat, 18 May 2013 01:00:17 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/19/2
+Message-ID: <51985C4A.5060504@redhat.com>
+Date: Sat, 18 May 2013 22:59:54 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Salvatore Bonaccorso <carnil@...ian.org>, Russ Allbery <rra@...ian.org>
-Subject: Re: CVE Request: WebAuth: Authentication credential disclosure
+To: Open Source Security <oss-security@...ts.openwall.com>, ballen@...nel.co.uk
+Subject: More zPanel security flaws? Trying to sort them out
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/16/2013 12:58 PM, Salvatore Bonaccorso wrote:
-> Hi Kurt
-> 
-> Could a CVE be assigned for this issue in WebAuth (Cc'ing Russ 
-> Allbery):
-> 
-> ----cut---------cut---------cut---------cut---------cut---------cut-----
->
-> 
-WebAuth 4.4.1 was changed to use a persistent CGI::Application object
-> for the WebLogin application when run under FastCGI. However, 
-> CGI::Application does not reset header state automatically between 
-> FastCGI requests, and WebLogin was not modified to do so. In most 
-> situations, this caused no problems, since WebLogin overrode the 
-> previous header state with new values when answering the request. 
-> However, it did not do so when redirecting a user for REMOTE_USER 
-> authentication using the $REMUSER_REDIRECT WebLogin option.
-> 
-> Therefore, if WebLogin were configured with the $REMUSER_REDIRECT 
-> option and running under FastCGI, a user using REMOTE_USER 
-> authentication may receive WebLogin cookies intended for a
-> previous user of the same FastCGI login.fcgi process, enabling them
-> to authenticate to other web sites as the previous user. 
-> ----cut---------cut---------cut---------cut---------cut---------cut-----
->
->  Upstream advisory:
-> 
-> [1] http://webauth.stanford.edu/security/2013-05-15.html
-> 
-> Versions affected: 4.4.1 through 4.5.2 Versions fixed:	   4.5.3 and
-> later
-> 
-> Upstream patch for the issue is referenced at [2].
-> 
-> [2] http://webauth.stanford.edu/security/2013-05-15.patch
-> 
-> Even tought advisory says "For Debian and Ubuntu users, all
-> versions of WebAuth with this vulnerability were only uploaded to
-> Debian experimental and did not appear in any release. For Stanford
-> users, no version of WebLogin with this vulnerability was ever
-> deployed in production.", would it make sense nevertheless to
-> assign a CVE to this issue?
-> 
-> Regards, Salvatore
+So the head of the zPanel project "ballen" ("Bobby Allen" according to
+Google) reports:
 
-I did a Google search, there appear to be other
-universities/organizations using WebAuth, was the vulnerable version
-made generally available (e.g. on an ftp site or whatever?).
+http://forums.zpanelcp.com/showthread.php?27608-ZPanelCP-Server-has-not-been-compromised
 
+======
+4) Security issues raised
+The security issues mentioned in the following article
+(http://imgur.com/a/lzRuo) are already fixed, however we are a short
+way off being able to release the new version. All known security
+vulnerabilities have been announced on here with fixes and guides.
+======
 
+I'm unable to find this list or a dedicated security page (apart from
+a list of 4 security features at
+http://www.zpanelcp.com/about/features/#tab-1-3).
+
+Can you please send me that list with URLs and ideally source code
+commits so we can get CVE #'s assigned to the zPanel vulnerabilities?
+Alternatively if anyone in the community wants to do it that'd be
+great as well. Thanks in advance.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -68,17 +38,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRlycBAAoJEBYNRVNeJnmTNvgQAKFLYqRaxIkEU8a4R7kOMJyf
-cld4weMGow+fQK45V7HFHE+dHugASH6TWQHozucJ7gfXgBk5V8HWAXMceo+MCo7h
-cbPsMiWOxiJOOJlffGs6Y/dvKM5dURj3WZDam21RDI8rPR28WJX1DAjprXByqTUr
-BgzVcH2inh0rDBPo+jeK/UPiEzQXEE4NJpkTTijDLhkqvuk40k9P1Ftxb/STN/yf
-tKse0cDJ7K5+petk5r1/Q8LiCJx1f3KejvZN2vNKUnU3/7v7KcYFINio0PQhV60X
-HZOFcByUDSoLpkiLwr8s+/Z7cmIvU3lMBfoBbQJFlXcyLlz5Hc+IBXbqQP6xAquO
-IbxP2bgMZWDlkAxiyJUiZeAqD4e71AXTjalXPLQ7nEUSgS3fhBi1Kv4x8N+dFiY4
-LPrY4UvnnVKUFSqB8zqcPduEeqx8e3110Dqbd1EvdjMHQYXDjQA6dG1hxMFsyjS9
-N4SKd5smxzQUoXm49cgvxmU7qi5DO2bFpckqrsNX4tcAmWOaeeYS+IHvzWJeXyua
-IbOjLEH5U7s411d5J2xERYXbw/zAj2oA+B7cBEKhSAtlpRwAJvTXB3vvSju+OihY
-Mys9eN6BBVNPopD34MLeaiLVZC+r0tGKC08UT39SAgNIoLXwtz8/9S1Gy6MoJeub
-MjjqRYuoI3Tlnqit5KHl
-=umo+
+iQIcBAEBAgAGBQJRmFxKAAoJEBYNRVNeJnmTCwIP/0zXFzVNilB/y5tM95ngf0hl
+GcdEbxxbP0E9L+hm5jlm9ILkP84muTsgfhiT7eB5IBT/+MiMAkXMTKZ8bkkuzee8
+FRuLKUMlon2jaGE7QJHeNyh6cjq/NK9HdAbEFm7c6l3IoBPYt3yCcO00VLm2x6sq
+y8xGdiAtu35qjhFwtjI4jXTsnLOOYql8ZW5ej/3h10beAIldRtZ79tSRm/68Br4F
+tn2Qn0qjMbBxAt60nNpQCHEMKk94InaA9ZnhxVQUxnmqtSqAqhEUPakC1/iuERm/
+ctOE1jK5nlo7eEXH6yPWbVVcdcz9NhHnGsnmpXCGh+1pB8JP1mGbSMVMvUHQ81ri
+egGuar0SUWzQKc19ikI+jxkf80eNgX7XxZHeSnxsz0pG/TOJ5EIod0Y3ut3pV6ei
+yY8tc18iWjUNNIcp2ZlR+rHdFBZSApqVp/q/MeznfHIwKCzXSk2Mvnmk/kYDU+ml
+lqrMgxvXcQ6ff0DsTa2lLAqG46eOScARHzIs8Q+gwvtSq1o5n8MhKWwBM1XnjYhO
+nFywDzKwCqnx0kq5GTkmn5VEtRliRJ3aHjUI9mwa0E+ix3FyEXYSzAYnCv8JTYxd
+awQdvQ1sFTKio3FPiJPjjXgb3BBGW9JMBNWS+8rJiUGfv/OJnjbCo5Ap/EdKilDj
+s46AoBfJqq2H/1E4A3T8
+=mKa/
 -----END PGP SIGNATURE-----
