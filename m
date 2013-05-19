@@ -1,42 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/13
-Message-ID: <CAH_aqbtG1p1f68x_EVug0TS+8KSi-cCdx7z=hsZzjhjzdcg43Q@mail.gmail.com>
-Date: Mon, 21 Jan 2013 12:03:42 -0200
-From: Henrique Montenegro <typoon@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Wordpress 3.5 Full-path disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/19/4
+Message-ID: <20130519090759.GA5331@poolp.org>
+Date: Sun, 19 May 2013 11:07:59 +0200
+From: Gilles Chehade <gilles@...lp.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, "Jason A. Donenfeld" <Jason@...c4.com>, misc@...nsmtpd.org
+Subject: Re: Re: CVE Request: DoS in OpenSMTPD TLS Support
 Content-Type: text/plain; charset=utf-8
 
-Yes, I also agree that wordpress should fix this and I understand that this
-is a low-priority mostly configuration related issue. I was just not sure
-if this was eligible for a CVE or not. I'll keep this reference in mind for
-future times.
+On Sat, May 18, 2013 at 11:03:45PM -0600, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 05/18/2013 09:00 PM, Jason A. Donenfeld wrote:
+> > On Sat, May 18, 2013 at 6:16 PM, Gilles Chehade <gilles@...lp.org>
+> > wrote:
+> >> Not too nice to send a CVE request without ANY coordination with
+> >> us ...
+> > 
+> > Sorry about that. I was in the midst of bumping packages in gentoo
+> > to the snapshot where you had fixed the issue, when I figured it
+> > might be wise to also get the issue tracked with a CVE asap. Sorry
+> > for jumping the gun.
+> 
+> For future reference you can get CVEs privately, although if you're
+> not the official upstream this means there is a greater chance of
+> duplicates (and thus of me saying "no, make a public request). So if
+> you want to do this a possible compromise is to email me and the
+> upstream and if upstream replies that it's ok then I'd probably go ahead.
+> 
 
-Thanks for the help!
+Yes, that would have been much nicer.
 
-Henrique
+We discovered the CVE request at the same time as everyone, on two
+public lists along with a script that allows any kiddie to trigger
+it... sent by a package maintainer we had talked to minutes ago to
+explain the issue and who knew the fix release was two days away.
 
+Anyway, what's done is done, we released earlier, hopefully we get
+a bit more coordination next time.
 
-On Mon, Jan 21, 2013 at 12:00 PM, Henri Salo <henri@...v.fi> wrote:
+Hopefully, we don't need too many CVE request anyways ;-)
 
-> On Mon, Jan 21, 2013 at 11:29:45AM +0000, Giles Coochey wrote:
-> > Wouldn't setting PHP "display_errors" be for development only, the
-> > entire point of the directive is to give the developer more
-> > information 'in page'.
-> >
-> > http://php.net/manual/en/errorfunc.configuration.php#ini.display-errors
-> >
-> > Quoting:
-> > "This is a feature to support your development and should never be
-> > used on production systems (e.g. systems connected to the
-> > internet)."
->
-> You are correct. No CVE, but WordPress should still fix this. Please note
-> that
-> some configuration errors still get CVE, but this is not one of those in my
-> opinion/knowledge. Path disclosures are usually low-priority issues.
->
-> ---
-> Henri Salo
->
+-- 
+Gilles Chehade
 
+https://www.poolp.org                                          @poolpOrg
