@@ -1,48 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/11
-Message-Id: <D9FF507F-08CC-4A34-901F-7A6A5595B4D8@stufft.io>
-Date: Wed, 14 Aug 2013 17:02:36 -0400
-From: Donald Stufft <donald@...fft.io>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: rubygems insecure download (and other problems)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/19/5
+Message-ID: <20130519100649.GC26114@kludge.henri.nerv.fi>
+Date: Sun, 19 May 2013 13:06:49 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: plone, rrdtool, zenoss bugs
 Content-Type: text/plain; charset=utf-8
 
-
-On Aug 14, 2013, at 4:59 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-
-> Signed PGP part
-> I don't think this is CVE worthy, but it is worth fixing and not
-> putting everyone at such risk:
+On Thu, Apr 18, 2013 at 02:05:42PM +0200, Thomas Pollet wrote:
+> Also,
+> the rrdtool python module crashes on format string exploit
+> $ python -c "import rrdtool
+> rrdtool.graph('/tmp/out.png','-f','%n%n')"
+> Segmentation fault
 > 
-> https://bugzilla.novell.com/show_bug.cgi?id=834785
-> https://bugzilla.redhat.com/show_bug.cgi?id=997179
-> 
-> Problem #1:
-> install /etc/gemrc to install gems via https rather than http
-> 
-> everyone should be enabling HTTPS where possible, intercepting and
-> modifying HTTP is trivial.
-> 
-> Problem #2:
-> it redirects to  production.cf.rubygems.org which is on cloudfront so
-> has certificate mismatch, so either users have to accept insecurity,
-> or... well there is no second choice =(.
-> 
-> https://www.ssllabs.com/ssltest/analyze.html?d=production.cf.rubygems.org
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
+> this module is used by zenoss to create graphs (zenoss users are able to
+> pass arguments to rrdtool).
 
-pip has a CVE for downloading via HTTP, does switching the
-gem to HTTPS actually make gem verify it?
+Tested Debian wheezy packages:
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1629
+python-rrdtool 1.4.7-2
+python2.7 2.7.3-6
 
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+Backtrace attached. Might affect other software too.
+Debian bug: http://bugs.debian.org/708866
 
+---
+Henri Salo
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+View attachment "python-rrdtool-bt.txt" of type "text/plain" (4247 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
