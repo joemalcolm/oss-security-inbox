@@ -1,94 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/08/8
-Message-ID: <527D3AB4.2010100@redhat.com>
-Date: Fri, 08 Nov 2013 12:25:40 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org
-CC: "Xen.org security team" <security@....org>
-Subject: Re: Xen Security Advisory 75 - Host crash due to guest VMX instruction execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/19/1
+Message-ID: <CAHmME9rmJGQTvsa0Z=d7Kb6P+m4PxR_dD2PD5bc3U1BjP5uEbw@mail.gmail.com>
+Date: Sun, 19 May 2013 05:00:26 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: Gilles Chehade <gilles@...lp.org>
+Cc: oss-security <oss-security@...ts.openwall.com>, misc@...nsmtpd.org
+Subject: Re: CVE Request: DoS in OpenSMTPD TLS Support
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sat, May 18, 2013 at 6:16 PM, Gilles Chehade <gilles@...lp.org> wrote:
+> Not too nice to send a CVE request without ANY coordination with us ...
 
-On 11/08/2013 09:21 AM, Xen.org security team wrote:
-> Xen Security Advisory XSA-75
-> 
-> Host crash due to guest VMX instruction execution
-> 
-> ISSUE DESCRIPTION =================
-> 
-> Permission checks on the emulation paths (intended for guests
-> using nested virtualization) for VMLAUNCH and VMRESUME were
-> deferred too much.  The hypervisor would try to use internal state
-> which is not set up unless nested virtualization is actually
-> enabled for a guest.
-> 
-> IMPACT ======
-> 
-> A malicious or misbehaved HVM guest, including malicious or
-> misbehaved user mode code run in the guest, might be able to crash
-> the host.
-> 
-> VULNERABLE SYSTEMS ==================
-> 
-> Xen 4.2.x and later are vulnerable. Xen 4.1.x and earlier are not
-> vulnerable.
-> 
-> Only HVM guests run on VMX capable (e.g. Intel) hardware can take 
-> advantage of this vulnerability.
-> 
-> MITIGATION ==========
-> 
-> Running only PV guests, or running HVM guests on SVM capable (e.g.
-> AMD) hardware will avoid this issue.
-> 
-> Enabling nested virtualization for a HVM guest running on VMX
-> capable hardware would also allow avoiding the issue.  However
-> this functionality is still considered experimental, and is not
-> covered by security support from the Xen Project security team.
-> This approach is therefore not recommended for use in production.
-> 
-> CREDITS =======
-> 
-> This issue was discovered by Jeff Zimmerman.
-> 
-> NOTE REGARDING LACK OF EMBARGO ==============================
-> 
-> This issue was disclosed publicly on the xen-devel mailing list.
-> 
-> RESOLUTION ==========
-> 
-> Applying the appropriate attached patch resolves this issue.
-> 
-> xsa75-4.3-unstable.patch    Xen 4.3.x, xen-unstable xsa75-4.2.patch
-> Xen 4.2.x
-> 
-> $ sha256sum xsa75*.patch 
-> 0b2da4ede6507713c75e313ba468b1fd7110e5696974ab72e2135f41ee393a8b
-> xsa75-4.2.patch 
-> 91936421279fd2fa5321d9ed5a2b71fe76bc0e1348e67126e8b9cde0cb1d32b2
-> xsa75-4.3-unstable.patch $
+Sorry about that. I was in the midst of bumping packages in gentoo to
+the snapshot where you had fixed the issue, when I figured it might be
+wise to also get the issue tracked with a CVE asap. Sorry for jumping
+the gun.
 
-Please use CVE-2013-4551 for this issue.
+> Just for the record, you contacted us today reporting a bug which could
+> be memory corruption and you didn't know if it could be exploited.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+The quote was "I haven't looked into why this happens or if memory
+corruption / code execution is a possibility, but at the very least,
+it's a nasty DoS."
 
-iQIcBAEBAgAGBQJSfTqzAAoJEBYNRVNeJnmT6PoP/3tI0kE5IydnZtpc3C6YQwFo
-4VCCmwMNzMK4MfQ8A2bAl2sVGDNzMmwRN/DGzCvJlj4OuLppbBzwzbMCrSH7FCm9
-o7AU68NjJ1Sx27OOxMNH9Zh4gRMKlRfRCtV+SEKX1YAfup/l11QlFw7v06bb6g1u
-7eTNsA3pUGZbD1zMDOgfbLX2V+El+Ef3cXuH1IfsSJpJkbHq6tgGW//v9y8hoY8n
-cZsm9xDi3P8veJTClAlq57Yw36JXQ06YauFQqmU4pr2qn7OttRJPGagXMdwTG187
-OEw8lSoX1vEU7M7vOghX3tZSUeaoEN13bL2JV08NqPO6jFWRX/PcOe2FgRpcGPJw
-UbuoYiYY5Q7ozrzGLxJ4cvt/fIeBtb9zChbP0jiCzz4Fsm3gKFm0M+5Gt4LlYzZi
-nQKslGrbZPcQ9rlqPpNKrZfz1CRJNGpNzUWFgiSV3Hw7SO3rKs/wG7a0bdliIFjg
-Kl62gffpoejTZR6Lbgjjs9BD681wzF094gVaxK2x0b7beWct764ee6T6EyjgOAPN
-3+cNMe5bORgusyuwyTo782a1i7JIesnzQ5PZj6mlZufJzEOTQ1Lz1ahgzUQuR/oZ
-5gTG2etl0vA2DxueTLFllwPjE64R6KwkpAMaEW9SPTygnV3RSHrqtR9D8I5phbml
-zOWkbRoOEYT/lCeSMKQf
-=I+wF
------END PGP SIGNATURE-----
+> The snapshot mail, commit log and diffs makes the issue obvious
+
+Which is why I figured it was already a public issue, and therefore
+not an issue to track it with a CVE. But apologies, nonetheless, for
+jumping the gun. I'll coordinate with you more closely in the future.
