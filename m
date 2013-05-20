@@ -1,56 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/11
-Message-ID: <524EE8E5.10804@redhat.com>
-Date: Fri, 04 Oct 2013 10:12:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: Re: CVE request - VLC 2.0.0 to 2.0.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/20/4
+Message-ID: <20130520212139.298aebdc@redhat.com>
+Date: Mon, 20 May 2013 21:21:39 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Ian Weller <ianweller@...oraproject.org>
+Subject: Re: CVE Request (minor) -- Python 3.2: DoS when matching certificate with many '*' wildcard characters {was:  CVE Request (minor) --  python-backports-ssl_match_hostname: Denial of service when matching certificate with many '*' wildcard characters }
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, 15 May 2013 19:51:38 -0600 Kurt Seifried wrote:
 
-On 10/04/2013 02:04 AM, Hanno Böck wrote:
-> On Thu, 03 Oct 2013 22:32:12 -0600 Kurt Seifried
-> <kseifried@...hat.com> wrote:
-> 
->> Sorry forgot to reply. I'm not sure this is CVE worthy. In
->> general crash bugs in services are CVE worthy, but crashes in
->> client software are usually limited to things like email clients
->> or web browsers where there is a high potential for processing
->> untrusted data without much user interaction (e.g. displaying
->> some random email or web page) whre you also have the potential
->> to lose work (so there is an impact).
-> 
->> In the case of VLC you load a nasty file, it crashes, you don't
->> do it again. There's not really any impact. You don't lose any
->> work.
-> 
-> VLC is used as a browser plugin and can also be embedded in other 
-> applications. (though I'm not aware if this can crash the whole
-> browser with the modern sandboxing stuff browsers do)
+> On 05/15/2013 05:28 AM, Jan Lieskovsky wrote:
 
-So if someone can test this and report back that'd be great and then
-we can deal with the CVE depending on how this plays out.
+> > Replying to myself here. Issue is present in Python 3.2 code too -
+> > so the CVE should be allocated for the original (Python 3.2) code,
+> > rather than to python-backports-ssl_match_hostname package.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+...
 
-iQIcBAEBAgAGBQJSTujlAAoJEBYNRVNeJnmT5wYP/3ijX88DMXQH2ESddStu8bjq
-5X4Pu+Vizi7aRFxYYg4T6XYFCvVWbzcJwQlRP1FrGzRrpS27warwz5XebZy+qGuQ
-bUgMWEnC0e06sokxJeWr2YZdBCxsTGTZdv0OzhtiRNXyoyEMogmzELhGnNh2zqWy
-VSr2eksFvIUmK5IEoxsCesbLy4mwiNixW2nvrZwS02juPpy6beyn5uKWhhU+1Phl
-O/OMf0yUEbFGFKsQOjesJwm1hIBGK6ZKn3CtlKjxLG5Z7VqmoCK9V1VlGEiyEwHr
-j4OInC6wK7NCfW+OOsg6ZQzrl5DC7CYrtT9KYtt9gpxObTk/7YhobTvYd38Abc9p
-G9sk08nOAesq0WF1c490ZmifQCkTKyZBO6NlRYo/Ci3VFbku6zOlzdyhM0LDimk/
-xLACmeGgsXFJjxaP/4gMzTIeaZR42AYljzLRqSDzlWMgAppkLxdiGyhllxmc/cXe
-MRK4s5Q1qgEdxVLgQLlltTDhcv8ZX42cg2xwraN45BIl+gl66Z1nvqhUFKKWUjNo
-CMU6g9Wjqf+nESyum3sF61n6X/et2far/nPXDn9IZZ2+8nLF8HYJKLQmzUFXyXJ0
-qBeXq6/dHzjsbZ66+c8eiLw6yH5rx9xFI66IARFFwdDzyQQPid1/Y8aAGZDwW+BQ
-YmesRzWsqCo5a4y4LN6Z
-=lLPp
------END PGP SIGNATURE-----
+> Please use CVE-2013-2099 for this issue.
+
+There should be no need for two separate CVEs for this issue.
+Problematic match_hostname was developed in Python 3.  As its
+functionality is needed by Python 2 users, and it is not provided by
+the standard library, Python 3 implementation was made available via
+different module.  It's the same code, packaged in python (3.x) and
+python-backports-ssl_match_hostname packages.  The same CVE should
+apply to both.
+
+Given that CVE-2013-2099 was assigned to Python 3 ssl, CVE-2013-2098
+seems like the one to reject as dupe.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
