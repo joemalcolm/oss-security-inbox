@@ -1,34 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/6
-Message-ID: <20130718233553.608eba65.reed@reedloden.com>
-Date: Thu, 18 Jul 2013 23:35:53 -0700
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/20/2
+Message-ID: <606867088.4567640.1369068931984.JavaMail.root@redhat.com>
+Date: Mon, 20 May 2013 12:55:31 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com, Andrew Nacin <nacin@...dpress.org>, "Christey, Steven M." <coley@...re.org>, Jay Turla <shipcodez@...il.com>
-Subject: Re: Re: SWFUpload <= (Object Injection/CSRF) Vulnerabilities Multiple flaws
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Gerald Combs <gerald@...eshark.org>
+Subject: CVE Request -- Wireshark: Upstream v1.8.7, v1.6.15 fixes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-On Fri, 19 Jul 2013 00:27:37 -0600
-Kurt Seifried <kseifried@...hat.com> wrote:
+  Wireshark upstream has released 1.8.7, 1.6.15 versions,
+correcting multiple security flaws:
 
-> So to confirm:
-> 
-> CVE-2013-4144 swfupload KedAns-Dz object injection
-> CVE-2013-4145 duplicate of CVE-2012-3414
-> CVE-2013-4146 swfupload KedAns-Dz CSRF
-> 
-> and we're good?
+1) http://www.wireshark.org/security/wnpa-sec-2013-31.html
+   https://bugzilla.redhat.com/show_bug.cgi?id=965110
 
-Where's the CSRF vuln? I see XSS but not a separate CSRF issue...
+2) http://www.wireshark.org/security/wnpa-sec-2013-30.html
+   https://bugzilla.redhat.com/show_bug.cgi?id=965111
 
-~reed
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+3) http://www.wireshark.org/security/wnpa-sec-2013-29.html
+   https://bugzilla.redhat.com/show_bug.cgi?id=965112
 
-iEYEARECAAYFAlHo3kkACgkQa6IiJvPDPVrqKwCguY8KtcZGDqCuHeUkukowdPRL
-VPkAoIXHGK0UoRgJStAMsDbbMT8CHA9q
-=bV1g
------END PGP SIGNATURE-----
+4) http://www.wireshark.org/security/wnpa-sec-2013-28.html
+   https://bugzilla.redhat.com/show_bug.cgi?id=965186
+
+5) http://www.wireshark.org/security/wnpa-sec-2013-27.html
+   https://bugzilla.redhat.com/show_bug.cgi?id=965190
+
+6) http://www.wireshark.org/security/wnpa-sec-2013-26.html
+   https://bugzilla.redhat.com/show_bug.cgi?id=965192
+
+7) http://www.wireshark.org/security/wnpa-sec-2013-25.html
+   https://bugzilla.redhat.com/show_bug.cgi?id=965193
+
+8) http://www.wireshark.org/security/wnpa-sec-2013-24.html
+   https://bugzilla.redhat.com/show_bug.cgi?id=965194
+
+9) http://www.wireshark.org/security/wnpa-sec-2013-23.html
+   https://bugzilla.redhat.com/show_bug.cgi?id=965195
+
+   Further Note regarding 9):
+   The CVE-2013-2486 && CVE-2013-2487 identifiers
+   have been originally assigned for the 9) issue for the
+   fix in v1.8.6. The patch should contain two patches,
+   but only one was applied. Not sure if a new CVE identifier
+   should be assigned for this case.
+
+Could you allocate CVE identifiers for these?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
