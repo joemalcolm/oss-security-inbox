@@ -1,31 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/23
-Message-ID: <20131104123738.57d82ee5.reed@reedloden.com>
-Date: Mon, 4 Nov 2013 12:37:38 -0800
-From: Reed Loden <reed@...dloden.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: openssl default ciphers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/20/7
+Message-Id: <201305202300.r4KN0fd2006073@linus.mitre.org>
+Date: Mon, 20 May 2013 19:00:41 -0400 (EDT)
+From: cve-assign@...re.org
+To: gerald@...eshark.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: CVE assignments for Wireshark 1.8.7 and 1.6.15
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-The Mozilla opsec guys wrote up some good guidelines recently on what
-they consider a good TLS cipher suite choice should be, but even if you
-didn't want to go all-out by making the default ultra-secure (with
-full PFS, etc.), they explain their choices fairly well, so should be
-useful in trying to figure out a middle ground that makes most people
-happy.
+>8) http://www.wireshark.org/security/wnpa-sec-2013-24.html
 
-https://wiki.mozilla.org/Security/Server_Side_TLS
+Use CVE-2013-3555.
 
-~reed
+
+>7) http://www.wireshark.org/security/wnpa-sec-2013-25.html
+
+Use CVE-2013-3556 for the Bug 8599 issue addressed in r48943.
+
+Use CVE-2013-3557 for the Bug 8599 issue addressed in r48944.
+
+It is possible that CVE-2013-3556 only affects people who made their
+own builds from the Wireshark trunk, and does not affect users of any
+Wireshark release. Although MITRE does not always assign CVE names for
+such development-code issues, in this case it is useful for clarifying
+the scope of CVE-2013-3557.
+
+
+>6) http://www.wireshark.org/security/wnpa-sec-2013-26.html
+
+Use CVE-2013-3558.
+
+
+>5) http://www.wireshark.org/security/wnpa-sec-2013-27.html
+
+Use CVE-2013-3559.
+
+
+>4) http://www.wireshark.org/security/wnpa-sec-2013-28.html
+
+Use CVE-2013-3560.
+
+
+>3) http://www.wireshark.org/security/wnpa-sec-2013-29.html
+
+Use CVE-2013-3561 for the Bug 8448 issue. Note that this CVE is shared
+with issues covered by wnpa-sec-2013-30 and wnpa-sec-2013-31.
+
+Use CVE-2013-3562 for the Bug 8449 issue.
+
+
+>2) http://www.wireshark.org/security/wnpa-sec-2013-30.html
+
+Use CVE-2013-3561. Note that this CVE is shared with issues covered by
+wnpa-sec-2013-31 and (part of) wnpa-sec-2013-29.
+
+
+>1) http://www.wireshark.org/security/wnpa-sec-2013-31.html
+
+Use CVE-2013-3561. Note that this CVE is shared with issues covered by
+wnpa-sec-2013-30 and (part of) wnpa-sec-2013-29.
+
+
+>9) http://www.wireshark.org/security/wnpa-sec-2013-23.html
+
+>   Further Note regarding 9):
+>   The CVE-2013-2486 && CVE-2013-2487 identifiers
+>   have been originally assigned for the 9) issue for the
+>   fix in v1.8.6. The patch should contain two patches,
+>   but only one was applied. Not sure if a new CVE identifier
+>   should be assigned for this case.
+
+See comment 13 in Wireshark bug 8364. CVE-2013-2486 is about revision
+47805, and CVE-2013-2487 is about revision 47808 (an issue with a
+different discoverer than 47805). MITRE will later publish an update
+to the information about affected versions within our CVE-2013-2486
+description.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v1.4.11 (SunOS)
 
-iKYEARECAGYFAlJ4BZJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3Bl
-bnBncC5maWZ0aGhvcnNlbWFuLm5ldDZCNTZGOUFDMDdCNjg1RDdEQzQ1NjBEQTZC
-QTIyMjI2RjNDMzNENUEACgkQa6IiJvPDPVrsJwCeIw5lo0/5JiV1z0fsz+rGigai
-0UYAoMRIc5jKSxKRpd2iM54hwyotLPid
-=uOgO
+iQEcBAEBAgAGBQJRmqrWAAoJEGvefgSNfHMdVh4IAI/dNMaSwwJeaxSNybuk0aLd
+sgfat0n3gWsjc9gvtmovzXs0gd5VpfKk2ObvTWCuJnIyhyDW5nGgPd1Bj+Qs46/t
+6JTcdud0UXfuzjGU2O1OlrRpX8YxqpUNP8RJfgwDSWGeijlE0W5j3/nVBCCwzoHO
+QyPARoC92dS0Vi6HOsDljHJHamGLL48X1+b10y6KxR4Q3g6s78fKjottI9THrUUj
+F5m8oNIb90FI6luIf7zW6egNR4uNvULjJOiLbLCZvvKn+9+82legQsAy9STwph2q
+QIcDuGyGqL06QSKubjYyafog1WWnhk/+dwdQcP2/Z3iK5Z3uJi2IMOZFiEanbpg=
+=9leG
 -----END PGP SIGNATURE-----
