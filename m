@@ -1,34 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/01/5
-Message-ID: <524A791F.3080008@redhat.com>
-Date: Tue, 01 Oct 2013 12:56:23 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/20/3
+Message-Id: <20130520174343.6489CE673F@smtp.hushmail.com>
+Date: Mon, 20 May 2013 17:43:40 +0000
+From: "mancha" <mancha1@...h.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE request] systemd
+Subject: tty-hijacking & CVE-2005-4890 - redux
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+Hello.
 
-I would like to request CVE ids for 4 systemd issues.
+A recent use-case on Slackware made me re-visit CVE-2005-4890
+in the context of "su -c". Particularly, shadow's implementation
+as of shadow 4.1.5.
 
-1. systemd: Integer overflow, leading to heap-based buffer overflow by
-processing native messages
-https://bugzilla.redhat.com/show_bug.cgi?id=859051
+During the discussions of this CVE (see footer links), it was
+pointed out shadow's fix is partial given interactive su remains
+vulnerable to tty-hijacking. It was also mentioned this vector
+is less worrisome given use cases for interactive su are primarily
+privilege escalation.
 
-2. systemd: TOCTOU race condition when updating file permissions and
-SELinux security contexts
-https://bugzilla.redhat.com/show_bug.cgi?id=859060
+The CVE was always a bit controversial with many believing
+using su and sudo to drop privileges is unsafe and more an
+administration issue than a design flaw.
 
-3. systemd: Possibility of denial of logging service by processing
-native messages from file
-https://bugzilla.redhat.com/show_bug.cgi?id=859104
+All that said, at the very least would it be reasonable to
+apply the same threat-assessment criterion to the crippling
+of "su -c" and not drop the controlling tty for the case when
+the callee is root?
 
-4. systemd: Improper sanitization of invalid XKB layouts descriptions
-(privilege escalation when custom PolicyKit local authority file used)
-https://bugzilla.redhat.com/show_bug.cgi?id=862324
+Slackware doesn't use PAM so the fix in shadow relies on a
+TIOCNOTTY ioctl() request and not a setsid() call. One result
+of this change is summarized in the table below:
 
-Thanks!
+                                        shadow 
+                             4.1.4.3   4.1.5.1   4.1.5.1+patch*
+
+1. As unpriv user user1:
+xterm -e su -c $COMM          SUCCESS    FAIL     SUCCESS
+xterm -e su user2 -c $COMM    SUCCESS    FAIL     FAIL
+
+2. As root:
+xterm -e su user1 -c $COMM    SUCCESS    FAIL     FAIL
+
+-----
+* See attached
+
+Cheers.
+
+--mancha
 
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+===
+
+[1] http://thread.gmane.org/gmane.comp.security.oss.general/5172
+[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
+Download attachment "shadow-4.1.5.1-tty.diff" of type "application/octet-stream" (321 bytes)
