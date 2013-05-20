@@ -1,50 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/13
-Message-ID: <5203D30E.9000503@redhat.com>
-Date: Thu, 08 Aug 2013 11:19:10 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: David Jorm <djorm@...hat.com>
-Subject: Re: CVE request: remote code execution due to XML deserialization in Restlet
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/20/5
+Message-Id: <201305201926.r4KJQXv7029669@linus.mitre.org>
+Date: Mon, 20 May 2013 15:26:33 -0400 (EDT)
+From: cve-assign@...re.org
+To: jlieskov@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- Wireshark: Upstream v1.8.7, v1.6.15 fixes
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/08/2013 02:16 AM, David Jorm wrote:
-> Dinis Cruz has published information on remote code execution due
-> to XML deserialization in Restlet:
-> 
-> http://blog.diniscruz.com/2013/08/using-xmldecoder-to-execute-server-side.html
->
-> 
-https://github.com/o2platform/DefCon_RESTing
-> 
-> I have tested his reproducer and confirmed it works against Restlet
-> 2.0 and 2.2. Please assign a CVE ID to this flaw.
-> 
-> Thanks
-> 
+>  Wireshark upstream has released 1.8.7, 1.6.15 versions,
+>correcting multiple security flaws:
 
-Please use CVE-2013-4221 for this issue.
+Wireshark upstream sends advance requests for CVE assignments to MITRE
+(for these releases and apparently all other releases in the past year
+or more). MITRE will be sending our 1.8.7/1.6.15 CVE assignments to
+oss-security also, almost certainly today.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.11 (SunOS)
 
-iQIcBAEBAgAGBQJSA9MNAAoJEBYNRVNeJnmTdqgQALVLWb4/ukLeYl9TKslFtQxF
-O/qkGcoSM0ElNNO2WaJlOzCfoFDz2pHtyEloNBkB+09LDswViSciXJBuvJ+B/Mj+
-OxlRtnQkWkFLjurY9O9f/auHzNtyQgO5xrGh+rho0y98laxFTi/GoOIUAY55Z7KO
-JX8LUyEIi2KbnPdnT1RKmk61Jk9TnCuyQBwhRESsTDN/wbU+05eEzEkgZ5/rqu5p
-Y507eXvxzGBhD5D6N3jDGe8GqAIgl3c4ylmQQlxkBnGbetgL26Gqwa4MyLdz7RKA
-XdihLUohBjxcNjgpTQ3NzwiO0ZxAl2gXG4kicDJz9LNFafXEbeC7+NJUC2DaXqAn
-xicdDh3PHdOPvaDmqNxn9kK9zp2zN6xBVzEwIUPWFuWn9k89DvNL2EoM5c5nOwhL
-nxZiqujMZs1ye4WuuX2PghPDvd2q6fWVdkeOs5XdHEsQ0E3pX4F2+Aj3mljALDcC
-o2sHCmFG2pxxeMu0fmX3f72F8xDwDTgY0eVj81Ws06yQMsKTzKaItMPWgKmDPcSQ
-pckr8MiZFm24WLYS2aNbj54mJlmdzqy8+KX3/Q7e3z76OELmQPHCRpmpE/VEtJzs
-h73PVrcLG+THNDNp7cmTDvieD7xPJTVNdKv5k/xkiUQkSQlpIHF0YijUFehjHErk
-ktYGdFsocD6uc63CC/js
-=PvGf
+iQEcBAEBAgAGBQJRmnYjAAoJEGvefgSNfHMdoegH/iWmca2XSYhKnHJUL8WV8gy6
+dYYYXoN6jLFJKgHgVWCAGCt1DfNm5jgmH1KD+reBWb4q4BupHj4S4QeGB2dnDFd7
+QmIb9QQcmZ9kNBWRdQ9SbCql2eKNuMDi7+uDxwX9f1B/91X0/8JwK0L/VkE+BCKH
+318mGVd69HTOUrRbbTGq78lKVvymsdlI9KyjiuecVo+3t0UWDcasF2fWYcpSwmKA
+wJaiGneDdXc+UxmY0Fu6zonMj5hfdQK4TZ2/q9mFcZVd5JRhWcDpFPDflFw/YLtd
+I2roSmN7IS74RE3jWA/I4+T/yabJZs4PMU8UHtIZtWo418LBYPW4/Gu93peuoCs=
+=gZdS
 -----END PGP SIGNATURE-----
