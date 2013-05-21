@@ -1,29 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/20/2
-Message-ID: <CAD1NwhgLEg0kx9cXNf6bx3cw8Phbkk--H_EeEBLFOYWTRkseHA@mail.gmail.com>
-Date: Sat, 20 Apr 2013 19:36:06 +0200
-From: Lukas Reschke <lukas@...cloud.org>
-To: Mark Panaghiston <markp@...pyworm.com>
-Cc: Kurt Seifried <kseifried@...hat.com>,  Open Source Security <oss-security@...ts.openwall.com>, hello@...pyworm.com,  "security@...cloud.com" <security@...cloud.com>
-Subject: Re: CVE-2013-1942 jPlayer 2.2.19 XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/21/1
+Message-ID: <519ABFAE.9030400@moodle.com>
+Date: Tue, 21 May 2013 08:28:30 +0800
+From: Michael de Raadt <michaeld@...dle.com>
+To: oss-security@...ts.openwall.com
+Subject: Moodle security notifications public
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 20, 2013 at 7:19 PM, Mark Panaghiston <markp@...pyworm.com> wrote:
->
-> [2.2.23] Security Fix: The Flash SWF had a minor security vulnerability that
-> enabled XSS (Cross Site Scripting). Reported by Eugene Dokukin.
-> https://github.com/happyworm/jPlayer/commit/c5fe17bb4459164bd59153b57248cf94b8867373
+The following security notifications are now public. Thanks to OSS 
+members for their cooperation.
 
-As far I can see from this commit this only affected "alert()" and
-allowed the display of an alert box. Could you clarify that please?
+=======================================================================
+MSA-13-0020: Capability issue in Assignment
 
-If so this could be only abused for techniques like social engineering
-and should IMHO not handled as a security issue.
+Description:       The assignment module was not checking capabilities
+                    for users downloading all assignments as a zip.
+Issue summary:     Students can download assignments submitted by other
+                    students
+Severity/Risk:     Serious
+Versions affected: 2.4 to 2.4.3, 2.3 to 2.3.6
+Versions fixed:    2.5, 2.4.4 and 2.3.7
+Reported by:       Phillip Franks
+Issue no.:         MDL-38443
+CVE Identifier:    CVE-2013-2079
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-38443
 
-@Kurt: What's your opinion on that?
+=======================================================================
+MSA-13-0021: Potential information leak in Gradebook
 
---
-ownCloud
-Your Cloud, Your Data, Your Way!
+Description:       The Gradebook's Overview report was showing grade
+                    totals that may have incorrectly included hidden
+                    grades.
+Issue summary:     The method for figuring out
+                    showtotalsifcontainhidden on the overview report is
+                    flawed
+Severity/Risk:     Minor
+Versions affected: 2.4 to 2.4.3, 2.3 to 2.3.6,
+                    earlier unsupported versions
+Versions fixed:    2.5, 2.4.4 and 2.3.7
+Reported by:       Andrew Davis
+Issue no.:         MDL-37475
+CVE Identifier:    CVE-2013-2080
+Workaround:        Ensure all courses have the same value for hiding
+                    grades in the gradebook. This is set at
+                    Administration > Grades > Course grade settings >
+                    Hide totals if they contain hidden items
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-37475
 
-GPG: 0xEB32B77BA406BE99
+=======================================================================
+MSA-13-0022: Information leak in hub registration
+
+Description:       When registering a site on a hub (not Moodle.net)
+                    site information was being sent to the hub
+                    regardless of settings chosen.
+Issue summary:     Moodle send site information to a hub even though
+                    it's unchecked
+Severity/Risk:     Minor
+Versions affected: 2.4 to 2.4.3, 2.3 to 2.3.6, 2.2 to 2.2.9,
+                    earlier unsupported versions
+Versions fixed:    2.5, 2.4.4, 2.3.7 and 2.2.10
+Reported by:       Jérôme Mouneyrac
+Issue no.:         MDL-37822
+CVE Identifier:    CVE-2013-2081
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-37822
+
+=======================================================================
+MSA-13-0023: Permission issue in blog comments
+
+Description:       There was no check of permissions for viewing
+                    comments on blog posts.
+Issue summary:     Blog comment validation should verify that the user
+                    can view a post.
+Severity/Risk:     Serious
+Versions affected: 2.4 to 2.4.3, 2.3 to 2.3.6, 2.2 to 2.2.9,
+                    earlier unsupported versions
+Versions fixed:    2.5, 2.4.4, 2.3.7 and 2.2.10
+Reported by:       Dan Poltawski
+Issue no.:         MDL-37245
+CVE Identifier:    CVE-2013-2082
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-37245
+
+=======================================================================
+MSA-13-0024: Form filtering issue
+
+Description:       Form elements named using a specific naming
+                    scheme were not being filtered correctly
+Issue summary:     Elements named foo[i] are not cleaned properly
+Severity/Risk:     Minor
+Versions affected: 2.4 to 2.4.3, 2.3 to 2.3.6, 2.2 to 2.2.9,
+                    earlier unsupported versions
+Versions fixed:    2.5, 2.4.4, 2.3.7 and 2.2.10
+Reported by:       Dan Poltawski
+Issue no.:         MDL-38885
+CVE Identifier:    CVE-2013-2083
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-38885
