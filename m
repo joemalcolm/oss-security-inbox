@@ -1,18 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/18
-Message-ID: <20330483.qpQBG611Ln@devil>
-Date: Wed, 27 Feb 2013 00:38:22 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/21/2
+Message-ID: <4867175.ZVKOe4YAr4@devil>
+Date: Tue, 21 May 2013 20:58:04 +0200
 From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: psi+ stores the cache file as world-readable
+Subject: CVE request: dovecot : "APPEND" Parameters Processing Denial of Service Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 26 February 2013 14:27:23 Seth Arnold wrote:
-> Are there environments where ~/.cache isn't 0700 by default?
-I don't know
+>From the secunia advisory SA53492[1] :
 
-You are completely right, but in case the .cache dir is not 0700, if these 
-files are not world-readable the problem never exist.
+Description
+A vulnerability has been reported in Dovecot, which can be exploited by 
+malicious users to cause a DoS (Denial of Service).
+
+The vulnerability is caused due to an error within IMAP functionality when 
+processing the "APPEND" parameters and can be exploited to cause a hang.
+
+The vulnerability is reported in version 2.2.
+
+
+Solution
+Update to version 2.2.2.
+
+Provided and/or discovered by
+Reported by the vendor.
+
+Original Advisory
+http://www.dovecot.org/list/dovecot-news/2013-May/000255.html
+
+Commit:
+http://hg.dovecot.org/dovecot-2.2/rev/ea0390e1789f
+
+[1]: https://secunia.com/advisories/53492/
+
 -- 
 Agostino Sarubbo
 Gentoo Linux Developer
