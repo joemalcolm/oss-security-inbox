@@ -1,48 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/5
-Message-Id: <201312120501.rBC51RVC026250@linus.mitre.org>
-Date: Thu, 12 Dec 2013 00:01:27 -0500 (EST)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: TYPO3-CORE-SA-2013-004 and TYPO3-FLOW-SA-2013-001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/1
+Message-ID: <519C6EF4.9020502@redhat.com>
+Date: Wed, 22 May 2013 01:08:36 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Tomas Hoger <thoger@...hat.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Ian Weller <ianweller@...oraproject.org>
+Subject: Re: CVE Request (minor) -- Python 3.2: DoS when matching certificate with many '*' wildcard characters {was: CVE Request (minor) --  python-backports-ssl_match_hostname: Denial of service when matching certificate with many '*' wildcard characters }
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-For the issues that were numbered 1-10 in your message:
+On 05/20/2013 01:21 PM, Tomas Hoger wrote:
+> On Wed, 15 May 2013 19:51:38 -0600 Kurt Seifried wrote:
+> 
+>> On 05/15/2013 05:28 AM, Jan Lieskovsky wrote:
+> 
+>>> Replying to myself here. Issue is present in Python 3.2 code
+>>> too - so the CVE should be allocated for the original (Python
+>>> 3.2) code, rather than to python-backports-ssl_match_hostname
+>>> package.
+> 
+> ...
+> 
+>> Please use CVE-2013-2099 for this issue.
+> 
+> There should be no need for two separate CVEs for this issue. 
+> Problematic match_hostname was developed in Python 3.  As its 
+> functionality is needed by Python 2 users, and it is not provided
+> by the standard library, Python 3 implementation was made available
+> via different module.  It's the same code, packaged in python (3.x)
+> and python-backports-ssl_match_hostname packages.  The same CVE
+> should apply to both.
+> 
+> Given that CVE-2013-2099 was assigned to Python 3 ssl,
+> CVE-2013-2098 seems like the one to reject as dupe.
 
-1) CVE-2013-7073
-2) CVE-2013-7074
-3) CVE-2013-7075
-4) CVE-2013-7076
-5) CVE-2013-7077
-6) CVE-2013-7078
-7) CVE-2013-7079
-8) CVE-2013-7080
-9) CVE-2013-7081
-10) CVE-2013-7082
 
-Also, for issue 3, are you disclosing a CSRF vulnerability? Or are you
-just saying that, theoretically, if a CSRF vulnerability existed, that
-would be one way to conduct the attack?
+My reasoning here was that Python 2 and 3 constitute "forked" or
+separate code bases, so fall under CVE SPLIT.evidence includes:
 
-We'll assign another CVE ID if CSRF is being disclosed here.
+1) Python 2to3, a lot of Python code needs work to move from 2 to 3
+2) This feature was added as standard in Python 3 and then later back
+ported to 2
+
+Steve, can we get a referees decision here? Thanks.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSqULiAAoJEKllVAevmvmsYY0H/REu+zTywg4aZvUJWF5QSXLT
-5iPAUgal7JQWBKW7g5H6UKkoZ/WoDqyqlZ4Jtut39B4luu82OLEBArmEyA2VoSWZ
-r42u53fQH1OmLv/mDumHpIQ3Of42AjNVsafE2+5gqSumi+e1neIDMCYyV0mfvwG8
-+9VLO/Y9wh91srA7ZLmXMU4it15RM6z4CAcNQjQGS+ylIOx3M5grIC8uRCoYqKP4
-sVz8CNMIR65+X2Q7Aaw42b5IyRRpb0qwMFL46ScJWFJGQUdO08I3n4YBaMQOz0Yl
-vKOG43sE2vNK3kq9f0zT2U5vYINIafXYadw0mpi79AVIirS5xeSqLyMpJUkneGs=
-=luW2
+iQIcBAEBAgAGBQJRnG70AAoJEBYNRVNeJnmTpEYP/jfly9dWKELpKrVdjXr7pKaU
+KxwJSr2PlNA0p0vN91ESKZYsCBcGV/jnPU8YqhyW6WiFbTcpM7s8Kv7QGN+urQkB
+NK0R7QNcZHb0e7/5NGkMyVFHZMivICsyOpjn8RgX39CC+OypjLCVln5cBctKvBvF
+uYjf1GNOVW3EImTxGDa6xe04pqXRW1+g9E4jwaeDLNQSaB60j4QU2XmoSwsxvcor
+LH2OAU3ZTaGztxLzQHfptaqV8XzeWvR8lRKduFcI8Yo6Y0peicBkTirzitLC+vDi
+ZD6WX+ru7pyxNlMwfIss7H+xXQon/zCZO8Q8DTRGRTweLSMGyzVh7I2h6Xx2PfMo
+2JFTJP6mEokPa9OEHZdEwkfwQGFGG2vKemrKgu7Ya+sDoNmSpNmU3jQAefUClW0b
+1FGVGB2Q2gg4v2ZXyYGWSoYVBb9+Bg/d4eaJjNr2OxJh7Xlgc26f1aa9pbka6Xg/
+M5sgMQwMD8ZMSuX2SY0RbiAcswQDbb5MWzcJZaeTsSqRZ5aEh+4y0VdMHAoXyiSm
++P6NcKQHYgOP/lnR7CRYjy6PgGVGW00RK0bufpR3bVbKLRAwbomVpyicJkreQag5
+dO2RTGTdUnYdyFkvXUGGjrYrDi28yNt9ELn5N0fv3ChwK+dYJBMnxcQF2tIgyI9g
+UdInSDJvngF8rE2QhQ0+
+=tg8P
 -----END PGP SIGNATURE-----
