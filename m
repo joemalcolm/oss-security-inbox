@@ -1,26 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/26/5
-Message-ID: <1377536670.14534.YahooMailNeo@web140505.mail.bf1.yahoo.com>
-Date: Mon, 26 Aug 2013 10:04:30 -0700 (PDT)
-From: David Walser <luigiwalser@...oo.com>
-To: "\"cve-assign@...re.org\"" <cve-assign@...re.org>, "\"oss-security@...ts.openwall.com\"" <oss-security@...ts.openwall.com>, "\"lwn@....net\"" <lwn@....net>
-Cc: "security@...up.mageia.org" <security@...up.mageia.org>, "tmb@....fi" <tmb@....fi>
-Subject: Fw: python CVE typoed in Mageia advisory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/7
+Message-ID: <1534621804.5617953.1369225060745.JavaMail.root@redhat.com>
+Date: Wed, 22 May 2013 08:17:40 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Timo Sirainen <tss@....fi>
+Cc: Agostino Sarubbo <ago@...too.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: dovecot : "APPEND" Parameters Processing Denial of Service Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-More CVE confusion, and this time it's my fault.  For the recent Python 
+Thank you for the report, Agostino.
 
-ssl.match_hostname security issue, which was assigned CVE-2013-4238 here:
-http://www.openwall.com/lists/oss-security/2013/08/13/2
+Cc-ing Timo to clarify on the point below yet.
 
-I typoed it as CVE-2013-4328 while we (Mageia) were preparing the update and it 
-made it into our advisories:
-http://advisories.mageia.org/MGASA-2013-0250.html
-http://advisories.mageia.org/MGASA-2013-0252.html
+----- Original Message -----
+> From: "Agostino Sarubbo" <ago@...too.org>
+> To: oss-security@...ts.openwall.com
+> Sent: Tuesday, May 21, 2013 8:58:04 PM
+> Subject: [oss-security] CVE request: dovecot : "APPEND" Parameters Processing Denial of Service Vulnerability
+> 
+> From the secunia advisory SA53492[1] :
+> 
+> Description
+> A vulnerability has been reported in Dovecot, which can be exploited by
+> malicious users to cause a DoS (Denial of Service).
+> 
+> The vulnerability is caused due to an error within IMAP functionality when
+> processing the "APPEND" parameters and can be exploited to cause a hang.
 
-So I think we'll get our advisories corrected soon.  LWN, could you please 
-re-file them under the new vulnerability entry for the correct CVE?
-http://lwn.net/Vulnerabilities/563961/ - typoed one
-http://lwn.net/Vulnerabilities/564820/ - correct one
+Timo, in relation with the previous (similar) one (thanks to Tomas Hoger for
+pointing out):
+  [1] http://thread.gmane.org/gmane.comp.security.oss.general/8916/focus=8934
+  [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695138#15
 
-Sorry about this.
+this time the CVE identifier should be allocated / issue is valid, right?
+
+While in the former [1], [2] case just the connection for the user issuing
+the command would crash, this time (assuming) either whole dovecot daemon
+might hang or even if the whole daemon wouldn't hang (and request is handled
+within a thread), that request would made the particular thread to consume
+excessive amount of CPU due to infinite loop, right?
+
+Timo, can you confirm / disprove a CVE identifier should be assigned to this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+> The vulnerability is reported in version 2.2.
+> 
+> 
+> Solution
+> Update to version 2.2.2.
+> 
+> Provided and/or discovered by
+> Reported by the vendor.
+> 
+> Original Advisory
+> http://www.dovecot.org/list/dovecot-news/2013-May/000255.html
+> 
+> Commit:
+> http://hg.dovecot.org/dovecot-2.2/rev/ea0390e1789f
+> 
+> [1]: https://secunia.com/advisories/53492/
+> 
+> --
+> Agostino Sarubbo
+> Gentoo Linux Developer
+> 
