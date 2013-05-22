@@ -1,33 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/8
-Message-ID: <20130220025039.GA32551@kroah.com>
-Date: Tue, 19 Feb 2013 18:50:39 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/6
+Message-ID: <2472894.Q1IOzbLRho@oe.nux.tld>
+Date: Wed, 22 May 2013 13:44:09 +0200
+From: Oden Eriksson <oeriksson@...driva.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel race condition with PTRACE_SETREGS (CVE-2013-0871)
+Subject: Re: Fwd: [Full-disclosure] Thttpd 2.25b Directory Traversal Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 19, 2013 at 05:47:23PM -0800, Greg KH wrote:
-> On Tue, Feb 19, 2013 at 12:40:50PM -0800, Julien Tinnes wrote:
-> > On Sat, Feb 16, 2013 at 2:49 AM, Solar Designer <solar@...nwall.com> wrote:
-> > > The mainline commits from January are by Oleg Nesterov of Red Hat.  Why
-> > > wasn't(?) the issue handled with due severity within Red Hat, then -
-> > > such that Red Hat would at the very least have a statement on whether
-> > > and which of their kernels are affected by now.  My guess is that the
-> > > full severity of the issue might not have been understood by Oleg at the
-> > > time, but it's only a guess.
-> > 
-> > That's the eternal debate :) Since upstream doesn't want to handle
-> > security and disclosure, I sure wish that distro vendors could
-> > regroup, step-up and do it.
+onsdagen den 22 maj 2013 13.06.18 skrev  Matthias Weckbecker:
+> Hi,
 > 
-> I know some people don't "like" how the kernel team handles bug reports
-> and fixes, but seriously, this should have been pretty obvious by anyone
-> watching the stable kernel releases, which all distros do.  The fact
-> that the distros didn't notify others is not the kernel community's
-> fault, sorry.
+> has anybody possibly already confirmed this? It might also be worth
+> to assign a CVE to this if it turns out to be a reproducible issue.
 
-Ick, my appologies Julien, it seems we are in violent agreement here
-about the role that distros should be playing.  Sorry about that.
-
-greg k-h
+Confirmed here. Needed to use "lynx -dump ...".
