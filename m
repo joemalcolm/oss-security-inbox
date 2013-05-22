@@ -1,41 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/10
-Message-ID: <CA+rthh-WFr9J19Fx6HAbjM4wgcdfGsQUJxVuffbj6+H2h-nC2A@mail.gmail.com>
-Date: Mon, 22 Apr 2013 17:53:02 +0200
-From: Mathias Krause <minipli@...glemail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/9
+Message-ID: <20130522132916.GB3827@blema.cz>
+Date: Wed, 22 May 2013 15:29:16 +0200
+From: Vitezslav Cizek <civ@...ma.cz>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, Petr Matousek <pmatouse@...hat.com>
-Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
+Subject: Re: Fwd: [Full-disclosure] Thttpd 2.25b Directory Traversal Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 22, 2013 at 3:57 PM, P J P <ppandit@...hat.com> wrote:
-> +-- On Mon, 22 Apr 2013, Mathias Krause wrote --+
-> | partly... Have a look at verify_iovec()/verify_compat_iovec(). They're
-> | updating the msg_name and msg_iov pointers.
->
->   I did, both seem to use user supplied `msg_namelen' value to copy contents
-> from user `msg_name' to `sockaddr_storage addr' variable. And when
-> `msg_namelen' is zero(0) msg_name is set to NULL. Later same `msg_namelen'
-> bytes are copied to user area, right?
+* Dne Středa 22. květen 2013, 13:44:09 [CEST] Oden Eriksson napsal:
+> onsdagen den 22 maj 2013 13.06.18 skrev  Matthias Weckbecker:
+> > Hi,
+> > 
+> > has anybody possibly already confirmed this? It might also be worth
+> > to assign a CVE to this if it turns out to be a reproducible issue.
+> 
+> Confirmed here. Needed to use "lynx -dump ...".
+> 
+Are you sure?
+I fail to reproducet the problem.
 
-No. It is capped in move_addr_to_user() to the actual size -- if set
-by the protocol -- or sizeof(struct sockaddr_storage) -- whichever is
-smaller.
+How do you use lynx?
+Do you prepend "http://" to the url?
+Otherwise lynx won't connect over network
+and will default to local filesystem.
 
-> Ah..right, both are called with `mode = VERIFY_WRITE' and both initialise
-> `addr' variable when mode = VERIFY_READ.
->
-> If it's copying user data to `addr', why selectively do it when mode =
-> VERIFY_READ?
+For example:
+$ lynx -dump "google.com:80/../../../../etc/passwd"
+wil get you you're local /etc/passwd
 
-It's called with VERIFY_READ in __sys_sendmsg() because in this case
-"addr" is an input parameter. For recvmsg() it's an output parameter
-so doesn't need to be read, but only written to.
-
-> Also, wouldn't - memset(addr, 0, sizeof(addr)) - fix this leak for all
-> definitions of <proto>_recvmsg() routine??
-
-Yes, but see this discussion: http://thread.gmane.org/gmane.linux.kernel/1472604
-
-
-Mathias
+  Vita
