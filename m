@@ -1,64 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/09/2
-Message-ID: <518BBDA0.7040008@openstack.org>
-Date: Thu, 09 May 2013 17:15:44 +0200
-From: Thierry Carrez <thierry@...nstack.org>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA 2013-010] Nova uses insecure keystone middleware tmpdir by default (CVE-2013-2030)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/4
+Message-ID: <519CA2F6.5050002@redhat.com>
+Date: Wed, 22 May 2013 16:20:30 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: dovecot : "APPEND" Parameters Processing Denial of Service Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 05/22/2013 12:28 AM, Agostino Sarubbo wrote:
+> From the secunia advisory SA53492[1] :
+> 
+> Description
+> A vulnerability has been reported in Dovecot, which can be exploited by 
+> malicious users to cause a DoS (Denial of Service).
+> 
+> The vulnerability is caused due to an error within IMAP functionality when 
+> processing the "APPEND" parameters and can be exploited to cause a hang.
+> 
+> The vulnerability is reported in version 2.2.
+> 
+> 
+> Solution
+> Update to version 2.2.2.
+> 
+> Provided and/or discovered by
+> Reported by the vendor.
+> 
+> Original Advisory
+> http://www.dovecot.org/list/dovecot-news/2013-May/000255.html
+> 
+> Commit:
+> http://hg.dovecot.org/dovecot-2.2/rev/ea0390e1789f
+> 
+> [1]: https://secunia.com/advisories/53492/
+> 
 
-OpenStack Security Advisory: 2013-010
-CVE: CVE-2013-2030
-Date: May 9, 2013
-Title: Nova uses insecure keystone middleware tmpdir by default
-Reporter: Grant Murphy (Red Hat), Anton Lundin
-Products: Nova
-Affects: Folsom, Grizzly
+Note: I found a similar commit in dovecot-2.2 repo:
 
-Description:
-Grant Murphy from Red Hat and Anton Lundin both independently reported a
-vulnerability in Nova's default location for the Keystone middleware
-signing directory (signing_dir). By previously setting up a malicious
-directory structure, an attacker with local shell access on the Nova
-node could potentially issue forged tokens that would be accepted by the
-middleware. Only setups that use the default value for signing_dir are
-affected. Note that future versions of the Keystone middleware will
-issue a warning if an insecure signing directory is used.
+http://hg.dovecot.org/dovecot-2.2/rev/0b7039a614f7
 
-Havana (development branch) fix:
-https://review.openstack.org/#/c/28568/
+the commit message says " imap: Fixed assert-crash on invalid APPEND
+parameters."
 
-Grizzly fix:
-https://review.openstack.org/#/c/28569/
+I am not very familiar with the dovecot code, but taking a brief look
+suggests that parsing APPEND in some way could result in hitting assert.
 
-Folsom fix:
-https://review.openstack.org/#/c/28570/
-
-References:
-https://bugs.launchpad.net/nova/+bug/1174608
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-2030
-
-- -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJRi72dAAoJEFB6+JAlsQQjJZAQAJ5w/+BoBD4em8YklBsxU6wU
-Bn1wWu3W5ngCNuHwr4ydWzC3U1TT1zWtogWJpv/+87m2KPESWhs7YGCkTIE9tLpA
-sNOniOG9hGUsWwRgtUqjA8/8QzLgbNJ/PDJx0lrNPNkvMbHwP/jxotx353edhelQ
-QAPJwVPBqu0vn2VZOeFWYNO/AnWNcjTXE0po92qaFvw3HWL3ykMd30w4Ejxv9clC
-VjBjaNkReSkmcd/BaArtr1IenyYyVqM7nv/VWl5O5Up02+uvAozDmy6Cyc1O5VOW
-6m9nRH2WKE/bFXcTEG4rpH+/BZxG2RuyklUBvVtSaEAQOWYFSwQKzjxGM3rItsWt
-iuQYrakl6H69tRS3HS9pAXWdxSikSb8CqmVJauf3RG1/EQ7GtCO0kXVPi8fYBaTX
-GpLmpY8bj6o2iY1Kh1bozZ2oYVLgPrhP2R4oj+4iaSN++gy2qs0d3AvIK0BzBKT+
-fd7wAUpdxltM9eZS82VEQxIaOGUDqnGompEu3nPRv9KD5kZqgz/L/jp5I+PR3y1D
-Uaj8W+FfF/AZtMRLJHl3I0kUHRhfuIusir5zja7UCoR6UEeipLvBzbi/DSGfBCRY
-/VbBv9ZZBeQ+Kw4EwS4/7G5nw1RX4/bKGSi0zcwwmD2unB7Plm9MjI65yR4oFidl
-uOpCYFwNk6PqCFED/mCz
-=wjZ/
------END PGP SIGNATURE-----
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
