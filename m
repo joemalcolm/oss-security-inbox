@@ -1,29 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/13
-Message-ID: <alpine.LFD.2.03.1302271852440.8716@redhat.com>
-Date: Wed, 27 Feb 2013 19:39:50 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: Linux kernel: USB: io_ti: NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/14
+Message-ID: <1970861107.5816983.1369237599522.JavaMail.root@redhat.com>
+Date: Wed, 22 May 2013 11:46:39 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Apostolis Bessas <mpessas@...nsifex.com>, Ilias Vrachnis <vid@...nsifex.com>, Radek Vokal <rvokal@...hat.com>, Florian Weimer <fweimer@...hat.com>
+Subject: CVE-2013-2073 transifex-client: Does not validate HTTPS server certificate (fixed in transifex-client v0.9)
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hello Steve, vendors,
 
-Linux kernel built with Edgeport USB serial converter driver io_ti, is 
-vulnerable to a NULL pointer dereference flaw. It happens if the device is 
-disconnected while corresponding /dev/ttyUSB? file is in use.
+  It was found that Transifex command-line client, a command line tool for Transifex
+translation management, did not perform X.509 certificate verification when using
+secured SSL connection. A man-in-the-middle attacker could use this flaw to spoof
+a Transifex server via an arbitrary certificate.
 
-An unprivileged user could use this flaw to crash the system, resulting DoS.
+The CVE identifier of CVE-2013-2073 has been allocated to this issue.
 
-Upstream fix:
--------------
-  -> https://git.kernel.org/linus/1ee0a224bc9aad1de496c795f96bc6ba2c394811
+Acknowledgements:
+  This issue was discovered by Florian Weimer of the Red Hat Product Security Team.
 
-Reference:
-----------
-  -> https://bugzilla.redhat.com/show_bug.cgi?id=916191
+  Red Hat would like to thank Apostolis Bessas and Ilias Vrachnis of Transifex
+  for prompt replies and patches.
 
-Thank you.
+Fixed in: transifex-client v0.9:
+            https://pypi.python.org/pypi/transifex-client/0.9
+            http://blog.transifex.com/post/51072109836/new-version-of-the-transifex-client-has-been-released
+
+Upstream patches are as follows:
+[1] https://github.com/transifex/transifex-client/commit/e24ea954373874962f22f63a7311d04d6ff56d84
+[2] https://github.com/transifex/transifex-client/commit/f237dd7d3f4f08be7160f32eb99edafe2769aad1
+[3] https://github.com/transifex/transifex-client/commit/5246f188b0abcc1a4c20894fcab88f7a6cd6cfd9
+[4] https://github.com/transifex/transifex-client/commit/ad29a9dbe869e0c7d861826a82c9ce2f022face4
+
+Thank you && Regards, Jan.
 --
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+Jan iankko Lieskovsky / Red Hat Security Response Team
