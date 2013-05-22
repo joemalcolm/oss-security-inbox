@@ -1,22 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/10/6
-Message-id: <342A3698-3748-4474-8063-E6EF45188DF1@me.com>
-Date: Tue, 10 Sep 2013 17:17:52 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Henri Salo <henri@...v.fi>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Features 0.3.0 Ruby gem /tmp file injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/10
+Message-Id: <201305221531.44501.mweckbecker@suse.de>
+Date: Wed, 22 May 2013 15:31:44 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fwd: [Full-disclosure] Thttpd 2.25b Directory Traversal Vulnerability
 Content-Type: text/plain; charset=utf-8
 
+On Wednesday 22 May 2013 13:44:09 Oden Eriksson wrote:
+> onsdagen den 22 maj 2013 13.06.18 skrev  Matthias Weckbecker:
+> > Hi,
+> >
+> > has anybody possibly already confirmed this? It might also be worth
+> > to assign a CVE to this if it turns out to be a reproducible issue.
+>
+> Confirmed here. Needed to use "lynx -dump ...".
 
-On Sep 10, 2013, at 4:52 PM, Henri Salo <henri@...v.fi> wrote:
+That's weird. But you've tried it *with* 'http://'? Otherwise you
+don't even generate a HTTP request.
 
-> On Mon, Sep 09, 2013 at 05:38:46PM +0000, Larry W. Cashdollar wrote:
->> Vendor: Not notified
-> 
-> Why not?
+$ lynx -dump "127.0.0.1:/../../../etc/passwd"
+vs
+$ lynx -dump "http://127.0.0.1/../../../etc/passwd"
 
-I dropped the ball.  Done.  I just sent him an email.
+I don't think this report is valid.
 
-=)
+Matthias
 
+-- 
+Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
