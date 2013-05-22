@@ -1,41 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/1
-Message-id: <2D2EC044-77F8-4B63-8966-8DA6CE8051A0@me.com>
-Date: Mon, 02 Dec 2013 19:13:14 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Command injection vulnerability in Ruby Gem sprout 0.7.246
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/16
+Message-ID: <4002262.qqzJ9NiA05@oe.nux.tld>
+Date: Wed, 22 May 2013 22:49:19 +0200
+From: Oden Eriksson <oeriksson@...driva.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fwd: [Full-disclosure] Thttpd 2.25b Directory Traversal Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Title: Command injection vulnerability in Ruby Gem sprout 0.7.246
+onsdagen den 22 maj 2013 15.31.44 skrev  Matthias Weckbecker:
+> On Wednesday 22 May 2013 13:44:09 Oden Eriksson wrote:
+> > onsdagen den 22 maj 2013 13.06.18 skrev  Matthias Weckbecker:
+> > > Hi,
+> > > 
+> > > has anybody possibly already confirmed this? It might also be worth
+> > > to assign a CVE to this if it turns out to be a reproducible issue.
+> > 
+> > Confirmed here. Needed to use "lynx -dump ...".
+> 
+> That's weird. But you've tried it *with* 'http://'? Otherwise you
+> don't even generate a HTTP request.
+> 
+> $ lynx -dump "127.0.0.1:/../../../etc/passwd"
+> vs
+> $ lynx -dump "http://127.0.0.1/../../../etc/passwd"
+> 
+> I don't think this report is valid.
+> 
+> Matthias
 
-Download: http://rubygems.org/gems/sprout, http://projectsprouts.org/
-
-Vulnerability:
-
-The unpack_zip() function contains the following code:
-
-sprout-0.7.246/lib/sprout/archive_unpacker.rb
-
-60           zip_dir = File.expand_path(File.dirname(zip_file))
-61           zip_name = File.basename(zip_file)
-62           output = File.expand_path(dir)
-63           # puts ">> zip_dir: #{zip_dir} zip_name: #{zip_name} output: #{output}    "     
-64           %x(cd #{zip_dir};unzip #{zip_name} -d #{output})
-
-
-If the attacker can control zip_dir, zip_name or output then they can possibly 
-execute shell commands by injecting shell meta characters as input. 
-
-
-PoC:
-
-For example: filename;id;.zip
-
-I contacted the developer a few weeks ago but received no response.
-
-
-Thanks!
-Larry W. Cashdollar
-@_larry0
-http://vapid.dhs.org/advisories/
+Whoops. You're right.
