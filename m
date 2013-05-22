@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/23
-Message-ID: <CACYkhxiNS=qbNLwxpQCzFUDtmzniFP1gJ=PJO5MtHAA09e5-+g@mail.gmail.com>
-Date: Fri, 11 Oct 2013 09:28:26 +1100
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com, security@...ian.org
-Subject: Re: RESEND: CVE Request: pwgen
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/12
+Message-ID: <75E33E7D-66AE-46BB-AD19-966153421F38@tenable.com>
+Date: Wed, 22 May 2013 13:38:32 +0000
+From: George Theall <gtheall@...able.com>
+To: "<oss-security@...ts.openwall.com>" <oss-security@...ts.openwall.com>
+Subject: Re: Fwd: [Full-disclosure] Thttpd 2.25b Directory Traversal Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 11 October 2013 00:35, Marcus Meissner <meissner@...e.de> wrote:
-> (CVE worthyness:
-> It does not fully meet the security expectations of generating
-> a non-weak password by default....
-> )
 
-"Exploiting in the wild" isn't what I do, but it wouldn't be hard to
-weed out some pwgen passwords from public dumps simply by doing:
-pwgen -cn 8 1000000000 | john --stdin pwfile
+On May 22, 2013, at 9:29 AM, Vitezslav Cizek <civ@...ma.cz>
+ wrote:
 
-I have a program that tries to mimic the internal state and generate
-in order of probability, but it still needs some tuning.  There will
-be a couple of slides on pwgen at my Ruxcon talk too.
+> * Dne Středa 22. květen 2013, 13:44:09 [CEST] Oden Eriksson napsal:
+>> onsdagen den 22 maj 2013 13.06.18 skrev  Matthias Weckbecker:
+>>> Hi,
+>>> 
+>>> has anybody possibly already confirmed this? It might also be worth
+>>> to assign a CVE to this if it turns out to be a reproducible issue.
+>> 
+>> Confirmed here. Needed to use "lynx -dump ...".
+>> 
+> Are you sure?
+> I fail to reproducet the problem.
 
-For distros not wanting to ship an insecure program, see
-https://github.com/therealmik/pwgen/compare/securityfixes
+This seems like a configuration issue rather than a vulnerability. The code in libhttpd.c seems to filter directory traversal sequences. And I was able to reproduce this only if thttpd was serving files out of the system root directory (e.g., "thttpd -d /"), in which case the directory traversal sequences are irrelevant.
 
-I think somebody at Debian needs to do an NMU, since the maintainer is
-still not responding.
 
-Regards,
-  Michael
+George
+-- 
+theall@...able.com
+
