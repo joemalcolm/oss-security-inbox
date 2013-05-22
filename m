@@ -1,83 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/16/6
-Message-ID: <51E58521.40008@redhat.com>
-Date: Tue, 16 Jul 2013 11:38:41 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: Re: Insecure temp files usage in phusion passenger (other than CVE-2013-2119)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/8
+Message-Id: <B9688A2D-7F5D-4E9E-BA74-A41B35B7DD73@iki.fi>
+Date: Wed, 22 May 2013 15:24:59 +0300
+From: Timo Sirainen <tss@....fi>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: Agostino Sarubbo <ago@...too.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: dovecot : "APPEND" Parameters Processing Denial of Service Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 22.5.2013, at 15.17, Jan Lieskovsky <jlieskov@...hat.com> wrote:
 
-On 07/15/2013 08:37 AM, Raphael Geissert wrote:
-> Hi again,
-> 
-> On 10 June 2013 16:54, Raphael Geissert <geissert@...ian.org>
-> wrote:
->> While looking at  CVE-2013-2119 I noticed that Phusion Passenger 
->> 2.2.11's ext/common/Utils.cpp makeDirTemp() uses mkdir(1) to
->> create directories in /tmp (e.g. /tmp/phusion.$$) for use by the
->> application and web server. A local user could create the
->> directories and have write access to directories, and possibly
->> files used by the application. I haven't confirmed, but I guess
->> this would allow some sort of privilege escalation to the user
->> executing the application or at least access to otherwise
->> restricted data.
+> ----- Original Message -----
+>> From: "Agostino Sarubbo" <ago@...too.org>
+>> To: oss-security@...ts.openwall.com
+>> Sent: Tuesday, May 21, 2013 8:58:04 PM
+>> Subject: [oss-security] CVE request: dovecot : "APPEND" Parameters Processing Denial of Service Vulnerability
 >> 
->> Additionally, some of the subdirectories might be chown(2)ed to
->> a different user even if the directory already existed (it chowns
->> iff mkdir(1) returns 0). Not sure if it could have an impact,
->> however.
+>> From the secunia advisory SA53492[1] :
+>> 
+>> Description
+>> A vulnerability has been reported in Dovecot, which can be exploited by
+>> malicious users to cause a DoS (Denial of Service).
+>> 
+>> The vulnerability is caused due to an error within IMAP functionality when
+>> processing the "APPEND" parameters and can be exploited to cause a hang.
 > 
-> After talking to upstream, the above issue with the temp directory
-> has been fixed in 4.0.6 (release withdrawn and replaced by 4.0.7
-> due to a regression), and a regression fixed in 4.0.8[2]. The issue
-> was tracked as #910[3].
+> Timo, in relation with the previous (similar) one (thanks to Tomas Hoger for
+> pointing out):
+>  [1] http://thread.gmane.org/gmane.comp.security.oss.general/8916/focus=8934
+>  [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695138#15
 > 
-> Could a CVE id be assigned then?
+> this time the CVE identifier should be allocated / issue is valid, right?
 > 
-> It allows a local user to DoS the service or to take over its
-> traffic.
+> While in the former [1], [2] case just the connection for the user issuing
+> the command would crash, this time (assuming) either whole dovecot daemon
+> might hang or even if the whole daemon wouldn't hang (and request is handled
+> within a thread), that request would made the particular thread to consume
+> excessive amount of CPU due to infinite loop, right?
+
+A logged in user can cause his own IMAP connection process to eat 100% CPU, so it won't immediately hang other users. By default users can log in max. 10 times from the same IP, so attacker requires many IPs to cause a real DoS. And of course a valid user account, which means it will be immediately visible to admin who is causing the system to slow down.
+
+> Timo, can you confirm / disprove a CVE identifier should be assigned to this?
+
+I'm not against it, but I don't see this as that big of an issue, especially with v2.2 still not being widely used.
+
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 > 
-> [1]http://blog.phusion.nl/2013/07/04/phusion-passenger-4-0-6-released/
->
-> 
-Bug fix:
-https://github.com/phusion/passenger/commit/5483b3292cc2af1c83033eaaadec20dba4dcfd9b
-> [2]http://blog.phusion.nl/2013/07/09/phusion-passenger-4-0-8-released/
->
-> 
-Regression fix:
-> https://github.com/phusion/passenger/commit/9dda49f4a3ebe9bafc48da1bd45799f30ce19566
->
-> 
-[3]https://code.google.com/p/phusion-passenger/issues/detail?id=910
-> 
-> Cheers, -- Raphael Geissert - Debian Developer www.debian.org -
-> get.debian.net
+>> 
+>> The vulnerability is reported in version 2.2.
+>> 
+>> 
+>> Solution
+>> Update to version 2.2.2.
+>> 
+>> Provided and/or discovered by
+>> Reported by the vendor.
+>> 
+>> Original Advisory
+>> http://www.dovecot.org/list/dovecot-news/2013-May/000255.html
+>> 
+>> Commit:
+>> http://hg.dovecot.org/dovecot-2.2/rev/ea0390e1789f
+>> 
+>> [1]: https://secunia.com/advisories/53492/
+>> 
+>> --
+>> Agostino Sarubbo
+>> Gentoo Linux Developer
+>> 
 > 
 
-Please use CVE-2013-4136 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJR5YUhAAoJEBYNRVNeJnmT0xUQANA2upj/XcARdB6ZslRZfyiR
-sC0I4khYvEt8wZMG6FTgb3f0vN7tPZoxcZt5O2mxxUyWYc/4iVueiB6a77Qx7lth
-wJ98fdLRb7UUJK5N3JHPIQm1BuvE83svUTuodDnnesrcMTJA/iFHZ59wAK7MXPn/
-mpVHGbNhfdvNxwL7k4CcuNXng/4xm7Pg9dCngNd4uSvmbUKQCbENtnIePUPs6Lwx
-dnia4pKaDfRFZ+WeK8OYT4sRxnf4rImbwV6kwF3+SvxpsdyA8P0XOx0+Lx8pNnHL
-AwBTZxNmDehbUJ8vuKMGbPsCwsjQKudoJFk+BmGPF5nC1aVbHKHPi5fL5ydzf0nm
-GJ9yMHTOAIuFApzh3j0kCX/K7Jfwynr3y3xI8hLzaf2rjR/nc1jzn/Si24zZG6Z9
-GvSwL2EOHNtzxXXkQF4JZARS3n+B73K4w7hdiX58ZGim1q9551EEghSc/qBbiTGn
-svU+Z/Zz528mCv9AGHLK8C7y6BSDFJLrzLHuH6hx5AzVeM53Shb8oegcanObLAgj
-GkB5CMDgn6T5obdx0bPUwGXnABt76RjGJ0P9dvZ4/pWfAEibZGZYDunZ7YomQuzU
-qAljswBoUlMzngS3OrCpxB7gGf0AwcNnzo6yQTMvCKx4n9Ikjl1VeljD0SCVu1eW
-VES+Vjb20flunp4/qLpY
-=VvTG
------END PGP SIGNATURE-----
