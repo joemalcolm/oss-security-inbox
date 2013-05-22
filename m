@@ -1,52 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/01/3
-Message-ID: <50E289B7.6070605@redhat.com>
-Date: Tue, 01 Jan 2013 00:01:11 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/2
+Message-ID: <20130522084618.GA5003@openwall.com>
+Date: Wed, 22 May 2013 12:46:18 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>, William Pitcock <nenolod@...eferenced.org>
-Subject: Re: CVE Request: Charybdis and ircd-ratbox remote crash flaw
+Cc: Andrew Alexeev <andrew@...nx.com>
+Subject: Re: nginx security advisory (CVE-2013-2028)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, May 07, 2013 at 05:44:36AM -0700, Andrew Alexeev wrote:
+> Greg MacManus, of iSIGHT Partners Labs, found a security problem
+> in several recent versions of nginx.  A stack-based buffer
+> overflow might occur in a worker process while handling a
+> specially crafted request, potentially resulting in arbitrary code
+> execution (CVE-2013-2028).
 
-On 12/31/2012 11:34 PM, Huzaifa Sidhpurwala wrote:
-> Hi All,
-> 
-> Saw this report about Charybdis and ircd-ratbox remote crash flaw
-> at:
-> 
-> http://rabbit.dereferenced.org/~nenolod/ASA-2012-12-31.txt 
-> http://tech.slashdot.org/story/12/12/31/2241229/efnet-paralyzed-by-vulnerability
->
->  Researcher advisory suggests both the products are affected.
-> 
-> Sadly i could not get the contact details of either of the
-> products to copy on this email.
-> 
-> Should we be assigning CVEs to these issues?
+A recent blog post on the topic:
 
-Please use CVE-2012-6084 for this issue.
+"Analysis of nginx 1.3.9/1.4.0 stack buffer overflow and x64
+exploitation (CVE-2013-2028)"
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+http://www.vnsecurity.net/2013/05/analysis-of-nginx-cve-2013-2028/
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ4om3AAoJEBYNRVNeJnmTJ2sQAMWeu0rAxwKD77SLyVtwurt+
-cJ1DFrRcBrqMVRWiJOB9MsyaCUyts5JNUlL2lU4k/F4k4j3byi7V1iT/cvcTkqjZ
-E1lK7cBaErAODGunysmccTxA6of7QEL5HNpW8M+R9YGoicdjODm1Cst7eAdkhubm
-eP3HklZ0PgCPqUee9/OIHRf10BVfM4hVl6oRupj7Q6eIRBy6spYEY9ICdDbwKRFZ
-sxZMKhyWijJGAfXcTNeElJX29/QvYfz0HzuArO3yF0wVwHJzU0YM4fVMcbCnGoP+
-5Iwc1AW1XW81EMROAbopdXnfN8jMtklBydE1r0tbxcAWifK9Qhhi4T+odZUmHd5p
-DPzJh2dSBKeVnivjp5qwxwtmHPOEn+qEwCXVPRkBVcoDa5zuU83v3Lo1QIbGyhvV
-XGzwEG/1nuUzDdZ/SkWNH9RDhScZqfwGFnJmLIl5W3CR5IoaJBgimmjNgfsmnkfj
-/ay4unm0TvGGhW2OZ/AneBaSYeZwy7ogZ3WmWO53xnnINYYgVFuTCyvTcsoWPsEe
-r4oOyc2j5b3GFWktlJtJplb6YyrfXAgRFPGN9/Lv+XzKKo/AcfJQ8lUv/Lwk8Hxf
-TkNmwPGB+MkEcn3zFEn9eN7O/qUVyr/w4kQnK0TbJYTfLXRCVxqDH0FtkOflyhe3
-NSS3xHWlFvz+K97EcW/s
-=FWwE
------END PGP SIGNATURE-----
+Alexander
