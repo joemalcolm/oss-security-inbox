@@ -1,96 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/16
-Message-ID: <520D024B.9000607@redhat.com>
-Date: Thu, 15 Aug 2013 10:31:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Marcus Meissner <meissner@...e.de>
-CC: oss-security@...ts.openwall.com
-Subject: Re: rubygems insecure download (and other problems)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/3
+Message-Id: <201305221130.34805.thijs@debian.org>
+Date: Wed, 22 May 2013 11:30:30 +0200
+From: Thijs Kinkhorst <thijs@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: MediaWiki chunked uploads vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 08/15/2013 02:37 AM, Marcus Meissner wrote:
-> On Wed, Aug 14, 2013 at 05:02:36PM -0400, Donald Stufft wrote:
->> 
->> On Aug 14, 2013, at 4:59 PM, Kurt Seifried <kseifried@...hat.com>
->> wrote:
->> 
->>> Signed PGP part I don't think this is CVE worthy, but it is
->>> worth fixing and not putting everyone at such risk:
->>> 
->>> https://bugzilla.novell.com/show_bug.cgi?id=834785 
->>> https://bugzilla.redhat.com/show_bug.cgi?id=997179
->>> 
->>> Problem #1: install /etc/gemrc to install gems via https rather
->>> than http
->>> 
->>> everyone should be enabling HTTPS where possible, intercepting
->>> and modifying HTTP is trivial.
->>> 
->>> Problem #2: it redirects to  production.cf.rubygems.org which
->>> is on cloudfront so has certificate mismatch, so either users
->>> have to accept insecurity, or... well there is no second choice
->>> =(.
->>> 
->>> https://www.ssllabs.com/ssltest/analyze.html?d=production.cf.rubygems.org
->>>
->>>
->>> 
-- - --
->>> Kurt Seifried Red Hat Security Response Team (SRT) PGP:
->>> 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->>> 
->> 
->> pip has a CVE for downloading via HTTP, does switching the gem to
->> HTTPS actually make gem verify it?
->> 
->> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1629
-> 
-> Some SSL certificate issues in Ruby were also fixed...
-> 
-> ... testing by pointing rubygems.org to another host with https
-> gives:
-> 
-> $ gem install foo ERROR:  Could not find a valid gem 'foo' (>= 0)
-> in any repository ERROR:  While executing gem ...
-> (Gem::RemoteFetcher::FetchError) SSL_connect returned=1 errno=0
-> state=SSLv3 read server certificate B: certificate verify failed
-> (https://rubygems.org/latest_specs.4.8.gz) ...
-> 
-> I think a "package management" solution that installs software on a
-> system should have good security measurements by default these
-> days, and trivial man-in-the-middle attacks should not be
-> possible.
-> 
-> So the implicit assumption "installing gems is secure" is violated
-> here, which would require a CVE I think.
-> 
-> Ciao, Marcus
-> 
+Can a CVE name be assigned for the following MediaWiki issue please?
 
-Can someone generate a list of all the client software that pulls gems
-insecurely from rubygems.org and post it here? thanks. I can't assign
-CVE's to services, only to software.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Thanks,
+Thijs
 
-iQIcBAEBAgAGBQJSDQJKAAoJEBYNRVNeJnmTfgYQAMOtj1PiNc46aiuAoAVnAaKr
-n9oH44SDMd/byjhfbSFuK+mRFlGgXynFSEdpu4dEZl8w5qQmTlHHdLlU7RIzVFfg
-B8qOrr/KIYn50ftwlJI0Jik68o5bq3HamGi7B+E+cX53BYEz9zhI7jVP39WdnY0M
-Dmoany+EiORK19ZPeg10dDVWfe5vwk0k/4i1h7xWp5rUThC6LmGcNpZCdEHgfZyA
-auMOwZzneenav6HHMEa+Vh0N0uf9T1BeTHdVI4GHzepLxzSwuF5kgIu8Q3tXnGgU
-6NEGfdv9KuA7Ivgz16jjUUiJEk/JdgbUaBECXUzdzdSDmSc6ow27IDbVLh0Yq0hW
-FIyBz50q+0Wt+L7CsTZ8qfs3+Se0BSZt6XDkQwEA8x/wZPBfzIx59F8KGfZXu4sE
-H895w4YdFlcY7bZEdEakd28aHZbKj2qD4/KlfmntXzs4HIMFO1CrLuJ8zaqX1ZTI
-xRJZiX+Wur8f7Ftcx+ScjkRMC66PxGxIvqnFXKRxYlD+mPpm6zr0xfLw0buL5C4m
-4ZUpy3xlWVfrS6wsaFoco9DALB0naaBVqwgXxMPqxi+cbt4u2+s+MjoZmNPTcitp
-dj/GZQCruejr2iKkNfhUTfvSxlKEFPGxcBVx5nTjGcEGBsg1EOit1a4rsubt9V+z
-In9YUH15QvITGMrbfkyl
-=8leO
------END PGP SIGNATURE-----
+----------  Doorgestuurd bericht  ----------
+
+Onderwerp: [MediaWiki-announce] MediaWiki Security Release: 1.20.6 and 1.19.7
+Datum: dinsdag 21 mei 2013, 22:14:52
+Van: Chris Steipp <csteipp@...imedia.org>
+Aan: mediawiki-announce@...ts.wikimedia.org, "MediaWiki-l" <mediawiki-
+l@...ts.wikimedia.org>, Wikimedia developers <wikitech-l@...ts.wikimedia.org>
+
+I would like to announce the release of MediaWiki 1.20.6 and 1.19.7.
+These releases fix a security related issue that could affect users of
+MediaWiki. Download links are given at the end of this email.
+
+* MediaWiki user Marco discovered that security checks for file
+uploads were not being run when the file was uploaded in chunks
+through the API. This option has been available to users who can
+upload files since MediaWiki 1.19.
+<https://bugzilla.wikimedia.org/show_bug.cgi?id=48306>
+
+Full release notes for 1.20.6:
+<https://www.mediawiki.org/wiki/Release_notes/1.20>
+
+Full release notes for 1.19.7:
+<https://www.mediawiki.org/wiki/Release_notes/1.19>
+
+For information about how to upgrade, see
+<https://www.mediawiki.org/wiki/Manual:Upgrading>
+
+
+**********************************************************************
+   1.20.6
+**********************************************************************
+Download:
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.6.tar.gz
+
+Patch to previous version (1.20.5):
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.6.patch.gz
+
+GPG signatures:
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.6.tar.gz.sig
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.6.patch.gz.sig
+
+Public keys:
+https://secure.wikimedia.org/keys.html
+
+
+**********************************************************************
+   1.19.7
+**********************************************************************
+Download:
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.7.tar.gz
+
+Patch to previous version (1.19.6):
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.7.patch.gz
+
+GPG signatures:
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.7.tar.gz.sig
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.7.patch.gz.sig
+
+Public keys:
+https://secure.wikimedia.org/keys.html
+
+_______________________________________________
+MediaWiki announcements mailing list
+To unsubscribe, go to:
+https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce
+
+-------------------------------------------------------
+
+Download attachment "signature.asc " of type "application/pgp-signature" (491 bytes)
