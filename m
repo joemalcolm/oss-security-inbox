@@ -1,43 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/19
-Message-ID: <20130808201639.GB8864@redhat.com>
-Date: Thu, 8 Aug 2013 14:16:39 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Paul Gevers <elbrus@...ian.org>, Gandalf <gandalf@...ti.net>
-Subject: Re: CVE Request: Regression introduced in cacti with fix for CVE-2013-1435
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/23/1
+Message-ID: <20130523135827.03724f4b@redhat.com>
+Date: Thu, 23 May 2013 13:58:27 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Ian Weller <ianweller@...oraproject.org>
+Subject: Re: CVE Request (minor) -- Python 3.2: DoS when matching certificate with many '*' wildcard characters {was:  CVE Request (minor) --  python-backports-ssl_match_hostname: Denial of service when matching certificate with many '*' wildcard characters }
 Content-Type: text/plain; charset=utf-8
 
-* [2013-08-08 21:20:59 +0200] Salvatore Bonaccorso wrote:
+On Wed, 22 May 2013 01:08:36 -0600 Kurt Seifried wrote:
 
->Hi Kurt
->
->The fix for CVE-2013-1435[1] introduced a regression:
->
-> [1] http://svn.cacti.net/viewvc?view=rev&revision=7393
->
->It was reported in [2] and upstream proposed a fix [3] which was
->confirmed to work by two of the involved people.
->
-> [2] http://sourceforge.net/mailarchive/message.php?msg_id=31262707
-> [3] http://sourceforge.net/mailarchive/message.php?msg_id=31262712
->
->The corresponding svn commits should be the following:
->
-> [4] http://svn.cacti.net/viewvc?view=rev&revision=7408
-> [5] http://svn.cacti.net/viewvc?view=rev&revision=7409
-> [6] http://svn.cacti.net/viewvc?view=rev&revision=7413
->
->Does this need a follow-up CVE assignment for the regression part
->introduced?
+> > Given that CVE-2013-2099 was assigned to Python 3 ssl,
+> > CVE-2013-2098 seems like the one to reject as dupe.
+> 
+> My reasoning here was that Python 2 and 3 constitute "forked" or
+> separate code bases, so fall under CVE SPLIT.evidence includes:
+> 
+> 1) Python 2to3, a lot of Python code needs work to move from 2 to 3
+> 2) This feature was added as standard in Python 3 and then later back
+> ported to 2
 
-My understanding would be no.  A follow-up CVE would be assigned if it
-a) didn't fix the underlying security issue (it does) or b) introduced a
-new security issue (it doesn't).
+There are surely differences in other parts of python code, but in this
+case, affected functionality is the same in python 3 and
+python-backports-ssl_match_hostname (the latter just contains a
+functionality copied from the former).  Given that affected code is
+identical, I don't believe differences in other parts of codebases not
+related to the flaw should force split.  I.e. I'd follow:
 
-Botching the fix so that _functionality_ no longer works would not be
-grounds for another CVE (although anyone backporting these would surely
-want the additional fixes).
+AB4) If there are multiple products, vendors, distributors, or users of
+the same core codebase, then DO NOT SPLIT based solely on
+distinguishing between products.
+
+Additionally, the same code was also found embedded elsewhere:
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=709066#16
+https://bugzilla.redhat.com/show_bug.cgi?id=963260#c11
+
+I don't think we want to give every project embedding that source a
+separate CVE id.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Tomas Hoger / Red Hat Security Response Team
