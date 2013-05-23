@@ -1,71 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/14
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF0904E0FF@IMCMBX01.MITRE.ORG>
-Date: Wed, 20 Mar 2013 17:13:48 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "kseifried@...hat.com" <kseifried@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Henri Salo <henri@...v.fi>, "larry0@...com" <larry0@...com>
-Subject: RE: [Red Hat - Possible Forgery] Re: Ruby CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/23/4
+Message-ID: <20130523205212.GE29720@openstack.org>
+Date: Thu, 23 May 2013 20:52:12 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
+To: openstack@...ts.launchpad.net, oss-security@...ts.openwall.com
+Subject: [OSSA 2013-013] Keystone client local information disclosure (CVE-2013-2013)
 Content-Type: text/plain; charset=utf-8
 
-http://direct.osvdb.org/show/osvdb/91450 (command_wrap gem) did not get any separate CVEs from MITRE, so the original assignment of CVE-2013-1875 is still valid.
+OpenStack Security Advisory: 2013-013
+CVE: CVE-2013-2013
+Date: May 23, 2013
+Title: Keystone client local information disclosure
+Reporter: Jake Dahn (Nebula)
+Products: python-keystoneclient
+Affects: All versions
 
-We have REJECTed CVE-2013-1876, CVE-2013-1877, and CVE-2013-1878 as originally stated by Kurt.
+Description:
+Jake Dahn from Nebula reported a vulnerability that the keystone
+client only allows passwords to be updated in a clear text
+command-line argument, which may enable other local users to obtain
+sensitive information by listing the process and potentially leaves
+a record of the password within the shell command history.
 
-- Steve
+Fix:
+https://review.openstack.org/28702
 
+Notes:
+A fix has already been merged to the python-keystoneclient master
+branch on 2013-05-21 (commit f2e0818) which adds an interactive
+password prompt, and will appear in the next release of
+python-keystoneclient.
 
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2013
+https://bugs.launchpad.net/python-keystoneclient/+bug/938315
 
->-----Original Message-----
->From: Kurt Seifried [mailto:kseifried@...hat.com]
->Sent: Wednesday, March 20, 2013 5:05 AM
->To: oss-security@...ts.openwall.com
->Cc: Henri Salo; larry0@...com; Christey, Steven M.
->Subject: Re: [Red Hat - Possible Forgery] Re: [oss-security] Ruby CVEs
->
->-----BEGIN PGP SIGNED MESSAGE-----
->Hash: SHA1
->
->On 03/20/2013 02:43 AM, Kurt Seifried wrote:
->
->Argh I didn't pay attention to Larry's previous emails where he listed
->the CVE's assigned:
->
->http://www.openwall.com/lists/oss-security/2013/03/19/9
->
->http://www.osvdb.org/show/osvdb/91232  fastreader CVE-2013-2615
->http://www.osvdb.org/show/osvdb/91231  MiniMagic  CVE-2013-2616
->http://www.osvdb.org/show/osvdb/91230  Curl       CVE-2013-2617
->
->Please don't send requests to oss-sec if you already sent a request to
->Mitre/anyone else. Also I don't seem to have these in my emails from
->Mitre (to VIM list or anywhere else)?
->
->> ===================
->>>> These 4 are all the ";" URL parsing issues ny larry0@...com
->>>> =================== http://direct.osvdb.org/show/osvdb/91450
->>>> command_wrap gem
->>
->> Please use CVE-2013-1875 for this issue.
->
->Did this one get a CVE from Mitre?
->
->>>> http://direct.osvdb.org/show/osvdb/91232 fastreader gem
->>
->> Please use CVE-2013-1876 for this issue.
->
->Please reject, use CVE-2013-2615 instead
->
->>>> http://direct.osvdb.org/show/osvdb/91231 MiniMagic gem
->>
->> Please use CVE-2013-1877 for this issue.
->
->Please reject, use CVE-2013-2616 instead
->
->>>> http://direct.osvdb.org/show/osvdb/91230 Curl gem
->>
->> Please use CVE-2013-1878 for this issue.
->
->Please reject, use CVE-2013-2617 instead
->
+-- 
+Jeremy Stanley (fungi)
+OpenStack Vulnerability Management Team
 
+Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
