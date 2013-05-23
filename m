@@ -1,57 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/13
-Message-ID: <5149D4E2.1060804@openstack.org>
-Date: Wed, 20 Mar 2013 16:25:22 +0100
-From: Thierry Carrez <thierry@...nstack.org>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA 2013-009] Keystone PKI tokens online validation bypasses revocation check (CVE-2013-1865)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/23/2
+Message-ID: <20130523141714.GY27789@lister.brianlane.com>
+Date: Thu, 23 May 2013 07:17:14 -0700
+From: "Brian C. Lane" <bcl@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2013-2069 livecd-tools: improper handling of passwords 
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+https://bugzilla.redhat.com/show_bug.cgi?id=964299
 
-OpenStack Security Advisory: 2013-009
-CVE: CVE-2013-1865
-Date: March 20, 2013
-Title: Keystone PKI tokens online validation bypasses revocation check
-Reporter: Guang Yee (HP)
-Products: Keystone
-Affects: Folsom
+The livecd-tools package provides support for reading and executing
+Kickstart files in order to create a system image. It was discovered
+that livecd-tools gave the root user an empty password rather than
+leaving the password locked in situations where no 'rootpw' directive
+was used or when the 'rootpw --lock' directive was used within the
+Kickstart file, which could allow local users to gain access to the
+root account. (CVE-2013-2069)
 
-Description:
-Guang Yee from HP reported a vulnerability in the revocation check for
-Keystone PKI tokens. Those tokens are supposed to be validated locally
-using cryptographic checks, but the user also has the option of asking
-the server to validate them. In that case, the online verification of
-PKI tokens would bypass the revocation check, potentially affirming
-revocated tokens are still valid. Only Folsom setups making use of
-online verification of PKI tokens are affected.
+Please note that livecd-tools is also used by appliance-tools to create
+images used for virtual machines, USB based systems, and so on.
+Additionally, the Python script components of livecd-tools have been
+broken out into a separate package named python-imgcreate on some
+distributions (such as Fedora).
 
-Folsom fix:
-https://review.openstack.org/#/c/24906/
+Acknowledgements:
 
-References:
-https://bugs.launchpad.net/keystone/folsom/+bug/1129713
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-1865
+Red Hat would like to thank Amazon Web Services for reporting this
+issue. 
+Amazon Web Services acknowledges Sylvain Beucler as the original
+reporter.
 
-- -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+-- 
+Brian C. Lane | Anaconda Team | IRC: bcl #anaconda | Port Orchard, WA (PST8PDT)
 
-iQIcBAEBCAAGBQJRSdTdAAoJEFB6+JAlsQQj9sUQAL0y9zV5xWHDhAFpfaUGobq6
-n5TVeEEf3kb1CIYuVhX6vHuPl2CtoekMSX7MOLehiwmbxGw3B4G7DONZrWuxmzOT
-J9B9kwMew3K5lE3X4oYH3cHjkTC+ZsnlUBzNiJIXEAkBFaGLmCwbt2eCREBcKvU8
-glaPKncO226Y85wMV+Sbe12qDX/82o6TydkcJglhdGF3AYI4813yGb/U41rkKUnq
-zlsg4Zaea4IFUe23fc9EchRDcgR1N+yfZf04+CKRymhvOcYzSLZDNxJpYN+jwzLy
-UcB3Jqak8FR0+w3k28bz41COUWtynrTy5FAoDgvGtLM2m1GedMygNKdMb1yERC9z
-ELWb0P1Z6qt5zZa6BORM185PJ9Dy5zQkOOOH1I7nWjnIa9wFzvbQBKHv5WPARWDu
-rdAM2I55JmGxo6qFJWK6QnpYI6o6PQjQ2s0FC/H2kCMgXPygURD/X101Y2lOFSZ7
-P8OhTKoVYqZf5pImpKCbtm1GHWIpev7BkzWvsFpPhVz4ExHSTsmc1Mk2ugDGQrgO
-tCcF7Eo0eABepY4qVrSUi4euZvpFsWcjl7GzQ0WLCWyMUdPo9271ZfsgxfPxId7l
-CMgn2hgpGv5+yTDDg4p8NSqmUp5hSMo/i6zgDrL9XEn4qx5Rr8pNqV/vUhmYQmzV
-qQqwB3DR57T1eFMlGL7y
-=9dar
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
