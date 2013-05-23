@@ -1,133 +1,273 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/4
-Message-ID: <525E2633.8020802@redhat.com>
-Date: Tue, 15 Oct 2013 23:37:55 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/23/3
+Message-ID: <519E3180.8000804@oracle.com>
+Date: Thu, 23 May 2013 08:10:56 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: WebTester 5.x Multiple Vulnerabilities
+CC: Ilja Van Sprundel <ivansprundel@...ctive.com>
+Subject: Fwd: [ANNOUNCE] X.Org Security Advisory: Protocol handling issues in X Window System client libraries
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 10/15/2013 07:30 PM, X-Cisadane wrote:
-> ==========================================================================================
->  WebTester 5.x Multiple Vulnerabilities 
-> ==========================================================================================
-> 
-> 
-> :--------------------------------------------------------------------------------------------------------------------------
->
->  --------------: : # Exploit Title : WebTester 5.x Multiple
-> Vulnerabilities : # Date : 15 October 2013 : # Author : X-Cisadane
->  : # CMS Developer : http://epplersoft.com/webtester.html : # CMS
-> Source Code : http://sourceforge.net/projects/webtesteronline/ : #
-> Version : ALL : # Category : Web Applications : # Vulnerability :
-> SQL Injection, Arbitrary File Upload, PHPInfo() Disclosure,
-> Leftover install.php File : # Tested On : Google Chrome Version
-> 26.0.1410.64 m (Windows XP SP 3 32-Bit English) : # Greetz to :
-> X-Code, Borneo Crew, Depok Cyber, Explore Crew, CodeNesia, Bogor-H,
-> Jakarta Anonymous Club, Jabar Cyber,
-> 
-> Winda Utari 
-> :--------------------------------------------------------------------------------------------------------------------------
->
->  --------------:
-> 
-> DORKS (How to find the target) : ================================ 
-> intext:Copyright © 2003 - 2010 Eppler Software 
-> inurl:/go.php?testID= intitle:WebTester Online Testing Or use your
-> own Google Dorks :)
-> 
-> Proof of Concept ================
-> 
-> [ 1 ] SQL Injection POC : 
-> http://[Site]/[Path]/startTest.php?FirstName=a&LastName=a&TestID=['SQLi]
->  Example : 
-> http://simuladodireitocespe.com/startTest.php?FirstName=a&LastName=a&TestID='5
->  
-> http://www.huertos.eu/encuesta/startTest.php?FirstName=a&LastName=a&TestID='5
->  
-> http://autoskola-buratrans.com/templates/default/ispiti/startTest.php?FirstName=a&LastName=a&TestID='5
->  
-> http://conalepnl091.sytes.net/simulador/startTest.php?FirstName=a&LastName=a&TestID='5
->  
-> http://learnin.elschool.pl/startTest.php?FirstName=a&LastName=a&TestID='5
->  ...etc...
 
 
 
-> [ 2 ] Arbitrary File Upload through TinyMCE (plugins/filemanager)
->  Webster 5.x has a built-in WYSIWYG Editor, that is TinyMCE. The
-> attacker can upload file through the TinyMCE File Manager. It can
-> be found in tiny_mce/plugins/filemanager.
-> 
-> Poc : 
-> http://[Site]/[Path]/tiny_mce/plugins/filemanager/InsertFile/insert_file.php
->  Example the target is http://onlinetests.germaniak.eu/ Change the
-> url to 
-> http://onlinetests.germaniak.eu/tiny_mce/plugins/filemanager/InsertFile/insert_file.php
->  Pic #1 : http://i40.tinypic.com/117z390.png Then tick : Insert
-> filetype icon, Insert file size & Insert file modification date. 
-> Click upload and wait until the file sent to the server. Pic #2 :
-> http://i39.tinypic.com/2wluaon.png Pic #3 :
-> http://i40.tinypic.com/2uh0fir.png If the file was successfully
-> uploaded, check in the /test-images/ directory. For Example : 
-> http://onlinetests.germaniak.eu/test-images/ 
-> http://www.rzecznik.org/test/test-images/ 
-> http://simula.se/fun/webtester5/test-images/ 
-> http://811lifestylecoach.com/test-images/ 
-> http://umpire-test.splashprojects.co.uk/test-images/ 
-> http://zamoweb.altervista.org/test-images/ ...etc...
+-------- Original Message --------
+Subject: [ANNOUNCE] X.Org Security Advisory: Protocol handling issues in X 
+Window System client libraries
+Date: Thu, 23 May 2013 08:05:22 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: xorg-announce@...ts.x.org
+CC: xorg@...ts.x.org, xorg-devel@...ts.x.org
+
+X.Org Security Advisory:  May 23, 2013
+Protocol handling issues in X Window System client libraries
+============================================================
+
+Description:
+============
+
+Ilja van Sprundel, a security researcher with IOActive, has discovered
+a large number of issues in the way various X client libraries handle
+the responses they receive from servers, and has worked with X.Org's
+security team to analyze, confirm, and fix these issues.
+
+Most of these issues stem from the client libraries trusting the server
+to send correct protocol data, and not verifying that the values will
+not overflow or cause other damage.   Most of the time X clients & servers
+are run by the same user, with the server more privileged from the clients,
+so this is not a problem, but there are scenarios in which a privileged
+client can be connected to an unprivileged server, for instance, connecting
+a setuid X client (such as a screen lock program) to a virtual X server
+(such as Xvfb or Xephyr) which the user has modified to return invalid
+data, potentially allowing the user to escalate their privileges.
+
+The X.Org security team would like to take this opportunity to remind
+X client authors that current best practices suggest separating code
+that requires privileges from the GUI, to reduce the attack surface of
+issues like this.
+
+The vulnerabilities include:
+
+- integer overflows calculating memory needs for replies
+
+     These calls do not check that their calculations for how much memory
+     is needed to handle the returned data have not overflowed, so can
+     result in allocating too little memory and then writing the returned
+     data past the end of the allocated buffer.
+
+     * CVE-2013-1981: libX11 1.5.99.901 (1.6 RC1) and earlier
+       Affected functions:  XQueryFont(), _XF86BigfontQueryFont(),
+           XListFontsWithInfo(), XGetMotionEvents(), XListHosts(),
+           XGetModifierMapping(), XGetPointerMapping(), XGetKeyboardMapping(),
+           XGetWindowProperty(), XGetImage()
+
+     * CVE-2013-1982: libXext 1.3.1 and earlier
+       Affected functions:  XcupGetReservedColormapEntries(),
+           XcupStoreColors(), XdbeGetVisualInfo(), XeviGetVisualInfo(),
+           XShapeGetRectangles(), XSyncListSystemCounters()
+
+     * CVE-2013-1983: libXfixes 5.0 and earlier
+       Affected functions:  XFixesGetCursorImage()
+
+     * CVE-2013-1984: libXi 1.7.1 and earlier
+       Affected functions:  XGetDeviceControl(), XGetFeedbackControl(),
+           XGetDeviceDontPropagateList(), XGetDeviceMotionEvents(),
+           XIGetProperty(), XIGetSelectedEvents(), XGetDeviceProperties(),
+           XListInputDevices()
+
+     * CVE-2013-1985: libXinerama 1.1.2 and earlier
+       Affected functions:  XineramaQueryScreens()
+
+     * CVE-2013-2062: libXp 1.0.1 and earlier
+       Affected functions:  XpGetAttributes(), XpGetOneAttribute(),
+           XpGetPrinterList(), XpQueryScreens()
+
+     * CVE-2013-1986: libXrandr 1.4.0 and earlier
+       Affected functions:  XRRQueryOutputProperty(), XRRQueryProviderProperty()
+          [XRRQueryProviderProperty() was introduced in libXrandr 1.4.0 and is
+           not found in 1.3.2 and older releases.]
+
+     * CVE-2013-1987: libXrender 0.9.7 and earlier
+       Affected functions:  XRenderQueryFilters(), XRenderQueryFormats(),
+           XRenderQueryPictIndexValues()
+
+     * CVE-2013-1988: libXRes 1.0.6 and earlier
+       Affected functions:  XResQueryClients(), XResQueryClientResources()
+
+     * CVE-2013-2063: libXtst 1.2.1 and earlier
+       Affected functions:  XRecordGetContext()
+
+     * CVE-2013-1989: libXv 1.0.7 and earlier
+       Affected functions:  XvQueryPortAttributes(), XvListImageFormats(),
+           XvCreateImage()
+
+     * CVE-2013-1990: libXvMC 1.0.7 and earlier
+       Affected functions:  XvMCListSurfaceTypes(), XvMCListSubpictureTypes()
+
+     * CVE-2013-1991: libXxf86dga 1.1.3 and earlier
+       Affected functions:  XDGAQueryModes(), XDGASetMode()
+
+     * CVE-2013-1992: libdmx 1.1.2 and earlier
+       Affected functions:  DMXGetScreenAttributes(), DMXGetWindowAttributes(),
+           DMXGetInputAttributes()
+
+     * CVE-2013-2064: libxcb 1.9 and earlier
+       Affected functions:  read_packet()
+
+     * CVE-2013-1993: libGLX in Mesa 9.1.1 and earlier
+       Affected functions:  XF86DRIOpenConnection(), XF86DRIGetClientDriverName()
+
+     * CVE-2013-1994: libchromeXvMC & libchromeXvMCPro in openChrome 0.3.2
+       and earlier
+       Affected functions:  uniDRIOpenConnection(), uniDRIGetClientDriverName()
+
+- sign extension issues calculating memory needs for replies
+
+     These calls do not check that their calculations for how much memory
+     is needed to handle the returned data have not had sign extension
+     issues when converting smaller integer types to larger ones, leading
+     to negative numbers being used in memory size calculations that can
+     result in allocating too little memory and then writing the returned
+     data past the end of the allocated buffer.
+
+     * CVE-2013-1995: libXi 1.7.1 and earlier
+       Affected functions:  XListInputDevices()
+
+     * CVE-2013-1996: libFS 1.0.4 and earlier
+       Affected functions:  FSOpenServer()
+
+- buffer overflows due to not validating length or offset values in replies
+
+     These calls do not check that the lengths and/or indexes returned by the
+     server are within the bounds specified by the caller or the bounds of the
+     memory allocated by the function, so could write past the bounds of
+     allocated memory when storing the returned data.
+
+     * CVE-2013-1997: libX11 1.5.99.901 (1.6 RC1) and earlier
+       Affected functions:  XAllocColorCells(), _XkbReadGetDeviceInfoReply(),
+           _XkbReadGeomShapes(), _XkbReadGetGeometryReply(), _XkbReadKeySyms(),
+           _XkbReadKeyActions(), _XkbReadKeyBehaviors(), _XkbReadModifierMap(),
+           _XkbReadExplicitComponents(), _XkbReadVirtualModMap(),
+           _XkbReadGetNamesReply(), _XkbReadGetMapReply(), _XimXGetReadData(),
+           XListFonts(), XListExtensions(), XGetFontPath()
+
+     * CVE-2013-1998: libXi 1.7.1 and earlier
+       Affected functions:  XGetDeviceButtonMapping(), _XIPassiveGrabDevice(),
+           XQueryDeviceState()
+
+     * CVE-2013-2066: libXv 1.0.7 and earlier
+       Affected functions:  XvQueryPortAttributes()
+
+     * CVE-2013-1999: libXvMC 1.0.7 and earlier
+       Affected functions:  XvMCGetDRInfo()
+
+     * CVE-2013-2000: libXxf86dga 1.1.3 and earlier
+       Affected functions:  XDGAQueryModes(), XDGASetMode()
+
+     * CVE-2013-2001: libXxf86vm 1.1.2 and earlier
+       Affected functions:  XF86VidModeGetGammaRamp()
+
+     * CVE-2013-2002: libXt 1.1.3 and earlier
+       Affected functions:  _XtResourceConfigurationEH()
+
+- integer overflows parsing user-specified files
+
+     These calls do not check that their calculations for how much memory
+     is needed to handle the data being read have not overflowed, so can
+     result in allocating too little memory and then writing the returned
+     data past the end of the allocated buffer.
+
+     * CVE-2013-1981: libX11 1.5.99.901 (1.6 RC1) and earlier
+       Affected functions:  LoadColornameDB(), XrmGetFileDatabase(),
+           _XimParseStringFile(), TransFileName()
+
+     * CVE-2013-2003: libXcursor 1.1.13 and earlier
+       Affected functions:  _XcursorFileHeaderCreate()
+
+- unbounded recursion parsing user-specified files
+
+     These calls read in files and handle C-style '#include' directives
+     to include other files, and have no limit for how many levels deep
+     they will go, including allowing files to #include themselves, until
+     the stack overflows from the recursive function calling patterns.
+
+     * CVE-2013-2004: libX11 1.5.99.901 (1.6 RC1) and earlier
+       Affected functions:  GetDatabase(), _XimParseStringFile()
+
+- memory corruption due to unchecked return values
+
+     These calls assume that pointers are properly initialized by the
+     XGetWindowProperty() function and don't check for failure of the
+     function to return a valid window property, which can lead to
+     use of uninitialized pointers for reading, writing, or passing to
+     functions such as free().   XGetWindowProperty() in libX11 1.5.99.901
+     (1.6RC1) and earlier did not ensure returned pointers were initialized
+     to NULL when returning a failure (this is fixed in libX11 1.5.99.902
+     and later).
+
+     * CVE-2013-2005: libXt 1.1.3 and earlier
+       Affected functions:  ReqCleanup(), HandleSelectionEvents(),
+           ReqTimedOut(), HandleNormal(), HandleSelectionReplies()
+
+Affected Versions
+=================
+
+X.Org believes all prior versions of these libraries contain these
+flaws, dating back to their introduction.
+
+Versions of the X libraries built on top of the Xlib bridge to the XCB
+framework are vulnerable to fewer issues than those without, due to the
+added safety and consistency assertions in the XCB calls to read data
+from the network, but most of these vulnerabilities are not caught by
+those checks.
+
+Fixes
+=====
+
+Fixes are available in git commits and patches which will be listed
+on http://www.x.org/wiki/Development/Security/Advisory-2013-05-23
+when this advisory is released.
+
+Fixes will also be included in these module releases from X.Org:
+
+     libX11 1.5.99.902 (1.6 RC2)
+     libXcursor 1.1.14
+     libXext 1.3.2
+     libXfixes 5.0.1
+     libXi 1.7.2
+     libXinerama 1.1.3
+     libXp 1.0.2
+     libXrandr 1.4.1
+     libXrender 0.9.8
+     libXRes 1.0.7
+     libXv 1.0.8
+     libXvMC 1.0.8
+     libXxf86dga 1.1.4
+     libXxf86vm 1.1.3
+     libdmx 1.1.3
+     libxcb 1.9.1
+     libFS 1.0.5
+     libXt 1.1.4
+
+or releases to be determined from our sister projects:
+     xf86-video-openchrome    OpenChrome project - http://www.openchrome.org/
+     Mesa                     Mesa3D project - http://www.mesa3d.org/
+
+Thanks
+======
+
+X.Org thanks Ilja van Sprundel of IOActive for reporting these issues to our
+security team and assisting them in understanding them and evaluating our
+fixes, and Alan Coopersmith of Oracle for coordinating the X.Org response and
+developing the fixes for these issues.
+
+-- 
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	  X.Org Security Response Team - xorg-security@...ts.x.org
 
 
 
-> [ 3 ] PHPInfo() Disclosure POC : http://[Site]/[Path]/phpinfo.php 
-> Example : 
-> http://mhsquiz.marbleheadschools.org/webtester/phpinfo.php 
-> http://test.auzefiu.com/phpinfo.php 
-> http://test.deltaschools.com/phpinfo.php 
-> http://www.noordskool.com/toetse/phpinfo.php 
-> http://bocahomehealth.com/exam/phpinfo.php ...etc...
 
+Download attachment "Attached Message Part" of type "application/pgp-signature" (833 bytes)
 
-> [ 4 ] Leftover install.php File POC :
-> http://[Site]/[Path]/install.php Example : 
-> http://www.ibeucamposmacae.com.br/webtester5/install.php 
-> http://briefhealthprograms.com/webtester5/install.php 
-> http://intgvna.gardnervna.org/test/install.php 
-> http://delarcollege.com/POSTUTME/install.php 
-> http://www.orionhs.org/webtester/install.php ...etc...
-
-How is this a security issue specifically? can you run the installer
-again or something?
-
-> 
-> Bonus : Default Username and Password Username : admin Password :
-> admin Admin Control Panel : http://[Site]/[Path]/admin/
-> 
-> Sent from my BlackBerry® smartphone from Sinyal Bagus XL, Nyambung 
-> Teruuusss...! 
-> ------------------------------------------------------------------------
->
-> 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSXiYyAAoJEBYNRVNeJnmTJagP/3vj0hzF3sBWrnz1n5GBMGQd
-xiEf5jnoyYNEwQzkHg6BF9yxB4o6Q1Px5hN51F4GMuHtorfiMMOP8qmB/1VXtXbt
-O3vwNX9LE3SspSX6SCTn0/2mYsEyNjV2jwUia+Y2I8txTGGRglTjF+/BIYnFQLvV
-4eVaN0B+9Xu1PAiia/KyHHsg5sbREa9h1SoWok+2aUyqnnq6YUbOzWzhcSKjuXJt
-tjBKWGp3XqigERxH87KPzuzkkxxlt1xgy5dURT6f2o0rHCJkhRwDKVuDCIJp70+B
-P4bU9jnxwOXnanFaHq1dzmoj1Y3RyX2T58KQIdDVwXYaD+BIAabuGVSvTmAxktM6
-FfbZtQZTB1TTurb/yO3GGFUq7PP9cst/57M3aVT6+LdUzCGxbRclFGnVDI9rYSWT
-HIi+yme2I2ALxxRQQAp9vW4f7VNvPzdAsMLCzEeYskjQKV2jQB5VFjwCIZ7lXZCE
-B6bjsifGHYXfhHK0Oqs75Hj6CpHtY9bTQmN7pUGNGb9tGEHuCn6AUkPeMo+nL1eN
-aeC8dGlNTGMIxEIVjE7yTq3MkNyUcCkTfZG2KsrYVotWxYOfksK00E4IcQweYKE9
-mgMBAz2BeIJKsEPP/4E8IQxU7/gHnvAf3cy6KR9bIFr26R7P0e+7hqqtKKboztPr
-Gx30g5X9B1IeyNKunmSc
-=10xl
------END PGP SIGNATURE-----
+View attachment "Attached Message Part" of type "text/plain" (235 bytes)
