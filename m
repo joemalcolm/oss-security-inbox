@@ -1,34 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/14
-Message-ID: <1262213361.21460546.1360080779459.JavaMail.root@redhat.com>
-Date: Tue, 5 Feb 2013 11:12:59 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Debarshi Ray <debarshir@...hat.com>, Simon McVittie <simon.mcvittie@...labora.co.uk>
-Subject: [CVE Assignment Notification] CVE-2013-0240 - Gnome Online Accounts (GOA) (previously) failed to verify SSL certificates when creating e.g. Windows Live or Facebook accounts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/24/7
+Message-ID: <20130524214329.GA21771@hunt>
+Date: Fri, 24 May 2013 14:43:29 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: pwgen
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Hello Kurt, Steve, all,
 
-  it was found that Gnome Online Accounts (GOA)
-did not perform SSL certificate validation, when
-performing Windows Live and Facebook accounts creation.
-A remote attacker could use this flaw to conduct
-man-in-the-middle (MiTM) attacks, possibly leading
-to their ability to obtain sensitive information.
+Do these issues deserve CVE numbers?
 
-The CVE identifier of CVE-2013-0240 has been assigned
-to this issue.
+A user reported to launchpad [1] that pwgen will use /dev/urandom or
+/dev/random if it can, but will silently fall back to using drand48() or
+random() if the device files fail to open. The report also mentions that
+when the device files are available, the output is biased by too-simple
+use of the modulo operator to scale the output to 0 <= n < max. There
+are further complaints about the poor use of available entropy when
+seeding the weaker algorithms.
 
-Relevant upstream patch:
-[1] http://git.gnome.org/browse/gnome-online-accounts/commit/?id=edde7c63326242a60a075341d3fea0be0bc4d80e
+A potentially related complaint is in Debian's BTS [2]: in this bug
+report, the user wanted a way to force use of /dev/random even if
+/dev/urandom is available.
 
-References:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-0240
+I've pasted the relevant source to pastebin.ubuntu.com [3].
 
-The issue was found (and reported internally to Red Hat bugzilla)
-by Simon McVittie.
+Are any of these worthy of a CVE number?
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+- silent fall-back to weak algorithms
+- biased output due to poor use of modulo operations
+- poor seeding of weak algorithms
+
+Thank you
+
+1: https://bugs.launchpad.net/ubuntu/+source/pwgen/+bug/1183213
+2: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=672241
+3: http://pastebin.ubuntu.com/5698361/
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
