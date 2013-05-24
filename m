@@ -1,30 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/11
-Message-ID: <20130806195610.GQ19155@redhat.com>
-Date: Tue, 6 Aug 2013 13:56:10 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/24/2
+Message-ID: <519F18D7.5030605@redhat.com>
+Date: Fri, 24 May 2013 01:37:59 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: three additional flaws fixed in putty 0.63
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: plone, rrdtool, zenoss bugs
 Content-Type: text/plain; charset=utf-8
 
-There seem to be some CVEs needed for putty 0.63 due to some other fixes
-that were fixed alongside CVE-2013-4852:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+On 05/19/2013 04:06 AM, Henri Salo wrote:
+> On Thu, Apr 18, 2013 at 02:05:42PM +0200, Thomas Pollet wrote:
+>> Also, the rrdtool python module crashes on format string exploit 
+>> $ python -c "import rrdtool 
+>> rrdtool.graph('/tmp/out.png','-f','%n%n')" Segmentation fault
+>> 
+>> this module is used by zenoss to create graphs (zenoss users are
+>> able to pass arguments to rrdtool).
+> 
+> Tested Debian wheezy packages:
+> 
+> python-rrdtool 1.4.7-2 python2.7 2.7.3-6
+> 
+> Backtrace attached. Might affect other software too. Debian bug:
+> http://bugs.debian.org/708866
+> 
+> --- Henri Salo
+> 
 
-* a heap-corrupting buffer underrun bug in the modmul function which performs modular multiplication:
-http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/vuln-modmul.html
-http://svn.tartarus.org/sgt?view=revision&sortby=date&revision=9977
+Ho likely is an attacker to be able to pass a format string to it though?
 
-* A buffer overflow vulnerability in the calculation of modular inverses when verifying a DSA signature:
-http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/vuln-bignum-division-by-zero.html
-http://svn.tartarus.org/sgt?view=revision&sortby=date&revision=9996
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-* Private keys left in memory after being used by PuTTY tools:
-http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/private-key-not-wiped.html
-http://svn.tartarus.org/sgt?view=revision&sortby=date&revision=9988
-
-
-I can't see any CVE references so I suspect there are none.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+iQIcBAEBAgAGBQJRnxjXAAoJEBYNRVNeJnmTJa8P/jwtm8WAre0mftB424RhAsb/
++CcogzHLLJ1fkUK2ri4qHlzctq4ttsw2Pfb9kvm6k9U/reMK00HThCNk1V45ulq0
+ukW5lGm/yqIREiEt4pJ/eCVD+bsMy5W1ebhbYfE3lLaEr3wWr/3BkcOMfvJq+DPP
+zlbmGrT5okyBpmU5B72KRq1fsk3Od+AQkTcXBYpDHESFUhwJhYUlni+NGpW1m6iC
+TV1E1iXpLzSYyVUrwDExrJDQVBCpGPZ80lXzPOcsSL/GkVxFX0hqIrXadUkwesSN
+bafmkH/uB82oU1+Hnkc457kZJFKqFXLVPP5NqJVnEdg2DsS1ZFkN5qrr22TMOuCf
+Wsa7baH+UNlgFRAfsuHvg4Bo10pOnBtIzCmSu9bsZlADERybbmzqXKENu5TtXpN/
+2espKnmWR6R7S1FOUcKqdk0KpuLni7VgHL+3x4kLPM7WAzTJIMLI++DE+aT2LZJr
+ltz4u+P4GCR44dBdoTvRg1Q9YAiCjxPC8lWM7cc0Fe5BA+IbgxLcBRyRtYKt9Nwu
+GySiWegva670RYXk7wVFNj/cPaJCXK9ZBrliNAmQrFzF0QaYjaW+dFVTpmWG4yUM
+Teg8c8Txt1SZ85tu8yym955ddAdYQ0leIKGuBgCmTMBkWoD9XVPlLvwwOxs2MHtl
+xAfoxPZ6xj3JhAxs19wA
+=Y8Ch
+-----END PGP SIGNATURE-----
