@@ -1,21 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/10
-Message-Id: <B3DBB52A-914E-40AB-973C-D06A6A320723@stufft.io>
-Date: Sat, 27 Jul 2013 03:29:06 -0400
-From: Donald Stufft <donald@...fft.io>
-To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com
-Subject: Re: CVE Request: Insecure Software Download in pip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/24/4
+Message-ID: <20130524075833.GC11682@kludge.henri.nerv.fi>
+Date: Fri, 24 May 2013 10:58:33 +0300
+From: Henri Salo <henri@...v.fi>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: plone, rrdtool, zenoss bugs
 Content-Type: text/plain; charset=utf-8
 
+On Fri, May 24, 2013 at 01:37:59AM -0600, Kurt Seifried wrote:
+> Ho likely is an attacker to be able to pass a format string to it though?
 
-If it helps at all this is the commit that introduced initial support for it (where it explicitly calls out PEP381)
+Hard to say how many and which applications are using this library with user
+input. At least original reporter pointed out Zenoss-case. I can find out if
+there is others if that is needed, but obviously it's impossible to list all use
+cases.
 
-https://github.com/pypa/pip/commit/e80c387a26858c4d7ff43c5f030b04b03fd43dfe
+---
+Henri Salo
 
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
