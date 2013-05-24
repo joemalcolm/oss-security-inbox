@@ -1,73 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/1
-Message-ID: <CABbbngDQon7WYSWjtSmB5CA085gcNhLW_HRAh9jCoBh+LbLRZQ@mail.gmail.com>
-Date: Sun, 11 Aug 2013 21:06:46 -0700
-From: Forest Monsen <forest.monsen@...il.com>
-To: Henri Salo <henri@...v.fi>
-Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/24/1
+Message-ID: <519F1414.4000501@redhat.com>
+Date: Fri, 24 May 2013 01:17:40 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Timo Sirainen <tss@....fi>, Jan Lieskovsky <jlieskov@...hat.com>, Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: dovecot : "APPEND" Parameters Processing Denial of Service Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Good, thanks Henri.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 05/22/2013 06:24 AM, Timo Sirainen wrote:
+> On 22.5.2013, at 15.17, Jan Lieskovsky <jlieskov@...hat.com>
+> wrote:
+> 
+>> ----- Original Message -----
+>>> From: "Agostino Sarubbo" <ago@...too.org> To:
+>>> oss-security@...ts.openwall.com Sent: Tuesday, May 21, 2013
+>>> 8:58:04 PM Subject: [oss-security] CVE request: dovecot :
+>>> "APPEND" Parameters Processing Denial of Service Vulnerability
+>>> 
+>>> From the secunia advisory SA53492[1] :
+>>> 
+>>> Description A vulnerability has been reported in Dovecot, which
+>>> can be exploited by malicious users to cause a DoS (Denial of
+>>> Service).
+>>> 
+>>> The vulnerability is caused due to an error within IMAP
+>>> functionality when processing the "APPEND" parameters and can
+>>> be exploited to cause a hang.
+>> 
+>> Timo, in relation with the previous (similar) one (thanks to
+>> Tomas Hoger for pointing out): [1]
+>> http://thread.gmane.org/gmane.comp.security.oss.general/8916/focus=8934
+>>
+>> 
+[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695138#15
+>> 
+>> this time the CVE identifier should be allocated / issue is
+>> valid, right?
+>> 
+>> While in the former [1], [2] case just the connection for the
+>> user issuing the command would crash, this time (assuming) either
+>> whole dovecot daemon might hang or even if the whole daemon
+>> wouldn't hang (and request is handled within a thread), that
+>> request would made the particular thread to consume excessive
+>> amount of CPU due to infinite loop, right?
+> 
+> A logged in user can cause his own IMAP connection process to eat
+> 100% CPU, so it won't immediately hang other users. By default
+> users can log in max. 10 times from the same IP, so attacker
+> requires many IPs to cause a real DoS. And of course a valid user
+> account, which means it will be immediately visible to admin who is
+> causing the system to slow down.
+> 
+>> Timo, can you confirm / disprove a CVE identifier should be
+>> assigned to this?
+> 
+> I'm not against it, but I don't see this as that big of an issue,
+> especially with v2.2 still not being widely used.
+
+Yeah, we can't guarantee that can we. For all we know someone used it
+in a major deployment/system image/who knows.
+
+Please use CVE-2013-2111 for this issue.
 
 
-On Sat, Aug 10, 2013 at 12:38 AM, Henri Salo <henri@...v.fi> wrote:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-> On Fri, Aug 09, 2013 at 10:02:59PM -0600, Kurt Seifried wrote:
-> > On 08/09/2013 05:29 PM, Forest Monsen wrote:
-> > > Hi there,
-> > >
-> > > I'd like to request CVE identifiers for...
-> > >
-> > > SA-CONTRIB-2013-061 - Flippy - Access Bypass
-> > > https://drupal.org/node/2054701
-> > >
-> > > SA-CONTRIB-2013-062 - RESTful Web Services (RESTWS) - Access
-> > > Bypass https://drupal.org/node/2059603
-> > >
-> > > SA-CONTRIB-2013-063 - Authenticated User Page Caching (Authcache)
-> > > - Information Disclosure https://drupal.org/node/2059589
-> > >
-> > > SA-CONTRIB-2013-064 - Persona - Cross site request forgery (CSRF)
-> > > https://drupal.org/node/2059599
-> > >
-> > > SA-CONTRIB-2013-065 - Organic Groups - Access Bypass
-> > > https://drupal.org/node/2059765
-> > >
-> > > SA-CONTRIB-2013-066 - Monster Menus - Multiple Vulnerabilities
-> > > (Looks like two here: XSS, and an Access Bypass vuln)
-> > > https://drupal.org/node/2059823
-> > >
-> > > Thanks!
-> > >
-> > > Best, Forest
-> > >
-> >
-> > Yup
-> >
-> > CVE-2013-4224 SA-CONTRIB-2013-061 - Flippy - Access Bypass
-> >
-> > CVE-2013-4225 SA-CONTRIB-2013-062 - RESTful Web Services (RESTWS) -
-> > Access Bypass
-> >
-> > CVE-2013-4226 SA-CONTRIB-2013-063 - Authenticated User Page Caching
-> > (Authcache) -Information Disclosure
-> >
-> > CVE-2013-4227 SA-CONTRIB-2013-064 - Persona - Cross site request
-> > forgery (CSRF)
-> >
-> > CVE-2013-4228 SA-CONTRIB-2013-065 - Organic Groups - Access Bypass
-> >
-> > CVE-2013-4229 SA-CONTRIB-2013-066 - Monster Menus XSS
-> >
-> > CVE-2013-4230 SA-CONTRIB-2013-066 - Monster Menus Access Bypass
->
-> CVE-2013-4187 has been assigned already for SA-CONTRIB-2013-061[1].
-> CVE-2013-4224 should be REJECTED if I am correct, thanks.
->
-> 1: http://www.openwall.com/lists/oss-security/2013/08/01/1
->
-> ---
-> Henri Salo
->
-
+iQIcBAEBAgAGBQJRnxQTAAoJEBYNRVNeJnmTtsQP/1iZJ5D8PbeDGeF/Zau/7S2y
+lOLCOUocf7+b8xjidHqfOS5eQKdqd8gpICCdiOhKUw3pcDp6MTXtfCle+9pOLAwz
+grZzKBHho1P+WUb/9yfo4zOJHTBMfZHqLj4BSlF5e3rEEZcmAFlxYy0T3uq3Whfx
+GP80X1snQW5aKtN6LjyaqUN2JUjGCCowtZpmvB0NZlZo5wgJjNx+o+/eGBT9TAEU
+Q5kt/9QP27ji8EHLrYwJBL/OdxbroqEm3xxnOk0Akwda4DsxgCthNf3mbB4mq9mU
+uAogsOqwCkwK070zh5ZwEGZkqp9tFOcz/bo06+tb3QNqKwiEKyTS+/qRVpvusF2n
+NHZ/emqJCmAw54Zp9/rvzR6qr9xEyhXIlbAgXHh+PBLKqSJTmnHp27L0fJIy/iYM
+di46PJfi3T8SmqEDL/S4rdhPaEcA1nt1233jIp5mYl2inrKBX7sc3a14g7tjDXxC
+hXaVVAMNDcRfiC4x/s1YMq8CECyeHNLabbwJDL6koujmumQsKaQHdeKjttzOKe43
+yQGFeVl2Z9hl1KbrmKy3f8a0BpVUBFJx3NZ+cFP4PliRwKtfzdmeEjIXAFhMcnWW
+DY+O9UHhFwyeSfC/LVCMYA9GE/ij6cztS+PH20YKN5skos20890wG9iEBukTbpND
+qVWusXlGRLtFMGAnO5w3
+=sWws
+-----END PGP SIGNATURE-----
