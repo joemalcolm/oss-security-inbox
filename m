@@ -1,69 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/8
-Message-ID: <874nag7j98.fsf@shannon.wxcvbn.org>
-Date: Fri, 23 Aug 2013 13:13:07 +0200
-From: jca+dash@...vbn.org (Jérémie Courrèges-Anglas)
-To: Tavis Ormandy <taviso@...gle.com>
-Cc: Jilles Tjoelker <jilles@...ck.nl>, Harald van Dijk <harald@...awatt.nl>, dash@...r.kernel.org, oss-security@...ts.openwall.com
-Subject: Re: [PATCH] implement privmode support in dash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/24/3
+Message-ID: <519F16ED.7080905@redhat.com>
+Date: Fri, 24 May 2013 01:29:49 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Thijs Kinkhorst <thijs@...ian.org>
+Subject: Re: CVE request: MediaWiki chunked uploads vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Tavis Ormandy <taviso@...gle.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On Thu, Aug 22, 2013 at 1:35 PM, Jilles Tjoelker <jilles@...ck.nl> wrote:
->> I think there is no reason to deviate from other shells here. Therefore,
->> please call it "privileged".
->>
->
-> Agreed.
->
->>> In bash and FBSD, after starting with -p, set +p can be used to drop
->>> privileges. With your patch, dash accepts set +p, but silently ignores it.
->>
->>> How does something like the attached, to be applied on top of your
->>> patch, look?
->>
->>> [snip]
->>> +     if (!on && (uid != geteuid() || gid != getegid())) {
->>> +             setuid(uid);
->>> +             setgid(gid);
->>> +             /* PS1 might need to be changed accordingly. */
->>> +             choose_ps1();
->>> +     }
->>> +}
->>
->> This code tries to use setuid() and setgid() to drop all privilege,
->> which is only correct if the privilege to be dropped is UID 0, or on BSD
->> systems. It would be better to use setresuid() or setreuid(), and change
->> the GID before changing the UID.
->
-> This is logic duplicated from pdksh and bash, I'm slightly reluctant
-> to do things differently, unless it's not going to get committed
-> otherwise.
+On 05/22/2013 03:30 AM, Thijs Kinkhorst wrote:
+> Hi,
+> 
+> Can a CVE name be assigned for the following MediaWiki issue
+> please?
 
-pdksh is only maintained by OpenBSD, afaik (mksh syncs regularly).
-The current code rather looks like this:
+Nope, see below. email me if you want to become the official mediawiki
+requester.
 
-	if (f == FPRIVILEGED && oldval && !newval) {
-		gid_t gid = getgid();
-
-		setresgid(gid, gid, gid);
-		setgroups(1, &gid);
-		setresuid(ksheuid, ksheuid, ksheuid);
-	} ...
-
-> You can see some code snippets here:
-> http://blog.cmpxchg8b.com/2013/08/security-debianisms.html
+> 
+> Thanks, Thijs
+> 
+> ----------  Doorgestuurd bericht  ----------
+> 
+> Onderwerp: [MediaWiki-announce] MediaWiki Security Release: 1.20.6
+> and 1.19.7 Datum: dinsdag 21 mei 2013, 22:14:52 Van: Chris Steipp
+> <csteipp@...imedia.org> Aan:
+> mediawiki-announce@...ts.wikimedia.org, "MediaWiki-l" <mediawiki- 
+> l@...ts.wikimedia.org>, Wikimedia developers
+> <wikitech-l@...ts.wikimedia.org>
+> 
+> I would like to announce the release of MediaWiki 1.20.6 and
+> 1.19.7. These releases fix a security related issue that could
+> affect users of MediaWiki. Download links are given at the end of
+> this email.
+> 
+> * MediaWiki user Marco discovered that security checks for file 
+> uploads were not being run when the file was uploaded in chunks 
+> through the API. This option has been available to users who can 
+> upload files since MediaWiki 1.19. 
+> <https://bugzilla.wikimedia.org/show_bug.cgi?id=48306>
+> 
+> Full release notes for 1.20.6: 
+> <https://www.mediawiki.org/wiki/Release_notes/1.20>
+> 
+> Full release notes for 1.19.7: 
+> <https://www.mediawiki.org/wiki/Release_notes/1.19>
+> 
+> For information about how to upgrade, see 
+> <https://www.mediawiki.org/wiki/Manual:Upgrading>
+> 
+> 
+> **********************************************************************
 >
->> Apart from that, it is better to check the return value from setuid()
->> and similar functions. In particular, some versions of Linux may fail
->> setuid() for [EAGAIN], leaving the process running with the same
->> privileges.
+> 
+1.20.6
+> **********************************************************************
 >
-> I don't think this is true anymore, but I have no strong objection to
-> adding it, so long as it's noted that bash and pdksh do not do this.
+> 
+Download:
+> http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.6.tar.gz
 >
-> Tavis.
+>  Patch to previous version (1.20.5): 
+> http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.6.patch.gz
+>
+>  GPG signatures: 
+> http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.6.tar.gz.sig
+>
+> 
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.6.patch.gz.sig
+> 
+> Public keys: https://secure.wikimedia.org/keys.html
+> 
+> 
+> **********************************************************************
+>
+> 
+1.19.7
+> **********************************************************************
+>
+> 
+Download:
+> http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.7.tar.gz
+>
+>  Patch to previous version (1.19.6): 
+> http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.7.patch.gz
+>
+>  GPG signatures: 
+> http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.7.tar.gz.sig
+>
+> 
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.7.patch.gz.sig
+> 
+> Public keys: https://secure.wikimedia.org/keys.html
 
--- 
-jca | PGP: 0x06A11494 / 61DB D9A0 00A4 67CF 2A90  8961 6191 8FBF 06A1 1494
+Please use CVE-2013-2114 for this issue.
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRnxbtAAoJEBYNRVNeJnmT4lUQANETyonIDnJ7oD/DuGWsWhUU
+K8VGbItSuTl0KI2rMCN3g5+EgM1K8ZZknpVI56ErWRqD4UPOm3EYwKjstMOVxjAw
+w2MzjHkd2G9SDTSls3xhe+Jp8RAe0BOeYyxZpaVyvusfoisznqrVFBVacqjj1AcP
+/2lS+vgRLxRWwBUkegBVbCBsJsWnefAKcugzh02GkgD98nnbNrfCESzZDQjP0LFE
+v65RpIv2a4Pkj9tosEIBc3Q5aMJgxqSBtFohLG+gk0ibGf2CA84fE6S0As+TEW9m
+QLUDq/zL09Bl7wbKQnOoWjIcvNRzXzQgzwXXg26VD8WJAXsHdnLC8wBggxVrqmfS
+dbGFJaFn5Hv5gYdct2GVcnzQd03pnNSbHkGyZYsYgkDZqJ8F22TNy5oSKp9B9f9N
+9iH+x8t860r7pvUJ6VDfz30Olx4LieXmNAvOz3pvR7gEPutWvAjOHa7Pqb6kwBAY
+hR3aMa3vw2eRoUJLZPPn9bXv2hitNhLS8e/ioD0fObRDHKxLO54Ct6aVjVB/buPo
+LowwCqKc2mYVeM1r8mulHoMvO3v+FbUr3BGCraFGETrScP53qedH0LH7O6mdOnhQ
+/TbsnCH+Dium8p7DBug68u2crgH8wsO7LxO664oApMyJKaU1JYoFFEgxKGZH8k3m
+YwVIiJ90AXVyQtKP65se
+=hF8t
+-----END PGP SIGNATURE-----
