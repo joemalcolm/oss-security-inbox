@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/15/1
-Message-ID: <CANTw=MOPG+xzNoKFFNiM20VLZNvcjA+k1r80wZDzfJXkTgDiKg@mail.gmail.com>
-Date: Thu, 14 Mar 2013 21:18:45 -0400
-From: Michael Gilbert <mgilbert@...ian.org>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE abstraction choices and the Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/24/6
+Message-ID: <knn9q2$a6i$1@ger.gmane.org>
+Date: Fri, 24 May 2013 09:53:27 +0100
+From: Matthew Wilkes <matthew@...thewwilkes.co.uk>
+To: oss-security@...ts.openwall.com
+Subject: Re: plone, rrdtool, zenoss bugs
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 8, 2013 at 9:57 AM, Steven M. Christey wrote:
-> Considering the Krause kernel info-leaks as an example, this might
-> suggest about 11 CVEs for crypto, xfrm_user, net (including net/tun),
-> ipvs, dccp, llc, l2tp, Bluetooth, atm, udf, and isofs.  There might
-> be additional SPLITs based on bug type.
->
-> What do people think?  To the distro maintainers: given that CVE
-> cannot support per-bug IDs for the reasons I've already described,
-> are per-subsystem SPLITs workable?
+On 2013-04-18 21:08, Kurt Seifried wrote:
+> Was this previously exploitable, or is this just a hardening measure?
 
-Speaking only for myself, I think this is a quite reasonable way to draw a line.
+Hi, Plone checking in here. Sorry, didn't see this until the ping just now.
 
-Best wishes,
-Mike
+This is technically a bug in PluggableAuthService, an optional part of 
+Zope that we use. In a correctly set up Plone site this won't be 
+accessible, but if people are using an account that's set up to access 
+the Zope management interface (such as the initial admin user created on 
+install) then it would be.
+
+We discourage people from using these users specifically because the 
+administration forms that make up the ZMI are not high quality. We're 
+looking into longer term solutions to make it safer, but the advice 
+right now is to stick with the Site Administrator role we added in Plone 
+4.1 or the Editor/Contributor/Reviewer roles that we've always had.
+
+There is no valid reason for anyone to be logged in as a user that could 
+access these forms on a production system.
+
+Matt
+
+
