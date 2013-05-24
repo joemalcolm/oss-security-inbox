@@ -1,63 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/15
-Message-ID: <51DDBBC6.1070401@redhat.com>
-Date: Wed, 10 Jul 2013 13:53:42 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/24/5
+Message-ID: <519F2891.5010204@redhat.com>
+Date: Fri, 24 May 2013 02:45:05 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: security curmudgeon <jericho@...rition.org>
-Subject: Re: Re: Re: Re: cryptocat/decryptocat - needs a cve?
+To: Henri Salo <henri@...v.fi>
+CC: oss-security@...ts.openwall.com, Thomas Pollet <thomas.pollet@...il.com>
+Subject: Re: plone, rrdtool, zenoss bugs
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/10/2013 11:36 AM, security curmudgeon wrote:
+On 05/24/2013 01:58 AM, Henri Salo wrote:
+> On Fri, May 24, 2013 at 01:37:59AM -0600, Kurt Seifried wrote:
+>> Ho likely is an attacker to be able to pass a format string to it
+>> though?
 > 
+> Hard to say how many and which applications are using this library
+> with user input. At least original reporter pointed out
+> Zenoss-case. I can find out if there is others if that is needed,
+> but obviously it's impossible to list all use cases.
 > 
-> In reference to Kurt's post: 
-> http://seclists.org/oss-sec/2013/q3/66
-> 
-> I went through the CryptoCat changelog, as well as the audit report
-> from 2012 and broke out all the issues as I saw them. They are all
-> live on OSVDB, which may help on CVE assignments:
-> 
-> http://direct.osvdb.org/search?search%5Bvuln_title%5D=cryptocat&search%5Btext_type%5D=titles
->
-> 
+> --- Henri Salo
 > 
 
-You rock, thanks. Owe you a beer.
+The original reporter never replied =( [ping!]
 
-Please use (same titles as OSVDB):
+Any ways:
 
-CVE-2013-2257 Cryptocat Group Chat ECC Private Key Generation Brute
-Force Weakness
-CVE-2013-2258 Cryptocat Crafted Nickname User Impersonation Spoofing
-CVE-2013-2259 Cryptocat on Firefox Conversation Overview Nickname
-Arbitrary Code Execution
-CVE-2013-2260 Cryptocat Cryptocat.random() Function Array Key Entropy
-Weakness
-CVE-2013-2261 Cryptocat for Chrome manifest.json img/keygen.gif
-Software Detection Weakness
-CVE-2013-2262 Cryptocat strophe.js XMPP Request ID Prediction OTR Chat
-Activity Remote Disclosure
-CVE-2013-4100 Cryptocat Crafted Username Chat Remote DoS
-CVE-2013-4101 Cryptocat Link Markup Decorator addLinks() Function HTML
-Handling Weakness
-CVE-2013-4102 Cryptocat strophe.js Math.random() Function Random
-Number Generator (RNG) Weakness
-CVE-2013-4103 Cryptocat Crafted Data URI Remote Script Injection
-CVE-2013-4104 Cryptocat OTR Socialist Millionnaire Protocol Key
-Exchange Poisoning Weakness
-CVE-2013-4105 Cryptocat Multiparty Encryption Scheme AES-CTR Nonce
-Re-use Plaintext Traffic Disclosure
-CVE-2013-4106 Cryptocat Conversation Overview Nickname XSS
-CVE-2013-4107 Cryptocat cryptocat.js handlePresence() Function
-Nickname Change XSS
-CVE-2013-4108 Cryptocat Multiple Unspecified Minor Issues
-CVE-2013-4109 Cryptocat Message Handling Unspecified XSS
-CVE-2013-4110 Cryptocat Unspecified Chat Participant User List Disclosure
+> Also, the rrdtool python module crashes on format string exploit $
+> python -c "import rrdtool 
+> rrdtool.graph('/tmp/out.png','-f','%n%n')" Segmentation fault
+> 
+> this module is used by zenoss to create graphs (zenoss users are
+> able to pass arguments to rrdtool).
 
+It just doesn't sound like much of a problem (user logs in, passes
+some mucky data to rrdtool causing it to crash, the system is fine,
+that instance of rrdtool dies and gets cleaned up). No real trust
+boundary gets violated/no DoS in any meaningful way as I understand
+it. Unless an exploitable scenario comes to light I don't think this
+is an issue really.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -65,17 +48,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR3bvFAAoJEBYNRVNeJnmT1ksQAL/C09I0kmpMEB9J8kSF19x+
-iQZYNmyK9Cslxl9pdG/HLeLGieFdhGMAJ9CgBMfW82Vil6VAU8AwGn+rG8RUZtdk
-cdhh6bGBvj3uLjgz+sabBZdCRSsu/LL6Y5INcQIVkvO5iIBF/HKqMRGBlmGygjdp
-fJfLQigoPFcZ1IfIABFv40mMZxr8v6ZMlqukmOVeTyjnDPjNgYzimCqe3kBQzBwE
-YA90sISausX5a68Tk3mkRMtsRfEQY7CXG666c/FO2sH+61CbQb8PhfuJ33TRWFog
-wDqaphzHgWbBoW11VSlmTcEjGsaL/oxCGrwSqFE4hdg1vWgmxpMNZq6LodVvxTh4
-REZaPQtrlJiIJjxFOwHiYUIig+BShgw74iQ4SmTse5PqQ/Z76VQlutQzXqGKdZ/V
-xrl7AJvrUiEOHpmfkeS1x9feF85IY+MmDSIqVmRYr/wvClzTOHgFRNiBH4+FHUA1
-axl+sLM8dlu4dFJdkPgf/HssQ26LDcLA7AmQxh1Fkb7NdvwGiGQ8F6fBz0JbyTMN
-VQ7R/cx2GDagsEaoMmYp3hTMKrJbBpN04OEr/YmE0XWlz3s9dPLswwLdDgI7JDgJ
-IGa+hfJCz58KK2JY1ztV0SyD75gcxhPpMxoblQnqlsDnV5lLbNrBLquKze9iXgxc
-YCpcKrjSVUT4q5OA5Rob
-=s1DF
+iQIcBAEBAgAGBQJRnyiRAAoJEBYNRVNeJnmT08IP/i0atKL21qGjzJ9If/UyK2kT
+uwSSFJEtwSn9XwwG1qWFeBzlOmijo7Bk0abgQPGPG8x5otnRQQpHz1y002DNNwlM
+Z9HDRPOgGf6eo7BKKWRw+kdUswokIlqxdkIt6vKfgL96+JztSzSG6YPVdU/ACHAs
+dprx4Fs3nYsq2y+uUdk7WEmpr4nJygQH8siwNaPQ57cU23BwYuhAqfkkbrvuVJn8
+w8AUaAfwXjn6qO5bUuP82RsDvNidtqZXmeRlBQX5IKGoMx9Qn4T+OgB1z9pIR2MG
+i2uvZzVuma8Ur3P+bApPOnluLFwVxggw45OqGHIK9NO5ANE9vNwTN6TaCLWBXZe8
+eysHOgcwZI4/O3bC/nMEZ3MGDi0htFgkuKcVU/CEy47gnSPG+X+kW2sd3r8LKC22
+r9h07MycMVtx0ZiYgo0QPvwE1TzFp3LNwTZrJneG3bi5yKMBe44/tzt55S14APKO
+0i2TeUyte4vytnRRQHPX+tn0rtjRBKCzL9u7mhShz9ye27HHfiBWE01nqNiH6f7Q
+aGNl/G/yMhTT0LN14z1sLt/215cRBqD8dOxtiDk8QH4XnCUs3uPVuHWYWXXdl49Y
+zdjDztqKY/r3a7b9eTv1t+MM4F6CJbztu21c9WYGQovr8ttzSugllHWXw6xSg/Pp
+AYHNlLaUDdDsUmsQtRrF
+=jPkc
 -----END PGP SIGNATURE-----
