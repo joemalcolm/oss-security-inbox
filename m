@@ -1,31 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/5
-Message-ID: <20130618062412.GA22313@inutil.org>
-Date: Tue, 18 Jun 2013 08:24:12 +0200
-From: Moritz Muehlenhoff <jmm@...til.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: Thoughts on a vuln/CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/25/3
+Message-ID: <CAHmME9o-34DVwr9XJ3kqv_nt6tWs0GLkStbCE1VjSQF8tq33Wg@mail.gmail.com>
+Date: Sat, 25 May 2013 20:16:20 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: cgit@...ts.zx2c4.com
+Subject: CVE Request: cgit directory traversal
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 18, 2013 at 12:04:30AM -0600, Kurt Seifried wrote:
+Hi Kurt,
 
-> http://bits.debian.org/2013/06/remove-debian-multimedia.html
+As mentioned in early messages to oss-sec, I've inherited
+maintainership of the cgit codebase and am gradually auditing it.
+Today I found a nasty directory traversal:
 
-[..]
+http://somehost/?url=/somerepo/about/../../../../etc/passwd
 
-> We have software with a now insecure configuration as it points to a
-> site that may or may not be under attacker control. It seems to me
-> like this might be a candidate for a CVE. Thoughts and comments for
-> and against are welcome (I'm on the fence myself).
+This should be pretty straightforward to categorize.
 
-No way. This is not an insecure configuration: This was never a Debian 
-service and people are free to put whatever they want in /etc/apt/sources.list. 
-There are hundreds of external apt sources and everyone of them could have
-their owner changed at some point.
+Exploitation looks like:
+http://data.zx2c4.com/cgit-directory-traversal.png
 
-Also there's no security issue: If a domain is grabbed and someone configures
-an apt repository on the site, he/she would lack the repository key previously
-used to sign the repo.
+I've committed a fix for it here:
+http://git.zx2c4.com/cgit/commit/?h=wip&id=babf94e04e74123eb658a823213c062663cdadd6
 
-Cheers,
-        Moritz
+And this fix will be in the master branch and a new release will be made soon.
+
+Cgit by default is not vulnerable to this, and the vulnerability only
+exists when a user has configured cgit to use a readme file from a
+filesystem filepath instead of from the git repo itself. Until a
+release is made, administrators are urged to disable reading the
+readme file from a filepath, if currently enabled.
+
+Thanks,
+Jason
