@@ -1,66 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/26/2
-Message-ID: <51CA76E6.1060002@redhat.com>
-Date: Tue, 25 Jun 2013 23:06:46 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Michael Samuel <mik@...net.net>, security@....org
-Subject: Re: KDE Paste Applet
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/25/2
+Message-ID: <20130525141722.GA29366@elende>
+Date: Sat, 25 May 2013 16:17:22 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: David Prévot <taffit@...ian.org>
+Subject: CVE Request: SPIP privilege escalation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Kurt
 
-On 06/25/2013 10:39 PM, Michael Samuel wrote:
-> On 13 June 2013 10:02, Michael Samuel <mik@...net.net> wrote:
-> 
->> Ok, so the fix for this uses KRandom::random()...
->> 
->> I suggest leaving the KDE Paste fix as-is and replacing KRandom
->> with something that just fills an integer from /dev/urandom -
->> then we can save a few CVE numbers for the rest of the year.
->> 
->> qrand() should probably also do the same, especially since
->> cnonces for HTTP auth are using it - that means there's only 2^32
->> (at best) possible cnonces...
->> 
->>> 
->>> 
-> Fedora and Ubuntu have both pushed out this patch.  Requesting a
-> new CVE for "KRandom::random() isn't a secure PRNG", since the KDE
-> guys are convinced that it is.
-> 
-> Regards, Michael
+SPIP 3.0.9, 2.1.22 and 2.0.23 fixed a privilege escalation vulerability,
+where an user can take editorial control on the site.  Upstream announce
+is at [1] and the upstream commit fixing it is [2].
 
-So the thing is it can be completely random, just like a coin flip.
-But the search space might be to small (e.g. a 1 bit key based on a
-coin flip wouldn't be "secure"). I suspect 2^32 isn't enough any more
-either, assuming a 480 core GPU, if you can run 250 cracking attempts
-per second per core you can brute force a 2^32 search space in 10
-hours or so. Needless to say GPUs are getting pretty cheap. So this
-appears to be a textbook example of CWE-334 "Small Space of Random
-Values".
+I'm CC'ing David Prévot, Debian maintainer for spip (there does not seem
+to be a english translation of the announce available right now).
 
-Please use CVE-2013-2213 for KDE KRandom::random() CWE-334: Small
-Space of Random Values.
+ [1] http://contrib.spip.net/SPIP-3-0-9-2-1-22-2-0-23-corrections-de-bug-et-faille?lang=fr
+ [2] http://core.spip.org/projects/spip/repository/revisions/20541 
+ [3] http://bugs.debian.org/709674
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Could a CVE be assigned to this issue for better tracking?
 
-iQIcBAEBAgAGBQJRynbmAAoJEBYNRVNeJnmTj68P/i+bSIxKTJpd1Hz6o+hLBioi
-EJwbFDLz1sMd+cmU49LM+fGd5Rv9irPqbudNY9yGXBxn+lwTsygNLbXB427x7FJz
-xjPNkmmSyG9+DHDNGyY+O1kDUCtIJ0rwlueHZ4+5AGhYE2FdeNdVs5hr5n6EzIGw
-R3f0pRZVuiCK9ty2j+RGjkWxDquAD3Ro2iJC6IVwd2S/TUc7idcLxOM6FJNgPibT
-UFLCKn/HiD/dzsCDnun+BOMMPM76kHkN3sFfZAReYFYM31+1zA8n+UqzKJqokPev
-t0QISM4w5eGP5zNw2gonemc1/7Rqi5xa+t7VACVyVt/UQds/H9Hez/xe1j9+iAAh
-BpmELpPPt3/jM4DdCPdEATT6IZGxlBwxKJ19Tq08ub3A+059cBpBKtI6/r0q3IXm
-guMzbFwLYSUEX2LcfcK6IPBJnZFxuuv1bI7OevWzT018/ctUiu7Thx2OP6WYDe1A
-BtJs4vqHc4tAyq30IBb9+xCwgESZcLMlD8XiTBIp0haIg9hbOXLyAEbMmuBvTdZv
-WH09qDrmPoBmS3eDfbPg+Fh0RTcw8Kb55xvEUr4yMxSqJRGktXSJKAon2d9T3WJp
-LHOgqyuYQ5QFx+rdNm4lmNeitrGQRcOCTYPjTy4eL1geKIaUfe6358Dlt49b7Ktl
-rvZ6qnjvz8YfA5BbhJAe
-=sRNF
------END PGP SIGNATURE-----
+Regards,
+Salvatore
