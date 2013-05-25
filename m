@@ -1,44 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/19/1
-Message-Id: <F273072B-5984-4F59-8A25-9B6FC87C1F78@segment7.net>
-Date: Wed, 18 Sep 2013 18:03:00 -0700
-From: Eric Hodel <drbrain@...ment7.net>
-To: Alexander Cherepanov <cherepan@...me.ru>
-Cc: oss-security@...ts.openwall.com, kseifried@...hat.com, "dammer2k@...il.com Sharipov" <dammer2k@...il.com>, "security@...y-lang.org" <security@...y-lang.org>
-Subject: Re: CVE-2013-4287 Algorithmic complexity vulnerability in RubyGems 2.0.7 and older
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/25/1
+Message-ID: <51A052B2.3020104@redhat.com>
+Date: Fri, 24 May 2013 23:57:06 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: coley@...us.mitre.org, oss-security@...ts.openwall.com, security@...ntu.com
+Subject: Re: CVE Request: pwgen
 Content-Type: text/plain; charset=utf-8
 
-On Sep 18, 2013, at 15:05, Alexander Cherepanov <cherepan@...me.ru> wrote:
-> On 2013-09-18 04:11, Eric Hodel wrote:
->> Here's a new patch to go with the new (unassigned) CVE.  This new patch replaces regular expression matches that are susceptible to backtracking with a parser-like approach.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 05/24/2013 03:43 PM, Seth Arnold wrote:
+> Hello Kurt, Steve, all,
 > 
-> According to your patch 'versions have only one "-" (per semver)'. This
-> means that "*" after "(#{VERSION_PATTERN})" in ANCHORED_VERSION_PATTERN
-> is a bug. It should be "?". If you fix it then there should be no
-> problem with VERSION_PATTERN at all. AFAICT VERSION_PATTERN gives you a
-> linear complexity. Hence there is no need to suppress backtracking…
-
-Good catch, I think this is a bug, but I'll need to check with the person who added that.
-
->> This patch applies to RubyGems 2.1.x releases.  I will create patches for RubyGems 1.8.23.1, 1.8.26, 2.0.9 and 2.1.4 if it there is no obvious flaw seen in it.
->> 
->> I would like to release this fix by Monday, 23 September as I will be traveling mid-week.
->> 
->> The vulnerable regular expression constants are still present, but I can't think of a way to construct them that does not allow backtracking.
+> Do these issues deserve CVE numbers?
 > 
-> ...but if you really want to suppress backtracking (say, for
-> optimization) it is easy: either atomic grouping for every repetition
-> (exactly the way you have already done but for other repetitions also)
-> or add extra "+" after each "+" and "*". That's according to
-> http://www.ruby-doc.org/core-2.0.0/Regexp.html .
+> A user reported to launchpad [1] that pwgen will use /dev/urandom
+> or /dev/random if it can, but will silently fall back to using
+> drand48() or random() if the device files fail to open. The report
+> also mentions that when the device files are available, the output
+> is biased by too-simple use of the modulo operator to scale the
+> output to 0 <= n < max. There are further complaints about the poor
+> use of available entropy when seeding the weaker algorithms.
+> 
+> A potentially related complaint is in Debian's BTS [2]: in this
+> bug report, the user wanted a way to force use of /dev/random even
+> if /dev/urandom is available.
+> 
+> I've pasted the relevant source to pastebin.ubuntu.com [3].
+> 
+> Are any of these worthy of a CVE number?
+> 
+> - silent fall-back to weak algorithms - biased output due to poor
+> use of modulo operations - poor seeding of weak algorithms
 
-Thank you.  I glossed over the * in ANCHORED_VERSION_PATTERN, and this fixes the problem with minimal change (something I would prefer for a security fix).
+Is any of this behaviour documented, or is it only "documented" in the
+source code (I'm guessing source code only)? Also I'm trying to think
+of situations where /dev/random and urandom are not available, AND the
+system is otherwise working ok and nothing comes to mind. The fall
+back is definitely sub-optimal, but can it be triggered in any
+meaningful way.
 
-Here is a complete updated patch including the backtracking and extra "-" fixes:
+> 
+> Thank you
+> 
+> 1: https://bugs.launchpad.net/ubuntu/+source/pwgen/+bug/1183213 2:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=672241 3:
+> http://pastebin.ubuntu.com/5698361/
+> 
 
 
-Download attachment "CVE-2013-XXXX.2.patch" of type "application/octet-stream" (2406 bytes)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-
-
-The same script as my previous message can be used to verify it.
+iQIcBAEBAgAGBQJRoFKyAAoJEBYNRVNeJnmTiHgP/3PO8f3HSuQvmRHEuhsyaLYN
+QjwpBnCdOf4BOeNHW3tI4TmcJoKGk0KAB6yUOx0z2dFcLd1Nnwrn1x3zXEVz7cio
+uXx4dNqEcwiBszVmMufPQsuCHuU5V7f64PKFdD1IQMWXSB9jybtLLdOcoFNcF+pj
+3dWp3aQwU5kmldA+JjhrlVoChbCs2q35cqgUYlP6cUj+mTkhuP8p7Zp/AVKmRZHL
+sgidqjL/ZZ82DqsXmdLKCDMB/jxxz012/DmBXeyhNuyMno3flDsn490dAxnliKO5
+oPhP906KRRP6rSBVGEEKmS9RJonddUlThYctiHebJEFQ+EF2m6d6woaGQBXVkU67
+DCylfKzjfGkJB6nhL8NeHdqm1Qv55ke3rG8TivscDIrUGSD1948cFg2TruFJnzaM
+4F11EbyFn+vzt/pqAOZWb1t49n5PT9V+w8XaHSZzTNrYisHJNy6lX2PnFHnSXsUU
+oJkSiyw/8MP0jYktNDUSM7q/U+0CXRvxA6FjJii22/9sQSyKripN+qJxISTarlFi
+TiJQ1emFnsw80G0+so/s6dqZZeqgs2az9v/R3Ho+YZfr4N9SDDovJKn6pTWHCP9M
+lwz8lWrRQ5JB4FEJcsfw5bqvgqzO4EDNAjsVDWIiZ9lky8fXhcji5LMH87I4HS67
+Rqf2QdwWJ3382akFX7rg
+=TmgN
+-----END PGP SIGNATURE-----
