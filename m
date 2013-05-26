@@ -1,46 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/22
-Message-ID: <514247A2.2020802@delphij.net>
-Date: Thu, 14 Mar 2013 14:56:50 -0700
-From: Xin Li <delphij@...phij.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/26/1
+Message-ID: <51A254F2.2030506@dest-unreach.org>
+Date: Sun, 26 May 2013 20:31:14 +0200
+From: Gerhard Rieger <gerhard@...t-unreach.org>
 To: oss-security@...ts.openwall.com
-CC: "Alexander E. Patrakov" <patrakov@...il.com>
-Subject: Re: CVE-2013-0913 Linux kernel i915 integer overflow
+Subject: socat security advisory 4 - CVE-2013-3571
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Socat security advisory - FD leak
 
-Hi, Alexander,
+Overview
+  Under certain circumstances an FD leak occurs and can be misused for
+  denial of service attacks against socat running in server mode.
 
-On 03/13/13 09:04, Alexander E. Patrakov wrote:
-> 2013/3/12 Kees Cook <keescook@...omium.org>:
->> This flaw could lead to a kernel heap overflow by processes with
->> access to the DRM driver:
->> 
->> https://lkml.org/lkml/2013/3/11/501
-> 
-> Given that FreeBSD also has some sort of i915kms kernel driver now,
-> is it also vulnerable?
+Vulnerability Id: CVE-2013-3571
 
-Based on our evaluation this also affects FreeBSD and thus we will fix
-it similarly.
+Details
+  The issue occurs when a vulnerable version of socat is invoked with a
+  listen type address with option fork and one or more of the options
+  sourceport, lowport, range, or tcpwrap. When socat refuses a client
+  connection due to one of these address or port restrictions it does
+  shutdown() the socket but does not close() it, resulting in a file
+  descriptor leak in the listening process, visible with command lsof
+  and possibly resulting in error EMFILE "Too many open files".
 
-However, since users using DRM generally already have physical local
-access to the system, we do not intend to release a security advisory
-for this issue.
+Testcase
+  In one terminal run the server:
 
-Cheers,
-- -- 
-Xin LI
-FreeBSD Deputy Security Officer
------BEGIN PGP SIGNATURE-----
+    socat -d tcp-listen:10000,reuseaddr,fork,range=0.0.0.0/32 pipe
 
-iQEcBAEBCgAGBQJRQkeiAAoJEG80Jeu8UPuzf/8H/2ZZJqHvCyZmy04hjnMwtQGD
-ooZRc5fGOdWJu77gFCpK8i5EG77dyF0SbuDzSho91uKkLrRQqyMQwr2dz2xiGU4l
-wIPxt9UcEXe5oP36ZFU7AdAcD6mYnORTBv1kmTUsfv26Cp+99nTM6vTHCB6hBZFO
-SzDsUAaZ6jdl7iemI/QI7WVgKWj5p+ReBFi/WkEcCRaqkrOEDRFyQMvmTwkvTnn2
-Sv6L+x1HwiNk2OYsgdm9mJsx2OsUADs7IznPPNZdd5t1/TYQRJKfDbaMdjuv4QgT
-VyVUs73w73X4x0Ipyxxcpi1OhrIMYiyOBxnnlqPB5/KAXiivSn4SQu5HOtwqf7o=
-=3nVh
------END PGP SIGNATURE-----
+  In a second terminal see which FDs are open, then connect (implicitely
+  using a forbidden address), and check if there is a new FD open, e.g.:
+
+    lsof -p $(pgrep socat)
+    socat /dev/null tcp:localhost:10000
+    lsof -p $(pgrep socat)
+
+  If the second lsof shows an additional FD as in the following line,
+  this socat version is vulnerable:
+
+    socat  17947 gerhard  4u  sock  0,6  0t0 1145265 can't identify protocol
+
+Workaround
+  Use IP filters in your OS or firewall.
+  Restart socat when it crashed.
+
+Affected versions
+  1.2.0.0 - 1.7.2.1
+  2.0.0-b1 - 2.0.0-b5
+
+Not affected or corrected versions
+  1.0.0.0 - 1.1.0.1
+  1.7.2.2 and later
+  2.0.0-b6 and later
+
+Download
+  The updated sources can be downloaded from:
+
+    http://www.dest-unreach.org/socat/download/socat-1.7.2.2.tar.gz
+    http://www.dest-unreach.org/socat/download/socat-2.0.0-b6.tar.gz
+
+  Patch to 1.7.2.1:
+    http://www.dest-unreach.org/socat/download/socat-1.7.2.2.patch.gz
+
+  Patch to 2.0.0-b5:
+    http://www.dest-unreach.org/socat/download/socat-2.0.0-b6.patch.gz
+
+Credits
+  Full credits to Catalin Mitrofan for finding and reporting this issue.
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (554 bytes)
