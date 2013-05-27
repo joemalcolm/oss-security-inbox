@@ -1,53 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/23/3
-Message-ID: <52672B69.3020800@redhat.com>
-Date: Tue, 22 Oct 2013 19:50:33 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: lightdm no longer confines guest profile with AppArmor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/27/1
+Message-ID: <2064382145.8213708.1369657855832.JavaMail.root@redhat.com>
+Date: Mon, 27 May 2013 08:30:55 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Jason A. Donenfeld" <Jason@...c4.com>
+Cc: cgit@...ts.zx2c4.com, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: cgit directory traversal
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Thank you for the report, Jason.
 
-On 10/22/2013 12:52 PM, Marc Deslauriers wrote:
-> Hello,
+> Hi Kurt,
 > 
-> Christian Prim discovered that Light Display Manager 1.8.0 and
-> later no longer use the appropriate wrapper when launching guest
-> sessions, resulting in the session not being confined by AppArmor.
+> As mentioned in early messages to oss-sec, I've inherited
+> maintainership of the cgit codebase and am gradually auditing it.
+> Today I found a nasty directory traversal:
 > 
-> Bug report: https://bugs.launchpad.net/lightdm/+bug/1243339
+> http://somehost/?url=/somerepo/about/../../../../etc/passwd
 > 
-> Could a CVE please be assigned to this issue?
+> This should be pretty straightforward to categorize.
+> 
+> Exploitation looks like:
+> http://data.zx2c4.com/cgit-directory-traversal.png
+> 
+> I've committed a fix for it here:
+> http://git.zx2c4.com/cgit/commit/?h=wip&id=babf94e04e74123eb658a823213c062663cdadd6
+
+That patch doesn't seem to be applicable to cgit-0.9.1 version yet (there
+doesn't seem to be cgit_parse_readme() routine yet).
+
+Can you provide a patch that would apply against v0.9.1 version too? Or
+would this be just problem of master branch code?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+> And this fix will be in the master branch and a new release will be made
+> soon.
+> 
+> Cgit by default is not vulnerable to this, and the vulnerability only
+> exists when a user has configured cgit to use a readme file from a
+> filesystem filepath instead of from the git repo itself. Until a
+> release is made, administrators are urged to disable reading the
+> readme file from a filepath, if currently enabled.
 > 
 > Thanks,
+> Jason
 > 
-> Marc.
-> 
-
-Ok to confirm the app armor profile is applied by default to lightdm
-and the guest account, and was meant to prevent guest from touching
-/home at all? I just wanna confirm this is a security vuln and not
-security hardening.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSZytpAAoJEBYNRVNeJnmTzzoP/iPZWVmyzy+9p5L9hZl8n7yD
-dxehTeZ5T+/jCuMPB9NXiNFpErYlmQL0stLsrJ+14dIk1Xd/JUV0+VX0HfUN4P88
-ubQ6is4MmCGk3MydK9JMHB8qvOcOMNYjp8F77BrbLzQxOE0v2O3dma2QAkm4dids
-xGfvi0ci52jNLrd3we5gfH4TyQ3lvnRpFdglShn95QVSlVK/2D4W8S+pPKI0G9zH
-wF7xrmIw2fb4FURznvcTbDkY1W7nwTpssG3o9XWaJDpw1dNyuMVd6YszPolgWXfw
-H/xcWZtT5qa2lnHlA7KSfSEcG/ABP8a7uy0RoGrHUvrXEpHZPQQXn42EDU/J9fHp
-8x6v9CTZE/MDyMJqgOUl5znYjMtzyMLt8wBS6OBETfHc+lmi8uNr1oilLULGCRXv
-aRxTdffaTrTzjSZLKQuMVGPuFK3oZLGwyfjSHXJemQ0ify4O9IB/wB0vy/MC7+o3
-nQ1LvM2SXNF32FzWYD+BfynCeNdQGnrGNrI5DyZ45H1UQ9OwTO2rmJtEShcWcNPF
-SrBphV9Jr4yANF9KmuyK/hafhDndzBKOq4Puepq1EP0ZeyESrgGmUglncHaJwaf4
-n03vT59llDt/2hhx+uBvkDCYq6uvN7ITkYasMnFRhC//mL1tnkCwneGwxBMW0vkv
-pxxWV0dGOh8n+YnQos0J
-=CuO1
------END PGP SIGNATURE-----
