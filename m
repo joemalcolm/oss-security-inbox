@@ -1,66 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/31/8
-Message-Id: <201312311458.rBVEvqC7006687@linus.mitre.org>
-Date: Tue, 31 Dec 2013 09:57:52 -0500 (EST)
-From: cve-assign@...re.org
-To: stephen.kenworthy@...le.oxon.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, henri@...v.fi, joernchen@...noelit.de
-Subject: Re: CVE request: Fat Free CRM multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/27/2
+Message-ID: <51A39F63.3030807@redhat.com>
+Date: Mon, 27 May 2013 12:01:07 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Salvatore Bonaccorso <carnil@...ian.org>, David Prévot <taffit@...ian.org>
+Subject: Re: CVE Request: SPIP privilege escalation
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> I can confirm for issue 3 that the disclosure also involves to_xml.
-> Please assign the additional CVE ID.
+On 05/25/2013 08:17 AM, Salvatore Bonaccorso wrote:
+> Hi Kurt
+> 
+> SPIP 3.0.9, 2.1.22 and 2.0.23 fixed a privilege escalation vulerability,
+> where an user can take editorial control on the site.  Upstream announce
+> is at [1] and the upstream commit fixing it is [2].
+> 
+> I'm CC'ing David Prévot, Debian maintainer for spip (there does not seem
+> to be a english translation of the announce available right now).
+> 
+>  [1] http://contrib.spip.net/SPIP-3-0-9-2-1-22-2-0-23-corrections-de-bug-et-faille?lang=fr
+>  [2] http://core.spip.org/projects/spip/repository/revisions/20541 
+>  [3] http://bugs.debian.org/709674
+> 
+> Could a CVE be assigned to this issue for better tracking?
+> 
+> Regards,
+> Salvatore
 
-Use CVE-2013-7249.
-
-
-> Re: denial of service, I don't believe this is an issue as the exploit
-> only relates to read operations.
-
-OK, there is no CVE assignment for this. Just for clarification, the
-"denial of service" theory was related to:
-
-  https://github.com/fatfreecrm/fat_free_crm/commit/cf26a04b356ad2161c4c6160260eb870a3de5328
-
-specifically:
-
-   -  resources :users, :id => /\d+/ do
-   +  resources :users, :id => /\d+/, :except => [:index, :destroy] do
-
-and:
-
-   -   it "recognizes and generates #destroy" do
-   -      { :delete => "/users/1" }.should route_to(:controller => "users", :action => "destroy", :id => "1")
-   +    it "doesn't recognize #destroy" do
-   +      { :delete => "/users/1" }.should_not be_routable
-
-in which a reader might infer that a "destroy" of some data associated
-with a user account would be a denial of service.
-
-Our understanding now is that the presence of ":destroy" in the added
-code string:
-
-   , :except => [:index, :destroy]
-
-does not prevent any type of attack, and therefore it is not a
-vulnerability fix.
+Please use CVE-2013-2118 for this issue.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSwtq0AAoJEKllVAevmvmsd7IH/1zw1OPyRZMnweFANOFheRMg
-QfJxobXUXBHa30uZeRaOBujRNzx/ptTl0CrfyCSDpktcXQ803TW8MmfOCwEfzvym
-8QtH41XTxkXDzVNujl5jtVCMCEw9+/zPYvvsRT9vrQPNp1F2cIkUxcggn3PGJ4Et
-Exuo83rI5ciyWgPOdB/s748PhPNRPIw8rx5zahxw9fepsxNnlXngdpGmxa6dD4YU
-NZ7pNjc2RpUq22gVcSks17/JnqetCrvkwmUgTHT0VbYhu/c+Zf7DUd/vL6uvkmxh
-GUUJsmsP/oUwmWrw8a4m2/cKFYMjORsOYK1KU2IjhtezddiiysOtg6E/eEs1SZQ=
-=RNUF
+iQIcBAEBAgAGBQJRo59iAAoJEBYNRVNeJnmTGowP/Aw8ICe0RweKkV0oyR35lFkd
+GGWj34hmYW+AqQAZB9CZ6CwAW7HiDnbUOd607kwu856x8C7fq+C1vRFKQJFBbomg
+iVu5SJtpAD3XffuzqIV3ufpqAh8Z3u9NLrlfrgRbTOvr08zN5pdsT8mMJTO/2DtU
+6mbDG6wnrFOPtYBZLaSJDXroFd69F+uHQn60sK1v07KVlyKtkGHNSsgzhr7GN+zj
+i4x6hBo5AytQg3tOJfLBvTmJrGU47P71zXNLiON+F+Xow75brLM3DHBI14hfnZqR
+5VewPkr+wrrr3ytsypBIlPU79rUcb8OyhdV2ozowB1Iq2s4eWA4r0VFRZ+iXoGqg
+vOVNivMHadqK3AezGulgOBuVzofysJFX3Wr4o5jx6gsLQn4nj7ZEK/lh6ZGDzJj4
+VT2FP5r7sLbMxLj4jGqxmae1Crqe4JtDdFuuEt+oZ/sM2BF0kH+saR1lUkrvvsqC
+KT/G2f7pivgG/3y3T+sujRvFvnWXykv50mRGG3qgHUBBHuBykaC9Tl2WOHSJiXz2
+V4DpesTCmWNMdEtQ7Xue+X8bk8Hg/qE/8wnn2KF6kOPlkHIp7VpTsawE+vzX4bJe
+PY47QWim4tD0czV1jGn0vE8Af/TNlLgRwf69PXSLvA/97m3KuSDLbC5BL5HoN7za
+7IKLZN/XTB3uyOZYEmGb
+=qn2v
 -----END PGP SIGNATURE-----
