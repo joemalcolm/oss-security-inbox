@@ -1,43 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/6
-Message-ID: <51271B2E.3090100@redhat.com>
-Date: Fri, 22 Feb 2013 00:15:58 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Eric Dumazet <eric.dumazet@...il.com>
-CC: bhutchings@...arflare.com, Greg KH <gregkh@...uxfoundation.org>, ppandit@...hat.com, YOSHIFUJI Hideaki <yoshfuji@...ux-ipv6.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Linux kernel handling of IPv6 temporary addresses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/28/4
+Message-ID: <1338782267.8755963.1369736072304.JavaMail.root@redhat.com>
+Date: Tue, 28 May 2013 06:14:32 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Athmane Madjoudj <athmanem@...il.com>
+Subject: [Notification] CVE-2013-2765 mod_security: NULL pointer dereference (DoS, crash) when forceRequestBodyVariable action triggered and unknown Content-Type was used
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Steve, vendors,
 
-Please use CVE-2013-0343 for Linux kernel handling of IPv6 temporary
-addresses
+  as brought to me by Athmane, ModSecurity upstream has release v2.7.4 version:
+  [1] http://sourceforge.net/mailarchive/message.php?msg_id=30900019
 
-Original threads:
+correcting one security NULL pointer dereference flaw (CVE-2013-2765) - from [2]:
 
-http://seclists.org/oss-sec/2012/q4/292
-http://seclists.org/oss-sec/2013/q1/92
+* Fixed Remote Null Pointer DeReference (CVE-2013-2765). When forceRequestBodyVariable
+  action is triggered and a unknown Content-Type is used, mod_security will crash
+  trying to manipulate msr->msc_reqbody_chunks->elts however msr->msc_reqbody_chunks
+  is NULL. (Thanks Younes JAAIDI).
 
+References:
+  [2] https://raw.github.com/SpiderLabs/ModSecurity/master/CHANGES
+  [3] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-2765
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Relevant upstream patch (seems to be the following):
+[4] https://github.com/SpiderLabs/ModSecurity/commit/0840b13612a0b7ef1ce7441cf811dcfc6b463fba
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-iQIcBAEBAgAGBQJRJxsuAAoJEBYNRVNeJnmTsyMQAMiatRT1NyiTkkMastN7D0S+
-lcCJ9yMt+fradBTMAmzn2VhIA9ipzMv628Yppv0ATrkugkIxBEQJg72yYpvCH3na
-a/nDJXRKxoyfx90GxFTs514669t+eF//5vdu7AIBG60LatBWBGbnpCCqSYd/WbEi
-NBCQ2xc6iVX+4CIrvTTwBszKSHuCbhfPsnkLJOuJxNFMFZskiAFRjnsPMua1F2kk
-dKXmNi6eU5HHKv8rU6aXgERppqLD2BpA6drwmIivPbQ7lDqkUQDyvnMSPJ7yk1h0
-nAI8gbbY71EAsjYPgelaoDRi++cKcyBDDdSvywcZ+78a3PIjoCpCMaODeWX9K+AN
-CrblSiVdpL2/akVVzlvA1NBlqprG+NzZulrnRGF4XqOE4hsqQtXJ7glre+soriMA
-BF0wMpshe+gZOed8xwJKaVYat6Fye88gTCSTjMsy9sC/FYOQoi2YhmFJb1OCLmHp
-oeCeEir1l5hlPn62kV21vBjs7xyAakbADUNgr8IDRKbAz1nyEJe6GJHqqjZ77XIy
-+JaysTazzWSXHC88oZ/5d/auv/CgC5CHU3ybXU2Am0C/1WsXnzZCrdDTFXNvKWDw
-1X3+1AMTVwb8qElGxQOc/rJVhitrymlFLOG30CIy3Mllp0PbpBpkCk/pidMjnd/s
-JUjhpoRibwaiR/rg3xxz
-=l50l
------END PGP SIGNATURE-----
+P.S.: Thanks goes to Athmane for bringing this to our attention.
