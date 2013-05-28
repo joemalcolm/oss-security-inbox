@@ -1,42 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/14
-Message-ID: <20130227144834.GA2858@kroah.com>
-Date: Wed, 27 Feb 2013 06:48:34 -0800
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/28/7
+Message-ID: <51A51546.9020202@openstack.org>
+Date: Tue, 28 May 2013 22:36:22 +0200
+From: Thierry Carrez <thierry@...nstack.org>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2013-014] Missing expiration check in Keystone PKI tokens validation (CVE-2013-2104)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
-> On Tue, Feb 26, 2013 at 09:03:46PM -0800, Greg KH wrote:
-> > On Tue, Feb 26, 2013 at 11:41:53PM -0500, Michael Gilbert wrote:
-> > > Anyway, on a more serious note, at some point, acceptance will look
-> > > something like a real kernel-sec team that does essentially what you
-> > > just did, but on a continual basis: reviewing most/all commits for
-> > > potential security concerns and forwarding them to oss-sec to increase
-> > > identification and awareness to be applied downstream.
-> > 
-> > I will say flat out that this is an impossible task to accomplish.
-> > 
-> > As proof of that, I suggest you do this for just one major kernel
-> > release cycle (2-3 months long).
-> > 
-> > You do know the number of patches applied to the Linux kernel every
-> > hour, right?
-> > 
-> > Would you have caught the patch that started this thread?  I sure
-> > didn't, and I was the one who originally applied it to the kernel tree
-> > in the first place.  Doing "root-cause" research for every patch is
-> > non-trivial, as I know you realize.
-> 
-> For starters, security@...nel.org submissions should be posted to
-> oss-security or any other security related public mailing list when the
-> patch is being committed.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-That's not going to happen, and you know that, to do so would be totally
-irresponsible of us and directly harm your users.  That's what
-vendor-sec (or whatever it is called now) is for.  Hasn't that been
-happening for a while now, or has no one been notifying that list of
-these issues?
+OpenStack Security Advisory: 2013-014
+CVE: CVE-2013-2104
+Date: May 28, 2013
+Title: Missing expiration check in Keystone PKI tokens validation
+Reporter: Eoghan Glynn (Red Hat), Alex Meade (Rackspace)
+Products/Affects: Keystone (Folsom only), python-keystoneclient (0.2.0+)
 
-greg k-h
+Description:
+Eoghan Glynn from Red Hat and Alex Meade from Rackspace both reported a
+vulnerability in expiry checks for PKI tokens in the Keystone
+authentication middleware. Expired tokens for authenticated users could
+continue to be used, potentially resulting in the bypass of intended
+security policies. The effect of PKI token revocation is also reversed
+when the token expires, in the sense that a revoked token is once again
+treated as being valid. Only setups using PKI tokens are affected.
+
+Note:
+The affected code was added to Keystone in the Folsom release, but was
+moved to python-keystoneclient during the Grizzly development cycle.
+
+python-keystoneclient fix (will be included in upcoming 0.2.4 release):
+https://review.openstack.org/#/c/30742/
+
+Keystone (Folsom) fix:
+https://review.openstack.org/#/c/30743/
+
+References:
+https://bugs.launchpad.net/python-keystoneclient/+bug/1179615
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-2104
+
+- -- 
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQIcBAEBCAAGBQJRpRVGAAoJEFB6+JAlsQQjBRAP/iyScNAht67EMgGed4GWNKd3
+2zHOgmqIq31S558ugul1e3qNgggnQ0qJvI1RjcgZuKoJEhH8SaPZBuykyycSvO9M
+L2Bex+GKAGAMuaz4ryPcnt7xJg+Mc0cksdCldeW1pXMrt8yITSQgXe0GqnGssoC+
+5TCk7JG8ADczbDGMa/nyc65tksbEI8hNJYyLLbCapvxfz4VqL2r5yp0vT0/jWDxy
+FLocAYnoKm9oxl0In5zioMQs0cSYAAa5EjwMLMMmUF/Axa7GskUOME8Q/GdgpMzJ
+h5AutinbpANSysz8pTB9bps7WSq33KfGKBN23caP43XvyMVA6CTsLUJH+U/9n+9u
+0rTmKcumLXW9nkf5leki1u69VqRZFksrcEzJVtXdDyGGvFbZjPLcoA8lWifluSK/
+vhu+T+RSnFWicki/Ifiz7c4tK6RYSB+a4G3/982GBxKp1sm3WLKd3ljsmpsqFeAY
+sz1o6p8zTgKIsYKrFEO6wMx37Qiga1RRB0As9msmAHJ6LXTO5ev8LcxXBjRjSIPs
+kTxoxHomRhbJAigvw+qSNSZz3DjrEywcqlNLLINQio21gzPMP4v1GVzwvroI8akf
+6oz4DLDMcbdI1yQ7jjEhpnrcpFRHrJi2a45Tv6dlto34LvG7gLvgmLgnkJs0XMw7
+BslUz5cGAucwXTz2vSHs
+=bu2N
+-----END PGP SIGNATURE-----
