@@ -1,56 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/12
-Message-ID: <20130904215001.GQ32641@redhat.com>
-Date: Wed, 4 Sep 2013 15:50:01 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/28/3
+Message-ID: <CAA7hUgHfBzXkotPwMaodTe4iOPvSfQf-rFaXiv2KnQ+YFT5A9w@mail.gmail.com>
+Date: Tue, 28 May 2013 10:43:48 +0200
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
+Subject: CVE request: libraw: multiple issues
 Content-Type: text/plain; charset=utf-8
 
-* [2013-09-04 11:25:21 -0400] Daniel Kahn Gillmor wrote:
+Hi,
 
->[dropping cc's, just leaving oss-security]
+>From [1]:
+> LibRaw 0.15.1 (26-05-2013)
+This should be 0.15.2
 >
->On 09/03/2013 07:02 PM, Vincent Danen wrote:
+> Fixed possible double-free() on error recovery on damaged full-color (Foveon, sRAW) files.
+> wchar_t* file interface disabled for MinGW32 compilation
 >
->> I mean, if someone wants to shoot themselves in the foot and document it
->> as a feature, who are we to say otherwise?  We may not agree with it,
->> but it's a documented feature (deliberately changed), so we can't just
->> very well call it a security flaw because we don't like the new
->> behaviour.
+> LibRaw 0.15.1 (24-05-2013)
 >
->I'm curious about this.  If, say, a modern TLS library some day decides
->to get around to implementing (old, deprecated, known-insecure,
->previously-unimplemented) SSLv2, and announces it as a feature, and
->enables it by default, is the consensus of this group that we would not
->treat it as worthy of a CVE, despite being a clear security weakening?
->
->At what point does the security community override the upstream
->decisions and declare the packages vulnerable?
+> fixed wrong data maximum calculation for Panasonic files
+> check for possible buffer overrun in exposure correction code
 
-That's a good question.  For your example, I'd say that's a bad thing...
-we all know SSLv2 is insecure and we would consider the developer to be
-a little "special" in the head, I think.  =)
+So there's a double-free (fixed in 0.15.2[3]) and a buffer overflow
+(fixed in 0.15.1[2]).
 
-This is a bit different though.  The users are authenticated -- it's not
-unauthenticated exposure.  How granular the access controls _within_
-that application are largely depend on the developer.  It might be
-different if they decided to chuck the whole authentication basis and
-decided that information in Nagios should be public.  But, even then,
-that is a definite design decision -- is it still a security flaw?
+Could CVE ids be assigned please?
 
-Arguably, Google searches often reveal sensitive information -- does
-that mean Google searches require a CVE?  Or is that up to the end user
-to decide "this has too much risk" or "I disagree with the design
-decision here and will suit something better to my use-case"?
+References:
+[1]http://www.libraw.org/download
+[2]http://www.libraw.org/news/libraw-0-15-1
+[3]http://www.libraw.org/news/libraw-0-15-2
+http://secunia.com/advisories/53547/
 
-So while I think you have a valid question, I think the first question
-is what constitutes a security flaw -- once that is defined, then I
-think what upstream does is irrelevant.  If it's a flaw, it's a flaw.
-
-And obviously upstream's point of view is sometime questionable -- it's
-like the Linux kernel folks deciding there are no security bugs, only
-_bugs_ (with no distinction).  That never went over very well.  =)
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Cheers,
+--
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
