@@ -1,49 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/12
-Message-ID: <1550676.WtK3uptiHT@hoth>
-Date: Mon, 04 Mar 2013 22:12:56 +0100
-From: Eric Lacombe <goretux@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: handling of Linux kernel vulnerabilities (was: CVE request - Linux kernel: VFAT slab-based buffer overflow)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/28/2
+Message-ID: <20130528014709.GA480@openwall.com>
+Date: Tue, 28 May 2013 05:47:09 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Michael Samuel <mik@...net.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: pwgen
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, May 28, 2013 at 01:33:48AM +0000, Michael Samuel wrote:
+> The default mode of this program generates extremely low entropy passwords - 
+> It is probably worth changing the default to "secure" mode and removing 
+> phonemes mode, to avoid putting users at risk.
 
-Le lundi 4 mars 2013 11:48:58, Greg KH a écrit :
-> On Sun, Mar 03, 2013 at 10:39:30PM -0500, Michael Gilbert wrote:
-> > I was getting encouraged by the recent anger-centric posts, the "what
-> > is it that we're supposed to do better?" ones. That gave me some
-> > encouragement that there was the possibility of positive change, but
-> > the "we're not going to make users more unsafe by telling them about
-> > issues affecting them" is a persistence of the denial state.  That
-> > logic completely violates the known idiom that knowledge is power:
-> > give users the knowledge that they need to protect themselves, and
-> > they will; starve them of that knowledge, and they remain vulnerable.
-> 
-> That's a load of crap.
-> 
-> Seriously, you know it only benefits the "bad guys" if I were to say,
-> "This patch just went into Linus's tree that fixes a security problem
-> that you can exploit in this manner".  No user would have a chance to
-> fix their systems before the vulnerability was added to the
-> "ultra-sploit" tool and everyone would have their systems trashed.
+Yes.  You have seen the thread on pwgen from last year, right? -
 
-I think there's a difference between disclosing the vulnerability and 
-disclosing it with a related exploit. The first one allows to fulfill what 
-Michael Gilbert explains without the consequences that you focus on.
+http://www.openwall.com/lists/oss-security/2012/01/22/6
 
-And as Michael Gilbert insisted on, I deeply think that the asymmetry of the 
-problem should be taken into account for defining the way of dealing with 
-security flaws.
+(Use the "thread-prev" link for more messages from that thread.)
 
-Best regards,
-
-	Eric Lacombe
-
-> 
-> If you so strongly believe this, why is there a linux-distros list in
-> the first place?
-> 
-> Come on, be realistic people.
-> 
-> greg k-h
+Alexander
