@@ -1,41 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/10
-Message-ID: <20130121124231.5b5304a8@project-mindstorm.net>
-Date: Mon, 21 Jan 2013 12:42:31 +0100
-From: Milan Berger <m.berger@...ject-mindstorm.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/28/1
+Message-ID: <loom.20130528T031311-502@post.gmane.org>
+Date: Tue, 28 May 2013 01:33:48 +0000 (UTC)
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Wordpress 3.5 Full-path disclosure vulnerability
+Subject: Re: CVE Request: pwgen
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-> The issue can be seen only when PHP's display_errors is set to On.
-> I have setup a default installation of wordpress 3.5 to display the
-> issue. It can be accessed via the URL:
-> http://blog.gilgalab.com.br/?s[]=1
+I was the person who reported this via launchpad.
 
-this is a configuration error on your side, not on wordpress' one.
+The fallback could possibly be triggered accidentally by MAC schemes, such 
+as selinux and apparmor.
 
+There's 8 packages in Ubuntu that depend on this, so I guess it would be 
+worth checking them to see if they execute pwgen in an apparmor context that 
+doesn't allow /dev/urandom access.  I had a quick look at maas-region-
+controller, and it seems to just be calling it from a postinst script.
 
+I have a patch attached to the LP bug that removes the fallback (in favour 
+of bailing out with an message to stderr and exit code 1), and removes the 
+modulo bias.
 
--- 
-Kind Regards
+The default mode of this program generates extremely low entropy passwords - 
+It is probably worth changing the default to "secure" mode and removing 
+phonemes mode, to avoid putting users at risk.
 
-Milan Berger
-Project-Mindstorm Technical Engineer
+Regards,
+  Michael
 
----
-project-mindstorm.net
-Fruehlingstrasse 4 
-90537 Feucht
-Germany
-
-Mob.: +49 176 22 98 76 02
-
-https://www.ghcif.de
-http://www.nopaste.info (for sale)
-https://www.digital-bit.ch
-http://www.project-mindstorm.net
-
-
-twitter: http://twitter.com/twit4c
