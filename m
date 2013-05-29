@@ -1,28 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/10
-Message-ID: <878ux4hwvo.fsf@windlord.stanford.edu>
-Date: Mon, 04 Nov 2013 09:58:35 -0800
-From: Russ Allbery <eagle@...ie.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/2
+Message-ID: <174291314.10035067.1369830102814.JavaMail.root@redhat.com>
+Date: Wed, 29 May 2013 08:21:42 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: openssl default ciphers
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Richard Jones <rjones@...hat.com>
+Subject: CVE Request -- libguestfs (1.21.6 | 1.22.0 | 1.23.0 <= X < 1.22.1 | 1.23.1): Denial of service due to a double-free when inspecting certain guest files / images
 Content-Type: text/plain; charset=utf-8
 
-Hanno Böck <hanno@...eck.de> writes:
+Hello Kurt, Steve, vendors,
 
-> SSLCipherSuite HIGH:!MEDIUM:!LOW:!aNULL@...ENGTH
-> should be fine. There are basically near zero browsers out there that
-> should have any problems with that. Even dinosaurs like IE6 can work
-> with this, you don't need "medium" ciphers as long as you don't want to
-> make a site accessible to browser museums.
+  LibguestFS upstream has issued the following patch:
+  [1] https://github.com/libguestfs/libguestfs/commit/fa6a76050d82894365dfe32916903ef7fee3ffcd
 
-Just to data-point on compatibility, we've been using:
+to correct a double-free flaw in the virt-inspector / other virt-* tools,
+which could lead to denial of service if some of the tools were used by
+3rd party applications for inspection of untrusted guest files / images:
 
-SSLProtocol all -SSLv2
-SSLCipherSuite HIGH:MEDIUM:!ADH:!SSLv2:@STRENGTH
+  [2] https://www.redhat.com/archives/libguestfs/2013-May/msg00079.html
+  [3] https://www.redhat.com/archives/libguestfs/2013-May/msg00080.html
 
-(not quite as strong as what you mention above; we should look at
-changing) for all of Stanford's SSL web sites for years and years now, and
-have never had a single complaint.
+Could you allocate a CVE identifier for this?
 
--- 
-Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
