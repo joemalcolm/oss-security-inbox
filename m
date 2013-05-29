@@ -1,54 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/16/2
-Message-ID: <51E4CE6C.5020202@redhat.com>
-Date: Mon, 15 Jul 2013 22:39:08 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/1
+Message-ID: <CAA7hUgE0Wn5K-cSHzpw9O_0RMZrv4ctyo+aCJmXmqsnje+5REg@mail.gmail.com>
+Date: Wed, 29 May 2013 11:18:06 +0200
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- spice: unsafe clients ring access abort
+Subject: Re: CVE request: libraw: multiple issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Kurt,
 
-On 07/15/2013 05:25 PM, Petr Matousek wrote:
-> Currently, both red_channel_pipes_add_type() and 
-> red_channel_pipes_add_empty_msg() use plaing RING_FOREACH() which
-> is not safe versus removals from the ring within the loop body.
-> Yet, when (network) error does occur, the current item could be
-> removed from the ring down the road and the assertion in
-> RING_FOREACH()'s ring_next() could trip, causing the process
-> containing the spice server to abort.
-> 
-> An user able to initiate spice connection to the guest could use
-> this flaw to crash the guest.
-> 
-> Upstream fix: 
-> http://cgit.freedesktop.org/spice/spice/commit/?id=53488f0275d6c8a121af49f7ac817d09ce68090d
->
->  References: https://bugzilla.redhat.com/show_bug.cgi?id=984769
-> 
-> Thanks,
-> 
+On 28 May 2013 19:58, Kurt Seifried <kseifried@...hat.com> wrote:
+> On 05/28/2013 02:43 AM, Raphael Geissert wrote:
+>> So there's a double-free (fixed in 0.15.2[3])
 
-Please use CVE-2013-4130 for this issue.
+https://github.com/LibRaw/LibRaw/commit/19ffddb0fe1a4ffdb459b797ffcf7f490d28b5a6
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+>> and a buffer overflow (fixed in 0.15.1[2]).
 
-iQIcBAEBAgAGBQJR5M5sAAoJEBYNRVNeJnmT6dAQAMErLuphvHoyUmO9INJIw53K
-aa9PDr2OFf8IuqlBVqams3ZCtq3BEyRoQ4x3Xbb09uszokbGvsuRWMQzwrvIbqma
-Uhu+X5BqFY16bKoIAZuMyvYqrTz0Y9VBM9SjHT4guYANbdREIckI8xOKEVg+ZhWD
-Qkh4n4cXTziIJFOAOVGkZUMInbqSIWk+f7KQlHhiPpfsAHXU0eySKJAlF6OdSgNz
-0MfTkpB+bdPZd+elE2FSRWrCbxcRLIUTr2nQOVyIi/4IOaI/L7q63GgdpRNDC2t5
-nI/tLz+wJYxbLRho71eE0gtAK037PMZfpM3Nq4TZ2ytlXYBB7cMNUt/WNgoKD+NT
-ScCRAWD149ZJFmbv8OK/Kc2AM7NpC8H+LN3WgIp1UT4HNWR9LiPUxg0NAi+DU3qa
-FUBwhVTmXWV2GTOtHz8rhR5vTG+9Vnp/8atzAsYGkexQxpSdDQWroobjDuTUl5LQ
-oLEXIfFU4A7saegI3VQalQrHvPqMJSj8+Y1mqem8KNAA/cYy6Jvc4Os7sK8gp9y2
-qabj/h6QyVIrRbGH6aCyUQfAMDkn1LY/2fZe1ztT7MOx3wPRsGJIGOyR62P0OrNK
-di7f4O2GUIy9v4scYjH6nSBDCYL5qQLumSXLo5jBPPWcn0AHcws4padVj9jF+WWU
-F9e1cvSeFzuz8fExm+NJ
-=Qdgu
------END PGP SIGNATURE-----
+https://github.com/LibRaw/LibRaw/commit/2f912f5b33582961b1cdbd9fd828589f8b78f21d
+
+Cheers,
+--
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
