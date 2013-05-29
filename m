@@ -1,50 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/15/1
-Message-ID: <1371271788.4581.36.camel@goat.lightspeed>
-Date: Fri, 14 Jun 2013 23:49:48 -0500
-From: John Lightsey <john@...nuts.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/8
+Message-ID: <51A64260.1020306@redhat.com>
+Date: Wed, 29 May 2013 12:01:04 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: FD leakage for cgi program on Monkey HTTPD
+CC: "Richard W.M. Jones" <rjones@...hat.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE Request -- libguestfs (1.20.6 | 1.22.0 | 1.23.0 <= X < 1.22.1 | 1.23.1): Denial of service due to a double-free when inspecting certain guest files / images
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2013-06-14 at 16:50 -0700, Seth Arnold wrote: 
-> On Fri, Jun 14, 2013 at 04:40:29PM -0500, John Lightsey wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> > I don't see how this issue is very different from CVE-2012-4442 and
-> > CVE-2012-4443. Do you believe those CVEs were not appropriate?
+On 05/29/2013 06:25 AM, Richard W.M. Jones wrote:
+> On Wed, May 29, 2013 at 08:21:42AM -0400, Jan Lieskovsky wrote:
+>> Hello Kurt, Steve, vendors,
+>> 
+>> LibguestFS upstream has issued the following patch: [1]
+>> https://github.com/libguestfs/libguestfs/commit/fa6a76050d82894365dfe32916903ef7fee3ffcd
+>>
+>>
+>> 
+to correct a double-free flaw in the virt-inspector / other virt-* tools,
+>> which could lead to denial of service if some of the tools were
+>> used by 3rd party applications for inspection of untrusted guest
+>> files / images:
+>> 
+>> [2]
+>> https://www.redhat.com/archives/libguestfs/2013-May/msg00079.html
+>>
+>> 
+[3] https://www.redhat.com/archives/libguestfs/2013-May/msg00080.html
+>> 
+>> Could you allocate a CVE identifier for this?
+
+Please use CVE-2013-2124 for this issue.
+
+> Small adjustment to the subject line.
 > 
-> CVE-2012-4442 and CVE-2012-4443 (failure to drop supplementary gids,
-> failure to drop root uid and gid when running CGIs, for those reading
-> along at home) were probably appropriate for two reasons: (a) Monkey
-> probably made some effort at dropping privileges and just screwed it up
-> in the same way everyone else did a decade earlier (b) no one expects a
-> webserver to run as root once it has bound its sockets. Even a webserver
-> claimed to be "lightweight" is _expected_ to drop all the unneeded
-> privileges once running.
-
-I would argue that no one will expect that giving a user the ability to
-run CGI scripts in a particular virtualhost context on the system gives
-them the ability to intercept and spoof traffic for all virtualhosts on
-the system.
-
-Monkey does include virtualhost support and mentions shared hosting as
-an example usage scenario in the documentation.
-
-http://monkey-project.com/documentation/virtual_hosts
-
+> Just to be clear this affects:
 > 
-> But not all webservers are expected to try to enforce running CGIs with
-> different security boundaries. Apache chose to try, and faults in their
-> suEXEC ought to be allocated CVEs. I don't see anything on the Monkey
-> website to document any suEXEC-alike functionality.
+> 1.20.x, x <= 6 1.21.x, all x (this is an obsolete development
+> branch) 1.22.0 1.23.0
 > 
-> Obviously Kurt disagreed with me and allocated a CVE :) so in some sense
-> this whole discussion is now hypothetical.
+> NOT affected are:
+> 
+> anything < 1.20 1.20.7 (fix backported to this stable version
+> yesterday) 1.22.1 (fix backported to this stable version
+> yesterday) 1.23.1 (this is the upstream version, fixed yesterday)
+> 
+> Credit for finding the bug goes to the Coverity static analyzer.
+> 
+> Rich.
+> 
 
-Indeed. I found it very interesting that you objected. To me this seemed
-to be a relatively straightforward issue. I appreciate you explaining
-your reasoning in more detail.
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+iQIcBAEBAgAGBQJRpkJgAAoJEBYNRVNeJnmTd+EP/RkYk9n7T+MCIHgCt2/A32y9
+sSuQypdt7q8JDpdgg2Cscrd9IopgT5iwAo/N9HCP7vZ7FGGGjHw1Cdk5YwY+RRpz
+3OLngcmFz0nTNFYxQRq1u6iFJpxZBE49Yt9KYzhipWOmzK3PmpBT7j6hPHmVMhst
+Qf2qm23hTOJ4axBphht/iGJ8Uze6HGaiNXf4T+ZbMWho9wSGkkOA1L5JpR5Yq4BU
+GRWKHKRqoIm8h2J/KClUQdrjKbF5OO70VRORQhiPeREANyXucn9KvfHsPOrtZt/Y
+lGxPgNOgw58+QjTZjO3U+a8m3SPoGQONg49d5F0Ti0RoSbk3reZfLFSlrHwXBIp/
+e4QJjpipfQ4R4kQu3TpcajofoeVkNyh4qPKbO0iCXWrJlrMl5o1MP89DyA0DOlUy
+RtCHUJbgFi4Z4o0wqi9JYHz1pvdfBWb8+y0iTRecOQmsEjn0miT6ppjwJTF45S6P
+pXrBTJ4gHT17OPcEpJKbA5nN3e/7eN1XqDKEcTEadW+tZJ8dM2ufGNVe4R1GGTmw
+I/slo2kmBfm/ryg/FscknF4tTiAaU2IKsObpdYZ3hNCusqAtU3jSo2zHPYhvaKzL
+nMkpFT/Ik1S6CEWkKx2ZX3h3+888tNUSMxj+RAnDFhs7FCaSCgQG2teJzn4PCIHu
+ax+hfIBtrTPbwJW5wC2C
+=j0HU
+-----END PGP SIGNATURE-----
