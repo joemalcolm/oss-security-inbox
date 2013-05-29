@@ -1,79 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/31/3
-Message-id: <13dc1f39c91.2736.e9a71456a41b1faeabc6c13ed23b7beb@me.com>
-Date: Sun, 31 Mar 2013 15:36:43 -0400
-From: Larry Cashdollar <larry0@...com>
-To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
-Cc: Packet Storm <packet@...ketstormsecurity.org>
-Subject: Re: Remote command execution in Ruby Gem ldoce 0.0.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/13
+Message-ID: <51A694D6.3090604@redhat.com>
+Date: Wed, 29 May 2013 17:52:54 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: Drupal contrib CVE
 Content-Type: text/plain; charset=utf-8
 
-Oh, sorry here it is:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-http://rubygems.org/gems/ldoce
+On 05/29/2013 05:00 PM, Forest Monsen wrote:
+> A late one just came out. I'd like to request a CVE for:
+> 
+> SA-CONTRIB-2013-050 - Webform - Cross Site Scripting (XSS) 
+> https://drupal.org/node/2007460
+> 
+> Thanks!
+> 
+> Forest
+> 
 
+Better late than running around in circles with your hair on fire =).
 
-Sent with AquaMail for Android
-http://www.aqua-mail.com
+Please use CVE-2013-2129 for this issue.
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-On March 31, 2013 3:23:00 PM Kurt Seifried <kseifried@...hat.com> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 03/31/2013 10:11 AM, Larry W. Cashdollar wrote:
-> >
-> > Remote command execution in Ruby Gem ldoce 0.0.2
-> >
-> > /Larry W. Cashdollar @_larry0 3/25/2013/
-> > ------------------------------------------------------------------------
-> >
-> >  Ldoce Ruby Gem:
-> >
-> > Easily interface with the Longman Dictionary of Contemporary
-> > English API from Ruby:
-> >
-> > NB currently mac only as it depends on the afplay command.
-> >
-> > https://github.com/markburns/ldoce
-> >
-> > Ldoce passes an mp3 url to commandline for audio output of the
-> > pronunciation of a dictonary word:
-> >
-> > If the URL or filename for the mp3 files contain shell
-> > metacharacters code can be executed remotely as the client:
-> >
-> > [./ldoce-0.0.2/lib/ldoce/word.rb]
-> >
-> > if mp3? unless File.exists? filename command = "curl #{mp3_url}
-> > -silent > {filename}" `{command}` end `afplay #{filename}` end
-> >
->
-> Just one note, can you include the link (if available) to the gem on
-> the rubygems.org site (which where most people seem to get their gems).
->
-> Please use CVE-2013-1911 for this issue.
->
->
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.13 (GNU/Linux)
->
-> iQIcBAEBAgAGBQJRWI0UAAoJEBYNRVNeJnmTrHMP/RDKi6LHT+t0viJZy2zsqftQ
-> W87AvNUOpUGDx1ip78No/ymXwHgWiFLoH+n6I4GpPZ4CuTfUlWos9kRJ0GpWFPZi
-> nwMsJvgMh7ZEtHUHR+aVssvbwTTU5P2bKkCM5ishVTwKYtFTHQECHzSd44OE5/D5
-> zqQN+mYTIh+tW71LIG0NVwUJuazgi/Z0rA9Bv03X31Vja7G/83/R44IrTGS6eXG+
-> 0Ymmfpmfiy+2cdTjnVPKq+zVTVwLyMoPDTouzP3wbsERxrMXEQEqSlo4JtDZQUcC
-> cjrIk9mOp4tJ2spS2ez1duIAJGKDKUNlL+44GKTOCjAEZmGorDoDo+Iv/XsPcEXS
-> azxhlx3ikJjMByKcQfe9c9aVJJj6vHOzUNbTkFyC4bDWT3CbDLmuZtN+WHtfNpE8
-> xUOGxlvWLDwtunFRVVrGinZfg7QetcWyI7KBr6QGLMyRPNshOhi4iKABtmpF5VxP
-> M7Qo8t9v0V3E3fhjo053E6g4zG33JidBPP8B4WJ3dX6yJWYb1GAB+EHUTQh48Yub
-> PBJgqgeuQdTJu0JLkbKj0YTyrQRdg8Jo8pCDdhodeModsC+iHY/brvKjYVjoZVxH
-> IKf2ga6p6apAL2ZCKGzO6dfpXF02SxaTzaaEuIJOx5KDMws8BfxJ+mPFQ6AU1DC7
-> dOZVOFV7G9DFkA2ER8gy
-> =9PGv
-> -----END PGP SIGNATURE-----
-
-
+iQIcBAEBAgAGBQJRppTVAAoJEBYNRVNeJnmTl6IQANLu1PxySM9TBDDAfiXF1VVb
+/BX0Ah1LULV7WM2EtcRoUrdiXZYK71LrfhVGZ4gWJMRF3mwNNdJLPkKog18Wh0FY
+3lipDD/MowgKzHOTziQ9IZX8VtAuQ86QJzCD8knMwnSdVicrYSR65ENzlQuRM1Rs
+DniSTNHFaZmnybbKZwB0fkf1GmEwRbV4uFVUVX31dexEAsL43T8DMIF8djHiynHG
+Do4ID/t2humvkTn3OYEMilmq91B5seg0WD/1Y0UskWSdvSy1TxDVj+wDuuTJR6Ks
+IVDLO2tbwVSaFYWVq7AIvTqFJ0XfL7gU2NEOLs6jow6mJoA3OvdhSGHQDQtBvyKF
+XhCOdKUAbs2S2mYOkHjEQR3JJOMq7n5N5KyC69nQZq/xJQT7YO8rlCzExka5uJG1
+0/j9Qiy5mKEv9bc1yGNO6Fg0LdwkgJ09NdjfhbQ1iXGq3+L2XOeiRufkCJkBuQ0w
+GU49dhP6922/tF4DmB+TyH1O4bnSTCtx1nGQYWbCXLoODLUSaOPT+KOS1iwIOz+u
+oyI9Uaq/xM6Nq0y+fEUNe8vhBfitSqoB9pYZZdDaPbLBvP9qubCNgonY059Z3Rf+
+IBtQozeC+c/ZKJ+T5IiaCl7br5KFH8qxx5nO997Avhy5I1k8L2/80/i3Lj8VzCKo
+xQ+5LDsFnakh0LoOKbb/
+=0mjM
+-----END PGP SIGNATURE-----
