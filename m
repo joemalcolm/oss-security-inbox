@@ -1,78 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/02/2
-Message-Id: <E1VRPFn-00053J-3A@xenbits.xen.org>
-Date: Wed, 02 Oct 2013 16:26:23 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 65 (CVE-2013-4344) - qemu SCSI REPORT LUNS buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/5
+Message-ID: <20130529193251.78fa2003@redhat.com>
+Date: Wed, 29 May 2013 19:32:51 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: GnuTLS 2.x Lucky13 fix regression CVE-2013-2116
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi!
 
-             Xen Security Advisory CVE-2013-4344 / XSA-65
-                              version 2
+This upstream gnutls-devel list thread points out an OOB read bug
+introduced via the Lucky13 / CVE-2013-1619 fix for GnuTLS 2.x.
 
-                 qemu SCSI REPORT LUNS buffer overflow
+http://thread.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/6753
 
-UPDATES IN VERSION 2
-====================
+This possibly allows crashing TLS servers using GnuTLS remotely.
+Upstream version 2.12.23 and vendor versions with 2.x patch backported
+should be affected.  Upstream 3.x versions used different patch not
+affected by this issue.
 
-Public release.
+CVE-2013-2116 was assigned to this issue.
 
-ISSUE DESCRIPTION
-=================
-
-qemu contains a possible buffer overflow in the SCSI code that
-implements the REPORT LUNS command.  The buffer can be overflowed by
-creating a SCSI controller with more than 256 attached devices (such
-as disks) and sending a REPORT LUNS command with a short transfer
-buffer (less than 2056 bytes).
-
-Xen systems do not use the qemu SCSI code by default.
-
-IMPACT
-======
-
-On Xen systems where the device_model_args (or equivalent) parameters
-have been used to configure a SCSI controller for a guest, with more
-than 256 devices, a malicious guest might be able to escalate its
-privilege to that of the qemu process in the host (typically root).
-
-VULNERABLE SYSTEMS
-==================
-
-Only Xen systems whose administrators have deliberately configured HVM
-guests to have emulated SCSI controllers, and where those guests are
-provided with more than 256 devices, are vulnerable.
-
-We are not aware of any such systems.
-
-MITIGATION AND RESOLUTION
-=========================
-
-Please refer to the advisories and information from the Qemu project.
-
-If, during the embargo period, you have any questions about this
-advisory in the context of Xen, please contact the Xen Project
-Security Team.
-
-CREDITS
-=======
-
-This issue was reported to us by the Qemu project.
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJSTEiLAAoJEIP+FMlX6CvZsuIH/2f6vLkHvXLe862mX/bKF1Ix
-TQQjvoIxV8dAJmY6Rb5U1KKvNK8JoNNcxtv5rPkQ7n+5TcR2AuWGkuHA5CZGCa10
-ctW2dmf7/V46SOrJz0xPKzNcNJSdu7R9sLo6Dbw4c0m/+xs5H29AO38VHXyKNtgN
-eMZBcMt9GUgGt0PFMsqDkcGnk2RgA9aXzPycHumuCEtUlzF23m0PpqZK3qKUAK0s
-lTHjr4WBmsxBaQyqmjdyMPdmh2BtnYa6pkmGvNw3ALncuhO5aepL7rbeE0ZtUOEO
-o5pB88MRAOGeu0DRDgYm6r6aWLh2SjeGKJayljYTJXp2yS5tlSMBkXH6w0khZj8=
-=c8pu
------END PGP SIGNATURE-----
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
