@@ -1,147 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/27/1
-Message-ID: <20130427010158.GN23082@nef.pbox.org>
-Date: Sat, 27 Apr 2013 03:01:58 +0200
-From: Alistair Crooks <agc@...src.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>
-Subject: Re: upstream source code authenticity checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/11
+Message-ID: <51A65CFA.4090907@redhat.com>
+Date: Wed, 29 May 2013 13:54:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: P J P <ppandit@...hat.com>
+Subject: Re: CVE request: Linux kernel: net: oops from tcp_collapse() when using splice(2)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 26, 2013 at 12:55:22AM -0600, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 05/29/2013 01:10 PM, P J P wrote:
+> Hello,
 > 
-> On 04/25/2013 11:57 PM, Alistair Crooks wrote:
-> > On Thu, Apr 25, 2013 at 01:30:23AM -0600, Kurt Seifried wrote:
-> >> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
-> >> 
-> >> On 04/24/2013 11:55 PM, Alistair Crooks wrote:
-> >>> I'm not sure what using PGP gains us?
-> >>> 
-> >>> Regards, Alistair
-> >> 
-> >> So some possible outcomes are:
-> >> 
-> >> 1) They do PGP/GPG and don't get compromised. Long term outcome:
-> >> we come out way ahead.
-> >> 
-> >> 2) They do PGP/GPG and do get compromised. Long term outcome: we
-> >> trust bad things and lose, hopefully this gets spotted quickly
-> >> and dealt with.
-> > 
-> > Sure.  I actually agree with you.  But I'd also like it if we
-> > could bear in mind that, with PGP, trust is earned, trust
-> > signatures are snapshots in time, and trust levels are private,
-> > best guessses by people.  All people can see from a key listing is
-> > who trusted them and when, not how much, or whether the trust was
-> > warranted.
+> Linux kernel which supports splice(2) call to move data across
+> file/socket descriptors via a pipe buffers, is vulnerable to a
+> kernel crash that occurs while calling splice(2) over a tcp socket
+> which in turn calls tcp_read_sock().
 > 
-> This makes no sense. So you don't trust their signature because they
-> have to "earn trust", but you do trust their software and you compile
-> and run it? That's literally insane.
-
-No, not really.  (Well, not at all, but I'm feeling charitable today). 
-I know lots of people who write software.  Some of their personal
-lives are train wrecks.  Some I wouldn't trust to sit the right way on
-a toilet seat.  But, for various reasons, such as mentoring,
-peer-programming, peer review, stringent regression tests, personal
-audits of their work, or because of random audits, etc, I would trust
-the software they write.
-
-I don't think that's "literally insane".
-
-I don't know if you've ever done one of the key signing parties, where
-you get handed government id, and that is supposed to define someone's
-identity.  It tells age, name, and ability to keep a dead pan face in
-front of a camera.  It says nothing about how trust-worthy someone is,
-in the sense that I would compile/run software written by them. On top of
-all this is the problem of mutt updating your pubring with various
-people's public keys when you read an email from them (yes, it can be
-turned off).  However, given that I'm on some "unusual" (read
-"precious") mailing lists, that behavior can mean that someone can
-send out email to a list, and now their key appears on my pubring.  An
-attempt to verify a signature on something unrelated could mean that
-their pub key is used to verify something. 
-
-> I a seriously confused that a lot of people seem to think unsigned
-> code is somehow ok, but if we sign the code we have to do it perfectly
-> to have any value. This simply isn't true. Right now unsigned code is
-> wide open, and detecting changes is expensive (you need a full copy to
-> compare against, and if you have a copy why would you care? =).
-> SIgning releases with PGP/GPG makes this problem a lot easier to
-> handle and even if it fails, by definition the attacker would have
-> been able to pull the attack off any ways.
-
-No, not really.  My point was that people seem to think that, just
-because something is signed, it must be 100% good from the right
-person.  I will agree that most of the time this is the case -
-however, relying on this to be the case would be imprudent. There's
-also the unusual case where we get pub keys from a "third-party" HKP
-server, thereby rendering it more difficult for keys to be misused,
-and yet I've seen people saying that just distributing the pub key
-with the distribution is fine.  This is in a world where DNSsec is not
-yet fully deployed, and there are ways of working around certs. No, it's
-not likely, but it is possible.
-
-As to unsigned code being wide open, we have previous versions to
-compare against (and, in the sense that we're discussing it here, the
-people who will be comparing are the packagers for the Linux
-distributions, or the BSD packagers).  They are perfectly capable of
-doing that, and should be.  As part of updating packages, they should
-be taking steps to ensure that some things have not changed.  We
-should learn from our previous mistakes, and get this right.  As I
-said originally, we saw some attempts at trojans during the
-"configure" stages of building packages; admittedly this was 13 years
-ago (at least). That kind of thing was caught, and our defences against
-that kind of thing are much better these days (only running certain steps
-as root - like package installation - building in chroots, building on
-VMs, signing results, even CI and things like hudson and jenkins).
- 
-> Can we please get over this "security must be done perfect or not at
-> all" and maybe actually get on with making things better? We have to
-> start somewhere. Sitting here going "well we won't do it unless we can
-> do it completely correctly" is just stupid and pointless. Seriously.
-> We need to start raising the bar and teaching people, this is far
-> better than refusing to do anything since it won't be perfect.
-
-That wasn't my intention, so I'm sorry if it came across that way. But
-can we also get away from the "we have signed distfiles now, so everything
-is guaranteed to be safe for evermore"? Thanks.
- 
-> A perfect example of this is CVE assignments. Most projects do not do
-> them well or at all. Should I give up? Or should I try to educate them
-> and hand hold as needed so that they learn how to do it and start
-> doing it properly? This is what I have been doing and you may notice
-> that XEN, OwnCloud, OpenStack and a few others are now shipping
-> advisories with CVE's already assigned. And most of them are doing CVE
-> requests in a way that is efficient and scalable.
+> A user/program could use this flaw to cause system crash, resulting
+> in DoS.
 > 
-> And next month (hopefully) you'll be getting even more CVEs (due to
-> more vendors doing CVE requests properly and easily for me), and then
-> at some point we'll bring OSVDB into the fold (once Steven figures out
-> how =) and it'll get even better.
-> 
-> Got to start somewhere. And if you want to go build some perfect
-> system I wish you luck, but I suspect like most attempts at perfection
-> it won't get very far.
+> Upstream fix: ------------- ->
+> https://git.kernel.org/linus/baff42ab1494528907bf4d5870359e31711746ae
+>
+>  Thank you. -- Prasad J Pandit / Red Hat Security Response Team 
+> DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
 
-I think this misrepresents my position just a tad.  I don't want
-everything to be perfect, and I realise that won't ever happen.  But
-I'm also against a feeling of false security, and concerned lest we
-all fall into that trap.
+Please use CVE-2013-2128 for this issue.
 
-I'm also enthusiastic about whatever OSVDB (vulnerability DB?) is, and
-thank you for your work with CVE assignment, management, and
-evangelisation.  It is not an easy job, and you deserve all of our
-thanks.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-As for me, I'm continuing to develop using PGP - I believe in it. I
-still want better processes and procedures around key usage, though.
-
-(If anyone has made it through to this point, I thank you, and
-congratulate you.  The horse is dead, and I am fed up beating it - it
-can go for hamburgers in the UK now).
-
-Regards,
-Alistair
+iQIcBAEBAgAGBQJRplz5AAoJEBYNRVNeJnmTO7cQAKpmU3GklEtrsq+f4ue/91yk
+sEl9AxuczqhVqSwX3wW6ijIEC4fbNJEc+FXGEkPe7ZR/gm9CgRd53ko8aJHZyZxS
+VWoyw8cVjBMqoN3x/XljI/zotJCmt5lsoo4kuP7fFkhK9FNHIKxlTtt2CIbnV66A
+9WNt3XyzAf42+2Q5nfoLgs/8T9gjDalUU2dgCQ+5yhFCLstIB8U2KmcW7rXi+2U4
+3z+TQY80sGbRHJPmJIuT058vNGBzoriwPjtbzmYPJ717fCQBUGoAVtBqVD469QZN
+vv86FZjTKwHMnOZHJNPNH0HzVNxvYoEp9Zg/NS/FuukhGnUovDMt5ruKbu6qdpWu
+mAN5fx1E1qo/JVROdX6Qb8srjvMRWB4MvGJSd2uQKShDRGsApLkUeiGigSBeoFLB
+x+lEI2lbMWdFwilKdqleTZ4FBgxpsmq/wXluN3YPYrir+BmMegv6t6TeHJkLAUGo
+NNE4aaIEIOdu8NGU+Tpi821va4E99wAm0CmoA6C1pNkhsWhcre61KZARvzS4tUKU
+xaV/yXcw9aWryu11FUlMEW/DNTmyg/kXJRdLLRCfBNU6KfG9sObi/f2gf/q0cyLR
+1Uq9ATnCa79mWeI0VxW5cQlUgWGrlFgDo55RH8qggQTTKzhjGmQSK1Njiu9z1pUR
+4RslEORFbUi2183cIiE5
+=42Vh
+-----END PGP SIGNATURE-----
