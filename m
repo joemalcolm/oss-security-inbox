@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/31/6
-Message-ID: <CAA7hUgG2MudRHss3S0SQqXhO5ZGKBhmuRqx6Ue77t_ARRuzGFQ@mail.gmail.com>
-Date: Wed, 31 Jul 2013 10:33:09 +0200
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/12
+Message-ID: <51A68891.4000506@gmail.com>
+Date: Wed, 29 May 2013 16:00:33 -0700
+From: Forest Monsen <forest.monsen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Insecure Software Download in pip
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: Drupal contrib CVE
 Content-Type: text/plain; charset=utf-8
 
-On 31 July 2013 10:11, Kurt Seifried <kseifried@...hat.com> wrote:
-> On 07/30/2013 12:44 PM, Donald Stufft wrote:
->> There was a CVE for pip not verifying TLS,
->> https://access.redhat.com/security/cve/CVE-2013-1629 However that
->> says it was RESERVED so I'm not sure how to make that unreserved?
->> I've not done much with requesting CVEs before.
->
-> Ok I have no info on that CVE, is it embargoed? I can't find it in
-> google after a quick search. I need to see that one before I can
-> assign anything.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->From the bugzilla info: "source=debian", and looking at our tracker:
-https://security-tracker.debian.org/tracker/CVE-2013-1629 points to:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=710163
+A late one just came out. I'd like to request a CVE for:
 
-I don't know who assigned the id, however.
+SA-CONTRIB-2013-050 - Webform - Cross Site Scripting (XSS)
+https://drupal.org/node/2007460
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Thanks!
+
+Forest
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iEYEARECAAYFAlGmiJEACgkQ/ILCL9e1Br5srgCggMdkmGDFC4fmIWkRCJjMmger
+dO4An3TRdMRUGzP3VwNnVRL6QLrm6KX0
+=/4Xb
+-----END PGP SIGNATURE-----
