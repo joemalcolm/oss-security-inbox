@@ -1,33 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/09/4
-Message-ID: <1746507251.13758094.1376035937778.JavaMail.root@redhat.com>
-Date: Fri, 9 Aug 2013 04:12:17 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Miroslav Lichvar <mlichvar@...hat.com>, Florian Weimer <fweimer@...hat.com>
-Subject: [Not a CVE request, just notification] CVE-2012-4502, CVE-2012-4503 -- Two security flaws fixed in Chrony v1.29
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/3
+Message-ID: <20130529122523.GN4515@redhat.com>
+Date: Wed, 29 May 2013 13:25:23 +0100
+From: "Richard W.M. Jones" <rjones@...hat.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- libguestfs (1.20.6 | 1.22.0 | 1.23.0 <= X < 1.22.1 | 1.23.1): Denial of service due to a double-free when inspecting certain guest files / images
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On Wed, May 29, 2013 at 08:21:42AM -0400, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+>   LibguestFS upstream has issued the following patch:
+>   [1] https://github.com/libguestfs/libguestfs/commit/fa6a76050d82894365dfe32916903ef7fee3ffcd
+> 
+> to correct a double-free flaw in the virt-inspector / other virt-* tools,
+> which could lead to denial of service if some of the tools were used by
+> 3rd party applications for inspection of untrusted guest files / images:
+> 
+>   [2] https://www.redhat.com/archives/libguestfs/2013-May/msg00079.html
+>   [3] https://www.redhat.com/archives/libguestfs/2013-May/msg00080.html
+> 
+> Could you allocate a CVE identifier for this?
 
-  Chrony upstream has released v1.29 version, correcting two security flaws:
+Small adjustment to the subject line.
 
-* Issue #1: CVE-2012-4502: Buffer overflow when processing crafted command packets
+Just to be clear this affects:
 
-  This issue was found by Florian Weimer of Red Hat.
+1.20.x, x <= 6
+1.21.x, all x (this is an obsolete development branch)
+1.22.0
+1.23.0
 
-  Relevant patch: http://git.tuxfamily.org/chrony/chrony.git/?p=chrony/chrony.git;a=commitdiff;h=7712455d9aa33d0db0945effaa07e900b85987b1
-  Announcement: http://permalink.gmane.org/gmane.comp.time.chrony.announce/15
-  Red Hat bug: https://bugzilla.redhat.com/show_bug.cgi?id=846392
+NOT affected are:
 
-* Issue #2: CVE-2012-4503: Uninitialized data in command replies
+anything < 1.20
+1.20.7 (fix backported to this stable version yesterday)
+1.22.1 (fix backported to this stable version yesterday)
+1.23.1 (this is the upstream version, fixed yesterday)
 
-  This issue was found by Miroslav Lichvar of Red Hat.
- 
-  Relevant patch: http://git.tuxfamily.org/chrony/chrony.git/?p=chrony/chrony.git;a=commitdiff;h=c6fdeeb6bb0b17dc28c19ae492c4a1c498e54ea3
-  Announcement: http://permalink.gmane.org/gmane.comp.time.chrony.announce/15
-  Red Hat bug: https://bugzilla.redhat.com/show_bug.cgi?id=846392
+Credit for finding the bug goes to the Coverity static analyzer.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Rich.
+
+-- 
+Richard Jones, Virtualization Group, Red Hat http://people.redhat.com/~rjones
+libguestfs lets you edit virtual machines.  Supports shell scripting,
+bindings from many languages.  http://libguestfs.org
