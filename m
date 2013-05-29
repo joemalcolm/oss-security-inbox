@@ -1,57 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/16
-Message-Id: <201312101735.rBAHZksN020616@linus.mitre.org>
-Date: Tue, 10 Dec 2013 12:35:46 -0500 (EST)
-From: cve-assign@...re.org
-To: ratulg@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: monitorix: HTTP server 'handle_request()' session fixation & XSS vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/9
+Message-ID: <51A64283.5050403@redhat.com>
+Date: Wed, 29 May 2013 12:01:39 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Yes, we recognize that http://secunia.com/advisories/55857/ is an
-additional reference. Relative to what we previously posted, existence
-of this reference does not simplify the situation, because it says
-"Two vulnerabilities have been reported" and then perhaps proceeds to
-state what only one of the vulnerabilities is. Or, alternatively,
-maybe that Secunia advisory is implicitly categorizing $target and
-$target_cgi as separate vulnerabilities.
+On 05/29/2013 10:46 AM, Forest Monsen wrote:
+> Hi there,
+> 
+> I'd like to request CVE identifiers for:
+> 
+> SA-CONTRIB-2013-048 - Edit Limit - Access Bypass 
+> http://drupal.org/node/2007048
 
-Does anyone wish to contribute the information about whether the first
-problem fix (involving allowable characters in the $target and
-$target_cgi variables in lib/HTTPServer.pm) was part of 3.3.1, or only
-part of 3.4.0? If not, we can have someone at MITRE try to locate a
-copy of 3.3.1 later.
+Please use CVE-2013-2122 for this issue.
 
-https://github.com/mikaku/Monitorix/blob/master/Changes says
+> SA-CONTRIB-2013-049 - Node access user reference - Access Bypass 
+> http://drupal.org/node/2007122
 
-   Fixed to correctly sanitize the input string in the built-in HTTP server
-   which led into a number of security vulnerabilities. [#30]
+Please use CVE-2013-2123 for this issue.
 
-in both the 3.3.1 and 3.4.0 changelog entries. Also, as we previously
-posted, the vendor referred to "two security issues ... not covered
-yet in the previous 3.3.1 version" when announcing 3.4.0. We see that
-there is a second XSS-related commit involving the PATH_INFO (aka the
-$url variable) but this isn't necessarily "two security issues" by
-itself. So, we still don't know how many CVE IDs to assign, and we
-would prefer not to assign any CVE IDs until the meaning and scope of
-each ID is at least somewhat understood.
+> Thanks!
+> 
+> Forest
+> 
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSp1A6AAoJEKllVAevmvmstTsH/iCuzA8UqbTbMQCYQ7PfNFE5
-O0uYBMLgjBq801xz+aLF0FIhlm6Ruac3qfi7pXv+CV9OgtcHqoOuLTsnrUM4vNi/
-dCH5o3l+5aD4DMasP/Q8upSwqJl8GgUhyr78lgNRUxA/Wdje6o4+HM/v7lLLr6Hf
-uWLWndMzSzDw79R3RChz4cnXhDRYrSesBEDGdwFwN4/wRQ4Tp9WX3ocRGvhxw1fk
-5yo789nJzL3jYhXczqcUUR50OBQREUmB7eF1Kt4wU0idumaAm3mWARxnaWoA5Xgu
-dEyHhaNpu/uml4m1NswPmar9L1hh2kOORAmoY5KyhH6y2UIPmQDEKEcSX8tenPY=
-=JnLr
+iQIcBAEBAgAGBQJRpkKDAAoJEBYNRVNeJnmTDEMQAMHSMdIIfpx0abBJLaj9m8y+
+Yy3gvWPsAEcO17w07X9FHomhvAGtarQk8TzTozv1bWzkvn1mwrc4bOudWoSY/WiY
+QtnJM+7xAao3gQmnjpQ5KL9vInqzoj2LN1Y+ws1R33liEOdDqqWDv1JL7kBRoW1p
+AOl+3lBZ/EpZ0Q6TbF/e6JlkMefpSg8RXSVnf0Cdmh+WIfVn6XJMctXfZVRevYZO
+E1L06cd00lZkpMjJCLDTsixpmZYpdHwVwfDNiEAZOZ+X673ZyBsbq2BhTQ3tMTR0
+YWgd/CZzZGt0xWZm9XMwsKu3JsF0/I8dZ4QA8Vv+YZG2xM3NkyKv7qvYXJPUcS9o
+0wuPkwf3ikOZf7Z7lLMz7BmOWdmA6LPzkDe6ksg8DIE6P4nRR77Z/zr35mf3GFCR
+1gBEecf0HHqPH44jnOFPM5NC+y+VzCXRt6Q7FrZBexzMNArUqbtcmTxHZaPmCz/p
+n3VHyAhtAChSGhOn2Tcr/JrMRY8gAPR34glj4qpWXeeTLnP8h2+hioR51o9SqKiS
+SR3jZSmshhFdBv3/bV0EqUabL2P2Q2W55Bo+AyesqUzJGkH3R8lz0jK9wi+gJ9+E
+6klHGnoTAaFf6zEk80zbVdYcvgDbjyXZmN4lt0nTeEXAOjfm8MAKOITxu19eN579
+WXFSa+YH4i6VsaYuwQl5
+=sE1C
 -----END PGP SIGNATURE-----
