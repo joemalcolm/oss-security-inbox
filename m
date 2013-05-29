@@ -1,96 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/3
-Message-ID: <512705C8.6080908@redhat.com>
-Date: Thu, 21 Feb 2013 22:44:40 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/7
+Message-ID: <51A64245.9030702@redhat.com>
+Date: Wed, 29 May 2013 12:00:37 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Mitre CVE assign department <cve-assign@...re.org>
-Subject: CVEs for libxml2 and expat internal and external XML entity expansion
+To: oss-security@...ts.openwall.com
+CC: Raphael Geissert <geissert@...ian.org>
+Subject: Re: CVE request: libraw: multiple issues
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-So here are the CVE's for the two big ones, libxml2 and expat. Both
-are affected by the expansion of internal entities (which can be used
-to consume resources) and external entities (which can cause a denial
-of service against other services, be used to port scan, etc.).
+On 05/29/2013 03:18 AM, Raphael Geissert wrote:
+> Hi Kurt,
+> 
+> On 28 May 2013 19:58, Kurt Seifried <kseifried@...hat.com> wrote:
+>> On 05/28/2013 02:43 AM, Raphael Geissert wrote:
+>>> So there's a double-free (fixed in 0.15.2[3])
+> 
+> https://github.com/LibRaw/LibRaw/commit/19ffddb0fe1a4ffdb459b797ffcf7f490d28b5a6
 
-To be clear:
+Please
+> 
+use CVE-2013-2126 for this issue.
 
-====================
-Internal entity expansion refers to the exponential/quadratic/fast
-linear expansion of XML entities, e.g.:
-====================
-<!DOCTYPE xmlbomb [
-<!ENTITY a "1234567890" >
-<!ENTITY b "&a;&a;&a;&a;&a;&a;&a;&a;">
-<!ENTITY c "&b;&b;&b;&b;&b;&b;&b;&b;">
-<!ENTITY d "&c;&c;&c;&c;&c;&c;&c;&c;">
-]>
-<bomb>&d;</bomb>
+>>> and a buffer overflow (fixed in 0.15.1[2]).
+> 
+> https://github.com/LibRaw/LibRaw/commit/2f912f5b33582961b1cdbd9fd828589f8b78f21d
 
-or
+Please
+> 
+use CVE-2013-2127 for this issue.
 
-<!DOCTYPE bomb [
-<!ENTITY a "xxxxxxx... a couple of ten thousand chars">
-]>
-<bomb>&a;&a;&a;... repeat</bomb>
+> Cheers, -- Raphael Geissert - Debian Developer www.debian.org -
+> get.debian.net
 
-Which causes resources to be consumed
+Thanks
 
-
-
-====================
-External entity expansion refers to the loading of external resources
-such as XML entities from another server or a local file:
-====================
-<!DOCTYPE external [
-<!ENTITY ee SYSTEM "http://www.example.org/some.xml">
-]>
-<root>&ee;</root>
-
-
-<!DOCTYPE external [
-<!ENTITY ee SYSTEM "file:///PATH/TO/simple.xml">
-]>
-<root>&ee;</root>
-
-Which can cause resources to be consumed or can result in port
-scanning /application scanning information being sent to the attacker.
-
-
-So the CVE's to use:
-
-Please use CVE-2013-0338 for libxml2 internal entity expansion
-
-Please use CVE-2013-0339 for libxml2 external entities expansion
-
-Please use CVE-2013-0340 for expat internal entity expansion
-
-Please use CVE-2013-0341 for expat external entities expansion
-
-
-If you know of other XML libraries that are vulnerable (and open
-source =) please let oss-sec know so we can assign CVEs.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRJwXIAAoJEBYNRVNeJnmTYUMP/3gJtHt6GFt+J6fG03TIQMOA
-3NE7YfmU34/ZPxgFDHDiU7dOJc8uX6VMSQO0fyoFVW40iP/1PTxMow30E1qYBnDL
-nXl9Kxl1q/8uqWEpm0CN569a9aU3svCxtcC28m1ziTZ/DwNq/d+fbw/m76Mua9gd
-ZpL6hUeMcij47imYOtOgbMiYSt0F+JWTnHoBOwtIdZxkwWEzTIHC6eTNbKAe9Quo
-km8fLdpXA14WIWGeqS/K7qI4ie4JOSoJvHCp9YSF3gIVPxHXNqf6Yu1EAJbRRns9
-kLG8QH1agRxzV+ZmLobZmtY9D1zB+IjXGGQEd2U5gStYZNIAUxKnXPTKEsJJ4gyd
-iw7qp+ubNcO2X5leILNpGAJNtrDbRBcyrtLInM397Pl2xq3IGqX0/H74t+9paUPl
-xQexOko7btBmH0oFHJZNLwDjl97HevfLWab/izLCjANpuGwzPtP3h0GGfmQQ22nP
-dN9Cc0keFYbd+k9piihQqlHo25ZRW7Haqi5I1c2YK7lpvw8EcjsAc4Ggwk3waM+D
-S4oxQGHF5i4RvVvTRIJ5ShoHJMs8jS02XlUR+LoCsr3oP/UMkt/lzAkhnm/T0aLr
-WQ69a1is2p+yoQv9ASHA512ggxq/Zp1yNE/P97nK4nM01dx6vddr++Yxrq3cMVFZ
-42S90AvngWmywpPfKOQI
-=3XLg
+iQIcBAEBAgAGBQJRpkJEAAoJEBYNRVNeJnmTVZYP/R5M80Qjy91ZN3hoYmsywB7V
+KE8Tgwm1LsxWNvoHm5/ml7kEphNwrwPsxJeiKfZG1lql1N3I4Rd3eGLZZCn88WNk
+EJ1JeSDxE5XIpApnReXHBfCk3OGsHcotRhGj+7b+LCLqOcQW/f/MPQ3yVSMab8Pz
+QhFTg0t2TDthhAEQWi4PbwgVTPEb+UZtWo8gV4EF6rOWC45ZVOg/l5A+V0eBvt3j
+7SKRqxCdx5WTd3bK/t6T1jeQQi8BKF0AJ9q36AV5QObEcdvO992BXjt+bGxfwduk
+xpkChFcSmO17rd+NDWREO4Xr6AdUGD0JlhNsOD+q4+l51YCeZ5a7pumMwCxGVueE
+uBc9ztzvt8HekYgAV3vUgjGAHHistzSVQe9LfvxSwDotzGm6HSMtpvxogOMwXJbF
+eTr4AOBdLeV5cEbCZ+wXvLOFxr7AuNoO/by4pEb7YMMTacfFcv4Xy6uPjFQ63STS
+AGVn6/kN4ZB3xVZRTUePg+xWsgGUQKkeiWiV0N37JorHrNW2F9IwPLZxU4JqGGWA
+mR6HTxDzN1s8IykfuHM8hI/v1AHFr18gcxDlVitcN8zQWtKYXh5leDyEAQf8oLp2
+kqo/rljhijQdvhburnPBf91uJjrm7oYnrx4p5PaiG9e9oGEBZdzEe56teVOPUjjR
+BMZbIiKtJRQWOlZE9InY
+=bs8g
 -----END PGP SIGNATURE-----
