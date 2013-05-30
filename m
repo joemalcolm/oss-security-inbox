@@ -1,40 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/7
-Message-ID: <52579861.2010100@gmail.com>
-Date: Fri, 11 Oct 2013 12:19:13 +0600
-From: "Alexander E. Patrakov" <patrakov@...il.com>
-To: General PulseAudio Discussion <pulseaudio-discuss@...ts.freedesktop.org>
-CC: oss-security@...ts.openwall.com, webkit-gtk@...ts.webkit.org
-Subject: Re: [pulseaudio-discuss] Vulnerability in Webkit-GTK and PulseAudio volume handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/30/1
+Message-ID: <CAA7hUgHxQGo36UL5GER=ZzEc2BBnHKUYUjRbV4shGhYMp78gEQ@mail.gmail.com>
+Date: Thu, 30 May 2013 10:50:20 +0200
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: znc: null pointer dereference in webadmin
 Content-Type: text/plain; charset=utf-8
 
-Colin Guthrie wrote:
-> What would be more interesting to me would be how the same code works 
-> on Windows 7 which I believe also implements a flat volume scheme (not 
-> sure about Win 8) and how it handles stream volumes in this context 
-> (background: 
-> http://www.patrickbaudisch.com/publications/2004-Baudisch-CHI04-FlatVolumeControl.pdf)
+Hi,
 
-Here is a Windows 7 screenshot relevant to the flat volume idea. You 
-need it to understand the text below.
+A null pointer dereference was found in ZNC 1.0 in the webadmin module
+which can be triggered by non-admins and cause denial of service[0].
 
-http://permalink.gmane.org/gmane.comp.audio.pulseaudio.general/17426
+Could a CVE id be assigned please?
 
-Basically, Windows' flat volumes a just an UI feature of the default 
-mixer application. Volume sliders inside applications still show 
-relative-to-the-master volumes, as can be seen with Windows media player 
-on that screenshot. In other words, Microsoft did not go as far as the 
-referenced paper suggests.
+Thanks in advance.
 
-As far as testing the bad javascript under Windows, I have asked my 
-colleague to do just that in all major browsers (Chrome, Firefox, IE 
-(with a different media file), non-webkit Opera, webkit Opera). Result: 
-no bug. Javascript volume does not correspond to anything in the mixer 
-application. The volume slider inside the browser jumps between 99% and 
-100%, but the volume slider in the mixer application can be set to any 
-value, stays there, and the browser obeys. So the inside-the-browser 
-volume control is just an additional element in the path, exposed to the 
-user only inside the browser.
+References:
+[0] https://github.com/znc/znc/commit/2bd410ee5570cea127233f1133ea22f25174eb28
+[1] https://secunia.com/advisories/53450/
 
--- 
-Alexander E. Patrakov
+Cheers,
+--
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
