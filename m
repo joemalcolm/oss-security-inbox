@@ -1,57 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/29/7
-Message-ID: <526FDA6F.3010607@redhat.com>
-Date: Tue, 29 Oct 2013 09:55:27 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/30/3
+Message-ID: <51A7B3C5.7090809@redhat.com>
+Date: Thu, 30 May 2013 14:17:09 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for a vulnerability in OpenStack Keystone
+CC: Raphael Geissert <geissert@...ian.org>
+Subject: Re: CVE request: znc: null pointer dereference in webadmin
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/29/2013 04:40 AM, Thierry Carrez wrote:
-> A vulnerability was discovered in OpenStack (see below). In order
-> to ensure full traceability, we need a CVE number assigned that we
-> can attach to further notifications. This issue is already public, 
-> although an advisory was not sent yet.
+On 05/30/2013 02:50 AM, Raphael Geissert wrote:
+> Hi,
 > 
-> """ Title: Unintentional role granting with Keystone LDAP backend 
-> Reporter: The IBM OpenStack test team Products: Keystone Affects:
-> Grizzly, Havana
+> A null pointer dereference was found in ZNC 1.0 in the webadmin
+> module which can be triggered by non-admins and cause denial of
+> service[0].
 > 
-> Description: The IBM OpenStack test team reported a vulnerability
-> in role change code within the Keystone LDAP backend. When a role
-> on a tenant is removed from a user, and that user doesn't have that
-> role on the tenant, then the user may actually be granted the role
-> on the tenant. A user could use social engineering and leverage
-> that vulnerability to get extra roles granted, or may accidentally
-> be granted extra roles. Only Keystone setups using a LDAP backend
-> are affected. """
+> Could a CVE id be assigned please?
 > 
-> References: https://bugs.launchpad.net/keystone/+bug/1242855
+> Thanks in advance.
 > 
-> Thanks in advance,
+> References: [0]
+> https://github.com/znc/znc/commit/2bd410ee5570cea127233f1133ea22f25174eb28
+>
+> 
+[1] https://secunia.com/advisories/53450/
+> 
+> Cheers, -- Raphael Geissert - Debian Developer www.debian.org -
+> get.debian.net
 
-Please use CVE-2013-4477 for this issue.
+Please use CVE-2013-2130 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSb9pvAAoJEBYNRVNeJnmTmjoP/0A7aJSD7WuV8NaDE799Qb1S
-O80YYx6KrCmUCcVf3kkx1h0WfRo/3JDq74k0S4g9+ooXYkJZ8+aygWj1XtAEpOc9
-V4uKtExTXDJ+UDtvLHp0CFz+cLw+cK/no2uRbQA89EwZWYywe/6SdcSADBw8Rb55
-XJ897SBbHzkCSot7af/Ps+EnP4tN4YrxAilhyCvQbNfKOgCQhRmNh4dSnjaXDaAY
-fviQCpbKEYqvZvdxxIAfb2fqBsG/UaXBKOcivqw9UHMLN8w8tiHE1RfAHEPb4C48
-ElfpQ2VopTSp20wd1gwS6z76YzCSuDVMEB7kGbn3BIs0IIUsTNvzGbkpAGK6hAYW
-sc9Cyx3JcnmTDCAyxCvA90lwymU59PkylnUK+Sq9+ofX+ZU9HNtqX+uj+ohFoU1y
-E6WduJv3fCe8qs2cBk5RUgUvrJozQ2QYmpPTXYt09Aqtm5gODfTto1VS1IAjEy7N
-PZkF/MBsM+UoYEiDJwF1h5dpU8E/YHS3uEjOv9d3ngrSec6De6fseaAAdtBLriWt
-09iL7SnrJJxvZ13SmpKS8nBIyT/zPE7y2QXZvAxwxjmVU48kFFLoVbfK484KJoe3
-j013FiYW7e4kc4Udn24n1LzWMaFuGTlkyIpLDNYKMgfOdvFZsPXp0WIZDI7IR3Z8
-CVhPTI0G3m8QacTu+46n
-=Ux12
+iQIcBAEBAgAGBQJRp7PFAAoJEBYNRVNeJnmTwxoQAJSCdnDUK3hRAZFLrChyN4UL
+ERQdptENDqkj+B5uIMkyc2UCcXaSLtE5vv7e4dgnvLz2e6PrnOeUhbk0pHU68cYu
+1Mi0i5F1Dzv675UWYob5+EQsYQ19Yt4OWnAFJ+KK4r0d61aMP6mKznV09cOzmjQ9
+dVy1W34LnHH2dR4hv+5k2jv57xs1zLvsa1iKUCgcL3SmsPgr6i4iFH2YOsifbIqx
+KCvFmFPCqKQwNmAhksRGH8Q8SIlH6ESl/MvSu77drG2BcgAfEBgfMjfInS+3vvWO
+xUzkxJCUOockl/C+E5Vw2NIjlysOdYg/WO1Aifq37+YrGQXSIk4xqgeTfccm/UQe
+A0uWI4FmlXsr9DOrbXjtkH3N/J2e3HDIF67GeZo+hOz5HQtJg8y04gBYmtxGPO58
+TjtyZR4ryjyqXdUcXF5n1s27CS6eefbphMD2fDkna+gHS3YEKUwz2pEMZGaMcpsv
+qdqRl0OI8M9lcqLObNyWD7IH/ADCGYHg/D8nH3tVCOlwC0XdzuIfANP9bWZSUTUf
+xW9C9lBhGPiYMTfhDn9HzEElyqZINaSWTzGNI89bESqeB9ODev1ShiEaQv2VnY0E
+B0MWU8w9RRW+MyGfNd8uEO2nXHayg8Cn4rEp5Eg5zSbPcz0wZcDKdwPTin7Gx0ME
+XiDLCbDY6AEB/Td8tC57
+=0S2S
 -----END PGP SIGNATURE-----
