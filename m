@@ -1,105 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/30
-Message-ID: <512E4ABF.9040201@redhat.com>
-Date: Wed, 27 Feb 2013 11:04:47 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/30/2
+Message-ID: <51A76822.3080903@collabora.co.uk>
+Date: Thu, 30 May 2013 15:54:26 +0100
+From: Simon McVittie <simon.mcvittie@...labora.co.uk>
 To: oss-security@...ts.openwall.com
-CC: "Todd C. Miller" <Todd.Miller@...rtesan.com>
-Subject: Re: CVE request: sudo authentication bypass when clock is reset
+Subject: CVE-2013-1431: telepathy-gabble: TLS bypass via use of legacy Jabber
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-On 02/27/2013 09:23 AM, Todd C. Miller wrote:
-> Sudo 1.8.6p7 and 1.7.10p7 are now available which include a fix
-> for the following bug:
-> 
-> Sudo authentication bypass when clock is reset
-> 
-> Summary:
->     When a user successfully authenticates with sudo, a time stamp
->     file is updated to allow that user to continue running sudo
->     without requiring a password for a preset time period (five
->     minutes by default).  The user's time stamp file can be reset
->     using "sudo -k" or removed altogether via "sudo -K".
-> 
->     A user who has sudo access and is able to control the local
->     clock (common in desktop environments) can run a command via
->     sudo without authenticating as long as they have previously
->     authenticated themselves at least once by running "sudo -k" and
->     then setting the clock to the epoch (1970-01-01 01:00:00).
-> 
->     The vulnerability does not permit a user to run commands other
->     than those allowed by the sudoers policy.
-> 
-> Sudo versions affected:
->     Sudo 1.6.0 through 1.7.10p7 and sudo 1.8.0 through 1.8.6p7.
-> 
-> Details:
->     By default, sudo displays a lecture when the user's time stamp
->     file is not present.  In sudo 1.6, the -k option was changed
->     to reset the time stamp file to the epoch rather than remove
->     it to prevent the lecture from being displayed the next time
->     sudo was run.  No special case was added for handling a time
->     stamp file set to the epoch since the clock should never
->     legitimately be set to that value.
-> 
->     However, there are two common ways for the clock to be reset
->     to the epoch.  The first way is when the clock is reset due to
->     a fully drained battery on some systems.  The other way is by
->     a user logged in to a desktop environment that allows changes
->     to the date and time.
-> 
->     As long as the user has successfully run sudo before, they are
->     able to run "sudo -k" to reset the time stamp file.  This action
->     does not require a password and is not logged.  If the user is
->     also able to reset the date and time to the epoch (1970-01-01
->     01:00:00), they will be able to run sudo without having to
->     authenticate.
-> 
-> Impact:
->     The flaw may allow someone with physical access to a machine
->     that is not password-protected to run sudo commands without
->     knowing the logged in user's password.  On systems where sudo
->     is the principal way of running commands as root, such as on
->     Ubuntu and Mac OS X, there is a greater chance that the logged
->     in user has run sudo before and thus that an attack would
->     succeed.
-> 
-> Fix:
->     The bug is fixed in sudo 1.8.6p7 and 1.7.10p7.  These versions
->     will ignore a time stamp file that is set to the epoch.
-> 
-> Workaround:
->     Using "sudo -K" instead of "sudo -k" will completely remove the
->     time stamp file instead of just resetting it.
-> 
-> Credit:
->     I'd like to thank Marco Schoepl for finding and reporting this
->     long-standing bug.
-> 
+Maksim Otstavnov reported a vulnerability in the Wocky submodule used by
+telepathy-gabble, an XMPP client implementation for the Telepathy
+framework. A network intermediary could use this vulnerability to bypass
+TLS verification and perform a man-in-the-middle attack. The Debian
+security team has allocated CVE-2013-1431 for this vulnerability.
 
-Please use CVE-2013-1775 for this issue.
+This vulnerability is fixed in telepathy-gabble 0.16.6 [0]. All
+versions since 0.9.x are believed to be vulnerable. The patch
+described below is likely to apply to all affected versions without
+modification.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+If you use an unencrypted connection to a "legacy Jabber" (pre-XMPP)
+server, fixed versions of telepathy-gabble will not connect to that
+server until you make one of these configuration changes:
 
+• upgrade the server software to something that supports XMPP 1.0; or
+• use an encrypted "old SSL" connection, typically on port 5223
+  (old-ssl); or
+• turn off "Encryption required (TLS/SSL)" (require-encryption).
+
+Since the vulnerable code is in a git submodule, distributors with
+tarball-based builds for telepathy-gabble will need to apply a patch
+with suitably adjusted paths. A suitable patch[1] is available from
+the Telepathy bug report[2]. Distributors who will patch the Wocky
+submodule directly can take the patch from the git commit[3].
+
+In the current development branch, versions 0.17.0 to 0.17.3 are
+vulnerable; the upcoming 0.17.4 release will fix this vulnerability.
+
+Regards,
+    Simon
+
+[0]
+http://telepathy.freedesktop.org/releases/telepathy-gabble/telepathy-gabble-0.16.6.tar.gz
+
+http://telepathy.freedesktop.org/releases/telepathy-gabble/telepathy-gabble-0.16.6.tar.gz.asc
+[1] https://bugs.freedesktop.org/attachment.cgi?id=79894
+[2] https://bugs.freedesktop.org/show_bug.cgi?id=65036
+[3]
+cgit.freedesktop.org/wocky/commit/?id=ff317a2783058e8e90fac21bd8ba18359c5401f9
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRLkq/AAoJEBYNRVNeJnmTiDcQANR8k6W1zRF1otKXMobCjS5P
-Jost0kmGEC0M32NbR4CYXz//noUTsZR6Zbh1C4Kt/lsjARv7NkJgFKKUi6hqXoig
-YGmUQtMDaI8Y8kmI09gr4XMrr/urmo0ifd8cWDULBxnPGT9zWbfpALXkJ5iI2bm2
-tTIhKEaYz7nyqRxZkwDX8OTJ4glikhd+XfEeP1wqUxT6fsYFJu4o8yJyHkoCg2ML
-cGfHm/nSf/Gg1I0Ze6VvDbg8zGeynPo3uCzHVL0sUbn3PXRYDAEF+gL0sOFPMjpw
-ObJNjJxBUaHasZL7gLLGKdqzXOH19WzsAhXuizbeBC6qLytiKojakt2vfEcbKpE1
-kvnb/RZUJgeJ713C2Zr7uTJ5IVP+k13f86lNUJA5TqKsbnTCPCHOlStgFIQFU3wa
-sTQpfS+6h6wZI95UZ4WTA0In1PyoB9hNIK+5xpOXw5j7mau/jCuL773XgZc+yK6p
-JgadFbfOY674ORPxrnBXNM6N9yCNQrvSRRmmr88efQo4U4SFx30cDZYrET7wsR5B
-MrqNGLP7dQtDbfB3ap0tqyTTXzModg4xcvObHa6F3w9UbsI+fTpkDsaUpZRf9PTT
-JwAklksljHsJA4oVvhAhS0MQqyV9H34v8tbQhT7pEbtOpXRluCM8nEoIrV6kn/1v
-24TzEDeKW4PHX2R2aXvN
-=kQGP
+iQIVAwUBUadoIk3o/ypjx8yQAQjp2g//ahF56sVtw5M0z7SVR8HXgXpvgwkoiV9C
+9jAdfp12d4fePF0tmUjglnINRCvz1V0qwq40uYTD5i9KDgQ3sRbLJ0ND/AB3kxDn
+6/xZnKdRaQrOC9yGoR5ukQcLdsZn92tBBcprLhy6Xb/fOh53ekGNxrlmUACGRR9s
+yD4m1/5Yhxr2cCxBppcJAQp9Ml1Zk8+aO7TG7GK1dU58r0kDkOqCBei0mwSRVL0V
+cO1sMyofOw+SOouwXne+XHwxY2/T2LaXq9jqm/hCZGMYwYr2Tg/ttysnkeJ40cNS
+E2Bx8AUCjwhfNfS2RWZCea2XlyHyzxNMMQV8NsABbvFp4Ab0BVRr7wEazZAJIv88
+IGrpzHLndfD/7zxEdDAnurJiHEaypaY6RzFh1vXeb8JMZJfbTlZFYj5GWpQvsX2G
+zVdiOOkaC/82PqYO8+c+xPXQKdfsMmyTDq6Wz+QC6gyFmUJu6VR4xMC5WR74DmK3
+bCG1VDy44d50/IbFBD8iNWhBfPbjEimuIIzwnwSYD8vUuNbbBvMuQwpCbYd9CduP
+lZSnqkG7xG25Pvx0bbzUtFuZvaT+wxYRo2ggG8WiJ9lRs0x4LvhM/y8WMeBFkt/5
+sT9RhAmLzEaUyIreOdK2JgzG0p+FtRAxvBsaVwlDTdSpwBZAK7VCgnPOqmaK+zey
+eW5Zap6A7wM=
+=YXtV
 -----END PGP SIGNATURE-----
