@@ -1,61 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/20/3
-Message-ID: <51C2AD28.7090905@redhat.com>
-Date: Thu, 20 Jun 2013 01:20:08 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/31/7
+Message-Id: <201305311929.r4VJSwLQ011742@linus.mitre.org>
+Date: Fri, 31 May 2013 15:28:58 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: monkeyd Denial of Service
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/19/2013 06:09 PM, Forest Monsen wrote:
-> Hi there,
-> 
-> I'd like to request a CVE identifier, or identifiers, for:
-> 
-> SA-CONTRIB-2013-053 - Login Security - Multiple Vulnerabilities 
-> https://drupal.org/node/2023585
-> 
-> Maybe two -- denial of service, and access bypass.
-> 
-> Thanks!
-> 
-> Forest Monsen, on behalf of the Drupal Security Team
+>http://bugs.monkey-project.com/ticket/181
 
-When Login Security is configured to use the delay feature, frequent
-or concurrent failed attempts to login can consume all the web serving
-processes, causing a denial of service.
-
-Please use CVE-2013-2197 for this issue.
-
-
-
-It is possible to bypass Login Security features when soft blocking is
-disabled. This is due to the incorrect use of string filtering in the
-module which can cause the module to skip all checks.
-
-Please use CVE-2013-2198 for this issue.
+Use CVE-2013-3724.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.11 (SunOS)
 
-iQIcBAEBAgAGBQJRwq0nAAoJEBYNRVNeJnmTx6kP/1tJ13zLlzqa0vTN4qc95pL7
-QCEP8h3k+pqJWqDVHMD2KGrXukmTATVU0tWi14IeGMJ748YeW8gp+tNynXGGnAWn
-tMTW5jql7K9/ZkGe5ILRSt5aEfHgX6BMYfMVsJj+gqiEaO4x2F30yZgVNWj9+3ba
-VVfPBa5BBOH02LPKfoS+KueTH2Dy6BRh0qUBkjlj9uNHnJ0wnm5EKxw4ui8V8SuI
-z8lPgCkVSCKjxXYDSmJLFC4hf2OIjS35y/DTYA95HTJV8RRT1uLT6tpo4gW7oKpq
-k9Zv3mTgKw4ZnmLjKdLuMQBX+LTfyWuFer+cpj9SBujOuM1you204nn9hNkPBGXT
-ZPoPZQvXvUpxDVEejX2GLUHiWeSHc9tos1/rC2hxVjIvdH/fUhf730sYmcx/jIsq
-3TmwyhUvH7yj5olHplGMTbbQO2f+htDUk8bqyCsfum0vO4xkfLwGVhTn6pWDLS5G
-s6I32JowrBWTj1K/T0EgzSEWomiXnta5Q4r8+WkhDL4brSKEmS4XxdpS8HvbU2wP
-VJDTh1VlixlpaLznoajbrfo1xMNA47JWmKorQrztAdZzl4dKFo61BwRPak/aU5+C
-5+mSDVsaUsEGlK1AQ+ih0v0O0G+gcm93mkgnpC3wtU4Ui9jX2aNNOz/X51n8rLWC
-0P7A9+vunyaU4h9yLFF8
-=aIiU
+iQEcBAEBAgAGBQJRqPmBAAoJEGvefgSNfHMdWQoH/iVai+p1Bvju71gOuLcUcROF
+b8VnBcYcSNLSU2DRkGM8BORP9mg4xZeea6k6zxvDJ8dgYVEQ4AklejLXhu/eJfrn
+vjaP9at0vvZU/rJkS4wfweGa3yHGYsLvBUOTXj5tcJPY7aU7Y7y98Uwilw8i5bUC
+tl2Z1mtMDtdYIDQ4Ut20g6dt2geCe06F/d4G7xc64NF1vD/R5ZaAr+a1+IbZyrP6
+FyeqsllKwF3F4+GiYHmoT5aJJhbw2+ioXqxMi/bY050XbIjAhksUilREYALOaAb6
+APfSWalJU0vwjpA1muc/Kroz3h0+oTY1XsI6bgol1GX/bfyxh7KWkOgKTdWt0hA=
+=LAFg
 -----END PGP SIGNATURE-----
