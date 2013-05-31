@@ -1,27 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/8
-Message-ID: <20130320095132.GA18899@dhcp-25-225.brq.redhat.com>
-Date: Wed, 20 Mar 2013 10:51:32 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/31/4
+Message-ID: <51A8AB57.5060408@gentoo.org>
+Date: Fri, 31 May 2013 15:53:27 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2013-1848 -- Linux kernel: ext3: format string issues
+Subject: CVE request: monkeyd Denial of Service
 Content-Type: text/plain; charset=utf-8
 
-ext3_msg() takes the printk prefix as the second parameter and the
-format string as the third parameter. Two callers of ext3_msg omit the
-prefix and pass the format string as the second parameter and the first
-parameter to the format string as the third parameter. In both cases
-this string comes from an arbitrary source.
+Hello,
 
-An user able to mount ext3 filesystems could use this flaw to crash the
-system or, potentially, increase their privileges.
+from http://www.1337day.com/exploit/20830 :
 
-Upstream fix:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=8d0c2d10dd72c5292eda7a06231056a4c972e4cc
+|Title:|
+|======|
+|Monkey HTTPD 1.1.1 - Denial of Service Vulnerability|
+||
+|Date:|
+|=====|
+|2013-05-28|
+||
+|References:|
+|===========|
+|http://bugs.monkey-project.com/ticket/181|
+||
+|Introduction:|
+|=============|
+|Monkey is a lightweight and powerful web server for GNU/Linux.|
+||
+|It has been designed to be very scalable with low memory and CPU 
+consumption, the perfect solution for embedded devices. Made for ARM, 
+x86 and x64.|
+||
+|Abstract:|
+|=========|
+|The vulnerability is a denial of service which is caused by sending a 
+null byte in an HTTP request to the web server.|
+||
+|Report-Timeline:|
+|================|
+|2013-05-23: Discovered vulnerability via fuzzing|
+|2013-05-25: Vendor Notification|
+|2013-05-26: Vendor Response/Feedback|
+|2013-05-27: Vendor Fix/Patch|
+|2013-05-28: PublicDisclosure|
+||
+|Status:|
+|========|
+|Published|
+||
+|Affected Products:|
+|==================|
+|Monkey HTTPD - version 1.1.1|
+||
+|Exploitation-Technique:|
+|=======================|
+|Remote|
+||
+|Details:|
+|========|
+|A bug discovered in Monkey's HTTP parser allows an attacker to cause a 
+segmentation fault in one of the daemon's threads using a specially 
+crafted request containing a null byte. An attacker can crash all the 
+available threads by sending the specially crafted request multiple 
+times, rendering the server useless for legitimate users.|
+||
+|Proof of Concept:|
+|=================|
+|The vulnerability can be exploited by remote attacker without any 
+special privileges. The placement of the null byte within the request 
+does not seem to have any effect on the result. The null byte may even 
+be used instead of an HTTP method such as, GET. Below is an example of 
+how this bug can be manually triggered:|
+||
+|ruby -e 'puts "GET /\x00 HTTP/1.1\r\n\r\n"'|netcat localhost 2001|
+||
+|Solution:|
+|=========|
+|This vulnerability has been fixed for the 1.2.0 release.|
+||
+|Risk:|
+|=====|
+|The security risk of the redirection vulnerability is estimated as low(+).|
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-1848
+Commit code:
+http://git.monkey-project.com/?p=monkey;a=commitdiff;h=9f32a0c56ab185651dc91a858ac5259f07ed9ad1
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
