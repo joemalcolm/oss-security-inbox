@@ -1,44 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/9
-Message-ID: <529F89E1.3050103@redhat.com>
-Date: Wed, 04 Dec 2013 13:00:33 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/31/6
+Message-ID: <51A8F59F.7040002@redhat.com>
+Date: Fri, 31 May 2013 13:10:23 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: SNMPD DoS #2411 snmpd crashes/hangs when AgentX subagent times-out
+Subject: CVE-2013-2132 MongoDB: User-triggerable NULL pointer dereference due to utter plebbery
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/02/2013 10:54 PM, Kurt Seifried wrote:
-> Just cleaning out old email, ran across this:
-> 
-> http://sourceforge.net/p/net-snmp/bugs/2411/
-> 
-> It's a DoS, requires authenticated access but snmpd is often used to
-> monitor a lot of systems not always under your direct control (e.g.
-> read only access). I'm inclined to assign a CVE unless someone objects
-> strongly.
+https://jira.mongodb.org/browse/PYTHON-532
 
-Please use CVE-2012-6151 for this issue.
+Short summary:
+
+Step 1. Use Mongo as WEB SCALE DOCUMENT STORE OF CHOICE LOL
+Step 2. Assume basic engineering principles applied throughout due to
+HEAVY MARKETING SUGGESTING AWESOMENESS.
+Step 3. Spend 6 months fighting plebbery across the spectrum, mostly
+succeed.
+Step 4. NIGHT BEFORE INVESTOR DEMO, TRY UPLOADING SOME DATA WITH
+"{$ref: '#/mongodb/plebtastic'"
+Step 5. LOL WTF?!?!? PYMONGO CRASH?? :OOO LOOOL WEBSCALE
+Step 6. It's 4am now. STILL INVESTIGATING
+b4cb9be0 pymongo/_cbsonmodule.c (Mike Dirolf 2009-11-10 14:54:39 -0500
+1196) /* Decoding for DBRefs */
+Oh Mike!!!
+
+
+3. ADD process_dbrefs=False TO ALL THE DRIVERS
+
+To reproduce:
+? in mongo shell:
+db.python532.insert({x : {"$ref" : "whatever"} });
+? in python shell
+import pymongo
+pymongo.MongoClient().test.python532.find_one()
+
+Fix:
+https://github.com/mongodb/mongo-python-driver/commit/a060c15ef87e0f0e72974c7c0e57fe811bbd06a2
+
+BTW can someone from 10gen contact me so we can start doing the CVEs
+for MongoDB properly? Thanks.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSn4nhAAoJEBYNRVNeJnmTkXIP/2aUuLaKF1kfF8e9ZbN/8KBj
-m9ry80sAPt58JQLNtTuKImW5HQ12N1A5lYeDoqgHpS9/RUka6GSUApgRr7Z7qv4m
-5loGnswD0Y4SB7kdM2YSUuRqPo3CGUnlbE1GWZMUxQlQKdItrbQmatxhRAUzpYVR
-TkW8zMUJ0CvT5th3OlTqRW82FzQB9e69qXWEtfCxuk/WA7iSlzF38pFxp2DbM+PV
-kQYxFKHgyL4OsuT+tT1Zcm9eItO7MCCOjXFRnRiEqM7NVODBCvGRLsceOXQdcfb2
-yJwaci+dU4jWQBXbiNuoGSIxPeaWG/BHaExtvONnq9EivLgcgh4C42/ia6qd6EXb
-ObqlWatq3CY0MaSEuCoYymLum+apR4YQMgeMqqtzasi7qxTBnsw9zcjb6lwLUNIq
-0/RZ9bqSPA5IJG/o2LS6hf7/P2i4jzHr7ROahnVUEkfkFqglI17wKLBjrPXe5WT4
-S53rTkL/HRfD6ZrSWKvQhJNR7Tu5fXouOizuVinzTcQn9oUo3JMdQN42/5cctVvW
-WztnSSWfpJ/0qIRELLPRPndvrnIm40+wpo8GNw8CSd/Pg4IILXJzFsc8BFLDuAVG
-Y8KmRQRNXnq9q3dfngwB9fSWKRtufXPktpUfnGKn/2cyFID54Qj35RTFu1Z6ZdzF
-tRdheIVoJHoY1eDnJLEH
-=v98p
+iQIcBAEBAgAGBQJRqPWfAAoJEBYNRVNeJnmTOngQAMcgBc6gI2Sr78b3El4ZZ1Cx
+TPdez1MNZhzhK9ELhLV+fuwFVDTYNQijFDlGjJjjFICh5RPOuVUCrAVyrv1NK4HF
+e2CgLNAuZuG68z4byKDe7zvfftwb2NgT+9DRtye20ExYQ2KgEufrEPjLlY0BF9vu
+arQyye/b2InhuUx7zzNr/dPkLXRzibq+7CfbCkSQ9T4/yJ5Cjlk7ILnIPNlV/E4L
+48P+fOza5JcLJs/MEInXMOhQiDQDYWn4M1gcwe4YCKbsjohAhQy9KBoFIckbLEA6
+mceG+KkQmB5D/X32YGq3UMOOfPntgrvV/s6sjhscqmMrdhMmlPRIhObI/Mpfo4GQ
+lxoa94BEXAagFEMUPBs/iu1vwof90Yso9J0Zer6pil950SGA3YjauCmOP3GibjWr
+LBaLvOCZB/HxYmSKvDeN5g7plNfl1MSnuAglcIFOMs/xntRYgBJrDfUDw9kKjm0Z
+Y7iglIjLYQvStQGXGmHQhwglJJgxZjOipJSalEeTVdWfFWXursKamoTu8Bo9TELK
+z8zbh3IozHA/roQFcLtDgcVtn0qFMMf4YBb9rXMwePAdEXTrOVTzcPUe3dc0tEmY
+5nCBsMPYZ0/KLQATViApAT3v3sa++ywxqATibPoxJdvsmvrDLLtDPenHbEr4b6Ns
+CkTEXrASTF/y5sWYDZ/F
+=Djhc
 -----END PGP SIGNATURE-----
