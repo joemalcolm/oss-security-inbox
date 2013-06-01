@@ -1,68 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/14
-Message-Id: <201312092343.rB9NhIhb029000@linus.mitre.org>
-Date: Mon, 9 Dec 2013 18:43:18 -0500 (EST)
-From: cve-assign@...re.org
-To: ratulg@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: monitorix: HTTP server 'handle_request()' session fixation & XSS vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/01/1
+Message-ID: <51A96750.50409@redhat.com>
+Date: Fri, 31 May 2013 21:15:28 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2013-2132 MongoDB: User-triggerable NULL pointer dereference due to utter plebbery
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1038071
+To be clear this is in the mongo-python-driver aka pymongo, not in
+MongoDB itself (but under the umbrella of MongoDB, I should have been
+more clear the first time).
 
-In reading this, we were not sure what vulnerability or
-vulnerabilities you are referring to. First, the Subject line mentions
-session fixation, but the body of the message doesn't mention session
-fixation.
-
-https://github.com/mikaku/Monitorix/issues/30 says "The remote host is
-running a web server that fails to adequately sanitize request strings
-of malicious JavaScript. By leveraging this issue, an attacker may be
-able to inject arbitrary cookies. Depending on the structure of the
-web application, it may be possible to launch a 'session fixation'
-attack using this mechanism." This suggests some possibility that the
-session fixation issue is resultant from an XSS vulnerability. In that
-situation, the session fixation issue could not be assigned a separate
-CVE ID.
-
-Also, https://github.com/mikaku/Monitorix/issues/30 says "The remote
-host is running GoScript. The installed version fails to properly
-sanitize user-supplied input to the 'go.cgi' script. An
-unauthenticated, remote attacker could exploit this flaw to execute
-arbitrary commands on the remote host." This is apparently a 2004
-issue but does not have a CVE ID. Monitorix 3.3.1 apparently has a
-patch for it.
-
-http://www.monitorix.org/news.html says "3.3.1 version released ...
-21-Nov-2013 ... This is a maintenance release that fixes a serious bug
-in the built-in HTTP server. It was discovered that the
-handle_request() routine did not properly perform input sanitization
-which led into a number of security vulnerabilities." (This is about
-some or all of the https://github.com/mikaku/Monitorix/issues/30
-page).
-
-http://www.monitorix.org/news.html also says "3.4.0 version
-released ... 02-Dec-2013 ... This version also fixes an important
-number of bugs and two security issues ... not covered yet in the
-previous 3.3.1 version." These would very likely need separate CVE
-IDs.
+On 05/31/2013 01:10 PM, Kurt Seifried wrote:
+> https://jira.mongodb.org/browse/PYTHON-532
+> 
+> Short summary:
+> 
+> Step 1. Use Mongo as WEB SCALE DOCUMENT STORE OF CHOICE LOL Step 2.
+> Assume basic engineering principles applied throughout due to HEAVY
+> MARKETING SUGGESTING AWESOMENESS. Step 3. Spend 6 months fighting
+> plebbery across the spectrum, mostly succeed. Step 4. NIGHT BEFORE
+> INVESTOR DEMO, TRY UPLOADING SOME DATA WITH "{$ref:
+> '#/mongodb/plebtastic'" Step 5. LOL WTF?!?!? PYMONGO CRASH?? :OOO
+> LOOOL WEBSCALE Step 6. It's 4am now. STILL INVESTIGATING b4cb9be0
+> pymongo/_cbsonmodule.c (Mike Dirolf 2009-11-10 14:54:39 -0500 1196)
+> /* Decoding for DBRefs */ Oh Mike!!!
+> 
+> 
+> 3. ADD process_dbrefs=False TO ALL THE DRIVERS
+> 
+> To reproduce: ? in mongo shell: db.python532.insert({x : {"$ref" :
+> "whatever"} }); ? in python shell import pymongo 
+> pymongo.MongoClient().test.python532.find_one()
+> 
+> Fix: 
+> https://github.com/mongodb/mongo-python-driver/commit/a060c15ef87e0f0e72974c7c0e57fe811bbd06a2
+>
+>  BTW can someone from 10gen contact me so we can start doing the
+> CVEs for MongoDB properly? Thanks.
+> 
+> 
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSplHIAAoJEKllVAevmvms0jAH/0RNtdKYSSGixfL2e4TABdMo
-27U2T/rM0cH6Bk9xMyIH0vtqhHsOsaMB266PEym9iy+Hntf+/OiCizA8HAbdeLoi
-xFjyYnWNAmuLnictLQ7S4zuwHMlA/3S9MsPS4ZaSpYmKkyb7YsxzSXNHmawss/XB
-wOuLDHyFu5JV6/5o6CfACKdAXxUjE569O8v647zH6XYhsaaEQJTe7TxRybJzLKgY
-YQrzp4Mh8QhMB2KNR9FO8zR9HfkTU0UoLzBQ/t52+ZmKi4eBOdzhi9La1hBgXleW
-NWBpx7zgnrAVN8bZ6xR3MiIa3fQtS4ncHhmliLzW5Qjrz7rZWNiTIKdwLiutDiI=
-=vNaA
+iQIcBAEBAgAGBQJRqWdQAAoJEBYNRVNeJnmTLyEP+wUzUZbwh+R/MANlnHkUUIYt
+Ird/gKx5jdyLhcdwuztgE017gYXZ2HuqA1cf59pw6KshZAkbSsKY/60gMeQrDe5V
+9ZVkHYW158MkfFgcL7mTzD8IbLJfrIQIpD3Wt3fNH31J2+xg3DBuyvLfTG8pYjC4
+VCtzY2KUUl3iiFA0TRHp6T9eOvsipA6LiqX1fr0lvhIxMl8cxbGcQE7dR43W/CGB
+DEnL+8apDtnVKHJrn+2YCoMVwox02ZZtzV6IbrQS97xY0Yk1LEEYj6ykKrtf6TPv
+7dt9WbxawyDHt0BcIhpyercBb9iBN0gavEczEewH9/kRpBWvQek2lg75PDcsp2Fs
+g+eSKVjFaguNp8d78WO7yQFM1RCRWImgneQGxg8iCMxY3MfcvMbY3z6yvYnJfV4r
+CxkC4J21zLTOYZg0i4bVekQhp1XKfSz7pDootWcgyPMl6q6C2nUQRckA94E/jPtB
+XtE4eIdawcZQ4nsaNlYuj1W/CC0R3+KeWPWb4pZr0Q4DPJjKx00AXgSvs02ZGoAl
+0pVNDnk6Gyc3gefkbZCsZ2gc8DX05x2x1FQntIbc7tHAstt+wJEZShB7D/vVLOa3
+LQ9oUPgU7bkVW9LD9UYck6GTVlvcN7TkgLbMsdRBDqPcPxUOUn8ZoWW2ude1MB7T
+/wU5PAfqMa/AMPKtvRVY
+=CZpc
 -----END PGP SIGNATURE-----
