@@ -1,31 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/18/5
-Message-ID: <52399B41.2010003@canonical.com>
-Date: Wed, 18 Sep 2013 08:23:29 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: [vs-plain] polkit races
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/02/1
+Message-ID: <20130602175608.GA14002@suse.de>
+Date: Sun, 2 Jun 2013 19:56:09 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: kernel info leak in tkill/tgkill
 Content-Type: text/plain; charset=utf-8
 
-On 13-09-18 08:15 AM, Sebastian Krahmer wrote:
-> Hi list
-> 
-> As required by distros list policy, I forward this to oss-security.
-> The initial CRD was Sept 11th, but it was shifted to today as
-> there were so many packages to be fixed.
-> 
-> regards
-> Sebastian
+Hi,
 
-I am the one who requested the embargo be extended to today, and was granted an
-exception to the distro list policy. Ubuntu has a number of a distro-specific
-packages that contain similar issues, and the embargo extension permitted us to
-prepare and test timely updates.
+This small Linux kernel info leaks still needs a CVE I think.
 
-Marc.
+b9e146d8eb3b9ecae5086d373b50fa0c1f3e7f0f
+Author: Emese Revfy <re.emese@...il.com>
+Date:   Wed Apr 17 15:58:36 2013 -0700
 
+    kernel/signal.c: stop info leak via the tkill and the tgkill syscalls
 
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+    This fixes a kernel memory contents leak via the tkill and tgkill syscalls
+    for compat processes.
+
+    This is visible in the siginfo_t->_sifields._rt.si_sigval.sival_ptr field
+    when handling signals delivered from tkill.
+
+    The place of the infoleak:
+
+    int copy_siginfo_to_user32(compat_siginfo_t __user *to, siginfo_t *from)
+    {
+            ...
+            put_user_ex(ptr_to_compat(from->si_ptr), &to->si_ptr);
+            ...
+    }
+
+    Signed-off-by: Emese Revfy <re.emese@...il.com>
+    Reviewed-by: PaX Team <pageexec@...email.hu>
+    Signed-off-by: Kees Cook <keescook@...omium.org>
+    Cc: Al Viro <viro@...iv.linux.org.uk>
+    Cc: Oleg Nesterov <oleg@...hat.com>
+    Cc: "Eric W. Biederman" <ebiederm@...ssion.com>
+    Cc: Serge Hallyn <serge.hallyn@...onical.com>
+    Cc: <stable@...r.kernel.org>
+    Signed-off-by: Andrew Morton <akpm@...ux-foundation.org>
+    Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
+
