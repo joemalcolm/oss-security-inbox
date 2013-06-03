@@ -1,17 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/12/2
-Message-Id: <201305121722.34545.luciano@debian.org>
-Date: Sun, 12 May 2013 17:22:34 +0200
-From: Luciano Bello <luciano@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Henrique de Moraes Holschuh <hmh@...ian.org>, security@...ian.org, tw-public@....de
-Subject: CVE request: MoinMoin Wiki (remote code execution vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/03/4
+Message-ID: <20130603173743.GL1472@yuggoth.org>
+Date: Mon, 3 Jun 2013 17:37:44 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com, openstack@...ts.launchpad.net
+Subject: Re: [Openstack] [OSSA 2013-013] Keystone client local information disclosure (CVE-2013-2013)
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
-    The section 0x06 of http://www.exploit-db.com/papers/25306/ mention a 
-exploit for moinmoin, which looks connected with this vulnerability 
-http://www.securityfocus.com/bid/59728
-    Can you please assign a CVE to it?
+On 2013-06-03 10:01:03 -0700 (-0700), Lloyd Dewolf wrote:
+> I appreciate that it often isn't appropriate, but in this case it
+> might have been beneficial to include python-keystoneclient
+> version 0.2.4 where this is first resolved.
 
-Cheers, luciano
+What's the better way to do that, do you think? Delay the
+announcement until a new release is tagged, guess what the release
+will be numbered (possibly doable with the assistance of the
+developers as long as they don't change their minds), or follow up
+to the announcement after the fact? I opted for expediency and
+accuracy, indicating the date and commit hash stating "will appear
+in the next release," but am happy to entertain alternative
+approaches there.
+
+I agree it's less than ideal for end users reading the announcement
+and trying to decide whether they're running a new enough version of
+the client to have access to that feature, though I guess the
+manpage or --help output is the first place I would look as a user
+if it came into question. Also, with many users running
+stable-distribution-packaged clients with fixes backported, upstream
+version numbers can be fairly irrelevant to those users in the short
+term as they may have the fix in a client reporting to be running an
+older version.
+-- 
+Jeremy Stanley
