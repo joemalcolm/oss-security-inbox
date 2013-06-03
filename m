@@ -1,25 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/5
-Message-ID: <871udsp69p.fsf@mid.deneb.enyo.de>
-Date: Fri, 11 Jan 2013 07:45:22 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: gnome-keyring does not discard stored secrets in some cases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/03/1
+Message-Id: <E1UjXm9-0000i6-47@xenbits.xen.org>
+Date: Mon, 03 Jun 2013 16:38:29 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 52 (CVE-2013-2076) - Information leak on XSAVE/XRSTOR capable AMD CPUs
 Content-Type: text/plain; charset=utf-8
 
-We've received a bug report that gnome-keyring client library does not
-instruct the daemon to discard secrets when using the
-gnome_keyring_lock_all_sync function:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-<http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=697896>
-<https://bugzilla.gnome.org/show_bug.cgi?id=690466>
+	     Xen Security Advisory CVE-2013-2076 / XSA-52
+                            version 3
 
-The function is simply not implemented.
+           Information leak on XSAVE/XRSTOR capable AMD CPUs
 
-I had trouble finding a caller of this function, but the submitter
-indicated that gnome-power-manager uses it in older versions:
+UPDATES IN VERSION 3
+====================
 
-<http://git.gnome.org/browse/gnome-power-manager/tree/src/gpm-control.c?h=gnome-2-32#n162>
+Public release.
 
-I'm not sure if this needs a CVE, but it's probably worth fixing
-anyway.
+ISSUE DESCRIPTION
+=================
+
+On AMD processors supporting XSAVE/XRSTOR (family 15h and up), when an
+exception is pending, these instructions save/restore only the FOP,
+FIP, and FDP x87 registers in FXSAVE/FXRSTOR.  This allows one domain
+to determine portions of the state of floating point instructions of
+other domains.
+
+NOTE: This is the documented behavior of AMD64 processors, but it is
+inconsistent with Intel processors in a security-relevant fashion that
+was not addressed by the original implementation of XSAVE support on
+Xen.
+
+This vulnerability is similar to CVE-2006-1056, concerning
+FXSAVE/FXRSTOR on AMD processors.
+
+IMPACT
+======
+
+A malicious domain may be able to leverage this to obtain sensitive
+information such as cryptographic keys from another domain.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.0 and onwards are vulnerable when run on systems with AMD
+processors supporting XSAVE.  Any kind of guest can exploit the
+vulnerability.
+
+In Xen 4.0.2 through 4.0.4 as well as in Xen 4.1.x XSAVE support is
+disabled by default; therefore systems running these versions are not
+vulnerable unless support is explicitly enabled using the "xsave"
+hypervisor command line option.
+
+Systems not using AMD processors, or using AMD processors not
+supporting XSAVE (i.e. families prior to 15h), are not vulnerable.
+
+Xen 3.x and earlier are not vulnerable.
+
+MITIGATION
+==========
+
+Turning off XSAVE support via the "no-xsave" hypervisor command line
+option will avoid the vulnerability.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa52-4.1.patch             Xen 4.1.x
+xsa52-4.2-unstable.patch    Xen 4.2.x, xen-unstable
+
+$ sha256sum xsa52-*.patch
+058741aae8881774cfe8f8d193fee9b92da62e61459b1e9617798ccee2ce8d75  xsa52-4.1.patch
+5b8582185bf90386729e81db1f7780c69a891b074a87d9a619a90d6f639bea13  xsa52-4.2-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJRrMHCAAoJEIP+FMlX6CvZIX8H/ihEr/Pd3hbtHs7dNvm61b6W
++0sKx6RxMxZOVe5G0tWaiJEXzyT78kqtYAuI3m5pZdGZ0+40L1vWEN8mTKErfTmX
+igN5kUtPaoMT0wWO+/2XKBs/VBF1AzOmBgFntClm+lXpwPBSXVoqv8BKUzxIH/yN
+aaoSPzV2cIRJh/Vt5aEInjd25kwJ4Leh+pQ+gyxedu4ImqQeEud/z5C1YM5RwXco
+ixy9Gd11Uk1NIXnPYCYj4CUh5NmCWeWf1CXkIkz+HfjUtH/Qr71uSb0SyXgdKM9B
+fUXp45TRHzhtzhYERo0lTVHnd6gaT34gT7f6PAKBEMBh398tV+LKvJQf3xU1jE8=
+=XL1m
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa52-4.1.patch" of type "application/octet-stream" (1929 bytes)
+
+Download attachment "xsa52-4.2-unstable.patch" of type "application/octet-stream" (1945 bytes)
