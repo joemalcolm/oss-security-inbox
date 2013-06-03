@@ -1,24 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/4
-Message-ID: <249137999.3280513.1373563437679.JavaMail.root@redhat.com>
-Date: Thu, 11 Jul 2013 13:23:57 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request - php 5.3.27 fixing heap corruption in the XML parser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/03/8
+Message-ID: <CAJ3HoZ3XNCHL+Q_LVyezVB7Lk+AGNcKT-fVt3UWzmO8mCMVqbg@mail.gmail.com>
+Date: Tue, 4 Jun 2013 07:11:40 +1200
+From: Robert Collins <robertc@...ertcollins.net>
+To: Jeremy Stanley <fungi@...goth.org>
+Cc: openstack@...ts.launchpad.net, oss-security@...ts.openwall.com
+Subject: Re: [Openstack] [OSSA 2013-013] Keystone client local information disclosure (CVE-2013-2013)
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+What if we were to always do a release after a security advisory?
+On 4 Jun 2013 06:25, "Jeremy Stanley" <fungi@...goth.org> wrote:
 
-  PHP upstream has released 5.3.27 version:
-  [1] http://php.net/archive/2013.php#id2013-07-11-1
+> On 2013-06-03 10:51:19 -0700 (-0700), Lloyd Dewolf wrote:
+> [...]
+> > Interestingly, the OSSA 2013-014 notice did include
+> > "python-keystoneclient fix (will be included in upcoming 0.2.4
+> > release)".
+>
+> I'm going to chalk that up to Thierry knowing the version number at
+> that point, since the OSSA 2013-014 fix is what got tagged with
+> 0.2.4 the next morning. On the other hand the -013 fix was a
+> lower-priority feature enhancement and I didn't want to rely on a
+> versioning guess a week ahead. Client releases are handled a bit
+> more independently compared to OpenStack server components (where we
+> can predict release milestone dates fairly accurately).
+>
+> As a general rule I'm going to try to include the release version
+> numbers in advance when I can do so safely, and otherwise rely on
+> subsequent release announcements.
+> --
+> Jeremy Stanley
+>
+> _______________________________________________
+> Mailing list: https://launchpad.net/~openstack
+> Post to     : openstack@...ts.launchpad.net
+> Unsubscribe : https://launchpad.net/~openstack
+> More help   : https://help.launchpad.net/ListHelp
+>
 
-correcting one security flaw (upstream bug #65236):
-[2] http://php.net/ChangeLog-5.php
-[3] https://bugs.php.net/bug.php?id=65236
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
