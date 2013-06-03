@@ -1,85 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/20/2
-Message-ID: <51EA271D.4030904@redhat.com>
-Date: Fri, 19 Jul 2013 23:58:53 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: coley@...us.mitre.org, oss-security@...ts.openwall.com, security@...ntu.com
-Subject: Re: CVE Request: smokeping incomplete fix for CVE-2012-0790
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/03/2
+Message-Id: <E1UjXmC-0000id-CU@xenbits.xen.org>
+Date: Mon, 03 Jun 2013 16:38:32 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 53 (CVE-2013-2077) - Hypervisor crash due to missing exception recovery on XRSTOR
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/19/2013 06:34 PM, Seth Arnold wrote:
-> Hello Kurt, Steve, all,
-> 
-> I am requesting a 2012 CVE for an incomplete security fix in
-> smokeping, fixed in version 2.6.9.
-> 
-> CVE-2012-0790 was assigned to smokeping for XSS flaws.
-> 
-> The fix for CVE-2012-0790 in smokeping 2.6.7 was incomplete. The 
-> filtering used this blacklist:
-> 
-> $mode =~ s/[<>&%]/./g;
-> 
-> The version in 2.6.9 uses the following blacklist:
-> 
-> my $xssBadRx = qr/[<>%&'";]/;
-> 
-> (', ", and ; have been added. When it is used, blacklist chars are
-> now turned to _ rather than . ) The 2.6.9 version prevents escaping
-> <html attribute="..."> via " characters.
-> 
-> The incomplete fix is in 2.6.7 and 2.6.8.
-> 
-> This flaw was discovered by Florian Weimer [1] in 2012 and brought
-> to our attention [2] in 2013.
-> 
-> The upstream CHANGES [3] file includes, in part:
-> 
-> 
-> --------------------------------------------------
-> 
-> 2013/03/04 - released version 2.6.9
-> 
-> *  be more careful about preventing xss attacks, re
-> http://bugs.debian.org/659899 (tobi)
-> 
-> --------------------------------------------------
-> 
-> 
-> I have not found an up-to-date online browsable source.
-> 
-> Thanks
-> 
-> 
-> 1: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659899#37 2:
-> https://bugs.launchpad.net/ubuntu/+source/smokeping/+bug/1203061 3:
-> http://oss.oetiker.ch/smokeping/pub/CHANGES
-> 
+	     Xen Security Advisory CVE-2013-2077 / XSA-53
+                            version 3
 
-Perfect CVE request.
+       Hypervisor crash due to missing exception recovery on XRSTOR
 
-Please use CVE-2013-4158 for this issue.
+UPDATES IN VERSION 3
+====================
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+Processors do certain validity checks on the data passed to XRSTOR.
+While the hypervisor controls the placement of that memory block, it
+doesn't restrict the contents in any way.  Thus the hypervisor exposes
+itself to a fault occurring on XRSTOR.  Other than for FXRSTOR, which
+behaves similarly, there was no exception recovery code attached to
+XRSTOR.
+
+IMPACT
+======
+
+Malicious or buggy unprivileged user space can cause the entire host
+to crash.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.0 and onwards are vulnerable when run on systems with processors
+supporting XSAVE.  Only PV guests can exploit the vulnerability; for
+HVM guests only the control tools have access to the respective
+hypervisor functions.
+
+In Xen 4.0.2 through 4.0.4 as well as in Xen 4.1.x XSAVE support is
+disabled by default; therefore systems running these versions are not
+vulnerable unless support is explicitly enabled using the "xsave"
+hypervisor command line option.
+
+Systems using processors not supporting XSAVE are not vulnerable.
+
+Xen 3.x and earlier are not vulnerable.
+
+MITIGATION
+==========
+
+Turning off XSAVE support via the "no-xsave" hypervisor command line
+option will avoid the vulnerability.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa53-4.1.patch             Xen 4.1.x
+xsa53-4.2.patch             Xen 4.2.x
+xsa53-unstable.patch        xen-unstable
+
+$ sha256sum xsa53-*.patch
+2deedb983ef6ffb24375e5ae33fd271e4fb94f938be143919310daf1163de182  xsa53-4.1.patch
+785f7612bd229f7501f4e98e4760f307d90c64305ee14707d262b77f05fa683d  xsa53-4.2.patch
+b9804e081afbc5e7308176841d0249e1f934f75e7fcc8f937bad6b95eb6944a5  xsa53-unstable.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR6icdAAoJEBYNRVNeJnmT/OYP/1jPhcrEMasq08oEE4zlne0h
-Ax+BAv+RioPNadydOoqd+0Xj6ReT0Zz92q0sL5Pig2kdPo2QkmUX3p+wWjXNTDMS
-HsWb2zjnghKUFfAWCfOHdJpXUsAU///8PCQqETfOTxm4RmAZGHbvbRkC9a8C4STu
-GaVPSwZvOArjfg30w7q6g2AYuiE3xHHTgKiZR6W1KD6t17kHGj2foRfQ417x2DCP
-EDS3n2BPQk8Cujy+epySC89FnOn4EvdJ3NLXSStvlYMTFORzOXN74ZyNxUNWAkax
-AXw8xf46mgEPyoxrEz3WSe3QERTFt/Hc6ALD4WHhe91v9Lf+QSndQ7dG1+o64jD7
-itRPhu6Zs52YxEZ3Ii8MA3TIaRL1tEd6laMcBIKcAfZs7WlRsdg76F5AfICVpiqj
-DLz0wkfuvvOdUzKA4UPB8klr/j0vbw4KjRrG9hA15T5aNZT5c9U3GHwMV4g7X94n
-jzQrE0Hi2pRlaNUhfhGVsJdyDRAUYwF1UdXaoZaKG3e0FBbZYLphTPnL350xmQDU
-vLiMgi/WDwI0ql+ZvziuKSOYEbufefP3CnqP8gEePm9o6xng/cgK9nKKB67ljhVC
-OMP2Y3QjUzNCV6w2JO6nsEUc63sLeRta7o509cryEXV9J8Wns5AfZAMufNv8yWfA
-iIWmeqk+laVdZDU5HSe/
-=y8JO
+iQEcBAEBAgAGBQJRrMHGAAoJEIP+FMlX6CvZFiwH/3LXdHi2TC8c5HP1CCmn9jw2
+G44ZmfFYsEi8/SuEYnr7O4EE6lR/bU6FPu9u1Qal9KjfjkbmnGSmrJS2YTOnF42F
+UNKb1AlB/FbEay+5JZguqFKNkNKi2/u1GmyCLGrd01edf0c2emMvSLovR1yGo8RY
+u0KFpyRAMFt/OALIswQPblCYNkfEgOlAjTYAd4l06m47xRNEVeVbOQ93p0bbwnsT
+wkHbv+TIx6iwip0T0wWwms/tgZFvhpDa9VCgJ0I5QAQcyVYewwXjbC0UAvgQ5I/H
+p4CRyI3JP8FoblEk9sxtzscxLTw+cz14omNPal16wk7C6qZ7oYs8XKAoIuWMN5A=
+=mnra
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa53-4.1.patch" of type "application/octet-stream" (2179 bytes)
+
+Download attachment "xsa53-4.2.patch" of type "application/octet-stream" (2273 bytes)
+
+Download attachment "xsa53-unstable.patch" of type "application/octet-stream" (2328 bytes)
