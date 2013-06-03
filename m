@@ -1,59 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/15/5
-Message-ID: <CALCETrWYm7rhz=y8c6jTy2Ry_CFU0ajwjDAx5tDAK42r0rrfZQ@mail.gmail.com>
-Date: Mon, 15 Apr 2013 15:45:31 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: Brian Martin <brian@...nsecurityfoundation.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Summary of security bugs (now fixed) in user namespaces
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/03/3
+Message-Id: <E1UjXmF-0000j5-0w@xenbits.xen.org>
+Date: Mon, 03 Jun 2013 16:38:35 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 54 (CVE-2013-2078) - Hypervisor crash due to missing exception recovery on XSETBV
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 15, 2013 at 3:34 PM, Brian Martin
-<brian@...nsecurityfoundation.org> wrote:
->
-> Andy;
->
-> : I previously reported these bugs privatley.  I'm summarizing them for
->
-> : the historical record.  These bugs were never exploitable on a
-> : default-configured released kernel, but some 3.8 versions are
-> : vulnerable depending on configuration.
->
-> Do you know if these were patched, and therefore possibly disclosed via the
-> commits? With these details, it is difficult to line them up to existing
-> reports.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Bug 1 should be fixed in:
+	     Xen Security Advisory CVE-2013-2078 / XSA-54
+                            version 3
 
-commit 3151527ee007b73a0ebd296010f1c0454a919c7d
-Author: Eric W. Biederman <ebiederm@...ssion.com>
-Date:   Fri Mar 15 01:45:51 2013 -0700
+       Hypervisor crash due to missing exception recovery on XSETBV
 
-    userns:  Don't allow creation if the user is chrooted
+UPDATES IN VERSION 3
+====================
 
-Bug 2 is should be fixed by these:
+Public release.
 
-commit 90563b198e4c6674c63672fae1923da467215f45
-Author: Eric W. Biederman <ebiederm@...ssion.com>
-Date:   Fri Mar 22 03:10:15 2013 -0700
+ISSUE DESCRIPTION
+=================
 
-    vfs: Add a mount flag to lock read only bind mounts
+Processors do certain validity checks on the register values passed to
+XSETBV.  For the PV emulation path for that instruction the hypervisor
+code didn't check for certain invalid bit combinations, thus exposing
+itself to a fault occurring when invoking that instruction on behalf
+of the guest.
 
-commit 132c94e31b8bca8ea921f9f96a57d684fa4ae0a9
-Author: Eric W. Biederman <ebiederm@...ssion.com>
-Date:   Fri Mar 22 04:08:05 2013 -0700
+IMPACT
+======
 
-    vfs: Carefully propogate mounts across user namespaces
+Malicious or buggy unprivileged user space can cause the entire host
+to crash.
 
-Bug 3 should be fixed in:
+VULNERABLE SYSTEMS
+==================
 
-commit 92f28d973cce45ef5823209aab3138eb45d8b349
-Author: Eric W. Biederman <ebiederm@...ssion.com>
-Date:   Fri Mar 15 01:03:33 2013 -0700
+Xen 4.0 and onwards are vulnerable when run on systems with processors
+supporting XSAVE.  Only PV guests can exploit the vulnerability.
 
-    scm: Require CAP_SYS_ADMIN over the current pidns to spoof pids.
+In Xen 4.0.2 through 4.0.4 as well as in Xen 4.1.x XSAVE support is
+disabled by default; therefore systems running these versions are not
+vulnerable unless support is explicitly enabled using the "xsave"
+hypervisor command line option.
 
-Bug 4 isn't yet public... (it's unpatched so far and it's considerably
-more severe than any of these).
+Systems using processors not supporting XSAVE are not vulnerable.
 
---Andy
+Xen 3.x and earlier are not vulnerable.
+
+MITIGATION
+==========
+
+Turning off XSAVE support via the "no-xsave" hypervisor command line
+option will avoid the vulnerability.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa54.patch                 Xen 4.1.x, Xen 4.2.x, xen-unstable
+
+$ sha256sum xsa54-*.patch
+5d94946b3c9cba52aae2bffd4b0ebb11d09181650b5322a3c85170674a05f6b7  xsa54.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJRrMHJAAoJEIP+FMlX6CvZo7QH/insD6Ggb7vo09gEHuwktsXr
+yv0S1/ITk7dtGvHzhDKS3DS0AdYQeaHzU9MxH2/Cfa4GOQKGRTLNSfSpqZbd2hoB
+ZLhKwxA4nriCkW/Igzv6u7dxD5NuoRNE2lxyWIBaIHXczr4HvRJQin8pjKnzKujJ
+YQPbvgNqfuk/AhjxoZuZrhD3IN5RJm0+K6bkqRZQJt+IwI5jeu4n9xFJsS6joAdC
+ch/T1ADbt/OVeQFXvz1xGb0+OXo+Xs7kQCbZWT3ZNUMwx+JXw94WI5MTqMrXGVPC
+bBUNxk64dvOThbLLF0O9mv03L/bIWHM8kWJD61JJGhMTnlx7uFJ0SFdPzGhMPd8=
+=dCbn
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa54.patch" of type "application/octet-stream" (972 bytes)
