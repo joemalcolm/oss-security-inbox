@@ -1,58 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/7
-Message-ID: <20131114132539.GO5443@mwanda>
-Date: Thu, 14 Nov 2013 16:25:39 +0300
-From: Dan Carpenter <dan.carpenter@...cle.com>
-To: Nico Golde <oss-security+ml@...lde.de>, oss-security@...ts.openwall.com, security@...nel.org, "Hans J. Koch" <hjk@...sjkoch.de>
-Subject: Re: some unstracked linux kernel security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/03/6
+Message-ID: <CABN7HM+7GmYfbD9+=g5ed4KPoT+ev-vJw5hcdn+5uAqX9Dn0ew@mail.gmail.com>
+Date: Mon, 3 Jun 2013 10:51:19 -0700
+From: Lloyd Dewolf <lloydostack@...il.com>
+To: Jeremy Stanley <fungi@...goth.org>
+Cc: oss-security@...ts.openwall.com,  OpenStack Mailing List <openstack@...ts.launchpad.net>
+Subject: Re: [Openstack] [OSSA 2013-013] Keystone client local information disclosure (CVE-2013-2013)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 14, 2013 at 11:33:10AM +0100, Petr Matousek wrote:
-> On Tue, Nov 12, 2013 at 11:10:32AM +0100, Petr Matousek wrote:
-> > Hi,
-> > 
-> > On Sun, Nov 03, 2013 at 05:32:52PM +0100, Nico Golde wrote:
-> > > drivers/uio/uio.c: mapping of physical memory to user space without proper size check
-> > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7314e613d5ff
-> > 
-> > there is a size check in uio_mmap() (the only caller of uio_mmap_physical()):
-> > 
-> >         requested_pages = vma_pages(vma);
-> >         actual_pages = ((idev->info->mem[mi].addr & ~PAGE_MASK)
-> >                         + idev->info->mem[mi].size + PAGE_SIZE -1) >> PAGE_SHIFT;
-> >         if (requested_pages > actual_pages)
-> >                 return -EINVAL;
-> > 
-> > why it wasn't sufficient?
-> 
-> Apparently there was a CVE split [1] and this is now CVE-2013-6763.
-> 
->   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6763
-> 
-> I still think this is a non-issue based on the above mentioned size
-> check. Can I please get second opinion from someone more knowledgeable
-> on this?
-> 
+Thanks Jeremy,
+
+I agree with you. I prefer a follow up after the fact.
+
+Interestingly, the OSSA 2013-014 notice did include
+"python-keystoneclient fix (will be included in upcoming 0.2.4
+release)".
+
+Thank you,
+Lloyd
+
+
+On Mon, Jun 3, 2013 at 10:37 AM, Jeremy Stanley <fungi@...goth.org> wrote:
+> On 2013-06-03 10:01:03 -0700 (-0700), Lloyd Dewolf wrote:
+>> I appreciate that it often isn't appropriate, but in this case it
+>> might have been beneficial to include python-keystoneclient
+>> version 0.2.4 where this is first resolved.
 >
+> What's the better way to do that, do you think? Delay the
+> announcement until a new release is tagged, guess what the release
+> will be numbered (possibly doable with the assistance of the
+> developers as long as they don't change their minds), or follow up
+> to the announcement after the fact? I opted for expediency and
+> accuracy, indicating the date and commit hash stating "will appear
+> in the next release," but am happy to entertain alternative
+> approaches there.
+>
+> I agree it's less than ideal for end users reading the announcement
+> and trying to decide whether they're running a new enough version of
+> the client to have access to that feature, though I guess the
+> manpage or --help output is the first place I would look as a user
+> if it came into question. Also, with many users running
+> stable-distribution-packaged clients with fixes backported, upstream
+> version numbers can be fairly irrelevant to those users in the short
+> term as they may have the fix in a client reporting to be running an
+> older version.
+> --
+> Jeremy Stanley
+>
+> _______________________________________________
+> Mailing list: https://launchpad.net/~openstack
+> Post to     : openstack@...ts.launchpad.net
+> Unsubscribe : https://launchpad.net/~openstack
+> More help   : https://help.launchpad.net/ListHelp
 
-Added Hans to the CC list since he's the maintainer.  Petr is asking if
-the size checks in uio_mmap() and uio_mmap_physical() are duplicative.
 
-> Isn't the size check redundant because of 
-> 
->         requested_pages = vma_pages(vma);
->         actual_pages = ((idev->info->mem[mi].addr & ~PAGE_MASK)
->                         + idev->info->mem[mi].size + PAGE_SIZE -1) >> PAGE_SHIFT;
->         if (requested_pages > actual_pages)
->                 return -EINVAL;
 
-That check is worrying requested_pages is rounded down to the nearest
-page but actual_pages is rounded up.  I don't understand why we are
-adding "(mem[mi]addr % PAGE_SIZE)" to the pre rounded up actual_pages.
-
-So, yeah, it seems like we do check the size twice now except the first
-time we do it wrong.
-
-regards,
-dan carpenter
-
+-- 
+--
+@lloyddewolf
+http://www.pistoncloud.com/
