@@ -1,59 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/46
-Message-ID: <512E868D.6000607@gmail.com>
-Date: Wed, 27 Feb 2013 14:19:57 -0800
-From: Forest Monsen <forest.monsen@...il.com>
-To: Kurt Seifried <kseifried@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request for Drupal Contributed Modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/03/7
+Message-ID: <20130603182437.GM1472@yuggoth.org>
+Date: Mon, 3 Jun 2013 18:24:39 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com, openstack@...ts.launchpad.net
+Subject: Re: [OSSA 2013-013] Keystone client local information disclosure (CVE-2013-2013)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 2013-06-03 10:51:19 -0700 (-0700), Lloyd Dewolf wrote:
+[...]
+> Interestingly, the OSSA 2013-014 notice did include
+> "python-keystoneclient fix (will be included in upcoming 0.2.4
+> release)".
 
-Hi Kurt,
+I'm going to chalk that up to Thierry knowing the version number at
+that point, since the OSSA 2013-014 fix is what got tagged with
+0.2.4 the next morning. On the other hand the -013 fix was a
+lower-priority feature enhancement and I didn't want to rely on a
+versioning guess a week ahead. Client releases are handled a bit
+more independently compared to OpenStack server components (where we
+can predict release milestone dates fairly accurately).
 
-I'd like to request CVE identifiers for several issues in contributed
-modules:
-
-SA-CONTRIB-2013-024 - Creative Theme - Cross Site Scripting (XSS)
-http://drupal.org/node/1929474
-
-SA-CONTRIB-2013-025 - Fresh Theme - Cross Site Scripting (XSS)
-http://drupal.org/node/1929482
-
-SA-CONTRIB-2013-026 - Best Responsive Theme - Cross Site Scripting (XSS)
-http://drupal.org/node/1929484
-
-SA-CONTRIB-2013-027 - Professional theme - Cross Site Scripting (XSS)
-http://drupal.org/node/1929486
-
-SA-CONTRIB-2013-028 - Responsive Blog Theme - Cross Site Scripting (XSS)
-http://drupal.org/node/1929488
-
-SA-CONTRIB-2013-029 - Business theme - Cross Site Scripting (XSS)
-http://drupal.org/node/1929496
-
-SA-CONTRIB-2013-030 - Clean Theme - Cross Site Scripting (XSS)
-http://drupal.org/node/1929500
-
-SA-CONTRIB-2013-031 - Premium Responsive theme - Cross Site Scripting
-(XSS)
-http://drupal.org/node/1929508
-
-SA-CONTRIB-2013-032 - Company theme - Cross Site Scripting (XSS)
-http://drupal.org/node/1929512
-
-SA-CONTRIB-2013-033 - Simple Corporate theme - Cross Site Scripting (XSS)
-http://drupal.org/node/1929514
-
-Thanks!
-Forest
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iEYEARECAAYFAlEuhnsACgkQ/ILCL9e1Br4EWQCcDDfQ8L8LXHTNoP5UtyC/yarl
-H1UAnRc0Sc6fm1O+nyvrWbVg5ssTCPlU
-=vvx3
------END PGP SIGNATURE-----
+As a general rule I'm going to try to include the release version
+numbers in advance when I can do so safely, and otherwise rely on
+subsequent release announcements.
+-- 
+Jeremy Stanley
