@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/13
-Message-ID: <20131115173031.GI2563@redhat.com>
-Date: Fri, 15 Nov 2013 10:30:31 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request for graphicsmagick DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/5
+Message-ID: <20130604160754.GA2624@kludge.henri.nerv.fi>
+Date: Tue, 4 Jun 2013 19:07:54 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, security@...pal.org
+Subject: CVE request: CKEditor module for Drupal access bypass SA-CONTRIB-2011-054
 Content-Type: text/plain; charset=utf-8
 
-I don't think this has been brought up here yet, but could a CVE be
-provided for the following?
+This does not seem to have CVE yet. Please assign. Drupal guys could you
+confirm, thanks.
 
-A vulnerability has been reported in GraphicsMagick, which can be
-exploited by malicious people to 
-cause a DoS (Denial of Service).
+Advisory ID: DRUPAL-SA-CONTRIB-2011-054
+Project: CKEditor - WYSIWYG HTML editor (third-party module)
+Version: 7.x
+Date: 2011-November-09
+Security risk: Critical
+Exploitable from: Remote
+Vulnerability: Access bypass
+Versions affected: CKEditor 7.x-1.4 version only
+Solution: Upgrade to CKEditor 7.x-1.5
 
-The vulnerability is caused due to an error within the
-"ExportAlphaQuantumType()" function 
-(magick/export.c) when exporting 8-bit RGBA images and can be exploited
-to cause a crash.
+https://drupal.org/node/1337006
+http://osvdb.org/77005
+http://secunia.com/advisories/46772/
 
-The vulnerability is reported in versions prior to 1.3.18.
+---
+Henri Salo
 
-References:
-
-https://bugs.gentoo.org/show_bug.cgi?id=488050
-http://sourceforge.net/p/graphicsmagick/discussion/250737/thread/20888e8b/
-https://secunia.com/advisories/55288/
-http://sourceforge.net/p/graphicsmagick/code/ci/1a2d7a38363f7f23b63d626887d22d39c7240144/
-https://bugzilla.redhat.com/show_bug.cgi?id=1019085
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=729661
-
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
