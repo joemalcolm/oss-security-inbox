@@ -1,86 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/13/1
-Message-ID: <511AD9CF.9030908@redhat.com>
-Date: Tue, 12 Feb 2013 17:09:51 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, Josselin Mouette <joss@...ian.org>
-Subject: Re: CVE request: Transmission can be made to crash remotely
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/4
+Message-ID: <20130604155316.GE19097@suse.de>
+Date: Tue, 4 Jun 2013 17:53:16 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Cc: a.p.zijlstra@...llo.nl, eranian@...gle.com, ak@...ux.intel.com, security@...nel.org
+Subject: CVE Request: More perf security fixes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 02/11/2013 06:47 AM, Jan Lieskovsky wrote:
-> Hello Yves-Alexis,
-> 
-> to follow up on this one. The source of the issue seems to be
-> underlying libutp code: [1]
-> https://trac.transmissionbt.com/ticket/5002#comment:22
-> 
-> more specifically the way how libutp (previously) handled selective
-> acknowledgements, which resulted in following two (libutp)
-> patches: [2] https://github.com/bittorrent/libutp/issues/38 [3]
-> https://github.com/bittorrent/libutp/issues/37
-> 
-> Transmission upstream corrected this issue in v2.74: [4]
-> https://trac.transmissionbt.com/query?milestone=2.74&group=component&order=severity
->
->  with the following patch: [5]
-> https://trac.transmissionbt.com/changeset/13646
-> 
-> Ad assigning CVE ids - I think one CVE id is enough. The problem is
-> in libutp code, and Transmission upstream seems to commit their own
-> change only due to libutp (un)responsiveness: [6]
-> https://trac.transmissionbt.com/ticket/5002#comment:32
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
-> P.S.: All the links from above at one place are at: [7]
-> https://bugzilla.redhat.com/show_bug.cgi?id=909934
-> 
-> ----- Original Message ----- On dim., 2013-02-10 at 11:50 +0100,
-> Josselin Mouette wrote:
->> Package: transmission-daemon Version: 2.52-3 Severity: grave 
->> Tags: security patch upstream Justification: user security hole
->> 
->> The transmission-daemon package in wheezy crashes regularly.
->> According to upstream this is a remote security hole (at least a
->> remote DoS, but most probably there is a way to take control of
->> the process).
->> 
->> https://trac.transmissionbt.com/ticket/5044 
->> https://trac.transmissionbt.com/ticket/5002
->> 
->> Apparently there is no CVE assigned. The bug is fixed upstream
->> and I’m attaching the patch. I’m currently testing a patched
->> package, and will report whether the fix is sufficient.
->> 
->> Could a CVE be assigned for this?
->> 
->> Thanks in advance, -- Yves-Alexis
+The perf kernel folks seem to have fixed some more perf issues which have not yet got CVEs.
 
-Please use CVE-2012-6129  for this issue.
+Our partner Intel thinks that these 3 are security relevant, so we think
+they also need seperate CVEs.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+I only glanced what the issue is, please correct if my classification is wrong..
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
 
-iQIcBAEBAgAGBQJRGtnOAAoJEBYNRVNeJnmTt20P/39GwILNRCBJUhOR/CYtypJB
-5ORIowSXw4tJ0/MqlgTac3wcFfeM9X1GGxsYvfDBc1xVsXdchPBUsccZh5NnzVXQ
-bzuQCJFfRg3K4IEcxdyC4jYPxuKCGyk/KN0AZSjer122kXcskMnd2VGPOrgwgq9n
-F22j+2rXk9D5YoXAKpQituzJV0+hy9D209rVRyQ/CIEmq7FxNyPsN48x+liBfmwu
-XqXmIKPR0XtgK72obIBTiUmQO2C+maptpRBlkqUKHSL+mE+D0mLdAb+BzzU65/Iq
-s3ktGniPYuW9lm1QvDSfmWACevT48RHoLEYrOEzxAO47v3NGr0jKOdXwNNK1GvPV
-r9MDaPnVee27jpHORhDMPLBnRSWWwGJP51sSZCJtne3RFjeORfiwulk2umkL+27i
-L6023aEgur6UwmTtkrpAqLGz7RT8l0r/h1dVB3q4CeaEyAlJyrHggy/Mey1bpqVC
-Tz4J6IHxU/SbHPFcBLFG9xpqmfhUDG4jdUP/dSRMeF5LsizLORkKtyhrl+SMLClW
-dVcWCJrj1QQOmXrxdpI6W0U6rCnOsJ/UAE1hbxFyFvOeDv7JaF4xmnsuF7OGHTj9
-SVegAoQO+fWllQHHRvhtl/I1Ga7MG5qJOI6V0oumyGp4mO+I2j2y3kPAFcblGSfp
-wk/1pgPxBMi92k7KPx0+
-=ZqrS
------END PGP SIGNATURE-----
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
+
+commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
+Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+Date:   Fri May 3 14:11:25 2013 +0200
+
+    perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
+
+    We should always have proper privileges when requesting kernel
+    data.
+
+    Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+    Cc: <stable@...nel.org>
+    Cc: Andi Kleen <ak@...ux.intel.com>
+    Cc: eranian@...gle.com
+    Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
+    [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
+    Signed-off-by: Ingo Molnar <mingo@...nel.org>
+    Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
+
+
+2. Denial of service (system crash)
+
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=f1923820c447e986a9da0fc6bf60c1dccdf0408e
+
+commit f1923820c447e986a9da0fc6bf60c1dccdf0408e
+Author: Stephane Eranian <eranian@...gle.com>
+Date:   Tue Apr 16 13:51:43 2013 +0200
+
+    perf/x86: Fix offcore_rsp valid mask for SNB/IVB
+    
+    The valid mask for both offcore_response_0 and
+    offcore_response_1 was wrong for SNB/SNB-EP,
+    IVB/IVB-EP. It was possible to write to
+    reserved bit and cause a GP fault crashing
+    the kernel.
+    
+    This patch fixes the problem by correctly marking the
+    reserved bits in the valid mask for all the processors
+    mentioned above.
+    
+    A distinction between desktop and server parts is introduced
+    because bits 24-30 are only available on the server parts.
+    
+    This version of the  patch is just a rebase to perf/urgent tree
+    and should apply to older kernels as well.
+    
+    Signed-off-by: Stephane Eranian <eranian@...gle.com>
+    Cc: peterz@...radead.org
+    Cc: jolsa@...hat.com
+    Cc: gregkh@...uxfoundation.org
+    Cc: security@...nel.org
+    Cc: ak@...ux.intel.com
+    Signed-off-by: Ingo Molnar <mingo@...nel.org>
+
+
+3. Information leak (??) via perf LBR filter 
+
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6e15eb3ba6c0249c9e8c783517d131b47db995ca
+
+commit 6e15eb3ba6c0249c9e8c783517d131b47db995ca
+Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+Date:   Fri May 3 14:11:24 2013 +0200
+
+    perf/x86/intel/lbr: Fix LBR filter
+    
+    The LBR 'from' adddress is under full userspace control; ensure
+    we validate it before reading from it.
+    
+    Note: is_module_text_address() can potentially be quite
+    expensive; for those running into that with high overhead
+    in modules optimize it using an RCU backed rb-tree.
+    
+    Reported-by: Andi Kleen <ak@...ux.intel.com>
+    Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+    Cc: <stable@...nel.org>
+    Cc: eranian@...gle.com
+    Link: http://lkml.kernel.org/r/20130503121256.158211806@chello.nl
+    Signed-off-by: Ingo Molnar <mingo@...nel.org>
+    Link: http://lkml.kernel.org/n/tip-mk8i82ffzax01cnqo829iy1q@git.kernel.org
+
+
