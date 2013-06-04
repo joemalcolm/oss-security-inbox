@@ -1,76 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/28/1
-Message-ID: <CABniQZP9uZF5Fssc+UTM0sX_SRUYRuuowsN+dnPHs2FudCfoug@mail.gmail.com>
-Date: Sun, 28 Apr 2013 13:01:39 +0800
-From: Shawn <citypw@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/10
+Message-ID: <51AE381A.2030201@redhat.com>
+Date: Tue, 04 Jun 2013 12:55:22 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Nginx ngx_http_close_connection function integer overflow - can anyone confirm this?
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: kernel info leak in tkill/tgkill
 Content-Type: text/plain; charset=utf-8
 
-hey Andrew,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I wrote a test program[1] that would generate a bunch of random bytes
-as http post payload. I ran it for hours but only make the
-r->count==>4. It seems like Nginx community not confirm this issue
-yet. I tried to contact 360 guys but didn't get reply.
+On 06/02/2013 11:56 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> This small Linux kernel info leaks still needs a CVE I think.
+> 
+> b9e146d8eb3b9ecae5086d373b50fa0c1f3e7f0f Author: Emese Revfy
+> <re.emese@...il.com> Date:   Wed Apr 17 15:58:36 2013 -0700
+> 
+> kernel/signal.c: stop info leak via the tkill and the tgkill
+> syscalls
+> 
+> This fixes a kernel memory contents leak via the tkill and tgkill
+> syscalls for compat processes.
+> 
+> This is visible in the siginfo_t->_sifields._rt.si_sigval.sival_ptr
+> field when handling signals delivered from tkill.
+> 
+> The place of the infoleak:
+> 
+> int copy_siginfo_to_user32(compat_siginfo_t __user *to, siginfo_t
+> *from) { ... put_user_ex(ptr_to_compat(from->si_ptr),
+> &to->si_ptr); ... }
+> 
+> Signed-off-by: Emese Revfy <re.emese@...il.com> Reviewed-by: PaX
+> Team <pageexec@...email.hu> Signed-off-by: Kees Cook
+> <keescook@...omium.org> Cc: Al Viro <viro@...iv.linux.org.uk> Cc:
+> Oleg Nesterov <oleg@...hat.com> Cc: "Eric W. Biederman"
+> <ebiederm@...ssion.com> Cc: Serge Hallyn
+> <serge.hallyn@...onical.com> Cc: <stable@...r.kernel.org> 
+> Signed-off-by: Andrew Morton <akpm@...ux-foundation.org> 
+> Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
 
-[1] https://github.com/citypw/arsenal-4-sec-testing/blob/master/http/http_request/http_post_payload_fuzzing.py
+Please use CVE-2013-2141 for this issue.
 
-On Fri, Apr 26, 2013 at 3:15 PM, Andrew Alexeev <andrew@...nx.com> wrote:
-> On Apr 26, 2013, at 9:48 AM, Alistair Crooks wrote:
->
->> On Thu, Apr 25, 2013 at 11:36:17PM -0600, Kurt Seifried wrote:
->>> -----BEGIN PGP SIGNED MESSAGE-----
->>> Hash: SHA1
->>>
->>> - From Bugtraq:
->>>
->>> http://www.securityfocus.com/archive/1/526439/30/0/threaded
->>>
->>> Website: http://safe3.com.cn
->>
->> Is this legit?
->>
->> I downloaded the index.html file with curl, and embedded around line 87
->> was a flash file:
->
-> Unfortunately we weren't approached by "Qihoo 360 Web Security Research Team"
-> before this publication went out through bugtraq.
->
-> We are now trying to obtain more information from that team without much success.
->
-> We've also analyzed their report and we can't conclude this is a real vulnerability yet.
-> From the descriptions provided it still looks like it's somewhat spurious.
->
-> We are trying to continue investigation though.
->
-> Regrettably responsible disclosure isn't always the case. However, we can't yet confirm
-> it's a full one either.
->
->
->> <table width="930" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
->> <tr><td>
->> <object type="application/x-shockwave-flash" data="/banner.swf?xml=/banner.xml" width="930" height="180">
->> <param name="movie" value="/banner.swf?xml=/banner.xml"/>
->> </object>
->> </td></tr>
->> <tr>
->>
->> so I took it to be an attempt at phishing.
->>
->> Maybe I'm just too paranoid in my old age?
->>
->> Regards,
->> Alistair
->>
->
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-
-
---
-GNU powered it...
-GPL protect it...
-God blessing it...
-
-regards
-Shawn
+iQIcBAEBAgAGBQJRrjgZAAoJEBYNRVNeJnmTOQ8P/jy1ODjXitITR3jB1DZtX1yn
+PRczwTvDTxDxypF5GMzFmvHYMyRvgMiN8P1XVz5yjEWdrvJRF0uV3S1+yx75GSxJ
+BuBT86Vzq8HZ0CAoVpbZlJYpA/NSoWmRjepMhh0KnA9V4LJiWBDf1aZ+z2utPngR
+mthyNxm4oI2+sPL1VvEsstBLhiimtTq6lzgb9looSzOnwsw43ybE/BJVZLuYNI9t
+bDjIpdYw6AuEsXRBuXHQlQqVD9Qj+Wkx3ZN+jSbQnoYQ4XXINQkp52YcIN0lV4Rm
+6Q8bkvTcPipJnvGzXSoXiCReXLAGDDgQmcG+YY+krQNIyq8N4ZiNHyGb5O/XFjUx
+Euh41qLi000oeyUAbLWUSO3dIzwtkw1upEl22hmm0wtKJid5HpT1drn0gZXPRDm8
+qPgGsaZqtI04E4CiWjJI24/wVhowb/b7TRfpNw15dd3dzV3EJR5zVawZfMZ/vD9l
+J1+ydHLr3DVNjoky2wvljlaEHscyBOwLOPs0bHCBGoy/ajSo6Lxa9h0bl4m4DK1+
+lzjgACZojblSEhw+usnl5HGCLzexvTn1fKMfBsjN9gj8SL6y4Qr4a/mUioUtwRHw
+DMHZzzkJgl3xLq8V+easanK/re0PU4FAiLBr5JkTo18jZnbonit5chPEmP5veON6
+txtIdd2HmtInUbllfSIn
+=alVA
+-----END PGP SIGNATURE-----
