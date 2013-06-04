@@ -1,94 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/10
-Message-Id: <E1TxcYZ-0007Gd-LA@xenbits.xen.org>
-Date: Tue, 22 Jan 2013 12:02:23 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 34 (CVE-2013-0151) - nested virtualization on 32-bit exposes host crash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/2
+Message-ID: <CAA7hUgHtdh9ckayyuQyLn-_rNNo84-yoTEmyZm53HLt2Gfchmw@mail.gmail.com>
+Date: Tue, 4 Jun 2013 15:51:14 +0200
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: libraw: multiple issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi again,
 
-	     Xen Security Advisory CVE-2013-0151 / XSA-34
-                            version 2
+On 29 May 2013 20:00, Kurt Seifried <kseifried@...hat.com> wrote:
+> On 05/29/2013 03:18 AM, Raphael Geissert wrote:
+>> On 28 May 2013 19:58, Kurt Seifried <kseifried@...hat.com> wrote:
+>>> On 05/28/2013 02:43 AM, Raphael Geissert wrote:
+>>>> So there's a double-free (fixed in 0.15.2[3])
+>>
+>> https://github.com/LibRaw/LibRaw/commit/19ffddb0fe1a4ffdb459b797ffcf7f490d28b5a6
+>
+> Please use CVE-2013-2126 for this issue.
 
-	   nested virtualization on 32-bit exposes host crash
+FWIW, I've noticed that libkdcraw and darktable embed copies of libraw
+that are vulnerable to the double free.
 
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-When performing nested virtualisation Xen would incorrectly map guest
-pages for extended periods using an interface which is only intended
-for transient mappings. In some configurations there are a limited
-number of slots available for these transient mappings and exhausting
-them leads to a host crash and therefore a Denial of Service attack.
-
-IMPACT
-======
-
-A malicious guest administrator can, by enabling nested virtualisation
-from within the guest, trigger the issue.
-
-Their ability to do this will depend on the number of VCPUs the domain
-is configured with. Domains with smaller numbers of VCPUs (e.g. less
-than 16) are not able to create sufficient mappings via this method to
-trigger the issue.
-
-VULNERABLE SYSTEMS
-==================
-
-32 bit hypervisors running HVM guests on either Intel or AMD are
-vulnerable.
-
-Only Xen version 4.2.x is vulnerable.
-
-Nested virtualisation was introduced as an experimental feature in Xen
-4.2 and therefore versions of Xen prior to that are not vulnerable.
-
-The 32 bit hypervisor has been removed in Xen unstable and therefore
-is not vulnerable.
-
-MITIGATION
-==========
-
-Running a 64 bit hypervisor or avoiding running HVM guests with
-untrusted administrators can avoid the issue.
-
-We strongly recommend running a 64 bit hypervisor on any processor
-which supports it. Note that this does not require running a 64 bit
-domain 0.
-
-Ensuring that HVM guests with untrusted administrators do not have
-more than 16 VCPUs will also avoid the issue.
-
-RESOLUTION
-==========
-
-The attached patch avoids this issue by disabling nested HVM support
-when running a 32-bit hypervisor.
-
-xsa34-4.2.patch             Xen 4.2.x
-
-$ sha256sum xsa34*.patch
-ef75cdcf934003aaced57698a2441c4ba058b968956925eec2d5a100a28db0ae  xsa34-4.2.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQ/ny6AAoJEIP+FMlX6CvZU20IAKVSD/ymPr/xXxVa+QHCPCeQ
-MceHY8JE7mRsy1+houbsmQyzq4ASgdrxN70E3QIxUDKXJjJsUEs/0Ju5hhbgZltp
-OazXgg+qICgjqjEklRZOCs9iymepjjDYXWhwUccUleTO/2E9/j8znLQGoUqitHrk
-APycEQ26+YbmWQAUTuvXcL5ST7oByPH8Ax0bjOnMWpQFY8G2ZBbgczmw3uMnHMRN
-NVE8akGv45ey5qEraL+Qe3S5cauVdVPxPodavlDIV0628em9+gFbG4+P5Sgn5TeY
-Kv3u8LjWDWRtZEVcHGRUkIYrlgeWD2TGFkqdGCTd7vf3lKMAopNjIGrH80kNmrc=
-=gW3M
------END PGP SIGNATURE-----
-
-Download attachment "xsa34-4.2.patch" of type "application/octet-stream" (984 bytes)
+Cheers,
+--
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
