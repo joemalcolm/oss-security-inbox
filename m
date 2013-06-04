@@ -1,103 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/04/11
-Message-ID: <51D5BF89.6060205@redhat.com>
-Date: Thu, 04 Jul 2013 12:31:37 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Gallery3 Security Team <security@...leryproject.org>
-Subject: Re: CVE Request -- gallery3 (3.0.9): Fixing two security flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/13
+Message-Id: <678F3CA5-B7BF-4FA7-B273-2487CA8165D4@dwwright.net>
+Date: Tue, 4 Jun 2013 15:51:23 -0400
+From: Derek Wright <drupal@...right.net>
+To: kseifried@...hat.com, security@...pal.org
+Cc: oss-security@...ts.openwall.com, Henri Salo <henri@...v.fi>
+Subject: Re: [security] CVE request: CKEditor module for Drupal access bypass SA-CONTRIB-2011-054
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I updated https://drupal.org/node/1337006 accordingly.
 
-On 07/04/2013 03:19 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> Gallery upstream has released 3.0.9 version, correcting two
-> security flaws: [1] http://galleryproject.org/gallery_3_0_9
-> 
-> My guess [***] is the two issues are as follows:
-> 
-> * Issue #1 - Improper stripping of URL fragments in flowplayer SWF
-> file might lead to reply attacks (a different flaw than
-> CVE-2013-2138): 
-> ----------------------------------------------------------------------------
->
->  A security flaw was found in the way flowplayer SWF file handling
-> functionality of Gallery version 3, an open source project with the
-> goal to develop and support leading photo sharing web application
-> solutions, processed certain URL fragments passed to this file
-> (certain URL fragments were not stripped properly when these files
-> were called via direct URL request(s)). A remote attacker could use
-> this flaw to conduct replay attacks.
-> 
-> A different vulnerability than CVE-2013-2138.
-> 
-> Upstream ticket: [2]
-> http://sourceforge.net/apps/trac/gallery/ticket/2073
-> 
-> Relevant upstream patch: [3]
-> https://github.com/gallery/gallery3/commit/c5318bb1a2dd266b50317a2adb74d74338593733
->
->  References: [4]
-> https://bugzilla.redhat.com/show_bug.cgi?id=981197
-
-Please use CVE-2013-2240 for this issue.
-
-> 
-> * Issue #2 - gallery3: Multiple information exposure flaws in data
-> rest core module 
-> -----------------------------------------------------------------------------------
->
->  Multiple information exposure flaws were found in the way data
-> rest core module of Gallery version 3, an open source project with
-> the goal to develop and support leading photo sharing web
-> application solutions, used to previously restrict access to
-> certain items of the photo album. A remote attacker, valid Gallery
-> 3 user, could use this flaw to possibly obtain sensitive
-> information (file, resize or thumb path of the item in question).
-> 
-> Upstream ticket: [5]
-> http://sourceforge.net/apps/trac/gallery/ticket/2074
-> 
-> Relevant upstream patch (against 3.0.x branch): [6]
-> https://github.com/gallery/gallery3/commit/cbbcf1b4791762d7da0ea7b6c4f4b551a4d9caed
->
->  References: [7]
-> https://bugzilla.redhat.com/show_bug.cgi?id=981198
-
-Please use CVE-2013-2241 for this issue.
-
-> Could you allocate CVE identifiers for these?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
-> [***] Guess because the issues aren't more thoroughly described in
-> upstream announcement [1] and former (private) email check with
-> Gallery3 upstream didn't provide more details either. Cc-ed them on
-> this post too, they to correct me where necessary.
-> 
+Thanks,
+-Derek Wright (dww) of the Drupal Security Team
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+On Jun 4, 2013, at 2:42 PM, Kurt Seifried wrote:
 
-iQIcBAEBAgAGBQJR1b+JAAoJEBYNRVNeJnmTYFEP/02THfjrSDhAS39jQBSMISJb
-dgjL4/SKczghELBBVlzmv/O4b6GnDOpIkFC1ofX/tTkV2eEdEaXUV3aC22EB6Vwq
-o71em51Y+rrS184uIH5LMer3GvQsn+thyAWH/Huj80oS4GHZ5kiCvN1GaAvplTov
-JEzldVJGYs2+MJ1tOaVMc5tuCNFeBE2oGZYN5Ci+F+0T7TTfKBwaePBK2ExlEpmb
-RxcqTj9ONDqcMN2poW3t7f9xtX9aAOk8ebZKHaHuGVGq8nUpD/+XdwGIu6KRKSoA
-R6oFRk8Kxix4AJY1fAxAMDkHpiqy/Z3L+/qwPVqRlCg/Ilr/hgaFKUGeDbwyVEqM
-ZKAWLGFE+OHPcH0n5p5X2tIWkAvsoaCBlaIwvRJ8S1seb6w90B1Ob7ynO4yohQpu
-/bpCQXnU1lQfY/BhMJ/5TMFoZvLyf28DxJTlsTjhic3aV6VqrCcu9Y7WQW8vaMXM
-HxPOL+clnkhBTBvya7RXFy9R1ft4ODzDUrD9IxDeewkVl/9YrOHakDTM0AKNI+fL
-tlyksHM7vyDjUDVG/gMDooIrLgoroLNUQikFOb2kx8QFFmz+nWTi+3zYEUh5SWe4
-LtuBdfTdTChd7XEF/mCVmscUtw99alivUL63nCnLZek6jdlchnHZcJ5Fj2bVA93q
-Jxqd4d48c76uFAhOtKSJ
-=Aotk
------END PGP SIGNATURE-----
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 06/04/2013 10:07 AM, Henri Salo wrote:
+>> This does not seem to have CVE yet. Please assign. Drupal guys
+>> could you confirm, thanks.
+>> 
+>> Advisory ID: DRUPAL-SA-CONTRIB-2011-054 Project: CKEditor - WYSIWYG
+>> HTML editor (third-party module) Version: 7.x Date:
+>> 2011-November-09 Security risk: Critical Exploitable from: Remote 
+>> Vulnerability: Access bypass Versions affected: CKEditor 7.x-1.4
+>> version only Solution: Upgrade to CKEditor 7.x-1.5
+>> 
+>> https://drupal.org/node/1337006 http://osvdb.org/77005 
+>> http://secunia.com/advisories/46772/
+>> 
+>> --- Henri Salo
+> 
+> Please use CVE-2011-4972  for this issue.
+> 
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.13 (GNU/Linux)
+> 
+> iQIcBAEBAgAGBQJRrjULAAoJEBYNRVNeJnmTZuMQAIa2xfRWpbwfe9LCKbsC7xal
+> XnAJZE8xSty/8ixGajcZjOZ8RlcZ37eLGxcfNNE4/7QsxZGZ6eH/y98DndkL9ncX
+> eRkukrlLDwgH0WnoXK84RT5PQuUmECmHC6JE1HkPW58IHQlHC/90j2ZGYX8xecqO
+> nXpL4JKqoFPU5vFTp4A1H31X4QvZkKEqdw+FFh9P7vM27gOyZuu7cvSeAWABygbr
+> QzKQ/BYk6Ivc1kUnhX0N6lFOxCzliGY2c2tGHDU+yEvnHQmCKk1NOUgfEU0lWZTd
+> hTC6Bbh3FWdISl28qPjE1K/Ay55xXNZJaG+dhbPdRiZ0ONvphJbj8EB4W7P4NfHo
+> aKItCZuyn9vN72x8ScDulwkCU4smI0lAOw2hB+02mYJPZh2OXpbsbqTj/6n++/U7
+> hzA/nGs7gl4OXtYz4DCM9Hk5Un783TYt6eOguaJULHeraxrITf+u6ghPNWHufbG7
+> bUoTnRBc3ody4lGpEFK1mMTBmMJ6XIK87I4+CYMmKpNICjVcorglRyidKvhjAOyZ
+> 7Vvg7IQfu6iJBHl+kWrTfMgc1IVsuRcaAeciZNPVFezxCAhulJpesbz/isftHn2r
+> 6Ivwj+m4feivCGLlZ6/ey3dfU83D2PP9ulJeiYJvTLyXaOdfXeNXtL41uKefeih9
+> S5MKxDC9JnSgu1o5DLED
+> =v3qw
+> -----END PGP SIGNATURE-----
+> -- 
+> [ Security | http://lists.drupal.org/mailman/listinfo/security ]
+> [Security team mailing list management and scheduling is documented here | https://security.drupal.org/handling-list-emails]
+
