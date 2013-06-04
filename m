@@ -1,53 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/03/4
-Message-ID: <20130503173916.GA21231@elende>
-Date: Fri, 3 May 2013 19:39:16 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: Mark Panaghiston <markp@...pyworm.com>, hello@...pyworm.com
-Subject: Re: Re: CVE-2013-1942 jPlayer 2.2.19 XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/1
+Message-ID: <550806746.14013224.1370350265382.JavaMail.root@redhat.com>
+Date: Tue, 4 Jun 2013 08:51:05 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request -- Gallery < 3.0.8 - Improper stripping of URL fragments in uploadify and flowplayer SWF files might lead to replay attacks
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt
+Hello Kurt, Steve, vendors,
 
-Have a question about the CVE assignments for these issues:
+  Gallery 3 upstream has released v3.0.8 version:
+  [1] http://sourceforge.net/mailarchive/message.php?msg_id=30925931
+  [2] http://galleryproject.org/gallery_3_0_8
 
-On Mon, Apr 29, 2013 at 01:30:09PM -0600, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 04/20/2013 11:19 AM, Mark Panaghiston wrote:
-> > jPlayer 2.3.0 has been released that officially fixes this issue:
-> > 
-> > http://www.jplayer.org/ https://github.com/happyworm/jPlayer
-> > 
-> > Tagged as *2.3.0* on GitHub. 
-> > https://github.com/happyworm/jPlayer/commit/c1c7a4dfa63bb6684d3670202e4a65d400dfce86
-> >
-> >  Full Release Notes for jPlayer 2.3.0: 
-> > http://www.jplayer.org/2.3.0/release-notes/
-> > 
-> > In particular these fixes addressed security issues. Listed with
-> > their GitHub commits for code reference:
-> > 
-> > [2.2.20] Security Fix: The Flash SWF had a security vulnerability
-> > that enabled XSS (Cross Site Scripting). Reported by Malte Batram.
-> > Security reference CVE-2013-1942
-> > <https://access.redhat.com/security/cve/>. 
-> > https://github.com/happyworm/jPlayer/commit/e8ca190f7f972a6a421cb95f09e138720e40ed6d
-> 
-> Sorry
-> > 
-> for the late reply. Please use CVE-2013-2022 for this issue.
+correcting one security flaw (or two if you would consider uploadify
+and flowplayer SWF files as two separate cases):
 
-In [1] CVE-2013-1942 was assigned, referencing the same commit.
+A security flaw was found in the way uploadify and flowplayer SWF files
+handling functionality of Gallery version 3, an open source project with
+the goal to develop and support leading photo sharing web application
+solutions, processed certain URL fragments passed to these files (certain
+URL fragments were not stripped properly when these files were called
+via direct URL request(s)). A remote attacker could use this flaw to
+conduct replay attacks.
 
- [1] http://marc.info/?l=oss-security&m=136570964825921&w=2
+Relevant upstream tickets (and patches):
+* uploadify case:
+  [3] http://sourceforge.net/apps/trac/gallery/ticket/2068
+  [4] https://github.com/gallery/gallery3/commit/80bb0f2222dd99ed2ce59e804b833bab63cc376a
 
-Should CVE-2013-1942 thus only be used for owncloud reference, and
-CVE-2013-2022 and CVE-2013-2023 on other side for jplayer itself?
+* flowplayer case:
+  [5] http://sourceforge.net/apps/trac/gallery/ticket/2070
+  [6] https://github.com/gallery/gallery3/commit/3e5bba2cd4febe8331c0158c11ea418f21c72efa
+  [7] https://github.com/gallery/gallery3/commit/12e51694fdc39c752cc439424cf309866f9f914a
 
-Thanks a lot in advance for clarification!
+References:
+[8] https://bugzilla.redhat.com/show_bug.cgi?id=970596
 
-Regards,
-Salvatore
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
