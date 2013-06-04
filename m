@@ -1,35 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/7
-Message-ID: <alpine.LFD.2.03.1307240104350.5565@redhat.com>
-Date: Wed, 24 Jul 2013 01:06:38 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: Linux kernel: panic while appending data to a corked IPv6 socket in ip6_append_data_mtu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/11
+Message-ID: <51AE3834.3060204@redhat.com>
+Date: Tue, 04 Jun 2013 12:55:48 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Marc Deslauriers <marc.deslauriers@...onical.com>
+Subject: Re: CVE Request: libimobiledevice insecure /tmp use
 Content-Type: text/plain; charset=utf-8
 
-   Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Linux kernel built with the IPv6 networking support is vulnerable to a crash
-while appending data to an IPv6 socket with UDP_CORKED option set. UDP_CORK
-enables accumulating data and sending it as single datagram.
+On 05/31/2013 08:43 AM, Marc Deslauriers wrote:
+> Hello,
+> 
+> In libimobiledevice, the following commit:
+> 
+> http://cgit.sukimashita.com/libimobiledevice.git/commit/src?id=825d...
+>
+>  Falls back to creating files in /tmp if $XDG_CONFIG_HOME and $HOME
+> are unset. In some distros, upowerd runs this as root, which causes
+> files in /tmp to be created and updated in an insecure manner as
+> root, allowing for symlink attacks.
+> 
+> Bugs: 
+> http://libiphone.lighthouseapp.com/projects/27916-libiphone/tickets/331-insecure-tmp-directory-use
+>
+> 
+https://bugs.launchpad.net/ubuntu/+source/libimobiledevice/+bug/1164263
+> 
+> Could a CVE please be assigned to this issue?
+> 
+> Thanks,
+> 
+> Marc.
 
-An unprivileged user/program could use this flaw to crash the kernel, 
-resulting in local DoS.
+Please use CVE-2013-2142 for this issue.
 
-Upstream fix:
--------------
-  -> https://git.kernel.org/linus/75a493e60ac4bbe2e977e7129d6d8cbb0dd236be
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Reference:
-----------
-  -> https://bugzilla.redhat.com/show_bug.cgi?id=987633
-
-Acknowledgements:
------------------
-
-Red Hat would like to thank Hannes Frederic Sowa for reporting this issue.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+iQIcBAEBAgAGBQJRrjgzAAoJEBYNRVNeJnmT0E0P/09xKFWcrZspZ1bLdg/4MC8u
+KYnfJdOJ6nNVr+p3MdOnO2esZh6d8F5rfXvasAWLnV9scvRprEvjkWVvSDPDICJ4
+QhdMaptR59SFqdCPERYvDVGRN/Aj5b6S6t16TcpGvhsFH9ho6ESfj4XmxuZJLSac
+Q/5pwnoyX66ZkfAV7CAEKFqsNGJK5YMdfJuNYeOA8JdVcpY9HgNkb+UuSjGnZRGr
+7QUUmlVyKWUiz7EOZEisli6xAeAD20w/SCgsjS+5ldIa0mYudDTA1MZ51p2+diY6
+Kj3oAGw9NHLNFxpBXzdDHwY7TPlbUKNHrfYh5PhVCMSGmW+rb6ARHOsre0ozGEAg
+hJumTGI3CVyoFhe4x19A8TWaTaPAoWDcG+90DRUSOf3KD7oajcy34/0RQv17/1to
+iAsV2DGR0H2nEq5NN4pkmoUeoY28dJtBEu/AS9eTv9TJhULWOixuclJtoeXQeYXi
+gNIS75AWu57NCoXuM0ZrgukQJ9eaWsDg7QdCoUKJ1yDnPN4Wu68mFlpqfKtTAE6a
+La8haZiwHtr6M00J3UlHUyWenttxXtuacnotaRs+K6nIrieurlV4ZOIAr7CjrEOP
+/ru1YmxzVL/AJpAfW/f/chMnksT5a3zjh+gQTVVXYQblYWWP7/sggL13kPtz3nsb
+9at9trjzKcIzMKRm+CwS
+=B0+o
+-----END PGP SIGNATURE-----
