@@ -1,23 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/19
-Message-ID: <20131010173059.GB21941@hunt>
-Date: Thu, 10 Oct 2013 10:30:59 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/3
+Message-ID: <20130604155141.GF3638@redhat.com>
+Date: Tue, 4 Jun 2013 09:51:41 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: dropbear sshd daemon 2013.59 release
+Subject: CVE request: libsrtp buffer overflow flaw
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 10, 2013 at 03:27:07PM +0200, Marcus Meissner wrote:
-> (Kurt, I looked for your howto, but my googlefu today is weak.)
+A buffer overflow flaw was reported in libsrtp, Cisco's reference
+implementation of the Secure Real-time Transport Protocol (SRTP), in how
+the crypto_policy_set_from_profile_for_rtp() function applies
+cryptographic profiles to an srtp_policy.  This could allow for a crash
+of a client linked against libsrtp (like asterisk or linphone).
 
-It's unfortunately not ranked well (either in Google or, for giggles,
-Bing). Everything else Kurt does with CVEs drowns it out...
+A pull request in git has a patch to correct this issue (doesn't look
+like it's been merged into master yet though).
 
-https://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
+References:
 
-Unless someone gives you this URL, you're just never going to find it.
-Capabilities are alive and well. :)
+http://seclists.org/fulldisclosure/2013/Jun/10
+https://github.com/cisco/libsrtp/pull/26
+https://bugzilla.redhat.com/show_bug.cgi?id=970697
 
-Thanks
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+As an aside, when I was poking around in github, I also found this but I
+don't know anything about libsrtp so I don't know if this is something
+that can be triggered by a remote user or if this is just a hardening
+thing, but the commit message is "Security fix to not ignore RTCP
+encryption, if required."
+
+https://github.com/cisco/libsrtp/commit/8ad50a05279b61a382da3cc730ff1560ab4272e8
+
+Is there someone more familiar with libsrtp that might be able to
+comment on whether or not this is a flaw (so can a remote user request
+to disable encryption and do ... something?)
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
