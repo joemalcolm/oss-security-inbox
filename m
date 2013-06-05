@@ -1,63 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/8
-Message-ID: <525E295F.3000307@redhat.com>
-Date: Tue, 15 Oct 2013 23:51:27 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/18
+Message-ID: <20130605174629.GC12812@phenom.dumpdata.com>
+Date: Wed, 5 Jun 2013 13:46:29 -0400
+From: Konrad Rzeszutek Wilk <konrad.wilk@...cle.com>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, leon@...nweber.de
-Subject: Re: Re: CVE request: pyxtrlock
+Subject: xen/blkback: Check device permissions before allowing OP_DISCARD
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hey,
 
-On 10/15/2013 05:47 PM, cve-assign@...re.org wrote:
->> Honestly I don't know what the rule is, 10? 100? 1000? 10000?
->> 65536?
-> 
-> At least at the moment, those numbers seem very high. From our 
-> perspective, the minimum required number of users is approximately
-> 2. The closed issues page is sufficient:
-> 
-> https://github.com/leonnnn/pyxtrlock/issues?page=1&state=closed
-> 
-> Situations in which MITRE has previously declined a CVE are much
-> more marginal; for example:
-> 
-> - some cases of code that wasn't packaged in any way, and not even 
-> necessarily intended for use as-is, e.g., something similar to 
-> example code posted as a stackoverflow.com answer
-> 
-> - people a few years ago who were creating fake products that
-> didn't have any reasonable purpose, and then asking for CVEs in
-> order to have inbound links to their "vendor" web site
+John Haxby and Dan Carpenter recommended I ask for an CVE number here.
 
-Heh. I'll have to rmemeber that =)
+The bug is that if a system admin provides a disk (which supports
+the discard aka TRIM or SCSI UNMAP) to a guest as read-only - there are
+no checks done. Which means that the OS can destroy the data.
 
-So for pyxtrlock please use:
+The likehood of somebody using 'ro' disks I think is small - but there
+is probably one person who does it and would be unhappy that a guest
+OS can destroy the underlaying data.
 
-CVE-2013-4426 pyxtrlock mis-spelled variable name
+I have a patch (and a test-case) ready (see attached). I think
+I just need an CVE number and need to send the mentioned patch
+to Linus?
 
-CVE-2013-4427 pyxtrlock Incorrect return value checking
+View attachment "0001-xen-blkback-Check-device-permissions-before-allowing.patch" of type "text/plain" (1886 bytes)
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSXilfAAoJEBYNRVNeJnmTj50QANEzulzh2eHjSsjSsyVoBJ0E
-7M59Eg4PaD2qZmgRDihnOwisUeecb6CLsX3EIIxeW0/3Zrvhha31dBxq3NylcjmQ
-TbVg1eYj1+xwhrY1FHsar/laButQDkfkQNr1pqVWY6+R7ZBViXDYEAQbUxmQDNkM
-0DEJpGOdY3rC5MKnMH3Auh4Uzps0wP6qpDkkmmMjcgz+vLji3tz5c0naqZe7tuQD
-Fah5LOu94T1KgNqtmP3mqWWVaBxTs1cOh30ZjM0+0lxvdiYC2390E0lrOHe6JqDG
-S4KAkWWLT2nHXrMIs5HcmZxJdrsCmFcJeZOMFI/uIVpzItJgFB9VNnayj2Bd68DY
-6Kvlno6jhUhJ2kZ5nYjwNF1hCvlxgIJ1GPRoFu+SOEk7B2xLLj7nVAM50UUPl90S
-CuYjxzdwA/alLN3U1JzXUlsqxGTU4XYNyqSNjkGA0Nfohnz/CVHXMXJ8/YULFoqy
-/8/DUiSquVK6QsiWjt/N2fy0ZD9Z48kLD30/0RRdAhWcTvnOT/zlB8ehHrvroCGp
-IRSYvArP3IuQoCF0vdDvz1r3tSLtoSTfRiyfCzTBPVT96V6Nry4bxSRD4E6HakAD
-lwLxvG0wcRzM+MejEbGhra2trJn/OlGYf3IctMeYMETXqdono/bNQFt2vQWmWQFr
-akhfNe9uFpaxozP8qAHs
-=CNl8
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
