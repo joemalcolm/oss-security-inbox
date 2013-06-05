@@ -1,50 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/10
-Message-ID: <20130425134046.GO21938@mars-attacks.org>
-Date: Thu, 25 Apr 2013 15:40:46 +0200
-From: nicolas vigier <boklm@...s-attacks.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/16
+Message-ID: <20130605181858.GR3638@redhat.com>
+Date: Wed, 5 Jun 2013 12:18:58 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+Cc: audreyt@...reyt.org
+Subject: CVE-2013-2145: perl Module::Signature code execution vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 25 Apr 2013, Alistair Crooks wrote:
+Florian Weimer of the Red Hat Product Security Team reported the
+following flaw (it has been given the name CVE-2013-2145):
 
-> 
-> Q4. where's the public key for this?
-> 
-> A4. could be anywhere. If it's on one of the HKP servers, then cool.
-> Not, however, that it can be verified - I know of at least one person
-> who has had pubkey information uploaded to the key servers for a key
-> he had no knowledge about. Anyone can put whatever email address into
-> the userid that they want. If it came with the tarball, ho hum.
 
-Even if the key comes with the tarball, if the tarball is always signed
-with the same key for all releases, then it's useful. You download the
-key the first time, keep it somewhere (for instance in the package
-source) and use it again to check next releases. And if a new release is
-signed with a different key you know you need to be more careful and
-can check if the key change is legitimate.
+The perl Module::Signature module adds signing capabilities to CPAN
+modules.  The 'cpansign verify' command will automatically download keys
+and use them to check the signature of CPAN packages via the SIGNATURE
+file.
 
-> 
-> Q5. what was signed?
-> 
-> A5.  if it comes out as a text document, according to RFC 4880, it has
-> some weird properties; hopefully all tar files will be binary. 
-> Whatever, what was signed was something with the same digest as the
-> tarball.  Default algorithm is SHA1.  Second pre-image attacks on SHA1
-> are getting closer to being possible, and there are means to modify
-> entries in the tarball so that an attack is much easier.
-> 
-> Q6. Is this a DSA key?  (DSA keys rely on good entropy at signing
-> time) If so, how good was the entropy on the machine used to generate
-> the signature?
-> 
-> A6.  Again, unknown.
-> 
-> Q7. Has someone found the k value for Q6/A6 previously?
-> 
-> A7. They might have done. We'd only know if they told us.
-> 
+The format of the SIGNATURE file includes the cipher to use to match the
+provided hash; for instance:
 
-Same could be said about ssh, tls or almost anything using cryptography ...
+SHA1 955ba924e9cd1bafccb4d6d7bd3be25c3ce8bf75 README
 
+If an attacker were to replace this (SHA1) with a special unknown cipher
+(e.g. 'Special') and were to include in the distribution a
+'Digest/Special.pm', the code in this perl module would be executed when
+'cpansign -verify' is run.  This will execute arbitrary code with the
+privileges of the user running cpansign.
+
+Because cpansign will download public keys from a public key repository,
+the GPG key used to sign the SIGNATURE file may also be suspect; an
+attacker able to modify a CPAN module distribution file and sign the
+SIGNATURE file with their own key only has to make their key public.
+cpansign will download the attacker's key, validate the SIGNATURE file
+as being correctly signed, but will then execute code as noted above, if
+the SIGNATURE file is crafted in this way.
+
+Module::Signature version 0.72 corrects [1],[2] this issue by refusing
+to load Digest::* modules from relative paths in @INC.
+
+References:
+
+https://github.com/audreyt/module-signature/commit/575f7bd6ba4cc7c92f841e8758f88a131674ebf2
+https://github.com/audreyt/module-signature/commit/cbd06b392a73c63159dc5c20ff5b3c8fc88c4896
+https://bugzilla.redhat.com/show_bug.cgi?id=971096
+
+
+As an aside, I don't believe the authenticity checks of cpansign are
+valid.  According to the upstream documentation, the defaults are to
+download any matching public key for anything that is GPG-signed.  That
+by itself, since there cannot be any trust, makes me believe that the
+GPG signature is no more useful than an md5sum of the SIGNATURE file (in
+terms of it being "tamper proof").  It's sufficient to verify that the
+contents of the file are unmodified from whomever signed it, but does
+not establish any kind of trust/trustworthiness.
+
+According to:
+
+http://search.cpan.org/~audreyt/Module-Signature-0.71/lib/Module/Signature.pm
+
+the following is documented:
+
+$AutoKeyRetrieve
+Whether to automatically fetch unknown keys from the key server.
+Defaults to 1.
+
+$KeyServer
+The OpenPGP key server for fetching the author's public key (currently
+only implemented on gpg, not Crypt::OpenPGP). May be set to a false
+value to prevent this module from fetching public keys
+
+In light of the above, I wouldn't consider the untrustworthiness of a
+GPG key to be a flaw, but it does essentially make the GPG signature
+part not have any real value.
+
+I've suggested to upstream that if they want this to be used seriously
+for trust (and not just verifying that the distribution is untampered
+with, according to whomever was able to sign the SIGNATURE file), that
+they should disable the auto-retrieval of keys by default and/or CPAN
+should manage their own keyserver of trusted keys and cpansign should
+only pull from that keyserver.  The first is probably practical enough
+to do, the second I'm not so sure.
+
+If anyone has any other suggestions for upstream, I've cc'd her to this
+mail (she's not on the list AFAIK, so keep her cc'd if you have other
+suggestions).
+
+I will offer that this is at least a step in the right direction as I
+don't believe that pypi for python does anything like this (no idea for
+other languages).
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
+
+Content of type "application/pgp-signature" skipped
