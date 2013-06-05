@@ -1,51 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/05/4
-Message-ID: <5227FBFB.3000501@redhat.com>
-Date: Thu, 05 Sep 2013 13:35:23 +1000
-From: David Jorm <djorm@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2013-2185 / Tomcat
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/7
+Message-ID: <20130605121559.GJ27176@twins.programming.kicks-ass.net>
+Date: Wed, 5 Jun 2013 14:15:59 +0200
+From: Peter Zijlstra <peterz@...radead.org>
+To: OSS Security List <oss-security@...ts.openwall.com>, eranian@...gle.com, ak@...ux.intel.com, security@...nel.org, Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: More perf security fixes
 Content-Type: text/plain; charset=utf-8
 
-On 09/05/2013 12:11 AM, Moritz Muehlenhoff wrote:
-> Hi,
-> Question to the Red Hat people on the list:
->
-> Is https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-2185 something which applies
-> to Tomcat in general or is this specific to the  "Red Hat JBoss Enterprise
-> Application Platform"?
->
-> The DiskFileItem class is part of Tomcat 7, but there's no reference to CVE-2013-2185
-> at http://tomcat.apache.org/security-7.html
->
-> Cheers,
->          Moritz
+On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
+> Hello, Peter.
+> 
+> On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
+> > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
+> > 
+> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
+> > 
+> > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
+> > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+> > Date:   Fri May 3 14:11:25 2013 +0200
+> > 
+> >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
+> > 
+> >     We should always have proper privileges when requesting kernel
+> >     data.
+> > 
+> >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+> >     Cc: <stable@...nel.org>
+> >     Cc: Andi Kleen <ak@...ux.intel.com>
+> >     Cc: eranian@...gle.com
+> >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
+> >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
+> >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
+> >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
+> 
+> There is similar check in perf_copy_attr() which is called from
+> perf_event_open syscall --
+> 
+>                 /* kernel level capture: check permissions */
+>                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+>                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+>                         return -EACCES;
+> 
+> It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
+> missing something?
+> 
 
-Hi Moritz
+I overlooked it, also its slightly broken. See the discussion at: 
+  https://lkml.org/lkml/2013/5/21/166
 
-This flaw was reported to the tomcat security team, but they were of the 
-opinion that it did not constitute a security flaw in tomcat. The Red 
-Hat security team decided that we did consider it a security flaw in 
-tomcat, and handled it accordingly. I think whether or not this category 
-of issue is considered a security flaw is an unresolved debate - having 
-some consensus either way would be helpful in my opinion.
-
-The DiskFileItem class's readObject method contained a poison null byte 
-flaw. A remote attacker able to supply a serialized instance of the 
-DiskFileItem class, which will be deserialized on a server, could use 
-this flaw to write arbitrary content to any location on the server that 
-is permitted by the user running the application server process. The key 
-point here is that an application is only vulnerable if it deserializes 
-arbitrary user-supplied data, and it has DiskFileItem on the classpath. 
-One argument is that since exploitation relies on an application 
-allowing deserialization of user-supplied data, the real flaw lies in 
-that application, so this is not actually a security flaw in 
-DiskFileItem. The opposing argument is that an application allowing 
-deserialization of user-supplied data would not necessarily expose any 
-kind of security flaw, but if a vulnerable class (e.g. DiskFileItem) 
-existed on the server's classpath, then it would, therefore this is a 
-security flaw in DiskFileItem.
-
-Thanks
---
-David Jorm / Red Hat Security Response Team
+  
