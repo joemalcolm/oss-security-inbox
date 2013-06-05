@@ -1,53 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/12
-Message-ID: <20131203190945.GD27953@higgins.local>
-Date: Tue, 3 Dec 2013 11:09:45 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2013-6417] Incomplete fix to CVE-2013-0155 (Unsafe Query Generation Risk)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/21
+Message-ID: <51AF8E14.7040205@redhat.com>
+Date: Wed, 05 Jun 2013 13:14:28 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Konrad Rzeszutek Wilk <konrad.wilk@...cle.com>
+Subject: Re: xen/blkback: Check device permissions before allowing OP_DISCARD
 Content-Type: text/plain; charset=utf-8
 
-Incomplete fix to CVE-2013-0155 (Unsafe Query Generation Risk)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The prior fix to CVE-2013-0155 was incomplete and the use of common 3rd party libraries can accidentally circumvent the protection. This vulnerability has been assigned the CVE identifier CVE-2013-6417.
+On 06/05/2013 11:46 AM, Konrad Rzeszutek Wilk wrote:
+> Hey,
+> 
+> John Haxby and Dan Carpenter recommended I ask for an CVE number
+> here.
+> 
+> The bug is that if a system admin provides a disk (which supports 
+> the discard aka TRIM or SCSI UNMAP) to a guest as read-only - there
+> are no checks done. Which means that the OS can destroy the data.
+> 
+> The likehood of somebody using 'ro' disks I think is small - but
+> there is probably one person who does it and would be unhappy that
+> a guest OS can destroy the underlaying data.
+> 
+> I have a patch (and a test-case) ready (see attached). I think I
+> just need an CVE number and need to send the mentioned patch to
+> Linus?
+> 
 
-Versions Affected:  All.
-Not affected:       None
-Fixed Versions:     4.0.2 & 3.2.16
+Please use CVE-2013-2140 for this issue.
 
-Impact 
-------
-Due to the way that Rack::Request and Rails::Request interact, it is possible for a 3rd party or custom rack middleware to parse the parameters insecurely and store them in the same key that Rails uses for its own parameters.  In the event that happens the application will receive unsafe parameters and could be vulnerable to the earlier vulnerability.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-All users running an affected release should either upgrade or use one of the work arounds immediately. 
-
-Releases 
--------- 
-The 4.0.2 & 3.2.16 releases are available at the normal locations. 
-
-Workarounds 
------------
-To work around this issue you need to audit your middleware chain and ensure that each of the libraries in use does not create an instance of Rack::Request. 
-
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
-
-* 4-0-rack-params.patch - Patch for 4.0 series 
-* 3-2-rack-params.patch - Patch for 3.2 series 
-
-Please note that only the 4.0.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
-Credits 
-------- 
-Thanks to Sudhir Rao for reporting the issue to us and to James Tucker for assisting with the fix.
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "3-2-rack-params.patch" of type "text/plain" (2718 bytes)
-
-View attachment "4-0-rack-params.patch" of type "text/plain" (2810 bytes)
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBAgAGBQJRr44UAAoJEBYNRVNeJnmTYhUQAMndCp3wbt65oG/kPDRPIcgz
+tOAzJTw99IIQ/n/n+Wxui5c/Rq/RhShahDgsFKXx/PcBw0oZcBQPAwo3j6XqK8Ea
+ocXT2BW/IbBOJLEi/A/4lFQtNBMB4CLC02OVaYjRxUqvnGoWFCVGUIBr4S18jMEA
+Aqx3fzbPqvL7W0FGNqdpFGaqO4bvZfMTHep9TM4LDRhkLFEntQIFzZ6wCk1CD+iP
+sNRTbbOxDl7Pi5ex+jhSUcaudRUGpXb3hr6An6N9llHDuSkQpE9fVKYR8nRYvsyJ
+pBrk1piiWKHmQDV+8pxKl4OKjZUpClAu6HLOQ7THzybLIXCdZMbBxIcDzD0zyjpD
+g+CblUAwMX3VhaxNRhOXQF3JzViR9fbv6+Etf0TG/iKLfwOMnXoBkz8bbm+rPc79
+cnFSEHmFZqVIpnMYDVXTe2hmHGf7T65ZFNM658EZA+ttchiG+70xPqq2W6/XuiGM
+Gvqy8MmO2Ufv6/DnL6WtXsLjQFE0nhZzcyGZg3dIjS8tr7o0iQrRITCPaCjGwlL2
+cqXl9rPuJOBiojtdM3klF8Trk8d7jD12nmvqYZN/1YBP/s2d3q/G+rRMotPYGpOt
+HnKmS/0eTnw0D8pdZz6JAVbljViNY3wgpr9NnpNt2ooKhuJ0awpAu6tN4BagXVda
+OtVZADzDl5AkeGZIC0+v
+=Rnva
+-----END PGP SIGNATURE-----
