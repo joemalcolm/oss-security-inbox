@@ -1,45 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/02/1
-Message-ID: <20130602175608.GA14002@suse.de>
-Date: Sun, 2 Jun 2013 19:56:09 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: kernel info leak in tkill/tgkill
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/23
+Message-ID: <51AF8F9E.7030702@redhat.com>
+Date: Wed, 05 Jun 2013 13:21:02 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Marcus Meissner <meissner@...e.de>, a.p.zijlstra@...llo.nl, eranian@...gle.com, ak@...ux.intel.com, security@...nel.org
+Subject: Re: CVE Request: More perf security fixes
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This small Linux kernel info leaks still needs a CVE I think.
+On 06/04/2013 09:53 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> The perf kernel folks seem to have fixed some more perf issues
+> which have not yet got CVEs.
+> 
+> Our partner Intel thinks that these 3 are security relevant, so we
+> think they also need seperate CVEs.
+> 
+> I only glanced what the issue is, please correct if my
+> classification is wrong..
+> 
+> 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
 
-b9e146d8eb3b9ecae5086d373b50fa0c1f3e7f0f
-Author: Emese Revfy <re.emese@...il.com>
-Date:   Wed Apr 17 15:58:36 2013 -0700
+This
+> 
+one is a right proper mess. I'm going to suggest in future we
+send one email per Linux Kernel vuln so in case discussions takes off
+the other vulns included don't get caught up in the mess.
 
-    kernel/signal.c: stop info leak via the tkill and the tgkill syscalls
+> 2. Denial of service (system crash)
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=f1923820c447e986a9da0fc6bf60c1dccdf0408e
 
-    This fixes a kernel memory contents leak via the tkill and tgkill syscalls
-    for compat processes.
+This
+> 
+one seems clear, please use CVE-2013-2146 for this issue.
 
-    This is visible in the siginfo_t->_sifields._rt.si_sigval.sival_ptr field
-    when handling signals delivered from tkill.
+> 3. Information leak (??) via perf LBR filter
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6e15eb3ba6c0249c9e8c783517d131b47db995ca
 
-    The place of the infoleak:
+This
+> 
+one is a right proper mess. I'm going to suggest in future we
+send one email per Linux Kernel vuln so in case discussions takes off
+the other vulns included don't get caught up in the mess.
 
-    int copy_siginfo_to_user32(compat_siginfo_t __user *to, siginfo_t *from)
-    {
-            ...
-            put_user_ex(ptr_to_compat(from->si_ptr), &to->si_ptr);
-            ...
-    }
 
-    Signed-off-by: Emese Revfy <re.emese@...il.com>
-    Reviewed-by: PaX Team <pageexec@...email.hu>
-    Signed-off-by: Kees Cook <keescook@...omium.org>
-    Cc: Al Viro <viro@...iv.linux.org.uk>
-    Cc: Oleg Nesterov <oleg@...hat.com>
-    Cc: "Eric W. Biederman" <ebiederm@...ssion.com>
-    Cc: Serge Hallyn <serge.hallyn@...onical.com>
-    Cc: <stable@...r.kernel.org>
-    Signed-off-by: Andrew Morton <akpm@...ux-foundation.org>
-    Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
+iQIcBAEBAgAGBQJRr4+eAAoJEBYNRVNeJnmT23AP/0V/QI3Ad/8oVXc/aXZVXuSf
+iefMVriDJAdmGIgX0lLqtGy7ovq1ckz8AwqdfA+6IuX3re7PgcX7qLBIMycyCJne
+VnKzuCAvUqS+8rjKvXgBJE5BYicYqTSXpDHzjt4C+rDFDhwGK+lswfcblXgVVTKZ
+3FBDbxQ4TrwCGI5YBILYw8p3lkArlBkALwU89Kj8z8nSKU/BRmWfmd5ACvwOgHhu
+1OLIvicOBMI7/UB/NhNNE8MZ7+fORtkIQdKKWAfiIrLhsR8sMPlu9WD7FSaFiZQl
+68LOQRMzrJGcFe2+oCOx2OQbl+0hcVBdLoQ50DtJ8dpFmo+YiQgJHG4192VFtvwk
+aA30jQKwsTEWTSrROtzvDBTTR5jHsp9oficT1MISnS1D3JtuzX5I4h+vqWtclzRo
+SLVSvysKHhIpkUXN4tieEfcWwlsR2IG2XPc+qXtxY7ZrFhGfdXq+78wHJQ4fuD/c
+bmlhwK+pNe0Il6eQHPld6uRvGpqGpZL/CBCQAOvs7KyqXcPq05sEwg3MVjX6HmAr
+QTYIlksdBeffeZ1ZX6Qpn7s5DjXvw2NsNkwhPNweWUdX8OFL2Fbc3oMVbxXlqi7o
+kjBa/+oZGBv0CIyKcwucBQOxhdYYrBjEYAs+qAq52NHfw8O2MbsBxCT6KKb4eFEl
+dPfQoKn2D0Tvu4R8p3Od
+=Xpu8
+-----END PGP SIGNATURE-----
