@@ -1,49 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/07/4
-Message-ID: <50EB3B68.8060009@redhat.com>
-Date: Mon, 07 Jan 2013 14:17:28 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/26
+Message-ID: <51AF91B5.4010103@redhat.com>
+Date: Wed, 05 Jun 2013 13:29:57 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Salvatore Bonaccorso <carnil@...ian.org>
-Subject: Re: CVE Request: Jenkins possible remote code execution
+CC: P J P <ppandit@...hat.com>
+Subject: Re: CVE Request: Linux kernel: fanotify: info leak in copy_event_to_user
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/07/2013 11:25 AM, Salvatore Bonaccorso wrote:
-> Hi
+On 06/05/2013 01:53 AM, P J P wrote:
+> Hi,
 > 
-> There was another advisory for Jenkins[1]. According to the
-> advisory remote code execution should be possible. Could a CVE be
-> assigned to this issue?
+> Linux kernel built with the Filesystem wide access notification 
+> (CONFIG_FANOTIFY) support is vulnerable to an information leakage
+> flaw. The leaked bytes could be accessed via read(2) call on the
+> fanotify descriptor.
 > 
-> [1]:
-> https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2013-01-04
->
->  Regards, Salvatore
+> A user/program could use this flaw to leak kernel memory bytes.
 > 
+> Upstream fix: ------------- -> https://lkml.org/lkml/2013/6/3/128
+> 
+> Thank you. -- Prasad J Pandit / Red Hat Security Response Team DB7A
+> 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
 
-Please use CVE-2013-0158 for this issue.
+Please use CVE-2013-2148 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ6ztoAAoJEBYNRVNeJnmT9y4P/iSZl8Ef/39XfzxUpcMIuc1t
-S0glo/s0SPpYwibcr+qTvbj8BKSANrwQorQTj8zJaOkSXr+j/YxP2PNDRRjbiJs1
-y+f2kcL0XsO0NCn6SXDeX/zU8j+i/0m8L2oUJrIGHtOm39G6qery32oIV4Siv6Ox
-TeCuoesiApiIrhp6b/EmtOGGH7MtLecXpTYc5EorIaXGuuDUtNocVwBegbZHd3Pl
-QqglBzIaB8nGXZBODL8Cg/WC8UIy8NCB/pDl48ESwluLTZg2hYHdjch8QlvPMSU2
-9cIior6zb9f331q9x6vOZu36U8mnQCQ8nq/ryqj5bPCuHX6RMrvVPL6VGQhOUVI3
-wqR+buXhxMVf8LCixjVx07nv2OvaSmN27EP5+S6d1XXwxilI2FZaug8HeuPRIcv3
-x8FdZYlrfR6BJobONJ/esdlS14Ec99kqJT6sbg053HcWHHLZUGTmfny1bq3eTKFL
-85HfqDSi9OmMbahu2SJ9q9Q8s7gTtAAoqU85SnjNiSCf0jZUgPibjFTcPy/lFLPH
-uA8lzN7V5Ms76CeHEAXmLyClkGWRsU3cgCf6aoebzePPLUhFKPQmb00G4UU0NCPW
-IhFlsVGykBM37ulLW12+uDNoafRkWNdGPT23pdO60gGlbp33/0lNjeqVBC/8zw1T
-vKknCoUeBz307WpFbOUk
-=09WE
+iQIcBAEBAgAGBQJRr5G0AAoJEBYNRVNeJnmTO7cP+QHw+Hw+XUrCtsj2Jrawr+4m
+UV/QXA4fNwSoVQpnlHF+PLCZkr4TmS+6MK0hdVe9DovoI8edMJY4rTGb5Snil83+
+ldOg0mFKSOyYcdlRT24Zt73wMcLMtmX6lbAQVl5dM8E5T5LA8+WY/mhhZ8IBvIhR
+h+KLiQVLTuJcWIixnbUdf6IxXqLB+Gh4FlUwVh5amFPRQflOha2qSZxj7qbn0lRN
+MzfPT0TZfe4/i/CUHAYWk+uB44KSGh7t20aDuFpVBqM645NAvwBtOIIrVYFyIeLH
+eJAGlX/8GBwf8UUtTHjaaFo66osrIRCIw7LQl+5hkDQ84jyhA3VMA6MZplbX/usF
+HFPnreSp481L4kORWDarkwpTjgjKRwjBjOqWecEyDizXKoXdT6HqasNu9GuRU4Te
+PYSqGxwApcqH8MtYneENVx+Nh/rRTFtBc6S9DOvL675NxZpXFohpo3Zy1QaTWCRV
+cOzOvj6j1ZU8paUa0x7W5Viqhm8p8Yns3kpr7of4wGCi77liaIyV70NPzdCVb1pS
+jckSHZonzKVGtabO00hEdGrOr9WzzVwThZJcTXoqzbjIkZplH0HR2RiIscKHlw9j
+DzU4arcwq8cFLDqGOOPePeL2ZeWhEEniR2yUUlekB64jrev4vUQhNCQ+hvRpqpPA
+k4Wi35esxrkkLHFGynst
+=BLUh
 -----END PGP SIGNATURE-----
