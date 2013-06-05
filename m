@@ -1,56 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/29
-Message-ID: <512E4A90.9090406@redhat.com>
-Date: Wed, 27 Feb 2013 11:04:00 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: P J P <ppandit@...hat.com>
-Subject: Re: CVE request: Linux kernel: USB: io_ti: NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/15
+Message-ID: <CABPqkBTw+qoYQmgiTDwgN18fUb2iV3d1F+cfCEzjde0wAGqmcQ@mail.gmail.com>
+Date: Wed, 5 Jun 2013 15:53:52 +0200
+From: Stephane Eranian <eranian@...gle.com>
+To: Peter Zijlstra <a.p.zijlstra@...llo.nl>, Stephane Eranian <eranian@...gle.com>,  "ak@...ux.intel.com" <ak@...ux.intel.com>, security@...nel.org,  Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: More perf security fixes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 02/27/2013 07:09 AM, P J P wrote:
-> Hello,
-> 
-> Linux kernel built with Edgeport USB serial converter driver io_ti,
-> is vulnerable to a NULL pointer dereference flaw. It happens if the
-> device is disconnected while corresponding /dev/ttyUSB? file is in
-> use.
-> 
-> An unprivileged user could use this flaw to crash the system,
-> resulting DoS.
-> 
-> Upstream fix: ------------- ->
-> https://git.kernel.org/linus/1ee0a224bc9aad1de496c795f96bc6ba2c394811
+On Wed, Jun 5, 2013 at 3:35 PM, Petr Matousek <pmatouse@...hat.com> wrote:
+> On Wed, Jun 05, 2013 at 03:02:53PM +0200, Peter Zijlstra wrote:
+>> On Wed, Jun 05, 2013 at 02:38:56PM +0200, Petr Matousek wrote:
+>> > On Wed, Jun 05, 2013 at 02:15:59PM +0200, Peter Zijlstra wrote:
+>> > > On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
+>> > > > Hello, Peter.
+>> > > >
+>> > > > On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
+>> > > > > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
+>> > > > >
+>> > > > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
+>> > > > >
+>> > > > > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
+>> > > > > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+>> > > > > Date:   Fri May 3 14:11:25 2013 +0200
+>> > > > >
+>> > > > >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
+>> > > > >
+>> > > > >     We should always have proper privileges when requesting kernel
+>> > > > >     data.
+>> > > > >
+>> > > > >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+>> > > > >     Cc: <stable@...nel.org>
+>> > > > >     Cc: Andi Kleen <ak@...ux.intel.com>
+>> > > > >     Cc: eranian@...gle.com
+>> > > > >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
+>> > > > >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
+>> > > > >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
+>> > > > >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
+>> > > >
+>> > > > There is similar check in perf_copy_attr() which is called from
+>> > > > perf_event_open syscall --
+>> > > >
+>> > > >                 /* kernel level capture: check permissions */
+>> > > >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+>> > > >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+>> > > >                         return -EACCES;
+>> > > >
+>> > > > It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
+>> > > > missing something?
+>> > > >
+>> > >
+>> > > I overlooked it, also its slightly broken. See the discussion at:
+>> > >   https://lkml.org/lkml/2013/5/21/166
+>> >
+>> > Got it, thanks for the pointer. So it is safe to say there never was a
+>> > leak in this case (and thus no security issue worth CVE)?
+>>
+>> There was a leak, notice how Stephane's patch did a
+>> s/PERF_SAMPLE_BRANCH_PERM_PLM/PERF_SAMPLE_BRANCH_KERNEL/
 >
->  Reference: ---------- ->
-> https://bugzilla.redhat.com/show_bug.cgi?id=916191
-> 
-> Thank you. -- Prasad J Pandit / Red Hat Security Response Team DB7A
-> 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+> PERF_SAMPLE_BRANCH_PERM_PLM is a superset of PERF_SAMPLE_BRANCH_KERNEL:
+>
+> #define PERF_SAMPLE_BRANCH_PERM_PLM \
+>         (PERF_SAMPLE_BRANCH_KERNEL |\
+>          PERF_SAMPLE_BRANCH_HV)
+>
+>
+>> but also places
+>> the check _after_ we propagate the event PLM levels in the case none
+>> were LBR specific.
+>
+> Assuming the leak does occur only when PERF_SAMPLE_BRANCH_KERNEL is set,
+> that does not matter:
+>
+>                /* kernel level capture: check permissions */
+>                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+>                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+>                         return -EACCES;
+>
+> ^^^ this assures proper permission check if PERF_SAMPLE_BRANCH_KERNEL
+> is explicitly set
+>
+>
+>                 /* propagate priv level, when not set for branch */
+>                 if (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) {
+>
+>                         /* exclude_kernel checked on syscall entry */
+>                         if (!attr->exclude_kernel)
+>                                 mask |= PERF_SAMPLE_BRANCH_KERNEL;
+>
+> And following check in perf_event_open syscall assures the permission
+> are right for (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) code:
+>
+>         if (!attr.exclude_kernel) {
+>                 if (perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+>                         return -EACCES;
+>         }
+>
+Yes, your analysis is correct. If the branch has not explicit priv
+level mask, then
+it is inherited from the event branches are requested from.
 
-Please use CVE-2013-1774 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRLkqQAAoJEBYNRVNeJnmTm5cQAJ6D6yOZnJufAnbZJyuD1fej
-G9/8cTTMA+819yRqYCn9GAHqLHG9luxlBBdqbppKSHNsqkMRAYFPr2iHBmFVyrio
-OCok4gaqjnL5M5MhEyDm7W2+2BTsidTjfjTAJSF+9CncOp4GU1ucrTqNlYJOkLTA
-ENvswv+dZ4GG//QXIr3c0lh4VRwRNeduuotC1xhPlSzS/MCobUhldtgvA7rpEygQ
-+Fs4z/SsmKHf8CLXhyEE9YWayQ+ccs6yGRyjSUxfrXw3wofYV5MPmcQkxh4jHPUo
-CtV9wsGj7VIi3iwkx0oz/q75IpRTqyRfJoaYYGziR56WnpjtPw6FKLJfDeC2qufB
-eZs+6ZvX9Z+19V3/9Q3TgGokaSXnbcV+lPxDwQ5hgY2icwnE+uKHPzkFWJ6Nv8jB
-fYAMAyC6MRcVItkW+x6bdUWfNmFPI5Fgf0/7Z0oh2sZ4sDB70jtnIDVwEvb0xg7H
-CMYE6jeO9n2TfM2Ojt0d/4Fhe1cEcZM6Rqfh3JxzeyRxDCW97sxXlsX+AuuFlSzo
-4DgQRQh8HhVvuzZpgNXvl0/OGPUa5PmgPSEGGKriEFmDral2kIkKtPlmqqUrTeXA
-bQTzZxpckIwdSs/5DKBVY900eubAJSU1CS7PJmp90AUFMVHych3Frzyar7Q8RFYO
-COPY5FwbpdXRD19dOJds
-=V9VA
------END PGP SIGNATURE-----
+> --
+> Petr Matousek / Red Hat Security Response Team
