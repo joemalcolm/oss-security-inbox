@@ -1,16 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/17
-Message-ID: <5277FD64.10406@gmail.com>
-Date: Mon, 04 Nov 2013 21:02:44 +0100
-From: leToff <letoff@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/20
+Message-ID: <51AF88B9.4060403@fifthhorseman.net>
+Date: Wed, 05 Jun 2013 14:51:37 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: openssl default ciphers
+CC: Russ Allbery <rra@...nford.edu>, audreyt@...reyt.org
+Subject: Re: CVE-2013-2145: perl Module::Signature code execution vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 04/11/2013 20:40, Eric H. Christensen wrote:
->
-> BEAST is now mitigated on most browsers so we can drop the very broken
-> RC4 cipher.
-I guess Stephan is working with Safari...
+On 06/05/2013 02:24 PM, Russ Allbery wrote:
 
-leToff
+> Speaking as a CPAN author, the second would be awesome.  For bonus points,
+> once one registers a key with CPAN, CPAN could then even check one's
+> uploads and disallow uploads that aren't signed with the proper key.
+
+As another CPAN contributor (though much less prolific than Russ), i
+also think this would be great.
+
+And wearing my hat as a member of the debian perl module packaging team,
+i would be very happy to see this level of author-specific cryptographic
+integrity checks when were updating packages from CPAN.  I suspect we
+have enough people interested in this within the debian pkg-perl to
+build in automated checks against these certifications during debian
+packaging as well.
+
+Thanks for continuing to maintain such a great archive of useful, free code.
+
+	--dkg
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
