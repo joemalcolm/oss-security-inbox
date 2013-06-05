@@ -1,51 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/11
-Message-ID: <5294DCD9.8050000@redhat.com>
-Date: Tue, 26 Nov 2013 10:39:37 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: static IV used in Percona XtraBackup
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/6
+Message-ID: <20130605121054.GC32700@dhcp-25-225.brq.redhat.com>
+Date: Wed, 5 Jun 2013 14:10:54 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: a.p.zijlstra@...llo.nl
+Cc: OSS Security List <oss-security@...ts.openwall.com>, a.p.zijlstra@...llo.nl, eranian@...gle.com, ak@...ux.intel.com, security@...nel.org, Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: More perf security fixes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello, Peter.
 
-On 11/26/2013 03:52 AM, Marcus Meissner wrote:
-> Hi,
+On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
+> 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
 > 
-> This came to our desk:
-> https://bugzilla.novell.com/show_bug.cgi?id=852224
-> https://bugs.launchpad.net/percona-xtrabackup/+bug/1185343
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
 > 
-> constant IV used in CTR Mode, allowing plaintext retrieval
-> attacks.
+> commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
+> Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+> Date:   Fri May 3 14:11:25 2013 +0200
 > 
-> I think it needs a CVE.
+>     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
 > 
-> Ciao, Marcus
+>     We should always have proper privileges when requesting kernel
+>     data.
 > 
+>     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+>     Cc: <stable@...nel.org>
+>     Cc: Andi Kleen <ak@...ux.intel.com>
+>     Cc: eranian@...gle.com
+>     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
+>     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
+>     Signed-off-by: Ingo Molnar <mingo@...nel.org>
+>     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
 
-Please use CVE-2013-6394 for this issue.
+There is similar check in perf_copy_attr() which is called from
+perf_event_open syscall --
 
-P.S. has anyone considered packaging this for Fedora? looks nifty.
+                /* kernel level capture: check permissions */
+                if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+                    && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+                        return -EACCES;
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
+missing something?
 
-iQIcBAEBAgAGBQJSlNzYAAoJEBYNRVNeJnmT91QP/1Mnd31z82+CKrLklfRidV/Y
-McdFlOm9AQJvUTKy5U8/7JroWx5wQpGBOVqp7KKB30m/PId+mzoVPF+0AwHhfleg
-CQ37UowmYx6izjSS+A3yHXFYdm7Bm46ulghnSF7slM+tEn9SiiP6IjGJLJfJStZ9
-9KkCdUDepq67UmLA9ny10/Fhc+NBcAJj6VIPGzQPFyFlqw91RFLnnqpX+Sb7qCGj
-lIXikWYmmCtKtl6DzPPNgbcejMY9OJulacHQ8V8fngAIcHzuofkMRyv17zDvtreP
-MiUB7NeMpwzWZBqIv3WE+/kzmxubVf8pI50Y847bDwzMd1HhVv0RrigqGhg8reiG
-dIHGFk+LS60PTPHEFs7K7r2xAk+GOmHPOCpaZlQqDrNRqQ/Zxu9MDjockYN4+rS/
-4qJD9N8jeyDHhZmR2BnIIlZkjHzwYlDcAiAX06NB4mppVTTHadaWYTc6620NhG9F
-BzV3KIxyFnAVPD3aeXaWCtLqCaKmq3kAJHsTF2QkmlsVNNwcnMdIvMnbyyjn5oeY
-Dw1bZcmdRfchYavozkuM5898PH8+yzvXl/k60e/8zjgGIVbVIRYblznK+5bqPlpb
-GPoYGAmmy8knV2E/6YR7kFXdzVC8n/XYUL9h7HGNy74pLGEZLHlxlhM52fRPE9qs
-P6fxvlll8e/bfvZj2CDZ
-=b8Jv
------END PGP SIGNATURE-----
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
