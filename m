@@ -1,47 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/23/4
-Message-ID: <52672D6B.6010708@redhat.com>
-Date: Tue, 22 Oct 2013 19:59:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: another glibc flaw, similar to CVE-2013-1914, but in AF_INET6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/8
+Message-ID: <20130605123855.GD32700@dhcp-25-225.brq.redhat.com>
+Date: Wed, 5 Jun 2013 14:38:56 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: a.p.zijlstra@...llo.nl
+Cc: eranian@...gle.com, ak@...ux.intel.com, security@...nel.org, Marcus Meissner <meissner@...e.de>, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: More perf security fixes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 10/22/2013 04:42 PM, Vincent Danen wrote:
-> It was found that the CVE-2013-1914 fix in glibc for AF_UNSPEC
-> missed a an identical case but with AF_INET6.  Could a CVE be
-> assigned to this? This issue has the same impact as CVE-2013-1914.
+On Wed, Jun 05, 2013 at 02:15:59PM +0200, Peter Zijlstra wrote:
+> On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
+> > Hello, Peter.
+> > 
+> > On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
+> > > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
+> > > 
+> > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
+> > > 
+> > > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
+> > > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+> > > Date:   Fri May 3 14:11:25 2013 +0200
+> > > 
+> > >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
+> > > 
+> > >     We should always have proper privileges when requesting kernel
+> > >     data.
+> > > 
+> > >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+> > >     Cc: <stable@...nel.org>
+> > >     Cc: Andi Kleen <ak@...ux.intel.com>
+> > >     Cc: eranian@...gle.com
+> > >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
+> > >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
+> > >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
+> > >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
+> > 
+> > There is similar check in perf_copy_attr() which is called from
+> > perf_event_open syscall --
+> > 
+> >                 /* kernel level capture: check permissions */
+> >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+> >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+> >                         return -EACCES;
+> > 
+> > It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
+> > missing something?
+> > 
 > 
-> References:
-> 
-> https://sourceware.org/ml/libc-alpha/2013-10/msg00733.html 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1022280
-> 
-> Thanks.
-> 
+> I overlooked it, also its slightly broken. See the discussion at: 
+>   https://lkml.org/lkml/2013/5/21/166
 
-Please use CVE-2013-4458 for this issue.
+Got it, thanks for the pointer. So it is safe to say there never was a
+leak in this case (and thus no security issue worth CVE)?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSZy1qAAoJEBYNRVNeJnmTF/4P/2+5FLBkwlUwC55vTvbb2lq0
-gnRYK3Ukme8ViRy0XZw/vm6p5g/7Wm8aj3DaTzA4cMuMMQ7fUL9E3ZUqP/xmltb6
-CfvzcDhqZCNp8OyKSn5ELK8GFJxOToiwTijlN4gHJ+FostNq+PRtkBRh6x3HN9h5
-sNBtXFKIqISRaZOVZD1mNCuPC2dvypP4SbCVuBNa7s24drwO2/rKMIVQxrJVbzMt
-XTRvMEWNqz83gUA4orBcDWB6dQvIfjQPxrtIebvLnZ0pL3iiRXhQsfRexmNjtQtc
-gCpmfKoa9bl1x9elExhAduSkFjoiaMlj5HT8vSWXT21ADd6r+0elu9LJLYKNNf6s
-HZ6WsuK3fSLLPWQ1oK0mve1PLbOEDykWxTUwtNdmeRTE3d1qWg7nE26O0MA8+W3t
-aTu/68gHCe+d7USlcUcvgF6cGKaqC4o3yS4iDcOMHVaStDUePXL6Kz+HGJ/pOzPc
-oBcUCCJ5ud88bGg2q1URXnEoyxHdVmgYRwDiNnWl6wX6cK86oaBHTAHmzoMTr0ro
-dm/+o5Lgz7R/3fXQHXswIez+DwhjKb+kd3sbkqAtDsn1NhVDy0rBSI1exMxMQaQe
-1jfqae57/aKLzMJsDIX7+CLNz5tmcAoG+sZZr5daIMIfUYzIY26dV74QPTLjDql7
-bW3SvoKIC5uiVqqDTKNk
-=BHAT
------END PGP SIGNATURE-----
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
