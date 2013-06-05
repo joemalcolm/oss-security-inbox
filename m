@@ -1,37 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/08/3
-Message-ID: <CAA7hUgFVYCP55JoCHdQGwNwe72f7RaJpDUWvLRMJaq+kUyxeVw@mail.gmail.com>
-Date: Tue, 8 Oct 2013 12:16:02 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: security@...ara.org
-Subject: CVE request: mahara 1.7.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/14
+Message-ID: <CABPqkBQuJ-f5EXBJ5EVOH+sjkRL2HGOmkB4GPVpsNsEeKFXCfg@mail.gmail.com>
+Date: Wed, 5 Jun 2013 14:30:13 +0200
+From: Stephane Eranian <eranian@...gle.com>
+To: Peter Zijlstra <peterz@...radead.org>
+Cc: OSS Security List <oss-security@...ts.openwall.com>,  "ak@...ux.intel.com" <ak@...ux.intel.com>, security@...nel.org,  Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: More perf security fixes
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Multiple vulnerabilities have been discovered and fixed in the 1.7.3
-release of Mahara:
 
->From [1]
-> * Bug #1211758 Arbitrary image download
-> * Bug #1175446 user supplied $_SERVER['HTTP_HOST'] can be used for injections
-> * Bug #1233500 Not checking ownership of blocks before editing them
+On Wed, Jun 5, 2013 at 2:15 PM, Peter Zijlstra <peterz@...radead.org> wrote:
+> On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
+>> Hello, Peter.
+>>
+>> On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
+>> > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
+>> >
+>> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
+>> >
+>> > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
+>> > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+>> > Date:   Fri May 3 14:11:25 2013 +0200
+>> >
+>> >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
+>> >
+>> >     We should always have proper privileges when requesting kernel
+>> >     data.
+>> >
+>> >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+>> >     Cc: <stable@...nel.org>
+>> >     Cc: Andi Kleen <ak@...ux.intel.com>
+>> >     Cc: eranian@...gle.com
+>> >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
+>> >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
+>> >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
+>> >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
+>>
+>> There is similar check in perf_copy_attr() which is called from
+>> perf_event_open syscall --
+>>
+>>                 /* kernel level capture: check permissions */
+>>                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+>>                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+>>                         return -EACCES;
+>>
+>> It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
+>> missing something?
+>>
+>
+> I overlooked it, also its slightly broken. See the discussion at:
+>   https://lkml.org/lkml/2013/5/21/166
+>
+Yes, there was a typo in the constant. Was checking the wrong bits.
+Now it is fixed with the patch referred to by Peter.
 
-1st and 3rd issues are described at:
-https://mahara.org/interaction/forum/topic.php?id=5753
-
-2nd issue is described at:
-https://mahara.org/interaction/forum/topic.php?id=5754
-
-Could CVE ids be assigned please?
-
-To Hugh and the other mahara security people: please chime in if you
-have already requested ids to somebody else.
-
-[1] https://launchpad.net/mahara/1.7/1.7.3#release-notes
-
-Thanks,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+>
