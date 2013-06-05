@@ -1,66 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/15
-Message-ID: <50F85ECF.1090301@redhat.com>
-Date: Thu, 17 Jan 2013 13:27:59 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: piwik before 1.10
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/1
+Message-ID: <alpine.LFD.2.03.1306051241480.10573@redhat.com>
+Date: Wed, 5 Jun 2013 12:53:33 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request: kernel: cpqarray/c: info leak in ida_locked_ioctl()
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+   Hello
 
-On 01/17/2013 02:18 AM, Hanno Böck wrote:
-> Hi,
-> 
-> See here: http://piwik.org/blog/2013/01/piwik-1-10/
-> 
-> "Security: We would like to thank the Security Researchers Mateusz 
-> Goik,  Paweł Hałdrzyński and Artur Czyż, for their responsible 
-> disclosure. They have all reported XSS vulnerabilities (which
-> we’ve fixed) as part of our Security Bug Bounty Program. Thank you
-> to them for making Piwik more secure!"
-> 
-> Security focus lists it, but it calls it just "Multiple
-> Unspecified Cross Site Scripting Vulnerabilities".
-> 
-> No further details. And as piwik devs already statet here last
-> year, they like security by obscurity so I don't think asking them
-> will help.
-> 
-> Please assign CVE. (I think one for all XSS issues fixed in 1.10
-> is enough).
-> 
-> cu,
+A Linux kernel built with the Compaq SMART2(CONFIG_BLK_CPQ_DA) & Compaq Smart 
+Array 5xxx(CONFIG_BLK_CPQ_CISS_DA) support is vulnerable to an information 
+leakage flaw. This could occur while doing an ioctl(2) calls on the block 
+device with command `IDAGETPCIINFO' or `CCISS_PASSTHRU32'.
 
-As per CVE merge/split, 3 different researchers = 3 different CVEs. I
-can't find any link between them (e.g.  they don't work for the same
-company and reported them as a group), so the CVE's are:
+A user/program could use this flaw to leak kernel memory bytes.
 
-Piwiki 1.10 XSS Mateusz Goik use CVE-2013-0193
-Piwiki 1.10 XSS Paweł Hałdrzyński use CVE-2013-0194
-Piwiki 1.10 XSS Artur Czyż use CVE-2013-0195
+Upstream fixes:
+---------------
+  -> https://lkml.org/lkml/2013/6/3/131
+  -> https://lkml.org/lkml/2013/6/3/127
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ+F7PAAoJEBYNRVNeJnmTRZwP/02o64X8u/k87JQAlfL7sbjH
-CKdLYpLRXv++vpZSgaiMTPpurqCCA9vXy3okAPnc33wg7F6sq9z3iTMuHFUX9g4n
-QUOPn/EigwUDYZbAEbUpZInK3WcM1fkXEoglZXsUzDfUnp3OMsCPiO3L+B5hzqaW
-ruZi8Ct673eaIl09KyB0OGDB8uNw1IFvXhRafEUM+jC6gvIkgp/xXoQQ+XYBN/Kn
-O5Gn4AdXlouGcJO1p82Y/WU3JBToJihXzATIp9lddxni3Si8ZGQzovgfohtRE46H
-3PEIhbxe6pIddkuOCJfOfB7sUyFfJCjMtziKNmOaB1U9QRxsqA8TEy1doyDsrS82
-oJH2WQgavpbEAsgtC5Lpih9nFPeONgbI4pMBVyCc4Z5FVU636mUz4UfGqx9vM7Ba
-Xq4FaM8h26qXiSSZgYX7ok7ddo7vmxqo4PmuC2iaMrx9cUxNJWcV7vJXNAjLp2ff
-feDdXV0cmMOuUTSAIBiPxWOo7kV7e6Ci/ifFfUv1lGXbyy99DXz4GWVCwp0k8ykv
-LnCUMfexgL4gZduY1k/Hs/h4VHbEEYdOrtWblaNWLJLUsEo6ZCGoayaLoDsmS9fQ
-CEOsrNdhfh0kllpZULFljPQO+lJihM6aiv9HgBWHrBTGtCJKbwDQ7hp4MI7HsrV7
-/Q2p/TO+M/xsrogH4Hfs
-=7f5c
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
