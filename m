@@ -1,25 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/25/2
-Message-ID: <CAEmQOhBA6tK4OZELCBbeQWJMni=8MBdbDH+BmKb03hoy+LumbA@mail.gmail.com>
-Date: Mon, 25 Nov 2013 12:12:16 +0000
-From: Jonathan Salwan <jonathan.salwan@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Kernel MSM - Memory leak in drivers/base/genlock.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/22
+Message-ID: <20130605191817.GL32700@dhcp-25-225.brq.redhat.com>
+Date: Wed, 5 Jun 2013 21:18:17 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: Stephane Eranian <eranian@...gle.com>
+Cc: Peter Zijlstra <peterz@...radead.org>, "ak@...ux.intel.com" <ak@...ux.intel.com>, security@...nel.org, Marcus Meissner <meissner@...e.de>, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: More perf security fixes
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Wed, Jun 05, 2013 at 02:30:13PM +0200, Stephane Eranian wrote:
+> Hi,
+> 
+> 
+> On Wed, Jun 5, 2013 at 2:15 PM, Peter Zijlstra <peterz@...radead.org> wrote:
+> > On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
+> >> Hello, Peter.
+> >>
+> >> On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
+> >> > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
+> >> >
+> >> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
+> >> >
+> >> > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
+> >> > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+> >> > Date:   Fri May 3 14:11:25 2013 +0200
+> >> >
+> >> >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
+> >> >
+> >> >     We should always have proper privileges when requesting kernel
+> >> >     data.
+> >> >
+> >> >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+> >> >     Cc: <stable@...nel.org>
+> >> >     Cc: Andi Kleen <ak@...ux.intel.com>
+> >> >     Cc: eranian@...gle.com
+> >> >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
+> >> >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
+> >> >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
+> >> >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
+> >>
+> >> There is similar check in perf_copy_attr() which is called from
+> >> perf_event_open syscall --
+> >>
+> >>                 /* kernel level capture: check permissions */
+> >>                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+> >>                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+> >>                         return -EACCES;
+> >>
+> >> It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
+> >> missing something?
+> >>
+> >
+> > I overlooked it, also its slightly broken. See the discussion at:
+> >   https://lkml.org/lkml/2013/5/21/166
+> >
+> Yes, there was a typo in the constant. Was checking the wrong bits.
 
-The Genlock driver does not properly initialize all members of a structure
-before copying it to user space. This allows a local attacker to obtain
-potentially sensitive information from kernel stack memory via ioctl system
-calls.
+Before we were checking PERF_SAMPLE_BRANCH_PERM_PLM bits.
+PERF_SAMPLE_BRANCH_PERM_PLM is defined as 
 
-Upstream fixes:
-https://www.codeaurora.org/cgit/quic/la/kernel/msm/commit/drivers/base/genlock.c?id=e3c43027bdb59f03eec7ead0a01c77e4bf801625&h=jb_3.2.3
+#define PERF_SAMPLE_BRANCH_PERM_PLM \
+        (PERF_SAMPLE_BRANCH_KERNEL |\
+         PERF_SAMPLE_BRANCH_HV)
 
-Could you please assign a CVE id for this issue?
+Can you please explain why that was considered as wrong bits? Shouldn't
+we also check for PERF_SAMPLE_BRANCH_HV now? I admit that it has now
+more sense that before and it will actually work after you reorganized
+and moved the check the way you did, but ain't we leaking some useful
+privileged info by not checking for PERF_SAMPLE_BRANCH_PERM_PLM but only
+for PERF_SAMPLE_BRANCH_KERNEL?
 
-Thanks,
-
-- Jonathan
-
+-- 
+Petr Matousek / Red Hat Security Response Team
