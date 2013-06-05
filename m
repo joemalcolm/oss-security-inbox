@@ -1,56 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/13/8
-Message-ID: <51BA5C53.6000407@redhat.com>
-Date: Thu, 13 Jun 2013 17:57:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/11
+Message-ID: <20130605135156.GF32700@dhcp-25-225.brq.redhat.com>
+Date: Wed, 5 Jun 2013 15:51:56 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Alan Coopersmith <alan.coopersmith@...cle.com>, "X.Org Security Team" <xorg-security@...ts.x.org>, mancha1@...h.com, "X.Org Development" <xorg-devel@...ts.x.org>
-Subject: Re: CVE request for possible NULL ptr deref in XDM when using crypt() from glibc 2.17+
+Cc: Marcus Meissner <meissner@...e.de>, a.p.zijlstra@...llo.nl, eranian@...gle.com, security@...nel.org
+Subject: Re: Re: CVE Request: More perf security fixes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 06/11/2013 05:47 PM, Alan Coopersmith wrote:
-> It's been suggested we get a CVE id assigned for this recent fix to
-> the xdm display/login manager from X.Org:
+On Tue, Jun 04, 2013 at 10:59:33AM -0700, Andi Kleen wrote:
+> > 3. Information leak (??) via perf LBR filter 
 > 
-> http://cgit.freedesktop.org/xorg/app/xdm/commit/?id=8d1eb5c74413e4c9a21f689fc106949b121c0117
->
->  Without this fix, if xdm is built to use raw crypt()
-> authentication, instead of a higher level system such as PAM or BSD
-> Auth, and that crypt() function can return a NULL pointer (as glibc
-> 2.17+ does for invalid input, such as when an account is locked by
-> prepending a "!" to the password field), then attempting to login
-> to such an account via xdm can crash the xdm daemon.
+> Leak + crash actually.
 > 
-> For single user console machines, this generally just means you get
-> the text console login prompt instead.   For machines set up to
-> support multiple seats, remote XDMCP access, or X terminals (such
-> as LTSP setups using xdm), this may be a denial of service for
-> users on those other seats/terminals /devices.
+> > 
+> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6e15eb3ba6c0249c9e8c783517d131b47db995ca
+> > 
+> > commit 6e15eb3ba6c0249c9e8c783517d131b47db995ca
+> > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+> > Date:   Fri May 3 14:11:24 2013 +0200
+> > 
+> >     perf/x86/intel/lbr: Fix LBR filter
+> >     
+> >     The LBR 'from' adddress is under full userspace control; ensure
+> >     we validate it before reading from it.
 > 
+> This patch is known broken and causes additional crashes.
+> There's no updated patch for that so far.
+> 
+> -Andi
 
-
-Please use CVE-2013-2179 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRulxTAAoJEBYNRVNeJnmTI9wP/1LWPFOfR+/Z/1mM77kBbt+K
-WqXL20xy5rXRKSYUCDAIE2QLwK+FFwoEP8kB0SzYAp2KQ/Tnq99HWN8Xdb0lT3+A
-sxQF5Dy8DCYr5ME5lvYraYxRyFOqal3mx3TGY9dGvzBGB4iOsJ24xPrPzz4uA0iv
-IGnltkD1dHiHbVfIsYqrFrdXqN8q1NyRJHWV+L2mLW/iGfIIpw1W289x/8xjBd8Y
-ZEfckYr8aLpq5kkf8KT3ua+C0Y99U0n7+TFcxgFPmCkgE57U4dzpFdbAV6iJ69hw
-ahyB62MQT6WFtSvUqnl0VP+CclgKZyDvkxzyPkWFBFIuQqTyDOMqyzPXrF9v9C1p
-idVxpEHK3w1bdWGrJswYtTqWHE+4PEjeiMYJSDIw/pnINT99z349wlK2tLixCt+z
-CGEMelGZvAIgL8pvEnnKfrip0nRbjIFvJGMrdC6uLHNsQvkosMDx7zSOteq60L+d
-/yZxOFGjH2+BxFJfSobAlY28E8XTUvG+8o0SEBGq82oPbbAL5KBbbEw9XGcERTT8
-rQ0f8xd8Cvdw9fLaVg0FWDircqqtVNhFGwy1tAUE9NokFZlN94ljV5+F7Bhi1OHA
-MuRP5doyWSD+4EsGBG1HhIKAj4spszGp/nl4PTu+aAVx0+209RUMmWCH06h2LbIj
-4YqMWveDHUo7h+FXZu9z
-=VM3h
------END PGP SIGNATURE-----
+-- 
+Petr Matousek / Red Hat Security Response Team
