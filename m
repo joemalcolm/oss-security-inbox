@@ -1,33 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/30/5
-Message-ID: <CAGVYHsXtMODq8-EnmObam0OB8AzbvtSthA0Jkfz6SO=zh4wQmA@mail.gmail.com>
-Date: Tue, 30 Apr 2013 11:11:26 -0500
-From: Andrés Gómez Ramírez <andresgomezram7@...il.com>
-To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: Flightgear remote format string
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/13
+Message-ID: <20130605141614.GG32700@dhcp-25-225.brq.redhat.com>
+Date: Wed, 5 Jun 2013 16:16:15 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: Peter Zijlstra <peterz@...radead.org>, Andi Kleen <ak@...ux.jf.intel.com>
+Cc: Marcus Meissner <meissner@...e.de>, eranian@...gle.com, security@...nel.org, oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request: More perf security fixes
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Andi, Peter.
 
-Introduction:
+On Wed, Jun 05, 2013 at 10:23:02AM +0200, Peter Zijlstra wrote:
+> On Tue, Jun 04, 2013 at 10:59:33AM -0700, Andi Kleen wrote:
+> > > 3. Information leak (??) via perf LBR filter 
+> > 
+> > Leak + crash actually.
 
-FlightGear is an open-source flight simulator.  It supports a variety of
-popular platforms (Windows, Mac, Linux, etc.) and is developed by skilled
-volunteers from around the world.  Source code for the entire project is
-available and licensed under the GNU General Public License.
+Was the leak supposed to be addressed via
+7cc23cd6c0c7d7f4bee057607e7ce01568925717 (and thus was never there)?
 
-Bug:
+Or how was the fix below supposed to fix the info leak?
 
-Flightgear allows remote control through Property tree.  It is vulnerable
-to remote format string vulnerability when some special parameters related
-with clouds are changed.  This could allow to crash the application or
-potentially execute arbitrary code under certain conditions.
+> > 
+> > > 
+> > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6e15eb3ba6c0249c9e8c783517d131b47db995ca
+> > > 
+> > > commit 6e15eb3ba6c0249c9e8c783517d131b47db995ca
+> > > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+> > > Date:   Fri May 3 14:11:24 2013 +0200
+> > > 
+> > >     perf/x86/intel/lbr: Fix LBR filter
+> > >     
+> > >     The LBR 'from' adddress is under full userspace control; ensure
+> > >     we validate it before reading from it.
+> > 
+> > This patch is known broken and causes additional crashes.
+> > There's no updated patch for that so far.
+> 
+> And yet there's no crash report in my inbox.. how kind you you andi.
+> 
+> And I know you don't agree with the patch, but since you're too lazy to
+> provide a better one I didn't think you minded _that_ much :-)
 
-Fix:
-
-No fix.
-
-References:
-
-http://kuronosec.blogspot.com/2013/04/flightgear-remote-format-string.html
-
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
