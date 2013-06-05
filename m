@@ -1,87 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/26/6
-Message-Id: <4D729FBB-922F-438F-B818-649C6F9F05F0@stufft.io>
-Date: Fri, 26 Jul 2013 11:46:03 -0400
-From: Donald Stufft <donald@...fft.io>
-To: oss-security@...ts.openwall.com, isis@...project.org
-Cc: cve-assign@...re.org
-Subject: Re: Requesting CVE-ID(s) for Python's pip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/10
+Message-ID: <20130605133555.GE32700@dhcp-25-225.brq.redhat.com>
+Date: Wed, 5 Jun 2013 15:35:55 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+Cc: eranian@...gle.com, ak@...ux.intel.com, security@...nel.org, Marcus Meissner <meissner@...e.de>, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: More perf security fixes
 Content-Type: text/plain; charset=utf-8
 
-
-On Jul 26, 2013, at 8:03 AM, isis agora lovecruft <isis@...project.org> wrote:
-
-> I would also like to request CVE assignment(s) for two issues in pip
-> (https://github.com/pypa/pip/), related to Donald Stufft's.
+On Wed, Jun 05, 2013 at 03:02:53PM +0200, Peter Zijlstra wrote:
+> On Wed, Jun 05, 2013 at 02:38:56PM +0200, Petr Matousek wrote:
+> > On Wed, Jun 05, 2013 at 02:15:59PM +0200, Peter Zijlstra wrote:
+> > > On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
+> > > > Hello, Peter.
+> > > > 
+> > > > On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
+> > > > > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
+> > > > > 
+> > > > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
+> > > > > 
+> > > > > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
+> > > > > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+> > > > > Date:   Fri May 3 14:11:25 2013 +0200
+> > > > > 
+> > > > >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
+> > > > > 
+> > > > >     We should always have proper privileges when requesting kernel
+> > > > >     data.
+> > > > > 
+> > > > >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+> > > > >     Cc: <stable@...nel.org>
+> > > > >     Cc: Andi Kleen <ak@...ux.intel.com>
+> > > > >     Cc: eranian@...gle.com
+> > > > >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
+> > > > >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
+> > > > >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
+> > > > >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
+> > > > 
+> > > > There is similar check in perf_copy_attr() which is called from
+> > > > perf_event_open syscall --
+> > > > 
+> > > >                 /* kernel level capture: check permissions */
+> > > >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+> > > >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+> > > >                         return -EACCES;
+> > > > 
+> > > > It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
+> > > > missing something?
+> > > > 
+> > > 
+> > > I overlooked it, also its slightly broken. See the discussion at: 
+> > >   https://lkml.org/lkml/2013/5/21/166
+> > 
+> > Got it, thanks for the pointer. So it is safe to say there never was a
+> > leak in this case (and thus no security issue worth CVE)?
 > 
-> First issue:
-> ------------
->  Python's pip versions 1.4.x and earlier are vulnerable to an Arbitrary Code
->  Execution Attack due to incorrect regexp parsing of external download links
->  in the following functions in pip/index.py:
-> 
->    * PackageFinder._get_pages() https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L232
->    * PackageFinder._sort_links() https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L272
->    * PackageFinder._package_versions() https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L285
->    * PackageFinder._link_package_versions() https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L290
-> 
->  Which allow an attacker with the ability to Man-in-the-Middle external
->  package URIs (which often include external HTTP URIs, and can include the
->  module author's personal website, see
->  https://github.com/pypa/pip/commit/a3584d176697bd4c83390de1857679d44389e00d#L0L265)
->  to specify an arbitrarily high package version number and gain code
->  execution.
-> 
->  Uptream bugtracker reports: https://github.com/pypa/pip/issues/425#issuecomment-20639993
->                              https://github.com/pypa/pip/issues/425#issuecomment-20640890
-> 
->  Other mentions: https://github.com/pypa/pip/commit/9ccd5f0bb37508f03e6a19be58af7384eede2157
->                  https://paste.debian.net/7309/
-> 
->  This issue is fixed in pip>=1.5.x by Donald Stufft in the following commits:
->  https://github.com/pypa/pip/commit/0e1da584f418ae0088b43d01248572e2ff53d3a1
->  https://github.com/pypa/pip/commit/9ccd5f0bb37508f03e6a19be58af7384eede2157
+> There was a leak, notice how Stephane's patch did a
+> s/PERF_SAMPLE_BRANCH_PERM_PLM/PERF_SAMPLE_BRANCH_KERNEL/
 
-I'm not sure I understand this one. Is this just the external urls? Technically it wasn't a problem with the regexp's they worked fine. It was just bad behavior inherited from legacy systems. 1.4.x defaults to allowing them but enables people to turn them off, 1.5.x will disallow them by default.
+PERF_SAMPLE_BRANCH_PERM_PLM is a superset of PERF_SAMPLE_BRANCH_KERNEL:
 
-1.3.x and earlier allowed them and offered no way to disable them.
-
-> 
-> Second issue:
-> -------------
->  Python's pip versions 1.5.x and earlier use MD5 hashes for verification of
->  package integrity against PyPI (which defaults to providing MD5).
-
-Strictly speaking pip doesn't default to any hash. It just uses the hash given to it. Prior to 1.2 it only allowed MD5 but since the release of 1.2 it has allowed any of the guaranteed hashes in python's hash lib.
-
-See: https://github.com/pypa/pip/pull/467
-
-Setuptools has also historically only allowed MD5 but has recently with version 0.9+ enabled similar abilities to setuptools to enable the use of any available hashes as well. Distribute (a fork of setuptools which has now been merged back into setuptools) only supports MD5 in it's older releases.
-
-> 
-> These issues appear to be unrelated to Donald Stufft's CVE ID request filed
-> earlier today, and additionally unrelated to the following already assigned
-> CVEs:
-> 
->  * CVE-2013-1888 Pip builds in /tmp 
->    https://security-tracker.debian.org/tracker/CVE-2013-1888
->    https://bugzilla.redhat.com/show_bug.cgi?id=923974
->    http://seclists.org/oss-sec/2013/q1/704
-> 
->  * CVE-2013-1629 Pip<1.3.0 uses a default package index without SSL
->    https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1629
->    https://bugzilla.redhat.com/show_bug.cgi?id=968059
-> 
-> -- 
-> ♥Ⓐ isis agora lovecruft
-> _________________________________________________________
-> GPG: 4096R/A3ADB67A2CDB8B35
-> Current Keys: https://blog.patternsinthevoid.net/isis.txt
+#define PERF_SAMPLE_BRANCH_PERM_PLM \
+        (PERF_SAMPLE_BRANCH_KERNEL |\
+         PERF_SAMPLE_BRANCH_HV)
 
 
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+> but also places
+> the check _after_ we propagate the event PLM levels in the case none
+> were LBR specific.
+
+Assuming the leak does occur only when PERF_SAMPLE_BRANCH_KERNEL is set,
+that does not matter:
+
+               /* kernel level capture: check permissions */
+                if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+                    && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+                        return -EACCES;
+
+^^^ this assures proper permission check if PERF_SAMPLE_BRANCH_KERNEL
+is explicitly set
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
+                /* propagate priv level, when not set for branch */
+                if (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) {
+
+                        /* exclude_kernel checked on syscall entry */
+                        if (!attr->exclude_kernel)
+                                mask |= PERF_SAMPLE_BRANCH_KERNEL;
+
+And following check in perf_event_open syscall assures the permission
+are right for (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) code:
+
+        if (!attr.exclude_kernel) {
+                if (perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+                        return -EACCES;
+        }
+
+-- 
+Petr Matousek / Red Hat Security Response Team
