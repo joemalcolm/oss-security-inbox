@@ -1,19 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/05/9
-Message-ID: <2938644.Rb0ONN4tu6@devil>
-Date: Thu, 05 Sep 2013 10:38:47 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Kernel PID Spoofing Privilege Escalation Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/9
+Message-ID: <20130605130253.GK27176@twins.programming.kicks-ass.net>
+Date: Wed, 5 Jun 2013 15:02:53 +0200
+From: Peter Zijlstra <peterz@...radead.org>
+To: eranian@...gle.com, ak@...ux.intel.com, security@...nel.org, Marcus Meissner <meissner@...e.de>, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: More perf security fixes
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 04 September 2013 20:30:05 Kurt Seifried wrote:
-> Stupid Q, any reason why this couldn't be sent to
-> http://oss-security.openwall.org/wiki/mailing-lists/distros to give
-> vendors a heads up (also we can get it a CVE prior to public release
-> then)?
+On Wed, Jun 05, 2013 at 02:38:56PM +0200, Petr Matousek wrote:
+> On Wed, Jun 05, 2013 at 02:15:59PM +0200, Peter Zijlstra wrote:
+> > On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
+> > > Hello, Peter.
+> > > 
+> > > On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
+> > > > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
+> > > > 
+> > > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
+> > > > 
+> > > > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
+> > > > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+> > > > Date:   Fri May 3 14:11:25 2013 +0200
+> > > > 
+> > > >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
+> > > > 
+> > > >     We should always have proper privileges when requesting kernel
+> > > >     data.
+> > > > 
+> > > >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+> > > >     Cc: <stable@...nel.org>
+> > > >     Cc: Andi Kleen <ak@...ux.intel.com>
+> > > >     Cc: eranian@...gle.com
+> > > >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
+> > > >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
+> > > >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
+> > > >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
+> > > 
+> > > There is similar check in perf_copy_attr() which is called from
+> > > perf_event_open syscall --
+> > > 
+> > >                 /* kernel level capture: check permissions */
+> > >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+> > >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+> > >                         return -EACCES;
+> > > 
+> > > It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
+> > > missing something?
+> > > 
+> > 
+> > I overlooked it, also its slightly broken. See the discussion at: 
+> >   https://lkml.org/lkml/2013/5/21/166
+> 
+> Got it, thanks for the pointer. So it is safe to say there never was a
+> leak in this case (and thus no security issue worth CVE)?
 
-Petr gave you the answer.
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+There was a leak, notice how Stephane's patch did a
+s/PERF_SAMPLE_BRANCH_PERM_PLM/PERF_SAMPLE_BRANCH_KERNEL/ but also places
+the check _after_ we propagate the event PLM levels in the case none
+were LBR specific.
+
+
