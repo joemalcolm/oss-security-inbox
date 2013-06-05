@@ -1,28 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/08/7
-Message-ID: <20130608115609.GC12877@gremlin.ru>
-Date: Sat, 8 Jun 2013 15:56:09 +0400
-From: gremlin@...mlin.ru
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/24
+Message-ID: <20130605192308.GM32700@dhcp-25-225.brq.redhat.com>
+Date: Wed, 5 Jun 2013 21:23:08 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: Stephane Eranian <eranian@...gle.com>
+Cc: Peter Zijlstra <a.p.zijlstra@...llo.nl>, "ak@...ux.intel.com" <ak@...ux.intel.com>, security@...nel.org, Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: More perf security fixes
 Content-Type: text/plain; charset=utf-8
 
-On 08-Jun-2013 07:43:21 -0400, larry Cashdollar wrote:
+On Wed, Jun 05, 2013 at 03:53:52PM +0200, Stephane Eranian wrote:
+> On Wed, Jun 5, 2013 at 3:35 PM, Petr Matousek <pmatouse@...hat.com> wrote:
+> > On Wed, Jun 05, 2013 at 03:02:53PM +0200, Peter Zijlstra wrote:
+> >> On Wed, Jun 05, 2013 at 02:38:56PM +0200, Petr Matousek wrote:
+> >> > On Wed, Jun 05, 2013 at 02:15:59PM +0200, Peter Zijlstra wrote:
+> >> > > On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
+> >> > > > Hello, Peter.
+> >> > > >
+> >> > > > On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
+> >> > > > > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
+> >> > > > >
+> >> > > > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
+> >> > > > >
+> >> > > > > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
+> >> > > > > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+> >> > > > > Date:   Fri May 3 14:11:25 2013 +0200
+> >> > > > >
+> >> > > > >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
+> >> > > > >
+> >> > > > >     We should always have proper privileges when requesting kernel
+> >> > > > >     data.
+> >> > > > >
+> >> > > > >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+> >> > > > >     Cc: <stable@...nel.org>
+> >> > > > >     Cc: Andi Kleen <ak@...ux.intel.com>
+> >> > > > >     Cc: eranian@...gle.com
+> >> > > > >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
+> >> > > > >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
+> >> > > > >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
+> >> > > > >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
+> >> > > >
+> >> > > > There is similar check in perf_copy_attr() which is called from
+> >> > > > perf_event_open syscall --
+> >> > > >
+> >> > > >                 /* kernel level capture: check permissions */
+> >> > > >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+> >> > > >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+> >> > > >                         return -EACCES;
+> >> > > >
+> >> > > > It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
+> >> > > > missing something?
+> >> > > >
+> >> > >
+> >> > > I overlooked it, also its slightly broken. See the discussion at:
+> >> > >   https://lkml.org/lkml/2013/5/21/166
+> >> >
+> >> > Got it, thanks for the pointer. So it is safe to say there never was a
+> >> > leak in this case (and thus no security issue worth CVE)?
+> >>
+> >> There was a leak, notice how Stephane's patch did a
+> >> s/PERF_SAMPLE_BRANCH_PERM_PLM/PERF_SAMPLE_BRANCH_KERNEL/
+> >
+> > PERF_SAMPLE_BRANCH_PERM_PLM is a superset of PERF_SAMPLE_BRANCH_KERNEL:
+> >
+> > #define PERF_SAMPLE_BRANCH_PERM_PLM \
+> >         (PERF_SAMPLE_BRANCH_KERNEL |\
+> >          PERF_SAMPLE_BRANCH_HV)
+> >
+> >
+> >> but also places
+> >> the check _after_ we propagate the event PLM levels in the case none
+> >> were LBR specific.
+> >
+> > Assuming the leak does occur only when PERF_SAMPLE_BRANCH_KERNEL is set,
+> > that does not matter:
+> >
+> >                /* kernel level capture: check permissions */
+> >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+> >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+> >                         return -EACCES;
+> >
+> > ^^^ this assures proper permission check if PERF_SAMPLE_BRANCH_KERNEL
+> > is explicitly set
+> >
+> >
+> >                 /* propagate priv level, when not set for branch */
+> >                 if (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) {
+> >
+> >                         /* exclude_kernel checked on syscall entry */
+> >                         if (!attr->exclude_kernel)
+> >                                 mask |= PERF_SAMPLE_BRANCH_KERNEL;
+> >
+> > And following check in perf_event_open syscall assures the permission
+> > are right for (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) code:
+> >
+> >         if (!attr.exclude_kernel) {
+> >                 if (perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+> >                         return -EACCES;
+> >         }
+> >
+> Yes, your analysis is correct. If the branch has not explicit priv
+> level mask, then
+> it is inherited from the event branches are requested from.
 
- >>> According to the bug report details that's a race condition.
- >>> A malicious user is using a vulnerability in the way the
- >>> installation script handles changing file permissions to disclose
- >>> sensitive information.
- >> Yes. And, once again, that's a misconfiguration - the file should
- >> be created as 0600 root:root during installation and only after
- >> that chmod() and chown() may be applied.
- > I'd agree if this were a configuration file we were talking about,
- > but it's an installation script.
+I am sorry to re-iterate the question, but does that mean that even
+before your and Peter's changes, it was not possible to set
+PERF_SAMPLE_BRANCH_KERNEL without passing "perf_paranoid_kernel() &&
+!capable(CAP_SYS_ADMIN" check either in perf_copy_attr or 
+perf_event_open (attr.exclude_kernel check)?
 
-So what? The installation script may contain the `umask 077` line,
-can't it?
+Did your patch change anything at all or it was just refactoring?
 
+I must be missing something.
+
+Thanks for the patience,
 -- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+Petr Matousek / Red Hat Security Response Team
