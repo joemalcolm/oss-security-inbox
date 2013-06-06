@@ -1,49 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/20/4
-Message-Id: <201312201538.rBKFcBQI021587@linus.mitre.org>
-Date: Fri, 20 Dec 2013 10:38:11 -0500 (EST)
-From: cve-assign@...re.org
-To: jmm@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Asterisk AST-2013-007
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/3
+Message-ID: <CAEmQOhBO3z-d+FPffzX3af5tf0i8wbzRB1xRZ8mG1N75DtyrgA@mail.gmail.com>
+Date: Thu, 6 Jun 2013 10:19:22 +0200
+From: Jonathan Salwan <jonathan.salwan@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Linux Kernel - Leak information in cdrom driver.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> But an ID is missing for
-> http://downloads.asterisk.org/pub/security/AST-2013-007.html
+When we read a block from the disk it normally fills a buffer but if
+the drive is malfunctioning there is a chance that it would only be
+partially filled. The result is an leak information to userspace.
 
-It is missing because that disclosure does not qualify for a CVE ID.
-The rationale sent to upstream was:
+Patch applied and committed in the next-line :
 
-'We don't think we'll be able to assign a CVE number for the
-downloads.asterisk.org/pub/security/AST-2013-007.html announcement. As
-far as we can tell, the announcement is about introducing an optional
-new security feature. An example of a type of issue that could have a
-CVE assignment is: ... a third party ships a product based on
-Asterisk ... this product implements an external control protocol that
-is capable of calling the SHELL and FILE functions with untrusted user
-input ... the third party publishes a security announcement stating
-that the new release of their product ships with a revised
-asterisk.conf containing a "no" value for the "live_dangerously"
-option, in order to fix this vulnerability ... We would generally
-assign one CVE number for each such security announcement, if any are
-found.'
+http://git.kernel.org/cgit/linux/kernel/git/next/linux-next.git/commit/drivers/cdrom/cdrom.c?id=050e4b8fb7cdd7096c987a9cd556029c622c7fe2
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJStGRFAAoJEKllVAevmvmsT7sH/jG+t0zvQPHnDdQNWzta/dOX
-v+qoi1ej0V8NYNflNY5A7SPNGtCJrvsCewyYwprZ04tEiFhPV5SwgF6YbMOIGPFl
-6dJA6oyu4Hyl7+28Snacesi1xh5F7oBaRA+uBdTfVeKTXC8OacfsfCQSXdjWWFbV
-Hi/JY4cjRJIZEQLEOGxxIka8E3nnpKhz0+CkQKqGeVAZLEN2wsiZpaYUFKtg6DIx
-VbDF+GoX8MNK4ueKcuDDw3CRTGbnC5mpc1zJXrvaKLQWh607VrWzxBMoIGycpGFR
-EhIjmKL0nD0IoplbSZrU0KDSMZSzO9ZOA10HgUncI1L5+jFRCHkQlTjtxT7yHgk=
-=zlC7
------END PGP SIGNATURE-----
+Could you allocate a CVE id for this?
+
+Thanks,
+
+-- Jonathan
