@@ -1,68 +1,163 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/5
-Message-ID: <51943B99.5070203@redhat.com>
-Date: Wed, 15 May 2013 19:51:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Ian Weller <ianweller@...oraproject.org>
-Subject: Re: CVE Request (minor) --  python-backports-ssl_match_hostname: Denial of service when matching certificate with many '*' wildcard characters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/6
+Message-ID: <20130606100335.GX32700@dhcp-25-225.brq.redhat.com>
+Date: Thu, 6 Jun 2013 12:03:35 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: Stephane Eranian <eranian@...gle.com>
+Cc: Peter Zijlstra <a.p.zijlstra@...llo.nl>, "ak@...ux.intel.com" <ak@...ux.intel.com>, security@...nel.org, Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: More perf security fixes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Jun 06, 2013 at 10:16:39AM +0200, Stephane Eranian wrote:
+> On Wed, Jun 5, 2013 at 9:23 PM, Petr Matousek <pmatouse@...hat.com> wrote:
+> > On Wed, Jun 05, 2013 at 03:53:52PM +0200, Stephane Eranian wrote:
+> >> On Wed, Jun 5, 2013 at 3:35 PM, Petr Matousek <pmatouse@...hat.com> wrote:
+> >> > On Wed, Jun 05, 2013 at 03:02:53PM +0200, Peter Zijlstra wrote:
+> >> >> On Wed, Jun 05, 2013 at 02:38:56PM +0200, Petr Matousek wrote:
+> >> >> > On Wed, Jun 05, 2013 at 02:15:59PM +0200, Peter Zijlstra wrote:
+> >> >> > > On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
+> >> >> > > > Hello, Peter.
+> >> >> > > >
+> >> >> > > > On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
+> >> >> > > > > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
+> >> >> > > > >
+> >> >> > > > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
+> >> >> > > > >
+> >> >> > > > > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
+> >> >> > > > > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+> >> >> > > > > Date:   Fri May 3 14:11:25 2013 +0200
+> >> >> > > > >
+> >> >> > > > >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
+> >> >> > > > >
+> >> >> > > > >     We should always have proper privileges when requesting kernel
+> >> >> > > > >     data.
+> >> >> > > > >
+> >> >> > > > >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+> >> >> > > > >     Cc: <stable@...nel.org>
+> >> >> > > > >     Cc: Andi Kleen <ak@...ux.intel.com>
+> >> >> > > > >     Cc: eranian@...gle.com
+> >> >> > > > >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
+> >> >> > > > >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
+> >> >> > > > >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
+> >> >> > > > >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
+> >> >> > > >
+> >> >> > > > There is similar check in perf_copy_attr() which is called from
+> >> >> > > > perf_event_open syscall --
+> >> >> > > >
+> >> >> > > >                 /* kernel level capture: check permissions */
+> >> >> > > >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+> >> >> > > >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+> >> >> > > >                         return -EACCES;
+> >> >> > > >
+> >> >> > > > It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
+> >> >> > > > missing something?
+> >> >> > > >
+> >> >> > >
+> >> >> > > I overlooked it, also its slightly broken. See the discussion at:
+> >> >> > >   https://lkml.org/lkml/2013/5/21/166
+> >> >> >
+> >> >> > Got it, thanks for the pointer. So it is safe to say there never was a
+> >> >> > leak in this case (and thus no security issue worth CVE)?
+> >> >>
+> >> >> There was a leak, notice how Stephane's patch did a
+> >> >> s/PERF_SAMPLE_BRANCH_PERM_PLM/PERF_SAMPLE_BRANCH_KERNEL/
+> >> >
+> >> > PERF_SAMPLE_BRANCH_PERM_PLM is a superset of PERF_SAMPLE_BRANCH_KERNEL:
+> >> >
+> >> > #define PERF_SAMPLE_BRANCH_PERM_PLM \
+> >> >         (PERF_SAMPLE_BRANCH_KERNEL |\
+> >> >          PERF_SAMPLE_BRANCH_HV)
+> >> >
+> >> >
+> >> >> but also places
+> >> >> the check _after_ we propagate the event PLM levels in the case none
+> >> >> were LBR specific.
+> >> >
+> >> > Assuming the leak does occur only when PERF_SAMPLE_BRANCH_KERNEL is set,
+> >> > that does not matter:
+> >> >
+> >> >                /* kernel level capture: check permissions */
+> >> >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+> >> >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+> >> >                         return -EACCES;
+> >> >
+> >> > ^^^ this assures proper permission check if PERF_SAMPLE_BRANCH_KERNEL
+> >> > is explicitly set
+> >> >
+> >> >
+> >> >                 /* propagate priv level, when not set for branch */
+> >> >                 if (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) {
+> >> >
+> >> >                         /* exclude_kernel checked on syscall entry */
+> >> >                         if (!attr->exclude_kernel)
+> >> >                                 mask |= PERF_SAMPLE_BRANCH_KERNEL;
+> >> >
+> >> > And following check in perf_event_open syscall assures the permission
+> >> > are right for (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) code:
+> >> >
+> >> >         if (!attr.exclude_kernel) {
+> >> >                 if (perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+> >> >                         return -EACCES;
+> >> >         }
+> >> >
+> >> Yes, your analysis is correct. If the branch has not explicit priv
+> >> level mask, then
+> >> it is inherited from the event branches are requested from.
+> >
+> > I am sorry to re-iterate the question, but does that mean that even
+> > before your and Peter's changes, it was not possible to set
+> > PERF_SAMPLE_BRANCH_KERNEL without passing "perf_paranoid_kernel() &&
+> > !capable(CAP_SYS_ADMIN" check either in perf_copy_attr or
+> > perf_event_open (attr.exclude_kernel check)?
+> >
+> > Did your patch change anything at all or it was just refactoring?
+> >
+> Before:
+>                 /* kernel level capture: check permissions */
+>                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+>                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+>                         return -EACCES;
+> 
+> 1. If you were coming in with explicit branch priv level set
+>     to BRANCH_KERNEL, it would check against paranoid() + cap()
+> 2. If you were coming in with explicit branch priv level set
+>     to BRANCH_HV, it would check against paranoid() + cap()
+> 3. If you were coming in with explicit branch priv level set
+>     to BRANCH_USER, nothing would happen
+> 
+> That's all because PERM_PLM = KERNEL | HV
+> So I think it was okay.
+> 
+> In the new, code:
+>                 /* kernel level capture: check permissions */
+>                 if ((mask & PERF_SAMPLE_BRANCH_KERNEL)
+>                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+>                         return -EACCES;
+> 
+> We only check for BRANCH_KERNEL, and not BRANCH_HV.
+> I think we need to fix that, my bad. So we need to use
+> PERF_SAMPLE_BRANCH_PERM_PLM again here.
+> I will send a patch ASAP. I got confused about the macro
+> name, sorry. Thanks for insisting.
 
-On 05/15/2013 05:19 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
->   A denial of service flaw was found in the way python-backports-ssl_match_hostname,
-> an implementation that brings the ssl.match_hostname() function from Python 3.2 to
-> users of earlier versions of Python, performed matching of the certificate's name
-> in the case it contained many '*' wildcard characters. A remote attacker, able to
-> obtain valid certificate [*] with its name containing a lot of '*' wildcard characters,
-> could use this flaw to cause denial of service (excessive CPU time consumption) by
-> issuing request to validate that certificate for / in an application using the
-> python-backports-ssl_match_hostname functionality.
-> 
-> Upstream bug report (no patch yet):
-> [1] http://bugs.python.org/issue17980
-> 
-> References:
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=963186
-> 
-> Credit: Issue was found by Florian Weimer of Red Hat Product Security Team
-> 
-> Could you allocate a CVE identifier for this (it's possible that 
-> Python 3.2 implementation is vulnerable to the same problem too,
-> will check that case yet)?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> --
-> [*] Would be minor issue because ability to obtain such valid certificate would
->     mean the necessity to use some compromised CA. On the other hand though
->     being corner case, can't be completely excluded.
-> 
+Actually I think your latest patch (PERF_SAMPLE_BRANCH_KERNEL ->
+PERF_SAMPLE_BRANCH_PERM_PLM) on top of the permission check move after
+the privilege level propagation in case no explicit privilege level is
+specified improved things.
 
-Please use CVE-2013-2098 for this issue.
+Before, PERF_SAMPLE_BRANCH_HV could be set without the privilege check
+by the privilege level propagation code in perf_copy_attr(), because
+there is no explicit check for !attr.exclude_hv similar to
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+        if (!attr.exclude_kernel) {
+                if (perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+                        return -EACCES;
+        }
 
-iQIcBAEBAgAGBQJRlDuZAAoJEBYNRVNeJnmTrLEP/30fUBUGtPgQp/vyE8InM20c
-27ctbuHVRkAFxNGgDHVXsEysEMb2IwOK2IDLFHyv9E62M83FWPrdaT+ub95wXriW
-jI3SzZfyVqnK3nu1fLsydOUv3+MzOo2CzSreJ0M0p7Iy4erp94iR0O3g0OeOhoVe
-it9a77Wgb8PAVYNGqpO0zqMyC/H4X1S+IdFS/lq2YKe+RpdV79dL1TWNMXo/spWd
-UZWxMdeSibNwtNw8K+g/QMdT0IbTDjNIJa5ncSjfA5tt6wmwrQ1+3VfxNBrQLrZK
-0tpJIcjh8G0c6/nzXoonvTTv531THk1NZpe+7jNKA6bcI48eCRykBrTzwVwqBOpY
-jDu+ZeijGwaPC1r+2IRHsfpzJCHMGuirZWIusAJYU/fwHk/OUIPn+cEUSyp24zpU
-6c6YCyMoHu8w9PHAeLGP1TVY5AuNKxWH56dWfCpfYo5egrdF+Hbg+Wxkc3C9dYMv
-eEFB/XZZ1ZQYJTcOdvrRNcP6zcw7RKjVfunAsevR72r7s2QiNiJ1u+luhp5NFw19
-5YAcFlm9MUD408UigqjGzwA3DjN4+qEa+E/CPuftH+uvXAWNnG3Ngyx4eNKq8mtz
-QnA2aeP2OiNq92kJueNnU+z3j+HQMn5J8UnWKXuJgQcaulxAfMn+W7VG6p14T/r/
-v68SLazxWV41c3I9Kl95
-=DuLR
------END PGP SIGNATURE-----
+in perf_event_open. This was not the case of PERF_SAMPLE_BRANCH_KERNEL,
+because !attr.exclude_kernel permission check was always there.
+
+Thanks Stephane!
+
+-- 
+Petr Matousek / Red Hat Security Response Team
