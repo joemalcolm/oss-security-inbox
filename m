@@ -1,38 +1,147 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/9
-Message-ID: <20130111001114.332846b4.reed@reedloden.com>
-Date: Fri, 11 Jan 2013 00:11:14 -0800
-From: Reed Loden <reed@...dloden.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request for multi_xml ruby gem (has same problem as CVE-2013-0156)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/2
+Message-ID: <CABPqkBQcOEdyh2yEVGCyLJ5ULaK5DgGJ5rN29J6ZAREZt0R1xQ@mail.gmail.com>
+Date: Thu, 6 Jun 2013 10:16:39 +0200
+From: Stephane Eranian <eranian@...gle.com>
+To: Stephane Eranian <eranian@...gle.com>, Peter Zijlstra <a.p.zijlstra@...llo.nl>,  "ak@...ux.intel.com" <ak@...ux.intel.com>, security@...nel.org,  Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: More perf security fixes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Jun 5, 2013 at 9:23 PM, Petr Matousek <pmatouse@...hat.com> wrote:
+> On Wed, Jun 05, 2013 at 03:53:52PM +0200, Stephane Eranian wrote:
+>> On Wed, Jun 5, 2013 at 3:35 PM, Petr Matousek <pmatouse@...hat.com> wrote:
+>> > On Wed, Jun 05, 2013 at 03:02:53PM +0200, Peter Zijlstra wrote:
+>> >> On Wed, Jun 05, 2013 at 02:38:56PM +0200, Petr Matousek wrote:
+>> >> > On Wed, Jun 05, 2013 at 02:15:59PM +0200, Peter Zijlstra wrote:
+>> >> > > On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
+>> >> > > > Hello, Peter.
+>> >> > > >
+>> >> > > > On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
+>> >> > > > > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
+>> >> > > > >
+>> >> > > > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
+>> >> > > > >
+>> >> > > > > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
+>> >> > > > > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+>> >> > > > > Date:   Fri May 3 14:11:25 2013 +0200
+>> >> > > > >
+>> >> > > > >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
+>> >> > > > >
+>> >> > > > >     We should always have proper privileges when requesting kernel
+>> >> > > > >     data.
+>> >> > > > >
+>> >> > > > >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
+>> >> > > > >     Cc: <stable@...nel.org>
+>> >> > > > >     Cc: Andi Kleen <ak@...ux.intel.com>
+>> >> > > > >     Cc: eranian@...gle.com
+>> >> > > > >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
+>> >> > > > >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
+>> >> > > > >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
+>> >> > > > >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
+>> >> > > >
+>> >> > > > There is similar check in perf_copy_attr() which is called from
+>> >> > > > perf_event_open syscall --
+>> >> > > >
+>> >> > > >                 /* kernel level capture: check permissions */
+>> >> > > >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+>> >> > > >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+>> >> > > >                         return -EACCES;
+>> >> > > >
+>> >> > > > It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
+>> >> > > > missing something?
+>> >> > > >
+>> >> > >
+>> >> > > I overlooked it, also its slightly broken. See the discussion at:
+>> >> > >   https://lkml.org/lkml/2013/5/21/166
+>> >> >
+>> >> > Got it, thanks for the pointer. So it is safe to say there never was a
+>> >> > leak in this case (and thus no security issue worth CVE)?
+>> >>
+>> >> There was a leak, notice how Stephane's patch did a
+>> >> s/PERF_SAMPLE_BRANCH_PERM_PLM/PERF_SAMPLE_BRANCH_KERNEL/
+>> >
+>> > PERF_SAMPLE_BRANCH_PERM_PLM is a superset of PERF_SAMPLE_BRANCH_KERNEL:
+>> >
+>> > #define PERF_SAMPLE_BRANCH_PERM_PLM \
+>> >         (PERF_SAMPLE_BRANCH_KERNEL |\
+>> >          PERF_SAMPLE_BRANCH_HV)
+>> >
+>> >
+>> >> but also places
+>> >> the check _after_ we propagate the event PLM levels in the case none
+>> >> were LBR specific.
+>> >
+>> > Assuming the leak does occur only when PERF_SAMPLE_BRANCH_KERNEL is set,
+>> > that does not matter:
+>> >
+>> >                /* kernel level capture: check permissions */
+>> >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+>> >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+>> >                         return -EACCES;
+>> >
+>> > ^^^ this assures proper permission check if PERF_SAMPLE_BRANCH_KERNEL
+>> > is explicitly set
+>> >
+>> >
+>> >                 /* propagate priv level, when not set for branch */
+>> >                 if (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) {
+>> >
+>> >                         /* exclude_kernel checked on syscall entry */
+>> >                         if (!attr->exclude_kernel)
+>> >                                 mask |= PERF_SAMPLE_BRANCH_KERNEL;
+>> >
+>> > And following check in perf_event_open syscall assures the permission
+>> > are right for (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) code:
+>> >
+>> >         if (!attr.exclude_kernel) {
+>> >                 if (perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+>> >                         return -EACCES;
+>> >         }
+>> >
+>> Yes, your analysis is correct. If the branch has not explicit priv
+>> level mask, then
+>> it is inherited from the event branches are requested from.
+>
+> I am sorry to re-iterate the question, but does that mean that even
+> before your and Peter's changes, it was not possible to set
+> PERF_SAMPLE_BRANCH_KERNEL without passing "perf_paranoid_kernel() &&
+> !capable(CAP_SYS_ADMIN" check either in perf_copy_attr or
+> perf_event_open (attr.exclude_kernel check)?
+>
+> Did your patch change anything at all or it was just refactoring?
+>
+Before:
+                /* kernel level capture: check permissions */
+                if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+                    && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+                        return -EACCES;
 
-On Fri, 11 Jan 2013 00:52:38 -0700
-Kurt Seifried <kseifried@...hat.com> wrote:
+1. If you were coming in with explicit branch priv level set
+    to BRANCH_KERNEL, it would check against paranoid() + cap()
+2. If you were coming in with explicit branch priv level set
+    to BRANCH_HV, it would check against paranoid() + cap()
+3. If you were coming in with explicit branch priv level set
+    to BRANCH_USER, nothing would happen
 
-> On 01/10/2013 05:56 PM, Reed Loden wrote:
-> > Apparently, the multi_xml ruby gem has the same issue as
-> > CVE-2013-0156.
-...
-> These appear to be slightly different code bases, and in any event to
-> prevent confusion I'm assigning it a separate CVE to prevent confusion
-> since Ruby on Rails = 100% usage basically and multi_xml = > 100%
-> (probably a whole lot less).
-> 
-> Please use CVE-2013-0175 for this issue in the multi_xml ruby gem.
+That's all because PERM_PLM = KERNEL | HV
+So I think it was okay.
 
-Thanks! multi_xml 0.5.2 was just released with the fix.
-https://rubygems.org/gems/multi_xml/versions/0.5.2
+In the new, code:
+                /* kernel level capture: check permissions */
+                if ((mask & PERF_SAMPLE_BRANCH_KERNEL)
+                    && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+                        return -EACCES;
 
-~reed
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+We only check for BRANCH_KERNEL, and not BRANCH_HV.
+I think we need to fix that, my bad. So we need to use
+PERF_SAMPLE_BRANCH_PERM_PLM again here.
+I will send a patch ASAP. I got confused about the macro
+name, sorry. Thanks for insisting.
 
-iEYEARECAAYFAlDvySIACgkQa6IiJvPDPVpZAwCfU8xU8qDKM6vFjRWv6lus9FFf
-vaoAn1xEdqfElznfOoFRAxNquF9dwXEI
-=9u/F
------END PGP SIGNATURE-----
+
+So here,
+> I must be missing something.
+>
+> Thanks for the patience,
+> --
+> Petr Matousek / Red Hat Security Response Team
