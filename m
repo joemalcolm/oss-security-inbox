@@ -1,63 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/23/2
-Message-ID: <20130423082605.GM5828@dhcp-25-225.brq.redhat.com>
-Date: Tue, 23 Apr 2013 10:26:06 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/14
+Message-ID: <20130606220233.GA24431@kroah.com>
+Date: Thu, 6 Jun 2013 15:02:33 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
+Subject: Re: Linux kernel format string flaws
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 22, 2013 at 11:02:10AM -0700, Greg KH wrote:
-> On Mon, Apr 22, 2013 at 01:43:17PM -0400, cve-assign@...re.org wrote:
-> > >On Mon, Apr 22, 2013 at 01:44:17AM -0400, cve-assign@...re.org wrote:
-> > >> 680d04e0ba7e926233e3b9cee59125ce181f66ba CVE-2013-3236
-> > >> d5e0d0f607a7a029c6563a0470d88255c89a8d11 CVE-2013-3237
-> > >
-> > >Please explain how these can get a CVE number when the code involved has
-> > >never even been in a kernel.org release yet?
-> > 
-> > MITRE has never had any restrictions on CVEs for issues that exist
-> > only in release-candidate software or only in beta software. See for
-> > example "Attendees agreed that CVE should include problems in beta
-> > software, provided that the beta code was intended for public
-> > dissemination" in the
-> > http://cve.mitre.org/data/board/archives/2000-03/msg00007.html post.
-> > 
-> > These CVEs tend to be rare, possibly because they are useful to fewer
-> > people. Recent examples in which a major vendor specifically chose to
-> > assign a CVE name to an issue affecting only beta software are:
-> > 
-> >   CVE-2009-2968 - VMware Studio 2.0 public beta
-> > 
-> >   CVE-2010-0113 - Symantec Norton Mobile Security 1.0 Beta
-> > 
-> > A few months ago, MITRE started to draft some rough guidelines for a
-> > case of a vendor who was considering use of CVEs during beta testing.
-> > That case seems mostly inapplicable to the current question
-> > (CVE-2013-3236, CVE-2013-3237, etc. weren't in any sense based on
-> > "vendor" requests), but we might be able to share guidelines at some
-> > point if any vendor here is in a similar position.
+On Thu, Jun 06, 2013 at 01:59:55PM -0700, Kees Cook wrote:
+> I've found two issues in how Linux uses format strings:
 > 
-> Thanks for the explanation, but, given the rate-of-churn[1] in the Linux
-> kernel -rc releases, I would be really wary to start wanting to assign
-> CVEs to things that only show up in these types of kernel releases.
 > 
-> Unless you really want to be swamped with requests, it's your choice :)
+> CVE-2013-2852: b43 wireless driver
 > 
-> Linux kernel -rc releases are for developers, and for those people
-> wanting to help with Linux kernel development, they are not for anyone
-> to run on any system that they do not to expect to immediately explode
-> into a bunch of pieces, let alone expect to be "perfect" from a security
-> standpoint.
+> The b43 driver reports error strings that can be interpreted as format
+> strings. Under normal conditions, this is not a problem, but it is
+> possible for the "fwpostfix" module parameter to change the filenames
+> used to fetch firmware. When such a file is not found, the filename
+> will be processed as a format string. This flaw could potentially allow
+> escalation from uid-0 to ring-0, so except for certain environments,
+> it is not too serious.
+> 
+> If b43 hardware is available, this should show itself easily. I don't have
+> any available for testing, but it seems it would show itself like this:
+> # rmmod b43
+> # modprobe b43 fwpostfix=AA%xBB
+> ...
+> # dmesg
+> ...
+> b43-0 ERROR: Firmware file "b43AAdeff80ccBB/a0g1bsinitvals5.fw" not found
+> 
+> Using %n instead of %x would lead to exciting crashes. :)
+> 
+> It has been fixed in the upstream wireless tree:
+> 
+> http://git.kernel.org/cgit/linux/kernel/git/linville/wireless.git/commit/?id=9538cbaab6e8b8046039b4b2eb6c9d614dc782bd
+> 
+> 
+> CVE-2013-2851: block layer
+> 
+> The block layer uses the "disk_name" field as a format
+> string in a number of places. While this is normally not a problem due
+> to how disk names are created (statically or incrementally), there
+> is currently at least one way to define nearly arbitrary names via
+> md. Instead of filtering md, this should be fixed within the kernel's
+> interfaces. This flaw could potentially allow escalation from uid-0 to
+> ring-0, so except for certain environments, it is not too serious.
+> 
+> The test case is trivial:
+> # echo md_%x.%x.%x.%x > /sys/module/md_mod/parameters/new_array
+> # ls /dev/md_*
+> /dev/md_c12cc370.df66d800.df66d80c.c13da45b
+> 
+> Using %n instead of %x leads to exciting crashes. :)
+> 
+> The fix has been sent upstream:
+> http://marc.info/?l=linux-kernel&m=137055204522556&w=2
+> 
+> 
+> With the above fixes, a series of additional format string related clean
+> ups has also been sent upstream:
+> http://marc.info/?l=linux-kernel&m=137055207522563&w=2
 
-I agree with Greg. We (Red Hat) haven't requested CVEs for issues in -rc
-releases, which we consider under development, in the past and we do not
-intend to start doing that. It's in fact one of the criteria when
-examining upstream commits - if the bug and the fix is in -rc release,
-skip it.
+For both of these, you have to have root permissions in order to cause
+any problems, right?
 
-Just my 2 cents.
+thanks,
 
--- 
-Petr Matousek / Red Hat Security Response Team
+greg k-h
