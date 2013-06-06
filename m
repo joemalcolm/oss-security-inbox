@@ -1,21 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/08/1
-Message-ID: <CA+5g0S+K+3YfYL_pbakSZQXPgOTta3o6ZwuM3uBjW9UqagJrwg@mail.gmail.com>
-Date: Fri, 7 Jun 2013 22:25:27 -0300
-From: Felipe Pena <felipensp@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/12
+Message-ID: <51B0E85C.4020807@gmail.com>
+Date: Thu, 06 Jun 2013 12:51:56 -0700
+From: Forest Monsen <forest.monsen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Monkey HTTPD - DoS due bug on Range header handling
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for Drupal contributed module
 Content-Type: text/plain; charset=utf-8
 
-I've found an issue on the way as Monkey HTTPD handle the Range HTTP header
-when receiving Range:bytes=N-N where N is the exact file size, which causes
-the
-thread to go into an infinite loop, hence keeping the server busy on each
-request until a server shutdown.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-More details on bug report at http://bugs.monkey-project.com/ticket/184
+Hi there -- can we get a CVE identifier for:
 
--- 
-Regards,
-Felipe Pena
+SA-CONTRIB-2013-051 - Services - Cross site request forgery (CSRF)
+https://drupal.org/node/2012982
 
+? Thanks.
+
+Best,
+Forest
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iEYEARECAAYFAlGw6FYACgkQ/ILCL9e1Br4uKQCdFdTdD0bIsAqpAvUebcYjoJsh
+z7IAnRxFb8ytv+rlBx4EI/isXghxSTIX
+=7Dug
+-----END PGP SIGNATURE-----
