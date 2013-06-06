@@ -1,30 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/11/1
-Message-ID: <CAA7hUgGJ=rdKiLK9zEE5vCLxn19hG-UQCpHgTRdWYLry7Utgzw@mail.gmail.com>
-Date: Tue, 11 Jun 2013 10:30:42 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: info@...raw.org
-Subject: Re: CVE request: libraw: multiple issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/1
+Message-ID: <CACYkhxjNX0Kk7pzWV9BAtHQZC9h85yBSbxkqh9BA+8HnGhojdw@mail.gmail.com>
+Date: Thu, 6 Jun 2013 14:19:50 +1000
+From: Michael Samuel <mik@...net.net>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: pwgen
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I've done some further analysis of the program after reading the previous
+thread, and I think there needs to be CVEs and fixes for:
 
-On 10 June 2013 12:16, Alexander Bergmann <abergmann@...e.com> wrote:
-> In which libraw version was this problem actually introduced?
+- When used from a non-tty passwords are trivially weak by default (first
+reported by Solar Designer)
+- Phonemes mode has heavy bias and is enabled by default (first reported by
+Solar Designer)
+- Silent fallback to insecure entropy (first reported by Jean-Michel
+Vourgère) (Debian bug #672241 - tagged as "wishlist")
+- Secure mode has bias towards numbers and uppercase letters
 
-I don't know exactly, CC'ing upstream for this.
+I've attached a patch that fixes most issues - it doesn't solve the bias
+towards numbers, because it's caused by requiring at-least one number per
+password - so in an 8 character password there'd have to be 0.1 numbers to
+avoid bias.  There's an argument to be made for removing the at-least-one
+rule, but if the system that password is being used with has those rules,
+it doesn't fix the problem anyway.  Perhaps a separate flag for that?
 
-> darktable uses embedded libraw 0.14.7
-> libkdcraw uses embedded libraw 0.15.0
+The changes are:
+
+- Print a message and abort() of there's trouble opening or reading
+/dev/urandom (So apport should pick up any packages that have been using
+insecure entropy)
+- Make "-s" the default
+- Add an argument --insecure-phonemes (or -P)
+- Non-tty passwords are now as secure as tty
+- Require lower-case characters be present to even out some bias
+- Pull in passwdqc as a Suggests on the debian package - pwqgen can
+generate sane random passphrases
+
+I can't imagine any reasonable use-case for the non-tty defaults (except
+maybe combining with espeak as an enhanced interrogation technique), and
+you can be certain that there's some people out there with it embedded in a
+script that's generating useless passwords.
+
+For phonemes mode in general, the bias is extreme, there are a limited
+number of possible combinations and it is generally not suitable for
+security purposes.  I have some fairly detailed analysis of it, but I
+believe this list has a no-exploits policy...
+
+Regards,
+  Michael
+
+
+On 28 May 2013 11:47, Solar Designer <solar@...nwall.com> wrote:
+
+> On Tue, May 28, 2013 at 01:33:48AM +0000, Michael Samuel wrote:
+> > The default mode of this program generates extremely low entropy
+> passwords -
+> > It is probably worth changing the default to "secure" mode and removing
+> > phonemes mode, to avoid putting users at risk.
 >
-> I found a commit that introduced the "// allocate image as temporary
-> buffer, size" stuff within commit 1a8e92ff, and that was part of 0.14.0.
+> Yes.  You have seen the thread on pwgen from last year, right? -
+>
+> http://www.openwall.com/lists/oss-security/2012/01/22/6
+>
+> (Use the "thread-prev" link for more messages from that thread.)
+>
+> Alexander
+>
 
-libkdcraw, as it used to be included in kdegraphics in KDE 4.4, used
-libraw 0.8.x and possibly older versions.
+Content of type "text/html" skipped
 
-Cheers,
---
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Download attachment "pwgen-security.patch" of type "application/octet-stream" (6141 bytes)
