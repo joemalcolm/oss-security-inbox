@@ -1,50 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/4
-Message-ID: <51EEBAA9.8060000@pipping.org>
-Date: Tue, 23 Jul 2013 19:17:29 +0200
-From: Sebastian Pipping <sebastian@...ping.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: mysecureshell: information disclosure (or worse)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/4
+Message-ID: <20130606090204.GA3725@quad>
+Date: Thu, 6 Jun 2013 11:02:04 +0200
+From: Stephane Eranian <eranian@...gle.com>
+To: linux-kernel@...r.kernel.org
+Cc: peterz@...radead.org, mingo@...e.hu, pmatouse@...hat.com, meissner@...e.de, security@...nel.org, oss-security@...ts.openwall.com, ak@...ux.intel.com
+Subject: [PATCH] perf: fix hypervisor branch sampling permission check
 Content-Type: text/plain; charset=utf-8
 
-Hello everyone,
 
+Commit 2b923c8 perf/x86: Check branch sampling priv level in generic code
+was missing the check for the hypervisor (HV) priv level, so add it back.
 
-mysecureshell [1] is an SFTP-only shell to be used with sshd.
+With this patch, we get the following correct behavior:
 
-The latest release 1.31 makes use of shared memory to maintain 128 slots
-with one struct for each connection/process.
-Access to that block of shared memory is not (or not properly)
-synchronized, so two or more processes might end up occupying the very
-same slot when process scheduling wants that to happen.  The effective
-permissions of the process remain untouched, though.  So it's logging in
-as someone else and it isn't.
+  # echo 2 >/proc/sys/kernel/perf_event_paranoid 
 
-The relevant code from SftpServer/SftpWho.c (lines 106 and after) is:
+  $ perf record -j any,k noploop 1
+  Error:
+  You may not have permission to collect stats.
+  Consider tweaking /proc/sys/kernel/perf_event_paranoid:
+   -1 - Not paranoid at all
+    0 - Disallow raw tracepoint access for unpriv
+    1 - Disallow cpu events for unpriv
+    2 - Disallow kernel profiling for unpriv
 
-  for (i = 0; i < SFTPWHO_MAXCLIENT; i++)
-      if (who[i].status == SFTPWHO_EMPTY)
-      {
-          (void) usleep(100);
-          if (who[i].status == SFTPWHO_EMPTY)
-          {
-              //clean all old infos
-              memset(&who[i], 0, sizeof(*who));
-              //marked structure as occuped :)
-              who[i].status = SFTPWHO_IDLE;
-              return (&who[i]);
-          }
-      }
+   $ perf record -j any,hv noploop 1
+   Error:
+   You may not have permission to collect stats.
+   Consider tweaking /proc/sys/kernel/perf_event_paranoid:
+    -1 - Not paranoid at all
+     0 - Disallow raw tracepoint access for unpriv
+     1 - Disallow cpu events for unpriv
+     2 - Disallow kernel profiling for unpriv
 
-The symptoms of this bug have been reported earlier at [2] by forum user
-"voleg".  To my best knowledge, there is no CVE number assigned yet.
-
-Best,
-
-
-
-Sebastian
-
-
-[1] http://mysecureshell.sourceforge.net/
-[2] http://mysecureshell.free.fr/forum/viewtopic.php?id=655
+Signed-off-by: Stephane Eranian <eranian@...gle.com>
+---
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 95edd5a..f0880fb 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -6501,8 +6501,8 @@ static int perf_copy_attr(struct perf_event_attr __user *uattr,
+ 			 */
+ 			attr->branch_sample_type = mask;
+ 		}
+-		/* kernel level capture: check permissions */
+-		if ((mask & PERF_SAMPLE_BRANCH_KERNEL)
++		/* privileged levels capture (kernel, hv): check permissions */
++		if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
+ 		    && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
+ 			return -EACCES;
+ 	}
