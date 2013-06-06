@@ -1,33 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/31/7
-Message-Id: <201305311929.r4VJSwLQ011742@linus.mitre.org>
-Date: Fri, 31 May 2013 15:28:58 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: monkeyd Denial of Service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/11
+Message-ID: <20130606181703.GA13184@hunt>
+Date: Thu, 6 Jun 2013 11:17:03 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: chroots & uid sharing
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Jun 06, 2013 at 03:02:37PM +0200, Jason A. Donenfeld wrote:
+> What I wonder is how many distros are shipping various daemons that
+> run under the nobody user, with certain ones chrooting and others not.
+> How should we handle this?
 
->http://bugs.monkey-project.com/ticket/181
+We can handle nobody well enough by correcting its mis-use every time
+we spot it. There are enough purpose-specific users on a typical system
+these days to just give the impression that any new service should get
+its own corresponding user, so the temptation to use 'nobody' is lower
+than it used to be.
 
-Use CVE-2013-3724.
+Of course, if a different user account gets abused for both chrooted and
+non-chrooted use, that's harder to combat, short of reminding people
+that chroot is filesystem and _only_ filesystem..
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
 
-iQEcBAEBAgAGBQJRqPmBAAoJEGvefgSNfHMdWQoH/iVai+p1Bvju71gOuLcUcROF
-b8VnBcYcSNLSU2DRkGM8BORP9mg4xZeea6k6zxvDJ8dgYVEQ4AklejLXhu/eJfrn
-vjaP9at0vvZU/rJkS4wfweGa3yHGYsLvBUOTXj5tcJPY7aU7Y7y98Uwilw8i5bUC
-tl2Z1mtMDtdYIDQ4Ut20g6dt2geCe06F/d4G7xc64NF1vD/R5ZaAr+a1+IbZyrP6
-FyeqsllKwF3F4+GiYHmoT5aJJhbw2+ioXqxMi/bY050XbIjAhksUilREYALOaAb6
-APfSWalJU0vwjpA1muc/Kroz3h0+oTY1XsI6bgol1GX/bfyxh7KWkOgKTdWt0hA=
-=LAFg
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
