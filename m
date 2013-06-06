@@ -1,158 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/06/2
-Message-ID: <51370279.8090500@redhat.com>
-Date: Wed, 06 Mar 2013 01:46:49 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Mathias Krause <minipli@...glemail.com>, Solar Designer <solar@...nwall.com>
-Subject: Re: CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/8
+Message-ID: <CAHmME9qqm_6mD7bR6uo1Kius2eCKNQadELU3CKX=OHQwKabuJQ@mail.gmail.com>
+Date: Thu, 6 Jun 2013 15:02:37 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: chroots & uid sharing
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi folks,
 
-On 03/05/2013 01:52 PM, Mathias Krause wrote:
-> Hi Kurt,
-> 
-> I don't care much about info leaks beyond merely fixing them. But 
-> Alexander asked me to request a CVE ID for the recent crypto fix
-> of mine and as I did quite a few of such fixes in the recent past,
-> I'll just list them all here. The information might be a bit scarce
-> for a CVE ID request but as I don't expect any CVE IDs anyway, I
-> didn't wanted to do too much unnecessary work. ;)
+Some people would be surprised to learn you can ptrace processes from
+inside chroots that exist outside of chroots. So, if there are two
+processes, one chrooted, and one unchrooted, both using the same UID,
+you can ptrace your way out of the chroot pretty easily. Grsecurity
+actually adds a little nob to the kernel to disallow this.
 
-CVE ID's prompt people to back port these security fixes which is a
-good thing indeed =).
+What I wonder is how many distros are shipping various daemons that
+run under the nobody user, with certain ones chrooting and others not.
+How should we handle this?
 
-> 9a5467b crypto: user - fix info leaks in report API
-> 
-> This is quite a big info leak of heap, stack and .text memory. No 
-> crypto material, though. Also, as the crypto user API is protected
-> by capable(CAP_NET_ADMIN), it's not as critical as is might sound
-> on the first sight. It affects all versions from the introduction
-> of the crypto user API -- that is v3.2 - v3.8.
-> 
-> 
-> Older info leak fixes follow. All of them ended up in v3.6 and
-> were backported to the stable/longterm kernels at the time:
-> 
-> ecd7918 xfrm_user: ensure user supplied esn replay window is valid 
-> What: Leaks up to ~3.5kb heap memory. Was protected by 
-> capable(CAP_NET_ADMIN) at the time.
-> 
-> 1f86840 xfrm_user: fix info leak in copy_to_user_tmpl() What: Minor
-> leak of stack memory. Was protected by capable(CAP_NET_ADMIN) at
-> the time.
-> 
-> 7b78983 xfrm_user: fix info leak in copy_to_user_policy() What:
-> Minor leak of heap memory. Was protected by capable(CAP_NET_ADMIN)
-> at the time.
-> 
-> f778a63 xfrm_user: fix info leak in copy_to_user_state() What:
-> Minor leak of heap memory. Was protected by capable(CAP_NET_ADMIN)
-> at the time.
-> 
-> 4c87308 xfrm_user: fix info leak in copy_to_user_auth() What: Leak
-> of heap memory. Was protected by capable(CAP_NET_ADMIN) at the
-> time.
-> 
-> 43da5f2 net: fix info leak in compat dev_ifconf() What: Minor leak
-> of stack memory.
-> 
-> 2d8a041 ipvs: fix info leak in getsockopt(IP_VS_SO_GET_TIMEOUT) 
-> What: Minor leak of stack memory.
-> 
-> 7b07f8e dccp: fix info leak via
-> getsockopt(DCCP_SOCKOPT_CCID_TX_INFO) What: Minor leak of stack
-> memory.
-> 
-> 3592aae llc: fix info leak via getsockname() What: Major leak of
-> stack memory (up to 128 bytes).
-> 
-> 04d4fbc l2tp: fix info leak via getsockname() What: Minor leak of
-> stack memory.
-> 
-> 792039c Bluetooth: L2CAP - Fix info leak via getsockname() What:
-> Minor leak of stack memory.
-> 
-> 9344a97 Bluetooth: RFCOMM - Fix info leak via getsockname() What:
-> Minor leak of stack memory.
-> 
-> f9432c5 Bluetooth: RFCOMM - Fix info leak in
-> ioctl(RFCOMMGETDEVLIST) What: Minor leak of heap memory.
-> 
-> 9ad2de4 Bluetooth: RFCOMM - Fix info leak in
-> getsockopt(BT_SECURITY) What: Minor leak of stack memory.
-> 
-> 3f68ba0 Bluetooth: HCI - Fix info leak via getsockname() What:
-> Minor leak of stack memory.
-> 
-> e15ca9a Bluetooth: HCI - Fix info leak in getsockopt(HCI_FILTER) 
-> What: Minor leak of stack memory.
-> 
-> 3c0c5cf atm: fix info leak via getsockname() What: Minor leak of
-> stack memory.
-> 
-> e862f1a atm: fix info leak in getsockopt(SO_ATMPVC) What: Minor
-> leak of stack memory.
-> 
-> a117dac net/tun: fix ioctl() based info leaks What: Leak of 36
-> bytes of stack memory.
-> 
-> 0143fc5 udf: avoid info leak on export What: Minor leak of heap
-> memory.
-> 
-> fe685aa isofs: avoid info leak on export What: Minor leak of heap
-> memory.
+More generally, I'm wondering what the attitude should be toward this
+kind of violation when it occurs within a particular daemon. For
+example, OpenSMTPD forks a bunch of processes, and drops privs of some
+and chroots others. But they violate the uid-per-chroot rule,
+rendering the chroots useless. Should this be considered a security
+flaw? Or just a silly design consideration?
 
-can you provide the full git id/link to these? Also were they all
-discovered by the same researcher?
+This disgusting and offensive one-liner shows such flawed chroots:
 
-> Now do follow a few NULL ptr derefs ending up in privilege
-> escalation if a user is able to map page 0 or probably a DoS
-> otherwise. Also those have all been fixed in v3.6 and backported to
-> the corresponding stable/longterm kernels at the time:
-> 
-> 864745d xfrm_user: return error pointer instead of NULL What: Wrong
-> return of NULL leads to wrong path in calling function leading to
-> NULL pointer deref of skb.
-> 
-> 276bdb8 dccp: check ccid before dereferencing What: Missing NULL
-> pointer check leads to NULL function pointer.
+krantz ~ # for i in /proc/[0-9]*; do echo $(readlink -f $i/root)
+$(stat -c "%u %g" $i 2>/dev/null); done | sort | uniq | egrep "$(for i
+in /proc/[0-9]*; do if [ "$(readlink -f $i/root)" != "/" ]; then stat
+-c "%u %g" $i 2>/dev/null; fi; done | sort | uniq | tr '\n' '|' | head
+-c -1)" | ( u=""; l=""; while read line; do nu="$(cut -d ' ' -f 2,3
+<<<"$line")"; if [ "$nu" == "$u" ]; then if [ "$l" != "" ]; then echo
+"$l"; fi; echo "$line"; else l="$line"; fi; u="$nu"; done )
+/ 25 25
+/var/empty 25 25
 
-can you provide the full git id/link to these? Also were they all
-discovered by the same researcher?
 
-> That's all. Enough, I guess ;)
-> 
-> 
-> While we are at it: Do we care about getting CVE IDs for info
-> leaks? If so, all of them or only for the ones with leaks above a
-> certain threshold (>= 16 bytes, e.g.)?
+Thoughts?
 
-Yes please. Much like DNA fragments you can potentially string them
-together to reveal larger things.
-
-> Regards, Mathias
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRNwJ5AAoJEBYNRVNeJnmTVtYQAMSwhmnF4hScjVRMmJuc/mcM
-ExgC7R1khhxIG5rPU+ZwVvLnfO0hby2oRIIkFf/2Aaj4mMXe5iBLzO3xdgWS1Ekv
-M4PE57f8X+4G+9PaYWW1ebWDuf1HAVc8fxneZ1aBC3xPEg+VEgutow8To4x5rwyp
-Y0iO4OsMU6nHLj2dDodKXlIvzoSm7Vdrgx+GE96fAQTxHgsamyKBP/cDzl7QwowZ
-dXZEJ1pK6H2pMVbutKLYQmUMhXRCtNajZaqRbysvoLrnjcY0G56Gf+pZUWPWaOqf
-K2g81VcoG4buc1zoDCAcmUBHSM69g3gN2Rz+Wvqx1G9ABQyIaSpuyaP4cLLHTtPn
-AS4pql+TJMyvP+yWDSM3a8RGRaO+9jzdJCrXVDrq5mdEmjkqgAT7R3XOvLTouJp8
-0QnGAYczKf09PeRuaficD8eg5GUGYbrIvVp00qG9wBcPhvVNNTJrsi/rjbiroW/g
-KDQzlKqxKbixaxj4tFtGpyeDXcKR1weT9JLG21IZmMA3NLhGuvUbSPpdL3Yqbshh
-jGtxy0QIcLGl3j+mYwsgXYt26oCg80tFrYXKoyBlD/D+7NjUDOfPReauB6nlsAiU
-+KWO70sxeIjbRGqmJD1/scIzzBVZKPJ/rdM5Y2A+dhioVg7vAG1RxyxHY+nHMpGt
-wX0XTKmw9WnfdDe4U0T/
-=ldnf
------END PGP SIGNATURE-----
+Jason
