@@ -1,64 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/14
-Message-ID: <52866D4F.7070303@redhat.com>
-Date: Fri, 15 Nov 2013 11:51:59 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/10
+Message-ID: <20130606174409.GB23288@kludge.henri.nerv.fi>
+Date: Thu, 6 Jun 2013 20:44:09 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for graphicsmagick DoS
+Cc: Kurt Seifried <kseifried@...hat.com>, plugins@...dpress.org, moderators@...db.org
+Subject: CVE request: WordPress plugin uk-cookie CSRF
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 11/15/2013 10:30 AM, Vincent Danen wrote:
-> I don't think this has been brought up here yet, but could a CVE
-> be provided for the following?
-> 
-> A vulnerability has been reported in GraphicsMagick, which can be 
-> exploited by malicious people to cause a DoS (Denial of Service).
-> 
-> The vulnerability is caused due to an error within the 
-> "ExportAlphaQuantumType()" function (magick/export.c) when
-> exporting 8-bit RGBA images and can be exploited to cause a crash.
-> 
-> The vulnerability is reported in versions prior to 1.3.18.
-> 
-> References:
-> 
-> https://bugs.gentoo.org/show_bug.cgi?id=488050 
-> http://sourceforge.net/p/graphicsmagick/discussion/250737/thread/20888e8b/
->
-> 
-https://secunia.com/advisories/55288/
-> http://sourceforge.net/p/graphicsmagick/code/ci/1a2d7a38363f7f23b63d626887d22d39c7240144/
->
->  https://bugzilla.redhat.com/show_bug.cgi?id=1019085 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=729661
-> 
-> 
+While reproducing CVE-2012-5856[1][2] I noticed there is CSRF security
+vulnerability in uk-cookie plugin and abusing it attacker can insert XSS to
+front page of WordPress installation. Version 1.1 is the latest and I did not
+test older versions. OSVDB item[3] should be updated. Plugin is currently
+disabled in WordPress plugin repository so vendor URL is currently 404.
 
-Please use CVE-2013-4589 for this issue.
+PoC: https://github.com/wpscanteam/wpscan/issues/184#issuecomment-19038566
+Product: Uk Cookie Plugin for WordPress
+Vendor URL: http://wordpress.org/plugins/uk-cookie/
+Vendor SVN: http://plugins.svn.wordpress.org/uk-cookie/trunk/
+Vulnerability Type: CWE-352
+Vulnerable Versions: 1.1 and probably earlier
+Fixed Version: N/A
 
-S'il vous plaît utiliser CVE-2013-4589 pour cette question.
+Kurt, could you assign CVE-identifier for CSRF vulnerability, thanks.
 
+1: http://seclists.org/bugtraq/2012/Nov/50
+2: http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-5856
+3: http://osvdb.org/87561
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Similar plugins are available: http://wordpress.org/plugins/uk-cookie-consent/
 
-iQIcBAEBAgAGBQJShm1PAAoJEBYNRVNeJnmT+9kP/292YyjS12oZLUif6JtHQO/V
-EIw8mRZdtofax+pgXUUpj3IhibwCOM5HvJn7vIEaBgWXMjH3wxfDFRHNg/DBldHY
-QBPeOcMbGOTAmOSRkq3j62v3vJ+t72kjzvTSX22EspQ+ngUnFZt7WMY3D82JxNdu
-Jrk4PA3s9BUfiyGwS6/XjF7oj3drsdkeKuo91yUA77fKn4nPAExiouj/xdh3mir9
-VycSSZDzzgvyoofr1iZ5spBXxzsZSmksTuMmUiS8JdOIM6ulvAA3PmfIZcC+vJyu
-pD1mDxWul2k7ga+lo/1jZHHfzISrM1UTkA+cLWLNzzlQ7Ez91G2TUQaqlCuJL9lB
-njn3xZjfn7ElxuWUhsfiXpYAvrXbIExUyePlhUySYzsoeshWgIdX/7o+dbnyBLOg
-1995tNCqz/FdYDvYTyvcOI5oMSPxXBm0xLUgBYJGLYJWcLhwPwlI3PhrHfZpao/p
-C7I6I1TDRt2lPia40/DJe29q/emTKo+qYS7vigrgZSxrmU3heagULYrekSHKmQ9S
-5AWPndC5Ybph3j/yrjYSTZork2C644tE7R8XF3qKmBH7z5sV7L9qu4xY/GtMZ2L5
-z8ilk5Y9o9KkGmhpc3MXSVxLZ2smkhXJM1HAZ1erZ8umKLF0Yykau6LVxnyJ4JSv
-R6lB2YN74vxP//aDH+wS
-=8FRM
------END PGP SIGNATURE-----
+--
+Qentinel, Henri Salo
+http://www.qentinel.com/en/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
