@@ -1,36 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/19/2
-Message-ID: <51985C4A.5060504@redhat.com>
-Date: Sat, 18 May 2013 22:59:54 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/07/2
+Message-ID: <51B172D1.6000707@redhat.com>
+Date: Thu, 06 Jun 2013 23:42:41 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, ballen@...nel.co.uk
-Subject: More zPanel security flaws? Trying to sort them out
+To: oss-security@...ts.openwall.com
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed module
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-So the head of the zPanel project "ballen" ("Bobby Allen" according to
-Google) reports:
+On 06/06/2013 01:51 PM, Forest Monsen wrote:
+> Hi there -- can we get a CVE identifier for:
+> 
+> SA-CONTRIB-2013-051 - Services - Cross site request forgery (CSRF) 
+> https://drupal.org/node/2012982
+> 
+> ? Thanks.
+> 
+> Best, Forest
 
-http://forums.zpanelcp.com/showthread.php?27608-ZPanelCP-Server-has-not-been-compromised
-
-======
-4) Security issues raised
-The security issues mentioned in the following article
-(http://imgur.com/a/lzRuo) are already fixed, however we are a short
-way off being able to release the new version. All known security
-vulnerabilities have been announced on here with fixes and guides.
-======
-
-I'm unable to find this list or a dedicated security page (apart from
-a list of 4 security features at
-http://www.zpanelcp.com/about/features/#tab-1-3).
-
-Can you please send me that list with URLs and ideally source code
-commits so we can get CVE #'s assigned to the zPanel vulnerabilities?
-Alternatively if anyone in the community wants to do it that'd be
-great as well. Thanks in advance.
+Please use CVE-2013-2158 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -38,17 +29,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRmFxKAAoJEBYNRVNeJnmTCwIP/0zXFzVNilB/y5tM95ngf0hl
-GcdEbxxbP0E9L+hm5jlm9ILkP84muTsgfhiT7eB5IBT/+MiMAkXMTKZ8bkkuzee8
-FRuLKUMlon2jaGE7QJHeNyh6cjq/NK9HdAbEFm7c6l3IoBPYt3yCcO00VLm2x6sq
-y8xGdiAtu35qjhFwtjI4jXTsnLOOYql8ZW5ej/3h10beAIldRtZ79tSRm/68Br4F
-tn2Qn0qjMbBxAt60nNpQCHEMKk94InaA9ZnhxVQUxnmqtSqAqhEUPakC1/iuERm/
-ctOE1jK5nlo7eEXH6yPWbVVcdcz9NhHnGsnmpXCGh+1pB8JP1mGbSMVMvUHQ81ri
-egGuar0SUWzQKc19ikI+jxkf80eNgX7XxZHeSnxsz0pG/TOJ5EIod0Y3ut3pV6ei
-yY8tc18iWjUNNIcp2ZlR+rHdFBZSApqVp/q/MeznfHIwKCzXSk2Mvnmk/kYDU+ml
-lqrMgxvXcQ6ff0DsTa2lLAqG46eOScARHzIs8Q+gwvtSq1o5n8MhKWwBM1XnjYhO
-nFywDzKwCqnx0kq5GTkmn5VEtRliRJ3aHjUI9mwa0E+ix3FyEXYSzAYnCv8JTYxd
-awQdvQ1sFTKio3FPiJPjjXgb3BBGW9JMBNWS+8rJiUGfv/OJnjbCo5Ap/EdKilDj
-s46AoBfJqq2H/1E4A3T8
-=mKa/
+iQIcBAEBAgAGBQJRsXLRAAoJEBYNRVNeJnmTvGEP/i+vLRj3cPCNJUjdZYH2KSTy
+Nv5Xib9t3DuwRPJYveTZOzK+qk3VAzq27KpdP683P4bhHgqlOSQCE3SXQVl0C0jt
++OJFuLHYYnhVDrebte4g7Oy7FG4F+GAOig/s9zkbixZLy8tlYyHSt6rM46kcH757
+UKfRXlKL9aT+8T+TKnx/fKGyf84OBHTb7S0Lz4ooqUIqCrRjLbc1ZyFJIGGAkNlK
+3pzFxblcfa8fZurhnUiWsLEpjd+zdl5GRLhWqM8sFrb/sm/t2xH0LTqyJmDZX4PZ
+m24Kkz+ZHtE+eqaG+RJdmYj9BJBJVngUMLsrNLIfXildPVet2EbQWkTp7mNJ0Tjo
+HQSzzsCDhL61UecDnorJgq7m0tEg555ifVl8UVzo1lenPAz8nC/J6MC5grLnKs8W
+fffjxKzh2PZt71V/UCCtU2h9VCMFiWX4xFjTi78q4b66Bi5bblBpeleDzgQ7E1aZ
+8hy7wwsNuE8lSm3GM6vqt+Vlhfnf+lrtCZ2edooR+QmQVtrwR5FGfxaKY677mJZU
+esUom6lXjfJRfOhiBUaWs1ilNZ6OZR1lA+SH+PtUE0ZsboxtnlE975tD6ofEV9vN
+oRNdpbpIal0+UrkWVDY9lWsDUUwEj5ankow8EsyY1nTE7IEkKp1mtVb7f7sEMs7w
+tBb+oJaPl9Gi0khfWOGv
+=oiPB
 -----END PGP SIGNATURE-----
