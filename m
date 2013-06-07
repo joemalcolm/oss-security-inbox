@@ -1,71 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/3
-Message-ID: <50EBA789.60609@redhat.com>
-Date: Mon, 07 Jan 2013 21:58:49 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/07/1
+Message-ID: <51B152CE.20209@redhat.com>
+Date: Thu, 06 Jun 2013 21:26:06 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: vladz <vladz@...zero.fr>
-Subject: Re: /dev/ptmx timing
+Subject: Re: chroots & uid sharing
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/07/2013 03:23 PM, vladz wrote:
+On 06/06/2013 12:17 PM, Seth Arnold wrote:
+> On Thu, Jun 06, 2013 at 03:02:37PM +0200, Jason A. Donenfeld
+> wrote:
+>> What I wonder is how many distros are shipping various daemons
+>> that run under the nobody user, with certain ones chrooting and
+>> others not. How should we handle this?
 > 
-> Hi list,
+> We can handle nobody well enough by correcting its mis-use every
+> time we spot it. There are enough purpose-specific users on a
+> typical system these days to just give the impression that any new
+> service should get its own corresponding user, so the temptation to
+> use 'nobody' is lower than it used to be.
 > 
-> I noticed that it was possible to measure inter-keystrokes timing
-> thanks to the /dev/ptmx character device.  Any local user that is
-> using pseudo-terminal can be targeted.
-> 
-> As it may also be used to disclose sensible information such as
-> password length, I was wondering if it should be treat as a
-> security issue?
-> 
-> Description + PoC: http://vladz.devzero.fr/013_ptmx-timing.php.
-> 
-> No sure right now but I think the only way to solve this is to
-> modify the pts handling at kernel level.  Any opinions on that?
-> 
-> Thanks, vladz.
+> Of course, if a different user account gets abused for both
+> chrooted and non-chrooted use, that's harder to combat, short of
+> reminding people that chroot is filesystem and _only_ filesystem..
 
-Confirmed, as a normal user I can watch /dev/ptmx for keystroke activity.
+I literally can't remember when people started saying "if you're using
+chroot for security, you're doing it wrong" it was a long time ago. At
+least a decade for myself and I wasn't the first person (that probably
+goes to the BSD guys and jail()):
 
-Please use CVE-2013-0160 for this issue.
-
-Also from previous research I have seen:
-
-http://users.ece.cmu.edu/~dawnsong/papers/ssh-timing.pdf
-http://www.stanford.edu/~mlustig/SSH.ppt
-http://www.stanford.edu/~mlustig/ssh_report.pdf
-
-/dev/ptmx would be ideal as you'd have no jitter to deal with and you
-could combine it with "w" and/or "ps" so you could for example
-correlate a user starting SSH up and then capture the timing of their
-username (followed by a pause) and then the password (followed by a
-pause) and so on.
-
-
+http://seclists.org/vuln-dev/2002/May/419
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ66eJAAoJEBYNRVNeJnmTevoQAJxHtqI1TbKxzhnmPyJiBEuM
-0/MhJ9ZHdo/VQYyHDQT6hR+so0Gk3SDNRV9of8hNBR33CrxAgCW2SH8Cygwx4cs9
-XyOW7HHDc5AIvo8CckvOl9zfEzZrdC5cbbqYGOZmLFeSGiAQcN0hwzuuHOYf90ly
-QHzntWaFP+V8fJ5sD9Zygyscfq7pdui/us6Yr1PuOjjoXMiAOafjzLU3Uk50Cbms
-RXu3A96QdnJQ2t52YYYa0lCLnA/9hKDR4LBWjrjKK+BXtNFsTYfaG9dMoEcseSx5
-mk52wdHqShp8mLwTgW9YamMgSEpR4w2/jTtLsJo868ZK0p/CRsEfDnSTsBS9AZNP
-ps4fCaqSz6AXydd35P275XRHmR0xV26URf2/8dehuRidgWuE2RVHxGMQy+LEhJg7
-1R52IQdtXrvX4irmN/G23W1/AWqc02VD0EVQpUnqDHBXwWQRikXUqjvTUU6Bh0oc
-lI28sx6JzBIVBHJsoB8ojmQ+vjUz8quUE+AMfqoVCnZp9PxSzEwMT3iTwYuUw/Ul
-epJJFyvacvkOqj1W4kgqDl2Vjk5PINpnznKzR2+8AggKpJfGM2drOdVk+elWzl5I
-KcWAiC64AmeuBbNYnuZYr94WQp6/zZ9cqLHX5tRoDbpOT+5vj9EBFTYNPSR/m5Rc
-VabBXIAJPf5K9EaOuQRt
-=jNow
+iQIcBAEBAgAGBQJRsVLNAAoJEBYNRVNeJnmTFzkQAIeHqk2uSmK2wKqP9o3CQ0JG
+GcY21kKwl/JyBSqgsLQutDp7sdqrngK+Dcti/W/JICacvPO+rHfgh7UI5bYX8FuL
+AiXW4jc5Sn7s3SfWWGEizur8bz7GAxhEy/Jy3h8w8ZIry0ufXbgigyBv+xT3qoZG
+8L4Kd+88V03kpt478IQNsOAgvlv20vY16mz7JLTXdEKECBHJxhD454nPLGtvfcSc
+pmZ+g2TzGBniR0KzwKqtiPSbgBW+Edx/RaQ+nZFdJmL9BF6DX6fGwf4potOZ8lTa
+whYi5Kzcabdlv8QXQ12HHNmJ13DH2qz42B55AIb222g2HntB/RTA2m7+Od8K2vJw
+kR4NDOrtzUYB9xOSFKe3YTNeM+0n+BcRwagoUjQXLijCdIXH/Qgoht8N18943v6w
+xq4K/MwL1EO57jyuGhADMKBnQ0ZX9SsKKwGccYjM0JqGYv/j5Usz8Pv+100GKNOn
+bOK0ToBHZClhGMsFSOpFDw8IWIZ/OwOWDUgO5hcj/Go5m6kDZUilJTY2JqOI/3o2
+fxC76SWbAy3sM4hs2/mIUsPJDauESzezU4IZ+w5qqIXXs3r1zyu7yRbAc/cQ6543
+/QVp737RSsxGlaarelytXmBvGWgob7hw9tBAq93LR1zyY2uYv3AErWeDit3LL8ju
+QVa2pPNX+5RZuByj7JZ/
+=WFp/
 -----END PGP SIGNATURE-----
