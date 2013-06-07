@@ -1,38 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/10
-Message-ID: <20130303082703.GA24607@gremlin.ru>
-Date: Sun, 3 Mar 2013 12:27:03 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/07/4
+Message-ID: <CA+5g0SKGCDiYrAD_K_jghz043w4FejkGZOZxPmKdAqVFeSFMKQ@mail.gmail.com>
+Date: Fri, 7 Jun 2013 09:46:52 -0300
+From: Felipe Pena <felipensp@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: busybox
+Subject: Broken authentication on Monkey HTTPD Auth plugin
 Content-Type: text/plain; charset=utf-8
 
-On 02-Mar-2013 21:43:53 -0700, Kurt Seifried wrote:
+I've found an issue in the way as Monkey HTTPD Auth login performs
+authentication:
 
- >> Hi, busyboxy is creating parts of the directory tree with
- >> incorrect permissions when creating device nodes in nested
- >> directories:
- >> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=701965
+CVE-2013-2159 - Broken username checking on Auth plugin
 
- > Just a quick note:
- > find / -perm +0002
- > should show a very minimal list (/tmp, /var/tmp, some spool dirs,
- > and symbolic links),
+Due strncmp() misuse the username checking phase was matching different
+usernames when checking N initial bytes from username list.
 
-`find -L / -perm /0002` will perform better, following the symlinks.
+$ ./mk_passwd -c -b ../plugins/auth/users.mk felipe123 bar
+[+] Adding user felipe123
+$ ./mk_passwd -b ../plugins/auth/users.mk felipe foo
+[+] Adding user felipe
 
- > please run this on your packages/systems to ensure nothing silly
- > is going out the door.
+On this scenario, we only manage to log in with 'felipe' username using
+'bar' as password, since the strncmp() was using the first 6 bytes to match
+the usernames.
 
-For that, I'd recommend checking for "-perm /0022": group-writable
-directories (primarily) and files are about to cause trouble as well.
-
- > It's 2013, I shouldn't be assigning CVEs for this problem still :P.
-
-That's Debian, they are still in the past century... :-)
-
+The bug has been fixed, more details at
+http://bugs.monkey-project.com/ticket/183
 
 -- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+Regards,
+Felipe Pena
+
