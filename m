@@ -1,78 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/6
-Message-ID: <5132C6EC.1070701@redhat.com>
-Date: Sat, 02 Mar 2013 20:43:40 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/07/6
+Message-ID: <CAFCLFXuj5RggM6am+CiMZOMFKzchHyfeUh72A0XnGRG+WbdktQ@mail.gmail.com>
+Date: Fri, 7 Jun 2013 16:54:16 -0700
+From: Tom Maher <tmaher@...oku.com>
 To: oss-security@...ts.openwall.com
-CC: Salvatore Bonaccorso <carnil@...ian.org>, Damien Regad <damien.regad@...ckgroup.com>
-Subject: Re: CVE request: MantisBT before 1.2.13 "Change Status To" feature allows unauthorised workflow changes
+Subject: Re: chroots & uid sharing
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Jun 6, 2013 at 8:26 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> I literally can't remember when people started saying "if you're using
+> chroot for security, you're doing it wrong" it was a long time ago. At
+> least a decade for myself and I wasn't the first person (that probably
+> goes to the BSD guys and jail()):
+>
+> http://seclists.org/vuln-dev/2002/May/419
 
-On 03/01/2013 11:33 AM, Salvatore Bonaccorso wrote:
-> Hi Kurt
-> 
-> Noticed that the following CVE request did not got a CVE. Would it be
-> possible to assign a CVE to this?
-> 
-> On Sat, Jan 19, 2013 at 11:35:06AM +1100, David Hicks wrote:
->> Hello again list,
->>
->> Damien Regad (MantisBT developer) discovered and fixed[1] an access
->> control/permissions bug in MantisBT that exists in MantisBT version
->> 1.2.12 and prior.
->>
->> A MantisBT user with "Reporter" permissions (enabling them to
->> report/create new issues) can modify the workflow status of any issue to
->> "New" even if they do not have the necessary permission to make this
->> change.
->>
->> Details of the bug, including steps to reproduce and patches are
->> available at [1].
->>
->> References:
->> [1] http://www.mantisbt.org/bugs/view.php?id=15258
->>
->> As per previous e-mails to this list within the past 24 hours, MantisBT
->> 1.2.13 is expected to be released early next week.
->>
->> Can a CVE ID please be assigned to this issue?
+This assertion has always bugged me.  Yes, if you are using chroot for
+security, and only chroot for security, you're absolutely doing it
+wrong.  However, when used with an awareness of its limitations, as
+you quite rightly point out and enumerate, I argue chroot (and its
+more sophisticated cousins jail and pivot_root) does in fact provide
+some defense.  For example, think multiple different,
+mutually-distrusting applications on a host, one of which has a simple
+directory traversal bug, and the other of which mistakenly has
+sensitive files set to be world readable (but without any directory
+traversal issues).  chroot is great for that.
 
-Please use CVE-2013-1811 for this issue.
+I would be less bugged by this if I hadn't repeatedly encountered
+well-intentioned folks who hear that argument and think that chroot is
+completely useless for security enforcement, rather than simply
+insufficient.
 
-regarding the past email ctrl-c, ctrl-v, same thing right?
-
->> With thanks,
->> David Hicks
->> MantisBT Developer
->> #mantisbt irc.freenode.net
->> http://www.mantisbt.org/bugs/
-> 
-> Regards,
-> Salvatore
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRMsbsAAoJEBYNRVNeJnmTJywP/iekMslqs479EEQAXadz7AVT
-wUxFBMZyalKBUTBQBfBh484ImReFR5zPnnJwOzgf8zn5U/CZLDF49kOCGvYvxlXM
-Gd1Z3s+xtc54zhJOhrEpLKn3jYbSVNx1/Xi9SY2DNsgE9356MopuZFYZMqh3aIpH
-F2F6Z7a1LGuLbH3s1FRpWsGvJLtD7H4Y+ORmNpQyxOMy+Y4IsvyKeP/SXXAnX3Mu
-FMBnip1brK9uw8crHiZCJuSsGHCmvQZ6om/YGNFvjDJb8Z8MvQMX6uyIPZS3BgQT
-tc4dqI8YPrmDBjAVKii44av2YPuA++LdwKp0+sgI2A9+ctMtI3zGgbiDPRBglpC8
-QYrZrqK3vfPbl4BQH8iHzwUqz1bSD8LsluE+5GQKDvhXEeN3ruFWHwGmOUdv2wdI
-ZqUScEJE4ZWBLlsReaZzNvVVNdJh1dwhdEuBMFt+Z0rFRgF6CKH4KdjlI/L2XOQT
-FIsib+BlNuuHPvfTBLs0WlzYIjjt/vFMRKQj2OxFl+8YzIQTfvm/gwTtObaBU9Hq
-Tkx43du+fPcE6zyCoNHc8D89hHQ3YNJM2Vnmpr2EEuh4bXb+ihGocdn/+ScLNNPf
-7e2iavcD1Uq0EaL1ODW3cSaX0RjAilB2/7hx83unlNp1DQvt0RlAGheDG+V5JIOr
-p5Fq3w8XmTsO0tVkfH6t
-=fGdi
------END PGP SIGNATURE-----
+-- 
+Tom Maher <tmaher@...oku.com>
