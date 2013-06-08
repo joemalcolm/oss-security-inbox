@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/22/4
-Message-ID: <20130722150444.GA8676@eldamar.local>
-Date: Mon, 22 Jul 2013 17:04:44 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: security@...ngoproject.com
-Subject: CVE Request: Django: Account enumeration through timing attack in password verification in django.contrib.auth
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/08/5
+Message-ID: <20130608113316.GB12877@gremlin.ru>
+Date: Sat, 8 Jun 2013 15:33:16 +0400
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 08-Jun-2013 07:22:44 -0400, larry Cashdollar wrote:
 
-Cc'ing security@...ngoproject.com
+ > According to the bug report details that's a race condition.
+ > A malicious user is using a vulnerability in the way the
+ > installation script handles changing file permissions to disclose
+ > sensitive information.
 
->From [1] in Django accounts can be enumerated trough timing attacks:
+Yes. And, once again, that's a misconfiguration - the file should
+be created as 0600 root:root during installation and only after
+that chmod() and chown() may be applied.
 
-> When attempting to authenticate using django.contrib.auth, if a user does not
-> exist the authenticate() function returns None nearly instantaneously, while
-> when a user exists it takes much longer as the attempted password gets hashed
-> and compared with the stored password. This allows for an attacker to infer
-> whether or not a given account exists based upon the response time of an
-> authentication attempt.  This can be seen much more clearly when the number of
-> rounds on the password hasher is set to something high like 100000.
+ > On Jun 8, 2013, at 7:00 AM, gremlin@...mlin.ru wrote:
 
- [1] https://code.djangoproject.com/ticket/20760
+- Because it messes up the order in which people normally read text.
+- Why top-posting is considered the most annoying thing in messages?
 
-A proposed patch is at [2] but not yet a commit in upstream git repository.
 
- [2] https://code.djangoproject.com/attachment/ticket/20760/20760_fix_hash_once.diff
-
-Does this needs a CVE asignment?
-
-Regards,
-Salvatore
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
