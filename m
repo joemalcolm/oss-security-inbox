@@ -1,39 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/27/1
-Message-id: <f753c4f2-8690-48c4-8142-0358b7a87c0c@me.com>
-Date: Wed, 27 Mar 2013 00:19:45 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Ruby gem Thumbshooter 0.1.5 remote code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/08/6
+Message-id: <DD900A17-E031-4833-AEFE-45C7E1FA9BB9@me.com>
+Date: Sat, 08 Jun 2013 07:43:21 -0400
+From: larry Cashdollar <larry0@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
 Content-Type: text/plain; charset=utf-8
 
-On Mar 26, 2013, at 04:59 PM, Kurt Seifried <﻿kseifried@...hat.com﻿> wrote:
+On Jun 8, 2013, at 7:33 AM, gremlin@...mlin.ru wrote:
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
->
-> Please
-> >
-> use CVE-2013-1898 for this issue.
->
-> > Larry C$
->
-> I gotta ask, what's with the name?
- 
-It's my real name.  You can imagine what my childhood was like. 
+> On 08-Jun-2013 07:22:44 -0400, larry Cashdollar wrote:
+> 
+>> According to the bug report details that's a race condition.
+>> A malicious user is using a vulnerability in the way the
+>> installation script handles changing file permissions to disclose
+>> sensitive information.
+> 
+> Yes. And, once again, that's a misconfiguration - the file should
+> be created as 0600 root:root during installation and only after
+> that chmod() and chown() may be applied.
+> 
 
-"Hey Cashdollar got change for a dollar?" - No sorry I only carry big bills.
-"Hey Cashdollar can I have a dollar?" - No go get a Job.
-"Hey Cashdollar got any cash?".... Eh...geez.
+I'd agree if this were a configuration file we were talking about, but it's an installation script.
 
-I was told by my father that it was an American Indian name from the tribe 'Paycheck'. 
 
-A more realistic answer is it might be dutch for kirchtoller, and was mangled to Cashdollar.
+>> On Jun 8, 2013, at 7:00 AM, gremlin@...mlin.ru wrote:
+> 
+> - Because it messes up the order in which people normally read text.
+> - Why top-posting is considered the most annoying thing in messages?
+> 
 
-I make up random answers normally when people ask like, I am in the witness protection program etc... I'll spare you the rest
-at this point. ;-)
+My apologies. 
 
--- Larry
-Content of type "text/html" skipped
+> 
+> -- 
+> Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+> GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+> GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
