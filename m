@@ -1,71 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/14
-Message-ID: <5133A987.4040605@redhat.com>
-Date: Sun, 03 Mar 2013 12:50:31 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/08/9
+Message-ID: <51B369BC.2050605@fifthhorseman.net>
+Date: Sat, 08 Jun 2013 13:28:28 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-CC: Michael Tokarev <mjt@....msk.ru>, Piotr Karbowski <piotr.karbowski@...il.com>
-Subject: Re: CVE id request: busybox
+CC: gremlin@...mlin.ru
+Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 06/08/2013 07:00 AM, gremlin@...mlin.ru wrote:
 
-On 03/03/2013 08:01 AM, Michael Tokarev wrote:
-> 03.03.2013 18:33, Piotr Karbowski wrote:
->> On 03/03/2013 11:19 AM, Michael Tokarev wrote:
->>> What it has to do with Debian, besides that debian was first to
->>> actually submit this bug into its own bug tracker?
->> 
->> Acctualy not the first, the bug was reported to busybox
->> mailinglist on 18 Dec 2012.
-> 
-> That's where I noticed it and submitted a bugreport to Debian BTS
-> from there.
-> 
-> Note that I didn't want to request a CVE# for that, and used a 
-> somewhat low severify value for the report in the Debian BTS (which
-> was quite some time after the initial report).
-> 
-> If I thought it deserves a CVE, I'd request one right after seeing
-> the discussion in question :)
-> 
-> But I guess we're muddling waters for too much already.  I merely
-> commented on the joke about Debian, -- the issue is definitely not
-> debian-specific, Debian does not even use mdev from busybox (but
-> allows to use it to the users).
-> 
-> Thanks,
-> 
-> /mjt
-> 
+> That's not a security issue, but a misconfiguration
 
-This actually raises a good point, due to Debian being a secondary
-source in most cases (e.g. upstream has a bug report which is then
-copied into Debian's bug tracker since Debian ships it) the dates and
-sometimes information is wrong. I will no longer be issuing CVE's for
-issues brought up through the Debian bugtracker without an original
-source to back it up, otherwise more mistakes will happen which is not
-good.
+I consider this a security bug in the debian package's maintainer
+scripts: it is a race condition that leaks confidential information to a
+user who "wins" the race.  It is *not* a misconfiguration; it is a bug
+with security implications.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> (alas, very common for Deb*an packages)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+If you know of more bugs like this, please report them with an e-mail to
+submit@...s.debian.org with the first line "Package: FOO" (where "FOO"
+is replaced by the name of the buggy package).  Thanks!
 
-iQIcBAEBAgAGBQJRM6mHAAoJEBYNRVNeJnmTM8cQAJZqQPpzsLaicBfyFwsnZ6gK
-8IOdtaqDZdE6oYoV10QgvQa018ASXjED+blG8lvZptF2wVuXjVi3+C5uGY8J6UH7
-REGCRShlplJ9798XzGxmFVcSezkOGQmZUvV8QSQRZHIqNfPuwSMsM6uwnXRlfDF3
-VACwecuo76dSZ1+q3E2DUz9WcUYEnvRMoFwsJiTe/+uxCfcH4xMFYI9raofHAYRf
-FC3q34Elc+AXxzxF1MC1WE9HjrwmUYNx2bxhcuuGhzyv3TQztgrxO+8RCd9xXcc2
-6Gt5ErQHY16LQ7DTv0I/1OpXEb5DgFrP6wDBb0RbONiZcm/k5QYgxpV+fInZylDT
-oBzNeUopyC0y7ZLVQDx++iKAeD7Dt+qhCPNtiHAPGvyj9cyIm+Kkt2t5KsQtOfkF
-vy35FGM3aXs6ZPaqtbQZ3CxUX8Bg0rBLjV9sF79yUyx+5ybg9U7NbnxEp27kKlZN
-OTXmwvwsQ3uCf3uv7/9uNCVD4Q95K+gfZAZtH9zgVFjwzbzAsVu6yNNQvz9/ShzM
-TjcGb77wW/IrGwFi7tslRlNARzSVWGBMbl8wsdum3Xctus4ZfYM6JSKhD9KlmM5L
-MxV596WPUb3mlqh2AhEOA2XBzv19jMejcH+EL7UnJONC+bf8FV32msmxtyRDVl97
-V0DINRevLl/L+OxxMifm
-=lwSO
------END PGP SIGNATURE-----
+> so at least I doubt that deserves a CVE.
+
+I respectfully disagree; if an upstream package leaks confidential
+information to an adversary who "wins" a race, that is a bug which
+deserves a CVE.  Debian packaging bugs should be held to the same standard.
+
+Regards,
+
+	--dkg (i am a member of the debian project)
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
