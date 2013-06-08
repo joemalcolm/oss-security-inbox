@@ -1,28 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/15/10
-Message-ID: <20130715232513.GW4441@dhcp-25-225.brq.redhat.com>
-Date: Tue, 16 Jul 2013 01:25:13 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/08/3
+Message-ID: <20130608110051.GA12877@gremlin.ru>
+Date: Sat, 8 Jun 2013 15:00:51 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- spice: unsafe clients ring access abort
+Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
 Content-Type: text/plain; charset=utf-8
 
-Currently, both red_channel_pipes_add_type() and
-red_channel_pipes_add_empty_msg() use plaing RING_FOREACH() which is not
-safe versus removals from the ring within the loop body. Yet, when
-(network) error does occur, the current item could be removed from the
-ring down the road and the assertion in RING_FOREACH()'s ring_next()
-could trip, causing the process containing the spice server to abort.
+On 08-Jun-2013 12:44:45 +0200, vladz wrote:
 
-An user able to initiate spice connection to the guest could use this
-flaw to crash the guest.
+ > The file "/etc/mysql/debian.cnf", which contains plain text
+ > credentials for the "debian-sys-maint" mysql user, is created
+ > in an insecure manner during the package installation phase.
+ > This can lead a non-privileged local user to disclose its content
+ > and use this special account to perform administration tasks.
+ > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=711600
+ > Could you allocate CVE id for this issue?
 
-Upstream fix:
-http://cgit.freedesktop.org/spice/spice/commit/?id=53488f0275d6c8a121af49f7ac817d09ce68090d
+That's not a security issue, but a misconfiguration (alas, very common
+for Deb*an packages), so at least I doubt that deserves a CVE.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=984769
 
-Thanks,
 -- 
-Petr Matousek / Red Hat Security Response Team
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
