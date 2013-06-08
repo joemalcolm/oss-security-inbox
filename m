@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/9
-Message-ID: <51C02DBD.6000507@debian.org>
-Date: Tue, 18 Jun 2013 10:51:57 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on a vuln/CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/08/4
+Message-id: <8FA7409F-AF5D-4F47-B640-2B5D2BC83AB5@me.com>
+Date: Sat, 08 Jun 2013 07:22:44 -0400
+From: larry Cashdollar <larry0@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
 Content-Type: text/plain; charset=utf-8
 
-On 18/06/13 07:44, Kurt Seifried wrote:
-> As for the security of the repo key proving that it it is safe/not 
-> compromised would be hard, I'm guessing it wasn't held on an HSM,
-> and was it securely destroyed, or?
+According to the bug report details that's a race condition.  A malicious user is using a vulnerability in the way the installation script handles changing file permissions to disclose sensitive information.  
 
-In this case the repository key is the former maintainer's personal
-PGP key, which it appears he uses to sign deb-multimedia.org (the same
-set of packages as the former debian-multimedia.org). I would assume
-that it is unlikely to be held on a HSM, but I don't see any reason
-why it would now be less safe than it was while debian-multimedia.org
-was active.
+Larry C$
 
-Anyone who doesn't/didn't trust the maintainer of that repository (and
-in particular, anyone who doesn't/didn't trust him to store keys
-securely) shouldn't have added that repository's key as "trusted" in
-the first place.
+On Jun 8, 2013, at 7:00 AM, gremlin@...mlin.ru wrote:
 
-    S
+> On 08-Jun-2013 12:44:45 +0200, vladz wrote:
+> 
+>> The file "/etc/mysql/debian.cnf", which contains plain text
+>> credentials for the "debian-sys-maint" mysql user, is created
+>> in an insecure manner during the package installation phase.
+>> This can lead a non-privileged local user to disclose its content
+>> and use this special account to perform administration tasks.
+>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=711600
+>> Could you allocate CVE id for this issue?
+> 
+> That's not a security issue, but a misconfiguration (alas, very common
+> for Deb*an packages), so at least I doubt that deserves a CVE.
+> 
+> 
+> -- 
+> Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+> GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+> GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
