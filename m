@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/12/5
-Message-Id: <20130712154757.44A2F600AC@smtp.hushmail.com>
-Date: Fri, 12 Jul 2013 15:47:57 +0000
-From: "mancha" <mancha1@...h.com>
-To: oss-security@...ts.openwall.com, solar@...nwall.com
-Subject: Re: CVE request: Cyrus-sasl NULL ptr. dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/08/7
+Message-ID: <20130608115609.GC12877@gremlin.ru>
+Date: Sat, 8 Jun 2013 15:56:09 +0400
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 12 Jul 2013 15:35:22 +0000 "Solar Designer" wrote:
->Does this really crash the entire daemon process rather than
->just one of its children (where a new one would be spawned for
->another request)?
->
->I think this needs to be clarified, and the answer will affect 
->whether
->we have a security issue (CVE-worthy) or not.
->
->Alexander
+On 08-Jun-2013 07:43:21 -0400, larry Cashdollar wrote:
 
-That is a good question. The short answer is there isn't a
-re-spawn of crashed processes. The longer answer is cyrus-sasl's
-saslauthd defaults to starting up 5 round-robin listening
-threads (configurable via -n switch).
+ >>> According to the bug report details that's a race condition.
+ >>> A malicious user is using a vulnerability in the way the
+ >>> installation script handles changing file permissions to disclose
+ >>> sensitive information.
+ >> Yes. And, once again, that's a misconfiguration - the file should
+ >> be created as 0600 root:root during installation and only after
+ >> that chmod() and chown() may be applied.
+ > I'd agree if this were a configuration file we were talking about,
+ > but it's an installation script.
 
-Under a default scenario, authentication would continue to be
-available until the 5th NULL ptr. dereference.
+So what? The installation script may contain the `umask 077` line,
+can't it?
 
---mancha
-
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
