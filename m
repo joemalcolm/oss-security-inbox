@@ -1,15 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/26
-Message-ID: <CAHmME9qgH1oA5XJWu3OMmJ3YR4sbKyEuzz87qiQHXhiWEkv1UA@mail.gmail.com>
-Date: Wed, 27 Feb 2013 18:46:30 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/09/2
+Message-ID: <51B4048F.3040703@redhat.com>
+Date: Sat, 08 Jun 2013 22:29:03 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+CC: vladz <vladz@...zero.fr>
+Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 5:17 PM, Greg KH <greg@...ah.com> wrote:
-> Are you willing to do it?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-If it's a patch for an issue sent to security@, then it is, in fact, a
-"trivial task" as to whether or not it was a security fix. There's no
-issue of responsibility of judgement, at all.
+On 06/08/2013 04:44 AM, vladz wrote:
+> Hi,
+> 
+> The file "/etc/mysql/debian.cnf", which contains plain text
+> credentials for the "debian-sys-maint" mysql user, is created in an
+> insecure manner during the package installation phase.  This can
+> lead a non-privileged local user to disclose its content and use
+> this special account to perform administration tasks.
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=711600
+> 
+> Could you allocate CVE id for this issue?
+> 
+> Thank you, vladz.
+> 
+
+Please use CVE-2013-2162 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRtASPAAoJEBYNRVNeJnmTjXsP+gK3XOri7eJb9Sk58xWPbxDt
+lQlfUaG6V0ZQ/AnfH5VODMgqqF8m8ogEBO7Cmcx/Azz7j1fyuwl+dnSGBWFllZOL
+pjIMQ7OzxYGcJwVUzLygFTQrRohychLStJI3nVbX7q7gCg/G8nXs+BmpL5gvpIAI
+CbOBOrJpw4FSE87lLAfa4qFz9b3qZY39urwE1eFAcdi/paUQHFXkIbMCV96NdTBs
+PkUhEN9NxI93Gge8djoSh1L+vXNWxKDEAzA+mMyI9cOFr9JWW0oSAEy/XKnNFk9e
+697+AnSkJ7j62LxbJNxBbkM5Ok/n9ja71XMBA1NRkELGgAoEf3wxPXAMzkN6ell7
+AxcXiWY8pPS6ep6zETHFMqRGMYt+aQBFFfJyVFx3QYRyrSDwIqzZ0ovfGh2Qiw+2
+G+oGAdznkgSeTHWuQdnTY/ntW9Ww9/zJyv09JrLEGL0huYjQepw/YhZyW1kIRfg8
+LyVOMQEDmQZOtojwAabbl8IgsR5hnpwDIHxn2hD/9CDjcn0P5AlGT2k13vLPwiZQ
+Qlf65iBic5w+Vcc4atjEFiMpgRqhHdhszDsYLK/zrX5IukL4vdrOIWd48SwgxqBZ
+J/xMfp6JYptwEcVdeW0tWUQkPCoh4rckjx++hm670V12Z9KcHK109jIcopnY/YT5
+0ZcJaLTY2tr8MerVYdy6
+=XLf7
+-----END PGP SIGNATURE-----
