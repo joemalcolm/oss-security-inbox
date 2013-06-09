@@ -1,132 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/1
-Message-ID: <DUB111-W4861089C4AAB5A5CD3A200EF630@phx.gbl>
-Date: Fri, 19 Jul 2013 05:22:52 +0430
-From: Hamid Zamani <me@...idx9.ir>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/09/3
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF26F4C40E@IMCMBX01.MITRE.ORG>
+Date: Sun, 9 Jun 2013 22:17:14 +0000
+From: "Christey, Steven M." <coley@...re.org>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request : Radius Daemon (YardRadius v1.1.2-4 ) Multiple Format String Vulnerabilities
+CC: "gremlin@...mlin.ru" <gremlin@...mlin.ru>
+Subject: RE: CVE request: Debian's package "mysql-server" leaks credential information
 Content-Type: text/plain; charset=utf-8
 
-Hello, 
+>From: Daniel Kahn Gillmor [mailto:dkg@...thhorseman.net]
+>Sent: Saturday, June 08, 2013 1:28 PM
+>To: oss-security@...ts.openwall.com
+>Cc: gremlin@...mlin.ru
+>Subject: Re: [oss-security] CVE request: Debian's package "mysql-server"
+>leaks credential information
+>
+>On 06/08/2013 07:00 AM, gremlin@...mlin.ru wrote:
+>
+>> That's not a security issue, but a misconfiguration
+>
+>I consider this a security bug in the debian package's maintainer
+>scripts: it is a race condition that leaks confidential information to a
+>user who "wins" the race.  It is *not* a misconfiguration; it is a bug
+>with security implications.
+
+This is the CVE perspective, as well.  Even though "setting permissions and ownership of a file" is clearly a configuration operation, as Kurt said, we do sometimes cover such issues.
+
+Looking at the code extract for the installation script in Debian bug 711600, it is clear that debian.cnf is expected to have certain ownership and permissions; this is part of a "security policy" that is specified by the code with the chown/chmod commands, which override the default umask.  Due to the race condition, an attacker can violate this policy, which argues strongly for inclusion in CVE.  We have maybe 10 to 20 previous CVEs that involve insufficient control of permissions during installation or copies (for example, extracting a lot of files from an archive, or doing a recursive directory copy, and changing the permissions only *after* they have all been extracted.)
+
+There has been some past discussion on oss-security about when reliance on a default umask is sufficient for inclusion in CVE or not.  See September 2012 discussion about gpg and vim starting at http://www.openwall.com/lists/oss-security/2012/09/21/4 , with my commentary at http://www.openwall.com/lists/oss-security/2012/09/24/9 and Kurt's at http://www.openwall.com/lists/oss-security/2012/09/26/6 .  While there aren't any hard-and-fast rules, a file containing private keys or credentials is typically expected to be readable only by the intended user of the program, so creation of a file with insecure permissions due to reliance on a default umask would likely qualify for a CVE.
+
+- Steve
 
-Software name : YardRadius 
-Version : 1.1.2-4
-
-Several Format String Vulnerabilites was found in latest YardRadius .
-
-Description : 
-
-
-
-src/log.c :
-
-
-
-void 
-
-log_msg(int priority,char *fmt, va_list args)
-
-{
-
-...
-
-	char buffer[1024];
-
-...
-
-	vfprintf(msgfd, fmt, args);
-
-...
-
-       vsnprintf(buffer,1024,fmt, args);
-
-#if defined(HAVE_SYSLOG)
-
-       syslog(priority, buffer); //! if buff filled by "%x" so an attacker can see the addresses and ...
-
-...
-
-       vsyslog(priority, fmt, args); 
-
-...
-
-}
-
-
-
-
-
-
-############
-
-
-
-src/version.c :
-
-
-
-#define  STRVER "%s : YARD Radius Server %s ... $ "
-
-
-
-
-
-void 
-
-version(void)
-
-{
-
-       char buffer[1024];
-
-
-
-       build_version(buffer,sizeof(buffer));
-
-       fprintf(stderr, buffer);
-
-       exit(-1);
-
-}
-
-
-
-...
-
-
-
-void 
-
-build_version(char *bp,size_t sizeofbp)
-
-{
-
-       snprintf(bp,sizeofbp-1,STRVER, progname, VERSION);
-
-..
-
-
-
-$ ln -s radiusd %x
-
-$ ./%x -v
-
-./b77c0ff4 : YARD Radius Server 1.1 ...
-
-
-
-So an attacker may control the memory and execute arbitrary codes.
-
-
-Debian bug report : 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714612
-
-CXSecurity.com :
-http://cxsecurity.com/issue/WLB-2013070028
-
-
-Please assign a CVE number.
-
-Thank you,
-Hamid Zamani
- 		 	   		  
