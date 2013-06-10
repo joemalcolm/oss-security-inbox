@@ -1,61 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/23/7
-Message-ID: <52672EF4.8060802@redhat.com>
-Date: Tue, 22 Oct 2013 20:05:40 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/10/5
+Message-ID: <CAA7hUgG+mofrGa1=BcbUAxw0b_7RagbY9-Tn=fMBXfvOocFywA@mail.gmail.com>
+Date: Mon, 10 Jun 2013 16:54:21 +0200
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: MantisBT before 1.2.16 XSS vulnerability
+Subject: Insecure temp files usage in phusion passenger (other than CVE-2013-2119)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 10/21/2013 04:26 PM, Damien Regad wrote:
-> Greetings
-> 
-> Roland Becker (MantisBT developer) discovered and fixed [1] an XSS 
-> vulnerability issue affecting MantisBT releases 1.0.0 to 1.2.15
-> included.
-> 
-> Account_sponsor_page.php.php did not correctly sanitize project
-> names, enabling a malicious user to execute malicious JavaScript
-> when visiting that page.
-> 
-> The criticality of this issue is compounded by the fact that a 
-> high-privilege account (typically project manager or administrator)
-> is required to edit project names.
-> 
-> Patches attached to [1]. Can you please assign a CVE ID to this
-> issue ?
-> 
-> Thank you
-> 
-> D. Regad MantisBT Developer http://mantisbt.org/
-> 
-> [1] http://www.mantisbt.org/bugs/view.php?id=16513
-> 
-> BCC: mantisbt-dev@...ts.sourceforge.net
-> 
+While looking at  CVE-2013-2119 I noticed that Phusion Passenger
+2.2.11's ext/common/Utils.cpp makeDirTemp() uses mkdir(1) to create
+directories in /tmp (e.g. /tmp/phusion.$$) for use by the application
+and web server.
+A local user could create the directories and have write access to
+directories, and possibly files used by the application. I haven't
+confirmed, but I guess this would allow some sort of privilege
+escalation to the user executing the application or at least access to
+otherwise restricted data.
 
-Please use CVE-2013-4460 for this issue.
+Additionally, some of the subdirectories might be chown(2)ed to a
+different user even if the directory already existed (it chowns iff
+mkdir(1) returns 0). Not sure if it could have an impact, however.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Later versions of Phusion Passenger (namely, 3.0.13) use mkdir(2)
+directly but it only checks for EEXIST, in which case it even skips
+the chown. The directory is chmod'ed and chown'ed otherwise.
 
-iQIcBAEBAgAGBQJSZy7zAAoJEBYNRVNeJnmTJbQQAKtmOfKLuorxnrgvX+1lApw9
-FWmvTBG03WTYhERpP7TCLAMFn2PEdna4/7prfcxUswR09RaJnsc1ThwynNFvbi5H
-rv2N53RvieD8tHVpFRI3z0STLXshe8E61WaSRW2anZDsw3Bcj0sVLrbv4MF3Suhr
-GtueiO73KF229e4DpY1jpXCLMgJiruQYAdG+1DVbFm94eM5D4JkWIln0rkJHLE0Y
-7AdJ7GN+It3UaXhkPEwE9xZ2pdvO0koSpGPYLjLJxLIYV6v2HTNtidMCgHONVI6e
-nsxKymufL6RnuR5ycb3vP2Y/5GEUhnXCQZftziDtYAWiB2bBG9PoCdJJGsMm9wAH
-YsyZfMqf28wcpZ1U/YY5XuOVDUCWNEnnjDKZH95i5pZmKXZhhUb3+kg4v9BJhYGw
-nsLKkHT2F/lJEbZecDtf/G3xrAmBgptc/76+fZSoqCb/1JvlMrFsCYiXMBr5W69j
-ItOlc2rwrbinU0KhjW+U53KvT2EekrTkc4XHOYo1W56jG4Byse6RtrAcZRxDt/gt
-u597YrsXb9ImJFhwSA80Lq7MmjBLX34TyedvtM7sCe2U2NK5bOvwZMn57R5HOCxe
-uGytwgmRtY04FHbziDkAYpSbuW8Apn6/38NbFThZeZrgOR7dQWaXvfLJxRUeNo/8
-grYD/r1nVF6aENVOfgc7
-=OwHh
------END PGP SIGNATURE-----
+So, at least in 3.0.13 a file could be created instead of a directory
+and the code would go on, while in 2.2.11 one would need to win the
+race condition in mkdir(1) -p's stat check.
+
+Does anyone know enough about phusion passenger to know what the
+impact could be?
+(and depending on that, assigning CVE id(s))
+
+Cheers,
+--
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
