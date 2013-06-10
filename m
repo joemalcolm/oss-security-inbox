@@ -1,93 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/01/2
-Message-Id: <E1VcGbZ-0004u7-9o@xenbits.xen.org>
-Date: Fri, 01 Nov 2013 15:25:45 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 73 - Lock order reversal between page allocation and grant table locks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/10/4
+Message-ID: <20130610125335.GA22803@kludge.henri.nerv.fi>
+Date: Mon, 10 Jun 2013 15:53:35 +0300
+From: Henri Salo <henri@...v.fi>
+To: gremlin@...mlin.ru
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Jun 10, 2013 at 03:26:30PM +0400, gremlin@...mlin.ru wrote:
+> I know lots (even for MySQL, which we are discussing, I can recall
+> at least mysqldump producing trash, or several replication issues),
+> but I don't want to waste my time.
+> 
+> P.S.: http://pics.rsh.ru/img/debipoke_demo_itnrnj4r.png :-)
 
-                    Xen Security Advisory XSA-73
-                              version 2
+What do you mean by wasting time? Could you elaborate a bit more. I know that
+there are several persons in this list who are actively fixing and reporting
+security issues to Debian. Don't hide behind picture if you have some real
+opinion why you should not be reporting bugs to Debian. You could even list the
+problems here and I can deal with reporting part. Are you refering to this?
+http://www.debian.org/security/2013/dsa-2667
 
-    Lock order reversal between page allocation and grant table locks
+---
+Henri Salo
 
-UPDATES IN VERSION 2
-====================
-
-Corrected typo in xsa73-4.1.patch. The other patches were already
-correct.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-While the response to this issue was being prepared by the security
-team, the bug was independently discovered by a third party who
-publicly disclosed it without realising the security impact.
-
-ISSUE DESCRIPTION
-=================
-
-The locks page_alloc_lock and grant_table.lock are not always taken in
-the same order.  This opens the possibility of deadlock.
-
-IMPACT
-======
-
-A malicious guest administrator can deny service to the entire host.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions going back to at least Xen 3.2 are vulnerable.
-
-To exploit the vulnerability, the attacker must have control of more
-than one vcpu, either by controlling a malicious multi-vcpu guest, or
-by controlling more than one guest.
-
-MITIGATION
-==========
-
-There is no practical mitigation for this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Coverity Scan and diagnosed by Andrew
-Cooper.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa73-4.3-unstable.patch    Xen 4.3.x, xen-unstable
-xsa73-4.2.patch             Xen 4.2.x
-xsa73-4.1.patch             Xen 4.1.x
-
-$ sha256sum xsa73*.patch
-c9284e2c12b1c4f8c63d11b8802b4f408e6623f857f120b04e47840f433e4823  xsa73-4.1.patch
-10b809c39582a7f29150f0635b78bc2ce40df0bded963b78f42db3e21775da8c  xsa73-4.2.patch
-48411cd6b15e4e4fa3c4335298179a4b1094c5e1ae8dc7582bbfb9439d97037b  xsa73-4.3-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJSc8fSAAoJEIP+FMlX6CvZeRUH/Rn+MT2Xj1zteuIs89cLZOBc
-5ieh44Nqulyn/kQU+j7tzmq0urzt5w0VEiL7CWDxXe6KktzKZDnZTkXDSXr13sxU
-pIM682cpaSsGvDFDSKdc6x03cNQ3P+FSrz/uWEWmCFjOuqRT839RkY3NbkC6mhaH
-O9JUW+uojphJ3TJDfmvl9xsN4W6A3H8SvJp71c6LNGMTUXfAsOahNnrlJev+s8Pu
-OruXzqVFzOpU1BbWYAakhSgUg/5+FTCcR+ZUN4AgMHgetnXIbR0qGtvWGEP9kTVt
-wOK/mgAA7T4yHyTySmmVHc/BN422e0xv045Zr25AI2WrteLnpo4gj5GJBuAilEU=
-=RHfD
------END PGP SIGNATURE-----
-
-Download attachment "xsa73-4.1.patch" of type "application/octet-stream" (3726 bytes)
-
-Download attachment "xsa73-4.2.patch" of type "application/octet-stream" (3756 bytes)
-
-Download attachment "xsa73-4.3-unstable.patch" of type "application/octet-stream" (3707 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
