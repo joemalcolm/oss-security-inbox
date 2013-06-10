@@ -1,24 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/5
-Message-ID: <5296ED11.6030202@redhat.com>
-Date: Thu, 28 Nov 2013 18:13:21 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/10/2
+Message-ID: <20130610112630.GB9807@gremlin.ru>
+Date: Mon, 10 Jun 2013 15:26:30 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifrie@...hat.com>
-Subject: CVE Request: ownCloud security bypass on admin page
+Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 08-Jun-2013 13:28:28 -0400, Daniel Kahn Gillmor wrote:
 
-ownCloud 5.0.13 fixes a security issue:
+ >> That's not a security issue, but a misconfiguration
+ > I consider this a security bug in the debian package's maintainer
+ > scripts: it is a race condition that leaks confidential information
 
-http://owncloud.org/changelog/
-SECURITY: Fix a possible security bypass on admin page under certain 
-circumstances and MariaDB
+Package post-install scripts are closer to configuration.
 
-Can a CVE please be assigned?
+ >> (alas, very common for Deb*an packages)
+ > If you know of more bugs like this, please report them with an
+ > e-mail to submit@...s.debian.org with the first line "Package:
+ > FOO" (where "FOO" is replaced by the name of the buggy package).
+ > Thanks!
 
-Thanks,
+I know lots (even for MySQL, which we are discussing, I can recall
+at least mysqldump producing trash, or several replication issues),
+but I don't want to waste my time.
 
---
-Murray McAllister / Red Hat Security Response Team
+P.S.: http://pics.rsh.ru/img/debipoke_demo_itnrnj4r.png :-)
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
