@@ -1,33 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/18/3
-Message-ID: <20131218152423.GA32050@suse.de>
-Date: Wed, 18 Dec 2013 16:24:23 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/10/6
+Message-ID: <20130610183048.GA25650@devzero.fr>
+Date: Mon, 10 Jun 2013 20:30:48 +0200
+From: vladz <vladz@...zero.fr>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE Request: pywbem certificate TOCTOU
+Cc: Raphael Geissert <geissert@...ian.org>
+Subject: Re: Insecure temp files usage in phusion passenger (other than CVE-2013-2119)
 Content-Type: text/plain; charset=utf-8
 
-Hi
 
-There is an issue with pywbem checking x509 certifcates.
-Our BZ is
+Hi,
 
-https://bugzilla.novell.com/show_bug.cgi?id=856108
+On Mon, Jun 10, 2013 at 04:54:21PM +0200, Raphael Geissert wrote:
+> While looking at  CVE-2013-2119 I noticed that Phusion Passenger
+> 2.2.11's ext/common/Utils.cpp makeDirTemp() uses mkdir(1) to create
+> directories in /tmp (e.g. /tmp/phusion.$$) for use by the application
+> and web server.
 
-It contains the upstream URLs. There also seems to be a ticket
-open for it at RH (1026891) but I cannot access that, so I dont know
-whether they already assigned a CVE for it? At least in upstream commits
-there is no CVE mentioned.
+I think you meant makeDirTree() for the function name and not
+makeDirTemp(), am I correct?  
 
-If there is not already one, can you assign one?
+I don't know much about the tool but snipped the code around the mkdir()
+function for other people to see:
 
-thx,
-Sebastian
+  $ cat -n ruby-passenger-3.0.13debian/ext/common/Utils.cpp
+  [...]
+  486                 do {
+  487                         ret = mkdir(current.c_str(), modeBits);
+  488                 } while (ret == -1 && errno == EINTR);
+  489                 if (ret == -1) {
+  490                         if (errno == EEXIST) {
+  491                                 // Ignore error and don't chmod/chown.
+  492                                 continue;
+  493                         } else {
+  494                                 int e = errno;
+  495                                 throw FileSystemException("Cannot create directory '" + current + "'",
+  496                                         e, current);
+  497                         }
+  498                 }
 
--- 
+> Does anyone know enough about phusion passenger to know what the
+> impact could be?
+> (and depending on that, assigning CVE id(s))
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+I don't see any problem here.  The mkdir() return code appears to be
+checked correctly and chmod/chown ignored if directory was previously
+created.
 
+Cheers.
