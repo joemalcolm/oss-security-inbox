@@ -1,52 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/11
-Message-ID: <51A65CFA.4090907@redhat.com>
-Date: Wed, 29 May 2013 13:54:34 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/10/7
+Message-id: <3db1d596-11e8-473b-bfa9-73f5045f8a72@me.com>
+Date: Mon, 10 Jun 2013 19:49:53 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
 To: oss-security@...ts.openwall.com
-CC: P J P <ppandit@...hat.com>
-Subject: Re: CVE request: Linux kernel: net: oops from tcp_collapse() when using splice(2)
+Subject: Re: Insecure temp files usage in phusion passenger (other than CVE-2013-2119)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I think he is saying the directory can be hijacked if a malicious user creates the directory first they will retain read/write access to it.
 
-On 05/29/2013 01:10 PM, P J P wrote:
-> Hello,
-> 
-> Linux kernel which supports splice(2) call to move data across
-> file/socket descriptors via a pipe buffers, is vulnerable to a
-> kernel crash that occurs while calling splice(2) over a tcp socket
-> which in turn calls tcp_read_sock().
-> 
-> A user/program could use this flaw to cause system crash, resulting
-> in DoS.
-> 
-> Upstream fix: ------------- ->
-> https://git.kernel.org/linus/baff42ab1494528907bf4d5870359e31711746ae
+On Jun 10, 2013, at 11:30 AM, vladz <vladz@...zero.fr> wrote:
+
 >
->  Thank you. -- Prasad J Pandit / Red Hat Security Response Team 
-> DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+> Hi,
+>
+> On Mon, Jun 10, 2013 at 04:54:21PM +0200, Raphael Geissert wrote:
+> > While looking at CVE-2013-2119 I noticed that Phusion Passenger
+> > 2.2.11's ext/common/Utils.cpp makeDirTemp() uses mkdir(1) to create
+> > directories in /tmp (e.g. /tmp/phusion.$$) for use by the application
+> > and web server.
+>
+> I think you meant makeDirTree() for the function name and not
+> makeDirTemp(), am I correct?
+>
+> I don't know much about the tool but snipped the code around the mkdir()
+> function for other people to see:
+>
+> $ cat -n ruby-passenger-3.0.13debian/ext/common/Utils.cpp
+> [...]
+> 486 do {
+> 487 ret = mkdir(current.c_str(), modeBits);
+> 488 } while (ret == -1 && errno == EINTR);
+> 489 if (ret == -1) {
+> 490 if (errno == EEXIST) {
+> 491 // Ignore error and don't chmod/chown.
+> 492 continue;
+> 493 } else {
+> 494 int e = errno;
+> 495 throw FileSystemException("Cannot create directory '" + current + "'",
+> 496 e, current);
+> 497 }
+> 498 }
+>
+> > Does anyone know enough about phusion passenger to know what the
+> > impact could be?
+> > (and depending on that, assigning CVE id(s))
+>
+> I don't see any problem here. The mkdir() return code appears to be
+> checked correctly and chmod/chown ignored if directory was previously
+> created.
+>
+> Cheers.
 
-Please use CVE-2013-2128 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRplz5AAoJEBYNRVNeJnmTO7cQAKpmU3GklEtrsq+f4ue/91yk
-sEl9AxuczqhVqSwX3wW6ijIEC4fbNJEc+FXGEkPe7ZR/gm9CgRd53ko8aJHZyZxS
-VWoyw8cVjBMqoN3x/XljI/zotJCmt5lsoo4kuP7fFkhK9FNHIKxlTtt2CIbnV66A
-9WNt3XyzAf42+2Q5nfoLgs/8T9gjDalUU2dgCQ+5yhFCLstIB8U2KmcW7rXi+2U4
-3z+TQY80sGbRHJPmJIuT058vNGBzoriwPjtbzmYPJ717fCQBUGoAVtBqVD469QZN
-vv86FZjTKwHMnOZHJNPNH0HzVNxvYoEp9Zg/NS/FuukhGnUovDMt5ruKbu6qdpWu
-mAN5fx1E1qo/JVROdX6Qb8srjvMRWB4MvGJSd2uQKShDRGsApLkUeiGigSBeoFLB
-x+lEI2lbMWdFwilKdqleTZ4FBgxpsmq/wXluN3YPYrir+BmMegv6t6TeHJkLAUGo
-NNE4aaIEIOdu8NGU+Tpi821va4E99wAm0CmoA6C1pNkhsWhcre61KZARvzS4tUKU
-xaV/yXcw9aWryu11FUlMEW/DNTmyg/kXJRdLLRCfBNU6KfG9sObi/f2gf/q0cyLR
-1Uq9ATnCa79mWeI0VxW5cQlUgWGrlFgDo55RH8qggQTTKzhjGmQSK1Njiu9z1pUR
-4RslEORFbUi2183cIiE5
-=42Vh
------END PGP SIGNATURE-----
+Content of type "text/html" skipped
