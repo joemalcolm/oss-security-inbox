@@ -1,115 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/40
-Message-ID: <CADju=b4Ca_YVA=tG+bfjMYEK_BHgjMesEE+OEBeGwPfQcQ=08Q@mail.gmail.com>
-Date: Wed, 27 Feb 2013 10:15:52 -0800
-From: Jim Mellander <jmellander@....gov>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/10/3
+Message-ID: <51B5BA7D.6040001@redhat.com>
+Date: Mon, 10 Jun 2013 13:37:33 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Michael Tokarev <mjt@....msk.ru>
-Subject: Re: CVE# request: pigz creates temp file with insecure permissions
+Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
 Content-Type: text/plain; charset=utf-8
 
-This was reported to and corrected by the pigz maintainer on 7/26/12, per:
-
-Jim Mellander <jmellander@....gov>
-7/26/12
-
-to madler, pigz-announce-.
-Hi:
-
-I recently downloaded and tried pigz - thanks for the software - its
-very useful for multicore systems, especially on the big iron that
-NERSC runs.  However, there seems to be a security hole, relating to
-permissions during compression.  The permissions of the .gz file being
-created are less restrictive than the original file, which is
-different than gzip, per the below:
-
-using gzip:
-
-# gzip -9 x &
-[1] 17014
-# ls -l x*
--rw-------. 1 root root 1217318912 Jul 26 12:34 x
--rw-------. 1 root root   63602688 Jul 26 12:47 x.gz
-#
-
-
-using pigz:
-
-# pigz -9 x&
-[1] 17017
-# ls -l x*
--rw-------. 1 root root 1217318912 Jul 26 12:34 x
--rw-r--r--. 1 root root   75392287 Jul 26 12:48 x.gz
-# pigz --version
-pigz 2.2.4
-#
-
-
-the file contents are potentially exposed during compression due to
-permissions, which is a potential security hole....
-
-Hope this helps,
-
-Jim Mellander
-NERSC Cybersecurity
-510-486-7204
-
-On Fri, Feb 15, 2013 at 10:33 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+On 06/10/2013 01:26 PM, gremlin@...mlin.ru wrote:
+> On 08-Jun-2013 13:28:28 -0400, Daniel Kahn Gillmor wrote:
 >
-> On 02/15/2013 01:33 AM, Michael Tokarev wrote:
->> I think this one well deserves a CVE#.  I just submitted the
->> following bug #700608 to Debian BTS:
->>
->> When asked to compress a file with restricted permissions (like
->> mode 0600), the .gz file pigz creates while doing this has usual
->> mode derived from umask (like 0644).  If the file is large enough
->> (and why we would use pigz instead of gzip for small files), this
->> results in the original content being readable for everyone until
->> the compression finishes.
->>
->> Here's the deal:
->>
->> $ fallocate -l 1G foo $ chmod 0600 foo $ pigz foo & $ ls -l foo
->> foo.gz -rw------- 1 mjt mjt 1073741824 Feb 15 12:27 foo -rw-rw-r--
->> 1 mjt mjt     502516 Feb 15 12:27 foo.gz
->>
->> When it finishes, it correctly applies original file permissions to
->> the newly created file, but it is already waaay too late.
->>
->> Other one-file archivers (gzip, xz, bzip2, ...) usually create the
->> temp file with very strict permissions first, and change it to the
->> right perms only when done, so only the current user can read it.
+>   >> That's not a security issue, but a misconfiguration
+>   > I consider this a security bug in the debian package's maintainer
+>   > scripts: it is a race condition that leaks confidential information
 >
-> Apologies for my first misreading of this. Please use CVE-2013-0296
-> for this issue.
->
->>
->> Thanks!
->>
->> /mjt
->>
->
->
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.13 (GNU/Linux)
->
-> iQIcBAEBAgAGBQJRHyhPAAoJEBYNRVNeJnmT/58QANpX3fNSN/DV2k2h6/TMreid
-> gnqYXxndMTo6D63+4jWkKyMb+XsJjNJ52jvN3wAYwKGVk7MtrDzKydDFn5qFMBJ0
-> 4Ysp+cVsD5HE4QRc6cJPkBNaoKA6t+cj0fInu/hqkXMTAZpUDEPn9p4FUjB0OSrJ
-> nOFz4PWbAPX8KItMNUmMCu/r2OnOQ7vhJDHk37GIXhEwvZE9Hf2m2mNtBfBHHrlw
-> 7x8fO0lEmYi3aOhkvm+ka0U/YplmNWxWXjF0xoxzwQgEeJV+xSiCgk7Wk4YzYLTm
-> i4TPI/RHvvuXgKs2mzHXE6qu5F0ADif0Vhl2iEasl8X3Zjeb6nZ7i6r+eTAMmsXf
-> pJvDbC28PnPGSC+u9J4oibDbugu7FJXyYDWtDz6ylQTFDJZ6nXPKGfUUbq2i/7vn
-> G84r/1LsrF8PxBFu8fFCD/+tZtyoCMU8qosfiTFHi4sgVF/4jGBVmICkyn6IE+3e
-> VL/bcutjWd9gGg9S8MaAO+TDnEmaJbvluPlBandKNdZIV18e7bDed6fsGwXiyJ12
-> XGIC5A9IgxioG4yFguwB1LutVaBMW80UxjMZQDOoeTOLWLS6dLqFuLbWz3DK0b3a
-> aqh+tH1OvYNHgpu9UFDFFVvGCMziXL8k95dPb/8BbHF0YB4GGP9K0V77BEvRBJkC
-> jAPHv+UOIAjW2xXDwTyK
-> =OByZ
-> -----END PGP SIGNATURE-----
+> Package post-install scripts are closer to configuration.
+
+That depends on the post-install script.  In Debian's case, there are 
+some extensions because there is still some interactive package 
+installation left, but in general, the postinst script performs required 
+steps for properly integrating the new package with the rest of the system.
+
+For Fedora and downstream, the postinst script should be 
+non-interactive, so it is really not much like configuration.
+
+In general, it's desirable to do as much as possible in a declarative 
+fashion (for better auditing, rollback, etc.), but I don't anyone is 
+even close to that.
+
+Anyway, if there's a bug in the postinstall script that causes an 
+exposure, it needs to be fixed.  With the prerm script, it's more 
+complicated because you can't fix it without executing it again. 8-)
+
+-- 
+Florian Weimer / Red Hat Product Security Team
