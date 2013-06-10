@@ -1,20 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/5
-Message-ID: <1110336290.13184628.1375949800967.JavaMail.root@redhat.com>
-Date: Thu, 8 Aug 2013 04:16:40 -0400 (EDT)
-From: David Jorm <djorm@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request: remote code execution due to XML deserialization in Restlet
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/10/1
+Message-ID: <20130610101642.GA19371@surtsey.monkey.lab>
+Date: Mon, 10 Jun 2013 12:16:42 +0200
+From: Alexander Bergmann <abergmann@...e.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: libraw: multiple issues
 Content-Type: text/plain; charset=utf-8
 
-Dinis Cruz has published information on remote code execution due to XML deserialization in Restlet:
+On Tue, Jun 04, 2013 at 03:51:14PM +0200, Raphael Geissert wrote:
+> Hi again,
+> 
+> On 29 May 2013 20:00, Kurt Seifried <kseifried@...hat.com> wrote:
+> > On 05/29/2013 03:18 AM, Raphael Geissert wrote:
+> >> On 28 May 2013 19:58, Kurt Seifried <kseifried@...hat.com> wrote:
+> >>> On 05/28/2013 02:43 AM, Raphael Geissert wrote:
+> >>>> So there's a double-free (fixed in 0.15.2[3])
+> >>
+> >> https://github.com/LibRaw/LibRaw/commit/19ffddb0fe1a4ffdb459b797ffcf7f490d28b5a6
+> >
+> > Please use CVE-2013-2126 for this issue.
+> 
+> FWIW, I've noticed that libkdcraw and darktable embed copies of libraw
+> that are vulnerable to the double free.
 
-http://blog.diniscruz.com/2013/08/using-xmldecoder-to-execute-server-side.html
-https://github.com/o2platform/DefCon_RESTing
+In which libraw version was this problem actually introduced?
 
-I have tested his reproducer and confirmed it works against Restlet 2.0 and 2.2. Please assign a CVE ID to this flaw.
+darktable uses embedded libraw 0.14.7
+libkdcraw uses embedded libraw 0.15.0
 
-Thanks
+I found a commit that introduced the "// allocate image as temporary 
+buffer, size" stuff within commit 1a8e92ff, and that was part of 0.14.0.
+
+
+Regards,
+Alex
+
 -- 
-David Jorm / Red Hat Security Response Team
+Alexander Bergmann <abergmann@...e.com>
+Security Software Engineer
+SUSE Linux GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer HRB 16746 (AG Nürnberg)
 
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
