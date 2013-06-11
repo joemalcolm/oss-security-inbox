@@ -1,45 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/12/1
-Message-ID: <485076142.1024861.1360675388971.JavaMail.root@redhat.com>
-Date: Tue, 12 Feb 2013 08:23:08 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/11/1
+Message-ID: <CAA7hUgGJ=rdKiLK9zEE5vCLxn19hG-UQCpHgTRdWYLry7Utgzw@mail.gmail.com>
+Date: Tue, 11 Jun 2013 10:30:42 +0200
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, David Jorm <djorm@...hat.com>
-Subject: CVE Request --  jakarta-commons-httpclient: Wildcard matching in SSL hostname verifier incorrect (a different issue than CVE-2012-5783)
+Cc: info@...raw.org
+Subject: Re: CVE request: libraw: multiple issues
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hi,
 
-  Originally, Common Vulnerabilities and Exposures
-assigned an identifier CVE-2012-5783 to the following
-vulnerability:
+On 10 June 2013 12:16, Alexander Bergmann <abergmann@...e.com> wrote:
+> In which libraw version was this problem actually introduced?
 
-Apache Commons HttpClient 3.x, as used in Amazon Flexible
-Payments Service (FPS) merchant Java SDK and other products,
-does not verify that the server hostname matches a domain
-name in the subject's Common Name (CN) or subjectAltName field
-of the X.509 certificate, which allows man-in-the-middle
-attackers to spoof SSL servers via an arbitrary valid certificate.
+I don't know exactly, CC'ing upstream for this.
 
-Later it was found, that the SSL hostname verifier implementation
-(CVE-2012-5783 fix) contained a bug in wildcard matching:
-[1] https://issues.apache.org/jira/browse/HTTPCLIENT-1255
+> darktable uses embedded libraw 0.14.7
+> libkdcraw uses embedded libraw 0.15.0
+>
+> I found a commit that introduced the "// allocate image as temporary
+> buffer, size" stuff within commit 1a8e92ff, and that was part of 0.14.0.
 
-which still allowed certain type of certificates checks to pass,
-even if they shouldn't.
+libkdcraw, as it used to be included in kdegraphics in KDE 4.4, used
+libraw 0.8.x and possibly older versions.
 
-Relevant upstream patches:
-[2] https://fisheye6.atlassian.com/changelog/httpcomponents?cs=1406213
-    (against 4.2.x branch)
-[3] https://fisheye6.atlassian.com/changelog/httpcomponents?cs=1406217
-    (against trunk)
-
-References:
-[4] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=700268
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=910358
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
+Cheers,
 --
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
