@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/13/2
-Message-ID: <51B9B32B.4020507@collabora.co.uk>
-Date: Thu, 13 Jun 2013 12:55:23 +0100
-From: Simon McVittie <simon.mcvittie@...labora.co.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/11/3
+Message-ID: <20130611135539.GA17091@kludge.henri.nerv.fi>
+Date: Tue, 11 Jun 2013 16:55:39 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2013-2168: dbus: DoS in system services caused by _dbus_printf_string_upper_bound
+Cc: vnd@...h.net, security@...dpress.org
+Subject: CVE request: WordPress 3.5.1 denial of service vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Alexandru Cornea discovered a vulnerability in libdbus caused by an
-implementation bug in _dbus_printf_string_upper_bound(). This
-vulnerability can be exploited by a local user to crash system services
-that use libdbus, causing denial of service. It is platform-specific:
-x86-64 Linux is known to be affected.
+There is denial of service vulnerability (CWE-400) in WordPress 3.5.1. Could you
+assign CVE identifier, thanks.
 
-This vulnerability is tracked as CVE-2013-2168 and is fixed in D-Bus
-stable releases 1.4.26 and 1.6.12, and development release 1.7.4.
-Upgrading is recommended.
+Advisory URL: https://vndh.net/note:wordpress-351-denial-service
+PoC: https://vndh.net/snippet:wordpress-351-denial-service:wordpress-py
+Status: Reported to vendor by founder. No reply.
+Reproduced: https://github.com/wpscanteam/wpscan/issues/219
+Note: "Exploitation of this vulnerability is possible only when there is at
+least one password protected post on the blog."
 
-Distributors who backport security fixes should use this commit:
-http://cgit.freedesktop.org/dbus/dbus/commit/?id=954d75b2b64e4799f360d2a6bf9cff6d9fee37e7
+I have no idea how many uses password protected blog posts and there isn't easy
+way to find out. This might also affect multisite installations. There is patch
+in advisory, which I did not verify.
 
-On Unix platforms, this vulnerability was introduced in dbus versions
-1.4.16 and 1.5.8 while fixing a portability bug, freedesktop.org #11668.
-The 1.2.x branch is not vulnerable.
+---
+Henri Salo
 
-On Windows, a similar bug exists in all branches that have Windows
-support. The D-Bus project does not support security-sensitive uses of
-D-Bus on Windows.
-
-Regards,
-    Simon
-
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
