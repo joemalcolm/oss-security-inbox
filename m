@@ -1,47 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/15
-Message-ID: <52152124.5020900@redhat.com>
-Date: Wed, 21 Aug 2013 14:20:52 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/11/5
+Message-ID: <51B7B71C.1090006@oracle.com>
+Date: Tue, 11 Jun 2013 16:47:40 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: CVE request: lcms 1.x buffer overflows
+CC: "X.Org Security Team" <xorg-security@...ts.x.org>, mancha1@...h.com, "X.Org Development" <xorg-devel@...ts.x.org>
+Subject: CVE request for possible NULL ptr deref in XDM when using crypt() from glibc 2.17+
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+It's been suggested we get a CVE id assigned for this recent fix to the xdm
+display/login manager from X.Org:
 
-On 08/05/2013 06:49 AM, Raphael Geissert wrote:
-> On 5 August 2013 07:25, Thijs Kinkhorst <thijs@...ian.org> wrote:
->> Buffer overflows have been reported in Little CMS 1.x: 
->> http://bugs.debian.org/718682
-> 
-> Just a quick note: one of the affected parts of the code is a
-> sample and the other is the tiffdiff(1) tool, where the buffer
-> overflow is triggered by the file names passed as arguments.
-> 
-> Cheers,
-> 
+http://cgit.freedesktop.org/xorg/app/xdm/commit/?id=8d1eb5c74413e4c9a21f689fc106949b121c0117
 
-can you post the filenames/affected code? thanks.
+Without this fix, if xdm is built to use raw crypt() authentication, instead
+of a higher level system such as PAM or BSD Auth, and that crypt() function
+can return a NULL pointer (as glibc 2.17+ does for invalid input, such as
+when an account is locked by prepending a "!" to the password field), then
+attempting to login to such an account via xdm can crash the xdm daemon.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+For single user console machines, this generally just means you get the 
+text console login prompt instead.   For machines set up to support multiple
+seats, remote XDMCP access, or X terminals (such as LTSP setups using xdm),
+this may be a denial of service for users on those other seats/terminals
+/devices.
 
-iQIcBAEBAgAGBQJSFSEkAAoJEBYNRVNeJnmTLoMP/2GqTFo8AXhrLL5OCV3L203F
-52/8LwiniM/gZ2IZpC5iPdyAXQKjgm+L99tsXQjD0XQBoz5oIvMtkv+MVX5hjTir
-fXZwS6YiBn9PIWzd8JtcBm92SqEZ7N9A6r/uJecLY45dvVNioA8d/uWu4id96DnH
-jal8y/NsHeLRoq7apYg37rpqLOURD7Qt7GxD+ZANXPYXIjSIPoh9nBPctemvTlFP
-8qeuJfGYcbjnqVf+VSQ3gJot+39azC48t0NxhQqriuVspt/cZ0XXGoYtCOMA3xML
-GZeOKvZVUwkIQ5tJpWwlMfvMJHZ0uMezveXrcJM+m5dzGGSbIuYuluDEkhmRfd3K
-GlBfPfZW4ddPFCXIouMdxlebHdn5gVar1SIfoo4mCRxJZE/Tmaq0vBb+gm5E2dzq
-47GnxeLK7hEmTNryagoGUncivOl8JuXQiIK1Jx8pMg+bNUTEWr4XiBsD7knjDNB2
-41EgzIRz/x3+Ax00uc006lJslrOUBrCU65oBudfrOWICLzI9PkIroamZ1F/Jc/sW
-QUgMPyz1Jeg02T1DhGu+YdgVWaE3zP5C5VJ/y7TkrJYSktD6s0IVgUJk1jlzsGg4
-jOM0je5510SMylPPiNCxWVFYOtCoMA8PCQHmL9esL237w/oscKwmk7CTGM0OiMkS
-1KfBpahLipmG4imnbhGZ
-=z5DM
------END PGP SIGNATURE-----
+-- 
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
