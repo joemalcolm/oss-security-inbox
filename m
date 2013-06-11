@@ -1,35 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/17
-Message-ID: <20130220200605.GE1851@sentinelchicken.org>
-Date: Wed, 20 Feb 2013 12:06:06 -0800
-From: Tim <tim-security@...tinelchicken.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: RE: Handling CVEs for the XML entity expansion issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/11/2
+Message-ID: <20130611111031.3c0e1826@devil>
+Date: Tue, 11 Jun 2013 11:10:31 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: resin: Cross site scripting
 Content-Type: text/plain; charset=utf-8
 
+From the secunia advisory SA53749 [1]:
 
-> Docbook uses it quite a bit, e.g. each chapter is a file, then you use
-> external entities to put them all together, also for graphics/etc.
-> Breaking Docbook would make me a sad panda.
+Description
+Gjoko Krstic has discovered a vulnerability in Caucho Resin, which can
+be exploited by malicious people to conduct cross-site scripting
+attacks.
 
-Well sure, some minority of apps will break.  Libraries release notes
-merely need to say "next version breaks backward compatibility for
-apps that use entities and inline DTDs.  If your app uses these,
-explicitly enable with ..."  Once again, "off by default", not
-removed.
+Input appended to the URL after /resin-admin/ is not properly sanitised
+before being returned to the user. This can be exploited to execute
+arbitrary HTML and script code in a user's browser session in context
+of an affected site.
+
+The vulnerability is confirmed in version 4.0.36. Other versions may
+also be affected.
 
 
-> I tend to agree, however for the billion laughs/linear attack that can
-> be somewhat addressed, libxml for example addressed it by stopping all
-> non linear expansion a few years ago, so while still vulnerable they
-> are less vulnerable.
+Solution
+No official solution is currently available.
 
-Yes, but this is by far the least interesting attack scenario for most
-XML libraries.  Since libxml2 is pretty limited in it's entities
-support and network capabilities to begin with, it isn't as
-interesting of a case for XXE generally.  However, other libraries
-leverage many platform network capabilities that make for some much
-more interesting attacks. 
+Provided and/or discovered by
+Gjoko Krstic (LiquidWorm)
 
-tim
+Original Advisory
+ZSL-2013-5143:
+http://www.zeroscience.mk/en/vulnerabilities/ZSL-2013-5143.php
+
+[1]: https://secunia.com/advisories/53749/
+
+The original advisory contains a poc.
