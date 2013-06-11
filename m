@@ -1,70 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/3
-Message-ID: <514976A9.9080602@redhat.com>
-Date: Wed, 20 Mar 2013 02:43:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/11/4
+Message-ID: <20130611161602.GS3638@redhat.com>
+Date: Tue, 11 Jun 2013 10:16:02 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, larry0@...com, "Christey, Steven M." <coley@...re.org>
-Subject: Re: Ruby CVEs
+Cc: Russ Allbery <rra@...nford.edu>, audreyt@...reyt.org, Daniel Kahn Gillmor <dkg@...thhorseman.net>
+Subject: Re: CVE-2013-2145: perl Module::Signature code execution vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* [2013-06-05 14:51:37 -0400] Daniel Kahn Gillmor wrote:
 
-On 03/19/2013 04:00 AM, Henri Salo wrote:
-> On Tue, Mar 19, 2013 at 01:17:11AM -0600, Kurt Seifried wrote:
->> http://direct.osvdb.org/search?search[vuln_title]=ruby&search[text_type]=titles
->>
->>
->>
->> 
-===================
->> These 4 are all the ";" URL parsing issues ny larry0@...com 
->> =================== http://direct.osvdb.org/show/osvdb/91450 
->> command_wrap gem
+>On 06/05/2013 02:24 PM, Russ Allbery wrote:
+>
+>> Speaking as a CPAN author, the second would be awesome.  For bonus points,
+>> once one registers a key with CPAN, CPAN could then even check one's
+>> uploads and disallow uploads that aren't signed with the proper key.
+>
+>As another CPAN contributor (though much less prolific than Russ), i
+>also think this would be great.
+>
+>And wearing my hat as a member of the debian perl module packaging team,
+>i would be very happy to see this level of author-specific cryptographic
+>integrity checks when were updating packages from CPAN.  I suspect we
+>have enough people interested in this within the debian pkg-perl to
+>build in automated checks against these certifications during debian
+>packaging as well.
+>
+>Thanks for continuing to maintain such a great archive of useful, free code.
 
-Please use CVE-2013-1875 for this issue.
+I guess the big question then is what is the way forward?  I'm not that
+familiar with CPAN other than occasionally using it, but is there some
+kind of governing body that this can be brought up to?  I imagine
+someone is going to have to host this and start the wheels moving, but
+I honestly have no idea who that might be.
 
->> http://direct.osvdb.org/show/osvdb/91232 fastreader gem
-
-Please use CVE-2013-1876 for this issue.
-
->> http://direct.osvdb.org/show/osvdb/91231 MiniMagic gem
-
-Please use CVE-2013-1877 for this issue.
-
->> http://direct.osvdb.org/show/osvdb/91230 Curl gem
-
-Please use CVE-2013-1878 for this issue.
-
-> Please note that in private email Larry said he will request CVEs
-> for these security vulnerabilities. Adding Larry as CC so he can
-> tell us if he already did that and if he didn't we can assign those
-> in this thread.
-
-As per Larry's previous emails, assigning here.
-
-> --- Henri Salo
-> 
+I think it would be ideal to do something like this (in fact, I wish
+that all of the module repositories for various programming languages
+would do the same).  It might be a great opportunity to show some
+leadership in this area so that other languages may adopt something
+similar.
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRSXaoAAoJEBYNRVNeJnmTBC8QANTC351DE1t2loRuTrKt8lJM
-g/6GYPEX3CohoaaHH/84VNp89v63ewbILDw3R7dCWkc4cjjyLUFM5eJthztWavQb
-fMoMSGgCEYysZQsQZhYL596XUJpqazO1/ITtfvoA6YTM+5nbBG2iGnLszFxbXmRs
-o7iuL7128r6POHd2LzQzDGtCdKQuUdinUbkyF1F9EbWwUgJO554uolSINs9ZYoE1
-Im4e0Lc9E4E458gx/cK8l3m7g4MqWwjO4ILr5JKyiSza11tRET0x/LHDl7u73Oae
-tcDszjgiE0zxFj64vKNU3FoIu6XsG0Wd20BfQo7qp75zz7Lk5KD1f0D9Zf/ZGcGB
-9bHS1W2obN60+jihOBwl+CiKSEpeWWMARbJg1kq3VFkZHxb0BSP/OvLbTg356L0P
-TkT9Icvt9Jup70I8AwFiMwfLyZnLZDgzJ5DfQv/22tn6LQd15pL8+k+eeUHOTkuq
-1SjpWEEfVz9ss292q8nT9+BmL5IP81pEZqfIu+/K8khOHVRVsZtZhW1NMzeM6AWx
-0GWSbHrN8eDhjhExww0Qrw9jpmn7YvxN7MjNfj8YuHIM82571RYFDSg/nZlzpkti
-D5aErdR6r/lOXZtI+r8pq84FEks2LztP9JP6m+O1D+NP2JHydtvEAllWz/6KRmxr
-YUovKvZgJXlg5HQUW68P
-=z+ry
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Security Response Team 
