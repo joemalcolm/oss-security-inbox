@@ -1,56 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/09/4
-Message-ID: <20130109082423.GA30593@suse.de>
-Date: Wed, 9 Jan 2013 09:24:23 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/12/3
+Message-ID: <51B8C0F2.60909@redhat.com>
+Date: Wed, 12 Jun 2013 12:41:54 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: cronie fd leak
+CC: Henri Salo <henri@...v.fi>, vnd@...h.net, security@...dpress.org
+Subject: Re: CVE request: WordPress 3.5.1 denial of service vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Possible that you have got a different cron implementation.
+On 06/11/2013 07:55 AM, Henri Salo wrote:
+> There is denial of service vulnerability (CWE-400) in WordPress 3.5.1. Could you
+> assign CVE identifier, thanks.
+> 
+> Advisory URL: https://vndh.net/note:wordpress-351-denial-service
+> PoC: https://vndh.net/snippet:wordpress-351-denial-service:wordpress-py
+> Status: Reported to vendor by founder. No reply.
+> Reproduced: https://github.com/wpscanteam/wpscan/issues/219
+> Note: "Exploitation of this vulnerability is possible only when there is at
+> least one password protected post on the blog."
+> 
+> I have no idea how many uses password protected blog posts and there isn't easy
+> way to find out. This might also affect multisite installations. There is patch
+> in advisory, which I did not verify.
+> 
+> ---
+> Henri Salo
+> 
 
-There is no hidden info in our bugzilla; the reproducer
-is using lvm commands, but I remember it worked with any
-command. Actually its not about the warnings, a "cat" will probably
-also do, if you check its /proc/$pid/fd when its invoked.
-But cat doesnt emit warnings about open fd's.
+Please use CVE-2013-2173 for this issue.
 
-Not sure about upstream, probably not.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-regards,
-Sebastian
-
-
-On Tue, Jan 08, 2013 at 09:01:19PM -0700, Vincent Danen wrote:
-> * [2013-01-08 13:56:40 +0100] Sebastian Krahmer wrote:
->
->> "Hello Kurt, Steve, vendors,"
->>
->> cronie leaks read-only fd's, please check here:
->>
->> https://bugzilla.novell.com/show_bug.cgi?id=786096
->>
->> can someone assign a CVE?
->
-> Sebastian, do you have a specific command that you're using?  I'm trying
-> to reproduce this in Fedora and RHEL using lvdisplay (maybe a bad
-> choice?) and also using "lvm vgck -v vg_thor && lvm pvs" in
-> /etc/crontab.
->
-> The output is mailed to me fine with no warnings?  Can you share what
-> command was being used to reproduce this?  It's possible that something
-> you added (or we added) makes this a non-issue on other platforms.
->
-> Has upstream been informed of this yet?
->
-> -- 
-> Vincent Danen / Red Hat Security Response Team 
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+iQIcBAEBAgAGBQJRuMDyAAoJEBYNRVNeJnmTyYsP/iQS0yEH6Us8d3TcmPUrebKW
+SH6qYMgXAxQJUS+c3haLT92ZbwN+YvWweZSPELOBq+pynG2TrXAnsyy8233mMCNK
+b0U7i22Nld3G8/BTZtRQhzfXw85HPJbYFAJ0WDrq7m3hQSoZucqOc+apXv8Y6LST
+5t4AAs4f8kE68CGupeNvuuOWTLOBaoo1Yk8lVgpSoPDCDBzJ3eby4VhYv6NAggdn
+h9sGyqz0E5nAC+4xMMM3w6OKsbh0vRkFNHU183tOl1Yej5sDwfHHDjbsmmfbFtjQ
+4rpwepr8KvCg3NVmIqZz6Chr67ylrfioY6TDR1cao2iKDyBkWb5EWqBo7V0PAz+w
+ypKH3ykcxeCxSOvecoMLo6nfPZZ/rnasxvag08z6TJ6nraIoQ7NBzgNjoHEVo2s4
+09CLneYlveFrN3N3QdYEx1RZVuNoj+GkvsmvGGl40lxdSIoY8v88Wk1T/2FyrF+s
+AfcHla4iqy5mdrcBI3v8WsojoXXCj2TxPmXV0yBqSyFszt38zUaugIayz1lwJ2hz
+X0d4MAuHPhcUet0NnJDiejsR/9dIthkCr4VoZ9anbrHZSmXyy3NpZb2aCkOJxMgy
+IPk4c0aUPgQm6FS8doe5nl7Mts2FEllURNVg1ZL2fHtGZPz+UGYW8Klaf1Bfl97+
+ZHySQr7HqGvEIZHV+j65
+=lBRl
+-----END PGP SIGNATURE-----
