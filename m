@@ -1,35 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/16/3
-Message-ID: <995448632.1743634.1373989797019.JavaMail.root@redhat.com>
-Date: Tue, 16 Jul 2013 11:49:57 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/12/1
+Message-ID: <20130612131114.GA29328@openwall.com>
+Date: Wed, 12 Jun 2013 17:11:14 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request -- kde-workspace 4.10.5 fixing two security flaws
+Cc: vnd@...h.net, security@...dpress.org
+Subject: Re: CVE request: WordPress 3.5.1 denial of service vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On Tue, Jun 11, 2013 at 04:55:39PM +0300, Henri Salo wrote:
+> There is denial of service vulnerability (CWE-400) in WordPress 3.5.1. Could you
+> assign CVE identifier, thanks.
+> 
+> Advisory URL: https://vndh.net/note:wordpress-351-denial-service
+> PoC: https://vndh.net/snippet:wordpress-351-denial-service:wordpress-py
+> Status: Reported to vendor by founder. No reply.
+> Reproduced: https://github.com/wpscanteam/wpscan/issues/219
+> Note: "Exploitation of this vulnerability is possible only when there is at
+> least one password protected post on the blog."
+> 
+> I have no idea how many uses password protected blog posts and there isn't easy
+> way to find out. This might also affect multisite installations. There is patch
+> in advisory, which I did not verify.
 
-  while not listed in the announcement:
-  [1] http://www.kde.org/announcements/announce-4.10.5.php
+Bugtraq message pre-moderation is taking too much time, so now that the
+topic is brought up in here as well anyway I think I should post my
+reply in here too.
 
-looks like kde-workspace v4.10.5 fixed two security flaws
-(the second one a minor one):
+----- Forwarded message from Solar Designer <solar@...nwall.com> -----
 
-* Issue #1 - Possible NULL pointer dereference in KDM and KCheckPass
-             when glibc 2.17 (eglibc 2.17) or FIPS enabled system used
-             Bug: https://git.reviewboard.kde.org/r/111261/
-             Relevant patches:
-               https://projects.kde.org/projects/kde/kde-workspace/repository/revisions/45b7f137fbc0b942fd2c9b4e8d8c1f0293e64ba7
-               https://projects.kde.org/projects/kde/kde-workspace/repository/revisions/7777194da6154375fc8103b8c4e29e385cd7ae2e
+Date: Wed, 12 Jun 2013 03:02:29 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Peter Bex <Peter.Bex@...all.nl>,
+	Krzysztof Katowicz-Kowalewski <vnd@...h.net>,
+	Bugtraq <bugtraq@...urityfocus.com>
+Subject: Re: WordPress 3.5.1, Denial of Service
 
-* Issue #2 - Plasma desktop is leaking memory in X if some system tray icon is blinking
-             Bug: https://bugs.kde.org/show_bug.cgi?id=314919
-             Relevant patch:
-               https://projects.kde.org/projects/kde/kde-workspace/repository/revisions/2c810db3e41d56ad7dd8ec3436f3cf3abcc31983
+Hi guys,
 
-Could you allocate CVE ids for these?
+I'll over-quote a little, then comment below:
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+On Tue, Jun 11, 2013 at 08:55:21PM +0200, Peter Bex wrote:
+> On Fri, Jun 07, 2013 at 06:29:48PM +0200, Krzysztof Katowicz-Kowalewski wrote:
+> > Version 3.5.1 (latest) of popular blogging engine WordPress suffers from remote denial of service vulnerability. The bug exists in encryption module (class-phpass.php). The exploitation of this vulnerability is possible only when at least one post is protected by a password.
+[...]
+> > More information (including proof of concept):
+> > https://vndh.net/note:wordpress-351-denial-service
+[...]
+> This phpass.php isn't hand-rolled like you stated in your blog post; it's
+> a copy of a public domain crypt()-workalike: http://www.openwall.com/phpass/
+> There are several other systems which implement their password hashing
+> using this library.
+> 
+> Having said that, being able to control the setting looks like a mistake on
+> the part of Wordpress, so I'm not sure the bug is in phpass, strictly
+> speaking.  However, have you considered contacting upstream
+> (Solar Designer/OpenWall) about this?
+
+Web apps (like WordPress) were indeed not supposed to expose the ability
+for untrusted users to specify arbitrary "setting" strings (which
+include the configurable cost).  I am unfamiliar with WordPress, so I
+don't know why they do it here - is this instance of their use of phpass
+perhaps meant to achieve similar goals that tripcodes do?  If so, yes,
+they should be sanitizing the cost setting (perhaps with a site admin
+configurable upper bound).  However, for password hashes coming from
+WordPress user/password database (primary intended use of phpass), this
+should not be necessary.  (Indeed, a similar DoS attack could be
+performed by someone having gained write access to the database, but
+that would likely be the least of a site admin's worries.)
+
+The problem of DoS attacks via attacker-chosen cost settings with
+tunable password hashing schemes like this is actually a general one
+(and it's even more of a problem when the memory cost is also tunable).
+An example is the Apache web server, where local DoS is possible via
+malicious bcrypt or (more recently) also SHA-crypt hashes in .htpasswd
+files.  (And to a lesser extent also via extended DES-based hashes,
+which are supported on *BSDs and more.)  Although the DoS is local, it
+affects other users of the Apache instance (not just the attacking local
+user) and potentially of the entire system.  Arguably, the fact that
+Apache is in general very susceptible to various DoS attacks qualifies
+as an excuse (there's no expectation of any DoS resistance with Apache,
+is there?) ;-)  (e.g., wouldn't having it read a "huge" sparse file
+result in similar behavior?)
+
+Arguably, library code should reject the most insane parameter values.
+For example, musl libc - http://www.musl-libc.org - version 0.9.10
+rejects bcrypt's log2(cost) > 19 and limits SHA-crypt's rounds count
+to < 10M for this reason (original SHA-crypt limits to < 1 billion).
+However, on one hand this is insufficient (if an application exposes the
+setting as untrusted input, it should have its own sanitization and/or
+other safety measures anyway) and on the other hand the arbitrary limits
+may be problematic in some obscure cases (e.g., when reusing the same
+underlying password hashing scheme as a KDF for encrypting a rarely-used
+piece of data locally).  So it's more of a partial workaround for the
+present state of things e.g. with Apache, than it is a real solution.
+
+Maybe future password hashing APIs should include a function to sanitize
+a provided setting string given certain high-level limits (not abstract
+log2(cost) numbers, but e.g. microseconds and kilobytes - even though
+the function may have to use estimates of the expected actual usage).
+Applications would then be advised to use this function if and where
+appropriate.  Alternatively, maybe the password hashing function itself
+should accept these upper limits as optional inputs (and refuse to work,
+in some fail-close manner, if the limits would likely be exceeded).
+
+Except for the specific upper limits imposed by musl, which were chosen
+last year, none of the above is new - it's just that we all have been
+sitting on this general issue for many years.  It's about 20 years since
+extended DES-based hashes with variable iteration counts were introduced
+in BSD/OS in early 1990s and reimplemented in FreeSec in 1993, and
+Apache's .htpasswd (predecessor) is maybe only slightly younger.
+
+Nice find regarding the specific WordPress issue, though!  And a nice
+reminder, too.
+
+Alexander
+
+----- End forwarded message -----
