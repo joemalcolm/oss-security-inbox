@@ -1,66 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/6
-Message-ID: <E0DBFAC9-D5C4-49BE-BD51-B8194F10D362@tenable.com>
-Date: Tue, 10 Dec 2013 12:19:23 +0000
-From: George Theall <gtheall@...able.com>
-To: "<oss-security@...ts.openwall.com>" <oss-security@...ts.openwall.com>
-CC: "ratulg@...hat.com" <ratulg@...hat.com>, "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: Re: CVE request: monitorix: HTTP server 'handle_request()' session fixation & XSS vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/12/4
+Message-ID: <1371067252.4059.6.camel@scapa>
+Date: Wed, 12 Jun 2013 22:00:52 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fail2ban 0.8.9, Denial of Service (Apache rules only)
 Content-Type: text/plain; charset=utf-8
 
+Can someone assign a CVE for this fail2ban issue?
 
-On Dec 9, 2013, at 6:43 PM, cve-assign@...re.org wrote:
+On sam., 2013-06-08 at 07:44 +0200, Krzysztof Katowicz-Kowalewski wrote:
+> Version 0.8.9 (latest) of Fail2ban allows to perform remote denial of
+> service for arbitrary chosen IP address. Address listed on Fail2ban's
+> whitelist are not affected. The vulnerability exists in Apache rules
+> and it is caused by improper validation of a log file by regular
+> expression. Malicious user can easily inject his own data to analyzed
+> logs and deceive monitoring engine.
+> 
+> Affected files:
+> /filter.d/apache-auth.conf
+> /filter.d/apache-nohome.conf
+> /filter.d/apache-noscript.conf
+> /filter.d/apache-overflows.conf
+> 
+> Time frames:
+> 01.06.2013 - Cyril Jaquier (contact section) has been informed about the vulnerability (no response)
+> 08.06.2013 - The vulnerability has been released to the public.
+> 
+> More information, including proof of concept and patches is available here:
+> https://vndh.net/note:fail2ban-089-denial-service
 
-> Also, https://github.com/mikaku/Monitorix/issues/30 says "The remote
-> host is running GoScript. The installed version fails to properly
-> sanitize user-supplied input to the 'go.cgi' script. An
-> unauthenticated, remote attacker could exploit this flaw to execute
-> arbitrary commands on the remote host." This is apparently a 2004
-> issue but does not have a CVE ID. Monitorix 3.3.1 apparently has a
-> patch for it.
-
-FYI - while this vulnerability in Monitorix was flagged by a plugin in Nessus that tests for the GoScript’s go.cgi script code execution issue, our research verified that the issue is different. Monitorix doesn’t include GoScript or even have a script named go.cgi.  The issue in Monitorix arises because of code in the ‘handle_request()’ function in its ‘lib/HTTPServer.pm’, which fails to sanitize the target_cgi value before using it in a Perl 'open()' call; 
-
-                         ----- snip, snip, snip ——
-        my $url = $cgi->path_info();
-…
-        $target = $url;
-        while() {
-                my $cur = length($target);
-                $target =~ s/\.\.\///;
-                $target =~ s/^\///;
-                $target =~ s/\/$//;
-                last unless $cur ne length($target);
-        }
-        $target = $target_cgi = "/$target”;
-
-        $target =~ s/^$base_url//;        # removes the 'base_url' part
-        $target_cgi =~ s/^$base_cgi//;        # removes the 'base_cgi' part
-        if(!$target || $target eq $base_url) {
-                $target = "index.html" unless $target;
-        }
-        ($mimetype) = ($target =~ m/.*\.(html|cgi|png)$/);
-
-        $target =~ s/^\///;                # removes leading slash
-        $target_cgi =~ s/^\///;                # removes leading slash
-        if($target_cgi eq "monitorix.cgi") {
-                chdir("cgi");
-                open(EXEC, "./$target_cgi |");
-                @data = <EXEC>;
-                close(EXEC);
-        } elsif($target) {
-                if(open(IN, $target)) {
-                        @data = <IN>;
-                        close(IN);
-                }
-        }
-
-                         ----- snip, snip, snip ——
-
-The issue was fixed in this commit - https://github.com/mikaku/Monitorix/commit/ff80441be7089f774448dfe4b49e6fced70e71cb
-
-
-George
+Thanks in advance,
 -- 
-theall@...able.com
+Yves-Alexis
 
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
