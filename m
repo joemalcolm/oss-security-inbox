@@ -1,50 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/6
-Message-ID: <20130325111726.GA28771@inutil.org>
-Date: Mon, 25 Mar 2013 12:17:26 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/12/7
+Message-ID: <20130612225634.GD899@openwall.com>
+Date: Thu, 13 Jun 2013 02:56:34 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com, Mathias Krause <minipli@...glemail.com>
-Subject: Re: Linux kernel: net - three info leaks in rtnl
+Cc: john-users@...ts.openwall.com
+Subject: Re: CVE request: WordPress 3.5.1 denial of service vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 25, 2013 at 12:15:38PM +0100, Moritz Muehlenhoff wrote:
-> Hi,
+On Thu, Jun 13, 2013 at 12:05:14AM +0400, Alexander Cherepanov wrote:
+> On 2013-06-12 17:11, Solar Designer wrote:
+> >Arguably, library code should reject the most insane parameter values.
+> >For example, musl libc - http://www.musl-libc.org - version 0.9.10
+> >rejects bcrypt's log2(cost)>  19 and limits SHA-crypt's rounds count
+> >to<  10M for this reason (original SHA-crypt limits to<  1 billion).
 > 
-> > On 03/19/2013 03:15 PM, Mathias Krause wrote:
-> > > I fixed a few more info leaks in linux v3.9-rc3. Unprivileged
-> > > users can use the netlink interface to exploit the following issues
-> > > to disclose kernel stack memory:
-> > > 
-> > > 29cd8ae dcbnl: fix various netlink info leaks 
-> > > http://git.kernel.org/linus/29cd8ae0e1a39e239a3a7b67da1986add1199fc0
-> > >
-> > >  84d73cd rtnl: fix info leak on RTM_GETLINK request for VF devices 
-> > > http://git.kernel.org/linus/84d73cd3fb142bf1298a8c13fd4ca50fd2432372
-> > >
-> > >  c085c49 bridge: fix mdb info leaks 
-> > > http://git.kernel.org/linus/c085c49920b2f900ba716b4ca1c1a55ece9872cc
-> > >
-> > >  David Miller did backports for the above issues which are
-> > > currently under review and should end up in the next stable and
-> > > longterm kernels.
-> > > 
-> > > Regards, Mathias
-> > 
-> > CVE Merge - same researcher/vuln/version. Please use CVE-2013-1873 for
-> > these issues.
-> 
-> These appeared in the CVE updates under different IDs now:
-> 
-> 29cd8ae: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2634
-> 84d73cd: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2635
-> c085c49: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2636
-> 
-> Which shall we use?
+> On a related note: shouldn't John the Ripper also reject hashes with 
+> insane run-time or memory cost parameters?
 
-Ah, I just noticed that 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1873 has already
-been marked as rejected.
+I don't have strong feelings one way or the other, which is why I
+haven't implemented this so far.  Also, in JtR we did not support any
+hashes/ciphers with configurable memory cost until very recently, so
+that part of the issue did not arise.  As to processing time cost, in
+JtR it's at worst a DoS against a cracking run, which the user would
+notice and hopefully deal with.  Yes, having some warnings printed could
+help pinpoint the culprit hashes - we can add that.  As to the memory
+usage issue, maybe we need to have a configurable total memory limit (in
+john.conf) - not a per-hash limit.  We could use RLIMIT_AS (or the like)
+where supported.  It's more reliable than doing our own memory usage
+tracking, although then we'd need to ensure we're able to print a
+sensible error message when that limit is almost reached (this is not
+difficult, it's just something not to overlook).
 
-Cheers,
-        Moritz
+Alexander
