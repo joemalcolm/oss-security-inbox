@@ -1,41 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/22/5
-Message-ID: <20131222220322.GB25293@scapa.corsac.net>
-Date: Sun, 22 Dec 2013 23:03:22 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/12/2
+Message-ID: <CABRvpqDNHAqyYy=XA=Fe_KqBtGur=kx4Q6qyXAgBT2k_+C543Q@mail.gmail.com>
+Date: Wed, 12 Jun 2013 09:34:16 -0400
+From: Andrew Nacin <nacin@...dpress.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [SECURITY] [DSA 2826-1] denyhosts security update
+Cc: security <security@...dpress.org>, vnd@...h.net
+Subject: Re: CVE request: WordPress 3.5.1 denial of service vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+On Jun 12, 2013 9:11 AM, "Solar Designer" <solar@...nwall.com> wrote:
+> Web apps (like WordPress) were indeed not supposed to expose the ability
+> for untrusted users to specify arbitrary "setting" strings (which
+> include the configurable cost).  I am unfamiliar with WordPress, so I
+> don't know why they do it here - is this instance of their use of phpass
+> perhaps meant to achieve similar goals that tripcodes do?  If so, yes,
+> they should be sanitizing the cost setting (perhaps with a site admin
+> configurable upper bound).
 
-On Sun, Dec 22, 2013 at 07:51:29PM +0100, Helmut Grohne wrote:
-> The proposed solution is to tighten up the regular expressions for
-> matching log file entries. Specifically including the $ pattern to match
-> the end of log lines. For your convenience I attach the final patch.
-> 
-> The Debian security advisory is the initial public disclosure.
-> 
-> I am not aware of any upstream response to this issue and the last
-> denyhosts release is from 2008.
+We agree.
 
-On top of that, we really advise anyone still using denyhosts to switch
-to a more maintained solution. fail2ban apparently does the same job. I
-can't judge the code quality, but at least someone is taking care of it.
+> However, for password hashes coming from
+> WordPress user/password database (primary intended use of phpass), this
+> should not be necessary.  (Indeed, a similar DoS attack could be
+> performed by someone having gained write access to the database, but
+> that would likely be the least of a site admin's worries.)
 
-Regards,
-- -- 
-Yves-Alexis Perez
-Debian security team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+Correct (and yes).
 
-iQEcBAEBCgAGBQJSt2GnAAoJEG3bU/KmdcClyB4H/2TIISrDlhgv5nQUcp01Y96H
-Y0XIJBgA/2C03AKnk7TtBHc0KB79DuaTVP9YljtqDmYWZ8t1S0D+ZBmZvqZA0yRy
-OvBDqRu180lRUHfZNVtzcmigqaNABCbjpMXSRhHoJ9wyuMO/vYvzV89fwTLMnUjA
-xR6sDLT9Mr7VQi2HqCdLzxB9TgVjpKEdyGcYZJRpxosEJtbT3cQMPf936ZLbZTKr
-WJcLdnCv9Bjt48EtUtAm/2OYbiLe7uWRruD5d0hffA6wTqlPPR+6WJFNDKl4GzOy
-4LTBEhUuNTKjvWGti4olkGwmiYiyknLnLOpC4+sT3rfNe8XuR3/6r6LdvepNUZ8=
-=gtu+
------END PGP SIGNATURE-----
+Andrew Nacin
+WordPress
+
