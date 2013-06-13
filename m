@@ -1,39 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/11
-Message-ID: <20130828204117.GY32641@redhat.com>
-Date: Wed, 28 Aug 2013 14:41:17 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/13/2
+Message-ID: <51B9B32B.4020507@collabora.co.uk>
+Date: Thu, 13 Jun 2013 12:55:23 +0100
+From: Simon McVittie <simon.mcvittie@...labora.co.uk>
 To: oss-security@...ts.openwall.com
-Subject: CVE request, libdigidoc arbitrary file overwrite flaw
+Subject: CVE-2013-2168: dbus: DoS in system services caused by _dbus_printf_string_upper_bound
 Content-Type: text/plain; charset=utf-8
 
-I did not see a CVE for this or a request for the same, so can one be
-assigned please?  Just going to cut and paste from our bugzilla:
+Alexandru Cornea discovered a vulnerability in libdbus caused by an
+implementation bug in _dbus_printf_string_upper_bound(). This
+vulnerability can be exploited by a local user to crash system services
+that use libdbus, causing denial of service. It is platform-specific:
+x86-64 Linux is known to be affected.
 
-It was reported [1],[2] that ID-software 3.7.2 (libdigidoc):
+This vulnerability is tracked as CVE-2013-2168 and is fixed in D-Bus
+stable releases 1.4.26 and 1.6.12, and development release 1.7.4.
+Upgrading is recommended.
 
-"Fixed one critical bug in the DDOC parsing routines. By persuading a
-victim to open a specially-crafted DDOC file, a remote attacker could
-exploit this vulnerability to overwrite arbitrary files on the system
-with the privileges of the victim."
+Distributors who backport security fixes should use this commit:
+http://cgit.freedesktop.org/dbus/dbus/commit/?id=954d75b2b64e4799f360d2a6bf9cff6d9fee37e7
 
-The patch is in svn (not the repository from code.google.com/p/esteid,
-but from svn.eesti.ee) [3] (r98).  This patch was backported for Mageia
-[4] and looks applicable to what we ship in Fedora (although we have a
-much older version).  The patch from Mageia (or upstream) won't apply
-without changes, however, as it's adding a new error code.  Judging from
-the patch, it's just making sure that the file name doesn't include '/'
-or '\\' (so no paths in the filename).
+On Unix platforms, this vulnerability was introduced in dbus versions
+1.4.16 and 1.5.8 while fixing a portability bug, freedesktop.org #11668.
+The 1.2.x branch is not vulnerable.
 
+On Windows, a similar bug exists in all branches that have Windows
+support. The D-Bus project does not support security-sensitive uses of
+D-Bus on Windows.
 
-[1] http://www.id.ee/?lang=en&id=34283#3_7_2
-[2] https://bugs.mageia.org/show_bug.cgi?id=11100
-[3] https://svn.eesti.ee/projektid/idkaart_public/
-[4] http://svnweb.mageia.org/packages/updates/3/libdigidoc/current/SOURCES/libdigidoc-3.6.0.0-security-fix-DataFile-name-tag.patch?revision=472660&view=markup
+Regards,
+    Simon
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1002299
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
