@@ -1,73 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/8
-Message-ID: <5296F953.1080405@redhat.com>
-Date: Thu, 28 Nov 2013 01:05:39 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/13/9
+Message-ID: <51BA5C6C.8080706@redhat.com>
+Date: Thu, 13 Jun 2013 17:57:32 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Quassel IRC - manipulated clients can access backlog of all users on a shared core
+CC: Henri Salo <henri@...v.fi>, plugins@...dpress.org, moderators@...db.org
+Subject: Re: CVE request: WordPress plugin uk-cookie CSRF
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/27/2013 02:37 PM, Manuel Nickschas wrote:
-> Hi all,
+On 06/06/2013 11:44 AM, Henri Salo wrote:
+> Hello,
 > 
-> I'd like to request a CVE for the following vulnerability in
-> Quassel IRC:
+> While reproducing CVE-2012-5856[1][2] I noticed there is CSRF
+> security vulnerability in uk-cookie plugin and abusing it attacker
+> can insert XSS to front page of WordPress installation. Version 1.1
+> is the latest and I did not test older versions. OSVDB item[3]
+> should be updated. Plugin is currently disabled in WordPress plugin
+> repository so vendor URL is currently 404.
 > 
-> Affected versions: all versions prior to 0.9.2 (released
-> 2013-11-26)
+> PoC:
+> https://github.com/wpscanteam/wpscan/issues/184#issuecomment-19038566
+>
 > 
-> Description:
+Product: Uk Cookie Plugin for WordPress
+> Vendor URL: http://wordpress.org/plugins/uk-cookie/ Vendor SVN:
+> http://plugins.svn.wordpress.org/uk-cookie/trunk/ Vulnerability
+> Type: CWE-352 Vulnerable Versions: 1.1 and probably earlier Fixed
+> Version: N/A
 > 
-> A Quassel core (server daemon) supports being used by multiple
-> users, who all have independent settings, backlog and so on. The
-> backlog is stored in a database shared by all users on a Quassel
-> core, tagged with a user ID. However, some SQL queries didn't check
-> for the correct user ID being provided.
+> Kurt, could you assign CVE-identifier for CSRF vulnerability,
+> thanks.
 > 
-> This has the undesired effect that the Quassel core can be tricked
-> into providing the backlog for an IRC channel or query that does
-> not belong to the user session requesting it. Doing this requires a
-> manipulated client sending appropriately crafted requests to the
-> core. This client also needs to be properly authenticated, i.e. to
-> have supplied valid user credentials for one of the users on the
-> core.
+> 1: http://seclists.org/bugtraq/2012/Nov/50 2:
+> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-5856 3:
+> http://osvdb.org/87561
 > 
-> Credit for finding this issue goes to Andrew Hampe.
+> Similar plugins are available:
+> http://wordpress.org/plugins/uk-cookie-consent/
 > 
-> Fix [1] has been released in 0.9.2 [2].
-> 
-> This patch can be cleanly applied to any version starting from
-> 0.6.0, and easily backported to even older versions by adapting the
-> schema version number.
-> 
-> Thanks, ~ Manuel Nickschas (Sput)
-> 
-> [1] <https://github.com/quassel/quassel/commit/a1a24da> [2]
-> <http://quassel-irc.org/pub/quassel-0.9.2.tar.bz2>
+> -- Qentinel, Henri Salo http://www.qentinel.com/en/
 > 
 
-Please use CVE-2013-6404 for this issue.
+Please use CVE-2013-2180 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSlvlTAAoJEBYNRVNeJnmTIecQAILaEfaJEtbNtpB0qC31XOBh
-yezgIglqcJEsdyP3mh31B1rs/WrJhR2UGN70afZ5UG7eB3AIYCaYhwXu+Soc9YkJ
-38ZyVZAM0O1woIsG0tDHTnmuQm4QCLbexAbTRnQBUGBJ5NA4N8hxIX8iw0O3cHL1
-5CLjcYGiEGH9XCv1f9GZp28Wb0FqOqbKmmXdo1Ku0ZRF/u/4bbvWfQPNBVYKZi+l
-lQvCuYdQFRxlOeymwdHtHvOe94SIUUnFQomRXZEQBOI0qOxCsSRNxVOU+FPkZ2Cy
-0AElUeDeF3BXlHDIBYF23Jh/fgAU9FilMVyuey6SRJaYiMzXn2re8epBTSbB+VE1
-htdzmOQh6BTcf1RyQr3FsQqhPY6X5IyHfB6Te5JCYdwvrCdFRfVd7pmNbuckSvny
-jYogv+NGLiKBLOcxDBJc+TznvDV9dMXZ6ec9TBDdM2p3OtcmysmONqPBFJZQOoHw
-YwSU7ZFxqmB3LEZgdv6/QH6Y/s3yz5Yx9t+kZwJB6XIg+Sku9JT4Z8qe9P7iElne
-gcFuBH0pHDF0sOuPwYHAmAbYgxDcm+yegzdaOaD0g9I/asDiEZI6KfXROPK1/9bx
-X3Jnv7icgSbZKdxCQKMbmMLR9w45MRBdbA61nMSuf8Hn6zS4WaX5cA2Kf4kJI6zX
-HKuWwAVgqgrGVaESEcN6
-=LfbD
+iQIcBAEBAgAGBQJRulxsAAoJEBYNRVNeJnmTEDMP/2oKFX6X2D4pjglDAKmyqZOq
+vNnQhX77xYDvjfi4VkDfDRk+Ja3v9VWP4oA/sF5GkHGQq2wdUWzTztvz92GY7vB+
+eKYr9rJb47wUt4wwPSzP6xMBIP2fzpA8Znl4UiNhJKsCPLEgc4tNq2qeIJGv8Izd
+1FM4pqyZaiGaADvSuwY5CcH+3CmJlmkaufr9b8OV1AB/S5TMiDUZuTUTdvtXVy0J
+Np0yiRESrp1qRbALTS3cFteSWRFMiowfha3WzOXQRwfVoQaRZw2n2b8PqRuF/saf
+cRsBI/5hKigD9NwaGPsdRk/MHVar77dC+/87XJF1OVjcY1W5V7qQyG+9I4aIkJ2n
+2591jL9lkgVRanuc73lZY1sGT6UvjE2g6fNXGzzx9UpoCr7WLUPanJ83WXObdMzF
+TdHrDXCoVGJQbsCM9Ar94tDPbV32tEdEzxVLkZOMpniJUk4/ZN6ihKMHiiVBaiwu
+7owPdBHhbW56MXZbTRfEB+mOuJ2e/gYfFbXw+DzvivzynOAuoFZJ88ylO7K7Gdgv
+PPR8nYui7mPv2tQLkgcfv7jgmRsq+BfOfm1nkYdd/DvImggCz6TvG9qDY1cvz/wk
+Hvc0hlyFXyuwT3B202t+GkAFV1JzGggLD4jgYBPoupaqDjHRJWqQIk+blAguW56G
+HJ9H3jNuSimcj6s+VRU3
+=lS9g
 -----END PGP SIGNATURE-----
