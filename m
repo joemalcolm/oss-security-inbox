@@ -1,30 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/15/6
-Message-ID: <20130715195356.GS4441@dhcp-25-225.brq.redhat.com>
-Date: Mon, 15 Jul 2013 21:53:56 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request -- Linux kernel: vhost-net: use-after-free in vhost_net_flush
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/13/4
+Message-ID: <20130613162107.GR29720@openstack.org>
+Date: Thu, 13 Jun 2013 16:21:07 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
+To: openstack-announce@...ts.openstack.org, openstack@...ts.launchpad.net, oss-security@...ts.openwall.com
+Subject: [OSSA 2013-016] Unchecked user input in Swift XML responses (CVE-2013-2161)
 Content-Type: text/plain; charset=utf-8
 
-vhost_net_ubuf_put_and_wait has a confusing name: it will actually also
-free it's argument. vhost_net_flush tries to use the argument after
-passing it to vhost_net_ubuf_put_and_wait, this results in use after
-free.
+OpenStack Security Advisory: 2013-016
+CVE: CVE-2013-2161
+Date: June 13, 2013
+Title: Unchecked user input in Swift XML responses
+Reporter: Alex Gaynor (Rackspace)
+Products: Swift
+Affects: All versions
 
-Upstream fix:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=dd7633ecd553a5e304d349aa6f8eb8a0417098c5
+Description:
+Alex Gaynor from Rackspace reported a vulnerability in XML handling
+within Swift account servers. Account strings were unescaped in XML
+listings, and an attacker could potentially generate unparsable or
+arbitrary XML responses which may be used to leverage other
+vulnerabilities in the calling software.
 
-Introduced by:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1280c27f8e29acf4af2da914e80ec27c3dbd5c01
+Havana (development branch) fix:
+https://review.openstack.org/32905
 
-Introduced in upstream version:
-v3.8-rc1
+Grizzly fix:
+https://review.openstack.org/32909
+
+Folsom fix:
+https://review.openstack.org/32911
+
+Notes:
+This fix will be included in the next release.
 
 References:
-https://bugzilla.redhat.com/show_bug.cgi?id=984722
-https://bugzilla.redhat.com/show_bug.cgi?id=980643
-http://pkgs.fedoraproject.org/cgit/kernel.git/commit/?h=f19&id=da4ebd83da1869778909f394f6ebd50850ef5fec
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2161
+https://bugs.launchpad.net/swift/+bug/1183884
 
 -- 
-Petr Matousek / Red Hat Security Response Team
+Jeremy Stanley (fungi)
+OpenStack Vulnerability Management Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
