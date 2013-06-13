@@ -1,60 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/25/5
-Message-ID: <526ACF83.4060108@redhat.com>
-Date: Fri, 25 Oct 2013 14:07:31 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/13/5
+Message-ID: <51BA5BC7.5070204@redhat.com>
+Date: Thu, 13 Jun 2013 17:54:47 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux kernel: net: memory corruption with UDP_CORK and UFO
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: resin: Cross site scripting
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/25/2013 08:11 AM, P J P wrote:
->    Hello,
+On 06/11/2013 03:10 AM, Agostino Sarubbo wrote:
+> From the secunia advisory SA53749 [1]:
 > 
-> Linux kernel built with an Ethernet driver(ex virtio-net) which has UDP
-> Fragmentation Offload(UFO) feature ON is vulnerable to a memory
-> corruption flaw when UDP_CORK socket option is set. It could occur when
-> sending large messages, wherein all messages are not greater than
-> maximum transfer unit(MTU) of the underlying medium.
+> Description Gjoko Krstic has discovered a vulnerability in Caucho
+> Resin, which can be exploited by malicious people to conduct
+> cross-site scripting attacks.
 > 
-> An unprivileged user/program could use this flaw to crash the kernel
-> resulting in DoS, or potentially execute arbitrary code to escalate
-> privileges to gain root access to a system.
+> Input appended to the URL after /resin-admin/ is not properly
+> sanitised before being returned to the user. This can be exploited
+> to execute arbitrary HTML and script code in a user's browser
+> session in context of an affected site.
 > 
-> Upstream fix:
-> -------------
->  -> http://patchwork.ozlabs.org/patch/285292/
-> 
-> Reference:
-> ----------
->  -> https://bugzilla.redhat.com/show_bug.cgi?id=1023477
+> The vulnerability is confirmed in version 4.0.36. Other versions
+> may also be affected.
 > 
 > 
-> Thank you.
-> -- 
-> Prasad J Pandit / Red Hat Security Response Team
+> Solution No official solution is currently available.
+> 
+> Provided and/or discovered by Gjoko Krstic (LiquidWorm)
+> 
+> Original Advisory ZSL-2013-5143: 
+> http://www.zeroscience.mk/en/vulnerabilities/ZSL-2013-5143.php
+> 
+> [1]: https://secunia.com/advisories/53749/
+> 
+> The original advisory contains a poc.
+> 
 
-Please use CVE-2013-4470 for this issue.
+This doesn't appear to be an Open Source licensed software:
+
+                   Caucho Developer Source License
+                             version 1.1
+
+Please go direct to Mitre for your CVE needs on this one.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSas+CAAoJEBYNRVNeJnmTbvwQAJ+unAsNrmKoFQpp01saoDF4
-pUlgdgV1RFdFK8iOHYn7hq1OXjJvRoZLx4UMC/JTykDyYnUiuAe+NCN2GBZoNK8Z
-xvCTjYK0NGNG/izsxBCqUnirUJlFwykmJjE/rjuXkjmJXiPna0l42UPr+xxOaynS
-xX1IP516i2k2FMAvvKqLa5LaH2k94QDWfSl4KleTQ4hv3mMC72h31y4EGt5t5avE
-GH2ZA44PFUr69xO2lJP6EoT2jdislOmTnSjEXngq3jgawBfeIJb2u5slB4SMaULQ
-sdi9dLqdIe4k6oE07ip4yBU3UIwEjb1b+cmfLtFmx8Gqliab6T5NHspW2F5u9Sek
-baVpRAGH+0HuHrIFI1p1me+s9cIDLbXTeHktUZUuHiR4z7Moxz1Sc2axoGnyumha
-Qo7EbyQ1dVaokwAI7GjAa5en/3cFNFdj+/wdBa7dLecfcDbQfTDenbVtnHXiesD3
-L1+XEKQ4X6ONZ1HNvwjoo/s/YcMOlT2oSQmAcmmjFYVKWcGkzFLHPKPkQzz2BBXi
-687Zlh+sk46ptnZXx5N1IB2gOqXDuOLDMAYXilmDX1HPZWUAPg1g4uArIW30eiQG
-SgM0yjrVrJi0M8+oDMhdgN4EYRBRufUd9urweChNOC7NFeCQzppIlIJKYq/WBhGm
-3tjOGfppsAjWi5FtvYjH
-=Eg+0
+iQIcBAEBAgAGBQJRulvHAAoJEBYNRVNeJnmT7icQAJBmsZ+Cjk/8KceIpohPwA5I
+o8aKC73v+LFeFLmwjkCNLMjh6C4S868A12QhfbVj6LSl2oB2tD+Nd1dUC/SzAjk0
+B6F2vqOG0XCJqNF6ja0uPs1H+jGLky7BF2mxRpAebpi9bn/dw5j9zmcizQoTGo6n
+B8B85P+yTbYlbo3o/hRhXf+lQsVC0rxFQNVTckup63iTYYl3Dti9IV3NN7r/j9ss
+kJYXd8EtRNpdjVOxa9Lg5zkM8fxkfb5YIlkTnBOsNe9z0+swowcm8BtO0npuBZlM
+y08gi5RU5Bz1gHJkhAywuH+6iUPHTq81J/d25COGp0QjHApQrEKC8MgJoilLnGLb
+fqAoP9oaxXq0BtUO8Y2lBGDVjglVv6OEjAeNh17rgr1Ol7LGNdJpk/gvFNjWpIzl
+49CcapQQUzSDkKEqk4NNWfZDjl2BAga0cAjwbF9nuyK3kQHsY4/kEyxi/YQHga8g
+90P/xRsOsNr6WNKl5+dY79JPOpibbw/ulcYRVo51AsQ6xWSbpGGKxaavvmAIl+E9
+lUobw/DjJb6ow0oGY8yxE3AdXIYa89Pjri94n/Chpw7CSyVt9hSakEztkQ6HUP2E
+RN51UqgduNSKy7o232JNvgASISB4d9c77qL5RA9MWSfIqgjZGMIulH+kvpj/NaX2
+VVILjlhfdhPhnwXxDXVE
+=cmeP
 -----END PGP SIGNATURE-----
