@@ -1,49 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/1
-Message-ID: <20131230001955.GC9236@kludge.henri.nerv.fi>
-Date: Mon, 30 Dec 2013 02:19:55 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/13/7
+Message-ID: <51BA5C45.2030407@redhat.com>
+Date: Thu, 13 Jun 2013 17:56:53 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Jakob Lell <jakob@...oblell.com>
-Subject: CVE request: SMF 1.1.19, 2.0.6
+CC: Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: Re: Fail2ban 0.8.9, Denial of Service (Apache rules only)
 Content-Type: text/plain; charset=utf-8
 
-Can I get two CVEs for following SMF issues, thanks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Advisory:
-http://www.jakoblell.com/blog/2013/12/13/multiple-vulnerabilities-in-smf-forum-software/
-http://seclists.org/fulldisclosure/2013/Dec/83
+On 06/12/2013 02:00 PM, Yves-Alexis Perez wrote:
+> Can someone assign a CVE for this fail2ban issue?
+> 
+> On sam., 2013-06-08 at 07:44 +0200, Krzysztof Katowicz-Kowalewski
+> wrote:
+>> Version 0.8.9 (latest) of Fail2ban allows to perform remote
+>> denial of service for arbitrary chosen IP address. Address listed
+>> on Fail2ban's whitelist are not affected. The vulnerability
+>> exists in Apache rules and it is caused by improper validation of
+>> a log file by regular expression. Malicious user can easily
+>> inject his own data to analyzed logs and deceive monitoring
+>> engine.
+>> 
+>> Affected files: /filter.d/apache-auth.conf 
+>> /filter.d/apache-nohome.conf /filter.d/apache-noscript.conf 
+>> /filter.d/apache-overflows.conf
+>> 
+>> Time frames: 01.06.2013 - Cyril Jaquier (contact section) has
+>> been informed about the vulnerability (no response) 08.06.2013 -
+>> The vulnerability has been released to the public.
+>> 
+>> More information, including proof of concept and patches is
+>> available here: 
+>> https://vndh.net/note:fail2ban-089-denial-service
+> 
+> Thanks in advance,
+> 
 
-http://osvdb.org/101004 "Unspecified Clickjacking Arbitrary Code Execution"
-http://osvdb.org/101005 "Unicode Homoglyph Username Spoofing Weakness"
 
-Fixed in 1.1.19 and 2.0.6 versions.
-Credit: Jakob Lell
+Please use CVE-2013-2178 for this issue.
 
-Changelog:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-"""
-October 2013
--------------------------------------------------------------------------------
- ! Added some headers to help protect against clickjacking (thanks Jakob Lell for the report)
- ! Invalid avatars were not always properly cleaned up (thanks chaoztc for the report)
- ! Added protection against usernames being impersonated with Unicode space characters (thanks Jakob Lell for the report)
- ! Sessions weren't always cleaned up properly on logout (thanks creepernex for the report)
- ! Certain fields were accepted during registration even when they shouldn't be (thanks tomreyn for the report)
- ! Certain errors were unnecessarily shown during a failed registration and some of those were inappropriate anyway (thanks Labradoodle-360 for the report)
- ! Approving an account from a member's profile was not logged (thanks emanuele for the report)
- ! Approving an account from a member's profile did not always properly enforce security rules (thanks emanuele for the report)
- ! The PHPSESSID injector would also add it to the canonical link, breaking it (thanks to all who reported it)
- ! An invalid character was indicated in legacy attachment handling
- ! Under some circumstances the admin panel would not accept the number of verification questions you had entered (thanks BurkeKnight for the report)
- ! The help pages could sometimes accidentally direct users to non-existing pages (thanks AngelinaBelle for the report and Illori for the fix)
-"""
-
-Changes:
-
-http://custom.simplemachines.org/upgrades/index.php?action=upgrade;file=smf_patch_1.1.19_2.0.6.tar.gz;smf_version=2.0.5
-
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQIcBAEBAgAGBQJRulxFAAoJEBYNRVNeJnmT2J8P/RZPvm4voCHNwELGb+e9OGkV
+nbu7DyGhjYyOzzD3I0NrTgPlS6siz3nI10xZIvhs953CP2r6yDEqR8YP4rosreOZ
+lhZd8nNvPZmcvw+l/8q8JdLZ7q1RU+TGyMELR3l+FN9frqo3vPPsFbqh1QGBsJhD
+ngzHRMBGEyMDo42xzDTCGQmyS901s6Q+lh0GiTb2tKhfk6JqkbFtQ0r8TH4Z4nXY
++lKA+Qxl/4Shhhb6xtWm2B7E9eqqLfb8lyNh5HVkVwEhI+BM6PUQSpx+Fu2J2Puj
+Ue9XvozzmIR6FWWztlNl1PrNh8tC/F6HFIW2vHSP16pNkIJOWBtgjBA0aMDIQFPt
+lO2Sx4mmV5ZbZBKNgR+D3sg1CXnDT+eo56xm6W8NDWNmpcWu7uZ2YP2R3x8Bbntp
+v/uUQc52P/SXirFCv73ltPpAVv6TCx2QqmPaRfYLVeflCLJ5ypxkNdeFy8UpOH5m
+0cb324X6MSv6UxaMe2hRH2Wg6QKYfUKXAdcpGfuFoi2Qq4MDPiPPa7zQ/zSD8mzb
+cpa4++TgL2GKpB+L8aKPqLdFzC71a+C9bfDe0JIVWnYo5SgTy3xdWJ5R+3k1eh3Y
+q5LuM4MCnpP5ACjBMIbJyLxpPe12WnoQB9nl3dXES6DXde4NAEpKKZkqnUzGv8/1
+C7RXa1N9VgB60t+FSu4z
+=QT9k
+-----END PGP SIGNATURE-----
