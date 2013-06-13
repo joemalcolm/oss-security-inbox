@@ -1,54 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/17/2
-Message-ID: <5237AF28.9050705@redhat.com>
-Date: Mon, 16 Sep 2013 19:23:52 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/13/8
+Message-ID: <51BA5C53.6000407@redhat.com>
+Date: Thu, 13 Jun 2013 17:57:07 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, Moritz Naumann <security@...itz-naumann.com>, security@...plemachines.org
-Subject: Re: CVE request: Simple Machines Forum (SMF) <= 2.0.5 - multiple vulnerabilities
+CC: Alan Coopersmith <alan.coopersmith@...cle.com>, "X.Org Security Team" <xorg-security@...ts.x.org>, mancha1@...h.com, "X.Org Development" <xorg-devel@...ts.x.org>
+Subject: Re: CVE request for possible NULL ptr deref in XDM when using crypt() from glibc 2.17+
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/15/2013 12:27 PM, Henri Salo wrote:
-> Please assign 2013 CVE for SMF vulnerabilities, thanks. Fixes at
-> least XSS issues. No reply from vendor when I asked if there is
-> CVE(s) assigned already.
+On 06/11/2013 05:47 PM, Alan Coopersmith wrote:
+> It's been suggested we get a CVE id assigned for this recent fix to
+> the xdm display/login manager from X.Org:
 > 
-> Advisory:
-> http://www.simplemachines.org/community/index.php?topic=509417 
-> Diff:
-> http://custom.simplemachines.org/upgrades/index.php?action=upgrade;file=smf_patch_2.0.5.tar.gz;smf_version=2.0.4
+> http://cgit.freedesktop.org/xorg/app/xdm/commit/?id=8d1eb5c74413e4c9a21f689fc106949b121c0117
+>
+>  Without this fix, if xdm is built to use raw crypt()
+> authentication, instead of a higher level system such as PAM or BSD
+> Auth, and that crypt() function can return a NULL pointer (as glibc
+> 2.17+ does for invalid input, such as when an account is locked by
+> prepending a "!" to the password field), then attempting to login
+> to such an account via xdm can crash the xdm daemon.
+> 
+> For single user console machines, this generally just means you get
+> the text console login prompt instead.   For machines set up to
+> support multiple seats, remote XDMCP access, or X terminals (such
+> as LTSP setups using xdm), this may be a denial of service for
+> users on those other seats/terminals /devices.
+> 
 
-Can
-> 
-you provide a summary of the diff? thanks.
 
-> Other references: http://osvdb.org/96323 
-> http://secunia.com/advisories/54384/
-> 
-> --- Henri Salo
-> 
-
+Please use CVE-2013-2179 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSN68nAAoJEBYNRVNeJnmT3awQAJcqKAx/vWODnmMoNb4BJiN4
-GurFg3oImCiTC/ocVoYXPE3fri7/i4utfI2NaiDt6fgrHZMBhcFVoFEeweDnIk8j
-JA4zzqmeBTPvEP4nKUfJNaIUVa513k77Y72dBmhCYUmQ/eH6ViPgjnKAkUHIMRXZ
-pviUV7wMJT5YWiLMhZfqZKDm5/I+4c3e4MVrflD7Tl5p5Fd3L+Rtb31bEXhezUZ4
-fOu5YLblLDV/qikIIYaGkfJ9ZH7MzRr6YB5HOOO8lZiIdZk+nxAkjsITWoEjxSQJ
-Fz2b/9N8xZiEhN3O9crXu3x+Spzz5y2a9k3CpzWdlPGoakH2C4eERzrtuqCbEzBs
-6T1H/cotjY4m5W+k3AmF5n0Vr8vkEbMrRsWE4IerOwygt4iuiy023MPCHcOs8dJu
-La7abPxzZ2Ks3SY6QpL7plek83gLbfO1KYbvhzXXO97lDSD5VaP/QfYp6r2G8+Zs
-Y7mUyUoPfFBfnp6GeJbSVzL6r4sOnHikpatQoISjZ8FfukesMpjSv+uuf6gYkHzO
-s5AGpzUiAkwfWEd0SL2oQFrpuhQz3rSPmDb+GoN2YrKX/yLlc6ehFh0JlqXhxP8W
-N3wAQDv5TRKKhfSFfaOxXJO3CCpfM2BicHj0R8MLHTus6G/wgqQo7hRtCOgkIPXa
-Md6eV1Keirpym02yaMjm
-=uCxB
+iQIcBAEBAgAGBQJRulxTAAoJEBYNRVNeJnmTI9wP/1LWPFOfR+/Z/1mM77kBbt+K
+WqXL20xy5rXRKSYUCDAIE2QLwK+FFwoEP8kB0SzYAp2KQ/Tnq99HWN8Xdb0lT3+A
+sxQF5Dy8DCYr5ME5lvYraYxRyFOqal3mx3TGY9dGvzBGB4iOsJ24xPrPzz4uA0iv
+IGnltkD1dHiHbVfIsYqrFrdXqN8q1NyRJHWV+L2mLW/iGfIIpw1W289x/8xjBd8Y
+ZEfckYr8aLpq5kkf8KT3ua+C0Y99U0n7+TFcxgFPmCkgE57U4dzpFdbAV6iJ69hw
+ahyB62MQT6WFtSvUqnl0VP+CclgKZyDvkxzyPkWFBFIuQqTyDOMqyzPXrF9v9C1p
+idVxpEHK3w1bdWGrJswYtTqWHE+4PEjeiMYJSDIw/pnINT99z349wlK2tLixCt+z
+CGEMelGZvAIgL8pvEnnKfrip0nRbjIFvJGMrdC6uLHNsQvkosMDx7zSOteq60L+d
+/yZxOFGjH2+BxFJfSobAlY28E8XTUvG+8o0SEBGq82oPbbAL5KBbbEw9XGcERTT8
+rQ0f8xd8Cvdw9fLaVg0FWDircqqtVNhFGwy1tAUE9NokFZlN94ljV5+F7Bhi1OHA
+MuRP5doyWSD+4EsGBG1HhIKAj4spszGp/nl4PTu+aAVx0+209RUMmWCH06h2LbIj
+4YqMWveDHUo7h+FXZu9z
+=VM3h
 -----END PGP SIGNATURE-----
