@@ -1,35 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/03/1
-Message-ID: <CABbbngC3h1YMC+WNu9V9KN6dPJbJhxHdEEadcf+eJfRRwCjYCQ@mail.gmail.com>
-Date: Sat, 2 Nov 2013 22:37:02 -0700
-From: Forest Monsen <forest.monsen@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/5
+Message-ID: <CA+5g0SJMp87UWZcHDXPZoYCh1NhTkw1ZALyEgP7NnQpwiRX53g@mail.gmail.com>
+Date: Fri, 14 Jun 2013 14:24:09 -0300
+From: Felipe Pena <felipensp@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: FD leakage for cgi program on Monkey HTTPD
 Content-Type: text/plain; charset=utf-8
 
-Hi there! I'd like to request CVE identifiers for:
+I've identified a fd leakage when running a program via Monkey HTTPD -
+CGI plugin.
 
-SA-CONTRIB-2013-081 - Spaces - Access bypass
-https://drupal.org/node/2118717
+By runninng `ls -lah /proc/<pid>/fd/` on the CGI program we can see:
 
-SA-CONTRIB-2013-082 - Bean - Cross Site Scripting (XSS)
-https://drupal.org/node/2118873
+total 0
+dr-x------ 2 felipe felipe 0 Jun 14 14:00 .
+dr-xr-xr-x 8 felipe felipe 0 Jun 14 14:00 ..
+lr-x------ 1 felipe felipe 64 Jun 14 14:00 0 -> pipe:[239545]
+l-wx------ 1 felipe felipe 64 Jun 14 14:00 1 -> pipe:[239546]
+lrwx------ 1 felipe felipe 64 Jun 14 14:00 10 -> anon_inode:[eventpoll]
+lr-x------ 1 felipe felipe 64 Jun 14 14:00 11 -> pipe:[242960]
+lrwx------ 1 felipe felipe 64 Jun 14 14:00 12 -> anon_inode:[eventpoll]
+lrwx------ 1 felipe felipe 64 Jun 14 14:00 13 -> anon_inode:[eventpoll]
+lrwx------ 1 felipe felipe 64 Jun 14 14:00 14 -> anon_inode:[eventpoll]
+lrwx------ 1 felipe felipe 64 Jun 14 14:00 15 -> anon_inode:[eventpoll]
+lrwx------ 1 felipe felipe 64 Jun 14 14:00 16 -> anon_inode:[eventpoll]
+lrwx------ 1 felipe felipe 64 Jun 14 14:00 17 -> anon_inode:[eventpoll]
+lrwx------ 1 felipe felipe 64 Jun 14 14:00 18 -> anon_inode:[eventpoll]
+lrwx------ 1 felipe felipe 64 Jun 14 14:00 19 -> anon_inode:[eventpoll]
+l-wx------ 1 felipe felipe 64 Jun 14 14:00 2 -> /dev/null
+lrwx------ 1 felipe felipe 64 Jun 14 14:00 3 -> socket:[240797]
+lrwx------ 1 felipe felipe 64 Jun 14 14:00 4 ->
+/home/felipe/audit/monkey/monkey/logs/monkey.pid.2001
+lr-x------ 1 felipe felipe 64 Jun 14 14:00 5 -> pipe:[240798]
+l-wx------ 1 felipe felipe 64 Jun 14 14:00 6 -> pipe:[240798]
+lr-x------ 1 felipe felipe 64 Jun 14 14:00 7 -> pipe:[240799]
+l-wx------ 1 felipe felipe 64 Jun 14 14:00 8 -> pipe:[240799]
+lrwx------ 1 felipe felipe 64 Jun 14 14:00 9 -> socket:[242784]
 
-SA-CONTRIB-2013-083 - Quiz - Access Bypass
-https://drupal.org/node/2123995
-(This appears to me to be two issues; an access bypass, and an access
-bypass leading to information disclosure.)
+Hence a malicious program can take control of Monkey HTTP request response
+through a network socket related file descriptor, etc.
 
-SA-CONTRIB-2013-084 - FileField Sources - Access Bypass
-https://drupal.org/node/2124241
 
-SA-CONTRIB-2013-085 - Feed Element Mapper - Cross Site Scripting
-https://drupal.org/node/2124279
+Report
+------
+http://bugs.monkey-project.com/ticket/187
 
-SA-CONTRIB-2013-086 - Monster Menus - Access bypass
-https://drupal.org/node/2124289
 
-Thanks!
-Forest
+CREDITS
+-------
+Felipe Pena
 
+--
+Regards,
+Felipe Pena
