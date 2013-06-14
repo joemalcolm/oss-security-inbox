@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/9
-Message-ID: <51D1D34B.4050203@redhat.com>
-Date: Mon, 01 Jul 2013 13:06:51 -0600
-From: Eric Blake <eblake@...hat.com>
-To: kseifried@...hat.com
-CC: oss-security@...ts.openwall.com, libvirt-security@...hat.com
-Subject: Re: [Libvirt-Security] CVE-2013-2218 -- libvirt: crash when listing network interfaces with filters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/1
+Message-ID: <1371181824.4354.16.camel@goat.lightspeed>
+Date: Thu, 13 Jun 2013 22:50:24 -0500
+From: John Lightsey <john@...nuts.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: MovableType before 5.2.6
 Content-Type: text/plain; charset=utf-8
 
-On 07/01/2013 12:49 PM, Kurt Seifried wrote:
-> On 07/01/2013 09:21 AM, Petr Matousek wrote:
->> The virConnectListAllInterfaces method has a double-free of the 
->> 'struct netcf_if' object when any of the filtering flags cause an
->> interface to be skipped over. For example when running the command
->> 'virsh iface-list --inactive'
-> 
->> Upstream fix: 
->> http://libvirt.org/git/?p=libvirt.git;a=commit;h=244e0b8cf15ca2ef48d82058e728656e6c4bad11
-> 
->>  References: https://bugzilla.redhat.com/show_bug.cgi?id=980112
-> 
->> Thanks,
-> 
-> 
-> Please use CVE-2013-2229 for this issue.
+Hi everyone,
 
-No, we already assigned CVE-2013-2218 to this issue.  CVE-2013-2229
-should be closed as a mistake, or reused for some other purpose.
-
--- 
-Eric Blake   eblake redhat com    +1-919-301-3266
-Libvirt virtualization library http://libvirt.org
+The 5.2.6 release of MovableType fixed a vulnerability in the handling
+of comments to blog posts. The 'comment_state' parameter is processed by
+MovableType's unserialize() function which can be used to send data into
+Storable::thaw().
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (622 bytes)
+As documented by the perl-security team recently, Storable::thaw is
+unsafe to use on untrusted inputs.
+
+http://perl5.git.perl.org/perl.git/commit/664f237a84176c09b20b62dbfe64dd736a7ce05e
+
+
+The MovableType 5.2.6 release notes document the fix for this
+vulnerability as:
+
+"109458 Currently un-used parameters are unintentionally deleted when a
+comment is posted"
+
+http://www.movabletype.org/documentation/appendices/release-notes/movable-type-526-release-notes.html
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
