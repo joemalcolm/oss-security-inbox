@@ -1,35 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/2
-Message-Id: <201312120450.rBC4nv9f026054@linus.mitre.org>
-Date: Wed, 11 Dec 2013 23:49:57 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, abe@...ian.org, team@...urity.debian.org, 731848@...s.debian.org, andy@...dance.com
-Subject: Re: CVE Request: ack-grep: potential remote code execution via per-project .ackrc files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/11
+Message-ID: <51BB76C7.6000804@redhat.com>
+Date: Fri, 14 Jun 2013 14:02:15 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Felipe Pena <felipensp@...il.com>
+Subject: Re: CVE request: Bypass protected directory by Monkey HTTPD - Mandril security plugin
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> This verison of ack prevents the --pager, --regex and --output
-> options from being used from project-level ackrc files.  It is
-> possible to execute malicious code with these options
-
-Use CVE-2013-7069.
+On 06/14/2013 11:22 AM, Felipe Pena wrote:
+> Monkey HTTPD - Mandril security plugin Mandril is a plugin which
+> provides a security layer to Monkey through rules which can be
+> applied to the request URI or by network address.
+> 
+> A vulnerability was found in the way as the URI are validated. The
+> plugin check the configuration rules against possible encoded
+> URIs.
+> 
+> PoC ---
+> 
+> Configuration sample: [RULES] Deny_URL /test/
+> 
+> To bypass such rule, we just need to make a request like: 
+> http://yourhost/%2ftest/
+> 
+> 
+> Report ------ http://bugs.monkey-project.com/ticket/186
+> 
+> 
+> CREDITS ------- Felipe Pena
+> 
+> -- Regards, Felipe Pena
+> 
+Please use CVE-2013-2182 for this issue.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSqT/wAAoJEKllVAevmvms2mUH+gMG97hD1ieJnU8eDSBz2jTP
-ZOy+PH/QzLcaSEtFrPG7ge9SfY8sowGGpTQPPyMI08zAdWZNlPCKzi/Y0Od0tohv
-dxkXwUoluY/KGvpoUD1doVGf49mGNTfP7x/KxIdYQn/0aMTOQ9uf95QA640AV3k9
-kKTdUiCBs3pvQ0yT//euC0nQMEUC+cWzs6DvDtckAyGc2Dn53MLTSlL2jx3fkrvj
-JM/kDaWB3yebdF0anDbrnq6lDSo+XfoTie4XQgHU+AMCopVYYXryipK2xt95DKtW
-SwXZnBMjeWtcQMV1i0E5awL5GFEkA20sUMBcc/aDadQMGuBTcL9dn/lzhPvEy8E=
-=7136
+iQIcBAEBAgAGBQJRu3bHAAoJEBYNRVNeJnmT6dYQAM3NIk28f3FfxPgR/8krXK7t
+sW6RidIkH0hZi+WrNCaK9nwNx04yUfvfuXCiWooMrF+axUMFDAPC/nz9YORDnOhC
+WtiKGjP3htQbPPj6uuURP4+SGXpYL1kPdqdFufHKUTrHnO7wVodTWNr9CrOTZTtd
+W5Q8cbZ+3UFvnKlzqaZtFYT5jFGaoBYa7fBgDJvgXdOTiWk5R7zl23gO6qnQbAJH
+M/ItUEF+J2SFMAzJ9IZv8l4O/TH1aIbyg3YCw3vBALI9IQJfHw3pGhPUf2gN+bJ5
+kn2W9lxo6PSyjJbciazfOQq+K+6FtsStSAQABbo6UkPcnXDy3jfZGhwaot3n4Kux
+5ZbSuvZtpeUR9dJPFSRjepJ/OBn1FqlRP1L5HsuXpcblicb8wInPAXkRi29s7tA8
+zeQPtwLx+FkxCC21YPA03iG8/RY3qcDFYZzG8p6VdsCpjB4a1flanTfCzf77ctVE
+IYO3dFpWebBvVzKvd4sjNx+u3+DpLmh4i7iy6u6XK7zaxEIbWyywe/vZgwu3Hcfo
+XJcQJ0x1fGVerNOdzTTvDeDgPvYPijW/q15DmnYn4KLGSfDGDvjcyY4dDlJCjEkI
+fkDCn8/2r0KXDj2a0k8ekMfm4F4nRJbnA0vH4FB0Wg1jOowC89GV/yzT25CjTq/K
+E19Vi8H0IoXzCiO/OUro
+=WGwQ
 -----END PGP SIGNATURE-----
