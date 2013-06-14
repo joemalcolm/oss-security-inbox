@@ -1,47 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/3
-Message-Id: <201304220544.r3M5iHce017360@linus.mitre.org>
-Date: Mon, 22 Apr 2013 01:44:17 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Linux kernel: more net info leak fixes for v3.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/6
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF26F53771@IMCMBX01.MITRE.ORG>
+Date: Fri, 14 Jun 2013 18:20:59 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "felipensp@...il.com" <felipensp@...il.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: CVE request: FD leakage for cgi program on Monkey HTTPD
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Felipe,
 
-9b3e617f3df53822345a8573b6d358f6b9e5ed87 CVE-2013-3222
-ef3313e84acbf349caecae942ab3ab731471f1a1 CVE-2013-3223
-4683f42fde3977bdb4e8a09622788cc8b5313778 CVE-2013-3224
-e11e0455c0d7d3d62276a0c55d9dfbc16779d691 CVE-2013-3225
-c8c499175f7d295ef867335bceb9a76a2c3cdc38 CVE-2013-3226
-2d6fbfe733f35c6b355c216644e08e149c61b271 CVE-2013-3227
-5ae94c0d2f0bed41d6718be743985d61b7f5c47d CVE-2013-3228
-a5598bd9c087dc0efc250a5221e5d0e6f584ee88 CVE-2013-3229
-b860d3cc62877fad02863e2a08efff69a19382d2 CVE-2013-3230
-c77a4b9cffb6215a15196ec499490d116dfad181 CVE-2013-3231
-3ce5efad47b62c57a4f5c54248347085a750ce0e c802d759623acbd6e1ee9fbdabae89159a513913 CVE-2013-3232
-d26d6504f23e803824e8ebd14e52d4fc0a0b09cb CVE-2013-3233
-4a184233f21645cf0b719366210ed445d1024d72 CVE-2013-3234
-60085c3d009b0df252547adb336d1ccca5ce52ec CVE-2013-3235
-680d04e0ba7e926233e3b9cee59125ce181f66ba CVE-2013-3236
-d5e0d0f607a7a029c6563a0470d88255c89a8d11 CVE-2013-3237
-72a763d805a48ac8c0bf48fdb510e84c12de51fe CVE-2013-3076
+Sorry if this is a dumb question.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+If you are using "file descriptor leak" in the sense of "malicious parties can directly access the file descriptor" - then that doesn't seem to be the case here, because permissions are limited only to you.
 
-iQEcBAEBAgAGBQJRdMwLAAoJEGvefgSNfHMdayUH/1iBzQrgyvBM+bUfF1zxXDAm
-TbGbqSwgfTtWSh2DnfO66lFCMCOCYsBdIVLj7VOmcHa2iVL3Jygy0PXmWacCHl6J
-cN8zW0F19Y/hBD7W8JDHp5kBkYa4YbU/mFov7fXUZl1k5m7gffl+kpsF/JE7H17I
-BQuNIuyMaalLOYkneqmKLa7kiu63NzWykNqo5hQWcNkifZL2iZKMVXEBEhMi488L
-2Rv6anPLYoK9DUAUWsiL8RYhJMNogEJNYkRA9pwCBfMn5j584KKhFs2mP+pdG35z
-cJZ++WDKjxniJ2trwYY8YS7+MFfH5DrG3EwY7o/9m9+VeqHu+XeEsjjLh39AXGE=
-=+B69
------END PGP SIGNATURE-----
+If you are using "file descriptor leak" in the sense of "the program does not close a file after opening it, consuming too many file descriptors," then how can a program take control of Monkey HTTPD?
+
+- Steve
+
+
+>-----Original Message-----
+>From: Felipe Pena [mailto:felipensp@...il.com]
+>Sent: Friday, June 14, 2013 1:24 PM
+>To: oss-security@...ts.openwall.com
+>Subject: [oss-security] CVE request: FD leakage for cgi program on Monkey
+>HTTPD
+>
+>I've identified a fd leakage when running a program via Monkey HTTPD -
+>CGI plugin.
+>
+>By runninng `ls -lah /proc/<pid>/fd/` on the CGI program we can see:
+>
+>total 0
+>dr-x------ 2 felipe felipe 0 Jun 14 14:00 .
+>dr-xr-xr-x 8 felipe felipe 0 Jun 14 14:00 ..
+>lr-x------ 1 felipe felipe 64 Jun 14 14:00 0 -> pipe:[239545]
+>l-wx------ 1 felipe felipe 64 Jun 14 14:00 1 -> pipe:[239546]
+>lrwx------ 1 felipe felipe 64 Jun 14 14:00 10 -> anon_inode:[eventpoll]
+>lr-x------ 1 felipe felipe 64 Jun 14 14:00 11 -> pipe:[242960]
+>lrwx------ 1 felipe felipe 64 Jun 14 14:00 12 -> anon_inode:[eventpoll]
+>lrwx------ 1 felipe felipe 64 Jun 14 14:00 13 -> anon_inode:[eventpoll]
+>lrwx------ 1 felipe felipe 64 Jun 14 14:00 14 -> anon_inode:[eventpoll]
+>lrwx------ 1 felipe felipe 64 Jun 14 14:00 15 -> anon_inode:[eventpoll]
+>lrwx------ 1 felipe felipe 64 Jun 14 14:00 16 -> anon_inode:[eventpoll]
+>lrwx------ 1 felipe felipe 64 Jun 14 14:00 17 -> anon_inode:[eventpoll]
+>lrwx------ 1 felipe felipe 64 Jun 14 14:00 18 -> anon_inode:[eventpoll]
+>lrwx------ 1 felipe felipe 64 Jun 14 14:00 19 -> anon_inode:[eventpoll]
+>l-wx------ 1 felipe felipe 64 Jun 14 14:00 2 -> /dev/null
+>lrwx------ 1 felipe felipe 64 Jun 14 14:00 3 -> socket:[240797]
+>lrwx------ 1 felipe felipe 64 Jun 14 14:00 4 ->
+>/home/felipe/audit/monkey/monkey/logs/monkey.pid.2001
+>lr-x------ 1 felipe felipe 64 Jun 14 14:00 5 -> pipe:[240798]
+>l-wx------ 1 felipe felipe 64 Jun 14 14:00 6 -> pipe:[240798]
+>lr-x------ 1 felipe felipe 64 Jun 14 14:00 7 -> pipe:[240799]
+>l-wx------ 1 felipe felipe 64 Jun 14 14:00 8 -> pipe:[240799]
+>lrwx------ 1 felipe felipe 64 Jun 14 14:00 9 -> socket:[242784]
+>
+>Hence a malicious program can take control of Monkey HTTP request response
+>through a network socket related file descriptor, etc.
+>
+>
+>Report
+>------
+>http://bugs.monkey-project.com/ticket/187
+>
+>
+>CREDITS
+>-------
+>Felipe Pena
+>
+>--
+>Regards,
+>Felipe Pena
