@@ -1,17 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/21
-Message-ID: <50FD9BFE.1030908@googlemail.com>
-Date: Mon, 21 Jan 2013 19:50:22 +0000
-From: Scott Herbert <scott.a.herbert@...glemail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/8
+Message-ID: <20130614190200.GB29731@hunt>
+Date: Fri, 14 Jun 2013 12:02:00 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Whats worth a CVE?
+Subject: Re: CVE request: FD leakage for cgi program on Monkey HTTPD
 Content-Type: text/plain; charset=utf-8
 
-Well the subject sum's the question up really, are their any fixed
-guidelines for what counts as a CVE and what doesn't? Or is it just up
-to the CVE pool manager as to what they feel is of note?
+On Fri, Jun 14, 2013 at 06:20:59PM +0000, Christey, Steven M. wrote:
+> Felipe,
+> 
+> Sorry if this is a dumb question.
+> 
+> If you are using "file descriptor leak" in the sense of "malicious
+> parties can directly access the file descriptor" - then that doesn't
+> seem to be the case here, because permissions are limited only to you.
 
+I seem to recall this issue came up for Apache around a decade back; it
+also forgot to close the listening sockets before executing CGI scripts.
 
+These sorts of events brought about a general consensus that scripts
+or other programmable code executed directly by the webserver was by
+definition completely trusted. If you don't trust the CGIs or plugin
+modules as much as the webserver, you'd run them via FastCGI as another
+user or otherwise use the webserver as a proxy in front of the services.
 
+Yes, a CGI could accept() connections on those sockets and generally
+muck things up -- but they already run with the full privileges of the
+webserver.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (554 bytes)
+The Monkey folks probably should use close-on-exec on their file
+descriptors for simple reliability reasons. And this should probably
+not get a CVE -- unless the Monkey server documentation claims there is
+a trust boundary between the server and CGIs. I'd be surprised.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
