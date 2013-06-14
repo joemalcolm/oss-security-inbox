@@ -1,19 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/5
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF090684C1@IMCMBX01.MITRE.ORG>
-Date: Thu, 28 Mar 2013 15:44:09 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "plugins@...dpress.org" <plugins@...dpress.org>
-Subject: RE: WordPress plugins vulnerable to CVE-2013-1808
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/12
+Message-ID: <51BB76DA.2000307@redhat.com>
+Date: Fri, 14 Jun 2013 14:02:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Felipe Pena <felipensp@...il.com>
+Subject: Re: CVE request: FD leakage for cgi program on Monkey HTTPD
 Content-Type: text/plain; charset=utf-8
 
-Henri,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It appears that CVE-2013-1463 was previously assigned to an issue that was claimed to exist in WP-Table Reloaded and fixed by that module developer, but the attack vector involves the id parameter to js/tabletools/zeroclipboard.swf, so this is likely a duplicate.  Can you confirm?
+On 06/14/2013 11:24 AM, Felipe Pena wrote:
+> I've identified a fd leakage when running a program via Monkey
+> HTTPD - CGI plugin.
+> 
+> By runninng `ls -lah /proc/<pid>/fd/` on the CGI program we can
+> see:
+> 
+> total 0 dr-x------ 2 felipe felipe 0 Jun 14 14:00 . dr-xr-xr-x 8
+> felipe felipe 0 Jun 14 14:00 .. lr-x------ 1 felipe felipe 64 Jun
+> 14 14:00 0 -> pipe:[239545] l-wx------ 1 felipe felipe 64 Jun 14
+> 14:00 1 -> pipe:[239546] lrwx------ 1 felipe felipe 64 Jun 14 14:00
+> 10 -> anon_inode:[eventpoll] lr-x------ 1 felipe felipe 64 Jun 14
+> 14:00 11 -> pipe:[242960] lrwx------ 1 felipe felipe 64 Jun 14
+> 14:00 12 -> anon_inode:[eventpoll] lrwx------ 1 felipe felipe 64
+> Jun 14 14:00 13 -> anon_inode:[eventpoll] lrwx------ 1 felipe
+> felipe 64 Jun 14 14:00 14 -> anon_inode:[eventpoll] lrwx------ 1
+> felipe felipe 64 Jun 14 14:00 15 -> anon_inode:[eventpoll] 
+> lrwx------ 1 felipe felipe 64 Jun 14 14:00 16 ->
+> anon_inode:[eventpoll] lrwx------ 1 felipe felipe 64 Jun 14 14:00
+> 17 -> anon_inode:[eventpoll] lrwx------ 1 felipe felipe 64 Jun 14
+> 14:00 18 -> anon_inode:[eventpoll] lrwx------ 1 felipe felipe 64
+> Jun 14 14:00 19 -> anon_inode:[eventpoll] l-wx------ 1 felipe
+> felipe 64 Jun 14 14:00 2 -> /dev/null lrwx------ 1 felipe felipe 64
+> Jun 14 14:00 3 -> socket:[240797] lrwx------ 1 felipe felipe 64 Jun
+> 14 14:00 4 -> 
+> /home/felipe/audit/monkey/monkey/logs/monkey.pid.2001 lr-x------ 1
+> felipe felipe 64 Jun 14 14:00 5 -> pipe:[240798] l-wx------ 1
+> felipe felipe 64 Jun 14 14:00 6 -> pipe:[240798] lr-x------ 1
+> felipe felipe 64 Jun 14 14:00 7 -> pipe:[240799] l-wx------ 1
+> felipe felipe 64 Jun 14 14:00 8 -> pipe:[240799] lrwx------ 1
+> felipe felipe 64 Jun 14 14:00 9 -> socket:[242784]
+> 
+> Hence a malicious program can take control of Monkey HTTP request
+> response through a network socket related file descriptor, etc.
+> 
+> 
+> Report ------ http://bugs.monkey-project.com/ticket/187
+> 
+> 
+> CREDITS ------- Felipe Pena
+> 
+> -- Regards, Felipe Pena
+> 
 
-If this is a duplicate, we have an unusual situation for how to resolve it.  The older CVE, CVE-2013-1463, is much more widely used than the newer CVE-2013-1808, which would argue for keeping the older CVE-2013-1463.  However, because that older CVE focuses on the wrong product, and CVE-2013-1808 is referenced in Red Hat's Bugzilla and thus "more authoritative," this would argue for keeping CVE-2013-1808.
+Please use CVE-2013-2183 for this issue.
 
-- Steve
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-
+iQIcBAEBAgAGBQJRu3baAAoJEBYNRVNeJnmT43AQAM3dKQboBCzZHlze5g3QQld0
+XyUeyoN3AIqAPLtUADDAX4hbKdf6xEtL9dx172XFEA0LDGFzK+saPHrF5WePziow
+4GXk1Ejqm+gYgEOyobXYuHw3EgmPXp4KF3uSIqjTOt4MRzpmLYyZYy2YQA0LVwtX
+iXTdEwl3ozF/N70RrCV9BwVGBV9tN3a1cQshn+3ywDETcyqwUL53G3rb8FDs7tDI
+R/zwJNGXjHYbCU1+TVLywwhTSnvLECeLo2ejNJc5i7XUqMHwoSrU9vPtLWiBY9gF
+tFZoVgbU6EI1Y42eBbja+hxKZK3jryLZSgZG6nlXazuMl7TY5q5nDvqFd8Dz36vy
+C/35TIWv2vXysJBRnT0DGv01h7+1/sB3Ze7qJYs6BlUQumkVOOHVaX1o7GHTQ6mB
+ltKnuBS9LIMYG3iHuTavSsd0egjbwLguzxSbONQWeQHwyi0/UZZu5M2uwM+5Nhgt
+skRyr+n8MOwoRhskUH4//j4JOsF2OY8bQiq43wQXe0r1+oQbJVYouYn3FaBXTiAi
+EVa80hW9wDFk/uqXmX85WVcSx+T9NytKazByrBN107Y7tYMNFHh/TdIuPypTkqcx
+TVEaoXnYUkK4I3jSAZKPkNdQo7Iw0oJV+7ClOUdNcO7qkOkO2sFxuyZffZi19/7L
+u2i9lLOoW+/cVb/yEoG4
+=UYLs
+-----END PGP SIGNATURE-----
