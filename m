@@ -1,49 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/30/1
-Message-ID: <52994079.1040106@redhat.com>
-Date: Fri, 29 Nov 2013 18:33:45 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: UnrealIRCd remote DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/7
+Message-ID: <CA+5g0SK70uFgQHTPv03nk7kpJmH855+GdPRoE+Xvosz6NiG=6A@mail.gmail.com>
+Date: Fri, 14 Jun 2013 15:40:54 -0300
+From: Felipe Pena <felipensp@...il.com>
+To: "Christey, Steven M." <coley@...re.org>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: FD leakage for cgi program on Monkey HTTPD
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 11/29/2013 04:12 AM, Henri Salo wrote:
-> Can I get two CVEs for new issues in UnrealIRCd, thank you.
-> 
-> Release notification:
-> http://forums.unrealircd.com/viewtopic.php?f=2&t=8221 Release
-> notes:
-> http://www.unrealircd.com/txt/unreal3_2_10_2_release_notes.txt 
-> Fixed in: 3.2.10.2 Secunia: http://secunia.com/advisories/55839/
-> 
-> http://osvdb.org/100353 Unspecified NULL Pointer Dereference Remote
-> DoS http://osvdb.org/100352 Unspecified Use-after-free Remote DoS
-> 
-> --- Henri Salo
-> 
+2013/6/14 Christey, Steven M. <coley@...re.org>:
+> Felipe,
+>
+> Sorry if this is a dumb question.
+>
+> If you are using "file descriptor leak" in the sense of "malicious parties can directly access the file descriptor" - then that doesn't seem to be the case here, because permissions are limited only to you.
+>
+> If you are using "file descriptor leak" in the sense of "the program does not close a file after opening it, consuming too many file descriptors," then how can a program take control of Monkey HTTPD?
+>
+> - Steve
+>
+>
 
-Please use CVE-2013-6413  for this issue.
+Actually the server is running using my user, because this you see my
+name as user there.
+I just did a test running the server as root, it used the user in the
+configuration file, but the cgi program still using the same user than
+the server.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+On my PoC (which uses leaked networkd socket fd to accepts connections
+and write to them) I just was able to write the response to the next
+requests instead of the HTTPD server.
 
-iQIcBAEBAgAGBQJSmUB5AAoJEBYNRVNeJnmT9zQP/1AuGRu1IW0E8xDmJsM2ss/E
-wbBsj8gE8UVe0lc0OfT5SaSqeTR1OYOow8GwtQBhCqiR9BxSezrJ7i9Ssi4TwlQ+
-mxTuR8RXbyu1yh5nuGHWXoLZJb+mMS5hdCkZPhirhRU2ttoO1qUNocth2Z39ZaYf
-rm4Ws1z0M2haqJ4XzjADsoBTqXVb69HzkyKkQnRWkNYRCItc+DOxDuIt7zWYTI8L
-x+kV8M6cbBemTJEw9lMwF6mmWpMPyx82k5tLH/9lwzccivo9WwwAczLdwno/U0v/
-ZFE0thODkfbkJbuI8NA6iXeOcW5A6g4fn4fHbf5GAL66EgDSFVabxAUOKcz+1ayC
-SxjHRGHJuMhecgWjL2bixgUSFfDzkXA7vyn3pr0BMdD0fCSu5+yx9w2jPyeMY5AY
-Ol8GbPGO3F2eM/afJH31XHRUzBSdl2IY1gyuVYa9iGMR5Ug2fP3JZjwX5SUXN7j2
-kuQMOcWMsv8/mmqmK+BltFGlmCxYPwMHBBQijR/kHWKhs5sL/o5rX3a5DmyjhkLo
-jgp6Qv+7IXy/ki1uEcq1yUqd02lb+Ir4GWc/yUNUJyAFNNRGbYDtC0pwYlJqZYvY
-GwlE1tUD9l7wrcBO6CThxZHtMPXPuCoDGj+/PrQISAog/DSqu4Olt6ycQg5d1ECC
-FTHFRQyPFQViUvOg+JxW
-=ZjS9
------END PGP SIGNATURE-----
+
+>>-----Original Message-----
+>>From: Felipe Pena [mailto:felipensp@...il.com]
+>>Sent: Friday, June 14, 2013 1:24 PM
+>>To: oss-security@...ts.openwall.com
+>>Subject: [oss-security] CVE request: FD leakage for cgi program on Monkey
+>>HTTPD
+>>
+>>I've identified a fd leakage when running a program via Monkey HTTPD -
+>>CGI plugin.
+>>
+>>By runninng `ls -lah /proc/<pid>/fd/` on the CGI program we can see:
+>>
+>>total 0
+>>dr-x------ 2 felipe felipe 0 Jun 14 14:00 .
+>>dr-xr-xr-x 8 felipe felipe 0 Jun 14 14:00 ..
+>>lr-x------ 1 felipe felipe 64 Jun 14 14:00 0 -> pipe:[239545]
+>>l-wx------ 1 felipe felipe 64 Jun 14 14:00 1 -> pipe:[239546]
+>>lrwx------ 1 felipe felipe 64 Jun 14 14:00 10 -> anon_inode:[eventpoll]
+>>lr-x------ 1 felipe felipe 64 Jun 14 14:00 11 -> pipe:[242960]
+>>lrwx------ 1 felipe felipe 64 Jun 14 14:00 12 -> anon_inode:[eventpoll]
+>>lrwx------ 1 felipe felipe 64 Jun 14 14:00 13 -> anon_inode:[eventpoll]
+>>lrwx------ 1 felipe felipe 64 Jun 14 14:00 14 -> anon_inode:[eventpoll]
+>>lrwx------ 1 felipe felipe 64 Jun 14 14:00 15 -> anon_inode:[eventpoll]
+>>lrwx------ 1 felipe felipe 64 Jun 14 14:00 16 -> anon_inode:[eventpoll]
+>>lrwx------ 1 felipe felipe 64 Jun 14 14:00 17 -> anon_inode:[eventpoll]
+>>lrwx------ 1 felipe felipe 64 Jun 14 14:00 18 -> anon_inode:[eventpoll]
+>>lrwx------ 1 felipe felipe 64 Jun 14 14:00 19 -> anon_inode:[eventpoll]
+>>l-wx------ 1 felipe felipe 64 Jun 14 14:00 2 -> /dev/null
+>>lrwx------ 1 felipe felipe 64 Jun 14 14:00 3 -> socket:[240797]
+>>lrwx------ 1 felipe felipe 64 Jun 14 14:00 4 ->
+>>/home/felipe/audit/monkey/monkey/logs/monkey.pid.2001
+>>lr-x------ 1 felipe felipe 64 Jun 14 14:00 5 -> pipe:[240798]
+>>l-wx------ 1 felipe felipe 64 Jun 14 14:00 6 -> pipe:[240798]
+>>lr-x------ 1 felipe felipe 64 Jun 14 14:00 7 -> pipe:[240799]
+>>l-wx------ 1 felipe felipe 64 Jun 14 14:00 8 -> pipe:[240799]
+>>lrwx------ 1 felipe felipe 64 Jun 14 14:00 9 -> socket:[242784]
+>>
+>>Hence a malicious program can take control of Monkey HTTP request response
+>>through a network socket related file descriptor, etc.
+>>
+>>
+>>Report
+>>------
+>>http://bugs.monkey-project.com/ticket/187
+>>
+>>
+>>CREDITS
+>>-------
+>>Felipe Pena
+>>
+>>--
+>>Regards,
+>>Felipe Pena
+
+
+
+--
+Regards,
+Felipe Pena
