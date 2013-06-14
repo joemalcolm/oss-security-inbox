@@ -1,38 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/10/2
-Message-ID: <CANTw=MOK60+A2PHkY6O08OJshY2nnV6v_DX4o1GvRpmubTCEGA@mail.gmail.com>
-Date: Wed, 10 Apr 2013 12:21:14 -0400
-From: Michael Gilbert <mgilbert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/4
+Message-ID: <CA+5g0SKE=J8m=P2FsXk8HdzJdxwAxXVa-uVhPaD5eTUxAhLMnQ@mail.gmail.com>
+Date: Fri, 14 Jun 2013 14:22:27 -0300
+From: Felipe Pena <felipensp@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Any info on dovecot CVE-2010-0535?
+Subject: CVE request: Bypass protected directory by Monkey HTTPD - Mandril security plugin
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 8, 2013 at 7:02 PM, Geoff Keating wrote:
-> On 07/04/2013, at 6:29 pm, Michael Gilbert <mgilbert@...ian.org> wrote:
->
->> I'm in the process of reviewing some older untriaged issues in the
->> Debian security tracker.  I came across this Apple id (CVE-2010-0535)
->> in dovecot.  Being Apple advisory, there is absolutely no useful
->> information included, but based on the text, the issue is dependent on
->> Kerberos.
->>
->> I found no other dovecot CVEs involving Kerberos, so the question I
->> have is whether this is still currently an unfixed issue affecting
->> dovecot?  Was it Apple-specific?
->
-> Hi Michael,
->
-> This is Apple-specific.  It affects the db-od auth method.
+Monkey HTTPD - Mandril security plugin
+Mandril is a plugin which provides a security layer to Monkey through
+rules which can be applied to the request URI or by network address.
 
-Thank you very much for the information.
+A vulnerability was found in the way as the URI are validated. The plugin check
+the configuration rules against possible encoded URIs.
 
->> Generally, what can be done by
->> distro security teams about issues with no actionable information?
->> Would Mitre be willing to nudge Apple for information?
->
-> Apple's on this list so you can always just ask...
+PoC
+---
 
-Good to know, thank you for participating.
+Configuration sample:
+[RULES]
+Deny_URL /test/
 
-Best wishes,
-Mike
+To bypass such rule, we just need to make a request like:
+http://yourhost/%2ftest/
+
+
+Report
+------
+http://bugs.monkey-project.com/ticket/186
+
+
+CREDITS
+-------
+Felipe Pena
+
+--
+Regards,
+Felipe Pena
