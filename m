@@ -1,32 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/06/3
-Message-ID: <alpine.LFD.2.10.1312061913410.4862@javelin.pnq.redhat.com>
-Date: Fri, 6 Dec 2013 19:16:01 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: Linux kernel: net: fib: fib6_add: potential NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/14
+Message-ID: <1371246029.4482.57.camel@goat.lightspeed>
+Date: Fri, 14 Jun 2013 16:40:29 -0500
+From: John Lightsey <john@...nuts.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: FD leakage for cgi program on Monkey HTTPD
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+On Fri, 2013-06-14 at 12:02 -0700, Seth Arnold wrote: 
+> On Fri, Jun 14, 2013 at 06:20:59PM +0000, Christey, Steven M. wrote:
+> > Felipe,
+> > 
+> > Sorry if this is a dumb question.
+> > 
+> > If you are using "file descriptor leak" in the sense of "malicious
+> > parties can directly access the file descriptor" - then that doesn't
+> > seem to be the case here, because permissions are limited only to you.
+> 
+> I seem to recall this issue came up for Apache around a decade back; it
+> also forgot to close the listening sockets before executing CGI scripts.
+> 
+> These sorts of events brought about a general consensus that scripts
+> or other programmable code executed directly by the webserver was by
+> definition completely trusted. If you don't trust the CGIs or plugin
+> modules as much as the webserver, you'd run them via FastCGI as another
+> user or otherwise use the webserver as a proxy in front of the services.
+> 
+> Yes, a CGI could accept() connections on those sockets and generally
+> muck things up -- but they already run with the full privileges of the
+> webserver.
 
-Linux kernel built with the IPv6 protocol(CONFIG_IPv6) along with the IPv6 
-source address based routing support(CONFIG_IPV6_SUBTREE) is vulnerable to a 
-NULL pointer dereference flaw. It could occur while doing an ioctl(SIOCADDRT) 
-call on an IPv6 socket. User would need to have CAP_NET_ADMIN privileges to 
-perform such a call.
+CGI scripts don't run with the full privileges of the webserver. They
+typically run with the privileges appropriate to a container inside the
+webserver (a combination of virtualhost configuration directives, URL
+address space, document root and  uid/gid.)
 
-A user/program with CAP_NET_ADMIN privileges could use this flaw to crash a
-system resulting in DoS.
+A user on the server that can edit CGI scripts in one context shouldn't
+be able to take over other contexts on the same system. How would shared
+hosting and userdir be possible if CGI scripts were allowed to do this?
 
-Upstream fix:
--------------
-  -> https://git.kernel.org/linus/ae7b4e1f213aa659aedf9c6ecad0bf5f0476e1e2
+You could certainly argue that some webservers are not written to
+support shared hosting or userdir style functionality, but Monkey
+clearly is written to support it.
 
-Reference:
-----------
-  -> https://bugzilla.redhat.com/show_bug.cgi?id=1039054
+I don't see how this issue is very different from CVE-2012-4442 and
+CVE-2012-4443. Do you believe those CVEs were not appropriate?
+
+> 
+> The Monkey folks probably should use close-on-exec on their file
+> descriptors for simple reliability reasons. And this should probably
+> not get a CVE -- unless the Monkey server documentation claims there is
+> a trust boundary between the server and CGIs. I'd be surprised.
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
