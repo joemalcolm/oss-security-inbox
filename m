@@ -1,35 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/9
-Message-ID: <alpine.LFD.2.03.1301171502050.24132@redhat.com>
-Date: Thu, 17 Jan 2013 17:21:33 +0530 (IST)
-From: P J P <ppandit@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/17/4
+Message-ID: <20130617224021.GA27916@kroah.com>
+Date: Mon, 17 Jun 2013 15:40:21 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-cc: kargig@...d.gr
-Subject: Re: Linux kernel handling of IPv6 temporary addresses
+Subject: Re: CVE Request: Linux - ext4 support
 Content-Type: text/plain; charset=utf-8
 
-+-- On Wed, 16 Jan 2013, George Kargiotakis wrote --+
-|        valid_lft 131007sec preferred_lft 65471sec
-|  inet6 fd00:966b:7196:c731:222:aaff:fecc:1111/64 scope global tentative dynamic 
-|        valid_lft 131007sec preferred_lft 65471sec
-| 
-| what I also find wrong here is that all temporary addresses (dynamic) 
-| acquired have gotten the same last 64bits. I don't think this is OK per RFC 
-| 4941 even if not explicitly defined there. Every temp. address created 
-| should be different per prefix from the rest.
+On Mon, Jun 17, 2013 at 11:52:47PM +0200, Jonathan Salwan wrote:
+> On Mon, Jun 17, 2013 at 10:29 PM, Greg KH <greg@...ah.com> wrote:
+> > On Mon, Jun 17, 2013 at 10:12:34PM +0200, Jonathan Salwan wrote:
+> >> Hi,
+> >>
+> >> Could you assign a CVE for this issue please?
+> >>
+> >> https://bugzilla.redhat.com/show_bug.cgi?id=971170
+> >
+> > I thought we (the ext4 developers and kernel security team) discussed
+> > this and determined that a user could _not_ trigger this problem.  Or
+> > was I mistaken as to the output of that conversation?
+> >
+> > thanks,
+> >
+> > greg k-h
+> 
+> Only with CAP_SYS_RESOURCE indeed.
 
-   True, the last few bits of the addresses are same as the IPv6 address of 
-the host, with scope::global, but no tentative dynamic bits set. Plus network 
-becomes unreachable till I reboot the host.
+So, given that this really isn't a viable issue, why do you need a CVE?
 
-| use_tempaddr for the iface still has '2' as its value
-| # cat /proc/sys/net/ipv6/conf/eth0/use_tempaddr 
-| 2
+confused,
 
-   This value is always 0, before ifconfig eth0 down and after ifconfig eth0 
-up.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+greg k-h
