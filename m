@@ -1,56 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/25/4
-Message-ID: <5293C3A4.2060700@redhat.com>
-Date: Mon, 25 Nov 2013 14:39:48 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/17/5
+Message-ID: <20130617224101.GA4968@1wt.eu>
+Date: Tue, 18 Jun 2013 00:41:01 +0200
+From: Willy Tarreau <w@....eu>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Kernel MSM - Memory leak in drivers/base/genlock.c
+Subject: CVE-2013-2175 : haproxy may crash when using header occurrences relative to the tail
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 11/25/2013 05:12 AM, Jonathan Salwan wrote:
-> Hello,
-> 
-> The Genlock driver does not properly initialize all members of a
-> structure before copying it to user space. This allows a local
-> attacker to obtain potentially sensitive information from kernel
-> stack memory via ioctl system calls.
+David Torgerson reported an haproxy crash with enough traces to diagnose
+the cause as being related to the use of a negative occurrence number in
+a header extraction, which is used to extract an entry starting from the
+last occurrence.
 
-This should be classified as CWE-200 Information Disclosure, "memory
-leak" refers to memory being used and not released properly, resulting
-in out of memory conditions.
+--- summary ---
 
-> 
-> Upstream fixes: 
-> https://www.codeaurora.org/cgit/quic/la/kernel/msm/commit/drivers/base/genlock.c?id=e3c43027bdb59f03eec7ead0a01c77e4bf801625&h=jb_3.2.3
->
->  Could you please assign a CVE id for this issue?
-> 
-> Thanks,
-> 
-> - Jonathan
+Configurations at risk are those which make use of "hdr_ip(name,-1)" (in
+1.4) or any hdr_* variant with a negative occurrence count in 1.5, or
+the "usesrc hdr_ip(name)" statement in both 1.4 and 1.5. These
+configurations may be crashed when run with haproxy 1.4.4 to 1.4.23 or
+development versions up to and including 1.5-dev18. Versions 1.4.24 and
+1.5-dev19 are safe.
 
-Please use CVE-2013-6392 for this issue.
+--- quick workaround ---
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+A workaround consists in rejecting dangerous requests early using
+hdr_cnt(<name>), which is available both in 1.4 and 1.5 :
+    
+       block if { hdr_cnt(<name>) ge 10 }
 
-iQIcBAEBAgAGBQJSk8OkAAoJEBYNRVNeJnmTlEUP/1TrJoUCoRFq3Yq6y60Yzc0J
-W0xPsRy4HvT74bXg0VzwymuzIue9LqzzDlEFPSPDPDF3iEpXiLCOjLwvhu7FE03X
-YSnfCqIcTtaMDUBsFNDCq5Ze7I82O8ttu3ThSqaURcS8BPKYNqhJ3U+lUh8CUI1k
-myMbAmec+pUvg2HhEd8eeL3VIL2TmbIK8weI19EM9JdV/pG1m4lwpKXcui7L68ax
-F6kX9ZLsETN0OL5DXthKStg79eD/8rO5gptQ/Ks1QqRooUzzeTW9iCTlQ8qHrpEz
-V7o/2M4nKNVvneBnDXDQrTSo4+xiMSm74BA/k5qdm8nWHJOHXFUJD+m+F9Cgfjap
-YKAxqOrIUzCz/8ffm3En+yMdXcZyALfHqMauLzRIumNkzGrVHZsZKHus76hHNd4B
-SbUoosGKUw9ZBhajE3KIzjnir6kVnz2GS7HCL3RvTt0/Hbqfo8Q8dOYrM/Ffxj08
-0MiWQ3epvuwrvsSYzcA3kSA9eytnKiv/qqDO1Y7w5vhqJNf5Tkh6I1gN9IaC/ZYV
-dVGCRxMQwqeLH6enMXZrEmb/y5ko0gS68AW6fA8K/7PH1GGBofyh1a0ufDQx0rQW
-iLjZ++Swo6k16LUHIY2o1G3mBfqdeGizC4tOrWfK4DTFJFoZFK+K7zfkw09YoS/B
-rt7xxAwqZzf9TA90DQEs
-=htq/
------END PGP SIGNATURE-----
+--- details ---
+
+When a config makes use of hdr_ip(x-forwarded-for,-1) or any such thing
+involving a negative occurrence count, the header is still parsed in the
+order it appears, and an array of up to MAX_HDR_HISTORY entries is created.
+When more entries are used, the entries simply wrap and continue this way.
+    
+A problem happens when the incoming header field count exactly divides
+MAX_HDR_HISTORY, because the computation removes the number of requested
+occurrences from the count, but does not care about the risk of wrapping
+with a negative number. Thus we can dereference the array with a negative
+number and randomly crash the process.
+    
+The bug is located in http_get_hdr() in haproxy 1.5, and get_ip_from_hdr2()
+in haproxy 1.4. It affects configurations making use of one of the following
+functions with a negative <value> occurence number :
+    
+   - hdr_ip(<name>, <value>)  (in 1.4)
+   - hdr_*(<name>, <value>)   (in 1.5)
+    
+It also affects "source" statements involving "hdr_ip(<name>)" since that
+statement implicitly uses -1 for <value> :
+    
+   - source 0.0.0.0 usesrc hdr_ip(<name>)
+    
+This bug has been present since the introduction of the negative offset
+count in 1.4.4 via commit bce70882.
+
+CVE-2013-2175 was assigned to this bug.
+
+Special thanks to David Torgerson who provided a significant number of
+traces, and to Ryan O'Hara from Red Hat for providing a CVE id.
+    
+--- links ---
+ 1.4-stable patch for version <= 1.4.23 :
+ http://git.1wt.eu/web?p=haproxy-1.4.git;a=commitdiff;h=f534af74ed
+ 1.4.24 source code: 
+ http://haproxy.1wt.eu/download/1.4/src/haproxy-1.4.24.tar.gz
+ 
+ 1.5-dev patch for versions <= 1.5-dev18 :
+ http://git.1wt.eu/web?p=haproxy.git;a=commitdiff;h=67dad2715b
+ 1.5-dev19 source code:
+ http://haproxy.1wt.eu/download/1.5/src/devel/haproxy-1.5-dev19.tar.gz
+
+Please check with your distro vendor for packaged updates.
+
+Thanks,
+Willy Tarreau
+
