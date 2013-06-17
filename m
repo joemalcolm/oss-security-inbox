@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/02/2
-Message-ID: <20130202141521.GP21775@kludge.henri.nerv.fi>
-Date: Sat, 2 Feb 2013 16:15:21 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/17/3
+Message-ID: <CAEmQOhB9=_LXeJHk6U3WymYvNZaoEKnUAfN3zV1qir5W=R7yOQ@mail.gmail.com>
+Date: Mon, 17 Jun 2013 23:52:47 +0200
+From: Jonathan Salwan <jonathan.salwan@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: A small backlog of vulnerabilities in Chicken Scheme
+Subject: Re: CVE Request: Linux - ext4 support
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Feb 02, 2013 at 02:59:03PM +0100, Peter Bex wrote:
-> Recently a handful of security bugs have been found and fixed in the
-> Chicken Scheme compiler (http://www.call-cc.org).  We (the core team)
-> have decided we'd like to start using CVE identifiers for the benefit
-> of our users and distributions.
+On Mon, Jun 17, 2013 at 10:29 PM, Greg KH <greg@...ah.com> wrote:
+> On Mon, Jun 17, 2013 at 10:12:34PM +0200, Jonathan Salwan wrote:
+>> Hi,
+>>
+>> Could you assign a CVE for this issue please?
+>>
+>> https://bugzilla.redhat.com/show_bug.cgi?id=971170
+>
+> I thought we (the ext4 developers and kernel security team) discussed
+> this and determined that a user could _not_ trigger this problem.  Or
+> was I mistaken as to the output of that conversation?
+>
+> thanks,
+>
+> greg k-h
 
-Nice!
+Only with CAP_SYS_RESOURCE indeed.
 
-> I'd also like to know if it's possible to get CVE numbers assigned
-> *before* issuing a security advisory, but without immediate full
-> disclosure, so an initial advisory can be complete with CVE number.
-> The CVE can be updated afterwards with the link to the advisory when
-> it is issued.  This should make it easier for users to find information
-> about the bug.  This list's Openwall wiki seems to imply that it's
-> only possible to request a CVE for an issue given all the information
-> immediately, but a recent message from Kurt Seifried in a thread about
-> Jenkins says that it can be done.  If it's indeed okay to e-mail Kurt
-> directly, it would be helpful to include this in the documentation wiki.
 
-http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
+Thanks,
 
---
-Henri Salo
+-- Jonathan
