@@ -1,67 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/8
-Message-ID: <52090D2F.9050908@redhat.com>
-Date: Mon, 12 Aug 2013 10:28:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/17/1
+Message-ID: <CAEmQOhBx55Mu0PoB8J7=a3U1ZZWXez9hrn5W_qSdLOV-e+v6ow@mail.gmail.com>
+Date: Mon, 17 Jun 2013 22:12:34 +0200
+From: Jonathan Salwan <jonathan.salwan@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>
-Subject: Re: CVE Request -- glibc: Buffer overwrite when using readdir_r on file systems returning file names longer than NAME_MAX characters
+Subject: CVE Request: Linux - ext4 support
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 08/11/2013 07:05 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> An out-of buffer bounds write flaw was found in the way
-> readdir_r() routine of glibc, the collection of GNU libc libraries,
-> used to handle file system entry when its name was longer than
-> NAME_MAX characters constant, defined by Linux kernel (readdir_r()
-> used to put content of the directory read into application's
-> allocated buffer, possibly [NTFS or CIFS filesystems for example]
-> leading to application's buffer overwrite]. A remote-attacker could
-> provide a specially-crafted NTFS or CIFS image that, when processed
-> in an application using the readdir_r() functionality, would lead
-> to that application crash or, potentially, arbitrary code execution
-> with the privileges of the user running the application.
-> 
-> This issue was found by Florian Weimer of Red Hat Product Security
-> Team.
-> 
-> Upstream bug report: [1]
-> http://sourceware.org/bugzilla/show_bug.cgi?id=14699
-> 
-> Latest patch proposal: [2]
-> http://sourceware.org/ml/libc-alpha/2013-05/msg00445.html
-> 
-> References: [3] https://bugzilla.redhat.com/show_bug.cgi?id=995839
-> 
-> Can you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
+Could you assign a CVE for this issue please?
 
-Please use CVE-2013-4237 for this issue.
+https://bugzilla.redhat.com/show_bug.cgi?id=971170
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Thanks,
 
-iQIcBAEBAgAGBQJSCQ0uAAoJEBYNRVNeJnmTTpoP/08f7bwbfwOkWmDUhHFy/27N
-uQ2j2N0uH1r7kkjwH6Ja7wDUryzxfUqbZ9rW06YTPNCT0WYVcFJVXSPNyczavvYT
-esB5/FaLTa8HwgrctJuHkamE97Dy7MQ+E0SdoGC0lBdnpJETw8A1MtIdZPNl4dow
-dLcw1jspGQZ+vOqxlVQPVqaMVkw6CakADtUeryPWK3SeTnCl4mOMYxiy3z+Vk1bE
-+6W8pkGOG9xg+wqw7dyTABRLIIeiRVgqajv5HH2rEt8WUkEGmrq0uI0mnWIOckmy
-yDUPcXqyLd2p8xXGAEHWmD6QHpvWdebeq51G2PUprqDtnA6DFUg3Lf8rpZGf4d8x
-Etqjudiq9qbXHcFv9S1MPTc2zX6hhS5z4GJfYD+Yq9s00d/36X5KVRAwML+sFLWm
-lWlIzGzkS2WbEymOwdWw6FpMfu/4pCRocrkSFbSAfB15Co1ZanwubdAXq5EFz/mP
-/SB3KpxsUzZe0WIuH7pZcvv3xfEFYqL4E4CspiHp/fMd+7V9tyvzJRzr9QXpCC8Q
-FxK5Xmry2tBb04o0W/VHp2q1gTTnNtbRxfIMT036+ZY//ThBZzH9y8AQ6pKuKlLa
-vriEvPvOCBf0QeO4bB9Y4DbXI3jnHWloVH06EdzXf5buuJ5tA8HzZ/vFleZYkAOh
-btIzbXUBFEHeDVCoI2Jo
-=JpTI
------END PGP SIGNATURE-----
+-- Jonathan
