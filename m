@@ -1,25 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/23/6
-Message-ID: <alpine.LFD.2.03.1304231819510.21349@redhat.com>
-Date: Tue, 23 Apr 2013 18:22:25 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: cve-assign@...re.org
-Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/17/2
+Message-ID: <20130617202929.GA26673@kroah.com>
+Date: Mon, 17 Jun 2013 13:29:29 -0700
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux - ext4 support
 Content-Type: text/plain; charset=utf-8
 
-+-- On Tue, 23 Apr 2013, Mathias Krause wrote --+
-| net/socket.c, I guess. The copy_from_user is followed by verify_iovec() that 
-| sets msg_name to "addr" -- a kernel stack variable.
+On Mon, Jun 17, 2013 at 10:12:34PM +0200, Jonathan Salwan wrote:
+> Hi,
+> 
+> Could you assign a CVE for this issue please?
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=971170
 
-  Ah yep, right!
- 
-| Please ask your colleagues at RedHat for any further explanations of
-| the code. AFAIK, oss-sec is no kernel hacker newbie forum ;)
+I thought we (the ext4 developers and kernel security team) discussed
+this and determined that a user could _not_ trigger this problem.  Or
+was I mistaken as to the output of that conversation?
 
-   Yep, okay. Sorry to bother you.
+thanks,
 
-Thanks so much.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+greg k-h
