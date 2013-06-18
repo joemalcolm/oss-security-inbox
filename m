@@ -1,39 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/01/1
-Message-ID: <1238924710.19834042.1359736012433.JavaMail.root@redhat.com>
-Date: Fri, 1 Feb 2013 11:26:52 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Fabio Di Nitto <fdinitto@...hat.com>, Jan Friesse <jfriesse@...hat.com>
-Subject: CVE Request -- Corosync (X < 2.0.3): Remote DoS due improper HMAC initialization and improper junk filtering when different encryption keys used
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/5
+Message-ID: <20130618062412.GA22313@inutil.org>
+Date: Tue, 18 Jun 2013 08:24:12 +0200
+From: Moritz Muehlenhoff <jmm@...til.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: Thoughts on a vuln/CVE?
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On Tue, Jun 18, 2013 at 12:04:30AM -0600, Kurt Seifried wrote:
 
-  Corosync upstream has recently released 2.0.3 version correcting
-one security issue:
+> http://bits.debian.org/2013/06/remove-debian-multimedia.html
 
-A denial of service flaw was found in the way Corosync,
-the cluster engine and application programming interfaces,
-performed processing of certain network packets, when different
-encryption keys were used. Previously the HMAC key was not initialized
-properly, which allowed certain packets to pass through to the internal
-phases of the Corosync packet validation process, possibly leading
-to corosync daemon crash.
+[..]
 
-References:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=906834
-[2] http://lists.fedoraproject.org/pipermail/package-announce/2013-January/097833.html
-[3] http://lwn.net/Vulnerabilities/535234/
-[4] https://bugs.mageia.org/show_bug.cgi?id=8905
+> We have software with a now insecure configuration as it points to a
+> site that may or may not be under attacker control. It seems to me
+> like this might be a candidate for a CVE. Thoughts and comments for
+> and against are welcome (I'm on the fence myself).
 
-The HMAC initialization has been corrected in upstream via:
-[5] https://github.com/corosync/corosync/commit/b3f456a8ceefac6e9f2e9acc2ea0c159d412b595
+No way. This is not an insecure configuration: This was never a Debian 
+service and people are free to put whatever they want in /etc/apt/sources.list. 
+There are hundreds of external apt sources and everyone of them could have
+their owner changed at some point.
 
-but there might be more changes needed (Cc-in Fabio and Jan).
+Also there's no security issue: If a domain is grabbed and someone configures
+an apt repository on the site, he/she would lack the repository key previously
+used to sign the repo.
 
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Cheers,
+        Moritz
