@@ -1,63 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/7
-Message-ID: <529F404F.1070608@canonical.com>
-Date: Wed, 04 Dec 2013 08:46:39 -0600
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/7
+Message-ID: <51C01CC5.9070108@redhat.com>
+Date: Tue, 18 Jun 2013 10:39:33 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>, security <security@...ntu.com>,  xorg_security@...rg
-Subject: Re: CVE Request: xorg-server and pixman
+Subject: CVE request: gnome-shell crash, screen unlock on resume
 Content-Type: text/plain; charset=utf-8
 
-On 12/04/2013 01:09 AM, Murray McAllister wrote:
-> On 12/04/2013 03:32 PM, Kurt Seifried wrote:
->> On 12/03/2013 10:54 AM, Jamie Strandboge wrote:
->>
->>> Hi,
->>
->>> This bug has been public since August but I could find a CVE for
->>> it: https://launchpad.net/bugs/1197921
->>
->>> There are two bugs - Xorg can be made to crash and pixman can
->>> trigger the aformentioned Xorg crash. A simplified reproducer is in
->>> the pixman patches with another reproducer in the Launchpad bug.
->>> The xorg
->>
->>> xorg-server - exa: only draw valid trapezoids The patch was
->>> submitted in October but doesn't seem to be applied yet, so I'm 
->>> CC'ing xorg_security. Patch references the pixman f.d.o bug, but
->>> doesn't seem to have an associated xorg bug. 
->>> http://patchwork.freedesktop.org/patch/14769/ 
->>> http://lists.x.org/archives/xorg-devel/2013-October/037996.html
->>
->>> Pixman - Corrupted CustomShape crashes Xorg 
->>> https://bugs.freedesktop.org/show_bug.cgi?id=67484 Patch: -
->>> 5e14da97f16e421d084a9e735be21b1025150f0c (fix) -
->>> 2f876cf86718d3dd9b3b04ae9552530edafe58a1 (test case)
->>
->>> Thanks!
->>
->>
->> So only x.org crashes, you can trigger it via X.org, or via pixman? or
->> is pixman also crashing?
->>
->>
-> 
-> From https://bugs.freedesktop.org/show_bug.cgi?id=67484 and
-> http://patchwork.freedesktop.org/patch/14769/ it sounded like it would
-> affect both 1) crash an application using pixman 2) crash the X server
-> 
-> Is that correct?
-> 
+Upstream GNOME recently fixed a bug that could crash gnome-shell 
+immediately after resume:
 
-AIUI, this is correct. See:
-https://bugs.launchpad.net/ubuntu/+source/xorg-server/+bug/1197921/comments/28
+https://bugzilla.gnome.org/show_bug.cgi?id=701974
 
-"No, it really is a bug in pixman too. I just fixed the same comparison that
-happens in xorg-server, but pixman is still affected."
+As noted here, the impact is that after resume, the password entry 
+dialog disappears and the user is dropped into the pre-existing X session:
 
+https://bugzilla.redhat.com/show_bug.cgi?id=954054
+
+I haven't figured out the exact trigger conditions, but this has 
+happened to me a couple of times since switching to Fedora 19 last 
+weekend.  It does not appear to be a once-in-a-blue-moon bug.
+
+I think this needs to be tracked as a security bug because screen 
+locking is a security feature (which is part of many security policies).
 
 -- 
-Jamie Strandboge                 http://www.ubuntu.com/
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
+Florian Weimer / Red Hat Product Security Team
