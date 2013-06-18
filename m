@@ -1,18 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/5
-Message-ID: <20130409064119.GB10990@mwanda>
-Date: Tue, 9 Apr 2013 09:41:19 +0300
-From: Dan Carpenter <dan.carpenter@...cle.com>
-To: P J P <ppandit@...hat.com>
-Cc: oss security list <oss-security@...ts.openwall.com>, Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/11
+Message-ID: <20130618165347.GS21784@sentinelchicken.org>
+Date: Tue, 18 Jun 2013 09:53:47 -0700
+From: Tim <tim-security@...tinelchicken.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: Thoughts on a vuln/CVE?
 Content-Type: text/plain; charset=utf-8
 
-Ah...  Good point.  You've got me there.
+> However my original question still stands, can/should we consider a
+> common configuration of software that goes from being secure to
+> insecure to be worthy of a CVE? A lot of things that used to be common
+> practice (like shipping every service/server enabled, all accounts
+> active, all access enabled, anonymous uploads allowed, etc.) are now
+> seen as security vulnerabilities/exposures.
 
-I don't know which arches are affected by this information leak or
-even if there are any.
+To me, it's a big grey area as far as assigning a CVE for stuff like
+this.
 
-regards,
-dan carpenter
+But there's no reason we shouldn't raise awareness through venues like
+the various CERTs.  Though it seems US-CERT is only really good at
+re-sending microsoft and apple advisories these days. =(
 
+tim
