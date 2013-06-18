@@ -1,68 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/26/2
-Message-ID: <521B3238.6050602@mccme.ru>
-Date: Mon, 26 Aug 2013 14:47:20 +0400
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/9
+Message-ID: <51C02DBD.6000507@debian.org>
+Date: Tue, 18 Jun 2013 10:51:57 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: HTTPS
+Subject: Re: Thoughts on a vuln/CVE?
 Content-Type: text/plain; charset=utf-8
 
-On 2013-08-15 10:38, gremlin@...mlin.ru wrote:
-> On 14-Aug-2013 14:59:12 -0600, Kurt Seifried wrote:
->  > everyone should be enabling HTTPS where possible,
+On 18/06/13 07:44, Kurt Seifried wrote:
+> As for the security of the repo key proving that it it is safe/not 
+> compromised would be hard, I'm guessing it wasn't held on an HSM,
+> and was it securely destroyed, or?
 
-I agree.
+In this case the repository key is the former maintainer's personal
+PGP key, which it appears he uses to sign deb-multimedia.org (the same
+set of packages as the former debian-multimedia.org). I would assume
+that it is unlikely to be held on a HSM, but I don't see any reason
+why it would now be less safe than it was while debian-multimedia.org
+was active.
 
-> Very dangerous mistake. HTTPS should be used only for non-anonymous
-> access, otherwise plain HTTP is preferred. 
+Anyone who doesn't/didn't trust the maintainer of that repository (and
+in particular, anyone who doesn't/didn't trust him to store keys
+securely) shouldn't have added that repository's key as "trusted" in
+the first place.
 
-Alexey,
-
-I kinda shared this sentiment several years ago (when I used tools like
-Privoxy for my personal content filtering) but not any more. The time
-has changed. Wifi usage is widespread and more untrusted networks are
-used in general, I think. ISPs are inserting ads in Web traffic [1][2].
-Tor becomes more popular (and every exit node is in mitm position).
-Projects like "HTTPS Everywhere" are gaining moment. And privacy is
-taken much more seriously in general. And so on. And don't forget recent
-(and not so recent) NSA spying scandals:-)
-
-[1] https://www.cs.washington.edu/research/security/web-tripwire.html
-[2] http://bits.blogs.nytimes.com/2012/04/06/courtyard-marriott-wifi/
-
-The situation with corporate networks could be somewhat different but
-IMHO not very much.
-
-[skip]
-
->  > intercepting and modifying HTTP is trivial.
-> 
-> Yes. But intercepting and modifying HTTPS requires just an ability
-> to issue client-trusted certificates (sufficient for 99% of HTTPS
-> applications), so the content signing should always be preferred
-> over distributor validation.
-
-Content signing by whom? Whose signature would you trust when you
-install a random gem? Will you manually hunt keys for authors of all
-packages and their dependencies, blindly trust any signatures, or what?
-
-OTOH HTTPS prevents at least two attacks (by an attacker in mitm
-position) that plain content signing doesn't:
-- replay attack (downgrade to known-vulnerable version) [3];
-- DoSing client by sending data forever in response to any file request [4].
-
-[3]
-https://cs.arizona.edu/stork/packagemanagersecurity/attacks-on-package-managers.html
-[4]
-https://cs.arizona.edu/stork/packagemanagersecurity/otherattacks.html#endlessdata
-
-But don't take me wrong, I'm not proposing to use HTTPS instead of code
-signing at all. Both seem to complement each other rather well.
-
-All,
-
-is there any description of the state-of-the-art approach to software
-updating?
-
--- 
-Alexander Cherepanov
+    S
