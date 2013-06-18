@@ -1,38 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/05/8
-Message-ID: <20131105235033.GC2471@redhat.com>
-Date: Tue, 5 Nov 2013 16:50:33 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: additional fix for CVE-2012-2825 libxslt crash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/12
+Message-ID: <20130618164125.GA21737@inutil.org>
+Date: Tue, 18 Jun 2013 18:41:25 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Thoughts on a vuln/CVE?
 Content-Type: text/plain; charset=utf-8
 
-* [2013-11-05 23:29:08 +0100] Marcus Meissner wrote:
+On Tue, Jun 18, 2013 at 12:44:09AM -0600, Kurt Seifried wrote:
+> Also part of my thought process is that (for example) this would be a
+> good configuration to check for and ensure is disabled, something for
+> SCAP for example or the Debian security guide (e.g. a generic "make
+> sure all enabled repos are actually working as expected").
 
->On Tue, Nov 05, 2013 at 11:17:21PM +0100, Florian Weimer wrote:
->> * Vincent Danen:
->>
->> > The reason this doesn't crash for me on Red Hat Enterprise Linux 5 which
->> > ships 1.1.17 is because we included this patch (well, the developer did)
->> > a day after the initial build with the comment:
->> >
->> > - CVE-2012-2825 requires an extra patch on 1.1.17
->> >
->> > So, I think this does require a second CVE.
->>
->> Has anyone shipped an incomplete update?  If yes, then I think we
->> actually need a second CVE.  In the past, we got them for similar
->> cases, and at least Debian's tracking more or less assumes that it's
->> possible to assign CVEs to deal with such corner cases.
->
->SUSE did, otherwise we would not have noticed :/
+Debian doesn't endorse any external repository. During package installation
+the pre/post installation scripts run with root privs. As such, if you
+enable a repository you trust the people behind that repository with
+the equivalent to root access to your system anyway.
 
-Heh.
-
-The other point is that CVE-2012-2825 affected before and after 1.1.25,
-whereas this one really only affects < 1.1.25 so it's either a different
-flaw or that commit (fixed in 1.1.25) is actually an incomplete fix, and
-CVE-2012-2825 is the "fix of the fix" CVE.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Cheers,
+        Moritz
