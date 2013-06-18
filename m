@@ -1,87 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/15
-Message-ID: <20130614235037.GA32705@hunt>
-Date: Fri, 14 Jun 2013 16:50:37 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/4
+Message-ID: <8761xc54b4.fsf@windlord.stanford.edu>
+Date: Mon, 17 Jun 2013 23:19:27 -0700
+From: Russ Allbery <rra@...nford.edu>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: FD leakage for cgi program on Monkey HTTPD
+Subject: Re: Thoughts on a vuln/CVE?
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 14, 2013 at 04:40:29PM -0500, John Lightsey wrote:
-> > These sorts of events brought about a general consensus that scripts
-> > or other programmable code executed directly by the webserver was by
-> > definition completely trusted. If you don't trust the CGIs or plugin
-> > modules as much as the webserver, you'd run them via FastCGI as another
-> > user or otherwise use the webserver as a proxy in front of the services.
-> > 
-> > Yes, a CGI could accept() connections on those sockets and generally
-> > muck things up -- but they already run with the full privileges of the
-> > webserver.
-> 
-> CGI scripts don't run with the full privileges of the webserver. They
-> typically run with the privileges appropriate to a container inside the
-> webserver (a combination of virtualhost configuration directives, URL
-> address space, document root and  uid/gid.)
+Kurt Seifried <kseifried@...hat.com> writes:
 
-"Document root" means nothing without an enforcement mechanism from the
-OS, such as:
+> We have software with a now insecure configuration as it points to a
+> site that may or may not be under attacker control. It seems to me like
+> this might be a candidate for a CVE. Thoughts and comments for and
+> against are welcome (I'm on the fence myself).
 
-- Running with a different user id that has different rights
-- Running with a different security context (via a MAC system such as
-  AppArmor, SELinux, SMACK, TOMOYO, Trusted Solaris, etc.) that has
-  different rights.
-- Running with a different seccomp2 profile to turn off certain system
-  calls.
-- Running in an OS-supplied container such as lxc, OpenVZ, or BSD Jail
-- Running in a virtualized environment where the virtualizing system in
-  place can provide confinement in conjunction with one of the above.
+It's possibly worth noting that the repository that was at that site was
+signed and had been for some years, and the key was not compromised.  So
+not only would the site need to be taken over by an attacker for a
+successful exploit, but the affected user would have to ignore the copius
+warnings that APT produces when installing packages from an untrusted
+archive, or have configured APT to not check repository signatures.
 
-This is why the php "safe open" functionality was such a joke. It was
-never safe, under any definition that a user might use. The webserver's
-idea of the "webroot" in no way influences anything any CGI script ever
-does. Ever. :)
-
-> A user on the server that can edit CGI scripts in one context shouldn't
-> be able to take over other contexts on the same system. How would shared
-> hosting and userdir be possible if CGI scripts were allowed to do this?
-
-A single web server providing CGIs that can be run by multiple users in
-different contexts is one thing -- Apache's suEXEC mechanism, for
-example.
-
-I don't see anything on the Monkey website that suggests it is remotely
-reasonable to use for serving CGIs from users with differing levels of
-trust:
-http://www.monkey-project.com/about
-
-> You could certainly argue that some webservers are not written to
-> support shared hosting or userdir style functionality, but Monkey
-> clearly is written to support it.
-> 
-> I don't see how this issue is very different from CVE-2012-4442 and
-> CVE-2012-4443. Do you believe those CVEs were not appropriate?
-
-CVE-2012-4442 and CVE-2012-4443 (failure to drop supplementary gids,
-failure to drop root uid and gid when running CGIs, for those reading
-along at home) were probably appropriate for two reasons: (a) Monkey
-probably made some effort at dropping privileges and just screwed it up
-in the same way everyone else did a decade earlier (b) no one expects a
-webserver to run as root once it has bound its sockets. Even a webserver
-claimed to be "lightweight" is _expected_ to drop all the unneeded
-privileges once running.
-
-But not all webservers are expected to try to enforce running CGIs with
-different security boundaries. Apache chose to try, and faults in their
-suEXEC ought to be allocated CVEs. I don't see anything on the Monkey
-website to document any suEXEC-alike functionality.
-
-Obviously Kurt disagreed with me and allocated a CVE :) so in some sense
-this whole discussion is now hypothetical.
-
-If Monkey _does_ claim to provide a secure way to execute CGIs owned by
-different users, then a CVE is surely warranted. Does Monkey claim to be
-a secure way to execute code from untrusted sources?
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+-- 
+Russ Allbery (rra@...nford.edu)             <http://www.eyrie.org/~eagle/>
