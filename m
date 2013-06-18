@@ -1,164 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/5
-Message-ID: <517E2294.5050504@redhat.com>
-Date: Mon, 29 Apr 2013 01:34:44 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Jason Wang <jasowang@...hat.com>, Kurt Seifried <kseifrie@...hat.com>, aliguori@...ibm.com, mst@...hat.com, qemu-devel@...gnu.org, oss-security@...ts.openwall.com
-Subject: Re: Re: [PATCH 1/3] virtio-pci: properly validate address before accessing config
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/10
+Message-ID: <CACyjiAg3SJvNsuYHJP_1QGkz6gK_uZeX+MaSJTo5Uhf2OZpbMA@mail.gmail.com>
+Date: Tue, 18 Jun 2013 11:16:34 +0100
+From: Dave Walker <davewalker@...ntu.com>
+To: oss-security@...ts.openwall.com
+Cc: kseifried@...hat.com
+Subject: Re: Thoughts on a vuln/CVE?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 04/28/2013 05:29 AM, Petr Matousek wrote:
-> On Sat, Apr 27, 2013 at 01:13:16PM +0800, Jason Wang wrote:
->> On 04/26/2013 10:27 PM, Petr Matousek wrote:
->>> On Fri, Apr 26, 2013 at 04:34:02PM +0800, Jason Wang wrote:
->>>> There are several several issues in the current checking:
->>>> 
->>>> - The check was based on the minus of unsigned values which
->>>> can overflow - It was done after .{set|get}_config() which
->>>> can lead crash when config_len is zero since vdev->config is
->>>> NULL
->>>> 
->>>> Fix this by:
->>>> 
->>>> - Validate the address in virtio_pci_config_{read|write}()
->>>> before .{set|get}_config - Use addition instead minus to do
->>>> the validation
->>>> 
->>>> Cc: Michael S. Tsirkin <mst@...hat.com> Cc: Petr Matousek
->>>> <pmatouse@...hat.com> Signed-off-by: Jason Wang
->>>> <jasowang@...hat.com> --- hw/virtio/virtio-pci.c |    9
->>>> +++++++++ hw/virtio/virtio.c     |   18 ------------------ 2
->>>> files changed, 9 insertions(+), 18 deletions(-)
->>>> 
->>>> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c 
->>>> index a1f15a8..7f6c7d1 100644 --- a/hw/virtio/virtio-pci.c 
->>>> +++ b/hw/virtio/virtio-pci.c @@ -400,6 +400,10 @@ static
->>>> uint64_t virtio_pci_config_read(void *opaque, hwaddr addr, } 
->>>> addr -= config;
->>>> 
->>>> +    if (addr + size > proxy->vdev->config_len) { +
->>>> return (uint32_t)-1; +    } +
->>> What is the range of values addr can be? I guess it's not
->>> arbitrary and not fully in guests hands. Can it be higher than
->>> corresponding pci config space size?
->> 
->> Not fully in guests hands. It depends on size the config size. 
->> Unfortunately, qemu will roundup the size to power of 2 in 
->> virtio_pci_device_plugged():
->> 
->> size = VIRTIO_PCI_REGION_SIZE(&proxy->pci_dev) +
->> virtio_bus_get_vdev_config_len(bus);
->> 
->> if (size & (size - 1)) { size = 1 << qemu_fls(size); }
->> 
->> So, for virtio-rng, though its region size is 20, it will be
->> rounded up to 32, which left guest the possibility to access
->> beyond the config space. So some check is needs in
->> virito_pci_config_read().
-> 
-> Ok, in that case it would make sense to document the preconditions
-> that assures that addr + size won't overflow. Or add the values in
-> a safe way (check that the sum is not less than one of the
-> addend).
-> 
->>> IOW, can guest touch anything interesting or will all accesses
->>> end in the first page in the qemu address space, considering
->>> vdev->config being NULL?
->>> 
->> 
->> There's another theoretical issue as pointed by Anthony, see 
->> virtio_config_writew():
->> 
->> void virtio_config_writew(VirtIODevice *vdev, uint32_t addr,
->> uint32_t data) { uint16_t val = data;
->> 
->> if (addr > (vdev->config_len - sizeof(val))) return;
->> 
->> stw_p(vdev->config + addr, val);
->> 
->> if (vdev->set_config) vdev->set_config(vdev, vdev->config); }
->> 
->> If there's a device whose config_len is 1, the check will fail
->> and we can access some other location.
->> 
->> But since virtio-rng has zero config length and addr here should
->> be less than 12, and all other device's config length is all
->> greater than 4. Only first page could be access here.
-> 
-> So the only practical attack (virtio-rng device that has config
-> length 0) can only end in the first page of qemu address space
-> which is on any not-so-much recent kernel protected by
-> mmap_min_addr and will result in qemu process crash. Access to pci
-> config space is privileged operation, so root user in the guest can
-> crash the guest (something that root can do anyways).
-> 
-> Don't get me wrong, we still need the fix to avoid any potential
-> issues in the future, but I'm leaning towards not treating this
-> issue as a security (CVE) one due to the lack of practical
-> exploitability.
-> 
-> @Kurt -- do we assign CVE identifiers to issues that rely on an
-> option (or lack of) that when set in a way that would allow the
-> issue in question to be exploited is known to be insecure?
-> 
-> References: 
-> https://lists.gnu.org/archive/html/qemu-devel/2013-04/msg05013.html
+On 18 June 2013 07:44, Kurt Seifried <kseifried@...hat.com> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 >
-> 
-https://bugzilla.redhat.com/show_bug.cgi?id=957155
-> 
-> The option is mmap_min_addr which assures that no mapping can be
-> present at the beginning of the address space and all accesses will
-> result in sigsegv. Default setting of mmap_min_addr is enough to
-> avoid this issue from having security consequences. Disabling
-> mmap_min_addr (setting to 0) means that some if not all of the
-> "kernel NULL pointer dereferences" out there could be used for
-> privilege escalation.
-> 
-> Thanks,
-> 
+> On 06/18/2013 12:24 AM, Moritz Muehlenhoff wrote:
+>> On Tue, Jun 18, 2013 at 12:04:30AM -0600, Kurt Seifried wrote:
+>>
+>>> http://bits.debian.org/2013/06/remove-debian-multimedia.html
+>>
+>> [..]
+>>
+>>> We have software with a now insecure configuration as it points
+>>> to a site that may or may not be under attacker control. It seems
+>>> to me like this might be a candidate for a CVE. Thoughts and
+>>> comments for and against are welcome (I'm on the fence myself).
+>>
+>> No way. This is not an insecure configuration: This was never a
+>> Debian service and people are free to put whatever they want in
+>> /etc/apt/sources.list. There are hundreds of external apt sources
+>> and everyone of them could have their owner changed at some point.
+>>
+>> Also there's no security issue: If a domain is grabbed and someone
+>> configures an apt repository on the site, he/she would lack the
+>> repository key previously used to sign the repo.
+>>
+>> Cheers, Moritz
+>>
+>
+> Ah thanks, I forgot about that (I don't use Debian that often). So
+> with the signing key requirement in mind this is not a vuln.
+>
+> However my original question still stands, can/should we consider a
+> common configuration of software that goes from being secure to
+> insecure to be worthy of a CVE? A lot of things that used to be common
+> practice (like shipping every service/server enabled, all accounts
+> active, all access enabled, anonymous uploads allowed, etc.) are now
+> seen as security vulnerabilities/exposures.
+>
+> As for the security of the repo key proving that it it is safe/not
+> compromised would be hard, I'm guessing it wasn't held on an HSM, and
+> was it securely destroyed, or?
+>
+> Also part of my thought process is that (for example) this would be a
+> good configuration to check for and ensure is disabled, something for
+> SCAP for example or the Debian security guide (e.g. a generic "make
+> sure all enabled repos are actually working as expected").
+>
+>
 
-Ok so this does NOT affect Linux systems using mmap_min_addr with a
-sane default value (e.g. larger than 0). However more than a few
-systems have shipped with mmap_min_addr set to 0, not picking on
-Debian, just the first result I found:
+Hey,
 
-http://wiki.debian.org/mmap_min_addr
+If a weakness in Debian's package management system signature
+verification was identified recently, then this specific issue of
+debian-multimedia deserves dedicated attention as it would be a useful
+contributing vector; but until then - this isn't an documentable
+exposure risk IMO.
 
-"In Debian 5.0.0 through 5.0.3 inclusive, the 2.6.26 kernel is shipped
-with a default mmap_min_addr of '0'."
+Comparing to the definition we use for 'Exposure', a "system
+configuration issue" certainly fits the grounds to be assigned a CVE
+identifier, but arbitrary package archives which are signed are not
+tied to a specific host (re-mirroring is often encouraged), as the
+assurance is provided by the signature - not by any means of
+transport.
 
-Hopefully everyone has upgraded to 5.0.4 =).
+I think the direction Kurt is moving towards is making sure every
+distro is thinking what would happen if a popular update domain
+changes ownership, is this case considered?  If a CVE identifier helps
+make this co-ordinated, then - well, there have been worse uses for
+identifiers. :).
 
-So there is a realistic potential for systems to be affected (e.g. if
-this had been fixed 10 years ago I'd have probably not given a CVE,
-but 3 years is not a super long time).
-
-Please use CVE-2013-2016 for virtio-pci: properly validate address
-before accessing config.
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRfiKUAAoJEBYNRVNeJnmTcQ0P/iCx/Wz1piIDwvtcEHDrrgJK
-pSEztM+1RUC8fsqPjwyaOijupGhMMtmtfJpuhlNnzNUSaWpX7p75d7JMMOWsTztI
-wkxOPIso0Zrj7susqYrg7Qiw6G9FJ6sTZFcSWbWFFHieMiVZZMZ0zKe8Vqh1gnv6
-cy8OPIDPRT7mkj8lRhYvvzZjIA4S4cNs3DCSvqYn/vwVX/XQI7IQ9f5zz6wrCjLm
-prZjHKzZj1MO6C0HLdTw7TWd/gauhbPRyxn13Kb7sk6CeoAx1ip2AX6pS5xILLPE
-RV55j46MRosqr9C+V9I2ljQTkRUATLbIM8ny7mxHwB1JYtSn6djL3ID4GJz5Q3RY
-TiCiLACqlahxOWv3UDtx60+mOeiZvhE8gP8TS4LexeqIYIuppP93xq1NHZgqYcQT
-q/YXxTXBQ/oueXXd2ktiiHwCyWj8FIqnsEIUIDSifpXmlbLPtVxD4MDmqHm+P34m
-e4Po3kD/y5AO04qy7M1TbyHunIOXBzQnAmNlzAD4Iw/ou0PSuZP8hB+ZCtJUObKv
-BxHXsLGieHmgZ/7qkkxLw9XAZtW6A9Fu+0yHoU7Ur60YQTg/urZhAuFSv6Cm8vti
-YRq/xL2+GWG5SzKOBPJ28TUy1bpb3m0tg4bhzzqo8ikruKXr/RhvsQ2BPDaA47F0
-oN6qXXGSlpx3XlpE29sr
-=IDuh
------END PGP SIGNATURE-----
+-- 
+Kind Regards,
+Dave Walker
