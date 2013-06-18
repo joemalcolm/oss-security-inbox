@@ -1,97 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/20/7
-Message-Id: <201305202300.r4KN0fd2006073@linus.mitre.org>
-Date: Mon, 20 May 2013 19:00:41 -0400 (EDT)
-From: cve-assign@...re.org
-To: gerald@...eshark.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: CVE assignments for Wireshark 1.8.7 and 1.6.15
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/6
+Message-ID: <51C001B9.4020307@redhat.com>
+Date: Tue, 18 Jun 2013 00:44:09 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Moritz Muehlenhoff <jmm@...til.org>
+Subject: Re: Thoughts on a vuln/CVE?
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
->8) http://www.wireshark.org/security/wnpa-sec-2013-24.html
+On 06/18/2013 12:24 AM, Moritz Muehlenhoff wrote:
+> On Tue, Jun 18, 2013 at 12:04:30AM -0600, Kurt Seifried wrote:
+> 
+>> http://bits.debian.org/2013/06/remove-debian-multimedia.html
+> 
+> [..]
+> 
+>> We have software with a now insecure configuration as it points
+>> to a site that may or may not be under attacker control. It seems
+>> to me like this might be a candidate for a CVE. Thoughts and
+>> comments for and against are welcome (I'm on the fence myself).
+> 
+> No way. This is not an insecure configuration: This was never a
+> Debian service and people are free to put whatever they want in
+> /etc/apt/sources.list. There are hundreds of external apt sources
+> and everyone of them could have their owner changed at some point.
+> 
+> Also there's no security issue: If a domain is grabbed and someone
+> configures an apt repository on the site, he/she would lack the
+> repository key previously used to sign the repo.
+> 
+> Cheers, Moritz
+> 
 
-Use CVE-2013-3555.
+Ah thanks, I forgot about that (I don't use Debian that often). So
+with the signing key requirement in mind this is not a vuln.
 
+However my original question still stands, can/should we consider a
+common configuration of software that goes from being secure to
+insecure to be worthy of a CVE? A lot of things that used to be common
+practice (like shipping every service/server enabled, all accounts
+active, all access enabled, anonymous uploads allowed, etc.) are now
+seen as security vulnerabilities/exposures.
 
->7) http://www.wireshark.org/security/wnpa-sec-2013-25.html
+As for the security of the repo key proving that it it is safe/not
+compromised would be hard, I'm guessing it wasn't held on an HSM, and
+was it securely destroyed, or?
 
-Use CVE-2013-3556 for the Bug 8599 issue addressed in r48943.
+Also part of my thought process is that (for example) this would be a
+good configuration to check for and ensure is disabled, something for
+SCAP for example or the Debian security guide (e.g. a generic "make
+sure all enabled repos are actually working as expected").
 
-Use CVE-2013-3557 for the Bug 8599 issue addressed in r48944.
-
-It is possible that CVE-2013-3556 only affects people who made their
-own builds from the Wireshark trunk, and does not affect users of any
-Wireshark release. Although MITRE does not always assign CVE names for
-such development-code issues, in this case it is useful for clarifying
-the scope of CVE-2013-3557.
-
-
->6) http://www.wireshark.org/security/wnpa-sec-2013-26.html
-
-Use CVE-2013-3558.
-
-
->5) http://www.wireshark.org/security/wnpa-sec-2013-27.html
-
-Use CVE-2013-3559.
-
-
->4) http://www.wireshark.org/security/wnpa-sec-2013-28.html
-
-Use CVE-2013-3560.
-
-
->3) http://www.wireshark.org/security/wnpa-sec-2013-29.html
-
-Use CVE-2013-3561 for the Bug 8448 issue. Note that this CVE is shared
-with issues covered by wnpa-sec-2013-30 and wnpa-sec-2013-31.
-
-Use CVE-2013-3562 for the Bug 8449 issue.
-
-
->2) http://www.wireshark.org/security/wnpa-sec-2013-30.html
-
-Use CVE-2013-3561. Note that this CVE is shared with issues covered by
-wnpa-sec-2013-31 and (part of) wnpa-sec-2013-29.
-
-
->1) http://www.wireshark.org/security/wnpa-sec-2013-31.html
-
-Use CVE-2013-3561. Note that this CVE is shared with issues covered by
-wnpa-sec-2013-30 and (part of) wnpa-sec-2013-29.
-
-
->9) http://www.wireshark.org/security/wnpa-sec-2013-23.html
-
->   Further Note regarding 9):
->   The CVE-2013-2486 && CVE-2013-2487 identifiers
->   have been originally assigned for the 9) issue for the
->   fix in v1.8.6. The patch should contain two patches,
->   but only one was applied. Not sure if a new CVE identifier
->   should be assigned for this case.
-
-See comment 13 in Wireshark bug 8364. CVE-2013-2486 is about revision
-47805, and CVE-2013-2487 is about revision 47808 (an issue with a
-different discoverer than 47805). MITRE will later publish an update
-to the information about affected versions within our CVE-2013-2486
-description.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJRmqrWAAoJEGvefgSNfHMdVh4IAI/dNMaSwwJeaxSNybuk0aLd
-sgfat0n3gWsjc9gvtmovzXs0gd5VpfKk2ObvTWCuJnIyhyDW5nGgPd1Bj+Qs46/t
-6JTcdud0UXfuzjGU2O1OlrRpX8YxqpUNP8RJfgwDSWGeijlE0W5j3/nVBCCwzoHO
-QyPARoC92dS0Vi6HOsDljHJHamGLL48X1+b10y6KxR4Q3g6s78fKjottI9THrUUj
-F5m8oNIb90FI6luIf7zW6egNR4uNvULjJOiLbLCZvvKn+9+82legQsAy9STwph2q
-QIcDuGyGqL06QSKubjYyafog1WWnhk/+dwdQcP2/Z3iK5Z3uJi2IMOZFiEanbpg=
-=9leG
+iQIcBAEBAgAGBQJRwAG5AAoJEBYNRVNeJnmTzDYP/1FG8ALLhiHpoqbBvnrYymfi
+g5De/gVZdn9BGmloP5qFEOtywzxZtEruToQ76ztyf1gCUPjAh8gQrUGFJMNl0n/d
+zgRTOyzHH1U5KBLF9PhZzyxx9thGpBvlJzlgdwnRqOj40qRVAai+SEWVtdiR9Qtg
+4VNDGXKhetuDP4MRhnYjfgCsCJ8WPtbICBhc7g328BtN3SmYc02feXYMFGHr/VfM
+Xn7n5KsANFnI0exVhTP8foFXwaQELBpz0R45J2EvocJnTdLLlSvbr1KQJBRzb5pC
+q0A0EIWn7B/ymqqmsqR/hs+xulqSZ2J0vumZvpXNAWVIjtynoAOIM0a3WO3iSb4L
+xE2pNTr9LOnnq9F6r2U+sU60cWMZu/hLJkt+iDwmIT2vpOZ8TmFjAJfPPFaxvYXb
+IJeqvmxlwcb91sj73yoagBFzBByRo4Ka7akUrrO40lW4GsqjQOlwKkvQsrE/4hv6
+QttA1UW1VcdcrqfNXAVncXwkyEH2wS3lJT/6z05eOcC+Ca8EKNO1W2/3CT7lM0Zi
+ig5VQGqyX/zJTstS7iR2sJNryA/HsFhsrPt05cRxyc99zB1GY4rRWuioU0foyS3D
+V9YzZLJb9c5djZPkwqDo0XrTdeuQCDBy1cgk1pjCaTjj+uCxugwJnXyfNts49oIp
+xW1cbTD0akaJx9imbztz
+=ZYhI
 -----END PGP SIGNATURE-----
