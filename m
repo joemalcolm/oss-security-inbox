@@ -1,41 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/22/2
-Message-ID: <528F7F00.6010704@openstack.org>
-Date: Fri, 22 Nov 2013 16:57:52 +0100
-From: Thierry Carrez <thierry@...nstack.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE request for a vulnerability in OpenStack Ceilometer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/1
+Message-ID: <51BFC25A.80009@redhat.com>
+Date: Mon, 17 Jun 2013 20:13:46 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Greg KH <greg@...ah.com>, "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE Request: Linux - ext4 support
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although
-an advisory was not sent yet.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-"""
-Title: Ceilometer DB2/MongoDB backend password leak
-Reporter: Eric Brown (IBM)
-Products: Ceilometer
-Affects: All supported versions
+On 06/17/2013 04:40 PM, Greg KH wrote:
+> On Mon, Jun 17, 2013 at 11:52:47PM +0200, Jonathan Salwan wrote:
+>> On Mon, Jun 17, 2013 at 10:29 PM, Greg KH <greg@...ah.com>
+>> wrote:
+>>> On Mon, Jun 17, 2013 at 10:12:34PM +0200, Jonathan Salwan
+>>> wrote:
+>>>> Hi,
+>>>> 
+>>>> Could you assign a CVE for this issue please?
+>>>> 
+>>>> https://bugzilla.redhat.com/show_bug.cgi?id=971170
+>>> 
+>>> I thought we (the ext4 developers and kernel security team)
+>>> discussed this and determined that a user could _not_ trigger
+>>> this problem.  Or was I mistaken as to the output of that
+>>> conversation?
+>>> 
+>>> thanks,
+>>> 
+>>> greg k-h
+>> 
+>> Only with CAP_SYS_RESOURCE indeed.
+> 
+> So, given that this really isn't a viable issue, why do you need a
+> CVE?
+> 
+> confused,
+> 
+> greg k-h
+> 
 
-Description:
-Eric Brown from IBM reported an information leak in Ceilometer logs. The
-password for the DB2 or MongoDB backends was logged at INFO level in the
-ceilometer-api logs. An attacker with access to the logs (local shell,
-log aggregation system access, or accidental leak) may leverage this
-vulnerability to elevate privileges and gain direct full access to the
-Ceilometer backend. Only Ceilometer setups using the DB2 or MongoDB
-backends are affected.
-"""
+Looking at man capabilities:
 
-References:
-https://bugs.launchpad.net/ceilometer/+bug/1244476
+CAP_SYS_RESOURCE
+* Use reserved space on ext2 file systems;
+* override disk quota limits;
+* increase resource limits (see setrlimit(2));
+* override RLIMIT_NPROC resource limit;
 
-Thanks in advance,
-
--- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
+so it would seem a user/process with this capability can DoS the
+system regardless. However in this case would it be possible for the
+attacker to trigger a DoS that is difficult (if not impossible) to
+trace back to the attacker? In this case it might qualify for a CVE,
+but I'd also want to get Steven's thoughts (cc'ed directly).
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRv8JaAAoJEBYNRVNeJnmT3l0P/iMLejdRhqWNNjJXav1y00Bk
+Wqd8U0gS69N8yUB8L56HcXVKCFt0qaM5CpN+HJ/q2Hiu1SDA1db9hK33JG13QvG+
+X90HD2LUzDT2ZE3ILQ7OTu0OxhmFUMxdnXFojN91YsLbY0iWNpSnx6hhk9dZI1uD
+U4OPP8Dd0TjFOVsZRkalhhn/1ppMFOUMmY/0zhU2v7dt4S3D4chpfxCDLEI5lDNs
+x7Mj3pHiQa1dzITmQSvlQh0Yp2d373ShepUPTHiK7R/2qYI8kSqe8MF4vGIwvt/0
+mved8Hstf6/Y7NMu5j6pPwcxUw8CodgWHSS/EvL7uQ+rTeZGh7499BZgBnSLz1Vt
+noXo3JmZijQ75rqxLk5lZBTl6t2PHYxDtxvPhpOwVbrxhCWxJL9ucjbe1mjOQZml
+jKaDr+fOm8K8V19DCW3hByMGx/eBykNUbwpHawA210y/k/Ez0nylK/mL8bCfom5p
+NLy0u6Uqq9SahjFQ6e22itpJcTmeW4FXpLId62uegIA4Bpz/gIbRVliP+FWlc5ze
+BYKjbeBgfWIfiRv2ZvnF1B6WYmQGD06kEcm3ESW6GUGTj/8Mesm2lP6zoKuSWvLA
+A5/ExkQlV85m5xr7KPs/+ejWstFd1Rf4TV3AxiyDWgojNe4Q1e5D0/7SI4Ejg7XE
+ztTTYMAgzWYPp3D9KUAu
+=YKK0
+-----END PGP SIGNATURE-----
