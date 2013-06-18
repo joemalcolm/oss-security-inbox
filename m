@@ -1,83 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/2
-Message-ID: <520C45CF.4020400@redhat.com>
-Date: Wed, 14 Aug 2013 21:06:55 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/8
+Message-ID: <51C02219.5080200@redhat.com>
+Date: Tue, 18 Jun 2013 11:02:17 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, security@...o3.org
-Subject: Re: CVE request: TYPO3 remote code execution by arbitrary file creation TYPO3-CORE-SA-2013-002
+Subject: Re: Thoughts on a vuln/CVE?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 06/18/2013 08:44 AM, Kurt Seifried wrote:
+> However my original question still stands, can/should we consider a
+> common configuration of software that goes from being secure to
+> insecure to be worthy of a CVE? A lot of things that used to be common
+> practice (like shipping every service/server enabled, all accounts
+> active, all access enabled, anonymous uploads allowed, etc.) are now
+> seen as security vulnerabilities/exposures.
 
-On 08/14/2013 10:26 AM, Henri Salo wrote:
-> Can we assign CVE for remote code execution by arbitrary file
-> creation vulnerability in TYPO3, thanks.
-> 
-> http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2013-002/
->
-> 
-Advisory ID: TYPO3-CORE-SA-2013-002
-> Vulnerable subcomponent: Backend File Upload / File Abstraction
-> Layer Vulnerability Type: Remote Code Execution by arbitrary file
-> creation Affected Versions: All versions from 6.0.0 up to the
-> development branch of 6.2 Severity: Critical Suggested CVSS v2.0:
-> AV:N/AC:L/Au:S/C:C/I:C/A:C/E:F/RL:O/RC:C
-> 
-> Problem Description: The file upload component and the File
-> Abstraction Layer are failing to check for denied file extensions,
-> which allows authenticated editors (even with limited permissions)
-> to upload php files with arbitrary code, which can then be executed
-> in web server's context.
-> 
-> Solution: Update to the TYPO3 version 6.0.8 or 6.1.3 that fix the
-> problem described!
-> 
-> Credits: Credits go to Sebastian Nerz who discovered and reported
-> the issue.
-> 
-> Please note that XSS issue in the advisory already has CVE. TYPO3
-> team also verified that this hasn't been requested already.
-> 
-> --- Henri Salo
-> 
+We definitely do.  A recent example is CVE-2012-4446.
 
-So it states for the first one:
-
-Problem Description: TYPO3 bundles flash files for video and audio
-playback. Old versions of FlowPlayer and flashmedia are susceptible to
-Cross-Site Scripting. No authentication is required to exploit this
-vulnerability.
-
-so it sounds like embedded third party software, there appear to be
-some older CVE's for flowplayer, I'm guessing it might be one of
-these? Can the typo3 people please provide details (e.g. code patches)
-of exactly what they fixed?
-
-For the second one "Vulnerable subcomponent: Backend File Upload /
-File Abstraction Layer" code execution please use CVE-2013-4250 for
-this issue.
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSDEXPAAoJEBYNRVNeJnmTzckQAKDUpbvvvQhdHSduMbtepLlf
-wKANId9ZC0b2s9KT0Q0uT7Ez5sOpxM/xM3Q08LjmXMOo6+IjujRDAK1BFk9kr1Rr
-xu2kMeDGDemKHdRHdkFJFnzPJJLaF05Mmr8r9j8lkakVrZHIDbNcem66Q4/KMVhl
-EnJhQA/Ja8hkOgt4xpUYEFcGLuZDfmiUI7aIsUjWgDKp14QpX5kOBEucqlcSVRed
-9pGsZYksMILHrpMb4QX9SoHBgIzvGqiZ2Z/rEoKl4Kp12eZ0Ua5aj/YP7X9VUndy
-NkLcXclUmevlW55uCM/8U0rlYk1rJXLHJyxlYgI5PpTZSJAiaAW8eWfISdY0WNLM
-AbHG1bQRtxVaNa2ztXz+DxInIV2gdQQf2kZWZ/13bCDbmr+/R73O3RhbOCyynmR2
-stDfr1ymm8gViiVX0lPrEdOTy6tQvH+NYigc/SlbXby83fB7D6wTPKTpKTBwAGti
-yTaHyhRxpbs+T5OYIxB+iAumJPQcL9fLS5gT20vv5t9d1N+CYGgR/QmloBB2kfDH
-Sa/qqlKipjHyflW2SqNA/pdtDSq+Th2085hs5sK7iF1mxzO8wTOe3WqIuyZWVTte
-0b1e2725wq6edaYUEL8xcSWw8P3tGWXeE8eHjOl/qSDoCt5Ek3au71fmpRhc3APd
-q0o2EO+B5pWpiszZDp1E
-=ffmK
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security Team
