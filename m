@@ -1,79 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/15/2
-Message-Id: <201312151947.rBFJlCbA021002@linus.mitre.org>
-Date: Sun, 15 Dec 2013 14:47:12 -0500 (EST)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, gmurphy@...hat.com
-Subject: Re: Issue with PYTHON_EGG_CACHE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/19/3
+Message-ID: <51C14DFF.2050309@redhat.com>
+Date: Wed, 19 Jun 2013 00:21:51 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: Thoughts on a vuln/CVE?
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> OpenStack swift:
-
-> os.environ['PYTHON_EGG_CACHE'] = '/tmp'
-
-This message seems to disclose a vulnerability in an unspecified
-version of OpenStack Swift. It might be the same as this part of the
-http://tarballs.openstack.org/swift/swift-1.11.0.tar.gz distribution:
-
-swift/common/manager.py
-
-  def setup_env():
-  ...
-  os.environ.setdefault('PYTHON_EGG_CACHE', '/tmp')
-
-http://git.openstack.org/cgit/openstack/swift/tree/swift/common/manager.py
-
-http://www.openstack.org/projects/openstack-security/ says "How to
-Report Security Issues to OpenStack ... Open a bug in Launchpad and
-mark it as a 'security bug'. This will make the bug Private and only
-accessible to the Vulnerability Management Team." We don't know
-whether that has been done. It may be inapplicable because the
-information isn't private.
-
-Use CVE-2013-7109 for this report about OpenStack Swift. Again,
-CVE-2013-7109 is not an ID for which setuptools is the affected
-product.
-
-> Google search:
+On 06/19/2013 12:17 AM, Florian Weimer wrote:
+> * Kurt Seifried:
 > 
-> PYTHON_EGG_CACHE "/tmp" filetype:py
+>> I care a lot less about what is "officially endorsed" or not
+>> endorsed and a lot more with what is actually going on. If a
+>> large percentage of people are exposed to a vuln, even if they
+>> "shouldn't" be then it would still get a CVE. I see a lot of CVEs
+>> that should never be exploitable, but people do crazy
+>> things/configurations.
+> 
+> But the present situation is really not that clear-cut.  We have
+> no indicator of malicious intent from the current domain owner, and
+> users would still have to disable signature checking *and* they
+> must have configured the problematic repository.  That's a little
+> bit far-fetched.
 
-This seems very useful, but it's not a type of information that MITRE
-is interested in working with at this exact moment. At first glance,
-the Google search results seem to include all of the following:
-
-  - cases in which something equivalent to
-    "os.environ.setdefault('PYTHON_EGG_CACHE', '/tmp')" is used within
-    code that's intended for distribution as a "product"
-
-  - cases in which something equivalent to
-    "os.environ.setdefault('PYTHON_EGG_CACHE', '/tmp')" is used within
-    other types of code such as site-specific code or example code
-
-  - cases in which setting PYTHON_EGG_CACHE would not actually occur
-    (comments, documentation, discussion, etc.)
-
-We can assign CVE IDs for the first category, i.e., cases in which
-someone has identified this as a security problem within a specific
-software product.
+Right. I'm talking about more than just this instance. Wordpress
+plugins. rubygems.org. etc. Any ways I've been thinking about it and
+will post a longer email later.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSrgaXAAoJEKllVAevmvmsaf4IAKucJyDDjHoKlexqpH2lk2iZ
-sArZ3BXydRbvwSsQYiwB6gh/0ncqjszaE4fqcoPLSdG1s9FTHaIwQWAdbVBNYlwM
-CPuRj4iQbce5D8+PBIgnbF051W/vIDnJAgcE67FfVG0gX1DbOCR/UHkiy6kgrlt8
-r92uO2KQ7DtJ68g6xf4N0iHiF5wM4IAbIRAvx4ia7Qj6mdYdXWbLRQnDP4qfeSnJ
-X0qzn9eVIutWp1VM3+dIarGUOeaRCV8yOvWPz2nt3HGrCMMWEiZhecUUBIUqPLrN
-orLeQuU1u1qi72kaYldWKbT9/4SZgjKHs2QkuUcghMyY5vaYNwXbN8IbmHdseqk=
-=e156
+iQIcBAEBAgAGBQJRwU3/AAoJEBYNRVNeJnmTuHUP/2otfOAwAccFN9CWIJIA5SvV
+69lCbIdNlClftuZe6Cxux8Ggguw8iN4avF4ni20CvfGmhKfdBsUkXxqRNXNwBDJi
+H8Jin+Dq9jFElOkrCcJPON8kwfPL39b+g4A/U3FYTpj9MKrzDP8JtLZ0aV0yCqca
+jpHpAStwcfODpy/sCWS+cLdZgLGS7YZ1dbiPT4PshooFwv+oD6Ma0jLIqaGIEZ3u
+9Yo5zPziaydWfCha7QTN4gBgkykXr/srCwXjTCyE54BjB+zi6ojSdZkRLh+Kq9EQ
+4iLQgJPMPudnXZ5aGdQGQV50Ya96cLwkQRqpJfJUDlAzJu04rpm9tYql//WOUJGb
+/7WpdRb0Xfc5VAdqyDPRPUmykE2wkJ1ziomXWqklupkrDe/O3v4ivTEsjHnA42PA
+CU9tzFJ3//OWm5aN8rY4sv2MUC8AXNvTp4IepjyE0CDZjaR1oinhhS0F294j6hxp
+tkyt5x+5J1mhYSPBubgSWGrobXugMhNd/wThid/54Hc+pAcCYtibxXXyRafvSu+G
+NhXohHMiJh47l4EVy8a4zlIPuazRrbmPb6nfN6CrpZ9wXof4iYH6tuSLMYdCBwtk
+CcJmjVFA4BoveWD2iuMRGUBLQgtA79+9GzL5oNjV0Z1O8mYZ7r/Xi7baxHZnP5iJ
+KKpsYJyUDjCBh/gxan32
+=11ul
 -----END PGP SIGNATURE-----
