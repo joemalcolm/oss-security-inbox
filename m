@@ -1,28 +1,152 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/20
-Message-ID: <20130725100200.GA28446@videolan.org>
-Date: Thu, 25 Jul 2013 12:02:00 +0200
-From: Jean-Baptiste Kempf <jb@...eolan.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Michael Niedermayer <michaelni@....at>, Moritz Muehlenhoff <jmm@...til.org>, Moritz Muehlenhoff <jmm@...ian.org>, ffmpeg-security@...peg.org, security@...eolan.org
-Subject: Re: new FFMpeg stuff
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/19/4
+Message-ID: <51C15AE2.7080206@redhat.com>
+Date: Wed, 19 Jun 2013 01:16:50 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: TYPO3 Security Team <security@...o3.org>
+Subject: Re: Re: [Ticket#2012111110000015] TYPO3-CORE-SA-2012-005: Several Vulnerabilities in TYPO3 Core
 Content-Type: text/plain; charset=utf-8
 
-On 25 Jul, Kurt Seifried wrote :
-> > Why the VLC security team should be involved in that?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 06/16/2013 05:46 AM, TYPO3 Security Team wrote:
+> Dear Kurt Seifried,
 > 
-> Because they want to help make sure the CVEs get correctly assigned?
+> Thank you for your request.
 > 
-> If you guys don't care about getting CVE's done properly well that's
-> your choice I guess and I'll assign the CVEs as best I can. But I was
-> hoping VLC upstream might help out.
+> I'm a bit embarrassed about our response time :(
+> 
+> Very sorry for that. Things will vastly improve in the near
+> future!
+> 
+> 12/10/2012 22:40 - Kurt Seifried wrote:
+> 
+>> Can the Typo3 security team please confirm the following:
+>> 
+>>> Component Type: TYPO3 Core Affected Versions: 4.5.0 up to
+>>> 4.5.20, 4.6.0 up to 4.6.13, 4.7.0 up
+>> to 4.7.5 and development releases of the 6.0 branch.
+>>> Vulnerability Types: SQL Injection, Cross-Site Scripting,
+>> Information Disclosure
+>> 
+>> so no CVE's needed for this, this is simply a summary of the
+>> below issues?
+> 
+> True!
+> 
+>>> Vulnerable subcomponent: TYPO3 Backend History Module
+>>> Vulnerability Type: SQL Injection, Cross-Site Scripting
+>>> Solution: Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6
+>>> that
+>> fix the problem described!
+>>> Credits: Credits go to Thomas Worm who discovered and reported
+>>> the
+>> issue.
+>> 
+>> Did he discover both the SQL Injection and the Cross-Site
+>> Scripting issues?
+> 
+> No, he only discovered the XSS. We discovered the SQLi while fixing
+> the XSS.
+> 
+>> Can you provide a link to the specific code fixes?
+> 
+> Here it is. https://review.typo3.org/16304
+> 
+>> so 2 cve's needed correct?
+> 
+> Yes.
+> 
+>>> Vulnerable subcomponent: TYPO3 Backend History Module
+>>> Vulnerability Type: Information Disclosure
+>> Solution: Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6
+>> that fix the problem described!
+>>> Credits: Credits go to Core Team Member Oliver Hader who 
+>>> discovered
+>> and fixed the issue.
+>> 
+>> so one cve needed here? Can you provide a link to the specific
+>> code fixes?
+> 
+> Yes.
+> 
+> It's also fixed in the same change: https://review.typo3.org/16304
+> 
+>>> Vulnerable subcomponent: TYPO3 Backend API Vulnerability Type: 
+>>> Cross-Site Scripting Solution: Update to the TYPO3 version
+>>> 4.5.21, 4.6.14 or 4.7.6 that
+>> fix the problem described!
+>>> Credits: Credits go to Johannes Feustel who discovered and 
+>>> reported
+>> the issue.
+>> 
+>> so one cve needed here? Can you provide a link to the specific
+>> code fixes?
+> 
+> Yes: https://review.typo3.org/16305
+> 
+>>> Vulnerability Type: Cross-Site Scripting Solution: Update to
+>>> the TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
+>> fix the problem described!
+>>> Credits: Credits go to Richard Brain who discovered and
+>>> reported the
+>> issue.
+>> 
+>> so one cve needed here? Can you provide a link to the specific
+>> code fixes?
+> 
+> Yes: https://review.typo3.org/16300
+> 
+> 
+> Regards,
+> 
+> Helmut Hummel Member of the TYPO3 Security Team
+> 
+> -- TYPO3 Security Team homepage: http://typo3.org/teams/security/
+> 
+> E-Mail: security@...o3.org
+> 
+> Please note: When replying to this e-mail, please leave the header
+> intact.
+> 
 
-I think you misunderstood me.
-Upstream is FFmpeg, not VLC. Why shouldn't FFmpeg team get the CVE?
+k so in summary then:
 
-Best regards,
+CVE-2012-6144 TYPO3-CORE-SA-2012-005: Backend History Module SQL
+Injection TYPO3 internal
 
--- 
-Jean-Baptiste Kempf
-http://www.jbkempf.com/ - +33 672 704 734
-Sent from my Electronic Device
+CVE-2012-6145 TYPO3-CORE-SA-2012-005: Backend History Module
+Cross-Site Scripting Thomas Worm
+
+CVE-2012-6146 TYPO3-CORE-SA-2012-005: Backend History Module
+Information Disclosure Oliver Hader
+
+CVE-2012-6147 TYPO3-CORE-SA-2012-005: Backend API Cross-Site Scripting
+Johannes Feustel
+
+CVE-2012-6148 TYPO3-CORE-SA-2012-005: Backend API Cross-Site Scripting
+Richard Brain
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRwVriAAoJEBYNRVNeJnmTb5cP/Ak8xgGQDdVelQ4cvLwPuTfH
++2UEnqcBZEWHKT3ib9tNDUAar0DLihASl51H/lX3PjgBB9hOwur9nAgvhyGCaP0o
+xbAQ7caIjpT30nMWf6icX4DAFs2t0KU4vXm5DxAWlbMaiwpCGXIRQpzaz1XiRWic
+9SnsVxSoDL8O8M4ayLHdbNsdvqdoMIJeo8luikJr+9RXMJCnnKw4Nn0wPqQM4UJG
+4NL4Fw1giqZQbYuBvu/Z0cshYlLj8zDFWR5r7NXkWoVWUwSVPIkLBuaeIA88wA3J
+mCszK56aRbmFV54Tmojqc1lzORuzN8/Pf6auoftNAL5sa8C6K7SbkesNXTUAX4J/
+nup6XNKzU3UbFekqVyDoak5R/dWtA/I3FUhOuXO/HksfZLwkOv+OPyTDZ7TDHopW
+a7xeN8cCkD3ds7AhOzV+yAo81Ak+EBeeROoIsIJ/MYPO9jNzuB6hbO8NWrHwztOn
+MG3IibbUL2BSSp+yToCSoEpmZGQMqX3749DlGtbR/475AK1AQ/47aPd0Pceilxgy
+I5n2xRJ4v59hOUPW20V+PADYSI9Y/8LYy+aTW2tIH8xcSWAeEPTZeZRRu7NwAOPN
+NlrabGczpfuLFyYi/DvyF93M+o9RIjGEzyCEW+XimdzisKSIGTqFdU3JbiqKXtIf
+sciyPmOfkbV9J4kWMBgs
+=I/oC
+-----END PGP SIGNATURE-----
