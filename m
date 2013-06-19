@@ -1,74 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/04/5
-Message-ID: <515DB1D9.6080802@redhat.com>
-Date: Thu, 04 Apr 2013 11:01:13 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/19/2
+Message-ID: <871u7ypqu8.fsf@mid.deneb.enyo.de>
+Date: Wed, 19 Jun 2013 08:17:03 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: rpc-gssd is vulnerable to DNS spoofing
+Subject: Re: Thoughts on a vuln/CVE?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* Kurt Seifried:
 
-On 04/03/2013 04:43 PM, Vincent Danen wrote:
-> This has been discussed on the linux-nfs mailing list, so fully
-> public. Just cutting and pasting from our bugzilla:
-> 
-> It was reported [1],[2] that rpc.gssd in nfs-utils is vulnerable to
-> DNS spoofing due to it depending on PTR resolution for GSSAPI 
-> authentication.  Because of this, if a user where able to poison
-> DNS to a victim's computer, they would be able to trick rpc.gssd
-> into talking to another server (perhaps with less security) than
-> the intended server (with stricter security).  If the victim has
-> write access to the second (less secure) server, and the attacker
-> has read access (when they normally might not on the secure
-> server), the victim could write files to that server, which the
-> attacker could obtain (when normally they would not be able to).
-> To the victim this is transparent because the victim's computer
-> asks the KDC for a ticket to the second server due to reverse DNS
-> resolution; in this case Krb5 authentication does not fail because
-> the victim is talking to the "correct" server.
-> 
-> A patch that prevents this issue has been posted [3].
-> 
-> To workaround this issue, set the IP/host pair in /etc/hosts so
-> that it cannot be spoofed.
-> 
-> A good explanation is also available here [4].
-> 
-> [1] http://marc.info/?l=linux-nfs&m=136491998607561&w=2 [2]
-> http://marc.info/?l=linux-nfs&m=136500502805121&w=2 [3]
-> http://marc.info/?l=linux-nfs&m=136493115612397&w=2 [4]
-> http://ssimo.org/blog/id_015.html
-> 
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=948072
-> 
-> 
-> Since this is fairly new, I don't think a CVE would have been
-> requested already.  Could one be assigned to this?
+> I care a lot less about what is "officially endorsed" or not endorsed
+> and a lot more with what is actually going on. If a large percentage
+> of people are exposed to a vuln, even if they "shouldn't" be then it
+> would still get a CVE. I see a lot of CVEs that should never be
+> exploitable, but people do crazy things/configurations.
 
-Please use CVE-2013-1923 for this issue.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRXbHZAAoJEBYNRVNeJnmTFYEP/1KxHQ6plRr16LsGL2iFEz8L
-Ku/gGd20IE1tWfoRiLObEsrK3ab8GcTztgQEK3i2YCmQxjF+rPDA4M7a2BH7XSDK
-tJqH6Ia4PKEXEl+kJsNQaDAkZjvWjOkkzpSNvVc/IQy6NkjcFMXtDh+ySRoRgDhS
-lo2KMxw0q6KMPNc9fumfKbejhGR5QRm4RwycfmhyE0t7JcoomjgR78bTwRIR1gL4
-8PxA0E3P/7b5gfEq0eid8AN9GpiiDab7LmWVnTMPsirsKEiq6CEu6p7WICT7CsCH
-Xfz3ao24XO6LDmIJOnR7ecjafQcrdYFJDJM67Nh+TCxjjLrYVYrPIKptjJl7DPsq
-ou/FXfeHNR3BNiSg36NZZ0UnMP59tt3q2Fu6qsDR/QWDNxd1T/2CDs8W7ENVQzZS
-oRdTUWNOM/3MJvUywi6okmLMMQMySbNsa/V7xOlluc7TYr8QbzckTpdcFKQQVmmU
-gxFg6OrtUAfdaKftXDINlYsonVSPdJ46gCStYQ8D5DW/8Ug/HkSdbM85UOcUU8Ow
-9+kAsNxeUBaykPoMQtJNtp6rd7pivhgb1T6TjGNlnY4EQ9j6iM/RhLFTKIApaDA8
-scLftJs8PnCjufDEx3eE8/KtcWL75idfc0ImYgyPKHOzJFKBIxWHlPSutLP3z16r
-vW9pyE03/Ju4HSPCYiiL
-=r3i1
------END PGP SIGNATURE-----
+But the present situation is really not that clear-cut.  We have no
+indicator of malicious intent from the current domain owner, and users
+would still have to disable signature checking *and* they must have
+configured the problematic repository.  That's a little bit
+far-fetched.
