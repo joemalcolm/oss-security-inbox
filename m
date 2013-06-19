@@ -1,109 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/3
-Message-ID: <CA+z51A5LsQOLaSsKJGuF0GkJJ+jHOeKWDZcu5CUDrMA8c+ySrQ@mail.gmail.com>
-Date: Fri, 5 Jul 2013 09:58:23 +0200
-From: Shad Laws <shad@...dlaws.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>,  Gallery3 Security Team <security@...leryproject.org>
-Subject: Re: CVE Request -- gallery3 (3.0.9): Fixing two security flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/19/1
+Message-ID: <51C1146A.1010804@redhat.com>
+Date: Tue, 18 Jun 2013 20:16:10 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Florian Weimer <fweimer@...hat.com>
+Subject: Re: CVE request: gnome-shell crash, screen unlock on resume
 Content-Type: text/plain; charset=utf-8
 
-Hello everyone,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A quick clarification on issue #2: the problem wasn't the item information
-or paths, but rather the original-sized image file.
+On 06/18/2013 02:39 AM, Florian Weimer wrote:
+> Upstream GNOME recently fixed a bug that could crash gnome-shell 
+> immediately after resume:
+> 
+> https://bugzilla.gnome.org/show_bug.cgi?id=701974
+> 
+> As noted here, the impact is that after resume, the password entry 
+> dialog disappears and the user is dropped into the pre-existing X
+> session:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=954054
+> 
+> I haven't figured out the exact trigger conditions, but this has 
+> happened to me a couple of times since switching to Fedora 19 last 
+> weekend.  It does not appear to be a once-in-a-blue-moon bug.
+> 
+> I think this needs to be tracked as a security bug because screen 
+> locking is a security feature (which is part of many security
+> policies).
 
-A legitimate user with "view" privileges for an item should be able to:
-- get the item info and image file links (e.g.
-".../rest/data/123?size=thumb", etc.)
-- follow the links and get the "thumb" and "resize" image files themselves.
-- guess the "full" image file link without thinking too hard (e.g.
-".../rest/data/123?size=full")
-- follow the link and get the "full" image file itself **ONLY** if they
-have "view_full" access.
+Please use CVE-2013-2190 for this issue.
 
-The problem was that this last condition wasn't being properly enforced.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Thanks again, and sorry for the delay in response!
-Shad
-
-
-On 4 July 2013 11:19, Jan Lieskovsky <jlieskov@...hat.com> wrote:
-
-> Hello Kurt, Steve, vendors,
->
->   Gallery upstream has released 3.0.9 version, correcting two security
-> flaws:
->   [1] http://galleryproject.org/gallery_3_0_9
->
-> My guess [***] is the two issues are as follows:
->
-> * Issue #1 - Improper stripping of URL fragments in flowplayer
-> SWF file might lead to reply attacks (a different flaw than CVE-2013-2138):
->
-> ----------------------------------------------------------------------------
->
->   A security flaw was found in the way flowplayer SWF file handling
-> functionality
->   of Gallery version 3, an open source project with the goal to develop and
->   support leading photo sharing web application solutions, processed
-> certain
->   URL fragments passed to this file (certain URL fragments were not
-> stripped
->   properly when these files were called via direct URL request(s)). A
-> remote
->   attacker could use this flaw to conduct replay attacks.
->
->   A different vulnerability than CVE-2013-2138.
->
->   Upstream ticket:
->   [2] http://sourceforge.net/apps/trac/gallery/ticket/2073
->
->   Relevant upstream patch:
->   [3]
-> https://github.com/gallery/gallery3/commit/c5318bb1a2dd266b50317a2adb74d74338593733
->
->   References:
->   [4] https://bugzilla.redhat.com/show_bug.cgi?id=981197
->
-> * Issue #2 - gallery3: Multiple information exposure flaws in data rest
-> core module
->
-> -----------------------------------------------------------------------------------
->
->   Multiple information exposure flaws were found in the way data rest core
-> module
->   of Gallery version 3, an open source project with the goal to develop
-> and support
->   leading photo sharing web application solutions, used to previously
-> restrict access
->   to certain items of the photo album. A remote attacker, valid Gallery 3
-> user, could
->   use this flaw to possibly obtain sensitive information (file, resize or
-> thumb path
->   of the item in question).
->
->   Upstream ticket:
->   [5] http://sourceforge.net/apps/trac/gallery/ticket/2074
->
->   Relevant upstream patch (against 3.0.x branch):
->   [6]
-> https://github.com/gallery/gallery3/commit/cbbcf1b4791762d7da0ea7b6c4f4b551a4d9caed
->
->   References:
->   [7] https://bugzilla.redhat.com/show_bug.cgi?id=981198
->
-> Could you allocate CVE identifiers for these?
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> [***] Guess because the issues aren't more thoroughly described in
-> upstream announcement [1]
->       and former (private) email check with Gallery3 upstream didn't
-> provide more details
->       either. Cc-ed them on this post too, they to correct me where
-> necessary.
->
-
+iQIcBAEBAgAGBQJRwRRpAAoJEBYNRVNeJnmTZaIP/3YqPTHlpUwl5a4dZNk+LGXL
+0HiBDyglb3Qhn7QtiCR/fm40qtDW8uzDM/UtdEjP4fdqjBlECWs3f18Jd9cs3Cs0
+Baww1zPLKfXSxwsMJKlTnRGllE3/oVcyA1c+IBfBe30zleS/q2355S3valftw0qH
+sa32z3Lj5cnVbaWKiiKrCJP53Su1oNOm8QGRZrDUGn9ZTJMGHwP3ZxPhzw3Hu9wa
+tmu2jDte/7Xxk8SFFRShzx3MHmgsKLq+cEuX3FFQWGrMqQ69ThurJQxFbgqJ8/ZM
+wBy8Y+pbrnGY3Y8JOUdl+49HWwNTIqSeIDxtiTpfyeBSbJwPyubVhDK+3wR37zFm
+ks0CLK/+rqFzenIzBVrCop4SdzjHc9iLASwHlugBb28nFbRAV4Dm+RyK8qhvVaem
+pSlYSfHF+DhXiK6qErv3F2p+lLDpCUaZMAC1Wek2GQT9A3XadAG6cHlP0pT7L0Lc
+7kxILXPUN1D6aufbQmeOJZ/RYHGRS2msCnjyelnLLZGVj2e5Y1FTgE2EXtlff6PP
+NYSr+f2afurSM6em6WryKTtXDb5ZXu67PJn8VcUC5fyR4fzEx3TqqXPJ+tefUnSJ
+PPVveOdbOuWPlU41NSKq7bCURWFxOgBgTDMNly9HkZDhcNzOFkQTF+Qx6ofNl9Rz
+pPKAuIn1R+SmwLwE0iRx
+=jkJk
+-----END PGP SIGNATURE-----
