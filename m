@@ -1,24 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/1
-Message-ID: <20130806143148.GG15178@dhcp-25-225.brq.redhat.com>
-Date: Tue, 6 Aug 2013 16:31:48 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/20/5
+Message-ID: <20130620201632.GF26962@dhcp-25-225.brq.redhat.com>
+Date: Thu, 20 Jun 2013 22:16:33 +0200
 From: Petr Matousek <pmatouse@...hat.com>
-To: security@...nel.org
-Cc: oss-security@...ts.openwall.com
-Subject: CLONE_NEWUSER local DoS
+To: oss-security@...ts.openwall.com
+Subject: CVE Request -- Linux kernel: sctp: duplicate cookie handling NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+A flaw was found in the way Linux kernel's SCTP network protocol
+implementation handled duplicate cookies. A transient empty association
+is created while processing the duplicate cookie chunk that userspace
+could query, potentially leading to NULL pointer dereference. A remote
+attacker able to initiate SCTP connection to the system could use this
+flaw to create transient conditions that could lead to remote system
+crash if remote system user is querying SCTP connection info at the time
+these conditions exist.
 
-spender reported [1] a local DoS triggerable by unprivileged user when
-user namespaces are enabled (CONFIG_USER_NS).
+Upstream fix:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=f2815633504b442ca0b0605c16bf3d88a3a0fcea
+(already in stable)
 
-  [1] https://twitter.com/grsecurity/status/364566062336978944
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=976562
 
-Reproducer:
-
-b836010000bb00000010cd80ebf2 is for(;;)unshare(1<<28);
-
-Best regards,
+Thanks,
 -- 
 Petr Matousek / Red Hat Security Response Team
