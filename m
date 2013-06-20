@@ -1,44 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/28/7
-Message-ID: <1362035086.4116.23.camel@scapa>
-Date: Thu, 28 Feb 2013 08:04:46 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/20/1
+Message-ID: <51C2482D.3000306@gmail.com>
+Date: Wed, 19 Jun 2013 17:09:17 -0700
+From: Forest Monsen <forest.monsen@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: poppler 0.22.1 security fixes
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for Drupal contributed module
 Content-Type: text/plain; charset=utf-8
 
-On mer., 2013-02-27 at 20:39 -0700, Kurt Seifried wrote:
-> Please use CVE-2013-1788 for these invalid memory issues.
-> 
-> >
-> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a9b8ab4657dec65b8b86c225d12c533ad7e984e2
-> >
-> > 
-> Fix crash in broken file 1031.pdf.asan.48.15
-> > 
-> >
-> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a205e71a2dbe0c8d4f4905a76a3f79ec522eacec
-> >
-> > 
-> Do not crash in broken documents like 1007.pdf.asan.48.4
-> 
-> Please use CVE-2013-1788 for these crash issues.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Is this a typo? Did you mean to write CVE-2013-1789 for the crash
-issues?
-> 
-> 
-> >
-> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=b1026b5978c385328f2a15a2185c599a563edf91
-> >
-> > 
-> Initialize refLine totally
-> > Fixes uninitialized memory read in 1004.pdf.asan.7.3
-> 
-> Please use CVE-2013-1790 for this uninitialized memory read issue.
+Hi there,
 
--- 
-Yves-Alexis
+I'd like to request a CVE identifier, or identifiers, for:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+SA-CONTRIB-2013-053 - Login Security - Multiple Vulnerabilities
+https://drupal.org/node/2023585
+
+Maybe two -- denial of service, and access bypass.
+
+Thanks!
+
+Forest Monsen, on behalf of the Drupal Security Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iEYEARECAAYFAlHCSCcACgkQ/ILCL9e1Br75UACfdlUDwUPqSN4WTIK6bMhQYoje
+8JQAnivszxby1qk3VyzyAWaeTyC3sBlT
+=GXXe
+-----END PGP SIGNATURE-----
