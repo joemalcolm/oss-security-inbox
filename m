@@ -1,78 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/26/2
-Message-ID: <CABRvpqB+K1MCGqoGoW_AAYWP_neNytqx7Ln4dOFptt_GQwMDXg@mail.gmail.com>
-Date: Sat, 26 Jan 2013 15:13:13 -0500
-From: Andrew Nacin <nacin@...dpress.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Henri Salo <henri@...v.fi>,  WordPress Security Team <security@...dpress.org>
-Subject: Re: CVE request: WordPress 3.5.1 Maintenance and Security Release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/20/3
+Message-ID: <51C2AD28.7090905@redhat.com>
+Date: Thu, 20 Jun 2013 01:20:08 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed module
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jan 26, 2013 at 2:19 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> > - A server-side request forgery vulnerability and remote port
-> > scanning using pingbacks. This vulnerability, which could
-> > potentially be used to expose information and compromise a site,
-> > affects all previous WordPress versions. This was fixed by the
-> > WordPress security team. We’d like to thank security researchers
-> > Gennady Kovshenin and Ryan Dewhurst for reviewing our work.
->
-> Basically it applies filters to pingbacks, things like:
->
-> return new IXR_Error(33, __('The specified target URL cannot be used
-> as a target. It either doesn't exist, or it is not a pingback-enabled
-> resource.')); so I was largely abl to confirm this one.
+On 06/19/2013 06:09 PM, Forest Monsen wrote:
+> Hi there,
+> 
+> I'd like to request a CVE identifier, or identifiers, for:
+> 
+> SA-CONTRIB-2013-053 - Login Security - Multiple Vulnerabilities 
+> https://drupal.org/node/2023585
+> 
+> Maybe two -- denial of service, and access bypass.
+> 
+> Thanks!
+> 
+> Forest Monsen, on behalf of the Drupal Security Team
 
+When Login Security is configured to use the delay feature, frequent
+or concurrent failed attempts to login can consume all the web serving
+processes, causing a denial of service.
 
-The primary fix is to better validate a URL before triggering an HTTP
-request to it. You can see this with the filter and function
-pingback_ping_source_uri in http://core.trac.wordpress.org/changeset/23330.
-It blocks credentials, odd ports, RFC1918 IPs, etc. Turning the error
-messages into generic errors was an additional defensive measure but due to
-the other fixes, does not address a particular vulnerability.
-
-What these fixes target have already been written about publicly:
-http://www.acunetix.com/blog/web-security-zone/wordpress-pingback-vulnerability/
-http://lab.onsec.ru/2013/01/wordpress-xmlrpc-pingback-additional.html
-
-> - Two instances of cross-site scripting via shortcodes and post
-> > content. These issues were discovered by Jon Cave of the WordPress
-> > security team.
->
-
-I found one instance of esc_attr() to esc_url() on a url used in
-> embedded media, I'm guessing this is the XSS mentioned in the
-> description as "post content"?
->
-
-That was one — http://core.trac.wordpress.org/changeset/23322. The other
-was http://core.trac.wordpress.org/changeset/23317, which serves to fully
-validate HTML tags passed to a shortcode and reject exploitative values.
-
-All I'm seeing for shortcodes related junk is in a big JavaScript blob
-> wp-35/wp-includes/js/media-editor.min.js. It looks like this might
-> need two CVEs if they are widely different.
->
-
-The changes in media-editor.min.js are bug fixes and not related to
-security. They may be seen in uncompressed form here:
-http://core.trac.wordpress.org/changeset?old_path=%2Ftags%2F3.5%2Fwp-includes%2Fjs%2Fmedia-editor.js&new_path=%2Ftags%2F3.5.1%2Fwp-includes%2Fjs%2Fmedia-editor.js
-.
-
-> - A cross-site scripting vulnerability in the external library
-> > Plupload. Thanks to the Moxiecode team for working with us on this,
-> > and for releasing Plupload 1.5.5 to address this issue.
+Please use CVE-2013-2197 for this issue.
 
 
-> The diff for plupload is a mess of JavaScript/binary files so I can't
-> confirm much.
->
 
-The security fix was specific to the Flash binary. Here is the upstream
-commit: https://github.com/moxiecode/plupload/commit/2d746ee. Exploit
-occurs with uplupload.flash.js?id=XSS, using the attack described here:
-http://lcamtuf.blogspot.se/2011/03/other-reason-to-beware-of.html.
+It is possible to bypass Login Security features when soft blocking is
+disabled. This is due to the incorrect use of string filtering in the
+module which can cause the module to skip all checks.
 
-Regards,
-Andrew Nacin
+Please use CVE-2013-2198 for this issue.
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRwq0nAAoJEBYNRVNeJnmTx6kP/1tJ13zLlzqa0vTN4qc95pL7
+QCEP8h3k+pqJWqDVHMD2KGrXukmTATVU0tWi14IeGMJ748YeW8gp+tNynXGGnAWn
+tMTW5jql7K9/ZkGe5ILRSt5aEfHgX6BMYfMVsJj+gqiEaO4x2F30yZgVNWj9+3ba
+VVfPBa5BBOH02LPKfoS+KueTH2Dy6BRh0qUBkjlj9uNHnJ0wnm5EKxw4ui8V8SuI
+z8lPgCkVSCKjxXYDSmJLFC4hf2OIjS35y/DTYA95HTJV8RRT1uLT6tpo4gW7oKpq
+k9Zv3mTgKw4ZnmLjKdLuMQBX+LTfyWuFer+cpj9SBujOuM1you204nn9hNkPBGXT
+ZPoPZQvXvUpxDVEejX2GLUHiWeSHc9tos1/rC2hxVjIvdH/fUhf730sYmcx/jIsq
+3TmwyhUvH7yj5olHplGMTbbQO2f+htDUk8bqyCsfum0vO4xkfLwGVhTn6pWDLS5G
+s6I32JowrBWTj1K/T0EgzSEWomiXnta5Q4r8+WkhDL4brSKEmS4XxdpS8HvbU2wP
+VJDTh1VlixlpaLznoajbrfo1xMNA47JWmKorQrztAdZzl4dKFo61BwRPak/aU5+C
+5+mSDVsaUsEGlK1AQ+ih0v0O0G+gcm93mkgnpC3wtU4Ui9jX2aNNOz/X51n8rLWC
+0P7A9+vunyaU4h9yLFF8
+=aIiU
+-----END PGP SIGNATURE-----
