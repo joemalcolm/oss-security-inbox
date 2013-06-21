@@ -1,38 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/03/2
-Message-ID: <20131103160706.GC2305@openstack.org>
-Date: Sun, 3 Nov 2013 16:07:06 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/21/4
+Message-ID: <51C4773A.8010700@redhat.com>
+Date: Fri, 21 Jun 2013 09:54:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for a vulnerability in OpenStack Nova
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Axel Beckert <abe@...ian.org>, Nico Golde <nion@...ian.org>, "W. Martin Borgert" <debacle@...ian.org>
+Subject: Re: CVE Request -- tpp: Possibility of arbitrary code execution when processing untrusted TPP template
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public,
-although an advisory was not sent yet.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Title: XenAPI security groups not kept through migrate or resize
-Reporter: Chris Behrens (Rackspace) and Vangelis Tasoulas
-Products: Nova
-Affects: Folsom, Grizzly
+On 06/21/2013 02:09 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> A security flaw was found in the way tpp, a ncurses-based
+> presentation tool, processed TPP templates containing --exec clause
+> (input provided as an argument of the --exec clause would be
+> immediately executed without requesting a second confirmation from
+> the user). A remote attacker could provide a specially-crafted text
+> presentation program (TPP) template that, when processed with the
+> tpp binary would lead to arbitrary code execution with the
+> privileges of the user running the tpp executable.
+> 
+> References: [1]
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=706644 [2]
+> http://patch-tracker.debian.org/patch/series/view/tpp/1.3.1-3/15-optional-exec.patch
+>
+> 
+(Debian distribution patch)
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=976684
+> 
+> Upstream patch / GitHub link: [4]
+> https://github.com/xtaran/tpp/commit/350aafbd9a3256f6d479dacb9740bf3f0b9a3fc3
+>
+>  Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
 
-Description:
-Chris Behrens with Rackspace and Vangelis Tasoulas reported a set of
-vulnerabilities in OpenStack Nova. When migrating or resizing an
-instance, including live migration, existing security groups may not
-be reapplied after the operation completes. This can lead to
-unintentional network exposure for virtual machines. Only setups
-using the XenAPI backend are affected.
+Please use CVE-2013-2208 for this issue.
 
-References:
-https://launchpad.net/bugs/1073306
-https://launchpad.net/bugs/1202266
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Thanks in advance,
-
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
+iQIcBAEBAgAGBQJRxHc6AAoJEBYNRVNeJnmTwrAP/jrtBpw2jTSLeN/nPd23k0B1
+DhSGpu/73H+7d/h6ZQHC46mKU0u4jthsKOYlpyb0NN0QkTQSWvCEKPL5DoaGkpMp
+ZSr+k0aFfyZxSrUn12L+Of2T5/CBFIUkyYpJPQpIomcSYAH2JtCLuXhJ2ox0oc5R
+oK0g4EKrtH1CUXwXHS5MNvJjh4vajghPRucFRu4oMQjf3ETL1mgk/vrtKGAhUWyd
+sA4cgyXziWsYxl9PAobi6ftrAfNKUSy003hzg+i6A+xzmnvWsFFeklsYjolBLWlN
+wIbeF4H52z2mlvF+kk6M1EQ8fijxry1Y85HYq53vAaevsoibPQ5cDdWm35bYEnZL
+mToJ+2+xV/07yxSg6MgR8F2BTfk94pxGgSzRmq7i5UpxDre78Lu8bCKLJIjKDayy
+44p4cN7yroZtDfvelx96pqbrPS0dkwOynwFF2XE4yr6bcDR3M29dLnP70ybMd8ua
+v3jJOineQUZsAkm/BkC3eArtsE2dYO6RZCgyZHzP+fUbI45Z7lJ013oI6ssISiM2
+9/Z1OpL5TCJwF2veC1KpYyUVbQOcmxzQEw1EB3jMudC8fGCnKD6VfPhekl0cDIeF
+gu8txEzUBk5ZRJ1H3fo77SWG+nz2ltCq7NAHDvgJ100FXoKa0ehV7PIbH8njl9E+
+4qyMwAzWb9AnHFEorgVL
+=anQ1
+-----END PGP SIGNATURE-----
