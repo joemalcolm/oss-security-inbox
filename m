@@ -1,184 +1,157 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/7
-Message-ID: <51E944F4.6080803@thedistillery.eu>
-Date: Fri, 19 Jul 2013 14:53:56 +0100
-From: Matthew Wilkes <matt@...distillery.eu>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - PloneFormGen, multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/21/3
+Message-Id: <E1UpyG1-0002Fy-UB@xenbits.xen.org>
+Date: Fri, 21 Jun 2013 10:07:53 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 57 - libxl allows guest write access to sensitive console related xenstore keys
 Content-Type: text/plain; charset=utf-8
 
- > Sorry thought i had replied to this. I need links to the code
-> commits/vuln code so I can confirm these.
->
-> To reiterate: so I can confirm CVE assignments, and prevent duplicate
-> assignments you *MUST* provide links to the code commits/vulnerable
-> code. I don't have the time to go hunting through your source code for
-> them. People need to start making better CVE requests, or you're not
-> going to get CVEs from me.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Sorry, I wasn't aware you'd be wanting to trawl through the source
-yourself, tried to provide enough context in the original.
+                     Xen Security Advisory XSA-57
+                               version 3
 
+ libxl allows guest write access to sensitive console related xenstore keys
 
+UPDATES IN VERSION 3
+====================
 
-# Execute arbitrary shell commands
-**CVSSv2 base score**: 10
+Public release.
 
-CWE-78 - Improper Neutralisation of Special Elements used in an OS Command
-CWE-573 - Improper Following of Specification by Caller
-CWE-749 - Exposed dangerous method or function
+ISSUE DESCRIPTION
+=================
 
-Passing a urlencoded shell command to a support function that is
-accessible through the web causes that shell command to be run with the
-same privileges as the Zope server.
+The libxenlight (libxl) toolstack library does not correctly set
+permissions on xenstore keys relating to paravirtualised and emulated
+serial console devices. This could allow a malicious guest
+administrator to change values in xenstore which the host later relies
+on being implicitly trusted.
 
-Vulnerable code:
-https://github.com/smcmahon/Products.PloneFormGen/blob/1.7.8/Products/PloneFormGen/content/ya_gpg.py#L99-L100
+This vulnerability has not yet been assigned a CVE Candidate number by
+MITRE.  We will issue an updated version of XSA-57 when this is
+available.
 
-Fixed by:
-https://github.com/smcmahon/Products.PloneFormGen/commit/405daa4ee0248ea7f0af84d46cb551b652123454#L1L100
+IMPACT
+======
 
+A malicious guest administrator can read and write any files in the
+host filesystem which are accessible to the user id running the
+xenconsole client binary. This may be the user id of a host
+administrator who connects to the guest's console or the user id of
+any self service mechanism provided to guest administrators by the
+host provider.
 
+As well as reading and writing files an attacker with access to an HVM
+guest can cause any PV or serial consoles to be connected to a variety
+of network resources (sockets, udp connections) or other end points
+(fifo, pipes) in the host file filesystem according to the privileges
+granted to the qemu device model for that guest.
 
-# Set custom script body
-**CVSSv2 base score**: 8.2
-CWE-306 - Missing authentication for critical resource
-CWE-749 - Exposed dangerous method or function
+A malicious guest administrator can also redirect the VNC console
+port of the guest to another port on the host. This may expose the VNC
+port of other guests or of other firewalled services to an attack.
 
-When using a custom script action adapter, it is possible for anonymous
-users to overwrite the content of the script. This allows an attacker
-complete control over what happens to the received data. The script is
-executed within Zope's RestrictedPython environment, however, so it
-doesn't allow escape from the process sandbox.
+VULNERABLE SYSTEMS
+==================
 
-Vulnerable code:
-https://github.com/smcmahon/Products.PloneFormGen/blob/6e3bf62685b203f75720d7b475013fd7f51b43ca/Products/PloneFormGen/content/customScriptAdapter.py#L156-L159
+All systems which use libxl as part of the toolstack are vulnerable.
 
-Fixed by:
-https://github.com/smcmahon/Products.PloneFormGen/commit/c30eaa22d3b87a3f0e38ac5253a09427c71a14fa#L1L156
-Fixed by:
-https://github.com/smcmahon/Products.PloneFormGen/commit/e95ae713709bc47a7eecbff872c465413e8cf529#L1R158
+libxl is present in Xen versions 4.0 onwards.
 
+The major consumer of libxl functionality is the xl toolstack which
+became the default in Xen 4.2.
 
+In addition to this libvirt can optionally make use of libxl. This can
+be queried with
+        # virsh version
 
-# Can set body of mail template on mailer object
-**CVSSv2 base score**: 7.5
-CWE-863 - Incorrect authorization
-CWE-749 - Exposed dangerous method or function
+Which will report "xenlight" if libxl is in use. libvirt currently
+prefers the xend backend if xend is running.
 
-An unused method has a declarePublic call, allowing anyone to invoke it.
-This allows any PloneFormGen form with a mailer object to have the email
-template modified by anonymous users. As the template is a ZPT object it
-can include inline Python expressions evaluated in the process sandbox.
+The xend and xapi toolstacks do not currently use libxl.
 
-Vulnerable code:
-https://github.com/smcmahon/Products.PloneFormGen/blob/6e3bf62685b203f75720d7b475013fd7f51b43ca/Products/PloneFormGen/content/formMailerAdapter.py#L569-L581
+MITIGATION
+==========
 
-Fixed by:
-https://github.com/smcmahon/Products.PloneFormGen/commit/083354988faadb0314d7059e57aad41d81cd17e0#L1L569
+Host administrators can start a domain paused and manually correct the
+xenstore permissions of the relevant nodes.
 
+A domain can be started in the paused state with xl by using
+    # xl create -p <cfg>
 
+A domain's domid can then be determined with:
+    # xl domid <name>
 
-# Insufficient CSRF protection on SaveData adapter allows changing data
-**CVSSv2 base score**: 6.3
-CWE-352 - Cross-site request forgery (CSRF)
-CWE-749 - Exposed dangerous method or function
+If using libvirt then virsh can be used instead:
+    # virsh start --paused <name>
+    # virsh domid <name>
 
-If a privileged user is tricked into accessing an attacker controlled
-URL, it is possible to craft a request which would allow setting the
-saved data to any value, thus compromising the integrity of the data.
+For a domain $DOMID the following command will recursively correct the
+permissions for the primary PV console:
 
-Vulnerable code:
-https://github.com/smcmahon/Products.PloneFormGen/blob/master/Products/PloneFormGen/content/saveDataAdapter.py#L185-L208
+    # xenstore-chmod -r /local/domain/$DOMID/console n0 r$DOMID
 
+If the domain uses a device model stubdomain then it will also be
+necessary to fix the permissions for the stubdomain. The stubdomain is
+named "<name>-dm". Assuming its domain ID is $DMDOM:
 
+    # xenstore-chmod -r /local/domain/$DMDOM/console n0 r$DMDOM
 
-# Can determine the success page without filling in form
-**CVSSv2 base score**: 5
-CWE-767 - Access to critical private variable via public method
+In addition a stub domain has three secondary PV consoles which must be
+fixed, however in this case the "state" and "protocol" nodes along
+with the device node itself should not be restricted. For each device
+$D in [1,2,3]:
 
-Often this is just a thank you page, however it is used by some users to
-expose access to a private URL or further logic. In this case it *may*
-provide an attacker with access to sensitive information.
+    # xenstore-chmod -r /local/domain/$DMDOM/device/console/$N n0 r$DMDOM
+    # xenstore-chmod /local/domain/$DMDOM/device/console/$N/state n$DMDOM r0
+    # xenstore-chmod /local/domain/$DMDOM/device/console/$N/protocol n$DMDOM r0
+    # xenstore-chmod /local/domain/$DMDOM/device/console/$N n$DMDOM r0
 
-Vulnerable code:
-https://github.com/smcmahon/Products.PloneFormGen/blob/6e3bf62685b203f75720d7b475013fd7f51b43ca/Products/PloneFormGen/content/form.py#L628-L670
+The current permissions can be listed with
+    # xenstore-ls -fp <PATH>
 
-Fixed by:
-https://github.com/smcmahon/Products.PloneFormGen/commit/d68227e9e5d654758ee1a711fc0af78d4a6a3c66
+Once the permissions are fixed you may unpause the domain with
+    # xl unpause <domain>
+or with virsh:
+    # virsh resume <domain>
 
+The permissions can also be corrected on a live system if they are
+then manually validated to be non-malicious.
 
-# Render body of mail template on mailer object
-**CVSSv2 base score**: 5
-CWE-767 - Access to critical private variable via public method
+See http://wiki.xen.org/wiki/XenBus#Permissions for information on the
+permissions syntax.
 
-Like the above attack, this allows users who have not filled in a form
-to see the email they would have received if they had. It stacks with
-the set body vulnerability to allow the attacker to execute Python
-embedded in the custom template.
+RESOLUTION
+==========
 
-Fixed in:
-https://github.com/smcmahon/Products.PloneFormGen/blob/master/Products/PloneFormGen/content/formMailerAdapter.py#L503-L507
+Applying the appropriate attached patch resolves this issue.
 
+xsa57-4.2.patch             Xen 4.2.x
+xsa57-4.1.patch             Xen 4.1.x
+xsa57-unstable.patch        xen-unstable
 
+$ sha256sum xsa57-*.patch
+428a1d42f4314404cde339a78a59422bf4f0590c4d16ea8adc83425fe5eede3d  xsa57-4.1.patch
+b6a5106848541972519cc529859d9ff3083c79367276c7031560fa4ce6f9f770  xsa57-4.2.patch
+d329f56c30f7a4f91906658ea661234d2ca31b74ee68257bf009072999b3d3ef  xsa57-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-# Run ScriptAdapter script without submitting form
-**CVSSv2 base score**: 5 (???)
-CWE-767 - Access to critical private variable via public method
+iQEcBAEBAgAGBQJRxCQGAAoJEIP+FMlX6CvZsEsIAMNZ04W82IhfCPR1ReDUjan0
+/0e2z6HENlfzXGm5vr42c2C2qb0K9iwkPZzwOjRspvy3A7CdPf+S1GYGNt1753Do
+69v0yhvzQR6thOyzJOUd4f+Gw9biQYWbePvYQJrdUJI01yqSszVT+ZtBpaHAdHBZ
+4KLgKJF/8senmidAVflqDmInUPN9JltH8QWB6yjZ90dQhFZ8ivFNW2hYDrVtGLzd
+giKKmklzLY9q897i//9+lARNjBSTshHcwUHTUpj5mcB5D++TrijLiFngU6rrme2X
+QTPJl+qZaDQyxkDQTRKGv6Y3droxi0ub6l+PxnqFMmkn+q1WfeR8hX0gqHk2ol0=
+=u9QO
+-----END PGP SIGNATURE-----
 
-As above, but with the set custom script body vulnerability. The effect
-of running the script varies by deployment.
+Download attachment "xsa57-4.1.patch" of type "application/octet-stream" (16672 bytes)
 
-Fixed in:
-https://github.com/smcmahon/Products.PloneFormGen/blob/master/Products/PloneFormGen/content/customScriptAdapter.py#L137-L141
+Download attachment "xsa57-4.2.patch" of type "application/octet-stream" (15549 bytes)
 
-
-
-# Can add spurious blank records to SaveDataAdapter
-**CVSSv2 base score**: 5
-CWE-306 - Missing authentication for critical resource
-CWE-20 - Improper input validation
-CWE-749 - Exposed dangerous method or function
-
-When using the default action adapter for saving data, it's possible to
-create blank, likely invalid records. A malicious user could automate
-this to add many invalid responses.
-
-Fixed in:
-https://github.com/smcmahon/Products.PloneFormGen/commit/de053133678b07e2fedfa44fa59ba28350fc76af#L1R103
-
-
-
-# Can enable or disable form actions
-**CVSSv2 base score**: 4.3
-CWE-306 - Missing authentication for critical resource
-CWE-352 - Cross-site request forgery
-
-If the ids of the action adapters within a form are known, it is possible to
-disable or enable them as an anonymous user. This would allow an attacker to
-effectively disable the form, or to redirect input.
-
-Fixed in:
-https://github.com/smcmahon/Products.PloneFormGen/commit/bdec524555d0614ce35722082f740ec5e51d27e8#L1L1017
-
-
-
-
-# Vector for determining user details in XSS attacks
-**CVSSv2 base score**: 3.5 (???)
-CWE-352 - Cross-site request forgery
-CWE-359 - Privacy violation
-
-Fixed in:
-https://github.com/smcmahon/Products.PloneFormGen/commit/bdec524555d0614ce35722082f740ec5e51d27e8
-
-
-
-
-
-I think that should be all you asked for, please let me know if not.
-
-Matt
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (3748 bytes)
+Download attachment "xsa57-unstable.patch" of type "application/octet-stream" (15819 bytes)
