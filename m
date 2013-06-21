@@ -1,59 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/6
-Message-Id: <6A685AAD-0CB4-4246-88DC-4ADACF8CBF8A@stufft.io>
-Date: Thu, 15 Aug 2013 02:44:33 -0400
-From: Donald Stufft <donald@...fft.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/21/2
+Message-ID: <132809582.23179823.1371802188478.JavaMail.root@redhat.com>
+Date: Fri, 21 Jun 2013 04:09:48 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: HTTPS (was: rubygems insecure download (and other problems))
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Axel Beckert <abe@...ian.org>, Nico Golde <nion@...ian.org>, "W. Martin Borgert" <debacle@...ian.org>
+Subject: CVE Request -- tpp: Possibility of arbitrary code execution when processing untrusted TPP template
 Content-Type: text/plain; charset=utf-8
 
+Hello Kurt, Steve, vendors,
 
-On Aug 15, 2013, at 2:38 AM, gremlin@...mlin.ru wrote:
+  A security flaw was found in the way tpp, a ncurses-based presentation tool,
+processed TPP templates containing --exec clause (input provided as an argument
+of the --exec clause would be immediately executed without requesting a second
+confirmation from the user). A remote attacker could provide a specially-crafted
+text presentation program (TPP) template that, when processed with the tpp binary
+would lead to arbitrary code execution with the privileges of the user running
+the tpp executable.
 
-> On 14-Aug-2013 14:59:12 -0600, Kurt Seifried wrote:
-> 
->> everyone should be enabling HTTPS where possible,
-> 
-> Very dangerous mistake. HTTPS should be used only for non-anonymous
-> access, otherwise plain HTTP is preferred. In any case, let the users
-> choose whether they want to use it.
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=706644
+[2] http://patch-tracker.debian.org/patch/series/view/tpp/1.3.1-3/15-optional-exec.patch
+    (Debian distribution patch)
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=976684
 
-Why would HTTP be preferred? There's practically no downside to
-using HTTPS always.
+Upstream patch / GitHub link:
+[4] https://github.com/xtaran/tpp/commit/350aafbd9a3256f6d479dacb9740bf3f0b9a3fc3
 
-> 
-> Compare to FTP vs SCP/SFTP: first is for getting files from anyone
-> (into /incoming) and giving files for everyone (from /pub), second
-> is for transferring your own files. Obviously, I presume FTP daemon
-> to be configured for anonymous-only access.
-> 
->> intercepting and modifying HTTP is trivial.
-> 
-> Yes. But intercepting and modifying HTTPS requires just an ability
-> to issue client-trusted certificates (sufficient for 99% of HTTPS
-> applications), so the content signing should always be preferred
-> over distributor validation.
+Could you allocate a CVE id for this?
 
-Security is always a game of margins. The set of people who can issue
-a certificate for a domain they don't own AND are in a position to exploit
-a user trying to install something is far smaller than the set of people who
-are in a position to exploit a HTTP connection.
-
-Content signing is preferred but that is a much harder problem to solve
-in general for a repository like Rubygems than simple using TLS which
-is a pretty good approximation.
-
-> 
-> 
-> -- 
-> Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-> GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-> GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
-
-
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
