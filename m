@@ -1,51 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/16
-Message-ID: <20130925192846.GD14841@dirac.q-ix.net>
-Date: Wed, 25 Sep 2013 21:28:46 +0200
-From: Leon Weber <leon@...nweber.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/24/2
+Message-ID: <51C867E8.6000301@redhat.com>
+Date: Mon, 24 Jun 2013 09:38:16 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: sebi@...ecware.net, j.wielicki@...ecware.net
-Subject: CVE request: pyxtrlock
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephen Gallagher <sgallagh@...hat.com>
+Subject: Re: CVE Request --  Review Board: Stored XSS due improper sanitization of user's full name in the reviews dropdown (fixed in upstream v1.7.10, v1.6.17 versions)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-two security issues were found and fixed in pyxtrlock[1], a lightweight X
-screen locker.
+On 06/24/2013 08:46 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> A persistent / stored cross-site scripting (XSS) flaw was found in 
+> the way reviews dropdown of Review Board, a web-based code review
+> tool, performed sanitization of certain user information (full
+> name). A remote attacker could provide a specially-crafted URL
+> that, when visited would lead to arbitrary HTML or web script
+> execution in the context of Review Board user's session.
+> 
+> References: [1]
+> http://www.reviewboard.org/docs/releasenotes/reviewboard/1.7.10/ 
+> [2]
+> http://www.reviewboard.org/docs/releasenotes/reviewboard/1.6.17/ 
+> [3]
+> http://www.reviewboard.org/news/2013/06/22/review-board-1617-and-1710-released/
+>
+> 
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=977423
+> 
+> Upstream patch: [5]
+> https://github.com/reviewboard/reviewboard/commit/4aaacbb1e628a80803ba1a55703db38fccdf7dbf
+>
+>  Upstream acknowledges Craig Young at Tripwire as the original
+> issue reporter.
+> 
+> Can you allocate a CVE identifier for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
 
-• A mis-spelled variable name could cause the program to crash and thus
-  unlock the screen without requiring a password if the erroneous code
-  line was reached, which could be achieved by correctly timing multiple
-  authentication failures.
+Please use CVE-2013-2209 for this issue.
 
-  This was found by Paul Lhussiez and reported to us at
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-      <https://github.com/leonnnn/pyxtrlock/issues/8>
-
-  Commit containing the fix, and security release announcement:
-
-      <https://github.com/leonnnn/pyxtrlock/commit/297a697ce1543451166a9c85ba1e0dd76fa4ae10>
-      <https://zombofant.net/blog/2013/8/pyxtrlock-release-0.1-130825>
-
-  All versions before release 0.1 or git commit 297a697 are vulnerable.
-
-• Incorrect return value checking after calling XCB library functions
-  led to the program seemingly starting up normally, but leaving the
-  keyboard or mouse not actually locked in case the xcb_grab_*()
-  functions returned an error. There would be no indication for the user
-  that one of the input devices is not locked.
-
-  Commit containing the fix, and security release announcement:
-
-      <https://github.com/leonnnn/pyxtrlock/commit/50a8522392809a5688638d074fb9f84264c8b58d>
-      <https://zombofant.net/blog/2013/9/pyxtrlock-release-0.2-130909>
-
-  All versions before release 0.2 or git commit 50a8522 are vulnerable.
-
-Could CVE-IDs be assigned for these, please?
-
-    -- Leon.        (pyxtrlock maintainer)
-
-[1]: <https://zombofant.net/hacking/pyxtrlock>
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQIcBAEBAgAGBQJRyGfoAAoJEBYNRVNeJnmTB8sQANp8mi2I7PKBGxCpb4PSWsDR
+QP04iByU0D0xlGZbgGn7SJwws31n3uvWeDUYSTuG0Kvaqyi64rLcmRb2gN3onqzo
+eO0+RYQryDl59mjUsIftUjyjL+DJ9fXLs37Zlfb9i0Q1tOCTBKd311vwLXqi+PSl
+mQck+lADiac1njdcIx9xTr4Zufg3oJyw9P9QpkC3zAd3WbAQM/S3E7yBNCZLVoBf
+LEO8Il/UTo8OoWKcQ+eSSlE2YNwz0ZULrti6iAkK5WClFdmGcg8fHuFokFn2On/+
+IVaJYOZk9rhXR+KlPSSDtMf90026gYMP2fb7TpzsNOJYzxj4eERrEW+rFUgVMIMM
++gUbo9p1ML0zSnfBRx9gZPOQ+F2/hQcfbWu2MncqBK3ApvnvPPZgUR3jhNCfu6IQ
+Y/j9cU9HK0/EOpIvze/986mMHDu7DBOt61Q3tC72jHx4bP9xnVxqI4LWobqb6GLP
+xYlH3QFP+SKpxNA7KWuDQsLSUXU5pEz/lkFi1bcDL7l4rZ326KDTBUsBpG7cOdP5
+J5REuW/lubaMrgTTiWS4erBGZhE5T5Und3j9Hh/vyHyJxml9WlEjsrltK6elh37R
+RQymb/QLhN29CKZcBJbQlf2cQIS9k13C+WwIlceBxgy0oIe0H6mxp6OqLneCu87w
+Dq0IYynHAU/we26y43LG
+=F+nO
+-----END PGP SIGNATURE-----
