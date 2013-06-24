@@ -1,38 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/24/3
-Message-ID: <51019D8A.6020605@gmail.com>
-Date: Thu, 24 Jan 2013 12:46:02 -0800
-From: Forest Monsen <forest.monsen@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/24/1
+Message-ID: <1873121591.25789374.1372085219308.JavaMail.root@redhat.com>
+Date: Mon, 24 Jun 2013 10:46:59 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE request for Drupal contributed modules
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stephen Gallagher <sgallagh@...hat.com>
+Subject: CVE Request --  Review Board: Stored XSS due improper sanitization of user's full name in the reviews dropdown (fixed in upstream v1.7.10, v1.6.17 versions)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-Hi, here's a request for CVE IDs for several contributed modules:
+  A persistent / stored cross-site scripting (XSS) flaw was found in
+the way reviews dropdown of Review Board, a web-based code review tool,
+performed sanitization of certain user information (full name). A remote
+attacker could provide a specially-crafted URL that, when visited would
+lead to arbitrary HTML or web script execution in the context of
+Review Board user's session.
 
-SA-CONTRIB-2013-006 - Video - Arbitrary Code Execution
-https://drupal.org/node/1896714
+References:
+[1] http://www.reviewboard.org/docs/releasenotes/reviewboard/1.7.10/
+[2] http://www.reviewboard.org/docs/releasenotes/reviewboard/1.6.17/
+[3] http://www.reviewboard.org/news/2013/06/22/review-board-1617-and-1710-released/
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=977423
 
-SA-CONTRIB-2013-007 User Relationships - Cross Site Scripting (XSS)
-https://drupal.org/node/1896720
+Upstream patch:
+[5] https://github.com/reviewboard/reviewboard/commit/4aaacbb1e628a80803ba1a55703db38fccdf7dbf
 
-SA-CONTRIB-2013-009 - Keyboard Shortcut Utility - Access Bypass -
-module unsupported
-https://drupal.org/node/1896752
+Upstream acknowledges Craig Young at Tripwire as the original issue reporter.
 
-SA-CONTRIB-2013-010 - Search API sorts - Cross Site Scripting (XSS)
-https://drupal.org/node/1896782
+Can you allocate a CVE identifier for this?
 
-Thanks,
-Forest
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iEYEARECAAYFAlEBnYAACgkQ/ILCL9e1Br5YcQCeNvawNkdlY9MCLAwK8WtR8aFI
-z5YAnAliJHMiMT+NBNaMFVgkq/tpEWRr
-=AKbS
------END PGP SIGNATURE-----
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
