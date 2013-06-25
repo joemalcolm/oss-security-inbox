@@ -1,66 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/14
-Message-ID: <20130422180210.GA2204@kroah.com>
-Date: Mon, 22 Apr 2013 11:02:10 -0700
-From: Greg KH <greg@...ah.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/25/2
+Message-ID: <1372194797.8189.33.camel@scapa>
+Date: Tue, 25 Jun 2013 23:13:17 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: Peter de Ridder <peter@...e.org>, oss-security@...ts.openwall.com
+Cc: LightDM Mailing List <lightdm@...ts.freedesktop.org>
+Subject: Re: [LightDM] light-locker 0.1.0 released
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 22, 2013 at 01:43:17PM -0400, cve-assign@...re.org wrote:
-> >On Mon, Apr 22, 2013 at 01:44:17AM -0400, cve-assign@...re.org wrote:
-> >> 680d04e0ba7e926233e3b9cee59125ce181f66ba CVE-2013-3236
-> >> d5e0d0f607a7a029c6563a0470d88255c89a8d11 CVE-2013-3237
-> >
-> >Please explain how these can get a CVE number when the code involved has
-> >never even been in a kernel.org release yet?
+I'm cross-posting this to oss-sec so people there have a chance to look
+at the audit request.
+
+On mar., 2013-06-25 at 10:47 +0200, Peter de Ridder wrote:
+> light-locker 0.1.0 is now available for download from
 > 
-> MITRE has never had any restrictions on CVEs for issues that exist
-> only in release-candidate software or only in beta software. See for
-> example "Attendees agreed that CVE should include problems in beta
-> software, provided that the beta code was intended for public
-> dissemination" in the
-> http://cve.mitre.org/data/board/archives/2000-03/msg00007.html post.
+>  http://rhaalovely.net/stuff/light-locker-0.1.0.tar.bz2
 > 
-> These CVEs tend to be rare, possibly because they are useful to fewer
-> people. Recent examples in which a major vendor specifically chose to
-> assign a CVE name to an issue affecting only beta software are:
+>  SHA1: 7c2639d4f6a113f97143d530a5696984be66238d
+>  MD5:  52984b8c7066b63e1c5398859e36a255
 > 
->   CVE-2009-2968 - VMware Studio 2.0 public beta
+> What is light locker?
+> =====================
+> light-locker is a simple locker (forked from gnome-screensaver) that aims
+> to have simple, sane, secure defaults and be well integrated with the
+> desktop while not carrying any desktop-specific dependencies.
 > 
->   CVE-2010-0113 - Symantec Norton Mobile Security 1.0 Beta
+> It relies on lightdm for locking and unlocking your session via
+> ConsoleKit/UPower or logind/systemd.
 > 
-> A few months ago, MITRE started to draft some rough guidelines for a
-> case of a vendor who was considering use of CVEs during beta testing.
-> That case seems mostly inapplicable to the current question
-> (CVE-2013-3236, CVE-2013-3237, etc. weren't in any sense based on
-> "vendor" requests), but we might be able to share guidelines at some
-> point if any vendor here is in a similar position.
+> Release notes for 0.1.0
+> =======================
+> [Please note that this is a development release.]
+> 
+> light-locker source code is hosted on
+> http://github.com/the-cavalry/light-locker
+> Issues and pull request can be placed on github.  We don't take feature
+> requests for the 1.0.0 version.  These will be postponed to later versions.
+> 
+>   Request for audit:
+> light-locker aims to bring security to locked sessions.  Important here is
+> that the locker should not crash as this would expose the locked session.
+> 
+>   Request for translations:
+> Since the fork of gnome-screensaver many translation-strings were removed
+> but 2 new strings were added.  Translators can send changes with a
+> github pull request or mail the new .po file to simon@...e.org.
+> Please remove the fuzzy tags from the translations as strings marked as
+> fuzzy won't be translated in the application.
+> To preview the lock screen run `./src/preview` for the source tree.
+>  However, this requires translations to be installed.
+> _______________________________________________
+> LightDM mailing list
+> LightDM@...ts.freedesktop.org
+> http://lists.freedesktop.org/mailman/listinfo/lightdm
 
-Thanks for the explanation, but, given the rate-of-churn[1] in the Linux
-kernel -rc releases, I would be really wary to start wanting to assign
-CVEs to things that only show up in these types of kernel releases.
+-- 
+Yves-Alexis
 
-Unless you really want to be swamped with requests, it's your choice :)
-
-Linux kernel -rc releases are for developers, and for those people
-wanting to help with Linux kernel development, they are not for anyone
-to run on any system that they do not to expect to immediately explode
-into a bunch of pieces, let alone expect to be "perfect" from a security
-standpoint.
-
-These releases are much different from the two closed-source products
-you list above, which are not developed in the open, and rely on "public
-beta" releases to do some of their testing on real-world systems.  As
-the Linux kernel is developed entirely in the open, starting to want to
-assign CVE entries to issues that show up in one -rc release, and are
-fixed before the final kernel release, seems a bit odd.
-
-But hey, it's your system, not mine, good luck.
-
-greg k-h
-
-[1] You do realize just how fast it is, right?  Faster than you can ever
-    imagine, or even want to think about, and almost impossible to keep
-    up with.
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
