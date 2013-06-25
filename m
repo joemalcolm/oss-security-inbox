@@ -1,64 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/20
-Message-ID: <20130502194151.GA30044@thyrsus.com>
-Date: Thu, 2 May 2013 15:41:51 -0400
-From: "Eric S. Raymond" <esr@...rsus.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Miroslav Lichvar <mlichvar@...hat.com>
-Subject: Re: CVE Request -- gpsd 3.9 fixing a denial of service flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/25/1
+Message-ID: <51C9F7AE.3070004@redhat.com>
+Date: Tue, 25 Jun 2013 14:03:58 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Xen.org security team" <security@....org>, xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org
+Subject: Re: Xen Security Advisory 57 - libxl allows guest write access to sensitive console related xenstore keys
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...hat.com>:
-> On 05/02/2013 03:58 AM, Jan Lieskovsky wrote:
-> > @Eric - Eric, could you please help us to solve this doubt? (which 
-> > of the patches is the correct one to fix the above mentioned DoS /
-> > security issue)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-There are two critical patches which solve two different DoSes (well,
-one certain and one potential).  Yes, it's a strange coincidence that
-both bugs were characterized at almost the same time after we haven't
-had a crash bug since 2007.
+On 06/21/2013 04:07 AM, Xen.org security team wrote:
+> Xen Security Advisory XSA-57 version 3
+> 
+> libxl allows guest write access to sensitive console related
+> xenstore keys
+> 
+> UPDATES IN VERSION 3 ====================
+> 
+> Public release.
+> 
+> ISSUE DESCRIPTION =================
+> 
+> The libxenlight (libxl) toolstack library does not correctly set 
+> permissions on xenstore keys relating to paravirtualised and
+> emulated serial console devices. This could allow a malicious
+> guest administrator to change values in xenstore which the host
+> later relies on being implicitly trusted.
+> 
+> This vulnerability has not yet been assigned a CVE Candidate number
+> by MITRE.  We will issue an updated version of XSA-57 when this is 
+> available.
 
-The crash bug was in the NMEA driver.  There's particular kind of malformed
-packet, sometimes emitted by SiRFStar-III receivers, that looks like this:
+Please use CVE-2013-2211 for this issue.
 
-$GPGGA,030130$GPGLL,2638.1728,N,08011.3893,W,030131.000,A,A*41\r\n
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-See the incomplete GGA without trailing \r\n  at the front?  Usually 
-that was harmless and would be silently discarded. Under rare circumstances
-it could core dump (but not any more, I now have a regression test to check
-this case).
-
-That fix was commit dd9c3c2830cb8f8fd8491ce68c82698dc5538f50.
-
-The potential crash/DoS was in the AIS driver.
-
-The first stage of what it does is un-armor an AIVDM ASCII packet
-representation into an equivalent binary packet which is then examined
-for data at specific bit offsets.
-
-The un-armoring logic was not properly bounds-checked, potentially
-opening up a hole. In theory, an overlong armored packet could be
-crafted to overrun the binary-packet buffer.
-
-I'm not sure that one was exploitable; there are other properties of
-the code (notably the bounds-checked maximum length of the AIVDM ASCII
-packet buffer) that seem to guarantee the end of the binary packet
-buffer could never be reached.
-
-I put in a check anyway, because (a) I could be wrong about that, (b)
-supposing I'm right, that invariant could get silently broken by a future 
-code change.
-
-That was commit 08edc49d8f63c75bfdfb480b083b0d960310f94f, responding 
-to Savannah bug #38511.
-
-Note: neither of these have privilege-escalation possibilities.  gpsd
-needs root to initialize, but drops it long before either of these 
-code defects could fire.
-
-If you have any other questions, do not hesitate to ask.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
-
-Download attachment "signature.asc" of type "application/pgp-signature" (191 bytes)
+iQIcBAEBAgAGBQJRyfeuAAoJEBYNRVNeJnmThT8P/2Ehm4GlkwopiQeHAZ+sDICM
+sG62vRRVrTl3NOvmIq1hhCum1CxSkriGsid+v2TDu9RXsyZ8bZHkbwUBdqcxJi0A
+LxFnmvd/EfWMtdxzbdw5YclFQ3o8ajxpJ9K10NLcVy46Mfcr9ZUA86PdwTcAYUk5
+PC9X/EGFXENq+v+PRs6SwuJQyUey39dz1C9w4/R/G7JqNwZMHbuwGJWjC32ExvE9
+c4n9NpZCPeHt+xVj/9LPjCMZhVDttq+GRk3o00CBf3ruUYY5cWGbm0X2kZLiqb5/
+E+XLdZULQtwdIW/GfAwyjIhO0516dvMYK/rBtZyOvwOTrXvJC95nMSg4BHXq+ae3
+7NMAPMH9OF8ppBi3+8MyOh5bdQGu+Dq6v/OzobIcuJa7xXaq+S6B3xZuzQvXInwS
+WYoaxYtRQoeL2lugxb08D70E4rMKJobCMqao+k9dEiLgyy7Y/OVfwq0Tmj2VJWur
+Pzil1NBgcPGWA89AdMcVdTJa8RjEc6wbEaFIIRy0EqAGK4o4zjkghwl+19OQNO9A
+g5hTtjCkJ+OiLHm1lmDnuIK3KJ6HIlDSfIp9qcpu9iu2fQVrVCYAoXRJ9w35gJCQ
+xvxs/ytE9EyGysQXY7TFsgOnY9SWBUThQgCMUqO2Ylhc/9EaCVemy2J6YJI8yuuS
+bCJ5Rs25sKay74ovVPeD
+=jbfT
+-----END PGP SIGNATURE-----
