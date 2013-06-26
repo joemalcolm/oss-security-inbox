@@ -1,24 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/12/1
-Message-ID: <20131012012226.GS4394@ucc.gu.uwa.edu.au>
-Date: Sat, 12 Oct 2013 09:22:26 +0800
-From: Matt Johnston <matt@....asn.au>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/26/3
+Message-ID: <51CA9107.6060402@redhat.com>
+Date: Wed, 26 Jun 2013 16:58:15 +1000
+From: Garth Mollett <gmollett@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: dropbear sshd daemon 2013.59 release
+Subject: Re: KDE Paste Applet
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 10, 2013 at 11:41:27PM -0600, Kurt Seifried wrote:
-> On 10/10/2013 07:27 AM, Marcus Meissner wrote:
-> > It also has this changes entry which might need one: - Avoid
-> > disclosing existence of valid users through inconsistent delays 
-> > Thanks to Logan Lamb for reporting
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> This one seems to not be as exploitable or did I misread the follow up
-> emails?
+On 06/26/2013 03:06 PM, Kurt Seifried wrote:
+> On 06/25/2013 10:39 PM, Michael Samuel wrote:
+>> On 13 June 2013 10:02, Michael Samuel <mik@...net.net> wrote:
+> 
+>>> Ok, so the fix for this uses KRandom::random()...
+>>> 
+>>> I suggest leaving the KDE Paste fix as-is and replacing
+>>> KRandom with something that just fills an integer from
+>>> /dev/urandom - then we can save a few CVE numbers for the rest
+>>> of the year.
+>>> 
+>>> qrand() should probably also do the same, especially since 
+>>> cnonces for HTTP auth are using it - that means there's only
+>>> 2^32 (at best) possible cnonces...
+>>> 
+>>>> 
+>>>> 
+>> Fedora and Ubuntu have both pushed out this patch.  Requesting a 
+>> new CVE for "KRandom::random() isn't a secure PRNG", since the
+>> KDE guys are convinced that it is.
+> 
+>> Regards, Michael
+> 
+> So the thing is it can be completely random, just like a coin
+> flip. But the search space might be to small (e.g. a 1 bit key
+> based on a coin flip wouldn't be "secure"). I suspect 2^32 isn't
+> enough any more either, assuming a 480 core GPU, if you can run 250
+> cracking attempts per second per core you can brute force a 2^32
+> search space in 10 hours or so. Needless to say GPUs are getting
+> pretty cheap. So this appears to be a textbook example of CWE-334
+> "Small Space of Random Values".
+> 
+> Please use CVE-2013-2213 for KDE KRandom::random() CWE-334: Small 
+> Space of Random Values.
+> 
+> 
 
-This one needs a CVE too, just the link was wrong.                                                                                                            
-https://secure.ucc.asn.au/hg/dropbear/rev/d7784616409a is
-the correct patch.
+If /dev/urandom can't be opened it looks even worse:
 
-Cheers,
-Matt
+00041             // No /dev/urandom... try something else.
+00042             srand(getpid());
+00043             seed = rand()+time(0);
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQEcBAEBAgAGBQJRypEHAAoJEPjpLwZKQ8Gp3boIAMy5abrxcwaSuPQYswPtrD2j
+Xhj8qYmvwoRQDN5TDaT6uzEMZOSsC7cCv7RarueCiQwX+TOMz/XaxiFE8n37khTk
+MgVuBDJc759QNfIIeyYedg7WrT0c3rbqbD/CHjKicJrnpDSTBqxz7um0CejtQzMP
+dC1gk2PHYbHzQR75xEYhHPZsY30tsIeY/cP6/x+nN3h7xcVOwKNSLEHEAFzpxH6i
+zgCSUj277b0LpmddMIaLvO+qXDEAZ+RT6JN14uqfSYFbQ1F+oM4x4x/k5IOCoHNQ
+aAGLSfpxQ+MiborqQKCpGvoMsP9Hdw1s6pnPeDFoLD8tIjxr4Pcem0r5ebiT+zQ=
+=Vgdc
+-----END PGP SIGNATURE-----
