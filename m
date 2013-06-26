@@ -1,89 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/30/2
-Message-Id: <201308300646.r7U6kmSZ010229@linus.mitre.org>
-Date: Fri, 30 Aug 2013 02:46:48 -0400 (EDT)
-From: cve-assign@...re.org
-To: larry0@...com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: YingZhi Python Programming Language for iOS ftp .. bug & httpd arbitrary upload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/26/9
+Message-ID: <51CB4432.3070606@redhat.com>
+Date: Wed, 26 Jun 2013 13:42:42 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> I'd like to request a CVE for these vulnerabilities I disclosed back
-> on Sept 27 2012.
-> http://vapid.dhs.org/advisories/python_for_ipad.html
+On 06/26/2013 12:36 PM, Vincent Danen wrote:
+> I don't believe a CVE has been assigned to this issue yet.
 > 
-> YingZhi Python Programming Language for iOS
+> It was reported that Nagios 3.4.4 at least, and possibly earlier 
+> versions, would allow users with access to Nagios to obtain full
+> access to the servicegroup overview, even if they are not
+> authorized to view all of the systems (not configured for this
+> ability in the authorized_for_* configuration option).  This
+> includes the servicegroup overview, summary, and grid.
 > 
-> Vendor: XiaoWen Huang, YingZhi Python for iOS.
+> Provided the user has access to view some services, they will be
+> able to see all services (including those they should not see).
+> Note that the user in question must have access to some services
+> and must have access to Nagios to begin with.
 > 
-> Ver 1.9.
+> This has not yet been corrected upstream.
 > 
-> OSVDB IDs: 96719 & 96720
+> References:
 > 
-> Product Websites
-> http://sosilen.blog.163.com
-> http://www.iphoneappstorm.com/iphone-apps/utilities/com.yingzhi.python/yingzhipython.php?id=493505744 YingZhi
+> http://www.mail-archive.com/nagios-users@lists.sourceforge.net/msg39749.html
+>
+>  http://tracker.nagios.org/view.php?id=456 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714171 
+> https://bugzilla.redhat.com/show_bug.cgi?id=978531
 > 
-> Python Interpreter is a native python development application for the
-> iPad/iPhone. It is available for iOS 4 and above.
 > 
-> The product is packaged with its own httpd and ftpd servers. Enabling
-> the local daemons for development by Touching Computer<->This Machine
-> starts up an httpd server and ftpd server, both daemons are bound to
-> device IP not localhost.
+> Thanks.
 
-> httpd server allows upload of arbitrary files to root WWW directory.
-> 
-> Browsing to http://<target_ip>:8080/ presents an index page in which
-> anyone can upload files to the web servers root directory.
-
-Use CVE-2013-5654. Support for anonymous upload is, at least, rare in
-HTTP servers and this behavior would seem to violate reasonable user
-expectations.
-
-If you have any further information about the specific statements in
-OSVDB entry 96720, please let us know. For example, have you confirmed
-that the default configuration of this HTTP server enables a PHP
-interpreter, such that uploads of .php files are especially dangerous?
-
- 
-> ftp server vulnerable to ../ bug
-> 
-> The ftp server doesn't sanitize user input and allows remote users to
-> read and possibly write to the devices storage.
-> 
-> ftp://192.168.0.24:10000/../../../../../../../private/etc/passwd
-
-Use CVE-2013-5655.
-
-
-> The ftp server doesn't bother authenticating users, any
-> username/password combination will allow you in.
-
-We're not immediately assigning a CVE ID for this authentication
-behavior because it might be an intentional part of the vendor's
-design, and might have been reasonable in the vendor's envisioned
-development environment. If there is any documentation suggesting that
-this is instead an authentication bypass (e.g., the product allows the
-user to configure a username/password combination), the assignment can
-of course be reconsidered.
+Please use CVE-2013-2214 for this issue.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSID68AAoJEGvefgSNfHMdbt4IALFMSBoUA/WIybOGhq6wXFV+
-hc1S9kiDnKxjtR/IEnSnmjEBkF+iOdYoh2KOM41veWZD5hfoDgE2jgU3CRVHXEC7
-OAhievWB9Bx5SZghIyJFjfqAwhLjS/9DmDonDFN8EBIguflaN36e7clr3+/ixzZ5
-tzKElNelBcbgjf0WaQqfPpHRB46JJQFQ3AvqRMOyi1YbcG2LJ+uC8bylqvhXYbta
-g/LqwJ8UaxZ886Hd+V1k/+sYUL9S/VzgGnkQd4QPZJXVsAfFcEELubpnEyO0m3g+
-OQaKqLjvhA6YTfe6GuY2LJgh583UUrl8Bv+dUuP4nsiELpcZQDHa6AZjbbFJVSw=
-=pgG9
+iQIcBAEBAgAGBQJRy0QxAAoJEBYNRVNeJnmTmiQQANqHxjDihPtiDF+fOMIEm3Gg
+7jegPnW574tdZuiPXSr5bsoUKz9t6CnZ9s0TRNogZfv0w7WiXEQs8uPsttHwAbAP
+xsLOI+TJa7VryrCW6J8Nad75zYwuYVsuiwHU8X1T6eijbinr6rTJlTRniDrf16la
+5Dn+pu3077Zcao3M2rcsLrtJLDp2eGA0j+n9c1CCA3qgYZ52KjGYJ2GHBuR/lwY8
+56+o0W5x4TBxHoRDqYXEb5SIyzMFlvQFWFJUWUGwqdFV+4LR9Kcp8BcoraMtDuLg
+Wor1CBuVB4RaYVx9ljb0IcZiQhLG3MllLWe32mXQKQeIvCTtXI2BWxq9g3Q4brzX
+V6DL5GFBaGg+zhDIqzwN5LMYsNeYdss/QR8fltnCg6ijUz4MrlEr+J7gtwPipa0A
+N+muSm+tValcNRXK1lzz5Emrqz3BOSxIBGuQSNcskO+hpIjpljmUEZ5rprF8FV6v
+HEPNgxFLsQ004J0tLjFI1H+CapTpIPIXtOCIYaMuMuwy/O8Q56fxXZSR0EINF/zu
+DKjhA5hZd8ICUHqScChopSR7ur7T+XxTD42N18WiPi8+DbhEXuYBWqdRNt3ki8Tc
+StVX+mxA4Sd2AHU6wa8G04jaq/MTm5MMaEGkjCmbO6SzpbEuhLDcRrImVX+3Svza
+Couxa/Nd733MeYJGcvz6
+=wrcn
 -----END PGP SIGNATURE-----
