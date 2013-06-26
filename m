@@ -1,58 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/3
-Message-ID: <5181E9D3.6000301@redhat.com>
-Date: Thu, 02 May 2013 09:51:39 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/26/1
+Message-ID: <CACYkhxjAjVTrEGDtcCz6Sn3E=mW4AkUsQ_om6_FNxr4zxbc8kw@mail.gmail.com>
+Date: Wed, 26 Jun 2013 14:39:49 +1000
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: Two libtiff (tiff2pdf flaws)
+Subject: Re: KDE Paste Applet
 Content-Type: text/plain; charset=utf-8
 
-Re-sending
+On 13 June 2013 10:02, Michael Samuel <mik@...net.net> wrote:
 
+> Ok, so the fix for this uses KRandom::random()...
+>
+> I suggest leaving the KDE Paste fix as-is and replacing KRandom with
+> something that just fills an integer from /dev/urandom - then we can save a
+> few CVE numbers for the rest of the year.
+>
+> qrand() should probably also do the same, especially since cnonces for
+> HTTP auth are using it - that means there's only 2^32 (at best) possible
+> cnonces...
+>
+>>
+>>
+Fedora and Ubuntu have both pushed out this patch.  Requesting a new CVE
+for "KRandom::random() isn't a secure PRNG", since the KDE guys are
+convinced that it is.
 
--------- Original Message --------
-Subject: Two libtiff (tiff2pdf flaws)
-Date: Thu, 02 May 2013 09:30:26 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-
-Hi all,
-
-Two flaws were reported to us in tiff2pdf utility shipped with the
-libtiff library. Details as follows:
-
-1. CVE-2013-1961 libtiff (tiff2pdf): Stack-based buffer overflow with
-malformed image-length and resolution
-
-A stack-based buffer overflow was found in the way tiff2pdf, a TIFF
-image to a PDF document conversion tool, of libtiff, a library of
-functions for manipulating TIFF (Tagged Image File Format) image format
-files, performed write of TIFF image content into particular PDF
-document file, when malformed image-length and resolution values are
-used in the TIFF file. A remote attacker could provide a specially-
-crafted TIFF image format file, that when processed by tiff2pdf would
-lead to tiff2pdf executable crash.
-
-Reference: https://bugzilla.redhat.com/show_bug.cgi?id=952131
-
-2.  CVE-2013-1960 libtiff (tiff2pdf): Heap-based buffer overflow in
-t2_process_jpeg_strip()
-
-A heap-based buffer overflow flaw was found in the way tiff2pdf, a TIFF
-image to a PDF document conversion tool, of libtiff, a library of
-functions for manipulating TIFF (Tagged Image File Format) image format
-files, performed write of TIFF image content into particular PDF
-document file, in the tp_process_jpeg_strip() function. A remote
-attacker could provide a specially-crafted TIFF image format file, that
-when processed by tiff2pdf would lead to tiff2pdf executable crash or,
-potentially, arbitrary code execution with the privileges of the user
-running the tiff2pdf binary.
-
-Reference: https://bugzilla.redhat.com/show_bug.cgi?id=952158
-
-The enclosed bugs contains the relevant patches.
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
-
+Regards,
+  Michael
 
