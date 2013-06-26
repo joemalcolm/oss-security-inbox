@@ -1,76 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/7
-Message-ID: <20130207084910.GH23092@frohike.homeunix.org>
-Date: Thu, 7 Feb 2013 09:49:10 +0100
-From: Peter Bex <Peter.Bex@...all.nl>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: A small backlog of vulnerabilities in Chicken Scheme
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/26/6
+Message-ID: <20130626183621.GD3638@redhat.com>
+Date: Wed, 26 Jun 2013 12:36:21 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: unauthorized host/service views displayed in servicegroup view
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 06, 2013 at 07:29:10PM -0700, Kurt Seifried wrote:
-> Sorry for the delay, it's been a crazy couple of weeks.
+I don't believe a CVE has been assigned to this issue yet.
 
-No problem.  Thanks for all your efforts!
+It was reported that Nagios 3.4.4 at least, and possibly earlier
+versions, would allow users with access to Nagios to obtain full access
+to the servicegroup overview, even if they are not authorized to view
+all of the systems (not configured for this ability in the
+authorized_for_* configuration option).  This includes the servicegroup
+overview, summary, and grid.
 
-> On 02/02/2013 06:59 AM, Peter Bex wrote:
-> > I'd like to request CVEs for the currently known security bugs:
-> > 
-> > * POSIX select() buffer overrun, fixed on in Chicken 4.8.2
-> > (development snapshot) by switching to POSIX poll() on platforms
-> > where supported. This is also fixed in 4.8.0.1 (stability
-> > release).
-> 
-> Can you list the versions released that included the broken and
-> correct patch? thanks.
+Provided the user has access to view some services, they will be able to
+see all services (including those they should not see).  Note that the
+user in question must have access to some services and must have access
+to Nagios to begin with.
 
-The preliminary patch was correct but not portable (so not broken in
-the sense of being vulnerable).  Because of portability problems it was
-never committed.  I decided to include the link to the other patch for
-completeness, and for reference (useful for people reading the CVE and
-studying the bug's history).  Sorry if this caused some confusion.
+This has not yet been corrected upstream.
 
-The correct patch was committed and ended up in stable
-release 4.8.0.1 and development snapshot 4.8.2. 
+References:
 
-Effectively this means that 4.8.0 and earlier is vulnerable, plus the
-development snapshot 4.8.1 (but *not* 4.8.0.1 - the fix was pulled up
-into our stability branch).
+http://www.mail-archive.com/nagios-users@lists.sourceforge.net/msg39749.html
+http://tracker.nagios.org/view.php?id=456
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714171
+https://bugzilla.redhat.com/show_bug.cgi?id=978531
 
-Maybe it helps if I explain our current versioning scheme.  Our stable
-releases end in a zero (ex: 4.7.0, 4.8.0).  We periodically release
-stability patchlevel upgrades, which end up as minor version suffixes.
-This means that 4.8.0 is stable, followed by 4.8.0.1, 4.8.0.2 etc.
 
-While working on the next major release (which will be 4.9.0), snapshots
-are built which will have minor versions like 4.8.1, 4.8.2 etc.
-The 4.8.0.n versions contain only bugfixes that went into 4.8.x
-snapshots which were deemed important enough to pull up into the minor
-stable release cycle.
+Thanks.
 
-> > * Vulnerability to algorithmic complexity attacks due to hash
-> > table collisions.  Fixed in 4.8.0. First public confirmation of the
-> > issue, with preliminary (broken) patch: 
-> > http://lists.nongnu.org/archive/html/chicken-hackers/2012-01/msg00002.html
-> > 
-> Proper fix:
-> > http://lists.nongnu.org/archive/html/chicken-hackers/2012-01/msg00020.html
-> 
-> Can you list the versions released that included the broken and
-> correct patch? thanks.
-
-No versions contained the preliminary patch, it was made available for
-testing only.  I also included this one for reference.  I'll try make
-this clearer the next time.
-
-The correct patch ended up in snapshot 4.7.4 and, thus, in stable
-release 4.8.0; This means that anything before 4.7.4 is vulnerable.
-
-> > Finally, how do CVE entries in MITRE and/or the NVD get updated? I
-> > couldn't find anything about this in the FAQ.
-
-I would still appreciate an answer to this question.
-
-Cheers,
-Peter
 -- 
-http://sjamaan.ath.cx
+Vincent Danen / Red Hat Security Response Team 
