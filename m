@@ -1,57 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/8
-Message-Id: <00F23841-9165-4690-AE0B-6EA70F6EA15A@nginx.com>
-Date: Fri, 26 Apr 2013 11:15:21 +0400
-From: Andrew Alexeev <andrew@...nx.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/26/8
+Message-ID: <51CB3A9D.2080208@redhat.com>
+Date: Wed, 26 Jun 2013 13:01:49 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com, gremlin@...mlin.ru
-Subject: Re: Nginx ngx_http_close_connection function integer overflow - can anyone confirm this?
+CC: Raphael Geissert <geissert@...ian.org>
+Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
 Content-Type: text/plain; charset=utf-8
 
-On Apr 26, 2013, at 9:48 AM, Alistair Crooks wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On Thu, Apr 25, 2013 at 11:36:17PM -0600, Kurt Seifried wrote:
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA1
->> 
->> - From Bugtraq:
->> 
->> http://www.securityfocus.com/archive/1/526439/30/0/threaded
->> 
->> Website: http://safe3.com.cn
+On 06/26/2013 12:44 PM, Raphael Geissert wrote:
+> On Wednesday 26 June 2013 20:36:21 Vincent Danen wrote:
+>> I don't believe a CVE has been assigned to this issue yet.
 > 
-> Is this legit?
+> I believe you are correct. We, as in the Debian security team, have
+> just received a CVE request from the reporter.
 > 
-> I downloaded the index.html file with curl, and embedded around line 87
-> was a flash file:
+> Cheers,
 
-Unfortunately we weren't approached by "Qihoo 360 Web Security Research Team"
-before this publication went out through bugtraq.
-
-We are now trying to obtain more information from that team without much success.
-
-We've also analyzed their report and we can't conclude this is a real vulnerability yet.
-From the descriptions provided it still looks like it's somewhat spurious.
-
-We are trying to continue investigation though.
-
-Regrettably responsible disclosure isn't always the case. However, we can't yet confirm
-it's a full one either.
+Shall I assign one?
 
 
-> <table width="930" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
-> <tr><td>
-> <object type="application/x-shockwave-flash" data="/banner.swf?xml=/banner.xml" width="930" height="180">
-> <param name="movie" value="/banner.swf?xml=/banner.xml"/>
-> </object>
-> </td></tr>
-> <tr>
-> 
-> so I took it to be an attempt at phishing.
-> 
-> Maybe I'm just too paranoid in my old age?
-> 
-> Regards,
-> Alistair
-> 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
+iQIcBAEBAgAGBQJRyzqdAAoJEBYNRVNeJnmTgPUQANUNQCFXoqpd6NNbAdHJmwhd
+aPAK3BBc96zNor59gMYBKTtkXhIlwGoHJ1T8FHGIUMbbTG/Ovu+4R8vCAF/PXC7/
+64iFSFdzWEQJnee5ZRO7vkqQ4x8AACBc7mtBIGZtMc5S6w8JKGzvTIHsI2QtHNpE
+MDWMfvW6oOMA24REDwygaJXySSg6usPLx/07Jg0uShvqWppte5etWTkeJ4sdCRJW
+42hqBM9d43fYUu47Tqr3P1eXLfvNeXPFV9CQ8Dty5JEvfEZVjN+wJ6gcQQn89S4n
+XCSc2q6sX2SiUgTRVZD9K2cCxQ67LArA8aVekTiAHUuZkOZMtsds6WpJOWLzcjkA
+qMnF4zyHsZza3WXz51DK9K8Gkd7TLXxa8ZNdFdiot2bm60p1zaNODV4IoQMc3Vgq
+S6OSo/GfvazwQKpz8XTRAJgzly1F4PAv+bC4UCyHjIDxpmpGHFDmiwup22Ll/De2
+wZDMRwbpmo4KbR1IXGx6tl6oAosoby5XGkMA4dXhGw/dvm/Uht7HklD/zpuKMcRs
+OaOCnZcsYa0ATd3NKY/6HuzdYma6ua6U8ehXrplJzwdTVVzHtVyApKhyxN132wSc
+YaTuE/liMmJaVS64s72Amjgr9lwwah4aw6g+2g30+W19uwnBqa41uAksr5EeFi3Q
+z1C7s7K0wRdbDytQEKet
+=T8V6
+-----END PGP SIGNATURE-----
