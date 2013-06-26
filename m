@@ -1,78 +1,157 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/11/1
-Message-Id: <201309110840.r8B8eCHv015955@linus.mitre.org>
-Date: Wed, 11 Sep 2013 04:40:12 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com, gerald@...eshark.org
-Cc: cve-assign@...re.org
-Subject: CVEs for Wireshark 1.8.10 and 1.10.2 releases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/26/4
+Message-Id: <E1Urn7X-00056F-Ad@xenbits.xen.org>
+Date: Wed, 26 Jun 2013 10:38:39 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 57 (CVE-2013-2211) - libxl allows guest write access to sensitive console related xenstore keys
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-https://www.wireshark.org/security/wnpa-sec-2013-54.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=8827
-http://anonsvn.wireshark.org/viewvc?view=revision&revision=51130
-crash; incorrectly maintained free list
-CVE-2013-5717
+               Xen Security Advisory CVE-2013-2211 / XSA-57
+                               version 4
 
+ libxl allows guest write access to sensitive console related xenstore keys
 
-https://www.wireshark.org/security/wnpa-sec-2013-55.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=9005 Access Denied
-crash
-CVE-2013-5718
+UPDATES IN VERSION 4
+====================
 
+This issue has been assigned CVE-2013-2211.
 
-https://www.wireshark.org/security/wnpa-sec-2013-56.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=9020
-http://anonsvn.wireshark.org/viewvc?view=revision&revision=51196
-loop
-CVE-2013-5719
+ISSUE DESCRIPTION
+=================
 
+The libxenlight (libxl) toolstack library does not correctly set
+permissions on xenstore keys relating to paravirtualised and emulated
+serial console devices. This could allow a malicious guest
+administrator to change values in xenstore which the host later relies
+on being implicitly trusted.
 
-https://www.wireshark.org/security/wnpa-sec-2013-57.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=9019 Access Denied
-buffer overflow
-CVE-2013-5720
+This vulnerability has not yet been assigned a CVE Candidate number by
+MITRE.  We will issue an updated version of XSA-57 when this is
+available.
 
+IMPACT
+======
 
-https://www.wireshark.org/security/wnpa-sec-2013-58.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=9079
-http://anonsvn.wireshark.org/viewvc?view=revision&revision=51603
-crash; erroneous entry into a loop
-CVE-2013-5721
+A malicious guest administrator can read and write any files in the
+host filesystem which are accessible to the user id running the
+xenconsole client binary. This may be the user id of a host
+administrator who connects to the guest's console or the user id of
+any self service mechanism provided to guest administrators by the
+host provider.
 
+As well as reading and writing files an attacker with access to an HVM
+guest can cause any PV or serial consoles to be connected to a variety
+of network resources (sockets, udp connections) or other end points
+(fifo, pipes) in the host file filesystem according to the privileges
+granted to the qemu device model for that guest.
 
-https://www.wireshark.org/security/wnpa-sec-2013-59.html
-crash
-CVE-2013-5722
+A malicious guest administrator can also redirect the VNC console
+port of the guest to another port on the host. This may expose the VNC
+port of other guests or of other firewalled services to an attack.
 
+VULNERABLE SYSTEMS
+==================
 
-https://www.wireshark.org/security/wnpa-sec-2013-60.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=8742
-http://anonsvn.wireshark.org/viewvc?view=revision&revision=49697
+All systems which use libxl as part of the toolstack are vulnerable.
 
-We don't understand why
-https://www.wireshark.org/security/wnpa-sec-2013-60.html has different
-affected versions than
-https://www.wireshark.org/security/wnpa-sec-2013-51.html (they are
-both about bug 8742). Thus, we don't know whether new CVE IDs are
-needed.
+libxl is present in Xen versions 4.0 onwards.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+The major consumer of libxl functionality is the xl toolstack which
+became the default in Xen 4.2.
+
+In addition to this libvirt can optionally make use of libxl. This can
+be queried with
+        # virsh version
+
+Which will report "xenlight" if libxl is in use. libvirt currently
+prefers the xend backend if xend is running.
+
+The xend and xapi toolstacks do not currently use libxl.
+
+MITIGATION
+==========
+
+Host administrators can start a domain paused and manually correct the
+xenstore permissions of the relevant nodes.
+
+A domain can be started in the paused state with xl by using
+    # xl create -p <cfg>
+
+A domain's domid can then be determined with:
+    # xl domid <name>
+
+If using libvirt then virsh can be used instead:
+    # virsh start --paused <name>
+    # virsh domid <name>
+
+For a domain $DOMID the following command will recursively correct the
+permissions for the primary PV console:
+
+    # xenstore-chmod -r /local/domain/$DOMID/console n0 r$DOMID
+
+If the domain uses a device model stubdomain then it will also be
+necessary to fix the permissions for the stubdomain. The stubdomain is
+named "<name>-dm". Assuming its domain ID is $DMDOM:
+
+    # xenstore-chmod -r /local/domain/$DMDOM/console n0 r$DMDOM
+
+In addition a stub domain has three secondary PV consoles which must be
+fixed, however in this case the "state" and "protocol" nodes along
+with the device node itself should not be restricted. For each device
+$D in [1,2,3]:
+
+    # xenstore-chmod -r /local/domain/$DMDOM/device/console/$N n0 r$DMDOM
+    # xenstore-chmod /local/domain/$DMDOM/device/console/$N/state n$DMDOM r0
+    # xenstore-chmod /local/domain/$DMDOM/device/console/$N/protocol n$DMDOM r0
+    # xenstore-chmod /local/domain/$DMDOM/device/console/$N n$DMDOM r0
+
+The current permissions can be listed with
+    # xenstore-ls -fp <PATH>
+
+Once the permissions are fixed you may unpause the domain with
+    # xl unpause <domain>
+or with virsh:
+    # virsh resume <domain>
+
+The permissions can also be corrected on a live system if they are
+then manually validated to be non-malicious.
+
+See http://wiki.xen.org/wiki/XenBus#Permissions for information on the
+permissions syntax.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa57-4.2.patch             Xen 4.2.x
+xsa57-4.1.patch             Xen 4.1.x
+xsa57-unstable.patch        xen-unstable
+
+$ sha256sum xsa57-*.patch
+428a1d42f4314404cde339a78a59422bf4f0590c4d16ea8adc83425fe5eede3d  xsa57-4.1.patch
+b6a5106848541972519cc529859d9ff3083c79367276c7031560fa4ce6f9f770  xsa57-4.2.patch
+d329f56c30f7a4f91906658ea661234d2ca31b74ee68257bf009072999b3d3ef  xsa57-unstable.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSMCvgAAoJEKllVAevmvmsuWMH/RRdPe0Lk3lAP3pVOGm+37GP
-9He6RbdJywE0X5aK7V7TTTXJJt6lFmLk91m9yFmeVeleBTb71nmzhsLf8Spn34Ew
-upNCIIWOz5SrBST8rkX8q9w27nNr3VsC9Ai7y+SazWme9AzPFgM5mAbTpcimBe1m
-3k/N27ZqQdvRhdlT7NbzjhEE+AYYSldtaVp5B+PjZBPECvUPBSTWQJnsc+ywMHMl
-v90upHmTTCPR6k1M0fQcANRIE1GAHjkpiyrDCdtFY+geArQis93w95Zp5REayvVU
-geky+wLz63mQQw6A7pHC8sejrNLAggwvqTERthsIyv5W5YIpcwFVCy/bicY47TY=
-=n04P
+iQEcBAEBAgAGBQJRysSAAAoJEIP+FMlX6CvZ+9cH/R1sMTy9m9Vg7dopyMcSgtFz
+1VatpxBUE0ldwv40t4kfMiKjocW/VUKV2j0HIOFCNh/XUTxtdO8SdVOsrQgfady2
+IUGzRPIjnL82fRHcN1BNc81bViikDQ6R9cypA+R0V4X5sj8lwTtz5G73yoKnqWfb
+2X57m0HT4pwySSTnhHyMyBdbBix8EdtjpyW3gzcrF1SmvQSIozz5NV80EpIWEnvY
+x6uoVhCI6HD+JwH5xqn/E0oWvrc9v2+c300YIsTiXZcm7S19c+mphWO8o+wupwaX
+xI1YfBO/YdxBlT5awFYtYLKwe6ld11K+AeonVapwRMiwyqMXRIiCSAmnjtSy7lg=
+=vA8Q
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa57-4.1.patch" of type "application/octet-stream" (16672 bytes)
+
+Download attachment "xsa57-4.2.patch" of type "application/octet-stream" (15549 bytes)
+
+Download attachment "xsa57-unstable.patch" of type "application/octet-stream" (15819 bytes)
