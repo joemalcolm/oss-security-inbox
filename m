@@ -1,78 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/16/6
-Message-ID: <520E51B0.8000907@redhat.com>
-Date: Fri, 16 Aug 2013 10:22:08 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Kurt Seifried <kseifrie@...hat.com>
-Subject: Re: CVE Request: linux-kernel priviledge escalation on ARM/perf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/27/9
+Message-ID: <Pine.GSO.4.64.1306271712580.4601@faron.mitre.org>
+Date: Thu, 27 Jun 2013 17:37:09 -0400 (EDT)
+From: "Steven M. Christey" <coley@...re.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com, alexandre.rebert@...il.com
+cc: Russ Allbery <rra@...nford.edu>, cve-assign@...re.org
+Subject: Re: 1.2k bug reports for Debian, some may be security
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 08/16/2013 05:07 AM, Petr Matousek wrote:
-> On Wed, Aug 14, 2013 at 05:37:32PM -0400, Vince Weaver wrote:
->> Hello
->> 
->> I'm not really a security researcher, so hopefully I'm reporting
->> this in the proper way.
-> 
-> Thank you for the report, Vince. I think that it is completely fine
-> -)
-> 
->> I have a fuzzer tool for the perf_event_open() syscall that
->> found a few oopses on the ARM platform, which I reported to lkml
->> a week ago.
->> 
->> One of the oopses can lead to a local privilege escalation on
->> ARM-perf. This fix can be found here: 
->> http://www.arm.linux.org.uk/developer/patches/viewpatch.php?id=7809/1
+On Thu, 27 Jun 2013, Kurt Seifried wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 06/26/2013 11:56 PM, Russ Allbery wrote:
+>> Kurt Seifried <kseifried@...hat.com> writes:
 >>
->> 
-The discussion thread is:
->> https://lkml.org/lkml/2013/8/7/259
->> 
->> The hope is this appears in 3.11-rc6 but my attempts to get the
->> people at security@...r.kernel.org to take this seriously didn't
->> really go very well.
->> 
->> I do have code that will exploit the kernel and give me a root
->> shell on an ARM Pandaboard machine running 3.11-rc4.  The exploit
->> is a bit fragile though: + Only works on ARM + Elevates from
->> normal user to root, no special config required. perf_event
->> syscalls run as regular users, not sure why some think you need
->> root. + It does need a user-mappable address at an exact byte
->> offset from a pmu_struct in memory.  This limits things somewhat;
->> in my testing 3.11-rc kernels have INT_MIN at exactly the right
->> place but the exploit doesn't work on a 3.7.6 kernel, it just
->> oopses or crashes the machine.
-> 
-> This looks valid to me. Unless someone has any objections, can you 
-> please Kurt assign CVE to this issue?
-> 
-> Thanks,
-> 
+>>> I will of course be doing CVEs for these (*sob*). In order to
+>>> make this possible though I'm going to need some help in the form
+>>> of good CVE requests in this case I will be fascist.
 
-Please use CVE-2013-4254 for this issue.
+The following is just my opinion and not an official CVE-Assign position. 
+I am concerned that we could assign too many CVEs to issues that don't 
+turn out to be vulnerabilities.
+
+Past experience suggests that when it comes to "local" exploitation, many 
+people involved in security do not necessarily draw clear boundaries 
+between bugs and vulnerabilities, at least as vulnerabilities have been 
+"classically" understood in the last couple decades.  We occasoinally see 
+examples of this on oss-security.  Multiply that by 1.2K and we may wind 
+up with some mayhem of our own.
+
+There should be very clearly-specified reasons for why an issue crosses 
+privilege boundaries.  If an attacker can only exploit an issue through a 
+command-line parameter, configuration file, or other input that must be 
+inherently trusted (otherwise the app can't function properly), then that 
+may not qualify as a vulnerability.
+
+If the program is exploitable through input that could be untrusted in 
+common usage scenarios (e.g., "sort" may be executed on log file output as 
+in CVE-2013-0221), then that may be worthy of a CVE.
+
+As far as I can see on the current Debian threads, some of the reported 
+issues do not actually cross privilege boundaries, and would therefore 
+fall more under the "bug" category than a vulnerability worthy of a CVE.
+
+To fully understand which inputs or usage scenarios pose a real risk, it 
+may require a deep familiarity with the software itself - such as the 
+package maintainers.
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Russ Allbery said:
 
-iQIcBAEBAgAGBQJSDlGwAAoJEBYNRVNeJnmTUmIQAINcIK8HLi1xR4fbhy87tdSC
-wv/Ta768n1T/ctooqSocsDt2I0JrT81PG1S8fmKkYziFRG7N7HOMM7vNIvxc9Kzg
-s3J3nQsOVBHbsVKFX8U1lFnfjJbIBfSJJd4ybmUPi75KiEiH5WJZN8B64gm/14jk
-h45IOd9rBI6ej5Rk3cOrs3QeLEAJP/KOxbPX+8H0JD4lCNG86oXg8BuPbzqODHXO
-9bLtsxetbK8Ago/O9pp5JKClYPCctPjpOJTn7Kz7XeltycGuOHixW2LsH0tP9FUT
-TxvNalNJ3+JWdUg23C501j1pya6/HPIAIWt0tb7hX6i5PuSluP6/7LfiH7wIySNs
-Ft0q+FXzd8OUYIw/TiAw1WaRlCb3SNAbNjVDoFcMoaO1KBUXmT3BP8ROgsDO1vZM
-QEP95sT8yhKDIuNhlK5wbqYMisc9Koo1oOsZLYNcfkMljlB2V+vg6otQdQW/MQMV
-CPsEMncE3fcRAyabfxVcaQgIDH3WYGbFlMTwNBKyWZjjOX62nGRcNioiVPpQAuNX
-Evqvt0v8NJDWB2LkoUigp4NzPucQNEifS5ZwCpw14YHD7J7MdgntTVnyFdDGEPMv
-wC86yJhN/8f1c7TSxVH51P8ZiD5FtHCcz0ynR+9ZeWkcLIHvkyJO4M2NcwAmUOei
-QoH+aUwRIv/nfky2TdXq
-=KsT9
------END PGP SIGNATURE-----
+>> I suspect you will not want to be doing CVEs for most of these.
+>> The ones I've seen so far aren't really security issues.  They're
+>> cases of command-line programs crashing on input, but usually input
+>> that is not feasibly under the control of an attacker (command-line
+>> options provided by the user, etc.).
+
+Hopefully this is the case.  Perhaps we should rely more heavily on the 
+package maintainers to help determine this.
+
+> Yup. hence the "Attack outcome (is this a security vulnerability in
+> other words)". I'm hoping <10% of these are security vulnerabilities.
+> But anything setuid/setgid, etc.... all sorts of potential for problems.
+
+An issue in a setuid/setgid program still might not automatically be a 
+vulnerability - for example, if the issue is in a configuration file, or 
+if it only appears after privileges have been dropped, it might not be an 
+issue.
+
+I was under the impression from an incomplete read of the MAYHEM paper 
+that it could generate shellcode for code execution, yet I'm only hearing 
+of reports for crashes.  If code execution can be proven, then that may be 
+informative.  However, if person X can already run code (like executing 
+the "vulnerable" program in the first place), and they can only introduce 
+shellcode through "trusted" inputs like configuration files, and the 
+shellcode will only run with the same privileges as X, then there is no 
+security gain and no privilege boundaries are crossed, thus not a 
+"vulnerability" in the classic sense and not worthy of a CVE.
+
+- Steve
