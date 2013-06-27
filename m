@@ -1,43 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/14/3
-Message-ID: <20131014123832.GF14043@suse.de>
-Date: Mon, 14 Oct 2013 14:38:33 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request : poppler < 0.13.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/27/1
+Message-ID: <51CBC448.6010400@redhat.com>
+Date: Wed, 26 Jun 2013 22:49:12 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, cve-assign@...re.org, "Steven M. Christey" <coley@...re.org>
+Subject: 1.2k bug reports for Debian, some may be security
 Content-Type: text/plain; charset=utf-8
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+http://lists.debian.org/debian-devel/2013/06/msg00720.html
+
+From: Alexandre Rebert <alexandre.rebert@...il.com>
 
 Hi,
 
-Kurt? Could you assign a CVE please?
+I am a security researcher at Carnegie Mellon University, and my team
+has found thousands of crashes in binaries downloaded from debian
+wheeze packages. After contacting owner@...s.debian.org, Don Armstrong
+advised us to contact you before submitting ~1.2K bug reports to the
+Debian BTS using maintonly@...s.debian.org (to avoid spamming
+debian-bugs-dist).
 
-SUSE is affected by this in SLE11.
+We found the bugs using Mayhem [1], an automatic bug finding system
+that we've been developing in David Brumley's research lab for a
+couple of years. We recently ran Mayhem on almost all ELF binaries of
+Debian Wheezy (~23K binaries) [2], and it reported thousands of
+crashes.
+=================
 
-Ciao, Marcus
-On Wed, Sep 18, 2013 at 09:53:33AM +0200, etienne wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> Hi,
-> I'd like to request a CVE number for the following issue
-> http://cgit.freedesktop.org/poppler/poppler/commit/poppler/DCTStream.cc?id=fc071d800cb4329a3ccf898d7bf16b4db7323ad8
-> 
-> The bug has been fixed in poppler 0.13.3, back in 2010, though it is
-> still present and exploitable in several distributions.
-> 
-> Thanks,
-> 
-> Etienne
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.10 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-> 
-> iEYEARECAAYFAlI5W/cACgkQCRpgAcXwxOcbEQCgoa8IZSrKjVjEfJRXBBLcNpom
-> mggAmQGZmKXz/5eYy5JVETtWxVB/rH4Y
-> =uavz
-> -----END PGP SIGNATURE-----
-> 
+I will of course be doing CVEs for these (*sob*). In order to make
+this possible though I'm going to need some help in the form of good
+CVE requests in this case I will be fascist. The following data will
+be required:
 
-> pub  1024D/C5F0C4E7 2013-03-05 Etienne Helluy-Lafont <etiennehelluy@...il.com>
-> sub  1024g/A2EAC3E7 2013-03-05 [verfällt: 2014-12-30]
+For each package:
+CVE requesters name / email (sending an email should be fine)
+Official Debian Package name
+Official upstream name and URL to site
+Affected version in Debian
 
+Then for each vuln:
+Link to Debian bug entry
+Description of vuln/type (like one sentence)
+Link to code fix (mandatory)
+Attack outcome (is this a security vulnerability in other words)
+
+Or else I will get steam rolled.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRy8RIAAoJEBYNRVNeJnmTmxYQAN5ry/gbbrZdYdqKn0unw7U/
+am8hjj3GnqtwnWyLTTKtujGZdck+IYdaceXsTQBfMVlX5kSktuN47URDrvD/tasw
+oMFr30231JI2kTtKlaq+DrzmDEX2hwyEZX+tMrkGVY53162jKMtkiXZ1azLFDFFb
+zk/GSZjKaULRXIPbgiz71PmJQqfBRyGHpAx9wfsS7mafBev5pcyk+CMYrtScnGCe
+Q4H5qJGfFTvw2/LTOL45jx5wRalrOraTOYg77Ymxw7fI/czgeOkZncWj8p/VMnzh
+GV2x34+XchRERS7CFYU/Mtu7vIF55FTmgIMgyYa2lNrBzl/18F2ZPwomBui3a44s
+VxoTOHOmSOnbQeDyellcZmZNIo8ha0mQuHO2B0p1A7ZE0SM/au9cIkwbjLfqBap0
+1zUhsu+OQQgDWEttyh30Kzk+uMVGaI3iHLd+lwYiKETl/NFWurkv1w6+uct3lyPs
+7HW+sGGCIkW3gaHC/b4BSN56rZYZrKIpHUHgsu8iQZLN7ZiBi4a1H5sHY4YGAwIj
+qUKft6PKQ6oXHYNtGZF/dbvjRVdjyeb6gsd7ZFIa6Ysgp/au/5ucniX2jAb+ruAE
+q4Fu67PrQOcbFsFORQSVXLjcruBuJEMMW6adp3CLbnPPaBVq1Oo55muwG0i56E4S
+d4AygY8ooUp+MjdF4yOU
+=1ITA
+-----END PGP SIGNATURE-----
