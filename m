@@ -1,49 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/2
-Message-ID: <20130108024308.GA14320@altlinux.org>
-Date: Tue, 8 Jan 2013 06:43:08 +0400
-From: "Dmitry V. Levin" <ldv@...linux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/27/6
+Message-ID: <CAA7hUgGpa13NpmRKkCPA7GV76xNaWG6WMkwzNXmV5drx2bOJgQ@mail.gmail.com>
+Date: Thu, 27 Jun 2013 18:04:51 +0200
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: /dev/ptmx timing
+Cc: jmd@...epnet.net, moyo@...epnet.net
+Subject: CVE request: GLPI, multiple issues
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jan 07, 2013 at 08:11:11PM -0500, adam swanda wrote:
-> Don't you need to be running as root for this to be possible?
+Hi,
 
-You certainly haven't followed the link listed below, have you?
+[CC'ing upstream for complimentary information]
 
-The elegance of this timing attack is that all you need is
-inotify_add_watch(fd, "/dev/ptmx", IN_MODIFY)
-which is usually available to everybody who has read access to /dev/ptmx.
+Multiple SQL injections have been reported in GLPI:
+http://packetstormsecurity.com/files/122097/GLPI-0.83.8-SQL-Injection.html
 
-> I know you can use strace to capture keystroke "writes" for any given PID,
-> but unless you want to capture only processes you are running you need to
-> be root or use sudo strace <cmd>.
-> 
-> It looks like your PoCs fall into the same category. Following that same
-> logic, if a user has root access, what would they gain by sniffing password
-> character length? Since they can view hashes, change passwords, etc,
-> without this method.
-> 
-> I might be completely wrong here but I personally wouldn't classify this as
-> a security issue. Just putting in my own opinion, of course, as a casual
-> reader of this list.
-> On Jan 7, 2013 5:24 PM, "vladz" <vladz@...zero.fr> wrote:
-> 
-> > I noticed that it was possible to measure inter-keystrokes timing thanks
-> > to the /dev/ptmx character device.  Any local user that is using
-> > pseudo-terminal can be targeted.
-> >
-> > As it may also be used to disclose sensible information such as password
-> > length, I was wondering if it should be treat as a security issue?
-> >
-> > Description + PoC: http://vladz.devzero.fr/013_ptmx-timing.php.
-> >
-> > No sure right now but I think the only way to solve this is to modify
-> > the pts handling at kernel level.  Any opinions on that?
+(note that the original advisory was hosted at www.zeroscience.mk but
+it 404s as of the time of writing)
 
+And a local file inclusion vulnerability was also reported:
+http://packetstormsecurity.com/files/122087/GLPI-0.83.7-Parameter-Traversal-Arbitrary-File-Access.html
 
--- 
-ldv
+(same note as for the above issue)
 
-Content of type "application/pgp-signature" skipped
+I'm not aware of related commits or bug reports other than the
+following (but this is me trying to connect dots):
+https://forge.indepnet.net/issues/4372
+which was marked as fixed at least in (0.83.9):
+https://forge.indepnet.net/projects/glpi/versions/915
+But the bug report also refers to the fix in trunk and the 0.85 branch.
+
+Could CVE ids be assigned please?
+
+Note that this is a different request than the one for the one about
+the use of unserialize on untrusted data.
+
+Thanks in advance,
+--
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
