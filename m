@@ -1,22 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/22/3
-Message-ID: <20130722132239.GG26504@dhcp-25-225.brq.redhat.com>
-Date: Mon, 22 Jul 2013 15:22:40 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Laszlo Ersek <lersek@...hat.com>, Lev Veyde <lveyde@...hat.com>, aliguori@...ibm.com, mdroth@...ux.vnet.ibm.com
-Subject: CVE-2013-2231 -- qemu: qemu-ga win32 service unquoted search path
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/27/4
+Message-ID: <96CE3E2EEB6DAC41B51EE1A32AB852B701A5C401@SMFIDF806B.main.fr.ds.corp>
+Date: Thu, 27 Jun 2013 09:41:37 +0200
+From: "Mehrenberger, Xavier" <Xavier.Mehrenberger@...sidian.com>
+To: <oss-security@...ts.openwall.com>
+Subject: CVE request for GLPI
 Content-Type: text/plain; charset=utf-8
 
-An unquoted search path flaw was found in the way qemu guest agent
-service for Windows was installed into the system.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A local unprivileged user could use this flaw to increase their
-privileges.
+Hello,
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=980757
-http://cwe.mitre.org/data/definitions/428.html
+I'd like to request a CVE identifier for a vulnerability in GLPI.
+The unserialize() function was used in several places throughout the
+codebase; 
+one CVE identifier should (IMHO) be sufficient.
 
--- 
-Petr Matousek / Red Hat Security Response Team
+It has been publicly fixed in the project's repository.
+
+Thanks
+
+=======================================
+Advisory title: unserialize vulnerability in GLPI 0.83.9
+Product: GLPI 0.83.9
+Discovered by: Xavier Mehrenberger @Cassidian CyberSecurity
+Vulnerable version: 0.83.9
+Tested: v0.83.9, 2013-06-21
+Fixed in repository: 2013-06-23 commits 21169 to 21180
+Category: Potential PHP code execution
+Vulnerability type: [CWE-502] Deserialization of Untrusted Data
+CVE IDs: none yet
+By: Xavier Mehrenberger
+Cassidian CyberSecurity
+http://www.cassidiancybersecurity.com
+=======================================
+
+- ----- CVE-2013-XXXX Required configuration: No specific configuration
+required
+Steps to reproduce:
+* Issue a request to
+glpi/front/ticket.form.php?id=1&_predefined_fields=XXXX,
+* replacing XXX with a serialized PHP object
+
+Vulnerable code sample:
+- --- file ticket.class.php, function showFormHelpdesk
+   if (isset($options['_predefined_fields'])) {
+      $options['_predefined_fields']
+         =
+unserialize(rawurldecode(stripslashes($options['_predefined_fields'])));
+- ---
+
+When passing a non-existent empty serialized class (ex: class called
+"exploit"
+value "O%3A7%3A%22exploit%22%3A0%3A%7B%7D"), an error occurs, which is
+caught
+by the userErrorHandlerNormal function in toolbox.class.php.
+
+When a PHP object gets unserialized, its __wakeup() function is
+executed. When
+this object gets destroyed, its __destruct() function is executed (since
+PHP5).
+No such object exists throughout the GLPI codebase. However, it might
+exist in
+a third-party library, as demonstrated by Stefan Esser [2].
+More information about this vulnerability class can be found at [1].
+
+The unsafe use of unserialize() has been fixed throughout the codebase
+in commits 
+21169 [3] to 21180.
+
+References: 
+[1] https://www.owasp.org/index.php/PHP_Object_Injection
+[2]
+http://www.suspekt.org/downloads/POC2009-ShockingNewsInPHPExploitation.p
+df part II
+[3]
+https://forge.indepnet.net/projects/glpi/repository/revisions/21169/diff
+/branches/0.83-bugfixes/inc/ticket.class.php
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iQEcBAEBAgAGBQJRy+uWAAoJED6sl31qxFSwJIAH/1ocTdzZV5ZrakoMMueBzUM3
+Kh5cme5ieMKaMQ4UM4RG4JoPdV8SmEAlzdG0QfmOr03AaY9Z6THqFUReydso1qCJ
+7s/5Vb48D0E4aJNircswz1AE3I/uYTDCVHqFSdgVQ4qEjmqQr1gPjBDEkHzZ9dNP
+LH43kc4BrWctQzKJAowvMqwa5utPWjuTxNHp9xVWNHI4lQVMJTHs1LHhr28Wsfy/
+rqTblJYwOBZ8HqZsZIZhWeVc1TvSWkv2COFThH5RQ2iru/6EZe8C8NmqMyqFqA0A
+SVonXNsEsKhYuEUUqMGEf9ljeVwcsmPPSCrcAYxzoAeTOAgKgvSaWYpHEFzBOO8=
+=12Pi
+-----END PGP SIGNATURE-----
