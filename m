@@ -1,67 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/10/3
-Message-id: <dfa4bb3d-fdc5-418c-92f6-e98da615d3e4@me.com>
-Date: Wed, 10 Apr 2013 19:14:43 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Remote command injection in Ruby Gem kelredd-pruview 0.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/27/5
+Message-ID: <497475886.29391584.1372343485338.JavaMail.root@redhat.com>
+Date: Thu, 27 Jun 2013 10:31:25 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Ralph Loader <suckfish@...g.co.nz>
+Subject: CVE Request --  python-suds: Insecure temporary directory use when initializing file-based URL cache
 Content-Type: text/plain; charset=utf-8
 
-﻿Remote command injection in Ruby Gem kelredd-pruview 0.3.8 ﻿
+Hello Kurt, Steve, vendors,
 
-Larry W. Cashdollar
-4/4/2013
-@_larry0
+  based on the public Red Hat Bugzilla report:
+  [1] https://bugzilla.redhat.com/show_bug.cgi?id=978696
 
-Description: "A gem to ease generating image previews (thumbnails) of various files."
+by Ralph Loader:
 
-https://rubygems.org/gems/kelredd-pruview
+A insecure temporary directory use flaw was found in the way
+python-suds, a Python SOAP web services client library, performed
+initialization of its internal file-based URL cache (predictable
+location was used for directory to store the cached files). A
+local attacker could use this flaw to conduct symbolic link
+attacks, possibly leading to their ability for example the
+SOAP .wsdl metadata to redirect queries to a different host,
+than originally intended.
 
-Remote commands can be executed if the file name contains shell meta characters.
+The reasons for the current behaviour are detailed at:
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=978696#c4
 
-./kelredd-pruview-0.3.0/lib/pruview/document.rb
+Could you allocate a CVE id for this?
 
-In the following code snippet, we see the user input isn't sanitized for shell metacharacters. A malicious file with special characters in the filename could be used to execute commands as the local user.
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-69       run_system_command("convert -format jpg \"{source}[0]\" \"{@...pfile.path}\"", "Error processing postscript document")
-85       colorspace = run_system_command("identify #{GLOBAL_CMD_ARGS} -format \"%r\" #{image.path}", "Error reading document colorspace")
-
-function run_system_comand() passes user supplied input to the command line.
-
-141     def run_system_command(command, error_message)
-142       output = `{command}`
-143       raise "{error_message}: error given {$?}\n{output}" if $? != 0
-144       return output
-145     end
-
-In kelredd-pruview-0.3.0/lib/pruview/video.rb: Also the video encoding and scaling features are vulnerable as well:
-
-27       run("#{FLVTOOL} -U #{target}", "Unable to add meta-data for #{target}.")
-
-51       run(build_command(@source, target, width, height, get_info(info_yml), scale_static), "Una    ble to convert #{@...rce} to #{target}.")
-
-Run is defined as:
-
-140     def run(command, error_message = "Unknown error.")
-141       raise "Ffmpeg error: " + error_message + " - command: '#{command}'" if !system(command)
-142     end
-
-User controlled data is being sent to the command line with out any shell meta charatcers being escaped.
-
-In kelredd-pruview-0.3.0/lib/pruview/video_image.rb:
-
-13       run(build_command(source, "-ss 00:00:#{duration * 0.1}", 'mjpeg', target), "Unable to get     preview image for #{target}")
-
-30 def self.build_command(source, time_str, format, target) 31 command = %Q{#{Video::FFMPEG} -i "#{source}"} 32 command += " #{time_str}" 33 command += " -f #{format}" if !format.empty? 34 command += " -an -y #{target}" 35 end
-
-where function run() is defined as:
-
- 37     def self.run(command, error_message = "Unknown error.")
- 38       raise "Ffmpeg error: " + error_message + " - command: '#{command}'" if !system(command)
- 39     end 
-
-In line 38 user supplied data is passed to the command line.
-This vulnerability doesn't have a CVE assigned yet.
-
-http://vapid.dhs.org/advisories/kelredd-pruview-cmd-inject.html 
-Content of type "text/html" skipped
+P.S.: There doesn't seem to be an upstream patch available yet (afaik),
+      but the fix is obvious - use more unpredictable routine
+      for file-based URL cache directory location generation than
+      Python's tempfile.gettempdir() (which is case tempfile.tempdir
+      is None, defaults to '/tmp').
