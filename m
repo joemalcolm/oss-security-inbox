@@ -1,61 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/9
-Message-Id: <20130705182503.7C34E600EF@smtp.hushmail.com>
-Date: Fri, 05 Jul 2013 18:25:03 +0000
-From: "mancha" <mancha1@...h.com>
-To: oss-security@...ts.openwall.com
-Subject: NULL pointer dereferences; multiple issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/27/7
+Message-ID: <Pine.GSO.4.64.1306271230210.4601@faron.mitre.org>
+Date: Thu, 27 Jun 2013 12:57:07 -0400 (EDT)
+From: "Steven M. Christey" <coley@...re.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+cc: Salvatore Bonaccorso <carnil@...ian.org>, Mark Panaghiston <markp@...pyworm.com>, hello@...pyworm.com
+Subject: Re: Re: CVE-2013-1942 jPlayer 2.2.19 XSS
 Content-Type: text/plain; charset=utf-8
 
-At the suggestion of Marcus Meissner from OpenSUSE, I am posting
-here.
 
----
-Background:
-Beginning with glibc 2.17 (eglibc 2.17), crypt() fails with EINVAL
-(w/ NULL return) if the salt violates specifications. Additionally,
-on FIPS-140 enabled Linux systems, DES or MD5 encrypted passwords
-passed to crypt() fail with EPERM (w/ NULL return).
----
+Kurt,
 
-A project of mine, which began with helping the Slackware Linux team
-patch their Shadow tools suite to properly handle possible NULL
-returns from glibc 2.17+ crypt(), has since evolved into a larger
-project where I have been working with developers to introduce
-needed protections to prevent crypt() NULL pointer dereference
-situations. So far the list includes: cvs, gdm, KDE/kdm,
-KDE/kcheckpass, shadow-tools, slim, tcsh, Xorg/xdm, and yp-tools.
+Your CVE assignment posts from [1] and [2] appear to be inconsistent, and 
+there are some questions about affected versions, so I wanted to get some 
+clarity about which CVEs go with which issues.
 
-My policy has been to make public my fixes once upstream
-developers had a chance to commit fixes. The only exceptions
-are: cvs (inactive project), shadow-tools (Christian Perrier let
-me know Shadow-tools development is temporarily halted), and
-yp-tools (I have been repeatedly unable to contact Thorsten Kukuk).
-The gdm 2.20.11 fix was not shared with Gnome because gdm, as of
-2.21, no longer supports non-PAM authentication.
+1) CVE-2013-1942 - fixed in 2.2.20.
+    Commit: e8ca190f7f972a6a421cb95f09e138720e40ed6d
 
-The security implications of these issues vary in nature and
-severity. So far, only xdm has an associated CVE: CVE-2013-2179.
+    This one doesn't seem to have any issues.
 
-My progress is being documented in Slackware's de facto bug &
-discussion forum (linuxquestions.org). You can view thread here: 
-https://www.linuxquestions.org/questions/slackware-14/%5Bslackware-
-current%5D-glibc-2-17-shadow-and-other-penumbrae-4175461061/
+2) CVE-2013-2022 - based on [1] CVE-2013-2022 is listed after a section
+    that talks about an XSS fixed in 2.3.0 (which also includes the
+    CVE-2013-1942 assignment).   However, in [2] you say "CVE-2013-2022 is
+    for jPlayer 2.2.20 XSS" but http://www.jplayer.org/2.3.0/release-notes/
+    says that CVE-2013-2022 is fixed in 2.2.23.  (Maybe when you said
+    2.2.20, this also covered other unfixed versions UNTIL 2.2.23).
 
-Finally, I am placing patch files along with a signed digest file
-in a sourceforge project:
-https://sourceforge.net/projects/miscellaneouspa/files/glibc217/
+3) CVE-2013-2023 - in [1] you assign CVE-2013-2023 to the security fix
+    that quotes the jPlayer changelog entry for 2.2.23 - which, as just
+    mentioned in the previous bullet, you already described as being
+    associated with CVE-2013-2022.  In [2], you also state that
+    CVE-2013-2023 is for jPlayer 2.2.23 XSS.
 
-Cheers,
+4) There is no mention of issues that are FIXED in 2.3.0 based
+    on upstream changelog, but http://www.jplayer.org/2.4.0/release-notes/
+    lists fixes in both 2.3.1 and 2.3.2.
 
---mancha
+5) According to jPlayer release notes, we have:
 
-P.S. I was not involved with the fixes for screen, ppp, dropbear,
-and popa3d. I documented the upstream fixes, however, for
-Slackware's benefit.
+    [2.3.1] Security Fix: The Flash SWF had a minor security vulnerability
+    that enabled XSS (Cross Site Scripting). Reported by Eugene Dokukin.
+    Security reference CVE-2013-2023.
 
-==
-PGP Key ID: 0xB5ABF4FFF7048E92
-Key fingerprint = 7F1F E9BF 77CF 15AC 8F6B  C934 B5AB F4FF F704 8E92
-==
+    [2.3.2] Security Fix: Closed Flash SWF security vulnerability that
+    enabled XSS (Cross Site Scripting). Reported by Eugene Dokukin. Security
+    reference CVE-2013-2023. The jPlayer noConflict option is now
+    restricted to strings that contain the term jQuery. For example:
+    lib.jQuery or myjQueryRocks.
 
+    [2.2.20] Security Fix: The Flash SWF had a security vulnerability that
+    enabled XSS (Cross Site Scripting). Reported by Malte Batram. Security
+    reference CVE-2013-1942.
+
+    [2.2.23] Security Fix: The Flash SWF had a minor security vulnerability
+    that enabled XSS (Cross Site Scripting). Reported by Eugene Dokukin.
+    Security reference CVE-2013-2022.
+
+I'm of the mindset to use the CVE assignments as provided by jQuery 
+upstream, but it may be good to get full clarity down to the individual 
+commits.
+
+
+[1] http://marc.info/?l=oss-security&m=136726705917858&w=2
+
+[2] http://marc.info/?l=oss-security&m=136773622321563&w=2
