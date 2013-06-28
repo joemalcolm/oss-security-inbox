@@ -1,147 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/2
-Message-ID: <CABPqkBQcOEdyh2yEVGCyLJ5ULaK5DgGJ5rN29J6ZAREZt0R1xQ@mail.gmail.com>
-Date: Thu, 6 Jun 2013 10:16:39 +0200
-From: Stephane Eranian <eranian@...gle.com>
-To: Stephane Eranian <eranian@...gle.com>, Peter Zijlstra <a.p.zijlstra@...llo.nl>,  "ak@...ux.intel.com" <ak@...ux.intel.com>, security@...nel.org,  Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: More perf security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/28/3
+Message-ID: <51CDD10F.9090701@redhat.com>
+Date: Fri, 28 Jun 2013 12:08:15 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Remi Collet <rcollet@...hat.com>, Adam Harvey <aharvey@....net>
+Subject: Re: CVE Request - PHP PECL Radius (php-pecl-radius) v1.2.7 fixing a security flaw in radius_get_vendor_attr()
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 5, 2013 at 9:23 PM, Petr Matousek <pmatouse@...hat.com> wrote:
-> On Wed, Jun 05, 2013 at 03:53:52PM +0200, Stephane Eranian wrote:
->> On Wed, Jun 5, 2013 at 3:35 PM, Petr Matousek <pmatouse@...hat.com> wrote:
->> > On Wed, Jun 05, 2013 at 03:02:53PM +0200, Peter Zijlstra wrote:
->> >> On Wed, Jun 05, 2013 at 02:38:56PM +0200, Petr Matousek wrote:
->> >> > On Wed, Jun 05, 2013 at 02:15:59PM +0200, Peter Zijlstra wrote:
->> >> > > On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
->> >> > > > Hello, Peter.
->> >> > > >
->> >> > > > On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
->> >> > > > > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
->> >> > > > >
->> >> > > > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
->> >> > > > >
->> >> > > > > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
->> >> > > > > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
->> >> > > > > Date:   Fri May 3 14:11:25 2013 +0200
->> >> > > > >
->> >> > > > >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
->> >> > > > >
->> >> > > > >     We should always have proper privileges when requesting kernel
->> >> > > > >     data.
->> >> > > > >
->> >> > > > >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
->> >> > > > >     Cc: <stable@...nel.org>
->> >> > > > >     Cc: Andi Kleen <ak@...ux.intel.com>
->> >> > > > >     Cc: eranian@...gle.com
->> >> > > > >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
->> >> > > > >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
->> >> > > > >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
->> >> > > > >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
->> >> > > >
->> >> > > > There is similar check in perf_copy_attr() which is called from
->> >> > > > perf_event_open syscall --
->> >> > > >
->> >> > > >                 /* kernel level capture: check permissions */
->> >> > > >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
->> >> > > >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
->> >> > > >                         return -EACCES;
->> >> > > >
->> >> > > > It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
->> >> > > > missing something?
->> >> > > >
->> >> > >
->> >> > > I overlooked it, also its slightly broken. See the discussion at:
->> >> > >   https://lkml.org/lkml/2013/5/21/166
->> >> >
->> >> > Got it, thanks for the pointer. So it is safe to say there never was a
->> >> > leak in this case (and thus no security issue worth CVE)?
->> >>
->> >> There was a leak, notice how Stephane's patch did a
->> >> s/PERF_SAMPLE_BRANCH_PERM_PLM/PERF_SAMPLE_BRANCH_KERNEL/
->> >
->> > PERF_SAMPLE_BRANCH_PERM_PLM is a superset of PERF_SAMPLE_BRANCH_KERNEL:
->> >
->> > #define PERF_SAMPLE_BRANCH_PERM_PLM \
->> >         (PERF_SAMPLE_BRANCH_KERNEL |\
->> >          PERF_SAMPLE_BRANCH_HV)
->> >
->> >
->> >> but also places
->> >> the check _after_ we propagate the event PLM levels in the case none
->> >> were LBR specific.
->> >
->> > Assuming the leak does occur only when PERF_SAMPLE_BRANCH_KERNEL is set,
->> > that does not matter:
->> >
->> >                /* kernel level capture: check permissions */
->> >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
->> >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
->> >                         return -EACCES;
->> >
->> > ^^^ this assures proper permission check if PERF_SAMPLE_BRANCH_KERNEL
->> > is explicitly set
->> >
->> >
->> >                 /* propagate priv level, when not set for branch */
->> >                 if (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) {
->> >
->> >                         /* exclude_kernel checked on syscall entry */
->> >                         if (!attr->exclude_kernel)
->> >                                 mask |= PERF_SAMPLE_BRANCH_KERNEL;
->> >
->> > And following check in perf_event_open syscall assures the permission
->> > are right for (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) code:
->> >
->> >         if (!attr.exclude_kernel) {
->> >                 if (perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
->> >                         return -EACCES;
->> >         }
->> >
->> Yes, your analysis is correct. If the branch has not explicit priv
->> level mask, then
->> it is inherited from the event branches are requested from.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 06/28/2013 06:59 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> PHP PECL upstream has released 1.2.7 version of the Radius client
+> library, correcting one security flaw (from [1]):
+> 
+> "- Fix a security issue in radius_get_vendor_attr() by enforcing
+> checks of the VSA length field against the buffer size. (Adam)"
+> 
+> References: [1]
+> http://pecl.php.net/package-changelog.php?package=radius [2]
+> http://pecl.php.net/news/
+> 
+> Relevant upstream patch: [3]
+> https://github.com/LawnGnome/php-radius/commit/13c149b051f82b709e8d7cc32111e84b49d57234
 >
-> I am sorry to re-iterate the question, but does that mean that even
-> before your and Peter's changes, it was not possible to set
-> PERF_SAMPLE_BRANCH_KERNEL without passing "perf_paranoid_kernel() &&
-> !capable(CAP_SYS_ADMIN" check either in perf_copy_attr or
-> perf_event_open (attr.exclude_kernel check)?
->
-> Did your patch change anything at all or it was just refactoring?
->
-Before:
-                /* kernel level capture: check permissions */
-                if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
-                    && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
-                        return -EACCES;
+>  Can you allocate a CVE identifier for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
 
-1. If you were coming in with explicit branch priv level set
-    to BRANCH_KERNEL, it would check against paranoid() + cap()
-2. If you were coming in with explicit branch priv level set
-    to BRANCH_HV, it would check against paranoid() + cap()
-3. If you were coming in with explicit branch priv level set
-    to BRANCH_USER, nothing would happen
+Please use CVE-2013-2220  for this issue.
 
-That's all because PERM_PLM = KERNEL | HV
-So I think it was okay.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-In the new, code:
-                /* kernel level capture: check permissions */
-                if ((mask & PERF_SAMPLE_BRANCH_KERNEL)
-                    && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
-                        return -EACCES;
-
-We only check for BRANCH_KERNEL, and not BRANCH_HV.
-I think we need to fix that, my bad. So we need to use
-PERF_SAMPLE_BRANCH_PERM_PLM again here.
-I will send a patch ASAP. I got confused about the macro
-name, sorry. Thanks for insisting.
-
-
-So here,
-> I must be missing something.
->
-> Thanks for the patience,
-> --
-> Petr Matousek / Red Hat Security Response Team
+iQIcBAEBAgAGBQJRzdEPAAoJEBYNRVNeJnmT4LAP/3btWxRNzklWtej77KtbxsUW
+2nPKZyH8DGv7NqZ484uH026FY0HnECSU2YVxH0qyEdQqfR5n75eg9pIuMkwl/uBP
+8QNpn7kepoCsyW3KgKg6LR3sU8o6cyOpvAENsVoBCamVbtOUaLAq9zqgLKfPCnGN
+wvaOslhMZF/j3nqGo/JFPPCu/8ZdFVVYD40eQO5K4lwJdY98wmAuO8McYMerfFCL
+WXj5XthGiPXMcIXVtJgB+UmtkKB391ROQ3jqxoTzttP3Lw0+jHXwx3USrRQjErAP
+9p9WXPoqU5XmaFCD6Q2f9ROdGP/ofggIxvL6XEhC9i3bIH+D/TJ0AHBnspcMV0Ul
+/p9MtBlZodzrWmkrKqAScv+mkcYc0/IWrSy4OOtaEIoh5DCEsyFoKvbl7bnw5Joa
+SSLkdPbKoWBvGymrWjj7DznjK2rWcuL7IJvUeV4VbSrxqW8OuthffKxzqhy+wIEw
+RB0IRtlucyC7mqYS9ZaIoABRgz8r9K1t9q5Tj5rKgDmiAszSUROo6rJBQ2fgUsye
+4sbCeQnTg+gTORhcU2QHpJwZaVuonaS9pq9viPukl93nf3UnHuJvQ1UViCPa7t5c
+7TB+Qn/iHSzGIyjaZw2a9INnjT+hUqfaHf4GD+oE3BSLO49eByD/fx5mbPMyIO06
+HaUNBfjEitHxMciu97F4
+=69tY
+-----END PGP SIGNATURE-----
