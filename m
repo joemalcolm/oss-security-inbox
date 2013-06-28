@@ -1,38 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/06/2
-Message-ID: <515F6753.8080906@redhat.com>
-Date: Fri, 05 Apr 2013 18:07:47 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/27/8
+Message-ID: <51CDBD52.7020808@redhat.com>
+Date: Fri, 28 Jun 2013 10:44:02 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Ralph Loader <suckfish@...g.co.nz>
+Subject: Re: CVE Request --  python-suds: Insecure temporary directory use when initializing file-based URL cache
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/05/2013 08:05 AM, Marcus Meissner wrote:
-> Hi,
+On 06/27/2013 08:31 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-> Should also get a CVE.
+> based on the public Red Hat Bugzilla report: [1]
+> https://bugzilla.redhat.com/show_bug.cgi?id=978696
 > 
-> https://github.com/torvalds/linux/commit/12176503366885edd542389eed3aaf94be163fdb
->
->  commit 12176503366885edd542389eed3aaf94be163fdb Author: Kees Cook
-> <keescook@...omium.org> Date:   Thu Oct 25 13:38:16 2012 -0700
+> by Ralph Loader:
 > 
-> fs/compat_ioctl.c: VIDEO_SET_SPU_PALETTE missing error check
+> A insecure temporary directory use flaw was found in the way 
+> python-suds, a Python SOAP web services client library, performed 
+> initialization of its internal file-based URL cache (predictable 
+> location was used for directory to store the cached files). A local
+> attacker could use this flaw to conduct symbolic link attacks,
+> possibly leading to their ability for example the SOAP .wsdl
+> metadata to redirect queries to a different host, than originally
+> intended.
 > 
-> The compat ioctl for VIDEO_SET_SPU_PALETTE was missing an error
-> check while converting ioctl arguments.  This could lead to leaking
-> kernel stack contents into userspace.
+> The reasons for the current behaviour are detailed at: [2]
+> https://bugzilla.redhat.com/show_bug.cgi?id=978696#c4
 > 
-> Patch extracted from existing fix in grsecurity.
+> Could you allocate a CVE id for this?
 > 
-> Ciao, Marcus
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+> P.S.: There doesn't seem to be an upstream patch available yet
+> (afaik), but the fix is obvious - use more unpredictable routine 
+> for file-based URL cache directory location generation than 
+> Python's tempfile.gettempdir() (which is case tempfile.tempdir is
+> None, defaults to '/tmp').
 > 
 
-Please use CVE-2013-1928 for this issue.
+Please use CVE-2013-2217 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -40,17 +51,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRX2dTAAoJEBYNRVNeJnmT5sEQAKO4lBmSU5A2zBRvSY/+cYwt
-2B94LEDuSpS/vLGwLg0wDbPRgow1qQCmpij4ECXe4/DeQ1b8kpdK6aM35rA0ncPW
-2IUWmIvCoJ40zvZWPP8UY+WYP/tYRvjnAq2/NcDHqDPw2E2AkcKszqOoB5x5Xzk8
-D1w2hoz5DTeI/2Jna0ckBrQ6t7PVa1Hf6oRd8c/hcXKkEllOibVCIisvm8Gx4cPg
-mYVvUBKlBK+PIwlOExI7g6fTwBhWPZhZAKjN11NPxWSI2OIJ9s50Qtvt9Y3efYiX
-kQc6AQ1dOZ0/AoT/THaNQ25it/eXywBRoJt13MIxwlHawqXU4A245mSImBdAoe+u
-dPWRA+erpT+HIwy417gJk9qsVPYlekRDfaXLBPhn788J9bNm6aHBekrki5fCEH1N
-oCpa11I7ItnJx4VrORzl4uvKAROJ/swxbzAsK82TY1LK8amBmfYh3+ZixRy9MTzL
-8TcuBsBAcuuQdmXrYbGMh+gEkQH5uItVlNtZqFAeG7JX6kEhSUiaS6Edc4ayf8Qs
-Nm2VI/E5I/W8u7BaB29NJzVF+5W9t9dwk6ifN1215FeOniPspcYtY6hcJGFLTsYW
-jd2ytymBSxblWvVUjhTZ3M4nBGm7wP2e9QrRDQzp9QtKXKq6gUJZnFl5poRQb1QW
-/HyrqMwANM0Rc05jZIol
-=ZrYy
+iQIcBAEBAgAGBQJRzb1RAAoJEBYNRVNeJnmTnJwP/jRQn05DhFJoLcckhb6+MgN8
+ydVyE4FiKb1qTbK+wq3dYsmPTx1LdP5HVsg/OPfU2hEOpWOSynQVbhXhm7shpHbl
+RRApRkO2r//afZykwqaZK7aXHkGV134cj4C1B5r/3NZAVcFNdufEQkMLJl+z8uso
+t/sadkTHVkUvgz3RO2tvfLpp9h1gXeil21BGOo/4xj4lj2O6qedLAfkIdFkIF0Uo
+RB6U33jbeOb5E9YMFqewVzrPaqU8qypXKQk+82RLQPHbCD68V6NXDQF6DOfBkxT7
+SKRyrDBylBhhBTNOt10M66NHLO18DnY3FlvfpVaPSgwA43SLTS8tDy0lBhy3T3Jq
+GjXAeNtFCszn83vNBlFcXMTmmu1BhZcn+1AlSjXeV+vLlTqkHQ4AIptE9fS/WY9Y
+lvFUI9SzyzAq6kFtxjA57j/G01CwPvCFhIrCoWQzfl+w6kVId4xCiSmXXPCpIqaT
+mM5ZPXuaggE9QknkJ0w41PO9De1rvZ4Im90s5wYlCNxeh010zuBDIrsNOnOEDmmW
+RnIjoPXmcoNw8cWsWjFuWAfDdT6VU8OFpg0XQlJz+TkDx/leIg8BQUZjF6EEgJbG
+7qU1cpkWEHgQsyRgtvOBwYtg2VfgfQpPQX8NqEZi/3nC0vdX0/TFFqLGXxc9aryD
+HhSELZ4iK3KSuoqUbRVW
+=lIRn
 -----END PGP SIGNATURE-----
