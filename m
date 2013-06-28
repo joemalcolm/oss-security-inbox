@@ -1,54 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/25/2
-Message-ID: <5269BB21.2040807@redhat.com>
-Date: Thu, 24 Oct 2013 18:28:17 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: gnutls/libdane buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/28/1
+Message-ID: <CAF1AS2jfWUSsWW=+WPKT_3oTWTX28-KJD+z22LxSw-TMDwXcsw@mail.gmail.com>
+Date: Thu, 27 Jun 2013 23:04:58 -0400
+From: Alexandre Rebert <alexandre.rebert@...il.com>
+To: coley@...re.org
+Cc: oss-security@...ts.openwall.com, kseifried@...hat.com,  Russ Allbery <rra@...nford.edu>, cve-assign@...re.org
+Subject: Re: 1.2k bug reports for Debian, some may be security
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 10/24/2013 08:04 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> GNUTLS just posted a security adivsory which needs a CVE:
-> 
-> http://www.gnutls.org/security.html#GNUTLS-SA-2013-3 
-> GNUTLS-SA-2013-3 Denial of service This vulnerability affects the
-> DANE library of gnutls 3.1.x and gnutls 3.2.x. A server that
-> returns more 4 DANE entries could corrupt the memory of a
-> requesting client.  Recommendation: Upgrade to the latest gnutls 
-> version (3.1.15 or 3.2.5)
-> 
-> Commit for 3.1: 
-> https://gitorious.org/gnutls/gnutls/commit/916deedf41604270ac398314809e8377476433db
->
->  Commit for 3.2: 
-> https://gitorious.org/gnutls/gnutls/commit/ed51e5e53cfbab3103d6b7b85b7ba4515e4f30c3
->
->  Ciao, Marcus
+I can confirm most of the bugs have no security implications, and
+should probably not get CVEs. Given the high number of crashes we
+found, it is highely likely that some will impact security though.
 
-Please use CVE-2013-4466 for this issue.
+Mayhem considered multiple input sources during the analysis of the
+23K binaries: environment variables, command line arguments, files and
+standard input. Sockets was not one of them. That means that we only
+need to consider two attack vectors: (1) crashes of setuid/setgid
+programs, and (2) crashes with input files that are potentially
+untrusted.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+For (1), I have not checked whether we found crashes in setuid/setgid
+programs yet. It is however straightforward to compile a list and
+forward it to whoever is filing the CVEs. They might not be
+exploitable, but a crash in such programs is concerning and might be
+worth a CVE. Let me know if that's something you'd like us to do.
 
-iQIcBAEBAgAGBQJSabsgAAoJEBYNRVNeJnmT7T8P/iHgZosxSuSlne24Wz/77VoZ
-NJQCWquH2MfC1GfhQASMIaEBexBZcWGptnCBokP2bLwqQcEOp8Yb3N6AatNkkK9s
-7/Taub2hpkwrOHIGSxe/DWnsyKZyFLiUadzByG+mrGlYiYQmXBTIHhkiXC5sYUKs
-YAvXyJPi+G+cl0ZM1feE5oWCQOocJisR3u2cQmtJDZik2EXrWjfharRT12uB5dzX
-4YajH1QA1U9G6nm1iIdCCBO1e5jNseBPwoaEwymTxllERb6ejFA3HCDqXjQoBJIM
-S6wcnxAWwRQRLYEQwdVKZPJAlrEEPTWk8mAy/CuX6y+DYYWR9UyEFJsfNli4fseW
-r+KTnf9VyZMHn5SriBvnPo6Oy7NqjOvYotAGjl0zE5CtkP5j3QC02gxpDogcdtzC
-OE/HWoMOLEG8xCqOc3VJy6i5g12kBuyv5O4MYsjDuMo1GtbLWD+qL03J59jmxg2M
-0/EyKeJE6qObflFaIsOaU48PqNZYFIvI34b67487SFv7tg5WbhQYuHT9MUUXIC3I
-pjGtmtqYIyhQai3DBxb6K7EP7I3TOylmntf+gMCVpFHSOT3h+H8nAr5GdhOIT2p+
-6zzr8p2YMfIrJUagn7kjVsd1remVVvfTkUaRBD8xX7EzZr4NEjf//1ISOeH6mSD1
-LiQ5VYuEXb2+jUbD9Z7a
-=MZwH
------END PGP SIGNATURE-----
+For (2), it is difficult to automatically identify such crashes. As
+Steve mentioned, it may require a deep familiarity with the program.
+Package maintainers or upstream developers are the most suited people
+to judge whether a crash should be considered security critical. It is
+an unsatisfying solution, as the burden to report vulnerabilities
+would lie on them, but I don't see a way around it.
+
+> I was under the impression from an incomplete read of the MAYHEM paper that
+> it could generate shellcode for code execution, yet I'm only hearing of
+> reports for crashes.  If code execution can be proven, then that may be
+> informative.
+
+Yes, that is correct. Mayhem actually generated a couple of exploits
+from the crashes we found. We are currently looking at them
+individually, and we will report all exploits that are security
+issues.
+
+Regards,
+The Mayhem Team
