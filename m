@@ -1,56 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/8
-Message-ID: <51F0E620.7000301@redhat.com>
-Date: Thu, 25 Jul 2013 02:47:28 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/28/2
+Message-ID: <902108239.30294129.1372424399950.JavaMail.root@redhat.com>
+Date: Fri, 28 Jun 2013 08:59:59 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Salvatore Bonaccorso <carnil@...ian.org>
-Subject: Re: CVE Request: XSS in smokeping / start and end time fields not filtered
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Remi Collet <rcollet@...hat.com>, Adam Harvey <aharvey@....net>
+Subject: CVE Request - PHP PECL Radius (php-pecl-radius) v1.2.7 fixing a security flaw in radius_get_vendor_attr()
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-On 07/20/2013 01:13 AM, Salvatore Bonaccorso wrote:
-> Hi Kurt
-> 
-> There is another XSS fix which was done after the 2.6.9 release
-> for smokeping.
-> 
-> In [1] Steven Chamberlain pointed out that in 2.6.9 upstrem the 
-> "start" and "end" time fields are still not filtered.
-> 
-> Tobi Oetiker fixed this in a commit following the 2.6.9 release at 
-> [2]. But this version is no yet released.
-> 
-> [1] http://bugs.debian.org/659899#67 [2]
-> https://github.com/oetiker/SmokePing/commit/bad9f9c28f0939b269f90072aa4cf41f20f15563
->
->  Does this also needs a separate CVE, as a subsequent fix to the
-> 2.6.9 release?
-> 
-> Regards, Salvatore
-> 
+  PHP PECL upstream has released 1.2.7 version of the Radius
+client library, correcting one security flaw (from [1]):
 
-Please use CVE-2013-4168 for this issue.
+"- Fix a security issue in radius_get_vendor_attr() by enforcing checks of the
+VSA length field against the buffer size. (Adam)"
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+References:
+[1] http://pecl.php.net/package-changelog.php?package=radius
+[2] http://pecl.php.net/news/
 
-iQIcBAEBAgAGBQJR8OYgAAoJEBYNRVNeJnmT3WkQANxHo9M+etujiCzZVS+YxW/c
-fLB09stp/lraJRsHdlJIAsESF50IwBoEOxhgEl2UhxB21f/cWVmucbm6O9+ySCA9
-iwqnVOdQYJuo17KourhC/CetahGQIVh6oSUU0tO2shUq6kQyWkjR00c3lRxa2qqs
-6egxKtu68+eDTHPbqSi03dK8Fb/fzDrFj2f1b7/uJ1VLOhHdgEgT6Lb2uiXMOfUO
-d0Aov5WaYVvl3N0u7ysiGq9jy0SAAG76f7w6GKEZQtT0PLyg+UHGimmn70ji5iI/
-Hp4D7mjUIecXW4hGWsAMqoy4/d+2WFjvXNTyP7gqdX2NjXN92+1xEsBI3qJbdoze
-Z5efsRa0JaCVQy//wsyYZyPNJBGkb/zKVO0k/PEr44lr8COP1h7CQ5uAEUDHQyoj
-sFsajrQSaHjY1X4g9QjUUefHTZT7KXU+xD6F36JDrwEfT9+kts0m2lKCKeSWIcJg
-Z6k18/C/XLK834KkUYRhIo3ljqfd/20cVgSiKy17T7wU/tfoBKmvl3JeYDEQwxyH
-EAlaFEJ6d22PWDw3bJSMYmkcS/dQ5rQzAVrkwaPB2QVrd9s2LCwJwHq5kepRcQK7
-/FHVPwSxb5jF6BTnWuaNZiRhOULe5qkqSv4kGtbffNn7RAeEvaaFF41OZlOsRaCF
-bGAAsvGzExo2lK2654dL
-=Y9ti
------END PGP SIGNATURE-----
+Relevant upstream patch:
+[3] https://github.com/LawnGnome/php-radius/commit/13c149b051f82b709e8d7cc32111e84b49d57234
+
+Can you allocate a CVE identifier for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
