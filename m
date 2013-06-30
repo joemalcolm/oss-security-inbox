@@ -1,54 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/25/1
-Message-ID: <51A052B2.3020104@redhat.com>
-Date: Fri, 24 May 2013 23:57:06 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/30/5
+Message-ID: <51D0B800.3090806@redhat.com>
+Date: Sun, 30 Jun 2013 16:58:08 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: coley@...us.mitre.org, oss-security@...ts.openwall.com, security@...ntu.com
-Subject: Re: CVE Request: pwgen
+To: oss-security@...ts.openwall.com
+CC: Steven Ciaburri <steve@...k911.com>
+Subject: Re: CVE request: Kernel 2.6.32+ IP_RETOPTS Buffer Poisoning DoS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/24/2013 03:43 PM, Seth Arnold wrote:
-> Hello Kurt, Steve, all,
-> 
-> Do these issues deserve CVE numbers?
-> 
-> A user reported to launchpad [1] that pwgen will use /dev/urandom
-> or /dev/random if it can, but will silently fall back to using
-> drand48() or random() if the device files fail to open. The report
-> also mentions that when the device files are available, the output
-> is biased by too-simple use of the modulo operator to scale the
-> output to 0 <= n < max. There are further complaints about the poor
-> use of available entropy when seeding the weaker algorithms.
-> 
-> A potentially related complaint is in Debian's BTS [2]: in this
-> bug report, the user wanted a way to force use of /dev/random even
-> if /dev/urandom is available.
-> 
-> I've pasted the relevant source to pastebin.ubuntu.com [3].
-> 
-> Are any of these worthy of a CVE number?
-> 
-> - silent fall-back to weak algorithms - biased output due to poor
-> use of modulo operations - poor seeding of weak algorithms
-
-Is any of this behaviour documented, or is it only "documented" in the
-source code (I'm guessing source code only)? Also I'm trying to think
-of situations where /dev/random and urandom are not available, AND the
-system is otherwise working ok and nothing comes to mind. The fall
-back is definitely sub-optimal, but can it be triggered in any
-meaningful way.
-
-> 
-> Thank you
-> 
-> 1: https://bugs.launchpad.net/ubuntu/+source/pwgen/+bug/1183213 2:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=672241 3:
-> http://pastebin.ubuntu.com/5698361/
+On 06/30/2013 04:45 PM, Steven Ciaburri wrote:
+> We have a bugzilla report in with redhat: #979788
 > 
 
+I'm having issues replicating this, works fine on CentOS 6 VM, RHEL 6
+VM, nothing happens (tried one cpu, 2 cpus, etc.), what RHEL 6
+configuration are you using?
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -56,17 +25,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRoFKyAAoJEBYNRVNeJnmTiHgP/3PO8f3HSuQvmRHEuhsyaLYN
-QjwpBnCdOf4BOeNHW3tI4TmcJoKGk0KAB6yUOx0z2dFcLd1Nnwrn1x3zXEVz7cio
-uXx4dNqEcwiBszVmMufPQsuCHuU5V7f64PKFdD1IQMWXSB9jybtLLdOcoFNcF+pj
-3dWp3aQwU5kmldA+JjhrlVoChbCs2q35cqgUYlP6cUj+mTkhuP8p7Zp/AVKmRZHL
-sgidqjL/ZZ82DqsXmdLKCDMB/jxxz012/DmBXeyhNuyMno3flDsn490dAxnliKO5
-oPhP906KRRP6rSBVGEEKmS9RJonddUlThYctiHebJEFQ+EF2m6d6woaGQBXVkU67
-DCylfKzjfGkJB6nhL8NeHdqm1Qv55ke3rG8TivscDIrUGSD1948cFg2TruFJnzaM
-4F11EbyFn+vzt/pqAOZWb1t49n5PT9V+w8XaHSZzTNrYisHJNy6lX2PnFHnSXsUU
-oJkSiyw/8MP0jYktNDUSM7q/U+0CXRvxA6FjJii22/9sQSyKripN+qJxISTarlFi
-TiJQ1emFnsw80G0+so/s6dqZZeqgs2az9v/R3Ho+YZfr4N9SDDovJKn6pTWHCP9M
-lwz8lWrRQ5JB4FEJcsfw5bqvgqzO4EDNAjsVDWIiZ9lky8fXhcji5LMH87I4HS67
-Rqf2QdwWJ3382akFX7rg
-=TmgN
+iQIcBAEBAgAGBQJR0LgAAAoJEBYNRVNeJnmTgEQQAJcu5NdNM5rEcsUbkfGamcK6
+CR/fRclJZiSMb2nV1RzwI5BLq8KPjReiNme+KbLJnqoDknX+krFANjbRM7cK44fz
+ehh8My9K8g8fKbqahejikSXOJHeCooZWMm8d0x0EknHfqsS4AFLdNd1jhayhDLkU
+boKBtucZ8mVaQ5G6J4ov+pCAzHN6RDkpzasbqKDFwRbiMOSF8rIZAtKZhp+u3EoB
+BCZqRD4LwTI08VD/gUhUCzL1c4g2xEEx3EKW+0EL8JY4yoDe12NtSS9/MYcjOrEz
+J8eCnLlQ/edNiKvcqW7jsUbRlnmqkMEEx84+d5xQy/jvrNXRYJ7vYFKR+um1KE88
+4L7ScVxFnZs6lEJ6qgpnmmxgHlq+IMrxaQNI0na70ZZeF49TiqzHkyVZpc53Sp7y
+lVSaodruZhpsccdLgkVzu/HOhb3ltBW/DEqtwFCEue1Z52xQTdrwHE0KOmMuWGlO
+yrSkAOXkDrOsldLNvaqHEz2EAu093mB/Jbs6/ByQ4YGjORFdeuen+T4ECg70+9YD
+2DIlP2I+nCx7EyalilwpgcwboyQid27957AVN93gp6PBsAyYCQZEr/mfLwQJ6bmO
+ca1mimoaq5NuoUc2E9jH+Q0zAXC66qX/zNqd6IRTpCUox4+Q1M9iz08rbg4xS4S6
+56fbIlVp2/K72f8YJ2GS
+=4HeF
 -----END PGP SIGNATURE-----
