@@ -1,28 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/07/1
-Message-ID: <CAE2SPAYf2oNVHUj096C=h-7CbMSO5eTxNZWbsp_h9=QPMD9DJA@mail.gmail.com>
-Date: Sun, 7 Apr 2013 14:57:21 +0200
-From: Bastien ROUCARIES <roucaries.bastien@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: New vulnerabilty in imagemagick
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/30/6
+Message-ID: <51D0B885.2050208@redhat.com>
+Date: Sun, 30 Jun 2013 17:00:21 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Kernel: 2.6.32+ IP_RETOPTS Buffer Poisoning DoS hemlock.c
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Imagemagick url coder is affected by a NULL deference trigerrable by user
+Works great on CentOS 6, can't get it to work on RHEL 6 so far.
+Attaching PoC in case the web site goes down or something.
 
-It only occurs when you use a URL as an image filename and you can't
-write to the temporary directory which is typically /tmp or whereever
-MAGICK_TMPDIR env variable points.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-As the debian mainteners I believe this is a security (minor) bug that
-could lead to local dos at least.
+iQIcBAEBAgAGBQJR0LiFAAoJEBYNRVNeJnmTcuQP/23TDx5dJLJdjGf+c/4zoidG
+gu5iPZ+ITDLhbPvr5iJMzlue2SFmmO+yxkqboEtuNzv8G11QNKj97I7XxX2tNEFB
+feaBoOP/GNcaDlxG0UDuQGZ6nALnArBdhLaMhHYtYrPJciCA5lGw9ulHvcwTVULd
+ZrBWDGPnrDnf893tU4VKXX2/h1RWhCabKTACctC9oZR0xzSHNJIuN8wsbqB7kWid
+j9aW2tm240o5NfyThwpS85IfKUOueagZd/JKu20R4LGICnkS8pN/SfYu5SHn41o9
+z1lbZixfwJ8lMv9WhiH0A68oh84XmKDeO3QvKVH4Ac06bE5Qyam2DzROKMDQ7QQ+
+YDz/TJfZPQjtClOf8ShJG8ygIj6zUF3amweXr3ef5/BUXj52D4L0pzQX8106s7Vy
+EQGGsvwu9XGEnAMWo75dXdooBiTohbU7SH/UpSpvo620pS4ewsCXcChwr4V9Uogs
+P/lkAXh8JejTt3Q40b45LC2Dvtek9XvyHSO8uP+6ayxMZxeUH8O6ozm6pD5Kcyag
+rPTE4Dtmjy/TVYPOTirYQ4HoBKz/LZUAaXcjhlpjL9zy1umq2QMBZtk/5gypVID1
+IqY47bTU49qs25w3Ex9DUaOx590vawZ2eojTndgDsSkMH1Yl99ADkth15t8OOHyv
+CYysUj/cD3PnTXBRK1sF
+=9a6A
+-----END PGP SIGNATURE-----
 
-Upstream bug is here
-http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=23117
-
-Could you please open a candidate CVE number ?
-
-Patch here fix the bug.
-
-Download attachment "0001-git-svn-id-https-www.imagemagick.org-subversion-Imag.patch" of type "application/octet-stream" (1176 bytes)
+View attachment "hemlock.c" of type "text/x-csrc" (2404 bytes)
