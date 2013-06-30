@@ -1,46 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/12
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF09095EAF@IMCMBX01.MITRE.ORG>
-Date: Thu, 2 May 2013 15:48:36 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "kseifried@...hat.com" <kseifried@...hat.com>, "andresgomezram7@...il.com" <andresgomezram7@...il.com>
-Subject: RE: Flightgear remote format string
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/30/8
+Message-ID: <51D0B96A.8060406@redhat.com>
+Date: Sun, 30 Jun 2013 17:04:10 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Kernel: 2.6.32+ IP_RETOPTS Buffer Poisoning DoS hemlock.c
 Content-Type: text/plain; charset=utf-8
 
-Andrés,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Here is my interpretation of the problem.  I believe there is some confusion because people don't usually think that a flight simulator could be accessible from a "remote" location.
+On 06/30/2013 05:00 PM, Kurt Seifried wrote:
+> Works great on CentOS 6, can't get it to work on RHEL 6 so far. 
+> Attaching PoC in case the web site goes down or something.
 
-Is the following correct?
+And that wasn't meant to go to oss-sec (sleep deprivation FTW!),
+apologies.
 
-1) The Flightgear package includes a network server.  This server can be run using fgfs.exe and specifying a port number using the "-telnet" argument, for example.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-2) The format string problem is in the server.
-
-3) Your exploit makes a connection to the server (on port 5501).
-
-4) The exploit sends a number of format strings in the cloud names (using the "property tree").  For some reason, it sends the same command 5 times, and it sends this command for "layers" 1 through 5. 
-
-5) The exploit causes the server to crash.
-
-- Steve
-
->-----Original Message-----
->From: Andrés Gómez Ramírez [mailto:andresgomezram7@...il.com]
->Sent: Thursday, May 02, 2013 11:13 AM
->To: kseifried@...hat.com
->Cc: oss-security@...ts.openwall.com
->Subject: Re: [oss-security] Flightgear remote format string
->
->>
->> So it's not on by default? Is there any documentation specifically you
->> can point me to regarding enabling/securing it?
->>
->
->Hi,
->the detailed info is in the reference:
->
->http://kuronosec.blogspot.com/2013/04/flightgear-remote-format-
->string.html
->
->if you need more info, please let me know.
+iQIcBAEBAgAGBQJR0LlpAAoJEBYNRVNeJnmTkqYP/jcBQU9RJ2TdzITeXgL0i/Bh
+eykfskjd6DI5P/VaC+aR2jcqYS3m7HUWupSK788DgsnZjxyXDJlAJFEq575LotvY
+D76umi6SKIOgdyHLsClkzmmY7YCUI8TP13zdrh0kUTcfbBvth8/b/WwAQd9+zvHL
+DUiAGdtHlOZhzwpwPa2n08gpX9AYOAAXcj/sjnoIvOrdU3zbI2VjTOIJexvTpiS5
++/tQyiYClNf+pqwg4nRYPRP8xr8LLYElakyRz6cl9lmGKVp1e4tAKydoh8Jgbg0R
+kGq4+rpgf6l0W1D7SaNKK9VmoC3666QK6oFNmQFj3fSsxQezRR3Rk6Rt8Dd83Vd8
+Jo+Nj27DYo8FfEcGKOOYtPA6Sg1ZClgUDJeMHlVEP1hXJr2KZltTXM7WA5zjuzfB
+k5BH0eZKqE1yQjylax8Y/VC4tEZ6/QgXGvDLoMXqH7oYvmmMfpnKQPKc4lrUeHem
+R/9vjY7JLgBOToEGPgVyXDFWPF56gZKIi1yS0mRY8Ga9242R8s7SQ8WxHaGoFuqm
+GRuqIkj8hF8S614Sp/vUmSS02OK9bMJW3XPIkgzYmGqFLe5JTbKLfFbRT1Kqtv8I
+UD8bbz7uA/pvlQXzK1xg7fCHiKk/zpi1EBW4g6ynEh+T3S6rvDB66bCkiyofOsvB
+ecP8gLTGk4eYtPaKlnag
+=sMZM
+-----END PGP SIGNATURE-----
