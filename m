@@ -1,50 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/8
-Message-ID: <20131211154418.GD2348@openstack.org>
-Date: Wed, 11 Dec 2013 15:44:18 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/30/7
+Message-ID: <51D0B8BB.6010403@redhat.com>
+Date: Sun, 30 Jun 2013 17:01:15 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2013-033] Metadata queries from Neutron to Nova are not restricted by tenant (CVE-2013-6419)
+CC: Steven Ciaburri <steve@...k911.com>
+Subject: Re: CVE request: Kernel 2.6.32+ IP_RETOPTS Buffer Poisoning DoS
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2013-033
-CVE: CVE-2013-6419
-Date: December 11, 2013
-Title: Metadata queries from Neutron to Nova are not restricted by tenant
-Reporter: Aaron Rosen (VMware)
-Products: Neutron, Nova
-Affects: All supported releases
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
-Aaron Rosen from VMware reported a vulnerability in the metadata
-access from OpenStack Neutron to Nova. Because of a missing
-authorization check on port binding, by guessing an instance_id a
-tenant may retrieve another tenant's metadata resulting in
-information disclosure. Only OpenStack setups running
-neutron-metadata-agent are affected.
+On 06/30/2013 01:33 AM, Steven Ciaburri wrote:
+> There is a local DOS exploit in centos 6, openvz 6, cloudlinux 6
+> and others.
+> 
+> https://www.rack911.com/poc/hemlock.c
+> 
 
-Icehouse (development branch) fix:
-https://review.openstack.org/61439 (neutron)
-https://review.openstack.org/61428 (nova)
+Please use CVE-2013-2224 for this issue.
 
-Havana fix:
-https://review.openstack.org/61442 (neutron)
-https://review.openstack.org/61435 (nova)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Grizzly fix:
-https://review.openstack.org/61443 (neutron)
-https://review.openstack.org/61437 (nova)
-
-Notes:
-This fix will be included in the icehouse-2 development milestone
-and in a future 2013.2.1 release.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6419
-https://launchpad.net/bugs/1235450
-
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
+iQIcBAEBAgAGBQJR0Li7AAoJEBYNRVNeJnmTVI0QAIfJnky7/AHyXvx7KXUAG7Fh
+GR+fJ54yJtaY7AOh0DKt9oNwHOhPrWD6agXWtyOwaI9V6CgrIpDY3baiwN9rFAG2
+e6/XVfS3bfzf7fADlz8hFGqjtL5hGtHPVScoQY8TYiX/JJ9ibIYM1YmvA4YQhYJL
+qv+p/jDjb1UufHm7pHFpz34rbUvnHmmaKKYR2xIubyaNHBY4pYrXYbtJQcOYswy+
+iP3w4S2YY17I79E3Ud6YzLNbRAhsrv/ALWfSFQq0IMDYGpLSp7UbJk7g+GIRpm3y
+U8z80m3Hgv40MDjOpFMaj6vPm7CX0YTcpPzvdur9qY4Q+vdGFfvc8r6xmKp7LAwy
+wzzJDo/L/bdldArbGfH8z+RScA4qzuXic7sQTF3ibkCQZM2UDX0KH+n/xPAB0Tg4
+HG96sNhfH61r9A9E5e5PTdIvlGEMRWPlSJzBvH9VQJfHgeqXER6QnCaORIh5IUfO
+CK5qknWt23cp8ye+clHmDnqgC8fWiW7CxdgYxD4uj1HD+A94sYGgE1ZolxCPjoU9
+kv/MpXYHFyYTU5CTThTlCS/7LmzeMr0Hyqxae5KU6dRiCCkyGKKqUCXhpOkAiyI1
+O3yD6JbeD9XizNOaDwmXhPkEAuqU+A3AA9PUjN7QXVwaMpzd+fmCqvK53C0NfTNR
+2vZxELskBER/mEF/Zu1y
+=RijB
+-----END PGP SIGNATURE-----
