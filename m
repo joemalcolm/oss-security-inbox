@@ -1,78 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/10
-Message-ID: <CALCETrXvZzN4NhGUseu=xcgS5otR-S6PWc=O69oUNS+GKFFJjg@mail.gmail.com>
-Date: Tue, 16 Apr 2013 10:34:23 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com,  Brian Martin <brian@...nsecurityfoundation.org>
-Subject: Re: Re: Summary of security bugs (now fixed) in user namespaces
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/30/11
+Message-ID: <51D0C078.3010709@rack911.com>
+Date: Sun, 30 Jun 2013 16:34:16 -0700
+From: Steven Ciaburri <steve@...k911.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Kernel: 2.6.32+ IP_RETOPTS Buffer Poisoning DoS hemlock.c
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 16, 2013 at 2:01 AM, Kurt Seifried <kseifried@...hat.com> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 04/15/2013 04:45 PM, Andy Lutomirski wrote:
->> On Mon, Apr 15, 2013 at 3:34 PM, Brian Martin
->> <brian@...nsecurityfoundation.org> wrote:
->>>
->>> Andy;
->>>
->>> : I previously reported these bugs privatley.  I'm summarizing
->>> them for
->>>
->>> : the historical record.  These bugs were never exploitable on a
->>> : default-configured released kernel, but some 3.8 versions are :
->>> vulnerable depending on configuration.
->>>
->>> Do you know if these were patched, and therefore possibly
->>> disclosed via the commits? With these details, it is difficult to
->>> line them up to existing reports.
->>
->> Bug 1 should be fixed in:
->>
->> commit 3151527ee007b73a0ebd296010f1c0454a919c7d Author: Eric W.
->> Biederman <ebiederm@...ssion.com> Date:   Fri Mar 15 01:45:51 2013
->> -0700
->>
->> userns:  Don't allow creation if the user is chrooted
->
-> Can you confirm this has no CVE?
+Kurt,
 
-AFAIK it does not.
+I just loaded a a virtual machine at Rackspace Cloud running RHEL. It is a Xen based VM.
 
->
->> Bug 2 is should be fixed by these:
->>
->> commit 90563b198e4c6674c63672fae1923da467215f45 Author: Eric W.
->> Biederman <ebiederm@...ssion.com> Date:   Fri Mar 22 03:10:15 2013
->> -0700
->>
->> vfs: Add a mount flag to lock read only bind mounts
->>
->> commit 132c94e31b8bca8ea921f9f96a57d684fa4ae0a9 Author: Eric W.
->> Biederman <ebiederm@...ssion.com> Date:   Fri Mar 22 04:08:05 2013
->> -0700
->>
->> vfs: Carefully propogate mounts across user namespaces
->
-> Can you confirm this has no CVE?
+[steven@...l ~]$ ./a.out
+[+] giving ourselves some poison...
+[+] polluted kernelspace with more crap
+[+] polluted kernelspace with more crap
+[+] polluted kernelspace with more crap
+[+] polluted kernelspace with more crap
+[+] polluted kernelspace with more crap
+[+] polluted kernelspace with more crap
+[+] polluted kernelspace with more crap
 
-AFAIK it does not.
+at which point the server kernel paniced. 
 
+The server is running 2.6.32-358.11.1.el6.x86_64
+I did discover that it appears with SELINUX enabled the POC can go through a considerable amount of tries before it crashes.
 
->
->> Bug 3 should be fixed in:
->>
->> commit 92f28d973cce45ef5823209aab3138eb45d8b349 Author: Eric W.
->> Biederman <ebiederm@...ssion.com> Date:   Fri Mar 15 01:03:33 2013
->> -0700
->>
->> scm: Require CAP_SYS_ADMIN over the current pidns to spoof pids.
->
-> Can you confirm this has no CVE?
->
+On 6/30/2013 4:04 PM, Kurt Seifried wrote:
+> On 06/30/2013 05:00 PM, Kurt Seifried wrote:
+>> Works great on CentOS 6, can't get it to work on RHEL 6 so far. 
+>> Attaching PoC in case the web site goes down or something.
+> 
+> And that wasn't meant to go to oss-sec (sleep deprivation FTW!),
+> apologies.
+> 
+> 
 
-AFAIK it does not.
-
---Andy
