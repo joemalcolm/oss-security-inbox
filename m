@@ -1,38 +1,12 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/13/3
-Message-Id: <5D1373C6-9E71-46EE-8CB1-2F8917EBF561@nginx.com>
-Date: Mon, 13 May 2013 08:07:59 -0700
-From: Andrew Alexeev <andrew@...nx.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: nginx security advisory (CVE-2013-2070)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/30/1
+Message-ID: <51CFDF5B.4060404@rack911.com>
+Date: Sun, 30 Jun 2013 00:33:47 -0700
+From: Steven Ciaburri <steve@...k911.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Kernel 2.6.32+ IP_RETOPTS Buffer Poisoning DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+There is a local DOS exploit in centos 6, openvz 6, cloudlinux 6 and others.
 
-A security problem related to CVE-2013-2028 was identified,
-affecting some previous nginx versions if proxy_pass to 
-untrusted upstream HTTP servers is used.
-
-The problem may lead to a denial of service or a disclosure of a
-worker process memory on a specially crafted response from an
-upstream proxied server.
-
-The problem affects nginx 1.1.4 - 1.2.8, 1.3.0 - 1.4.0.
-
-The problem is already fixed in nginx 1.5.0, 1.4.1.  Version 1.2.9
-was released to address the issue in the 1.2.x legacy branch.
-
-Patch for nginx 1.3.9 - 1.4.0 is the same as for CVE-2013-2028:
-
-http://nginx.org/download/patch.2013.chunked.txt
-
-Patch for older nginx versions (1.1.4 - 1.2.8, 1.3.0 - 1.3.8)
-can be found here:
-
-http://nginx.org/download/patch.2013.proxy.txt
-
--- 
-Andrew Alexeev
-Nginx, Inc.
-
-
+https://www.rack911.com/poc/hemlock.c
