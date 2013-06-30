@@ -1,43 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/12
-Message-ID: <20130320145734.GO3176@redhat.com>
-Date: Wed, 20 Mar 2013 08:57:34 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/30/10
+Message-ID: <51D0BE81.8050009@redhat.com>
+Date: Sun, 30 Jun 2013 17:25:53 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2013-0287: sssd simple access provider flaw prevents intended ACL use when client to an AD provider
+CC: Raphael Geissert <geissert@...ian.org>, jmd@...epnet.net, moyo@...epnet.net
+Subject: Re: CVE request: GLPI, multiple issues
 Content-Type: text/plain; charset=utf-8
 
-This was posted to the linux-distros last week and as per the policy I'm
-posting it here now.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 06/27/2013 10:04 AM, Raphael Geissert wrote:
+> Hi,
+> 
+> [CC'ing upstream for complimentary information]
+> 
+> Multiple SQL injections have been reported in GLPI: 
+> http://packetstormsecurity.com/files/122097/GLPI-0.83.8-SQL-Injection.html
+>
+>  (note that the original advisory was hosted at www.zeroscience.mk
+> but it 404s as of the time of writing)
+
+Please use CVE-2013-2226 for this issue.
+
+> And a local file inclusion vulnerability was also reported: 
+> http://packetstormsecurity.com/files/122087/GLPI-0.83.7-Parameter-Traversal-Arbitrary-File-Access.html
+
+Please
+> 
+use CVE-2013-2227 for this issue.
+
+> (same note as for the above issue)
+> 
+> I'm not aware of related commits or bug reports other than the 
+> following (but this is me trying to connect dots): 
+> https://forge.indepnet.net/issues/4372 which was marked as fixed at
+> least in (0.83.9): 
+> https://forge.indepnet.net/projects/glpi/versions/915 But the bug
+> report also refers to the fix in trunk and the 0.85 branch.
+> 
+> Could CVE ids be assigned please?
+> 
+> Note that this is a different request than the one for the one
+> about the use of unserialize on untrusted data.
+> 
+> Thanks in advance, -- Raphael Geissert - Debian Developer 
+> www.debian.org - get.debian.net
+> 
 
 
-Kaushik Banerjee discovered that SSSD's "simple" access provider did not
-work as expected when SSSD is configured as an Active Directory client
-when using the new (as of version 1.9.0) Active Directory provider.
-During the PAM account phase, SSSD may not not know the group name of a
-group that the user is a member of, but only the Windows Security
-Identifier.  Because the group name is not known, the simple_deny_groups
-option does not work at all, and will always permit access; if any
-groups are noted in simple_deny_groups, all groups are permitted access.
-In addition, if any groups are noted in simple_allow_groups, access is
-always denied to everyone.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-By default, the configuration will allow all users to login (both
-simple_deny_groups and simple_allow_groups are empty).
-
-The Active Directory provider was introduced in version 1.9.0; earlier
-versions of SSSD are not vulnerable to this flaw.
-
-
-Acknowledgements:
-
-This issue was discovered by Kaushik Banerjee of Red Hat.
-
-References:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-0287
-
--- 
-Vincent Danen / Red Hat Security Response Team 
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBAgAGBQJR0L6BAAoJEBYNRVNeJnmTwUwP/1WPDS0lMBng3M3YnvbGBChi
+Y8rzR8nBEQNbqH9b/UFN0RfRJX8KDHhjmowOkKBh02QDDtvFza3FxjWDCgGzvkkY
+XkoxlBaLybYuNsaoAIJWJ8wUlM1O39qmHYwB2RXAyy0UHlbCahpj2u9DK6y3o2C6
+6geZHZs5sZP56P+utCtfoVVoiLL6/n2vUlZj5pNYaPnc8kgBE6ubJlN4XufVIiSF
+h2O296HT1Db6iKwDs2t7/n+pl/+ojagcQMrg7Ve82wGmFGhKhmllg7Z7k6TxJ5D6
+ViYNdhmkb6MU7h5gpe9JoJ+Mw8uy6bwl8qmz8D3MmXGK+1SL1rq/1qNx0trVJi+b
+mS6t2OwZEDwSaF+bd1moZS0dnXTVR1nx4bEzWkqhMvw8NzoewKybbV5uh41MsQDJ
+1aa3z/ObYWgR2zKT1kWaCWG3CYbjNkftLmOsi6FM1Utl7AcqEqlV12nLfTLtMOev
+qPcOD3ivzm0FfVRqudMAU9/vUVkq55nxWex5c51RS/wQuidZIC9tbYOKz1QlHz+d
+cwf53a351d0GME+7ypiglbZvaNRs6lQScRGV3tvFJ22j+Eu1eM9HR7Cx2nrdUFt8
+VahIRzZR66/3tLgozuyobtFLPaxEKLPoleEDlgu+GSxPjRcRAQZ2nL7Z6mnAil0l
+h0ipXcjxycJacxuZ922Z
+=EKG1
+-----END PGP SIGNATURE-----
