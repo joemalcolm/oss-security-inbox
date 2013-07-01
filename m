@@ -1,47 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/6
-Message-ID: <52090AC5.8070106@redhat.com>
-Date: Mon, 12 Aug 2013 10:18:13 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Subject: Re: CVE Request -- vdsm: incomplete fix for CVE-2013-0167 issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/2
+Message-ID: <CACYkhxj735VaX6m0ff-tp9XPNxgEc=s-S3yAX+3EtPSTY7DWuw@mail.gmail.com>
+Date: Mon, 1 Jul 2013 14:45:43 +1000
+From: Michael Samuel <mik@...net.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Ansible not caching SSH host keys
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+http://www.ansibleworks.com/
 
-On 08/12/2013 08:44 AM, Petr Matousek wrote:
-> It was found that fix for CVE-2013-0167 was not complete. A
-> privileged guest user could still potentially make the host the
-> guest is running on unavailable to the management server by making
-> guest agent return data with invalid XML characters.
-> 
-> Upstream fix: 
-> http://gerrit.ovirt.org/gitweb?p=vdsm.git;a=commit;h=5fe1615b7949999fc9abd896bde63bf24f8431d6
->
->  References: https://bugzilla.redhat.com/show_bug.cgi?id=996166
-> 
-> Thanks,
+Problem:
+Default configuration does not cache SSH host keys, effectively disabling
+host key checking
 
-Please use CVE-2013-4236 for this issue.
+Note - do not credit me for finding this, I'm just the only person
+indignant enough to request a CVE
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+A colleague found this bug, only to notice that it was logged by somebody
+else (antong on github), and rejected:
+https://github.com/ansible/ansible/issues/857
 
-iQIcBAEBAgAGBQJSCQrFAAoJEBYNRVNeJnmTXlYP/iWP2ugFXnurvLZ0UkRdrQ4W
-d5fTZXq5KFIRBesnNQFelnkfjHcstBNU9gH3zmGaJzK2V0a9rTKQTZ23+zgkf64u
-zYWV/wI+drtpCctTIMpwJVsSWACSucZrMYEKnylCjfCWuhNGbAmjXJktN5Z60Rl5
-1D5DnZy1NBJ4bexJlXuqr5OCQeMFpZksTMiW6CZilU/iiUZMwFUm3khC3QfQiPHF
-dyGLQsfiGEyV9CmSmOVxhzSQfwiibgyAdck2vFKS9jt5XrFH8nkU9iN4FtjqkpNt
-PI2t00xYDAe6drRp5nWnGSEYlb3YaqGxvaiDeuaKPzJm+B8CY95AFxRYW1xDuNaO
-3AEmtWjDpiggZlUHIgZN+rSQtYdb43DLY3MUts7Nf3hbt7EEhjN1bTHYqb/aG4gE
-etL1i1IgtbRXNdKSWevZp7sWGk0brrAnOASqeRvpEkwTr2ZTVF5xCx+eDK22uCv6
-M/lorlh9O769qeSeZBkl8+9a0llNOb45SiCPqtzkzVqpBTg0J+cuWX9xhcBfDnhp
-YP8+wIIySsaX61h7ldr7CG70uEX/siB/v/rTacntWcnR1J9J8IBKMKdiR952IQxi
-be4M1NL4JIQdPPLbe6Gg8Geb5L9/cjMYHCuXKxZXj7hXzOWu4b/y3A/0TE4eRJLU
-3SGzHk/pniLMk2yqG2Oj
-=Z3PP
------END PGP SIGNATURE-----
+This can be fixed by calling ssh.load_system_host_keys() after line 78 of
+https://github.com/ansible/ansible/blob/496f06c3c90cfd89802622c640480328436746c6/lib/ansible/runner/connection_plugins/paramiko_ssh.py
+
+While it is possible to call the SSH command instead of using paramiko,
+this isn't the default and the ramifications of not checking host keys
+aren't advertised to users.  A more reasonable approach would be to
+document how to un-cache a host key should it change.
+
+Regards,
+  Michael
+
