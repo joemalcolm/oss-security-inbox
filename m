@@ -1,56 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/25/2
-Message-Id: <201308251333.r7PDXWaN006187@linus.mitre.org>
-Date: Sun, 25 Aug 2013 09:33:32 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, gandalf@...ti.net, elbrus@...ian.org
-Subject: Re: CVE Request: 3 XSS vulnerabilities in Cacti <= 0.8.8b
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/11
+Message-ID: <51D1EAA2.7040600@msgid.tls.msk.ru>
+Date: Tue, 02 Jul 2013 00:46:26 +0400
+From: Michael Tokarev <mjt@....msk.ru>
+To: oss-security@...ts.openwall.com
+CC: Michael Jerris <mike@...ris.com>, Ken Rice <krice@...eswitch.org>
+Subject: CVE request: FreeSWITCH regex substitution 3 buffer overflows
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello.
 
-> Three cross-site scripting vulnerabilities
+Yesterday I started thinking for the first time about some VOIP
+solution for our office, and come across FreeSWITCH software --
+www.freeswitch.org.  After talking on IRC a bit, I decided to
+take a look at the source, because a question asked by one of
+the users looked interesting to me.
 
-We think you may mean "Three vulnerabilities" -- not all three are
-XSS.
+And immediately I discovered 3 buffer overflows in the _first_
+function I ever saw in the source of this software.
 
-> - Reflected XSS in the "step" parameter of the "/install/index.php"
->   script
-> - Stored XSS in the id parameter in the "/cacti/host.php" script
+http://jira.freeswitch.org/browse/FS-5566 - it is the original
+ bugreport which looked innocent enough initially.
 
-Use CVE-2013-5588 for both of these XSS issues.
+http://jira.freeswitch.org/secure/attachment/18855/0001-regex_subst-allow-n-in-regex-substitutions-and-fix-3.patch --
+ this is a patch of mine that fixes initial bug and also 3
+ buffer overflows I found when dealing with the issue.
 
+Some context.  FreeSWITCH's routing mechanism is based almost
+entirely on regular expressions and uses substring matches
+in the core routing (dialplan).  So the regexps are matched
+against untrusted input (which is especially mentioned in the
+docs).  But ofcourse users aren't easy with writing regexps
+correctly, always constraining the length of the input
+properly.
 
-> - "/cacti/host.php" script is vulnerable to Blind SQL Injection in
->   the "id" parameter.
+So, if there are any references to unconstrained input in
+any dialplan expressions -- that is, instead of \d{10},
+\d+ is used, we're getting a remotely triggerable buffer
+overflows with good potential of remote code execution.
 
-Use CVE-2013-5589 for this SQL injection issue.
+As simple as that.
 
+It _looks_ like the default configuration isn't affected
+since apparently all regexes there are constrained.  But
+we can't be sure for all user configs.
 
-> input_validate_input_number(get_request_var_post("host_template_id"));
+I haven't studied actual potential for code execution,
+but from a quick view it appears quite possible.
 
-This code was added to host.php in both 0.8.8 and 0.8.9, but we think
-that it might be impossible to exploit the host_template_id parameter
-for either XSS or SQL injection. If there is a usable attack with the
-host_template_id parameter, please request another CVE ID. Any
-vulnerability for the host_template_id parameter is not within the
-scope of either CVE-2013-5588 or CVE-2013-5589.
+Thanks,
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSGgZrAAoJEGvefgSNfHMdfRkH/R0lG8hngh9Q91DcEs7JNgUj
-mOuUN3iizdQYUrjkwFgrzv0ENWtHd+jm3fwbnQVQVyTSqoOaAT2d7/mheY74Halc
-R+SaMIhr8B+fKJdt2hs2wZZyqIjK6/gI1x5sv0k8/Cei389U2nhoRYzgfYukuYQB
-NPSD7u2ZZVJ00r64JQfeNQ8WtTkhD69kejd7L+qn/hl0ebsQd/SM+jGk3v3vZ6eQ
-+dUMHyf0z8Jo12W6ppa5biG71hqEDgdNmQuU6QXAtV4m01snZhMmt/kbQ88wg6O7
-Lz27dc8vb/B+48krsdA1VcX+JQGXmv4mMSyPzzIKehxYbwqzNK+Z4ETIBfIdZHU=
-=1n5f
------END PGP SIGNATURE-----
+/mjt
