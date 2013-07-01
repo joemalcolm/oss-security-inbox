@@ -1,48 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/6
-Message-Id: <201303281619.14981.tmb@65535.com>
-Date: Thu, 28 Mar 2013 16:19:07 +0000
-From: Tim Brown <tmb@...35.com>
-To: Steve Grubb <sgrubb@...hat.com>
-Cc: oss-security@...ts.openwall.com, Corey Bryant <coreyb@...ux.vnet.ibm.com>
-Subject: Re: Re: [kernel-hardening] Security vulnerability tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/13
+Message-ID: <51D1F594.1000209@redhat.com>
+Date: Mon, 01 Jul 2013 15:33:08 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Eric Blake <eblake@...hat.com>
+CC: oss-security@...ts.openwall.com, libvirt-security@...hat.com
+Subject: Re: [Libvirt-Security] CVE-2013-2218 -- libvirt: crash when listing network interfaces with filters
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 28 Mar 2013 15:58:32 Steve Grubb wrote:
-> On Wednesday, March 27, 2013 05:51:19 PM Corey Bryant wrote:
-> > Thanks Tim.  Sounds nice.  This is the first security audit tool on the
-> > list so if we could add more in this category that would be nice.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 07/01/2013 01:06 PM, Eric Blake wrote:
+> On 07/01/2013 12:49 PM, Kurt Seifried wrote:
+>> On 07/01/2013 09:21 AM, Petr Matousek wrote:
+>>> The virConnectListAllInterfaces method has a double-free of the
+>>>  'struct netcf_if' object when any of the filtering flags cause
+>>> an interface to be skipped over. For example when running the
+>>> command 'virsh iface-list --inactive'
+>> 
+>>> Upstream fix: 
+>>> http://libvirt.org/git/?p=libvirt.git;a=commit;h=244e0b8cf15ca2ef48d82058e728656e6c4bad11
+>>
+>>>
+>>> 
+References: https://bugzilla.redhat.com/show_bug.cgi?id=980112
+>> 
+>>> Thanks,
+>> 
+>> 
+>> Please use CVE-2013-2229 for this issue.
 > 
-> There is also openscap if you are wanting security auditing.
-> http://www.open-scap.org/page/Main_Page
+> No, we already assigned CVE-2013-2218 to this issue.
+> CVE-2013-2229 should be closed as a mistake, or reused for some
+> other purpose.
 
-I've already said this to Corey but it bares repeating...
+Sorry that was really bad of me, totally didn't read the email, just
+saw from Jan and though "derp. needs a cve". Please REJECT
+CVE-2013-2229, duplicate assignment because Kurt isn't smarter than
+the average bear.
 
-Having a background in UNIX SecOps, I do a lot of system audits in my current 
-role and whilst I understand the business driver, I really don't like the 
-term.  The main gist is, CIS style audits are worthy but they won't effectively 
-test your controls.
 
-upc is an offensive tool to help identify escalation of privilege vectors 
-(especially on large multi-user system), (there is of course a degree of 
-overlap with a traditional audit).  It started off focussing on the quick wins 
-but it's developing in a more rounded attack tool.  As an example, the trunk 
-version of upc contains plugins to pull up (amongst other things) compiler flag 
-misuse, insecure API usage and other SDL violations, not something a 
-traditional audit would cover but which are pretty useful when you land on a 
-random system and want additional privileges.  Users of upc should not be 
-afraid to write code, or fire up a debugger in the pursuit of root.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-If you wanted to use it in a more systemic fashion, it might be interesting to 
-run it (for example) pre and post package upgrade or as part of distro QA etc 
-- but that's certainly not why we use/develop it (unless maybe we're doing a 
-product assessment where I might use it to model the authorised users attack 
-surface).  I'm sure if people wanted to develop it in that direction, any 
-submitted patches would be looked upon favourably though :).
-
-Tim
--- 
-Tim Brown
-<mailto:tmb@...35.com>
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+iQIcBAEBAgAGBQJR0fWUAAoJEBYNRVNeJnmTgjEP/37CuvtbfytgGLsuk41HYLXq
+9i+h0nkvneoqfaad/x/c6nBUfD5zKW4bTmN6WraNAA3qbr+skpxkI8kTnnsYrI9v
+99sEZiR/YFbZpu/by2GdECbA5WnY7jPIirYHMkVP2aW3DSXCJd/HSiIwwz86vasu
+ZkVKiRdOutNs7XUxpFLhv0XNt8vKzBXFbgSdz9taigBUzY1ZnsSfMN1GauY6WZuD
+4Xsf52WIWykeubH3MBbLSqyDp5kc6BxoKIbJv/h5kwp1kQEGLtIoCQNuByc3dAiA
+w9egS6GffCrdROSbue0pedgmkJux1DvKW5H+0kR4eaKi09pIq/9KMZMgoZeD3z2A
+PTMl4DTRtE62toMjtlcypVWz3rcsF0lZyeVooEC/rdxQLp7+FtVrTtyv6a4Q9Qnz
+viAn0DnUXo1P8td/ORrt17jRZWrEEhIkDuFJKiFdocQ/JWNjcJO9aP7nq0Lgp8XS
+Y7Z49g5sHdQNCpl9jsJFMnvMpy7Ng9r4jehI4t4xO9WDS2WJOV2BBjklM9JQUPPw
+1db0A+5a4vUaix2M1cKkAt+1NCijdR0umD37YF1sBdAY48eIIB2vRLbuXZImxtQT
+Q0OWEQCYd3By8d9XtDsyljPVZ2XwgQUzXs4qHnKHNgSUmXcLugTUjdRl07jjbmc2
+ntG3o0jkx3w7vNWN87EA
+=Ispm
+-----END PGP SIGNATURE-----
