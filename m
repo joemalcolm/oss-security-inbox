@@ -1,29 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/06/2
-Message-ID: <20130106142030.GA17276@kludge.henri.nerv.fi>
-Date: Sun, 6 Jan 2013 16:20:30 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Havalite CMS 1.1.7 stored XSS vulnerability in comments of blog posts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/9
+Message-ID: <51D1D34B.4050203@redhat.com>
+Date: Mon, 01 Jul 2013 13:06:51 -0600
+From: Eric Blake <eblake@...hat.com>
+To: kseifried@...hat.com
+CC: oss-security@...ts.openwall.com, libvirt-security@...hat.com
+Subject: Re: [Libvirt-Security] CVE-2013-2218 -- libvirt: crash when listing network interfaces with filters
 Content-Type: text/plain; charset=utf-8
 
-Havalite CMS has stored XSS vulnerability in comments of blog posts. Example:
+On 07/01/2013 12:49 PM, Kurt Seifried wrote:
+> On 07/01/2013 09:21 AM, Petr Matousek wrote:
+>> The virConnectListAllInterfaces method has a double-free of the 
+>> 'struct netcf_if' object when any of the filtering flags cause an
+>> interface to be skipped over. For example when running the command
+>> 'virsh iface-list --inactive'
+> 
+>> Upstream fix: 
+>> http://libvirt.org/git/?p=libvirt.git;a=commit;h=244e0b8cf15ca2ef48d82058e728656e6c4bad11
+> 
+>>  References: https://bugzilla.redhat.com/show_bug.cgi?id=980112
+> 
+>> Thanks,
+> 
+> 
+> Please use CVE-2013-2229 for this issue.
 
-POST http://example.com/?p=1 "comment" with value %E2%80%9C%3E%3Cscript%3Ealert%28document.cookie%29%3C%2Fscript%3E
+No, we already assigned CVE-2013-2218 to this issue.  CVE-2013-2229
+should be closed as a mistake, or reused for some other purpose.
 
-Tested in 1.1.7 (cbd391e913d04224225cf924a7fcb2b5), which was uploaded 2012-11-07 to sourceforge.net. I tried to contact vendor without response.
+-- 
+Eric Blake   eblake redhat com    +1-919-301-3266
+Libvirt virtualization library http://libvirt.org
 
-https://sourceforge.net/projects/havalite/files/
 
-Some other notes:
-- CVE-2012-5919 still not fixed in 1.1.7 version
-- CVE-2012-5893 does not work without administrator privileges, but uploaded files are executed (for example PHP)
-- Typos in "readme.html"
-- 777 modes not needed even it was in several places. 711 is enough for content directories
-
-I recommend not to use this software before these vulnerabilities are fixed.
-
----
-Henri Salo
-ps. I have regression tests for these issues if someone needs :)
-pss. Please note that havalite.com is not affected by this issue for some reason
+Download attachment "signature.asc" of type "application/pgp-signature" (622 bytes)
