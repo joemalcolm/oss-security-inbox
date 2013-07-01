@@ -1,40 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/10/2
-Message-ID: <20130110165719.GD2638@redhat.com>
-Date: Thu, 10 Jan 2013 09:57:19 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/8
+Message-ID: <51D1CCC8.8040108@redhat.com>
+Date: Mon, 01 Jul 2013 12:39:04 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Confirming CVE for ettercap buffer overflow flaw (CVE-2012-0722?)
+CC: Solar Designer <solar@...nwall.com>, Sona Sarmadi <sona.sarmadi@...a.com>, Dejan Bucar <dejan.bucar@...a.com>
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-This isn't on MITRE's site (reserved), and the initial advisory
-indicates that this has a CVE of CVE-2012-0722.  Can someone confirm
-that this is the correct CVE name?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+On 07/01/2013 11:01 AM, Solar Designer wrote:
+> Hi Sona,
+> 
+> On Mon, Jul 01, 2013 at 11:25:37AM +0000, Sona Sarmadi wrote:
+>> Please add Enea Linux information to: 
+>> http://oss-security.openwall.org/wiki/vendors
+> 
+> You're the one to add your information to the wiki (just register
+> for an account and edit the page), and this is desirable regardless
+> of whether you'd be on the private distros list or not.  I went to
+> your website at http://www.enea.com and was not able to (quickly)
+> find any information on your security response, advisories,
+> software updates, etc.  Without such information, we cannot even
+> consider you for membership of the private list.
+> 
+> Thanks,
+> 
+> Alexander
+> 
 
+Speaking personally, not on behalf of Red Hat here, yeah, I can't find
+ANY security related info on your website for your products.
+Personally speaking, I would strongly oppose membership even if they
+throw up some security related web pages as it's obvious that this
+isn't a long term effort but "oh we should join distros@, throw some
+web pages up? ok, done!" Until a vendor has shown some long term
+effort to do security properly I suspect letting them onto distros@
+would only increase the chances of a leak and devaluing the list in
+general.
 
-A stack-based buffer overflow was reported [1],[2] in Ettercap <=
-0.7.5.1.  A boundary error within the scan_load_hosts() function (in
-src/ec_scan.c), when parsing entries from a hosts list, could be
-exploited to cause a stack-based buffer overflow via an overly long
-entry.  In order to exploit this, a user must be tricked into loading a
-malicious host file.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-This has not yet been corrected upstream, but a proposed patch is
-available [3].
-
-The initial report [1] indicates that this was given the name
-CVE-2012-0722.
-
-[1] http://www.exploit-db.com/exploits/23945/
-[2] https://secunia.com/advisories/51731/
-[3] http://www.securation.com/files/2013/01/ec.patch
-
-Also:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=894092
-https://bugs.gentoo.org/show_bug.cgi?id=451198
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+iQIcBAEBAgAGBQJR0czIAAoJEBYNRVNeJnmT2TQQAJvwGuVe2QjrMhJIsha4UViS
+XCtv12fsNiXTRrTVmr2itD69Z/mBeeuXzr6MX7hl+iKpMevaa2Cu+Hut4mKi6wyj
+teKkaaQm5FuopCXoCG2/+RhiRf3YfaxPWvBnfnr2XWs0O4clVoS6zP1EZuGIBmw/
+oN92gFU7DQ8r3DQhSddk8s2bE2yEEsqCVv29Qi/zi1Iyvz+q0erONSBR4rjZyc5l
+hk/5xlqJxa8SDOEwMM6rnDF/uf0bFMMqdT83cEv2ni30ZdgQFHgczAQwe31scZnS
+VnwVztuxQ1cWL701Mbiv8kTB6Yy4JfQbmcuNOoLSbG8EOeomFtXsG0Zsl0ZAOOQL
+9KIi09kpUveEylF1gWvm26+p2UwuIpaE0sZEtsg+IUmZDp5meaCyWIv5iglV1WqY
+1TFjZT4VSabO/O2bAibJ/IsS5+xMog+QsB3NQ5n8ECC8FP1mMkhx6M8raZmbWFnm
+kSuXFPx8xEXH/PE2o8HMCVGe1WMky7tP21INYky+iLXmOOXaS4ZscQC/2Z7KbGFc
+GkKpir3SCKZSDDVr0JudcNTGl3Iuh4kBAB64fvZTmLEjPn1fJcdw2wM6UL2oyXhz
+Ztg2WQhwxbY5jBUOB3iHVL1+M8Y6gQXY/mA3ZKlBPgqyjAxB3B+Oeb1oM/+NN3zU
+yLnLJB081yBxv6f0paUF
+=Caum
+-----END PGP SIGNATURE-----
