@@ -1,67 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/5
-Message-ID: <20130320090828.GC2135@kludge.henri.nerv.fi>
-Date: Wed, 20 Mar 2013 11:08:28 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com, "Christey, Steven M." <coley@...re.org>, larry0@...com
-Subject: Re: Ruby CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/1
+Message-ID: <51D0EC20.40605@redhat.com>
+Date: Sun, 30 Jun 2013 20:40:32 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE-2013-2228 : Salt Stack RSA exponent of 1 (there can be only one! da-na-naaah! na-na-na-naahh-nah-nahhh!)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 20, 2013 at 02:43:21AM -0600, Kurt Seifried wrote:
-> On 03/19/2013 04:00 AM, Henri Salo wrote:
-> > On Tue, Mar 19, 2013 at 01:17:11AM -0600, Kurt Seifried wrote:
-> >> http://direct.osvdb.org/search?search[vuln_title]=ruby&search[text_type]=titles
-> >>
-> >>
-> >>
-> >> 
-> ===================
-> >> These 4 are all the ";" URL parsing issues ny larry0@...com 
-> >> =================== http://direct.osvdb.org/show/osvdb/91450 
-> >> command_wrap gem
-> 
-> Please use CVE-2013-1875 for this issue.
-> 
-> >> http://direct.osvdb.org/show/osvdb/91232 fastreader gem
-> 
-> Please use CVE-2013-1876 for this issue.
-> 
-> >> http://direct.osvdb.org/show/osvdb/91231 MiniMagic gem
-> 
-> Please use CVE-2013-1877 for this issue.
-> 
-> >> http://direct.osvdb.org/show/osvdb/91230 Curl gem
-> 
-> Please use CVE-2013-1878 for this issue.
-> 
-> > Please note that in private email Larry said he will request CVEs
-> > for these security vulnerabilities. Adding Larry as CC so he can
-> > tell us if he already did that and if he didn't we can assign those
-> > in this thread.
-> 
-> As per Larry's previous emails, assigning here.
-> 
-> > --- Henri Salo
-> > 
-> 
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-These have been assigned by Mitre in email to Larry:
+https://github.com/saltstack/salt/commit/5dd304276ba5745ec21fc1e6686a0b28da29e6fc
 
-http://www.openwall.com/lists/oss-security/2013/03/19/9
+This is indeed CVE worthy, for example we have CVE-2006-7140 and
+CVE-2011-4121 for RSA exponent 3, so RSA exponent 1 definitely qualifies.
 
-> http://www.osvdb.org/show/osvdb/91232  fastreader CVE-2013-2615
-> http://www.osvdb.org/show/osvdb/91231  MiniMagic  CVE-2013-2616
-> http://www.osvdb.org/show/osvdb/91230  Curl       CVE-2013-2617
+Please use CVE-2013-2228 for the RSA exponent of 1 in Salt Stack
 
-I updated OSVDB items. No idea about http://osvdb.org/91450
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Do we REJECT CVE-2013-1876, CVE-2013-1877, CVE-2013-1878?
-
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQIcBAEBAgAGBQJR0OwgAAoJEBYNRVNeJnmTECcQAMPrHTHY3nNvgtsjqFbVZWme
+AJO/Ir5ETsUPK9fOoesSA5i4XVKD+fTUp/FJp5hkd9B8tJeunvboRAj28lOePyr/
+pJ1cFT6JcMCxiQdkMZYh2ALqlRRWscyd2t+GbhE+SJPXv/XvGcuk9rGobqWf4rxL
+zcIQtdfQtzoF3zqU1sdLruPbRWJmuI+IPXN5io1+vsqhZQTeod8+Ixn42Ridb8L5
+sCzKrLzp9UPZwJJ81QdNi9O6pVBdahZ7DvKvTSdGeZeOf404dHpc6ESaL261kBCv
+y8SRa7wJGGd+gia1Iy5nt3FwiWDkw5IUv8m5VK7honuJinGZ59musoVvZCgwk0gx
+2bdOoVucf6FFC/eePEI8YSOzJAusx6xjvNxp7ECQAEJ0OKIWF8wtCWY8+WRtuJYB
+tzvZzN/GfLt5/TCqNa6CYKFBdoWp38DmRvo9WI8kGKBnmILx9iCiVybpYPs75CU5
+CT+GZu05pSY4FgiUNAHqZViUTDBpBeRagpNiiMIUKyyeaRVHwf752FUOUAWZ4BO+
+hR//vZbb/c3XVrLCW9rfjB7BFRHUQ0vEKvxvpPnsdX94qjWGq9dD1CwfNxLV7CvC
+3QqfCtDYxp04SDgTIquCg3IsjQo9S7LMOhlBtU6AdLjtIErzW9xkKsYuHQ1XcoF9
+d87rT51nyqviXGzTYs9C
+=vhe1
+-----END PGP SIGNATURE-----
