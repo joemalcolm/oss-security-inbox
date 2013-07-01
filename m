@@ -1,47 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/8
-Message-ID: <20130705143834.GM4362@suse.de>
-Date: Fri, 5 Jul 2013 16:38:34 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/6
+Message-ID: <20130701152159.GI10319@dhcp-25-225.brq.redhat.com>
+Date: Mon, 1 Jul 2013 17:21:59 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: libxml2 external parsed entities issue
+Cc: libvirt-security@...hat.com
+Subject: CVE-2013-2218 -- libvirt: crash when listing network interfaces with filters
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 05, 2013 at 09:30:07AM -0400, Marc Deslauriers wrote:
-> On 13-07-05 09:17 AM, Marcus Meissner wrote:
-> > On Fri, Jul 05, 2013 at 08:48:04AM -0400, Marc Deslauriers wrote:
-> >> Hello,
-> >>
-> >> libxml2 earlier than 2.9.0 fetches external parsed entities by default, with no
-> >> way to disable the behaviour.
-> >>
-> >> Fixed by the following commit:
-> >>
-> >> https://git.gnome.org/browse/libxml2/commit/?id=4629ee02ac649c27f9c0cf98ba017c6b5526070f
-> >>
-> >> More Information:
-> >> https://mail.gnome.org/archives/xml/2012-October/msg00045.html
-> >> https://github.com/sparklemotion/nokogiri/issues/693
-> >> https://bugs.launchpad.net/ubuntu/+source/libxml2/+bug/1194410
-> >>
-> >>
-> >> Could a CVE please be assigned to this issue?
-> > 
-> > Sounds like http://seclists.org/oss-sec/2013/q1/391  
-> > and
-> > "Please use CVE-2013-0339 for libxml2 external entities expansion"
-> > 
-> > ?
-> > 
-> 
-> Hrm, I would have thought CVE-2013-0339 was for the entities expansion DoS issue
-> fixed by this commit:
-> 
-> https://git.gnome.org/browse/libxml2/commit/?id=23f05e0c33987d6605387b300c4be5da2120a7ab
-> 
-> The other one is for external entities expansion being enabled by default with
-> no way to turn it off. You would lump them together?
+The virConnectListAllInterfaces method has a double-free of the
+'struct netcf_if' object when any of the filtering flags cause
+an interface to be skipped over. For example when running the
+command 'virsh iface-list --inactive'
 
-Mostly wondering, as it seemed more or less related. Perhaps someone else has more insight.
+Upstream fix:
+http://libvirt.org/git/?p=libvirt.git;a=commit;h=244e0b8cf15ca2ef48d82058e728656e6c4bad11
 
-Ciao, Marcus
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=980112
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
