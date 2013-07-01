@@ -1,42 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/2
-Message-Id: <81E7532F-92B3-4665-8C5D-3CA1893A78B1@kernel.sg>
-Date: Thu, 14 Mar 2013 09:03:20 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CLONE_NEWUSER|CLONE_FS root exploit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/12
+Message-ID: <1858274.ExbzP1YEpJ@devil>
+Date: Mon, 01 Jul 2013 23:20:13 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: Kurt Seifried <kseifried@...hat.com>, libvirt-security@...hat.com
+Subject: Re: CVE-2013-2218 -- libvirt: crash when listing network interfaces with filters
 Content-Type: text/plain; charset=utf-8
 
-On 14 Mar, 2013, at 8:59 AM, Eugene Teo <eugeneteo@...nel.sg> wrote:
+On Monday 01 July 2013 12:49:51 Kurt Seifried wrote:
+> Please use CVE-2013-2229 for this issue.
 
-> On 13 Mar, 2013, at 11:39 PM, Sebastian Krahmer <krahmer@...e.de> wrote:
-> 
->> Hi,
->> 
->> Seems like CLONE_NEWUSER|CLONE_FS might be a forbidden
->> combination.
->> During evaluating the new user namespace thingie, it turned out
->> that its trivially exploitable to get a (real) uid 0,
->> as demonstrated here:
->> 
->> http://stealth.openwall.net/xSports/clown-newuser.c
->> 
->> The trick is to setup a chroot in your CLONE_NEWUSER,
->> but also affecting the parent, which is running
->> in the init_user_ns, but with the chroot shared.
->> Then its trivial to get a rootshell from that.
->> 
->> Tested on a openSUSE12.1 with a custom build 3.8.2 (x86_64).
->> 
->> I hope I didnt make anything wrong, mixing up the UIDs,
->> or disabled important checks during kernel build on my test
->> system. ;)
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=aea8b5d1e5c5482e7cdda849dc16d728f7080289
-
-I realised that the link is incorrect. Will post again when I see the patches.
-
-> 
-
-Eugene
+I guess CVE-2013-2218 was already assigned.
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
