@@ -1,65 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/17/5
-Message-ID: <5237C70A.1010903@redhat.com>
-Date: Mon, 16 Sep 2013 21:05:46 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/14
+Message-ID: <51D1F685.5050608@redhat.com>
+Date: Mon, 01 Jul 2013 15:37:09 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Reno Robert <renorobert@...il.com>, Michael Niedermayer <michaelni@....at>
-Subject: Re: CVE-Request FFmpeg vulnerability
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Question about signed email
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/14/2013 02:23 AM, Reno Robert wrote:
-> Hi, Issues in libavcodec H.264 code of FFmpeg 0.11.3 leading to out
-> of bound read/write. Below is the link to commit, used to fix the
-> issue 
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=39ed5442620a7a0fd2328b7d4aefc6ae152c5441
->
->  I would like to request CVE Identifier for the above.
+- -----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please use CVE-2013-4358 for this issue.
+This message is properly signed right? Can people reply privately and
+tell me what it looks like in their email client, e.g. if it looks
+properly signed or not? Screen shots welcome. Thanks
 
 
-Nifty, from the RFC:
-
-   The H.264 specification
-   includes two types of parameter sets: sequence parameter set and
-   picture parameter set.  An active sequence parameter set remains
-   unchanged throughout a coded video sequence, and an active picture
-   parameter set remains unchanged within a coded picture.  The sequence
-   and picture parameter set structures contain information such as
-   picture size, optional coding modes employed, and macroblock to slice
-   group map.
-
-   To be able to change picture parameters (such as the picture size)
-   without having to transmit parameter set updates synchronously to the
-   slice packet stream, the encoder and decoder can maintain a list of
-   more than one sequence and picture parameter set.  Each slice header
-   contains a codeword that indicates the sequence and picture parameter
-   set to be used.
+- -----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
 
-
-
-- -- 
+- - --
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+- -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSN8cJAAoJEBYNRVNeJnmTHSIP/iZMuO76ctSfqZqv/4snYrRv
-rZ56mvDgflGpl38C+kCu47dlShWdaSaWl5ne4TpzHtxF/DCnutA9YXv4V4eVpSM7
-CSU27fxcMhKd9x9LNPAW2VWLYtyaa+JmPG5N8O0YdbzLOYEZRM59AKRZ72rFTc2U
-OCmJWPi8u4WSLyfSBtFrT1s4YCSMarb+7u++VaTL+jzF7jPFnajlk3+Z+Ir2cCit
-Mh+xSu0BNXMKQmkm9efChqQOYc1we+RFObTuls3oFySR9lTYKWvCUuRJ69mZhQuh
-flXci52RrQmdD9t+0wXgv1OtkPidCPD+8Pr+Y3MM+1/0cOBGO916ckYs6kx2z6nv
-qxlX1aufySwostZ1fVFJFxaPHbEkZ3hBlELSCcBhPFhXunDkR6QP2LOGDm3pBio8
-2edM0gaCxVIcbV9D+24oZvxpF+AphrQgXvEAT0rjs33B3Q4ClnZOS95dXvp1/dRk
-ymQLZDmMB1E7cXYa0nKZoR1Fd1X8E2UV5YKw7gWFaaxmEQ9HtXmnee+VI9I9Ndaw
-MR/YinYvttROBCUj5nfQdlBlaEcjCXFqIoOax9g0Yynp2VPrQBxE0YBbUB2O37Ua
-wt4ChysOI6/3m2+T//rIF2znv07fbsi7AdZ1sP5Qx5BxCrNpIFDvlD95+rkODTPo
-7SWZw8hgyGSe+4FHBex4
-=QDoo
+iQIcBAEBAgAGBQJR0fZeAAoJEBYNRVNeJnmTTkIQAIr6OkoHbkKCx0LMZQve4oIJ
+fjUHHx3WqOyQR5I1OStrt2RLoJeWzIpFUPrQTRFoPvpyCUXW/sNvGoILTjZftD3l
+1A6andojNuNSXZmL7TWZ9Ce1YdOh+C5cbd6edYLbpkwOt9ZrPya6xsrPpztJLDvT
+d9jx8/lxnmDo0K8zFuk+k0a2G8Z4N5xkA/JpR8WqA28sD4X6S1RbA/Rq360/qw//
+4zEkDFlNODlplGVNKxuSLfNR8D2eFleDF8ZMovJM1JPT7E4fQEi4E4wVHzD/Y8qk
+dsGF2OEBjpvLcehH2PA9w/IxB5yJdToiHM9aRyz5drjOT+pYkRktFLPSrpsc7z24
+EPHCv1SlIRoYxSeTtFxOg/K8T67uBwmNerWSh4WKicy1dWmMm9UqytRQLo76t0Cz
+tKxOuzEDU8X+uh8uQK1wsE3x5kzHTISJHmzZ6WIGTpIjOyznt7nXgCbP9u0GU+8X
+Cx0EJD+gou2QyqBfW1/3JtSa+pE/WuOJG5Gh35idvxoZC+znzKSs5KfDE+UJ2fP5
+p7ctLubLO4gR5GfB02R37ayGFNiBg+ww0Z5NoN6RpA70J7s4KGxM00XqFeZiuIon
+GQXsYUgrIaptx04SORR2/Dvsv98dh0/PHMUVzeVkQwUQHqsAgrkBvuIGbI1n+NoR
+cSWpEf0XM5mYxRtMGSrU
+=bCBE
+- -----END PGP SIGNATURE-----
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJR0faFAAoJEBYNRVNeJnmTboEQAI8jWhNRneMvevZfN3CntW+L
+6Edx1pypmgHHFjdnBPpXF5R1NNFy0QTY3HYW/ADWeWA7U7cmDFupESETTqyMFx1h
+k37Q5nOZcQtKWz2RUzGRBiNfZ+lDs9tCWzSAmGSfuuKXEm+fSL+dS9xNICgc3s91
+KJURWjTbKFyIbguAbHTxSZJ9eADICEfEpDvMkbOJnfdXtJ0JM7vLj3+aD/fDKnG9
+uYiTXr0oHKnJDD+8f7w66+WKCYeuNwdalc0TZAsOvwr58ws1JetJBE4x68T0rbCW
+95UjMO4adU0VwEzeBrVgY4UL+K0sep2j9V+1+Q3NxF+jzdBQ5sPswXnh1yeLj1Ug
+7iQTgk+qPMJ8gooWiB6cbrcvwztKTPmVjVZBDwwiiMNQctMBrPmDFLgiN3aWjeLm
+ukatP23eS569vsI00UKD+vSC6Mm60ofAPJHADOKPWGVNUujGCeJROvHwurfK+tP9
+qO2Ly/PDX1peWh3w/48pHtPFBsnsXd2Iw+v4xttCnpjd08ppkCAFDycQv0jmqHA1
+qOnL3F02523+7IgAQJW12ozTGWjqaGSkJRevSK9oMBGFtHfhElfxpejsYRgkbx+y
+1N82HR7xq8FJMMUx7l4Fs4QZfTg2e8Qo2XG9uPA9dx7t2faJPQ8mYlN4tpMZCOx7
+xt1XD0jUnQ5tG82c9RS9
+=YcTM
 -----END PGP SIGNATURE-----
