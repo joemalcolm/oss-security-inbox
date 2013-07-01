@@ -1,35 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/4
-Message-Id: <201304290554.r3T5sIVp027152@linus.mitre.org>
-Date: Mon, 29 Apr 2013 01:54:18 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux kernel: cifs: NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/10
+Message-ID: <51D1CF4F.8050008@redhat.com>
+Date: Mon, 01 Jul 2013 12:49:51 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, libvirt-security@...hat.com
+Subject: Re: CVE-2013-2218 -- libvirt: crash when listing network interfaces with filters
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
->a NULL pointer dereference flaw ... during a re-connection attempt.
+On 07/01/2013 09:21 AM, Petr Matousek wrote:
+> The virConnectListAllInterfaces method has a double-free of the 
+> 'struct netcf_if' object when any of the filtering flags cause an
+> interface to be skipped over. For example when running the command
+> 'virsh iface-list --inactive'
+> 
+> Upstream fix: 
+> http://libvirt.org/git/?p=libvirt.git;a=commit;h=244e0b8cf15ca2ef48d82058e728656e6c4bad11
+>
+>  References: https://bugzilla.redhat.com/show_bug.cgi?id=980112
+> 
+> Thanks,
+> 
 
->  -> https://git.kernel.org/linus/ea702b80e0bbb2448e201472127288beb82ca2fe
+Please use CVE-2013-2229 for this issue.
 
-Use CVE-2013-3302.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJRfgnSAAoJEGvefgSNfHMdNY4IAJBlodzbEfdmKsjsjo2kvvfz
-g8I88MT/VAoC9Ux/oVpwD8Z73ux/5ySc5CLmDnZ17BI6M3tq0D1W8HuTdTp4aHbI
-yWDglMsj51tAx+RRtJQzh4Yft7ZQVRkRv/mA861nwL/0h8+ttiBW03Co/+ziZ0VU
-a/GISUiuOcEZFbsTx3kRYD4ZnBNCoszdUovK7WA7YPrBaut9/g6No1OZWkeRVPIB
-Rc2kHSVhsrWIVUBQ9FDxZa7eig6kWjnMZqNBf9cn/d/oeHuVrwTbyWZUitBBQBm1
-xqI1TXpzQvBtklC4bYN8zvju7mR1FS9bf4dIfLO24VGl+rxSb/CsmG84WjUzO0A=
-=WADH
+iQIcBAEBAgAGBQJR0c9PAAoJEBYNRVNeJnmTSY4P/ilsf0ieJ07XJrtl3G7sWgcZ
+70tHmnhyu8R4I1shc6mQgFVUCwObfbCGm20pT4vThcC9ntcMMErNPViUU7yAALlT
+4L6Z6Lu45YFgQsEG9mjEOTgLq7pKkjyvsPugB5838sDO+8pd1VXL4CrcjP1yX6BE
+gIh+qo8CR9wqEXc/yPcnLs9X7mV4sgxoh8EZcw9MIblEUasdLBUr1QvzCvoXHepV
+j5H9n8jKMOuPXoHOfm7WcpX72tlZcfFy2M9cLfSn2P2ctaIvi3uXRiJDgaxve8aa
+fOZjOgf8bao+BDgbQ3eihF/5N486KS9oD9QwzY05/4urp6DyrkWqDER7y1lOtsCb
+IxAtwa3bEsmUflYvJlsdsZiiF/iO8R8Bw0jVIiQKK1VzdhWN7iTJ8o9Pzr1FoaZc
+VgYCyNftBUsHIi+rD0m2HdKBB7MMzH1/heS8/26zaj1gW7bBC1PEiO/MFRA/pX79
+Vts/DjghNZR43SGULuc2wDodMhI0S+pcO2DI7Y+fcFU05xxRskKfQYf9je0VKauJ
+euUk4Dpm548Fs2JfDhSuGd45VAVbrPhCmm31fyOI3AAkbvhaoQWKA9tTNMmMOBCT
+mvtrioGrlAfkc2g5ZXmCGv0ZQ7AuQ32nYBUX+CFYlgHHAdK5ORxL7zcLwn9043as
+3g4NK6/2vam9wBfOGfDm
+=OVns
 -----END PGP SIGNATURE-----
