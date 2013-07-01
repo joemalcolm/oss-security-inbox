@@ -1,65 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/30/6
-Message-ID: <5271358C.1010508@openstack.org>
-Date: Wed, 30 Oct 2013 17:36:28 +0100
-From: Thierry Carrez <thierry@...nstack.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: [OSSA 2013-028] Unintentional role granting with Keystone LDAP backend (CVE-2013-4477)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/7
+Message-ID: <20130701170101.GA20517@openwall.com>
+Date: Mon, 1 Jul 2013 21:01:01 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Sona Sarmadi <sona.sarmadi@...a.com>
+Cc: oss-security@...ts.openwall.com, Dejan Bucar <dejan.bucar@...a.com>
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Sona,
 
-OpenStack Security Advisory: 2013-028
-CVE: CVE-2013-4477
-Date: October 30, 2013
-Title: Unintentional role granting with Keystone LDAP backend
-Reporter: The IBM OpenStack test team
-Products: Keystone
-Affects: All supported versions
+On Mon, Jul 01, 2013 at 11:25:37AM +0000, Sona Sarmadi wrote:
+> Please add Enea Linux information to:
+> http://oss-security.openwall.org/wiki/vendors
 
-Description:
-The IBM OpenStack test team reported a vulnerability in role change
-code within the Keystone LDAP backend. When a role on a tenant is
-removed from a user, and that user doesn't have that role on the
-tenant, then the user may actually be granted the role on the tenant.
-A user could use social engineering and leverage that vulnerability to
-get extra roles granted, or may accidentally be granted extra roles.
-Only Keystone setups using a LDAP backend are affected.
+You're the one to add your information to the wiki (just register for an
+account and edit the page), and this is desirable regardless of whether
+you'd be on the private distros list or not.  I went to your website at
+http://www.enea.com and was not able to (quickly) find any information
+on your security response, advisories, software updates, etc.  Without
+such information, we cannot even consider you for membership of the
+private list.
 
-Icehouse (development branch) fix:
-https://review.openstack.org/53012
+Thanks,
 
-Havana fix:
-https://review.openstack.org/53146
-
-Grizzly fix:
-https://review.openstack.org/53154
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4477
-https://bugs.launchpad.net/keystone/+bug/1242855
-
-Regards,
-
-- -- 
-Thierry Carrez
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJScTWMAAoJEFB6+JAlsQQjPuIQAIEYi9MIqI9nIN5vQlj9MLlB
-nW9CUjvhHCq6B9k9njqeiXyo9Nl+AQIiNQpULE1li48SWlicGJtary2PAzYasHKv
-jiPZyU5+I5V6FsK42EcnazymK9Nsd5Xow0l9TIaQ2OL7ee0BQkgqiGaFVGU26yWy
-Zfjl1+ebWjP+SB0lpvYL0lDx5fNEhPL5G8iONOet1tT+vTIXYsWiYq6VS7/wTSdq
-WkY/6X7JLPPRmzwrJQvLBjQdTxUAQUmKew6NoOS0mSjX5MZjTsmHR+DaPUqFAVwF
-jK7QFxTfYd11ZQEWPPNJ8gA1/MvFW+y1zSKYphQNAMns4Ez6hoFzBsLnA0IWHUra
-OgwrqTKblHp9W7MPY3Kc8c+f7Mb1qJrzLtvoI2Vm8srhIv/ZfWrMEvtPFfQ9F9K+
-H1vf16woxD4E0yCspIcJBG1f3fKTZ9YAEjepjI9L0NGFPuJ2K79dwb8jHopn4Z67
-sQXCQMD1fFOZ6z/yHG22AKLWxbICWRFTgEz6VRULgLoniq4FN40bhuA8C2eu0rte
-qpx6s63BQgPg5tEY24qr5W70lPdKVn4KTIDlyiLGUUa3zHfI5yCIRjEbs0x9FtTv
-AIlLoTPXkUhy9eshJdeNCOapSqaXF49WcllBzDMswosxqM2RbbP6dgzSTFO7qoZS
-hp/4MizCO99lqP7mU6FJ
-=kxqa
------END PGP SIGNATURE-----
+Alexander
