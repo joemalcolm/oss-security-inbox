@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/26/6
-Message-ID: <CABbbngBJqDeCmDtzpz=HG6_0Rb=e5bm9NrpseOFAu3GNmwGF3w@mail.gmail.com>
-Date: Thu, 26 Sep 2013 14:21:38 -0700
-From: Forest Monsen <forest.monsen@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/5
+Message-ID: <20130701151000.GL2696@suse.de>
+Date: Mon, 1 Jul 2013 17:10:00 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: information leak in AF_KEY notify messages
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+Hi,
 
-I'd like to request CVE identifiers for:
+found in the mainline kernel git:
 
-SA-CONTRIB-2013-073 - Make Meeting Scheduler - Access Bypass
-https://drupal.org/node/2081637
+commit a5cc68f3d63306d0d288f31edfc2ae6ef8ecd887
+Author: Mathias Krause <minipli@...glemail.com>
+Date:   Wed Jun 26 23:52:30 2013 +0200
 
-SA-CONTRIB-2013-074 - MediaFront - Cross Site Scripting (XSS)
-https://drupal.org/node/2087051
+    af_key: fix info leaks in notify messages
 
-SA-CONTRIB-2013-075 - Click2Sell - Multiple Vulnerabilities (XSS and CSRF)
-(Now marked "unsupported," and no patch provided)
-https://drupal.org/node/2087055
+    key_notify_sa_flush() and key_notify_policy_flush() miss to initialize
+    the sadb_msg_reserved member of the broadcasted message and thereby
+    leak 2 bytes of heap memory to listeners. Fix that.
 
-SA-CONTRIB-2013-076 - jQuery Countdown - Cross Site Scripting (XSS)
-https://drupal.org/node/2087095
+    Signed-off-by: Mathias Krause <minipli@...glemail.com>
+    Cc: Steffen Klassert <steffen.klassert@...unet.com>
+    Cc: "David S. Miller" <davem@...emloft.net>
+    Cc: Herbert Xu <herbert@...dor.apana.org.au>
+    Signed-off-by: David S. Miller <davem@...emloft.net>
 
-SA-CONTRIB-2013-077 - Google Site Search - Cross Site Scripting (XSS)
-https://drupal.org/node/2092395
-
-Thanks!
-
-Best,
-Forest
-
+Ciao, Marcus
