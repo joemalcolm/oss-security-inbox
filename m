@@ -1,23 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/17/2
-Message-ID: <20130617202929.GA26673@kroah.com>
-Date: Mon, 17 Jun 2013 13:29:29 -0700
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux - ext4 support
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/4
+Message-ID: <3230301C09DEF9499B442BBE162C5E48253D0BD3@sestoex05.enea.se>
+Date: Mon, 1 Jul 2013 11:25:37 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Dejan Bucar <dejan.bucar@...a.com>
+Subject: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 17, 2013 at 10:12:34PM +0200, Jonathan Salwan wrote:
-> Hi,
-> 
-> Could you assign a CVE for this issue please?
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=971170
+Hi,
 
-I thought we (the ext4 developers and kernel security team) discussed
-this and determined that a user could _not_ trigger this problem.  Or
-was I mistaken as to the output of that conversation?
+My name is Sona Sarmadi and I am security response for Enea  Linux. I would like to request membership to the linux-distros mailing list representing Enea Linux.
+The information on linux-distros will be used to plan/prepare updates to our customers. 
 
-thanks,
+Please add Enea Linux information to:
+http://oss-security.openwall.org/wiki/vendors
 
-greg k-h
+
+Best regard
+Sona
+
+Sona Sarmadi
+Security officer
+Enea
+Jan Stenbecks torg 17,
+Box 1033, SE-164 21 Kista, Sweden
+Direct: +46 8 5071  4475
+Mobile: +46 70 971 4475
+sona.sarmadi@...a.com
+www.enea.com 
+
+ 
+
+This message, including attachments, is CONFIDENTIAL. It may also be privileged or otherwise protected by law. If you received this email by mistake please let us know by reply and then delete it from your system; you should not copy it or disclose its contents to anyone.
+
+
+
+Sona Sarmadi
+Software Engineer
+Enea
+Jan Stenbecks torg 17,
+Box 1033, SE-164 21 Kista, Sweden
+Direct: +46 8 5071  4475
+Mobile: +46 70 971 4475
+sona.sarmadi@...a.com
+www.enea.com 
+
+
+
+This message, including attachments, is CONFIDENTIAL. It may also be privileged or otherwise protected by law. If you received this email by mistake please let us know by reply and then delete it from your system; you should not copy it or disclose its contents to anyone.
+
+
