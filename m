@@ -1,88 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/26/5
-Message-Id: <E1Urpcz-000275-5T@xenbits.xen.org>
-Date: Wed, 26 Jun 2013 13:19:17 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 58 (CVE-2013-1432) - Page reference counting error due to XSA-45/CVE-2013-1918 fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/02/7
+Message-ID: <51D33CFE.7050802@redhat.com>
+Date: Tue, 02 Jul 2013 14:50:06 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: information leak in AF_KEY notify messages
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-             Xen Security Advisory CVE-2013-1432 / XSA-58
-                            version 2
+On 07/01/2013 09:10 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> found in the mainline kernel git:
+> 
+> commit a5cc68f3d63306d0d288f31edfc2ae6ef8ecd887 Author: Mathias
+> Krause <minipli@...glemail.com> Date:   Wed Jun 26 23:52:30 2013
+> +0200
+> 
+> af_key: fix info leaks in notify messages
+> 
+> key_notify_sa_flush() and key_notify_policy_flush() miss to
+> initialize the sadb_msg_reserved member of the broadcasted message
+> and thereby leak 2 bytes of heap memory to listeners. Fix that.
+> 
+> Signed-off-by: Mathias Krause <minipli@...glemail.com> Cc: Steffen
+> Klassert <steffen.klassert@...unet.com> Cc: "David S. Miller"
+> <davem@...emloft.net> Cc: Herbert Xu <herbert@...dor.apana.org.au> 
+> Signed-off-by: David S. Miller <davem@...emloft.net>
+> 
+> Ciao, Marcus
+> 
 
-        Page reference counting error due to XSA-45/CVE-2013-1918 fixes
+FYI please include link to commit, makes life quicker.
 
-UPDATES IN VERSION 2
-====================
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a5cc68f3d63306d0d288f31edfc2ae6ef8ecd887
 
-Public release.  Credits section added.
+Please use CVE-2013-2234 for this issue.
 
-ISSUE DESCRIPTION
-=================
-
-The XSA-45/CVE-2013-1918 patch making error handling paths preemptible broke
-page reference counting by not retaining a reference on pages stored for
-deferred cleanup. This would lead to the hypervisor prematurely attempting to
-free the page, generally crashing upon finding the page still in use.
-
-CREDITS
-=======
-
-Thanks to Andrew Cooper and the Citrix XenServer team for discovering
-and reporting this vulnerability, and helping investigate it.
-
-IMPACT
-======
-
-Malicious or buggy PV guest kernels can mount a denial of service attack
-affecting the whole system. It can't be excluded that this could also be
-exploited to mount a privilege escalation attack.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions having the XSA-45/CVE-2013-1918 fixes applied are vulnerable.
-
-The vulnerability is only exposed by PV guests.
-
-MITIGATION
-==========
-
-Running only HVM guests, or PV guests with trusted kernels, will avoid this
-vulnerability.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa58-4.1.patch             Xen 4.1.x
-xsa58-4.2.patch             Xen 4.2.x
-xsa58-unstable.patch        xen-unstable
-
-$ sha256sum xsa58*.patch
-3623ec87e5a2830f0d41de19a8e448d618954973c3264727a1f3a095f15a8641  xsa58-4.1.patch
-194d6610fc38b767d643e5d58a1268f45921fb35e309b47aca6a388b861311c2  xsa58-4.2.patch
-2c94b099d7144d03c0f7f44e892a521537fc040d11bc46f84a2438eece46a0f5  xsa58-unstable.patch
-$
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJRyuoNAAoJEIP+FMlX6CvZY3EH/04uBhD797FdBhCRkq/y1ACc
-Dvg1BRZ4lHkURDp97gD4Fdyf95Lw4qtniYBq8H/kpVPWJgN7+Dmj8uoluWhOI62Y
-Q7a97CZ3O39VcuNRQnZG8c6dduGwMTzbJMkftG0CcltygAxVVRU4uHSG4+MHQ5PZ
-N1xauljWrbw49iZz0shxZv4BA/1MQyuyZGFIpOaYoom0vV67pfrQJ2kgCMDUctmq
-WXNkVcOiS7lwS/+++goPIboSEy6UJCIVrhZmL7GhbNfiznlOFVgExMttQRcUDi/D
-4SS4ghl3IyB34TwoX1P7TPEeHGbfonObGpzBQNduBIJDM32nqO7P8097XG0j0Tw=
-=aw1s
+iQIcBAEBAgAGBQJR0zz9AAoJEBYNRVNeJnmTbqkP/ReXQ9G1f/HdFkK6seMmC1Ie
+B6Bam0x4DjbDMYXcZIqbxh4ld5XsEvJEAwF4Yc63v2GpXAJDQoi3ZtgLBeds6ImE
+SDYBPGiFw5puNINeOzn4ORSvdZyJLnvbzlRhRuioAfdW3KNNY2kv1N39+XEBke7t
++rqdAPs9cLt2W6Wrqk8o07LKFaWlUPOnQ87hNvilfvx6EKQp+WQlHSLpEscj9JDM
+7g/S+sLaMkvi8DigdXV6YBav+wbcQlaEhu78Txwnp1W7YvsEd/tAkZZn06n1lRQF
+DDJ9txCw2QUWL2bHbKNbmIlepLpHQy54mFfSpm/7Sdh0KZtHjlfPMGnp42t1Cqwa
+M0F8RoYkVHT0iWQk0YWhtJxpyXF5THgyEP3YfGOu8LyiPauyviJNXhIO6ulw+J8+
+VonWrbYSevDlESpmWzLu24n+HiUzHt1SOVp76upTOID6XIR2wEHwivX3QVQhe3FU
+FxQX01UY4Uy1n7A4ZYS+oB59YWe1AMSLrIS+A7fSbRdaqtnFrZLSDoMx8iU2WbmT
+ZGrP80fXA15GjrsmMYkyxwMRE4HwAirVpreYAvKZDszqJJMivpdzUoNp55R0hVnV
+IzDj5t+U5mxL0QUvlS5ZDDiC4NJnMlA9M1iHIXPq4pG7/x4LasW2aiC1PeA4rRkj
+3jYnaYd9zqi+CpY3LHb8
+=hnaQ
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa58-4.1.patch" of type "application/octet-stream" (4208 bytes)
-
-Download attachment "xsa58-4.2.patch" of type "application/octet-stream" (4629 bytes)
-
-Download attachment "xsa58-unstable.patch" of type "application/octet-stream" (4621 bytes)
