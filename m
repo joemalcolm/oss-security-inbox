@@ -1,97 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/2
-Message-ID: <517A1251.8080602@redhat.com>
-Date: Thu, 25 Apr 2013 23:36:17 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, gremlin@...mlin.ru
-Subject: Nginx ngx_http_close_connection function integer overflow - can anyone confirm this?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/02/4
+Message-ID: <20130702102141.GT10319@dhcp-25-225.brq.redhat.com>
+Date: Tue, 2 Jul 2013 12:21:42 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: spender@...ecurity.com
+Subject: Re: CVE request: Kernel 2.6.32+ IP_RETOPTS Buffer Poisoning DoS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sun, Jun 30, 2013 at 12:33:47AM -0700, Steven Ciaburri wrote:
+> There is a local DOS exploit in centos 6, openvz 6, cloudlinux 6 and others.
+> 
+> https://www.rack911.com/poc/hemlock.c
 
-- From Bugtraq:
+Just to make sure -- this triggers Red Hat specific bug introduced via
+CVE-2012-3552 fix [1, 2]. This issue does not affect upstream.
 
-http://www.securityfocus.com/archive/1/526439/30/0/threaded
+  [1] https://bugzilla.redhat.com/show_bug.cgi?id=979936#c2
+  [2] https://bugzilla.redhat.com/show_bug.cgi?id=979936#c3
 
-Website: http://safe3.com.cn
+Spender suggest there is a integer problem in the code [3], but there is
+not. The problem spender is trying to fix is avoided by the CMSG_OK
+check in ip_cmsg_send() function and msg_controllen check in
+__sys_sendmsg().
 
-I. BACKGROUND
-- ---------------------
+There is some slight room for error though since CMSG_OK checks for
+"(cmsg)->cmsg_len >= sizeof(struct cmsghdr)" and the expression is
+"err = cmsg->cmsg_len - CMSG_ALIGN(sizeof(struct cmsghdr));" but with
+the current alignment and cmsghdr struct size we should be fine on
+both 32 and 64bit.
 
-Nginx is an HTTP and reverse proxy server, as well as a mail proxy
-server, written by Igor Sysoev. For a long time, it has been running
-on many heavily loaded Russian sites including Yandex, Mail.Ru,
-VKontakte, and Rambler. According to Netcraft nginx served or proxied
-12.96% busiest sites in April 2013. Here are some of the success
-stories: Netflix, Wordpress.com, FastMail.FM.
+  [3] https://twitter.com/grsecurity/status/351664130031222784
 
-II. DESCRIPTION
-- ---------------------
-
-Qihoo 360 Web Security Research Team discovered a critical
-vulnerability in nginx.
-
-The vulnerability is caused by a int overflow error within the Nginx
-ngx_http_close_connection function when r->count is less then 0 or
-more then 255, which could be exploited
-by remote attackers to compromise a vulnerable system via malicious
-http requests.
-
-III. AFFECTED PRODUCTS
-- ---------------------------
-
-Nginx all latest version
-
-IV. Exploits/PoCs
-- ---------------------------------------
-
-In-depth technical analysis of the vulnerability and a fully
-functional remote code execution exploit are available through the
-safe3q (at) gmail (dot) com [email concealed]
-In src\http\ngx_http_request_body.c ngx_http_discard_request_body
-function,we can make r->count++.
-
-V. VUPEN Threat Protection Program
-- -----------------------------------
-
-VI. SOLUTION
-- ----------------
-
-Validate the r->count input.
-
-VII. CREDIT
-- --------------
-
-This vulnerability was discovered by Safe3 of Qihoo 360.
-
-VIII. ABOUT Qihoo 360
-- ---------------------------
-
-Qihoo 360 is the leading provider of defensive and offensive web cloud
-security of China.
-
-IX. REFERENCES
-- ----------------------
-http://nginx.org/en/
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRehJQAAoJEBYNRVNeJnmTC8oP/1ueYNmvM+qx+60uYkB3+zzc
-zlV3w7ejZ09rXtV3Tl4x/znxSSai82E08I32Xgpx30E2fYpVjNhj9prJwWU8pZtp
-+pIGos9ZdEulmexn9A1snFgzjbF1foECpBPuSu8b1VZE7WjEBS3E0LWQg/UwC4cp
-AkvG8MGBJclg0HD+GzJVG9vVpOLeyDUyaqWV+6+nBNneqUo5dZRaLDm3iPEt2pDX
-9wLMA0Ov0xKnhpzzcoca91IkES05p179feqoBH1CrF9sTCM0grj85JVyd3oyFFUB
-Espl6+OR2Tci1ckay5B0u00oRuYmaIOKCp4Njt0jBe0Kr8dFyTnCRZKTFQvumuTs
-GykmOesRxlTP6KEAypBxigVPuvp0rnnGKr3OJUnrCcGy4aGmRSICs8dYZ1+vsfWW
-aVze6ccjCOe0n6VUIlELNfOw2vn4A/P5BxkZUqxfkmb+8uorkK2ewwlwpWhdEPss
-OOyS7YDVmY0Z8/cdcEFzSB7pRY0SBYV7dDA22Vrl6RANAiDN83ZHY0p5hB00iqOt
-AtxHmPCHc9zzyWiyQdaRUcB6Z7AKdsWPxO9dbVaaA6dmB78ujd5+7hOLN0IWwAFs
-sZf6qMhNUUgAiAoqtEoO90bftbvFHshAvVf5yVC8JLoi8VWRiSHfli82TlwEjoFD
-O5Mk8mGHU5janXRMOfVi
-=I7C/
------END PGP SIGNATURE-----
+-- 
+Petr Matousek / Red Hat Security Response Team
