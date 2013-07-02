@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/10/3
-Message-ID: <51B5BA7D.6040001@redhat.com>
-Date: Mon, 10 Jun 2013 13:37:33 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/02/3
+Message-ID: <20130702091440.GF13295@suse.de>
+Date: Tue, 2 Jul 2013 11:14:40 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: kernel: ipv6: using ipv4 vs ipv6 structure during routing lookup in sendmsg
 Content-Type: text/plain; charset=utf-8
 
-On 06/10/2013 01:26 PM, gremlin@...mlin.ru wrote:
-> On 08-Jun-2013 13:28:28 -0400, Daniel Kahn Gillmor wrote:
->
->   >> That's not a security issue, but a misconfiguration
->   > I consider this a security bug in the debian package's maintainer
->   > scripts: it is a race condition that leaks confidential information
->
-> Package post-install scripts are closer to configuration.
+Hi,
 
-That depends on the post-install script.  In Debian's case, there are 
-some extensions because there is still some interactive package 
-installation left, but in general, the postinst script performs required 
-steps for properly integrating the new package with the rest of the system.
+Also fresh in the mainline kernel and spotted by trinity:
 
-For Fedora and downstream, the postinst script should be 
-non-interactive, so it is really not much like configuration.
+commit a963a37d384d71ad43b3e9e79d68d42fbe0901f3
+Author: Eric Dumazet <edumazet@...gle.com>
+Date:   Wed Jun 26 04:15:07 2013 -0700
 
-In general, it's desirable to do as much as possible in a declarative 
-fashion (for better auditing, rollback, etc.), but I don't anyone is 
-even close to that.
+    ipv6: ip6_sk_dst_check() must not assume ipv6 dst
 
-Anyway, if there's a bug in the postinstall script that causes an 
-exposure, it needs to be fixed.  With the prerm script, it's more 
-complicated because you can't fix it without executing it again. 8-)
+    It's possible to use AF_INET6 sockets and to connect to an IPv4
+    destination. After this, socket dst cache is a pointer to a rtable,
+    not rt6_info.
 
--- 
-Florian Weimer / Red Hat Product Security Team
+    ip6_sk_dst_check() should check the socket dst cache is IPv6, or else
+    various corruptions/crashes can happen.
+
+    Dave Jones can reproduce immediate crash with
+    trinity -q -l off -n -c sendmsg -c connect
+
+    With help from Hannes Frederic Sowa
+
+    Reported-by: Dave Jones <davej@...hat.com>
+    Reported-by: Hannes Frederic Sowa <hannes@...essinduktion.org>
+    Signed-off-by: Eric Dumazet <edumazet@...gle.com>
+    Acked-by: Hannes Frederic Sowa <hannes@...essinduktion.org>
+    Signed-off-by: David S. Miller <davem@...emloft.net>
+
+
+Can be triggered by non-root users according to Eric, so needs a CVE.
+
+Ciao, Marcus
