@@ -1,77 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/13/10
-Message-Id: <E1U5fXd-0004ML-2n@xenbits.xen.org>
-Date: Wed, 13 Feb 2013 16:50:41 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 42 (CVE-2013-0228) - Linux kernel hits general protection if %ds is corrupt for 32-bit PVOPS.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/02/2
+Message-ID: <3230301C09DEF9499B442BBE162C5E48253D16F1@sestoex05.enea.se>
+Date: Tue, 2 Jul 2013 07:58:46 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: Solar Designer <solar@...nwall.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Alexander,
 
-	     Xen Security Advisory CVE-2013-0228 / XSA-42
-                            version 2
+>  I went to your website at http://www.enea.com and was not able to (quickly) find any information on your 
+>  security response, advisories, software updates, etc.  Without such information, we cannot even consider
+>  you for membership of the private list.
 
- Linux kernel hits general protection if %ds is corrupt for 32-bit PVOPS.
+Thanks for the quick response.  
+Our security office is in the startup phase, we will update the Enea website with security information soon.
 
+BR
+Sona 
 
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Linux kernel when returning from an iret assumes that %ds segment is safe
-and uses it to reference various per-cpu related fields. Unfortunately
-the user can modify the LDT and provide a NULL one. Whenever an iret is called
-we end up in xen_iret and try to use the %ds segment and cause an
-general protection fault.
-
-IMPACT
-======
-
-Malicious or buggy unprivileged user space can cause the guest kernel to
-crash, or permit a privilege escalation within the guest, or operate
-erroneously.
-
-VULNERABLE SYSTEMS
-==================
-
-All 32bit PVOPS versions of Linux are affected, since the introduction
-of Xen PVOPS support in 2.6.23.  Classic-Xen kernels are not vulnerable.
-
-MITIGATION
-==========
-
-This can be mitigated by not running 32bit PVOPS Linux guests.
-
-32bit classic-Xen guests, all 64bit PV guests and all HVM guests are
-unaffected.
-
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-
-$ sha256sum xsa42*.patch
-a931fdc161653fb1a3a6d8c1cf6d2c9954c5aec134b610be6e9699552a659eb8  xsa42-pvops-0001-x86-xen-don-t-assume-ds-is-usable-in-xen_iret-for-32.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJRG8PxAAoJEIP+FMlX6CvZC3gH/0v/9nr3jXbsMHZlkBRtCx9n
-np1ed8btQGpmmk/WqbyLj/KcTNlXLIa1zwhTSPUgXlVIoDPuzstfGXm96gBNfYhS
-hl56QYTruhHPAvvrAwE8SNIlMUH+n7Wq1BThkXFU1yBnjXxzTi4SdmUwy4gAA/SE
-Xp35RAcIV6IwLRMMY12aat7XKnVx4S5n+gCC5eu0WZ+n73Ecrlqmsq+2X2ZHo3wP
-nu9UN+PChmBJHfcA8OhelY/X4X4DV1HNPuFkj9ypyPrvXIrl6M0D5TfGoyRNXMHq
-izAn51ro8gTGND6xY+s3auelquKiJkyl/5AXnfd0y9bSewGJS6oxoRzFdctJqxM=
-=mgHb
------END PGP SIGNATURE-----
-
-Download attachment "xsa42-pvops-0001-x86-xen-don-t-assume-ds-is-usable-in-xen_iret-for-32.patch" of type "application/octet-stream" (4959 bytes)
