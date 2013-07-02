@@ -1,70 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/6
-Message-ID: <529D628A.6090709@redhat.com>
-Date: Mon, 02 Dec 2013 21:48:10 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/02/5
+Message-ID: <51D31D28.5000103@redhat.com>
+Date: Tue, 02 Jul 2013 12:34:16 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Command injection vulnerability in Ruby Gem sprout 0.7.246
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: kernel: ipv6: using ipv4 vs ipv6 structure during routing lookup in sendmsg
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/02/2013 05:13 PM, Larry W. Cashdollar wrote:
-> Title: Command injection vulnerability in Ruby Gem sprout 0.7.246
+On 07/02/2013 03:14 AM, Marcus Meissner wrote:
+> Hi,
 > 
-> Download: http://rubygems.org/gems/sprout,
-> http://projectsprouts.org/
+> Also fresh in the mainline kernel and spotted by trinity:
 > 
-> Vulnerability:
+> commit a963a37d384d71ad43b3e9e79d68d42fbe0901f3 Author: Eric
+> Dumazet <edumazet@...gle.com> Date:   Wed Jun 26 04:15:07 2013
+> -0700
 > 
-> The unpack_zip() function contains the following code:
+> ipv6: ip6_sk_dst_check() must not assume ipv6 dst
 > 
-> sprout-0.7.246/lib/sprout/archive_unpacker.rb
+> It's possible to use AF_INET6 sockets and to connect to an IPv4 
+> destination. After this, socket dst cache is a pointer to a
+> rtable, not rt6_info.
 > 
-> 60           zip_dir = File.expand_path(File.dirname(zip_file)) 61
-> zip_name = File.basename(zip_file) 62           output =
-> File.expand_path(dir) 63           # puts ">> zip_dir: #{zip_dir}
-> zip_name: #{zip_name} output: #{output}    " 64           %x(cd
-> #{zip_dir};unzip #{zip_name} -d #{output})
+> ip6_sk_dst_check() should check the socket dst cache is IPv6, or
+> else various corruptions/crashes can happen.
 > 
+> Dave Jones can reproduce immediate crash with trinity -q -l off -n
+> -c sendmsg -c connect
 > 
-> If the attacker can control zip_dir, zip_name or output then they
-> can possibly execute shell commands by injecting shell meta
-> characters as input.
+> With help from Hannes Frederic Sowa
 > 
-> 
-> PoC:
-> 
-> For example: filename;id;.zip
-> 
-> I contacted the developer a few weeks ago but received no
-> response.
+> Reported-by: Dave Jones <davej@...hat.com> Reported-by: Hannes
+> Frederic Sowa <hannes@...essinduktion.org> Signed-off-by: Eric
+> Dumazet <edumazet@...gle.com> Acked-by: Hannes Frederic Sowa
+> <hannes@...essinduktion.org> Signed-off-by: David S. Miller
+> <davem@...emloft.net>
 > 
 > 
-> Thanks! Larry W. Cashdollar @_larry0 
-> http://vapid.dhs.org/advisories/
+> Can be triggered by non-root users according to Eric, so needs a
+> CVE.
 > 
+> Ciao, Marcus
 
-Please use CVE-2013-6421 for this issue.
+Confirmed, locks up good. Please use CVE-2013-2232 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSnWKKAAoJEBYNRVNeJnmTsCQP/0JOzVgGlr/oLH3szDIwtU4Y
-IvRepWCAH0fZtWXmal9rY4bGaHlaRE61gTSnfn6+6Sj4psqNWU2wezwNdVkSwIbN
-G08vrEvNJ5b0k6yHUwsnPpYHbZUWCDpceK5aN/ZLoYUOQnZw5pCMjZ5jQpw6Do6t
-/9Cey9dKERSkJHDP2IOFwzSmAAQOfsX14/3VTzlaKHvhKUaQyCWNRvY5EXTZ/API
-X2Xz5z2N0AB7huQR7GU8EgYiXlsxPdr1XU1ZxfKp8WjgZhDW/F1WSa64Zyy2nFHX
-M/YSyHkzyHStMfDc2pFRiNZUHeqCle2GD9xlJc/GZmpMroQnYClmV9ZN+i3Fqr5V
-bRkZQ0NpLk+BumsXLpYUcPXZwOce2AI6OAZ6Qyf2leRH+4XqE7PsR5M3a3jE/pYJ
-CYrZ6ZpVRS1bSb8HPqYUUbelaMSE/2uRCo14s4yxg5I3Hq1Vu2pEXtYhQJfR8sur
-LdX1usO5DffmG0bVvjntqDcXTK0YLcuS/DrqLlo0+OlxySKzuOGZ672Dblvnn4Gw
-H4Zd/aJ44GmgAdtJC2nduM6kO/BhYa/d1ieRyujTvG4V96zsjxY6tbsZFJhOsEk1
-pDKNUESYb3Bwm0FW/6nbJWF26I8t53ao+gPEEaivyOTdMdU+Ww7bEeC+2YO2AuCE
-CGtqiVx/cBkTRdJti47l
-=og9A
+iQIcBAEBAgAGBQJR0x0nAAoJEBYNRVNeJnmTOWoP/35zG1obrsUImHs3e1/GorYy
+2sDC8W2fxHMWj0Fhk/V7xw6+um5S5/5e/l3ZqKGWENoilslI51wRY0qrvUr3dzzT
+yx5RubpSZQQyq7lD//bynl65JoZ7K+2tOUxpera7DW09vDQjgmpuYjsZJNbgpmLp
+rgCkWznBJwLpj83xzTjct0ALoEX9GJ5T1niF42BLEyRCkrCSpAiP4ja2b7cKvX/p
+n2W7sNLTkVm+0c8tDDPmvSPJeWEknZEB7iOz+gN2lLNNv6Ji5QdNw0hTc8sPextG
+whMMQrhe6ToUFfYvMFqWIZY2Gm39MRtswhcQgra1Bi7+LQ41naRKQ++1GRJba96J
+VDz8aE31/GRoWLZKkDfbLHI9AXnGyhsQdLsGq0s3TmyoeahINC6msGyoaYn7mkQ6
+XK9W5ejqS/QNzjhy2Q1Rm7x3Qcc2wWSBHZr8qfFtYAMhrEdOwupxC+BLHvJ4XxO3
+jVqe6hQtzVc72wIM8ais1iJP8c1rAtM4ELl5jgrGsgV8XsRAnYYGtEqPUQ9Lawte
+IMg8yxlOBifGKT92IZvcoC1gyG527Z4+2uoNd26ajeXiCsIwzZ9/pbv3rCSdq81n
+15Gr7tuRH0I9LT8/EfI5Xjm6JYDiEGe+zQMZXt+fww8Kn9xTprp2M6DOrZIo13O4
+FtHIDJKazPNatsXRacq0
+=6I6r
 -----END PGP SIGNATURE-----
