@@ -1,51 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/10
-Message-ID: <CAHQz1rLDkYvtVu6PnfS=4HoE8c+Tb4PAAp-COJdOB7HW35-_ug@mail.gmail.com>
-Date: Tue, 9 Apr 2013 10:43:48 -0300
-From: Breno Silva <breno.silva@...il.com>
-To: Athmane Madjoudj <athmanem@...il.com>
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>,  oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request -- ModSecurity (X < 2.7.3): Vulnerable to XXE attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/02/1
+Message-ID: <186789772.18307680.1372750780822.JavaMail.root@redhat.com>
+Date: Tue, 2 Jul 2013 03:39:40 -0400 (EDT)
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: Question about signed email
 Content-Type: text/plain; charset=utf-8
 
-Good. Do you have any idea when it will be available for users ?
+It doesn't look properly signed to me because there are two signatures in it, see below.
 
-The guy who discovered it want to write a blog post with details. So i ask
-him to wait at least when we have some packages backported.
+----- Original Message -----
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> - -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> This message is properly signed right? Can people reply privately and
+> tell me what it looks like in their email client, e.g. if it looks
+> properly signed or not? Screen shots welcome. Thanks
+> 
+> 
+> - -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> 
+> - - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> - -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.13 (GNU/Linux)
+> 
+> iQIcBAEBAgAGBQJR0fZeAAoJEBYNRVNeJnmTTkIQAIr6OkoHbkKCx0LMZQve4oIJ
+> fjUHHx3WqOyQR5I1OStrt2RLoJeWzIpFUPrQTRFoPvpyCUXW/sNvGoILTjZftD3l
+> 1A6andojNuNSXZmL7TWZ9Ce1YdOh+C5cbd6edYLbpkwOt9ZrPya6xsrPpztJLDvT
+> d9jx8/lxnmDo0K8zFuk+k0a2G8Z4N5xkA/JpR8WqA28sD4X6S1RbA/Rq360/qw//
+> 4zEkDFlNODlplGVNKxuSLfNR8D2eFleDF8ZMovJM1JPT7E4fQEi4E4wVHzD/Y8qk
+> dsGF2OEBjpvLcehH2PA9w/IxB5yJdToiHM9aRyz5drjOT+pYkRktFLPSrpsc7z24
+> EPHCv1SlIRoYxSeTtFxOg/K8T67uBwmNerWSh4WKicy1dWmMm9UqytRQLo76t0Cz
+> tKxOuzEDU8X+uh8uQK1wsE3x5kzHTISJHmzZ6WIGTpIjOyznt7nXgCbP9u0GU+8X
+> Cx0EJD+gou2QyqBfW1/3JtSa+pE/WuOJG5Gh35idvxoZC+znzKSs5KfDE+UJ2fP5
+> p7ctLubLO4gR5GfB02R37ayGFNiBg+ww0Z5NoN6RpA70J7s4KGxM00XqFeZiuIon
+> GQXsYUgrIaptx04SORR2/Dvsv98dh0/PHMUVzeVkQwUQHqsAgrkBvuIGbI1n+NoR
+> cSWpEf0XM5mYxRtMGSrU
+> =bCBE
+> - -----END PGP SIGNATURE-----
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.13 (GNU/Linux)
+> 
+> iQIcBAEBAgAGBQJR0faFAAoJEBYNRVNeJnmTboEQAI8jWhNRneMvevZfN3CntW+L
+> 6Edx1pypmgHHFjdnBPpXF5R1NNFy0QTY3HYW/ADWeWA7U7cmDFupESETTqyMFx1h
+> k37Q5nOZcQtKWz2RUzGRBiNfZ+lDs9tCWzSAmGSfuuKXEm+fSL+dS9xNICgc3s91
+> KJURWjTbKFyIbguAbHTxSZJ9eADICEfEpDvMkbOJnfdXtJ0JM7vLj3+aD/fDKnG9
+> uYiTXr0oHKnJDD+8f7w66+WKCYeuNwdalc0TZAsOvwr58ws1JetJBE4x68T0rbCW
+> 95UjMO4adU0VwEzeBrVgY4UL+K0sep2j9V+1+Q3NxF+jzdBQ5sPswXnh1yeLj1Ug
+> 7iQTgk+qPMJ8gooWiB6cbrcvwztKTPmVjVZBDwwiiMNQctMBrPmDFLgiN3aWjeLm
+> ukatP23eS569vsI00UKD+vSC6Mm60ofAPJHADOKPWGVNUujGCeJROvHwurfK+tP9
+> qO2Ly/PDX1peWh3w/48pHtPFBsnsXd2Iw+v4xttCnpjd08ppkCAFDycQv0jmqHA1
+> qOnL3F02523+7IgAQJW12ozTGWjqaGSkJRevSK9oMBGFtHfhElfxpejsYRgkbx+y
+> 1N82HR7xq8FJMMUx7l4Fs4QZfTg2e8Qo2XG9uPA9dx7t2faJPQ8mYlN4tpMZCOx7
+> xt1XD0jUnQ5tG82c9RS9
+> =YcTM
+> -----END PGP SIGNATURE-----
+> 
 
-Thanks
-
-Breno
-
-
-On Tue, Apr 9, 2013 at 10:41 AM, Athmane Madjoudj <athmanem@...il.com>wrote:
-
-> On Tue, Apr 09, 2013 at 05:26:42AM -0400, Jan Lieskovsky wrote:
-> > Hi Breno,
-> >
-> >   (Cc-ing Athmane on this due reasons which will get obvious below).
-> >
-> >   thank you for checking with us.
-> >
-> > AFAICT to fix this in Fedora and Fedora EPEL-6 versions, we have
-> > just rebased to latest upstream 2.7.3 version. But you are truly
-> > right (assuming this being the reason you are checking with us),
-> > that on Fedora EPEL-5 we are shipping older (2.6.8 based version
-> > of ModSecurity).
-> >
-> > FWIHL:
-> >   [1] https://bugzilla.redhat.com/show_bug.cgi?id=947842#c1
-> >
-> <...snip...>
->
-> Hi,
->
-> I forgot to mention in bug report that an EPEL5 update which still uses
-> 2.6.8 release (libxml2 in el5 is too old) is scheduled with backborted
-> patch just like with CVE-2012-4528.
->
-> Thanks.
->
-> -- Athmane, Fedora / EPEL mod_security maintainer
->
-
+-- 
+Florian Weimer / Red Hat Product Security Team
