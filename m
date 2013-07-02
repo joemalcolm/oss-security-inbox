@@ -1,17 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/31/4
-Message-ID: <CABVvea15aMSR5ZB9e-BppnSzGanbCeCgBq2JRx3Mj=K+jtLgUw@mail.gmail.com>
-Date: Tue, 31 Dec 2013 14:33:57 +0800
-From: Yongjian Xu <xuyongjiande@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/02/6
+Message-ID: <51D33DA0.30505@redhat.com>
+Date: Tue, 02 Jul 2013 14:52:48 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request - kernel: char: Int overflow in lp_do_ioctl()
+CC: Michael Samuel <mik@...net.net>
+Subject: Re: CVE Request: Ansible not caching SSH host keys
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://git.kernel.org/cgit/linux/kernel/git/next/linux-next.git/commit/?id=1c2de820d66d704c7d6fffdd872b7670eb4e29bb
+On 06/30/2013 10:45 PM, Michael Samuel wrote:
+> http://www.ansibleworks.com/
+> 
+> Problem: Default configuration does not cache SSH host keys,
+> effectively disabling host key checking
+> 
+> Note - do not credit me for finding this, I'm just the only person 
+> indignant enough to request a CVE
+> 
+> A colleague found this bug, only to notice that it was logged by
+> somebody else (antong on github), and rejected: 
+> https://github.com/ansible/ansible/issues/857
+> 
+> This can be fixed by calling ssh.load_system_host_keys() after line
+> 78 of 
+> https://github.com/ansible/ansible/blob/496f06c3c90cfd89802622c640480328436746c6/lib/ansible/runner/connection_plugins/paramiko_ssh.py
+>
+>  While it is possible to call the SSH command instead of using
+> paramiko, this isn't the default and the ramifications of not
+> checking host keys aren't advertised to users.  A more reasonable
+> approach would be to document how to un-cache a host key should it
+> change.
+> 
+> Regards, Michael
 
-This is an integer overflow, and can be controlled via ioctl.
+Please use CVE-2013-2233 for this issue. After some thought I think it
+qualifies, host key caching is def. a security feature designed to
+prevent mitm (if you constantly hammer the user to check/accept keys
+at some point they'll just go "sure whatever, they must have changed
+something on the remote end).
 
-arg comes from user-space, so int overflow may occur in this:
-LP_TIME(minor) = arg * HZ/100;
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJR0z2gAAoJEBYNRVNeJnmTGvoP/0sanyVTjjjwTo/Jhf+aXDUX
+YTZvJgjQ7Eg4mrPg+voxAP0boYke4WaEps0J9H5CvMLAnq/o/LSdg6M5mZnCukcf
+fX8hdqdo5WZjhBO8y1lF7ozEc+CuWOKKtY221C4uI4Q8IZ9+2Ad70YwkauBTVzlN
+BIIRncBLfLmccDoQbGjWLwbKOqq1RXXsUR58a8rNj8TxmsYtNNNmUBUr5do69ytX
+mIDYtu/mtQLWZVAsKk+7oQu/4lWtoYNK4zTIzQTO04i7plPjLkSivTCAjvPhn9+W
+qXjTps+aEb6h/jEZC9fi6mtb6rBGIvRSZNxMaILso9x1N0Aqr6zdKzLOTWOVnaG5
+tcMXmArZePPeM6TGh+o3lLAH7NmmDDMkzoiHUow3ExhD5fnqM/KjTO1JM1u+W6J3
+r6XGqkjvlzHUQEIuVKcHGlSrAfgQ4Kz3lL9wNcrZnd/yYxxeJEAbjnJhfDyXKUHe
+BuxZWHKlWDebtZoFEtg1QICPKzW4VWwMISSdzu0iI9rZQoKivyTILvG8kB+oG/p/
+r8Y7cVfelATL4VvZeO7oXTDpuJlsrpkRr8qKvZL96d1GkCZrPIVznYy2qHAZSKr4
+V8psXCYzad3uwBM37Do3e21ysSkwypY7irFotBPIpccQChjAtAQOc339s66EXhW4
+9gea7LiuYO+VK5k4fKW8
+=hVHG
+-----END PGP SIGNATURE-----
