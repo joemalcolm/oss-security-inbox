@@ -1,74 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/2
-Message-ID: <326f6b635a89320c32d945446ab58df0@imap.steindlberger.de>
-Date: Wed, 04 Sep 2013 10:31:12 +0200
-From: Jonas Meurer <jonas@...esources.org>
-To: nagios-devel@...ts.sourceforge.net
-Cc: oss-security@...ts.openwall.com, Vincent Danen <vdanen@...hat.com>, Kurt Seifried <kseifried@...hat.com>, contribute@...ios.org
-Subject: Security bug or feature? Servicegroups leak hostnames to unauthorized users (Was: CVE request: unauthorized host/service views displayed in servicegroup view)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/03/2
+Message-ID: <20130703163533.GE8154@suse.de>
+Date: Wed, 3 Jul 2013 18:35:33 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: Earlier AF_KEY in key_notify_policy_flush
 Content-Type: text/plain; charset=utf-8
 
-Hey list and fellow Nagios developers,
+On Wed, Jul 03, 2013 at 11:02:13AM +0200, Marcus Meissner wrote:
+> Hi,
+> 
+> Michal Hocko identified an earlier patch for an AF_KEY information leak,
+> in nearly the same place as CVE-2013-2234.
 
-as you might have noticed, there's a discussion ongoing on 
-oss-security[1]
-regarding bug report #456[2].
-
-I'm the one who discovered the described issue, and I still believe that
-it's a bug with security implications, even though not everyone seems to
-be convinced.
-
-I'll try to give a brief description of the issue:
-
-The Nagios status.cgi (at all 3.4* and 4.0* versions I checked) leaks
-hostnames to unauthorized users as part of servicegroups. All of
-servicegroup overview, summary and grid list each and every hostname 
-that
-is part of a servicegroup, regardless whether the HTTP user is listed in
-contacts/contactgroups for this host.
-
-In my opinion this is a security issue - at least on multi-user (e.g.
-multi-customer) Nagios-setups. I guess that most ISPs which give their
-customers access to the Nagios CGIs don't want to provide a full list
-of monitored hosts to their customers as a side-effect.
-
-One reason for confusion is the following entry from Nagios3 
-changelog[3]:
-
-3.4.0 - 05/04/2012
-ENHANCEMENTS
-[...]
-- Users can now see hostgroups and servicegroups that contain at least
-   one host or service they are authorized for, instead of having to
-   be authorized for them all (Ethan Galstad)
-
-
-The indisputable part of this change is, that users are allowed to see
-hostgroups and servicegroups with at least one authorized host or
-service. Unclear is, whether this means "group and all its group
-members", or "group and only authorized group members".
-
-Unfortunately, no Nagios developer speaked up yet about this issue. Thus
-there's still a lot confusion about it.
-
-You can find my patch at the Nagios Issue Tracker. This patch changes
-status.cgi behaviour to show only group members (hosts/services) that
-the user is authorized to see.
-
-A comment about this issue by the Nagios Developers whould be highly
-appreciated. In case that the described (and critizised) behaviour of
-status.cgi is intended, the distribution security teams can move on.
-
-If on the other hand you agree with me, that this issue should be
-fixed, I'll continue to work with the security teams in order to
-provide patched Nagios packages for their distributions.
-
-Thanks for your work on Nagios, it's a very valuable piece of software!
-
-Kind regards,
-  jonas
-
-[1] http://www.openwall.com/lists/oss-security/2013/06/26/6
-[2] http://tracker.nagios.org/view.php?id=456
-[3] http://www.nagios.org/projects/nagioscore/history/core-3x
-
+URL:
+https://github.com/torvalds/linux/commit/85dfb745ee40232876663ae206cba35f24ab2a40
+ 
+> Due to different time of fix and different researcher probably
+> needs a new CVE.
+> 
+> Ciao, Marcus
+> 
+> commit 85dfb745ee40232876663ae206cba35f24ab2a40
+> Author: Nicolas Dichtel <nicolas.dichtel@...nd.com>
+> Date:   Mon Feb 18 16:24:20 2013 +0100
+> 
+>     af_key: initialize satype in key_notify_policy_flush()
+>     
+>     This field was left uninitialized. Some user daemons perform check against this
+>     field.
+>     
+>     Signed-off-by: Nicolas Dichtel <nicolas.dichtel@...nd.com>
+>     Signed-off-by: Steffen Klassert <steffen.klassert@...unet.com>
+> 
