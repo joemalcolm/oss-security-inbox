@@ -1,64 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/12/4
-Message-ID: <5231DBBD.8070003@openstack.org>
-Date: Thu, 12 Sep 2013 17:20:29 +0200
-From: Thierry Carrez <thierry@...nstack.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: [OSSA 2013-026] Potential denial of service on Nova when using Qpid (CVE-2013-4261)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/03/1
+Message-ID: <20130703090213.GC2896@suse.de>
+Date: Wed, 3 Jul 2013 11:02:13 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: Earlier AF_KEY in key_notify_policy_flush
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-OpenStack Security Advisory: 2013-026
-CVE: CVE-2013-4261
-Date: September 12, 2013
-Title: Potential denial of service on Nova when using Qpid
-Reporter: Jaroslav Henner (Red Hat)
-Products: Nova
-Affects: Folsom, Grizzly
+Michal Hocko identified an earlier patch for an AF_KEY information leak,
+in nearly the same place as CVE-2013-2234.
 
-Description:
-Jaroslav Henner from Red Hat reported a vulnerability in Nova when using
-Apache Qpid as the RPC backend. By sending any random text longer than
-65K characters to an instance console and requesting the console log
-contents through the API, an authenticated user may disrupt the
-nova-compute node his instance is running on. This vulnerability could
-be leveraged in a Denial of Service attack against the cloud provider.
-Only Folsom and Grizzly setups using Qpid as their RPC backend are
-affected. Havana setups, or setups using other RPC backends (like
-RabbitMQ), are all unaffected.
+Due to different time of fix and different researcher probably
+needs a new CVE.
 
-Grizzly fix:
-https://review.openstack.org/#/c/43303/
+Ciao, Marcus
 
-Folsom fix:
-https://review.openstack.org/#/c/45426/
+commit 85dfb745ee40232876663ae206cba35f24ab2a40
+Author: Nicolas Dichtel <nicolas.dichtel@...nd.com>
+Date:   Mon Feb 18 16:24:20 2013 +0100
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4261
-https://bugs.launchpad.net/nova/+bug/1215091
+    af_key: initialize satype in key_notify_policy_flush()
+    
+    This field was left uninitialized. Some user daemons perform check against this
+    field.
+    
+    Signed-off-by: Nicolas Dichtel <nicolas.dichtel@...nd.com>
+    Signed-off-by: Steffen Klassert <steffen.klassert@...unet.com>
 
-Regards,
-
-- -- 
-Thierry Carrez
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJSMdu9AAoJEFB6+JAlsQQjenQQAJWcaFpLYRVzGarpbDIyFnU6
-Pvrg5fBuJhPbrNNr+oSFcrMbIy4G70COfY53GEq1JyZ122Oo3//KpK9QpPxSck8F
-aeQa7YqJJocI1XoyVkpOZIMD8lOERZpLZpotV3UuzmKV1KS2W5UAJ3CTvBWcuhZq
-YlFmvEz1Hqryrk3nLPtXCQrhG5SnCwFUIu3AXrBNcp5+7dG1kulniz4Bjp1fNdgb
-dGFNUGY+YK+by7SuwcuTKgRwes2kB0HPVR/AyfailpUMFljgvjNx6zybaIhOt3CT
-eZHLJwxyDJDPZriZZtR23+5M6dZdnd/OZIbZOCZnSvAmq+R4NSCTMU9nJIQFbvdQ
-Ar2WgWQgOwjqjjDngOMxnizVHkOx26JE5NIiwhQeucjHA797G8fJ51GQ71nhBEne
-kclRCVIn9wLFJSNN6/TqgfF0e44GTtsRxCKlFtHwVPwSI/KBICZKTt3VyY/6njN6
-n2UWubbqqYtN05a0VK281ah3RbZYOPLtkZGCuI+PPzwGnNBl9gJk+9o8+jCVEPSY
-3Pn43//fOFM5GAoFngescTqzl1W08T7Zii+UsBbYAfCF3ym+TswPY41MYXui2d4j
-bqlsh8sOhVfKBHCJNB3UKKTZ2IFBo0ve8JlyAgZfw2GbJ928+CfqVAJ27vwmzT5N
-03iM2MHgLDGsCf1D+dcK
-=+ZxS
------END PGP SIGNATURE-----
