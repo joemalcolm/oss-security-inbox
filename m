@@ -1,58 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/10
-Message-ID: <5285C627.3040402@redhat.com>
-Date: Thu, 14 Nov 2013 23:58:47 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/04/5
+Message-ID: <51D4FA87.7060706@redhat.com>
+Date: Wed, 03 Jul 2013 22:31:03 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: cryptographic primitive choices [was: Re: Microsoft Warns Customers Away From RC4 and SHA-1]
+CC: "Steven M. Christey" <coley@...re.org>, Salvatore Bonaccorso <carnil@...ian.org>, Mark Panaghiston <markp@...pyworm.com>, hello@...pyworm.com
+Subject: Re: Re: CVE-2013-1942 jPlayer 2.2.19 XSS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/14/2013 11:39 PM, Chris Palmer wrote:
-> On Nov 14, 2013 9:31 PM, "Kurt Seifried" <kseifried@...hat.com>
-> wrote:
+On 06/27/2013 10:57 AM, Steven M. Christey wrote:
 > 
->> So essentially in my head I see a couple slider bars, as they go 
->> towards the riskier end of the spectrum (e.g. protecting a CA 
->> certificate vs. protecting a single SSL session) stronger
->> encryption is needed.
+> Kurt,
 > 
-> But the cost of setting the sliders all the way to the secure side
-> is so low, why bother making the distinction?
+> Your CVE assignment posts from [1] and [2] appear to be
+> inconsistent, and there are some questions about affected versions,
+> so I wanted to get some clarity about which CVEs go with which
+> issues.
+> 
+> 1) CVE-2013-1942 - fixed in 2.2.20. Commit:
+> e8ca190f7f972a6a421cb95f09e138720e40ed6d
+> 
+> This one doesn't seem to have any issues.
 
-Compatibility, for example HTTPS, you can disable a lot but if you
-only allowed one cipher chances are a good chunk of clients wouldn't
-be able to connect. There's a LOT of software out there, some open
-source, some commercial, some written in house, it all uses encryption
-and signing (usually wrongly, sigh) and a lot of it cannot or will not
-be updated any time soon, if at all. Think of all the devices that act
-as a web client and will never have TLS 1.2 support (e.g. "smart" TVs)
-for example. Would I prefer the world to ditch SSL, TLS 1.0 and 1.1
-and move to TLS 1.2 entirely? Of course. Is it going to happen? Not
-for a loooong time.
+My understanding of this one is that it now filters out \\ < > = which
+could be previously used to insert content into the parameters passed
+to the SWF file resulting in XSS.
 
-Think of all the things that currently use (often older versions of)
-OpenSSL/PolarSSL/GnuTLS/etc and will never get updated...
+> 
+> 2) CVE-2013-2022 - based on [1] CVE-2013-2022 is listed after a
+> section that talks about an XSS fixed in 2.3.0 (which also includes
+> the CVE-2013-1942 assignment).   However, in [2] you say
+> "CVE-2013-2022 is for jPlayer 2.2.20 XSS" but
+> http://www.jplayer.org/2.3.0/release-notes/ says that CVE-2013-2022
+> is fixed in 2.2.23.  (Maybe when you said 2.2.20, this also covered
+> other unfixed versions UNTIL 2.2.23).
+
+that was probably the case, I typically assume when I assign a CVE
+that the next release will assign it (because usually people do fix
+things quickly =). I was going off of
+http://www.jplayer.org/latest/release-notes/ when I assigned these
+
+
+> 3) CVE-2013-2023 - in [1] you assign CVE-2013-2023 to the security
+> fix that quotes the jPlayer changelog entry for 2.2.23 - which, as
+> just mentioned in the previous bullet, you already described as
+> being associated with CVE-2013-2022.  In [2], you also state that 
+> CVE-2013-2023 is for jPlayer 2.2.23 XSS.
+> 
+> 4) There is no mention of issues that are FIXED in 2.3.0 based on
+> upstream changelog, but
+> http://www.jplayer.org/2.4.0/release-notes/ lists fixes in both
+> 2.3.1 and 2.3.2.
+
+
+
+> 5) According to jPlayer release notes, we have:
+> 
+> [2.3.1] Security Fix: The Flash SWF had a minor security
+> vulnerability that enabled XSS (Cross Site Scripting). Reported by
+> Eugene Dokukin. Security reference CVE-2013-2023.
+> 
+> [2.3.2] Security Fix: Closed Flash SWF security vulnerability that 
+> enabled XSS (Cross Site Scripting). Reported by Eugene Dokukin.
+> Security reference CVE-2013-2023. The jPlayer noConflict option is
+> now restricted to strings that contain the term jQuery. For
+> example: lib.jQuery or myjQueryRocks.
+> 
+> [2.2.20] Security Fix: The Flash SWF had a security vulnerability
+> that enabled XSS (Cross Site Scripting). Reported by Malte Batram.
+> Security reference CVE-2013-1942.
+> 
+> [2.2.23] Security Fix: The Flash SWF had a minor security
+> vulnerability that enabled XSS (Cross Site Scripting). Reported by
+> Eugene Dokukin. Security reference CVE-2013-2022.
+> 
+> I'm of the mindset to use the CVE assignments as provided by
+> jQuery upstream, but it may be good to get full clarity down to the
+> individual commits.
+
+Yeah, partly what happened is I was specifically asked for a cve for
+jplayer by the ownCloud guys, I looked at the changelog, saw a bunch
+more and assigned them as best I could.
+
+> 
+> [1] http://marc.info/?l=oss-security&m=136726705917858&w=2
+> 
+> [2] http://marc.info/?l=oss-security&m=136773622321563&w=2
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJShcYmAAoJEBYNRVNeJnmT5pUQAK0t3qhfhLw4zUBh0ac3qXgN
-Nxoo22kz3VLDxNVRCzONnP8+R551uk0YW+7ylxGwgbfMt3RgpNT6gvfIPk/g+Z6V
-bNo5iUDQPUJFGjy4xMPJ32NWz6+bYgcZwi7dBbfNBQZpJopsP3Q9iWAvvxh2w2Rn
-G5+q8C7jF7FNRZnSf324h96VNhChdmh2rd6nGAanJl/kaQSPrTXMXF99EF04I9AO
-x0YCu8nUDaD9l2oxBWRKfRDXNd3qJmO5xCk1eZJIaiPQiZW9z9JbjuODAqTIHhB2
-OtPq+ATcrvj3uHUBqNQb9OhUOAkhEHPz7qkfdUskDj9/5c3qC/uNE9LBBVolVnTT
-v+yL5QAcsPdyZk4xenlCSnEwguYWGG4VWYpxITazM9OSp6OxP+mAzprwOfPUVpRr
-K0m5ARt3P54Xx4baOPExW7ukjCAknt19K7nyd4ZXUUQ3c2mNYGj87u23MJBtpdTL
-8Xc+6nPNCdQ8OsdxykR12bmGGs6qqdc+3rQdXCzR6XlijCRi75iCkokGlipb+2MH
-9SheIYSbZXkNTkQhXmZnZVgTizT9HF8RRAreVnWcBGngCSamCVPHXkaWsJfxGbdo
-cWppbv109oOuCyXd2wraPqG+eRGBMNRQq2sGewTjLTI7Qe/b87CKn0nEiG4Xt1Ud
-X7CpLJdIcrmYZ1OMqsP+
-=hAuj
+iQIcBAEBAgAGBQJR1PqGAAoJEBYNRVNeJnmT7LkP/12lDuC26SCngF1M8jAoMLdd
+lyLnjlIxgtJSh1/01JzdTlLUjLoNXCslQKuDuvv9VXPNNhec3CTVF5Gpyqufwnnh
+96KaUK8Bb20uBjLRISwoEnS416vZK8WG0RDpDj0jZeBL/cbhzRbJxFvOozM62FWG
+iHnhRGOHIUm5J+j1DK50eDaSi+gNCCNsYxrYbXzyO34EcpBb48OTDWHK0LC/jelL
+FvtpiDDwP7pYOMme63e5TRN5WBCwH9VcFeLFaCa8Cfabu6k4qy0IqwUU5wYDvg6C
+Z5zIROkVSvD1O4zWAdfZqwhpJ0bGKHdFRwQ2TphOiW2aHwOjKy58Brtrfa3qCvrB
+7CNqEc9KykxkYwwsoACC6iUnW5CLxOF9Nvm0pWGEB+PZErfYDuS7o3vvDFkb5nNg
+pnq+icz4M4U3OxRmA1g3EiZEsCwGQzL5pOzZS9IsoofYMuZd5oUuT0N9kZV330Cj
+JVUvIDwNx5iUb/gpvfh3UXKD6EA2myRmVL5adbEghKh0U4UVg9Dqb20asr/fbQsE
+YbT2fJTdG/VMPQUA5HXXOpkPlfafDSr016TKD3OvWrhi+P9hrNKJd2A7J7zNf6Tn
+EM4nvCBMU02mx/aCRPdgagcPCTbjhFVC16yDcTrXaPwI/INxVdCxfnikRDxjXXdb
+KzQofUuEeBFRyhRySuHR
+=Cocf
 -----END PGP SIGNATURE-----
