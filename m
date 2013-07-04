@@ -1,84 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/6
-Message-ID: <51E7B145.6010601@redhat.com>
-Date: Thu, 18 Jul 2013 03:11:33 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: mancha <mancha1@...h.com>
-Subject: Re: CVE Request - xlockmore 5.43 fixes a security flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/04/10
+Message-ID: <CAESa+_m+UcfeX9TgG+xqNkMBwYmO4dk=NvZ2YP_D92jbxY1QzQ@mail.gmail.com>
+Date: Thu, 4 Jul 2013 10:02:28 -0700
+From: Bharat Mediratta <bharat@...alto.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, security@...leryproject.org,  oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- gallery3 (3.0.9): Fixing two security flaws
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+This is accurate enough. Thanks Jan and sorry for not responding earlier -
+I'm traveling with limited access.
+On Jul 4, 2013 4:19 AM, "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-On 07/16/2013 03:17 PM, mancha wrote:
-> On Tue, 16 Jul 2013 20:18:06 +0000 "Kurt Seifried" wrote:
->> To reiterate: so I can confirm CVE assignments, and prevent 
->> duplicate assignments you *MUST* provide links to the code 
->> commits/vulnerable code.
-> 
->> People need to start making better CVE requests, or you're not
->> going to get CVEs from me.
-> 
-> I am relatively new at CVE requests so I am learning-by-doing. I
-> must have missed the original comment you feel you're re-iterating
-> to me.
-> 
-> Relevant code can be found here:
-> 
-> [1] 
-> http://sourceforge.net/projects/miscellaneouspa/files/glibc217/xlock
+> Hello Kurt, Steve, vendors,
 >
-> 
-more-5.42-glibc217-crypt.diff
+>   Gallery upstream has released 3.0.9 version, correcting two security
+> flaws:
+>   [1] http://galleryproject.org/gallery_3_0_9
+>
+> My guess [***] is the two issues are as follows:
+>
+> * Issue #1 - Improper stripping of URL fragments in flowplayer
+> SWF file might lead to reply attacks (a different flaw than CVE-2013-2138):
+>
+> ----------------------------------------------------------------------------
+>
+>   A security flaw was found in the way flowplayer SWF file handling
+> functionality
+>   of Gallery version 3, an open source project with the goal to develop and
+>   support leading photo sharing web application solutions, processed
+> certain
+>   URL fragments passed to this file (certain URL fragments were not
+> stripped
+>   properly when these files were called via direct URL request(s)). A
+> remote
+>   attacker could use this flaw to conduct replay attacks.
+>
+>   A different vulnerability than CVE-2013-2138.
+>
+>   Upstream ticket:
+>   [2] http://sourceforge.net/apps/trac/gallery/ticket/2073
+>
+>   Relevant upstream patch:
+>   [3]
+> https://github.com/gallery/gallery3/commit/c5318bb1a2dd266b50317a2adb74d74338593733
+>
+>   References:
+>   [4] https://bugzilla.redhat.com/show_bug.cgi?id=981197
+>
+> * Issue #2 - gallery3: Multiple information exposure flaws in data rest
+> core module
+>
+> -----------------------------------------------------------------------------------
+>
+>   Multiple information exposure flaws were found in the way data rest core
+> module
+>   of Gallery version 3, an open source project with the goal to develop
+> and support
+>   leading photo sharing web application solutions, used to previously
+> restrict access
+>   to certain items of the photo album. A remote attacker, valid Gallery 3
+> user, could
+>   use this flaw to possibly obtain sensitive information (file, resize or
+> thumb path
+>   of the item in question).
+>
+>   Upstream ticket:
+>   [5] http://sourceforge.net/apps/trac/gallery/ticket/2074
+>
+>   Relevant upstream patch (against 3.0.x branch):
+>   [6]
+> https://github.com/gallery/gallery3/commit/cbbcf1b4791762d7da0ea7b6c4f4b551a4d9caed
+>
+>   References:
+>   [7] https://bugzilla.redhat.com/show_bug.cgi?id=981198
+>
+> Could you allocate CVE identifiers for these?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> [***] Guess because the issues aren't more thoroughly described in
+> upstream announcement [1]
+>       and former (private) email check with Gallery3 upstream didn't
+> provide more details
+>       either. Cc-ed them on this post too, they to correct me where
+> necessary.
+>
+>
 
-Thanks, Please use CVE-2013-4143 for this issue.
-
-> Upstream doesn't appear to have a public version control repo which
-> is why I didn't post link(s) to commit(s). I mistakenly thought
-> their changelog annoucement would be enough.
-
-Huh? So just the release tarballs? That's annoying :P As for the
-requirements it depends, different CVE requesters have different
-requirements depending on how well they do things. E.g. Some do CVE
-very well, but to make absolutely sure SPLIT/MERGE is done right I
-request some details, others like Drupal have security advisories that
-are sufficiently detailed that i can assign based on them alone, so
-until a CVE requester proves that they know what they are doing,
-reliably, I'm going to need details to make sure the CVE assignment is
-done correctly. Part of the issue is scale, I do 1000+ CVE assignments
-a year, so if they start taking more then 5-10 minutes I won't have
-time to do anything else (like my day job, or sleep).
-
-> I enjoy contributing time to the community via code submissions and
-> by making flaws/fixes known to vendors via this list. I just hope
-> they don't all have to raise my blood pressure in the future.
-
-
-Welcome to security where just contacting some of them can be an epic
-task.
-
-> --mancha
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJR57FEAAoJEBYNRVNeJnmTVLIQAIv1cnjsVFTJe1AnD430MddW
-CqnynTT/YXB9/Q4P7ygcQn9wql6uj3Bp60nhR39EU3ZCBMJPpIQC5zJrYTD+whsG
-wABnp5XNNAKgvvzpuQYsu7Bn/eGWEaCjwKSwinwh7ZKwOWKyekl9M8F2rOnzbsQm
-h2b/MwAQ2x88HCl6bhTdrcKfDM+AKRUwVXB0mb4n+I6xOh1Lw4ADLDXFxdpPGisD
-Wi/aOZkvbVDFoO+sh4WjfJNbSna7RCy5d9yvolSTIs82R51Gng/MaXa0opMy1A7v
-nH3oA22iMWD3nNVRDhH6qFJOwJ1iqi112/BP9GBF1Xr3n2GfpLctDsRozEbzw+77
-FK64F7xSw15/msH0frnPVq/s3ryIL5l5caauGYuu8s/NXPvYqm4VPW7OKnP9KORs
-V/jYgVFWea8wNz+7HZutbanipyKGilfMyJLx0fiVxhwRzQ77+a+RYVjMjpMleFZe
-ZyVWSAl3lk54Gaz+puFnNc161fdUYg69LSw4IgRVJ05WfDee3OYXYjNaE2Vdvqoz
-0LNkY2aYoBdrrgmVJb13ItTz2smv5yxVdMv2pBrRGHNqQGK4SZa6ogXhW/dqECLn
-oIMm7R5gJFFIvn0UK7ZYu9+xkaZXeTgRHZ9rqg8SoeavMPUCoaO6geUIx46l3CgE
-s6+MGioxUjdc020Z6drg
-=ZSyP
------END PGP SIGNATURE-----
