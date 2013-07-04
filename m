@@ -1,60 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/9
-Message-ID: <1381481490.4814.13.camel@localhost.localdomain>
-Date: Fri, 11 Oct 2013 10:51:30 +0200
-From: Xabier Rodríguez Calvar <calvaris@...il.com>
-To: General PulseAudio Discussion <pulseaudio-discuss@...ts.freedesktop.org>
-Cc: oss-security@...ts.openwall.com, webkit-gtk@...ts.webkit.org
-Subject: Re: [pulseaudio-discuss] Vulnerability in Webkit-GTK and PulseAudio volume handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/04/4
+Message-ID: <51D4EDE7.6030504@redhat.com>
+Date: Wed, 03 Jul 2013 21:37:11 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Michael Tokarev <mjt@....msk.ru>, Michael Jerris <mike@...ris.com>, Ken Rice <krice@...eswitch.org>
+Subject: Re: CVE request: FreeSWITCH regex substitution 3 buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-O Xov, 10-10-2013 ás 20:50 +0100, Colin Guthrie escribiu:
-> It's certainly an interesting issue and your code highlights the
-> problem
-> quite well.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 07/01/2013 02:46 PM, Michael Tokarev wrote:
+> Hello.
 > 
-> I'm not sure I consider it a technical vulnerability tho' (just my
-> personal opinion) but I do appreciate the damage to both h/w and
-> hearing
-> that could result and thus I won't argue about classifying it as such.
+> Yesterday I started thinking for the first time about some VOIP 
+> solution for our office, and come across FreeSWITCH software -- 
+> www.freeswitch.org.  After talking on IRC a bit, I decided to take
+> a look at the source, because a question asked by one of the users
+> looked interesting to me.
 > 
-> What would be more interesting to me would be how the same code works
-> on
-> Windows 7 which I believe also implements a flat volume scheme (not
-> sure
-> about Win 8) and how it handles stream volumes in this context
-> (background:
-> http://www.patrickbaudisch.com/publications/2004-Baudisch-CHI04-FlatVolumeControl.pdf)
+> And immediately I discovered 3 buffer overflows in the _first_ 
+> function I ever saw in the source of this software.
+> 
+> http://jira.freeswitch.org/browse/FS-5566 - it is the original 
+> bugreport which looked innocent enough initially.
+> 
+> http://jira.freeswitch.org/secure/attachment/18855/0001-regex_subst-allow-n-in-regex-substitutions-and-fix-3.patch
+> -- this is a patch of mine that fixes initial bug and also 3 buffer
+> overflows I found when dealing with the issue.
+> 
+> Some context.  FreeSWITCH's routing mechanism is based almost 
+> entirely on regular expressions and uses substring matches in the
+> core routing (dialplan).  So the regexps are matched against
+> untrusted input (which is especially mentioned in the docs).  But
+> ofcourse users aren't easy with writing regexps correctly, always
+> constraining the length of the input properly.
+> 
+> So, if there are any references to unconstrained input in any
+> dialplan expressions -- that is, instead of \d{10}, \d+ is used,
+> we're getting a remotely triggerable buffer overflows with good
+> potential of remote code execution.
+> 
+> As simple as that.
+> 
+> It _looks_ like the default configuration isn't affected since
+> apparently all regexes there are constrained.  But we can't be sure
+> for all user configs.
+> 
+> I haven't studied actual potential for code execution, but from a
+> quick view it appears quite possible.
+> 
+> Thanks,
+> 
+> /mjt
 
-For Colin to know, before touching anything in WebKitGtk+ the behavior
-was that the volume was ramping up to 100% with every website regardless
-their volume control.
-
-I met Slomo and Lennart at GUADEC and we thought that the best was
-letting the sink, pulsesink in this case, set the volume and we would
-just get that for the slider, regardless the volume model applied. This
-was supposed to be a good compromise for the different situations (using
-PA with or without flat volumes, using another sink) as volume wouldn't
-ramp up to 100% always.
-
-There are some other restrictions we have to observe, though:
-
-     1. We want to be agnostic of the GStreamer sink used and of course,
-        to the volume model used by pulse, because we don't know it.
-     2. We want to allow audio passthrough when possible.
-     3. We want to be coherent with the rest of GNOME apps, and the
-        volume model they are using.
-     4. We have to comply with the HTML5 W3C standard that says that
-        volume will be 100% by default, though user agents can decide to
-        restore former volume (perfect if we let pulse decide it).
-
-We would easily add a GStreamer volume element and solve what Alexander
-says, buy we would be breaking 2 and 3 rules and to fulfill 3 and 4, I
-actually tested that with the proposed fix, the volume could still ramp
-up to 100% because in our opinion, it is up to the web developer to
-sanitize their volume management or up to the user to change the volume
-model.
-
-Best regards.
+Same researcher/version/vuln type so CVE MERGE. Please use
+CVE-2013-2238 for this issue.
 
 
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJR1O3mAAoJEBYNRVNeJnmTwA4QAMVxd81ar5PHUNo/NRf+giHU
+EQhYZBvIQIysyFeOn3SAmeAcO4j0+t+t06Hmm23gR7YKHhj04PvHhCHCo+12WKt5
+3susjMf9XfR0hlXoGK0Buzn9ICx7GzR8Gxq9omevNkacJHySdhHrUVbjpd/lLjtK
+iR0IUG/+7w/5guznzT+NaKVPc1jkxjE+agH4gIO553V1ZgmN7U9S16/FylL8Z9PD
+0uRyzztah/4pE4Ic/OMhwRUMX2B1s894oW0NxIqS4nhsp6Wwzqbp5+SDQLt18Vcc
+EzrrnAd8JGWswqZylZTmgOGOG0uuXtkq+WIKqKDx4B6I+RdBipQ/+3GGWY+giaAT
+P6vfSMU+VvzjJ6iYQRanRzJIiZQogfmRIhDXHjtOBR32/uZinZdSPm1GWMaBcRFq
+ZLbUEjtIjN3zVffYF2lZtYspQ1iIy4OHddanpYBlcBNQSqgpW5ChNQB0/+JkwE3h
+fOV/PEs+TAK7U/exVshWnF93Hr85B167q274ViWb+9/VOjfiUvHGcjbkYiVthv5P
+xkBkj4PNkYssdncXlRCH43ImO0APAy3dDbOUozEgJ8iPU9hIDWb+3/J5uODY/tz+
+Tmbk8Ni69hIe3F4uMk0B5HOapTAfbcOzp+Gz1CPfMhZ2xpEZJNnHgqJ7j4b7kGAr
+0/y4JDV6gsCe7QAKaaID
+=HSFr
+-----END PGP SIGNATURE-----
