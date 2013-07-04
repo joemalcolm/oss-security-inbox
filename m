@@ -1,98 +1,159 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/14/1
-Message-ID: <5191E174.9020009@redhat.com>
-Date: Tue, 14 May 2013 01:02:12 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/1
+Message-ID: <51D5E0F2.80405@thedistillery.eu>
+Date: Thu, 04 Jul 2013 21:54:10 +0100
+From: Matthew Wilkes <matt@...distillery.eu>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, moderators@...db.org
-Subject: Re: CVE request: Gallery multiple XSS vulnerabilities
+Subject: CVE Request - PloneFormGen, multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello all,
 
-On 05/13/2013 01:28 AM, Henri Salo wrote:
-> Hello,
-> 
-> Two XSS vulnerabilities have been fixed in gallery 3.0.7.
-> 
-> http://osvdb.org/92691 http://osvdb.org/92740
-> 
-> One CVE-2013-XXXX is enough as these are fixed in the same version
-> and same issue type.
-> 
-> If I am correct: http://osvdb.org/92789 should be removed as
-> duplicate of http://osvdb.org/92691 http://osvdb.org/92690 should
-> be removed as duplicate of http://osvdb.org/92740
-> 
-> Please ask if you have questions.
-> 
-> Diff between 3.0.6 - 3.0.7 below:
-> 
-> """ git diff aa89aa0dc1610931674530169be8fd1edfceafde
-> df9a412c5a18414ec52550e04f9672693f06421f diff --git
-> a/gallery3/README b/gallery3/README index 7c58b69..18a2663 100644 
-> --- a/gallery3/README +++ b/gallery3/README @@ -1,4 +1,4 @@ 
-> -Gallery 3.0.6 (Rive Gauche) +Gallery 3.0.7 (Rive Droite) 
-> ===========================
-> 
-> About diff --git a/gallery3/modules/gallery/controllers/movies.php
-> b/gallery3/modules/gallery/controllers/movies.php index
-> ca332f6..5607571 100644 ---
-> a/gallery3/modules/gallery/controllers/movies.php +++
-> b/gallery3/modules/gallery/controllers/movies.php @@ -67,7 +67,7 @@
-> class Movies_Controller extends Items_Controller {
-> 
-> log::success("content", "Updated movie", "<a
-> href=\"{$movie->url()}\">view</a>"); message::success( -
-> t("Saved movie %movie_title", array("movie_title" =>
-> $movie->title))); +        t("Saved movie %movie_title",
-> array("movie_title" => html::purify($movie->title))));
-> 
-> if ($form->from_id->value == $movie->id) { // Use the new url; it
-> might have changed. diff --git
-> a/gallery3/modules/gallery/helpers/gallery.php
-> b/gallery3/modules/gallery/helpers/gallery.php index
-> f3382fa..81f406d 100644 ---
-> a/gallery3/modules/gallery/helpers/gallery.php +++
-> b/gallery3/modules/gallery/helpers/gallery.php @@ -18,8 +18,8 @@ *
-> Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA
-> 02110-1301, USA. */ class gallery_Core { -  const VERSION =
-> "3.0.6"; -  const CODE_NAME = "Rive Gauche"; +  const VERSION =
-> "3.0.7"; +  const CODE_NAME = "Rive Droite"; const RELEASE_CHANNEL
-> = "release"; const RELEASE_BRANCH = "3.0.x";
-> 
-> diff --git a/gallery3/modules/gallery/views/error_admin.html.php
-> b/gallery3/modules/gallery/views/error_admin.html.php index
-> cd1bd56..036e204 100644 ---
-> a/gallery3/modules/gallery/views/error_admin.html.php +++
-> b/gallery3/modules/gallery/views/error_admin.html.php @@ -289,7
-> +289,7 @@ <tr> <td class="key"> <code> -                    <?=
-> $key?> +                    <?= html::purify($key) ?> </code> 
-> </td> <td class="value"> """
-> 
-> --- Henri Salo
-> 
+I'd like to request some CVE identifiers for the following 
+vulnerabilities, recently patched in PloneFormGen[1]
 
-Please use CVE-2013-2087 for Gallery multiple XSS vulnerabilities
+Here are some descriptions of the vulnerabilities, along with the CVSSv2 
+base score we calculated, and our determination of the relevant CWE 
+identifiers. We're not sure about potential merges, especially as there 
+are two pairs of very similar attacks.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRkeF0AAoJEBYNRVNeJnmTBO0QAK1W7UNk1DlNmNqqj6islaVN
-ZtMeUgnMeMBH2Kn5AdvR2O6PugqSK+sq2RymnXAuyCn6OlPVgA1o7Wz2AkRX5tyj
-fLDMu+pzl4+OPo53wM7v+nhQZ+2VlbBRLHR9j1iny2DM0CFo6HFGS8jCQoITIngb
-ZpDUzLn6X1e9sZxAP3CByexYmSog/8MkBOr2+fldCoPC5+n4BmCSHcXKYIqSzCP1
-ZH02RVLhsUwBlkYlMs/99OaVof6aDBF0rfrgx2W9xw6azWXcOyg9HWXJPWH6byb8
-jN+YjkVeFjM9vc265Zb2z6lj72rdCzWjnw32RX4JqC7luMyCiUwITkYGeLpqrTFc
-iSKDYkvXkq7oNfqkEuppI20K4Nz6JvwN5jX5B6LAUInUPp5jjQm4MWZbnclXvJ18
-rvCXsbvLK1zjWZR7k/koQoBYnVfJ270cB8xCzMl1XQCac2d6xSvES3REYGMrCNbr
-T2N96MFKvg7HFqaAdYNhNVtR4rP44h4P0KBSNF6OonQDnq6Py7FkqpLmESE0jerS
-yUEaqnYd/Bv9s6/kYufThf5DsEyHZRiXySuOtDqCWyv385dS6HfUvZzsLQ8e7szg
-FOk7vqSo3zT9XxJZO+LM/1D7/dGUL0D3RiSWX/Cm4cuQme7sLxBdiU/QlCix5+nH
-yg0wJGjjDW8AydYJeWW4
-=WANh
------END PGP SIGNATURE-----
+# Execute arbitrary shell commands
+**CVSSv2 base score**: 10
+
+CWE-78 - Improper Neutralisation of Special Elements used in an OS Command
+CWE-573 - Improper Following of Specification by Caller
+CWE-749 - Exposed dangerous method or function
+
+Passing a urlencoded shell command to a support function that is 
+accessible through the web causes that shell command to be run with the 
+same privileges as the Zope server.
+
+
+
+# Set custom script body
+**CVSSv2 base score**: 8.2
+CWE-306 - Missing authentication for critical resource
+CWE-749 - Exposed dangerous method or function
+
+When using a custom script action adapter, it is possible for anonymous 
+users to overwrite the content of the script. This allows an attacker 
+complete control over what happens to the received data. The script is 
+executed within Zope's RestrictedPython environment, however, so it 
+doesn't allow escape from the process sandbox.
+
+
+
+# Can set body of mail template on mailer object
+**CVSSv2 base score**: 7.5
+CWE-863 - Incorrect authorization
+CWE-749 - Exposed dangerous method or function
+
+An unused method has a declarePublic call, allowing anyone to invoke it. 
+This allows any PloneFormGen form with a mailer object to have the email 
+template modified by anonymous users. As the template is a ZPT object it 
+can include inline Python expressions evaluated in the process sandbox.
+
+
+
+# Insufficient CSRF protection on SaveData adapter allows changing data
+**CVSSv2 base score**: 6.3
+CWE-352 - Cross-site request forgery (CSRF)
+CWE-749 - Exposed dangerous method or function
+
+If a privileged user is tricked into accessing an attacker controlled 
+URL, it is possible to craft a request which would allow setting the 
+saved data to any value, thus compromising the integrity of the data.
+
+
+
+# Can determine the success page without filling in form
+**CVSSv2 base score**: 5
+CWE-767 - Access to critical private variable via public method
+
+Often this is just a thank you page, however it is used by some users to 
+expose access to a private URL or further logic. In this case it *may* 
+provide an attacker with access to sensitive information.
+
+
+
+# Render body of mail template on mailer object
+**CVSSv2 base score**: 5
+CWE-767 - Access to critical private variable via public method
+
+Like the above attack, this allows users who have not filled in a form 
+to see the email they would have received if they had. It stacks with 
+the set body vulnerability to allow the attacker to execute Python 
+embedded in the custom template.
+
+
+
+# Run ScriptAdapter script without submitting form
+**CVSSv2 base score**: 5 (???)
+CWE-767 - Access to critical private variable via public method
+
+As above, but with the set custom script body vulnerability. The effect 
+of running the script varies by deployment.
+
+
+
+# Can add spurious blank records to SaveDataAdapter
+**CVSSv2 base score**: 5
+CWE-306 - Missing authentication for critical resource
+CWE-20 - Improper input validation
+CWE-749 - Exposed dangerous method or function
+
+When using the default action adapter for saving data, it's possible to 
+create blank, likely invalid records. A malicious user could automate 
+this to add many invalid responses.
+
+
+
+# Can enable or disable form actions
+**CVSSv2 base score**: 4.3
+CWE-306 - Missing authentication for critical resource
+CWE-352 - Cross-site request forgery
+
+If the ids of the action adapters within a form are known, it is possible to
+disable or enable them as an anonymous user. This would allow an attacker to
+effectively disable the form, or to redirect input.
+
+
+
+# Vector for determining user details in XSS attacks
+**CVSSv2 base score**: 3.5 (???)
+CWE-352 - Cross-site request forgery
+CWE-359 - Privacy violation
+
+Multiple methods are exposed which allow determination of the email 
+address, name and id of the currently authenticated member in custom 
+script adapters. If an attacker were already performing a cross site 
+scripting vulnerability elsewhere on the domain, these methods could be 
+used to identify users and leak sensitive information.
+
+
+
+All but 'Insufficient CSRF protection on SaveData adapter allows 
+changing data' have official fixes; that one is unpatched. Disclosure of 
+reproducers has only been to the maintainer at this stage, but happen 
+more widely sometime in the next few weeks. Credits for all the 
+vulnerabilities go to The Code Distillery
+
+Kurt, or whoever assigns the CVEs for this, I'm happy to provide more 
+information if you need it.
+
+Thanks,
+
+Matthew Wilkes
+
+[1] - 
+http://plone.org/products/plone/security/advisories/ploneformgen-vulnerability-requires-immediate-upgrade
+
+
+------
+http://thedistillery.eu.
+The Code Distillery Ltd. Is registered in England & Wales (#7747893).
+Registered address 145-157 St John Street, London, EC1V 4PW.
+
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (3748 bytes)
