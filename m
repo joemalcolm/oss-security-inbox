@@ -1,18 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/09/1
-Message-ID: <20130309123139.GD22547@suse.de>
-Date: Sat, 9 Mar 2013 13:31:39 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: typo3 sql injection and open redirection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/04/2
+Message-ID: <51D4D8A4.9090301@redhat.com>
+Date: Wed, 03 Jul 2013 20:06:28 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: David Lamparter <equinox@...c24.net>
+Subject: Re: CVE request: Quagga OSPF-API stack overrun
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-http://typo3.org/support/teamssecuritysecurity-bulletins/security-bulletins-single-view/article/sql-injection-and-open-redirection-in-typo3-core/                                            
+On 07/03/2013 03:14 PM, David Lamparter wrote:
+> Hi,
+> 
+> I guess I need a CVE number for this, we've discovered a local
+> network exploitable stack overrun in Quagga's ospfd.
+> 
+> Reference: 
+> http://lists.quagga.net/pipermail/quagga-dev/2013-July/010621.html
+> 
+> Cheers,
+> 
+> -David (Quagga maintainer)
 
-has 2 new security issues without apparent CVE...
+Please use CVE-2013-2236  for this issue.
 
-Kurt, is this in your scope, or more in Mitres?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Ciao, Marcus
+iQIcBAEBAgAGBQJR1NikAAoJEBYNRVNeJnmTAG4QANY+YzJfkiSoHeuAg7sjlJvt
+iEYl7tGVg3eejA18SrqiBtFv9/QT+8gyvHStlAO8VK/nVwIB1vuH8zbLMDq/77rg
+c94f/NCfUk6LNDhOx8HrjX6hDmrYpJZ3wAF+8cuu2iIew04Bpov2O1VMyWqisshM
+N4zo2cYKObeqlnVjMr8Nq42A11Jk99vXq2QTRDX3IKiZDFKLThue+G4gG25ffGUD
+Rf1vFY99ctcNbNai+CaujkdO+JnlM6t3Na4mK/1RD/ZAqjtLoAHQyJdCmO72dKe6
+K3Ew2z9NcD4tA0IJ6MsF+HbMKdRLxXN89aI95/McKjTxhcImDwVGyOVNCQYfs00E
+y5OKUASrfHauQkvdHfbQ3toeCaYe8pJB+87PBlqq5DWE0QXFqXcqdRoB43m+K1/z
+mvQW8zvlg0VZaozScM9xeVNoRWwHSk+biMCixkbCydb915VKGVCWmAIYIKoTjEQd
+8wEH7rq8W42lgZ/rPhK7bErPbRIIhSQPGgi1PVB6BoImbDx0wrWoauaXaW3zqgSl
+kHszTObV3atTCmAEUzIjYk6rod3mLzl8zvVqfaW9yXfaihBmjJpWuv0jRrmLb5iP
+dq/30TF4rLD2D3liwDocerzDSP8T4Mhd5/BcU/VvQmdKCCR2U7B8Y1rhaxpW4/Aa
+1G5X8ZlaG7HNSdV10VWG
+=/ILj
+-----END PGP SIGNATURE-----
