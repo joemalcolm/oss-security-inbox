@@ -1,46 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/19
-Message-ID: <20130710220118.GD9874@kludge.henri.nerv.fi>
-Date: Thu, 11 Jul 2013 01:01:18 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/04/3
+Message-ID: <51D4DF6B.90104@redhat.com>
+Date: Wed, 03 Jul 2013 20:35:23 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Zenphoto waraxe-2012-SA#096
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: Earlier AF_KEY in key_notify_policy_flush
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2012 CVE identifiers for multiple issues in Zenphoto, thanks. Maybe we
-can only use one ID for easiness.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Advisory URL: http://www.waraxe.us/advisory-96.html
-Author: Janek Vind "waraxe"
-Affected versions: Zenphoto 1.4.3.3 and older
-Patched version: Zenphoto 1.4.3.4
-Release advisory: http://www.zenphoto.org/news/zenphoto-1.4.3.4
-http://secunia.com/advisories/50799/
-http://www.securelist.com/en/advisories/50799
+On 07/03/2013 10:35 AM, Marcus Meissner wrote:
+> On Wed, Jul 03, 2013 at 11:02:13AM +0200, Marcus Meissner wrote:
+>> Hi,
+>> 
+>> Michal Hocko identified an earlier patch for an AF_KEY
+>> information leak, in nearly the same place as CVE-2013-2234.
+> 
+> URL: 
+> https://github.com/torvalds/linux/commit/85dfb745ee40232876663ae206cba35f24ab2a40
+>
+> 
+>> Due to different time of fix and different researcher probably 
+>> needs a new CVE.
 
-http://osvdb.org/87016 Zenphoto zp-core/zp-extensions/GoogleMap/m.php data Parameter XSS  
-http://osvdb.org/87017 Zenphoto zp-core/zp-extensions/tiny_mce/config/zenpage-default-full.js.php locale Parameter XSS  
-http://osvdb.org/87018 Zenphoto zp-core/zp-extensions/cloneZenphoto/cloneTab.php Multiple Parameter XSS  
-http://osvdb.org/87019 Zenphoto zp-core/admin-tags.php tagsort Parameter XSS  
-http://osvdb.org/87020 Zenphoto zp-core/admin-users.php error Parameter XSS   
-http://osvdb.org/87021 Zenphoto zp-core/admin-thumbcrop.php Multiple Parameter XSS  
-http://osvdb.org/87022 Zenphoto zp-core/admin-comments.php ndeleted Parameter XSS  
-http://osvdb.org/87023 Zenphoto zp-core/zp-extensions/tiny_mce/plugins/tinyzenpage/js/dialog.php album Parameter XSS  
-http://osvdb.org/87024 Zenphoto zp-core/admin-upload.php Multiple Parameter XSS  
-http://osvdb.org/87025 Zenphoto Database Backup Direct Request Remote Information Disclosure
-http://osvdb.org/87026 Zenphoto zp-core/zp-extensions/uploader_flash/check.php Arbitrary File Enumeration  
-http://osvdb.org/87027 Zenphoto zp-core/zp-extensions/search_statistics.php X_FORWARDED_FOR HTTP Header SQL Injection
-http://osvdb.org/87028 Zenphoto zp-core/zp-extensions/failed_access_blocker.php X_FORWARDED_FOR HTTP Header SQL Injection
-http://osvdb.org/87029 Zenphoto zp-core/zp-extensions/federated_logon/Verisign_logon.php redirect Parameter XSS  
-http://osvdb.org/87030 Zenphoto zp-core/zp-extensions/federated_logon/OpenID_logon.php Multiple Parameter XSS  
-http://osvdb.org/87031 Zenphoto zp-core/admin-functions.php File Upload PHP Code Execution
-http://osvdb.org/87032 Zenphoto zp-core/zp-extensions/uploader_jQuery/uploader.php File Upload PHP Code Execution
-http://osvdb.org/87033 Zenphoto getUserIP() Function X_FORWARDED_FOR HTTP Header IP Address Spoofing Weakness
+Yup CVE split.
 
-Please note that CVE-2012-4519 has been assigned to issue http://osvdb.org/85899
-in mailing list thread http://www.openwall.com/lists/oss-security/2012/10/11/4
+>> 
+>> Ciao, Marcus
+>> 
+>> commit 85dfb745ee40232876663ae206cba35f24ab2a40 Author: Nicolas
+>> Dichtel <nicolas.dichtel@...nd.com> Date:   Mon Feb 18 16:24:20
+>> 2013 +0100
+>> 
+>> af_key: initialize satype in key_notify_policy_flush()
+>> 
+>> This field was left uninitialized. Some user daemons perform
+>> check against this field.
+>> 
+>> Signed-off-by: Nicolas Dichtel <nicolas.dichtel@...nd.com> 
+>> Signed-off-by: Steffen Klassert <steffen.klassert@...unet.com>
+>> 
 
----
-Henri Salo
+Please use CVE-2013-2237 for this issue.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJR1N9rAAoJEBYNRVNeJnmTjC4P/0W86bcbkrENj7qTJMAhfkoD
+yRHlIVOgQUBDcoz5uvtwXJzyS3LYUtv0MrpRw2hpTzGmVp+fBuESK7SSq/xC7ddj
+S91U3CglCWvuvqPK2+z4ovvR/VuZ/ed1AESgVsfAdwor/qyTj2w16+pJPNkF7Iw1
+3HnqNiBwCGw85h2mpWTN2L0TZJ+BUQliz2YG/GDdI1h/8TG1FI/DXqfdrzamNtaw
+8U+gcvSISXRtRkIY4Hifg4KS4X9dYlA0IK+aBQ5Ur2pyxc/goCzTsejKOxgThpha
+K428FuFIOA10gBEGSl5h4dplZxDbw0lhfE7H/prWHG15pxxuzbw5ug2Jaq11FLv5
+aniTIqW9T2EDTcCaHFB4szYbXWBMsaGYUbx+qpUCtLXT9LcVjwmvobmbgng3L7LB
+h2cKiktMAQQDOYo7ZkGcX23pu8Eor2gLjZ8MnBedH5DZYWzd3aMOl+89Cvsv7rz1
+guQYjk2yPi8xjl0WrBJQ2w9mcJLbOPDJrURoCMilp3OG+XggHxK0ksxSnZSvZ9LG
+7YFtP47QNidRlgLd3tf5S56d65tUiF7qM254oOmXIh5pDq2yPQ6BdqDu6wKi0Mux
+4oabaJCGs1E2dLjZnzFHDxBG9MabV2NDAt2qGxG6diVIZz2eVUShfHLPgQpbgfdJ
+5La/nOo9QQwxdnnU8d6g
+=oB3q
+-----END PGP SIGNATURE-----
