@@ -1,46 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/02/7
-Message-Id: <201312022335.rB2NZOtX005303@linus.mitre.org>
-Date: Mon, 2 Dec 2013 18:35:24 -0500 (EST)
-From: cve-assign@...re.org
-To: Ian.Jackson@...citrix.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, xen-devel@...ts.xen.org, security@....org
-Subject: Re: Xen Security Advisory 82 (CVE-2013-6885) - Guest triggerable AMD CPU erratum may cause host hang
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/04/11
+Message-ID: <51D5BF89.6060205@redhat.com>
+Date: Thu, 04 Jul 2013 12:31:37 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Gallery3 Security Team <security@...leryproject.org>
+Subject: Re: CVE Request -- gallery3 (3.0.9): Fixing two security flaws
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> This was sent by MITRE as part of the CVE assignment. It seems likely
-> to us (the Xen Project security team) that the CVE assignment was a
-> consequence of our embargoed predisclosure to xen-security-issues.
+On 07/04/2013 03:19 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> Gallery upstream has released 3.0.9 version, correcting two
+> security flaws: [1] http://galleryproject.org/gallery_3_0_9
+> 
+> My guess [***] is the two issues are as follows:
+> 
+> * Issue #1 - Improper stripping of URL fragments in flowplayer SWF
+> file might lead to reply attacks (a different flaw than
+> CVE-2013-2138): 
+> ----------------------------------------------------------------------------
+>
+>  A security flaw was found in the way flowplayer SWF file handling
+> functionality of Gallery version 3, an open source project with the
+> goal to develop and support leading photo sharing web application
+> solutions, processed certain URL fragments passed to this file
+> (certain URL fragments were not stripped properly when these files
+> were called via direct URL request(s)). A remote attacker could use
+> this flaw to conduct replay attacks.
+> 
+> A different vulnerability than CVE-2013-2138.
+> 
+> Upstream ticket: [2]
+> http://sourceforge.net/apps/trac/gallery/ticket/2073
+> 
+> Relevant upstream patch: [3]
+> https://github.com/gallery/gallery3/commit/c5318bb1a2dd266b50317a2adb74d74338593733
+>
+>  References: [4]
+> https://bugzilla.redhat.com/show_bug.cgi?id=981197
 
-MITRE typically does not know about multi-party embargo arrangements
-affecting Linux vendors and various other vendors, and did not know
-about any multi-party embargo arrangement in this case. If anyone who
-is regularly involved in vulnerability remediation affecting the
-open-source community asks MITRE to send an announcement of a CVE
-assignment to oss-security, we send that announcement without any
-investigation of disclosure restrictions. Although it is unfortunate
-if such an announcement had an adverse effect on a planned disclosure
-timeline, we feel that this is an isolated case and does not mean that
-we need to reevaluate our approach. Also, once an issue is mentioned
-on oss-security by anyone, we consider the issue fully public and we
-sometimes proceed to publish a CVE immediately.
+Please use CVE-2013-2240 for this issue.
+
+> 
+> * Issue #2 - gallery3: Multiple information exposure flaws in data
+> rest core module 
+> -----------------------------------------------------------------------------------
+>
+>  Multiple information exposure flaws were found in the way data
+> rest core module of Gallery version 3, an open source project with
+> the goal to develop and support leading photo sharing web
+> application solutions, used to previously restrict access to
+> certain items of the photo album. A remote attacker, valid Gallery
+> 3 user, could use this flaw to possibly obtain sensitive
+> information (file, resize or thumb path of the item in question).
+> 
+> Upstream ticket: [5]
+> http://sourceforge.net/apps/trac/gallery/ticket/2074
+> 
+> Relevant upstream patch (against 3.0.x branch): [6]
+> https://github.com/gallery/gallery3/commit/cbbcf1b4791762d7da0ea7b6c4f4b551a4d9caed
+>
+>  References: [7]
+> https://bugzilla.redhat.com/show_bug.cgi?id=981198
+
+Please use CVE-2013-2241 for this issue.
+
+> Could you allocate CVE identifiers for these?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+> [***] Guess because the issues aren't more thoroughly described in
+> upstream announcement [1] and former (private) email check with
+> Gallery3 upstream didn't provide more details either. Cc-ed them on
+> this post too, they to correct me where necessary.
+> 
+
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSnRcQAAoJEKllVAevmvmshl8H/0d/jkBYZP11YbWOzTXQrKGj
-exCXvUaC6BOukr1+u1eh7GR1W98NY5S7DT3oHDu0DzAfJ2iR4AAM0513V9mCUo/f
-LBBGsw+pyzPKeI5UQdXJ8GQ0Ut/WlbMB4qj0+ZuwKjCKFCdir2Xx7H0H3Ptb3qik
-38JgvO+bpMxDWnrF+Nh6SkuocB9jXuDCbCGO5Q4jaj1CcExmaRV9H8A0O4VbvtTj
-VQa+eY48H7WpBqKUrKylo/zZT5pBs/3tH0FSymiGLP9aFCDAl5xazf9LWq3iow/D
-AND3rDNlEzmDJ8zSHzx0wrvHTW8xMpj3KAk3z4D8G8XTmw7reltAVo1eGPmL6S0=
-=ouMl
+iQIcBAEBAgAGBQJR1b+JAAoJEBYNRVNeJnmTYFEP/02THfjrSDhAS39jQBSMISJb
+dgjL4/SKczghELBBVlzmv/O4b6GnDOpIkFC1ofX/tTkV2eEdEaXUV3aC22EB6Vwq
+o71em51Y+rrS184uIH5LMer3GvQsn+thyAWH/Huj80oS4GHZ5kiCvN1GaAvplTov
+JEzldVJGYs2+MJ1tOaVMc5tuCNFeBE2oGZYN5Ci+F+0T7TTfKBwaePBK2ExlEpmb
+RxcqTj9ONDqcMN2poW3t7f9xtX9aAOk8ebZKHaHuGVGq8nUpD/+XdwGIu6KRKSoA
+R6oFRk8Kxix4AJY1fAxAMDkHpiqy/Z3L+/qwPVqRlCg/Ilr/hgaFKUGeDbwyVEqM
+ZKAWLGFE+OHPcH0n5p5X2tIWkAvsoaCBlaIwvRJ8S1seb6w90B1Ob7ynO4yohQpu
+/bpCQXnU1lQfY/BhMJ/5TMFoZvLyf28DxJTlsTjhic3aV6VqrCcu9Y7WQW8vaMXM
+HxPOL+clnkhBTBvya7RXFy9R1ft4ODzDUrD9IxDeewkVl/9YrOHakDTM0AKNI+fL
+tlyksHM7vyDjUDVG/gMDooIrLgoroLNUQikFOb2kx8QFFmz+nWTi+3zYEUh5SWe4
+LtuBdfTdTChd7XEF/mCVmscUtw99alivUL63nCnLZek6jdlchnHZcJ5Fj2bVA93q
+Jxqd4d48c76uFAhOtKSJ
+=Aotk
 -----END PGP SIGNATURE-----
