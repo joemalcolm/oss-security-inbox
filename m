@@ -1,126 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/06/3
-Message-ID: <CA+rthh_cLHOzWhOFLH3wEq5s+mZxcJ_h-hS-Fuv8ArOq+9owfw@mail.gmail.com>
-Date: Wed, 6 Mar 2013 10:14:46 +0100
-From: Mathias Krause <minipli@...glemail.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/04/7
+Message-ID: <1860314397.33806243.1372929561739.JavaMail.root@redhat.com>
+Date: Thu, 4 Jul 2013 05:19:21 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Gallery3 Security Team <security@...leryproject.org>
+Subject: CVE Request -- gallery3 (3.0.9): Fixing two security flaws
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 6, 2013 at 9:46 AM, Kurt Seifried <kseifried@...hat.com> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 03/05/2013 01:52 PM, Mathias Krause wrote:
->> Hi Kurt,
->>
->> I don't care much about info leaks beyond merely fixing them. But
->> Alexander asked me to request a CVE ID for the recent crypto fix
->> of mine and as I did quite a few of such fixes in the recent past,
->> I'll just list them all here. The information might be a bit scarce
->> for a CVE ID request but as I don't expect any CVE IDs anyway, I
->> didn't wanted to do too much unnecessary work. ;)
->
-> CVE ID's prompt people to back port these security fixes which is a
-> good thing indeed =).
+Hello Kurt, Steve, vendors,
 
-M'kay. Might be the case for the crypto fix as it wasn't Cc'ed to
-stable, albeit I asked Herbert for it :/
-(see <http://www.mail-archive.com/linux-crypto@vger.kernel.org/msg08339.html>).
+  Gallery upstream has released 3.0.9 version, correcting two security flaws:
+  [1] http://galleryproject.org/gallery_3_0_9
 
->> 9a5467b crypto: user - fix info leaks in report API
-gitweb: https://git.kernel.org/linus/9a5467b
+My guess [***] is the two issues are as follows:
 
->> ecd7918 xfrm_user: ensure user supplied esn replay window is valid
-gitweb: https://git.kernel.org/linus/ecd7918
+* Issue #1 - Improper stripping of URL fragments in flowplayer
+SWF file might lead to reply attacks (a different flaw than CVE-2013-2138):
+----------------------------------------------------------------------------
 
->> 1f86840 xfrm_user: fix info leak in copy_to_user_tmpl()
-gitweb: https://git.kernel.org/linus/1f86840
+  A security flaw was found in the way flowplayer SWF file handling functionality
+  of Gallery version 3, an open source project with the goal to develop and
+  support leading photo sharing web application solutions, processed certain
+  URL fragments passed to this file (certain URL fragments were not stripped
+  properly when these files were called via direct URL request(s)). A remote
+  attacker could use this flaw to conduct replay attacks.
 
->> 7b78983 xfrm_user: fix info leak in copy_to_user_policy()
-gitweb: https://git.kernel.org/linus/7b78983
+  A different vulnerability than CVE-2013-2138.
 
->> f778a63 xfrm_user: fix info leak in copy_to_user_state()
-gitweb: https://git.kernel.org/linus/f778a63
+  Upstream ticket:
+  [2] http://sourceforge.net/apps/trac/gallery/ticket/2073
 
->> 4c87308 xfrm_user: fix info leak in copy_to_user_auth()
-gitweb: https://git.kernel.org/linus/4c87308
+  Relevant upstream patch:
+  [3] https://github.com/gallery/gallery3/commit/c5318bb1a2dd266b50317a2adb74d74338593733
 
->> 43da5f2 net: fix info leak in compat dev_ifconf()
-gitweb: https://git.kernel.org/linus/43da5f2
+  References:
+  [4] https://bugzilla.redhat.com/show_bug.cgi?id=981197
 
->> 2d8a041 ipvs: fix info leak in getsockopt(IP_VS_SO_GET_TIMEOUT)
-gitweb: https://git.kernel.org/linus/2d8a041
+* Issue #2 - gallery3: Multiple information exposure flaws in data rest core module
+-----------------------------------------------------------------------------------
 
->> 7b07f8e dccp: fix info leak via getsockopt(DCCP_SOCKOPT_CCID_TX_INFO)
-gitweb: https://git.kernel.org/linus/7b07f8e
+  Multiple information exposure flaws were found in the way data rest core module
+  of Gallery version 3, an open source project with the goal to develop and support
+  leading photo sharing web application solutions, used to previously restrict access
+  to certain items of the photo album. A remote attacker, valid Gallery 3 user, could
+  use this flaw to possibly obtain sensitive information (file, resize or thumb path
+  of the item in question).
 
->> 3592aae llc: fix info leak via getsockname()
-gitweb: https://git.kernel.org/linus/3592aae
+  Upstream ticket:
+  [5] http://sourceforge.net/apps/trac/gallery/ticket/2074
 
->> 04d4fbc l2tp: fix info leak via getsockname()
-gitweb: https://git.kernel.org/linus/04d4fbc
+  Relevant upstream patch (against 3.0.x branch):
+  [6] https://github.com/gallery/gallery3/commit/cbbcf1b4791762d7da0ea7b6c4f4b551a4d9caed
 
->> 792039c Bluetooth: L2CAP - Fix info leak via getsockname()
-gitweb: https://git.kernel.org/linus/792039c
+  References:
+  [7] https://bugzilla.redhat.com/show_bug.cgi?id=981198
 
->> 9344a97 Bluetooth: RFCOMM - Fix info leak via getsockname()
-gitweb: https://git.kernel.org/linus/9344a97
+Could you allocate CVE identifiers for these?
 
->> f9432c5 Bluetooth: RFCOMM - Fix info leak in ioctl(RFCOMMGETDEVLIST)
-gitweb: https://git.kernel.org/linus/f9432c5
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
->> 9ad2de4 Bluetooth: RFCOMM - Fix info leak in getsockopt(BT_SECURITY)
-gitweb: https://git.kernel.org/linus/9ad2de4
-
->> 3f68ba0 Bluetooth: HCI - Fix info leak via getsockname()
-gitweb: https://git.kernel.org/linus/3f68ba0
-
->> e15ca9a Bluetooth: HCI - Fix info leak in getsockopt(HCI_FILTER)
-gitweb: https://git.kernel.org/linus/e15ca9a
-
->> 3c0c5cf atm: fix info leak via getsockname()
-gitweb: https://git.kernel.org/linus/3c0c5cf
-
->> e862f1a atm: fix info leak in getsockopt(SO_ATMPVC)
-gitweb: https://git.kernel.org/linus/e862f1a
-
->> a117dac net/tun: fix ioctl() based info leaks
-gitweb: https://git.kernel.org/linus/a117dac
-
->> 0143fc5 udf: avoid info leak on export
-gitweb: https://git.kernel.org/linus/0143fc5
-
->> fe685aa isofs: avoid info leak on export
-gitweb: https://git.kernel.org/linus/fe685aa
-
->> 864745d xfrm_user: return error pointer instead of NULL
-gitweb: https://git.kernel.org/linus/864745d
-
->> 276bdb8 dccp: check ccid before dereferencing
-gitweb: https://git.kernel.org/linus/276bdb8
-
-> can you provide the full git id/link to these?
-
-Links are inlined above. The pattern how to create web-links is pretty
-obvious, though.
-
-> Also were they all
-> discovered by the same researcher?
-
-All of the bugs were discovered and fixed by me. But I'm no
-researcher. It's more a hobby of mine ;)
-
->> While we are at it: Do we care about getting CVE IDs for info
->> leaks? If so, all of them or only for the ones with leaks above a
->> certain threshold (>= 16 bytes, e.g.)?
->
-> Yes please. Much like DNA fragments you can potentially string them
-> together to reveal larger things.
-
-Okay. I'll continue posting my findings, then.
-
-
-Regards,
-Mathias
+[***] Guess because the issues aren't more thoroughly described in upstream announcement [1]
+      and former (private) email check with Gallery3 upstream didn't provide more details
+      either. Cc-ed them on this post too, they to correct me where necessary.
