@@ -1,57 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/9
-Message-ID: <5132D509.2070804@redhat.com>
-Date: Sat, 02 Mar 2013 21:43:53 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/04/12
+Message-ID: <CABLZJbxK4iUoppGTDw-v9-zBUQjDQgn95iRsDk+aBhuTGfF4SA@mail.gmail.com>
+Date: Thu, 4 Jul 2013 21:06:43 +0200
+From: Maksymilian <max@...t.cx>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: busybox
+Subject: Re: CVE Request: glibc getaddrinfo() stack overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> Perhaps there are some missing CVE ids?
 
-On 03/01/2013 04:27 AM, Nico Golde wrote:
-> Hi,
-> busyboxy is creating parts of the directory tree with incorrect permissions 
-> when creating device nodes in nested directories:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=701965
-> 
-> Can we get a CVE id for this please?
-> 
-> Cheers
-> Nico
+In 2011 the problem with alloca() was not defined as a vulnerability.
 
-Please use CVE-2013-1813 for this issue.
+http://sourceware.org/bugzilla/show_bug.cgi?id=12671
 
-Just a quick note:
+Maksymilian Arciemowicz
+http://cxsecurity.com/ <http://cxsec.org/>
 
-find / -perm +0002
-
-should show a very minimal list (/tmp, /var/tmp, some spool dirs, and
-symbolic links), please run this on your packages/systems to ensure
-nothing silly is going out the door. It's 2013, I shouldn't be assigning
-CVEs for this problem still :P.
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRMtUJAAoJEBYNRVNeJnmTtxwP/2SWV7ap1o3l8dJ0PbkWWsBm
-a1f8xQZ7/ir4XPF0aYTFXuq95qghTqjBHsJSm+MzS42rzULYeq7rJ7mI+ZOOlAIo
-z3PaRYnMxy2XsjJJu87C9fFAfJbYxsLfLEKWSD3s32jQhtSHgjeSDHUfmRVerYyT
-vf13i0UWhHyCvXfP4TJW8Kd3Eepa5HVrYkzBL22BkfYqW9qdKWL0i4DbENyuHPjk
-O+ycYKJi7s7NslwpKWxvs8GQEVUUN3RCj4PT5JottB8Sx3inyx6A07t+llQ0WwEb
-VFI+NYsx04TVxVVXiBfE1tF81AIdNcEvQIeIJxsDkiCvPhNxgWDLALBmDMZQrxYp
-fvJmstoLlZ8+eZDhMHMbD34VhmmAijKdd4wBSdEC77j+euw7K3HTYKPlKuobY3BV
-pFu3P9uViJdaciKBNW+RqzlruJDmJnub+gdTD/0o2R8XQkM4q6J8C7vzYSQLqKsP
-4P820VlfttBKotQU3AmXdehYxqR5JavBbc94dvLUs+ENbn1S3BhbaBMQAAFVR/tm
-UO47DKQr+fHludhAQTrPhryS70dHkWYvTKWBxRJS4BczmtuqtBTvcj6YG7hFIP7W
-trOTRSgHSxxlufD4/g6aM2hHzxM+JBRB/Ligbx7qGCj1lLxPX4T4LQAkdWc2riyO
-jRYIu8P8veSaYNpCiGsD
-=V9L1
------END PGP SIGNATURE-----
