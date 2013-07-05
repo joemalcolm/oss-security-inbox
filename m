@@ -1,93 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/19/2
-Message-ID: <523B47D9.2020508@redhat.com>
-Date: Thu, 19 Sep 2013 12:52:09 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Thierry Carrez <thierry@...nstack.org>, Jeremy Stanley <jeremy@...nstack.org>
-Subject: OpenStack: Glance image creation in other tenant accounts (CVE-2013-4354)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/15
+Message-ID: <51D7269B.5060508@oracle.com>
+Date: Fri, 05 Jul 2013 13:03:39 -0700
+From: Oracle Security Alerts <secalert_us@...cle.com>
+To: kseifried@...hat.com
+CC: oss-security@...ts.openwall.com, Raphael Geissert <geissert@...ian.org>, security@...cle.com
+Subject: Re: Possible CVE request: virtualbox virtio-net host DoS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-With apologies, I was supposed to send this out yesterday but missed
-it. I spoke with upstream and we agreed that making this public does
-not present a major risk.
+Hi Kurt,
 
-- From https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-4354
+On 7/5/13 12:22 PM, Kurt Seifried wrote:
+> On 07/05/2013 04:13 AM, Raphael Geissert wrote:
+>> Hi,
+> 
+>> Quoting [1]:
+>>> I have discovered a problem with virtio-net that leads to a 
+>>> lockup of the host machine's kernel and the need for a hard
+>>> reset to make it working again.
+> 
+>> The bug is said to be worked around in version 4.2.14 and really 
+>> fixed in 4.2.16, but the changelog of either version doesn't 
+>> reference that ticket.
+> 
+>> Rumors say that virtualbox makes the host randomly hang, but
+>> since there is an actual bug report and confirmation from
+>> upstream this time I guess a CVE id should be assigned.
+> 
+>> [1] https://www.virtualbox.org/ticket/11863 [2] 
+>> https://www.virtualbox.org/wiki/Changelog [3] 
+>> https://secunia.com/advisories/53858/
+> 
+>> Cheers, -- Raphael Geissert - Debian Developer www.debian.org - 
+>> get.debian.net
+> 
+> Oracle is a CNA so they should handle this:
+> 
+> http://cve.mitre.org/cve/cna.html
+> 
+> CC'ing them. Can you guys assign one quickly so this can be
+> properly tracked? Thanks!
 
-==========
-Dafna Ron of Red Hat reports:
+Please use CVE-2013-3792 to track this issue.
 
-Description of problem:
+Thanks,
+- -Ritwik Ghoshal
 
-when I try to create an image with tenant name and not tenant ID, the
-image is not created and no errors are issued.
-you simply cannot find the image.
+- --
+Best Regards,
 
-Version-Release number of selected component (if applicable):
-
-openstack-glance-2013.1.3-1.el6ost.noarch
-
-How reproducible:
-
-100%
-
-Steps to Reproduce:
-1. install AIO with local tgt storage (using packstack)
-2. create a tenant and a user
-3. create an image for the tenant using the tenant name
-4. run glance image-list while logging in with user
-5. run the same create command using tenant ID
-6. run glance image-list while logging in with the user
-
-Actual results:
-
-image is no created with tenant name.
-no errors or indicators that the image was not created.
-
-Expected results:
-
-image should be created with tenant name
-if we decided not to allow create of image with tenant name we should
-block the command from running with missing param error
-
-========
-
-Upon further investigation Flavio Percoco of Red Hat reports:
-
-Ayal suggested this could also be a security issue. I went ahead and
-tested current behavior and indeed, this behavior could be used to
-inject images to other users.
-
-Scenario:
-- - Create an image using user1
-- - Pick tenant's id of user2 and add it as a member of the image user1
-just created
-- - Use user2 to list images. This will list the image user1 created.
-
-I think this is an issue because it allows user from other tenants to
-sneak images with a backdoor to other tenants.
-==========
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Oracle Security Alerts
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG/MacGPG2 v2.0.18 (Darwin)
+Comment: GPGTools - http://gpgtools.org
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJSO0fYAAoJEBYNRVNeJnmTrm4QAKP8lbvyPi6UbqGFDBcZbNcw
-K8H9Qrg0IPR6P2cLJMpMN0RKkMlkPy7sHJZXx3Yg4ki2wJ39rq5/XyaMs0y3QvbX
-OumUV9hw81CuODPbpT+n5qaIWShB2LWDUK5hOvezDAyjrQTt6F0BGvkDMFp8mEA5
-IX074I5590GgrNRcr1YtJyRDEblP0Q6Xcm4Pla3ShuyH39Vj6TGQDhru5Pu/0WtU
-9WrDmMC7koXLzcFPj3y7XUvhE6ftjlX/9Cnc8aYA+nLA4xMVlDPazprFmcf68pWc
-VUWA6C2BtsQOA30tarzHSAdd0eKiGSQ7VqKhT0Kis8rrgA65EwXKZ8CecnVdTfy6
-yTGINC18iBoqR4M9bRmVpDE5xawtM0cf1BUzZZEq3pGL6ZiuALWqhMjxXRFiWOaz
-Lg+92OvopIBl+L0ncWXwC0IhBvmanBl4VzPItbNlMRmgyXLUNdlRuyDJzfWci6Z8
-Uh4kyl/Xk3sqBgdJOyd+gS8IRxlsqxOitppkpScDFTc7yNXzrqLS+fe1Duhkrct6
-g1tKmvrBvKzOqfglSxHmABR81YS5m3DRvSEGpKsNN1uest/hNpRpbVUUB0PbgD0I
-UEeug7jmKwLe1igBXrctxrBc/RRtw5c1PmvlbXDFmt3tLpl0ar0d+iuPTdZQZzee
-WaPgP+KUFohNJyS/2Ljn
-=gLOM
+iEYEARECAAYFAlHXJpoACgkQf36Vx1dNy5qhPgCfekd/nmFXwk7kADDn1N5QuSJF
+XJwAn2JZH6u6EYRYdLeGy59VhMhzq8o5
+=z5Rn
 -----END PGP SIGNATURE-----
