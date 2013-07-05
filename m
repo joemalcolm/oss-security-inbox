@@ -1,122 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/27
-Message-ID: <20130605194833.GA27861@tassilo.jf.intel.com>
-Date: Wed, 5 Jun 2013 12:48:33 -0700
-From: Andi Kleen <ak@...ux.jf.intel.com>
-To: Peter Zijlstra <peterz@...radead.org>
-Cc: Andi Kleen <ak@...ux.jf.intel.com>, Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>, eranian@...gle.com, security@...nel.org
-Subject: Re: CVE Request: More perf security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/3
+Message-ID: <CA+z51A5LsQOLaSsKJGuF0GkJJ+jHOeKWDZcu5CUDrMA8c+ySrQ@mail.gmail.com>
+Date: Fri, 5 Jul 2013 09:58:23 +0200
+From: Shad Laws <shad@...dlaws.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>,  Gallery3 Security Team <security@...leryproject.org>
+Subject: Re: CVE Request -- gallery3 (3.0.9): Fixing two security flaws
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 05, 2013 at 10:23:02AM +0200, Peter Zijlstra wrote:
-> On Tue, Jun 04, 2013 at 10:59:33AM -0700, Andi Kleen wrote:
-> > > 3. Information leak (??) via perf LBR filter 
-> > 
-> > Leak + crash actually.
-> > 
-> > > 
-> > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6e15eb3ba6c0249c9e8c783517d131b47db995ca
-> > > 
-> > > commit 6e15eb3ba6c0249c9e8c783517d131b47db995ca
-> > > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-> > > Date:   Fri May 3 14:11:24 2013 +0200
-> > > 
-> > >     perf/x86/intel/lbr: Fix LBR filter
-> > >     
-> > >     The LBR 'from' adddress is under full userspace control; ensure
-> > >     we validate it before reading from it.
-> > 
-> > This patch is known broken and causes additional crashes.
-> > There's no updated patch for that so far.
-> 
-> And yet there's no crash report in my inbox.. how kind you you andi.
+Hello everyone,
 
-It was brand new. Normally we only report when we knew more.
+A quick clarification on issue #2: the problem wasn't the item information
+or paths, but rather the original-sized image file.
 
-I just posted it here to stop people from releasing buggy updates.
+A legitimate user with "view" privileges for an item should be able to:
+- get the item info and image file links (e.g.
+".../rest/data/123?size=thumb", etc.)
+- follow the links and get the "thumb" and "resize" image files themselves.
+- guess the "full" image file link without thinking too hard (e.g.
+".../rest/data/123?size=full")
+- follow the link and get the "full" image file itself **ONLY** if they
+have "view_full" access.
 
-> 
-> And I know you don't agree with the patch, but since you're too lazy to
-> provide a better one I didn't think you minded _that_ much :-)
+The problem was that this last condition wasn't being properly enforced.
 
-It has nothing to do with the old performance problem 
-(the patch adding a O(n^2) performance path)
-
-We found recently a correctness problem during some stress testing.
-It seems to be a latent bug in the module list handling.
-
-Under some conditions the module list walk from the NMI handler
-crashes.
-
-Strangely it even happens under normal operation, you don't
-even need to load/unload a module.
-
-Here's an example oops (unfortunately with a lot of junk)
-
-[ 2041.104399]  [<c26bc64d>] ? do_page_fault+0xd/0x10
-[ 2041.109766]  [<c26b9cac>] ? error_code+0x6c/0x74
-[ 2041.114943]  [<c20967b8>] ? print_modules+0x38/0xe0
-[ 2041.120408]  [<c26b07e6>] ? printk+0x3d/0x3f
-[ 2041.125195]  [<c2033d1f>] ? warn_slowpath_common+0x5f/0x80
-[ 2041.131342]  [<c26bbfbf>] ? vmalloc_fault+0x5f/0xd2
-[ 2041.136807]  [<c26bbfbf>] ? vmalloc_fault+0x5f/0xd2
-[ 2041.142277]  [<f967e0a0>] ? cpufreq_get_measured_perf+0xa0/0xe0 [mperf]
-[ 2041.149686]  [<c26bc640>] ? __do_page_fault+0x550/0x550
-[ 2041.155546]  [<c2033d62>] ? warn_slowpath_null+0x22/0x30
-[ 2041.161499]  [<c26bbfbf>] ? vmalloc_fault+0x5f/0xd2
-[ 2041.166967]  [<f967e0a0>] ? cpufreq_get_measured_perf+0xa0/0xe0 [mperf]
-[ 2041.174376]  [<c26bc56d>] ? __do_page_fault+0x47d/0x550
-[ 2041.180237]  [<c20137cf>] ? intel_pmu_enable_all+0x1f/0x90
-[ 2041.186386]  [<f967e0a0>] ? cpufreq_get_measured_perf+0xa0/0xe0 [mperf]
-[ 2041.193795]  [<f967e0a0>] ? cpufreq_get_measured_perf+0xa0/0xe0 [mperf]
-[ 2041.201206]  [<f967e0a0>] ? cpufreq_get_measured_perf+0xa0/0xe0 [mperf]
-[ 2041.208617]  [<f967e0a0>] ? cpufreq_get_measured_perf+0xa0/0xe0 [mperf]
-[ 2041.216027]  [<c26bc640>] ? __do_page_fault+0x550/0x550
-[ 2041.221881]  [<c26bc64d>] ? do_page_fault+0xd/0x10
-[ 2041.227250]  [<c26b9cac>] ? error_code+0x6c/0x74
-[ 2041.232426]  [<f967e0a0>] ? cpufreq_get_measured_perf+0xa0/0xe0 [mperf]
-[ 2041.239837]  [<f967e0a0>] ? cpufreq_get_measured_perf+0xa0/0xe0 [mperf]
-[ 2041.247248]  [<f967e0a0>] ? cpufreq_get_measured_perf+0xa0/0xe0 [mperf]
-[ 2041.254658]  [<c2090e89>] ? __module_address+0x39/0x80
-[ 2041.260415]  [<c2090ee0>] ? __module_text_address+0x10/0x60
-[ 2041.266660]  [<f967e0a0>] ? cpufreq_get_measured_perf+0xa0/0xe0 [mperf]
-[ 2041.274068]  [<c209674c>] ? is_module_text_address+0x1c/0x50
-[ 2041.280411]  [<c20523c7>] ? kernel_text_address+0x47/0x50
-[ 2041.286459]  [<c2011167>] ? branch_type+0x47/0x240
-[ 2041.291834]  [<c24c1ceb>] ? __cpufreq_driver_getavg+0x4b/0x70
-[ 2041.298271]  [<c24c1cec>] ? __cpufreq_driver_getavg+0x4c/0x70
-[ 2041.304709]  [<c20117b1>] ? intel_pmu_lbr_read+0x241/0x420
-[ 2041.310858]  [<f967e0c0>] ? cpufreq_get_measured_perf+0xc0/0xe0 [mperf]
-[ 2041.318270]  [<c201409a>] ? intel_pmu_handle_irq+0x9a/0x360
-[ 2041.324516]  [<c206dab0>] ? find_busiest_group+0x110/0x9e0
-[ 2041.330668]  [<c26baedb>] ? perf_event_nmi_handler+0x1b/0x20
-[ 2041.337008]  [<c26ba641>] ? nmi_handle.isra.0+0x41/0x60
-[ 2041.342862]  [<c26ba753>] ? do_nmi+0xf3/0x420
-
-struct module *__module_address(unsigned long addr)
-{
-        struct module *mod;
-
-        if (addr < module_addr_min || addr > module_addr_max)
-                return NULL;
-
-        list_for_each_entry_rcu(mod, &modules, list) {
-                if (mod->state == MODULE_STATE_UNFORMED)
-                ^^^^^^^ trigger page fault ^^^^^^^
-                        continue;
-                if (within_module_core(addr, mod)
-                    || within_module_init(addr, mod))
-                        return mod;
-        }
-        return NULL;
-}
+Thanks again, and sorry for the delay in response!
+Shad
 
 
+On 4 July 2013 11:19, Jan Lieskovsky <jlieskov@...hat.com> wrote:
 
--Andi
+> Hello Kurt, Steve, vendors,
+>
+>   Gallery upstream has released 3.0.9 version, correcting two security
+> flaws:
+>   [1] http://galleryproject.org/gallery_3_0_9
+>
+> My guess [***] is the two issues are as follows:
+>
+> * Issue #1 - Improper stripping of URL fragments in flowplayer
+> SWF file might lead to reply attacks (a different flaw than CVE-2013-2138):
+>
+> ----------------------------------------------------------------------------
+>
+>   A security flaw was found in the way flowplayer SWF file handling
+> functionality
+>   of Gallery version 3, an open source project with the goal to develop and
+>   support leading photo sharing web application solutions, processed
+> certain
+>   URL fragments passed to this file (certain URL fragments were not
+> stripped
+>   properly when these files were called via direct URL request(s)). A
+> remote
+>   attacker could use this flaw to conduct replay attacks.
+>
+>   A different vulnerability than CVE-2013-2138.
+>
+>   Upstream ticket:
+>   [2] http://sourceforge.net/apps/trac/gallery/ticket/2073
+>
+>   Relevant upstream patch:
+>   [3]
+> https://github.com/gallery/gallery3/commit/c5318bb1a2dd266b50317a2adb74d74338593733
+>
+>   References:
+>   [4] https://bugzilla.redhat.com/show_bug.cgi?id=981197
+>
+> * Issue #2 - gallery3: Multiple information exposure flaws in data rest
+> core module
+>
+> -----------------------------------------------------------------------------------
+>
+>   Multiple information exposure flaws were found in the way data rest core
+> module
+>   of Gallery version 3, an open source project with the goal to develop
+> and support
+>   leading photo sharing web application solutions, used to previously
+> restrict access
+>   to certain items of the photo album. A remote attacker, valid Gallery 3
+> user, could
+>   use this flaw to possibly obtain sensitive information (file, resize or
+> thumb path
+>   of the item in question).
+>
+>   Upstream ticket:
+>   [5] http://sourceforge.net/apps/trac/gallery/ticket/2074
+>
+>   Relevant upstream patch (against 3.0.x branch):
+>   [6]
+> https://github.com/gallery/gallery3/commit/cbbcf1b4791762d7da0ea7b6c4f4b551a4d9caed
+>
+>   References:
+>   [7] https://bugzilla.redhat.com/show_bug.cgi?id=981198
+>
+> Could you allocate CVE identifiers for these?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> [***] Guess because the issues aren't more thoroughly described in
+> upstream announcement [1]
+>       and former (private) email check with Gallery3 upstream didn't
+> provide more details
+>       either. Cc-ed them on this post too, they to correct me where
+> necessary.
+>
 
-
-
-
--- 
-ak@...ux.intel.com -- Speaking for myself only
