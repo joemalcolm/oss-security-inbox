@@ -1,21 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/5
-Message-ID: <20131126105229.GB8743@suse.de>
-Date: Tue, 26 Nov 2013 11:52:29 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/6
+Message-ID: <20130705131741.GJ4362@suse.de>
+Date: Fri, 5 Jul 2013 15:17:41 +0200
 From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: static IV used in Percona XtraBackup
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: libxml2 external parsed entities issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Jul 05, 2013 at 08:48:04AM -0400, Marc Deslauriers wrote:
+> Hello,
+> 
+> libxml2 earlier than 2.9.0 fetches external parsed entities by default, with no
+> way to disable the behaviour.
+> 
+> Fixed by the following commit:
+> 
+> https://git.gnome.org/browse/libxml2/commit/?id=4629ee02ac649c27f9c0cf98ba017c6b5526070f
+> 
+> More Information:
+> https://mail.gnome.org/archives/xml/2012-October/msg00045.html
+> https://github.com/sparklemotion/nokogiri/issues/693
+> https://bugs.launchpad.net/ubuntu/+source/libxml2/+bug/1194410
+> 
+> 
+> Could a CVE please be assigned to this issue?
 
-This came to our desk:
-https://bugzilla.novell.com/show_bug.cgi?id=852224
-https://bugs.launchpad.net/percona-xtrabackup/+bug/1185343
+Sounds like http://seclists.org/oss-sec/2013/q1/391  
+and
+"Please use CVE-2013-0339 for libxml2 external entities expansion"
 
-constant IV used in CTR Mode, allowing plaintext retrieval
-attacks.
+?
 
-I think it needs a CVE.
-
-Ciao, Marcus
+Ciao, Marus
