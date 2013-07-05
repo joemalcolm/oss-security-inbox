@@ -1,118 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/12
-Message-ID: <CAD1Nwhj5wYkmYBTX1C0Ct8tkS_rCKtAZm6XstNDO5hdLAry6BQ@mail.gmail.com>
-Date: Tue, 22 Jan 2013 16:49:12 +0100
-From: Lukas Reschke <lukas@...cloud.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/13
+Message-ID: <CABbbngAKWqChsW7spqamRHDwsqB+CkrmAg+jGmqajrPb4S_8Kg@mail.gmail.com>
+Date: Fri, 5 Jul 2013 13:54:20 -0700
+From: Forest Monsen <forest.monsen@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "security@...cloud.com" <security@...cloud.com>
-Subject: ownCloud Security Advisories - 2013-001 & 2013-002
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for Drupal contrib module
 Content-Type: text/plain; charset=utf-8
 
-Multiple XSS vulnerabilities (oC-SA-2013-001)
-=================================
-Web: http://owncloud.org/about/security/advisories/oC-SA-2013-001/
+Hi there,
 
-CVE IDENTIFIERS
-==============
-CVE-2013-0201, CVE-2013-0202, CVE-2013-0203
+I'd like to request a CVE identifier for:
 
-AFFECTED SOFTWARE
-==================
-ownCloud Server < 4.5.6
-ownCloud Server < 4.0.11
+SA-CONTRIB-2013-054 - Fast Permissions Administration - Access Bypass
+https://drupal.org/node/2028813
 
-DESCRIPTION
-===========
-Multiple cross-site scripting (XSS) vulnerabilities in ownCloud 4.5.5
-and 4.0.10 and all prior versions allow remote attackers to inject
-arbitrary web script or HTML via
+Thanks,
+Forest
 
-- the GET parameters to resetpassword.php in
-core/lostpassword/templates/ (CVE-2013-0201)
-  - Commits: c05c8ab (stable45), 4e2b834 (stable4)
-  - Risk: Medium
-  - Note: This is a reflected XSS, which can be only abused using
-Internet Explorer 9 and prior.
-- the mime parameter to mimeicon.php in apps/files/ajax/ (CVE-2013-0201)
-  - Commits: b8e0309 (stable45), f603454 (stable4)
-  - Risk: Medium
-  - Note: This is a reflected XSS, which only affects ownCloud
-versions hosted by Windows.
-- the token parameter to sharing.php in apps/gallery/ (CVE-2013-0201)
-  - Commits: 34ac2f5 (stable45), f71f0ad (stable4)
-  - Risk: Medium
-  - Note: This is a reflected XSS, for a successful exploitation the
-"gallery" app needs to be enabled.
-- the action parameter to sharing.php in core/ajax/ (CVE-2013-0202)
-  - Commits: fb334f3 (stable45), 306d5ee (stable4)
-  - Risk: Low
-  - Note: This is a self XSS, for a successful exploitation the user
-needs to enter malicious Javascript on his own.
-- the POST parameters to new.php in apps/calendar/ajax/event/ (CVE-2013-0203)
-  - Commits: 9e6ba80e (stable45), 708bd (stable4)
-  - Risk: High
-  - Note: This is a stored XSS, for a successful exploitation the
-"calendar" app needs to be enabled. An authenticated remote attacker
-may be able to share this crafted event with other users.
-- the url parameter to addBookmark.php in apps/bookmarks/ajax/ (CVE-2013-0203)
-  - Commits: 6aba1e8 (stable45), 3f37063 (stable4)
-  - Risk: Low
-  - Note: This is a stored XSS, for a successful exploitation the
-"bookmarks" app needs to be enabled.
-
-RESOLUTION
-==========
-Update to ownCloud Server 4.5.6 or 4.0.11
-http://mirrors.owncloud.org/releases/owncloud-4.5.6.tar.bz2
-http://mirrors.owncloud.org/releases/owncloud-4.0.11.tar.bz2
-
-CREDITS
-=======
-The ownCloud Team would like to thank Mathias Karlsson
-(CVE-2013-0201), Ahmad Ashraff (CVE-2013-0202) and Frans Rosén
-(CVE-2012-0203) for discovering this vulnerabilities.
-
-
-=======================================================================
-
-
-Code execution in external storage (oC-SA-2013-002)
-======================================
-Web: http://owncloud.org/about/security/advisories/oC-SA-2013-002/
-
-CVE IDENTIFIER
-=============
-CVE-2013-0204
-
-AFFECTED SOFTWARE
-==================
-ownCloud Server < 4.5.6
-
-RISK
-====
-Critical
-
-COMMIT
-======
-0825f2c (stable45)
-
-DESCRIPTION
-===========
-Due to not sufficiently sanitizing the user input in
-“settings/personal.php” in ownCloud 4.5.x before 4.5.11 an
-authenticated remote attackers may be able to execute arbitrary code
-by entering special crafted PHP code in the mount point settings.
-
-Note: For a successful exploitation the “external storage” app needs
-to be enabled and the admin must allow users to edit their mount
-points.
-
-RESOLUTION
-==========
-Update to ownCloud Server 4.5.6
-http://mirrors.owncloud.org/releases/owncloud-4.5.6.tar.bz2
-
-CREDITS
-=======
-The ownCloud Team would like to thank Yuji Kosuga for discovering this
-vulnerability.
