@@ -1,57 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/4
-Message-ID: <5208DDAC.7000404@redhat.com>
-Date: Mon, 12 Aug 2013 15:05:48 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: X.509 name constraints and potential interpretation conflict
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/12
+Message-ID: <51D73189.1030208@redhat.com>
+Date: Fri, 05 Jul 2013 14:50:17 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, security@...e.de, Sebastian Krahmer <krahmer@...e.de>
+Subject: Question about CVE for X!! DoS
 Content-Type: text/plain; charset=utf-8
 
-NSS CA roots are widely reused, but the implementation deviates from RFC 
-5280 in such a way that NSS can safely accept additional root 
-certificates as long as they have name constraints.  I think this is a 
-bug in RFC 5280, and the fix in NSS is sound, but it could still result 
-in surprising behavior if the root store is used unfiltered with TLS 
-implementations that lack this bug fix.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-For reference, here is the RFC 5280 errata I submitted:
+http://lists.opensuse.org/opensuse-updates/2013-07/msg00023.html
+https://bugzilla.novell.com/show_bug.cgi?id=815583
 
---------------------------------------
-Type: Technical
-Reported by: Florian Weimer <fweimer@...hat.com>
+Lists no CVE? I assume it needs one, or did upstream handle this?
 
-Section: 4.2.1.10
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Original Text
--------------
-    DNS name restrictions are expressed as host.example.com.  Any DNS
-    name that can be constructed by simply adding zero or more labels to
-    the left-hand side of the name satisfies the name constraint.  For
-    example, www.host.example.com would satisfy the constraint but
-    host1.example.com would not.
-
-
-Corrected Text
---------------
-[Add this to the paragraph]
-
-    If an implementation extracts DNS names from the subject
-    distinguished name, DNS name restrictions MUST be applied
-    to these names as well.
-
-
-Notes
------
-When used with TLS and HTTP (according to RFC 2818), section 4.2.1.10, 
-Name Constraints, is technically a NOP that doesn't constraint the CA 
-that has this attribute because RFC 2818 mandates processing of the 
-common name attribute in the subject distinguished name. 
-Consequentially, the constraint can be bypassed by issuing a certificate 
-without a subject alternative name.  The fix is to apply the DNS name 
-restrictions to the relevant parts of the subject distinguished name, 
-too, as implemented here:
-
-https://bugzilla.mozilla.org/show_bug.cgi?id=394919
-
--- 
-Florian Weimer / Red Hat Product Security Team
+iQIcBAEBAgAGBQJR1zGJAAoJEBYNRVNeJnmTc7QP/1oJyLmTnyqYqo2cJGhLwouf
+8n/90rk5++yRy37RwWURHCtvxW+xolJt5+DsdKB45LdAcGoeZXMlWqswUMMVMByN
+o68Evc9jSuVzTr1BdX79Z5khcwoa4hzVcPHcPwyuhaGhaKe4rzJFxesRvJakd/fz
+ZdBTwi6pD1wcS3iAsCPE1vcohBfuOo7K+Tdk/eSGFKCSUtpFK6juV41rw3c3SkKC
+BHYUV9CZeuiFIEvcIXMkqAFDgJ4HKndPP7eOsI2zqaVOGoX57KvlWEwvzHQgsd1/
+u1dahht5GrG7PxK0Mq6kEOQ2bY4cCSkOUJBNL2Izb1M3G1IDnHauoCiF7v3QChLg
+pBOLRmtwNmuuZwELaHmHyrggmTi3M4AUGnJvvDfLZ/5Sq9aD8y9Jov76q+6dgZf5
+RSHbrkHh7KpDfYKZ/KPBhIauIjWxAPg9vl+HtTS2fnFZsE/uXBOO33042+kCbKct
+01sSz05QWGcfLfavD2GeCiJsv6HJBGzXT43QJZkHdFNMCv5WkjmIIKmGdG2Y1p8U
+fCXZG2Pm8EuuKi2hViOmBXp1eqOIy7yrLuHy5YtiCbtTnruHwHrP5C4oRJeFPu37
+SN6mqbbNs8IrsCRk0+KnPie0Mwf1s0PzEfz1wGZkwyeGPZs02poEdtHfSFeeBhjx
+p+5K5WSdeHOchPqs9u/g
+=LEsZ
+-----END PGP SIGNATURE-----
