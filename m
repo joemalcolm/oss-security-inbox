@@ -1,50 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/26/1
-Message-ID: <521AE21C.9030600@redhat.com>
-Date: Mon, 26 Aug 2013 10:35:32 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/5
+Message-ID: <51D6C084.3050604@canonical.com>
+Date: Fri, 05 Jul 2013 08:48:04 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: CVE-2013-5575 LibTIFF through 3.9.5 integer overflow
+Subject: CVE Request: libxml2 external parsed entities issue
 Content-Type: text/plain; charset=utf-8
 
-On 08/24/2013 08:15 PM, cve-assign@...re.org wrote:
-> http://archives.neohapsis.com/archives/fulldisclosure/2013-08/0247.html
-> http://www.x90c.org/advisories/xadv_2013001_libtiff.txt
-> 
-> This apparently only affects older versions but seems different from
-> CVE-2012-1173 and other CVEs, so it is assigned CVE-2013-5575.
-> 
-> 
+Hello,
 
-There seems to be no vulnerability in here, checkout the exploit code:
+libxml2 earlier than 2.9.0 fetches external parsed entities by default, with no
+way to disable the behaviour.
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "tiffio.h"
+Fixed by the following commit:
 
-int tiff_integer_overflow_test(){
-TIFF* tif = TIFFOpen("/home/x90c/sample_spp.tif", "r");
-int samples = 0;
+https://git.gnome.org/browse/libxml2/commit/?id=4629ee02ac649c27f9c0cf98ba017c6b5526070f
 
-/*
- * for instance, TIFFGetField library function will
- * called with malicious samplesperpixel field value
- * TIFFGetField got segfault!
- */
-TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &samples);
+More Information:
+https://mail.gnome.org/archives/xml/2012-October/msg00045.html
+https://github.com/sparklemotion/nokogiri/issues/693
+https://bugs.launchpad.net/ubuntu/+source/libxml2/+bug/1194410
 
-printf("tiff_poc: tif samplesperpixel field=%d\n", samples);
-}
 
-This is obviously missing a check for the return value of *tif after
-TIFFOpen(). In the above case, since libtiff isnt able to open the file,
-it returns a NULL, Our "exploit" code above tried to run TIFFGetField()
-on it, and results in a "fixed value deference",so this is user-mistake
-and not a vulnerability.
+Could a CVE please be assigned to this issue?
 
-I want to ask to REJECT this CVE.
+Thanks,
+
+Marc.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
