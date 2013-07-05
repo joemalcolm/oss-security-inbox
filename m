@@ -1,28 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/8
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF26F99A84@IMCMBX01.MITRE.ORG>
-Date: Fri, 19 Jul 2013 14:59:56 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "kseifried@...hat.com" <kseifried@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Andrew Nacin <nacin@...dpress.org>, Jay Turla <shipcodez@...il.com>
-Subject: RE: Re: SWFUpload <= (Object Injection/CSRF) Vulnerabilities Multiple flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/9
+Message-Id: <20130705182503.7C34E600EF@smtp.hushmail.com>
+Date: Fri, 05 Jul 2013 18:25:03 +0000
+From: "mancha" <mancha1@...h.com>
+To: oss-security@...ts.openwall.com
+Subject: NULL pointer dereferences; multiple issues
 Content-Type: text/plain; charset=utf-8
 
-Kurt said:
+At the suggestion of Marcus Meissner from OpenSUSE, I am posting
+here.
 
->So to confirm:
->
->CVE-2013-4144 swfupload KedAns-Dz object injection
->CVE-2013-4145 duplicate of CVE-2012-3414
-> CVE-2013-4146  swfupload KedAns-Dz CSRF
+---
+Background:
+Beginning with glibc 2.17 (eglibc 2.17), crypt() fails with EINVAL
+(w/ NULL return) if the salt violates specifications. Additionally,
+on FIPS-140 enabled Linux systems, DES or MD5 encrypted passwords
+passed to crypt() fail with EPERM (w/ NULL return).
+---
 
-That is how we're handling it for CVE right now, although since people aren't sure whether there's really a CSRF, I'm waiting to update CVE-2013-4146 until we get more clarity.
+A project of mine, which began with helping the Slackware Linux team
+patch their Shadow tools suite to properly handle possible NULL
+returns from glibc 2.17+ crypt(), has since evolved into a larger
+project where I have been working with developers to introduce
+needed protections to prevent crypt() NULL pointer dereference
+situations. So far the list includes: cvs, gdm, KDE/kdm,
+KDE/kcheckpass, shadow-tools, slim, tcsh, Xorg/xdm, and yp-tools.
 
-I'm also not sure what the real problem is with the "object injection" in this case.  This appears to be an example of "content spoofing" as defined by OWASP/WASC, but using images instead of rendering attacker-controlled text.
+My policy has been to make public my fixes once upstream
+developers had a chance to commit fixes. The only exceptions
+are: cvs (inactive project), shadow-tools (Christian Perrier let
+me know Shadow-tools development is temporarily halted), and
+yp-tools (I have been repeatedly unable to contact Thorsten Kukuk).
+The gdm 2.20.11 fix was not shared with Gnome because gdm, as of
+2.21, no longer supports non-PAM authentication.
 
-It looks like a URL can be used to change the image that's displayed for a Flash button through the upload object itself.   This is not technically XSS because there is no script being used, but apparently it affects how the upload interface is presented to the victim.
+The security implications of these issues vary in nature and
+severity. So far, only xdm has an associated CVE: CVE-2013-2179.
 
-It's not immediately clear to me whether there are phishing-style or clickjacking-style attacks that can be performed against SWFUpload by using a malicious button image.  Just printing out an unexpected image onto the form wouldn't cross privilege boundaries by itself I don't think, because the attacker already got the victim's browser to render the SWFUpload dialog that shows the button in the first place, and the SWFUpload functionality appears to be intended to allow remotely-specified images based on the buttonImageURL parameter and documentation for the .  If the button can be used to submit a file without interaction or trick the user in some other way, that might be sufficient for a CVE.
+My progress is being documented in Slackware's de facto bug &
+discussion forum (linuxquestions.org). You can view thread here: 
+https://www.linuxquestions.org/questions/slackware-14/%5Bslackware-
+current%5D-glibc-2-17-shadow-and-other-penumbrae-4175461061/
 
-- Steve
+Finally, I am placing patch files along with a signed digest file
+in a sourceforge project:
+https://sourceforge.net/projects/miscellaneouspa/files/glibc217/
+
+Cheers,
+
+--mancha
+
+P.S. I was not involved with the fixes for screen, ppp, dropbear,
+and popa3d. I documented the upstream fixes, however, for
+Slackware's benefit.
+
+==
+PGP Key ID: 0xB5ABF4FFF7048E92
+Key fingerprint = 7F1F E9BF 77CF 15AC 8F6B  C934 B5AB F4FF F704 8E92
+==
 
