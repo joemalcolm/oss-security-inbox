@@ -1,37 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/27/3
-Message-ID: <51CBD80E.8080901@redhat.com>
-Date: Thu, 27 Jun 2013 00:13:34 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/10
+Message-ID: <51D71AAE.1090102@redhat.com>
+Date: Fri, 05 Jul 2013 13:12:46 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Russ Allbery <rra@...nford.edu>
-CC: oss-security@...ts.openwall.com, cve-assign@...re.org, "Steven M. Christey" <coley@...re.org>
-Subject: Re: 1.2k bug reports for Debian, some may be security
+To: oss-security@...ts.openwall.com
+CC: Marcus Meissner <meissner@...e.de>, "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE Request: libxml2 external parsed entities issue
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/26/2013 11:56 PM, Russ Allbery wrote:
-> Kurt Seifried <kseifried@...hat.com> writes:
+On 07/05/2013 08:38 AM, Marcus Meissner wrote:
+> On Fri, Jul 05, 2013 at 09:30:07AM -0400, Marc Deslauriers wrote:
+>> On 13-07-05 09:17 AM, Marcus Meissner wrote:
+>>> On Fri, Jul 05, 2013 at 08:48:04AM -0400, Marc Deslauriers
+>>> wrote:
+>>>> Hello,
+>>>> 
+>>>> libxml2 earlier than 2.9.0 fetches external parsed entities
+>>>> by default, with no way to disable the behaviour.
+>>>> 
+>>>> Fixed by the following commit:
+>>>> 
+>>>> https://git.gnome.org/browse/libxml2/commit/?id=4629ee02ac649c27f9c0cf98ba017c6b5526070f
+>>>>
+>>>>
+>>>> 
+More Information:
+>>>> https://mail.gnome.org/archives/xml/2012-October/msg00045.html
+>>>>
+>>>> 
+https://github.com/sparklemotion/nokogiri/issues/693
+>>>> https://bugs.launchpad.net/ubuntu/+source/libxml2/+bug/1194410
+>>>>
+>>>>
+>>>>
+>>>> 
+Could a CVE please be assigned to this issue?
+>>> 
+>>> Sounds like http://seclists.org/oss-sec/2013/q1/391 and "Please
+>>> use CVE-2013-0339 for libxml2 external entities expansion"
+>>> 
+>>> ?
+>>> 
+>> 
+>> Hrm, I would have thought CVE-2013-0339 was for the entities
+>> expansion DoS issue fixed by this commit:
+>> 
+>> https://git.gnome.org/browse/libxml2/commit/?id=23f05e0c33987d6605387b300c4be5da2120a7ab
+>>
+>>
+>> 
+The other one is for external entities expansion being enabled by
+default with
+>> no way to turn it off. You would lump them together?
 > 
->> I will of course be doing CVEs for these (*sob*). In order to
->> make this possible though I'm going to need some help in the form
->> of good CVE requests in this case I will be fascist.
+> Mostly wondering, as it seemed more or less related. Perhaps
+> someone else has more insight.
 > 
-> I suspect you will not want to be doing CVEs for most of these.
-> The ones I've seen so far aren't really security issues.  They're
-> cases of command-line programs crashing on input, but usually input
-> that is not feasibly under the control of an attacker (command-line
-> options provided by the user, etc.).
-> 
-> My guess is that the vast majority of these problems are
-> robustness issues, but are not security issues under any reasonable
-> threat model that I can think of.
-> 
+> Ciao, Marcus
 
-Yup. hence the "Attack outcome (is this a security vulnerability in
-other words)". I'm hoping <10% of these are security vulnerabilities.
-But anything setuid/setgid, etc.... all sorts of potential for problems.
+So the emails covering this:
+
+http://www.openwall.com/lists/oss-security/2013/04/12/6
+
+CVE-2013-0338 - libxml2 internal entity expansion
+
+CVE-2013-0339 - libxml2 external entities expansion
+
+For CVE-2013-0340 and CVE-2013-0339, there are "workarounds" available
+for application developers, although such workarounds may be very
+expensive to develop, and this might place "too much" responsibility
+to the developers - so, these assignments may still be OK.  It is
+still worth discussion.
+
+So same problem, just a new (better) fix is my take, Steve, does that
+work for you as well?
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -39,17 +84,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRy9gNAAoJEBYNRVNeJnmTJuQP/3MxneL9auzCGqT156Qu0A40
-njwYBrJBoMXNi8hPyIMJT1USGIWGpYwW4nMi2cGYWZIZU0w+sfuBpKjqtb6VtNp8
-tB53S2+5/J3Cnjo0JJWI3EULDD6dh0pExz6YOKKlPv83Hpu7z3w5foSkVCM7ZT+n
-TIOIPVnZiwvNxowxe8VdcZN4bwdkbH5GwI7M7O18Mosg+cjBVmTbnUG4UdUQSxk0
-6CDYYIm4B6JSssV9Ow1AcDnTe1jcNUWNjhhVOWyp65hYeOgkNQpeoI7jdNl7uad+
-hfFrqHXkREDs1nft9RAzqKIFYzHQe/tns0teGZB5dFBh43tZX2XUXKUxsRftyEZw
-PWJSCcUB8usaDqcRL3EYg0l5TntyUohV+9ehX2fDHyBmzSdlJoN0OPpyD2ZDH3D4
-Y7NA9uQGwakI7+DvLyb3Nxzyo7qEpkO+24z0ZyisiKLaolxeHediQpZE2mYNh31k
-+gYYV/20m2/hBwJhLsMgHw811MB2z8fxdxMBL+0WwryFhcjQklLCmrU2aMDh14Wm
-8fsO8V8/G39qOepRx76j440vEdCulMOZkrepu+Nk5z/S34FT+joMOrl7iTKGW9WN
-lWXy0dkE/3ta1YM3ddHhQumII5HVt01M7LnkzdmZpoGOaklZYG9P7O68eZT+wUFI
-6mFMebi9ElH2DFOdTX1x
-=HlQ4
+iQIcBAEBAgAGBQJR1xquAAoJEBYNRVNeJnmTfQwQAJGm8zXjmI5zOPtYsl6BX2T5
+5KSQ7ZkfB7iEaaHEtiZPnocXlf0No7jpq6VtMqdoiTQ3mzCXiMvs7Cev6jg9EeA7
+OnHu7Z7C/m5ZAwxdclwJ+83TjtSKcf/Yz1K6vRIAlTeh+cDWhqWGIW/48bX54KTh
+Uj+8oW7ka101ZLaycA8y0UwPsiz9vzrHAonDSn09CcUI7AhxgsLTKOHIl0UgGIZi
+WHNw5rQaxxXtEkyVh4Y0lsn1mqvJv8kSjaRUQ+dH9bv8ToIzGYbm6NLdJtcXl7FX
++IIxhhWpvJnYaTnqazzN0GFT55AmFf8x6Fu4FPrbW3Pc5S6UdRBVjjdm/Vs3TFr8
+IBDoSp0nqGkIr2Wx9n8BfZeRb7sAUkGZm3l4enue7W9HwQghdzsTyZrL+9xtHO+B
+0YGuo4r+DxFyGMnsyU7m1oXQoCvALp02KPBpr566dKpZ7MFxyim/h8dUxRCO+7R6
+8pVI7icFb+lKfimQryqgclXmmDaFCmikbHwZ+v+J1CrB4yQ3I0JLo7pxi5mNtEvx
+uqU9xvlGZpJiWjDnIRAe4JPgKTqu2AHOQXJv9ITXW1T7E9w9JrB+b14gwM965HT4
+UkPH9OusLZFFp+PBK8CyZAzQ/yOCfoFxkW9DtvWif5CGHORLos01lLogZdITQ7Eq
+Kf9QNiB0vbB51dKcpqPt
+=xLit
 -----END PGP SIGNATURE-----
