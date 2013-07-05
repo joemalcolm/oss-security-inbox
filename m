@@ -1,33 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/08/4
-Message-ID: <CALMiPQDsdpi=KFoOyO9m7txEWSwuJRYQTxFzgEsT97eEEYebiQ@mail.gmail.com>
-Date: Thu, 7 Feb 2013 19:34:47 -0800
-From: James Tucker <raggi@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2013-0263: Rack all versions, Timing attack in cookie sessions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/14
+Message-ID: <20130705210639.GP28839@betterave.cristau.org>
+Date: Fri, 5 Jul 2013 23:06:39 +0200
+From: Julien Cristau <jcristau@...ian.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: security@...e.de, Sebastian Krahmer <krahmer@...e.de>
+Subject: Re: Question about CVE for X!! DoS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Jul  5, 2013 at 14:50:17 -0600, Kurt Seifried wrote:
 
-CVE: CVE-2013-0263
-Software: Rack (rack.github.com)
-Type of vulnerability: Timing attack, leading to potential RCE
-Vulnerable code:
-https://github.com/rack/rack/blob/master/lib/rack/session/cookie.rb#L149
-Patch: https://github.com/rack/rack/commit/0cd7e9aa397f8ebb3b8481d67dbac8b4863a7f07
-and https://github.com/rack/rack/commit/9a81b961457805f6d1a5c275d053068440421e11
-Versions affected: All prior versions.
-Versions fixed: 1.1.6, 1.2.8, 1.3.10, 1.4.5, 1.5.2
-Reporter: Ben Murphy
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (Darwin)
+> http://lists.opensuse.org/opensuse-updates/2013-07/msg00023.html
+> https://bugzilla.novell.com/show_bug.cgi?id=815583
+> 
+> Lists no CVE? I assume it needs one, or did upstream handle this?
+> 
+If you can connect to an X server, DoSing it is trivial (think
+XGrabServer).  This has never been considered a security issue AFAIK.
 
-iQEcBAEBAgAGBQJRFHIMAAoJELphsezQxofDmlwH/1vqc5a8UoyyqQJW9FcWisKt
-+M/2xboWI5tXJ/XYEzp1hLenTEmUVRK0YpezgROCJPCTCi0RkRW00cHW8Jo7vDs1
-8xxId6vlCDAgtWvJX3oRlCIQ7ot/CrcDFvTtLDjtdgkzydv534GUMAPiZphF2Mrz
-TuU0LVCKx8P2GYnT0wid6bmgLhtHS9XYWTN+K/QRmwqJlhMMeK061CzhTwPESWyE
-9xgwH0v7W3HpAo5NAA227/Z5i0s89tNCYHbTrt6B75K0MRaKbsTszLk0E0H3qBg9
-rvJoaXOv2Z9IqvvZMpOR/Gg89vIE1LXtTZixR3BgJQazLKFPH1wByy7jMlzC3F0=
-=wEzk
------END PGP SIGNATURE-----
+Cheers,
+Julien
