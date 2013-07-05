@@ -1,55 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/5
-Message-ID: <CA+5g0SJMp87UWZcHDXPZoYCh1NhTkw1ZALyEgP7NnQpwiRX53g@mail.gmail.com>
-Date: Fri, 14 Jun 2013 14:24:09 -0300
-From: Felipe Pena <felipensp@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/7
+Message-ID: <51D6CA5F.9040604@canonical.com>
+Date: Fri, 05 Jul 2013 09:30:07 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: FD leakage for cgi program on Monkey HTTPD
+Subject: Re: CVE Request: libxml2 external parsed entities issue
 Content-Type: text/plain; charset=utf-8
 
-I've identified a fd leakage when running a program via Monkey HTTPD -
-CGI plugin.
+On 13-07-05 09:17 AM, Marcus Meissner wrote:
+> On Fri, Jul 05, 2013 at 08:48:04AM -0400, Marc Deslauriers wrote:
+>> Hello,
+>>
+>> libxml2 earlier than 2.9.0 fetches external parsed entities by default, with no
+>> way to disable the behaviour.
+>>
+>> Fixed by the following commit:
+>>
+>> https://git.gnome.org/browse/libxml2/commit/?id=4629ee02ac649c27f9c0cf98ba017c6b5526070f
+>>
+>> More Information:
+>> https://mail.gnome.org/archives/xml/2012-October/msg00045.html
+>> https://github.com/sparklemotion/nokogiri/issues/693
+>> https://bugs.launchpad.net/ubuntu/+source/libxml2/+bug/1194410
+>>
+>>
+>> Could a CVE please be assigned to this issue?
+> 
+> Sounds like http://seclists.org/oss-sec/2013/q1/391  
+> and
+> "Please use CVE-2013-0339 for libxml2 external entities expansion"
+> 
+> ?
+> 
 
-By runninng `ls -lah /proc/<pid>/fd/` on the CGI program we can see:
+Hrm, I would have thought CVE-2013-0339 was for the entities expansion DoS issue
+fixed by this commit:
 
-total 0
-dr-x------ 2 felipe felipe 0 Jun 14 14:00 .
-dr-xr-xr-x 8 felipe felipe 0 Jun 14 14:00 ..
-lr-x------ 1 felipe felipe 64 Jun 14 14:00 0 -> pipe:[239545]
-l-wx------ 1 felipe felipe 64 Jun 14 14:00 1 -> pipe:[239546]
-lrwx------ 1 felipe felipe 64 Jun 14 14:00 10 -> anon_inode:[eventpoll]
-lr-x------ 1 felipe felipe 64 Jun 14 14:00 11 -> pipe:[242960]
-lrwx------ 1 felipe felipe 64 Jun 14 14:00 12 -> anon_inode:[eventpoll]
-lrwx------ 1 felipe felipe 64 Jun 14 14:00 13 -> anon_inode:[eventpoll]
-lrwx------ 1 felipe felipe 64 Jun 14 14:00 14 -> anon_inode:[eventpoll]
-lrwx------ 1 felipe felipe 64 Jun 14 14:00 15 -> anon_inode:[eventpoll]
-lrwx------ 1 felipe felipe 64 Jun 14 14:00 16 -> anon_inode:[eventpoll]
-lrwx------ 1 felipe felipe 64 Jun 14 14:00 17 -> anon_inode:[eventpoll]
-lrwx------ 1 felipe felipe 64 Jun 14 14:00 18 -> anon_inode:[eventpoll]
-lrwx------ 1 felipe felipe 64 Jun 14 14:00 19 -> anon_inode:[eventpoll]
-l-wx------ 1 felipe felipe 64 Jun 14 14:00 2 -> /dev/null
-lrwx------ 1 felipe felipe 64 Jun 14 14:00 3 -> socket:[240797]
-lrwx------ 1 felipe felipe 64 Jun 14 14:00 4 ->
-/home/felipe/audit/monkey/monkey/logs/monkey.pid.2001
-lr-x------ 1 felipe felipe 64 Jun 14 14:00 5 -> pipe:[240798]
-l-wx------ 1 felipe felipe 64 Jun 14 14:00 6 -> pipe:[240798]
-lr-x------ 1 felipe felipe 64 Jun 14 14:00 7 -> pipe:[240799]
-l-wx------ 1 felipe felipe 64 Jun 14 14:00 8 -> pipe:[240799]
-lrwx------ 1 felipe felipe 64 Jun 14 14:00 9 -> socket:[242784]
+https://git.gnome.org/browse/libxml2/commit/?id=23f05e0c33987d6605387b300c4be5da2120a7ab
 
-Hence a malicious program can take control of Monkey HTTP request response
-through a network socket related file descriptor, etc.
+The other one is for external entities expansion being enabled by default with
+no way to turn it off. You would lump them together?
 
+Marc.
 
-Report
-------
-http://bugs.monkey-project.com/ticket/187
-
-
-CREDITS
--------
-Felipe Pena
-
---
-Regards,
-Felipe Pena
