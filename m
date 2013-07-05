@@ -1,70 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/14
-Message-ID: <20130606220233.GA24431@kroah.com>
-Date: Thu, 6 Jun 2013 15:02:33 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/4
+Message-ID: <CAA7hUgH1p_ZzYJ-B3mkT++xTNt2KzZh-KbfnQF3gqkbiyM=-Ew@mail.gmail.com>
+Date: Fri, 5 Jul 2013 12:13:56 +0200
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel format string flaws
+Subject: Possible CVE request: virtualbox virtio-net host DoS
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 06, 2013 at 01:59:55PM -0700, Kees Cook wrote:
-> I've found two issues in how Linux uses format strings:
-> 
-> 
-> CVE-2013-2852: b43 wireless driver
-> 
-> The b43 driver reports error strings that can be interpreted as format
-> strings. Under normal conditions, this is not a problem, but it is
-> possible for the "fwpostfix" module parameter to change the filenames
-> used to fetch firmware. When such a file is not found, the filename
-> will be processed as a format string. This flaw could potentially allow
-> escalation from uid-0 to ring-0, so except for certain environments,
-> it is not too serious.
-> 
-> If b43 hardware is available, this should show itself easily. I don't have
-> any available for testing, but it seems it would show itself like this:
-> # rmmod b43
-> # modprobe b43 fwpostfix=AA%xBB
-> ...
-> # dmesg
-> ...
-> b43-0 ERROR: Firmware file "b43AAdeff80ccBB/a0g1bsinitvals5.fw" not found
-> 
-> Using %n instead of %x would lead to exciting crashes. :)
-> 
-> It has been fixed in the upstream wireless tree:
-> 
-> http://git.kernel.org/cgit/linux/kernel/git/linville/wireless.git/commit/?id=9538cbaab6e8b8046039b4b2eb6c9d614dc782bd
-> 
-> 
-> CVE-2013-2851: block layer
-> 
-> The block layer uses the "disk_name" field as a format
-> string in a number of places. While this is normally not a problem due
-> to how disk names are created (statically or incrementally), there
-> is currently at least one way to define nearly arbitrary names via
-> md. Instead of filtering md, this should be fixed within the kernel's
-> interfaces. This flaw could potentially allow escalation from uid-0 to
-> ring-0, so except for certain environments, it is not too serious.
-> 
-> The test case is trivial:
-> # echo md_%x.%x.%x.%x > /sys/module/md_mod/parameters/new_array
-> # ls /dev/md_*
-> /dev/md_c12cc370.df66d800.df66d80c.c13da45b
-> 
-> Using %n instead of %x leads to exciting crashes. :)
-> 
-> The fix has been sent upstream:
-> http://marc.info/?l=linux-kernel&m=137055204522556&w=2
-> 
-> 
-> With the above fixes, a series of additional format string related clean
-> ups has also been sent upstream:
-> http://marc.info/?l=linux-kernel&m=137055207522563&w=2
+Hi,
 
-For both of these, you have to have root permissions in order to cause
-any problems, right?
+Quoting [1]:
+> I have discovered a problem with virtio-net that leads to a lockup of the host
+> machine's kernel and the need for a hard reset to make it working again.
 
-thanks,
+The bug is said to be worked around in version 4.2.14 and really fixed
+in 4.2.16, but the changelog of either version doesn't reference that
+ticket.
 
-greg k-h
+Rumors say that virtualbox makes the host randomly hang, but since
+there is an actual bug report and confirmation from upstream this time
+I guess a CVE id should be assigned.
+
+[1] https://www.virtualbox.org/ticket/11863
+[2] https://www.virtualbox.org/wiki/Changelog
+[3] https://secunia.com/advisories/53858/
+
+Cheers,
+--
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
