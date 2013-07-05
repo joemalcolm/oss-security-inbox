@@ -1,46 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/20/6
-Message-ID: <519A9756.9060203@redhat.com>
-Date: Mon, 20 May 2013 15:36:22 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/8
+Message-ID: <20130705143834.GM4362@suse.de>
+Date: Fri, 5 Jul 2013 16:38:34 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, jlieskov@...hat.com
-Subject: Re: Re: CVE Request -- Wireshark: Upstream v1.8.7, v1.6.15 fixes
+Subject: Re: CVE Request: libxml2 external parsed entities issue
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 05/20/2013 01:26 PM, cve-assign@...re.org wrote:
->> Wireshark upstream has released 1.8.7, 1.6.15 versions, 
->> correcting multiple security flaws:
+On Fri, Jul 05, 2013 at 09:30:07AM -0400, Marc Deslauriers wrote:
+> On 13-07-05 09:17 AM, Marcus Meissner wrote:
+> > On Fri, Jul 05, 2013 at 08:48:04AM -0400, Marc Deslauriers wrote:
+> >> Hello,
+> >>
+> >> libxml2 earlier than 2.9.0 fetches external parsed entities by default, with no
+> >> way to disable the behaviour.
+> >>
+> >> Fixed by the following commit:
+> >>
+> >> https://git.gnome.org/browse/libxml2/commit/?id=4629ee02ac649c27f9c0cf98ba017c6b5526070f
+> >>
+> >> More Information:
+> >> https://mail.gnome.org/archives/xml/2012-October/msg00045.html
+> >> https://github.com/sparklemotion/nokogiri/issues/693
+> >> https://bugs.launchpad.net/ubuntu/+source/libxml2/+bug/1194410
+> >>
+> >>
+> >> Could a CVE please be assigned to this issue?
+> > 
+> > Sounds like http://seclists.org/oss-sec/2013/q1/391  
+> > and
+> > "Please use CVE-2013-0339 for libxml2 external entities expansion"
+> > 
+> > ?
+> > 
 > 
-> Wireshark upstream sends advance requests for CVE assignments to
-> MITRE (for these releases and apparently all other releases in the
-> past year or more). MITRE will be sending our 1.8.7/1.6.15 CVE
-> assignments to oss-security also, almost certainly today.
+> Hrm, I would have thought CVE-2013-0339 was for the entities expansion DoS issue
+> fixed by this commit:
+> 
+> https://git.gnome.org/browse/libxml2/commit/?id=23f05e0c33987d6605387b300c4be5da2120a7ab
+> 
+> The other one is for external entities expansion being enabled by default with
+> no way to turn it off. You would lump them together?
 
-So just to confirm: ALL wireshark CVEs are handled by upstream sending
-a request direct to Mitre? Cool by me.
+Mostly wondering, as it seemed more or less related. Perhaps someone else has more insight.
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRmpdVAAoJEBYNRVNeJnmTTo0P/jLkEcPgmH4QpeVMj2Qo2hwl
-IhMwm8zb4s1lve44Y5qhl4efYjVbiyxCQOBTlx6RzMMGIzFPeWo4efBrQgIckCC6
-bB+HnHiZmqRPWMZRacEU5T2z0CHUGHuwd83PjxMz2SYY6QKwNRrfLwVE873vnxR2
-R800sqt69cMnPQA16ozsvGo7LZiFwv9OWrQRNn9kw2AZw29ExSmV82o6fIGB18j/
-yDqyyZZ0arNSscE7dm92GAB/0v2Rpn0cgENy11E92Kr+Pxxka+/Vt1SU8AkAQqLM
-VvI0DzZpMPEgeDQwye+p6hwbZ7fkeVN1lp+H42NmG3R4gvq/9PTgeriSgCUWVolV
-Zw7iKP0CIxS/EoGXKzVdtLzSL+Fs+c2doZpancYVhbxF5UZmduPjJmXC6t/LZleD
-jHB7nDpzq0S4/eLnehlYjSI2AyycU1ZgMKQ8+eDdKQSwGbZ3G12IwJ9T7J+CBdRr
-d5UjH5o3dgc5BOrkZlXQlBSukP1IxK+LJPQPKaXBhiIN6NbXoX2vHRZ+bmcybRmU
-Pu3IQuM/GE2XE1fFMtrjhFJR3mbpqDfsE/Nv3UG0oChE5Ovl+BlgkjDz6kb55RLK
-x/YpAX50VX7OtaQzJ47TAlld7giFMfoLAXt4ke/Bm/kTv4bdG2SRwNH7h2SvVTcM
-n7rgNF7TpPh6DyZLbQvp
-=vfsO
------END PGP SIGNATURE-----
+Ciao, Marcus
