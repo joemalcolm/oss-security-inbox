@@ -1,77 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/02/3
-Message-ID: <524C4B04.6020505@redhat.com>
-Date: Wed, 02 Oct 2013 10:34:12 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/06/2
+Message-ID: <51D7A736.1090400@redhat.com>
+Date: Fri, 05 Jul 2013 23:12:22 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: security curmudgeon <jericho@...rition.org>
-Subject: Re: Re: CVE request: Simple Machines Forum (SMF) <= 2.0.5 - multiple vulnerabilities
+To: Alan Coopersmith <alan.coopersmith@...cle.com>
+CC: oss-security@...ts.openwall.com, security@...e.de, Sebastian Krahmer <krahmer@...e.de>
+Subject: Re: Question about CVE for X!! DoS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/01/2013 06:23 PM, security curmudgeon wrote:
+On 07/05/2013 09:22 PM, Alan Coopersmith wrote:
+> On 07/ 5/13 01:50 PM, Kurt Seifried wrote:
+>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>> 
+>> http://lists.opensuse.org/opensuse-updates/2013-07/msg00023.html 
+>> https://bugzilla.novell.com/show_bug.cgi?id=815583
+>> 
+>> Lists no CVE? I assume it needs one, or did upstream handle
+>> this?
 > 
-> From: Kurt Seifried <kseifried () redhat com> Date: Tue, 01 Oct
-> 2013 10:07:22 -0600
+> Upstream discussion, including reps from both Red Hat & SuSE,
+> determined it didn't need a CVE, since it can only be triggered by
+> a client authorized to connect to the Xserver (via xauth, xhost,
+> etc.) and such a client, by design, can lock all other clients out
+> from the server, kill clients, etc.
 > 
-> Please use CVE-2013-4395 for the XSS vuln.
+> It would be like wanting a CVE for the fact that another process
+> running under your UID can kill your process.
+> 
+> Not sure why SuSE decided to go ahead and release it as a security
+> fix anyway - it's certainly a bug fix though.
 
-CVE MERGE I thought (one researcher, same version, same vuln type).
-
-> --
-> 
-> Which XSS vuln? =) That thread was messy, but Henri and others
-> appear to have identified and/or confirmed four different ones:
-> 
-> /Sources/ManageServer.php Multiple XSS 
-> http://seclists.org/oss-sec/2013/q3/607 
-> http://custom.simplemachines.org/upgrades/index.php?action=upgrade;file=smf_patch_2.0.5.tar.gz;smf_version=2.0.4
->
->  http://www.simplemachines.org/community/index.php?topic=509417 
-> http://seclists.org/oss-sec/2013/q3/642
-> 
-> index.php admin Action board_name Parameter Stored XSS 
-> http://seclists.org/oss-sec/2013/q3/642 
-> http://hauntit.blogspot.co.uk/2013/04/en-smf-204-full-disclosure.html
->
->  index.php pm Action sa Parameter Stored XSS 
-> http://hauntit.blogspot.co.uk/2013/04/en-smf-204-full-disclosure.html
->
-> 
-http://seclists.org/oss-sec/2013/q3/642
-> 
-> index.php admin Action desc Parameter Stored XSS 
-> http://seclists.org/oss-sec/2013/q3/642
-> 
-> 
-> That is what I took away from the entire thread at least. Can
-> someone confirm this is correct, and can you confirm the CVE
-> assignment please Kurt?
-> 
-> Brian
-> 
-> 
-
+Yeah that's what had me confused. I would classify this as security
+hardening (good to fix, but no trust boundary gets crossed), not a
+security vulnerability. Was wondering if it had been found to be worse
+or something.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSTEsEAAoJEBYNRVNeJnmTbagP/2w6rjD42xZn+qvq6fD63/AB
-UeYTJ3vdGWz2ZHEs5gvuFKRs8O6DU86MLAuLDilme0i34dxDLIXQZxc/I5oPqlIF
-bH+I+bfE+C/rmaebPE1uiaG31CjubqEvUdk5CsXHeorVPkA9qePT4QUEfTzlKZk6
-tZjnm33GOrY7BXBpvFP1QcSezDqkoofR4DqJByD5vPHFIG6Konr608//0jm3nl2B
-l37HqBaAt/9zt0xh2ChQu3vUwBwCG+srhtkEUNt7gRN2P/mP4ohRZDj0PvNS8OTx
-xPhL5/BNR1b/dGkFxiGOCoCK4UT8DZOwpDBr91iuaSzX+VeX6n5MUh/9TSUORxai
-rnGMA9z06bN/hL2dyqkIsLIAK4vrdGU4pO1i7EI21ZURfR1gf3SRfiyAwzYzv5Yo
-1NbP9EiUeTkTQnaPwx3vfvX7JOkHYNkoAwqimozeusG9xplEWqIJ4dUrchEYVc3i
-sRGoFvig/cu3U2z5ZC4xb4nii1tYdYUfTWgrQy5k9xI7XOdnJFIP8Q7a6etbPG8i
-EEAbr+YnmB5YZq3E458GSIf8mjxbZVqt0jhWyY4R9dM6mESeHS0wfoGP+Fcs+3d2
-461SYArUFnFZ2DG0dGJS/54EfHvzPThdqOgKy+lA3O/pD6WPp1JIAHiSVuVS//rz
-nr/9Ip+GH7yykUjfI3yp
-=y3nP
+iQIcBAEBAgAGBQJR16c1AAoJEBYNRVNeJnmTGBwP/2uN26UIKrLsSxF7qCNaRmK0
+szTvWKDq4Q2Bqm3S6lAmsNItS4Sjilx7HEEjUW52NmJysdNvJwpO9v03bYUtMLqn
+8/PLVGh998BWDtby1kqZOb2VEhLDnAyfFMp3HsNjm+kwAgBv3NDgFgTI6sIhNdkA
+TVHP4jSoD1rAfSJzJqpB8saLeqR1T0wF5n6jDA+0Ghkv6R+C97EMUfz6wJnjlXRi
+eAXftO86GJVce4XunLxnS3hhGqTxzNlZ1nfo16UphkV36nQ5720SC+AzmnOWFsBp
+6JNF42H/JdHKdXOIa6WQa/CkpyTw2INOEmgzz2Pz2qjn12vR2GE4YzvsqZuoj/H3
+XGT1l8D3wj4I9CPeYOqAWC+6YgcgMU68Hx+kueiDIS7dMn+KpT/96im8ochbSM1v
+ay+wFLY6m6N3JaZo+ZsXmy3Hri74TMyXyAvo2wl0cZwE21tMKHDTJWa55lEKY/xr
+MdTSaKh9vhO9G7XHwAHiWI+zNwqK685HPV8JRq8kTvRa7b8hcbVem77n1zui2wJZ
+fXYXL5FtyZIFqd72da7coRzWK0h3GQUVfGysMSRZ0fxkvw2gB/euLF638al/b/1x
+JTsldj8LdkAFwGxGYE/iM1zFeB3bt2XOTi3g3d0XHD5j4D1hYKj8JvIYs+2d/QVe
+qzs1o9U7ocA5xHfNzMqq
+=9vM2
 -----END PGP SIGNATURE-----
