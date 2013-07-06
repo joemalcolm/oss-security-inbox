@@ -1,45 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/1
-Message-ID: <516CFA37.7060606@redhat.com>
-Date: Tue, 16 Apr 2013 17:13:59 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/06/3
+Message-ID: <51D7C587.8030802@redhat.com>
+Date: Sat, 06 Jul 2013 01:21:43 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: autotrace: stack-based buffer overflow in bmp parser
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contrib module
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-There is a stack-based buffer overflow in autotrace 0.31.1 in
-Fedora[1]. In input-bmp.c, the input_bmp_reader() function creates a
-buffer on the stack:
+On 07/05/2013 02:54 PM, Forest Monsen wrote:
+> Hi there,
+> 
+> I'd like to request a CVE identifier for:
+> 
+> SA-CONTRIB-2013-054 - Fast Permissions Administration - Access
+> Bypass https://drupal.org/node/2028813
+> 
+> Thanks, Forest
+> 
 
-91   unsigned char buffer[64];
+Please use CVE-2013-2247  for this issue.
 
-Later on
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-169   else if (Bitmap_File_Head.biSize <= 64) /* Probably OS/2 2.x */
-170     {
-171       if (!ReadOK (fd, buffer, Bitmap_File_Head.biSize - 4))
-
-We control Bitmap_File_Head.biSize. A value of 0 meets the <=64
-requirements, and 0 - 4 should result in almost 4294967295 bytes being
-read into the buffer.
-
-I am told:
-
-""
-The same code is in Gimp, it was introduced in commit
-d9c6f88141aecf956c5d721168f795de0e3027b8 and accidentally fixed in
-57f805a159874107c6c98065f9aa648c3634b8fd:
-
-https://git.gnome.org/browse/gimp/commit/?h=d9c6f88141aecf956c5d7
-https://git.gnome.org/browse/gimp/commit/?h=57f805a159874107c6c98
-
-Similar code can also be found in sam2p.
-""
-
-On Fedora 18, the issue was caught by FORTIFY_SOURCE.
-
-Murray.
-
-[1] http://koji.fedoraproject.org/koji/buildinfo?buildID=340458
+iQIcBAEBAgAGBQJR18WHAAoJEBYNRVNeJnmTXeQP/1jOUhqdXlnGKabKalpLRpx1
+4iVfFB82hNa47ieDqOVGxmmm94dNWzlpc5k6BN8FXwS+V9zve57yvG8E4wJXM5E+
+MOM8m652EKq693hWEyS4l4zO6q1ohCLk6tpvd0R58PbhgsfXON8am2gdHJnLQkzi
+7Y7PjPGPW5M6HJTbZMEbKJKRHErloDKsO4i3/0U4CKLCDOcv4dFbZyLt16oioGb7
+umelMMHq2Khw36DbWR956y7n+EjSAEUIcwPb04oMs1X8Q5LUSAjDftWm+xMAsA0D
+VVTC/xcFcW1bVbKbWSKrk5fzv/3G+RJyozT9YqJ85qUe4IpvXVbnU7/30CqVUpTJ
+6t3RGSleA1OWnHvjT0Qlxgh83P4ojnBKyKpDpbKPRdtsfd2sgWW8NtiNMjrt5ZMm
+1UtI7QFQZ4lhQMwA9cOM9Jg5wMAoPlH8iyOG7SzdbaNYKbYF4VgvXt7ra5fFKvXl
+gYXAZecV0kRAoyuDOdqCIWvpw66yPHbxzEKcvVJ5b1zPAJGLRNgdppGIYs4K+AZC
+KMwvaQ/v9aKOzKywFfGZFDq+VBtKGsvmlDU/3z2Q4Oyt4gwPR8/pK5fEUUUCSIJ4
+Ef4uAq3E7bkdEZMiqgN6tW4jQpUCH0C3jU6e8tQTontaFcyQ3HY7+GXi7QKTGvaA
+yfOeBKbyhb5UzV18uMgs
+=Qtl0
+-----END PGP SIGNATURE-----
