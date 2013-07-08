@@ -1,30 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/11
-Message-ID: <5277E84A.2070301@fifthhorseman.net>
-Date: Mon, 04 Nov 2013 13:32:42 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-CC: Seth <seth@...rl-i-gig.com>
-Subject: XSS in CollectiveAccess 1.3 and earlier
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/08/1
+Message-ID: <20130708083150.GK19458@core.inversepath.com>
+Date: Mon, 8 Jul 2013 10:31:50 +0200
+From: Daniele Bianco <danbia@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2013-001] File Roller path sanitization errors
 Content-Type: text/plain; charset=utf-8
 
-There was a cross-site scripting (XSS) vulnerability in 
-CollectiveAccess, a web-based archive cataloging system written in PHP.
 
-CollectiveAccess 1.3.1 was released including this fix.
+#2013-001 File Roller path sanitization errors
 
-http://www.collectiveaccess.org/news/collectiveaccess-version-1-3-1-released/
+Description:
 
-The issue was reported at:
+The File Roller archive manager for the GNOME desktop suffers from a
+path traversal vulnerability caused by insufficient path sanitization.
 
-  http://clangers.collectiveaccess.org/jira/browse/PROV-638
+A specially crafted archive file can be used to trigger creation of
+arbitrary files in any location, writable by the user executing the extraction,
+outside the current working directory. This behaviour is triggered when the
+option 'Keep directory structure' is selected from the application 'Extract'
+dialog.
 
-  (the PROV-638 ticket may not be accessible to the public)
+The issue is present on File Roller installations which have been
+compiled with libarchive support, used to handle tar, cpio, lha, 7zip, ar
+archiving formats and ISO images. The libarchive support is enabled by
+default.
 
-The changeset fixing it is:
+Affected version:
+File Roller >= 3.6.0, >= 3.8.0, >= 3.9.1
 
-https://github.com/collectiveaccess/providence/commit/b54e01419966c8d8f23db532caad91304c977776
+Fixed version:
+File Roller >= 3.6.4, >= 3.8.3, >= 3.9.3
 
-Regards,
+Credit: vulnerability report received from Yorick Koster 
+        <yorick.koster AT securify.nl>
 
-	--dkg
+CVE: CVE-2013-4668
+
+Timeline:
+2013-05-16: vulnerability report received
+2013-05-20: contacted File Roller maintainer
+2013-05-27: maintainer provides patch for review
+2013-05-28: reporter confirms patch effectiveness
+2013-06-11: oCERT confirms patch effectiveness
+2013-06-17: File Roller 3.9.3 released
+2013-07-02: File Roller 3.6.4, 3.8.3 released
+2013-07-04: contacted affected vendors
+2013-07-04: assigned CVE
+2013-07-08: advisory release
+
+References:
+http://fileroller.sourceforge.net
+http://git.gnome.org/browse/file-roller
+https://git.gnome.org/browse/file-roller/commit/?id=b147281293a8307808475e102a14857055f81631
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2013-001.html
+
+--
+  Daniele Bianco      Open Source Computer Security Incident Response Team
+  <danbia@...rt.org>                                  http://www.ocert.org
+
+  GPG Key 0x9544A497
+  GPG Key fingerprint = 88A7 43F4 F28F 1B9D 6F2D  4AC5 AE75 822E 9544 A497
