@@ -1,25 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/5
-Message-ID: <alpine.LFD.2.03.1304081801490.32035@redhat.com>
-Date: Mon, 8 Apr 2013 18:30:02 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/09/7
+Message-ID: <20130709190339.GB18188@boyd>
+Date: Tue, 9 Jul 2013 12:03:40 -0700
+From: Tyler Hicks <tyhicks@...onical.com>
+To: oss-security@...ts.openwall.com
+Cc: Chanam Park <chanam.park@...co.kr>
+Subject: Linux kernel libceph NULL function pointer dereference (CVE-2013-1059)
 Content-Type: text/plain; charset=utf-8
 
-  Hi,
-+-- On Fri, 5 Apr 2013, Marcus Meissner wrote --+
-| Should also get a CVE.
-| https://github.com/torvalds/linux/commit/12176503366885edd542389eed3aaf94be163fdb
+Chanam Park discovered that a crafted auth_reply message could cause a
+NULL function pointer dereference in the libceph auth_none handler. A
+remote attacker could use this flaw to cause a denial of service.
 
-Comments around get_user() macro say that in case of an error, destination 
-variable @x is set to zero.
+If a malicious Ceph monitor sends an auth_reply message with the value
+of -EAGAIN in the result field, ceph_build_auth_request() will call the
+ceph_auth_client_ops->build_request() function pointer without checking
+to see if the build_request() pointer is NULL. The auth_none handler
+does not initialize its build_request() pointer.
 
- -> https://github.com/torvalds/linux/blob/master/arch/x86/include/asm/uaccess.h#L134
+See http://hkpco.kr/advisory/CVE-2013-1059.txt for more information.
 
-Just to confirm, is it the same macro that is called from fs/compat_ioctl.c ?
+The fix can be found in the upstream ceph-client.git tree:
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+https://git.kernel.org/cgit/linux/kernel/git/sage/ceph-client.git/commit/?id=2cb33cac622afde897aa02d3dcd9fbba8bae839e
+
+Tyler
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
