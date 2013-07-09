@@ -1,38 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/17
-Message-ID: <20130429202005.GA2009@elende>
-Date: Mon, 29 Apr 2013 22:20:05 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: Felix Gröbert <groebert@...gle.com>, Henri Salo <henri@...v.fi>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, draynor@...rcefire.com
-Subject: Re: Multiple potential security issues fixed in ClamAV 0.97.8 - any further details?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/09/6
+Message-Id: <839F16C2-D096-45C0-9F80-8CBCF3D938C1@nadim.cc>
+Date: Tue, 9 Jul 2013 11:59:01 -0400
+From: Nadim Kobeissi <nadim@...im.cc>
+To: kseifried@...hat.com
+Cc: Open Source Security <oss-security@...ts.openwall.com>, nadim@...pto.cat, arlo@...pto.cat
+Subject: Re: cryptocat/decryptocat - needs a cve?
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt
+No CVE has been assigned yet. Any assistance with this is welcome!
 
-On Mon, Apr 29, 2013 at 01:27:18PM -0600, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 04/27/2013 04:49 PM, Felix Gröbert wrote:
-> > Hi,
-> > 
-> > sorry for the delayed response, I'm OOO.
-> > 
-> > The bugs should be public now:
-> > 
-> > https://bugzilla.clamav.net/show_bug.cgi?id=7055 heap corruption,
-> > potentially exploitable.
-> 
-> Please use CVE-2013-2020 for this issue.
-> 
-> > https://bugzilla.clamav.net/show_bug.cgi?id=7053 overflow due to
-> > PDF key length computation. Potentially exploitable.
-> 
-> Please use CVE-2013-2020 for this issue.
+NK
 
-Should these get separates CVE (as two different types)? Only would
-like to confirm, in case this was a typo.
+On 2013-07-08, at 11:32 PM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-Regards,
-Salvatore
+> Original posting:
+> http://tobtu.com/decryptocat.php
+> 
+> Official blog reply:
+> https://blog.crypto.cat/2013/07/new-critical-vulnerability-in-cryptocat-details/
+> 
+> Reddit:
+> http://www.reddit.com/r/netsec/comments/1hmn2g/decryptocat/
+> 
+> Has a CVE for this been requested/assigned?
+> 
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
