@@ -1,80 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/28/3
-Message-ID: <20130428155846.GF1315@li141-249.members.linode.com>
-Date: Sun, 28 Apr 2013 17:58:46 +0200
-From: Alyssa Milburn <amilburn@...l.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/09/8
+Message-ID: <51DC5F10.3000600@msgid.tls.msk.ru>
+Date: Tue, 09 Jul 2013 23:05:52 +0400
+From: Michael Tokarev <mjt@....msk.ru>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in BOINC
+Subject: Re: CVE request: FreeSWITCH regex substitution 3 buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+A week has been passed away.
 
-There have been various recent(-ish) vulnerabilities found in the BOINC
-software for desktop grid computing. The major projects have (hopefully)
-fixed all of these by now, and the clients should only be vulnerable if
-they're connected to a hostile server.
+But actually I'm not sure I understand the process.  What is
+needed to, first, assign a CVE#, and second, to fill it in?
 
-The commit ids below are all from the boinc-v2 repository, see
-http://boinc.berkeley.edu/trac/browser/boinc-v2 for a web view.
+Thanks,
 
-These are the ones I consider to be obviously important:
+/mjt
 
-* CVE-2013-2298: various stack overflow vulnerabilities in the XML parser
-  used by both the client and server software. I think that any 7.x version
-  is vulnerable, but possibly not the 6.12 branch or earlier. No promises.
+02.07.2013 00:46, Michael Tokarev wrote:
+> Hello.
+> 
+> Yesterday I started thinking for the first time about some VOIP
+> solution for our office, and come across FreeSWITCH software --
+> www.freeswitch.org.  After talking on IRC a bit, I decided to
+> take a look at the source, because a question asked by one of
+> the users looked interesting to me.
+> 
+> And immediately I discovered 3 buffer overflows in the _first_
+> function I ever saw in the source of this software.
+> 
+> http://jira.freeswitch.org/browse/FS-5566 - it is the original
+>  bugreport which looked innocent enough initially.
+> 
+> http://jira.freeswitch.org/secure/attachment/18855/0001-regex_subst-allow-n-in-regex-substitutions-and-fix-3.patch --
+>  this is a patch of mine that fixes initial bug and also 3
+>  buffer overflows I found when dealing with the issue.
+> 
+> Some context.  FreeSWITCH's routing mechanism is based almost
+> entirely on regular expressions and uses substring matches
+> in the core routing (dialplan).  So the regexps are matched
+> against untrusted input (which is especially mentioned in the
+> docs).  But ofcourse users aren't easy with writing regexps
+> correctly, always constraining the length of the input
+> properly.
+> 
+> So, if there are any references to unconstrained input in
+> any dialplan expressions -- that is, instead of \d{10},
+> \d+ is used, we're getting a remotely triggerable buffer
+> overflows with good potential of remote code execution.
+> 
+> As simple as that.
+> 
+> It _looks_ like the default configuration isn't affected
+> since apparently all regexes there are constrained.  But
+> we can't be sure for all user configs.
+> 
+> I haven't studied actual potential for code execution,
+> but from a quick view it appears quite possible.
+> 
+> Thanks,
+> 
+> /mjt
+> 
 
-  (Found/reported by me. I notified all public projects I could find who
-   were running obviously-vulnerable copies of the code, in early March.)
-
-  http://thread.gmane.org/gmane.comp.distributed.boinc.user/3741
-  2fea03824925cbcb976f4191f4d8321e41a4d95b
-
-* Stack overflow in the client code by providing multiple file_signature
-  elements. 6.10.58 and 6.12.34 are vulnerable. 7.x isn't.
-
-  (This was fixed back in 2011, possibly accidentally.)
-
-  9a4140ae30a72e5175f3f31646d91f2d58df7156
-
-* SQL injections in the server-side scheduler code:
-
-  (Found/reported by me. I warned projects about this at the same time
-   as the the above notifications, hopefully they've mostly patched it..)
-
-  http://thread.gmane.org/gmane.comp.distributed.boinc.user/3776
-  3ced18ddaaea5e03d2cc70f8cce5ab214b4d5635
-
-* SQL injections in the user-facing web scripts:
-  (These were possibly found by Michael Voß, see
-   http://www.mdr.de/mdr-info/hacker-boinc100.html )
-
-  http://thread.gmane.org/gmane.comp.distributed.boinc.user/3658
-  e8d6c33fe158129a5616e18eb84a7a9d44aca15f
-  6e205de096da83b12ffb2f0183b43e51261eb0c4
-  ce3110489bc139b8218252ba1cb0862d69f72ae3
-
-And some issues I'm not sure are quite so important:
-
-* Stack overflows in the trickle code on server and client side:
-
-  (Fixed back in 2011, and these were only present in experimental 6.13.x
-   releases, as far as I know.)
-
-  5b04b249db166ec38c1ee99a9eadcaa300c0f454
-  ae04b50a71f3e96ee1bc59b76fca97cf0fe976f7
-
-* From a few days ago, a possible format string issue(?) in the client
-  code:
-
-  (Noticed by Gianfranco Costamagna/Nicolás Alvarez judging by the thread)
-
-  http://thread.gmane.org/gmane.comp.distributed.boinc.devel/6416
-  99258dcecba8ef36e1ce0fd6e0dacffe53613ac9
-
-* An SQL injection vulnerability in the locality code (apparently only
-  used by one known project), so I mention this just for completeness
-  just in case anyone happens to be using it:
-
-  2dbfdc55057b2c1f0508b56244044b1ad34e7cdb
-
-- Alyssa
