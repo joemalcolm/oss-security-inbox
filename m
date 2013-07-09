@@ -1,39 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/14/2
-Message-ID: <20130213185528.69c6ffe0.reed@reedloden.com>
-Date: Wed, 13 Feb 2013 18:55:28 -0800
-From: Reed Loden <reed@...dloden.com>
-To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com, maxim@...oillogical.com
-Subject: Re: Some rubygems related CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/09/4
+Message-ID: <20130709111809.GE25765@suse.de>
+Date: Tue, 9 Jul 2013 13:18:09 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: Alan Coopersmith <alan.coopersmith@...cle.com>, oss-security@...ts.openwall.com, Sebastian Krahmer <krahmer@...e.de>, security@...e.de
+Subject: Re: [security@...e.de] Re: Question about CVE for X!! DoS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On Wed, 13 Feb 2013 19:39:23 -0700
-Kurt Seifried <kseifried@...hat.com> wrote:
-
-> newrelic_rpm information disclosure
+On Fri, Jul 05, 2013 at 11:12:22PM -0600, Kurt Seifried wrote:
+> On 07/05/2013 09:22 PM, Alan Coopersmith wrote:
+> > On 07/ 5/13 01:50 PM, Kurt Seifried wrote:
+> >> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+> >> 
+> >> http://lists.opensuse.org/opensuse-updates/2013-07/msg00023.html 
+> >> https://bugzilla.novell.com/show_bug.cgi?id=815583
+> >> 
+> >> Lists no CVE? I assume it needs one, or did upstream handle
+> >> this?
+> > 
+> > Upstream discussion, including reps from both Red Hat & SuSE,
+> > determined it didn't need a CVE, since it can only be triggered by
+> > a client authorized to connect to the Xserver (via xauth, xhost,
+> > etc.) and such a client, by design, can lock all other clients out
+> > from the server, kill clients, etc.
+> > 
+> > It would be like wanting a CVE for the fact that another process
+> > running under your UID can kill your process.
+> > 
+> > Not sure why SuSE decided to go ahead and release it as a security
+> > fix anyway - it's certainly a bug fix though.
 > 
-> newrelic_rpm
-> https://newrelic.com/docs/ruby/ruby-agent-security-notification
-> A bug in the Ruby agent causes database connection information and raw
-> SQL statements to be transmitted to New Relic servers. The database
-> connection information includes the database IP address, username, and
-> password. The information is not stored or retransmitted by New Relic
-> and is immediately discarded.
-> 
-> Please use CVE-2013-0284 for this issue.
+> Yeah that's what had me confused. I would classify this as security
+> hardening (good to fix, but no trust boundary gets crossed), not a
+> security vulnerability. Was wondering if it had been found to be worse
+> or something.
 
-This issue was disclosed on 2012-12-06, so it should actually have a
-CVE-2012-XXXX assignment.
+I checked this and we had opened a security bug as the bug initially
+arrived at xorg_security... We did not untag it for security so
+it went to our process with the incorrect tagging and no CVE.
 
-~reed
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+I see that we missed to record the follow up discussion which was
+probably the reason for that.
 
-iEYEARECAAYFAlEcUiAACgkQa6IiJvPDPVrOLgCdGJF+jeMIuyyybbToA3OUi5Ca
-SSIAnjSBZF8SsToyHUT2IE1Viu0gVlni
-=MMyb
------END PGP SIGNATURE-----
+Sorry for the confusion.
+
+Ciao, Marcus
