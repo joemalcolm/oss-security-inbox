@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/12
-Message-ID: <51E96EF5.4040407@redhat.com>
-Date: Fri, 19 Jul 2013 10:53:09 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/09/1
+Message-ID: <51DB7ABD.5090506@redhat.com>
+Date: Mon, 08 Jul 2013 20:51:41 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, libvirt-security@...hat.com
-Subject: Re: CVE request -- libvirt: crash of libvirtd without guest agent configuration
+To: Open Source Security <oss-security@...ts.openwall.com>, Moritz Muehlenhoff <jmm@...ian.org>, ffmpeg-security@...peg.org, michaelni@....at
+Subject: new FFMpeg stuff
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/19/2013 10:14 AM, Petr Matousek wrote:
-> If users haven't configured guest agent then qemuAgentCommand()
-> will dereference a NULL 'mon' pointer.
-> 
-> A remote user able to issue commands to libvirt daemon could use
-> this flaw to crash libvirtd.
-> 
-> References: https://bugzilla.redhat.com/show_bug.cgi?id=986386 
-> https://bugzilla.redhat.com/show_bug.cgi?id=984821 
-> https://www.redhat.com/archives/libvir-list/2013-July/msg00992.html
->
->  Upstream fix: 
-> http://libvirt.org/git/?p=libvirt.git;a=commit;h=96518d4316b711c72205117f8d5c967d5127bbb6
->
->  Thanks,
-> 
+https://bugs.gentoo.org/show_bug.cgi?id=476218
 
-Please use CVE-2013-4154 for this issue.
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=38229362529ed1619d8ebcc81ecde85b23b45895
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=e30b068ef79f604ff439418da07f7e2efd01d4ea
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=6765ee7b9cba46818a45b051438b2552f0a1b70a
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=b36e1893ef3430f039c1eaddeedcbb378f9c4444
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=7388c0c58601477db076e2e74e8b11f8a644384a
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=95a57d26d8653d21f0dab1aff3558ee944853dbf
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=b564784a207b1395d2b5a41e580539df04651096
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=78962d3df49afe5011b572656ecfe940bd5fbf2e
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=cf04af2086be105ff86088357b83d672d38417d9
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=eae63e3c156f784ee0612422f0c95131ea913c14
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=fd54dd028bc9f7bfb80ebf823a533dc84b73f936
+
+Correct me if I'm wrong but most of these seem to deserve CVEs and
+none have been assigned, correct?
+
+http://ffmpeg.org/security.html
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -35,17 +36,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR6W71AAoJEBYNRVNeJnmTmosP/3x1PKMoC1Y0P6WhThKGKIjB
-/z6+rOKAitr8nTxjILopvwM0+Wbs2Tl2uxb/J+IbFu745QTfNrzxvBnreDvXmCUT
-2A8ABs85zaALZqsw1vj3FNtCvQf1hzTEo0/DzufCj0owr+q9/ibRxAPPNgZiKyrY
-xaQWJZ3e0D9T8Y+dm+gHDVg4pEC1sSPGbQA1zFUXPSUM/NC1ABGALz7d+uEh/nt7
-0WzqBtH86rHm3okuFlDeAnByZaNzcFspazr5yLb6SmZyDnJCadwojfEPG18Q1Zbh
-41d5JWJFOrojyqX2+lSiop8ayUJKubx8QV823VZZqWNIK+bR0bPRoi9ZjycRVQT4
-ruhgfQDzEjD8GNfIm93SJudzT0GfLclRDVGJo6yY5L2wtpi/9Ei9fBYg9jdprqgX
-VTCt7IKb5TYIp8QsX5Okc0BSSne//2I1crYmEXfnYt03CAerJeApxlvOrqGNcVGK
-NYLcoyQsTjfeK9YhXtesfW45wPkzv8QLLcGvc1nDy2sgbuevmS5ZdRCp6qQFWhIy
-G0gAz2mMWVNmNOthn7Yh0GpT6IPTBCCh2XJAScXzS7bLoH5PeeKBXKO9wh5VOcsp
-jPZ8b3e3YLhAMaUy7A4IHqt1HR1Nh0js2WiR6yjZAN/d21GZ06i/aSWY/pxt19H4
-rn4Ep2QOUJZUmzm2ucDO
-=4XqL
+iQIcBAEBAgAGBQJR23q9AAoJEBYNRVNeJnmTU2QP/iaL/vPtPgR5XbnabRZQBCC7
+jbHtHQS9Fp6iTDTxAgX6aUVDI5TEglUQoTvoz9aqEpybcZkyq1RV+Mb5aUHdmoTo
+CwdxtUpGwnfH5ESdR38SvvU4Ir82hb6eR9U568QjCEE3f76YKbPixZaxpFSOMJgn
+k2mLrtn7Serz5z2bAzQFk+Uezkt5EYKnjGrZr+Mc4TvWRs51CDpiaidFFfaHBCzq
+Wz5Y4NvRHlBJBcit3V6bv2j/knNzURaxHaxV3EkceS01E93Ex2oZ3nD7eioVEuA/
+uJ4axV24fwcQaYyD9vW/HM/QY5bvMPC/a6XhHVhRndReScn1jndWDkGhLfG2N7oY
+xtVuOTbwqTvFGWAzsYfPGD2eP+zSfFPFwhH2Kp0tARG8u41UspHmikyO45PE+hA+
+xIVn2lFSXoL02F5MWBxijqERfc4XxwG4dMqz0SqVYXPimVYnuboLCsDIVqcDU3Ek
+5brxvel3fW9rYM4cg2KrceyzhzEDfAHTFZrTqwzEPVDy754zhHo7RW0T5JSj5J3X
+av8rab7o+ztN8n7nIGY1xtQEXuI90p0zPAy9k5LxLZcfIpaXr/mdbgs49xsM4MXc
+6ufIhajBqXxiENNNAd+0HR/qaEjd0qccmi1AlooOHf1p8seG1nvC7RyH86rTtQdn
+KHZKCduIzam3jwNmvAQJ
+=CA1m
 -----END PGP SIGNATURE-----
