@@ -1,42 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/2
-Message-ID: <20130820223601.GC20223@order.stressinduktion.org>
-Date: Wed, 21 Aug 2013 00:36:01 +0200
-From: Hannes Frederic Sowa <hannes@...essinduktion.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/09/11
+Message-ID: <51DC9EF2.2090403@redhat.com>
+Date: Tue, 09 Jul 2013 17:38:26 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: vfs_read()/vfs_write(): potential missing checks (or not?)
+CC: "Adam D. Barratt" <adam@...m-barratt.org.uk>
+Subject: Re: CVE request: FreeSWITCH regex substitution 3 buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 20, 2013 at 07:58:49PM +0200, vladz wrote:
->
-> [...]
->
-> Looking at the kernel sources, the vfs_read(), vfs_write(), vfs_readv()
-> and vfs_writev() functions checks the permissions of the file object
-> (file->f_mode) before operating on file descriptor:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 07/09/2013 03:07 PM, Adam D. Barratt wrote:
+> On Tue, 2013-07-09 at 23:05 +0400, Michael Tokarev wrote:
+>> A week has been passed away.
+>> 
+>> But actually I'm not sure I understand the process.  What is 
+>> needed to, first, assign a CVE#, and second, to fill it in?
 > 
->     $ cat -n linux-3.10.7/fs/read_write.c
->     [...]
->     353 ssize_t vfs_read(struct file *file, char __user *buf, size_t count, loff_t *pos)
->     354 {
->     355         ssize_t ret;
->     356
->     357         if (!(file->f_mode & FMODE_READ))
->     358                 return -EBADF;
+> For the avoidance of doubt, you did get a reply from Kurt with a
+> CVE assignment in it, last week.
 > 
-> I believe this is insufficient, the inode object should be checked too.
-> So that if the file's permissions allow read/write operations, so we can
-> perform reading/writing from/to the file descriptor.  I've patched the
-> concerned function to do so (cf. patch [3]).
+> Regards,
+> 
+> Adam
+> 
 
-This behavior is deliberatly chosen. If the inode is checked again, you
-could just mmap the filedescriptor to memory and get away with that,
-too. There are plans to implement a revoke-syscall. Maybe it will
-be implemented for files, too (other operating systems only provide
-revoke-Support for terminals, block or char devices).  This shoud then
-handle the teardown of memory mappings with some specified semantic, too.
+And that is why I also sign them, and issue them publicly on OSS-SEC
+as much as possible (easy to verify/confirm it went out). The system
+works!
 
-Greetings,
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-  Hannes
-
+iQIcBAEBAgAGBQJR3J7xAAoJEBYNRVNeJnmT4hoP/jSXejY8e+jhEpTPyuy66YxB
+4di/YsqmUrGwzRWzQoU2AnFudMgTbrn3I+Kg6CTa24IZvBtXqMpcGNwkArpUBGXH
+dhWjySPC7brdv4uaJfbHnJu3dsMmjd4n+Ideh/daGaZDPe61CqitDFLxE1FeutUz
+q0KTNZLeg5aIyl70G9WyeE98oBVJvJ1iuY7OQ3B83PnlsYx7l64le99OvuLqVhHo
+0Q3JvSl6t2jks+4jiEDoDGKE3lpRLHma5z1jxcBJmroQLiNNCcGBxxYsKDxMO7Kk
+Xbygy2DsCHJclofu3UHEg1sJKHDj8Zenf+wtaUWY8jWqxdpg/U10oKPtjvi5JHLc
+o0wLUkQJ1ZfST0ol31mL0hU4sCvujKMTgNinqNfcuYUbaf0WfRAlaHRNIQMvvztZ
+oYFEjsrMsD1ZNrPIa8bmfUWJMuj4SJt4rDKRvoB8RVhntxfHdi4CwNBX4UThNrDm
+q3nKb1EeT60rPJ0cW/eLdsiCWm2tHOnIKHq3Qb092NNXnmeVEuWaM/enQXeinlix
+gS5pyEt8a7lnkVtdJyhxEmLMdrWGe4d5MWYHWT/SOjvxL5ajlt6kPjVCSJ+YqeiN
+wvFGg0hut5mBfnISONecvvuW2LbodRKWX7vGXb226KS4W5yS8JPySSzujeZfp1we
+Sb5oQW7RHsYSwXvPDZ5x
+=FHki
+-----END PGP SIGNATURE-----
