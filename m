@@ -1,68 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/02/1
-Message-ID: <51FB2381.7070906@redhat.com>
-Date: Thu, 01 Aug 2013 21:12:01 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: michaeld@...dle.com, security@...library.com, Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: [vs-plain] Request for CVE Identifiers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/09/3
+Message-ID: <20130709044934.GA5130@inutil.org>
+Date: Tue, 9 Jul 2013 06:49:34 +0200
+From: Moritz Muehlenhoff <jmm@...til.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: Moritz Muehlenhoff <jmm@...ian.org>, ffmpeg-security@...peg.org, michaelni@....at
+Subject: Re: new FFMpeg stuff
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Kurt Seifried wrote:
 
-On 07/05/2013 12:01 AM, Michael de Raadt wrote:
-> Hi, Kurt.
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> Thanks for getting back to me.
+> https://bugs.gentoo.org/show_bug.cgi?id=476218
 > 
-> The YUI issue (reported as Moodle security issue MSA-13-0025)
-> seems to have affected YUI versions 3.0.0 through 3.10.0 and was
-> fixed in 3.10.1. There was a smaller related problem still in
-> 3.10.2 that they also fixed. Here are some links to the YUI
-> announcements...
-
-Hi YUI guys, can we get the CVE situation for YUI sorted out please
-and thank you? I'd be happy to assign CVEs or to help you get them
-from Mitre.
-
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=38229362529ed1619d8ebcc81ecde85b23b45895
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=e30b068ef79f604ff439418da07f7e2efd01d4ea
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=6765ee7b9cba46818a45b051438b2552f0a1b70a
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=b36e1893ef3430f039c1eaddeedcbb378f9c4444
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=7388c0c58601477db076e2e74e8b11f8a644384a
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=95a57d26d8653d21f0dab1aff3558ee944853dbf
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=b564784a207b1395d2b5a41e580539df04651096
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=78962d3df49afe5011b572656ecfe940bd5fbf2e
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=cf04af2086be105ff86088357b83d672d38417d9
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=eae63e3c156f784ee0612422f0c95131ea913c14
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=fd54dd028bc9f7bfb80ebf823a533dc84b73f936
 > 
-> http://www.yuiblog.com/blog/2013/05/14/yui-3-10-1-released-to-fix-swf-vulnerability/
->
+> Correct me if I'm wrong but most of these seem to deserve CVEs and
+> none have been assigned, correct?
 > 
-http://yuilibrary.com/support/20130515-vulnerability/
-> 
-> I couldn't find an existing CVE for this. Perhaps there is not one
-> yet.  Michael de Raadt /BSci(Hons), PhD/ *Development Manager,
-> Moodle HQ <http://moodle.com/hq/>* Availability:  	Calendar
-> <http://dl.dropbox.com/u/11561272/calendar.html> Web:
-> moodle.com/michaeld <http://moodle.com/michaeld> Blog:
-> salvetore.wordpress.com <http://salvetore.wordpress.com/> Email:
-> michaeld@...dle.com <mailto:michaeld@...dle.com> LinkedIn:
-> linkedin.com/in/michaelderaadt 
-> <http://linkedin.com/in/michaelderaadt> Twitter:  	@salvetore
-> <https://twitter.com/salvetore>
-> 
-> <http://moodle.org>
+> http://ffmpeg.org/security.html
 
+These appear to be new, but I'm not sure how previous CVE IDs were assigned for ffmpeg/libav.
+E.g. CVE-2013-0878 seems to be from a Google CNA, right? (At least CVE-2013-0879 is for Chrome)
 
+All these issues (and all the ones in previous rounds) were found through fuzzing done
+at Google by Mateusz "j00ru" Jurczyk and Gynvael Coldwind.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+It would be very, very welcome if CVE assignments from either ffmpeg or libav for any
+such issues would have a reference to the filename of the fuzzed file triggering the problem.
 
-iQIcBAEBAgAGBQJR+yOBAAoJEBYNRVNeJnmTEHwP/iLHXRhGK0FTjLnaRm1+gnU4
-LLpL4g67iSpvKC8b1uU1HDMGX0XqPFdUHsbfhDh1SSFyQk/zF9aDLmdcO+5iuDZv
-hSaElDQuqLfMFzLpu76462YrWJn4juhKQ9jXZfMo5behIu7vaJIutXnDdBS62Trq
-0EhSGiOVBif5cglZlEwRzw0N7PNI3of3ym1DFgHgXa3KQTl6qqavRMYTPyj0FggD
-FZkUgJOPCsIv196EMiG9y4b8p8SKLBvhqUqvHkAcUyeauvtFXWGIMiHYs5wyReD/
-mo39xRgccIJCQARiymRfuJ4zAkvsY7r3K+RFJbegSff4JK55dBBHjaNeDu6uQd9J
-i6dGxCkIXmzu46J7t2qlVhLc1hpcxpMOFBnlAJTsFxd+OTFuyVZpIi9iM/uOEz1y
-EdEtFzj/IGLKxzV7qnq0wSNVAdcC/njK3ztwTUUMNKGl4lRps3V/2NIUVnb+5bnl
-WyNBW6Oa6xUcrrWQusm7Q5souFD3LC8Jbt4LwsgKVcyNL2c3oAf1c2S2/HYBCe/S
-Lsoyjw8255zBjRYBvauEH4lqhGRTVh2ThzmZGllvXzZlLGQ0oJsL8f/Vntc1R+M0
-oTLaVMIC/vR1IWrNpeDJNiUUpINNHTmt6KI2qHAWXO1pG30YrG1b028feVXHZ/nA
-rQThVR7Lw0Nw2ZjuykpY
-=RbCn
------END PGP SIGNATURE-----
+With the diverging code bases between ffmpeg and libav [1] it becomes very complicated
+to properly track down if one of the two is affected.
+
+Cheers,
+        Moritz
+
+[1] http://en.wikipedia.org/wiki/Libav#Fork_from_FFmpeg
