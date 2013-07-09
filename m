@@ -1,33 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/12
-Message-Id: <A797FBF7-DB96-4641-9263-9EF8C6C6A7D5@stufft.io>
-Date: Wed, 7 Aug 2013 13:23:14 -0400
-From: Donald Stufft <donald@...fft.io>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Insecure Software Download in pip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/09/9
+Message-ID: <51DC6D50.5090704@redhat.com>
+Date: Tue, 09 Jul 2013 14:06:40 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Michael Tokarev <mjt@....msk.ru>
+Subject: Re: CVE request: FreeSWITCH regex substitution 3 buffer overflows
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Jul 31, 2013, at 4:11 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+On 07/09/2013 01:05 PM, Michael Tokarev wrote:
+> A week has been passed away.
+> 
+> But actually I'm not sure I understand the process.  What is needed
+> to, first, assign a CVE#, and second, to fill it in?
+> 
+> Thanks,
+> 
+> /mjt
 
-> Ok I have no info on that CVE, is it embargoed? I can't find it in
-> google after a quick search. I need to see that one before I can
-> assign anything. As for the reserved thing:
+So I've actually updated the CVE wikipedia page because I've seen this
+question so many times =)
+
+http://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures
+
+When investigating a vulnerability or potential vulnerability it helps
+to acquire a CVE number early on. CVE numbers may not appear in the
+Mitre or NVD CVE databases for some time (days, weeks, months or
+potentially years) due to issues that are embargoed (the CVE number
+has been assigned but the issue has not been made public), or in cases
+where the entry is not researched and written up by Mitre due to
+resource issues. The benefit of early CVE candidacy is that all future
+correspondence can refer to the CVE number. Information on getting CVE
+identifiers for Open Source issues is available from Red Hat.
 
 
-This CVE has been fixed, and it is for the issue where pip prior to 1.3 did not download
-from the central repository using TLS
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1629
-
-So back to the question of mirroring, possible to get a CVE for that now? :)
-
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
-
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+iQIcBAEBAgAGBQJR3G1QAAoJEBYNRVNeJnmT2ZUP/1R8WGE3porAs2M1y+HKCb7x
+4/tAXpS+I6CPW5BJfeDOSkMFm4yWzvEzNpwYQD/xUMp2QS/GpAMjz9PqyDIyFJvb
+WBajelhYNqGebHlEv7Ku0csMvXXPchXmBoGL7ND0SFeyPdA6lut8qt2qmShloq6a
+h6Jl0KPw9npEd6zj/SilFH9OvYZetaukN/a1lKMrCXsAZx0GRxV0DXGFO6POqFIE
+xO2PiBSOlfq9Z4oyeM5SCbgBukqzSh+Hw0N4kQ/fX43PLONTlMLqtAwqsBk/AMb8
+e1LzdImUpbJ0O+nK7rU7nj9ivXeRryPgbtCK0Nxsp2KcMwLUd/yxQPLt8GI1E2HV
+26adMpVF64IaXjBcb89E0hs6K405ZzKJVyz69AWrMM+k8SuaLufufef317o0qArS
+ss5fK356kV3AALOLDDmwBSfAOIPkx1waLa9XNBUyJVLzFg9cpJWzGjdcr8RSOTSb
+589NrTcG0xW+ocNnDfSo7b2pxgaaNPB69UzHxY8/68wgdq/NdIOSc+kS6+g55DTi
+u/AO/Va9Y0bAjp6LkgYaAjTlENb5PabaPD5DBN38utdWfQx2gdDPSNUXQBaSkZe8
+YsbrYEqaL1c6IF399agqKvh+b0QJEVCvx9pjNGJglhQ8+bABcUfqNiwg3Jz7Kg7L
+GGE8V2iEolXwu4eCbmou
+=orw1
+-----END PGP SIGNATURE-----
