@@ -1,49 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/04/3
-Message-ID: <51D4DF6B.90104@redhat.com>
-Date: Wed, 03 Jul 2013 20:35:23 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/1
+Message-ID: <51DCD899.5040609@redhat.com>
+Date: Tue, 09 Jul 2013 21:44:25 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: Earlier AF_KEY in key_notify_policy_flush
+CC: Nadim Kobeissi <nadim@...im.cc>, nadim@...pto.cat, arlo@...pto.cat
+Subject: Re: Re: cryptocat/decryptocat - needs a cve?
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/03/2013 10:35 AM, Marcus Meissner wrote:
-> On Wed, Jul 03, 2013 at 11:02:13AM +0200, Marcus Meissner wrote:
->> Hi,
->> 
->> Michal Hocko identified an earlier patch for an AF_KEY
->> information leak, in nearly the same place as CVE-2013-2234.
+On 07/09/2013 09:59 AM, Nadim Kobeissi wrote:
+> No CVE has been assigned yet. Any assistance with this is welcome!
 > 
-> URL: 
-> https://github.com/torvalds/linux/commit/85dfb745ee40232876663ae206cba35f24ab2a40
->
-> 
->> Due to different time of fix and different researcher probably 
->> needs a new CVE.
+> NK
 
-Yup CVE split.
+Ok sorry for the delay, I have some questions. Can you provide links
+to the code commits fixing these issues/give some details on them?
+Also I assume the Cryptocat 2.1 release fixes the decryptocat issue
+correct?
 
->> 
->> Ciao, Marcus
->> 
->> commit 85dfb745ee40232876663ae206cba35f24ab2a40 Author: Nicolas
->> Dichtel <nicolas.dichtel@...nd.com> Date:   Mon Feb 18 16:24:20
->> 2013 +0100
->> 
->> af_key: initialize satype in key_notify_policy_flush()
->> 
->> This field was left uninitialized. Some user daemons perform
->> check against this field.
->> 
->> Signed-off-by: Nicolas Dichtel <nicolas.dichtel@...nd.com> 
->> Signed-off-by: Steffen Klassert <steffen.klassert@...unet.com>
->> 
+==============
 
-Please use CVE-2013-2237 for this issue.
+https://github.com/cryptocat/cryptocat/blob/master/CHANGELOG.md
+
+Cryptocat 2.1
+Jun. 7 2013
+Security enhancements and bug fixes. Updating is recommended.
+
+Cryptocat 2.0.42
+Apr. 19 2013
+Fixed a bug found in the encryption libraries that could partially
+weaken the security of multiparty Cryptocat messages.
+
+Cryptocat 2.0.22
+Nov. 7 2012
+This version pushes many important security fixes, detailed here on
+the Cryptocat Development Blog:
+https://blog.crypto.cat/2012/11/security-update-our-first-full-audit/
+
+Cryptocat 2.0.19
+Nov. 1 2012
+Minor security fixes.
+
+==============
+
+Second set of questions:
+
+Then in http://tobtu.com/decryptocat.php
+
+A number of other issues are mentioned, but I can't easily match them
+up to the changelog:
+
+Date introduced	Days in Git	Difficulty rating
+Jul 9, 2011	58	Passwords so probably broken
+Sep 5, 2011	6	*** Medium
+Sep 11, 2011	36	**** Hard
+Oct 15, 2011	2	***** "Impossible"
+Oct 17, 2011	12	*** Medium
+Oct 29, 2011	191	** Easy
+May 7, 2012	347	* Encraption
+Apr 19, 2013	45	*** Medium
+Jun 3, 2013	30+	***** "Impossible"
+
+Can you provide links to the commits for these issues?
+
+It looks like we need between 4 and 10+ CVEs in total.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -51,17 +74,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR1N9rAAoJEBYNRVNeJnmTjC4P/0W86bcbkrENj7qTJMAhfkoD
-yRHlIVOgQUBDcoz5uvtwXJzyS3LYUtv0MrpRw2hpTzGmVp+fBuESK7SSq/xC7ddj
-S91U3CglCWvuvqPK2+z4ovvR/VuZ/ed1AESgVsfAdwor/qyTj2w16+pJPNkF7Iw1
-3HnqNiBwCGw85h2mpWTN2L0TZJ+BUQliz2YG/GDdI1h/8TG1FI/DXqfdrzamNtaw
-8U+gcvSISXRtRkIY4Hifg4KS4X9dYlA0IK+aBQ5Ur2pyxc/goCzTsejKOxgThpha
-K428FuFIOA10gBEGSl5h4dplZxDbw0lhfE7H/prWHG15pxxuzbw5ug2Jaq11FLv5
-aniTIqW9T2EDTcCaHFB4szYbXWBMsaGYUbx+qpUCtLXT9LcVjwmvobmbgng3L7LB
-h2cKiktMAQQDOYo7ZkGcX23pu8Eor2gLjZ8MnBedH5DZYWzd3aMOl+89Cvsv7rz1
-guQYjk2yPi8xjl0WrBJQ2w9mcJLbOPDJrURoCMilp3OG+XggHxK0ksxSnZSvZ9LG
-7YFtP47QNidRlgLd3tf5S56d65tUiF7qM254oOmXIh5pDq2yPQ6BdqDu6wKi0Mux
-4oabaJCGs1E2dLjZnzFHDxBG9MabV2NDAt2qGxG6diVIZz2eVUShfHLPgQpbgfdJ
-5La/nOo9QQwxdnnU8d6g
-=oB3q
+iQIcBAEBAgAGBQJR3NiZAAoJEBYNRVNeJnmTiNUQANXP/F9DrWyrrT4b3jlDbOnh
+Rrd1khnt/b8zP7LbGNAaKS70qLe1StjjNkXd/L8Dlc9GjV5mfM8JZF15jmMM7Ud6
+3scF4c1jHaNzl1W/mHWfrFOTKcHWTp4YpDyFF7KQkYqbHmjFrD5zRaUYujdjO14i
+yrL5SDLOYG35EkIML8aN9jhrkaX8Smi3v9x8WEhVFstFy0YqVSpGP+ZeflH6Xbeg
+Sqc9nvAHnZo/xeyUNydrnPkMBpSwYq1WM6MONkVZzpcri9KpiPQHMi1VbhFVw6eh
+mSLYKAwgc7pmsuEGH9Gg1On+7vnV7xDj1zZir/bo4smVLW5+QEnwcTAbXO5yA+ub
+YerqnSgmMo4ngxUKiMVmUgWLcq8zLuMlC8zeQux6M5UXoSStetAmXWZLRjmqp5ex
+lD6NLxLCtDZgsfIpIDD7BJ3j9y9BK8Nr02OSx6PSkPVt33Fo9QQVQQkZJklf0Ado
+W0DG67w7u/5o8ZtgYKg7hdGU6t7JTm9T8n8AQlKtx248BjxvvP70xazpPs6QI06T
+8ZjjNVhtbu/IjbMun/GIhP9nTFCq2J0lUYTMeVVCHqnK3XE78Dr9bM8EXTYgXa4Q
+7K+mqT+E4do4ZPphHLAv7IogK6dfpfmkB20L6puU+1aDe+sLta4bLquwbqkb1L1t
+penEqUZKladlKwf7o5fn
+=QAJ/
 -----END PGP SIGNATURE-----
