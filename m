@@ -1,49 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/08/1
-Message-ID: <20130508013001.GB21927@thyrsus.com>
-Date: Tue, 7 May 2013 21:30:01 -0400
-From: "Eric S. Raymond" <esr@...rsus.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: Kurt Seifried <kseifried@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Miroslav Lichvar <mlichvar@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- gpsd 3.9 fixing a denial of service flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/13
+Message-ID: <51DDBA0C.1030806@redhat.com>
+Date: Wed, 10 Jul 2013 13:46:20 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Stefan Kanthak <stefan.kanthak@...go.de>, security@...illa.org
+Subject: Re: CVE request for Mozilla Thunderbird (Windows)
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky <jlieskov@...hat.com>:
-> Hello Eric,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 07/10/2013 12:59 PM, Stefan Kanthak wrote:
+> The installer of Mozilla Thunderbird writes the following command line
+> with unquoted spaces for uninstallation into the Windows registry:
 > 
->   since there have doubts appeared:
->     https://bugs.mageia.org/show_bug.cgi?id=9969#c2
-
-Sorry, seem I missed some earlier mail, probably due to my DNS being
-temporarily deranged after I upgraded to Ubuntu 13.04.  
- 
-> which upstream patch has been the CVE-2013-2038 identifier assigned
-> to, could you confirm / disprove the latter?
+> [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Mozilla Thunderbird 17.0.5 (x86 en-US)]
+> "UninstallString"="C:\\Program Files\\Mozilla Thunderbird\\uninstall\\helper.exe"
 > 
-> * The true crash was in the NMEA(2000) driver, with upstream patch:
->   http://git.savannah.gnu.org/cgit/gpsd.git/commit/?id=dd9c3c2830cb8f8fd8491ce68c82698dc5538f50
+> See <https://bugzilla.mozilla.org/show_bug.cgi?id=871084>,
+> <https://bugzilla.mozilla.org/show_bug.cgi?id=786407> and
+> <https://bugzilla.mozilla.org/show_bug.cgi?id=868746>
 > 
->   This one should be referenced under CVE-2013-2038.
-
-Not quite right.  The problem was with NMEA0183, not with NMEA2000.  But yes,
-this crash has been seen in the wild, though not in conjenction with an 
-identified attack.
-
-> * While the hypothetical one was in the AIS driver, with upstream patch:
->   http://git.savannah.gnu.org/cgit/gpsd.git/commit/?id=08edc49d8f63c75bfdfb480b083b0d960310f94f
+> Due to a well-known and well-documented idiosyncrasy of Windows'
+> CreateProcess() API this can result in the execution of a rogue
+> program "C:\Program.exe" or "C:\Program Files\Mozilla.exe" with the
+> privileges of the caller.
+> Since the caller of this command line typically has administrative
+> rights this vulnerability can lead to a privilege escalation.
 > 
->   Upstream 3.9 announcement "Armor the AIS driver against an implausible overrun attack."
->   would support this.
+> Affected versions: all current releases.
+> 
+> Fixed version: ?
+> 
+> Stefan Kanthak
+> 
 
-Correct.  The potential AIS overrun has *not* been observed.  The
-possibility was reported by someone reading the code.
+Mozilla is a CNA (http://cve.mitre.org/cve/cna.html) so they'll need
+to handle this one. Adding them to CC.
 
-> > Application of the patch looks reasonable. Just would be good to know
-> > if it was applied just like a preventive measure (no DoS right now, just
-> > prevent its [possible] occurrence in the future in case of code change)
-> > or if under certain circumstances it might be used to DoS gpsd too?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-It is a preventive measure.  I don't think it is presently exploitable,
-but I'm not *certain* it isn't.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+iQIcBAEBAgAGBQJR3boMAAoJEBYNRVNeJnmTAL8QAM+JVRhIFM0La55vt0z3XzG7
+wcjoe+2oF6Y1qI5vDP0t/1SAj9yBCBEWixKrLnkeKFpOT5+SKUy+kUl3Of+u25w5
+52oY8p9AmcYCuf0EaI+8BMvtC1QhDkH3h9zUS8VVzyg6V+8f1Lwby59aaTT+9XY1
+OEDZ86kMnR19KV0iglb2dajrMlaepXJhls+uZWCxEiTbgvDLIgm5Gwq8GWOxztGa
+dqck2CyvJOdoa7Z0SoGEKYktfImsEgPfIwsJPP9+OChbHjF8yMkQzW6jnhTGsxUF
+yEH+JWsqJh2NxZzEukYvZ7hiBAvLLLJf+5BD6XHeo2QDJv7R/zugbcgJqkrho48Y
+NDgykkiJqY5FAFrqecaI96HQj/o4BsnzBHOQMjRwaH0CjpNES/Q7DBVX1Oapz1OS
+welco9LqsyjPiCDEJJ9c34Ysk3666KJH68WE/pFftAhqnIXuyyh8fylUn0LsKWY8
+HGKmgILTGtJBKu0J0FgF+hOiqI/nWcAJSSTwSVm6nLHx5r6wDX44A/YMO+rOp+GS
+NpAjbV8EWN2sws9gm7CSKMR1M8kYhxHpbVGuDiSlQvMI9YtVr6pNXg6uf/5+BKag
+XrJ8EQ1WCrHu/3h4DVanvI/xUzJNqcoigW0cRKMGB34S6JDoJKMu4a6rgRcJEAB7
+4yvTghlVWdAxASrtmCCT
+=luq9
+-----END PGP SIGNATURE-----
