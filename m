@@ -1,101 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/25/1
-Message-ID: <52929E82.1040101@moodle.com>
-Date: Mon, 25 Nov 2013 08:49:06 +0800
-From: Michael de Raadt <michaeld@...dle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/17
+Message-ID: <51DDBDC5.7020501@fifthhorseman.net>
+Date: Wed, 10 Jul 2013 16:02:13 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: Moodle security notifications public
+CC: 715325@...s.debian.org
+Subject: npm uses predictable temporary filenames when unpacking tarballs
 Content-Type: text/plain; charset=utf-8
 
-The following security notifications are now public after a delayed release.
+hi oss-sec folks--
 
-*Please note that the MSA security numbers reported earlier were 
-incorrect and out of sequence. These should be corrected.*
+i recently learned that npm, the node.js language-specific package
+manager, created predictable temporary directory names in a
+world-writable filesystem (/tmp) by default when unpacking archives.
 
-Thanks to OSS members for their continued cooperation.
+It looks like this might leave open a classic symlink race such that one
+user could control the location where another user unpacked packages
+coming from an npm installation.
 
-=======================================================================
-MSA-13-0036 (not MSA-13-25): Incorrect headers sent for secured resources
+if the superuser was the one running npm, this might have led to a
+non-privileged user who wins the race getting a privilege escalation as
+well, depending on the contents of the fetched package.
 
-Description:       Some files were being delivered with incorrect
-                    headers, meaning they could be cached downstream.
-Issue summary:     Incorrect headers emitted for secured resources
-Severity/Risk:     Minor
-Versions affected: 2.5 to 2.5.2, 2.4 to 2.4.6, 2.3 to 2.3.9 and
-                    earlier unsupported versions
-Versions fixed:    2.6, 2.5.3, 2.4.7 and 2.3.10
-Reported by:       Tony Levi
-Issue no.:         MDL-38743, MDL-42686
-CVE identifier:    CVE-2013-4522
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-38743
+The issue appears to have been fixed upstream today, here:
 
-=======================================================================
-MSA-13-0037 (not MSA-13-26): Cross site scripting in Messages
+  https://github.com/isaacs/npm/commit/f4d31693
 
-Description:       JavaScript in messages was being executed on some
-                    pages.
-Issue summary:     Cross Site Scripting in Messages
-Severity/Risk:     Serious
-Versions affected: 2.5 to 2.5.2, 2.4 to 2.4.6, 2.3 to 2.3.9 and
-                    earlier unsupported versions
-Versions fixed:    2.6, 2.5.3, 2.4.7 and 2.3.10
-Reported by:       Panagiotis Petasis
-Issue no.:         MDL-41941
-CVE identifier:    CVE-2013-4523
-Workaround:        Disable messages
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-41941
+I first learned about the problem during a related a bug report
+http://bugs.debian.org/715325 (cc'ed here)
 
-=======================================================================
-MSA-13-0038 (not MSA-13-27): Access to server files through repository
+If you think this needs a CVE, could you assign one please?
 
-Description:       The file system repository was allowing access
-                    to files beyond the Moodle file area.
-Issue summary:     File System repository gives read access to the
-                    whole file system
-Severity/Risk:     Serious
-Versions affected: 2.5 to 2.5.2, 2.4 to 2.4.6, 2.3 to 2.3.9 and
-                    earlier unsupported versions
-Versions fixed:    2.6, 2.5.3, 2.4.7 and 2.3.10
-Reported by:       Frédéric Massart
-Issue no.:         MDL-41807
-CVE identifier:    CVE-2013-4524
-Workaround:        Do not enable File System repository (default)
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-41807
+Regards,
 
-=======================================================================
-MSA-13-0039 (not MSA-13-28): Cross site scripting in Quiz
+	--dkg
 
-Description:       JavaScript in question answers was being executed on
-                    the Quiz Results page.
-Issue summary:     XSS on view quiz results page
-Severity/Risk:     Serious
-Versions affected: 2.5 to 2.5.2, 2.4 to 2.4.6, 2.3 to 2.3.9 and
-                    earlier unsupported versions
-Versions fixed:    2.6, 2.5.3, 2.4.7 and 2.3.10
-Reported by:       Michael Hess
-Issue no.:         MDL-41820
-CVE identifier:    CVE-2013-4525
-Workaround:        Disable text-based question types.
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-41820
 
-=======================================================================
-MSA-13-0040: Cross site scripting vulnerability in YUI library
-
-Description:       Flash files distributed with the YUI library
-                    may have allowed for cross-site scripting attacks.
-                    This is additional to MSA-13-0025.
-Issue summary:     YUI2 security vulnerability
-Severity/Risk:     Serious
-Versions affected: 2.3 to 2.3.9 and earlier unsupported versions
-Versions fixed:    2.3.10
-Reported by:       Petr Škoda
-Issue no.:         MDL-42780
-CVE identifier:    CVE-2013-6780
-Workaround:        Remove all SWF files under the lib/yui directory.
-Changes (2.3): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-42780
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
