@@ -1,57 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/20/1
-Message-ID: <20130720003422.GA2619@hunt>
-Date: Fri, 19 Jul 2013 17:34:22 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com
-Subject: CVE Request: smokeping incomplete fix for CVE-2012-0790
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/11
+Message-ID: <63140AD44DF9493C81881ACAE3C6E1D6@celsius>
+Date: Wed, 10 Jul 2013 20:56:57 +0200
+From: "Stefan Kanthak" <stefan.kanthak@...go.de>
+To: <oss-security@...ts.openwall.com>
+Subject: CVE request for Mozilla Firefox (Windows)
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, all,
+The installer of Mozilla Firefox writes the following command line
+with unquoted spaces for uninstallation into the Windows registry:
 
-I am requesting a 2012 CVE for an incomplete security fix in smokeping,
-fixed in version 2.6.9.
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Mozilla Firefox 22.0 (x86 en-US)]
+"UninstallString"="C:\\Program Files\\Mozilla Firefox\\uninstall\\helper.exe"
 
-CVE-2012-0790 was assigned to smokeping for XSS flaws.
+See <https://bugzilla.mozilla.org/show_bug.cgi?id=871084>,
+<https://bugzilla.mozilla.org/show_bug.cgi?id=786407> and
+<https://bugzilla.mozilla.org/show_bug.cgi?id=868746>
 
-The fix for CVE-2012-0790 in smokeping 2.6.7 was incomplete. The
-filtering used this blacklist:
+Due to a well-known and well-documented idiosyncrasy of Windows'
+CreateProcess() API this can result in the execution of a rogue
+program "C:\Program.exe" or "C:\Program Files\Mozilla.exe" with the
+privileges of the caller.
+Since the caller of this command line typically has administrative
+rights this vulnerability can lead to a privilege escalation.
 
-    $mode =~ s/[<>&%]/./g;
+Affected versions: all current releases.
 
-The version in 2.6.9 uses the following blacklist:
+Fixed version: 23.0.
 
-    my $xssBadRx = qr/[<>%&'";]/;
-
-(', ", and ; have been added. When it is used, blacklist chars are now
-turned to _ rather than . ) The 2.6.9 version prevents escaping <html
-attribute="..."> via " characters.
-
-The incomplete fix is in 2.6.7 and 2.6.8.
-
-This flaw was discovered by Florian Weimer [1] in 2012 and brought to
-our attention [2] in 2013.
-
-The upstream CHANGES [3] file includes, in part:
-
-
---------------------------------------------------
-
-2013/03/04 - released version 2.6.9
-
-*  be more careful about preventing xss attacks, re http://bugs.debian.org/659899 (tobi)
-
---------------------------------------------------
-
-
-I have not found an up-to-date online browsable source.
-
-Thanks
-
-
-1: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659899#37
-2: https://bugs.launchpad.net/ubuntu/+source/smokeping/+bug/1203061
-3: http://oss.oetiker.ch/smokeping/pub/CHANGES
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Stefan Kanthak
