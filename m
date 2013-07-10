@@ -1,101 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/21/1
-Message-ID: <519ABFAE.9030400@moodle.com>
-Date: Tue, 21 May 2013 08:28:30 +0800
-From: Michael de Raadt <michaeld@...dle.com>
-To: oss-security@...ts.openwall.com
-Subject: Moodle security notifications public
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/4
+Message-ID: <51DCE865.2020609@msgid.tls.msk.ru>
+Date: Wed, 10 Jul 2013 08:51:49 +0400
+From: Michael Tokarev <mjt@....msk.ru>
+To: "Adam D. Barratt" <adam@...m-barratt.org.uk>
+CC: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE request: FreeSWITCH regex substitution 3 buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-The following security notifications are now public. Thanks to OSS 
-members for their cooperation.
+10.07.2013 08:43, Adam D. Barratt wrote:
+> On Wed, 2013-07-10 at 08:26 +0400, Michael Tokarev wrote:
+>> The thing is that I did _not_ get a reply, and did not get Adam's
+>> message either.  I see them now in the archives but not in my inbox.
+> 
+> fwiw, in the case of my first message you will only have the copy that
+> went to the list, as mails have Reply-To: set and I didn't overrride
+> that. (I've added you directly this time.)
 
-=======================================================================
-MSA-13-0020: Capability issue in Assignment
+Yes, I've seen this in the archives (on the openwall.com site).  I'm
+subscribed to the list, and now I received two messages from you -- one
+sent to me directly and another that went to the list.  For two other
+mails - the CVE-2013-2238 assignment (message from Kurt) and your note
+about it I received nothing at all.
 
-Description:       The assignment module was not checking capabilities
-                    for users downloading all assignments as a zip.
-Issue summary:     Students can download assignments submitted by other
-                    students
-Severity/Risk:     Serious
-Versions affected: 2.4 to 2.4.3, 2.3 to 2.3.6
-Versions fixed:    2.5, 2.4.4 and 2.3.7
-Reported by:       Phillip Franks
-Issue no.:         MDL-38443
-CVE Identifier:    CVE-2013-2079
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-38443
+I'll watch archives from now on, to detect further mail loss and to try
+to understand what's going on.
 
-=======================================================================
-MSA-13-0021: Potential information leak in Gradebook
+(And this is now not relevant to FreeSWITCH ofcourse... ;)
 
-Description:       The Gradebook's Overview report was showing grade
-                    totals that may have incorrectly included hidden
-                    grades.
-Issue summary:     The method for figuring out
-                    showtotalsifcontainhidden on the overview report is
-                    flawed
-Severity/Risk:     Minor
-Versions affected: 2.4 to 2.4.3, 2.3 to 2.3.6,
-                    earlier unsupported versions
-Versions fixed:    2.5, 2.4.4 and 2.3.7
-Reported by:       Andrew Davis
-Issue no.:         MDL-37475
-CVE Identifier:    CVE-2013-2080
-Workaround:        Ensure all courses have the same value for hiding
-                    grades in the gradebook. This is set at
-                    Administration > Grades > Course grade settings >
-                    Hide totals if they contain hidden items
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-37475
+Thanks!
 
-=======================================================================
-MSA-13-0022: Information leak in hub registration
-
-Description:       When registering a site on a hub (not Moodle.net)
-                    site information was being sent to the hub
-                    regardless of settings chosen.
-Issue summary:     Moodle send site information to a hub even though
-                    it's unchecked
-Severity/Risk:     Minor
-Versions affected: 2.4 to 2.4.3, 2.3 to 2.3.6, 2.2 to 2.2.9,
-                    earlier unsupported versions
-Versions fixed:    2.5, 2.4.4, 2.3.7 and 2.2.10
-Reported by:       Jérôme Mouneyrac
-Issue no.:         MDL-37822
-CVE Identifier:    CVE-2013-2081
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-37822
-
-=======================================================================
-MSA-13-0023: Permission issue in blog comments
-
-Description:       There was no check of permissions for viewing
-                    comments on blog posts.
-Issue summary:     Blog comment validation should verify that the user
-                    can view a post.
-Severity/Risk:     Serious
-Versions affected: 2.4 to 2.4.3, 2.3 to 2.3.6, 2.2 to 2.2.9,
-                    earlier unsupported versions
-Versions fixed:    2.5, 2.4.4, 2.3.7 and 2.2.10
-Reported by:       Dan Poltawski
-Issue no.:         MDL-37245
-CVE Identifier:    CVE-2013-2082
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-37245
-
-=======================================================================
-MSA-13-0024: Form filtering issue
-
-Description:       Form elements named using a specific naming
-                    scheme were not being filtered correctly
-Issue summary:     Elements named foo[i] are not cleaned properly
-Severity/Risk:     Minor
-Versions affected: 2.4 to 2.4.3, 2.3 to 2.3.6, 2.2 to 2.2.9,
-                    earlier unsupported versions
-Versions fixed:    2.5, 2.4.4, 2.3.7 and 2.2.10
-Reported by:       Dan Poltawski
-Issue no.:         MDL-38885
-CVE Identifier:    CVE-2013-2083
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-38885
+/mjt
