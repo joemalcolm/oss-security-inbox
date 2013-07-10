@@ -1,46 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/2
-Message-ID: <20130422013214.GG17095@nef.pbox.org>
-Date: Mon, 22 Apr 2013 03:32:14 +0200
-From: Alistair Crooks <agc@...src.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/3
+Message-ID: <1373431437.14697.17.camel@jacala.jungle.funky-badger.org>
+Date: Wed, 10 Jul 2013 05:43:57 +0100
+From: "Adam D. Barratt" <adam@...m-barratt.org.uk>
 To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+Cc: Kurt Seifried <kseifried@...hat.com>, Michael Tokarev <mjt@....msk.ru>
+Subject: Re: CVE request: FreeSWITCH regex substitution 3 buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 22, 2013 at 10:52:00AM +1000, Allan McRae wrote:
-> Arch Linux does have similar system (our package building infrastructure
-> uses PGP signature verification if available, any of a variety of
-> checksums).
+On Wed, 2013-07-10 at 08:26 +0400, Michael Tokarev wrote:
+> The thing is that I did _not_ get a reply, and did not get Adam's
+> message either.  I see them now in the archives but not in my inbox.
 
-Right - and, as your blog post mentions, the necessary effectiveness
-of the public key is germane to the issues here.  How is revocation or
-expiry of keys handled?
- 
-> The point of my post was that if upstream does not provide anything when
-> they release a tarball, then they really do not help that much...  It
-> just verifies that the source the packager downloaded is the same as the
-> source you have.  It does not save you if the source was altered before
-> the packager obtained it.
-
-Well, the package maintainers are asked to provide a summary of changes
-when any updates are made. Personally, I like to diff old and new sources
-to see what has changed; I'd like to think it's not just me doing that.
-So the old version is used as leverage for the newer version.
-
-However, the threat vector is an interesting one; in the past we've
-seen trojaned versions of software (typically exploited in the
-configure stage) occur, but the trojaned versions trail the official
-release by some time.  As an aside -- if the builder is running
-"./configure" as root, then they deserve a lot of the stuff that's
-coming their way.  The other thing to note is that, in these cases,
-the digests have been sufficient to pick up the changes in the
-distributed tar files.  And simply adding more weight and complexity
-to the signature (it's more than likely a SHA1 digest that gets
-signed, right?) doesn't add any more protection, and demands
-up-to-date public keys of the tarball packager.
-
-So, all in all, I'm not sure what benefits a signature provides over digests
-for this use case.
+fwiw, in the case of my first message you will only have the copy that
+went to the list, as mails have Reply-To: set and I didn't overrride
+that. (I've added you directly this time.)
 
 Regards,
-Alistair
+
+Adam
+
