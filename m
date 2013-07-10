@@ -1,48 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/05/1
-Message-Id: <F6AC3E8C-856D-4D57-93BB-91E95336042C@redhat.com>
-Date: Wed, 4 Sep 2013 21:19:19 -0400 (EDT)
-From: Vincent Danen <vdanen@...hat.com>
-To: "cve-assign@...re.org" <cve-assign@...re.org>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/7
+Message-ID: <8b7a4b6fd6d93ea18b0190a3f4542f79@imap.steindlberger.de>
+Date: Wed, 10 Jul 2013 17:17:08 +0200
+From: Jonas Meurer <jonas@...esources.org>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com, Vincent Danen <vdanen@...hat.com>, mejo@...ian.org, contribute@...ios.org
 Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
 Content-Type: text/plain; charset=utf-8
 
-That somewhat proves my point.
-=). In both cases you're talking about intended security being violated or a security-relevant mistake.  I don't see how relaxing ACLs intentionally, but still protected via authentication, meet either criteria.
+Hello,
 
---
-Vincent Danen / Red Hat Security Response Team
-
-
-On 2013-09-04, at 5:08 PM, cve-assign@...re.org wrote:
-
+Am 2013-07-08 20:16, schrieb Kurt Seifried:
 > -----BEGIN PGP SIGNED MESSAGE-----
 > Hash: SHA1
 > 
->> I think the first question is what constitutes a security flaw --
->> once that is defined, then I think what upstream does is irrelevant.
->> If it's a flaw, it's a flaw.
+> On 06/26/2013 01:42 PM, Kurt Seifried wrote:
+>> On 06/26/2013 12:36 PM, Vincent Danen wrote:
+>>> I don't believe a CVE has been assigned to this issue yet.
+>> 
+>>> It was reported that Nagios 3.4.4 at least, and possibly earlier
+>>>  versions, would allow users with access to Nagios to obtain
+>>> full access to the servicegroup overview, even if they are not
+>>> authorized to view all of the systems (not configured for this
+>>> ability in the authorized_for_* configuration option).  This
+>>> includes the servicegroup overview, summary, and grid.
+>> 
+>>> Provided the user has access to view some services, they will be
+>>> able to see all services (including those they should not see).
+>>> Note that the user in question must have access to some services
+>>> and must have access to Nagios to begin with.
+>> 
+>>> This has not yet been corrected upstream.
+>> 
+>>> References:
+>> 
+>>> http://www.mail-archive.com/nagios-users@lists.sourceforge.net/msg39749.html
+>> 
+>>>  http://tracker.nagios.org/view.php?id=456
+>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714171
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=978531
+>> 
+>> 
+>>> Thanks.
+>> 
+>> Please use CVE-2013-2214 for this issue.
 > 
-> CVE assignment by MITRE doesn't look at flaws in quite that way. If a
-> vendor has developed and released software and then sends us a report
-> that the software had a security-relevant mistake, or violated that
-> vendor's intended security policy, that's usually enough for a CVE.
-> Reports from third parties are viewed much more restrictively.
-> 
-> - -- 
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
-> 
-> iQEcBAEBAgAGBQJSJ7raAAoJEGvefgSNfHMdG6IH/RaOwVRMz+RWNEbF/ofeAWKV
-> mVCfX+dzdvgsl3vr8r2aDL+K7hHV7RMwUial7ioyOCruTvtvBTRfssXcJrcLzLSF
-> zejR2luTtNNzFIVbjc134gDOis9/Xr2dPwheP0RNHBFRI655tnCWt+gIisPhJujz
-> E/FfW67K7up0/c+dDuzgdHfO1n+PG0Us3SdAnQwKGS181agM4flsWL64XXaITFs4
-> 0Xx8l6UPN6G7ybMikJlsUbiLQZ70au6W0eEqTCvuLILbx0oEFRK47cLxGJSn190N
-> lOIh5F1YwVPeZivXjEc0kdFxY+pypc8v1AxXHzQnzwap+wtxsshmgyadqiiiXD8=
-> =5ycL
-> -----END PGP SIGNATURE-----
+> It appears there are may be some problems with this issue, potentially
+> this may have been a bad configuration and not a source code based
+> problem, however we haven't been able to confirm it yet. I've also not
+> been able to contact upstream about this easily (no security@ address,
+> if anyone know whom to forward this to, please let me know, thanks.
+
+I'm wondering why you fail to reproduce this issue. I posted some 
+details regarding my setup at the Nagios Tracker: 
+http://tracker.nagios.org/view.php?id=456
+
+Unfortunately Nagios upstream sometimes rather unresponsive. At least 
+that's what I observed.
+
+Please let me know if you need any further details regarding the bug or 
+advice on how to reproduce it.
+
+Kind regards,
+  jonas
