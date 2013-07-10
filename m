@@ -1,85 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/09/4
-Message-ID: <D6182642CE6D2D4FBFCDF99946E249883B2FF461@G4W3299.americas.hpqcorp.net>
-Date: Thu, 9 May 2013 16:02:24 +0000
-From: "Miller, Mark M (EB SW Cloud - R&D - Corvallis)" <mark.m.miller@...com>
-To: Thierry Carrez <thierry@...nstack.org>, "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "openstack-announce@...ts.openstack.org" <openstack-announce@...ts.openstack.org>
-Subject: RE: [Openstack] [OSSA 2013-011] Keystone tokens not immediately invalidated when user is deleted (CVE-2013-2059)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/6
+Message-ID: <1854202304.2159179.1373461845560.JavaMail.root@redhat.com>
+Date: Wed, 10 Jul 2013 09:10:45 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Marc-André Moreau <marcandre.moreau@...il.com>, Bernhard Miklautz <bmiklautz@...nstuff.at>, Martin Fleisz <mfleisz@...nstuff.at>
+Subject: CVE Request -- FreeRDP: Multiple security fixes in 1.1.0-beta1 version
 Content-Type: text/plain; charset=utf-8
 
-General question:
+Hello Kurt, Steve, vendors,
 
-Looks like a fix has been written for Grizzly. Is there an official Grizzly patch release coming out that contains this and other fixes? 
+  (some time ago) FreeRDP upstream has released 1.1.0-beta1 version:
+  [1] http://sourceforge.net/mailarchive/message.php?msg_id=30591956
 
-Regards,
+correcting multiple security flaws:
+* library / client side fixes:
+    https://github.com/FreeRDP/FreeRDP/pull/887
+    https://github.com/FreeRDP/FreeRDP/commit/0dc22d5a30a1c7d146b2a835b2032668127c33e9
+    https://github.com/FreeRDP/FreeRDP/commit/bceec083677a609ba2f06cc75924ab0accac5388
 
-Mark Miller
+* server side fixes:
+    https://github.com/FreeRDP/FreeRDP/commit/7d58aac24fe20ffaad7bd9b40c9ddf457c1b06e7
+    https://github.com/FreeRDP/FreeRDP/commit/0773bb9303d24473fe1185d85a424dfe159aff53
 
------Original Message-----
-From: Openstack [mailto:openstack-bounces+mark.m.miller=hp.com@...ts.launchpad.net] On Behalf Of Thierry Carrez
-Sent: Thursday, May 09, 2013 8:48 AM
-To: openstack@...ts.launchpad.net; oss-security@...ts.openwall.com; openstack-announce@...ts.openstack.org
-Subject: [Openstack] [OSSA 2013-011] Keystone tokens not immediately invalidated when user is deleted (CVE-2013-2059)
+CC-ed Marc-Andre, Bernhard and Martin of FreeRDP upstream to clarify
+if the above list of patches is complete wrt to security fixes, corrected
+within 1.0.1-beta1 version. Marc-Andre, Bernhard, Martin, please complete
+the set of security fixes if / where necessary.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Kurt / Steve, could you allocate CVE ids for these?
 
-OpenStack Security Advisory: 2013-011
-CVE: CVE-2013-2059
-Date: May 9, 2013
-Title: Keystone tokens not immediately invalidated when user is deleted
-Reporter: Sam Stoelinga
-Products: Keystone
-Affects: All versions
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Description:
-Sam Stoelinga reported a vulnerability in Keystone. When users are
-deleted through Keystone v2 API, existing tokens for those users are not
-immediately invalidated and remain valid for the duration of the token's
-life (by default, up to 24 hours). This may result in users retaining
-access when the administrator of the system thought them disabled. You
-can workaround this issue by disabling a user before deleting it: in
-that case the tokens belonging to the disabled user are immediately
-invalidated. Keystone setups using the v3 API call to delete users are
-unaffected.
-
-Havana (development branch) fix:
-https://review.openstack.org/#/c/28677/
-
-Grizzly fix:
-https://review.openstack.org/#/c/28678/
-
-Folsom fix:
-https://review.openstack.org/#/c/28679/
-
-References:
-https://bugs.launchpad.net/keystone/+bug/1166670
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-2059
-
-- -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJRi8UUAAoJEFB6+JAlsQQjarMQAL64x2OlW3SbgOoCUDhi91lv
-JdBStMO6/6H1Njjv0cLEAOE/50rAJSFLsdLlzSkXHimD9NWnXogpbaKj+gWd/Jbm
-xDOgVtRDa8IgmaXVgA88tAO0/C6QHTQMBwBce8hVzMRRDZZ6zW7SAvofTBjdjmEj
-tC8nwhxF/QAx/lHwIyWHQsGCip+z9JQxT+UCQ5ytQQbSnYI/wmRWMHCCcst7XFqn
-H6Y9LQ8cLQAOZk0fHZx7wsFFVJ9XIiQcZxYSGPDn5/aRXlbbF6cWTy4UPB3jmMkp
-wJ7XSjpXzPLsTCimXwYT9CkhUYjvC7Y9Yu2XF3VycFL+bifobIfPQ2ABNBqkd/U1
-2iIMq8rCTIG+GEhgBMHyrBdXJclsdzY/mFOHZhOdCsLH2pO6EPCUjO3Zs6BPtYfk
-zBNPRzrUXAnay+xjJhjQqxCOuskx/gxt2kOF00G1c/jZTytqzx7M4yf5GL9DYD6g
-LLUZpb+Ia5voocBpK2484fXlouVoQY+encQopnSZb5GarsMgO1hRK8qtExeeR3+o
-NPxeat15YaSvVaCgSL2msqnjIr6g3wXI1vLGdvmGny4hvNnLd+UeeQ9eT0Nc7LN9
-aotaXRhDeYz71aFd8ZCYpUtoZ6I50/XnRT9+FrQ2QZ7cEKSVZjUv+mcEn0mCvZpC
-hqKVwOK6strcPXDlQwZr
-=e4jK
------END PGP SIGNATURE-----
-
-_______________________________________________
-Mailing list: https://launchpad.net/~openstack
-Post to     : openstack@...ts.launchpad.net
-Unsubscribe : https://launchpad.net/~openstack
-More help   : https://help.launchpad.net/ListHelp
+P.S.: Thanks goes to Florian Weimer of Red Hat Product Security Team for pointing these
+      out.
