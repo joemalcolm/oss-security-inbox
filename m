@@ -1,65 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/09/3
-Message-ID: <518BC514.9040902@openstack.org>
-Date: Thu, 09 May 2013 17:47:32 +0200
-From: Thierry Carrez <thierry@...nstack.org>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA 2013-011] Keystone tokens not immediately invalidated when user is deleted (CVE-2013-2059)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/19
+Message-ID: <20130710220118.GD9874@kludge.henri.nerv.fi>
+Date: Thu, 11 Jul 2013 01:01:18 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Zenphoto waraxe-2012-SA#096
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Can I get 2012 CVE identifiers for multiple issues in Zenphoto, thanks. Maybe we
+can only use one ID for easiness.
 
-OpenStack Security Advisory: 2013-011
-CVE: CVE-2013-2059
-Date: May 9, 2013
-Title: Keystone tokens not immediately invalidated when user is deleted
-Reporter: Sam Stoelinga
-Products: Keystone
-Affects: All versions
+Advisory URL: http://www.waraxe.us/advisory-96.html
+Author: Janek Vind "waraxe"
+Affected versions: Zenphoto 1.4.3.3 and older
+Patched version: Zenphoto 1.4.3.4
+Release advisory: http://www.zenphoto.org/news/zenphoto-1.4.3.4
+http://secunia.com/advisories/50799/
+http://www.securelist.com/en/advisories/50799
 
-Description:
-Sam Stoelinga reported a vulnerability in Keystone. When users are
-deleted through Keystone v2 API, existing tokens for those users are not
-immediately invalidated and remain valid for the duration of the token's
-life (by default, up to 24 hours). This may result in users retaining
-access when the administrator of the system thought them disabled. You
-can workaround this issue by disabling a user before deleting it: in
-that case the tokens belonging to the disabled user are immediately
-invalidated. Keystone setups using the v3 API call to delete users are
-unaffected.
+http://osvdb.org/87016 Zenphoto zp-core/zp-extensions/GoogleMap/m.php data Parameter XSS  
+http://osvdb.org/87017 Zenphoto zp-core/zp-extensions/tiny_mce/config/zenpage-default-full.js.php locale Parameter XSS  
+http://osvdb.org/87018 Zenphoto zp-core/zp-extensions/cloneZenphoto/cloneTab.php Multiple Parameter XSS  
+http://osvdb.org/87019 Zenphoto zp-core/admin-tags.php tagsort Parameter XSS  
+http://osvdb.org/87020 Zenphoto zp-core/admin-users.php error Parameter XSS   
+http://osvdb.org/87021 Zenphoto zp-core/admin-thumbcrop.php Multiple Parameter XSS  
+http://osvdb.org/87022 Zenphoto zp-core/admin-comments.php ndeleted Parameter XSS  
+http://osvdb.org/87023 Zenphoto zp-core/zp-extensions/tiny_mce/plugins/tinyzenpage/js/dialog.php album Parameter XSS  
+http://osvdb.org/87024 Zenphoto zp-core/admin-upload.php Multiple Parameter XSS  
+http://osvdb.org/87025 Zenphoto Database Backup Direct Request Remote Information Disclosure
+http://osvdb.org/87026 Zenphoto zp-core/zp-extensions/uploader_flash/check.php Arbitrary File Enumeration  
+http://osvdb.org/87027 Zenphoto zp-core/zp-extensions/search_statistics.php X_FORWARDED_FOR HTTP Header SQL Injection
+http://osvdb.org/87028 Zenphoto zp-core/zp-extensions/failed_access_blocker.php X_FORWARDED_FOR HTTP Header SQL Injection
+http://osvdb.org/87029 Zenphoto zp-core/zp-extensions/federated_logon/Verisign_logon.php redirect Parameter XSS  
+http://osvdb.org/87030 Zenphoto zp-core/zp-extensions/federated_logon/OpenID_logon.php Multiple Parameter XSS  
+http://osvdb.org/87031 Zenphoto zp-core/admin-functions.php File Upload PHP Code Execution
+http://osvdb.org/87032 Zenphoto zp-core/zp-extensions/uploader_jQuery/uploader.php File Upload PHP Code Execution
+http://osvdb.org/87033 Zenphoto getUserIP() Function X_FORWARDED_FOR HTTP Header IP Address Spoofing Weakness
 
-Havana (development branch) fix:
-https://review.openstack.org/#/c/28677/
+Please note that CVE-2012-4519 has been assigned to issue http://osvdb.org/85899
+in mailing list thread http://www.openwall.com/lists/oss-security/2012/10/11/4
 
-Grizzly fix:
-https://review.openstack.org/#/c/28678/
+---
+Henri Salo
 
-Folsom fix:
-https://review.openstack.org/#/c/28679/
-
-References:
-https://bugs.launchpad.net/keystone/+bug/1166670
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-2059
-
-- -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJRi8UUAAoJEFB6+JAlsQQjarMQAL64x2OlW3SbgOoCUDhi91lv
-JdBStMO6/6H1Njjv0cLEAOE/50rAJSFLsdLlzSkXHimD9NWnXogpbaKj+gWd/Jbm
-xDOgVtRDa8IgmaXVgA88tAO0/C6QHTQMBwBce8hVzMRRDZZ6zW7SAvofTBjdjmEj
-tC8nwhxF/QAx/lHwIyWHQsGCip+z9JQxT+UCQ5ytQQbSnYI/wmRWMHCCcst7XFqn
-H6Y9LQ8cLQAOZk0fHZx7wsFFVJ9XIiQcZxYSGPDn5/aRXlbbF6cWTy4UPB3jmMkp
-wJ7XSjpXzPLsTCimXwYT9CkhUYjvC7Y9Yu2XF3VycFL+bifobIfPQ2ABNBqkd/U1
-2iIMq8rCTIG+GEhgBMHyrBdXJclsdzY/mFOHZhOdCsLH2pO6EPCUjO3Zs6BPtYfk
-zBNPRzrUXAnay+xjJhjQqxCOuskx/gxt2kOF00G1c/jZTytqzx7M4yf5GL9DYD6g
-LLUZpb+Ia5voocBpK2484fXlouVoQY+encQopnSZb5GarsMgO1hRK8qtExeeR3+o
-NPxeat15YaSvVaCgSL2msqnjIr6g3wXI1vLGdvmGny4hvNnLd+UeeQ9eT0Nc7LN9
-aotaXRhDeYz71aFd8ZCYpUtoZ6I50/XnRT9+FrQ2QZ7cEKSVZjUv+mcEn0mCvZpC
-hqKVwOK6strcPXDlQwZr
-=e4jK
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
