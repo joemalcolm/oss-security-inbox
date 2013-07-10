@@ -1,87 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/31/4
-Message-ID: <51A8AB57.5060408@gentoo.org>
-Date: Fri, 31 May 2013 15:53:27 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/15
+Message-ID: <51DDBBC6.1070401@redhat.com>
+Date: Wed, 10 Jul 2013 13:53:42 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: monkeyd Denial of Service
+CC: security curmudgeon <jericho@...rition.org>
+Subject: Re: Re: Re: Re: cryptocat/decryptocat - needs a cve?
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-from http://www.1337day.com/exploit/20830 :
+On 07/10/2013 11:36 AM, security curmudgeon wrote:
+> 
+> 
+> In reference to Kurt's post: 
+> http://seclists.org/oss-sec/2013/q3/66
+> 
+> I went through the CryptoCat changelog, as well as the audit report
+> from 2012 and broke out all the issues as I saw them. They are all
+> live on OSVDB, which may help on CVE assignments:
+> 
+> http://direct.osvdb.org/search?search%5Bvuln_title%5D=cryptocat&search%5Btext_type%5D=titles
+>
+> 
+> 
 
-|Title:|
-|======|
-|Monkey HTTPD 1.1.1 - Denial of Service Vulnerability|
-||
-|Date:|
-|=====|
-|2013-05-28|
-||
-|References:|
-|===========|
-|http://bugs.monkey-project.com/ticket/181|
-||
-|Introduction:|
-|=============|
-|Monkey is a lightweight and powerful web server for GNU/Linux.|
-||
-|It has been designed to be very scalable with low memory and CPU 
-consumption, the perfect solution for embedded devices. Made for ARM, 
-x86 and x64.|
-||
-|Abstract:|
-|=========|
-|The vulnerability is a denial of service which is caused by sending a 
-null byte in an HTTP request to the web server.|
-||
-|Report-Timeline:|
-|================|
-|2013-05-23: Discovered vulnerability via fuzzing|
-|2013-05-25: Vendor Notification|
-|2013-05-26: Vendor Response/Feedback|
-|2013-05-27: Vendor Fix/Patch|
-|2013-05-28: PublicDisclosure|
-||
-|Status:|
-|========|
-|Published|
-||
-|Affected Products:|
-|==================|
-|Monkey HTTPD - version 1.1.1|
-||
-|Exploitation-Technique:|
-|=======================|
-|Remote|
-||
-|Details:|
-|========|
-|A bug discovered in Monkey's HTTP parser allows an attacker to cause a 
-segmentation fault in one of the daemon's threads using a specially 
-crafted request containing a null byte. An attacker can crash all the 
-available threads by sending the specially crafted request multiple 
-times, rendering the server useless for legitimate users.|
-||
-|Proof of Concept:|
-|=================|
-|The vulnerability can be exploited by remote attacker without any 
-special privileges. The placement of the null byte within the request 
-does not seem to have any effect on the result. The null byte may even 
-be used instead of an HTTP method such as, GET. Below is an example of 
-how this bug can be manually triggered:|
-||
-|ruby -e 'puts "GET /\x00 HTTP/1.1\r\n\r\n"'|netcat localhost 2001|
-||
-|Solution:|
-|=========|
-|This vulnerability has been fixed for the 1.2.0 release.|
-||
-|Risk:|
-|=====|
-|The security risk of the redirection vulnerability is estimated as low(+).|
+You rock, thanks. Owe you a beer.
 
-Commit code:
-http://git.monkey-project.com/?p=monkey;a=commitdiff;h=9f32a0c56ab185651dc91a858ac5259f07ed9ad1
+Please use (same titles as OSVDB):
 
+CVE-2013-2257 Cryptocat Group Chat ECC Private Key Generation Brute
+Force Weakness
+CVE-2013-2258 Cryptocat Crafted Nickname User Impersonation Spoofing
+CVE-2013-2259 Cryptocat on Firefox Conversation Overview Nickname
+Arbitrary Code Execution
+CVE-2013-2260 Cryptocat Cryptocat.random() Function Array Key Entropy
+Weakness
+CVE-2013-2261 Cryptocat for Chrome manifest.json img/keygen.gif
+Software Detection Weakness
+CVE-2013-2262 Cryptocat strophe.js XMPP Request ID Prediction OTR Chat
+Activity Remote Disclosure
+CVE-2013-4100 Cryptocat Crafted Username Chat Remote DoS
+CVE-2013-4101 Cryptocat Link Markup Decorator addLinks() Function HTML
+Handling Weakness
+CVE-2013-4102 Cryptocat strophe.js Math.random() Function Random
+Number Generator (RNG) Weakness
+CVE-2013-4103 Cryptocat Crafted Data URI Remote Script Injection
+CVE-2013-4104 Cryptocat OTR Socialist Millionnaire Protocol Key
+Exchange Poisoning Weakness
+CVE-2013-4105 Cryptocat Multiparty Encryption Scheme AES-CTR Nonce
+Re-use Plaintext Traffic Disclosure
+CVE-2013-4106 Cryptocat Conversation Overview Nickname XSS
+CVE-2013-4107 Cryptocat cryptocat.js handlePresence() Function
+Nickname Change XSS
+CVE-2013-4108 Cryptocat Multiple Unspecified Minor Issues
+CVE-2013-4109 Cryptocat Message Handling Unspecified XSS
+CVE-2013-4110 Cryptocat Unspecified Chat Participant User List Disclosure
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJR3bvFAAoJEBYNRVNeJnmT1ksQAL/C09I0kmpMEB9J8kSF19x+
+iQZYNmyK9Cslxl9pdG/HLeLGieFdhGMAJ9CgBMfW82Vil6VAU8AwGn+rG8RUZtdk
+cdhh6bGBvj3uLjgz+sabBZdCRSsu/LL6Y5INcQIVkvO5iIBF/HKqMRGBlmGygjdp
+fJfLQigoPFcZ1IfIABFv40mMZxr8v6ZMlqukmOVeTyjnDPjNgYzimCqe3kBQzBwE
+YA90sISausX5a68Tk3mkRMtsRfEQY7CXG666c/FO2sH+61CbQb8PhfuJ33TRWFog
+wDqaphzHgWbBoW11VSlmTcEjGsaL/oxCGrwSqFE4hdg1vWgmxpMNZq6LodVvxTh4
+REZaPQtrlJiIJjxFOwHiYUIig+BShgw74iQ4SmTse5PqQ/Z76VQlutQzXqGKdZ/V
+xrl7AJvrUiEOHpmfkeS1x9feF85IY+MmDSIqVmRYr/wvClzTOHgFRNiBH4+FHUA1
+axl+sLM8dlu4dFJdkPgf/HssQ26LDcLA7AmQxh1Fkb7NdvwGiGQ8F6fBz0JbyTMN
+VQ7R/cx2GDagsEaoMmYp3hTMKrJbBpN04OEr/YmE0XWlz3s9dPLswwLdDgI7JDgJ
+IGa+hfJCz58KK2JY1ztV0SyD75gcxhPpMxoblQnqlsDnV5lLbNrBLquKze9iXgxc
+YCpcKrjSVUT4q5OA5Rob
+=s1DF
+-----END PGP SIGNATURE-----
