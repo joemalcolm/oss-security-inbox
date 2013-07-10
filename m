@@ -1,38 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/1
-Message-ID: <51787BB2.2070801@redhat.com>
-Date: Wed, 24 Apr 2013 18:41:22 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/16
+Message-ID: <51DDBC86.7070002@redhat.com>
+Date: Wed, 10 Jul 2013 13:56:54 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>, security@...dpress.org, donncha@...oimh.ie
-Subject: Re: WP-Super-Cache XSS and Remote Code Exec
+CC: Matthew Wilkes <matthew@...thewwilkes.co.uk>
+Subject: Re: Re: CVE Request - PloneFormGen, multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/24/2013 04:27 PM, Hanno Böck wrote:
-> On Wed, 24 Apr 2013 12:30:57 -0600 Kurt Seifried
-> <kseifried@...hat.com> wrote:
+On 07/10/2013 10:01 AM, Matthew Wilkes wrote:
+> On 2013-07-04 21:54, Matthew Wilkes wrote:
+>> Hello all,
+>> 
+>> I'd like to request some CVE identifiers for the following 
+>> vulnerabilities, recently patched in PloneFormGen[1]
 > 
->> WP-Super-Cache 1.2 Remote Code Execution Fixed in 1.3:
+> Anything I can do to unblock this?
 > 
-> There are two different changelog entries that look like they
-> belong to this issue: 
-> https://wordpress.org/extend/plugins/wp-super-cache/changelog/
+> Thanks,
 > 
-> 1.3 says: "mfunc tags could be executed in comments. Fixed."
+> Matt
 > 
-> and 1.3.2 says: "Any mfunc/mclude/dynamic-cached-content tags in
-> comments are now removed."
 > 
-> To me this looks like 1.3 contained an incomplete fix that got 
-> completed in 1.3.2 (?), but I don't know. If that's the case, we
-> should probably have another CVE for the incomplete fix.
 
-I'm not going to spend time researching this. If you want to, feel
-free, based on your results I can assign a CVE if needed.
-
+Ah sorry can you reply to your first message with links to the code
+commits and who discovered them so I can confirm these
+issues/split/merge them as needed? Thanks.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -40,17 +36,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJReHuxAAoJEBYNRVNeJnmT3N0QAMxpGryTu5OCnQg8M7gSeyk5
-moiAo3LznDf2zu57PHOUPI3UnpIIdjsluEOgn6Sbo/BoP/keT6dpG9wg4oVKd/k0
-ZlMRUKHjQlPRjBaWvkrwSpDvPil9AcBAWHTNgnA9RsSy0y0gRF3wq4wPydGR6CE6
-1U8oM7Ikl9A7GU0//OREscLI4/+q2lqesLWvYlVyFk9lA5bDoOU0JTKnNvtTJb9L
-iFKbtmVN/5KlyilTny2yD9HwnW+gY+8qA12uVj/q1i9xFUeHZvUW4TA+As2yomMp
-WSn+mNz1FKi1qzEWMIO1pJj6RncubWkF9DBqDL42VWe2POWvp62KcVbc9hHN7pbe
-SMobyp+Vl9/mAlg1jdsSbf7jjHj9MptM7EfXcJL7hM2zwqdHgXIglEi8lZfffvcY
-MCqzzN89abpz1YNqaicWR3fkjMSi1/YogaWuGZglmGQdx3cCoD70EinA7H0UCok/
-l2Eh9Ikz9d0dpevQLWwm49G7dtuKBEy1XsxF11vKKq8GRoiG6+0+YfHVO4s3Imyn
-GjjFKHNKByeXk/i5rw71O3cV0lcMgaxCjt0v01R1i1ATjyVdjjWS0+c1ow/pGaC/
-+/wbkFFxN8MtWwJdvQas3e/5oe+fu5RyWfcWqM3w3WTGePYKqzQM6/sn0t7SzkhQ
-bTwqcH2ybUk5tfQnwt3f
-=VCth
+iQIcBAEBAgAGBQJR3byFAAoJEBYNRVNeJnmTZ4QP/i0c4w0hqH0OkPIkDZ60UAxh
+H6/x3ZXwjwK33FNvPGHV4eLZfQSC93932RGPBX6nbNteRNia3i9YFqexUSqto10t
+2bJ3dhvr2yGrcOOkZgf8tKekXS6TCpd7xj5EQVrRmWrFjeDObWZOtBqI8P+/IwMR
+z+e5YOc3lamnlqQhEZWsAggm8xKyS549vev383rlsLV6cvpEYKhJmSlv4Qbeo8i+
+btfTux29oTrA6ThKPaS0c7bd9zTwB2JGAOYLxMXK8Fp2S7vyvXf/VMnMRMbMPzi4
+xkS4BCMKAgcYcPKtaEGZbMQ+Vd/HmSdvFcaLYpcDPdBNBHzzn3SJAHbOIVhkBK9g
+YbRC4arQ3N6t4hb+LKbxtpxsBcet+MnDEoxtCc/9px4+S23mCKKtT230HqUFzDHP
+y8on5JjmfmrHZrr8bg8sA+2pH2SFsH/K65d/CsrXmz6rXn0BtUEhH+fdc4pvQ5sz
+Wq1NmRts91dktw7c5XNzbxQ8rG1UBDq0p73cciq4n8vNURXl6VgIIxBqruV4+3yw
+Rn/DBXTR6Zv0RXfHW8OoQ8X6mT/EuoohQ7KaKyWzKBTz5hQPjjSQQ6EuCDTYyIch
+cxUQ1Bit1f18aQforebn3lQ3/WSfX9XoKCYV3iQFIjZdJd+1adj9HKx0Fr6zO3+/
+IHg/vGIrGNWqKpuCHhBO
+=isYe
 -----END PGP SIGNATURE-----
