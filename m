@@ -1,33 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/3
-Message-ID: <20130305035013.GA6465@openwall.com>
-Date: Tue, 5 Mar 2013 07:50:13 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/8
+Message-ID: <krk0gs$bpb$1@ger.gmane.org>
+Date: Wed, 10 Jul 2013 17:01:38 +0100
+From: Matthew Wilkes <matthew@...thewwilkes.co.uk>
 To: oss-security@...ts.openwall.com
-Subject: Re: handling of Linux kernel vulnerabilities
+Subject: Re: CVE Request - PloneFormGen, multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-All -
+On 2013-07-04 21:54, Matthew Wilkes wrote:
+> Hello all,
+>
+> I'd like to request some CVE identifiers for the following
+> vulnerabilities, recently patched in PloneFormGen[1]
 
-On Mon, Mar 04, 2013 at 08:10:22PM -0700, Kurt Seifried wrote:
-> If you want to discuss the theoretical/philosophical nature of
-> information security as applied to the Linux kernel I'd be happy to
-> set up a separate list for that, OSS-Security isn't really the right
-> venue.
-
-The above is Kurt's opinion, which he is indeed entitled to, but it is
-not a list moderators' statement.  Thus, please do not be
-significantly discouraged to discuss "the theoretical/philosophical
-nature of information security as applied to the Linux kernel" in here
-just because of Kurt's posting. :-)  Indeed, if that's the general
-feeling of list members, we may have to put an end to the discussion,
-but I am not seeing that yet.  In fact, I think the discussion will
-happily clam down on its own.
-
-Discussions such as this one are in fact on-topic here, despite of them
-being relatively rare.  This is the right venue.  I do not think we need
-a separate venues for these things yet (if ever).
+Anything I can do to unblock this?
 
 Thanks,
 
-Alexander
+Matt
+
+
