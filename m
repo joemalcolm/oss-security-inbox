@@ -1,37 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/06/4
-Message-ID: <20131206140153.GA16411@cachalot>
-Date: Fri, 6 Dec 2013 18:01:53 +0400
-From: Vasily Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/14
+Message-ID: <51DDBA28.6080306@redhat.com>
+Date: Wed, 10 Jul 2013 13:46:48 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Kernel: ping: NULL pointer dereference on write to msg_name
+CC: Stefan Kanthak <stefan.kanthak@...go.de>, security@...illa.org
+Subject: Re: CVE request for Mozilla Firefox (Windows)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Fri, Dec 06, 2013 at 19:13 +0530, P J P wrote:
-> Linux kernel built with the TCP/IP networking support(CONFIG_NET) is
-> vulnerable to a NULL pointer dereference flaw. It could occur via a
-> plain read(2) call on a ping socket. Usage of ping sockets is
-> generally restricted to privileged users.
+On 07/10/2013 12:56 PM, Stefan Kanthak wrote:
+> The installer of Mozilla Firefox writes the following command line 
+> with unquoted spaces for uninstallation into the Windows registry:
 > 
-> A user/program able to read from ping sockets could use this flaw to crash a
-> system resulting in DoS.
+> [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Mozilla
+> Firefox 22.0 (x86 en-US)] "UninstallString"="C:\\Program
+> Files\\Mozilla Firefox\\uninstall\\helper.exe"
 > 
-> Upstream fix:
-> -------------
->  -> https://git.kernel.org/linus/cf970c002d270c36202bd5b9c2804d3097a52da0
+> See <https://bugzilla.mozilla.org/show_bug.cgi?id=871084>, 
+> <https://bugzilla.mozilla.org/show_bug.cgi?id=786407> and 
+> <https://bugzilla.mozilla.org/show_bug.cgi?id=868746>
 > 
-> Reference:
-> ----------
->  -> https://bugzilla.redhat.com/show_bug.cgi?id=1039046
+> Due to a well-known and well-documented idiosyncrasy of Windows' 
+> CreateProcess() API this can result in the execution of a rogue 
+> program "C:\Program.exe" or "C:\Program Files\Mozilla.exe" with
+> the privileges of the caller. Since the caller of this command line
+> typically has administrative rights this vulnerability can lead to
+> a privilege escalation.
+> 
+> Affected versions: all current releases.
+> 
+> Fixed version: 23.0.
+> 
+> Stefan Kanthak
+> 
 
-The bug was introduced with ping6 sockets implementation in:
+Mozilla is a CNA (http://cve.mitre.org/cve/cna.html) so they'll need
+to handle this one. Adding them to CC.
 
-https://git.kernel.org/linus/6d0bfe22611602f36617bc7aa2ffa1bbb2f54c67
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Thanks,
-
--- 
-Vasily Kulikov
-http://www.openwall.com - bringing security into open computing environments
+iQIcBAEBAgAGBQJR3bonAAoJEBYNRVNeJnmTAMAP/jSmT4oCK0uN6UB1j5hp3Puq
+xL1xbhag5gXxe75DG2BO8On4gsEvcOTgJzEedlqAz2jpx/YRwiErSz8fYw4HRP3r
+mC9IuL51Tl1seh/L0h+0moWTX4To+E49IdsODhK5EvczCfFKVxDPxPNDDXZu0A1p
+qpb3sH+dujiBq9LgkZwaP43ByCl2rR1YPRdhK8JJ+yKh5WlX6CfBSSaW0xX2nB6J
+oPqUgNmBf45zwXJeRcvv1nSTlGtcaaK+OeOxi3Iv0ooekAeqp4m+Hsp1MjQql76R
+gnDjA4h2vkmXk8+UuCNxxg0LRPKNWf9WQrKxqiwrpgMpInV6BIf7785kuskaGZfI
+D3E247hCyWNiewddBk5No7WoIw87g0rd8osg1irvegxDVCOZAm06rcpFco67pCGm
+vdtpF8jnsN53qbDlXhYQ6R8D1s4dhLJTooWQ+tpRGN0mDInbnLiJtvZ7iAvByP1b
+w6GpR/2RHC+49NyLevjNtrJsLrtag/FBR5a3wGTpJPX6Vejl7fHTQH94HF9bZt5d
+eosuGwYFBHJVvvqt9wCYv9gdNNSPqq/MK1HLL1m/gALH/QVrBN7qWXIeGNXQQlMk
+2fx+EtHjalDRlFBjQBv5koJUIF7vl/NUgIud6S9M0W5WpBUAdrs+hKKZQ/0dqr/2
+16XrC8jWRZvgQUu8K6IA
+=BEs1
+-----END PGP SIGNATURE-----
