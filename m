@@ -1,32 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/11
-Message-ID: <alpine.LFD.2.10.1311151408030.26561@javelin.pnq.redhat.com>
-Date: Fri, 15 Nov 2013 14:12:52 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: Linux kernel: net: ipvs stack buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/4
+Message-ID: <249137999.3280513.1373563437679.JavaMail.root@redhat.com>
+Date: Thu, 11 Jul 2013 13:23:57 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request - php 5.3.27 fixing heap corruption in the XML parser
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+Hello Kurt, Steve, vendors,
 
-Linux kernel built with the IP Virtual Server(CONFIG_IP_VS) support is 
-vulnerable to a buffer overflow flaw. It could occur while setting or 
-retrieving socket options via setsockopt(2) or getsockopt(2) calls. Though a 
-user needs to have CAP_NET_ADMIN privileges to perform these IP_VS operations.
+  PHP upstream has released 5.3.27 version:
+  [1] http://php.net/archive/2013.php#id2013-07-11-1
 
-A user/program with CAP_NET_ADMIN privileges could use this flaw to further 
-escalate their privileges on a system.
+correcting one security flaw (upstream bug #65236):
+[2] http://php.net/ChangeLog-5.php
+[3] https://bugs.php.net/bug.php?id=65236
 
-Upstream fix:
--------------
-  -> https://git.kernel.org/linus/04bcef2a83f40c6db24222b27a52892cba39dffb
+Could you allocate a CVE id for this?
 
-References:
------------
-  -> http://seclists.org/fulldisclosure/2013/Nov/77
-  -> https://bugzilla.redhat.com/show_bug.cgi?id=1030800
-
-
-Thank you.
+Thank you && Regards, Jan.
 --
-Prasad J Pandit / Red Hat Security Response Team
+Jan iankko Lieskovsky / Red Hat Security Response Team
