@@ -1,59 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/2
-Message-ID: <5202FE6F.7070506@redhat.com>
-Date: Wed, 07 Aug 2013 20:11:59 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/6
+Message-ID: <51DEF36E.6030408@redhat.com>
+Date: Thu, 11 Jul 2013 12:03:26 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: David Walser <luigiwalser@...oo.com>, "marcus@....franken.de" <marcus@....franken.de>, "lwn@....net" <lwn@....net>
-Subject: Re: tomcat CVE confusion
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - php 5.3.27 fixing heap corruption in the XML parser
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/07/2013 12:41 PM, David Walser wrote:
-> OpenSuSE has issued an advisory for tomcat today: 
-> http://lists.opensuse.org/opensuse-updates/2013-08/msg00014.html
+On 07/11/2013 11:23 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-> This is also linked from LWN here: 
-> http://lwn.net/Vulnerabilities/562439/
+>   PHP upstream has released 5.3.27 version:
+>   [1] http://php.net/archive/2013.php#id2013-07-11-1
 > 
-> This CVE-2013-3544 is not mentioned on tomcat's security page: 
-> http://tomcat.apache.org/security-7.html
+> correcting one security flaw (upstream bug #65236):
+> [2] http://php.net/ChangeLog-5.php
+> [3] https://bugs.php.net/bug.php?id=65236
 > 
-> But CVE-2012-3544 is mentioned there (note the different year).
+> Could you allocate a CVE id for this?
 > 
-> Based on this Novell/OpenSuSE bug report, I believe OpenSuSE made a
-> typo: https://bugzilla.novell.com/show_bug.cgi?id=831119
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 > 
-> I can't find any info about CVE-2013-3544, but the mitre page says
-> it's reserved.  Perhaps that CVE has already been allocated for
-> some other piece of software?  If so, this might cause some
-> confusion.  I'm not sure how this should be handled, but I thought
-> it would be appropriate to point this out.
 
-I can't comment on that CVE specifically but on the reserved thing:
-
-http://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures
-
-Description[edit source | editbeta]
-This is a standardized text description of the issue(s). One common
-entry is:
-
-** RESERVED ** This candidate has been reserved by an organization or
-individual that will use it when announcing a new security problem.
-When the candidate has been publicized, the details for this candidate
-will be provided.
-
-This means that the entry number has been reserved by Mitre for an
-issue or a CNA has reserved the number. So in the case where a CNA
-requests a block of CVE numbers in advance (e.g. Red Hat currently
-requests CVEs in blocks of 500) the CVE number will be marked as
-reserved even though the CVE itself may not be assigned by the CNA for
-some time.
-
-
-
+Please use CVE-2013-4113 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -61,17 +36,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSAv5vAAoJEBYNRVNeJnmTEgQQAJJe0EFOZLiYE9pSuZ7TSCth
-7w5/Q+iArKakdyaz7w7WVf+POcQuKTc6/P2JJXquM4YSy7k82j+h6o4VCsRN+bvm
-Elha1n4f0BYaXez+7G09aAAMZ6jKXLb30D5NxWnHQV9mABVTvn7VbW/Ehy+pevXJ
-FWuj2cmZNHzFLmVyI/pmZUmwS9LwtPV9UA6IO9Ka024iF2OStuj0hwHWuBDtasMd
-R9DPhTm2/gMOx1NqIBzi0GYdbRept5M4F17E4LN+mEJBvtQVhrr0wjU8ZwjrCbFv
-QCBIHbqpHQjomtq7JdYoq9nyPLSP9M6E8n5WkRODYllgLDil76KKSJDXqKXI5edb
-v2GhdifY86v8XgAiEU8SI0CY6mFWMhztG2WaOwyvmz0nnZ52XVbGeNAtqvdTuN0K
-dCD06gnxyH4oZ7nu012hOGV9I+4n4wCBALQ+ql3hKZ43m4aLNqCA68OnbkD++2bG
-B5I3fhfQ/HTd4dfGYWy1J4fcsTUAdpDw4nJSUjNcScAfI7URiXVINk6rHN06zQvc
-x9jKHMCUMLxGgxMAmp/BZm3EzPS/T3TVOVJGnlQapc0DIrr1B/RGKyEBBMsMrBSZ
-hSAIBunqnWf37Xo92vcXZbM3pcN1OeILdB/TSog2IMIHxG4vrrHgeEfuDnNpmxy9
-utRHS4sjTS0eM1sY4Pn3
-=yTEy
+iQIcBAEBAgAGBQJR3vNuAAoJEBYNRVNeJnmTnuUP/i5uZVYMONCBm0Zqo8wJr+Aa
+94cXOcpNdkgXa71vI0JqUq/BqNScqoq2TFqi4c+L5Qi6jIYELpGcFBf4zkOAw1l7
+FQ8VtT4EOIQLyBflPdvs8frBmYWe3NH0hlplgihMEq2Ih8k+W2H3afe29HXGv5tz
+XnURgR2zpQr+sATZNoSNmSITVETcD1gxGDCxCYl5FAHOo549zqh1wmw8Jgba+B5U
+kvVXLs/DHu9NpB9B0PB9SWMtxQSkG2WRcuMI/C4Zc0EliG9YoC9BM24S1L1OLisn
+iH8IqjeTqSUgwcW+BWOgYC0G1CRIBGVB04Ua6NHo34aT3mq8IasEWFIo1d3MQFPz
+4YofelrZlhjNwCTX1MXYbF5hRfEqpOnZj4+NLfwVjllQ4tWGawwwXA3vOLXQK18l
+XKEh42C/4Jc2PkM90DsxZUPAEnmslpPaXZdyevfvuB4kSZhKRMneH39DP941m14/
+GnKXcB2hm4PzFba1dP56YoX8/tEu2qXJYQ879F1wOGBW9tD87kxDnKU5UzqFgmiG
+Lk+mhF9EtjSfoYFOeIhIlKWbqlrve8vk5sYgmouMhPhQbRo6ZDpQXpA+7tbSIOmF
+xVhQa1gMq2IdFYkVZmJPegK3eBobnO/bpVKzj6RszGVqipFzxTpNXivinkdQT/XI
+A0YzJ9NUbVrmvOYFyn6U
+=DfQX
 -----END PGP SIGNATURE-----
