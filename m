@@ -1,60 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/12/1
-Message-ID: <513E95E1.2080304@redhat.com>
-Date: Mon, 11 Mar 2013 20:41:37 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Adam Zabrocki <pi3@....com.pl>, full-disclosure@...ts.grok.org.uk, secalert <secalert@...urityreason.pl>
-Subject: Re: Multiple SQL Injection vulnerabilities in Disk Pool Manager (DPM)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/12/1
+Message-ID: <51DF354C.4080208@ifw-dresden.de>
+Date: Fri, 12 Jul 2013 00:44:28 +0200
+From: Henri Wahl <h.wahl@...-dresden.de>
+To: kseifried@...hat.com
+CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Henri Wahl <henriwww@...rs.sourceforge.net>
+Subject: Re: CVE Request -- Nagstamon (prior 0.9.10): Monitor server user credentials exposure in automated requests to get update information
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
+For those who want to fix a 0.9.9 package there is an updated version at
+Github:
+https://github.com/HenriWahl/Nagstamon/tree/0.9.9.1 .
+Anyway it is a better idea to upgrade to 0.9.10.
 
-On 03/10/2013 12:17 AM, Adam Zabrocki wrote:
-> Name:                 Multiple SQL Injection vulnerabilities in 
-> Disk Pool Manager (DPM) Author:               Adam Zabrocki
-> (<pi3@....com.pl>) Date:                 November 27, 2009 (Yes,
-> it's very old bug ;P)
-> 
-> Timeline
-> 
-> 2009-11-27 - Found vulnerability. 2011-08-03 - Vulnerability
-> officialy reported. 2013-02-19 - Updated packages available in the
-> EGI UMD-1 and EGI UMD-2. 2013-03-05 - Public disclosure on vendor's
-> wiki, after allowing sites to upgrade 
-> (https://wiki.egi.eu/wiki/SVG:Advisory-SVG-2012-2683) 2013-03-10 -
-> Release of this advisory.
-> 
-> 
-> 
-> Best regards, Adam Zabrocki
-> 
-> -- http://pi3.com.pl
+Regards
+Henri
 
-I'm curious as to why the 2 year delay? I'm going to go with the date
-reported as that is also mentioned in the public advisory, I can't
-confirm the 2009 date.
 
-Please use CVE-2011-4970 for this issue.
+-- 
+Henri Wahl
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+IT Department
+Leibniz-Institut für Festkoerper- u.
+Werkstoffforschung Dresden
 
-iQIcBAEBAgAGBQJRPpXhAAoJEBYNRVNeJnmTWM4QAIXbXji8kHSgx0HRpLSuOORM
-EQvjEnKiu65WQxNnDsvde1PIqLMjblG+aKL1ui8lXzqqA1qWmgAKbamQ69BaSzMN
-XF1mPsmb7xz+piwUfWUOCJZz/PbOmLBXyp6TRmxOvbne42DC6CBO5mRWmboYLC9k
-an1qK3ymSMyf1WHmJGG+6b68WqfhtcH2Q/fKchn7KvpPHgU4+a4zmlmb587q1cf1
-UVrMCwr6VWX2Jt/hLs3YP9Phb9DEGKQN/QorieNN9pPe1l5KM5/dB0HWtmD632t3
-q44zY4J9cPNHsUcUgrD7iw0q0pYK5Jah72YZjEjPeK29hiBH6BsOtRWcrF5zfUKq
-iVifcrNPsaQ2iDn+eU3BYbw/g4EUD3hlqhJ4gYfWUeZQXWfaxBM1wHOupHDQcLUo
-GJZZgbpd3nE8rN0Wtc3ZbF0Ht8iv5JiI3ZC6ZXA/R7ff6KfQjeP5ncqkfehPLOYR
-sH0arO/Nc/3ek4dtFDYiDCeO1gWNrzx4rZK+ajgtoqMN1zk8I4R5u/3dgmiDirsa
-ZHhgcu8XLjBYx/4mmOO09H+ovNZZELGZnHg43HAdcjbG5piUUSB5DhUXYoBMN5QX
-LEzBHmppsceuOe3LgbEtjbNX93+nk7Ch8JV8nj03AJo490HFpOUS670PF9nCPGfO
-ZKSznOcQlQmvvqUILsaG
-=SR7C
------END PGP SIGNATURE-----
+tel: (03 51) 46 59 - 797
+email: h.wahl@...-dresden.de
+http://www.ifw-dresden.de
+
+Nagios status monitor Nagstamon:
+http://nagstamon.ifw-dresden.de
+
+DHCPv6 server dhcpy6d:
+http://dhcpy6d.ifw-dresden.de
+
+IFW Dresden e.V., Helmholtzstraße 20, D-01069 Dresden
+VR Dresden Nr. 1369
+Vorstand: Prof. Dr. Juergen Eckert, Dr. h.c. Dipl.-Finw. Rolf Pfrengle
+
+
+
