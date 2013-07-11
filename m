@@ -1,92 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/04/10
-Message-ID: <CAESa+_m+UcfeX9TgG+xqNkMBwYmO4dk=NvZ2YP_D92jbxY1QzQ@mail.gmail.com>
-Date: Thu, 4 Jul 2013 10:02:28 -0700
-From: Bharat Mediratta <bharat@...alto.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, security@...leryproject.org,  oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- gallery3 (3.0.9): Fixing two security flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/11
+Message-ID: <51DEF470.8070707@redhat.com>
+Date: Thu, 11 Jul 2013 12:07:44 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>, plugins@...dpress.org, moderators@...db.org
+Subject: Re: CVE request: WordPress plugin category-grid-view-gallery XSS
 Content-Type: text/plain; charset=utf-8
 
-This is accurate enough. Thanks Jan and sorry for not responding earlier -
-I'm traveling with limited access.
-On Jul 4, 2013 4:19 AM, "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Hello Kurt, Steve, vendors,
->
->   Gallery upstream has released 3.0.9 version, correcting two security
-> flaws:
->   [1] http://galleryproject.org/gallery_3_0_9
->
-> My guess [***] is the two issues are as follows:
->
-> * Issue #1 - Improper stripping of URL fragments in flowplayer
-> SWF file might lead to reply attacks (a different flaw than CVE-2013-2138):
->
-> ----------------------------------------------------------------------------
->
->   A security flaw was found in the way flowplayer SWF file handling
-> functionality
->   of Gallery version 3, an open source project with the goal to develop and
->   support leading photo sharing web application solutions, processed
-> certain
->   URL fragments passed to this file (certain URL fragments were not
-> stripped
->   properly when these files were called via direct URL request(s)). A
-> remote
->   attacker could use this flaw to conduct replay attacks.
->
->   A different vulnerability than CVE-2013-2138.
->
->   Upstream ticket:
->   [2] http://sourceforge.net/apps/trac/gallery/ticket/2073
->
->   Relevant upstream patch:
->   [3]
-> https://github.com/gallery/gallery3/commit/c5318bb1a2dd266b50317a2adb74d74338593733
->
->   References:
->   [4] https://bugzilla.redhat.com/show_bug.cgi?id=981197
->
-> * Issue #2 - gallery3: Multiple information exposure flaws in data rest
-> core module
->
-> -----------------------------------------------------------------------------------
->
->   Multiple information exposure flaws were found in the way data rest core
-> module
->   of Gallery version 3, an open source project with the goal to develop
-> and support
->   leading photo sharing web application solutions, used to previously
-> restrict access
->   to certain items of the photo album. A remote attacker, valid Gallery 3
-> user, could
->   use this flaw to possibly obtain sensitive information (file, resize or
-> thumb path
->   of the item in question).
->
->   Upstream ticket:
->   [5] http://sourceforge.net/apps/trac/gallery/ticket/2074
->
->   Relevant upstream patch (against 3.0.x branch):
->   [6]
-> https://github.com/gallery/gallery3/commit/cbbcf1b4791762d7da0ea7b6c4f4b551a4d9caed
->
->   References:
->   [7] https://bugzilla.redhat.com/show_bug.cgi?id=981198
->
-> Could you allocate CVE identifiers for these?
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> [***] Guess because the issues aren't more thoroughly described in
-> upstream announcement [1]
->       and former (private) email check with Gallery3 upstream didn't
-> provide more details
->       either. Cc-ed them on this post too, they to correct me where
-> necessary.
->
->
+On 07/11/2013 12:05 PM, Henri Salo wrote:
+> On Thu, Jul 11, 2013 at 11:59:13AM -0600, Kurt Seifried wrote:
+>> On 07/10/2013 08:12 PM, Henri Salo wrote:
+>>> Can I get 2013 CVE identifier for XSS vulnerability in
+>>> WordPress plugin category-grid-view-gallery, thanks.
+>>> 
+>>> Plugin page: 
+>>> http://wordpress.org/plugins/category-grid-view-gallery/
+>>> Original advisory: http://seclists.org/bugtraq/2013/Jul/17
+>>> Version affected: 2.3.1 (older probably affected too) PoC: 
+>>> https://example.com/wp-content/plugins/category-grid-view-gallery/includes/CatGridPost.php?ID=44%22%3E%3Cimg%20src=%22http://%22%20onerror=alert%28document.cookie%29;%3E
+>>>
+>>>
+>>> 
+Not yet fixed as author did not contact vendor. Top 1277 plugin by
+>>> popularity. WordPress guys could you coordinate this with
+>>> plugin developer, thanks?
+>>> 
+>>> --- Henri Salo
+>> 
+>> Can you confirm the vulnerability? I don't see any follow up 
+>> emails/etc. Thanks.
+> 
+> This is the confirmation. I manually tested this in 2.3.1 version.
+> 
+> --- Henri Salo
+> 
 
+Thanks, please use CVE-2013-4117 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJR3vRwAAoJEBYNRVNeJnmTTgkP/0uZnljcilLrqihfFslDzDcH
+6d/bKs6ilMl7x8NuO+7AnkyH7obmNByokXDmXnIsrDTtKE5sia7G/LxBsgVj6TTm
+pYRjUBhULdPlVj/69kYedOyDLtPJdoAvZAP5Z1WqE9Oqw7DY+gyZI5BbC2Id5n87
+A95VkvdZOM9QveiMpwIniCNCPewL1QXVkRk5wNohZ/zw+WEinWalI7D0gydFQcl2
+L7tHUOFi6HfHQNvh60MCW28A76bsqo7fJjJdTk8JKvehSOekoIRfTnBcqv7dDKXV
+DJ5YVKSzz2m4TFAm/NGQ/B6BJwH5rkiJ2OA4V2dwN1HkmTArfDBqCgjNKOGn203B
+sslzQ4JBwZypNEUFvwC7EXHehdmISJJS18VK0La+QvLcJZ1t2l/Je9klCwmlX72H
+4+dLYLRCyKn4BPRjWX5KUEAyf1M3mR1ENN4xJ6qgnTtJb+kFPbn/BuXZ1U/nVqkL
+zT7VdYPHlosrWcOi+CIRytsyWUf8+9ba0e7ILs7os2SwivUS+4bpxFCFk+BzoA2v
+jJifR9SpG+mKaAapP2029j9uEMdN0dA1YwA/Bg2cIDQITC1pepM+TWmZl6naYkdo
+ZDo7XvcRv8gOPViSx8QHe/vMjhnly3sm0IRzpEpb03gPMrMhlPNO6/jt/jEKX2dF
+9fRajh8JjBcSCzRiAU6+
+=PXEo
+-----END PGP SIGNATURE-----
