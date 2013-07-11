@@ -1,38 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/01/1
-Message-ID: <CAGyNYUPFaRFKP6KgpXT0n4QTUFfkm_6ec5MHNPQugGNY_-1mGg@mail.gmail.com>
-Date: Fri, 1 Mar 2013 11:26:34 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/5
+Message-ID: <51DEF271.5060404@redhat.com>
+Date: Thu, 11 Jul 2013 11:59:13 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>, plugins@...dpress.org, moderators@...db.org
+Subject: Re: CVE request: WordPress plugin category-grid-view-gallery XSS
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 07/10/2013 08:12 PM, Henri Salo wrote:
+> Can I get 2013 CVE identifier for XSS vulnerability in WordPress
+> plugin category-grid-view-gallery, thanks.
+> 
+> Plugin page:
+> http://wordpress.org/plugins/category-grid-view-gallery/ Original
+> advisory: http://seclists.org/bugtraq/2013/Jul/17 Version affected:
+> 2.3.1 (older probably affected too) PoC:
+> https://example.com/wp-content/plugins/category-grid-view-gallery/includes/CatGridPost.php?ID=44%22%3E%3Cimg%20src=%22http://%22%20onerror=alert%28document.cookie%29;%3E
 >
-> > > The linux-distros/oss-sec members can make sure that each issue gets
-> CVE
-> > > and it's properly publicly communicated at the right time (preferably
-> > > when the issue is public -- when it is committed).
-> > >
-> > > Should you consider this approach, is there anything I can help with to
-> > > make that happen?
-> >
-> > Yes, I need someone to actually do this.  There used to be a Red Hat
-> > security team member that did this, or so I thought.
->
-> That was most probably Eugene Teo, he's no longer in Red Hat. I am not
-> subscribed to security@...nel.org.
->
+>  Not yet fixed as author did not contact vendor. Top 1277 plugin by
+> popularity. WordPress guys could you coordinate this with plugin
+> developer, thanks?
+> 
+> --- Henri Salo
 
-I heard my name being mentioned. I used to do all that background work but
-I can't afford to do this full-time anymore. It's not easy but definitely
-do-able. It can be rather tiring too. Someone needs to be proactive, and
-make this happen. Petr has worked with me for a few years, and I think he
-can do this.
+Can you confirm the vulnerability? I don't see any follow up
+emails/etc. Thanks.
 
-I also want to bring back my cve-tagged kernel tree. I'm willing to work
-with any distro's security team who is willing to supply me with the CVE
-names, and the relevant commits/references. Talk to me if you are
-interested...
 
-Eugene
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
+iQIcBAEBAgAGBQJR3vJxAAoJEBYNRVNeJnmTS9wQAL7y+/GCpvB77YH6eaXjESDo
+ymY4IZS6nq+XN+MjNIivsqJc1YQfST8jlaNQMYuJmjS6NEydp57dVHcb3NfGY13w
+zeVpAnqxQVlxMISpU/NDw33NlHYkHSi71WVJylNtY8ols7Dcq0+2wM93dXRnHNVB
+76pgWQW23RtV0td/7Yk7YnAqYlUIJ6nSIu4RKPdhb7hRAw/JjP9aAcILWY87Ah/U
+sTUjDJVkRH9AufJZ/UygczR8ZQhcWX98nYAoBhqEqU6u/bADz+qEJ8DUdrMsOTvQ
+7zQYviGyDrp+au7xEwOX9rC5YvX9RxYN4CP4uXDh3v1ye4AYLmGpqfFSvAiio+1e
+xoNhdI1DJqblDdifAShtTw0eZY3mWLy/lHqLiZLywrDLo7qF2krEkkZFHgJKzn5J
+/OByTRAFsgeiEfpZrOeihk7y1fnpICTfBF2h3ftp/Tz5vG/jXfw9AbCDer5iNng+
+nGuGfB3/gYZW9FZaEtHC1ge40k40LyePaQL4FdeUwL5nYdGQQJMxGlVm1Z9K0Mj2
+DKcUGf7mswsYO1Cda/NJimtLxGrUdEGl5U+X0lzuk8BQXRraLYOJSN7BRXSxVLDr
+3khCE/LhbFeHRN9wB5kjveT3oNvcVWg/UT4yxJLLLKBirRI8wBQHzjy5Wpn1qY8q
+zQGVAxSCWSvOSRbh5zx0
+=CjqU
+-----END PGP SIGNATURE-----
