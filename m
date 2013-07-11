@@ -1,72 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/5
-Message-ID: <20130319100019.GA23826@lakka.kapsi.fi>
-Date: Tue, 19 Mar 2013 12:00:19 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/10
+Message-ID: <20130711180519.GG18562@kludge.henri.nerv.fi>
+Date: Thu, 11 Jul 2013 21:05:19 +0300
 From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: larry0@...com
-Subject: Re: Ruby CVEs
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, plugins@...dpress.org, moderators@...db.org
+Subject: Re: CVE request: WordPress plugin category-grid-view-gallery XSS
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 19, 2013 at 01:17:11AM -0600, Kurt Seifried wrote:
-> http://direct.osvdb.org/search?search[vuln_title]=ruby&search[text_type]=titles
+On Thu, Jul 11, 2013 at 11:59:13AM -0600, Kurt Seifried wrote:
+> On 07/10/2013 08:12 PM, Henri Salo wrote:
+> > Can I get 2013 CVE identifier for XSS vulnerability in WordPress
+> > plugin category-grid-view-gallery, thanks.
+> > 
+> > Plugin page:
+> > http://wordpress.org/plugins/category-grid-view-gallery/ Original
+> > advisory: http://seclists.org/bugtraq/2013/Jul/17 Version affected:
+> > 2.3.1 (older probably affected too) PoC:
+> > https://example.com/wp-content/plugins/category-grid-view-gallery/includes/CatGridPost.php?ID=44%22%3E%3Cimg%20src=%22http://%22%20onerror=alert%28document.cookie%29;%3E
+> >
+> >  Not yet fixed as author did not contact vendor. Top 1277 plugin by
+> > popularity. WordPress guys could you coordinate this with plugin
+> > developer, thanks?
+> > 
+> > --- Henri Salo
 > 
-> 
-> ===================
-> These 4 are all the ";" URL parsing issues ny larry0@...com
-> ===================
-> http://direct.osvdb.org/show/osvdb/91450
-> command_wrap gem
-> 
-> http://direct.osvdb.org/show/osvdb/91232
-> fastreader gem
-> 
-> http://direct.osvdb.org/show/osvdb/91231
-> MiniMagic gem
-> 
-> http://direct.osvdb.org/show/osvdb/91230
-> Curl gem
-> 
-> 
-> ===================
-> http://direct.osvdb.org/show/osvdb/90717
-> fileutils - has CVE-2013-2516 - where did this come from (I assume
-> Mitre?)? Does it cover just this issue or the next 3?
-> ===================
-> 
-> http://direct.osvdb.org/show/osvdb/90718
-> fileutils gem
-> code exec
-> 
-> http://direct.osvdb.org/show/osvdb/90716
-> fileutils gem
-> dir creation
-> 
-> http://direct.osvdb.org/show/osvdb/90715
-> fileutils gem
-> tmp file creation
-> ===================
-> 
-> http://direct.osvdb.org/show/osvdb/90206
-> typecasting - mysql/etc. - we probably need another long email from
-> steve on how to handle this =)
-> 
-> http://direct.osvdb.org/show/osvdb/89612
-> gemcutter - Psych YAML parse - do we assign a vuln for psych?
-> 
-> http://direct.osvdb.org/show/osvdb/90946
-> libxml2 entity expansion *** see Steven's long posting, I need to
-> figure this out yet.
-> 
-> Also am I missing anything else?
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Can you confirm the vulnerability? I don't see any follow up
+> emails/etc. Thanks.
 
-Please note that in private email Larry said he will request CVEs for these
-security vulnerabilities. Adding Larry as CC so he can tell us if he already did
-that and if he didn't we can assign those in this thread.
+This is the confirmation. I manually tested this in 2.3.1 version.
 
 ---
 Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
