@@ -1,42 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/1
-Message-ID: <528327D7.5080800@redhat.com>
-Date: Wed, 13 Nov 2013 00:18:47 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/3
+Message-ID: <1705863526.3270323.1373562441477.JavaMail.root@redhat.com>
+Date: Thu, 11 Jul 2013 13:07:21 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: rubygem omniauth-facebook CSRF vurnerability
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Henri Wahl <henriwww@...rs.sourceforge.net>
+Subject: CVE Request -- Nagstamon (prior 0.9.10): Monitor server user credentials exposure in automated requests to get update information
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-On 11/12/2013 02:47 PM, Josef Šimánek wrote:
-> Patch prepared to release:
-> 
-> https://github.com/mkdynamic/omniauth-facebook/commit/ccfcc26fe7e34acbd75ad4a095fd01ce5ff48ee7
+  an user details information exposure flaw was found in the way Nagstamon,
+Nagios status monitor for desktop, performed automated requests to get
+information about available updates. Remote attacker could use this flaw
+to obtain user credentials for server monitored by the desktop status
+monitor due to their improper (base64 encoding based) encoding in the
+HTTP request, when the HTTP Basic authentication scheme was used.
 
-Perfect
-> 
-thanks. Please use CVE-2013-4562 for this issue.
+References:
+[1] http://nagstamon.ifw-dresden.de/docs/security/
+[2] https://bugs.gentoo.org/show_bug.cgi?id=476538
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=983673
 
+Can you allocate a CVE id for this?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSgyfXAAoJEBYNRVNeJnmTKOQQAKaTmf5r+dKHkB4dYlIxZarP
-kX4gbn7GC+RPc7V1tRh3nFvK6XYOScHfNR6Cz14jplmEFyg5wMPYMjv2bgwBclv+
-5X403Vg2Sv0eR8bxq9g7anx5cW+Fqi5I/uIaDI/4p/Y8+ACCxZ0wxhP8LfA9VjUU
-awi7rlBhZc3vnntwWu9lBxGJH/+5YCyRRpRYeW4W5AiloT7U7i9U4mlw39BYkbcC
-LgzNhBzjsopIIXRuGZOuhkXW1lAbB3aQGBBaXoZdKYk1O4OcbQbSOGhzDaom2xkW
-9MofWZMAq+z+7CGj4A8OxCuYwdpN0VBZBy0yr/rVUw9ej5sNLLdy7MishLoK2kyZ
-3B2zADkXf9J8R4HRlDBJcBI6HBrjabaNPET38aWG+LweNgn4LnBDyq5Sd6XU7rkN
-pnvjk1Cou6s97j7oM/YR1L2+CYO55i7xAGa89/vyxxtaBqHIQUgYjfqztovNe5CF
-WdtnuS9x+N6g3F183t5Gw1N3pYr+I08GzQwrYkf4QewBWer+3jbC3OHnRmRmjZON
-nC2QrluhRCfkeEpJwLgsGjLZT+bcfINVqqU2pZ1KeL1YbtBinFtoxPX5vw5/ILL4
-1hjTPVkbmDlTjMVWL2q68ZganEsoAjDdA05Y93vFXgr1Fz9ZrNSh0+aoT1QKTrqY
-PH46mQjDliit+5iek3pS
-=lfBO
------END PGP SIGNATURE-----
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
