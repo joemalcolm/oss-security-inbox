@@ -1,25 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/3
-Message-ID: <CAEmQOhBO3z-d+FPffzX3af5tf0i8wbzRB1xRZ8mG1N75DtyrgA@mail.gmail.com>
-Date: Thu, 6 Jun 2013 10:19:22 +0200
-From: Jonathan Salwan <jonathan.salwan@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/8
+Message-ID: <51DEF3BB.3000203@redhat.com>
+Date: Thu, 11 Jul 2013 12:04:43 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Linux Kernel - Leak information in cdrom driver.
+CC: Raphael Geissert <geissert@...ian.org>, squid-bugs@...id-cache.org, info@...id-cache.org
+Subject: Re: CVE request: SQUID-2013:2: buffer overflow in HTTP request handling
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-When we read a block from the disk it normally fills a buffer but if
-the drive is malfunctioning there is a chance that it would only be
-partially filled. The result is an leak information to userspace.
+On 07/11/2013 08:53 AM, Raphael Geissert wrote:
+> Hi,
+> 
+> Squid has released a security advisory[0]:
+>> Due to incorrect data validation Squid is vulnerable to a buffer 
+>> overflow attack when processing specially crafted HTTP requests.
+> 
+> [0]http://www.squid-cache.org/Advisories/SQUID-2013_2.txt
+> 
+> Could a CVE id be assigned please?
+> 
+> Thanks in advance.
+> 
+> [CC'ing squid's security address so that they can include the id
+> in the advisory once assigned]
+> 
+> Cheers, -- Raphael Geissert - Debian Developer www.debian.org -
+> get.debian.net
+> 
 
-Patch applied and committed in the next-line :
+Please use CVE-2013-4115 for this issue.
 
-http://git.kernel.org/cgit/linux/kernel/git/next/linux-next.git/commit/drivers/cdrom/cdrom.c?id=050e4b8fb7cdd7096c987a9cd556029c622c7fe2
+Squid people: can someone contact me about getting you guys CVEs in
+advance? It would make things easier for all concerned.
 
+https://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
 
-Could you allocate a CVE id for this?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Thanks,
-
--- Jonathan
+iQIcBAEBAgAGBQJR3vO7AAoJEBYNRVNeJnmT3OUQAIvRTjkSXucBqPzUv8P6d9qy
+ke4lBrgo1IxwI17CAgCWWP612Ert2mkDsfKkqTDb/bttave6tvDL3RR54wMHYm/W
+SMNX8lKYD4vEpE9UlbLuz65LzBwMH5Uip7aR4FXLG2nFRCgAAN8W+NYunBh/BWaf
+e+m1RwA7SvlkgDMkZiZKAxLC2N0BCs9bkQ8NTyJ0n1jlWiWbV6hxZFLR+TQallAs
+UFXp15fkZB6IeFyG8bJ1t75CbFmtzHa49SRcOla13oV3Q/5pEJXEmmJk1BjH1pUY
+gIouzdVmtpdI2XqKG35ZVbzGi4KrJ9UIFCW7HG7p6CBYYPZKMB9tRh2Q3snSbonT
+6nO+1wBEyALQjHJrBKw3goF3uSqMvhIO0x5H+VEIk7qw4jMBcxBCwIMR/O/l5o4G
+Ps6d3Z7YztWwof7wTlO82jnUnL0ELeWV1Hsh5vqjFfGNLPqQNOZWBqpdrqqyhbBW
+urmPNyoHhFq/YgxRcDi7FmLuM3jP9dqi/DfDhKWctc2IUBLp5hzaXf0CJ+k9NPZW
+M37XnNwfTgpGpToCFCjiIEZ0bZigrWZXHheKojnuc8JSTaPm0/yjnHhIWaIhNj6Z
+l/PaNCgufelRSv200kt+BaTMr6XFW3FrpZRxh32k/KnSY2Y2pm3wtaDIQgEMy87N
+cjszaeAyQimlgzYJ/t9m
+=bB3W
+-----END PGP SIGNATURE-----
