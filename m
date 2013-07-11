@@ -1,34 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/5
-Message-ID: <5265AA27.6060000@mantisbt.org>
-Date: Tue, 22 Oct 2013 00:26:47 +0200
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/2
+Message-ID: <CAA7hUgGGZOUX0CueP=AYSYFT14gA-TMnLmvR2pnd=qkV46RhXA@mail.gmail.com>
+Date: Thu, 11 Jul 2013 16:53:12 +0200
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: MantisBT before 1.2.16 XSS vulnerability
+Cc: squid-bugs@...id-cache.org
+Subject: CVE request: SQUID-2013:2: buffer overflow in HTTP request handling
 Content-Type: text/plain; charset=utf-8
 
-Greetings
+Hi,
 
-Roland Becker (MantisBT developer) discovered and fixed [1] an XSS 
-vulnerability issue affecting MantisBT releases 1.0.0 to 1.2.15 included.
+Squid has released a security advisory[0]:
+> Due to incorrect data validation Squid is vulnerable to a buffer
+> overflow attack when processing specially crafted HTTP requests.
 
-Account_sponsor_page.php.php did not correctly sanitize project names, 
-enabling a malicious user to execute malicious JavaScript when visiting 
-that page.
+[0]http://www.squid-cache.org/Advisories/SQUID-2013_2.txt
 
-The criticality of this issue is compounded by the fact that a 
-high-privilege account (typically project manager or administrator) is 
-required to edit project names.
+Could a CVE id be assigned please?
 
-Patches attached to [1]. Can you please assign a CVE ID to this issue ?
+Thanks in advance.
 
-Thank you
+[CC'ing squid's security address so that they can include the id in
+the advisory once assigned]
 
-D. Regad
-MantisBT Developer
-http://mantisbt.org/
-
-[1] http://www.mantisbt.org/bugs/view.php?id=16513
-
-BCC: mantisbt-dev@...ts.sourceforge.net
-
+Cheers,
+--
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
