@@ -1,163 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/6
-Message-ID: <20130606100335.GX32700@dhcp-25-225.brq.redhat.com>
-Date: Thu, 6 Jun 2013 12:03:35 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: Stephane Eranian <eranian@...gle.com>
-Cc: Peter Zijlstra <a.p.zijlstra@...llo.nl>, "ak@...ux.intel.com" <ak@...ux.intel.com>, security@...nel.org, Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: More perf security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/12
+Message-ID: <51DEFDF3.2090609@redhat.com>
+Date: Thu, 11 Jul 2013 12:48:19 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Marc-André Moreau <marcandre.moreau@...il.com>, Bernhard Miklautz <bmiklautz@...nstuff.at>, Martin Fleisz <mfleisz@...nstuff.at>
+Subject: Re: CVE Request -- FreeRDP: Multiple security fixes in 1.1.0-beta1 version
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 06, 2013 at 10:16:39AM +0200, Stephane Eranian wrote:
-> On Wed, Jun 5, 2013 at 9:23 PM, Petr Matousek <pmatouse@...hat.com> wrote:
-> > On Wed, Jun 05, 2013 at 03:53:52PM +0200, Stephane Eranian wrote:
-> >> On Wed, Jun 5, 2013 at 3:35 PM, Petr Matousek <pmatouse@...hat.com> wrote:
-> >> > On Wed, Jun 05, 2013 at 03:02:53PM +0200, Peter Zijlstra wrote:
-> >> >> On Wed, Jun 05, 2013 at 02:38:56PM +0200, Petr Matousek wrote:
-> >> >> > On Wed, Jun 05, 2013 at 02:15:59PM +0200, Peter Zijlstra wrote:
-> >> >> > > On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
-> >> >> > > > Hello, Peter.
-> >> >> > > >
-> >> >> > > > On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
-> >> >> > > > > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
-> >> >> > > > >
-> >> >> > > > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
-> >> >> > > > >
-> >> >> > > > > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
-> >> >> > > > > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-> >> >> > > > > Date:   Fri May 3 14:11:25 2013 +0200
-> >> >> > > > >
-> >> >> > > > >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
-> >> >> > > > >
-> >> >> > > > >     We should always have proper privileges when requesting kernel
-> >> >> > > > >     data.
-> >> >> > > > >
-> >> >> > > > >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-> >> >> > > > >     Cc: <stable@...nel.org>
-> >> >> > > > >     Cc: Andi Kleen <ak@...ux.intel.com>
-> >> >> > > > >     Cc: eranian@...gle.com
-> >> >> > > > >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
-> >> >> > > > >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
-> >> >> > > > >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
-> >> >> > > > >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
-> >> >> > > >
-> >> >> > > > There is similar check in perf_copy_attr() which is called from
-> >> >> > > > perf_event_open syscall --
-> >> >> > > >
-> >> >> > > >                 /* kernel level capture: check permissions */
-> >> >> > > >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
-> >> >> > > >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
-> >> >> > > >                         return -EACCES;
-> >> >> > > >
-> >> >> > > > It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
-> >> >> > > > missing something?
-> >> >> > > >
-> >> >> > >
-> >> >> > > I overlooked it, also its slightly broken. See the discussion at:
-> >> >> > >   https://lkml.org/lkml/2013/5/21/166
-> >> >> >
-> >> >> > Got it, thanks for the pointer. So it is safe to say there never was a
-> >> >> > leak in this case (and thus no security issue worth CVE)?
-> >> >>
-> >> >> There was a leak, notice how Stephane's patch did a
-> >> >> s/PERF_SAMPLE_BRANCH_PERM_PLM/PERF_SAMPLE_BRANCH_KERNEL/
-> >> >
-> >> > PERF_SAMPLE_BRANCH_PERM_PLM is a superset of PERF_SAMPLE_BRANCH_KERNEL:
-> >> >
-> >> > #define PERF_SAMPLE_BRANCH_PERM_PLM \
-> >> >         (PERF_SAMPLE_BRANCH_KERNEL |\
-> >> >          PERF_SAMPLE_BRANCH_HV)
-> >> >
-> >> >
-> >> >> but also places
-> >> >> the check _after_ we propagate the event PLM levels in the case none
-> >> >> were LBR specific.
-> >> >
-> >> > Assuming the leak does occur only when PERF_SAMPLE_BRANCH_KERNEL is set,
-> >> > that does not matter:
-> >> >
-> >> >                /* kernel level capture: check permissions */
-> >> >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
-> >> >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
-> >> >                         return -EACCES;
-> >> >
-> >> > ^^^ this assures proper permission check if PERF_SAMPLE_BRANCH_KERNEL
-> >> > is explicitly set
-> >> >
-> >> >
-> >> >                 /* propagate priv level, when not set for branch */
-> >> >                 if (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) {
-> >> >
-> >> >                         /* exclude_kernel checked on syscall entry */
-> >> >                         if (!attr->exclude_kernel)
-> >> >                                 mask |= PERF_SAMPLE_BRANCH_KERNEL;
-> >> >
-> >> > And following check in perf_event_open syscall assures the permission
-> >> > are right for (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) code:
-> >> >
-> >> >         if (!attr.exclude_kernel) {
-> >> >                 if (perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
-> >> >                         return -EACCES;
-> >> >         }
-> >> >
-> >> Yes, your analysis is correct. If the branch has not explicit priv
-> >> level mask, then
-> >> it is inherited from the event branches are requested from.
-> >
-> > I am sorry to re-iterate the question, but does that mean that even
-> > before your and Peter's changes, it was not possible to set
-> > PERF_SAMPLE_BRANCH_KERNEL without passing "perf_paranoid_kernel() &&
-> > !capable(CAP_SYS_ADMIN" check either in perf_copy_attr or
-> > perf_event_open (attr.exclude_kernel check)?
-> >
-> > Did your patch change anything at all or it was just refactoring?
-> >
-> Before:
->                 /* kernel level capture: check permissions */
->                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
->                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
->                         return -EACCES;
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 07/10/2013 07:10 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-> 1. If you were coming in with explicit branch priv level set
->     to BRANCH_KERNEL, it would check against paranoid() + cap()
-> 2. If you were coming in with explicit branch priv level set
->     to BRANCH_HV, it would check against paranoid() + cap()
-> 3. If you were coming in with explicit branch priv level set
->     to BRANCH_USER, nothing would happen
+> (some time ago) FreeRDP upstream has released 1.1.0-beta1 version: 
+> [1] http://sourceforge.net/mailarchive/message.php?msg_id=30591956
 > 
-> That's all because PERM_PLM = KERNEL | HV
-> So I think it was okay.
+> correcting multiple security flaws: * library / client side fixes: 
+> https://github.com/FreeRDP/FreeRDP/pull/887
+
+Can someone from upstream confirm if these are hardening or a security
+fix?
+
+> https://github.com/FreeRDP/FreeRDP/commit/0dc22d5a30a1c7d146b2a835b2032668127c33e9
+
+Can
 > 
-> In the new, code:
->                 /* kernel level capture: check permissions */
->                 if ((mask & PERF_SAMPLE_BRANCH_KERNEL)
->                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
->                         return -EACCES;
+someone from upstream confirm if these are hardening or a security
+fix?
+
+> https://github.com/FreeRDP/FreeRDP/commit/bceec083677a609ba2f06cc75924ab0accac5388
+
+Can
 > 
-> We only check for BRANCH_KERNEL, and not BRANCH_HV.
-> I think we need to fix that, my bad. So we need to use
-> PERF_SAMPLE_BRANCH_PERM_PLM again here.
-> I will send a patch ASAP. I got confused about the macro
-> name, sorry. Thanks for insisting.
+someone from upstream confirm if these are hardening or a security
+fix?
 
-Actually I think your latest patch (PERF_SAMPLE_BRANCH_KERNEL ->
-PERF_SAMPLE_BRANCH_PERM_PLM) on top of the permission check move after
-the privilege level propagation in case no explicit privilege level is
-specified improved things.
+> * server side fixes: 
+> https://github.com/FreeRDP/FreeRDP/commit/7d58aac24fe20ffaad7bd9b40c9ddf457c1b06e7
 
-Before, PERF_SAMPLE_BRANCH_HV could be set without the privilege check
-by the privilege level propagation code in perf_copy_attr(), because
-there is no explicit check for !attr.exclude_hv similar to
+Please
+> 
+use CVE-2013-4118 for this issue.
 
-        if (!attr.exclude_kernel) {
-                if (perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
-                        return -EACCES;
-        }
+> https://github.com/FreeRDP/FreeRDP/commit/0773bb9303d24473fe1185d85a424dfe159aff53
 
-in perf_event_open. This was not the case of PERF_SAMPLE_BRANCH_KERNEL,
-because !attr.exclude_kernel permission check was always there.
+Please
+> 
+use CVE-2013-4119 for this issue.
 
-Thanks Stephane!
 
--- 
-Petr Matousek / Red Hat Security Response Team
+> CC-ed Marc-Andre, Bernhard and Martin of FreeRDP upstream to
+> clarify if the above list of patches is complete wrt to security
+> fixes, corrected within 1.0.1-beta1 version. Marc-Andre, Bernhard,
+> Martin, please complete the set of security fixes if / where
+> necessary.
+> 
+> Kurt / Steve, could you allocate CVE ids for these?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+> P.S.: Thanks goes to Florian Weimer of Red Hat Product Security
+> Team for pointing these out.
+> 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJR3v3zAAoJEBYNRVNeJnmTVfwQAL68o31SjenHZ6/4w8cfLhaO
+JeD1V6vaSj8WZdWXLivMo99naYhEd185EMzGZPXapGWkZ1viVoL/q9lWFT6UHRfE
+hhwmmhbRoBv0zeCrwQe+puNWV5WyVpy6dEczJh/sDacMLNPBlW35EnBtckV7tZSw
+xLHK/SqOEjcbq5xCtXWIYKgHBLN3PWIuEhmghPCcshg7v/K1QmtlpQzdQyv5Gw5P
+xVvTjHM3aUJJBztR4OGQRybsL5CH61GiDUYGbFd2Uo5IWDjq8pMp0JddNgjocw9m
+x2wzwQual+zNjHhx+8oiJm9xCN21MnGNO1d14yPxVdibNKHSMzBI6i7xxOkeRb3x
+Mc/uJt3Vq3VeuTlmv3oO0Nr0UGWk/1AK0T1+CjqZpIbI4UKdiRhliI8QMjEFbSQZ
+c05iOou7aTOEZtHjxEkG47zLSx1/80u+ctK2tsVqb5RlfgX2w/fAUXnRrW0rvF8N
+Kq9mUJy7iS24v/rS5p3IxLJ2qGeKW+LqZTdXv1RIlu4Rno8dPbaG+zvpS5eWOSoA
+rYBljsKcWURUuJ6dLLH42yQoSRWe6XdZXhzJpyIJtadXbNWWRJS2nKEA4BJ8mjod
+8rwi3V4EEeHwUDXVPMm+1AgDQD6PJeH2t4K/gh5My5Rr6L8oKqqGTQsHG0HxqA0O
+CZV6W6lhLF0rZKu3TfvZ
+=hL5K
+-----END PGP SIGNATURE-----
