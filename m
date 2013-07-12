@@ -1,70 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/5
-Message-ID: <50F7A54A.70307@redhat.com>
-Date: Thu, 17 Jan 2013 00:16:26 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Carlos Alberto Lopez Perez <clopez@...lia.com>, WHK Yan <yan.uniko.102@...il.com>, submit@...ecurity.com, submissions@...ketstormsecurity.com, vuldb@...urityfocus.com, 1337 Exploit DataBase <mr.inj3ct0r@...il.com>, vuln@...unia.com
-Subject: Re: Re: [Full-disclosure] File Disclosure in SimpleMachines Forum <= 2.0.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/12/4
+Message-ID: <20130712153507.GA14685@openwall.com>
+Date: Fri, 12 Jul 2013 19:35:07 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com, mancha1@...h.com
+Subject: Re: CVE request: Cyrus-sasl NULL ptr. dereference
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Jul 12, 2013 at 03:27:18PM +0000, mancha wrote:
+> Starting with glibc 2.17 (eglibc 2.17), crypt() fails with
+> EINVAL (w/ NULL return) if the salt violates specifications.
+> Additionally, on FIPS-140 enabled Linux systems, DES/MD5-encrypted
+> passwords passed to crypt() fail with EPERM (w/ NULL return).
+> 
+> When authenticating against Cyrus-sasl via mechanisms that use
+> glibc's crypt (e.g. getpwent or shadow auth. mechs), and this
+> crypt() returns a NULL as glibc 2.17+ does on above-described
+> input, the client crashes the authentication daemon resulting
+> in a DoS.
 
-Ok got this translated and then promptly got back logged, sorry for
-the delay.
+Does this really crash the entire daemon process rather than just one of
+its children (where a new one would be spawned for another request)?
 
-==================
-Carlos Alberto Lopez Perez wrote:
-I'm sorry, I was using google translator, I speak Spanish.
-I was saying that sometimes there are admins that need help to manage
-forum sections like in an smf. I am part of the <http://elhacker.net>
-community, where there is only one admin and several co-admins. The
-admin does not trust his own shadow and has created a special user group
-from the group panel  called coadmin. This kind of user has been created
-with the same permissions as an admin with the exception of package
-installations and anything that might allow them to take total control
-of the server, and they are restricted only to the forum tasks.
-With this security breach, a user like this coadmin could be able to
-access the configuration file and read the database, thus being able to
-obtain the admin's session hash and later upload an ill-intentioned
-shell like a c99.php.
-This scenario repeats in many forums I visit, like
-<http://portalhacker.net> and  <http://el-hacker.com>. That's why I
-think it's an important security failure, since if smf is designed to
-protect directories and it doesn't do it properly, allowing file reading
-in an arbitrary way [Translator note: what follows might not make sense
-but it doesn't make sense in Spanish either, sorry] it's because for us
-it's not an isolated case  or so easy to detect, it's like the classic
-scenario of "is an xss high or low impact?"; it all depends on the
-scenario and in our cases it's something critical.
-Thanks for your attention Mr. Kurt
-==================
+I think this needs to be clarified, and the answer will affect whether
+we have a security issue (CVE-worthy) or not.
 
-Ok this makes sense, so basically you have a highly privileged forum
-admin that can read files such as the database config which is a
-definite problem.
-
-Please use CVE-2013-0192 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ96VKAAoJEBYNRVNeJnmTjOsQANPPwMS5oZt3il1gEKpRq1bT
-y/BXDu6R64NdG0ScGUgOGWCSbXpAkLZDoVhgqn2Ps6i8a+s9u8v81tIAuO0h+0VN
-2gyM7UuRaP079IeG2T+DjfsUJEk15nIhijebDKHn01Pv1IgJYK5uRpMwEIPliT4o
-8C4p5WOK042xr/HAbYW5vf5YUYGR23uzJp+PYch6NQCddVfiuCSsyo4F3O7ZVJHz
-SoJqIr3cg2Ke9Ztx6fp2IGQD/NvMOznZtkDgNe5NAFIQ8qEyyaVS6d46J2a0/qRz
-TuOwDWwU5WRZY6WkCVl+TlrNE9czIV1iz+y9I9PReF1KT4D+12ptx1Dv2NFR8FFR
-0kdmFw6vRgj3wB+yNT+WIdwhTMpXIsuWW8Ww4swSgTqkkcuJO8U9l484x2ENmNrn
-OpywRj/hmzs8U9HRm6GkfuUK8oibnBlmxyEogkUtk9uCuBA53THGcGQE1+KcoN9z
-ikd1Rv2ClKuTPYondk7o27quVk5eYQdibqRnfr1NqQhCP1w7oJz83LteqGgiaBvM
-RDrg/VfcDm3Bfcxcg3bDenaauXcmEmoWrtULJ3kSO21qzJk1DOXrbXLappF3aHGJ
-F/gv7U/D321rgKZF7k8nL4TPeQCGrgIJZqRDZQr5XPe/HZdQsguR+KX3HUohIIzl
-GJmoQqGnuAQ+yjvtVLAV
-=3l16
------END PGP SIGNATURE-----
+Alexander
