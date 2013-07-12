@@ -1,53 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/19/3
-Message-ID: <51C14DFF.2050309@redhat.com>
-Date: Wed, 19 Jun 2013 00:21:51 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: Thoughts on a vuln/CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/12/2
+Message-ID: <20130712005549.GA27860@scheep.thinstuff.com>
+Date: Fri, 12 Jul 2013 02:55:49 +0200
+From: Bernhard Miklautz <bmiklautz@...nstuff.at>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Marc-André Moreau <marcandre.moreau@...il.com>, Martin Fleisz <mfleisz@...nstuff.at>
+Subject: Re: CVE Request -- FreeRDP: Multiple security fixes in 1.1.0-beta1 version
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Kurt,
 
-On 06/19/2013 12:17 AM, Florian Weimer wrote:
-> * Kurt Seifried:
-> 
->> I care a lot less about what is "officially endorsed" or not
->> endorsed and a lot more with what is actually going on. If a
->> large percentage of people are exposed to a vuln, even if they
->> "shouldn't" be then it would still get a CVE. I see a lot of CVEs
->> that should never be exploitable, but people do crazy
->> things/configurations.
-> 
-> But the present situation is really not that clear-cut.  We have
-> no indicator of malicious intent from the current domain owner, and
-> users would still have to disable signature checking *and* they
-> must have configured the problematic repository.  That's a little
-> bit far-fetched.
+On Thu, Jul 11, 2013 at 12:48:19PM -0600, Kurt Seifried wrote:
+> > (some time ago) FreeRDP upstream has released 1.1.0-beta1 version: 
+> > [1] http://sourceforge.net/mailarchive/message.php?msg_id=30591956
+to clarify our current stable version is 1.0.2. FreeRDP version 1.1.0 is *beta* and 
+still under development and therefore not stable or production ready and 
+subject to frequent changes (as [1] also stated).
 
-Right. I'm talking about more than just this instance. Wordpress
-plugins. rubygems.org. etc. Any ways I've been thinking about it and
-will post a longer email later.
+> > correcting multiple security flaws: * library / client side fixes: 
+> > https://github.com/FreeRDP/FreeRDP/pull/887
+> Can someone from upstream confirm if these are hardening or a security fix?
+Hardening.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+> > https://github.com/FreeRDP/FreeRDP/commit/0dc22d5a30a1c7d146b2a835b2032668127c33e9
+> > https://github.com/FreeRDP/FreeRDP/commit/bceec083677a609ba2f06cc75924ab0accac5388
+> Can someone from upstream confirm if these are hardening or a security fix?
+Neither nor.
 
-iQIcBAEBAgAGBQJRwU3/AAoJEBYNRVNeJnmTuHUP/2otfOAwAccFN9CWIJIA5SvV
-69lCbIdNlClftuZe6Cxux8Ggguw8iN4avF4ni20CvfGmhKfdBsUkXxqRNXNwBDJi
-H8Jin+Dq9jFElOkrCcJPON8kwfPL39b+g4A/U3FYTpj9MKrzDP8JtLZ0aV0yCqca
-jpHpAStwcfODpy/sCWS+cLdZgLGS7YZ1dbiPT4PshooFwv+oD6Ma0jLIqaGIEZ3u
-9Yo5zPziaydWfCha7QTN4gBgkykXr/srCwXjTCyE54BjB+zi6ojSdZkRLh+Kq9EQ
-4iLQgJPMPudnXZ5aGdQGQV50Ya96cLwkQRqpJfJUDlAzJu04rpm9tYql//WOUJGb
-/7WpdRb0Xfc5VAdqyDPRPUmykE2wkJ1ziomXWqklupkrDe/O3v4ivTEsjHnA42PA
-CU9tzFJ3//OWm5aN8rY4sv2MUC8AXNvTp4IepjyE0CDZjaR1oinhhS0F294j6hxp
-tkyt5x+5J1mhYSPBubgSWGrobXugMhNd/wThid/54Hc+pAcCYtibxXXyRafvSu+G
-NhXohHMiJh47l4EVy8a4zlIPuazRrbmPb6nfN6CrpZ9wXof4iYH6tuSLMYdCBwtk
-CcJmjVFA4BoveWD2iuMRGUBLQgtA79+9GzL5oNjV0Z1O8mYZ7r/Xi7baxHZnP5iJ
-KKpsYJyUDjCBh/gxan32
-=11ul
------END PGP SIGNATURE-----
+> > * server side fixes: 
+> > https://github.com/FreeRDP/FreeRDP/commit/7d58aac24fe20ffaad7bd9b40c9ddf457c1b06e7
+> Please use CVE-2013-4118 for this issue.
+
+> > https://github.com/FreeRDP/FreeRDP/commit/0773bb9303d24473fe1185d85a424dfe159aff53
+> Please use CVE-2013-4119 for this issue.
+
+There might also be some misunderstanding. The initial CVE request stated that
+1.1.0-beta1 corrected these flaws but as a matter of fact only the commits from pull request 
+887 and commit 7d58aac24fe20ffaad7bd9b40c9ddf457c1b06e7 are contained. - The other issues are 
+fixed in our git master branch. 
+
+We've created a snapshot that contains all the fixes mentioned above:
+
+http://pub.freerdp.com/releases/freerdp-1.1.0-beta+2013071101.tar.gz
+md5: 108f8404b210ea789226cbca65c43724
+sha1: a79d0174b0487abb900601c67572aa6dbfc12629
+
+We will also review our current stable version to check if the issues 
+exist there as well and publish an update if required.
+
+Thank you,
+best regards,
+Bernhard
