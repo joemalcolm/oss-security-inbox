@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/9
-Message-ID: <CA+rthh8+hiLbPa74rz+txqJuODKxGpTUuJHVacH34VMWD4+R8Q@mail.gmail.com>
-Date: Mon, 25 Feb 2013 19:59:01 +0100
-From: Mathias Krause <minipli@...glemail.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/12/5
+Message-Id: <20130712154757.44A2F600AC@smtp.hushmail.com>
+Date: Fri, 12 Jul 2013 15:47:57 +0000
+From: "mancha" <mancha1@...h.com>
+To: oss-security@...ts.openwall.com, solar@...nwall.com
+Subject: Re: CVE request: Cyrus-sasl NULL ptr. dereference
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 25, 2013 at 7:53 PM, Dan Rosenberg
-<dan.j.rosenberg@...il.com> wrote:
-> On 02/25/2013 01:45 PM, Mathias Krause wrote:
->> Did you even try to run the exploit on a v3.2 kernel? Or even more
->> simple, looked at the code of a v3.2 kernel? There is no sock_diag
->> anywhere in the kernel; there is only inet_diag. And inet_diag hadn't
->> and still does not have the out-of-bounds access issue. So no, this
->> bug is non-existent on a v3.2 kernel.
->>
->> Thanks,
->> Mathias
->>
-> The bug was introduced with this commit:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=d366477a52f1df29fa066ffb18e4e6101ee2ad04
+On Fri, 12 Jul 2013 15:35:22 +0000 "Solar Designer" wrote:
+>Does this really crash the entire daemon process rather than
+>just one of its children (where a new one would be spawned for
+>another request)?
 >
-> This commit took place during kernel version 3.2.0-rc4, so yes, it does
-> seem to affect 3.2 kernels.
+>I think this needs to be clarified, and the answer will affect 
+>whether
+>we have a security issue (CVE-worthy) or not.
+>
+>Alexander
 
-$ git describe --contains d366477a52f1df29fa066ffb18e4e6101ee2ad04
-v3.3-rc1~182^2~326
+That is a good question. The short answer is there isn't a
+re-spawn of crashed processes. The longer answer is cyrus-sasl's
+saslauthd defaults to starting up 5 round-robin listening
+threads (configurable via -n switch).
 
-Is git lying to me or what?
+Under a default scenario, authentication would continue to be
+available until the 5th NULL ptr. dereference.
 
+--mancha
 
-Cheers,
-Mathias
