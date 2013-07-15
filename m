@@ -1,84 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/9
-Message-ID: <20131203190654.GA27953@higgins.local>
-Date: Tue, 3 Dec 2013 11:06:54 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2013-6414] Denial of Service Vulnerability in Action View
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/15/1
+Message-ID: <20130715081827.GB30861@suse.de>
+Date: Mon, 15 Jul 2013 10:18:27 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: mancha1@...h.com
+Subject: Re: CVE request: Cyrus-sasl NULL ptr. dereference
 Content-Type: text/plain; charset=utf-8
 
-Denial of Service Vulnerability in Action View
 
-There is a denial of service vulnerability in the header handling component of
-Action View. This vulnerability has been assigned the CVE identifier CVE-2013-6414.
+Hi,
 
-Versions Affected:  3.0.0 and all later versions
-Not affected:       2.3.x
-Fixed Versions:     4.0.2, 3.2.16
+Even if it won't be a DoS, it could potentially be an
+auth bypass. What if you can alloc so much memory in
+one of the threads that one alloc would return
+(and actually alloc space at) NULL which
+you could fill with your own pwd struct? I am not so deep
+in the glibc heap to know whether this could still work
+(also to mention mmap_min_addr).
 
-Impact 
------- 
-Strings sent in specially crafted headers will be cached indefinitely.  This
-can cause the cache to grow infinitely, which will eventually consume all
-memory on the target machine, causing a denial of service.  All users running
-an affected release should either upgrade or use one of the work arounds
-immediately. 
+Sebastian
 
-Releases 
--------- 
-The 4.0.2 & 3.2.16 releases are available at the normal locations. 
-
-Workarounds 
------------ 
-Users who cannot upgrade may apply this monkey patch as an initializer to work around the issue:
-
-```
-ActiveSupport.on_load(:action_view) do
-  ActionView::LookupContext::DetailsKey.class_eval do
-    class << self
-      alias :old_get :get
-
-      def get(details)
-        if details[:formats]
-          details = details.dup
-          syms    = Set.new Mime::SET.symbols
-          details[:formats] = details[:formats].select { |v|
-            syms.include? v
-          }
-        end
-        old_get details
-      end
-    end
-  end
-end
-```
-
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
-
-* 3-0-header_dos.patch - Patch for 3.0 series 
-* 3-1-header_dos.patch - Patch for 3.1 series 
-* 3-2-header_dos.patch - Patch for 3.2 series 
-* 4-0-header_dos.patch - Patch for 4.0 series 
-
-Please note that only the 4.0.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
-Credits 
-------- 
-Thanks to Toby Hsieh of SlideShare for reporting the issue to us
-
+On Fri, Jul 12, 2013 at 07:35:07PM +0400, Solar Designer wrote:
+> On Fri, Jul 12, 2013 at 03:27:18PM +0000, mancha wrote:
+> > Starting with glibc 2.17 (eglibc 2.17), crypt() fails with
+> > EINVAL (w/ NULL return) if the salt violates specifications.
+> > Additionally, on FIPS-140 enabled Linux systems, DES/MD5-encrypted
+> > passwords passed to crypt() fail with EPERM (w/ NULL return).
+> > 
+> > When authenticating against Cyrus-sasl via mechanisms that use
+> > glibc's crypt (e.g. getpwent or shadow auth. mechs), and this
+> > crypt() returns a NULL as glibc 2.17+ does on above-described
+> > input, the client crashes the authentication daemon resulting
+> > in a DoS.
+> 
+> Does this really crash the entire daemon process rather than just one of
+> its children (where a new one would be spawned for another request)?
+> 
+> I think this needs to be clarified, and the answer will affect whether
+> we have a security issue (CVE-worthy) or not.
+> 
+> Alexander
 
 -- 
-Aaron Patterson
-http://tenderlovemaking.com/
 
-View attachment "3-0-header_dos.patch" of type "text/plain" (1161 bytes)
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-View attachment "3-1-header_dos.patch" of type "text/plain" (1161 bytes)
-
-View attachment "3-2-header_dos.patch" of type "text/plain" (964 bytes)
-
-View attachment "4-0-header_dos.patch" of type "text/plain" (978 bytes)
-
-Content of type "application/pgp-signature" skipped
