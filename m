@@ -1,48 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/12
-Message-ID: <50EC6F62.5080409@redhat.com>
-Date: Tue, 08 Jan 2013 12:11:30 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/15/8
+Message-ID: <20130715211246.GT4441@dhcp-25-225.brq.redhat.com>
+Date: Mon, 15 Jul 2013 23:12:47 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: WHK Yan <yan.uniko.102@...il.com>, Carlos Alberto Lopez Perez <clopez@...lia.com>, submissions@...ketstormsecurity.com, mr.inj3ct0r@...il.com, submit@...ecurity.com, vuln@...unia.com, vuldb@...urityfocus.com
-Subject: Re: Re: [Full-disclosure] File Disclosure in SimpleMachines Forum <= 2.0.3
+Subject: CVE Request -- Linux kernel: bridge: BUG at kernel/timer.c:729
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Several people reported the oops: "kernel BUG at kernel/timer.c:729!"
+and the stack trace is:
 
-On 01/08/2013 06:36 AM, WHK Yan wrote:
-> The flaw is not exploitable without privileges. On some occasions
-> there are forums where there are co-admistrators which have
-> privileges to view the error log but not to modify code or at least
-> read the mysql connection.
+    #7 [ffff880214d25c10] mod_timer+501 at ffffffff8106d905
+    #8 [ffff880214d25c50] br_multicast_del_pg.isra.20+261 at
+ffffffffa0731d25 [bridge]
+    #9 [ffff880214d25c80] br_multicast_disable_port+88 at
+ffffffffa0732948 [bridge]
+    #10 [ffff880214d25cb0] br_stp_disable_port+154 at ffffffffa072bcca
+[bridge]
+    #11 [ffff880214d25ce8] br_device_event+520 at ffffffffa072a4e8
+[bridge]
+    #12 [ffff880214d25d18] notifier_call_chain+76 at ffffffff8164aafc
+    #13 [ffff880214d25d50] raw_notifier_call_chain+22 at
+ffffffff810858f6
+    #14 [ffff880214d25d60] call_netdevice_notifiers+45 at
+ffffffff81536aad
+    #15 [ffff880214d25d80] dev_close_many+183 at ffffffff81536d17
+    #16 [ffff880214d25dc0] rollback_registered_many+168 at
+ffffffff81537f68
+    #17 [ffff880214d25de8] rollback_registered+49 at ffffffff81538101
+    #18 [ffff880214d25e10] unregister_netdevice_queue+72 at
+ffffffff815390d8
+    #19 [ffff880214d25e30] __tun_detach+272 at ffffffffa074c2f0 [tun]
+    #20 [ffff880214d25e88] tun_chr_close+45 at ffffffffa074c4bd [tun]
+    #21 [ffff880214d25ea8] __fput+225 at ffffffff8119b1f1
+    #22 [ffff880214d25ef0] ____fput+14 at ffffffff8119b3fe
+    #23 [ffff880214d25f00] task_work_run+159 at ffffffff8107cf7f
+    #24 [ffff880214d25f30] do_notify_resume+97 at ffffffff810139e1
+    #25 [ffff880214d25f50] int_signal+18 at ffffffff8164f292
 
-So is a trust/security boundary crossed here? Can you please confirm
-that the co-admistrator (or anyone) is not supposed to be able to read
-arbitrary files accessible to the web server, and that this attack
-does indeed allow that? Thanks.
+The bug was usually hit when shutting down a KVM guest.
 
-Removing full-disclosure@...ts.grok.org.uk from CC due to reply spam.
+Upstream fix:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c7e8e8a8f7a70b343ca1e0f90a31e35ab2d16de1
 
+Introduced by:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=9f00b2e7cf241fa389733d41b6
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Introduced in upstream version:
+v3.11-rc1 (but we had it in Fedora because of bz#880035)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=984743
+https://bugzilla.redhat.com/show_bug.cgi?id=980254
+http://pkgs.fedoraproject.org/cgit/kernel.git/commit/?h=f19&id=a993279a9bb538ae524fca69ec23c5c1b428f47e
 
-iQIcBAEBAgAGBQJQ7G9iAAoJEBYNRVNeJnmTPD0P/3qP0sPDl82+V1ST02WalH7q
-O4qhaSWUi//rY3RXMARDVfNUOeTfzBgOpS21/4qeLuLH07ko5rrwGOksuc6U8fE+
-NOQz9A3sqHQyE0419WqWDuI/kIK7SucWnGw8ACU+/vckvzWjfSDRQamq6+P+SBxL
-Cf8zS65JY5kMTRgOPK4HMy/UyUgye9DTg49aKoUIzDndbzEX+BIvr6LqSPzh5wTE
-+/NbA9R20ARFGJSe/gQARTVs8d5p0/6oi9KSxcwHLfvpWEC1zNsziVpervI3doNB
-SXb9DoiGH/G0GGoryVP5tl2kgzuaMWgdys/ypHDZ+Jmap4DsV161+Y1pS8UcRP4f
-MRAKZ3Slb/1wyW7omRnA/J6EWrgyEq4Z0f14DPUhLiLMaOgIHbVEt/b/pfyRYdPE
-EEhbemCqzqaQMwSkN9g8XSOptwD2g2vj01Kdi58TzKvS4zZefHnmVCUmfr31fEF6
-iuh4FH4baYygNlyqMMH83QtSHEB6YwRGky/bMxFZ+FGOPq0amYXBhiqV/dAkS2Ns
-+Tt0dpJCIBo4e6TMOmFe4obpYj4XSlRVz0SKiU4oz5XvDKUiKEM1Q4DGrLtY2+9W
-1ozv7vcKFdg89Vrm/i9BfAiyLue9swXtr5LFS1PAE5HJB6yWBSERv2PPvnX4xj3i
-PMcisy0d8xjsEbxA4rxG
-=d5Kh
------END PGP SIGNATURE-----
+-- 
+Petr Matousek / Red Hat Security Response Team
