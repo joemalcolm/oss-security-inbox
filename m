@@ -1,32 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/9
-Message-ID: <5348211.Bu8K2RGd8j@devil>
-Date: Wed, 04 Sep 2013 16:39:12 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/15/2
+Message-ID: <CAA7hUgHD7YKjt26+ML=H9KcJoXhx7ONW9sGRF5UpyypDV=uB-A@mail.gmail.com>
+Date: Mon, 15 Jul 2013 16:37:29 +0200
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Kernel PID Spoofing Privilege Escalation Vulnerability
+Subject: Re: Insecure temp files usage in phusion passenger (other than CVE-2013-2119)
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability has been reported in the Linux Kernel, which can be exploited 
-by malicious, local users to gain escalated privileges.
+Hi again,
 
-The vulnerability is caused due to an error within the "scm_check_creds()" 
-function (net/core/scm.c) and can be exploited to gain escalated privileges by 
-spoofing a PID.
+On 10 June 2013 16:54, Raphael Geissert <geissert@...ian.org> wrote:
+> While looking at  CVE-2013-2119 I noticed that Phusion Passenger
+> 2.2.11's ext/common/Utils.cpp makeDirTemp() uses mkdir(1) to create
+> directories in /tmp (e.g. /tmp/phusion.$$) for use by the application
+> and web server.
+> A local user could create the directories and have write access to
+> directories, and possibly files used by the application. I haven't
+> confirmed, but I guess this would allow some sort of privilege
+> escalation to the user executing the application or at least access to
+> otherwise restricted data.
+>
+> Additionally, some of the subdirectories might be chown(2)ed to a
+> different user even if the directory already existed (it chowns iff
+> mkdir(1) returns 0). Not sure if it could have an impact, however.
 
-The vulnerability is reported in version 3.10.10.
+After talking to upstream, the above issue with the temp directory has
+been fixed in 4.0.6 (release withdrawn and replaced by 4.0.7 due to a
+regression), and a regression fixed in 4.0.8[2]. The issue was tracked
+as #910[3].
 
+Could a CVE id be assigned then?
 
-Solution:
-Fixed in the GIT repository.
+It allows a local user to DoS the service or to take over its traffic.
 
-Provided and/or discovered by:
-Disclosed within a GIT commit.
+[1]http://blog.phusion.nl/2013/07/04/phusion-passenger-4-0-6-released/
+Bug fix: https://github.com/phusion/passenger/commit/5483b3292cc2af1c83033eaaadec20dba4dcfd9b
+[2]http://blog.phusion.nl/2013/07/09/phusion-passenger-4-0-8-released/
+Regression fix:
+https://github.com/phusion/passenger/commit/9dda49f4a3ebe9bafc48da1bd45799f30ce19566
+[3]https://code.google.com/p/phusion-passenger/issues/detail?id=910
 
-Original Advisory:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/net/core/scm.c?id=d661684cf6820331feae71146c35da83d794467e
-
-Source: https://secunia.com/advisories/54675/
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Cheers,
+--
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
