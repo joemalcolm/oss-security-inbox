@@ -1,24 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/4
-Message-ID: <52845A74.6040102@redhat.com>
-Date: Thu, 14 Nov 2013 16:07:00 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifrie@...hat.com>, carnil@...ian.org
-Subject: Re: CVE request: ppthtml heap-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/15/4
+Message-ID: <51E4290B.7000907@redhat.com>
+Date: Mon, 15 Jul 2013 10:53:31 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Hannes Frederic Sowa <hannes@...essinduktion.org>
+Subject: Re: CVE Request -- Linux kernel: ipv6: BUG_ON in fib6_add_rt2node()
 Content-Type: text/plain; charset=utf-8
 
-On 11/14/2013 03:11 PM, Murray McAllister wrote:
-> Morning,
->
-> A heap-based buffer overflow flaw was reported in ppthtml:
->
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=729279
->
-> Looking in xlhtml-0.5-15.fc19.src.rpm, I think the root cause of the
-> problem is in __OLEdecode() with an under allocation here:
->
-> 163   BDepot = (U8 *) malloc (0x0200 * (num_bbd_blocks + num_xbbd_blocks));
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Setting num_bbd_blocks and num_xbbd_blocks both to "1" also leads 
-similar problems.
+On 07/15/2013 10:24 AM, Petr Matousek wrote:
+> If two router advertisment speaker announce seperate default
+> gateways with infinite timeout the kernel currently packs these
+> routes together into an ecmp route set. If one of the RA speaker
+> now changes the advertised expiration to a lower value and a third
+> route with infinite timeout pops up we end up with a BUG_ON.
+> 
+> Remote attacker could use this flaw to crash the system.
+> 
+> Fixed by: 
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=307f2fb95e9b96b3577916e73d92e104f8f26494
+>
+>  Introduced by: 
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=51ebd3181572af8d5076808dab2682d800f6da5d
+>
+>  Introduced in upstream version: v3.7-rc1
+> 
+> Acknowledgements:
+> 
+> Red Hat would like to thank Hannes Frederic Sowa for reporting
+> this issue.
+> 
+
+Please use CVE-2013-4125 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJR5CkLAAoJEBYNRVNeJnmTEnMQAIkV1aERL6D2GPTq5d8ePlt6
++SVUkkDJBn8q71jNC+1fvrkxtdmSgr2Ob+mLMQQucfisyRH6T8hn61nJW2Z4xM6q
+LcQvvBLXIZNAbdeYPGuOqbh07d+Ax4uzmDXbo8ubo6BWa9Q7i3ZEUWLumsTqB+Pt
+IOlGNCL5zldy2TAEzWigmJTFgeJfMEMUQI4IRmwbAIBHU8SFzrAVlUTP8VZT0MHt
+dU0LIavp/9xPkNARNYR0Bbw0Eqe6f1TlfCOD1A8Ah9tIA15obJD8zhQvooFQt0b9
+rGEQvRtt+AQ7r7YM4TBLI1Y5az0icBLFf8j+BVmMd744n3jj4Df9r0xmebKmP7CM
+/DwuBlWhxDoIkIJ5Y0lGwZmwKUZyB3fTO4DojGgyPsRPGwzT9/VTI8G+i9JelW7b
+Mzjr090zcPzztbrn0X6PWvD8wSRHcf+Mg3rxP2KtLSfWrbWRt0cbmTJ+e8AmGhmY
+ZqrWapUxwMJ07RHjgmj39ZBndPAC8VCaxu0XyEw77+qpmic50s6hRCkXUKSZM1lL
+qcyBEXwgJHIP0ZG58WnaOZeku4iOHJpLqv3ph1AK6hDygKQxiGb9ErSJSr5f66ZK
+vLjm6rRKqeOLkOtjQsW+EnFiiFJOBx3yrMpobG0gKtZUeUmxC86I/HDnKhTaSbq7
+jDatx2lHNYGyzqKXXgeS
+=l/xc
+-----END PGP SIGNATURE-----
