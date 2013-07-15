@@ -1,41 +1,155 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/11
-Message-ID: <20130425140315.GP21938@mars-attacks.org>
-Date: Thu, 25 Apr 2013 16:03:15 +0200
-From: nicolas vigier <boklm@...s-attacks.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/15/5
+Message-ID: <51E43DC6.7040304@upv.es>
+Date: Mon, 15 Jul 2013 20:21:58 +0200
+From: Hector Marco <hecmargi@....es>
+To: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk, oss-security@...ts.openwall.com
+Subject: CVE-2013-4788 - Eglibc PTR MANGLE bug
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 24 Apr 2013, Eric H. Christensen wrote:
 
-> On Sun, Apr 21, 2013 at 12:39:39AM +0400, Solar Designer wrote:
-> > i just found this recent blog post by Allan McRae of Arch Linux:
-> > 
-> > http://allanmcrae.com/2012/04/how-secure-is-the-source-code/
-> 
-> This is a great article and I really appreciate the work that went into the research.
-> 
-> > I think that placing both "MD5 checksum provided on same site as
-> > download" and "PGP signature, key difficult to verify" in the same
-> > "yellow" category is inconvenient for us.  "MD5 checksum provided on
-> > same site as download" only helps verify downloads from mirrors against
-> > the master site, whereas "PGP signature, key difficult to verify"
-> > achieves a lot more - once a distro is already including the package
-> > (and has already taken the risk of it having been tampered with), then
-> > verifying further updates to the package becomes almost as reliable as
-> > it would have been with proper signing (with a "readily verifiable" key).
-> > So we need four categories, or simply "MD5 checksum provided on same
-> > site as download" should be in "red", not in "yellow".
-> 
-> This is a good discussion to have.  I've recently started working on "best practices" articles at Red Hat and feel this would make an excellent article on how we can all improve the security of our source code that inevitably gets pushed into the various distributions.  
-> 
-> What is really the best, most proper way of desiminating releases?  I really don't like the use of MD5 for checksums (I'd prefer something out of the SHA-2 or SHA-3 family of hashing algorithms) and I really *do* like the use of PGP for signing the code.  I do foresee some practices within the use of PGP that might not be great, though.
-> 
-> So what is the best way of authenticating the source code?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The good thing about PGP signed tarballs is that an automated check
-could be integrated in package build, with some standard macros or
-script to make it easy to check signature from a specific key. If it's
-easy and does not cost time then more packagers will do it.
+Hi guys,
+
+The following is a bug that we found while we were working around
+stack smashing protection techniques.
+
+
+Title: CVE-2013-4788 - Eglibc PTR MANGLE bug
+
+
+0.- Description
+
+This bug was discovered in March 2013 while we were developing the RAF SSP
+technique. The glibc bug makes it easy to take advantage of common
+errors such
+as buffer overflows allows in these cases redirect the execution flow and
+potentially execute arbitrary code.
+
+
+1.- Impact
+
+All statically linked applications compiled with glibc and eglibc are
+affected,
+independent of the operating system distribution. Note that this problem
+is not
+solved by only patching the eglibc, but it is also necessary to
+recompile all
+static executables.  As far I know there are a lot of routers, embedded
+systems
+etc., which use static linked applications. Since the bug is from the
+beginning
+of the PTR_MANGLE implementations (years 2005-2006) there are a ton of
+vulnerable devices.
+
+
+2.- Vulnerable packages
+
+The bug has been propagated to all the static code compiled with all
+versions,
+on all architectures, of glibc from 2.4 (06-Mar-2006) to 2.17 (Current
+version).
+
+
+3.- Vulnerability
+
+The vulnerability is caused due to the non initialization to a random
+value (it
+is always zero) of the "pointer guard" by the glibc only when generating
+static
+compiled executables. Dynamic executables are not affected. Pointer guard is
+used to mangle the content of sensible pointers (longjmp, signal handlers,
+etc.), if the pointer guard value is zero (non-initialized) then it is not
+effective.   An example:  Library functions like "setjmp()" or
+"longjmp()" use
+PTR_MANGLE and PTR_DEMANGLE. These macros are used to protect structures
+like
+jmp_buf. Basically consist on XOR-ing the pointer value with a random
+32/64-bit
+value. Since the pointer guard (random value) is 0x0 the attacker can easily
+calculate off-line the value of a target address. By overwriting the "env"
+structure with the pre-computed address the vulnerability is triggered when
+longjmp() is called and the execution flow is redirected to attacker
+address.
+
+4.- Exploit
+
+The bug was tested with Debian 7.1 and Ubunu 12.04 LTS and 13.04). I already
+created a proof of concept to exploit this vulnerability for both 32 and 64
+bits x86 architectures.   The proof of concept poc-bug-mangle.c redirect the
+execution flow to a function which prompt a shell. This exploit can be
+compiled
+for both i386 and x86_64 architectures. More architectures can be added
+easily
+by adding the correspondent defines.  
+
+Compilation for i386:
+   gcc poc-bug-mangle.c -o poc-bug-mangle -static
+
+Compilation for x86_64:
+   gcc poc-bug-mangle.c -o poc-bug-mangle_32 -static -m32
+   gcc poc-bug-mangle.c -o poc-bug-mangle_64 -static -m64
+
+Execution output:
+   box@....upv.es:~$ ./poc-bug-mangle
+   [+] Exploiting ...
+   [+] hacked !!
+   $
+
+
+
+5.- FIX
+
+Note that the bug is not solved by only patching the eglibc, but it is also
+necessary to recompile all static executables. I have created a non official
+patch ptr_mangle-eglibc-2.17.patch for the gblic-2.17.  
+
+Patching glibc-2.17:
+   wget http://hmarco.org/bugs/patches/ptr_mangle-eglibc-2.17.patch
+   cd glibc-2.17
+   patch -p1 < ../ptr_mangle-eglibc-2.17.patch
+
+
+6.- Discussion
+
+Although this bug is not exploitable by itself, the truth is that the PTR
+Mangle encryption is useless. The goal of the protection technique is not
+achieved.  This can be seen as the canary stack is set to 0x0, although
+is not
+exploitable by itself is clearly an issue. What about whether the canary has
+been set to zero from 2006 to today ? This is what happened with the
+pointers
+protected with this mechanism.   According to Ulrich_Drepper to use
+"encryption
+pointers (instead of canaries) to protect structures like jmp_buf is at
+least
+as secure and in addition faster". Following the above and since the
+protection
+mechanism is useless from the first implementation, the number of
+potentially
+affected systems could be huge.
+
+Patch and exploit source code:
+
+http://hmarco.org/bugs/CVE-2013-4788.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJR5D3CAAoJEI9kAsYMQl6irpMQAJ7vGyBETTHeyURqLmKUgofg
+YRnK1ia/CszGyNSZVTCF6NIv6JMtaXsF3xvITk0dj68WMtc5DdTSMkw2XQSwzBJv
+Vlh8QE6KayM+D0esBy6m7+7dLcPyshW4zTKzU6vQwAkxB+PdRKPuEwnVO3hoqtB/
+cwiAhk7J2m5sTkKWVz48JJG/f6EjJRZJLaB6J2pzHPijvBCGmTeXLU4+9RnO4i0q
+CoPcJai5uwDk9yRtj2iwbnHj6PIdSeJj3Sw3UJwZb9vF5gX2FQdSQJTc3yvzc3+7
+UMHzuEcScFXWPJpKZGuiHU43sBu9pKvye3MUroEOcG6e4woncABRYRSQzDriN/AJ
+aUpmvaFtllCA9es286GTBVN7/GGlpLb0PyfdfQW9cVgPqpFZ7Z5GQFMa+pZ/nPRZ
+gM4aa2YFveQckBJS14yVMz/lyixcVxpEQH0lJbLYO6L9G+0kdaK8knUMR5q9SFYZ
+GkUzauDkzsGUmDrCvam9mYqc55HOmyQETIfu34SorTOnhD2Seg+BWujbU3BJ2NI1
+qIp8SrmX+7V75Jsy9p5/LzkjDXyAoSlwi/RchhtCo5Ih99ZJgjlDrtuR9C+GVBL9
+36IemhVfUdM0SFIUJVcCfSMPlrZO/eCCWRnJmTCUBhox9dZ01dUHMNC0h2q/gdxt
+Bp4l0er3CX70KglD5YIx
+=gFhS
+-----END PGP SIGNATURE-----
 
