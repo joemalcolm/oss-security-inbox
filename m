@@ -1,68 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/22/7
-Message-ID: <CABbbngCorijY-gVNxzmgat2X=UW3bM5CZOMC50vm+nPyh53sSQ@mail.gmail.com>
-Date: Mon, 22 Jul 2013 11:22:39 -0700
-From: Forest Monsen <forest.monsen@...il.com>
-To: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com
-Cc: "security@...pal.org" <security@...pal.org>
-Subject: Re: CVE request for a Drupal contributed module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/15/3
+Message-ID: <20130715162417.GQ4441@dhcp-25-225.brq.redhat.com>
+Date: Mon, 15 Jul 2013 18:24:17 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Hannes Frederic Sowa <hannes@...essinduktion.org>
+Subject: CVE Request -- Linux kernel: ipv6: BUG_ON in fib6_add_rt2node()
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt, regarding CVE assignment and your request for clarification at
-http://www.openwall.com/lists/oss-security/2013/05/16/2:
+If two router advertisment speaker announce seperate default gateways
+with infinite timeout the kernel currently packs these routes together
+into an ecmp route set. If one of the RA speaker now changes the
+advertised expiration to a lower value and a third route with infinite
+timeout pops up we end up with a BUG_ON.
 
-On Wed, May 15, 2013 at 6:41 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+Remote attacker could use this flaw to crash the system.
 
-> This sounds like two separate issues:
-[...]
-> can you send me the code patches fixing this so I can make sure it
-> gets the correct SPLIT/MERGE treatment? Thanks.
+Fixed by:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=307f2fb95e9b96b3577916e73d92e104f8f26494
 
-Yep - Diffs for the commits that fixed both of these issues are at:
+Introduced by:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=51ebd3181572af8d5076808dab2682d800f6da5d
 
-Drupal 6: http://drupalcode.org/project/ga_login.git/commitdiff/dd04ea3
- Drupal 7: http://drupalcode.org/project/ga_login.git/commitdiff/c365097
+Introduced in upstream version:
+v3.7-rc1
 
-For the first issue,
+Acknowledgements:
 
+Red Hat would like to thank Hannes Frederic Sowa for reporting this
+issue.
 
-> Accidental removal of account configuration.
->
-> In certain scenarios, Google Authenticator login incorrectly
-> determines the user's account name. The change in account name could
-> cause the two-factor authentication for existing accounts to be lost,
-> allowing users to log in using just username and password.
->
-> This vulnerability is mitigated by the fact while Google Authenticator
-> login's additional verification is by-passed, a username and password
-> are still required to log in.
->
-
-It looks like the maintainer now concatenates a "Realm" (site name) and
-suffix with the Drupal username to form the GA username. Any inconsistency
-there will invalidate earlier credentials.
-
-For the second,
-
-One Time Password (OTP) replay
->
-> If an attacker can intercept a login request with a username, password
-> and OTP, an attacker could use this same data again to login to the
-> website.
->
-> This vulnerability is mitigated by the fact that an attacker who can
-> intercept a login request with this level of detail can usually also
-> intercept the ongoing session identifying token.
->
-
-It looks to me like the maintainer now implements a skew value to either
-(in the case of a time-based one-time password token) review only a certain
-range of timed tokens on either side, or (in the case of an HMAC-based
-one-time password token) to again test a range of tokens.
-
-I'll copy the Drupal Security Team, in case I haven't understood it
-correctly or if further clarification is necessary. Thanks.
-
-Best,
-Forest
-
+-- 
+Petr Matousek / Red Hat Security Response Team
