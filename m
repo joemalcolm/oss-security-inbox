@@ -1,116 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/28/4
-Message-ID: <512ED17C.4080507@redhat.com>
-Date: Wed, 27 Feb 2013 20:39:40 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/16/3
+Message-ID: <995448632.1743634.1373989797019.JavaMail.root@redhat.com>
+Date: Tue, 16 Jul 2013 11:49:57 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: poppler 0.22.1 security fixes
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request -- kde-workspace 4.10.5 fixing two security flaws
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-On 02/27/2013 06:24 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> poppler 0.22.1 was released without much ado, it however contains
-> various security fixes.
-> 
-> The security fixes apparently come from AdressSanitizer work and
-> fuzzing provided by the Google Security Team.
-> 
-> The page: http://j00ru.vexillium.org/?p=1507
-> 
-> explains most of it, and while it focuses on Adobe Acrobat Reader,
-> they also covered poppler testing inside.
+  while not listed in the announcement:
+  [1] http://www.kde.org/announcements/announce-4.10.5.php
 
-Ok so these issues were found and processed by a team of people at
-Google (gratzi!) and Red Hat (booyah!) so for the purposes of CVE I'm
-considering the team to be a single team (which makes CVE assignment
-much easier =).
+looks like kde-workspace v4.10.5 fixed two security flaws
+(the second one a minor one):
 
-> So far I see: 
-> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=8b6dc55e530b2f5ede6b9dfb64aafdd1d5836492
->
-> 
-Fix invalid memory access in 1150.pdf.asan.8.69
-> 
-> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=e14b6e9c13d35c9bd1e0c50906ace8e707816888
->
-> 
-Fix invalid memory access in 2030.pdf.asan.69.463
-> 
-> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=0388837f01bc467045164f9ddaff787000a8caaa
->
-> 
-Fix another invalid memory access in 1091.pdf.asan.72.42
-> 
-> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=957aa252912cde85d76c41e9710b33425a82b696
->
-> 
-Fix invalid memory accesses in 1091.pdf.asan.72.42
-> 
-> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=bbc2d8918fe234b7ef2c480eb148943922cc0959
->
-> 
-Fix invalid memory accesses in 1036.pdf.asan.23.17
+* Issue #1 - Possible NULL pointer dereference in KDM and KCheckPass
+             when glibc 2.17 (eglibc 2.17) or FIPS enabled system used
+             Bug: https://git.reviewboard.kde.org/r/111261/
+             Relevant patches:
+               https://projects.kde.org/projects/kde/kde-workspace/repository/revisions/45b7f137fbc0b942fd2c9b4e8d8c1f0293e64ba7
+               https://projects.kde.org/projects/kde/kde-workspace/repository/revisions/7777194da6154375fc8103b8c4e29e385cd7ae2e
 
-Please use CVE-2013-1788 for these invalid memory issues.
+* Issue #2 - Plasma desktop is leaking memory in X if some system tray icon is blinking
+             Bug: https://bugs.kde.org/show_bug.cgi?id=314919
+             Relevant patch:
+               https://projects.kde.org/projects/kde/kde-workspace/repository/revisions/2c810db3e41d56ad7dd8ec3436f3cf3abcc31983
 
-> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a9b8ab4657dec65b8b86c225d12c533ad7e984e2
->
-> 
-Fix crash in broken file 1031.pdf.asan.48.15
-> 
-> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a205e71a2dbe0c8d4f4905a76a3f79ec522eacec
->
-> 
-Do not crash in broken documents like 1007.pdf.asan.48.4
+Could you allocate CVE ids for these?
 
-Please use CVE-2013-1788 for these crash issues.
-
-
-> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=b1026b5978c385328f2a15a2185c599a563edf91
->
-> 
-Initialize refLine totally
-> Fixes uninitialized memory read in 1004.pdf.asan.7.3
-
-Please use CVE-2013-1790 for this uninitialized memory read issue.
-
-> As the blog page mentions "Huzaifa Sidhpurwala from RedHat
-> Security", perhaps Redhat has assigned CVEs already.
-
-Nope, although hopefully in future we'll coordinate CVEs better before
-hand.
-
-> Otherwise one ore more CVEs are required.
-
-Yup.
-
-> Ciao, Marcus
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRLtF8AAoJEBYNRVNeJnmTh/YP/jmwGLJ0IS8rTTmRhRXw8yYX
-McSfWbdn4WJO3zeELgpmUJue0qfsFF66iXKUoVRfvpvoT5EtDWPp02Wubkd26Z77
-DCsWJ2AYwvbwZNfnrAbP/sSnNu7W1HEQUIEcsLuoffbw9ZONMuWF1EOgZ6JZKvsB
-cHQjg1fzXXqPGaNSU5QEkIhVzZrEm8vAhHai0sEgKDYGGIjX4QKefiYdrzKCnCZa
-yV9qUb7knv9qqNB0iyE625cmqaoskdjdyaqDNFjSDzpeYKB9I/iQYvvD4dyw/dhM
-JIx1MwfZXX9C69KXxCLrQuwgSXgi/HmuDdIdnuoTdZIsk9UO5jzkIkWOIbVsc1Eo
-C7SWxmBvS7DoHgH7jLpo7BlxmuDRupbdeOxLPfyJzu/bdYaeeusCOGRcaMXVB0/C
-H/inAQVn5m1cAR1YEp76ZpqG9E/VMHcdC3cO+KDDMitPeMY5LVSN/IRPgCGDf/hB
-MZyToi0YrFg5t4U7M/2CKhumK7ivwjPg7kKnWSwBsYt6ECsSknRAsWqEuMVc1PmK
-E31or9K4qe/f4igQ0Xm7r5/sZhB3oTVHvGb7+yTIGUaWJXEGRazFVPxk7lryUroY
-SNrSXFkKyCRO6nNvp+De0+xL/fyQfq0NZIK671gbR9i24GXLhIgO75v1GQFrbhJ6
-2nWKQJCoJhxRF3mn/3et
-=MQpu
------END PGP SIGNATURE-----
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
