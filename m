@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/28/4
-Message-ID: <1338782267.8755963.1369736072304.JavaMail.root@redhat.com>
-Date: Tue, 28 May 2013 06:14:32 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/16/11
+Message-ID: <CABbbngAG9gpkEMHnxZO6KSF6+Ezsf=MyLpxFy8eJ_je58wVg1g@mail.gmail.com>
+Date: Tue, 16 Jul 2013 14:36:37 -0700
+From: Forest Monsen <forest.monsen@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Athmane Madjoudj <athmanem@...il.com>
-Subject: [Notification] CVE-2013-2765 mod_security: NULL pointer dereference (DoS, crash) when forceRequestBodyVariable action triggered and unknown Content-Type was used
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for Drupal contrib modules
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Hi there,
 
-  as brought to me by Athmane, ModSecurity upstream has release v2.7.4 version:
-  [1] http://sourceforge.net/mailarchive/message.php?msg_id=30900019
+I'd like to request CVE identifiers for:
 
-correcting one security NULL pointer dereference flaw (CVE-2013-2765) - from [2]:
+SA-CONTRIB-2013-055 - Hatch - Cross Site Scripting
+https://drupal.org/node/2038363
 
-* Fixed Remote Null Pointer DeReference (CVE-2013-2765). When forceRequestBodyVariable
-  action is triggered and a unknown Content-Type is used, mod_security will crash
-  trying to manipulate msr->msc_reqbody_chunks->elts however msr->msc_reqbody_chunks
-  is NULL. (Thanks Younes JAAIDI).
+SA-CONTRIB-2013-056 - Stage File Proxy - Denial of Service
+https://drupal.org/node/2038801
 
-References:
-  [2] https://raw.github.com/SpiderLabs/ModSecurity/master/CHANGES
-  [3] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-2765
+SA-CONTRIB-2013-057 - TinyBox - Cross Site Scripting (XSS)
+https://drupal.org/node/2038807
 
-Relevant upstream patch (seems to be the following):
-[4] https://github.com/SpiderLabs/ModSecurity/commit/0840b13612a0b7ef1ce7441cf811dcfc6b463fba
+Thanks!
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Forest
 
-P.S.: Thanks goes to Athmane for bringing this to our attention.
