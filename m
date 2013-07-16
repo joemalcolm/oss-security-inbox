@@ -1,58 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/13/2
-Message-ID: <511ADAC1.3090102@redhat.com>
-Date: Tue, 12 Feb 2013 17:13:53 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/16/8
+Message-Id: <20130716191807.3E701600C4@smtp.hushmail.com>
+Date: Tue, 16 Jul 2013 19:18:07 +0000
+From: "mancha" <mancha1@...h.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE request: Trac Ticket Modification Workflow Permission Restriction Bypass
+Subject: CVE Request - xlockmore 5.43 fixes a security flaw
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, vendors, et al.
 
-On 02/11/2013 04:12 AM, Henri Salo wrote:
-> Hello,
-> 
-> From Secunia: A security issue has been reported in Trac, which can
-> be exploited by malicious users to bypass certain security
-> restrictions. The security issue is caused due to the application
-> not properly checking workflow permissions before modifying a
-> ticket, which can be exploited to change the status and resolution
-> of tickets without having proper permissions.
-> 
-> http://secunia.com/advisories/39123/ 
-> http://osvdb.org/show/osvdb/63317
-> 
-> The security issue is reported in versions prior to 0.11.7. 
-> http://trac.edgewall.org/wiki/ChangeLog#a0.11.7
-> 
-> Could you assign CVE-2010-XXXX, thank you. Please double verify
-> this hasn't been assigned. I tried my best to avoid duplicates :)
-> 
-> -- Henri Salo
+xlockmore 5.43 released 2 days ago with a fix for a security
+flaw related to potential NULL pointer dereferences when
+authenticating via glibc 2.17+ crypt() and OSF/1 C2 security's
+dispcrypt().
 
-Please use CVE-2010-5108 for this issue.
+Under certain conditions the NULL pointers can trigger a crash
+in xlockmore effectively bypassing the screen lock.
 
+[1] http://www.tux.org/~bagleyd/xlock/xlockmore.README
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+--mancha
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRGtrBAAoJEBYNRVNeJnmTIgAP/1XW61JAB9uYh1yK7Dytpdd+
-mPA4vQRTyx4nylnlPQbrw/Pig+tkl8C8i627Oh/8pPkfAhGQynWIcSFiR8SFvJpa
-zTrsvJghXXHtiDoYV+Ot7fIH/L0HH3IbZJxRIOd0t/trRgOVymkEutEQcIzEeLWB
-mLg15oumIMO4CNf4f4OFXXoFiIz2z0D2PlAWo6hP35kaKaKla+FU0IgfrFMljFeE
-jHj6fQuQKYf9ryHjuMJDd12qBVV3pi2RwCLdHPkkvbb7LxKzAa0umEHTxnLMBKUu
-KRbrTNEYDd5CKMaZu7tnlE6iIiuv+ov6Atrj8eI0E8zhjDXAbnHooIaUQ9nYzu/o
-egbHXADFEMgLii99bSZcNu0NBelwX8k+dCYtS+FB9i1zPD7KoIMjq86Wde6dqIQS
-TLO/TKo/TJCMqmrz4xxMlTSkBuMRbIImJj8QGYQkQu7XkjlxdNicFvyjheNDdMBV
-mCiYJ4GGn+j2LUYm/AhfwfNO38ZZ79djYwiCujeVsdJcNSowrU81FHPAcgf0KZFZ
-MF8Np2wX09mVbrhbNQ2SQTnPKI8iGov0vGaKGvrz6nBOWtHCWxl5B7dmKSy/e3kH
-8s7Sm1oSoGtBywUkhkjPIwbqIvCzGvqvxggchaTGU294NwPS0cAm4z19A/Or2HTI
-r+ftIYjQBVAFKBd4phkx
-=80fD
------END PGP SIGNATURE-----
