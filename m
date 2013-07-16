@@ -1,30 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/09/7
-Message-ID: <20130709190339.GB18188@boyd>
-Date: Tue, 9 Jul 2013 12:03:40 -0700
-From: Tyler Hicks <tyhicks@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/16/6
+Message-ID: <51E58521.40008@redhat.com>
+Date: Tue, 16 Jul 2013 11:38:41 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Chanam Park <chanam.park@...co.kr>
-Subject: Linux kernel libceph NULL function pointer dereference (CVE-2013-1059)
+CC: Raphael Geissert <geissert@...ian.org>
+Subject: Re: Re: Insecure temp files usage in phusion passenger (other than CVE-2013-2119)
 Content-Type: text/plain; charset=utf-8
 
-Chanam Park discovered that a crafted auth_reply message could cause a
-NULL function pointer dereference in the libceph auth_none handler. A
-remote attacker could use this flaw to cause a denial of service.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-If a malicious Ceph monitor sends an auth_reply message with the value
-of -EAGAIN in the result field, ceph_build_auth_request() will call the
-ceph_auth_client_ops->build_request() function pointer without checking
-to see if the build_request() pointer is NULL. The auth_none handler
-does not initialize its build_request() pointer.
+On 07/15/2013 08:37 AM, Raphael Geissert wrote:
+> Hi again,
+> 
+> On 10 June 2013 16:54, Raphael Geissert <geissert@...ian.org>
+> wrote:
+>> While looking at  CVE-2013-2119 I noticed that Phusion Passenger 
+>> 2.2.11's ext/common/Utils.cpp makeDirTemp() uses mkdir(1) to
+>> create directories in /tmp (e.g. /tmp/phusion.$$) for use by the
+>> application and web server. A local user could create the
+>> directories and have write access to directories, and possibly
+>> files used by the application. I haven't confirmed, but I guess
+>> this would allow some sort of privilege escalation to the user
+>> executing the application or at least access to otherwise
+>> restricted data.
+>> 
+>> Additionally, some of the subdirectories might be chown(2)ed to
+>> a different user even if the directory already existed (it chowns
+>> iff mkdir(1) returns 0). Not sure if it could have an impact,
+>> however.
+> 
+> After talking to upstream, the above issue with the temp directory
+> has been fixed in 4.0.6 (release withdrawn and replaced by 4.0.7
+> due to a regression), and a regression fixed in 4.0.8[2]. The issue
+> was tracked as #910[3].
+> 
+> Could a CVE id be assigned then?
+> 
+> It allows a local user to DoS the service or to take over its
+> traffic.
+> 
+> [1]http://blog.phusion.nl/2013/07/04/phusion-passenger-4-0-6-released/
+>
+> 
+Bug fix:
+https://github.com/phusion/passenger/commit/5483b3292cc2af1c83033eaaadec20dba4dcfd9b
+> [2]http://blog.phusion.nl/2013/07/09/phusion-passenger-4-0-8-released/
+>
+> 
+Regression fix:
+> https://github.com/phusion/passenger/commit/9dda49f4a3ebe9bafc48da1bd45799f30ce19566
+>
+> 
+[3]https://code.google.com/p/phusion-passenger/issues/detail?id=910
+> 
+> Cheers, -- Raphael Geissert - Debian Developer www.debian.org -
+> get.debian.net
+> 
 
-See http://hkpco.kr/advisory/CVE-2013-1059.txt for more information.
+Please use CVE-2013-4136 for this issue.
 
-The fix can be found in the upstream ceph-client.git tree:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-https://git.kernel.org/cgit/linux/kernel/git/sage/ceph-client.git/commit/?id=2cb33cac622afde897aa02d3dcd9fbba8bae839e
-
-Tyler
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+iQIcBAEBAgAGBQJR5YUhAAoJEBYNRVNeJnmT0xUQANA2upj/XcARdB6ZslRZfyiR
+sC0I4khYvEt8wZMG6FTgb3f0vN7tPZoxcZt5O2mxxUyWYc/4iVueiB6a77Qx7lth
+wJ98fdLRb7UUJK5N3JHPIQm1BuvE83svUTuodDnnesrcMTJA/iFHZ59wAK7MXPn/
+mpVHGbNhfdvNxwL7k4CcuNXng/4xm7Pg9dCngNd4uSvmbUKQCbENtnIePUPs6Lwx
+dnia4pKaDfRFZ+WeK8OYT4sRxnf4rImbwV6kwF3+SvxpsdyA8P0XOx0+Lx8pNnHL
+AwBTZxNmDehbUJ8vuKMGbPsCwsjQKudoJFk+BmGPF5nC1aVbHKHPi5fL5ydzf0nm
+GJ9yMHTOAIuFApzh3j0kCX/K7Jfwynr3y3xI8hLzaf2rjR/nc1jzn/Si24zZG6Z9
+GvSwL2EOHNtzxXXkQF4JZARS3n+B73K4w7hdiX58ZGim1q9551EEghSc/qBbiTGn
+svU+Z/Zz528mCv9AGHLK8C7y6BSDFJLrzLHuH6hx5AzVeM53Shb8oegcanObLAgj
+GkB5CMDgn6T5obdx0bPUwGXnABt76RjGJ0P9dvZ4/pWfAEibZGZYDunZ7YomQuzU
+qAljswBoUlMzngS3OrCpxB7gGf0AwcNnzo6yQTMvCKx4n9Ikjl1VeljD0SCVu1eW
+VES+Vjb20flunp4/qLpY
+=VvTG
+-----END PGP SIGNATURE-----
