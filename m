@@ -1,55 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/3
-Message-ID: <5296CCFF.2080004@redhat.com>
-Date: Wed, 27 Nov 2013 21:56:31 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: hplip insecure temporary file handling in pkit.py
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/16/10
+Message-Id: <20130716211757.2CFDF600AC@smtp.hushmail.com>
+Date: Tue, 16 Jul 2013 21:17:56 +0000
+From: "mancha" <mancha1@...h.com>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: CVE Request - xlockmore 5.43 fixes a security flaw
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, 16 Jul 2013 20:18:06 +0000 "Kurt Seifried" wrote:
+>To reiterate: so I can confirm CVE assignments, and prevent 
+>duplicate assignments you *MUST* provide links to the code 
+>commits/vulnerable code.
 
-On 11/27/2013 04:46 AM, Raphael Geissert wrote:
-> Hi,
-> 
-> On 27 November 2013 12:22, Ratul Gupta <ratulg@...hat.com> wrote:
->> Hello,
->> 
->> A temporary file handling flaw was found in hplip/pkit.py.
->> 
->> References: 
->> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=725876
-> 
-> Thanks for sending the request, I was waiting for the problem to
-> be confirmed but later forgot about it.
-> 
->> Can a CVE please be assigned if one has not been already?
-> 
-> None has been assigned as far as I'm aware of.
-> 
-> Cheers,
+>People need to start making better CVE requests, or you're 
+>not going to get CVEs from me.
 
-Please use CVE-2013-6402 for this issue.
+I am relatively new at CVE requests so I am learning-by-doing.
+I must have missed the original comment you feel you're
+re-iterating to me.
 
+Relevant code can be found here:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+[1] 
+http://sourceforge.net/projects/miscellaneouspa/files/glibc217/xlock
+more-5.42-glibc217-crypt.diff
 
-iQIcBAEBAgAGBQJSlsz+AAoJEBYNRVNeJnmT8I8P/j+XBW/SzksKSi5dtUkLmbI8
-5V1Xd6cI/xhS94ls3rLGba23MjozdElgYnMI8XvgvvRhNRbeutTRYwEFHJbL5jqh
-kqDqa3nIwZHlYCbQT5QrIbDmI6FGjLbCRckryh+lkS7nkdedjOibOjgZuLP8HQED
-xuV4hFi9s3Tx0EVdNR1VxBLCLyVBX+F9QFOFz6dTrXH+lcriYb9u6CF7CEs/Gev7
-NuVdVYGFxsEm+ZsyOmZ/Cn2nB9RMTKVk6QbkFes2RGeY1pwxrFmtwUf4hyrnSeBB
-42TmTHSV/t6JhRq0iDBWXC1b6R83Upt/41Ir9lGsI/719wG8EOVb38phxgiV3xMg
-sz6BaUrNzo/Ecu8nkHJqnhbdgwHCVfo/oJ3uG275ChI6XJYdAPdNNZmvK44es8DN
-zbzRiEMbrBE6UmqZqIAPzD2X1fCaelbrHxODeK1VCkeOokqxd65u2/PXRVkx3xdW
-4u8qIonGAPghIxn8XYlnjyNumLmi84M1JtZ1HXcilJoMk0MM9RZ9GdA7lig+VrYX
-FAT4PrlYSo6lONFpo2gMY1TYTQOCLHYKOVantgaa8Zqrk/Whz4Bo0Gi23fbrXunR
-gYmLwoX2C8OndPQ5Y7atUzH5f9wBTuAV8kMRX4gZC5Ukcuh98YNwnBq2C6K0n2th
-QWE5qT3+bTi5ySnCy84S
-=xMka
------END PGP SIGNATURE-----
+Upstream doesn't appear to have a public version control repo
+which is why I didn't post link(s) to commit(s). I mistakenly
+thought their changelog annoucement would be enough.
+
+I enjoy contributing time to the community via code submissions
+and by making flaws/fixes known to vendors via this list. I just
+hope they don't all have to raise my blood pressure in the future.
+
+--mancha
+
