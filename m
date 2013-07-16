@@ -1,21 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/16
-Message-ID: <5EA177BBB85E4EF4900F47CD51F0323E@wildbit.com>
-Date: Tue, 9 Apr 2013 14:08:20 -0400
-From: Russ Thompson <russ@...dbit.com>
-To: oss-security@...ts.openwall.com
-Subject: Postfix incorrect permissions on configurations. Request.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/16/7
+Message-Id: <20130716184934.AC832600E5@smtp.hushmail.com>
+Date: Tue, 16 Jul 2013 18:49:34 +0000
+From: "mancha" <mancha1@...h.com>
+To: oss-security@...ts.openwall.com, jlieskov@...hat.com
+Cc: coley@...us.mitre.org
+Subject: Re: CVE Request -- kde-workspace 4.10.5 fixing two security flaws
 Content-Type: text/plain; charset=utf-8
 
-Postfix is setting the following permissions by default on Debian Squeeze.  I'm seeing roughly the same on RHEL/CentOS 6.x, this appears to be a requirement of "sendmail.postfix"  
+On Tue, 16 Jul 2013 15:50:25 +0000 "Jan Lieskovsky" wrote:
+>Hello Kurt, Steve, vendors,
+>
+>  while not listed in the announcement:
+>  [1] http://www.kde.org/announcements/announce-4.10.5.php
+>
+>looks like kde-workspace v4.10.5 fixed two security flaws
+>(the second one a minor one):
+>
+>* Issue #1 - Possible NULL pointer dereference in KDM and 
+>KCheckPass when glibc 2.17 (eglibc 2.17) or FIPS enabled system 
+>used
+> Bug: https://git.reviewboard.kde.org/r/111261/
+>             Relevant patches:
+>             https://projects.kde.org/projects/kde/kde-
+workspace/repository/revisions/45b7f137fbc0b942fd2c9b4e8d8c1f0293e64
+ba7
+>             https://projects.kde.org/projects/kde/kde-
+workspace/repository/revisions/7777194da6154375fc8103b8c4e29e385cd7a
+e2e
 
-0755 /etc/postfix
-0644 /etc/postfix/*
-0755 /etc/postfix-script
-0755 /etc/post-install
+Hi Jan et al.
 
-Which allows all users to execute these scripts and read configurations.  Setting to tighter/more typical permissions (i.e 640) results in:  postfix/sendmail[21007]: fatal: open /etc/postfix/main.cf: Permission denied
+Actually, issue #1's fix (CVE-2013-4132) just missed the 
+tag/release 
+deadline for 4.10.5 by a day or two. The FIXED-IN entry in the
+revision comment is inaccurate.
 
-Thanks
-- Russ
+Distribs, when upgrading to kde-workspace 4.10.5, should apply
+https://projects.kde.org/projects/kde/kde-
+workspace/repository/revisions/45b7f137fbc0b942fd2c9b4e8d8c1f0293e64
+ba7.
+
+Best,
+
+--mancha
 
