@@ -1,37 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/10
-Message-ID: <517EC860.7020808@redhat.com>
-Date: Mon, 29 Apr 2013 13:22:08 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/16/2
+Message-ID: <51E4CE6C.5020202@redhat.com>
+Date: Mon, 15 Jul 2013 22:39:08 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- Linux kernel: veth: double-free in case of congestion
+Subject: Re: CVE Request -- spice: unsafe clients ring access abort
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/29/2013 05:06 AM, Petr Matousek wrote:
-> Description of the problem: A flaw was found in the way Virtual
-> Ethernet driver implementation in the Linux kernel handled skbs in
-> case of congestion.
+On 07/15/2013 05:25 PM, Petr Matousek wrote:
+> Currently, both red_channel_pipes_add_type() and 
+> red_channel_pipes_add_empty_msg() use plaing RING_FOREACH() which
+> is not safe versus removals from the ring within the loop body.
+> Yet, when (network) error does occur, the current item could be
+> removed from the ring down the road and the assertion in
+> RING_FOREACH()'s ring_next() could trip, causing the process
+> containing the spice server to abort.
 > 
-> A remote attacker could potentially use this flaw to crash the
-> system.
-> 
-> Introduced in: 2.6.33-rc1
-> 
-> Fixed in: 2.6.34
+> An user able to initiate spice connection to the guest could use
+> this flaw to crash the guest.
 > 
 > Upstream fix: 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6ec82562ffc6f297d0de36d65776cff8e5704867
+> http://cgit.freedesktop.org/spice/spice/commit/?id=53488f0275d6c8a121af49f7ac817d09ce68090d
 >
->  References: 
-> http://marc.info/?l=linux-netdev&m=127310770900442&w=3
+>  References: https://bugzilla.redhat.com/show_bug.cgi?id=984769
 > 
 > Thanks,
 > 
 
-Please use CVE-2013-2017for this issue.
+Please use CVE-2013-4130 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -39,17 +38,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRfshgAAoJEBYNRVNeJnmTRwgP/RSfX9Tvi02MIsggTFqOxrny
-21CM4h0oeOCDRQPCe4aABj52Uya5nn4x02+XACbEMCkpC9b+L3ktfSZe+g8H56iw
-eVYeNDY7fTNcVq/xOYpFwefiDH+6JUgBYN/Fiz5fXIAdxipvrKbEAOsWqpjETFN7
-0iN0K+DQGm6b63sy0z2yzqnprjyLeMBKQNhpGyk+0Dy7ggYIMyli9GDO9J52LtDg
-8Wc4dpxLVPOuArtwQjG7tVaw+E4irBE6z8hnZ1/mGwLRGQI3sFTaFk2HnCV7E4fA
-jeAkP+W3pBQnbgcqtqH5412Md5KUPBk2zYUpy973NtUWCvd0pnBhOQGB7qLYhEBX
-8QFK7hv8d9+vC47WZrliMDHJV2cMisN142qxkgXuIm7rmM7+lc6l6HfZHKvqoE1n
-5kLTejvHVYcyEzt61vYZAAXAYEsaTEya+Jw2fQL21guobEX82hg219XhrK1RwU3/
-7rT2ah0TTDZTy3WE7Qf6zu9zufvZHTboI8+iEOSaZaR0wUYsJCT82oEE0abGu1V+
-vu4bJ374KO+a36pIPVPncgysTPMHoj/vyuJu7sRPjwoOhwFMXJUJ/AlkHXD2uy/W
-R7MO4RtyBcJuVdSZxE3pMoawSUxwtl2261TqR0wfzY1PnLGhdcazVdGNX98l9fkX
-DFrZqBasDaHQeKnuvJ+n
-=IVmh
+iQIcBAEBAgAGBQJR5M5sAAoJEBYNRVNeJnmT6dAQAMErLuphvHoyUmO9INJIw53K
+aa9PDr2OFf8IuqlBVqams3ZCtq3BEyRoQ4x3Xbb09uszokbGvsuRWMQzwrvIbqma
+Uhu+X5BqFY16bKoIAZuMyvYqrTz0Y9VBM9SjHT4guYANbdREIckI8xOKEVg+ZhWD
+Qkh4n4cXTziIJFOAOVGkZUMInbqSIWk+f7KQlHhiPpfsAHXU0eySKJAlF6OdSgNz
+0MfTkpB+bdPZd+elE2FSRWrCbxcRLIUTr2nQOVyIi/4IOaI/L7q63GgdpRNDC2t5
+nI/tLz+wJYxbLRho71eE0gtAK037PMZfpM3Nq4TZ2ytlXYBB7cMNUt/WNgoKD+NT
+ScCRAWD149ZJFmbv8OK/Kc2AM7NpC8H+LN3WgIp1UT4HNWR9LiPUxg0NAi+DU3qa
+FUBwhVTmXWV2GTOtHz8rhR5vTG+9Vnp/8atzAsYGkexQxpSdDQWroobjDuTUl5LQ
+oLEXIfFU4A7saegI3VQalQrHvPqMJSj8+Y1mqem8KNAA/cYy6Jvc4Os7sK8gp9y2
+qabj/h6QyVIrRbGH6aCyUQfAMDkn1LY/2fZe1ztT7MOx3wPRsGJIGOyR62P0OrNK
+di7f4O2GUIy9v4scYjH6nSBDCYL5qQLumSXLo5jBPPWcn0AHcws4padVj9jF+WWU
+F9e1cvSeFzuz8fExm+NJ
+=Qdgu
 -----END PGP SIGNATURE-----
