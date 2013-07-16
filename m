@@ -1,19 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/28/11
-Message-Id: <201302281024.r1SAO13r004834@core.courtesan.com>
-Date: Thu, 28 Feb 2013 05:24:01 -0500
-From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: sudo authentication bypass when clock is reset
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/16/9
+Message-ID: <51E5AA7B.8070905@redhat.com>
+Date: Tue, 16 Jul 2013 14:18:03 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: mancha <mancha1@...h.com>
+Subject: Re: CVE Request - xlockmore 5.43 fixes a security flaw
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 27 Feb 2013 11:23:29 EST, "Todd C. Miller" wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Sudo versions affected:
->     Sudo 1.6.0 through 1.7.10p7 and sudo 1.8.0 through 1.8.6p7.
+On 07/16/2013 01:18 PM, mancha wrote:
+> Hello Kurt, vendors, et al.
+> 
+> xlockmore 5.43 released 2 days ago with a fix for a security flaw
+> related to potential NULL pointer dereferences when authenticating
+> via glibc 2.17+ crypt() and OSF/1 C2 security's dispcrypt().
+> 
+> Under certain conditions the NULL pointers can trigger a crash in
+> xlockmore effectively bypassing the screen lock.
+> 
+> [1] http://www.tux.org/~bagleyd/xlock/xlockmore.README
+> 
+> --mancha
+> 
 
-The affected versions are actually:
 
-    Sudo 1.6.0 through 1.7.10p6 and sudo 1.8.0 through 1.8.6p6 inclusive.
+To reiterate: so I can confirm CVE assignments, and prevent duplicate
+assignments you *MUST* provide links to the code commits/vulnerable
+code. I don't have the time to go hunting through your source code for
+them. People need to start making better CVE requests, or you're not
+going to get CVEs from me.
 
- - todd
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJR5ap7AAoJEBYNRVNeJnmTfBYP/2OoM+WauwiYv/jplnPi5TbO
+AAoFy0XP4Yu/Ey8N9wgbRak4OfSB98rhnLWprCubRIZT2F2L2//jGRotsDhI6CSD
+p2CgTGkqHNQpqknA4GLuOT4X3l5nNnnmIeQZI3xfyhztDpi2t4RQ49BHbiMRUeTT
+as/uzV/M8hRZOaoOWbVMBOa3l9VAbrlgKuAeYNFfbaZD9pp0ED2pem9jXUCfmK2U
+OmN2Pj8oYWSOj5nANqsYFwwC66F44N9Ua4xVVb8SLeMRnfDpbVrII7wmOSCDvHSo
++G0mx8By4PmHUhnFqoe3Xfw9gRie+xJJ1vexO8pOODsg/mhQ0kOBywwCORxzn0Ky
+Tjy+M2+B8HsERhjXTh46ggruel8Li7aGHXaNnGz/fw1xorlNGRCo+OnBOTaynsX0
+Ou04Qpou7bmALjmKhrQ+zW6t2ZwkbvN+kXmBb0OM4kjovx3fPD/T2VGXnNQs94Nh
+OxVs/FXYKgMejCLWuOvT4hJxe5etjez6fz9B6QBTbi+CpjaAt/A4809ckp0B7CXt
+ASr9DtpKpTbtvELblv9BUCOIrgyclULW4KnR83HiE56MXgutWuZxT7r+FlBqlyyK
+ZYd17SUv1o96Y11KNfSpq0FVvObgZdSV0ptKkIa/UNowm3JuZc8zclPz8xyNNDWE
+WoONkFfhKyNGJHVsLt4H
+=69Jx
+-----END PGP SIGNATURE-----
