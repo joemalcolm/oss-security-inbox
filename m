@@ -1,44 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/20/1
-Message-ID: <20130120123233.GA16558@elende>
-Date: Sun, 20 Jan 2013 13:32:33 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/17/2
+Message-ID: <51E670AC.1070307@gmail.com>
+Date: Wed, 17 Jul 2013 12:23:40 +0200
+From: Florian <floriangaultier@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: hs-tls: Basic constraints vulnerability
+Subject: CVE Request - MongoDB <=2.4.4 uninitialized object
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi,
 
-For hs-tls (TLS/SSL implementation in haskell) it was announced the following
-advisory[0]:
+Just a CVE request for this
+http://blog.scrt.ch/2013/06/04/mongodb-rce-by-databasespraying/
 
-----cut---------cut---------cut---------cut---------cut---------cut-----
-Hi cafe,
-
-this is a security advisory for tls-extra < 0.6.1 which are all vulnerable to bad
-certificate validation.
-
-Some part of the certificate validation procedure were missing (relying on the
-work-in-progress x509 v3 extensions), and because of this anyone with a correct
-end-entity certificate can issue certificate for any arbitrary domain, i.e.
-acting as a CA.
-
-This problem has been fixed in tls-extra 0.6.1, and I advise everyone to upgrade as
-soon as possible.
-
-Despite a very serious flaw in the certificate validation, I'm happy that the
-code is seeing some audits, and would want to thanks Ertugrul Söylemez for the
-findings [1].
-
-[1] https://github.com/vincenthz/hs-tls/issues/29
-----cut---------cut---------cut---------cut---------cut---------cut-----
-
-According to the upstream issue it should be fixed with commit [2].
-
- [0]: http://www.haskell.org/pipermail/haskell-cafe/2013-January/105842.html
- [2]: https://github.com/vincenthz/hs-tls/commit/15885c0649ceabd2f4d2913df8ac6dc63d6b3b37
-
-Could a CVE for this issue be assigned?
-
-Regards,
-Salvatore
+Thx
