@@ -1,76 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/5
-Message-ID: <20130225132745.GA3202@alf.mars>
-Date: Mon, 25 Feb 2013 14:27:47 +0100
-From: Helmut Grohne <helmut@...divi.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/17/1
+Message-ID: <51E633B9.90805@redhat.com>
+Date: Wed, 17 Jul 2013 00:03:37 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Roland Mas <lolando@...ian.org>
-Subject: fusionforge CVE-2013-1423 multiple privilege escalations
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contrib modules
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I am publicly disclosing fusionforge CVE-2013-1423 today. On the 25th of
-January I reported one of these issues to the Debian security team and
-the fusionforge maintainers. In the process of fixing the issue a number
-of further issues surfaced. All of these issues currently covered by the
-single CVE-2013-1423 have in common that they related to privileged
-operations not properly checking their environment and thus leading to
-privilege escalation. Let me give an easy to exploit example.
+On 07/16/2013 03:36 PM, Forest Monsen wrote:
+> Hi there,
+> 
+> I'd like to request CVE identifiers for:
+> 
+> SA-CONTRIB-2013-055 - Hatch - Cross Site Scripting 
+> https://drupal.org/node/2038363
 
-Quoting deb-specific/user_dump_update.pl (fusionforge 5.2-1):
-|       $home_dir = $homedir_prefix.'/'.$username;
-|       unless (-d $home_dir.'/incoming') {
-|           mkdir $home_dir.'/incoming', 0755;
-|       }
-|
-|       my $realuid=get_file_owner_uid($home_dir);
-|       if ($uid eq $realuid){
-|               system("chown $uid $home_dir/incoming");
-|               system("chmod 0755 $home_dir/incoming");
+Please use CVE-2013-4138 for this issue.
 
-This code is executed as root in a cron job. By replacing ~/incoming
-with a hard link to some other file (.e.g. an .ssh/authorized_keys file
-from a different user) an attacker can gain ownership of files.
+> SA-CONTRIB-2013-056 - Stage File Proxy - Denial of Service 
+> https://drupal.org/node/2038801
 
-The initial report related to plugins/scmcvs/cronjobs/ssh_create.php
-which contained a chown to ~user/.ssh which is user controlled.
 
-Most of the issues relate to usage of chown or chmod on objects
-controlled by a user. These issues have been avoided carrying out
-operations on user controlled files with the effective permission of the
-user (seteuid). Another source was TOCTOU race conditions which have
-been avoided by using O_EXCL which is file mode "x" in php. Also some
-file permission were only fixed after closing the file (information
-disclosure) which is now done at open time by using umask.
+Please use CVE-2013-4139 for this issue.
 
-Roland Mas iteratively updated the sources with me giving feedback on
-issues. The resulting patches have been commited to the respective git
-branches. Please have a look at those patches for further details.
+> SA-CONTRIB-2013-057 - TinyBox - Cross Site Scripting (XSS) 
+> https://drupal.org/node/2038807
 
-5.0: https://fusionforge.org/plugins/scmgit/cgi-bin/gitweb.cgi?p=fusionforge/fusionforge.git;a=commitdiff;h=0cc51b3aca51fa915a35195fdf729bcdb903f2af
-5.1: https://fusionforge.org/plugins/scmgit/cgi-bin/gitweb.cgi?p=fusionforge/fusionforge.git;a=commitdiff;h=9937b9d94ab60ff67fe249c1b9a6c8e3fc1778ba
-5.2: https://fusionforge.org/plugins/scmgit/cgi-bin/gitweb.cgi?p=fusionforge/fusionforge.git;a=commitdiff;h=1fc730b97c797e03b89cd37823ab345d35286cf4
 
-Here is a list of files affected:
+Please use CVE-2013-4140 for this issue.
 
-contrib/gforge-3.0-cronjobs.patch (removed)
-cronjobs/homedirs.php
-deb-specific/fileforge.pl (removed)
-deb-specific/group_dump_update.pl
-deb-specific/ssh_dump_update.pl
-deb-specific/user_dump_update.pl
-plugins/scmbzr/common/BzrPlugin.class.php
-plugins/scmcvs/common/CVSPlugin.class.php
-plugins/scmcvs/cronjobs/cvs.php
-plugins/scmcvs/cronjobs/ssh_create.php
-plugins/scmgit/common/GitPlugin.class.php
-plugins/scmsvn/common/SVNPlugin.class.php
-plugins/wiki/cronjobs/create_groups.php
-utils/cvs1/cvscreate.sh (removed)
-utils/include.pl
+> Thanks!
+> 
+> Forest
+> 
 
-Finally I would like to thank Roland Mas for his thorough work on these
-issues, his quick reaction and the nice interaction.
 
-Helmut
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJR5jO5AAoJEBYNRVNeJnmTrqcP/0I1Q++UVyJlYnfMYFjllcpJ
+1YVURdWIazG/12bx5RIBPK5FFDKbsTpgLdFW9bJ8kqquUC3AVawGxbVh7mcdMHOQ
+qqGmY2pKTuESTCzGmXYA6Ktyelfdbo5mr9KzrewHLdMCzUyRS50jmTZWUobKK3du
+yvOT8hPfPoZB/1xP2bI7dNufcYCapMCgSJBwg9pOPCsXA2kFRIvtmuxKFpjC69LC
+xZeQkNxfQL1Dv3oXzjxeOJTZiNQeCcnu0oSjsGr/axccpEpMKSgUaKa8Wx+F1hG4
+6VjAXiVpcjWuu/A9u8Ms/blUht/EeGFTqXnjxvK2Kfepu4EgAcdMrwzZLawlx/z+
+SgnbJXh6XRNYOIDPyiBsmpJkakn/xdZe/vk25KxafUg6f3OhSePR04ZE2xCYDa5m
+xsdVFycKlQkLzCnQFwp2VtUelX59pjW2X35oLBkU2AGwbrFk9XGWseMYXcDwIG4I
+e17Y01nMIt2eLSh2sgNhzbjqxpA6owV5ItAzRb28CfGG1fIag1O3uBKowZjiu+R7
+1wJLU/Ww7ILho7C6ZeG4B6yaFzdipzJclVA++/OhxNpd/2je0Kt3x34xoEnPkHam
+A51m6spUf5TZhpIj7ZQuUhmgLf/DYTUcCujagRFKocZXYf/1M5/NH7ItK/6uBoY2
+HbnvcvT8zJFcII7IkhHi
+=MTgT
+-----END PGP SIGNATURE-----
