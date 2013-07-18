@@ -1,132 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/12/2
-Message-ID: <20131012033420.GA10479@openwall.com>
-Date: Sat, 12 Oct 2013 07:34:20 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/1
+Message-ID: <51E770A8.5090504@redhat.com>
+Date: Wed, 17 Jul 2013 22:35:52 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: RESEND: CVE Request: pwgen
+CC: Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: ISC DHCP client and unsolicited DHCP options
 Content-Type: text/plain; charset=utf-8
 
-Kurt, Steve, all -
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Thu, Oct 10, 2013 at 03:35:09PM +0200, Marcus Meissner wrote:
-> It might just not be that CVE worthy. But I saw no replies...
-
-I now think it is CVE worthy.
-
-> (CVE worthyness:
-> It does not fully meet the security expectations of generating
-> a non-weak password by default....
-> )
+On 07/17/2013 01:21 PM, Florian Weimer wrote:
+> Somewhat surprisingly, ISC DHCP does not check if a server
+> response contains options which have not been requested.  As a
+> result, removing items from dhclient.conf (say, DNS servers or
+> route requests) does not provide any additional security.
 > 
-> Solar? Kurt?
+> This is not a CVE assignment request.  I just want to share this
+> to give distributions the opportunity to update their
+> configuration scripts (the actual interface configuration is
+> implemented in shell, in case you wonder).  Upstream version 4.2.5
+> adds additional environment variables which allow the script to
+> check what was requested in dhclient.conf:
+> 
+> | - The client now passes information about the options it
+> requested |   from the server to the script code via environment
+> variables. |   These variables are of the form
+> requested_<option_name>=1 with |   the option name being the same
+> as used in the new_* and old_* |   variables. |   [ISC-Bugs
+> #29068]
+> 
+> (Using NetworkManager may still bypass dhclient.conf settings, see 
+> Debian bug 717158.)
+> 
 
-Kurt was "sitting on the fence for this one":
+Do any DHCP clients process and use options passed to them that are
+not explicitly wanted? Might be worth setting up a DHCP server that
+hands out every possible options (there's a lot) and see what happens
+on various clients.
 
-http://www.openwall.com/lists/oss-security/2012/01/17/12
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-At the time, I replied that it was too early for the CVE aspect, as I
-was still figuring out the magnitude of the problem:
-
-http://www.openwall.com/lists/oss-security/2012/01/17/14
-
-Steve replied that having an insecure feature documented does not always
-preclude from CVE assignment:
-
-http://www.openwall.com/lists/oss-security/2012/01/17/15
-
-To this, I can add that although the phoneme mode is documented as being
-less secure, the magnitude and ways in which it is less secure are
-unclear from the documentation.  Specifically, there's no mention that
-the distribution of generated passwords is highly non-uniform, and
-indeed this is not clear from merely looking at a handful of passwords.
-(I guess this non-uniformity was not expected by the author, and thus it
-is a bug.)
-
-Also, without looking at the documentation, it is not even immediately
-clear (to a new user of the program) that phonemes are being used.
-At first glance, the passwords look like they could potentially use the
-full 62^8 keyspace - but this is actually not the case, by far.  So the
-program's default behavior is misleading.
-
-The thread ended here, with some figures showing just how bad the
-problem is:
-
-http://www.openwall.com/lists/oss-security/2012/01/22/6
-
-The CVE aspect was not revisited.
-
-Here are the figures for pwgen's defaults with output to tty:
-
-Top 1 million of unique passwords from my 1 billion training set cracks
-3.7% of passwords in the test set.
-
-Top 10 million cracks 14.5%.
-
-Top 44 million cracks 21%.  (I chose this as an optimal wordlist size.)
-
-Top 100 million cracks 26.3%.
-
-With pwgen's defaults with output to non-tty:
-
-Top 45.5 million cracks 75%.  (Ouch!)
-
-These results can be improved a little bit (slightly higher percentages
-cracked per same wordlist size) by using a larger training set (beyond 1
-billion) or by considering all of the phoneme probabilities, etc. and
-creating a program that would output pwgen's possible passwords in an
-optimal order (this proves to be a non-trivial task so far, yet someone
-may do it).
-
-Alexander
-
-> On Thu, Sep 26, 2013 at 11:11:59AM +1000, Michael Samuel wrote:
-> > Hi,
-> > 
-> > No CVEs have been assigned for this, and as far as I can tell no
-> > distributions have patched.
-> > 
-> > On 6 June 2013 14:19, Michael Samuel <mik@...net.net> wrote:
-> > 
-> > > I've done some further analysis of the program after reading the previous
-> > > thread, and I think there needs to be CVEs and fixes for:
-> > >
-> > > - When used from a non-tty passwords are trivially weak by default (first
-> > > reported by Solar Designer)
-> > > - Phonemes mode has heavy bias and is enabled by default (first reported
-> > > by Solar Designer)
-> > > - Silent fallback to insecure entropy (first reported by Jean-Michel
-> > > Vourg?re) (Debian bug #672241 - tagged as "wishlist")
-> > > - Secure mode has bias towards numbers and uppercase letters
-> > >
-> > > I've attached a patch that fixes most issues - it doesn't solve the bias
-> > > towards numbers, because it's caused by requiring at-least one number per
-> > > password - so in an 8 character password there'd have to be 0.1 numbers to
-> > > avoid bias.  There's an argument to be made for removing the at-least-one
-> > > rule, but if the system that password is being used with has those rules,
-> > > it doesn't fix the problem anyway.  Perhaps a separate flag for that?
-> > >
-> > > The changes are:
-> > >
-> > > - Print a message and abort() of there's trouble opening or reading
-> > > /dev/urandom (So apport should pick up any packages that have been using
-> > > insecure entropy)
-> > > - Make "-s" the default
-> > > - Add an argument --insecure-phonemes (or -P)
-> > > - Non-tty passwords are now as secure as tty
-> > > - Require lower-case characters be present to even out some bias
-> > > - Pull in passwdqc as a Suggests on the debian package - pwqgen can
-> > > generate sane random passphrases
-> > >
-> > > I can't imagine any reasonable use-case for the non-tty defaults (except
-> > > maybe combining with espeak as an enhanced interrogation technique), and
-> > > you can be certain that there's some people out there with it embedded in a
-> > > script that's generating useless passwords.
-> > >
-> > > For phonemes mode in general, the bias is extreme, there are a limited
-> > > number of possible combinations and it is generally not suitable for
-> > > security purposes.  I have some fairly detailed analysis of it, but I
-> > > believe this list has a no-exploits policy...
-> > >
-> > > Regards,
-> > >   Michael
+iQIcBAEBAgAGBQJR53CoAAoJEBYNRVNeJnmTGw0P/ifiXZNt56f0JaBOaq4J3ZOM
+xQICpvZiOJ5meCYyVwJHxB3Ket4GXxEjLlwFi4RTWc5So5tlH9diINQq4q1oeUHF
+ajOs2vb0dXA7bxUOaug2BU+35GQYncQ9ns4XcP0U0aMP23z7JAolXcwkELM3TN3p
+kQICLwdcPK/x9zT8avmX37LTE41N0zSltxVRxw60iTy1QyHwlFVP+VG8VHNKeu+i
+20zUsVpMUajhwzOm1xnzvJIjSdlZrVBMcLNorFRlbDkqKZpwAd50IfSAvGmcbpfu
+JlZUn+xJfGLSNhjx7TvbuLAaADUUH0ZVOYkHvkFGp4wPvYpwLnDMkWUiN+TdUyD2
+rKQa5SEDIQ45YeZLhAIwAimabQdMUOYLnCQXMlWlryJK4Oog3X8eBaQMwKuxlMfm
+6pbSrBrfdfhPwFjLaUXEQCwHb4IKNDp3pH32/WyDuo49D7q0iRAQrZg3gQ0N0cg7
+Ua9YtUt5FJNqkDE7M26ANjrgPCONHgqOXvvH1qAWvTiNpxDtKwwOykwVAYQ4yAcP
+A3wvmJ5WsUj6o10toTfuNrlZzj37eqY1ppiyd9e9J36fQ82Tl2FkQcWTJhDxu3Dc
+ah6ymoXURH/d2JdTHdUvIgBFoRjHmZNWSMzPjt/50p5RdhfP/jgujlO5g6Me4KTa
+lLAMAGNWCipXHmCCGamO
+=LDL/
+-----END PGP SIGNATURE-----
