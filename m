@@ -1,39 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/02/2
-Message-id: <a90fa22f-d8ac-4712-95dc-4aa89a142ec9@me.com>
-Date: Fri, 02 Aug 2013 07:12:37 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Rgpg Ruby Gem Remote Command Injection (CVE Request)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/12
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF26F99157@IMCMBX01.MITRE.ORG>
+Date: Thu, 18 Jul 2013 21:10:15 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "Kurt Seifried" <kseifried@...hat.com>, Andrew Nacin <nacin@...dpress.org>
+CC: Jay Turla <shipcodez@...il.com>
+Subject: RE: Re: SWFUpload <= (Object Injection/CSRF) Vulnerabilities Multiple flaws
 Content-Type: text/plain; charset=utf-8
 
-Title: Rgpg Ruby Gem Remote Command Injection
+Kurt etc. - no CVE REJECT decisions yet, please.  We might be dealing with a CVE *triplicate*.
 
-Date: 7/31/2013
+There have been a lot of disclosures about swfupload.swf lately with... ummm... mixed levels of detail and varying levels of researcher skill and diligence.  For example, the movieName parameter vector was given CVE-2012-3414 by Kurt in July of 2012, for an April 2012 disclosure - https://nealpoole.com/blog/2012/05/xss-and-csrf-via-swf-applets-swfupload-plupload/  (assignment is in http://www.openwall.com/lists/oss-security/2012/07/17/12 but is listed for the "libjs-swfupload" package).  The CVE-2013-4145 that Kurt just assigned also involves the movieName vector.
 
-Advisory Author: Larry W. Cashdollar, @_larry0
+Since swfupload.swf is apparently widely used, researchers may be finding the same issue over and over again in different packages, and presenting them as if they are new.  Yet there might be some attack variants buried in there, too.
 
-CVE: TBD
+Because of the amount of attention by researchers who don't check whether an issue has already been disclosed, and/or the number of independent products that use this library, any "new" swfupload.swf issues should be regarded with extreme suspicion while CVE tries to iron out all the existing duplicates.
 
-Download: https://rubygems.org/gems/rgpg
+Andrew Nacin said:
 
-Description:
+>CVE-2013-4145 (XSS) is actually CVE-2012-2399.
 
-"A simple Ruby wrapper around gpg command for file encryption.
-rgpg is a simple API for interacting with the gpg tool. It is specifically designed to avoid altering global keyring state by creating temporary public and secret keyrings on the fly for encryption and decryption."
+CVE-2012-2399's only public details are that it's an unspecified vulnerability in Wordpress before 3.3.2, yet http://wordpress.org/news/2012/04/wordpress-3-3-2/ is pretty vague and mentions multiple products (although it does credit Neal Poole for at least one issue).  That said, a statement by a lead developer of Wordpress is important for this clarification ;-)  Andrew, can you confirm for sure that CVE-2012-2399 is *also* the same as CVE-2012-3414 for Neal Poole's movieName vector?
 
-Vulnerability:
+- Steve
 
-The following code snippet does not sanitize user supplied input before passing it to the System () function for execution. If this API is used in the context of a rails application remote commands can be injected into the shell if the user supplies shell meta characters like ; and &. 
-in lib/rgpg/gpg_helper.rb:
 
- 68       begin
- 69         outputfile.close
- 70         result = system("#{commandline} > #{output_file.path} 2>&1")
- 71       ensure
-Author: Notified 8/1/2013.
-
-Fixed: in 0.2.3. 8/1/2013.
-
-Greets to all@...CON21.
-Content of type "text/html" skipped
+>-----Original Message-----
+>From: andrewnacin@...il.com [mailto:andrewnacin@...il.com] On Behalf Of
+>Andrew Nacin
+>Sent: Thursday, July 18, 2013 4:37 PM
+>To: Kurt Seifried
+>Cc: Open Source Security; Jay Turla; nacin@...dpress.org
+>Subject: [oss-security] Re: SWFUpload <= (Object Injection/CSRF) Vulnerabilities
+>Multiple flaws
+>
+>On Thu, Jul 18, 2013 at 4:25 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+>> This was brought to my attention by Jay Turla <shipcodez@...il.com>,
+>> after some searching I found:
+>>
+>> http://bot24.blogspot.ca/2013/04/swfupload-object-injectioncsrf.html
+>>
+>> and after testing (it works). So please use:
+>>
+>> CVE-2013-4144 swfupload KedAns-Dz object injection
+>> CVE-2013-4145 swfupload KedAns-Dz XSS
+>> CVE-2013-4146 swfupload KedAns-Dz CSRF
+>
+>CVE-2013-4145 (XSS) is actually CVE-2012-2399. And, CVE-2013-4146
+>(CSRF) seems to be just the potential for CSRF via XSS -- don't think
+>this is a separate issue.
+>
+>Neither of those are reproducible in
+>https://github.com/wordpress/secure-swfupload.
+>
+>We're aware of CVE-2013-4144 and intend to fix it soon, but it's
+>really tough to classify "image injection" as a serious vulnerability
+>without there being any actual XSS there to further trick the user.
+>
+>> Also alerting WordPress.
+>
+>Thank you.
