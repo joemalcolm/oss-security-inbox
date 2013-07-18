@@ -1,38 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/27/7
-Message-ID: <877gkswpnc.fsf@windlord.stanford.edu>
-Date: Wed, 27 Mar 2013 13:31:35 -0700
-From: Russ Allbery <rra@...nford.edu>
-To: oss-security@...ts.openwall.com
-Cc: kernel-hardening@...ts.openwall.com
-Subject: Re: Security vulnerability tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/13
+Message-ID: <CABRvpqBEXHx9D_ipEnHfbzrT0rW7SqGZX=cpTeg17VQxTs0noQ@mail.gmail.com>
+Date: Thu, 18 Jul 2013 17:29:17 -0400
+From: Andrew Nacin <nacin@...dpress.org>
+To: "Christey, Steven M." <coley@...re.org>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Kurt Seifried <kseifried@...hat.com>,  Jay Turla <shipcodez@...il.com>
+Subject: Re: Re: SWFUpload <= (Object Injection/CSRF) Vulnerabilities Multiple flaws
 Content-Type: text/plain; charset=utf-8
 
-Corey Bryant <coreyb@...ux.vnet.ibm.com> writes:
+On Thu, Jul 18, 2013 at 5:10 PM, Christey, Steven M. <coley@...re.org> wrote:
+> CVE-2012-2399's only public details are that it's an unspecified vulnerability in Wordpress before 3.3.2, yet http://wordpress.org/news/2012/04/wordpress-3-3-2/ is pretty vague and mentions multiple products (although it does credit Neal Poole for at least one issue).  That said, a statement by a lead developer of Wordpress is important for this clarification ;-)  Andrew, can you confirm for sure that CVE-2012-2399 is *also* the same as CVE-2012-3414 for Neal Poole's movieName vector?
 
-> Clang
-> -----
-> Static analysis tool for C/C++
+Negative, I was mistaken. Sorry for the confusion. CVE-2012-2399 was a
+separate XSS, affecting buttonText, and reported by Szymon Gruszecki.
+CVE-2012-3414 was Neal Poole's report, affecting movieName.
 
-Clang is, properly speaking, a compiler.  It happens to also have a static
-analyzer available as part of the same code base.
+So, CVE-2013-4145 is a duplicate of CVE-2012-3414, *not* of CVE-2012-2399.
 
-If you're going to mention Clang, it's probably also pointing out that
-good old GCC has very extensive warning flags that can, among other
-things, find possible security vulnerabilities by locating variables that
-are used before being set, dangerous printf formats, mismatches between
-printf formats and arguments, and so forth.  For example, I currently use:
+That said, given that CVE-2012-2399 was not publicly described at the
+time, I would not be surprised if one or more CVEs have been issued
+for the same XSS via buttonText at one point.
 
-WARNINGS = -g -O -D_FORTIFY_SOURCE=2 -Wall -Wextra -Wendif-labels           \
-        -Wformat=2 -Winit-self -Wswitch-enum -Wdeclaration-after-statement  \
-        -Wshadow -Wpointer-arith -Wbad-function-cast -Wcast-align           \
-        -Wwrite-strings -Wjump-misses-init -Wlogical-op                     \
-        -Wstrict-prototypes -Wmissing-prototypes -Wredundant-decls          \
-        -Wnested-externs -Werror
+Christey, Steven M. <coley@...re.org> wrote:
+> Since swfupload.swf is apparently widely used, researchers may be finding the same issue over and over again in different packages, and presenting them as if they are new.  Yet there might be some attack variants buried in there, too.
+>
+> Because of the amount of attention by researchers who don't check whether an issue has already been disclosed, and/or the number of independent products that use this library, any "new" swfupload.swf issues should be regarded with extreme suspicion while CVE tries to iron out all the existing duplicates.
 
-with GCC (4.6 or later) with all of my software.  Many of those are not
-security-related, of course, but -Wformat=2 certainly is, and some of the
--Wall and -Wextra warnings are as well.
+Related, for those who haven't seen, WordPress forked SWFUpload last
+month. Both Neal and Szymon have been helping us with the fork, as
+well. At this point, in terms of issues known to us, only the image
+injection issue is unfixed.
 
--- 
-Russ Allbery (rra@...nford.edu)             <http://www.eyrie.org/~eagle/>
+Fork: https://github.com/wordpress/secure-swfupload
+Post: http://make.wordpress.org/core/2013/06/21/secure-swfupload/
