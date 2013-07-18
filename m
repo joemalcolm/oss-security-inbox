@@ -1,47 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/13/3
-Message-ID: <511ADAF5.4090100@redhat.com>
-Date: Tue, 12 Feb 2013 17:14:45 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: piwigo XSS in password.php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/7
+Message-ID: <20130718124055.GA26243@suse.de>
+Date: Thu, 18 Jul 2013 14:40:55 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: OpenJDK and lcms2 2.5 release fixes various denial of service issues in lcms2
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 02/11/2013 12:24 AM, Henri Salo wrote:
-> On Sat, Feb 09, 2013 at 06:14:35PM -0700, Kurt Seifried wrote:
->> http://www.openwall.com/lists/oss-security/2012/10/06/2
-> 
-> Sorry about duplicate! Does your sources know if
-> http://www.openwall.com/lists/oss-security/2012/10/06/3 ever got
-> assigned?
-> 
-> -- Henri Salo
+The lcms2 2.4 -> 2.5 version upgrade fixes various crashes that could be used
+by attackers to crash (NULL ptr deref) programs using lcms2, like e.g. OpenJDK 7
 
-http://www.openwall.com/lists/oss-security/2012/10/18/5
+This was found in the embedded copy within OpenJDK7 first, then merged to lcms2.
 
-Never heard a reply so it got lost and forgotten I guess.
+http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2013-July/023895.html
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+lcms2 related issues in there:
+ * S8007925: Improve cmsStageAllocLabV2ToV4curves
+ * S8007926: Improve cmsPipelineDup
+ * S8007927: Improve cmsAllocProfileSequenceDescription
+ * S8007929: Improve CurvesAlloc
+ * S8009654: Improve stability of cmsnamed
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+All covered by lcms2 in this commit (I think):
+https://github.com/mm2/Little-CMS/commit/91c2db7f2559be504211b283bc3a2c631d6f06d9
 
-iQIcBAEBAgAGBQJRGtr0AAoJEBYNRVNeJnmT/gMP/iq8niltJln0R3npSQST0ivp
-hNtYGuUdMSdfSBcASw+yc+SvFTpnBPlm3H1MJXq1vrExZQzurvZPD6WcoiN7vA/R
-qb35AC5/zd6qxlPxx4nyPbiHGiNyU2M+2Cwt5+fQmKlNyA7/EX2wfxd/dp3gJc2u
-ixGvGKdFrcUfFU654yF72+LeupGsqaW/nPYFEhxL/7Xtv1scAvuenOmuy06QNqNm
-lqrULjnZ8FGjrLsiEpBf9N18KjPO/tb1k+8dz7ru5ltMpygs0BDvBq8ILTh/HNsg
-6vJCTk8TKfkVLjpLRd46vOzh/DH9hYwBpbPnD8Zs/pHFflCeYu6mCwvpcGp55a+B
-HJa+s7tJqUg3NYCLM0fQNuHo4s6b0Way01YlXmN3ZKYUdGwfr4BE/PxfEN+NXJPC
-QfeaiySWCxzr7C+2c27GPwR2hDTeJvuBRRdEGPzFh+UuO1K4p8hBrCfCNqrvsVqk
-/UP+iBvQ7dUlKWJChhwpBFa/xaP+1k3prtsgFhFMlJxFb+LTHg7uzz/+YgNfzcGd
-Wu237W3w3/vx2Zqe8O3v89QLUtHYvKooauSRq/Md7UF3YHXUTtDSgv3f+Q62r/6U
-YNJajWicvAH0KggvDnMtKbnr/ml4zcTFpIs3C67MKaeAnGMNoNg5x3zezuERNL4a
-TKxmPamE9nvMp5PbqpEU
-=8i4B
------END PGP SIGNATURE-----
+These probably can get just 1 CVE, although I do not know the OpenJDK IcedTea side
+of the story.
+
+https://bugzilla.novell.com/show_bug.cgi?id=826097#c9 has the research into
+more of these stability commits in lcms2 by my colleague Stanislav Brabec.
+Not sure if they should get seperate CVEs or not.
+
+Ciao, Marcus
