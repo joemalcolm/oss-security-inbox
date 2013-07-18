@@ -1,43 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/12/1
-Message-ID: <51DF354C.4080208@ifw-dresden.de>
-Date: Fri, 12 Jul 2013 00:44:28 +0200
-From: Henri Wahl <h.wahl@...-dresden.de>
-To: kseifried@...hat.com
-CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Henri Wahl <henriwww@...rs.sourceforge.net>
-Subject: Re: CVE Request -- Nagstamon (prior 0.9.10): Monitor server user credentials exposure in automated requests to get update information
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/3
+Message-ID: <51E77E27.70909@redhat.com>
+Date: Wed, 17 Jul 2013 23:33:27 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Please REJECT CVE-2013-4141
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-For those who want to fix a 0.9.9 package there is an updated version at
-Github:
-https://github.com/HenriWahl/Nagstamon/tree/0.9.9.1 .
-Anyway it is a better idea to upgrade to 0.9.10.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Regards
-Henri
+Please REJECT CVE-2013-4141, it was assigned privately, it is a
+duplicate of CVE-2013-4125
 
 
--- 
-Henri Wahl
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-IT Department
-Leibniz-Institut für Festkoerper- u.
-Werkstoffforschung Dresden
-
-tel: (03 51) 46 59 - 797
-email: h.wahl@...-dresden.de
-http://www.ifw-dresden.de
-
-Nagios status monitor Nagstamon:
-http://nagstamon.ifw-dresden.de
-
-DHCPv6 server dhcpy6d:
-http://dhcpy6d.ifw-dresden.de
-
-IFW Dresden e.V., Helmholtzstraße 20, D-01069 Dresden
-VR Dresden Nr. 1369
-Vorstand: Prof. Dr. Juergen Eckert, Dr. h.c. Dipl.-Finw. Rolf Pfrengle
-
-
-
+iQIcBAEBAgAGBQJR534mAAoJEBYNRVNeJnmTjnUP/iA1KN05Q6eoAhqB2HuyHdHf
+rGHEOMRkT4dDi00b8YGmBc0jHFY9no7G+H7sJPdWHl+T0xSaX5eXDS8w/iT5GkAo
+0hb7M3CU5+m+HdhKZcVDIhTx1CW6NT/ls6hIN2BrilOY4ctWoFxv5wTaDW9hy5hU
+kqs6r4YrHrFzpn4XwnTwL1kpmcwoHpxoNiF13liN/Ejm5g8ol86tiP7PK+NeRhcd
+pQ1FUR96Bml3G/AVtoyH7AJnnSyUpsmZPMZWxsQcAGy4r4RizZKAuJtHtdcWf5Sw
+35G7SLHno5Fyoz8SY+YjIovxowcf2XQEw7p4G0H996sqTjUt8+3+UXlkSLVPCEe0
+RtqXVDa+Vl9wvJoAyOLKUO1hzovmK2V6rk5wGrkdRYBCNsV4R+j49MvODB8xzatS
+JdtPbub4mvrobn0EbLDDrJM2wPTnIwWW0xEciJ7VkOo/PJ8Or2YwttauwR82YnU9
+6BNTpA1L0Ui9KHCRwl2RJQ1WmZt8ayM0r2IFe+ZQFNKQ7Wk5SAz/KEfrrPA60gLN
+Bi4BMdgi/7z+EgMBJ9xSCHuwd6mp8x622bEkgVw00M4G4amPdriRGIhp6L3srr6/
++gme1gBy75CqmnBzO0NJY/FZlKlMYjBeIMfqRaXy15bV68WNJ78H86Xnzyz5eFl2
+kwHQD0PXR9TFQsOHejM1
+=2yJc
+-----END PGP SIGNATURE-----
