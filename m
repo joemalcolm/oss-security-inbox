@@ -1,44 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/13
-Message-ID: <51523671.2060005@redhat.com>
-Date: Tue, 26 Mar 2013 17:59:45 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/6
+Message-ID: <51E7B145.6010601@redhat.com>
+Date: Thu, 18 Jul 2013 03:11:33 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: larry Cashdollar <larry0@...com>
-Subject: Re: Ruby gem Thumbshooter 0.1.5 remote code execution
+CC: mancha <mancha1@...h.com>
+Subject: Re: CVE Request - xlockmore 5.43 fixes a security flaw
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/26/2013 05:23 AM, larry Cashdollar wrote:
-> Ruby gem Thumbshooter 0.1.5 remote code execution
+On 07/16/2013 03:17 PM, mancha wrote:
+> On Tue, 16 Jul 2013 20:18:06 +0000 "Kurt Seifried" wrote:
+>> To reiterate: so I can confirm CVE assignments, and prevent 
+>> duplicate assignments you *MUST* provide links to the code 
+>> commits/vulnerable code.
 > 
-> 3/25/2013 Generates thumbshots of URLs by using Webkit and QT4.
+>> People need to start making better CVE requests, or you're not
+>> going to get CVEs from me.
 > 
-> https://github.com/digineo/thumbshooter
+> I am relatively new at CVE requests so I am learning-by-doing. I
+> must have missed the original comment you feel you're re-iterating
+> to me.
 > 
-> Specially crafted URLs can result in remote code execution if the
-> URL contains shell metacharacters.
+> Relevant code can be found here:
 > 
-> We see that the url is passed directly to the shell in the
-> following code snippet from
-> ./thumbshooter-0.1.5/lib/thumbshooter.rb lines:
+> [1] 
+> http://sourceforge.net/projects/miscellaneouspa/files/glibc217/xlock
+>
 > 
-> 1012 command << "xvfb-run -a --server-args='-screen 0,
-> #{screen}x24' " 1015 command << "{WEBKIT2PNG} '{url}' {args}" 1017
-> img = `{command} 2>&1` Larry W. Cashdollar @_larry0 
-> http://vapid.dhs.org/advisories/thumbshooter-ruby-gem-remoteexec.html
+more-5.42-glibc217-crypt.diff
 
-Please
+Thanks, Please use CVE-2013-4143 for this issue.
+
+> Upstream doesn't appear to have a public version control repo which
+> is why I didn't post link(s) to commit(s). I mistakenly thought
+> their changelog annoucement would be enough.
+
+Huh? So just the release tarballs? That's annoying :P As for the
+requirements it depends, different CVE requesters have different
+requirements depending on how well they do things. E.g. Some do CVE
+very well, but to make absolutely sure SPLIT/MERGE is done right I
+request some details, others like Drupal have security advisories that
+are sufficiently detailed that i can assign based on them alone, so
+until a CVE requester proves that they know what they are doing,
+reliably, I'm going to need details to make sure the CVE assignment is
+done correctly. Part of the issue is scale, I do 1000+ CVE assignments
+a year, so if they start taking more then 5-10 minutes I won't have
+time to do anything else (like my day job, or sleep).
+
+> I enjoy contributing time to the community via code submissions and
+> by making flaws/fixes known to vendors via this list. I just hope
+> they don't all have to raise my blood pressure in the future.
+
+
+Welcome to security where just contacting some of them can be an epic
+task.
+
+> --mancha
 > 
-use CVE-2013-1898 for this issue.
-
-> Larry C$
-
-I gotta ask, what's with the name?
-
-
 
 
 - -- 
@@ -47,17 +68,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRUjZxAAoJEBYNRVNeJnmT7UsQAKyyqS2vP8+KTvtM1qIXmJED
-lvbyZrMXgiQsj7kn1b8XwpEz8x9oI+h/DJjSrz0DVEZ65HnwQBmmf7ao45ssT265
-jnExud8o7N+9MoolmVAEPidCyINno+ZrHl5BKYEmKJCwzDBEB8ij8UpBgX521sG4
-5HIRzyZ194jWHlFO7Y0GPkYUDiXjr0cec8DazJherjfnDJTdssUB8WLXu4rjLKFA
-BBiDErr3MtbGu2WVoBC07SlyG1aNnhAmkt0Hx2nA+mSo150qQ8MzDQFlrYTS8ls4
-sSRP9AhXEKrEFR9WKtHDhi407Xf+6BHCluhQOaKt01Cl6w381wZZNwuWYwHLSBEF
-uCSw6FEVjrZM6xTJ3I40D6aRwt5SyN1kaOA/v1IHRVkZrnRoHrGJSnsjeKP5gEKs
-lytNnxT5q6VXyR4OpkwWITrstGc02l1y95cGsG9zhtaiDJz2NiWZG28f83pP3JUq
-yxm2m2sLqqEd2D8cMtBdbT0F9b9JF+aANneoED460zGqzwLAlasnh6pKFK8kHf/F
-TFN1G6gHa19g6VOucjGwqeSpay+cVasveR4GA0tsGx+vTOuZi03gfMrjTulKrqej
-925V3l5xpWDWgPINN0Uf002ons+a1DSLMWyH7eXT5f70X+A5Wj03gX84/7zRLyqf
-ZZNgKWuPTKdwOoKKHqHC
-=7Yra
+iQIcBAEBAgAGBQJR57FEAAoJEBYNRVNeJnmTVLIQAIv1cnjsVFTJe1AnD430MddW
+CqnynTT/YXB9/Q4P7ygcQn9wql6uj3Bp60nhR39EU3ZCBMJPpIQC5zJrYTD+whsG
+wABnp5XNNAKgvvzpuQYsu7Bn/eGWEaCjwKSwinwh7ZKwOWKyekl9M8F2rOnzbsQm
+h2b/MwAQ2x88HCl6bhTdrcKfDM+AKRUwVXB0mb4n+I6xOh1Lw4ADLDXFxdpPGisD
+Wi/aOZkvbVDFoO+sh4WjfJNbSna7RCy5d9yvolSTIs82R51Gng/MaXa0opMy1A7v
+nH3oA22iMWD3nNVRDhH6qFJOwJ1iqi112/BP9GBF1Xr3n2GfpLctDsRozEbzw+77
+FK64F7xSw15/msH0frnPVq/s3ryIL5l5caauGYuu8s/NXPvYqm4VPW7OKnP9KORs
+V/jYgVFWea8wNz+7HZutbanipyKGilfMyJLx0fiVxhwRzQ77+a+RYVjMjpMleFZe
+ZyVWSAl3lk54Gaz+puFnNc161fdUYg69LSw4IgRVJ05WfDee3OYXYjNaE2Vdvqoz
+0LNkY2aYoBdrrgmVJb13ItTz2smv5yxVdMv2pBrRGHNqQGK4SZa6ogXhW/dqECLn
+oIMm7R5gJFFIvn0UK7ZYu9+xkaZXeTgRHZ9rqg8SoeavMPUCoaO6geUIx46l3CgE
+s6+MGioxUjdc020Z6drg
+=ZSyP
 -----END PGP SIGNATURE-----
