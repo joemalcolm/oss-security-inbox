@@ -1,52 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/29/1
-Message-ID: <51CEE994.4000208@gmail.com>
-Date: Sat, 29 Jun 2013 10:05:08 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Multiple issues in GNU ZRTPCPP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/10
+Message-ID: <51E84F2F.30001@redhat.com>
+Date: Thu, 18 Jul 2013 14:25:19 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, Jay Turla <shipcodez@...il.com>, Andrew Nacin <nacin@...dpress.org>
+Subject: SWFUpload <= (Object Injection/CSRF) Vulnerabilities Multiple flaws
 Content-Type: text/plain; charset=utf-8
 
-I'd like to request CVEs for multiple security vulnerabilities
-discovered, reported, and published by Mark Dowd of Azimuth Security in
-GNU ZRTPCPP, an open-source ZRTP implementation used in a number of
-"secure phone" solutions:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-http://blog.azimuthsecurity.com/2013/06/attacking-crypto-phones-weaknesses-in.html
+This was brought to my attention by Jay Turla <shipcodez@...il.com>,
+after some searching I found:
 
+http://bot24.blogspot.ca/2013/04/swfupload-object-injectioncsrf.html
 
-1. Remote heap overflow
+and after testing (it works). So please use:
 
-A remote attacker can cause a heap-based buffer overflow by sending an
-overly-large ZRTP packet of several possible types, including a "Hello"
-packet. Successful exploitation would allow an attacker to execute
-arbitrary code in the context of a vulnerable application.
+CVE-2013-4144 swfupload KedAns-Dz object injection
+CVE-2013-4145 swfupload KedAns-Dz XSS
+CVE-2013-4146 swfupload KedAns-Dz CSRF
 
+Also alerting WordPress. Remember folks, if you spot a security
+advisory in the wild without a CVE, tell us so we can tag and release
+it and track it more easily! And also get it fixed.
 
-2. Multiple remote stack overflows
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-A remote attacker can cause multiple stack-based buffer overflows by
-sending a malformed ZRTP Hello packet with an overly-large value in
-certain fields, including the count of public keys. Exploitation may be
-difficult due to the details of the layout of stack variables in memory,
-but successful exploitation would allow an attacker to execute arbitrary
-code in the context of a vulnerable application.
-
-
-3. Multiple remote heap memory disclosures
-
-By sending a truncated ZRTP Ping packet, the response packet will
-include several bytes of the affected application's heap memory due to a
-lack of validation on the incoming packet. This flaw could be exploited
-to gain knowledge about the heap state of an affected application to
-enable further attacks, or potentially reveal sensitive information
-stored on the heap.
-
-
-The fixes for all of these flaws were included in the following commit:
-https://github.com/wernerd/ZRTPCPP/commit/c8617100f359b217a974938c5539a1dd8a120b0e
-
-
-Regards,
-Dan
-
+iQIcBAEBAgAGBQJR6E8vAAoJEBYNRVNeJnmTcFcP/331rP9zHHtFlZtodHLOnJrt
+PQHM9Y5Bz3pjyClyR/W8nrCN8yxxbRGjFlTZrFcv2GW4rob1cwaFT6aKD3ZArGMV
+cVa6h7B1DkApGcCFFrdLWP7bnc96qusylT8t79jLQ0RO0iVLPAz2THXfWpa5qNAt
+ypk34nka0sXXNNsXpdDoyiNgVxqrHuiDbBMqQ5BDWqmmyTVtDVlICo9ZOnHxXQGx
+FQFxCPXWgI4KkhzOX2VrwIvdw/k9I3xGsuEAV0+TFM1dKeZdLg5/GMIWr9avxL/d
+DNyWiYiWYhk5wDupnf9jkAu1LIOEwnr68gn1MiKs28Va4nj7yTcdraacCJrS6JeN
+O+Vtg/zpnNDmSK8Uoa1PxBXQf3DLQ+Yyg9HG/PNf1htihp9nSAfW09sfNCkODJ05
+2IOWOTc0qmjl9DXArPdhxPC4b6/AJYoOvXTHeb/9H1rlVqHV/NcAlf7mQ+MVd/R4
+OKoscdmPO/flfxbWeo4XRj9MHAfjC17kRBXe2o3U7vgc2v77Y64puF2JTHMzRvq+
+g6LN4t12l6lih5mBo+o1V8DqCM9Bcp810mcCSVqutHyfSn4LsSCNn9YcZRug9stq
+laRaZ7HVSl3JqT+7mEN7KJObbLe7O6+3s+RRpQo1K+7DZ2WBrEN95JEX3ywIIyNj
+XPvOw5EpxiBigLoP1US5
+=oiie
+-----END PGP SIGNATURE-----
