@@ -1,54 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/01/4
-Message-ID: <CA+O_gMyxU+pRkz_5Q30WM2wzktqoVJUDMxASJWi6DDx2C5VqKw@mail.gmail.com>
-Date: Thu, 2 May 2013 10:02:36 +1200
-From: Robbie MacKay <robbie@...ahidi.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/4
+Message-ID: <51E77E27.5040509@redhat.com>
+Date: Wed, 17 Jul 2013 23:33:27 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Please REJECT CVE-2013-4141
 Content-Type: text/plain; charset=utf-8
 
-I'd just like to +1 creating a good set of guidelines for signing releases.
-Especially if it gives a "baseline", "level 1", "level 2", etc. set of
-standards.
-I'm an open source developer working in a small team. We need to improve
-our processes but sometimes don't have the time to figure out the best way.
-Guidelines would speed that up for us and give me something I can point at
-to convince my team mates.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Please REJECT CVE-2013-4141, it was assigned privately, it is a
+duplicate of CVE-2013-4125
 
 
-On Wed, May 1, 2013 at 6:24 AM, Daniel Kahn Gillmor
-<dkg@...thhorseman.net>wrote:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-> On 04/26/2013 01:57 AM, Alistair Crooks wrote:
-> > All people can see from a key listing is who trusted them and
-> > when, not how much, or whether the trust was warranted.
->
-> Just for the record, most OpenPGP key certification listings don't
-> indicate anything at all about trust, including "who trusted them".
-> they show cryptographically-verifiable assertions of identity and
-> control over key material.
->
-> Put another way, a signature on an OpenPGP key+userid says "I believe
-> that this key belongs to this person" -- it doesn't say anything about
-> trust in that person (or about their intrinsic trustworthiness).
->
-> Sorry for the nit-pick, but the term "trust" is so overused and confused
-> in these contexts that i think it's important to clarify it when it's
-> getting muddled.
->
-> Regards,
->
->         --dkg
->
->
-
-
--- 
-Robbie Mackay
-
-Software Developer, External Projects
-Ushahidi Inc
-m: +64 27 576 2243
-e: robbie@...ahidi.com
-skype: robbie.mackay
-
+iQIcBAEBAgAGBQJR534mAAoJEBYNRVNeJnmTjnUP/iA1KN05Q6eoAhqB2HuyHdHf
+rGHEOMRkT4dDi00b8YGmBc0jHFY9no7G+H7sJPdWHl+T0xSaX5eXDS8w/iT5GkAo
+0hb7M3CU5+m+HdhKZcVDIhTx1CW6NT/ls6hIN2BrilOY4ctWoFxv5wTaDW9hy5hU
+kqs6r4YrHrFzpn4XwnTwL1kpmcwoHpxoNiF13liN/Ejm5g8ol86tiP7PK+NeRhcd
+pQ1FUR96Bml3G/AVtoyH7AJnnSyUpsmZPMZWxsQcAGy4r4RizZKAuJtHtdcWf5Sw
+35G7SLHno5Fyoz8SY+YjIovxowcf2XQEw7p4G0H996sqTjUt8+3+UXlkSLVPCEe0
+RtqXVDa+Vl9wvJoAyOLKUO1hzovmK2V6rk5wGrkdRYBCNsV4R+j49MvODB8xzatS
+JdtPbub4mvrobn0EbLDDrJM2wPTnIwWW0xEciJ7VkOo/PJ8Or2YwttauwR82YnU9
+6BNTpA1L0Ui9KHCRwl2RJQ1WmZt8ayM0r2IFe+ZQFNKQ7Wk5SAz/KEfrrPA60gLN
+Bi4BMdgi/7z+EgMBJ9xSCHuwd6mp8x622bEkgVw00M4G4amPdriRGIhp6L3srr6/
++gme1gBy75CqmnBzO0NJY/FZlKlMYjBeIMfqRaXy15bV68WNJ78H86Xnzyz5eFl2
+kwHQD0PXR9TFQsOHejM1
+=2yJc
+-----END PGP SIGNATURE-----
