@@ -1,55 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/15/4
-Message-ID: <CAE6fNr+8q-2Jw9wPn54V4fdHqMjmAWGOuK06dH+zbWKXZeKvDQ@mail.gmail.com>
-Date: Wed, 15 May 2013 08:08:47 +0200
-From: sd <sd@...ksheep.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/8
+Message-ID: <loom.20130718T121741-706@post.gmane.org>
+Date: Thu, 18 Jul 2013 10:20:26 +0000 (UTC)
+From: mancha <mancha1@...h.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: linux kernel perf out-of-bounds access
+Subject: Re: CVE Request - xlockmore 5.43 fixes a security flaw
 Content-Type: text/plain; charset=utf-8
 
-Frankly, that there was not a CVE for this came as a surprise to me later
-as I simply hit the release button each time I spot my bug killed when I'm
-auditing the git commit backlog - usually there is fully armed exploit and
-advisory already.
+Kurt Seifried <kseifried@...> writes:
+> I request some details, others like Drupal have security advisories that
+> are sufficiently detailed that i can assign based on them alone, so
+> until a CVE requester proves that they know what they are doing,
+> reliably, I'm going to need details to make sure the CVE assignment is
+> done correctly. Part of the issue is scale, I do 1000+ CVE assignments
+> a year, so if they start taking more then 5-10 minutes I won't have
+> time to do anything else (like my day job, or sleep).
 
+Thank you for taking the time to provide such a detailed response.
+What you say makes complete sense and helps me (and I assume list
+onlookers) get a better feel for the process.
 
-2013/5/15 Greg KH <greg@...ah.com>
+Best,
 
-> On Wed, May 15, 2013 at 09:26:30AM +0800, Eugene Teo wrote:
-> > On Tue, May 14, 2013 at 8:25 PM, Marc Deslauriers <
-> > marc.deslauriers@...onical.com> wrote:
-> >
-> > > Hello,
-> > >
-> > > Is there a CVE for this? If not, could one be assigned, please?
-> > >
-> > > https://patchwork.kernel.org/patch/2441281/
-> > >
-> > > 8176cced706b5e5d15887584150764894e94e02f
-> > >
-> > > (BTW, there is currently an exploit for this going around...)
-> > >
-> >
-> > Nowhere did it say it is a security fix. Fix available since April 13.
-> > s@...s not aware too. Awesome.
-> >
-> > Seriously, surely by now we should all know that silent fixes are not the
-> > wisest thing to do.
->
-> I do not think anyone realized it was a "security" fix.  It was never
-> mentioned to the security@...nel.org alias, and I only picked it up
-> for the stable releases because someone said, "hey, here's another
-> trinity bugfix that userspace can trigger".  We fix those all the time,
-> every single stable kernel release.
->
-> The only thing different this time is someone took the time to develop a
-> simple exploit for others to use.
->
-> So I don't think this was any more or less "silent" than the normal
-> kernel bug fixes that happen every single week.
->
-> thanks,
->
-> greg k-h
->
+--mancha
 
