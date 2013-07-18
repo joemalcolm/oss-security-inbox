@@ -1,78 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/14/1
-Message-ID: <2476752.xGPUqvCcXv@devil>
-Date: Sat, 14 Sep 2013 09:05:01 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: proftpd: mod_sftp/mod_sftp_pam invalid pool allocation during kbdint authentication
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/11
+Message-ID: <CABRvpqCvkfcYvwhnB61pTW0BNxYx+dnuHkk+2qgZk6CvfZO+sQ@mail.gmail.com>
+Date: Thu, 18 Jul 2013 16:36:55 -0400
+From: Andrew Nacin <nacin@...dpress.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: Open Source Security <oss-security@...ts.openwall.com>, Jay Turla <shipcodez@...il.com>,  nacin@...dpress.org
+Subject: Re: SWFUpload <= (Object Injection/CSRF) Vulnerabilities Multiple flaws
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Thu, Jul 18, 2013 at 4:25 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> This was brought to my attention by Jay Turla <shipcodez@...il.com>,
+> after some searching I found:
+>
+> http://bot24.blogspot.ca/2013/04/swfupload-object-injectioncsrf.html
+>
+> and after testing (it works). So please use:
+>
+> CVE-2013-4144 swfupload KedAns-Dz object injection
+> CVE-2013-4145 swfupload KedAns-Dz XSS
+> CVE-2013-4146 swfupload KedAns-Dz CSRF
 
-From: http://kingcope.wordpress.com/2013/09/11/proftpd-mod_sftpmod_sftp_pam-invalid-pool-allocation-in-kbdint-authentication/
+CVE-2013-4145 (XSS) is actually CVE-2012-2399. And, CVE-2013-4146
+(CSRF) seems to be just the potential for CSRF via XSS -- don't think
+this is a separate issue.
 
-ProFTPd installs with mod_sftp and mod_sftp_pam activated contain the 
-vulnerability described in this post.
+Neither of those are reproducible in
+https://github.com/wordpress/secure-swfupload.
 
-The current stable release of ProFTPd is 1.3.4d and the current release 
-candidate is 1.3.5rc3.
+We're aware of CVE-2013-4144 and intend to fix it soon, but it's
+really tough to classify "image injection" as a serious vulnerability
+without there being any actual XSS there to further trick the user.
 
-First I have to note that this vulnerability is unlikely to be exploited. 
-There is a way to control $rip instruction pointer
+> Also alerting WordPress.
 
-on 64 bit systems, for example on the Ubuntu 64Bit platform but I believe that 
-it is not possible to get full code execution with this bug.
-
-The bug is useful to trigger a large heap allocation and exhaust all available 
-system memory of the underlying operating system.
-
-Inside the file located at proftpd-1.3.5rc2/contrib/mod_sftp/kbdint.c ProFTPd 
-handles the SSH keyboard interactive authentication procedure, in this case it 
-will use pam as an authentication library therefore mod_sftp_pam has to be 
-active for an installation to be vulnerable.
-
-Source code file and line kbdint.c:300 reads:
-
-[1] resp_count = sftp_msg_read_int(pkt->pool, &buf, &buflen);
-
-[2] list = make_array(p, resp_count, sizeof(char *));
-for (i = 0; i < resp_count; i++) {
-char *resp;
-
-resp = sftp_msg_read_string(pkt->pool, &buf, &buflen);
-*((char **) push_array(list)) = pstrdup(p, sftp_utf8_decode_str(p, resp));
-}
-
-Line 1 will read the kbdint response count which is an unsigned integer with a 
-size of 32 bits from the client during an SSH kbdint userauth info response 
-client request.
-
-This value is used to allocate a buffer with the size 
-user_supplied_uint32_value multiplied by the size of a char pointer being 
-32bits or 64bits depending on the platform.
-
-There is no size check before the request is sent to the pool allocator that 
-is called by make_array at Line 2.
-
-The pool allocator can be tricked to handle negative allocation sizes if 
-resp_count is large enough.
-
-There is a size check of the response count value but it’s done after this 
-function returns.
-
-The DoS condition can be triggered by sending an int32 value for resp_count 
-that is slightly below the available memory of the target system and repeating 
-the request.
-
-Noteably OpenSSH vulnerability CVE-2002-0640 is very similar to this ProFTPd 
-vulnerability. It has the very same code path.
-
-Here is a reference to the OpenSSH Challenge-Response Authentication bug that 
-was exploited by GOBBLES Security in their year 2002 sshutuptheo.tgz exploit: 
-http://lwn.net/Articles/3531/.
-
-Usage of keyboard interactive authentication in ProFTPd mod_sftp is rare as it 
-is not activated by default.
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Thank you.
