@@ -1,56 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/1
-Message-ID: <520C45A4.5010006@redhat.com>
-Date: Wed, 14 Aug 2013 21:06:12 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Thijs Kinkhorst <thijs@...ian.org>
-Subject: Re: [CVE request] Django 1.4.6 security release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/9
+Message-ID: <CACwpN6N1ThD5mADuxLMVuhsh5K0Arzne-QeRO+_to6SNDp3J5w@mail.gmail.com>
+Date: Thu, 18 Jul 2013 08:14:39 -0400
+From: Dan Pasette <dan@...en.com>
+To: kseifried@...hat.com, Andreas Nilsson <andreas.nilsson@...en.com>
+Cc: oss-security@...ts.openwall.com, Florian <floriangaultier@...il.com>,  "A. Jesse Jiryu Davis" <jesse@...en.com>
+Subject: Re: CVE Request - MongoDB <=2.4.4 uninitialized object
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+We already requested CVE-2013-2132 for this and it was fixed in version
+2.4.5.
 
-On 08/14/2013 02:11 AM, Thijs Kinkhorst wrote:
-> On Wed, August 14, 2013 09:42, Kurt Seifried wrote:
->> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->> 
->> On 08/13/2013 11:31 PM, Moritz Muehlenhoff wrote:
->>> Hi, this needs two CVE assignments: 
->>> https://www.djangoproject.com/weblog/2013/aug/13/security-releases-issued/
+We announced it on mongodb-announce and have it listed in our alerts page
+here: http://www.mongodb.org/about/alerts/
+
+
+On Thu, Jul 18, 2013 at 12:39 AM, Kurt Seifried <kseifried@...hat.com>wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 >
->>> 
->> Please provide links to the vulnerable code/fixed code thanks.
-> 
-> Links to the patches of the various affected release branches can
-> be found at the bottom of the quoted URL.
-> 
-> 
-> Thijs
+> On 07/17/2013 04:23 AM, Florian wrote:
+> > Hi,
+> >
+> > Just a CVE request for this
+> > http://blog.scrt.ch/2013/06/04/mongodb-rce-by-databasespraying/
+> >
+> > Thx
+> >
+>
+> Please use CVE-2013-4142 for this issue.
+>
+> Also adding Mongo people to this, are you guys aware of this? Also is
+> there a security alias I should be using (in case people are on
+> vacation/etc?
+>
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.13 (GNU/Linux)
+>
+> iQIcBAEBAgAGBQJR53F5AAoJEBYNRVNeJnmTYKUP+QGz72ykBk4A2gcmApgofq9s
+> qmWGklP/nuWfR0LNbior4YIGQSXqW9m0LnUeCxHz5FAHhVRtBwV20/AYHH8tXFPZ
+> n3WzJWkMM8DT9uXZcDqXV694Wo/b0FP6PXXq31OmXyJGgDu935RTFmDZdlwWCr60
+> Scb4KFatP1M4Wajf1i6l8fw25CsCCLB3pc9J5G626LkVlTqZ2gH3JUkVPKquqAFs
+> 1EfTAx8gY/mjH036XPHp5mcgKmalsCHWDIb/xBlwS8xSdjgtPqjerA2WtfUerlrI
+> fIN4sTklhNFwllrD4YSlLBEqyq1SWJlSZl1dJIuOJGrYocTU0DEiR37x2CDEUyIM
+> 0rfGUbxgDJkpiRXVc1urdikN/uGpcC5KJmaUuF696aEfF9wlWEpNP/Ik/LtwS/9w
+> 5m9bZx4zS1uilx5VFeUI98XSVVOcRbfjR2koYg1NwefcZXlfWVx7nAKShPVAll5Z
+> BWtWPhg1mDnO2GN0Z/qcw5M2q9AdhiRJpnK0Z8QCmQrm4uDgErh+iVMUfiPXakNO
+> rk0AU3UOORrsLb1VfxUzN+SC6C5OTEEyDU0x/9MG4xGyb8J0QTiF9ZZr4p8MFw+W
+> xTeWFygbD/YHYsYAl0CO5WBPZMb6fux0OuMTkXtTcY2OedyP75jPdpXjWm/+Yxf7
+> MM/JV/ZUNQmgMheI+c8q
+> =uB1p
+> -----END PGP SIGNATURE-----
+>
 
-For the Issue: Cross-site scripting (XSS) in admin interface please
-use CVE-2013-4249 for this issue.
-
-For Issue: Cross-site scripting (XSS) in admin interface I'm going to
-consider this as security hardening unless someone tells me otherwise.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSDEWkAAoJEBYNRVNeJnmTro0P/0qTtLEXOwV4O3uKtzR4pnWG
-9SAFxmGkZ619OdLgcn3Zk96LaGYBw9l/F2BSl0m9yBNUpnFi5lAvKREJMJBJmQcC
-+kzW9Ta/7CP4DZfpH+ROACVD2rKVm857iX5ILFIp8RUcHN4Z1A5JtkR6s7ye0iiQ
-dflOtOUtDs9pv4rpL0lhDnlbw/nyW7VA50CmhT+8SyzXp89FKeelFn1r7Pyf3Rld
-wF7kVlz4ECziTVhXEQaWSR93j5pYBONnr6sQ6Sa+8vVnIZuOUimMED6a6VAc8wrl
-oHiNFz3RRpuUrtP2Jwfd8aPeAiJttRwQfWJm93tz3p0GrvdOs7U84tFoiXJgm9JY
-fdSOEChKMqkOjqcwMs1PJrWUKP4OlkKlpIG/Ha2cdzxFyIQYq6ofHdUuGU8t1t8q
-ep4XqlxbJhecLdRXPjdkm7qH6bKpccNk7F8V10yla+s2AwBqSQK3iiQkKI19Lalv
-yYxteoBGJutWbxz/NmCxS7KvxGJi/XpCdF+DDwdJTV7UauujSbBbOFe28U5rHXXw
-1Vzh/YjwJExNLUaIIe/57KTka4XuK0ldPwhV0rcHEN9LVPTYR7BZA0a2gVJl5exg
-SNmD7B4CRihAIt79+ocKgtuXUist6s7Mg54MYwOIog/fc1iRX6qptYnb4fTw3gxg
-PlvRGQKO/XEv5Q6n5J0Q
-=cIus
------END PGP SIGNATURE-----
