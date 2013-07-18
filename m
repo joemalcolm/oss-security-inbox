@@ -1,55 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/19/1
-Message-ID: <51C1146A.1010804@redhat.com>
-Date: Tue, 18 Jun 2013 20:16:10 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fweimer@...hat.com>
-Subject: Re: CVE request: gnome-shell crash, screen unlock on resume
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/14
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF26F991C6@IMCMBX01.MITRE.ORG>
+Date: Thu, 18 Jul 2013 21:33:21 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: Andrew Nacin <nacin@...dpress.org>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "Kurt Seifried" <kseifried@...hat.com>, Jay Turla <shipcodez@...il.com>
+Subject: RE: Re: SWFUpload <= (Object Injection/CSRF) Vulnerabilities Multiple flaws
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Andrew Nacin said:
 
-On 06/18/2013 02:39 AM, Florian Weimer wrote:
-> Upstream GNOME recently fixed a bug that could crash gnome-shell 
-> immediately after resume:
-> 
-> https://bugzilla.gnome.org/show_bug.cgi?id=701974
-> 
-> As noted here, the impact is that after resume, the password entry 
-> dialog disappears and the user is dropped into the pre-existing X
-> session:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=954054
-> 
-> I haven't figured out the exact trigger conditions, but this has 
-> happened to me a couple of times since switching to Fedora 19 last 
-> weekend.  It does not appear to be a once-in-a-blue-moon bug.
-> 
-> I think this needs to be tracked as a security bug because screen 
-> locking is a security feature (which is part of many security
-> policies).
+>So, CVE-2013-4145 is a duplicate of CVE-2012-3414, *not* of CVE-2012-2399.
 
-Please use CVE-2013-2190 for this issue.
+OK, thanks for the clarification.  I found some additional clarity in your announcement of the SWFUpload fork: http://make.wordpress.org/core/2013/06/21/secure-swfupload/
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+>That said, given that CVE-2012-2399 was not publicly described at the
+>time, I would not be surprised if one or more CVEs have been issued
+>for the same XSS via buttonText at one point.
 
-iQIcBAEBAgAGBQJRwRRpAAoJEBYNRVNeJnmTZaIP/3YqPTHlpUwl5a4dZNk+LGXL
-0HiBDyglb3Qhn7QtiCR/fm40qtDW8uzDM/UtdEjP4fdqjBlECWs3f18Jd9cs3Cs0
-Baww1zPLKfXSxwsMJKlTnRGllE3/oVcyA1c+IBfBe30zleS/q2355S3valftw0qH
-sa32z3Lj5cnVbaWKiiKrCJP53Su1oNOm8QGRZrDUGn9ZTJMGHwP3ZxPhzw3Hu9wa
-tmu2jDte/7Xxk8SFFRShzx3MHmgsKLq+cEuX3FFQWGrMqQ69ThurJQxFbgqJ8/ZM
-wBy8Y+pbrnGY3Y8JOUdl+49HWwNTIqSeIDxtiTpfyeBSbJwPyubVhDK+3wR37zFm
-ks0CLK/+rqFzenIzBVrCop4SdzjHc9iLASwHlugBb28nFbRAV4Dm+RyK8qhvVaem
-pSlYSfHF+DhXiK6qErv3F2p+lLDpCUaZMAC1Wek2GQT9A3XadAG6cHlP0pT7L0Lc
-7kxILXPUN1D6aufbQmeOJZ/RYHGRS2msCnjyelnLLZGVj2e5Y1FTgE2EXtlff6PP
-NYSr+f2afurSM6em6WryKTtXDb5ZXu67PJn8VcUC5fyR4fzEx3TqqXPJ+tefUnSJ
-PPVveOdbOuWPlU41NSKq7bCURWFxOgBgTDMNly9HkZDhcNzOFkQTF+Qx6ofNl9Rz
-pPKAuIn1R+SmwLwE0iRx
-=jkJk
------END PGP SIGNATURE-----
+Oh, me neither.  Think I ran across a couple examples already.
+
+- Steve
+
