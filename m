@@ -1,29 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/2
-Message-ID: <20130205071251.GA3178@beverly.kleinbus.org>
-Date: Tue, 5 Feb 2013 08:12:51 +0100
-From: Ignatios Souvatzis <is@...bsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/2
+Message-ID: <51E77179.4040509@redhat.com>
+Date: Wed, 17 Jul 2013 22:39:21 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: latd
+CC: Florian <floriangaultier@...il.com>, Dan Pasette <dan@...en.com>, "A. Jesse Jiryu Davis" <jesse@...en.com>
+Subject: Re: CVE Request - MongoDB <=2.4.4 uninitialized object
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 03, 2013 at 09:11:13PM -0700, Kurt Seifried wrote:
-> 
-> On 02/03/2013 04:48 AM, Nico Golde wrote:
-> > Hey, latd suffers of a buffer overflow when processing the version
-> > header and generating an error message.
-> > 
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=699625
-> > 
-> > Can we get a CVE id for this?
-> > 
-> > Cheers Nico
-> 
-> Please use CVE-2013-0251 for this issue.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-All versions from 1.25 to 1.30 contain the bug. I've inspected the 
-code to find out whether the pkgsrc package version has it and to
-write a proper pkg-vulnerabilities database entry.
+On 07/17/2013 04:23 AM, Florian wrote:
+> Hi,
+> 
+> Just a CVE request for this 
+> http://blog.scrt.ch/2013/06/04/mongodb-rce-by-databasespraying/
+> 
+> Thx
+> 
 
-Regards,
-	-is
+Please use CVE-2013-4142 for this issue.
+
+Also adding Mongo people to this, are you guys aware of this? Also is
+there a security alias I should be using (in case people are on
+vacation/etc?
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJR53F5AAoJEBYNRVNeJnmTYKUP+QGz72ykBk4A2gcmApgofq9s
+qmWGklP/nuWfR0LNbior4YIGQSXqW9m0LnUeCxHz5FAHhVRtBwV20/AYHH8tXFPZ
+n3WzJWkMM8DT9uXZcDqXV694Wo/b0FP6PXXq31OmXyJGgDu935RTFmDZdlwWCr60
+Scb4KFatP1M4Wajf1i6l8fw25CsCCLB3pc9J5G626LkVlTqZ2gH3JUkVPKquqAFs
+1EfTAx8gY/mjH036XPHp5mcgKmalsCHWDIb/xBlwS8xSdjgtPqjerA2WtfUerlrI
+fIN4sTklhNFwllrD4YSlLBEqyq1SWJlSZl1dJIuOJGrYocTU0DEiR37x2CDEUyIM
+0rfGUbxgDJkpiRXVc1urdikN/uGpcC5KJmaUuF696aEfF9wlWEpNP/Ik/LtwS/9w
+5m9bZx4zS1uilx5VFeUI98XSVVOcRbfjR2koYg1NwefcZXlfWVx7nAKShPVAll5Z
+BWtWPhg1mDnO2GN0Z/qcw5M2q9AdhiRJpnK0Z8QCmQrm4uDgErh+iVMUfiPXakNO
+rk0AU3UOORrsLb1VfxUzN+SC6C5OTEEyDU0x/9MG4xGyb8J0QTiF9ZZr4p8MFw+W
+xTeWFygbD/YHYsYAl0CO5WBPZMb6fux0OuMTkXtTcY2OedyP75jPdpXjWm/+Yxf7
+MM/JV/ZUNQmgMheI+c8q
+=uB1p
+-----END PGP SIGNATURE-----
