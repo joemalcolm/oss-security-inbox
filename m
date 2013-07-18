@@ -1,37 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/11
-Message-ID: <CAA7hUgHF3g75qfkWwyxmCM=8c_+-zceareiJ4Ns-YaGU_sEqyA@mail.gmail.com>
-Date: Tue, 5 Mar 2013 14:30:39 +0100
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/5
+Message-Id: <B3C4AA9A-71F8-4941-B132-1AC09BE202C7@joshuawise.com>
+Date: Thu, 18 Jul 2013 00:14:47 -0700
+From: Joshua Wise <joshua@...huawise.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: busybox
+Cc: Joshua Wise <joshua@...huawise.com>, elly@...toquark.net, Evan Prodromou <evan@...n.com>
+Subject: CVE-2013-4137: StatusNet v1.1.0: SQL injection
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+This is an advisory for StatusNet v1.0.0 through v1.1.0.
 
-On 4 March 2013 03:26, Kurt Seifried <kseifried@...hat.com> wrote:
-[...]
-> I didn't say I;'m excluding them. I simply will require an original
-> source, in this case the year is probably wrong.
+Multiple user-facing functions do not sanitize API input before interpolating it into database query strings.  This can result of exfiltration of database data, and depending on MySQL server (mis)configuration, can also result in file I/O to the database server disk.
 
-Not bikeshedding here, but sometimes those bug reports *are* the
-original source.
-And with all due respect, it has happened before that you've asked for
-an "original source" (upstream commit or bug report) when there exists
-none. All it has lead is to the CVE request becoming stalled or even
-abandoned.
+StatusNet versions 1.1.1 and 1.0.2 have been released to correct these issues.  Patching to these versions as soon as possible is advised.  For more information, visit:
+  http://status.net/2013/07/16/security-alert-sql-injection-attack-for-statusnet-1-0-x-and-1-1-x
 
-What can we do about it?
+Advisory title: Multiple SQL injection vulnerabilities
+Product: StatusNet
+Discovered by:
+  Elly Fong-Jones
+  Joshua Wise (NVIDIA Corporation)
+Known vulnerable versions: 1.0.0 - 1.1.0
+Tested: 1.1.0, 2013-07-16
+Fixed in version: 1.1.1
+Vulnerability type: CWE-89 (SQL Injection)
+CVE IDs: CVE-2013-4137
 
-We already have a quite long list of issues without a CVE id and this
-is not good for anybody:
-https://security-tracker.debian.org/tracker/data/fake-names
+My thanks to the Evan Prodromou for his help in quickly responding to these issues and releasing a new version.
 
-(nb. some of the issues in the list might already have an id but the
-temporary entry hasn't been removed or it was decided that no id
-should be assigned)
+joshua
 
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
