@@ -1,70 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/12
-Message-ID: <517939B4.2040207@fifthhorseman.net>
-Date: Thu, 25 Apr 2013 22:12:04 +0800
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/5
+Message-ID: <51E8DC59.7090305@redhat.com>
+Date: Fri, 19 Jul 2013 00:27:37 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>,  Alistair Crooks <agc@...src.org>, Josh Bressers <bressers@...hat.com>
-Subject: Re: upstream source code authenticity checking
+CC: Andrew Nacin <nacin@...dpress.org>, "Christey, Steven M." <coley@...re.org>, Jay Turla <shipcodez@...il.com>
+Subject: Re: Re: SWFUpload <= (Object Injection/CSRF) Vulnerabilities Multiple flaws
 Content-Type: text/plain; charset=utf-8
 
-On 04/25/2013 03:30 PM, Kurt Seifried wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> At a minimum this raises the bar for attackers when trying to insert a
-> fake release/whatever. The real problem however is the cost of doing
-> this. Key creation/storage/management/backup/etc is all non trivial
-> and not free. Is the cost of this worth it?
+On 07/18/2013 03:29 PM, Andrew Nacin wrote:
+> On Thu, Jul 18, 2013 at 5:10 PM, Christey, Steven M.
+> <coley@...re.org> wrote:
+>> CVE-2012-2399's only public details are that it's an unspecified
+>> vulnerability in Wordpress before 3.3.2, yet
+>> http://wordpress.org/news/2012/04/wordpress-3-3-2/ is pretty
+>> vague and mentions multiple products (although it does credit
+>> Neal Poole for at least one issue).  That said, a statement by a
+>> lead developer of Wordpress is important for this clarification
+>> ;-)  Andrew, can you confirm for sure that CVE-2012-2399 is
+>> *also* the same as CVE-2012-3414 for Neal Poole's movieName
+>> vector?
+> 
+> Negative, I was mistaken. Sorry for the confusion. CVE-2012-2399
+> was a separate XSS, affecting buttonText, and reported by Szymon
+> Gruszecki. CVE-2012-3414 was Neal Poole's report, affecting
+> movieName.
+> 
+> So, CVE-2013-4145 is a duplicate of CVE-2012-3414, *not* of
+> CVE-2012-2399.
+> 
+> That said, given that CVE-2012-2399 was not publicly described at
+> the time, I would not be surprised if one or more CVEs have been
+> issued for the same XSS via buttonText at one point.
+> 
+> Christey, Steven M. <coley@...re.org> wrote:
+>> Since swfupload.swf is apparently widely used, researchers may be
+>> finding the same issue over and over again in different packages,
+>> and presenting them as if they are new.  Yet there might be some
+>> attack variants buried in there, too.
+>> 
+>> Because of the amount of attention by researchers who don't check
+>> whether an issue has already been disclosed, and/or the number of
+>> independent products that use this library, any "new"
+>> swfupload.swf issues should be regarded with extreme suspicion
+>> while CVE tries to iron out all the existing duplicates.
+> 
+> Related, for those who haven't seen, WordPress forked SWFUpload
+> last month. Both Neal and Szymon have been helping us with the
+> fork, as well. At this point, in terms of issues known to us, only
+> the image injection issue is unfixed.
+> 
+> Fork: https://github.com/wordpress/secure-swfupload Post:
+> http://make.wordpress.org/core/2013/06/21/secure-swfupload/
 
-Yes, this cost is worth it.  People who take the time to publish source
-code on the dirty dirty internet have a responsibility to their users to
-take the integrity of their publications seriously.
+So to confirm:
 
-The simple workflow of "the release manager has the OpenPGP key for the
-project on the keyring of her personal development machine" (while
-probably less robust than the ideal scenario), has an extremely low cost
-to implement and raises the bar for an attack significantly.
+CVE-2013-4144 swfupload KedAns-Dz object injection
+CVE-2013-4145 duplicate of CVE-2012-3414
+CVE-2013-4146 swfupload KedAns-Dz CSRF
 
-> I think if we are going to push this we need to come up with a pretty
-> good set of guidelines that are easy to follow and implement. Things
-> like creation of keys, usage, storage, how to handle key roll overs,
-> lost keys, etc. 
+and we're good?
 
-These would be great things to have, but many projects aren't even
-signing their releases yet.  I don't want us to spec out a byzantine
-ruleset that would put people off from *starting* to sign their
-releases.  Maybe such a policy could break out the sophisticated stuff
-into the form of "baseline", "level 1", "level 2", etc.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-That way we could encourage all projects to get to the "baseline" (which
-should be short and simple) without requiring them to "level up" right
-away (to offline key storage, key transition statements, etc).
-
-Some existing ideas about "best-practice" for maintaining an openpgp key
-(and public keyring) have been collected here, though they aren't
-specific to software publishers:
-
-  https://we.riseup.net/debian/openpgp-best-practices
-
-(it's a wiki, folks are invited/encouraged to improve it)
-
-> Maybe even have a trusted party signs packages sent to
-> them, confirms the package with the project through some other trusted
-> channel like secure email or because they know the guy in real life/etc.
-
-i'm not sure who "the guy" is, but there's nothing stopping anyone with
-intimate knowledge of the free software ecosystem (e.g. maybe one of the
-foundational distros?) from certifying packaged releases and publishing
-them.  Arguably, the distros that sign their source manifests are
-already doing this work, though they may be in different forms from one
-another or from upstream.
-
-for public third-party assertions to be useful in the real world,
-though, there needs to be easy/public audit infrastructure that anyone
-can run to catch the appearance of malicious/variant versions.
-
-Regards,
-
-	--dkg
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+iQIcBAEBAgAGBQJR6NxZAAoJEBYNRVNeJnmTGwMQAIzLgZpf4ggH+ql8QAsdVqVs
+wH+0fCtRGvFW1wB4rCVQzAcJMF/L8ebL6McXrLwBJh5F1X3n7wvSjoh8T8VKIRov
+nDNCanJCXWCtm28sJ1OAhh8x2UngQXiVMvJpuFn3zBQCTU2JpCagJsKJugqTMS3B
+SggojonDX++AbfebqobqVpM5nDkhFU7AxhpWvHZz1IEZsOekN0cdEjaKpRHDsrxx
+N0SgWVBDhxkdqIoFuXNbiL1mjx0ZNrSbNhOYjzy4WMG3ZeENsHv85KMPhnP0CDj8
+xdc3s7ih4PF1a6bRIUvYWLpXk+J+5E/npYrqPyFeMEw+P/PoYtyFAujITcWwDSPm
+nQAgi97BUVOVpQ8zBYUyYREF5tJ1C3zqjOrq1mAO65Tp3BqkYUGsC+Mvw7Dz8elM
+EvdCrRdvKhE7ZVY1U+QzcORygsQ8D8KNK4iq9pHEW9mowRMmtgqMO8uFh83v68GV
+lnyzmvWZl0QI+7jm15l0u/tmp4snwi3aJuo7Hl8FymEggSFoHofkXO7TuD7wERpP
+VEHUmuI54XlT4MG0G9C3SnxFejLUY9ko2D0/EnygLF5V6hR4EalENY8cwPgq0Xbi
+nRf7gGJ+9l16IOjyhX6PfjPejnBjxqs9hFcI3U+6/D9GsatdH8zA69snRE0VyC6t
+hHwWve2IjD9tdoUkAGGc
+=BDEg
+-----END PGP SIGNATURE-----
