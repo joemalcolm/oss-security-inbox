@@ -1,111 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/9
-Message-ID: <CAHQz1rKAXwB-HG53sKCF9FPT84dwPr95RZ1cMQ=tHpG7JumOWA@mail.gmail.com>
-Date: Tue, 9 Apr 2013 09:17:58 -0300
-From: Breno Silva <breno.silva@...il.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com,  Athmane Madjoudj <athmanem@...il.com>
-Subject: Re: Re: CVE Request -- ModSecurity (X < 2.7.3): Vulnerable to XXE attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/8
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF26F99A84@IMCMBX01.MITRE.ORG>
+Date: Fri, 19 Jul 2013 14:59:56 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "kseifried@...hat.com" <kseifried@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Andrew Nacin <nacin@...dpress.org>, Jay Turla <shipcodez@...il.com>
+Subject: RE: Re: SWFUpload <= (Object Injection/CSRF) Vulnerabilities Multiple flaws
 Content-Type: text/plain; charset=utf-8
 
-Hello Jan,
+Kurt said:
 
-I'm attaching a patch for 2.5.12. However it is small and i think can help
-you do the same for 2.6.8.
-Let me know if you have any questions.
+>So to confirm:
+>
+>CVE-2013-4144 swfupload KedAns-Dz object injection
+>CVE-2013-4145 duplicate of CVE-2012-3414
+> CVE-2013-4146  swfupload KedAns-Dz CSRF
 
-Thanks
+That is how we're handling it for CVE right now, although since people aren't sure whether there's really a CSRF, I'm waiting to update CVE-2013-4146 until we get more clarity.
 
-Breno
+I'm also not sure what the real problem is with the "object injection" in this case.  This appears to be an example of "content spoofing" as defined by OWASP/WASC, but using images instead of rendering attacker-controlled text.
 
+It looks like a URL can be used to change the image that's displayed for a Flash button through the upload object itself.   This is not technically XSS because there is no script being used, but apparently it affects how the upload interface is presented to the victim.
 
-On Tue, Apr 9, 2013 at 6:26 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+It's not immediately clear to me whether there are phishing-style or clickjacking-style attacks that can be performed against SWFUpload by using a malicious button image.  Just printing out an unexpected image onto the form wouldn't cross privilege boundaries by itself I don't think, because the attacker already got the victim's browser to render the SWFUpload dialog that shows the button in the first place, and the SWFUpload functionality appears to be intended to allow remotely-specified images based on the buttonImageURL parameter and documentation for the .  If the button can be used to submit a file without interaction or trick the user in some other way, that might be sufficient for a CVE.
 
-> Hi Breno,
->
->   (Cc-ing Athmane on this due reasons which will get obvious below).
->
->   thank you for checking with us.
->
-> AFAICT to fix this in Fedora and Fedora EPEL-6 versions, we have
-> just rebased to latest upstream 2.7.3 version. But you are truly
-> right (assuming this being the reason you are checking with us),
-> that on Fedora EPEL-5 we are shipping older (2.6.8 based version
-> of ModSecurity).
->
-> FWIHL:
->   [1] https://bugzilla.redhat.com/show_bug.cgi?id=947842#c1
->
-> it's wasn't immediately clear how the backported upstream patch
-> would look like in / against that version (and not completely
-> sure we can just rebase in that product too - Athmane could you
-> clarify here if we can rebase or would rather want upstream patch
-> form against 2.6.8 version?)
->
-> Breno, so if you are willing to help (and Athmane would confirm
-> we need patch against 2.6.8 version), it would be appreciated
-> if you could provide it.
->
-> That's just for our expectations. Obviously other vendors might
-> be interested in upstream patch backports against different versions
-> yet (but I will let them to speak out their needs by themselves).
->
-> Thank you for your time / check anyway. It's appreciated.
->
-> Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
->
-> ----- Original Message -----
-> Hello Jan,
->
-> Are you guys backporting de patch to old versions of ModSecurity ?
->
-> Thanks
->
-> Breno
->
->
-> On Wed, Apr 3, 2013 at 9:23 AM, Jan Lieskovsky <jlieskov@...hat.com>
-> wrote:
->
-> > Hello Kurt, Steve, Breno, vendors,
-> >
-> >   ModSecurity upstream has released v2.7.3 version:
-> > [1] https://github.com/SpiderLabs/ModSecurity/blob/master/CHANGES
-> >
-> > correcting one security flaw (from [2]):
-> > "It was reported that the XML files parser of ModSecurity,
-> > a security module for the Apache HTTP Server, was vulnerable
-> > to XML External Entity attacks. A remote attacker could
-> > provide a specially-crafted XML file that, when processed
-> > might lead to local files disclosure or, potentially,
-> > excessive resources (memory, CPU) consumption."
-> >
-> > References:
-> > [2] https://bugzilla.redhat.com/show_bug.cgi?id=947842
-> > [3] https://bugs.gentoo.org/show_bug.cgi?id=464188
-> > [4] https://secunia.com/advisories/52847/
-> >
-> > Relevant upstream patch (seems to be the following):
-> > [5]
-> >
-> https://github.com/SpiderLabs/ModSecurity/commit/d4d80b38aa85eccb26e3c61b04d16e8ca5de76fe
-> >
-> > Could you allocate a CVE id [*] for this?
-> >
-> > Thank you && Regards, Jan.
-> > --
-> > Jan iankko Lieskovsky / Red Hat Security Response Team
-> >
-> > [*] According to:
-> > https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ModSecurity
-> >     there doesn't seem to have been a CVE id allocated for this issue
-> yet.
-> >
->
+- Steve
 
-Content of type "text/html" skipped
-
-Download attachment "CVE-2013-1915 (1).patch" of type "application/octet-stream" (4277 bytes)
