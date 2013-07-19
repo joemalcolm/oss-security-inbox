@@ -1,29 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/12
-Message-ID: <51A68891.4000506@gmail.com>
-Date: Wed, 29 May 2013 16:00:33 -0700
-From: Forest Monsen <forest.monsen@...il.com>
-To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: Drupal contrib CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/12
+Message-ID: <51E96EF5.4040407@redhat.com>
+Date: Fri, 19 Jul 2013 10:53:09 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, libvirt-security@...hat.com
+Subject: Re: CVE request -- libvirt: crash of libvirtd without guest agent configuration
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-A late one just came out. I'd like to request a CVE for:
+On 07/19/2013 10:14 AM, Petr Matousek wrote:
+> If users haven't configured guest agent then qemuAgentCommand()
+> will dereference a NULL 'mon' pointer.
+> 
+> A remote user able to issue commands to libvirt daemon could use
+> this flaw to crash libvirtd.
+> 
+> References: https://bugzilla.redhat.com/show_bug.cgi?id=986386 
+> https://bugzilla.redhat.com/show_bug.cgi?id=984821 
+> https://www.redhat.com/archives/libvir-list/2013-July/msg00992.html
+>
+>  Upstream fix: 
+> http://libvirt.org/git/?p=libvirt.git;a=commit;h=96518d4316b711c72205117f8d5c967d5127bbb6
+>
+>  Thanks,
+> 
 
-SA-CONTRIB-2013-050 - Webform - Cross Site Scripting (XSS)
-https://drupal.org/node/2007460
+Please use CVE-2013-4154 for this issue.
 
-Thanks!
-
-Forest
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iEYEARECAAYFAlGmiJEACgkQ/ILCL9e1Br5srgCggMdkmGDFC4fmIWkRCJjMmger
-dO4An3TRdMRUGzP3VwNnVRL6QLrm6KX0
-=/4Xb
+iQIcBAEBAgAGBQJR6W71AAoJEBYNRVNeJnmTmosP/3x1PKMoC1Y0P6WhThKGKIjB
+/z6+rOKAitr8nTxjILopvwM0+Wbs2Tl2uxb/J+IbFu745QTfNrzxvBnreDvXmCUT
+2A8ABs85zaALZqsw1vj3FNtCvQf1hzTEo0/DzufCj0owr+q9/ibRxAPPNgZiKyrY
+xaQWJZ3e0D9T8Y+dm+gHDVg4pEC1sSPGbQA1zFUXPSUM/NC1ABGALz7d+uEh/nt7
+0WzqBtH86rHm3okuFlDeAnByZaNzcFspazr5yLb6SmZyDnJCadwojfEPG18Q1Zbh
+41d5JWJFOrojyqX2+lSiop8ayUJKubx8QV823VZZqWNIK+bR0bPRoi9ZjycRVQT4
+ruhgfQDzEjD8GNfIm93SJudzT0GfLclRDVGJo6yY5L2wtpi/9Ei9fBYg9jdprqgX
+VTCt7IKb5TYIp8QsX5Okc0BSSne//2I1crYmEXfnYt03CAerJeApxlvOrqGNcVGK
+NYLcoyQsTjfeK9YhXtesfW45wPkzv8QLLcGvc1nDy2sgbuevmS5ZdRCp6qQFWhIy
+G0gAz2mMWVNmNOthn7Yh0GpT6IPTBCCh2XJAScXzS7bLoH5PeeKBXKO9wh5VOcsp
+jPZ8b3e3YLhAMaUy7A4IHqt1HR1Nh0js2WiR6yjZAN/d21GZ06i/aSWY/pxt19H4
+rn4Ep2QOUJZUmzm2ucDO
+=4XqL
 -----END PGP SIGNATURE-----
