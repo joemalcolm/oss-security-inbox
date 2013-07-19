@@ -1,46 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/15/2
-Message-ID: <CAA7hUgHD7YKjt26+ML=H9KcJoXhx7ONW9sGRF5UpyypDV=uB-A@mail.gmail.com>
-Date: Mon, 15 Jul 2013 16:37:29 +0200
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/6
+Message-ID: <20130718233553.608eba65.reed@reedloden.com>
+Date: Thu, 18 Jul 2013 23:35:53 -0700
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Insecure temp files usage in phusion passenger (other than CVE-2013-2119)
+Cc: kseifried@...hat.com, Andrew Nacin <nacin@...dpress.org>, "Christey, Steven M." <coley@...re.org>, Jay Turla <shipcodez@...il.com>
+Subject: Re: Re: SWFUpload <= (Object Injection/CSRF) Vulnerabilities Multiple flaws
 Content-Type: text/plain; charset=utf-8
 
-Hi again,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 10 June 2013 16:54, Raphael Geissert <geissert@...ian.org> wrote:
-> While looking at  CVE-2013-2119 I noticed that Phusion Passenger
-> 2.2.11's ext/common/Utils.cpp makeDirTemp() uses mkdir(1) to create
-> directories in /tmp (e.g. /tmp/phusion.$$) for use by the application
-> and web server.
-> A local user could create the directories and have write access to
-> directories, and possibly files used by the application. I haven't
-> confirmed, but I guess this would allow some sort of privilege
-> escalation to the user executing the application or at least access to
-> otherwise restricted data.
->
-> Additionally, some of the subdirectories might be chown(2)ed to a
-> different user even if the directory already existed (it chowns iff
-> mkdir(1) returns 0). Not sure if it could have an impact, however.
+On Fri, 19 Jul 2013 00:27:37 -0600
+Kurt Seifried <kseifried@...hat.com> wrote:
 
-After talking to upstream, the above issue with the temp directory has
-been fixed in 4.0.6 (release withdrawn and replaced by 4.0.7 due to a
-regression), and a regression fixed in 4.0.8[2]. The issue was tracked
-as #910[3].
+> So to confirm:
+> 
+> CVE-2013-4144 swfupload KedAns-Dz object injection
+> CVE-2013-4145 duplicate of CVE-2012-3414
+> CVE-2013-4146 swfupload KedAns-Dz CSRF
+> 
+> and we're good?
 
-Could a CVE id be assigned then?
+Where's the CSRF vuln? I see XSS but not a separate CSRF issue...
 
-It allows a local user to DoS the service or to take over its traffic.
+~reed
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-[1]http://blog.phusion.nl/2013/07/04/phusion-passenger-4-0-6-released/
-Bug fix: https://github.com/phusion/passenger/commit/5483b3292cc2af1c83033eaaadec20dba4dcfd9b
-[2]http://blog.phusion.nl/2013/07/09/phusion-passenger-4-0-8-released/
-Regression fix:
-https://github.com/phusion/passenger/commit/9dda49f4a3ebe9bafc48da1bd45799f30ce19566
-[3]https://code.google.com/p/phusion-passenger/issues/detail?id=910
-
-Cheers,
---
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+iEYEARECAAYFAlHo3kkACgkQa6IiJvPDPVrqKwCguY8KtcZGDqCuHeUkukowdPRL
+VPkAoIXHGK0UoRgJStAMsDbbMT8CHA9q
+=bV1g
+-----END PGP SIGNATURE-----
