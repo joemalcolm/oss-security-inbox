@@ -1,68 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/8
-Message-ID: <526589AE.7070602@redhat.com>
-Date: Mon, 21 Oct 2013 14:08:14 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: Re: CVE duplicates SA-CONTRIB-2013-075
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/1
+Message-ID: <DUB111-W4861089C4AAB5A5CD3A200EF630@phx.gbl>
+Date: Fri, 19 Jul 2013 05:22:52 +0430
+From: Hamid Zamani <me@...idx9.ir>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request : Radius Daemon (YardRadius v1.1.2-4 ) Multiple Format String Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello, 
 
-On 10/21/2013 09:41 AM, Christey, Steven M. wrote:
-> Note that with two CNAs handling already-public issues, there are
-> multiple ways that duplicates can arise.  This risk grows as
-> MITRE's output increases.  On the MITRE side, we are revisiting our
-> procedures for reducing the number of duplicates.  We already
-> privately identified the increased duplicate risk with Kurt and
-> will work with him to make things more manageable.
-> 
-> For this specific situation: MITRE processed the Drupal advisories
-> on September 25, creating new CVEs that were thus available in NVD
-> at approximately 11 AM Eastern time.  Forest's request to
-> oss-security happened on September 26.  Kurt's response to
-> oss-security was on September 27.  So in this case, there were
-> multiple opportunities for requesters to check for pre-existing
-> CVEs in NVD.
-> 
-> The MITRE-assigned CVE-2013-5937 and CVE-2013-5938 are in more
-> active use and were published first, so they will be kept.
-> 
-> REJECT CVE-2013-4381 as a duplicate of CVE-2013-5938.
-> 
-> REJECT CVE-2013-4382 as a duplicate of CVE-2013-5937.
-> 
-> Forest, please update the advisory to use the MITRE-assigned
-> numbers.
-> 
-> - Steve
+Software name : YardRadius 
+Version : 1.1.2-4
+
+Several Format String Vulnerabilites was found in latest YardRadius .
+
+Description : 
 
 
-Yup, I failed to check because well in past it had never been a
-problem and I didn't know Mitre was increasing their output with
-respect to the open source public assignments. Hopefully shouldn't
-happen again.
+
+src/log.c :
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSZYmuAAoJEBYNRVNeJnmT19AP+gMlW0BxSiM1jZIRDVWl7x4E
-QOzjZ4Wrf0iw7jjg+Xz/wD1GOUMkqPqXPoEe75xIHhOkcB4gcgtfwxx8JlMer+r8
-GOfuHPPvWsFQdT0N+8rETPyFr8mCNzGlFv6bJuwMoc9/6S8JJnoXZx+GYjtN9lfJ
-fqCVqzeiuF+C86pdW5p6Eb4JEgE7fzpAprEO6oXMCvJwi0n9Q2IO2gjE1mLo64Nr
-u2DLbsj6TqW8Vr6q+/889WRkAYdP4HLeOwK6HNiUtBF9iULERhRkVoAPJhqQoPWd
-cqp3JjhT6CGv1JhjCmXYPX5MDM/4wVj2Xd8Tu0VR8KAVTZRdp9j8dNgtqP1xsiM7
-TSxpfcZxoNvNmEOIIbelEjGqdC7Nl6rEhgk4lolyDDUq+BeYhum0SE/A3/al+KOz
-m5NcoTiZSw29kwBZJ5nyT/VkBipOYNCZ92IMaXBQaq/xk+oh9UaGFX0HgEglC8LX
-ktx5Il4/yRRnNxuUCITlN1kdMyUYhT15Wn5171SE37ii5qvvJbfK4DIOyBninuHr
-9YMxH3qTF6xUBYEkzliU52m0IywFLF2DrFgTKKF6ENbCiAlQP1MZxXtj2bmfm32s
-+5Bm2LKbZDRjLkzLE0EDxrQfLX8l6TUjKBlij3EyvuXsA8+nq5ylt0kpw3ywBHKT
-Cy81JmErK59LDnU4ddph
-=EW1Q
------END PGP SIGNATURE-----
+void 
+
+log_msg(int priority,char *fmt, va_list args)
+
+{
+
+...
+
+	char buffer[1024];
+
+...
+
+	vfprintf(msgfd, fmt, args);
+
+...
+
+       vsnprintf(buffer,1024,fmt, args);
+
+#if defined(HAVE_SYSLOG)
+
+       syslog(priority, buffer); //! if buff filled by "%x" so an attacker can see the addresses and ...
+
+...
+
+       vsyslog(priority, fmt, args); 
+
+...
+
+}
+
+
+
+
+
+
+############
+
+
+
+src/version.c :
+
+
+
+#define  STRVER "%s : YARD Radius Server %s ... $ "
+
+
+
+
+
+void 
+
+version(void)
+
+{
+
+       char buffer[1024];
+
+
+
+       build_version(buffer,sizeof(buffer));
+
+       fprintf(stderr, buffer);
+
+       exit(-1);
+
+}
+
+
+
+...
+
+
+
+void 
+
+build_version(char *bp,size_t sizeofbp)
+
+{
+
+       snprintf(bp,sizeofbp-1,STRVER, progname, VERSION);
+
+..
+
+
+
+$ ln -s radiusd %x
+
+$ ./%x -v
+
+./b77c0ff4 : YARD Radius Server 1.1 ...
+
+
+
+So an attacker may control the memory and execute arbitrary codes.
+
+
+Debian bug report : 
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714612
+
+CXSecurity.com :
+http://cxsecurity.com/issue/WLB-2013070028
+
+
+Please assign a CVE number.
+
+Thank you,
+Hamid Zamani
+ 		 	   		  
