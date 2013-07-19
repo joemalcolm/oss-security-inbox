@@ -1,16 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/14/6
-Message-ID: <20130514123719.GE19206@dhcp-25-225.brq.redhat.com>
-Date: Tue, 14 May 2013 14:37:22 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/10
+Message-ID: <20130719161452.GW4441@dhcp-25-225.brq.redhat.com>
+Date: Fri, 19 Jul 2013 18:14:52 +0200
 From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: linux kernel perf out-of-bounds access
+Cc: libvirt-security@...hat.com
+Subject: CVE request -- libvirt: crash of libvirtd without guest agent configuration
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 14, 2013 at 08:25:54AM -0400, Marc Deslauriers wrote:
-> Is there a CVE for this? If not, could one be assigned, please?
+If users haven't configured guest agent then qemuAgentCommand() will
+dereference a NULL 'mon' pointer.
 
-Please use CVE-2013-2094.
+A remote user able to issue commands to libvirt daemon could use this
+flaw to crash libvirtd.
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=986386
+https://bugzilla.redhat.com/show_bug.cgi?id=984821
+https://www.redhat.com/archives/libvir-list/2013-July/msg00992.html
+
+Upstream fix:
+http://libvirt.org/git/?p=libvirt.git;a=commit;h=96518d4316b711c72205117f8d5c967d5127bbb6
 
 Thanks,
 -- 
