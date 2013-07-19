@@ -1,79 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/21/2
-Message-Id: <E1VjSVD-0003Q6-SO@xenbits.xen.org>
-Date: Thu, 21 Nov 2013 11:32:56 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 78 (CVE-2013-6375) - Insufficient TLB flushing in VT-d (iommu) code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/2
+Message-ID: <20130719050056.GA9059@inutil.org>
+Date: Fri, 19 Jul 2013 07:00:56 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: kseifried@...hat.com, Andreas Nilsson <andreas.nilsson@...en.com>, Florian <floriangaultier@...il.com>, "A. Jesse Jiryu Davis" <jesse@...en.com>
+Subject: Re: CVE Request - MongoDB <=2.4.4 uninitialized object
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Jul 18, 2013 at 08:14:39AM -0400, Dan Pasette wrote:
+> We already requested CVE-2013-2132 for this and it was fixed in version
+> 2.4.5.
+> 
+> We announced it on mongodb-announce and have it listed in our alerts page
+> here: http://www.mongodb.org/about/alerts/
 
-             Xen Security Advisory CVE-2013-6375 / XSA-78
-                              version 2
+CVE-2013-2132 was already assigned to this issue in the Python driver:
+http://www.openwall.com/lists/oss-security/2013/05/31/6
+https://jira.mongodb.org/browse/PYTHON-532
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-2132
 
-           Insufficient TLB flushing in VT-d (iommu) code
+While "your" CVE-2013-2132 refers to
+https://jira.mongodb.org/browse/SERVER-9878, which AFAICS is a different
+issue.
 
-UPDATES IN VERSION 2
-====================
-
-This issue has been assigned CVE-2013-6375.
-
-ISSUE DESCRIPTION
-=================
-
-An inverted boolean parameter resulted in TLB flushes not happening
-upon clearing of a present translation table entry.  Retaining stale
-TLB entries could allow guests access to memory that ought to have
-been revoked, or grant greater access than intended.
-
-IMPACT
-======
-
-Malicious guest administrators might be able to cause host-wide denial
-of service, or escalate their privilege to that of the host.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.2.x and later are vulnerable.
-Xen 4.1.x and earlier are not vulnerable.
-
-Only systems using Intel VT-d for PCI passthrough are vulnerable.
-
-MITIGATION
-==========
-
-This issue can be avoided by not assigning PCI devices to untrusted guests on
-systems supporting Intel VT-d.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This issue was disclosed publicly on the xen-devel mailing list.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa78.patch        Xen 4.2.x, Xen 4.3.x, xen-unstable
-
-$ sha256sum xsa78*.patch
-bb13b280bb456c1d7c8f468e23e336e6b2d06eb364c6823f1b426fcfe09f6ed3  xsa78.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJSje8rAAoJEIP+FMlX6CvZ1kkIALhafGTk2hNupn2YyvqaUchF
-P7lnff8PohFj9WRM3I5axrJGkZeOozjeRSbgaVwlg5UY1A6vNqtT9GSQtSWRWbk/
-/0ysGvwbBTdRQeGhvENhpFOJRF/4TjGn1xmCBgQbmrhZuS9iAQvJL8yUY/HdCVyf
-gk9Vw/yuBZff15h97FH9M+zrdz+DbBTlR0t5HlVkLMvXyFkYIRafwaZVKWaH/C9y
-S1Wz6M9q1U9KrE8wBsNNHMgywdTiriCkzhfxEQbsPKnn/NFCOS0ehqct0JeZx100
-Eritdmkr805EUCcFUdS5R1EDP6xiRUCUAdbL/tvTJExzmPEG0sg7kKWIArRujLU=
-=ZgNn
------END PGP SIGNATURE-----
-
-Download attachment "xsa78.patch" of type "application/octet-stream" (888 bytes)
+Cheers,
+        Moritz
