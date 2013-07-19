@@ -1,27 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/10
-Message-ID: <20130806183109.GA29541@redhat.com>
-Date: Tue, 6 Aug 2013 20:31:09 +0200
-From: Oleg Nesterov <oleg@...hat.com>
-To: Andy Lutomirski <luto@...capital.net>
-Cc: security@...nel.org, oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>, "Eric W. Biederman" <ebiederm@...ssion.com>, Linus Torvalds <torvalds@...ux-foundation.org>
-Subject: Re: CLONE_NEWUSER local DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/3
+Message-ID: <51E8D63F.6010202@redhat.com>
+Date: Fri, 19 Jul 2013 00:01:35 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Moritz Muehlenhoff <jmm@...ian.org>
+CC: oss-security@...ts.openwall.com, Andreas Nilsson <andreas.nilsson@...en.com>, Florian <floriangaultier@...il.com>, "A. Jesse Jiryu Davis" <jesse@...en.com>
+Subject: Re: CVE Request - MongoDB <=2.4.4 uninitialized object
 Content-Type: text/plain; charset=utf-8
 
-On 08/06, Andy Lutomirski wrote:
->
-> On Tue, Aug 6, 2013 at 9:47 AM, Oleg Nesterov <oleg@...hat.com> wrote:
-> >
-> > I'll send the patch, but perhaps there is something else. Eric?
->
-> I think that's right.  OTOH, it's not going to prevent this from OOMing:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Aaaah. user_ns_cachep I guess? ns->parent logic, yes??
+On 07/18/2013 11:00 PM, Moritz Muehlenhoff wrote:
+> On Thu, Jul 18, 2013 at 08:14:39AM -0400, Dan Pasette wrote:
+>> We already requested CVE-2013-2132 for this and it was fixed in
+>> version 2.4.5.
+>> 
+>> We announced it on mongodb-announce and have it listed in our
+>> alerts page here: http://www.mongodb.org/about/alerts/
+> 
+> CVE-2013-2132 was already assigned to this issue in the Python
+> driver: http://www.openwall.com/lists/oss-security/2013/05/31/6 
+> https://jira.mongodb.org/browse/PYTHON-532 
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-2132
+> 
+> While "your" CVE-2013-2132 refers to 
+> https://jira.mongodb.org/browse/SERVER-9878, which AFAICS is a
+> different issue.
+> 
+> Cheers, Moritz
+> 
 
-I convinced myself this should be fine but it seems you are right.
+yup. different code bases, different CVE's even if the "same" problem.
+should have gotten separate cves, sigh. We need better coordination.
 
-IIUC, this needs another fix. Will try tomorrow. Not that I think
-this needs my help ;)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Oleg.
-
+iQIcBAEBAgAGBQJR6NY/AAoJEBYNRVNeJnmTa1oP/irxQJKdWeiHYm+hK3vDZ+k6
+EihMvMSPfcpK3zWyVW1IZNTJhdhD8HBxYc8LnCysG2SiksuzPMv141QKGftFwHjO
+f8PeGgbWmRRyfar5aRMQsjJQKVBeRrgF8b0mKugYeDdKmEeuE2D2pO+xgGk59gfK
+oX2to6pU3kiF0uNVvOAYjVbn3tdd2zXnt0zUh1cFELxSWyNSsWSZbq5lbIg2c2Fv
+ErKrZMhWgzK+ws5rhfZHzBN2qMYy2swLzx2MRaVxX2uL9FZJ5DNQ03Eo0AX3vuoU
+mPQD6fI+1xdjxhjQGBs+qfR9G+XZY21MwQLR4sRxIkIAyFNBRZz6H1V3Z8JET3Qh
+snR6hZCbtN5AQ9cwXL9rWb0NL5Ypt7FpkzqwNvZCb+tf0ORyTRGUy0hVXr54tX0/
+VcgKeiyzSLWOOTZUZ3oPt/bvYIeQ9E5S+uvGgUC3wZy191mlBN8G73MTXOCGlXGy
+IBYFioIVnrV+059C2kBOPV5k5it90ecZBoymVK+bskUUDhxCyWpuYaVfqWGTS7ec
+X+HqkoC+zWsW5yuYLS9vyXRaB0KjV3GswFDkBi/m0YMfo69Nk8wDu2K3dKZEJMB3
+rD6ZNVcDreJBhpfI/hK7hQr2abO24Pxw3uXSkxJGo/1x98Yn2KscRGcLL76FaxON
+fsqXT2cdYbon3u0mZwcz
+=mam6
+-----END PGP SIGNATURE-----
