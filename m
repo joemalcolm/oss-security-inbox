@@ -1,39 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/5
-Message-ID: <20131114103310.GX22293@dhcp-25-225.brq.redhat.com>
-Date: Thu, 14 Nov 2013 11:33:10 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/9
+Message-ID: <20130719161256.GV4441@dhcp-25-225.brq.redhat.com>
+Date: Fri, 19 Jul 2013 18:12:57 +0200
 From: Petr Matousek <pmatouse@...hat.com>
-To: Nico Golde <oss-security+ml@...lde.de>, oss-security@...ts.openwall.com
-Cc: security@...nel.org
-Subject: Re: some unstracked linux kernel security fixes
+To: oss-security@...ts.openwall.com
+Cc: libvirt-security@...hat.com
+Subject: CVE request -- libvirt: double free of returned JSON array in qemuAgentGetVCPUs()
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 12, 2013 at 11:10:32AM +0100, Petr Matousek wrote:
-> Hi,
-> 
-> On Sun, Nov 03, 2013 at 05:32:52PM +0100, Nico Golde wrote:
-> > drivers/uio/uio.c: mapping of physical memory to user space without proper size check
-> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7314e613d5ff
-> 
-> there is a size check in uio_mmap() (the only caller of uio_mmap_physical()):
-> 
->         requested_pages = vma_pages(vma);
->         actual_pages = ((idev->info->mem[mi].addr & ~PAGE_MASK)
->                         + idev->info->mem[mi].size + PAGE_SIZE -1) >> PAGE_SHIFT;
->         if (requested_pages > actual_pages)
->                 return -EINVAL;
-> 
-> why it wasn't sufficient?
+A part of the returned monitor response was freed twice and caused
+crashes of the daemon when using guest agent cpu count retrieval.
 
-Apparently there was a CVE split [1] and this is now CVE-2013-6763.
+A remote user able to issue commands to libvirt daemon could use this
+flaw to crash libvirtd or, potentially, escalate their privileges to
+that of libvirtd process.
 
-  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6763
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=986383
+https://bugzilla.redhat.com/show_bug.cgi?id=984821
+https://www.redhat.com/archives/libvir-list/2013-July/msg01035.html
 
-I still think this is a non-issue based on the above mentioned size
-check. Can I please get second opinion from someone more knowledgeable
-on this?
+Upstream fix:
+http://libvirt.org/git/?p=libvirt.git;a=commit;h=dfc692350a04a70b4ca65667c30869b3bfdaf034
 
 Thanks,
 -- 
 Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
