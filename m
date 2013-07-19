@@ -1,57 +1,159 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/2
-Message-ID: <5266110D.70106@redhat.com>
-Date: Mon, 21 Oct 2013 23:45:49 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/4
+Message-ID: <51E8DB27.3050908@redhat.com>
+Date: Fri, 19 Jul 2013 00:22:31 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: LDAP Account Manager XSS in login.php
+CC: Hamid Zamani <me@...idx9.ir>
+Subject: Re: CVE Request : Radius Daemon (YardRadius v1.1.2-4 ) Multiple Format String Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/21/2013 03:16 PM, Salvatore Bonaccorso wrote:
-> Hi Kurt,
+On 07/18/2013 06:52 PM, Hamid Zamani wrote:
+> Hello,
 > 
-> Eric Sesterhenn discovered a XSS vulnerability in login.php of LDAP
-> Account Manager and reported this to the Debian BTS[1]. It requires
-> to send malicious data via POST.
+> Software name : YardRadius Version : 1.1.2-4
 > 
-> [1] http://bugs.debian.org/726976
+> Several Format String Vulnerabilites was found in latest YardRadius
+> .
 > 
-> Upstream Bugreport:
+> Description :
 > 
-> [2] http://sourceforge.net/p/lam/bugs/156/
 > 
-> Upstream also has already commited fixes to the VCS:
 > 
-> [3] http://sourceforge.net/p/lam/code/5074/ [4]
-> http://sourceforge.net/p/lam/code/5075/
+> src/log.c :
 > 
-> Could you please assign a CVE for this issue?
 > 
-> Regards, Salvatore
+> 
+> void
+> 
+> log_msg(int priority,char *fmt, va_list args)
+> 
+> {
+> 
+> ...
+> 
+> char buffer[1024];
+> 
+> ...
+> 
+> vfprintf(msgfd, fmt, args);
+> 
+> ...
+> 
+> vsnprintf(buffer,1024,fmt, args);
+> 
+> #if defined(HAVE_SYSLOG)
+> 
+> syslog(priority, buffer); //! if buff filled by "%x" so an attacker
+> can see the addresses and ...
+> 
+> ...
+> 
+> vsyslog(priority, fmt, args);
+> 
+> ...
+> 
+> }
+> 
+> 
+> 
+> 
+> 
+> 
+> ############
+> 
+> 
+> 
+> src/version.c :
+> 
+> 
+> 
+> #define  STRVER "%s : YARD Radius Server %s ... $ "
+> 
+> 
+> 
+> 
+> 
+> void
+> 
+> version(void)
+> 
+> {
+> 
+> char buffer[1024];
+> 
+> 
+> 
+> build_version(buffer,sizeof(buffer));
+> 
+> fprintf(stderr, buffer);
+> 
+> exit(-1);
+> 
+> }
+> 
+> 
+> 
+> ...
+> 
+> 
+> 
+> void
+> 
+> build_version(char *bp,size_t sizeofbp)
+> 
+> {
+> 
+> snprintf(bp,sizeofbp-1,STRVER, progname, VERSION);
+> 
+> ..
+> 
+> 
+> 
+> $ ln -s radiusd %x
+> 
+> $ ./%x -v
+> 
+> ./b77c0ff4 : YARD Radius Server 1.1 ...
+> 
+> 
+> 
+> So an attacker may control the memory and execute arbitrary codes.
+> 
+> 
+> Debian bug report : 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714612
+> 
+> CXSecurity.com : http://cxsecurity.com/issue/WLB-2013070028
+> 
+> 
+> Please assign a CVE number.
+> 
+> Thank you, Hamid Zamani 
 > 
 
-Thanks, please use CVE-2013-4453 for this issue.
+Please use CVE-2013-4147 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSZhENAAoJEBYNRVNeJnmTbEMP/imXMXt9yFjHSh42fMNDjx2g
-1lrVFPC6VoZiJ63qhTy/DYf3vO2sgXOXQn5r5NypnBN+Oyq40dtX56wbV+hULioa
-7W7JlXpcJLrjXxQi/dGF46XR3KZL0kpW2lUgJ+jfLKOqa5Do0LfzHtcRRnxI/CIs
-p4hzBqRhJ1laAGkCAYwoitloAnmRFHyoGnRomgkWS4xSHI7DT5k3m8X28R9rBxJ1
-CCpfhtVqVhrjpY/IzJ8rzwob9voTOgDPZVsVfI5sB0qOkwKWxgGzBs/jHrG1nBQD
-ucONhql0zNF6n3Z720RcI60jNqcdNBsxyF54CBj5ZHIjicB36AXJxg9r1eSxrg2w
-pqdI3AhI5TN9f/y0USkOsJnUK4wkYhqugHRyIEapVd0/D5g8r2wUjkxNSvQueLtt
-6VAousV8sPP0UngytOrppgKuSyWjIsvQmo9bOFRScbAQ6IF8c6VMBF+YXkw1d+Vg
-/K9hkqBloStlWHIiwm/gb8dWRq3OLYna3vQobjKDAqfPgiw9BEFZvfbUgB/fcTY0
-QZhVv7C8TaGodz3zkFEMHhAZRK5klMrXTM9i/kK0DgC+Gtgbj+K3ihwsDvS5F0F6
-Zxevrxk+1jgy9KIGK89wQG6tinwD4JHJ5JR6LGSYELbqKoE8Ww3upkjSvCC7nysu
-tABNBx4fgPoMxJSpn5Yd
-=R3A8
+iQIcBAEBAgAGBQJR6NsnAAoJEBYNRVNeJnmTbngQAMuOzgrhySXyiDUopLXrAby1
+yZ3OhUcLyraU1NJFdhNRXSLqZL9XIdsPhgpQrzzntKyrNc30UbnCXbwENIigT6pL
+NjycD1gErK49nzy2iDOm1o5dB3GfCPHQPKmRKbvNbHiEq4nZbBlEBswOBPoY2wX+
+ArBgGuuVrLSIJX6KCfUbpMqqjlc5S5TkLQeGRYvioR1VOIo4JSw0Ur1mM9A3LRqq
+dkwsjt8RtlrJAFlYpGuW2BKR14l0cyrXC8Vwp+kpohDkMbwl8HS7WTrZjxA5bpec
+1umxlBflWtTQqtUzKQFUu8T23R7IyNLYQd3n4bpKFN3xRiBv+Wbfhmixkl7YmoE6
+qBtFlM4U/a7tNrmQokB/Ymq6umLid1VhzWvH+em1FmJqUvJn5gjvm9O2nTEAFzLV
+5xzVXfTsEKaGEYtk5/+4BJzY1l5PQb9mY/4hawYzZ9qf1GyjgNGfWco32UpMEr8v
+GDBI0b4aF4yD75RkRO/ZHAIwhewNTmkYeMIsj2TpeZhBPxWxt4Fym1btvLCct/fW
+r19InNLe0pyeE7aVe3Ig9Qt4vq7K2oMwH9zvfdEN0xZYGEtRf2b8TaVTOwJhAjy8
+dE6xF0KvLLgDAHAiI7ZVp13wfVUuZ9Pa12Tb9Ype94HIUj89smlj6cteIKarrM3B
+PXxw8gsgxAYD0SHJJYD4
+=bORy
 -----END PGP SIGNATURE-----
