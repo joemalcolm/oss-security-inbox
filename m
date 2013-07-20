@@ -1,42 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/6
-Message-Id: <201302051049.56639.mweckbecker@suse.de>
-Date: Tue, 5 Feb 2013 10:49:56 +0100
-From: Matthias Weckbecker <mweckbecker@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/20/1
+Message-ID: <20130720003422.GA2619@hunt>
+Date: Fri, 19 Jul 2013 17:34:22 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: smokeping incomplete fix for CVE-2012-0790
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 05 February 2013 10:40:57 Matthias Weckbecker wrote:
-> b8391806cd79095fe566f2401d8c7ad85a64b198 seems to be the commit for GnuTLS
-> that fixes the issue.
->
+Hello Kurt, Steve, all,
 
-Links:
+I am requesting a 2012 CVE for an incomplete security fix in smokeping,
+fixed in version 2.6.9.
 
-https://gitorious.org/gnutls/gnutls/commit/328ee22c1b3951e060c7124c7cb1cee592c59bc0
-https://gitorious.org/gnutls/gnutls/commit/b8391806cd79095fe566f2401d8c7ad85a64b198
+CVE-2012-0790 was assigned to smokeping for XSS flaws.
 
-Sorry for the spam,
-Matthias
+The fix for CVE-2012-0790 in smokeping 2.6.7 was incomplete. The
+filtering used this blacklist:
 
-> On Tuesday 05 February 2013 10:34:23 Matthias Weckbecker wrote:
-> > Hi,
-> >
-> > has there already been a CVE assigned for the recent "lucky 13" timing
-> > flaw that affects various SSL / TLS implementations (including GnuTLS)?
-> >
-> >   http://www.isg.rhul.ac.uk/tls/
-> >   http://www.gnutls.org/security.html#GNUTLS-SA-2013-1
-> >
-> > I think this could qualify for CVE for each open source implementation
-> > that's prone.
-> >
-> > Thanks,
-> > Matthias
+    $mode =~ s/[<>&%]/./g;
 
--- 
-Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+The version in 2.6.9 uses the following blacklist:
+
+    my $xssBadRx = qr/[<>%&'";]/;
+
+(', ", and ; have been added. When it is used, blacklist chars are now
+turned to _ rather than . ) The 2.6.9 version prevents escaping <html
+attribute="..."> via " characters.
+
+The incomplete fix is in 2.6.7 and 2.6.8.
+
+This flaw was discovered by Florian Weimer [1] in 2012 and brought to
+our attention [2] in 2013.
+
+The upstream CHANGES [3] file includes, in part:
+
+
+--------------------------------------------------
+
+2013/03/04 - released version 2.6.9
+
+*  be more careful about preventing xss attacks, re http://bugs.debian.org/659899 (tobi)
+
+--------------------------------------------------
+
+
+I have not found an up-to-date online browsable source.
+
+Thanks
+
+
+1: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659899#37
+2: https://bugs.launchpad.net/ubuntu/+source/smokeping/+bug/1203061
+3: http://oss.oetiker.ch/smokeping/pub/CHANGES
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
