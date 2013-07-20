@@ -1,86 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/1
-Message-ID: <20130426052424.GD23082@nef.pbox.org>
-Date: Fri, 26 Apr 2013 07:24:24 +0200
-From: Alistair Crooks <agc@...src.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/20/2
+Message-ID: <51EA271D.4030904@redhat.com>
+Date: Fri, 19 Jul 2013 23:58:53 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: coley@...us.mitre.org, oss-security@...ts.openwall.com, security@...ntu.com
+Subject: Re: CVE Request: smokeping incomplete fix for CVE-2012-0790
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 25, 2013 at 08:55:00AM -0400, Josh Bressers wrote:
-> > 
-> > So, all in all, what you have is a digest, signed by someone who knows
-> > the key, or who has access to the creds (if any) for the key, or who
-> > has found out the key creds, albeit with timestamp info for when the
-> > signature took place.
-> > 
-> > I'm not sure what using PGP gains us?
-> > 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 07/19/2013 06:34 PM, Seth Arnold wrote:
+> Hello Kurt, Steve, all,
 > 
-> I'm going to take a hard stance against this statement and use it as my
-> soapbox for a bit here.
+> I am requesting a 2012 CVE for an incomplete security fix in
+> smokeping, fixed in version 2.6.9.
 > 
-> This attitude is really dangerous in the world of security (but it has
-> infected our universe). Security is hard, we all know that, but I think we
-> like to draw a line at 100% and say "it's this or nothing". No, PGP isn't
-> perfect, but it gains us a ton. It's a way we can say "this was signed by
-> someone with the key". Did the bad guy have they key? Maybe, the goal isn't
-> to get to 100%, it's to make the job of an attacker harder, which this
-> would do.
+> CVE-2012-0790 was assigned to smokeping for XSS flaws.
 > 
-> There is no system that exists in this instance that is 100% safe. What we
-> need to do isn't talk about how useless PGP is (which it isn't), we need to
-> talk about what's right about it and give advice so people understand how
-> to avoid silly mistakes.
+> The fix for CVE-2012-0790 in smokeping 2.6.7 was incomplete. The 
+> filtering used this blacklist:
+> 
+> $mode =~ s/[<>&%]/./g;
+> 
+> The version in 2.6.9 uses the following blacklist:
+> 
+> my $xssBadRx = qr/[<>%&'";]/;
+> 
+> (', ", and ; have been added. When it is used, blacklist chars are
+> now turned to _ rather than . ) The 2.6.9 version prevents escaping
+> <html attribute="..."> via " characters.
+> 
+> The incomplete fix is in 2.6.7 and 2.6.8.
+> 
+> This flaw was discovered by Florian Weimer [1] in 2012 and brought
+> to our attention [2] in 2013.
+> 
+> The upstream CHANGES [3] file includes, in part:
+> 
+> 
+> --------------------------------------------------
+> 
+> 2013/03/04 - released version 2.6.9
+> 
+> *  be more careful about preventing xss attacks, re
+> http://bugs.debian.org/659899 (tobi)
+> 
+> --------------------------------------------------
+> 
+> 
+> I have not found an up-to-date online browsable source.
+> 
+> Thanks
+> 
+> 
+> 1: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659899#37 2:
+> https://bugs.launchpad.net/ubuntu/+source/smokeping/+bug/1203061 3:
+> http://oss.oetiker.ch/smokeping/pub/CHANGES
+> 
 
-I think you misunderstand me. The mail I sent out was to warn against the
-magic "it's signed, so it's gospel" myth by pointing out the problems of
-key management. I have written my own pgp/rfc4880 implementation, and talked
-about it at EuroBSDcons in 2009, 2010, 2011. I would hardly do that if i
-thought PGP was "useless". It's a bit disappointing that my advice (in pointing
-out ways that PGP can be worked around in order to diminish integrity and
-security) was categorised as an attack on PGP itself - I shall take that as
-a reminder that I should be more clear in what I write.
- 
-> A great example is to use a smart card. If a project is using a smart card,
-> and tells us they're using a smart card, that would be helpful in letting
-> us know their signatures are probably trustworthy. We would certainly know
-> their signatures are more trustworthy than a project who uses a private key
-> shared between 10 people. Is the smart card a perfect solution? Certainly
-> not, but it's better than not using a smart card. How many non security
-> people really understand this? How many of us have tried to explain it in a
-> calm and understanding manner?
+Perfect CVE request.
 
-I fail to see how "using a smartcard" automatically leads to
-signatures "probably being trustworthy".  Lest I'm misunderstood again
-- 2 factor authentication is good, yes, but you need to look at the
-set up holistically. If an unauthorised third party has root on the server
-being used to control the 2 factor auth, then you are in a worse
-position than not using 2 factor auth.  Consider the SSL business
-model where the CAs have considerable motivation not to disclose
-intrusions, mis-issued certs and other such items.  In the case of
-Diginotar, they were put out of business.
+Please use CVE-2013-4158 for this issue.
 
-And before people start telling me to get real, I'll point out that
-most enterprises these days have a basic assumption that they have
-been hacked, and are building "more secure" islands to try to fence
-intrusions in.
- 
-> This is Red Hat's goal here. We want to help folks understand what some
-> easy wins are. Security is hard, it will never be 100%. I'd rather see us
-> all working together to improve what we can.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-I'm all for rasing the bar. My previous mail was intended to make people
-think about the processes and procedures behind key management - I'm sorry
-it failed so dismally. I shall attempt to do better next time.
-
-If Red Hat document their key management procedures, that would be
-great.  Having these procedures audited would be superb (albeit a very
-brave step), and I would be very impressed if they did.  I'm not sure
-security is as hard as you're making out, although I'm aware that
-there's no silver bullet.
-
-Onwards and upwards...
-
-Regards,
-Alistair
+iQIcBAEBAgAGBQJR6icdAAoJEBYNRVNeJnmT/OYP/1jPhcrEMasq08oEE4zlne0h
+Ax+BAv+RioPNadydOoqd+0Xj6ReT0Zz92q0sL5Pig2kdPo2QkmUX3p+wWjXNTDMS
+HsWb2zjnghKUFfAWCfOHdJpXUsAU///8PCQqETfOTxm4RmAZGHbvbRkC9a8C4STu
+GaVPSwZvOArjfg30w7q6g2AYuiE3xHHTgKiZR6W1KD6t17kHGj2foRfQ417x2DCP
+EDS3n2BPQk8Cujy+epySC89FnOn4EvdJ3NLXSStvlYMTFORzOXN74ZyNxUNWAkax
+AXw8xf46mgEPyoxrEz3WSe3QERTFt/Hc6ALD4WHhe91v9Lf+QSndQ7dG1+o64jD7
+itRPhu6Zs52YxEZ3Ii8MA3TIaRL1tEd6laMcBIKcAfZs7WlRsdg76F5AfICVpiqj
+DLz0wkfuvvOdUzKA4UPB8klr/j0vbw4KjRrG9hA15T5aNZT5c9U3GHwMV4g7X94n
+jzQrE0Hi2pRlaNUhfhGVsJdyDRAUYwF1UdXaoZaKG3e0FBbZYLphTPnL350xmQDU
+vLiMgi/WDwI0ql+ZvziuKSOYEbufefP3CnqP8gEePm9o6xng/cgK9nKKB67ljhVC
+OMP2Y3QjUzNCV6w2JO6nsEUc63sLeRta7o509cryEXV9J8Wns5AfZAMufNv8yWfA
+iIWmeqk+laVdZDU5HSe/
+=y8JO
+-----END PGP SIGNATURE-----
