@@ -1,100 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/10
-Message-ID: <20130605133555.GE32700@dhcp-25-225.brq.redhat.com>
-Date: Wed, 5 Jun 2013 15:35:55 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-Cc: eranian@...gle.com, ak@...ux.intel.com, security@...nel.org, Marcus Meissner <meissner@...e.de>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: More perf security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/20/3
+Message-ID: <20130720071344.GA13185@eldamar.local>
+Date: Sat, 20 Jul 2013 09:13:44 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: XSS in smokeping / start and end time fields not filtered
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 05, 2013 at 03:02:53PM +0200, Peter Zijlstra wrote:
-> On Wed, Jun 05, 2013 at 02:38:56PM +0200, Petr Matousek wrote:
-> > On Wed, Jun 05, 2013 at 02:15:59PM +0200, Peter Zijlstra wrote:
-> > > On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
-> > > > Hello, Peter.
-> > > > 
-> > > > On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
-> > > > > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
-> > > > > 
-> > > > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
-> > > > > 
-> > > > > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
-> > > > > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-> > > > > Date:   Fri May 3 14:11:25 2013 +0200
-> > > > > 
-> > > > >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
-> > > > > 
-> > > > >     We should always have proper privileges when requesting kernel
-> > > > >     data.
-> > > > > 
-> > > > >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-> > > > >     Cc: <stable@...nel.org>
-> > > > >     Cc: Andi Kleen <ak@...ux.intel.com>
-> > > > >     Cc: eranian@...gle.com
-> > > > >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
-> > > > >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
-> > > > >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
-> > > > >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
-> > > > 
-> > > > There is similar check in perf_copy_attr() which is called from
-> > > > perf_event_open syscall --
-> > > > 
-> > > >                 /* kernel level capture: check permissions */
-> > > >                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
-> > > >                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
-> > > >                         return -EACCES;
-> > > > 
-> > > > It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
-> > > > missing something?
-> > > > 
-> > > 
-> > > I overlooked it, also its slightly broken. See the discussion at: 
-> > >   https://lkml.org/lkml/2013/5/21/166
-> > 
-> > Got it, thanks for the pointer. So it is safe to say there never was a
-> > leak in this case (and thus no security issue worth CVE)?
-> 
-> There was a leak, notice how Stephane's patch did a
-> s/PERF_SAMPLE_BRANCH_PERM_PLM/PERF_SAMPLE_BRANCH_KERNEL/
+Hi Kurt
 
-PERF_SAMPLE_BRANCH_PERM_PLM is a superset of PERF_SAMPLE_BRANCH_KERNEL:
+There is another XSS fix which was done after the 2.6.9 release for
+smokeping.
 
-#define PERF_SAMPLE_BRANCH_PERM_PLM \
-        (PERF_SAMPLE_BRANCH_KERNEL |\
-         PERF_SAMPLE_BRANCH_HV)
+In [1] Steven Chamberlain pointed out that in 2.6.9 upstrem the
+"start" and "end" time fields are still not filtered.
 
+Tobi Oetiker fixed this in a commit following the 2.6.9 release at
+[2]. But this version is no yet released.
 
-> but also places
-> the check _after_ we propagate the event PLM levels in the case none
-> were LBR specific.
+ [1] http://bugs.debian.org/659899#67
+ [2] https://github.com/oetiker/SmokePing/commit/bad9f9c28f0939b269f90072aa4cf41f20f15563
 
-Assuming the leak does occur only when PERF_SAMPLE_BRANCH_KERNEL is set,
-that does not matter:
+Does this also needs a separate CVE, as a subsequent fix to the 2.6.9
+release?
 
-               /* kernel level capture: check permissions */
-                if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
-                    && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
-                        return -EACCES;
-
-^^^ this assures proper permission check if PERF_SAMPLE_BRANCH_KERNEL
-is explicitly set
-
-
-                /* propagate priv level, when not set for branch */
-                if (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) {
-
-                        /* exclude_kernel checked on syscall entry */
-                        if (!attr->exclude_kernel)
-                                mask |= PERF_SAMPLE_BRANCH_KERNEL;
-
-And following check in perf_event_open syscall assures the permission
-are right for (!(mask & PERF_SAMPLE_BRANCH_PLM_ALL)) code:
-
-        if (!attr.exclude_kernel) {
-                if (perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
-                        return -EACCES;
-        }
-
--- 
-Petr Matousek / Red Hat Security Response Team
+Regards,
+Salvatore
