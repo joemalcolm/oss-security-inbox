@@ -1,28 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/9
-Message-ID: <20130719161256.GV4441@dhcp-25-225.brq.redhat.com>
-Date: Fri, 19 Jul 2013 18:12:57 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: libvirt-security@...hat.com
-Subject: CVE request -- libvirt: double free of returned JSON array in qemuAgentGetVCPUs()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/21/1
+Message-ID: <20130721171004.54932a97@melee>
+Date: Sun, 21 Jul 2013 17:10:04 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: cve request: cms made simple XSS before 1.11.7
 Content-Type: text/plain; charset=utf-8
 
-A part of the returned monitor response was freed twice and caused
-crashes of the daemon when using guest agent cpu count retrieval.
+cmsmadesimple 1.11.7 fixes an XSS. Not much info though:
 
-A remote user able to issue commands to libvirt daemon could use this
-flaw to crash libvirtd or, potentially, escalate their privileges to
-that of libvirtd process.
+https://twitter.com/LeakFree/status/336942367351394305
+http://forum.cmsmadesimple.org/viewtopic.php?f=1&t=66590&p=299356#p299356
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=986383
-https://bugzilla.redhat.com/show_bug.cgi?id=984821
-https://www.redhat.com/archives/libvir-list/2013-July/msg01035.html
+Please assign CVE.
 
-Upstream fix:
-http://libvirt.org/git/?p=libvirt.git;a=commit;h=dfc692350a04a70b4ca65667c30869b3bfdaf034
-
-Thanks,
 -- 
-Petr Matousek / Red Hat Security Response Team
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
