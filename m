@@ -1,62 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/08/1
-Message-ID: <CAEmQOhDfUJAFyK3L0a2DS03s69ATvSJG_ZZrCdN+gRYZBrGH0w@mail.gmail.com>
-Date: Fri, 8 Nov 2013 01:01:58 +0000
-From: Jonathan Salwan <jonathan.salwan@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/21/2
+Message-ID: <1374436936.3799.22.camel@scapa>
+Date: Sun, 21 Jul 2013 22:02:16 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Advisory report - Multiple memory corruption and race condition in Goodix gt915 Android touchscreen driver (CVE-2013-4740 & CVE-2013-6122)
+Subject: CVE Request: evolution mail client GPG key selection issue
 Content-Type: text/plain; charset=utf-8
 
-Description
-========
-Multiple issues have been identified in the Goodix gt915 touchscreen
-driver for Android. The issues were found in the write handler of the
-procfs entry created by the driver, which by default is readable and
-writeable to users without any specific privileges.
+Hi,
 
-CVE-2013-4740
-----------------------
-When processing data written to the procfs file, the Goodix gt915
-touchscreen driver is using user space supplied content as length
-values in subsequent memory manipulation operations without
-bounds checking. This can lead to multiple memory corruption issues.
-An application with access to the respective file can use this flaw
-to, e.g., elevate privileges.
+an issue with security impact was recently fixed in Evolution. More
+details can be found on the Red Hat bug report at
+https://bugzilla.redhat.com/show_bug.cgi?id=973728 but it basically
+boils down to a wrong selection when choosing the the keyid for a
+destination email address.
 
-Access Vector: local
-Security Risk: high
-Vulnerability: CWE-20 (Improper Input Validation)
+Basically, when you have multiple keys in the keyrings, with overlapping
+email addresses (like foo@...mple.com and foobar@...mple.com), you can
+end up (silently) encrypting to the wrong recipient.
 
-CVE-2013-6122
------------------------
-When processing arguments passed to the procfs write handler of
-the Goodix gt915 touchscreen driver, user space data is copied to
-a global variable and used without a mutual-exclusion mechanism.
-The global structure used by the procfs write handler can be accessed
-concurrently by more than one process. This would allow local attackers
-to bypass the input validation checks (such as introduced by the fix for
-CVE-2013-4740). An application with access to the respective file can use
-this flaw to, e.g., alter the internal state of the handler, bypass security
-checks, or create a denial-of-service condition.
+It actually happened to me when forwarding embargoed security issues so
+it can happen in real life. Now the wrong recipient would need to
+actually obtain a copy of the sent mail (since it's sent to the correct
+recipient, not the wrong one), but I still think it warrants a CVE.
 
-Access Vector: local
-Security Risk: medium
-Vulnerability: CWE-362 (Concurrent Execution using Shared Resource
-with Improper Synchronization)
+Quick fix was to use the documented format for email searches in GnuPG
+(using <> around email addresses) but a more complete fix for explicit
+key selection should appear some time in the future.
 
-Affected versions
-All Android releases from CAF using a Linux kernel from the following heads:
+Regards,
+-- 
+Yves-Alexis
 
-jb_3*
-msm-3.10
-Patch
-We advise customers to apply the following patches:
-https://www.codeaurora.org/cgit/quic/la/kernel/msm-3.10/commit/?id=f53bcf29a6e7a66b3d935b8d562fa00829261f05
-
-Acknowledgement
-=============
-Qualcomm Innovation Center, Inc. (QuIC) thanks Jonathan Salwan of the
-Sysdream Security Lab for reporting the related issues and working with
-QuIC to help improve Android device security.
-
-https://www.codeaurora.org/projects/security-advisories/multiple-memory-corruption-issues-and-race-condition-goodix-gt915-touchscreen-driver-procfs-handler
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
