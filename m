@@ -1,54 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/31/7
-Message-ID: <52C27568.8030100@redhat.com>
-Date: Tue, 31 Dec 2013 00:42:32 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/22/8
+Message-ID: <alpine.LNX.2.00.1307221726590.28441@forced.attrition.org>
+Date: Mon, 22 Jul 2013 17:28:35 -0500 (CDT)
+From: security curmudgeon <jericho@...rition.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux kernel: net: memory leak in recvmsg handlermsg_name & msg_namelen logic
+Subject: Re: CVE request: webcalendar before 1.2.7
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 12/31/2013 12:06 AM, P J P wrote:
-> Hello,
-> 
-> Linux kernel built with the networking support(CONFIG_NET) is
-> vulnerable to an information leakage flaw in the socket layer. It
-> could occur while doing recvmsg(2), recvfrom(2) socket calls. It
-> occurs due to improperly initialised msg_name & msg_namelen message
-> header parameters.
-> 
-> A user/program could use this flaw to leak information from kernel 
-> memory bytes.
-> 
-> Upstream fix: ------------- ->
-> https://git.kernel.org/linus/f3d3342602f8bcbf37d7c46641cb9bca7618eb1c
->
->  Reference: ---------- ->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1039845
-> 
-> Thank you. -- Prasad J Pandit / Red Hat Security Response Team
+Kurt's reply is a good reminder of why he needs that information. Based on 
+the original post, some of these have assignments.
 
-Please use CVE-2013-6463 for this issue.
+: Security fix: Do not show the reason for a failed login (i.e. "no such user")
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Likely CVE-2013-1422 / OSVDB 90668
 
-iQIcBAEBAgAGBQJSwnVoAAoJEBYNRVNeJnmTtWEQAMzznw0nuad4vG0SnyDguNda
-1FcFYxt8/VYyhOrtbN35NZgV4I51/KocNghCFlXicRIGl7XFIsXQ5XVaeLsUOGzL
-0DPURFPTzX11NMQOHs7vVcz7UJ65QldvzvZnfGGSkMiX2W8Z7vIZce1AdM3t/aQw
-rqupmJ7h+WFwvJdNp7fzqvS1dt0gtfOB6OCtXqUDCeTp5Xo19GaYaTNN2fKW7TN+
-9GA0eeJDphP937zc8tO07fVC7tTruj5ZFJw1fsYCX9vEUcPZF3xrqHDJ+MmJRQJh
-nHGKjlq1uQ3lX/8kt4M/tdYPM9a13Go4+HSk9y+zSSgM7ycpSLs+2+3L5YRMRlnu
-h8VMwuijLdYMYawpNtBv8x74sh4zUwRPJz+r24/a5ordwnuzXpkUsp7tzTE80Or5
-FciQizomMfAySnBSvHpmNOZL4lMTa6DKW0jlv89iKd1Q9TsRKgq0RXumvtEQVweR
-GrcG/uzmL/cmTDejC10R57/OvOeVnorWmxRmLTwaqAG8Kq9UQSdrmbc5JCnGoOJ4
-GKDcAfwmdqLJHEk6J48b74lmr3ZZuiuNu8cXZtuEueh4eoVD9IKjXxaTR0yk0BBu
-61Bg7+5T0OKWRNMAf74bGmar8CFk0kFOCddKdnn61SYo8b/RivLqL/k06vN11J3/
-UEn7UOTvXU18T2+KqQ4F
-=OyNz
------END PGP SIGNATURE-----
+: Security fix: Escape HTML characters in category name.
+
+Likely CVE-2013-1421 / OSVDB 90669
+
+: Security fix: Check all passed in fields (either via HTML form or via
+: URL parameter) for certain malicious tags (script, embed, etc.) and
+: generate fatal error if found.
+
+This one seems like it may be new.
