@@ -1,23 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/4
-Message-ID: <515C3C6E.2090202@redhat.com>
-Date: Wed, 03 Apr 2013 16:27:58 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: glibc getaddrinfo() stack overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/22/7
+Message-ID: <CABbbngCorijY-gVNxzmgat2X=UW3bM5CZOMC50vm+nPyh53sSQ@mail.gmail.com>
+Date: Mon, 22 Jul 2013 11:22:39 -0700
+From: Forest Monsen <forest.monsen@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com
+Cc: "security@...pal.org" <security@...pal.org>
+Subject: Re: CVE request for a Drupal contributed module
 Content-Type: text/plain; charset=utf-8
 
-On 04/03/2013 01:10 PM, Marcus Meissner wrote:
+Hi Kurt, regarding CVE assignment and your request for clarification at
+http://www.openwall.com/lists/oss-security/2013/05/16/2:
 
-> I am not sure you can usually push this amount of addresses via DNS for all
-> setups.
+On Wed, May 15, 2013 at 6:41 PM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-Both IPv4 and IPv6 addresses are combined in that array, right?  Then 
-the protocol limit seems to be around 4000 + 2300 addresses (NAME (2 
-bytes with compression) + RCLASS (2) + RTYPE(2) + TTL (4) + RDATALEN(2) 
-+ RDATA(4 or 16) per record, total available space is 64K), which could 
-be used to blow 128K stacks sometimes used by JVMs.
+> This sounds like two separate issues:
+[...]
+> can you send me the code patches fixing this so I can make sure it
+> gets the correct SPLIT/MERGE treatment? Thanks.
 
--- 
-Florian Weimer / Red Hat Product Security Team
+Yep - Diffs for the commits that fixed both of these issues are at:
+
+Drupal 6: http://drupalcode.org/project/ga_login.git/commitdiff/dd04ea3
+ Drupal 7: http://drupalcode.org/project/ga_login.git/commitdiff/c365097
+
+For the first issue,
+
+
+> Accidental removal of account configuration.
+>
+> In certain scenarios, Google Authenticator login incorrectly
+> determines the user's account name. The change in account name could
+> cause the two-factor authentication for existing accounts to be lost,
+> allowing users to log in using just username and password.
+>
+> This vulnerability is mitigated by the fact while Google Authenticator
+> login's additional verification is by-passed, a username and password
+> are still required to log in.
+>
+
+It looks like the maintainer now concatenates a "Realm" (site name) and
+suffix with the Drupal username to form the GA username. Any inconsistency
+there will invalidate earlier credentials.
+
+For the second,
+
+One Time Password (OTP) replay
+>
+> If an attacker can intercept a login request with a username, password
+> and OTP, an attacker could use this same data again to login to the
+> website.
+>
+> This vulnerability is mitigated by the fact that an attacker who can
+> intercept a login request with this level of detail can usually also
+> intercept the ongoing session identifying token.
+>
+
+It looks to me like the maintainer now implements a skew value to either
+(in the case of a time-based one-time password token) review only a certain
+range of timed tokens on either side, or (in the case of an HMAC-based
+one-time password token) to again test a range of tokens.
+
+I'll copy the Drupal Security Team, in case I haven't understood it
+correctly or if further clarification is necessary. Thanks.
+
+Best,
+Forest
+
