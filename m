@@ -1,39 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/05/3
-Message-ID: <5278DDCE.5040806@redhat.com>
-Date: Tue, 05 Nov 2013 13:00:14 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/22/1
+Message-ID: <51ECECB4.4060200@redhat.com>
+Date: Mon, 22 Jul 2013 02:26:28 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: openssl default ciphers
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: OpenJDK and lcms2 2.5 release fixes various denial of service issues in lcms2
 Content-Type: text/plain; charset=utf-8
 
-On 11/04/2013 09:37 PM, Reed Loden wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> The Mozilla opsec guys wrote up some good guidelines recently on what
-> they consider a good TLS cipher suite choice should be, but even if you
-> didn't want to go all-out by making the default ultra-secure (with
-> full PFS, etc.), they explain their choices fairly well, so should be
-> useful in trying to figure out a middle ground that makes most people
-> happy.
+On 07/18/2013 06:40 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> The lcms2 2.4 -> 2.5 version upgrade fixes various crashes that
+> could be used by attackers to crash (NULL ptr deref) programs using
+> lcms2, like e.g. OpenJDK 7
+> 
+> This was found in the embedded copy within OpenJDK7 first, then
+> merged to lcms2.
+> 
+> http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2013-July/023895.html
 >
-> https://wiki.mozilla.org/Security/Server_Side_TLS
+>  lcms2 related issues in there: * S8007925: Improve
+> cmsStageAllocLabV2ToV4curves * S8007926: Improve cmsPipelineDup *
+> S8007927: Improve cmsAllocProfileSequenceDescription * S8007929:
+> Improve CurvesAlloc * S8009654: Improve stability of cmsnamed
+> 
+> All covered by lcms2 in this commit (I think): 
+> https://github.com/mm2/Little-CMS/commit/91c2db7f2559be504211b283bc3a2c631d6f06d9
+>
+>  These probably can get just 1 CVE, although I do not know the
+> OpenJDK IcedTea side of the story.
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=826097#c9 has the
+> research into more of these stability commits in lcms2 by my
+> colleague Stanislav Brabec. Not sure if they should get seperate
+> CVEs or not.
+> 
+> Ciao, Marcus
 
-Personally, I find the push towards PFS rather odd.  TLS with PFC is 
-structured in a way that PFS does not unconditionally enhance security. 
-  Without PFC, part of the session key handshake is encrypted to the 
-server's public key.  With PFC, the entire DH handshake is unencrypted, 
-and the server signs its part.  This means that a potential attacker 
-gains another angle, targeting the DH handshake, and it also shifts the 
-picture somewhat as far as the server's public key operation is 
-concerned (decryption vs signing).  There is also the possibility that 
-the asymmetric protection of the DH handshake is insufficient.  (In this 
-discussion, I'm ignoring DSA server certificates in this discussion 
-because they are so rare.)
+Please use CVE-2013-4160 for this issue.
 
-In short, I think it's fairly likely that PFS cipher suites offer weaker 
-security compared to their non-PFS counterparts.  I suspect most PFS's 
-attractiveness stems from its spelled-out name, not its actual technical 
-merits in the context of TLS.
 
--- 
-Florian Weimer / Red Hat Product Security Team
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJR7Oy0AAoJEBYNRVNeJnmTI3UP/ilQRQCahbiqxisBhukMHQ2B
+aV7tM+nHl5gA91hugA8uPn3HJ6NSRG1J2KDRCn066ZsRxHwy8WAerTM7xzq2sMyB
+MPH5svDq+xcu4FlbdI+dz7/2DB0RBxsNZjQIr86GzdhucpTQeLch85rN8wrj/phu
+P1O7/UpmF5iaq+SJJLqsWlzZLp3C2RD6o/SoNwh2J2AXdro5owpkgrK26+QBL0Bs
+3vtpH9tWpe0qROLVV7Q18lco9G4XLbQufXLKRIDI+r76UfySOgR9qi4Pl6b6Jz76
+5jWbUinbPXCBHX4icDedK+qjqUkt79ydpTqDhJX5lGaZfoKmTitGUhItoqstfyxp
+Wx04wDYzIHHCsJSBNVTySmY/XJYKfGTK6mivSfsrDJbeAVbQ6qTFfDEaeUktWkA4
+ivSxh/7LzqwKv+BOdIAOJgKwixEa8m4zv0zi8pslb0W9lkHLZJPy0iQr7FTytgh9
+pXJ5hN3aFRiqKtrNIOD8dMaO+wP3SgM/QaIOAPLgHcK14tJxS23jdogPeKJFXAWi
+c2KxYG8U5P/kHxnwu/VTtUYUHIO9g3meVhizRaNGZIkCnjxjjH9Q4kpGObLTn3+M
+a9o13wPtU78ESyC3AaJmFSpcGJUIE2KmMiHqCdzfCZeKvNJPeaBY/ZJnOQubnH3b
+MuqH4HxRmnfYgYPaUMmO
+=8u9n
+-----END PGP SIGNATURE-----
