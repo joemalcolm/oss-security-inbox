@@ -1,53 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/31/1
-Message-ID: <alpine.LNX.2.00.1301301335340.22747@forced.attrition.org>
-Date: Wed, 30 Jan 2013 13:36:30 -0600 (CST)
-From: Brian Martin <brian@...nsecurityfoundation.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/22/5
+Message-ID: <CABbbngCCTsRA+LGuCxjwSSw1NrdphmCpaspiXL=zOLThWPoeQg@mail.gmail.com>
+Date: Mon, 22 Jul 2013 09:53:23 -0700
+From: Forest Monsen <forest.monsen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [OSVDB Mods] [New Vulnerability] File Disclosure in SimpleMachines Forum <= 2.0.3 (CVE-2013-0192) (fwd)
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
+Hi there, I'd like to request CVE identifiers for two modules:
 
-FYI:
+SA-CONTRIB-2013-058 - MRBS - Abandoned - Mutliple
+vulnerabilities<https://drupal.org/node/2044173>
+https://drupal.org/node/2044173
 
-Kurt has indicated that the 2009 disclosure affects 1.x, and the new 
-affects 2.x, so they warrant separate CVEs. This is the official request 
-for it.
+SA-CONTRIB-2013-059 - Hostmaster (Aegir) - Access Bypass
+https://drupal.org/node/2044299
 
-Brian
-OSF / OSVDB.org
+The first one has been abandoned.
 
----------- Forwarded message ----------
-From: Brian Martin <brian@...nsecurityfoundation.org>
-To: Carlos Alberto Lopez Perez <clopez@...lia.com>
-Cc: OSVDB Mods <moderators@...db.org>, Kurt Seifried <kseifried@...hat.com>
-Date: Wed, 30 Jan 2013 13:27:35 -0600 (CST)
-Subject: Re: [OSVDB Mods] [New Vulnerability] File Disclosure in SimpleMachines
-     Forum <= 2.0.3 (CVE-2013-0192)
+Thanks!
 
+Forest
 
-
-On Wed, 30 Jan 2013, Carlos Alberto Lopez Perez wrote:
-
-: There is a file disclosure vulnerability in SMF (Simple Machines Forum)
-: affecting versions <= 2.0.3 [1]
-:
-: The vulnerability has been assigned CVE-2013-0192 [2] and requires a
-: valid admin backend login to be exploited, therefore has a low security
-: impact score.
-:
-: On some configurations a SMF deployment is shared by several "co-admins"
-: that are not trusted beyond the SMF deployment. This vulnerability
-: allows them to read arbitrary files on the filesystem and therefore gain
-: new privileges by reading the settings.php with the database passwords.
-
-Thanks for the information Carlos.
-
-Kurt; This was originally disclosed in 2009 (see OSVDB 86444 [1]) and
-re-discovered in January 13. If you concur, do you want to see about
-issuing a 2009 CVE? One was never issued for the original disclosure.
-
-Brian
-OSF / OSVDB.org
-
-[1] http://osvdb.org/86444
