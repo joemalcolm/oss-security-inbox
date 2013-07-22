@@ -1,30 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/3
-Message-ID: <alpine.LFD.2.10.1312101258210.28548@javelin.pnq.redhat.com>
-Date: Tue, 10 Dec 2013 13:00:43 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: Linux kernel: net: memory leak in recvmsg handler msg_name & msg_namelen logic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/22/6
+Message-ID: <51ED6E3F.3010403@redhat.com>
+Date: Mon, 22 Jul 2013 11:39:11 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: webcalendar before 1.2.7
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Linux kernel built with the networking support(CONFIG_NET) is vulnerable to an 
-information leakage flaw in the socket layer. It could occur while doing 
-recvmsg(2), recvfrom(2) socket calls. It occurs due to improperly initialised 
-msg_name & msg_namelen message header parameters.
+On 07/22/2013 03:21 AM, Hanno Böck wrote:
+> Hello,
+> 
+> Can I please have three CVEs for webcalendar?
+> 
+> http://sourceforge.net/projects/webcalendar/files/webcalendar%201.2/1.2.7/
+> 
+>  - Security fix: Do not show the reason for a failed login (i.e. "no
+>    such user")
+>  - Security fix: Escape HTML characters in category name.
+>  - Security fix: Check all passed in fields (either via HTML form or via
+>    URL parameter) for certain malicious tags (script, embed, etc.) and
+>    generate fatal error if found.
+> 
+> I'm not sure if the first is really considered CVE-relevant.
 
-A user/program could use this flaw to leak kernel memory bytes.
+To reiterate: so I can confirm CVE assignments, and prevent duplicate
+assignments you *MUST* provide links to the code commits/vulnerable
+code. I don't have the time to go hunting through your source code for
+them. People need to start making better CVE requests, or you're not
+going to get CVEs from me.
 
-Upstream fix:
--------------
-  -> https://git.kernel.org/linus/f3d3342602f8bcbf37d7c46641cb9bca7618eb1c
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Reference:
-----------
-  -> https://bugzilla.redhat.com/show_bug.cgi?id=1039845
-
-
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+iQIcBAEBAgAGBQJR7W4/AAoJEBYNRVNeJnmTl8cP/30PYaE4vRFq9TSxg4AyNIJ0
+47ptsT3R8nHSnlljV63WP2/IrvqPmJ1NpAWs8lUYYGKzHYJ+svLTXkwz7NqEay+i
+j4cRSqDT93KJ05+MDayKa1vRpt9c4yddJKdKrLymf5BhH0YwWgHeV6xSrzdATkxo
+NjAwmVD6OAFDI2mnrBW5+Csqe1wKwFtyWLi9mv7njrir5xq9cC4YNajb3RpezEqw
+x04zICfIi2u9wssMlSQ0p/xxvO+/klfUn8ZPlD5PacQizig0wbFRtzbvWTMwcfok
+H5FyqIEtnSBJuMejJgywJDSMDFV2speekCMkkyzFLg5b+vs75geTOuM1NpGZ6mID
+H4W8DMNB+KZ+980ZlPCLfyvzsuR5voPlISRWERlu4lGnRCt5hiteE8XQsQFjoTR6
+T8RYIVzfU7mJ4kwDuFA96O1+PxKvPDgUt1U7i9P+SCsnRxqX/JjkginSN+PhPcZZ
+uW3qVRDbq1Z1qlKLR+/bhjmOsJXz5eOOrKJofyZq59wSi6/bzjhp589UOZfdn5KR
+7uFQFSArt6Ltt36UiLkPC5ViyrgHbbsBIkUfVsHDaSYakFEtyTr2HoMgpLs28aMJ
+aKf3RK8Du9hSHTJ7vJ8/9tVf34tNTzwlty+PKTy0QsreVKswmzqnu8Le3zc5t6WG
+yBDi2q3DrXKPKiFE+Sn8
+=w8R9
+-----END PGP SIGNATURE-----
