@@ -1,51 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/5
-Message-ID: <20130822083233.GA21932@domone.kolej.mff.cuni.cz>
-Date: Thu, 22 Aug 2013 10:32:33 +0200
-From: Ondřej Bílka <neleai@...nam.cz>
-To: Stephen Röttger <stephen.roettger@...il.com>
-Cc: oss-security@...ts.openwall.com, gcc@....gnu.org
-Subject: Re: PoC: Function Pointer Protection in C Programs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/22/2
+Message-ID: <20130722112125.71fd8cc0@melee>
+Date: Mon, 22 Jul 2013 11:21:25 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE request: webcalendar before 1.2.7
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 21, 2013 at 07:04:58PM +0200, Stephen Röttger wrote:
-> 
-> > What is performance impact for program that just qsorts big array? It
-> > looks like worst case scenario for me.
-> 
-> I just put together a quick test program that sorts an array of 10^6
-> integers and stopped the execution time using "time". The results are as
-> follows (+- 0,01s):
-> 
-> protection disabled, -O0:
-> ./sort_nofpp_0  0,19s user 0,02s system 98% cpu 0,215 total
-> 
-> protection enabled, -O0
-> ./sort_fpp_0  0,54s user 0,01s system 99% cpu 0,549 total
-> 
-> protection disabled, -O3
-> ./sort_nofpp_3  0,15s user 0,01s system 98% cpu 0,157 total
-> 
-> protection enabled, -O3
-> ./sort_fpp_3  0,51s user 0,00s system 99% cpu 0,511 total
-> 
-> So this makes quite a difference:
-> 0,19s -> 0,54s
-> 0,15s -> 0,51s
+Hello,
 
-After bit of thought a loops with callback can be optimized by gcc.
+Can I please have three CVEs for webcalendar?
 
-It could be possible to teach CSE to rewrite
+http://sourceforge.net/projects/webcalendar/files/webcalendar%201.2/1.2.7/
 
-while(foo){
- check(p);
- (*p)(x,y,z);
-}
+ - Security fix: Do not show the reason for a failed login (i.e. "no
+   such user")
+ - Security fix: Escape HTML characters in category name.
+ - Security fix: Check all passed in fields (either via HTML form or via
+   URL parameter) for certain malicious tags (script, embed, etc.) and
+   generate fatal error if found.
 
-into 
+I'm not sure if the first is really considered CVE-relevant.
 
-check(p);
-while(foo){
- (*p)(x,y,z);
-}
+-- 
+Hanno Böck
+http://hboeck.de/
 
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
