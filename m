@@ -1,20 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/13
-Message-ID: <1371242011.27178.4.camel@scapa>
-Date: Fri, 14 Jun 2013 22:33:31 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com, Felipe Pena <felipensp@...il.com>
-Subject: Re: CVE request: FD leakage for cgi program on Monkey HTTPD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/22/4
+Message-ID: <20130722150444.GA8676@eldamar.local>
+Date: Mon, 22 Jul 2013 17:04:44 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: security@...ngoproject.com
+Subject: CVE Request: Django: Account enumeration through timing attack in password verification in django.contrib.auth
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2013-06-14 at 14:02 -0600, Kurt Seifried wrote:
-> Please use CVE-2013-2183 for this issue.
+Hi
 
-Does this mean you disagree with Seth about the analysis?
+Cc'ing security@...ngoproject.com
+
+>From [1] in Django accounts can be enumerated trough timing attacks:
+
+> When attempting to authenticate using django.contrib.auth, if a user does not
+> exist the authenticate() function returns None nearly instantaneously, while
+> when a user exists it takes much longer as the attempted password gets hashed
+> and compared with the stored password. This allows for an attacker to infer
+> whether or not a given account exists based upon the response time of an
+> authentication attempt.  This can be seen much more clearly when the number of
+> rounds on the password hasher is set to something high like 100000.
+
+ [1] https://code.djangoproject.com/ticket/20760
+
+A proposed patch is at [2] but not yet a commit in upstream git repository.
+
+ [2] https://code.djangoproject.com/attachment/ticket/20760/20760_fix_hash_once.diff
+
+Does this needs a CVE asignment?
 
 Regards,
--- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Salvatore
