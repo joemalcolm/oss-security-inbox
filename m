@@ -1,45 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/10
-Message-ID: <20131211155058.GH2348@openstack.org>
-Date: Wed, 11 Dec 2013 15:50:58 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2013-034] Heat CFN policy rules not all enforced (CVE-2013-6426)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/7
+Message-ID: <alpine.LFD.2.03.1307240104350.5565@redhat.com>
+Date: Wed, 24 Jul 2013 01:06:38 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request: Linux kernel: panic while appending data to a corked IPv6 socket in ip6_append_data_mtu
 Content-Type: text/plain; charset=utf-8
 
-[Apologies for the duplicate--forgot to sign the previous one.]
+   Hi,
 
-OpenStack Security Advisory: 2013-034
-CVE: CVE-2013-6426
-Date: December 11, 2013
-Title: Heat CFN policy rules not all enforced
-Reporter: Steven Hardy (Red Hat)
-Products: Heat
-Affects: All supported releases
+Linux kernel built with the IPv6 networking support is vulnerable to a crash
+while appending data to an IPv6 socket with UDP_CORKED option set. UDP_CORK
+enables accumulating data and sending it as single datagram.
 
-Description:
-Steven Hardy from Red Hat reported a vulnerability in Heat's default
-API policy enforcement. By calling the CreateStack or UpdateStack
-methods, an in-instance user may be able to create or update a stack
-in violation of the default policy. Only setups using Heat's
-cloudformation-compatible API are affected.
+An unprivileged user/program could use this flaw to crash the kernel, 
+resulting in local DoS.
 
-Icehouse (development branch) fix:
-https://review.openstack.org/61452
+Upstream fix:
+-------------
+  -> https://git.kernel.org/linus/75a493e60ac4bbe2e977e7129d6d8cbb0dd236be
 
-Havana fix:
-https://review.openstack.org/61454
+Reference:
+----------
+  -> https://bugzilla.redhat.com/show_bug.cgi?id=987633
 
-Notes:
-This fix will be included in the icehouse-2 development milestone
-and in a future 2013.2.1 release.
+Acknowledgements:
+-----------------
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6426
-https://launchpad.net/bugs/1256049
+Red Hat would like to thank Hannes Frederic Sowa for reporting this issue.
 
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
