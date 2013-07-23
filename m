@@ -1,60 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/19/5
-Message-ID: <51C1D0E1.9000704@openstack.org>
-Date: Wed, 19 Jun 2013 17:40:17 +0200
-From: Thierry Carrez <thierry@...nstack.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: [OSSA 2013-017] Issues in Keystone middleware memcache signing/encryption feature (CVE-2013-2166, CVE-2013-2167)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/1
+Message-ID: <20130723063550.GA25741@inutil.org>
+Date: Tue, 23 Jul 2013 08:35:50 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: kseifried@...hat.com, Andreas Nilsson <andreas.nilsson@...en.com>, Florian <floriangaultier@...il.com>, "A. Jesse Jiryu Davis" <jesse@...en.com>
+Subject: Re: CVE Request - MongoDB <=2.4.4 uninitialized object
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Jul 18, 2013 at 08:14:39AM -0400, Dan Pasette wrote:
+> We already requested CVE-2013-2132 for this and it was fixed in version
+> 2.4.5.
+> 
+> We announced it on mongodb-announce and have it listed in our alerts page
+> here: http://www.mongodb.org/about/alerts/
 
-OpenStack Security Advisory: 2013-017
-CVE: CVE-2013-2166, CVE-2013-2167
-Date: June 19, 2013
-Title: Issues in Keystone middleware memcache signing/encryption feature
-Reporter: Paul McMillan (Nebula)
-Products: python-keystoneclient
-Affects: version 0.2.3 to 0.2.5
+http://www.mongodb.org/about/alerts/ now lists CVE-2013-3969 for
+SERVER-9878.
 
-Description:
-Paul McMillan from Nebula reported multiple issues in the implementation
-of memcache signing/encryption feature in Keystone client middleware. An
-attacker with direct write access to the memcache backend (or in a
-man-in-the-middle position) could insert malicious data and potentially
-bypass the encryption (CVE-2013-2166) or signing (CVE-2013-2167)
-security strategy that was specified. Only setups that make use of
-memcache caching in the Keystone middleware (specify memcache_servers)
-and using ENCRYPT or MAC as their memcache_security_strategy are affected.
+So CVE-2013-4142 should be rejected, then.
 
-python-keystoneclient fix (will be included in upcoming 0.2.6 release):
-https://review.openstack.org/#/c/33661
-
-References:
-https://bugs.launchpad.net/python-keystoneclient/+bug/1175367
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2166
-https://bugs.launchpad.net/python-keystoneclient/+bug/1175368
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2167
-
-- -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJRwdDhAAoJEFB6+JAlsQQjfwYP/i3is9VMQXQAo9PvjsNnLkEU
-MuvvDhxqu9bmqUFrXwbMfLUy8AM5QGPvWetge5Y7xDci6j4a5vNgw4XmzuP1xKvs
-1GZ44pVO+GaqRwb5cuPXo3bcdGcRTVboZSdDTVDb4MIZ8i6sQil6BG+XUQgaPHQb
-4MMDbLqFJCQjKSEO6hDFyXwDTb4BwGh+UtjiX4itChplg9Ac4YvVjz0Wpb9oH0L0
-CcFoSBw+zmSGkQFM0+jtb0P3lwpRwcVlcsxmh+veInXToaAD38lIjZ9qecIdsz5J
-XdFZXnRd1pvWZUPa9IcmVG8uBfTsY6T59eygCX82RvrRwSf7+uV+medxycRscMlL
-TFLktHVsAk+jsx8xBHPi3MZxobkCTql/CnXOpvAV/7+xWVIeoS9K30z1qyNEyKc5
-4t0m9Zn1VtT5ohGvdomc0E0inJfz28DXZ/7wfVneOeK0kPGsn6SzQ4UWRcbo7XH7
-PSjBeFBZ1C3MhRfrMiiOwtwhuoUctDqEZM2Jfb2LA4YZDXJ5P48v/3hzhtnIW76t
-9vVTGf7RR+oG/wmyf/0CKRF3HouIFv+uNbxrjxFKi8jGc2d+aCg3a1d3nekYSCt+
-qecqdiJEm3xlCLuhBxYoWWj3eCQIqAS24RRJzy9gr+AfeDcNtEUBTkFN7LOGu62O
-uI+3q+8vLH/GuhV7gPnS
-=a3MM
------END PGP SIGNATURE-----
+Cheers,
+        Moritz
