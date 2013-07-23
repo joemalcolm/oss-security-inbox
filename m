@@ -1,36 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/22/2
-Message-ID: <20131222103407.GA11061@openwall.com>
-Date: Sun, 22 Dec 2013 14:34:07 +0400
-From: Solar Designer <solar@...nwall.com>
-To: nick@...edev.com
-Cc: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, tenderlove@...y-lang.org
-Subject: Re: [CVE-2013-4491] Reflective XSS Vulnerability in Ruby on Rails
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/3
+Message-ID: <20130723150657.GF11432@kludge.henri.nerv.fi>
+Date: Tue, 23 Jul 2013 18:06:57 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Cisco announces agreement to acquire Sourcefire
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+http://www.marketwire.com/press-release/cisco-announces-agreement-to-acquire-sourcefire-nasdaq-csco-1813520.htm
 
-On Sun, Dec 22, 2013 at 01:29:58AM -0800, nick@...edev.com wrote:
-> I am trying to upgrade but the suggested error handler doesn't work.
-...
+---
+Henri Salo
 
-Are these followup postings still on topic for oss-security, or should
-this possibly be discussed elsewhere and, if necessary and when ready,
-summarized for/on oss-security as well (e.g., in the form of a revised
-security advisory)?  I am not sure, and as a co-moderator I am wondering
-if/when we should start rejecting messages in this thread that are CC'ed
-to oss-security by non-subscribers.  I'd appreciate advice.
-
-This is actually part of a more generic issue: whenever an upstream
-project posts a security advisory CC'ed to that project's list(s) and to
-oss-security, we often end up getting followup postings by users of the
-project's software who are not into security and thus comment on
-non-security aspects.  This is sometimes fine and maybe even desirable,
-but sometimes it gets too far off topic for oss-security, and it's often
-difficult for moderators to decide when to start rejecting.  A better
-approach may be for upstream projects to be sending such announcements
-to their lists and to oss-security separately, not by CC'ing.
-(I actually asked OpenStack to start doing that a while ago, and I guess
-they're doing it that way now.)
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
