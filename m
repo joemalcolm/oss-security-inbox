@@ -1,72 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/7
-Message-ID: <alpine.LFD.2.03.1301161809360.4004@redhat.com>
-Date: Wed, 16 Jan 2013 18:17:28 +0530 (IST)
-From: P J P <ppandit@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/4
+Message-ID: <51EEBAA9.8060000@pipping.org>
+Date: Tue, 23 Jul 2013 19:17:29 +0200
+From: Sebastian Pipping <sebastian@...ping.org>
 To: oss-security@...ts.openwall.com
-cc: kargig@...d.gr
-Subject: Re: Linux kernel handling of IPv6 temporary addresses
+Subject: CVE request: mysecureshell: information disclosure (or worse)
 Content-Type: text/plain; charset=utf-8
 
-
-   Hello George,
-
-+-- On Wed, 16 Jan 2013, George Kargiotakis wrote --+
-| You can reproduce the bug with a new option for flood_router26 that has been added to the thc-ipv6 toolkit v2.1.
-| # ./flood_router26 -A eth0
-
-  I tried this, it takes quite a while for other hosts to receive the 
-generated traffic. On the receiving hosts kernel logs
-
-==
-...
-...kernel: Neighbour table overflow.
-==
-
-no log message from ipv6_create_tempaddr() routine. 
+Hello everyone,
 
 
-| I've applied your patch to 3.5.7 and unless I've done something wrong, it doesn't seem to work. Actually I can't
-| get any temporary address assignment with it. This is what I get upon booting with your patch:
+mysecureshell [1] is an SFTP-only shell to be used with sshd.
 
-  Ah, very sorry, I missed to say: ift = ipv6_add_addr(...) : in my last 
-patch. It remains NULL all the time. Please try this fixed version
+The latest release 1.31 makes use of shared memory to maintain 128 slots
+with one struct for each connection/process.
+Access to that block of shared memory is not (or not properly)
+synchronized, so two or more processes might end up occupying the very
+same slot when process scheduling wants that to happen.  The effective
+permissions of the process remain untouched, though.  So it's logging in
+as someone else and it isn't.
 
-===
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 420e563..0aaaa63 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -1046,12 +1046,19 @@ retry:
- 	if (ifp->flags & IFA_F_OPTIMISTIC)
- 		addr_flags |= IFA_F_OPTIMISTIC;
- 
--	ift = !max_addresses ||
--	      ipv6_count_addresses(idev) < max_addresses ?
--		ipv6_add_addr(idev, &addr, tmp_plen,
--			      ipv6_addr_type(&addr)&IPV6_ADDR_SCOPE_MASK,
--			      addr_flags) : NULL;
--	if (!ift || IS_ERR(ift)) {
-+    ift = NULL;
-+    if (!max_addresses || ipv6_count_addresses(idev) < max_addresses)
-+        ift = ipv6_add_addr(idev, &addr, tmp_plen,
-+                        ipv6_addr_type(&addr) & IPV6_ADDR_SCOPE_MASK,
-+                        addr_flags);
-+    if (!ift) {
-+        in6_ifa_put(ifp);
-+        in6_dev_put(idev);
-+        pr_info("%s: ipv6 temporary address upper limit reached\n", __func__);
-+        ret = -1;
-+        goto out;
-+    }
-+    else if (IS_ERR(ift)) {
- 		in6_ifa_put(ifp);
- 		in6_dev_put(idev);
- 		pr_info("%s: retry temporary address regeneration\n", __func__);
-===
+The relevant code from SftpServer/SftpWho.c (lines 106 and after) is:
+
+  for (i = 0; i < SFTPWHO_MAXCLIENT; i++)
+      if (who[i].status == SFTPWHO_EMPTY)
+      {
+          (void) usleep(100);
+          if (who[i].status == SFTPWHO_EMPTY)
+          {
+              //clean all old infos
+              memset(&who[i], 0, sizeof(*who));
+              //marked structure as occuped :)
+              who[i].status = SFTPWHO_IDLE;
+              return (&who[i]);
+          }
+      }
+
+The symptoms of this bug have been reported earlier at [2] by forum user
+"voleg".  To my best knowledge, there is no CVE number assigned yet.
+
+Best,
 
 
-Thanks so much.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+
+Sebastian
+
+
+[1] http://mysecureshell.sourceforge.net/
+[2] http://mysecureshell.free.fr/forum/viewtopic.php?id=655
