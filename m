@@ -1,13 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/11
-Message-ID: <CAJzxam+Gs2wua5arNqWU3nxvbDAZTB=MVTZWaYdO-++KoHe3nw@mail.gmail.com>
-Date: Thu, 21 Mar 2013 01:13:15 +1100
-From: David Black <disclosure@....org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request: python-pip insecure temporary directory handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/5
+Message-ID: <51EEBB23.40204@pipping.org>
+Date: Tue, 23 Jul 2013 19:19:31 +0200
+From: Sebastian Pipping <sebastian@...ping.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: mysecureshell: local denial of service (or worse)
 Content-Type: text/plain; charset=utf-8
 
-Prior to version 1.3 pip used '/tmp/pip-build' as a temporary
-directory and as per the report in
-https://github.com/pypa/pip/issues/725 would follow a symbolic link
-placed at '/tmp/pip-build' when writing temporary files.
+Hello everyone,
+
+
+mysecureshell [1] is an SFTP-only shell to be used with sshd.
+
+The latest release 1.31 makes use of shared memory with permissions 666
+to maintain 128 slots with one struct for each connection/process.
+An unprivileged user can mark mark all remaining slots as occupied (and
+optionally wait for remaining clients to leave to block those slots, too).
+
+To demonstrate the issue, I have written a small command line tool.
+It's free software and can be found at [2].  Use it like this:
+
+  # make
+  cc -std=c99 -Wall -Wextra -pedantic local-dos.c -o local-dos
+
+  # ./local-dos
+  USAGE:
+    ./local-dos (block|unblock|show)
+
+  # watch -n 1 -d ./local-dos block
+  [..]
+
+Besides the local DoS it might be possible to attack the call to chdir,
+since that is reading from shared memory, too.
+
+Any ideas on other attacks based on writing to that block of shared
+memory?  File /bin/MySecureShell is mode 4755 setuid root if that makes
+it more interesting :-)
+
+Best,
+
+
+
+Sebastian
+
+
+[1] http://mysecureshell.sourceforge.net/
+[2] https://github.com/hartwork/mysecureshell-issues
