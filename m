@@ -1,188 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/6
-Message-ID: <CAA7hUgE_xknsSqeYVZhG4Ka8J2=AA4ZQR=Ppgws1oGOCOJv==A@mail.gmail.com>
-Date: Wed, 4 Dec 2013 12:24:31 +0100
-From: Raphael Geissert <atomo64@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/12
+Message-ID: <20130723221539.GH11432@kludge.henri.nerv.fi>
+Date: Wed, 24 Jul 2013 01:15:39 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: [vs] multiple issues in openjpeg
+Cc: security@...ngoproject.com, Salvatore Bonaccorso <carnil@...ian.org>
+Subject: Re: CVE Request: Django: Account enumeration through timing attack in password verification in django.contrib.auth
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Jul 22, 2013 at 05:04:44PM +0200, Salvatore Bonaccorso wrote:
+> Hi
+> 
+> Cc'ing security@...ngoproject.com
+> 
+> From [1] in Django accounts can be enumerated trough timing attacks:
+> 
+> > When attempting to authenticate using django.contrib.auth, if a user does not
+> > exist the authenticate() function returns None nearly instantaneously, while
+> > when a user exists it takes much longer as the attempted password gets hashed
+> > and compared with the stored password. This allows for an attacker to infer
+> > whether or not a given account exists based upon the response time of an
+> > authentication attempt.  This can be seen much more clearly when the number of
+> > rounds on the password hasher is set to something high like 100000.
+> 
+>  [1] https://code.djangoproject.com/ticket/20760
+> 
+> A proposed patch is at [2] but not yet a commit in upstream git repository.
+> 
+>  [2] https://code.djangoproject.com/attachment/ticket/20760/20760_fix_hash_once.diff
+> 
+> Does this needs a CVE asignment?
+> 
+> Regards,
+> Salvatore
 
-This was unembargoed yesterday, so here's a copy of the messages sent
-to the distros list.
-There were no responses, so no messages are missing.
+Please see comments from aaugustin
+https://code.djangoproject.com/ticket/20760#comment:23
 
-In the meantime I've received a response from one of upstream authors,
-Mathieu Malaterre, saying he would be reviewing the patches at a later
-time.
+This is exemplary case of CWE-208 and similar issues have received CVEs.
 
-This work was done as part of a review of openjpeg for EDF.
+---
+Henri Salo
 
-Cheers,
-Raphael
-
----------- Forwarded message ----------
-From: Raphael Geissert <atomo64@...il.com>
-Date: 1 December 2013 23:42
-Subject: Re: [vs] multiple issues in openjpeg
-To: distros@...openwall.org
-
-
-Hi again,
-
-Given that there has been no response whatsoever...
-
-On 26 November 2013 12:04, Raphael Geissert <atomo64@...il.com> wrote:
-[...]
-> 1. heap OOB reads, information leaks
-
-CVE-2013-6052
-
-> 2. ditto, but only affecting 1.5.1
-
-CVE-2013-6053
-
-> 3. heap OOB writes (CVE-2013-6045)
-> 4. ditto but only affecting 1.3
-
-CVE-2013-6054
-
-> 5. null pointer dereferences, division by zero, and anything that
-> would just fit as DoS (CVE-2013-1447)
-> 6. ditto, but only affecting 1.5.1
-
-CVE-2013-6887
-
-Cheers,
---
-Raphael Geissert
-
-
----------- Forwarded message ----------
-From: Raphael Geissert <atomo64@...il.com>
-Date: 26 November 2013 12:04
-Subject: [vs] multiple issues in openjpeg
-To: distros@...openwall.org
-
-
-Hi everyone,
-
-During a review for EDF, I discovered multiple kinds of
-vulnerabilities in openjpeg (different than CVE-2013-4289 and
-CVE-2013-4290).
-
-Summary:
-* multiple denial of service (null ptr deref, high resource
-consumption - in the order of 20GBs, division by zero, etc),
-* invalid free()s (didn't check impact),
-* out of bounds array reads and writes (similar to CVE-2012-3358, so
-possibly exploitable to run arbitrary code),
-* a format string bug (didn't check impact, at least DoS, ileak), and
-* the use of uninitialized memory for all sorts of things.
-
-Notice that this does not constitute a full review and that there
-surely are more issues left in the code base.
-
-Versions reviewed:
-* 1.3 (with Debian's patches, as found in Debian squeeze and wheezy), and
-* 1.5.1 (as found in Debian experimental).
-Other versions might also be affected.
-
-Upstream was contacted but got no response.
-
-CVE-wise, I've classified the issues as following:
-
-1. heap OOB reads, information leaks
-2. ditto, but only affecting 1.5.1
-3. heap OOB writes (CVE-2013-6045)
-4. ditto but only affecting 1.3
-5. null pointer dereferences, division by zero, and anything that
-would just fit as DoS (CVE-2013-1447)
-6. ditto, but only affecting 1.5.1
-
-The two CVE ids above come from Debian's pool, but given the above
-classification more ids are going to be needed. If there's an
-agreement to the above, could somebody please assign some other ids?
-
-Now, as for the vulnerabilities themselves, they are best described by
-the attached patches. If details for any specific patch are desired
-don't hesitate to ask. They should apply to both versions almost
-as-is, if they don't, prod me.
-
-Patches by categories defined above:
-
-1.
-shifting_too_much.patch
-2.
-segfault3.patch
-3.
-segfault0.patch
-segfault1.patch
-segfault2.patch
-segfault5.patch
-segfault7.patch
-4.
-qcx_backport.patch
-5.
-bloop1.patch
-bloop2.patch
-divbyzero.patch
-null-ptr-deref.patch
-segfault4.patch
-segfault6.patch
-segfault8.patch
-segfault10.patch
-uint_overflow.patch
-6.
-ifree1.patch
-
-The patch that replaces malloc with calloc (segfault4.patch) is surely
-enough just a workaround, but there are too many problems with the
-code to spend further time on it.
-
-Desired CDR: 3rd of December, 07:00 UTC
-
-Cheers,
---
-Raphael Geissert
-
-
--- 
-Raphael Geissert
-
-View attachment "bloop1.patch" of type "text/x-patch" (765 bytes)
-
-View attachment "bloop2.patch" of type "text/x-patch" (2154 bytes)
-
-View attachment "divbyzero.patch" of type "text/x-patch" (1874 bytes)
-
-View attachment "ifree1.patch" of type "text/x-patch" (1113 bytes)
-
-View attachment "null-ptr-deref.patch" of type "text/x-patch" (1166 bytes)
-
-View attachment "qcx_backport.patch" of type "text/x-patch" (1149 bytes)
-
-View attachment "segfault0.patch" of type "text/x-patch" (857 bytes)
-
-View attachment "segfault1.patch" of type "text/x-patch" (1428 bytes)
-
-View attachment "segfault2.patch" of type "text/x-patch" (774 bytes)
-
-View attachment "segfault3.patch" of type "text/x-patch" (628 bytes)
-
-View attachment "segfault4.patch" of type "text/x-patch" (509 bytes)
-
-View attachment "segfault5.patch" of type "text/x-patch" (726 bytes)
-
-View attachment "segfault6.patch" of type "text/x-patch" (590 bytes)
-
-View attachment "segfault7.patch" of type "text/x-patch" (662 bytes)
-
-View attachment "segfault8.patch" of type "text/x-patch" (583 bytes)
-
-View attachment "segfault10.patch" of type "text/x-patch" (502 bytes)
-
-View attachment "shifting_too_much.patch" of type "text/x-patch" (1947 bytes)
-
-View attachment "uint_overflow.patch" of type "text/x-patch" (710 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
