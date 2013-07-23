@@ -1,35 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/13/2
-Message-Id: <201312130325.rBD3PaaM015876@linus.mitre.org>
-Date: Thu, 12 Dec 2013 22:25:36 -0500 (EST)
-From: cve-assign@...re.org
-To: ratulg@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: devscripts (uscan) broken handling of filenames with whitespace
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/2
+Message-ID: <20130723143306.GA7183@eldamar.local>
+Date: Tue, 23 Jul 2013 16:33:06 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: security@...ngoproject.com
+Subject: Re: CVE Request: Django: Account enumeration through timing attack in password verification in django.contrib.auth
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-> If USCAN_EXCLUSION is enabled, uscan doesn't correctly handle filenames
-> containing whitespace. This can be abused my malicious upstream to
-> delete files of their choice.
+On Mon, Jul 22, 2013 at 05:04:44PM +0200, Salvatore Bonaccorso wrote:
+> Hi
+> 
+> Cc'ing security@...ngoproject.com
+> 
+> From [1] in Django accounts can be enumerated trough timing attacks:
+> 
+> > When attempting to authenticate using django.contrib.auth, if a user does not
+> > exist the authenticate() function returns None nearly instantaneously, while
+> > when a user exists it takes much longer as the attempted password gets hashed
+> > and compared with the stored password. This allows for an attacker to infer
+> > whether or not a given account exists based upon the response time of an
+> > authentication attempt.  This can be seen much more clearly when the number of
+> > rounds on the password hasher is set to something high like 100000.
+> 
+>  [1] https://code.djangoproject.com/ticket/20760
+> 
+> A proposed patch is at [2] but not yet a commit in upstream git repository.
+> 
+>  [2] https://code.djangoproject.com/attachment/ticket/20760/20760_fix_hash_once.diff
+> 
+> Does this needs a CVE asignment?
 
-Use CVE-2013-7085.
+Only a update: this was now fixed in [1] in master branch, and in [2]
+as backport for 1.6.x.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+ [1] https://github.com/django/django/commit/5dbca13f3baa2e1bafd77e84a80ad6d8a074712e
+ [2] https://github.com/django/django/commit/4525eab0779a2946063288224dcebb61ba382976
 
-iQEcBAEBAgAGBQJSqnyLAAoJEKllVAevmvmspLgIALFtX//Ly03mk4N40kjk88en
-YndflL0ZwPDDcZPd59CgyUaNOaOYGq+NsVFzrAacLA88Xnt76zHe7gT2EXHOYl4y
-iaigFLDzsbYTW1kY1+A9lTn96LhVyGhGlr1sUyGWdV0js6BuTOf1qon3DNheTSRk
-MEHsc6dl2bmxVCCsPl3un81tWP8GUQKqx5Z4f520Uwobild3UHwJM6rWfmsTPuif
-kzpjvV+s1oG+vx4gLagg3IJ/IaD6ujlI2iw7fx8thc26ikcbPiHQHIGhKQWgXMYn
-k1JyMZBizx/9gBCk9g/7dCp8SQTFI/fPAugsJWQGPcv/sQ59T1G8+T37Ph/rUaE=
-=k0jK
------END PGP SIGNATURE-----
+Regards,
+Salvatore
