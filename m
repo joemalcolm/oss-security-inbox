@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/14
-Message-ID: <20130121145448.GA8751@suse.de>
-Date: Mon, 21 Jan 2013 15:54:48 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE Request coreutils
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/11
+Message-ID: <alpine.LFD.2.03.1307240138510.6898@redhat.com>
+Date: Wed, 24 Jul 2013 01:45:26 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: Linux kernel: panic while appending data to a corked IPv6 socket in ip6_append_data_mtu
 Content-Type: text/plain; charset=utf-8
 
-Hi,
++-- On Tue, 23 Jul 2013, Seth Arnold wrote --+
+| UDP_CORKED? I don't see this string in my /usr/include/ or recent Linux git 
+| tree. 
+| Am I missing something?
 
-Can someone assign a CVE id for a buffer overflow in coreutils?
-Its the same code snippet (coreutils-i18n.patch) and it affects sort, uniq and join:
+  It's one of those non-portable Linux socket options.
 
-https://bugzilla.novell.com/show_bug.cgi?id=798538
-https://bugzilla.novell.com/show_bug.cgi?id=796243
-https://bugzilla.novell.com/show_bug.cgi?id=798541
+===
+$ man 7 udp 
+ ...
+ UDP_CORK (since Linux 2.5.44)
+              If  this  option is enabled, then all data output on this socket
+              is accumulated into a single datagram that is  transmitted  when
+              the  option is disabled.  This option should not be used in code
+              intended to be portable.
+===
 
-regards,
-Sebastian
+Though the crash is more of due to IPV6_MTU value set. (from commit log)
 
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
