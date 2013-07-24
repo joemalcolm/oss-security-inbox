@@ -1,68 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/8
-Message-ID: <5162F7AB.7080301@redhat.com>
-Date: Mon, 08 Apr 2013 11:00:27 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Damien Regad <damien.regad@...ckgroup.com>
-Subject: Re: Re: Multiple CVE requests for MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/24/4
+Message-Id: <E1V1xNG-00008D-Po@xenbits.xen.org>
+Date: Wed, 24 Jul 2013 11:36:55 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 60 (CVE-2013-2212) - Excessive time to disable caching with HVM guests with PCI passthrough
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/08/2013 03:47 AM, Damien Regad wrote:
-> Kurt Seifried <kseifried@...> writes:
->> Please use CVE-2013-1930 for this issue.
-> 
-> Hi Kurt,
-> 
-> Thanks for assigning the 3 CVE's.
-> 
->>> 4. XSS issue on Configuration Report page when displaying
->>> complex value
->>> 
->>> This issue affects Mantis 1.2.0rc1 and later.
->>> 
->>> Lack of proper string escaping allows users (having admin
->>> access) to enter arbitrary javascript code and have it executed
->>> on the user's browser.
->>> 
->>> Reference: http://www.mantisbt.org/bugs/view.php?id=15416
->> 
->> Does this count as a proper release or does it fall into the
->> "beta" classification?
-> 
-> 1.2.0rc1 was a beta release. The first "proper" release affected by
-> this was 1.2.0
+             Xen Security Advisory CVE-2013-2212 / XSA-60
+                             version 4
 
-Ok not assigning a CVE then, unless there are a large number of users
-betas don't get CVEs.
+   Excessive time to disable caching with HVM guests with PCI passthrough
 
-> Hope this clarifies, let me know if you need more info.
-> 
-> Damien
-> 
-> 
+UPDATES IN VERSION 4
+====================
 
+Public release.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+ISSUE DESCRIPTION
+=================
+
+HVM guests are able to manipulate their physical address space such that
+processing a subsequent request by that guest to disable caches takes an
+extended amount of time changing the cachability of the memory pages assigned
+to this guest. This applies only when the guest has been granted access to
+some memory mapped I/O region (typically by way of assigning a passthrough
+PCI device).
+
+This can cause the CPU which processes the request to become unavailable,
+possibly causing the hypervisor or a guest kernel (including the domain 0 one)
+to halt itself ("panic").
+
+For reference, as long as no patch implementing an approved alternative
+solution is available (there's only a draft violating certain requirements
+set by Intel's documentation), the problematic code is the function
+vmx_set_uc_mode() (in that it calls ept_change_entry_emt_with_range() with
+the full guest GFN range, which the guest has control over, but which also
+would be a problem with sufficiently large but not malicious guests).
+
+IMPACT
+======
+
+A malicious domain, given access to a device with memory mapped I/O
+regions, can cause the host to become unresponsive for a period of
+time, potentially leading to a DoS affecting the whole system.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen version 3.3 onwards is vulnerable.
+
+Only systems using the Intel variant of Hardware Assisted Paging (aka EPT) are
+vulnerable.
+
+MITIGATION
+==========
+
+This issue can be avoided by not assigning PCI devices to untrusted guests, or
+by running HVM guests with shadow mode paging (through adding "hap=0" to the
+domain configuration file).
+
+CREDITS
+=======
+
+Konrad Wilk found the issue as a bug, which on examination by the
+Xenproject.org Security Team turned out to be a security problem.
+
+RESOLUTION
+==========
+
+There is currently no resolution to this issue.
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRYverAAoJEBYNRVNeJnmTY7MP/AqImz3OEiHIMEJtdTaIe5f/
-d+t9UypinW/nTjV3CCovR93F2om90Z9h891OBWSBvozJdab3NRyHZKFRrjyG275a
-6pdVMP9IXrKjxUn30P58JDLc8D9cUZHazE45hXmhLz8UBs44m/rW2TtqTNkuZwqp
-9jwrH/PbFZj1rIsWpizY5NJW0dpA34Okj2Kj//GpMSHjzocEpSzw0q9NUSMxij63
-WZ2jql+yLihYULjPRF2IeTl+TkhPlmIlhmxitKKt+lV+ZAyR3MAFE5Y2z8WKLiGi
-nf/94izFZLUJ1sMlXRRBTlXV4NfR71jElT0M4JBVQW1Ph7mlULA13f30TFEOjCuS
-hM4DPMPHyWHp5N2nGDGizkh1b99JBawUkMpPOAMlDEJYnwZVar70UgCzoKpjsbuc
-3Yo0s8mS+DdOOWz3oOpaf+PImaFgHfrxgkIyEB/PuIja27vo7aYV/7gYjSeSqn5x
-9sV+4tFD3vLsI7E5KPYGG7s8w/JYw7mfBUnYLJLuOuLu+YpqkTj4ooM/YZNYjHk2
-CoJ4gZMwdeHy6i+MlqCThUthb99xcnVbXhwF5b3in4We0LmCOzmpV9do+wj1VA+L
-HW6JtoaszYaJ0vkLknPwHjuq5eIn0UkSm7EKjVgzfjgbyjMj/PMEnh/YPewSvRyE
-MfUeMokQsR54xX0d8HOb
-=uiSE
+iQEcBAEBAgAGBQJR77wrAAoJEIP+FMlX6CvZB5MH/ibfpjHuoGOIo7mWukld4NM5
+UVIKC+rTrnkYhbF2f+xIM833+WAUjPuXZKZ6/EirDAPAAQCut2DouNvVdVnZ5cBx
+rq0N8l9wy0/dq/7kCyI3kAGFlJ3VYz7aM5+TTPFGfO7Yq3ohUNu2EE4vv/t5KVjD
+H4reh8UaA5QuRbdh3evCM9Vdt2syqi8JQwB5D2CJqrgAuFPwEVle8MLKSXWWb/+V
+KUy+mRAb1tN3jbWIev0TZ7Hm3x61yO60/WFzsQzkmkd+qWvC5btkWDg05K5DHC+Q
+yvFU3Y5u7J/ub00ZO4e9wjNDG5+ItQUK4xp8y5s65qx27P/eK9VLi8dvnHVMk04=
+=HUbY
 -----END PGP SIGNATURE-----
+
