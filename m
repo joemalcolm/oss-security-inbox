@@ -1,80 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/13
-Message-ID: <20130222114615.GC27037@gremlin.ru>
-Date: Fri, 22 Feb 2013 15:46:15 +0400
-From: gremlin@...mlin.ru
-To: oss-security@...ts.openwall.com
-Subject: Re: nginx world-readable logdir
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/24/2
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF26F9CFE2@IMCMBX01.MITRE.ORG>
+Date: Wed, 24 Jul 2013 04:26:41 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "security@...ngoproject.com" <security@...ngoproject.com>, "Salvatore Bonaccorso" <carnil@...ian.org>, Henri Salo <henri@...v.fi>
+Subject: RE: CVE Request: Django: Account enumeration through timing attack in password verification in django.contrib.auth
 Content-Type: text/plain; charset=utf-8
 
-On 22-Feb-2013 10:49:38 +0200, Henri Salo wrote:
+Donald Stufft said:
 
- >>> So I think that ${subject} is just a misconfiguration.
+>I don't think this really deserves a CVE. All versions of Django prior to
+>1.6 (unreleased) have allowed you to determine if a username existed
+>or not via the login failure message, negating the need to do any sort
+>of timing attack.
 
- >> Welp I confirmed it on Fedora 16. So at least some things are
- >> affected.
+The simple existence of a timing issue does not automatically qualify something for a CVE.  We have typically taken the approach that if there's a "policy" of a product in which the information is not regarded as sensitive - such as intended functionality - then this does not cross "privilege boundaries" and would not qualify for a CVE.  For example, if users automatically get public profiles, then the username might not be private.  If Django was intentionally providing this specific login failure details as a convenience to its users, then that forms a "policy" (which still might deserve its own CVE because Django admins might not want that).
 
- > Some distros are affected.
+This is an interesting case, because the "legitimate functionality" (login error message infoleak) is itself (potentially) an issue.
 
-Alas for them... But the solution is simple.
+Is the login failure message hard-coded, or is it dependent on configuration?  If there's a possible configuration that hides the cause of login failure such as a custom message, then the timing attack would still be a valid scenario for enumerating usernames under that otherwise-good configuration, and would get a CVE.
 
- > Good to hear not all are.
+Regardless, there probably needs to be a CVE for the login failure username enumeration before 1.6 (unless there already is one).
 
-%install
-# ...
-mkdir -pm750 %{buildroot}%{_localstatedir}/log/%{name}
-touch	%{buildroot}%{_localstatedir}/log/%{name}/access.log \
-	%{buildroot}%{_localstatedir}/log/%{name}/error.log
+There is still a (minor) question about whether a CVE is necessary for the timing discrepancy.  When dealing with closely-related issues, another question is "if issue 1 is fixed, then would that automatically fix issue 2?"  (This is effectively finding chains.)  In this case, a fix for the login failure error message would not fix the timing discrepancy, so they are distinguishable issues, at the least.
 
-%post
-# ...
-touch	%{_localstatedir}/log/%{name}/access.log \
-	%{_localstatedir}/log/%{name}/error.log
-chown -R root:wheel %{_localstatedir}/log/%{name}
-chmod 750 %{_localstatedir}/log/%{name}
-chmod 640 %{_localstatedir}/log/%{name}/*
-# ...
+- Steve
 
-%files
-# ...
-%ghost %{_localstatedir}/log/%{name}/access.log
-%ghost %{_localstatedir}/log/%{name}/error.log
-
-The use of `touch` is preferred as it doesn't trash the existing logs
-on package update, and explicit `chmod` and `chown` ensure that their
-permissions are correct (Captain Obvious to the rescue, I know).
-
- > This is not just misconfiguration.
-
-This issue isn't related to the nginx itself.
-However, I'd agree that nginx could use restrictive mode for its' log
-files:
-
-diff -burpN nginx-1.2.7.orig/src/core/ngx_log.c nginx-1.2.7/src/core/ngx_log.c
---- nginx-1.2.7.orig/src/core/ngx_log.c	2012-01-18 19:07:43.000000000 +0400
-+++ nginx-1.2.7/src/core/ngx_log.c	2013-02-22 15:42:04.000000000 +0400
-@@ -325,7 +325,7 @@ ngx_log_init(u_char *prefix)
- 
-     ngx_log_file.fd = ngx_open_file(name, NGX_FILE_APPEND,
-                                     NGX_FILE_CREATE_OR_OPEN,
--                                    NGX_FILE_DEFAULT_ACCESS);
-+                                    NGX_FILE_USR_GRP_ACCESS);
- 
-     if (ngx_log_file.fd == NGX_INVALID_FILE) {
-         ngx_log_stderr(ngx_errno,
-diff -burpN nginx-1.2.7.orig/src/os/unix/ngx_files.h nginx-1.2.7/src/os/unix/ngx_files.h
---- nginx-1.2.7.orig/src/os/unix/ngx_files.h	2012-03-27 20:42:34.000000000 +0400
-+++ nginx-1.2.7/src/os/unix/ngx_files.h	2013-02-22 15:41:22.000000000 +0400
-@@ -98,6 +98,7 @@ typedef struct {
- #endif /* NGX_HAVE_OPENAT */
- 
- #define NGX_FILE_DEFAULT_ACCESS  0644
-+#define NGX_FILE_USR_GRP_ACCESS  0640
- #define NGX_FILE_OWNER_ACCESS    0600
-
-
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
