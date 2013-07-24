@@ -1,33 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/4
-Message-ID: <51DCE865.2020609@msgid.tls.msk.ru>
-Date: Wed, 10 Jul 2013 08:51:49 +0400
-From: Michael Tokarev <mjt@....msk.ru>
-To: "Adam D. Barratt" <adam@...m-barratt.org.uk>
-CC: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE request: FreeSWITCH regex substitution 3 buffer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/24/7
+Message-ID: <51EFFDEB.5010805@gmail.com>
+Date: Wed, 24 Jul 2013 18:16:43 +0200
+From: Paul <pawlkt@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: timing leak in bitcoind
 Content-Type: text/plain; charset=utf-8
 
-10.07.2013 08:43, Adam D. Barratt wrote:
-> On Wed, 2013-07-10 at 08:26 +0400, Michael Tokarev wrote:
->> The thing is that I did _not_ get a reply, and did not get Adam's
->> message either.  I see them now in the archives but not in my inbox.
-> 
-> fwiw, in the case of my first message you will only have the copy that
-> went to the list, as mails have Reply-To: set and I didn't overrride
-> that. (I've added you directly this time.)
+Low risk issue in RPC auth. code, described here:
+https://github.com/bitcoin/bitcoin/issues/2838
 
-Yes, I've seen this in the archives (on the openwall.com site).  I'm
-subscribed to the list, and now I received two messages from you -- one
-sent to me directly and another that went to the list.  For two other
-mails - the CVE-2013-2238 assignment (message from Kurt) and your note
-about it I received nothing at all.
+-- 
+Regards,
+Paul
 
-I'll watch archives from now on, to detect further mail loss and to try
-to understand what's going on.
 
-(And this is now not relevant to FreeSWITCH ofcourse... ;)
-
-Thanks!
-
-/mjt
