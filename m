@@ -1,52 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/17/2
-Message-Id: <201310171353.r9HDrnmQ000161@linus.mitre.org>
-Date: Thu, 17 Oct 2013 09:53:49 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/24/1
+Message-Id: <472F6B92-B09F-4FEB-B6A9-5C2F973A75AE@stufft.io>
+Date: Tue, 23 Jul 2013 23:21:33 -0400
+From: Donald Stufft <donald@...fft.io>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, stbuehler@...httpd.net, jww@...omium.org, security@...illa.org
-Subject: Re: browser document.cookie DoS vulnerability
+Cc: security@...ngoproject.com, Salvatore Bonaccorso <carnil@...ian.org>
+Subject: Re: CVE Request: Django: Account enumeration through timing attack in password verification in django.contrib.auth
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
->> http://www.openwall.com/lists/oss-security/2013/04/03/10
+On Jul 23, 2013, at 6:15 PM, Henri Salo <henri@...v.fi> wrote:
 
->> Chromium 25.0.1364.160 (debian testing), Iceweasel/Firefox 19 and
->> probably many other browsers allow javascript to set broken cookie
->> values, leading to possible permanent "400 Bad Request" responses.
+> On Mon, Jul 22, 2013 at 05:04:44PM +0200, Salvatore Bonaccorso wrote:
+>> Hi
+>> 
+>> Cc'ing security@...ngoproject.com
+>> 
+>> From [1] in Django accounts can be enumerated trough timing attacks:
+>> 
+>>> When attempting to authenticate using django.contrib.auth, if a user does not
+>>> exist the authenticate() function returns None nearly instantaneously, while
+>>> when a user exists it takes much longer as the attempted password gets hashed
+>>> and compared with the stored password. This allows for an attacker to infer
+>>> whether or not a given account exists based upon the response time of an
+>>> authentication attempt.  This can be seen much more clearly when the number of
+>>> rounds on the password hasher is set to something high like 100000.
+>> 
+>> [1] https://code.djangoproject.com/ticket/20760
+>> 
+>> A proposed patch is at [2] but not yet a commit in upstream git repository.
+>> 
+>> [2] https://code.djangoproject.com/attachment/ticket/20760/20760_fix_hash_once.diff
+>> 
+>> Does this needs a CVE asignment?
+>> 
+>> Regards,
+>> Salvatore
+> 
+> Please see comments from aaugustin
+> https://code.djangoproject.com/ticket/20760#comment:23
+> 
+> This is exemplary case of CWE-208 and similar issues have received CVEs.
+> 
+> ---
+> Henri Salo
 
-> http://www.openwall.com/lists/oss-security/2013/10/16/16
+I don't think this really deserves a CVE. All versions of Django prior to
+1.6 (unreleased) have allowed you to determine if a username existed
+or not via the login failure message, negating the need to do any sort
+of timing attack. Django 1.6 is the first version that *doesn't* give exact
+details in the error message as to why the login was unsuccessful and
+as noted already the unreleased Django 1.6 has changed the error
+message and has applied the proposed patch.
 
->   - at least two independently implemented web browsers are capable of
->     sending malformed Cookie headers that trigger the lighttpd
->     request.c "invalid char in header" code, leading to the 400 HTTP
->     status code
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
 
-> When the web browser sends the malformed Cookie header, it is (in
-> effect) enabling a Logout CSRF vulnerability on a web site that does
-> not have any server-side Logout CSRF problem.
 
-There didn't seem to be further discussion of this, and the public
-vendor references don't yet have CVE IDs, so we are assigning these:
-
-CVE-2013-6166 https://code.google.com/p/chromium/issues/detail?id=238041
-CVE-2013-6167 https://bugzilla.mozilla.org/show_bug.cgi?id=858215
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSX+s0AAoJEKllVAevmvmslvkH/1b5TzN4yzFoyjXIt/DZ0oPk
-NunvsxFQwc7PUusqU9p1tqoyavH0nEBF9i+2l41s33UwiD695AMScQThwAf2inJZ
-gAX0omLkqSDXx1JMaByK8ayzoVgqh7crpRAXyNo70TJN29Xnn7WqTN47eHFjCFPQ
-YWV3mGciGHPX/LL/ZBovtmAGtE1fNo9teDfTEMBORTkNiVW5vkvZahEeYDAsStEE
-ZJXvjLRbTE06GHw4OZX+8h7rmutrYW5NJ5o+J7HCtKsT21M7qOEgUw+tJa8PPqAS
-Rdvc9ixFgjuP/gz8l8TMi2JOCuT85GqRiQxlJb9eY9Axb9yBUpbfruwT0XS3hFo=
-=D2jQ
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
