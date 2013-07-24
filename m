@@ -1,36 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/1
-Message-ID: <20130319061625.GA2759@openwall.com>
-Date: Tue, 19 Mar 2013 10:16:25 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: net: slab corruption due to improper synchronization around inet->opt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/24/6
+Message-Id: <E1V1zcU-0004Qf-2K@xenbits.xen.org>
+Date: Wed, 24 Jul 2013 14:00:46 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 60 (CVE-2013-2212) - Excessive time to disable caching with HVM guests with PCI passthrough
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 31, 2012 at 06:11:53PM +0200, Petr Matousek wrote:
-> Description of the problem:
-> Lack proper synchronization to manipulate inet->opt ip_options can lead
-> to system crash.
-> 
-> Problem is that ip_make_skb() calls ip_setup_cork() and ip_setup_cork()
-> possibly makes a copy of ipc->opt (struct ip_options), without any
-> protection against another thread manipulating inet->opt. Another thread
-> can change inet->opt pointer and free old one under us.
-> 
-> Given right server application (setting socket options and processing
-> traffic over the same socket at the same time), remote attacker could
-> use this flaw to crash the system. More likely though, local
-> unprivileged user could use this flaw to crash the system.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-What are our reasons to claim that this is merely a DoS, as opposed to a
-potential for arbitrary code execution with kernel privileges (at least
-in the local attack case)?
+             Xen Security Advisory CVE-2013-2212 / XSA-60
+                             version 5
 
-> Upstream fix:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f6d8bd051c391c1c0458a30b2a7abcd939329259
+   Excessive time to disable caching with HVM guests with PCI passthrough
 
-This was assigned CVE-2012-3552:
+UPDATES IN VERSION 5
+====================
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-3552
+Corrected credit.
 
-Alexander
+ISSUE DESCRIPTION
+=================
+
+HVM guests are able to manipulate their physical address space such that
+processing a subsequent request by that guest to disable caches takes an
+extended amount of time changing the cachability of the memory pages assigned
+to this guest. This applies only when the guest has been granted access to
+some memory mapped I/O region (typically by way of assigning a passthrough
+PCI device).
+
+This can cause the CPU which processes the request to become unavailable,
+possibly causing the hypervisor or a guest kernel (including the domain 0 one)
+to halt itself ("panic").
+
+For reference, as long as no patch implementing an approved alternative
+solution is available (there's only a draft violating certain requirements
+set by Intel's documentation), the problematic code is the function
+vmx_set_uc_mode() (in that it calls ept_change_entry_emt_with_range() with
+the full guest GFN range, which the guest has control over, but which also
+would be a problem with sufficiently large but not malicious guests).
+
+IMPACT
+======
+
+A malicious domain, given access to a device with memory mapped I/O
+regions, can cause the host to become unresponsive for a period of
+time, potentially leading to a DoS affecting the whole system.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen version 3.3 onwards is vulnerable.
+
+Only systems using the Intel variant of Hardware Assisted Paging (aka EPT) are
+vulnerable.
+
+MITIGATION
+==========
+
+This issue can be avoided by not assigning PCI devices to untrusted guests, or
+by running HVM guests with shadow mode paging (through adding "hap=0" to the
+domain configuration file).
+
+CREDITS
+=======
+
+Zhenzhong Duan found the issue as a bug, which on examination by the
+Xenproject.org Security Team turned out to be a security problem.
+
+RESOLUTION
+==========
+
+There is currently no resolution to this issue.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJR7932AAoJEIP+FMlX6CvZ8pUIAJFFqtelnwQ58gEM3XYmbBdo
+FXF9xPiykqCbRzSfbVohmSj3vmORUsI22m8kk1fsJmSayJr9P8nJaYLqdr4/tcMf
+gqDLqBFWiOf+O48ULFaPf7eDBnVUzYQXBAcEEkfInjenvYgclTmdMQUbFGCtr+/O
+6BI8Y0NU6K5Nawu7n3VZK7j6D7VniwyNnIfgApK+k2PLdb9r9m4GQdQVulYOSw8h
+8H49C3D6c1L6m63he6c3NiyjfLZbFZbcqZuJPMMM5IR/J025Om6Kxyxcmx4wCCog
+nnyOPjCalPe9zOdsQlOEbrvH/UV/4U1EzkiWR2hRLbOS9bFJ2YweQxhvn7k/TVk=
+=rRXP
+-----END PGP SIGNATURE-----
+
