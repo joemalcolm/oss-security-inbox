@@ -1,55 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/10/7
-Message-id: <3db1d596-11e8-473b-bfa9-73f5045f8a72@me.com>
-Date: Mon, 10 Jun 2013 19:49:53 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/4
+Message-ID: <51F0E36D.9050606@redhat.com>
+Date: Thu, 25 Jul 2013 02:35:57 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Insecure temp files usage in phusion passenger (other than CVE-2013-2119)
+Subject: Re: Re: CVE request: webcalendar before 1.2.7
 Content-Type: text/plain; charset=utf-8
 
-I think he is saying the directory can be hijacked if a malicious user creates the directory first they will retain read/write access to it.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Jun 10, 2013, at 11:30 AM, vladz <vladz@...zero.fr> wrote:
+On 07/22/2013 04:28 PM, security curmudgeon wrote:
+> 
+> Kurt's reply is a good reminder of why he needs that information.
+> Based on the original post, some of these have assignments.
+> 
+> : Security fix: Do not show the reason for a failed login (i.e. "no
+> such user")
+> 
+> Likely CVE-2013-1422 / OSVDB 90668
+> 
+> : Security fix: Escape HTML characters in category name.
+> 
+> Likely CVE-2013-1421 / OSVDB 90669
+> 
+> : Security fix: Check all passed in fields (either via HTML form or
+> via : URL parameter) for certain malicious tags (script, embed,
+> etc.) and : generate fatal error if found.
+> 
+> This one seems like it may be new.
 
->
-> Hi,
->
-> On Mon, Jun 10, 2013 at 04:54:21PM +0200, Raphael Geissert wrote:
-> > While looking at CVE-2013-2119 I noticed that Phusion Passenger
-> > 2.2.11's ext/common/Utils.cpp makeDirTemp() uses mkdir(1) to create
-> > directories in /tmp (e.g. /tmp/phusion.$$) for use by the application
-> > and web server.
->
-> I think you meant makeDirTree() for the function name and not
-> makeDirTemp(), am I correct?
->
-> I don't know much about the tool but snipped the code around the mkdir()
-> function for other people to see:
->
-> $ cat -n ruby-passenger-3.0.13debian/ext/common/Utils.cpp
-> [...]
-> 486 do {
-> 487 ret = mkdir(current.c_str(), modeBits);
-> 488 } while (ret == -1 && errno == EINTR);
-> 489 if (ret == -1) {
-> 490 if (errno == EEXIST) {
-> 491 // Ignore error and don't chmod/chown.
-> 492 continue;
-> 493 } else {
-> 494 int e = errno;
-> 495 throw FileSystemException("Cannot create directory '" + current + "'",
-> 496 e, current);
-> 497 }
-> 498 }
->
-> > Does anyone know enough about phusion passenger to know what the
-> > impact could be?
-> > (and depending on that, assigning CVE id(s))
->
-> I don't see any problem here. The mkdir() return code appears to be
-> checked correctly and chmod/chown ignored if directory was previously
-> created.
->
-> Cheers.
+To reiterate: so I can confirm CVE assignments, and prevent duplicate
+assignments you *MUST* provide links to the code commits/vulnerable
+code. I don't have the time to go hunting through your source code for
+them. People need to start making better CVE requests, or you're not
+going to get CVEs from me.
 
-Content of type "text/html" skipped
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJR8ONsAAoJEBYNRVNeJnmTN+cQAM9dH/Yx9vn0dhXd7jiXqNMa
+w1Os4cwUX9AU5bMvpulnFymG8cvY6/VUBCcS/t9VxVuosgAlpoJfbl4OHGnhshLi
+LnPYIk6AUmgFnlzzpraYq64ztnVXlAlAXdzA9Uf97r00b1RUxLx4bTwgCZeUlggR
+AopFO+d0/xbZF340PdMT7WV+HdEP/JWAmyXn8J1njJH+jyKCHk4+0IC82u03JwQM
+VihfqLA/ahQmGduiywwOHLfHAmxQp6KTHqOd6vkfscHjpS3rvXZneefWPaMVLPHo
+KPiLa0pNuy09Tetc7BD0g7ahsWQP+Bf8zMfUyKJbisrBLO2evgvWNEGVBqH/IA2H
+uiEDAlVwCYcCyTSdu9OFal4qh1ppQzB2rY6qBS5l0Ne+GWLUHgpd52hcYwn5t7qm
+t1okvahtd0lDJuyWXsoV01l6R3j5o5iodPfmVbW0DgssB27vHbbbxW19dKLXtbCx
+AUzth1CefMK6+av8AXqpiEOVB4L6YrG+6VUu6ttsqIkpUUr0QVTJG13Ubs92Vi6x
+pOfoFJ99mZB9t9XwN3IcumEpJTMQmN9bcmj8DraDSQonUGBHK2Q01daCnKgLEDpu
+t/j/pw3ZyOBSYpKhTdlPH5B3E8Ne3OEFOG7AXfXpcSYIxZZYYVMJ9rmCWN72bR8T
+6CozuVk6Acmye/PfOrQW
+=T3Uy
+-----END PGP SIGNATURE-----
