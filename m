@@ -1,44 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/03/1
-Message-ID: <CAEDdjHeAEqU8DSwj8krZC5=puZWTOc_8Pe16Li+EVqLsLfh4=A@mail.gmail.com>
-Date: Thu, 3 Oct 2013 21:52:13 +0100
-From: Pedro Ribeiro <pedrib@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/5
+Message-ID: <51F0E5DA.50009@redhat.com>
+Date: Thu, 25 Jul 2013 02:46:18 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - VLC 2.0.0 to 2.0.8
+CC: Paul <pawlkt@...il.com>
+Subject: Re: CVE request: timing leak in bitcoind
 Content-Type: text/plain; charset=utf-8
 
-On 1 October 2013 16:20, Pedro Ribeiro <pedrib@...il.com> wrote:
-> Hi,
->
-> I have discovered a denial of service / possible code execution in VLC via a
-> crafted ASF file. This has been reported to VLC and was apparently fixed
-> unintentionally in 2.0.8 with the entry "Improve handling of corrupt ASF
-> files". Version 2.1.0 is not affected.
->
-> The file contains a crafted ASF packet that causes VLC to crash on a read
-> operation, with control of EDI and EAX. In the file attached you will find
-> at starting offset 0x157AD the hex values 17 DE B4 71 in little endian,
-> which attempts to use for a read operation. Control of other variables in
-> the Demux function in asf.c is also possible by changing packet values
-> before and after the offset as per the ASF specification.
->
-> The file is located here:
-> https://github.com/pedrib/PoC/blob/master/vlc-crash.asf
->
-> I have not been able to obtain any program control so far, so at the moment
-> this only crashes VLC. However someone more skilled might be able to control
-> it.
->
-> Can you please provide a CVE for this?
->
-> Regards
-> Pedro
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 07/24/2013 10:16 AM, Paul wrote:
+> Low risk issue in RPC auth. code, described here: 
+> https://github.com/bitcoin/bitcoin/issues/2838
 
 
-Hi,
+Please use CVE-2013-4165  for this issue.
 
-Do you need more information on this, do not consider it CVE-worthy or
-just swamped with work at the moment? :)
 
-Regards,
-Pedro
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJR8OXaAAoJEBYNRVNeJnmTZJwP/1WTYcAm9h91upY8dHoxq5UV
+KFpeVtv/m1/3gHk12oCkieCFAp0D0MLw6KlqfGuwPpNM2GUAjuSoTgUD8i+aO7Zr
+tmzkxl3qGAzZnGdhzMIh2UiuH5NUzaagVQpt1N56ivPs2VMH4QVYmjxLYXh2CeSf
+T9rnDBFq37fJ7nfbQHHeAynMlYy/Uab/kis2ff0k2ryYqTuCkrC6rlTxm89dqN64
+nRTyKwK5DCsobRQPykgcrPgOBwYdauE+8YVtxTvm96ihCBK2JJAyNhfXK2opQI2F
+1cG1iLzmzsN0P0/X4OXfZzbiWZwrzckHmpTi1rrEN4zVDK9zp86y6b/ussrdDIUY
+kLJxJ5i6Xdw29+QRWrVdKz2PVh+IYye2RZ8dhDYuzFKN8C12BK9sl00VMiuR0/pT
+u1VA07h+jKB/rnnKS9IrxzLmHKTHqZ+znzPV3i2wOzLmYcFaPX8aKlMi2ybu3wAB
+he58iQGS206aZm8uJkDXvedOOzYfCiX4qsraFryLGdJzSIp3UPiD7ZVea+sjXElS
+rpgcxYC2HIujNGyC3zeUlykc5FCKxbRBESATTS94eYXlFWX4Z57cCBsIyK3kcCeS
+0eGR1RtJNBZ7tj4MCuaSJQldLFdqFYV/qdNTWKb4BCFAm58+2u3zxgpexaiWL+6X
+fsSMIhlQcP4NsRtZMhcs
+=G2hb
+-----END PGP SIGNATURE-----
