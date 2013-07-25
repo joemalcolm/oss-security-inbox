@@ -1,38 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/7
-Message-id: <5170ead4-5956-48e3-919d-4ae4910f7b26@me.com>
-Date: Tue, 26 Mar 2013 15:55:51 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/8
+Message-ID: <51F0E620.7000301@redhat.com>
+Date: Thu, 25 Jul 2013 02:47:28 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Ruby gem Thumbshooter 0.1.5 remote code execution
+CC: Salvatore Bonaccorso <carnil@...ian.org>
+Subject: Re: CVE Request: XSS in smokeping / start and end time fields not filtered
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-May I please have a CVE assigned to this vulnerability? ﻿
+On 07/20/2013 01:13 AM, Salvatore Bonaccorso wrote:
+> Hi Kurt
+> 
+> There is another XSS fix which was done after the 2.6.9 release
+> for smokeping.
+> 
+> In [1] Steven Chamberlain pointed out that in 2.6.9 upstrem the 
+> "start" and "end" time fields are still not filtered.
+> 
+> Tobi Oetiker fixed this in a commit following the 2.6.9 release at 
+> [2]. But this version is no yet released.
+> 
+> [1] http://bugs.debian.org/659899#67 [2]
+> https://github.com/oetiker/SmokePing/commit/bad9f9c28f0939b269f90072aa4cf41f20f15563
+>
+>  Does this also needs a separate CVE, as a subsequent fix to the
+> 2.6.9 release?
+> 
+> Regards, Salvatore
+> 
 
-Thanks!
+Please use CVE-2013-4168 for this issue.
 
-On Mar 26, 2013, at 04:23 AM, larry Cashdollar <larry0@...com> wrote:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-> Ruby gem Thumbshooter 0.1.5 remote code execution
->
-> 3/25/2013
-> Generates thumbshots of URLs by using Webkit and QT4.
->
-> https://github.com/digineo/thumbshooter
->
-> Specially crafted URLs can result in remote code execution if the URL contains shell metacharacters.
->
-> We see that the url is passed directly to the shell in the following code snippet from ./thumbshooter-0.1.5/lib/thumbshooter.rb lines:
->
-> 1012 command << "xvfb-run -a --server-args='-screen 0, #{screen}x24' "
-> 1015 command << "{WEBKIT2PNG} '{url}' {args}"
-> 1017 img = `{command} 2>&1`
-> Larry W. Cashdollar
-> @_larry0
-> http://vapid.dhs.org/advisories/thumbshooter-ruby-gem-remoteexec.html
->
->
-> Larry C$
-Content of type "text/html" skipped
+iQIcBAEBAgAGBQJR8OYgAAoJEBYNRVNeJnmT3WkQANxHo9M+etujiCzZVS+YxW/c
+fLB09stp/lraJRsHdlJIAsESF50IwBoEOxhgEl2UhxB21f/cWVmucbm6O9+ySCA9
+iwqnVOdQYJuo17KourhC/CetahGQIVh6oSUU0tO2shUq6kQyWkjR00c3lRxa2qqs
+6egxKtu68+eDTHPbqSi03dK8Fb/fzDrFj2f1b7/uJ1VLOhHdgEgT6Lb2uiXMOfUO
+d0Aov5WaYVvl3N0u7ysiGq9jy0SAAG76f7w6GKEZQtT0PLyg+UHGimmn70ji5iI/
+Hp4D7mjUIecXW4hGWsAMqoy4/d+2WFjvXNTyP7gqdX2NjXN92+1xEsBI3qJbdoze
+Z5efsRa0JaCVQy//wsyYZyPNJBGkb/zKVO0k/PEr44lr8COP1h7CQ5uAEUDHQyoj
+sFsajrQSaHjY1X4g9QjUUefHTZT7KXU+xD6F36JDrwEfT9+kts0m2lKCKeSWIcJg
+Z6k18/C/XLK834KkUYRhIo3ljqfd/20cVgSiKy17T7wU/tfoBKmvl3JeYDEQwxyH
+EAlaFEJ6d22PWDw3bJSMYmkcS/dQ5rQzAVrkwaPB2QVrd9s2LCwJwHq5kepRcQK7
+/FHVPwSxb5jF6BTnWuaNZiRhOULe5qkqSv4kGtbffNn7RAeEvaaFF41OZlOsRaCF
+bGAAsvGzExo2lK2654dL
+=Y9ti
+-----END PGP SIGNATURE-----
