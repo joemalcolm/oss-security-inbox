@@ -1,56 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/3
-Message-ID: <51E8D63F.6010202@redhat.com>
-Date: Fri, 19 Jul 2013 00:01:35 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Moritz Muehlenhoff <jmm@...ian.org>
-CC: oss-security@...ts.openwall.com, Andreas Nilsson <andreas.nilsson@...en.com>, Florian <floriangaultier@...il.com>, "A. Jesse Jiryu Davis" <jesse@...en.com>
-Subject: Re: CVE Request - MongoDB <=2.4.4 uninitialized object
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/1
+Message-ID: <87hafjieag.fsf@windlord.stanford.edu>
+Date: Wed, 24 Jul 2013 19:06:31 -0700
+From: Russ Allbery <rra@...nford.edu>
+To: oss-security@...ts.openwall.com
+Subject: Two OpenAFS security advisories
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+As previously disclosed on distros, and now disclosed here per the distros
+policy.
 
-On 07/18/2013 11:00 PM, Moritz Muehlenhoff wrote:
-> On Thu, Jul 18, 2013 at 08:14:39AM -0400, Dan Pasette wrote:
->> We already requested CVE-2013-2132 for this and it was fixed in
->> version 2.4.5.
->> 
->> We announced it on mongodb-announce and have it listed in our
->> alerts page here: http://www.mongodb.org/about/alerts/
-> 
-> CVE-2013-2132 was already assigned to this issue in the Python
-> driver: http://www.openwall.com/lists/oss-security/2013/05/31/6 
-> https://jira.mongodb.org/browse/PYTHON-532 
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-2132
-> 
-> While "your" CVE-2013-2132 refers to 
-> https://jira.mongodb.org/browse/SERVER-9878, which AFAICS is a
-> different issue.
-> 
-> Cheers, Moritz
-> 
+The first one is a somewhat odd special case, as this isn't a
+newly-discovered vulnerability.  However, it's become clear that
+brute-force attacks on DES are immediately practical, prompting a
+reimplementation of the security layer that's being treated as a security
+release by the OpenAFS project.  (Also, it's been an embarassment for some
+time that AFS didn't have crypto agility and didn't support anything
+stronger than DES.  That's finally fixed.)
 
-yup. different code bases, different CVE's even if the "same" problem.
-should have gotten separate cves, sigh. We need better coordination.
+The two vulnerabilities are:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+OpenAFS Security Advisory 2013-0003 (CVE-2013-4134)
 
-iQIcBAEBAgAGBQJR6NY/AAoJEBYNRVNeJnmTa1oP/irxQJKdWeiHYm+hK3vDZ+k6
-EihMvMSPfcpK3zWyVW1IZNTJhdhD8HBxYc8LnCysG2SiksuzPMv141QKGftFwHjO
-f8PeGgbWmRRyfar5aRMQsjJQKVBeRrgF8b0mKugYeDdKmEeuE2D2pO+xgGk59gfK
-oX2to6pU3kiF0uNVvOAYjVbn3tdd2zXnt0zUh1cFELxSWyNSsWSZbq5lbIg2c2Fv
-ErKrZMhWgzK+ws5rhfZHzBN2qMYy2swLzx2MRaVxX2uL9FZJ5DNQ03Eo0AX3vuoU
-mPQD6fI+1xdjxhjQGBs+qfR9G+XZY21MwQLR4sRxIkIAyFNBRZz6H1V3Z8JET3Qh
-snR6hZCbtN5AQ9cwXL9rWb0NL5Ypt7FpkzqwNvZCb+tf0ORyTRGUy0hVXr54tX0/
-VcgKeiyzSLWOOTZUZ3oPt/bvYIeQ9E5S+uvGgUC3wZy191mlBN8G73MTXOCGlXGy
-IBYFioIVnrV+059C2kBOPV5k5it90ecZBoymVK+bskUUDhxCyWpuYaVfqWGTS7ec
-X+HqkoC+zWsW5yuYLS9vyXRaB0KjV3GswFDkBi/m0YMfo69Nk8wDu2K3dKZEJMB3
-rD6ZNVcDreJBhpfI/hK7hQr2abO24Pxw3uXSkxJGo/1x98Yn2KscRGcLL76FaxON
-fsqXT2cdYbon3u0mZwcz
-=mam6
------END PGP SIGNATURE-----
+    OpenAFS uses Kerberos tickets to secure network traffic. For
+    historical reasons, it has only supported the DES encryption algorithm
+    to encrypt these tickets. The weakness of DES's 56 bit key space has
+    long been known, however it has recently become possible to use that
+    weakness to cheaply (around $100) and rapidly (approximately 23 hours)
+    compromise a service's long term key.
+
+    This vulnerability is a particular problem for OpenAFS because DES is
+    the only encryption algorithm supported in current releases.
+
+OpenAFS Security Advisory 2013-0004 (CVE-2013-4135)
+
+    The -encrypt option to the 'vos' volume management command should
+    cause it to encrypt all data between client and server. However, in
+    versions of OpenAFS later than 1.6.0, it has no effect, and data is
+    transmitted with integrity protection only. In all versions of
+    OpenAFS, vos -encrypt has no effect when combined with the -localauth
+    option.
+
+The upstream advisories, patches, upgrade instructions, and so forth are
+available at:
+
+    http://www.openafs.org/security/
+
+-- 
+Russ Allbery (rra@...nford.edu)             <http://www.eyrie.org/~eagle/>
