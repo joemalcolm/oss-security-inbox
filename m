@@ -1,71 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/24/1
-Message-ID: <519F1414.4000501@redhat.com>
-Date: Fri, 24 May 2013 01:17:40 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/7
+Message-ID: <51F0E613.6090004@redhat.com>
+Date: Thu, 25 Jul 2013 02:47:15 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Timo Sirainen <tss@....fi>, Jan Lieskovsky <jlieskov@...hat.com>, Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: dovecot : "APPEND" Parameters Processing Denial of Service Vulnerability
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: cve request: cms made simple XSS before 1.11.7
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/22/2013 06:24 AM, Timo Sirainen wrote:
-> On 22.5.2013, at 15.17, Jan Lieskovsky <jlieskov@...hat.com>
-> wrote:
+On 07/21/2013 09:10 AM, Hanno Böck wrote:
+> cmsmadesimple 1.11.7 fixes an XSS. Not much info though:
 > 
->> ----- Original Message -----
->>> From: "Agostino Sarubbo" <ago@...too.org> To:
->>> oss-security@...ts.openwall.com Sent: Tuesday, May 21, 2013
->>> 8:58:04 PM Subject: [oss-security] CVE request: dovecot :
->>> "APPEND" Parameters Processing Denial of Service Vulnerability
->>> 
->>> From the secunia advisory SA53492[1] :
->>> 
->>> Description A vulnerability has been reported in Dovecot, which
->>> can be exploited by malicious users to cause a DoS (Denial of
->>> Service).
->>> 
->>> The vulnerability is caused due to an error within IMAP
->>> functionality when processing the "APPEND" parameters and can
->>> be exploited to cause a hang.
->> 
->> Timo, in relation with the previous (similar) one (thanks to
->> Tomas Hoger for pointing out): [1]
->> http://thread.gmane.org/gmane.comp.security.oss.general/8916/focus=8934
->>
->> 
-[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695138#15
->> 
->> this time the CVE identifier should be allocated / issue is
->> valid, right?
->> 
->> While in the former [1], [2] case just the connection for the
->> user issuing the command would crash, this time (assuming) either
->> whole dovecot daemon might hang or even if the whole daemon
->> wouldn't hang (and request is handled within a thread), that
->> request would made the particular thread to consume excessive
->> amount of CPU due to infinite loop, right?
+> https://twitter.com/LeakFree/status/336942367351394305 
+> http://forum.cmsmadesimple.org/viewtopic.php?f=1&t=66590&p=299356#p299356
+>
+>  Please assign CVE.
 > 
-> A logged in user can cause his own IMAP connection process to eat
-> 100% CPU, so it won't immediately hang other users. By default
-> users can log in max. 10 times from the same IP, so attacker
-> requires many IPs to cause a real DoS. And of course a valid user
-> account, which means it will be immediately visible to admin who is
-> causing the system to slow down.
-> 
->> Timo, can you confirm / disprove a CVE identifier should be
->> assigned to this?
-> 
-> I'm not against it, but I don't see this as that big of an issue,
-> especially with v2.2 still not being widely used.
 
-Yeah, we can't guarantee that can we. For all we know someone used it
-in a major deployment/system image/who knows.
-
-Please use CVE-2013-2111 for this issue.
-
+Please use CVE-2013-4167 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -73,17 +28,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRnxQTAAoJEBYNRVNeJnmTtsQP/1iZJ5D8PbeDGeF/Zau/7S2y
-lOLCOUocf7+b8xjidHqfOS5eQKdqd8gpICCdiOhKUw3pcDp6MTXtfCle+9pOLAwz
-grZzKBHho1P+WUb/9yfo4zOJHTBMfZHqLj4BSlF5e3rEEZcmAFlxYy0T3uq3Whfx
-GP80X1snQW5aKtN6LjyaqUN2JUjGCCowtZpmvB0NZlZo5wgJjNx+o+/eGBT9TAEU
-Q5kt/9QP27ji8EHLrYwJBL/OdxbroqEm3xxnOk0Akwda4DsxgCthNf3mbB4mq9mU
-uAogsOqwCkwK070zh5ZwEGZkqp9tFOcz/bo06+tb3QNqKwiEKyTS+/qRVpvusF2n
-NHZ/emqJCmAw54Zp9/rvzR6qr9xEyhXIlbAgXHh+PBLKqSJTmnHp27L0fJIy/iYM
-di46PJfi3T8SmqEDL/S4rdhPaEcA1nt1233jIp5mYl2inrKBX7sc3a14g7tjDXxC
-hXaVVAMNDcRfiC4x/s1YMq8CECyeHNLabbwJDL6koujmumQsKaQHdeKjttzOKe43
-yQGFeVl2Z9hl1KbrmKy3f8a0BpVUBFJx3NZ+cFP4PliRwKtfzdmeEjIXAFhMcnWW
-DY+O9UHhFwyeSfC/LVCMYA9GE/ij6cztS+PH20YKN5skos20890wG9iEBukTbpND
-qVWusXlGRLtFMGAnO5w3
-=sWws
+iQIcBAEBAgAGBQJR8OYTAAoJEBYNRVNeJnmTrcAQAMaNmIF7b0FKEJL5zeHE6PQC
+sG1SDryss4JqadmR5hunknSIhfpSzGqc4OAOZPyyg8zGPCy1FbJGQJTUdLJyaTSV
+J+aB90Q0n4oEmou37uS2b8laTTs54SwxJ0873m3Mpklg7/yJyWvCMKlX6rfAIxwf
+hBdJ57gzbGd7EeX9cY/gX5cHsFalnb24cNishNHKKpUAG2XVyzRo8+v27ij+QH+2
+YJjS1U9ATWolUQSMnctxhaKmxS7PPmCNR/BqSYAJjy3WZrOZdRHCftgsQQAXgnaE
+2zTD2blqOqfgFZtf4x30HiSKDpfNaMxZjJvO/kxmKA2r+u5LvW3wgXCwggwieECD
+dAe71ZYpRQeoySvw+SUrKiwEXl3jVJWlf4csIs8Nw7cq7A4n1Qd3GVXsQOSQZYzc
+RgUxcUsLey74ZlVCZM4wArpZOzOJqs2ShyYu4Rya34AlI+V8KznYklrD3LlQqf0V
+k+aDjNrtL13mP6tVtxVR062BnGcD2Yxv419E4W/F0b1xldRdeZerKMPoZ+LUjjh0
+HA6BRruKJhGu1krgy4LD9+KUpllQjYreIUreAEt9fCudQ/1SwE4UhcI2GTPo3umK
+xHOlNyYbyqbILN836/OSFuejMu9dMrxXdIqeYdQmPHgnSAIAJpwE7d7nG5y5nO1V
+m3Didwy4H/KHxLpE25V6
+=LznB
 -----END PGP SIGNATURE-----
