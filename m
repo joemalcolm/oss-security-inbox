@@ -1,78 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/17
-Message-ID: <20131016172941.GA97616@higgins.local>
-Date: Wed, 16 Oct 2013 10:29:41 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
-Subject: Possible DoS Vulnerability in Action Mailer (CVE-2013-4389)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/15
+Message-ID: <d7b0b0f38b856835a6e273fb56e9c2ae.squirrel@aphrodite.kinkhorst.nl>
+Date: Thu, 25 Jul 2013 13:38:44 +0200
+From: "Thijs Kinkhorst" <thijs@...ian.org>
+To: "Open Source Security" <oss-security@...ts.openwall.com>
+Subject: CVE request: GnuPG side-channel attack on RSA secret keys
 Content-Type: text/plain; charset=utf-8
 
-Possible DoS Vulnerability in Action Mailer
+Hi list,
 
-There is a possible DoS vulnerability in the log subscriber component of
-Action Mailer. This vulnerability has been assigned the CVE identifier CVE-2013-4389.
+I'd like to request a CVE name for the side channel attack described in
+attached release announcements of GnuPG and Libgrypt.
 
-Versions Affected:  3.x.x
-Not affected:       4.0.x, 2.3.x
-Fixed Versions:     3.2.15
 
-Impact 
------- 
-A carefully crafted email address in conjunction with the Action Mailer logger
-format string could take advantage of a bug in Ruby's sprintf implementation
-and possibly lead to a denial of service attack.
+Thanks,
+Thijs
+Download attachment "[Announce] [security fix] GnuPG
+ 1.4.14 released.eml" of type "message/rfc822" (12532 bytes)
 
-Impacted Ruby code will look something like this:
-
-  "some string #{user_input}" % some_number
-
-All users running an affected release should either upgrade or use one of the
-work arounds immediately. 
-
-Releases 
--------- 
-The FIXED releases are available at the normal locations. 
-
-Workarounds 
------------ 
-If you can't upgrade or apply patch to your system, you can work around the
-issue by using the following monkey patch after requiring Action Mailer:
-
-```ruby
-module ActionMailer
-  class LogSubscriber < ActiveSupport::LogSubscriber
-    def deliver(event)
-      recipients = Array.wrap(event.payload[:to]).join(', ')
-      info("\nSent mail to #{recipients} (#{event.duration.round(1)}ms)")
-      debug(event.payload[:mail])
-    end
-  end
-end
-```
-
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
-
-* 3-2-log-subscriber.patch - Patch for 3.2 series 
-* 3-1-log-subscriber.patch - Patch for 3.1 series 
-* 3-0-log-subscriber.patch - Patch for 3.0 series 
-
-Please note that only the 4.0.x, 3.2.x, and 2.3.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
-Credits 
-------- 
-
-Thanks to Aaron Neyer for reporting this vulnerability!
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "3-0-log-subscriber.patch" of type "text/plain" (4320 bytes)
-
-View attachment "3-1-log-subscriber.patch" of type "text/plain" (4262 bytes)
-
-View attachment "3-2-log-subscriber.patch" of type "text/plain" (4000 bytes)
-
-Content of type "application/pgp-signature" skipped
+Download attachment "[Announce] [security fix]
+ Libgcrypt 1.5.3 released.eml" of type "message/rfc822" (6966 bytes)
