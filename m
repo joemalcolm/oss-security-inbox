@@ -1,48 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/4
-Message-ID: <CANDc0NLKmtDS=TabWyrPrHwUe=WGP34DnwD6YN0SpA1ghQjyKQ@mail.gmail.com>
-Date: Wed, 13 Mar 2013 08:44:47 +0000
-From: Eduardo Tongson <propolice@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel + devtmpfs automount == insecure /dev/{,u}random mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/11
+Message-ID: <51F0E96D.9070903@redhat.com>
+Date: Thu, 25 Jul 2013 03:01:33 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Jean-Baptiste Kempf <jb@...eolan.org>
+CC: oss-security@...ts.openwall.com, Michael Niedermayer <michaelni@....at>, Moritz Muehlenhoff <jmm@...til.org>, Moritz Muehlenhoff <jmm@...ian.org>, ffmpeg-security@...peg.org, security@...eolan.org
+Subject: Re: new FFMpeg stuff
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 13, 2013 at 8:35 AM,  <gremlin@...mlin.ru> wrote:
-> linux/drivers/char/mem.c contains the following code:
->
-> static const struct memdev {
->   const char *name;
->   umode_t mode;
->   const struct file_operations *fops;
->   struct backing_dev_info *dev_info;
-> } devlist[] = {
-> // ...
->    [8] = { "random", 0666, &random_fops, NULL },
->    [9] = { "urandom", 0666, &urandom_fops, NULL },
-> // ...
-> };
->
-> This allows writing to these devices by an unprivileged user
-> resulting in re-initializing the entropy pool (as described
-> in `man 4 random`) and thus making the data predictable.
->
-> Just boot the kernel with "init=/bin/sh" parameter and issue
-> the `ls -l /dev/*random` command - you'll see something like:
->
-> crw-rw-rw- 1 root root 1, 8 Mar 13 08:30 /dev/random
-> crw-rw-rw- 1 root root 1, 9 Mar 13 08:30 /dev/urandom
->
-> The obvious fix is to create these devices with mode 0644,
-> so only root will be able to re-initialize the entropy pool.
->
-> Possibly, this even deserves a CVE to be assigned...
->
->
-> --
-> Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-> GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-> GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-See http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=81748.
+On 07/25/2013 02:52 AM, Jean-Baptiste Kempf wrote:
+> On 25 Jul, Kurt Seifried wrote :
+>> Can the VLC security team confirm/correct this as needed so we
+>> can ensure it's correct before I assign CVEs? thanks.
+> 
+> Why the VLC security team should be involved in that?
 
-  E
+Because they want to help make sure the CVEs get correctly assigned?
+
+If you guys don't care about getting CVE's done properly well that's
+your choice I guess and I'll assign the CVEs as best I can. But I was
+hoping VLC upstream might help out.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJR8OltAAoJEBYNRVNeJnmTrQgQAIV55cIEFWiCsm292zRI9IgX
+UnrEsa5WBHznZDVHva49QRsZYFrDcYNFsnvgyn7Jc+UHHKr90b/zlcGvvMxVYopE
+1uWTScgdcbDbZe7MI0KPV19Ig5rMRdD0fWJDM/hnvQLqt2aMHpVyGU30oE/b9z2/
+Iom2jjNrkHPZLo9hPLHJHqYb798g7KStsQtt9cpjTXVdsZx94N0tGoBZFqR4BxVW
+Q5B4izEwR6hObY5rm94gQEeGOYxZiJ+CCt5Mc1eEhktcnSpS5POj6qwDUlQsKYZC
+r0iAh4jDFaqsR1583voaiUbDFVTgKnOV2dGNS8TJkLMP6ATJSlC+lw1WS2Sf30nf
+kzxAdunIeZIP4ZpEDorJv8v0jLdY+bPW/AX2mx0MwMB5nNjVNuoImPT/DjI5dxxF
+mgcES5P8sULr2TWDdcJFZrFT0OUgsnkFtoSzzfcy0VhGzDnmOYTzjM6RqGEjzs2u
+01MxVRdNnEmxy5oEfpqxZdeRpObbf9RCrHku0t7v2ZoIv1aO0fRXQTEhbu7crD3J
+Fb3ggWC9lBXHyN5g6c7uTwJABns2VpPl9H6gR4uN+NXJEirJElcdrL38seo/hJUs
+ROYBKnPj6Nh9HRtmZevSHOTeGcfUg2GxpG/2XfxnAJUC1HSRScWB7tery6u2cQi6
+Nl83Yw2FBMgv365yHRvy
+=p9qJ
+-----END PGP SIGNATURE-----
