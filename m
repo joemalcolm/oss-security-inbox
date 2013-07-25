@@ -1,46 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/5
-Message-ID: <5181F830.8050403@redhat.com>
-Date: Wed, 01 May 2013 23:22:56 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE Request for Drupal contributed module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/16
+Message-ID: <1374753944.4093.5.camel@oban>
+Date: Thu, 25 Jul 2013 14:05:44 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: evolution mail client GPG key selection issue
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On jeu., 2013-07-25 at 02:46 -0600, Kurt Seifried wrote:
+> Yeah this was discussed internally a bit at Red Hat after you filed
+> the bug, it's a messy problem. I think one concern was where do you
+> want to place policy decisions for key usage and trust, in GPG, in the
+> app using it, or something else?
 
-On 05/01/2013 07:54 PM, Forest Monsen wrote:
-> Hi there! How about a CVE identifier for:
+Indeed, it's a messy one, and having to parse gpg output doesn't help
+establishing boundaries.
+
+>  One concern I have is I sometimes
+> used to (not any more!) download all the signing keys for keys I was
+> using to see if I could establish a web of trust. Of course anyone can
+> sign someone elses key and upload that to the public key servers, so
+> then the potential for grabbing a key from a bad guy increases
+> significantly.
+
+Indeed. I seem to recall (but I'm not sure though) there was a mode to
+automatically download keys for encryption (or maybe signature
+verification).
+
 > 
-> SA-CONTRIB-2013-046 - Filebrowser - Reflected Cross Site Scripting
-> (XSS) http://drupal.org/node/1984212
+> Any ways for evolutions please use CVE-2013-4166 for this issue. Has
+> anyone checked other popular mail clients like thunderbird/mutt/etc? 
 
-Please use CVE-2013-2036 for this issue.
+Mutt (at least mutt-patched package in Debian) seems to run a full
+search and then present the user the whole list of uids (with keyids,
+name, comment and email details) for him to select, which looks like a
+good idea.
 
-> Thanks!
-> 
-> Best, Forest
-> 
+Regards,
+-- 
+Yves-Alexis
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRgfgvAAoJEBYNRVNeJnmTQ/UP/1mK5HUrHw+//GmpMeF9VDyN
-gDtTAIa0jcpjINAeZKl1oAHh8d2O1JzMM3rpfrEoM1UR58zdz8PBfQ2k0GwKcAzQ
-mFCGrzeByUt4GWcVhAf4y+1XtIfUjBIrqfkyftzNYg5uQCY+LAGP9NJbu46tw0lN
-rjvrVUQsB6koQBTgS4sOxaboWe7BAtHbLvfmqXboWgz8pRSXLOC0o/dZxJtfCZFt
-bhGRoZkpOybGagff+y5D225VX5Ka2QJydcOY88x0MpvezI+BvzoFQ8Pjj4R+qdoH
-84jX/A7ZfiAIudKkEZstdM6Ng1gIXnrNqRpWVDeFg6ZwLmD2ChTUdN1DT/jHaQjl
-c6Wj1uv6/IZgLx/GLYVnsb7E8w/8B5y9zf6CreQxF5vjNCRWdmEIrkjNitL5wu+3
-kgBc+w/Yw1ezIIuWhVFDzXriWdiVS75yOV6cBfvgiPq86Lh8m611qK5yeqiDfTdN
-Lb8yRc+luFr8gSKL1fyt0xsYG2pFu7qibzOXr4TfCTPd3iSTvVncP4fHlUtvt0iY
-J8lfq/5kGDTKvzOnsklHSm6zW3JmyEbhqwxlUJtGCAV3gOWdVFBvNkiQAbAnXZJd
-/dAprHndRntKSNJKbI3HZyre3GYdqv5wRKcR86dgFY39Uza/fxL8Ii76sTSBDsnn
-XGLZnTqLsdgylJUCZCHM
-=QdtE
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
