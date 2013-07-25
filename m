@@ -1,29 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/6
-Message-ID: <96945015.52885093.1357234242478.JavaMail.root@redhat.com>
-Date: Thu, 3 Jan 2013 12:30:42 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/22
+Message-ID: <CABbbngDkfOqK0FusmA+2e2UibNVP3bJ5MSN0PE3CPqgPoyhNdw@mail.gmail.com>
+Date: Thu, 25 Jul 2013 10:52:24 -0700
+From: Forest Monsen <forest.monsen@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Panu Matilainen <pmatilai@...hat.com>
-Subject: CVE Request -- rpm (X >= 4.10 and X < 3d74c43 commit): Signature checking function returned success on (possibly malicious ) rpm packages
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hi there,
 
-  RPM upstream has corrected the following security issue:
-  [1] https://bugzilla.novell.com/show_bug.cgi?id=796375
-  Relevant upstream patch:
-  [2] http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=3d74c43
+I'd like to request a CVE identifier for:
 
-Affected rpm versions include rpm >= 4.10.0 [3] and < than [2] commit.
+SA-CONTRIB-2013-060 - Scald - Cross Site Scripting (XSS)
+https://drupal.org/node/2049415
 
-An attacker could use this flaw to create a syntactically valid rpm
-package, that could bypass the signature check.
+Thanks!
 
-Could you allocate a CVE id for this?
+Forest Monsen
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-[3] http://rpm.org/wiki/Releases/4.10.0
