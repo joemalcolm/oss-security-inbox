@@ -1,42 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/10
-Message-ID: <51EEDF1B.7010704@redhat.com>
-Date: Tue, 23 Jul 2013 13:52:59 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/10
+Message-ID: <51F0E89D.7010806@redhat.com>
+Date: Thu, 25 Jul 2013 02:58:05 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: P J P <ppandit@...hat.com>
-Subject: Re: CVE request: Linux kernel: panic while appending data to a corked IPv6 socket in ip6_append_data_mtu
+CC: Matthew Wilkes <matt@...distillery.eu>
+Subject: Re: Re: CVE Request - PloneFormGen, multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/23/2013 01:36 PM, P J P wrote:
-> Hi,
+On 07/19/2013 07:53 AM, Matthew Wilkes wrote:
+>> Sorry thought i had replied to this. I need links to the code 
+>> commits/vuln code so I can confirm these.
+>> 
+>> To reiterate: so I can confirm CVE assignments, and prevent
+>> duplicate assignments you *MUST* provide links to the code
+>> commits/vulnerable code. I don't have the time to go hunting
+>> through your source code for them. People need to start making
+>> better CVE requests, or you're not going to get CVEs from me.
 > 
-> Linux kernel built with the IPv6 networking support is vulnerable
-> to a crash while appending data to an IPv6 socket with UDP_CORKED
-> option set. UDP_CORK enables accumulating data and sending it as
-> single datagram.
-> 
-> An unprivileged user/program could use this flaw to crash the
-> kernel, resulting in local DoS.
-> 
-> Upstream fix: ------------- ->
-> https://git.kernel.org/linus/75a493e60ac4bbe2e977e7129d6d8cbb0dd236be
->
->  Reference: ---------- ->
-> https://bugzilla.redhat.com/show_bug.cgi?id=987633
-> 
-> Acknowledgements: -----------------
-> 
-> Red Hat would like to thank Hannes Frederic Sowa for reporting this
-> issue.
-> 
-> Thank you. -- Prasad J Pandit / Red Hat Security Response Team DB7A
-> 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+> Sorry, I wasn't aware you'd be wanting to trawl through the source 
+> yourself, tried to provide enough context in the original.
 
-Please use CVE-2013-4163 for this issue.
+Quite honestly I want to go through your source code, or for that
+matter any ones source code I'm not personally responsible for like I
+want to get kicked in the face by a horse.
+
+But I also want to make sure CVE's get assigned correctly. So three
+main problems arise:
+
+1) Does the issue(s) need a CVE? sometimes they are security hardening
+that look a lot like security vulnerabilities, but ultimately are not
+(see Steven's recent email about timing attacks/user name disclosure
+in Django for a good example of this).
+
+2) incorrect SPLIT/MERGE of issues (it can be subtle)
+
+3) duplicate CVE assignments
+
+Having QUICK access to the source code vulns/corrections makes all the
+above much much easier.
+
+Plus I'm not the only one analysing these issues, other open source
+vendors who ship your code may want to back port the fix, or make sure
+the fix is correct, or look for similar problems in your source code.
+
+Then you've got companies like iSIGHT Partners and iDefense (whom I
+formerly contracted for) that are just two of literally HUNDREDS of
+companies that go through all the stuff posted here (and
+Bugtraq/Full-Disclosure, and every other security list on the planet).
+This means rather then HUNDREDS of people having to hunt down the
+specific source code links/patches the original CVE requester makes
+sure it gets taken care. This scales and is much more efficient. Plus
+the original requester is a lot more likely to get it correct.
+
+You're not asking for CVE's in a vacuum. CVE's are widely used by
+literally millions of people and organizations, we need to make sure
+they are done right or we will cause an obscene amount of time and
+money to be wasted.
+
+CVE assignment to follow tomorrow because it's 3am here.
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -44,17 +70,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR7t8bAAoJEBYNRVNeJnmTFv4QAJOWescZj0nhdpKxBAKxmpup
-/23aw/8sY4wZ/L7lOakx5PaF3Ia15ZAknTjNqzio0UvjyDONZFOOZXdEde3IuS3J
-WJ5OiyisccJrGEuKTEa/rhwr1zAS/R/7QwSMZIDMHpgQGustSFpQKCH2TCCdiPFu
-Fm6hINLG0GBotCzmOOd10bJBFDMMHzCLc2lbHM8/cJXcbXR60D8G1WO6jWhD7hg8
-HYF9/64A44wmJG+13Pq4GUj4yCAFyVUrUMdRIjDNmAa4Y0x52/P83vY+Xer5nwt0
-ZivlPqD0/NqqlfIf+bPAU6t0v/7ZIPBxVbdh7rJTSF5PY/zVnLGzFi9BiQxnufkc
-F874zW0hPXZ0QwHr2MFNdKHizgibepOi5NAScPULXvnkmUNSElqiWK98uiH/WX1z
-bANKu4tOh7+FnWBugi7gPBwz5j7+8uk4XVj+2kaKnHO2WlJBuxxSjGvAZuPcaowb
-C3rM3n9eL8Ye2O/bSV0eYV0583CB3x/xXy8WHwUt6yMqjsUZP1lTnXbRYAdt10U4
-v+hstzsX9MhZV9eb17/ilBIh/8y/GjJOCijZ/C7WkeDYrgF6djHpbVT/ClRVhaLg
-lcED9/fp4JmgnRdRLuaRd++bBYA1NuIuhzXrish8ILRa4cIuXongwgx5fQadACaA
-sWbHTXj762d+jjSG75GP
-=6ulD
+iQIcBAEBAgAGBQJR8OidAAoJEBYNRVNeJnmTR9QP/i0mhCdFmjd5jhLznVHOspzs
+cutqLnLEifmdUx5b6pEdBeV/4xIToEpA4NSXUH9k0wm5oJVTQAMznavRVrsAPyro
+pGzgZr8CdY//NuFrfcK02qwBTwwvevVmPt1zWLSe+PJ4oxEj6tILxqUKEIolDri3
+QMUOs2Yr+GQOEa50Al4GraDHSQOPjdzI4hmQ4gOwOH6JA5It7+dTePvtCMj18Sof
+Wq9vBitqog7WMdT8C5vKx//DgP/Wrk6kDsdLCIxjrRhAuApExnCr7W+WjBfKe1rH
+LRT82Fxoe0TnGH+0RrH3Z1UEJkAyGtv2WEePCU7eSHubwndq2lt0ewACW+hK/fsr
+kMvdNBvlPC877RkvHLEznJSII5cAXBdEHhDnBgRlnR7mWrAMdaoTkyvLJNUm3Swy
+p0mfuLXDu7e1O+pKhQbHjykv27bunIMa0i1pHJ5fx3EXsB4mvei+CNt9/1VzgySO
+HbSVcOMBX05o/pCwpaAyrwfMsNwCqWNXZRCkrmu+LwuZg7SJDy4YHXuDgWuwd/7D
+ASuiLB/ue2syXyJs8ImWSSrzsl62SH8F4LZRqiaEZbO3Shdiko75pMAZpBTsi3qL
+/6mv7l84YEKir8McUwuMp6U8MTXxTbSR2VAnrQvuEVWC1ydK5VZz0A4Cw3lwG6d7
+roWkIh0hY2cJZwEPkX2r
+=8Vjl
 -----END PGP SIGNATURE-----
