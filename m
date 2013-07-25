@@ -1,52 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/11/9
-Message-ID: <5230D754.4020702@redhat.com>
-Date: Wed, 11 Sep 2013 14:49:24 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/21
+Message-ID: <51F15ADC.8080109@fifthhorseman.net>
+Date: Thu, 25 Jul 2013 13:05:32 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contrib modules
+CC: Kurt Seifried <kseifried@...hat.com>,  Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: CVE Request: evolution mail client GPG key selection issue
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 07/25/2013 04:46 AM, Kurt Seifried wrote:
+> Yeah this was discussed internally a bit at Red Hat after you filed
+> the bug, it's a messy problem. I think one concern was where do you
+> want to place policy decisions for key usage and trust, in GPG, in the
+> app using it, or something else?
 
-On 09/03/2013 03:00 PM, Forest Monsen wrote:
-> Hi there -- I'd like to request CVE identifiers for:
-> 
-> SA-CONTRIB-2013-071 - Flag - Cross Site Scripting 
-> https://drupal.org/node/2076221
+This is a critical observation.  there currently exists a lot of
+infrastructure which uses gpg as the backend for dealing with keys.
+Moving those decision processes out of gpg and into frontends means that
+any tool which relies on gpg itself won't be able to make use of those
+policy decisions implemented only in a frontend.
 
-Please use CVE-2013-4336 for this issue.
+> One concern I have is I sometimes
+> used to (not any more!) download all the signing keys for keys I was
+> using to see if I could establish a web of trust.
 
-> SA-CONTRIB-2013-072 - Node View Permissions - Access Bypass 
-> https://drupal.org/node/2076315
+Do you refresh your keyring regularly?  If not, you risk not receiving
+notification of revocation and other updates.  If you do refresh your
+keyring regularly, then you are also vulnerable to arbitrary user ID and
+subkey injection, since keys are fetched by keyid or fingerprint
+(including by subkey) and anyone can graft someone else's primary key to
+their own key as a subkey (even an expired one, or one without proper
+usage flags).
 
-Please use CVE-2013-4337 for this issue.
+In short: if anyone is relying on their local keyring as a "safe"
+storage place for keys they believe are valid, they're in an untenable
+position.
 
-> Thanks!
-> 
-> Best, Forest
-> 
+GnuPG needs the user to explicitly indicate which keys are valid, and
+user agents which use GnuPG to encrypt messages need to only send to
+keys which are known to be validly bound (by a trusted certifier) to the
+User ID in question.
+
+This can be done by either (a) designating certain keys with strong
+enough "ownertrust" and then being willing to rely on their
+certifications, or by the user themselves certifying keys that they
+believe to be valid.  If the user is the only trusted certifier, and
+they have a key that they are willing to use for a remote peer but they
+do not want to publish their certification, they can make a
+non-exportable certification (a.k.a. "local signature") to indicate to
+gpg that the peer's key is valid for their address.
+
+> Any ways for evolutions please use CVE-2013-4166 for this issue. Has
+> anyone checked other popular mail clients like thunderbird/mutt/etc?
+
+Thunderbird's enigmail plugin has a user preference (in the "advanced"
+pane of the expert preferences dialog, in the config editor as
+extensions.enigmail.hushMailSupport) that says "Use '<' and '>' to
+specify email addresses".  The help text also mentions "disable if
+recipients have old hushmail keys" -- this defaults to being checked
+(the config option is "false" when the checkbox is checked,
+confusingly).  So by default enigmail is "fixing" things in the same way
+as the proposed evolution fix, if i understand the bug report correctly.
+
+However, enigmail also has an option (under the "sending" pane of the
+hexpert preferences dialog, in the config editor as
+extensions.enigmail.alwaysTrustSend) which says "Always trust people's
+keys", with the help text of "Do not use the Web of Trust to determine
+the validaty of keys".  this defaults to "true" (checked), which means
+that enigmail will happily send mail to a key that gpg does not believe
+belongs to the recipient address (i just tested this; it looks like with
+the default settings, enigmail will encrypt to the first key returned by
+gpg that has the given user ID, even if a later matching key has a
+higher validity).
+
+This is a separate issue from the User ID matching issue originally
+raised in this thread though.
+
+	--dkg
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSMNdUAAoJEBYNRVNeJnmTbNcP/RblImqYzuX3w9EJAxvtQI8l
-H8wOAlAusXSXPo2EsVT81bZUXePh/3uZDDddekCErhcuHbNE7mg/h7xzVf4bLGPX
-dUQKPNKzF3WD1h3Dwd+ybpeqMBPNzX3qgCG+VxDFK+DGgoe0yZC2KlZLhgq9/DXU
-Xpgs2u+iLbCSILO1AG5fpx+Rlg6tHPJy5lraY7SAy+6yaTfp1OkRBycCSpYcWTNz
-9x5T3LmxqZbfIOSTVmncRLihpOj08HnjKTdk4HWlC7EPJ538Ttw4I2ITnsA0Kxns
-6rv4H/p8/LLE5CJkLCqdiYvP2EcpV462GTWNnm/4TkpsmUcI2MaA9SE+dZqrcoUo
-+9wY/4v13un2YfCYZxDFeIacMBjlm5YXiRrzoY58sWu4aBkRZ0jANJ5U1A9mq/77
-FsCWu60YDpnrNXVM/8qAYvH0B4AGFwO8RR1XF1wyqeoCLaryc/LiGbAWmk3mKrt5
-KP11KbzCIFiUPya8XBNjxIeBdHYn1CQLtxrOarFwuhU9a9kt1ITZ2Qf3v9n6wTeQ
-c4IiG57TWeAhZ7N1RrEB+3ucVaO2FrDaWshPiVF2Jl4TsE1AEYqxGy+ECOsCwtnG
-q+OIifTxMDGn8XUJ5KtSqC7onGYwQbVpv/wZc2s5wVNmKXBiknuY5dMarnR7bmd0
-DmjcUtNEfaSnYGxOU/Iv
-=Rqmw
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
