@@ -1,44 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/16
-Message-ID: <1374753944.4093.5.camel@oban>
-Date: Thu, 25 Jul 2013 14:05:44 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/13
+Message-ID: <51F0F367.8040105@pipping.org>
+Date: Thu, 25 Jul 2013 11:44:07 +0200
+From: Sebastian Pipping <sebastian@...ping.org>
 To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: evolution mail client GPG key selection issue
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE request: mysecureshell: information disclosure (or worse)
 Content-Type: text/plain; charset=utf-8
 
-On jeu., 2013-07-25 at 02:46 -0600, Kurt Seifried wrote:
-> Yeah this was discussed internally a bit at Red Hat after you filed
-> the bug, it's a messy problem. I think one concern was where do you
-> want to place policy decisions for key usage and trust, in GPG, in the
-> app using it, or something else?
+Hello Kurt,
 
-Indeed, it's a messy one, and having to parse gpg output doesn't help
-establishing boundaries.
 
->  One concern I have is I sometimes
-> used to (not any more!) download all the signing keys for keys I was
-> using to see if I could establish a web of trust. Of course anyone can
-> sign someone elses key and upload that to the public key servers, so
-> then the potential for grabbing a key from a bad guy increases
-> significantly.
-
-Indeed. I seem to recall (but I'm not sure though) there was a mode to
-automatically download keys for encryption (or maybe signature
-verification).
-
+On 25.07.2013 10:33, Kurt Seifried wrote:
+> On 07/23/2013 11:17 AM, Sebastian Pipping wrote:
+>> mysecureshell [1] is an SFTP-only shell to be used with sshd.
 > 
-> Any ways for evolutions please use CVE-2013-4166 for this issue. Has
-> anyone checked other popular mail clients like thunderbird/mutt/etc? 
+>> The latest release 1.31 makes use of shared memory to maintain 128
+>> slots with one struct for each connection/process. Access to that
+>> block of shared memory is not (or not properly) synchronized, so
+>> two or more processes might end up occupying the very same slot
+>> when process scheduling wants that to happen.  The effective 
+>> permissions of the process remain untouched, though.  So it's
+>> logging in as someone else and it isn't.
+>>
+>> The relevant code from SftpServer/SftpWho.c (lines 106 and after)
+>> is:
+>>
+>> [cut out, same code below]
+>>
+>> The symptoms of this bug have been reported earlier at [2] by forum
+>> user "voleg".  To my best knowledge, there is no CVE number
+>> assigned yet.
+>> [..]
+>> [1] http://mysecureshell.sourceforge.net/
+>> [2] http://mysecureshell.free.fr/forum/viewtopic.php?id=655
+> 
+> 
+> To reiterate: so I can confirm CVE assignments, and prevent duplicate
+> assignments you *MUST* provide links to the code commits/vulnerable
+> code. I don't have the time to go hunting through your source code for
+> them. People need to start making better CVE requests, or you're not
+> going to get CVEs from me.
 
-Mutt (at least mutt-patched package in Debian) seems to run a full
-search and then present the user the whole list of uids (with keyids,
-name, comment and email details) for him to select, which looks like a
-good idea.
+Upstream tarball
+================
+http://mysecureshell.free.fr/repository/index.php/debian/pool/main/m/mysecureshell/mysecureshell_1.31.tar.gz
 
-Regards,
--- 
-Yves-Alexis
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Issue
+=====
+Race condition, lack of synchronization, user may end up in another
+directory.
+
+
+Guilty code
+===========
+
+Online
+~~~~~~
+http://mysecureshell.cvs.sourceforge.net/viewvc/mysecureshell/mysecureshell/SftpServer/SftpWho.c?revision=1.3&view=markup#l107
+
+Inlined  (from SftpServer/SftpWho.c, lines 107 and after)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+for (i = 0; i < SFTPWHO_MAXCLIENT; i++)
+    if (who[i].status == SFTPWHO_EMPTY)
+    {
+        (void) usleep(100);
+        if (who[i].status == SFTPWHO_EMPTY)
+        {
+            //clean all old infos
+            memset(&who[i], 0, sizeof(*who));
+            //marked structure as occuped
+            who[i].status = SFTPWHO_IDLE;
+            return (&who[i]);
+        }
+    }
+
+
+Please let me know if you need anything more.  Thanks for your time!
+
+Best,
+
+
+
+Sebastian
