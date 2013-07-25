@@ -1,54 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/12
-Message-ID: <20131104194149.2ee4504b@chromobil.localdomain>
-Date: Mon, 4 Nov 2013 19:41:49 +0100
-From: Stefan Bühler <stbuehler@...httpd.net>
-To: oss-security@...ts.openwall.com
-Cc: hanno@...eck.de
-Subject: Re: openssl default ciphers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/20
+Message-ID: <20130725100200.GA28446@videolan.org>
+Date: Thu, 25 Jul 2013 12:02:00 +0200
+From: Jean-Baptiste Kempf <jb@...eolan.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Michael Niedermayer <michaelni@....at>, Moritz Muehlenhoff <jmm@...til.org>, Moritz Muehlenhoff <jmm@...ian.org>, ffmpeg-security@...peg.org, security@...eolan.org
+Subject: Re: new FFMpeg stuff
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 4 Nov 2013 18:49:06 +0100
-Hanno Böck <hanno@...eck.de> wrote:
-
-> On Mon, 4 Nov 2013 18:16:30 +0100
-> Stefan Bühler <stbuehler@...httpd.net> wrote:
+On 25 Jul, Kurt Seifried wrote :
+> > Why the VLC security team should be involved in that?
 > 
-> > Is 'DEFAULT@...ENGTH:!LOW:!EXP' (should
-> > be similar to 'HIGH:MEDIUM:!aNULL') a reasonably default?
+> Because they want to help make sure the CVEs get correctly assigned?
 > 
-> SSLCipherSuite HIGH:!MEDIUM:!LOW:!aNULL@...ENGTH
-> should be fine. There are basically near zero browsers out there that
-> should have any problems with that. Even dinosaurs like IE6 can work
-> with this, you don't need "medium" ciphers as long as you don't want
-> to make a site accessible to browser museums.
+> If you guys don't care about getting CVE's done properly well that's
+> your choice I guess and I'll assign the CVEs as best I can. But I was
+> hoping VLC upstream might help out.
 
-There is no difference to HIGH:!aNULL on my system. I don't see why
-HIGH:!MEDIUM:!LOW could be not equal to HIGH anyway...
+I think you misunderstood me.
+Upstream is FFmpeg, not VLC. Why shouldn't FFmpeg team get the CVE?
 
-> And looking at what medium includes that high doesn't, it seems you
-> really don't want that ancient cipher suites:
-> -DHE-RSA-SEED-SHA
-> -DHE-DSS-SEED-SHA
-> -SEED-SHA
-> -IDEA-CBC-SHA
-> -IDEA-CBC-MD5
-> -RC2-CBC-MD5
-> -ECDHE-RSA-RC4-SHA
-> -ECDHE-ECDSA-RC4-SHA
-> -ECDH-RSA-RC4-SHA
-> -ECDH-ECDSA-RC4-SHA
-> -RC4-SHA
-> -RC4-MD5
-> -RC4-MD5
-> -PSK-RC4-SHA
+Best regards,
 
-This is not what I get for "MEDIUM" (debian testing); I see only SEED +
-RC4; RC2 is an export cipher; wikipedia has some stuff on IDEA, and it
-seems indeed "ancient". SEED might be more relevant (for Korea...), and
-RC4 is having a big comeback due to the BEAST attack.
-
-I think due to BEAST a default collection should include RC4; that is
-why I included MEDIUM.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+-- 
+Jean-Baptiste Kempf
+http://www.jbkempf.com/ - +33 672 704 734
+Sent from my Electronic Device
