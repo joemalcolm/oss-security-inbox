@@ -1,68 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/13/5
-Message-ID: <51BA5BC7.5070204@redhat.com>
-Date: Thu, 13 Jun 2013 17:54:47 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: resin: Cross site scripting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/14
+Message-ID: <51F0FDE5.9010006@pipping.org>
+Date: Thu, 25 Jul 2013 12:28:53 +0200
+From: Sebastian Pipping <sebastian@...ping.org>
+To: kseifried@...hat.com
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE request: mysecureshell: local denial of service (or worse)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt,
 
-On 06/11/2013 03:10 AM, Agostino Sarubbo wrote:
-> From the secunia advisory SA53749 [1]:
-> 
-> Description Gjoko Krstic has discovered a vulnerability in Caucho
-> Resin, which can be exploited by malicious people to conduct
-> cross-site scripting attacks.
-> 
-> Input appended to the URL after /resin-admin/ is not properly
-> sanitised before being returned to the user. This can be exploited
-> to execute arbitrary HTML and script code in a user's browser
-> session in context of an affected site.
-> 
-> The vulnerability is confirmed in version 4.0.36. Other versions
-> may also be affected.
-> 
-> 
-> Solution No official solution is currently available.
-> 
-> Provided and/or discovered by Gjoko Krstic (LiquidWorm)
-> 
-> Original Advisory ZSL-2013-5143: 
-> http://www.zeroscience.mk/en/vulnerabilities/ZSL-2013-5143.php
-> 
-> [1]: https://secunia.com/advisories/53749/
-> 
-> The original advisory contains a poc.
-> 
 
-This doesn't appear to be an Open Source licensed software:
+On 25.07.2013 10:33, Kurt Seifried wrote:
+> On 07/23/2013 11:19 AM, Sebastian Pipping wrote:
+>> mysecureshell [1] is an SFTP-only shell to be used with sshd.
+> 
+>> The latest release 1.31 makes use of shared memory with permissions
+>> 666 to maintain 128 slots with one struct for each
+>> connection/process. An unprivileged user can mark mark all
+>> remaining slots as occupied (and optionally wait for remaining
+>> clients to leave to block those slots, too).
+> 
+>> To demonstrate the issue, I have written a small command line
+>> tool. It's free software and can be found at [2].  Use it like
+>> this:
+> 
+>> # make cc -std=c99 -Wall -Wextra -pedantic local-dos.c -o
+>> local-dos
+> 
+>> # ./local-dos USAGE: ./local-dos (block|unblock|show)
+> 
+>> # watch -n 1 -d ./local-dos block [..]
+> 
+>> Besides the local DoS it might be possible to attack the call to
+>> chdir, since that is reading from shared memory, too.
+> 
+>> Any ideas on other attacks based on writing to that block of
+>> shared memory?  File /bin/MySecureShell is mode 4755 setuid root if
+>> that makes it more interesting :-)
+>> [..]
+>> [1] http://mysecureshell.sourceforge.net/
+>> [2] https://github.com/hartwork/mysecureshell-issues
+> 
+> To reiterate: so I can confirm CVE assignments, and prevent duplicate
+> assignments you *MUST* provide links to the code commits/vulnerable
+> code. I don't have the time to go hunting through your source code for
+> them. People need to start making better CVE requests, or you're not
+> going to get CVEs from me.
+> 
+> I think if I repeat this enough times it'll work.
 
-                   Caucho Developer Source License
-                             version 1.1
+Upstream tarball
+================
+http://mysecureshell.free.fr/repository/index.php/debian/pool/main/m/mysecureshell/mysecureshell_1.31.tar.gz
 
-Please go direct to Mitre for your CVE needs on this one.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Issue
+=====
+Mode 0666 for shared memory, local denial of service
 
-iQIcBAEBAgAGBQJRulvHAAoJEBYNRVNeJnmT7icQAJBmsZ+Cjk/8KceIpohPwA5I
-o8aKC73v+LFeFLmwjkCNLMjh6C4S868A12QhfbVj6LSl2oB2tD+Nd1dUC/SzAjk0
-B6F2vqOG0XCJqNF6ja0uPs1H+jGLky7BF2mxRpAebpi9bn/dw5j9zmcizQoTGo6n
-B8B85P+yTbYlbo3o/hRhXf+lQsVC0rxFQNVTckup63iTYYl3Dti9IV3NN7r/j9ss
-kJYXd8EtRNpdjVOxa9Lg5zkM8fxkfb5YIlkTnBOsNe9z0+swowcm8BtO0npuBZlM
-y08gi5RU5Bz1gHJkhAywuH+6iUPHTq81J/d25COGp0QjHApQrEKC8MgJoilLnGLb
-fqAoP9oaxXq0BtUO8Y2lBGDVjglVv6OEjAeNh17rgr1Ol7LGNdJpk/gvFNjWpIzl
-49CcapQQUzSDkKEqk4NNWfZDjl2BAga0cAjwbF9nuyK3kQHsY4/kEyxi/YQHga8g
-90P/xRsOsNr6WNKl5+dY79JPOpibbw/ulcYRVo51AsQ6xWSbpGGKxaavvmAIl+E9
-lUobw/DjJb6ow0oGY8yxE3AdXIYa89Pjri94n/Chpw7CSyVt9hSakEztkQ6HUP2E
-RN51UqgduNSKy7o232JNvgASISB4d9c77qL5RA9MWSfIqgjZGMIulH+kvpj/NaX2
-VVILjlhfdhPhnwXxDXVE
-=cmeP
------END PGP SIGNATURE-----
+
+Guilty code
+===========
+
+Online
+~~~~~~
+http://mysecureshell.cvs.sourceforge.net/viewvc/mysecureshell/mysecureshell/SftpServer/SftpWho.c?revision=1.3&view=markup#l73
+
+Inlined  (from SftpServer/SftpWho.c, lines 73 and after)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//try to join to existing shm
+if ((shmid = shmget(key, sizeof(t_shm), 0)) == -1)
+  if (create == 1)
+    {
+      shmid = shmget(key, sizeof(t_shm), IPC_CREAT | IPC_EXCL | 0666);
+      eraze = 1;
+    }
+
+
+Please let me know if you need anything more.  Thanks for your time!
+
+Best,
+
+
+
+Sebastian
