@@ -1,44 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/27/8
-Message-Id: <201312271207.rBRC7Vxx026079@linus.mitre.org>
-Date: Fri, 27 Dec 2013 07:07:31 -0500 (EST)
-From: cve-assign@...re.org
-To: huzaifas@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Two CVE request for gnome-shell/screensaver issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/6
+Message-ID: <51F0E5FC.4000809@redhat.com>
+Date: Thu, 25 Jul 2013 02:46:52 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: CVE Request: evolution mail client GPG key selection issue
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> 1. gnome-shell: blind command execution via activities search keyboard focus
-> https://bugzilla.gnome.org/show_bug.cgi?id=686740
-> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1030431
-> https://git.gnome.org/browse/gnome-shell/commit/js/ui/screenShield.js?id=209014b083dbe86ed0e0860a6016735571b56f94
+On 07/21/2013 02:02 PM, Yves-Alexis Perez wrote:
+> Hi,
+> 
+> an issue with security impact was recently fixed in Evolution.
+> More details can be found on the Red Hat bug report at 
+> https://bugzilla.redhat.com/show_bug.cgi?id=973728 but it
+> basically boils down to a wrong selection when choosing the the
+> keyid for a destination email address.
+> 
+> Basically, when you have multiple keys in the keyrings, with
+> overlapping email addresses (like foo@...mple.com and
+> foobar@...mple.com), you can end up (silently) encrypting to the
+> wrong recipient.
+> 
+> It actually happened to me when forwarding embargoed security
+> issues so it can happen in real life. Now the wrong recipient would
+> need to actually obtain a copy of the sent mail (since it's sent to
+> the correct recipient, not the wrong one), but I still think it
+> warrants a CVE.
+> 
+> Quick fix was to use the documented format for email searches in
+> GnuPG (using <> around email addresses) but a more complete fix for
+> explicit key selection should appear some time in the future.
+> 
+> Regards,
 
-Use CVE-2013-7220.
+Yeah this was discussed internally a bit at Red Hat after you filed
+the bug, it's a messy problem. I think one concern was where do you
+want to place policy decisions for key usage and trust, in GPG, in the
+app using it, or something else? One concern I have is I sometimes
+used to (not any more!) download all the signing keys for keys I was
+using to see if I could establish a web of trust. Of course anyone can
+sign someone elses key and upload that to the public key servers, so
+then the potential for grabbing a key from a bad guy increases
+significantly.
 
+Any ways for evolutions please use CVE-2013-4166 for this issue. Has
+anyone checked other popular mail clients like thunderbird/mutt/etc?
 
-> 2. gnome-shell: run command dialog visible above screen locker
-> https://bugzilla.gnome.org/show_bug.cgi?id=708313
-> https://git.gnome.org/browse/gnome-shell/commit/js/ui/main.js?id=efdf1ff755943fba1f8a9aaeff77daa3ed338088
-> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1046839
-
-Use CVE-2013-7221.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEbBAEBAgAGBQJSvWy7AAoJEKllVAevmvmsBKIH9i5j8T+1kItAC6Lxy5kSfHca
-pDllGu1EsCuFXVkSHSVExTo1lLebBLtU4ZvHB9lJ7pSIp2WgSEmQ5jGTuNYSg4Er
-EAcbBHqJOy56iRKW7nVbVszn4aWmMSWOotUtJFjFsjYkY0lpKec4/UwLmb1y7Lsl
-mGQ0Vwjrtd3BxxhADcjPfcVynl4mxAp8sOcZlCt4OZid71ZSN3S6YfX/FeG7cNJ6
-axwTmWjOQYjOTqPcBkdbaUaYoDk5F4yZoev3IKiOxcq/4GGduqfMDgUnksLaELqM
-rPjCNErsnEAKxyS1KbISa9wqbV3os0ENIzqfJcGqxRk7wZDaiIo5ZnqjEQkrRg==
-=BWdH
+iQIcBAEBAgAGBQJR8OX7AAoJEBYNRVNeJnmT+hQQAMh1vNoTyxu/d5sQidn571z1
+2ZGVu07Z+1tFNgHlH1cLNIfw7bnPTy4SydyGFnXdHw4XSFwp52glS0FYYyhyLhwv
+tsFP0QSQc6jBpcETM9voHTdELHbAGySoY5TZV8gXeLoiboJ+dhCCmJhmCVxlQqgr
+Q+ae+bR4UcNNZ3TLKIaJbKm+TJdULiGar1iHMXiIYpR+66uekrcCM3uL3yjhgnwk
+7+zp8haLv8d2mOUGAkFfsg2Jku/bLnCj4/vRK10EV61pwzkW2/C2lBUhCKpGAEMQ
+6o6UkulgZaIP0kRtdNk+tYZAFbzhqiRxyDlXCxmJwRu+p0nJ1OY8Bf3i3oPGeVHq
+NpMwRbpDAyzYPZTVgvQfdr+GTOaikwbdH37zI8tUk5MXnXSMwDmvOt4nmziCtzK0
+rU+DA6p1BQGgDMSc5LNFAp26H70SdIUo1CssoWhTC06Z2nk8LebPfgwCQ6weoyoR
+InNhmXiCCEwfpOuOEXJ4gWDEL9CxaM1dUpa66QyICFhgLtz7ySJCYMXKAgqhzkk2
+vEWEMmAkwMmW9SZaoW3ddhHL8UI1/KB25MhC5icRT89L7ZGr9fGqvLKVsVQWTV1L
+s68r9o2ChxcMpU/hLul2nHvB36hlBrfLoFZYEl9aTY+p9oOQKrcpffLlOJGJS1eq
+Lap0JhAntso2FN2hciB8
+=UVD4
 -----END PGP SIGNATURE-----
