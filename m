@@ -1,63 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/29/1
-Message-ID: <5154E60B.70009@redhat.com>
-Date: Thu, 28 Mar 2013 18:53:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/19
+Message-ID: <ksqq8t$s6m$1@ger.gmane.org>
+Date: Thu, 25 Jul 2013 10:14:12 +0100
+From: Matthew Wilkes <matthew@...thewwilkes.co.uk>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE Request for Drupal contrib modules
+Subject: Re: CVE Request - PloneFormGen, multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> But I also want to make sure CVE's get assigned correctly. So three
+> main problems arise
 
-On 03/28/2013 02:00 PM, Forest Monsen wrote:
-> Hi there,
-> 
-> I'd like to request CVE identifiers for:
-> 
-> SA-CONTRIB-2013-036 - Zero Point - Cross Site Scripting (XSS) 
-> http://drupal.org/node/1954588
+Kurt, I get it. Really. I'll make sure code commits are included in 
+future. I don't think anyone's being deliberately obstructive here, I 
+know I certainly try my best to give you clear, short descriptions so 
+that you don't have to waste time going through others' code if you 
+don't need to. I'm not trying to make your job harder, I'm trying to help.
 
-Please use CVE-2013-1905 for this issue.
+> Having QUICK access to the source code vulns/corrections makes all the
+> above much much easier.
 
-> SA-CONTRIB-2013-037 - Rules - Cross Site Scripting (XSS) 
-> http://drupal.org/node/1954592
+Sure, I'll make sure you have it it future. From my point of view, 
+however, a lot of these things are caused by subtle interactions of 
+various mistakes that would be harmless on their own. That makes it 
+harder to provide useful source code as it could easily look correct. 
+For example, the Zope application server uses the presence of 
+documentation as an in-band marker of if something is public or private; 
+just sending you a link to the removal of docs would be pretty confusing.
 
-Please use CVE-2013-1906 for this issue.
+> You're not asking for CVE's in a vacuum. CVE's are widely used by
+> literally millions of people and organizations, we need to make sure
+> they are done right or we will cause an obscene amount of time and
+> money to be wasted.
 
-> SA-CONTRIB-2013-038 - Commons Groups - Access bypass & Privilege 
-> escalation http://drupal.org/node/1954764
+The reason I write descriptions and include my estimates of CWE 
+identifiers and CVSS scores is precisely because I know lots of people 
+read these lists, and it matters to me to reduce the amount of work they 
+have to go through.  I'd be surprised to learn that more people care 
+about the commits themselves rather than the information in an easy to 
+consume format.
 
-Please use CVE-2013-1907 for this issue.
+> CVE assignment to follow tomorrow because it's 3am here.
 
-> SA-CONTRIB-2013-039 - Commons Wikis - Access bypass & Privilege
-> escalation http://drupal.org/node/1954766
+Thank you, it's appreciated.
 
-Please use CVE-2013-1908 for this issue.
+Matt
 
-> Thanks!
-> 
-> Forest
-> 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRVOYLAAoJEBYNRVNeJnmT9coP/2P1CJEFrRGo8NMq9AVR/SvA
-GWDL+zK16Dejqm+EoYA9pb1r4uh40igN77Akj1UgbQJtQn3EpIuMpzzGojZFgwwo
-2YSuykWx4rWXDEYrhMW+BzPARZgOcM54I7l+EgBd0+nu9dKWrX64HGIlP7RE01RE
-lRMyltw+qnBanJMGHcIUo96P00co6AMoGh02Wj7pcce87oH353bU0yWILhNc/dve
-iEkO4s0w3E30TbFtJJk3WKDNoORjfRB9ix7CSOeIz99vJZrG4B9wqH6l+rnNIpGC
-Cp4PQPrJ4e0muIqVgW8CKytBM6GBlcb8+/s9G8yjUUYuNGnd496+b7PMtHIdq4r4
-E80oJ4tOiHTA5kebNCXHQs9YAAuMOOodBFnJezffoO5ZBXgc+31s5Pv1rZTJIdJ5
-yE/5bonCigNSHfuWQi34um6P4ytHGTkxZzEiwZoWnnSNaqHSSPBtSwz0uJJjix+O
-SJWJiy9wcjcWZxGhQKLtnIk+K74UPrY41zc/e4XPT+JNeKIbljrVuATh67RsrUmU
-tDO6tZ/slpQ1IsxuSWug4bCAwhydVNZ6vun83/wHPxAUPgPxvj4hlQQMX3OMuU2u
-JOe6pekVuNa6fFq70oY8Xla0W4LX71Oe2Vwm6h4h4AkXCXDXNEyrwMehrYpvrF9w
-leeXpkXSeJtPKAJIIN0Y
-=fwxJ
------END PGP SIGNATURE-----
