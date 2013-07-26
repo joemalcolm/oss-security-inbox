@@ -1,41 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/9
-Message-ID: <20131211154735.GF2348@openstack.org>
-Date: Wed, 11 Dec 2013 15:47:36 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2013-034] Heat CFN policy rules not all enforced (CVE-2013-6426)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/26/3
+Message-ID: <20130726082719.GA9759@elende>
+Date: Fri, 26 Jul 2013 10:27:20 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: henrik@...n.dk
+Subject: CVE Request: Xymon Systems and Network Monitor - remote file deletion vulnerability
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2013-034
-CVE: CVE-2013-6426
-Date: December 11, 2013
-Title: Heat CFN policy rules not all enforced
-Reporter: Steven Hardy (Red Hat)
-Products: Heat
-Affects: All supported releases
+Hi Kurt
 
-Description:
-Steven Hardy from Red Hat reported a vulnerability in Heat's default
-API policy enforcement. By calling the CreateStack or UpdateStack
-methods, an in-instance user may be able to create or update a stack
-in violation of the default policy. Only setups using Heat's
-cloudformation-compatible API are affected.
+Henrik Størner (CC'ed) announced on xymon mailinglist and bugtraq an
+update for Xymon, a systems and network monitor. xymon is vulnerable
+to a remote file deletion vulnerability (see attached full announce
+text).
 
-Icehouse (development branch) fix:
-https://review.openstack.org/61452
+Upstream commit fixing the issue is at [1].
 
-Havana fix:
-https://review.openstack.org/61454
+ [1] http://sourceforge.net/p/xymon/code/7199/
 
-Notes:
-This fix will be included in the icehouse-2 development milestone
-and in a future 2013.2.1 release.
+Can a CVE be assigned to this issue?
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6426
-https://launchpad.net/bugs/1256049
+Regards,
+Salvatore
 
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
+----- Forwarded message from Henrik Størner <henrik@...n.dk> -----
+
+Hi,
+
+a security vulnerability has been found in version 4.x of the Xymon
+Systems & Network Monitor tool
+(https://sourceforge.net/projects/xymon/).
+
+
+Impact
+------
+The error permits a remote attacker to delete files on the server
+running the Xymon trend-data daemon "xymond_rrd". File deletion is
+done with the privileges of the user that Xymon is running with, so it
+is limited to files available to the userid running the Xymon service.
+This includes all historical data stored by the Xymon monitoring
+system.
+
+
+Vulnerable versions
+-------------------
+All Xymon 4.x versions prior to 4.3.12 with the xymond_rrd module
+enabled (this is the default configuration).
+
+Note that Xymon was called "Hobbit" from version 4.0 to 4.2; all of
+the "Hobbit" versions are also vulnerable.
+
+
+Mitigating factors
+------------------
+The attack requires access to the xymond network port (default: tcp
+port 1984).
+
+If access to administrative commands is limited by use of the
+"--admin-senders" option for the "xymond" daemon, then the attack is
+restricted to the commands sent from the IP-adresses listed in the
+--admin-senders access list. However, the default configuration
+permits these commands to be sent from any IP.
+
+Systems where xymond_rrd is disabled are not vulnerable, but this is
+not the default configuration.
+
+
+Details
+-------
+Xymon stores historical data, trend-data etc. for each monitored host
+in a set of directories below the Xymon "server/data/" directory. Each
+monitored host has a set of directories named by the hostname.
+
+When a host is no longer monitored, the data stored for the host can
+be removed by sending a "drop HOSTNAME" command to the Xymon master
+daemon. This is forwarded to xymond_rrd and other modules which then
+handle deleting various parts of the stored data, essentially by
+performing the equivalent of "rm -rf
+<xymondatadirectory>/rrd/HOSTNAME". In the vulnerable versions of
+Xymon, the hostname sent to xymond was used without any checking, so a
+hostname could include one or more "../" sequences to delete files
+outside the intended directory.
+
+There are other modules that delete files in response to a "drophost"
+command, but for various reasons these are not vulnerable to the
+attack.
+
+
+Credit and timeline
+-------------------
+The bug was discovered by "cleaver" during investigation of a bug
+originally reported to the Xymon mailing list on July 17 -
+http://lists.xymon.com/archive/2013-July/037838.html - and I was
+notified via private e-mail on July 21st when it was realized to be a
+security related issue.
+
+A bugfix - r7199 - was committed to the Sourceforge SVN code
+repository on July 23rd, and version 4.3.12 was released on July 24th.
+
+
+Henrik Størner
+Xymon developer
+
+----- End forwarded message -----
