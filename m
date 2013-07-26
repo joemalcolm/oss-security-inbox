@@ -1,60 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/22
-Message-ID: <512BD689.8090908@redhat.com>
-Date: Mon, 25 Feb 2013 14:24:25 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/26/8
+Message-ID: <51F2CB9C.4040005@redhat.com>
+Date: Fri, 26 Jul 2013 13:18:52 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Bastian Blank <waldi@...ian.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: libvirt kvm-group writable storage
+To: oss-security@...ts.openwall.com
+CC: Moritz Muehlenhoff <jmm@...ian.org>, Andreas Nilsson <andreas.nilsson@...en.com>, Florian <floriangaultier@...il.com>, "A. Jesse Jiryu Davis" <jesse@...en.com>, "Steven M. Christey" <coley@...re.org>
+Subject: Re: CVE Request - MongoDB <=2.4.4 uninitialized object
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/25/2013 12:36 PM, Bastian Blank wrote:
-> Hi
+On 07/18/2013 11:00 PM, Moritz Muehlenhoff wrote:
+> On Thu, Jul 18, 2013 at 08:14:39AM -0400, Dan Pasette wrote:
+>> We already requested CVE-2013-2132 for this and it was fixed in version
+>> 2.4.5.
+>>
+>> We announced it on mongodb-announce and have it listed in our alerts page
+>> here: http://www.mongodb.org/about/alerts/
 > 
-> libvirtd in privileged (root) mode runs qemu/kvm guests with a
-> different user. It set owner/group of storage used by this guests
-> to this user and group. In Debian this is libvirt-qemu:kvm.
+> CVE-2013-2132 was already assigned to this issue in the Python driver:
+> http://www.openwall.com/lists/oss-security/2013/05/31/6
+> https://jira.mongodb.org/browse/PYTHON-532
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-2132
 > 
-> | brw-rw---T 1 libvirt-qemu kvm  254, 11 Feb 25 17:08 /dev/dm-11 |
-> brw-rw---T 1 libvirt-qemu kvm  254, 12 Feb 25 17:50 /dev/dm-12
+> While "your" CVE-2013-2132 refers to
+> https://jira.mongodb.org/browse/SERVER-9878, which AFAICS is a different
+> issue.
 > 
-> The kvm group is used for generic access control on /dev/kvm, so a
-> lot of users may have access to this group.
-> 
-> | crw-rw---T 1 root kvm 10, 232 Feb 25 18:04 kvm
-> 
-> This allows write access to unrelated users to this storage.
-> 
-> Affected is at least Debian Squeeze (0.8.3-5+squeeze2) and Debian 
-> experimental (1.0.1-2). Reference is http://bugs.debian.org/701649
-> 
-> Please assign a CVE.
-> 
-> Bastian
+> Cheers,
+>         Moritz
 > 
 
-Please use CVE-2013-1766 for this issue.
+Can upstream please confirm/deny what is going on here, I'm pressed
+for time recently and don't have time to wade through the code to
+determine what's up, as I see it:
+
+1) did a CVE number get recycled? E.g. you fixed the issue referred to
+in CVE-2013-4142 in mongodb but then label it with CVE-2013-2132?
+
+2) are these in fact in need of a CVE merge? (seems unlikely since one
+is mongodb, and the other is the python driver, so different code bases)
+
+3) some other option?
+
+I guess my biggest concern right now is confirming that CVE-2013-4142
+( http://blog.scrt.ch/2013/06/04/mongodb-rce-by-databasespraying/) is
+in fact fixed in release 2.4.5 of mongoDB. Thanks!
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRK9aIAAoJEBYNRVNeJnmT8EMQAMa1H0ohO260tA037ynQsPZt
-xsgfjODQyH5DvC0u6/TaenkqdC91wgWuD5pRCgtTzIUOzuXGCYuyKqn9s+MTS1RW
-TN8vbuBnEZEZNssm1cCntTEuClJlD2ZoctwKVGN4WqGJpQhhN6wuLt0Kh2pgt+bm
-eJ8zhtvREpncjnt/GIOACIsshSysQONup4tWDOaag3RyBbkM1QDTV8CoA9STjBu4
-8/1NZ4+C9qsI94dV+F3C0cijZgDn8Ev62reZKsSYSxBUxreDhwj3DwKAA37bSpf5
-WKbjcfDlkuw2TNdwzPPm/NdJs+q8RiMOzCeIUD/vXzzXsfW8qjNDR2veG16+p1cw
-w+dLf7ggto00cSgTvNnwrEr14lCE73JVRvg6K+LUsHR5soNuyNGGYMIelvNcj6sh
-0xLSSIqREvFW2sVX2LKmOtRMz9YXmQgs4uqGqxMMh8mMcRZeJuTv2X05WydejLKc
-mYxc2hwL3urP7JhB28BYhF6KGZRbtcE5X3835cRuwH0AZIL5GW6V63d8FiEPHYMV
-Zn0pxOylVGqc2Jr8fzfUlmePh3fVY/H7jRmK+Q8Hrg15SbMho1XAwSw15mfSuNXA
-VKvMdoWuN7bFry2FG1/rf033B0E84Nl6P3HD+qjTvBsyT4yFNV9zdZ2vaJkzOCAK
-D4mwa1UNIq0b7ncoXGFI
-=S4IS
+iQIcBAEBAgAGBQJR8sucAAoJEBYNRVNeJnmThyoP/1iLNar6Ebax4ini7ZsUIDOP
+fQVtXD0H5soEMmaqtgVLvmpobvCmcKdk1Yx6GbARgvCiR9aRxODRr6uUHTqWYo8l
+YkH7RHLXBNPfo31itzvF2psKkS0rcfhNw9eWIYkx7wbKd4eGSi64s/F8+A/Ewtql
+7ZDo6lwxlmY8vEDaAo98Ts+Cavs0lF1EOFQ3z3nF6gDkZWKMER1R/WnZXnnop/j7
+kc5xVWifdHJWkJOJ90wlhthZmyp+YijAMKINScPBv+/tgCZT5OKBM+7+VJFGKJLg
+ZngwIcEkRRfqd/G9l+fQ1q6lMQPzKcFIIONeGSzIjxUay++uHBHUbxSS1A4YYwSW
+VoOj7IZZ5BG+UZfG/Z8fQunG074W+QHKI8mx9XnmuZnZA9zo4MJ8PdvaVxhQE+mL
+ACdOjBQQtHCyT46hOpPVE3RVXuFdzI3uDXaTN3YaWo63I03220vytr3gFkbT5Vv2
+5+v2vE1wDQixXoH+92Y6fJkEoyk43s26BhEHrhvnKXzorxV7OUPvnIcOaWZR/JQA
+cdetu9duQa3Kn95x0GS4OU/qE9CJ6WC+gsO90SD4p/8B9/6eARVZ+DzUaw798eaP
++X4SbvNu0+eUO85hMfGhDT3STrr8E7MzVTBYSn70QZduzA8FXpzM0p42h8KTbo8S
+Cyp09K0HbsPMTte1nuNN
+=qHRK
 -----END PGP SIGNATURE-----
