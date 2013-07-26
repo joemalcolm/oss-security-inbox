@@ -1,33 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/19/5
-Message-ID: <20130519100649.GC26114@kludge.henri.nerv.fi>
-Date: Sun, 19 May 2013 13:06:49 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/26/5
+Message-ID: <20130726141637.GA15592@hesperos>
+Date: Fri, 26 Jul 2013 11:16:37 -0300
+From: Raúl Benencia <rul@...gan.cc>
 To: oss-security@...ts.openwall.com
-Subject: Re: plone, rrdtool, zenoss bugs
+Cc: Joachim Breitner <nomeata@...ian.org>, security@...ian.org, adam vogt <vogt.adam@...il.com>
+Subject: CVE-2013-1436: xmonad-contrib remote command injection
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 18, 2013 at 02:05:42PM +0200, Thomas Pollet wrote:
-> Also,
-> the rrdtool python module crashes on format string exploit
-> $ python -c "import rrdtool
-> rrdtool.graph('/tmp/out.png','-f','%n%n')"
-> Segmentation fault
-> 
-> this module is used by zenoss to create graphs (zenoss users are able to
-> pass arguments to rrdtool).
+Hello,
 
-Tested Debian wheezy packages:
+I've discovered a remote command injection vulnerability in xmonad-contrib.
+The vulnerability is in the XMonad.Hooks.DynamicLog module. It has been
+assigned the name CVE-2013-1436.
 
-python-rrdtool 1.4.7-2
-python2.7 2.7.3-6
+Background
+==========
+DynamicLog module feeds information to others programs about what's
+happening on xmonad window manager. Such programs generally are status bars
+as xmobar or dzen2. These programs features the ability of receiving
+formatted input from stdin, and that's the way used by xmonad to
+communicate information such as workspace status, current layout and window
+title. So far, so good.
 
-Backtrace attached. Might affect other software too.
-Debian bug: http://bugs.debian.org/708866
+Both bars uses some meta-language to format their input. For example,
+xmobar will make the following text clickable.
 
----
-Henri Salo
+  <action=xclock>Click to clock</action>
 
-View attachment "python-rrdtool-bt.txt" of type "text/plain" (4247 bytes)
+Vulnerability & exploit
+=======================
+As we know, web browsers usually set the window title to the current tab. A
+malicious user, then, can craft a special title in order to inject commands
+in the current bar. In xmobar this will be something like this:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+<html>
+        <head>
+                <title>&lt;action=xclock&gt;An innocent title&lt;/action&gt;</title>
+        </head>
+        <body>
+                <h1>Good bye, cruel world</h1>
+        </body>
+</html>
+
+So, if the user accidentally (or incidentally) clicks on the xmobar window
+title, the command will be executed. In dzen2 this is also possible,
+although I haven't tried to execute code. A (harmless) proof of concept is
+attached for both bars. The proof for dzen2 just changes the background
+color of the bar.
+
+Fix
+===
+A fix for this issue is already available in xmonad webpage[0]. A patch
+written by Adam Vogt can be retrieved from the commit in the darcs repo[1].
+If you use this module, please make sure to recompile your xmonad binary
+after upgrading the package.
+
+I would like to thank Joachim Breitner and the Debian Security Team for
+their help in disclosing this issue.
+
+Cheers.
+
+[0] http://hackage.haskell.org/packages/archive/xmonad-contrib/0.11.2/xmonad-contrib-0.11.2.tar.gz
+[1] http://handra.rampa.sk/dawb/patch?repoPURL=http%3A%2F%2Fcode.haskell.org%2FXMonadContrib&repoPHash=20130708144813-1499c-0c3e284d3523c0694b9423714081761813bc1e89
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
