@@ -1,29 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/4
-Message-Id: <201302051034.24049.mweckbecker@suse.de>
-Date: Tue, 5 Feb 2013 10:34:23 +0100
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/26/2
+Message-ID: <51F1E81E.5000704@fifthhorseman.net>
+Date: Thu, 25 Jul 2013 23:08:14 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-Cc: nadhem.alfardan.2009@...l.ac.uk, kenny.paterson@...l.ac.uk
-Subject: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
+CC: Kurt Seifried <kseifried@...hat.com>,  Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: CVE Request: evolution mail client GPG key selection issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 07/25/2013 10:42 PM, Kurt Seifried wrote:
+> Yeah that was why I think in some cases it's better to have the policy
+> decision in the front end which would support more subtle distinctions
+> than "trust" and "no trust".
 
-has there already been a CVE assigned for the recent "lucky 13" timing
-flaw that affects various SSL / TLS implementations (including GnuTLS)?
+but gpg doesn't offer those either (despite the abominable terminology).
+ gpg can say whether a user ID is "valid" (meaning bound to a primary
+key by certifications you're willing to rely on), and it can say whether
+(or how much) you are willing to rely on OpenPGP certifications made by
+a given key.  This last point is "ownertrust", and it says *nothing*
+about trust for codesigning, etc.  It just days "are you willing to rely
+on this key for OpenPGP identity certifications?"
 
-  http://www.isg.rhul.ac.uk/tls/
-  http://www.gnutls.org/security.html#GNUTLS-SA-2013-1
+If you want to get fancy, ownertrust is not even necessarily
+black-or-white, you can choose "marginal" ownertrust for a given key,
+which means "on its own i'm not willing to rely on an OpenPGP identity
+certification from this key.  but if it's corroborated with two other
+certifications from other marginally-trusted keys, then i'm willing to
+rely on them in aggregate."  (whether this sort of policy is useful or a
+good idea in an age when there are mass keysignings is a separate
+discussion)
 
-I think this could qualify for CVE for each open source implementation
-that's prone.
+> True, but as a thought experiment, an extension to GPG or perhaps a
+> layer sitting on top of it that let you specify properties with the
+> key like "allow signing of sandboxed apps" or "allow signing of core
+> system apps" or "allow signing of documents" or "allow signing of
+> legal document" and so on, allowing you to keep that policy in one
+> spot rather than in your software package manager, your word
+> processor, etc.
 
-Thanks,
-Matthias
+I am going to nitpick your terminology here because i think it's helpful
+to clarify what we're talking about.
 
--- 
-Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+You surely don't actually mean "allow signing of sandboxed apps" -- you
+can't prevent me from signing any apps, sandboxed or not!
+
+I think you mean "It's OK to run any app in this sandbox if it has been
+signed by dkg".
+
+Phrased this way, it's clearer that this is an authorization policy
+choice that belongs *to the sandbox* (not to the key manager) or at
+least to the class of applications or tools that offer sandbox-like
+functionality.
+
+The key manager can tell if i a key *is* my key, but the sandbox has to
+decide whether something should be run once it knows who has signed off
+on it.
+
+Similarly, "Allow signing of core system apps" is actually "allow
+installation of core system apps if signed by X".
+
+But what about "allow document signing"?  I'm stuck what you mean here.
+ If you (and your keyring tools) believe that my key belongs to me, and
+there is no immediate functional consequence of my having signed a
+document other than a (hopefully unspoofable) UI display to the user
+that "this document was signed by dkg", why would there need to be a
+separate authorization layer?  What would it protect?
+
+If you're talking about "allow signing a build manifest (or a git tag)
+that will be fed to our compile farm" that's a very specific kind of
+document, and corresponds to a different sort of access
+control/authorization layer.  But plain human-readable documents?
+
+> Although realistically
+> it would become hideously complicated and messy and no-one would have
+> any idea what their settings were or what they meant (much like
+> browser security settings back in the day).
+
+as opposed to today, when most people still have no idea what their
+browser security settings are or what they mean or even that they have
+browser security settings :P
+
+Thanks for the enlightening discussion, I hope folks don't find it too
+horribly off-topic.
+
+Regards,
+
+	--dkg
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
