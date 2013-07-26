@@ -1,48 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/2
-Message-ID: <51E77179.4040509@redhat.com>
-Date: Wed, 17 Jul 2013 22:39:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Florian <floriangaultier@...il.com>, Dan Pasette <dan@...en.com>, "A. Jesse Jiryu Davis" <jesse@...en.com>
-Subject: Re: CVE Request - MongoDB <=2.4.4 uninitialized object
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/26/6
+Message-Id: <4D729FBB-922F-438F-B818-649C6F9F05F0@stufft.io>
+Date: Fri, 26 Jul 2013 11:46:03 -0400
+From: Donald Stufft <donald@...fft.io>
+To: oss-security@...ts.openwall.com, isis@...project.org
+Cc: cve-assign@...re.org
+Subject: Re: Requesting CVE-ID(s) for Python's pip
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 07/17/2013 04:23 AM, Florian wrote:
-> Hi,
+On Jul 26, 2013, at 8:03 AM, isis agora lovecruft <isis@...project.org> wrote:
+
+> I would also like to request CVE assignment(s) for two issues in pip
+> (https://github.com/pypa/pip/), related to Donald Stufft's.
 > 
-> Just a CVE request for this 
-> http://blog.scrt.ch/2013/06/04/mongodb-rce-by-databasespraying/
+> First issue:
+> ------------
+>  Python's pip versions 1.4.x and earlier are vulnerable to an Arbitrary Code
+>  Execution Attack due to incorrect regexp parsing of external download links
+>  in the following functions in pip/index.py:
 > 
-> Thx
+>    * PackageFinder._get_pages() https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L232
+>    * PackageFinder._sort_links() https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L272
+>    * PackageFinder._package_versions() https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L285
+>    * PackageFinder._link_package_versions() https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L290
 > 
+>  Which allow an attacker with the ability to Man-in-the-Middle external
+>  package URIs (which often include external HTTP URIs, and can include the
+>  module author's personal website, see
+>  https://github.com/pypa/pip/commit/a3584d176697bd4c83390de1857679d44389e00d#L0L265)
+>  to specify an arbitrarily high package version number and gain code
+>  execution.
+> 
+>  Uptream bugtracker reports: https://github.com/pypa/pip/issues/425#issuecomment-20639993
+>                              https://github.com/pypa/pip/issues/425#issuecomment-20640890
+> 
+>  Other mentions: https://github.com/pypa/pip/commit/9ccd5f0bb37508f03e6a19be58af7384eede2157
+>                  https://paste.debian.net/7309/
+> 
+>  This issue is fixed in pip>=1.5.x by Donald Stufft in the following commits:
+>  https://github.com/pypa/pip/commit/0e1da584f418ae0088b43d01248572e2ff53d3a1
+>  https://github.com/pypa/pip/commit/9ccd5f0bb37508f03e6a19be58af7384eede2157
 
-Please use CVE-2013-4142 for this issue.
+I'm not sure I understand this one. Is this just the external urls? Technically it wasn't a problem with the regexp's they worked fine. It was just bad behavior inherited from legacy systems. 1.4.x defaults to allowing them but enables people to turn them off, 1.5.x will disallow them by default.
 
-Also adding Mongo people to this, are you guys aware of this? Also is
-there a security alias I should be using (in case people are on
-vacation/etc?
+1.3.x and earlier allowed them and offered no way to disable them.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+> 
+> Second issue:
+> -------------
+>  Python's pip versions 1.5.x and earlier use MD5 hashes for verification of
+>  package integrity against PyPI (which defaults to providing MD5).
 
-iQIcBAEBAgAGBQJR53F5AAoJEBYNRVNeJnmTYKUP+QGz72ykBk4A2gcmApgofq9s
-qmWGklP/nuWfR0LNbior4YIGQSXqW9m0LnUeCxHz5FAHhVRtBwV20/AYHH8tXFPZ
-n3WzJWkMM8DT9uXZcDqXV694Wo/b0FP6PXXq31OmXyJGgDu935RTFmDZdlwWCr60
-Scb4KFatP1M4Wajf1i6l8fw25CsCCLB3pc9J5G626LkVlTqZ2gH3JUkVPKquqAFs
-1EfTAx8gY/mjH036XPHp5mcgKmalsCHWDIb/xBlwS8xSdjgtPqjerA2WtfUerlrI
-fIN4sTklhNFwllrD4YSlLBEqyq1SWJlSZl1dJIuOJGrYocTU0DEiR37x2CDEUyIM
-0rfGUbxgDJkpiRXVc1urdikN/uGpcC5KJmaUuF696aEfF9wlWEpNP/Ik/LtwS/9w
-5m9bZx4zS1uilx5VFeUI98XSVVOcRbfjR2koYg1NwefcZXlfWVx7nAKShPVAll5Z
-BWtWPhg1mDnO2GN0Z/qcw5M2q9AdhiRJpnK0Z8QCmQrm4uDgErh+iVMUfiPXakNO
-rk0AU3UOORrsLb1VfxUzN+SC6C5OTEEyDU0x/9MG4xGyb8J0QTiF9ZZr4p8MFw+W
-xTeWFygbD/YHYsYAl0CO5WBPZMb6fux0OuMTkXtTcY2OedyP75jPdpXjWm/+Yxf7
-MM/JV/ZUNQmgMheI+c8q
-=uB1p
------END PGP SIGNATURE-----
+Strictly speaking pip doesn't default to any hash. It just uses the hash given to it. Prior to 1.2 it only allowed MD5 but since the release of 1.2 it has allowed any of the guaranteed hashes in python's hash lib.
+
+See: https://github.com/pypa/pip/pull/467
+
+Setuptools has also historically only allowed MD5 but has recently with version 0.9+ enabled similar abilities to setuptools to enable the use of any available hashes as well. Distribute (a fork of setuptools which has now been merged back into setuptools) only supports MD5 in it's older releases.
+
+> 
+> These issues appear to be unrelated to Donald Stufft's CVE ID request filed
+> earlier today, and additionally unrelated to the following already assigned
+> CVEs:
+> 
+>  * CVE-2013-1888 Pip builds in /tmp 
+>    https://security-tracker.debian.org/tracker/CVE-2013-1888
+>    https://bugzilla.redhat.com/show_bug.cgi?id=923974
+>    http://seclists.org/oss-sec/2013/q1/704
+> 
+>  * CVE-2013-1629 Pip<1.3.0 uses a default package index without SSL
+>    https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1629
+>    https://bugzilla.redhat.com/show_bug.cgi?id=968059
+> 
+> -- 
+> ♥Ⓐ isis agora lovecruft
+> _________________________________________________________
+> GPG: 4096R/A3ADB67A2CDB8B35
+> Current Keys: https://blog.patternsinthevoid.net/isis.txt
+
+
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
