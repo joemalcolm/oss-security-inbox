@@ -1,56 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/23
-Message-ID: <CA+sLGzwsRPX_kgh7Ta64XR4ek27Jfo+OBjUb+ck2huFPxgVBqg@mail.gmail.com>
-Date: Tue, 5 Feb 2013 16:59:41 -0500
-From: Sang Kil Cha <sangkilc@....edu>
-To: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/26/4
+Message-ID: <20130726120316.GD6700@patternsinthevoid.net>
+Date: Fri, 26 Jul 2013 12:03:16 +0000
+From: isis agora lovecruft <isis@...project.org>
+To: cve-assign@...re.org
 Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: imview
+Subject: Requesting CVE-ID(s) for Python's pip
 Content-Type: text/plain; charset=utf-8
 
-It reads in .ics file (iCalendar). Typical scenario would be to share your
-schedule by sending the ics file to your friends. So someone can open a
-malicious calendar file from imview, and then crash.
+I would also like to request CVE assignment(s) for two issues in pip
+(https://github.com/pypa/pip/), related to Donald Stufft's.
 
--Sang Kil
+First issue:
+------------
+  Python's pip versions 1.4.x and earlier are vulnerable to an Arbitrary Code
+  Execution Attack due to incorrect regexp parsing of external download links
+  in the following functions in pip/index.py:
 
-On Tue, Feb 5, 2013 at 4:44 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+    * PackageFinder._get_pages() https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L232
+    * PackageFinder._sort_links() https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L272
+    * PackageFinder._package_versions() https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L285
+    * PackageFinder._link_package_versions() https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L290
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 02/05/2013 12:23 PM, Sang Kil Cha wrote:
-> > Hi,
-> >
-> > I am requesting a CVE for "
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=699820".
-> >
-> > Thanks, Sang Kil
-> >
->
-> How do you get the crashing input to imview? does it get used in web
-> browsers or email clients to load images automatically or something?
->
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.13 (GNU/Linux)
->
-> iQIcBAEBAgAGBQJREX0gAAoJEBYNRVNeJnmT4CoP/RJbC/ri3ZQkHyYCSzsiWdSz
-> mybDB3J7NRpMeqVcOWK0M65EYmImV9VhH+pjDvDzuFCncpzWQqGFsRg4fWnD3CpU
-> 85JOl1bXmcsOqWyzev0ulariGpf/zgvKsA3iigEA+DlVy7amCTs9vRdnh+b7vyEg
-> X49iEJ7uy5nGZ+SOMYzA5pDcCY4gpDvA/JWlqCoMmI2WDG/t7+Uph0t5yco0bg8v
-> 4UsFskUgZnLWMN9nNmdvJX0/1Bhlz5UXpNgf22Ie+3erH5196IuhbFmCy6AG8FtA
-> u8FRg4dB0mMeVJlsVg768uFygVSP1+W/vSHtkaTznuttLSA78lamhou9bgRiLNh0
-> 76nzcFxcp9IRph4BV31sh4Vic9BmYplCEzmYac0tTHrpFVrV7gI+DEdrtcDhUkIP
-> RFYXJeM+0ZaOWIWjWItxY4MGIRDLLofVjyMeiWZAE+2TCUysL38d6YXahj4WKVaf
-> XjviwS4p1dP/f9VHRQveTuQxCsnNQORPT76h9Vn4t5f/v66UxbqlF6c1hMUmblcy
-> BrKdJEUvQmBHK0Yw2YeVGFJ5FUT+GFP7cH3gsmV9tvMGQyD9RYBPp5aZUpopTbSK
-> Twouuh3UEB4/wI2uvU/QHC5wNAGXWsoC9UUIi8pRat2cdBvNR16jDBjRuuPO2vtP
-> PLk4ZkV4mZ5li5WvPG6B
-> =2eMT
-> -----END PGP SIGNATURE-----
->
+  Which allow an attacker with the ability to Man-in-the-Middle external
+  package URIs (which often include external HTTP URIs, and can include the
+  module author's personal website, see
+  https://github.com/pypa/pip/commit/a3584d176697bd4c83390de1857679d44389e00d#L0L265)
+  to specify an arbitrarily high package version number and gain code
+  execution.
 
+  Uptream bugtracker reports: https://github.com/pypa/pip/issues/425#issuecomment-20639993
+                              https://github.com/pypa/pip/issues/425#issuecomment-20640890
+
+  Other mentions: https://github.com/pypa/pip/commit/9ccd5f0bb37508f03e6a19be58af7384eede2157
+                  https://paste.debian.net/7309/
+
+  This issue is fixed in pip>=1.5.x by Donald Stufft in the following commits:
+  https://github.com/pypa/pip/commit/0e1da584f418ae0088b43d01248572e2ff53d3a1
+  https://github.com/pypa/pip/commit/9ccd5f0bb37508f03e6a19be58af7384eede2157
+
+Second issue:
+-------------
+  Python's pip versions 1.5.x and earlier use MD5 hashes for verification of
+  package integrity against PyPI (which defaults to providing MD5).
+
+These issues appear to be unrelated to Donald Stufft's CVE ID request filed
+earlier today, and additionally unrelated to the following already assigned
+CVEs:
+
+  * CVE-2013-1888 Pip builds in /tmp 
+    https://security-tracker.debian.org/tracker/CVE-2013-1888
+    https://bugzilla.redhat.com/show_bug.cgi?id=923974
+    http://seclists.org/oss-sec/2013/q1/704
+
+  * CVE-2013-1629 Pip<1.3.0 uses a default package index without SSL
+    https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1629
+    https://bugzilla.redhat.com/show_bug.cgi?id=968059
+
+-- 
+ ♥Ⓐ isis agora lovecruft
+_________________________________________________________
+GPG: 4096R/A3ADB67A2CDB8B35
+Current Keys: https://blog.patternsinthevoid.net/isis.txt
+
+Download attachment "signature.asc" of type "application/pgp-signature" (916 bytes)
