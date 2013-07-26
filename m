@@ -1,37 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/2
-Message-ID: <50E579FC.2060302@igalia.com>
-Date: Thu, 03 Jan 2013 13:30:52 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: oss-security@...ts.openwall.com
-CC: Aaron Patterson <tenderlove@...y-lang.org>,  rubyonrails-security@...glegroups.com
-Subject: Re: SQL Injection Vulnerability in Ruby on Rails (CVE-2012-5664)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/26/1
+Message-ID: <51F1E206.6060409@redhat.com>
+Date: Thu, 25 Jul 2013 20:42:14 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+CC: oss-security@...ts.openwall.com, Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: CVE Request: evolution mail client GPG key selection issue
 Content-Type: text/plain; charset=utf-8
 
-On 02/01/13 22:22, Aaron Patterson wrote:
-> There is a SQL injection vulnerability in Active Record in ALL versions. This vulnerability has been assigned the CVE identifier CVE-2012-5664.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 07/25/2013 02:10 PM, Daniel Kahn Gillmor wrote:
+> On 07/25/2013 03:19 PM, Kurt Seifried wrote:
+>> One problem moving it to the backend is I may trust your key to
+>> sign email, but not to sign code and vice versa. At least for RPM
+>> this is handled internally (you install the key into RPM) so
+>> that's one less worry.
+> 
+> gpg doesn't claim to know *anything* about what you "trust" keys to
+> do other than whether you're willing to rely on that key to certify
+> other keys.
+
+Yeah that was why I think in some cases it's better to have the policy
+decision in the front end which would support more subtle distinctions
+than "trust" and "no trust".
+
+> gpg can tell you "this message was signed by dkg" but it cannot
+> (and should not) say "dkg is allowed to upgrade your libc".
+
+True, but as a thought experiment, an extension to GPG or perhaps a
+layer sitting on top of it that let you specify properties with the
+key like "allow signing of sandboxed apps" or "allow signing of core
+system apps" or "allow signing of documents" or "allow signing of
+legal document" and so on, allowing you to keep that policy in one
+spot rather than in your software package manager, your word
+processor, etc. seems like not the worst idea. Although realistically
+it would become hideously complicated and messy and no-one would have
+any idea what their settings were or what they meant (much like
+browser security settings back in the day).
+
+> basically, gpg's job is to handle the authentication side of
+> things (which is all that an MUA cares about) but *not* to handle
+> the authorization side of things.
+> 
+> Authorization is rightly scoped by different uses of the
+> infrastructure, as you suggest.  Some work is being done on this
+> too: Stef Walter's current developments of p11-kit aim at allowing
+> tools in a similar domain (initially, web site X.509 certification
+> and potentially code signing) to share authorization information.
+
+Interesting. For completeness:
+http://p11-glue.freedesktop.org/p11-kit.html
+
+>> Yup. Key management sucks even with good software, and we don't
+>> have good software for this. Witness CRL/OCSP and then all the
+>> vendors shipping browser updates to specifically blacklist
+>> compromised certificates.
+> 
+> indeed.  Same sort of problem, same shitty non-scalable solutions
+> :(
+
+Well of all people (not to surprising) it looks like entities like
+CloudFlare might actually be able to provide reliable OCSP responders
+(which sadly no CA ever has AFAIK).
+
+>> Yeah the use of KeyIDs is just stupid (although I get why they
+>> did it, I still think it was stupid), they're to short. We should
+>> be using fingerprints only. Sigh.
+> 
+> even if it uses full fingerprints, the fact that i can associate
+> your primary key as a (revoked) subkey of mine means i can force
+> the keyservers to include one of my keys when anyone goes to
+> refresh yours.
+> 
+>> True, and trust me if my key ever gets compromised (and I know
+>> about it) I'll be phoning certain people and not relying on key
+>> revocation to let them know.
+> 
+> That's a good idea, but i hope you don't see the two tactics as
+> mutually exclusive.  Personal notification is guaranteed to miss
+> some people, especially for people whose key is used publicly (like
+> yours is).
+
+Yup, but I'm not relying on my boss/coworkers/you guys noticing key
+revocation, I'm calling them and whatnot =)
+
+[snip]
+
+> --dkg
 
 
-CVE-2012-5664 literally says:
 
-"SQL injection vulnerability in the Authlogic gem for Ruby on Rails
-allows remote attackers to execute arbitrary SQL commands via a crafted
-parameter in conjunction with a secret_token value, related to certain
-behavior of find_by_id and other find_by_ methods."
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-
-However in your description of the bug I don't see any references to the
-Authlogic gem. This rather seems to be a generic RoR issue.
-
-
-And both Debian and Ubuntu have marked this CVE as NOT-FOR-US because of
-this (they don't ship Authlogic gem).
-
-
-Could you please clarify this?
-
-
-Thanks!
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
+iQIcBAEBAgAGBQJR8eIGAAoJEBYNRVNeJnmTYeoQAI4JEUEGSKMMvKNoIVwOYTlI
+MZRveV4v+IdYiVYwSiWtl05pqtS9wUO1usnasfR+TqMuf7/60UpK6psMpjF44WM1
+WipIGBDlaLdafI4PbpEbiHv8d4gQeGRAzAqrZ8XCtwOmev0G+Z6JFzLSnzmaZLSG
+khMR9dalRpKLabbOgHQkTSvbfeCLfO1DJ4tYL76bcQ12D6Ru1wmMOzfok3pO9JTd
+9mA/qUwL/8lXbAP2yIgyvYIW0G0x5cqNrvsWbcEFdXq7O3UaQla0QlukelmwWXzg
+9zkB0pE4VmNfIbTI4vE2ZbJcLkywYdTerdJxawEV7dhBo0CDCdkUHGJub4vCp5BB
+mOaZYFMHvymApiLcgRRPoVrwQaFeRYwQUikw364k8HnWXNcmjYIa5kU58x4Pdh1S
+scl6nsMxNXnh05Bl3Td01HIndhfVeZqqcvG3T8FbKYLmDh32cZOij+lUFImqLDKf
+QkeQ5Hmyp4M5iuavV+ACmc5GWHvzMbRh2mHG6O/kb2+g8AgabbOaBBgMbE16scqh
+3N474XqB9qQ8y6BrfBW3m1+KqaJEH+sAgRa7XbQteNuTP37QLAfxINuQRpd5Vd0l
+Nkrmrl1oiBWhq1n8mDDFgoWhKB4DtMNtmWvz0l5F2bdjhCcrzzkL3I/zqiR1AL1h
+bNzQxVXHUhqFGOUjQztH
+=FWjU
+-----END PGP SIGNATURE-----
