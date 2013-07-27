@@ -1,64 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/7
-Message-ID: <5212F9C2.8090408@moritz-naumann.com>
-Date: Tue, 20 Aug 2013 05:08:18 +0000
-From: Moritz Naumann <info@...itz-naumann.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/7
+Message-ID: <51F37172.6080702@redhat.com>
+Date: Sat, 27 Jul 2013 01:06:26 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: PostgreSQL insecure install via yum (multiple problems)
+CC: Forest Monsen <forest.monsen@...il.com>, "security@...pal.org" <security@...pal.org>
+Subject: Re: CVE request for a Drupal contributed module
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA1
 
-Eric H. Christensen:
-> On Mon, Aug 19, 2013 at 06:58:22PM -0600, Kurt Seifried wrote:
->> Signing RPM's isn't very useful if you never make the signing
->> key available!
+On 07/22/2013 12:22 PM, Forest Monsen wrote:
+> Hi Kurt, regarding CVE assignment and your request for
+> clarification at 
+> http://www.openwall.com/lists/oss-security/2013/05/16/2:
 > 
-> You mean like this: 
-> http://keys.fedoraproject.org/pks/lookup?search=0x442df0f8&op=vindex
-
-Still
+> On Wed, May 15, 2013 at 6:41 PM, Kurt Seifried
+> <kseifried@...hat.com> wrote:
 > 
-plain HTTP there (on a somewhat unrelated site), also:
-* short key ID (no fingerprint) listed on http://yum.postgresql.org
-* DSA-1 key: 3 don'ts in a row.
+>> This sounds like two separate issues:
+> [...]
+>> can you send me the code patches fixing this so I can make sure
+>> it gets the correct SPLIT/MERGE treatment? Thanks.
+> 
+> Yep - Diffs for the commits that fixed both of these issues are
+> at:
+> 
+> Drupal 6:
+> http://drupalcode.org/project/ga_login.git/commitdiff/dd04ea3 
+> Drupal 7:
+> http://drupalcode.org/project/ga_login.git/commitdiff/c365097
+> 
+> For the first issue,
+> 
+> 
+>> Accidental removal of account configuration.
+>> 
+>> In certain scenarios, Google Authenticator login incorrectly 
+>> determines the user's account name. The change in account name
+>> could cause the two-factor authentication for existing accounts
+>> to be lost, allowing users to log in using just username and
+>> password.
+>> 
+>> This vulnerability is mitigated by the fact while Google
+>> Authenticator login's additional verification is by-passed, a
+>> username and password are still required to log in.
+>> 
+> 
+> It looks like the maintainer now concatenates a "Realm" (site name)
+> and suffix with the Drupal username to form the GA username. Any
+> inconsistency there will invalidate earlier credentials.
 
-The situation is a bit better for the APT repository:
-http://wiki.postgresql.org/wiki/Apt
+Please use CVE-2013-4177 for this issue.
 
-* 4096-bit RSA key
-* instructs to download key from same site - using plain http
-  (but HTTPS is available - GoDaddy CA domain control validated)
-* (short key ID used in documentation only)
+> For the second,
+> 
+> One Time Password (OTP) replay
+>> 
+>> If an attacker can intercept a login request with a username,
+>> password and OTP, an attacker could use this same data again to
+>> login to the website.
+>> 
+>> This vulnerability is mitigated by the fact that an attacker who
+>> can intercept a login request with this level of detail can
+>> usually also intercept the ongoing session identifying token.
+>> 
+> 
+> It looks to me like the maintainer now implements a skew value to
+> either (in the case of a time-based one-time password token) review
+> only a certain range of timed tokens on either side, or (in the
+> case of an HMAC-based one-time password token) to again test a
+> range of tokens.
+> 
+> I'll copy the Drupal Security Team, in case I haven't understood
+> it correctly or if further clarification is necessary. Thanks.
 
-In contrary to the Yum repository signing key this OpenPGP key is
-signed by someone else, notably a Debian developer, so verifying it
-via the web of trust / strong set /may/ succeed.
+Please use CVE-2013-4178 for this issue.
 
-Maybe a new policy document would solve it...
-http://wiki.postgresql.org/wiki/Policies
-http://wiki.postgresql.org/wiki/ReleasePrep
+> Best, Forest
+> 
 
-This said, I'm glad that the Postgresql Global Development Group do
-provide us with these repositories.
 
-Moritz
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQJ8BAEBCgBmBQJSEvmxXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXREMEEwRkYzMTUwODdEMEUzQkU0QzVGMkVC
-RDk2RUNBRDkzNDUwMEIwAAoJEL2W7K2TRQCwibgQAM/0KPyoqBjaFsmxWo9TrLOz
-1IWUs1Y2ww2n3dqy0qwqhBk4o6NsdpRQ0phkqW33H1PxyhYSeq2HvgHf4L16DQ31
-mmkaO72v5hO1EjfXNzmeODe1EXpJP91bwSPIbW31p1rOjDBJVcY6sEGeu+GC+tqt
-/BaBBO27F/4yoK1U4XIiRDoItjojW92eBoe8UEhu2Ds3GG1/mZ0APj04cq0ruWZw
-SWXuuUh+Q/Un27TwTCKsTH1BwSMh4PxxSfXNMnCVT5YzjSWuNq6CRe27FSZOGH+e
-28LQYbLKnr9w2Kx0+MCMGihOPmbvAxAaaiVvIvWpLIiNkIyxR86HNMmPB5w8f86K
-W97VSCUahN0F0PKefMatCMvKpXL6LqZ6eVxJgBAEUfavj69TBgCF0ORjNtKlFuy9
-BHB1pAHYB+/Jj+0K6Ox/hdZnJE9k/VGw2/5tQHyo4dZQbifIYBymcnAszESR7U2H
-fLjFCmkLsxdq1/uvirjljscYYyIGWnDdAYURfXQgDslG4uRAOBH/JUJqN/NnAHra
-4k4R5DejSmbipeR2QUJoKVvyGVChYrBt2lnzmXk7JYhohPQ2+6kUCU1e/FwNNFVI
-s4+9S4BfXEKHkruiKXLSH0DxR88HrV0aokU6eg1OsRB6+evRjjtVzPSfK36KfcPD
-cF456FKI6+Q44uc2qp2z
-=mzCS
+iQIcBAEBAgAGBQJR83FyAAoJEBYNRVNeJnmTVCgQAMGesZzGhReWut7B2WKjMrz6
+lRGEaQxlAnqjtknh8Zitcnf6imdojHlKRbSaY1rxYBus67wNy2zitYsSNxrH7MEd
+U5kGWPR8NqyvOi01U/KPiQESFxEpeSBPTEiUruAUIlXMW7kokb5mb+NA49L8HpRH
+DL6OGiMa80NyCfaSIDkAvC8Z4lVcYE1zV/68aV3mWkUwKM/uxoFrRlcvplgDLc+0
+efQlZg3DFviL+ShIwMq9bItW6Kix71/+gHXfEbNv4R75qHJEbWka6Ts8siMVgR9R
+2MwyuksNlnzM5SLuo9NyhVHW5ZqxtA/qs6GTwM8nnKtG0R0HL8AlRvG7VMvyxu3O
+ozCj9ZGuWFm3fi1qLTKW6Udq0+VidQ7xf3Xg/c6AQivcdqdhuGgNjaWDNGe5LAdB
+UOE9YSs+k+74y/aW+GxVyn14LglkSpzLy+eY8w3JfNWnjF6w9uCeSktIaa9H9/Ko
+aa4n2kTPG/+0twHg4gg/rd8Smari4CAkBMzcWB59siZGgTKRBZ3Wu2tPvB0UDMgq
+FUPsvU0EjOhLn4SZalc79r4mwBzNozEzDk9GhbmkfHFVQ56cr3+eltc8pZgfVuEw
++mS58xTwwhAeQOz76K7WWQqxcqj5Ow+psoBy23WHTw1VOvkHudE6iZZ73lpWg4E2
+nTWskopuCzm2VIotNRbb
+=Yftf
 -----END PGP SIGNATURE-----
