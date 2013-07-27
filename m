@@ -1,59 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/27/3
-Message-ID: <51A39F77.7020907@redhat.com>
-Date: Mon, 27 May 2013 12:01:27 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/8
+Message-ID: <51F371DE.8010608@redhat.com>
+Date: Sat, 27 Jul 2013 01:08:14 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Jason A. Donenfeld" <Jason@...c4.com>, cgit@...ts.zx2c4.com
-Subject: Re: CVE Request: cgit directory traversal
+Subject: Re: CVE Request: Insecure Software Download in pip
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/27/2013 06:30 AM, Jan Lieskovsky wrote:
-> Thank you for the report, Jason.
+On 07/25/2013 03:09 AM, Donald Stufft wrote:
+> I'd like to request a CVE for pip
+> (https://pypi.python.org/pypi/pip/).
 > 
->> Hi Kurt,
->> 
->> As mentioned in early messages to oss-sec, I've inherited 
->> maintainership of the cgit codebase and am gradually auditing
->> it. Today I found a nasty directory traversal:
->> 
->> http://somehost/?url=/somerepo/about/../../../../etc/passwd
->> 
->> This should be pretty straightforward to categorize.
->> 
->> Exploitation looks like: 
->> http://data.zx2c4.com/cgit-directory-traversal.png
->> 
->> I've committed a fix for it here: 
->> http://git.zx2c4.com/cgit/commit/?h=wip&id=babf94e04e74123eb658a823213c062663cdadd6
->
->> 
-> That patch doesn't seem to be applicable to cgit-0.9.1 version yet
-> (there doesn't seem to be cgit_parse_readme() routine yet).
+> The mirroring support (-M, --use-mirrors) was implemented without
+> any sort of authenticity checks and is downloaded over plaintext
+> HTTP. Further more by default it will dynamically discover the list
+> of available mirrors by querying a DNS entry and extrapolating from
+> that data. It does not attempt to use any sort of method of
+> securing this querying of the DNS like DNSSEC. Software packages
+> are downloaded over these insecure links, unpacked, and then
+> typically the setup.py python file inside of them is executed.
 > 
-> Can you provide a patch that would apply against v0.9.1 version
-> too? Or would this be just problem of master branch code?
+> The vulnerable code is located at: -
+> https://github.com/pypa/pip/blob/develop/pip/index.py#L60-L64 -
+> https://github.com/pypa/pip/blob/develop/pip/index.py#L205-L207 -
+> https://github.com/pypa/pip/blob/develop/pip/index.py#L553-L572 -
+> https://github.com/pypa/pip/blob/develop/pip/index.py#L999-L1024
 > 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+> The affected versions are every released version since 0.8.1 which
+> are: 0.8.1, 0.8.2, 0.8.3, 1.0, 1.0.1, 1.0.2, 1.1, 1.2, 1.2.1, 1.3,
+> 1.3.1, 1.4
 > 
->> 
->> And this fix will be in the master branch and a new release will
->> be made soon.
->> 
->> Cgit by default is not vulnerable to this, and the vulnerability
->> only exists when a user has configured cgit to use a readme file
->> from a filesystem filepath instead of from the git repo itself.
->> Until a release is made, administrators are urged to disable
->> reading the readme file from a filepath, if currently enabled.
->> 
->> Thanks, Jason
->> 
+> I'm not aware of this issue having ever had a CVE requested for it
+> and my attempts to search the CVE database did not appear to turn
+> up anything relevant but the search doesn't appear to be the
+> greatest so I may have missed it.
+> 
+> I'm hoping to land a patch for this in a future release (current
+> iteration of patch available at
+> https://github.com/dstufft/pip/compare/remove-mirror-support) but
+> there is no planned fix version as of yet.
+> 
+> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 7C6B
+> 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
 
-Please use CVE-2013-2117 for this issue.
+Was it supposed to be secure (like was this explicitly supposed to be
+all encrypted/etc.)? This sounds more like security hardening than a
+security vulnerability.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -61,17 +56,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRo593AAoJEBYNRVNeJnmTWKAQAJ8a7E2eRPWx8SYACGnrzkB+
-Gb8yO/13gvSd1C/OwcooBPuOfASWhGbLOMRvrlKr9JzJMXTCNQ62Uz/OLB5+Vqzg
-XisOlqWtIRaP2uOHzYjpO+mC1CVKYuwhLeQR8RlrD8zGlDxxVheVgwP4n7CwmOXL
-kY2ZvHWq2EsmrlOS7dgRWo2mYhPOTQZ8JY3JUuFZhC4cxEgEZdv7XEJuuiWZzG8u
-Ovtd8f2nt08GBbz2i/ikVCwHWDLO37Je+GsfCswuilvZFNd0V/liPEcvI5ogooxW
-6NJVCnGK4+qrCIY0SarlT4keCO7TnqwD++KeHfWEsdK3aRPIpkYkBEFi/WiCY0Ki
-r88x1xymNWyLdvNr0faZMw5q/DhWc9+3guv0blzzkZ71uXWChRLKgDIzTMGNHpob
-nVpG436o8Atk2k4nEsTS14fuiRx7rMDQuzYJRca3/Wn+lH4DBwuZshW5w9GccgLe
-xJllCgi1L7+XTwuoxxo8x6UiubXUAH4+AdxZ/G04pb96jjZAxCN5capn7BkpR6tc
-R+Pc5vpKsm5fpY6uXJPpm6ZFwYT8glXJqSuR9bWCqTSAYVs1BoljvGu0aCx5MO22
-cjJxYmmpOgZ5DrYNNBokOBjUlphhRYHrpqqrsc2H7w/4cmNhg/A5G624EIsxnuTW
-80p0he4NPrS/pXUrBCtU
-=BN+T
+iQIcBAEBAgAGBQJR83HdAAoJEBYNRVNeJnmTZHAQALOm7lBjIZUCgej+8eW5YVut
+f6Z6KiJtJo1m5nITrtAxS9lg7vrwWZ4bg2VhRBT9NQ3kYCP4QHbD80O5jeC2timf
+xuelk/qX3htCG0Jl/of9N1VveGGc+IKd96se8QrR5ZdwSu6T5fbdEuXTvAuDSDXf
+a2ov7M6tw0K6/78VWrw9iqwpN+qnirfpgeNYtpt9opcQt67YR0YImbvKY/jHGIEz
+PrCWRLfsIjNgn4jKo1hDvjtoIo0AJ0cQGAQZi+hZbnK3/KbQK23qAA59OCElD0ZZ
+lfdiAbqXEuonyfH/DKA/dpB2kNKRb8rJpGh+SDGMfYFgrQv+Hw7x7DAd0a9js9Oi
+JBM9T1kWqTNtwSeN8WrOVVdR7VUKO3Up3+nzsd6et8c/3v2ZDEUgWWxnkA8qWSeS
+EaGvSjHWuHeR/DxEoZCQksiceeiWwS3glFVcSqXACH1JKroCU8e//AjB3awOhmkN
+cGSArMXGRtkvPwVt/eMmjA8UzXQPjnX+Q2NnkyepLeJuDm2PQPrQkciNAQ3TpfmZ
+t9tHO5E0NIfXQ3+W5YJhal4FHjue55ebK4K3ydj/QUiAe7gTFpqkTwA9+azXa8SS
+y7O/riAjm/Sr1veGnM3BNK4xGDmrNVdD0Cfjp0nq+CpXWpAqy/TipomsBcW6nPat
+R02LjbWbFPuoUAT0+xr4
+=1uQa
 -----END PGP SIGNATURE-----
