@@ -1,66 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/1
-Message-ID: <511DA697.2010907@redhat.com>
-Date: Fri, 15 Feb 2013 13:08:07 +1000
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/6
+Message-ID: <51F36FBF.2020101@redhat.com>
+Date: Sat, 27 Jul 2013 00:59:11 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>, chevalier 3as <chevalier3as@...il.com>
-Subject: Re: Potential HTTP Header Injection in Apache HTTPClient
+CC: Sebastian Pipping <sebastian@...ping.org>
+Subject: Re: CVE request: mysecureshell: information disclosure (or worse)
 Content-Type: text/plain; charset=utf-8
 
-On 02/13/2013 07:54 PM, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 07/25/2013 03:44 AM, Sebastian Pipping wrote:
+> Hello Kurt,
+> 
+> 
+> On 25.07.2013 10:33, Kurt Seifried wrote:
+>> On 07/23/2013 11:17 AM, Sebastian Pipping wrote:
+>>> mysecureshell [1] is an SFTP-only shell to be used with sshd.
+>> 
+>>> The latest release 1.31 makes use of shared memory to maintain
+>>> 128 slots with one struct for each connection/process. Access
+>>> to that block of shared memory is not (or not properly)
+>>> synchronized, so two or more processes might end up occupying
+>>> the very same slot when process scheduling wants that to
+>>> happen.  The effective permissions of the process remain
+>>> untouched, though.  So it's logging in as someone else and it
+>>> isn't.
+>>> 
+>>> The relevant code from SftpServer/SftpWho.c (lines 106 and
+>>> after) is:
+>>> 
+>>> [cut out, same code below]
+>>> 
+>>> The symptoms of this bug have been reported earlier at [2] by
+>>> forum user "voleg".  To my best knowledge, there is no CVE
+>>> number assigned yet. [..] [1]
+>>> http://mysecureshell.sourceforge.net/ [2]
+>>> http://mysecureshell.free.fr/forum/viewtopic.php?id=655
+>> 
+>> 
+>> To reiterate: so I can confirm CVE assignments, and prevent
+>> duplicate assignments you *MUST* provide links to the code
+>> commits/vulnerable code. I don't have the time to go hunting
+>> through your source code for them. People need to start making
+>> better CVE requests, or you're not going to get CVEs from me.
+> 
+> Upstream tarball ================ 
+> http://mysecureshell.free.fr/repository/index.php/debian/pool/main/m/mysecureshell/mysecureshell_1.31.tar.gz
 >
-> On 01/10/2013 07:38 AM, chevalier 3as wrote:
->> Hi,
->>
->> As I'm not sure if this is a vulnerability or simply a 'feature',
->> I'm posting the details for more information.
->>
->> The addRequestHeader method of the Apache HTTPClient module
->> version 3.x seems to allow the injection of more than a header
->> (potentilally the latest version 4.x too for addHeader method):
->>
->> Using the following code, it includes a third header in the
->> request: HttpClient client = new HttpClient(); PostMethod method =
->> new PostMethod("http://www.google.fr");
->> method.addRequestHeader("header1", "value1\r\nheader3: value3");
->> method.addRequestHeader("header2","value2");
->>
->>
->> The real risk is adding a second request using a similar code:
->> req.addRequestHeader("Content-Length:0\r\n\r\n" +
->> "POST\t/anotherpath\tHTTP/1.1\r\n" + "Host:host\r\n" +
->> "Referer:faked\r\n" + "User-Agent:faked\r\n" +
->> "Content-Type:faked\r\n" + "Content-Length:3\r\n" + "\r\n" +
->> "foo\n", "bar");
->>
->> Because of the Content-Length header, the sever will consider it as
->> a seperate request.
->>
->> Iis this an expected behavior ? if so developpers should be aware
->> of the risk letting a user input values.
->>
->> A similar advisory for Flash is available here:
->> http://www.rapid7.com/resources/advisories/R7-0026.jsp
->>
->> My 2 cents, As
->>
-> Has anyone investigated this/can comment on this? thanks.
+> 
+> 
+> Issue ===== Race condition, lack of synchronization, user may end
+> up in another directory.
+> 
+> 
+> Guilty code ===========
+> 
+> Online ~~~~~~ 
+> http://mysecureshell.cvs.sourceforge.net/viewvc/mysecureshell/mysecureshell/SftpServer/SftpWho.c?revision=1.3&view=markup#l107
+>
+>  Inlined  (from SftpServer/SftpWho.c, lines 107 and after) 
+> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ for (i =
+> 0; i < SFTPWHO_MAXCLIENT; i++) if (who[i].status == SFTPWHO_EMPTY) 
+> { (void) usleep(100); if (who[i].status == SFTPWHO_EMPTY) { //clean
+> all old infos memset(&who[i], 0, sizeof(*who)); //marked structure
+> as occuped who[i].status = SFTPWHO_IDLE; return (&who[i]); } }
+> 
+> 
+> Please let me know if you need anything more.  Thanks for your
+> time!
+> 
+> Best,
+> 
+> 
+> 
+> Sebastian
+> 
 
-I do not think this qualifies as a vulnerability. The addRequestHeader 
-method isn't stripping out CRLF, allowing for a potential header 
-splitting attack if an application passes unsanitized user input to 
-addRequestHeader. The onus should be on the application to sanitize user 
-input appropriately. If we called this a vulnerability, then we'd have 
-to say a database interface that lets you pass an SQL string might allow 
-for SQL injection, or something that lets you print a string to the body 
-of a HTTP response might allow for XSS.
+Perfect! Please use CVE-2013-4176 for this issue.
 
-Having an optional parameter to addRequestHeader to sanitize CRLF values 
-might be a nice feature, but I'd call it a feature request rather than a 
-vulnerability.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Thanks
-David
+iQIcBAEBAgAGBQJR82+/AAoJEBYNRVNeJnmThkMP/jWgKyNVGCxwpmRDg5SRVcl6
+J1kxIYH3CZeANoy7HWqaABq4S+qLTImsfT/6/THUPEUqnN4sEzOKabwp0EDdt7xR
+R6nCEgo9Nsju5dHwe5dpJJDS3vWw5pu/KdLtTZ5ynmIvhsgW6Cu7vFMbOkOH5qgL
+3jUtilE2bZPoC/ifY7RljgO0OL2IvYqYP80du+iLBPMWLKxr376Smhdd6uvXxHAC
+U/tExCZs6LWJkH+1VPP7dywEBN95PY7XdEbKyBKAYtGiu+GH0mR1KtsbthGYio6U
+xZn5xZdDH8HBUkVeZLAknFUnNpdKYqOeVXieXhXDg6STFNDRsRKcx6iqRY+FlSwd
+YBRhnNcVS8Bsc3HeK1RIxX6rOQkM7e7cUlkJVUm4+zhm9xb31LOiy1hEi8yXbNTb
+Exu30w0yxWCEdiyLiy45jGlBBQXEQMC3PkGBdcx8Fla2cthI0Pa+OWUOluYvCurV
+oJGSf5bQsEVlL8ZU2zoyEt1OKb1zMoyEtgMFxwFNnCAvwcLZHlq1J4bh1I8wMMNs
+Je3Es+xNVa2BAF1VuYvGcxbGLR4HYoS3krOB15wmHWydekH0DeLqSFQBARc/vGjE
+eUj2fjTVZuQR3smund8XdpYKejxeO00CifJA0R8t+YlmRTP+ouDgKzrddLrmAOPS
+bMNGh6fOM8PtCqo8N8Is
+=yM09
+-----END PGP SIGNATURE-----
