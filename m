@@ -1,33 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/7
-Message-Id: <201312120509.rBC591s7026591@linus.mitre.org>
-Date: Thu, 12 Dec 2013 00:09:01 -0500 (EST)
-From: cve-assign@...re.org
-To: jurriaanbremer@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: ZNC IRC Bouncer DoS in FiSH Plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/9
+Message-Id: <5F48E626-4CD6-4477-B57D-80CF03348134@stufft.io>
+Date: Sat, 27 Jul 2013 03:10:24 -0400
+From: Donald Stufft <donald@...fft.io>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: CVE Request: Insecure Software Download in pip
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
->no bounds are checked, and thus the buffer "raw_buf" can be overflowed
+On Jul 27, 2013, at 3:08 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-Use CVE-2013-7049.
+> On 07/25/2013 03:09 AM, Donald Stufft wrote:
+> > I'd like to request a CVE for pip
+> > (https://pypi.python.org/pypi/pip/).
+> > 
+> > The mirroring support (-M, --use-mirrors) was implemented without
+> > any sort of authenticity checks and is downloaded over plaintext
+> > HTTP. Further more by default it will dynamically discover the list
+> > of available mirrors by querying a DNS entry and extrapolating from
+> > that data. It does not attempt to use any sort of method of
+> > securing this querying of the DNS like DNSSEC. Software packages
+> > are downloaded over these insecure links, unpacked, and then
+> > typically the setup.py python file inside of them is executed.
+> > 
+> > The vulnerable code is located at: -
+> > https://github.com/pypa/pip/blob/develop/pip/index.py#L60-L64 -
+> > https://github.com/pypa/pip/blob/develop/pip/index.py#L205-L207 -
+> > https://github.com/pypa/pip/blob/develop/pip/index.py#L553-L572 -
+> > https://github.com/pypa/pip/blob/develop/pip/index.py#L999-L1024
+> > 
+> > The affected versions are every released version since 0.8.1 which
+> > are: 0.8.1, 0.8.2, 0.8.3, 1.0, 1.0.1, 1.0.2, 1.1, 1.2, 1.2.1, 1.3,
+> > 1.3.1, 1.4
+> > 
+> > I'm not aware of this issue having ever had a CVE requested for it
+> > and my attempts to search the CVE database did not appear to turn
+> > up anything relevant but the search doesn't appear to be the
+> > greatest so I may have missed it.
+> > 
+> > I'm hoping to land a patch for this in a future release (current
+> > iteration of patch available at
+> > https://github.com/dstufft/pip/compare/remove-mirror-support) but
+> > there is no planned fix version as of yet.
+> > 
+> > ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 7C6B
+> > 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+> 
+> Was it supposed to be secure (like was this explicitly supposed to be
+> all encrypted/etc.)? This sounds more like security hardening than a
+> security vulnerability.
+> 
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+The mirroring protocol explicitly included provisions for verification which
+was not being done.
 
-iQEcBAEBAgAGBQJSqUS5AAoJEKllVAevmvmsFP8H/2nnWV/ZvMeRPco9M7N5YcrL
-gBL2I1hXcL3nh+NblNaEnP+mCdM3Q5zNgiStLtyjE39slCZoElyIbQSnSn2BjWAw
-NE29+PcpKnOqgfu7SjS5HePF+U/f788ksQdizoCtQ3lRcWzaGWj3gv/es7pPg4Dg
-W1HbB9Gmp8SvOkt0DAeFBK93eC+QOw/HGRnQeM32ScGLg0Qac9dCwbGIG3AM5bV9
-1v73xWv1XnU41LPbwir/eGPdiGNGC4vtjsABEL9CJzw4v5frPnLjznySc2rOCGqq
-+sOUGZKUXpJox/lXmCzkD2MAVuK8vKIAyGXMZGkode3Hvu2VhVr1/l8BK2TwYw8=
-=moi9
------END PGP SIGNATURE-----
+http://www.python.org/dev/peps/pep-0381/#mirror-authenticity
+
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
