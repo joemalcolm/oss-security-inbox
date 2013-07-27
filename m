@@ -1,45 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/11
-Message-Id: <201312092337.rB9NbYxt021435@linus.mitre.org>
-Date: Mon, 9 Dec 2013 18:37:34 -0500 (EST)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: two issues in libmicrohttpd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/11
+Message-ID: <CAMB8f9Po7wxekQp+J0uuQ-gt9k6uDNXg_gO2__i382KGhcgX3Q@mail.gmail.com>
+Date: Fri, 26 Jul 2013 21:19:33 -0400
+From: Evan Teitelman <teitelmanevan@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: scottydroid@...il.com
+Subject: CVE Request - Coin Widget serves code over plain http.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Coin Widget is a Bitcoin and Lightcoin donation widget. Its code is
+normally downloaded from http://coinwidget.com/widget/coin.js in the
+following manner.
 
-> Florian Weimer of the Red Hat Product Security Team discovered two
-> issues in libmicrohttpd:
-> 
-> https://gnunet.org/svn/libmicrohttpd/ChangeLog
-> http://secunia.com/advisories/55903/
-> https://bugs.gentoo.org/show_bug.cgi?id=493450
+<script src="http://coinwidget.com/widget/coin.js"></script>
+<script>
+CoinWidgetCom.go({
+    wallet_address: "31uEbMgunupShBVTewXjtqbBv5MndwfXhb"
+    , currency: "bitcoin"
+    , counter: "count"
+    , alignment: "bl"
+    , qrcode: true
+    , auto_show: false
+    , lbl_button: "Donate"
+    , lbl_address: "My Bitcoin Address:"
+    , lbl_count: "donations"
+    , lbl_amount: "BTC"
+});
+</script>
 
-> 1) https://bugzilla.redhat.com/show_bug.cgi?id=1039384
+Without SSL or similar protection, it is possible for the code to be
+modified in transit. A malicious individual could modify the code to
+replace a legitimate wallet address with his or her own.
 
-Use CVE-2013-7038.
+I believe this vulnerability is an example of CWE-300. Does it need a
+CVE identifier?
 
- 
-> 2) https://bugzilla.redhat.com/show_bug.cgi?id=1039390
+I have copied the creator of Coin Widget on this email.
 
-Use CVE-2013-7039.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSpk/lAAoJEKllVAevmvmsDE0H/1D7xkrXZKwkvlEKzu78KDaF
-Q1mEJj0boixLOe0DnYRd1QqWm45F4XJE/bNoFdDEGQ6k2eqStsIT48HvwMjy6UaN
-bXR55cIduJOn507OHBGV2To5u5falb5+gvAurA6of77KoAHv/EbXZMw8Qn57840h
-gw7YR97rhzuZv792UtKgGP6da6pYIpc+Fn1Dc98WtIqAIgZ7Z5TeWZZh6AQSwKeJ
-UqSmbixi0SY0+5l47XKlVu3dlWPpe9vzL+68oTaq3iWI/N1XPAMHK/BMc1qGxqqd
-eYQJR0aKidKuSmPQD7YNCzyKxnMWqPmW2nrXpqBZsNV+hnTTlmM5Z7DodZZyq+8=
-=3xDS
------END PGP SIGNATURE-----
+Thank you for your time,
+Evan Teitelman.
