@@ -1,20 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/6
-Message-Id: <31370FCF-2829-4A55-82C1-7531C4761C6A@iki.fi>
-Date: Wed, 14 Aug 2013 18:40:38 +0300
-From: Timo Sirainen <tss@....fi>
-To: Raphael Geissert <geissert@...ian.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Possible CVE request: dovecot crash when disconnecting during pop3 LIST
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/4
+Message-ID: <51F36F71.4090101@redhat.com>
+Date: Sat, 27 Jul 2013 00:57:53 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-On 14.8.2013, at 18.30, Raphael Geissert <geissert@...ian.org> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Dovecot's 2.2.5 release notes mention a fix for a client-triggered
-> assert when disconnecting during a pop3 LIST[1]. Without more details,
-> I can't tell if a CVE id should be assigned. Timo, could you please
-> shed some more light, or provide a pointer to more details?
+On 07/25/2013 11:52 AM, Forest Monsen wrote:
+> Hi there,
+> 
+> I'd like to request a CVE identifier for:
+> 
+> SA-CONTRIB-2013-060 - Scald - Cross Site Scripting (XSS) 
+> https://drupal.org/node/2049415
+> 
+> Thanks!
+> 
+> Forest Monsen
+> 
 
+Please use CVE-2013-4174 for this issue.
 
-It doesn't deserve a CVE, there have been a lot of similar bugs in Dovecot and I don't think any of them have gotten a CVE. All post-login crashes affect only the one IMAP/POP3 connection that caused the crash itself, nobody else. (Unless Dovecot was configured in a non-recommended way to handle multiple clients per process, but just about nobody does that since it has other problems as well.) In this specific bug the POP3 client had already disconnected so the user isn't really DoSing himself either. So the only problem it caused was that Dovecot logged an assert error and maybe wrote a core dump.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
+iQIcBAEBAgAGBQJR829wAAoJEBYNRVNeJnmTCd8P/iwky+3HrM/b72ixpUxshu+T
+1/if6SFKb2hoqIijBB3fgF0K44TtLaqlPoxlMAiMxmFnl9MCz6Nq1WbRD8aSJ/mN
+5UjzdTFzamwkk7k7U0HpBKwSc8tPZ6XCQ5zhRa4OlSJ1NSE02HuH3tJ1Dhx5yKIb
+nzudwOy2ZBVCEQo58Atx31n2jqk1I3Az72k2+oAtAs+muCvTjdUVPu79EymJu1aU
+hugqdaMxYMEIFAL2o823FAr8AQ6QQqP1lhoYgSIWeF2LwzJNbhpYIp7B9eWrJqFb
+TO0P10NnhB4Bm2yuDWTxZaHSZQcE9VCFFfgWDPf+ShjiaYek2CQ59HEPu8UIB2MV
++UoA+reET+zqU0nQPDTv7Ap9wK9cdEw5WDcS+Ib8iQ5QueibuCqT6MtaKkSP8qX4
+W9LAWMbNgo+s912Yvq7RJlPQ4namm/QDnE52eg5noYv9KGOQ5aeAUic91HpdRXEf
+li/UBg36I1dLyW73sd61XAXTGu4kJEKinKKbqkUN9V3+QqcSU8MGVR5zzBxCFimo
+f/eTRGt2SOwUDa2ksiQw2yhztoCkz0wteujZNycOHyqIFzApLN8e5g+x/4WvrPPf
+HllYA19uejoP716jDXn4OJ9eJ9AqQ9BRMZezdQ4iBNAk/xVmw1IfOANRwsaQVNQS
+1eq6Al5QOFbZz1Nsl+Lg
+=8sE3
+-----END PGP SIGNATURE-----
