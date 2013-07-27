@@ -1,28 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/22/1
-Message-ID: <20130922172302.GA17237@lonestar>
-Date: Sun, 22 Sep 2013 22:53:02 +0530
-From: Dhiru Kholia <dhiru.kholia@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/10
+Message-Id: <B3DBB52A-914E-40AB-973C-D06A6A320723@stufft.io>
+Date: Sat, 27 Jul 2013 03:29:06 -0400
+From: Donald Stufft <donald@...fft.io>
 To: oss-security@...ts.openwall.com
-Subject: Re: Research on better-than-brute-force attacks on PDF cryptography
+Cc: kseifried@...hat.com
+Subject: Re: CVE Request: Insecure Software Download in pip
 Content-Type: text/plain; charset=utf-8
 
-On 09/17/13 at 08:26pm, Florian Weimer wrote:
-> I've looked at a PDF implementation, compared it against the specification
-> (including Adobe's supplement covering AES-256), and unless I'm missing
-> something, there are a few odd things there.
->
-> Does anyone know if there's published research into this topic?  I could
-> only find indications that the specification does not adequately defend
-> against brute-force password guessing.  Which is probably true, but not
-> exactly my concern.
 
-Hi Florian,
+If it helps at all this is the commit that introduced initial support for it (where it explicitly calls out PEP381)
 
-http://tinyurl.com/pdf-fmt-plug-c might help you in your research.
+https://github.com/pypa/pip/commit/e80c387a26858c4d7ff43c5f030b04b03fd43dfe
 
-For unknown reasons, Adobe weakened their "KDF" in the "R5" scheme, a
-mistake which they have fixed in their current "R6" scheme.
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
 
---
-Dhiru
+
+Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
