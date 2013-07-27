@@ -1,156 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/07/2
-Message-ID: <51385A41.60308@redhat.com>
-Date: Thu, 07 Mar 2013 02:13:37 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/12
+Message-ID: <51F41AF1.5010702@redhat.com>
+Date: Sat, 27 Jul 2013 13:09:37 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Mathias Krause <minipli@...glemail.com>, Solar Designer <solar@...nwall.com>
-Subject: Re: CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
+CC: Evan Teitelman <teitelmanevan@...il.com>, scottydroid@...il.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request - Coin Widget serves code over plain http.
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/05/2013 01:52 PM, Mathias Krause wrote:
-> Hi Kurt,
+On 07/26/2013 07:19 PM, Evan Teitelman wrote:
+> Coin Widget is a Bitcoin and Lightcoin donation widget. Its code
+> is normally downloaded from http://coinwidget.com/widget/coin.js in
+> the following manner.
 > 
-> I don't care much about info leaks beyond merely fixing them. But 
-> Alexander asked me to request a CVE ID for the recent crypto fix
-> of mine and as I did quite a few of such fixes in the recent past,
-> I'll just list them all here. The information might be a bit scarce
-> for a CVE ID request but as I don't expect any CVE IDs anyway, I
-> didn't wanted to do too much unnecessary work. ;)
+> <script src="http://coinwidget.com/widget/coin.js"></script> 
+> <script> CoinWidgetCom.go({ wallet_address:
+> "31uEbMgunupShBVTewXjtqbBv5MndwfXhb" , currency: "bitcoin" ,
+> counter: "count" , alignment: "bl" , qrcode: true , auto_show:
+> false , lbl_button: "Donate" , lbl_address: "My Bitcoin Address:" ,
+> lbl_count: "donations" , lbl_amount: "BTC" }); </script>
 > 
-> 9a5467b crypto: user - fix info leaks in report API
-> 
-> This is quite a big info leak of heap, stack and .text memory. No 
-> crypto material, though. Also, as the crypto user API is protected
-> by capable(CAP_NET_ADMIN), it's not as critical as is might sound
-> on the first sight. It affects all versions from the introduction
-> of the crypto user API -- that is v3.2 - v3.8.
+> Without SSL or similar protection, it is possible for the code to
+> be modified in transit. A malicious individual could modify the
+> code to replace a legitimate wallet address with his or her own.
 
-Please use CVE-2013-1825 for this issue.
+I also tried "https://coinwidget.com/widget/coin.js" and it failed
+(you can telnet to the port, it's open, but I got an SSL error). If
+you try
+"https://www.ssllabs.com/ssltest/analyze.html?d=coinwidget.com+"
+you'll see the same.
 
+> I believe this vulnerability is an example of CWE-300. Does it need
+> a CVE identifier?
 
-Bundling the following into a single CVE:
+The problem is not in the code, the problem is in how the code is
+served/distributed. CVE is traditionally for software and not for
+services. So under a simplistic reading of that strict definition I
+would say this doesn't deserve a CVE.
 
-> Older info leak fixes follow. All of them ended up in v3.6 and
-> were backported to the stable/longterm kernels at the time:
-> 
-> ecd7918 xfrm_user: ensure user supplied esn replay window is valid 
-> What: Leaks up to ~3.5kb heap memory. Was protected by 
-> capable(CAP_NET_ADMIN) at the time.
-> 
-> 1f86840 xfrm_user: fix info leak in copy_to_user_tmpl() What: Minor
-> leak of stack memory. Was protected by capable(CAP_NET_ADMIN) at
-> the time.
-> 
-> 7b78983 xfrm_user: fix info leak in copy_to_user_policy() What:
-> Minor leak of heap memory. Was protected by capable(CAP_NET_ADMIN)
-> at the time.
-> 
-> f778a63 xfrm_user: fix info leak in copy_to_user_state() What:
-> Minor leak of heap memory. Was protected by capable(CAP_NET_ADMIN)
-> at the time.
-> 
-> 4c87308 xfrm_user: fix info leak in copy_to_user_auth() What: Leak
-> of heap memory. Was protected by capable(CAP_NET_ADMIN) at the
-> time.
-> 
-> 43da5f2 net: fix info leak in compat dev_ifconf() What: Minor leak
-> of stack memory.
-> 
-> 2d8a041 ipvs: fix info leak in getsockopt(IP_VS_SO_GET_TIMEOUT) 
-> What: Minor leak of stack memory.
-> 
-> 7b07f8e dccp: fix info leak via
-> getsockopt(DCCP_SOCKOPT_CCID_TX_INFO) What: Minor leak of stack
-> memory.
-> 
-> 3592aae llc: fix info leak via getsockname() What: Major leak of
-> stack memory (up to 128 bytes).
-> 
-> 04d4fbc l2tp: fix info leak via getsockname() What: Minor leak of
-> stack memory.
-> 
-> 792039c Bluetooth: L2CAP - Fix info leak via getsockname() What:
-> Minor leak of stack memory.
-> 
-> 9344a97 Bluetooth: RFCOMM - Fix info leak via getsockname() What:
-> Minor leak of stack memory.
-> 
-> f9432c5 Bluetooth: RFCOMM - Fix info leak in
-> ioctl(RFCOMMGETDEVLIST) What: Minor leak of heap memory.
-> 
-> 9ad2de4 Bluetooth: RFCOMM - Fix info leak in
-> getsockopt(BT_SECURITY) What: Minor leak of stack memory.
-> 
-> 3f68ba0 Bluetooth: HCI - Fix info leak via getsockname() What:
-> Minor leak of stack memory.
-> 
-> e15ca9a Bluetooth: HCI - Fix info leak in getsockopt(HCI_FILTER) 
-> What: Minor leak of stack memory.
-> 
-> 3c0c5cf atm: fix info leak via getsockname() What: Minor leak of
-> stack memory.
-> 
-> e862f1a atm: fix info leak in getsockopt(SO_ATMPVC) What: Minor
-> leak of stack memory.
-> 
-> a117dac net/tun: fix ioctl() based info leaks What: Leak of 36
-> bytes of stack memory.
-> 
-> 0143fc5 udf: avoid info leak on export What: Minor leak of heap
-> memory.
-> 
-> fe685aa isofs: avoid info leak on export What: Minor leak of heap
-> memory.
+However the world is changing, for example a program that included an
+auto-updater component that was advertised as being "Secure" but went
+over HTTP would probably qualify for a CVE.
 
-Please use CVE-2012-6138 for these issues.
+Steve I'm bouncing this to you, I'm inclined to NOT assign a CVE since
+it opens up a huge can of worms (every single bit of JavaScript served
+from HTTP and not available via HTTPS ever), but I can also see how it
+should maybe get a CVE.
 
-> Now do follow a few NULL ptr derefs ending up in privilege
-> escalation if a user is able to map page 0 or probably a DoS
-> otherwise. Also those have all been fixed in v3.6 and backported to
-> the corresponding stable/longterm kernels at the time:
+The good news is that future versions of Firefox are implementing a
+security policy that when loading a page from HTTPS they will not load
+page components from HTTP, which would fix this issue. Hopefully all
+the browsers do this.
+
 > 
-> 864745d xfrm_user: return error pointer instead of NULL What: Wrong
-> return of NULL leads to wrong path in calling function leading to
-> NULL pointer deref of skb.
-
-Please use CVE-2013-1826 for this issue.
-
-> 276bdb8 dccp: check ccid before dereferencing What: Missing NULL
-> pointer check leads to NULL function pointer.
-
-Please use CVE-2013-1827 for this issue.
-
-
-> That's all. Enough, I guess ;)
+> I have copied the creator of Coin Widget on this email.
 > 
-> While we are at it: Do we care about getting CVE IDs for info
-> leaks? If so, all of them or only for the ones with leaks above a
-> certain threshold (>= 16 bytes, e.g.)?
+> Thank you for your time, Evan Teitelman.
 > 
-> Regards, Mathias
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJROFpBAAoJEBYNRVNeJnmT/SwP/37qcH9dRMXl6TYl/tZNuyr3
-qBjFI/waxxiJt2x5abAeFXJ423+Lg30ZrkuuiUkLaNRRa+U4pDkInKw9xsigvm4D
-+JKXmEI0qwVfjRg7dDQY0HSWUaNwlXbr2roOw2ioilukkGcAcWIlKErP0rrbN8u9
-JSj7uE77+MN5MuCevI2u5DWBY1iuGwzzvRFf3DYCcE+ceha8Iwn0AdR3jPtYgrpA
-jJ+zew9OlAp65zhcJ47SQ5X9hmBNglWKr6ej9cNn/NLdfcMott1+kggNyU5djtCY
-lwAHZ3jQT9+4m+kDZiG+8QpMyAQucitCyudehk9oryWgU9Rc6jrwYeA5FWpJEFpJ
-ujZB3diGzqt8K8GsMzoIisNYr/10tLr2ummBSlB1fCzyITFJG4aSQETjtVv5B5/I
-fIjY3nQ8CXs8UDCAFVdPffQgByeFVxPdBf9xI8nqo36DSpHSBWSI1XZcOscpAYRI
-GIhpN4TmzAja90l6LxH0p1oxrgL0mzmIkud29UrwntLfCHxuzQ42Wj1hKNKZdRN7
-FxPXE8J2g4EaAFzO4jHun7kFQO6ME9ThPac82p/2kY2VjW15VE9iV5jJdSGxzH1L
-5Em1s2A4yChVwXZFVjH6I0A4h4AE3CPkG6NuHOBVo5/Bn3vDc4n1PXG/c8EF5AFf
-kIERn7KKBOTAwHQ5UheK
-=bmBV
+iQIcBAEBAgAGBQJR9BrxAAoJEBYNRVNeJnmTzSUP/2cz0J2eI0lA9z3JWVl0VUy1
+9xiS+SUxFTpmim+bAEg7glaJuMmYdXqXrSGgeujGNlS/Fwz4pkO/FcKbfg/SzxaE
+pVjhMQSni6hMfsos18Zsh6V9FE7gyvsiFULFYD3MQErSsXwbXlNO7iQcaxPo1oFI
+X7I6fibNNb1dlHIgUcZA2dfj3MUDl2l31TgmPyWyO2KRYadz7z0Yw6xNTV1CsbBT
+Ppig53utesTkoiRd+Oym6u0HSjr5PN8SjFO7qSHV5h8Cdd0Q7+mHcBsg6C76Cixa
++eAuFpdC9CbyXgXtXuepbSCK9YlM6tyW3Acl1V16XM0pyI0GDGmdzfqsZHb3hwzg
+hKxqNLrYf7PAgDkz8wPHdWn6M2ENnkNmHOKxlQiLWBAiP3Zjx7KoGphRfFxG0cox
+FY2FeteiGRt1J7UfTApJkXlFgTcYfn1UtGFtqBeMj3JqSsCvBx9z5fJqCbDwTV2F
+qwZkyURHdEYyOj4S35oQ/pgabV6XpmO9m/PMr43BnL6qStV+DJzXLedNIBVbV+XU
+amPT15MOjWkwFVCU5oGakz0hIkMSDli6Z/tCOA2gXxZQ/kI606P6HymD9pGfw8nW
+9bTQRTHdJfkDCOu65V3Tj8vUO2zQ+kD76iLKXIy8GkhPV2Uer7FHW22fB5uxgQit
+fcouWuyRDV85m0MQNEYH
+=S3oH
 -----END PGP SIGNATURE-----
