@@ -1,105 +1,129 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/6
-Message-ID: <CAN_LGv361=VsOZ6KKU68ViRng5yYFHkUzRe8gCUDV+kfGYSdRg@mail.gmail.com>
-Date: Tue, 22 Oct 2013 19:48:40 +0100
-From: "Alexander E. Patrakov" <patrakov@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/1
+Message-Id: <201307270341.r6R3fZI3019180@freefall.freebsd.org>
+Date: Sat, 27 Jul 2013 03:41:35 GMT
+From: FreeBSD Security Advisories <security-advisories@...ebsd.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: WebKit-GTK + Puseaudio: unexpectedly high sound volume
+Subject: FreeBSD Security Advisory FreeBSD-SA-13:08.nfsserver
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Some time ago I have reported an issue:
-http://seclists.org/oss-sec/2013/q4/35 , but decided not to request
-CVE at that time, because I wanted to collect opinions on the topic
-"who should fix what". I have collected them from both involved
-parties and thus now request a CVE ID for this coordination issue /
-case of contradicting requirements. Please let me know if I have
-omitted any of the required information.
+=============================================================================
+FreeBSD-SA-13:08.nfsserver                                  Security Advisory
+                                                          The FreeBSD Project
 
-Let me reproduce the most important part of my initial report.
+Topic:          Incorrect privilege validation in the NFS server
 
-======
-The following combination of software has a nasty bug when used
-together, that I personally consider to be a vulnerability:
+Category:       core
+Module:         nfsserver
+Announced:      2013-07-26
+Credits:        Rick Macklem, Christopher Key, Tim Zingelman
+Affects:        FreeBSD 8.3, FreeBSD 9.0 and FreeBSD 9.1
+Corrected:      2012-12-28 14:06:49 UTC (stable/9, 9.2-BETA2)
+                2013-07-26 22:40:23 UTC (releng/9.1, 9.1-RELEASE-p5)
+                2013-01-06 01:11:45 UTC (stable/8, 8.3-STABLE)
+                2013-07-26 22:40:29 UTC (releng/8.3, 8.3-RELEASE-p9)
+CVE Name:       CVE-2013-4851
 
-* PulseAudio (any version, especially when used in flat-volume mode
-that is the default everywhere except Ubuntu).
- * Any browser based on Webkit-GTK 2.x (any version with HTML5
-audio/video support based on GStreamer).
+For general information regarding FreeBSD Security Advisories,
+including descriptions of the fields above, security branches, and the
+following sections, please visit <URL:http://security.FreeBSD.org/>.
 
-The bug is that a malicious piece of javascript on the web page can
-cause an audio file to play at an unexpectedly high volume, not
-obeying the volume that the user has set for the web browser in
-pavucontrol or gnome-volume-control, and effectively not letting the
-user move the volume slider corresponding to the web browser [1]. When
-flat volumes are in effect, the web page can play that audio file at
-the full volume that the sound card is capable of, which can in some
-cases damage loudspeakers (especially tweeters) or the user's hearing
-[2].
+I.   Background
 
-The reproducer (that just sets the volume at regular intervals using a
-timer) is already public at http://jsfiddle.net/bteam/FbkGD/ and can
-be trivially enhanced to also prevent muting of the audio stream. View
-that in Epiphany or Midori on any Linux distribution except Ubuntu.
-======
+The Network File System (NFS) allows a host to export some or all of its
+file systems so that other hosts can access them over the network and mount
+them as if they were on local disks.  FreeBSD includes both server and client
+implementations of NFS.
 
-Personally, I classify [1] as an annoyance-class bug (but still a bug)
-and [2] as a security issue.
+II.  Problem Description
 
-Relevant links:
+The kernel incorrectly uses client supplied credentials instead of the one
+configured in exports(5) when filling out the anonymous credential for a
+NFS export, when -network or -host restrictions are used at the same time.
 
-https://bugs.webkit.org/show_bug.cgi?id=118974
-https://bugzilla.gnome.org/show_bug.cgi?id=675217
-https://bugs.freedesktop.org/show_bug.cgi?id=46466
-https://bugzilla.gnome.org/show_bug.cgi?id=680779
+III. Impact
 
-Chromium is not vulnerable because it does not attempt to integrate
-the javascript volume with the stream volume in PulseAudio. Tested
-Windows-based browsers (IE, Firefox, Chrome, Opera) are not vulnerable
-for the same reason - the javascript-settable volume does not
-correspond to anything in the system mixer. I have not tested Firefox
-with GStreamer backend on Linux.
+The remote client may supply privileged credentials (e.g. the root user)
+when accessing a file under the NFS share, which will bypass the normal
+access checks.
 
-I spoke both to representatives of PulseAudio development team and to
-WebKit-GTK developers. The unfortunate conclusion is that no agreement
-can be reached upstream on the topic "who should fix what", and no
-agreement exists whether this is a bug at all (I was told that I am
-the only one who complains, and that I should fix the issue on my own
-system by disabing flat volumes, which I did, but I don't consider
-this to be a full fix). I should also mention that the current
-behaviour is a necessary result of a previous agreement reached at
-GUADEC between PulseAudio, GStreamer and WebKit-GTK developers -
-that's why the natural resistance to its rediscussion.
+IV.  Workaround
 
-As all components are definitely operating as intended according to
-the majority of their authors (PulseAudio implements the most
-intuitive volume control model according to a published research
-paper, WebKit-GTK implements W3C standards and offers the best
-possible integration of web applications into that desktop sound
-volume model), this bug will, I think, never get fixed upstream.
+Systems that do not provide the NFS service are not vulnerable.  Systems that
+do provide the NFS service are only vulnerable when -mapall or -maproot is
+used in combination with network and/or host restrictions.
 
-PulseAudio devs mostly agree that this is a sandboxing issue in
-WebKit-GTK. WebKit-GTK developers think that such sandboxing is
-possible to do but should not be done because "We want to be coherent
-with the rest of GNOME apps, and the volume model they are using"
-(even though no other browser attempts that), and suggest to either
-fix the volume model or live with it.
+V.   Solution
 
-My own advice to Linux distributions, which obviously differs from the
-upstream opinion of both projects:
+Perform one of the following:
 
-1. Disable flat volumes in PulseAudio by default. This would convert
-this security issue into a mere "application relative-volume slider
-disobeys the user" annoyance-class bug.
+1) Upgrade your vulnerable system to a supported FreeBSD stable or
+release / security branch (releng) dated after the correction date.
 
-2. Persuade upstream developers of WebKit-GTK that full desktop
-integration is not a worthy goal for a web browser engine.
+2) To update your vulnerable system via a source code patch:
 
-One off-topic remark, just to illustrate my opinion: this is not the
-first case that I encountered where too much desktop integration is an
-issue. The other (non-security) issue is
-https://bugzilla.redhat.com/show_bug.cgi?id=755200
+The following patches have been verified to apply to the applicable
+FreeBSD release branches.
 
--- 
-Alexander E. Patrakov
+a) Download the relevant patch from the location below, and verify the
+detached PGP signature using your PGP utility.
+
+# fetch http://security.FreeBSD.org/patches/SA-13:08/nfsserver.patch
+# fetch http://security.FreeBSD.org/patches/SA-13:08/nfsserver.patch.asc
+# gpg --verify nfsserver.patch.asc
+
+b) Apply the patch.
+
+# cd /usr/src
+# patch < /path/to/patch
+
+c) Recompile your kernel as described in
+<URL:http://www.FreeBSD.org/handbook/kernelconfig.html> and reboot the
+system.
+
+3) To update your vulnerable system via a binary patch:
+
+Systems running a RELEASE version of FreeBSD on the i386 or amd64
+platforms can be updated via the freebsd-update(8) utility:
+
+# freebsd-update fetch
+# freebsd-update install
+
+VI.  Correction details
+
+The following list contains the correction revision numbers for each
+affected branch.
+
+Branch/path                                                      Revision
+- -------------------------------------------------------------------------
+stable/8/                                                         r245086
+releng/8.3/                                                       r253694
+stable/9/                                                         r244772
+releng/9.1/                                                       r253693
+- -------------------------------------------------------------------------
+
+To see which files were modified by a particular revision, run the
+following command, replacing XXXXXX with the revision number, on a
+machine with Subversion installed:
+
+# svn diff -cXXXXXX --summarize svn://svn.freebsd.org/base
+
+Or visit the following URL, replacing XXXXXX with the revision number:
+
+<URL:http://svnweb.freebsd.org/base?view=revision&revision=XXXXXX>
+
+VII. References
+
+<URL:http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4851>
+
+The latest revision of this advisory is available at
+http://security.FreeBSD.org/advisories/FreeBSD-SA-13:08.nfsserver.asc
+-----BEGIN PGP SIGNATURE-----
+
+iEYEARECAAYFAlHzPrkACgkQFdaIBMps37I9YACfSu4orRhgOhol8vacW9kF3ZGP
+jtAAn0t2i14CMo1MT5MztI6RWX3hnUWZ
+=xjf/
+-----END PGP SIGNATURE-----
