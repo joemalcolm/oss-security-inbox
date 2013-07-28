@@ -1,48 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/4
-Message-ID: <51F36F71.4090101@redhat.com>
-Date: Sat, 27 Jul 2013 00:57:53 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/28/1
+Message-ID: <20130728133024.GA28830@alf.mars>
+Date: Sun, 28 Jul 2013 15:30:27 +0200
+From: Helmut Grohne <helmut@...divi.de>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed modules
+Subject: Re: ISC DHCP client and unsolicited DHCP options
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Jul 17, 2013 at 10:35:52PM -0600, Kurt Seifried wrote:
+> Do any DHCP clients process and use options passed to them that are
+> not explicitly wanted? Might be worth setting up a DHCP server that
+> hands out every possible options (there's a lot) and see what happens
+> on various clients.
 
-On 07/25/2013 11:52 AM, Forest Monsen wrote:
-> Hi there,
-> 
-> I'd like to request a CVE identifier for:
-> 
-> SA-CONTRIB-2013-060 - Scald - Cross Site Scripting (XSS) 
-> https://drupal.org/node/2049415
-> 
-> Thanks!
-> 
-> Forest Monsen
-> 
+At least on Debian, the default configuration requests the host-name option.
+The dhclient-script then evaluates this option and thereby enables a DHCP
+server to change the hostname if the current hostname is "(none)", "localhost"
+or a previously sent hostname. Changing the hostname can have undesired
+consequences such as breaking a running X11 session (can be considered remote
+denial of service).
 
-Please use CVE-2013-4174 for this issue.
+That is why a number of people (including me) remove host-name from the
+requested options. Now given the new findings, a DHCP server can still change
+the hostname of a connecting client by first sending an unsolicited host-name
+option with the current hostname and then changing the hostname in a RENEW.
+Guessing the current hostname should be easy in the presence of avahi or
+similar services.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Since the bug breaks the assumption, that removing an option from the
+request list causes it not to be processed, and this can result in the
+xserver rejecting new connections, I think the issue should receive a
+CVE identifier.
 
-iQIcBAEBAgAGBQJR829wAAoJEBYNRVNeJnmTCd8P/iwky+3HrM/b72ixpUxshu+T
-1/if6SFKb2hoqIijBB3fgF0K44TtLaqlPoxlMAiMxmFnl9MCz6Nq1WbRD8aSJ/mN
-5UjzdTFzamwkk7k7U0HpBKwSc8tPZ6XCQ5zhRa4OlSJ1NSE02HuH3tJ1Dhx5yKIb
-nzudwOy2ZBVCEQo58Atx31n2jqk1I3Az72k2+oAtAs+muCvTjdUVPu79EymJu1aU
-hugqdaMxYMEIFAL2o823FAr8AQ6QQqP1lhoYgSIWeF2LwzJNbhpYIp7B9eWrJqFb
-TO0P10NnhB4Bm2yuDWTxZaHSZQcE9VCFFfgWDPf+ShjiaYek2CQ59HEPu8UIB2MV
-+UoA+reET+zqU0nQPDTv7Ap9wK9cdEw5WDcS+Ib8iQ5QueibuCqT6MtaKkSP8qX4
-W9LAWMbNgo+s912Yvq7RJlPQ4namm/QDnE52eg5noYv9KGOQ5aeAUic91HpdRXEf
-li/UBg36I1dLyW73sd61XAXTGu4kJEKinKKbqkUN9V3+QqcSU8MGVR5zzBxCFimo
-f/eTRGt2SOwUDa2ksiQw2yhztoCkz0wteujZNycOHyqIFzApLN8e5g+x/4WvrPPf
-HllYA19uejoP716jDXn4OJ9eJ9AqQ9BRMZezdQ4iBNAk/xVmw1IfOANRwsaQVNQS
-1eq6Al5QOFbZz1Nsl+Lg
-=8sE3
------END PGP SIGNATURE-----
+Quoting the relevant dhclient-script part:
+| if [ -n "$new_host_name" ]; then
+|     current_hostname=$(hostname)
+| 
+|     # current host name is empty, '(none)' or 'localhost' or differs from new one from DHCP
+|     if [ -z "$current_hostname" ] ||
+|        [ "$current_hostname" = '(none)' ] ||
+|        [ "$current_hostname" = 'localhost' ] ||
+|        [ "$current_hostname" = "$old_host_name" ]; then
+|        if [ "$new_host_name" != "$old_host_name" ]; then
+|            hostname "$new_host_name"
+|        fi
+|     fi
+| fi
+
+Helmut
