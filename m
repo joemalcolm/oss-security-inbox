@@ -1,37 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/13/2
-Message-ID: <20130913133819.GO11152@dhcp-25-225.brq.redhat.com>
-Date: Fri, 13 Sep 2013 15:38:19 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/29/3
+Message-ID: <1199474359.8390821.1375119761052.JavaMail.root@redhat.com>
+Date: Mon, 29 Jul 2013 13:42:41 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- Linux kernel: net: sctp: ipv6 ipsec encryption bug in sctp_v6_xmit
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, phpMyAdmin security team <security@...myadmin.net>, Mitre CVE assign department <cve-assign@...re.org>
+Subject: CVE Request -- phpMyAdmin 3.5.8.2 and 4.0.4.2 are released
 Content-Type: text/plain; charset=utf-8
 
-Alan Chester reported an issue with IPv6 on SCTP that IPsec traffic is
-not being encrypted, whereas on IPv4 it is. Setting up an AH + ESP transport
-does not seem to have the desired effect:
+Hello Kurt, Steve, phpMyAdmin security team, vendors,
 
-SCTP + IPv4:
+  phpMyAdmin upstream has recently released 3.5.8.2 and 4.0.4.2 of phpMyAdmin
+administration too:
+  [1] http://www.phpmyadmin.net/home_page/news.php#phpMyAdmin_3.5.8.2_and_4.0.4.2_are_released
 
- 22:14:20.809645 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF],
-proto AH (51), length 116)
-     192.168.0.2 > 192.168.0.5: AH(spi=0x00000042,sumlen=16,seq=0x1):ESP(spi=0x00000044,seq=0x1), length 72
- 22:14:20.813270 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF],proto AH (51), length 340)
-     192.168.0.5 > 192.168.0.2: AH(spi=0x00000043,sumlen=16,seq=0x1):
+correcting multiple security flaws (PMASA-2013-10.php is reserved for future use, see [1]):
+* http://www.phpmyadmin.net/home_page/security/PMASA-2013-8.php
+* http://www.phpmyadmin.net/home_page/security/PMASA-2013-9.php
+* http://www.phpmyadmin.net/home_page/security/PMASA-2013-11.php
+* http://www.phpmyadmin.net/home_page/security/PMASA-2013-12.php
+* http://www.phpmyadmin.net/home_page/security/PMASA-2013-13.php
+* http://www.phpmyadmin.net/home_page/security/PMASA-2013-14.php
+* http://www.phpmyadmin.net/home_page/security/PMASA-2013-15.php
 
-SCTP + IPv6:
+Doesn't look CVE identifiers have been already allocated to these?
 
- 22:31:19.215029 IP6 (class 0x02, hlim 64, next-header SCTP (132)payload length: 364)
-     fe80::222:15ff:fe87:7fc.3333 > fe80::92e6:baff:fe0d:5a54.36767:sctp
-     1) [INIT ACK] [init tag: 747759530] [rwnd: 62464] [OS: 10] [MIS:10]
+Could you assign them? (Cc-ing phpMyAdmin security team to confirm
+these weren't assigned yet [and Mitre's CVE assigning department
+since having an impression, we have previously discussed this and
+the conclusion was Mitre CVE department will assign them {but maybe
+it wasn't case of phpMyAdmin, not sure right now}]).
 
-References:
-https://bugzilla.kernel.org/show_bug.cgi?id=24412
-https://bugzilla.redhat.com/show_bug.cgi?id=1007872
-
-Upstream fix:
-http://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=95ee62083cb6453e056562d91f597552021e6ae7
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
