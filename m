@@ -1,45 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/1
-Message-ID: <5125696F.2030201@redhat.com>
-Date: Wed, 20 Feb 2013 17:25:19 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/29/2
+Message-ID: <CAD6CYKNeeF7ODUMLXqDf_GrbPgRvBX7d01JChvyqh9_r_GCYWw@mail.gmail.com>
+Date: Mon, 29 Jul 2013 09:48:39 +0200
+From: Alexandre Dulaunoy <a@....be>
 To: oss-security@...ts.openwall.com
-CC: "Christey, Steven M." <coley@...re.org>
-Subject: Re: RE: Handling CVEs for the XML entity expansion issues
+Subject: CVE missing? for "Exim with Dovecot: Typical Misconfiguration Leads to Remote Command Execution"
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi All,
 
-On 02/20/2013 06:02 AM, Christey, Steven M. wrote:
-> Kurt,
-> 
-> I'm reviewing this issue with the rest of the cve-assign team.  We
-> will get back to you with an answer shortly.
-> 
-> - Steve
+I couldn't find the CVE number for the following vulnerability/misconfiguration:
 
-Any movement on this? I'm now sitting on a huge pile of stuff that
-will need CVEs.
+https://www.redteam-pentesting.de/en/advisories/rt-sa-2013-001/-exim-with-dovecot-typical-misconfiguration-leads-to-remote-command-execution
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Is there a CVE assigned for this combo vulnerability in Exim/Dovecot?
+or as this is a configuration matter there is no CVE assigned (even if
+this "recommended configuration" was in the wiki of the vendor)?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Thanks for any feedback,
 
-iQIcBAEBAgAGBQJRJWlvAAoJEBYNRVNeJnmTRwcP/25newzMZJMtWV8PEm+3b4Sm
-bNdnDAQjbP82V7RBBqVQ/MlPHs9dFFXSwzZzjrHigT/lT/pe7db6oK4g75uL1+Y9
-BSHuLK5OziJPLOczc/1YUZ17sk6+YzvubBCZQ1wzZ/OxcENYHtJ8h5g7ljFLpT9S
-wkg8vAMdaGZ+tA30kfyfEwiswp/a2we4AN3MwmV2e2WYnMmkBuWxO8xKkpjrKtO/
-iK2ZlQV+WNVDelujpWMOfwJkCuHo66VZsgs/sC1g7DTPaG67ceboK8UVuY7q0vw1
-vGkwHKQcclCOZjnUfLbgFXY/DWpWRi713brS9oTQUVV7JNTvnem1OjnzaJn4JOoa
-IS8RLi1XwYbMd7IYkreng+XODuf7+qZ9gTD/otDDjqSxX3ahq7Vnk7KDvXVgthJ4
-tcUo9nlhKI34FY8wTwECs+CyVdluK42zOpa0Lx2dBK9kf4VE4ZlH+0qTzJl+5H0h
-rh+xzi2MOgs1cM2qUYSAiHRDsoOS0648xXcxe7vTR4m1eeHk/WF6z3umcXQ8yKSq
-RAFNvdpXnnLQZVNqUbl1dJG+hjHKf9klOWdPH6eDWn1PKv5G3RRMMmBviGIHPAUS
-DMl8RSu2VpzV0muqmeuSUSGrCS+SZPN/43CiGfClUVj0nNXmTw+28+8Ku/nQGNtM
-ldp8ePKKDs4yYbKe99Rt
-=uieQ
------END PGP SIGNATURE-----
+Cheers
+
+-- 
+--                   Alexandre Dulaunoy (adulau) -- http://www.foo.be/
+--                             http://www.foo.be/cgi-bin/wiki.pl/Diary
+--         "Knowledge can create problems, it is not through ignorance
+--                                that we can solve them" Isaac Asimov
