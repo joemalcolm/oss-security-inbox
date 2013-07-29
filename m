@@ -1,30 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/9
-Message-ID: <alpine.LFD.2.03.1303051535280.9898@redhat.com>
-Date: Tue, 5 Mar 2013 15:38:49 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: Linux kernel: xfs: _xfs_buf_find NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/29/5
+Message-ID: <20130729224550.2f3a8734@redhat.com>
+Date: Mon, 29 Jul 2013 22:45:50 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: security-officer@...eBSD.org
+Cc: OSS Security <oss-security@...ts.openwall.com>
+Subject: Re: FreeBSD Security Advisory FreeBSD-SA-13:07.bind
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi!
 
-Linux kernel built with support for XFS file system is vulnerable to a NULL
-pointer dereference flaw. This occurs while accessing blocks beyond the end
-of the file system, possibly on a corrupted device.
+On Sat, 27 Jul 2013 03:41:28 GMT FreeBSD Security Advisories wrote:
 
-A user able to mount the file system could use this flaw to crash the kernel, 
-resulting in DoS.
+> FreeBSD-SA-13:07.bind                                Security Advisory
+>                                                    The FreeBSD Project
+> 
+> Topic:          BIND remote denial of service
+> 
+> Category:       contrib
+> Module:         bind
+> Announced:      2013-07-26
+> Credits:        Maxim Shudrak and the HP Zero Day Initiative, ISC
+> Affects:        FreeBSD 8.4-RELEASE and FreeBSD 9.x
 
-Upstream fix:
--------------
-  -> https://git.kernel.org/linus/eb178619f930fa2ba2348de332a1ff1c66a31424
+Are FreeBSD advisories now going to be posted to oss-security?  They
+were not posted here before.  The list charter strongly discourages
+posting of vendor security advisories:
 
-Reference:
-----------
-  -> https://bugzilla.redhat.com/show_bug.cgi?id=918009
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+-- 
+Tomas Hoger / Red Hat Security Response Team
