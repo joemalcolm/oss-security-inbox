@@ -1,58 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/2
-Message-ID: <CA+rthh9U_gVARki=eUHP=R8Lm9X2pT4J059gBFmdrqUFdYjKyQ@mail.gmail.com>
-Date: Mon, 25 Feb 2013 11:41:33 +0100
-From: Mathias Krause <minipli@...glemail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/29/7
+Message-ID: <20130729211914.GA10698@openwall.com>
+Date: Tue, 30 Jul 2013 01:19:14 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
+Cc: security-officer@...eBSD.org
+Subject: Re: FreeBSD Security Advisory FreeBSD-SA-13:07.bind
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 25, 2013 at 11:13 AM, Solar Designer <solar@...nwall.com> wrote:
-> On Sun, Feb 24, 2013 at 10:10:45AM +0100, Mathias Krause wrote:
->> An unprivileged user can send a netlink message resulting in an
->> out-of-bounds access of the sock_diag_handlers[] array which, in turn,
->> allows userland to take over control while in kernel mode.
->>
->> Patch (already in net/master):
->> http://thread.gmane.org/gmane.linux.network/260061
->>
->> Affected versions:
->> v3.3 - v3.8
->
-> Nice find!  Do you happen to know of distro backports of the affected
-> code to older kernels?
+On Mon, Jul 29, 2013 at 10:45:50PM +0200, Tomas Hoger wrote:
+> Are FreeBSD advisories now going to be posted to oss-security?  They
+> were not posted here before.  The list charter strongly discourages
+> posting of vendor security advisories:
+> 
+> http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-No. I haven't investigated this any further. So I don't know.
+Tomas is referring to:
 
->  When you wrote that the bug is "in there for
-> ages", did you mean that 3.3 has been out "for ages" or something else?
+"Security advisories aimed at end-users only are not welcome (e.g.,
+those from a distribution vendor announcing new pre-built packages).
+There has to be desirable information for others in the Open Source
+community (e.g., an upstream maintainer may announce a new version of
+their software with security fixes to be picked up by distributors)."
 
-Kind of. The missing upper bound check was (and still is) in there in
-older kernels as well, at times as this code was still living in
-inet_diag.c. But it wasn't (and isn't) vulnerable as the
-inet_diag_handlers[] array is 256 elements big. So userland cannot
-exploit this as the type for the family is __u8.
+This guideline exists largely to avoid content duplication (as far as
+non-end-users are concerned), which we'd see here if multiple distro
+vendors were announcing their updates in here (since many if not most of
+those updates would be for packages based on shared upstream code, and
+thus for upstream code vulnerabilities that have already been reported
+in here separately).
 
->> PoC is not attached this time but can be requested on demand. Hint:
->> Works well on Fedora 18, bypassing all mmap_min_addr checks. ;)
->
-> SynQ posted a (different?) PoC here:
->
-> https://rdot.org/forum/showthread.php?p=30828
->
-> Apparently, high values of mmap_min_addr (like 131072) happen to work
-> against this one, but they might not work against other attack vectors
-> or/and kernel builds.  The bug is not a NULL+offset dereference, so
-> mmap_min_addr was not supposed to help against its exploitation - it
-> just happens to, sometimes.
+Given the above, I think it makes some sense to allow/encourage distro
+vendor advisories for their own distro-specific issues to be posted in
+here.  This may seem counter-intuitive at first, but note that there's
+no content duplication problem with those, and the distro is acting as a
+(potential) upstream when they're announcing their own
+vulnerability/update (relevant to be picked up by other distros who may
+have reused that component or have otherwise similar code, and relevant
+to all of us as an opportunity to learn from and potentially avoid
+making a similar mistake or whatever the cause of the vulnerability was).
 
-Well, my Russian is actually non-existent but from reading the code,
-they should use other values to get much more reliable and, for that
-matter, higher addresses ;)
-In fact, on x86-64 one can generate addresses far, far away from mmap_min_addr.
-But sorry, I won't disclose any further details, to not get into legal
-issues. In Germany it's quite hairy to do things like that :/
-But I can provide you my PoC in a private email -- for security evaluation.
+Looking at two recent FreeBSD advisories, I think
+FreeBSD-SA-13:08.nfsserver is desirable for oss-security.
+FreeBSD-SA-13:07.bind is less so.  Was the underlying BIND issue
+mentioned in here, though?  It should have been!  If this was in fact
+the first mention, then better to have it in this form than none at all.
 
+Now, I realize that selective posting of a distro vendor's security
+advisories to a mailing list could be confusing (an end-user could then
+expect to see all advisories from the vendor, and would possibly not
+subscribe to an appropriate channel as a result of such confusion).
+So maybe for things like FreeBSD-SA-13:08.nfsserver non-end-user /
+non-advisory postings will work better, even if they refer to the
+end-user advisory for more info.
 
-Mathias
+Alexander
