@@ -1,64 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/13/11
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF0697B06E@IMCMBX01.MITRE.ORG>
-Date: Wed, 13 Feb 2013 17:07:06 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: Kurt Seifried <kseifried@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: David Jorm <djorm@...hat.com>
-Subject: RE: CVE Request --  jakarta-commons-httpclient: Wildcard matching in SSL hostname verifier incorrect (a different issue than CVE-2012-5783)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/29/4
+Message-Id: <201307291754.r6THs3X9003593@linus.mitre.org>
+Date: Mon, 29 Jul 2013 13:54:03 -0400 (EDT)
+From: cve-assign@...re.org
+To: jlieskov@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...myadmin.net
+Subject: Re: CVE Request -- phpMyAdmin 3.5.8.2 and 4.0.4.2 are released
 Content-Type: text/plain; charset=utf-8
-
-We'll REJECT it.
-
-Researchers in general should remain aware that bugs in security features do not necessarily constitute vulnerabilities.  And, as already implied in this thread - if functionality is broken but there is no attacker role, or if the affected software is effectively placed into a more restricted "security policy" than intended, then this behavior would be treated as a bug (or feature), not a vulnerability, so it would not receive a CVE.
-
-- Steve
-
-
-
------Original Message-----
-From: Kurt Seifried [mailto:kseifried@...hat.com] 
-Sent: Tuesday, February 12, 2013 11:34 PM
-To: oss-security@...ts.openwall.com
-Cc: David Jorm; Christey, Steven M.
-Subject: Re: [oss-security] CVE Request -- jakarta-commons-httpclient: Wildcard matching in SSL hostname verifier incorrect (a different issue than CVE-2012-5783)
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/12/2013 06:20 PM, David Jorm wrote:
-> On 02/13/2013 10:29 AM, Kurt Seifried wrote:
->>> Please use CVE-2012-6127 for this issue.
->> Ok I should have looked into this deeper, it looks like it may
->> not be a security issue but I'm not 100% certain, so for now I
->> will leave this, and if someone can show there is no security
->> impact I'll reject it. Sorry for the mixup.
-> 
-> This bug will cause valid certificates to be rejected, but not for 
-> invalid certificates to be accepted. Please reject the CVE.
-> 
-> Thanks David
+>* http://www.phpmyadmin.net/home_page/security/PMASA-2013-8.php
+>* http://www.phpmyadmin.net/home_page/security/PMASA-2013-9.php
+>* http://www.phpmyadmin.net/home_page/security/PMASA-2013-11.php
+>* http://www.phpmyadmin.net/home_page/security/PMASA-2013-12.php
+>* http://www.phpmyadmin.net/home_page/security/PMASA-2013-13.php
+>* http://www.phpmyadmin.net/home_page/security/PMASA-2013-14.php
+>* http://www.phpmyadmin.net/home_page/security/PMASA-2013-15.php
+>
+>Doesn't look CVE identifiers have been already allocated to these?
 
-Please reject CVE-2012-6127, it is not a security issue.
+MITRE has made most of these CVE assignments and should be finishing
+that today. We will send a follow-up message to everyone.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.11 (SunOS)
 
-iQIcBAEBAgAGBQJRGxe6AAoJEBYNRVNeJnmTJ8EQAKT6LzCJ1Q0Moii19B9QYao+
-nY6rVqGX1RDfwbyYSN0SpxxHyUQ1915bL20MX/MD4elt2l92F5cShFox9yt7k5Ml
-ucdDq0vS3oEjvahaWrm6fNewW29HgUf+kLrtcRBGgDFZsWkfcIMJ/wbFd/ZBRp4B
-Ac9jMoq+bBbxV/N5ArjHH3oF6Vp1NU6fwnJTn1Ay7pOA0b905LXQd3Th3yJ86HTb
-zcmGQabM6URfyR/4IwdmgRX8NeDGqR2dCIw6TUeTYxvk6BkVygCJT32FyEIjy9RX
-bCxeaWohtPzwiJ2zy49zLE3hvlbbBgLG1WP52B2Rm1QJM8ZWS/6yUDds784f+nlL
-RjunG1lzpLjvvfrCD8E78sDTxlRAkFLjSoQiZUNcbs4edEz2TBxNn3fk1KOWJAfA
-pThbRLZRXDvPvgr1t5I8HoB+SrJWeVLiNKS5V0uO3CjS7dOsZij8Z5GWUrxTKsli
-2HVBdOpc1mq4lH932cM/pL70+ZaO/UXzjR31NHa2UieWRiAaMGAuTPFGn4sbvcY1
-v7h3IM4XG/wiYnB3wcPANNZWBlHyL3qGCE0yYMbsI1VA66e0j2hZPdkfv9QgQKjz
-QatdRdomwZ9UFD1SLYsbi5Lbh7i4vnXf2ts/jJ7J6XH8Fb0Ys7l7TzgdOH4o8SlP
-88zHNUGhMsGpe1+x/Tql
-=83Jm
+iQEcBAEBAgAGBQJR9qs7AAoJEGvefgSNfHMdyiUIAMCTfx9wX2Eq9gUihlGdQucH
+PQzoxD5FYGm91EOMaVMmKAgkpAdc07/zHfmBVtaAYFh3TjKpFTersmfEIEsESFyf
+orMSeucNmxVnwxZItzwQo2HQsIUBoQ4DxwcG/aeUMWUxfZkrYGvbHWbYuOtbFOfh
+j1ymCQwSFZlKfn1gJv+lFvxcX0ta+DTSuohJWvF+TFcbU/vJ7O20uENCw3dcTl2P
+i/bpeqHnUcZYIJjYPZRMmrNctfvRpa92FNXUndNrhkHe8XD8aeur7AcNxuNEfKSO
+H48h7urlT+Yhiw+8xLexKq2ETbH9gvnYg+tEqSNQUJLTnXxe7sYvzqJoCVKuYTI=
+=aYCJ
 -----END PGP SIGNATURE-----
