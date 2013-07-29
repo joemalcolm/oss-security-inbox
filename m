@@ -1,25 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/18
-Message-ID: <1528506.5oroF307i7@devil>
-Date: Fri, 22 Feb 2013 14:12:52 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: sthttpd world-redable logdir
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/29/1
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF26F9FC52@IMCMBX01.MITRE.ORG>
+Date: Mon, 29 Jul 2013 00:07:17 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "kseifried@...hat.com" <kseifried@...hat.com>
+CC: Evan Teitelman <teitelmanevan@...il.com>, "scottydroid@...il.com" <scottydroid@...il.com>, "Christey, Steven M." <coley@...re.org>
+Subject: RE: CVE Request - Coin Widget serves code over plain http.
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Kurt Seifried said:
 
-sthttps[1], a fork of thttpd, a small, fast, multiplexing webserver.
-creates its log as world-redable:
+>The problem is not in the code, the problem is in how the code is
+>served/distributed. CVE is traditionally for software and not for
+>services. So under a simplistic reading of that strict definition I
+>would say this doesn't deserve a CVE.
 
-# ls -la /var/log/thttpd.log 
--rw-r--r-- 1 thttpd thttpd 0 Feb 22 14:05 /var/log/thttpd.log  
+tl;dr I've looked into this issue some more and in general, I agree.
 
-It should be only gentoo-related because the log is created by our own init-
-script. Please assign a CVE.
+I suspect there are a couple issues here; note that these are some of my impressions and not anything "official" from CVE:
 
+1) The downloading and execution of code from an "http://" URL is subject to various attacks, including DNS spoofing and MITM.  To my way of thinking, the main issue is that the code is not downloaded in a way that preserves its integrity AND ensures that it was downloaded from a trusted source.  For CVE, a core question for inclusion is, "does this download of code WITHOUT an integrity check (CWE-494) happen automatically, or is there a documented manual step in which the administrator is expected to verify the integrity?"
 
-[1]: http://opensource.dyc.edu/sthttpd
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+2) With Coin Widget in particular, the widget is available in github, and people can download the code and install it on their own servers (see the "Download the Source Code" link from the main page at http://coinwidget.com/).  Thus Coin Widget can be offered as a customer-controlled "product" (not just a service) and, as a product, could qualify for a CVE, but read on...
+
+3) However, from http://coinwidget.com/, it appears that the Coin Widget installation documentation tells the installer to modify widget/coin.js to point to an admin-controlled source.  This suggests that it's an admin-controlled configuration, which may exclude it from CVE.
+
+4) The "Wizard" that generates Coin Widget code for people is out of scope - this is inherently "site-specific" in that there would be no customer actions to fix a vulnerability; the Coin Widget admins could modify their code to avoid use of http:// URLs entirely, without any action on behalf of customers.
+
+5) One could argue that this issue is due to a fundamental problem in HTTP, and as such, HTTP should be "blamed" for not having integrity checks; but, to assign a CVE to every commonly-used protocol that doesn't use encryption is not necessarily appropriate, either.
+
+All in all, for now, it seems to me that this particular Coin Widget issue is out of CVE's scope because of the software-as-a-service and configuration considerations, but the general issue of "reading and executing scripting code from http:// links without verification" may qualify.
+
+>However the world is changing, for example a program that included an
+>auto-updater component that was advertised as being "Secure" but went
+>over HTTP would probably qualify for a CVE.
+
+It probably would, but since this might theoretically affect any software that's 5 years old or more and downloads anything over unencrypted channels without integrity checks, the raw number of CVEs that could be assigned is rather daunting.
+
+>Steve I'm bouncing this to you, I'm inclined to NOT assign a CVE since
+>it opens up a huge can of worms (every single bit of JavaScript served
+>from HTTP and not available via HTTPS ever), but I can also see how it
+>should maybe get a CVE.
+
+My gut reaction is that you might be treating this as a more complex issue than it really is.  Simple delivery of code over HTTP might affect Coin Widget and many other packages, regardless of whether *some* code is delivered over HTTPS.
+
+>The good news is that future versions of Firefox are implementing a
+>security policy that when loading a page from HTTPS they will not load
+>page components from HTTP, which would fix this issue. Hopefully all
+>the browsers do this.
+
+While there are no formal rules, CVE generally considers "typical behavior of market-leading browsers" as acceptable considerations for determining a vulnerability; e.g., many XSS attack variants only apply to 1 or 2 browsers.
+
+- Steve
+
