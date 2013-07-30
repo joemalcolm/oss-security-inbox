@@ -1,25 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/23/7
-Message-Id: <201312232020.rBNKJsn2007176@linus.mitre.org>
-Date: Mon, 23 Dec 2013 15:19:54 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/30/1
+Message-Id: <201307300024.r6U0NtrT011678@linus.mitre.org>
+Date: Mon, 29 Jul 2013 20:23:55 -0400 (EDT)
 From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, carnil@...ian.org
-Subject: Re: CVE request: denial of service in Nagios (process_cgivars())
+To: security@...myadmin.net
+Cc: cve-assign@...re.org, jlieskov@...hat.com, oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- phpMyAdmin 3.5.8.2 and 4.0.4.2 are released
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://sourceforge.net/p/nagios/nagioscore/ci/d97e03f32741a7d851826b03ed73ff4c9612a866/
+>* http://www.phpmyadmin.net/home_page/security/PMASA-2013-8.php
 
-Relative to CVE-2013-7108, Nagios changed two files that Icinga did
-not change. If the additional changes are vulnerability fixes, we will
-assign two more CVE IDs. (The vulnerability types would not be the
-same.) We are currently coordinating with Icinga upstream on this. In
-any case, CVE-2013-7108 will represent a set of off-by-one error
-issues that are common to Icinga and Nagios, and were all announced at
-the same time. CVE-2013-7108 is not specific to only Icinga.
+Use CVE-2013-4995.
+
+As far as we can tell, this should be the only CVE needed for
+PMASA-2013-8; however, this link gives us a 404 error:
+
+  "The following commits have been made on the 3.5 branch to
+  fix this issue: 51f343b91908d1b1bacaebe6db87c3d7aa522581"
+
+
+>* http://www.phpmyadmin.net/home_page/security/PMASA-2013-9.php
+>* http://www.phpmyadmin.net/home_page/security/PMASA-2013-11.php
+
+Use CVE-2013-4996 for the PMASA-2013-9 XSS issues that affect both
+3.5.x and 4.0.x, and for the PMASA-2013-11 XSS issue.
+
+Use CVE-2013-4997 for the PMASA-2013-9 XSS issues that affect only
+3.5.x. (We think this may be the first two issues, but the CVE is
+assigned on the basis of affected versions, not the vulnerability
+details.)
+
+(We didn't notice any XSS issues that affected only 4.0.x.)
+
+
+>* http://www.phpmyadmin.net/home_page/security/PMASA-2013-12.php
+
+Use CVE-2013-4998 for the path-disclosure issues affecting both 3.5.x
+and 4.0.x (approximately three affected files).
+
+Use CVE-2013-4999 for the path-disclosure issues affecting only
+version 4.0.x (approximately two affected files).
+
+Use CVE-2013-5000 for the path-disclosure issues affecting only
+version 3.5.x (several affected files).
+
+
+>* http://www.phpmyadmin.net/home_page/security/PMASA-2013-13.php
+
+Use CVE-2013-5001.
+
+
+>* http://www.phpmyadmin.net/home_page/security/PMASA-2013-14.php
+
+Use CVE-2013-5002.
+
+
+>* http://www.phpmyadmin.net/home_page/security/PMASA-2013-15.php
+
+Use CVE-2013-5003.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -27,13 +68,13 @@ M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.11 (SunOS)
 
-iQEcBAEBAgAGBQJSuJoTAAoJEKllVAevmvmsyM4H/1x5l2PIC4gqguCMgegrR1X4
-c8/kAkjxV1JoTFPYZhjyw5/fKtlZ/5f2QNmP00mZcWKEf2466jRuRb6mm3LNwdPC
-rnheq4iaIFMi+KGksEMvb1cmO0VC4kEB7gnFMyfFNG6R3CVOLlsbaAiDovJR+ZXJ
-RfDcqTYFqpV3BMsTmbFs8C/72KOtED2ZBoRW/hTBUh8lz3E8kud68cjXhddrRXFB
-MDmmmHiaFwJ/4nR2LwFdap5iHUJ87YaezrFKCl75bVtVYBqPtnLaI9jOwUKkB5sf
-FDeK+6AoKsEhWEYLyqLrHIu6vyIRs3QTbxZ7w9PRUXILnfTz4btG8laUgKBWdNc=
-=HvwP
+iQEcBAEBAgAGBQJR9wY/AAoJEGvefgSNfHMdcgUIAK7ylWgGM6Yt+qfqf+7ZWX+e
+VBM7/OcyPT7+GuFmE+PCsb7dVf4DAJOZBwTHx7JzabLFXhOWV+iFhxHyXzErTgmM
+ncDAb3ThOFUd3gjw81Wuk4O2JNehPQ/SJ5DxPWHFCyK/Ky/w/krbJ3FabDdcuP+X
+whbYQV8H2wIGtoZqrHuDL0kAg2/tuFGg1Kw1I7v4mraqPVWGV+sFyvE1eZmE+WlH
+ypDDorpLLdOjGfetRnjAVLVIMVKkQ5TZEeU8IC5HyI9m0lBk6aBNIFeoB/yCUcLP
++VnIbFHdRTyThabvg84qkeD7CJROZU3HUsUZjSdo/57jXG5PP6rNakhpjfFhwbc=
+=efXp
 -----END PGP SIGNATURE-----
