@@ -1,26 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/8
-Message-ID: <loom.20130718T121741-706@post.gmane.org>
-Date: Thu, 18 Jul 2013 10:20:26 +0000 (UTC)
-From: mancha <mancha1@...h.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/31/1
+Message-ID: <CADc0ge-JeWxRpHar3RgQbUimos7N0_=GtzhXcjvsdoc2RMyzeA@mail.gmail.com>
+Date: Tue, 30 Jul 2013 22:36:17 +0100
+From: Tim Retout <tim@...out.co.uk>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - xlockmore 5.43 fixes a security flaw
+Subject: CVE Request: CPAN perl module Data::UUID symlink attacks
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...> writes:
-> I request some details, others like Drupal have security advisories that
-> are sufficiently detailed that i can assign based on them alone, so
-> until a CVE requester proves that they know what they are doing,
-> reliably, I'm going to need details to make sure the CVE assignment is
-> done correctly. Part of the issue is scale, I do 1000+ CVE assignments
-> a year, so if they start taking more then 5-10 minutes I won't have
-> time to do anything else (like my day job, or sleep).
+Hi all,
 
-Thank you for taking the time to provide such a detailed response.
-What you say makes complete sense and helps me (and I assume list
-onlookers) get a better feel for the process.
+The Perl module Data::UUID from CPAN is vulnerable to symlink attacks.
+ This is a widely used Perl module for generating UUIDs.
 
-Best,
+Details are in the bug report on github:
+https://github.com/rjbs/Data-UUID/issues/5
 
---mancha
+I believe all released versions are affected - I have confirmed the
+issue against 1.219.
 
+Regarding affected distributions, note that Debian and Fedora do not
+ship Data::UUID from CPAN - they use OSSP's uuid.  However, at least
+Arch and Gentoo seem to ship the CPAN version.
+
+I've not previously requested a CVE id for this, it's an open source
+request, and it's not embargoed.
+
+Kind regards,
+
+-- 
+Tim Retout <tim@...out.co.uk>
