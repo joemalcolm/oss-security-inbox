@@ -1,82 +1,183 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/03/3
-Message-Id: <E1UjXmF-0000j5-0w@xenbits.xen.org>
-Date: Mon, 03 Jun 2013 16:38:35 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 54 (CVE-2013-2078) - Hypervisor crash due to missing exception recovery on XSETBV
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/30/13
+Message-Id: <8307006D-3B31-49B2-A755-539A3B233366@stufft.io>
+Date: Tue, 30 Jul 2013 14:44:07 -0400
+From: Donald Stufft <donald@...fft.io>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Insecure Software Download in pip
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-	     Xen Security Advisory CVE-2013-2078 / XSA-54
-                            version 3
+On Jul 30, 2013, at 2:32 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-       Hypervisor crash due to missing exception recovery on XSETBV
+> Signed PGP part
+> On 07/30/2013 12:28 AM, Donald Stufft wrote:
+> > 
+> > On Jul 30, 2013, at 2:21 AM, Kurt Seifried <kseifried@...hat.com 
+> > <mailto:kseifried@...hat.com>> wrote:
+> > 
+> >> Signed PGP part On 07/27/2013 01:10 AM, Donald Stufft wrote:
+> >>> 
+> >>> On Jul 27, 2013, at 3:08 AM, Kurt Seifried
+> >>> <kseifried@...hat.com
+> >> <mailto:kseifried@...hat.com>>
+> >>> wrote:
+> >>> 
+> >>>> On 07/25/2013 03:09 AM, Donald Stufft wrote:
+> >>>>> I'd like to request a CVE for pip 
+> >>>>> (https://pypi.python.org/pypi/pip/).
+> >>>>> 
+> >>>>> The mirroring support (-M, --use-mirrors) was implemented 
+> >>>>> without any sort of authenticity checks and is downloaded
+> >>>>> over plaintext HTTP. Further more by default it will
+> >>>>> dynamically discover the list of available mirrors by
+> >>>>> querying a DNS entry and extrapolating from that data. It
+> >>>>> does not attempt to use any sort of method of securing this
+> >>>>> querying of the DNS like DNSSEC. Software packages are
+> >>>>> downloaded over these insecure links, unpacked, and then
+> >>>>> typically the setup.py python file inside of them is
+> >>>>> executed.
+> >>>>> 
+> >>>>> The vulnerable code is located at: - 
+> >>>>> https://github.com/pypa/pip/blob/develop/pip/index.py#L60-L64
+> >>
+> >>>>> 
+> >>> -
+> >>>>> https://github.com/pypa/pip/blob/develop/pip/index.py#L205-L207
+> >>
+> >>>>> 
+> >>> -
+> >>>>> https://github.com/pypa/pip/blob/develop/pip/index.py#L553-L572
+> >>
+> >>>>> 
+> >>> -
+> >>>>> https://github.com/pypa/pip/blob/develop/pip/index.py#L999-L1024
+> >>
+> >>>>> 
+> >>> 
+> >>>>> 
+> >>>>> 
+> >> The affected versions are every released version since 0.8.1
+> >> which
+> >>>>> are: 0.8.1, 0.8.2, 0.8.3, 1.0, 1.0.1, 1.0.2, 1.1, 1.2,
+> >>>>> 1.2.1, 1.3, 1.3.1, 1.4
+> >>>>> 
+> >>>>> I'm not aware of this issue having ever had a CVE requested
+> >>>>> for it and my attempts to search the CVE database did not
+> >>>>> appear to turn up anything relevant but the search doesn't
+> >>>>> appear to be the greatest so I may have missed it.
+> >>>>> 
+> >>>>> I'm hoping to land a patch for this in a future release 
+> >>>>> (current iteration of patch available at 
+> >>>>> https://github.com/dstufft/pip/compare/remove-mirror-support)
+> >>
+> >>>>> 
+> >>> but there is no planned fix version as of yet.
+> >>>>> 
+> >>>>> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 
+> >>>>> 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+> >>>> 
+> >>>> Was it supposed to be secure (like was this explicitly
+> >>>> supposed to be all encrypted/etc.)? This sounds more like
+> >>>> security hardening than a security vulnerability.
+> >>>> 
+> >>>> - -- Kurt Seifried Red Hat Security Response Team (SRT) PGP: 
+> >>>> 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> >>>> 
+> >>> 
+> >>> The mirroring protocol explicitly included provisions for 
+> >>> verification which was not being done.
+> >>> 
+> >>> http://www.python.org/dev/peps/pep-0381/#mirror-authenticity
+> >>> 
+> >>> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA //
+> >>> 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+> >>> 
+> >> 
+> >> So to confirm, we're talking about the line:
+> >> 
+> >> "Verification is not needed when downloading from central index,
+> >> and should be avoided to reduce the computation overhead."
+> >> 
+> >> So accessing the central index is done over HTTP by default, no 
+> >> support for HTTPS previous to commit 
+> >> https://github.com/pypa/pip/commit/e80c387a26858c4d7ff43c5f030b04b03fd43dfe
+> >>
+> >> 
+> correct?
+> >> 
+> >> - -- Kurt Seifried Red Hat Security Response Team (SRT) PGP:
+> >> 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> >> 
+> >> 
+> > 
+> > The central index is pypi.python.org <http://pypi.python.org> and 
+> > historically (and at the time of that commit) it was not accessed
+> > securely (plaintext HTTP, no authenticity checks etc). The 
+> > mirroring support, (located at, a.pyp.python.org
+> > <http://a.pyp.python.org>, b.pypi.python.org
+> > <http://b.pypi.python.org>, …) which that commit adds and PEP381 
+> > deals with, was supposed to have authenticity checking preventing
+> > a malicious mirror operator from attacking you by checking a html
+> > manifest that included hashes was signed by a key owned by the
+> > central index (pypi.python.org <http://pypi.python.org>). That
+> > commit does not include checking that the mirrors are not hosting
+> > content that differs from the central index.
+> > 
+> > So basically the lack of authenticity checking when installing
+> > directly from the central index is a separate issue which has been
+> > (mostly) addressed with pip 1.3, and more so with 1.4. However this
+> > request deals explicitly with the implementation of the protocol
+> > for installing from the hosts that mirror the central index, but
+> > are not the central index.
+> > 
+> > For what it's worth my PR to fix it is here
+> > https://github.com/pypa/pip/pull/1098
+> > 
+> > Between myself, the comment on the PR, and the mailing list I have
+> > 3 pip developers +1ing the change so it's likely it's going to land
+> > unless one of the others has concerns.
+> > 
+> > ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 7C6B
+> > 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+> > 
+> 
+> So does this need two CVEs potentially? E.g. one for the central issue
+> and one for the mirror issue? In any event if it's the same issue but
+> they get fixed in different versions that would trigger a CVE split.
 
-UPDATES IN VERSION 3
-====================
+There was a CVE for pip not verifying TLS, https://access.redhat.com/security/cve/CVE-2013-1629
+However that says it was RESERVED so I'm not sure how to make
+that unreserved? I've not done much with requesting CVEs before.
 
-Public release.
+I do believe they are separate issues though and deserve separate
+CVEs.
 
-ISSUE DESCRIPTION
-=================
+Also as a status update my fix for this just landed in the develop branch
+this morning so the fix will be released in 1.5. It removes --use-mirrors
+and the automatic discovery via DNS, and it makes the --mirrors option
+(which allowed you to specify which mirror you wanted) an alias
+for --extra-index-url. It's true that the mirrors are all still only available
+on HTTP but I don't believe that piece is a problem for pip as the user
+would have had to explicit use ``--mirrors http://f.pypi.python.org/simple``.
 
-Processors do certain validity checks on the register values passed to
-XSETBV.  For the PV emulation path for that instruction the hypervisor
-code didn't check for certain invalid bit combinations, thus exposing
-itself to a fault occurring when invoking that instruction on behalf
-of the guest.
+So It's fixed :) Question is just now does it get a CVE so I can try to document
+our change log with CVE numbers for these issues.
 
-IMPACT
-======
+> 
+> 
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
 
-Malicious or buggy unprivileged user space can cause the entire host
-to crash.
 
-VULNERABLE SYSTEMS
-==================
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
 
-Xen 4.0 and onwards are vulnerable when run on systems with processors
-supporting XSAVE.  Only PV guests can exploit the vulnerability.
 
-In Xen 4.0.2 through 4.0.4 as well as in Xen 4.1.x XSAVE support is
-disabled by default; therefore systems running these versions are not
-vulnerable unless support is explicitly enabled using the "xsave"
-hypervisor command line option.
+Content of type "text/html" skipped
 
-Systems using processors not supporting XSAVE are not vulnerable.
-
-Xen 3.x and earlier are not vulnerable.
-
-MITIGATION
-==========
-
-Turning off XSAVE support via the "no-xsave" hypervisor command line
-option will avoid the vulnerability.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa54.patch                 Xen 4.1.x, Xen 4.2.x, xen-unstable
-
-$ sha256sum xsa54-*.patch
-5d94946b3c9cba52aae2bffd4b0ebb11d09181650b5322a3c85170674a05f6b7  xsa54.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJRrMHJAAoJEIP+FMlX6CvZo7QH/insD6Ggb7vo09gEHuwktsXr
-yv0S1/ITk7dtGvHzhDKS3DS0AdYQeaHzU9MxH2/Cfa4GOQKGRTLNSfSpqZbd2hoB
-ZLhKwxA4nriCkW/Igzv6u7dxD5NuoRNE2lxyWIBaIHXczr4HvRJQin8pjKnzKujJ
-YQPbvgNqfuk/AhjxoZuZrhD3IN5RJm0+K6bkqRZQJt+IwI5jeu4n9xFJsS6joAdC
-ch/T1ADbt/OVeQFXvz1xGb0+OXo+Xs7kQCbZWT3ZNUMwx+JXw94WI5MTqMrXGVPC
-bBUNxk64dvOThbLLF0O9mv03L/bIWHM8kWJD61JJGhMTnlx7uFJ0SFdPzGhMPd8=
-=dCbn
------END PGP SIGNATURE-----
-
-Download attachment "xsa54.patch" of type "application/octet-stream" (972 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
