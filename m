@@ -1,77 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/12
-Message-ID: <op.w19wxvoqdyj81a@ebl-kc.eblgnz.ngu.pk>
-Date: Fri, 23 Aug 2013 22:23:45 +0800
-From: Roy <roytam@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/30/4
+Message-ID: <51F75B74.4010807@redhat.com>
+Date: Tue, 30 Jul 2013 00:21:40 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: dash@...r.kernel.org
-Subject: Re: [PATCH] implement privmode support in dash
+CC: Donald Stufft <donald@...fft.io>
+Subject: Re: CVE Request: Insecure Software Download in pip
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 23 Aug 2013 19:40:31 +0800, "Jérémie Courrèges-Anglas"  
-<jca+dash@...vbn.org> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->
-> Also,
->
-> Tavis Ormandy <taviso@...gle.com> writes:
->
-> [...]
->
->>> Apart from that, it is better to check the return value from setuid()
->>> and similar functions. In particular, some versions of Linux may fail
->>> setuid() for [EAGAIN], leaving the process running with the same
->>> privileges.
->>
->> I don't think this is true anymore, but I have no strong objection to
->> adding it, so long as it's noted that bash and pdksh do not do this.
->
-> Just for reference, from mksh:
->
+On 07/27/2013 01:10 AM, Donald Stufft wrote:
+> 
+> On Jul 27, 2013, at 3:08 AM, Kurt Seifried <kseifried@...hat.com>
+> wrote:
+> 
+>> On 07/25/2013 03:09 AM, Donald Stufft wrote:
+>>> I'd like to request a CVE for pip 
+>>> (https://pypi.python.org/pypi/pip/).
+>>> 
+>>> The mirroring support (-M, --use-mirrors) was implemented
+>>> without any sort of authenticity checks and is downloaded over
+>>> plaintext HTTP. Further more by default it will dynamically
+>>> discover the list of available mirrors by querying a DNS entry
+>>> and extrapolating from that data. It does not attempt to use
+>>> any sort of method of securing this querying of the DNS like
+>>> DNSSEC. Software packages are downloaded over these insecure
+>>> links, unpacked, and then typically the setup.py python file
+>>> inside of them is executed.
+>>> 
+>>> The vulnerable code is located at: - 
+>>> https://github.com/pypa/pip/blob/develop/pip/index.py#L60-L64
+>>> - 
+>>> https://github.com/pypa/pip/blob/develop/pip/index.py#L205-L207
+>>> - 
+>>> https://github.com/pypa/pip/blob/develop/pip/index.py#L553-L572
+>>> - 
+>>> https://github.com/pypa/pip/blob/develop/pip/index.py#L999-L1024
+>>>
+>>>
+>>> 
+The affected versions are every released version since 0.8.1 which
+>>> are: 0.8.1, 0.8.2, 0.8.3, 1.0, 1.0.1, 1.0.2, 1.1, 1.2, 1.2.1,
+>>> 1.3, 1.3.1, 1.4
+>>> 
+>>> I'm not aware of this issue having ever had a CVE requested for
+>>> it and my attempts to search the CVE database did not appear to
+>>> turn up anything relevant but the search doesn't appear to be
+>>> the greatest so I may have missed it.
+>>> 
+>>> I'm hoping to land a patch for this in a future release
+>>> (current iteration of patch available at 
+>>> https://github.com/dstufft/pip/compare/remove-mirror-support)
+>>> but there is no planned fix version as of yet.
+>>> 
+>>> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA //
+>>> 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+>> 
+>> Was it supposed to be secure (like was this explicitly supposed
+>> to be all encrypted/etc.)? This sounds more like security
+>> hardening than a security vulnerability.
+>> 
+>> - -- Kurt Seifried Red Hat Security Response Team (SRT) PGP:
+>> 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>> 
+> 
+> The mirroring protocol explicitly included provisions for
+> verification which was not being done.
+> 
+> http://www.python.org/dev/peps/pep-0381/#mirror-authenticity
+> 
+> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 7C6B
+> 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+> 
 
-[snip]
+So to confirm, we're talking about the line:
 
-BTW it is just changed in cvs. Log message:
+"Verification is not needed when downloading from central index, and
+should be avoided to reduce the computation overhead."
 
-Commit ID:	10052176CB912FE954B
-CVSROOT:	/cvs
-Module name:	src
-Changes by:	tg@...c.mirbsd.org	2013/08/23 14:07:41
-UTC
+So accessing the central index is done over HTTP by default, no
+support for HTTPS previous to commit
+https://github.com/pypa/pip/commit/e80c387a26858c4d7ff43c5f030b04b03fd43dfe
+correct?
 
-Modified files:
-	distrib/special/mksh: Makefile
-	bin/mksh       : Build.sh Makefile check.t misc.c mksh.1 sh.h
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Log message:
-SECURITY: Unbreak “set +p”, broken by OpenBSD ksh change.
-
-TODO: I am seriously considering following Chet and changing
-the way this works, by explicitly dropping privs unless the
-shell is run with -p. Every other shell does it like mksh,
-except Heirloom sh, which on the other hand doesn’t know any
-explicit set -p or set +p (though it doesn’t know set +foo
-for any foo either).
-
-┌──┤ QUESTION: Do we need the ability to do this:
-│ tg@...u:~ $ ./suidmksh -p -c 'whoami; set +p; whoami'
-│ root
-│ tg
-
-If not, I’m seriously considering to drop set ±p as well,
-only parse -p on the command line, with +p being the default,
-and dropping FPRIVILEGED.
-
-Thanks to RT for noticing and jilles for initial follow-up
-discussion, as well as Chet Ramey for doing the sane/secure
-thing instead of following Debian.
-
-To generate a diff of this changeset, execute the following commands:
-cvs -R rdiff -kk -upr1.71 -r1.72 src/distrib/special/mksh/Makefile
-cvs -R rdiff -kk -upr1.645 -r1.646 src/bin/mksh/Build.sh
-cvs -R rdiff -kk -upr1.124 -r1.125 src/bin/mksh/Makefile
-cvs -R rdiff -kk -upr1.630 -r1.631 src/bin/mksh/check.t
-cvs -R rdiff -kk -upr1.214 -r1.215 src/bin/mksh/misc.c
-cvs -R rdiff -kk -upr1.320 -r1.321 src/bin/mksh/mksh.1
-cvs -R rdiff -kk -upr1.668 -r1.669 src/bin/mksh/sh.h
-
+iQIcBAEBAgAGBQJR91t0AAoJEBYNRVNeJnmTTYUP/RXpnqUKcaBTXZXCGl2M7NrY
+3G+qvedOWg4M0j3iVe6H1xhoVy3ABYd/Mh/GbTFyZ5cAPo6ur6Emzje+5miuCe17
+72XOrDhU/o7syxVrCAF9j6D2nsJt0Plq+s4U/gMdDpBBcZpTgW/5RmO/dJIKPjxd
+3ajiBJ80ezdhsDRYIpKRNbMv17xK2g5k7ywkvBlzAM7rvzg0W1bWFI5hk3yb8g+L
+x0H0iFpRix4FIaF8Y6tk6AmCXnIm0Y16SUuZZP/ybbk8Y9thNGxEjeLswkB3THKU
+WXKyLF1gaEzGhqWTQXKqgCJ6/G/Y0/71UkNCna6EHysQ8mCJPioXowmn+BXxPGad
+bN1Hn8+HwxxS5w4EHlLC2ChFoxhCj28MTeIvTmndzjlYXD8xzDfU6XuuPNKZSKsq
+QN54/Q0e/gkY7Q6jpV3F5j43/SZmP2h/gVN+lrV+e0llhjULcOyUo/YDasHi3v4I
+ppQpF+PiIljOpxWXSFKtbdlbkFupFF67GptwtWkgZUChJ9L/pn7Dwh0KRtVH9aut
+toB9swy5aM2ypNra0LSKfG0WUAY55ce9Tr4pi+8jwA8+jVSGxYXGWJKtZIHw4m04
+LUMEtHSm2yvp85GKukPBoxiRl18x2ELaYMhmRaHKRkKE9Q3m8g0SpxmZxSsRXg8A
+dNm8003wLnCSHsOMr4dF
+=gJ2D
+-----END PGP SIGNATURE-----
