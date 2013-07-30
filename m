@@ -1,32 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/18/2
-Message-ID: <mpro.mtaycf02rhzko035k.taviso@cmpxchg8b.com>
-Date: Tue, 17 Sep 2013 20:43:28 -0700
-From: Tavis Ormandy <taviso@...xchg8b.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: davfs2 - Unsecure use of system()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/30/11
+Message-ID: <51F7CB05.107@openstack.org>
+Date: Tue, 30 Jul 2013 16:17:41 +0200
+From: Thierry Carrez <thierry@...nstack.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: [OSSA 2013-018] Missing SSL certificate check in Python glance client (CVE-2013-4111)
 Content-Type: text/plain; charset=utf-8
 
-Luciano Bello <luciano@...ian.org> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Hi,
->    A security vulnerability have been reported in davfs2 
-> http://bugs.debian.org/723034
-> 
-> Please, assign a CVE id.
-> 
-> Thanks, luciano
-> 
+OpenStack Security Advisory: 2013-018
+CVE: CVE-2013-4111
+Date: July 30, 2013
+Title: Missing SSL certificate check in Python glance client
+Reporter: Thomas Leaman (HP)
+Products: python-glanceclient
+Affects: All versions
 
-I feel obliged to point at this ;-)
+Description:
+Thomas Leaman from HP reported that the Python Glance client was
+failing to properly check certificates during the establishment of
+HTTPS connections. A remote attacker with access over segments of the
+network between client and server could potentially set up a man-in
+the-middle attack and access the contents of the Glance client request
+(or response).
 
-http://article.gmane.org/gmane.comp.shells.dash/841
+python-glanceclient fix (will be included in a future release):
+https://review.openstack.org/#/c/33464/
 
-Tavis.
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4111
+https://bugs.launchpad.net/python-glanceclient/+bug/1192229
 
+Regards,
 
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
+- -- 
+Thierry Carrez
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
+iQIcBAEBCAAGBQJR98sFAAoJEFB6+JAlsQQj0DcP/0qpdfzkReydoNU+OcR4HzJp
+mO/jlyiieX9PRjkgDRaOrqA8pyA2QAwb9JUGNXWA7MRBsWQRlWTgkT38bMU///YK
+vq1Q1UWIupPyOaMGZRW4Vmc1DN0vEtfmqwImj3tWWAdXwO/AaIo76HoAFLjOHV0/
+dg8bsXm7fAS8UHFqFpLVNpgLFqm7TIFeG2sV/efQQkTZxy2txiqV/LFf7EFFF8NL
+aPPrgrORGbopj1HMV4PcZ2DHniHyYviMUDnXpUhtCw+T6G/RINi6CsaBdzmoyr09
+d+XHV717FLPS1eR4gJmdOiLTwf9SIr/4ElAeUba+3CbPaYmDN5Lc3MFXtnXkGxXl
++qaZLE4VLAs6eTVTHFzCFXjKsiTXEVWJ/sFBWtUWnaM/ulunR7COPgrfi2R4zU/R
+mkd0nFwHINPqDH4UPzgOw36cHBLPuKU5FNvXwk7e1yUm7aeV3cCr5to9b19WdX/Z
+xn31G6ZyhVD+Mnb6qbgpC9bzH/qE+/I6MFI7EOWHZbszxxDdWfz6KJZEt+/razoJ
+ljlPEP6cGeuWTj0ZHaTGhzbI4lTjTdgK8G7Rfn08X+SkuwbJL1+39YSudqS0rwbW
+Sawx+H+tBd2NVf2ES0xwzuVElfl3QD6P0HW1vR4FtnxCSxKPppiJ3yrJofJNv9ub
+tIRMIhF5d0T5V/zkQk0z
+=YsWI
+-----END PGP SIGNATURE-----
