@@ -1,75 +1,144 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/14/5
-Message-ID: <50F4599C.7060300@redhat.com>
-Date: Mon, 14 Jan 2013 12:16:44 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/30/3
+Message-ID: <51F75AAD.4020706@redhat.com>
+Date: Tue, 30 Jul 2013 00:18:21 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Michael Scherer <misc@...b.org>
-Subject: Re: CVE Request -- redis: Two insecure temporary file use flaws
+CC: "Christey, Steven M." <coley@...re.org>, Evan Teitelman <teitelmanevan@...il.com>, "scottydroid@...il.com" <scottydroid@...il.com>
+Subject: Re: CVE Request - Coin Widget serves code over plain http.
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/14/2013 09:08 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+On 07/28/2013 06:07 PM, Christey, Steven M. wrote:
+> Kurt Seifried said:
 > 
-> Issue #1: =========
+>> The problem is not in the code, the problem is in how the code
+>> is served/distributed. CVE is traditionally for software and not
+>> for services. So under a simplistic reading of that strict
+>> definition I would say this doesn't deserve a CVE.
 > 
-> Michael Scherer in the following Red Hat bugzilla: [1]
-> https://bugzilla.redhat.com/show_bug.cgi?id=894659
+> tl;dr I've looked into this issue some more and in general, I
+> agree.
 > 
-> pointed out, Redis, a persistent key-value database of version 2.4 
-> to be prone to temporary file use in src/redis.c:
+> I suspect there are a couple issues here; note that these are some
+> of my impressions and not anything "official" from CVE:
 > 
-> server.vm_swap_file = zstrdup("/tmp/redis-%p.vm");
+> 1) The downloading and execution of code from an "http://" URL is
+> subject to various attacks, including DNS spoofing and MITM.  To my
+> way of thinking, the main issue is that the code is not downloaded
+> in a way that preserves its integrity AND ensures that it was
+> downloaded from a trusted source.  For CVE, a core question for
+> inclusion is, "does this download of code WITHOUT an integrity
+> check (CWE-494) happen automatically, or is there a documented
+> manual step in which the administrator is expected to verify the
+> integrity?"
 > 
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=894659#c0
+> 2) With Coin Widget in particular, the widget is available in
+> github, and people can download the code and install it on their
+> own servers (see the "Download the Source Code" link from the main
+> page at http://coinwidget.com/).  Thus Coin Widget can be offered
+> as a customer-controlled "product" (not just a service) and, as a
+> product, could qualify for a CVE, but read on...
 > 
-> Note: This problem was fix by the patch [3] below.
+> 3) However, from http://coinwidget.com/, it appears that the Coin
+> Widget installation documentation tells the installer to modify
+> widget/coin.js to point to an admin-controlled source.  This
+> suggests that it's an admin-controlled configuration, which may
+> exclude it from CVE.
 > 
-> Issue #2: ========= When searching for a patch, that corrected the
-> issue [2] above, found out it was patch
+> 4) The "Wizard" that generates Coin Widget code for people is out
+> of scope - this is inherently "site-specific" in that there would
+> be no customer actions to fix a vulnerability; the Coin Widget
+> admins could modify their code to avoid use of http:// URLs
+> entirely, without any action on behalf of customers.
 > 
-> [3]
-> https://github.com/antirez/redis/commit/697af434fbeb2e3ba2ba9687cd283ed1a2734fa5
-> ,
+> 5) One could argue that this issue is due to a fundamental problem
+> in HTTP, and as such, HTTP should be "blamed" for not having
+> integrity checks; but, to assign a CVE to every commonly-used
+> protocol that doesn't use encryption is not necessarily
+> appropriate, either.
 > 
-> but it also introduced another insecure temporary flaw in 
-> src/redis.c:
-> 
-> 776 	+    server.ds_path = zstrdup("/tmp/redis.ds");
-> 
-> Note: Issue #2 is also fixed in recent upstream 2.6.7 / 2.6.8 
-> versions. If you want me to find exact patch, which corrected the
-> second problem, let me know and i will provide the commit id.
-> 
-> Could you allocate (two) CVE ids for these issues?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
+> All in all, for now, it seems to me that this particular Coin
+> Widget issue is out of CVE's scope because of the
+> software-as-a-service and configuration considerations, but the
+> general issue of "reading and executing scripting code from http://
+> links without verification" may qualify.
 
-Please use CVE-2013-0178 for this issue.
+So like CVE-2009-3555 we have a single CVE for the issue and any
+future instances can be submitted to cve-assign@ for addition? Problem
+is this CVE would become monstrously huge and unwieldy.
+
+>> However the world is changing, for example a program that
+>> included an auto-updater component that was advertised as being
+>> "Secure" but went over HTTP would probably qualify for a CVE.
+> 
+> It probably would, but since this might theoretically affect any
+> software that's 5 years old or more and downloads anything over
+> unencrypted channels without integrity checks, the raw number of
+> CVEs that could be assigned is rather daunting.
+
+Yup. Maybe only apply it to common software/software that advertises
+"Secure" updates? Seems like a cop out (I vote we do it right or not
+at all, but first define what "right" is =).
+
+>> Steve I'm bouncing this to you, I'm inclined to NOT assign a CVE
+>> since it opens up a huge can of worms (every single bit of
+>> JavaScript served from HTTP and not available via HTTPS ever),
+>> but I can also see how it should maybe get a CVE.
+> 
+> My gut reaction is that you might be treating this as a more
+> complex issue than it really is.  Simple delivery of code over HTTP
+> might affect Coin Widget and many other packages, regardless of
+> whether *some* code is delivered over HTTPS.
+
+One thing I've been thinking about is all the software on the planet
+that I have no real clue as to how secure/well developed it (to say
+nothing of how well a packager like
+Fedora/Debian/Ubuntu/Dreamhost[1]/etc cares for it). Some signals
+exist, like do they have a security@ contact that actually replies? Do
+they have a bug tracker? Do they offer updates? Did they set static
+SSH host keys? In general we have no way of knowing, perhaps
+OSVDB/someone wants to start collecting data on known good and known
+bad software projects in addition to vulnerability info (e.g. has
+"bugtracker, URL is at, bonus point for supporting security bugs that
+are private)"? But then the legal issues "you said something mean
+about us so we're taking you to court in the UK for libel" come up and
+I basically give up since I have no answer for that one =).
+
+[1]
+http://missingm.co/2013/07/identical-droplets-in-the-digitalocean-regenerate-your-ubuntu-ssh-host-keys-now/
+
+>> The good news is that future versions of Firefox are implementing
+>> a security policy that when loading a page from HTTPS they will
+>> not load page components from HTTP, which would fix this issue.
+>> Hopefully all the browsers do this.
+> 
+> While there are no formal rules, CVE generally considers "typical
+> behavior of market-leading browsers" as acceptable considerations
+> for determining a vulnerability; e.g., many XSS attack variants
+> only apply to 1 or 2 browsers.
+> 
+> - Steve
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ9FmbAAoJEBYNRVNeJnmTFo4QALy3a/Bu+2xY95VXoEEcHSFM
-BlTqxv4fkH0Zu6dmxeGQji5rjNd1UkV3FAimhxuCDWtSoR+cKznCNUJlmntnXeN3
-PTCvU0mjngAGF8VBwmmNER8J5CoI01PQAV+HFgPKAWSd4KFyecPyUa4USRZU1kdE
-GcmT/TSCGASOobehybcYpwzaSukZasnmvBh7bPfJx6IrfAFUEE5/4F6FtTFYCALG
-TvRtzGhwmr0DQwY6hdkQU9AWMhABfr4fuejxbWp8TI4mvckXO4MTzIr+b79VIdml
-EkZTRXz4WlsFsAkPB/hX3bNLWoHydc8Wh3BRotNJqrq+0Evbv4m2PBiBGGJmeNne
-URXJ9yUHumY+Mw9oTo9eoO7xHEVSQYQzzJsdUK5gHofeMs3BIwR3cwzPFO0ZOiJu
-Z0h0hiKEoSUMxuhlO1UDSbYHEH2HbM8JTRk49e7dILSm75tGNrkgR624jOn1e4YR
-3kUv3aInuY84EO7O46nfv1vV6olQgiu3tpRfe+kJc++DbH7m1h/Ryjhq567ICRJf
-KEaWPHBXP/1U2Lk95PZZqXg5HFffg+Azu4kcBtiAO5GlKpOhmv4bDsdKsKe0jOdO
-bcOUMziPQgKXRNTx3H0L7QNsF3EwaQPSPUdhlhjB0kKD1ZsGCXBgyC9kRZqTTujA
-KfblZT+C8sWqjlJHnSNj
-=gqM1
+iQIcBAEBAgAGBQJR91qtAAoJEBYNRVNeJnmTMGUP/R4dlw/wmJlRQ+IhafhHHbSC
+MieUlzIT1BraEzvzmv0O7/0WqEB4wtS48aCEGaMoDrF06AZEfkLKSGwe4BVWwXY3
+X3ZUokssCYT0EaljAQUv6LBphiaKs7GXNI3ZSZcjcgX7t7Z4Gz4GoBk2NYdfcdtD
+IrRaxfEf1I2j2RE1phe07ej6baEqOyqlPbEmMkQx+VRnVizLSD0u0+yqJkepF+AN
+CaZ8a5mjBvw+Sqfq68BdlCyFNshqCRycqDFqtdUdCOhCOtBJAwOsPjkDDqXH1KUb
+XAOpjmxCqxBbFTjn49dhEDQ9578SyPaftPsMI9h36eus7gOxLyYd9NupGKv3SaAV
+soPlyxQLVc2zrJ0GpnlgwtKCsnLjaDp3iNDxifgJExT+BlW30NNTuxGQf4oacpw5
+2a4nboDp1NByvAXr5OmaSRpC+i3JZofX/MnyxNYV05R3yMUFz+c5v07W0ux9+0tg
+aSMsbFTt2r6mOkvDV92ehsS1Z8+2NXcZUGEWamnFdmWjt6YdJrmg6xPDgJZZYiWe
+Y7DsU0RZ/PgYNPr5AEI8ukavwwpGk8NgbrR8GopzePwHChH21hg0IxqAcB8Ma+f3
+2r13pDxHdsLNas3CtlRTyyVYtd1hRSDRVoRD0CqfWwJLf4YivqHdlhcTx9+wGHzk
+x4+obiAU2D47KECC7mJo
+=5cNU
 -----END PGP SIGNATURE-----
