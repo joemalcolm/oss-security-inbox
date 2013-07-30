@@ -1,86 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/7
-Message-Id: <E1VqMtV-0007EA-Nj@xenbits.xen.org>
-Date: Tue, 10 Dec 2013 12:58:33 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 80 (CVE-2013-6400) - IOMMU TLB flushing may be inadvertently suppressed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/30/12
+Message-ID: <51F7DE33.4070408@gmail.com>
+Date: Tue, 30 Jul 2013 17:39:31 +0200
+From: Dieter Adriaenssens <dieter.adriaenssens@...il.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+CC: cve-assign@...re.org, oss-security@...ts.openwall.com,  security@...myadmin.net
+Subject: Re: [Phpmyadmin-security] Re: CVE Request -- phpMyAdmin 3.5.8.2 and 4.0.4.2 are released
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-             Xen Security Advisory CVE-2013-6400 / XSA-80
-                              version 3
+Thanks for the CVE IDs.
 
-          IOMMU TLB flushing may be inadvertently suppressed
+On 2013-07-30 11:39, Jan Lieskovsky wrote:
+>>>> * http://www.phpmyadmin.net/home_page/security/PMASA-2013-8.php
+> 
+> Use CVE-2013-4995.
+> 
+> As far as we can tell, this should be the only CVE needed for
+> PMASA-2013-8; however, this link gives us a 404 error:
+> 
+>   "The following commits have been made on the 3.5 branch to
+>   fix this issue: 51f343b91908d1b1bacaebe6db87c3d7aa522581"
+> 
+>> The proper link wrt to PMASA-2013-8 fix in phpMyAdmin v3.5.x seems to be
+>> the following:
+>>   https://github.com/phpmyadmin/phpmyadmin/commit/01d35b3558e47fba947719857bd71f6fd9e5dce8
 
-UPDATES IN VERSION 3
-====================
+The link to the fix for phpMyAdmin 3.5.x was updated in PMASA-2013-8.
 
-Public release.
+Thanks for noticing.
 
-Corrected explanatory text to refer to the correct patch filename.
+Kind regards,
 
-ISSUE DESCRIPTION
-=================
+Dieter Adriaenssens
+for the phpMyAdmin security team
 
-An internal flag is used to temporarily suppress IOMMU TLB flushes, in
-order to consolidate multiple single page flushes into one wider
-flush.  This flag is not cleared again, on certain error paths.  This
-can result in TLB flushes not happening when they are needed.
-Retaining stale TLB entries could allow guests access to memory that
-ought to have been revoked, or grant greater access than intended.
 
-IMPACT
-======
-
-Malicious guest administrators might be able to cause host-wide denial of
-service, or escalate their privilege to that of the host.
-
-VULNERABLE SYSTEMS
-==================
-
-Only VMs which have been assigned PCI devices can exploit the bug.
-
-Only systems using Intel VT-d are vulnerable, since the bug is in the
-VT-d specific code in Xen.
-
-Xen 4.2.x and later are vulnerable.
-Xen 4.1.x and earlier are not vulnerable.
-
-MITIGATION
-==========
-
-This issue can be avoided by not assigning PCI devices to untrusted guests on
-systems supporting Intel VT-d.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa80.patch                Xen 4.2.x, Xen 4.3.x, xen-unstable
-
-$ sha256sum xsa80*.patch
-d15e627c59dd48e1cacb2fbcd5e2148975daa426df1f693b991d69201c048e77  xsa80.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJSpw/SAAoJEIP+FMlX6CvZu48IAIsJz4NRVXqCYl9hjtFhgfhL
-/V2J9T9Xp0/iNTmfP6FMu2wIZohAcosMOaZ5NXouIb50bta2mpeQhA0K0RZLEin5
-2QH9rcfYYchAeQjPt72QVPH3iMTWdPXXV3HDuqXI+G+II64bonHvArtAwYxeJpWM
-ZwegEnxsEk2YsYk+TYGMzQws2sXygx06JxEJsE9/Q6BOJG9jnwvtRsleVDuMuBMR
-6U1DdaxZohk5k1xqS5Y6udyXpJQgob7fMdwAoLWxxlb7vB3kOgzMoorVrzRZ0LcZ
-LmqBYxdCQRV+Tn19eE9xo1LjBr9qBS13nGDQbyIADoF85N/SmZoMycRsqunUQ2U=
-=rB23
------END PGP SIGNATURE-----
-
-Download attachment "xsa80.patch" of type "application/octet-stream" (2072 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (900 bytes)
