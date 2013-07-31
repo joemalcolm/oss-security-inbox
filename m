@@ -1,78 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/9
-Message-ID: <20131114165212.GA22293@dhcp-25-225.brq.redhat.com>
-Date: Thu, 14 Nov 2013 17:52:13 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: Dan Carpenter <dan.carpenter@...cle.com>
-Cc: Nico Golde <oss-security+ml@...lde.de>, oss-security@...ts.openwall.com, security@...nel.org, "Hans J. Koch" <hjk@...sjkoch.de>
-Subject: Re: some unstracked linux kernel security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/31/4
+Message-ID: <51F8C6FD.1030807@redhat.com>
+Date: Wed, 31 Jul 2013 02:12:45 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Tim Retout <tim@...out.co.uk>
+Subject: Re: CVE Request: CPAN perl module Data::UUID symlink attacks
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 14, 2013 at 04:25:39PM +0300, Dan Carpenter wrote:
-> On Thu, Nov 14, 2013 at 11:33:10AM +0100, Petr Matousek wrote:
-> > On Tue, Nov 12, 2013 at 11:10:32AM +0100, Petr Matousek wrote:
-> > > Hi,
-> > > 
-> > > On Sun, Nov 03, 2013 at 05:32:52PM +0100, Nico Golde wrote:
-> > > > drivers/uio/uio.c: mapping of physical memory to user space without proper size check
-> > > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7314e613d5ff
-> > > 
-> > > there is a size check in uio_mmap() (the only caller of uio_mmap_physical()):
-> > > 
-> > >         requested_pages = vma_pages(vma);
-> > >         actual_pages = ((idev->info->mem[mi].addr & ~PAGE_MASK)
-> > >                         + idev->info->mem[mi].size + PAGE_SIZE -1) >> PAGE_SHIFT;
-> > >         if (requested_pages > actual_pages)
-> > >                 return -EINVAL;
-> > > 
-> > > why it wasn't sufficient?
-> > 
-> > Apparently there was a CVE split [1] and this is now CVE-2013-6763.
-> > 
-> >   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6763
-> > 
-> > I still think this is a non-issue based on the above mentioned size
-> > check. Can I please get second opinion from someone more knowledgeable
-> > on this?
-> > 
-> >
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 07/30/2013 03:36 PM, Tim Retout wrote:
+> Hi all,
 > 
-> Added Hans to the CC list since he's the maintainer.  Petr is asking if
-> the size checks in uio_mmap() and uio_mmap_physical() are duplicative.
+> The Perl module Data::UUID from CPAN is vulnerable to symlink
+> attacks. This is a widely used Perl module for generating UUIDs.
 > 
-> > Isn't the size check redundant because of 
-> > 
-> >         requested_pages = vma_pages(vma);
-> >         actual_pages = ((idev->info->mem[mi].addr & ~PAGE_MASK)
-> >                         + idev->info->mem[mi].size + PAGE_SIZE -1) >> PAGE_SHIFT;
-> >         if (requested_pages > actual_pages)
-> >                 return -EINVAL;
+> Details are in the bug report on github: 
+> https://github.com/rjbs/Data-UUID/issues/5
 > 
-> That check is worrying requested_pages is rounded down to the nearest
-> page
+> I believe all released versions are affected - I have confirmed
+> the issue against 1.219.
+> 
+> Regarding affected distributions, note that Debian and Fedora do
+> not ship Data::UUID from CPAN - they use OSSP's uuid.  However, at
+> least Arch and Gentoo seem to ship the CPAN version.
+> 
+> I've not previously requested a CVE id for this, it's an open
+> source request, and it's not embargoed.
+> 
+> Kind regards,
+> 
 
-Is there any rounding down happening? I would expect both vma->vm_start
-and vma->vm_end to be page aligned.
+Please use CVE-2013-4184 for this issue. Not all Linux's have that sysctl.
 
-> but actual_pages is rounded up. I don't understand why we are
-> adding "(mem[mi]addr % PAGE_SIZE)" to the pre rounded up actual_pages.
 
-Imagine addr and size are not page aligned and
-((addr & ~PAGE_MASK) + (size & ~PAGE_MASK)) > PAGE_SIZE.
-We need to round up two pages instead of one in that case.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-> So, yeah, it seems like we do check the size twice now except the first
-> time we do it wrong.
-
-With unaligned addr and/or size we can end up with mapping memory 
-not belonging to the UIO_MEM_PHYS registered region, but that is something
-you expect when using this interface from the drivers and/or userspace,
-because you want access to the whole region to properly handle the
-device, no?
-
-IOW, with the current changes, isn't the functionality broken for
-non page-aligned addr and/or size?
-
--- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+iQIcBAEBAgAGBQJR+Mb9AAoJEBYNRVNeJnmTB9IP/0iZKeYYiUQZD/1wZCY4fuRo
+Hc8LKA5c0vuTLGGZ/EgLLZ8184r34UbODdhS2oNBCTWkqFZXgu48vyyrSWuUAZYj
+sZNz78Cq6wJ0Uq6db61hX7044FfEEB3Ch4oMWrtqey0WXvvR/yRZYzND6PdFcCVp
+0b3YrcP+Ls8+j9hrwKpwdDZox2V5Xq/MR12jrjixlbgHUXeOpo1uicu1yo72SG3o
+5GUeTPl4vhN5mOQ+yU1tihT6c5GfDHFSOjnLQ6qQriJs15o/xXV9SZpstNdhACGe
+Qt+CBC0OK/dsEnrFgXk1rOHm8VUXR1cWVcgQfCNs3kqUih7wqLzREomjM1Ulhuwm
+0iM00bmSr3UhxoAU7yxOW+12/xhYdkruUqDd05cRxz+63fJIZUiDywJTU4VW2YPq
+29J9es2zmz4AkGiV+A9wdQANAeyZsTavRFjtaenzopAJteJv0p56fTvqkKALup/L
+RhopNAe5mp27xlKttdth3yeni+EcOmiK5QmwyaJLdX7ySXlHAvSoKXgD02TfzEOA
+Lbglf1x4cwj4TG9SZrdrinbCRQ4UfcTAMXOOeaxsSdk2h20xhh54Ga1ldKRGtn1v
+77Q9xfy9okXccju5Xz/Fexq0SPLj/xa3yIhydnbvAf/aiOL2nCA6RrLlZiP2mrDQ
+3+f3R9iu5+q4J5Nwjbeh
+=y5hD
+-----END PGP SIGNATURE-----
