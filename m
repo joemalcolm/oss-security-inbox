@@ -1,38 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/12/2
-Message-Id: <201311121246.rACCkG6M023918@linus.mitre.org>
-Date: Tue, 12 Nov 2013 07:46:16 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/31/9
+Message-ID: <CABbbngBCGa8V58C324pUaEUbyzXmkwTXq+5Yf5=c7MdeKO6Qmw@mail.gmail.com>
+Date: Wed, 31 Jul 2013 15:51:57 -0700
+From: Forest Monsen <forest.monsen@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2013-6780 for YUI 2.x 2013-11-11 uploader.swf issue
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for Drupal contributed module
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello!
 
-See https://yuilibrary.com/support/20131111-vulnerability/ for the
-vendor's disclosure.
+I'd like to request an identifier for:
 
-In some previous cases, YUI CVE assignments were made in conjunction
-with new releases of an open-source product such as Bugzilla or
-Moodle. In this case, CVE-2013-6780 was coordinated with YUI upstream,
-and will supersede any private CVE assignments that might have been
-planned for this YUI issue within Bugzilla, Moodle, etc.
+SA-CONTRIB-2013-061 - Flippy - Access Bypass
+https://drupal.org/node/2054701
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Thanks,
+Forest
 
-iQEcBAEBAgAGBQJSgiKyAAoJEKllVAevmvms6pMH/3n01VK7TSBep/Ju0YRwTovD
-wAx9jd++NtKtYfOmhuW7FgSVpsy1e+spjcPb4R9cfa/kQkO/khbpN7aIqHUzhkCK
-Sc5IgM9H6BZ4z/L8JNipenq15EKv14nQfUUq7/n5wl9XHRaxis5Omq525IiII/Y+
-D5Z4cA2uINKXsItQjV6/GoNqpCCBFIViLXCQhdUgvP167lnBzgcT87KT/7aCthbl
-T/QkdZmDwhpowC/8V7KZeFbKHr2QirLtbgz2JqtoziwHJO9MPn4d+gtMHSU//lUI
-B9g1deUiFwUjAuVhlCUlZDKN9FYSXw5KP+BxQUGLmxZe5Pgf6cfwaCGEM3Scg0Q=
-=94PZ
------END PGP SIGNATURE-----
