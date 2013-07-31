@@ -1,27 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/17/1
-Message-ID: <20130517064618.GN22048@dhcp-25-225.brq.redhat.com>
-Date: Fri, 17 May 2013 08:46:19 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/31/2
+Message-ID: <20130731055341.GA23826@elende>
+Date: Wed, 31 Jul 2013 07:53:41 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2013-1962 libvirt: DoS (max count of open files exhaustion) due sockets leak in the storage pool
+Subject: Re: CVE Request: CPAN perl module Data::UUID symlink attacks
 Content-Type: text/plain; charset=utf-8
 
-On Thu, May 16, 2013 at 08:20:00PM +0200, Agostino Sarubbo wrote:
-> On Thursday 16 May 2013 16:50:13 Petr Matousek wrote:
-> > References:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-1962
+Hi Tim,
+
+On Tue, Jul 30, 2013 at 10:36:17PM +0100, Tim Retout wrote:
+> Hi all,
 > 
-> Please do not point to a link with the CVE. If for any weird reason the cve 
-> will be rejected or so,  the link will be invalid. Please point to the bug 
-> number instead.
+> The Perl module Data::UUID from CPAN is vulnerable to symlink attacks.
+>  This is a widely used Perl module for generating UUIDs.
+> 
+> Details are in the bug report on github:
+> https://github.com/rjbs/Data-UUID/issues/5
+> 
+> I believe all released versions are affected - I have confirmed the
+> issue against 1.219.
+> 
+> Regarding affected distributions, note that Debian and Fedora do not
+> ship Data::UUID from CPAN - they use OSSP's uuid.  However, at least
+> Arch and Gentoo seem to ship the CPAN version.
 
-Makes complete sense, even though we usually keep aliases even for
-rejected CVEs in our bugzilla. 
+Only a short comment on this: For Debian this will change as there is a
+Intent to Package bugreport pending and package in NEW queue waiting
+to be accepted into the archive.
 
-This was more of an copy&paste overlook than anything else as I usually
-send non-alias bug ids.
+ [1] http://bugs.debian.org/717315
+ [2] http://ftp-master.debian.org/new.html
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Regards,
+Salvatore
