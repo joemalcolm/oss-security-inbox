@@ -1,45 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/02/1
-Message-ID: <alpine.LNX.2.00.1310011921180.15327@forced.attrition.org>
-Date: Tue, 1 Oct 2013 19:23:28 -0500 (CDT)
-From: security curmudgeon <jericho@...rition.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Simple Machines Forum (SMF) <= 2.0.5 - multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/31/5
+Message-Id: <8FC1EF7C-DB04-486D-B7DA-2F64666FB54C@stufft.io>
+Date: Wed, 31 Jul 2013 04:25:49 -0400
+From: Donald Stufft <donald@...fft.io>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Insecure Software Download in pip
 Content-Type: text/plain; charset=utf-8
 
 
-From: Kurt Seifried <kseifried () redhat com>
-Date: Tue, 01 Oct 2013 10:07:22 -0600
+On Jul 31, 2013, at 4:11 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-Please use CVE-2013-4395 for the XSS vuln.
+> Signed PGP part
+> 
+> Ok I have no info on that CVE, is it embargoed? I can't find it in
+> google after a quick search. I need to see that one before I can
+> assign anything. As for the reserved thing:
+> 
+> http://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures#Description
+> 
 
---
+If it's embargo'd it's news to me. The details (I assume) are here https://bugzilla.redhat.com/show_bug.cgi?id=968059
 
-Which XSS vuln? =) That thread was messy, but Henri and others appear to 
-have identified and/or confirmed four different ones:
+As far as I know none of the pip maintainers requested it. I assume (going by the bugzilla) that CVE is for the fact pip didn't use TLS or any other authentication method when downloading from the central index. That was fixed in 1.3 which was releases March 2013.
 
-/Sources/ManageServer.php Multiple XSS
-http://seclists.org/oss-sec/2013/q3/607
-http://custom.simplemachines.org/upgrades/index.php?action=upgrade;file=smf_patch_2.0.5.tar.gz;smf_version=2.0.4
-http://www.simplemachines.org/community/index.php?topic=509417
-http://seclists.org/oss-sec/2013/q3/642
+I don't know who "owns" that CVE or anything about it. The only reason I even know it exists is the red hat page showed up in a google search when I was looking for pip CVE's to match fixes up to. I'm not sure what I can (if anything?) do as a pip developer to unreserve it?
 
-index.php admin Action board_name Parameter Stored XSS
-http://seclists.org/oss-sec/2013/q3/642
-http://hauntit.blogspot.co.uk/2013/04/en-smf-204-full-disclosure.html
-
-index.php pm Action sa Parameter Stored XSS
-http://hauntit.blogspot.co.uk/2013/04/en-smf-204-full-disclosure.html
-http://seclists.org/oss-sec/2013/q3/642
-
-index.php admin Action desc Parameter Stored XSS
-http://seclists.org/oss-sec/2013/q3/642
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
 
 
-That is what I took away from the entire thread at least. Can someone 
-confirm this is correct, and can you confirm the CVE assignment please 
-Kurt?
+Content of type "text/html" skipped
 
-Brian
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
