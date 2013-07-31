@@ -1,59 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/18/10
-Message-ID: <1358551271.11550.2@d.hx.id.au>
-Date: Sat, 19 Jan 2013 10:21:11 +1100
-From: David Hicks <d@...id.au>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/31/7
+Message-Id: <F309E96C-9148-49FD-A2BF-4FD7460F9D6C@stufft.io>
+Date: Wed, 31 Jul 2013 05:11:41 -0400
+From: Donald Stufft <donald@...fft.io>
 To: oss-security@...ts.openwall.com
-Cc: Roland Becker <roland@...ol.de>, Robert Munteanu <robert.munteanu@...il.com>
-Subject: CVE request: MantisBT 1.2.12 only summary.php category/project names XSS vulnerability
+Subject: Re: CVE Request: Insecure Software Download in pip
 Content-Type: text/plain; charset=utf-8
 
-Hi list,
 
-Roland Becker (MantisBT Developer) discovered[1] a XSS vulnerability
-introduced in MantisBT 1.2.12 with the display of category/project names
-on the summary.php page. Versions of MantisBT other than 1.2.12 are not
-affected by this vulnerability.
+On Jul 31, 2013, at 4:33 AM, Raphael Geissert <geissert@...ian.org> wrote:
 
-A malicious MantisBT user holding privileged manager/administrator
-permissions could create a category or project name that contains
-JavaScript code. Any user visiting summary.php from that point on may
-then be exposed to having the malicious JavaScript execute within their
-browser environment.
+> On 31 July 2013 10:11, Kurt Seifried <kseifried@...hat.com> wrote:
+>> On 07/30/2013 12:44 PM, Donald Stufft wrote:
+>>> There was a CVE for pip not verifying TLS,
+>>> https://access.redhat.com/security/cve/CVE-2013-1629 However that
+>>> says it was RESERVED so I'm not sure how to make that unreserved?
+>>> I've not done much with requesting CVEs before.
+>> 
+>> Ok I have no info on that CVE, is it embargoed? I can't find it in
+>> google after a quick search. I need to see that one before I can
+>> assign anything.
+> 
+> From the bugzilla info: "source=debian", and looking at our tracker:
+> https://security-tracker.debian.org/tracker/CVE-2013-1629 points to:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=710163
+> 
+> I don't know who assigned the id, however.
+> 
+> Cheers,
+> -- 
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
 
-The severity of this issue is limited by the need to hold privileged
-manager/administrator permissions in order to modify category and
-project names. However -- there are many use cases where MantisBT
-installations can have hundreds of sub-projects, each managed by
-different people/parties that can not or should not be fully trusted.
+Ha, Awesome. This CVE is some sort of ghost ;)
 
-Refer to previous commits 3ca8a164[2] and 6ec3f693[3] to trace back the
-origin of this vulnerability.
+Debian bug links to https://security-tracker.debian.org/tracker/CVE-2013-1629
 
-References:
-[1] http://www.mantisbt.org/bugs/view.php?id=15384
-[2]
-https://github.com/mantisbt/mantisbt/commit/3ca8a164641951aba2a459364e656ca0996f8a2b
-[3]
-https://github.com/mantisbt/mantisbt/commit/6ec3f693d6d212d6bba788681a206c14df43569f
+Which links to.. This conversation in oss-sec, NVD which says it doesn't exist, The RedHat Bugzilla, Gentoo which says it doesn't exist, Ubuntu which says it does but doesn't give any more info other than linking to the page on Mitre that just says the reserved bit.
 
-Discussion on the MantisBT Developer Mailing List has indicated that a
-release of MantisBT 1.2.13 (resolving both this vulnerability and
-CVE-2013-0197 which was announced on this list ~12 hours ago) will not
-occur until early next week. As such, a patch is attached for
-distributions packaging MantisBT 1.2.12. It is recommended this patch be
-applied as soon as possible.
+A google search turns up http://www.reddit.com/r/Python/comments/17rfh7/warning_dont_use_pip_in_an_untrusted_network_a/c8ay4xt but it's unclear if that person requested the CVE or not.
 
-Can a CVE ID please be assigned to this issue?
+So uh how do we figure it out? Can I as a pip developer contact Mitre and release data for it?
 
-With thanks,
-David Hicks
-MantisBT Developer
-#mantisbt irc.freenode.net
-http://www.mantisbt.org/bugs/
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
 
-Bcc: mantisbt-dev@...ts.sourceforge.net
 
-View attachment "0001-Fix-15384-summary.php-XSS-vulnerability-in-MantisBT-.patch" of type "text/x-patch" (3260 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
