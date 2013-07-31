@@ -1,44 +1,146 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/9
-Message-ID: <44571994.539723.1366643699484.JavaMail.root@redhat.com>
-Date: Mon, 22 Apr 2013 11:14:59 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/31/8
+Message-ID: <2133092372.9599549.1375289875077.JavaMail.root@redhat.com>
+Date: Wed, 31 Jul 2013 12:57:55 -0400 (EDT)
 From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Steve Dickson <steved@...hat.com>
-Subject: [CVE assignment notification] CVE-2013-1950 libtirpc: Invalid pointer free leads to rpcbind daemon crash  (A different vulnerability than CVE-2003-0028)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Mitre CVE assign department <cve-assign@...re.org>, Plone Security Team <security@...ne.org>, Matthew Wilkes <matthew.wilkes@...ne.org>, Jan Pokorny <jpokorny@...hat.com>
+Subject: CVE Request -- Plone: 20130618 Hotfix (multiple vectors)
 Content-Type: text/plain; charset=utf-8
 
-Hello SteveCh, SteveD, vendors,
+Hello Kurt, Steve, Mitre CVE assignment team, vendors,
 
-  originally Common Vulnerabilities and Exposures assigned the CVE-2003-0028 identifier
-to the following flaw:
-[1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2003-0028
+  based on:
+    [1] http://plone.org/products/plone/security/advisories/20130618-announcement
 
-Testing original CVE-2003-0028 reproducer against recent rpcbind code, 
-resulted into an invalid pointer free flaw to be found:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=948378#c0
+and further cooperation with Plone Security Team (many thanks to Matthew Wilkes
+for issues review and comments) the [1] issues description is as follows (the *.py
+scripts in the summary correspond to files from Plone 20130618 Hotfix that would
+be applicable to correct that specific issue. See also Notes for particular cases though):
 
-Further issue context [3]:
---------------------------
-An invalid pointer free flaw was found in the way server side code
-implementation for connectionless RPC requests of libtirpc, a library
-implementing Transport-Independent RPC (TI-RPC), (previously) performed
-arguments retrieval (due to a regression in commit 82cc2e61 svc_dg_getargs()
-routine callers would crash with invalid pointer free). A remote attacker
-could issue a specially-crafted Sun RPC request that, when processed,
-would lead to rpcbind daemon crash.
+------
+#1  Plone: DoS (infinite loop) by administrator privilege users when retrieving information for certain resources (traverser.py)
+    https://bugzilla.redhat.com/show_bug.cgi?id=978449
+    CWE: CWE-835 
+    
+    A denial of service flaw was found in the way Plone, a user friendly and powerful content management system, performed particular resource related information
+    retrieval in certain cases (request interaction with internal traversal machinery). A remote attacker, having administrator privilege to certain subset of Plone
+    action screens / functionality, could use this flaw to cause uncontrolled resource consumption (infinite loop) by issuing a specially-crafted request.
 
-A different vulnerability than CVE-2003-0028.
+-----
+#2  Plone: Privilege escalation due improper authorization (dataitems.py, get.py, traverseName.py)
+    https://bugzilla.redhat.com/show_bug.cgi?id=978450
+    CWE: CWE-285
 
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=948378#c13
+    A privilege escalation flaw was found in the way Plone, a user friendly and powerful content management system, enforced authorization for users having
+    administrator privilege access for a subtree of a particular node (access to node above that subtree was granted even when the user in question has had
+    administrator privilege only for a subtree of that node). A remote attacker, with administrator user privilege to certain subtree of Plone actions /
+    functionality, could use this flaw to access / alter also higher nodes.
 
-Particular upstream patch:
-[4] http://git.infradead.org/users/steved/libtirpc.git/commitdiff/a9f437119d79a438cb12e510f3cadd4060102c9f
+-----
+#3  Plone: Multiple cross-site scripting (XSS) flaws (spamProtect.py, pts.py, request.py)
+    https://bugzilla.redhat.com/show_bug.cgi?id=978451
+    CWE: CWE-79
+  
+    Multiple cross-site scripting (XSS) flaws were found in the way Plone, a user friendly and powerful content management system, performed sanitization of user
+    provided input in web forms. A remote attacker could provide a specially-crafted URL that, when visited by authenticated Plone user could lead to arbitrary
+    HTML or web script execution in the context of Plone user's session.
 
-Note: While the original CVE-2003-0028 issue has been reported to possibly
-      allow / lead to arbitrary code execution under certain circumstances,
-      the current (CVE-2013-1950) is believed to be able to cause (remote)
-      rpcbind daemon crash "only".
+-----
+#4  Plone: Information exposure due improper access control enforcement when generating zip archives (zip.py)
+    https://bugzilla.redhat.com/show_bug.cgi?id=978453
+    CWE: CWE-200, Information Exposure
+         CWE-284: Improper Access Control
+         CWE-285: Improper Authorization
+
+    An information exposure flaw was found in the way zip archives generation functionality of Plone, a user friendly and powerful content management system,
+    enforced user access control privileges on the content to be included into the archive. A remote attacker could use this flaw to obtain sensitive information
+    (by generating a zip archive from content they would not be otherwise able to access).
+
+-----
+#5  Plone: Ability to spoof emails (sendto.py)
+    https://bugzilla.redhat.com/show_bug.cgi?id=978464
+    CWE: CWE-749
+
+    A security flaw was found in the way Plone, a user friendly and powerful content management system, performed certain provided data validation when sending
+    emails. A remote attacker, valid Plone user, could use this flaw to conduct email spoofing attacks.
+
+-----
+#6  Plone: Anonymous users capable to hide certain fields from content edit forms (typeswidget.py)
+    https://bugzilla.redhat.com/show_bug.cgi?id=978469
+    CWE: CWE-302: Authentication Bypass by Assumed-Immutable Data
+
+    A security flaw was found in the way Plone, a user friendly and powerful content management system, enforced immutable setting on certain content edit forms.
+    A remote attacker could use this flaw to provide a specially-crafted URL that would (in a non-persistent way) hide certain fields from these content edit forms,
+    possibly leading to scenario such altered forms to be erroneously accepted by authenticated Plone user as valid.
+
+-----
+#7  Plone: File system path exposure (wysiwyg.py)
+    https://bugzilla.redhat.com/show_bug.cgi?id=978470
+    CWE: CWE-209: Information Exposure Through an Error Message
+
+    A file system path exposure flaw was found in the way Plone, a user friendly and powerful content management system, used to present certain error messages
+    in the wysiwyg component. A remote attacker could provide a specially-crafted URL that, when processed would lead to exposure of file system path (for the
+    selected component) of the Plone instance.
+
+-----
+#8  Plone: Open redirect in the HTTP server implementation (marmoset_patch.py, publish.py, principiaredirect.py)
+    https://bugzilla.redhat.com/show_bug.cgi?id=978471
+    CWE: CWE-601: URL Redirection to Untrusted Site ('Open Redirect')
+
+    An open redirect flaw was found in multiple components of Plone, a user friendly and powerful content management system. Remote attacker could provide
+    a specially-crafted URL that when visited by valid Plone user could lead the Plone user's session to be redirected to external site.
+
+    Note from Matthew Wilkes: 'marmoset_patch is just a library, not sure it's worth mentioning here'
+
+-----
+#9  Plone: Multiple information exposure flaws via certain object methods (objectmanager.py)
+    https://bugzilla.redhat.com/show_bug.cgi?id=978475
+    CWE: CWE-200, Information Exposure
+
+    Multiple information exposure flaws were found in the way object manager implementation of Plone, a user friendly and powerful content management system,
+    protected access to its internal methods. A remote attacker could issue a specially-crafted (URL) request that, when processed would lead to information exposure.
+
+-----
+#10 Plone: Authenticated users able to modify / delete portraits of other users (member_portrait.py)
+    https://bugzilla.redhat.com/show_bug.cgi?id=978478
+    CWE: CWE-267: Privilege Defined With Unsafe Actions
+
+    A security flaw (privilege defined with unsafe actions) was found in the way portrait handling component of Plone, a user friendly and powerful content management
+    system, performed portraits management. Remote attacker, authenticated Plone user could use this flaw to modify or delete portraits of other users.
+
+-----
+#11 Plone: Authenticated users able to alter their password despite of policy definition / setting prohibiting it (mail_password.py)
+    https://bugzilla.redhat.com/show_bug.cgi?id=978480
+    CWE: CWE-284: Improper Access Control
+
+    A security flaw was found in the way Plone, a user friendly and powerful content management system, restricted access to password change for unauthorized users.
+    If from policy definition Plone user in question was not allowed to change their password, they (previously) could still reset / change the password via forgotten
+    password email functionality.
+
+-----
+#12 Plone: DoS by decompressing large zip archives (cb_decode.py, linkintegrity.py)
+    https://bugzilla.redhat.com/show_bug.cgi?id=978482
+    CWE: CWE-400: Uncontrolled Resource Consumption ('Resource Exhaustion')
+
+    A denial of service flaw was found in the way Plone, a user friendly and powerful content management system, used to previously expand certain zip archives.
+    Remote attacker, authenticated Plone user could issue Zip archive expand request with specially-crafted archive that, when processed would lead to uncontrolled
+    resources consumption (denial of service).
+
+-----
+#13 Plone: Forwarding of cookie data (session hijack) in certain browsers (in_portal.py)
+    https://bugzilla.redhat.com/show_bug.cgi?id=978485
+    CWE: CWE-522: Insufficiently Protected Credentials
+
+    A security flaw was found in the way Plone, a user friendly and powerful content management system, previously protected user's cookie data in certain situations.
+    A remote attacker could provide a specially-crafted URL that, when visited by a valid Plone user could lead to Plone user's cookie to be forwarded if the victim
+    was using certain browsers (possibility of session hijack).
+
+    Note from Matthew Wilkes due this one: 'Hmm. I'd argue for CWE-601 and maybe CWE-20 too. It's hard to pin down.'
+
+-----
+
+Could you allocate CVE identifiers for these?
 
 Thank you && Regards, Jan.
 --
