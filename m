@@ -1,20 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/8
-Message-ID: <20130207104539.GA15634@gremlin.ru>
-Date: Thu, 7 Feb 2013 14:45:39 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/01/1
+Message-ID: <51F9F939.2050708@redhat.com>
+Date: Wed, 31 Jul 2013 23:59:21 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: imview
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed module
 Content-Type: text/plain; charset=utf-8
 
-On 06-Feb-2013 14:22:02 -0500, Sang Kil Cha wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- > One can associate the program with ics file, but maybe it is not likely.
+On 07/31/2013 04:51 PM, Forest Monsen wrote:
+> Hello!
+> 
+> I'd like to request an identifier for:
+> 
+> SA-CONTRIB-2013-061 - Flippy - Access Bypass
+> https://drupal.org/node/2054701
+> 
+> Thanks,
+> Forest
+> 
 
-That doesn't raise the ordinary bug to the level of security issue.
+Please use CVE-2013-4187 for this issue.
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+iQIcBAEBAgAGBQJR+fk5AAoJEBYNRVNeJnmTt+IP/ilI6saH8Csn65hACOMuOf8x
+i1OaPR35gldWHvq+3UQg5Tg26XjfQ4UORz2yZ8MjYX6U7UhWv7NesvhNyAZ8vO0S
+NInDGDcZwvyRJlIXJ5co43F/dZ2RedsXSysY5C4h6FEK04LYlvJLddwuoV32j/H8
+nHzyLVRg4GPR/pDX1rgUcuDQfb6Q6oUOLbqwgJ6RuWwdRYw/Wa7zQ7WLJ9lWDaf6
+0qUX85lYLpyeZrdzpYPuYAriSsvEmHA0jgrElgqsrI3K8frhDYgXhUTFC5PDqO4D
+6oaYS6E5bnWQZAy+AtSavibPo/v/SutCOD30l8nMv9PiKdPWnQmX64dpFCHpkJvX
+F+va2cfX2Ljuf9SvbHHSroDrgRu3rOz/vZkOjro/5pa7AroNux+kJ8ZI+LbboIfQ
+OfwkTjcGtZQ7xW9d8o34TZp15POpubV9GEdP8wI2o2W1WvZVqV9nP7Nf9qQ7mZDl
+n/U5nGWVt1m6TMYQ8s69RibJdEQiHFeWn+nrPyIwEujbdLbMHXQljBQ4mqwK0HZY
+YvWUA8Ft3M9hp2KWJCi40QOSxeVgkySEoOpOQzK1i3LalKNDcF6EJswTz2ARDY2w
+E/yVunLPkKiJLTjRwx8EgzADVlxfyg/A4KqaW4/4A9wonkQPzxxtuUzaXZ9KQI7q
+y++BlFoIqS1XG1XcjbB6
+=fmO3
+-----END PGP SIGNATURE-----
