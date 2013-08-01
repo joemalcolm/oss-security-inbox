@@ -1,76 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/9
-Message-Id: <E1U2iMn-0008As-4b@xenbits.xen.org>
-Date: Tue, 05 Feb 2013 13:15:17 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 43 (CVE-2013-0231) - Linux pciback DoS via not rate limited log messages.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/01/4
+Message-ID: <51FA81D3.1020502@fifthhorseman.net>
+Date: Thu, 01 Aug 2013 11:42:11 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com
+CC: Kurt Seifried <kseifried@...hat.com>,  Donald Stufft <donald@...fft.io>, isis@...project.org, cve-assign@...re.org
+Subject: Re: Requesting CVE-ID(s) for Python's pip
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 07/30/2013 02:29 AM, Kurt Seifried wrote:
+> I'm not sure in this case MD5 alone is a security vulnerability, I
+> think previously it had been decided that just because it uses MD5
+> wasn't ernough to get a CVE, it had to have some specific use that
+> made MD5 a problem. OTOH DES is at this point worthy of a CVE since
+> you can crack it in a reasonable amount of time on AWS/etc for a few
+> hundred bucks or less. Personally I would assign a CVE to everything
+> using MD5 by default to try and help kill it off, but that would be a
+> lot of CVEs.
 
-             Xen Security Advisory CVE-2013-0231 / XSA-43
-			      version 2
+Maybe it's worth examining what sort of attack vectors are possible when
+MD5 is relied upon that are not possible if stronger digests are required.
 
-         Linux pciback DoS via not rate limited log messages.
+MD5 is currently known to be vulnerable to collision attacks, but no one
+(to my knowledge) has published anything close to an effective pre-image
+attack yet.
 
-UPDATES IN VERSION 2
-====================
+I'm assuming that pip is checking the digests of a source tarball
+fetched from a mirror based on a manifest that is signed by a well-known
+key (if my understanding of the architecture is wrong, please correct me!)
 
-Public release.
+here's one conceivable attack that exploits MD5's failed collision
+resistance:
 
-ISSUE DESCRIPTION
-=================
+Consider an attacker who can upload a python module to the pypi
+repository to get them included in the manifest, and who can tamper with
+a mirror or can modify traffic on their victim's network.
 
-Xen's PCI backend drivers in Linux allow a guest with assigned PCI device(s)
-to cause a DoS through a flood of kernel messages, potentially affecting other
-domains in the system.
+This attacker could craft two versions of their module that have the
+same MD5 digest, but one of them is innocuous and the other is malicious.
 
-IMPACT
-======
+The attacker then uploads the innocuous one to the main archive, it is
+vetted by whatever is the normal pypi policy, and its MD5 sum is
+included in the standard signed manifest.  Then the victim goes to fetch
+it, the attacker replaces the download with the malicious version.
 
-A malicious guest can mount a DoS affecting the entire system.
+If pip is only checking MD5 digests, it sees that the digest is correct,
+and the victim has no idea that they received anything different than
+the innocuous version.  The general public never sees the malicious code.
 
-VULNERABLE SYSTEMS
-==================
+This attack requires that the attacker already have a significant set of
+dangerous powers (uploading to pypi, control of the victim's chosen
+mirror or network), but it enables them to pull off the attack in
+secrecy at least.
 
-All systems running guests with access to passed through PCI devices are
-vulnerable.
+Regards,
 
-Both mainline ("pvops") and classic-Xen patch kernels are affected.
+	--dkg
 
-MITIGATION
-==========
 
-This issue can be avoided by not assigning PCI devices to untrusted
-guests.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa43-pvops.patch            Apply to mainline Linux 3.8-rc5.
-xsa43-classic.patch          Apply to linux-2.6.18-xen tree.
-
-$ sha256sum xsa43*.patch
-4dec2d9b043bce2b8b54578573ba254fa7e6cbf4640cd100f40d8bf8a5a6a470  xsa43-classic.patch
-6efe83c9951dcba20f18095814d19089e19230c6876bbdab32cc2f1165bb07c8  xsa43-pvops.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJREQI+AAoJEIP+FMlX6CvZkoEH/2sIEO+1qLiHTde/UJznrvr8
-R8MDNC5tqXVLtbPjScoTItMHaPfz33lcypz9UFknHepdwZKhRrcuqy4E79lxeXDG
-BybbbbfNfJPeUG44O1fkyJTJys0xRBnAGzWInZZwq+gWRaJv+JNhzinFujvLNDJV
-4m2ObnSwT1mx/9CjRxWGakKDhPcZSGmWIicyN5tueNKdWbAjSqiR/J8N5W+QJiCm
-+BzjzYpfUqn0vKOlARQIMshzqFjYVTnoHFZf/4Hl7ogIibxfGGo5t05pzBoAlIgj
-nTizW2Bxs9XM1NaFsZ2ESg8KVDTFSHS+jsMtdl0bWoHwRs6nNMQJJTjTPHXspCQ=
-=5o5U
------END PGP SIGNATURE-----
-
-Download attachment "xsa43-classic.patch" of type "application/octet-stream" (884 bytes)
-
-Download attachment "xsa43-pvops.patch" of type "application/octet-stream" (1786 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
