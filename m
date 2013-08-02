@@ -1,61 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/9
-Message-ID: <51EEDF0A.40707@redhat.com>
-Date: Tue, 23 Jul 2013 13:52:42 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: P J P <ppandit@...hat.com>
-Subject: Re: CVE Request: Linux kernel: panic while pushing pending data out of an IPv6 socket with UDP_CORK enabled.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/02/2
+Message-id: <a90fa22f-d8ac-4712-95dc-4aa89a142ec9@me.com>
+Date: Fri, 02 Aug 2013 07:12:37 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Rgpg Ruby Gem Remote Command Injection (CVE Request)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Title: Rgpg Ruby Gem Remote Command Injection
 
-On 07/23/2013 01:18 PM, P J P wrote:
->   Hi,
-> 
-> Linux kernel built with IPv6 networking is vulnerable to a crash while
-> sending data as a single datagram over IPv6 socket when UDP_CORK option
-> set. UDP_CORK enables accumulating data and sending it as a single
-> datagram.
-> 
-> Upstream fix:
-> -------------
->  -> https://git.kernel.org/linus/8822b64a0fa64a5dd1dfcf837c5b0be83f8c05d1
-> 
-> Reference:
-> ----------
->  -> https://bugzilla.redhat.com/show_bug.cgi?id=987627
-> 
-> Acknowledgement:
-> -----------------
-> Red Hat would like to thank Hannes Frederic Sowa for reporting this issue.
-> 
-> 
-> Thank you!
-> -- 
-> Prasad J Pandit / Red Hat Security Response Team
-> DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+Date: 7/31/2013
 
-Please use CVE-2013-4162 for this issue.
+Advisory Author: Larry W. Cashdollar, @_larry0
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+CVE: TBD
 
-iQIcBAEBAgAGBQJR7t8KAAoJEBYNRVNeJnmT8TwQALX0bwqkXpN8vpa7Md0g2E9Z
-oBUEWdolT9QS6TOotOdklbY0AndXZSgLqLzLGsca9cwtQQW5jVpxroPGYmMLBhj1
-Vpju0mTYrnjsd3d6tQN6ORtLW/+oC2F3vvbSdSPu6sg5JkleeDaBBKtFdJl5pgqZ
-cmsQmXtr9ZJc/BJxI5argYcdudvjBHiLrNp6Co3ul27zcR+nZQHBuT/2TBRAnBa2
-fGkOMUtKyJBTOWeROfg2KZ7y5IPdc6h0xR0MOSIRksCRoP9+cQR+qS3myT70s/9A
-baqLzlRiYYO2CC1ewFhqPGnL8+U993pa9hyEPodVbowCyWMwGkQcXsamTlrzFDXh
-AKShbI3WAhLn0tqaojSc9sbYqwgLohZuUdApmGjSDvAV60AG+azZJt1pocSbEJMw
-ASBTQzd4bvS/ec8wpyJdgLEpbleUyPEdjLtY4RgfaWwakoYt9c9hjbv4MUyYPRXX
-BMna1M9aJ/JOeo8NjFRlxVeyBxnVzkZS3MpgbsxgA3GpMYKl1Kx4UDbuBPbHp4YQ
-EVJgusuMxBc6hPZJP3Q3vqXrLD8PhV96czt0GsJttaNG5EUBbA7nl2eW8XTZGDBw
-PSR/jYaqf/2AlVYKHs8fsmWWx06ot3Prz90fXaa5sY6+juOQLHqRgFK6rTWB5GcQ
-qS7Qax34S9wRbDfxlhcH
-=PiVS
------END PGP SIGNATURE-----
+Download: https://rubygems.org/gems/rgpg
+
+Description:
+
+"A simple Ruby wrapper around gpg command for file encryption.
+rgpg is a simple API for interacting with the gpg tool. It is specifically designed to avoid altering global keyring state by creating temporary public and secret keyrings on the fly for encryption and decryption."
+
+Vulnerability:
+
+The following code snippet does not sanitize user supplied input before passing it to the System () function for execution. If this API is used in the context of a rails application remote commands can be injected into the shell if the user supplies shell meta characters like ; and &. 
+in lib/rgpg/gpg_helper.rb:
+
+ 68       begin
+ 69         outputfile.close
+ 70         result = system("#{commandline} > #{output_file.path} 2>&1")
+ 71       ensure
+Author: Notified 8/1/2013.
+
+Fixed: in 0.2.3. 8/1/2013.
+
+Greets to all@...CON21.
+Content of type "text/html" skipped
