@@ -1,19 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/17
-Message-ID: <CAHmME9pBSPab=jBLUOuuX0uvQkhytOvJPaHNxWs22Td1KaU8Fg@mail.gmail.com>
-Date: Wed, 27 Feb 2013 00:05:33 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/02/1
+Message-ID: <51FB2381.7070906@redhat.com>
+Date: Thu, 01 Aug 2013 21:12:01 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: michaeld@...dle.com, security@...library.com, Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: [vs-plain] Request for CVE Identifiers
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 26, 2013 at 10:05 PM, Kurt Seifried
-> The problem with security is you have to basically do it 100%
-> correctly 100% of the time, otherwise things fall through the cracks
-> (like this VFAT thing).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Also, what about the tmpfs one from yesterday? Nobody involved in the
-patch reported that as a security bug to this list, until I saw it
-myself, just by chance, as a random person on the internet, and posted
-it to the list. In that case, it was clearly marked "use-after-free",
-but nobody involved requested a CVE.
+On 07/05/2013 12:01 AM, Michael de Raadt wrote:
+> Hi, Kurt.
+> 
+> Thanks for getting back to me.
+> 
+> The YUI issue (reported as Moodle security issue MSA-13-0025)
+> seems to have affected YUI versions 3.0.0 through 3.10.0 and was
+> fixed in 3.10.1. There was a smaller related problem still in
+> 3.10.2 that they also fixed. Here are some links to the YUI
+> announcements...
+
+Hi YUI guys, can we get the CVE situation for YUI sorted out please
+and thank you? I'd be happy to assign CVEs or to help you get them
+from Mitre.
+
+> 
+> http://www.yuiblog.com/blog/2013/05/14/yui-3-10-1-released-to-fix-swf-vulnerability/
+>
+> 
+http://yuilibrary.com/support/20130515-vulnerability/
+> 
+> I couldn't find an existing CVE for this. Perhaps there is not one
+> yet.  Michael de Raadt /BSci(Hons), PhD/ *Development Manager,
+> Moodle HQ <http://moodle.com/hq/>* Availability:  	Calendar
+> <http://dl.dropbox.com/u/11561272/calendar.html> Web:
+> moodle.com/michaeld <http://moodle.com/michaeld> Blog:
+> salvetore.wordpress.com <http://salvetore.wordpress.com/> Email:
+> michaeld@...dle.com <mailto:michaeld@...dle.com> LinkedIn:
+> linkedin.com/in/michaelderaadt 
+> <http://linkedin.com/in/michaelderaadt> Twitter:  	@salvetore
+> <https://twitter.com/salvetore>
+> 
+> <http://moodle.org>
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJR+yOBAAoJEBYNRVNeJnmTEHwP/iLHXRhGK0FTjLnaRm1+gnU4
+LLpL4g67iSpvKC8b1uU1HDMGX0XqPFdUHsbfhDh1SSFyQk/zF9aDLmdcO+5iuDZv
+hSaElDQuqLfMFzLpu76462YrWJn4juhKQ9jXZfMo5behIu7vaJIutXnDdBS62Trq
+0EhSGiOVBif5cglZlEwRzw0N7PNI3of3ym1DFgHgXa3KQTl6qqavRMYTPyj0FggD
+FZkUgJOPCsIv196EMiG9y4b8p8SKLBvhqUqvHkAcUyeauvtFXWGIMiHYs5wyReD/
+mo39xRgccIJCQARiymRfuJ4zAkvsY7r3K+RFJbegSff4JK55dBBHjaNeDu6uQd9J
+i6dGxCkIXmzu46J7t2qlVhLc1hpcxpMOFBnlAJTsFxd+OTFuyVZpIi9iM/uOEz1y
+EdEtFzj/IGLKxzV7qnq0wSNVAdcC/njK3ztwTUUMNKGl4lRps3V/2NIUVnb+5bnl
+WyNBW6Oa6xUcrrWQusm7Q5souFD3LC8Jbt4LwsgKVcyNL2c3oAf1c2S2/HYBCe/S
+Lsoyjw8255zBjRYBvauEH4lqhGRTVh2ThzmZGllvXzZlLGQ0oJsL8f/Vntc1R+M0
+oTLaVMIC/vR1IWrNpeDJNiUUpINNHTmt6KI2qHAWXO1pG30YrG1b028feVXHZ/nA
+rQThVR7Lw0Nw2ZjuykpY
+=RbCn
+-----END PGP SIGNATURE-----
