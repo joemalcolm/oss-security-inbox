@@ -1,132 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/12
-Message-ID: <CAD1Nwhg9ZghcvW8Uehcge-PMdk8jg-O5EFoeKgmB-pERiRGJAA@mail.gmail.com>
-Date: Wed, 3 Apr 2013 19:23:40 +0200
-From: Lukas Reschke <lukas@...cloud.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/03/1
+Message-ID: <51FC939E.2070103@redhat.com>
+Date: Fri, 02 Aug 2013 23:22:38 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "security@...cloud.com" <security@...cloud.com>
-Subject: ownCloud Security Advisories (2013-011, 2013-012)
+CC: Vincent Danen <vdanen@...hat.com>, mejo@...ian.org, contribute@...ios.org
+Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-To avoid confusion: The download links are pointing to 5.0.3 since it was
-just released one day after 5.0.1 (and 5.0.2) because of two nasty upgrade
-bugs.
+On 08/02/2013 11:27 AM, Vincent Danen wrote:
+> * [2013-07-10 17:17:08 +0200] Jonas Meurer wrote:
+> 
+>> Hello,
+>> 
+>> Am 2013-07-08 20:16, schrieb Kurt Seifried:
+>>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>>> 
+>>> On 06/26/2013 01:42 PM, Kurt Seifried wrote:
+>>>> On 06/26/2013 12:36 PM, Vincent Danen wrote:
+>>>>> I don't believe a CVE has been assigned to this issue yet.
+>>>> 
+>>>>> It was reported that Nagios 3.4.4 at least, and possibly
+>>>>> earlier versions, would allow users with access to Nagios
+>>>>> to obtain full access to the servicegroup overview, even if
+>>>>> they are not authorized to view all of the systems (not
+>>>>> configured for this ability in the authorized_for_*
+>>>>> configuration option).  This includes the servicegroup
+>>>>> overview, summary, and grid.
+>>>> 
+>>>>> Provided the user has access to view some services, they
+>>>>> will be able to see all services (including those they
+>>>>> should not see). Note that the user in question must have
+>>>>> access to some services and must have access to Nagios to
+>>>>> begin with.
+>>>> 
+>>>>> This has not yet been corrected upstream.
+>>>> 
+>>>>> References:
+>>>> 
+>>>>> http://www.mail-archive.com/nagios-users@lists.sourceforge.net/msg39749.html
+>>>>>
+>>>>
+>>>>>
+>>>>> 
+http://tracker.nagios.org/view.php?id=456
+>>>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714171 
+>>>>> https://bugzilla.redhat.com/show_bug.cgi?id=978531
+>>>> 
+>>>> 
+>>>>> Thanks.
+>>>> 
+>>>> Please use CVE-2013-2214 for this issue.
+>>> 
+>>> It appears there are may be some problems with this issue,
+>>> potentially this may have been a bad configuration and not a
+>>> source code based problem, however we haven't been able to
+>>> confirm it yet. I've also not been able to contact upstream
+>>> about this easily (no security@ address, if anyone know whom to
+>>> forward this to, please let me know, thanks.
+>> 
+>> I'm wondering why you fail to reproduce this issue. I posted
+>> some details regarding my setup at the Nagios Tracker: 
+>> http://tracker.nagios.org/view.php?id=456
+>> 
+>> Unfortunately Nagios upstream sometimes rather unresponsive. At
+>> least that's what I observed.
+>> 
+>> Please let me know if you need any further details regarding the
+>> bug or advice on how to reproduce it.
+> 
+> To close the loop on this, the CVE should probably be rejected. 
+> According to upstream, this is done by design.  One of our users
+> noted it in our bugzilla:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=978531#c11
+> 
+> He has a thorough explanation, but the bottom line is this seems to
+> be by design, as noted in the changelog:
+> 
+> http://www.nagios.org/projects/nagioscore/history/core-3x
+> 
+> * Users can now see hostgroups and servicegroups that contain at
+> least one host or service they are authorized for, instead of
+> having to be authorized for them all (Ethan Galstad)
+> 
+> I suspect this CVE should be rejected as this is done by design.
+> 
 
-This bugs are only affecting the 5.0 branch.
+Agreed. Please REJECT CVE-2013-2214
 
---------------------
-
-# Multiple XSS vulnerabilities (oC-SA-2013-011)
-
-Web: http://owncloud.org/about/security/advisories/oC-SA-2013-011/
-
-
-## CVE IDENTIFIERS
-- - CVE-2013-1890
-
-
-## AFFECTED SOFTWARE
-- - ownCloud Server < 5.0.1
-
-
-## DESCRIPTION
-Multiple cross-site scripting (XSS) vulnerabilities in ownCloud 5.0.0
-allow remote attackers to inject arbitrary web script or HTML via
-
-
-- - the "new_name" POST parameter to renameTag.php in /apps/bookmarks/ajax/
-  - Commits: 1c63eb1 (stable5)
-  - Risk: Medium
-  - Note: Successful exploitation of this stored XSS requires the
-“bookmark” app to be enabled. (enabled by default)
-- - multiple unspecified parameters to several files in apps/contacts/ajax/
-  - Commits: ae9e5a4 (stable5)
-  - Risk: Medium
-  - Note: Successful exploitation of this stored XSS requires the
-“calendar” app to be enabled. (enabled by default)
-
-
-## Credits
-The ownCloud Team would like to thank Dylan Irzi
-(http://websecuritydev.com/) for discovering this vulnerabilities.
-
-
-## RESOLUTION
-Update to ownCloud Server 5.0.3
-http://download.owncloud.org/community/owncloud-5.0.3.tar.bz2
-
-
-
-
-- --------------------
-
-
-# contacts: SQL Injection (oC-SA-2013-012)
-
-
-Web: http://owncloud.org/about/security/advisories/oC-SA-2013-012/
-
-
-## CVE IDENTIFIERS
-- - CVE-2013-1893
-
-
-## AFFECTED SOFTWARE
-- - ownCloud Server < 5.0.1
-
-## RISK
-- Critical
-
-## Commits
-- stable5: c1b62af
-
-
-## DESCRIPTION
-ownCloud before 5.0.1 does not neutralize special elements that are passed
-to the SQL query in addressbookprovider.php which therefore allows an
-authenticated attacker to execute arbitrary SQL commands.
-
-
-Note: Successful exploitation of this vulnerability requires the "contacts"
-application to be enabled. (enabled by default)
-
-
-## Credits
-The ownCloud Team would like to thank Alexander Bürger for discovering this
-vulnerability.
-
-
-## RESOLUTION
-Update to ownCloud Server 5.0.3
-http://download.owncloud.org/community/owncloud-5.0.3.tar.bz2
-
--- 
-ownCloud
-Your Cloud, Your Data, Your Way!
-
-
-
-
-GPG: 0xEB32B77BA406BE99
-
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-wsFcBAEBAgAQBQJRXGWNCRDrMrd7pAa+mQAAiGsP/29XRSM1Feazdcb3SZrb
-S45G7hMOCGbM/WTHVO4gQKsH/UJdjdURDq+jF5LPrHtFdpzZvNlJq392va7y
-Reo2d/OJOfPhKmagktq1S+RXRCM49tEARYZryXoHtVJ24spUjyFoje+AYdio
-DUjA7K94zxgNx+oI8E+wps2HHjasRLkVUHvK19SFpJJmS0Uo+1pKNRDKD1oj
-CQrt0lChORp6xJrCh70yp1fB3HTYfysE5K6h/9nTvsEwAcoPHxC3PKUvovAe
-uHMPaUO0ClDQzHlApue9XHsTV0b/zlRtSVlb7+DwwIOGVcxWt2vIxWXerA54
-/shDxAB1h/eORjkbtMyrpyd0kN7ZxUHBhWIxWgSJOLNHFf2ECbDtuvU/SMsU
-ojGBCRbptOgx7xAvtIULFdtTuJ2xDC4ERowWST7UVQ4q8DA3ygP4NvQd8f46
-yObXDATM5l6ldeXXONQ6+MIQBDsCn+E6gJUk0ek/aCwiClZ44oZSFfD7+UiI
-2c5/RRhjk1CtsYdr+LExm42vSfHsaH23MFYw5oFmz1NLHYUNmcrTB2gJFOj3
-Fr5dcJ+QqVjQsDf6ewP1JwnF4SelRX3qGOcubrixw4clQKoCSrvCcEu9d1sF
-olOlMFbg7uVfbDKrzOsE8pujel2fZ5In35fuFivSuX09V/aJuCHlkYo/y0p/
-pVn6
-=LD+w
+iQIcBAEBAgAGBQJR/JOeAAoJEBYNRVNeJnmTfdgQAL6SAsZX9DoQ77q/a3lOduTP
+XdLD+0gLCply3f8LywrnQOlfKa8B+LOhT+Xu3IZ0dCTPz4qpYyYAKUf+KspYeo8x
+qI0VSn6weEYCVqNP8es4rvdkBFJWb+fmB1/pmQv0IGMMVN4WyMHVAFXBQwu7ipiO
+FiqnQfVqbbe6AdFaFoOoNrB71bAoxywGYgmFol7+/QRXlO1GxDNImnj8T6vBmyDp
+oJfIWn/gkjV4EFp34pOVCcy6mY6tXsIA6eiWhqRQJQfKMh+17jX0Du0F6e6p/9+x
+lS36AIq4jBn6fQiqmEUPqeqREK/QxCMluCq+kOZ/y9Tb36liM963ic4FeL203Pwe
+VcjhTconVQmN79RCSO+I4MJcUZ9N7JFS+PF7aj/igtZXS/+F9mE2W02qf3nuaB5X
+6M+Rh4vvFwRZm0PbYZpfxa6UzVlEudJNMcbA9WmbLO8/QYACCDfI/NOAacouOcvS
+ovS1DhlRbzbTwdSQ4UATaKqSqwCXgAR93aLoWQyaJOl0H5ubkOX4btLzHBU1Cgph
+j8ACw+Q97utDF0+KCsuTST/8M18ngqS4oRQEuUMhTNITbIaqFCKUjgvnaQm1W0QZ
+x/2kb661oLg9GNAHEa2Ie6ghbPqB9sg2n6lf7RIsjO/rXFWk8HaVDBNH2Wn90F6n
+QK+hnoerPd2vr5DY2oGr
+=NCWl
 -----END PGP SIGNATURE-----
-
