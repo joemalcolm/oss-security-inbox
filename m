@@ -1,64 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/1
-Message-ID: <51106B20.4050609@redhat.com>
-Date: Mon, 04 Feb 2013 19:14:56 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/03/2
+Message-ID: <51FC94AC.5020009@redhat.com>
+Date: Fri, 02 Aug 2013 23:27:08 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed modules
+CC: "Larry W. Cashdollar" <larry0@...com>
+Subject: Re: Rgpg Ruby Gem Remote Command Injection (CVE Request)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/04/2013 10:24 AM, Forest Monsen wrote:
-> Hi there,
+On 08/02/2013 01:12 AM, Larry W. Cashdollar wrote:
+> Title: *Rgpg Ruby Gem Remote Command Injection*
 > 
-> Here's a request for CVE identifiers for several issues with
-> Drupal contributed modules. Thank you Kurt.
 > 
-> SA-CONTRIB-2013-011 - email2image - Access Bypass - Unsupported 
-> http://drupal.org/node/1903264
-
-Please use CVE-2013-0257 for this issue.
-
-> SA-CONTRIB-2013-012 - Google Authenticator login - Access Bypass 
-> http://drupal.org/node/1903282
-
-Please use CVE-2013-0258 for this issue.
-
-> SA-CONTRIB-2013-013 - Boxes - Cross site scripting (XSS) 
-> http://drupal.org/node/1903300
-
-Please use CVE-2013-0259 for this issue.
-
-> SA-CONTRIB-2013-014 - Drush Debian Packaging - Information
-> Disclosure - Unsupported http://drupal.org/node/1903324
-
-Please use CVE-2013-0260 for this issue.
-
+> Date: 7/31/2013
 > 
-> Forest
 > 
+> Advisory Author: Larry W. Cashdollar, @_larry0
+> 
+> 
+> CVE: TBD
+> 
+> 
+> Download: https://rubygems.org/gems/rgpg
+> 
+> 
+> Description:
+> 
+> 
+> "A simple Ruby wrapper around gpg command for file encryption.
+> 
+> rgpg is a simple API for interacting with the gpg tool. It is 
+> specifically designed to avoid altering global keyring state by
+> creating temporary public and secret keyrings on the fly for
+> encryption and decryption."
+> 
+> 
+> Vulnerability:
+> 
+> 
+> The following code snippet does not sanitize user supplied input
+> before passing it to the System () function for execution. If this
+> API is used in the context of a rails application remote commands
+> can be injected into the shell if the user supplies shell meta
+> characters like ; and &.
+> 
+> in lib/rgpg/gpg_helper.rb:
+> 
+> 68       begin 69         output/file.close 70         result =
+> system("#{command/line} > #{output_file.path} 2>&1") 71
+> ensure
+> 
+> Author: Notified 8/1/2013.
+> 
+> 
+> Fixed: in 0.2.3. 8/1/2013.
+> 
+> 
+> Greets to all@...CON21.
+> 
+
+Please use CVE-2013-4203 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJREGsfAAoJEBYNRVNeJnmTSQgQAJp2INAuP0EYBBuLFFNT05aM
-a6WcCQ1qhu5Bg7E631YHoqMkHY3G1ozFIlBk30L10cXDYp9D7H7/He+Qgb0plJ7X
-W9HeQVx5Hz9d3IfhlGq8Ih4Buw0UmpQmvGnmMvRgjmdP44r/uuCbl+8Q/aj20ivh
-0z8ZnKZtELDucyUdxuHprn6YujHSIuBUIJcjtftoiaCQpnt9PI4eS4xXaysZaOdc
-oBW55G2fYUvLS2kgWZQvYFIlK6nXd0nGMfXyHnnr8Jv0J2v2+iDBd2LJ880kLAyB
-YC3jmMtfJqX+eQw3AGCCn9pscJWfbrK4Z+tlgHilVArjORS/Pmy3M5jrIOAj9tL2
-ls9+Ej2KHmYNm5kZstVpgfYbPRoSY/xcZY6Aq/RdISnvUJy+Q4mBKmGs4iQn99lN
-M8aeIs8QszxaaLcywJkfShfGVEi1ix/hChtAxN2QvuNAfeFCTVX3B9EuH8VoqfGF
-T5hokqbi26Ifsnex6Gd40pd/40PouIskZD/l9rz7sp+4POVPszqEhy22kPQ6TINx
-RaW2Tdhk6XnGBiQB2QMsKoNyBnJIrS/im+6Noa55MLUxvR9ASdLJ8ij4wHAtNswN
-G+vBwnelaSgt3hPpIqRkk7t2MLojKr2rfSmtkj2hg4ru0d6aJFfyRNY6Rax3HrYY
-vDoySkJDJgBjvvWTGXuH
-=7L+6
+iQIcBAEBAgAGBQJR/JSsAAoJEBYNRVNeJnmTJ1UP/i07yMMuth0XEJjDoyWGb0AK
+ov+h6eAEBS0GmCwwzyP71J0bZiGhJ3OVpfD9+gFCYwlJRrgQPG1fCfxTbg2jMuZG
+NmrmPbNvNA4P4EdmQrAd8B52c0Bj+HsBm43vC1BkBcgL91KK3JzcqzOy+LGfa2tL
+VJYmrzBPkbCYGYe1e6pSYKsOuFMQ2epBbaV4K5nnJBr8SVL1hE7PC06f4rsRwsDg
+N7Mn4g9+L+cChRxe464U3jJh1fc7kM/UW2pe50Lqf7gJXi5H2WdNimS0STrzZxcN
+dTlufNylobuIwAQXJ2ZfQ19JCLCm49JFLDDXbKcbvFPsKmZ7OS9GTZP423M5eUN9
+UnI30FF9SkmU1mWh9+o6xxO9BfLz40cRhYsk++oln48djVpjvJcyzklpbwieRh4A
+9KO2T5txo5pl6jt20mzzQZyuatsl1mfQCIQ1ltxOqNXzs1Bw7km7jQWCP3qeZjMD
+NRtrOagtzFf01oX7b/hUNKxpdN/fwJciSf737eAsi8ys6KJJMwWbO+u8Hq8JtK/O
+LULbsUGIPgcih5mpLj7d9+d5zlRc8WcNwYHwNeFon2BQFYuIHzJ72ErDQzGIi4Ly
+oS9EwxfoQX/6WJw2yQSvs7wUiOyxWIPKunPOnm8OYrBmxiVbiVLllEhylMf40f02
+RgKNyJnxWZPPEFf/XkUM
+=KV4E
 -----END PGP SIGNATURE-----
