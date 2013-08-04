@@ -1,68 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/20
-Message-ID: <512BD671.6080509@redhat.com>
-Date: Mon, 25 Feb 2013 14:24:01 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: PackageKit"update" allows downgrade of packages when using the "zypp" backend
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/04/1
+Message-ID: <51FDA2EC.7040407@freesources.org>
+Date: Sun, 04 Aug 2013 02:40:12 +0200
+From: Jonas Meurer <jonas@...esources.org>
+To: Vincent Danen <vdanen@...hat.com>
+CC: oss-security@...ts.openwall.com, kseifried@...hat.com,  contribute@...ios.org
+Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 02/23/2013 12:34 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> On openSUSE we have started to allow local logged in users to install
-> online updates (but not install new packages or remove ones), as this
-> seems a common and secure operation to us.
-> (Also done in light of the Linus Torvalds flame posting.)
-> 
-> PolicyKit rules in PackageKit also allow this in the vanilla version:
-> 	org.freedesktop.packagekit.system-update
-> shipping default is "yes" for local logged-in active users.
-> 
-> 
-> So far we assumed that the update operation only allows upgrading versions.
-> 
-> The enforcement of this rule did not fully work, so at least the "zypp"
-> backend of PackageKit allowed downgrade of packages using this call.
-> The "update" method also allowed installing non-update resolvables like
-> patterns or even new packages.
-> 
-> We have not checked the other backends, they might also be affected.
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=804983
-> https://bugs.freedesktop.org/show_bug.cgi?id=61231
-> https://gitorious.org/packagekit/packagekit/commit/d3d14631042237bcfe6fb30a60e59bb6d94af425
-> 
-> 
-> As the default assumed secure behaviour is violated, this requires a CVE.
-> 
-> Ciao, Marcus
-> 
+sorry, I'm on holidays and cannot work on this issue for the next two
+weeks. But I think that there is a missunderstanding. See my short
+comment below.
 
-Please use CVE-2013-1764 for this issue.
+Am 02.08.2013 19:27, schrieb Vincent Danen:
+> * [2013-07-10 17:17:08 +0200] Jonas Meurer wrote:
+> 
+>> Hello,
+>>
+>> Am 2013-07-08 20:16, schrieb Kurt Seifried:
+>>> -----BEGIN PGP SIGNED MESSAGE-----
+>>> Hash: SHA1
+>>>
+>>> On 06/26/2013 01:42 PM, Kurt Seifried wrote:
+>>>> On 06/26/2013 12:36 PM, Vincent Danen wrote:
+>>>>> I don't believe a CVE has been assigned to this issue yet.
+>>>>
+>>>>> It was reported that Nagios 3.4.4 at least, and possibly earlier
+>>>>> versions, would allow users with access to Nagios to obtain
+>>>>> full access to the servicegroup overview, even if they are not
+>>>>> authorized to view all of the systems (not configured for this
+>>>>> ability in the authorized_for_* configuration option).  This
+>>>>> includes the servicegroup overview, summary, and grid.
+>>>>
+>>>>> Provided the user has access to view some services, they will be
+>>>>> able to see all services (including those they should not see).
+>>>>> Note that the user in question must have access to some services
+>>>>> and must have access to Nagios to begin with.
+>>>>
+>>>>> This has not yet been corrected upstream.
+>>>>
+>>>>> References:
+>>>>
+>>>>> http://www.mail-archive.com/nagios-users@lists.sourceforge.net/msg39749.html
+>>>>>
+>>>>
+>>>>> http://tracker.nagios.org/view.php?id=456
+>>>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714171
+>>>>> https://bugzilla.redhat.com/show_bug.cgi?id=978531
+>>>>
+>>>>
+>>>>> Thanks.
+>>>>
+>>>> Please use CVE-2013-2214 for this issue.
+>>>
+>>> It appears there are may be some problems with this issue, potentially
+>>> this may have been a bad configuration and not a source code based
+>>> problem, however we haven't been able to confirm it yet. I've also not
+>>> been able to contact upstream about this easily (no security@ address,
+>>> if anyone know whom to forward this to, please let me know, thanks.
+>>
+>> I'm wondering why you fail to reproduce this issue. I posted some
+>> details regarding my setup at the Nagios Tracker:
+>> http://tracker.nagios.org/view.php?id=456
+>>
+>> Unfortunately Nagios upstream sometimes rather unresponsive. At least
+>> that's what I observed.
+>>
+>> Please let me know if you need any further details regarding the bug
+>> or advice on how to reproduce it.
+> 
+> To close the loop on this, the CVE should probably be rejected.
+> According to upstream, this is done by design.  One of our users noted
+> it in our bugzilla:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=978531#c11
+> 
+> He has a thorough explanation, but the bottom line is this seems to be
+> by design, as noted in the changelog:
+> 
+> http://www.nagios.org/projects/nagioscore/history/core-3x
+> 
+> * Users can now see hostgroups and servicegroups that contain at least
+>   one host or service they are authorized for, instead of having to be
+>   authorized for them all (Ethan Galstad)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+As I understand this changelog entry, it means the following:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Hostgroups and servicegroups are listed with all the _authorized_
+members if the user is authorized to see at least one member.
 
-iQIcBAEBAgAGBQJRK9ZxAAoJEBYNRVNeJnmTvgUQAMcAT3QN0a6dDWzK+2Y5pJEG
-ozK1TrS2/X9k5MatjGm9zfldI3Dodo8cvn++zHIWn21aRNSmUF+v5x+UNKEX/AoC
-fOS8kTRSe0D+KvsaHLGmB8ZwxTl5M2kMx82cky015ZDNB77fPpsaZOCMOEmYSNlU
-dt85EZkt6845sz+AEo1DaEnpvbxR3koEnA61unQUtVdbNv6xmh9WuPi7pX7vQ6Mb
-UqwWFNaGeqEbiygBc6RnGatcb0iqsH3Bv9huXhHhgT+o/oBoZ9yaFka2hbuSHe6p
-uOmtXiAKPItpOObUA3fHTOBXwCzF+QO+qzOzHleQotFfJCwkOHphmeDq08tZLwku
-zPG7L4fB/OL6MhwxiO2cBfV3MnmwmR3km7Yv/RpQ/g+IL3DL5cerhujWT0Zn7YTU
-kk5zE20baS8K4MFEEdApER3QpgNZZfnxCXRkp1gx058cvzdfrx8f9VOusSS2OLbH
-+i65gTYzqhwJJVWJaCsagHh05311KkBdBtdvDhh/2GqRTsIxEKvBFZRsi4tQTc0C
-twJpP63Poy2OazO76esQRG8vlt2WGggWA+E87HIp/P8s8Msz0Ezd8kJgwpU3LzXW
-2Zy4mQA7dS68j2LaFy8n+nUu9EgolrsO7xSMegm1wYAFtFAEjjsemtGucvQhXR52
-gIyQM7ZqELbUrWTZ9TnR
-=EYRJ
------END PGP SIGNATURE-----
+To me it doesn't mean the following (which was the case without my patch):
+
+Servicegroups are listed with all members (regardless wether authorized
+or unauthorized) if the user is authorized to see at least one member.
+
+Another argument for my point of view is that the nagios maintainers
+(silently) accepted my patch (at least if I remember correctly, it has
+been incorporated into the upstream development repository).
+Unfortunately there's still not one single statement from upstream about
+the issue, that I'm aware of.
+
+> I suspect this CVE should be rejected as this is done by design.
+
+Like explained above, I disagree with this suggestion :)
+
+Kind regards,
+ jonas
+
