@@ -1,33 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/16
-Message-ID: <20130225201023.GA6537@openwall.com>
-Date: Tue, 26 Feb 2013 00:10:23 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/04/2
+Message-Id: <CBF1BD51-82D9-412F-97CA-9DF290A7092D@stufft.io>
+Date: Sat, 3 Aug 2013 20:41:55 -0400
+From: Donald Stufft <donald@...fft.io>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
+Subject: Re: CVE Request: Insecure Software Download in pip
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 25, 2013 at 07:45:01PM +0100, Mathias Krause wrote:
-> Did you even try to run the exploit on a v3.2 kernel? Or even more
-> simple, looked at the code of a v3.2 kernel?
 
-No.  I think my role in this discussion is to bring up the right
-questions and have you answer them, for others to have those answers.
-I hope you don't mind. :-)  Personally, I don't care about this specific
-bug much (not relevant), but I do care about handling of Linux kernel
-bugs in general.
+On Jul 31, 2013, at 5:11 AM, Donald Stufft <donald@...fft.io> wrote:
 
-While we're at it, I notice that lately many of us use "kernel" in the
-Subject to refer to the Linux kernel.  I wonder if this little detail
-makes this mailing list a little less comfortable for non-Linux folks.
-Maybe we should put "Linux" or "Linux kernel" into the Subject on those
-occasions, not to discourage non-Linux discussions in here.
+> 
+> On Jul 31, 2013, at 4:33 AM, Raphael Geissert <geissert@...ian.org> wrote:
+> 
+>> On 31 July 2013 10:11, Kurt Seifried <kseifried@...hat.com> wrote:
+>>> On 07/30/2013 12:44 PM, Donald Stufft wrote:
+>>>> There was a CVE for pip not verifying TLS,
+>>>> https://access.redhat.com/security/cve/CVE-2013-1629 However that
+>>>> says it was RESERVED so I'm not sure how to make that unreserved?
+>>>> I've not done much with requesting CVEs before.
+>>> 
+>>> Ok I have no info on that CVE, is it embargoed? I can't find it in
+>>> google after a quick search. I need to see that one before I can
+>>> assign anything.
+>> 
+>> From the bugzilla info: "source=debian", and looking at our tracker:
+>> https://security-tracker.debian.org/tracker/CVE-2013-1629 points to:
+>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=710163
+>> 
+>> I don't know who assigned the id, however.
+>> 
+>> Cheers,
+>> -- 
+>> Raphael Geissert - Debian Developer
+>> www.debian.org - get.debian.net
+> 
+> Ha, Awesome. This CVE is some sort of ghost ;)
+> 
+> Debian bug links to https://security-tracker.debian.org/tracker/CVE-2013-1629
+> 
+> Which links to.. This conversation in oss-sec, NVD which says it doesn't exist, The RedHat Bugzilla, Gentoo which says it doesn't exist, Ubuntu which says it does but doesn't give any more info other than linking to the page on Mitre that just says the reserved bit.
+> 
+> A google search turns up http://www.reddit.com/r/Python/comments/17rfh7/warning_dont_use_pip_in_an_untrusted_network_a/c8ay4xt but it's unclear if that person requested the CVE or not.
+> 
+> So uh how do we figure it out? Can I as a pip developer contact Mitre and release data for it?
+> 
+> -----------------
+> Donald Stufft
+> PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+> 
 
-> There is no sock_diag
-> anywhere in the kernel; there is only inet_diag. And inet_diag hadn't
-> and still does not have the out-of-bounds access issue. So no, this
-> bug is non-existent on a v3.2 kernel.
 
-Thanks!
 
-Alexander
+Trying to close the loop on this, what's the next step forward?
+
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
