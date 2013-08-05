@@ -1,53 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/7
-Message-ID: <20131004100421.135d2f25@hboeck.de>
-Date: Fri, 4 Oct 2013 10:04:21 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request - VLC 2.0.0 to 2.0.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/05/6
+Message-ID: <52000E0E.1060503@redhat.com>
+Date: Mon, 05 Aug 2013 14:41:50 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, tim.kosse@...ezilla-project.org
+Subject: Update for CVE-2013-4852: PuTTY SSH handshake heap overflow (FileZilla reportedly embeds a copy)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA1
 
-On Thu, 03 Oct 2013 22:32:12 -0600
-Kurt Seifried <kseifried@...hat.com> wrote:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=718800
 
-> Sorry forgot to reply. I'm not sure this is CVE worthy. In general
-> crash bugs in services are CVE worthy, but crashes in client software
-> are usually limited to things like email clients or web browsers where
-> there is a high potential for processing untrusted data without much
-> user interaction (e.g. displaying some random email or web page) whre
-> you also have the potential to lose work (so there is an impact).
-> 
-> In the case of VLC you load a nasty file, it crashes, you don't do it
-> again. There's not really any impact. You don't lose any work.
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: Debian Bug Tracking System <submit@...s.debian.org>
+Subject: filezilla: CVE-2013-4852: PuTTY SSH handshake heap overflow
+Date: Mon, 05 Aug 2013 17:37:22 +0200
+Package: filezilla
+Severity: grave
+Tags: security patch upstream
 
-VLC is used as a browser plugin and can also be embedded in other
-applications.
-(though I'm not aware if this can crash the whole browser with the
-modern sandboxing stuff browsers do)
+Hi,
+
+the following vulnerability was published for putty, but filezilla
+embedds putty source:
+
+CVE-2013-4852[0]:
+PuTTY SSH handshake heap overflow
+
+See the advisory [1] for details referring to putty commit [2].
+AFAICS filezilla embedding putty in vulnerable version is used in
+build for fzsftp. See [3] for the corresponding bugreport for putty
+itself.
+
+If you fix the vulnerability please also make sure to include the
+CVE (Common Vulnerabilities & Exposures) id in your changelog entry.
+
+For further information see:
+
+[0] http://security-tracker.debian.org/tracker/CVE-2013-4852
+[1] http://www.search-lab.hu/advisories/secadv-20130722
+[2] http://svn.tartarus.org/sgt?view=revision&sortby=date&revision=9896
+[3] http://bugs.debian.org/718779
+
+Please adjust the affected versions in the BTS as needed.
+
+Regards,
+Salvatore
+
+==============
+
+Personal comment: it would be great if software embedded other
+software/code (e.g. libxml2/expat are common ones, as is zlib and
+other compressors) could be listed in a semi standard fashion in the
+source code (e.g. maybe an "EMBEDDED.txt" or something?) along with
+the date/version that was embedded.
+
 
 - -- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.21 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBCgAGBQJSTnaJAAoJEKWIAHK7tR5CNk0QALuO9LtxhFcRasZIsIHZMEY7
-1LDULOSR8HuBtjjbhFZKZde+jvH01686awnJRKGLHoFmFnmpVlCzmkbpPddj3pE3
-FN6VsXW/1j5GtmffrdHnWDYRjzM237NDMPiHqg5dp0wHw7udiL/zR4hiGbn5S0sJ
-xH5P94OhWiimMXAPtW1TGXdJRR66DuidYnHskl5526sHGyQtNeRkbjXZ3G00zlw9
-j/zfzoPsqaN42VG/IL0jknCsyf7cgv0K4q8+q0mXW8GI/AkgBqMiFIcsnriRAMtM
-NzNZ8HvxCGfqHbUrePETyWfT3MbKk5yRuZGgNESXw+H2LkyHwp+jJ13/1FBycAde
-ZOwwzAltbvh0abqZccfc6sXqAabjnO3YxLsivaEEkKzYW38ta+D2oxySQgrUN/xx
-NVaFv/xHPpNMxLxnC0ETtdfxmk+WbmrK3UBsMdj779y55A5c8Jsqc8Em/qi3SNoU
-c6ad01tL6esB83D/TxPu3XLRdJmpR8TYV5HsvwwIEsU8olOdzMqIoyEaLSEFdl+w
-vjksWChtS543oEwi9EK5rDMjAQEAdMEscwQXAciay9ZVqpBDD7NMtCWX6hKF2Ao3
-QHTfb2XMsQzx343PiuL0KNiogy2zrCeDkMj/yU6LSE8MrFedE/KvUa9EVKCtd88+
-byGlEQqYq/7R1Ywll6vC
-=75h5
+iQIcBAEBAgAGBQJSAA4NAAoJEBYNRVNeJnmTZqgP/iwh6pswIFAHbu6aw8XFWAms
+k5JC/7YHMkK+YqVIGHLdxAvjJ/uHRpg6wzTF86t3BbtcPSCugqU6ON6LT8wfZO13
+n2jd4CQfSKMKTNyTH2PDZGVBUy6zy1DrUF309wHsQ+visVMQRxvU0mKNNDOQnYET
+CypSrt3D5NdTk5s764PEz/vIBoghX1utJh5NGt9OQLmgObsmDvKZJ6mFmuwvxDVb
+hszA+7Z96q4qISoQGicoMWETCbMdwlVnRBBMlpZOjj39uW+IbfYwpgRl79l3Gl+J
+PyAJ8fIKLL26rHLInITtgbaHGf3WCUr/qY3wEZNTibTsUqPnyM0RsscbINWIxcfJ
+VhwjzbZLGxZ996k3aGyTB36gBFU0/lWMHUC1DPrBgjGKdZci4F95zPP9zfLRf4Gg
+yLaRSsCF0U/TZYXUeOeuUTwKyQlXsAXgHmyGkvWKmXMt244k6L+Wwu/lvmrHoMx+
+Ud5N2ho1kwCWNWZNLznHkdKECRYXB/2Eyaym/sVZ71FfCuKB4SSY89btSAlRriai
+CSa06w1P/0mNBWPFymn9dWnUthMcENWqa3r57CH2kAeCF3VukMGh6razWoWlnRAf
+4kSsvggR5sU2HJCMtaUWoZUKRCpoAy6eS97T1GbHlQNtEeyePAALAAIUiHoHkezb
+TZnDaBnvH7vTW4d6xJJ8
+=LlIe
 -----END PGP SIGNATURE-----
