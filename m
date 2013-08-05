@@ -1,28 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/3
-Message-ID: <20131016051844.GA20183@lorien.valinor.li>
-Date: Wed, 16 Oct 2013 07:18:44 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/05/2
+Message-ID: <b5d6b02868bb7a4370526412f7f58321.squirrel@aphrodite.kinkhorst.nl>
+Date: Mon, 5 Aug 2013 07:25:29 +0200
+From: "Thijs Kinkhorst" <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: team@...urity.debian.org
-Subject: Re: Request for linux-distros@...openwall.org membership
+Subject: CVE request: lcms 1.x buffer overflows
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-On Wed, Oct 16, 2013 at 05:46:59AM +0400, Solar Designer wrote:
-> On Mon, Oct 07, 2013 at 11:17:18PM +0200, Moritz Muehlenhoff wrote:
-> > On Mon, Oct 07, 2013 at 10:47:29PM +0200, Salvatore Bonaccorso wrote:
-> > > I recently joined the Debian Security team and request membership to
-> > > the linux-distros@...openwall.org list so that I may participate fully
-> > > in reporting and fixing vulnerabilities in Debian and FOSS. Here is my
-> > > GPG fingerprint:
-> [...]
-> > Confirmed.
-> 
-> I've just subscribed Salvatore to linux-distros.  Sorry for the delay.
+Buffer overflows have been reported in Little CMS 1.x:
+http://bugs.debian.org/718682
 
-Thanks Alexander.
+Upstream does not support this branch anymore since 2009, but several
+distributions are still shipping it.
 
-Regards,
-Salvatore
+Can a CVE id be assigned please?
+
+
+Thanks,
+Thijs
