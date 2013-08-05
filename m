@@ -1,52 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/21/2
-Message-ID: <20130321025754.GA12382@openwall.com>
-Date: Thu, 21 Mar 2013 06:57:54 +0400
-From: Solar Designer <solar@...nwall.com>
-To: larry Cashdollar <larry0@...com>
-Cc: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: Ruby CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/05/1
+Message-ID: <1536863885.11233094.1375678600823.JavaMail.root@redhat.com>
+Date: Mon, 5 Aug 2013 00:56:40 -0400 (EDT)
+From: David Jorm <djorm@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request: XSS in Google Web Toolkit (GWT)
 Content-Type: text/plain; charset=utf-8
 
-Larry,
+I note that with the release of Google Web Toolkit (GWT) 2.5.1, a security flaw has been resolved:
 
-On Wed, Mar 20, 2013 at 09:57:20PM -0400, larry Cashdollar wrote:
-> This was my fault, I should have sent the CVE numbers off list. Sorry all.
+http://www.gwtproject.org/release-notes.html#Release_Notes_2_5_1_RC1 ("Security Fixes")
 
-Why keep information off-list, when it is of interest to some on the
-list?  That would be worse.  Reviewing the list archives, I see that the
-"Ruby CVEs" thread was started in here by Kurt:
+The release notes state:
+Fixed an XSS vulnerability in html files used by GWTTestCase (patch). These files will only be included in a GWT app if it depends on the JUnit module. Despite the fix, this is not recommended.
 
-http://www.openwall.com/lists/oss-security/2013/03/19/2
+The patch is here:
+https://code.google.com/p/google-web-toolkit/source/detail?r=11385
 
-Then you posted three additional messages on the same day:
+I have reproduced this flaw and can confirm it is reflected XSS. I have previously contacted security@...gle asking for CVE IDs for GWT flaws, but never received a response. Please assign a CVE ID to this flaw.
 
-http://www.openwall.com/lists/oss-security/2013/03/19/7
-http://www.openwall.com/lists/oss-security/2013/03/19/8
-http://www.openwall.com/lists/oss-security/2013/03/19/9
-
-with each of them in its own thread.  Thus, maybe the only thing you
-could have done better on that day (given that you had already requested
-CVEs privately 3 days before) was to reply to the thread started by Kurt,
-thereby making it more likely that he'd see the messages as being
-relevant to his "Ruby CVEs".  I understand that replying to an existing
-thread with a forwarded message may be cumbersome; if so, you could have
-posted the forwarded messages separately (like you did) and then replied
-to the original thread saying that you had just posted a relevant
-message (and preferably including a list archive URL for that message).
-
-On March 16, you could have done better by requesting the CVEs via
-oss-security rather than in private.  This would also serve to inform
-the list subscribers of the security issues earlier.
-
-Kurt could have done better by paying attention to other messages on
-this list before assigning CVE IDs.  The traffic in here is not high.
-
-Overall, I think all of you have tried to do the right thing, and I
-would not want to have information withheld from this list merely to
-avoid duplicate CVE IDs in the future.  CVEs are handy, but the CVE
-assignment process should not affect what is posted publicly and when.
-
-Thanks,
-
-Alexander
+Thanks
+-- 
+David Jorm / Red Hat Security Response Team
