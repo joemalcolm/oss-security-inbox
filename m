@@ -1,28 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/05/3
-Message-ID: <20130405140516.GE26194@suse.de>
-Date: Fri, 5 Apr 2013 16:05:16 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/05/5
+Message-Id: <201308051927.r75JRN4b015111@linus.mitre.org>
+Date: Mon, 5 Aug 2013 15:27:23 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: valid but unusual sequence of CVEs in SYM13-009
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Should also get a CVE.
+There's a recent disclosure at:
 
-https://github.com/torvalds/linux/commit/12176503366885edd542389eed3aaf94be163fdb
+  http://www.symantec.com/security_response/securityupdates/detail.jsp?fid=security_advisory&pvid=security_advisory&year=&suid=20130801_00
 
-commit 12176503366885edd542389eed3aaf94be163fdb
-Author: Kees Cook <keescook@...omium.org>
-Date:   Thu Oct 25 13:38:16 2012 -0700
+that has the following valid and correct sequence of CVEs:
 
-    fs/compat_ioctl.c: VIDEO_SET_SPU_PALETTE missing error check
+  CVE-2013-4575
+  CVE-2013-4676
+  CVE-2013-4677
+  CVE-2013-4678
 
-    The compat ioctl for VIDEO_SET_SPU_PALETTE was missing an error check
-    while converting ioctl arguments.  This could lead to leaking kernel
-    stack contents into userspace.
+In other words, the first CVE should NOT be re-interpreted to mean a
+number that "fits better."
 
-    Patch extracted from existing fix in grsecurity.
+CVE-2013-4575 is for software that runs on Linux but we don't know
+(and don't need to know) whether it is open source or might be open
+sourced in the future. We're mentioning it at the request of someone
+who has been assigned CVEs adjacent to CVE-2013-4575, with future use
+for open-source vulnerabilities expected. Thanks very much to that
+person for their help.
 
-Ciao, Marcus
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJR//l0AAoJEGvefgSNfHMdXYAH/iZbYPo5Z1mnuZ6O7l0ox7xG
+jU4DFThfj+pgi2RWheGiqOn9Qp6rLvjO5tPA+C53ryq+UK7LICYYxrkskTL8iol5
+pi7uvMnqAkHnq/FQTjnMhVk3SD0Jo+VRCcnPk5/XleE7hBqdHNNVl7GTo8/o+QYg
++Vt0PZAMahPW9DXBtlxhHlDnEfQEfFQUr8Avzi2szuDpnniTgu3c/zoYApmFhPYc
+Ia+092oQDS+S3AfHmSIgookzYHa6JqgelbREWkfAWOMueSCJ7ej6Dp/19l9k1eoL
+TFqb6JoxItrWQI08dcB2nPNfXRy9+woPLP63l6b+LWu5APRmXSSbW+JOAXpBxyc=
+=loS6
+-----END PGP SIGNATURE-----
