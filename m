@@ -1,26 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/05/1
-Message-ID: <669edbebc75f8c696e48398b271fc464.squirrel@aphrodite.kinkhorst.nl>
-Date: Tue, 5 Nov 2013 09:54:01 +0100
-From: "Thijs Kinkhorst" <thijs@...ian.org>
-To: "Open Source Security" <oss-security@...ts.openwall.com>
-Subject: CVE request: drupalauth module for simpleSAMLphp trivial impersonation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/05/3
+Message-ID: <51FF3C64.3030609@redhat.com>
+Date: Sun, 04 Aug 2013 23:47:16 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: XSS in Google Web Toolkit (GWT)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Alan Barrett reported an issue in the drupalauth module for simpleSAMLphp,
-which takes the username out of a cookie which is obviously under control
-of the user.
+On 08/04/2013 10:56 PM, David Jorm wrote:
+> I note that with the release of Google Web Toolkit (GWT) 2.5.1, a
+> security flaw has been resolved:
+> 
+> http://www.gwtproject.org/release-notes.html#Release_Notes_2_5_1_RC1
+> ("Security Fixes")
+> 
+> The release notes state: Fixed an XSS vulnerability in html files
+> used by GWTTestCase (patch). These files will only be included in a
+> GWT app if it depends on the JUnit module. Despite the fix, this is
+> not recommended.
+> 
+> The patch is here: 
+> https://code.google.com/p/google-web-toolkit/source/detail?r=11385
+> 
+> I have reproduced this flaw and can confirm it is reflected XSS. I
+> have previously contacted security@...gle asking for CVE IDs for
+> GWT flaws, but never received a response. Please assign a CVE ID to
+> this flaw.
+> 
+> Thanks
 
-Report and patch:
-http://code.google.com/p/drupalauth/issues/detail?id=9
+So according to
+http://cve.mitre.org/cve/cna.html
+Google is a CVE Numbering Authority but I can't find a CVE in google
+(irony?) for this so I guess they missed it. Please use CVE-2013-4204
+for this issue.
 
-(Note that this is an independently developed module not part of the
-simpleSAMLphp core distribution. Note also that this module is used for
-Drupal as an authentication source, and is not related to using Drupal
-with simpleSAMLphp as an SP).
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-
-Cheers,
-Thijs
+iQIcBAEBAgAGBQJR/zxhAAoJEBYNRVNeJnmTgtEQAJ2gmoFcYw9EXIWtQBLkykBq
+7GShyEcaxY43Ecm38TEIMElHxXsiX6QoI16O0AzkMi2N0TsKjxp0Lvf7zfU3fhqI
++juPu2bqKP+yGRJKcb5RoEUr1QGkvS8e4BBTK/572shziiC7j+hvdYYOR3sFvmQw
+q8HiLIx/in+MUgB+V9XIOyKk5C8v60C8CQ8EH4oqD8q8YScq/HioaKgrs4GJqCUA
+tbnHPuah9WBOyS0RstyDPAsDRXVGl081mPlq0fllHq28sArbZo+gB1ZgDMhvVhbv
+AghVzKYt8px3FLi+MVlSTOGeIrTXtpsTWQ66DKxfYfsj1iNh+T3B/fD4H08c4hqX
+46rEUBwGKvdNIcg6+DsHvni/6zXBry8qA9x3xwnfUK0xDhZZ8qXN5uXhPqLCM64N
+TADtIVy5R0f1pv9SNRUMuKBPs+Pw5kimgnYaM45i1E8ilSxHVX6JKsTukx89DK+0
+YK674UeTPVQIelFFG8EnasINjgua2kEEaFWsqMPcLbeFsHZA9AD7GpEC6vilTrQz
+w8ApJ90Ti1oU0eZ1oMhpcjkgjQaS/ZIwYAkIZnLq9Xi5/jGu6aB0sum4fPd8Fytt
+QDWdJwfTaWq8pNa4M/wwLJGP89EQFunXfGwLd4iloJEHeDSRbmj7H0lRax4DSxeJ
++07h7kydenYwxrVTBUL3
+=roNw
+-----END PGP SIGNATURE-----
