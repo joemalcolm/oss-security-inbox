@@ -1,48 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/5
-Message-ID: <51241C74.3090604@redhat.com>
-Date: Tue, 19 Feb 2013 17:44:36 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Kurt Seifried <kseifrie@...hat.com>
-Subject: Re: CVE request -- Linux kernel: net: CIPSO_V4_TAG_LOCAL tag NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/3
+Message-ID: <20130806150415.GO29720@openstack.org>
+Date: Tue, 6 Aug 2013 15:04:15 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2013-019] Resource limit circumvention in Nova private flavors (CVE-2013-2256)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+OpenStack Security Advisory: 2013-019
+CVE: CVE-2013-2256
+Date: August 6, 2013
+Title: Resource limit circumvention in Nova private flavors
+Reporter: hzrandd (NetEase)
+Products: Nova
+Affects: All versions
 
-On 02/19/2013 05:41 PM, Petr Matousek wrote:
-> The skb argument to cipso_v4_validate() is NULL when called via
-> the setsockopt() syscall. An local user able to set CIPSO IP
-> options on the socket could use this flaw to crash the system.
-> 
-> Upstream fix: 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=89d7ae34cdda4195809a5a987f697a517a2a3177
->
->  References: https://bugzilla.redhat.com/show_bug.cgi?id=912900
-> 
-> Thanks,
-> 
+Description:
+hzrandd from NetEase reported a resource limit circumvention
+vulnerability in Nova's handling of private flavors. Any tenant is
+able to show and boot any other tenant's private flavors by guessing
+a flavor ID. This not only exposes the flavor's name, memory and
+disk size, swap allocation, VCPU count and similar flavor
+properties, but potentially allows circumvention of any resource
+limits enforced through the os-flavor-access:is_public property.
 
-Please use CVE-2013-0310 for this issue.
+Havana (development branch) fix:
+https://review.openstack.org/34963
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Grizzly fix:
+https://review.openstack.org/37992
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Folsom fix:
+https://review.openstack.org/38318
 
-iQIcBAEBAgAGBQJRJBx0AAoJEBYNRVNeJnmTiBwQAJlmqgsWghKYK01u84yZ62HL
-wkMK0AXgZdQnv6teM9+33P/VEArPa2oIrZj7JtvLgn8ajM7hL7z+BphJSviZsYl3
-lMx/tZRah+XSAxnksDm9q7ZN7BI05tzSMIDaeoKk9x+6WX7xHVc2VfhcUIUOnh/G
-FbhSyEIw4LU9Ogj086KAepXqwHht9Ez/LvelP4yXEwd6vKIJgdC3zJ1ff+2GT3M7
-tQaWT9OhWlFlxLIEh8X2t7qRbBNjmrNZDRWCnmHfKmN6+SDeWJkhsw9NBaFLscX2
-Q5Ti2E1uRGW5XXuphhBQbOhMiOkj9glwu3pqVm+ci4TbWSjNOxThQgEEZa5XIrdJ
-uMaW6ENMQT9GqF393R9cM0mU93WK2qTWq879o7hvgERxboboYYcP1MdLho0qORUL
-rTR3sjkw1GlALHJ8iqMCo2NF2XF1bWl6X4Dh/J8d5bNMWHRhK7nlfL+weN/7BtLz
-h+mfUholnRJQ/aokIsYS2IPK0xOqn0bTKsOwBxAo9v5qU9MZWrODLp1L14uYht9E
-mrmLaeXDRbpzCADUBKCzlHo5CmUPNxBceTBKQLZNvzcH9aAmAeJZ+tZLocz2Q87l
-AahSKmmNdJd3SVorjcbU1jBp8GE6CQ4+bE+ElsGdplEYrabUKXMQoIouyG3e/s4w
-aejzDsAENgdsjYW68f81
-=f/iD
------END PGP SIGNATURE-----
+Notes:
+This fix is included in the havana-2 development milestone and will
+appear in a future 2013.1.3 release.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2256
+https://bugs.launchpad.net/nova/+bug/1194093
+
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
