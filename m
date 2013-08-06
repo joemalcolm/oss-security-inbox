@@ -1,63 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/11
-Message-ID: <CABUevEw_RtFtUx_xUWVev2MSCVOCgipuJP3oG1W+QahCuxW_Zw@mail.gmail.com>
-Date: Tue, 20 Aug 2013 18:57:04 +0200
-From: Magnus Hagander <magnus@...ander.net>
-To: kseifried@...hat.com, Devrim Gunduz <devrim@...duz.org>
-Cc: oss-security@...ts.openwall.com,  "Eric H. Christensen" <echriste@...hat.com>, "security@...tgresql.org" <security@...tgresql.org>, kevin@...ye.com
-Subject: Re: [pgsql-security] Re: PostgreSQL insecure install via yum (multiple problems)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/15
+Message-ID: <52018D42.1090109@redhat.com>
+Date: Tue, 06 Aug 2013 17:56:50 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, "Steven M. Christey" <coley@...re.org>
+Subject: SSL BREACH
 Content-Type: text/plain; charset=utf-8
 
-Adding Devrim Gunduz who is the maintainer of the PostgreSQL yum repository.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+I assume this will get handled like CVE-2009-3555?
 
-On Tue, Aug 20, 2013 at 6:11 AM, Kurt Seifried <kseifried@...hat.com> wrote:
-> On 08/19/2013 07:19 PM, Eric H. Christensen wrote:
->> On Mon, Aug 19, 2013 at 06:58:22PM -0600, Kurt Seifried wrote:
->>> Signing RPM's isn't very useful if you never make the signing
->>> key available!
->>
->> You mean like this:
->> http://keys.fedoraproject.org/pks/lookup?search=0x442df0f8&op=vindex
->>
->>  I'm pretty sure pgp.mit.edu isn't the best source for PGP keys any
->> longer, unfortunately.
->
-> Dunno who to ask, so adding Scrye: can we make sure Google indexes the
-> Fedora key server? This actually raises a good point, what are the key
-> servers now? The big 3 used to be:
->
-> http://pgp.mit.edu/
-> http://keyserver.pgp.com/
-> http://sks-keyservers.net/
->
-> and it's not on any of them =( Even if the key is uploaded PostgreSQL
-> doesn't list the key fingerprint anywhere securely, the key ID can be
-> spoofed, so yeah there might be keys with the ID 442df0f8 but I got no
-> clue if they're legitimate or not =(.
->
-> Really all we need is an HTTPS server (easy) and a web page listing
-> the key/fingerprint, ideally the full text of the key. I understand
-> small projects may not do this, but PostgreSQL is pretty big and
-> professional.
+http://threatpost.com/breach-compression-attack-steals-https-secrets-in-under-30-seconds/101579
 
-Agreed, we should. Regardless of it being on the proper keyservrers or
-not. In fact, we do this for Debian/Ubuntu already at
-https://www.postgresql.org/media/keys/ACCC4CF8.asc. The intention was
-to do it for the rpm keys as well, but that seems to have slipped off
-the todo list somehow.
+http://it.slashdot.org/story/13/08/05/233216
 
-Devrim, can you provide the key for this, and update the instructions
-accordingly? I believe you have the required commit bit on the website
-repository, but if not, send me the keyfile as it should be, and I can
-apply it for you (and of course, confirm out of band what the
-fingerprint is of the correct key).
+https://www.djangoproject.com/weblog/2013/aug/06/breach-and-django/
 
-Thanks!
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-
--- 
- Magnus Hagander
- PostgreSQL Core Team
- Me: http://www.hagander.net/
- Work: http://www.redpill-linpro.com/
+iQIcBAEBAgAGBQJSAY1CAAoJEBYNRVNeJnmTgBcP/jUKKNmUDTe28yQ8aDBCCyXR
+rcdyyudy6/Q5Q50E99fmU5LL0UWB1WKqrao7bn1Fwu8q/i3VyOLenbmyYeBeAL98
+zQBeqz+alSMcYYw4mpDiaY66KDFUiRM16dOw4wtHarL7kRyM3yte91H4J2fCFk3j
+BOBkC8D+hu9ZXF2OShp9gzWw0+5fwJ94wvJj6hw8fnRbmPWF4PJ7EtGEDVrvFOaJ
+rSDHuG+fZ0BXkgrVXNhh57Agu4EVJSj8l6UA0ltK9tH8PJXQoYJAh9qOGPSdPjeN
+y0J432RgjihyiHQARY++te4Sc3+joqXLwnPHXk7ww9r+mkxEcdzR6fhfo1Lo8bpr
+4VUiQ37BR/tck9JJZvWwclByqBk6Y9FHWblzMKiymdLzAthR1jTFNCHXuIBL1MBt
+sARu5TMbBww9RuAxvdDw0Dir6OLOBMWdpYXqqkh4b9lqyGIWmQbe2HX4VkJf2A4r
+a8wCD+/jmdXV2/7uz+csAO9OTexBpAE5s2EKjukQ9pslbB0ubqMFUsdYCGncaVZ/
+7/oOw9L1Y7oEF2xrZHnpQ5AIftUiBRTrws6p8cmvLssO/qhhFxKegZoC4w2URNUY
+WD7mM23jKRGWhSdn/lMdu39cyjnMaXlKxyfyxcYyL0L+8Kyn++sTIixT4+th0p8x
+09eZ84zqe5u3KJLufFqC
+=VhC2
+-----END PGP SIGNATURE-----
