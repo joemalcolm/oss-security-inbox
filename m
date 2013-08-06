@@ -1,100 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/5
-Message-ID: <5125B695.2080101@redhat.com>
-Date: Wed, 20 Feb 2013 22:54:29 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal Core and contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/12
+Message-ID: <8738qmilme.fsf@xmission.com>
+Date: Tue, 06 Aug 2013 13:56:41 -0700
+From: ebiederm@...ssion.com (Eric W. Biederman)
+To: Oleg Nesterov <oleg@...hat.com>
+Cc: security@...nel.org,  oss-security@...ts.openwall.com,  Petr Matousek <pmatouse@...hat.com>,  Andy Lutomirski <luto@...capital.net>,  David Howells <dhowells@...hat.com>,  linux-kernel@...r.kernel.org
+Subject: Re: [PATCH 1/1] userns: unshare_userns(&cred) should not populate cred on failure
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Oleg Nesterov <oleg@...hat.com> writes:
 
-On 02/20/2013 09:42 PM, Forest Monsen wrote:
-> Hi Kurt,
-> 
-> Here's a request for CVE identifiers for several issues:
+> unshare_userns(new_cred) does *new_cred = prepare_creds() before
+> create_user_ns() which can fail. However, the caller expects that
+> it doesn't need to take care of new_cred if unshare_userns() fails.
+>
+> We could change the single caller, sys_unshare(), but I think it
+> would be more clean to avoid the side effects on failure, so with
+> this patch unshare_userns() does put_cred() itself and initializes
+> *new_cred only if create_user_ns() succeeeds.
 
-Top posting because I'm lazy
+Doh!
 
-CVE-2013-0316 Drupal SA-CORE-2013-002 - Drupal core - Denial of service
-CVE-2013-0317 Drupal SA-CONTRIB-2013-015 - Manager Change for Organic
-Groups - Cross site scripting (XSS)
-CVE-2013-0318 Drupal SA-CONTRIB-2013-016 - Banckle Chat - Access
-bypass - Unsupported
-CVE-2013-0319 Drupal SA-CONTRIB-2013-017 - Yandex.Metrics - Cross site
-scripting (XSS)
-CVE-2013-0320 Drupal SA-CONTRIB-2013-018 - Taxonomy Manager - Cross
-Site Request Forgery (CSRF)
-CVE-2013-0321 Drupal SA-CONTRIB-2013-019 - Ubercart Views - Cross site
-scripting (XSS)
-CVE-2013-0322 Drupal SA-CONTRIB-2013-020 - Ubercart - Cross site
-scripting (XSS)
-CVE-2013-0323 Drupal SA-CONTRIB-2013-021 - Display Suite - Cross Site
-Scripting (XSS)
-CVE-2013-0324 Drupal SA-CONTRIB-2013-022 - Menu Reference - Cross site
-scripting (XSS)
-CVE-2013-0325 Drupal SA-CONTRIB-2013-023 - Varnish module - Cross Site
-Scripting (XSS)
+Reviewed-by: "Eric W. Biederman" <ebiederm@...ssion.com>
 
-
-
-> 
-> SA-CORE-2013-002 - Drupal core - Denial of service 
-> http://drupal.org/SA-CORE-2013-002
-> 
-> SA-CONTRIB-2013-015 - Manager Change for Organic Groups - Cross
-> site scripting (XSS) http://drupal.org/node/1916312
-> 
-> SA-CONTRIB-2013-016 - Banckle Chat - Access bypass - Unsupported 
-> http://drupal.org/node/1916370
-> 
-> SA-CONTRIB-2013-017 - Yandex.Metrics - Cross site scripting (XSS) 
-> http://drupal.org/node/1922400
-> 
-> SA-CONTRIB-2013-018 - Taxonomy Manager - Cross Site Request Forgery
-> (CSRF) http://drupal.org/node/1922410
-> 
-> SA-CONTRIB-2013-019 - Ubercart Views - Cross site scripting (XSS) 
-> http://drupal.org/node/1922416
-> 
-> SA-CONTRIB-2013-020 - Ubercart - Cross site scripting (XSS) 
-> http://drupal.org/node/1922418
-> 
-> SA-CONTRIB-2013-021 - Display Suite - Cross Site Scripting (XSS) 
-> http://drupal.org/node/1922438
-> 
-> SA-CONTRIB-2013-022 - Menu Reference - Cross site scripting (XSS) 
-> http://drupal.org/node/1922446
-> 
-> SA-CONTRIB-2013-023 - Varnish module - Cross Site Scripting (XSS) 
-> http://drupal.org/node/1922756
-> 
-> Thanks!
-> 
-> Forest
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRJbaVAAoJEBYNRVNeJnmTik8QAIKH1ZaO3ORx/UxP9ohCwkK+
-gkjn1hftxSyo7/iGvyoaIBK8S2vRLvGgD2XjUWgVKxEahhtdxFbIeDZhM8XoMNiK
-Zryi3E5mjBXWCk5yH65ILY75FTYzN568vlWoXy0yPOlIZ8GHqFpjXFnnm160aOql
-c/Wo9uIvmAjl+b05WrNtirUpW2WNKOOxqDbKQcHsPrDhtsLfxCklhP0KmwtF6L9K
-vI6Vtf+35vA0ELfM0VtZUBgSjtJQbBGqYcHwSCkQh6SHbZegYBr+f1Eqx8VpyGLz
-M+n99G8CzND4BAnppin6LCueDSUIuiLgbHysVyaKbJ9L7cxb4XdKtYS9sgmil3Wa
-8fEPvimiHNCRBDS2znBQomHKZXI2yf6+K+8/uKyG43D7AA7FK8Iqp+SwJX3iQ9m2
-z5svQJe8QeE6vjQfZM8fb4rq4tPpLrx9mdIsRI2k5CkOC+sZ/Cs0dF7SkZp6i208
-Qqa+9wzzp1FcmCWVNCypLk5Sqly3iuHUmU6FDYp3nfAncOJUY7Vt0NjYF9HhvPRp
-CnW1uFoV1N28hgAqewd0mIr3kUuzZaJ4bovzc/KcJziWKcwMbKyEx+UeGkzwUJFu
-fJqcqwvZh0d2zBtOlGAvqTSUx1wV1GTpPaG+qaUInXO+npvk5oSppm1EHns4dO4a
-bnA1je31AzdvK3IAyt6M
-=hOl8
------END PGP SIGNATURE-----
+> Cc: stable@...r.kernel.org
+> Signed-off-by: Oleg Nesterov <oleg@...hat.com>
+> ---
+>  kernel/user_namespace.c |   13 +++++++++----
+>  1 files changed, 9 insertions(+), 4 deletions(-)
+>
+> diff --git a/kernel/user_namespace.c b/kernel/user_namespace.c
+> index d8c30db..6e50a44 100644
+> --- a/kernel/user_namespace.c
+> +++ b/kernel/user_namespace.c
+> @@ -105,16 +105,21 @@ int create_user_ns(struct cred *new)
+>  int unshare_userns(unsigned long unshare_flags, struct cred **new_cred)
+>  {
+>  	struct cred *cred;
+> +	int err = -ENOMEM;
+>  
+>  	if (!(unshare_flags & CLONE_NEWUSER))
+>  		return 0;
+>  
+>  	cred = prepare_creds();
+> -	if (!cred)
+> -		return -ENOMEM;
+> +	if (cred) {
+> +		err = create_user_ns(cred);
+> +		if (err)
+> +			put_cred(cred);
+> +		else
+> +			*new_cred = cred;
+> +	}
+>  
+> -	*new_cred = cred;
+> -	return create_user_ns(cred);
+> +	return err;
+>  }
+>  
+>  void free_user_ns(struct user_namespace *ns)
