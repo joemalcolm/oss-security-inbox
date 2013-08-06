@@ -1,107 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/29/5
-Message-Id: <E1VbBNu-0001Jl-G5@xenbits.xen.org>
-Date: Tue, 29 Oct 2013 15:39:10 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 72 (CVE-2013-4416) - ocaml xenstored mishandles oversized message replies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/7
+Message-ID: <20130806173855.GB24908@redhat.com>
+Date: Tue, 6 Aug 2013 19:38:55 +0200
+From: Oleg Nesterov <oleg@...hat.com>
+To: security@...nel.org, oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
+Cc: "Eric W. Biederman" <ebiederm@...ssion.com>, Andy Lutomirski <luto@...capital.net>, David Howells <dhowells@...hat.com>, linux-kernel@...r.kernel.org
+Subject: [PATCH 1/1] userns: unshare_userns(&cred) should not populate cred on failure
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+unshare_userns(new_cred) does *new_cred = prepare_creds() before
+create_user_ns() which can fail. However, the caller expects that
+it doesn't need to take care of new_cred if unshare_userns() fails.
 
-             Xen Security Advisory CVE-2013-4416 / XSA-72
-                             version 3
+We could change the single caller, sys_unshare(), but I think it
+would be more clean to avoid the side effects on failure, so with
+this patch unshare_userns() does put_cred() itself and initializes
+*new_cred only if create_user_ns() succeeeds.
 
-         ocaml xenstored mishandles oversized message replies
+Cc: stable@...r.kernel.org
+Signed-off-by: Oleg Nesterov <oleg@...hat.com>
+---
+ kernel/user_namespace.c |   13 +++++++++----
+ 1 files changed, 9 insertions(+), 4 deletions(-)
 
-UPDATES IN VERSION 3
-====================
+diff --git a/kernel/user_namespace.c b/kernel/user_namespace.c
+index d8c30db..6e50a44 100644
+--- a/kernel/user_namespace.c
++++ b/kernel/user_namespace.c
+@@ -105,16 +105,21 @@ int create_user_ns(struct cred *new)
+ int unshare_userns(unsigned long unshare_flags, struct cred **new_cred)
+ {
+ 	struct cred *cred;
++	int err = -ENOMEM;
+ 
+ 	if (!(unshare_flags & CLONE_NEWUSER))
+ 		return 0;
+ 
+ 	cred = prepare_creds();
+-	if (!cred)
+-		return -ENOMEM;
++	if (cred) {
++		err = create_user_ns(cred);
++		if (err)
++			put_cred(cred);
++		else
++			*new_cred = cred;
++	}
+ 
+-	*new_cred = cred;
+-	return create_user_ns(cred);
++	return err;
+ }
+ 
+ void free_user_ns(struct user_namespace *ns)
+-- 
+1.5.5.1
 
-Public release.
 
-ISSUE DESCRIPTION
-=================
-
-The Ocaml xenstored implementation ("oxenstored") cannot correctly handle
-a message reply larger than XENSTORE_PAYLOAD_SIZE when communicating
-with a client domain via the shared ring mechanism.
-
-When this situation occurs the connection to the client domain will be
-shutdown and cannot be restarted leading to a denial of service to
-that domain.
-
-Clients in the same domain as xenstored which are using the Unix
-domain socket mechanism are not vulnerable.
-
-IMPACT
-======
-
-A malicious domain can create a directory containing a large number of
-entries in the hopes that a victim domain will attempt to list the
-contents of that directory. If this happens then the victim domain's
-xenstore connection will be shutdown leading to a denial of service
-against that domain.
-
-If the victim domain is a toolstack or control domain then this can
-lead to a denial of service against the whole system.
-
-VULNERABLE SYSTEMS
-==================
-
-All systems using oxenstored are potentially vulnerable.
-
-oxenstored was added in Xen 4.1.0. From Xen 4.2.0 onward it is used by
-default if an ocaml toolstack was present at build time.
-
-In its default configuration the C xenstored implementation is not
-vulnerable.  By default this implementation imposes a quota on the
-maximum directory size which is less than XENSTORE_PAYLOAD_SIZE.  If
-you have adjusted the quota using the --entry-size / -S option to a
-value larger than XENSTORE_PAYLOAD_SIZE (4096 bytes) then you may be
-vulnerable.
-
-Systems where the toolstack and oxenstored live in the same domain
-will default to using Unix domain socket based communications and
-therefore are not vulnerable to the host wide denial of service by
-default.  In such a configuration guest domains which do not list
-xenstore paths belonging to untrusted foreign domains will not be
-vulnerable to the DoS.  (In the common case guests will not have
-permission to do so in any case.)
-
-MITIGATION
-==========
-
-Switching to the C xenstored (in its default configuration), will
-eliminate this vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Thomas Sanders at Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves both the ocaml xenstore and C
-xenstore issues.
-
-xsa72.patch        xen-unstable, Xen 4.3.x, Xen 4.2.x
-
-$ sha256sum xsa72*.patch
-66e11513fc512173140f3ca12568f8ef79415e9a7884254a700991b3f1afd125  xsa72.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJSb9aMAAoJEIP+FMlX6CvZU6MH/2Racg6r+JLka2jqPO3X+BCh
-+Dvkp2s85lQ/i7lUDq7V/1Badc+GpqCAoysgjh0bMSyXpPwaz3N+JhcgSEzWbXoU
-IlQQUWGA86jO7x0g1HBIfvmf6o+ALWKkoyLiOZ3ZgpibO/vkl+8qU6yiD+r0XDaM
-TTcsuRrosw6wbVsPkL7wGpTsQD1JA/FSKd7BpsQRMjxUeMtTeBtPN1o+zsvGf7he
-A8MYe55XXYZbHv/S9yuBCHXtCU+QRtuGJGODIPACOqsaqWETIf013sxCORAmqg3x
-bNEm3R0EJl3pO8Hdd2kTzIjRHgLn9LEKTIQU4+IYj0jOqXsMYjalFIL2RFC2lzI=
-=vgDt
------END PGP SIGNATURE-----
-
-Download attachment "xsa72.patch" of type "application/octet-stream" (2633 bytes)
