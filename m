@@ -1,90 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/1
-Message-ID: <51DCD899.5040609@redhat.com>
-Date: Tue, 09 Jul 2013 21:44:25 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/11
+Message-ID: <20130806195610.GQ19155@redhat.com>
+Date: Tue, 6 Aug 2013 13:56:10 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Nadim Kobeissi <nadim@...im.cc>, nadim@...pto.cat, arlo@...pto.cat
-Subject: Re: Re: cryptocat/decryptocat - needs a cve?
+Subject: CVE request: three additional flaws fixed in putty 0.63
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+There seem to be some CVEs needed for putty 0.63 due to some other fixes
+that were fixed alongside CVE-2013-4852:
 
-On 07/09/2013 09:59 AM, Nadim Kobeissi wrote:
-> No CVE has been assigned yet. Any assistance with this is welcome!
-> 
-> NK
 
-Ok sorry for the delay, I have some questions. Can you provide links
-to the code commits fixing these issues/give some details on them?
-Also I assume the Cryptocat 2.1 release fixes the decryptocat issue
-correct?
+* a heap-corrupting buffer underrun bug in the modmul function which performs modular multiplication:
+http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/vuln-modmul.html
+http://svn.tartarus.org/sgt?view=revision&sortby=date&revision=9977
 
-==============
+* A buffer overflow vulnerability in the calculation of modular inverses when verifying a DSA signature:
+http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/vuln-bignum-division-by-zero.html
+http://svn.tartarus.org/sgt?view=revision&sortby=date&revision=9996
 
-https://github.com/cryptocat/cryptocat/blob/master/CHANGELOG.md
+* Private keys left in memory after being used by PuTTY tools:
+http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/private-key-not-wiped.html
+http://svn.tartarus.org/sgt?view=revision&sortby=date&revision=9988
 
-Cryptocat 2.1
-Jun. 7 2013
-Security enhancements and bug fixes. Updating is recommended.
 
-Cryptocat 2.0.42
-Apr. 19 2013
-Fixed a bug found in the encryption libraries that could partially
-weaken the security of multiparty Cryptocat messages.
+I can't see any CVE references so I suspect there are none.
 
-Cryptocat 2.0.22
-Nov. 7 2012
-This version pushes many important security fixes, detailed here on
-the Cryptocat Development Blog:
-https://blog.crypto.cat/2012/11/security-update-our-first-full-audit/
-
-Cryptocat 2.0.19
-Nov. 1 2012
-Minor security fixes.
-
-==============
-
-Second set of questions:
-
-Then in http://tobtu.com/decryptocat.php
-
-A number of other issues are mentioned, but I can't easily match them
-up to the changelog:
-
-Date introduced	Days in Git	Difficulty rating
-Jul 9, 2011	58	Passwords so probably broken
-Sep 5, 2011	6	*** Medium
-Sep 11, 2011	36	**** Hard
-Oct 15, 2011	2	***** "Impossible"
-Oct 17, 2011	12	*** Medium
-Oct 29, 2011	191	** Easy
-May 7, 2012	347	* Encraption
-Apr 19, 2013	45	*** Medium
-Jun 3, 2013	30+	***** "Impossible"
-
-Can you provide links to the commits for these issues?
-
-It looks like we need between 4 and 10+ CVEs in total.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJR3NiZAAoJEBYNRVNeJnmTiNUQANXP/F9DrWyrrT4b3jlDbOnh
-Rrd1khnt/b8zP7LbGNAaKS70qLe1StjjNkXd/L8Dlc9GjV5mfM8JZF15jmMM7Ud6
-3scF4c1jHaNzl1W/mHWfrFOTKcHWTp4YpDyFF7KQkYqbHmjFrD5zRaUYujdjO14i
-yrL5SDLOYG35EkIML8aN9jhrkaX8Smi3v9x8WEhVFstFy0YqVSpGP+ZeflH6Xbeg
-Sqc9nvAHnZo/xeyUNydrnPkMBpSwYq1WM6MONkVZzpcri9KpiPQHMi1VbhFVw6eh
-mSLYKAwgc7pmsuEGH9Gg1On+7vnV7xDj1zZir/bo4smVLW5+QEnwcTAbXO5yA+ub
-YerqnSgmMo4ngxUKiMVmUgWLcq8zLuMlC8zeQux6M5UXoSStetAmXWZLRjmqp5ex
-lD6NLxLCtDZgsfIpIDD7BJ3j9y9BK8Nr02OSx6PSkPVt33Fo9QQVQQkZJklf0Ado
-W0DG67w7u/5o8ZtgYKg7hdGU6t7JTm9T8n8AQlKtx248BjxvvP70xazpPs6QI06T
-8ZjjNVhtbu/IjbMun/GIhP9nTFCq2J0lUYTMeVVCHqnK3XE78Dr9bM8EXTYgXa4Q
-7K+mqT+E4do4ZPphHLAv7IogK6dfpfmkB20L6puU+1aDe+sLta4bLquwbqkb1L1t
-penEqUZKladlKwf7o5fn
-=QAJ/
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Security Response Team 
