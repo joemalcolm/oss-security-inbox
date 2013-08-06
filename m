@@ -1,80 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/9
-Message-Id: <E1TxcYd-0007H4-74@xenbits.xen.org>
-Date: Tue, 22 Jan 2013 12:02:27 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 35 (CVE-2013-0152) - Nested HVM exposes host to being driven out of memory by guest
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/10
+Message-ID: <20130806183109.GA29541@redhat.com>
+Date: Tue, 6 Aug 2013 20:31:09 +0200
+From: Oleg Nesterov <oleg@...hat.com>
+To: Andy Lutomirski <luto@...capital.net>
+Cc: security@...nel.org, oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>, "Eric W. Biederman" <ebiederm@...ssion.com>, Linus Torvalds <torvalds@...ux-foundation.org>
+Subject: Re: CLONE_NEWUSER local DoS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 08/06, Andy Lutomirski wrote:
+>
+> On Tue, Aug 6, 2013 at 9:47 AM, Oleg Nesterov <oleg@...hat.com> wrote:
+> >
+> > I'll send the patch, but perhaps there is something else. Eric?
+>
+> I think that's right.  OTOH, it's not going to prevent this from OOMing:
 
-	     Xen Security Advisory CVE-2013-0152 / XSA-35
-                           version 3
+Aaaah. user_ns_cachep I guess? ns->parent logic, yes??
 
-       Nested HVM exposes host to being driven out of memory by guest
+I convinced myself this should be fine but it seems you are right.
 
-UPDATES IN VERSION 3
-====================
+IIUC, this needs another fix. Will try tomorrow. Not that I think
+this needs my help ;)
 
-Public release.
+Oleg.
 
-ISSUE DESCRIPTION
-=================
-
-Guests are currently permitted to enable nested virtualization on
-themselves. Missing error handling cleanup in the handling code makes
-it possible for a guest, particularly a multi-vCPU one, to repeatedly
-invoke this operation, thus causing a leak of - over time - unbounded
-amounts of memory.
-
-IMPACT
-======
-
-A malicious domain can mount a denial of service attack affecting the
-whole system.
-
-VULNERABLE SYSTEMS
-==================
-
-Only Xen 4.2 and Xen unstable are vulnerable. Xen 4.1 and earlier are
-not vulnerable.
-
-The vulnerability is only exposed by HVM guests.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this vulnerability.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-To fix both XSA 34 and XSA 35, first apply xsa34-4.2.patch from XSA 34
-and then *also* apply xsa35-4.2-with-xsa34.patch from this advisory.
-
-To fix this issue without addressing XSA 34, use xsa35.patch.
-
-$ sha256sum xsa35*.patch
-8372322e986bc2210f0d35b4d35a029301bd28fc1dffb789dff1436eb2024723  xsa35-4.2-with-xsa34.patch
-e69b01033b0fa4c3d175697566d2f0b161337e8d206654919937f77721dbf866  xsa35.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQ/ny+AAoJEIP+FMlX6CvZajwIAJ2/2xGmEbI44LFJ4rGehOY8
-CZRlTzyPLUt1eVk6lD7qwX1ondGEAsFwLrZdFp+c08Cle7o2RT502EwptPGIRhkc
-8pPjOgqWr/YjHC/B0VAoCZOF08HsIpDU2wiaxKhcFODNoeUb2z01OL5G+7I60HzV
-54F70rCBx229Myhq9zqCV4a1XW+73k6NL7bpRICAME5fDy+8q4gcF0UDLv6MZmNV
-PB9Ey2kiH6TMZO4Si+ekF4GQzfvje5/xTU/v0bHq6r7SxhHXq4aJ5e6jER0vlTsr
-0HbE5uG/4LimCmc77q0ZiHOGg61gc/V1imfsUOTnnfaifw4qReCQHXpMAOdg9Ww=
-=O88v
------END PGP SIGNATURE-----
-
-Download attachment "xsa35-4.2-with-xsa34.patch" of type "application/octet-stream" (773 bytes)
-
-Download attachment "xsa35.patch" of type "application/octet-stream" (919 bytes)
