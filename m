@@ -1,51 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/4
-Message-ID: <514818C8.5050402@redhat.com>
-Date: Tue, 19 Mar 2013 01:50:32 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/4
+Message-ID: <20130806150501.GQ29720@openstack.org>
+Date: Tue, 6 Aug 2013 15:05:01 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
 To: oss-security@...ts.openwall.com
-CC: Sean Amoss <ackle@...too.org>
-Subject: Re: CVE Request: VLC Buffer overflows
+Subject: [OSSA 2013-020] Denial of Service in Nova network source security groups (CVE-2013-4185)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+OpenStack Security Advisory: 2013-020
+CVE: CVE-2013-4185
+Date: August 6, 2013
+Title: Denial of Service in Nova network source security groups
+Reporter: Vishvananda Ishaya (Nebula)
+Products: Nova
+Affects: All versions
 
-On 03/17/2013 06:52 AM, Sean Amoss wrote:
-> It looks like this issue has not been assigned a CVE ID:
-> 
-> VLC media player 2.0.5 addresses buffer overflow flaws in the
-> freetype renderer and HTML subtitle parser.
-> 
-> Reference: http://www.videolan.org/security/sa1301.html
-> 
-> Upstream fix: 
-> http://git.videolan.org/?p=vlc/vlc-2.0.git;a=commitdiff;h=9b0414dc7f5c18ff2951175cf076779c444efd70
->
-> 
-> 
-> Thanks, Sean
-> 
+Description:
+Vishvananda Ishaya from Nebula reported a denial of service
+vulnerability in Nova's handling of network source security group
+policy updates. By performing a large number of server creation
+operations, the proportion of updates increases quadratically and
+may overwhelm nova-network such that it is no longer able to service
+other requests in a timely fashion. Only setups relying on
+nova-network are affected.
 
-Please use CVE-2013-1868 for these issues.
+Havana (development branch) fix:
+https://review.openstack.org/39541
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Grizzly fix:
+https://review.openstack.org/39543
 
-iQIcBAEBAgAGBQJRSBjIAAoJEBYNRVNeJnmToJUP/0RjhDeG77/f++xOk1mTfC3p
-g53cXgcuvhWfbumdZyjuqnuXtv5SjvJ7ZrVQ6+Nr5AQf71vIHe9tsmFj2J7U1hBX
-4Il9gZc88NhDHYcsom6eQQg3X9nJ6gVa7qpiEHGCe1gEK+VzgjRcXe7Zjk5cSppQ
-zryMJb5vdceIaV4zaacMqHkuCK8nphmVBJBzpuhXfCLrfxozYwHN6e1Bb7nPeS4H
-cZ1kHNK62nuG27AjaY40bOkv2hJxGs4I89JZ5mKofWr/tGj67w2Y04oVouJALKYW
-AScZYskKrZYlXwfkqt4GIvTY0oh2mPkWqwBdnOuxuBkdoauETF/YZf3S/YS/tFEr
-97iXiJTwTFCjsxug7WmK9rGWIK/+pJDnjU8Ud+im1/uWuQzoKt2sQEJluOOKdgiA
-7LkhwHhGLIH2lHSxbiuhg3OIResVwE/vBA1vikiIS3p2BTuiS3WFB6ywGHmU2yCc
-NvQundgAmeg8TeS0EtsVrqq3fDXF7eLyPPN4SLfGftDV8nQJEJETsr0yiY0aPukJ
-vTWDEFnQk/h8DIsO+5W9RaSE9YiOoNNo93Saesw8AKIMfCegXvqBErFjlYT3+Fsz
-zo+9f3W3nxlQaz0yhwItQFQZpS3nkOMuYFR4Zht2ZqXdsM7EeKdVX8ft+ZCoxmul
-NfSm8s1+N1KxbpW6Dc0b
-=Khpl
------END PGP SIGNATURE-----
+Folsom fix:
+https://review.openstack.org/39544
+
+Notes:
+This fix will be included in the havana-3 development milestone and
+in a future 2013.1.3 release.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4185
+https://bugs.launchpad.net/nova/+bug/1184041
+
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
