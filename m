@@ -1,28 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/12
-Message-ID: <CA+rthh_wXTo2LNNWJhV1VM07d4XoQkoOGE0rHOwDbWv31FM5tw@mail.gmail.com>
-Date: Tue, 19 Mar 2013 22:15:30 +0100
-From: Mathias Krause <minipli@...glemail.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel: net - three info leaks in rtnl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/9
+Message-ID: <CALCETrWbsT+HGvVQMV_fUEDa1otG+er0gU3H4v-_9FdWgYpY1g@mail.gmail.com>
+Date: Tue, 6 Aug 2013 11:14:24 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: Oleg Nesterov <oleg@...hat.com>
+Cc: security@...nel.org, oss-security@...ts.openwall.com,  Petr Matousek <pmatouse@...hat.com>, "Eric W. Biederman" <ebiederm@...ssion.com>,  David Howells <dhowells@...hat.com>, linux-kernel@...r.kernel.org
+Subject: Re: [PATCH 1/1] userns: unshare_userns(&cred) should not populate cred on failure
 Content-Type: text/plain; charset=utf-8
 
-I fixed a few more info leaks in linux v3.9-rc3. Unprivileged users
-can use the netlink interface to exploit the following issues to
-disclose kernel stack memory:
+On Tue, Aug 6, 2013 at 10:38 AM, Oleg Nesterov <oleg@...hat.com> wrote:
+> unshare_userns(new_cred) does *new_cred = prepare_creds() before
+> create_user_ns() which can fail. However, the caller expects that
+> it doesn't need to take care of new_cred if unshare_userns() fails.
+>
+> We could change the single caller, sys_unshare(), but I think it
+> would be more clean to avoid the side effects on failure, so with
+> this patch unshare_userns() does put_cred() itself and initializes
+> *new_cred only if create_user_ns() succeeeds.
+>
+> Cc: stable@...r.kernel.org
+> Signed-off-by: Oleg Nesterov <oleg@...hat.com>
+> ---
+>  kernel/user_namespace.c |   13 +++++++++----
+>  1 files changed, 9 insertions(+), 4 deletions(-)
+>
+> diff --git a/kernel/user_namespace.c b/kernel/user_namespace.c
+> index d8c30db..6e50a44 100644
+> --- a/kernel/user_namespace.c
+> +++ b/kernel/user_namespace.c
+> @@ -105,16 +105,21 @@ int create_user_ns(struct cred *new)
+>  int unshare_userns(unsigned long unshare_flags, struct cred **new_cred)
+>  {
+>         struct cred *cred;
+> +       int err = -ENOMEM;
+>
+>         if (!(unshare_flags & CLONE_NEWUSER))
+>                 return 0;
+>
+>         cred = prepare_creds();
+> -       if (!cred)
+> -               return -ENOMEM;
+> +       if (cred) {
+> +               err = create_user_ns(cred);
+> +               if (err)
+> +                       put_cred(cred);
+> +               else
+> +                       *new_cred = cred;
+> +       }
+>
+> -       *new_cred = cred;
+> -       return create_user_ns(cred);
+> +       return err;
+>  }
+>
+>  void free_user_ns(struct user_namespace *ns)
+> --
+> 1.5.5.1
+>
+>
 
-29cd8ae dcbnl: fix various netlink info leaks
-http://git.kernel.org/linus/29cd8ae0e1a39e239a3a7b67da1986add1199fc0
+Reviewed-by: Andy Lutomirski <luto@...capital.net>
 
-84d73cd rtnl: fix info leak on RTM_GETLINK request for VF devices
-http://git.kernel.org/linus/84d73cd3fb142bf1298a8c13fd4ca50fd2432372
 
-c085c49 bridge: fix mdb info leaks
-http://git.kernel.org/linus/c085c49920b2f900ba716b4ca1c1a55ece9872cc
-
-David Miller did backports for the above issues which are currently
-under review and should end up in the next stable and longterm
-kernels.
-
-Regards,
-Mathias
+-- 
+Andy Lutomirski
+AMA Capital Management, LLC
