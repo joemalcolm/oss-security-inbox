@@ -1,56 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/12
-Message-ID: <52862675.3090609@redhat.com>
-Date: Fri, 15 Nov 2013 06:49:41 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux kernel: net: ipvs stack buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/5
+Message-ID: <20130806164745.GA17343@redhat.com>
+Date: Tue, 6 Aug 2013 18:47:45 +0200
+From: Oleg Nesterov <oleg@...hat.com>
+To: security@...nel.org, oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
+Cc: "Eric W. Biederman" <ebiederm@...ssion.com>, Andy Lutomirski <luto@...capital.net>
+Subject: Re: CLONE_NEWUSER local DoS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 11/15/2013 01:42 AM, P J P wrote:
-> Hello,
-> 
-> Linux kernel built with the IP Virtual Server(CONFIG_IP_VS) support
-> is vulnerable to a buffer overflow flaw. It could occur while
-> setting or retrieving socket options via setsockopt(2) or
-> getsockopt(2) calls. Though a user needs to have CAP_NET_ADMIN
-> privileges to perform these IP_VS operations.
-> 
-> A user/program with CAP_NET_ADMIN privileges could use this flaw
-> to further escalate their privileges on a system.
-> 
-> Upstream fix: ------------- ->
-> https://git.kernel.org/linus/04bcef2a83f40c6db24222b27a52892cba39dffb
+On 08/06, Petr Matousek wrote:
 >
->  References: ----------- ->
-> http://seclists.org/fulldisclosure/2013/Nov/77 ->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1030800
-> 
-> 
-> Thank you. -- Prasad J Pandit / Red Hat Security Response Team
+> spender reported [1] a local DoS triggerable by unprivileged user when
+> user namespaces are enabled (CONFIG_USER_NS).
+>
+>   [1] https://twitter.com/grsecurity/status/364566062336978944
+>
+> Reproducer:
+>
+> b836010000bb00000010cd80ebf2 is for(;;)unshare(1<<28);
 
-Please use CVE-2013-4588 for this issue.
+What happens? OOM?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+I'll recheck, but at first glance this is simple, unshare_userns()
+populates new_cred which is not freed by bad_unshare_cleanup_fd
+if create_user_ns() fails. And create_user_ns() _should_ fail (iiuc)
+when CLONE_NEWUSER is called for the second time and later due to
+!kuid_has_mapping().
 
-iQIcBAEBAgAGBQJShiZ1AAoJEBYNRVNeJnmTnlIQANaGT3+5IHHSwr9aHibkS2+A
-H9mGwCNcvcgcmfXwdFLsK8mccE3GVdFK4llSYBg5qJZiO+F5fkGYkt3PG84D9+QB
-nkuXOr6brtblYThs7qcsPS55YLvFpe6shq+ujJypHiy39EeQj8WqbyOq/T+U2gnu
-o8tL/Evc/Q34hteKt57nDQLDfHYImH8phyZJz9ooZTQHa+hLnDPA0Lu1669MUkKU
-IrOGzMfP1EeMi72+PdcTk64C9G2jIw0FOjWtEdO6R7kUH5JW8qQdt2jfYxbmeOsd
-OFKiQC+OCzQuxrgOpU8A9J+SPxLCcx1ni/w5WGOCJhHCln3qFm0VOnKDL5ZagyXO
-ru+4jxiox9/tpZ+/OYlhiWm2k8PBxkNAUnBx7j7JSj5Udp7Ir1XUoQ50lFo9CYlb
-Fo7DxsZfUa6rFKEQH48D5tb2hGzPlBMkXK0bIXFqan+kJEXafEeNJW6kMWOnS/dG
-C+jLsgjP05oj7WuiqkysQFl0b/IMxIyumwQmHa7TUVK2MHd+9RmPxKyMgUxDrEMh
-upxNbGp6KIAVL0IzxD17Wt9j2w+xPMjPbifCHPZOQcXqFPJ2W2EXrvh+tsJJ7srS
-D1T49RhietVozcZVsiMqvQ/9gJBU9Vsq1IOBF9ZC2pwvk8sISYNBKuTFOt6q+O29
-nw3JXUXq/QGhAv/l7Wjf
-=DtLs
------END PGP SIGNATURE-----
+I'll send the patch, but perhaps there is something else. Eric?
+
+Oleg.
+
