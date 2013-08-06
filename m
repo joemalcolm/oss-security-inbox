@@ -1,44 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/16/3
-Message-ID: <20131216203537.32d1f7e4@chromobil.localdomain>
-Date: Mon, 16 Dec 2013 20:35:37 +0100
-From: Stefan Bühler <stbuehler@...httpd.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/13
+Message-ID: <52018A89.6020206@redhat.com>
+Date: Tue, 06 Aug 2013 17:45:13 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Juvia secret token handling
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: three additional flaws fixed in putty 0.63
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Juvia is a Ruby on Rails application to host "comments":
-> A commenting server similar to Disqus and IntenseDebate
+On 08/06/2013 01:56 PM, Vincent Danen wrote:
+> There seem to be some CVEs needed for putty 0.63 due to some other
+> fixes that were fixed alongside CVE-2013-4852:
+> 
+> 
+> * a heap-corrupting buffer underrun bug in the modmul function
+> which performs modular multiplication: 
+> http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/vuln-modmul.html
+>
+> 
+http://svn.tartarus.org/sgt?view=revision&sortby=date&revision=9977
 
-It includes a "default" secret to validate cookies in 
-`app/config/initializers/secret_token.rb', and the install instructions
-do not include generating a new secret.
-Also the file in question is maintained in git, and configuration
-should not touch these files.
+Please use CVE-2013-4206 for this issue.
 
-This means an attacker could modify session state, which is somehow
-trusted by the Rails application.
+> * A buffer overflow vulnerability in the calculation of modular
+> inverses when verifying a DSA signature: 
+> http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/vuln-bignum-division-by-zero.html
+>
+>  
+> http://svn.tartarus.org/sgt?view=revision&sortby=date&revision=9996
 
-A workaround for Juvia is to generate a new secret (`rake secret') and
-replace the one in
-`app/config/initializers/secret_token.rb' (invalidating all cookies,
-don't forget to restart Juvia).
-You have to be careful when switching between git branches and so on to
-not loose the change.
+Please
+> 
+use CVE-2013-4207 for this issue.
+
+> * Private keys left in memory after being used by PuTTY tools: 
+> http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/private-key-not-wiped.html
+>
+>  
+> http://svn.tartarus.org/sgt?view=revision&sortby=date&revision=9988
+
+Please
+> 
+use CVE-2013-4208 for this issue.
+
+> 
+> I can't see any CVE references so I suspect there are none.
+> 
 
 
-The core problem is that rails generated the file that way; other gems
-have similar issues.
-The rails security team has been informed about this.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Kind regards,
-Stefan
-
-References:
-* Juvia "public" secret:
-  https://github.com/phusion/juvia/blob/master/config/initializers/secret_token.rb
-* Juvia issue for this: https://github.com/phusion/juvia/issues/55
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+iQIcBAEBAgAGBQJSAYqIAAoJEBYNRVNeJnmT40IQAMf92qB5MISMIwY/d2EKY9Z2
+I9eVzuaJWhB6f4s4Lj/zJ+gSQ6ZiGuOWAWE0KXWLP5KbImnZ5cWXG3d1UfmFQb40
+UahPLX/FlZ9Ru8TpZA9IBscYchQ7PRCvN7gk2Sr/JTkSLkvVMOZ6xUN7iC30pzlN
+ibiWAiXmOhbX/G5QwPRoVC66nejdPgYznWGJUrdgAdHTYpdK8/Gny/b06GtDbrYO
++SZUEMYRcN1cTg0YxJAht9l03zMe4QX0tvfTRJg7TGqYLpUeMWmZmpY42cL1MH4C
+XkZOdQ+nLi6IrkTrz+L6X24O0dpaChh9yLi4l27ydvrxIe9T1z1h46kdl0sIQfNx
+dTfiKR0aHLCcpysIseV081KQAXQy4aFZ7VnT12jQ3/z0G84hqzfcK1E/2nqhMlAv
+XJX8wa+JIk2SwIRynkBUqhwrTx85g46Xl+E6M0378m/HeUc6kKE9xYW+fAYCGGft
+aimf5lrES21doSHh4zsQblYHszWXgNIV98HVIMyQT5OtkH1LBxBrOK3nNgG1b2nR
+62F05LgXo/HNziDUlfaoCGvBdy0IEi36vAFS6Aa7wJrAr++Aj/F5j1VnWrMW+w7i
+BAR0dU3LJrkfXJPZt5EXiEkirTcrKQt8o/a7zxDkCRxSKYLZY21079qmIbx8bCym
+OYySyEcyG8jXIgdvmeza
+=4Ry2
+-----END PGP SIGNATURE-----
