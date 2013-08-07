@@ -1,31 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/18/9
-Message-ID: <CAANPUCjTehWt-fTzH=O7gBQPwOR3z7WM989etgSWnpX2FjbH+A@mail.gmail.com>
-Date: Fri, 18 Jan 2013 16:02:51 -0700
-From: Greg Knaddison <greg.knaddison@...il.com>
-To: security@...pal.org, Jan Lieskovsky <jlieskov@...hat.com>
-Cc: oss-security@...ts.openwall.com,  Mitre CVE assign department <cve-assign@...re.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: [security] CVE Request - SA-CORE-2013-001 (one JQuery X < 1.63 issue and two Drupal modules issues)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/9
+Message-ID: <5202811F.2010004@redhat.com>
+Date: Wed, 07 Aug 2013 11:17:19 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Florian <floriangaultier@...il.com>
+Subject: Re: CVE Request - LibModPlug <=0.8.8.4 multiple heap overflow
 Content-Type: text/plain; charset=utf-8
 
-Response below.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Thu, Jan 17, 2013 at 8:50 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
-> @Drupal security team - could you clarify if to fix the first issue,
-> there was yet some other Drupal specific patch / change (besides the
-> JQuery library update), which would require yet another (fourth) CVE
-> id to be allocated?
+On 08/07/2013 10:24 AM, Florian wrote:
+> Hi,
+> 
+> Just a CVE Request for this 
+> http://blog.scrt.ch/2013/07/24/vlc-abc-parsing-seems-to-be-a-ctf-challenge/
+>
+>  Thx
+> 
 
-The fix we added to Drupal does not require (or implement) an update
-to the jQuery library at all; rather it works around the issue
-entirely within Drupal's code.  I think that means it should get its
-own CVE ID.
+I need a better request. You want one CVE? multiple CVEs? A quick read
+of the web page indicates multiple different problems. Can you list
+them here and provide links to the source code? thanks.
 
-We did it this way because it means that any other Drupal packages,
-such as drupal7-jquery_update, would not be expected to have a
-vulnerability as long as the core update is applied.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-I believe this means that yes, we will need a fourth CVE id to be allocated.
-
-Thanks,
-Greg
+iQIcBAEBAgAGBQJSAoEfAAoJEBYNRVNeJnmTmQ8P/iy7oMVpnHBMzb/ZrdxMxeFV
+x4IyuPn4X7qqF5aJMY24BvN+4dgvsIOUDAr6rJFktyn3aPjk++Srt0oQucZVQ6Ut
+rhu7uzaic2uLcY2e4bFsNHhTiTokOJEAqa7Es862jFwqAwJPU1FYpXDhEGlmENwM
+MFS8TULxlt9ocpQUaYUhN08FbwD0WreOHl2ASXOey9kVjAq6IlZ3QWHXvCxnsfk6
+YefKZ56kH5X80lDH/D4zqCMSk3F8gGV3IK5bZhwFSAtjkc/Nqs4lno6RZ4yspaJK
+lb9UgKudistkGLguM/50Cq8Zm/WlEGHuZIcKyAy40e5fHThMWcNG8ZbmA99uXo8J
+tZ8dWM6cDpWjQgiYPq2tphul1yH2nm8pdYGzpEg+J3Hd0A83hbeyENS2Y9oEujKC
+A8ysBIvlDSe9HPDfwxhI+ga17KCex7zIsVXcvd57ltklwagZae8DMV92oXCQojfl
+zTa2ffrtOTJQi1Vm0wbSB3tf9MuJCm99BjmdG1ZF31gJbuJYCO5NFpiGLPtprNvk
+5p+itH4kCl1D7dhAEg/jnF3k0zzNGpmP9TrPj8XUdBcveMDKcRFA6DxUdqdL+LmJ
+se4ciFbEhH1vr35SbHbqgdx4wVadenzU5AY4xiZKcXnYtGSmd/3kxpbFGrlyGgpW
+fu0uPaHSrHpBfb6xwpeV
+=LoaB
+-----END PGP SIGNATURE-----
