@@ -1,58 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/3
-Message-ID: <52147668.9050204@oracle.com>
-Date: Wed, 21 Aug 2013 09:12:24 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/4
+Message-ID: <52019063.20707@gt.net>
+Date: Tue, 06 Aug 2013 17:10:11 -0700
+From: Nathan March <nathan@...net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: vfs_read()/vfs_write(): potential missing checks (or not?)
+CC: Kurt Seifried <kseifried@...hat.com>,  Assign a CVE Identifier <cve-assign@...re.org>, "Steven M. Christey" <coley@...re.org>
+Subject: Re: OpenX Ad Server Backdoor CVE?
 Content-Type: text/plain; charset=utf-8
 
-On 20/08/13 23:36, Hannes Frederic Sowa wrote:
-> On Tue, Aug 20, 2013 at 07:58:49PM +0200, vladz wrote:
->> >
->> > [...]
->> >
->> > Looking at the kernel sources, the vfs_read(), vfs_write(), vfs_readv()
->> > and vfs_writev() functions checks the permissions of the file object
->> > (file->f_mode) before operating on file descriptor:
->> > 
->> >     $ cat -n linux-3.10.7/fs/read_write.c
->> >     [...]
->> >     353 ssize_t vfs_read(struct file *file, char __user *buf, size_t count, loff_t *pos)
->> >     354 {
->> >     355         ssize_t ret;
->> >     356
->> >     357         if (!(file->f_mode & FMODE_READ))
->> >     358                 return -EBADF;
->> > 
->> > I believe this is insufficient, the inode object should be checked too.
->> > So that if the file's permissions allow read/write operations, so we can
->> > perform reading/writing from/to the file descriptor.  I've patched the
->> > concerned function to do so (cf. patch [3]).
-> This behavior is deliberatly chosen. If the inode is checked again, you
-> could just mmap the filedescriptor to memory and get away with that,
-> too. There are plans to implement a revoke-syscall. Maybe it will
-> be implemented for files, too (other operating systems only provide
-> revoke-Support for terminals, block or char devices).  This shoud then
-> handle the teardown of memory mappings with some specified semantic, too.
+On 8/6/2013 4:52 PM, Kurt Seifried wrote:
+> According to a post by Heise Security, a backdoor has been spotted in
+> the popular open source ad software OpenX [1][2]. Appearantly the
+> backdoor has been present since at least November 2012. I tried to
+> download the source to verify the information, but it appears the
+> files have been removed.
 
+I can confirm this is in 2.8.10 that was downloaded on July 15th. It's 
+inside the /etc/plugins/openXVideoAds.zip at 
+./plugins/deliveryLog/vastServeVideoPlayer/flowplayer/3.1.1/flowplayer-3.1.1.min.js
 
-If you want extended checking of read(2) then use selinux: it
-specifically handles cases like this.
+md5sum on the zip matches 6b3459f16238aa717f379565650cb0cf
 
-Checking the inode may result in perfectly reasonable behaviour suddenly
-not working:
+- Nathan
 
-   my-suid-program > logfile
+-- 
+Nathan March<nathan@...net>
+Gossamer Threads Inc. http://www.gossamer-threads.com/
+Tel: (604) 687-5804 Fax: (604) 687-5806
 
-for instance will fail if the setuid owner doesn't have permission to
-write to logfile which would surprise a lot of people (and break a lot
-of things).   Moreover,
-
-  my-suid-program | tee logfile >/dev/null
-
-would work.   On the other hand, selinux takes care of both of these: it
-only forbids the write() when it's wrong will (often) track the write
-across a pipeline.
-
-jch
