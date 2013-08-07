@@ -1,56 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/1
-Message-Id: <201312120444.rBC4iiud025981@linus.mitre.org>
-Date: Wed, 11 Dec 2013 23:44:44 -0500 (EST)
-From: cve-assign@...re.org
-To: forest.monsen@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for Drupal core, and contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/10
+Message-ID: <5202817D.9030302@redhat.com>
+Date: Wed, 07 Aug 2013 11:18:53 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: SQL injection and shell escaping issues in Cacti < 0.8.8b
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SA-CONTRIB-2013-093   CVE-2013-7063
+On 08/07/2013 10:06 AM, Vincent Danen wrote:
+> Cacti 0.8.8b was released today [1] with a changelog that notes:
+> 
+> Cacti 0.8.8b Change Log [...] * security: SQL injection and shell
+> escaping issues
+> 
+> It looks like the SQL injection issue is in api_poller.php and 
+> utility.php [2]
+> 
+> I think there are two shell escaping issue:
+> 
+> 1) snmp.php: Use escapeshellarg() instead of custom escape function
+> for snmp library [3] 2) rrd.php: Properly escape all user input for
+> consumption by rrdtool [4]
+> 
+> 
+> [1] http://sourceforge.net/mailarchive/message.php?msg_id=31258868 
+> [2] http://svn.cacti.net/viewvc?view=rev&revision=7394 [3]
+> http://svn.cacti.net/viewvc?view=rev&revision=7392 [4]
+> http://svn.cacti.net/viewvc?view=rev&revision=7393
+> 
+> 
+> Looks like 3 CVEs are needed.
+> 
 
-SA-CONTRIB-2013-094   CVE-2013-7064
-
-Note that this says 'The module doesn't sufficiently fiter [sic] and
-validate configuration values entered by administrators. This
-vulnerability is mitigated by the fact that an attacker must have a
-role with the permission "Administer EU Cookie Compliance popup".' Our
-perspective is that, typically, web applications do not have a threat
-model in which crafted configuration settings entered by admins are a
-vector that qualifies for a CVE assignment. You, in the context of
-representing the "vendor" of the module, are allowed to have that
-threat model if you want to. (This is entirely reasonable if an XSS
-attack would realistically result in privilege escalation to a
-higher-level admin account.) If you want to reconsider, we can
-optionally reject this CVE for you. Otherwise, it will remain a valid
-(and non-disputed) CVE.
-
-
-SA-CONTRIB-2013-095
-  Posting content into groups where a user is not a member CVE-2013-7065
-  Inconsistent access checking in posting content CVE-2013-7068
-
-SA-CONTRIB-2013-096   CVE-2013-7066
-
-SA-CONTRIB-2013-097   CVE-2013-7067
+JUST FYI vdanen/myself were emailed off list about some CVE's that may
+have already been assigned to this. Just waiting on that info before
+proceeding.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSqT71AAoJEKllVAevmvms7aAH/j6E+fBmktGi/1OQgPxDJ/6R
-Fsd45/cHZPqRR3Yx95hQEpCP2lSBkzfdJuyqpq2rrKU0x34nogR9eotbt5rk06qY
-jM9Wr1yEY6VWtvkF+7PT7OtYY4eBk3GR66iPwJSxE+za2j6xxfAegyYxBYPnNyZ3
-StE20jX4Wr01TPOEfS6mJYJuiOcHbJphf5w2UuGXXnUvVAR7MT5l0d2LJcKwuxCl
-2pkD8jWgkKtPgr+RyYUHdk8LhzIpo6ENLtruJRY66wz0sF+XRxds9jyvQovsuhJy
-SuJQ1iHK9gf3k/dL+84YA2VpPb1GNKQVjER1AqALpqjWWiwqotySqEQ3GeDW3sk=
-=0M9J
+iQIcBAEBAgAGBQJSAoF9AAoJEBYNRVNeJnmTvU0P/RKdK6I0+K5lKJSuhfaoZByH
+E+1JaQh+9DQFWAjIBJropw46eaJ9snB72dCtj+LDr4J1stBPIkZDGVnBNB3feIlH
+rJMBBuqQAGU3DdpQz4I3txRt/wDHB540PglKdOFYDXTiKWvy8y0HodrQmkzIU+Xd
+HLJA8GDHNB/YGXreKDTEQO/KntHKc0YvAY5JeX1EvNJNwDdcHs444lEbKMmoGmpx
+iS8Khy5EEftwmPVJYzPDXGvdzX6UjdxTEOJHhysUM7m7aGhLtcBoaziC7k9wMcf2
+ghCzSzEqcqGkN4cShz0u00naZ627df7i6SZAuM7xp7vvNr9SnunhMMemjt317q9K
+Vr9Gu3Lb7SwnzRugK8/GMwvgXnzKHyISaoYJX+4EZ7c9J/3x7ZtMdGCfOAmx4x/9
+O90YO5tK6szJzsFeBg/yCPAiJ0gt7o6m67jzGOxw6wNPEW4rc0L80o/vjbmhgyop
+e6CQLlOiTFhlP1iUBXtioyOFIQlwjqIivzcvn23sNW0G7lWmHZ0f9hNq5O03Woq6
+80sGJYRnJzptoFM2TOf7YwqzN17bzURO0FQsMTGlyyWt3MU03s4gIRnFmmdvvmjh
+ce85EAcWiRwmbRPuVHJ0TXPRbBdA0PdcPzvqgCcgs11kEgIbIVdk4ODaWcMqzxSV
+dhfcoUXmv9uZNEVOz/+4
+=b6WC
 -----END PGP SIGNATURE-----
