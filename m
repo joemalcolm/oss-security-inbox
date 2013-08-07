@@ -1,53 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/9
-Message-ID: <51A64283.5050403@redhat.com>
-Date: Wed, 29 May 2013 12:01:39 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/16
+Message-ID: <1076240558.13016888.1375919725070.JavaMail.root@redhat.com>
+Date: Wed, 7 Aug 2013 19:55:25 -0400 (EDT)
+From: David Jorm <djorm@...hat.com>
+To: oss-security@...ts.openwall.com, David Walser <luigiwalser@...oo.com>
+Cc: marcus@....franken.de, lwn@....net
+Subject: Re: tomcat CVE confusion
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 05/29/2013 10:46 AM, Forest Monsen wrote:
-> Hi there,
+> OpenSuSE has issued an advisory for tomcat today:
+> http://lists.opensuse.org/opensuse-updates/2013-08/msg00014.html
 > 
-> I'd like to request CVE identifiers for:
+> This is also linked from LWN here:
+> http://lwn.net/Vulnerabilities/562439/
 > 
-> SA-CONTRIB-2013-048 - Edit Limit - Access Bypass 
-> http://drupal.org/node/2007048
-
-Please use CVE-2013-2122 for this issue.
-
-> SA-CONTRIB-2013-049 - Node access user reference - Access Bypass 
-> http://drupal.org/node/2007122
-
-Please use CVE-2013-2123 for this issue.
-
-> Thanks!
+> This CVE-2013-3544 is not mentioned on tomcat's security page:
+> http://tomcat.apache.org/security-7.html
 > 
-> Forest
+> But CVE-2012-3544 is mentioned there (note the different year).
 > 
+> Based on this Novell/OpenSuSE bug report, I believe OpenSuSE made a typo:
+> https://bugzilla.novell.com/show_bug.cgi?id=831119
+> 
+> I can't find any info about CVE-2013-3544, but the mitre page says it's
+> reserved.  Perhaps that CVE has already been allocated for some other piece
+> of software?  If so, this might cause some confusion.  I'm not sure how this
+> should be handled, but I thought it would be appropriate to point this out.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
++1 I think it is a typo. The correct CVE ID is 2012-3544:
 
-iQIcBAEBAgAGBQJRpkKDAAoJEBYNRVNeJnmTDEMQAMHSMdIIfpx0abBJLaj9m8y+
-Yy3gvWPsAEcO17w07X9FHomhvAGtarQk8TzTozv1bWzkvn1mwrc4bOudWoSY/WiY
-QtnJM+7xAao3gQmnjpQ5KL9vInqzoj2LN1Y+ws1R33liEOdDqqWDv1JL7kBRoW1p
-AOl+3lBZ/EpZ0Q6TbF/e6JlkMefpSg8RXSVnf0Cdmh+WIfVn6XJMctXfZVRevYZO
-E1L06cd00lZkpMjJCLDTsixpmZYpdHwVwfDNiEAZOZ+X673ZyBsbq2BhTQ3tMTR0
-YWgd/CZzZGt0xWZm9XMwsKu3JsF0/I8dZ4QA8Vv+YZG2xM3NkyKv7qvYXJPUcS9o
-0wuPkwf3ikOZf7Z7lLMz7BmOWdmA6LPzkDe6ksg8DIE6P4nRR77Z/zr35mf3GFCR
-1gBEecf0HHqPH44jnOFPM5NC+y+VzCXRt6Q7FrZBexzMNArUqbtcmTxHZaPmCz/p
-n3VHyAhtAChSGhOn2Tcr/JrMRY8gAPR34glj4qpWXeeTLnP8h2+hioR51o9SqKiS
-SR3jZSmshhFdBv3/bV0EqUabL2P2Q2W55Bo+AyesqUzJGkH3R8lz0jK9wi+gJ9+E
-6klHGnoTAaFf6zEk80zbVdYcvgDbjyXZmN4lt0nTeEXAOjfm8MAKOITxu19eN579
-WXFSa+YH4i6VsaYuwQl5
-=sE1C
------END PGP SIGNATURE-----
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3544
+
+David
