@@ -1,53 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/16
-Message-ID: <517AB435.5060108@redhat.com>
-Date: Fri, 26 Apr 2013 11:07:01 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/5
+Message-ID: <20130807151739.GU29720@openstack.org>
+Date: Wed, 7 Aug 2013 15:17:40 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
 To: oss-security@...ts.openwall.com
-CC: P J P <ppandit@...hat.com>
-Subject: Re: CVE request: Linux kernel: ext4: hang during mount(8)
+Subject: [OSSA 2013-021] Cinder LVM volume driver does not support secure deletion (CVE-2013-4183)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+OpenStack Security Advisory: 2013-021
+CVE: CVE-2013-4183
+Date: August 7, 2013
+Title: Cinder LVM volume driver does not support secure deletion
+Reporter: Rongze Zhu (UnitedStack)
+Products: Cinder
+Affects: 2013.1 (Grizzly) and later
 
-On 04/26/2013 06:03 AM, P J P wrote:
-> Hi,
-> 
-> Linux kernel built with an Ext4 filesystem is vulnerable to a
-> system hang situation. It occurs while [auto]mounting a non-journal
-> filesystem with an orphan list of inodes to clear.
-> 
-> A user could use this flaw to stall the kernel resulting in DoS.
-> 
-> Upstream fix: ------------- ->
-> https://git.kernel.org/linus/0e9a9a1ad619e7e987815d20262d36a2f95717ca
->
->  Reference: ---------- ->
-> https://bugzilla.redhat.com/show_bug.cgi?id=957123
-> 
-> Thank you. -- Prasad J Pandit / Red Hat Security Response Team DB7A
-> 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+Description:
+Rongze Zhu from UnitedStack reported a vulnerability in the Cinder
+LVM volume driver. The contents of LVM snapshots may not be cleared
+upon deletion even when secure deletes are configured, resulting in
+potential exposure of latent data to subsequent servers for other
+tenants. Only setups using LVMVolumeDriver are affected.
 
-Please use CVE-2013-2015 for this issue.
+Havana (development branch) fix:
+https://review.openstack.org/36506
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Grizzly fix:
+https://review.openstack.org/39565
 
-iQIcBAEBAgAGBQJRerQ1AAoJEBYNRVNeJnmT7gMQAJy++hdzwaUj4XiYWOlPWz9S
-VrnKu5nP2949EgA6CndcHzKIDe+HP6hS5Q6Zcmw5g2dofTsvz672mLMXCh7FGc8f
-4y1CEBzJ1Ov4AZ9xR5BFH2I9FhdggWPDtalnpygbBoB0n9F8uBPvhD2NpLYLR8dd
-R2XW8rOU4d8VC85542MmeLQ/5b0tmoI//pWdk4uI7H8PMrNJKxFJiDzvWtaGi65U
-s15ceIjIobkRZ1ZtExWp4j5+cDKD7iCKOaXAiXQkMeGKy4ohMVZJ7JUIQfwOfZIM
-ZnR12cJPIgMEvFIkSE5wFg/iQfk8Or4tUfVMdJ9ctwZvYCyMuv+V7qjDoWePmW3f
-6cQ36PfUjLgaheG4BLxiV4HMbxLHiGaRCg/h8KGWR7FK9FbhYhu4puKhB5DBDu+y
-gJdX/2OTVPvDFzk70hTKcvxL9DjVzzaFERlADMHM3+hMKW1mV6xmR2TxTjxeq6ri
-cBQNb5qWrVj3h1ApqPBrHvwnrJZ07UA6tVJ6UjlPX2ByrhgwC3s0pPqmGbm6jZBZ
-++MZ++J6jVGJb2TpatBZkYT7Ou2Gd2ZN4rhzKsGaQqK4SUrH2Otna54JA2vxJO9k
-3vvJCeh3KaAdceadSWbPqs+cWOZZ9tYZO8vq+ZdmyEr60nFDEC5MmRXFRhoLYCRI
-dtuVHCQuwTB9BEMboMXF
-=SP8D
------END PGP SIGNATURE-----
+Notes:
+This fix is included in the havana-2 development milestone and will
+appear in a future 2013.1.3 release.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4183
+https://launchpad.net/bugs/1198185
+
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
