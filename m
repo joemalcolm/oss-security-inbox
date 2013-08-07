@@ -1,58 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/31/4
-Message-ID: <51F8C6FD.1030807@redhat.com>
-Date: Wed, 31 Jul 2013 02:12:45 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Tim Retout <tim@...out.co.uk>
-Subject: Re: CVE Request: CPAN perl module Data::UUID symlink attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/13
+Message-ID: <5202840C.6020501@gmail.com>
+Date: Wed, 07 Aug 2013 19:29:48 +0200
+From: Florian <floriangaultier@...il.com>
+To: kseifried@...hat.com
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE Request - LibModPlug <=0.8.8.4 multiple heap overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 07/30/2013 03:36 PM, Tim Retout wrote:
-> Hi all,
+On 07/08/2013 19:17, Kurt Seifried wrote:
+> On 08/07/2013 10:24 AM, Florian wrote:
+>> Hi,
 > 
-> The Perl module Data::UUID from CPAN is vulnerable to symlink
-> attacks. This is a widely used Perl module for generating UUIDs.
+>> Just a CVE Request for this 
+>> http://blog.scrt.ch/2013/07/24/vlc-abc-parsing-seems-to-be-a-ctf-challenge/
 > 
-> Details are in the bug report on github: 
-> https://github.com/rjbs/Data-UUID/issues/5
+>>  Thx
 > 
-> I believe all released versions are affected - I have confirmed
-> the issue against 1.219.
 > 
-> Regarding affected distributions, note that Debian and Fedora do
-> not ship Data::UUID from CPAN - they use OSSP's uuid.  However, at
-> least Arch and Gentoo seem to ship the CPAN version.
-> 
-> I've not previously requested a CVE id for this, it's an open
-> source request, and it's not embargoed.
-> 
-> Kind regards,
+> I need a better request. You want one CVE? multiple CVEs? A quick read
+> of the web page indicates multiple different problems. Can you list
+> them here and provide links to the source code? thanks.
 > 
 
-Please use CVE-2013-4184 for this issue. Not all Linux's have that sysctl.
+Okay, so the first bug is an integer overflow in j variable, it occurs
+here :
+https://github.com/gardaud/libmodplug/blob/master/src/load_abc.cpp#L1852
+
+The second bug is a heap overflow and can be triggered in two functions
+abc_MIDI_drum :
+https://github.com/gardaud/libmodplug/blob/master/src/load_abc.cpp#L3211
+and
+abc_MIDI_gchord :
+https://github.com/gardaud/libmodplug/blob/master/src/load_abc.cpp#L3258
+
+h->gchord and h->drum are static buffers and are filled until the copied
+byte is in the charset (respectively 'fbcz0123456789ghijGHIJ' and
+'dz0123456789')
+
+It's up to you to open one or multiple CVE.
+
+Don't hesitate if you want more information.
+
+Thx
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR+Mb9AAoJEBYNRVNeJnmTB9IP/0iZKeYYiUQZD/1wZCY4fuRo
-Hc8LKA5c0vuTLGGZ/EgLLZ8184r34UbODdhS2oNBCTWkqFZXgu48vyyrSWuUAZYj
-sZNz78Cq6wJ0Uq6db61hX7044FfEEB3Ch4oMWrtqey0WXvvR/yRZYzND6PdFcCVp
-0b3YrcP+Ls8+j9hrwKpwdDZox2V5Xq/MR12jrjixlbgHUXeOpo1uicu1yo72SG3o
-5GUeTPl4vhN5mOQ+yU1tihT6c5GfDHFSOjnLQ6qQriJs15o/xXV9SZpstNdhACGe
-Qt+CBC0OK/dsEnrFgXk1rOHm8VUXR1cWVcgQfCNs3kqUih7wqLzREomjM1Ulhuwm
-0iM00bmSr3UhxoAU7yxOW+12/xhYdkruUqDd05cRxz+63fJIZUiDywJTU4VW2YPq
-29J9es2zmz4AkGiV+A9wdQANAeyZsTavRFjtaenzopAJteJv0p56fTvqkKALup/L
-RhopNAe5mp27xlKttdth3yeni+EcOmiK5QmwyaJLdX7ySXlHAvSoKXgD02TfzEOA
-Lbglf1x4cwj4TG9SZrdrinbCRQ4UfcTAMXOOeaxsSdk2h20xhh54Ga1ldKRGtn1v
-77Q9xfy9okXccju5Xz/Fexq0SPLj/xa3yIhydnbvAf/aiOL2nCA6RrLlZiP2mrDQ
-3+f3R9iu5+q4J5Nwjbeh
-=y5hD
------END PGP SIGNATURE-----
