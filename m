@@ -1,44 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/6
-Message-ID: <20130806173827.GA24908@redhat.com>
-Date: Tue, 6 Aug 2013 19:38:27 +0200
-From: Oleg Nesterov <oleg@...hat.com>
-To: security@...nel.org, oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Cc: "Eric W. Biederman" <ebiederm@...ssion.com>, Andy Lutomirski <luto@...capital.net>, David Howells <dhowells@...hat.com>
-Subject: [PATCH 0/1] (Was: CLONE_NEWUSER local DoS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/15
+Message-ID: <20130807191602.GA13735@eldamar.local>
+Date: Wed, 7 Aug 2013 21:16:02 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: SQL injection and shell escaping issues in Cacti < 0.8.8b
 Content-Type: text/plain; charset=utf-8
 
-On 08/06, Oleg Nesterov wrote:
->
-> On 08/06, Petr Matousek wrote:
-> >
-> > spender reported [1] a local DoS triggerable by unprivileged user when
-> > user namespaces are enabled (CONFIG_USER_NS).
-> >
-> >   [1] https://twitter.com/grsecurity/status/364566062336978944
+Hi Kurt, hi Vincent,
 
-I see nothing related there, so the patch lacks Reported-by.
+On Wed, Aug 07, 2013 at 11:18:53AM -0600, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 08/07/2013 10:06 AM, Vincent Danen wrote:
+> > Cacti 0.8.8b was released today [1] with a changelog that notes:
+> > 
+> > Cacti 0.8.8b Change Log [...] * security: SQL injection and shell
+> > escaping issues
+> > 
+> > It looks like the SQL injection issue is in api_poller.php and 
+> > utility.php [2]
+> > 
+> > I think there are two shell escaping issue:
+> > 
+> > 1) snmp.php: Use escapeshellarg() instead of custom escape function
+> > for snmp library [3] 2) rrd.php: Properly escape all user input for
+> > consumption by rrdtool [4]
+> > 
+> > 
+> > [1] http://sourceforge.net/mailarchive/message.php?msg_id=31258868 
+> > [2] http://svn.cacti.net/viewvc?view=rev&revision=7394 [3]
+> > http://svn.cacti.net/viewvc?view=rev&revision=7392 [4]
+> > http://svn.cacti.net/viewvc?view=rev&revision=7393
+> > 
+> > 
+> > Looks like 3 CVEs are needed.
+> > 
+> 
+> JUST FYI vdanen/myself were emailed off list about some CVE's that may
+> have already been assigned to this. Just waiting on that info before
+> proceeding.
 
-Who is reporter?
+The Debian Security Team had assigned the following CVEs:
 
-> > Reproducer:
-> >
-> > b836010000bb00000010cd80ebf2 is for(;;)unshare(1<<28);
->
-> What happens? OOM?
+CVE-2013-1434: for the SQL injection issues, fixed by
+http://svn.cacti.net/viewvc?view=rev&revision=7394
 
-Yes, this leaks the memory, the patch seems to fix the problem.
+CVE-2013-1435: for the shell escaping issues, fixed by
+http://svn.cacti.net/viewvc?view=rev&revision=7392 and
+http://svn.cacti.net/viewvc?view=rev&revision=7393
 
-> I'll recheck, but at first glance this is simple, unshare_userns()
-> populates new_cred which is not freed by bad_unshare_cleanup_fd
-> if create_user_ns() fails. And create_user_ns() _should_ fail (iiuc)
-> when CLONE_NEWUSER is called for the second time and later due to
-> !kuid_has_mapping().
->
-> I'll send the patch, but perhaps there is something else. Eric?
+Regards,
+Salvatore
 
-Eric, Andy, the patch looks trivial, but it would be nice if you
-can ack/nack. I am sending it to lkml.
-
-Oleg.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
