@@ -1,24 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/08/2
-Message-ID: <20130608104445.GA3565@devzero.fr>
-Date: Sat, 8 Jun 2013 12:44:45 +0200
-From: vladz <vladz@...zero.fr>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Debian's package "mysql-server" leaks credential information
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/11
+Message-Id: <C4C0398D-AED3-4892-AA54-F26B18748DE6@stufft.io>
+Date: Wed, 7 Aug 2013 13:20:47 -0400
+From: Donald Stufft <donald@...fft.io>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Reserved CVE for pip
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+So I was researching pip's CVE's some more and I came across CVE-2013-1888 which Kurt assigned http://www.openwall.com/lists/oss-security/2013/03/22/10 but which shows up as RESERVED https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1888.
 
-The file "/etc/mysql/debian.cnf", which contains plain text credentials
-for the "debian-sys-maint" mysql user, is created in an insecure manner
-during the package installation phase.  This can lead a non-privileged
-local user to disclose its content and use this special account to
-perform administration tasks.
+Can you fix this so it's not RESERVED Kurt?
 
-  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=711600
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
 
-Could you allocate CVE id for this issue?
 
-Thank you,
-vladz.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
