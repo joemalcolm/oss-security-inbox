@@ -1,63 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/3
-Message-ID: <529EB061.5060105@redhat.com>
-Date: Tue, 03 Dec 2013 21:32:33 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: security <security@...ntu.com>, xorg_security@...rg
-Subject: Re: CVE Request: xorg-server and pixman
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/1
+Message-Id: <201308070012.r770BrJ0014578@linus.mitre.org>
+Date: Tue, 6 Aug 2013 20:11:53 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: SSL BREACH
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/03/2013 10:54 AM, Jamie Strandboge wrote:
-> 
-> Hi,
-> 
-> This bug has been public since August but I could find a CVE for
-> it: https://launchpad.net/bugs/1197921
-> 
-> There are two bugs - Xorg can be made to crash and pixman can
-> trigger the aformentioned Xorg crash. A simplified reproducer is in
-> the pixman patches with another reproducer in the Launchpad bug.
-> The xorg
-> 
-> xorg-server - exa: only draw valid trapezoids The patch was
-> submitted in October but doesn't seem to be applied yet, so I'm 
-> CC'ing xorg_security. Patch references the pixman f.d.o bug, but
-> doesn't seem to have an associated xorg bug. 
-> http://patchwork.freedesktop.org/patch/14769/ 
-> http://lists.x.org/archives/xorg-devel/2013-October/037996.html
-> 
-> Pixman - Corrupted CustomShape crashes Xorg 
-> https://bugs.freedesktop.org/show_bug.cgi?id=67484 Patch: -
-> 5e14da97f16e421d084a9e735be21b1025150f0c (fix) -
-> 2f876cf86718d3dd9b3b04ae9552530edafe58a1 (test case)
-> 
-> Thanks!
-> 
+>I assume this will get handled like CVE-2009-3555?
+>
+>http://threatpost.com/breach-compression-attack-steals-https-secrets-in-under-30-seconds/101579
+>
+>http://it.slashdot.org/story/13/08/05/233216
+>
+>https://www.djangoproject.com/weblog/2013/aug/06/breach-and-django/
 
-So only x.org crashes, you can trigger it via X.org, or via pixman? or
-is pixman also crashing?
+MITRE has looked at this in some depth but has not yet decided whether
+this can be treated as a vulnerability in a protocol, with one CVE
+shared across every product. We do realize that
+http://www.kb.cert.org/vuls/id/987798 currently contains one CVE ID.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.11 (SunOS)
 
-iQIcBAEBAgAGBQJSnrBgAAoJEBYNRVNeJnmTezEP/03QEjtOV38i8iaCs67r2Ldp
-69qjo2RLgvlW0djDCPVXQVJMP5nQb7hSLVTWlyRdV9MvKKzCXMrRcUwz9AEZyeJW
-Hn9qRF+Eytn1cIuP6UXcG978pqwMgnyU7Lfiq4PqI+s4pheMtwT8eX4VYKFFuJ3/
-0tgXK4AvrpEKcYO3+xezx36bO6SklGMNsV4WTdENHqCBK3IrjwzyQ7+AI0K2iIPR
-gRMnl1OB/D2XXQa3/lWUz8D9cReoLVJI1NPrSbPPhNDMqbc6bq5hxXkF8cKNjRwW
-pT+hTMDg/YIpuRTgXRIHsB4idjSLhLKIxsujTqASZn6Rxb1Ckbi53WN+x5kQ+Nq8
-X+Pxxx+Yw9YCzupRSmmgTyfvurfQy8b5ZoIocMI3Itud3IW3ZH51s6ICPe+1CWTb
-s903F8vIObnL2NqSGs4D6iBGcgJ4U1MNhOP0nqo4GOJVFueO/mhrVG6kSA4T+SBl
-L4Gx1d9EwywT6pC82OxN7WPopkCAepUEa0iH0ei4MiygSBdv3OX3wV3g9hKz1Siv
-v8ObilLFz3hW/yYtVqAbYGrsqPakivuyzAHOYp6UtiNxrfBlVAs7plRaD2BnbZqS
-5YmvZ9Uw4H6Hr1jQ4/J97ZFfpnq2Sv9OSp6mdP5j9Nmg7KsfUY1WwXwno7joolju
-jmArlWRbqZUTS4Qz5VSp
-=Punz
+iQEcBAEBAgAGBQJSAY/9AAoJEGvefgSNfHMd2k0IAKtQ4ZLWL5JfnOF0VW3qJroT
+kzQjFCI+MNWkw6TcyXpyq36ZKJSZ9C1ANudGPPnaPT2XbMRgd4T5yQUKextCYf01
+getOOJZkY1vp5A52ujG7pcYNB2a+DP1O/LinPQvdp3TGrbWdOuRixzQ/AMKcbKrp
+AXTajRsLJmMbtjJ95n9XF3ie+fT1QdW02YyzDMmT5UiRJtDJQV9RbFAW+9J+iuw9
+OP43uxwXtf50zFsU6OffNSlQNHoGQqD9NB17YFxjZvL4swg1P1YyQn6IIsOXzze3
+gPNmL/PT27x4d/zr001idedzZtAsfpN60WudPZggQRvmzZyTC2E2Nct5Fy4P6Xg=
+=yr5Z
 -----END PGP SIGNATURE-----
