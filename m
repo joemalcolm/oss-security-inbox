@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/6
-Message-ID: <alpine.LFD.2.03.1304082148570.6859@redhat.com>
-Date: Mon, 8 Apr 2013 22:18:30 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: Dan Carpenter <dan.carpenter@...cle.com>
-cc: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/7
+Message-ID: <20130807160642.GR19155@redhat.com>
+Date: Wed, 7 Aug 2013 10:06:42 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: SQL injection and shell escaping issues in Cacti < 0.8.8b
 Content-Type: text/plain; charset=utf-8
 
-  Hello Dan,
-+-- On Mon, 8 Apr 2013, Dan Carpenter wrote --+
-| The x86 version is ok but asm-generic version of get_user() doesn't clear x.
-| 
-| include/asm-generic/uaccess.h
-| 
-|    226  #define get_user(x, ptr)                                        \
-|    227  ({                                                              \
-|    228          might_sleep();                                          \
-|    229          access_ok(VERIFY_READ, ptr, sizeof(*ptr)) ?             \
-|    230                  __get_user(x, ptr) :                            \
-|    231                  -EFAULT;                                        \
-|    232  })
+Cacti 0.8.8b was released today [1] with a changelog that notes:
 
-  Here, following call sequence ensures that 'x' is always initialised with 
-user memory contents.
+Cacti 0.8.8b Change Log
+[...]
+   * security: SQL injection and shell escaping issues
 
- get_user
-  -> __get_user
-   -> __get_user_fn
-    -> __copy_from_user
+It looks like the SQL injection issue is in api_poller.php and
+utility.php [2]
 
-Unless `access_ok()' in `__get_user' returns 0, which it does not, OR 
-sizeof(*ptr) is > 8 bytes.
+I think there are two shell escaping issue:
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+1) snmp.php: Use escapeshellarg() instead of custom escape function for snmp library [3]
+2) rrd.php: Properly escape all user input for consumption by rrdtool [4]
+
+
+[1] http://sourceforge.net/mailarchive/message.php?msg_id=31258868
+[2] http://svn.cacti.net/viewvc?view=rev&revision=7394
+[3] http://svn.cacti.net/viewvc?view=rev&revision=7392
+[4] http://svn.cacti.net/viewvc?view=rev&revision=7393
+
+
+Looks like 3 CVEs are needed.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
