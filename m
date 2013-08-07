@@ -1,50 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/13
-Message-ID: <5294E5C4.2060108@redhat.com>
-Date: Tue, 26 Nov 2013 19:17:40 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: static IV used in Percona XtraBackup
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/3
+Message-ID: <20130807072502.GH15178@dhcp-25-225.brq.redhat.com>
+Date: Wed, 7 Aug 2013 09:25:03 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: Oleg Nesterov <oleg@...hat.com>
+Cc: security@...nel.org, oss-security@...ts.openwall.com, "Eric W. Biederman" <ebiederm@...ssion.com>, Andy Lutomirski <luto@...capital.net>, David Howells <dhowells@...hat.com>
+Subject: Re: [PATCH 0/1] (Was: CLONE_NEWUSER local DoS)
 Content-Type: text/plain; charset=utf-8
 
-On 11/26/2013 11:52 AM, Marcus Meissner wrote:
-> Hi,
->
-> This came to our desk:
-> https://bugzilla.novell.com/show_bug.cgi?id=852224
-> https://bugs.launchpad.net/percona-xtrabackup/+bug/1185343
->
-> constant IV used in CTR Mode, allowing plaintext retrieval
-> attacks.
+On Tue, Aug 06, 2013 at 07:38:27PM +0200, Oleg Nesterov wrote:
+> On 08/06, Oleg Nesterov wrote:
+> >
+> > On 08/06, Petr Matousek wrote:
+> > >
+> > > spender reported [1] a local DoS triggerable by unprivileged user when
+> > > user namespaces are enabled (CONFIG_USER_NS).
+> > >
+> > >   [1] https://twitter.com/grsecurity/status/364566062336978944
+> 
+> I see nothing related there, so the patch lacks Reported-by.
+> 
+> Who is reporter?
 
-Is suppose this is part of the fix.
-
-+void
-+xb_crypt_init_iv()
-+{
-+	uint seed = time(NULL);
-+	srandom(seed);
-+}
-+
-+void
-+xb_crypt_create_iv(void* ivbuf, size_t ivlen)
-+{
-+	size_t i;
-+	ulong rndval;
-+
-+	for (i = 0; i < ivlen; i++) {
-+		if (i % 4 == 0) {
-+			rndval = (ulong) random();
-+		}
-+		((uchar*)ivbuf)[i] = ((uchar*)&rndval)[i % 4];
-+	}
-+}
-
-This still risks keystream reuse because time() is fairly coarse.
-
-What's worse, on 64-bit big-endian architectures, it results in a 
-constant zero IV because RAND_MAX is not large enough to reach the upper 
-32 bits in the first four bytes of the rndval variable.
+spender@...ecurity.net
 
 -- 
-Florian Weimer / Red Hat Product Security Team
+Petr Matousek / Red Hat Security Response Team
