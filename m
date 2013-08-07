@@ -1,60 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/24/3
-Message-Id: <201308241446.r7OEkX9L015785@linus.mitre.org>
-Date: Sat, 24 Aug 2013 10:46:33 -0400 (EDT)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Joomla unauthorised uploads before 2.5.14 / 3.1.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/12
+Message-Id: <A797FBF7-DB96-4641-9263-9EF8C6C6A7D5@stufft.io>
+Date: Wed, 7 Aug 2013 13:23:14 -0400
+From: Donald Stufft <donald@...fft.io>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Insecure Software Download in pip
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> http://developer.joomla.org/security/563-20130801-core-unauthorised-uploads.html
-> Code commit 2.5:
-> https://github.com/joomla/joomla-cms/commit/fa5645208eefd70f521cd2e4d53d5378622133d8
-> Code commit 3.1:
-> https://github.com/joomla/joomla-cms/commit/1ed07e257a2c0794ba19e864f7c5101e7e8c41d2
-> 
-> Issue also exists in 1.5 (end of life):
-> http://joomlacode.org/gf/project/joomla/tracker/?action=TrackerItemEdit&tracker_item_id=31626
-> 
-> Exploit in the wild:
-> https://github.com/rapid7/metasploit-framework/pull/2219
-> http://www.cso.com.au/article/523528/joomla_patches_file_manager_vulnerability_responsible_hijacked_websites/
+On Jul 31, 2013, at 4:11 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-Here, the CVE abstraction for the main issue seems clear, so we are
-assigning:
+> Ok I have no info on that CVE, is it embargoed? I can't find it in
+> google after a quick search. I need to see that one before I can
+> assign anything. As for the reserved thing:
 
-  CVE-2013-5576 - incomplete validation of $format in media.php in
-                  Joomla! 1.5.x (before a certain unofficial patch),
-                  2.x before 2.5.14, and 3.x before 3.1.5
 
-The above tracker_item_id=31626 reference has other statements about
-1.5.x security that might (or might not) be assigned other CVEs later.
-For example:
+This CVE has been fixed, and it is for the issue where pip prior to 1.3 did not download
+from the central repository using TLS
 
-  Adddate: 2013-08-01 16:35:29
-    There seems, though, to be at least one more problem with the
-    "media.php" file: the "defined('_JEXEC') or die('Restricted access')"
-    execution protection is missing.
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1629
 
-  (The security relevance of this is disputed later in the same item.)
+So back to the question of mirroring, possible to get a CVE for that now? :)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
 
-iQEcBAEBAgAGBQJSGMUOAAoJEGvefgSNfHMdeuYH/3SpoMD4tUKNCNgkeY5zaRwo
-Aw+dC/sfXt1KIDKCR6jX3nyxdZdcPjUs9dgdZtFYd1uQl9sj+Y67hCUyD16KZ3p+
-rCkNidGl6X3RYPpERmzsNd4N9ty51ZmeK5Q7cISXGEXIKcaWnxX/fHyr/fN8boIb
-+GwqvNHdBZTgTE5kmo8wpAGVCA7VaXgdGAXAWLqLJ4ADGumJAiaG8s5f6xuQcOgk
-3B7AET8ms3qAbbDv/1BnYBXGOHOAHRN0uqjHgS0gBrEaSVxBFusrCr/9IzLn1w+e
-NLmQdN2QfbSc6IXvp8LydMGaNQtv6E9cmH12wrakwi1EVfE28MlgOgcvYQSYQck=
-=763k
------END PGP SIGNATURE-----
+
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
