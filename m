@@ -1,25 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/15/3
-Message-ID: <20130915194644.GA8557@eldamar.local>
-Date: Sun, 15 Sep 2013 21:46:44 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Cc: team@...urity.debian.org, alex@...ngoproject.com, lfaraone@...ian.org, hertzog@...ian.org
-Subject: [notification] django: CVE-2013-1443: denial-of-service via large passwords
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/2
+Message-ID: <5201D823.6010706@redhat.com>
+Date: Tue, 06 Aug 2013 23:16:19 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Nathan March <nathan@...net>
+CC: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>, "Steven M. Christey" <coley@...re.org>
+Subject: Re: OpenX Ad Server Backdoor CVE?
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Django released a new advisory for a denial-of-service via large
-passwords [1].
+On 08/06/2013 06:10 PM, Nathan March wrote:
+> On 8/6/2013 4:52 PM, Kurt Seifried wrote:
+>> According to a post by Heise Security, a backdoor has been
+>> spotted in the popular open source ad software OpenX [1][2].
+>> Appearantly the backdoor has been present since at least November
+>> 2012. I tried to download the source to verify the information,
+>> but it appears the files have been removed.
+> 
+> I can confirm this is in 2.8.10 that was downloaded on July 15th.
+> It's inside the /etc/plugins/openXVideoAds.zip at 
+> ./plugins/deliveryLog/vastServeVideoPlayer/flowplayer/3.1.1/flowplayer-3.1.1.min.js
+>
+> 
+> 
+> md5sum on the zip matches 6b3459f16238aa717f379565650cb0cf
+> 
+> - Nathan
+> 
 
-This is a short notice to avoid possible dublications of a CVE. The
-Debian Security Team was asked shortly before the advisory release for
-a CVE, and CVE-2013-1443 got assigned to this issue today.
+Please use CVE-2013-4211 for this issue.
 
- [1] https://www.djangoproject.com/weblog/2013/sep/15/security/
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Regards,
-Salvatore
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+iQIcBAEBAgAGBQJSAdgiAAoJEBYNRVNeJnmTbxMP/RnSpjLObSpR9aY7qf4iT0EF
+6knTvjDGxAlcpdjYiZFb/eKqQU6HEz7AY8jmnIcUZxdcOz2gqJWRrfRIlsq60MPK
+2DeQqs1YTeI8y/MW5zG992e0zl83F5L9hZ+jthI1K5pOAdodyov+iAKoaEVc1Jtc
+BVY0wctV/rJG31Z3ljnwq9xoHpTgGhKfviqAlVHENja7bagmp9fm9mxd4JwFB9W4
+VYiNbKUSjbjWRFW4jEUb9+3bzD4AY3mlOqhsqBeHbT/yvw1UvLlsy7PF/VLwlf/i
+nhtcUJk/61kgiCr0AOj+Nn17BLQ7HQyjFrnbEAucoXH02ZXdnwAp3lBc81/1J0eQ
+x3avpvOP44ghxjWGnPXZnb1JwURtoqVq3BdV3LOPFaSjci8dDoMmqRSPxotGT0WX
+725tgnlgaItvEMR/bU5MbkNRtuJwzWnOiIgorG1soInjCZNRy0ojZHpRT9JCc0mo
+88/veCmfIQvwRLG9d23CBUyuWqKR3UKqHIVUYsdO5iuzDyAntT00OIBy7YMaeVPQ
+vGJFPMj8s8JLZX/Z0BpP09uvHjsTgqfrgA3GQkpSct8E+40FMNFuqxzANk1Vxy/Z
+p/JB0NH33aAu4NVnhcJ2lpJ8FHx4/RZ6RyKT7t7+G1R4hSACYsJK+X3zXeNWzYHu
+iCIRl4sDn3hSJ8qdPDcd
+=vwwV
+-----END PGP SIGNATURE-----
