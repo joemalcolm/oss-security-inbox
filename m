@@ -1,43 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/17/3
-Message-ID: <516E713C.5000900@suse.de>
-Date: Wed, 17 Apr 2013 11:54:04 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/6
+Message-ID: <52026C4C.5030201@openstack.org>
+Date: Wed, 07 Aug 2013 17:48:28 +0200
+From: Thierry Carrez <thierry@...nstack.org>
 To: oss-security@...ts.openwall.com
-Subject: debian: gpg --verify suggests entire file was verified, even if file contains auxiliary data
+Subject: [OSSA 2013-022] Swift Denial of Service using superfluous object tombstones (CVE-2013-4155)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-Hi,
-this might possibly need a CVE-ID.
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=704645
-https://bugs.g10code.com/gnupg/issue1486
+OpenStack Security Advisory: 2013-022
+CVE: CVE-2013-4155
+Date: August 7, 2013
+Title: Swift Denial of Service using superfluous object tombstones
+Reporter: Peter Portante (Red Hat)
+Products: Swift
+Affects: All versions
 
+Description:
+Peter Portante from Red Hat reported a vulnerability in Swift. By
+issuing requests with an old X-Timestamp value, an authenticated
+attacker can fill an object server with superfluous object tombstones,
+which may significantly slow down subsequent requests to that object
+server, facilitating a Denial of Service attack against Swift clusters.
 
-Itself it might be no issue but in conjunction with other applications
-this could become a vulnerability.
+Havana (development branch) fix:
+https://review.openstack.org/40643
 
-Bye,
-Thomas
+Grizzly fix:
+https://review.openstack.org/40645
+
+Folsom fix:
+https://review.openstack.org/40646
+
+Note:
+The havana fix will be included in the upcoming Swift 1.9.1 release.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4155
+https://bugs.launchpad.net/swift/+bug/1196932
+
+Regards,
 
 - -- 
-Thomas Biege <thomas@...e.de>, Team Leader MaintenanceSecurity, CSSLP
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
-21284 (AG Nürnberg)
-- --
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Thierry Carrez
+OpenStack Vulnerability Management Team
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-iQEcBAEBAgAGBQJRbnE8AAoJEJqHoVJVjr8DBcMH/ic5gyrlMeuFpLQGnSHQ0VEm
-pDSSHXG7SHA25y27yXQMof/tofsJtFgoHypjTXoDm7008B/TtUPulgjib7uEujV6
-pnrzjkfc///NkEKBMdC/zFd9QrigqTbqYd/Xvy9QhNXieexT50eeMmcJi79rZXbA
-5P/wlTTgIHz0KFPTYHgmy+9+qwB+T4eagL2iUH2RdDc15M81EQ4QSlY6+fKHGEfv
-UvmN95yqXO68Yb69s/Tet3Hg6zKfBIJH0xyaTrKtIjjCdVjEVCitZqkW8WQGpVYf
-4yzu7+4BTbtMWLIiBRHdydHWEu8k9diqXwpbbdxEaj0LVMgkkA1V5G7CYn28Qec=
-=WqQL
+iQIcBAEBCAAGBQJSAmxMAAoJEFB6+JAlsQQjHnAP/3Q1paJhRVmqLqMgH/+1aey+
+5tzafCJP/YwRdjRi3l27MgIVoKk9sqVr3jxpaSDVFZ2iKD3wqcb28cYa8tqRGLsV
+gkb0nCePG/HQjcfE58Up+1otH/vMqoZTjLzQfUWPAWZASCm6vFSIcepdyi4WMIiM
+Rfv1E+Mjf9esNBT7fHgfNW4wrJbut+j4pU9sqzZS13KE2pbdKi8URsF1Pt77QXz5
+PtgfvGiIlkwQQ18Y0VMyGj50uWF36J3YXt1k6L4qa9SXd+HAx5yRq+QPdPPHgUrv
+S3WDi+lAlhZa47K7fDUzR9Ytr25JSa1L48cJp2e8Lw5RNSGjZd9UJp5ZGvlK0ZFl
+fb3gktBu+4KzJ6jiCV7kQXSxTVMcICjFF35v0Y6pLCmTOeYtcri1VoT9CV0mdo+f
+85BxCcykaE1EQbPW+OpO5S6LoGpb0WBCYvcqrQr05I7Y0qIdUz4WucsheWDx2kSm
+o6ZaZedc1k397WLZt2WTaqQFgoFh2fN9gp+syseFItCi+zlQOyMkCCm3ORvnmGuE
+7fR0998XTRzzW1b8Z9a8QWWyXVmHqZ7oqu4yRsGxbyZG+4ckX+XsRwqf/C3DJNdw
+fZTXbvnEgxnO18Cq5ki4EbJrk70vW45TtJ7kSWGbwSEcZ/Ju4A1fncK4ESd/cMf7
+2hcM7moWaAcdUSCEII7O
+=AwQ5
 -----END PGP SIGNATURE-----
