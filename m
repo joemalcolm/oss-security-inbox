@@ -1,58 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/6
-Message-ID: <20130225161208.GA3026@openwall.com>
-Date: Mon, 25 Feb 2013 20:12:08 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/19
+Message-ID: <20130808201639.GB8864@redhat.com>
+Date: Thu, 8 Aug 2013 14:16:39 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
+Cc: Paul Gevers <elbrus@...ian.org>, Gandalf <gandalf@...ti.net>
+Subject: Re: CVE Request: Regression introduced in cacti with fix for CVE-2013-1435
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 25, 2013 at 11:41:33AM +0100, Mathias Krause wrote:
-> But sorry, I won't disclose any further details, to not get into legal
-> issues. In Germany it's quite hairy to do things like that :/
-> But I can provide you my PoC in a private email -- for security evaluation.
+* [2013-08-08 21:20:59 +0200] Salvatore Bonaccorso wrote:
 
-This is not necessary since we don't use these "too recent" kernels, but
-thanks for offering.
+>Hi Kurt
+>
+>The fix for CVE-2013-1435[1] introduced a regression:
+>
+> [1] http://svn.cacti.net/viewvc?view=rev&revision=7393
+>
+>It was reported in [2] and upstream proposed a fix [3] which was
+>confirmed to work by two of the involved people.
+>
+> [2] http://sourceforge.net/mailarchive/message.php?msg_id=31262707
+> [3] http://sourceforge.net/mailarchive/message.php?msg_id=31262712
+>
+>The corresponding svn commits should be the following:
+>
+> [4] http://svn.cacti.net/viewvc?view=rev&revision=7408
+> [5] http://svn.cacti.net/viewvc?view=rev&revision=7409
+> [6] http://svn.cacti.net/viewvc?view=rev&revision=7413
+>
+>Does this need a follow-up CVE assignment for the regression part
+>introduced?
 
-Here's a curious tweet:
+My understanding would be no.  A follow-up CVE would be assigned if it
+a) didn't fix the underlying security issue (it does) or b) introduced a
+new security issue (it doesn't).
 
-<_argp> Since full-disclosure has been DDoSed to oblivion, here's huku's sock_diag 1 year-old exploit: http://pastebin.com/gwn1qErx
+Botching the fix so that _functionality_ no longer works would not be
+grounds for another CVE (although anyone backporting these would surely
+want the additional fixes).
 
-The pastebin has:
-
----
-Who the fuck DDoS'ed full-disclosure? ;)
-
-http://sysc.tl/mpougatsa_me_krema_kai_milko.tgz
-
----------- Forwarded message ----------
-From: huku <huku@...ack.net>
-Date: Mon, 25 Feb 2013 01:18:38 +0200
-Subject: CVE-2013-1763 local root exploit
-To: full-disclosure@...ts.grok.org.uk
-
-Greetings fly to Daphne Rosen, Gianna Michaels and Carmella Bing.
-
-./hk
----
-
-SHA-1:
-c5904fdaea3e212bb84592e6e2ce3a640b14308c  mpougatsa_me_krema_kai_milko.tgz
-
-Two of the files in the tarball have timestamps of 2012-07-14.  Of
-course, this is no proof, but it does appear that the bug was privately
-known since about July 2012.  The README says:
-
-"A trimmed down version of an old exploit for the recently published
-`sock_diag_handlers[]' vulnerability :("
-
-The code contains:
-
-  printf("Linux kernel >= 3.2 NETLINK_INET_DIAG 0day\n");
-  printf("by huku <huku _at_ grhack _dot_ net>\n");
-
-Is ">= 3.2" an error (should have been ">= 3.3" as your original posting
-in here said)?  (The difference may be whether Ubuntu 12.04 is affected.)
-
-Alexander
+-- 
+Vincent Danen / Red Hat Security Response Team 
