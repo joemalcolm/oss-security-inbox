@@ -1,84 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/12
-Message-ID: <51F41AF1.5010702@redhat.com>
-Date: Sat, 27 Jul 2013 13:09:37 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Evan Teitelman <teitelmanevan@...il.com>, scottydroid@...il.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request - Coin Widget serves code over plain http.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/9
+Message-ID: <5203C2DA.1020806@openstack.org>
+Date: Thu, 08 Aug 2013 18:10:02 +0200
+From: Thierry Carrez <thierry@...nstack.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: [OSSA 2013-023] Denial of Service using XML entities in Nova/Cinder extensions (CVE-2013-4179, CVE-2013-4202)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-On 07/26/2013 07:19 PM, Evan Teitelman wrote:
-> Coin Widget is a Bitcoin and Lightcoin donation widget. Its code
-> is normally downloaded from http://coinwidget.com/widget/coin.js in
-> the following manner.
-> 
-> <script src="http://coinwidget.com/widget/coin.js"></script> 
-> <script> CoinWidgetCom.go({ wallet_address:
-> "31uEbMgunupShBVTewXjtqbBv5MndwfXhb" , currency: "bitcoin" ,
-> counter: "count" , alignment: "bl" , qrcode: true , auto_show:
-> false , lbl_button: "Donate" , lbl_address: "My Bitcoin Address:" ,
-> lbl_count: "donations" , lbl_amount: "BTC" }); </script>
-> 
-> Without SSL or similar protection, it is possible for the code to
-> be modified in transit. A malicious individual could modify the
-> code to replace a legitimate wallet address with his or her own.
+OpenStack Security Advisory: 2013-023
+CVE: CVE-2013-4179, CVE-2013-4202
+Date: August 8, 2013
+Title: Denial of Service using XML entities in Nova/Cinder extensions
+Reporter: Grant Murphy (Red Hat)
+Products: Nova, Cinder
+Affects: Grizzly and later
 
-I also tried "https://coinwidget.com/widget/coin.js" and it failed
-(you can telnet to the port, it's open, but I got an SSL error). If
-you try
-"https://www.ssllabs.com/ssltest/analyze.html?d=coinwidget.com+"
-you'll see the same.
+Description:
+Grant Murphy from Red Hat reported that vulnerabilities in XML request
+parsers were not fully patched in OSSA 2013-004. By leveraging XML
+entity expansion in specific extensions, an unauthenticated attacker may
+still consume excessive resources on the Nova (CVE-2013-4179) or Cinder
+(CVE-2013-4202) API servers, resulting in a denial of service and
+potentially a crash. Only Nova setups making use of the security group
+extension in Grizzly are affected. Only Cinder setups making use of the
+backups or volume transfer API extension in Grizzly are affected.
 
-> I believe this vulnerability is an example of CWE-300. Does it need
-> a CVE identifier?
+Havana (development branch) fixes:
+Nova: https://review.openstack.org/40879
+Cinder: https://review.openstack.org/40881
 
-The problem is not in the code, the problem is in how the code is
-served/distributed. CVE is traditionally for software and not for
-services. So under a simplistic reading of that strict definition I
-would say this doesn't deserve a CVE.
+Grizzly fixes:
+Nova: https://review.openstack.org/40880
+Cinder: https://review.openstack.org/40883
 
-However the world is changing, for example a program that included an
-auto-updater component that was advertised as being "Secure" but went
-over HTTP would probably qualify for a CVE.
+Note: The Nova and Cinder Grizzly fixes will be included in the upcoming
+2013.1.3 stable release.
 
-Steve I'm bouncing this to you, I'm inclined to NOT assign a CVE since
-it opens up a huge can of worms (every single bit of JavaScript served
-from HTTP and not available via HTTPS ever), but I can also see how it
-should maybe get a CVE.
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4179
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4202
+https://launchpad.net/bugs/1190229
 
-The good news is that future versions of Firefox are implementing a
-security policy that when loading a page from HTTPS they will not load
-page components from HTTP, which would fix this issue. Hopefully all
-the browsers do this.
-
-> 
-> I have copied the creator of Coin Widget on this email.
-> 
-> Thank you for your time, Evan Teitelman.
-> 
-
+Regards,
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Thierry Carrez
+OpenStack Vulnerability Management Team
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJR9BrxAAoJEBYNRVNeJnmTzSUP/2cz0J2eI0lA9z3JWVl0VUy1
-9xiS+SUxFTpmim+bAEg7glaJuMmYdXqXrSGgeujGNlS/Fwz4pkO/FcKbfg/SzxaE
-pVjhMQSni6hMfsos18Zsh6V9FE7gyvsiFULFYD3MQErSsXwbXlNO7iQcaxPo1oFI
-X7I6fibNNb1dlHIgUcZA2dfj3MUDl2l31TgmPyWyO2KRYadz7z0Yw6xNTV1CsbBT
-Ppig53utesTkoiRd+Oym6u0HSjr5PN8SjFO7qSHV5h8Cdd0Q7+mHcBsg6C76Cixa
-+eAuFpdC9CbyXgXtXuepbSCK9YlM6tyW3Acl1V16XM0pyI0GDGmdzfqsZHb3hwzg
-hKxqNLrYf7PAgDkz8wPHdWn6M2ENnkNmHOKxlQiLWBAiP3Zjx7KoGphRfFxG0cox
-FY2FeteiGRt1J7UfTApJkXlFgTcYfn1UtGFtqBeMj3JqSsCvBx9z5fJqCbDwTV2F
-qwZkyURHdEYyOj4S35oQ/pgabV6XpmO9m/PMr43BnL6qStV+DJzXLedNIBVbV+XU
-amPT15MOjWkwFVCU5oGakz0hIkMSDli6Z/tCOA2gXxZQ/kI606P6HymD9pGfw8nW
-9bTQRTHdJfkDCOu65V3Tj8vUO2zQ+kD76iLKXIy8GkhPV2Uer7FHW22fB5uxgQit
-fcouWuyRDV85m0MQNEYH
-=S3oH
+iQIcBAEBCAAGBQJSA8LaAAoJEFB6+JAlsQQjQUsQAK6nFmxXNqX8f5toY7eF+f8Q
+1wx9w5/TQQTAuiBwTJvmLm3dSluE+llo9bbb9Sce3hc5MAJKcaZq4FO9DDk0W5vs
+oQSLP5EzcSocjVK4CW523y1fYHViiac566cfCp32il5FMFPrmZ0qGmIhs60r+bUa
+FzjIZXsXGX8o+c9JYcaPt9B9pYp6bjriicSVEexyic5yBcfAmS2yR089waVoloSo
+829R6CbMfbWqtusXzUrgfWj1jQI7tf4uu8Q5xmP+TOQCiUd4fQLFFlvIv7kjvWC4
+4Gjx1rzf3sFAPsrWuTKBHsZ6wX2yIKf5rNuPo0K0bvPn8XSAwrcY4fkXCrECLz4y
+7bbn/oD2Bkou26V09zMtqjE5pgmVvYi1daEZifn/OMyzh0jr5CP8bXoR6UEHcX7v
+FY94el6JWoJTobU+ltehSO8pliHTv2CtuyWYI32sQMXyF6KHuKuLKeT7EC3VfZ55
+YSzY/XRjORiRQOItZtRq2mY62MSYA0OFm4Lpp9cHR6S25Nh+et7JBPmjkcgQsDTm
+IRhd61Rv7PJ5maH6bM5Oip8djFsh4+H0Bi8t0kJPdo+XQKhk8Je6c5adlvHh0C/V
+m3ngEfkvyHcFooezpqStj2EIq3qUltkarPw5U1Z8xxLEc40tI+Z+KWXof1xWLyhG
+ysDHEU9BAjE8N9BA/rvN
+=03Ze
 -----END PGP SIGNATURE-----
