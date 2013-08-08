@@ -1,17 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/1
-Message-ID: <1572267.ZAauxAabhU@devil>
-Date: Tue, 26 Feb 2013 10:44:14 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE request: monkeyd world-readable logdir
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/5
+Message-ID: <1110336290.13184628.1375949800967.JavaMail.root@redhat.com>
+Date: Thu, 8 Aug 2013 04:16:40 -0400 (EDT)
+From: David Jorm <djorm@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request: remote code execution due to XML deserialization in Restlet
 Content-Type: text/plain; charset=utf-8
 
-On Monday 25 February 2013 14:02:00 Kurt Seifried wrote:
-> This also doesn't look to be very active/widely used.
+Dinis Cruz has published information on remote code execution due to XML deserialization in Restlet:
 
-I don't see this as a valid reason to don't assign a CVE.
+http://blog.diniscruz.com/2013/08/using-xmldecoder-to-execute-server-side.html
+https://github.com/o2platform/DefCon_RESTing
+
+I have tested his reproducer and confirmed it works against Restlet 2.0 and 2.2. Please assign a CVE ID to this flaw.
+
+Thanks
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+David Jorm / Red Hat Security Response Team
+
