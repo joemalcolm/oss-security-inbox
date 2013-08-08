@@ -1,28 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/10/4
-Message-ID: <20130610125335.GA22803@kludge.henri.nerv.fi>
-Date: Mon, 10 Jun 2013 15:53:35 +0300
-From: Henri Salo <henri@...v.fi>
-To: gremlin@...mlin.ru
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/18
+Message-ID: <20130808192059.GA11002@eldamar.local>
+Date: Thu, 8 Aug 2013 21:20:59 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Paul Gevers <elbrus@...ian.org>, Gandalf <gandalf@...ti.net>
+Subject: CVE Request: Regression introduced in cacti with fix for CVE-2013-1435
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 10, 2013 at 03:26:30PM +0400, gremlin@...mlin.ru wrote:
-> I know lots (even for MySQL, which we are discussing, I can recall
-> at least mysqldump producing trash, or several replication issues),
-> but I don't want to waste my time.
-> 
-> P.S.: http://pics.rsh.ru/img/debipoke_demo_itnrnj4r.png :-)
+Hi Kurt
 
-What do you mean by wasting time? Could you elaborate a bit more. I know that
-there are several persons in this list who are actively fixing and reporting
-security issues to Debian. Don't hide behind picture if you have some real
-opinion why you should not be reporting bugs to Debian. You could even list the
-problems here and I can deal with reporting part. Are you refering to this?
-http://www.debian.org/security/2013/dsa-2667
+The fix for CVE-2013-1435[1] introduced a regression:
 
----
-Henri Salo
+ [1] http://svn.cacti.net/viewvc?view=rev&revision=7393
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+It was reported in [2] and upstream proposed a fix [3] which was
+confirmed to work by two of the involved people.
+
+ [2] http://sourceforge.net/mailarchive/message.php?msg_id=31262707
+ [3] http://sourceforge.net/mailarchive/message.php?msg_id=31262712
+
+The corresponding svn commits should be the following:
+
+ [4] http://svn.cacti.net/viewvc?view=rev&revision=7408
+ [5] http://svn.cacti.net/viewvc?view=rev&revision=7409
+ [6] http://svn.cacti.net/viewvc?view=rev&revision=7413
+
+Does this need a follow-up CVE assignment for the regression part
+introduced?
+
+Regards,
+Salvatore
