@@ -1,40 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/8
-Message-ID: <20130516140611.GD19291@kludge.henri.nerv.fi>
-Date: Thu, 16 May 2013 17:06:11 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: WordPress plugin mail-on-update CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/7
+Message-ID: <alpine.LFD.2.03.1308081521050.18623@redhat.com>
+Date: Thu, 8 Aug 2013 15:39:30 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Petr Matousek <pmatouse@...hat.com>
+Subject: CVE Request: Linux kernel: arm64: unhandled el0 traps
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+   Hi,
 
-Can I get 2013 CVE for WordPress plugin mail-on-update CSRF vulnerability. PoC
-for "List of alternative recipients" below. Tested 5.1.0 version.
+Linux kernel built for the ARM64(CONFIG_ARM64) platform is vulnerable to a 
+crash when the processor generates trap/esr, that is not handled gracefully, 
+which leads to bad_mode(), wherein it'll die() or oops().
 
-Homepage: http://wordpress.org/extend/plugins/mail-on-update/
-Code: http://plugins.svn.wordpress.org/mail-on-update/trunk/
+A user/program could use this flaw to crash the kernel resulting in DoS.
 
-<html><form action="https://example.com/wp/wp-admin/options-general.php?page=mail-on-update" method="post" class="buttom-primary">
-<input name="mailonupdate_mailto" type="hidden" value="example0@...mple.com
-example1@...mple.com
-example2@...mple.com
-example3@...mple.com
-example4@...mple.com
-example5@...mple.com
-example6@...mple.com
-example7@...mple.com
-example8@...mple.com
-example9@...mple.com
-example10@...mple.com
-henri+monkey@...v.fi" />
-<input name="submit" type="submit" value="Save"/></form></html>
+Upstream fixes:
+===============
+  -> https://git.kernel.org/linus/381cc2b9705512ee7c7f1839cbdde374625a2a9f
+  -> https://git.kernel.org/linus/9955ac47f4ba1c95ecb6092aeaefb40a22e99268
 
-If attacker adds random email to that form default user won't get emails and
-attacker might be interested to receive these as the email contains information
-of available plugin updates.
-
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
