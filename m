@@ -1,20 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/12/5
-Message-ID: <871ucl1nkf.fsf@mid.deneb.enyo.de>
-Date: Tue, 12 Feb 2013 17:53:04 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: Eitan Adler <lists@...anadler.com>
-Cc: oss-security@...ts.openwall.com,  cve-assign@...re.org
-Subject: Re: Re: e1000e/82574L hardware erratum
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/8
+Message-ID: <20130808112839.GE4372@suse.de>
+Date: Thu, 8 Aug 2013 13:28:39 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com, David Walser <luigiwalser@...oo.com>
+Cc: "lwn@....net" <lwn@....net>
+Subject: Re: tomcat CVE confusion
 Content-Type: text/plain; charset=utf-8
 
-* Eitan Adler:
+On Wed, Aug 07, 2013 at 11:41:07AM -0700, David Walser wrote:
+> OpenSuSE has issued an advisory for tomcat today:
+> http://lists.opensuse.org/opensuse-updates/2013-08/msg00014.html
+> 
+> This is also linked from LWN here:
+> http://lwn.net/Vulnerabilities/562439/
+> 
+> This CVE-2013-3544 is not mentioned on tomcat's security page:
+> http://tomcat.apache.org/security-7.html
+> 
+> But CVE-2012-3544 is mentioned there (note the different year).
+> 
+> Based on this Novell/OpenSuSE bug report, I believe OpenSuSE made a typo:
+> https://bugzilla.novell.com/show_bug.cgi?id=831119
+> 
+> I can't find any info about CVE-2013-3544, but the mitre page says it's reserved.  Perhaps that CVE has already been allocated for some other piece of software?  If so, this might cause some confusion.  I'm not sure how this should be handled, but I thought it would be appropriate to point this out.
 
-> It should be noted that this is motherboard specific.  In particular
-> only motherboard manufacturers that ignored Intel guidelines are
-> affected (acc' to intel).
->
-> Their official statement is here:
-> http://communities.intel.com/community/wired/blog/2013/02/07/intel-82574l-gigabit-ethernet-controller-statement
 
-Indeed.  A kernel module update seems unnecessary.
+Hi,
+
+This is an unfortunate typo introduced by our packager that migrated to
+the following process.
+
+CVE-2012-3544 is the correct CVE.
+
+Ciao, Marcus
