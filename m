@@ -1,29 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/12
-Message-ID: <alpine.LFD.2.10.1311282307500.20723@javelin.pnq.redhat.com>
-Date: Thu, 28 Nov 2013 23:10:46 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE Request: Linux kernel: net: uninitialised memory leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/2
+Message-ID: <5202FE6F.7070506@redhat.com>
+Date: Wed, 07 Aug 2013 20:11:59 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: David Walser <luigiwalser@...oo.com>, "marcus@....franken.de" <marcus@....franken.de>, "lwn@....net" <lwn@....net>
+Subject: Re: tomcat CVE confusion
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Linux kernel built with the networking support(CONFIG_NET), is vulnerable to a 
-memory leakage flaw. It occurs while doing the recvmsg(2), recvfrom(2), 
-recvmmsg(2) socket calls.
+On 08/07/2013 12:41 PM, David Walser wrote:
+> OpenSuSE has issued an advisory for tomcat today: 
+> http://lists.opensuse.org/opensuse-updates/2013-08/msg00014.html
+> 
+> This is also linked from LWN here: 
+> http://lwn.net/Vulnerabilities/562439/
+> 
+> This CVE-2013-3544 is not mentioned on tomcat's security page: 
+> http://tomcat.apache.org/security-7.html
+> 
+> But CVE-2012-3544 is mentioned there (note the different year).
+> 
+> Based on this Novell/OpenSuSE bug report, I believe OpenSuSE made a
+> typo: https://bugzilla.novell.com/show_bug.cgi?id=831119
+> 
+> I can't find any info about CVE-2013-3544, but the mitre page says
+> it's reserved.  Perhaps that CVE has already been allocated for
+> some other piece of software?  If so, this might cause some
+> confusion.  I'm not sure how this should be handled, but I thought
+> it would be appropriate to point this out.
 
-A user/program could use this flaw to leak kernel memory bytes.
+I can't comment on that CVE specifically but on the reserved thing:
 
-Upstream fix:
--------------
-  -> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=bceaa90240b6019ed73b49965eac7d167610be69
+http://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures
 
-Reference:
-----------
-  -> https://bugzilla.redhat.com/show_bug.cgi?id=1035875
+Description[edit source | editbeta]
+This is a standardized text description of the issue(s). One common
+entry is:
+
+** RESERVED ** This candidate has been reserved by an organization or
+individual that will use it when announcing a new security problem.
+When the candidate has been publicized, the details for this candidate
+will be provided.
+
+This means that the entry number has been reserved by Mitre for an
+issue or a CNA has reserved the number. So in the case where a CNA
+requests a block of CVE numbers in advance (e.g. Red Hat currently
+requests CVEs in blocks of 500) the CVE number will be marked as
+reserved even though the CVE itself may not be assigned by the CNA for
+some time.
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSAv5vAAoJEBYNRVNeJnmTEgQQAJJe0EFOZLiYE9pSuZ7TSCth
+7w5/Q+iArKakdyaz7w7WVf+POcQuKTc6/P2JJXquM4YSy7k82j+h6o4VCsRN+bvm
+Elha1n4f0BYaXez+7G09aAAMZ6jKXLb30D5NxWnHQV9mABVTvn7VbW/Ehy+pevXJ
+FWuj2cmZNHzFLmVyI/pmZUmwS9LwtPV9UA6IO9Ka024iF2OStuj0hwHWuBDtasMd
+R9DPhTm2/gMOx1NqIBzi0GYdbRept5M4F17E4LN+mEJBvtQVhrr0wjU8ZwjrCbFv
+QCBIHbqpHQjomtq7JdYoq9nyPLSP9M6E8n5WkRODYllgLDil76KKSJDXqKXI5edb
+v2GhdifY86v8XgAiEU8SI0CY6mFWMhztG2WaOwyvmz0nnZ52XVbGeNAtqvdTuN0K
+dCD06gnxyH4oZ7nu012hOGV9I+4n4wCBALQ+ql3hKZ43m4aLNqCA68OnbkD++2bG
+B5I3fhfQ/HTd4dfGYWy1J4fcsTUAdpDw4nJSUjNcScAfI7URiXVINk6rHN06zQvc
+x9jKHMCUMLxGgxMAmp/BZm3EzPS/T3TVOVJGnlQapc0DIrr1B/RGKyEBBMsMrBSZ
+hSAIBunqnWf37Xo92vcXZbM3pcN1OeILdB/TSog2IMIHxG4vrrHgeEfuDnNpmxy9
+utRHS4sjTS0eM1sY4Pn3
+=yTEy
+-----END PGP SIGNATURE-----
