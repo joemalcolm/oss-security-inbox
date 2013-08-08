@@ -1,43 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/02/5
-Message-ID: <20131202212442.GX2523@redhat.com>
-Date: Mon, 2 Dec 2013 14:24:42 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: samba pam_winbind authentication fails open
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/14
+Message-ID: <20130808172147.GA11641@hunt>
+Date: Thu, 8 Aug 2013 10:21:47 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Dan Williams <dcbw@...hat.com>
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>
+Subject: Re: Re: CVE Request -- Four flaws in WiMAX (afaik upstream is dead for this)
 Content-Type: text/plain; charset=utf-8
 
-Just cutting-and-pasting from the bug I just filed.  The following was
-reported to us, but had been reported upstream last year.
+On Thu, Aug 08, 2013 at 12:10:21PM -0500, Dan Williams wrote:
+> There don't have to be public bugs yet, but if nobody writes patches in
+> a reasonable amount of time perhaps they should just be made public.
 
-It was reported [1] that Samba's pam_winbind module would fail open (allowing
-access) when the require_membership_of option is used as an argument to
-pam_winbind, and contains a non-existent group as the value.  In such a
-configuration, rather then failing and not permitting authentication which is
-what would be expected, pam_winbind will allow authentication to proceed.
+They are public already:
+http://www.openwall.com/lists/oss-security/2013/08/08/10
 
-For instance, if the following is specified and the user is not a member of the
-group 'Admin', they will not obtain access to the system:
+This is probably for the best, sounds like anyone reliant upon this code
+would be wise to re-write much of it anyway...
 
-auth        sufficient    pam_winbind.so use_first_pass require_membership_of=Admin
+Thanks
 
-On the other hand, if the non-existent group 'AdminOops' is specified, the user
-is obviously not a member of said group, authentication will be permitted:
-
-auth        sufficient    pam_winbind.so use_first_pass require_membership_of=AdminOops
-
-The commit [2] that most likely introduced this flaw indicates that this was
-introduced October 2009 and another commit [3] looks like the fix, although
-that is for another bug [4] that's somewhat related to this issue and somewhat
-not.
-
-[1] https://lists.samba.org/archive/samba-technical/2012-June/084593.html
-[2] http://git.samba.org/?p=samba.git;a=commit;h=31f1a36901b5b8959dc51401c09c114829b50392
-[3] http://git.samba.org/?p=samba.git;a=commitdiff;h=f62683956a3b182f6a61cc7a2b4ada2e74cde243
-[4] https://bugzilla.samba.org/show_bug.cgi?id=8598
-
-
-Could a CVE be assigned to this issue?
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
