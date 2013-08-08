@@ -1,72 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/24/1
-Message-Id: <201312241521.rBOFL3RJ029682@linus.mitre.org>
-Date: Tue, 24 Dec 2013 10:21:03 -0500 (EST)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, carnil@...ian.org
-Subject: Re: CVE request: denial of service in Nagios (process_cgivars())
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/6
+Message-ID: <333828963.13226430.1375954935713.JavaMail.root@redhat.com>
+Date: Thu, 8 Aug 2013 05:42:15 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Pedro Ribeiro <pedrib@...il.com>, Frank Warmerdam <warmerdam@...ox.com>
+Subject: CVE Request -- Four (stack-based) buffer overflows and one use-after-free in libtiff v4.0.3 reported by Pedro Ribeiro
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-> http://sourceforge.net/p/nagios/nagioscore/ci/d97e03f32741a7d851826b03ed73ff4c9612a866/
+  Pedro Ribeiro has recently reported the following five security
+flaws being present in the tools of TIFF library:
+  [1] http://www.asmail.be/msg0055359936.html
 
-> Can you please advise if any additional CVE(s) will be assigned to
-> this commit in Nagios then?
+While they are present in the tools (=> not that urgent like they
+would be in the library itself), there's been CVE ids assigned
+in the past for TIFF library tools issues too. To mention some examples:
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1961
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1960
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-4564
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-3401
 
-The situation is a bit complicated but it appears that the best choice
-is to add one CVE assignment.
+Since there doesn't seem to be CVE identifiers assigned for these
+[1] issues yet, could you allocate them?
 
-As mentioned in the
-http://openwall.com/lists/oss-security/2013/12/16/4 post,
-CVE-2013-7108 is for the https://dev.icinga.org/issues/5251 report.
-This mentions specific affected Icinga files. The issue in the same
-files in Nagios has this same CVE ID.
+FWIW regarding the patches and upstream bugs - if my information
+is up2date, there aren't upstream bugs and patches for these issues
+yet.
 
-Nagios changed two other files. The first file is contrib/daemonchk.c.
-This is a fix for the same type of off-by-one issue covered by
-CVE-2013-7108, but it was announced at a different time and therefore
-is assigned a different CVE ID, CVE-2013-7205 for Nagios. Our
-information from Icinga upstream is that the contrib/daemonchk.c code
-isn't exposed to untrusted input with the Icinga distribution as
-shipped, and would only be exposed if the user decides to change the
-build/installation process. Therefore, Icinga upstream is not
-accepting this as an Icinga vulnerability.
-
-Another observation about contrib/daemonchk.c is that the
-process_cgivars function apparently accomplishes nothing, and the call
-and the code itself (with the originally erroneous length checking)
-could perhaps just be omitted, because the variables[x] values are
-never used. However, later use of the variables[x] values is
-irrelevant to the reported attack possibility.
-
-The second file is cgi/statuswml.c. Here, the Nagios commit adds a
-block of new code -- this isn't an off-by-one change like the other
-cases. As far as we can tell, this block of new code doesn't correct
-any exploitable vulnerability and thus there won't be any associated
-CVE ID. The code might be a good idea for consistency reasons, but we
-didn't notice any viable attack that would involve long variables[x]
-values.
-
-Finally (although it's not directly relevant to CVE assignment),
-Icinga does not use the cgi/statuswml.c code and is no longer even
-shipping it.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSuaVyAAoJEKllVAevmvmsE/sIALIOCCsIyfU4kDVoQOjB2FYC
-bqS1B/OfcYkIhcSqGiH/MS+aCaP7bdiVXsy6d89se8XIWe7GRni54rS6nBROmQ6b
-trvXGGy/SJkEvgYE0CQb6UEQl1FFej7lUzHEWCsRaHaUK+s90dEngAi6WjcZj/fc
-Udyr/V/22uBA++Q96IlL0GokAQE0DLymifWwSgkE5EDkQvulEuZ+6TqK+cDIKcFJ
-tnRWk5uLEtEpu84i2RaXC/FeHPSdjrPtIX0FVO/Q1LX0yTxwk5+ilJNQsdWZqcMv
-BPpIXY8xE8BWAnGuQ72odtiSoiV8jzZ4nJIxkjDYTCShwhkJNBWznB9R5VOw/hQ=
-=onXN
------END PGP SIGNATURE-----
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
