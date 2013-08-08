@@ -1,31 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/27/3
-Message-ID: <CADR5acJGf2FjniZhTxJrihS3ttAUS+5c+82evsv=nopngFAxMg@mail.gmail.com>
-Date: Sat, 27 Apr 2013 15:49:09 -0700
-From: Felix Gröbert <groebert@...gle.com>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com, Henri Salo <henri@...v.fi>,  Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, draynor@...rcefire.com
-Subject: Re: Multiple potential security issues fixed in ClamAV 0.97.8 - any further details?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/16
+Message-ID: <1757812633.13565576.1375985164167.JavaMail.root@redhat.com>
+Date: Thu, 8 Aug 2013 14:06:04 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Pedro Ribeiro <pedrib@...il.com>, Frank Warmerdam <warmerdam@...ox.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- Four (stack-based) buffer overflows and one use-after-free in libtiff v4.0.3 reported by Pedro Ribeiro
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello vendors,
 
-sorry for the delayed response, I'm OOO.
+  since Kurt asked for it, below is the summary of the issues.
 
-The bugs should be public now:
+> 
+> Hello Kurt, Steve, vendors,
+> 
+>   Pedro Ribeiro has recently reported the following five security
+> flaws being present in the tools of TIFF library:
+>   [1] http://www.asmail.be/msg0055359936.html
 
-https://bugzilla.clamav.net/show_bug.cgi?id=7055
-heap corruption, potentially exploitable.
+* Issue #1 (tools/gif2tiff.c): Stack-based buffer overflow in the gif2tiff tool when reading GIF extension block on crafted GIF image
+* Issue #2 (tools/gif2tiff.c): Stack-based buffer overflow in the gif2tiff tool when decoding a GIF raster image
+* Issue #3 (tools/gif2tiff.c): Stack-based buffer overflow in the gif2tiff tool when decoding a GIF raster image (same routine like
+                               in case #2, just different line code)
+* Issue #4 (tools/tiff2pdf.c): Use after free in tiff2pdf tool when reading TIFF file raster image data and writing them to the output PDF XObject's
+                               image dictionary stream
+* Issue #5 (tools/rgb2ycbcr.c): Stack-based buffer overflow in the rgb2ycbcr tool when performing RGBA to YCbCr conversion (converting
+                                non-YCbCr TIFF image to a YCbCr one) when processing crafted rasted date of provided TIFF image file
 
-https://bugzilla.clamav.net/show_bug.cgi?id=7053
-overflow due to PDF key length computation. Potentially exploitable.
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-https://bugzilla.clamav.net/show_bug.cgi?id=7054
-NULL pointer dereference in sis parsing.
-
-When building clamav I recommend disabling legacy or unneeded features
-(e.g. sis). I guess that's common sense though.
-
-Cheers
-Felix
-
+> 
+> While they are present in the tools (=> not that urgent like they
+> would be in the library itself), there's been CVE ids assigned
+> in the past for TIFF library tools issues too. To mention some examples:
+>   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1961
+>   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1960
+>   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-4564
+>   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-3401
+> 
+> Since there doesn't seem to be CVE identifiers assigned for these
+> [1] issues yet, could you allocate them?
+> 
+> FWIW regarding the patches and upstream bugs - if my information
+> is up2date, there aren't upstream bugs and patches for these issues
+> yet.
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
