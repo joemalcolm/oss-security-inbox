@@ -1,72 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/31/3
-Message-ID: <527289B8.70304@openstack.org>
-Date: Thu, 31 Oct 2013 17:47:52 +0100
-From: Thierry Carrez <thierry@...nstack.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: [OSSA 2013-029] Potential Nova denial of service through compressed disk images (CVE-2013-4463, CVE-2013-4469)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/1
+Message-ID: <5202F89C.9090603@redhat.com>
+Date: Wed, 07 Aug 2013 19:47:08 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Some Nagios /tmp vulns (no reply from upstream)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-OpenStack Security Advisory: 2013-029
-CVE: CVE-2013-4463, CVE-2013-4469
-Date: October 31, 2013
-Title: Potential Nova denial of service through compressed disk images
-Reporter: Bernhard M. Wiedemann (SUSE) & Pádraig Brady (Red Hat)
-Products: Nova
-Affects: All versions
+No reply from upstream, these are both non critical so making public.
+Does anyone know the best way to contact Nagios upstream for security
+issues?
 
-Description:
-Bernhard M. Wiedemann from SUSE reported a vulnerability in Nova's
-control of the size of disk images. By using malicious compressed qcow2
-disk images, an authenticated user may consume large amounts of disk
-space for each image, potentially resulting in a Denial of Service
-attack on Nova compute nodes (CVE-2013-4463). While fixing this issue,
-Pádraig Brady from Red Hat additionally discovered that OSSA 2013-012
-did not fully address CVE-2013-2096 in the non-default case where
-use_cow_images=False, and malicious qcow images are being transferred
-from Glance. In that specific case, an authenticated user could still
-consume large amounts of disk space for each instance using the
-malicious image, potentially also resulting in a Denial of Service
-attack on Nova compute nodes (CVE-2013-4469). The provided fixes
-address both issues.
+Nagios:
+https://bugzilla.redhat.com/show_bug.cgi?id=958002
+http://tracker.nagios.org/view.php?id=450
+Please use CVE-2013-4214 for this issue.
 
-Icehouse (development branch) fix:
-https://review.openstack.org/54765
+Nagios-plugins:
+https://bugzilla.redhat.com/show_bug.cgi?id=957482
+http://tracker.nagios.org/view.php?id=451
+Please use CVE-2013-4215 for this issue.
 
-Havana fix:
-https://review.openstack.org/54767
+Both reported by Grant Murhphy (gmurphy@...hat.com) of Red Hat.
 
-Grizzly fix:
-https://review.openstack.org/54768
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4463
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4469
-https://bugs.launchpad.net/nova/+bug/1206081
-
-Regards,
 
 - -- 
-Thierry Carrez
-OpenStack Vulnerability Management Team
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBCAAGBQJScom4AAoJEFB6+JAlsQQjds8P/RHc+cYZTRRvoRM2BIIbbfB0
-d28WZPGGHKpKY99XQ/Q0+rDfmZb3N1KJ0nsCrLOdaNUXydIO7kE3wNElvyY8ES4x
-6AJcocK6+3IPdazdu7tTiU/wfhx7DjjFZP+jk91JOmd4jcJ83TGqBT1nUhwDyhIf
-YNjyPoZNnMIz9ga/yn1Drk9RyH0CCNHIL1h4OT9V8CQ4jmbmNOoqw0Benrk+o2Rn
-eFpQfagUm6uKjhyCvbowZueVZv8KB/johfj/w3gpAiuQEMana9dU7fLX18qRhUlh
-xJzCfUanD0JGWUkLtHsy9SapStjqclme4vEjBhLJxhqST547jDjWHnNylPDNHKXa
-OnZ8r7mYrpx3hAhrDe+hWjPmrZ/dOMIwNP8nuWIY+Hyenyv1henSJX0qeppXeAbA
-swTeQhet1iCDw9v+1KadCdPyVLNft7aIa9jw40WUV+Ff60HW8lzNAH0EXf5YWDuG
-rQ5fZoHSRBmOF3GsVtuNDKTABsZz1ecxgwJ4oXV23b79VLV87n1RN5sZLHIu5FY8
-303ci7O7xwFh1mV3VgiQZJzub7/Ey1CBmj8ds/Bg/TyxsraVkDoOxdg216OdvVzs
-VdhgN9dOzD3UEW7kL4uBYNWNSNYoAhTmEphotvtWIR8n/Y4olEYO61YaYZFJvIOy
-hVLCGyCGF9uUbWqkCs5D
-=AdLt
+iQIcBAEBAgAGBQJSAvibAAoJEBYNRVNeJnmTE5wP/0Lyp7Uv28hTqJ9fY13iG3vj
+/XgpPKkjeFYdlO7q9Ih/hO93kYdT45pi5QsUI1/MRYvDXI9JT6Box4AApibh5BCf
+bV8uF2egq5Gtrpa6mV2OBMAEkaLwAlT5Nigps0uIljCZwYKrpTDGjR0w4NFfUtuK
+HXQ9VwxcR3RIG4wduDDsbi/c/anyuxDhP0u5lMrV7D74CoHQxsMJ25kEWF6NSSF1
+kMwu0bSKZpxMv8wKvDOjK59ZBPlJl0fijV0C6NQ4xSzlz+8PpKTD76JKcViTzOZq
+DBELZFDoNogTLxPkg/KyVyJXL1AIpjvnwiUdKFv436z8qlD2XQ8dBUI5+dpQekRT
+OPJY+EypfBhGehao/trsVw6/DY3lszalff45//q39B2oAVehCvT9vTy8XdiMPPuS
+Z2ixqF4wQnFnO0VNYRlZRD0121zUZRMAkSnzJFVuBCy2J6GnUT8wfhhSu0X+XQ3+
+7EGy/dUi5fCUQvcOmmLIibz6+HE3f0FH+53rkfudGoRxTLNuOIOjhk2UfhtKtCKC
+R2WaZAfkOVKvTI9o6a96dRmOhQ3bgYyVn8/hiLxHv+zDof1Fk6GeCo+ZIBCmrp6i
+SoZ+1bfhKeDCdwwMewr75RGOVJzsyyDcx5UqKQhxmYqlWRIbSIxiZsE8dIj0dA14
+lwesnGNadux3ZA6WXX0Z
+=ffI4
 -----END PGP SIGNATURE-----
