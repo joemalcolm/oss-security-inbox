@@ -1,46 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/7
-Message-ID: <512DA7B6.5020209@redhat.com>
-Date: Tue, 26 Feb 2013 23:29:10 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/4
+Message-Id: <17A032BC-9318-4A63-A564-8AABD2F29F87@stufft.io>
+Date: Wed, 7 Aug 2013 22:22:24 -0400
+From: Donald Stufft <donald@...fft.io>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: Reserved CVE for pip
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 02/26/2013 02:38 PM, Yves-Alexis Perez wrote:
-> On mar., 2013-02-26 at 14:05 -0700, Kurt Seifried wrote:
->> The problem with security is you have to basically do it 100% 
->> correctly 100% of the time
+On Aug 7, 2013, at 10:21 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+
+> Signed PGP part
+> On 08/07/2013 11:20 AM, Donald Stufft wrote:
+> > So I was researching pip's CVE's some more and I came across
+> > CVE-2013-1888 which Kurt assigned
+> > http://www.openwall.com/lists/oss-security/2013/03/22/10 but which
+> > shows up as RESERVED
+> > https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1888.
+> > 
+> > Can you fix this so it's not RESERVED Kurt?
+> > 
+> > ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 7C6B
+> > 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+> > 
 > 
-> You can also look at other, more proactives approaches (hardening
-> the memory layout, enforcing W^X etc.). Even hardening userland
-> might help here.
+> Nope.
+> 
+> http://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures#Description
+> 
+> Description
+> 
+> This is a standardized text description of the issue(s). One common
+> entry is:
+> 
+> ** RESERVED ** This candidate has been reserved by an organization
+> or individual that will use it when announcing a new security problem.
+> When the candidate has been publicized, the details for this
+> candidate will be provided.
+> 
+> This means that the entry number has been reserved by Mitre for an
+> issue or a CNA has reserved the number. So in the case where a CNA
+> requests a block of CVE numbers in advance (e.g. Red Hat currently
+> requests CVEs in blocks of 500) the CVE number will be marked as
+> reserved even though the CVE itself may not be assigned by the CNA for
+> some time. Until The CVE is assigned AND Mitre is made aware of it
+> (e.g. the embargo passes and the issue is made public) AND Mitre has
+> researched the issue and written a description of it entries will show
+> up as "** RESERVED **".
+> 
+> Mitre: can we consider changing the text to be more explanatory, I get
+> requests for this constantly (people seem t think I run the database
+> or something ;).
+> 
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
 
-I was referring to security process, not security technology, sorry I
-should have been more clear.
+I was asking you because you assigned the CVE in question ;)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRLae2AAoJEBYNRVNeJnmTFicP/R1mzoiCLtPWlwy9JEDJuYK6
-/K1p7UD1CmxyFdP/tkNoDDjv9QSIqw4Savg0hD1nvpYR/Wm7nB4006dkDCNRZVXr
-XcgwKRKMHbX6cDLRONOLrCgplAnq+QR5A8V3hqpnRyRLq/OFvbuQO9JaKkM8t4+u
-J1tip7qgZyTFtC5E5h47L3DoCTnb7+r3xF77lnuXn3xRrH1zWogKS/1rhsGURH5Z
-7lbITT5yjaOoKENZnllYGXBOcaadgnJ8j0TobTrPTLEUZJyjgB5Lh6KM9QFzQ4VZ
-lrKwyfc0+vt72ATd1650c7GBvQKXQanWLsONmqx90Kx1JXXQK5ubTWzPAkO7BS8f
-9P8BJT0vGrUIgBNvUKQipbiDVJqoLmcNmwdMTEJBN67Vti+H8UHI7WuM6XJrqvGX
-oygDGsJGqcU2vsS0SPtM0scoA74zVLv3N8Z74iRcDytEJmcosUcxmMpDIQ25tWDc
-CpFPKTGY/2ioBvZRIo/Q7Unbsxuh+QfmHqDy2uPg7ABnzpAo60Awof17mN3F/OcE
-jXTui92H7ylfePok3jS9GML68LHM0Ajcy9LbENT22q7QtNSj7sXFAtQNjHYWOxBL
-6dId7Zuk3TdVA9dtjirhkMXe+3ezTq98tyP5bXgBToImXRVf56b6ukcZtvhg0LrU
-XO/mTbiIdJ8nhIz6jA67
-=1I97
------END PGP SIGNATURE-----
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
