@@ -1,50 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/13/4
-Message-ID: <20130513205349.GH22446@redhat.com>
-Date: Mon, 13 May 2013 14:53:49 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2002-2443: Kerberos kpasswd UDP ping-pong vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/15
+Message-ID: <610745677.13549970.1375982939625.JavaMail.root@redhat.com>
+Date: Thu, 8 Aug 2013 13:28:59 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Seth Arnold <seth.arnold@...onical.com>
+Cc: Dan Williams <dcbw@...hat.com>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>
+Subject: Re: Re: CVE Request -- Four flaws in WiMAX (afaik upstream is dead for this)
 Content-Type: text/plain; charset=utf-8
 
-This flaw has commonly been referred to as CVE-1999-0103 because that
-CVE also describes a UDP ping-pong attack.  The same type of issue
-exists in kadmind's kpasswd handling, but unfortunately no one told
-upstream for the last decade.  CVE-1999-0103 never mentioned krb5 in any
-way other than with regards to a Nessus plugin that tests for the
-CVE-1999-0103 weakness in kpasswd handling.
+> 
+> On Thu, Aug 08, 2013 at 12:10:21PM -0500, Dan Williams wrote:
+> > There don't have to be public bugs yet, but if nobody writes patches in
+> > a reasonable amount of time perhaps they should just be made public.
+> 
+> They are public already:
+> http://www.openwall.com/lists/oss-security/2013/08/08/10
 
-Upstream now knows and a fix is available.  Cut-n-paste from our bug
-report follows:
+Yes, made them public. As can be seen in timestamp for Red Hat bugs,
+original notes have been added by Florian pretty long time ago (but
+still within this year, so 2013 ones should be applied).
 
+> 
+> This is probably for the best, sounds like anyone reliant upon this code
+> would be wise to re-write much of it anyway...
 
-A flaw in certain programs that handle UDP traffic was discovered and
-assigned the name CVE-1999-0103 (that CVE specifically mentions echo and
-chargen as vulnerable).  In 2002, a Nessus plugin was included [1] that
-reference this CVE name, but was for the kpasswd service.  Until
-recently, this issue had not been reported upstream.  This issue has
-since been reported upstream [2] and is now fixed [3].
+Since these did not seem to follow some progress, made them public
+(so people would at least know about the issues and could deprecate / obsolete
+the package or look for other ways of solution).
 
-If a malicious remote user were to spoof their IP address to that of
-another server running kadmind with the password change port (kpasswd,
-port 464), or to the target server's IP address itself), kpasswd will
-pass UDP packets to the spoofed address and reply each time.  This can
-be used to consume bandwidth and CPU on the affected servers running
-kadmind.
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-This should be fixed in the for krb5-1.11.3 release.
-
-[1] http://marc.info/?l=nessus&m=102418951803893&w=2
-[2] http://krbdev.mit.edu/rt/Ticket/Display.html?id=7637
-[3] https://github.com/krb5/krb5/commit/cf1a0c411b2668c57c41e9c4efd15ba17b6b322c
-
-
-After discussing with upstream and MITRE, it was decided that this issue
-needed its own CVE name, so it was assigned CVE-2002-2443.
-
-I can't find an email address for Tenable, so I'll probably just use
-their contact form and post to the archive for this message so they can
-adjust the name of that particular script.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+> 
+> Thanks
+> 
