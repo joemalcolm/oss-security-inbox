@@ -1,58 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/06/5
-Message-ID: <20130206212035.GA29981@ngolde.de>
-Date: Wed, 6 Feb 2013 22:20:35 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/13
+Message-ID: <5203D30E.9000503@redhat.com>
+Date: Thu, 08 Aug 2013 11:19:10 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: openssh?
+CC: David Jorm <djorm@...hat.com>
+Subject: Re: CVE request: remote code execution due to XML deserialization in Restlet
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-years ago CVE-2006-1206 was raised for a denial of service attack against 
-dropbear based on exhausting the maximum number of connections.
-Back in 2010 I played around with this in openssh to find out if similar 
-attacks work against that. Since then I never really knew what to do with 
-this, but every now and then I remember it and after this bugged me for a 
-while, I finally brought up the topic to the openssh developers.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The attached program demonstrates a similar attack against a default openssh 
-installation. The program simply connects to an ssh server and waits for the 
-socket to be closed, thus determining the LoginGraceTime setting of the 
-server. Next, it opens up connections to the server, keeping them open until 
-no further connection is allowed and thus determining the MaxStartUps setting 
-(of course, this may not be always accurate depending on the currently active 
-sessions etc, but this is a minor detail).
+On 08/08/2013 02:16 AM, David Jorm wrote:
+> Dinis Cruz has published information on remote code execution due
+> to XML deserialization in Restlet:
+> 
+> http://blog.diniscruz.com/2013/08/using-xmldecoder-to-execute-server-side.html
+>
+> 
+https://github.com/o2platform/DefCon_RESTing
+> 
+> I have tested his reproducer and confirmed it works against Restlet
+> 2.0 and 2.2. Please assign a CVE ID to this flaw.
+> 
+> Thanks
+> 
 
-The code continues to sleep for logingracetime seconds and spawns maxstartup 
-connections again. As a result, unless you are very lucky and you hit the time 
-window between the connection respawn, a user can not login anymore.
+Please use CVE-2013-4221 for this issue.
 
-While this is a standard problem for any network service that limits the 
-number of connections, I think in openssh's case this is supported by very 
-historically very long LoginGraceTime default settings (2 minutes) and a lack
-of random early drop usage for MaxStartups.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-While you could argue that this is not per-se an openssh security issue, the 
-default settings aid here to a trivial denial of service attack against
-ssh installations by all linux distributions I've seen.
-
-The result for a user who tries to login is this:
-ssh_exchange_identification: Connection closed by remote host
-
-The openssh maintainers actually agree here and it resulted in the following 
-changes:
-http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/servconf.c?r1=1.234#rev1.234
-http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/sshd_config.5?r1=1.156#rev1.156
-http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/sshd_config?r1=1.89#rev1.89
-
-I personally don't mind whether this get's a CVE id or not,but considering 
-that dropbear got one in the past,I thought I'd bring this up.
-
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-
-View attachment "sshext.c" of type "text/x-csrc" (3925 bytes)
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBAgAGBQJSA9MNAAoJEBYNRVNeJnmTdqgQALVLWb4/ukLeYl9TKslFtQxF
+O/qkGcoSM0ElNNO2WaJlOzCfoFDz2pHtyEloNBkB+09LDswViSciXJBuvJ+B/Mj+
+OxlRtnQkWkFLjurY9O9f/auHzNtyQgO5xrGh+rho0y98laxFTi/GoOIUAY55Z7KO
+JX8LUyEIi2KbnPdnT1RKmk61Jk9TnCuyQBwhRESsTDN/wbU+05eEzEkgZ5/rqu5p
+Y507eXvxzGBhD5D6N3jDGe8GqAIgl3c4ylmQQlxkBnGbetgL26Gqwa4MyLdz7RKA
+XdihLUohBjxcNjgpTQ3NzwiO0ZxAl2gXG4kicDJz9LNFafXEbeC7+NJUC2DaXqAn
+xicdDh3PHdOPvaDmqNxn9kK9zp2zN6xBVzEwIUPWFuWn9k89DvNL2EoM5c5nOwhL
+nxZiqujMZs1ye4WuuX2PghPDvd2q6fWVdkeOs5XdHEsQ0E3pX4F2+Aj3mljALDcC
+o2sHCmFG2pxxeMu0fmX3f72F8xDwDTgY0eVj81Ws06yQMsKTzKaItMPWgKmDPcSQ
+pckr8MiZFm24WLYS2aNbj54mJlmdzqy8+KX3/Q7e3z76OELmQPHCRpmpE/VEtJzs
+h73PVrcLG+THNDNp7cmTDvieD7xPJTVNdKv5k/xkiUQkSQlpIHF0YijUFehjHErk
+ktYGdFsocD6uc63CC/js
+=PvGf
+-----END PGP SIGNATURE-----
