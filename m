@@ -1,62 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/17/1
-Message-ID: <52AFB08F.6090100@redhat.com>
-Date: Mon, 16 Dec 2013 19:01:51 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, mpessas@...nsifex.com, vid@...nsifex.com, rvokal@...hat.com, fweimer@...hat.com
-Subject: Re: Re: CVE-2013-2073 transifex-client: Does not validate HTTPS server certificate (fixed in transifex-client v0.9)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/09/12
+Message-ID: <CABbbngBRMBAf5gdcbv3rA878B2nFhsLgVQoHq4mo1TP_fGhw7Q@mail.gmail.com>
+Date: Fri, 9 Aug 2013 16:29:56 -0700
+From: Forest Monsen <forest.monsen@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi there,
 
-On 12/16/2013 02:10 AM, Tomas Hoger wrote:
-> On Sun, 15 Dec 2013 15:19:54 -0500 (EST) cve-assign@...re.org
-> wrote:
-> 
->>> The way certificate check was implemented to fix CVE-2013-2073
->>> was incorrect (check was done on "probe" connection, but not
->>> the actual connection used to transfer data).
->> 
->> To have two CVEs assigned in response to two different patches
->> for the same security problem, it's generally necessary for the
->> first patch to fix some aspect of the problem. If the first patch
->> accomplished nothing, a total of only one CVE is used.
-> 
-> That's not consistent with guidance I've seen in the past - if
-> update is released claiming to fix some issue without actually
-> fixing it, new CVE is needed.  Not doing so leads to inconsistent
-> security update data with two different updates or package versions
-> of the same component being listed as fixing the same CVE.  Release
-> text can probably explain id reuse, and consider it sufficient for
-> human consumption, but it's probably more upsetting to tools
-> processing machine readable versions of update notifications (e.g.
-> OVAL).
+I'd like to request CVE identifiers for...
 
-If there was a patch to try and fix it, then a release, then a new
-patch to fix it for real and a new release  that would definitely get
-a new CVE. If there was a patch, then a new patch, but no official
-release in between it's a grey area.
+SA-CONTRIB-2013-061 - Flippy - Access Bypass
+https://drupal.org/node/2054701
 
+SA-CONTRIB-2013-062 - RESTful Web Services (RESTWS) - Access Bypass
+https://drupal.org/node/2059603
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+SA-CONTRIB-2013-063 - Authenticated User Page Caching (Authcache) -
+Information Disclosure
+https://drupal.org/node/2059589
 
-iQIcBAEBAgAGBQJSr7CPAAoJEBYNRVNeJnmTIBAP/jhRFbUgxulS42chjgGgftwA
-ZY+QF0ElJTCKtOXXiAdb4XQNIxG30UGV9IFXjWzk6+OI0wDe8HfbZKc+h0mV1Bf0
-B6xCic9E3S2JjH1jnrwIpMAyzyFzTsA6UfbtqbRe5hYqaWP7Rn+VvtvcEGNO27iS
-3yOfYpSCNAZvXqAgL4TmO1Z+frXQNXylaLf6OxRGi6td/yGL/F4sJsbjJRDO3xwA
-j8r92bVTqZVYdtFLyLJL/VQYxDnj+n9PAdgCceCs23sahbu5sAt/1pmjGUUJcgaz
-LmMLJdhbU3Z1Fd7OtDd9d7cp/5l8pRCEE9ldO8aKdoFegKnmNWe959Al/Pgu93t6
-nvAnm9NshmPSn8cKQkuKkyER1SvWUDfZlv+TrRHM7sahucNIYWSsRVvrdVmBnwvM
-RLkyY18541k5MnVLnwIW0cJCLtQrRgsAUNXMvkmMJ2YXV53EVJdyQz7N9VQJousJ
-xLow3+Vlb3oUdud1wmhDc/Y5vaXiNpcXG+qPeJuiIgNHl4Mf9/Q4yU1eTgfALLIC
-C+Rqm/HbG6s9bpk3MJ57bFBvAWoTM/2TJnv2l6qNpJWMf/j6Y/D5o2SFwEaTUCq6
-6uxa4wog+PXBTcT3s7pHkMDxo3eGXgqgCU5PwbBznm2cmFS2Etzs5SqAmFwtYldh
-RbZlQLnZArxSrItpZYVZ
-=IGxK
------END PGP SIGNATURE-----
+SA-CONTRIB-2013-064 - Persona - Cross site request forgery (CSRF)
+https://drupal.org/node/2059599
+
+SA-CONTRIB-2013-065 - Organic Groups - Access Bypass
+https://drupal.org/node/2059765
+
+SA-CONTRIB-2013-066 - Monster Menus - Multiple Vulnerabilities
+(Looks like two here: XSS, and an Access Bypass vuln)
+https://drupal.org/node/2059823
+
+Thanks!
+
+Best,
+Forest
+
