@@ -1,109 +1,153 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/11
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF0697FE9E@IMCMBX01.MITRE.ORG>
-Date: Wed, 20 Feb 2013 13:02:44 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: Kurt Seifried <kseifried@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Handling CVEs for the XML entity expansion issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/09/6
+Message-ID: <2017542405.13795630.1376040932418.JavaMail.root@redhat.com>
+Date: Fri, 9 Aug 2013 05:35:32 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Marek Kasik <mkasik@...hat.com>, Albert Astals Cid <aacid@....org>, "Derek B. Noonburg" <derekn@...labs.com>, Mitre CVE assign department <cve-assign@...re.org>
+Subject: Re: [CVE assignment notification] CVE-2012-2142 poppler, xpdf: Insufficient sanitization of escape sequences in the error message {AKA request for feedback if CVE to be marked as disputed / rejected}
 Content-Type: text/plain; charset=utf-8
 
-Kurt,
 
-I'm reviewing this issue with the rest of the cve-assign team.  We will get back to you with an answer shortly.
+Poppler upstream patch:
+  http://cgit.freedesktop.org/poppler/poppler/commit/?id=71bad47ed6a36d825b0d08992c8db56845c71e40
 
-- Steve
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-
------Original Message-----
-From: Kurt Seifried [mailto:kseifried@...hat.com] 
-Sent: Wednesday, February 20, 2013 3:22 AM
-To: oss-security@...ts.openwall.com; Christey, Steven M.
-Subject: Handling CVEs for the XML entity expansion issues
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-https://bitbucket.org/tiran/defusedxml
-http://blog.python.org/2013/02/announcing-defusedxml-fixes-for-xml.html
-
-So two generic vulnerabilities have been found in XML libraries/parsers:
-
-1) Unrestricted entity expansion induces DoS vulnerabilities in Python
-XML libraries (XML bomb)
-- - this can be referred to as the billion laughs / exponential entity
-expansion, but can also be done linearly and still impact the system.
-For example libxml fixed the billion laughs attack version of this,
-but linear expansion (that eats up say a few hundred k of ram per
-second) will still cause problems. This issue will not be CVE split
-however since it's the same issue (expansion of entities).
-
-For Python XML parsing this was assigned CVE-2013-1664
-
-
-2) External entity expansion in Python XML libraries inflicts
-potential security flaws and DoS vulnerabilities
-- - XML documents can include references to external entities, e.g.
-http:// resources:
-<!ENTITY ee SYSTEM "http://www.example.org/some.xml">
-
-For Python XML parsing this was assigned CVE-2013-1665
-
-So questions:
-======================
-
-We need more CVE's, I think for each XML prasing library/etc we should
-obviously assign a CVE (e.g. libxml, expat, internal Python parsers),
-obviously fixing it at the root is ideal, but disabling external
-entities for example in the library for all things using that library
-is not possible.
-
-But then we run into the issue where we can fix this issue within the
-application (OpenStack, using Python):
-
-+PARSER = etree.XMLParser(
-+    resolve_entities=False,
-+    remove_comments=True,
-+    remove_pis=True)
-+
-+# NOTE(dolph): lxml.etree.Entity() is just a callable that currently
-returns an
-+# lxml.etree._Entity instance, which doesn't appear to be part of the
-+# public API, so we discover the type dynamically to be safe
-+ENTITY_TYPE = type(etree.Entity('x'))
-+
-
-- -        dom = etree.fromstring(xml_str.strip())
-+        dom = etree.fromstring(xml_str.strip(), PARSER)
-
-Which disables entity parsing in the application thus avoiding all the
-entity expansion problems. Now I'm inclined in this case to say no CVE
-(I had earlier, erroneously assigned CVE's for these fixes in
-OpenStack). But now I'm not as sure, if an underlying library has an
-unsafe/insecure behaviour that is on by default, BUT can be disabled
-easily then does that vulnerability count as being in the library? If
-not then I'd be inclined to say we need CVE's for all the vulnerable
-applications, but in this case that's thousands (millions?) of
-applications.
-
-So Steve, I think we need some guidance on how to assign the CVEs here.
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRJIebAAoJEBYNRVNeJnmTDN4QAIgwf74T2M6+4S6wj4h5EZP1
-k/Cg0WW2AVPtN7nOsGg5Y5QdUCsGHtBoP9h/SWT21lch+DW3uYUhqgvtDpeyiGjc
-XzDu8DNcmHnIFbq49RS5UTRpSdR35Y3oqd0lUi7yiRpiT4XpgfSHwI7BNR9L2Wm0
-FUiwQDL9BULkD4wcq6NsagPiZCsaRmmezfUb/g5PxgYW84p56fYa5tg4SEQ7O4M/
-lLNYDChfIis7gJVgqoLjbNClV36a2UWIGxIg/TCP8hVpmUpDMv04cxIbmtGWJ/tp
-2iKzLNn25INaN80T6t0pzhC//R+jpWTkr9eFP4W7X+CA2Rs3sY0BA9Xvnyl9FPCF
-gaQUTd7PyefKEM1Fm7OqFn1XbrtcKpOBThNI+NL5c/mrmud96DQwy8MMRaKDYhr1
-W+fGxHBFD/Ztcffh/Dz1t/Ycm7T9BWzKQxitsubudZuEDQ7XfUilzLWQgy1X998J
-T/Yjzsym8tkOoMvOe343caqDHTtBpq7eIFSXtJTTlXHIc5MiAT72406rak4/WVt0
-qvrmhAxyOtWy8fOt2j/Qj9/rn8qYum9gBUFwHb4LWYRLADyK3lqThY3la/gMFYTi
-y+KvwZf1FBtbXaJYZ3keO9ouMKNsvv9ll20Tke6wckFYPkLXRCs17quTHCx3Hh9J
-MfZCwfOGm5G7O38k+vZ6
-=V2n9
------END PGP SIGNATURE-----
+> 
+> Hello Kurt, Steve, vendors, Mitre CVE assign department,
+> 
+>   long time ago (in the February of 2012 yet) we have received
+> the following private report from Phillips Wolf:
+> 
+> * poppler, xpdf: Insufficient sanitization of escape sequences in the error
+> messages
+> -------------------------------------------------------------------------------------
+> 
+>   An insufficient escape sequences sanitization flaw was found in the way
+>   xpdf, a PDF file viewer for the X window system, and poppler, a PDF
+>   rendering library, performed sanitization of certain characters to be
+>   displayed in the error messages, which arose during presentation of
+>   certain PDF files. A remote attacker could use this flaw to modify a
+>   window's title, or, possibly execute arbitrary commands or overwrite
+>   files, via a specially-crafted PDF file containing an escape sequence for
+>   a terminal emulator if local, unsuspecting user opened such crafted PDF
+>   file in xpdf or in an application linked against poppler library (for
+>   example evince).
+> 
+>   References: https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-2142
+> 
+> We tested, confirmed the deficiency and based on that assigned CVE-2012-2142
+> identifier to the problem. Marek Kasik (Red Hat poppler package maintainer)
+> has provided the following patch against (in that time) upstream poppler
+> version:
+>   [P] https://bugzilla.redhat.com/show_bug.cgi?id=789936#c25
+> 
+> We also contacted poppler and xpdf upstreams with request to review that
+> patch and agree on embargo date. The reply was as inlined:
+> 
+> Albert Astals Cid (lines prefixed with '>' are my words):
+> =========================================================
+> "> Hi Albert,
+> 
+> Hi
+> 
+> >   we wouldn't have objections against sharing this patches public
+> > (and opening our CVE-2012-2142 bug for public audience).
+> >
+> > But prior doing that can we agree on upstream classification of this
+> > one? Is the intention to apply the patch still just 'preventive measure',
+> > thus upstream doesn't consider CVE-2012-2142 to be a security flaw?
+> >
+> > Or would you admit that this is a security issue and it can be treated
+> > as such?
+> 
+> To be honest, as we discussed, I understand this is a flaw of whoever is
+> receiving our output, I don't mind "sanitizing" our output for everyone's
+> benefit, but as it is poppler's duty to not crash on broken/invalid/malicious
+> PDF files, it is whoever is processing poppler's output to not crash or
+> malfunction on broken/invalid/malicious input.
+> 
+> Does that help in your classification?
+> 
+> Cheers,
+>   Albert
+> =========================================================
+> 
+> Derek B.Noonburg (lines prefixed with '>' are my words):
+> ========================================================
+> > Some examples what can be achieved by escape sequences:
+> >
+> > [1] http://rtfm.etla.org/xterm/ctlseq.html
+> > [2] http://lwn.net/Articles/24198/
+> > [3] http://en.wikipedia.org/wiki/ANSI_escape_code#CSI_codes
+> > [4] http://www.termsys.demon.co.uk/vtansi.htm
+> >
+> > Someone might argue that this is not a xpdf's / poppler's problem (they
+> > just take
+> > the input from the PDF file, parse what's possible to proceed, and display
+> > the
+> > rest to the standard error output).
+> >
+> > But as noted in [2] there are numerous cases, when improper escaping of
+> > escape
+> > sequences could lead to malicious effects. And I assume the last thing the
+> > xpdf /
+> > poppler user, when viewing an untrusted / downloaded PDF file would be,
+> > they would
+> > need to worry about if viewing that file couldn't do something malicious on
+> > their
+> > host.
+> >
+> > Thus Marek's patch escapes all the non-printable characters, which might be
+> > such
+> > intentionally included escape sequences, they to be sanitized yet prior
+> > they are logged
+> > into standard error output.
+> >
+> > Hopefully the above explains our motivation behind having such patches in
+> > both
+> > upstream codes.
+> 
+> Wouldn't it make more sense to treat this as a security hole in the
+> terminal emulator (xterm or whatever)?
+> 
+> If a sequence of escape characters sent to stdout/stderr can cause a
+> security problem, then all an attacker would need to do would be to
+> place the escape sequence in, e.g., a README file in a source code
+> tarball.  Surely you wouldn't consider that to be a security hole in
+> cat?
+> 
+> The bugtraq post referenced in [2] says this:
+> 
+> "The responsibility should rest on the actual terminal emulator; any
+> features that allow file or command-line  access should be disabled by
+> default and more attention should be paid to new features that
+> implement any use of escape sequences."
+> 
+> - Derek
+> ========================================================
+> 
+> While we don't agree with poppler's / xpdf's upstream opinion (apply
+> the patches, but not to call the issue as a security flaw), since for example
+> not
+> that recent, similar problem in Apache's httpd web server's mod_rewrite
+> module problem:
+>   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1862
+> 
+> has got a CVE identifier [and "security flaw treatment"], we don't
+> want to argue with them longer => so if the CVE identifier should be revoked
+> as disputed / invalid / rejected at the end, we will leave that decision
+> to vendors / Mitre team.
+> 
+> What matters is, the issue is there, and this post is intended as
+> notification
+> for vendors who might want to apply Marek's patch [P] to protect their
+> instances.
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
