@@ -1,85 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/30/1
-Message-Id: <E1VQcD1-0000Nq-BD@xenbits.xen.org>
-Date: Mon, 30 Sep 2013 12:04:15 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 63 (CVE-2013-4355) - Information leaks through I/O instruction emulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/09/9
+Message-ID: <CA+T2pCGDU-OJ8t_aO-YCb9UVfXyvKn3Ahnf8D0m=pw-jL-StyA@mail.gmail.com>
+Date: Fri, 9 Aug 2013 13:42:16 -0500
+From: William Pitcock <nenolod@...eferenced.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: nullmailer world readable /etc/nullmailer/remotes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-              Xen Security Advisory CVE-2013-4355 / XSA-63
-                             version 3
+/etc/nullmailer/remotes may contain SMTP authentication information as
+arguments provided to the requested nullmailer sending module, e.g.:
 
-         Information leaks through I/O instruction emulation
+smtp.gmail.com smtp --username=foo --password=bar --starttls --port=587
 
-UPDATES IN VERSION 3
-====================
+William
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Insufficient or missing error handling in certain routines dealing
-with guest memory reads can lead to uninitialized data on the
-hypervisor stack (potentially containing sensitive data from prior
-work the hypervisor performed) being copied to guest visible storage.
-
-This allows a malicious HVM guest to craft certain operations (namely,
-but not limited to, port or memory mapped I/O writes) involving
-physical or virtual addresses that have no actual memory associated
-with them, so that hypervisor stack contents are copied into the
-destination of the operation, thus becoming visible to the guest.
-
-IMPACT
-======
-
-A malicious HVM guest might be able to read sensitive data relating
-to other guests.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 3.2.x and later are vulnerable.
-Xen 3.1.x and earlier have not been inspected.
-
-Only HVM guests can take advantage of this vulnerability.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Coverity Scan and diagnosed by Andrew
-Cooper & Tim Deegan.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa63.patch        Xen 4.2.x, 4.3.x, and unstable
-
-$ sha256sum xsa63*.patch
-32fa93d8ebdfbe85931c52010bf9e561fdae8846462c5b1f2fbc217ca36f3005  xsa63.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJSSUhEAAoJEIP+FMlX6CvZGUsH/13jBs/EU8H/mqXCO7gQXIrm
-tPp/gsjxxxhVrwOjmmJZShQ8CWU8T3zL0RKaaGBJzAd+imnXQdb+il1vkNYT8edH
-zSB9WN3o/WNu7bzlhm3ro67WlwhXSY2yea7Bj/9bg2//T5RgoXsewX+LbCAJ3Z44
-fflCQsCuvpl77oIcftIe5rcJAtHR4Jb5/4Ps+MzxI52oS3m2BGXv/qOTpDfy7qsp
-7j/219hChnGVoZ1u/2m0i1789/9tYWM7jFbvqVYH6yHTEgk1ds8Cnn/uHQ8zXjKI
-CW8E5HGKOHOpTtJjDF0h3OqcK8vG7qKgHULDziXV//QWPP3uH/dAQCjQO9uS8r4=
-=RilU
------END PGP SIGNATURE-----
-
-Download attachment "xsa63.patch" of type "application/octet-stream" (5872 bytes)
+On Fri, Aug 9, 2013 at 12:16 PM, Christey, Steven M. <coley@...re.org> wrote:
+> Agostino,
+>
+> Out of curiosity, what types of sensitive information are contained in this file that cause world-readable permissions to pose a vulnerability?
+>
+> - Steve
+>
+>
+>>-----Original Message-----
+>>From: Agostino Sarubbo [mailto:ago@...too.org]
+>>Sent: Friday, August 09, 2013 1:15 PM
+>>To: oss-security@...ts.openwall.com
+>>Subject: [oss-security] CVE request: nullmailer world readable
+>>/etc/nullmailer/remotes
+>>
+>>Hello,
+>>
+>>On Gentoo, the file /etc/nullmailer/remotes is installed with wrong
+>>permissions:
+>>
+>>~ # ls -la /etc/nullmailer/remotes
+>>-rw-r--r-- 1 root root 971 Aug  9 18:58 /etc/nullmailer/remotes
+>>
+>>Nullmailer-1.11-r2 contains the fix, all prior versions are affected.
+>>
+>>Please assign a CVE.
+>>--
+>>Agostino Sarubbo
+>>Gentoo Linux Developer
