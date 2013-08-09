@@ -1,37 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/8
-Message-ID: <20130614190200.GB29731@hunt>
-Date: Fri, 14 Jun 2013 12:02:00 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/09/4
+Message-ID: <1746507251.13758094.1376035937778.JavaMail.root@redhat.com>
+Date: Fri, 9 Aug 2013 04:12:17 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: FD leakage for cgi program on Monkey HTTPD
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Miroslav Lichvar <mlichvar@...hat.com>, Florian Weimer <fweimer@...hat.com>
+Subject: [Not a CVE request, just notification] CVE-2012-4502, CVE-2012-4503 -- Two security flaws fixed in Chrony v1.29
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 14, 2013 at 06:20:59PM +0000, Christey, Steven M. wrote:
-> Felipe,
-> 
-> Sorry if this is a dumb question.
-> 
-> If you are using "file descriptor leak" in the sense of "malicious
-> parties can directly access the file descriptor" - then that doesn't
-> seem to be the case here, because permissions are limited only to you.
+Hello Kurt, Steve, vendors,
 
-I seem to recall this issue came up for Apache around a decade back; it
-also forgot to close the listening sockets before executing CGI scripts.
+  Chrony upstream has released v1.29 version, correcting two security flaws:
 
-These sorts of events brought about a general consensus that scripts
-or other programmable code executed directly by the webserver was by
-definition completely trusted. If you don't trust the CGIs or plugin
-modules as much as the webserver, you'd run them via FastCGI as another
-user or otherwise use the webserver as a proxy in front of the services.
+* Issue #1: CVE-2012-4502: Buffer overflow when processing crafted command packets
 
-Yes, a CGI could accept() connections on those sockets and generally
-muck things up -- but they already run with the full privileges of the
-webserver.
+  This issue was found by Florian Weimer of Red Hat.
 
-The Monkey folks probably should use close-on-exec on their file
-descriptors for simple reliability reasons. And this should probably
-not get a CVE -- unless the Monkey server documentation claims there is
-a trust boundary between the server and CGIs. I'd be surprised.
+  Relevant patch: http://git.tuxfamily.org/chrony/chrony.git/?p=chrony/chrony.git;a=commitdiff;h=7712455d9aa33d0db0945effaa07e900b85987b1
+  Announcement: http://permalink.gmane.org/gmane.comp.time.chrony.announce/15
+  Red Hat bug: https://bugzilla.redhat.com/show_bug.cgi?id=846392
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+* Issue #2: CVE-2012-4503: Uninitialized data in command replies
+
+  This issue was found by Miroslav Lichvar of Red Hat.
+ 
+  Relevant patch: http://git.tuxfamily.org/chrony/chrony.git/?p=chrony/chrony.git;a=commitdiff;h=c6fdeeb6bb0b17dc28c19ae492c4a1c498e54ea3
+  Announcement: http://permalink.gmane.org/gmane.comp.time.chrony.announce/15
+  Red Hat bug: https://bugzilla.redhat.com/show_bug.cgi?id=846392
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
