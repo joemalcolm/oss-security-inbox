@@ -1,45 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/4
-Message-ID: <5226FF5A.5020801@LINworks.de>
-Date: Wed, 04 Sep 2013 11:37:30 +0200
-From: Jochen Bern <Jochen.Bern@...works.de>
-To: Nagios Developers List <nagios-devel@...ts.sourceforge.net>
-Cc: Andreas Ericsson <ae@....se>, oss-security@...ts.openwall.com, Vincent Danen <vdanen@...hat.com>, contribute@...ios.org, Kurt Seifried <kseifried@...hat.com>
-Subject: Re: [Nagios-devel] Security bug or feature? Servicegroups leak hostnames to unauthorized users (Was: CVE request: unauthorized host/service views displayed in servicegroup view)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/09/7
+Message-ID: <1777398.QCavq5Ahkj@devil>
+Date: Fri, 09 Aug 2013 19:15:16 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: nullmailer world readable /etc/nullmailer/remotes
 Content-Type: text/plain; charset=utf-8
 
-On 04.09.2013 11:03, Andreas Ericsson wrote:
-> On 2013-09-04 10:31, Jonas Meurer wrote:
->> The indisputable part of this change is, that users are allowed to see
->> hostgroups and servicegroups with at least one authorized host or
->> service. Unclear is, whether this means "group and all its group
->> members", or "group and only authorized group members".
-> 
-> It should mean "group and only authorized group members, except also
-> hosts for services where one is authorized to see the service".
-[...]
-> Well, it *was* by design, but now I'm changing the design. It's a good
-> time for it, since 4.0 is about to come out. I think the security teams
-> can move on and we'll consider this "changed" rather than "fixed" for
-> 4.0, where we do some security tightening.
+Hello,
 
-Since you do seem to be willing to ponder the system of access rights
-and its security implications: I haven't checked the 4.x prereleases
-yet, does being authorized to see a host's information still necessarily
-provide access to *all* services on it?
+On Gentoo, the file /etc/nullmailer/remotes is installed with wrong 
+permissions:
 
-In the "customers accessing provider's Nagios" scenario, I suppose that
-the customer might be interested in seeing "application is running" but
-not, say, "the snmpd that ties this machine to the provider's NMS is
-acting up" ...
+~ # ls -la /etc/nullmailer/remotes 
+-rw-r--r-- 1 root root 971 Aug  9 18:58 /etc/nullmailer/remotes
 
-Regards,
-								J. Bern
+Nullmailer-1.11-r2 contains the fix, all prior versions are affected.
+
+Please assign a CVE.
 -- 
-*NEU* - NEC IT-Infrastruktur-Produkte im <http://www.linworks-shop.de/>:
-Server--Storage--Virtualisierung--Management SW--Passion for Performance
-Jochen Bern, Systemingenieur --- LINworks GmbH <http://www.LINworks.de/>
-Postfach 100121, 64201 Darmstadt | Robert-Koch-Str. 9, 64331 Weiterstadt
-PGP (1024D/4096g) FP = D18B 41B1 16C0 11BA 7F8C DCF7 E1D5 FAF4 444E 1C27
-Tel. +49 6151 9067-231, Zentr. -0, Fax -299 - Amtsg. Darmstadt HRB 85202
-Unternehmenssitz Weiterstadt, Geschäftsführer Metin Dogan, Oliver Michel
+Agostino Sarubbo
+Gentoo Linux Developer
