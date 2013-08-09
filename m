@@ -1,62 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/5
-Message-ID: <5212ECFF.3050100@redhat.com>
-Date: Mon, 19 Aug 2013 22:13:51 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/09/3
+Message-ID: <5204444C.7060707@redhat.com>
+Date: Thu, 08 Aug 2013 19:22:20 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Landon Hurley <ljrhurley@...il.com>
-Subject: Re: PostgreSQL insecure install via yum (multiple problems)
+CC: Greg KH <greg@...ah.com>, Petr Matousek <pmatouse@...hat.com>
+Subject: Re: CVE Request: Linux kernel: arm64: unhandled el0 traps
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/19/2013 07:04 PM, Landon Hurley wrote:
-> Kurt Seifried <kseifried@...hat.com> wrote:
->> Problem:
+On 08/08/2013 06:02 PM, Greg KH wrote:
+> On Thu, Aug 08, 2013 at 03:39:30PM +0530, P J P wrote:
+>> Hi,
+>> 
+>> Linux kernel built for the ARM64(CONFIG_ARM64) platform is 
+>> vulnerable to a crash when the processor generates trap/esr, that
+>> is not handled gracefully, which leads to bad_mode(), wherein
+>> it'll die() or oops().
+>> 
+>> A user/program could use this flaw to crash the kernel resulting
+>> in DoS.
+>> 
+>> Upstream fixes: =============== ->
+>> https://git.kernel.org/linus/381cc2b9705512ee7c7f1839cbdde374625a2a9f
+>>
+>> 
+- -> https://git.kernel.org/linus/9955ac47f4ba1c95ecb6092aeaefb40a22e99268
 > 
->> So I wanted to install PostgreSQL 9.2 to test something. So I
->> google "postgresql 9.2 rpm" and get sent to:
+> CVE requests for code that can only run on a processor that is not 
+> shipping yet?  Isn't there a rule somewhere about CVEs not being
+> allowed for stuff like this?
 > 
->> http://yum.postgresql.org/repopackages.php
+> thanks,
 > 
->> which is not available by HTTPS at all. Not ideal but ok, I
->> download it over HTTP because I can check the signature on the
->> file right?
+> greg k-h
 > 
->> Wrong, I can't find the key anywhere. I try pgp.mit.edu, I even
->> google site:postgresql.org 442df0f8 and all you get are archived
->> emails with the warning that the signature can't be checked. No
->> copy of the key.
-> 
-> Kurt, pgp.mit.edu is deprecated. I recommend searching 0x442df0f8
-> on pool.sks-keyservers.net which does return a key.
-> 
-> landon
 
-Weird, I must have typo'ed it, in any event it returns a key with that
-value and no signatures. No idea if it's legitimate or not. I can
-check it against an RPM I downloaded over HTTP which sort of ends me
-back up square one.
-
+Nope, they are shipping now. Not widely available, but a few more
+months will fix that.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSEuz/AAoJEBYNRVNeJnmT3UYP/j3UkEnVw+Yp2VT1N7HbVgzv
-p/P3ZoFCOxyv801RmkbhGTgvFXwAYewKvFzEKh55xiCCuoKTarbyeO84SpsEkxV7
-WQizj0pwPBTnCQFDEcAkG1tiPYXiyMXb24QcpRivox7XlrAFyzqE8KNiYxNaWngi
-ZznFQpenSJgWBpI/F8VqLntOi62Y/DPjJ2yGX0ZHrA/HvG0s7ov5CTr35l4IBYjc
-J3lCu4mLonbagpFZHWPUMqWQtQvfE02EhfRCOHuU13u9ugrXE755pHQ7/9pTW9wg
-GAEcNpNC2m4aXpiQfxYga2MI6oELED8Kg56vIwxsdpc6WT6JgqsqdczxG4C6Ooqc
-9HxDIke0Y8umXa4WtfAtLneDL2HI9fU5cGYq4ZCs46+rLFr5I552vHzybyjAcQkN
-5UjZJsGPTh9x48aY9WADtWE30AS5XGIecIn4Nec27TKxpY0jc4lUsTbepG0aitRn
-44Q7LX2moAn3cCWoy0hPFZZMdUcAxSJDdUnSRGQhxKwfYhCxJ8YhQpRZ0Z3sKOac
-nGh1wEa1VUDBiUrmTiyv9VS/3Hemjh1rL9TgbfBYYpBtCFLo6UmWZssyJMlumf35
-4LqzoOEUeLLScTHMclDwHtm33iNCAsO/a/zwJMN1IzyYGaJRreHWcYReIx9/yVP3
-iuQmwEOYYTr/5BVMww5C
-=d7so
+iQIcBAEBAgAGBQJSBERMAAoJEBYNRVNeJnmTxXsQANPLOTc262rGI6ql/qSnopKL
+o9ykos218wh+XS1f1JTK38avZFzzv0jw7dkqXwD0pbYCj02XDz30nqv/Wr3HAZav
+o+Rw4xUTQFldKcA3YBW51Os595RXIvEFHTT3BWPrz/h0S5DvEnUjJzMksk7GR3EH
+p5J5SOHfxV/7kzzCMsY9dKEMoY5EWlUtJ0a9yQSLcJ4L2eh7rTHmXFm0JO+inaUo
+liGQKi786GS9Fsvso/Ssey8Z9flcQLJQp+8v0OHemcvXA8gd/T5TL2zJZVcavYAI
+sNFYzylRCKq1XkiEK1epllVv3+bgs4Gm7a2lnhQArMiZxtqwHdjA5jW0DAaaxrd+
+QYAZKmzC2HyIYn6tcyXclK4gj8ueOuiEvcfF6FYex7XwdFC2CxIZFmPUlDk3M9Ng
+FKKkfvxDMFKrUuHFSDWUmXApokBhCBO0//mW0F5mkKX9h1lfQfZjRnc2coH65ZMd
+MDsTf2xGd89ONhEzWu+yFSHTvchFjMOaHTZ770qvcrboC+vfP/BM2ImIJ5bvjEr4
+Ra5UVfApF6oQGTYk+lEkGPyqYR4mSX6DMLvJCWB+KsOsLRLQd9uHdTKTUWrbF0ye
+bOCZhEbFq7dNWkyzy9MhOmPf3YVILxz9OM4qfKa9Ca+IsTWmWnZxfnrD6RZD98GD
+EQnzfEWgCnei6aL/GdUi
+=KqED
 -----END PGP SIGNATURE-----
