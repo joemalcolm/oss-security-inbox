@@ -1,24 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/1
-Message-ID: <20130723063550.GA25741@inutil.org>
-Date: Tue, 23 Jul 2013 08:35:50 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com, Andreas Nilsson <andreas.nilsson@...en.com>, Florian <floriangaultier@...il.com>, "A. Jesse Jiryu Davis" <jesse@...en.com>
-Subject: Re: CVE Request - MongoDB <=2.4.4 uninitialized object
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/10/4
+Message-ID: <20130810073830.GB31059@kludge.henri.nerv.fi>
+Date: Sat, 10 Aug 2013 10:38:30 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 18, 2013 at 08:14:39AM -0400, Dan Pasette wrote:
-> We already requested CVE-2013-2132 for this and it was fixed in version
-> 2.4.5.
+On Fri, Aug 09, 2013 at 10:02:59PM -0600, Kurt Seifried wrote:
+> On 08/09/2013 05:29 PM, Forest Monsen wrote:
+> > Hi there,
+> > 
+> > I'd like to request CVE identifiers for...
+> > 
+> > SA-CONTRIB-2013-061 - Flippy - Access Bypass 
+> > https://drupal.org/node/2054701
+> > 
+> > SA-CONTRIB-2013-062 - RESTful Web Services (RESTWS) - Access
+> > Bypass https://drupal.org/node/2059603
+> > 
+> > SA-CONTRIB-2013-063 - Authenticated User Page Caching (Authcache)
+> > - Information Disclosure https://drupal.org/node/2059589
+> > 
+> > SA-CONTRIB-2013-064 - Persona - Cross site request forgery (CSRF) 
+> > https://drupal.org/node/2059599
+> > 
+> > SA-CONTRIB-2013-065 - Organic Groups - Access Bypass 
+> > https://drupal.org/node/2059765
+> > 
+> > SA-CONTRIB-2013-066 - Monster Menus - Multiple Vulnerabilities 
+> > (Looks like two here: XSS, and an Access Bypass vuln) 
+> > https://drupal.org/node/2059823
+> > 
+> > Thanks!
+> > 
+> > Best, Forest
+> > 
 > 
-> We announced it on mongodb-announce and have it listed in our alerts page
-> here: http://www.mongodb.org/about/alerts/
+> Yup
+> 
+> CVE-2013-4224 SA-CONTRIB-2013-061 - Flippy - Access Bypass
+> 
+> CVE-2013-4225 SA-CONTRIB-2013-062 - RESTful Web Services (RESTWS) -
+> Access Bypass
+> 
+> CVE-2013-4226 SA-CONTRIB-2013-063 - Authenticated User Page Caching
+> (Authcache) -Information Disclosure
+> 
+> CVE-2013-4227 SA-CONTRIB-2013-064 - Persona - Cross site request
+> forgery (CSRF)
+> 
+> CVE-2013-4228 SA-CONTRIB-2013-065 - Organic Groups - Access Bypass
+> 
+> CVE-2013-4229 SA-CONTRIB-2013-066 - Monster Menus XSS
+> 
+> CVE-2013-4230 SA-CONTRIB-2013-066 - Monster Menus Access Bypass
 
-http://www.mongodb.org/about/alerts/ now lists CVE-2013-3969 for
-SERVER-9878.
+CVE-2013-4187 has been assigned already for SA-CONTRIB-2013-061[1].
+CVE-2013-4224 should be REJECTED if I am correct, thanks.
 
-So CVE-2013-4142 should be rejected, then.
+1: http://www.openwall.com/lists/oss-security/2013/08/01/1
 
-Cheers,
-        Moritz
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
