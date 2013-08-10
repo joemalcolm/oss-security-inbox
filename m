@@ -1,57 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/23/3
-Message-ID: <512857BD.9000503@redhat.com>
-Date: Fri, 22 Feb 2013 22:46:37 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/10/1
+Message-ID: <5205BB73.4090201@redhat.com>
+Date: Fri, 09 Aug 2013 22:02:59 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: P J P <ppandit@...hat.com>
-Subject: Re: CVE request: Linux kernel: Bluetooth HIDP information disclosure
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/22/2013 03:05 AM, P J P wrote:
-> Hello,
+On 08/09/2013 05:29 PM, Forest Monsen wrote:
+> Hi there,
 > 
-> Linux kernel built with Bluetooth stack and HIDP support
-> HCONFIG_BT=y/m & CONFIG_BT_HIDP=y/m is vulnerable to an information
-> disclosure flaw caused by wrongly initializing the
-> hid_device->name, physical location and unique identifier
-> variables. Information leakage happens if these variables are not
-> NULL('\0') terminated.
+> I'd like to request CVE identifiers for...
 > 
-> An unprivileged user/program could cause this via
-> ioctl(HIDPCONNADD) call.
+> SA-CONTRIB-2013-061 - Flippy - Access Bypass 
+> https://drupal.org/node/2054701
 > 
-> Upstream fix: ->
-> https://git.kernel.org/linus/0a9ab9bdb3e891762553f667066190c1d22ad62b
->
->  Reference: -> https://bugzilla.redhat.com/show_bug.cgi?id=914298
+> SA-CONTRIB-2013-062 - RESTful Web Services (RESTWS) - Access
+> Bypass https://drupal.org/node/2059603
 > 
-> Thank you. -- Prasad J Pandit / Red Hat Security Response Team DB7A
-> 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+> SA-CONTRIB-2013-063 - Authenticated User Page Caching (Authcache)
+> - Information Disclosure https://drupal.org/node/2059589
+> 
+> SA-CONTRIB-2013-064 - Persona - Cross site request forgery (CSRF) 
+> https://drupal.org/node/2059599
+> 
+> SA-CONTRIB-2013-065 - Organic Groups - Access Bypass 
+> https://drupal.org/node/2059765
+> 
+> SA-CONTRIB-2013-066 - Monster Menus - Multiple Vulnerabilities 
+> (Looks like two here: XSS, and an Access Bypass vuln) 
+> https://drupal.org/node/2059823
+> 
+> Thanks!
+> 
+> Best, Forest
+> 
 
-Please use CVE-2013-0349 for this issue.
+Yup
+
+CVE-2013-4224 SA-CONTRIB-2013-061 - Flippy - Access Bypass
+
+CVE-2013-4225 SA-CONTRIB-2013-062 - RESTful Web Services (RESTWS) -
+Access Bypass
+
+CVE-2013-4226 SA-CONTRIB-2013-063 - Authenticated User Page Caching
+(Authcache) -Information Disclosure
+
+CVE-2013-4227 SA-CONTRIB-2013-064 - Persona - Cross site request
+forgery (CSRF)
+
+CVE-2013-4228 SA-CONTRIB-2013-065 - Organic Groups - Access Bypass
+
+CVE-2013-4229 SA-CONTRIB-2013-066 - Monster Menus XSS
+
+CVE-2013-4230 SA-CONTRIB-2013-066 - Monster Menus Access Bypass
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIbBAEBAgAGBQJRKFe9AAoJEBYNRVNeJnmTHnQP+OmTd2WoXZD596XCnJxDWHsw
-3Ow2krRQfQOondYjToxEDEjkRBVNVo/xHN2ENwagOVG0slxoG6D+iuXyABTaesAc
-k8EEuMtM4uDr6degu0ka+28z4yDDkPmo9+OTkCeT6fDdTzFeSC2fUv7EoahsgphR
-qmW1sedRKqHWCk51wrDMlGJ8F7pAvWVAv25/1sGoXRctudBdHh2OserNkWXujzIR
-bojUGIfyxmsa7ItWiBVYSTkWP8Me2QtjHtyxGWJZRXnPSefagJqpgvwf+n8+Xtit
-gyI1ZQMMv4+ebpson1W280Rd6qPeUpxMv8wWvIJnuJoleOYASiPh8f7jFmf9eNoy
-yhn776nBUjo+NV3pZsh71EwkXI28LUapshnONt7ZJG63cG3cqNmrlN4J2YgrRHfG
-qVo5ZS5oC1zfyGqZX2FUuCI0Ee+5s4t5qwAdEzLyOzY+JOFKTt+QWYUF5iHDWv+Z
-aYWSkpS4D42byGGKZkWGEQ17jmHLWPlJ8qxMVk1kOVMBpBFPKVAFnvJZK+M4ob/2
-HO8bSTDAuDaolUT5hhu3Ttdk/0bl/f+2DUx2HcbBMEM53e5wY8x7Zl3v9u6tl38A
-zmwobf6qRnf84cnb7g5JSpkOjHjUDUmeWzhbX4lXCSRHrGSZuWoVdaR9C3SuuF+/
-uPTr+zpbKco/8sZGQhk=
-=V1ib
+iQIcBAEBAgAGBQJSBbtzAAoJEBYNRVNeJnmTEvwQAM2rw6CmcsPea8E6KXbgxKgZ
+ahuaP4zCV/Nc966X8otYKyQrS6kFtJE4LtqmX7fksaZXg5t7yonRMOrUQr5hF0G9
+asw9gsjpOpZHOsW+PNw4JboIb61I52jX9kJw065HLMDr8oaKMVwXd2LOQcIG75Sf
+1ZKK/Z1UEdHvc2xX0mL5tzy/lbcVNyu0tCTPDQIcVqUGu45E+qeFOi+ecsxiL6ke
+GmgGJt2WQJlOgmbhtUM47H4jfAQBa2AZ7KK+3TY5vvz5/1TOGvYL/N6jsoF4EydZ
+3uawKi3M1+rX8DzCJyn4t9wyUD20C7tb79ZFl63tGsyJOC6LoDWWFkyNAjF61uSu
+XsTtEBr4xNIjXM78ZU12EC4KXFfkQznAtm6NtZwojopP+gJ6BFqAc/qmQgxmJiQB
+J+j8F11YcojhgipH8Zy+Jp1J1dvXpDKPfWnGI8MD+0zCGxBqbUxgcGz9gcRyEJgE
+Gob2XHf0LrXC30bbyOIWMEbni9o9QKZvekyI6gHYo0wBXBcutcD2Av24f9WR0Xpk
+RAudEd21ySi9PrSW49G5vzTjALg0CPYOxEWPkBMkduyN7xFzyEYuNxiPl0M1XLNX
+xS93+odiaaNMecIXvGH+mnh8j7VJiNpCwycYDfT5NpvIFYMFBHoVUO/k7rrloNnw
+0Y8SAoNaA4NFBvdDOEjv
+=hVqb
 -----END PGP SIGNATURE-----
