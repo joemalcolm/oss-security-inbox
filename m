@@ -1,70 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/12
-Message-ID: <5136377C.1000401@redhat.com>
-Date: Tue, 05 Mar 2013 11:20:44 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/10/3
+Message-ID: <5205C4C4.90205@redhat.com>
+Date: Fri, 09 Aug 2013 22:42:44 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: CVE id request: busybox
+CC: Florian <floriangaultier@...il.com>
+Subject: Re: CVE Request - LibModPlug <=0.8.8.4 multiple heap overflow
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/05/2013 06:30 AM, Raphael Geissert wrote:
-> Hi Kurt,
+On 08/07/2013 11:29 AM, Florian wrote:
+> On 07/08/2013 19:17, Kurt Seifried wrote:
+>> On 08/07/2013 10:24 AM, Florian wrote:
+>>> Hi,
+>> 
+>>> Just a CVE Request for this 
+>>> http://blog.scrt.ch/2013/07/24/vlc-abc-parsing-seems-to-be-a-ctf-challenge/
+>>
+>>>
+>>> 
+Thx
+>> 
+>> 
+>> I need a better request. You want one CVE? multiple CVEs? A quick
+>> read of the web page indicates multiple different problems. Can
+>> you list them here and provide links to the source code? thanks.
+>> 
 > 
-> On 4 March 2013 03:26, Kurt Seifried <kseifried@...hat.com> wrote: 
-> [...]
->> I didn't say I;'m excluding them. I simply will require an
->> original source, in this case the year is probably wrong.
+> Okay, so the first bug is an integer overflow in j variable, it
+> occurs here : 
+> https://github.com/gardaud/libmodplug/blob/master/src/load_abc.cpp#L1852
+
+Please
 > 
-> Not bikeshedding here, but sometimes those bug reports *are* the 
-> original source. And with all due respect, it has happened before
-> that you've asked for an "original source" (upstream commit or bug
-> report) when there exists none. All it has lead is to the CVE
-> request becoming stalled or even abandoned.
+use CVE-2013-4233 for this issue.
 
-Then say so. Basically I don't want people making lazy requests and
-forcing me to do the basic research.
-
-> What can we do about it?
+> The second bug is a heap overflow and can be triggered in two
+> functions abc_MIDI_drum : 
+> https://github.com/gardaud/libmodplug/blob/master/src/load_abc.cpp#L3211
+>
 > 
-> We already have a quite long list of issues without a CVE id and
-> this is not good for anybody: 
-> https://security-tracker.debian.org/tracker/data/fake-names
+and
+> abc_MIDI_gchord : 
+> https://github.com/gardaud/libmodplug/blob/master/src/load_abc.cpp#L3258
+>
+>  h->gchord and h->drum are static buffers and are filled until the
+> copied byte is in the charset (respectively
+> 'fbcz0123456789ghijGHIJ' and 'dz0123456789')
 
-So research them and post the requests here, problem solved! It's not
-like I'm unwilling to give out CVEs or something. I simply can't spend
-an hour researching each one.
+Please use CVE-2013-4234 for this issue.
 
-> (nb. some of the issues in the list might already have an id but
-> the temporary entry hasn't been removed or it was decided that no
-> id should be assigned)
+> It's up to you to open one or multiple CVE.
 
-And that's why I'm not going to deal with them myself, it would eat up
-all my time. I need some help here in other words.
+Nope.
 
-> Regards,
+http://cve.mitre.org/cve/editorial_policies/cd_abstraction.html
+
+I gotta follow to rules like everyone else.
+
+> Don't hesitate if you want more information.
+> 
+> Thx
+> 
+> 
+> 
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRNjd8AAoJEBYNRVNeJnmTVGYQAKFMMAYOE7ruEg1stN7tzAQs
-7tDDLCam7a8j2AHGBVogmI4I6ADfRwcqwjNBv7DOv63AQZbkw+OiVGbPADMGlKDP
-8ZIdiwZvt2Z6OBprH6k0vVMGpSF9aQcirDF0qdXplGjo8sxiyXG8S8YZy0/b/y7Q
-QJo5qezE5+5djiG9EGNQi97VnARo514eZGLqdo8kWE2FHV+js64oSkUcH5Veu02C
-NAQRQziKZNpWf3ZCVZ4ByOEigbSuy8198lFqCjB3XoXrEIYk+eT2g1Fx41KdToQk
-ZLQ5mfAqWN/9wMLBRPRcMnojNFMHaOhCZ1AULcQyAsngu36hmvAPwFidVsDJTBwG
-M9UANh5Lq9Mkwu4zqF43/v3raen2Y1vQcFa7YBneHoXxtZQEDFHhK+QiZFHhLaMe
-TBmiuzu+N+WAhPtrGYd23BQRrOytepuFzjG2NFbxYiao8fYgFZ0rB+4Yn/W9b7t/
-kCmfJttKVPwgtoS6+Oj4a/FrgVhMiWrcjonv6njxleiWvS6gsziChp4+pp+grEr3
-ygFgogDtJgC2/yKlwV/ycz4rG2iiAHqkHXmebn21Nwfsxr3WnaVYQd8sJ3eOyczI
-pi49oU1L98678JlopgvifZhut803cqIH5sFT8hZvNIgVPH+eUfqvAGH1tI2q8ewN
-eA3Gc1vXdzMF19rRFlEL
-=b60Q
+iQIcBAEBAgAGBQJSBcTEAAoJEBYNRVNeJnmT6vEP/R1SVk6KRnwtW7queqL/UDg/
+Ji7SswSe2GBSNKmLdanWnhOJLeJsi2LjVv98U1rRR9bBxKE3BLkat/aTiM3ZACai
+KmFMIDtiSLAO+iz6pAuE6Ddko2fDdCw4K5RaGkAVatdrqVyW6SH98Zfj171yVJED
+GqO1TOm4xEQGPywZd+RKj6Q++yVmOQQxfyZ9cZTX6WHdZDeEhtVJtPJ3zSqquO7q
+En10K6dp8JYfB6l5qLf7yedhuSWchIZUlWqvLcv2dG1t295o5mru3Mri4xcWyFMp
+oluxgu20e7sTMjlxkByJQ2vT/ho8htTXlL3B5YtHtnsSsOspcak9/uQhvwrKeouY
+kAO0KHjVVdhA7uk6wpVyFjnXgVFkweSg1DnMl2sDHMf/GWKnuU+CnyT3kJzGvtAM
+TOQM77YsP+xowGfh62bZWgcz1UJH/00rIbWU/Edht37ZfhSikNhH00b7+QZGLh+K
+LVDWf+Ifpv1GMpshkpcAk/CfZSOp9nOyxFou2InM5EvHvdtWspdI5lxLSUZxBq1I
+bNoc8X5WF+wmjI8gWbiv/tddrX/JP+Qza3ogeG9kOdetr6CHICen3FaEvzMh3OZa
+9rp3iLdLJ+SVhhTpDAK4FcsuplX4yPpjTv5sFSacgrDb9JLqsMGDkjSH5ZiG9Mni
+esHtKi+2ApgHYHbnnpo0
+=x9Ym
 -----END PGP SIGNATURE-----
