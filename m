@@ -1,88 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/11
-Message-ID: <512D1C15.2010604@redhat.com>
-Date: Tue, 26 Feb 2013 13:33:25 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/11/1
+Message-ID: <loom.20130811T072950-947@post.gmane.org>
+Date: Sun, 11 Aug 2013 05:47:32 +0000 (UTC)
+From: mancha <mancha1@...h.com>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <atomo64@...il.com>, 700158@...s.debian.org, 700159@...s.debian.org
-Subject: Re: CVE request: XSS flaws fixed in ganglia
+Subject: Re: [CVE assignment notification] CVE-2012-2142 poppler, xpdf: Insufficient sanitization of escape sequences in the error message {AKA request for feedback if CVE to be marked as disputed / rejected}
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Jan Lieskovsky <jlieskov@...> writes:
 
-On 02/21/2013 06:50 AM, Raphael Geissert wrote:
-> Hi again,
+> Poppler upstream patch:
+>  
+http://cgit.freedesktop.org/poppler/poppler/commit/?id=71bad47ed6a36d825b0d08992c8db56845c71e40
 > 
-> On 21 February 2013 11:47, Raphael Geissert <atomo64@...il.com>
-> wrote:
->> On 8 February 2013 19:06, Vincent Danen <vdanen@...hat.com>
->> wrote:
->>> A number of XSS issues were fixed in ganglia's web ui:
->>> 
->>> https://github.com/ganglia/ganglia-web/commit/31d348947419058c43b8dfcd062e2988abd5058e
->>
->>
->>> 
-I've a hunch that there are a few issues with the changes. A quick
->> look at the patch shows that the change here breaks the
->> preg_replace call:
+> Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 > 
-> Forgot the reference, here's the exact code: 
-> https://github.com/ganglia/ganglia-web/commit/31d348947419058c43b8dfcd062e2988abd5058e#L7R17
->
->  [Salvatore, thanks for forwarding it]
-> 
-> Some other notes:
-> 
-> *
-> https://github.com/ganglia/ganglia-web/commit/31d348947419058c43b8dfcd062e2988abd5058e#L9R35
->
->  This is a directory traversal issue that requires authentication,
-> but there doesn't seem to be a CSRF protection in place (unless
-> I'm missing something). The (stored) XSS part of it is not entirely
-> fixed for the case where an attacker successfully took advantage of
-> it since the sanitation is only performed when storing to the .json
-> file.
-> 
-> The other operations related to views (in views_view.php) are all 
-> still vulnerable to XSS via the view_name GET parameter.
-> 
-> 
-> The authentication cookie uses a persistent token for every user
-> (no session ids or any sort of nonce), which is an issue on its
-> own, but it also doesn't verify that the group stored in the cookie
-> actually corresponds to the user. As of 3.5.7 the groups feature
-> still doesn't seem to be in use, however.
-> 
-> 
-> So I guess we are going to need at least one more CVE id for the 
-> remaining XSS issues in views_view.php and I leave the rest up to
-> the opinion of others (upstream included).
-> 
-> Cheers,
 
-Sorry I forgot about this after all the XML excitement. Please use
-CVE-2013-1770 for this issue.
+Hi. I've adapted Poppler's CVE-2012-2142 fix to xpdf-3.03 and posted
+here:
+http://sourceforge.net/projects/miscellaneouspa/files/misc/xpdf-3.03-CVE-2012-2142.diff
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+--mancha
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRLRwUAAoJEBYNRVNeJnmT/voQAIODImCIuIzSbo+4gjczgs5g
-Zj2oynsTM4cYqZcCKeKqHq7L0Vql/vLOt/P/WzpRzi7FRqIOlSwu3XoZC/PmX8wm
-3bqrJxmNRQUZ9rdOBiu77eZ9w6MKBFeuW1Q13JSXGFLJVQK/dUj9qMn1qaGgd2Gz
-kTUmTgghqjLi93LWyjvHfheKzkrq9CRsr3u63nrvekJbsFgopoyA3PwxsDeSlnDO
-KSMPvYbiO6O6J8eoUMI7XFEb8KMeoqxIYQgIoRN+M+9y3MSPFdC/RuuNwg5NEYwR
-uImdjWoc4zUTciajnWD8lmjsMe5HN5HpD4+Aj9Q2+wGUQ6c1pqMcqMHmqrxeY+6N
-VFtoJbkVsPHEm3YVLMp14JVQ5/jadJhBiGv7fHxCy8ctmGQxGKaHSK3nrfzExwzc
-7JqP6+7Stz592iqXRcItJGgMz891G0M5wrOu6h+GLMVRZuQhjmXFHolArfYUsBBH
-TczXZXz44z4TwWYfA+mJ0aFpuPNI1BkasGBthsYpBuVVlrLgWvWrAm8180dXDE6C
-8LXrtxJljuwXJv4sa4YquYvGF8WMnWPWzN4wscLhJ1yjAl1YKGolHoFab1MK7/4w
-Ggs+qd/DMicxSth4BwkbS7r/sO/epGMox0AfzmiPEt/jWArSVQCN8iY5R41u56+/
-OXQL2Nb/xQjXYjnF2JfJ
-=L3sJ
------END PGP SIGNATURE-----
