@@ -1,32 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/8
-Message-ID: <alpine.LFD.2.03.1304221852190.20599@redhat.com>
-Date: Mon, 22 Apr 2013 19:27:18 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: cve-assign@...re.org, Petr Matousek <pmatouse@...hat.com>
-Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/11/3
+Message-ID: <520790A5.4040608@redhat.com>
+Date: Sun, 11 Aug 2013 15:24:53 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- glibc: Buffer overwrite when using readdir_r on file systems returning file names longer than NAME_MAX characters
 Content-Type: text/plain; charset=utf-8
 
-+-- On Mon, 22 Apr 2013, Mathias Krause wrote --+
-| partly... Have a look at verify_iovec()/verify_compat_iovec(). They're
-| updating the msg_name and msg_iov pointers.
+On 08/11/2013 03:05 PM, Jan Lieskovsky wrote:
 
-  I did, both seem to use user supplied `msg_namelen' value to copy contents 
-from user `msg_name' to `sockaddr_storage addr' variable. And when 
-`msg_namelen' is zero(0) msg_name is set to NULL. Later same `msg_namelen' 
-bytes are copied to user area, right?
+> This issue was found by Florian Weimer of Red Hat Product Security Team.
 
-Ah..right, both are called with `mode = VERIFY_WRITE' and both initialise 
-`addr' variable when mode = VERIFY_READ.
+I think this is actually folklore by now, it's been floating around for 
+a couple of years.
 
-If it's copying user data to `addr', why selectively do it when mode = 
-VERIFY_READ?
-
-Also, wouldn't - memset(addr, 0, sizeof(addr)) - fix this leak for all 
-definitions of <proto>_recvmsg() routine??
-
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+-- 
+Florian Weimer / Red Hat Product Security Team
