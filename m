@@ -1,45 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/34
-Message-ID: <20130227182638.GT1722@dhcp-25-225.brq.redhat.com>
-Date: Wed, 27 Feb 2013 19:26:39 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: Greg KH <greg@...ah.com>, Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/10
+Message-ID: <1376326946.2970.33.camel@neutron.trustmatta.com>
+Date: Mon, 12 Aug 2013 18:02:26 +0100
+From: Florent Daigniere <florent.daigniere@...stmatta.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: pending Bitcoin/Android CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 10:05:20AM -0800, Greg KH wrote:
-> On Wed, Feb 27, 2013 at 05:13:06PM +0100, Petr Matousek wrote:
-> > On Wed, Feb 27, 2013 at 06:48:34AM -0800, Greg KH wrote:
-> > > On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
-> > > > For starters, security@...nel.org submissions should be posted to
-> > > > oss-security or any other security related public mailing list when
-> > > > the
-> > > > patch is being committed.
-> > > 
-> > > That's not going to happen, and you know that, to do so would be
-> > > totally
-> > > irresponsible of us and directly harm your users.  That's what
-> > > vendor-sec (or whatever it is called now) is for.
-> > 
-> > linux-distros [1] is vendor-sec replacement for Linux related issues.
-> > 
-> >   [1] http://oss-security.openwall.org/wiki/mailing-lists/distros
+On Mon, 2013-08-12 at 12:41 -0400, cve-assign@...re.org wrote:
+> https://code.google.com/p/bitcoin-wallet/source/detail?name=bitcoinj-0.10&r=04d2044880d88107ee4a939a516fb4be4cedeaf9#
 
-Greg, FYI. The linux-distros mailing list has strict rules about the
-maximum embargo period. It is ~14 days. I hope that ~14 days are
-acceptable as a grace period for you when the commit goes public. At the
-end of the embargo period the info is always sent to oss-sec with CVE id
-assigned. 
 
-Also, Alexander, are you willing to accept the semi-public nature of the
-sko submissions to linux-distros and treat them as embargoed even though
-the commit is already public?
+That looks like the wrong fix to me. Surely if the assumption is that
+the application will be used on a large number of heterogeneous embedded
+devices (with inconsistent software stacks), where random sources are
+unsuitable for cryptographic usage, the solution should not involve
+them.
 
-For me, this solutions is not optimal as we usually treat any issue that
-has public commit as public one, but it would at least avoid
-CVE-2013-0871 like problems.
+Why can't bincoin use deterministic signatures again?
+https://tools.ietf.org/html/rfc6979
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Florent
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
