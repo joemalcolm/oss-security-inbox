@@ -1,32 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/28/1
-Message-ID: <loom.20130528T031311-502@post.gmane.org>
-Date: Tue, 28 May 2013 01:33:48 +0000 (UTC)
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/13
+Message-ID: <52094379.8020905@redhat.com>
+Date: Mon, 12 Aug 2013 14:20:09 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: pwgen
+CC: Adéla Goldová <roguecoder@...h.com>
+Subject: Re: Re: CVE Request - HMS Testimonials 2.0.10 WP plugin
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I was the person who reported this via launchpad.
+On 08/12/2013 12:52 AM, Adéla Goldová wrote:
+> I noticed how I managed to spell the name really wrong in the message text. I just wanted to fix it to avoid confusion.
+> The name should be HMS Testimonials.
+> 
+> On 8/10/2013 at 6:31 PM, "Adéla Goldová" <roguecoder@...h.com> wrote:
+>>
+>> Hello
+>>
+>> The HMS Tesminoalis version 2.0.10 plugin for WordPress contains 
+>> multiple CSRF and XSS vulnerabilities.
+>> This can be used in many different ways, like defacement of both 
+>> public site and the admin area (only the HMS 
+>> Testimonials plugin area will be affected), modify settings to set 
+>> a lower role as moderator (very harmful on sites 
+>> with open registrations), etc. Could CVE's be assigned to this?
+>>
+>> 1: http://seclists.org/fulldisclosure/2013/Aug/96
+> 
 
-The fallback could possibly be triggered accidentally by MAC schemes, such 
-as selinux and apparmor.
+CVE MERGE, same researcher/versions, so:
 
-There's 8 packages in Ubuntu that depend on this, so I guess it would be 
-worth checking them to see if they execute pwgen in an apparmor context that 
-doesn't allow /dev/urandom access.  I had a quick look at maas-region-
-controller, and it seems to just be calling it from a postinst script.
+CVE-2013-4240 HMS Testimonials 2.0.10 CSRF
+CVE-2013-4241 HMS Testimonials 2.0.10 XSS
 
-I have a patch attached to the LP bug that removes the fallback (in favour 
-of bailing out with an message to stderr and exit code 1), and removes the 
-modulo bias.
 
-The default mode of this program generates extremely low entropy passwords - 
-It is probably worth changing the default to "secure" mode and removing 
-phonemes mode, to avoid putting users at risk.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Regards,
-  Michael
-
+iQIcBAEBAgAGBQJSCUN5AAoJEBYNRVNeJnmT8/MP/32QsjkC/rXOmSuEwp29Zpr3
+BrMdD0DGkL1+RbdeE1bCvV9G+V3/qMedM8qJDaj7Hhj48cTWLtgTBd1BPNgNCq5L
+TRiLUTfMz2xZtezlW8gu/VFcX3BrMJgCVdddYFp94/DPJf/Y+k224ufYIqO8wCl3
+oeibSCzlFB5DR3br9hQPXvlwj5IgscoS7nZ4078IuM+vWu0QxzAfT35ismtUFru9
+2V64N81RPa0xcBxA6cLxAbC84GDm9dijarrssMsUqK4XBcgN6/2nMJWEXimHRbyO
+OnuM3R6sFRPsYxHZR01oTH4QLD8dpmNPAJ5Nl9mOHyJoDrLJJUjYeJ2f3hQ38kZE
+aCRalHh3rzUd0ZuIG4jQs8ikzdZsgulBWXQ9o5UmdgQwoAyhQUKXWu5So9rX+/Cw
+zHK9R2FMAhTY1RyBHtdrpB6NeECDz3wJfZUKfr9fNarZRVxirfnUfvHt167mHPL0
+Hbf/tmkylZNsX5637Ye/2eUJrzBi0kJVkXdIzBzFY/TNpypSpUulLd/+TwnGa6qV
+sqdsWAT8+JOUg2nYYMZkuiJwENg6AhAkIQ78NUl+5DGfXh4oY5SD+eB9wDcd67jF
+OWmk8bbGvmQtFMv1fQdZWyOlXWToZRn0TxMySS6yQnWZ2PGRF4SLePdPoQmwdmw6
+jtrPW98NPnCCUdNn4ntw
+=LKt4
+-----END PGP SIGNATURE-----
