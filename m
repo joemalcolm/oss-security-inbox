@@ -1,22 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/14
-Message-ID: <20130705210639.GP28839@betterave.cristau.org>
-Date: Fri, 5 Jul 2013 23:06:39 +0200
-From: Julien Cristau <jcristau@...ian.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: security@...e.de, Sebastian Krahmer <krahmer@...e.de>
-Subject: Re: Question about CVE for X!! DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/1
+Message-ID: <CABbbngDQon7WYSWjtSmB5CA085gcNhLW_HRAh9jCoBh+LbLRZQ@mail.gmail.com>
+Date: Sun, 11 Aug 2013 21:06:46 -0700
+From: Forest Monsen <forest.monsen@...il.com>
+To: Henri Salo <henri@...v.fi>
+Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul  5, 2013 at 14:50:17 -0600, Kurt Seifried wrote:
+Good, thanks Henri.
 
-> http://lists.opensuse.org/opensuse-updates/2013-07/msg00023.html
-> https://bugzilla.novell.com/show_bug.cgi?id=815583
-> 
-> Lists no CVE? I assume it needs one, or did upstream handle this?
-> 
-If you can connect to an X server, DoSing it is trivial (think
-XGrabServer).  This has never been considered a security issue AFAIK.
 
-Cheers,
-Julien
+On Sat, Aug 10, 2013 at 12:38 AM, Henri Salo <henri@...v.fi> wrote:
+
+> On Fri, Aug 09, 2013 at 10:02:59PM -0600, Kurt Seifried wrote:
+> > On 08/09/2013 05:29 PM, Forest Monsen wrote:
+> > > Hi there,
+> > >
+> > > I'd like to request CVE identifiers for...
+> > >
+> > > SA-CONTRIB-2013-061 - Flippy - Access Bypass
+> > > https://drupal.org/node/2054701
+> > >
+> > > SA-CONTRIB-2013-062 - RESTful Web Services (RESTWS) - Access
+> > > Bypass https://drupal.org/node/2059603
+> > >
+> > > SA-CONTRIB-2013-063 - Authenticated User Page Caching (Authcache)
+> > > - Information Disclosure https://drupal.org/node/2059589
+> > >
+> > > SA-CONTRIB-2013-064 - Persona - Cross site request forgery (CSRF)
+> > > https://drupal.org/node/2059599
+> > >
+> > > SA-CONTRIB-2013-065 - Organic Groups - Access Bypass
+> > > https://drupal.org/node/2059765
+> > >
+> > > SA-CONTRIB-2013-066 - Monster Menus - Multiple Vulnerabilities
+> > > (Looks like two here: XSS, and an Access Bypass vuln)
+> > > https://drupal.org/node/2059823
+> > >
+> > > Thanks!
+> > >
+> > > Best, Forest
+> > >
+> >
+> > Yup
+> >
+> > CVE-2013-4224 SA-CONTRIB-2013-061 - Flippy - Access Bypass
+> >
+> > CVE-2013-4225 SA-CONTRIB-2013-062 - RESTful Web Services (RESTWS) -
+> > Access Bypass
+> >
+> > CVE-2013-4226 SA-CONTRIB-2013-063 - Authenticated User Page Caching
+> > (Authcache) -Information Disclosure
+> >
+> > CVE-2013-4227 SA-CONTRIB-2013-064 - Persona - Cross site request
+> > forgery (CSRF)
+> >
+> > CVE-2013-4228 SA-CONTRIB-2013-065 - Organic Groups - Access Bypass
+> >
+> > CVE-2013-4229 SA-CONTRIB-2013-066 - Monster Menus XSS
+> >
+> > CVE-2013-4230 SA-CONTRIB-2013-066 - Monster Menus Access Bypass
+>
+> CVE-2013-4187 has been assigned already for SA-CONTRIB-2013-061[1].
+> CVE-2013-4224 should be REJECTED if I am correct, thanks.
+>
+> 1: http://www.openwall.com/lists/oss-security/2013/08/01/1
+>
+> ---
+> Henri Salo
+>
+
