@@ -1,45 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/27/3
-Message-ID: <377853464.16168232.1364401513541.JavaMail.root@redhat.com>
-Date: Wed, 27 Mar 2013 12:25:13 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, James Antill <james.antill@...hat.com>, Zdenek Pavlas <zpavlas@...hat.com>
-Subject: CVE Request -- yum: Not removing bad metadata and using it in next run
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/6
+Message-ID: <52090AC5.8070106@redhat.com>
+Date: Mon, 12 Aug 2013 10:18:13 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
+Subject: Re: CVE Request -- vdsm: incomplete fix for CVE-2013-0167 issue
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  A security flaw was found in the way Yum package manager
-performed management of repository metadata in certain
-circumstances (bad metadata were not removed properly
-and re-used in subsequent run). An attacker could inject
-a specially-crafted Trojan horse file in the metadata of
-a remote repository, possibly leading to their ability
-to confuse Yum package manager to accept invalid untrusted
-metadata as valid by mistake.
+On 08/12/2013 08:44 AM, Petr Matousek wrote:
+> It was found that fix for CVE-2013-0167 was not complete. A
+> privileged guest user could still potentially make the host the
+> guest is running on unavailable to the management server by making
+> guest agent return data with invalid XML characters.
+> 
+> Upstream fix: 
+> http://gerrit.ovirt.org/gitweb?p=vdsm.git;a=commit;h=5fe1615b7949999fc9abd896bde63bf24f8431d6
+>
+>  References: https://bugzilla.redhat.com/show_bug.cgi?id=996166
+> 
+> Thanks,
 
-References:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=910446
-[2] http://lists.fedoraproject.org/pipermail/package-announce/2013-March/099496.html
-[3] http://lists.fedoraproject.org/pipermail/package-announce/2013-March/100299.html
-[4] https://lwn.net/Articles/540426/ 
-    (and search for 'yum: denial of service' here)
+Please use CVE-2013-4236 for this issue.
 
-Relevant upstream patch:
-[5] http://yum.baseurl.org/gitweb?p=yum.git;a=commitdiff;h=c148eb10b798270b3d15087433c8efb2a79a69d0
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-This issue was found by James Antill of Red Hat.
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: For those possibly wondering why [2] and [3]
-      are public already - it's true this has been fixed
-      some time ago already (but I wasn't around at that time)
-      and better to request later, than never.
-
-      Thank you for your understanding, Jan.
+iQIcBAEBAgAGBQJSCQrFAAoJEBYNRVNeJnmTXlYP/iWP2ugFXnurvLZ0UkRdrQ4W
+d5fTZXq5KFIRBesnNQFelnkfjHcstBNU9gH3zmGaJzK2V0a9rTKQTZ23+zgkf64u
+zYWV/wI+drtpCctTIMpwJVsSWACSucZrMYEKnylCjfCWuhNGbAmjXJktN5Z60Rl5
+1D5DnZy1NBJ4bexJlXuqr5OCQeMFpZksTMiW6CZilU/iiUZMwFUm3khC3QfQiPHF
+dyGLQsfiGEyV9CmSmOVxhzSQfwiibgyAdck2vFKS9jt5XrFH8nkU9iN4FtjqkpNt
+PI2t00xYDAe6drRp5nWnGSEYlb3YaqGxvaiDeuaKPzJm+B8CY95AFxRYW1xDuNaO
+3AEmtWjDpiggZlUHIgZN+rSQtYdb43DLY3MUts7Nf3hbt7EEhjN1bTHYqb/aG4gE
+etL1i1IgtbRXNdKSWevZp7sWGk0brrAnOASqeRvpEkwTr2ZTVF5xCx+eDK22uCv6
+M/lorlh9O769qeSeZBkl8+9a0llNOb45SiCPqtzkzVqpBTg0J+cuWX9xhcBfDnhp
+YP8+wIIySsaX61h7ldr7CG70uEX/siB/v/rTacntWcnR1J9J8IBKMKdiR952IQxi
+be4M1NL4JIQdPPLbe6Gg8Geb5L9/cjMYHCuXKxZXj7hXzOWu4b/y3A/0TE4eRJLU
+3SGzHk/pniLMk2yqG2Oj
+=Z3PP
+-----END PGP SIGNATURE-----
