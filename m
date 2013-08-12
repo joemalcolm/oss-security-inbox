@@ -1,59 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/10
-Message-ID: <50EC6DEE.5000104@redhat.com>
-Date: Tue, 08 Jan 2013 12:05:18 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Sebastian Krahmer <krahmer@...e.de>, coley@...us.mitre.org
-Subject: Re: CVE Request: nagios Stack based buffer overflow in web interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/15
+Message-ID: <CANTw=MOXoMamRnFXdZEdrF6tC=4Bm9Qdh7K4Vp2sUW1hgRwmNA@mail.gmail.com>
+Date: Mon, 12 Aug 2013 19:08:12 -0400
+From: Michael Gilbert <mgilbert@...ian.org>
+To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
+Cc: Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: Re: [CVE assignment notification] CVE-2012-2142 poppler, xpdf: Insufficient sanitization of escape sequences in the error message {AKA request for feedback if CVE to be marked as disputed / rejected}
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 01/08/2013 06:00 AM, Sebastian Krahmer wrote:
-> Hi,
-> 
-> I dont know if this already got a CVE. At least its not mentioned 
-> in the initial posting:
-> 
-> http://archives.neohapsis.com/archives/fulldisclosure/2012-12/0108.html
+On Mon, Aug 12, 2013 at 4:22 PM, Kurt Seifried wrote:
+> I assume we'll SPLIT this? In past some xpdf/poppler issues have been
+> merged circa 2010, but after that they appear to have been usually
+> treated as separate:
 >
->  Our bug about this is here:
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=797237
-> 
-> Can someone assign a CVE?
-> 
-> thx, Sebastian
+> http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=poppler
+> http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=xpdf
 
-Please use CVE-2012-6096 for this issue.
+It's the same codebase, just slightly diverged, so I would argue no.
+In fact Debian's xpdf is unaffected once poppler is fixed since it
+links against it (and the issue is in poppler's Error.cc).  I believe
+Gentoo does the same.
 
-Just a heads up: I don't really read full-disclosure for CVE
-assignments (the signal to noise ratio is insane, and every time I
-email back I get a flood of automated replies). If you want a CVE for
-open source from me, posting to oss-sec is the way to go.
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ7G3uAAoJEBYNRVNeJnmTg/sQAMr15m/ZYGlm+IFF6Q/Ln+sv
-GBUhM5zksB9dpoSlKlyC9cDimTYnaOILuDBlbizrt04nxiYZp97VsmHVaHn0hpI7
-pRfL8N9UoLPJixs5BwSW5tFPU+it0uTFJXirl4ycS0Dfn/kJ5BGZw1lNYVvGWs+M
-vXGgN/abbmnZ5S9motpl5+JLxH7i4p4QLpp4lYEJSM8T2sLP4umOrtSZgjG24dT+
-K6x3XzBcNGQvsWgQRJnEOTKW222rx2zNmQat+JD4XmDvL5cO9I5D/Q9xHLvF1kZB
-Jb3Uyo637onhja+DpDCKMbz4IVSRTJv0aBmdGuqT9mefIVmbezAJnOiqSmWvEmvv
-bRAjRvzXs+m6MjoBK8gI7Vk8otSvuIHDcmrvMh1hYVJ0fMpFh6nDLSnmEuJGddQF
-mYH9cSakGzK7vgKj6624nNlqhDBq/Imbb8yBzH8xPznMENcWbNp/QRs5kvGufedr
-CoMiX3lkcWEjQei+WhTfKUbkmv5xFOR3PxUoM8kTYAuOHG/1K82KHdMFQlpLcIb8
-miaR/H3A1SzKGVCPPWme9kBOlnRYuaekSkbqBYZXBnPfxbCvHZKdJxorw8p6D+0G
-dyA2UKtNxrB+DZDrxQD66OmTRN5YTp4Mi0wns/YZK+INTuTh69e/SKPn1kqIpZmY
-uuSIUaDa14lYCFuunCd4
-=j/BZ
------END PGP SIGNATURE-----
+Best wishes,
+Mike
