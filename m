@@ -1,71 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/13
-Message-ID: <CAH1ochwmt7Km6JzZUttXP_cq5iMt_y4EBUJbBP78Awg+fE7B0Q@mail.gmail.com>
-Date: Mon, 4 Nov 2013 11:47:12 -0700
-From: Mike <mikedawg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/7
+Message-ID: <52090CDD.6080806@redhat.com>
+Date: Mon, 12 Aug 2013 10:27:09 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: hanno@...eck.de
-Subject: Re: openssl default ciphers
+CC: Forest Monsen <forest.monsen@...il.com>, Henri Salo <henri@...v.fi>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-RC4 should absolutely not be included.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-RC4 is just as broken, if not broken worse than other cryptographic
-algorithms. I recommend you check out Matthew Green's blog:
-http://blog.cryptographyengineering.com/2013/03/attack-of-week-rc4-is-kind-of-broken-in.html
+On 08/11/2013 10:06 PM, Forest Monsen wrote:
+> Good, thanks Henri.
+> 
+> 
+> On Sat, Aug 10, 2013 at 12:38 AM, Henri Salo <henri@...v.fi>
+> wrote:
+> 
+>> On Fri, Aug 09, 2013 at 10:02:59PM -0600, Kurt Seifried wrote:
+>>> On 08/09/2013 05:29 PM, Forest Monsen wrote:
+>>>> Hi there,
+>>>> 
+>>>> I'd like to request CVE identifiers for...
+>>>> 
+>>>> SA-CONTRIB-2013-061 - Flippy - Access Bypass 
+>>>> https://drupal.org/node/2054701
+>>>> 
+>>>> SA-CONTRIB-2013-062 - RESTful Web Services (RESTWS) - Access 
+>>>> Bypass https://drupal.org/node/2059603
+>>>> 
+>>>> SA-CONTRIB-2013-063 - Authenticated User Page Caching
+>>>> (Authcache) - Information Disclosure
+>>>> https://drupal.org/node/2059589
+>>>> 
+>>>> SA-CONTRIB-2013-064 - Persona - Cross site request forgery
+>>>> (CSRF) https://drupal.org/node/2059599
+>>>> 
+>>>> SA-CONTRIB-2013-065 - Organic Groups - Access Bypass 
+>>>> https://drupal.org/node/2059765
+>>>> 
+>>>> SA-CONTRIB-2013-066 - Monster Menus - Multiple
+>>>> Vulnerabilities (Looks like two here: XSS, and an Access
+>>>> Bypass vuln) https://drupal.org/node/2059823
+>>>> 
+>>>> Thanks!
+>>>> 
+>>>> Best, Forest
+>>>> 
+>>> 
+>>> Yup
+>>> 
+>>> CVE-2013-4224 SA-CONTRIB-2013-061 - Flippy - Access Bypass
+>>> 
+>>> CVE-2013-4225 SA-CONTRIB-2013-062 - RESTful Web Services
+>>> (RESTWS) - Access Bypass
+>>> 
+>>> CVE-2013-4226 SA-CONTRIB-2013-063 - Authenticated User Page
+>>> Caching (Authcache) -Information Disclosure
+>>> 
+>>> CVE-2013-4227 SA-CONTRIB-2013-064 - Persona - Cross site
+>>> request forgery (CSRF)
+>>> 
+>>> CVE-2013-4228 SA-CONTRIB-2013-065 - Organic Groups - Access
+>>> Bypass
+>>> 
+>>> CVE-2013-4229 SA-CONTRIB-2013-066 - Monster Menus XSS
+>>> 
+>>> CVE-2013-4230 SA-CONTRIB-2013-066 - Monster Menus Access
+>>> Bypass
+>> 
+>> CVE-2013-4187 has been assigned already for
+>> SA-CONTRIB-2013-061[1]. CVE-2013-4224 should be REJECTED if I am
+>> correct, thanks.
+>> 
+>> 1: http://www.openwall.com/lists/oss-security/2013/08/01/1
+>> 
+>> --- Henri Salo
+>> 
+> 
 
-If you search around, you can find similar stories of problems with
-RC4 (like this one from Qualys:
-https://community.qualys.com/blogs/securitylabs/2011/10/17/mitigating-the-beast-attack-on-tls
- )
+Thanks all for catching it. Please REJECT CVE-2013-4224, use the
+originally assigned CVE-2013-4187 please.
 
-Mike
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-On Mon, Nov 4, 2013 at 11:41 AM, Stefan Bühler <stbuehler@...httpd.net> wrote:
-> On Mon, 4 Nov 2013 18:49:06 +0100
-> Hanno Böck <hanno@...eck.de> wrote:
->
->> On Mon, 4 Nov 2013 18:16:30 +0100
->> Stefan Bühler <stbuehler@...httpd.net> wrote:
->>
->> > Is 'DEFAULT@...ENGTH:!LOW:!EXP' (should
->> > be similar to 'HIGH:MEDIUM:!aNULL') a reasonably default?
->>
->> SSLCipherSuite HIGH:!MEDIUM:!LOW:!aNULL@...ENGTH
->> should be fine. There are basically near zero browsers out there that
->> should have any problems with that. Even dinosaurs like IE6 can work
->> with this, you don't need "medium" ciphers as long as you don't want
->> to make a site accessible to browser museums.
->
-> There is no difference to HIGH:!aNULL on my system. I don't see why
-> HIGH:!MEDIUM:!LOW could be not equal to HIGH anyway...
->
->> And looking at what medium includes that high doesn't, it seems you
->> really don't want that ancient cipher suites:
->> -DHE-RSA-SEED-SHA
->> -DHE-DSS-SEED-SHA
->> -SEED-SHA
->> -IDEA-CBC-SHA
->> -IDEA-CBC-MD5
->> -RC2-CBC-MD5
->> -ECDHE-RSA-RC4-SHA
->> -ECDHE-ECDSA-RC4-SHA
->> -ECDH-RSA-RC4-SHA
->> -ECDH-ECDSA-RC4-SHA
->> -RC4-SHA
->> -RC4-MD5
->> -RC4-MD5
->> -PSK-RC4-SHA
->
-> This is not what I get for "MEDIUM" (debian testing); I see only SEED +
-> RC4; RC2 is an export cipher; wikipedia has some stuff on IDEA, and it
-> seems indeed "ancient". SEED might be more relevant (for Korea...), and
-> RC4 is having a big comeback due to the BEAST attack.
->
-> I think due to BEAST a default collection should include RC4; that is
-> why I included MEDIUM.
-
-
-
--- 
-Mike
+iQIcBAEBAgAGBQJSCQzdAAoJEBYNRVNeJnmTDGoP/0rbe9yEUlqBXeBXNAem/3C4
+CF7tKsx+EDTHegRWtFZgmiRqNWzCJfLoWGLO79Klu5HT/pmmnHX6ESMdFJqcjlDV
+CmNSU8di/K8JJdZGIgAwp3JyEiIRlRVnMwKy/AeintaiPRGxl5qSy3N4qVWwdUz/
+Zn3ss5wjNDyPrq106wTtbFY+BiKprR5RvIx+bBMXmP0D6sqEuXb73laWnv9nRPgz
+HoYL65aoEGVWZq3SIyKVF5lNaIPZhKbHSyXp1cmO0sy29aPwl1hjJTvoimyTUBka
+5CRmUAg25NR/GJdP8GYMCQiU/Az8Lu3UVrxzgRyzZYjpVcoD3l/icdJqs/PiD/TW
+w/85sWoIbSoZX9ZaHQFc0rzj3NiGVxKi2x/2FUBouFgf7Vxlfn/dva5oLiPNdQgL
+ADCW92Pbgp4Bk3N0YH++f1vrhYzZ+W6D4wQgaFhH0nqXv7LfjDsXnSfHV0kid83+
+qGi8FCA8+N88gfwBzQfpnIq9nsWanuOQO9BMdgFZXKEFxSsYnWGNLx5UWL444x7F
+ojka3OHBc8A+/i+Ty+g5qXhL7wWrCAgo6UYLMZ4hXIJjNlLeO9lpLNe+dAQ+y6Jm
+pBEUgiLoYBHSmtpavQv2UVmkfKcwXoY+7+NO5Z/4kQUAZBKCGSNKIz4oIS0KXmK+
+zTkz+Hb03mnBrR/LOndZ
+=8/DX
+-----END PGP SIGNATURE-----
