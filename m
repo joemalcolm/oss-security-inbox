@@ -1,44 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/25/3
-Message-ID: <5269BB3D.80701@redhat.com>
-Date: Thu, 24 Oct 2013 18:28:45 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/9
+Message-Id: <201308121642.r7CGfxpj019114@linus.mitre.org>
+Date: Mon, 12 Aug 2013 12:41:59 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Simple Machines Forum (SMF) Remote file inclusion vulnerability
+Cc: cve-assign@...re.org
+Subject: pending Bitcoin/Android CVE assignments
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/24/2013 11:00 AM, Kevin Pawloski wrote:
-> https://github.com/SimpleMachines/SMF2.1/issues/701
-> 
-> Affects 2.0.X and 2.1.X.
-> 
-> Can a CVE please be assigned to this issue?
-> 
-> Thank you. Kevin
-> 
+MITRE is currently working on third-party CVE requests related to a
+recent Bitcoin/Android issue that might (or might not) be related to
+other open-source products such as Bouncy Castle products. We'll send
+another message here after we have CVE assignments or another outcome.
 
-Please use CVE-2013-4465 for this issue.
+Our preference is to assign the CVE IDs after there seems to be
+agreement among security researchers about how many different
+vulnerabilities contribute to the problem. Ultimately, the observed
+problem seems to be:
+
+  https://bitcointalk.org/index.php?topic=271486.0
+
+  Several people have reported their BTC stolen ... It has been
+  noticed that the coins are all transferred in a few hours after a
+  client improperly signs a transaction by reusing the same random
+  number.
+
+
+Here is an example reference that suggests more than one
+vulnerability:
+
+  https://code.google.com/p/bitcoin-wallet/source/detail?name=bitcoinj-0.10&r=04d2044880d88107ee4a939a516fb4be4cedeaf9#
+
+Other information we are currently considering includes:
+
+https://news.ycombinator.com/item?id=6195902 and
+http://android-developers.blogspot.com/2013/02/using-cryptography-to-store-credentials.html
+suggest that they are a communication from the "Android Developer
+Relations team" stating "This was fixed in Android 4.2 when we
+switched from BouncyCastle to OpenSSL as the underlying crypto
+provider. I don't know why you'd still be seeing this on Android 4.2."
+
+https://bitcointalk.org/index.php?topic=271486.msg2910339#msg2910339
+and
+http://www.nilsschneider.net/2013/01/28/recovering-bitcoin-private-keys.html
+refer to "The same k will lead to the same x1 coordinate, which will
+lead to the same r."
+
+http://armoredbarista.blogspot.com.au/2013/03/randomly-failed-weaknesses-in-java.html
+and
+http://www.scribd.com/doc/131955288/Randomly-Failed-The-State-of-Randomness-in-Current-Java-Implementations
+describe multiple issues in four different products.
+
+And, finally, https://news.ycombinator.com/item?id=6195787 says "They
+[ https://bitcointalk.org/index.php?topic=271831.0 ] claim the problem
+lies with 'a component of Android'. One of them told me that the
+solution was to switch from using SecureRandom to reading /dev/urandom
+directly. The actual source changes appear not to be public, and he
+wouldn't tell me details about the issue."
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.11 (SunOS)
 
-iQIcBAEBAgAGBQJSabs9AAoJEBYNRVNeJnmTy+cQAJ5j93YmLHGB4YfX65T4aohe
-L1tvKACdqGmlYAsuzG+qMYNWvyYhD6bo2I3l67m5bPWalWiOvmY7SmbHnobqJxBt
-YoCmZyba/t5ho8cNdqEyyBciQjACQQfK9HqqWY5vogP0bovZWyk3W/wlji1lYw4t
-JvW91JK9LgVcDs+oA9rw7zEMp8CaVwS6pS/cPG+XhTwSNjm6rHzMizWcyON5/7Z7
-MVozd9292RPlyLbr6ElKyY/hMwS2NNPew/AjbLroAv6kaJ+ZhcSsezoM2XpMRyW0
-ObuKyM/wjlQ/R2fOBfPcTYmSk2ijRSs1YdZnO2hxxlK7i2L7GsO541/xm+JglalU
-x+4bmr86oSyOnApCvM1bRru8XnH+z+x3ZSyw2Wmnm9BAkBEeYtgJ9jlkNB9l4V7m
-TZcfQsoMzwgUP6GjyvWMM/QVkjDwkOgCw6KTRbCtt9JI6mmmxN6Y4gNl4LKwUKeF
-E1bhoWZ07vnrRmTouAfiyMvSf88RG2feC2LVk9zbWmk/2NZHVOeq23TyfKjM893n
-WWsbePB9g84pmH/aeAD+Ml/mWVQt+GX+vNoZta5ie5OLyNWqEH4HvyGpP8nNLIWc
-d9ZJQ3HioT6A9+GfVjHrw5OQnZc6k+ncRu029b0sTVudjwAzwEloVclu7vxfTsat
-i46aVVcrJlVYdiMYG0rP
-=j/VG
+iQEcBAEBAgAGBQJSCQ9QAAoJEGvefgSNfHMd1L4H/0mnG2dh7G824DxEQns2qBB3
+Op1qk9FJeOzo+YL2x/lRbkGdem4UKUMS3rY9BSDJidfz8hfwfAZ6JysabUJzCkoB
+YkVC2zla2dKff+6fPsm49w26Ku9DgdGuKPdX2trKJhDkCqswQ1WNyV6sZIHKP51Y
+uCJBLo0TmffBZZOSH2e63AWrOT/rcClqr8G5aJHBJteNj+1eVY+dyQt/mDLVTbxW
+/ZQb4aYwKI3Rfacjbf8TbOo3TsevtzcjTMQSEya0F0AHx7HJWhxHniMVyGhgCjvQ
+CbobCP+uCohJzh+hSBj7v5PNMM9HA5EIQfms3lpyB8Kh0yrvT6LuER56etTpQDw=
+=7Oks
 -----END PGP SIGNATURE-----
