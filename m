@@ -1,96 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/24
-Message-ID: <51F18652.3030002@fifthhorseman.net>
-Date: Thu, 25 Jul 2013 16:10:58 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/5
+Message-ID: <20130812144408.GF25525@dhcp-25-225.brq.redhat.com>
+Date: Mon, 12 Aug 2013 16:44:08 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>,  Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: CVE Request: evolution mail client GPG key selection issue
+Cc: Kurt Seifried <kseifrie@...hat.com>
+Subject: CVE Request -- vdsm: incomplete fix for CVE-2013-0167 issue
 Content-Type: text/plain; charset=utf-8
 
-On 07/25/2013 03:19 PM, Kurt Seifried wrote:
-> One problem moving it to the backend is I may trust your key to sign
-> email, but not to sign code and vice versa. At least for RPM this is
-> handled internally (you install the key into RPM) so that's one less
-> worry.
+It was found that fix for CVE-2013-0167 was not complete. A privileged
+guest user could still potentially make the host the guest is running on
+unavailable to the management server by making guest agent return data
+with invalid XML characters.
 
-gpg doesn't claim to know *anything* about what you "trust" keys to do
-other than whether you're willing to rely on that key to certify other keys.
+Upstream fix:
+http://gerrit.ovirt.org/gitweb?p=vdsm.git;a=commit;h=5fe1615b7949999fc9abd896bde63bf24f8431d6
 
-gpg can tell you "this message was signed by dkg" but it cannot (and
-should not) say "dkg is allowed to upgrade your libc".
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=996166
 
-basically, gpg's job is to handle the authentication side of things
-(which is all that an MUA cares about) but *not* to handle the
-authorization side of things.
-
-Authorization is rightly scoped by different uses of the infrastructure,
-as you suggest.  Some work is being done on this too: Stef Walter's
-current developments of p11-kit aim at allowing tools in a similar
-domain (initially, web site X.509 certification and potentially code
-signing) to share authorization information.
-
-> Yup. Key management sucks even with good software, and we don't have
-> good software for this. Witness CRL/OCSP and then all the vendors
-> shipping browser updates to specifically blacklist compromised
-> certificates.
-
-indeed.  Same sort of problem, same shitty non-scalable solutions :(
-
-> Yeah the use of KeyIDs is just stupid (although I get why they did it,
-> I still think it was stupid), they're to short. We should be using
-> fingerprints only. Sigh.
-
-even if it uses full fingerprints, the fact that i can associate your
-primary key as a (revoked) subkey of mine means i can force the
-keyservers to include one of my keys when anyone goes to refresh yours.
-
-> True, and trust me if my key ever gets compromised (and I know about
-> it) I'll be phoning certain people and not relying on key revocation
-> to let them know.
-
-That's a good idea, but i hope you don't see the two tactics as mutually
-exclusive.  Personal notification is guaranteed to miss some people,
-especially for people whose key is used publicly (like yours is).
-
-> The problem here is the all or nothing trust setting. I may trust your
-> key enough to use it to encrypt email to you, but not to accept signed
-> email from you for example. To steal a phrase from Moxie Marlinspike
-> "no trust agility".
-
-Wait, are you saying that you throw away e-mails from me because they're
-signed?  clearly not :)  And if my key is good enough for you to encrypt
-mail to (that is, you believe it's a key i control, why don't you think
-it's a key i control on the other direction?
-
-sure, you might decide that you don't want to give me keys to your house
-(or let me approve software on your machine, or whatever) based on the
-fact that i send you a signed e-mail -- but that presumably has more to
-do with who i am than whether it's my key or not.
-
-> from enigmail's perspective why is that key present at all, so I can
-> see defaulting to trusting it, basically the policy sounds like "if
-> the user bothers to grab a key lets use it" which is probably not the
-> safest implicit policy, but does get things working.
-
-If that's what enigmail is thinking, it seems like a dangerous mistake
-to me.  In regular daily use, it is implausible that all keys in a
-user's keyring are actually held by trustworthy parties.
-
-It does "get things working", but it leads to messages being encrypted
-to arbitrary recipients.
-
-I could see more nuanced approaches that still wouldn't require any user
-intervention but would be better than the status quo, like:
-
- * if more than one key exists with the given user ID, and one of the
-keys has a higher validity than the others, choose that one.
-
-I personally run enigmail with the "Always trust people's key" unchecked.
-
-Regards,
-
-	--dkg
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
