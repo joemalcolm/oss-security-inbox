@@ -1,54 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/7
-Message-ID: <20130313124517.GY5654@dojo.mi.org>
-Date: Wed, 13 Mar 2013 08:45:17 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/14
+Message-ID: <52094418.1040708@redhat.com>
+Date: Mon, 12 Aug 2013 14:22:48 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE assignments for "weak" crypto (was CVE Request: MD5 used for Download verification)
+CC: mancha <mancha1@...h.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: Re: [CVE assignment notification] CVE-2012-2142 poppler, xpdf: Insufficient sanitization of escape sequences in the error message {AKA request for feedback if CVE to be marked as disputed / rejected}
 Content-Type: text/plain; charset=utf-8
 
-steve:The fundamental problem is in the MD5 algorithm itself; any
-steve:implementation of MD5 will suffer from the same problems.  We have
-steve:multiple CVE identifiers for the various weaknesses of MD5.  Any
-steve:product that uses MD5 is therefore subject to these weaknesses.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Multiple?  I did a quick search of MD5 from thE CVE database:
+On 08/10/2013 11:47 PM, mancha wrote:
+> Jan Lieskovsky <jlieskov@...> writes:
+> 
+>> Poppler upstream patch:
+>> 
+> http://cgit.freedesktop.org/poppler/poppler/commit/?id=71bad47ed6a36d825b0d08992c8db56845c71e40
+>>
+>>
+> 
+Regards, Jan.
+>> -- Jan iankko Lieskovsky / Red Hat Security Response Team
+>> 
+> 
+> Hi. I've adapted Poppler's CVE-2012-2142 fix to xpdf-3.03 and
+> posted here: 
+> http://sourceforge.net/projects/miscellaneouspa/files/misc/xpdf-3.03-CVE-2012-2142.diff
+>
+>  --mancha
+> 
 
-http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=md5
+I assume we'll SPLIT this? In past some xpdf/poppler issues have been
+merged circa 2010, but after that they appear to have been usually
+treated as separate:
 
-and found only one that *didn't* look tied to a particular implementation.
-Having said that...
+http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=poppler
+http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=xpdf
 
-tim:I think if an application relies on a cryptographic primitive for a
-tim:property that it does not provide, or that it is KNOWN to be broken
-tim:for (such as MD5 or SHA1 with collision resistance), then there should
-tim:be a CVE assigned.  The cat's out of the bag on these things; there'st
-tim:no excuse to use MD5 for this purpose.  The world knows these hashes
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-...the one CVE I found involving one of the "various weaknesses of
-MD5" DID involve MD5 collision resistance:
-
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-2761
-
-However, the associated text might be misleading -- caps are mine:
-
-	 The MD5 Message-Digest Algorithm is not collision resistant, which
-	 makes it easier for CONTEXT-DEPENDANT attackers to conduct spoofing
-	 attacks, AS DEMONSTRATED BY ATTACKS ON THE USE OF MD5 IN THE
-	 SIGNATURE ALGORITHM OF AN X.509 CERTIFICATE.
-
-While a careful reading of the text may lead one to conclude "X.509 is
-just one example of MD5 b0rked-ness", someone who implements MD5 in a
-non-X.509 cert context might easily gloss over this one.
-
-Might it make sense to highlight some of these "fundamental" CVEs that
-a diverse range of apps might be prone to?  Just thinking out loud here...
-
--Mike
-
--- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Make it so they have to reboot after every typo."     -the Pointy-Haired One
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBAgAGBQJSCUQYAAoJEBYNRVNeJnmTC6gQANU/SwWPW8nRgWHGwjzf65uK
+pt5DxZfaD+CXdCClh54qrDxdo+LjGAo4UwZ3wnccZBZZPdz5332J3ReB+Mg87mSJ
+apj87d9ygLIPs9axHOeQfPUReg0b45fk+gZXepn1CnndXX5nyqB9yQxZxXxt51Qe
+aG5UDxIn/ZDXuc+NYQyEKY8pWHkSo/7kti19EPDLDbl3gZJQUglaOVozfiTdJT2j
+XE0sg+CBc4azEzBw3flEYJ3lXLGXw85RTDgt4/+KfqfqI4BrorfqYNgm9ZrhjSQO
+z2XomL/0zM4hVnJOLbdbUPICR3uekbDRY2ne/+zP4HebWg0ckY4Jhm9kTMU6eVVo
+l2yIcw5CByfjTqg91yLItfBuGIxivj1W76Da0I6l8UNUDni6tj7ze3B2r27cYT4Y
+gTqOpUF7AUvxbLhu7Op7kHxQfsXcmpjWjK9EE7BwY8IAVmA4C+VOqciQISOIZZt5
+0ejLvXasZxqGWmq570A9f2c4g5ADjr06shQW/KPl0Oo72PfUUni4SXHAf/YoE2M2
+BgghaQ/mf/Q0nznLK60azKwypazcU4HziRwjaROz0qg8Q/5bpemcAfKTXbDQCHcq
+Gu97hqVYyXgHJyYcwbZ9QZBww3xIUtR7XaThIa8gqw/Xl9bufmBSn7HRxad1cHlh
+mKrmsatsNitCAbGcM3b2
+=IeYL
+-----END PGP SIGNATURE-----
