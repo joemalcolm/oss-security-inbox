@@ -1,37 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/26/6
-Message-ID: <20130626183621.GD3638@redhat.com>
-Date: Wed, 26 Jun 2013 12:36:21 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/4
+Message-ID: <5208DDAC.7000404@redhat.com>
+Date: Mon, 12 Aug 2013 15:05:48 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: unauthorized host/service views displayed in servicegroup view
+Subject: X.509 name constraints and potential interpretation conflict
 Content-Type: text/plain; charset=utf-8
 
-I don't believe a CVE has been assigned to this issue yet.
+NSS CA roots are widely reused, but the implementation deviates from RFC 
+5280 in such a way that NSS can safely accept additional root 
+certificates as long as they have name constraints.  I think this is a 
+bug in RFC 5280, and the fix in NSS is sound, but it could still result 
+in surprising behavior if the root store is used unfiltered with TLS 
+implementations that lack this bug fix.
 
-It was reported that Nagios 3.4.4 at least, and possibly earlier
-versions, would allow users with access to Nagios to obtain full access
-to the servicegroup overview, even if they are not authorized to view
-all of the systems (not configured for this ability in the
-authorized_for_* configuration option).  This includes the servicegroup
-overview, summary, and grid.
+For reference, here is the RFC 5280 errata I submitted:
 
-Provided the user has access to view some services, they will be able to
-see all services (including those they should not see).  Note that the
-user in question must have access to some services and must have access
-to Nagios to begin with.
+--------------------------------------
+Type: Technical
+Reported by: Florian Weimer <fweimer@...hat.com>
 
-This has not yet been corrected upstream.
+Section: 4.2.1.10
 
-References:
-
-http://www.mail-archive.com/nagios-users@lists.sourceforge.net/msg39749.html
-http://tracker.nagios.org/view.php?id=456
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714171
-https://bugzilla.redhat.com/show_bug.cgi?id=978531
+Original Text
+-------------
+    DNS name restrictions are expressed as host.example.com.  Any DNS
+    name that can be constructed by simply adding zero or more labels to
+    the left-hand side of the name satisfies the name constraint.  For
+    example, www.host.example.com would satisfy the constraint but
+    host1.example.com would not.
 
 
-Thanks.
+Corrected Text
+--------------
+[Add this to the paragraph]
+
+    If an implementation extracts DNS names from the subject
+    distinguished name, DNS name restrictions MUST be applied
+    to these names as well.
+
+
+Notes
+-----
+When used with TLS and HTTP (according to RFC 2818), section 4.2.1.10, 
+Name Constraints, is technically a NOP that doesn't constraint the CA 
+that has this attribute because RFC 2818 mandates processing of the 
+common name attribute in the subject distinguished name. 
+Consequentially, the constraint can be bypassed by issuing a certificate 
+without a subject alternative name.  The fix is to apply the DNS name 
+restrictions to the relevant parts of the subject distinguished name, 
+too, as implemented here:
+
+https://bugzilla.mozilla.org/show_bug.cgi?id=394919
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Florian Weimer / Red Hat Product Security Team
