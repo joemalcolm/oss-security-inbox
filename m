@@ -1,39 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/08/8
-Message-id: <5FBFF79E-306B-43DA-8C77-36CB96942E26@me.com>
-Date: Sat, 08 Jun 2013 08:16:10 -0400
-From: larry Cashdollar <larry0@...com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/13/3
+Message-ID: <520A1BA8.30804@debian.org>
+Date: Tue, 13 Aug 2013 13:42:32 +0200
+From: Giuseppe Iuculano <iuculano@...ian.org>
+To: Salvatore Bonaccorso <carnil@...ian.org>
+CC: Vincent Danen <vdanen@...hat.com>,  Kurt Seifried <kseifried@...hat.com>, team@...urity.debian.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: SQL injection and shell escaping issues in Cacti < 0.8.8b
 Content-Type: text/plain; charset=utf-8
 
+I confirm this.
+
+Giuseppe.
 
 
-On Jun 8, 2013, at 7:56 AM, gremlin@...mlin.ru wrote:
-
-> On 08-Jun-2013 07:43:21 -0400, larry Cashdollar wrote:
+On 07/08/2013 19:33, Salvatore Bonaccorso wrote:
+>>> Could you wait a bit with assigning there CVEs? Giuseppe Iuculano from
+>>> > >the Debian Security Team should have already assigned two CVEs to them
+>>> > >(I'm putting him in the loop), but apparently upstream has not
+>>> > >referenced them in the changelog. AFAICS the CVE assigned where:
+>>> > >
+>>> > >CVE-2013-1434 -> cacti_snmp_sql_injection_CVE-2013-1434.patch
+>>> > >
+>>> > >CVE-2013-1435 -> cacti_snmp_escape_string_CVE-2013-1435.patch and
+>>> > >fix_quoting_in_rrd_command_CVE-2013-1435.patch
+>>> > >
+>>> > >I will search the mapping patchname -> svn commits and update you.
+>> >
+>> > Thanks for this, Salvatore.  I'll wait for that mapping before
+>> > referencing anything though.
+> Apologies for the off-list posting, but I wanted to avoid some
+> confusion! I have found the mapping which should be as follow:
 > 
->>>> According to the bug report details that's a race condition.
->>>> A malicious user is using a vulnerability in the way the
->>>> installation script handles changing file permissions to disclose
->>>> sensitive information.
->>> Yes. And, once again, that's a misconfiguration - the file should
->>> be created as 0600 root:root during installation and only after
->>> that chmod() and chown() may be applied.
->> I'd agree if this were a configuration file we were talking about,
->> but it's an installation script.
+> http://svn.cacti.net/viewvc?view=rev&revision=7392 -> cacti_snmp_escape_string_CVE-2013-1435.patch -> CVE-2013-1435
+> http://svn.cacti.net/viewvc?view=rev&revision=7393 -> fix_quoting_in_rrd_command_CVE-2013-1435.patch -> CVE-2013-1435
+> http://svn.cacti.net/viewvc?view=rev&revision=7394 -> cacti_snmp_sql_injection_CVE-2013-1434.patch -> CVE-2013-1434
 > 
-> So what? The installation script may contain the `umask 077` line,
-> can't it?
+> @Guiseppe, can you confirm?
 
-Yes, then their would be no bug to exploit.  My assertion is that we are changing an installation script, not a configuration file. I guess you could argue that the post install script is doing the configuration however.  I guess it will depend on if issues similar to this one have been assigned CVEs in the past.
 
-Cheers.
-Larry
 
-> 
-> -- 
-> Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-> GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-> GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+Download attachment "signature.asc" of type "application/pgp-signature" (260 bytes)
