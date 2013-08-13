@@ -1,53 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/4
-Message-ID: <3230301C09DEF9499B442BBE162C5E48253D0BD3@sestoex05.enea.se>
-Date: Mon, 1 Jul 2013 11:25:37 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Dejan Bucar <dejan.bucar@...a.com>
-Subject: Request for linux-distros list membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/13/1
+Message-ID: <52099BF4.1030705@redhat.com>
+Date: Tue, 13 Aug 2013 12:37:40 +1000
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: security@...hon.org, security@...y-lang.org, cve-assign@...re.org
+Subject: CVE Request -- Python SSL module does not handle certificates that contain hostnames with NULL bytes
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Good morning,
 
-My name is Sona Sarmadi and I am security response for Enea  Linux. I would like to request membership to the linux-distros mailing list representing Enea Linux.
-The information on linux-distros will be used to plan/prepare updates to our customers. 
+An issue similar to CVE-2013-4073[1] was found in Python:
 
-Please add Enea Linux information to:
-http://oss-security.openwall.org/wiki/vendors
+https://bugs.mageia.org/show_bug.cgi?id=10989
+http://bugs.python.org/issue18709
 
+Could a CVE for the Python instance of this flaw please be assigned (if 
+one has not already been assigned)?
 
-Best regard
-Sona
+Thanks.
 
-Sona Sarmadi
-Security officer
-Enea
-Jan Stenbecks torg 17,
-Box 1033, SE-164 21 Kista, Sweden
-Direct: +46 8 5071  4475
-Mobile: +46 70 971 4475
-sona.sarmadi@...a.com
-www.enea.com 
+[1] 
+<http://www.ruby-lang.org/en/news/2013/06/27/hostname-check-bypassing-vulnerability-in-openssl-client-cve-2013-4073/>
 
- 
+<https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-4073>
 
-This message, including attachments, is CONFIDENTIAL. It may also be privileged or otherwise protected by law. If you received this email by mistake please let us know by reply and then delete it from your system; you should not copy it or disclose its contents to anyone.
-
-
-
-Sona Sarmadi
-Software Engineer
-Enea
-Jan Stenbecks torg 17,
-Box 1033, SE-164 21 Kista, Sweden
-Direct: +46 8 5071  4475
-Mobile: +46 70 971 4475
-sona.sarmadi@...a.com
-www.enea.com 
-
-
-
-This message, including attachments, is CONFIDENTIAL. It may also be privileged or otherwise protected by law. If you received this email by mistake please let us know by reply and then delete it from your system; you should not copy it or disclose its contents to anyone.
-
-
+--
+Murray McAllister / Red Hat Security Response Team
