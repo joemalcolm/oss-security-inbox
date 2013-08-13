@@ -1,54 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/1
-Message-ID: <50F76D62.6080206@redhat.com>
-Date: Wed, 16 Jan 2013 20:17:54 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/13/5
+Message-ID: <20130813230854.27d82c9d@redhat.com>
+Date: Tue, 13 Aug 2013 23:08:54 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Salvatore Bonaccorso <carnil@...ian.org>
-Subject: Re: bcron: cron jobs get access to the temporary output files from all other jobs that are still running
+Cc: helmut@...divi.de
+Subject: Re: ISC DHCP client and unsolicited DHCP options
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sun, 28 Jul 2013 15:30:27 +0200 Helmut Grohne wrote:
 
-On 01/16/2013 01:42 PM, Salvatore Bonaccorso wrote:
-> Hi
+> At least on Debian, the default configuration requests the host-name
+> option. The dhclient-script then evaluates this option and thereby
+> enables a DHCP server to change the hostname if the current hostname
+> is "(none)", "localhost" or a previously sent hostname. Changing the
+> hostname can have undesired consequences such as breaking a running
+> X11 session (can be considered remote denial of service).
 > 
-> I haven't found if there was already a request for this.
-> 
-> In Debian Bugtracker it was closed [1] today. It is possible due to
-> a bug in bcron-exec that cron jobs get access to the temporary
-> output files from other jobs that are still running. This is also
-> mentioned in upstream's NEWS[2]. The commit to fix this on github
-> should be[3]. Even it looks bcron is not broadly used, could the
-> above get a CVE?
-> 
-> [1]: http://bugs.debian.org/686650 [2]:
-> http://untroubled.org/bcron/NEWS [3]:
-> https://github.com/bruceg/bcron/commit/7e3b8d7a82a6712f4607aae151a3ba8843dc6c86
->
->  Regards, Salvatore
+> That is why a number of people (including me) remove host-name from
+> the requested options. Now given the new findings, a DHCP server can
+> still change the hostname of a connecting client by first sending an
+> unsolicited host-name option with the current hostname and then
+> changing the hostname in a RENEW. Guessing the current hostname
+> should be easy in the presence of avahi or similar services.
 
-This is news to me. Please use CVE-2012-6110 for this issue.
+The dhclient-script in dhcp packages in recent Fedora and Red Hat
+Enterprise Linux versions allow administrator to define hook scripts
+which are sourced by the dhclient-script.  Those hooks can unset
+environment variables set by dhclient before they are processed by the
+dhclient-script.  Not sure if other distros may want to add similar
+mechanism:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+http://pkgs.fedoraproject.org/cgit/dhcp.git/plain/dhclient-script
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+But as mentioned before, NetworkManager does its own processing and
+does not use the standard dhclient-script.
 
-iQIcBAEBAgAGBQJQ921iAAoJEBYNRVNeJnmTtJAQAJtLMNijkSacXS9sBLZkl4ZX
-tNKQCvxGl0irz6hxv57yXqRYu+Xtv5USJ4Jdnwcq6ng0MJQG3I1p2ArNS+vElsx5
-UyqTfqpVaLgaSWthnUSM6ictetTPS+onsHI/UJNmUXFvqktiAF+Ff2ca8fzGgDeM
-27lwJALQfcPZCjeXJU1xRaWbBsV415uv0eQFnHPPYNaImLeVHTw5JU64ub+K7NuZ
-4erMqEhu92mB87qo/FzAO3++iDDN5uujxhKOEqW8Hk5cF3K83ySwYr8dzs4DFFwO
-aocWUVcdJ9JJfDGt4ACtUeQH7mSXCcz2E9XdKhTaA8k6KEh1P4h1ehWEwVyZvrp7
-wc983Iiw2Pvrxmzy2FepaxBdBTroqHHPW//Ib/tQ60b6Dwaxoiqj1isyTcig9cw2
-9thMhNv6fzJD1dIW37UjUM3DbTPXDX8JDRGA/zW0BlZGjhwAKg5TV1+rvOuk9LlO
-hmyptiAyUtPPBT8O0iKd/UHpTPtsN/Smf5wQQFlVvqV8zVqz1l2quycqIenaQ8wK
-Pel/LBGhvWMqDAX8kqNZWritXn2U0H09gWLzl1QZweYp2cdywXB5Zcna+jLxYtmB
-2ehOPISfTd16txgzJ7mEe3yXMOfcuYCFRFYvUcepVhGiPOESziXulg5evU+1miUD
-1zuBsv2npGIJDwYJi6lM
-=uUL2
------END PGP SIGNATURE-----
+-- 
+Tomas Hoger / Red Hat Security Response Team
