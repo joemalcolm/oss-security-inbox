@@ -1,99 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/19
-Message-ID: <20130215235343.GG3015@redhat.com>
-Date: Fri, 15 Feb 2013 16:53:43 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: "Christey, Steven M." <coley@...re.org>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: python-pyrad insecurities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/13/2
+Message-ID: <5209A032.5040602@redhat.com>
+Date: Mon, 12 Aug 2013 20:55:46 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Murray McAllister <mmcallis@...hat.com>, security@...hon.org, security@...y-lang.org, cve-assign@...re.org
+Subject: Re: CVE Request -- Python SSL module does not handle certificates that contain hostnames with NULL bytes
 Content-Type: text/plain; charset=utf-8
 
-* [2013-02-15 19:51:07 +0000] Christey, Steven M. wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->These two issues were fixed in the same diff and reflect poor randomness - should we have only assigned one CVE?  (If the RADIUS feature was introduced in different versions than the authenticator-password feature, then maybe the SPLIT is acceptable.)
+On 08/12/2013 08:37 PM, Murray McAllister wrote:
+> Good morning,
+> 
+> An issue similar to CVE-2013-4073[1] was found in Python:
+> 
+> https://bugs.mageia.org/show_bug.cgi?id=10989 
+> http://bugs.python.org/issue18709
+> 
+> Could a CVE for the Python instance of this flaw please be assigned
+> (if one has not already been assigned)?
+> 
+> Thanks.
+> 
+> [1] 
+> <http://www.ruby-lang.org/en/news/2013/06/27/hostname-check-bypassing-vulnerability-in-openssl-client-cve-2013-4073/>
+>
+> 
+> 
+> <https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-4073>
+> 
+> -- Murray McAllister / Red Hat Security Response Team
 
-I'm not sure.  I didn't go digging to see when they were introduced --
-both features may have been introduced at the same time (or not).
+Yup just to be clear: CVE-2013-4073 is for Ruby. Python needs a new
+CVE (different code base and all that).
 
-Ok, so doing a quick peek at the first full blob of it in git:
+Please use CVE-2013-4238 for this issue in Python.
 
-https://github.com/wichert/pyrad/blob/c206b1dfc362db8b0ef9c256814377bde8ed91cf/pyrad/packet.py
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-The use of random.randrange() is in both the CreateAuthenticator() and
-CreateID() functions, so I would bet that they've been like that the
-whole time (that blob is from Sept 2007).  So I guess one CVE is
-probably sufficient.
-
-I only noted them as two issues as we had two separate bug reports about
-them.
-
->-----Original Message-----
->From: Kurt Seifried [mailto:kseifried@...hat.com]
->Sent: Friday, February 15, 2013 2:37 PM
->To: oss-security@...ts.openwall.com
->Cc: Vincent Danen
->Subject: Re: [oss-security] CVE request: python-pyrad insecurities
->
->-----BEGIN PGP SIGNED MESSAGE-----
->Hash: SHA1
->
->On 02/15/2013 09:14 AM, Vincent Danen wrote:
->> Could a CVE be assigned to the following two issues please?
->>
->> #1: https://bugzilla.redhat.com/show_bug.cgi?id=911682
->>
->> Nathaniel McCallum of Red Hat reported that pyrad was using
->> Python's random module in a number of places to generate
->> pseudo-random data.  In the case of the authenticator data, it was
->> being used to secure a password sent over the wire.  Because
->> Python's random module is not really suited for this purpose (not
->> random enough), it could lead to password hashing that may be
->> predictable.
->
->Please use CVE-2013-0294 for this issue.
->
->
->> #2: https://bugzilla.redhat.com/show_bug.cgi?id=911685
->>
->> Nathaniel McCallum of Red Hat reported that pyrad was creating
->> serialized RADIUS packet IDs in the CreateID() function in
->> packet.py. This is not suitable for RADIUS as the RFC specifies
->> that the ID must not be predictable.  As a result, the ID of the
->> next packet sent can be spoofed.
->
->Please use CVE-2013-0295 for this issue.
->
->>
->> These have been corrected in upstream's forthcoming version 2.1
->> via:
->>
->> https://github.com/wichert/pyrad/commit/38f74b36814ca5b1a27d9898141126af4953bee5
->>
->>
->>
->
->
->- --
->Kurt Seifried Red Hat Security Response Team (SRT)
->PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
->-----BEGIN PGP SIGNATURE-----
->Version: GnuPG v1.4.13 (GNU/Linux)
->
->iQIcBAEBAgAGBQJRHo5KAAoJEBYNRVNeJnmT32YP/RUrucNudALgorUcvGb12Btf
->Xtp5JPu+nYZDWq+i1au4ZMc1TZv12LKSErrvxaQZT04f6K6NvD74drqtHXf1a5ck
->NWAsk/RIRFrNmSvwkmL02352LWzKlPLfM7ZsiJgU73XEPmkLYdVCTopgGzKYaWYe
->vWKd7C3l1a/2b2I2C+O2OT2jyi89K3LQSzdZVSd7Mf81gDtDnkyQ8RT5QpcCPVRa
->XbfKdfzVdLNEw26n5k8/alpjvBARyv4KA7ZA4qQzaI9P32Nw1DFE/8zBbrHkrhj5
->V83HyOtQyqrYryreNahGkBtLc1LQZ8b81pOvNaE2FRVgA7M5VA4JH4OaL8NCornJ
->ozicUuB/U32D24Ox7UqR+nkScPCBAhj/iVz+lkKac3WHLNGJGSa25WwWjoaWPrip
->YaFZHzyijIAdYsr7tHoxTncKNhqtCClyiX6RZdPKKAfDGFV4hPfktwOY8Di6u+hM
->B8ANPe+nDi7kB4BQcm5Qj7RJ7KY0eixxYgv4ynhvvmdDlpFJwGh8rIilmCCGdVMa
->GDYjVzgR/SXTFOYWZ9pWc90Ixa3wNtqiCHNwUqKmKldHZvyph0XS4K0HM/o0IQny
->0aHSg04nSM9jlUOczlCwShhTrRHmTkkuRkXsVlv0ibtORTwcotD/9xghkLK9ktHb
->3HiFhtqk0CvJBtNMFcRG
->=z9JH
->-----END PGP SIGNATURE-----
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+iQIcBAEBAgAGBQJSCaAxAAoJEBYNRVNeJnmTqNYP/10PaxPrr6YJDT0W+Dwmjjp3
+yHiY0kJ1pjHgIiGKEqRkBv5+05c9cn9LKES1Kj+CePFiiq1VEO+28z/y6PhQBg8b
+0Ifad4ph5+SAhYthj9M7JzwXMSVmuCXNtGHQRkgSD72Xkn4Rgqj6vYaixCdbkSpO
+qvMkKhBDcde57rTrdnifs3w4EUKWi2eVkRMuN2twPQLOx6MiB/EKKFLqxR69LtZo
+qOd40LBqoEWtR3/J7C3oZkqYK26lAn7mnaTY67mPIuG78SGU9aFxe/AYwQ4pmb2Q
+k3fT73xNyoUyajYq+QfrqwNHkwk1sGtev6M6+ltgovN0ymZmUdIsYgBDEPJqaUSk
+D1ut2LOndsYomlCfEhvdOWWunG6V63qTsMdOy1z9fBh2evggNKedPpCNIWb6IG6t
+Lq3P67pzg+C2Auiv/m6hw6Q/ptUPt4N0/RgKReFtUqqEAjznUAarl4ldP1egL/W7
+4yFsIXqkTIcVExLcUYXlh5y1vfIUgl21xOp78u5Qtdhq1Mj7kobp3/uuFbbxFdtM
+tCgAnwRayVTwKQY1MQX1R3qRAArLvzAy0jI/bAfls11oRFJ9B2ZCoq31kUlUnEYj
+Cwvg3nrpl/Qyn1gpgaRNQT/RnSIi2ygKmPLd3nbXvpdlV9jQwqECSZk/mtBlLbxB
+oH8DuHHxhUqapitBg6LL
+=V3F8
+-----END PGP SIGNATURE-----
