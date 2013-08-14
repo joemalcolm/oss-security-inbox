@@ -1,89 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/08/4
-Message-Id: <E1Veoo5-0001qU-6H@xenbits.xen.org>
-Date: Fri, 08 Nov 2013 16:21:13 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 75 - Host crash due to guest VMX instruction execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/12
+Message-ID: <CA+1kKf7twdmx_w+-WDpbUqAVgth1YZG2x0xpf+0O6XgVp96KTg@mail.gmail.com>
+Date: Wed, 14 Aug 2013 22:02:56 +0100
+From: some one <s3cret.squirell@...il.com>
+To: Jakob Lell <jakob@...oblell.com>
+Cc: full-disclosure@...ts.grok.org.uk, netdev@...r.kernel.org,  oss-security@...ts.openwall.com
+Subject: Re: [Full-disclosure] Quick Blind TCP Connection Spoofing with SYN Cookies
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Good write up that Jakob and an interesting read.
+Thanks ,)
 
-                  Xen Security Advisory XSA-75
-
-           Host crash due to guest VMX instruction execution
-
-ISSUE DESCRIPTION
-=================
-
-Permission checks on the emulation paths (intended for guests using
-nested virtualization) for VMLAUNCH and VMRESUME were deferred too
-much.  The hypervisor would try to use internal state which is not set
-up unless nested virtualization is actually enabled for a guest.
-
-IMPACT
-======
-
-A malicious or misbehaved HVM guest, including malicious or misbehaved user
-mode code run in the guest, might be able to crash the host.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.2.x and later are vulnerable.
-Xen 4.1.x and earlier are not vulnerable.
-
-Only HVM guests run on VMX capable (e.g. Intel) hardware can take
-advantage of this vulnerability.
-
-MITIGATION
-==========
-
-Running only PV guests, or running HVM guests on SVM capable
-(e.g. AMD) hardware will avoid this issue.
-
-Enabling nested virtualization for a HVM guest running on VMX capable
-hardware would also allow avoiding the issue.  However this
-functionality is still considered experimental, and is not covered by
-security support from the Xen Project security team.  This approach is
-therefore not recommended for use in production.
-
-CREDITS
-=======
-
-This issue was discovered by Jeff Zimmerman.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This issue was disclosed publicly on the xen-devel mailing list.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa75-4.3-unstable.patch    Xen 4.3.x, xen-unstable
-xsa75-4.2.patch             Xen 4.2.x
-
-$ sha256sum xsa75*.patch
-0b2da4ede6507713c75e313ba468b1fd7110e5696974ab72e2135f41ee393a8b  xsa75-4.2.patch
-91936421279fd2fa5321d9ed5a2b71fe76bc0e1348e67126e8b9cde0cb1d32b2  xsa75-4.3-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJSfQ8xAAoJEIP+FMlX6CvZ8JQIAMc9IH79JeoZPAe/Fvz8TrdF
-FM7FkB/+sob4ybEFXnaSsK/7v7+A1e2qti/UVZfgcKEa8LG7aAIXFqsMXqErvME2
-7D+r0Kt7QfvK5BvOygACCMsNV5muUTndVO8NUtHm8wDJk6yuSMWVnA/c3p+OSkH0
-h63cfkrf9iYSYrPdCt4iO+/JKDVZl3bQAmHOFHvGTqsN7FMgOGexn+9RlNwWNmlU
-jvMxPLmwaerwd85fqLwEjajWT1TJlqro5xx4darKp8pokY+DVEtV4MGHXgllHVym
-t7g56Ph7YXPqTIJV4+PmrNQNwFPvsgBeFVyno3oa95IT4F55Fja0LiJUxREDHhU=
-=AbJ0
------END PGP SIGNATURE-----
-
-Download attachment "xsa75-4.2.patch" of type "application/octet-stream" (1586 bytes)
-
-Download attachment "xsa75-4.3-unstable.patch" of type "application/octet-stream" (1747 bytes)
