@@ -1,37 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/08/9
-Message-ID: <51B369BC.2050605@fifthhorseman.net>
-Date: Sat, 08 Jun 2013 13:28:28 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/13
+Message-ID: <alpine.DEB.2.10.1308141725010.17107@vincent-weaver-1.um.maine.edu>
+Date: Wed, 14 Aug 2013 17:37:32 -0400 (EDT)
+From: Vince Weaver <vincent.weaver@...ne.edu>
 To: oss-security@...ts.openwall.com
-CC: gremlin@...mlin.ru
-Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
+Subject: CVE Request: linux-kernel priviledge escalation on ARM/perf
 Content-Type: text/plain; charset=utf-8
 
-On 06/08/2013 07:00 AM, gremlin@...mlin.ru wrote:
+Hello
 
-> That's not a security issue, but a misconfiguration
+I'm not really a security researcher, so hopefully I'm reporting this in 
+the proper way.
 
-I consider this a security bug in the debian package's maintainer
-scripts: it is a race condition that leaks confidential information to a
-user who "wins" the race.  It is *not* a misconfiguration; it is a bug
-with security implications.
+I have a fuzzer tool for the perf_event_open() syscall that found
+a few oopses on the ARM platform, which I reported to lkml a week ago.
 
-> (alas, very common for Deb*an packages)
+One of the oopses can lead to a local privilege escalation on ARM-perf.
+This fix can be found here:
+  http://www.arm.linux.org.uk/developer/patches/viewpatch.php?id=7809/1
+The discussion thread is:
+  https://lkml.org/lkml/2013/8/7/259 
 
-If you know of more bugs like this, please report them with an e-mail to
-submit@...s.debian.org with the first line "Package: FOO" (where "FOO"
-is replaced by the name of the buggy package).  Thanks!
+The hope is this appears in 3.11-rc6 but my attempts to get the people at 
+security@...r.kernel.org to take this seriously didn't really go very 
+well.
 
-> so at least I doubt that deserves a CVE.
+I do have code that will exploit the kernel and give me a root shell
+on an ARM Pandaboard machine running 3.11-rc4.  The exploit is a bit 
+fragile though:
+  + Only works on ARM
+  + Elevates from normal user to root, no special config required.
+    perf_event syscalls run as regular users, not sure why some
+    think you need root.
+  + It does need a user-mappable address at an exact byte offset
+    from a pmu_struct in memory.  This limits things somewhat; in
+    my testing 3.11-rc kernels have INT_MIN at exactly the right place 
+    but the exploit doesn't work on a 3.7.6 kernel,
+    it just oopses or crashes the machine.
 
-I respectfully disagree; if an upstream package leaks confidential
-information to an adversary who "wins" a race, that is a bug which
-deserves a CVE.  Debian packaging bugs should be held to the same standard.
+Thanks,
 
-Regards,
-
-	--dkg (i am a member of the debian project)
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+Vince
