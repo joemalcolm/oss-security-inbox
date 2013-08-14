@@ -1,71 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/18/1
-Message-ID: <51219868.2000406@redhat.com>
-Date: Sun, 17 Feb 2013 19:56:40 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/9
+Message-ID: <520BEFA0.4040209@redhat.com>
+Date: Wed, 14 Aug 2013 14:59:12 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, kk@...suke.org
-Subject: Jenkins CVE request for Jenkins Security Advisory 2013-02-16
+To: Open Source Security c <oss-security@...ts.openwall.com>
+Subject: rubygems insecure download (and other problems)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-I'm trying to sort out this security advisory so CVE #'s can be
-assigned to it, can you (kk@) please comment on this? thanks.
+I don't think this is CVE worthy, but it is worth fixing and not
+putting everyone at such risk:
 
-https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2013-02-16
+https://bugzilla.novell.com/show_bug.cgi?id=834785
+https://bugzilla.redhat.com/show_bug.cgi?id=997179
 
-==============
-One of the vulnerabilities allows cross-site request forgery (CSRF)
-attacks on Jenkins master, which causes an user to make unwanted
-actions on Jenkins.
+Problem #1:
+install /etc/gemrc to install gems via https rather than http
 
-Another vulnerability enables cross-site scripting (XSS) attacks,
-which has the similar consequence.
+everyone should be enabling HTTPS where possible, intercepting and
+modifying HTTP is trivial.
 
-Another vulnerability allowed an attacker to bypass the CSRF
-protection mechanism in place, thereby mounting more CSRF attackes.
-These attacks allow an attacker without direct access to Jenkins to
-mount an attack.
+Problem #2:
+it redirects to  production.cf.rubygems.org which is on cloudfront so
+has certificate mismatch, so either users have to accept insecurity,
+or... well there is no second choice =(.
 
-In the fourth vulnerability, a malicious user of Jenkins can trick
-Jenkins into building jobs that he does not have direct access to.
-
-And lastly, a vulnerability allows a malicious user of Jenkins to
-mount a denial of service attack by feeding a carefully crafted
-payload to Jenkins.
-================
-
-So it sounds like 2 CSRF, 1 XSS, 1 "can trick Jenkins into building
-jobs that he does not have direct access to" (permissions bypass?) and
-a denial of service.
-
-The 2 CSRF ones, were they discovered by separate researchers or the
-same person? Can you provide the code patches that fix them so I can
-see more details? Thanks.
-
-Also if you want to get CVE #'s for Jenkins advisories please do not
-hesitate to contact me/secalert@...hat.com, this will make tracking
-these issues a lot easier!
+https://www.ssllabs.com/ssltest/analyze.html?d=production.cf.rubygems.org
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRIZhoAAoJEBYNRVNeJnmTlrIP/23i8gBuaR+Aaswxgj90+Goa
-slw1CGNbgt0BT6ABqUrpKgidkB/g20xa0dKL6X0gdu5qdDxTJ7aJ3dkhAlSQeD9w
-zNItfmU37NyDaZJ8PW+B05kNkijLMPnsJM7emKC6WsLO3K3iHQgYqS1t7/Oz33gA
-f3mnfeRYsH7s1nuW44710JhCk0BIW5cmado9CM3xwioXahDyWKc5MPs9/7FyNSVj
-LzjM2Z8Inwu5bk1HoS9E7dCvBTq9oCre3KiLfEWOrQSLXu9uE/yVVmcTzfMKP+QT
-Jw1cRUK2SjpeC/yu+A/0ZaE5JgT7xy4QguprHwjaYHwklAq+TTE6MuJa/pgd6urc
-0gbnPIWMldNndvS+GJFshuoTO7T4/A7dfbuzGxdECfFaYUzNEXx4UxL9VPzxYXI0
-98Bl1agTc/I2BMkg8K77jRfAhVhd9nPG8wdXxu3wG8oQm5bp9tUyDUu6Hsgs56AY
-7PoDxlzkZtD5XyoxEyktW6mz/rz3U0lZvN1TuXy5bxNRAxjXMH7TyKZ1bbodykae
-ZWM7ZJHo5H/F96jKtq/SrF8d6Zd+rQ98Lam2urH6C2z6YCZgt5MHuNAF8li5mjEZ
-sw4adnNKKc635j8pZVEf9gjlBNuXB5nKg5XIWHfyHpXY4TnicUMGAsFVBafcFm1Z
-ZoPZscPPjk6ygGSnyPga
-=wF04
+iQIcBAEBAgAGBQJSC++gAAoJEBYNRVNeJnmTb44P/243B7aF7hZCx23I3WnIP/in
+hQElGjUzTvzJIbPo4krhupYnZMxFNRyHC+YcrZeKeZvgwF0px2B/iK4T/4rB1MXU
+Hii6cgXWS9t9ULgPQtEYcvGIweV9oqU11W2ESCDqkddmzSclVOWTCvdNnUkFO+sd
+v4U5KsVt+1kNgeVcE17gy5vBmaiuKquvSM2xpZJAXx6ryTquTsq7IUfSG/ilOwY9
+CeCUBJAQyUfKomcGOuDUiY0Ta7deZP3/QjN0N2kQSHG78P21Eary4TqKLi9N10ii
+PQ+3G61h8FLBgyrT9THSWWEJHnQhJBx2/dg4WNmUuvwNIvI5un0Bwpr236/87Nkg
+nTnhUOxiMrbHS1/yJ6MJe+SnULDGw8o66YJNYeSTsoyN/HSPMXRiqJuhJAMV1mkf
+y8sCc2SQednAOoRkPHamEU1zfMG5e+lM5NDJBVrGSpT2Q/2M9dcD11/mXSaYY3qO
+kAOaFzwYt3/RNoXzgWfuP84brMDz66scWmKXUMuntMnuwcf1/2tGqaaZ4b16H6u1
+kPTrreciqYr/tGgwr0rmTCw3Ejmi18CMWfTEOipdtwQkTuY/4gSggBspLBC/Q2tJ
+hUqdMvz343MvnfLtQnFnP19FyQPQMpn4CNuFs9oOVNPJ6nzrnPc1c+kQrSRX/OYe
+NEs9EM69KFXdxcXcg6c9
+=PZMb
 -----END PGP SIGNATURE-----
