@@ -1,78 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/09/11
-Message-ID: <5205455A.1090205@redhat.com>
-Date: Fri, 09 Aug 2013 13:39:06 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: William Pitcock <nenolod@...eferenced.org>
-Subject: Re: CVE request: nullmailer world readable /etc/nullmailer/remotes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/11
+Message-Id: <D9FF507F-08CC-4A34-901F-7A6A5595B4D8@stufft.io>
+Date: Wed, 14 Aug 2013 17:02:36 -0400
+From: Donald Stufft <donald@...fft.io>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: rubygems insecure download (and other problems)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 08/09/2013 12:42 PM, William Pitcock wrote:
-> Hello,
+On Aug 14, 2013, at 4:59 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+
+> Signed PGP part
+> I don't think this is CVE worthy, but it is worth fixing and not
+> putting everyone at such risk:
 > 
-> /etc/nullmailer/remotes may contain SMTP authentication information
-> as arguments provided to the requested nullmailer sending module,
-> e.g.:
+> https://bugzilla.novell.com/show_bug.cgi?id=834785
+> https://bugzilla.redhat.com/show_bug.cgi?id=997179
 > 
-> smtp.gmail.com smtp --username=foo --password=bar --starttls
-> --port=587
+> Problem #1:
+> install /etc/gemrc to install gems via https rather than http
 > 
-> William
+> everyone should be enabling HTTPS where possible, intercepting and
+> modifying HTTP is trivial.
+> 
+> Problem #2:
+> it redirects to  production.cf.rubygems.org which is on cloudfront so
+> has certificate mismatch, so either users have to accept insecurity,
+> or... well there is no second choice =(.
+> 
+> https://www.ssllabs.com/ssltest/analyze.html?d=production.cf.rubygems.org
+> 
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
 
-Please use CVE-2013-4223 for this issue.
+pip has a CVE for downloading via HTTP, does switching the
+gem to HTTPS actually make gem verify it?
 
-> On Fri, Aug 9, 2013 at 12:16 PM, Christey, Steven M.
-> <coley@...re.org> wrote:
->> Agostino,
->> 
->> Out of curiosity, what types of sensitive information are
->> contained in this file that cause world-readable permissions to
->> pose a vulnerability?
->> 
->> - Steve
->> 
->> 
->>> -----Original Message----- From: Agostino Sarubbo
->>> [mailto:ago@...too.org] Sent: Friday, August 09, 2013 1:15 PM 
->>> To: oss-security@...ts.openwall.com Subject: [oss-security] CVE
->>> request: nullmailer world readable /etc/nullmailer/remotes
->>> 
->>> Hello,
->>> 
->>> On Gentoo, the file /etc/nullmailer/remotes is installed with
->>> wrong permissions:
->>> 
->>> ~ # ls -la /etc/nullmailer/remotes -rw-r--r-- 1 root root 971
->>> Aug  9 18:58 /etc/nullmailer/remotes
->>> 
->>> Nullmailer-1.11-r2 contains the fix, all prior versions are
->>> affected.
->>> 
->>> Please assign a CVE. -- Agostino Sarubbo Gentoo Linux
->>> Developer
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1629
+
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSBUVaAAoJEBYNRVNeJnmTnwEP/A5+fNAe5nZqLFSlGcmWHB0Q
-u2ia91QQn0F7wh7+ibriXHCeCXWV6G+JyAlJuZzitFaq4e6nCevoZYmTpvlE8cmc
-qL5LigFUf16el8+t1r7YRZByed8yrO+HKMMOtIUpB4GwFcaK8EMzUeOMXMqyCtRI
-FThjMI7jeRwUmNDLLow+omKjVlK4+DhYQu/B3GJBWxhAXPfy2fx24jm4pbs2yESj
-BvlElev2mYD9AFTbNsz4E8zv1wngsTPi7ymAwzlfHniMqNlKjKzxr736xIeDk435
-Tm9k8OjHb+exbInK+vrSfedAi2BwSHU+wQH6j2fAPP26PQpXqO8eST0JIxf7lnvX
-UnWbNAEK5kvo9/SgAEzCI95LXSxScojph6RkbSSc5s0jJHECoXA0YeZE/jUHIiju
-Ko4eaC3Wt2nDrWd8cjV7eMuR6RQ11LM0yIHI7M/5PN3vxnsSNwR1AhLbLlV25beF
-8qA1Edhkxvg7u5JvuxGhUVonq7cZ0SCxX1F6jd5sOEnZ3UoPP7UCT2L+I7U/6nQg
-Lhl4TogFPGMr1PGwU/MG7Cj5t6SKqB2yPe5YiZwv7bYdtziGrRhe100qYmQxNAut
-2cSqvoxFQ5lVqExv/OKfbYNQ1CQcVqqXFJMz87zD3pPgHk+rLr3Q0hKL8a+q9GzY
-6mHNVpTzLMvLUM75SH8L
-=A9Lm
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
