@@ -1,52 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/4
-Message-ID: <5178A7A9.3060500@redhat.com>
-Date: Wed, 24 Apr 2013 21:48:57 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, donncha@...oimh.ie, security@...dpress.org
-Subject: WP-Super-Cache 1.3.1 Remote Code Exec - properly fixed?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/6
+Message-Id: <31370FCF-2829-4A55-82C1-7531C4761C6A@iki.fi>
+Date: Wed, 14 Aug 2013 18:40:38 +0300
+From: Timo Sirainen <tss@....fi>
+To: Raphael Geissert <geissert@...ian.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Possible CVE request: dovecot crash when disconnecting during pop3 LIST
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 14.8.2013, at 18.30, Raphael Geissert <geissert@...ian.org> wrote:
 
-So it turns out the attempted fix for CVE-2013-2009 was incomplete. To
-quote reddit:
-
-"Erm, you forgot about escaping markdown metachars. Here, the fixed
-version, edit it in: \*\^_\^\*"
-
-http://www.reddit.com/r/netsec/comments/1czzyx/update_wp_super_cache_and_w3tc_immediately_remote/c9lvxn8
-
-And to quote the WP-Super-Cache 1.3.2 ChangeLog:
-
-+= 1.3.2 =
+> Dovecot's 2.2.5 release notes mention a fix for a client-triggered
+> assert when disconnecting during a pop3 LIST[1]. Without more details,
+> I can't tell if a CVE id should be assigned. Timo, could you please
+> shed some more light, or provide a pointer to more details?
 
 
-+* Any mfunc/mclude/dynamic-cached-content tags in comments are now
-removed.
+It doesn't deserve a CVE, there have been a lot of similar bugs in Dovecot and I don't think any of them have gotten a CVE. All post-login crashes affect only the one IMAP/POP3 connection that caused the crash itself, nobody else. (Unless Dovecot was configured in a non-recommended way to handle multiple clients per process, but just about nobody does that since it has other problems as well.) In this specific bug the POP3 client had already disconnected so the user isn't really DoSing himself either. So the only problem it caused was that Dovecot logged an assert error and maybe wrote a core dump.
 
-So please use CVE-2013-2011 for this issue.
-
-NOTE: this issue exists because of an incomplete fix for CVE-2013-2009.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJReKepAAoJEBYNRVNeJnmTujUQANF2fv8z1ewjFXCHDkippSn1
-SYpl4pXTWuL5CL/RIL6zbIlhMx6KJMTkC8vJKFKA0OZ7MLn2nJyBvg1DqXUVcI4d
-XvyPQHe53bqjlA6XMD2ldvN4Va3rYAmPQLOlLFJq2tY4VVaa2jW+iEpoTEdXDfwC
-XtkluA33f8vVJE97uwAgMWbh/TQ8dBxESPUEgxgusuQAGNWa5g1T/2ydHYjElb4X
-YH0yIaMh24Ygl9R5UQ8Fs6U5wttHKLYl1bkKCg1RpRgqiQwRc7Zu15hvIHprtOeO
-syKp+R0Xaubv82hZKvMs6SphhNL5u8EOkTVh5iov5BJG4oGj2ZmuaUYXcvn/FTS8
-pIhzEKr1nnmQ56xxrMa91fQdbprEb7JmPtSdl4lyTUZOFn+iLVbP+6mmVZW/lodT
-zOWeiy1lgx+dVBDijvYpaYh7iZuuK+MmtWMkPio3KPQtKnmSRpqpSFxTIdTadNj2
-CB5G0Oy0UT68n7eDrWWYZZR39pCbfwD6WC31MD9QVINHyIqXlBPPlcOKeeDjbGRZ
-OBjR91PHbv/DjVdUQjApgLjP46/9/YfnnVobO8IhYIttauxkMitVcmFhbdtAMYiU
-xKU47/aoBH8oXAzWiGMLLCAgPMNhVgTBFvUwzqmTDdbgZ6waLr2n9fr2qw333CXN
-H5gUmctO2sllcgD1OYb6
-=I8Sy
------END PGP SIGNATURE-----
