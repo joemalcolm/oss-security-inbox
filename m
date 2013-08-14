@@ -1,77 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/1
-Message-ID: <5255FA86.9020801@redhat.com>
-Date: Wed, 09 Oct 2013 18:53:26 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/5
+Message-ID: <CAA7hUgEK9nkbHbeWD9QEGp+kB3uANojwvnSv=WN=FaUZo36mbA@mail.gmail.com>
+Date: Wed, 14 Aug 2013 17:30:44 +0200
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Rich Felker <dalias@...ifal.cx>
-Subject: Re: Source of bad password hashing practices? MySQL manual...
+Cc: Timo Sirainen <tss@....fi>
+Subject: Possible CVE request: dovecot crash when disconnecting during pop3 LIST
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 10/09/2013 03:16 PM, Chris Palmer wrote:
-> There is more bad advice on that page:
-> 
-> """ ...Even passwords like“xfish98” are very bad. Much better is
-> “duag98” which contains the same word “fish” but typed one key to
-> the left on a standard QWERTY keyboard. ... """
-> 
-> And then a rather wacky assertion:
-> 
-> """Invest in a firewall. This protects you from at least 50% of
-> all types of exploits in any software. Put MySQL behind the
-> firewall or in a demilitarized zone (DMZ)."""
-> 
-> Ideally, someone (Seth Arnold started; want to finish?) should
-> rewrite all the bad stuff on that page, and send it to MySQL's
-> security contact as a patch. I'd remove the password creation
-> advice completely (other sources do a better job), and change the
-> firewall thing to just say something along the lines of, "Avoid
-> exposing MySQL to the internet... if you must, require
-> authentication... if you must, use TLS or an SSH tunnel... If you
-> use TLS, make sure the client correctly authenticates your server,
-> such as by checking for a specific end-entity certificate/key or a
-> specific issuer certificate/key...".
-> 
-> Part of the rewrite should be some advice along the lines of,
-> "MySQL offers a delightful built-in function you can use for
-> storing passwords, SCRYPT(). Prefer SCRYPT to other mechanisms like
-> MD5(), ENCRYPT(), or ... Please note that the ENCRYPT() function is
-> not safe and has been deprecated as of... To verify passwords,
-> check that SCRYPT(...) = scrypted_password in your WHERE clause...
-> Do not log plaintext passwords..." And then give them a patch to
-> implement SCRYPT and to log a deprecation warning when ENCRYPT is
-> used.
-> 
-> Easier said than done, of course; but I wanted to make the point
-> that Rich was right to raise this issue here (or, at least,
-> somewhere). Does anyone know the right MySQL security contact? It
-> isn't immediately obvious from a few web searches, but maybe 
-> secalert_us@...cle.com is right? Making that clear, and maybe 
-> publishing a PGP key, is another thing they could do...
-> 
+Dovecot's 2.2.5 release notes mention a fix for a client-triggered
+assert when disconnecting during a pop3 LIST[1]. Without more details,
+I can't tell if a CVE id should be assigned. Timo, could you please
+shed some more light, or provide a pointer to more details?
 
-One note, has anyone checked the MariaDB documentation, Percona and so on?
+Thanks in advance.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+[1]http://www.dovecot.org/list/dovecot-news/2013-August/000261.html
 
-iQIcBAEBAgAGBQJSVfqFAAoJEBYNRVNeJnmT2MIQAK6yvnjpE0cLdNIUxtQykrcT
-fLTmwRnljRaE5xSkui8Yn6qM6ycwL1rpqTK4lLrTpN2yf/jGyjMCj3G3Cm8TQOFJ
-rRb0wieIdTj9ZWWFTcnrX/wHJHp70tgBzD+TBun3paDT8DKP/BBuqbnWUJmFdKZI
-2eeSpnprkBhkEWfJV9zWRfxBLbmqU7n6bKMf8xamejSs7N4vXNrFBQiXpXFOro/x
-L9xJXt8uqxU87DVLv4COVRuh3Q+WmVeo3avAdmVO6ShjqCpCb8YqDXaSt+Kx9nPd
-QpSyLMNko7/QMol4++6zvsob48sZcYIE5BNvBuTdkwvmwZjI5Q4mvd64LkFof2ko
-2R5pmHwg7qHRa1THCacnokOs5GrQm7KDFSg4Lugibs4hDNbbk54tw8vo96GSGNqF
-7GfL7WdW8gsiKII4TVBdcAySbSfzt9ro7iVtiHnagVm9eYUjDdg13hU/mkjATjgM
-SBJv0RdMVeTOlgxoKUk6gfRDs5aYbNHABMMLsL2Cj7a2lqMhzw2dyCJBkKNvzYBB
-nBPxHMtZ9tzGexFCgRWuXtGxhu+G2dOrurgOCoQqY5Y26gGcWcWJ4t2oLx+f1k1/
-wq1Y8Jav6h754CUMgMWrWBXyaDzctgt5mbVg0Cyv0FeY88NtP9RZNFuSxLrGxlJl
-q86ofUJSABD0Mkh1lcve
-=n+C4
------END PGP SIGNATURE-----
+Regards,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
