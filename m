@@ -1,37 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/20/5
-Message-Id: <201305201926.r4KJQXv7029669@linus.mitre.org>
-Date: Mon, 20 May 2013 15:26:33 -0400 (EDT)
-From: cve-assign@...re.org
-To: jlieskov@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Wireshark: Upstream v1.8.7, v1.6.15 fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/1
+Message-ID: <20130814053100.GA11543@inutil.org>
+Date: Wed, 14 Aug 2013 07:31:00 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE request] Django 1.4.6 security release
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
+this needs two CVE assignments:
+https://www.djangoproject.com/weblog/2013/aug/13/security-releases-issued/ :
 
->  Wireshark upstream has released 1.8.7, 1.6.15 versions,
->correcting multiple security flaws:
+Cheers,
+        Moritz
 
-Wireshark upstream sends advance requests for CVE assignments to MITRE
-(for these releases and apparently all other releases in the past year
-or more). MITRE will be sending our 1.8.7/1.6.15 CVE assignments to
-oss-security also, almost certainly today.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Issue: Cross-site scripting (XSS) in admin interface
 
-iQEcBAEBAgAGBQJRmnYjAAoJEGvefgSNfHMdoegH/iWmca2XSYhKnHJUL8WV8gy6
-dYYYXoN6jLFJKgHgVWCAGCt1DfNm5jgmH1KD+reBWb4q4BupHj4S4QeGB2dnDFd7
-QmIb9QQcmZ9kNBWRdQ9SbCql2eKNuMDi7+uDxwX9f1B/91X0/8JwK0L/VkE+BCKH
-318mGVd69HTOUrRbbTGq78lKVvymsdlI9KyjiuecVo+3t0UWDcasF2fWYcpSwmKA
-wJaiGneDdXc+UxmY0Fu6zonMj5hfdQK4TZ2/q9mFcZVd5JRhWcDpFPDflFw/YLtd
-I2roSmN7IS74RE3jWA/I4+T/yabJZs4PMU8UHtIZtWo418LBYPW4/Gu93peuoCs=
-=gZdS
------END PGP SIGNATURE-----
+The Django administrative application, django.contrib.admin, provides functionality for CRUD (Creation, Retrieval, Updating and Deleting) operations by trusted users, including facilities for both automatic and customized data-manipulation interfaces.
+
+When displaying the value of a URLField -- a model field type for storing URLs -- this interface treated the values of such fields as safe, thus failing to properly accommodate the potential for dangerous values. A proof-of-concept application has been provided to the Django project, showing how this can be exploited to perform XSS in the administrative interface.
+
+In a normal Django deployment, this will only affect the administrative interface, as the incorrect handling occurs only in form-widget code in django.contrib.admin. It is, however, possible that other applications may be affected, if those applications make use of form widgets provided by the admin interface.
+
+To remedy this issue, the widget in question -- django.contrib.admin.widgets.AdminURLFieldWidget -- has been corrected to treat its value the same as any other potentially-user-supplied value; in other words, it will be treated as unsafe, and subject to Django's (enabled by default) output escaping.
+
+Thanks to Łukasz Langa for reporting this issue to us.
+
+
+
+
+Issue: Possible XSS via is_safe_url
+
+A common pattern in Django applications is for a view to accept, via querystring parameter, a URL to redirect to upon successful completion of the view's processing. This pattern is used in code bundled with Django itself; for example, the login view in django.contrib.auth.views, which accepts such a parameter to determine where to send a user following successful login.
+
+A utility function -- django.utils.http.is_safe_url() -- is provided and used to validate that this URL is on the current host (either via fully-qualified or relative URL), so as to avoid potentially dangerous redirects from maliciously-constructed querystrings.
+
+The is_safe_url() function works as intended for HTTP and HTTPS URLs, but due to the manner in which it parses the URL, will permit redirects to other schemes, such as javascript:. While the Django project is unaware of any demonstrated ability to perform cross-site scripting attacks via this mechanism, the potential for such is sufficient to trigger a security response.
+
+To remedy this issue, the is_safe_url() function has been modified to properly recognize and reject URLs which specify a scheme other than HTTP or HTTPS.
+
+Thanks to Nick Bruun for reporting this issue to us.
