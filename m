@@ -1,25 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/14/9
-Message-ID: <20130514165042.GL22446@redhat.com>
-Date: Tue, 14 May 2013 10:50:42 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/4
+Message-ID: <1424149.Usk3GeoM5R@oe.nux.tld>
+Date: Wed, 14 Aug 2013 10:47:06 +0200
+From: Oden Eriksson <oeriksson@...driva.com>
 To: oss-security@...ts.openwall.com
-Cc: George Theall <gtheall@...able.com>
-Subject: Re: Re:  CVE-2002-2443: Kerberos kpasswd UDP ping-pong vulnerability
+Subject: CVE Request -- php - handling of certs with null bytes
 Content-Type: text/plain; charset=utf-8
 
-* [2013-05-14 13:40:53 +0000] George Theall wrote:
+Hello,
+A similar flaw as in ruby and python was discovered and fixed for php.
 
->On May 13, 2013, at 2:53:49 PM, <vdanen@...hat com>
-> wrote:
->
->> I can't find an email address for Tenable, so I'll probably just use
->> their contact form and post to the archive for this message so they can
->> adjust the name of that particular script.
->
->Thanks for posting this. We've updated the Nessus plugin to use the new CVE / OSVDB and reference the upstream fix.
+ruby - CVE-2013-4073
+python - CVE-2013-4238
+php - CVE-2013-????
 
-Fantastic.  Thank you for this, George.
+http://www.ruby-lang.org/en/news/2013/06/27/hostname-check-bypassing-vulnerability-in-openssl-client-cve-2013-4073/[1]
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Upstream fixes:
+
+http://git.php.net/?p=php-src.git;a=commit;h=dcea4ec698dcae39b7bba6f6aa08933cbfee6755[2]
+
+http://git.php.net/?p=php-src.git;a=commit;h=2874696a5a8d46639d261571f915c493cd875897[3]
+
+
+_https://bugs.mageia.org/show_bug.cgi?id=10997_
+
+Cheers.
+
+--------
+[1] http://www.ruby-lang.org/en/news/2013/06/27/hostname-check-bypassing-vulnerability-in-openssl-client-cve-2013-4073/
+[2] http://git.php.net/?p=php-src.git;a=commit;h=dcea4ec698dcae39b7bba6f6aa08933cbfee6755
+[3] http://git.php.net/?p=php-src.git;a=commit;h=2874696a5a8d46639d261571f915c493cd875897
+
