@@ -1,152 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/05/4
-Message-Id: <6610eaff-77f4-4fc0-9bd1-4722f38675d6@googlegroups.com>
-Date: Thu, 5 Dec 2013 14:32:23 -0800 (PST)
-From: chris@...rish.com
-To: ruby-security-ann@...glegroups.com
-Cc: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com,  tenderlove@...y-lang.org
-Subject: Re: [CVE-2013-4491] Reflective XSS Vulnerability in Ruby on Rails
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/7
+Message-ID: <20130814162615.GA13548@kludge.henri.nerv.fi>
+Date: Wed, 14 Aug 2013 19:26:15 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: security@...o3.org
+Subject: CVE request: TYPO3 remote code execution by arbitrary file creation TYPO3-CORE-SA-2013-002
 Content-Type: text/plain; charset=utf-8
 
-With this update I18n introduced a `enforce_available_locales` setting that I'd like to clarify :
+Can we assign CVE for remote code execution by arbitrary file creation
+vulnerability in TYPO3, thanks.
 
-When I18n initialises, it creates an array of the known locales called I18n.available_locales.
-Typically, this array is created by scanning for YML files (in config/locales for a Rails app).
+http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2013-002/
+Advisory ID: TYPO3-CORE-SA-2013-002
+Vulnerable subcomponent: Backend File Upload / File Abstraction Layer
+Vulnerability Type: Remote Code Execution by arbitrary file creation
+Affected Versions: All versions from 6.0.0 up to the development branch of 6.2
+Severity: Critical
+Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:C/I:C/A:C/E:F/RL:O/RC:C
 
-With I8n.enforce_available_locales set to true, we check that the locale we're trying to use (eg. translate or localize) is included in the available_locales. This means we're certain it can't be malicious user submitted data even outside of the scope of a Rails app.
+Problem Description: The file upload component and the File Abstraction Layer
+are failing to check for denied file extensions, which allows authenticated
+editors (even with limited permissions) to upload php files with arbitrary code,
+which can then be executed in web server's context.
 
-On Tuesday, December 3, 2013 8:08:00 PM UTC+1, Aaron Patterson wrote:
-> Reflective XSS Vulnerability in Ruby on Rails
-> 
-> 
-> 
-> There is a vulnerability in the internationalization component of Ruby on Rails. Under certain common configurations an attacker can provide specially crafted input which will execute a reflective XSS attack.  This vulnerability has been assigned the CVE identifier CVE-2013-4491.
-> 
-> 
-> 
-> Versions Affected:  3.0.6 and all later versions.
-> 
-> Not affected:       3.0.5 and earlier 3.0.x versions.
-> 
-> Fixed Versions:     4.0.2, 3.2.16.
-> 
-> 
-> 
-> The root cause of this issue is a vulnerability in the i18n gem which has been assigned the identifier CVE-2013-4492. For this reason applications are also not affected if they have upgraded to the following i18n versions: 
-> 
-> * i18n-0.6.6 for Rails 4.0.x and 3.2.x applications
-> 
-> * i18n-0.5.1 for Rails 3.1.x and 3.0.x applications
-> 
-> 
-> 
-> Impact 
-> 
-> ------ 
-> 
-> When the i18n gem is unable to provide a translation for a given string, it creates a fallback HTML string.  Under certain common configurations this string can contain user input which would allow an attacker to execute a reflective XSS attack.
-> 
-> 
-> 
-> All users running an affected release should either upgrade or use one of the workarounds immediately. 
-> 
-> 
-> 
-> Releases 
-> 
-> -------- 
-> 
-> The 4.0.2 and 3.2.16 releases are available at the normal locations. 
-> 
-> 
-> 
-> Workarounds 
-> 
-> ----------- 
-> 
-> To work around this issue you must replace the standard i18n exception handler with a fixed one.  Place the following code into a file in the config/initializers directory of your project and restart the server.
-> 
-> 
-> 
->   require 'i18n'
-> 
-> 
-> 
->   # Override exception handler to more carefully html-escape missing-key results.
-> 
->   class HtmlSafeI18nExceptionHandler
-> 
->     Missing = I18n.const_defined?(:MissingTranslation) ? I18n::MissingTranslation : I18n::MissingTranslationData
-> 
-> 
-> 
->     def initialize(original_exception_handler)
-> 
->       @original_exception_handler = original_exception_handler
-> 
->     end
-> 
-> 
-> 
->     def call(exception, locale, key, options)
-> 
->       if exception.is_a?(Missing) && options[:rescue_format] == :html
-> 
->         keys = exception.keys.map { |k| Rack::Utils.escape_html k }
-> 
->         key = keys.last.to_s.gsub('_', ' ').gsub(/\b('?[a-z])/) { $1.capitalize }
-> 
->         %(<span class="translation_missing" title="translation missing: #{keys.join('.')}">#{key}</span>)
-> 
->       else
-> 
->         @original_exception_handler.call(exception, locale, key, options)
-> 
->       end
-> 
->     end
-> 
->   end
-> 
-> 
-> 
->   I18n.exception_handler = HtmlSafeI18nExceptionHandler.new(I18n.exception_handler)
-> 
-> 
-> 
-> This initializer has also been attached to this message as html_safe_i18n_exception_handler.rb
-> 
-> 
-> 
-> Patches 
-> 
-> ------- 
-> 
-> To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
-> 
-> 
-> 
-> * 4-0-i18n_xss.patch - Patch for 4.0 series 
-> 
-> * 3-2-i18n_xss.patch - Patch for 3.2 series 
-> 
-> 
-> 
-> Please note that only the 4.0.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-> 
-> 
-> 
-> Credits 
-> 
-> ------- 
-> 
-> Thanks to Peter McLarnan of Matasano Security for reporting the issue to us, and to Sven Fuchs and Christopher Dell for working with us on the fix.
-> 
-> 
-> 
-> -- 
-> 
-> Aaron Patterson
-> 
-> http://tenderlovemaking.com/
+Solution: Update to the TYPO3 version 6.0.8 or 6.1.3 that fix the problem
+described!
 
+Credits: Credits go to Sebastian Nerz who discovered and reported the issue.
+
+Please note that XSS issue in the advisory already has CVE. TYPO3 team also
+verified that this hasn't been requested already.
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
