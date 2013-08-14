@@ -1,29 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/11
-Message-ID: <20130516153159.GF19291@kludge.henri.nerv.fi>
-Date: Thu, 16 May 2013 18:31:59 +0300
-From: Henri Salo <henri@...v.fi>
-To: "Christey, Steven M." <coley@...re.org>
-Cc: oss-security@...ts.openwall.com;, plugins@...dpress.org
-Subject: Re: WordPress plugins vulnerable to CVE-2013-1808
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/10
+Message-ID: <520BF03D.1020803@redhat.com>
+Date: Wed, 14 Aug 2013 15:01:49 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: P J P <ppandit@...hat.com>, Petr Matousek <pmatouse@...hat.com>
+Subject: Re: CVE Request: Linux kernel: cifs: off-by-one bug in build_unc_path_to_root
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 28, 2013 at 03:44:09PM +0000, Christey, Steven M. wrote:
-> Henri,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 08/14/2013 01:07 PM, P J P wrote:
+> Hello,
 > 
-> It appears that CVE-2013-1463 was previously assigned to an issue that was claimed to exist in WP-Table Reloaded and fixed by that module developer, but the attack vector involves the id parameter to js/tabletools/zeroclipboard.swf, so this is likely a duplicate.  Can you confirm?
+> Linux kernel built with the Common Internet File System
+> (CONFIG_CIFS) support along with a feature to access Distributed
+> File Systems (CONFIG_CIFS_DFS_UPCALL), is vulnerable to a memory
+> corruption flaw caused by writing one byte past an allocated memory
+> area. It occurs while mounting a DFS share wherein the server
+> provides DFS referral names of certain length. The memory
+> corruption leads to an unresponsive kernel and subsequent crash
+> resulting in Denial of Service.
 > 
-> If this is a duplicate, we have an unusual situation for how to resolve it.  The older CVE, CVE-2013-1463, is much more widely used than the newer CVE-2013-1808, which would argue for keeping the older CVE-2013-1463.  However, because that older CVE focuses on the wrong product, and CVE-2013-1808 is referenced in Red Hat's Bugzilla and thus "more authoritative," this would argue for keeping CVE-2013-1808.
+> An user/program able to mount a file system could use this flaw to
+> crash the kernel resulting in DoS.
 > 
-> - Steve
+> Upstream fix: ------------- ->
+> https://git.kernel.org/linus/1fc29bacedeabb278080e31bb9c1ecb49f143c3b
+>
+> 
+> 
+> Thank you.
 
-I'm not sure if wp-table-reloaded used custom version of the zeroclipboard or
-not, but by looking at the checksums so did other plugins too. Let's REJECT
-CVE-2013-1463 and use CVE-2013-1808.
+Please use CVE-2013-4247 for this issue.
 
-http://osvdb.org/90374
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQIcBAEBAgAGBQJSC/A9AAoJEBYNRVNeJnmTnCYQALZ8C/e+35tYVn25OnW1Ksq9
+LdPnLaL6L1DittWkEt7Z4EntM+Qy3r+Djtnl7auJdck//9crUBhYgPks8HXYISHy
+uR+71OpZ96tUcMhxYrn1N2KkWrqwZry+woUENFDqJI483itejMnTGpw+lbRAVMjD
+zjlWLN7lRouVbz1X34ZcPkWMn8LBDmycc989ufrKBkp0vactxhaRtd+GwcxUu6Lw
+CKWPnA1HcOUAG2eqKoqZgJfzyHqcsHj7WnyxYuQklWfTtUVIbTvc0R8tHwfX/hc8
+Z2AjeDPkRS2f1oROFfj/Y65dLnmog8TRETHpljrZBXGvyQFbrrTWAbm48HPtinaQ
+6fMjo3Hrmb1cIO0AiwFz1K/HOG2acleK1YIdUFqdzRj0oRV4+F6WL99i90PIo82j
+B/rYngE8hL4my8k9IEma9aFwebWC+81fYP8UYFJ9w0pA29uzyYN3c2m84DYcxS7y
+tUiQLuFnkQnJXSTEMZ90BnknLVA3dZZNYTXk5qXR1dBlZQEzMaQrlnBQzT3Yvene
+4G3ZPvAQsMKvfQXsyiXmfb+06d9WJD2Ai+541B3AMQxQwILnGgNxncpcPLNyoqqG
+FPC5CiCqjACQ68mMxvb1E/ObwfqDlS/lgwuORcEsaP8ghLdpTvNPrvI7wyg0DCU4
+QP5A17rut3fmUoMkqFVa
+=SWLN
+-----END PGP SIGNATURE-----
