@@ -1,49 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/6
-Message-ID: <20130605121054.GC32700@dhcp-25-225.brq.redhat.com>
-Date: Wed, 5 Jun 2013 14:10:54 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: a.p.zijlstra@...llo.nl
-Cc: OSS Security List <oss-security@...ts.openwall.com>, a.p.zijlstra@...llo.nl, eranian@...gle.com, ak@...ux.intel.com, security@...nel.org, Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: More perf security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/3
+Message-ID: <f9a63c1df5453e566f9ca96ffa65b390.squirrel@aphrodite.kinkhorst.nl>
+Date: Wed, 14 Aug 2013 10:11:48 +0200
+From: "Thijs Kinkhorst" <thijs@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: [CVE request] Django 1.4.6 security release
 Content-Type: text/plain; charset=utf-8
 
-Hello, Peter.
+On Wed, August 14, 2013 09:42, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 08/13/2013 11:31 PM, Moritz Muehlenhoff wrote:
+>> Hi, this needs two CVE assignments:
+>> https://www.djangoproject.com/weblog/2013/aug/13/security-releases-issued/
 
-On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
-> 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
-> 
-> commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
-> Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-> Date:   Fri May 3 14:11:25 2013 +0200
-> 
->     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
-> 
->     We should always have proper privileges when requesting kernel
->     data.
-> 
->     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
->     Cc: <stable@...nel.org>
->     Cc: Andi Kleen <ak@...ux.intel.com>
->     Cc: eranian@...gle.com
->     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
->     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
->     Signed-off-by: Ingo Molnar <mingo@...nel.org>
->     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
+> Please provide links to the vulnerable code/fixed code thanks.
 
-There is similar check in perf_copy_attr() which is called from
-perf_event_open syscall --
+Links to the patches of the various affected release branches can be found
+at the bottom of the quoted URL.
 
-                /* kernel level capture: check permissions */
-                if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
-                    && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
-                        return -EACCES;
 
-It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
-missing something?
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Thijs
