@@ -1,60 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/11/2
-Message-ID: <518DAA59.1010005@redhat.com>
-Date: Fri, 10 May 2013 20:18:01 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: password exposure in kdelibs when showing "internal server error" messages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/4
+Message-ID: <1376548089.474034.550206332.3566.14@securityteam.typo3.org>
+Date: Thu, 15 Aug 2013 08:28:09 +0200
+From: TYPO3 Security Team <security@...o3.org>
+To: kseifried@...hat.com
+CC: Henri Salo <henri@...v.fi>, oss-security@...ts.openwall.com
+Subject: Re: [Ticket#2013081510000021]  CVE request: TYPO3 remote code execution by arbitrary file creation TYPO3-CORE-SA-201 [...]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Dear Kurt,
 
-On 05/10/2013 03:28 PM, Vincent Danen wrote:
-> I've not seen this yet; could a CVE be assigned to the following
-> issue?
-> 
-> It was reported that when KDE encounters an "internal server
-> error" and also prints out the URL that caused the error that it
-> would include the username and password (if supplied) to the
-> resource that caused the error.  For instance, it would show 
-> "https://user:password@...otehost.com" or similar.  This is due to 
-> kioslave/http/http.cpp using m_request.url.url() rather than the 
-> sanitized m_request.url.prettyUrl().  This issue is fixed in git.
-> 
-> Note that this information is printed out to the local user
-> actively using the computer.
-> 
-> References:
-> 
-> https://bugs.kde.org/show_bug.cgi?id=319428 
-> https://projects.kde.org/projects/kde/kdelibs/repository/revisions/65d736dab592bced4410ccfa4699de89f78c96ca/diff/kioslave/http/http.cpp
->
->  https://bugs.mageia.org/show_bug.cgi?id=10037 
-> https://bugzilla.redhat.com/show_bug.cgi?id=961981
-> 
-> 
+08/15/2013 05:10 - Kurt Seifried wrote:
 
-Please use CVE-2013-2074 for this issue.
+> so it sounds like embedded third party software, there appear to be
+> some older CVE's for flowplayer, I'm guessing it might be one of
+> these? Can the typo3 people please provide details (e.g. code patches)
+> of exactly what they fixed?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Yes, third party software flowplayer and Audio Player. Here are the changes:
 
-iQIcBAEBAgAGBQJRjapZAAoJEBYNRVNeJnmTMSoQAKX07giXr7vCKkYmdqU5Yt4c
-vLW9McS7aGUQSHaqryf5KlBcI8UouzOozicZhC9ixf0tekkMZym26tLW9+1Y71+h
-FKevk4cizXVcYDtArXmbQqn4VZOfioxFTyjycADM5kpoTEK2l9GbN/GcGsyHu6+L
-IzOUFLG8nKeP2uzahWZ1wbrjoK6Y0MtBg4FdK7F8qO1A5n2B7eWGCQnrbQYgOcYE
-trPVR7MElJ+5LnTwft9gUcyaur0cwp6NnHOESM9jlA8ZWenOl4SMJ15NrBa4PLbh
-fXNBkUBMjyXhqOoRNCFEanQA7923yZ8oUnRq+sw99ZAx8SyEEyea2GezCbCuUonA
-XWC2JDN7nJJDgCCkTbuLvhG6lZ+tNM4DNK13mH+RiPBYZ53Y7pMRLDN6dax6ThxQ
-69FgnxkNvv22A6IYzCP1DISD3tlXciJ7tbIfi1v65NnuixSqofeVCwAaP1ZtZ5So
-7vmZPXYNP0/8kr5f3ntyy0YgZZXgJ/xRXWLUQ3abIWji2osS61sfyxSRL4tknexd
-EwhzbIv9BdQEQiMvzvO6CbEV9b9Q7bf7QcpXjevqH2nt/SghoV89lz6PzvdcQacc
-oFXbVJsVZfV5StJG8T8FFdBAZxoTI3/ZeChaE9WPcIJKg2LZJNqlxFRBOQixyvmN
-m6DpYYFKzTIEYEVj9Shz
-=9j9m
------END PGP SIGNATURE-----
+https://review.typo3.org/22711
+https://review.typo3.org/22710
+
+The related older CVEs are already mentioned in the advisory, namely:
+
+CVE-2011-3642, CVE-2013-1464
+
+> For the second one "Vulnerable subcomponent: Backend File Upload /
+> File Abstraction Layer" code execution please use CVE-2013-4250 for
+> this issue.
+
+Thanks. I updated the advisory accordingly.
+
+
+Regards,
+
+Helmut Hummel
+Member of the TYPO3 Security Team
+
+--
+TYPO3 Security Team homepage: http://typo3.org/teams/security/
+
+E-Mail: security@...o3.org
+
+Please note: When replying to this e-mail, please leave the header intact.
