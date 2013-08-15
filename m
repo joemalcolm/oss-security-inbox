@@ -1,81 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/15
-Message-ID: <CAB8Fin_eXgePbW5OdH1iWxyiwm60y13sD2ooWKCCceeEWixSKA@mail.gmail.com>
-Date: Mon, 4 Nov 2013 20:01:15 +0100
-From: Jacob Vosmaer <jacob@...lab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/11
+Message-ID: <20130815103119.GA29271@gremlin.ru>
+Date: Thu, 15 Aug 2013 14:31:19 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Subject: CVE-2013-4490 Remote code execution vulnerability in the SSH key upload feature of GitLab
+Subject: Re: HTTPS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+On 15-Aug-2013 01:22:33 -0600, Kurt Seifried wrote:
 
-# Remote code execution vulnerability in the SSH key upload feature of
-GitLab
+ >>> everyone should be enabling HTTPS where possible,
 
-There is a remote code execution vulnerability in the SSH key upload
-feature of GitLab. This vulnerability has been assigned the CVE identifier
-CVE-2013-4490.
+ >> Very dangerous mistake. HTTPS should be used only for
+ >> non-anonymous access, otherwise plain HTTP is preferred.
+ >> In any case, let the users choose whether they want to
+ >> use it.
 
-Versions affected: 5.0, 5.1, 5.2, 5.3, 5.4, 6.0, 6.1, 6.2
+ > This is literally the first time I've ever heard anyone say this,
+ > I'm curious though, can you explain your reasoning/evidence for
+ > this statement?
 
-Not affected: 4.2 and earlier
+The reasoning is simple:
+1. Not all interceptions and modifications are evil.
+2. Some sites are much more evil than interceptors.
 
-Fixed versions: 5.4.1, 6.2.3
+ > You do realize HTTPS can be just as "anonymous" (ignoring the
+ > fact you have the persons IP/time stamp, browser string, etc =)
+ > as normal HTTP.
 
-### Impact
-The gitlab-shell SSH access endpoint manages the authorized_keys file for
-the git user. When a user adds a public key using the GitLab web interface
-a gitlab-shell command is invoked to add the public key to authorized_keys.
-In affected versions, the public key text entered by the user is exposed to
-the Bourne shell in a way that can be exploited to achieve code execution
-as the git user. Only authenticated users can upload an SSH key.
+Yes. And, just in case: HTTPS is used to bypass content-filtering
+proxies (ones that cut ads|malware|etc).
 
-All users running an affected release should upgrade gitlab-shell
-immediately.
+ >> Compare to FTP vs SCP/SFTP: first is for getting files from
+ >> anyone (into /incoming) and giving files for everyone (from
+ >> /pub), second is for transferring your own files. Obviously,
+ >> I presume FTP daemon to be configured for anonymous-only access.
 
-### Releases
-Gitlab-shell 1.7.4, available from https://github.com/gitlabhq/gitlab-shell,
-fixes the vulnerability and has been tested with GitLab 5.4.1 and GitLab
-6.2.3.
+ > Now I'm just confused.
 
-### Workarounds
-If you are using GitLab 5.0 or newer and you cannot upgrade to GitLab 5.4.1
-or GitLab 6.2.3 you should apply the following edit to gitlab-shell.
+Why?
 
-- --- a/lib/gitlab_keys.rb
-+++ b/lib/gitlab_keys.rb
-@@ -29,8 +29,7 @@ class GitlabKeys
-   def add_key
-     $logger.info "Adding key #{@..._id} => #{@....inspect}"
-     cmd = "command=\"#{ROOT_PATH}/bin/gitlab-shell
-#{@..._id}\",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty
-#{@...}"
-- -    cmd = "echo \'#{cmd}\' >> #{auth_file}"
-- -    system(cmd)
-+    open(auth_file, 'a') { |file| file.puts(cmd) }
-   end
+ >>> intercepting and modifying HTTP is trivial.
 
-   def rm_key
+ >> Yes. But intercepting and modifying HTTPS requires just an
+ >> ability to issue client-trusted certificates (sufficient for
+ >> 99% of HTTPS applications), so the content signing should
+ >> always be preferred over distributor validation.
 
-### Credits
-Thanks to Nigel Kukard of http://www.allworldit.com/ for reporting the
-vulnerability to us.
+ > And now I'm seriously confused. For clients that do not validate
+ > hostnames it would be true that you could get an HTTPS cert for
+ > any domain name and use it,
 
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
+The valid HTTPS certificate doesn't mean getting valid content - it
+only means you've connected to (most likely) the right server.
 
-iQEcBAEBCgAGBQJSd+6/AAoJEB2vXw0YK62WNNoIAJr4Mz0d4LjznjXzYjE/So0/
-cy3QxXjgNLjF2MiuAzDlnLCCRbUYcSpy50LZmGYSbv5YOF0cUknVge2R9+EJaSkk
-qJDxTDr02zX13e2YKEv158lgljJWI3+hT3+UjwCpSasPckkcyD48X8o2dT4BYRGc
-SbZxXMSLUg63np4db2zHjZqvpOr0txNYflduYsAZv5uld/Koy0YIBec2TfBVJWrg
-ghtooOQ/IIXQRe3Qjl+8uRLGEBlPmmsMv0mC5/t5Wo/3RMg/3MQ4Ez1FAAeutbPw
-qTZLxh7sXcMvVdkx24KoCSK+//IRa91bNxRiK2pDi6fNGuzxs2a21PEKAwHfJsA=
-=UL60
------END PGP SIGNATURE-----
+ > this would also work for the case where you first use HTTP to get
+ > a redirect to HTTPS
 
-Best regards,
+The most annoying behavior... Should be used only when the visitor
+wants to log in. IMHO.
 
-Jacob Vosmaer
-GitLab.com
+ > (the attacker intercepts the HTTP and sends you to an attacker
+ > controlled HTTPS).
 
+Unlike SSH, the HTTPS clients (which usually are the browsers) do not
+cache the visited servers' certificates, fully relying on issuing CA's
+honesty. This introduces a risk of false sence of security.
+
+Hmmmm... It seems that keeping self-signed certificates is even more
+safe than relying on "trusted" CAs...
+
+ > Hence ALWAYS using HTTPS!
+
+Ok. But NEVER force the visitors of your site to use it :-)
+
+ > I really suspect you have misunderstood what encrypted network
+ > protocols are for. Typically they address three major problems:
+ > integrity (attackers modifying traffic en route), confidentiality
+ > (by encrypting it)
+
+Do public data really need that?
+
+ > and as an offshoot of these two properties, and the magic of key
+ > exchanges you can also handle authentication securely, if desired.
+
+How many sites do use the HTTPS client certificates for authentication?
+My estimation: less than 1%, as most use trivial username + password
+over the encrypted connection.
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
