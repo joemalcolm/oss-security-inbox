@@ -1,34 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/29/7
-Message-ID: <20130829165430.GF32641@redhat.com>
-Date: Thu, 29 Aug 2013 10:54:30 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: Alex Legler <a3li@...too.org>
-Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: Re: CVE oops in GLSA 201308-05 (wireshark)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/15
+Message-ID: <520D021B.3080700@redhat.com>
+Date: Thu, 15 Aug 2013 10:30:19 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: gremlin@...mlin.ru
+Subject: Re: HTTPS
 Content-Type: text/plain; charset=utf-8
 
-* [2013-08-29 14:43:28 +0200] Alex Legler wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->On 28.08.2013 22:39, Vincent Danen wrote:
->>
->> Ok.  I suspect that Gentoo has or will fix any self-published copies of
->> their GLSA but the ones that are archived still contain the incorrect
->> references.  Not sure if you need/want to do anything... I just sent the
->> email as a heads-up for you.
->>
->
->Crud, this happened again with a mysql advisory today.
->We'll be sending errata for these two advisories soon and fix the posted
->advisories.
->
->In the meantime, I extended our tooling to avoid such mistakes in the
->future.
->
->At any rate, good catch Vincent.
+Ah you appear to be making two classical mistakes. You are confusing
+technical means for enforcing policy (e.g. security policy, privacy
+policy) with the actual policy itself. You are also making the second
+classical mistake of "one size fits all", what you see as valid
+security policy (anonymous access must be unencrypted, login access
+MUST be encrypted) is what you think the entire world should use.
 
-It wasn't me... I noticed it one of the bug reports in your bugzilla.
-=)
+This is obviously not the case. Some organizations may be very
+concerned with availability and exfiltration of data and ban ANY
+encryption, some sites may be very concerned with the privacy and
+integrity of their data and require mandatory encryption of their data
+in transit, at rest, and so on. Who is right? Both are.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Technical measures like encryption are simply a means of enforcing
+policy/laws/etc, First you decide on your policy (and take into
+account any laws/etc.), then you find technical means to achieve that
+policy. Not the other way around.
+
+So in this case the policy can probably be stated as:
+
+"When someone downloads a ruby gem via the rubygems.org system we want
+to ensure they get the gem they requested, and not one that an
+attacker has modified."
+
+So one way to achieve this policy would be gem code signing. Several
+efforts to implement this started and failed due to lack of community
+support/etc., due in large part to people confusing technical measures
+with policy, e.g. people were arguing the use of various cryptographic
+primitives before they'd answered questions like "do we require end
+developers to participate in this, or do we just involve rubygems.org?
+do we want end to end signing?" and so on.
+
+Obviously none of this progressed. So now I think the best option is
+to harden the existing system as best we can to protect users.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSDQIbAAoJEBYNRVNeJnmTdkcQAKwZFUZNTJNzqE7N84GX8JSF
+YSOCmIYFi5tmoUEnMwSqyQ21sWbiM1b/+vblTpLYPYC4xvSxJWc3HrYfa1/xiavm
+EDJjjkb5ewBHGBvfSJs9mAlcQZUSseZaTSXM7i0qy83LjkwjDbWVPgIl5yNokFjY
+IlYJd8LX7i3S8u7rYMQFTBH+fqQMohk9QvcdoHD6JkH6xl3Wq6V2nvWHtKmvxzVH
+LW/lRqnG2myCDjgRikWS+mGLmiJYFi1PlFbkbbWhfP3nuAdsFl3/nhej/5IUnztP
+L6fOT1SU1zKrzTnxWcQwfXrG+rg3AEi4l78lA0wsSXiSdUbA0bM8dbg/DzScG68I
+tT6yxsoNprJ+s8L/y6tBVMT3pNBNMBtiOLjmW3PLa7a8dIhc15xzqHEnr7bfjP6+
++NCVJB3FJeg8/+lHXn47fuYv7BdpYrP4X/XMXYWY+fb25WGpQyGiw9jZcWrN4P05
+69me1qRycidzh3bNjEOQtE6WIxhCKHa3O62Ws91Ko0x9akoeeV/IxJEgXSZTF/cE
+hCdsj6W2KTWcH1H4gPDMGSoEbO0r/TThZcDlaeFXNRAM6hZIJ+piDSAJvgOsn8zA
+GgUTI5IgoM2F4Sy7Rdd7LPxqcBI2e+a9CLiunoKIugSBwQ3d3/1m19EOiuz9aICI
+rlAkOUieLOUq/311UJqv
+=wzAD
+-----END PGP SIGNATURE-----
