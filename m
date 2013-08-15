@@ -1,62 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/6
-Message-ID: <51077004.4010207@redhat.com>
-Date: Mon, 28 Jan 2013 23:45:24 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/16
+Message-ID: <520D024B.9000607@redhat.com>
+Date: Thu, 15 Aug 2013 10:31:07 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, Andrew Nacin <nacin@...dpress.org>, security@...dpress.org
-Subject: Re: CVE request: WordPress 3.1.4 (and 3.2 Release Candidate 3)
+To: Marcus Meissner <meissner@...e.de>
+CC: oss-security@...ts.openwall.com
+Subject: Re: rubygems insecure download (and other problems)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/28/2013 01:56 AM, Henri Salo wrote:
-> Hello,
+On 08/15/2013 02:37 AM, Marcus Meissner wrote:
+> On Wed, Aug 14, 2013 at 05:02:36PM -0400, Donald Stufft wrote:
+>> 
+>> On Aug 14, 2013, at 4:59 PM, Kurt Seifried <kseifried@...hat.com>
+>> wrote:
+>> 
+>>> Signed PGP part I don't think this is CVE worthy, but it is
+>>> worth fixing and not putting everyone at such risk:
+>>> 
+>>> https://bugzilla.novell.com/show_bug.cgi?id=834785 
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=997179
+>>> 
+>>> Problem #1: install /etc/gemrc to install gems via https rather
+>>> than http
+>>> 
+>>> everyone should be enabling HTTPS where possible, intercepting
+>>> and modifying HTTP is trivial.
+>>> 
+>>> Problem #2: it redirects to  production.cf.rubygems.org which
+>>> is on cloudfront so has certificate mismatch, so either users
+>>> have to accept insecurity, or... well there is no second choice
+>>> =(.
+>>> 
+>>> https://www.ssllabs.com/ssltest/analyze.html?d=production.cf.rubygems.org
+>>>
+>>>
+>>> 
+- - --
+>>> Kurt Seifried Red Hat Security Response Team (SRT) PGP:
+>>> 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>>> 
+>> 
+>> pip has a CVE for downloading via HTTP, does switching the gem to
+>> HTTPS actually make gem verify it?
+>> 
+>> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1629
 > 
-> Vulnerabilities fixed in WordPress 3.1.4[1] does not yet have CVE
-> identifiers. As far as I can tell there is three different
-> issues[2][3][4]. Details of issue OSVDB:73721 from Andrew Nacin
-> below:
+> Some SSL certificate issues in Ruby were also fixed...
 > 
-> Using specially crafted requests under certain conditions, users
-> without the ability to write with unfiltered HTML could add some to
-> a post, and could update posts where they did not have a permission
-> to do so. The relevant changeset is:
-> http://core.trac.wordpress.org/changeset/18368/branches/3.1
+> ... testing by pointing rubygems.org to another host with https
+> gives:
 > 
-> 1: http://wordpress.org/news/2011/06/wordpress-3-1-4/ 2:
-> http://osvdb.org/73721 WordPress Unspecified Access Restriction
-> Bypass 3: http://osvdb.org/73722 WordPress wp-admin/edit-tags.php
-> Multiple Parameter SQL Injection 4: http://osvdb.org/73723
-> WordPress wp-admin/link-manager.php Multiple Parameter SQL
-> Injection
+> $ gem install foo ERROR:  Could not find a valid gem 'foo' (>= 0)
+> in any repository ERROR:  While executing gem ...
+> (Gem::RemoteFetcher::FetchError) SSL_connect returned=1 errno=0
+> state=SSLv3 read server certificate B: certificate verify failed
+> (https://rubygems.org/latest_specs.4.8.gz) ...
 > 
-> Please note that these need to be CVE-2011-XXXX, thanks.
+> I think a "package management" solution that installs software on a
+> system should have good security measurements by default these
+> days, and trivial man-in-the-middle attacks should not be
+> possible.
 > 
-> -- Henri Salo
+> So the implicit assumption "installing gems is secure" is violated
+> here, which would require a CVE I think.
+> 
+> Ciao, Marcus
+> 
 
-Can the WordPress team reply with commentary so I can help make sense
-of this? thanks.
+Can someone generate a list of all the client software that pulls gems
+insecurely from rubygems.org and post it here? thanks. I can't assign
+CVE's to services, only to software.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRB3AEAAoJEBYNRVNeJnmTobUP/11ZfBUsKendTEQdq2VUQY/R
-98stEMUOWnWFd99GbdQdPzRtPgq+s/dKvjyIj2OohDcQY4UfEn6cFpl75EhoxPbA
-FNUDrglQld57MyJh3MUGFTQHBQqjSl4ySn5xJEFv1Nq/j9qp9DZvd03lTpWdv8L7
-I84+WdB71ybqpre3wRM1/RXLGjFi+PrxXsYwq0FJiDX4GrKQ5LZFeZiahvWAFYjQ
-Q8puHO4rxRkNxzO1ZdxJiudElD9EJaUxPDabJhgvaSAoWXFNDCKIPKKK0jv/Y19z
-d34E4ngvYTJZq8gtcBoOysSOb8Yv6lMUam4LGEYsVGxsoVB9nJYO5UV1G69V+A45
-p1H54EoSI4jel9S2vJWUbIzRplEMH4o3iW0EnHLwi0+lK6xNuv4BDnbKsyQKoyfi
-REkWrGreXOIovKeCiBXyL84wGTOaQA4/Oq9WqwCNgGXlOFKA9gTa3gaVR2DeVZkY
-A71e+vculLGA9unHqAZlgyUFv0Uy2U/PYBM1Go+TalEA71Ja86DRgilHqJVu5O2b
-sh7kJ16bnYayyusvnY4dQGdAIcq6A01RHw7xJ0K2pZUeidiDrVa+oriUC7q0GWiX
-UutdvrsUv3PJ8Hpb64VP6L/DlvD8FmokKIhR7FAiPwjmjUIxLr5LnELrZDu20OUy
-9ds0Pf073NFt5UvIGJYP
-=UTA2
+iQIcBAEBAgAGBQJSDQJKAAoJEBYNRVNeJnmTfgYQAMOtj1PiNc46aiuAoAVnAaKr
+n9oH44SDMd/byjhfbSFuK+mRFlGgXynFSEdpu4dEZl8w5qQmTlHHdLlU7RIzVFfg
+B8qOrr/KIYn50ftwlJI0Jik68o5bq3HamGi7B+E+cX53BYEz9zhI7jVP39WdnY0M
+Dmoany+EiORK19ZPeg10dDVWfe5vwk0k/4i1h7xWp5rUThC6LmGcNpZCdEHgfZyA
+auMOwZzneenav6HHMEa+Vh0N0uf9T1BeTHdVI4GHzepLxzSwuF5kgIu8Q3tXnGgU
+6NEGfdv9KuA7Ivgz16jjUUiJEk/JdgbUaBECXUzdzdSDmSc6ow27IDbVLh0Yq0hW
+FIyBz50q+0Wt+L7CsTZ8qfs3+Se0BSZt6XDkQwEA8x/wZPBfzIx59F8KGfZXu4sE
+H895w4YdFlcY7bZEdEakd28aHZbKj2qD4/KlfmntXzs4HIMFO1CrLuJ8zaqX1ZTI
+xRJZiX+Wur8f7Ftcx+ScjkRMC66PxGxIvqnFXKRxYlD+mPpm6zr0xfLw0buL5C4m
+4ZUpy3xlWVfrS6wsaFoco9DALB0naaBVqwgXxMPqxi+cbt4u2+s+MjoZmNPTcitp
+dj/GZQCruejr2iKkNfhUTfvSxlKEFPGxcBVx5nTjGcEGBsg1EOit1a4rsubt9V+z
+In9YUH15QvITGMrbfkyl
+=8leO
 -----END PGP SIGNATURE-----
