@@ -1,45 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/12
-Message-ID: <20130723221539.GH11432@kludge.henri.nerv.fi>
-Date: Wed, 24 Jul 2013 01:15:39 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/5
+Message-ID: <20130815063809.GA5261@gremlin.ru>
+Date: Thu, 15 Aug 2013 10:38:09 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Cc: security@...ngoproject.com, Salvatore Bonaccorso <carnil@...ian.org>
-Subject: Re: CVE Request: Django: Account enumeration through timing attack in password verification in django.contrib.auth
+Subject: Re: HTTPS (was: rubygems insecure download (and other problems))
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 22, 2013 at 05:04:44PM +0200, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> Cc'ing security@...ngoproject.com
-> 
-> From [1] in Django accounts can be enumerated trough timing attacks:
-> 
-> > When attempting to authenticate using django.contrib.auth, if a user does not
-> > exist the authenticate() function returns None nearly instantaneously, while
-> > when a user exists it takes much longer as the attempted password gets hashed
-> > and compared with the stored password. This allows for an attacker to infer
-> > whether or not a given account exists based upon the response time of an
-> > authentication attempt.  This can be seen much more clearly when the number of
-> > rounds on the password hasher is set to something high like 100000.
-> 
->  [1] https://code.djangoproject.com/ticket/20760
-> 
-> A proposed patch is at [2] but not yet a commit in upstream git repository.
-> 
->  [2] https://code.djangoproject.com/attachment/ticket/20760/20760_fix_hash_once.diff
-> 
-> Does this needs a CVE asignment?
-> 
-> Regards,
-> Salvatore
+On 14-Aug-2013 14:59:12 -0600, Kurt Seifried wrote:
 
-Please see comments from aaugustin
-https://code.djangoproject.com/ticket/20760#comment:23
+ > everyone should be enabling HTTPS where possible,
 
-This is exemplary case of CWE-208 and similar issues have received CVEs.
+Very dangerous mistake. HTTPS should be used only for non-anonymous
+access, otherwise plain HTTP is preferred. In any case, let the users
+choose whether they want to use it.
 
----
-Henri Salo
+Compare to FTP vs SCP/SFTP: first is for getting files from anyone
+(into /incoming) and giving files for everyone (from /pub), second
+is for transferring your own files. Obviously, I presume FTP daemon
+to be configured for anonymous-only access.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+ > intercepting and modifying HTTP is trivial.
+
+Yes. But intercepting and modifying HTTPS requires just an ability
+to issue client-trusted certificates (sufficient for 99% of HTTPS
+applications), so the content signing should always be preferred
+over distributor validation.
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
