@@ -1,99 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/10/4
-Message-ID: <522F4961.7050605@redhat.com>
-Date: Tue, 10 Sep 2013 10:31:29 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/2
+Message-ID: <520C45CF.4020400@redhat.com>
+Date: Wed, 14 Aug 2013 21:06:55 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Xen.org security team" <security@....org>, xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org
-Subject: Re: Xen Security Advisory 61 - libxl partially sets up HVM passthrough even with disabled iommu
+CC: Henri Salo <henri@...v.fi>, security@...o3.org
+Subject: Re: CVE request: TYPO3 remote code execution by arbitrary file creation TYPO3-CORE-SA-2013-002
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/10/2013 04:56 AM, Xen.org security team wrote:
-> Xen Security Advisory XSA-61
+On 08/14/2013 10:26 AM, Henri Salo wrote:
+> Can we assign CVE for remote code execution by arbitrary file
+> creation vulnerability in TYPO3, thanks.
 > 
-> libxl partially sets up HVM passthrough even with disabled iommu
+> http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2013-002/
+>
 > 
-> ISSUE DESCRIPTION =================
+Advisory ID: TYPO3-CORE-SA-2013-002
+> Vulnerable subcomponent: Backend File Upload / File Abstraction
+> Layer Vulnerability Type: Remote Code Execution by arbitrary file
+> creation Affected Versions: All versions from 6.0.0 up to the
+> development branch of 6.2 Severity: Critical Suggested CVSS v2.0:
+> AV:N/AC:L/Au:S/C:C/I:C/A:C/E:F/RL:O/RC:C
 > 
-> With HVM domains, libxl's setup of PCI passthrough devices does
-> the IOMMU setup after giving (via the device model) the guest
-> access to the hardware and advertising it to the guest.
+> Problem Description: The file upload component and the File
+> Abstraction Layer are failing to check for denied file extensions,
+> which allows authenticated editors (even with limited permissions)
+> to upload php files with arbitrary code, which can then be executed
+> in web server's context.
 > 
-> If the IOMMU is disabled the overall setup fails, but after the
-> device has been made available to the guest; subsequent DMA
-> instructions from the guest to the device will cause wild DMA.
+> Solution: Update to the TYPO3 version 6.0.8 or 6.1.3 that fix the
+> problem described!
 > 
-> IMPACT ======
+> Credits: Credits go to Sebastian Nerz who discovered and reported
+> the issue.
 > 
-> A HVM domain, given access to a device which bus mastering capable
-> in the absence of a functioning IOMMU, can mount a privilege
-> escalation or denial of service attack affecting the whole system.
+> Please note that XSS issue in the advisory already has CVE. TYPO3
+> team also verified that this hasn't been requested already.
 > 
-> VULNERABLE SYSTEMS ==================
+> --- Henri Salo
 > 
-> 1. Only systems which pass busmastering-capable PCI devices through
-> to untrusted guests are vulnerable.  (Most PCI devices are 
-> busmastering-capable.)
-> 
-> 2. Only systems which use libxl as part of the toolstack are 
-> vulnerable.
-> 
-> The major consumer of libxl functionality is the xl toolstack
-> which became the default in Xen 4.2.
-> 
-> In addition to this libvirt can optionally make use of libxl. This 
-> can be queried with # virsh version which will report "xenlight" if
-> libxl is in use.  libvirt currently prefers the xend backend if
-> xend is running.
-> 
-> The xend and xapi toolstacks do not currently use libxl.
-> 
-> 3. Only Xen versions 4.0.x through 4.2.x are vulnerable.
-> 
-> 4. Only HVM domains can take advantage of this vulnerability.
-> 
-> 5. Systems which have a functioning IOMMU are NOT vulnerable.
-> 
-> MITIGATION ==========
-> 
-> This issue can be avoided by not assigning PCI devices to HVM
-> guests when there is no functioning IOMMU.
-> 
-> NOTE REGARDING LACK OF EMBARGO ==============================
-> 
-> This issue was disclosed publicly on xen-devel; the person
-> reporting it did not appreciate that it was a security issue.
-> Additionally the patch to fix the issue was already applied to the
-> respective branches (in particular resulting in Xen 4.3 not being
-> vulnerable).  Under the circumstances the Xen.org security team do
-> not consider that this advisory should be embargoed.
-> 
-> Also, we apologise for the delay to this advisory message, which
-> was due to an oversight by us.
-> 
-> CREDITS =======
-> 
-> George Dunlap found the issue as a bug, which on examination by
-> the Xenproject.org Security Team turned out to be a security
-> problem.
-> 
-> RESOLUTION ==========
-> 
-> Applying the appropriate attached patch resolves this issue.
-> 
-> xsa61-4.1.patch             Xen 4.1.x xsa61-4.2-unstable.patch
-> Xen 4.2.x, xen-unstable
-> 
-> $ sha256sum xsa61*.patch 
-> 19caa5f1ce91ebc908c899b8be216034dc67c3e890f59597f659caed41d468f6
-> xsa61-4.1.patch 
-> 5898926de86dd6a27f8e34a2c103e3d0c6267b1d7d947434f294423ed3b0eefd
-> xsa61-4.2-unstable.patch
 
-Please use CVE-2013-4329 for this issue.
+So it states for the first one:
+
+Problem Description: TYPO3 bundles flash files for video and audio
+playback. Old versions of FlowPlayer and flashmedia are susceptible to
+Cross-Site Scripting. No authentication is required to exploit this
+vulnerability.
+
+so it sounds like embedded third party software, there appear to be
+some older CVE's for flowplayer, I'm guessing it might be one of
+these? Can the typo3 people please provide details (e.g. code patches)
+of exactly what they fixed?
+
+For the second one "Vulnerable subcomponent: Backend File Upload /
+File Abstraction Layer" code execution please use CVE-2013-4250 for
+this issue.
+
 
 
 - -- 
@@ -102,17 +67,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSL0lgAAoJEBYNRVNeJnmTpKoP/RlZ1GcBYEZ/MAhKCgxitY0v
-COlxa8gXcfPx6wbf4BOwn15/+lIYW7VRAdTU5AeGjEag0GpOdXIXkI3VJM1VYuYS
-7fpjPAIaSPHHuccONMl5B5kR3IQIh9DLSlBY8TEZY9ZJALvb70cEnHibuC+6IDb6
-tnWOAOT+I6sRd1WcYyPGxjz5Q5D29fid34js767+2eCB+aPTPiuEu0MXvWOONjv7
-CHjFGyrwrbDyOyi5ly3VqluVXho4p+S4U8UsnMZ7bR4wT9QCZiZ6xi+Ay/XZxQJK
-jgnIJOBjfFFrIiOYOr6v/lambXOnaEZDKRJ9XBTXKkc2uO3iHO/h7aBIBRvO9x4H
-V/TqH0XX1+DUWh60tLmBgtnEuBRek73+HuiejquhtUEKhAFsz23B7Sgnc8llIuAQ
-OvEU3Clfh79byZaA7HxEQOK6YEJC7tj5K9u/DxsJDr/QZqod3Q7eXNtW2Vobohpe
-GXDKJhQ3DnmtETPj34FsSZPRBaEfqv1qjRKpFugE117WhfRGmXY8o3dgsLmJv+GK
-c3BbSq3RCCNrss0fUQWzyjUb1qGSFlPoxPi3t5RT+fzEAdAPi5IdKrFfBB7kQH5J
-4zxEn15qQG0RPK2n2RkDg9kKKMDO2UmVKN4OpyUpEmIsfHHpkWcNH2pfU4t18xAW
-flXo4tBjVrPv1jYNtg1T
-=VF8t
+iQIcBAEBAgAGBQJSDEXPAAoJEBYNRVNeJnmTzckQAKDUpbvvvQhdHSduMbtepLlf
+wKANId9ZC0b2s9KT0Q0uT7Ez5sOpxM/xM3Q08LjmXMOo6+IjujRDAK1BFk9kr1Rr
+xu2kMeDGDemKHdRHdkFJFnzPJJLaF05Mmr8r9j8lkakVrZHIDbNcem66Q4/KMVhl
+EnJhQA/Ja8hkOgt4xpUYEFcGLuZDfmiUI7aIsUjWgDKp14QpX5kOBEucqlcSVRed
+9pGsZYksMILHrpMb4QX9SoHBgIzvGqiZ2Z/rEoKl4Kp12eZ0Ua5aj/YP7X9VUndy
+NkLcXclUmevlW55uCM/8U0rlYk1rJXLHJyxlYgI5PpTZSJAiaAW8eWfISdY0WNLM
+AbHG1bQRtxVaNa2ztXz+DxInIV2gdQQf2kZWZ/13bCDbmr+/R73O3RhbOCyynmR2
+stDfr1ymm8gViiVX0lPrEdOTy6tQvH+NYigc/SlbXby83fB7D6wTPKTpKTBwAGti
+yTaHyhRxpbs+T5OYIxB+iAumJPQcL9fLS5gT20vv5t9d1N+CYGgR/QmloBB2kfDH
+Sa/qqlKipjHyflW2SqNA/pdtDSq+Th2085hs5sK7iF1mxzO8wTOe3WqIuyZWVTte
+0b1e2725wq6edaYUEL8xcSWw8P3tGWXeE8eHjOl/qSDoCt5Ek3au71fmpRhc3APd
+q0o2EO+B5pWpiszZDp1E
+=ffmK
 -----END PGP SIGNATURE-----
