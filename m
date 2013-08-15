@@ -1,61 +1,146 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/10
-Message-ID: <52139C03.3050400@suse.de>
-Date: Tue, 20 Aug 2013 18:40:35 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: Florian Weimer <fweimer@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: X.509 name constraints and potential interpretation conflict
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/12
+Message-Id: <E90E6268-1B35-452F-9514-C56FE93DDDA8@stufft.io>
+Date: Thu, 15 Aug 2013 06:40:14 -0400
+From: Donald Stufft <donald@...fft.io>
+To: oss-security@...ts.openwall.com
+Subject: Re: HTTPS
 Content-Type: text/plain; charset=utf-8
 
-Florian Weimer wrote:
-> NSS CA roots are widely reused, but the implementation deviates from
-> RFC 5280 in such a way that NSS can safely accept additional root
-> certificates as long as they have name constraints.  I think this is a
-> bug in RFC 5280, and the fix in NSS is sound, but it could still
-> result in surprising behavior if the root store is used unfiltered
-> with TLS implementations that lack this bug fix.
->
-> For reference, here is the RFC 5280 errata I submitted:
->
-> --------------------------------------
-> Type: Technical
-> Reported by: Florian Weimer <fweimer@...hat.com>
->
-> Section: 4.2.1.10
->
-> Original Text
-> -------------
->     DNS name restrictions are expressed as host.example.com.  Any DNS
->     name that can be constructed by simply adding zero or more labels to
->     the left-hand side of the name satisfies the name constraint.  For
->     example, www.host.example.com would satisfy the constraint but
->     host1.example.com would not.
->
->
-> Corrected Text
-> --------------
-> [Add this to the paragraph]
->
->     If an implementation extracts DNS names from the subject
->     distinguished name, DNS name restrictions MUST be applied
->     to these names as well.
 
-Do you have an idea in mind how to do that in practice? E.g with
-openssl? Checking name constraints and the logic of verifying server
-identifiers is at different layers there. Ie openssl makes sure
-certificate name constraints on subjAltNames are applied but the special
-interpretation of the CN as host name is left to the applications
-unfortunately.
+On Aug 15, 2013, at 6:31 AM, gremlin@...mlin.ru wrote:
 
-An alternative approach would be to disallow that legacy CN
-interpretation as host name in chains that use name constraints.
+> On 15-Aug-2013 01:22:33 -0600, Kurt Seifried wrote:
+> 
+>>>> everyone should be enabling HTTPS where possible,
+> 
+>>> Very dangerous mistake. HTTPS should be used only for
+>>> non-anonymous access, otherwise plain HTTP is preferred.
+>>> In any case, let the users choose whether they want to
+>>> use it.
+> 
+>> This is literally the first time I've ever heard anyone say this,
+>> I'm curious though, can you explain your reasoning/evidence for
+>> this statement?
+> 
+> The reasoning is simple:
+> 1. Not all interceptions and modifications are evil.
+> 2. Some sites are much more evil than interceptors.
 
-cu
-Ludwig
+#1 is technically true but because there's no way to programmatically
+determine if a interception or modification is "evil" systems should
+default to disallow and allow the user to allow it (by trusting another
+CA for instance for the interceptor).
 
--- 
-  (o_   Ludwig Nussel
-  //\
-  V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+I don't understand how #2 relates to HTTPS at all, TLS doesn't state
+anything about the safety of the server you're connecting to only
+the safety of the transport. 
+
+> 
+>> You do realize HTTPS can be just as "anonymous" (ignoring the
+>> fact you have the persons IP/time stamp, browser string, etc =)
+>> as normal HTTP.
+> 
+> Yes. And, just in case: HTTPS is used to bypass content-filtering
+> proxies (ones that cut ads|malware|etc).
+
+This is a false dichotomy. There are plenty of ways to do content-filtering
+proxies with HTTPS in a way that will still work.
+
+> 
+>>> Compare to FTP vs SCP/SFTP: first is for getting files from
+>>> anyone (into /incoming) and giving files for everyone (from
+>>> /pub), second is for transferring your own files. Obviously,
+>>> I presume FTP daemon to be configured for anonymous-only access.
+> 
+>> Now I'm just confused.
+> 
+> Why?
+> 
+>>>> intercepting and modifying HTTP is trivial.
+> 
+>>> Yes. But intercepting and modifying HTTPS requires just an
+>>> ability to issue client-trusted certificates (sufficient for
+>>> 99% of HTTPS applications), so the content signing should
+>>> always be preferred over distributor validation.
+> 
+>> And now I'm seriously confused. For clients that do not validate
+>> hostnames it would be true that you could get an HTTPS cert for
+>> any domain name and use it,
+> 
+> The valid HTTPS certificate doesn't mean getting valid content - it
+> only means you've connected to (most likely) the right server.
+
+It means you've connected to the right server and no attacker in the
+middle has modified the data (nor can they see the data). It makes
+no assertion about if the data the server gave you is correct, it only
+protects the transport.
+
+> 
+>> this would also work for the case where you first use HTTP to get
+>> a redirect to HTTPS
+> 
+> The most annoying behavior... Should be used only when the visitor
+> wants to log in. IMHO.
+
+This doesn't reflect the state of browser security. You basically need
+forced HTTPS or a number of attacks are possible against a typical site.
+
+> 
+>> (the attacker intercepts the HTTP and sends you to an attacker
+>> controlled HTTPS).
+> 
+> Unlike SSH, the HTTPS clients (which usually are the browsers) do not
+> cache the visited servers' certificates, fully relying on issuing CA's
+> honesty. This introduces a risk of false sence of security.
+> 
+> Hmmmm... It seems that keeping self-signed certificates is even more
+> safe than relying on "trusted" CAs…
+
+Or you can use public key pinning via headers like "Public-Key-Pins",
+or TLS extensions like TACK. And if you don't want to trust the CAs
+there are also solutions like convergence.
+
+> 
+>> Hence ALWAYS using HTTPS!
+> 
+> Ok. But NEVER force the visitors of your site to use it :-)
+
+Completely disagree. HTTPS should by the default and all traffic
+should be forced over it.
+
+> 
+>> I really suspect you have misunderstood what encrypted network
+>> protocols are for. Typically they address three major problems:
+>> integrity (attackers modifying traffic en route), confidentiality
+>> (by encrypting it)
+> 
+> Do public data really need that?
+
+Just because data is public doesn't mean you don't want to be assured
+that nobody has modified the data between the server and your
+computer. It also completely misses the fact that just because data is
+public it doesn't mean you want third parties to be able to see that you're
+accessing that data.
+
+> 
+>> and as an offshoot of these two properties, and the magic of key
+>> exchanges you can also handle authentication securely, if desired.
+> 
+> How many sites do use the HTTPS client certificates for authentication?
+> My estimation: less than 1%, as most use trivial username + password
+> over the encrypted connection.
+> 
+> 
+> -- 
+> Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+> GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+> GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+
+
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
