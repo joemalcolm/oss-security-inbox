@@ -1,104 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/7
-Message-ID: <51F37172.6080702@redhat.com>
-Date: Sat, 27 Jul 2013 01:06:26 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>, "security@...pal.org" <security@...pal.org>
-Subject: Re: CVE request for a Drupal contributed module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/17
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF26FC0BBC@IMCMBX01.MITRE.ORG>
+Date: Thu, 15 Aug 2013 16:51:20 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "kseifried@...hat.com" <kseifried@...hat.com>, Marcus Meissner <meissner@...e.de>
+Subject: RE: rubygems insecure download (and other problems)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Kurt asked:
 
-On 07/22/2013 12:22 PM, Forest Monsen wrote:
-> Hi Kurt, regarding CVE assignment and your request for
-> clarification at 
-> http://www.openwall.com/lists/oss-security/2013/05/16/2:
-> 
-> On Wed, May 15, 2013 at 6:41 PM, Kurt Seifried
-> <kseifried@...hat.com> wrote:
-> 
->> This sounds like two separate issues:
-> [...]
->> can you send me the code patches fixing this so I can make sure
->> it gets the correct SPLIT/MERGE treatment? Thanks.
-> 
-> Yep - Diffs for the commits that fixed both of these issues are
-> at:
-> 
-> Drupal 6:
-> http://drupalcode.org/project/ga_login.git/commitdiff/dd04ea3 
-> Drupal 7:
-> http://drupalcode.org/project/ga_login.git/commitdiff/c365097
-> 
-> For the first issue,
-> 
-> 
->> Accidental removal of account configuration.
->> 
->> In certain scenarios, Google Authenticator login incorrectly 
->> determines the user's account name. The change in account name
->> could cause the two-factor authentication for existing accounts
->> to be lost, allowing users to log in using just username and
->> password.
->> 
->> This vulnerability is mitigated by the fact while Google
->> Authenticator login's additional verification is by-passed, a
->> username and password are still required to log in.
->> 
-> 
-> It looks like the maintainer now concatenates a "Realm" (site name)
-> and suffix with the Drupal username to form the GA username. Any
-> inconsistency there will invalidate earlier credentials.
+>Can someone generate a list of all the client software that pulls gems
+>insecurely from rubygems.org and post it here? thanks. I can't assign
+>CVE's to services, only to software.
 
-Please use CVE-2013-4177 for this issue.
+Just some quick thoughts here...
 
-> For the second,
-> 
-> One Time Password (OTP) replay
->> 
->> If an attacker can intercept a login request with a username,
->> password and OTP, an attacker could use this same data again to
->> login to the website.
->> 
->> This vulnerability is mitigated by the fact that an attacker who
->> can intercept a login request with this level of detail can
->> usually also intercept the ongoing session identifying token.
->> 
-> 
-> It looks to me like the maintainer now implements a skew value to
-> either (in the case of a time-based one-time password token) review
-> only a certain range of timed tokens on either side, or (in the
-> case of an HMAC-based one-time password token) to again test a
-> range of tokens.
-> 
-> I'll copy the Drupal Security Team, in case I haven't understood
-> it correctly or if further clarification is necessary. Thanks.
+Downloading and automatic execution of code without ensuring its integrity does have precedent in CVE, as already noted.
 
-Please use CVE-2013-4178 for this issue.
+However, we might want to further narrow CVE's scope to issues in which:
 
-> Best, Forest
-> 
+1) The rubygems.org site is hard-coded or default, and
+
+2) The installation/update is performed automatically (or semi-automatically) in a way that the sysadmin cannot directly influence or otherwise validate the code.
+
+For item 1, we don't want to assign CVEs if the admin *could* configure something to use unsafe sources, but the default is safe.
+
+For item 2, maybe there are cases where the gem's sysadmin is expected to download the gem and compare the download's hash against a separately-published list of hashes.  (I don't know if this is the case.)  In this context, there is clearly an expectation for the sysadmin to perform the verification, and we don't often assign CVEs for cases when sysadmins do not follow vendor instructions.  If the product's installation documentation and/or vendor web page includes some kind of validation step (such as hash-checking), then this might not qualify for a CVE.
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Marcus Meissner said:
 
-iQIcBAEBAgAGBQJR83FyAAoJEBYNRVNeJnmTVCgQAMGesZzGhReWut7B2WKjMrz6
-lRGEaQxlAnqjtknh8Zitcnf6imdojHlKRbSaY1rxYBus67wNy2zitYsSNxrH7MEd
-U5kGWPR8NqyvOi01U/KPiQESFxEpeSBPTEiUruAUIlXMW7kokb5mb+NA49L8HpRH
-DL6OGiMa80NyCfaSIDkAvC8Z4lVcYE1zV/68aV3mWkUwKM/uxoFrRlcvplgDLc+0
-efQlZg3DFviL+ShIwMq9bItW6Kix71/+gHXfEbNv4R75qHJEbWka6Ts8siMVgR9R
-2MwyuksNlnzM5SLuo9NyhVHW5ZqxtA/qs6GTwM8nnKtG0R0HL8AlRvG7VMvyxu3O
-ozCj9ZGuWFm3fi1qLTKW6Udq0+VidQ7xf3Xg/c6AQivcdqdhuGgNjaWDNGe5LAdB
-UOE9YSs+k+74y/aW+GxVyn14LglkSpzLy+eY8w3JfNWnjF6w9uCeSktIaa9H9/Ko
-aa4n2kTPG/+0twHg4gg/rd8Smari4CAkBMzcWB59siZGgTKRBZ3Wu2tPvB0UDMgq
-FUPsvU0EjOhLn4SZalc79r4mwBzNozEzDk9GhbmkfHFVQ56cr3+eltc8pZgfVuEw
-+mS58xTwwhAeQOz76K7WWQqxcqj5Ow+psoBy23WHTw1VOvkHudE6iZZ73lpWg4E2
-nTWskopuCzm2VIotNRbb
-=Yftf
------END PGP SIGNATURE-----
+>I think a "package management" solution that installs software on a system should
+>have good security measurements by default these days, and trivial man-in-the-middle
+>attacks should not be possible.
+
+I think I agree.  This is not like the "old days" when there was no other recourse (or when there was a dependency on the sysadmin to validate hashes or do other integrity checks).  The increasing connectedness of software, and especially the increasing automation of code distribution or upgrades, makes this a bigger problem than it used to be.
+
+- Steve
+
