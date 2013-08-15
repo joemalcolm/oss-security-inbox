@@ -1,55 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/1
-Message-ID: <517489B0.9010705@archlinux.org>
-Date: Mon, 22 Apr 2013 10:52:00 +1000
-From: Allan McRae <allan@...hlinux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/18
+Message-ID: <20130815185408.GA2436@gremlin.ru>
+Date: Thu, 15 Aug 2013 22:54:08 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+Subject: Re: HTTPS
 Content-Type: text/plain; charset=utf-8
 
-On 22/04/13 09:27, Alistair Crooks wrote:
-> On Sun, Apr 21, 2013 at 12:39:39AM +0400, Solar Designer wrote:
->> Hi,
->>
->> I just found this recent blog post by Allan McRae of Arch Linux:
->>
->> http://allanmcrae.com/2012/04/how-secure-is-the-source-code/
->>
->> Thank you for doing this, Allan!  Are you contacting the upstream
->> authors to request that they start to properly sign their releases?
->> (I've been doing that on some occasions, sometimes with success.)
->>
->> I think that placing both "MD5 checksum provided on same site as
->> download" and "PGP signature, key difficult to verify" in the same
->> "yellow" category is inconvenient for us.  "MD5 checksum provided on
->> same site as download" only helps verify downloads from mirrors against
->> the master site, whereas "PGP signature, key difficult to verify"
->> achieves a lot more - once a distro is already including the package
->> (and has already taken the risk of it having been tampered with), then
->> verifying further updates to the package becomes almost as reliable as
->> it would have been with proper signing (with a "readily verifiable" key).
->> So we need four categories, or simply "MD5 checksum provided on same
->> site as download" should be in "red", not in "yellow".
-> 
-> The BSD ports and packages systems have had this checking in place
-> since day 1, and with different checksums - FreeBSD now use sha256,
-> pkgsrc uses sha1 and rmd160, and I don't know what OpenBSD uses;
-> the digests are all held as part of the packaging system itself.
-> 
-> One of the side benefits of this is recognising when upstream changes
-> tarballs without changing version numbers.
-> 
-> I think the Arch Linux people could leverage the work done here.
+On 15-Aug-2013 06:40:14 -0400, Donald Stufft wrote:
 
-Arch Linux does have similar system (our package building infrastructure
-uses PGP signature verification if available, any of a variety of
-checksums).
+[In general, I agree with skipped text - the initial reason for
+starting this subthread was different]
 
-The point of my post was that if upstream does not provide anything when
-they release a tarball, then they really do not help that much...  It
-just verifies that the source the packager downloaded is the same as the
-source you have.  It does not save you if the source was altered before
-the packager obtained it.
+ >> The valid HTTPS certificate doesn't mean getting valid content -
+ >> it only means you've connected to (most likely) the right server.
+ > It means you've connected to the right server and no attacker in
+ > the middle has modified the data (nor can they see the data). It
+ > makes no assertion about if the data the server gave you is
+ > correct, it only protects the transport.
 
-Allan
+Exactly! Now, the next question is: against _what_ does it protect
+the transport?
 
+For example, if I want to publish something really interesting for
+list subscribers (say, an image at http://hren.tebe.ru/noise.png
+which actually is just a random data), then HTTPS will add nothing
+except our (and all transit) ISPs wouldn't know what did you really
+downloaded from that server, but http://hren.tebe.ru/noise.png.sig
+(or just my note that given file has the size of 6895 bytes and its'
+SHA1 hash is 2542dd740a6030cc8c98ae4d8ab012bec92fce46) together with
+this signed message will prove its' integrity.
+
+ >>> this would also work for the case where you first use HTTP to
+ >>> get a redirect to HTTPS
+ >> The most annoying behavior... Should be used only when the
+ >> visitor wants to log in. IMHO.
+ > This doesn't reflect the state of browser security. You basically
+
+... may...
+
+ > need forced HTTPS or a number of attacks are possible against a
+ > typical site.
+
+I think we'd agree that heavily depends on site's logic.
+
+ >> Hmmmm... It seems that keeping self-signed certificates is even
+ >> more safe than relying on "trusted" CAs?
+ > Or you can use public key pinning via headers like
+ > "Public-Key-Pins", or TLS extensions like TACK. And if you don't
+ > want to trust the CAs there are also solutions like convergence.
+
+Yes. But signing the sensitive data is much easier and allows that
+data to be copied elsewhere.
+
+ > >> Hence ALWAYS using HTTPS!
+ >> Ok. But NEVER force the visitors of your site to use it :-)
+ > Completely disagree. HTTPS should by the default and all traffic
+ > should be forced over it.
+
+I don't see any really good reason for _forcing_ that.
+
+ >> Do public data really need that?
+ > Just because data is public doesn't mean you don't want to be
+ > assured that nobody has modified the data between the server
+ > and your computer. It also completely misses the fact that just
+ > because data is public it doesn't mean you want third parties to
+ > be able to see that you're accessing that data.
+
+Then protect the data, regardless of the communication channel's
+protection.
+
+Untrusted channel may deliver valid data, and trusted channel may
+deliver invalid data. That's the only idea why I've started this
+subthread.
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+
+Content of type "application/pgp-signature" skipped
