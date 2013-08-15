@@ -1,40 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/2
-Message-ID: <524E46C1.6020900@redhat.com>
-Date: Thu, 03 Oct 2013 22:40:33 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/7
+Message-ID: <520C81B9.6000001@redhat.com>
+Date: Thu, 15 Aug 2013 01:22:33 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: A note on cookie based sessions
+To: oss-security@...ts.openwall.com
+CC: gremlin@...mlin.ru
+Subject: Re: HTTPS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-So this has been published:
+On 08/15/2013 12:38 AM, gremlin@...mlin.ru wrote:
+> On 14-Aug-2013 14:59:12 -0600, Kurt Seifried wrote:
+> 
+>> everyone should be enabling HTTPS where possible,
+> 
+> Very dangerous mistake. HTTPS should be used only for
+> non-anonymous access, otherwise plain HTTP is preferred. In any
+> case, let the users choose whether they want to use it.
 
-http://maverickblogging.com/logout-is-broken-by-default-ruby-on-rails-web-applications/
+This is literally the first time I've ever heard anyone say this, I'm
+curious though, can you explain your reasoning/evidence for this
+statement? You do realize HTTPS can be just as "anonymous" (ignoring
+the fact you have the persons IP/time stamp, browser string, etc =) as
+normal HTTP.
 
-http://maverickblogging.com/security-vulnerability-with-django-cookie-based-sessions/
+> Compare to FTP vs SCP/SFTP: first is for getting files from anyone 
+> (into /incoming) and giving files for everyone (from /pub), second 
+> is for transferring your own files. Obviously, I presume FTP
+> daemon to be configured for anonymous-only access.
 
-Basically it boils down to this: cookie based session handling where
-you don't store state data on the backend, but instead have a cookie,
-possibly with an expiration time coded into it can be used in replay
-attacks.
+Now I'm just confused.
 
-That's a problem, but also an inherent limitation of how such session
-handling works. The advantages are a stateless backend, no need for
-state DB, if you have many backends, especially distributed, logins
-just work no matter which server you connect to.
+>> intercepting and modifying HTTP is trivial.
+> 
+> Yes. But intercepting and modifying HTTPS requires just an ability 
+> to issue client-trusted certificates (sufficient for 99% of HTTPS 
+> applications), so the content signing should always be preferred 
+> over distributor validation.
 
-In both Drupal and Ruby on Rails case the security issues are documented:
+And now I'm seriously confused. For clients that do not validate
+hostnames it would be true that you could get an HTTPS cert for any
+domain name and use it, this would also work for the case where you
+first use HTTP to get a redirect to HTTPS (the attacker intercepts the
+HTTP and sends you to an attacker controlled HTTPS). Hence ALWAYS
+using HTTPS!
 
-https://docs.djangoproject.com/en/1.5/topics/http/sessions/#using-cookie-based-sessions
+I really suspect you have misunderstood what encrypted network
+protocols are for. Typically they address three major problems:
+integrity (attackers modifying traffic en route), confidentiality (by
+encrypting it) and as an offshoot of these two properties, and the
+magic of key exchanges you can also handle authentication securely, if
+desired.
 
-http://guides.rubyonrails.org/action_controller_overview.html#session
-
-the documentation can maybe be improved (especially mentioning
-HTTPS/HSTS to prevent sniffing of the cookie) but generally speaking
-this is covered, so no CVEs here.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -42,17 +61,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSTkbBAAoJEBYNRVNeJnmTnI8QAJyoi0yWRmTzVHUiwMx/mcSa
-eum+9cMtxLi/TvB7KMtXJqCE9tRZ11R8gCqLpzxyuKOnFUoh2pK0OSm9oz2r0nkK
-xUsshwcEy9a4Ih9ICdPUBo9APQ8LoW0rGCqACP/BjKSs41As1IiJzN/wAm/Oshmj
-8n66ERqdpTeQlYfQQqHsAk3mbI4k9kKvYnO6yMrQe2GJ5vPW97O3FiSqasg8oqvt
-rvO6tdTElKfYIbp9JdgduMsNwyXsTSHUf4j2yW71NJHYf1Rh/CkldG1Q69Y3gCAo
-huYRBL/vzN3vDPhFWufovS7iHjSDDc20Uorxu7OO7WKp30yk9OpZZh/hx5myHQhd
-kZiaA9Zc2MkW8Fum1+onAJUqVJuAg8CH0ChABorCNhepvAfptS32UNFr9eBLVpxy
-+YfXkMFV6aW9549SuUHOjOsXXNfctjaVx+e0gvPwYilCj5On8FlNoCCJGA1QtA3P
-9B6GCc8TfHd7+5wx3qOTMTJhbxUg2R6sZ+NLwxLYgjd+sImYnbRFBhjo+EtUXMEp
-iPWdsC6zXnFhciUcznf+Ggg3gNRVVkH9cZUnczmR4nFe2tT6Gu6B75juzXQWG4rq
-51Tl2TfiSGgVzSlHBksvtmJSBv9GO84JtH0hrI1u40h4HBvjJNJNZr8kILKIGXBu
-27G8kN5NeQh+oEYmIL9d
-=rjhT
+iQIcBAEBAgAGBQJSDIG5AAoJEBYNRVNeJnmTJSsP/2NEp83Rfm6OUNj9Ti7rQFsm
+ybBae1RsqoMOS0+IUwI67DldrTH/9Zh8JymaAPXrSASVKJ1/ZxbIP6Vg8rP+tDCF
+OMX3364kZDfF0+UvG0r1X1S9GJLF7GEXEoUT1n8mSQF6vX2k/pIj1clSfSHG6rcZ
+LX7Fh6v6Zb3PINK9QTzq0cDVAB+0X6PmKaXIVL1155yXuNV4zMenr8pdnVrJJVDS
+oURISFMMvPsrHT9ziwG9X8bqxfmUNCh77DR5yRHM5Ir/d0gfK7Eg76uyiDPYCKIp
+5fpIJcF2ujo2b7uVscQWjspWuTbD3Ns3zDC4VvydzT1W/H3Or98elS2e/5MMxr9K
+Inhh8giI7jQnyECjIxBygb2gVmu1WBITSpOMfwNtggyIqozoA3ItVMvtG6UZaAXJ
+0xq2Qb54eobzzNwgef2lzzq+CVvV7GfkTv1F/EJtzsWlYn0/a3cE/Cuq78uOqTnu
+wR1R/QvWJDhU0iTKNFUJTySUn3HVVWq9a8rrVOVEZJh4FVi2cU+wUBfUvs1+56Zf
+hlNDFtDpiawyajNSgZ0ALrLJHozY2Nc9J4r1joEhMG45flf1OyjVrE+qvWqqGNB+
+N3fycpRJHite7HN/Y/F4Yz6EuxdYlnbsquwDt7SaAj1HBElGsJeEK1Lp2KkvWe4D
+6aSxSVbOoCC0Yg/JjUdL
+=8cIv
 -----END PGP SIGNATURE-----
