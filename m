@@ -1,34 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/22/5
-Message-ID: <514C73F8.6030705@cpanel.net>
-Date: Fri, 22 Mar 2013 10:08:40 -0500
-From: John Lightsey <jd@...nel.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/1
+Message-ID: <520C45A4.5010006@redhat.com>
+Date: Wed, 14 Aug 2013 21:06:12 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mod_ruid2 before 0.9.8
+CC: Thijs Kinkhorst <thijs@...ian.org>
+Subject: Re: [CVE request] Django 1.4.6 security release
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-mod_ruid2 is a suexec style module for apache 2.0, 2.2 and 2.4, based on
-mod_ruid and mod_suid2 that allows the Apache webserver to run under the
-UID and GID of the user account that controls a virtualhost. It also
-includes functionality to chroot Apache into the virtualhost document
-root prior to processing HTTP requests.
+On 08/14/2013 02:11 AM, Thijs Kinkhorst wrote:
+> On Wed, August 14, 2013 09:42, Kurt Seifried wrote:
+>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>> 
+>> On 08/13/2013 11:31 PM, Moritz Muehlenhoff wrote:
+>>> Hi, this needs two CVE assignments: 
+>>> https://www.djangoproject.com/weblog/2013/aug/13/security-releases-issued/
+>
+>>> 
+>> Please provide links to the vulnerable code/fixed code thanks.
+> 
+> Links to the patches of the various affected release branches can
+> be found at the bottom of the quoted URL.
+> 
+> 
+> Thijs
 
-After processing each request, mod_ruid2 returns to its initial starting
-state. For uid/gid changes this is done using linux capabilities. For
-chroot, this is done by following a file descriptor that leads outside
-of the chroot.
+For the Issue: Cross-site scripting (XSS) in admin interface please
+use CVE-2013-4249 for this issue.
 
-In versions of mod_ruid2 before 0.9.8, the filedescriptor used to break
-out of the chroot is inherited by all Apache subprocesses. This allows
-CGI scripts to also to break out of the chroot by performing a fchdir()
-across the inherited file descriptor.
+For Issue: Cross-site scripting (XSS) in admin interface I'm going to
+consider this as security hardening unless someone tells me otherwise.
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-http://sourceforge.net/mailarchive/forum.php?thread_name=514C503E.4020109%40users.sourceforge.net&forum_name=mod-ruid-announce
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
+iQIcBAEBAgAGBQJSDEWkAAoJEBYNRVNeJnmTro0P/0qTtLEXOwV4O3uKtzR4pnWG
+9SAFxmGkZ619OdLgcn3Zk96LaGYBw9l/F2BSl0m9yBNUpnFi5lAvKREJMJBJmQcC
++kzW9Ta/7CP4DZfpH+ROACVD2rKVm857iX5ILFIp8RUcHN4Z1A5JtkR6s7ye0iiQ
+dflOtOUtDs9pv4rpL0lhDnlbw/nyW7VA50CmhT+8SyzXp89FKeelFn1r7Pyf3Rld
+wF7kVlz4ECziTVhXEQaWSR93j5pYBONnr6sQ6Sa+8vVnIZuOUimMED6a6VAc8wrl
+oHiNFz3RRpuUrtP2Jwfd8aPeAiJttRwQfWJm93tz3p0GrvdOs7U84tFoiXJgm9JY
+fdSOEChKMqkOjqcwMs1PJrWUKP4OlkKlpIG/Ha2cdzxFyIQYq6ofHdUuGU8t1t8q
+ep4XqlxbJhecLdRXPjdkm7qH6bKpccNk7F8V10yla+s2AwBqSQK3iiQkKI19Lalv
+yYxteoBGJutWbxz/NmCxS7KvxGJi/XpCdF+DDwdJTV7UauujSbBbOFe28U5rHXXw
+1Vzh/YjwJExNLUaIIe/57KTka4XuK0ldPwhV0rcHEN9LVPTYR7BZA0a2gVJl5exg
+SNmD7B4CRihAIt79+ocKgtuXUist6s7Mg54MYwOIog/fc1iRX6qptYnb4fTw3gxg
+PlvRGQKO/XEv5Q6n5J0Q
+=cIus
+-----END PGP SIGNATURE-----
