@@ -1,23 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/2
-Message-ID: <20130220004108.GT14748@dhcp-25-225.brq.redhat.com>
-Date: Wed, 20 Feb 2013 01:41:09 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/10
+Message-ID: <20130815084657.GA26928@kludge.henri.nerv.fi>
+Date: Thu, 15 Aug 2013 11:46:57 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifrie@...hat.com>
-Subject: CVE request -- Linux kernel: net: CIPSO_V4_TAG_LOCAL tag NULL pointer dereference
+Subject: Re: rubygems insecure download (and other problems)
 Content-Type: text/plain; charset=utf-8
 
-The skb argument to cipso_v4_validate() is NULL when called via the
-setsockopt() syscall. An local user able to set CIPSO IP options on the
-socket could use this flaw to crash the system.
+On Thu, Aug 15, 2013 at 10:37:45AM +0200, Marcus Meissner wrote:
+> So the implicit assumption "installing gems is secure" is violated here, which would
+> require a CVE I think.
+> 
+> Ciao, Marcus
 
-Upstream fix:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=89d7ae34cdda4195809a5a987f697a517a2a3177
+This deserves CVE. There is already CVEs for similar issues. CVE per software if
+I am correct not one CVE for all similar issues.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=912900
+Kurt, comments?
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
