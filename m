@@ -1,54 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/30/3
-Message-ID: <517F2245.1020703@redhat.com>
-Date: Mon, 29 Apr 2013 19:45:41 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/8
+Message-ID: <20130815011147.096b4c1e.reed@reedloden.com>
+Date: Thu, 15 Aug 2013 01:11:47 -0700
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: memcached remote seg fault
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: rubygems insecure download (and other problems)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/29/2013 07:18 PM, Kurt Seifried wrote:
-> So this was brought to my attention:
-> 
-> http://insecurety.net/?p=872
-> 
-> Memcached remote DoS (segmentation fault)
-> 
-> Works like a charm on Fedora 18 running Memcached 1.4.15 (the
-> latest stable).
-> 
-> Please use CVE-2013-2026 for this issue. I guess the good news is
-> that because memcached basically has no security most people run it
-> within closed networks, hopefully no-one is running these things
-> publicly like a lot of people used to
-> (http://www.sensepost.com/blog/4873.html).
+On Wed, 14 Aug 2013 14:59:12 -0600
+Kurt Seifried <kseifried@...hat.com> wrote:
 
-I'm officially full of fail today. Please REJECT CVE-2013-2026 (wrong
-year) and use CVE-2011-4971for this issue. No more CVEs today, I'm
-apparently to tired to do this right.
+> Problem #2:
+> it redirects to  production.cf.rubygems.org which is on cloudfront so
+> has certificate mismatch, so either users have to accept insecurity,
+> or... well there is no second choice =(.
+> 
+> https://www.ssllabs.com/ssltest/analyze.html?d=production.cf.rubygems.org
 
+It only does that if you use http://. If you use https://rubygems.org,
+it goes through S3 directly
+(https://s3.amazonaws.com/production.s3.rubygems.org/)
 
+See this code:
+https://github.com/rubygems/rubygems-aws/blob/master/chef/site-cookbooks/rubygems/templates/default/nginx_balancer.conf.erb
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+I do wish they would fix their cipher suite choices, though. :/
+
+~reed
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRfyJFAAoJEBYNRVNeJnmTDt0P/312an0AGHE9T2+Pc52dhBco
-lR5AxwD/hIZNO4JqArWZw52sWEpEaxK3DsqctSPFP+KN/zxP9bF/+72n10RHnq5A
-q9ajI4f7kwx942FpHrIhlUpohyHe6U9ifujvAO6PXww6r5gZe8X+1IN/8wQNcMRI
-h0/woRposai4L1vm9MDnBTMDPsQtr9MIzePefZkSRonDIAcCPV93rT6OEEO5Wckt
-H9lvrrhDaSRMfAOT3t8xwehYF9Sn2+i6OevbwBeeElOsBschZPMOfdbWPxhL3VPk
-DJLfl20YUTlDC9TP1QjMbeaRcsL6wxbIl/E8JZGSJu6GFjo95Le4As5WAm4jPXVB
-7DPV39N1HI/S1PgZzZY8AxjAIWk3wks6o8wJ/vAJQe9t+UAV0j3KKIeBis5D5KwX
-1k21AQRJf+knjwxhautcHgYE9TSZYVX258N0Esbr/x1NLm/ukyluoYNXL34Us0kN
-8JFd91ksJTVZN5dWVfrBSAU1QqNBXnXiwQGMnNAQ9p3N46xdcxyQSvKaKhnq1WIy
-eB9aHJKCeAP+stnErXVcQm5DiUGuPvmxN89EnMFR9v3TQwXyd7D3c5faqNZAY7/s
-s779TstPeQlbBAsS6oyKsk+Zij3FzmnKgom74rPZKaiIdmIbBoAZ3iUCKHBKOXEQ
-lNGDPYLQKkbpFE8oPnpB
-=kp0+
+iEYEARECAAYFAlIMjUMACgkQa6IiJvPDPVr9pACfcbDy0A0NtHZbXfLgkzahGPsU
++tMAn0g7YtbhyA7e7sGuFNudJNkKlae5
+=J+1x
 -----END PGP SIGNATURE-----
