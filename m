@@ -1,61 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/42
-Message-ID: <20130227200723.GB23388@kroah.com>
-Date: Wed, 27 Feb 2013 12:07:23 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/9
+Message-ID: <20130815083745.GQ16388@suse.de>
+Date: Thu, 15 Aug 2013 10:37:45 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Cc: kseifried@...hat.com
+Subject: Re: rubygems insecure download (and other problems)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 07:14:55PM +0100, Petr Matousek wrote:
-> On Wed, Feb 27, 2013 at 10:05:20AM -0800, Greg KH wrote:
-> > On Wed, Feb 27, 2013 at 05:13:06PM +0100, Petr Matousek wrote:
-> > > On Wed, Feb 27, 2013 at 06:48:34AM -0800, Greg KH wrote:
-> > > > On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
-> > > > > For starters, security@...nel.org submissions should be posted to
-> > > > > oss-security or any other security related public mailing list when
-> > > > > the
-> > > > > patch is being committed.
-> > > > 
-> > > > That's not going to happen, and you know that, to do so would be
-> > > > totally
-> > > > irresponsible of us and directly harm your users.  That's what
-> > > > vendor-sec (or whatever it is called now) is for.
-> > > 
-> > > linux-distros [1] is vendor-sec replacement for Linux related issues.
-> > > 
-> > >   [1] http://oss-security.openwall.org/wiki/mailing-lists/distros
-> > 
-> > Yes, sorry, I couldn't remember the name of it at the moment :)
-> > 
-> > > > Hasn't that been
-> > > > happening for a while now, or has no one been notifying that list of
-> > > > these issues?
-> > > 
-> > > Regrettably no. No notifications of Linux kernel security issues
-> > > reported to security@...nel.org mailing list to linux-distros (former
-> > > vendor-sec) are happening on regular basis. I (speaking as Red Hat
-> > > Security Response Team member in charge of kernel security issues) would
-> > > really appreciate the notifications. Even marking commits that were
-> > > committed as a result of security@...nel.org submission as sko
-> > > originated would be really helpful.
-> > > 
-> > > The linux-distros/oss-sec members can make sure that each issue gets CVE
-> > > and it's properly publicly communicated at the right time (preferably
-> > > when the issue is public -- when it is committed).
-> > > 
-> > > Should you consider this approach, is there anything I can help with to
-> > > make that happen?
-> > 
-> > Yes, I need someone to actually do this.  There used to be a Red Hat
-> > security team member that did this, or so I thought.
+On Wed, Aug 14, 2013 at 05:02:36PM -0400, Donald Stufft wrote:
 > 
-> That was most probably Eugene Teo, he's no longer in Red Hat. I am not
-> subscribed to security@...nel.org.
+> On Aug 14, 2013, at 4:59 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> 
+> > Signed PGP part
+> > I don't think this is CVE worthy, but it is worth fixing and not
+> > putting everyone at such risk:
+> > 
+> > https://bugzilla.novell.com/show_bug.cgi?id=834785
+> > https://bugzilla.redhat.com/show_bug.cgi?id=997179
+> > 
+> > Problem #1:
+> > install /etc/gemrc to install gems via https rather than http
+> > 
+> > everyone should be enabling HTTPS where possible, intercepting and
+> > modifying HTTP is trivial.
+> > 
+> > Problem #2:
+> > it redirects to  production.cf.rubygems.org which is on cloudfront so
+> > has certificate mismatch, so either users have to accept insecurity,
+> > or... well there is no second choice =(.
+> > 
+> > https://www.ssllabs.com/ssltest/analyze.html?d=production.cf.rubygems.org
+> > 
+> > - -- 
+> > Kurt Seifried Red Hat Security Response Team (SRT)
+> > PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> > 
+> 
+> pip has a CVE for downloading via HTTP, does switching the
+> gem to HTTPS actually make gem verify it?
+> 
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1629
 
-Mark Cox is subscribed to this, and has volunteered to now be forwarding
-this information to the linux-distros list.
+Some SSL certificate issues in Ruby were also fixed...
 
-Thanks for prodding this to happen.
+... testing by pointing rubygems.org to another host with https gives:
 
-greg k-h
+$ gem install foo
+ERROR:  Could not find a valid gem 'foo' (>= 0) in any repository
+ERROR:  While executing gem ... (Gem::RemoteFetcher::FetchError)
+    SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed (https://rubygems.org/latest_specs.4.8.gz)
+...
+
+I think a "package management" solution that installs software on a system should
+have good security measurements by default these days, and trivial man-in-the-middle
+attacks should not be possible.
+
+So the implicit assumption "installing gems is secure" is violated here, which would
+require a CVE I think.
+
+Ciao, Marcus
