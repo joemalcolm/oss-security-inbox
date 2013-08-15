@@ -1,93 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/24/5
-Message-ID: <20130724135852.GF2518@phenom.dumpdata.com>
-Date: Wed, 24 Jul 2013 09:58:52 -0400
-From: Konrad Rzeszutek Wilk <konrad.wilk@...cle.com>
-To: "Xen.org security team" <security@....org>
-Cc: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 60 (CVE-2013-2212) - Excessive time to disable caching with HVM guests with PCI passthrough
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/6
+Message-Id: <6A685AAD-0CB4-4246-88DC-4ADACF8CBF8A@stufft.io>
+Date: Thu, 15 Aug 2013 02:44:33 -0400
+From: Donald Stufft <donald@...fft.io>
+To: oss-security@...ts.openwall.com
+Subject: Re: HTTPS (was: rubygems insecure download (and other problems))
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 24, 2013 at 11:36:55AM +0000, Xen.org security team wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
->              Xen Security Advisory CVE-2013-2212 / XSA-60
->                              version 4
-> 
->    Excessive time to disable caching with HVM guests with PCI passthrough
-> 
-> UPDATES IN VERSION 4
-> ====================
-> 
-> Public release.
-> 
-> ISSUE DESCRIPTION
-> =================
-> 
-> HVM guests are able to manipulate their physical address space such that
-> processing a subsequent request by that guest to disable caches takes an
-> extended amount of time changing the cachability of the memory pages assigned
-> to this guest. This applies only when the guest has been granted access to
-> some memory mapped I/O region (typically by way of assigning a passthrough
-> PCI device).
-> 
-> This can cause the CPU which processes the request to become unavailable,
-> possibly causing the hypervisor or a guest kernel (including the domain 0 one)
-> to halt itself ("panic").
-> 
-> For reference, as long as no patch implementing an approved alternative
-> solution is available (there's only a draft violating certain requirements
-> set by Intel's documentation), the problematic code is the function
-> vmx_set_uc_mode() (in that it calls ept_change_entry_emt_with_range() with
-> the full guest GFN range, which the guest has control over, but which also
-> would be a problem with sufficiently large but not malicious guests).
-> 
-> IMPACT
-> ======
-> 
-> A malicious domain, given access to a device with memory mapped I/O
-> regions, can cause the host to become unresponsive for a period of
-> time, potentially leading to a DoS affecting the whole system.
-> 
-> VULNERABLE SYSTEMS
-> ==================
-> 
-> Xen version 3.3 onwards is vulnerable.
-> 
-> Only systems using the Intel variant of Hardware Assisted Paging (aka EPT) are
-> vulnerable.
-> 
-> MITIGATION
-> ==========
-> 
-> This issue can be avoided by not assigning PCI devices to untrusted guests, or
-> by running HVM guests with shadow mode paging (through adding "hap=0" to the
-> domain configuration file).
-> 
-> CREDITS
-> =======
-> 
-> Konrad Wilk found the issue as a bug, which on examination by the
 
-It was:
-Zhenzhong Duan
+On Aug 15, 2013, at 2:38 AM, gremlin@...mlin.ru wrote:
 
-> Xenproject.org Security Team turned out to be a security problem.
+> On 14-Aug-2013 14:59:12 -0600, Kurt Seifried wrote:
 > 
-> RESOLUTION
-> ==========
+>> everyone should be enabling HTTPS where possible,
 > 
-> There is currently no resolution to this issue.
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.10 (GNU/Linux)
-> 
-> iQEcBAEBAgAGBQJR77wrAAoJEIP+FMlX6CvZB5MH/ibfpjHuoGOIo7mWukld4NM5
-> UVIKC+rTrnkYhbF2f+xIM833+WAUjPuXZKZ6/EirDAPAAQCut2DouNvVdVnZ5cBx
-> rq0N8l9wy0/dq/7kCyI3kAGFlJ3VYz7aM5+TTPFGfO7Yq3ohUNu2EE4vv/t5KVjD
-> H4reh8UaA5QuRbdh3evCM9Vdt2syqi8JQwB5D2CJqrgAuFPwEVle8MLKSXWWb/+V
-> KUy+mRAb1tN3jbWIev0TZ7Hm3x61yO60/WFzsQzkmkd+qWvC5btkWDg05K5DHC+Q
-> yvFU3Y5u7J/ub00ZO4e9wjNDG5+ItQUK4xp8y5s65qx27P/eK9VLi8dvnHVMk04=
-> =HUbY
-> -----END PGP SIGNATURE-----
+> Very dangerous mistake. HTTPS should be used only for non-anonymous
+> access, otherwise plain HTTP is preferred. In any case, let the users
+> choose whether they want to use it.
 
+Why would HTTP be preferred? There's practically no downside to
+using HTTPS always.
+
+> 
+> Compare to FTP vs SCP/SFTP: first is for getting files from anyone
+> (into /incoming) and giving files for everyone (from /pub), second
+> is for transferring your own files. Obviously, I presume FTP daemon
+> to be configured for anonymous-only access.
+> 
+>> intercepting and modifying HTTP is trivial.
+> 
+> Yes. But intercepting and modifying HTTPS requires just an ability
+> to issue client-trusted certificates (sufficient for 99% of HTTPS
+> applications), so the content signing should always be preferred
+> over distributor validation.
+
+Security is always a game of margins. The set of people who can issue
+a certificate for a domain they don't own AND are in a position to exploit
+a user trying to install something is far smaller than the set of people who
+are in a position to exploit a HTTP connection.
+
+Content signing is preferred but that is a much harder problem to solve
+in general for a repository like Rubygems than simple using TLS which
+is a pretty good approximation.
+
+> 
+> 
+> -- 
+> Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+> GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+> GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+
+
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
