@@ -1,59 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/11
-Message-ID: <51AE3834.3060204@redhat.com>
-Date: Tue, 04 Jun 2013 12:55:48 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/13
+Message-ID: <520CBD99.2090208@redhat.com>
+Date: Thu, 15 Aug 2013 13:38:01 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marc Deslauriers <marc.deslauriers@...onical.com>
-Subject: Re: CVE Request: libimobiledevice insecure /tmp use
+Subject: Re: HTTPS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 05/31/2013 08:43 AM, Marc Deslauriers wrote:
-> Hello,
-> 
-> In libimobiledevice, the following commit:
-> 
-> http://cgit.sukimashita.com/libimobiledevice.git/commit/src?id=825d...
+On 08/15/2013 12:40 PM, Donald Stufft wrote:
+> On Aug 15, 2013, at 6:31 AM, gremlin@...mlin.ru wrote:
+>> 1. Not all interceptions and modifications are evil.
+>> 2. Some sites are much more evil than interceptors.
 >
->  Falls back to creating files in /tmp if $XDG_CONFIG_HOME and $HOME
-> are unset. In some distros, upowerd runs this as root, which causes
-> files in /tmp to be created and updated in an insecure manner as
-> root, allowing for symlink attacks.
-> 
-> Bugs: 
-> http://libiphone.lighthouseapp.com/projects/27916-libiphone/tickets/331-insecure-tmp-directory-use
+> #1 is technically true but because there's no way to programmatically
+> determine if a interception or modification is "evil" systems should
+> default to disallow and allow the user to allow it (by trusting another
+> CA for instance for the interceptor).
 >
-> 
-https://bugs.launchpad.net/ubuntu/+source/libimobiledevice/+bug/1164263
-> 
-> Could a CVE please be assigned to this issue?
-> 
-> Thanks,
-> 
-> Marc.
+> I don't understand how #2 relates to HTTPS at all, TLS doesn't state
+> anything about the safety of the server you're connecting to only
+> the safety of the transport.
 
-Please use CVE-2013-2142 for this issue.
+If you can't intercept, you don't know what's going on inside the TLS 
+channel.  A malicious peer might successfully attack your user, and you 
+could have thwarted the attack if you had access to plaintext 
+communications.  (Yes, I understand what that sounds like.)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+It used to be the case that little malicious content was hosted on 
+major (HTTPS) sites, so analysis based on IP addresses and domain names 
+was quite effective.  This might have changed, though—all that is needed 
+is one single, large HTTPS-enabled service provider that doesn't have 
+adequate abuse mitigation.  But I still don't think that this is a valid 
+reason not to use HTTPS.
 
-iQIcBAEBAgAGBQJRrjgzAAoJEBYNRVNeJnmT0E0P/09xKFWcrZspZ1bLdg/4MC8u
-KYnfJdOJ6nNVr+p3MdOnO2esZh6d8F5rfXvasAWLnV9scvRprEvjkWVvSDPDICJ4
-QhdMaptR59SFqdCPERYvDVGRN/Aj5b6S6t16TcpGvhsFH9ho6ESfj4XmxuZJLSac
-Q/5pwnoyX66ZkfAV7CAEKFqsNGJK5YMdfJuNYeOA8JdVcpY9HgNkb+UuSjGnZRGr
-7QUUmlVyKWUiz7EOZEisli6xAeAD20w/SCgsjS+5ldIa0mYudDTA1MZ51p2+diY6
-Kj3oAGw9NHLNFxpBXzdDHwY7TPlbUKNHrfYh5PhVCMSGmW+rb6ARHOsre0ozGEAg
-hJumTGI3CVyoFhe4x19A8TWaTaPAoWDcG+90DRUSOf3KD7oajcy34/0RQv17/1to
-iAsV2DGR0H2nEq5NN4pkmoUeoY28dJtBEu/AS9eTv9TJhULWOixuclJtoeXQeYXi
-gNIS75AWu57NCoXuM0ZrgukQJ9eaWsDg7QdCoUKJ1yDnPN4Wu68mFlpqfKtTAE6a
-La8haZiwHtr6M00J3UlHUyWenttxXtuacnotaRs+K6nIrieurlV4ZOIAr7CjrEOP
-/ru1YmxzVL/AJpAfW/f/chMnksT5a3zjh+gQTVVXYQblYWWP7/sggL13kPtz3nsb
-9at9trjzKcIzMKRm+CwS
-=B0+o
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security Team
