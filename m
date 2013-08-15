@@ -1,62 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/16
-Message-ID: <50FD8533.3040500@redhat.com>
-Date: Mon, 21 Jan 2013 11:13:07 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/14
+Message-ID: <20130815133457.GE3498@yuggoth.org>
+Date: Thu, 15 Aug 2013 13:34:57 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Wordpress 3.5 Full-path disclosure vulnerability
+Subject: Re: HTTPS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 01/21/2013 07:00 AM, Henri Salo wrote:
-> On Mon, Jan 21, 2013 at 11:29:45AM +0000, Giles Coochey wrote:
->> Wouldn't setting PHP "display_errors" be for development only,
->> the entire point of the directive is to give the developer more 
->> information 'in page'.
->> 
->> http://php.net/manual/en/errorfunc.configuration.php#ini.display-errors
->>
->>
->> 
-Quoting:
->> "This is a feature to support your development and should never
->> be used on production systems (e.g. systems connected to the 
->> internet)."
+On 2013-08-15 14:31:19 +0400 (+0400), gremlin@...mlin.ru wrote:
+[...]
+> Unlike SSH, the HTTPS clients (which usually are the browsers) do
+> not cache the visited servers' certificates, fully relying on
+> issuing CA's honesty. This introduces a risk of false sence of
+> security.
 > 
-> You are correct. No CVE, but WordPress should still fix this.
-> Please note that some configuration errors still get CVE, but this
-> is not one of those in my opinion/knowledge. Path disclosures are
-> usually low-priority issues.
-> 
-> --- Henri Salo
+> Hmmmm... It seems that keeping self-signed certificates is even
+> more safe than relying on "trusted" CAs...
+[...]
 
-It's less about severity (there are actually CVE's with a CVSS2 score
-of 0), and more about documentation in this case. Setting
-"display_errors" to "On" for PHP is an EXPLICIT security NONO and
-generally well known (and the default is "Off"), so basically this is
-a "don't point the gun at your foot and pull the trigger because it
-will hurt" situation.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ/YUzAAoJEBYNRVNeJnmTIKAP/AxsgsBW9HEKF9H9GXgtg/lv
-47f+OlN6RXcD42cNvc++aguFHRQ4nLvxJszV8jthXAwLqZvWAKCbQgb5rpCrp09M
-wq7wStv9vUmTF4/UPZFvw+jXllDFNwrAO9ugYHdMr5nBTaM/gOim1kD9Q/SvaqaN
-xH+piAb9C7+mFqzVRQslhTie+Ps05L2jq9pFNfgBgVSbjwJRCrcvtNkRc0AHajKf
-I4xyb4EgXMGBxvKvQIFpHZcIeTjxQo5JlbbkMoliF8kdO97gXkNL6wwPo2Xo1uPV
-y95cAslDfV1BUJ/4CpFLcxtrLCoHhyA9IpQi10CBrNW107pxaRSG3WWx79BD80vR
-YVNFNH/Waq0BqRGwJ2j3amyf7xvm/ziBPbQhmGQWLLDcvD2dUDhjcBjN/sNcETap
-WWvXwDXnryJHErVyaC7C2n34bzPHQ38RbhWTFbybJOS9egQOPHXGo+HBUy8lspew
-SF9jumMnrMtMPZoJYO2s+djXsXVIaibKKdCteKl+m0+S0uxHCFuMlBmUqMZ3nWAN
-ThLiTjTeA58S0WySfeukLaxNVH9YJE9ETYpztGM3NMg+LeUOaG/W3Rh5QWRAn8wK
-3Udm6/ZiOFG0u7ebfReCPOyawuDhRiTqHavQDxdz6bD4R0mTrvvtvfMOOPKLhOLg
-KfFQhww05tRUEXR1crGJ
-=Xgak
------END PGP SIGNATURE-----
+Dragging this back onto the original topic, hopefully, the above
+concerns are far less relevant for a tool focused on downloading
+packages from a single site. The gem utility could absolutely pin
+its validation expectations to a single signing authority or even to
+a single server certificate (and make it a configurable list to
+support private package repositories and mirrors where desired). The
+transport security implications for a system with basically one
+distribution endpoint offer significantly different solutions than a
+many-to-many association like Web browsing.
+-- 
+{ PGP( 48F9961143495829 ); FINGER( fungi@...ulhu.yuggoth.org );
+WWW( http://fungi.yuggoth.org/ ); IRC( fungi@....yuggoth.org#ccl );
+WHOIS( STANL3-ARIN ); MUD( kinrui@...arsis.mudpy.org:6669 ); }
