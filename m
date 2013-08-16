@@ -1,54 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/23/5
-Message-ID: <51285803.3040403@redhat.com>
-Date: Fri, 22 Feb 2013 22:47:47 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/16/4
+Message-ID: <20130816105834.GB20884@gremlin.ru>
+Date: Fri, 16 Aug 2013 14:58:34 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: Cve request: tomcat world-readable logdir
+Subject: Re: HTTPS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 15-Aug-2013 13:34:57 +0000, Jeremy Stanley wrote:
 
-On 02/22/2013 05:59 AM, Agostino Sarubbo wrote:
-> Hello,
-> 
-> Tomcat 7 have a world readable log/logdir:
-> 
-> drwxr-xr-x 2 ago  ago  4096 Feb 22 13:50 .
->  drwxr-xr-x 8 root root 4096 Feb 22 13:50 ..
->  -rw-r--r-- 1 ago  ago  5919 Feb 22 13:51 catalina.2013-02-22.log
->  -rw-r--r-- 1 ago  ago     0 Feb 22 13:50
-> host-manager.2013-02-22.log
->  -rw-r--r-- 1 ago  ago     0 Feb 22 13:50 localhost.2013-02-22.log
->  -rw-r--r-- 1 ago  ago     0 Feb 22 13:50
-> localhost_access_log.2013-02-22.txt
->  -rw-r--r-- 1 ago  ago     0 Feb 22 13:50 manager.2013-02-22.log
-> 
-> I'd like to have a confirm on what is the behavior on the other
-> distros because it could be gentoo-related.
+ >> Unlike SSH, the HTTPS clients (which usually are the browsers)
+ >> do not cache the visited servers' certificates, fully relying
+ >> on issuing CA's honesty. This introduces a risk of false sence
+ >> of security.
+ >> Hmmmm... It seems that keeping self-signed certificates is even
+ >> more safe than relying on "trusted" CAs...
 
-Please use CVE-2013-0346 for this issue.
+ > Dragging this back onto the original topic, hopefully, the above
+ > concerns are far less relevant for a tool focused on downloading
+ > packages from a single site. The gem utility could absolutely
+ > pin its validation expectations to a single signing authority or
+ > even to a single server certificate (and make it a configurable
+ > list to support private package repositories and mirrors where
+ > desired). The transport security implications for a system with
+ > basically one distribution endpoint offer significantly different
+ > solutions than a many-to-many association like Web browsing.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Yes - that's exactly the point why I started this subthread: signing
+files is much more important than forcing people to connect via HTTPS.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRKFgDAAoJEBYNRVNeJnmTNCoP/i9b4pJnVxGFxGyotDh/m8jy
-/gCFHhLudK7w+i/5uDhYIPafANXU3NEZRPJqGF5E2NZOpSltXo+MgvxI33szlOGC
-nVEPWtrm71vLnFaPoTTvMBQJM/XKX2SzSoh4jiHZpYto4bPmcqX0T22Nl3xKVsK5
-LD1YhnzlPiM8CJ26V3SN0ms6mRA841LvFK/pa4YxQ6bMs6hXYKVSdL3ouyxbBu36
-5BPpaRCnVOc1GLgCDvwhyml4AkA0vabyvV7iXZX35tfDCiV/8PpQhOnb6mA0xRDN
-SP3NK+h0f5TiyBvztBZGNT0TD/NN8kZleXup3k4NBopQ0GOwSyuFGevX7Bxht2Qy
-XCQv/8W2HtIx/GTzF3TDzD7l3xYS/Xj+0cSkikw3te9Rkov4YtVwJ06DA3pRwmqm
-rCK63Ig8tSTNTQhjEz/ch1Y7ohSq2TL3NcPpGnZcaluwF06acPVmYmfakEJwCnur
-VocgcMRqyQBnYse1/IKUQdzcRvfNtSO/ucJkqyLNhxXqONacViNf+HtIsfOaSelh
-qmTdaHbO6HntZXJXSTeV6ZASnUgQAIWsn108ZQwuuVlE91khPN8HzbJm8xsjl8tM
-YV3bGBrDe0fbQ3LaVlIFmooR94MUsr/9feCOoWFOgh58knE/RU2qffBsro5fCEM8
-fRYBuVzcB7fH9MeyW2Xq
-=mL9N
------END PGP SIGNATURE-----
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
