@@ -1,119 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/30/5
-Message-Id: <577E4BA0-C208-447A-876E-C49D032E716A@stufft.io>
-Date: Tue, 30 Jul 2013 02:28:05 -0400
-From: Donald Stufft <donald@...fft.io>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Insecure Software Download in pip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/16/5
+Message-ID: <20130816110748.GX25525@dhcp-25-225.brq.redhat.com>
+Date: Fri, 16 Aug 2013 13:07:49 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com, Kurt Seifried <kseifrie@...hat.com>
+Subject: Re: CVE Request: linux-kernel priviledge escalation on ARM/perf
 Content-Type: text/plain; charset=utf-8
 
-
-On Jul 30, 2013, at 2:21 AM, Kurt Seifried <kseifried@...hat.com> wrote:
-
-> Signed PGP part
-> On 07/27/2013 01:10 AM, Donald Stufft wrote:
-> > 
-> > On Jul 27, 2013, at 3:08 AM, Kurt Seifried <kseifried@...hat.com>
-> > wrote:
-> > 
-> >> On 07/25/2013 03:09 AM, Donald Stufft wrote:
-> >>> I'd like to request a CVE for pip 
-> >>> (https://pypi.python.org/pypi/pip/).
-> >>> 
-> >>> The mirroring support (-M, --use-mirrors) was implemented
-> >>> without any sort of authenticity checks and is downloaded over
-> >>> plaintext HTTP. Further more by default it will dynamically
-> >>> discover the list of available mirrors by querying a DNS entry
-> >>> and extrapolating from that data. It does not attempt to use
-> >>> any sort of method of securing this querying of the DNS like
-> >>> DNSSEC. Software packages are downloaded over these insecure
-> >>> links, unpacked, and then typically the setup.py python file
-> >>> inside of them is executed.
-> >>> 
-> >>> The vulnerable code is located at: - 
-> >>> https://github.com/pypa/pip/blob/develop/pip/index.py#L60-L64
-> >>> - 
-> >>> https://github.com/pypa/pip/blob/develop/pip/index.py#L205-L207
-> >>> - 
-> >>> https://github.com/pypa/pip/blob/develop/pip/index.py#L553-L572
-> >>> - 
-> >>> https://github.com/pypa/pip/blob/develop/pip/index.py#L999-L1024
-> >>>
-> >>>
-> >>> 
-> The affected versions are every released version since 0.8.1 which
-> >>> are: 0.8.1, 0.8.2, 0.8.3, 1.0, 1.0.1, 1.0.2, 1.1, 1.2, 1.2.1,
-> >>> 1.3, 1.3.1, 1.4
-> >>> 
-> >>> I'm not aware of this issue having ever had a CVE requested for
-> >>> it and my attempts to search the CVE database did not appear to
-> >>> turn up anything relevant but the search doesn't appear to be
-> >>> the greatest so I may have missed it.
-> >>> 
-> >>> I'm hoping to land a patch for this in a future release
-> >>> (current iteration of patch available at 
-> >>> https://github.com/dstufft/pip/compare/remove-mirror-support)
-> >>> but there is no planned fix version as of yet.
-> >>> 
-> >>> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA //
-> >>> 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
-> >> 
-> >> Was it supposed to be secure (like was this explicitly supposed
-> >> to be all encrypted/etc.)? This sounds more like security
-> >> hardening than a security vulnerability.
-> >> 
-> >> - -- Kurt Seifried Red Hat Security Response Team (SRT) PGP:
-> >> 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> >> 
-> > 
-> > The mirroring protocol explicitly included provisions for
-> > verification which was not being done.
-> > 
-> > http://www.python.org/dev/peps/pep-0381/#mirror-authenticity
-> > 
-> > ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 7C6B
-> > 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
-> > 
+On Wed, Aug 14, 2013 at 05:37:32PM -0400, Vince Weaver wrote:
+> Hello
 > 
-> So to confirm, we're talking about the line:
+> I'm not really a security researcher, so hopefully I'm reporting this in 
+> the proper way.
+
+Thank you for the report, Vince. I think that it is completely fine -)
+
+> I have a fuzzer tool for the perf_event_open() syscall that found
+> a few oopses on the ARM platform, which I reported to lkml a week ago.
 > 
-> "Verification is not needed when downloading from central index, and
-> should be avoided to reduce the computation overhead."
+> One of the oopses can lead to a local privilege escalation on ARM-perf.
+> This fix can be found here:
+>   http://www.arm.linux.org.uk/developer/patches/viewpatch.php?id=7809/1
+> The discussion thread is:
+>   https://lkml.org/lkml/2013/8/7/259 
 > 
-> So accessing the central index is done over HTTP by default, no
-> support for HTTPS previous to commit
-> https://github.com/pypa/pip/commit/e80c387a26858c4d7ff43c5f030b04b03fd43dfe
-> correct?
+> The hope is this appears in 3.11-rc6 but my attempts to get the people at 
+> security@...r.kernel.org to take this seriously didn't really go very 
+> well.
 > 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
+> I do have code that will exploit the kernel and give me a root shell
+> on an ARM Pandaboard machine running 3.11-rc4.  The exploit is a bit 
+> fragile though:
+>   + Only works on ARM
+>   + Elevates from normal user to root, no special config required.
+>     perf_event syscalls run as regular users, not sure why some
+>     think you need root.
+>   + It does need a user-mappable address at an exact byte offset
+>     from a pmu_struct in memory.  This limits things somewhat; in
+>     my testing 3.11-rc kernels have INT_MIN at exactly the right place 
+>     but the exploit doesn't work on a 3.7.6 kernel,
+>     it just oopses or crashes the machine.
 
-The central index is pypi.python.org and historically (and at the time of that commit) it was
-not accessed securely (plaintext HTTP, no authenticity checks etc). The mirroring support,
-(located at, a.pyp.python.org, b.pypi.python.org, …) which that commit adds and PEP381
-deals with, was supposed to have authenticity checking preventing a malicious mirror
-operator from attacking you by checking a html manifest that included hashes was signed
-by a key owned by the central index (pypi.python.org). That commit does not include
-checking that the mirrors are not hosting content that differs from the central index.
+This looks valid to me. Unless someone has any objections, can you
+please Kurt assign CVE to this issue?
 
-So basically the lack of authenticity checking when installing directly from the central index
-is a separate issue which has been (mostly) addressed with pip 1.3, and more so with 1.4. 
-However this request deals explicitly with the implementation of the protocol for installing
-from the hosts that mirror the central index, but are not the central index.
-
-For what it's worth my PR to fix it is here https://github.com/pypa/pip/pull/1098
-
-Between myself, the comment on the PR, and the mailing list I have 3 pip developers +1ing
-the change so it's likely it's going to land unless one of the others has concerns.
-
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
-
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
