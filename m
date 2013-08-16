@@ -1,32 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/08/3
-Message-ID: <20130508210702.GH6040@frohike.xs4all.nl>
-Date: Wed, 8 May 2013 23:07:02 +0200
-From: Peter Bex <Peter.Bex@...all.nl>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE request: CHICKEN Scheme incomplete fix for CVE-2012-6122 (select() fs_set buffer overrun)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/16/2
+Message-ID: <BLU0-SMTP34261588C13E17191A14751EF470@phx.gbl>
+Date: Fri, 16 Aug 2013 11:14:27 +0430
+From: Hamid Zamani <me@...idx9.ir>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request : NAS v1.9.3 multiple Vulnerabilites
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hello,
 
-I'd like to request a CVE for a select() fd_set buffer overrun problem
-in CHICKEN Scheme before 4.8.2 and all stable versions up to and
-including 4.8.0.3, on non-Windows systems.
+recently i reported some vulnerabilities in Network Audio System (NAS) -
+v1.9.3
 
-The bug exists due to an incomplete fix for CVE-2012-6122.  Originally,
-only the userland thread scheduler's use of select() was rewritten to
-use POSIX poll().  It was later discovered by Florian Zumbiehl and Joerg
-Wittenberger that select() was still being used in three other places.
+These vulnerabilities reported at :
 
-This bug is remotelye xploitable in networking code, under the right
-conditions (if the "ulimit -n" value exceeds FD_SETSIZE).
+http://radscan.com/pipermail/nas/2013-August/001270.html
 
-The announcement can be found at
-http://lists.nongnu.org/archive/html/chicken-announce/2013-05/msg00000.html
+and 3 fix on upstream :
 
-There are two commits which together fix the bug:
-http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commitdiff;h=9e2022652258e8a30e5cedbf0abc9cd85a0f6af7
-http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commitdiff;h=556108092774086b6c86c2e27daf3f740ffec091
+https://sourceforge.net/p/nas/code/288/
+https://sourceforge.net/p/nas/code/287/tree//trunk/server/os/utils.c?diff=517ad7dc2718467b12eafbad:286
+https://sourceforge.net/p/nas/code/289/tree//trunk/server/os/connection.c?diff=517ad7dc2718467b12eafbad:288
 
-Cheers,
-Peter Bex
+is it possible to assign a CVE for these ?
+
+Thank you
+
+-- 
+Regards,
+Hamid Zamani (aka HAMIDx9)
+Ashiyane Digital Security Team
