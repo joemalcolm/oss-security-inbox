@@ -1,30 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/23/7
-Message-ID: <617692586.14212107.1358958356677.JavaMail.root@redhat.com>
-Date: Wed, 23 Jan 2013 11:25:56 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Willy Tarreau <w@....eu>, Michael Scherer <misc@...b.org>, Steve Grubb <sgrubb@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: [Security hardening] [Notification] haproxy (previously) failed to drop supplementary groups after setuid / setgid calls properly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/16/1
+Message-ID: <520D7582.5060702@python.org>
+Date: Fri, 16 Aug 2013 02:42:42 +0200
+From: Christian Heimes <christian@...hon.org>
+To: Brian Cameron <brian.cameron@...cle.com>
+CC: oss-security@...ts.openwall.com, security@...y-lang.org,  cve-assign@...re.org, security@...hon.org
+Subject: Re: [PSRT] CVE Request -- Python SSL module does not handle certificates that contain hostnames with NULL bytes
 Content-Type: text/plain; charset=utf-8
 
-Hello vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-  just FYI notification that haproxy upstream has recently corrected [2]
-improper dropping of supplementary groups [1] after setuid / setgid
-calls.
+Am 16.08.2013 00:23, schrieb Brian Cameron:
+> 
+> I notice the upstream bug has patches for many versions of Python,
+> but not for Python 2.6.  Will a Python 2.6 patch be provided, or is
+> it a reasonable fix to just backport the patched 2.7 files to 2.6
+> directly?
 
-We have further investigated this issue and have reasons to believe that 
-by itself this is NOT a security issue (another flaw would need to be
-found in haproxy this to be actually possible to use for something interesting).
+Hi Brian,
 
-For now we are considering this fix to be a preventive measure / security
-hardening (but took the time to notify you explicitly about this as you might
-still want to backport it into affected versions).
+I have back ported my patch to 2.6 and uploaded it for you [1]. Enjoy! :)
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Python 2.6 will get a final security release in October. Barry plans
+to include the patch, too.
 
-P.S.: [1] https://bugzilla.redhat.com/show_bug.cgi?id=894626
-      [2] http://git.1wt.eu/web?p=haproxy.git;a=commitdiff;h=ab012dd3
+Regards,
+Christian
+
+[1] http://bugs.python.org/issue18709
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQIcBAEBCgAGBQJSDXV9AAoJEMeIxMHUVQ1Fc3cP/irGYbzpqXISUrQt+OAd1KPB
+5M4SNJE2rUebhXiihic+YfjdrtjPkqmwD6dK2dnmMAmcRIyWGbluf434PgGmV1Uk
+6fmDU/j/h7zTK21wd6lttmJVdbsS85cxHsTTEi8Vtm6dBsblpdKCxaNMQx3f4o0/
+wmBdvEcoH7BSpz9GC7gSg6iOWUfuQAyLXTBHtEHM49gG9CGfqlZrRFe/iOjpRCXa
+gzQRiskyqIq8lv7foDHVaX4XO9n3HLmlbeQnVbeLjAWslpZSU9bl+bxIwaqq7Oi1
+fG/B18/x7o+x11LkaZ2Su6P0zGyh3Drm0dxX3MwC9Q2SEOlQtV1PxJigj1KKoHzR
+XogVUcIpzsC6wa7EJxQbd63ggyOOaQx20ozDYISLdcjD0GvTZgnmkm/UyVgSoLJi
+PTL07FOXXu1o2aDHRIYoBKkEgxWAuiPYM6ancav/jOLlpvoVEiUN++5ouosoAKBe
+i5JAfwlku+txNxaFvJerlhKN0Vfs3K+t5PRqeAq+sMQc/9T3QbAVnjOe8fgHkkX1
+5WP1LPN8Om43zVuClyv6jULwBP1ozYR0Cbmmf4ioJUOs8pxOgIggncUd1wVm84Xu
+rx6xhcbIHqwmxrZLoepCdcOupqgfjeuexWOg0uENjuiOPVzoUUA/u6kL9pEYqisM
+tYE4oKNRBZpmWcS8Y/yK
+=YvTP
+-----END PGP SIGNATURE-----
