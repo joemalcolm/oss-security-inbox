@@ -1,24 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/03/1
-Message-ID: <20130203114827.GA16743@ngolde.de>
-Date: Sun, 3 Feb 2013 12:48:28 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: latd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/16/6
+Message-ID: <520E51B0.8000907@redhat.com>
+Date: Fri, 16 Aug 2013 10:22:08 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Kurt Seifried <kseifrie@...hat.com>
+Subject: Re: CVE Request: linux-kernel priviledge escalation on ARM/perf
 Content-Type: text/plain; charset=utf-8
 
-Hey,
-latd suffers of a buffer overflow when processing the version header and 
-generating an error message.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=699625
+On 08/16/2013 05:07 AM, Petr Matousek wrote:
+> On Wed, Aug 14, 2013 at 05:37:32PM -0400, Vince Weaver wrote:
+>> Hello
+>> 
+>> I'm not really a security researcher, so hopefully I'm reporting
+>> this in the proper way.
+> 
+> Thank you for the report, Vince. I think that it is completely fine
+> -)
+> 
+>> I have a fuzzer tool for the perf_event_open() syscall that
+>> found a few oopses on the ARM platform, which I reported to lkml
+>> a week ago.
+>> 
+>> One of the oopses can lead to a local privilege escalation on
+>> ARM-perf. This fix can be found here: 
+>> http://www.arm.linux.org.uk/developer/patches/viewpatch.php?id=7809/1
+>>
+>> 
+The discussion thread is:
+>> https://lkml.org/lkml/2013/8/7/259
+>> 
+>> The hope is this appears in 3.11-rc6 but my attempts to get the
+>> people at security@...r.kernel.org to take this seriously didn't
+>> really go very well.
+>> 
+>> I do have code that will exploit the kernel and give me a root
+>> shell on an ARM Pandaboard machine running 3.11-rc4.  The exploit
+>> is a bit fragile though: + Only works on ARM + Elevates from
+>> normal user to root, no special config required. perf_event
+>> syscalls run as regular users, not sure why some think you need
+>> root. + It does need a user-mappable address at an exact byte
+>> offset from a pmu_struct in memory.  This limits things somewhat;
+>> in my testing 3.11-rc kernels have INT_MIN at exactly the right
+>> place but the exploit doesn't work on a 3.7.6 kernel, it just
+>> oopses or crashes the machine.
+> 
+> This looks valid to me. Unless someone has any objections, can you 
+> please Kurt assign CVE to this issue?
+> 
+> Thanks,
+> 
 
-Can we get a CVE id for this?
+Please use CVE-2013-4254 for this issue.
 
-Cheers
-Nico
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-Content of type "application/pgp-signature" skipped
+iQIcBAEBAgAGBQJSDlGwAAoJEBYNRVNeJnmTUmIQAINcIK8HLi1xR4fbhy87tdSC
+wv/Ta768n1T/ctooqSocsDt2I0JrT81PG1S8fmKkYziFRG7N7HOMM7vNIvxc9Kzg
+s3J3nQsOVBHbsVKFX8U1lFnfjJbIBfSJJd4ybmUPi75KiEiH5WJZN8B64gm/14jk
+h45IOd9rBI6ej5Rk3cOrs3QeLEAJP/KOxbPX+8H0JD4lCNG86oXg8BuPbzqODHXO
+9bLtsxetbK8Ago/O9pp5JKClYPCctPjpOJTn7Kz7XeltycGuOHixW2LsH0tP9FUT
+TxvNalNJ3+JWdUg23C501j1pya6/HPIAIWt0tb7hX6i5PuSluP6/7LfiH7wIySNs
+Ft0q+FXzd8OUYIw/TiAw1WaRlCb3SNAbNjVDoFcMoaO1KBUXmT3BP8ROgsDO1vZM
+QEP95sT8yhKDIuNhlK5wbqYMisc9Koo1oOsZLYNcfkMljlB2V+vg6otQdQW/MQMV
+CPsEMncE3fcRAyabfxVcaQgIDH3WYGbFlMTwNBKyWZjjOX62nGRcNioiVPpQAuNX
+Evqvt0v8NJDWB2LkoUigp4NzPucQNEifS5ZwCpw14YHD7J7MdgntTVnyFdDGEPMv
+wC86yJhN/8f1c7TSxVH51P8ZiD5FtHCcz0ynR+9ZeWkcLIHvkyJO4M2NcwAmUOei
+QoH+aUwRIv/nfky2TdXq
+=KsT9
+-----END PGP SIGNATURE-----
