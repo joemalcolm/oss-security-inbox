@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/12
-Message-ID: <CBC10B96B9C94D30B669358EE2407DAC@celsius>
-Date: Wed, 10 Jul 2013 20:59:10 +0200
-From: "Stefan Kanthak" <stefan.kanthak@...go.de>
-To: <oss-security@...ts.openwall.com>
-Subject: CVE request for Mozilla Thunderbird (Windows)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/16/7
+Message-ID: <3155530.eGWR7f6goc@k>
+Date: Fri, 16 Aug 2013 19:20:06 +0200
+From: Stefan Fritsch <sf@...itsch.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: SSL BREACH
 Content-Type: text/plain; charset=utf-8
 
-The installer of Mozilla Thunderbird writes the following command line
-with unquoted spaces for uninstallation into the Windows registry:
+Am Dienstag, 6. August 2013, 20:11:53 schrieb cve-assign@...re.org:
+> >I assume this will get handled like CVE-2009-3555?
+> >
+> >http://threatpost.com/breach-compression-attack-steals-https-secret
+> >s-in-under-30-seconds/101579
+> >
+> >http://it.slashdot.org/story/13/08/05/233216
+> >
+> >https://www.djangoproject.com/weblog/2013/aug/06/breach-and-django/
+> 
+> MITRE has looked at this in some depth but has not yet decided
+> whether this can be treated as a vulnerability in a protocol, with
+> one CVE shared across every product. We do realize that
+> http://www.kb.cert.org/vuls/id/987798 currently contains one CVE ID.
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Mozilla Thunderbird 17.0.5 (x86 en-US)]
-"UninstallString"="C:\\Program Files\\Mozilla Thunderbird\\uninstall\\helper.exe"
+Not sure if anyone had this idea before: Browsers could mitigate this 
+by not sending "Accept-Encoding: gzip" if a request is cross-domain 
+and contains some sort of credentials (HTTP-auth, cookies with the 
+'secure' attribute, client certificate, ...). This would stop the vast 
+majority of attack scenarios while leaving compression enabled for 
+most requests.
 
-See <https://bugzilla.mozilla.org/show_bug.cgi?id=871084>,
-<https://bugzilla.mozilla.org/show_bug.cgi?id=786407> and
-<https://bugzilla.mozilla.org/show_bug.cgi?id=868746>
-
-Due to a well-known and well-documented idiosyncrasy of Windows'
-CreateProcess() API this can result in the execution of a rogue
-program "C:\Program.exe" or "C:\Program Files\Mozilla.exe" with the
-privileges of the caller.
-Since the caller of this command line typically has administrative
-rights this vulnerability can lead to a privilege escalation.
-
-Affected versions: all current releases.
-
-Fixed version: ?
-
-Stefan Kanthak
