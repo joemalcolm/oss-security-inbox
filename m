@@ -1,57 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/03/3
-Message-ID: <527677FE.2020804@redhat.com>
-Date: Sun, 03 Nov 2013 09:21:18 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/16/3
+Message-ID: <20130816105614.GA20884@gremlin.ru>
+Date: Fri, 16 Aug 2013 14:56:14 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for a vulnerability in OpenStack Nova
+Subject: Re: HTTPS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 15-Aug-2013 13:38:01 +0200, Florian Weimer wrote:
 
-On 11/03/2013 09:07 AM, Jeremy Stanley wrote:
-> A vulnerability was discovered in OpenStack (see below). In order
-> to ensure full traceability, we need a CVE number assigned that we
-> can attach to further notifications. This issue is already public, 
-> although an advisory was not sent yet.
-> 
-> Title: XenAPI security groups not kept through migrate or resize 
-> Reporter: Chris Behrens (Rackspace) and Vangelis Tasoulas Products:
-> Nova Affects: Folsom, Grizzly
-> 
-> Description: Chris Behrens with Rackspace and Vangelis Tasoulas
-> reported a set of vulnerabilities in OpenStack Nova. When migrating
-> or resizing an instance, including live migration, existing
-> security groups may not be reapplied after the operation completes.
-> This can lead to unintentional network exposure for virtual
-> machines. Only setups using the XenAPI backend are affected.
-> 
-> References: https://launchpad.net/bugs/1073306 
-> https://launchpad.net/bugs/1202266
-> 
-> Thanks in advance,
-> 
+ > > > 1. Not all interceptions and modifications are evil.
+ > > > 2. Some sites are much more evil than interceptors.
 
-Please use CVE-2013-4497 for this issue.
+ > > #1 is technically true but because there's no way
+ > > to programmatically determine if a interception or
+ > > modification is "evil" systems should default to
+ > > disallow and allow the user to allow it (by trusting
+ > > another CA for instance for the interceptor).
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Quite simple: I am permitted to intercept my traffic, others
+are not. Creating own CA is as easy as several invocations of
+/usr/bin/openssl, but I don't see any good reasons for that.
 
-iQIcBAEBAgAGBQJSdnf+AAoJEBYNRVNeJnmTZEQQAItK3aWfzjV392UCszk6P5hX
-73dNS59bP4hGTQh3cSYPENl6ZkncFxj1FRQEmmHrp0TtGJaFPfOROReCHxGr0YOX
-ZjIDS7jhnDLxxxwon2LqjkV/69PXfTesNDjOm/bObkXhDgM6zJrL8ba6cmHF2GJv
-Ne2JAZKMXJyU9uj/0KFYltH6DZRD/CxxTdm264pd64iH0UkXb+OQg44cGcN+XyFs
-y/JDluc1WiILmEC65/rP9Dv4cN0/Pt4r2KhExY0cCJ10Mhq/qIHivHviNFdcVjpu
-5CBgqX6WVT+4JAPtgpXYtFbaxwQ6roAoQ+MPEgjoDOHIX0FDWlpTephzbJhVmdHi
-60/5MY+tIuATSEBQW8PuqiV6gJi3UckHJmhPSze/E4JOuXeMTwjB5whEUVfy/5g6
-2HMMirjwCD97dzB93NaA88h1GmBf80vfCrKnLihuO09/61HboAa7N8vh+wEFlglj
-+yKFDPsGahvq0oZ4ZRvDH0GcaP/zxQw2qH2ewR0gBumT8chytQ8kRRyPU0ROSe1m
-XO5BfDJi9BE8M5tChZ8LTYcLa3HMlP7VqTIbygpKfQv8fGKzIrvWfC2noTyhPo0E
-8lJVOSxno8+DeyLBcP45jp+pMTTyomfo5aJzRIh8lNVccZrFV36c2uycpEOK9UVb
-ElykQSGedXNXatPHFfA5
-=EkPq
------END PGP SIGNATURE-----
+ > > I don't understand how #2 relates to HTTPS at all,
+ > > TLS doesn't state anything about the safety of the
+ > > server you're connecting to only the safety of the
+ > > transport.
+
+ > If you can't intercept, you don't know what's going on inside
+ > the TLS channel. A malicious peer might successfully attack
+ > your user, and you could have thwarted the attack if you had
+ > access to plaintext communications. (Yes, I understand what
+ > that sounds like.)
+
+/me too. But I consider that normal for my own network.
+
+ > It used to be the case that little malicious content was hosted
+ > on major (HTTPS) sites, so analysis based on IP addresses and
+ > domain names was quite effective. This might have changed, though?
+
+It looks like it did... :-/
+
+ > all that is needed is one single, large HTTPS-enabled service
+ > provider that doesn't have adequate abuse mitigation. But I still
+ > don't think that this is a valid reason not to use HTTPS.
+
+Using the HTTPS is normal. Forcing others to use it is not.
+
+And once again, just to get back on topic: if you get the data with
+valid digital signature over the unsafe communication channel, you
+can be sure the data wasn't modified in transit, but if you get the
+data without digital signature over the trusted communication channel,
+you can't be sure at all.
+
+Protect the data, not the communications.
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
