@@ -1,32 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/21
-Message-ID: <CABbbngAKS=--FOWMA2RY1_xMcyjQ5UzjMJUa-yYgjtVxzoDaWQ@mail.gmail.com>
-Date: Wed, 21 Aug 2013 16:45:57 -0700
-From: Forest Monsen <forest.monsen@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/19/3
+Message-ID: <52127D9B.1000004@redhat.com>
+Date: Mon, 19 Aug 2013 14:18:35 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE request for Drupal contributed modules
+CC: Hamid Zamani <me@...idx9.ir>
+Subject: Re: CVE Request : NAS v1.9.3 multiple Vulnerabilites
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'd like to request CVE identifiers for...
+On 08/16/2013 12:44 AM, Hamid Zamani wrote:
+> Hello,
+> 
+> recently i reported some vulnerabilities in Network Audio System
+> (NAS) - v1.9.3
+> 
+> These vulnerabilities reported at :
+> 
+> http://radscan.com/pipermail/nas/2013-August/001270.html
+> 
+> and 3 fix on upstream :
+> 
+> https://sourceforge.net/p/nas/code/288/ 
+> https://sourceforge.net/p/nas/code/287/tree//trunk/server/os/utils.c?diff=517ad7dc2718467b12eafbad:286
+>
+> 
+https://sourceforge.net/p/nas/code/289/tree//trunk/server/os/connection.c?diff=517ad7dc2718467b12eafbad:288
+> 
+> is it possible to assign a CVE for these ?
+> 
+> Thank you
+> 
 
-SA-CONTRIB-2013-067 - BOTCHA - Information Disclosure (potential Privilege
-Escalation)
-https://drupal.org/node/2065057
+Ok so we got a total of three kinds of vulns, so same
+version/researcher I'm CVE MERGEing them:
 
-SA-CONTRIB-2013-068 - Entity API - Access Bypass
-https://drupal.org/node/2065207
+Buffer Overflows please use CVE-2013-4256
+Heap Overflow please use CVE-2013-4257
+Format String please use CVE-2013-4258
 
-SA-CONTRIB-2013-069 - Password Policy - XSS
-https://drupal.org/node/2065387
+As for "Possible Race Condition and symlink attack:" can we confirm
+it's a security issue?
 
-SA-CONTRIB-2013-070 - Zen - Cross Site Scripting
-https://drupal.org/node/2071157
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-Thanks!
-
-Best,
-Forest
-
+iQIcBAEBAgAGBQJSEn2bAAoJEBYNRVNeJnmTvlwP/Rt7ANxxSsEybZd77UMs/Nms
+HDTRrOWzXq4etxSwO9bDQca6GxCfs58IzJk9WoTDGnVoTagMl2cQJQ/IAIEbL/ty
+IbLa6iaLF2Ovi3PFH22M/X5ui8rXvymfRiz1k1zI52+lKPo9yWxxhSSNAVaaD+LE
+k2MP+ZCckVlzKbrvSubHkntTQszKkOPZkVw1LSUnw8y0Gg9gqmqZM2uPcrG4RgiH
+ECBavkSxumGd2TvzCusD+QAYHgYsGDWJ1VBx1QZx/ZgLnPOsa9cVk5er59b1e2cf
+LVxPiC9USQRISr//Amb5NYktojbSYZUt6YTEknsdyu9PasjEbS4zF5iBqn0d57BI
+PpfABLItMg/7loz1+eUk02BkgaHIYajJVVnrOwcGOxtiqrJM9JtvSW280cJ6TCOZ
+ZDio2Rnmf0CFIPYzAG6MegQ/cXn53AyS5r114Ge5PEw50wGK19SIsNAzOMXOoj1P
+gi34o10PID0DxX7MY5aVDBOLqiWnrq7w4y6gsi20JrebZMivZvRtHv8QjdNURdxH
+tkceuAs8S3g7tsCZNjn3nnQ35l/wsp9ouWCyiZhlbWFIbX+YBR8tSGkylSVyS4eo
+FWksNykZT3wwE9BbSUKk0bEGSLrmFahU/t0r5QoGVWPDfvbjQPKShX3aGENSir8t
+9LAJqDk+MPb78WE/bMjU
+=qxsJ
+-----END PGP SIGNATURE-----
