@@ -1,54 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/20/2
-Message-ID: <606867088.4567640.1369068931984.JavaMail.root@redhat.com>
-Date: Mon, 20 May 2013 12:55:31 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Gerald Combs <gerald@...eshark.org>
-Subject: CVE Request -- Wireshark: Upstream v1.8.7, v1.6.15 fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/19/2
+Message-ID: <52123D9E.2010706@redhat.com>
+Date: Mon, 19 Aug 2013 09:45:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: kseifried@...hat.com
+CC: oss-security@...ts.openwall.com, Thijs Kinkhorst <thijs@...ian.org>
+Subject: Re: [CVE request] Django 1.4.6 security release
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  Wireshark upstream has released 1.8.7, 1.6.15 versions,
-correcting multiple security flaws:
+On 08/14/2013 09:06 PM, Kurt Seifried wrote:
+> On 08/14/2013 02:11 AM, Thijs Kinkhorst wrote:
+>> On Wed, August 14, 2013 09:42, Kurt Seifried wrote:
+>>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>>> 
+>>> On 08/13/2013 11:31 PM, Moritz Muehlenhoff wrote:
+>>>> Hi, this needs two CVE assignments: 
+>>>> https://www.djangoproject.com/weblog/2013/aug/13/security-releases-issued/
+>
+>>>> 
+>>>> 
+>>> Please provide links to the vulnerable code/fixed code thanks.
+> 
+>> Links to the patches of the various affected release branches
+>> can be found at the bottom of the quoted URL.
+> 
+> 
+>> Thijs
+> 
+> For the Issue: Cross-site scripting (XSS) in admin interface
+> please use CVE-2013-4249 for this issue.
+> 
+> For Issue: Cross-site scripting (XSS) in admin interface I'm going
+> to consider this as security hardening unless someone tells me
+> otherwise.
 
-1) http://www.wireshark.org/security/wnpa-sec-2013-31.html
-   https://bugzilla.redhat.com/show_bug.cgi?id=965110
+Ahh this should be:
 
-2) http://www.wireshark.org/security/wnpa-sec-2013-30.html
-   https://bugzilla.redhat.com/show_bug.cgi?id=965111
+For the Issue: Cross-site scripting (XSS) in admin interface please
+use CVE-2013-4249 for this issue.
 
-3) http://www.wireshark.org/security/wnpa-sec-2013-29.html
-   https://bugzilla.redhat.com/show_bug.cgi?id=965112
+For the second issue: Issue: Possible XSS via is_safe_url I'm going to
+consider this as security hardening unless someone tells me otherwise.
 
-4) http://www.wireshark.org/security/wnpa-sec-2013-28.html
-   https://bugzilla.redhat.com/show_bug.cgi?id=965186
+Thanks to vdanen for pointing this out.
 
-5) http://www.wireshark.org/security/wnpa-sec-2013-27.html
-   https://bugzilla.redhat.com/show_bug.cgi?id=965190
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-6) http://www.wireshark.org/security/wnpa-sec-2013-26.html
-   https://bugzilla.redhat.com/show_bug.cgi?id=965192
-
-7) http://www.wireshark.org/security/wnpa-sec-2013-25.html
-   https://bugzilla.redhat.com/show_bug.cgi?id=965193
-
-8) http://www.wireshark.org/security/wnpa-sec-2013-24.html
-   https://bugzilla.redhat.com/show_bug.cgi?id=965194
-
-9) http://www.wireshark.org/security/wnpa-sec-2013-23.html
-   https://bugzilla.redhat.com/show_bug.cgi?id=965195
-
-   Further Note regarding 9):
-   The CVE-2013-2486 && CVE-2013-2487 identifiers
-   have been originally assigned for the 9) issue for the
-   fix in v1.8.6. The patch should contain two patches,
-   but only one was applied. Not sure if a new CVE identifier
-   should be assigned for this case.
-
-Could you allocate CVE identifiers for these?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQIcBAEBAgAGBQJSEj2dAAoJEBYNRVNeJnmTKeoQAIz5AHdXMEji0E/6yY1vfqCZ
+yIoqoA9tGOcmdai7q0//6dHb4vBML/m6QmfBknc7BVEcehrA78A0pJeRGtQ/Waga
+IhSWSGU7Wr0Pk+rWFZhMu1DYWQqaa+fdGrB/d3jSU83lJMwMvEEnwodnp/LMCbC2
+0k4BL8rbj1E6R8pJcyqG85RMdWqoMJW4+7bnFxlz8di5UWuGwuThvCiqibqCYmv5
+fsj9E5OuXrm7eOa7HKddmhl8ZnLVln8E5jcGrdiC8s++qGDdoHps3+Q4DJwrV/J3
+KMm/PZPzHWQ5pI3/+XlMX+b00ekJsgJXzmpT1qw0wMinnQWjBb2/Mtc8C44ogPyr
+sl5gL9Py6+u2rcc3V0lY240BILMruQMB8NFolN3dXtmeQvxI1ip2tUphKjxJidfB
+d+0ntbPaKdA5v1+AxZOnnV9NmpUW20YBXqX6kznGdNjknBxjp6RqvbqfKYz0YUcn
+KjpCUzOcbnRcUrWhv8Vp/dtCLf+SAX2+KDj+Q6AHLTRuzwucgijH/tAhE8gaah3k
+JwxzpZh1DjlHxhjfGA4f74/+9yYTPPYuvbSMZ8NuCu/V9GMVTWjgq0A8HKUt9CH0
+urwqspp6hh4NG8EOICPF8uk0sYzOron3WMEuABnXzJTLTSmERdRARGXOYy0EbrO9
+O3urq3HysUte9cf5L5Bc
+=PR5f
+-----END PGP SIGNATURE-----
