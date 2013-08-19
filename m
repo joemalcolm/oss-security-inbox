@@ -1,75 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/9
-Message-ID: <51417BBA.5010403@redhat.com>
-Date: Thu, 14 Mar 2013 01:26:50 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/19/1
+Message-ID: <5211E824.4020404@redhat.com>
+Date: Mon, 19 Aug 2013 11:40:52 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: gremlin@...mlin.ru
-Subject: Re: Linux kernel + devtmpfs automount == insecure /dev/{,u}random mode
+Subject: Re: CVE Request -- glibc: Buffer overwrite when using readdir_r on file systems returning file names longer than NAME_MAX characters
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 08/12/2013 06:28 PM, Kurt Seifried wrote:
+>> Upstream bug report: [1]
+>> http://sourceware.org/bugzilla/show_bug.cgi?id=14699
+>>
+>> Latest patch proposal: [2]
+>> http://sourceware.org/ml/libc-alpha/2013-05/msg00445.html
+>>
+>> References: [3] https://bugzilla.redhat.com/show_bug.cgi?id=995839
 
-On 03/14/2013 12:32 AM, gremlin@...mlin.ru wrote:
-> On 13-Mar-2013 15:54:15 +0400, gremlin@...mlin.ru wrote:
-> 
->>> http://lkml.indiana.edu/hypermail/linux/kernel/0012.2/0502.html
->
->>> 
-> Yes, I've found that while investigating the possible impact.
-> Also,
->> the random.c doesn't use the data directly, but instead hashes
->> it.
-> 
-> And that has some impact: the malicious (or just curious)
-> unprivileged user may run flood the devices with garbage, and the
-> kernel will spend resources hashing it.
-> 
-> Try this: `dd bs=1M if=/dev/zero of=/dev/urandom`
-> 
-> On a Core i5-2400 3.10GHz CPU, only 16 processes running for
-> several minutes result in all cores loaded at 99% and the load
-> average of 20. My workstation has survived the experiment, but
-> heavy-loaded servers may dislike that :-)
-> 
->> But my opinion stays exactly the same: devices should be 0644,
->> and only trusted random data sources should be used to add
->> entropy to the pool via add_device_randomness(). So, I'll just
->> restrict the access to /dev/{,u}random locally :-)
-> 
-> ... and recommend others do the same.
+> Please use CVE-2013-4237 for this issue.
 
-My test results with `dd bs=1M if=/dev/zero of=/dev/urandom` as a
-normal user:
+Thanks.  The upstream commit is:
 
-On a stock Fedora 18 64 bit VM with 3 cpus I tried this with both one
-and three instances of the dd, load average shot up to like 3 but the
-system was responsive, nothing noticeable.
+http://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=91ce408
 
-But when I set ulimit -t 10 and ran it, it got killed right away. So
-standard CPU limiting would appear to fix this, so as far as using
-this for a CPU DoS it doesn't appear to be a problem.
-
-Now should it have less permissive permissions? Yes.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRQXu6AAoJEBYNRVNeJnmTSB0QAKp9LGsbAWr8TNxOEdjyfzEe
-T2PC/bZ6fz8nO88EW2+cvg0htBmi5/9YN7yHyYWL4qvogJysU3wB1sKoiuZ14r/y
-JrpkXMMrNcSOkkYLMH4mJLbyofQWfzPEq5YgJeO1d67Y5l+q3MLlA5oFhb3YWvNk
-z5xR9QWY5Fgx++PUxvCIxivgmseL+NrTu7v1rWhmgvJN988lseITkaNgMZYrEt0l
-ZtydmW2IYOpGLLp43XJHNxIp8E3j+2WZsHgb5H/uTdI2q/Lr98n/LwGIXWOHI7Uz
-gVVhKywPLCwHfMoozuB5hJVr/0O8rMwLnlPk6yyNJLSEeAA7CGq4UmTGRgEICEcd
-BZ+hvmHlaYcEpigY4YO6EiuJ5+GkooucQIJSCkC/HcAx096S0ggdxPeJtBD4P9gR
-Ijw8y6auQbHC2g2kLKGBIvAPwizXm2CNODky1z7i8l5IpuUIshQUWJDRP/pR+14Y
-e9pD6NckNYT/0tlMKkNbJyhExuJvZJcUgnDiKRZ9q2bKgGj92Y5D9UMP7QOsPv+Y
-cJkCLF+hw0EdnbNmYlhuFjgRBt+7SaM2F9m+cuV+Qqx1SAcXbCdOt6+7sQ4E2ObI
-I5L2SovHWn5igGjhkgXFIY7BSd8kQntVQhZt1FRUY4biPr64eH600f8uQGgeKOZw
-2/FQX1ZB1TpFXvBaYIcK
-=vNHc
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security Team
