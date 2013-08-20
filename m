@@ -1,40 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/11/2
-Message-ID: <1660516253.84420.1376226307603.JavaMail.root@redhat.com>
-Date: Sun, 11 Aug 2013 09:05:07 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/5
+Message-ID: <5212ECFF.3050100@redhat.com>
+Date: Mon, 19 Aug 2013 22:13:51 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>
-Subject: CVE Request -- glibc: Buffer overwrite when using readdir_r on file systems returning file names longer than NAME_MAX characters
+CC: Landon Hurley <ljrhurley@...il.com>
+Subject: Re: PostgreSQL insecure install via yum (multiple problems)
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  An out-of buffer bounds write flaw was found in the way readdir_r()
-routine of glibc, the collection of GNU libc libraries, used to handle
-file system entry when its name was longer than NAME_MAX characters
-constant, defined by Linux kernel (readdir_r() used to put content of
-the directory read into application's allocated buffer, possibly
-[NTFS or CIFS filesystems for example] leading to application's
-buffer overwrite]. A remote-attacker could provide a specially-crafted
-NTFS or CIFS image that, when processed in an application using the
-readdir_r() functionality, would lead to that application crash or,
-potentially, arbitrary code execution with the privileges of the user
-running the application.
+On 08/19/2013 07:04 PM, Landon Hurley wrote:
+> Kurt Seifried <kseifried@...hat.com> wrote:
+>> Problem:
+> 
+>> So I wanted to install PostgreSQL 9.2 to test something. So I
+>> google "postgresql 9.2 rpm" and get sent to:
+> 
+>> http://yum.postgresql.org/repopackages.php
+> 
+>> which is not available by HTTPS at all. Not ideal but ok, I
+>> download it over HTTP because I can check the signature on the
+>> file right?
+> 
+>> Wrong, I can't find the key anywhere. I try pgp.mit.edu, I even
+>> google site:postgresql.org 442df0f8 and all you get are archived
+>> emails with the warning that the signature can't be checked. No
+>> copy of the key.
+> 
+> Kurt, pgp.mit.edu is deprecated. I recommend searching 0x442df0f8
+> on pool.sks-keyservers.net which does return a key.
+> 
+> landon
 
-This issue was found by Florian Weimer of Red Hat Product Security Team.
+Weird, I must have typo'ed it, in any event it returns a key with that
+value and no signatures. No idea if it's legitimate or not. I can
+check it against an RPM I downloaded over HTTP which sort of ends me
+back up square one.
 
-Upstream bug report:
-[1] http://sourceware.org/bugzilla/show_bug.cgi?id=14699
 
-Latest patch proposal:
-[2] http://sourceware.org/ml/libc-alpha/2013-05/msg00445.html
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-References:
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=995839
-
-Can you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQIcBAEBAgAGBQJSEuz/AAoJEBYNRVNeJnmT3UYP/j3UkEnVw+Yp2VT1N7HbVgzv
+p/P3ZoFCOxyv801RmkbhGTgvFXwAYewKvFzEKh55xiCCuoKTarbyeO84SpsEkxV7
+WQizj0pwPBTnCQFDEcAkG1tiPYXiyMXb24QcpRivox7XlrAFyzqE8KNiYxNaWngi
+ZznFQpenSJgWBpI/F8VqLntOi62Y/DPjJ2yGX0ZHrA/HvG0s7ov5CTr35l4IBYjc
+J3lCu4mLonbagpFZHWPUMqWQtQvfE02EhfRCOHuU13u9ugrXE755pHQ7/9pTW9wg
+GAEcNpNC2m4aXpiQfxYga2MI6oELED8Kg56vIwxsdpc6WT6JgqsqdczxG4C6Ooqc
+9HxDIke0Y8umXa4WtfAtLneDL2HI9fU5cGYq4ZCs46+rLFr5I552vHzybyjAcQkN
+5UjZJsGPTh9x48aY9WADtWE30AS5XGIecIn4Nec27TKxpY0jc4lUsTbepG0aitRn
+44Q7LX2moAn3cCWoy0hPFZZMdUcAxSJDdUnSRGQhxKwfYhCxJ8YhQpRZ0Z3sKOac
+nGh1wEa1VUDBiUrmTiyv9VS/3Hemjh1rL9TgbfBYYpBtCFLo6UmWZssyJMlumf35
+4LqzoOEUeLLScTHMclDwHtm33iNCAsO/a/zwJMN1IzyYGaJRreHWcYReIx9/yVP3
+iuQmwEOYYTr/5BVMww5C
+=d7so
+-----END PGP SIGNATURE-----
