@@ -1,74 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/12
-Message-ID: <CAEDdjHen0BZNwjoAfmRVfKtNW97XHnFn0uEJ51TwuwDfdPUjyQ@mail.gmail.com>
-Date: Fri, 4 Oct 2013 17:39:45 +0100
-From: Pedro Ribeiro <pedrib@...il.com>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: Hanno Böck <hanno@...eck.de>
-Subject: Re: Re: CVE request - VLC 2.0.0 to 2.0.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/10
+Message-ID: <52139C03.3050400@suse.de>
+Date: Tue, 20 Aug 2013 18:40:35 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: Florian Weimer <fweimer@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: X.509 name constraints and potential interpretation conflict
 Content-Type: text/plain; charset=utf-8
 
-On Oct 4, 2013 5:12 PM, "Kurt Seifried" <kseifried@...hat.com> wrote:
+Florian Weimer wrote:
+> NSS CA roots are widely reused, but the implementation deviates from
+> RFC 5280 in such a way that NSS can safely accept additional root
+> certificates as long as they have name constraints.  I think this is a
+> bug in RFC 5280, and the fix in NSS is sound, but it could still
+> result in surprising behavior if the root store is used unfiltered
+> with TLS implementations that lack this bug fix.
 >
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+> For reference, here is the RFC 5280 errata I submitted:
 >
-> On 10/04/2013 02:04 AM, Hanno Böck wrote:
-> > On Thu, 03 Oct 2013 22:32:12 -0600 Kurt Seifried
-> > <kseifried@...hat.com> wrote:
-> >
-> >> Sorry forgot to reply. I'm not sure this is CVE worthy. In
-> >> general crash bugs in services are CVE worthy, but crashes in
-> >> client software are usually limited to things like email clients
-> >> or web browsers where there is a high potential for processing
-> >> untrusted data without much user interaction (e.g. displaying
-> >> some random email or web page) whre you also have the potential
-> >> to lose work (so there is an impact).
-> >
-> >> In the case of VLC you load a nasty file, it crashes, you don't
-> >> do it again. There's not really any impact. You don't lose any
-> >> work.
-> >
-> > VLC is used as a browser plugin and can also be embedded in other
-> > applications. (though I'm not aware if this can crash the whole
-> > browser with the modern sandboxing stuff browsers do)
+> --------------------------------------
+> Type: Technical
+> Reported by: Florian Weimer <fweimer@...hat.com>
 >
-> So if someone can test this and report back that'd be great and then
-> we can deal with the CVE depending on how this plays out.
+> Section: 4.2.1.10
 >
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (GNU/Linux)
+> Original Text
+> -------------
+>     DNS name restrictions are expressed as host.example.com.  Any DNS
+>     name that can be constructed by simply adding zero or more labels to
+>     the left-hand side of the name satisfies the name constraint.  For
+>     example, www.host.example.com would satisfy the constraint but
+>     host1.example.com would not.
 >
-> iQIcBAEBAgAGBQJSTujlAAoJEBYNRVNeJnmT5wYP/3ijX88DMXQH2ESddStu8bjq
-> 5X4Pu+Vizi7aRFxYYg4T6XYFCvVWbzcJwQlRP1FrGzRrpS27warwz5XebZy+qGuQ
-> bUgMWEnC0e06sokxJeWr2YZdBCxsTGTZdv0OzhtiRNXyoyEMogmzELhGnNh2zqWy
-> VSr2eksFvIUmK5IEoxsCesbLy4mwiNixW2nvrZwS02juPpy6beyn5uKWhhU+1Phl
-> O/OMf0yUEbFGFKsQOjesJwm1hIBGK6ZKn3CtlKjxLG5Z7VqmoCK9V1VlGEiyEwHr
-> j4OInC6wK7NCfW+OOsg6ZQzrl5DC7CYrtT9KYtt9gpxObTk/7YhobTvYd38Abc9p
-> G9sk08nOAesq0WF1c490ZmifQCkTKyZBO6NlRYo/Ci3VFbku6zOlzdyhM0LDimk/
-> xLACmeGgsXFJjxaP/4gMzTIeaZR42AYljzLRqSDzlWMgAppkLxdiGyhllxmc/cXe
-> MRK4s5Q1qgEdxVLgQLlltTDhcv8ZX42cg2xwraN45BIl+gl66Z1nvqhUFKKWUjNo
-> CMU6g9Wjqf+nESyum3sF61n6X/et2far/nPXDn9IZZ2+8nLF8HYJKLQmzUFXyXJ0
-> qBeXq6/dHzjsbZ66+c8eiLw6yH5rx9xFI66IARFFwdDzyQQPid1/Y8aAGZDwW+BQ
-> YmesRzWsqCo5a4y4LN6Z
-> =lLPp
-> -----END PGP SIGNATURE-----
+>
+> Corrected Text
+> --------------
+> [Add this to the paragraph]
+>
+>     If an implementation extracts DNS names from the subject
+>     distinguished name, DNS name restrictions MUST be applied
+>     to these names as well.
 
-Hi Kurt,
+Do you have an idea in mind how to do that in practice? E.g with
+openssl? Checking name constraints and the logic of verifying server
+identifiers is at different layers there. Ie openssl makes sure
+certificate name constraints on subjAltNames are applied but the special
+interpretation of the CN as host name is left to the applications
+unfortunately.
 
-Thanks for the feedback, I'll keep that in mind for the future when
-requesting CVE's. I agree this is a minor issue, but because there is an
-invalid memory I read I thought it was relevant.
+An alternative approach would be to disallow that legacy CN
+interpretation as host name in chains that use name constraints.
 
-I tested with the browser plugin on the latest Firefox, and while it
-crashes the plugin, it doesn't seem to crash the browser.
+cu
+Ludwig
 
-As I said previously, I will continue to investigate whether I can get some
-program control, but for now it's only a measly DoS.
-
-Regards
-Pedro
-
+-- 
+  (o_   Ludwig Nussel
+  //\
+  V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
