@@ -1,53 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/19
-Message-ID: <CAJ_zFkJEb02d8Xs=RcWnRT7JbgDUYiAwMUUc3WFAfXr1ZN-0DQ@mail.gmail.com>
-Date: Thu, 22 Aug 2013 13:42:32 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: Jilles Tjoelker <jilles@...ck.nl>
-Cc: Harald van Dijk <harald@...awatt.nl>, dash@...r.kernel.org,  oss-security@...ts.openwall.com
-Subject: Re: [PATCH] implement privmode support in dash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/11
+Message-ID: <CABUevEw_RtFtUx_xUWVev2MSCVOCgipuJP3oG1W+QahCuxW_Zw@mail.gmail.com>
+Date: Tue, 20 Aug 2013 18:57:04 +0200
+From: Magnus Hagander <magnus@...ander.net>
+To: kseifried@...hat.com, Devrim Gunduz <devrim@...duz.org>
+Cc: oss-security@...ts.openwall.com,  "Eric H. Christensen" <echriste@...hat.com>, "security@...tgresql.org" <security@...tgresql.org>, kevin@...ye.com
+Subject: Re: [pgsql-security] Re: PostgreSQL insecure install via yum (multiple problems)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 22, 2013 at 1:35 PM, Jilles Tjoelker <jilles@...ck.nl> wrote:
-> I think there is no reason to deviate from other shells here. Therefore,
-> please call it "privileged".
+Adding Devrim Gunduz who is the maintainer of the PostgreSQL yum repository.
+
+
+On Tue, Aug 20, 2013 at 6:11 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+> On 08/19/2013 07:19 PM, Eric H. Christensen wrote:
+>> On Mon, Aug 19, 2013 at 06:58:22PM -0600, Kurt Seifried wrote:
+>>> Signing RPM's isn't very useful if you never make the signing
+>>> key available!
+>>
+>> You mean like this:
+>> http://keys.fedoraproject.org/pks/lookup?search=0x442df0f8&op=vindex
+>>
+>>  I'm pretty sure pgp.mit.edu isn't the best source for PGP keys any
+>> longer, unfortunately.
 >
-
-Agreed.
-
->> In bash and FBSD, after starting with -p, set +p can be used to drop
->> privileges. With your patch, dash accepts set +p, but silently ignores it.
+> Dunno who to ask, so adding Scrye: can we make sure Google indexes the
+> Fedora key server? This actually raises a good point, what are the key
+> servers now? The big 3 used to be:
 >
->> How does something like the attached, to be applied on top of your
->> patch, look?
+> http://pgp.mit.edu/
+> http://keyserver.pgp.com/
+> http://sks-keyservers.net/
 >
->> [snip]
->> +     if (!on && (uid != geteuid() || gid != getegid())) {
->> +             setuid(uid);
->> +             setgid(gid);
->> +             /* PS1 might need to be changed accordingly. */
->> +             choose_ps1();
->> +     }
->> +}
+> and it's not on any of them =( Even if the key is uploaded PostgreSQL
+> doesn't list the key fingerprint anywhere securely, the key ID can be
+> spoofed, so yeah there might be keys with the ID 442df0f8 but I got no
+> clue if they're legitimate or not =(.
 >
-> This code tries to use setuid() and setgid() to drop all privilege,
-> which is only correct if the privilege to be dropped is UID 0, or on BSD
-> systems. It would be better to use setresuid() or setreuid(), and change
-> the GID before changing the UID.
+> Really all we need is an HTTPS server (easy) and a web page listing
+> the key/fingerprint, ideally the full text of the key. I understand
+> small projects may not do this, but PostgreSQL is pretty big and
+> professional.
 
-This is logic duplicated from pdksh and bash, I'm slightly reluctant
-to do things differently, unless it's not going to get committed
-otherwise.
+Agreed, we should. Regardless of it being on the proper keyservrers or
+not. In fact, we do this for Debian/Ubuntu already at
+https://www.postgresql.org/media/keys/ACCC4CF8.asc. The intention was
+to do it for the rpm keys as well, but that seems to have slipped off
+the todo list somehow.
 
-You can see some code snippets here:
-http://blog.cmpxchg8b.com/2013/08/security-debianisms.html
+Devrim, can you provide the key for this, and update the instructions
+accordingly? I believe you have the required commit bit on the website
+repository, but if not, send me the keyfile as it should be, and I can
+apply it for you (and of course, confirm out of band what the
+fingerprint is of the correct key).
 
-> Apart from that, it is better to check the return value from setuid()
-> and similar functions. In particular, some versions of Linux may fail
-> setuid() for [EAGAIN], leaving the process running with the same
-> privileges.
+Thanks!
 
-I don't think this is true anymore, but I have no strong objection to
-adding it, so long as it's noted that bash and pdksh do not do this.
 
-Tavis.
+-- 
+ Magnus Hagander
+ PostgreSQL Core Team
+ Me: http://www.hagander.net/
+ Work: http://www.redpill-linpro.com/
