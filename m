@@ -1,26 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/10
-Message-ID: <1376326946.2970.33.camel@neutron.trustmatta.com>
-Date: Mon, 12 Aug 2013 18:02:26 +0100
-From: Florent Daigniere <florent.daigniere@...stmatta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/9
+Message-ID: <20130820131358.GB20223@order.stressinduktion.org>
+Date: Tue, 20 Aug 2013 15:13:58 +0200
+From: Hannes Frederic Sowa <hannes@...essinduktion.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: pending Bitcoin/Android CVE assignments
+Subject: Fix for CVE-2013-0343 queued up (linux-kernel/ipv6 temp. addresses)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2013-08-12 at 12:41 -0400, cve-assign@...re.org wrote:
-> https://code.google.com/p/bitcoin-wallet/source/detail?name=bitcoinj-0.10&r=04d2044880d88107ee4a939a516fb4be4cedeaf9#
+Hi!
 
+I just wanted to let you know that a fix for CVE-2013-0343 ("handling
+of of IPv6 temporary addresses") has been queued up for 3.11 and stable:
 
-That looks like the wrong fix to me. Surely if the assumption is that
-the application will be used on a large number of heterogeneous embedded
-devices (with inconsistent software stacks), where random sources are
-unsuitable for cryptographic usage, the solution should not involve
-them.
+  <https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=4b08a8f1bd8cb4541c93ec170027b4d0782dab52>
 
-Why can't bincoin use deterministic signatures again?
-https://tools.ietf.org/html/rfc6979
+Greetings,
 
-Florent
+  Hannes
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
