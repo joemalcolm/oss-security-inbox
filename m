@@ -1,53 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/08/2
-Message-ID: <5253B323.7090201@redhat.com>
-Date: Tue, 08 Oct 2013 01:24:19 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: mmcallis@...hat.com
-CC: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request: remote command-injection flaw in HTTP::Body::Multipart versions 1.08 and later
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/6
+Message-ID: <20130819222713.7c5f5d81@jelerak.scrye.com>
+Date: Mon, 19 Aug 2013 22:27:13 -0600
+From: Kevin Fenzi <kevin@...ye.com>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com, "Eric H. Christensen" <echriste@...hat.com>, security@...tgresql.org
+Subject: Re: PostgreSQL insecure install via yum (multiple problems)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA512
 
-On 10/07/2013 07:27 PM, Murray McAllister wrote:
-> Good morning,
-> 
-> A remote command-injection flaw was reported in
-> HTTP::Body::Multipart versions 1.08 and later:
-> 
-> - http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=721634 -
-> https://rt.cpan.org/Public/Bug/Display.html?id=88342 -
-> https://bugzilla.redhat.com/show_bug.cgi?id=1005669
-> 
-> The affected code is noted in the Debian bug report.
-> 
-> Could a CVE please be assigned if one has not been already?
-> 
-> Thanks,
-> 
-> -- Murray McAllister / Red Hat Security Response Team
+On Mon, 19 Aug 2013 22:11:13 -0600
+Kurt Seifried <kseifried@...hat.com> wrote:
 
-Please use CVE-2013-4407 for this issue.
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 08/19/2013 07:19 PM, Eric H. Christensen wrote:
+> > On Mon, Aug 19, 2013 at 06:58:22PM -0600, Kurt Seifried wrote:
+> >> Signing RPM's isn't very useful if you never make the signing
+> >> key available!
+> > 
+> > You mean like this:
+> > http://keys.fedoraproject.org/pks/lookup?search=0x442df0f8&op=vindex
+> >
+> >  I'm pretty sure pgp.mit.edu isn't the best source for PGP keys any
+> > longer, unfortunately.
+> 
+> Dunno who to ask, so adding Scrye: can we make sure Google indexes the
+> Fedora key server? 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+I'm happy to answer, but am not on some of the list's CC'ed, so feel
+free to pass my reply on. ;) 
+
+keys.fedoraproject.org is just recently revived. We had some issues
+with the sks software that runs on it and it was down for quite some
+time. Those issues are hopefully solved now so we can bring it up full
+time. 
+
+Hopefully google will notice it once it's been up for a while. 
+
+> This actually raises a good point, what are the key
+> servers now? The big 3 used to be:
+> 
+> http://pgp.mit.edu/
+> http://keyserver.pgp.com/
+> http://sks-keyservers.net/
+
+keys.fedoraproject.org should sync with sks-keyservers.net. 
+Not sure about the other 2. 
+
+kevin
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v2.0.20 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSU7MjAAoJEBYNRVNeJnmTtnYQAMi9iBQ+KcfggCxGl5+XCUwv
-MCLwF2ULA+JvE/xttbEEEUs7aTyuH6eD59PDlZ6YQWZNFg1oEv93s1tDY9S8/DIL
-xGy0BD6NK5rEL+EdBWlltarB2EvKE3Ow+wtn7Gw4YDh0cv42jpIbJ/rf5bbqGYXz
-wZ4/Z5du+3GD9CxK1FUNlFrfy1bi+D57ZTmyw7DtVxoiHNppxXNsosHVd0ruuNVe
-pzg2ABjFWCAfZMShoU8r0egFtm+VSfGwcRMsYHZyqhiQmeKNu+dpLCLhJTPHJXgW
-hLUdrq0/m5K+BaF8SPsEdTiIKgd5e9gxffDKq0sSJgW0ZwBGtMKB/vNYLA23Chlg
-0WAiaxg3rceAMZMERNIdFmawEBEPtrSRJDBrTrXcGgvvZVqSG2y4BKEyC+ebsK5J
-6Ips8qOxFigTvyeoXATGefvs47/94arPH9e17ckOA3QhCLTgyxtZt4ZlfdPcK5Nx
-HjcAAhByp/5Zgs4Qk4XMhx8CvlIwBd9q99Jo3Qiqw4LkZ/mf1rO/MqIMp58bHCdf
-EjTsEBzasJswFba9/ZQ36qJZgeCUQMmuxjuaZ3n5Q6R+NWJJZixY/Pt0YWfUofSJ
-1C1r81wpdQ68frh1LeFHdm3hCYLm2W8H5y1fuC+xTZVykkSjwj+ea6c6dQ8zCCKF
-g3UqUiz9gSK6g8MZLFJZ
-=pp0O
+iQIcBAEBCgAGBQJSEvAkAAoJEEs3sNgP+7teOI4QAJa9pLrruBTevGKTL64nnHoP
+P+wVKOIeKLc00OCiF0zmLgCvgjG2i6FgcWgvbdzOvS3fBTF3P29fqZ1CtwQEWUko
+cU0i/sDOYspImg0F3kM65BzLZpTOW6jJFU29LFcNYDkFOailCfoszL9FX25wPDe4
+0pB6I3o7fAe4knQ4hUzyNrbWrwtUpE1IJVJedipC5pJu3OGt2lkT7jP48WiugWyz
+0lCQ/MZtcwOVmAztkK4PYH2iJfYI36EyviKRYHjbsywrrgAFshIKzYLROVkQco8C
+EVWt89L16wU/zFLYt00J6FJUGU+6xAkAYKg5GaUfcwI/swpd76FP71COfsz3c5l+
+HyXwtDRADNb3cCnFzCuBqNnaaDrT7hTxin69/XaFjKIuNSMm8YsnkbCYcNzHzKGh
+jBJ5gST6yJYaIlLIB2rlADdQ1jIeJG1plLMhmwjayi+m5lQh54mgWiok2jIKvENu
+/o0gJemhjzc4E3o8yMKzqiMsH9jwKeS70FRO1zpo87VTD/P+8v3SPTw9H/GpyrN0
+U1dc4S/XDoJEuUIHCoZCBRvWnnnl9Eue7wYjlCsj1Un0wtJz2hXbTfZONvSfO52A
+fHC5U5WZyDwl4NjBg/M0A1bHMwA90UztnYaQXJai326jsTLjf+5v1mT+9iRRFwKU
+AeZZpZZPugIEychcXVL0
+=mXzc
 -----END PGP SIGNATURE-----
