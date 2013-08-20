@@ -1,90 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/18
-Message-ID: <517ECA41.8080400@redhat.com>
-Date: Mon, 29 Apr 2013 13:30:09 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Mark Panaghiston <markp@...pyworm.com>
-CC: Open Source Security <oss-security@...ts.openwall.com>, hello@...pyworm.com
-Subject: Re: CVE-2013-1942 jPlayer 2.2.19 XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/3
+Message-ID: <20130820011941.GA23227@localhost.localdomain>
+Date: Mon, 19 Aug 2013 21:19:41 -0400
+From: "Eric H. Christensen" <echriste@...hat.com>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: security@...tgresql.org
+Subject: Re: PostgreSQL insecure install via yum (multiple problems)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA512
 
-On 04/20/2013 11:19 AM, Mark Panaghiston wrote:
-> jPlayer 2.3.0 has been released that officially fixes this issue:
-> 
-> http://www.jplayer.org/ https://github.com/happyworm/jPlayer
-> 
-> Tagged as *2.3.0* on GitHub. 
-> https://github.com/happyworm/jPlayer/commit/c1c7a4dfa63bb6684d3670202e4a65d400dfce86
->
->  Full Release Notes for jPlayer 2.3.0: 
-> http://www.jplayer.org/2.3.0/release-notes/
-> 
-> In particular these fixes addressed security issues. Listed with
-> their GitHub commits for code reference:
-> 
-> [2.2.20] Security Fix: The Flash SWF had a security vulnerability
-> that enabled XSS (Cross Site Scripting). Reported by Malte Batram.
-> Security reference CVE-2013-1942
-> <https://access.redhat.com/security/cve/>. 
-> https://github.com/happyworm/jPlayer/commit/e8ca190f7f972a6a421cb95f09e138720e40ed6d
+On Mon, Aug 19, 2013 at 06:58:22PM -0600, Kurt Seifried wrote:
+> Signing RPM's isn't very useful if you never make the signing key
+> available!
 
-Sorry
-> 
-for the late reply. Please use CVE-2013-2022 for this issue.
+You mean like this:  http://keys.fedoraproject.org/pks/lookup?search=0x442df0f8&op=vindex
 
-> [2.2.23] Security Fix: The Flash SWF had a minor security
-> vulnerability that enabled XSS (Cross Site Scripting). Reported by
-> Eugene Dokukin. 
-> https://github.com/happyworm/jPlayer/commit/c5fe17bb4459164bd59153b57248cf94b8867373
+I'm pretty sure pgp.mit.edu isn't the best source for PGP keys any longer, unfortunately.
 
-Please
-> 
-use CVE-2013-2023 for this issue.
+- -- Eric
 
-> Best regards, Mark Panaghiston jPlayer lead developer
-> 
-> On 11/04/2013 20:47, Kurt Seifried wrote: ownCloud brought this to
-> my intention (they use it, I'm guessing other people use it as
-> well.
-> 
-> https://github.com/happyworm/jPlayer/commit/e8ca190f7f972a6a421cb95f09e138720e40ed6d
->
->  Please use CVE-2013-1942 for this issue. The only contact info I
-> can find is hello@...pyworm.com for upstream.
-> 
-> 
-> 
-> -- 
-> ------------------------------------------------------------------------
->
-> 
-*Mark Panaghiston*
-> www.happyworm.com <http://www.happyworm.com/> tel: +44 (0) 131 346
-> 8088 skype: mark_panaghiston follow: @thepag
-> <http://www.twitter.com/thepag/> 
-> ------------------------------------------------------------------------
+- --------------------------------------------------
+Eric "Sparks" Christensen
+Red Hat, Inc - Product Security Team
 
-- --
-> 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+sparks@...hat.com - sparks@...oraproject.org
+097C 82C3 52DF C64A 50C2  E3A3 8076 ABDE 024B B3D1
+- --------------------------------------------------
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRfspAAAoJEBYNRVNeJnmTSQsQAJSzXoKJYpLowjwVA/6hll42
-Ay/q/rj94sKza/2MULvbX7ItscweRhfrD99GJZnuLBOl+ssqYsHkDk/oUqf5GfF9
-F3j7hpk1cUQS6uEtCRn4VzmdqJZwb5y++xDuEG5WJVq1DVgm9qPPZmzkzz1bEuGi
-eVKHhzQ/cxSDQn+CQA4PxCu24XU9x+482LlGSfJLH1OAi9fz6ima0mCY/b5mwjV3
-1bvGz6Wu6fUWDiK9VrZC7EOzHOAfTPU3os/vkb1T4XSqZztZMzHxhVTnD7e92Ym7
-vxIQOrqtOKjAS9SDz7mjEU1yn2UOH2IArW3QSuwG53G0098eVzfPs2aM3NZLadhb
-ygycw81x3mUuWlA7U3YuXz6n8xZ/ywcQFnab1aCFt8Kvn1KTaJkZZvOwHgD4sFEF
-VhXjdjjSFwORbbF7fwFw0NNyk/2ro5Jat6wz+juCydN4O+21XA+OQCViKC8MsKdL
-3fU5UA4Ymc7sqSJSLa8KVCc5Mu1mPf7HlyLaenvW5NJszjJCFI/IEvTQlJ7riBQB
-8jdX7JtxCndS8DX/Mx4epn6rxaHSZ6lCtS6ApK/5FcMs6PyR8b2iOemCz+7E2E0O
-QqOaflMPYErKD2UifNGW2JOVCSxeMTJzmaRexqn29ziktDfQ17PAZDNZdVff0r4E
-2OwwjlbshAu5V5RtaOYK
-=Mleh
+iQGcBAEBCgAGBQJSEsQqAAoJEB/kgVGp2CYvhFAL/3vUyx8NgCyik42NiJKqOlAe
+yarq7tz6r3CoIxNkcl6LkOpNfsNK6/eSs3K5/ZngUXJX0fIW+jISAPU8TSKLY9AG
+nkEMAJnMpDwwzLbOjrOpSJglFsb4pj+A/q3WTD09HvocJqZXyYKbQK3li5nsj6qR
+TVlBYchjKs3yRBZQdobwK7YVkyQrZIB8a7bFZhyH5OUKHOsWh6cae/7bpkJ55kX/
+8n0j+OP1rAMhPXior40soJAmG/XrVQsiuw4GAJ8eGoc1bGybcBZ5SarRTrbq2s7q
+DQaQZn9HfwCeXoHODYyJj6Pp77l9qKKB72BF+2BDDLmI8lsI681xmMW3On7rCoP6
+PbLkxUHWicO9KtyNg1WYW8wHv0HiwnLPhNNilzlNLoTBBGRIZr6Bb0+Nq1uD1uUD
+E4GymQfIyYRNvowyyFGlh/2fMY5tpFMSR6gtu50tZpaSyhKS0bjzYM68jRX6YCW8
+YyOhcL7uKKenZESWcPHTgq8Z/Yd4rJs0zRrKlXVzsA==
+=Y/N1
 -----END PGP SIGNATURE-----
