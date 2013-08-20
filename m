@@ -1,43 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/19
-Message-ID: <CAFp7Qwrjn6dWddmW4bm=p4Uudtz0NLqArkAV+W7-ejC7kx1E6A@mail.gmail.com>
-Date: Fri, 15 Nov 2013 22:47:14 +0100
-From: Josef Šimánek <josef.simanek@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/12
+Message-ID: <alpine.DEB.2.10.1308201338140.23686@vincent-weaver-1.um.maine.edu>
+Date: Tue, 20 Aug 2013 13:47:38 -0400 (EDT)
+From: Vince Weaver <vincent.weaver@...ne.edu>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: RubyGem omniauth-facebook access token security vulnerability
+Subject: Re: CVE Request: linux-kernel priviledge escalation on ARM/perf
 Content-Type: text/plain; charset=utf-8
 
-# RubyGem omniauth-facebook access token security vulnerability
+On Wed, 14 Aug 2013, Vince Weaver wrote:
 
-There is a security vulnerability in the omniauth-facebook <= 1.5.0.
+> One of the oopses can lead to a local privilege escalation on ARM-perf.
+> This fix can be found here:
+>   http://www.arm.linux.org.uk/developer/patches/viewpatch.php?id=7809/1
+> The discussion thread is:
+>   https://lkml.org/lkml/2013/8/7/259 
 
-    Versions affected: <= 1.5.0
-    Fixed versions:    >= 1.5.1
+More info on this ( CVE-2013-4254 )
 
-## Impact
+The fix has been committed to linus-git and will be in 3.11-rc6:
+    c95eb3184ea1a3a2551df57190c81da695e2144b
+It is also in the recent 3.10.8 stable release.
 
-Because omniauth-facebook <= 1.5.0 supports passing an access token
-directly in the URL, an attacker may be able to authenticate as
-another user by passing a valid access token obtained from Facebook
-for another app.
+I've been doing further tests on this exploit, and it turns out it
+is very hard to exploit; it depends on having a very exact kernel
+memory layout with a user-mappable address at exactly the right place.
 
-If you're currently using this feature, and passing the access token
-directly, you should change your integration to use one of the secure
-methods using either a signed request or the code flow. These secure
-methods are default, so unless you are explicitly passing an access
-token you should not need to make any integration changes to upgrade
-to 1.5.1.
+Thus despite the vulnerability being there from 3.2 through 3.11-rc6 I've
+only been able to exploit it on 3.11-rc kernels, which probably limits the 
+exposure from this bug (it does oops on all kernels, but doesn't call
+into user code exept on 3.11-rc1 and newer).
 
-All users running an affected release should upgrade to >= 1.5.1.
+Since the bug is now fixed and the exploit seems unlikely to trigger on
+non-3.11-rc kernels, I've released my code describing the issue in more 
+detail.
 
-## Releases
+See my perf_event_tests package:
+   https://github.com/deater/perf_event_tests
 
-The 1.5.1 releases is available at the normal locations.
+A simple test for the bug can be found under:
+   crashes/arm_validate_event_oops.c
+And the exploit (with details in the source code comments) is here:
+   exploits/arm_perf_exploit.c
 
-## Workarounds
-
-None.
-
-## Credits
-
-Egor Homakov (@homakov)
+Vince
