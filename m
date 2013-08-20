@@ -1,30 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/1
-Message-ID: <52A5252A.6080009@redhat.com>
-Date: Mon, 09 Dec 2013 13:04:26 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/13
+Message-ID: <20130820175849.GA1307@devzero.fr>
+Date: Tue, 20 Aug 2013 19:58:49 +0200
+From: vladz <vladz@...zero.fr>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: two issues in libmicrohttpd
+Subject: Linux kernel: vfs_read()/vfs_write(): potential missing checks (or not?)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-Florian Weimer of the Red Hat Product Security Team discovered two
-issues in libmicrohttpd:
+I wanted to discuss some potential missing checks in the Linux kernel
+and more precisely within the read and write syscalls.  From my point of
+view, what will follow here constitutes a vulnerability but I wanted to
+have more opinions on the subject and request a CVE ID if needed.
 
-1) https://bugzilla.redhat.com/show_bug.cgi?id=1039384
+I noticed that a file descriptor isn't affected when its corresponding
+inode sees its permissions changed.  For instance:
 
-2) https://bugzilla.redhat.com/show_bug.cgi?id=1039390
+    $ whoami
+    vladz               // a non-privileged user
+    $ exec 4>/tmp/test  // opens a file and assign fd 4 to it
+ 
+Let say that root wants to own and protect the file:
 
-References:
+    # chown root:root /tmp/test
+    # chmod 400 /tmp/test
+    # ls -l /tmp/test
+    -r-------- 1 root root 0 août  18 23:04 /tmp/test
 
-https://gnunet.org/svn/libmicrohttpd/ChangeLog
-http://secunia.com/advisories/55903/
-https://bugs.gentoo.org/show_bug.cgi?id=493450
+We may think that the file is safe from any further modification from
+any user except root.  But it's not, user is still able to update its
+content through the opened file descriptor:
 
-Can CVEs please be assigned?
+    $ du -b /tmp/test
+    0	/tmp/test
+    $ echo 'Hey!' >&4   //redirects strings to fd 4
+    $ du -b /tmp/test
+    5	/tmp/test       // file now contains the string 'Hey!\n' (+5 bytes)
 
-Thanks,
+Another scenario can allow file content disclosure.  For instance, to
+create a file used to put sensitive content (such as credentials), the
+owner (or the application) will generally proceed with the following
+steps:
 
---
-Murray McAllister / Red Hat Security Response Team
+    a) creates the file (perms will depend on umask, usually 022)
+    b) restricts the file permissions (chmod 600)
+    c) opens the file and write sensitive content in it
+
+There is a time lapse between a) and b) where someone else can open the
+file in read-only to obtain a file descriptor and later disclose the
+content by accessing the fd:
+
+    $ exec 4</etc/credentials
+    [...]
+    $ cat <&4
+    [... file content ...]
+
+Note here that the "cat" command will only display the content once, in
+order to see further updates of this file, user must reposition the fd's
+offset thanks to the lseek() call (cf. catfd.c [1]).
+
+Even if it's preferable and more common to set a restricted umask before
+creating the sensitive file, the scenario above can be found in a bunch
+of softwares.
+
+I haven't spent a lot of time hunting, I've just used regular
+expressions through source packages and post-installation scripts, and
+limited my scope to Debian and RedHat.  Well, without big effort, I
+found 15 potential vulnerable applications, the current listing can be
+obtained on demand.  I don't think those applications have to be
+separately fixed as I think the real problem reside and should be fixed
+in the kernel.
+
+That said, I was unable to find any clear documentation about how
+read/write syscalls should deal with file descriptors.  POSIX's chmod
+page [2] covers the subject a bit saying:
+
+   "Any file descriptors currently open by any process on the file could
+    possibly become invalid if the mode of the file is changed to a
+    value which would deny access to that process. One situation where
+    this could occur is on a stateless file system. This behavior will
+    not occur in a conforming environment."
+
+Looking at the kernel sources, the vfs_read(), vfs_write(), vfs_readv()
+and vfs_writev() functions checks the permissions of the file object
+(file->f_mode) before operating on file descriptor:
+
+    $ cat -n linux-3.10.7/fs/read_write.c
+    [...]
+    353 ssize_t vfs_read(struct file *file, char __user *buf, size_t count, loff_t *pos)
+    354 {
+    355         ssize_t ret;
+    356
+    357         if (!(file->f_mode & FMODE_READ))
+    358                 return -EBADF;
+
+I believe this is insufficient, the inode object should be checked too.
+So that if the file's permissions allow read/write operations, so we can
+perform reading/writing from/to the file descriptor.  I've patched the
+concerned function to do so (cf. patch [3]).
+
+Cheers,
+vladz.
+
+
+Links:
+
+  [1] http://vladz.devzero.fr/svn/codes/misc/catfd.c
+  [2] http://pubs.opengroup.org/onlinepubs/009695399/functions/chmod.html
+  [3] http://vladz.devzero.fr/svn/codes/misc/rw_inode_perms-3.10.6.patch
