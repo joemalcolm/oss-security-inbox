@@ -1,92 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/1
-Message-ID: <00c101ce28d9$e3da9390$9b7a6fd5@pc>
-Date: Sun, 24 Mar 2013 23:51:55 +0200
-From: "MustLive" <mustlive@...security.com.ua>
-To: <submissions@...ketstormsecurity.org>, <full-disclosure@...ts.grok.org.uk>, <oss-security@...ts.openwall.com>
-Subject: XSS vulnerabilities in ZeroClipboard and multiple web applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/2
+Message-ID: <20130820223601.GC20223@order.stressinduktion.org>
+Date: Wed, 21 Aug 2013 00:36:01 +0200
+From: Hannes Frederic Sowa <hannes@...essinduktion.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: vfs_read()/vfs_write(): potential missing checks (or not?)
 Content-Type: text/plain; charset=utf-8
 
-Hello list!
+On Tue, Aug 20, 2013 at 07:58:49PM +0200, vladz wrote:
+>
+> [...]
+>
+> Looking at the kernel sources, the vfs_read(), vfs_write(), vfs_readv()
+> and vfs_writev() functions checks the permissions of the file object
+> (file->f_mode) before operating on file descriptor:
+> 
+>     $ cat -n linux-3.10.7/fs/read_write.c
+>     [...]
+>     353 ssize_t vfs_read(struct file *file, char __user *buf, size_t count, loff_t *pos)
+>     354 {
+>     355         ssize_t ret;
+>     356
+>     357         if (!(file->f_mode & FMODE_READ))
+>     358                 return -EBADF;
+> 
+> I believe this is insufficient, the inode object should be checked too.
+> So that if the file's permissions allow read/write operations, so we can
+> perform reading/writing from/to the file descriptor.  I've patched the
+> concerned function to do so (cf. patch [3]).
 
-In February I've wrote about Cross-Site Scripting vulnerabilities in 
-ZeroClipboard and multiple web applications. This is additional information 
-on this topic.
+This behavior is deliberatly chosen. If the inode is checked again, you
+could just mmap the filedescriptor to memory and get away with that,
+too. There are plans to implement a revoke-syscall. Maybe it will
+be implemented for files, too (other operating systems only provide
+revoke-Support for terminals, block or char devices).  This shoud then
+handle the teardown of memory mappings with some specified semantic, too.
 
-XSS vulnerabilities in ZeroClipboard
-http://securityvulns.ru/docs29105.html
-XSS vulnerabilities in YAML, Multiproject for Trac, UserCollections for 
-Piwigo, TAO and TableTools for DataTables for jQuery
-http://securityvulns.ru/docs29104.html
-XSS vulnerabilities in em-shorty, RepRapCalculator, Fulcrum, Django and aCMS
-http://securityvulns.ru/docs29103.html
+Greetings,
 
-SecurityVulns ID: 12910
-CVE: CVE-2013-1808
-
-During my conversation with old ZeroClipboard developer (Joseph Huckaby) and 
-new developers (Jon Rohan and James Greene) last month, I've recommended 
-them to prevent downloading of ZeroClipboard's files (swf and sources) from 
-repository at Google code. To prevent spreading of vulnerable versions of 
-software. After my second letter at 19th of February, Joseph agreed with me 
-on this and gave full control for new developers to make necessary changes 
-at http://code.google.com/p/zeroclipboard/. About added warnings and 
-disallowing of downloads Joseph informed me and later James confirm it too.
-
-But it was not sufficient enough, since I found that it was possible to 
-download files directly from repository (and there are many web sites which 
-are referencing on these files). So I've suggested Jon and James to 
-completely prevent downloading of all vulnerable files from old repository. 
-After my letters from 3rd, 16th and 24th of March, they at last did it and 
-made complete closure of old repository.
-
-XSS vulnerabilities in zClip and other web applications.
-
-In addition to all those web applications, which I've wrote earlier and 
-hundreds of webapps on which I've referenced via google dorks, there are 
-tens or hundreds additional vulnerable web applications with ZeroClipboard. 
-These are such webapps, which have no swf of ZeroClipboard in their bundles, 
-but referencing on it at their sites or in documentation. I have found many 
-webapps with such approach (for different flash-files, like all those flash 
-video players, about vulnerabilities in which I wrote) for last years and 
-wrote about such case. E.g. in 2010 I've wrote about Blogumus - a WP-Cumulus 
-fork for Blogger, where there was swf-file at the site, from which users can 
-download last version or embed it from that site (like from CDN).
-
-There are such web developers, like developers of zClip and many other web 
-applications, which are not bundling vulnerable swf of ZeroClipboard, but 
-they referencing to it in old repository and asking all users to manually 
-download last version of swf-file from repository (i.e. last vulnerable 
-version). I've wrote to zClip developers about it at 6th of March, but they 
-just ignored it. So to protect all future users of zClip and any other 
-similar software, which are referencing to old repository at Google Code 
-(with vulnerable versions of ZeroClipboard), and to force a fix to all such 
-software, it was needed to close old repository completely. And today 
-ZeroClipboard developers have done it.
-
-XSS (WASC-08):
-
-For zClip the path will be the next. XSS via id parameter and XSS via 
-copying payload into clipboard (as described in my first advisory).
-
-http://path/js/ZeroClipboard.swf?id=\%22))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//&width&height
-
-All versions of zClip are referencing to vulnerable versions of 
-ZeroClipboard. So all current users of zClip (including developer of zClip 
-at their site) are using vulnerable swf-files and have XSS vulnerabilities 
-at their sites. But since today all future users of zClip are protected. 
-After I've forced developers of ZeroClipboard, it will prevent spreading of 
-vulnerable versions of swf-files and will protect future users of all 
-software (like zClip) from downloading vulnerable versions of ZeroClipboard. 
->From now all web developers and users need to download ZeroClipboard only 
-from new repository (https://github.com/jonrohan/ZeroClipboard). Everyone 
-who is using old versions of ZeroClipboard or software, which are bundled 
-with old versions of it, needs to update to the last version 1.1.7 from new 
-repository.
-
-Best wishes & regards,
-MustLive
-Administrator of Websecurity web site
-http://websecurity.com.ua 
-
+  Hannes
 
