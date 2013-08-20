@@ -1,43 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/21/3
-Message-ID: <loom.20130321T105302-272@post.gmane.org>
-Date: Thu, 21 Mar 2013 10:29:39 +0000 (UTC)
-From: Damien Regad <damien.regad@...ckgroup.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/2
+Message-ID: <ff65c54d-e709-4721-93a8-ebb36fa51f54@email.android.com>
+Date: Mon, 19 Aug 2013 21:04:07 -0400
+From: Landon Hurley <ljrhurley@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: MantisBT text search query can crash site
+Subject: Re: PostgreSQL insecure install via yum (multiple problems)
 Content-Type: text/plain; charset=utf-8
 
-Dear all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-MantisBT user 'jjtest' discovered an issue [1] affecting MantisBT versions
-1.2.12 to 1.2.14 included.
+Kurt Seifried <kseifried@...hat.com> wrote:
+>Problem:
+>
+>So I wanted to install PostgreSQL 9.2 to test something. So I google
+>"postgresql 9.2 rpm" and get sent to:
+>
+>http://yum.postgresql.org/repopackages.php
+>
+>which is not available by HTTPS at all. Not ideal but ok, I download
+>it over HTTP because I can check the signature on the file right?
+>
+>Wrong, I can't find the key anywhere. I try pgp.mit.edu, I even google
+>site:postgresql.org 442df0f8 and all you get are archived emails with
+>the warning that the signature can't be checked. No copy of the key.
 
-Anybody having access to a MantisBT instance (including anonymous users on
-web-facing applications) may issue a search query on the View Issues page; if a
-filter combining some criteria and a text search with 'any condition' is
-applied, the generated SQL will results in a potentially huge cartesian product
-which, depending on the size of the underlying database, has the potential to
-bring down the site/db server as it runs out of resources.
+Kurt,
+pgp.mit.edu is deprecated. I recommend searching 0x442df0f8 on
+ pool.sks-keyservers.net which does return a key.
 
-The root cause of this behavior is joining a table with a from clause and
-setting the join's criteria in the query's where clause, without taking
-consideration the operator's precedence (AND/OR).
+landon
 
-Full details about this issue can be found in our bugtracker [1].
 
-A patch for this issue is available [2] in the project's repository on Github,
-and will be included in MantisBT version 1.2.15, which we expect to release in a
-couple of weeks once testing is completed.
 
-References:
-[1] http://www.mantisbt.org/bugs/view.php?id=15573
-[2] https://github.com/mantisbt/mantisbt/commit/d16988c3ca232a7
+>Solution:
+>
+>Can PostgreSQL please setup HTTPS immediately for this site, and also
+>publish the GPG key used to sign their RPMs in a secure manner (e.g.
+>on the HTTPS site)?
+>
+>To replicate:
+>
+>$ wget
+>https://yum.postgresql.org/9.2/redhat/rhel-6-x86_64/pgdg-centos92-9.2-6.noarch.rpm
+>
+>Fails.
+>
+>$ wget
+>https://yum.postgresql.org/9.2/redhat/rhel-6-x86_64/pgdg-centos92-9.2-6.noarch.rpm
+>
+>Gets the file but:
+>
+>$ rpm -K pgdg-centos92-9.2-6.noarch.rpm
+>pgdg-centos92-9.2-6.noarch.rpm: (SHA1) DSA sha1 md5 (GPG) NOT OK
+>(MISSING KEYS: GPG#442df0f8)
+>
+>Signing RPM's isn't very useful if you never make the signing key
+>available!
+>
+>
+>--
+>Kurt Seifried Red Hat Security Response Team (SRT)
+>PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Kindly assign a CVE ID for this issue.
 
-Damien Regad
-MantisBT developer
-mailto:mantisbt-dev@...ts.sourceforge.net
-http://www.mantisbt.org/bugs/
+- --
+Violence is the last refuge of the incompetent.
+-----BEGIN PGP SIGNATURE-----
+Version: APG v1.0.8
 
+iQJBBAEBCgArBQJSEsCHJBxMYW5kb24gSHVybGV5IDxsanJodXJsZXlAZ21haWwu
+Y29tPgAKCRA3qYf9H1SVrNiiEACZzVMdYrf6LoDKOTaKENvHtJOXYIHzG5QLH+C0
+/uwyC/TES3RdbW5zMyvMT1Nh+zz9w2jSgYIu/BSgFzXt3+GXhySi/s/rftf1+fr5
+K/38OyteKkgbvKJBbvmljTaEoL8rpflXrlR8nL9ozUcv7hLO6If9sQFD+3f5Klfd
+6jx3k0F5g2SLmQLO00o6tC4ro9PhJlU7g05ji75bHQA9S3hwYx8fM75OZN/4hC4U
+fRXHOLLbPfDOOIdM0McHRiMhayMYskoVU7UhV229zZlCf+rD3odcr/eu46wGE/cF
+RmMScyEV3IFuPJAUl4F+ph/j2eKPJ92t73ZtqTbXeIaYL/5AGbbAb8q6BQSoO7oL
+BNftzSdEoisjy9xCCUdrnnih2roNUxVwCzpCyrSRbxbnaagA8+UPOGyvk96jA+Ky
+jAYfgefmIHZ374iaMLhE6KdzqzIcxtZkA3xbjiCgzwJioHbSB0aImsZjaf60G5KX
+TOPwUWc8qFfShhBl0UanTispdMZtdgxEvs+FRluDypQevU0DnFFnu4ZCD7kXEuCO
+cWkORMQt3Av5Nyc7QWi5nhpG6P1d1a9CUGsag9xIGQjbsCaqg4k2X26Uy2M5DPb4
+xfm2jwTvkSd/3fw4eB4hBiqnkWVtKUKUNqIgSa+9uG5fjRy0vdjNLMH2OdHuT5p3
+DgyjGQ==
+=K8qK
+-----END PGP SIGNATURE-----
 
