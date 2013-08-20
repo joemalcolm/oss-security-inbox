@@ -1,96 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/1
-Message-ID: <516F5E06.8040500@redhat.com>
-Date: Wed, 17 Apr 2013 20:44:22 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/7
+Message-ID: <5212F9C2.8090408@moritz-naumann.com>
+Date: Tue, 20 Aug 2013 05:08:18 +0000
+From: Moritz Naumann <info@...itz-naumann.com>
 To: oss-security@...ts.openwall.com
-CC: Daniel Kahn Gillmor <dkg@...thhorseman.net>, Thomas Biege <thomas@...e.de>, patrick@...gmail.net, dkg@...thhorseman.net
-Subject: Re: debian: gpg --verify suggests entire file was verified, even if file contains auxiliary data
+Subject: Re: PostgreSQL insecure install via yum (multiple problems)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA512
 
-On 04/17/2013 12:32 PM, Daniel Kahn Gillmor wrote:
-> On 04/17/2013 02:23 PM, Kurt Seifried wrote:
->> I've run into this before, sadly enigmail (Thunderbird gpg
->> plugin) displays the same green bar for message signed ok, but
->> displays the text as "Part of the message signed" so unless
->> you're really paying attention, you'll miss it.
->> 
->> My thinking is this:
->> 
->> 1) It's pretty easy to find signed content for people using GPG 
->> 2) It's pretty easy to append/embed signed content into a larger
->> message
->> 
->> So the attack would be: create malicious content/email,
->> embed/append a valid message harvested from somewhere. Send to
->> user. The user verifies then reads the message, unless they are
->> really paying attention they probably won't notice that the
->> content isn't signed properly (e.g. have an email, ton of
->> whitespace, then the signed message). Personally I'm inclined to
->> assign a CVE, enigmail for example does mostly the right thing
->> (makes a distinction between fully signed and partially signed).
->> I think GPG should too. Thoughts/comments before I assign this?
+Eric H. Christensen:
+> On Mon, Aug 19, 2013 at 06:58:22PM -0600, Kurt Seifried wrote:
+>> Signing RPM's isn't very useful if you never make the signing
+>> key available!
 > 
-> A similar attack (related to PGP/MIME) has been under discussion on
-> the enigmail list last month.  see the thread starting at:
-> 
-> https://lists.enigmail.net/pipermail/enigmail-users_enigmail.net/2013-March/000721.html
->
->  I think the enigmail issues are distinct from the gpg issues, and
-> i don't think they should be conflated into the same CVE.
-> 
-> In particular, i see the enigmail issues as (security-related)
-> UI/UX problems, but i see the gpg problems as (security-related) 
-> API/programmatic-use problems.
-> 
-> By comparison with enigmail, thunderbird's native S/MIME
-> verification routines display no cryptographic indicators at all if
-> only part of a message is signed.  This means that S/MIME-signed
-> messages sent through common mailing list software which attaches a
-> text/plain MIME footer (like mailman) will not indicate that they
-> are verifiable at all.
-> 
-> it's not a pretty set of tradeoffs. :/
-> 
-> --dkg
-> 
+> You mean like this: 
+> http://keys.fedoraproject.org/pks/lookup?search=0x442df0f8&op=vindex
 
-So I think first off we need to figure out what the behaviour should
-be. My thought would be that it should be quit explicit, e.g. "this
-entire message/file/etc. was signed by X" or "a part of this
-file/message/etc. was signed by X" and so on.
+Still
+> 
+plain HTTP there (on a somewhat unrelated site), also:
+* short key ID (no fingerprint) listed on http://yum.postgresql.org
+* DSA-1 key: 3 don'ts in a row.
 
-The next challenge is how to signal it to the end user. One challenge
-with enigmail is it provides some of the signalling "in band" as it
-were (in the email text area) which can be modified by the attacker,
-and some of it "out of band: (at the top of the window area it puts
-the color bar and text to clarify. With GPG command line it can maybe
-say something like "part of this message was signed by X"?
+The situation is a bit better for the APT repository:
+http://wiki.postgresql.org/wiki/Apt
 
-I'm inclined to assign a CVE to this type of vulnerability but I have
-no idea how we fix this _properly_. Anyone have ideas?
+* 4096-bit RSA key
+* instructs to download key from same site - using plain http
+  (but HTTPS is available - GoDaddy CA domain control validated)
+* (short key ID used in documentation only)
 
+In contrary to the Yum repository signing key this OpenPGP key is
+signed by someone else, notably a Debian developer, so verifying it
+via the web of trust / strong set /may/ succeed.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Maybe a new policy document would solve it...
+http://wiki.postgresql.org/wiki/Policies
+http://wiki.postgresql.org/wiki/ReleasePrep
+
+This said, I'm glad that the Postgresql Global Development Group do
+provide us with these repositories.
+
+Moritz
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRb14FAAoJEBYNRVNeJnmTF/UQAI5niyrCCZ/MXR7kaP6ugzWA
-ldKWCMlI3D5GUyuQSabAiKDnNq5o6hevPkNs2RMBO4YtVin9cTcC3Obv3YAttSTQ
-N1H5JgroXO+1Q13v0pGJy1olw5SiTaWcyDMrAQ1EJpW5+E/yx+qNIkfMksZ8+NVH
-aokzOocX2LMQj7n1FjfB3gO8zIIhTTsRqCKX+cwfJZgJPD3FywySX3DsZZj2dRdo
-IgTuuYHAE+ZsNuV/rZO/Plv/KfzjBVu0RHxtaOnowaMZTDrw1LEcj8zPOKV/nOf5
-m9IV4oMMSz6zVnlIDABBdj8dZFuPN1Kp72j9ox0fcQjy5E1c+ZQ1alFNg6MmoShm
-3olCEX4cLmIRSnxB4G92Y80Pj2XmV/PKHrhwGZpggCGdTwEskXej8VcXiKFjH4JN
-sFpT8aHywKtP3GsWDx6fFkFe9Zy4ZPVlbfruySz9H4rFxywJJDbjoydDvBnhxzCy
-gffBcYnDPQ1YGnO8WrE8oNMT8jIeCEhOXvd73pgQCy/FvE68X3Q4keSvlwbR1TCE
-jfTGQqMS18yTshlISHF2rt9eOEkbDPzxHfFuOE/kWoYizqRfVjRW/WsZM+CYwVwH
-bkM+MGgyh7qa0Jb4eYHvqsl0EJkkp55Kuw3vCx3jcJpi3f6IXItpphgJt2rln4bQ
-Eop7WmP7qJR1/2y7ExFL
-=1b8Q
+iQJ8BAEBCgBmBQJSEvmxXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXREMEEwRkYzMTUwODdEMEUzQkU0QzVGMkVC
+RDk2RUNBRDkzNDUwMEIwAAoJEL2W7K2TRQCwibgQAM/0KPyoqBjaFsmxWo9TrLOz
+1IWUs1Y2ww2n3dqy0qwqhBk4o6NsdpRQ0phkqW33H1PxyhYSeq2HvgHf4L16DQ31
+mmkaO72v5hO1EjfXNzmeODe1EXpJP91bwSPIbW31p1rOjDBJVcY6sEGeu+GC+tqt
+/BaBBO27F/4yoK1U4XIiRDoItjojW92eBoe8UEhu2Ds3GG1/mZ0APj04cq0ruWZw
+SWXuuUh+Q/Un27TwTCKsTH1BwSMh4PxxSfXNMnCVT5YzjSWuNq6CRe27FSZOGH+e
+28LQYbLKnr9w2Kx0+MCMGihOPmbvAxAaaiVvIvWpLIiNkIyxR86HNMmPB5w8f86K
+W97VSCUahN0F0PKefMatCMvKpXL6LqZ6eVxJgBAEUfavj69TBgCF0ORjNtKlFuy9
+BHB1pAHYB+/Jj+0K6Ox/hdZnJE9k/VGw2/5tQHyo4dZQbifIYBymcnAszESR7U2H
+fLjFCmkLsxdq1/uvirjljscYYyIGWnDdAYURfXQgDslG4uRAOBH/JUJqN/NnAHra
+4k4R5DejSmbipeR2QUJoKVvyGVChYrBt2lnzmXk7JYhohPQ2+6kUCU1e/FwNNFVI
+s4+9S4BfXEKHkruiKXLSH0DxR88HrV0aokU6eg1OsRB6+evRjjtVzPSfK36KfcPD
+cF456FKI6+Q44uc2qp2z
+=mzCS
 -----END PGP SIGNATURE-----
