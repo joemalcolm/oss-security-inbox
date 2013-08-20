@@ -1,22 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/2
-Message-ID: <20131016014659.GA29471@openwall.com>
-Date: Wed, 16 Oct 2013 05:46:59 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/4
+Message-ID: <5212EC61.3020007@redhat.com>
+Date: Mon, 19 Aug 2013 22:11:13 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Salvatore Bonaccorso <carnil@...ian.org>, team@...urity.debian.org
-Subject: Re: Request for linux-distros@...openwall.org membership
+CC: "Eric H. Christensen" <echriste@...hat.com>, security@...tgresql.org, kevin@...ye.com
+Subject: Re: PostgreSQL insecure install via yum (multiple problems)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 07, 2013 at 11:17:18PM +0200, Moritz Muehlenhoff wrote:
-> On Mon, Oct 07, 2013 at 10:47:29PM +0200, Salvatore Bonaccorso wrote:
-> > I recently joined the Debian Security team and request membership to
-> > the linux-distros@...openwall.org list so that I may participate fully
-> > in reporting and fixing vulnerabilities in Debian and FOSS. Here is my
-> > GPG fingerprint:
-[...]
-> Confirmed.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I've just subscribed Salvatore to linux-distros.  Sorry for the delay.
+On 08/19/2013 07:19 PM, Eric H. Christensen wrote:
+> On Mon, Aug 19, 2013 at 06:58:22PM -0600, Kurt Seifried wrote:
+>> Signing RPM's isn't very useful if you never make the signing
+>> key available!
+> 
+> You mean like this:
+> http://keys.fedoraproject.org/pks/lookup?search=0x442df0f8&op=vindex
+>
+>  I'm pretty sure pgp.mit.edu isn't the best source for PGP keys any
+> longer, unfortunately.
 
-Alexander
+Dunno who to ask, so adding Scrye: can we make sure Google indexes the
+Fedora key server? This actually raises a good point, what are the key
+servers now? The big 3 used to be:
+
+http://pgp.mit.edu/
+http://keyserver.pgp.com/
+http://sks-keyservers.net/
+
+and it's not on any of them =( Even if the key is uploaded PostgreSQL
+doesn't list the key fingerprint anywhere securely, the key ID can be
+spoofed, so yeah there might be keys with the ID 442df0f8 but I got no
+clue if they're legitimate or not =(.
+
+Really all we need is an HTTPS server (easy) and a web page listing
+the key/fingerprint, ideally the full text of the key. I understand
+small projects may not do this, but PostgreSQL is pretty big and
+professional.
+
+> -- Eric
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSEuxhAAoJEBYNRVNeJnmTH00P/jBTD4aZJMvFOaVZst62zoA2
+5wp27Soz7UTVnLUeJVvkZBxwYfsEYhJVYOSlMMQ0g6sSbCnkuD1SxabXhLwutumi
+3umptqntOieXQClqsVzOpqMc53UxusjQKC9qjhjSa44l5AYrb7vD7mQuTAfO2jYL
+U+lXf7tti7t9EMnPN61jIdao9oySMEwwYBBKtgnnUifns5zv/S4rYQ7fx4Kq+rG1
+VyZW5EvReVD+uQMKAaLual4i5Ghn9LV7vbwT99Pv3hiN6hjhdeE44RjQ+0kaJikN
+XTFAzhReYuCswGMN/Cetofaayi1DKrd8+koMwLBz8lnpoE5zJ2YOdA3Cp3dC1/8Z
+a3UGLmnvXVCrUNhWE29tDi3ccUMpHEjV6I1zrzYnvNA0U23imkwi9y73zqj1qD9N
+rA6URIAlGT8yFYv8PIwDGzQcldsMUAblC71evynTrrhscdtAa6Lw6gWWdLVJHsbl
+eOaxkBAwlOPyxYgCteIIUcbqEMtY0ij/hA7rHV8KPfUdGOQz6WbnLa516/NYxwMw
+Ojw3UyOj+s4M0bIb3DKmgAieVg18YfKpK0n/rzdMC6+XAMzRG6coY1fP2eVMf2G8
+wr6RaqDThYs8CHAExL+ghsyC6tALq2/l996AtA3p7/5fOPYE9b30eqVEaD2ug257
+QhFEfUq2ycyncMChZDnl
+=UiGf
+-----END PGP SIGNATURE-----
