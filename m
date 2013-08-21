@@ -1,36 +1,12 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/11
-Message-ID: <CABRvpqCvkfcYvwhnB61pTW0BNxYx+dnuHkk+2qgZk6CvfZO+sQ@mail.gmail.com>
-Date: Thu, 18 Jul 2013 16:36:55 -0400
-From: Andrew Nacin <nacin@...dpress.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: Open Source Security <oss-security@...ts.openwall.com>, Jay Turla <shipcodez@...il.com>,  nacin@...dpress.org
-Subject: Re: SWFUpload <= (Object Injection/CSRF) Vulnerabilities Multiple flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/6
+Message-ID: <CACDKJ9r_e5MtT2E=nUqPj=b4Dm88veE-A5ihEYGyFsF=nZhHXw@mail.gmail.com>
+Date: Wed, 21 Aug 2013 17:28:08 +0200
+From: Alessandro Cresto Miseroglio <alex179ohm@...il.com>
+To: Stephen Röttger <stephen.roettger@...il.com>
+Cc: oss-security <oss-security@...ts.openwall.com>, gcc <gcc@....gnu.org>
+Subject: Re: PoC: Function Pointer Protection in C Programs
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 18, 2013 at 4:25 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> This was brought to my attention by Jay Turla <shipcodez@...il.com>,
-> after some searching I found:
->
-> http://bot24.blogspot.ca/2013/04/swfupload-object-injectioncsrf.html
->
-> and after testing (it works). So please use:
->
-> CVE-2013-4144 swfupload KedAns-Dz object injection
-> CVE-2013-4145 swfupload KedAns-Dz XSS
-> CVE-2013-4146 swfupload KedAns-Dz CSRF
-
-CVE-2013-4145 (XSS) is actually CVE-2012-2399. And, CVE-2013-4146
-(CSRF) seems to be just the potential for CSRF via XSS -- don't think
-this is a separate issue.
-
-Neither of those are reproducible in
-https://github.com/wordpress/secure-swfupload.
-
-We're aware of CVE-2013-4144 and intend to fix it soon, but it's
-really tough to classify "image injection" as a serious vulnerability
-without there being any actual XSS there to further trick the user.
-
-> Also alerting WordPress.
-
-Thank you.
+in English?
+(http://zero-entropy.de/fpp.pdf is in Deutsch)
