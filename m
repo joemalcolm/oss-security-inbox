@@ -1,29 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/4
-Message-ID: <20131230071725.GA8278@eldamar.local>
-Date: Mon, 30 Dec 2013 08:17:26 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/20
+Message-ID: <20130821212002.GA16896@order.stressinduktion.org>
+Date: Wed, 21 Aug 2013 23:20:02 +0200
+From: Hannes Frederic Sowa <hannes@...essinduktion.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: SASL authentication allows wrong credentials to access memcache
+Cc: gcc@....gnu.org
+Subject: Re: PoC: Function Pointer Protection in C Programs
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi!
 
->From upstream release notes for 1.4.17[1] it states "The other notable
-bug is a SASL authentication bypass glitch. If a client makes an
-invalid request with SASL credentials, it will initially fail. However
-if you issue a second request with bad SASL credentials, it will
-authenticate. This has now been fixed.".
+On Wed, Aug 21, 2013 at 04:43:13PM +0200, Stephen Röttger wrote:
+> Approach:
+> The basic idea of the thesis is to record all addresses that are
+> assigned to a function pointer variable at some place in the program (or
+> in one of the shared libraries) and if a function pointer is called,
+> verify that the address has been recorded previously. Thus, if an
+> attacker overwrites the fp variable with either the address of system()
+> or of a stack pivoting gadget, the fp call will fail, since these
+> adresses have never been assigned to a function pointer in the program.
+> The security of the approach relies on the assumption that no function
+> that can be abused for malicious purposes is ever assigned to a function
+> pointer, but this requirement will be weakened under future work.
+> 
+> How this works:
+> The compiler, GCC in my PoC, will register all assignments of function
+> pointer variables in the source code and will create a global variable
+> for the assigned function, which is initialized to the function's
+> address. Then, it replaces the address of the function in the assignment
+> with the address of the newly created variable:
+>     fp f = &printf;
+> becomes:
+>   printf_var = &printf;
+>     ...
+>     fp f = &printf_var;
+> Further, a global constructor is created that is run before the main
+> function of the program or before the shared library is loaded. This
+> constructor allocates a memory area where it stores the address of each
+> fp address previously registered. The created global variable is then
+> overwritten to point to the new memory area instead. Finally, the memory
+> area is mapped read only. Also, the variable where the address of this
+> area is stored has to be in read only memory as well to prevent
+> malicious overwrites. Putting it all together, the memory layout looks
+> like this:
+>                                     <read only>
+>  +-------+    +------------+    +------------------+    +----------+
+>  | fp f  | -> | printf_var | -> | protected memory | -> | printf() |
+>  +-------+    +------------+    +------------------+    +----------+
+> Additional instructions are emitted by the compiler before function
+> pointer calls. They will verify that the global variable (printf_var)
+> points to the protected memory region, from which it extracts the real
+> function pointer to be called. If an attacker is able to overwrite
+> either the function pointer or the global variable, he will only be able
+> to execute functions contained in the protected memory area (which he
+> can't overwrite since it is mapped read only during normal execution).
 
-The upstream bugreport is at [2], with the corresponding commit fixing
-this issue at [3].
+Thanks for doing research in this area! :)
 
- [1] https://code.google.com/p/memcached/wiki/ReleaseNotes1417
- [2] https://code.google.com/p/memcached/issues/detail?id=316
- [3] https://github.com/memcached/memcached/commit/87c1cf0f20be20608d3becf854e9cf0910f4ad32
+Your approach seems to have some slight similarities with -fvtable-verify:
+<http://gcc.gnu.org/ml/gcc-patches/2012-11/txt00001.txt>
 
-Could a CVE be assigned to this issue?
+Maybe some code sharing could be achieved?
 
-Regards, and thanks in advance
+Greetings,
 
-Salvatore
+  Hannes
+
