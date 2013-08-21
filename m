@@ -1,58 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/10
-Message-ID: <51BB76B1.2080201@redhat.com>
-Date: Fri, 14 Jun 2013 14:01:53 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Felipe Pena <felipensp@...il.com>
-Subject: Re: CVE request: XSS on Monkey HTTPD - dirlisting plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/10
+Message-ID: <5214F33A.3020509@googlemail.com>
+Date: Wed, 21 Aug 2013 19:04:58 +0200
+From: "Stephen Röttger" <stephen.roettger@...il.com>
+To: Ondřej Bílka <neleai@...nam.cz>
+CC: oss-security@...ts.openwall.com, gcc@....gnu.org
+Subject: Re: PoC: Function Pointer Protection in C Programs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 06/14/2013 11:21 AM, Felipe Pena wrote:
-> A vulnerability was found in the Monkey HTTP - dirlisting plugin, which does not
-> filter file names before printing on HTML page, hence vulnerable to XSS attack.
-> 
-> PoC
-> ----
-> $ touch "' onmouseover='alert(1);"
-> 
-> 
-> Report
-> ------
-> http://bugs.monkey-project.com/ticket/185
-> 
-> 
-> CREDITS
-> -------
-> Felipe Pena
-> 
-> --
-> Regards,
-> Felipe Pena
-> 
+> What is performance impact for program that just qsorts big array? It
+> looks like worst case scenario for me.
 
-Please use CVE-2013-2181 for this issue.
+I just put together a quick test program that sorts an array of 10^6
+integers and stopped the execution time using "time". The results are as
+follows (+- 0,01s):
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+protection disabled, -O0:
+./sort_nofpp_0  0,19s user 0,02s system 98% cpu 0,215 total
 
-iQIcBAEBAgAGBQJRu3axAAoJEBYNRVNeJnmTE9gP/R+VUc9EuW6DDGfd9wmTDF8y
-yYxdP37NAVwfEo7vHHgwtyK2rRawVxSSbRCN0yWgUNshuBGLxkpuaF3IWAmav3rf
-ARfh8QSnTj+R8+8SPjxeW+Pn4gGIHpJqLRj+U61denpQ7m7UKQfsqtOn16v8zLt3
-kjXdkhvPVC3JZXWzGSFV89CESH3WapVsTyArheRt0d71V34TG9d+uTh9hUl5e+EC
-Apy4xQ093gVKldPdRh5EFakIOwrL3mmEKjTE2S3lbXe2oNtiBtMVwHDSyF3aMrkJ
-aEWXGHrfnNctb+MxOIisSSYAmFUMkyJ1uFQUgvJJT8SnWcihmv2NYFkRYmUGWkyR
-wdQppuIuy+ynnXosZN4Pf+EukDHUh0ryX2QcrV6HBvTj5oLFjLN800zvNZSypdNe
-wBFAV/ZFSdUCoct9tw3jDKm4LhWj7gG/hqRBrwdUjO2E8vQILzMvCye4lkTCKPO6
-FLTdUByPec2k6UVSU/7c0l/x7RI8TF/T85dOiEavTLrYJhv2n5ZVKTmV6ZfZwbNR
-1HRuaausC2vwui7NZa1TY1tGD3BVdK/jBYPKNKOFpwFt5udO0WiO9FeDvnUwbAAu
-xeNPviD3MqhZROU2d1fQdS6e8CTzUhbFxzv1a/NETDKbEMqhtUFMeUJlG21EKaNp
-lvzoDLMnLwAtgtFdeeSF
-=secC
------END PGP SIGNATURE-----
+protection enabled, -O0
+./sort_fpp_0  0,54s user 0,01s system 99% cpu 0,549 total
+
+protection disabled, -O3
+./sort_nofpp_3  0,15s user 0,01s system 98% cpu 0,157 total
+
+protection enabled, -O3
+./sort_fpp_3  0,51s user 0,00s system 99% cpu 0,511 total
+
+So this makes quite a difference:
+0,19s -> 0,54s
+0,15s -> 0,51s
