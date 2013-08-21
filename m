@@ -1,58 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/3
-Message-ID: <52832BE0.1070905@redhat.com>
-Date: Wed, 13 Nov 2013 00:36:00 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/14
+Message-ID: <521520BD.8050003@redhat.com>
+Date: Wed, 21 Aug 2013 14:19:09 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Microsoft Warns Customers Away From RC4 and SHA-1
+To: oss-security@...ts.openwall.com
+CC: Donald Stufft <donald@...fft.io>
+Subject: Re: CVE Request: Insecure Software Download in pip
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-- From Slashdot:
+On 08/07/2013 11:23 AM, Donald Stufft wrote:
+> 
+> On Jul 31, 2013, at 4:11 AM, Kurt Seifried <kseifried@...hat.com 
+> <mailto:kseifried@...hat.com>> wrote:
+> 
+>> Ok I have no info on that CVE, is it embargoed? I can't find it
+>> in google after a quick search. I need to see that one before I
+>> can assign anything. As for the reserved thing:
+> 
+> This CVE has been fixed, and it is for the issue where pip prior to
+> 1.3 did not download from the central repository using TLS
+> 
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1629
+> 
+> So back to the question of mirroring, possible to get a CVE for
+> that now? :)
+> 
+> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 7C6B
+> 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+> 
 
-"The RC4 and SHA-1 algorithms have taken a lot of hits in recent
-years, with new attacks popping up on a regular basis. Many security
-experts and cryptographers have been recommending that vendors begin
-phasing the two out, and Microsoft on Tuesday said it is now
-recommending to developers that they deprecate RC4 and stop using the
-SHA-1 hash algorithm. RC4 is among the older stream cipher suites in
-use today, and there have been a number of practical attacks against
-it, including plaintext-recovery attacks. The improvements in
-computing power have made many of these attacks more feasible for
-attackers, and so Microsoft is telling developers to drop RC4 from
-their applications. The company also said that as of January 2016 it
-will no longer will validate any code signing or root certificate that
-uses SHA-1."
-
-http://threatpost.com/microsoft-warns-customers-away-from-sha-1-and-rc4/102902
-
-http://blogs.technet.com/b/srd/archive/2013/11/12/security-advisory-2868725-recommendation-to-disable-rc4.aspx
-
-http://blogs.technet.com/b/srd/archive/2013/11/12/security-advisory-2880823-recommendation-to-discontinue-use-of-sha-1.aspx
-
-I'm inclined to agree. The question I suppose is, like DES (and
-3DES/MD5) at what point do we start assigning CVE's for some of this?
-thoughts and comments welcome.
+Ack sorry catching up. Please use CVE-2013-4266  for the insecure
+mirroring stuff. Can you post the Python bug URL for this again? thanks.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSgyvgAAoJEBYNRVNeJnmTrSIQAJs4xB656Th6dRpFKgIcipB8
-HKeKt+fKYBV+a5njw3EXBVlDuQ8pbFhngMrPA0Ym5qSvgpTlRD0tSKIYB+nmnA2Q
-nNby58VGGPfRrSaMFwLPS6Kt8p/vSXdyES/CkwHrN2uzUZ1IihuKs8p37pTgiM/U
-QJK43tt1wRgSy/vIjiWatz1aeGtz/jXDpq3b+EInPsc9xmvnmchptmU6rZH/xtyu
-nBadOwWiYOTqEAE2EZvoH1QQD2u/JQiWMnJf3MzFAnLus2CtdJO6Ol/1Y6lvDpw3
-9W5994Tf00D90Rduerev8vugPgfDTHZJS8vpzLVHS4V4Sm5Lah2mWyFYrKLaIOQY
-pzhofdLI2KWw9Ecjhj+z7FNsCr9goSbZILOKUrH0oVRoMtSH4a8V+MJLP1IQSpnN
-ceOBo2ukJW+kSm6D0ZMDXOV/rmWfC4HEZIuhi8vxFXvSEGUgQaZzdd1JZK20iwPz
-3BjGMqgrmcC8qUsXVraJfrG4NAWPUuB1L/I4qGLuqYo8L8NrLN0F0VApHP95kHn8
-Q/iEHx+0+s/17D0KcjDgsR17A601oJjw4ku4CnXU9+sdlhdhERAKY70CZEBIcjPn
-yPwtnq0w4l0lxcQb+qIi9C+fCx9xnBrhTLorLLkx2JUB5qk+QOKMi6tV0k6Hxr83
-l+hmVlhruE4OctgTtNHp
-=fAYL
+iQIcBAEBAgAGBQJSFSC9AAoJEBYNRVNeJnmTCxIP/iAbXnPgKfRjlgCGYknvTjIN
+wqlj3kvHUOhME6V+ihjKVpQMIFCNJRePWPSAGswyNHh4/zuONqhy23Mf55dXxF1d
+nNrQZxyOaa/LroY6YwLGQl8Lc7fa8ZmnzFZNd+c+q4YU6nIbJRjQrihAGuLhc+NA
+Vm+3W+nz7raq5Spe19RK7QXiWu6tLaonT4frdc7CjqrVRrYqDtdnut10o5vFvPJU
+3sUXReKjLMG0sB7PaYYlcL3EO/cGaVOM03deylDx59S80awHc09iVyMET6alSYrO
+2XTru+Cur7le+SbU5vrCuC0Sxwe/IC3VkEQhwEiz2jPxTcxTOleLJKpEnrabcf+b
+4eaZ939oJgw7D5pPph2wkoIyF1/AJxV7L+yWIR5Swk265zYdVaWogBFSNoHbF7dw
+nnb2KOcB28R+0lVIszRHgrwyeqJhW9jkJxmTXbQqMiC4IJ/jh5a7FcdtAAiY7To6
+htfmXReGRxqA3+HpQleS9xhLEHF4iU4xuCRSgYfjrlj96Fdo+YDSppOeMMQME0RX
+Gr1Qh0AErF7HZxfoXeKpyWnKPxuiKDeamD+aSmGPTx+9Y8NLezMYCrZcKRUMJZuD
+eVEHYbLHYAKtwksgVJF2ToxmtCN87eqE5PbWi0RHaoXrhQyE3zPP5UrO0OwpO2r3
+c1DPYPHPECR4lrjm33Zs
+=1q5a
 -----END PGP SIGNATURE-----
