@@ -1,56 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/12
-Message-ID: <517054AB.9080102@redhat.com>
-Date: Thu, 18 Apr 2013 14:16:43 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/13
+Message-ID: <52151F83.4070302@redhat.com>
+Date: Wed, 21 Aug 2013 14:13:55 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>, veillard@...hat.com
-Subject: Re: CVE request : libxml2 Multiple Use-After-Free Vulnerabilities
+Subject: Re: HTTPS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/17/2013 06:45 AM, Agostino Sarubbo wrote:
-> From the secunia advisory SA53061[1]:
+On 08/16/2013 10:28 PM, Pavel Labushev wrote:
+> On Thu, 15 Aug 2013 02:44:33 -0400 Donald Stufft <donald@...fft.io>
+> wrote:
 > 
-> 1) An use-after-free error in "htmlParseChunk()" can be exploited
-> to dereference already freed memory.
-
-Please use CVE-2013-1969 for this issue.
-
-> 2) Two use-after-free errors in "xmldecl_done()" can be exploited
-> to dereference already freed memory.
-
-Please use CVE-2013-1970 for this issue.
-
-> The vulnerabilities are reported in version 2.9.0. Other versions
-> may also be affected.
+>> Content signing is preferred but that is a much harder problem to
+>> solve in general for a repository like Rubygems than simple using
+>> TLS which is a pretty good approximation.
 > 
-> Commit: 
-> https://git.gnome.org/browse/libxml2/commit/?id=de0cc20c29cb3f056062925395e0f68d2250a46f
->
->  [1]: https://secunia.com/advisories/53061/
+> If Rubygems users feel the gems are being obtained securely over
+> HTTPS, and no one tells them it may be otherwise, and no one
+> proactively provides them with the tools and guidelines, no one
+> tries to turn their attention to the problem, why would they bother
+> to sign anything or check the signatures, even if they're
+> available?
+> 
+> And one more thing: the fact that the problem is harder to solve
+> doesn't make HTTPS a pretty good approximation. It's just
+> something, but how good is it, or is it good at all? Even if HTTPS
+> would be a perfect solution to transfer data securely, it would
+> hardly add anything to security of the web service applications and
+> the other parts of the infrastructure, including people.
+> 
+> The next issue is with automated content signing, which already
+> was proposed as a better alternative by some people in this thread.
+> It again may be better than nothing, but barely good at all. Users
+> still would be forced to trust the whole infrastructure, or more 
+> specifically: its many parts, which, being compromised, would allow
+> the attacker access to the keys used for automatic signing.
+> 
+> Last but not least... How many times did you hear about some open
+> source project hosting was compromised? And how many times did you
+> hear about relevant SSL certificate tampering incidents? There's a
+> risk assessment issue here, which is IMHO underestimated and much
+> more important than all these talks about pros and cons of HTTPS.
 
-Thanks
+Right now the bar is so low as to be in the negative scale. Using
+HTTPS instead of HTTP raises it, the attacker now has to compromise
+the server, if they can do that, they could have also done it before
+most likely, so adding HTTPS doesn't make things any worse/riskier.
+
+I'm honestly tired of the "we shouldn't change the status quo of no
+security because we might not do the new security perfectly", guess
+what: you're not going to get any better at this without practise,
+when I was in my early 20's O bought a copy of stronghold and an SSL
+cert for seifried.org, Thawte had no idea how to sell a certificate to
+an individual (as opposed to a company), we compromised on a scan of
+my passport (since I had no business papers for it, being that it was
+just my name and not a company). Did I deploy SSL properly? in
+retrospect not really. But that's why we do things, find the mistakes
+and then correct them. And the only way to find a lot of these
+mistakes is to actually do it. We can sit around and discuss possible
+issues till the cows come home but that's not going to really help anyone.
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRcFSrAAoJEBYNRVNeJnmT7FIQAILwU3b8RiSi+4dxRfhBR7cy
-CxTLquS7ORT6LJFmcZlMki+1hgOPIrHItM4Mh6xTQZFQaGkkxS4x/zP6G+4iIN6O
-h4jtGu913B9EfSS55r5t8gZ4KtfyJHYyS+Rwoo9UiFLqTXKtB/6kU1t2wK/wCGOh
-8WMTtCt+6NMUu3l7v30buzdng2AzDLiAT+vdYTNH6hDvqeiJZDzfvI1qejxWsCvl
-ACGN4gJi3EqHqVdu29nRZ2YXp1ov4FAjvomY6oT2gN3VKSSDZ9arb+S6QIKztLUA
-9AecGgsguiq29Yp76MFpy4kCfXwx32cs2Hl/pG3fRDMmpYVVjoNv2exV11hRYSAs
-ogRFDbZeYMUAXCbX361vCuIDN7YoVg5E+0sGg0BGWVmRnfcKN8hcuSLozP/Q66qC
-YMvqqDzKZhdbjrIVVyHGL+zRdTDVAf789rr+oM027XBtQZMw00bbn0BPYUjbvte/
-UJbML28BXrbLt/cLQTbtcdBU0+6uI5VNZGd7OfRc/4WEiumiRkHGFuPbWOJ0XMmQ
-Ur3vkloUAeCyUo+SZccUOXsFdUbckgQK/EgTbHe8JgDOmL0mlQMmZ14uYwVYNWj+
-8iUwLHGKKCJzaCt4YkRQg9wGyMYQtOmV14E8Ab9qFA5PLYrLeg/smPSJzs5Ad5jf
-7NXfslgDwwrDVCrJ+NsY
-=JuAb
+iQIcBAEBAgAGBQJSFR+DAAoJEBYNRVNeJnmTvsIQAIf305RZ7AK46GAQMhZ+Es9H
+DdLO0Yyy3fn33YVUxJq+u3havOEVE58HLg9H4HNX7W1thuOTlIuGYsVakP0TeA2Y
+UWDkRLW0KVWjJTbbc57YBlePvj8HtdJxzJ2gh3NziGq/Z6SIr8mYRC4/XghMIVSC
+/IAIgyU1p2mSkiNaXsu1k9AL3spkPjO67hJxXQdgQStoMHi5I9cR4J480FRLVwh+
+bAkABd5x0BuyeBYy7A3/rQa7rIhGksMSLtG+658g14H8YyIvveNMjXs2BpXiwt6z
+NyJRekcwclEj3TXhWpOW3DQbo5wxnQqn0uUuDMySpavkXYpyhOJC7nGrywUeheQQ
+YXUAP7ZnZhsBYr4fRhK6yUk4oTOj2XXAqmJH6DgSSO6YCkTbWCUBwX3mygmCNnea
+/B+Kh88nk64muBVyAW9HaqzkjdWoXSUkV7MBsr1p59WAxkRSOr05vgcybaxLF9gQ
+9qNq2DDO1lTEkp2P3BccXasWtL5KMH/rECTK3CA7gTT3tIewAEt9PX7CMx8nGRf4
+o4B+HWWBdNKW4WLCHE7sAiU/fgAjf2Mx9H+Vm45IsvClPjEe/yTfKzB34JbcULOU
+qP+CagkQc1/VZXfTOfwiE24Ckn956iWw87JmLh/wUn0qLzHpeaPjgXGinwP9Lvz9
+b8GEQIEhlaqZFEPqZcE4
+=Fw73
 -----END PGP SIGNATURE-----
