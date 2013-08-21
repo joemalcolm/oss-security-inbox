@@ -1,53 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/10
-Message-ID: <525E2990.3050809@redhat.com>
-Date: Tue, 15 Oct 2013 23:52:16 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: CVE request: xss in XHProf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/17
+Message-Id: <CFC87055-AAB2-4CAE-BA2A-8E15D16DA39C@stufft.io>
+Date: Wed, 21 Aug 2013 16:28:03 -0400
+From: Donald Stufft <donald@...fft.io>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Insecure Software Download in pip
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 10/13/2013 07:01 PM, Murray McAllister wrote:
-> Hello,
-> 
-> A cross-site scripting flaw was fixed in XHProf:
-> 
-> https://bugs.gentoo.org/show_bug.cgi?id=487858 
-> http://pecl.php.net/package-changelog.php?package=xhprof&release=0.9.4
->
-> 
-https://bugzilla.redhat.com/show_bug.cgi?id=1018114
-> http://pecl.php.net/package/xhprof
-> 
-> Can a CVE please be assigned if one has not been already?
-> 
-> Thanks,
-> 
-> -- Murray McAllister / Red Hat Security Response Team
+On Aug 21, 2013, at 4:19 PM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-Please use CVE-2013-4433 for this issue.
+> Signed PGP part
+> On 08/07/2013 11:23 AM, Donald Stufft wrote:
+> > 
+> > On Jul 31, 2013, at 4:11 AM, Kurt Seifried <kseifried@...hat.com 
+> > <mailto:kseifried@...hat.com>> wrote:
+> > 
+> >> Ok I have no info on that CVE, is it embargoed? I can't find it
+> >> in google after a quick search. I need to see that one before I
+> >> can assign anything. As for the reserved thing:
+> > 
+> > This CVE has been fixed, and it is for the issue where pip prior to
+> > 1.3 did not download from the central repository using TLS
+> > 
+> > https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1629
+> > 
+> > So back to the question of mirroring, possible to get a CVE for
+> > that now? :)
+> > 
+> > ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 7C6B
+> > 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+> > 
+> 
+> Ack sorry catching up. Please use CVE-2013-4266  for the insecure
+> mirroring stuff. Can you post the Python bug URL for this again? thanks.
+> 
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+@Kurt can you reject CVE-2013-4266,
 
-iQIcBAEBAgAGBQJSXimQAAoJEBYNRVNeJnmTJeMQALKLWmKmPt2+JuYzRGMvYjKk
-XcN/rHLKa5+YJ+CpxJqQfruTiMVwpRhst1B/MrrDuQG27K2xW71GAYQ25i4mJn5l
-tWgBdUeKgLjXmovsLr46A1gPU4iBGkKtyO2laYkS8l1c3U2ibGDr+rbcPFW+MkEG
-DXiWnhQUWEJF3lmVUWobdZPk8laXWU/ozhuxBrfysCHIvKgvGyRtdEzIR4hwosyJ
-x8leEFHJnghIjU2T08z7K/++pqBx+NvnyfIyZNYDc5r6+4ceCKO2FaAGjYIISt8W
-HSZi4brymruGcBVzQaLuQBTDUqjHOxe4hbFJPygTYSFcSJ9B1CbE02YgAn0V2Jbp
-I7UwWxWoZx3WZ1+QIfc1enxm2dXNmSzrvS6cfURcSahGZBR997vwIKjHyW2TUiBo
-KysM1BkQGmufDHzjxmXa5SAzySp1wRRg90WdjsV9N+D52Y14buGUkPB+jmcs4gYU
-YBr8PyEB6IV9P3EIn80i/4VK1+uTC6qzLoSkp2L+dx/8OzVnrlHoP2L300aEWOL1
-p5FNlg+MjTUDBs2+c2GN6uU5DFAo4ut9yxteCDQJT2H1R/b4LCcN0we9po8SYEkv
-E7VqnIyy+WI9/G3gNeZbjtPAQeUUZo3lsd2yESJW/x0sjj9+OT37VFBq2GlRJkar
-y7TtvFVtQ4MmsXeCnS7B
-=9Hsb
------END PGP SIGNATURE-----
+I had assumed you weren't going to assign one so I contacted cve-assign@...re and they assigned CVE-2013-5123
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
