@@ -1,45 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/18/8
-Message-ID: <loom.20131218T203727-424@post.gmane.org>
-Date: Wed, 18 Dec 2013 19:41:13 +0000 (UTC)
-From: mancha <mancha1@...h.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: GnuPG 1.4.16 fixes RSA key extraction via acoustic side channel (CVE-2013-4576)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/1
+Message-ID: <20130821002548.GC3732@nb4>
+Date: Wed, 21 Aug 2013 02:25:48 +0200
+From: Michael Niedermayer <michaelni@....at>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Cc: ffmpeg-security@...peg.org
+Subject: CVE Request: FFmpeg 2.0.1 multiple problems
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer <solar@...> writes:
-> 
-> Hi,
-> 
-> GnuPG 1.4.16 was released today with a curious security fix:
-> 
-> http://lists.gnupg.org/pipermail/gnupg-devel/2013-December/028102.html
-> 
->  * Fixed the RSA Key Extraction via Low-Bandwidth Acoustic
->    Cryptanalysis attack as described by Genkin, Shamir, and Tromer.
->    See <http://www.cs.tau.ac.il/~tromer/acoustic/>.  [CVE-2013-4576]
-> 
-> Direct link to paper (8 MB; the website feels very slow at the moment):
-> 
-> http://www.cs.tau.ac.il/~tromer/papers/acoustic-20131218.pdf
-> 
-> Copy on SlideShare:
-> 
-> http://www.slideshare.net/daniel_bilar/acoustic-20131218
-> 
-> Alexander
+Hi
 
-As the primary fix for CVE-2013-4576, GnuPG 1.x now uses blinding to
-mitigate RSA key extraction attacks. This doesn't affect GnuPG 2.x as
-libgcrypt does blinding by default.
+Id like to request CVE(s) for FFmpeg 2.0.1, for the changes below:
 
-The acoustic attack leveraged some particulars of GnuPG by zero-padding
-input to force modular reductions in GnuPG's RSA implementation. GnuPG
-now cripples this lever by normalizing MPIs used as inputs to secret
-key functions.
 
-This secondary mitigation measure was introduced in GnuPG 1.4.16 and
-libgcrypt 1.6.0 (relevant for vendors shipping GnuPG 2.x).
+https://github.com/FFmpeg/FFmpeg/commit/e43a0a232dbf6d3c161823c2e07c52e76227a1bc
+Out of array (on heap) write
+Found-by: wm4
 
---mancha
 
+https://github.com/FFmpeg/FFmpeg/commit/2960576378d17d71cc8dccc926352ce568b5eec1
+https://trac.ffmpeg.org/ticket/2842
+testcase and valgrind output on bugtracker above
+Out of array (on heap) write
+Found-by: Piotr Bandurski <ami_stuff@...pl>
+
+
+https://github.com/FFmpeg/FFmpeg/commit/c94f9e854228e0ea00e1de8769d8d3f7cab84a55
+Found-by: Laurent Butti <laurentb@...il.com>
+Wrong return code that could lead to NULL+offset to be written to after memory
+allocation failure
+
+Thanks
+-- 
+Michael     GnuPG fingerprint: 9FF2128B147EF6730BADF133611EC787040B0FAB
+
+There will always be a question for which you do not know the correct answer.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
