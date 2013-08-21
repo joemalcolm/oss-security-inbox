@@ -1,59 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/11
-Message-ID: <51BB76C7.6000804@redhat.com>
-Date: Fri, 14 Jun 2013 14:02:15 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Felipe Pena <felipensp@...il.com>
-Subject: Re: CVE request: Bypass protected directory by Monkey HTTPD - Mandril security plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/9
+Message-ID: <20130821162603.GB4369@domone.kolej.mff.cuni.cz>
+Date: Wed, 21 Aug 2013 18:26:03 +0200
+From: Ondřej Bílka <neleai@...nam.cz>
+To: Stephen Röttger <stephen.roettger@...il.com>
+Cc: oss-security@...ts.openwall.com, gcc@....gnu.org
+Subject: Re: PoC: Function Pointer Protection in C Programs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Aug 21, 2013 at 04:43:13PM +0200, Stephen Röttger wrote:
+> Hi everyone,
+> 
+> I'd like to present you my master's thesis "Malicious Code Execution
+> Prevention through Function Pointer Protection" [0] and its
+> proof-of-concept implementation [1] for the gcc+glibc and would
+> appreciate some feedback.
+> 
 
-On 06/14/2013 11:22 AM, Felipe Pena wrote:
-> Monkey HTTPD - Mandril security plugin Mandril is a plugin which
-> provides a security layer to Monkey through rules which can be
-> applied to the request URI or by network address.
 > 
-> A vulnerability was found in the way as the URI are validated. The
-> plugin check the configuration rules against possible encoded
-> URIs.
+> Performance:
+> Though my PoC implementation is not free of bugs, I was able to compile
+> an nginx webserver and have it serve static websites, which I used for a
+> performance evaluation. On my test system, the number of requests per
+> second that the nginx could was reduced to 96% compared to a nginx
+> without the scheme. Handling of a single request included 71 function
+> pointer calls in this case. (More details can be found in my thesis [0])
 > 
-> PoC ---
-> 
-> Configuration sample: [RULES] Deny_URL /test/
-> 
-> To bypass such rule, we just need to make a request like: 
-> http://yourhost/%2ftest/
-> 
-> 
-> Report ------ http://bugs.monkey-project.com/ticket/186
-> 
-> 
-> CREDITS ------- Felipe Pena
-> 
-> -- Regards, Felipe Pena
-> 
-Please use CVE-2013-2182 for this issue.
+What is performance impact for program that just qsorts big array? It
+looks like worst case scenario for me.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRu3bHAAoJEBYNRVNeJnmT6dYQAM3NIk28f3FfxPgR/8krXK7t
-sW6RidIkH0hZi+WrNCaK9nwNx04yUfvfuXCiWooMrF+axUMFDAPC/nz9YORDnOhC
-WtiKGjP3htQbPPj6uuURP4+SGXpYL1kPdqdFufHKUTrHnO7wVodTWNr9CrOTZTtd
-W5Q8cbZ+3UFvnKlzqaZtFYT5jFGaoBYa7fBgDJvgXdOTiWk5R7zl23gO6qnQbAJH
-M/ItUEF+J2SFMAzJ9IZv8l4O/TH1aIbyg3YCw3vBALI9IQJfHw3pGhPUf2gN+bJ5
-kn2W9lxo6PSyjJbciazfOQq+K+6FtsStSAQABbo6UkPcnXDy3jfZGhwaot3n4Kux
-5ZbSuvZtpeUR9dJPFSRjepJ/OBn1FqlRP1L5HsuXpcblicb8wInPAXkRi29s7tA8
-zeQPtwLx+FkxCC21YPA03iG8/RY3qcDFYZzG8p6VdsCpjB4a1flanTfCzf77ctVE
-IYO3dFpWebBvVzKvd4sjNx+u3+DpLmh4i7iy6u6XK7zaxEIbWyywe/vZgwu3Hcfo
-XJcQJ0x1fGVerNOdzTTvDeDgPvYPijW/q15DmnYn4KLGSfDGDvjcyY4dDlJCjEkI
-fkDCn8/2r0KXDj2a0k8ekMfm4F4nRJbnA0vH4FB0Wg1jOowC89GV/yzT25CjTq/K
-E19Vi8H0IoXzCiO/OUro
-=WGwQ
------END PGP SIGNATURE-----
+Well now when gcc-4.7 can resolve function pointers it is possible to
+create header to inline comparison but still.
