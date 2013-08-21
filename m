@@ -1,40 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/5
-Message-ID: <20131204102641.GL3072@dhcp-25-225.brq.redhat.com>
-Date: Wed, 4 Dec 2013 11:26:42 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: Greg Kroah-Hartman <gregkh@...uxfoundation.org>, "Hans J. Koch" <hjk@...sjkoch.de>, Nico Golde <oss-security+ml@...lde.de>, oss-security@...ts.openwall.com, "security@...nel.org" <security@...nel.org>, Dan Carpenter <dan.carpenter@...cle.com>
-Subject: Re: kernel: uio: CVE-2013-6763 [was: Re: some unstracked linux kernel security fixes]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/21
+Message-ID: <CABbbngAKS=--FOWMA2RY1_xMcyjQ5UzjMJUa-yYgjtVxzoDaWQ@mail.gmail.com>
+Date: Wed, 21 Aug 2013 16:45:57 -0700
+From: Forest Monsen <forest.monsen@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 02, 2013 at 07:44:53PM -0800, Linus Torvalds wrote:
-> On Mon, Dec 2, 2013 at 7:40 PM, Greg Kroah-Hartman
-> <gregkh@...uxfoundation.org> wrote:
-> > On Tue, Nov 26, 2013 at 01:18:39PM +0100, Petr Matousek wrote:
-> >> >
-> >> > IOW, with the current changes, isn't the functionality broken for
-> >> > non page-aligned addr and/or size?
-> >
-> > This should now be fixed in Linus's tree, right?
-> 
-> Well, that depends on what you mean by "fixed".
+Hi there,
 
-I was going to say no, but then saw b6550287.
+I'd like to request CVE identifiers for...
 
-Just for the record, the CVE-2013-6763 fix consists of
+SA-CONTRIB-2013-067 - BOTCHA - Information Disclosure (potential Privilege
+Escalation)
+https://drupal.org/node/2065057
 
-  * uio part of 7314e613
-  * b6550287
+SA-CONTRIB-2013-068 - Entity API - Access Bypass
+https://drupal.org/node/2065207
 
-> If somebody depended on "we'll just mmap the page(s) that contained
-> the partial and unaligned resource", then current git is very very
-> broken, because it doesn't allow that at all.
+SA-CONTRIB-2013-069 - Password Policy - XSS
+https://drupal.org/node/2065387
 
-Intuitively I'd assume that the rounding up in uio_mmap is there for a
-reason, but what do I know.
+SA-CONTRIB-2013-070 - Zen - Cross Site Scripting
+https://drupal.org/node/2071157
 
-Regards,
--- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+Thanks!
+
+Best,
+Forest
+
