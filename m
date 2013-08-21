@@ -1,75 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/19
-Message-ID: <520D54E1.4030402@oracle.com>
-Date: Thu, 15 Aug 2013 17:23:29 -0500
-From: Brian Cameron <brian.cameron@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/15
+Message-ID: <52152124.5020900@redhat.com>
+Date: Wed, 21 Aug 2013 14:20:52 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: security@...hon.org, security@...y-lang.org, cve-assign@...re.org
-Subject: Re: CVE Request -- Python SSL module does not handle certificates that contain hostnames with NULL bytes
+CC: Raphael Geissert <geissert@...ian.org>
+Subject: Re: CVE request: lcms 1.x buffer overflows
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I notice the upstream bug has patches for many versions of Python, but
-not for Python 2.6.  Will a Python 2.6 patch be provided, or is it a
-reasonable fix to just backport the patched 2.7 files to 2.6 directly?
+On 08/05/2013 06:49 AM, Raphael Geissert wrote:
+> On 5 August 2013 07:25, Thijs Kinkhorst <thijs@...ian.org> wrote:
+>> Buffer overflows have been reported in Little CMS 1.x: 
+>> http://bugs.debian.org/718682
+> 
+> Just a quick note: one of the affected parts of the code is a
+> sample and the other is the tiffdiff(1) tool, where the buffer
+> overflow is triggered by the file names passed as arguments.
+> 
+> Cheers,
+> 
 
-Thanks,
+can you post the filenames/affected code? thanks.
 
----
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-Brian
-
-
-On 08/12/13 09:55 PM, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 08/12/2013 08:37 PM, Murray McAllister wrote:
->> Good morning,
->>
->> An issue similar to CVE-2013-4073[1] was found in Python:
->>
->> https://bugs.mageia.org/show_bug.cgi?id=10989
->> http://bugs.python.org/issue18709
->>
->> Could a CVE for the Python instance of this flaw please be assigned
->> (if one has not already been assigned)?
->>
->> Thanks.
->>
->> [1]
->> <http://www.ruby-lang.org/en/news/2013/06/27/hostname-check-bypassing-vulnerability-in-openssl-client-cve-2013-4073/>
->>
->>
->>
->> <https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-4073>
->>
->> -- Murray McAllister / Red Hat Security Response Team
->
-> Yup just to be clear: CVE-2013-4073 is for Ruby. Python needs a new
-> CVE (different code base and all that).
->
-> Please use CVE-2013-4238 for this issue in Python.
->
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.13 (GNU/Linux)
->
-> iQIcBAEBAgAGBQJSCaAxAAoJEBYNRVNeJnmTqNYP/10PaxPrr6YJDT0W+Dwmjjp3
-> yHiY0kJ1pjHgIiGKEqRkBv5+05c9cn9LKES1Kj+CePFiiq1VEO+28z/y6PhQBg8b
-> 0Ifad4ph5+SAhYthj9M7JzwXMSVmuCXNtGHQRkgSD72Xkn4Rgqj6vYaixCdbkSpO
-> qvMkKhBDcde57rTrdnifs3w4EUKWi2eVkRMuN2twPQLOx6MiB/EKKFLqxR69LtZo
-> qOd40LBqoEWtR3/J7C3oZkqYK26lAn7mnaTY67mPIuG78SGU9aFxe/AYwQ4pmb2Q
-> k3fT73xNyoUyajYq+QfrqwNHkwk1sGtev6M6+ltgovN0ymZmUdIsYgBDEPJqaUSk
-> D1ut2LOndsYomlCfEhvdOWWunG6V63qTsMdOy1z9fBh2evggNKedPpCNIWb6IG6t
-> Lq3P67pzg+C2Auiv/m6hw6Q/ptUPt4N0/RgKReFtUqqEAjznUAarl4ldP1egL/W7
-> 4yFsIXqkTIcVExLcUYXlh5y1vfIUgl21xOp78u5Qtdhq1Mj7kobp3/uuFbbxFdtM
-> tCgAnwRayVTwKQY1MQX1R3qRAArLvzAy0jI/bAfls11oRFJ9B2ZCoq31kUlUnEYj
-> Cwvg3nrpl/Qyn1gpgaRNQT/RnSIi2ygKmPLd3nbXvpdlV9jQwqECSZk/mtBlLbxB
-> oH8DuHHxhUqapitBg6LL
-> =V3F8
-> -----END PGP SIGNATURE-----
->
-
+iQIcBAEBAgAGBQJSFSEkAAoJEBYNRVNeJnmTLoMP/2GqTFo8AXhrLL5OCV3L203F
+52/8LwiniM/gZ2IZpC5iPdyAXQKjgm+L99tsXQjD0XQBoz5oIvMtkv+MVX5hjTir
+fXZwS6YiBn9PIWzd8JtcBm92SqEZ7N9A6r/uJecLY45dvVNioA8d/uWu4id96DnH
+jal8y/NsHeLRoq7apYg37rpqLOURD7Qt7GxD+ZANXPYXIjSIPoh9nBPctemvTlFP
+8qeuJfGYcbjnqVf+VSQ3gJot+39azC48t0NxhQqriuVspt/cZ0XXGoYtCOMA3xML
+GZeOKvZVUwkIQ5tJpWwlMfvMJHZ0uMezveXrcJM+m5dzGGSbIuYuluDEkhmRfd3K
+GlBfPfZW4ddPFCXIouMdxlebHdn5gVar1SIfoo4mCRxJZE/Tmaq0vBb+gm5E2dzq
+47GnxeLK7hEmTNryagoGUncivOl8JuXQiIK1Jx8pMg+bNUTEWr4XiBsD7knjDNB2
+41EgzIRz/x3+Ax00uc006lJslrOUBrCU65oBudfrOWICLzI9PkIroamZ1F/Jc/sW
+QUgMPyz1Jeg02T1DhGu+YdgVWaE3zP5C5VJ/y7TkrJYSktD6s0IVgUJk1jlzsGg4
+jOM0je5510SMylPPiNCxWVFYOtCoMA8PCQHmL9esL237w/oscKwmk7CTGM0OiMkS
+1KfBpahLipmG4imnbhGZ
+=z5DM
+-----END PGP SIGNATURE-----
