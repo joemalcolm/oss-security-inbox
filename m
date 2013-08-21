@@ -1,37 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/09/8
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF26FBCE88@IMCMBX01.MITRE.ORG>
-Date: Fri, 9 Aug 2013 17:16:58 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: CVE request: nullmailer world readable /etc/nullmailer/remotes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/19
+Message-ID: <8f48872739535e03d78809949ef30371.squirrel@aphrodite.kinkhorst.nl>
+Date: Wed, 21 Aug 2013 22:52:33 +0200
+From: "Thijs Kinkhorst" <thijs@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: lcms 1.x buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-Agostino,
+On Wed, August 21, 2013 22:20, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 08/05/2013 06:49 AM, Raphael Geissert wrote:
+>> On 5 August 2013 07:25, Thijs Kinkhorst <thijs@...ian.org> wrote:
+>>> Buffer overflows have been reported in Little CMS 1.x:
+>>> http://bugs.debian.org/718682
+>>
+>> Just a quick note: one of the affected parts of the code is a
+>> sample and the other is the tiffdiff(1) tool, where the buffer
+>> overflow is triggered by the file names passed as arguments.
+>>
+>> Cheers,
+>>
+>
+> can you post the filenames/affected code? thanks.
 
-Out of curiosity, what types of sensitive information are contained in this file that cause world-readable permissions to pose a vulnerability?
+You can find it in this patch:
+https://bugzilla.redhat.com/attachment.cgi?id=783274
+linked from:
+https://bugzilla.redhat.com/show_bug.cgi?id=991757
 
-- Steve
 
-
->-----Original Message-----
->From: Agostino Sarubbo [mailto:ago@...too.org]
->Sent: Friday, August 09, 2013 1:15 PM
->To: oss-security@...ts.openwall.com
->Subject: [oss-security] CVE request: nullmailer world readable
->/etc/nullmailer/remotes
->
->Hello,
->
->On Gentoo, the file /etc/nullmailer/remotes is installed with wrong
->permissions:
->
->~ # ls -la /etc/nullmailer/remotes
->-rw-r--r-- 1 root root 971 Aug  9 18:58 /etc/nullmailer/remotes
->
->Nullmailer-1.11-r2 contains the fix, all prior versions are affected.
->
->Please assign a CVE.
->--
->Agostino Sarubbo
->Gentoo Linux Developer
+Cheers,
+Thijs
