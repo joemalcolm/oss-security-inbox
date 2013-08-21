@@ -1,38 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/30/11
-Message-ID: <51D0C078.3010709@rack911.com>
-Date: Sun, 30 Jun 2013 16:34:16 -0700
-From: Steven Ciaburri <steve@...k911.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/11
+Message-ID: <52151B59.3060702@redhat.com>
+Date: Wed, 21 Aug 2013 13:56:09 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Kernel: 2.6.32+ IP_RETOPTS Buffer Poisoning DoS hemlock.c
+CC: Michael Niedermayer <michaelni@....at>, ffmpeg-security@...peg.org
+Subject: Re: CVE Request: FFmpeg 2.0.1 multiple problems
 Content-Type: text/plain; charset=utf-8
 
-Kurt,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I just loaded a a virtual machine at Rackspace Cloud running RHEL. It is a Xen based VM.
-
-[steven@...l ~]$ ./a.out
-[+] giving ourselves some poison...
-[+] polluted kernelspace with more crap
-[+] polluted kernelspace with more crap
-[+] polluted kernelspace with more crap
-[+] polluted kernelspace with more crap
-[+] polluted kernelspace with more crap
-[+] polluted kernelspace with more crap
-[+] polluted kernelspace with more crap
-
-at which point the server kernel paniced. 
-
-The server is running 2.6.32-358.11.1.el6.x86_64
-I did discover that it appears with SELINUX enabled the POC can go through a considerable amount of tries before it crashes.
-
-On 6/30/2013 4:04 PM, Kurt Seifried wrote:
-> On 06/30/2013 05:00 PM, Kurt Seifried wrote:
->> Works great on CentOS 6, can't get it to work on RHEL 6 so far. 
->> Attaching PoC in case the web site goes down or something.
+On 08/20/2013 06:25 PM, Michael Niedermayer wrote:
+> Hi
 > 
-> And that wasn't meant to go to oss-sec (sleep deprivation FTW!),
-> apologies.
+> Id like to request CVE(s) for FFmpeg 2.0.1, for the changes below:
 > 
 > 
+> https://github.com/FFmpeg/FFmpeg/commit/e43a0a232dbf6d3c161823c2e07c52e76227a1bc
+>
+> 
+Out of array (on heap) write
+> Found-by: wm4
 
+Please use CVE-2013-4263 for this issue.
+
+> https://github.com/FFmpeg/FFmpeg/commit/2960576378d17d71cc8dccc926352ce568b5eec1
+>
+> 
+https://trac.ffmpeg.org/ticket/2842
+> testcase and valgrind output on bugtracker above Out of array (on
+> heap) write Found-by: Piotr Bandurski <ami_stuff@...pl>
+
+Please use CVE-2013-4264 for this issue.
+
+> https://github.com/FFmpeg/FFmpeg/commit/c94f9e854228e0ea00e1de8769d8d3f7cab84a55
+>
+> 
+Found-by: Laurent Butti <laurentb@...il.com>
+> Wrong return code that could lead to NULL+offset to be written to
+> after memory allocation failure
+
+Please use CVE-2013-4265 for this issue.
+
+> Thanks
+> 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSFRtZAAoJEBYNRVNeJnmTJCcQAIUHn6MA6rAD9Bbg/+GPx3GP
+VL547+wrqu2qo+9nObJNn6ax7x0MUufcVK0W1aXnNqqhPsFaivo208lvxRAFho66
+F+lusaSJP7HoUz6EG8AxSdcyf0ScoXJGHXnZ89FP33SgLh6bOX6UjsnTF87KLMtY
+7NZpMyDpKtDp80toyVWVAyLEsJEJYM9KkWhuD9SzleaEW2I7zRzZO2QDv9DqazVL
+jrVrAU/4JbR8mwOUj66cM7Gddae0Y+52YclszkbiO+5KV4Um3CJAB3cSxMUzxhh5
+bMT/gPpCh0e2380pRM6pCz7p0fgrb6mQd01FYN5C0aJTJA2XIpdsZsn4nFp8xl22
+xRhueV3lSOgq+HYiMJW202mLNF7eeurMh+sOJ53Spz+7vxjQpv2BOZ9fgdYzqiua
+yGqzm25zcjY0yVOHxHZH0ktkRfkp/2KGJWcWvo0ly9Kql7D3LcYv8iOABy5rymJt
+sIJJZXKvfD6ZbgWQ/iAj9dOOAmHCZFsrzJNqP/35m39Rst0N45x6/6aujSOJrXzG
+WTxR8jDqITvCOc6NOU+qNKW6ZanVXAGjoqae0q1j41fHq4dnUKhg19aEOdNaD6Vg
+xE8kFAqcmg0zmmx+DeA4El9Y9IuWw2feIv27J4KnwGVpL1IhDvwKn8qPjKtutkEk
+4R/BgFMU27Ds2b4MyauY
+=wW2e
+-----END PGP SIGNATURE-----
