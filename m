@@ -1,65 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/18/1
-Message-Id: <DA50FDA9-FF87-457F-BC2A-161A87DB9B66@segment7.net>
-Date: Tue, 17 Sep 2013 17:11:00 -0700
-From: Eric Hodel <drbrain@...ment7.net>
-To: kseifried@...hat.com
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Alexander Cherepanov <cherepan@...me.ru>, "dammer2k@...il.com Sharipov" <dammer2k@...il.com>, "security@...y-lang.org" <security@...y-lang.org>
-Subject: Re: CVE-2013-4287 Algorithmic complexity vulnerability in RubyGems 2.0.7 and older
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/3
+Message-ID: <52147668.9050204@oracle.com>
+Date: Wed, 21 Aug 2013 09:12:24 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: vfs_read()/vfs_write(): potential missing checks (or not?)
 Content-Type: text/plain; charset=utf-8
 
-On Sep 16, 2013, at 18:28, Kurt Seifried <kseifried@...hat.com> wrote:
-> On 09/14/2013 03:11 PM, Alexander Cherepanov wrote:
-> > On 2013-09-10 09:32, Eric Hodel wrote:
-> >> The vulnerability can be fixed by changing the first grouping to
-> >> an atomic grouping in Gem::Version::VERSION_PATTERN in
-> >> lib/rubygems/version.rb.  For RubyGems 2.0.x:
-> >> 
-> >> -  VERSION_PATTERN =
-> >> '[0-9]+(\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
-> >> :nodoc: +  VERSION_PATTERN =
-> >> '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
-> >> :nodoc:
-> >> 
-> >> For RubyGems 1.8.x:
-> >> 
-> >> -  VERSION_PATTERN = '[0-9]+(\.[0-9a-zA-Z]+)*' # :nodoc: +
-> >> VERSION_PATTERN = '[0-9]+(?>\.[0-9a-zA-Z]+)*' # :nodoc:
-> > 
-> > This is not enough. The following script:
-> > 
-> > # Regexes are from 
-> > https://github.com/rubygems/rubygems/blob/master/lib/rubygems/version.rb#L150
-> >
-> > 
-> VERSION_PATTERN =
-> > '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
-> > :nodoc: ANCHORED_VERSION_PATTERN =
-> > /\A\s*(#{VERSION_PATTERN})*\s*\z/ # :nodoc: 
-> > '1111111111111111111111111111.' =~ ANCHORED_VERSION_PATTERN
-> > 
-> > takes ~1m on my machine. The problem is not in VERSION_PATTERN but
-> > in its possible repetition inside ANCHORED_VERSION_PATTERN.
-> > 
-> 
-> Great, I guess we're going to need a new CVE. Before I assign one can
-> we make sure we fix this so more fiddly expressions don't cause
-> problems? Thanks.
-
-Here's a new patch to go with the new (unassigned) CVE.  This new patch replaces regular expression matches that are susceptible to backtracking with a parser-like approach.
+On 20/08/13 23:36, Hannes Frederic Sowa wrote:
+> On Tue, Aug 20, 2013 at 07:58:49PM +0200, vladz wrote:
+>> >
+>> > [...]
+>> >
+>> > Looking at the kernel sources, the vfs_read(), vfs_write(), vfs_readv()
+>> > and vfs_writev() functions checks the permissions of the file object
+>> > (file->f_mode) before operating on file descriptor:
+>> > 
+>> >     $ cat -n linux-3.10.7/fs/read_write.c
+>> >     [...]
+>> >     353 ssize_t vfs_read(struct file *file, char __user *buf, size_t count, loff_t *pos)
+>> >     354 {
+>> >     355         ssize_t ret;
+>> >     356
+>> >     357         if (!(file->f_mode & FMODE_READ))
+>> >     358                 return -EBADF;
+>> > 
+>> > I believe this is insufficient, the inode object should be checked too.
+>> > So that if the file's permissions allow read/write operations, so we can
+>> > perform reading/writing from/to the file descriptor.  I've patched the
+>> > concerned function to do so (cf. patch [3]).
+> This behavior is deliberatly chosen. If the inode is checked again, you
+> could just mmap the filedescriptor to memory and get away with that,
+> too. There are plans to implement a revoke-syscall. Maybe it will
+> be implemented for files, too (other operating systems only provide
+> revoke-Support for terminals, block or char devices).  This shoud then
+> handle the teardown of memory mappings with some specified semantic, too.
 
 
-Download attachment "CVE-2013-XXXX.patch" of type "application/octet-stream" (4710 bytes)
+If you want extended checking of read(2) then use selinux: it
+specifically handles cases like this.
 
+Checking the inode may result in perfectly reasonable behaviour suddenly
+not working:
 
+   my-suid-program > logfile
 
-This patch applies to RubyGems 2.1.x releases.  I will create patches for RubyGems 1.8.23.1, 1.8.26, 2.0.9 and 2.1.4 if it there is no obvious flaw seen in it.
+for instance will fail if the setuid owner doesn't have permission to
+write to logfile which would surprise a lot of people (and break a lot
+of things).   Moreover,
 
-I would like to release this fix by Monday, 23 September as I will be traveling mid-week.
+  my-suid-program | tee logfile >/dev/null
 
-The vulnerable regular expression constants are still present, but I can't think of a way to construct them that does not allow backtracking.  I think they should be removed for the security fix release, but a fellow maintainer is worried about backwards compatibility and thinks they should be removed in the next feature release (2.2).  What do people typically do?
+would work.   On the other hand, selinux takes care of both of these: it
+only forbids the write() when it's wrong will (often) track the write
+across a pipeline.
 
-Here is a script to check the patch:
-
-
-View attachment "check.CVE-2013-XXXX.rb" of type "text/x-ruby-script" (472 bytes)
+jch
