@@ -1,22 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/17/1
-Message-ID: <CAH4rwTKSWqxc2aAzTQqFK0BfPkJLeg=N9yLg+UuTAfJ91mgRhw@mail.gmail.com>
-Date: Sat, 14 Sep 2013 13:53:44 +0530
-From: Reno Robert <renorobert@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Michael Niedermayer <michaelni@....at>
-Subject: CVE-Request FFmpeg vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/19
+Message-ID: <CAJ_zFkJEb02d8Xs=RcWnRT7JbgDUYiAwMUUc3WFAfXr1ZN-0DQ@mail.gmail.com>
+Date: Thu, 22 Aug 2013 13:42:32 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: Jilles Tjoelker <jilles@...ck.nl>
+Cc: Harald van Dijk <harald@...awatt.nl>, dash@...r.kernel.org,  oss-security@...ts.openwall.com
+Subject: Re: [PATCH] implement privmode support in dash
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-    Issues in libavcodec H.264 code of FFmpeg 0.11.3 leading to out of
-bound read/write. Below is the link to commit, used to fix the issue
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=39ed5442620a7a0fd2328b7d4aefc6ae152c5441
+On Thu, Aug 22, 2013 at 1:35 PM, Jilles Tjoelker <jilles@...ck.nl> wrote:
+> I think there is no reason to deviate from other shells here. Therefore,
+> please call it "privileged".
+>
 
-I would like to request CVE Identifier for the above.
+Agreed.
 
--- 
-Regards,
-Reno Robert
-http://v0ids3curity.blogspot.in/
+>> In bash and FBSD, after starting with -p, set +p can be used to drop
+>> privileges. With your patch, dash accepts set +p, but silently ignores it.
+>
+>> How does something like the attached, to be applied on top of your
+>> patch, look?
+>
+>> [snip]
+>> +     if (!on && (uid != geteuid() || gid != getegid())) {
+>> +             setuid(uid);
+>> +             setgid(gid);
+>> +             /* PS1 might need to be changed accordingly. */
+>> +             choose_ps1();
+>> +     }
+>> +}
+>
+> This code tries to use setuid() and setgid() to drop all privilege,
+> which is only correct if the privilege to be dropped is UID 0, or on BSD
+> systems. It would be better to use setresuid() or setreuid(), and change
+> the GID before changing the UID.
 
+This is logic duplicated from pdksh and bash, I'm slightly reluctant
+to do things differently, unless it's not going to get committed
+otherwise.
+
+You can see some code snippets here:
+http://blog.cmpxchg8b.com/2013/08/security-debianisms.html
+
+> Apart from that, it is better to check the return value from setuid()
+> and similar functions. In particular, some versions of Linux may fail
+> setuid() for [EAGAIN], leaving the process running with the same
+> privileges.
+
+I don't think this is true anymore, but I have no strong objection to
+adding it, so long as it's noted that bash and pdksh do not do this.
+
+Tavis.
