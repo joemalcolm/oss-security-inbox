@@ -1,33 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/25/4
-Message-ID: <alpine.LFD.2.03.1310251926490.17630@redhat.com>
-Date: Fri, 25 Oct 2013 19:41:24 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: Linux kernel: net: memory corruption with UDP_CORK and UFO
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/21
+Message-ID: <52167D85.6080707@fifthhorseman.net>
+Date: Thu, 22 Aug 2013 17:07:17 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com
+CC: Andrey Korolyov <andrey@...l.ru>, kseifried@...hat.com
+Subject: Re: Possibly insecure permissions on sshd_config in Debian-based distros
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+On 08/22/2013 04:36 PM, Andrey Korolyov wrote:
+> On Fri, Aug 23, 2013 at 12:20 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-Linux kernel built with an Ethernet driver(ex virtio-net) which has UDP 
-Fragmentation Offload(UFO) feature ON is vulnerable to a memory corruption 
-flaw when UDP_CORK socket option is set. It could occur when sending large 
-messages, wherein all messages are not greater than maximum transfer unit(MTU) 
-of the underlying medium.
+>> Well the default file config would of course be known. I'm reading the
+>> man page and nothing super secret pops out, e.g. no passwords get
+>> embedded. Can you give an example of sensitive information in sshd_config?
+> 
+> AllowUsers/AllowGroups/PermitEmptyPasswords
+> 
+> Obtaining such information can shorten time of bruteforce remote attacks.
 
-An unprivileged user/program could use this flaw to crash the kernel resulting 
-in DoS, or potentially execute arbitrary code to escalate privileges to gain 
-root access to a system.
+I don't think these rise to the level of being worth hiding at all.
 
-Upstream fix:
--------------
-  -> http://patchwork.ozlabs.org/patch/285292/
+PermitEmptyPasswords is one additional password to test against each
+user account, which i don't think is significant.  And a user with local
+access to the machine can already radically shorten bruteforce
+enumeration of possible accounts with just with "getent passwd".  the
+gap from there to AllowUsers isn't particularly significant by comparison.
 
-Reference:
-----------
-  -> https://bugzilla.redhat.com/show_bug.cgi?id=1023477
+I don't know of any history of any serious high-entropy secrets
+(passphrases, secret keys, etc) being stored in sshd_config, and i would
+imagine the ssh developers would resist any configuration that
+encourages that sort of thing.
+
+Having your config files world-readable by default eases debugging, and
+can communicate to savvy users what your policies are without needing to
+exchange e-mail or chat.
+
+Administrators who want to make that tradeoff are free to make it, of
+course, but if a proposal was made within debian to do something like
+"chmod go-r sshd_config",  i would object to it.
+
+This doesn't warrant a CVE.
+
+	--dkg
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
