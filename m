@@ -1,48 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/4
-Message-ID: <20130806150501.GQ29720@openstack.org>
-Date: Tue, 6 Aug 2013 15:05:01 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/9
+Message-ID: <5215EC4F.1090405@redhat.com>
+Date: Thu, 22 Aug 2013 16:17:43 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2013-020] Denial of Service in Nova network source security groups (CVE-2013-4185)
+CC: Dag-Erling Smørgrav <des@....no>, freebsd-security@...ebsd.org
+Subject: Re: FreeBSD Security Advisory FreeBSD-SA-13:10.sctp
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2013-020
-CVE: CVE-2013-4185
-Date: August 6, 2013
-Title: Denial of Service in Nova network source security groups
-Reporter: Vishvananda Ishaya (Nebula)
-Products: Nova
-Affects: All versions
+On 08/22/2013 03:38 PM, Dag-Erling Smørgrav wrote:
+> This also affects third-party software (Firefox, at the very least) that
+> incorporates FreeBSD's SCTP implementation.
+> 
 
-Description:
-Vishvananda Ishaya from Nebula reported a denial of service
-vulnerability in Nova's handling of network source security group
-policy updates. By performing a large number of server creation
-operations, the proportion of updates increases quadratically and
-may overwhelm nova-network such that it is no longer able to service
-other requests in a timely fashion. Only setups relying on
-nova-network are affected.
+Are you sure about this?
+i did not find anything in the Mozilla code!
 
-Havana (development branch) fix:
-https://review.openstack.org/39541
-
-Grizzly fix:
-https://review.openstack.org/39543
-
-Folsom fix:
-https://review.openstack.org/39544
-
-Notes:
-This fix will be included in the havana-3 development milestone and
-in a future 2013.1.3 release.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4185
-https://bugs.launchpad.net/nova/+bug/1184041
 
 -- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
+Huzaifa Sidhpurwala / Red Hat Security Response Team
