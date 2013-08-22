@@ -1,32 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/5
-Message-Id: <B3C4AA9A-71F8-4941-B132-1AC09BE202C7@joshuawise.com>
-Date: Thu, 18 Jul 2013 00:14:47 -0700
-From: Joshua Wise <joshua@...huawise.com>
-To: oss-security@...ts.openwall.com
-Cc: Joshua Wise <joshua@...huawise.com>, elly@...toquark.net, Evan Prodromou <evan@...n.com>
-Subject: CVE-2013-4137: StatusNet v1.1.0: SQL injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/7
+Message-ID: <5215E2C5.2050002@googlemail.com>
+Date: Thu, 22 Aug 2013 12:07:01 +0200
+From: "Stephen Röttger" <stephen.roettger@...il.com>
+To: Ondřej Bílka <neleai@...nam.cz>
+CC: oss-security@...ts.openwall.com, gcc@....gnu.org
+Subject: Re: PoC: Function Pointer Protection in C Programs
 Content-Type: text/plain; charset=utf-8
 
-This is an advisory for StatusNet v1.0.0 through v1.1.0.
+> After bit of thought a loops with callback can be optimized by gcc.
+> 
+> It could be possible to teach CSE to rewrite
+> 
+> while(foo){
+>  check(p);
+>  (*p)(x,y,z);
+> }
+> 
+> into 
+> 
+> check(p);
+> while(foo){
+>  (*p)(x,y,z);
+> }
+> 
 
-Multiple user-facing functions do not sanitize API input before interpolating it into database query strings.  This can result of exfiltration of database data, and depending on MySQL server (mis)configuration, can also result in file I/O to the database server disk.
-
-StatusNet versions 1.1.1 and 1.0.2 have been released to correct these issues.  Patching to these versions as soon as possible is advised.  For more information, visit:
-  http://status.net/2013/07/16/security-alert-sql-injection-attack-for-statusnet-1-0-x-and-1-1-x
-
-Advisory title: Multiple SQL injection vulnerabilities
-Product: StatusNet
-Discovered by:
-  Elly Fong-Jones
-  Joshua Wise (NVIDIA Corporation)
-Known vulnerable versions: 1.0.0 - 1.1.0
-Tested: 1.1.0, 2013-07-16
-Fixed in version: 1.1.1
-Vulnerability type: CWE-89 (SQL Injection)
-CVE IDs: CVE-2013-4137
-
-My thanks to the Evan Prodromou for his help in quickly responding to these issues and releasing a new version.
-
-joshua
-
+This might introduce security issues, if an attacker is able to
+overwrite p during the execution of the loop.
+For example if p is part of a dynamically allocated struct that has
+already been freed and an attacker can reallocate the memory after the
+first execution of the loop body, he would be able to bypass the check.
+On the other hand, if p is stored on the stack, vulnerabilities allowing
+to overwrite it, would likely also allow to overwrite saved return
+addresses.
