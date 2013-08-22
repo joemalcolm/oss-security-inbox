@@ -1,22 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/2
-Message-ID: <20130429032557.GA6839@openwall.com>
-Date: Mon, 29 Apr 2013 07:25:57 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: distros vs. linux-distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/5
+Message-ID: <20130822083233.GA21932@domone.kolej.mff.cuni.cz>
+Date: Thu, 22 Aug 2013 10:32:33 +0200
+From: Ondřej Bílka <neleai@...nam.cz>
+To: Stephen Röttger <stephen.roettger@...il.com>
+Cc: oss-security@...ts.openwall.com, gcc@....gnu.org
+Subject: Re: PoC: Function Pointer Protection in C Programs
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Aug 21, 2013 at 07:04:58PM +0200, Stephen Röttger wrote:
+> 
+> > What is performance impact for program that just qsorts big array? It
+> > looks like worst case scenario for me.
+> 
+> I just put together a quick test program that sorts an array of 10^6
+> integers and stopped the execution time using "time". The results are as
+> follows (+- 0,01s):
+> 
+> protection disabled, -O0:
+> ./sort_nofpp_0  0,19s user 0,02s system 98% cpu 0,215 total
+> 
+> protection enabled, -O0
+> ./sort_fpp_0  0,54s user 0,01s system 99% cpu 0,549 total
+> 
+> protection disabled, -O3
+> ./sort_nofpp_3  0,15s user 0,01s system 98% cpu 0,157 total
+> 
+> protection enabled, -O3
+> ./sort_fpp_3  0,51s user 0,00s system 99% cpu 0,511 total
+> 
+> So this makes quite a difference:
+> 0,19s -> 0,54s
+> 0,15s -> 0,51s
 
-Guys, before posting to these closed lists, please take a moment to
-think whether to report a given issue to distros (currently includes
-FreeBSD and NetBSD, as well as all of linux-distros members) or to
-linux-distros (Linux only).  Last week, Linux kernel issues were
-needlessly posted to distros (yes, the ones Andy has just made public in
-here), and today an issue not specific to Linux is posted to
-linux-distros (should be resent to distros now, I think).
+After bit of thought a loops with callback can be optimized by gcc.
 
-Thanks,
+It could be possible to teach CSE to rewrite
 
-Alexander
+while(foo){
+ check(p);
+ (*p)(x,y,z);
+}
+
+into 
+
+check(p);
+while(foo){
+ (*p)(x,y,z);
+}
+
