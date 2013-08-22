@@ -1,41 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/9
-Message-ID: <5154A144.9060203@gmail.com>
-Date: Thu, 28 Mar 2013 13:00:04 -0700
-From: Forest Monsen <forest.monsen@...il.com>
-To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE Request for Drupal contrib modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/18
+Message-ID: <CABYiri9o47kp=Q5DgXpw3Gr2_DnSXXO_3h6hqbLpkraw8u_T8g@mail.gmail.com>
+Date: Fri, 23 Aug 2013 00:36:38 +0400
+From: Andrey Korolyov <andrey@...l.ru>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Possibly insecure permissions on sshd_config in Debian-based distros
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Aug 23, 2013 at 12:20 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 08/22/2013 12:10 PM, Andrey Korolyov wrote:
+>> Hello,
+>>
+>> At least both Precise and Wheezy has 0644 mask on this file so an
+>> unprivileged local user can obtain some sensitive information from
+>> it. Though it not CVE-worthy, but quite strange.
+>
+> Well the default file config would of course be known. I'm reading the
+> man page and nothing super secret pops out, e.g. no passwords get
+> embedded. Can you give an example of sensitive information in sshd_config?
 
-Hi there,
+AllowUsers/AllowGroups/PermitEmptyPasswords
 
-I'd like to request CVE identifiers for:
+Obtaining such information can shorten time of bruteforce remote attacks.
 
-SA-CONTRIB-2013-036 - Zero Point - Cross Site Scripting (XSS)
-http://drupal.org/node/1954588
-
-SA-CONTRIB-2013-037 - Rules - Cross Site Scripting (XSS)
-http://drupal.org/node/1954592
-
-SA-CONTRIB-2013-038 - Commons Groups - Access bypass & Privilege
-escalation
-http://drupal.org/node/1954764
-
-SA-CONTRIB-2013-039 - Commons Wikis - Access bypass & Privilege escalation
-http://drupal.org/node/1954766
-
-Thanks!
-
-Forest
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iEYEARECAAYFAlFUoTwACgkQ/ILCL9e1Br692wCfQcf0xrflx2tuuLlBWcXD5JXf
-l5cAoJQKgACueDVwDIznDqM2vPcKT6MR
-=BDK8
------END PGP SIGNATURE-----
+>
+>
+>
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (GNU/Linux)
+>
+> iQIcBAEBAgAGBQJSFnKbAAoJEBYNRVNeJnmT8q4P/j6t2tHKcsIakUyWXFMZwN3n
+> p4x9ejgJH02NKvqe7SxBDsLk976d+B9FRZiZdbdZ0GcstVkYvGlBaV7FzcSGzSGb
+> 3osNdItXOqu/PLzYzfp53z6scMDMF7I9fE5bGYVyjCD5U1Tw5zjXDzcgURxLW56W
+> IcbkalHpPbxYF4PeXsdyoweunlIgWrdL4dSZzSfiysc47nwi7VFX8cgeKZh9+ufu
+> DFUxx4es0uQeyMyDK3cckhJZmD9NWqsdSrGGJ9aPrzs2tMp0/xuW4ecivd6Qhsgi
+> m2MR/2UO78ytY7kGmQLoUUZiPQijo+KPemiUhBc7JrFUBLL05ZewaCVA0HnUinm5
+> Shu6veoasQeGsJt1PiXh5p0QgXV6sIG8MSPSjc0w3aQ40oIuNw30nN2F1W/F/Sdb
+> tgnl0P37S79KzSdiRpiBBNCEh+8SLQTmjrvnX20HoQ8px3IHGzkdT0zVE2mT2DWC
+> cLxP3P2pInq2BTPC3NaNq47QgtbRqow+xP6mU/SUHAh1dRk8xVxqli56g5g/cv0p
+> HIYV35Fy4uv8kQFomnn7pcz2m5E+a0h05yycnUygppha+Lh2un1h+qJraIGc/blj
+> 5kEyyZGVmPYVXec36OOeFiDYz1LgpIWCVuW7noL/awGoOwCufC1YCRYvE6N9FyXI
+> MTqKyKPVKzC0MHERb/Ui
+> =rfgv
+> -----END PGP SIGNATURE-----
