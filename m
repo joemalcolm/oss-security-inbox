@@ -1,77 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/8
-Message-id: <E8E88567-17AF-4801-AC82-0BBB08A60A5A@me.com>
-Date: Tue, 19 Mar 2013 08:16:19 -0400
-From: larry Cashdollar <larry0@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/17
+Message-ID: <5216729C.3030807@redhat.com>
+Date: Thu, 22 Aug 2013 14:20:44 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: CVE requests
+CC: Andrey Korolyov <andrey@...l.ru>
+Subject: Re: Possibly insecure permissions on sshd_config in Debian-based distros
 Content-Type: text/plain; charset=utf-8
 
-Here is my CVE request I sent to mitre.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Begin forwarded message:
+On 08/22/2013 12:10 PM, Andrey Korolyov wrote:
+> Hello,
+> 
+> At least both Precise and Wheezy has 0644 mask on this file so an 
+> unprivileged local user can obtain some sensitive information from
+> it. Though it not CVE-worthy, but quite strange.
 
-> From: larry Cashdollar <larry0@...com>
-> Date: March 16, 2013, 8:40:05 AM AST
-> To: "cve-assign@...re.org" <cve-assign@...re.org>
-> Subject: Re: CVE requests
-> 
-> Hi, I've been asked to assign CVEs to the following vulnerabilities.
-> 
-> http://www.osvdb.org/show/osvdb/91232
-> http://www.osvdb.org/show/osvdb/91231
-> http://www.osvdb.org/show/osvdb/91230
-> 
-> Thanks again!
-> 
-> Larry C$
-> 
-> On Mar 15, 2013, at 4:01 PM, cve-assign@...re.org wrote:
-> 
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA1
->> 
->>> Sorry I missed one:
->>> 
->>> http://osvdb.org/show/osvdb/90926
->> 
->> Use CVE-2013-2561.
->> 
->> 
->>> I didn't see CVEs for the following issue either:
->>> 
->>> http://packetstormsecurity.com/files/108462/mambocms465-permdosdisclose.txt
->> 
->> Use CVE-2013-2562 for the storage of the cleartext MySQL database password in the document root.
->> 
->> Use CVE-2013-2563 for the storage of the admin password hash with unsafe permissions.
->> 
->> Use CVE-2013-2564 for the DoS.
->> 
->> Use CVE-2013-2565 for all of the path disclosure issues.
->> 
->> 
->>> Finally, http://osvdb.org/89910 is about a reportedly fixed
->>> vulnerability in an Oracle product.
->> 
->> Unfortunately, we still have not been able to complete our process for
->> assigning a CVE to this type of an Oracle product vulnerability. We
->> are continuing to pursue this and will let you know.
->> 
->> - -- 
->> CVE assignment team, MITRE CVE Numbering Authority
->> M/S M300
->> 202 Burlington Road, Bedford, MA 01730 USA
->> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
->> -----BEGIN PGP SIGNATURE-----
->> Version: GnuPG v1.4.11 (SunOS)
->> 
->> iQEcBAEBAgAGBQJRQ31jAAoJEGvefgSNfHMdwdkH/0vJgMovy8W8ydyZZ6OPo6/O
->> 9wHdQ/oKpa2KTBTyy8ojfoAD/ljAva77pQgNGimI7C02r3RwArbgFiSR7CcUodI7
->> +icKAATYCuX53jbBxrwhbXbYgOwW/1wg9uMFlTuuLz3EUi4MpO/ksDGgIYGCbRu8
->> i+MZRFCZp0p28n0Uu6Fy8Os3KXWsILtxPX+u6Su8xqWVE6yJ2yjuovB0OWXgstfD
->> F3Ca7CUhl5yaBkzdo4hkQded4DuaOXcHqT5ScTmhhf+nrZTrx+Pho4YjkylSJ3dl
->> Fd6MD6aI+GbRDmP1KdQsuGpB2zVW0KeHoy9QDATVNnLLKHX8/EL2n+Dv13HN9LI=
->> =94H1
->> -----END PGP SIGNATURE-----
+Well the default file config would of course be known. I'm reading the
+man page and nothing super secret pops out, e.g. no passwords get
+embedded. Can you give an example of sensitive information in sshd_config?
 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSFnKbAAoJEBYNRVNeJnmT8q4P/j6t2tHKcsIakUyWXFMZwN3n
+p4x9ejgJH02NKvqe7SxBDsLk976d+B9FRZiZdbdZ0GcstVkYvGlBaV7FzcSGzSGb
+3osNdItXOqu/PLzYzfp53z6scMDMF7I9fE5bGYVyjCD5U1Tw5zjXDzcgURxLW56W
+IcbkalHpPbxYF4PeXsdyoweunlIgWrdL4dSZzSfiysc47nwi7VFX8cgeKZh9+ufu
+DFUxx4es0uQeyMyDK3cckhJZmD9NWqsdSrGGJ9aPrzs2tMp0/xuW4ecivd6Qhsgi
+m2MR/2UO78ytY7kGmQLoUUZiPQijo+KPemiUhBc7JrFUBLL05ZewaCVA0HnUinm5
+Shu6veoasQeGsJt1PiXh5p0QgXV6sIG8MSPSjc0w3aQ40oIuNw30nN2F1W/F/Sdb
+tgnl0P37S79KzSdiRpiBBNCEh+8SLQTmjrvnX20HoQ8px3IHGzkdT0zVE2mT2DWC
+cLxP3P2pInq2BTPC3NaNq47QgtbRqow+xP6mU/SUHAh1dRk8xVxqli56g5g/cv0p
+HIYV35Fy4uv8kQFomnn7pcz2m5E+a0h05yycnUygppha+Lh2un1h+qJraIGc/blj
+5kEyyZGVmPYVXec36OOeFiDYz1LgpIWCVuW7noL/awGoOwCufC1YCRYvE6N9FyXI
+MTqKyKPVKzC0MHERb/Ui
+=rfgv
+-----END PGP SIGNATURE-----
