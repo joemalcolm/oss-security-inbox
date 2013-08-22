@@ -1,32 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/22/2
-Message-ID: <20130722112125.71fd8cc0@melee>
-Date: Mon, 22 Jul 2013 11:21:25 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE request: webcalendar before 1.2.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/6
+Message-ID: <5215DD42.5010206@googlemail.com>
+Date: Thu, 22 Aug 2013 11:43:30 +0200
+From: "Stephen Röttger" <stephen.roettger@...il.com>
+To: oss-security@...ts.openwall.com
+CC: Hannes Frederic Sowa <hannes@...essinduktion.org>, gcc@....gnu.org
+Subject: Re: PoC: Function Pointer Protection in C Programs
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+> Your approach seems to have some slight similarities with -fvtable-verify:
+> <http://gcc.gnu.org/ml/gcc-patches/2012-11/txt00001.txt>
+>
+> Maybe some code sharing could be achieved?
 
-Can I please have three CVEs for webcalendar?
-
-http://sourceforge.net/projects/webcalendar/files/webcalendar%201.2/1.2.7/
-
- - Security fix: Do not show the reason for a failed login (i.e. "no
-   such user")
- - Security fix: Escape HTML characters in category name.
- - Security fix: Check all passed in fields (either via HTML form or via
-   URL parameter) for certain malicious tags (script, embed, etc.) and
-   generate fatal error if found.
-
-I'm not sure if the first is really considered CVE-relevant.
-
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Thanks for the hint, this project was actually a big inspiration for my
+thesis and is part of my related work, although I made some mistakes in
+its description.
