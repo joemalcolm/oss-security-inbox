@@ -1,110 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/13
-Message-ID: <20130828213206.GM14644@outflux.net>
-Date: Wed, 28 Aug 2013 14:32:06 -0700
-From: Kees Cook <keescook@...omium.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/3
+Message-ID: <5215AEEF.40800@redhat.com>
+Date: Thu, 22 Aug 2013 00:25:51 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux HID security flaws
+CC: Thijs Kinkhorst <thijs@...ian.org>
+Subject: Re: CVE request: lcms 1.x buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I've found several issues in the Linux HID code. They are making their way
-into the Linux kernel via the linux-input tree now:
+On 08/21/2013 02:52 PM, Thijs Kinkhorst wrote:
+> On Wed, August 21, 2013 22:20, Kurt Seifried wrote:
+>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>> 
+>> On 08/05/2013 06:49 AM, Raphael Geissert wrote:
+>>> On 5 August 2013 07:25, Thijs Kinkhorst <thijs@...ian.org>
+>>> wrote:
+>>>> Buffer overflows have been reported in Little CMS 1.x: 
+>>>> http://bugs.debian.org/718682
+>>> 
+>>> Just a quick note: one of the affected parts of the code is a 
+>>> sample and the other is the tiffdiff(1) tool, where the buffer 
+>>> overflow is triggered by the file names passed as arguments.
+>>> 
+>>> Cheers,
+>>> 
+>> 
+>> can you post the filenames/affected code? thanks.
+> 
+> You can find it in this patch: 
+> https://bugzilla.redhat.com/attachment.cgi?id=783274 linked from: 
+> https://bugzilla.redhat.com/show_bug.cgi?id=991757
 
+Ahhh sigh. One note: if anyone sees security related flaws in our BZ
+not marked as such please set the "Security" keyword and SRT will get
+magically notified and we'll take a look at it.
 
-http://marc.info/?l=linux-input&m=137772180514608&w=1
-0001-HID-validate-HID-report-id-size.patch
-CVE-2013-2888
-Requires CONFIG_HID
-Memory write via arbitrary heap array index. This is the most serious,
-IMO, as it allows (on 32-bit) access to the entire memory range (the
-index is unsigned 32 bit). This is mitigated slightly by the fact that
-the starting address is at an "unknown" location on the heap, and that
-the value written is an "arbitrary" kernel pointer. Still, this could
-almost certainly be turned into full kernel execution given enough
-study.
+Please use CVE-2013-4276 for this issue.
 
-http://marc.info/?l=linux-input&m=137772181214612&w=1
-0002-HID-provide-a-helper-for-validating-hid-reports.patch
-Routine that many of the driver fixes use to verify their report sanity.
-
-http://marc.info/?l=linux-input&m=137772182014614&w=1
-0003-HID-zeroplus-validate-output-report-details.patch
-CVE-2013-2889
-Requires CONFIG_HID_ZEROPLUS
-Small past-end-of-heap-alloc zeroing.
-
-http://marc.info/?l=linux-input&m=137772182814616&w=1
-0004-HID-sony-validate-HID-output-report-details.patch
-CVE-2013-2890
-Requires CONFIG_HID_SONY
-Small past-end-of-heap-alloc zeroing
-
-http://marc.info/?l=linux-input&m=137772184614622&w=1
-0005-HID-steelseries-validate-output-report-details.patch
-CVE-2013-2891
-Requires CONFIG_HID_STEELSERIES
-16 byte past-end-of-heap-alloc zeroing
-
-http://marc.info/?l=linux-input&m=137772185414625&w=1
-0006-HID-pantherlord-validate-output-report-details.patch
-CVE-2013-2892
-Requires CONFIG_HID_PANTHERLORD
-Small past-end-of-heap-alloc zeroing
-
-http://marc.info/?l=linux-input&m=137772186714627&w=1
-0007-HID-LG-validate-HID-output-report-details.patch
-CVE-2013-2893
-Requires CONFIG_LOGITECH_FF or CONFIG_LOGIG940_FF or CONFIG_LOGIWHEELS_FF
-Userspace-assisted small past-end-of-heap-alloc zeroing
-
-http://marc.info/?l=linux-input&m=137772187514628&w=1
-0008-HID-lenovo-tpkbd-validate-output-report-details.patch
-CVE-2013-2894
-Requires CONFIG_HID_LENOVO_TPKBD
-Small past-end-of-heap-alloc zeroing
-
-http://marc.info/?l=linux-input&m=137772188314631&w=1
-0009-HID-logitech-dj-validate-output-report-details.patch
-CVE-2013-2895
-Requires CONFIG_HID_LOGITECH_DJ
-Can leak up to 12K of kernel memory contents to device, or NULL deref Oops
-DoS
-
-http://marc.info/?l=linux-input&m=137772189314633&w=1
-0010-HID-ntrig-validate-feature-report-details.patch
-CVE-2013-2896
-Requires CONFIG_HID_NTRIG
-Triggers NULL deref Oops DoS
-
-http://marc.info/?l=linux-input&m=137772190214635&w=1
-0011-HID-multitouch-validate-feature-report-details.patch
-CVE-2013-2897
-Requires CONFIG_HID_MULTITOUCH
-Slightly flexible heap overwrite with static value 0x2, or NULL deref Oops
-DoS
-
-http://marc.info/?l=linux-input&m=137772191114645&w=1
-0012-HID-sensor-hub-validate-feature-report-details.patch
-CVE-2013-2898
-Requires CONFIG_HID_SENSOR_HUB
-Potential kernel caller confusion via past-end-of-heap-allocation read
-
-http://marc.info/?l=linux-input&m=137772191714649&w=1
-0013-HID-picolcd_core-validate-output-report-details.patch
-CVE-2013-2899
-Requires CONFIG_HID_PICOLCD
-Userspace-assisted NULL deref Oops DoS
-
-http://marc.info/?t=137772196600012&r=1&w=1
-0014-HID-check-for-NULL-field-when-setting-values.patch
-Just a defensive change, since several drivers would have been less
-vulnerable with this check.
+> Cheers, Thijs
 
 
--Kees
 
--- 
-Kees Cook
-Chrome OS Security
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSFa7uAAoJEBYNRVNeJnmTkj8QAKScy7a42U0+jiMg5suTTzgn
+21Iyk4z9Rlqmr4I4tBCFy9Z4Ikee3X/1nWfABDnzib1b+kbWpIahG0/GZ7yHkEaa
+sJbu/Igj1AxhEiZm3RPpPNX/BmVL+nrgqBasHLQ4Cj3HXZbNDepffltYaSfgLYz+
+Xt5vsGwF1gbeijoxazPvB0LDruP+cohKU4JcItqg8brgBC3ADqyObcPxjWNTzHV6
+9QeNYv3NA4mIWbw/y4XRpCvxu9pSOtiO30K3wFvG/z1NoVXHVXmj+/fddKjvrCy9
+KVPRukncYD4/8KPRO+6hzYYawLOaBNJDNhs15z13jlgCBVEK1vmlLDCnlx9ObOXk
+WemBb4C7GskDq1TgzNayuTgrNZI8utFYcILIIEHE6q7DQOiqblYdIUbAASLpQ6xZ
+YlXI1V7sInpg+RIQ2EYaV/VIQucy74wA3gPu1mWPsV78wBeng43//wyn++e6drjZ
+1iacao6m0sGh05XcQiM9BkU6ekddAbSijCiSJ8eKNbCPFC0b77B93SFj8/KcehfN
+Ss8gwibQGiS8X21C1vgW6R+OV5d8ldwtdaNdvSlLCdwtLjblOaiQQbTdNk/45Crc
++mmJcWjpqdaelFdokTRX9pVbO3/J52NDjMTUY4d+AqttvaBi3Y0XlvXVrNei2G9t
+18iFm4e5gQzbPOA2wyJu
+=A+zt
+-----END PGP SIGNATURE-----
