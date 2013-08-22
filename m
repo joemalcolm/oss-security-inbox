@@ -1,43 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/16
-Message-ID: <519543E0.6010800@fifthhorseman.net>
-Date: Thu, 16 May 2013 16:38:56 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE-2013-2097: zPanel themes remote command execution as root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/15
+Message-ID: <52166DA8.1000201@gigawatt.nl>
+Date: Thu, 22 Aug 2013 21:59:36 +0200
+From: Harald van Dijk <harald@...awatt.nl>
+To: Tavis Ormandy <taviso@...gle.com>
+CC: dash@...r.kernel.org, oss-security@...ts.openwall.com
+Subject: Re: [PATCH] implement privmode support in dash
 Content-Type: text/plain; charset=utf-8
 
-On 05/16/2013 02:11 PM, Kurt Seifried wrote:
-> Ok and "joepie91" on reddit posted:
-> 
-> http://www.reddit.com/r/netsec/comments/1ee0eg/zpanel_support_team_calls_forum_user_fucken/c9zujzt
-> 
-> ======
-> It's a pretty basic (and more annoying than harmful) CSRF - basically,
-> http://zpanel.whatever.com/?logout=anything will log out the user from
-> a panel, no matter where it's called from. There's no logout key, and
-> no referer checking.
-> 
-> Insert <img src="http://zpanel.whatever.com/?logout=anything"> on any
-> site and anyone that visits the page will have their
-> zpanel.whatever.com session killed instantly.
-> ======
-> 
-> I can't verify this, but even if true it appears that there is no real
-> trust boundary violation (user clicks the link, they get logged out,
-> or JavaScript is used to trigger it, whatever). Unless someone can
-> show otherwise not assigning a CVE for this issue.
+On 22/08/13 19:59, Tavis Ormandy wrote:
+> Hello, this is a patch to add privmode support to dash. privmode attempts to
+> drop privileges by default if the effective uid does not match the uid. This
+> can be disabled with -p, or -o nopriv.
 
-Kurt: just to be clear, joepie91's attack didn't require javascript or
-link-clicking or anything of the kind, because it's an img src -- as
-long as your browser loads images automatically from non-origin hosts,
-it will trigger this behavior.
+Hi Tavis,
 
-That said, I agree with Kurt's general assessment here: this kind of DoS
-is the nicest possible thing an attacker can do with a CSRF.
+Your approach definitely has my support (FWTW), but there are two
+aspects that surprised me, and are different from bash and FreeBSD's sh:
 
-	--dkg
+You named the option nopriv, while bash and FBSD use the name
+privileged. I think it is likely to confuse people if "bash -o
+privileged" and "dash -o nopriv" do the same thing, and that it would be
+better to match bash and give the option a positive name, such as
+"priv", or perhaps even match them exactly and use "privileged".
 
+In bash and FBSD, after starting with -p, set +p can be used to drop
+privileges. With your patch, dash accepts set +p, but silently ignores it.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+How does something like the attached, to be applied on top of your
+patch, look?
+
+Cheers,
+Harald
+
+View attachment "dash-priv-addon.patch" of type "text/x-patch" (4150 bytes)
