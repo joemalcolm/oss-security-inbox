@@ -1,32 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/28/1
-Message-ID: <20131228071626.GA4434@kludge.henri.nerv.fi>
-Date: Sat, 28 Dec 2013 09:16:26 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: joernchen@...noelit.de, steveyken@...il.com
-Subject: CVE request: Fat Free CRM multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/16
+Message-ID: <CAJ_zFk+2r5EjTFqRUoiD4DFgKfvr415V+3Pekh63c2_qKAGoQg@mail.gmail.com>
+Date: Thu, 22 Aug 2013 13:05:11 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: Harald van Dijk <harald@...awatt.nl>
+Cc: dash@...r.kernel.org, oss-security@...ts.openwall.com
+Subject: Re: [PATCH] implement privmode support in dash
 Content-Type: text/plain; charset=utf-8
 
-Can I get four 2013 CVE identifiers for following Fat Free CRM issues, thanks.
+On Thu, Aug 22, 2013 at 12:59 PM, Harald van Dijk <harald@...awatt.nl> wrote:
+> On 22/08/13 19:59, Tavis Ormandy wrote:
+>> Hello, this is a patch to add privmode support to dash. privmode attempts to
+>> drop privileges by default if the effective uid does not match the uid. This
+>> can be disabled with -p, or -o nopriv.
+>
+> Hi Tavis,
+>
+> Your approach definitely has my support (FWTW), but there are two
+> aspects that surprised me, and are different from bash and FreeBSD's sh:
+>
+> You named the option nopriv, while bash and FBSD use the name
+> privileged. I think it is likely to confuse people if "bash -o
+> privileged" and "dash -o nopriv" do the same thing, and that it would be
+> better to match bash and give the option a positive name, such as
+> "priv", or perhaps even match them exactly and use "privileged".
+>
+> In bash and FBSD, after starting with -p, set +p can be used to drop
+> privileges. With your patch, dash accepts set +p, but silently ignores it.
+>
+> How does something like the attached, to be applied on top of your
+> patch, look?
 
-Advisory:
-http://www.phenoelit.org/stuff/ffcrm.txt
-http://seclists.org/fulldisclosure/2013/Dec/199
+Thanks Harald, those changes make sense to me.
 
-Notification to vendor:
-https://github.com/fatfreecrm/fat_free_crm/issues/300
-
-New versions 0.13.0 and 0.12.1 released:
-https://github.com/fatfreecrm/fat_free_crm/wiki/Fixing-security-vulnerabilities-%2827th-Dec-2013%29
-
-Issues:
-1. Known Session Secret
-2. Lack of CSRF Protection
-3. Default to_json for models
-4. Multiple SQL Injections
-
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Tavis.
