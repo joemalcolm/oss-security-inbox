@@ -1,32 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/14/2
-Message-ID: <523440C2.2070402@redhat.com>
-Date: Sat, 14 Sep 2013 12:56:02 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: glibc getaddrinfo() stack overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/20
+Message-ID: <20130822203500.GA21467@stack.nl>
+Date: Thu, 22 Aug 2013 22:35:00 +0200
+From: Jilles Tjoelker <jilles@...ck.nl>
+To: Harald van Dijk <harald@...awatt.nl>
+Cc: Tavis Ormandy <taviso@...gle.com>, dash@...r.kernel.org, oss-security@...ts.openwall.com
+Subject: Re: [PATCH] implement privmode support in dash
 Content-Type: text/plain; charset=utf-8
 
-On 08/22/2013 09:18 AM, Florian Weimer wrote:
-> On 07/04/2013 09:06 PM, Maksymilian wrote:
->>> Perhaps there are some missing CVE ids?
->>
->> In 2011 the problem with alloca() was not defined as a vulnerability.
->>
->> http://sourceware.org/bugzilla/show_bug.cgi?id=12671
->
-> I believe the analysis in this bug report is incorrect.  The security
-> implications are unclear.  A straight copy of a long name to a stack
-> buffer should trigger a crash because it hits the guard page, but even
-> that could be a problem for daemons.
->
-> On the other hand, it's impossible to know for sure that no GCC version
-> ever lays out the stack in such a way that we end up with a problem.
-> Multi-threaded programs linking in script interpreters are more exposed
-> to these problems, too.
+On Thu, Aug 22, 2013 at 09:59:36PM +0200, Harald van Dijk wrote:
+> On 22/08/13 19:59, Tavis Ormandy wrote:
+> > Hello, this is a patch to add privmode support to dash. privmode attempts to
+> > drop privileges by default if the effective uid does not match the uid. This
+> > can be disabled with -p, or -o nopriv.
 
-Kurt told me that the above didn't make it sufficiently clear that I 
-consider this issue CVE-worthy.
+> Your approach definitely has my support (FWTW), but there are two
+> aspects that surprised me, and are different from bash and FreeBSD's sh:
+
+> You named the option nopriv, while bash and FBSD use the name
+> privileged. I think it is likely to confuse people if "bash -o
+> privileged" and "dash -o nopriv" do the same thing, and that it would be
+> better to match bash and give the option a positive name, such as
+> "priv", or perhaps even match them exactly and use "privileged".
+
+I think there is no reason to deviate from other shells here. Therefore,
+please call it "privileged".
+
+> In bash and FBSD, after starting with -p, set +p can be used to drop
+> privileges. With your patch, dash accepts set +p, but silently ignores it.
+
+> How does something like the attached, to be applied on top of your
+> patch, look?
+
+> [snip]
+> +	if (!on && (uid != geteuid() || gid != getegid())) {
+> +		setuid(uid);
+> +		setgid(gid);
+> +		/* PS1 might need to be changed accordingly. */
+> +		choose_ps1();
+> +	}
+> +}
+
+This code tries to use setuid() and setgid() to drop all privilege,
+which is only correct if the privilege to be dropped is UID 0, or on BSD
+systems. It would be better to use setresuid() or setreuid(), and change
+the GID before changing the UID.
+
+Apart from that, it is better to check the return value from setuid()
+and similar functions. In particular, some versions of Linux may fail
+setuid() for [EAGAIN], leaving the process running with the same
+privileges.
 
 -- 
-Florian Weimer / Red Hat Product Security Team
+Jilles Tjoelker
