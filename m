@@ -1,124 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/19/1
-Message-ID: <52B255CB.90907@redhat.com>
-Date: Thu, 19 Dec 2013 13:11:23 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/14
+Message-ID: <52166A73.5050107@debian.org>
+Date: Thu, 22 Aug 2013 20:45:55 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, krahmer@...e.de
-Subject: Re: CVE already assigned for 1026891?
+Subject: Re: [PATCH] implement privmode support in dash
 Content-Type: text/plain; charset=utf-8
 
-On 12/19/2013 06:58 AM, Vincent Danen wrote:
+On 22/08/13 18:59, Tavis Ormandy wrote:
+> For example, here is one I just found in vmware-tools that manages to call
+> popen("lsb_release") with effective uid zero:
 > 
-> On Dec 18, 2013, at 12:43 PM, cve-assign@...re.org wrote:
-> 
->> Signed PGP part
->> http://www.openwall.com/lists/oss-security/2013/12/18/3 raises the
->> question of whether there is a CVE assignment in
->> https://bugzilla.redhat.com/show_bug.cgi?id=1026891 already, in order
->> to avoid a duplicate assignment. Our guess is that security issues
->> tracked privately by Red Hat typically do have pre-assigned CVE IDs,
->> so MITRE will delay a CVE assignment indefinitely.
->>
->> Although it would be great to know what CVE ID you have assigned,
->> replying with something like "yes, it has a CVE ID, but it's only
->> being shared with the embargo audience" would be quite useful as well.
-> 
-> There is a CVE assigned to this, but based on what Sebastian wrote, I can’t tell if it’s the same issue so I’m hesitant to say what the CVE is in case it does end up being different.
-> 
-> Sebastian, can you give me access to your bug?  Or did you intend to make it public?  I’m assuming that since you are asking about a CVE here, you maybe did not mean to keep it private?  Your other message said your bug contained upstream URLs (so maybe even pasting those here would be helpful).
-> 
-> Once I can look at it, I can let you know for sure whether or not it is the same issue (and should then use the same CVE).
-> 
-> Thanks.
-> 
-> — 
-> Vincent Danen / Red Hat Security Response Team
-> 
+> $ cc -xc - -olsb_release<<<'main(){system("sh>`tty` 2>&1");}';PATH=.:$PATH vmware-mount
+> # whoami
+> root
 
-Hi all,
+Having (da)sh drop privileges is a useful bit of hardening, but it
+doesn't help you if the vulnerable executable does a fork-and-exec
+without using the shell (at least with one of the exec variants that
+respects $PATH, like execvp), or some more friendly wrapper around
+fork-and-exec like posix_spawnp() or GLib's g_spawn family of functions.
 
-Sorry for the poor handling here on my part, the build in Fedora took me
-by surprise...There are two pywbem CVEs (assigned by Red Hat):
+After researching this sort of thing a bit a few months ago, I'm of the
+opinion that any set*id executable that doesn't filter its environment
+through a whitelist is Doing It Wrong. If it might find that its caller
+is in fact trusted, or if it's going to drop to their privileges later,
+then saving the untrusted environment and putting it back later is fine
+- e.g. in an ideal world, sudo would save the untrusted environment,
+check its configuration, authenticate the user, and (depending on
+configuration) put none, part or all of the untrusted environment back
+before it execs the target executable.
 
-CVE-2013-6418 is about pywbem doing an SSL connection with verification
-enabled, closing it, and doing the real data transfer over another
-connection with verification disabled.
+Unfortunately, many set*id executables don't do that: notably, many
+su(8) implementations call into PAM (and hence into arbitrary
+distribution- or sysadmin-chosen libraries) with a caller-supplied
+environment. I think sudo might do the same, but it wasn't clear to me.
+I asked the PAM mailing list what their security policy is[1] but
+haven't seen any reply so far. I didn't find anything actually
+exploitable at the time, but I didn't audit out-of-tree PAM plugins in
+any particular detail either.
 
-CVE-2013-6444 is about pywbem failing to verify the URI matches the
-Subject of the certificate (missing hostname check).
+If the vulnerable executable uses non-trivial libraries, and those
+libraries don't second-guess what their caller actually intended to do
+(as e.g. libdbus and libgio now do, as a result of CVE-2012-3524), then
+you get the same situation. I don't think "make every library or helper
+binary that might conceivably be used in a set*id executable distrust
+its environment" is really an approach that scales - it's the set*id
+executable that's crossing a privilege boundary, not the library or
+helper binary (which doesn't necessarily even know what the caller's
+security model is), so I think the onus should be on the set*id
+executable to be suitably paranoid.
 
-According to
-http://sourceforge.net/mailarchive/message.php?msg_id=31757312 both of
-these CVEs are fixed by the following patch:
+    S
 
-http://sourceforge.net/mailarchive/attachment.php?list_name=pywbem-devel&message_id=52AF1EE9.8080805%40redhat.com&counter=1
+[1] https://www.redhat.com/archives/pam-list/2013-January/msg00005.html
 
-However, I don't think that is the final fix, and I'm in the wrong
-timezone to ask :( so I'm just going to paste the comments from a bug I
-won't be able to open:
-
-""
-+        for path in (
-+                '/etc/pki/tls/certs',
-+                '/etc/ssl/certs',
-+                '/etc/ssl/certificates'):
-+            if os.path.exists(path):
-+                get_default_ca_certs._path = path
-+                break
-
-I'm not sure if this works because the /etc/pki/tls/certs directory does
-not contain individual PEM certificate files under special hashed file
-names, which is what SSL_CTX_load_verify_locations expects.
-
-+            ctx = SSL.Context('sslv3')
-
-The above results in an SSL 3.0 client hello:
-
-        Handshake Protocol: Client Hello
-            Handshake Type: Client Hello (1)
-            Length: 121
-            Version: SSL 3.0 (0x0300)
-            Random
-                gmt_unix_time: Dec 17, 2013 13:37:12.000000000 CET
-                random_bytes:
-xxx
-            Session ID Length: 0
-
-You need to use 'sslv23' to get the most recent protocol version.
-""
-
-""
-I've gathered some information about the paths you mentioned. I agree
-this approach is not correct. Perhaps this is better:
-
-        for path in (
-                # newer distributions using update-ca-trust
-                '/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt',
-                # use these directories as a fallback
-                '/etc/ssl/certs',
-                '/etc/ssl/certificates'):
-            if os.path.exists(path):
-                get_default_ca_certs._path = path
-                break
-
-On f19+, update-ca-trust is used to regenerate ca bundles under
-/etc/pki/ca-trust/extracted directory. As you say it's wrong to use
-directory path here, since cacertdir_rehash is not used to make symlinks
-with hashes.
-On f18 and older, '/etc/ssl/certs' is used with symlinks created by
-cacertdir_rehash.
-
-If '/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt' does not
-exist, the '/etc/ssl/certs' will be used as a fallback.
-""
-
-I will open our bugs soon
-(https://bugzilla.redhat.com/show_bug.cgi?id=1039801 and
-https://bugzilla.redhat.com/show_bug.cgi?id=1044246).
-
-Apologies again for the mess here and lack of a heads up before it went
-public.
-
---
-Murray McAllister / Red Hat Security Response Team
