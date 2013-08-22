@@ -1,51 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/23/7
-Message-ID: <51285826.2050806@redhat.com>
-Date: Fri, 22 Feb 2013 22:48:22 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: sthttpd world-redable logdir
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/10
+Message-ID: <86ppt6gddz.fsf@nine.des.no>
+Date: Thu, 22 Aug 2013 13:42:48 +0200
+From: Dag-Erling Smørgrav <des@....no>
+To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Cc: oss-security@...ts.openwall.com,  freebsd-security@...ebsd.org
+Subject: Re: FreeBSD Security Advisory FreeBSD-SA-13:10.sctp
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Huzaifa Sidhpurwala <huzaifas@...hat.com> writes:
+> Dag-Erling Smørgrav <des@....no> writes:
+> > This also affects third-party software (Firefox, at the very least)
+> > that incorporates FreeBSD's SCTP implementation.
+> Are you sure about this?
 
-On 02/22/2013 06:12 AM, Agostino Sarubbo wrote:
-> Hello,
-> 
-> sthttps[1], a fork of thttpd, a small, fast, multiplexing
-> webserver. creates its log as world-redable:
-> 
-> # ls -la /var/log/thttpd.log -rw-r--r-- 1 thttpd thttpd 0 Feb 22
-> 14:05 /var/log/thttpd.log
-> 
-> It should be only gentoo-related because the log is created by our
-> own init- script. Please assign a CVE.
-> 
-> 
-> [1]: http://opensource.dyc.edu/sthttpd
+Allow me to amend my statement: this *may* also affect third-party
+software that incorporates our SCTP implementation, including Mozilla
+Firefox and Google Chrome.  I can neither confirm nor deny that they are
+actually vulnerable; all I can say is that a) I have it on good
+authority that they use the same code (JFGI!) and b) they were notified
+in advance.
 
-Please use CVE-2013-0348 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRKFgmAAoJEBYNRVNeJnmTqKkP/1GpZbbfiJY8ctOYtbbhBy5n
-QWVJLobpvUOWrlBaUjCPK60yyVJDtHFWmewyw/Kb5avA+LkHMOwSiQVp14izI1p2
-fJP5WRBgo1PjgbSkG4HHzy9MbfKkHdVylbptfALoVM6oIC0sS2/wPRYiB0/pNUK4
-2gA8Vo9Wn5KiX2UljIdm5xU2hMQZ3+7ZyADi3d8jYMbUbSqktMfAX86rEjBU+CvR
-ea1+80B318Oz6vEPUeRX9SWohixuCtxtbgMEV0c5X7X1Q55gxv+sVT3H8nEM9kea
-bTYHiahZNd8PmIUmxvAyC0G626mQG/C8WcO/fMG2ReTwV9iAb2KGPXPqR+yJ58W4
-5cXO7vMlFWx0oEUjSfZnY06DFUL+TF1rkd7xSMNWtXnw4PN5+5hoMJ21YH3Sbsn8
-UXmJ8H/7+0DVmIJTM2/nyyKNovzGCVSdERYm0pvR27ayHL64nTScf0kQpsERt/FZ
-6GU3wgoFjn+ybDO8wA8q21IT+v5/5mk3ZTH4pD7tkwOD0n2gawZWd735B2KL5kCA
-5ZdVHsPvTiKwzryiquaXIOqc+3qosTLA7bDfGRFL4qcU54BNJrQk/+ZrX4hUKwSY
-Ly4W862iQp9IsqTMv8HlJQ5HazM/FmSaRDleJ9Y7PWjf+9iqpBfMMxCaNvsSwVwg
-RrPfJlyDnwaO3opFOZH5
-=vsxV
------END PGP SIGNATURE-----
+DES
+-- 
+Dag-Erling Smørgrav - des@....no
