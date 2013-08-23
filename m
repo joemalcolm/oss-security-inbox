@@ -1,35 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/17/1
-Message-ID: <525FC779.1000905@gentoo.org>
-Date: Thu, 17 Oct 2013 15:18:17 +0400
-From: Sergey Popov <pinkbyte@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: echoping buffer overflow vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/5
+Message-ID: <CAJ_zFk+RrhBr4oHJmbQSxwdeMnvD66XY8qvtVGvdxR7fDk8M_g@mail.gmail.com>
+Date: Fri, 23 Aug 2013 01:36:52 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com, dash@...r.kernel.org
+Subject: Re: [PATCH] implement privmode support in dash
 Content-Type: text/plain; charset=utf-8
 
-Echoping 6.0.2 and before contains several buffer overflow
-vulnerabilities that can lead to execution of arbitrary code on the
-system or cause the application to crash.
+On Thu, Aug 22, 2013 at 8:31 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+>
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 08/22/2013 11:59 AM, Tavis Ormandy wrote:
+> > Here is a related blog post on the topic
+> > http://blog.cmpxchg8b.com/2013/08/security-debianisms.html
+> >
+> > If you care about tracking vulnerabilities, the vmware issue is
+> > called CVE-2013-1662.
+>
+> Do we need one for Debian as well? Seems like a strong maybe.
+>
 
-Bug report in Gentoo:
-https://bugs.gentoo.org/show_bug.cgi?id=349569
+I think it would be a good idea, it seems similar to something like
+CVE-2009-2695 which was a mitigation being disabled.
 
-Some additional info:
-http://xforce.iss.net/xforce/xfdb/64141
-http://secunia.com/advisories/42619/
-
-Issue is fixed in upstream[1], but no release yet.
-
-Please assign a CVE for this, thanks.
-
-[1] - http://sourceforge.net/p/echoping/bugs/55/
-
--- 
-Best regards, Sergey Popov
-Gentoo developer
-Gentoo Desktop Effects project lead
-Gentoo Qt project lead
-Gentoo Proxy maintainers project lead
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
+Tavis.
