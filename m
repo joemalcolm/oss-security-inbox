@@ -1,60 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/5
-Message-ID: <50E5B542.50702@igalia.com>
-Date: Thu, 03 Jan 2013 17:43:46 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/3
+Message-ID: <20130823054215.GA22947@hunt>
+Date: Thu, 22 Aug 2013 22:42:15 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-CC: Aaron Patterson <tenderlove@...y-lang.org>,  rubyonrails-security@...glegroups.com
-Subject: Re: SQL Injection Vulnerability in Ruby on Rails (CVE-2012-5664)
+Subject: Re: [PATCH] implement privmode support in dash
 Content-Type: text/plain; charset=utf-8
 
-On 03/01/13 13:30, Carlos Alberto Lopez Perez wrote:
-> On 02/01/13 22:22, Aaron Patterson wrote:
->> There is a SQL injection vulnerability in Active Record in ALL versions. This vulnerability has been assigned the CVE identifier CVE-2012-5664.
+On Thu, Aug 22, 2013 at 09:31:03PM -0600, Kurt Seifried wrote:
+> On 08/22/2013 11:59 AM, Tavis Ormandy wrote:
+> > Here is a related blog post on the topic
+> > http://blog.cmpxchg8b.com/2013/08/security-debianisms.html
+> > 
+> > If you care about tracking vulnerabilities, the vmware issue is
+> > called CVE-2013-1662.
 > 
-> 
-> CVE-2012-5664 literally says:
-> 
-> "SQL injection vulnerability in the Authlogic gem for Ruby on Rails
-> allows remote attackers to execute arbitrary SQL commands via a crafted
-> parameter in conjunction with a secret_token value, related to certain
-> behavior of find_by_id and other find_by_ methods."
-> 
-> 
-> However in your description of the bug I don't see any references to the
-> Authlogic gem. This rather seems to be a generic RoR issue.
-> 
-> 
-> And both Debian and Ubuntu have marked this CVE as NOT-FOR-US because of
-> this (they don't ship Authlogic gem).
-> 
-> 
-> Could you please clarify this?
-> 
-> 
-> Thanks!
+> Do we need one for Debian as well? Seems like a strong maybe.
 
-Answering myself:
+I don't think so -- it isn't the shell at fault when a setuid program
+fails to manage its privileges properly.
 
-In this blog post [1] the issue is explained in deep.
+Incidentally, I'm curious to know how the vmware-mount problem was
+discovered. Was it discovered because dash does not have bash's
+mitigation in place? Or was it discovered via some other mechanism?
 
-The bug is on RoR. Authlogic only is one of the possible vectors to
-trigger the bug. There is a known exploitable scenario that requires
-Authlogic to trigger this bug.
+Regardless of the answer, it is probably worth using bash's mitigation
+in dash, but I'm curious if we'll make discovering future bugs in setuid
+programs more difficult to spot by happenstance by doing so.
 
-However other exploitable scenarios without Authlogic are possible.
+Thanks
 
-
-So I think the description for CVE-2012-5664 is incorrect and should be
-amended ASAP. Otherwise it will lead to confusion. People not using
-Authlogic would believe (wrongly) that they are not affected.
-
-
-Regards!
---------
-
-[1]
-http://blog.phusion.nl/2013/01/03/rails-sql-injection-vulnerability-hold-your-horses-here-are-the-facts
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
