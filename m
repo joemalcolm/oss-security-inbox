@@ -1,29 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/5
-Message-ID: <CAJ_zFk+RrhBr4oHJmbQSxwdeMnvD66XY8qvtVGvdxR7fDk8M_g@mail.gmail.com>
-Date: Fri, 23 Aug 2013 01:36:52 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com, dash@...r.kernel.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/10
+Message-ID: <1419758.eH1rNfhxKm@sarpedon>
+Date: Fri, 23 Aug 2013 12:29:41 +0100
+From: Tim Brown <tmb@...35.com>
+To: oss-security@...ts.openwall.com
 Subject: Re: [PATCH] implement privmode support in dash
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 22, 2013 at 8:31 PM, Kurt Seifried <kseifried@...hat.com> wrote:
->
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 08/22/2013 11:59 AM, Tavis Ormandy wrote:
-> > Here is a related blog post on the topic
-> > http://blog.cmpxchg8b.com/2013/08/security-debianisms.html
-> >
-> > If you care about tracking vulnerabilities, the vmware issue is
-> > called CVE-2013-1662.
->
-> Do we need one for Debian as well? Seems like a strong maybe.
->
+If we're going to fix dash to drop privs by default, might it also be worth 
+reevaluating bash-as-sh where upon it *doesn't* drop privileges?  I can see 
+the argument as to why, but Tavis' arguments also hold true for this case.
 
-I think it would be a good idea, it seems similar to something like
-CVE-2009-2695 which was a mitigation being disabled.
-
-Tavis.
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
