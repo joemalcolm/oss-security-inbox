@@ -1,51 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/27/1
-Message-ID: <2064382145.8213708.1369657855832.JavaMail.root@redhat.com>
-Date: Mon, 27 May 2013 08:30:55 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Jason A. Donenfeld" <Jason@...c4.com>
-Cc: cgit@...ts.zx2c4.com, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: cgit directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/4
+Message-ID: <CACYkhxiNS5rhFzyDRxSbn2ZE2H+aoKz7=Z15hVmxJcdXUNu7=Q@mail.gmail.com>
+Date: Fri, 23 Aug 2013 15:59:08 +1000
+From: Michael Samuel <mik@...net.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: [PATCH] implement privmode support in dash
 Content-Type: text/plain; charset=utf-8
 
-Thank you for the report, Jason.
+On 23 August 2013 15:42, Seth Arnold <seth.arnold@...onical.com> wrote:
 
-> Hi Kurt,
-> 
-> As mentioned in early messages to oss-sec, I've inherited
-> maintainership of the cgit codebase and am gradually auditing it.
-> Today I found a nasty directory traversal:
-> 
-> http://somehost/?url=/somerepo/about/../../../../etc/passwd
-> 
-> This should be pretty straightforward to categorize.
-> 
-> Exploitation looks like:
-> http://data.zx2c4.com/cgit-directory-traversal.png
-> 
-> I've committed a fix for it here:
-> http://git.zx2c4.com/cgit/commit/?h=wip&id=babf94e04e74123eb658a823213c062663cdadd6
+> Regardless of the answer, it is probably worth using bash's mitigation
+> in dash, but I'm curious if we'll make discovering future bugs in setuid
+> programs more difficult to spot by happenstance by doing so.
+>
 
-That patch doesn't seem to be applicable to cgit-0.9.1 version yet (there
-doesn't seem to be cgit_parse_readme() routine yet).
+I know of one instance where this has fooled a developer into thinking that
+'nice' drops privileges (because they were executing a shell script through
+nice).
 
-Can you provide a patch that would apply against v0.9.1 version too? Or
-would this be just problem of master branch code?
+One could argue that the developer is at fault and that programs that use
+suid bits require extra-special care - but it's often not the developer
+that needs protecting.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Could an alert (via stderr or syslog) be presented when the mitigation is
+activated implicitly?
 
-> 
-> And this fix will be in the master branch and a new release will be made
-> soon.
-> 
-> Cgit by default is not vulnerable to this, and the vulnerability only
-> exists when a user has configured cgit to use a readme file from a
-> filesystem filepath instead of from the git repo itself. Until a
-> release is made, administrators are urged to disable reading the
-> readme file from a filepath, if currently enabled.
-> 
-> Thanks,
-> Jason
-> 
