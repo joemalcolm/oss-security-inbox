@@ -1,43 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/20/5
-Message-Id: <F98F00CB-1003-4424-955A-12C638E304BB@redhat.com>
-Date: Fri, 20 Dec 2013 11:22:24 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/2
+Message-ID: <5216D777.6060601@redhat.com>
+Date: Thu, 22 Aug 2013 21:31:03 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE already assigned for 1026891?
+CC: Tavis Ormandy <taviso@...gle.com>, dash@...r.kernel.org
+Subject: Re: [PATCH] implement privmode support in dash
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Dec 20, 2013, at 8:28 AM, Marcus Meissner <meissner@...e.de> wrote:
-
-> On Wed, Dec 18, 2013 at 12:58:17PM -0700, Vincent Danen wrote:
->> 
->> On Dec 18, 2013, at 12:43 PM, cve-assign@...re.org wrote:
->> 
->>> Signed PGP part
->>> http://www.openwall.com/lists/oss-security/2013/12/18/3 raises the
->>> question of whether there is a CVE assignment in
->>> https://bugzilla.redhat.com/show_bug.cgi?id=1026891 already, in order
->>> to avoid a duplicate assignment. Our guess is that security issues
->>> tracked privately by Red Hat typically do have pre-assigned CVE IDs,
->>> so MITRE will delay a CVE assignment indefinitely.
->>> 
->>> Although it would be great to know what CVE ID you have assigned,
->>> replying with something like "yes, it has a CVE ID, but it's only
->>> being shared with the embargo audience" would be quite useful as well.
->> 
->> There is a CVE assigned to this, but based on what Sebastian wrote, I can’t tell if it’s the same issue so I’m hesitant to say what the CVE is in case it does end up being different.
->> 
->> Sebastian, can you give me access to your bug?  Or did you intend to make it public?  I’m assuming that since you are asking about a CVE here, you maybe did not mean to keep it private?  Your other message said your bug contained upstream URLs (so maybe even pasting those here would be helpful).
->> 
->> Once I can look at it, I can let you know for sure whether or not it is the same issue (and should then use the same CVE).
+On 08/22/2013 11:59 AM, Tavis Ormandy wrote:
+> Here is a related blog post on the topic
+> http://blog.cmpxchg8b.com/2013/08/security-debianisms.html
 > 
-> I have moved the bug to our Security Incidents product, so it should be visible now.
+> If you care about tracking vulnerabilities, the vmware issue is
+> called CVE-2013-1662.
 
-I see it.  That should be CVE-2013-6418 as Murray had already indicated.
+Do we need one for Debian as well? Seems like a strong maybe.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1039801
 
--- 
-Vincent Danen / Red Hat Security Response Team
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
+iQIcBAEBAgAGBQJSFtd3AAoJEBYNRVNeJnmTjWIQAI2N8A7Sej0z8VBHIqBewpR9
+cmonEsKtutVAhAm08umBhYvyaaiSXB9dOazpFHttUhGGt6YdJIVlaXWuDTsX1JAp
+XdLPSzTwgxuGQ3mPwr22fwYTWfqutI+hiCd364kFpkecBKkHUu/5wWXQJBf7O7D1
+J9i93jX1LJIN2zGJs3U1NqwClybP4rVEsEY0JHcZ/6ouZB8iQx0IKV8WvKELV7k/
+MEnH9jXj1iflRECtX3y4lEyM1QKxi1ZsI88HSXsb6WSwVlEmBj/iMkUAzkkdddqc
++bS7OFknUuf1cQVfpMaH3RLoRr2NUMaIK5l9XjZF4OZJSYrXZfM6qnC5vyZaLPGl
+eSmDz1HvjC07Ow/hXqVx1jYnPr4YvndtZNdQ76NYvt4m/RVAJHdLf2dHjEWhwZGm
+oYIXDrFFnmzlF/zI2NYthTRUV33Toae/GjBhkaZ5nDqUOD0uiWQnNhDCM/e3IEEi
+2xgxXjmuHI9qlNjfYDySi6AKhHehMYbfB9g9SrBIrEunF/DoaOTgavdLjdINSYDD
+fLIapXhDGsiafJeB4WauMEHLF4SksXiix/5dE99gnqaOdXy3t2XZgZk80SheQQxq
+alhGRqSZv8hw1AJ4mFmfHFd4BZhCiP+4JGVzK1WNdzBinclCXuji/6fg5DzEXYrW
+wEF2wooBieoW6pbji8NZ
+=qGEM
+-----END PGP SIGNATURE-----
