@@ -1,17 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/7
-Message-ID: <20130325155850.GC22574@suse.de>
-Date: Mon, 25 Mar 2013 16:58:50 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: Mongo DB
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/8
+Message-ID: <874nag7j98.fsf@shannon.wxcvbn.org>
+Date: Fri, 23 Aug 2013 13:13:07 +0200
+From: jca+dash@...vbn.org (Jérémie Courrèges-Anglas)
+To: Tavis Ormandy <taviso@...gle.com>
+Cc: Jilles Tjoelker <jilles@...ck.nl>, Harald van Dijk <harald@...awatt.nl>, dash@...r.kernel.org, oss-security@...ts.openwall.com
+Subject: Re: [PATCH] implement privmode support in dash
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Tavis Ormandy <taviso@...gle.com> writes:
 
-I do not think this has a CVE yet ...
+> On Thu, Aug 22, 2013 at 1:35 PM, Jilles Tjoelker <jilles@...ck.nl> wrote:
+>> I think there is no reason to deviate from other shells here. Therefore,
+>> please call it "privileged".
+>>
+>
+> Agreed.
+>
+>>> In bash and FBSD, after starting with -p, set +p can be used to drop
+>>> privileges. With your patch, dash accepts set +p, but silently ignores it.
+>>
+>>> How does something like the attached, to be applied on top of your
+>>> patch, look?
+>>
+>>> [snip]
+>>> +     if (!on && (uid != geteuid() || gid != getegid())) {
+>>> +             setuid(uid);
+>>> +             setgid(gid);
+>>> +             /* PS1 might need to be changed accordingly. */
+>>> +             choose_ps1();
+>>> +     }
+>>> +}
+>>
+>> This code tries to use setuid() and setgid() to drop all privilege,
+>> which is only correct if the privilege to be dropped is UID 0, or on BSD
+>> systems. It would be better to use setresuid() or setreuid(), and change
+>> the GID before changing the UID.
+>
+> This is logic duplicated from pdksh and bash, I'm slightly reluctant
+> to do things differently, unless it's not going to get committed
+> otherwise.
 
-http://blog.scrt.ch/2013/03/24/mongodb-0-day-ssji-to-rce/
-describes a MongoDB remote exploit.
+pdksh is only maintained by OpenBSD, afaik (mksh syncs regularly).
+The current code rather looks like this:
 
-Ciao, Marcus
+	if (f == FPRIVILEGED && oldval && !newval) {
+		gid_t gid = getgid();
+
+		setresgid(gid, gid, gid);
+		setgroups(1, &gid);
+		setresuid(ksheuid, ksheuid, ksheuid);
+	} ...
+
+> You can see some code snippets here:
+> http://blog.cmpxchg8b.com/2013/08/security-debianisms.html
+>
+>> Apart from that, it is better to check the return value from setuid()
+>> and similar functions. In particular, some versions of Linux may fail
+>> setuid() for [EAGAIN], leaving the process running with the same
+>> privileges.
+>
+> I don't think this is true anymore, but I have no strong objection to
+> adding it, so long as it's noted that bash and pdksh do not do this.
+>
+> Tavis.
+
+-- 
+jca | PGP: 0x06A11494 / 61DB D9A0 00A4 67CF 2A90  8961 6191 8FBF 06A1 1494
