@@ -1,63 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/28/7
-Message-ID: <51A51546.9020202@openstack.org>
-Date: Tue, 28 May 2013 22:36:22 +0200
-From: Thierry Carrez <thierry@...nstack.org>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA 2013-014] Missing expiration check in Keystone PKI tokens validation (CVE-2013-2104)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/11
+Message-ID: <5217568F.5040408@suse.de>
+Date: Fri, 23 Aug 2013 14:33:19 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: [PATCH] implement privmode support in dash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Simon McVittie wrote:
+> On 22/08/13 18:59, Tavis Ormandy wrote:
+> After researching this sort of thing a bit a few months ago, I'm of the
+> opinion that any set*id executable that doesn't filter its environment
+> through a whitelist is Doing It Wrong.
 
-OpenStack Security Advisory: 2013-014
-CVE: CVE-2013-2104
-Date: May 28, 2013
-Title: Missing expiration check in Keystone PKI tokens validation
-Reporter: Eoghan Glynn (Red Hat), Alex Meade (Rackspace)
-Products/Affects: Keystone (Folsom only), python-keystoneclient (0.2.0+)
+I'd go one step further and claim that anyone using a setuid program to
+solve anything is doing it wrong in the first place :-)
 
-Description:
-Eoghan Glynn from Red Hat and Alex Meade from Rackspace both reported a
-vulnerability in expiry checks for PKI tokens in the Keystone
-authentication middleware. Expired tokens for authenticated users could
-continue to be used, potentially resulting in the bypass of intended
-security policies. The effect of PKI token revocation is also reversed
-when the token expires, in the sense that a revoked token is once again
-treated as being valid. Only setups using PKI tokens are affected.
+> Unfortunately, many set*id executables don't do that: notably, many
+> su(8) implementations call into PAM (and hence into arbitrary
+> distribution- or sysadmin-chosen libraries) with a caller-supplied
+> environment. I think sudo might do the same, but it wasn't clear to me.
 
-Note:
-The affected code was added to Keystone in the Folsom release, but was
-moved to python-keystoneclient during the Grizzly development cycle.
+That's kind of mandatory. Some pam modules rely on having access to the
+calling user's environment (pam_xauth or pam_krb5 for example IIRC).
 
-python-keystoneclient fix (will be included in upcoming 0.2.4 release):
-https://review.openstack.org/#/c/30742/
+> I asked the PAM mailing list what their security policy is[1] but
+> haven't seen any reply so far.
 
-Keystone (Folsom) fix:
-https://review.openstack.org/#/c/30743/
+I doubt there is any policy. Has PAM evolved at all the last few years?
 
-References:
-https://bugs.launchpad.net/python-keystoneclient/+bug/1179615
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-2104
+Wrt su IMHO replacing that setuid binary with an implementation that
+uses a client/server model (think of a local ssh) is long overdue.
+su (and sudo) as is just doesn't fit into todays world anymore. The
+security issues are just one symptom of that.
 
-- -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+cu
+Ludwig
 
-iQIcBAEBCAAGBQJRpRVGAAoJEFB6+JAlsQQjBRAP/iyScNAht67EMgGed4GWNKd3
-2zHOgmqIq31S558ugul1e3qNgggnQ0qJvI1RjcgZuKoJEhH8SaPZBuykyycSvO9M
-L2Bex+GKAGAMuaz4ryPcnt7xJg+Mc0cksdCldeW1pXMrt8yITSQgXe0GqnGssoC+
-5TCk7JG8ADczbDGMa/nyc65tksbEI8hNJYyLLbCapvxfz4VqL2r5yp0vT0/jWDxy
-FLocAYnoKm9oxl0In5zioMQs0cSYAAa5EjwMLMMmUF/Axa7GskUOME8Q/GdgpMzJ
-h5AutinbpANSysz8pTB9bps7WSq33KfGKBN23caP43XvyMVA6CTsLUJH+U/9n+9u
-0rTmKcumLXW9nkf5leki1u69VqRZFksrcEzJVtXdDyGGvFbZjPLcoA8lWifluSK/
-vhu+T+RSnFWicki/Ifiz7c4tK6RYSB+a4G3/982GBxKp1sm3WLKd3ljsmpsqFeAY
-sz1o6p8zTgKIsYKrFEO6wMx37Qiga1RRB0As9msmAHJ6LXTO5ev8LcxXBjRjSIPs
-kTxoxHomRhbJAigvw+qSNSZz3DjrEywcqlNLLINQio21gzPMP4v1GVzwvroI8akf
-6oz4DLDMcbdI1yQ7jjEhpnrcpFRHrJi2a45Tv6dlto34LvG7gLvgmLgnkJs0XMw7
-BslUz5cGAucwXTz2vSHs
-=bu2N
------END PGP SIGNATURE-----
+-- 
+  (o_   Ludwig Nussel
+  //\
+  V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
