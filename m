@@ -1,39 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/1
-Message-ID: <51D0EC20.40605@redhat.com>
-Date: Sun, 30 Jun 2013 20:40:32 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE-2013-2228 : Salt Stack RSA exponent of 1 (there can be only one! da-na-naaah! na-na-na-naahh-nah-nahhh!)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/12
+Message-ID: <op.w19wxvoqdyj81a@ebl-kc.eblgnz.ngu.pk>
+Date: Fri, 23 Aug 2013 22:23:45 +0800
+From: Roy <roytam@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: dash@...r.kernel.org
+Subject: Re: [PATCH] implement privmode support in dash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, 23 Aug 2013 19:40:31 +0800, "Jérémie Courrèges-Anglas"  
+<jca+dash@...vbn.org> wrote:
 
-https://github.com/saltstack/salt/commit/5dd304276ba5745ec21fc1e6686a0b28da29e6fc
+>
+> Also,
+>
+> Tavis Ormandy <taviso@...gle.com> writes:
+>
+> [...]
+>
+>>> Apart from that, it is better to check the return value from setuid()
+>>> and similar functions. In particular, some versions of Linux may fail
+>>> setuid() for [EAGAIN], leaving the process running with the same
+>>> privileges.
+>>
+>> I don't think this is true anymore, but I have no strong objection to
+>> adding it, so long as it's noted that bash and pdksh do not do this.
+>
+> Just for reference, from mksh:
+>
 
-This is indeed CVE worthy, for example we have CVE-2006-7140 and
-CVE-2011-4121 for RSA exponent 3, so RSA exponent 1 definitely qualifies.
+[snip]
 
-Please use CVE-2013-2228 for the RSA exponent of 1 in Salt Stack
+BTW it is just changed in cvs. Log message:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Commit ID:	10052176CB912FE954B
+CVSROOT:	/cvs
+Module name:	src
+Changes by:	tg@...c.mirbsd.org	2013/08/23 14:07:41
+UTC
 
-iQIcBAEBAgAGBQJR0OwgAAoJEBYNRVNeJnmTECcQAMPrHTHY3nNvgtsjqFbVZWme
-AJO/Ir5ETsUPK9fOoesSA5i4XVKD+fTUp/FJp5hkd9B8tJeunvboRAj28lOePyr/
-pJ1cFT6JcMCxiQdkMZYh2ALqlRRWscyd2t+GbhE+SJPXv/XvGcuk9rGobqWf4rxL
-zcIQtdfQtzoF3zqU1sdLruPbRWJmuI+IPXN5io1+vsqhZQTeod8+Ixn42Ridb8L5
-sCzKrLzp9UPZwJJ81QdNi9O6pVBdahZ7DvKvTSdGeZeOf404dHpc6ESaL261kBCv
-y8SRa7wJGGd+gia1Iy5nt3FwiWDkw5IUv8m5VK7honuJinGZ59musoVvZCgwk0gx
-2bdOoVucf6FFC/eePEI8YSOzJAusx6xjvNxp7ECQAEJ0OKIWF8wtCWY8+WRtuJYB
-tzvZzN/GfLt5/TCqNa6CYKFBdoWp38DmRvo9WI8kGKBnmILx9iCiVybpYPs75CU5
-CT+GZu05pSY4FgiUNAHqZViUTDBpBeRagpNiiMIUKyyeaRVHwf752FUOUAWZ4BO+
-hR//vZbb/c3XVrLCW9rfjB7BFRHUQ0vEKvxvpPnsdX94qjWGq9dD1CwfNxLV7CvC
-3QqfCtDYxp04SDgTIquCg3IsjQo9S7LMOhlBtU6AdLjtIErzW9xkKsYuHQ1XcoF9
-d87rT51nyqviXGzTYs9C
-=vhe1
------END PGP SIGNATURE-----
+Modified files:
+	distrib/special/mksh: Makefile
+	bin/mksh       : Build.sh Makefile check.t misc.c mksh.1 sh.h
+
+Log message:
+SECURITY: Unbreak “set +p”, broken by OpenBSD ksh change.
+
+TODO: I am seriously considering following Chet and changing
+the way this works, by explicitly dropping privs unless the
+shell is run with -p. Every other shell does it like mksh,
+except Heirloom sh, which on the other hand doesn’t know any
+explicit set -p or set +p (though it doesn’t know set +foo
+for any foo either).
+
+┌──┤ QUESTION: Do we need the ability to do this:
+│ tg@...u:~ $ ./suidmksh -p -c 'whoami; set +p; whoami'
+│ root
+│ tg
+
+If not, I’m seriously considering to drop set ±p as well,
+only parse -p on the command line, with +p being the default,
+and dropping FPRIVILEGED.
+
+Thanks to RT for noticing and jilles for initial follow-up
+discussion, as well as Chet Ramey for doing the sane/secure
+thing instead of following Debian.
+
+To generate a diff of this changeset, execute the following commands:
+cvs -R rdiff -kk -upr1.71 -r1.72 src/distrib/special/mksh/Makefile
+cvs -R rdiff -kk -upr1.645 -r1.646 src/bin/mksh/Build.sh
+cvs -R rdiff -kk -upr1.124 -r1.125 src/bin/mksh/Makefile
+cvs -R rdiff -kk -upr1.630 -r1.631 src/bin/mksh/check.t
+cvs -R rdiff -kk -upr1.214 -r1.215 src/bin/mksh/misc.c
+cvs -R rdiff -kk -upr1.320 -r1.321 src/bin/mksh/mksh.1
+cvs -R rdiff -kk -upr1.668 -r1.669 src/bin/mksh/sh.h
+
