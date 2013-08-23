@@ -1,51 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/19/2
-Message-ID: <52620C06.50706@redhat.com>
-Date: Fri, 18 Oct 2013 22:35:18 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: echoping buffer overflow vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/9
+Message-ID: <87txig63f4.fsf@shannon.wxcvbn.org>
+Date: Fri, 23 Aug 2013 13:40:31 +0200
+From: jca+dash@...vbn.org (Jérémie Courrèges-Anglas)
+To: Tavis Ormandy <taviso@...gle.com>
+Cc: Jilles Tjoelker <jilles@...ck.nl>, Harald van Dijk <harald@...awatt.nl>, dash@...r.kernel.org, oss-security@...ts.openwall.com
+Subject: Re: [PATCH] implement privmode support in dash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 10/17/2013 05:18 AM, Sergey Popov wrote:
-> Echoping 6.0.2 and before contains several buffer overflow 
-> vulnerabilities that can lead to execution of arbitrary code on
-> the system or cause the application to crash.
-> 
-> Bug report in Gentoo: 
-> https://bugs.gentoo.org/show_bug.cgi?id=349569
-> 
-> Some additional info: http://xforce.iss.net/xforce/xfdb/64141 
-> http://secunia.com/advisories/42619/
-> 
-> Issue is fixed in upstream[1], but no release yet.
-> 
-> Please assign a CVE for this, thanks.
-> 
-> [1] - http://sourceforge.net/p/echoping/bugs/55/
+Also,
 
-Please use CVE-2013-4448 for this issue.
+Tavis Ormandy <taviso@...gle.com> writes:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+[...]
 
-iQIcBAEBAgAGBQJSYgwGAAoJEBYNRVNeJnmT86gP/A91wAw4i9j63pkwI01+7fxJ
-FUiG9SvzA4IUEqyLInwzPq2UbldWfU4i62N9oPq968qxOAPN11XGK1L+OYeuvOXy
-TQ7ZYo2l9CcLXqeAW4noyjHV3axZoL8zr+Sb2JQlZpRyUUqJ5Re5xVxSxtIMs4cS
-Ydznh700chkCOXFZoT0IRO87Fr6Pe0aAcHZksfpfS0n+ceEALYgcrs0BSm0DBP6r
-a3T8JxludZXEghBPtSwCBMuSyq9XTOuqY/MNQOrdzc5e/0bSLPw6JQhHUnAujVJy
-tXyqj7LSVHsyX8PdX+BQbIqUFq52tm9//UUNKx0IO7w1RaPOj+oIl3DN2V2UPlWG
-8eXvZJB282UIWWsm8nYtrQSiXCgutrvEYHvjUK8sS3/sUIpB/vQ1alV69VzSjv4w
-8d1QwgOl10sYLMo8w6OZl3KfVgMbi3ZbDSgBqVwlRDYknBa76QYYh6Je+4/T+MJd
-rVAmvj7i3jKWZjmlyzq1TxEmH3ERVRQ1SZz7y4SQDjZlGfEvt6L7yjc+gPwkKpJS
-ihIuPtuWK39QjpbbO7cskdGT5clAFVCd0vC9cK0xN03FyjuNGng+zVOn2Sqx9Fz9
-l1BNBtutzcVwbfDnKc2O5raMT6U/MjQxxe91JAISiwfhXGUV4qZWxzIYOexwfCOM
-OelKbGrUeMaE6Vz0LK1x
-=hN9J
------END PGP SIGNATURE-----
+>> Apart from that, it is better to check the return value from setuid()
+>> and similar functions. In particular, some versions of Linux may fail
+>> setuid() for [EAGAIN], leaving the process running with the same
+>> privileges.
+>
+> I don't think this is true anymore, but I have no strong objection to
+> adding it, so long as it's noted that bash and pdksh do not do this.
+
+Just for reference, from mksh:
+
+[...]
+
+#ifdef SETUID_CAN_FAIL_WITH_EAGAIN
+/* we don't need to check for other codes, EPERM won't happen */
+#define DO_SETUID(func, argvec) do {					\
+	if ((func argvec) && errno == EAGAIN)				\
+		errorf("%s failed with EAGAIN, probably due to a"	\
+		    " too low process limit; aborting", #func);		\
+} while (/* CONSTCOND */ 0)
+#else
+#define DO_SETUID(func, argvec) func argvec
+#endif
+
+[...]
+
+	  if (f == FPRIVILEGED && oldval && !newval) {
+		/* Turning off -p? */
+
+		/*XXX this can probably be optimised */
+		kshegid = kshgid = getgid();
+#if HAVE_SETRESUGID
+		DO_SETUID(setresgid, (kshegid, kshegid, kshegid));
+#if HAVE_SETGROUPS
+		/* setgroups doesn't EAGAIN on Linux */
+		setgroups(1, &kshegid);
+#endif
+		DO_SETUID(setresuid, (ksheuid, ksheuid, ksheuid));
+#else
+		/* seteuid, setegid, setgid don't EAGAIN on Linux */
+		ksheuid = kshuid = getuid();
+#ifndef MKSH__NO_SETEUGID
+		seteuid(ksheuid);
+#endif
+		DO_SETUID(setuid, (ksheuid));
+#ifndef MKSH__NO_SETEUGID
+		setegid(kshegid);
+#endif
+		setgid(kshegid);
+#endif
+	} [...]
+
+
+> Tavis.
+
+-- 
+jca | PGP: 0x06A11494 / 61DB D9A0 00A4 67CF 2A90  8961 6191 8FBF 06A1 1494
