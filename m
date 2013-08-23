@@ -1,43 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/9
-Message-ID: <20131113173438.GR22293@dhcp-25-225.brq.redhat.com>
-Date: Wed, 13 Nov 2013 18:34:38 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/13
+Message-ID: <20130823143933.GF28742@redhat.com>
+Date: Fri, 23 Aug 2013 08:39:33 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifrie@...hat.com>, Saran.Neti@...us.com
-Subject: CVE-2013-4563 -- Linux kernel: net: large udp packet over IPv6 over UFO-enabled device with TBF qdisc panic
+Subject: CVE request: roundcube 0.9.3 fixes two XSS flaws
 Content-Type: text/plain; charset=utf-8
 
-Commit 1e2bd517c108816220f262d7954b697af03b5f9c ("udp6: Fix udp
-fragmentation for tunnel traffic.") changed the calculation if
-there is enough space to include a fragment header in the skb from a
-skb->mac_header dervived one to skb_headroom. Because we already peeled
-off the skb to transport_header this is wrong.
+I don't see CVEs for these, or requests, so could two be assigned
+please?
 
-This fixes a panic Saran Neti reported. He used the tbf scheduler which
-skb_gso_segments the skb. The offsets get negative and we panic in
-memcpy because the skb was erroneously not expanded at the head.
+Two XSS flaws were fixed in roundcube 0.9.3 [1]:
 
-Introduced by:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1e2bd517c108816220f262d7954b697af03b5f9c
+* Fix XSS vulnerability when saving HTML signatures [2],[3]
+* Fix XSS vulnerability when editing a message "as new" or draft [2],[4]
 
-Introduced in:
-v3.10-rc5
 
-Upstream fix:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=0e033e0
+[1] http://trac.roundcube.net/wiki/Changelog#RELEASE0.9.3
+[2] http://trac.roundcube.net/ticket/1489251
+[3] http://trac.roundcube.net/changeset/ce5a6496fd6039962ba7424d153278e41ae8761b/github
+[4] http://trac.roundcube.net/changeset/93b0a30c1c8aa29d862b587b31e52bcc344b8d16/github
 
-References:
-http://marc.info/?l=linux-netdev&m=138305762205012&w=2
-https://bugzilla.redhat.com/show_bug.cgi?id=1030015
 
-Acknowledgements:
+Other references:
 
-Red Hat would like to thank Saran Neti of TELUS Security Labs for
-reporting this issue.
+http://bugs.gentoo.org/show_bug.cgi?id=482206
+https://bugzilla.redhat.com/show_bug.cgi?id=1000510
 
-Thanks,
+Thanks.
+
 -- 
-Petr Matousek / Red Hat Security Response Team
-
-Content of type "application/pgp-signature" skipped
+Vincent Danen / Red Hat Security Response Team 
