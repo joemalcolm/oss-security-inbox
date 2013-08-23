@@ -1,47 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/7
-Message-Id: <201310100535.r9A5ZB9I000034@linus.mitre.org>
-Date: Thu, 10 Oct 2013 01:35:11 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: 2 CVE's to be rejected
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/1
+Message-ID: <5216AC19.80309@redhat.com>
+Date: Thu, 22 Aug 2013 18:26:01 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+CC: oss-security@...ts.openwall.com, Andrey Korolyov <andrey@...l.ru>
+Subject: Re: Possibly insecure permissions on sshd_config in Debian-based distros
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> The following two CVEs were used internally, one for an issue that
-> turns out not to be an issue (looong story) and one for an issue with
-> the same root cause as another (so duplicate). We could in theory
-> recycle them but I feel it safer to not reuse them in case they leak
-> out and cause confusion.
+On 08/22/2013 03:07 PM, Daniel Kahn Gillmor wrote:
+> On 08/22/2013 04:36 PM, Andrey Korolyov wrote:
+>> On Fri, Aug 23, 2013 at 12:20 AM, Kurt Seifried
+>> <kseifried@...hat.com> wrote:
 > 
-> Please REJECT CVE-2013-1870
-> Please REJECT CVE-2013-4398
+>>> Well the default file config would of course be known. I'm
+>>> reading the man page and nothing super secret pops out, e.g. no
+>>> passwords get embedded. Can you give an example of sensitive
+>>> information in sshd_config?
+>> 
+>> AllowUsers/AllowGroups/PermitEmptyPasswords
+>> 
+>> Obtaining such information can shorten time of bruteforce remote
+>> attacks.
+> 
+> I don't think these rise to the level of being worth hiding at
+> all.
+> 
+> PermitEmptyPasswords is one additional password to test against
+> each user account, which i don't think is significant.  And a user
+> with local access to the machine can already radically shorten
+> bruteforce enumeration of possible accounts with just with "getent
+> passwd".  the gap from there to AllowUsers isn't particularly
+> significant by comparison.
+> 
+> I don't know of any history of any serious high-entropy secrets 
+> (passphrases, secret keys, etc) being stored in sshd_config, and i
+> would imagine the ssh developers would resist any configuration
+> that encourages that sort of thing.
+> 
+> Having your config files world-readable by default eases debugging,
+> and can communicate to savvy users what your policies are without
+> needing to exchange e-mail or chat.
+> 
+> Administrators who want to make that tradeoff are free to make it,
+> of course, but if a proposal was made within debian to do something
+> like "chmod go-r sshd_config",  i would object to it.
+> 
+> This doesn't warrant a CVE.
+> 
+> --dkg
 
-Our current process for rejecting as a duplicate requires that the
-REJECT description specify the duplicated CVE ID. Would you be able to
-say which one (1870 or 4398) had the duplicate/same-root-cause
-situation, and the correct CVE ID for the vulnerability with that root
-cause?
+Yup, the information would help a bit, but not enough to warrant a CVE
+I think. Unless someone comes up with something new for this no CVE.
 
-We would want this information even if the correct CVE ID still refers
-to an embargoed issue.
+
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSVjw0AAoJEKllVAevmvmsm7wH/0Rgv/rfNE3KlAYUGd9XKo0k
-MmE2+H4v+93Sw7wSbUnSXDATUP80DSgex8O4o/UT8U1nfXJXUMYRsFvkZQrmPevo
-wBxDj2v6laSIT2NMuLGz/noBMoZeluCSLlr3GL0AuntBH3omjxKkY3MunW7WkWY2
-8Gut8AfrfGFepz83BdMSBx8UsMP7sOHGzAnmm+7hwpxTx/yWa/bsuNQqYSaTXQwe
-4jOoX1yvPxnqhacevn2nWZ7ewvlYERAkFif0sWHxRhbzIhv626ahb3dY0Gf6L6bF
-/UqEXMWSC2O2nkqBdwvpGbZ797JSmGMniaRQ2+BqtnjjlYuKOkPj+v+dp2+0+bw=
-=nxfR
+iQIcBAEBAgAGBQJSFqwZAAoJEBYNRVNeJnmTqxQQAJuvFkRfb6jdL4uds9iEkUC+
+vOrG/Onic46gmDnecjW6xMljLgemT3DAOJhq753QZJvFQH49wnXcf1DgdXxpXbDH
+82DleaQU/oUUyswV/whOdTwqsLiWpoAQ9occ32RZWBseLyzmXJelRnlcT1ba/aNM
+azrAUoLAFQLLBQFkRi0GawcTSVRzzZtJn5CWcHuigzsyc0YKYSKcJhK5q2L8cQuQ
+7oXAcvg3OJBOGNDybUajhR1E/PF2aSJ8CiGGZZSrOzEB2h2FkaBzD+/Pbdp/ndq7
+u0aG90E9MusOMRxVeMMWzVKq6FAAqMhS+IS/qwGX7tdcjwFMzGXM6J5H1mgaTbPY
+ctKH6s1Uz37PilHQITpGUfoI0UK6WAz6cK52uw5GFxWYMh+ZBeeHOFScHnmWXKwH
+vhZp6e4AdXzR3Ey9D8ts+ZAgpvc+1t57PEk1+k1bGDwiKkQmmqha8jn9dgrM1wPr
+/1Hcm62VPeUblLjevbhH/z2VXr7lzk0V9LdRjU5oDGeCN0lMrHoUpTGT061URUQk
+GzdFnn0QWtH9LxUYcKJ0693IndWq7AiCBLQtNtdp/+1V05N1y4SnMVrOPiDsQV0I
+fWOHCbnO5+1YtDDpZNhEJWXe8rhNRYs9aQ0RfqTNKD3xn5bYTj1lPQcWKflTvqYq
+jGg5+tp9EV2Da6wL66/4
+=/Yx9
 -----END PGP SIGNATURE-----
