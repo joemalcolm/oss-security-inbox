@@ -1,41 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/11
-Message-ID: <CAMB8f9Po7wxekQp+J0uuQ-gt9k6uDNXg_gO2__i382KGhcgX3Q@mail.gmail.com>
-Date: Fri, 26 Jul 2013 21:19:33 -0400
-From: Evan Teitelman <teitelmanevan@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/6
+Message-ID: <mpro.mryjti05v9ro802k8.taviso@cmpxchg8b.com>
+Date: Thu, 22 Aug 2013 17:24:54 -0700
+From: Tavis Ormandy <taviso@...xchg8b.com>
 To: oss-security@...ts.openwall.com
-Cc: scottydroid@...il.com
-Subject: CVE Request - Coin Widget serves code over plain http.
+Subject: Re: [PATCH] implement privmode support in dash
 Content-Type: text/plain; charset=utf-8
 
-Coin Widget is a Bitcoin and Lightcoin donation widget. Its code is
-normally downloaded from http://coinwidget.com/widget/coin.js in the
-following manner.
+Simon McVittie <smcv@...ian.org> wrote:
 
-<script src="http://coinwidget.com/widget/coin.js"></script>
-<script>
-CoinWidgetCom.go({
-    wallet_address: "31uEbMgunupShBVTewXjtqbBv5MndwfXhb"
-    , currency: "bitcoin"
-    , counter: "count"
-    , alignment: "bl"
-    , qrcode: true
-    , auto_show: false
-    , lbl_button: "Donate"
-    , lbl_address: "My Bitcoin Address:"
-    , lbl_count: "donations"
-    , lbl_amount: "BTC"
-});
-</script>
+> On 22/08/13 18:59, Tavis Ormandy wrote:
+> > For example, here is one I just found in vmware-tools that manages to
+> > call popen("lsb_release") with effective uid zero:
+> > 
+> > $ cc -xc - -olsb_release<<<'main(){system("sh>`tty`
+> > 2>&1");}';PATH=.:$PATH vmware-mount # whoami root
+> 
+> Having (da)sh drop privileges is a useful bit of hardening, but it doesn't
+> help you if the vulnerable executable does a fork-and-exec without using
+> the shell (at least with one of the exec variants that respects $PATH,
+> like execvp), or some more friendly wrapper around fork-and-exec like
+> posix_spawnp() or GLib's g_spawn family of functions.
+> 
 
-Without SSL or similar protection, it is possible for the code to be
-modified in transit. A malicious individual could modify the code to
-replace a legitimate wallet address with his or her own.
+Sure, but we shouldn't let the perfect be the enemy of the good.
+-fstack-protector doesn't magically make anything safe, but it's still a
+useful mitigation tool that we would be worse off without.
 
-I believe this vulnerability is an example of CWE-300. Does it need a
-CVE identifier?
+We can't produce a patch that makes every crazy thing someone might want to
+do while setuid safe, but this is a common pattern that Debian-derived
+distributions lag behind on. I guarantee it will save you a few CVE's over
+the next few years :)
 
-I have copied the creator of Coin Widget on this email.
+Tavis.
 
-Thank you for your time,
-Evan Teitelman.
+
+-- 
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
+
