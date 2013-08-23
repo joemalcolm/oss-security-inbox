@@ -1,48 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/28/2
-Message-ID: <5106EC54.5030803@redhat.com>
-Date: Mon, 28 Jan 2013 14:23:32 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/7
+Message-ID: <52172D31.5010703@redhat.com>
+Date: Fri, 23 Aug 2013 11:36:49 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Salvatore Bonaccorso <carnil@...ian.org>, team@...urity.debian.org
-Subject: Re: CVE Request: zoneminder: arbitrary command execution vulnerability
+CC: Kurt Seifried <kseifried@...hat.com>, Tavis Ormandy <taviso@...gle.com>, dash@...r.kernel.org
+Subject: Re: [PATCH] implement privmode support in dash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 01/24/2013 11:47 PM, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> The following arbitrary command execution vulnerability for
-> zoneminder was disclosed/published:
-> 
-> http://itsecuritysolutions.org/2013-01-22-ZoneMinder-Video-Server-arbitrary-command-execution-vulnerability/
+On 08/23/2013 05:31 AM, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 >
->  Could you please assign a CVE for it?
-> 
-> Regards, Salvatore
+> On 08/22/2013 11:59 AM, Tavis Ormandy wrote:
+>> Here is a related blog post on the topic
+>> http://blog.cmpxchg8b.com/2013/08/security-debianisms.html
+>>
+>> If you care about tracking vulnerabilities, the vmware issue is
+>> called CVE-2013-1662.
+>
+> Do we need one for Debian as well? Seems like a strong maybe.
 
-Please use CVE-2013-0232 for this issue.
+Do you mean dash instead of Debian?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRBuxUAAoJEBYNRVNeJnmTtoMQAKdG7gqZ4T0X2Qnife28xYtJ
-UWl2Ric5tl/DBQrtRAcd70QtvB+L6ABK3D2/1ytzzj/IRmtgEl46Ru7QWFyx/YNW
-ST3N5pFP2PeXAm712nN3MQKFhucjOIp6OmiAVMJHOdNKfUsBeAQC3+BRVe5ELcek
-wQYuNdJQ1WDL3IRhmxZys0vxVamktAWN4zubvSJQ8jVjT8IInFcBt5iajuDUc9Pt
-VLpoqTBeX64otCJqWVvPMdS1Z5YidttoP+b9+Gnpgeq8kpLvp3ufTTyBEhcOGl6h
-eAmeV3MKRxvdJ46WcFYTzsFKdZQqaRhTsQpSGcoimMpDHqieEsGC6felicxmxrAB
-gk5DRaS7ff1b8oM8zum79x/J3zUgbxdwJ98ZYJqBq9ys1LdjYqlQrRFuIDGp2Wbb
-jvP7PlDXNcMWU9jvyrLCM1HVFq1UTmHzIKb0okS9iS+uXpO5PSHigZSWQZXlWyim
-88QA3Z2UlyPAgpUmMnfHRLJ/xmvOUXALFeCD1/5idIjr0fgNSKPmBGH90V1yRXEs
-CEYrLUZOVuazKgD81tWkszm4FxzPgBkUN8rAabx7Sh8C/EuN1Xo9H0BrQkyLorXr
-eMEGM6FmiPxDbG4PRq2H/yN4GMcQlenf1XRYXFIs0JINPJdBM+rxPhZEDBM0NR2A
-yqXerxes4Gsb0MvRBm0U
-=Gs8T
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security Team
