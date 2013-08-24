@@ -1,29 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/11
-Message-ID: <20130319191222.GA9893@frohike.xs4all.nl>
-Date: Tue, 19 Mar 2013 20:12:22 +0100
-From: Peter Bex <Peter.Bex@...all.nl>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Untrusted startup file inclusion in Chicken Scheme
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/24/2
+Message-Id: <201308241445.r7OEj8N8015771@linus.mitre.org>
+Date: Sat, 24 Aug 2013 10:45:08 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-2013-5575 LibTIFF through 3.9.5 integer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'd like to request a CVE identifier for an untrusted code execution
-problem in Chicken Scheme: The interpreter loads a file called
-".csirc" from the current directory on startup, without checking
-whether it can be trusted.
+http://archives.neohapsis.com/archives/fulldisclosure/2013-08/0247.html
+http://www.x90c.org/advisories/xadv_2013001_libtiff.txt
 
-Versions 4.8.2 after c6750af99ada7fa4815ee834e4e705bcfac9c137
-are unaffected, as will 4.8.3 and later.  The first stable release
-to include a fix will be 4.9.0.
+This apparently only affects older versions but seems different from
+CVE-2012-1173 and other CVEs, so it is assigned CVE-2013-5575.
 
-For the upstream advisory info see
-http://lists.nongnu.org/archive/html/chicken-announce/2013-03/msg00002.html
-and (important!) the errata:
-http://lists.nongnu.org/archive/html/chicken-announce/2013-03/msg00003.html
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Cheers,
-Peter
--- 
-http://www.more-magic.net
+iQEcBAEBAgAGBQJSGL/GAAoJEGvefgSNfHMda9gIAIPaWHzYQevX3j0sPCtpBa9j
+ZSjKNJWF9Y+mvrIwwfSpMlk0cRyz58Q3GrQFsxziUDeezmcwWirTwc09OquQ3Bn+
+zczIvA6LUWx/rQIaq35rDVcesfShx+p7bxyyTylHWtLpmJT5ItXtZDBylXBN/AMF
+bFGi0CmsHJGOhJit6JIzuVqXjsw8AoJWocfr8wckV3EGjAhCneSnjJNdoFYyrd+T
+0vURIhb45XMG0kyPVJz6n2fY0tSTgYfFx2Zk7t2adPY15eMyu3x9UoTMTox3lJ9s
+kvETjtwuv2BrJwDhDq7kz2itiZkNg2lPZ5htIxpAnIqBEkojuU3/yHH06yzdl1w=
+=SWt3
+-----END PGP SIGNATURE-----
