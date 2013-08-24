@@ -1,61 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/19/2
-Message-ID: <5170EA62.3000208@redhat.com>
-Date: Fri, 19 Apr 2013 00:55:30 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Thierry Carrez <thierry@...nstack.org>
-Subject: CVE-2013-1977  - OpenStack keystone.conf insecure file permissions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/24/3
+Message-Id: <201308241446.r7OEkX9L015785@linus.mitre.org>
+Date: Sat, 24 Aug 2013 10:46:33 -0400 (EDT)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Joomla unauthorised uploads before 2.5.14 / 3.1.5
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-As reported:
-https://bugs.launchpad.net/keystone/+bug/1168252
+> http://developer.joomla.org/security/563-20130801-core-unauthorised-uploads.html
+> Code commit 2.5:
+> https://github.com/joomla/joomla-cms/commit/fa5645208eefd70f521cd2e4d53d5378622133d8
+> Code commit 3.1:
+> https://github.com/joomla/joomla-cms/commit/1ed07e257a2c0794ba19e864f7c5101e7e8c41d2
+> 
+> Issue also exists in 1.5 (end of life):
+> http://joomlacode.org/gf/project/joomla/tracker/?action=TrackerItemEdit&tracker_item_id=31626
+> 
+> Exploit in the wild:
+> https://github.com/rapid7/metasploit-framework/pull/2219
+> http://www.cso.com.au/article/523528/joomla_patches_file_manager_vulnerability_responsible_hijacked_websites/
 
-The password configuration of LDAP and admin_token in keystone.conf
-should be secret to protect security information:
+Here, the CVE abstraction for the main issue seems clear, so we are
+assigning:
 
-[ldap]
-# url = ldap://localhost
-# user = dc=Manager,dc=example,dc=com
-# password = None <- should be secrect
-# suffix = cn=example,cn=com
-# use_dumb_member = False
-# allow_subtree_delete = False
-# dumb_member = cn=dumb,dc=example,dc=com
+  CVE-2013-5576 - incomplete validation of $format in media.php in
+                  Joomla! 1.5.x (before a certain unofficial patch),
+                  2.x before 2.5.14, and 3.x before 3.1.5
 
-[DEFAULT]
-admin_token = passw0rd <- should be secrect
+The above tracker_item_id=31626 reference has other statements about
+1.5.x security that might (or might not) be assigned other CVEs later.
+For example:
 
+  Adddate: 2013-08-01 16:35:29
+    There seems, though, to be at least one more problem with the
+    "media.php" file: the "defined('_JEXEC') or die('Restricted access')"
+    execution protection is missing.
 
-
-Red Hat has a modified installer, we install the file as:
-- -rw-------. 1 keystone keystone 10235 Apr 19 00:21
-/etc/keystone/keystone.conf
-
-Unfortunately when we hardened our installer I didn't check the
-upstream distribution for the same flaw, something I should have done.
-I'm now going to review the other hardening we did to ensure upstream
-is aware of these potential problems.
+  (The security relevance of this is disputed later in the same item.)
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJRcOphAAoJEBYNRVNeJnmTBe4QAKTD9ZwlHAxy4T8Yvyx3kf9L
-gKnO6/YjLPZfgX0YFw6jseUJ9dYkPwHNEBhPISTgW+ZYHvITD2c32SsbBtHwp41y
-DgJkYuvUy7QL0h9JUKz922pIMsTCTw1vxudVA1v9szUFOeNUkuxYp+sOU+XjLVcX
-12sWjhlrclpyKeVjxehE2gK+X8HONdHG/iyuYYm3Xjx9U0w5T3GZ/LJuBipaW/K6
-N8DNygS5cUX7QXjQ5Cpm3JTW9fTu4Lkx+XL6EoSPlkE5uYeoxLRV2aGdCwtgKLJl
-dwJXO5pgQMSXEee2c6j2JrbcFlY0Pu3GZF2BP5ZRvFcOJs2A8VgmJYZJoNX9vLAd
-gtLuUNcAN3GJnhpvNUzf2UO4im/3+Y/7y6xQ+F54ud/3jE3BaPezoA3CSGeUg924
-ygPSivWWztCYxTzxfadiJ382Lv77kFvu2+TGODa6HSm5EIa2PfgTwfq5kTYpbpqL
-ULdgwBrCPrcPzCe6uCt/DVumyOLVVdooYecHFop5+XtyliX1ja0Bl3dKCFoI3sSy
-lumhNJdPH/Q/0guyTqimTeTmLwc3WWqL9rhBLblKqSE138DqgaCJ3befjgyZt8mB
-5sAQp7NvHu/UsoT4gJ0qjfetAo5ZLKpC3HCc6LIDpH3A4K4UtB5HAIANtgb9x+i4
-B9A+8D2OtoJMwlh8To8A
-=Z0kN
+iQEcBAEBAgAGBQJSGMUOAAoJEGvefgSNfHMdeuYH/3SpoMD4tUKNCNgkeY5zaRwo
+Aw+dC/sfXt1KIDKCR6jX3nyxdZdcPjUs9dgdZtFYd1uQl9sj+Y67hCUyD16KZ3p+
+rCkNidGl6X3RYPpERmzsNd4N9ty51ZmeK5Q7cISXGEXIKcaWnxX/fHyr/fN8boIb
++GwqvNHdBZTgTE5kmo8wpAGVCA7VaXgdGAXAWLqLJ4ADGumJAiaG8s5f6xuQcOgk
+3B7AET8ms3qAbbDv/1BnYBXGOHOAHRN0uqjHgS0gBrEaSVxBFusrCr/9IzLn1w+e
+NLmQdN2QfbSc6IXvp8LydMGaNQtv6E9cmH12wrakwi1EVfE28MlgOgcvYQSYQck=
+=763k
 -----END PGP SIGNATURE-----
