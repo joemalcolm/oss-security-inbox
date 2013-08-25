@@ -1,81 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/21
-Message-Id: <201303141815.r2EIFTFi012977@linus.mitre.org>
-Date: Thu, 14 Mar 2013 14:15:29 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/25/2
+Message-Id: <201308251333.r7PDXWaN006187@linus.mitre.org>
+Date: Sun, 25 Aug 2013 09:33:32 -0400 (EDT)
 From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, gandalf@...ti.net, elbrus@...ian.org
+Subject: Re: CVE Request: 3 XSS vulnerabilities in Cacti <= 0.8.8b
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-CVE-2013-1825 -> REJECT; replaced by these three:
+> Three cross-site scripting vulnerabilities
 
-CVE-2013-2546
-9a5467bf7b6e9e02ec9c3da4e23747c05faeaac6 part 1
+We think you may mean "Three vulnerabilities" -- not all three are
+XSS.
 
-CVE-2013-2547
-9a5467bf7b6e9e02ec9c3da4e23747c05faeaac6 part 2
+> - Reflected XSS in the "step" parameter of the "/install/index.php"
+>   script
+> - Stored XSS in the id parameter in the "/cacti/host.php" script
 
-CVE-2013-2548
-9a5467bf7b6e9e02ec9c3da4e23747c05faeaac6 part 3
+Use CVE-2013-5588 for both of these XSS issues.
 
 
-CVE-2012-6138 -> REJECT; replaced by these fourteen:
+> - "/cacti/host.php" script is vulnerable to Blind SQL Injection in
+>   the "id" parameter.
 
-CVE-2012-6536
-ecd7918745234e423dd87fcc0c077da557909720
+Use CVE-2013-5589 for this SQL injection issue.
 
-CVE-2012-6537
-1f86840f897717f86d523a13e99a447e6a5d2fa5
-7b789836f434c87168eab067cfbed1ec4783dffd
-f778a636713a435d3a922c60b1622a91136560c1
 
-CVE-2012-6538
-4c87308bdea31a7b4828a51f6156e6f721a1fcc9
+> input_validate_input_number(get_request_var_post("host_template_id"));
 
-CVE-2012-6539
-43da5f2e0d0c69ded3d51907d9552310a6b545e8
-
-CVE-2012-6540
-2d8a041b7bfe1097af21441cb77d6af95f4f4680
-
-CVE-2012-6541
-7b07f8eb75aa3097cdfd4f6eac3da49db787381d
-
-CVE-2012-6542
-3592aaeb80290bda0f2cf0b5456c97bfc638b192
-
-CVE-2012-6543
-04d4fbca1017c11381e7d82acea21dd741e748bc
-
-CVE-2012-6544
-792039c73cf176c8e39a6e8beef2c94ff46522ed
-3f68ba07b1da811bf383b4b701b129bfcb2e4988
-e15ca9a0ef9a86f0477530b0f44a725d67f889ee
-
-CVE-2012-6545
-9344a972961d1a6d2c04d9008b13617bcb6ec2ef
-f9432c5ec8b1e9a09b9b0e5569e3c73db8de432a
-9ad2de43f1aee7e7274a4e0d41465489299e344b
-
-CVE-2012-6546
-3c0c5cfdcd4d69ffc4b9c0907cec99039f30a50a
-e862f1a9b7df4e8196ebec45ac62295138aa3fc2
-
-CVE-2012-6547
-a117dacde0288f3ec60b6e5bcedae8fa37ee0dfc
-
-CVE-2012-6548
-0143fc5e9f6f5aad4764801015bc8d4b4a278200
-
-CVE-2012-6549
-fe685aabf7c8c9f138e5ea900954d295bf229175
-
-Please refer to the additional details that will most likely show up
-under http://attrition.org/pipermail/vim/2013-March/ later today.
+This code was added to host.php in both 0.8.8 and 0.8.9, but we think
+that it might be impossible to exploit the host_template_id parameter
+for either XSS or SQL injection. If there is a usable attack with the
+host_template_id parameter, please request another CVE ID. Any
+vulnerability for the host_template_id parameter is not within the
+scope of either CVE-2013-5588 or CVE-2013-5589.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -83,13 +44,13 @@ M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJRQhNVAAoJEGvefgSNfHMdBlcH/0v22VYUFVJJ1XMSkEkJ8AHu
-OV/g/ayVPypbvkGmecAWmUbcOjTjmkcPhWkxVqz/bfDetsVdgJisjGuSGnFSTLIt
-o09JmYUtA7r9OBP/1vX2vPKouVisKwYNg1wA/L++xGnlf0mRqayLOPSVk+H6Ovsq
-U+Z9sr1jAqxctkd+YHnpKjiSy6lf7xhYgUDerIxWPIuNQFkICbIpoZhN7ePKnmJm
-U1Fjhcuqx3Nhyf1vfIXRz/Pmj3i/VfHnF6bhzhSxcID2eYdaw3GQVfXMXggsxjj6
-Bl/+tHplITznLPc8yczlrlZW4yqhoc9/CNwDd4HTc1/ANq6zfZsWgc39pyp/kco=
-=qjhX
+iQEcBAEBAgAGBQJSGgZrAAoJEGvefgSNfHMdfRkH/R0lG8hngh9Q91DcEs7JNgUj
+mOuUN3iizdQYUrjkwFgrzv0ENWtHd+jm3fwbnQVQVyTSqoOaAT2d7/mheY74Halc
+R+SaMIhr8B+fKJdt2hs2wZZyqIjK6/gI1x5sv0k8/Cei389U2nhoRYzgfYukuYQB
+NPSD7u2ZZVJ00r64JQfeNQ8WtTkhD69kejd7L+qn/hl0ebsQd/SM+jGk3v3vZ6eQ
++dUMHyf0z8Jo12W6ppa5biG71hqEDgdNmQuU6QXAtV4m01snZhMmt/kbQ88wg6O7
+Lz27dc8vb/B+48krsdA1VcX+JQGXmv4mMSyPzzIKehxYbwqzNK+Z4ETIBfIdZHU=
+=1n5f
 -----END PGP SIGNATURE-----
