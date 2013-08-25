@@ -1,81 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/21/1
-Message-ID: <528DBC61.90104@redhat.com>
-Date: Thu, 21 Nov 2013 00:55:13 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org
-CC: "Xen.org security team" <security@....org>
-Subject: Re: Xen Security Advisory 78 - Insufficient TLB flushing in VT-d (iommu) code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/25/1
+Message-ID: <20130825074415.GA15384@eldamar.local>
+Date: Sun, 25 Aug 2013 09:44:15 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Gandalf <gandalf@...ti.net>, Paul Gevers <elbrus@...ian.org>
+Subject: CVE Request: 3 XSS vulnerabilities in Cacti <= 0.8.8b
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-On 11/20/2013 10:08 AM, Xen.org security team wrote:
-> Xen Security Advisory XSA-78
-> 
-> Insufficient TLB flushing in VT-d (iommu) code
-> 
-> ISSUE DESCRIPTION =================
-> 
-> An inverted boolean parameter resulted in TLB flushes not
-> happening upon clearing of a present translation table entry.
-> Retaining stale TLB entries could allow guests access to memory
-> that ought to have been revoked, or grant greater access than
-> intended.
-> 
-> IMPACT ======
-> 
-> Malicious guest administrators might be able to cause host-wide
-> denial of service, or escalate their privilege to that of the
-> host.
-> 
-> VULNERABLE SYSTEMS ==================
-> 
-> Xen 4.2.x and later are vulnerable. Xen 4.1.x and earlier are not
-> vulnerable.
-> 
-> Only systems using Intel VT-d for PCI passthrough are vulnerable.
-> 
-> MITIGATION ==========
-> 
-> This issue can be avoided by not assigning PCI devices to untrusted
-> guests on systems supporting Intel VT-d.
-> 
-> NOTE REGARDING LACK OF EMBARGO ==============================
-> 
-> This issue was disclosed publicly on the xen-devel mailing list.
-> 
-> RESOLUTION ==========
-> 
-> Applying the attached patch resolves this issue.
-> 
-> xsa78.patch        Xen 4.2.x, Xen 4.3.x, xen-unstable
-> 
-> $ sha256sum xsa78*.patch 
-> 2b858188495542b393532dfeb108ae95cbb507a008b5ebf430b96c95272f9e0e
-> xsa78.patch $
+Three cross-site scripting vulnerabilities were reported in the Cacti
+Bugtracker at [1]:
 
-Please use CVE-2013-6375 for this issue.
+ - Reflected XSS in the "step" parameter of the "/install/index.php"
+   script
+ - Stored XSS in the id parameter in the "/cacti/host.php" script
+ - "/cacti/host.php" script is vulnerable to Blind SQL Injection in
+   the "id" parameter.
 
+Upstream (Cc'ed) has commited r7420[2] and r7421[3]
+for 0.8.8 and 0.8.9 respectively to fix these issues.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+ [1] http://bugs.cacti.net/view.php?id=2383
+ [2] http://svn.cacti.net/viewvc?view=rev&revision=7420
+ [3] http://svn.cacti.net/viewvc?view=rev&revision=7421
 
-iQIcBAEBAgAGBQJSjbxgAAoJEBYNRVNeJnmT+rsQANa8v60e5q9IlEAYEjqb/Tar
-NqozqDg0BY5ujLOapUY8ZKP7vFJqy17E3WlQCz0Hzucxozn6XwqBD2GZwyHVy9m/
-yH7sqoTrlJfhl+sC2FAU9eR0y7U1+Z1yXSF4aXmXZgUfawa+36X8e+FYDzV30hqe
-zYf6CxhZoiZ6Ngb5rH+Rtup4pdH4nuSULrgv3gir1EBCIBv8ElMItslGCbbvwv5J
-AizlzJThJZmZN6DblJewzFaddmT5YMVDuzvRWGav0dBFkDHdlPqdNx5CSDF33I/h
-tPXYH8ecgP8IXpSMeW+YgRLnq5B4WTQiXoiJz8VqsvbwrmUEZz85IkVmpznnfBkf
-WqGrgUT0Y1S0w2N309xyz/VM+QIgTRjhUDlgyLunEQaIS183c9wuYMAEAEgLLj6D
-R1gul6PM5d6nsNSt2AvRAd01Fr3fmZorQXxjyhY/AP1YDTbDsshcjRirEXhowjUk
-WEcNmDEK1OyigilospoHLMBChYiY5SulMc/J1uMFsMHhY9kPa7321KNvM/9wMxyx
-2tOZUN6J5r2tbDYtifOH9pyd38Ezi86HJUeniFWqn5sKMquWydKIczx6AbKrrmqW
-5U7qGQS3PNj9w+AC+pUhn9T5x6LyPrsRK1qqfIHnKg/1uXMSJwfDKI1vHFfWBoZD
-qaBYD1JWmWc/va1D8mKB
-=Ra7v
------END PGP SIGNATURE-----
+Can CVE's be assigned for these issues?
+
+Regards,
+Salvatore
