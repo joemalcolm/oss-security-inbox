@@ -1,40 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/6
-Message-Id: <201311141220.31600.tmb@65535.com>
-Date: Thu, 14 Nov 2013 12:20:23 +0000
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/26/2
+Message-ID: <521B3238.6050602@mccme.ru>
+Date: Mon, 26 Aug 2013 14:47:20 +0400
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Subject: "I miss LSD", slides, paper and tools relating to finding UNIX system level vulnerabilities (as given at 44CON)
+Subject: Re: HTTPS
 Content-Type: text/plain; charset=utf-8
+
+On 2013-08-15 10:38, gremlin@...mlin.ru wrote:
+> On 14-Aug-2013 14:59:12 -0600, Kurt Seifried wrote:
+>  > everyone should be enabling HTTPS where possible,
+
+I agree.
+
+> Very dangerous mistake. HTTPS should be used only for non-anonymous
+> access, otherwise plain HTTP is preferred. 
+
+Alexey,
+
+I kinda shared this sentiment several years ago (when I used tools like
+Privoxy for my personal content filtering) but not any more. The time
+has changed. Wifi usage is widespread and more untrusted networks are
+used in general, I think. ISPs are inserting ads in Web traffic [1][2].
+Tor becomes more popular (and every exit node is in mitm position).
+Projects like "HTTPS Everywhere" are gaining moment. And privacy is
+taken much more seriously in general. And so on. And don't forget recent
+(and not so recent) NSA spying scandals:-)
+
+[1] https://www.cs.washington.edu/research/security/web-tripwire.html
+[2] http://bits.blogs.nytimes.com/2012/04/06/courtyard-marriott-wifi/
+
+The situation with corporate networks could be somewhat different but
+IMHO not very much.
+
+[skip]
+
+>  > intercepting and modifying HTTP is trivial.
+> 
+> Yes. But intercepting and modifying HTTPS requires just an ability
+> to issue client-trusted certificates (sufficient for 99% of HTTPS
+> applications), so the content signing should always be preferred
+> over distributor validation.
+
+Content signing by whom? Whose signature would you trust when you
+install a random gem? Will you manually hunt keys for authors of all
+packages and their dependencies, blindly trust any signatures, or what?
+
+OTOH HTTPS prevents at least two attacks (by an attacker in mitm
+position) that plain content signing doesn't:
+- replay attack (downgrade to known-vulnerable version) [3];
+- DoSing client by sending data forever in response to any file request [4].
+
+[3]
+https://cs.arizona.edu/stork/packagemanagersecurity/attacks-on-package-managers.html
+[4]
+https://cs.arizona.edu/stork/packagemanagersecurity/otherattacks.html#endlessdata
+
+But don't take me wrong, I'm not proposing to use HTTPS instead of code
+signing at all. Both seem to complement each other rather well.
 
 All,
 
-Some of you may already have spotted this, but last night we published our 
-slides, paper and some tools from my talk at 44CON earlier in the year.  The 
-content can be found at:
+is there any description of the state-of-the-art approach to software
+updating?
 
-* http://labs.portcullis.co.uk/presentations/i-miss-lsd/
-
-The take home points around the System V shared memory issues (detailed in 
-more detail in the linked to paper) are:
-
-* System V shared memory is often created with weak permissions.
-* Usage of System V shared memory by X11 applications is particularly 
-problematic.
-* Qt Project patched Qt APIs (CVE-2013-0254), Oracle patched Java JRE
-(CVE-2013-1500), Google patched Chrome independently.
-* No progress has been made on the problem more generally by either Red Hat or
-Debian.
-* Coccinelle is an effective tool for performing static analysis on large 
-corpuses of C.
-* Memory corruption attacks against System V shared memory are unlikely.
-
-I've also released a tool called smaSHeM (again linked to) for dumping System 
-V shared memory and for manipulating it.
-
-Tim
 -- 
-Tim Brown
-<mailto:tmb@...35.com>
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+Alexander Cherepanov
