@@ -1,73 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/6
-Message-ID: <51F0E5FC.4000809@redhat.com>
-Date: Thu, 25 Jul 2013 02:46:52 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/26/1
+Message-ID: <521AE21C.9030600@redhat.com>
+Date: Mon, 26 Aug 2013 10:35:32 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: CVE Request: evolution mail client GPG key selection issue
+CC: cve-assign@...re.org
+Subject: Re: CVE-2013-5575 LibTIFF through 3.9.5 integer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 07/21/2013 02:02 PM, Yves-Alexis Perez wrote:
-> Hi,
+On 08/24/2013 08:15 PM, cve-assign@...re.org wrote:
+> http://archives.neohapsis.com/archives/fulldisclosure/2013-08/0247.html
+> http://www.x90c.org/advisories/xadv_2013001_libtiff.txt
 > 
-> an issue with security impact was recently fixed in Evolution.
-> More details can be found on the Red Hat bug report at 
-> https://bugzilla.redhat.com/show_bug.cgi?id=973728 but it
-> basically boils down to a wrong selection when choosing the the
-> keyid for a destination email address.
+> This apparently only affects older versions but seems different from
+> CVE-2012-1173 and other CVEs, so it is assigned CVE-2013-5575.
 > 
-> Basically, when you have multiple keys in the keyrings, with
-> overlapping email addresses (like foo@...mple.com and
-> foobar@...mple.com), you can end up (silently) encrypting to the
-> wrong recipient.
 > 
-> It actually happened to me when forwarding embargoed security
-> issues so it can happen in real life. Now the wrong recipient would
-> need to actually obtain a copy of the sent mail (since it's sent to
-> the correct recipient, not the wrong one), but I still think it
-> warrants a CVE.
-> 
-> Quick fix was to use the documented format for email searches in
-> GnuPG (using <> around email addresses) but a more complete fix for
-> explicit key selection should appear some time in the future.
-> 
-> Regards,
 
-Yeah this was discussed internally a bit at Red Hat after you filed
-the bug, it's a messy problem. I think one concern was where do you
-want to place policy decisions for key usage and trust, in GPG, in the
-app using it, or something else? One concern I have is I sometimes
-used to (not any more!) download all the signing keys for keys I was
-using to see if I could establish a web of trust. Of course anyone can
-sign someone elses key and upload that to the public key servers, so
-then the potential for grabbing a key from a bad guy increases
-significantly.
+There seems to be no vulnerability in here, checkout the exploit code:
 
-Any ways for evolutions please use CVE-2013-4166 for this issue. Has
-anyone checked other popular mail clients like thunderbird/mutt/etc?
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "tiffio.h"
 
+int tiff_integer_overflow_test(){
+TIFF* tif = TIFFOpen("/home/x90c/sample_spp.tif", "r");
+int samples = 0;
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+/*
+ * for instance, TIFFGetField library function will
+ * called with malicious samplesperpixel field value
+ * TIFFGetField got segfault!
+ */
+TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &samples);
 
-iQIcBAEBAgAGBQJR8OX7AAoJEBYNRVNeJnmT+hQQAMh1vNoTyxu/d5sQidn571z1
-2ZGVu07Z+1tFNgHlH1cLNIfw7bnPTy4SydyGFnXdHw4XSFwp52glS0FYYyhyLhwv
-tsFP0QSQc6jBpcETM9voHTdELHbAGySoY5TZV8gXeLoiboJ+dhCCmJhmCVxlQqgr
-Q+ae+bR4UcNNZ3TLKIaJbKm+TJdULiGar1iHMXiIYpR+66uekrcCM3uL3yjhgnwk
-7+zp8haLv8d2mOUGAkFfsg2Jku/bLnCj4/vRK10EV61pwzkW2/C2lBUhCKpGAEMQ
-6o6UkulgZaIP0kRtdNk+tYZAFbzhqiRxyDlXCxmJwRu+p0nJ1OY8Bf3i3oPGeVHq
-NpMwRbpDAyzYPZTVgvQfdr+GTOaikwbdH37zI8tUk5MXnXSMwDmvOt4nmziCtzK0
-rU+DA6p1BQGgDMSc5LNFAp26H70SdIUo1CssoWhTC06Z2nk8LebPfgwCQ6weoyoR
-InNhmXiCCEwfpOuOEXJ4gWDEL9CxaM1dUpa66QyICFhgLtz7ySJCYMXKAgqhzkk2
-vEWEMmAkwMmW9SZaoW3ddhHL8UI1/KB25MhC5icRT89L7ZGr9fGqvLKVsVQWTV1L
-s68r9o2ChxcMpU/hLul2nHvB36hlBrfLoFZYEl9aTY+p9oOQKrcpffLlOJGJS1eq
-Lap0JhAntso2FN2hciB8
-=UVD4
------END PGP SIGNATURE-----
+printf("tiff_poc: tif samplesperpixel field=%d\n", samples);
+}
+
+This is obviously missing a check for the return value of *tif after
+TIFFOpen(). In the above case, since libtiff isnt able to open the file,
+it returns a NULL, Our "exploit" code above tried to run TIFFGetField()
+on it, and results in a "fixed value deference",so this is user-mistake
+and not a vulnerability.
+
+I want to ask to REJECT this CVE.
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
