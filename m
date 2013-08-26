@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/15
-Message-ID: <20130925204306.GA5877@eldamar.local>
-Date: Wed, 25 Sep 2013 22:43:06 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com, security@...ian.org, cve-assign@...re.org
-Subject: [notification] txt2man unsafe use of tempoarary files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/26/5
+Message-ID: <1377536670.14534.YahooMailNeo@web140505.mail.bf1.yahoo.com>
+Date: Mon, 26 Aug 2013 10:04:30 -0700 (PDT)
+From: David Walser <luigiwalser@...oo.com>
+To: "\"cve-assign@...re.org\"" <cve-assign@...re.org>, "\"oss-security@...ts.openwall.com\"" <oss-security@...ts.openwall.com>, "\"lwn@....net\"" <lwn@....net>
+Cc: "security@...up.mageia.org" <security@...up.mageia.org>, "tmb@....fi" <tmb@....fi>
+Subject: Fw: python CVE typoed in Mageia advisory
 Content-Type: text/plain; charset=utf-8
 
-Hi
+More CVE confusion, and this time it's my fault.  For the recent Python 
 
-This is a notification that CVE-2013-1444 was assigned to the
-following issue[1] (affecting Debian and derivatives syncing from
-Debian the txt2man package):
+ssl.match_hostname security issue, which was assigned CVE-2013-4238 here:
+http://www.openwall.com/lists/oss-security/2013/08/13/2
 
-txt2man uses tempoary files in /tmp/ (specific /tmp/2222), Debian
-applied a patch including:
+I typoed it as CVE-2013-4328 while we (Mageia) were preparing the update and it 
+made it into our advisories:
+http://advisories.mageia.org/MGASA-2013-0250.html
+http://advisories.mageia.org/MGASA-2013-0252.html
 
-echo $post > /tmp/2222
+So I think we'll get our advisories corrected soon.  LWN, could you please 
+re-file them under the new vulnerability entry for the correct CVE?
+http://lwn.net/Vulnerabilities/563961/ - typoed one
+http://lwn.net/Vulnerabilities/564820/ - correct one
 
-in txt2man. This reported by Patrick J Cherry.
-
-References:
-
- [1] http://bugs.debian.org/724614
-
-Regards,
-Salvatore
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Sorry about this.
