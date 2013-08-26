@@ -1,34 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/12/3
-Message-Id: <20130712152718.DE2ED6009A@smtp.hushmail.com>
-Date: Fri, 12 Jul 2013 15:27:18 +0000
-From: "mancha" <mancha1@...h.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Cyrus-sasl NULL ptr. dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/26/4
+Message-Id: <201308261652.r7QGqQvm004300@linus.mitre.org>
+Date: Mon, 26 Aug 2013 12:52:26 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Linux Kernel: ARM: KVM: NULL pointer dereferences
 Content-Type: text/plain; charset=utf-8
 
-Starting with glibc 2.17 (eglibc 2.17), crypt() fails with
-EINVAL (w/ NULL return) if the salt violates specifications.
-Additionally, on FIPS-140 enabled Linux systems, DES/MD5-encrypted
-passwords passed to crypt() fail with EPERM (w/ NULL return).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-When authenticating against Cyrus-sasl via mechanisms that use
-glibc's crypt (e.g. getpwent or shadow auth. mechs), and this
-crypt() returns a NULL as glibc 2.17+ does on above-described
-input, the client crashes the authentication daemon resulting
-in a DoS.
+> Linux kernel built for the ARM(CONFIG_ARM) platform along with the Kernel
+> based Virtual Machine support(CONFIG_KVM), is vulnerable to a NULL pointer
+> dereference flaw. It occurs while performing an ioctl(KVM_GET_REG_LIST) call
+> on the KVM device, without first properly initialising a vCPU.
+> 
+> An unprivileged user/program could use this flaw to crash the kernel resulting
+> in DoS.
+> 
+> Upstream fix:
+>   -> https://git.kernel.org/linus/e8180dcaa8470ceca21109f143876fdcd9fe050a
 
-Upstream fix:
-http://git.cyrusimap.org/cyrus-
-sasl/commit/?id=dedad73e5e7a75d01a5f3d5a6702ab8ccd2ff40d
+Use CVE-2013-5634.
 
-Backported fixes (versions 2.1.23 & 2.1.26):
-http://sourceforge.net/projects/miscellaneouspa/files/glibc217/cyrus
--sasl-2.1.23-glibc217-crypt.diff
-http://sourceforge.net/projects/miscellaneouspa/files/glibc217/cyrus
--sasl-2.1.26-glibc217-crypt.diff
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Many thanks,
-
---mancha
-
+iQEcBAEBAgAGBQJSG4afAAoJEGvefgSNfHMdiiUH/R9Y7Hn2tI0UUFA0FJluFNdx
+xgZ0u1hxFkpEJ69O6FM5qKmH+TSfF/Jq27WIIjAwLPYA44bAqn3VeVukt/VpZPQj
+FCHGcJIDNnwV8n+R29rUPUMQ6VaENDM0aJSWuDlo3puTndNiXX/6vGyh1QXNBfBm
+uQHjvwIpOOErQibj2yReJoRJeIZkOJyf8oxJYp0yc+oE1ICbJ+yCCVfTCNBOQXhW
+U6EzqiMKAsg1+IgMgJXlD9imf8q8X7kDGnhMq/iWzODeFTpNXtgtAEVp5Ng0irNm
+08/zGfMH8F2u+OxFIwzcOc4Y+GYXUcGHHS2GKT399HXwrLUt64sxL5fOots/YxM=
+=cONI
+-----END PGP SIGNATURE-----
