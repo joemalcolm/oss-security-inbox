@@ -1,92 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/8
-Message-Id: <E1USpEl-00036n-C9@xenbits.xen.org>
-Date: Thu, 18 Apr 2013 13:50:55 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 44 (CVE-2013-1917) - Xen PV DoS vulnerability with SYSENTER
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/27/1
+Message-ID: <20130827234131.GN32641@redhat.com>
+Date: Tue, 27 Aug 2013 17:41:31 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE request: roundcube 0.9.3 fixes two XSS flaws
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* [2013-08-23 14:18:49 -0400] cve-assign@...re.org wrote:
 
-             Xen Security Advisory CVE-2013-1917 / XSA-44
-                              version 3
+>>[2] http://trac.roundcube.net/ticket/1489251
+>
+>As far as we can tell from the
+>http://trac.roundcube.net/ticket/1489251 history, the addressbook
+>group vulnerability was discovered by dennis1993 and affects only
+>version 1.0-git (not version 0.9.2). There is no direct statement that
+>the addressbook group vulnerability was fixed. It seems likely that
+>the addressbook group vulnerability could cross privilege boundaries
+>if the "click on this group after creation" action were performed by
+>an administrator who was visiting the addressbook of an unprivileged
+>user.
+>
+>The other issues were discovered by und3r and affect version 0.9.2. At
+>least one of these issues (JavaScript code in the signature) also
+>affects version 1.0-git. There seems to be a dispute about whether
+>this signature issue crosses privilege boundaries. Apparently a user
+>can use the signature issue to attack himself, but there is no
+>discussion of whether an administrator can visit the "identity
+>configuration page" of an unprivileged user, and thereby become a
+>victim of the XSS attack. The signature issue might be interpreted as
+>a CVE-2012-4668 regression. Also, there is some indication that all of
+>the issues discovered by und3r might have a root cause of 'This kind
+>of problem is present in all parts where there is the "MCE" editor
+>(or, more specifically, where there is a <textarea> with the CSS class
+>"mce_editor").'
+>
+>Thus, so far, it seems that we should have one CVE for the addressbook
+>group vulnerability, and one CVE for all of the vulnerabilities
+>discovered by und3r. If anyone has established that the
+>vulnerabilities discovered by und3r don't all have the same affected
+>versions, please let us know. Also, if anyone thinks that the
+>vulnerabilities discovered by und3r were actually the responsibility
+>of a third-party product (such as TinyMCE), please mention that as
+>well.
 
-                Xen PV DoS vulnerability with SYSENTER
+I didn't go digging that deep into it, but what you're saying makes
+sense and still leaves us with a request for two CVEs.
 
-UPDATES IN VERSION 3
-====================
+Would you be able to assign them?   I didn't see the actual assignment
+made in your reply.
 
-Backported patch for 4.0 now available.
+Thanks.
 
-ISSUE DESCRIPTION
-=================
-
-The SYSENTER instruction can be used by PV guests to accelerate system
-call processing. This instruction, however, leaves the EFLAGS register
-mostly unmodified - in particular, the NT flag doesn't get cleared. If
-the hypervisor subsequently uses IRET to return to the guest (which it
-will always do if the guest is a 32-bit one), that instruction will
-cause a #GP fault to be raised, but the recovery code in the
-hypervisor will again try to use IRET without intermediately clearing
-the NT flag. The #GP fault raised on this second IRET is a fatal
-event, causing the hypervisor to crash.
-
-IMPACT
-======
-
-Malicious or buggy unprivileged user space can cause the entire host to crash.
-
-VULNERABLE SYSTEMS
-==================
-
-All 64-bit Xen versions from 3.1 onwards running on Intel CPUs are
-vulnerable.  32-bit Xen is not affected, as it doesn't permit the use
-of SYSENTER by PV guests. 64-bit Xen run on AMD CPUs isn't affected
-since AMD CPUs don't allow the use of SYSENTER in long mode.
-
-The vulnerability is only exposed by PV guests.
-
-MITIGATION
-==========
-
-Running only HVM guests, or running PV guests on only 32-bit hosts or only AMD
-CPUs will avoid this vulnerability.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa44-4.0.patch             Xen 4.0.x
-xsa44-4.1.patch             Xen 4.1.x
-xsa44-4.2.patch             Xen 4.2.x
-xsa44-unstable.patch        xen-unstable
-
-$ sha256sum xsa44*.patch
-4de554d29adbae41a65d401becd9d074be27932ad9f3e0ed78ecb89de3ed35b5  xsa44-4.0.patch
-3dbf47224be0f8fc66ba08d8a46b910bd9a3e672ffe864aa77c698bef0e27783  xsa44-4.1.patch
-c6c3afa228426d78e0484b7ac34210f642f79add35c4a04ca5ff7db5f2539e49  xsa44-4.2.patch
-0e6ad83da75dc207a165411844c0985fd7f9588d92c2c95911c245485351bf36  xsa44-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJRb/oqAAoJEIP+FMlX6CvZ9EYH/2OAz/GRAX4A2Y52HoUfslN9
-lZa4YNJOtPOuLITMeapu7MXBgRJYA/GPFzfBVlAoPNQTNpUD0Mfxvwz9mVGIUtNX
-t0Mriz/oFGDqHzvz3rksmvG9y6tMfwa++srXms/uTXd3T1CxeGIHA4hMuvCRkMAU
-HQHQ1pfsK6XGHV+ITeJVBGEwKh+aDxBfqIXDU1yhgTA9djpsHXWNAsu5mNRBsb0i
-zMVxZg+x1maHhxigLwsEm1poxneWhkq+0pvTo/hCdK2XcK9NaUXNAALMZfQn5kgK
-IwaC52V3FJSxErIWlZz6IW6Zq4tugzu/VJ92hrM0fubd04mfFG15+buc+NdUmvk=
-=qSef
------END PGP SIGNATURE-----
-
-Download attachment "xsa44-4.0.patch" of type "application/octet-stream" (3220 bytes)
-
-Download attachment "xsa44-4.1.patch" of type "application/octet-stream" (2844 bytes)
-
-Download attachment "xsa44-4.2.patch" of type "application/octet-stream" (2843 bytes)
-
-Download attachment "xsa44-unstable.patch" of type "application/octet-stream" (1670 bytes)
+-- 
+Vincent Danen / Red Hat Security Response Team 
