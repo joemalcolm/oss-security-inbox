@@ -1,59 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/13
-Message-ID: <5170555B.4060801@redhat.com>
-Date: Thu, 18 Apr 2013 14:19:39 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/12
+Message-ID: <20130828204752.GZ32641@redhat.com>
+Date: Wed, 28 Aug 2013 14:47:52 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed modules
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE request: roundcube 0.9.3 fixes two XSS flaws
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* [2013-08-28 12:59:43 -0400] cve-assign@...re.org wrote:
 
-On 04/17/2013 02:36 PM, Forest Monsen wrote:
-> Hi there,
-> 
-> I'd like to request CVE identifiers for...
-> 
-> SA-CONTRIB-2013-043 - MP3 Player - Cross Site Scripting (XSS) 
-> http://drupal.org/node/1972804
+Perfect.  Thank you so much for this.
 
-Please use CVE-2013-1971 for this issue.
+>-----BEGIN PGP SIGNED MESSAGE-----
+>Hash: SHA1
+>
+>>[2] http://trac.roundcube.net/ticket/1489251
+>
+>The first CVE assignment for this is CVE-2013-5645. The scope of this
+>CVE includes:
+>
+>  http://trac.roundcube.net/changeset/93b0a30c1c8aa29d862b587b31e52bcc344b8d16/github
+>
+>  Fix XSS vulnerability when editing a message "as new" or draft
+>
+>  "rcmail_wash_html($body, array('safe' => 1), $cid_map);"
+>  added in compose.inc
+>
+>The scope of this CVE also includes:
+>
+>  http://trac.roundcube.net/changeset/ce5a6496fd6039962ba7424d153278e41ae8761b/github
+>
+>  Fix XSS vulnerability when saving HTML signatures
+>
+>  "rcmail_wash_html($save_data['signature']);"
+>  added in save_identity.inc
+>
+>to the extent that this can cross privilege boundaries within the
+>Roundcube webmail product.
+>
+>All aspects of CVE-2013-5645 were discovered by und3r. These are all
+>CVE-2013-5645 references:
+>
+>  http://trac.roundcube.net/wiki/Changelog#RELEASE0.9.3
+>  http://trac.roundcube.net/ticket/1489251
+>  http://trac.roundcube.net/changeset/ce5a6496fd6039962ba7424d153278e41ae8761b/github
+>  http://trac.roundcube.net/changeset/93b0a30c1c8aa29d862b587b31e52bcc344b8d16/github
+>
+>
+>The scope of CVE-2013-5645 does not include any additional
+>exploitation approaches (if any) in Roundcube webmail, or other
+>products, that are related to:
+>
+>  'This kind of problem is present in all parts where there is
+>  the "MCE" editor (or, more specifically, where there is a
+>  <textarea> with the CSS class "mce_editor").'
+>
+>That may possibly have other CVE assignments if someone investigates
+>it at a later time.
+>
+>
+>Finally, there is a separate CVE assignment of CVE-2013-5646 for this
+>other issue with different affected versions:
+>
+>  As far as we can tell from the
+>  http://trac.roundcube.net/ticket/1489251 history, the
+>  addressbook group vulnerability was discovered by dennis1993
+>  and affects only version 1.0-git (not version 0.9.2). There is
+>  no direct statement that the addressbook group vulnerability
+>  was fixed. It seems likely that the addressbook group
+>  vulnerability could cross privilege boundaries if the "click on
+>  this group after creation" action were performed by an
+>  administrator who was visiting the addressbook of an
+>  unprivileged user.
+>
+>http://trac.roundcube.net/ticket/1489251 is the only CVE-2013-5646
+>reference that we know of at the moment.
+>
+>- --
+>CVE assignment team, MITRE CVE Numbering Authority
+>M/S M300
+>202 Burlington Road, Bedford, MA 01730 USA
+>[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+>-----BEGIN PGP SIGNATURE-----
+>Version: GnuPG v1.4.14 (SunOS)
+>
+>iQEcBAEBAgAGBQJSHif2AAoJEGvefgSNfHMdcrEH/3cAf2Qn9FvArkhmvwGWhPmI
+>ddWBmTh0aoPNzuOYsNXT6ZMsBEFzRAFpcbCx4Mf32UvKO3tK/BJeQLC+eEk1XuzQ
+>0+59K2KKM5y/l13qwYP3I02RyvbQEDGzKsh1EsHlKwY2vcoPoHoETYutHPtQ6HEP
+>v2JgqyCMwaF+NGtqx2hK/eeiR0xBVf339ODHnii296d1KqCpcIAAPyoVGX75YZ3O
+>djG9lND36wHZ9S+Huy1APi1rx/SZnPxHjaBdtVU2GGAiGpu26zZpstN3HmVbMI+v
+>8jyYNpJstorjmgZqO/GwFoJ+M47YIwnISiMvCeItAClC2EwKKVRd1RLOZmGkeUM=
+>=vhpO
+>-----END PGP SIGNATURE-----
 
-> SA-CONTRIB-2013-044 - elFinder file manager - Cross Site Request
-> Forgery (CSRF) http://drupal.org/node/1972942
-
-Please use CVE-2013-1972 for this issue.
-
-> SA-CONTRIB-2013-045 - Autocomplete Widgets for Text and Number
-> Fields - Access bypass http://drupal.org/node/1972976
-
-Please use CVE-2013-1973 for this issue.
-
-> Thanks!
-> 
-> Forest
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRcFVbAAoJEBYNRVNeJnmTTzEQANS9vYnNx7tl981gaOmOXxF9
-INr6aWHA6vpa2W7Ng+CxW3FOv89U4pZj8d6Qsr/QXu0+fO/e/JmJXVEH0Uo3HCyr
-KtBfeM6QPuzykvPvdSDmgVa5xbw0OuaqYImPrjpCon5DYv81EgmQTMYMscZwuxFd
-bxyBDepY3wVmM6MCoQwhNQLDO4tWHSfOkJcl6akvopNebelLjPrsQ6aPiXbwd+SQ
-6QdhotHijf28UXtByGP8021uKFDKz2EsGHjg/tav0LsIamhLGYntE5BMiHIhIGWq
-nFknlPDpr7XqJ+kyNiVeU/bMpDdNi61sbGI/9Hzr/8enFPQvzzyD82p4SqlRUkz9
-cWVDfgVKbQ/4v2K8xlv1/nXCu7KMYY0kQaQcPXixgv/9wjy/lB+iiegY2ZfweGGM
-wYS5MBmIHAMuuVVF1rE6bbUQi9pYVtNEmFADrbZflQcrrvuymmDDzoXrWCjrB9Cr
-8veCPUdamTb4J9o4ddovwmdOyNUKOfufDxJWyBG50H+Ylb91tzqicUPq2JofTTCB
-FswCcLTqdQ0SbzYVUm/M1h1ppz5TfqOo92DNnFfefVhCRD3U2X6OPBdiXIX7DL5o
-PupmCmnoMthBJBczhFg2RONA/bhzKatYGpcw7hiLh03QKg6UxTyekuL+6+SCQqwk
-tygZ/0q/GPaZgtTOso+G
-=qeLa
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Security Response Team 
