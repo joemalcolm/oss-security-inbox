@@ -1,55 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/28/2
-Message-Id: <201312281223.rBSCNFKJ000867@linus.mitre.org>
-Date: Sat, 28 Dec 2013 07:23:15 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/4
+Message-Id: <201308281659.r7SGxhHq028090@linus.mitre.org>
+Date: Wed, 28 Aug 2013 12:59:43 -0400 (EDT)
 From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, steveyken@...il.com, joernchen@...noelit.de
-Subject: Re: CVE request: Fat Free CRM multiple vulnerabilities
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: roundcube 0.9.3 fixes two XSS flaws
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://www.phenoelit.org/stuff/ffcrm.txt
-> http://seclists.org/fulldisclosure/2013/Dec/199
-> https://github.com/fatfreecrm/fat_free_crm/issues/300
-> https://github.com/fatfreecrm/fat_free_crm/wiki/Fixing-security-vulnerabilities-%2827th-Dec-2013%29
+>[2] http://trac.roundcube.net/ticket/1489251
 
-> 1. Known Session Secret
-> https://github.com/fatfreecrm/fat_free_crm/commit/93c182dd4c6f3620b721d2a15ba6a6ecab5669df
+The first CVE assignment for this is CVE-2013-5645. The scope of this
+CVE includes:
 
-Use CVE-2013-7222.
+  http://trac.roundcube.net/changeset/93b0a30c1c8aa29d862b587b31e52bcc344b8d16/github
+
+  Fix XSS vulnerability when editing a message "as new" or draft
+
+  "rcmail_wash_html($body, array('safe' => 1), $cid_map);"
+  added in compose.inc
+
+The scope of this CVE also includes:
+
+  http://trac.roundcube.net/changeset/ce5a6496fd6039962ba7424d153278e41ae8761b/github
+
+  Fix XSS vulnerability when saving HTML signatures
+
+  "rcmail_wash_html($save_data['signature']);"
+  added in save_identity.inc
+
+to the extent that this can cross privilege boundaries within the
+Roundcube webmail product.
+
+All aspects of CVE-2013-5645 were discovered by und3r. These are all
+CVE-2013-5645 references:
+
+  http://trac.roundcube.net/wiki/Changelog#RELEASE0.9.3
+  http://trac.roundcube.net/ticket/1489251
+  http://trac.roundcube.net/changeset/ce5a6496fd6039962ba7424d153278e41ae8761b/github
+  http://trac.roundcube.net/changeset/93b0a30c1c8aa29d862b587b31e52bcc344b8d16/github
 
 
-> 2. Lack of CSRF Protection
-> https://github.com/fatfreecrm/fat_free_crm/commit/a7fedbb36388bad0c0f32b2346481e0ea126dea6
+The scope of CVE-2013-5645 does not include any additional
+exploitation approaches (if any) in Roundcube webmail, or other
+products, that are related to:
 
-Use CVE-2013-7223.
+  'This kind of problem is present in all parts where there is
+  the "MCE" editor (or, more specifically, where there is a
+  <textarea> with the CSS class "mce_editor").'
+
+That may possibly have other CVE assignments if someone investigates
+it at a later time.
 
 
-> 3. Default to_json for models
-> https://github.com/fatfreecrm/fat_free_crm/commit/cf26a04b356ad2161c4c6160260eb870a3de5328
+Finally, there is a separate CVE assignment of CVE-2013-5646 for this
+other issue with different affected versions:
 
-Use CVE-2013-7224.
+  As far as we can tell from the
+  http://trac.roundcube.net/ticket/1489251 history, the
+  addressbook group vulnerability was discovered by dennis1993
+  and affects only version 1.0-git (not version 0.9.2). There is
+  no direct statement that the addressbook group vulnerability
+  was fixed. It seems likely that the addressbook group
+  vulnerability could cross privilege boundaries if the "click on
+  this group after creation" action were performed by an
+  administrator who was visiting the addressbook of an
+  unprivileged user.
 
-
-> 4. Multiple SQL Injections
-> https://github.com/fatfreecrm/fat_free_crm/commit/078035f1ef73ed85285ac9d128c3c5f670cef066
-> https://github.com/fatfreecrm/fat_free_crm/commit/d4b2de81a4d8c1b201482edcb2488ed9280a65fd
-
-Use CVE-2013-7225.
-
-For item 3: if there is an information-disclosure vulnerability
-involving to_xml, please let us know and we can assign an additional
-CVE ID. The joernchen advisory mentioned only to_json, and therefore
-to_xml has a different discoverer and may require a separate CVE ID.
-
-If there is a denial of service issue involving :delete, please let us
-know and we can assign an additional CVE ID. The joernchen advisory
-mentioned only "renders JSON requests with a full JSON object," and
-therefore :delete has a different discoverer and may require a
-separate CVE ID.
+http://trac.roundcube.net/ticket/1489251 is the only CVE-2013-5646
+reference that we know of at the moment.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -59,11 +81,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJSvsH6AAoJEKllVAevmvmsjksIAMeaH2HBfTrSNt83LAy1Sk0c
-Q+lexLe6vIsOQLeh02/vk4zk/piqcuQGcmTmpEQ+X5lT+7zwrBoZAe3/g36Nb+mM
-uJh9gBzsJkq0JUnqRVn84e9gxnJpqXjUB0aRRhaFrMBKB5jdTDFpWzKWS77KVzhI
-QlgEMBObp4WUQHjAfsZcN+cs+xWjMVvR7+rk1AWJ9hAjT02UBGigVNWe5PmDrb8z
-/yqcrQiEFTENbdQKSjNxlSSoEFWxEUF1b4PInNl7451ep0Ee2ZKoi9bte8h8pgsP
-rOzEsPzu0yevLI7Wgrvl+clSdesuvIi6/2kGklv5LTsM23Rw/spat4nkAuFPKlU=
-=PZmt
+iQEcBAEBAgAGBQJSHif2AAoJEGvefgSNfHMdcrEH/3cAf2Qn9FvArkhmvwGWhPmI
+ddWBmTh0aoPNzuOYsNXT6ZMsBEFzRAFpcbCx4Mf32UvKO3tK/BJeQLC+eEk1XuzQ
+0+59K2KKM5y/l13qwYP3I02RyvbQEDGzKsh1EsHlKwY2vcoPoHoETYutHPtQ6HEP
+v2JgqyCMwaF+NGtqx2hK/eeiR0xBVf339ODHnii296d1KqCpcIAAPyoVGX75YZ3O
+djG9lND36wHZ9S+Huy1APi1rx/SZnPxHjaBdtVU2GGAiGpu26zZpstN3HmVbMI+v
+8jyYNpJstorjmgZqO/GwFoJ+M47YIwnISiMvCeItAClC2EwKKVRd1RLOZmGkeUM=
+=vhpO
 -----END PGP SIGNATURE-----
