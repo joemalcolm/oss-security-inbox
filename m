@@ -1,37 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/13
-Message-ID: <520CBD99.2090208@redhat.com>
-Date: Thu, 15 Aug 2013 13:38:01 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/13
+Message-ID: <20130828213206.GM14644@outflux.net>
+Date: Wed, 28 Aug 2013 14:32:06 -0700
+From: Kees Cook <keescook@...omium.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: HTTPS
+Subject: Linux HID security flaws
 Content-Type: text/plain; charset=utf-8
 
-On 08/15/2013 12:40 PM, Donald Stufft wrote:
-> On Aug 15, 2013, at 6:31 AM, gremlin@...mlin.ru wrote:
->> 1. Not all interceptions and modifications are evil.
->> 2. Some sites are much more evil than interceptors.
->
-> #1 is technically true but because there's no way to programmatically
-> determine if a interception or modification is "evil" systems should
-> default to disallow and allow the user to allow it (by trusting another
-> CA for instance for the interceptor).
->
-> I don't understand how #2 relates to HTTPS at all, TLS doesn't state
-> anything about the safety of the server you're connecting to only
-> the safety of the transport.
+Hi,
 
-If you can't intercept, you don't know what's going on inside the TLS 
-channel.  A malicious peer might successfully attack your user, and you 
-could have thwarted the attack if you had access to plaintext 
-communications.  (Yes, I understand what that sounds like.)
+I've found several issues in the Linux HID code. They are making their way
+into the Linux kernel via the linux-input tree now:
 
-It used to be the case that little malicious content was hosted on 
-major (HTTPS) sites, so analysis based on IP addresses and domain names 
-was quite effective.  This might have changed, though—all that is needed 
-is one single, large HTTPS-enabled service provider that doesn't have 
-adequate abuse mitigation.  But I still don't think that this is a valid 
-reason not to use HTTPS.
+
+http://marc.info/?l=linux-input&m=137772180514608&w=1
+0001-HID-validate-HID-report-id-size.patch
+CVE-2013-2888
+Requires CONFIG_HID
+Memory write via arbitrary heap array index. This is the most serious,
+IMO, as it allows (on 32-bit) access to the entire memory range (the
+index is unsigned 32 bit). This is mitigated slightly by the fact that
+the starting address is at an "unknown" location on the heap, and that
+the value written is an "arbitrary" kernel pointer. Still, this could
+almost certainly be turned into full kernel execution given enough
+study.
+
+http://marc.info/?l=linux-input&m=137772181214612&w=1
+0002-HID-provide-a-helper-for-validating-hid-reports.patch
+Routine that many of the driver fixes use to verify their report sanity.
+
+http://marc.info/?l=linux-input&m=137772182014614&w=1
+0003-HID-zeroplus-validate-output-report-details.patch
+CVE-2013-2889
+Requires CONFIG_HID_ZEROPLUS
+Small past-end-of-heap-alloc zeroing.
+
+http://marc.info/?l=linux-input&m=137772182814616&w=1
+0004-HID-sony-validate-HID-output-report-details.patch
+CVE-2013-2890
+Requires CONFIG_HID_SONY
+Small past-end-of-heap-alloc zeroing
+
+http://marc.info/?l=linux-input&m=137772184614622&w=1
+0005-HID-steelseries-validate-output-report-details.patch
+CVE-2013-2891
+Requires CONFIG_HID_STEELSERIES
+16 byte past-end-of-heap-alloc zeroing
+
+http://marc.info/?l=linux-input&m=137772185414625&w=1
+0006-HID-pantherlord-validate-output-report-details.patch
+CVE-2013-2892
+Requires CONFIG_HID_PANTHERLORD
+Small past-end-of-heap-alloc zeroing
+
+http://marc.info/?l=linux-input&m=137772186714627&w=1
+0007-HID-LG-validate-HID-output-report-details.patch
+CVE-2013-2893
+Requires CONFIG_LOGITECH_FF or CONFIG_LOGIG940_FF or CONFIG_LOGIWHEELS_FF
+Userspace-assisted small past-end-of-heap-alloc zeroing
+
+http://marc.info/?l=linux-input&m=137772187514628&w=1
+0008-HID-lenovo-tpkbd-validate-output-report-details.patch
+CVE-2013-2894
+Requires CONFIG_HID_LENOVO_TPKBD
+Small past-end-of-heap-alloc zeroing
+
+http://marc.info/?l=linux-input&m=137772188314631&w=1
+0009-HID-logitech-dj-validate-output-report-details.patch
+CVE-2013-2895
+Requires CONFIG_HID_LOGITECH_DJ
+Can leak up to 12K of kernel memory contents to device, or NULL deref Oops
+DoS
+
+http://marc.info/?l=linux-input&m=137772189314633&w=1
+0010-HID-ntrig-validate-feature-report-details.patch
+CVE-2013-2896
+Requires CONFIG_HID_NTRIG
+Triggers NULL deref Oops DoS
+
+http://marc.info/?l=linux-input&m=137772190214635&w=1
+0011-HID-multitouch-validate-feature-report-details.patch
+CVE-2013-2897
+Requires CONFIG_HID_MULTITOUCH
+Slightly flexible heap overwrite with static value 0x2, or NULL deref Oops
+DoS
+
+http://marc.info/?l=linux-input&m=137772191114645&w=1
+0012-HID-sensor-hub-validate-feature-report-details.patch
+CVE-2013-2898
+Requires CONFIG_HID_SENSOR_HUB
+Potential kernel caller confusion via past-end-of-heap-allocation read
+
+http://marc.info/?l=linux-input&m=137772191714649&w=1
+0013-HID-picolcd_core-validate-output-report-details.patch
+CVE-2013-2899
+Requires CONFIG_HID_PICOLCD
+Userspace-assisted NULL deref Oops DoS
+
+http://marc.info/?t=137772196600012&r=1&w=1
+0014-HID-check-for-NULL-field-when-setting-values.patch
+Just a defensive change, since several drivers would have been less
+vulnerable with this check.
+
+
+-Kees
 
 -- 
-Florian Weimer / Red Hat Product Security Team
+Kees Cook
+Chrome OS Security
