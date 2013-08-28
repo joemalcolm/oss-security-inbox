@@ -1,58 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/4
-Message-ID: <51F0E36D.9050606@redhat.com>
-Date: Thu, 25 Jul 2013 02:35:57 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/5
+Message-Id: <201308281706.r7SH6dSm028584@linus.mitre.org>
+Date: Wed, 28 Aug 2013 13:06:39 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: webcalendar before 1.2.7
+Cc: cve-assign@...re.org
+Subject: CVE-2013-5641 CVE-2013-5642 recent Asterisk issues
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/22/2013 04:28 PM, security curmudgeon wrote:
-> 
-> Kurt's reply is a good reminder of why he needs that information.
-> Based on the original post, some of these have assignments.
-> 
-> : Security fix: Do not show the reason for a failed login (i.e. "no
-> such user")
-> 
-> Likely CVE-2013-1422 / OSVDB 90668
-> 
-> : Security fix: Escape HTML characters in category name.
-> 
-> Likely CVE-2013-1421 / OSVDB 90669
-> 
-> : Security fix: Check all passed in fields (either via HTML form or
-> via : URL parameter) for certain malicious tags (script, embed,
-> etc.) and : generate fatal error if found.
-> 
-> This one seems like it may be new.
+Here are two new CVE assignments for Asterisk advisories:
 
-To reiterate: so I can confirm CVE assignments, and prevent duplicate
-assignments you *MUST* provide links to the code commits/vulnerable
-code. I don't have the time to go hunting through your source code for
-them. People need to start making better CVE requests, or you're not
-going to get CVEs from me.
+http://downloads.asterisk.org/pub/security/AST-2013-004.html
+CVE-2013-5641
+
+
+http://downloads.asterisk.org/pub/security/AST-2013-005.html
+CVE-2013-5642
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJR8ONsAAoJEBYNRVNeJnmTN+cQAM9dH/Yx9vn0dhXd7jiXqNMa
-w1Os4cwUX9AU5bMvpulnFymG8cvY6/VUBCcS/t9VxVuosgAlpoJfbl4OHGnhshLi
-LnPYIk6AUmgFnlzzpraYq64ztnVXlAlAXdzA9Uf97r00b1RUxLx4bTwgCZeUlggR
-AopFO+d0/xbZF340PdMT7WV+HdEP/JWAmyXn8J1njJH+jyKCHk4+0IC82u03JwQM
-VihfqLA/ahQmGduiywwOHLfHAmxQp6KTHqOd6vkfscHjpS3rvXZneefWPaMVLPHo
-KPiLa0pNuy09Tetc7BD0g7ahsWQP+Bf8zMfUyKJbisrBLO2evgvWNEGVBqH/IA2H
-uiEDAlVwCYcCyTSdu9OFal4qh1ppQzB2rY6qBS5l0Ne+GWLUHgpd52hcYwn5t7qm
-t1okvahtd0lDJuyWXsoV01l6R3j5o5iodPfmVbW0DgssB27vHbbbxW19dKLXtbCx
-AUzth1CefMK6+av8AXqpiEOVB4L6YrG+6VUu6ttsqIkpUUr0QVTJG13Ubs92Vi6x
-pOfoFJ99mZB9t9XwN3IcumEpJTMQmN9bcmj8DraDSQonUGBHK2Q01daCnKgLEDpu
-t/j/pw3ZyOBSYpKhTdlPH5B3E8Ne3OEFOG7AXfXpcSYIxZZYYVMJ9rmCWN72bR8T
-6CozuVk6Acmye/PfOrQW
-=T3Uy
+iQEcBAEBAgAGBQJSHi2XAAoJEGvefgSNfHMdU2UIAKfqSmCHEn5KUQ5p3BvuTDEN
+kvLprNxnS3fdgAQk/Es7Nsvdj1d5iXuajANN7SZABvbU8aWA7Xv+F9Kbnvn7gXYu
+zYmNEKIMV1E8APiFBjcdkl0LAxCJD/6b4mIMJA/Tewa+6Z9TMxgOc+KcH5LWIpXC
+LV9iVwXodz9QgTcjrnQhVpel4FoLnQONLmvFdXsHNp1YCl0j+yRfqbQBBExRposX
+jwUH0nLvnifiCccuhzeMT+xZR+zvJ61AIGDXnUwZMtZVS27U9WR0dUNkF6xHRtDh
+XbpISYzGcfTX7W5oVdohI7FiDCKpzcnbvrevljWD7Zd+a/+zdyeESpevMnqslQk=
+=xVxC
 -----END PGP SIGNATURE-----
