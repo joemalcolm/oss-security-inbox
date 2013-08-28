@@ -1,49 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/16/2
-Message-ID: <20131216171456.GD2645@scapa.corsac.net>
-Date: Mon, 16 Dec 2013 18:14:56 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/3
+Message-ID: <20130828152444.GV32641@redhat.com>
+Date: Wed, 28 Aug 2013 09:24:44 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Issue with PYTHON_EGG_CACHE
+Cc: "Steven M. Christey" <coley@...re.org>, cve-assign@...re.org
+Subject: CVE oops in GLSA 201308-05 (wireshark)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+I just saw via a Gentoo bug report that their GLSA 201308-05 advisory
+mentioned some CVEs as related to wireshark that were incorrect.
 
-On Sun, Dec 15, 2013 at 02:06:59PM -0700, Kurt Seifried wrote:
-> On 12/15/2013 01:23 PM, Jeremy Stanley wrote:
-> > On 2013-12-15 14:47:12 -0500 (-0500), cve-assign@...re.org wrote:
-> >> This message seems to disclose a vulnerability in an unspecified 
-> >> version of OpenStack Swift.
-> > [...]
-> >> Use CVE-2013-7109 for this report about OpenStack Swift. Again, 
-> >> CVE-2013-7109 is not an ID for which setuptools is the affected 
-> >> product.
-> > 
-> > I don't think this was intended as a CVE request. The OpenStack
-> > VMT had already determined this was non-exploitable in Swift over
-> > the course of https://launchpad.net/bugs/1192966 and explicitly
-> > decided not to request a CVE nor issue an advisory.
-> > 
-> 
-> Sorry yeah I should have been more clear, I was trying to show that
-> it's a pretty common coding pattern to use /tmp for PYTHON_EGG_CACHE,
-> that specific instance was a bad one (it's about the only example
-> where it isn't actually a vulnerability =).
+Instead of mentioning CVE-2013-{3560,3561,3562} they mentioned
+CVE-2013-{3540,3541,3542}.  I checked on MITRE's site and those three
+are still reserved.
 
-Does this mean CVE-2013-7109 should be REJECTed or not?
+I don't know who those three (354[012]) are assigned to, but you might
+want to see if they've been used already or not and dupe them against
+356[012] if they have not.
 
-Regards,
-- -- 
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+See:
 
-iQEcBAEBCgAGBQJSrzUMAAoJEG3bU/KmdcClvrkH/2BEhKHg11/3i5+d12QzHjdl
-LsvKQxgTslOVE4S9Pej++rGUrEx+HtKw09nosCg0kp/8X75nH0NScr78UvW0g9/L
-azpqkBPSPK42FktL1z+V8igiv5gS0WNQfILV6lXMhvNng18VO0+FIkDuBZYKXFw3
-C5i8geFsLKrFwJT0n3nUAm6o8eaTW2sGt5SINA8enGJHV0hFRqZ7reI/fiRbiVmw
-4QzIPlkFukVPnbTyUN47NXIvhlyP/mcy0d5dh0HNt/6/TKbflhHBnB7wjskJS3Cm
-dgj+75e3hdllqP0McTCt8uPvVadtLYtHzAr/6BdevNrAh4jk4jAilp0Y3HO04C4=
-=XegA
------END PGP SIGNATURE-----
+http://www.net-security.org/advisory.php?id=16517
+https://bugs.gentoo.org/show_bug.cgi?id=482794
+
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
