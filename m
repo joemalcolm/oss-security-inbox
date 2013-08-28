@@ -1,51 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/24/5
-Message-ID: <20130924223420.GA12465@hunt>
-Date: Tue, 24 Sep 2013 15:34:20 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Cc: security@...ntu.com
-Subject: graphite CVE-2013-5903 confusion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/11
+Message-ID: <20130828204117.GY32641@redhat.com>
+Date: Wed, 28 Aug 2013 14:41:17 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request, libdigidoc arbitrary file overwrite flaw
 Content-Type: text/plain; charset=utf-8
 
-Hello, I'm looking at CVE-2013-5903 from graphite and I believe there has
-been a problem in how it has been applied.
+I did not see a CVE for this or a request for the same, so can one be
+assigned please?  Just going to cut and paste from our bugzilla:
 
-The description from NVD and OSVDB says the vulnerability is cross-site
-scripting:
+It was reported [1],[2] that ID-software 3.7.2 (libdigidoc):
 
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2013-5903
+"Fixed one critical bug in the DDOC parsing routines. By persuading a
+victim to open a specially-crafted DDOC file, a remote attacker could
+exploit this vulnerability to overwrite arbitrary files on the system
+with the privileges of the victim."
 
-    Cross-site scripting (XSS) vulnerability in Graphite before 0.9.11
-    allows remote attackers to inject arbitrary web script or HTML via
-    unspecified vectors.
-
-http://osvdb.org/show/osvdb/97602
-
-    Graphite contains a flaw that allows a remote cross-site scripting
-    (XSS) attack. This flaw exists because the application does not
-    validate certain unspecified input before returning it to the user.
-    This may allow an attacker to create a specially crafted request
-    that would execute arbitrary script code in a user's browser within
-    the trust relationship between their browser and the server.
+The patch is in svn (not the repository from code.google.com/p/esteid,
+but from svn.eesti.ee) [3] (r98).  This patch was backported for Mageia
+[4] and looks applicable to what we ship in Fedora (although we have a
+much older version).  The patch from Mageia (or upstream) won't apply
+without changes, however, as it's adding a new error code.  Judging from
+the patch, it's just making sure that the file name doesn't include '/'
+or '\\' (so no paths in the filename).
 
 
-However, the checkins from the project appear to use this CVE for unsafe
-use of Python's pickle module:
+[1] http://www.id.ee/?lang=en&id=34283#3_7_2
+[2] https://bugs.mageia.org/show_bug.cgi?id=11100
+[3] https://svn.eesti.ee/projektid/idkaart_public/
+[4] http://svnweb.mageia.org/packages/updates/3/libdigidoc/current/SOURCES/libdigidoc-3.6.0.0-security-fix-DataFile-name-tag.patch?revision=472660&view=markup
 
-https://github.com/graphite-project/graphite-web/blob/master/docs/releases/0_9_11.rst
+https://bugzilla.redhat.com/show_bug.cgi?id=1002299
 
-    This release contains several security fixes for cross-site scripting
-    (XSS) as well as a fix for a remote-execution exploit in graphite-web
-    (CVE-2013-5903).
+Thanks.
 
-    ...
-
-    Fix insecure deserialization of pickled objects (CVE-2013-5093)
-
-
-MITRE, please advise.
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+-- 
+Vincent Danen / Red Hat Security Response Team 
