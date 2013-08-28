@@ -1,42 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/30/9
-Message-ID: <51802FA0.2040407@redhat.com>
-Date: Tue, 30 Apr 2013 14:54:56 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re-emergence of CVE-2008-4796 in Nagios current
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/10
+Message-ID: <20130828203921.GX32641@redhat.com>
+Date: Wed, 28 Aug 2013 14:39:21 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE oops in GLSA 201308-05 (wireshark)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* [2013-08-28 14:10:10 -0400] cve-assign@...re.org wrote:
 
-CVE-2008-4796 snoopy: command execution via shell metacharacters
+>-----BEGIN PGP SIGNED MESSAGE-----
+>Hash: SHA1
+>
+>>I just saw via a Gentoo bug report that their GLSA 201308-05 advisory
+>>mentioned some CVEs as related to wireshark that were incorrect.
+>>
+>>Instead of mentioning CVE-2013-{3560,3561,3562} they mentioned
+>>CVE-2013-{3540,3541,3542}. I checked on MITRE's site and those three
+>>are still reserved.
+>>
+>>I don't know who those three (354[012]) are assigned to, but you might
+>>want to see if they've been used already or not and dupe them against
+>>356[012] if they have not.
+>
+>Those are in use:
+>
+>http://archives.neohapsis.com/archives/fulldisclosure/2013-06/0085.html
+>
+>Airlive
+>CVE-2013-3540. Cross Site Request Forgery(CWE-352) and Clickjacking(CAPEC-103)
+>CVE-2013-3541. Relative Path Traversal(CWE-23)
+>
+>Grandstream
+>CVE-2013-3542. Backdoor in Telnet Protocol(CAPEC-443)
 
-Was found in Nagios core by Grant Murphy.
+Ok.  I suspect that Gentoo has or will fix any self-published copies of
+their GLSA but the ones that are archived still contain the incorrect
+references.  Not sure if you need/want to do anything... I just sent the
+email as a heads-up for you.
 
-Filed upstream: http://tracker.nagios.org/view.php?id=449
-
-We really need to start thinking about ways to find vulnerable copies
-of code and fixing them everywhere people have embedded them.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRgC+gAAoJEBYNRVNeJnmTUtAP/RXsDNAwMBHpqOjoIKC6OUh2
-17Ps1HzPQ1ecfAQcAVxv3GSO1BmlALU00JGcjqk8RBYwe8Y2aj8XvHKuW3wGLPHL
-5/1YMxg+rRS8OfE6RpKzJG8G70ie30p+WAVca7T+ah/GHNxUcVqOOdtQb3C4uujm
-GyLybXVDq8+nsOyMUqJKupDhEutMoqk4KhYfjAHNqd7f5/urFdSdajdiu2xBZFQE
-TTeuzIXvw2KuGIStOzp0SLZdgZ+1iXholZjMv5pm5O3NlpBKziDZCBAWfpDuNUMm
-PAnT36mxzdg8EtirP9bXC34aXiE5lF6+Nt1nXwO0lu/UhccN5G6R0QpEI3GsporK
-SajVT9Ql5oSp2RUYWu9CESm7ZvG3gznFtjBLh432ikwv8XTDNeRb7eoGJMGn4IVG
-zacORWR4dKDYfRlQyOUGvGZG9/n42tJYn4x3WzGu+dAM2ZGSiYci7y/zzkSlikBx
-F/UNinjVRyzL5eemqufEl0rGw00+9FjLMngeMJUI1FT2u4sADcrn2pTr12jOM7ZF
-kKCNVV1qKC3AyXLIqtQupPW3CHIgUUVAtVlrkZ1oxYXfZnHEDEi0sROK3Y2Nko1G
-vBUuB+akVUnKV1rE/dJzN3W+LWbR8s8/cGyA3Lv9NsSykQz1o8nnbdRZAvpeiY3J
-TOh0g6HhB6VVgqOpIccH
-=rZhm
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Security Response Team 
