@@ -1,57 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/10
-Message-ID: <520BF03D.1020803@redhat.com>
-Date: Wed, 14 Aug 2013 15:01:49 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: P J P <ppandit@...hat.com>, Petr Matousek <pmatouse@...hat.com>
-Subject: Re: CVE Request: Linux kernel: cifs: off-by-one bug in build_unc_path_to_root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/6
+Message-Id: <201308281810.r7SIAAQ5000352@linus.mitre.org>
+Date: Wed, 28 Aug 2013 14:10:10 -0400 (EDT)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE oops in GLSA 201308-05 (wireshark)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/14/2013 01:07 PM, P J P wrote:
-> Hello,
-> 
-> Linux kernel built with the Common Internet File System
-> (CONFIG_CIFS) support along with a feature to access Distributed
-> File Systems (CONFIG_CIFS_DFS_UPCALL), is vulnerable to a memory
-> corruption flaw caused by writing one byte past an allocated memory
-> area. It occurs while mounting a DFS share wherein the server
-> provides DFS referral names of certain length. The memory
-> corruption leads to an unresponsive kernel and subsequent crash
-> resulting in Denial of Service.
-> 
-> An user/program able to mount a file system could use this flaw to
-> crash the kernel resulting in DoS.
-> 
-> Upstream fix: ------------- ->
-> https://git.kernel.org/linus/1fc29bacedeabb278080e31bb9c1ecb49f143c3b
+>I just saw via a Gentoo bug report that their GLSA 201308-05 advisory
+>mentioned some CVEs as related to wireshark that were incorrect.
 >
-> 
-> 
-> Thank you.
+>Instead of mentioning CVE-2013-{3560,3561,3562} they mentioned
+>CVE-2013-{3540,3541,3542}. I checked on MITRE's site and those three
+>are still reserved.
+>
+>I don't know who those three (354[012]) are assigned to, but you might
+>want to see if they've been used already or not and dupe them against
+>356[012] if they have not.
 
-Please use CVE-2013-4247 for this issue.
+Those are in use:
+
+http://archives.neohapsis.com/archives/fulldisclosure/2013-06/0085.html
+
+Airlive
+CVE-2013-3540. Cross Site Request Forgery(CWE-352) and Clickjacking(CAPEC-103) 
+CVE-2013-3541. Relative Path Traversal(CWE-23)
+
+Grandstream
+CVE-2013-3542. Backdoor in Telnet Protocol(CAPEC-443)
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJSC/A9AAoJEBYNRVNeJnmTnCYQALZ8C/e+35tYVn25OnW1Ksq9
-LdPnLaL6L1DittWkEt7Z4EntM+Qy3r+Djtnl7auJdck//9crUBhYgPks8HXYISHy
-uR+71OpZ96tUcMhxYrn1N2KkWrqwZry+woUENFDqJI483itejMnTGpw+lbRAVMjD
-zjlWLN7lRouVbz1X34ZcPkWMn8LBDmycc989ufrKBkp0vactxhaRtd+GwcxUu6Lw
-CKWPnA1HcOUAG2eqKoqZgJfzyHqcsHj7WnyxYuQklWfTtUVIbTvc0R8tHwfX/hc8
-Z2AjeDPkRS2f1oROFfj/Y65dLnmog8TRETHpljrZBXGvyQFbrrTWAbm48HPtinaQ
-6fMjo3Hrmb1cIO0AiwFz1K/HOG2acleK1YIdUFqdzRj0oRV4+F6WL99i90PIo82j
-B/rYngE8hL4my8k9IEma9aFwebWC+81fYP8UYFJ9w0pA29uzyYN3c2m84DYcxS7y
-tUiQLuFnkQnJXSTEMZ90BnknLVA3dZZNYTXk5qXR1dBlZQEzMaQrlnBQzT3Yvene
-4G3ZPvAQsMKvfQXsyiXmfb+06d9WJD2Ai+541B3AMQxQwILnGgNxncpcPLNyoqqG
-FPC5CiCqjACQ68mMxvb1E/ObwfqDlS/lgwuORcEsaP8ghLdpTvNPrvI7wyg0DCU4
-QP5A17rut3fmUoMkqFVa
-=SWLN
+iQEcBAEBAgAGBQJSHjxYAAoJEGvefgSNfHMdTzwH/imDk8DaDY4Q3FyKkFrO2r2q
+70cQCSbBWjMdU/GsFErfpeurrreNtjuROSUWTgI9P8AEtyFfdC6XicQcEetlkueY
+rwwghhbim3APXYODX0cxx3K7Ww38BhXfa8iZXjRs1Rn9oj1OLWB0+X9XY1KTd2Pb
+FLoyAOrVVYWOIn029osm5nG8lSJCzyJz21u1ErSB8nXDzTQSMtIIgkRaX229fo0d
+VV+1OXmNwKbMwZeqRQUaHNC21Djo6SzLtEBFkCcVrb+kQArkVT+DPVHlxHtqOtTW
+d4NMX0LwAK0GVk1m4PW6PkRsOX/+iXuPEDJ04OpGE6W8a/PBrxTmVEbFIS01PIw=
+=tPeQ
 -----END PGP SIGNATURE-----
