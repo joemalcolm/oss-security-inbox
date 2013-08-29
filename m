@@ -1,34 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/5
-Message-ID: <20130815063809.GA5261@gremlin.ru>
-Date: Thu, 15 Aug 2013 10:38:09 +0400
-From: gremlin@...mlin.ru
-To: oss-security@...ts.openwall.com
-Subject: Re: HTTPS (was: rubygems insecure download (and other problems))
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/29/1
+Message-Id: <201308290313.r7T3DPQf020100@linus.mitre.org>
+Date: Wed, 28 Aug 2013 23:13:25 -0400 (EDT)
+From: cve-assign@...re.org
+To: larry0@...com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Command Injection in Ruby Gem Sounder 1.0.1
 Content-Type: text/plain; charset=utf-8
 
-On 14-Aug-2013 14:59:12 -0600, Kurt Seifried wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- > everyone should be enabling HTTPS where possible,
+> Download: https://rubygems.org/gems/sounder
+> 
+> lib/sounder/sound.rb:
+> 
+>     def play
+>       system %{/usr/bin/afplay "#{@...e}" &}
+> 
+> @file = "\"id;/usr/bin/id>/tmp/p;\""
+> system %{/bin/echo "#{@...e}" }
+> 
+> Advisory:  http://vapid.dhs.org/advisories/sounder-ruby-gem-cmd-inj.html
 
-Very dangerous mistake. HTTPS should be used only for non-anonymous
-access, otherwise plain HTTP is preferred. In any case, let the users
-choose whether they want to use it.
+Use CVE-2013-5647.
 
-Compare to FTP vs SCP/SFTP: first is for getting files from anyone
-(into /incoming) and giving files for everyone (from /pub), second
-is for transferring your own files. Obviously, I presume FTP daemon
-to be configured for anonymous-only access.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
- > intercepting and modifying HTTP is trivial.
-
-Yes. But intercepting and modifying HTTPS requires just an ability
-to issue client-trusted certificates (sufficient for 99% of HTTPS
-applications), so the content signing should always be preferred
-over distributor validation.
-
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+iQEcBAEBAgAGBQJSHrqaAAoJEGvefgSNfHMd/c8IAI/FoAwZOdJOzRmo7bpMahwM
+TaA9HfVzBeFd4+ETnkxSE8mC3i88b71nodYp5rW/TRW29VWnISTdSrSojsHaaUSq
+0z2BSDI8QyMnokFdCdAKvCOjglmrcz2yRtdHd1hkF9mwMe7Su/9JOLDxnM9IEjmF
+v+MNewRCWBfN87eALGOA2n8DbVKiXHYwaMPMwhImz94BM+yt+LoyAOAAV17h1jy/
+U1HJrG1VcwTAbHFp444gtnwNuzo6MZjoY1gLBfv4MmJiO5vFtLd/W9DaT6S7PUug
+0FO2ov//HbfgdJgcXzaMqpfamQxKoCseFsDwg/76XtyHrEDW1AIGc9ak7+oEJYI=
+=2al5
+-----END PGP SIGNATURE-----
