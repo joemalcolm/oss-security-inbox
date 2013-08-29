@@ -1,49 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/06/3
-Message-ID: <5112A30B.9080907@redhat.com>
-Date: Wed, 06 Feb 2013 11:38:03 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/30/3
+Message-ID: <CAE2SPAZgeLGOq+WKDgf-PTuyDn3629geBuVrWUyQjzZZhcYaoQ@mail.gmail.com>
+Date: Fri, 30 Aug 2013 01:24:33 +0200
+From: Bastien ROUCARIES <roucaries.bastien@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Sang Kil Cha <sangkilc@....edu>
-Subject: Re: CVE Request: imview
+Subject: CVE request for imagemagick bug
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The gif handling code of imagemagick allow execution of arbitrary code
+due to a buffer overflow of one byte.
+Gif image format is made of different kind of data unit called block
+and these block may appear at anytime.
+The code actually do the equivalent of a=malloc(length+count) [line 1
+of the patch] and  a[length+count]='\0' for each comment block [line
+11 of patch].
+Because this code is executed for every comment block and that an
+attacker could put arbitrary block between each comment block, and
+finaly this attacker could smash memory particularly on architecture
+where malloc layout is predictable.
+Worst the bug could be exploited remotly throught php-magick or perlmagick.
+A special image leading to malloc space corruption and thus a dos is available.
 
-On 02/05/2013 02:59 PM, Sang Kil Cha wrote:
-> It reads in .ics file (iCalendar). Typical scenario would be to
-> share your schedule by sending the ics file to your friends. So
-> someone can open a malicious calendar file from imview, and then
-> crash.
-> 
-> -Sang Kil
+Imagemagick before version 6.7.8-8 are affected.
 
-Is it loaded automatically somehow (e.g. ics file association?). It
-seems like causing this program to crash won't cause any harm (e.g. no
-lost data/etc. like you get when crashing a web browser/email
-client/server). Right now I'm leaning towards not assigning a CVE as
-it appears there is no real security related impact.
+See upstream bug report here:
+http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=23921
 
+First reported as a dos here:
+https://bugs.launchpad.net/ubuntu/+source/imagemagick/+bug/1218248
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Fixed by commit:
+http://trac.imagemagick.org/changeset/8770/ImageMagick/trunk/coders/gif.c
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJREqMLAAoJEBYNRVNeJnmTwJgP+wVa+pIGBe/FerHCOAuFasLv
-m7jtS3epo021F/bpwYHCmAJjS89mx6uoU9XgUUeBOQQqN4W3BawqD4kRgLvQ9P7B
-BczWYmNmwWs/z7Ws+GBtK7ymt2fDfprRe7I3HYLCnV4M54LHzVCugn5RIZlmhcaq
-j+YkSdayV/+Rfx1ZR95EU1okAwiJ4Is6/QL/GGLQPiAZUMJWKb8gmHUThUPcWsbr
-9so1bzN1Sidqst2FdsZtC88Cx+GGlIoIzU4h85Fo4Yu2ah4lXqeLUFUF8KHkf0HG
-qfQ3zvM2gRe9/6YKWZroqEA0oXYjuBMuJPqag/pmqB9cGN+t9F9TsYXAmdXY5vfd
-kSiVx2vXlvgLxyZrys784Tb2dfv8YCX8JTyV4BHMs0be6VuL/RcFPgJwhkpWAIYM
-dtGsBR5BG/+cKKHScIoeihroR6Po9t3ESdTdSNAWi/W/pE3yzN6yQNGjXwrAxcvW
-abw/rNZFB/KjWOEIRLgCrFMXeAfCoaOpih9jd3FVf6kP+mpGXn5MoTdQpsSb49e1
-dXZyvbB3LyqC45zYhpZUnQgKhQ9aGgSvR7rCk6pLbtnjC5NtCJ3N4S3BYRMm6/XR
-C+ocy+HptomqtwSRFFkb+ktJmOr+CbAwZkh3WZvtNXrXf+nJLDCPNXSzIh1m7IVb
-e/4mxG4elhoBEdWxbef1
-=TfWR
------END PGP SIGNATURE-----
+Analysis by myself
