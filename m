@@ -1,41 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/8
-Message-ID: <966dcee3ae5f464abf0d76e7f4e177fa@BL2PR09MB004.namprd09.prod.outlook.com>
-Date: Fri, 29 Nov 2013 13:51:54 +0000
-From: "Izadjoo, Meisam" <meisam.izadjoo@...t.gov>
-To: Alex Legler <a3li@...too.org>
-CC: nvd <nvd@...t.gov>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Gentoo Linux Security Team <security@...too.org>
-Subject: RE: http://nvd.nist.gov/nvd.cfm?cvename=CVE-XXX URLs result in 404
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/29/4
+Message-ID: <521EE6E5.6000403@gentoo.org>
+Date: Thu, 29 Aug 2013 10:15:01 +0400
+From: Sergey Popov <pinkbyte@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE oops in GLSA 201308-05 (wireshark)
 Content-Type: text/plain; charset=utf-8
 
-Good morning Alex, the issue you point out below was an unintended result of our upgrade earlier in the week. We will work to have this issue resolved as quickly as possible.
+28.08.2013 19:24, Vincent Danen пишет:
+> I just saw via a Gentoo bug report that their GLSA 201308-05 advisory
+> mentioned some CVEs as related to wireshark that were incorrect.
+> 
+> Instead of mentioning CVE-2013-{3560,3561,3562} they mentioned
+> CVE-2013-{3540,3541,3542}.  I checked on MITRE's site and those three
+> are still reserved.
+> 
+> I don't know who those three (354[012]) are assigned to, but you might
+> want to see if they've been used already or not and dupe them against
+> 356[012] if they have not.
+> 
+> See:
+> 
+> http://www.net-security.org/advisory.php?id=16517
+> https://bugs.gentoo.org/show_bug.cgi?id=482794
+> 
+> Thanks.
+> 
 
-Thank you for bringing this matter to our attention.
+That was my mistake and i am truly sorry about it. Our GLSA will be
+fixed soon, but i can not undo sent mail to gentoo-announce@ :-(
+
+-- 
+Best regards, Sergey Popov
+Gentoo developer
+Gentoo Desktop Effects project lead
+Gentoo Qt project lead
+Gentoo Proxy maintainers project lead
 
 
-Mase Izadjoo
-National Vulnerability Database
-National Institute of Standards and Technology
-nvd.nist.gov
-
-
------Original Message-----
-From: Alex Legler [mailto:a3li@...too.org] 
-Sent: Thursday, November 28, 2013 2:35 PM
-To: nvd
-Cc: oss-security@...ts.openwall.com; Gentoo Linux Security Team
-Subject: http://nvd.nist.gov/nvd.cfm?cvename=CVE-XXX URLs result in 404
-
-Hello,
-
-a few days ago, CVE links using the scheme noted in the subject stopped working, and started returning HTTP 404 error codes.
-Is this intended?
-
-We have been using this URL scheme for our advisories for the better part of 2 years now, and as we publish advisories via mailing lists and several sites import our advisories, we have no way to retroactively change most of the links. If the change was intended, could you at least have the 'old' URLs reply with a permanent redirect to a new, valid URL?
-
-Thanks,
-
---
-Alex Legler <a3li@...too.org>
-Gentoo Security/Ruby/Infrastructure
-
+Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
