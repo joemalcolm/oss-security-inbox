@@ -1,55 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/3
-Message-ID: <50FE123E.1070405@redhat.com>
-Date: Mon, 21 Jan 2013 21:14:54 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Yves-Alexis Perez <corsac@...ian.org>, 697666@...s.debian.org
-Subject: Re: CVE request for Movable Type
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/29/2
+Message-Id: <201308290315.r7T3Etg9020136@linus.mitre.org>
+Date: Wed, 28 Aug 2013 23:14:55 -0400 (EDT)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request, libdigidoc arbitrary file overwrite flaw
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/21/2013 01:48 PM, Yves-Alexis Perez wrote:
-> Hi,
+> http://www.id.ee/?lang=en&id=34283#3_7_2
+> https://bugs.mageia.org/show_bug.cgi?id=11100
+> https://svn.eesti.ee/projektid/idkaart_public/
+> http://svnweb.mageia.org/packages/updates/3/libdigidoc/current/SOURCES/libdigidoc-3.6.0.0-security-fix-DataFile-name-tag.patch?revision=472660&view=markup
+> https://bugzilla.redhat.com/show_bug.cgi?id=1002299
+> http://code.google.com/p/esteid/source/browse/libdigidoc/trunk/libdigidoc/DigiDocSAXParser.c
 > 
-> Movable Type 4.38 has been released few weeks ago, fixing a
-> security issue in the upgrade page.
+> Fixed one critical bug in the DDOC parsing routines. By persuading a
+> victim to open a specially-crafted DDOC file, a remote attacker could
+> exploit this vulnerability to overwrite arbitrary files
 > 
-> More information can be found at [1] but basically it looks like
-> missing input sanitation on the mt-upgrade.cgi page.
+> libdigidoc/DigiDocSAXParser.c
 > 
-> As far as I can tell, no CVE has been allocated yet, could someone 
-> allocate one?
+> void handleStartDataFile(SigDocParse* pctx, const xmlChar *name, const xmlChar **atts)
 > 
-> Regards,
-> 
-> [1]:
-> http://www.movabletype.org/2013/01/movable_type_438_patch.html
+>  if(strchr((char*)mbuf1.pMem, '/') || strchr((char*)mbuf1.pMem, '\\')) {
+>       ddocDebug(1, "handleStartDataFile", "Invalid filename:
 
-Please use CVE-2013-0209 for this issue.
-
-
+Use CVE-2013-5648.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJQ/hI+AAoJEBYNRVNeJnmT1mMP/jDNdTdLcLUW2LXXZIO5L7yp
-P8krZsVT0A6jNJA4EK3wC/i7XPq8tWVW6zpRJhHEvyvpLovmu97EpIF/ULZxqmM6
-mFrtoaJzoqjTKKeHyLlEg2e0TOiMzo8vLGj/T6AoD8phV+1feu12I5AbMBun+41y
-inhcNDXZnL5qU8YCNWcY/YpfuheTbRlCehqt94RvIa2/24QFW7HXl9JxIsnZ0k2H
-RKERnL5daWorHxjuonUzZRz6N2ApES1py/d67eBSlnYtXr6KLMJzQA2NImkQpykL
-094cywuPp5hMjNiPf+RaVnLqJCzaJE6q6PP/iApWrA2id/BfyOEkLgygWr6zIwnG
-PYpqk94PmFlCcVjU0hXC3g8rXyvMf04iIQm5A52RLwr0VRMNvuW6Bbyu+RTHItTl
-bviGHmscpeEfCm+K7SH8bCXKsVaMEyYOJlNq7HpgDDj3ry9QoF6cf+vkHYI6SbG3
-w4Jsv3CDBRRNKunjN6Fp0se3s72LtcB2VUbcmNyMTzF4Qgx0tHD3w0lAsT64ukt6
-+zlaCHK6MZiGTmUUGvv3wpOSp1LD0clfv8uhU7rn9H/vUR6X/IZGZKmB3e1Eeoak
-7tzkgR7SRYuagxZtqmQ413LZqoZ0CoSxW2toEg72ROX3JK2PtiSDFJAIEmIPSa2K
-kxWM2tY4evMUUqqOkQMl
-=XScr
+iQEcBAEBAgAGBQJSHrtVAAoJEGvefgSNfHMdRjUH/0zQyuWch2YyC+2TJPtJfhcJ
+MMLQhFw24q/geXO9tbusFFAd9RlsoCfvLEaqz0/bgv4jIQb99dQDoOC8cBvf97XJ
+gzZ4y0AZaOAAHZbppTSe4HGiTgeWmNEDGc7klcRmPmatalwCCZE2h0Koelw/dGEL
+v54WVQWUpwM5bd5YoXINSbNpw3rgpNtOoE1XUfwNYm0GYEnkT0+FUd2RJWYeANtj
+ARmtoeFEHojXcgFvULtQDYzjAECyjHAl33OcyHUvXK453RvGXRJaa2MzFHNNxIKy
+6XVA66DDP/3nJPJQD7aT4KgoBmW3AaUx6lKvisySY9hj4N6vurcOa4LathxP0wY=
+=EEDP
 -----END PGP SIGNATURE-----
