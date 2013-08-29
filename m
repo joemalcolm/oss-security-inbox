@@ -1,62 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/3
-Message-ID: <529849E6.2040805@redhat.com>
-Date: Fri, 29 Nov 2013 01:01:42 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/29/3
+Message-ID: <CAA7hUgFZqkZBJOtBP-fTo6=kSXF7R7kxpn=Xq5pF8h4gka940Q@mail.gmail.com>
+Date: Thu, 29 Aug 2013 11:55:35 +0200
+From: Raphael Geissert <atomo64@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for OpenTTD
+Subject: [notification] libraw: multiple denial of service vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 11/28/2013 01:10 PM, Rubidium wrote:
-> Hello folks,
-> 
-> the OpenTTD team and contributors have discovered several a
-> security vulnerability in OpenTTD. Please be so kind to allocate a
-> CVE id for the issues detailed below:
-> 
-> Denial of service (server) using forcefully crashed aircrafts
-> 
-> A missing validation allows remote attackers to cause a denial of 
-> service (crash) by forcefully crashing aircraft near the corner of
-> the map. This triggers a corner case where data outside of the
-> allocated map array is accessed.
-> 
-> A test case, and simple guide how to reproduce it can be found in
-> the issue in our bug tracker at http://bugs.openttd.org/task/5820
-> 
-> Vulnerability is present since 0.3.6 and will be fixed in the
-> upcoming 1.3.3 release.
-> 
-> Once the CVE id is allocated, the issue will be fully documented
-> at http://security.openttd.org/en/CVE-2013-xxxx
-> 
-> Thanks, Remko 'Rubidium' Bijker
-> 
-> [Please CC me, I'm not subscribed.]
-> 
+During a review for EDF I found a few denial of service
+vulnerabilities in LibRaw.
 
-Please use CVE-2013-6411 for this issue.
+CVE-2013-1438:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Specially crafted photo files may trigger a division by zero, an
+infinite loop, or a null pointer dereference in libraw leading to
+denial of service in applications using the library.
+These vulnerabilities appear to originate in dcraw and as such any
+program or library based on it is affected. To name a few confirmed
+applications: dcraw, ufraw. Other affected software: shotwell,
+darktable, and libkdcraw (Qt-style interface to libraw, using embedded
+copy) which is used by digikam.
 
-iQIcBAEBAgAGBQJSmEnmAAoJEBYNRVNeJnmTbHkP/A5u/0Rl0hNzgBfzn3Q7mSw/
-CknymiSbZXxgviIZ/oWmzWqyD1pDTSes2gIy7bpzm/+YrEGxpu4JV89x7NSpnB3C
-LGGQT8T+pkDd+kqui0DDwBo20EHotEMiWrUbXWnnNIoSsGnQAKirpaqOrznds+dx
-rfPrMmMTs6nix7Jk4ePA0sIRmy0Z+zuqDQ+fRzmVf9igrFo1M1HAQz5CRnXE3Yab
-b83ak4LRwP0+SxHnL+QNJbtKQtysFbVIkMNIDSDcfU0OdoOZbP7uTd09VqvOo5Gq
-CGrgTgIL4z8XRlIcKEf1tnPE/TbhJqf8wzydkrmZWX3l8qmwqktE2rMEFyiJ9zF2
-bav1ws+BIvzE9OKea2ggQFhxPFoi/0/uhvyIG+fzAYVdtfHXHOyL0mXfBn43Orli
-2COYejCsKbu96q5xl3+9TwxsxNgXGX8faON+drgpIrLwQ6/+tOJtjlhW46JrlvyT
-dxOnD2F9dnZhoJLWbWTJvPLNVqq83Y16gcShaPH0vvatsi/QJveCaPG1ZA564UH7
-4quPhMT6FCntHgH8ZClb6eAb4b1oR5oAfiVyTI50Ev+p+09wQ6xNdEPFMdQe5i+6
-MChMCfs0csZGjAeW5OBdOYGXIdgK7mP8SqvDLn9SGgIwdr9WWQsIXvoekIbyj7W8
-62hHhiEw3be2U1LXGS5+
-=rX1U
------END PGP SIGNATURE-----
+Google Picasa apparently uses dcraw/ufraw so it might be affected.
+dcraw's homepage has a list of applications that possibly still use
+it:
+http://cybercom.net/~dcoffin/dcraw/
+
+Affected versions of libraw: confirmed: 0.8-0.15.3; but it is likely
+that all versions are affected.
+
+(not listing all the other applications as I'm only considering libraw
+as the piece with CVE relevance, given the fact that it is a library.)
+
+Fixed in: libraw 0.15.4
+
+CVE-2013-1439:
+
+Specially crafted photo files may trigger a series of conditions in
+which a null pointer is dereferenced leading to denial of service in
+applications using the library. These three vulnerabilities are
+in/related to the 'faster LJPEG decoder', which upstream states was
+introduced in LibRaw 0.13 and support for which is going to be dropped
+in 0.16.
+
+Affected versions of libraw: 0.13.x-0.15.x
+
+Fixed in: libraw 0.15.4
+
+Patches:
+0.15.x:
+https://github.com/LibRaw/LibRaw/commit/11909cc59e712e09b508dda729b99aeaac2b29ad
+Future 0.16.x:
+https://github.com/LibRaw/LibRaw/commit/9ae25d8c3a6bfb40c582538193264f74c9b93bc0
+
+(upstream decided to commit all fixes in a single commit. The missing
+changes in the patch for 0.16 are the ones that correspond to
+CVE-2013-4139. I.e. 0.16 patchset is CVE-2013-1438, while the 0.15
+patchset is CVE-2013-4138 + CVE-2013-4139.)
+
+Upstream states that there will be backported fixes for the 0.14
+branch but there won't be any new release and "[they] should use
+0.14-stable branch from github repo".
+
+BCC'ing Dave Coffin, author of dcraw.
+
+I would like to thank upstream, Alex Tutubalin, for his cooperation.
+
+Cheers,
+-- 
+Raphael Geissert
