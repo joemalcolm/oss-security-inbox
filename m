@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/13
-Message-ID: <275490696.2320667.1366906978544.JavaMail.root@redhat.com>
-Date: Thu, 25 Apr 2013 12:22:58 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/29/6
+Message-ID: <20130829141959.GD13998@dhcp-25-225.brq.redhat.com>
+Date: Thu, 29 Aug 2013 16:20:00 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, William Ting <william.h.ting@...il.com>, Zbigniew Jędrzejewski-Szmek <zbyszek@...waw.pl>, Jan Pokorny <jpokorny@...hat.com>, Thibault North <thibault.north@...il.com>
-Subject: CVE Request -- autojump: autojump profile will load random stuff from a directory called custom_install
+Cc: libvirt-security@...hat.com
+Subject: CVE request -- libvirt: virBitmapParse out-of-bounds read access
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+The virBitmapParse function was calling virBitmapIsSet() function that
+requires the caller to check the bounds of the bitmap without checking
+them. This resulted into crashes when parsing a bitmap string that was
+exceeding the bounds used as argument.
 
-  a security flaw was found in the way autojump, a tool for faster filesystem
-navigation from the command line, used to honour content of custom_install
-directory when global and local autojump installations were not found,
-and $SHELL variable was unset or set to different value than bash or zsh.
-If an unsuspecting autojump user was tricked into running autojump script
-from the directory a local attacker has write access to, this flaw could be
-used for arbitrary (Python) code execution with the privileges of the user
-running the autojump binary / script.
+Introduced by:
+http://libvirt.org/git/?p=libvirt.git;a=commit;h=0fc89098a68f0f6962de8be4fc03ddd960ffbf08
 
-Relevant (final) upstream patches are as follows:
-[1] https://github.com/joelthelion/autojump/commit/ad09ee27d402be797b3456abff6edeb4291edfec
-[2] https://github.com/joelthelion/autojump/commit/c763b2afadb188ab52849c21d43d2e8fe5b8800a
+Upstream fix:
+http://libvirt.org/git/?p=libvirt.git;a=commit;h=47b9127e883677a0d60d767030a147450e919a25
 
 References:
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=950777
+https://bugzilla.redhat.com/show_bug.cgi?id=997367
 
-Credit: This issue was found and reported to Red Hat Bugzilla [3] by Zbigniew Jędrzejewski-Szmek.
-        Thanks also goes to Jan Pokorny for bringing this one to my attention,
-        and to William Ting of autojump upstream for promptly fixing the issue.
-
-Could you allocate a CVE identifier for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
