@@ -1,48 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/09/8
-Message-ID: <20131009180844.GA7035@hunt>
-Date: Wed, 9 Oct 2013 11:08:44 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Rich Felker <dalias@...ifal.cx>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Source of bad password hashing practices? MySQL manual...
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/29/8
+Message-id: <495b6b69-11f4-4f7d-a341-28b8dc704c30@me.com>
+Date: Thu, 29 Aug 2013 18:35:00 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: YingZhi Python Programming Language for iOS ftp .. bug & httpd arbitrary upload
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 08, 2013 at 07:57:52PM -0400, Rich Felker wrote:
-> It's come to my attention recently that the MySQL reference manual is
-> recommending very poor password hashing practices as part of its
-> security guidelines:
-> 
->   "Do not store cleartext passwords in your database. If your computer
->   becomes compromised, the intruder can take the full list of
->   passwords and use them. Instead, use SHA2(), SHA1(), MD5(), or some
->   other one-way hashing function and store the hash value."
-> 
->   (http://dev.mysql.com/doc/refman/5.7/en/security-guidelines.html)
-> 
-> With MySQL being one of the major traditional "LAMP stack" components,
-> I wonder if this is the source from which many web developers are
-> getting their ideas on how to do password hashing. What is the proper
-> procedure for publicizing documentation bugs like this which are
-> leading to poor security practice, and for getting them fixed?
+Hi,
 
-I don't know if we can realistically assign a CVE number to bad advice
-on the Internet :) , but it would be immensely useful if this paragraph
-could be updated to say:
+I'd like to request a CVE for these vulnerabilities I disclosed back on Sept 27 2012.
 
-   "Do not store cleartext passwords in your database. If your computer
-   becomes compromised, the intruder can take the full list of
-   passwords and use them. Instead, use PBKDF2, bcrypt, or scrypt to
-   compute unique hash values suitable for storing in the database."
+ 
 
-A further change that might be nice would change "If your computer becomes
-compromised ..." to "When your computer becomes compromised ..." but I
-could understand if the MySQL team doesn't share my pessimism and choses
-to ignore this small change.
+YingZhi Python Programming Language for iOS
 
-But please, MySQL team, feel free to use my proposed paragraph under
-whatever license you wish. The old one has to go.
+Vendor:﻿ XiaoWen Huang, YingZhi Python for iOS.
 
-Thanks
+Ver 1.9.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+OSVDB IDs: 96719 & 96720
+
+Product Websites
+http://sosilen.blog.163.com
+http://www.iphoneappstorm.com/iphone-apps/utilities/com.yingzhi.python/yingzhipython.php?id=493505744 YingZhi
+
+Description:
+Python Interpreter is a native python development application for the iPad/iPhone. It is available for iOS 4 and above.
+
+The product is packaged with its own httpd and ftpd servers. Enabling the local daemons for development by Touching Computer<->This Machine starts up an httpd server and ftpd server, both daemons are bound to device IP not localhost.
+Vulnerabilities:
+
+httpd server allows upload of arbitrary files to root WWW directory.
+
+Browsing to http://<target_ip>:8080/ presents an index page in which anyone can upload files to the web servers root 
+directory.
+
+ftp server vulnerable to ../ bug
+
+The ftp server doesn't sanitize user input and allows remote users to read and possibly write to the devices storage.
+
+ftp://192.168.0.24:10000/../../../../../../../private/etc/passwd
+
+The ftp server doesn't bother authenticating users, any username/password combination will allow you in.
+
+Larry W. Cashdollar @_larry0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+http://vapid.dhs.org/advisories/python_for_ipad.html
+
+http://seclists.org/fulldisclosure/2012/Sep/199
+Content of type "text/html" skipped
