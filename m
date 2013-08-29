@@ -1,23 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/11/1
-Message-ID: <20130311074433.GF22254@kludge.henri.nerv.fi>
-Date: Mon, 11 Mar 2013 09:44:33 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/29/5
+Message-ID: <521F41F0.3020701@gentoo.org>
+Date: Thu, 29 Aug 2013 14:43:28 +0200
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: plugins@...dpress.org
-Subject: CVE-2009-4168: WordPress plugin vkontakte-api XSS vulnerability
+CC: Vincent Danen <vdanen@...hat.com>, cve-assign@...re.org
+Subject: Re: Re: CVE oops in GLSA 201308-05 (wireshark)
 Content-Type: text/plain; charset=utf-8
 
-Hello list members,
+On 28.08.2013 22:39, Vincent Danen wrote:
+> 
+> Ok.  I suspect that Gentoo has or will fix any self-published copies of
+> their GLSA but the ones that are archived still contain the incorrect
+> references.  Not sure if you need/want to do anything... I just sent the
+> email as a heads-up for you.
+> 
 
-Plugin URL: http://wordpress.org/extend/plugins/vkontakte-api/
-Affected file: tagcloud.swf 368b01e1728111f99d93ac5805d97abbb899a910
-PoC: wp-content/plugins/vkontakte-api/swf/tagcloud.swf?mode=tags&tagcloud=<tags><a+href=%27javascript:alert%28document.cookie%29%27+style=%27font-size:+40pt%27>oss-security</a></tags>
-Affected versions: 1.21, 1.22, 1.23, 1.24, 1.25, 1.26, 1.27, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5, 2.7
+Crud, this happened again with a mysql advisory today.
+We'll be sending errata for these two advisories soon and fix the posted
+advisories.
 
-Currently no fix available.
+In the meantime, I extended our tooling to avoid such mistakes in the
+future.
 
---
-Henri Salo
+At any rate, good catch Vincent.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+-- 
+Alex Legler <a3li@...too.org>
+Gentoo Security/Ruby/Infrastructure
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
