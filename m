@@ -1,159 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/4
-Message-ID: <51E8DB27.3050908@redhat.com>
-Date: Fri, 19 Jul 2013 00:22:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/30/8
+Message-id: <f75606a7-7eb5-466a-aaad-35aefb8ca64c@me.com>
+Date: Fri, 30 Aug 2013 14:44:17 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
 To: oss-security@...ts.openwall.com
-CC: Hamid Zamani <me@...idx9.ir>
-Subject: Re: CVE Request : Radius Daemon (YardRadius v1.1.2-4 ) Multiple Format String Vulnerabilities
+Subject: Re: OSS at all? (was: YingZhi Lua Programming Language for iOS ftp .. bug & httpd arbitrary upload)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 07/18/2013 06:52 PM, Hamid Zamani wrote:
-> Hello,
-> 
-> Software name : YardRadius Version : 1.1.2-4
-> 
-> Several Format String Vulnerabilites was found in latest YardRadius
-> .
-> 
-> Description :
-> 
-> 
-> 
-> src/log.c :
-> 
-> 
-> 
-> void
-> 
-> log_msg(int priority,char *fmt, va_list args)
-> 
-> {
-> 
-> ...
-> 
-> char buffer[1024];
-> 
-> ...
-> 
-> vfprintf(msgfd, fmt, args);
-> 
-> ...
-> 
-> vsnprintf(buffer,1024,fmt, args);
-> 
-> #if defined(HAVE_SYSLOG)
-> 
-> syslog(priority, buffer); //! if buff filled by "%x" so an attacker
-> can see the addresses and ...
-> 
-> ...
-> 
-> vsyslog(priority, fmt, args);
-> 
-> ...
-> 
-> }
-> 
-> 
-> 
-> 
-> 
-> 
-> ############
-> 
-> 
-> 
-> src/version.c :
-> 
-> 
-> 
-> #define  STRVER "%s : YARD Radius Server %s ... $ "
-> 
-> 
-> 
-> 
-> 
-> void
-> 
-> version(void)
-> 
-> {
-> 
-> char buffer[1024];
-> 
-> 
-> 
-> build_version(buffer,sizeof(buffer));
-> 
-> fprintf(stderr, buffer);
-> 
-> exit(-1);
-> 
-> }
-> 
-> 
-> 
-> ...
-> 
-> 
-> 
-> void
-> 
-> build_version(char *bp,size_t sizeofbp)
-> 
-> {
-> 
-> snprintf(bp,sizeofbp-1,STRVER, progname, VERSION);
-> 
-> ..
-> 
-> 
-> 
-> $ ln -s radiusd %x
-> 
-> $ ./%x -v
-> 
-> ./b77c0ff4 : YARD Radius Server 1.1 ...
-> 
-> 
-> 
-> So an attacker may control the memory and execute arbitrary codes.
-> 
-> 
-> Debian bug report : 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714612
-> 
-> CXSecurity.com : http://cxsecurity.com/issue/WLB-2013070028
-> 
-> 
-> Please assign a CVE number.
-> 
-> Thank you, Hamid Zamani 
-> 
+On Aug 30, 2013, at 07:14 AM, Raphael Geissert <geissert@...ian.org> wrote:
 
-Please use CVE-2013-4147 for this issue.
+Hi,
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+On 30 August 2013 15:16, Larry W. Cashdollar <larry0@...com> wrote:
+During further investigation of the Python programming language by XiaoWen
+for ipad/iphone [...]
 
-iQIcBAEBAgAGBQJR6NsnAAoJEBYNRVNeJnmTbngQAMuOzgrhySXyiDUopLXrAby1
-yZ3OhUcLyraU1NJFdhNRXSLqZL9XIdsPhgpQrzzntKyrNc30UbnCXbwENIigT6pL
-NjycD1gErK49nzy2iDOm1o5dB3GfCPHQPKmRKbvNbHiEq4nZbBlEBswOBPoY2wX+
-ArBgGuuVrLSIJX6KCfUbpMqqjlc5S5TkLQeGRYvioR1VOIo4JSw0Ur1mM9A3LRqq
-dkwsjt8RtlrJAFlYpGuW2BKR14l0cyrXC8Vwp+kpohDkMbwl8HS7WTrZjxA5bpec
-1umxlBflWtTQqtUzKQFUu8T23R7IyNLYQd3n4bpKFN3xRiBv+Wbfhmixkl7YmoE6
-qBtFlM4U/a7tNrmQokB/Ymq6umLid1VhzWvH+em1FmJqUvJn5gjvm9O2nTEAFzLV
-5xzVXfTsEKaGEYtk5/+4BJzY1l5PQb9mY/4hawYzZ9qf1GyjgNGfWco32UpMEr8v
-GDBI0b4aF4yD75RkRO/ZHAIwhewNTmkYeMIsj2TpeZhBPxWxt4Fym1btvLCct/fW
-r19InNLe0pyeE7aVe3Ig9Qt4vq7K2oMwH9zvfdEN0xZYGEtRf2b8TaVTOwJhAjy8
-dE6xF0KvLLgDAHAiI7ZVp13wfVUuZ9Pa12Tb9Ype94HIUj89smlj6cteIKarrM3B
-PXxw8gsgxAYD0SHJJYD4
-=bORy
------END PGP SIGNATURE-----
+Does this and the previous email regarding "iOS apps" even belong to this list?
+A quick web search doesn't reveal anything that looks like source code.
+ 
+I'm Sorry, you are correct. This started out just being a CVE request. 
+Content of type "text/html" skipped
