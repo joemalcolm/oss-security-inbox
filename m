@@ -1,68 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/12
-Message-ID: <517576C3.2090206@redhat.com>
-Date: Mon, 22 Apr 2013 11:43:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: libxmp MASI Parsing Buffer Overflow Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/30/1
+Message-Id: <201308300644.r7U6iZbw010118@linus.mitre.org>
+Date: Fri, 30 Aug 2013 02:44:35 -0400 (EDT)
+From: cve-assign@...re.org
+To: pmatouse@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, libvirt-security@...hat.com
+Subject: Re: CVE request -- libvirt: virBitmapParse out-of-bounds read access
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/22/2013 05:01 AM, Agostino Sarubbo wrote:
-> From the secunia advisory SA53114[1]:
-> 
-> Description A vulnerability has been reported in libxmp, which can
-> be exploited by malicious people to compromise an application using
-> the library.
-> 
-> The vulnerability is caused due to a boundary error in the
-> "get_dsmp"() function (src/loaders/masi_load.c) when parsing MASI
-> files, which can be exploited to cause a buffer overflow.
-> 
-> Successful exploitation may allow execution of arbitrary code.
-> 
-> The vulnerability is reported in versions prior to 4.1.0.
-> 
-> 
-> Solution Update to version 4.1.0.
-> 
-> Provided and/or discovered by The vendor credits Douglas
-> Carmichael.
-> 
-> Original Advisory 
-> http://sourceforge.net/projects/xmp/files/libxmp/4.1.0/Changelog/view
+> The virBitmapParse function was calling virBitmapIsSet() function that
+> requires the caller to check the bounds of the bitmap without checking
+> them. This resulted into crashes when parsing a bitmap string that was
+> exceeding the bounds used as argument.
 >
->  Commit: 
-> http://sourceforge.net/p/xmp/libxmp/ci/a015fdfb478a60172fd225632a11bbd02870fc40/
->
-> 
-> 
-> [1]: https://secunia.com/advisories/53114/
+> https://bugzilla.redhat.com/show_bug.cgi?id=997367
+> Upstream fix:
+> http://libvirt.org/git/?p=libvirt.git;a=commit;h=47b9127e883677a0d60d767030a147450e919a25
 
-Please use CVE-2013-1980 for this issue.
-
-
+Use CVE-2013-5651.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJRdXbCAAoJEBYNRVNeJnmTyTMQAMymAtTaXTd1bjoLXBYWZ3rn
-19moaCfcO+LHsuRPO0qmmaUA25sxdIqEsk4MKlLdxlyLDS+98TNo101Qp3VWfCpc
-2cTCAbhNuMU+tnprM5XJusVnU0u0lGCyAAiSBPhqCT5GaOxNjhvWiX/ZbbOVsqAS
-xY7kb/8HsBsrq8zwTkXJjhUyLPwHbu+qmDg0WjkeBOP2lrxrITwpOfqLd6qv/3Bq
-jrMG3JSdOn8k8xsWhwJbcTjtlYV07gDAPmVXbb6cX/l5YZvpda1o/kFU1Wy2geDJ
-sv3AcvLWgKGXjjRDK/b22e7CAHJJ334CZsNOPgspmt+mtobw8bW0qTz4nZzN4skb
-6MduJ9V0ZpuN3oECj4VdL171V9Px0JP+IGjWo2rXbXzIzxMA9J4tIifj5gdmwE+V
-X0GXGF5d3OLE2d74bGq57BmnGOg6nwgJvh1hojpwYOooRroN5/x+nQFFd6F/y1kg
-RPuyODbibjwEpI95k9KK9yL2XFonJrlvsJRENqOFnIvUIkUN+RUizAdr7+y2xZR5
-uw9GR4nQSlCEwfwwSRYT4D+UMOcLqWbE29nKXEL8OBE/azEKXsYhp5iFyAnYUTlj
-sa16Lb5rckDPHjcbiRHIUeMwrgohlRWyjLWyQVNbl9/7cEqVMl90v4rGmaD8CVVN
-7VG7HEFPpGtH4xP/75Rl
-=eEzA
+iQEcBAEBAgAGBQJSIDcdAAoJEGvefgSNfHMdgoYH/1X2pJ8TbloT/iT9TpqTg2p1
+LplZwtLXbAqIwB1Rx79T1HxRvA72JkefgLlhPHMGmssKCAwfeZ3x0nGS4BnOnq9e
+i/dUa+InOznXMxEEsudl8AvGxepTpCk44j+Y4ab0XGllotzDM5iMWCjQItnVQxRi
+Yrms8W92Pn0WxTyMhfV5E8tQiEJwxTi3wih3vWE8RxPNuVDqS7qjnJk0Fzs/0RlY
+R4TRtaqsI4n3zY0pCtYYSwmoVGXOR0GA9MFJ39YzxtoKiw8nS/Xshf6/lffmxYlN
+1vH1ONyOEGmOamYQhnlJleHydAEfDGmptchEsHQTrpb7yvYsgsWw69wZ9yoCxzw=
+=uCdo
 -----END PGP SIGNATURE-----
