@@ -1,87 +1,124 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/14
-Message-ID: <51F0FDE5.9010006@pipping.org>
-Date: Thu, 25 Jul 2013 12:28:53 +0200
-From: Sebastian Pipping <sebastian@...ping.org>
-To: kseifried@...hat.com
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mysecureshell: local denial of service (or worse)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/30/5
+Message-id: <363cf805-3542-45af-8e0a-59e083666d93@me.com>
+Date: Fri, 30 Aug 2013 12:54:11 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: YingZhi Python Programming Language for iOS ftp .. bug & httpd arbitrary upload
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt,
+On Aug 30, 2013, at 05:42 AM, "Larry W. Cashdollar" <larry0@...com> wrote:
+
+On Aug 29, 2013, at 11:46 PM, cve-assign@...re.org wrote:
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+I'd like to request a CVE for these vulnerabilities I disclosed back
+on Sept 27 2012.
+http://vapid.dhs.org/advisories/python_for_ipad.html
+YingZhi Python Programming Language for iOS
+Vendor: XiaoWen Huang, YingZhi Python for iOS.
+Ver 1.9.
+OSVDB IDs: 96719 & 96720
+Product Websites
+http://sosilen.blog.163.com
+http://www.iphoneappstorm.com/iphone-apps/utilities/com.yingzhi.python/yingzhipython.php?id=493505744 YingZhi
+Python Interpreter is a native python development application for the
+iPad/iPhone. It is available for iOS 4 and above.
+The product is packaged with its own httpd and ftpd servers. Enabling
+the local daemons for development by Touching Computer<->This Machine
+starts up an httpd server and ftpd server, both daemons are bound to
+device IP not localhost.
+
+httpd server allows upload of arbitrary files to root WWW directory.
+Browsing to http://<target_ip>:8080/ presents an index page in which
+anyone can upload files to the web servers root directory.
+
+Use CVE-2013-5654. Support for anonymous upload is, at least, rare in
+HTTP servers and this behavior would seem to violate reasonable user
+expectations.
+
+If you have any further information about the specific statements in
+OSVDB entry 96720, please let us know. For example, have you confirmed
+that the default configuration of this HTTP server enables a PHP
+interpreter, such that uploads of .php files are especially dangerous?
+ 
+
+I just checked and it appears the http server doesn't interpret .php, .cgi or .py, it only serves basic content.
 
 
-On 25.07.2013 10:33, Kurt Seifried wrote:
-> On 07/23/2013 11:19 AM, Sebastian Pipping wrote:
->> mysecureshell [1] is an SFTP-only shell to be used with sshd.
-> 
->> The latest release 1.31 makes use of shared memory with permissions
->> 666 to maintain 128 slots with one struct for each
->> connection/process. An unprivileged user can mark mark all
->> remaining slots as occupied (and optionally wait for remaining
->> clients to leave to block those slots, too).
-> 
->> To demonstrate the issue, I have written a small command line
->> tool. It's free software and can be found at [2].  Use it like
->> this:
-> 
->> # make cc -std=c99 -Wall -Wextra -pedantic local-dos.c -o
->> local-dos
-> 
->> # ./local-dos USAGE: ./local-dos (block|unblock|show)
-> 
->> # watch -n 1 -d ./local-dos block [..]
-> 
->> Besides the local DoS it might be possible to attack the call to
->> chdir, since that is reading from shared memory, too.
-> 
->> Any ideas on other attacks based on writing to that block of
->> shared memory?  File /bin/MySecureShell is mode 4755 setuid root if
->> that makes it more interesting :-)
->> [..]
->> [1] http://mysecureshell.sourceforge.net/
->> [2] https://github.com/hartwork/mysecureshell-issues
-> 
-> To reiterate: so I can confirm CVE assignments, and prevent duplicate
-> assignments you *MUST* provide links to the code commits/vulnerable
-> code. I don't have the time to go hunting through your source code for
-> them. People need to start making better CVE requests, or you're not
-> going to get CVEs from me.
-> 
-> I think if I repeat this enough times it'll work.
+telnet 192.168.0.15 8080
+Trying 192.168.0.15...
+Connected to 192.168.0.15.
+Escape character is '^]'.
+GET /i.php HTTP/1.0
 
-Upstream tarball
-================
-http://mysecureshell.free.fr/repository/index.php/debian/pool/main/m/mysecureshell/mysecureshell_1.31.tar.gz
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Content-Length: 39
+Date: Fri, 30 Aug 2013 12:11:32 GMT
+
+<?php 
+echo '<p>Hello World</p>'; 
+?> 
+Connection closed by foreign host.
 
 
-Issue
-=====
-Mode 0666 for shared memory, local denial of service
+bos-mp5r9:Documents larry$ curl  -I http://192.168.0.15:8080
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+Accept-Ranges: bytes
+Date: Fri, 30 Aug 2013 12:28:48 GMT
 
+ 
 
-Guilty code
-===========
+The application documentation is a little confusing but states the following:
 
-Online
-~~~~~~
-http://mysecureshell.cvs.sourceforge.net/viewvc/mysecureshell/mysecureshell/SftpServer/SftpWho.c?revision=1.3&view=markup#l73
+You can upload learning materials to the local on the computer via wifi, support http and ftp two upload ways. The file system supports txt, pdf, chm, mp3, zip, gif, png, html, py
 
-Inlined  (from SftpServer/SftpWho.c, lines 73 and after)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//try to join to existing shm
-if ((shmid = shmget(key, sizeof(t_shm), 0)) == -1)
-  if (create == 1)
-    {
-      shmid = shmget(key, sizeof(t_shm), IPC_CREAT | IPC_EXCL | 0666);
-      eraze = 1;
-    }
-
-
-Please let me know if you need anything more.  Thanks for your time!
-
-Best,
+I originally thought .py support might have meant the http server interpreted python, but I have not had success in testing this.
 
 
 
-Sebastian
+
+
+
+ftp server vulnerable to ../ bug
+The ftp server doesn't sanitize user input and allows remote users to
+read and possibly write to the devices storage.
+ftp://192.168.0.24:10000/../../../../../../../private/etc/passwd
+
+Use CVE-2013-5655.
+
+
+The ftp server doesn't bother authenticating users, any
+username/password combination will allow you in.
+
+We're not immediately assigning a CVE ID for this authentication
+behavior because it might be an intentional part of the vendor's
+design, and might have been reasonable in the vendor's envisioned
+development environment. If there is any documentation suggesting that
+this is instead an authentication bypass (e.g., the product allows the
+user to configure a username/password combination), the assignment can
+of course be reconsidered.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSID68AAoJEGvefgSNfHMdbt4IALFMSBoUA/WIybOGhq6wXFV+
+hc1S9kiDnKxjtR/IEnSnmjEBkF+iOdYoh2KOM41veWZD5hfoDgE2jgU3CRVHXEC7
+OAhievWB9Bx5SZghIyJFjfqAwhLjS/9DmDonDFN8EBIguflaN36e7clr3+/ixzZ5
+tzKElNelBcbgjf0WaQqfPpHRB46JJQFQ3AvqRMOyi1YbcG2LJ+uC8bylqvhXYbta
+g/LqwJ8UaxZ886Hd+V1k/+sYUL9S/VzgGnkQd4QPZJXVsAfFcEELubpnEyO0m3g+
+OQaKqLjvhA6YTfe6GuY2LJgh583UUrl8Bv+dUuP4nsiELpcZQDHa6AZjbbFJVSw=
+=pgG9
+-----END PGP SIGNATURE-----
+
+Content of type "text/html" skipped
