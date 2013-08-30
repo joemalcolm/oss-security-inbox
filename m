@@ -1,60 +1,138 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/9
-Message-ID: <5298D5AC.5050508@redhat.com>
-Date: Fri, 29 Nov 2013 10:58:04 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ClamAV vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/30/9
+Message-ID: <621abcf0f5708ccc77ba822fe6e4e96d@imap.steindlberger.de>
+Date: Fri, 30 Aug 2013 17:47:13 +0200
+From: Jonas Meurer <jonas@...esources.org>
+To: Vincent Danen <vdanen@...hat.com>
+Cc: oss-security@...ts.openwall.com, kseifried@...hat.com, contribute@...ios.org
+Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Any news on that?
 
-On 11/29/2013 02:20 AM, Sergey Popov wrote:
-> It's a bit late, but i would like to request CVE for two 
-> vulnerabilities, that present in ClamAV before 0.97.7[1]:
+I still believe that there's a misunderstanding. I still consider the 
+bug I found as security relevant. Hostnames are leaked to unauthorized 
+nagios-cgi users.
+
+In case that you don't agree with what I've written below, please 
+explain.
+
+Honestly, I cannot believe that it was meant as a _feature_ by nagios 
+devs that _all_ hostnames are displayed for _all_ users, regardless 
+whether they're listed in contacts/contactgroups.
+
+I don't consider this issue too important, but still a CVE would be 
+appropriative in my opinion. It should be fixed in future uploads of 
+nagios3 to the major distributions. Most nagios admins might be unaware 
+of this issue.
+
+Kind regards,
+  jonas
+
+
+Am 2013-08-04 02:40, schrieb Jonas Meurer:
+> Hello,
 > 
-> 1) A double-free error exists within the
-> "unrar_extract_next_prepare()" function
-> (libclamunrar_iface/unrar_iface.c) when parsing a RAR file.
+> sorry, I'm on holidays and cannot work on this issue for the next two
+> weeks. But I think that there is a missunderstanding. See my short
+> comment below.
 > 
-> 2) An unspecified error within the "wwunpack()" function 
-> (libclamav/wwunpack.c) when unpacking a WWPack file can be
-> exploited to corrupt heap memory.
+> Am 02.08.2013 19:27, schrieb Vincent Danen:
+>> * [2013-07-10 17:17:08 +0200] Jonas Meurer wrote:
+>> 
+>>> Hello,
+>>> 
+>>> Am 2013-07-08 20:16, schrieb Kurt Seifried:
+>>>> -----BEGIN PGP SIGNED MESSAGE-----
+>>>> Hash: SHA1
+>>>> 
+>>>> On 06/26/2013 01:42 PM, Kurt Seifried wrote:
+>>>>> On 06/26/2013 12:36 PM, Vincent Danen wrote:
+>>>>>> I don't believe a CVE has been assigned to this issue yet.
+>>>>> 
+>>>>>> It was reported that Nagios 3.4.4 at least, and possibly earlier
+>>>>>> versions, would allow users with access to Nagios to obtain
+>>>>>> full access to the servicegroup overview, even if they are not
+>>>>>> authorized to view all of the systems (not configured for this
+>>>>>> ability in the authorized_for_* configuration option).  This
+>>>>>> includes the servicegroup overview, summary, and grid.
+>>>>> 
+>>>>>> Provided the user has access to view some services, they will be
+>>>>>> able to see all services (including those they should not see).
+>>>>>> Note that the user in question must have access to some services
+>>>>>> and must have access to Nagios to begin with.
+>>>>> 
+>>>>>> This has not yet been corrected upstream.
+>>>>> 
+>>>>>> References:
+>>>>> 
+>>>>>> http://www.mail-archive.com/nagios-users@lists.sourceforge.net/msg39749.html
+>>>>>> 
+>>>>> 
+>>>>>> http://tracker.nagios.org/view.php?id=456
+>>>>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714171
+>>>>>> https://bugzilla.redhat.com/show_bug.cgi?id=978531
+>>>>> 
+>>>>> 
+>>>>>> Thanks.
+>>>>> 
+>>>>> Please use CVE-2013-2214 for this issue.
+>>>> 
+>>>> It appears there are may be some problems with this issue, 
+>>>> potentially
+>>>> this may have been a bad configuration and not a source code based
+>>>> problem, however we haven't been able to confirm it yet. I've also 
+>>>> not
+>>>> been able to contact upstream about this easily (no security@ 
+>>>> address,
+>>>> if anyone know whom to forward this to, please let me know, thanks.
+>>> 
+>>> I'm wondering why you fail to reproduce this issue. I posted some
+>>> details regarding my setup at the Nagios Tracker:
+>>> http://tracker.nagios.org/view.php?id=456
+>>> 
+>>> Unfortunately Nagios upstream sometimes rather unresponsive. At least
+>>> that's what I observed.
+>>> 
+>>> Please let me know if you need any further details regarding the bug
+>>> or advice on how to reproduce it.
+>> 
+>> To close the loop on this, the CVE should probably be rejected.
+>> According to upstream, this is done by design.  One of our users noted
+>> it in our bugzilla:
+>> 
+>> https://bugzilla.redhat.com/show_bug.cgi?id=978531#c11
+>> 
+>> He has a thorough explanation, but the bottom line is this seems to be
+>> by design, as noted in the changelog:
+>> 
+>> http://www.nagios.org/projects/nagioscore/history/core-3x
+>> 
+>> * Users can now see hostgroups and servicegroups that contain at least
+>>   one host or service they are authorized for, instead of having to be
+>>   authorized for them all (Ethan Galstad)
 > 
-> [1] - https://secunia.com/advisories/52647/
+> As I understand this changelog entry, it means the following:
 > 
-
-The blog entry
-
-http://blog.clamav.net/2013/03/clamav-0977-has-been-released.html
-
-contains no mention of security flaws,
-
-Also the ChangeLog:
-
-https://github.com/vrtadmin/clamav-devel/blob/0.97/ChangeLog
-
-Doesn't contain any mention of the above flaws. Can you provide links
-to source code/bug reports or something so I can verify this? Thanks.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSmNWsAAoJEBYNRVNeJnmThXsP/jeOtL/zWdpxvSX6JEDw0OPj
-jhOr77n6thgze2U/wAnzqJNYrVu9zgbXo7PeIursWztKWOky90TZsVaYjsiCgQ0N
-iDo6WfG4h2Ee0b0L6MLTyADx9LCvYwdLcnjVOgzgAaQDirSTU0nc7oUdkMixTOXR
-xn6HEnGBxhw7o9xZbGWJL9fLxGrqnSvMowpTiH+qG1oiC7ShUvdI/k+5Fr2adX1E
-47gz+dZazGdj39u2aryXA3uRA1PFMFm5zVJcPz6Vuv0tZlZVWh1dA2OMeOSZdok4
-q8pd6WYiXDJdIWq9hpGwyR70GrJg0gsE8Dhw6KVtGu2V61BdX0dLxqnT5zhxxmFY
-DdyeFLkPTsEDUUj7wj7mciEgwXgUT2aiHrhXD6m9t+FvmU6MFD18HH0y7uD3vACU
-OBvOExWqcV/8rWmA3+VTAvgLXFCmVfNca6NP/d5oAnmeJRTGvBnyIGQwB95ozSbs
-fo0OvTm45CPzJVyiEX/7P1S73qLgnWV4Y0FLNg4mj5Qs2GkMs+LVGFxGOKr5XKed
-MdIk7Fa+xNMwI/qzJEYdA0xK1WPeDrwt5fpxJFoMjKqwF6jImmgUuQMZ5bvC0sqY
-bVTUzww4iPBvdY75yGH9F4BHacw+kw7MI9WUo9SJ32n047NB+UViRpAtvhshV6na
-bRvHsNYzqwUdW8msUh+0
-=MZ61
------END PGP SIGNATURE-----
+> Hostgroups and servicegroups are listed with all the _authorized_
+> members if the user is authorized to see at least one member.
+> 
+> To me it doesn't mean the following (which was the case without my 
+> patch):
+> 
+> Servicegroups are listed with all members (regardless wether authorized
+> or unauthorized) if the user is authorized to see at least one member.
+> 
+> Another argument for my point of view is that the nagios maintainers
+> (silently) accepted my patch (at least if I remember correctly, it has
+> been incorporated into the upstream development repository).
+> Unfortunately there's still not one single statement from upstream 
+> about
+> the issue, that I'm aware of.
+> 
+>> I suspect this CVE should be rejected as this is done by design.
+> 
+> Like explained above, I disagree with this suggestion :)
+> 
+> Kind regards,
+>  jonas
