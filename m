@@ -1,48 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/11
-Message-ID: <50EC6E83.2080107@redhat.com>
-Date: Tue, 08 Jan 2013 12:07:47 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Sebastian Krahmer <krahmer@...e.de>, coley@...us.mitre.org
-Subject: Re: CVE Request: cronie fd leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/30/2
+Message-Id: <201308300646.r7U6kmSZ010229@linus.mitre.org>
+Date: Fri, 30 Aug 2013 02:46:48 -0400 (EDT)
+From: cve-assign@...re.org
+To: larry0@...com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: YingZhi Python Programming Language for iOS ftp .. bug & httpd arbitrary upload
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/08/2013 05:56 AM, Sebastian Krahmer wrote:
-> "Hello Kurt, Steve, vendors,"
+> I'd like to request a CVE for these vulnerabilities I disclosed back
+> on Sept 27 2012.
+> http://vapid.dhs.org/advisories/python_for_ipad.html
 > 
-> cronie leaks read-only fd's, please check here:
+> YingZhi Python Programming Language for iOS
 > 
-> https://bugzilla.novell.com/show_bug.cgi?id=786096
+> Vendor: XiaoWen Huang, YingZhi Python for iOS.
 > 
-> can someone assign a CVE?
+> Ver 1.9.
 > 
-> thanks, Sebastian
+> OSVDB IDs: 96719 & 96720
 > 
+> Product Websites
+> http://sosilen.blog.163.com
+> http://www.iphoneappstorm.com/iphone-apps/utilities/com.yingzhi.python/yingzhipython.php?id=493505744 YingZhi
+> 
+> Python Interpreter is a native python development application for the
+> iPad/iPhone. It is available for iOS 4 and above.
+> 
+> The product is packaged with its own httpd and ftpd servers. Enabling
+> the local daemons for development by Touching Computer<->This Machine
+> starts up an httpd server and ftpd server, both daemons are bound to
+> device IP not localhost.
 
-Please use CVE-2012-6097 for this issue.
+> httpd server allows upload of arbitrary files to root WWW directory.
+> 
+> Browsing to http://<target_ip>:8080/ presents an index page in which
+> anyone can upload files to the web servers root directory.
+
+Use CVE-2013-5654. Support for anonymous upload is, at least, rare in
+HTTP servers and this behavior would seem to violate reasonable user
+expectations.
+
+If you have any further information about the specific statements in
+OSVDB entry 96720, please let us know. For example, have you confirmed
+that the default configuration of this HTTP server enables a PHP
+interpreter, such that uploads of .php files are especially dangerous?
+
+ 
+> ftp server vulnerable to ../ bug
+> 
+> The ftp server doesn't sanitize user input and allows remote users to
+> read and possibly write to the devices storage.
+> 
+> ftp://192.168.0.24:10000/../../../../../../../private/etc/passwd
+
+Use CVE-2013-5655.
+
+
+> The ftp server doesn't bother authenticating users, any
+> username/password combination will allow you in.
+
+We're not immediately assigning a CVE ID for this authentication
+behavior because it might be an intentional part of the vendor's
+design, and might have been reasonable in the vendor's envisioned
+development environment. If there is any documentation suggesting that
+this is instead an authentication bypass (e.g., the product allows the
+user to configure a username/password combination), the assignment can
+of course be reconsidered.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJQ7G6DAAoJEBYNRVNeJnmTFVsP/2uiis6yhx7V0E39N23sA7un
-tkMdQ3XziAb1s/dO1wocCDFMQzln6eEtem4TyJWlZyeYEdQELks+mOJZ/naqkQWC
-xpocQPweuCd8pIymt6KAk7OSqVjCMH7MFAH+4/vsRxqoTHeMjIWzxZ9GnKXLAQbU
-6f/60ubsz3t9TZ4/cc3hHj+mfQPZh4kuS8F8XF6wXvQugCEtgVfCZ+kv9TiLHtxe
-MpB7UZfdVB67ViUm9MUH12zzBLiIlQsCUAC41TfIVJqD5N3Ln5DwrCRxl/Q4mFj5
-CNFKNq1bRCTcnNlam1Z9we9OzAxhPI+Ed4w9rzEYTv77R1g7qBuycev1e/OL0Nvu
-AkdYZ3+XSURiDEccw42NDBQalo0MX+fcWsHRCDNnZAiiJiygwKFSq0RwOI/vRs9x
-A1Z3e70lJ73QP/kaxj4hzsr9EY+kDMrwGPJps/jz0mk1HzEp8d+9mi90clLI39uu
-DhTw4Z5XCzxe7nKnS4PYF5Gn27E+326zIhc6ZKnI0ENZj+3Q93yZJVE1U9V4g35X
-yK7nhSWToAtTMGgeq/d5JWL4IrzQ1PeXOAw+21pmw/H4pmzzGCb8rklwSE03yv5K
-+gk3cK9iLg/ZzYrMyJNTNCEr+vwc/0zBYpJhHx5CxiV0ljstNfNTDB7xTllP+9AJ
-LFKIWgzpRyR/ynwFDQRp
-=7vF5
+iQEcBAEBAgAGBQJSID68AAoJEGvefgSNfHMdbt4IALFMSBoUA/WIybOGhq6wXFV+
+hc1S9kiDnKxjtR/IEnSnmjEBkF+iOdYoh2KOM41veWZD5hfoDgE2jgU3CRVHXEC7
+OAhievWB9Bx5SZghIyJFjfqAwhLjS/9DmDonDFN8EBIguflaN36e7clr3+/ixzZ5
+tzKElNelBcbgjf0WaQqfPpHRB46JJQFQ3AvqRMOyi1YbcG2LJ+uC8bylqvhXYbta
+g/LqwJ8UaxZ886Hd+V1k/+sYUL9S/VzgGnkQd4QPZJXVsAfFcEELubpnEyO0m3g+
+OQaKqLjvhA6YTfe6GuY2LJgh583UUrl8Bv+dUuP4nsiELpcZQDHa6AZjbbFJVSw=
+=pgG9
 -----END PGP SIGNATURE-----
