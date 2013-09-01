@@ -1,40 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/3
-Message-ID: <87r4lks7jg.fsf@mid.deneb.enyo.de>
-Date: Thu, 17 Jan 2013 06:27:47 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: gnome-keyring does not discard stored secrets in some cases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/01/4
+Message-Id: <201309011625.r81GPHqN007324@linus.mitre.org>
+Date: Sun, 1 Sep 2013 12:25:17 -0400 (EDT)
+From: cve-assign@...re.org
+To: larry0@...com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Remote Command Injection in fog-dragonfly-0.8.2 Ruby Gem
 Content-Type: text/plain; charset=utf-8
 
-* Kurt Seifried:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->> I've verified that Fedora 17 (GNOME 3.4) does not discard cached
->> keys on suspend and hibernate, either.  (Swap is encrypted, though,
->> at least I selected that in the installer.)  However, I suspect
->> that users expect that suspend (but perhaps not hibernate) does not
->> discard keys.
+>Remote Command Injection in fog-dragonfly-0.8.2 Ruby Gem
+>Download: https://rubygems.org/gems/fog-dragonfly
 >
-> Just to confirm, is this behavior documented at all in the gnome
-> keyring documentation (e.g. that it does or doesn't do it)? Thanks.
+>"Dragonfly is an on-the-fly Rack-based image handling framework. It is
+>suitable for use with Rails, Sinatra and other web frameworks.
+>
+>Unescaped user supplied input is passed to the command line for shell
+>execution
+>
+>fog-dragonfly-0.8.2/lib/dragonfly/imagemagickutils.rb:
+>
+> 20     def convert(tempobject, args='', format=nil)
+> 21       tempfile = newtempfile(format)
+> 22       run "#{convertcommand} #{args} #{tempobject.path} #{tempfile.path}"
+> 23       tempfile
+> 24     end
+>
+>
+> 61     def run(command)
+> 62       log.debug("Running command: #{command}") if ImageMagickUtils.log_commands
+> 63       begin
+> 64         result = #{command}
 
-I think the clearest part is
-<https://live.gnome.org/GnomeKeyring/SecurityPhilosophy>, which
-proclaims:
+Use CVE-2013-5671 for this vulnerability in the fog-dragonfly gem. As
+far as we can tell, this is a vulnerability in the fog-dragonfly gem,
+not a vulnerability in Dragonfly. We found these possibly related
+fixes in Dragonfly:
 
-| * Try to keep your secrets from being swapped out or otherwise
-|   written to disk.
-| * Hunkering down and discarding all secrets when your computer is
-|   locked.
+  https://github.com/markevans/dragonfly/commit/ff141bb1d921fff506084b62a562f7a83d5e01fe#lib/dragonfly/image_magick/utils.rb
 
-The documentation for gnome_keyring_lock_all_sync
-<http://developer.gnome.org/gnome-keyring/unstable/gnome-keyring-Keyrings.html#gnome-keyring-lock-all-sync>
-says:
+  https://github.com/markevans/dragonfly/commit/47f95bd6b8af11fb0a44d6ab1c6f7d00d880cb68
 
-| Lock all the keyrings, so that their contents may not eb accessed
-| without first unlocking them with a password.
+If the unpatched Dragonfly code has a vulnerability in a common use
+case, this would require a separate CVE ID.
 
-In addition,
-<http://developer.gnome.org/gnome-keyring/unstable/gnome-keyring-Non-pageable-Memory.html>
-suggests that locked memory is never written to disk.  This is not
-true with hibernation.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSI2XoAAoJEGvefgSNfHMdv0oH/j0G7m0PMSwn1FvIcVpR39EP
+yKTuTfa9I5MSr2DXejQQ+5lhJN7eTJwjOTPETpGOu0BkDgMkRvcuw81PqgVwkWXc
+bT8DfNM/cO4vM3UjTJiTKYinVRMl3xsjGVzkwxV0E1mYhjbjrKGNUMgzjNPsSnja
+eNYC26v2UDLn3Jw8K7qXTk+ytgFqOE+MiA/KDXBvm6fB1SBOoeeaMGU7NNdCw8A9
+95TdYNzYE3JL7V0zz/5oidqkg0hlznK21KR01hUJK0s/U60rdzgA/73O+g8XSP4q
+vyqN0ykgSDodfAt6JsONR/5wzaXTmc25ZXaB3wMGG9yUxFZiORzVGSsWJ7mlad0=
+=SUlN
+-----END PGP SIGNATURE-----
