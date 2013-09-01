@@ -1,30 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/5
-Message-ID: <20130604160754.GA2624@kludge.henri.nerv.fi>
-Date: Tue, 4 Jun 2013 19:07:54 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com, security@...pal.org
-Subject: CVE request: CKEditor module for Drupal access bypass SA-CONTRIB-2011-054
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/01/5
+Message-id: <140daa0383f.2736.e9a71456a41b1faeabc6c13ed23b7beb@me.com>
+Date: Sun, 01 Sep 2013 13:44:31 -0400
+From: Larry Cashdollar <larry0@...com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Remote Command Injection in fog-dragonfly-0.8.2 Ruby Gem
 Content-Type: text/plain; charset=utf-8
 
-This does not seem to have CVE yet. Please assign. Drupal guys could you
-confirm, thanks.
+Yes sorry this is for the gem only.
 
-Advisory ID: DRUPAL-SA-CONTRIB-2011-054
-Project: CKEditor - WYSIWYG HTML editor (third-party module)
-Version: 7.x
-Date: 2011-November-09
-Security risk: Critical
-Exploitable from: Remote
-Vulnerability: Access bypass
-Versions affected: CKEditor 7.x-1.4 version only
-Solution: Upgrade to CKEditor 7.x-1.5
 
-https://drupal.org/node/1337006
-http://osvdb.org/77005
-http://secunia.com/advisories/46772/
+Sent with AquaMail for Android
+http://www.aqua-mail.com
 
----
-Henri Salo
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+On September 1, 2013 12:25:17 PM cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> >Remote Command Injection in fog-dragonfly-0.8.2 Ruby Gem
+> >Download: https://rubygems.org/gems/fog-dragonfly
+> >
+> >"Dragonfly is an on-the-fly Rack-based image handling framework. It is
+> >suitable for use with Rails, Sinatra and other web frameworks.
+> >
+> >Unescaped user supplied input is passed to the command line for shell
+> >execution
+> >
+> >fog-dragonfly-0.8.2/lib/dragonfly/imagemagickutils.rb:
+> >
+> > 20     def convert(tempobject, args='', format=nil)
+> > 21       tempfile = newtempfile(format)
+> > 22       run "#{convertcommand} #{args} #{tempobject.path} #{tempfile.path}"
+> > 23       tempfile
+> > 24     end
+> >
+> >
+> > 61     def run(command)
+> > 62       log.debug("Running command: #{command}") if 
+> ImageMagickUtils.log_commands
+> > 63       begin
+> > 64         result = #{command}
+>
+> Use CVE-2013-5671 for this vulnerability in the fog-dragonfly gem. As
+> far as we can tell, this is a vulnerability in the fog-dragonfly gem,
+> not a vulnerability in Dragonfly. We found these possibly related
+> fixes in Dragonfly:
+>
+>   https://github.com/markevans/dragonfly/commit/ff141bb1d921fff506084b62a562f7a83d5e01fe#lib/dragonfly/image_magick/utils.rb
+>
+>   https://github.com/markevans/dragonfly/commit/47f95bd6b8af11fb0a44d6ab1c6f7d00d880cb68
+>
+> If the unpatched Dragonfly code has a vulnerability in a common use
+> case, this would require a separate CVE ID.
+>
+> - -- CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+>
+> iQEcBAEBAgAGBQJSI2XoAAoJEGvefgSNfHMdv0oH/j0G7m0PMSwn1FvIcVpR39EP
+> yKTuTfa9I5MSr2DXejQQ+5lhJN7eTJwjOTPETpGOu0BkDgMkRvcuw81PqgVwkWXc
+> bT8DfNM/cO4vM3UjTJiTKYinVRMl3xsjGVzkwxV0E1mYhjbjrKGNUMgzjNPsSnja
+> eNYC26v2UDLn3Jw8K7qXTk+ytgFqOE+MiA/KDXBvm6fB1SBOoeeaMGU7NNdCw8A9
+> 95TdYNzYE3JL7V0zz/5oidqkg0hlznK21KR01hUJK0s/U60rdzgA/73O+g8XSP4q
+> vyqN0ykgSDodfAt6JsONR/5wzaXTmc25ZXaB3wMGG9yUxFZiORzVGSsWJ7mlad0=
+> =SUlN
+> -----END PGP SIGNATURE-----
+
+
