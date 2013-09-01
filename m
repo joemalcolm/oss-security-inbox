@@ -1,28 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/24/3
-Message-ID: <20130224134930.GB1722@dhcp-25-225.brq.redhat.com>
-Date: Sun, 24 Feb 2013 14:49:31 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/01/3
+Message-Id: <201309011623.r81GNkPN007293@linus.mitre.org>
+Date: Sun, 1 Sep 2013 12:23:46 -0400 (EDT)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: serendipity before 1.7.3 XSS
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 24, 2013 at 10:10:45AM +0100, Mathias Krause wrote:
-> An unprivileged user can send a netlink message resulting in an
-> out-of-bounds access of the sock_diag_handlers[] array which, in turn,
-> allows userland to take over control while in kernel mode.
-> 
-> Patch (already in net/master):
-> http://thread.gmane.org/gmane.linux.network/260061
-> 
-> Affected versions:
-> v3.3 - v3.8
-> 
-> PoC is not attached this time but can be requested on demand. Hint:
-> Works well on Fedora 18, bypassing all mmap_min_addr checks. ;)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please use CVE-2013-1763.
+> Serendipity blog software contains an XSS in the shipped
+> htmlarea-code for spell checking.
+> 
+> http://osvdb.org/87395
+> http://blog.s9y.org/archives/250-Serendipity-1.7.3-released.html
+> https://github.com/s9y/Serendipity/commit/d7dbe7757371c7f25a39463d1b924604785ae475
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Use CVE-2013-5670.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSI2aJAAoJEGvefgSNfHMdbWgH/1gF/pZXsQ6sHgUg0UXHc5GZ
+0qZUQS2zmlKoNGl/hboXfNjOIv6VwsJ6g0IHMOKfg7NCyfeq33ELTXd7V1fQxAx+
+9zeXWHrnLVmK/QIksycsZFACqGcws6eJhEDCNUL2u9l4yKkSmwCF7/LnGaBDOOr7
+H7QcA3pRJnvxlN8Ps8sOUaWgB0GJr6Bjo7N6Z/e7muJJlz/fbqX40oF/kLopRkba
+AiCif4q0PwR8tmGoU2lk8a8ZpVQtP3o/N22Lke/8qmio81fWPos4bwn8obRBygrp
+p3wPJq+v+zk8bmBCdxnXWN9ECwxzC5BEXm+WbAq6G9rVyzzjrN3Q9Dj05ygJiJg=
+=Cvft
+-----END PGP SIGNATURE-----
