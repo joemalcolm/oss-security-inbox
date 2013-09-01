@@ -1,17 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/4
-Message-ID: <CAE6fNrJ9GFamcNnvbbZgfWOpromHSjnWGEgPgi_o_Nyy01J2sQ@mail.gmail.com>
-Date: Tue, 26 Feb 2013 15:56:04 +0100
-From: sd <sd@...ksheep.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/01/6
+Message-Id: <20130901223530.DE7216015D@smtp.hushmail.com>
+Date: Mon, 02 Sep 2013 00:35:30 +0200
+From: "Adéla Goldová" <roguecoder@...h.com>
 To: oss-security@...ts.openwall.com
-Subject: Archlinux/x86-64 3.1.x-3.7.x x86-64 CVE-2013-1763 sock_diag_handlers[] warez
+Subject: [CVE Request] IndiaNIC Testimonial 2.2 WP plugin
 Content-Type: text/plain; charset=utf-8
 
-http://pastebin.com/a9BrSGFY
+Hey
 
-I'd guess some might find this useful, worked on every x86-64 Arch
-encountered since 3.3. Might be fun to port this to detect other
-distros (since arch is the only rolling kernel widely used, the need
-never arose).
+The testimonial plugin by IndiaNIC contains CSRF, XSS and SQLi vulnerabilities.
+I was able to deface the website, extract user credentials etc through crafted forms.
+Can someone please assign CVE's to this?
 
-View attachment "archer.c" of type "text/x-csrc" (1676 bytes)
+1: http://seclists.org/fulldisclosure/2013/Sep/5
+
