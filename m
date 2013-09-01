@@ -1,45 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/11
-Message-ID: <CAEKxqLDGjbpj+Qp9dtti6g-EE0F9tUWVCKH47z35dSbAJ5bPow@mail.gmail.com>
-Date: Wed, 22 May 2013 08:35:54 -0500
-From: Zate <zate75@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: [Full-disclosure] Thttpd 2.25b Directory Traversal Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/01/2
+Message-id: <5184316d-a68c-4c75-bcee-b1633886b082@me.com>
+Date: Sun, 01 Sep 2013 05:11:05 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Remote Command Injection in fog-dragonfly-0.8.2 Ruby Gem
 Content-Type: text/plain; charset=utf-8
 
-I got the same results.  Locally without http it shows me the local
-/etc/passwd and /etc/system, remotely against the reported version I get
-file not found with both lynx -dump and GET.
 
-Zate
+Hi Can I have a CVE for the following please?
+
+TITLE: Remote Command Injection in fog-dragonfly-0.8.2 Ruby Gem
+
+Credit: Larry W. Cashdollar, @_larry0
+
+Date: 8/16/2013
+
+CVE: TBD
+
+Download: https://rubygems.org/gems/fog-dragonfly
+
+Description:
+"Dragonfly is an on-the-fly Rack-based image handling framework. It is suitable for use with Rails, Sinatra and other web frameworks. Although it's mainly used for images, it can handle any content type."
+Unescaped user supplied input is passed to the command line for shell execution:
+from fog-dragonfly-0.8.2/lib/dragonfly/imagemagickutils.rb:
+
+20     def convert(tempobject, args='', format=nil)
+ 21       tempfile = newtempfile(format)
+ 22       run "#{convertcommand} #{args} #{tempobject.path} #{tempfile.path}"
+ 23       tempfile
+ 24     end
+.
+.
+.
+
+61     def run(command)
+ 62       log.debug("Running command: #{command}") if ImageMagickUtils.log_commands
+ 63       begin
+ 64         result = #{command}
 
 
-On Wed, May 22, 2013 at 8:31 AM, Matthias Weckbecker <mweckbecker@...e.de>wrote:
-
-> On Wednesday 22 May 2013 13:44:09 Oden Eriksson wrote:
-> > onsdagen den 22 maj 2013 13.06.18 skrev  Matthias Weckbecker:
-> > > Hi,
-> > >
-> > > has anybody possibly already confirmed this? It might also be worth
-> > > to assign a CVE to this if it turns out to be a reproducible issue.
-> >
-> > Confirmed here. Needed to use "lynx -dump ...".
->
-> That's weird. But you've tried it *with* 'http://'? Otherwise you
-> don't even generate a HTTP request.
->
-> $ lynx -dump "127.0.0.1:/../../../etc/passwd"
-> vs
-> $ lynx -dump "http://127.0.0.1/../../../etc/passwd"
->
-> I don't think this report is valid.
->
-> Matthias
->
-> --
-> Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-> SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-> Tel: +49-911-74053-0;  http://suse.com/
-> SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg)
->
-
+Vendor Notified: 8/16/2013
+Content of type "text/html" skipped
