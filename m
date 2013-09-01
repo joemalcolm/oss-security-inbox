@@ -1,61 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/20
-Message-ID: <51267909.2040504@redhat.com>
-Date: Thu, 21 Feb 2013 12:44:09 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, Agostino Sarubbo <ago@...too.org>, security-alert@...nx.org
-Subject: Re: CVE request: nginx world-readable logdir
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/01/1
+Message-ID: <20130901070155.08b17abd@hboeck.de>
+Date: Sun, 1 Sep 2013 07:01:55 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE request: serendipity before 1.7.3 XSS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Serendipity blog software contains an XSS in the shipped
+htmlarea-code for spell checking.
 
-On 02/21/2013 11:17 AM, Henri Salo wrote:
-> On Thu, Feb 21, 2013 at 06:50:14PM +0100, Agostino Sarubbo wrote:
->> Hello,
->> 
->> I just noticed my nginx logdir and its content are
->> world-readable:
->> 
->> drwxr-xr-x  2 root root  4096 Jan 10 00:11 . drwxr-xr-x 16 root
->> root  4096 Feb 21 17:46 .. -rw-r--r--  1 root root 69415 Feb 21
->> 17:46 error_log -rw-r--r--  1 root root 93017 Feb 18 22:03
->> localhost.access_log -rw-r--r--  1 root root 86227 Feb 18 22:03
->> localhost.error_log
->> 
->> What do you think about?
->> 
->> -- Agostino Sarubbo / ago -at- gentoo.org Gentoo Linux Developer
-> 
-> Also affects Debian squeeze package. I will report a bug. Can we
-> get a CVE assigned for this issue, thank you.
-> 
-> -- Henri Salo
-> 
+Vulnerability report:
+http://osvdb.org/87395
+Upstream confirmation:
+http://blog.s9y.org/archives/250-Serendipity-1.7.3-released.html
+Git commit:
+https://github.com/s9y/Serendipity/commit/d7dbe7757371c7f25a39463d1b924604785ae475
 
-Ok is this like standard HTTPD style logs? If so then they would
-generally be considered sensitive (GET strings, etc.). Adding nginx to
-the cc so they know.
+Please assign CVE.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+cu,
+-- 
+Hanno Böck
+http://hboeck.de/
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-iQIcBAEBAgAGBQJRJnkJAAoJEBYNRVNeJnmTogYQAIjhxGUtaPwlhIi7kwjlPJHh
-sZltN3ggmrz5KRCAhMPMYYxNoBR99Wsmdw/zLHTxKWCFUTrhP2d6g7VIuWum9947
-KMpkkVLRmToVt9YVLiXvfHp+N0zdVKsMSNW0G8OxrpFCiecV3GzMuy++oQDUV57L
-w/5sHyG1qOM/0yXh0tVnnFGbw4RnOb+hlWfvDV3AyyxJBw7BoNP6+O/a0Z+6H85N
-cPSFEzsrZjhrb9oPwNq/am4IGxC+6/QaejcftUPuMSgGCuYVqd4l/17zcHU0v2P/
-7oKExsx93lapJr2aYlIs1BabAM4AN3zfbadTXrQGHCLuIgDoWHODA+9Uu3Lfvbr8
-GoW6l+CaF4b4Q7LsC8ArPBiRp+wB0QKTfMsj2Y3TAunor6oytr+umB9Ph43yb2hG
-38ViPFYVAEk0FDnf8BpJrWbTivZxgU0ATRu+VW5Hn5ZGsBR8X7kZRAzhvTdFFU2g
-6Fb0GSdNwHaaqz42v2ZQDPpGj9TzxZMvIaeMU1BYxVdEdG8IKm94caAUhGzCKhSc
-Evj8ag49KqyjAD2pej58b4QY/g9yEEkptWr+LqrikimeRVpqXZCJJ4+b0p9pEvU5
-qbTG/HsaucXO7hKdwC996palugLoA8RaSgUmocmCQl5yPiXo43rAhAC0gTyUpTN5
-323PDSl7MT6RS70Lkxj4
-=kJtZ
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
