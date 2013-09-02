@@ -1,120 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/06/4
-Message-ID: <515F67C1.8000601@redhat.com>
-Date: Fri, 05 Apr 2013 18:09:37 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Damien Regad <damien.regad@...ckgroup.com>
-Subject: Re: Multiple CVE requests for MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/02/1
+Message-Id: <201309020043.r820hGQH015179@linus.mitre.org>
+Date: Sun, 1 Sep 2013 20:43:16 -0400 (EDT)
+From: cve-assign@...re.org
+To: roguecoder@...h.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: [CVE Request] IndiaNIC Testimonial 2.2 WP plugin
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/04/2013 05:17 PM, Damien Regad wrote:
-> Greetings,
-> 
-> The following 4 issues were discovered in the Mantis Bug Tracker:
-> 
-> 
-> 1. Close button available to users despite workflow restrictions
-> 
-> This issue affects Mantis 1.2.12 and later.
-> 
-> It allows low-privileged users to close issues even though the
-> workflow settings do not permit it.
-> 
-> Reference: http://www.mantisbt.org/bugs/view.php?id=15453
+> The testimonial plugin by IndiaNIC contains CSRF, XSS and SQLi vulnerabilities.
+> I was able to deface the website, extract user credentials etc through crafted forms.
+> Can someone please assign CVE's to this?
+>
+> 1: http://seclists.org/fulldisclosure/2013/Sep/5
 
-Please use CVE-2013-1930 for this issue.
+> http://wordpress.org/plugins/indianic-testimonial/
 
-> 2. XSS vulnerability when deleting a version
-> 
-> This issue affects Mantis 1.2.14 only.
-> 
-> Arbitrary JavaScript could be executed in the client's browser when
-> deleting a version containing embedded code in its name. The
-> criticality of this issue is compounded by the fact that a
-> high-privilege account (typically project manager or administrator)
-> is required to both to create and delete a version.
-> 
-> Reference: http://www.mantisbt.org/bugs/view.php?id=15511
+The entire disclosure seems to be based on CSRF attacks against an
+admin. Based on what you sent, we are not sure whether XSS is an
+independent vulnerability in this plugin. Is there a usable XSS attack
+that does not require a CSRF vulnerability, and does not require that
+the admin intentionally enter an XSS attack string during an
+authenticated session?
 
-Please use CVE-2013-1931 for this issue.
+The SQL injection:
 
-> 3. XSS vulnerability on Configuration Report page
-> 
-> This issue affects Mantis 1.2.13 only [1].
-> 
-> If the system defines a Project containing embedded JavaScript code
-> in its name, that code would be executed in the client's browser
-> when displaying the configuration report page
-> (adm_config_report.php).
-> 
-> The severity of this issue is mitigated by the need to have a 
-> high-privileged account both to set the project's name and to
-> access the configuration report page.
-> 
-> Reference: http://www.mantisbt.org/bugs/view.php?id=15415
+  name="custom_query" value="1=1) union select 1,2,3,@@version,5,6,7,8,9,10,11,12,13,14#"
 
-Please use CVE-2013-1932 for this issue.
+is something that we would typically expect is an independent
+vulnerability. A person who has admin access within a web interface is
+not necessarily authorized to execute arbitrary SQL statements. We
+found this code that seems to be relevant:
 
-> 4. XSS issue on Configuration Report page when displaying complex
-> value
-> 
-> This issue affects Mantis 1.2.0rc1 and later.
-> 
-> Lack of proper string escaping allows users (having admin access)
-> to enter arbitrary javascript code and have it executed on the
-> user's browser.
-> 
-> Reference: http://www.mantisbt.org/bugs/view.php?id=15416
+  http://plugins.svn.wordpress.org/indianic-testimonial/trunk/testimonial.php
+  
+      if ($_template_data['custom_query']) {
+        $filter_by = " AND ({$_template_data['custom_query']})";
+      }
 
-Does this count as a proper release or does it fall into the "beta"
-classification?
+      $_testimonial_result = $this->wpdb->get_results(
+      "SELECT * FROM {$this->wpdb->prefix}inic_testimonial WHERE (id NOT IN(" .
+      implode(",", $_current_featured_testimonial_id) . ")){$filter_by}
+      ORDER BY {$_template_data['ord_by']} LIMIT {$_no_of_testimonial}");
 
-> 
-> Issues resolution:
-> 
-> - 1 & 2 will be fixed in upcoming release 1.2.15, expected to go
-> live sometime next week (patches are available in the referenced
-> issues)
-> 
-> - 3 & 4 were both resolved in version 1.2.14, released on
-> 29-Jan-2013
-> 
-> 
-> Could you kindly assign CVEs for the above issues ? Thanks in
-> advance.
-> 
-> 
-> Best regards, D. Regad MantisBT Developer http://www.mantisbt.org
-> 
-> [1] MantisBT version 1.2.13 was tagged in the repository but never
-> formally released, as we discovered several critical issues at the
-> last minute and decided to pull it and released 1.2.14 a week later
-> instead.
-> 
-> 
+So, the outcome at this point is:
 
+  IndiaNIC Testimonial plugin 2.2 for WordPress
+
+  CSRF:           Use CVE-2013-5672.
+  SQL injection:  Use CVE-2013-5673.
+  XSS:            no CVE assigned; waiting for other information that
+                  XSS is an independent primary vulnerability here
+
+MITRE's CVE team does not do vulnerability coordination, but we think
+this disclosure process is not what the vendor would have preferred:
+
+  2013-08-07 - Email sent to IndiaNIC
+  2013-08-08 - Notification left on the plugin's Support board on wordpress.org
+
+Please see the "For a WordPress plugin security issue, email plugins
+[at] wordpress.org" step listed on the
+http://codex.wordpress.org/FAQ_Security web page.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJRX2fAAAoJEBYNRVNeJnmTPp4P/Rr4LuoQagM3dEgb+AsOJS04
-aN/EjKNJ70IEjYge2B2k3AxwdAWJAm0C+w27caR/yx+1kxptH31eE5CGyUUbGS95
-kfizE9eIhUufMt97xIV9Mnazfbkk5/faRL5SvgcZmvI2us6RmTROrElND9kpe8eM
-vsfb65SgdnrSCMBmltOYo61o0JgnIsJ9ElpOkyhGySeZbIDlwh9TpITmWdgVF0u1
-PeXS28jjwm0cQgHYUkdT38MjzS3MV0pJyYaIlY31ifAQVcY4UnzNrn5oV07WuLZ/
-YHgM3e/gbnPvVDg052VKjK7uY+OMnohSLB7j+LuEni7i+VmW8vJh6ntdB0Qvjl9D
-lktmvw0ulq6xN175JiOib3v7WhxF6TZYQmuLiTE+3ZGsu+Yt5bvfS6zQkYJE3o2t
-DO8wwudt9QC3H+HxFgTVh8ystDxbzorgxci34vq9cOGogGzEWBWNIc9NVjpiiCaK
-DakOsFVOmwrzeeZpChYtvECl3x36lI1xl/dmvwcci/yTJ/RzYg2h+2tObc5NZgkJ
-PY5FTa2hLJNBHO9CdgL0PfR5KZhzilaI8AlpWR4CkYxFOBMCWV572NfeG6LUg2xS
-7ZUAe9w0hCAkiVwyAaiJUf9aYngLN/kwVGRJQUK0R+p8cZnl4iYjcIvzLwi5lWcT
-Yi9mzFyrPEePbnszIppd
-=cV+p
+iQEcBAEBAgAGBQJSI91WAAoJEGvefgSNfHMdFzgIAIIIKw5mquHpGMdKVgmEoA/H
+NfKySaxYvWUhxspwxYP4tciasZWpMDI3AL3s8OTlOJ1uEr08GTEvUXd6lBvXvqRu
+w0bQhYwpGBU6A5m71UWiOUKWUy7qKstC9fcUNlxbDysX7s+/tUzFZsqpXmtuTPc7
+a/KFj/LuGcNi4voBqkv0/GZFNvU9jmySjhSVPCOwAiFw02HmU3GbmvJ24CNFvkca
+QJNY3jxLA3h7YSHPk8A0sYxWiiAyKXeyjN5t2o2R0tHBiNpKIoqCZjH+YSjNo1IU
+YuM7i3yfrQm8uGlLc8gB7NmWMMQqokf0BF4Gi3StFGBAsx+WrX3yAu45LvLyjMI=
+=u0kJ
 -----END PGP SIGNATURE-----
