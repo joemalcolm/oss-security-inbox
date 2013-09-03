@@ -1,39 +1,173 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/4
-Message-ID: <511DF2DA.7010706@msgid.tls.msk.ru>
-Date: Fri, 15 Feb 2013 12:33:30 +0400
-From: Michael Tokarev <mjt@....msk.ru>
-To: oss-security@...ts.openwall.com
-Subject: CVE# request: pigz creates temp file with insecure permissions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/03/4
+Message-ID: <20130903230243.GF32641@redhat.com>
+Date: Tue, 3 Sep 2013 17:02:43 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: Jonas Meurer <jonas@...esources.org>, contribute@...ios.org
+Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
 Content-Type: text/plain; charset=utf-8
 
-I think this one well deserves a CVE#.  I just submitted the following
-bug #700608 to Debian BTS:
+* [2013-09-03 13:41:03 -0600] Kurt Seifried wrote:
 
-When asked to compress a file with restricted permissions (like
-mode 0600), the .gz file pigz creates while doing this has
-usual mode derived from umask (like 0644).  If the file is
-large enough (and why we would use pigz instead of gzip for
-small files), this results in the original content being
-readable for everyone until the compression finishes.
+>-----BEGIN PGP SIGNED MESSAGE-----
+>Hash: SHA1
+>
+>On 08/30/2013 09:47 AM, Jonas Meurer wrote:
+>> Any news on that?
+>>
+>> I still believe that there's a misunderstanding. I still consider
+>> the bug I found as security relevant. Hostnames are leaked to
+>> unauthorized nagios-cgi users.
+>>
+>> In case that you don't agree with what I've written below, please
+>> explain.
+>>
+>> Honestly, I cannot believe that it was meant as a _feature_ by
+>> nagios devs that _all_ hostnames are displayed for _all_ users,
+>> regardless whether they're listed in contacts/contactgroups.
+>>
+>> I don't consider this issue too important, but still a CVE would
+>> be appropriative in my opinion. It should be fixed in future
+>> uploads of nagios3 to the major distributions. Most nagios admins
+>> might be unaware of this issue.
+>>
+>> Kind regards, jonas
+>>
+>>
+>> Am 2013-08-04 02:40, schrieb Jonas Meurer:
+>>> Hello,
+>>>
+>>> sorry, I'm on holidays and cannot work on this issue for the next
+>>> two weeks. But I think that there is a missunderstanding. See my
+>>> short comment below.
+>>>
+>>> Am 02.08.2013 19:27, schrieb Vincent Danen:
+>>>> * [2013-07-10 17:17:08 +0200] Jonas Meurer wrote:
+>>>>
+>>>>> Hello,
+>>>>>
+>>>>> Am 2013-07-08 20:16, schrieb Kurt Seifried:
+>>>>>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>>>>>>
+>>>>>> On 06/26/2013 01:42 PM, Kurt Seifried wrote:
+>>>>>>> On 06/26/2013 12:36 PM, Vincent Danen wrote:
+>>>>>>>> I don't believe a CVE has been assigned to this issue
+>>>>>>>> yet.
+>>>>>>>
+>>>>>>>> It was reported that Nagios 3.4.4 at least, and
+>>>>>>>> possibly earlier versions, would allow users with
+>>>>>>>> access to Nagios to obtain full access to the
+>>>>>>>> servicegroup overview, even if they are not authorized
+>>>>>>>> to view all of the systems (not configured for this
+>>>>>>>> ability in the authorized_for_* configuration option).
+>>>>>>>> This includes the servicegroup overview, summary, and
+>>>>>>>> grid.
+>>>>>>>
+>>>>>>>> Provided the user has access to view some services,
+>>>>>>>> they will be able to see all services (including those
+>>>>>>>> they should not see). Note that the user in question
+>>>>>>>> must have access to some services and must have access
+>>>>>>>> to Nagios to begin with.
+>>>>>>>
+>>>>>>>> This has not yet been corrected upstream.
+>>>>>>>
+>>>>>>>> References:
+>>>>>>>
+>>>>>>>> http://www.mail-archive.com/nagios-users@lists.sourceforge.net/msg39749.html
+>>>>>>>>
+>>>>>>>>
+>>>>>>>
+>>>>>>>>
+>>>>>>>>
+>http://tracker.nagios.org/view.php?id=456
+>>>>>>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714171
+>>>>>>>>
+>>>>>>>>
+>https://bugzilla.redhat.com/show_bug.cgi?id=978531
+>>>>>>>
+>>>>>>>
+>>>>>>>> Thanks.
+>>>>>>>
+>>>>>>> Please use CVE-2013-2214 for this issue.
+>>>>>>
+>>>>>> It appears there are may be some problems with this issue,
+>>>>>> potentially this may have been a bad configuration and not
+>>>>>> a source code based problem, however we haven't been able
+>>>>>> to confirm it yet. I've also not been able to contact
+>>>>>> upstream about this easily (no security@ address, if anyone
+>>>>>> know whom to forward this to, please let me know, thanks.
+>>>>>
+>>>>> I'm wondering why you fail to reproduce this issue. I posted
+>>>>> some details regarding my setup at the Nagios Tracker:
+>>>>> http://tracker.nagios.org/view.php?id=456
+>>>>>
+>>>>> Unfortunately Nagios upstream sometimes rather unresponsive.
+>>>>> At least that's what I observed.
+>>>>>
+>>>>> Please let me know if you need any further details regarding
+>>>>> the bug or advice on how to reproduce it.
+>>>>
+>>>> To close the loop on this, the CVE should probably be
+>>>> rejected. According to upstream, this is done by design.  One
+>>>> of our users noted it in our bugzilla:
+>>>>
+>>>> https://bugzilla.redhat.com/show_bug.cgi?id=978531#c11
+>>>>
+>>>> He has a thorough explanation, but the bottom line is this
+>>>> seems to be by design, as noted in the changelog:
+>>>>
+>>>> http://www.nagios.org/projects/nagioscore/history/core-3x
+>>>>
+>>>> * Users can now see hostgroups and servicegroups that contain
+>>>> at least one host or service they are authorized for, instead
+>>>> of having to be authorized for them all (Ethan Galstad)
+>>>
+>>> As I understand this changelog entry, it means the following:
+>>>
+>>> Hostgroups and servicegroups are listed with all the
+>>> _authorized_ members if the user is authorized to see at least
+>>> one member.
+>>>
+>>> To me it doesn't mean the following (which was the case without
+>>> my patch):
+>>>
+>>> Servicegroups are listed with all members (regardless wether
+>>> authorized or unauthorized) if the user is authorized to see at
+>>> least one member.
+>>>
+>>> Another argument for my point of view is that the nagios
+>>> maintainers (silently) accepted my patch (at least if I remember
+>>> correctly, it has been incorporated into the upstream development
+>>> repository). Unfortunately there's still not one single statement
+>>> from upstream about the issue, that I'm aware of.
+>>>
+>>>> I suspect this CVE should be rejected as this is done by
+>>>> design.
+>>>
+>>> Like explained above, I disagree with this suggestion :)
+>>>
+>>> Kind regards, jonas
+>
+>https://bugzilla.redhat.com/show_bug.cgi?id=978531#c11
+>
+>So as I understand it, NOTABUG, upstream documented it, etc.
 
-Here's the deal:
+Until and unless upstream acknowledges that this isn't by design (which
+the changelog entry most definitely indicates it _is_ by design) then I
+don't think there's anything we can do.
 
-$ fallocate -l 1G foo
-$ chmod 0600 foo
-$ pigz foo &
-$ ls -l foo foo.gz
--rw------- 1 mjt mjt 1073741824 Feb 15 12:27 foo
--rw-rw-r-- 1 mjt mjt     502516 Feb 15 12:27 foo.gz
+I mean, if someone wants to shoot themselves in the foot and document it
+as a feature, who are we to say otherwise?  We may not agree with it,
+but it's a documented feature (deliberately changed), so we can't just
+very well call it a security flaw because we don't like the new
+behaviour.
 
-When it finishes, it correctly applies original file permissions
-to the newly created file, but it is already waaay too late.
+Having said that, it would be fantastic if the folks at Nagios would
+speak up and put this to rest.  It could be a design decision that went
+too lax (thus being a flaw, exposing more than intended), or this might
+actually be what was meant.  Until upstream says one way or another, I
+would consider this not a security flaw.
 
-Other one-file archivers (gzip, xz, bzip2, ...) usually create
-the temp file with very strict permissions first, and change it
-to the right perms only when done, so only the current user can
-read it.
-
-Thanks!
-
-/mjt
+-- 
+Vincent Danen / Red Hat Security Response Team 
