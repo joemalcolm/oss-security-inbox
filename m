@@ -1,56 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/10
-Message-ID: <5135CAAD.7030504@redhat.com>
-Date: Tue, 05 Mar 2013 03:36:29 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: P J P <ppandit@...hat.com>
-Subject: Re: CVE request: Linux kernel: xfs: _xfs_buf_find NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/7
+Message-ID: <89555bf83fbb374e70bab82aba41a3bc@imap.steindlberger.de>
+Date: Wed, 04 Sep 2013 13:45:33 +0200
+From: Jonas Meurer <jonas@...esources.org>
+To: Andreas Ericsson <ae@....se>
+Cc: oss-security@...ts.openwall.com, nagios-devel@...ts.sourceforge.net, Vincent Danen <vdanen@...hat.com>, Kurt Seifried <kseifried@...hat.com>, contribute@...ios.org
+Subject: Re: Security bug or feature? Servicegroups leak hostnames to unauthorized users (Was: CVE request: unauthorized host/service views displayed in servicegroup view)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 03/05/2013 03:08 AM, P J P wrote:
-> Hello,
+Am 2013-09-04 11:03, schrieb Andreas Ericsson:
+> On 2013-09-04 10:31, Jonas Meurer wrote:
+>> Hey list and fellow Nagios developers,
+>> 
+>> as you might have noticed, there's a discussion ongoing on 
+>> oss-security[1]
+>> regarding bug report #456[2].
+>> 
+>> I'm the one who discovered the described issue, and I still believe 
+>> that
+>> it's a bug with security implications, even though not everyone seems 
+>> to
+>> be convinced.
+>> 
+>> I'll try to give a brief description of the issue:
+>> 
+>> The Nagios status.cgi (at all 3.4* and 4.0* versions I checked) leaks
+>> hostnames to unauthorized users as part of servicegroups. All of
+>> servicegroup overview, summary and grid list each and every hostname 
+>> that
+>> is part of a servicegroup, regardless whether the HTTP user is listed 
+>> in
+>> contacts/contactgroups for this host.
+>> 
+>> In my opinion this is a security issue - at least on multi-user (e.g.
+>> multi-customer) Nagios-setups. I guess that most ISPs which give their
+>> customers access to the Nagios CGIs don't want to provide a full list
+>> of monitored hosts to their customers as a side-effect.
+>> 
+>> One reason for confusion is the following entry from Nagios3 
+>> changelog[3]:
+>> 
+>> 3.4.0 - 05/04/2012
+>> ENHANCEMENTS
+>> [...]
+>> - Users can now see hostgroups and servicegroups that contain at least
+>>    one host or service they are authorized for, instead of having to
+>>    be authorized for them all (Ethan Galstad)
+>> 
+>> 
+>> The indisputable part of this change is, that users are allowed to see
+>> hostgroups and servicegroups with at least one authorized host or
+>> service. Unclear is, whether this means "group and all its group
+>> members", or "group and only authorized group members".
+>> 
 > 
-> Linux kernel built with support for XFS file system is vulnerable
-> to a NULL pointer dereference flaw. This occurs while accessing
-> blocks beyond the end of the file system, possibly on a corrupted
-> device.
+> It should mean "group and only authorized group members, except also
+> hosts for services where one is authorized to see the service".
+
+Ok, so if this was intended, then there indeed is a bug.
+
+>> You can find my patch at the Nagios Issue Tracker.
 > 
-> A user able to mount the file system could use this flaw to crash
-> the kernel, resulting in DoS.
+> Ah, right. Care to provide a link? Mostly, I prefer to get patches to
+> this mailing list, since I don't spend a lot of time hunting them down
+> from the (underused) tracker.
+
+Sure, my original mail already had it as footnote. Here you find patches
+for Nagios 3.4.4 and 4 (master from 26.06.2013):
+
+http://tracker.nagios.org/view.php?id=456
+
+>> A comment about this issue by the Nagios Developers whould be highly
+>> appreciated. In case that the described (and critizised) behaviour of
+>> status.cgi is intended, the distribution security teams can move on.
+>> 
 > 
-> Upstream fix: ------------- ->
-> https://git.kernel.org/linus/eb178619f930fa2ba2348de332a1ff1c66a31424
->
->  Reference: ---------- ->
-> https://bugzilla.redhat.com/show_bug.cgi?id=918009
-> 
-> Thank you. -- Prasad J Pandit / Red Hat Security Response Team DB7A
-> 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+> Well, it *was* by design, but now I'm changing the design. It's a good
+> time for it, since 4.0 is about to come out. I think the security teams
+> can move on and we'll consider this "changed" rather than "fixed" for
+> 4.0, where we do some security tightening.
 
-Please use CVE-2013-1819 for this issue.
+At least when I checked last (26.06.2013), Nagios 4 was still affected
+by the bug. Did you change the way status.cgi checks for authentication
+in the meantime?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Kind regards,
+  jonas
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRNcqsAAoJEBYNRVNeJnmTNWAP/iVgzKLALr90GoEczhWQXMWt
-xFE/DyzNpjR1qm3S3gPJ2MUozGYX4UgF6+68F3dpJJY85woXY0k40rdK8KPctlfE
-5dVHOeSAVxvEV0SfEK0rT6+L1KD5rCjnoOR1l2QyCYX2Qww04PLOIN/uZlJeEklY
-BjdZ6JueSQfyJNaCBpDyURwpY1GNk69TpHJ9+NHcOJ/BmsspVcMN5aOd4XN94U8M
-0D3s5mWj8hBsoPLFziNanFbJJNHZx6PrJoQyNwr6XOoGD3AwlhIUgVtHERMyxGxF
-wh3d1GdSqWhjPvrFr1DlQD0Pi4h5Pgp0YwOetREpjzPaWzkIinvNTZwHmGTHGNVL
-2U36DFi/N67xqZgZ+isRdIl1LsEuLueUJlZB813iYbG1mRQpCyZ/5nX5uliwqAlX
-mO7mg1Nj1mgvjFrb7M8wRU9tW1es364u6Rproa7qx2BATrfvqZMUPFDW3xGBVTqA
-fqIpgLjvYq+DXTJPGAPN1R9sP3kFtoudh1UzYeoTu20cEJhpThSoRLsHQWTZFaOB
-RW5QVs0MQphxRvGjCL/DsLRad6Ofv7C18NUpeOE6E4rYX7OzfUDEiQcfD5P++PkZ
-1U46TLXlfZlSFv6Ba/OzDrRuKJrY3VHBe7voIb/0iyfTEyundsGlvSd/o8afSvs3
-Kml2h0N0OZMp2C/WXIs8
-=8keL
------END PGP SIGNATURE-----
