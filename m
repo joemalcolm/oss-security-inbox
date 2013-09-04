@@ -1,65 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/11/4
-Message-ID: <1828157696.494253.1360590449549.JavaMail.root@redhat.com>
-Date: Mon, 11 Feb 2013 08:47:29 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Josselin Mouette <joss@...ian.org>
-Subject: Re: CVE request: Transmission can be made to crash remotely
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/6
+Message-ID: <52271148.4000906@op5.se>
+Date: Wed, 04 Sep 2013 12:54:00 +0200
+From: Andreas Ericsson <ae@....se>
+To: Jochen Bern <Jochen.Bern@...works.de>
+CC: Nagios Developers List <nagios-devel@...ts.sourceforge.net>,  oss-security@...ts.openwall.com, Vincent Danen <vdanen@...hat.com>,  contribute@...ios.org, Kurt Seifried <kseifried@...hat.com>
+Subject: Re: [Nagios-devel] Security bug or feature? Servicegroups leak hostnames to unauthorized users (Was: CVE request: unauthorized host/service views displayed in servicegroup view)
 Content-Type: text/plain; charset=utf-8
 
-Hello Yves-Alexis,
+On 2013-09-04 11:37, Jochen Bern wrote:
+> On 04.09.2013 11:03, Andreas Ericsson wrote:
+>> On 2013-09-04 10:31, Jonas Meurer wrote:
+>>> The indisputable part of this change is, that users are allowed to see
+>>> hostgroups and servicegroups with at least one authorized host or
+>>> service. Unclear is, whether this means "group and all its group
+>>> members", or "group and only authorized group members".
+>>
+>> It should mean "group and only authorized group members, except also
+>> hosts for services where one is authorized to see the service".
+> [...]
+>> Well, it *was* by design, but now I'm changing the design. It's a good
+>> time for it, since 4.0 is about to come out. I think the security teams
+>> can move on and we'll consider this "changed" rather than "fixed" for
+>> 4.0, where we do some security tightening.
+>
+> Since you do seem to be willing to ponder the system of access rights
+> and its security implications: I haven't checked the 4.x prereleases
+> yet, does being authorized to see a host's information still necessarily
+> provide access to *all* services on it?
+>
 
-  to follow up on this one. The source of the issue
-seems to be underlying libutp code:
-[1] https://trac.transmissionbt.com/ticket/5002#comment:22
+AFAIK, yes. Please understand that I'm very uninterested in changes to
+the UI though, and I'd be much (much) happier if UI and core were
+split into two different components.
 
-more specifically the way how libutp (previously) handled
-selective acknowledgements, which resulted in following two
-(libutp) patches:
-[2] https://github.com/bittorrent/libutp/issues/38
-[3] https://github.com/bittorrent/libutp/issues/37
+> In the "customers accessing provider's Nagios" scenario, I suppose that
+> the customer might be interested in seeing "application is running" but
+> not, say, "the snmpd that ties this machine to the provider's NMS is
+> acting up" ...
+>
 
-Transmission upstream corrected this issue in v2.74:
-[4] https://trac.transmissionbt.com/query?milestone=2.74&group=component&order=severity
+I agree. The problem is that with access to the host comes access to
+commands that affect all services on that host as well, so it's not
+necessarily as clearcut as "disable viewing here and we're done", if
+one wants to do things properly.
 
-with the following patch:
-[5] https://trac.transmissionbt.com/changeset/13646
+-- 
+Andreas Ericsson                   andreas.ericsson@....se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-Ad assigning CVE ids - I think one CVE id is enough.
-The problem is in libutp code, and Transmission upstream
-seems to commit their own change only due to libutp
-(un)responsiveness:
-[6] https://trac.transmissionbt.com/ticket/5002#comment:32
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: All the links from above at one place are at:
-      [7] https://bugzilla.redhat.com/show_bug.cgi?id=909934
-
------ Original Message -----
-On dim., 2013-02-10 at 11:50 +0100, Josselin Mouette wrote:
-> Package: transmission-daemon
-> Version: 2.52-3
-> Severity: grave
-> Tags: security patch upstream
-> Justification: user security hole
-> 
-> The transmission-daemon package in wheezy crashes regularly. According 
-> to upstream this is a remote security hole (at least a remote DoS, but 
-> most probably there is a way to take control of the process).
-> 
-> https://trac.transmissionbt.com/ticket/5044
-> https://trac.transmissionbt.com/ticket/5002
-> 
-> Apparently there is no CVE assigned. The bug is fixed upstream and I’m 
-> attaching the patch. I’m currently testing a patched package, and will 
-> report whether the fix is sufficient.
-> 
-> Could a CVE be assigned for this?
-> 
-> Thanks in advance,
-> -- 
-> Yves-Alexis
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
