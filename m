@@ -1,30 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/17
-Message-ID: <8738swpga4.fsf@windlord.stanford.edu>
-Date: Wed, 05 Jun 2013 11:24:19 -0700
-From: Russ Allbery <rra@...nford.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/3
+Message-ID: <5226F74D.50608@op5.se>
+Date: Wed, 04 Sep 2013 11:03:09 +0200
+From: Andreas Ericsson <ae@....se>
 To: oss-security@...ts.openwall.com
-Cc: audreyt@...reyt.org
-Subject: Re: CVE-2013-2145: perl Module::Signature code execution vulnerability
+CC: Jonas Meurer <jonas@...esources.org>,  nagios-devel@...ts.sourceforge.net, Vincent Danen <vdanen@...hat.com>,  Kurt Seifried <kseifried@...hat.com>, contribute@...ios.org
+Subject: Re: Security bug or feature? Servicegroups leak hostnames to unauthorized users (Was: CVE request: unauthorized host/service views displayed in servicegroup view)
 Content-Type: text/plain; charset=utf-8
 
-Vincent Danen <vdanen@...hat.com> writes:
+On 2013-09-04 10:31, Jonas Meurer wrote:
+> Hey list and fellow Nagios developers,
+>
+> as you might have noticed, there's a discussion ongoing on oss-security[1]
+> regarding bug report #456[2].
+>
+> I'm the one who discovered the described issue, and I still believe that
+> it's a bug with security implications, even though not everyone seems to
+> be convinced.
+>
+> I'll try to give a brief description of the issue:
+>
+> The Nagios status.cgi (at all 3.4* and 4.0* versions I checked) leaks
+> hostnames to unauthorized users as part of servicegroups. All of
+> servicegroup overview, summary and grid list each and every hostname that
+> is part of a servicegroup, regardless whether the HTTP user is listed in
+> contacts/contactgroups for this host.
+>
+> In my opinion this is a security issue - at least on multi-user (e.g.
+> multi-customer) Nagios-setups. I guess that most ISPs which give their
+> customers access to the Nagios CGIs don't want to provide a full list
+> of monitored hosts to their customers as a side-effect.
+>
+> One reason for confusion is the following entry from Nagios3 changelog[3]:
+>
+> 3.4.0 - 05/04/2012
+> ENHANCEMENTS
+> [...]
+> - Users can now see hostgroups and servicegroups that contain at least
+>    one host or service they are authorized for, instead of having to
+>    be authorized for them all (Ethan Galstad)
+>
+>
+> The indisputable part of this change is, that users are allowed to see
+> hostgroups and servicegroups with at least one authorized host or
+> service. Unclear is, whether this means "group and all its group
+> members", or "group and only authorized group members".
+>
 
-> I've suggested to upstream that if they want this to be used seriously
-> for trust (and not just verifying that the distribution is untampered
-> with, according to whomever was able to sign the SIGNATURE file), that
-> they should disable the auto-retrieval of keys by default and/or CPAN
-> should manage their own keyserver of trusted keys and cpansign should
-> only pull from that keyserver.  The first is probably practical enough
-> to do, the second I'm not so sure.
+It should mean "group and only authorized group members, except also
+hosts for services where one is authorized to see the service".
 
-Speaking as a CPAN author, the second would be awesome.  For bonus points,
-once one registers a key with CPAN, CPAN could then even check one's
-uploads and disallow uploads that aren't signed with the proper key.
+> Unfortunately, no Nagios developer speaked up yet about this issue. Thus
+> there's still a lot confusion about it.
+>
 
-It would require work by the CPAN maintainers, but the general
-infrastructure is in place to do things like this and one could bootstrap
-from CPAN username/password.
+Well, now I have, so confusion dispelled.
+
+> You can find my patch at the Nagios Issue Tracker.
+
+Ah, right. Care to provide a link? Mostly, I prefer to get patches to
+this mailing list, since I don't spend a lot of time hunting them down
+from the (underused) tracker.
+
+> This patch changes
+> status.cgi behaviour to show only group members (hosts/services) that
+> the user is authorized to see.
+>
+> A comment about this issue by the Nagios Developers whould be highly
+> appreciated. In case that the described (and critizised) behaviour of
+> status.cgi is intended, the distribution security teams can move on.
+>
+
+Well, it *was* by design, but now I'm changing the design. It's a good
+time for it, since 4.0 is about to come out. I think the security teams
+can move on and we'll consider this "changed" rather than "fixed" for
+4.0, where we do some security tightening.
+
+> If on the other hand you agree with me, that this issue should be
+> fixed, I'll continue to work with the security teams in order to
+> provide patched Nagios packages for their distributions.
+>
+> Thanks for your work on Nagios, it's a very valuable piece of software!
+>
+
+Thanks for enjoying it.
 
 -- 
-Russ Allbery (rra@...nford.edu)             <http://www.eyrie.org/~eagle/>
+Andreas Ericsson                   andreas.ericsson@....se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
