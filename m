@@ -1,39 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/23/2
-Message-ID: <512855F4.70607@redhat.com>
-Date: Fri, 22 Feb 2013 22:39:00 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/12
+Message-ID: <20130904215001.GQ32641@redhat.com>
+Date: Wed, 4 Sep 2013 15:50:01 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVEs for libxml2 and expat internal and external XML entity expansion
+Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* [2013-09-04 11:25:21 -0400] Daniel Kahn Gillmor wrote:
 
-On 02/22/2013 08:20 AM, Jakub Wilk wrote:
-> 
-> That'd be CVE-2003-1564, fixed in 2.7.0.
+>[dropping cc's, just leaving oss-security]
+>
+>On 09/03/2013 07:02 PM, Vincent Danen wrote:
+>
+>> I mean, if someone wants to shoot themselves in the foot and document it
+>> as a feature, who are we to say otherwise?  We may not agree with it,
+>> but it's a documented feature (deliberately changed), so we can't just
+>> very well call it a security flaw because we don't like the new
+>> behaviour.
+>
+>I'm curious about this.  If, say, a modern TLS library some day decides
+>to get around to implementing (old, deprecated, known-insecure,
+>previously-unimplemented) SSLv2, and announces it as a feature, and
+>enables it by default, is the consensus of this group that we would not
+>treat it as worthy of a CVE, despite being a clear security weakening?
+>
+>At what point does the security community override the upstream
+>decisions and declare the packages vulnerable?
 
-Against exponential, but not quadratic/fast linear.
+That's a good question.  For your example, I'd say that's a bad thing...
+we all know SSLv2 is insecure and we would consider the developer to be
+a little "special" in the head, I think.  =)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+This is a bit different though.  The users are authenticated -- it's not
+unauthenticated exposure.  How granular the access controls _within_
+that application are largely depend on the developer.  It might be
+different if they decided to chuck the whole authentication basis and
+decided that information in Nagios should be public.  But, even then,
+that is a definite design decision -- is it still a security flaw?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Arguably, Google searches often reveal sensitive information -- does
+that mean Google searches require a CVE?  Or is that up to the end user
+to decide "this has too much risk" or "I disagree with the design
+decision here and will suit something better to my use-case"?
 
-iQIcBAEBAgAGBQJRKFX0AAoJEBYNRVNeJnmT6kEP/1/twnDxFJC2jjII31sxsaaf
-QNtizYtIvI/6xQmolf9U0zTp7miq32JpLIedt0sGrI0bpe31zXMbgN1Xu4ZW/QCh
-MHQy+ETwXRoixTB6AcJ6jZtK5brnyzEY/b+wtkmp9bUMW2XcI3Sgx3nIY8vBTDYs
-bH8Cq+j0LRgJzQelhPPeMvTg/5dXMW+H7izjl42Vc8GIKwROrqN+JuR6sMdJ1/cD
-O0xmWRdT6NypbxoZ9PO5pJ6WiSvHve8zVtgIvfoXxG+MEznVNvYB6y/lpjT4B96P
-JSArEC4ePDU9/KZ0LyYTxFwsAPsoAvqkKrm85GFPupLDc7/gnzfqPzn9hZ4A7ZqR
-oR0yKtSIz1oz6zjY265wKS5Am3CATwZVauHuz8GmIqq1m0658XcZhJtvZmdz9JjH
-ksCpo9c2r/ARXNbCiq/dejSvoHMCq0KDxAbEbJ4h+pBRFH0cFC2bZfoXxxcxTWPZ
-LdPiUgkpsIVtzItw3owL51OkWWBJYzdbr9jY8xFPGtZXUJkYiCbGBM4WOb9yHJPJ
-PeFmxQNlcu8/BaRrxn6TR00/Jcnbn0iHQuQkgIbpvOZ/52AE6bXa/xOiiXf0De9V
-sC8x8yFzrgRc73Hi7ERRbipUKsqfWz246H3TX2LbsHw12IJXBObozfDX3ihHaExO
-bH8wL7cQt23yPJO2abS4
-=IjhS
------END PGP SIGNATURE-----
+So while I think you have a valid question, I think the first question
+is what constitutes a security flaw -- once that is defined, then I
+think what upstream does is irrelevant.  If it's a flaw, it's a flaw.
+
+And obviously upstream's point of view is sometime questionable -- it's
+like the Linux kernel folks deciding there are no security bugs, only
+_bugs_ (with no distinction).  That never went over very well.  =)
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
