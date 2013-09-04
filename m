@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/13/5
-Message-ID: <20131213143018.29b309b8@redhat.com>
-Date: Fri, 13 Dec 2013 14:30:18 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: jlieskov@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>, Apostolis Bessas <mpessas@...nsifex.com>, Ilias Vrachnis <vid@...nsifex.com>, Radek Vokal <rvokal@...hat.com>, Florian Weimer <fweimer@...hat.com>
-Subject: Re: CVE-2013-2073 transifex-client: Does not validate HTTPS server certificate (fixed in transifex-client v0.9)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/13
+Message-Id: <201309042308.r84N7wHa001693@linus.mitre.org>
+Date: Wed, 4 Sep 2013 19:07:58 -0400 (EDT)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 22 May 2013 11:46:39 -0400 (EDT) Jan Lieskovsky wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> It was found that Transifex command-line client, a command line
-> tool for Transifex translation management, did not perform X.509
-> certificate verification when using secured SSL connection. A
-> man-in-the-middle attacker could use this flaw to spoof a Transifex
-> server via an arbitrary certificate.
-> 
-> The CVE identifier of CVE-2013-2073 has been allocated to this issue.
+> I think the first question is what constitutes a security flaw --
+> once that is defined, then I think what upstream does is irrelevant.
+> If it's a flaw, it's a flaw.
 
-The way certificate check was implemented to fix CVE-2013-2073 was
-incorrect (check was done on "probe" connection, but not the actual
-connection used to transfer data).  This should now be fixed in 0.10
-(I can't confirm atm), which switches to use urllib3 with proper
-certificate checks.
+CVE assignment by MITRE doesn't look at flaws in quite that way. If a
+vendor has developed and released software and then sends us a report
+that the software had a security-relevant mistake, or violated that
+vendor's intended security policy, that's usually enough for a CVE.
+Reports from third parties are viewed much more restrictively.
 
-https://github.com/transifex/transifex-client/issues/42
-https://github.com/transifex/transifex-client/commit/6d69d61
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-This should get a new CVE.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+iQEcBAEBAgAGBQJSJ7raAAoJEGvefgSNfHMdG6IH/RaOwVRMz+RWNEbF/ofeAWKV
+mVCfX+dzdvgsl3vr8r2aDL+K7hHV7RMwUial7ioyOCruTvtvBTRfssXcJrcLzLSF
+zejR2luTtNNzFIVbjc134gDOis9/Xr2dPwheP0RNHBFRI655tnCWt+gIisPhJujz
+E/FfW67K7up0/c+dDuzgdHfO1n+PG0Us3SdAnQwKGS181agM4flsWL64XXaITFs4
+0Xx8l6UPN6G7ybMikJlsUbiLQZ70au6W0eEqTCvuLILbx0oEFRK47cLxGJSn190N
+lOIh5F1YwVPeZivXjEc0kdFxY+pypc8v1AxXHzQnzwap+wtxsshmgyadqiiiXD8=
+=5ycL
+-----END PGP SIGNATURE-----
