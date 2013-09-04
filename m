@@ -1,41 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/27/6
-Message-ID: <CAA7hUgGpa13NpmRKkCPA7GV76xNaWG6WMkwzNXmV5drx2bOJgQ@mail.gmail.com>
-Date: Thu, 27 Jun 2013 18:04:51 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: jmd@...epnet.net, moyo@...epnet.net
-Subject: CVE request: GLPI, multiple issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/4
+Message-ID: <5226FF5A.5020801@LINworks.de>
+Date: Wed, 04 Sep 2013 11:37:30 +0200
+From: Jochen Bern <Jochen.Bern@...works.de>
+To: Nagios Developers List <nagios-devel@...ts.sourceforge.net>
+Cc: Andreas Ericsson <ae@....se>, oss-security@...ts.openwall.com, Vincent Danen <vdanen@...hat.com>, contribute@...ios.org, Kurt Seifried <kseifried@...hat.com>
+Subject: Re: [Nagios-devel] Security bug or feature? Servicegroups leak hostnames to unauthorized users (Was: CVE request: unauthorized host/service views displayed in servicegroup view)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 04.09.2013 11:03, Andreas Ericsson wrote:
+> On 2013-09-04 10:31, Jonas Meurer wrote:
+>> The indisputable part of this change is, that users are allowed to see
+>> hostgroups and servicegroups with at least one authorized host or
+>> service. Unclear is, whether this means "group and all its group
+>> members", or "group and only authorized group members".
+> 
+> It should mean "group and only authorized group members, except also
+> hosts for services where one is authorized to see the service".
+[...]
+> Well, it *was* by design, but now I'm changing the design. It's a good
+> time for it, since 4.0 is about to come out. I think the security teams
+> can move on and we'll consider this "changed" rather than "fixed" for
+> 4.0, where we do some security tightening.
 
-[CC'ing upstream for complimentary information]
+Since you do seem to be willing to ponder the system of access rights
+and its security implications: I haven't checked the 4.x prereleases
+yet, does being authorized to see a host's information still necessarily
+provide access to *all* services on it?
 
-Multiple SQL injections have been reported in GLPI:
-http://packetstormsecurity.com/files/122097/GLPI-0.83.8-SQL-Injection.html
+In the "customers accessing provider's Nagios" scenario, I suppose that
+the customer might be interested in seeing "application is running" but
+not, say, "the snmpd that ties this machine to the provider's NMS is
+acting up" ...
 
-(note that the original advisory was hosted at www.zeroscience.mk but
-it 404s as of the time of writing)
-
-And a local file inclusion vulnerability was also reported:
-http://packetstormsecurity.com/files/122087/GLPI-0.83.7-Parameter-Traversal-Arbitrary-File-Access.html
-
-(same note as for the above issue)
-
-I'm not aware of related commits or bug reports other than the
-following (but this is me trying to connect dots):
-https://forge.indepnet.net/issues/4372
-which was marked as fixed at least in (0.83.9):
-https://forge.indepnet.net/projects/glpi/versions/915
-But the bug report also refers to the fix in trunk and the 0.85 branch.
-
-Could CVE ids be assigned please?
-
-Note that this is a different request than the one for the one about
-the use of unserialize on untrusted data.
-
-Thanks in advance,
---
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Regards,
+								J. Bern
+-- 
+*NEU* - NEC IT-Infrastruktur-Produkte im <http://www.linworks-shop.de/>:
+Server--Storage--Virtualisierung--Management SW--Passion for Performance
+Jochen Bern, Systemingenieur --- LINworks GmbH <http://www.LINworks.de/>
+Postfach 100121, 64201 Darmstadt | Robert-Koch-Str. 9, 64331 Weiterstadt
+PGP (1024D/4096g) FP = D18B 41B1 16C0 11BA 7F8C DCF7 E1D5 FAF4 444E 1C27
+Tel. +49 6151 9067-231, Zentr. -0, Fax -299 - Amtsg. Darmstadt HRB 85202
+Unternehmenssitz Weiterstadt, Geschäftsführer Metin Dogan, Oliver Michel
