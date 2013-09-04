@@ -1,37 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/1
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF33E35B3E@IMCMBX01.MITRE.ORG>
-Date: Tue, 26 Nov 2013 00:57:23 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: CVE request: Kernel MSM - Memory leak in drivers/base/genlock.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/11
+Message-ID: <cde12a44f1a32834d57f1c33d4d8e885@imap.steindlberger.de>
+Date: Wed, 04 Sep 2013 18:11:03 +0200
+From: Jonas Meurer <jonas@...esources.org>
+To: Andreas Ericsson <ae@....se>
+Cc: oss-security@...ts.openwall.com, nagios-devel@...ts.sourceforge.net, Vincent Danen <vdanen@...hat.com>, Kurt Seifried <kseifried@...hat.com>, contribute@...ios.org
+Subject: Re: Security bug or feature? Servicegroups leak hostnames to unauthorized users (Was: CVE request: unauthorized host/service views displayed in servicegroup view)
 Content-Type: text/plain; charset=utf-8
 
-Kurt said:
+For the record:
 
->> The Genlock driver does not properly initialize all members of a
->> structure before copying it to user space. This allows a local
->> attacker to obtain potentially sensitive information from kernel
->> stack memory via ioctl system calls.
->
->This should be classified as CWE-200 Information Disclosure, "memory
->leak" refers to memory being used and not released properly, resulting
->in out of memory conditions.
+Nagios developers finally accepted the patch into nagios 3.5 and 4.0 
+repository:
 
-In CWE, we discourage the "memory leak" term because it has multiple meanings and interpretations: (1) that memory is allocated but never released, or (2) that sensitive portions of memory are accidentally disclosed to untrusted parties.
+http://sourceforge.net/p/nagios/nagioscore/ci/1ffe547925a8b90b8d35ea96d6ca92b489178982/
+http://sourceforge.net/p/nagios/nagioscore/ci/f36ef53a9771d7f89d1f0810228eafc0c0f49036/
 
-This request sounds like variant (2) of the varying uses of the "memory leak" term, although Kurt's interpretation seems to be that it's about variant (1), which further reinforces my personal desire to see that term go away forever.
+Here's the relevant comments by Andreas Ericcson:
 
-Anyway... Note that, as this issue is described, "information disclosure" actually results from a root cause in which certain locations are not properly initialized.  Thus CWE-665: Improper Initialization (or its child CWE-457 Use of Uninitialized Variable) are probably more appropriate characterizations of the core issue; in this case, it happens to lead to memory disclosure, but in other cases, it might lead to privilege escalation or other consequences (depending on how the uninitialized data is used.)
+http://tracker.nagios.org/view.php?id=456#c795
+http://tracker.nagios.org/view.php?id=456#c796
 
-Note that vulnerabilities can be combinations of 2 or more less-significant errors, which in CWE are called chains or composites:
-http://cwe.mitre.org/data/reports/chains_and_composites.html
+Kind regards,
+  jonas
 
-That is, just like there can be attack chains, there can be vulnerability chains.
-
-As vulnerabilities become more and more complex (because the easy stuff is slowly getting eliminated), chains and composites are likely to pose more and more challenges for vulnerability classification in the future.  The Linux kernel is one of those places.
-
-For CVE assignment purposes, we generally try to classify based on the root cause, but there is a recognition that opinions may vary widely in this area.
-
-- Steve
-
+Am 2013-09-04 11:03, schrieb Andreas Ericsson:
+> On 2013-09-04 10:31, Jonas Meurer wrote:
+>> Hey list and fellow Nagios developers,
+>> 
+>> as you might have noticed, there's a discussion ongoing on 
+>> oss-security[1]
+>> regarding bug report #456[2].
+>> 
+>> I'm the one who discovered the described issue, and I still believe 
+>> that
+>> it's a bug with security implications, even though not everyone seems 
+>> to
+>> be convinced.
+>> 
+>> I'll try to give a brief description of the issue:
+>> 
+>> The Nagios status.cgi (at all 3.4* and 4.0* versions I checked) leaks
+>> hostnames to unauthorized users as part of servicegroups. All of
+>> servicegroup overview, summary and grid list each and every hostname 
+>> that
+>> is part of a servicegroup, regardless whether the HTTP user is listed 
+>> in
+>> contacts/contactgroups for this host.
+>> 
+>> In my opinion this is a security issue - at least on multi-user (e.g.
+>> multi-customer) Nagios-setups. I guess that most ISPs which give their
+>> customers access to the Nagios CGIs don't want to provide a full list
+>> of monitored hosts to their customers as a side-effect.
+>> 
+>> One reason for confusion is the following entry from Nagios3 
+>> changelog[3]:
+>> 
+>> 3.4.0 - 05/04/2012
+>> ENHANCEMENTS
+>> [...]
+>> - Users can now see hostgroups and servicegroups that contain at least
+>>    one host or service they are authorized for, instead of having to
+>>    be authorized for them all (Ethan Galstad)
+>> 
+>> 
+>> The indisputable part of this change is, that users are allowed to see
+>> hostgroups and servicegroups with at least one authorized host or
+>> service. Unclear is, whether this means "group and all its group
+>> members", or "group and only authorized group members".
+>> 
+> 
+> It should mean "group and only authorized group members, except also
+> hosts for services where one is authorized to see the service".
+> 
+>> Unfortunately, no Nagios developer speaked up yet about this issue. 
+>> Thus
+>> there's still a lot confusion about it.
+>> 
+> 
+> Well, now I have, so confusion dispelled.
+> 
+>> You can find my patch at the Nagios Issue Tracker.
+> 
+> Ah, right. Care to provide a link? Mostly, I prefer to get patches to
+> this mailing list, since I don't spend a lot of time hunting them down
+> from the (underused) tracker.
+> 
+>> This patch changes
+>> status.cgi behaviour to show only group members (hosts/services) that
+>> the user is authorized to see.
+>> 
+>> A comment about this issue by the Nagios Developers whould be highly
+>> appreciated. In case that the described (and critizised) behaviour of
+>> status.cgi is intended, the distribution security teams can move on.
+>> 
+> 
+> Well, it *was* by design, but now I'm changing the design. It's a good
+> time for it, since 4.0 is about to come out. I think the security teams
+> can move on and we'll consider this "changed" rather than "fixed" for
+> 4.0, where we do some security tightening.
+> 
+>> If on the other hand you agree with me, that this issue should be
+>> fixed, I'll continue to work with the security teams in order to
+>> provide patched Nagios packages for their distributions.
+>> 
+>> Thanks for your work on Nagios, it's a very valuable piece of 
+>> software!
+>> 
+> 
+> Thanks for enjoying it.
