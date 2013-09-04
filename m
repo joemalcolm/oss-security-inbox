@@ -1,34 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/15/6
-Message-ID: <20131015181913.GE20753@dirac.q-ix.net>
-Date: Tue, 15 Oct 2013 20:19:14 +0200
-From: Leon Weber <leon@...nweber.de>
-To: oss-security@...ts.openwall.com
-Cc: sebi@...ecware.net, j.wielicki@...ecware.net
-Subject: Re: CVE request: pyxtrlock
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/2
+Message-ID: <326f6b635a89320c32d945446ab58df0@imap.steindlberger.de>
+Date: Wed, 04 Sep 2013 10:31:12 +0200
+From: Jonas Meurer <jonas@...esources.org>
+To: nagios-devel@...ts.sourceforge.net
+Cc: oss-security@...ts.openwall.com, Vincent Danen <vdanen@...hat.com>, Kurt Seifried <kseifried@...hat.com>, contribute@...ios.org
+Subject: Security bug or feature? Servicegroups leak hostnames to unauthorized users (Was: CVE request: unauthorized host/service views displayed in servicegroup view)
 Content-Type: text/plain; charset=utf-8
 
-On 15.10.2013 12:04:43, Kurt Seifried wrote:
-> On 10/15/2013 07:14 AM, Leon Weber wrote:
-> > Do you think this isn't CVE worthy, or was the request just lost
-> > between other work? :-)
-> 
-> Sorry, meant to reply, forgot. This was the one where I was wondering
-> how many people us it. Debian doesn't ship it, nor does Red Hat,
-> Fedora. When I searched it in Google it tries to correct me to
-> "xtrlock", and for the term I get 644 results, so I'm thinking this
-> falls into the "not enough people use it to make a CVE worthwhile"
-> category, is that correct, or is there a large user pool/other factors
->  I'm unaware of?
+Hey list and fellow Nagios developers,
 
-No other factors, I think. We have received feedback and bug reports
-once in a while from a couple of people, so my best guess from that
-is a userbase of 10-100 people; but I can't really tell.
+as you might have noticed, there's a discussion ongoing on 
+oss-security[1]
+regarding bug report #456[2].
 
-Thanks for the reply, though. I simply wasn't sure if project size
-matters for CVE worthiness :-)
+I'm the one who discovered the described issue, and I still believe that
+it's a bug with security implications, even though not everyone seems to
+be convinced.
 
-    -- Leon.
+I'll try to give a brief description of the issue:
+
+The Nagios status.cgi (at all 3.4* and 4.0* versions I checked) leaks
+hostnames to unauthorized users as part of servicegroups. All of
+servicegroup overview, summary and grid list each and every hostname 
+that
+is part of a servicegroup, regardless whether the HTTP user is listed in
+contacts/contactgroups for this host.
+
+In my opinion this is a security issue - at least on multi-user (e.g.
+multi-customer) Nagios-setups. I guess that most ISPs which give their
+customers access to the Nagios CGIs don't want to provide a full list
+of monitored hosts to their customers as a side-effect.
+
+One reason for confusion is the following entry from Nagios3 
+changelog[3]:
+
+3.4.0 - 05/04/2012
+ENHANCEMENTS
+[...]
+- Users can now see hostgroups and servicegroups that contain at least
+   one host or service they are authorized for, instead of having to
+   be authorized for them all (Ethan Galstad)
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+The indisputable part of this change is, that users are allowed to see
+hostgroups and servicegroups with at least one authorized host or
+service. Unclear is, whether this means "group and all its group
+members", or "group and only authorized group members".
+
+Unfortunately, no Nagios developer speaked up yet about this issue. Thus
+there's still a lot confusion about it.
+
+You can find my patch at the Nagios Issue Tracker. This patch changes
+status.cgi behaviour to show only group members (hosts/services) that
+the user is authorized to see.
+
+A comment about this issue by the Nagios Developers whould be highly
+appreciated. In case that the described (and critizised) behaviour of
+status.cgi is intended, the distribution security teams can move on.
+
+If on the other hand you agree with me, that this issue should be
+fixed, I'll continue to work with the security teams in order to
+provide patched Nagios packages for their distributions.
+
+Thanks for your work on Nagios, it's a very valuable piece of software!
+
+Kind regards,
+  jonas
+
+[1] http://www.openwall.com/lists/oss-security/2013/06/26/6
+[2] http://tracker.nagios.org/view.php?id=456
+[3] http://www.nagios.org/projects/nagioscore/history/core-3x
+
