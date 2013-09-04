@@ -1,32 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/16/5
-Message-ID: <20131216213459.GA25100@eldamar.local>
-Date: Mon, 16 Dec 2013 22:34:59 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/9
+Message-ID: <5348211.Bu8K2RGd8j@devil>
+Date: Wed, 04 Sep 2013 16:39:12 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: 732283@...s.debian.org, cm@...etec.at
-Subject: CVE Request: Proc::Daemon writes pidfile with mode 666
+Subject: CVE request: Kernel PID Spoofing Privilege Escalation Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+A vulnerability has been reported in the Linux Kernel, which can be exploited 
+by malicious, local users to gain escalated privileges.
 
-christian mock <cm@...etec.at> has reported[1] that Proc::Daemon, when
-instructed to write a pid file, does that with a umask set to 0, so
-the pid file ends up with world-writable permissions.
+The vulnerability is caused due to an error within the "scm_check_creds()" 
+function (net/core/scm.c) and can be exploited to gain escalated privileges by 
+spoofing a PID.
 
-Upstream bugreport is at [2].
+The vulnerability is reported in version 3.10.10.
 
- [1] http://bugs.debian.org/732283
- [2] https://rt.cpan.org/Ticket/Display.html?id=91450
- 
-Axel Beckert has commited a patch to the Debian packaging[3] and
-forwarded it to upstream.
 
- [3] http://anonscm.debian.org/gitweb/?p=pkg-perl/packages/libproc-daemon-perl.git;a=blob;f=debian/patches/pid.patch
+Solution:
+Fixed in the GIT repository.
 
-Could a CVE be assigend for this issue?
+Provided and/or discovered by:
+Disclosed within a GIT commit.
 
-Regards and thanks in advance,
-Salvatore
+Original Advisory:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/net/core/scm.c?id=d661684cf6820331feae71146c35da83d794467e
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Source: https://secunia.com/advisories/54675/
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
