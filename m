@@ -1,64 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/12
-Message-ID: <517EC996.9000601@redhat.com>
-Date: Mon, 29 Apr 2013 13:27:18 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/8
+Message-ID: <20130904141123.GA27186@inutil.org>
+Date: Wed, 4 Sep 2013 16:11:23 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Felix Gröbert <groebert@...gle.com>, Henri Salo <henri@...v.fi>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, draynor@...rcefire.com
-Subject: Re: Multiple potential security issues fixed in ClamAV 0.97.8 - any further details?
+Subject: CVE-2013-2185 / Tomcat
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
+Question to the Red Hat people on the list:
 
-On 04/27/2013 04:49 PM, Felix Gröbert wrote:
-> Hi,
-> 
-> sorry for the delayed response, I'm OOO.
-> 
-> The bugs should be public now:
-> 
-> https://bugzilla.clamav.net/show_bug.cgi?id=7055 heap corruption,
-> potentially exploitable.
+Is https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-2185 something which applies
+to Tomcat in general or is this specific to the  "Red Hat JBoss Enterprise 
+Application Platform"?
 
-Please use CVE-2013-2020 for this issue.
+The DiskFileItem class is part of Tomcat 7, but there's no reference to CVE-2013-2185
+at http://tomcat.apache.org/security-7.html
 
-> https://bugzilla.clamav.net/show_bug.cgi?id=7053 overflow due to
-> PDF key length computation. Potentially exploitable.
-
-Please use CVE-2013-2020 for this issue.
-
-> https://bugzilla.clamav.net/show_bug.cgi?id=7054 NULL pointer
-> dereference in sis parsing.
-
-I can't view this bug so no details/no CVE. Can you open the bug up?
-Thanks.
-
-> 
-> When building clamav I recommend disabling legacy or unneeded
-> features (e.g. sis). I guess that's common sense though.
-> 
-> Cheers Felix
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRfsmWAAoJEBYNRVNeJnmTBFAP/j2Ccm0unfgN99v+ijDdpgTo
-IGB1WxGAdVi2NtWYA+jTrPlabMVR1ywnNJuNTFXJOmH/zWVMulM7f4ejmnM+yS4m
-I3c6Z1rlAjuJ76oJR2C2qPX2sFRrJP5N0UEv4GxOF3suuFBpiqktef4tZVpmx5Uj
-D5TIg+3Vjyh0QMJ93mNsZPohMT6/KUBD9TtNaEnqv//eTDx/BI24MtcVUADwX4R7
-Fbh7d1v9wvtTdVtKiLVlkNDB9GfH0/YuzMR7NZ2JNrhKVtWH6G68fYyt6HgbTmmE
-IT2CQgiqIuHGKfuRlDRcpdl2xNNl0MJwXZzozWYUi07+CXBO1UCw/wS1/w9LQxR2
-LgiulBhUiX+m7D8bRUoD64DNX74RhZrKMQrVIHuQfiFnCR/NXwOqqCcTSUDWb/vw
-mVu7i07zGZsPjwT8Wt6p+vQUwGbjVoLlMlbNjR7HR+INYYoEtcd8Ip9+txUIzZ1d
-Vymsw11J0F3quBo5lv9ngi6k0koBCtZEyJuVg3Y6w1nBcWOpYsNxno1fkoxOfIrj
-pkhu6yooL4C/6qTwL3e8VhrYhIATPu7nAh0U9fnMjF1ohaBIA1uUefNc1A7nmOSU
-wiRNJoBm0YXxZgCRu6FMrBosUVJ3jxtEx3tN2AyroG+PgAX+899XACzs7Dnozb2Z
-iJ3J/DetrQjrbG4JrxoM
-=l4CM
------END PGP SIGNATURE-----
+Cheers,
+        Moritz
