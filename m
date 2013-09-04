@@ -1,42 +1,170 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/1
-Message-Id: <201308070012.r770BrJ0014578@linus.mitre.org>
-Date: Tue, 6 Aug 2013 20:11:53 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: SSL BREACH
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/5
+Message-ID: <d531af465dc75824188fe42289cdf981.squirrel@aphrodite.kinkhorst.nl>
+Date: Wed, 4 Sep 2013 12:18:36 +0200
+From: "Thijs Kinkhorst" <thijs@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: "Chris Steipp" <csteipp@...imedia.org>
+Subject: CVE request: MediaWiki Security Release: 1.21.2, 1.20.7 and 1.19.8
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
->I assume this will get handled like CVE-2009-3555?
->
->http://threatpost.com/breach-compression-attack-steals-https-secrets-in-under-30-seconds/101579
->
->http://it.slashdot.org/story/13/08/05/233216
->
->https://www.djangoproject.com/weblog/2013/aug/06/breach-and-django/
+Mediawiki has announced the following security releases. The message
+contains a link to the patches for various release branches.
 
-MITRE has looked at this in some depth but has not yet decided whether
-this can be treated as a vulnerability in a protocol, with one CVE
-shared across every product. We do realize that
-http://www.kb.cert.org/vuls/id/987798 currently contains one CVE ID.
+Can CVE names be assigned please?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
 
-iQEcBAEBAgAGBQJSAY/9AAoJEGvefgSNfHMd2k0IAKtQ4ZLWL5JfnOF0VW3qJroT
-kzQjFCI+MNWkw6TcyXpyq36ZKJSZ9C1ANudGPPnaPT2XbMRgd4T5yQUKextCYf01
-getOOJZkY1vp5A52ujG7pcYNB2a+DP1O/LinPQvdp3TGrbWdOuRixzQ/AMKcbKrp
-AXTajRsLJmMbtjJ95n9XF3ie+fT1QdW02YyzDMmT5UiRJtDJQV9RbFAW+9J+iuw9
-OP43uxwXtf50zFsU6OffNSlQNHoGQqD9NB17YFxjZvL4swg1P1YyQn6IIsOXzze3
-gPNmL/PT27x4d/zr001idedzZtAsfpN60WudPZggQRvmzZyTC2E2Nct5Fy4P6Xg=
-=yr5Z
------END PGP SIGNATURE-----
+thanks,
+Thijs
+
+---------------------------- Original Message ----------------------------
+Subject: [MediaWiki-announce] MediaWiki Security Release: 1.21.2, 1.20.7
+and 1.19.8
+From:    "Chris Steipp" <csteipp@...imedia.org>
+Date:    Tue, September 3, 2013 22:50
+To:      mediawiki-announce@...ts.wikimedia.org
+         "MediaWiki-l" <mediawiki-l@...ts.wikimedia.org>
+         "Wikimedia developers" <wikitech-l@...ts.wikimedia.org>
+--------------------------------------------------------------------------
+
+I would like to announce the release of MediaWiki 1.21.2, 1.20.7 and
+1.19.8. These releases fix 3 security related bugs that could affect users
+of MediaWiki. Download links are given at the end of this email.
+
+* Mozilla, and other developers, reported a full path disclosure in
+MediaWiki, when an invalid language is specified in ResourceLoader
+<https://bugzilla.wikimedia.org/show_bug.cgi?id=46332>
+
+* An internal review found several API modules allowed anti-CSRF tokens to
+be accessed via JSONP.
+<https://bugzilla.wikimedia.org/show_bug.cgi?id=49090>
+
+* Andreas Peetz reported an issue with the MediaWiki API where an invalid
+property name could be used for XSS with older versions of Internet
+Explorer.
+<https://bugzilla.wikimedia.org/show_bug.cgi?id=52746>
+
+
+Additionally, the following extensions have been updated to fix security
+issues:
+
+* CentralAuth: An internal review found an authentication regression that
+allowed an attacker to bypass authentication
+<https://bugzilla.wikimedia.org/show_bug.cgi?id=52338>
+
+* SyntaxHighlight_GeSHi: Mateusz Goik reported an XSS in the included
+example.php script
+<https://bugzilla.wikimedia.org/show_bug.cgi?id=49070>
+
+* CheckUser: Alex Monk reported and fixed that CheckUser didn't require
+anti-CSRF tokens for checking users
+<https://bugzilla.wikimedia.org/show_bug.cgi?id=45019>
+
+* Wikibase: Liangent reported and fixed an XSS
+<https://bugzilla.wikimedia.org/show_bug.cgi?id=53472>
+
+* LiquidThreads: Alex Monk reported and fixed an XSS
+<https://bugzilla.wikimedia.org/show_bug.cgi?id=53320>
+
+
+
+Full release notes for 1.21.2:
+<https://www.mediawiki.org/wiki/Release_notes/1.21>
+
+Full release notes for 1.20.7:
+<https://www.mediawiki.org/wiki/Release_notes/1.20>
+
+Full release notes for 1.19.8:
+<https://www.mediawiki.org/wiki/Release_notes/1.19>
+
+For information about how to upgrade, see
+<https://www.mediawiki.org/wiki/Manual:Upgrading>
+
+
+**********************************************************************
+   1.21.2
+**********************************************************************
+Download:
+http://download.wikimedia.org/mediawiki/1.21/mediawiki-1.21.2.tar.gz
+
+Patch to previous version (1.21.1):
+http://download.wikimedia.org/mediawiki/1.21/mediawiki-1.21.2.patch.gz
+
+GPG signatures:
+http://download.wikimedia.org/mediawiki/1.21/mediawiki-core-1.21.2.tar.gz.sig
+http://download.wikimedia.org/mediawiki/1.21/mediawiki-1.21.2.tar.gz.sig
+http://download.wikimedia.org/mediawiki/1.21/mediawiki-1.21.2.patch.gz.sig
+
+Public keys:
+https://www.mediawiki.org/keys/keys.html
+
+**********************************************************************
+   1.20.7
+**********************************************************************
+Download:
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.7.tar.gz
+
+Patch to previous version (1.20.6):
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.7.patch.gz
+
+GPG signatures:
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-core-1.20.7.tar.gz.sig
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.7.tar.gz.sig
+http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.7.patch.gz.sig
+
+Public keys:
+https://www.mediawiki.org/keys/keys.html
+
+**********************************************************************
+   1.19.8
+**********************************************************************
+Download:
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.8.tar.gz
+
+Patch to previous version (1.19.7):
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.8.patch.gz
+
+GPG signatures:
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-core-1.19.8.tar.gz.sig
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.8.tar.gz.sig
+http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.8.patch.gz.sig
+
+Public keys:
+https://www.mediawiki.org/keys/keys.html
+
+**********************************************************************
+   Extension:CentralAuth
+**********************************************************************
+Information and Download:
+https://www.mediawiki.org/wiki/Extension:CentralAuth
+
+**********************************************************************
+   Extension:SyntaxHighlight_GeSHi
+**********************************************************************
+Information and Download:
+https://www.mediawiki.org/wiki/Extension:SyntaxHighlight_GeSHi
+
+**********************************************************************
+   Extension:CheckUser
+**********************************************************************
+Information and Download:
+https://www.mediawiki.org/wiki/Extension:CheckUser
+
+**********************************************************************
+   Extension:Wikibase
+**********************************************************************
+Information and Download:
+https://www.mediawiki.org/wiki/Extension:Wikibase
+
+**********************************************************************
+   Extension:LiquidThreads
+**********************************************************************
+Information and Download:
+https://www.mediawiki.org/wiki/Extension:LiquidThreads
+_______________________________________________
+MediaWiki announcements mailing list
+To unsubscribe, go to:
+https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce
+
