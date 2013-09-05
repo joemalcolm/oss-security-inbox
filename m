@@ -1,19 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/13
-Message-ID: <87zjrln2ky.fsf@mid.deneb.enyo.de>
-Date: Mon, 09 Sep 2013 22:48:45 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/05/2
+Message-ID: <5227E0C6.8050101@redhat.com>
+Date: Wed, 04 Sep 2013 19:39:18 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request : NAS v1.9.3 multiple Vulnerabilites
+CC: Vincent Danen <vdanen@...hat.com>, "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: Re: Re: CVE request: unauthorized host/service views displayed in servicegroup view
 Content-Type: text/plain; charset=utf-8
 
-* Kurt Seifried:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Format String please use CVE-2013-4258
+On 09/04/2013 07:19 PM, Vincent Danen wrote:
+> That somewhat proves my point. =). In both cases you're talking
+> about intended security being violated or a security-relevant
+> mistake.  I don't see how relaxing ACLs intentionally, but still
+> protected via authentication, meet either criteria.
+> 
+> -- Vincent Danen / Red Hat Security Response Team
+> 
+> 
+> On 2013-09-04, at 5:08 PM, cve-assign@...re.org wrote:
+> 
+>>>> I think the first question is what constitutes a security
+>>>> flaw -- once that is defined, then I think what upstream does
+>>>> is irrelevant. If it's a flaw, it's a flaw.
+> 
+> CVE assignment by MITRE doesn't look at flaws in quite that way. If
+> a vendor has developed and released software and then sends us a
+> report that the software had a security-relevant mistake, or
+> violated that vendor's intended security policy, that's usually
+> enough for a CVE. Reports from third parties are viewed much more
+> restrictively.
 
-This was actually fixed in r285, before the report:
+A good example of this is in action:
 
-http://sourceforge.net/mailarchive/forum.php?thread_name=E1Rp1rP-00038Z-VJ%40sfp-svn-6.v30.ch3.sourceforge.com&forum_name=nas-commits
+http://docs.python.org/2/library/pickle.html
+no CVE (big warning, safe alternatives, etc.)
 
-In case someone else is wondering why there hasn't been a recent
-commit fixing a format string issue. :-)
+http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=deserialization
+http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=deserializing
+lots of CVEs
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSJ+DGAAoJEBYNRVNeJnmT298P/RpuSqL5uHdQhfbsrJQZS+oo
+Ofar+PtSQzRfAvMqEFbBVA4EcSSiBPyqr6aY9jdboCo9QqWqwRZ/7mZY+WWY0otH
+hSqW/Z7mviZHAbbmvSELkoFTU5Qvjqb6tnH+raqVV/XDcsx3iITYVLp4mL6XjcGE
+SmvCA3fRTDN0LfYwrm04b39xIwWdRtvoKKMlQjgkn3Ea0s5EaxV7ktlwinEHDJvp
+Vk8lwo3R+XGPZ1LaQC69HCG1jff1+0KLeJoXjo0Qz7XzYolEsnFEHeMIufkyFI5+
+k/Sk1EWgZm4sQrUgMxAIu+ILFJ5Z8WnquwFOh2AA49zPA0XAqed1ED23mB3dzBBm
+ZyANQtmdy/r4NKsrVK2/CceGm3LkfCKkxzyzYovhNrgUQIC1o5+f80+AuQz1DB5I
+ZJGq2A9k4chisc6HNLIQpwprvYaS9Z9jWWLNoN8whFcJagV9SDq4Izw14hRIQx77
+A56ASqh6jIphtK/srLo4wlGBXIiHilSTrbPjSCaQF00qEJHHt5ARqG88x9ZVL3hP
+V4QPJ7Qrm+35L+Eq2P3jfZDIrizksOlDNMFOcj1TA+e8no17GkQaC7v7wPAWGYwl
+xkwkVuFNSnO5GoLKCgA+Tg7aEYND9pMQqL2uTSSfvrh789PCOJlUprQu9Cvjl2jh
+OG24Ti4uoEiSPiaU8kYF
+=H5qh
+-----END PGP SIGNATURE-----
