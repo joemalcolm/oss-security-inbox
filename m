@@ -1,51 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/5
-Message-ID: <20131113160910.GI7623@localhost.localdomain>
-Date: Wed, 13 Nov 2013 11:09:10 -0500
-From: "Eric H. Christensen" <echriste@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Microsoft Warns Customers Away From RC4 and SHA-1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/05/1
+Message-Id: <F6AC3E8C-856D-4D57-93BB-91E95336042C@redhat.com>
+Date: Wed, 4 Sep 2013 21:19:19 -0400 (EDT)
+From: Vincent Danen <vdanen@...hat.com>
+To: "cve-assign@...re.org" <cve-assign@...re.org>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+That somewhat proves my point.
+=). In both cases you're talking about intended security being violated or a security-relevant mistake.  I don't see how relaxing ACLs intentionally, but still protected via authentication, meet either criteria.
 
-On Wed, Nov 13, 2013 at 07:57:51AM -0800, Tim wrote:
-> > I'm inclined to agree. The question I suppose is, like DES (and
-> > 3DES/MD5) at what point do we start assigning CVE's for some of this?
-> > thoughts and comments welcome.
+--
+Vincent Danen / Red Hat Security Response Team
+
+
+On 2013-09-04, at 5:08 PM, cve-assign@...re.org wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> Using a weak encyption algorithm alone isn't a sufficient condition to
-> issue a CVE against software, since often the context of the usage
-> matters a lot.  If you use MD5 or SHA-1 for password hashing (with
-> lots of salt and rounds), then there's no vulnerability.  If you use
-> them for HMACs, then there's also likely no problem.  But if you use
-> them for a signature with a public key, there is.
-
-It's answers like this that make it difficult for non-security-literate system administrators to make good decisions.  I completely understand and agree with what you wrote but I wonder if we're making it harder for people to understand how to protect themselves.
-
-After having many similar conversations with people that manage systems I find that it's usually easier to say "MD5 bad, SHA-256 good" and then just walk away.  Perhaps some sort of chart should be published that allows people to make better decisions?
-
-- -- Eric
-
-- --------------------------------------------------
-Eric "Sparks" Christensen
-Red Hat, Inc - Product Security Team
-
-sparks@...hat.com - sparks@...oraproject.org
-097C 82C3 52DF C64A 50C2  E3A3 8076 ABDE 024B B3D1
-- --------------------------------------------------
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQGcBAEBCgAGBQJSg6QjAAoJEB/kgVGp2CYvHCoL/0lcSKwfskG9b8ltQoWFfBUF
-WEVB8JJOa+tfLG66tFFtIJtqBgR4cXK6fVaFu4N5n7J/xJ5ULPdE6OX72njSEH28
-4WHi0I8N0otvUe0RPETTKgm5UW4cIFbamc3RGtwYtmA6N0Y2w6Xpzvnu7TAQ2lr7
-6tz1gMy1GUKbwDxeyRgVqqAZk5uQp90L4mqPadMXTtqfUtbDX6JOU1lSN6rFd88S
-IGXMNICDJx3i6ErwJfxyfhLU/GcnLx4g7evTcet/LVR/An6V7FrCMf9PW19Lx5xv
-CIbHZGxhJDzA1pJ1/h+Oh2X4qGvmV5w5NUMIhdyVH2Mf/4DscxWZS6FpvaBKb0ax
-WZLWtoC2K9LEyiJq+VYMVMXhLwUy6oTMnenS/yGfdxBHLdI3uP9Sva7E0otdReLo
-6qrQVNW0KStL8D8MJ832tJ5jYx01SBQA5l1cUMwHrmGzC+VxE6cDAQ9FUc1v9+8p
-M/YbSc35J0paRZCpcL9tzQV38fZb/hvO8zbvKJ4zDQ==
-=MiSz
------END PGP SIGNATURE-----
+>> I think the first question is what constitutes a security flaw --
+>> once that is defined, then I think what upstream does is irrelevant.
+>> If it's a flaw, it's a flaw.
+> 
+> CVE assignment by MITRE doesn't look at flaws in quite that way. If a
+> vendor has developed and released software and then sends us a report
+> that the software had a security-relevant mistake, or violated that
+> vendor's intended security policy, that's usually enough for a CVE.
+> Reports from third parties are viewed much more restrictively.
+> 
+> - -- 
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+> 
+> iQEcBAEBAgAGBQJSJ7raAAoJEGvefgSNfHMdG6IH/RaOwVRMz+RWNEbF/ofeAWKV
+> mVCfX+dzdvgsl3vr8r2aDL+K7hHV7RMwUial7ioyOCruTvtvBTRfssXcJrcLzLSF
+> zejR2luTtNNzFIVbjc134gDOis9/Xr2dPwheP0RNHBFRI655tnCWt+gIisPhJujz
+> E/FfW67K7up0/c+dDuzgdHfO1n+PG0Us3SdAnQwKGS181agM4flsWL64XXaITFs4
+> 0Xx8l6UPN6G7ybMikJlsUbiLQZ70au6W0eEqTCvuLILbx0oEFRK47cLxGJSn190N
+> lOIh5F1YwVPeZivXjEc0kdFxY+pypc8v1AxXHzQnzwap+wtxsshmgyadqiiiXD8=
+> =5ycL
+> -----END PGP SIGNATURE-----
