@@ -1,40 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/12/3
-Message-Id: <201302121643.r1CGgva5006498@linus.mitre.org>
-Date: Tue, 12 Feb 2013 11:42:57 -0500 (EST)
-From: cve-assign@...re.org
-To: fw@...eb.enyo.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: e1000e/82574L hardware erratum
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/05/7
+Message-ID: <20130905083052.GV26936@dhcp-25-225.brq.redhat.com>
+Date: Thu, 5 Sep 2013 10:30:52 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: kseifried@...hat.com, Agostino Sarubbo <ago@...too.org>, Kees Cook <keescook@...omium.org>
+Subject: Re: CVE request: Kernel PID Spoofing Privilege Escalation Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Sep 05, 2013 at 11:23:49AM +0300, Dan Carpenter wrote:
+> On Wed, Sep 04, 2013 at 08:30:05PM -0600, Kurt Seifried wrote:
+> > Please use CVE-2013-4300 for this issue.
+> > 
+> > Stupid Q, any reason why this couldn't be sent to
+> > http://oss-security.openwall.org/wiki/mailing-lists/distros to give
+> > vendors a heads up (also we can get it a CVE prior to public release
+> > then)?
+> > 
+> 
+> The original patch was sent to netdev and lkml publicly from the start.
+> 
+> https://lkml.org/lkml/2013/8/22/462
+> 
+> We do have someone who is supposed to forwarding security bugs from
+> security@...nel.org to distros.  I'm not on distros but apparently this
+> wasn't happening properly so we've recently assigned another person to
+> help with this.
 
->It's been reported that some Intel 82574L network controllers can be
->brought into a non-processing state by receiving certain Ethernet
->frames:
->
-><http://blog.krisk.org/2013/02/packets-of-death.html>
->
->The packet is not malformed at the lower layers and will travel over
->the Internet.
+As you said, the patch was sent to public mailing lists clearly saying
+"This is a security bug.". If anything, this should have been forwarded
+to oss-security, there's no point to forward to distros when the issue
+is a) public and b) clearly marked as security fix.
 
-Use CVE-2013-1634.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJRGm//AAoJEGvefgSNfHMd5TEH/18N0E7vtVxa/yDlXY4rrSio
-PQsemVLwSdDGaDIB1fPczBHJub+qT7IN9Rz7gK2MFMe+t6m5aWSp+B1ZfU5q+vVd
-eHbRZ9ZlKLixoGlfWxwU9T7C42U7EWWgoPf/cxlqD5/U1TlOa6f+lL9G152s0ZWu
-wXoQl4uIn6yICRcs4Paws92oYfLhFoqlPc8W6OL5KKAtBDxExmPpaKmPkWNKaiom
-lS53JE4o5uUNDPNNtWjnS1QI1QzbOZXQPCIyrnRh7QXLxTB/b4RW7LEMYYRV/n1Y
-RCRdFzWOpBIsLliGUqaBjyW0hMzZkYxtY1hOemQjBzP87riGg/aKGDPOQy1B4oA=
-=XTPE
------END PGP SIGNATURE-----
+-- 
+Petr Matousek / Red Hat Security Response Team
