@@ -1,79 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/4
-Message-ID: <20130304025723.GA29048@openwall.com>
-Date: Mon, 4 Mar 2013 06:57:23 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/05/8
+Message-ID: <CAA7hUgGF7wN69VuUR900_29QHMdRPvbpwwZxhSvudcPOk1R1aA@mail.gmail.com>
+Date: Thu, 5 Sep 2013 10:38:14 +0200
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: handling of Linux kernel vulnerabilities (was: CVE request - Linux kernel: VFAT slab-based buffer overflow)
+Subject: [notification] exactimage DoS, jumping into the unknown
 Content-Type: text/plain; charset=utf-8
 
-Greg,
+Hi,
 
-Note that I am not even asking you to reconsider.  I have little hope
-that you would, as you appeared to have a firm opinion on this.
-I merely mentioned this aspect, with no intent to prompt a discussion of
-it.  That said, I've commented inline, just to clear up your confusion.
+While testing the update of exactimage for the fixes in its embedded
+copy of dcraw (CVE-2013-1438) I noticed that it did not initialize
+(setjmp) the jump pointer used by dcraw for error handling.
+In addition to the new checks introduced to fix the above-mentioned
+issue, there were already some cases where longjmp was called, causing
+the execution to jump to a location defined by an uninitialized
+variable.
 
-Then, in the last paragraph I was actually asking you a question, which
-you commented on - thanks!  It looks like I need to clarify it, which I
-did below as well.
+This new issue has been assigned CVE-2013-1441.
 
-On Mon, Mar 04, 2013 at 10:12:53AM +0800, Greg KH wrote:
-> On Mon, Mar 04, 2013 at 05:44:38AM +0400, Solar Designer wrote:
-> > In my opinion, it'd be best if Linus, Greg, et al. would reconsider
-> > their approach.
-> 
-> Reconsider just what specifically?
+Note that this is specific to exactimage and is not a bug, per-se, in dcraw.
 
-I (and many others) would prefer that you post to oss-security (public)
-on the day that you commit a fix.  You have not agreed to that.
-Instead, you have agreed to notify linux-distros (private) and ask them
-to delay notification to oss-security until some later time.  This is
-not great because technically the issue is half-public at commit time.
+According to the Debian maintainer this bug has probably been present
+since ExactImage 0.0.12
 
-> You bring up a bunch of issues that
-> the distros need to consider, what can the Linux kernel security team do
-> differently?
+This has been fixed in Debian with the patch added in the following commit:
+http://anonscm.debian.org/gitweb/?p=collab-maint/exactimage.git;a=commitdiff;h=1dff2eb586a3d10d8528a984bc471292e3789f5c;hp=acfe54193b18b46e880f4b474d2e40b4fdb44a8d
 
-Post to oss-security on commit day.
-
-Optionally, also notify linux-distros a few days before the commit.
-
-> We were asked to notify the linux-distro list,
-
-This was an unfortunate fallback option, after you refused to notify the
-oss-security list.
-
-> and now we
-> will be doing that.  Should we not and just go back to how things were
-> before?
-
-Assuming that you continue to refuse to notify oss-security, the rest of
-us in here need to discuss and then decide on whether to accept the
-fallback approach with going via linux-distros.  We also need to discuss
-the specifics first, as the decision whether to accept this or not may
-depend on the specifics.
-
-> > Overall, I think we should bite the bullet and accept sko's
-> > notifications to linux-distros, with a grace period of up to 7 days.
-> > Whenever a distro is ready to release an update, they should be able to
-> > insist on doing so within another 1 day, even if the initially planned
-> > grace period would expire later.  Would sko be OK with this?  Greg?
-> 
-> Again, I don't think anyone that is part of security@...nel.org minds
-> about having the issues publicized, after linux-distro has their time
-> to get things fixed and to their users.  If the linux-distro people care
-> about that, that does not seem to be a security@...nel.org group issue,
-> right?
-
-Right, but since you previously refused to notify oss-security right
-away, I thought that you could possibly stipulate that you'd only keep
-notifying linux-distros if the linux-distros folks keep the issues from
-hitting oss-security for at least a certain amount of time, or at least
-until fixes are available (from at least one distro? from all?), or
-whatever.  If you're fine with letting linux-distros decide on this
-fully on their own, and you would not stop notifying linux-distros if
-you deem that they fully-disclose the issues publicly "too soon", that's
-great (and logical)!
-
-Alexander
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
