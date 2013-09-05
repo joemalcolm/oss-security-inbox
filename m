@@ -1,76 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/14/3
-Message-ID: <5191E29B.9050703@redhat.com>
-Date: Tue, 14 May 2013 01:07:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/05/9
+Message-ID: <2938644.Rb0ONN4tu6@devil>
+Date: Thu, 05 Sep 2013 10:38:47 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-CC: chevalier 3as <chevalier3as@...il.com>, Florian HENRY <florian.henry@...n-concept.pro>
-Subject: Re: Re: CVE Request: Dolibarr - Multiple Vulnerabilities
+Subject: Re: CVE request: Kernel PID Spoofing Privilege Escalation Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wednesday 04 September 2013 20:30:05 Kurt Seifried wrote:
+> Stupid Q, any reason why this couldn't be sent to
+> http://oss-security.openwall.org/wiki/mailing-lists/distros to give
+> vendors a heads up (also we can get it a CVE prior to public release
+> then)?
 
-On 05/11/2013 01:11 PM, chevalier 3as wrote:
-> I've failed to mention command injection, fix can be found here:
-> 
-> https://github.com/Dolibarr/dolibarr/commit/526a80dd202bbca396687a502d52c27e06e97fff
-
-Please
-> 
-use CVE-2013-2093 for Dolibarr command injection
-
-
-> 2013/5/11 chevalier 3as <chevalier3as@...il.com>
-> 
->> Hello Kurt, Steve, All,
->> 
->> I'd like to request a CVE for two vulnerabilties in Dolibarr 3.3
->> and 3.4:
->> 
->> 1- SQL injection in 'pays' parameter, correction details can be
->> found here:
->> 
->> 
->> https://github.com/Dolibarr/dolibarr/commit/9427e32e2ed54c1a2bc519a88c057207836df489
-
-Please
->> 
-use CVE-2013-2091 for Dolibarr SQL injection in 'pays' parameter
-
->> 
->> 2- XSS vulnerabilty in several parameters, correction details can
->> be found here:
->> 
->> 
->> https://github.com/Dolibarr/dolibarr/commit/8a90598b23e1b2689848187941f7a96b04907005
-
-Please
->> 
-use CVE-2013-2092 for Dolibarr XSS vulnerabilty in several
-parameters
-
->> Cheers, Alaeddine Mesbahi
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRkeKbAAoJEBYNRVNeJnmTq0QQAJsGFL9tU9tldK8G4SZJmCo8
-N6x8oVBY4GKNsXwrQWQyjmJTiSYDZG9JvjS9ZP7NtKQ+mO0Ujofy8+nySR76/55u
-xuhUgzWasG/zWtbVVrlTTV8UXyjNKLRCv9xHu+O/5CqgHDDe4Sc5EswqR3XpiV12
-3dVhpPyqaapkw3E5kkQYDQXnQdUsLznjtWbIngljjjQxGAlDN09I0bBszi1K/PRZ
-TTj3J1qcT+oHjxSupWy4BftOe4A7nj/rSMHZ5jPRUOx58iR5h5t4k36jLPgYAzUX
-muEkt51j4RE9XPyb/zQXa7RZLh8QpudpLElLxPPXY7fg1InUVNqKDjHDP+NG7eTX
-ju0bDlkaTDyDf9JM/uCvg8mWHcS0rdxqOD6HSxizQmvadpGejzEcAzmSMk67XuuD
-/RKgBpGs4A428hx3AApS7OxMMTIxyKXXkCl/Mj6Glu0IKtusCJaZzAy5yJc5s16v
-9cISObNuNffzVS461k1TjHMlMftiI8/26I55KKNFZVXvijcGt9XR/ekF9puM/R/1
-IMCz9lNSU4v+40ZhdoTpjToR7qiSD3EC05iPDICm9Vu79L7sIG4ZcBgkGXuUdiSp
-Es5YXLqype+vqZvnJGYHlRS07OK9Q1fOBkIiSVS3BW/Xq044ukP1c/DgiLeWUKh0
-1xzaw++50ZNDcevQ+U6q
-=D+FC
------END PGP SIGNATURE-----
+Petr gave you the answer.
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
