@@ -1,89 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/9
-Message-Id: <E1UXv3J-00018f-9u@xenbits.xen.org>
-Date: Thu, 02 May 2013 15:04:09 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 49 (CVE-2013-1952) - VT-d interrupt remapping source validation flaw for bridges
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/05/4
+Message-ID: <5227FBFB.3000501@redhat.com>
+Date: Thu, 05 Sep 2013 13:35:23 +1000
+From: David Jorm <djorm@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2013-2185 / Tomcat
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 09/05/2013 12:11 AM, Moritz Muehlenhoff wrote:
+> Hi,
+> Question to the Red Hat people on the list:
+>
+> Is https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-2185 something which applies
+> to Tomcat in general or is this specific to the  "Red Hat JBoss Enterprise
+> Application Platform"?
+>
+> The DiskFileItem class is part of Tomcat 7, but there's no reference to CVE-2013-2185
+> at http://tomcat.apache.org/security-7.html
+>
+> Cheers,
+>          Moritz
 
-             Xen Security Advisory CVE-2013-1952 / XSA-49
-                              version 2
+Hi Moritz
 
-        VT-d interrupt remapping source validation flaw for bridges
+This flaw was reported to the tomcat security team, but they were of the 
+opinion that it did not constitute a security flaw in tomcat. The Red 
+Hat security team decided that we did consider it a security flaw in 
+tomcat, and handled it accordingly. I think whether or not this category 
+of issue is considered a security flaw is an unresolved debate - having 
+some consensus either way would be helpful in my opinion.
 
-UPDATES IN VERSION 2
-====================
+The DiskFileItem class's readObject method contained a poison null byte 
+flaw. A remote attacker able to supply a serialized instance of the 
+DiskFileItem class, which will be deserialized on a server, could use 
+this flaw to write arbitrary content to any location on the server that 
+is permitted by the user running the application server process. The key 
+point here is that an application is only vulnerable if it deserializes 
+arbitrary user-supplied data, and it has DiskFileItem on the classpath. 
+One argument is that since exploitation relies on an application 
+allowing deserialization of user-supplied data, the real flaw lies in 
+that application, so this is not actually a security flaw in 
+DiskFileItem. The opposing argument is that an application allowing 
+deserialization of user-supplied data would not necessarily expose any 
+kind of security flaw, but if a vulnerable class (e.g. DiskFileItem) 
+existed on the server's classpath, then it would, therefore this is a 
+security flaw in DiskFileItem.
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Interrupt remapping table entries for MSI interrupts set up by bridge
-devices did not get any source validation set up on them, allowing
-misbehaving or malicious guests to inject interrupts into the domain
-owning the bridges.
-
-In a typical Xen system bridge devices are owned by domain 0, leaving
-it vulnerable to such an attack. Such a DoS is likely to have an impact
-on other guests running in the system.
-
-IMPACT
-======
-
-A malicious domain, given access to a device which bus mastering
-capable, can mount a denial of service attack affecting the whole
-system.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen version 4.0 onwards is vulnerable.
-
-Only systems using Intel VT-d for PCI passthrough are vulnerable.
-
-Any domain which is given access to a PCI device that is bus mastering
-capable can take advantage of this vulnerability.
-
-MITIGATION
-==========
-
-This issue can be avoided by not assigning PCI devices to untrusted
-guests.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa49-unstable.patch          Xen xen-unstable
-xsa49-4.2.patch               Xen 4.2.x
-xsa49-4.1.patch               Xen 4.1.x
-
-$ sha256sum xsa49-*.patch
-666aec709795163e7c19e99f71ff88cb9a4d66f3f0599ef66446310323fd8d9e  xsa49-4.1.patch
-37055cbc74111cbc507af3f09d6ac2e472f24efd54cd3e08583dc635e66a539f  xsa49-4.2.patch
-ba07b4ff0393084282edc24db7f03eb95b0a4bbc8d40d6ede601d0182a0fc852  xsa49-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJRgnfXAAoJEIP+FMlX6CvZoHsH/jNpyc3Y1ga9GPQSxZ+GaXme
-z/TzcW1gZsP8TVlsoXJbGSVMbDLNLkTA7LpPkep/tSNOfQ3Umg/70sLtvXmpm2PR
-zvpLgjpKut5ziqLLhFX1kTRZIrg9X8p9k9DHiq3JKK7WUZ1S21i8zQH8w6k9R2Q5
-JO6WTP5VidDVByn23HcIwUI1/z4mbPIe5MI2/I81dbw3BnMLHeX8RGlIHz1Cj729
-W7UqRDkivdH0CjF4D/hBskcI+3bZOS2I+JrQf78YP5kq2zr1tSJ6wH9VhxgI0ku1
-LgmmEPfqoeCXK8/s0QcLFj+nAMx6OZWeTPJ31RT41106ZWku+gazddFsZJ+PeuY=
-=no/g
------END PGP SIGNATURE-----
-
-Download attachment "xsa49-4.1.patch" of type "application/octet-stream" (1847 bytes)
-
-Download attachment "xsa49-4.2.patch" of type "application/octet-stream" (1877 bytes)
-
-Download attachment "xsa49-unstable.patch" of type "application/octet-stream" (1916 bytes)
+Thanks
+--
+David Jorm / Red Hat Security Response Team
