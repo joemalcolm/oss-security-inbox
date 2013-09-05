@@ -1,34 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/15/2
-Message-ID: <CANTw=MOcG67T82Eqy3gAiXG58oxzsu0VoSkdLA=ATh46OGMwUg@mail.gmail.com>
-Date: Wed, 15 May 2013 00:02:38 -0400
-From: Michael Gilbert <mgilbert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/05/3
+Message-ID: <5227ECAD.8030604@redhat.com>
+Date: Wed, 04 Sep 2013 20:30:05 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: linux kernel perf out-of-bounds access
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: Kernel PID Spoofing Privilege Escalation Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 14, 2013 at 9:26 PM, Eugene Teo wrote:
-> On Tue, May 14, 2013 at 8:25 PM, Marc Deslauriers <
-> marc.deslauriers@...onical.com> wrote:
->
->> Hello,
->>
->> Is there a CVE for this? If not, could one be assigned, please?
->>
->> https://patchwork.kernel.org/patch/2441281/
->>
->> 8176cced706b5e5d15887584150764894e94e02f
->>
->> (BTW, there is currently an exploit for this going around...)
->>
->
-> Nowhere did it say it is a security fix. Fix available since April 13.
-> s@...s not aware too. Awesome.
->
-> Seriously, surely by now we should all know that silent fixes are not the
-> wisest thing to do.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-An iceberg of evidence is clearly not enough to change this ship's course.
+On 09/04/2013 08:39 AM, Agostino Sarubbo wrote:
+> A vulnerability has been reported in the Linux Kernel, which can be
+> exploited by malicious, local users to gain escalated privileges.
+> 
+> The vulnerability is caused due to an error within the
+> "scm_check_creds()" function (net/core/scm.c) and can be exploited
+> to gain escalated privileges by spoofing a PID.
+> 
+> The vulnerability is reported in version 3.10.10.
+> 
+> 
+> Solution: Fixed in the GIT repository.
+> 
+> Provided and/or discovered by: Disclosed within a GIT commit.
+> 
+> Original Advisory: 
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/net/core/scm.c?id=d661684cf6820331feae71146c35da83d794467e
+>
+>  Source: https://secunia.com/advisories/54675/
 
-Best wishes,
-Mike
+Please use CVE-2013-4300 for this issue.
+
+Stupid Q, any reason why this couldn't be sent to
+http://oss-security.openwall.org/wiki/mailing-lists/distros to give
+vendors a heads up (also we can get it a CVE prior to public release
+then)?
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSJ+ysAAoJEBYNRVNeJnmTs0QP/2CYOp2nHDlpq1KGsUNVi+uS
+jPsPoBuLp5nyJpjpg9ZN5zZZXUiQXruv9e1iQsN52Vv1IlnhyMeyOrA5qGrUFyy9
+KlXBAfBF8TRZqR8G5VdCFsFPHzy2uk2KOtA/THHEiIX5cSER9NTjh4Z5MALyg7RC
+imvw6D2SOjBsillT514pa24/BHwb9/H+ivDlRZ3lD66AI+anB247pj/32izFDK/Z
+X2qBEUPIjbWgAgVhuFPqaoxjMKmHJ960hL7v73NuH33gkOq61wyaBH9LSAP7Upgo
+H0goYSMlJ2sFSF3H48Oa62LJqHGMJXg1xBnJ/mHeVIJ5PSnxjSWLJ74TW1hOL+89
+PduKOnYoHaMlHESFlmZlxJVO/S520IBl9XiEDaTYEBjHh3pXHBEDDeerpdJ5K4Ek
+FFQSPXQFEQ8bKHq0EUrKs/6B/XtIsX4BZN/rsD4K7Ra1t9jsvGWIquwPckgJabzj
+q0m8nXih7BO7xuNMsljF7JZLpTqfeqkPhP06ML/u17YIYjK9W3lJPB+CmhIvKmRS
+oxuprIqbtd0vgqZEfo/VdqM50cNkZP1R8tjeMYmbFNumGQImzu+CXKKXSsdjRqap
+xJl2ROvpoqNqv4JRzGrAhsNRDOCV5CYkMVsMlHcuCFoXUuxuW7bea5qlU3mHKlgY
+IljNNvtK/IeYxqoZXrtu
+=FTZc
+-----END PGP SIGNATURE-----
