@@ -1,56 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/32
-Message-ID: <20130227180520.GC31167@kroah.com>
-Date: Wed, 27 Feb 2013 10:05:20 -0800
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/05/6
+Message-ID: <20130905082349.GA5658@mwanda>
+Date: Thu, 5 Sep 2013 11:23:49 +0300
+From: Dan Carpenter <dan.carpenter@...cle.com>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: Agostino Sarubbo <ago@...too.org>, Kees Cook <keescook@...omium.org>
+Subject: Re: CVE request: Kernel PID Spoofing Privilege Escalation Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 05:13:06PM +0100, Petr Matousek wrote:
-> On Wed, Feb 27, 2013 at 06:48:34AM -0800, Greg KH wrote:
-> > On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
-> > > For starters, security@...nel.org submissions should be posted to
-> > > oss-security or any other security related public mailing list when
-> > > the
-> > > patch is being committed.
-> > 
-> > That's not going to happen, and you know that, to do so would be
-> > totally
-> > irresponsible of us and directly harm your users.  That's what
-> > vendor-sec (or whatever it is called now) is for.
+On Wed, Sep 04, 2013 at 08:30:05PM -0600, Kurt Seifried wrote:
+> Please use CVE-2013-4300 for this issue.
 > 
-> linux-distros [1] is vendor-sec replacement for Linux related issues.
+> Stupid Q, any reason why this couldn't be sent to
+> http://oss-security.openwall.org/wiki/mailing-lists/distros to give
+> vendors a heads up (also we can get it a CVE prior to public release
+> then)?
 > 
->   [1] http://oss-security.openwall.org/wiki/mailing-lists/distros
 
-Yes, sorry, I couldn't remember the name of it at the moment :)
+The original patch was sent to netdev and lkml publicly from the start.
 
-> > Hasn't that been
-> > happening for a while now, or has no one been notifying that list of
-> > these issues?
-> 
-> Regrettably no. No notifications of Linux kernel security issues
-> reported to security@...nel.org mailing list to linux-distros (former
-> vendor-sec) are happening on regular basis. I (speaking as Red Hat
-> Security Response Team member in charge of kernel security issues) would
-> really appreciate the notifications. Even marking commits that were
-> committed as a result of security@...nel.org submission as sko
-> originated would be really helpful.
-> 
-> The linux-distros/oss-sec members can make sure that each issue gets CVE
-> and it's properly publicly communicated at the right time (preferably
-> when the issue is public -- when it is committed).
-> 
-> Should you consider this approach, is there anything I can help with to
-> make that happen?
+https://lkml.org/lkml/2013/8/22/462
 
-Yes, I need someone to actually do this.  There used to be a Red Hat
-security team member that did this, or so I thought.  What happened to
-that process?  I'll ask on security@...nel.org if someone wants to
-volunteer to do this, but if not, are you, or anyone else you know/trust
-willing to do so?
+We do have someone who is supposed to forwarding security bugs from
+security@...nel.org to distros.  I'm not on distros but apparently this
+wasn't happening properly so we've recently assigned another person to
+help with this.
 
-thanks,
+We're reviewing our security policies for the during the kernel summit,
+in October btw.  So far the main points are that people want less
+secrecy and more public reviews and better testing.  Kees wants to keep
+a record of CVEs in the kernel.
 
-greg k-h
+https://lists.linuxfoundation.org/pipermail/ksummit-2013-discuss/2013-August/001050.html
+
+It's not clear if anything will actually change though.
+
+regards,
+dan carpenter
