@@ -1,39 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/09/12
-Message-ID: <CABbbngBRMBAf5gdcbv3rA878B2nFhsLgVQoHq4mo1TP_fGhw7Q@mail.gmail.com>
-Date: Fri, 9 Aug 2013 16:29:56 -0700
-From: Forest Monsen <forest.monsen@...il.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/06/1
+Message-ID: <20130906162823.GR5194@redhat.com>
+Date: Fri, 6 Sep 2013 10:28:23 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: pyOpenSSL hostname check bypassing vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+pyOpenSSL suffers from the same NULL-byte truncation issue that ruby,
+python, php, etc. suffered from (like ruby CVE-2013-4073).
 
-I'd like to request CVE identifiers for...
+0.13.1 was recently released to correct this.  Could a CVE be assigned?
 
-SA-CONTRIB-2013-061 - Flippy - Access Bypass
-https://drupal.org/node/2054701
+References:
 
-SA-CONTRIB-2013-062 - RESTful Web Services (RESTWS) - Access Bypass
-https://drupal.org/node/2059603
+https://mail.python.org/pipermail/pyopenssl-users/2013-September/000478.html
+https://bugzilla.redhat.com/show_bug.cgi?id=1005325
 
-SA-CONTRIB-2013-063 - Authenticated User Page Caching (Authcache) -
-Information Disclosure
-https://drupal.org/node/2059589
-
-SA-CONTRIB-2013-064 - Persona - Cross site request forgery (CSRF)
-https://drupal.org/node/2059599
-
-SA-CONTRIB-2013-065 - Organic Groups - Access Bypass
-https://drupal.org/node/2059765
-
-SA-CONTRIB-2013-066 - Monster Menus - Multiple Vulnerabilities
-(Looks like two here: XSS, and an Access Bypass vuln)
-https://drupal.org/node/2059823
-
-Thanks!
-
-Best,
-Forest
-
+-- 
+Vincent Danen / Red Hat Security Response Team 
