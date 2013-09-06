@@ -1,137 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/07/2
-Message-ID: <52A2A8E6.1070300@redhat.com>
-Date: Fri, 06 Dec 2013 21:49:42 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/06/2
+Message-ID: <522A410C.4020907@redhat.com>
+Date: Fri, 06 Sep 2013 14:54:36 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Michael Niedermayer <michaelni@....at>
-CC: oss-security@...ts.openwall.com, ffmpeg-security@...peg.org, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: CVE Request: FFmpeg 2.1 multiple problems
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: pyOpenSSL hostname check bypassing vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Ok I've grouped these up a bit. My thoughts are should they have a CVE
-per grouping, or a unique CVE each?
+On 09/06/2013 10:28 AM, Vincent Danen wrote:
+> pyOpenSSL suffers from the same NULL-byte truncation issue that
+> ruby, python, php, etc. suffered from (like ruby CVE-2013-4073).
+> 
+> 0.13.1 was recently released to correct this.  Could a CVE be
+> assigned?
+> 
+> References:
+> 
+> https://mail.python.org/pipermail/pyopenssl-users/2013-September/000478.html
+>
+>  https://bugzilla.redhat.com/show_bug.cgi?id=1005325
+> 
 
-Leaving this up to Mitre as it's a bit fuzzy.
-
-===================
-
-https://github.com/FFmpeg/FFmpeg/commit/29ffeef5e73b8f41ff3a3f2242d356759c66f91f
-    fixes a deadlock in h264 decoding
-    https://trac.ffmpeg.org/ticket/2927 ami_stuff
-
-===================	
-
-https://github.com/FFmpeg/FFmpeg/commit/3819db745da2ac7fb3faacb116788c32f4753f34
-    Fixes out of array (on heap) writes in rpza decoding
-    https://trac.ffmpeg.org/ticket/2850 ami_stuff
-
-https://github.com/FFmpeg/FFmpeg/commit/547d690d676064069d44703a1917e0dab7e33445
-    Fixes out of array (on heap) writes in ffv1 decoding
-    https://trac.ffmpeg.org/ticket/2906 ami_stuff
-    Found-by: ami_stuff
-
-https://github.com/FFmpeg/FFmpeg/commit/f31011e9abfb2ae75bb32bc44e2c34194c8dc40a
-    out of array write (on heap) in case of realloc failure
-    https://trac.ffmpeg.org/ticket/2982 ami_stuff
-
-https://github.com/FFmpeg/FFmpeg/commit/780669ef7c23c00836a24921fcc6b03be2b8ca4a
-    Fixes out of array write in jpeg2000 decoding
-    https://trac.ffmpeg.org/ticket/3080 ami_stuff
-    Found-by: ami_stuff
-
-https://github.com/FFmpeg/FFmpeg/commit/86736f59d6a527d8bc807d09b93f971c0fe0bb07
-    avcodec/pngdsp: fix (un)signed type in end comparission
-    Fixes out of array writes in png decoding
-    https://trac.ffmpeg.org/ticket/2919 ami_stuff
-    Found_by: ami_stuff
-
-===================
-	
-https://github.com/FFmpeg/FFmpeg/commit/454a11a1c9c686c78aa97954306fb63453299760
-    avcodec/dsputil: fix signedness in sizeof() comparissions leading
-    to interger overflow and out of array accesses
-	Found by: Michael Niedermayer
-
-===================
-
-https://github.com/FFmpeg/FFmpeg/commit/b05cd1ea7e45a836f7f6071a716c38bb30326e0f
-    ffv1dec: Check bits_per_raw_sample and colorspace for equality in
-ver 0/1 headers
-    prevents inconsistency and out of array write
-	Found by: Michael Niedermayer
-	
-https://github.com/FFmpeg/FFmpeg/commit/821a5938d100458f4d09d634041b05c860554ce0
-    Fix order of align and pixel size multiplication.
-    Fixes out of array accesses in g2m4
-    https://trac.ffmpeg.org/ticket/2922 ami_stuff
-    Found-by: ami_stuff
-
-https://github.com/FFmpeg/FFmpeg/commit/880c73cd76109697447fbfbaa8e5ee5683309446
-    avcodec/flashsv: check diff_start/height
-    Fixes out of array accesses
-    https://trac.ffmpeg.org/ticket/2844 ami_stuff
-    Found-by: ami_stuff
-
-https://github.com/FFmpeg/FFmpeg/commit/8bb11c3ca77b52e05a9ed1496a65f8a76e6e2d8f
-    Check cdx/y values more carefully
-    Fixes out of array accesses in jpeg2000 decoding
-    https://trac.ffmpeg.org/ticket/2848 ami_stuff
-    Found-by: Piotr Bandurski <ami_stuff () o2 pl>
-
-https://github.com/FFmpeg/FFmpeg/commit/9a271a9368eaabf99e6c2046103acb33957e63b7
-    jpeg2000: check log2_cblk dimensions
-    Fixes out of array access
-    https://trac.ffmpeg.org/ticket/2895 ami_stuff
-    Found-by: Piotr Bandurski <ami_stuff () o2 pl>
-
-https://github.com/FFmpeg/FFmpeg/commit/a1b9004b768bef606ee98d417bceb9392ceb788d
-    avcodec/jpeg2000dec: fix context consistency with too large lowres
-    Fixes out of array accesses in jpeg2000 decoding
-    https://trac.ffmpeg.org/ticket/2898 ami_stuff
-
-https://github.com/FFmpeg/FFmpeg/commit/e07ac727c1cc9eed39e7f9117c97006f719864bd
-    fixes out of array access in g2m4
-    https://trac.ffmpeg.org/ticket/2971 ami_stuff
-    Found-by: ami_stuff
-
-https://github.com/FFmpeg/FFmpeg/commit/fe448cd28d674c3eff3072552eae366d0b659ce9
-    avcodec/jpeg2000dec: prevent out of array accesses in pixel addressing
-    https://trac.ffmpeg.org/ticket/2921 ami_stuff
-
-================
-
-https://github.com/FFmpeg/FFmpeg/commit/912ce9dd2080c5837285a471d750fa311e09b555
-    fix dereferencing invalid pointers in jpeg2000 decoding
-    Found-by: Laurent Butti <laurentb () gmail com>
-	
-=================
-
-https://github.com/FFmpeg/FFmpeg/commit/cdd5df8189ff1537f7abe8defe971f80602cc2d2
-    avfilter/vf_fps: make sure the fifo is not empty before using it
-    fixes double free in the fps filter
-    https://trac.ffmpeg.org/ticket/2905 Krieger
-
+Please use CVE-2013-4314 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSoqjmAAoJEBYNRVNeJnmTYtwQAJa8NZY0tBozAeNGHfrt/CPO
-Bi6DKLaKqx9R94VrgDATdXLyMV9om27bGYnP0xentRytbAIjWk6tbK7aPX6rbzE7
-J3VocoOV02mENlZUf6O7jPyRVsTDi+GUvdLoy9fvCo+uOT5VBofWXDh7aV6ei3i/
-jGC71MyPaU7X81X7Ix1pAQl0ItTtz5BBCdMz/VTqiUtoDHrqILTDUvrrAXBjk2xF
-lWVguOdr29+4yERbLq7PiZekPFhyfiisR5zMqp8JQOyW1meYRZw8snB450tOL2I1
-v982bcaky+Gu0j6DT3gNMO2smWoRVyX50/uiNaM3CXcoGWVxf6MwovOkVzjtd9v4
-cyBck2INHYqHiu1AYUNTogI+MnaO6wdBoBL2dJu+E3Mv+N6l2Dj7DT/Ig062sV+i
-sKL8g6dqEmRqoPkjjw3PLrB47DYupdciZ8Cng3hAetMwQ5tS3Rfk5YB9KOWslbPX
-bg4jsAMx3bTwJyRg5XU5uuYcC6mCuRymtDjQtc8wYljjN4HeQNk+uUf/DVHxEHqX
-7MZrLM9RBPPWl6eqaVRqqnVgfPcoKLq6ghqy0aZsA6FFfRLfUDmzGVQAfApOAPLV
-7nECU/DsXr2dtjdmRCvVFaHMjTb7m7UGG48i5Z5+L4wqBLoNHoJZLR8CxQhMErhr
-AqR9LkvVHU/M4g75DB2d
-=/xyt
+iQIcBAEBAgAGBQJSKkELAAoJEBYNRVNeJnmTsEIP/A8piMsssgPuYynOFvr8AH3s
+kF45hHOMMjVYXPXfsr6m1GFMC2IM7nPGIG2XD8NEruSZJhfi35aR4Oeh3QyL5vHg
+QmOkGILy1Va0P5CsrRmoGJ9gpvmA7HBs21sU0cUizy+f25nRm7Nx4vtAteZ9Jdh6
+rIGC8bGNg9JxmkOiWjQZh1otXAb6QpTAamhE6h7oIqZOoYh3uM0CCwmB15arGCMU
+sOssLQATAnp+xIufXwM7yUCO6zZ0tT2JWebXIPJuTq9/J+sMizcY/mwUtbcSjuQa
+Lw6wOKjPXyjFTw+MB4Ysf3f9sTzc4QSSKe7K8eLUCbyGuzJ3JJaTjfchK3QBetwk
+SX2hssXXogos0xPDoYaXNImkPh0fwf+PIiw6JexKg53V4g8t3DQRogeDJEtkkfEi
+u1LluxnBFMTOQ7L3k7u0ix0lU+LO1vd77y9hl73c8KP5QDDh67oJ3/gRD0DUOA+o
+rMWCM8CrMCOtpjgfNbJNZIu+s7iQvcUgdXk4vna7Wist/yq6OhOnOdGWRS0rX8br
+MF8AFD/eXFqoGDBQmRg8ToxT4AysIUdBpbp7Qv9HKWydOmGjKfXchygssdn8zd5Z
+Ioqpusxxol1mb+gcVk2rIhO6j6a38bGK3lmSC3NlTkv+8VHYZGJBqrQY5J4Qk6dz
+PVGm477HZN0wJKfS2+Wk
+=o5nu
 -----END PGP SIGNATURE-----
