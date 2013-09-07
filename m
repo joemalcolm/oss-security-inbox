@@ -1,71 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/02/1
-Message-ID: <51315259.4020405@redhat.com>
-Date: Fri, 01 Mar 2013 18:14:01 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/07/1
+Message-ID: <20130907081445.GC2815@kludge.henri.nerv.fi>
+Date: Sat, 7 Sep 2013 11:14:45 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: rubygem passenger security issue
+Cc: security@...o3.org
+Subject: CVE request: TYPO3-CORE-SA-2013-003
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Could you assign two 2013 CVE identifiers for following issues, thanks. We have
+agreed with Helmut Hummel that I'm requesting TYPO3 CVEs in the future using
+private method from:
+http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
 
-On 03/01/2013 09:46 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=804722 
-> https://github.com/FooBarWidget/passenger/commit/8c6693e0818772c345c979840d28312c2edd4ba4#commitcomment-2643541
->
->  Quoting:
-> 
-> There is a security issue regarding passenger that has been fixed
-> in master. However, this does only apply if you deploy arbitrary 
-> untrusted apps on you server. Very unlikely for us but still I
-> thought it was worth to inform you.
-> 
-> It fixes a security issue, but unless you're on a shared
-> environment it's not a grave issue. It allows an application
-> process to delete an arbitrary file, even a file it does not have
-> permi ssion to, but only during application startup (i.e. during
-> evaluation of config.ru). Once the application is started, it
-> cannot be exploited, so external visitors cannot influence this. If
->  you deploy arbitrary untrusted apps on your server then this issue
-> can be a problem. If all your apps are trusted (e.g. because your
-> organization wrote) them then there's no problem.
+http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2013-003
 
-PaaS. Third party apps, etc. I'm gonna go with a yes. Just because you
-deploy a poorly written/hostile app doesn't mean it should be able to
-hose your system completely.
+Component Type: TYPO3 Core
+Vulnerability Types: Cross-Site Scripting, Remote Code Execution
+Overall Severity: Critical
+Release Date: September 4, 2013
 
-Please use CVE-2012-6135 for this issue.
+#1 CVE-2013-XXXX
 
-> Unquote
-> 
-> I am not sure this warrants a CVE.
-> 
-> Ciao, Marcus
-> 
+Vulnerable subcomponent: File handling / File Abstraction Layer
+Vulnerability Type: Incomplete Access Management
+Affected Versions: All versions from 6.0.0 up to the development branch of 6.2
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:P/I:P/A:N/E:F/RL:O/RC:C
 
+Problem Description: TYPO3 comes with the possibility to restrict editors to
+certain file actions (copy, delete, move etc.) and to restrict these actions to
+be performed in certain locations (file mounts). This permission handling was
+only partly implemented with the introduction of the File Abstraction Layer
+(FAL). The file action permissions that can be set in backend user and group
+records were not respected and users could break out of file mounts by crafting
+URLs. Thus, unprivileged users could create or read arbitrary files within or
+outside the document root.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Solution: Update to the TYPO3 version 6.0.9, 6.1.4 or the latest development
+version! It is important to clear all caches (clear cache all in the backend or
+deleting the complete typo3temp/Cache directory) for the changes to take effect
+after the TYPO3 source files have been updated!
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Notes: Administrators are advised to set file permissions for backend users or
+groups by using user TS Config instead of using the file permission check boxes
+in the user or group records. This allows more fine grained control for single
+file action permissions. Examples in the advisory.
 
-iQIcBAEBAgAGBQJRMVJZAAoJEBYNRVNeJnmTTy0P/1L2D/jZW2Tfu3VHUCkZGIGj
-F7tV0XRR0WM4U+ODOKXXbuaefxHfPk7jJbQH0nfSa01KXCE/RwO/Qm482w/3KeHD
-LXASONIfc1IQnTOWFTA7wMToB2m/P4MWFJNmKeDZEbYxVshBpuzLsN6ZKQghntaG
-ArHtHN1ul8A2ZD7o8aDHR7s9Jh5ml60MgFtzujUcX4eL25JdD6TLoMxywlob8WVo
-YWKgmCGbYrpIsz7m1xbEtrKw2v/F1l91E24HXILa/FcpRr6Wn2VLnyMA58XR7rKR
-JAh6dbSG58X9hlu2DMXWWvcFvVozmNoqQo23AXtRzdC/CIoau750Pw8g1PftDAk8
-20CCM6yFwhFrRQZPvPa/VpD6mAzGfbdzWhGqI3og04SGyA3quKA5tmohenO3ouOB
-ezQiM2fseYNxOh/ru1UTxh8FXOgeKs4kizj6BCdwoNrxOycMwA5Etm8XU4Lmrg1q
-w9Wtwz9cZ0d/X76HNJhIY/+QeT+52AQZlDfNMxx2PZ9fL0Y8xJuD5Z+Ap1j/pSui
-Rbt90I6eKEfbcTD7ATcyvFWZsTMdx6rUPTGihX9UEYhlYqV0rK8GLuJRr8x6/moE
-DHApL7DNeGjoCHg96BfzegV+c0ps9V5tg6zeoey3bVMCU3pJDmf5psDtjC10kyVZ
-vRLgujtWhoVcvsypttTe
-=eLao
------END PGP SIGNATURE-----
+Credits: Credits go to Sebastian Nerz who discovered and reported the issues,
+Steffen Ritter and Helmut Hummel for creating the fixes and Anja Leichsenring,
+Susanne Moog, Michiel Roos, Sascha Egerer and Ernesto Baschny for testing.
+
+#2 CVE-2013-XXXX
+
+Vulnerable subcomponent: File Abstraction Layer
+Vulnerability Type: Remote Code Execution
+Affected Versions: All versions from 6.0.0 up to the development branch of 6.2
+Severity: Critical
+Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:C/I:C/A:C/E:F/RL:O/RC:C
+
+Problem Description: The check for denied file extensions implemented in the
+File Abstraction Layer as mentioned in advisory TYPO3-CORE-SA-2013-002 was
+incomplete. It was still possible for editors to rename files to have denied
+file extensions by inserting special characters that were removed at a later
+point. This (again) allowed authenticated editors to forge php files with
+arbitrary code, which can then be executed in web server's context.
+
+Solution: Update to the TYPO3 version 6.0.9, 6.1.4 or the latest development
+version!
+
+Credits: Credits go to Sascha Egerer who discovered and reported the issue. 
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
