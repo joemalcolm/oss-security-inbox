@@ -1,67 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/30/6
-Message-ID: <517FF1C1.1030105@redhat.com>
-Date: Tue, 30 Apr 2013 10:30:57 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/6
+Message-ID: <522DF8C8.70705@redhat.com>
+Date: Mon, 09 Sep 2013 10:35:20 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Andrés Gómez Ramírez <andresgomezram7@...il.com>, bugtraq@...urityfocus.com
-Subject: Re: Flightgear remote format string
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: Torque privilege escalation
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/30/2013 10:11 AM, Andrés Gómez Ramírez wrote:
-> Hi,
+On 09/09/2013 04:14 AM, Agostino Sarubbo wrote:
+> From the torque advisory 
+> http://www.supercluster.org/pipermail/torqueusers/2013-September/016098.html
+> :
 > 
-> Introduction:
+> *Vulnerability:* A non-privileged user who can run jobs or login to
+> a node running pbs_server or pbs_mom can submit an arbitrary job to
+> the cluster; that job can run as root. The user can submit a
+> command directly to a pbs_mom daemon to queue and run a job. A
+> malicious user could use this vulnerability to remotely execute
+> code as root on the cluster.
 > 
-> FlightGear is an open-source flight simulator.  It supports a
-> variety of popular platforms (Windows, Mac, Linux, etc.) and is
-> developed by skilled volunteers from around the world.  Source code
-> for the entire project is available and licensed under the GNU
-> General Public License.
 > 
-> Bug:
+> *Versions Affected:* All versions of TORQUE
 > 
-> Flightgear allows remote control through Property tree.  It is
-> vulnerable to remote format string vulnerability when some special
-> parameters related with clouds are changed.  This could allow to
-> crash the application or potentially execute arbitrary code under
-> certain conditions.
 > 
-> Fix:
+> *Mitigating Factors:*
 > 
-> No fix.
+> - The user must be logged in on a node that is already legitimately
+> able to contact pbs_mom daemons or submit jobs.
 > 
-> References:
+> - If a user submits a job via this defect and pbs_server is
+> running, pbs_server will kill the job unless job syncing is
+> disabled. It may take up to 45 seconds for pbs_server to kill the
+> job.
 > 
-> http://kuronosec.blogspot.com/2013/04/flightgear-remote-format-string.html
+> - There are no known instances of this vulnerability being
+> exploited.
+> 
 
-What
-> 
-is the default setting for flight tree? does it listen t the
-network public interface, localhost, is it disabled by default, or?
-Thanks.
-
+Please include links to the vulns/source code fixes/original
+information thanks.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRf/HBAAoJEBYNRVNeJnmT2esP/3B/cfmFPdzhv9Zv7jpRSPTN
-bW5ZvtrgEsWo5wmDewelvAnoaeOg1V/n5vb7rk1/j7AG02NhuNpdHIID6t7sr0lE
-glNhOUM/b0GmtEPsHUBAHTODsRXUt4vFO1QXfOTHF3tgkY2JYx1zTiBI3jdIioV6
-icpaaL2TluIBem/YbYvzxYAnnhdAKmZdu5+OKPuiQ0vguNoOZgOUAEte39ZrzBv0
-xSf6lfDGOmO/5n/gOTZ0o6hbJMKTcmGPVze4i3choGfjo+cH7LpWSjHP4zAe5amJ
-iByH3BLKe0DQSGnhhEx/Rz6vL/kjqKuRHQ+Qj09SQiMKMGSyBnKp6VUzI7cbknyE
-XBU/Z4onTQNMjadyXTWRTs2aOvsI3jo6um2vbWq7PBAglBsoUdzM+ocTeUd5uhgf
-Q0a9rlUkq2/iRMtqwfh+cSnXOWk6YB83l2oDMVllHRlW5NfPXSdbTCHNLttep5sS
-C5PFyXmc6SeUPDbz00hwjBV6qqAAoLvBgsJdMGbidT1PIh5rCbbVetmcIsrBjpuI
-NqKU7YH0yz0iSHWN7TS6yEho6nyXFZNAMX2HE+I07RDNFnYDAZB2+UeDfvqdNIkL
-xoR2/4QaRxoDDz/DclJ64ZGk7ttPLCztJIVd0XXe9qHQyKjzQEqvCERh2Wtsta4G
-PsHQq+gYKaGmfVWkfq0Q
-=BfNa
+iQIcBAEBAgAGBQJSLfjFAAoJEBYNRVNeJnmTmsEP/2VnQVuLVoVLzFuJRRQovcjf
+Iu50e5Bk2WEWLsibhdjuYbp14gZ4smNHHk1wjRxMKV12kbBzQ4ivndR13TukcCns
+CEkYSKbHgJqBvpBVIXjXqBtSovc26UaZd6Zz0jrrgBsKhX1r+opqmRMispZ5f7sn
+sK9fTwHnySIwuBHO8cm0RLDcoOY04UVk75gq8iemPcNnAWB4a1zRKPNk+ir5G6vg
+PrbWpfTFEiqe5LWpJADAUQj8dAHMpbJGZuis5krUGCe7ZLM+uCCPKBkU0sVsiHu6
+wM3bPnFt8ifBvRxG9gM7sRZ6/rHeK3DHvE53j10JjGA+HCgy6jSceWJzl4d0LXPj
+AQpsjW/Q7zcFY8Amx5wyL0DYwtWDwz/ZnQKRQINwoy7PzMb0lUOtxaOmcSiT5unE
+NHsW4Pi3u9KVV75PztWDc2367/B+gpRrVugR/fFJUylz32wofIzv/Jo6otXAyGe2
+gZcrx+9ekO1dCX+jMNaqvQL2WzjgILh4ZfbBVTYeNmb4JyrVCGsdVrw9b3l+QKqs
+yG/V44cZaNh18lMXwVm8Iv8fwfxIqzETVaUDnrAqdDxU3ol67mZ/GpSc3JXBtYtF
+fIVrreD7pEYFEy5jLskdwb1+H/FbU7u88Z2h4cGwSwphPNWK2FJA3xx1bIkIX1bF
+vOpu/OmXp43+Mn8JXUIP
+=UMc5
 -----END PGP SIGNATURE-----
