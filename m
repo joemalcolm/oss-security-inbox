@@ -1,32 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/18
-Message-Id: <F28C2934-C07B-45E1-AC9A-2B065536F475@stufft.io>
-Date: Thu, 25 Jul 2013 05:09:24 -0400
-From: Donald Stufft <donald@...fft.io>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request: Insecure Software Download in pip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/9
+Message-id: <0b73a783-12f3-4f1e-8ffb-9c29b33f6539@me.com>
+Date: Mon, 09 Sep 2013 17:38:46 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Features 0.3.0 Ruby gem /tmp file injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-I'd like to request a CVE for pip (https://pypi.python.org/pypi/pip/).
-
-The mirroring support (-M, --use-mirrors) was implemented without any sort of authenticity checks and is downloaded over plaintext HTTP. Further more by default it will dynamically discover the list of available mirrors by querying a DNS entry and extrapolating from that data. It does not attempt to use any sort of method of securing this querying of the DNS like DNSSEC. Software packages are downloaded over these insecure links, unpacked, and then typically the setup.py python file inside of them is executed.
-
-The vulnerable code is located at:
-    - https://github.com/pypa/pip/blob/develop/pip/index.py#L60-L64
-    - https://github.com/pypa/pip/blob/develop/pip/index.py#L205-L207
-    - https://github.com/pypa/pip/blob/develop/pip/index.py#L553-L572
-    - https://github.com/pypa/pip/blob/develop/pip/index.py#L999-L1024
-
-The affected versions are every released version since 0.8.1 which are:
-    0.8.1, 0.8.2, 0.8.3, 1.0, 1.0.1, 1.0.2, 1.1, 1.2, 1.2.1, 1.3, 1.3.1, 1.4
-
-I'm not aware of this issue having ever had a CVE requested for it and my attempts to search the CVE database did not appear to turn up anything relevant but the search doesn't appear to be the greatest so I may have missed it.
-
-I'm hoping to land a patch for this in a future release (current iteration of patch available at https://github.com/dstufft/pip/compare/remove-mirror-support) but there is no planned fix version as of yet.
-
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+Hi, May I have a CVE for the following vulnerability?
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
+Title: Features 0.3.0 Ruby gem /tmp file injection vulnerability
+
+Date: 9/1/2013
+Author: Larry W. Cashdollar @_larry0 
+Download: http://rubygems.org/gems/features
+CVE: TBD
+Description: "Plaintext User Stories Parser supporting native programming languages. Especially Objective-C"
+Same vulnerability as http://vapid.dhs.org/advisories/show_in_browser.html
+By a malicious user creating /tmp/out.html first and repeatedly writing to it they can inject malicious html into the file right before it is about to be opened.
+PoC:
+nobody () sp0rk:/$ while (true); do echo "<script> alert('Hello'); </script>" >> /tmp/out.html; done
+Will pop up a java script alert in other gem users browser. 
+Code:
+Vulnerabile code in ./features-0.3.0/lib/suite.rb
+
+html = parse_results(results).html
+%x(touch '/tmp/out.html' && echo '#{html}' > /tmp/out.html && open '/tmp/out.html' ) end
+def parse_results_and_open_in_safari(results) -- end
+def open_in_safari(html)
+%x(touch '/tmp/out.html' && echo '#{html}' > /tmp/out.html && open '/tmp/out.html' ) end
+
+Vendor: Not notified
+Content of type "text/html" skipped
