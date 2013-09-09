@@ -1,66 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/9
-Message-ID: <52658B0F.7070507@redhat.com>
-Date: Mon, 21 Oct 2013 14:14:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/8
+Message-ID: <1672767.xGzJSsig4s@devil>
+Date: Mon, 09 Sep 2013 19:31:02 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: echoping buffer overflow vulnerabilities
+Cc: kseifried@...hat.com
+Subject: Re: CVE request: Torque privilege escalation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Monday 09 September 2013 10:35:20 Kurt Seifried wrote:
+> Please include links to the vulns/source code fixes/original
+> information thanks.
 
-On 10/21/2013 12:04 AM, Moritz Muehlenhoff wrote:
-> On Fri, Oct 18, 2013 at 10:35:18PM -0600, Kurt Seifried wrote:
->> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->> 
->> On 10/17/2013 05:18 AM, Sergey Popov wrote:
->>> Echoping 6.0.2 and before contains several buffer overflow 
->>> vulnerabilities that can lead to execution of arbitrary code
->>> on the system or cause the application to crash.
->>> 
->>> Bug report in Gentoo: 
->>> https://bugs.gentoo.org/show_bug.cgi?id=349569
->>> 
->>> Some additional info: http://xforce.iss.net/xforce/xfdb/64141 
->>> http://secunia.com/advisories/42619/
->>> 
->>> Issue is fixed in upstream[1], but no release yet.
->>> 
->>> Please assign a CVE for this, thanks.
->>> 
->>> [1] - http://sourceforge.net/p/echoping/bugs/55/
->> 
->> Please use CVE-2013-4448 for this issue.
-> 
-> This should receive a CVE-2010-xxxx ID. It was originally reported
-> to the Debian BTS in December 2010 (as linked in the sf
-> bugtracker): 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=606808
-> 
-> Cheers, Moritz
-> 
-
-COrrect, I wasn't paying attention to the created/etc dates. Please
-REJECT CVE-2013-4448 and use CVE-2010-5111 instead.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSZYsOAAoJEBYNRVNeJnmT6joP/0V7xtZpJ0LRQBATuBANncYh
-aqrLie9+VuUhkYHzX2Cng/3kycy150OaqfLRHwz/qGeeUvCpvp0Ks4r2m3onXFfK
-hAZbJoFVK5jqwc91LNeUXm3i8X9UWS9lDcoxxQNlBROWKcphhzEl8oV12f5JjI82
-sN42NRJGS5bDqXSIepzlymHZbslpn4pJYKgq61oVe2+/Ag6rpaVExFFCnBj3Qskb
-zUaOQfzL6OhgN8iIHTdKGJQiJDHCFeD3E4n306j9gKmGr4eqKewd7Qqju4lsreeh
-Lv89eOE7k5Pvsxusc8aDDX7pmntPPgRk5ei4WF7a+8Wv7BGLl50EF7b06b9J/pgU
-RyWGPTy3Je47xFfsM4whrlVLtnyLjmlTSf30DBWapnJenvkpergfcBrRdQvOhkLA
-tjyCpsmAPI8G4m7AlvV+fzUWHL9LMbrESDMwmTRXlpiHIjBlAR+kXenyUjiw5KHV
-9l1o5fB9jdaWUrYbx9IHEwXObHhKDVtRWwN8Az1d8J8/AaNBi/yWRfFYm3zFlGvQ
-g/siJ+XfiTnI+STKx7FbHVXWQOLvpqfHE52p2sqdUzU5VzhtTfp0VSc99tU4Omzf
-7wGw6K954NXCm9oVVe51ZAR6q9baOnA46tkolqxfZZ9kqocpPxMDz6A30KrKJGc4
-Mc2pq05aKrasEmn9bWMn
-=5CSE
------END PGP SIGNATURE-----
+Did you see the link that contains the patch?
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
