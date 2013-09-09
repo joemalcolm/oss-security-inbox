@@ -1,55 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/7
-Message-ID: <50EFC4C6.2010002@redhat.com>
-Date: Fri, 11 Jan 2013 00:52:38 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/11
+Message-ID: <522E2967.6040702@redhat.com>
+Date: Mon, 09 Sep 2013 14:02:47 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Reed Loden <reed@...dloden.com>
-Subject: Re: CVE request for multi_xml ruby gem (has same problem as CVE-2013-0156)
+To: Agostino Sarubbo <ago@...too.org>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Torque privilege escalation
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/10/2013 05:56 PM, Reed Loden wrote:
-> Apparently, the multi_xml ruby gem has the same issue as
-> CVE-2013-0156.
+On 09/09/2013 11:31 AM, Agostino Sarubbo wrote:
+> On Monday 09 September 2013 10:35:20 Kurt Seifried wrote:
+>> Please include links to the vulns/source code fixes/original 
+>> information thanks.
 > 
-> Can a new CVE be assigned to track it specifically as well, or
-> would policy dictate that this issue be considered part of the
-> original CVE?
+> Did you see the link that contains the patch?
 > 
-> https://gist.github.com/d7f6d9f4925f413621aa 
-> https://github.com/sferik/multi_xml/pull/34 
-> https://news.ycombinator.com/item?id=5040457
-> 
-> ~reed
 
-These appear to be slightly different code bases, and in any event to
-prevent confusion I'm assigning it a separate CVE to prevent confusion
-since Ruby on Rails = 100% usage basically and multi_xml = > 100%
-(probably a whole lot less).
-
-Please use CVE-2013-0175 for this issue in the multi_xml ruby gem.
+No I did not, please use CVE-2013-4319 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ78TGAAoJEBYNRVNeJnmTeN8P/RlSMjTZCtmy2AfWWgMHPW8k
-ico/Z77pOL9Mvlh8xTLemFTymaVubnF2YNlaZFFxYRvmlObf/Ci1E6Qy8tf0Ik9H
-QUHeiXFvV+km6tKn3ieN3smUhtGRn/zUGyZEz2g0pBeSqCdl+5XUdVN2dB1NXmU0
-eZvuvtpCcVkyAJ9r+5g5Qv3+tqZn/7jKzjGrUGAQaw2dkgy2Sl4J0I6aKN1dyvBF
-YnifZCmexnvxSbVXRVJ7uNx2k8fBwcWmF3YAg5/bqSLrVBr5Bq4daCTXIgSal0WG
-boiAMofD2GMDGBeAn5xvjfnHTuVAB34L0P0C+P0NUUOwLLigJ4XfKfAeWBOqUQkg
-Ugk6ABEjlg6PLsz1+xe8ZwggAyaBg05hGD6azZfZ02EeOxhrTew5M/NT6jrp2CHh
-42YLKfYnEkfJQIWyOS/Yu7h0vAauvsdm64SvQhjhsNOJ4HGobrcQrj4DYayOQMK5
-WeTe81JDXokOf3RqdYc79AIeh2sJBGOiceoVwhjuIriJ51PgH4LXMcFUMTtwIOZg
-7efx8+fGMqTZxVEzWZPssg2vZl0eZTLc2fAXepmDf0DAie1MH8POcU+5ePQEpIfe
-22nLWzk86Pm2Pzw8yBJiw7Y9vezdne9MRXOhNSDZaALaIJny4LMPDZC31T2KZqOO
-9p6Mqs1REqiKMSDgvXun
-=f+4c
+iQIcBAEBAgAGBQJSLilnAAoJEBYNRVNeJnmT0SAQAJgpUm/H0ZRSh/YdkvparFfC
+mbI80AHUjz3Vp3KldGX+DB3yOgw7iWo/o/+Ocfpqng/8TgTSOU8TZWlS/J7aGxK2
+ifgNfsClWeDmlIRIj795BhsPYe7Z3yJxdKfi1Ep2wIeuOmeQlIKsQXBnWs9/W49T
+01BaIYQbGHAq2379Ki4uMF/YBpj6kgBMcMwR8O9komngCmfWMqIPEHw02UFhoQGG
+H5AEMWvbdR4x1SYD38LS8X5MMgNP+2XUP3ahJplii/zfwBUbcMZPB9R18aRAM0i8
+wDxJA85M6LViewAU24X4FBBVuGhxAJZtIb6FG9HtGGqMbWYNdUN+xVFrHwHyxOiI
+drgWNQePZz39mH2iLNVp9jC67OUlBoFFCrqEWShG0E9hxXxJKQwQhTkqKK3MuOGs
+QaD6Z3sFxsLXQJMJx4g9ZYQ9y/kfzb3zAjKkyvaaiEFUaqJpqNQRXRaXyOu8sFFQ
+9g8+ejJ4bqChoCEPdeeDd/KauQEX94yV7nvl1p1T1Xiapdj5vseVhOzPnWCwgqsi
+vJBrDWxiGoV+YyqXh9qyosW/9109n0f/ceAHwDl+Dm5anFvgiM3iYY8LVNFFncvD
+6vYXLfO46YhwuC4dpNc/5SZwAJgbW/Mg+M9KoQH7L+msEyodnAvZYz6/OkOGeeoe
+LIRku2ZF5XXoJzOuczRh
+=IDzk
 -----END PGP SIGNATURE-----
