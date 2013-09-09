@@ -1,56 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/21
-Message-ID: <51267B10.3070003@redhat.com>
-Date: Thu, 21 Feb 2013 12:52:48 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/14
+Message-ID: <BLU0-SMTP575C59610944DB24212E05EF3F0@phx.gbl>
+Date: Tue, 10 Sep 2013 03:24:41 +0430
+From: Hamid Zamani <me@...idx9.ir>
 To: oss-security@...ts.openwall.com
-CC: security curmudgeon <jericho@...rition.org>
-Subject: Re: Two more ZoneMinder that need CVE
+Subject: Re: CVE Request : NAS v1.9.3 multiple Vulnerabilites
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 02/21/2013 12:10 PM, security curmudgeon wrote:
+On 09/10/2013 01:18 AM, Florian Weimer wrote:
+> * Kurt Seifried:
 > 
-> re: Kurt's response about ZoneMinder: 
-> http://seclists.org/oss-sec/2013/q1/369
+>> Format String please use CVE-2013-4258
 > 
-> OSVDB has two more ZoneMinder issues that do not have CVE:
+> This was actually fixed in r285, before the report:
 > 
-> 74198      2011-08-01     ZoneMinder index.php view Parameter
-> Traversal Local File Inclusion
+> http://sourceforge.net/mailarchive/forum.php?thread_name=E1Rp1rP-00038Z-VJ%40sfp-svn-6.v30.ch3.sourceforge.com&forum_name=nas-commits
+> 
+> In case someone else is wondering why there hasn't been a recent
+> commit fixing a format string issue. :-)
+> 
+> 
 
-I think this is the CVE I Just assigned.
+That's right , but as i checked it had been fixed on upstream but
+packages on distros like Debian, Ubuntu and ... not. So i just reported
+that in order to update packages.
 
-> 89546      2009-02-09     ZoneMinder Multiple Default Credentials
+Of course i had to mentioned that as it discussed at radscan mail list.
 
-By default, ZoneMinder installs with default user credentials
-(username/password combination). The 'zmuser' account has a password
-of 'zmpass' and the 'admin' account has a password of 'admin', both of
-which are publicly known and documented. This allows remote attackers
-to trivially access the program or system and gain privileged access.
+Thanks
 
-so it doesn't qualify for a CVE.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRJnsQAAoJEBYNRVNeJnmTatsP/Rn0uyabjN7rOB+mlDBGoL7K
-Qo00ZZrdRQGVrswWnFgsaZqJYdbuGNi3Mwe9RQIZ0x8YvRH+8z4UCJ95OqtBqgxf
-Ff+Osgd7op317skAQjspqV9d6My5v9HQHeT3bBz9PpqMIXTKqFG8VfgELvkQRfOa
-AhFUJX04pbX9tWCDZ6xxfl6Kd+JsYpAIk34+d2DaRhXPEBouN0fBKxUo/SlRY6jW
-jOXr7P9nNlS9M6CgibCTCafPAoufeU5auT5YWI7sMsr0YYTi8cT/qiw4iEGorVxI
-aB4PsjldKnY3a+mIkIwEHPFhPqj/jkhVaNdO76f/JCAzyRaG+tc/rNeiC5GqAU/8
-XDWEziJLZntwdtQS7SaraS5Re3ApNH1pMn6jx/zDNe+0ubpez6GBZmcpe3ZnfeB1
-tJpX2exWvoIBJO59LSxtIgapsWR8WjZucx+H2NI9d4YirFpoaT8qhIp+yRIuXzkn
-uD97VVE3xG6I8JwsJCyxRD4zhFxVG8Icily5MQhmd1iPXAb/D+wblfrRgAr2M/ay
-bV2snuxBayPKgY8UJxSHI99U55euK66uiWKE62qNVzcz7H9ny9TKXxGD2CLwnUR4
-MTWn0GGjtf1ULHzxhX0WYGiR1cNvC7uZ5awGvzZqK3g8/wplVdX4sUW5o8dPwpK9
-/iGY57kibh/YPtCiWQM9
-=yYZ4
------END PGP SIGNATURE-----
+-- 
+Regards,
+Hamid Zamani (aka HAMIDx9)
+Ashiyane Digital Security Team
