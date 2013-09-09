@@ -1,75 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/5
-Message-ID: <5132C6B3.6020809@redhat.com>
-Date: Sat, 02 Mar 2013 20:42:43 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/5
+Message-ID: <522DEB0F.9080103@redhat.com>
+Date: Mon, 09 Sep 2013 09:36:47 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Salvatore Bonaccorso <carnil@...ian.org>, Damien Regad <damien.regad@...ckgroup.com>
-Subject: Re: CVE request: MantisBT before 1.2.13 "Change Status To" feature allows unauthorised workflow changes
+CC: Adéla Goldová <roguecoder@...h.com>
+Subject: Re: [CVE Request] Event Easy Calendar
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/01/2013 11:33 AM, Salvatore Bonaccorso wrote:
-> Hi Kurt
+On 09/09/2013 02:15 AM, Adéla Goldová wrote:
+> Hello
 > 
-> Noticed that the following CVE request did not got a CVE. Would it
-> be possible to assign a CVE to this?
-
-Yeah odd, I assigned one and then moved the other one to my archive,
-not sure why.
-
-> On Sat, Jan 19, 2013 at 11:35:06AM +1100, David Hicks wrote:
->> Hello again list,
->> 
->> Damien Regad (MantisBT developer) discovered and fixed[1] an
->> access control/permissions bug in MantisBT that exists in
->> MantisBT version 1.2.12 and prior.
->> 
->> A MantisBT user with "Reporter" permissions (enabling them to 
->> report/create new issues) can modify the workflow status of any
->> issue to "New" even if they do not have the necessary permission
->> to make this change.
->> 
->> Details of the bug, including steps to reproduce and patches are 
->> available at [1].
->> 
->> References: [1] http://www.mantisbt.org/bugs/view.php?id=15258
->> 
->> As per previous e-mails to this list within the past 24 hours,
->> MantisBT 1.2.13 is expected to be released early next week.
->> 
->> Can a CVE ID please be assigned to this issue?
-
-ccc
-
->> 
->> With thanks, David Hicks MantisBT Developer #mantisbt
->> irc.freenode.net http://www.mantisbt.org/bugs/
+> The wordpress plugin Event Easy Calendar suffers from CSRF and XSS
+> vulnerability and improper input validation. Could someone please
+> assign CVE's to this?
 > 
-> Regards, Salvatore
+> 1: http://seclists.org/fulldisclosure/2013/Sep/41
 > 
 
+Please include links to the vulns/source code fixes/original
+information thanks.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRMsazAAoJEBYNRVNeJnmTY/AP/1R6Vt4ATt0WGTjlq3L1Expe
-yXEdYDCTn5+QL7uXIzM72vEsX00HKIHBIKpga1J/PGCOC7s9cuypWwPKsByENIL4
-zUW7fYq+9GQ3GKhhLaAXEKInSzevrhTq3RMV6cIFWsI8oKcT/hvxJu/sPP5LH+NS
-rz08+nt5rNuYvRQULZiqSeHdwy8kOsrIYEV0+msqnj92kfPdmIOpWWe/xsQKbNeb
-hB2yYvDKnmxkuigkwBsEdeGbTmDah/eiFr3gDlLHgpYKSQRGppSf7rtVhUeMvCT9
-31j3+uqbSssALc3k3uOzSD7ytzUzladgrMVnhdSGs0JBFDvD3RMD48TEL9DT/zKm
-E65/4lwjl9sbGpdsD2I0/WRKkzuS+yOcefbXszZekR6dRQ/RLypb1/86XJtoPQGu
-2rFrj7/5XzkmXVlD68vOHDOcP3qciKgddRCmYkLbgYqdt2KJBfNflVj4tEuvlUFD
-+JZvEDJF74Guw2L9ag3Z1kJYzB/aqXLpS+5cnWe5J8y4oTSWFRrH1SdhInI0FUyX
-dJzhr+OonElp8UZnXmU/5TZ5pffzvw1qQvYA4DTP5BpFxUDrA2LqTzFhSQmE/Jcp
-6ffi6tH5SJJT7sY2WTjoTJDSRjnLPyTtUc+CdXdfrup+LGF4nr8DXzSNav8k+3BU
-ocWlaK1JT+9/gK2pPsX/
-=P2vN
+iQIcBAEBAgAGBQJSLesOAAoJEBYNRVNeJnmTo78QAMSYgdcz1nGX01klyr3heuHd
+gTiTeVUl6EtiLH+0VF13pDZJM4UI8kRxEOmKwGfv6qz5zIfxQmfaMk5+IUtdW4sA
+jLpjbUuIieuFOCwUGNle04K9faqeq/44BkqaEv024KBtiHRvE1UqFpv0FGzMmr/T
+LRVgBPL2AikF0EgZADPualhv+mwzvSEbE87f2OoUj8Oa55mhzLiE+umQv+cs/4mQ
+4RmOnX8oBSS6HOwy5y/BKr6wplKDLAleDpOjEvK/GdkpxHJOShJkV21buWg1zKfF
+X3qOysIY1QS9DcAQDSlY0sYGMT1G0M22NkSxtOF8NG7Y4R2Uc56eNS3z0grU1RmZ
+XRj6MCULBxWzgbFymKRyfswDIQcPjK7pEdkitKBLbZeZSuu0WqQC+lHcjLnHOpkq
+YVRoO7BIrHacgMMgQRhGB1Eqasf1fG9mGGxMrL/zeE/JJvIPqNAkrEq+ageoHW8L
+5Eph56Ipy/uIWkrKWfrlD2YE3cWGAjUBlC5qh6fjD0T84LSpte3pc8Ib/7+P3ODA
+bkxCY4XpS9M4PhZYOV/k7HBTM7p9wQWme1eMn1ld8q+YImf8Em9jYFWVFvDVGZrj
+74PZrPzuh2gOrp0Sb754SsgZ4ZuXPTE8HCIVGgT0io2K+OcYnvm9NLtUSm8Vc0qS
+x0R4dJZ0BzBkmr4HNxju
+=IXdn
 -----END PGP SIGNATURE-----
