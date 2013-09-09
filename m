@@ -1,48 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/21
-Message-ID: <52167D85.6080707@fifthhorseman.net>
-Date: Thu, 22 Aug 2013 17:07:17 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/13
+Message-ID: <87zjrln2ky.fsf@mid.deneb.enyo.de>
+Date: Mon, 09 Sep 2013 22:48:45 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-CC: Andrey Korolyov <andrey@...l.ru>, kseifried@...hat.com
-Subject: Re: Possibly insecure permissions on sshd_config in Debian-based distros
+Subject: Re: CVE Request : NAS v1.9.3 multiple Vulnerabilites
 Content-Type: text/plain; charset=utf-8
 
-On 08/22/2013 04:36 PM, Andrey Korolyov wrote:
-> On Fri, Aug 23, 2013 at 12:20 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+* Kurt Seifried:
 
->> Well the default file config would of course be known. I'm reading the
->> man page and nothing super secret pops out, e.g. no passwords get
->> embedded. Can you give an example of sensitive information in sshd_config?
-> 
-> AllowUsers/AllowGroups/PermitEmptyPasswords
-> 
-> Obtaining such information can shorten time of bruteforce remote attacks.
+> Format String please use CVE-2013-4258
 
-I don't think these rise to the level of being worth hiding at all.
+This was actually fixed in r285, before the report:
 
-PermitEmptyPasswords is one additional password to test against each
-user account, which i don't think is significant.  And a user with local
-access to the machine can already radically shorten bruteforce
-enumeration of possible accounts with just with "getent passwd".  the
-gap from there to AllowUsers isn't particularly significant by comparison.
+http://sourceforge.net/mailarchive/forum.php?thread_name=E1Rp1rP-00038Z-VJ%40sfp-svn-6.v30.ch3.sourceforge.com&forum_name=nas-commits
 
-I don't know of any history of any serious high-entropy secrets
-(passphrases, secret keys, etc) being stored in sshd_config, and i would
-imagine the ssh developers would resist any configuration that
-encourages that sort of thing.
-
-Having your config files world-readable by default eases debugging, and
-can communicate to savvy users what your policies are without needing to
-exchange e-mail or chat.
-
-Administrators who want to make that tradeoff are free to make it, of
-course, but if a proposal was made within debian to do something like
-"chmod go-r sshd_config",  i would object to it.
-
-This doesn't warrant a CVE.
-
-	--dkg
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+In case someone else is wondering why there hasn't been a recent
+commit fixing a format string issue. :-)
