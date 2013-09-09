@@ -1,65 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/29/6
-Message-ID: <51F6D742.70900@redhat.com>
-Date: Mon, 29 Jul 2013 14:57:38 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/4
+Message-ID: <17454854.nADZ7fCYU2@devil>
+Date: Mon, 09 Sep 2013 12:14:51 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-CC: Tomas Hoger <thoger@...hat.com>, security-officer@...eBSD.org
-Subject: Re: FreeBSD Security Advisory FreeBSD-SA-13:07.bind
+Subject: CVE request: Torque privilege escalation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+>From the torque advisory 
+http://www.supercluster.org/pipermail/torqueusers/2013-September/016098.html :
 
-On 07/29/2013 02:45 PM, Tomas Hoger wrote:
-> Hi!
-> 
-> On Sat, 27 Jul 2013 03:41:28 GMT FreeBSD Security Advisories
-> wrote:
-> 
->> FreeBSD-SA-13:07.bind                                Security
->> Advisory The FreeBSD Project
->> 
->> Topic:          BIND remote denial of service
->> 
->> Category:       contrib Module:         bind Announced:
->> 2013-07-26 Credits:        Maxim Shudrak and the HP Zero Day
->> Initiative, ISC Affects:        FreeBSD 8.4-RELEASE and FreeBSD
->> 9.x
-> 
-> Are FreeBSD advisories now going to be posted to oss-security?
-> They were not posted here before.  The list charter strongly
-> discourages posting of vendor security advisories:
-> 
-> http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
->
-> 
-This was my fault, I forgot about that part of the list rules, my
-intent was all the CVE's I assign should eventually show up here so
-Mitre/etc don't have to chase down 1000 project sites/mailing lists to
-find them. For large projects like FreeBSD this obviously won't be a
-problem. But what should we do in future to make it easy to see what
-happened to CVE assignments? cve-advisories@? tell people I assign to
-email mitre directly (but I have no way to know if that gets
-done/etc.), something else? Steven any requests/comments?
+*Vulnerability:* A non-privileged user who can run jobs or login to a
+node running
+pbs_server or pbs_mom can submit an arbitrary job to the cluster; that job
+can run as root. The user can submit a command directly to a pbs_mom daemon
+to queue and run a job. A malicious user could use this vulnerability to
+remotely execute code as root on the cluster.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR9tdBAAoJEBYNRVNeJnmT5hMP/0lRE5CGaDVnoYwGwOUVY6Qh
-u8UrDXi/9aY78FV+P+WQx9EKSBMdgxhZMaoxofBWrhuJhWy7cIlSRWtIfWeAyivb
-yFxz7foIIlLjmm0pnmVDnR02Bjk7YxsLBn5e77UeWfWPQtxbvkK9w/FfC1V3ildq
-qXss3U4+gisQ+9IlKQVcNDylcfGcXVQp/2bEQaai+ujoasOvQzDYgMYbLrFWYOKU
-WaJpynQ1VPWLaTEPr1xeiU9iiGHY1nBPECouo0RrM327RSnwjXT/GTdWjXSltmwr
-sLbRYdXs2DeNc5h/CB0U/u03y756lNhF5tseTdbS8FJx8/2nnW+awf0J+uL+3P1k
-ucEFniWX7hVpolwnqYRIVejJ0PbEt1iBXsLy2aeINuS6JzSjVk7qjuk1f2S2Rmls
-F7gczYFD1G3I+wIQF+mPVybZI5hV6MbHIybe+Kku4t3FBcaUv/HKNx8j0+mLGOeL
-DFN1I9CbRJjWV8e0IOX3aAGj6qUnGHL7dOhVhxdQoDq9ir26wx6BpNtLLpNo0TUd
-jh955r8ULVgfaGeCsyKb7xUIxtDxiKa9PFLmE7RtGWqQpmiUEgBMwVwQvxrQsFkY
-P29tmOXG++A1HJpjTcs/X9p/7Zr9EEJNX6vlML+svBneijvDxDmhiENPFYV/ppPi
-N+mgHZXoD5BwN/3wfgua
-=/zBY
------END PGP SIGNATURE-----
+*Versions Affected:* All versions of TORQUE
+
+
+*Mitigating Factors:*
+
+- The user must be logged in on a node that is already legitimately able to
+contact pbs_mom daemons or submit jobs.
+
+- If a user submits a job via this defect and pbs_server is running,
+pbs_server will kill the job unless job syncing is disabled. It may take up
+to 45 seconds for pbs_server to kill the job.
+
+- There are no known instances of this vulnerability being exploited.
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
