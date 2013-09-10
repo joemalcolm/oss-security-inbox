@@ -1,48 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/13
-Message-ID: <51A694D6.3090604@redhat.com>
-Date: Wed, 29 May 2013 17:52:54 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: Drupal contrib CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/10/3
+Message-Id: <E1VJLcT-0004k4-LQ@xenbits.xen.org>
+Date: Tue, 10 Sep 2013 10:56:29 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 61 - libxl partially sets up HVM passthrough even with disabled iommu
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/29/2013 05:00 PM, Forest Monsen wrote:
-> A late one just came out. I'd like to request a CVE for:
-> 
-> SA-CONTRIB-2013-050 - Webform - Cross Site Scripting (XSS) 
-> https://drupal.org/node/2007460
-> 
-> Thanks!
-> 
-> Forest
-> 
+                    Xen Security Advisory XSA-61
 
-Better late than running around in circles with your hair on fire =).
+     libxl partially sets up HVM passthrough even with disabled iommu
 
-Please use CVE-2013-2129 for this issue.
+ISSUE DESCRIPTION
+=================
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+With HVM domains, libxl's setup of PCI passthrough devices does the
+IOMMU setup after giving (via the device model) the guest access to
+the hardware and advertising it to the guest.
+
+If the IOMMU is disabled the overall setup fails, but after the device
+has been made available to the guest; subsequent DMA instructions from
+the guest to the device will cause wild DMA.
+
+IMPACT
+======
+
+A HVM domain, given access to a device which bus mastering capable in
+the absence of a functioning IOMMU, can mount a privilege escalation
+or denial of service attack affecting the whole system.
+
+VULNERABLE SYSTEMS
+==================
+
+1. Only systems which pass busmastering-capable PCI devices through to
+   untrusted guests are vulnerable.  (Most PCI devices are
+   busmastering-capable.)
+
+2. Only systems which use libxl as part of the toolstack are
+   vulnerable.
+
+   The major consumer of libxl functionality is the xl toolstack which
+   became the default in Xen 4.2.
+
+   In addition to this libvirt can optionally make use of libxl. This
+   can be queried with
+           # virsh version
+   which will report "xenlight" if libxl is in use.  libvirt currently
+   prefers the xend backend if xend is running.
+
+   The xend and xapi toolstacks do not currently use libxl.
+
+3. Only Xen versions 4.0.x through 4.2.x are vulnerable.
+
+4. Only HVM domains can take advantage of this vulnerability.
+
+5. Systems which have a functioning IOMMU are NOT vulnerable.
+
+MITIGATION
+==========
+
+This issue can be avoided by not assigning PCI devices to HVM guests when
+there is no functioning IOMMU.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This issue was disclosed publicly on xen-devel; the person reporting
+it did not appreciate that it was a security issue.  Additionally the
+patch to fix the issue was already applied to the respective branches
+(in particular resulting in Xen 4.3 not being vulnerable).  Under the
+circumstances the Xen.org security team do not consider that this
+advisory should be embargoed.
+
+Also, we apologise for the delay to this advisory message, which was
+due to an oversight by us.
+
+CREDITS
+=======
+
+George Dunlap found the issue as a bug, which on examination by the
+Xenproject.org Security Team turned out to be a security problem.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa61-4.1.patch             Xen 4.1.x
+xsa61-4.2-unstable.patch    Xen 4.2.x, xen-unstable
+
+$ sha256sum xsa61*.patch
+19caa5f1ce91ebc908c899b8be216034dc67c3e890f59597f659caed41d468f6  xsa61-4.1.patch
+5898926de86dd6a27f8e34a2c103e3d0c6267b1d7d947434f294423ed3b0eefd  xsa61-4.2-unstable.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRppTVAAoJEBYNRVNeJnmTl6IQANLu1PxySM9TBDDAfiXF1VVb
-/BX0Ah1LULV7WM2EtcRoUrdiXZYK71LrfhVGZ4gWJMRF3mwNNdJLPkKog18Wh0FY
-3lipDD/MowgKzHOTziQ9IZX8VtAuQ86QJzCD8knMwnSdVicrYSR65ENzlQuRM1Rs
-DniSTNHFaZmnybbKZwB0fkf1GmEwRbV4uFVUVX31dexEAsL43T8DMIF8djHiynHG
-Do4ID/t2humvkTn3OYEMilmq91B5seg0WD/1Y0UskWSdvSy1TxDVj+wDuuTJR6Ks
-IVDLO2tbwVSaFYWVq7AIvTqFJ0XfL7gU2NEOLs6jow6mJoA3OvdhSGHQDQtBvyKF
-XhCOdKUAbs2S2mYOkHjEQR3JJOMq7n5N5KyC69nQZq/xJQT7YO8rlCzExka5uJG1
-0/j9Qiy5mKEv9bc1yGNO6Fg0LdwkgJ09NdjfhbQ1iXGq3+L2XOeiRufkCJkBuQ0w
-GU49dhP6922/tF4DmB+TyH1O4bnSTCtx1nGQYWbCXLoODLUSaOPT+KOS1iwIOz+u
-oyI9Uaq/xM6Nq0y+fEUNe8vhBfitSqoB9pYZZdDaPbLBvP9qubCNgonY059Z3Rf+
-IBtQozeC+c/ZKJ+T5IiaCl7br5KFH8qxx5nO997Avhy5I1k8L2/80/i3Lj8VzCKo
-xQ+5LDsFnakh0LoOKbb/
-=0mjM
+iQEcBAEBAgAGBQJSLvrIAAoJEIP+FMlX6CvZDy4H/09N5lJYfQBEjYtFKsYTRRL3
+hQC2SyH5oXeRguHpCEYLy5EXJ5k0+lrrQ/Kpgf8yP9xUlfkZ19e+Zm20XpcTzRDL
+yi0VTLv12lNF02Iraml7OfK15FJbCk5BkwgL9aKdiNJX/42IeC49/LOWgAHpuen1
+YUEC7fTtwrbr5AER45jVNCcw94OccBzXOiEPA56nJBYzSFPD/iWjrNWTuto5BTOg
+nzf9JFtvoX40LyXy/p5qMmgu1veIiwUvVuMl8UUudwH0h03hDm1v2hRGtT1/BbQB
+bJRzaw1a/x6HmpkbHqWC2jq63S6FIrigpv+f9HmiRGmNxpm8DR6aCFMa4OquXiY=
+=Ag3V
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa61-4.1.patch" of type "application/octet-stream" (1816 bytes)
+
+Download attachment "xsa61-4.2-unstable.patch" of type "application/octet-stream" (1748 bytes)
