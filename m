@@ -1,29 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/44
-Message-ID: <1362000376.4116.15.camel@scapa>
-Date: Wed, 27 Feb 2013 22:26:16 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/10/5
+Message-ID: <20130910205213.GE10425@kludge.henri.nerv.fi>
+Date: Tue, 10 Sep 2013 23:52:13 +0300
+From: Henri Salo <henri@...v.fi>
+To: "Larry W. Cashdollar" <larry0@...com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Features 0.3.0 Ruby gem /tmp file injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On mer., 2013-02-27 at 10:05 -0800, Greg KH wrote:
-> Yes, I need someone to actually do this.  There used to be a Red Hat
-> security team member that did this, or so I thought.  What happened to
-> that process?  I'll ask on security@...nel.org if someone wants to
-> volunteer to do this, but if not, are you, or anyone else you
-> know/trust
-> willing to do so?
+On Mon, Sep 09, 2013 at 05:38:46PM +0000, Larry W. Cashdollar wrote:
+> Vendor: Not notified
 
-And do you think it'd be possible to have the same kind of notifications
-for (know security) issues not on security@k.o but committed to the
-tree? As I understand it networking subsystem patches don't go through
-security@k.o so for example I guess the sock_diag_handlers[] one didn't
-go through security@k.o but was still identified (at least for some
-people) as a security commit?
+Why not?
 
-Regards,
--- 
-Yves-Alexis
+---
+Henri Salo
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
