@@ -1,74 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/26/1
-Message-ID: <51A254F2.2030506@dest-unreach.org>
-Date: Sun, 26 May 2013 20:31:14 +0200
-From: Gerhard Rieger <gerhard@...t-unreach.org>
-To: oss-security@...ts.openwall.com
-Subject: socat security advisory 4 - CVE-2013-3571
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/10/1
+Message-Id: <6B089F9C-C6A7-4A60-B655-C5CF7D26E732@segment7.net>
+Date: Mon, 9 Sep 2013 22:32:25 -0700
+From: Eric Hodel <drbrain@...ment7.net>
+To: Operating system distro security contacts <distros@...openwall.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2013-4287 Algorithmic complexity vulnerability in RubyGems 2.0.7 and older
 Content-Type: text/plain; charset=utf-8
 
-Socat security advisory - FD leak
+RubyGems validates versions with a regular expression that is vulnerable to
+denial of service due to backtracking.  For specially crafted RubyGems
+versions attackers can cause denial of service through CPU consumption.
 
-Overview
-  Under certain circumstances an FD leak occurs and can be misused for
-  denial of service attacks against socat running in server mode.
+RubyGems versions 2.0.7 and older, 2.1.0.rc.1 and 2.1.0.rc.2 are vulnerable.
 
-Vulnerability Id: CVE-2013-3571
+Ruby versions 1.9.0 through 2.0.0p247 are vulnerable as they contain embedded
+versions of RubyGems.
 
-Details
-  The issue occurs when a vulnerable version of socat is invoked with a
-  listen type address with option fork and one or more of the options
-  sourceport, lowport, range, or tcpwrap. When socat refuses a client
-  connection due to one of these address or port restrictions it does
-  shutdown() the socket but does not close() it, resulting in a file
-  descriptor leak in the listening process, visible with command lsof
-  and possibly resulting in error EMFILE "Too many open files".
+It does not appear to be possible to exploit this vulnerability by installing a
+gem for RubyGems 1.8.x or 2.0.x.  Vulnerable uses of RubyGems API include
+packaging a gem (through `gem build`, Gem::Package or Gem::PackageTask),
+sending user input to Gem::Version.new, Gem::Version.correct? or use of the
+Gem::Version::VERSION_PATTERN or Gem::Version::ANCHORED_VERSION_PATTERN
+constants.
 
-Testcase
-  In one terminal run the server:
+Notably, users of bundler that install gems from git are vulnerable if a
+malicious author changes the gemspec to an invalid version.
 
-    socat -d tcp-listen:10000,reuseaddr,fork,range=0.0.0.0/32 pipe
+The vulnerability can be fixed by changing the first grouping to an atomic
+grouping in Gem::Version::VERSION_PATTERN in lib/rubygems/version.rb.  For
+RubyGems 2.0.x:
 
-  In a second terminal see which FDs are open, then connect (implicitely
-  using a forbidden address), and check if there is a new FD open, e.g.:
+  -  VERSION_PATTERN = '[0-9]+(\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' # :nodoc:
+  +  VERSION_PATTERN = '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' # :nodoc:
 
-    lsof -p $(pgrep socat)
-    socat /dev/null tcp:localhost:10000
-    lsof -p $(pgrep socat)
+For RubyGems 1.8.x:
 
-  If the second lsof shows an additional FD as in the following line,
-  this socat version is vulnerable:
+  -  VERSION_PATTERN = '[0-9]+(\.[0-9a-zA-Z]+)*' # :nodoc:
+  +  VERSION_PATTERN = '[0-9]+(?>\.[0-9a-zA-Z]+)*' # :nodoc:
 
-    socat  17947 gerhard  4u  sock  0,6  0t0 1145265 can't identify protocol
+This vulnerability was discovered by Damir Sharipov <dammer2k@...il.com>
 
-Workaround
-  Use IP filters in your OS or firewall.
-  Restart socat when it crashed.
+The above information is also posted at:
 
-Affected versions
-  1.2.0.0 - 1.7.2.1
-  2.0.0-b1 - 2.0.0-b5
+http://blog.rubygems.org/2013/09/09/CVE-2013-4287.html
 
-Not affected or corrected versions
-  1.0.0.0 - 1.1.0.1
-  1.7.2.2 and later
-  2.0.0-b6 and later
+Patches were committed for:
 
-Download
-  The updated sources can be downloaded from:
+RubyGems 2.1.0.rc.2, released as RubyGems 2.1.0:
 
-    http://www.dest-unreach.org/socat/download/socat-1.7.2.2.tar.gz
-    http://www.dest-unreach.org/socat/download/socat-2.0.0-b6.tar.gz
+https://github.com/rubygems/rubygems/commit/938a7e31ac73655845ab9045629ff3f580a125da
 
-  Patch to 1.7.2.1:
-    http://www.dest-unreach.org/socat/download/socat-1.7.2.2.patch.gz
+RubyGems 2.0.7, released as RubyGems 2.0.8:
 
-  Patch to 2.0.0-b5:
-    http://www.dest-unreach.org/socat/download/socat-2.0.0-b6.patch.gz
+https://github.com/rubygems/rubygems/commit/b9baec03145aed684d1cd3c87dcac3cc06becd9b
 
-Credits
-  Full credits to Catalin Mitrofan for finding and reporting this issue.
+RubyGems 1.8.25, released as RubyGems 1.8.26:
+
+https://github.com/rubygems/rubygems/commit/ed733bc379d75620f5be4213f89d1d7b38be3191
+
+RubyGems 1.8.23, released as RubyGems 1.8.23.1:
+
+https://github.com/rubygems/rubygems/commit/b697536f2455e8c8853cf5cf8a1017a36031ed67
+
+The following program can be used to test if you are vulnerable to CVE-2013-4287:
+
+
+View attachment "check.CVE-2013-4287.rb" of type "text/x-ruby-script" (489 bytes)
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (554 bytes)
+
+
