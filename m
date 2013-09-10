@@ -1,66 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/19/3
-Message-ID: <52127D9B.1000004@redhat.com>
-Date: Mon, 19 Aug 2013 14:18:35 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/10/2
+Message-ID: <522EA80F.2030808@tejimaya.com>
+Date: Tue, 10 Sep 2013 14:03:11 +0900
+From: Kousuke Ebihara <ebihara@...imaya.com>
 To: oss-security@...ts.openwall.com
-CC: Hamid Zamani <me@...idx9.ir>
-Subject: Re: CVE Request : NAS v1.9.3 multiple Vulnerabilites
+CC: security@...npne.jp
+Subject: CVE Request: OpenPNE 3, opWebAPIPlugin, opOpenSocialPlugin -- XXE vulnerability fix
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 08/16/2013 12:44 AM, Hamid Zamani wrote:
-> Hello,
-> 
-> recently i reported some vulnerabilities in Network Audio System
-> (NAS) - v1.9.3
-> 
-> These vulnerabilities reported at :
-> 
-> http://radscan.com/pipermail/nas/2013-August/001270.html
-> 
-> and 3 fix on upstream :
-> 
-> https://sourceforge.net/p/nas/code/288/ 
-> https://sourceforge.net/p/nas/code/287/tree//trunk/server/os/utils.c?diff=517ad7dc2718467b12eafbad:286
->
-> 
-https://sourceforge.net/p/nas/code/289/tree//trunk/server/os/connection.c?diff=517ad7dc2718467b12eafbad:288
-> 
-> is it possible to assign a CVE for these ?
-> 
-> Thank you
-> 
+I'm a member of OpenPNE security handling team.
 
-Ok so we got a total of three kinds of vulns, so same
-version/researcher I'm CVE MERGEing them:
+We've released our OSS product, OpenPNE 3, opWebAPIPlugin and opOpenSocialPlugin to fix XXE vulnerability.
 
-Buffer Overflows please use CVE-2013-4256
-Heap Overflow please use CVE-2013-4257
-Format String please use CVE-2013-4258
+Whould you assign CVEs to them?
 
-As for "Possible Race Condition and symlink attack:" can we confirm
-it's a security issue?
+1. OpenPNE 3 XXE Vulnerabilities
+    Affects: 3.8.7, 3.6.11, 3.4.21.1, 3.2.7.6, 3.0.8.5
+    Fixed: 3.8.7.1, 3.6.11.1, 3.4.21.2, 3.2.7.7, 3.0.8.6
+    Commit: https://github.com/openpne/OpenPNE3/commit/6147099848185a82a18d1ba8aa84e69a7eadfcba
+    Security Advisory: http://www.openpne.jp/archives/12091/
+    Original reporter of this vulnerability: Kousuke Ebihara
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+    Access Vector: Network exploitable
+    Access Complexity: Low
+    Authentication: Not required to exploit
+    Impact Type: Allows unauthorized disclosure of information; Allows unauthorized modification; Allows disruption of service
 
-iQIcBAEBAgAGBQJSEn2bAAoJEBYNRVNeJnmTvlwP/Rt7ANxxSsEybZd77UMs/Nms
-HDTRrOWzXq4etxSwO9bDQca6GxCfs58IzJk9WoTDGnVoTagMl2cQJQ/IAIEbL/ty
-IbLa6iaLF2Ovi3PFH22M/X5ui8rXvymfRiz1k1zI52+lKPo9yWxxhSSNAVaaD+LE
-k2MP+ZCckVlzKbrvSubHkntTQszKkOPZkVw1LSUnw8y0Gg9gqmqZM2uPcrG4RgiH
-ECBavkSxumGd2TvzCusD+QAYHgYsGDWJ1VBx1QZx/ZgLnPOsa9cVk5er59b1e2cf
-LVxPiC9USQRISr//Amb5NYktojbSYZUt6YTEknsdyu9PasjEbS4zF5iBqn0d57BI
-PpfABLItMg/7loz1+eUk02BkgaHIYajJVVnrOwcGOxtiqrJM9JtvSW280cJ6TCOZ
-ZDio2Rnmf0CFIPYzAG6MegQ/cXn53AyS5r114Ge5PEw50wGK19SIsNAzOMXOoj1P
-gi34o10PID0DxX7MY5aVDBOLqiWnrq7w4y6gsi20JrebZMivZvRtHv8QjdNURdxH
-tkceuAs8S3g7tsCZNjn3nnQ35l/wsp9ouWCyiZhlbWFIbX+YBR8tSGkylSVyS4eo
-FWksNykZT3wwE9BbSUKk0bEGSLrmFahU/t0r5QoGVWPDfvbjQPKShX3aGENSir8t
-9LAJqDk+MPb78WE/bMjU
-=qxsJ
------END PGP SIGNATURE-----
+2. opWebAPIPlugin XXE Vulnerabilities
+    Affects: 0.5.1, 0.4.0, 0.1.0
+    Fixed: 0.5.1.1, 0.4.0.1, 0.1.0.1
+    Commit: https://github.com/ebihara/opWebAPIPlugin/commit/8820a4a8d7b8c8fbfa4533cc5645f371d454ca5b
+    Security Advisory: http://www.openpne.jp/archives/12091/
+    Original reporter of this vulnerability: Kousuke Ebihara
+
+    Access Vector: Network exploitable
+    Access Complexity: Low
+    Authentication: Not required to exploit
+    Impact Type: Allows unauthorized disclosure of information; Allows unauthorized modification; Allows disruption of service
+
+3. opOpenSocialPlugin XXE Vulnerabilities
+    Affects: 0.8.2.1, 0.9.9.2, 0.9.13, 1.2.6
+    Fixed: 0.8.2.2, 0.9.9.3, 0.9.13.1, 1.2.6.1
+    Commit: https://github.com/openpne-ospt/opOpenSocialPlugin/commit/a19c02997cf3045ad18b57c14a05465bfb3ae88c
+    Security Advisory: http://www.openpne.jp/archives/12091/
+    Original reporter of this vulnerability: Kousuke Ebihara
+
+    Access Vector: Network exploitable
+    Access Complexity: Low
+    Authentication: Not required to exploit
+    Impact Type: Allows unauthorized disclosure of information; Allows unauthorized modification; Allows disruption of service
+
+Thanks,
+Kousuke
+
+-- 
+Kousuke Ebihara
+ebihara@...imaya.com
