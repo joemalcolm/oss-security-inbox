@@ -1,61 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/12/2
-Message-ID: <1292954594.1043511.1360677178154.JavaMail.root@redhat.com>
-Date: Tue, 12 Feb 2013 08:52:58 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/10/4
+Message-ID: <522F4961.7050605@redhat.com>
+Date: Tue, 10 Sep 2013 10:31:29 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, David Jorm <djorm@...hat.com>
-Subject: [Ignore not a security flaw] Re: CVE Request -- jakarta-commons-httpclient: Wildcard matching in SSL hostname verifier incorrect (a different issue than CVE-2012-5783)
+CC: "Xen.org security team" <security@....org>, xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org
+Subject: Re: Xen Security Advisory 61 - libxl partially sets up HVM passthrough even with disabled iommu
 Content-Type: text/plain; charset=utf-8
 
-Hello vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  taking back. Looks like we have previously
-investigated this issue with the following conclusion:
+On 09/10/2013 04:56 AM, Xen.org security team wrote:
+> Xen Security Advisory XSA-61
+> 
+> libxl partially sets up HVM passthrough even with disabled iommu
+> 
+> ISSUE DESCRIPTION =================
+> 
+> With HVM domains, libxl's setup of PCI passthrough devices does
+> the IOMMU setup after giving (via the device model) the guest
+> access to the hardware and advertising it to the guest.
+> 
+> If the IOMMU is disabled the overall setup fails, but after the
+> device has been made available to the guest; subsequent DMA
+> instructions from the guest to the device will cause wild DMA.
+> 
+> IMPACT ======
+> 
+> A HVM domain, given access to a device which bus mastering capable
+> in the absence of a functioning IOMMU, can mount a privilege
+> escalation or denial of service attack affecting the whole system.
+> 
+> VULNERABLE SYSTEMS ==================
+> 
+> 1. Only systems which pass busmastering-capable PCI devices through
+> to untrusted guests are vulnerable.  (Most PCI devices are 
+> busmastering-capable.)
+> 
+> 2. Only systems which use libxl as part of the toolstack are 
+> vulnerable.
+> 
+> The major consumer of libxl functionality is the xl toolstack
+> which became the default in Xen 4.2.
+> 
+> In addition to this libvirt can optionally make use of libxl. This 
+> can be queried with # virsh version which will report "xenlight" if
+> libxl is in use.  libvirt currently prefers the xend backend if
+> xend is running.
+> 
+> The xend and xapi toolstacks do not currently use libxl.
+> 
+> 3. Only Xen versions 4.0.x through 4.2.x are vulnerable.
+> 
+> 4. Only HVM domains can take advantage of this vulnerability.
+> 
+> 5. Systems which have a functioning IOMMU are NOT vulnerable.
+> 
+> MITIGATION ==========
+> 
+> This issue can be avoided by not assigning PCI devices to HVM
+> guests when there is no functioning IOMMU.
+> 
+> NOTE REGARDING LACK OF EMBARGO ==============================
+> 
+> This issue was disclosed publicly on xen-devel; the person
+> reporting it did not appreciate that it was a security issue.
+> Additionally the patch to fix the issue was already applied to the
+> respective branches (in particular resulting in Xen 4.3 not being
+> vulnerable).  Under the circumstances the Xen.org security team do
+> not consider that this advisory should be embargoed.
+> 
+> Also, we apologise for the delay to this advisory message, which
+> was due to an oversight by us.
+> 
+> CREDITS =======
+> 
+> George Dunlap found the issue as a bug, which on examination by
+> the Xenproject.org Security Team turned out to be a security
+> problem.
+> 
+> RESOLUTION ==========
+> 
+> Applying the appropriate attached patch resolves this issue.
+> 
+> xsa61-4.1.patch             Xen 4.1.x xsa61-4.2-unstable.patch
+> Xen 4.2.x, xen-unstable
+> 
+> $ sha256sum xsa61*.patch 
+> 19caa5f1ce91ebc908c899b8be216034dc67c3e890f59597f659caed41d468f6
+> xsa61-4.1.patch 
+> 5898926de86dd6a27f8e34a2c103e3d0c6267b1d7d947434f294423ed3b0eefd
+> xsa61-4.2-unstable.patch
 
-> /* Should HTTPCLIENT-1255 one be also classified as (another) CVE id? */
+Please use CVE-2013-4329 for this issue.
 
-It is my understanding that this bug will cause valid certificates to be rejected, but not for invalid certificates to be accepted. Therefore I do not think it qualifies for a CVE ID.
 
-=> not a security flaw. Ignore my previous request.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
------ Original Message -----
-Hello Kurt, Steve, vendors,
-
-  Originally, Common Vulnerabilities and Exposures
-assigned an identifier CVE-2012-5783 to the following
-vulnerability:
-
-Apache Commons HttpClient 3.x, as used in Amazon Flexible
-Payments Service (FPS) merchant Java SDK and other products,
-does not verify that the server hostname matches a domain
-name in the subject's Common Name (CN) or subjectAltName field
-of the X.509 certificate, which allows man-in-the-middle
-attackers to spoof SSL servers via an arbitrary valid certificate.
-
-Later it was found, that the SSL hostname verifier implementation
-(CVE-2012-5783 fix) contained a bug in wildcard matching:
-[1] https://issues.apache.org/jira/browse/HTTPCLIENT-1255
-
-which still allowed certain type of certificates checks to pass,
-even if they shouldn't.
-
-Relevant upstream patches:
-[2] https://fisheye6.atlassian.com/changelog/httpcomponents?cs=1406213
-    (against 4.2.x branch)
-[3] https://fisheye6.atlassian.com/changelog/httpcomponents?cs=1406217
-    (against trunk)
-
-References:
-[4] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=700268
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=910358
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQIcBAEBAgAGBQJSL0lgAAoJEBYNRVNeJnmTpKoP/RlZ1GcBYEZ/MAhKCgxitY0v
+COlxa8gXcfPx6wbf4BOwn15/+lIYW7VRAdTU5AeGjEag0GpOdXIXkI3VJM1VYuYS
+7fpjPAIaSPHHuccONMl5B5kR3IQIh9DLSlBY8TEZY9ZJALvb70cEnHibuC+6IDb6
+tnWOAOT+I6sRd1WcYyPGxjz5Q5D29fid34js767+2eCB+aPTPiuEu0MXvWOONjv7
+CHjFGyrwrbDyOyi5ly3VqluVXho4p+S4U8UsnMZ7bR4wT9QCZiZ6xi+Ay/XZxQJK
+jgnIJOBjfFFrIiOYOr6v/lambXOnaEZDKRJ9XBTXKkc2uO3iHO/h7aBIBRvO9x4H
+V/TqH0XX1+DUWh60tLmBgtnEuBRek73+HuiejquhtUEKhAFsz23B7Sgnc8llIuAQ
+OvEU3Clfh79byZaA7HxEQOK6YEJC7tj5K9u/DxsJDr/QZqod3Q7eXNtW2Vobohpe
+GXDKJhQ3DnmtETPj34FsSZPRBaEfqv1qjRKpFugE117WhfRGmXY8o3dgsLmJv+GK
+c3BbSq3RCCNrss0fUQWzyjUb1qGSFlPoxPi3t5RT+fzEAdAPi5IdKrFfBB7kQH5J
+4zxEn15qQG0RPK2n2RkDg9kKKMDO2UmVKN4OpyUpEmIsfHHpkWcNH2pfU4t18xAW
+flXo4tBjVrPv1jYNtg1T
+=VF8t
+-----END PGP SIGNATURE-----
