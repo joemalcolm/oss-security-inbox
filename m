@@ -1,45 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/7
-Message-ID: <51D6CA5F.9040604@canonical.com>
-Date: Fri, 05 Jul 2013 09:30:07 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: libxml2 external parsed entities issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/10/6
+Message-id: <342A3698-3748-4474-8063-E6EF45188DF1@me.com>
+Date: Tue, 10 Sep 2013 17:17:52 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Henri Salo <henri@...v.fi>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Features 0.3.0 Ruby gem /tmp file injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 13-07-05 09:17 AM, Marcus Meissner wrote:
-> On Fri, Jul 05, 2013 at 08:48:04AM -0400, Marc Deslauriers wrote:
->> Hello,
->>
->> libxml2 earlier than 2.9.0 fetches external parsed entities by default, with no
->> way to disable the behaviour.
->>
->> Fixed by the following commit:
->>
->> https://git.gnome.org/browse/libxml2/commit/?id=4629ee02ac649c27f9c0cf98ba017c6b5526070f
->>
->> More Information:
->> https://mail.gnome.org/archives/xml/2012-October/msg00045.html
->> https://github.com/sparklemotion/nokogiri/issues/693
->> https://bugs.launchpad.net/ubuntu/+source/libxml2/+bug/1194410
->>
->>
->> Could a CVE please be assigned to this issue?
+
+On Sep 10, 2013, at 4:52 PM, Henri Salo <henri@...v.fi> wrote:
+
+> On Mon, Sep 09, 2013 at 05:38:46PM +0000, Larry W. Cashdollar wrote:
+>> Vendor: Not notified
 > 
-> Sounds like http://seclists.org/oss-sec/2013/q1/391  
-> and
-> "Please use CVE-2013-0339 for libxml2 external entities expansion"
-> 
-> ?
-> 
+> Why not?
 
-Hrm, I would have thought CVE-2013-0339 was for the entities expansion DoS issue
-fixed by this commit:
+I dropped the ball.  Done.  I just sent him an email.
 
-https://git.gnome.org/browse/libxml2/commit/?id=23f05e0c33987d6605387b300c4be5da2120a7ab
-
-The other one is for external entities expansion being enabled by default with
-no way to turn it off. You would lump them together?
-
-Marc.
+=)
 
