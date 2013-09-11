@@ -1,21 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/05/4
-Message-ID: <CAA7hUgECvO16r_FcbxRtZ90FUySQ+emQ_uwcLiyg7wktgcvbgA@mail.gmail.com>
-Date: Mon, 5 Aug 2013 14:49:22 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: lcms 1.x buffer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/11/5
+Message-ID: <52308FD9.6050602@openstack.org>
+Date: Wed, 11 Sep 2013 17:44:25 +0200
+From: Thierry Carrez <thierry@...nstack.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: [OSSA 2013-025] Token revocation failure using Keystone memcache/KVS backends (CVE-2013-4294)
 Content-Type: text/plain; charset=utf-8
 
-On 5 August 2013 07:25, Thijs Kinkhorst <thijs@...ian.org> wrote:
-> Buffer overflows have been reported in Little CMS 1.x:
-> http://bugs.debian.org/718682
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Just a quick note: one of the affected parts of the code is a sample
-and the other is the tiffdiff(1) tool, where the buffer overflow is
-triggered by the file names passed as arguments.
+OpenStack Security Advisory: 2013-025
+CVE: CVE-2013-4294
+Date: September 11, 2013
+Title: Token revocation failure using Keystone memcache/KVS backends
+Reporter: Kieran Spear (University of Melbourne)
+Products: Keystone
+Affects: Folsom, Grizzly
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Description:
+Kieran Spear from the University of Melbourne reported a vulnerability
+in Keystone memcache and KVS token backends. The PKI token revocation
+lists stored the entire token instead of the token ID, triggering
+comparison failures, ultimately resulting in revoked PKI tokens still
+being considered valid. Only Folsom and Grizzly Keystone setups making
+use of PKI tokens with the memcache or KVS token backends are affected.
+Havana setups, setups using UUID tokens, or setups using PKI tokens with
+the SQL token backend are all unaffected.
+
+Grizzly fix:
+https://review.openstack.org/#/c/46080/
+
+Folsom fix:
+https://review.openstack.org/#/c/46079/
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4294
+https://bugs.launchpad.net/keystone/+bug/1202952
+
+Regards,
+
+- -- 
+Thierry Carrez
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQIcBAEBCAAGBQJSMI/ZAAoJEFB6+JAlsQQjgtUQAIh7h+yJQbBsdTGMVeM6Skv0
+bUSJBWx03m2JtUVVuWpWeByG9fdiLVFs9tGep5JuiOv4pqz7GhvOM5JSS30yaV+V
+yT34B/IFsvW8I6E2OMBeQSaANE22kcQMje9v1TnWrTJNLtTrHsO18lb/pkF+nbl1
+G0Jn+d4VnkGzaZ8+YvaeGt1qxbiYy9jkS5j8/UIf2KOeOCj3wXv4gXC7OIudP+6g
+NMWHCtNqeU36u9bhDwTH2huw8p7SUMh58sepiSniZ8QWrlc7BVbEpyR6SanGtzej
+CPpCKjkSNt7bBngVF2GyVZWgS8LeSbNoapNk3+K4Gt2dEPAqxoc1qtTAp68Vb2Fe
+LQh2sGvvhpLeFClGew5e6dBUdj3qmokMxPqLhj+QRZCP6Ub7x/d1lkW8L2f9Bk1/
+dgNc10GcWpiySxofs5HpIeFBoHqB22D2WybEgJ4ruJXc1dJc7l3szUKMoBMbqZ1k
+qcZYWxJUdY9d0q4SRjPQIvUQEl4vTqGGECl4pwIxx+PgVJSRbTjMKK2bBrNtvt2P
+B12XBNdz3GUCLtY5DF9SQEdCqIfciOJ5gYH+zuO2dbOyeH9Mptl+3Ze6XLL4EVql
+ctEOeWGHAh7atc7bL9GxMvNnGWbbqNmH7Mq5I0hhDsWt2MHHvnRSxvYRgVp0kr+X
+FPGguJy1K/Kfyquy60Oe
+=1rfx
+-----END PGP SIGNATURE-----
