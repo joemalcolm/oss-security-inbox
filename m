@@ -1,27 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/21
-Message-ID: <CAEWn2o97wzPEeSmPLcCMnJzWHvgLCVE0yJ8Wf-hsTTRVXrRABw@mail.gmail.com>
-Date: Thu, 10 Oct 2013 21:28:29 +0200
-From: Naufragium Est <naufragium.est@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/11/4
+Message-ID: <52306A83.3020904@canonical.com>
+Date: Wed, 11 Sep 2013 09:05:07 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: libtar: missing validation of file names
+Subject: CVE Request: lightdm incorrect .Xauthority permissions
 Content-Type: text/plain; charset=utf-8
 
-is this also CVE-worthy?
+Hello,
 
-https://lists.feep.net:8080/pipermail/libtar/2013-October/000359.html
+lightdm before 1.4.3, 1.6.2 and 1.7.14 created .Xauthority files with
+world-readable permissions.
 
-> The functions tar_extract_glob and tar_extract_all accept a path prefix
-> on where to extract files to. However, libtar does not validate the file
-> names stored inside a tar file, possibly leading to a file extraction
-> outside the prefix path. For example, consider a file name
-> "../../etc/passwd". If extract_all is called with prefix "/home/USER/",
-> libtar would try to overwrite "/etc/passwd".
+Fixed by the following commits:
 
+1.4.x:
+http://bazaar.launchpad.net/~lightdm-team/lightdm/1.4/revision/1571
+http://bazaar.launchpad.net/~lightdm-team/lightdm/1.4/revision/1576
+http://bazaar.launchpad.net/~lightdm-team/lightdm/1.4/revision/1577
 
-not fixed yet:
+1.6.x:
+http://bazaar.launchpad.net/~lightdm-team/lightdm/1.6/revision/1641
+http://bazaar.launchpad.net/~lightdm-team/lightdm/1.6/revision/1652
+http://bazaar.launchpad.net/~lightdm-team/lightdm/1.6/revision/1653
 
-https://lists.feep.net:8080/pipermail/libtar/2013-October/000362.html
+1.7.x:
+http://bazaar.launchpad.net/~lightdm-team/lightdm/trunk/revision/1675
+http://bazaar.launchpad.net/~lightdm-team/lightdm/trunk/revision/1780
+http://bazaar.launchpad.net/~lightdm-team/lightdm/trunk/revision/1781
 
-> Once I figure out the right way of handling this, there will probably be
-> another libtar release.
+Bug reports:
+https://bugs.launchpad.net/ubuntu/+source/lightdm/+bug/1175023
+https://bugs.launchpad.net/lightdm/+bug/685212
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=721744
+
+Could a CVE please be assigned to this issue?
+
+Thanks,
+
+Marc.
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
