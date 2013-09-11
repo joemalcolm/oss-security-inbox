@@ -1,60 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/6
-Message-ID: <52452232.8050907@redhat.com>
-Date: Fri, 27 Sep 2013 00:14:10 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/11/8
+Message-ID: <5230D6DB.1080903@redhat.com>
+Date: Wed, 11 Sep 2013 14:47:23 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed modules
+CC: Marc Deslauriers <marc.deslauriers@...onical.com>
+Subject: Re: CVE Request: lightdm incorrect .Xauthority permissions
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/26/2013 03:21 PM, Forest Monsen wrote:
-> Hi there,
+On 09/11/2013 07:05 AM, Marc Deslauriers wrote:
+> Hello,
 > 
-> I'd like to request CVE identifiers for:
+> lightdm before 1.4.3, 1.6.2 and 1.7.14 created .Xauthority files
+> with world-readable permissions.
 > 
-> SA-CONTRIB-2013-073 - Make Meeting Scheduler - Access Bypass 
-> https://drupal.org/node/2081637
+> Fixed by the following commits:
 > 
-> SA-CONTRIB-2013-074 - MediaFront - Cross Site Scripting (XSS) 
-> https://drupal.org/node/2087051
+> 1.4.x: 
+> http://bazaar.launchpad.net/~lightdm-team/lightdm/1.4/revision/1571
+>
 > 
-> SA-CONTRIB-2013-075 - Click2Sell - Multiple Vulnerabilities (XSS
-> and CSRF) (Now marked "unsupported," and no patch provided) 
-> https://drupal.org/node/2087055
+http://bazaar.launchpad.net/~lightdm-team/lightdm/1.4/revision/1576
+> http://bazaar.launchpad.net/~lightdm-team/lightdm/1.4/revision/1577
+>
+>  1.6.x: 
+> http://bazaar.launchpad.net/~lightdm-team/lightdm/1.6/revision/1641
+>
 > 
-> SA-CONTRIB-2013-076 - jQuery Countdown - Cross Site Scripting
-> (XSS) https://drupal.org/node/2087095
+http://bazaar.launchpad.net/~lightdm-team/lightdm/1.6/revision/1652
+> http://bazaar.launchpad.net/~lightdm-team/lightdm/1.6/revision/1653
+>
+>  1.7.x: 
+> http://bazaar.launchpad.net/~lightdm-team/lightdm/trunk/revision/1675
+>
 > 
-> SA-CONTRIB-2013-077 - Google Site Search - Cross Site Scripting
-> (XSS) https://drupal.org/node/2092395
+http://bazaar.launchpad.net/~lightdm-team/lightdm/trunk/revision/1780
+> http://bazaar.launchpad.net/~lightdm-team/lightdm/trunk/revision/1781
+>
+>  Bug reports: 
+> https://bugs.launchpad.net/ubuntu/+source/lightdm/+bug/1175023 
+> https://bugs.launchpad.net/lightdm/+bug/685212 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=721744
 > 
-> Thanks!
+> Could a CVE please be assigned to this issue?
 > 
-> Best, Forest
+> Thanks,
+> 
+> Marc.
 
-Please use:
-
-CVE-2013-4379 Drupal SA-CONTRIB-2013-073 - Make Meeting Scheduler -
-Access Bypass
-
-CVE-2013-4380 Drupal SA-CONTRIB-2013-074 - MediaFront - Cross Site
-Scripting (XSS)
-
-CVE-2013-4381 Drupal SA-CONTRIB-2013-075 - Click2Sell - Multiple
-Vulnerabilities XSS
-CVE-2013-4382 Drupal SA-CONTRIB-2013-075 - Click2Sell - Multiple
-Vulnerabilities CSRF
-
-CVE-2013-4383 Drupal SA-CONTRIB-2013-076 - jQuery Countdown - Cross
-Site Scripting (XSS)
-
-CVE-2013-4384 Drupal SA-CONTRIB-2013-077 - Google Site Search - Cross
-Site Scripting (XSS)
-
+Please use CVE-2013-4331 for this issue.
 
 
 - -- 
@@ -63,17 +60,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSRSIyAAoJEBYNRVNeJnmT/dAP/j87eza8z/EQ1QDIXD/HYi3F
-p0eXP+p8vvfQPfsDF2y3+fckmWsRuGzYDYU3Lh3Z7rbUipJkHPc+ABKfXgQWJJiN
-3F0JqDBWlyz9Dih3tdXf+qX53oZ1jovhTYuBI8ktEUM4LRh0bnjFanAWumlkL2kK
-GswolTCw4TK+AGtJEPTpoAa6NpMW0SzrLGwLDYtlPFqXdjr2pdXpzLDikqPiaO3P
-K3c+FpM4J0AfsIdQUE3DVnm6pm+91mTzDVmGNKq48bvEAzMNw90bVPSEwWjseb8b
-Z+F5IfYOGvwxrqT8SnDt3aOb9tVCYbPw++F2DmXno6JvlQiswCRhfI0U5DHLW0TK
-isLHFS4HifPZk4LzZmw/jBnA8BTFDu3BXY6Rav1j0eOOa8yawAjkdi1fw60OCmmA
-tcgtPzxEVs8jH0MMl2hFdQrIJY/ladh9yyBrXPBQixH4ijZth8C74Y/R6czEehl/
-qSmn8zGNAWQkYPknNutb1nhthC9ho8zS3mV8ls5VQY/wCVCpLrxmKsDIn8Hi0vTL
-4Khx1zXLFENd6ne0qhxlFV55/KXu1FbNfyhyBPpd20aLOLnp6LPGMj2GHztRLaZI
-len35d5KzIIm+stqTNWRCpQ0cFDhGtkDElaUV78EIepH+zdhcIT83blxWmFz7RRU
-kw/wIWQdbrM6QcThG5P0
-=lGBK
+iQIcBAEBAgAGBQJSMNbbAAoJEBYNRVNeJnmT0GwP/jdCZQzEbvqF/cdj3isPxdwC
+PBDIUKbLp0rJg2tnMg9RGPYWj5O6h72i1Dc6UunbBhyHr2JXA0TLyadXhSvVRRTN
+Mo/kP1Tz92zicUjmzgpLQTGDsKp0QbMQUq3Lo+hHLtGeSaKKVudToVSNm4qhX3/C
+TryB4a+olKQZ3V49DB+RO6e/2PVYr9Ihs1/BtT4ThxpsoC98OOHGz/YCDXoQLIyU
+AhXCc+vAlNYnLewL06Dh5OneHuGQzn7DXfn0TJQ8N+Qc9Lit6SbHR+vPOmAL8WXk
+7u029cYtQ2YH1q1x7yx8Icdv4RHcIV8chtP5NsmPAxjqUKT+oYb9TPOoVyXBmJfT
+rRk/4GhfzoX71Jzx4GC1pr0s9ODKGSZROxuzHRyQVoUNL06ya+nZaPC8FOU/yk7F
+Uk6bGq2b5HJBcH9FInu8SO399uMYs3fZwRz7Ts1llN4FyVqY9jUY1ymMMUIn+OtW
+DvBXN+F+jbN3v47j8+wFPFW4D+JLaQeinuAJ/ISCaJxix0RNxkr55amNO1hqYnEj
+IN9KoGvYzGdN/F817ygY2/1/egEbGvmGhxAFwbJyg3F/gtKpGgWAOq3FClcHxlWt
+c6utr90j1IhMO61khFziiEzz87rWN3BSmdUvE/DtPagf4RSuMVSVq4uqkAxU4unS
+5DMkHVOjT6kFx9gEJnTi
+=garn
 -----END PGP SIGNATURE-----
