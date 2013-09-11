@@ -1,61 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/13
-Message-ID: <51DDBA0C.1030806@redhat.com>
-Date: Wed, 10 Jul 2013 13:46:20 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/11/7
+Message-ID: <5230D6C9.3020504@redhat.com>
+Date: Wed, 11 Sep 2013 14:47:05 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Stefan Kanthak <stefan.kanthak@...go.de>, security@...illa.org
-Subject: Re: CVE request for Mozilla Thunderbird (Windows)
+CC: Will Newton <will.newton@...aro.org>
+Subject: Re: CVE Request: Three integer overflows in glibc memory allocator
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/10/2013 12:59 PM, Stefan Kanthak wrote:
-> The installer of Mozilla Thunderbird writes the following command line
-> with unquoted spaces for uninstallation into the Windows registry:
+On 09/11/2013 05:49 AM, Will Newton wrote:
+> Hi,
 > 
-> [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Mozilla Thunderbird 17.0.5 (x86 en-US)]
-> "UninstallString"="C:\\Program Files\\Mozilla Thunderbird\\uninstall\\helper.exe"
+> I recently discovered three integer overflow issues in the glibc 
+> memory allocator functions pvalloc, valloc and 
+> posix_memalign/memalign/aligned_alloc. These issues cause a large 
+> allocation size to wrap around and cause a wrong sized allocation
+> and heap corruption. The issues are fixed in glibc mainline.
 > 
-> See <https://bugzilla.mozilla.org/show_bug.cgi?id=871084>,
-> <https://bugzilla.mozilla.org/show_bug.cgi?id=786407> and
-> <https://bugzilla.mozilla.org/show_bug.cgi?id=868746>
+> The relevant glibc bugzilla entries are here:
 > 
-> Due to a well-known and well-documented idiosyncrasy of Windows'
-> CreateProcess() API this can result in the execution of a rogue
-> program "C:\Program.exe" or "C:\Program Files\Mozilla.exe" with the
-> privileges of the caller.
-> Since the caller of this command line typically has administrative
-> rights this vulnerability can lead to a privilege escalation.
+> https://sourceware.org/bugzilla/show_bug.cgi?id=15855 
+> https://sourceware.org/bugzilla/show_bug.cgi?id=15856 
+> https://sourceware.org/bugzilla/show_bug.cgi?id=15857
 > 
-> Affected versions: all current releases.
-> 
-> Fixed version: ?
-> 
-> Stefan Kanthak
-> 
+> Thanks,
 
-Mozilla is a CNA (http://cve.mitre.org/cve/cna.html) so they'll need
-to handle this one. Adding them to CC.
+CVE MERGE, same researcher, version and vuln type.
+
+Please use CVE-2013-4332  for this issue.
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR3boMAAoJEBYNRVNeJnmTAL8QAM+JVRhIFM0La55vt0z3XzG7
-wcjoe+2oF6Y1qI5vDP0t/1SAj9yBCBEWixKrLnkeKFpOT5+SKUy+kUl3Of+u25w5
-52oY8p9AmcYCuf0EaI+8BMvtC1QhDkH3h9zUS8VVzyg6V+8f1Lwby59aaTT+9XY1
-OEDZ86kMnR19KV0iglb2dajrMlaepXJhls+uZWCxEiTbgvDLIgm5Gwq8GWOxztGa
-dqck2CyvJOdoa7Z0SoGEKYktfImsEgPfIwsJPP9+OChbHjF8yMkQzW6jnhTGsxUF
-yEH+JWsqJh2NxZzEukYvZ7hiBAvLLLJf+5BD6XHeo2QDJv7R/zugbcgJqkrho48Y
-NDgykkiJqY5FAFrqecaI96HQj/o4BsnzBHOQMjRwaH0CjpNES/Q7DBVX1Oapz1OS
-welco9LqsyjPiCDEJJ9c34Ysk3666KJH68WE/pFftAhqnIXuyyh8fylUn0LsKWY8
-HGKmgILTGtJBKu0J0FgF+hOiqI/nWcAJSSTwSVm6nLHx5r6wDX44A/YMO+rOp+GS
-NpAjbV8EWN2sws9gm7CSKMR1M8kYhxHpbVGuDiSlQvMI9YtVr6pNXg6uf/5+BKag
-XrJ8EQ1WCrHu/3h4DVanvI/xUzJNqcoigW0cRKMGB34S6JDoJKMu4a6rgRcJEAB7
-4yvTghlVWdAxASrtmCCT
-=luq9
+iQIcBAEBAgAGBQJSMNbIAAoJEBYNRVNeJnmTHPkQAI7/UmQ/yybeEdLqB6VP7DM3
+r+4cTAkW5iI3xjLPHXchHrBofLnIj/TAxVensMR4A3wl2J28pcjwjjvmxka03HSD
+miVCfKoi4fMIGtnE9fOlTa1Gz3nTY/O26yU7sLbKWYZ4u6zgLY3asEcAySUFJJoC
+5OaTbxXqOu6+krwOZDGHL+sw0NevC+0hSk6989pPqDDu5pY24MmZw5SS7gKB+E0s
+D3Xb17duEvh273mvViwmi6qI8CrOstyX+Cxi9ERz/VtQ87s+t0z5HbDaIaeb+9hs
+07A+BJzdx64k3+0yzfmwzKXajGN3DqVaSAJE/wXmdNe6ug0I37OGh8VyxDVv14fG
+9agawmzp3UJ+0tELwD966D1lk8UiMB+wsIokOK91q7yihTCmcM9n0oWcGnaHCyVh
+QHfS5BADUu8k+KF1hP2Lef9lSjIHaxZhu5Nws9Kx4+Wmbe6qNKjpdYTo8y2Atrpr
+bXbc9xv9HLTTauv7kQMJh+woe1nf0d8e2IiIPU/hOc3TUkhoKdQ3DTffKPueIUeJ
+z/HT0IxmVCVKIBPBlzkMH7h3B78/GIjo8VQK47Ueg4w7bXTI22/pt9mR3Vf6c5Rn
+7u1CI/T1d26s6bXGncEt38mAUk7i0uL/BUcW+b9LSlV7lYw/WqgzPT9X0aVntKcB
+PuCXJxW0WblJubfTUOmp
+=/OeC
 -----END PGP SIGNATURE-----
