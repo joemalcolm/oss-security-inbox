@@ -1,99 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/24/3
-Message-ID: <20130924162513.GA3173@lonestar>
-Date: Tue, 24 Sep 2013 21:55:13 +0530
-From: Dhiru Kholia <dhiru.kholia@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/11/9
+Message-ID: <5230D754.4020702@redhat.com>
+Date: Wed, 11 Sep 2013 14:49:24 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Reproducible Builds for Fedora
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contrib modules
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I have been working on having Reproducible Builds in Fedora for some
-time.
+On 09/03/2013 03:00 PM, Forest Monsen wrote:
+> Hi there -- I'd like to request CVE identifiers for:
+> 
+> SA-CONTRIB-2013-071 - Flag - Cross Site Scripting 
+> https://drupal.org/node/2076221
 
-At this point, I think I have something demoable. Ensuring Reproducible
-Builds is a big task and I want your feedback, ideas, code and support.
+Please use CVE-2013-4336 for this issue.
 
-Please see https://github.com/kholia/ReproducibleBuilds for details.
+> SA-CONTRIB-2013-072 - Node View Permissions - Access Bypass 
+> https://drupal.org/node/2076315
 
-I would like to thank Debian and Ubuntu folks for starting similar
-projects (and inspiring this work).
+Please use CVE-2013-4337 for this issue.
 
-Reproducible Builds
-===================
+> Thanks!
+> 
+> Best, Forest
+> 
 
-It should be possible to reproduce every build of every package in
-Fedora.
 
-We want to be able to show that our binary was the result of our source
-code from our compiler and nobody added anything along the way.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-Can we (upstream / vendor) show that one of our rpms was built from the
-source we ship?
-
-It should be possible for the users to verify that the binary matches
-what the source intended to produce, in an independent fashion. We (the
-distribution provider) shouldn't be forced to say "Trust Us" to our
-users at all.
-
-Steps Involved
-==============
-
-* Recording the build environment (DONE)
-
-  - Koji does this automatically :-)
-
-* Re-producing the build environment (DONE)
-
-  - Retrieve "brootid" (buildrootID) corresponding to the NVR we want to
-    test from Koji (DONE)
-
-  - Replicate this buildroot (DONE)
-
-  - Create replica build environment using "Mock" (DONE)
-
-* Do re-builds locally using mock (DONE)
-
-* Verify new build against upstream (DONE, Steve's script works great)
-
-Current State
-=============
-
-* Packages like git, john and qpdf are 100% reproducible as far as code
-  is concerned :-)
-
-*  We also support "Recursive Verification". For example, if building
-   "Z" requires installing "Y" RPM, then, once we have verified that Z
-   is OK, we can ask our tool to verify "Y" too and so on.
-
-Current Challenges
-==================
-
-See http://tinyurl.com/ReproducibleBuildsProblems
-
-* python-epydoc will add timestamps to the HTML file it produces (
-  needs FIXING).
-
-* javadoc will add timestamps to the HTML file it produces (needs
-  FIXING).
-
-Links
-=====
-
-https://wiki.debian.org/ReproducibleBuilds
-
-http://fedoraproject.org/wiki/Releases/FeatureBuildId#Unique_build_ID
-
-http://blogs.kde.org/2013/06/19/really-source-code-software
-
-https://blog.torproject.org/blog/deterministic-builds-part-one-cyberwar-and-global-compromise
-
-https://trac.torproject.org/projects/tor/ticket/5837
-
-https://trac.torproject.org/projects/tor/ticket/3688
-
-http://bazaar.launchpad.net/~ubuntu-security/ubuntu-security-tools/trunk/files/head:/package-tools/
-
--- 
-Dhiru
+iQIcBAEBAgAGBQJSMNdUAAoJEBYNRVNeJnmTbNcP/RblImqYzuX3w9EJAxvtQI8l
+H8wOAlAusXSXPo2EsVT81bZUXePh/3uZDDddekCErhcuHbNE7mg/h7xzVf4bLGPX
+dUQKPNKzF3WD1h3Dwd+ybpeqMBPNzX3qgCG+VxDFK+DGgoe0yZC2KlZLhgq9/DXU
+Xpgs2u+iLbCSILO1AG5fpx+Rlg6tHPJy5lraY7SAy+6yaTfp1OkRBycCSpYcWTNz
+9x5T3LmxqZbfIOSTVmncRLihpOj08HnjKTdk4HWlC7EPJ538Ttw4I2ITnsA0Kxns
+6rv4H/p8/LLE5CJkLCqdiYvP2EcpV462GTWNnm/4TkpsmUcI2MaA9SE+dZqrcoUo
++9wY/4v13un2YfCYZxDFeIacMBjlm5YXiRrzoY58sWu4aBkRZ0jANJ5U1A9mq/77
+FsCWu60YDpnrNXVM/8qAYvH0B4AGFwO8RR1XF1wyqeoCLaryc/LiGbAWmk3mKrt5
+KP11KbzCIFiUPya8XBNjxIeBdHYn1CQLtxrOarFwuhU9a9kt1ITZ2Qf3v9n6wTeQ
+c4IiG57TWeAhZ7N1RrEB+3ucVaO2FrDaWshPiVF2Jl4TsE1AEYqxGy+ECOsCwtnG
+q+OIifTxMDGn8XUJ5KtSqC7onGYwQbVpv/wZc2s5wVNmKXBiknuY5dMarnR7bmd0
+DmjcUtNEfaSnYGxOU/Iv
+=Rqmw
+-----END PGP SIGNATURE-----
