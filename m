@@ -1,95 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/11
-Message-ID: <20130815103119.GA29271@gremlin.ru>
-Date: Thu, 15 Aug 2013 14:31:19 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/11/2
+Message-ID: <CANu=DmiJPziPFDCBojv=29UPnc=N+LpRWtVNSda8izMYBjir0A@mail.gmail.com>
+Date: Wed, 11 Sep 2013 12:49:04 +0100
+From: Will Newton <will.newton@...aro.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: HTTPS
+Subject: CVE Request: Three integer overflows in glibc memory allocator
 Content-Type: text/plain; charset=utf-8
 
-On 15-Aug-2013 01:22:33 -0600, Kurt Seifried wrote:
+Hi,
 
- >>> everyone should be enabling HTTPS where possible,
+I recently discovered three integer overflow issues in the glibc
+memory allocator functions pvalloc, valloc and
+posix_memalign/memalign/aligned_alloc. These issues cause a large
+allocation size to wrap around and cause a wrong sized allocation and
+heap corruption. The issues are fixed in glibc mainline.
 
- >> Very dangerous mistake. HTTPS should be used only for
- >> non-anonymous access, otherwise plain HTTP is preferred.
- >> In any case, let the users choose whether they want to
- >> use it.
+The relevant glibc bugzilla entries are here:
 
- > This is literally the first time I've ever heard anyone say this,
- > I'm curious though, can you explain your reasoning/evidence for
- > this statement?
+https://sourceware.org/bugzilla/show_bug.cgi?id=15855
+https://sourceware.org/bugzilla/show_bug.cgi?id=15856
+https://sourceware.org/bugzilla/show_bug.cgi?id=15857
 
-The reasoning is simple:
-1. Not all interceptions and modifications are evil.
-2. Some sites are much more evil than interceptors.
-
- > You do realize HTTPS can be just as "anonymous" (ignoring the
- > fact you have the persons IP/time stamp, browser string, etc =)
- > as normal HTTP.
-
-Yes. And, just in case: HTTPS is used to bypass content-filtering
-proxies (ones that cut ads|malware|etc).
-
- >> Compare to FTP vs SCP/SFTP: first is for getting files from
- >> anyone (into /incoming) and giving files for everyone (from
- >> /pub), second is for transferring your own files. Obviously,
- >> I presume FTP daemon to be configured for anonymous-only access.
-
- > Now I'm just confused.
-
-Why?
-
- >>> intercepting and modifying HTTP is trivial.
-
- >> Yes. But intercepting and modifying HTTPS requires just an
- >> ability to issue client-trusted certificates (sufficient for
- >> 99% of HTTPS applications), so the content signing should
- >> always be preferred over distributor validation.
-
- > And now I'm seriously confused. For clients that do not validate
- > hostnames it would be true that you could get an HTTPS cert for
- > any domain name and use it,
-
-The valid HTTPS certificate doesn't mean getting valid content - it
-only means you've connected to (most likely) the right server.
-
- > this would also work for the case where you first use HTTP to get
- > a redirect to HTTPS
-
-The most annoying behavior... Should be used only when the visitor
-wants to log in. IMHO.
-
- > (the attacker intercepts the HTTP and sends you to an attacker
- > controlled HTTPS).
-
-Unlike SSH, the HTTPS clients (which usually are the browsers) do not
-cache the visited servers' certificates, fully relying on issuing CA's
-honesty. This introduces a risk of false sence of security.
-
-Hmmmm... It seems that keeping self-signed certificates is even more
-safe than relying on "trusted" CAs...
-
- > Hence ALWAYS using HTTPS!
-
-Ok. But NEVER force the visitors of your site to use it :-)
-
- > I really suspect you have misunderstood what encrypted network
- > protocols are for. Typically they address three major problems:
- > integrity (attackers modifying traffic en route), confidentiality
- > (by encrypting it)
-
-Do public data really need that?
-
- > and as an offshoot of these two properties, and the magic of key
- > exchanges you can also handle authentication securely, if desired.
-
-How many sites do use the HTTPS client certificates for authentication?
-My estimation: less than 1%, as most use trivial username + password
-over the encrypted connection.
-
+Thanks,
 
 -- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+Will Newton
+Toolchain Working Group, Linaro
