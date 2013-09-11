@@ -1,61 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/22/4
-Message-ID: <528FB9E0.8090807@redhat.com>
-Date: Fri, 22 Nov 2013 13:09:04 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Drupal Security Team <security@...pal.org>, Open Source Security <oss-security@...ts.openwall.com>
-Subject: SA-CORE-2013-003 - Drupal core - Multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/11/10
+Message-ID: <CABRvpqDSf25+YyDZj4gC=F7PKc=3cymHBx=bzh1mpGTBYBu19Q@mail.gmail.com>
+Date: Wed, 11 Sep 2013 17:28:26 -0400
+From: Andrew Nacin <nacin@...dpress.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE Requests for WordPress 3.6.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Three issues fixed in WordPress 3.6.1:
+http://codex.wordpress.org/Version_3.6.1
 
-https://drupal.org/SA-CORE-2013-003
+ * Unsafe PHP unserialization. CWE-502.
+http://core.trac.wordpress.org/changeset/25325.
 
-SA-CORE-2013-003 - Drupal core - Multiple vulnerabilities
+ * Open Redirect / Insufficient Input Validation. CWE-601.
+http://core.trac.wordpress.org/changeset/25323 and
+http://core.trac.wordpress.org/changeset/25324.
 
-Multiple vulnerabilities due to optimistic cross-site request forgery
-protection (Form API validation
-Please use CVE-2013-6385 for this issue.
+ * Privilege Escalation: a user with an Author role, using a specially
+crafted request, was able to create a post that was marked as "written by"
+another user. http://core.trac.wordpress.org/changeset/25321.
 
-Multiple vulnerabilities due to weakness in pseudorandom number
-generation using mt_rand() (Form API, OpenID and random password
-generation - Drupal 6 and 7)
-Please use CVE-2013-6386 for this issue.
-
-Code execution prevention (Files directory .htaccess for Apache -
-Drupal 6 and 7)
-Treating as security hardening
-
-Access bypass (Security token validation - Drupal 6 and 7)
-Treating as security hardening
-
-Cross-site scripting (Image module - Drupal 7)
-Please use CVE-2013-6387 for this issue.
-
-Cross-site scripting (Color module - Drupal 7)
-Please use CVE-2013-6388 for this issue.
-
-Open redirect (Overlay module - Drupal 7)
-Please use CVE-2013-6389 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSj7nfAAoJEBYNRVNeJnmTQA8P+QEFJ5zwMuWRSELGUCnTQ0Tu
-ja1pMMKI/USbUvbX+YBgy/PoEcJNbam5lOwl5COUpxTgh3kZ/WQuHeQEFqEyJZ1W
-SausFeO8Om1eza4xZHf7UHpbgVpKCDkM3AI1PAXc8/ofMY+dfUY7+xzcea2dRFUQ
-MaClVJraYl4Ifa1TrdM/mdNDqWVuyulpXBlZLp3zrs9nwINjl1C6MjWL7W/4cRI8
-rCdVZOlF1CqR5PF0Y3Qw2uLhoQsBdEIcLIL0W8H+mTLAoGsdze4b6dVwZM7i+nE4
-TQL+f7l+cBcKlBLzQJFc5fKZ29pprkXlpUdfVHQxjp7CH+sQA0waQFn6fcQn5GJR
-yebhrFJHv6LrTaTjr8S6YxVVyC6cWTENkhSxYDbqrk4Jg+MXedh84MqKyutuo5AP
-nxhDvPtpT/RjuyRckQoKxMur6Zs3LlGetrKOvOza1bnHhG8Yq78HQcup1rom0Qz9
-hbFK6sQkVFTfoJdM/X17FM7B/WfLqjLUZY3nXpQqbIvrgKg7945/KT403iDLDTZu
-LGF2zvEhDT53HZDMK/bXglKr7X3Cg0tip71Trw5g4Zc3ZY3zdNf2SS+Onz22HXlj
-dzkb95tSE6KrVmFELnFok83Zs7EvJYrKwfVTDIo8u4kFrDFAvO+zTwEBmrQ4NVq6
-JvALQ9kTlBBcccAkF+Ts
-=26oq
------END PGP SIGNATURE-----
