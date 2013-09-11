@@ -1,33 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/06/1
-Message-ID: <51D78D5A.8090802@oracle.com>
-Date: Fri, 05 Jul 2013 20:22:02 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>, security@...e.de, Sebastian Krahmer <krahmer@...e.de>
-Subject: Re: Question about CVE for X!! DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/11/1
+Message-Id: <201309110840.r8B8eCHv015955@linus.mitre.org>
+Date: Wed, 11 Sep 2013 04:40:12 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com, gerald@...eshark.org
+Cc: cve-assign@...re.org
+Subject: CVEs for Wireshark 1.8.10 and 1.10.2 releases
 Content-Type: text/plain; charset=utf-8
 
-On 07/ 5/13 01:50 PM, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> http://lists.opensuse.org/opensuse-updates/2013-07/msg00023.html
-> https://bugzilla.novell.com/show_bug.cgi?id=815583
->
-> Lists no CVE? I assume it needs one, or did upstream handle this?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Upstream discussion, including reps from both Red Hat & SuSE, determined
-it didn't need a CVE, since it can only be triggered by a client authorized
-to connect to the Xserver (via xauth, xhost, etc.) and such a client, by
-design, can lock all other clients out from the server, kill clients, etc.
+https://www.wireshark.org/security/wnpa-sec-2013-54.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=8827
+http://anonsvn.wireshark.org/viewvc?view=revision&revision=51130
+crash; incorrectly maintained free list
+CVE-2013-5717
 
-It would be like wanting a CVE for the fact that another process running
-under your UID can kill your process.
 
-Not sure why SuSE decided to go ahead and release it as a security fix
-anyway - it's certainly a bug fix though.
+https://www.wireshark.org/security/wnpa-sec-2013-55.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=9005 Access Denied
+crash
+CVE-2013-5718
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+
+https://www.wireshark.org/security/wnpa-sec-2013-56.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=9020
+http://anonsvn.wireshark.org/viewvc?view=revision&revision=51196
+loop
+CVE-2013-5719
+
+
+https://www.wireshark.org/security/wnpa-sec-2013-57.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=9019 Access Denied
+buffer overflow
+CVE-2013-5720
+
+
+https://www.wireshark.org/security/wnpa-sec-2013-58.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=9079
+http://anonsvn.wireshark.org/viewvc?view=revision&revision=51603
+crash; erroneous entry into a loop
+CVE-2013-5721
+
+
+https://www.wireshark.org/security/wnpa-sec-2013-59.html
+crash
+CVE-2013-5722
+
+
+https://www.wireshark.org/security/wnpa-sec-2013-60.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=8742
+http://anonsvn.wireshark.org/viewvc?view=revision&revision=49697
+
+We don't understand why
+https://www.wireshark.org/security/wnpa-sec-2013-60.html has different
+affected versions than
+https://www.wireshark.org/security/wnpa-sec-2013-51.html (they are
+both about bug 8742). Thus, we don't know whether new CVE IDs are
+needed.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSMCvgAAoJEKllVAevmvmsuWMH/RRdPe0Lk3lAP3pVOGm+37GP
+9He6RbdJywE0X5aK7V7TTTXJJt6lFmLk91m9yFmeVeleBTb71nmzhsLf8Spn34Ew
+upNCIIWOz5SrBST8rkX8q9w27nNr3VsC9Ai7y+SazWme9AzPFgM5mAbTpcimBe1m
+3k/N27ZqQdvRhdlT7NbzjhEE+AYYSldtaVp5B+PjZBPECvUPBSTWQJnsc+ywMHMl
+v90upHmTTCPR6k1M0fQcANRIE1GAHjkpiyrDCdtFY+geArQis93w95Zp5REayvVU
+geky+wLz63mQQw6A7pHC8sejrNLAggwvqTERthsIyv5W5YIpcwFVCy/bicY47TY=
+=n04P
+-----END PGP SIGNATURE-----
