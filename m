@@ -1,68 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/01/8
-Message-ID: <524AF33A.9030501@redhat.com>
-Date: Tue, 01 Oct 2013 10:07:22 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/12/6
+Message-ID: <loom.20130912T193559-75@post.gmane.org>
+Date: Thu, 12 Sep 2013 17:40:07 +0000 (UTC)
+From: mancha <mancha1@...h.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE request: Simple Machines Forum (SMF) <= 2.0.5 - multiple vulnerabilities
+Subject: Re: CVE Request: Three integer overflows in glibc memory allocator
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 10/01/2013 12:23 AM, Henri Salo wrote:
-> On Wed, Sep 25, 2013 at 12:07:32PM -0600, Kurt Seifried wrote:
->> On 09/25/2013 10:45 AM, Henri Salo wrote:
->>> On Wed, Sep 25, 2013 at 02:33:14PM +0000, Moritz Naumann
->>> wrote:
->>>> This CSRF doesn't work for me on two 2.0.4 installations I
->>>> tested on.
->>> 
->>> You are correct.
->>> 
->>>> Both return Unable to verify referring url. Please go back
->>>> and try again.
->>> 
->>> Actual error message for me:
->>> 
->>> "Your session timed out while posting. Please go back and try 
->>> again."
->>> 
->>> I'm really sorry about this. I even tested using different
->>> computer so I don't know what I previously did wrong/different.
->>> Thank you for correcting this.
->>> 
->>> --- Henri Salo
->>> 
->> 
->> So to confirm: the XSS are legit, the CSRF is confirmed to not
->> work? thanks.
+Kurt Seifried <kseifried@...> writes:
+> On 09/11/2013 05:49 AM, Will Newton wrote:
+> > Hi,
+> > 
+> > I recently discovered three integer overflow issues in the glibc 
+> > memory allocator functions pvalloc, valloc and 
+> > posix_memalign/memalign/aligned_alloc. These issues cause a large 
+> > allocation size to wrap around and cause a wrong sized allocation
+> > and heap corruption. The issues are fixed in glibc mainline.
+> > 
+> > The relevant glibc bugzilla entries are here:
+> > 
+> > https://sourceware.org/bugzilla/show_bug.cgi?id=15855 
+> > https://sourceware.org/bugzilla/show_bug.cgi?id=15856 
+> > https://sourceware.org/bugzilla/show_bug.cgi?id=15857
+> > 
+> > Thanks,
 > 
-> Can we get these assigned or do you have open questions, thanks.
+> CVE MERGE, same researcher, version and vuln type.
 > 
-> --- Henri Salo
+> Please use CVE-2013-4332  for this issue.
 
-Apologies for the delay. Please use CVE-2013-4395 for the XSS vuln.
+Kurt, vendors, et al. -
 
+I've consolidated upstream fixes for these three integer
+overflow vulnerabilities in a port to glibc 2.17 and placed
+it here:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+http://sourceforge.net/projects/miscellaneouspa/files/misc/glibc-2.17_CVE-2013-4332.diff
 
-iQIcBAEBAgAGBQJSSvM6AAoJEBYNRVNeJnmTBOkP/jqGXYbN+ZSMT1R8hGpUr1kN
-ZO457FI7N8nhSsikecIgY9bnuEb0rTEQ3JYzsrPOWPNXwpkyzAr95LWXQQCfY92W
-RgYd6kilcqY1ydJz2/wV050nOm16vcHHbq4/oZ/HtRjIchMtS/PIhdKzV1o8Pwcl
-DWWqyv3lDl9wcnWBHPoJHcxh7oVI0DKTgDCK1pRhX7U2Z/mJ9DTR6bgFakZOiXYb
-67jYSFX8Jx3MB94u7Ol51TtbNbiurGfesJ1EgCcYcezAreV55IobJ7ynCjV1hm8u
-hbCVfMncTphggEX0kKb81tmPLQhnNrb8hhYeK+Q3T7gl/j9jcRDT5Z8VnwfzEBJZ
-mHZQNBWVplBLeFcUKaD6n8r4GaOexkZa3byqBc4pUZGtKTLAfI0ayxbfhF+b/uap
-3EO5ecNTzL5Ajm0zL++tlrJhTBpuvsceBqk+NTXCFrsCjnLjmTrIFp7SBieFsXXT
-pU3vkdb/Oxf+i4LXKgwB4PUX90HhgXAQ4On0LmGLYHIoxIuKlW0Q2uD8fo39PrWl
-9dtv2wjtZ3wTXDNE/Ovqeqgr4K7aNd64SZ3yVGMU5cQRObjTZSU19IvTnl8UCtXu
-ruNsNQmbwirEuo/DXJAyx8Squ67pCP731C4ZFKkqBwYD9cQH9D/iYQXf4x9e4wqB
-/lio2kWyNK8QBB2mrHR7
-=v7nS
------END PGP SIGNATURE-----
+Upstream fixes:
+* https://sourceware.org/git/?p=glibc.git;a=commit;h=1159a193696a
+* https://sourceware.org/git/?p=glibc.git;a=commit;h=55e17aadc1ef
+* https://sourceware.org/git/?p=glibc.git;a=commit;h=b73ed247781d
+
+--mancha
+
