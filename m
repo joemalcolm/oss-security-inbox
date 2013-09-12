@@ -1,53 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/1
-Message-Id: <201311280223.rAS2NbPL019021@linus.mitre.org>
-Date: Wed, 27 Nov 2013 21:23:37 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/12/1
+Message-ID: <52310AB3.5000703@redhat.com>
+Date: Wed, 11 Sep 2013 18:28:35 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2013-6885 AMD Publ. 51810 Errata 793 system hang
+CC: Andrew Nacin <nacin@...dpress.org>
+Subject: Re: CVE Requests for WordPress 3.6.1
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-The person who requested CVE-2013-6885 asked that we send the CVE
-assignment here because various open-source software will probably be
-adding code to prevent this denial of service attack.
+On 09/11/2013 03:28 PM, Andrew Nacin wrote:
+> Three issues fixed in WordPress 3.6.1: 
+> http://codex.wordpress.org/Version_3.6.1
+> 
+> * Unsafe PHP unserialization. CWE-502. 
+> http://core.trac.wordpress.org/changeset/25325.
 
-http://support.amd.com/TechDocs/51810_16h_00h-0Fh_Rev_Guide.pdf
-http://lists.dragonflybsd.org/pipermail/kernel/2011-December/046594.html
-http://www.zdnet.com/blog/hardware/amd-owns-up-to-cpu-bug/18924
+Please use CVE-2013-4338 for this issue.
 
-  793 Specific Combination of Writes to Write Combined Memory
-  Types and Locked Instructions May Cause Core Hang
+> * Open Redirect / Insufficient Input Validation. CWE-601. 
+> http://core.trac.wordpress.org/changeset/25323 and 
+> http://core.trac.wordpress.org/changeset/25324.
 
-  Under a highly specific and detailed set of internal timing
-  conditions, a locked instruction may trigger a timing sequence whereby
-  the write to a write combined memory type is not flushed, causing the
-  locked instruction to stall indefinitely.
+Please use CVE-2013-4339 for this issue.
 
-  Potential Effect on System
-  Processor core hang.
+> * Privilege Escalation: a user with an Author role, using a
+> specially crafted request, was able to create a post that was
+> marked as "written by" another user.
+> http://core.trac.wordpress.org/changeset/25321.
 
-  Suggested Workaround
-  BIOS should set MSRC001_1020[15] = 1b.
+Please use CVE-2013-4340 for this issue.
 
-  No fix planned
+Perfect request =) Thanks
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSlqj0AAoJEKllVAevmvmsDbEH/iqJkLRAEIAvUYExwqhvC61N
-/Td6GRxx9O8anj6fqn73slSUGJ5SM+SPaZ/8ZFwG7SMg1MzZEbMmzLAm3RON86Ru
-cM58GDw395sxepmCOWIGUx0dWa5s7n8hhvq2YxPv53GACorTtpmUM5g5HkcR//yR
-ipmQCmtQ86vwAQg9m+ZywKexy1DG8bsx3YmuMSkl+5jLkKkLaBGU78AiLJKzqDns
-Wq5Bt6uVpqo6y+ORxIlDl5OP1TOLsoyIiHM+94hEpdp472gKOoF20laqaIpK9nTU
-0/VK2Tp9UqCA7LC+4KbEbKS4SudN8OKAFBcobXIofBpcI13d90Eoii4QqSzjP9s=
-=sAu5
+iQIcBAEBAgAGBQJSMQqzAAoJEBYNRVNeJnmTiHgQAJUu3dMQMUNUcILBw1vq60wd
+VONk5MrHOSZEepUi2RdWQqagH8x9LJMsxu19HcnK/qrGAAy6zXNvq4j9obszT9UV
+GMsAU5+OrXCuXvoNMCIofkqabdqXPGbWpw5o+l8I+j71ebOz1th7tH0yye24Badx
+y6nUFwYuzrA3x7DL4F3E2ERamGgegUvcwhcpQlUjaeu7TlF6w3Ikq9ZkrJKHOiiz
+jvon3WBkAy17ayP093uKbE+zrTrypx+WHoc9ucHdAPmwUgiRDTBPfiTQFaGLdo6P
+F6t3zQeaKBKiLKNuGlhmmpEfaMHchjEQTkx4Qjb8E73aOfSXEy0LW1FEhwWrCu9T
+O4v8utuqBR3YCOlmJirrCzz7cGtl9LNtW3/U6e12L6DFy9PthcrIgCxObpGJxUlh
+JfYFuMQtOFw22srsGJFD1fve7ewzHJb0hw21zTaxh4zggJS/ACEKy5Fnz+89YkFr
+D1pXYyD2MBuFlOwqxW8yXnfiIgX1tDWuE9YbbmwM7826iaagYkYlNS1gFVV/Aee1
+ze/XOfRZlT2HjhdmKh7gvmTEE1/wJaA7H8LXi/3SuR24F4wfNpryQLx1MdEqSzXL
+9GjcFTmdoVwZTOyaavaitCvRoOuopB7hT8SZws0MEHAEi9hFwzVjpokOxFESomki
+fAwjXoSgQlfn24LjKakh
+=Uj6o
 -----END PGP SIGNATURE-----
