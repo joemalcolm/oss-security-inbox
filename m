@@ -1,64 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/5
-Message-ID: <52579009.1010607@redhat.com>
-Date: Thu, 10 Oct 2013 23:43:37 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/12/7
+Message-ID: <52321C47.8020705@redhat.com>
+Date: Thu, 12 Sep 2013 13:55:51 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: RE: 2 CVE's to be rejected
+To: oss-security@...ts.openwall.com, security@...ntu.com, chuck.short@...onical.com
+Subject: Re: cve requests for python-oauth2
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/10/2013 10:35 PM, Christey, Steven M. wrote:
->>> [cve-assign@...re] We would want this information even if the
->>> correct CVE ID still refers to an embargoed issue.
->> 
->> [Kurt] The duplicate issue is still embargoed, the other one is
->> also an embargoed issue.
-> 
-> To be (hopefully) more clear, we do not need to "populate" the CVE
-> description or references for the (still-valid) embargoed issue; we
-> only want to refer to its ID from the REJECTed CVE.  That way, if
-> for any reason the REJECTed CVE is used in public, there will be a
-> clear link to the appropriate CVE.  We don't feel that the
-> reference to the still-embargoed issue is an information leak of
-> any sort, given that Red Hat is likely to be working on dozens of
-> not-yet-disclosed vulnerabilities at any point in time, and you've
-> already publicly stated that CVE-2013-1870 (or CVE-2013-4398?) is a
-> dupe of *something*.
-> 
-> While it's unusual to do a REJECT of one CVE and say that it's a
-> duplicate of another CVE that's still not public and still shows up
-> as RESERVED, this action still gives useful information to certain
-> CVE consumers who rely on the CVE IDs to coordinate vulnerability
-> information between diverse parties (which is, after all, CVE's
-> primary goal).
-> 
-> Similarly, while it's unusual to publicly claim a REJECT of one CVE
-> because it's not a security issue, in the past we have supported
-> various "private" REJECTs that occur when the original CVE
-> requester determines that the issue is just a "bug" (or "feature")
-> and not a vulnerability before the issue was ever published.  It
-> doesn't seem like much of an information leak to know *that* a
-> particular CVE ID was REJECTed because further research showed that
-> the issue was not a vulnerability.
-> 
-> As such, it doesn't seem like there would be any loss of
-> privacy/secrecy if we knew which of (CVE-2013-1870 or
-> CVE-2013-4398) was a duplicate [of some other CVE, whose ID would
-> be nice to know even if the issue isn't public yet], and which of
-> (CVE-2013-1870 or CVE-2013-4398) should be REJECTed because it's
-> not a CVE-qualifying vulnerability at all.
+I have some clarifying questions, see below
 
-Ah apologies, I misunderstood and thought that you needed details.
-CVE-2013-1870 is a duplicate if CVE-2013-1869 (we thought it was two
-separate issues, turned out to be a single issue).
-
-> I recognize that we might not have sufficient insight into the
-> situation at hand, so any clarification would be welcome.
+On 09/12/2013 11:34 AM, Seth Arnold wrote:
+> Hello Kurt, all, I recently gave python-oauth2 a quick audit and
+> believe it needs three CVE entries:
 > 
-> - Steve
+> - _check_signature() ignores the nonce value when validating signed
+> urls
+> 
+> def _check_signature(self, request, consumer, token): timestamp,
+> nonce = request._get_timestamp_nonce() 
+> self._check_timestamp(timestamp) signature_method =
+> self._get_signature_method(request)
+> 
+> try: signature = request.get_parameter('oauth_signature') except: 
+> raise MissingSignature('Missing oauth_signature.')
+> 
+> # Validate the signature. valid = signature_method.check(request,
+> consumer, token, signature)
+> 
+> if not valid: key, base = signature_method.signing_base(request,
+> consumer, token)
+> 
+> raise Error('Invalid signature. Expected signature base ' 'string:
+> %s' % base)
+> 
+> Ignoring the nonce value enables replay attacks.
+> 
+> This appears to already be known (ignoring the misleading title): 
+> https://github.com/simplegeo/python-oauth2/issues/129
+
+Yeah ignoring nonces is not good. Oddly enough CWE only has CWE-323
+"Reusing a Nonce, Key Pair in Encryption" there is nothing for
+"completely ignored nonce". So this gets a CVE. Please use
+CVE-2013-4346 for this issue.
+
+> - _check_timestamp() does not constrain how far into the future
+> times may be, (also does not prevent negative times, but probably
+> not relevant for a CVE)
+> 
+> def _check_timestamp(self, timestamp): """Verify that timestamp is
+> recentish.""" timestamp = int(timestamp) now = int(time.time()) 
+> lapsed = now - timestamp if lapsed > self.timestamp_threshold: 
+> raise Error('Expired timestamp: given %d and now %s has a ' 
+> 'greater difference than threshold %d' % (timestamp, now, 
+> self.timestamp_threshold))
+> 
+> The timestamps are probably most useful to limit the number of
+> nonces that must be stored and compared but it seems generally
+> useful to prevent timestamps from the distant future from being
+> allowed.
+
+I see how this can be a problem, but with proper nonces it shouldn't
+be an issue on it on, correct? As such I'm leaning towards classifying
+this one as security hardening.
+
+> - make_nonce(), generate_nonce(), and generate_verifier() use a
+> poor prng:
+> 
+> @classmethod def make_nonce(cls): """Generate pseudorandom
+> number.""" return str(random.randint(0, 100000000))
+> 
+> 
+> def generate_nonce(length=8): """Generate pseudorandom number.""" 
+> return ''.join([str(random.randint(0, 9)) for i in range(length)])
+> 
+> 
+> def generate_verifier(length=8): """Generate pseudorandom
+> number.""" return ''.join([str(random.randint(0, 9)) for i in
+> range(length)])
+> 
+> Nonces may not need full-blown /dev/urandom but the Python
+> 'random' documentation clearly states the results are repeatable.
+> The lack of seeding in this module makes me think this is too weak
+> for this use.
+> 
+> The safety of oauth depends upon the verifier being unguessable,
+> and this is both too short, with too few character choices, and
+> probably does need full-blown /dev/urandom style randomness.
+> 
+> The poor PRNG for the nonce has been known since 2010-04-24 (silly
+> github, hover your _mouse pointer_ over the "3 years ago" text in
+> the bug report): 
+> https://github.com/simplegeo/python-oauth2/issues/9
+
+Yeah to quote Python random():
+
+However, being completely deterministic, it is not suitable for all
+purposes, and is completely unsuitable for cryptographic purposes.
+
+so even with a 'random' seed can attacker could conceivably take a
+sample and then brute force the original seed allowing them to predict
+future values. So this would go under insufficient randomness and get
+a CVE. Please use CVE-2013-4347 for this issue.
+
+> 
+> 
+> Thanks
 > 
 
 
@@ -68,17 +117,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSV5AJAAoJEBYNRVNeJnmTABIQAKTkQQm3TRdgK0VxjxZmsCcD
-YJUvPH5HC4d1qa/TDhrN6F33wZsdzL67JzPHlAXWh4jwlJiftEOKUQdec+6F61TS
-ILRmsMNZOShoMtq3wTGmyxrMngFGuYTjnF3aiMkuyueyr/5A64Xs7bGnT8mIYwuk
-sn10f0bmO0wkKCLKNnf7MQdWbqFWFKP9eM9PWP4qZolWMNDyhv/MzoAoHX/Zexsy
-Nmdpk0L6yt6mgDu+w+k70ns3/kEhtquVB/FHiw6+5/BQGM927aZuEyAwzF8O4IJ/
-Pow2ZXKKx99mIujuvraukxLfCniffIeNSefz9xpIuZW5bwBHh525U/hlGqHLWQUM
-6v1pQ6ed77CfqoeBEcmzhTVDLyNx0a5wJHCpJ4J+azIk+pBcp2FWhx87vFYU6Tyj
-WYUzg29af2TN1v7XZotcaU9gKrTv9TEjBNkMAypkqk3Z+XjA66QAiH22U9U9Ebrg
-HtsGDgs3Wa6t/ezVETFMFWOKQnwftFeBObUA6DvZRNOR/XOsGqPZQVmqKdwUS7mR
-fToJgcXeLA8Qd4MFnWkY5vaydVBvVRO35v1S2XP09Exws1RIexXvd7EDQql9Prd/
-nUFjzchE60WJeS5kk7Nh540J4aOfUuInnsF9acoUxri0jld/uuNZUCm/BiOOTeNS
-X/RSj8ke7D9YgB2PyXNS
-=SKLO
+iQIcBAEBAgAGBQJSMhxHAAoJEBYNRVNeJnmTo1MQALHLps+XJ37Nfge/ZO0lNh0F
+/CbiL9rkwYRdM61kKi13H995HcGeCcjiPI+v/6GlIEWJIrtHbf8bkYA1aqQF5cvi
+yb1cYQ0Q8h51q6mC57IPfx3EIRLbcHws+WzWrHYBrGz3yHzfLy9ZJs5D1CV8UHve
+X18QTmU654vEIZ4GhdWQnvktzCHlZ32tigP+PD+utXPQ/sjd0C3GGVicsh1BNVyG
+GB006iRrwlA1xgyyJxLXVcz24zeXFTDpHq8NQVXfj4LILAVGzyS53RWh8+FocdR0
+HoUSPZfzg5N2+vt8HjjWJNdlaAW2uKijR6eNSNDF5HH3I+LuCY01sww+40IN6I+U
+ncVuo1U8c4F+Nt8EjrxMJAa1DCdy0voee1yn8fQt7/doAN7yZdElaispQ0YkWqJC
+HQVdz8+1k/NxrLyJQ3vKZPh6qiPIoYykRFkTUjZQJ/I5yJ2ffRP76/mNkIMsWZy2
+YVMCeeZbHe7g7y56FWE6poCI7JYRGXPLWGOTioOI2RSVYGVfsyEEZAAdISKIpS9z
+xw9aPZCd3IYf9ouUV+Ra85egWWvZf7VC9sESa5CCqEWX1XO0lXKR3TadzVYtK9+q
+dY3ZhlaYlmZbZWlJagesCxp9KL+LYbRkw/Q+YoboLxJMaHBw2AaQsbEpK4mPAeXe
+JzSDqUqrfiG4W4qpITFb
+=hOZj
 -----END PGP SIGNATURE-----
