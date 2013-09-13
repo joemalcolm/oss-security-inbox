@@ -1,117 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/24
-Message-ID: <20131104213237.GA31654@openwall.com>
-Date: Tue, 5 Nov 2013 01:32:38 +0400
-From: Solar Designer <solar@...nwall.com>
-To: George Argyros <argyros.george@...il.com>
-Cc: oss-security@...ts.openwall.com, Aggelos Kiayias <aggelos@...yias.com>, Vladimir Vorontsov <vladimir.vorontsov@...ec.ru>, gifts <gifts.antichat@...il.com>
-Subject: Re: Randomness Attacks Against PHP Applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/13/2
+Message-ID: <20130913133819.GO11152@dhcp-25-225.brq.redhat.com>
+Date: Fri, 13 Sep 2013 15:38:19 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request -- Linux kernel: net: sctp: ipv6 ipsec encryption bug in sctp_v6_xmit
 Content-Type: text/plain; charset=utf-8
 
-Hi George and all,
+Alan Chester reported an issue with IPv6 on SCTP that IPsec traffic is
+not being encrypted, whereas on IPv4 it is. Setting up an AH + ESP transport
+does not seem to have the desired effect:
 
-It's been a year, and I happened to implement some enhancements to
-php_mt_seed last month.  Although oss-security is not meant to be a
-place to announce new versions of security tools, I think having this
-one posting added to the existing thread is appropriate.
+SCTP + IPv4:
 
-php_mt_seed is now beyond PoC, and it has a homepage at:
+ 22:14:20.809645 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF],
+proto AH (51), length 116)
+     192.168.0.2 > 192.168.0.5: AH(spi=0x00000042,sumlen=16,seq=0x1):ESP(spi=0x00000044,seq=0x1), length 72
+ 22:14:20.813270 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF],proto AH (51), length 340)
+     192.168.0.5 > 192.168.0.2: AH(spi=0x00000043,sumlen=16,seq=0x1):
 
-http://www.openwall.com/php_mt_seed/
+SCTP + IPv6:
 
-Please see below for some detail on what has changed:
+ 22:31:19.215029 IP6 (class 0x02, hlim 64, next-header SCTP (132)payload length: 364)
+     fe80::222:15ff:fe87:7fc.3333 > fe80::92e6:baff:fe0d:5a54.36767:sctp
+     1) [INIT ACK] [init tag: 747759530] [rwnd: 62464] [OS: 10] [MIS:10]
 
-> On Sun, Sep 23, 2012 at 1:14 AM, Solar Designer <solar@...nwall.com> wrote:
-> > The way I'd approach this is by limiting the set of possible seeds based
-> > on the first mt_rand() output (perhaps with a min-max range, so _many_
-> > seeds will be potentially valid - could be millions, yet significantly
-> > fewer than the full 4 billion set).  This can be accomplished almost as
-> > quickly as cracking the seed based on an exact mt_rand() output (full
-> > 31 bits of it, no min-max range) - that is, in one minute on CPU.  Then
-> > slower, but more generic code may be used to filter out the impossible
-> > seeds based on further mt_rand() outputs, until there's just one seed
-> > value left.  The slowness of that second cracker would not matter much
-> > because it'd only need to search a much smaller seed space.
+References:
+https://bugzilla.kernel.org/show_bug.cgi?id=24412
+https://bugzilla.redhat.com/show_bug.cgi?id=1007872
 
-I've implemented this without having to store the subset of seeds
-matching the first mt_rand() output.  The extra checks are performed
-by the same thread that finds the first output match, with the seed
-still in a local variable (perhaps still in a CPU register, even).
+Upstream fix:
+http://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=95ee62083cb6453e056562d91f597552021e6ae7
 
-> > A limitation, though, is that the very first mt_rand() output after
-> > seeding must be among those available, even if in truncated form.  If it
-> > is not, then more of the state has to be maintained in the initial
-> > cracking pass, thereby making it slightly slower.  When the first output
-> > is (at least partially) available, we only need 3 state elements, so
-> > they're kept in registers nicely.
-
-I was wrong to say that more state "has to" be maintained.  In cases
-like this, it's either storage/retrieval or recomputation.  For the
-current implementation, I chose the latter.  Current php_mt_seed
-recomputes just the required portions of MT's state if and when the
-extra comparisons are invoked.
-
-So current php_mt_seed is able to find seeds based on one or many,
-initial or not, and exact or not mt_rand() outputs.  Some examples of
-this are given here:
-
-http://www.openwall.com/lists/announce/2013/11/04/1
-http://www.openwall.com/php_mt_seed/README
-http://forum.insidepro.com/viewtopic.php?t=22342
-
-I've also added AVX2 and MIC (Xeon Phi) intrinsics.  In basic invocation
-mode (that is, given one full and exact mt_rand() output value),
-php_mt_seed 3.2 searches the full 32-bit seeds space on a Core i7-4770K
-at stock clocks in 48 seconds, and on a Xeon Phi 5110P in 7 seconds.  In
-advanced invocation modes, these are slightly higher - e.g., 51 seconds
-and 11 seconds, respectively, for the sample set of mt_rand(0, 61)
-outputs given by the InsidePro forum's user.
-
-On Thu, Sep 27, 2012 at 10:42:24PM -0400, George Argyros wrote:
-> This sounds like a good approach and it would probably be faster when
-> even truncated outputs are available. The problem is that we
-> encountered quite a few applications with a pattern of generating
-> tokens like md5(mt_rand()), and in general we found all kinds of weird
-> ways to generate tokens that a random developer came up with. In the
-> md5 case you won't be able to get the output of mt_rand unless you
-> bruteforce the md5 in the same fashion (which would still be faster
-> using code like the one you wrote, than using our approach, however
-> you will need to write some application specific code for cracking and
-> thats what we wanted to avoid).
-
-Well, yes, in your example the md5() currently would not fit into
-php_mt_seed's standard code and invocation modes - however, it is fairly
-easy to hack into the source.
-
-> Our goal was to provide a usable interface so that people will only
-> have to deal with the application specific part of the attack, rather
-> than getting the cracking done correctly. Nevertheless, I think that
-> applications that leak an mt_rand output are common out there and in
-> that case your cracker is a simpler and faster choice since it does
-> not require the user to write any C code at all. For cases when more
-> complex token generation algorithms are used I think that an approach
-> that takes care of all the cracking like the one we used may be
-> better. Also in case you use the option to generate some rainbow
-> tables (which may take some time too, depending on the "hash" function
-> used), the online search time will be a few seconds.
-> Another option could be to combine these two approaches and further
-> optimize the code that handles the cracking while also providing a
-> basic optimized version of mt_rand like the one you wrote to use when
-> writing other more complex "hash" functions.
-
-I'm not familiar with your approach.  With current php_mt_seed, the
-extra md5() or whatever would need to be hacked into the diff()
-function, and the MATCH_PURE flag would need to be reset.  I don't see
-how it can get much easier than that - well, short of providing ready to
-use primitives implementing common PHP functions such as md5().
-
-Finally, to make this posting more appropriate for oss-security: it
-appears that Drupal and WordPress need to have their random password
-generation fixed:
-
-https://twitter.com/solardiz/status/397380784128270336
-https://api.drupal.org/api/drupal/core!modules!user!user.module/function/user_password/8
-
-http://core.trac.wordpress.org/ticket/25816
-
-Alexander
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
