@@ -1,36 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/7
-Message-ID: <20130718124055.GA26243@suse.de>
-Date: Thu, 18 Jul 2013 14:40:55 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: OpenJDK and lcms2 2.5 release fixes various denial of service issues in lcms2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/13/4
+Message-ID: <5233644A.2080907@redhat.com>
+Date: Fri, 13 Sep 2013 13:15:22 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+Subject: Re: GnuPG treats no-usage-permitted keys as all-usages-permitted
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The lcms2 2.4 -> 2.5 version upgrade fixes various crashes that could be used
-by attackers to crash (NULL ptr deref) programs using lcms2, like e.g. OpenJDK 7
+On 09/13/2013 12:32 AM, Daniel Kahn Gillmor wrote:
+> RFC 4880 permits OpenPGP keyholders to mark their primary keys and 
+> subkeys with a "key flags" packet that indicates the capabilities
+> of the key [0].  These are represented as a set of binary flags,
+> including things like "This key may be used to encrypt
+> communications."
+> 
+> If a key or subkey has this "key flags" subpacket attached with all
+> bits cleared (off), GnuPG currently treats the key as having all
+> bits set (on).  While keys with this sort of marker are very rare
+> in the wild, GnuPG's misinterpretation of this subpacket could lead
+> to a breach of confidentiality or a mistaken identity
+> verification.
+> 
+> Potential Confidentiality Breach --------------------------------
+> 
+> For example, if Alice has a subkey X whose "key flags" subpacket
+> has all bits cleared (because she is using it for something not
+> documented in the spec, perhaps something experimental or risky),
+> and Bob sends Alice an e-mail encrypted using GnuPG, Bob may
+> accidentally encrypt the message to key X, depsite Alice having
+> clearly stated that the key is not to be used for encrypted
+> communications.  If Alice's intended use of X turns out to
+> compromise the key itself somehow, then the attacker can read Bob's
+> otherwise confidential communication to Alice.
+> 
+> Potential Mistaken Identity Verification 
+> ----------------------------------------
+> 
+> Consider the scenario above, but where Bob is in general willing to
+> rely on OpenPGP certifications made by Alice.  The legitimate form
+> of these certifications are usually made by Alice's primary key,
+> which is marked as "certification-capable".  Because Bob's GnuPG
+> misinterprets the usage flags on subkey X, Bob may be able to be
+> tricked into believing that Alice has certified someone else's
+> OpenPGP identity if an attacker manages to coax Alice into using
+> subkey X in a way that is replayable as an OpenPGP certification.
+> 
+> 
+> 
+> These risks are unlikely today (there are very few certifications
+> in the wild with an all-zero key flags subpacket), and they are
+> not particularly dangerous (for a compromise to happen, there needs
+> to also be a cross-context abuse of the mis-classified key, which i
+> do not have a concrete example of).  But the keyholder's stated
+> intent of separating out keys by context of use is being ignored,
+> so there is a window of vulnerability that should not be open.
+> 
+> There is also a (maybe non-security) functionality issue here, in
+> that GnuPG may mis-use the user's own keys if they are marked as
+> described above (e.g. signing messages or certifying identities
+> with a subkey that is explicitly marked as not being for that
+> purpose).
+> 
+> 
+> This problem was first reported to the GnuPG team back in March
+> [1]. Patches are available, but appear to only be applied on the
+> development branch (2.1.x).  So stable branches 1.4.x and 2.0.x
+> remain vulnerable at the moment.
+> 
+> Could a CVE be issued for this?
+> 
+> Regards,
+> 
+> --dkg
+> 
+> [0] https://tools.ietf.org/html/rfc4880#section-5.2.3.21 [1]
+> http://thread.gmane.org/gmane.comp.encryption.gpg.devel/17712/focus=18138
+>
+> 
+Please use CVE-2013-4351 for this issue.
 
-This was found in the embedded copy within OpenJDK7 first, then merged to lcms2.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2013-July/023895.html
-
-lcms2 related issues in there:
- * S8007925: Improve cmsStageAllocLabV2ToV4curves
- * S8007926: Improve cmsPipelineDup
- * S8007927: Improve cmsAllocProfileSequenceDescription
- * S8007929: Improve CurvesAlloc
- * S8009654: Improve stability of cmsnamed
-
-All covered by lcms2 in this commit (I think):
-https://github.com/mm2/Little-CMS/commit/91c2db7f2559be504211b283bc3a2c631d6f06d9
-
-These probably can get just 1 CVE, although I do not know the OpenJDK IcedTea side
-of the story.
-
-https://bugzilla.novell.com/show_bug.cgi?id=826097#c9 has the research into
-more of these stability commits in lcms2 by my colleague Stanislav Brabec.
-Not sure if they should get seperate CVEs or not.
-
-Ciao, Marcus
+iQIcBAEBAgAGBQJSM2RKAAoJEBYNRVNeJnmTcakQAMXS9Myd4ZpJeqGCX3dZlTHj
+rU4u//iuOC3cfRYwYV8EycQdAxkdXKGt5Fc2ZImjhwNiY70b9Luq+5MGPlDHRM1n
+vojp65uKJRHmiWrAsIMZJQiKDKdYtNys/rWh5YEbptUIIjILSyPCpO7vw8CAlAWW
+vwi4OYQoWKrPKt7vyRsTGd2kaKK4yhs3Lt3ULC9olbIE8M4qa7CXwc6+uO44jMLu
+MLToG7gHT3Y0hun6O58736vemkS/3Iqh1G0QRLWUZGj2qPC6u30OxpuwFIyDaZSu
+ng5+5zOfUyLnZNE6tdPcx1io2Dm5VaRE0gtM4HknNEHf8t2u8LOExWhTU5g0yR5e
+nyq0dKrTTG84nGSw/HRINXV0v2hbSpyA15Pz4gQoZ3KMkflCSw4XOlelT6sA2PCe
+sJkUWXGy/lgNC8PUUV7IH1uWkP7RSqh8oam3bD4h6ZBpZlodDXzwKBvSG5V9cdL7
+PKGZKfAzETueBAxKPXmYWLf9KRXZsulfud6yRctIa1n27C/wSSTw1L9VBY1XY4Ko
+ILT3Lg0tTk/Y/Q1YC2QgtAQu6u2jPUdXiDY1d2D5tv5EvxDTZUCipSpcw8LnGnjc
+pnvJ3XrbyDHxLe6nzSJwm/5NO5cKmq7uklr7SYIEhyPvuCFlC/NvD1rtfLhcsbxp
+iGpgXUg54W9hL1m4OA3u
+=Dg6j
+-----END PGP SIGNATURE-----
