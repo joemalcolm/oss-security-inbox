@@ -1,60 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/4
-Message-Id: <574DAA3C-1AC4-4B82-B444-FA484E003428@stufft.io>
-Date: Fri, 4 Oct 2013 01:26:46 -0400
-From: Donald Stufft <donald@...fft.io>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: A note on cookie based sessions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/13/1
+Message-ID: <87li31kz8w.fsf@alice.fifthhorseman.net>
+Date: Fri, 13 Sep 2013 02:32:47 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com
+Subject: GnuPG treats no-usage-permitted keys as all-usages-permitted
 Content-Type: text/plain; charset=utf-8
 
-I don't think this really is a vulnerability is it? I mean it's basically how
-the internet works. The only difference between a cooke backed session
-and a regular session is that there's no server side session to destroy.
-At least in Django's case, It's not a permanent session though, they are
-only good for a limited amount of time before the signature on the cookie
-expires.
+RFC 4880 permits OpenPGP keyholders to mark their primary keys and
+subkeys with a "key flags" packet that indicates the capabilities of the
+key [0].  These are represented as a set of binary flags, including
+things like "This key may be used to encrypt communications."
 
-If you have access to the session cookie you've already won the game, you've
-gotten an XSS or MITM and can do much worse then a session cookie.
+If a key or subkey has this "key flags" subpacket attached with all bits
+cleared (off), GnuPG currently treats the key as having all bits set
+(on).  While keys with this sort of marker are very rare in the wild,
+GnuPG's misinterpretation of this subpacket could lead to a breach of
+confidentiality or a mistaken identity verification.
 
-On Oct 4, 2013, at 12:40 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+Potential Confidentiality Breach
+--------------------------------
 
-> Signed PGP part
-> So this has been published:
-> 
-> http://maverickblogging.com/logout-is-broken-by-default-ruby-on-rails-web-applications/
-> 
-> http://maverickblogging.com/security-vulnerability-with-django-cookie-based-sessions/
-> 
-> Basically it boils down to this: cookie based session handling where
-> you don't store state data on the backend, but instead have a cookie,
-> possibly with an expiration time coded into it can be used in replay
-> attacks.
-> 
-> That's a problem, but also an inherent limitation of how such session
-> handling works. The advantages are a stateless backend, no need for
-> state DB, if you have many backends, especially distributed, logins
-> just work no matter which server you connect to.
-> 
-> In both Drupal and Ruby on Rails case the security issues are documented:
-> 
-> https://docs.djangoproject.com/en/1.5/topics/http/sessions/#using-cookie-based-sessions
-> 
-> http://guides.rubyonrails.org/action_controller_overview.html#session
-> 
-> the documentation can maybe be improved (especially mentioning
-> HTTPS/HSTS to prevent sniffing of the cookie) but generally speaking
-> this is covered, so no CVEs here.
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
+For example, if Alice has a subkey X whose "key flags" subpacket has all
+bits cleared (because she is using it for something not documented in
+the spec, perhaps something experimental or risky), and Bob sends Alice
+an e-mail encrypted using GnuPG, Bob may accidentally encrypt the
+message to key X, depsite Alice having clearly stated that the key is
+not to be used for encrypted communications.  If Alice's intended use of
+X turns out to compromise the key itself somehow, then the attacker can
+read Bob's otherwise confidential communication to Alice.
+
+Potential Mistaken Identity Verification
+----------------------------------------
+
+Consider the scenario above, but where Bob is in general willing to rely
+on OpenPGP certifications made by Alice.  The legitimate form of these
+certifications are usually made by Alice's primary key, which is marked
+as "certification-capable".  Because Bob's GnuPG misinterprets the usage
+flags on subkey X, Bob may be able to be tricked into believing that
+Alice has certified someone else's OpenPGP identity if an attacker
+manages to coax Alice into using subkey X in a way that is replayable as
+an OpenPGP certification.
 
 
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+
+These risks are unlikely today (there are very few certifications in the
+wild with an all-zero key flags subpacket), and they are not
+particularly dangerous (for a compromise to happen, there needs to also
+be a cross-context abuse of the mis-classified key, which i do not have
+a concrete example of).  But the keyholder's stated intent of separating
+out keys by context of use is being ignored, so there is a window of
+vulnerability that should not be open.
+
+There is also a (maybe non-security) functionality issue here, in that
+GnuPG may mis-use the user's own keys if they are marked as described
+above (e.g. signing messages or certifying identities with a subkey that
+is explicitly marked as not being for that purpose).
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+This problem was first reported to the GnuPG team back in March [1].
+Patches are available, but appear to only be applied on the development
+branch (2.1.x).  So stable branches 1.4.x and 2.0.x remain vulnerable at
+the moment.
+
+Could a CVE be issued for this?
+
+Regards,
+
+        --dkg
+
+[0] https://tools.ietf.org/html/rfc4880#section-5.2.3.21
+[1] http://thread.gmane.org/gmane.comp.encryption.gpg.devel/17712/focus=18138
+
+Content of type "application/pgp-signature" skipped
