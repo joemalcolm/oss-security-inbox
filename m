@@ -1,68 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/16/3
-Message-ID: <511F284F.2050304@redhat.com>
-Date: Fri, 15 Feb 2013 23:33:51 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/14/1
+Message-ID: <2476752.xGPUqvCcXv@devil>
+Date: Sat, 14 Sep 2013 09:05:01 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-CC: Michael Tokarev <mjt@....msk.ru>
-Subject: Re: CVE# request: pigz creates temp file with insecure permissions
+Subject: CVE request: proftpd: mod_sftp/mod_sftp_pam invalid pool allocation during kbdint authentication
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 02/15/2013 01:33 AM, Michael Tokarev wrote:
-> I think this one well deserves a CVE#.  I just submitted the
-> following bug #700608 to Debian BTS:
-> 
-> When asked to compress a file with restricted permissions (like 
-> mode 0600), the .gz file pigz creates while doing this has usual
-> mode derived from umask (like 0644).  If the file is large enough
-> (and why we would use pigz instead of gzip for small files), this
-> results in the original content being readable for everyone until
-> the compression finishes.
-> 
-> Here's the deal:
-> 
-> $ fallocate -l 1G foo $ chmod 0600 foo $ pigz foo & $ ls -l foo
-> foo.gz -rw------- 1 mjt mjt 1073741824 Feb 15 12:27 foo -rw-rw-r--
-> 1 mjt mjt     502516 Feb 15 12:27 foo.gz
-> 
-> When it finishes, it correctly applies original file permissions to
-> the newly created file, but it is already waaay too late.
-> 
-> Other one-file archivers (gzip, xz, bzip2, ...) usually create the
-> temp file with very strict permissions first, and change it to the
-> right perms only when done, so only the current user can read it.
+From: http://kingcope.wordpress.com/2013/09/11/proftpd-mod_sftpmod_sftp_pam-invalid-pool-allocation-in-kbdint-authentication/
 
-Apologies for my first misreading of this. Please use CVE-2013-0296
-for this issue.
+ProFTPd installs with mod_sftp and mod_sftp_pam activated contain the 
+vulnerability described in this post.
 
-> 
-> Thanks!
-> 
-> /mjt
-> 
+The current stable release of ProFTPd is 1.3.4d and the current release 
+candidate is 1.3.5rc3.
 
+First I have to note that this vulnerability is unlikely to be exploited. 
+There is a way to control $rip instruction pointer
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+on 64 bit systems, for example on the Ubuntu 64Bit platform but I believe that 
+it is not possible to get full code execution with this bug.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+The bug is useful to trigger a large heap allocation and exhaust all available 
+system memory of the underlying operating system.
 
-iQIcBAEBAgAGBQJRHyhPAAoJEBYNRVNeJnmT/58QANpX3fNSN/DV2k2h6/TMreid
-gnqYXxndMTo6D63+4jWkKyMb+XsJjNJ52jvN3wAYwKGVk7MtrDzKydDFn5qFMBJ0
-4Ysp+cVsD5HE4QRc6cJPkBNaoKA6t+cj0fInu/hqkXMTAZpUDEPn9p4FUjB0OSrJ
-nOFz4PWbAPX8KItMNUmMCu/r2OnOQ7vhJDHk37GIXhEwvZE9Hf2m2mNtBfBHHrlw
-7x8fO0lEmYi3aOhkvm+ka0U/YplmNWxWXjF0xoxzwQgEeJV+xSiCgk7Wk4YzYLTm
-i4TPI/RHvvuXgKs2mzHXE6qu5F0ADif0Vhl2iEasl8X3Zjeb6nZ7i6r+eTAMmsXf
-pJvDbC28PnPGSC+u9J4oibDbugu7FJXyYDWtDz6ylQTFDJZ6nXPKGfUUbq2i/7vn
-G84r/1LsrF8PxBFu8fFCD/+tZtyoCMU8qosfiTFHi4sgVF/4jGBVmICkyn6IE+3e
-VL/bcutjWd9gGg9S8MaAO+TDnEmaJbvluPlBandKNdZIV18e7bDed6fsGwXiyJ12
-XGIC5A9IgxioG4yFguwB1LutVaBMW80UxjMZQDOoeTOLWLS6dLqFuLbWz3DK0b3a
-aqh+tH1OvYNHgpu9UFDFFVvGCMziXL8k95dPb/8BbHF0YB4GGP9K0V77BEvRBJkC
-jAPHv+UOIAjW2xXDwTyK
-=OByZ
------END PGP SIGNATURE-----
+Inside the file located at proftpd-1.3.5rc2/contrib/mod_sftp/kbdint.c ProFTPd 
+handles the SSH keyboard interactive authentication procedure, in this case it 
+will use pam as an authentication library therefore mod_sftp_pam has to be 
+active for an installation to be vulnerable.
+
+Source code file and line kbdint.c:300 reads:
+
+[1] resp_count = sftp_msg_read_int(pkt->pool, &buf, &buflen);
+
+[2] list = make_array(p, resp_count, sizeof(char *));
+for (i = 0; i < resp_count; i++) {
+char *resp;
+
+resp = sftp_msg_read_string(pkt->pool, &buf, &buflen);
+*((char **) push_array(list)) = pstrdup(p, sftp_utf8_decode_str(p, resp));
+}
+
+Line 1 will read the kbdint response count which is an unsigned integer with a 
+size of 32 bits from the client during an SSH kbdint userauth info response 
+client request.
+
+This value is used to allocate a buffer with the size 
+user_supplied_uint32_value multiplied by the size of a char pointer being 
+32bits or 64bits depending on the platform.
+
+There is no size check before the request is sent to the pool allocator that 
+is called by make_array at Line 2.
+
+The pool allocator can be tricked to handle negative allocation sizes if 
+resp_count is large enough.
+
+There is a size check of the response count value but it’s done after this 
+function returns.
+
+The DoS condition can be triggered by sending an int32 value for resp_count 
+that is slightly below the available memory of the target system and repeating 
+the request.
+
+Noteably OpenSSH vulnerability CVE-2002-0640 is very similar to this ProFTPd 
+vulnerability. It has the very same code path.
+
+Here is a reference to the OpenSSH Challenge-Response Authentication bug that 
+was exploited by GOBBLES Security in their year 2002 sshutuptheo.tgz exploit: 
+http://lwn.net/Articles/3531/.
+
+Usage of keyboard interactive authentication in ProFTPd mod_sftp is rare as it 
+is not activated by default.
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
