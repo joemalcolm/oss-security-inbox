@@ -1,42 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/30/7
-Message-ID: <51D0B8BB.6010403@redhat.com>
-Date: Sun, 30 Jun 2013 17:01:15 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/14/3
+Message-ID: <5234D0FC.1050907@mccme.ru>
+Date: Sun, 15 Sep 2013 01:11:24 +0400
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-CC: Steven Ciaburri <steve@...k911.com>
-Subject: Re: CVE request: Kernel 2.6.32+ IP_RETOPTS Buffer Poisoning DoS
+Subject: Re: CVE-2013-4287 Algorithmic complexity vulnerability in RubyGems 2.0.7 and older
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 06/30/2013 01:33 AM, Steven Ciaburri wrote:
-> There is a local DOS exploit in centos 6, openvz 6, cloudlinux 6
-> and others.
+On 2013-09-10 09:32, Eric Hodel wrote:
+> The vulnerability can be fixed by changing the first grouping to an atomic
+> grouping in Gem::Version::VERSION_PATTERN in lib/rubygems/version.rb.  For
+> RubyGems 2.0.x:
 > 
-> https://www.rack911.com/poc/hemlock.c
+>   -  VERSION_PATTERN = '[0-9]+(\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' # :nodoc:
+>   +  VERSION_PATTERN = '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' # :nodoc:
 > 
+> For RubyGems 1.8.x:
+> 
+>   -  VERSION_PATTERN = '[0-9]+(\.[0-9a-zA-Z]+)*' # :nodoc:
+>   +  VERSION_PATTERN = '[0-9]+(?>\.[0-9a-zA-Z]+)*' # :nodoc:
 
-Please use CVE-2013-2224 for this issue.
+This is not enough. The following script:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+  # Regexes are from
+https://github.com/rubygems/rubygems/blob/master/lib/rubygems/version.rb#L150
+  VERSION_PATTERN =
+'[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' # :nodoc:
+  ANCHORED_VERSION_PATTERN = /\A\s*(#{VERSION_PATTERN})*\s*\z/ # :nodoc:
+  '1111111111111111111111111111.' =~ ANCHORED_VERSION_PATTERN
 
-iQIcBAEBAgAGBQJR0Li7AAoJEBYNRVNeJnmTVI0QAIfJnky7/AHyXvx7KXUAG7Fh
-GR+fJ54yJtaY7AOh0DKt9oNwHOhPrWD6agXWtyOwaI9V6CgrIpDY3baiwN9rFAG2
-e6/XVfS3bfzf7fADlz8hFGqjtL5hGtHPVScoQY8TYiX/JJ9ibIYM1YmvA4YQhYJL
-qv+p/jDjb1UufHm7pHFpz34rbUvnHmmaKKYR2xIubyaNHBY4pYrXYbtJQcOYswy+
-iP3w4S2YY17I79E3Ud6YzLNbRAhsrv/ALWfSFQq0IMDYGpLSp7UbJk7g+GIRpm3y
-U8z80m3Hgv40MDjOpFMaj6vPm7CX0YTcpPzvdur9qY4Q+vdGFfvc8r6xmKp7LAwy
-wzzJDo/L/bdldArbGfH8z+RScA4qzuXic7sQTF3ibkCQZM2UDX0KH+n/xPAB0Tg4
-HG96sNhfH61r9A9E5e5PTdIvlGEMRWPlSJzBvH9VQJfHgeqXER6QnCaORIh5IUfO
-CK5qknWt23cp8ye+clHmDnqgC8fWiW7CxdgYxD4uj1HD+A94sYGgE1ZolxCPjoU9
-kv/MpXYHFyYTU5CTThTlCS/7LmzeMr0Hyqxae5KU6dRiCCkyGKKqUCXhpOkAiyI1
-O3yD6JbeD9XizNOaDwmXhPkEAuqU+A3AA9PUjN7QXVwaMpzd+fmCqvK53C0NfTNR
-2vZxELskBER/mEF/Zu1y
-=RijB
------END PGP SIGNATURE-----
+takes ~1m on my machine. The problem is not in VERSION_PATTERN but in
+its possible repetition inside ANCHORED_VERSION_PATTERN.
+
+-- 
+Alexander Cherepanov
