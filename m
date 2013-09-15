@@ -1,28 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/17
-Message-ID: <20130225202855.GA6788@openwall.com>
-Date: Tue, 26 Feb 2013 00:28:55 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/15/3
+Message-ID: <20130915194644.GA8557@eldamar.local>
+Date: Sun, 15 Sep 2013 21:46:44 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Cc: team@...urity.debian.org, alex@...ngoproject.com, lfaraone@...ian.org, hertzog@...ian.org
+Subject: [notification] django: CVE-2013-1443: denial-of-service via large passwords
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 25, 2013 at 11:43:57AM +0100, Marcus Meissner wrote:
-> On Mon, Feb 25, 2013 at 02:13:49PM +0400, Solar Designer wrote:
-> > On Sun, Feb 24, 2013 at 10:10:45AM +0100, Mathias Krause wrote:
-> > > Affected versions:
-> > > v3.3 - v3.8
-> > 
-> > Nice find!  Do you happen to know of distro backports of the affected
-> > code to older kernels?  When you wrote that the bug is "in there for
-> > ages", did you mean that 3.3 has been out "for ages" or something else?
-> 
-> We did not backport the sock_diag code to SUSE Linux Enterprise Server 11 SP2.
+Hi
 
-Thank you.  There's also a "not vulnerable" statement for "the kernel
-package as shipped with Red Hat Enterprise Linux 5, 6 and Red Hat
-Enterprise MRG 2":
+Django released a new advisory for a denial-of-service via large
+passwords [1].
 
-https://bugzilla.redhat.com/show_bug.cgi?id=915052#c4
+This is a short notice to avoid possible dublications of a CVE. The
+Debian Security Team was asked shortly before the advisory release for
+a CVE, and CVE-2013-1443 got assigned to this issue today.
 
-Alexander
+ [1] https://www.djangoproject.com/weblog/2013/sep/15/security/
+
+Regards,
+Salvatore
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
