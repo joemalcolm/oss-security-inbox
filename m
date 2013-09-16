@@ -1,95 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/4
-Message-ID: <516D136F.1080106@redhat.com>
-Date: Tue, 16 Apr 2013 03:01:35 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/16/1
+Message-ID: <52366375.8060302@moodle.com>
+Date: Mon, 16 Sep 2013 09:48:37 +0800
+From: Michael de Raadt <michaeld@...dle.com>
 To: oss-security@...ts.openwall.com
-CC: Andy Lutomirski <luto@...capital.net>, Brian Martin <brian@...nsecurityfoundation.org>
-Subject: Re: Re: Summary of security bugs (now fixed) in user namespaces
+Subject: Moodle security notifications public
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The following security notifications are now public.
 
-On 04/15/2013 04:45 PM, Andy Lutomirski wrote:
-> On Mon, Apr 15, 2013 at 3:34 PM, Brian Martin 
-> <brian@...nsecurityfoundation.org> wrote:
->> 
->> Andy;
->> 
->> : I previously reported these bugs privatley.  I'm summarizing
->> them for
->> 
->> : the historical record.  These bugs were never exploitable on a 
->> : default-configured released kernel, but some 3.8 versions are :
->> vulnerable depending on configuration.
->> 
->> Do you know if these were patched, and therefore possibly
->> disclosed via the commits? With these details, it is difficult to
->> line them up to existing reports.
-> 
-> Bug 1 should be fixed in:
-> 
-> commit 3151527ee007b73a0ebd296010f1c0454a919c7d Author: Eric W.
-> Biederman <ebiederm@...ssion.com> Date:   Fri Mar 15 01:45:51 2013
-> -0700
-> 
-> userns:  Don't allow creation if the user is chrooted
+Thanks to OSS members for their cooperation.
 
-Can you confirm this has no CVE?
+=======================================================================
+MSA-13-0032: Host verification failure in Amazon S3 repository
 
-> Bug 2 is should be fixed by these:
-> 
-> commit 90563b198e4c6674c63672fae1923da467215f45 Author: Eric W.
-> Biederman <ebiederm@...ssion.com> Date:   Fri Mar 22 03:10:15 2013
-> -0700
-> 
-> vfs: Add a mount flag to lock read only bind mounts
-> 
-> commit 132c94e31b8bca8ea921f9f96a57d684fa4ae0a9 Author: Eric W.
-> Biederman <ebiederm@...ssion.com> Date:   Fri Mar 22 04:08:05 2013
-> -0700
-> 
-> vfs: Carefully propogate mounts across user namespaces
+Description:       The Amazon S3 repository was not verifying secure
+                    hosts
+Issue summary:     S3 class uses curl insecurely
+Severity/Risk:     Minor
+Versions affected: 2.5 to 2.5.1, 2.4 to 2.4.5, 2.3 to 2.3.8, previous
+                    unsupported versions
+Versions fixed:    2.5.2, 2.4.6 and 2.3.9
+Reported by:       Thijs Kinkhorst
+Issue no.:         MDL-40615
+CVE Identifier:    CVE-2012-6087
+Workaround:        Disable Amazon S3 repository (default)
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-40615
 
-Can you confirm this has no CVE?
+=======================================================================
+MSA-13-0033: Potential SQL injection in Moodle's SQL Server driver
 
-> Bug 3 should be fixed in:
-> 
-> commit 92f28d973cce45ef5823209aab3138eb45d8b349 Author: Eric W.
-> Biederman <ebiederm@...ssion.com> Date:   Fri Mar 15 01:03:33 2013
-> -0700
-> 
-> scm: Require CAP_SYS_ADMIN over the current pidns to spoof pids.
+Description:       Null characters were allowed in query strings, which
+                    caused sql statements to terminate and fail
+Issue summary:     null byte causes error in ms sql drivers - potential
+                    sql injection
+Severity/Risk:     Serious
+Versions affected: 2.5 to 2.5.1, 2.4 to 2.4.5, 2.3 to 2.3.8, previous
+                    unsupported versions
+Versions fixed:    2.5.2, 2.4.6 and 2.3.9
+Reported by:       Ryan Giobbi
+Issue no.:         MDL-40676
+CVE Identifier:    CVE-2013-4313
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-40676
 
-Can you confirm this has no CVE?
+=======================================================================
+MSA-13-0034: Object injection through Badges
 
-> Bug 4 isn't yet public... (it's unpatched so far and it's
-> considerably more severe than any of these).
-> 
-> --Andy
+Description:       Descriptions of external badges were open to
+                    exploitation.
+Issue summary:     Unserialize external input in badges/external.php
+                    allows object injection
+Severity/Risk:     Serious
+Versions affected: 2.5 to 2.5.1
+Versions fixed:    2.5.2
+Reported by:       Emilio Pinna
+Issue no.:         MDL-40924
+CVE Identifier:    CVE-2013-5674
+Workaround:        Disable Badges
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-40924
 
-Sorry bug #4? not public yet I assume means no details publicly
-officially? I can't do a CVE with no details (you can ask for one from
-me privately).
+=======================================================================
+MSA-13-0035: Inadequate filtering in Blog
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRbRNvAAoJEBYNRVNeJnmTPPMQALMGm16U5aHQFSTXUCQWy7SX
-+2qX+Y3TjiLqt/QN5s/nzMQf9Oj4VRjY2iyXSgX7achWDQn8tN8YOdN/ySeUaXmx
-4ZIzn+0IzRTsLPiCVLce9dWIO/jIPgmwKVYfk/uWjONq6kjA1CudQg0AxXrzEbKo
-SadbekIdouxJWzTBnnvTuxFVFLv6JhAPrJjllv5mXcfOhWSSPOoXr88M9OIEPWPc
-+2r/diOmJPirQbixwMOCk6AoWQmqAk8s7yrQ4HXI4cgWlaSNHoIFVCVL4hODuxYy
-RdfPOVQQGfIOmJY/qSUEidhSpXMix9iNwGO7B9QQ3WtCU4DrKxKxm3Pgt0YDy6pi
-OWpNxb7xtGl2O5SvxzkAvDcOXKrYs3nYS3T7d8E92pyhj8E9EJNfoORGSJZjFM2C
-/8VobBGBVDGSxOLiMKNbXdGnd6sxdvuzHs2c9JvdbCp4zIxYaBA6o8Envue+htMS
-4toQuDrXUm7Xi9oeckokMZIJwA89S36Q0BlJ2uvOlN1FvrxH1r7jZ15O4xPfiaZT
-btdMecpHxbfJ0AxAzXUKHut+qWtPlvuPtwbMTgAicmjEVwSocz1qyup0L+hXzfXG
-GsNP5gRk2Rnpa0fvVPNof2CKCXYnwUKgsZTBHCxJzR7xqwOZBKX8wBxKfjbB1OWw
-Sl0m7dyNR3NcUvCL0LOm
-=QIkR
------END PGP SIGNATURE-----
+Description:       Links to external blogs were not being adequately
+                    cleaned
+Issue summary:     XSS in remote blog/rss include
+Severity/Risk:     Serious
+Versions affected: 2.5 to 2.5.1, 2.4 to 2.4.5, 2.3 to 2.3.8, previous
+                    unsupported versions
+Versions fixed:    2.5.2, 2.4.6 and 2.3.9
+Reported by:       Ciaran McNally
+Issue no.:         MDL-41623
+CVE Identifier:    CVE-2013-4341
+Workaround:        Disable Blogs
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-41623
