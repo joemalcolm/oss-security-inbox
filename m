@@ -1,52 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/18/5
-Message-ID: <CAFp7QwpV0n9S4nQBFpqheT2_hjTep36-c8C=63PWNF6rX3vOfg@mail.gmail.com>
-Date: Mon, 18 Nov 2013 20:29:21 +0100
-From: Josef Šimánek <josef.simanek@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/16/2
+Message-ID: <20130916155949.522596f9@redhat.com>
+Date: Mon, 16 Sep 2013 15:59:49 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: RubyGem omniauth-facebook access token security vulnerability
+Subject: IcedTea-Web release 1.4.1 fixing CVE-2012-4540
 Content-Type: text/plain; charset=utf-8
 
-Sorry for bumping, but is there any problem with this CVE request?
+Hi!
 
-Fix is here (https://github.com/mkdynamic/omniauth-facebook/commit/115c0a768cd6f4b9bfae8900f8e3fc4fbeec3ad8)
-and release is prepared. We're waiting for CVE only.
+IcedTea-Web release 1.4.1 (re-)fixes CVE-2012-4540.  That issue was
+previously fixed in 1.1, 1.2, and 1.3 branches, but the fix did not
+make it to head and hence 1.4 was released vulnerable.
 
-regards
-Josef
+It is the same issue, but as vendors may have released security updates
+for the issue before and later rebased to vulnerable 1.4, there's a new
+CVE for missing / regressed security fix - CVE-2013-4349.
 
-2013/11/15 Josef Šimánek <josef.simanek@...il.com>:
-> # RubyGem omniauth-facebook access token security vulnerability
->
-> There is a security vulnerability in the omniauth-facebook <= 1.5.0.
->
->     Versions affected: <= 1.5.0
->     Fixed versions:    >= 1.5.1
->
-> ## Impact
->
-> Because omniauth-facebook <= 1.5.0 supports passing an access token
-> directly in the URL, an attacker may be able to authenticate as
-> another user by passing a valid access token obtained from Facebook
-> for another app.
->
-> If you're currently using this feature, and passing the access token
-> directly, you should change your integration to use one of the secure
-> methods using either a signed request or the code flow. These secure
-> methods are default, so unless you are explicitly passing an access
-> token you should not need to make any integration changes to upgrade
-> to 1.5.1.
->
-> All users running an affected release should upgrade to >= 1.5.1.
->
-> ## Releases
->
-> The 1.5.1 releases is available at the normal locations.
->
-> ## Workarounds
->
-> None.
->
-> ## Credits
->
-> Egor Homakov (@homakov)
+https://bugzilla.redhat.com/show_bug.cgi?id=1007960
+http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2013-September/024691.html
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
