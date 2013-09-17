@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/10
-Message-ID: <20130207131959.71f21aa9@melee>
-Date: Thu, 7 Feb 2013 13:19:59 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/17/9
+Message-ID: <20130917145740.GA13465@eldamar.local>
+Date: Tue, 17 Sep 2013 16:57:40 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
+Cc: luciano@...ian.org
+Subject: Re: CVE request: davfs2 - Unsecure use of system()
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Kurt, hi Luciano,
 
-Can you assign one more for matrixssl?
+On Tue, Sep 17, 2013 at 10:13:40AM +0200, Luciano Bello wrote:
+> Hi,
+>    A security vulnerability have been reported in davfs2 
+> http://bugs.debian.org/723034
+> 
+> Please, assign a CVE id.
 
-http://www.matrixssl.org/news.html
+As additional reference for this CVE request. The Debian Bugreport
+also contains the proposed diffs to apply to 1.4.6 and 1.4.7. But here
+are also upstream references.
 
-- -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
+Upstream Bugreport: http://savannah.nongnu.org/bugs/?40034
 
-iQIcBAEBCAAGBQJRE5vyAAoJEKWIAHK7tR5C7JQP/297MYlHEisJGceH/MvttO6M
-s1lcycIE3cGslllF/u1SLZ3PmvWc/xEVpQLjMq6dtr6MlXh1XovRtlId5DPGkniP
-jLxS1HHlEiPfE6/wP/hYwg6UnpKkbI5gykAjo7pN8O4i7TnLqK4qURIM+qDtvvW5
-Wdy0iS5pKRYp6Q9yboji9j8Anf2x6tHifVZBk5AUlsKf/JsT0V6ag6Mk+obU3nr0
-e2/yNpkasU5hU6LQhZzLsDshQyYZ5n+EtdlqAHmJYqt7ufW0rkeDQWxs/+lRZ8Bi
-XyGCYNKmksewsekrNj2x7o1tErIysqtBBp+xppBUJopVkgUdahAl9pn1vlSj4c3G
-HrBzTanV61pF2dv0erG3PN4umOmMe8O59eZDw933chvJKnvn2XR4vzZ72YrN+jtE
-afci87jvH3nX+dLoarHooGXyTo+4NzEP01jlCSwznKq9xjdefC8CcicszielhLTm
-URPSHVkQGNUYixI4JlBw1BmzRGTaYXy947kQJQf3jOeoog2Py4wcIz/s/InPfwFM
-yj6otJY5b23UOPs7fFH/kcPUZJeSO4MkH5ECMpNFj1DMic8ZyZYyqcqlcsXDvDfb
-OYZ6Vlz1t2Kav/l5pZuSlLiEjSkFuGfgPmCWVJWf9GPAWtv/LMpo7kVZgMMfOH9V
-WghTsD7xJYOG+i7x3sKA
-=4hro
------END PGP SIGNATURE-----
+Patches: 1.4.6: http://savannah.nongnu.org/bugs/download.php?file_id=29141
+         1.4.7: http://savannah.nongnu.org/bugs/download.php?file_id=29142
+
+Regards,
+Salvatore
