@@ -1,33 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/2
-Message-ID: <CACYkhxj735VaX6m0ff-tp9XPNxgEc=s-S3yAX+3EtPSTY7DWuw@mail.gmail.com>
-Date: Mon, 1 Jul 2013 14:45:43 +1000
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/17/3
+Message-ID: <5237B023.2000202@redhat.com>
+Date: Mon, 16 Sep 2013 19:28:03 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Ansible not caching SSH host keys
+CC: Alexander Cherepanov <cherepan@...me.ru>, dammer2k@...il.com, drbrain@...ment7.net
+Subject: Re: CVE-2013-4287 Algorithmic complexity vulnerability in RubyGems 2.0.7 and older
 Content-Type: text/plain; charset=utf-8
 
-http://www.ansibleworks.com/
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Problem:
-Default configuration does not cache SSH host keys, effectively disabling
-host key checking
+On 09/14/2013 03:11 PM, Alexander Cherepanov wrote:
+> On 2013-09-10 09:32, Eric Hodel wrote:
+>> The vulnerability can be fixed by changing the first grouping to
+>> an atomic grouping in Gem::Version::VERSION_PATTERN in
+>> lib/rubygems/version.rb.  For RubyGems 2.0.x:
+>> 
+>> -  VERSION_PATTERN =
+>> '[0-9]+(\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
+>> :nodoc: +  VERSION_PATTERN =
+>> '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
+>> :nodoc:
+>> 
+>> For RubyGems 1.8.x:
+>> 
+>> -  VERSION_PATTERN = '[0-9]+(\.[0-9a-zA-Z]+)*' # :nodoc: +
+>> VERSION_PATTERN = '[0-9]+(?>\.[0-9a-zA-Z]+)*' # :nodoc:
+> 
+> This is not enough. The following script:
+> 
+> # Regexes are from 
+> https://github.com/rubygems/rubygems/blob/master/lib/rubygems/version.rb#L150
+>
+> 
+VERSION_PATTERN =
+> '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
+> :nodoc: ANCHORED_VERSION_PATTERN =
+> /\A\s*(#{VERSION_PATTERN})*\s*\z/ # :nodoc: 
+> '1111111111111111111111111111.' =~ ANCHORED_VERSION_PATTERN
+> 
+> takes ~1m on my machine. The problem is not in VERSION_PATTERN but
+> in its possible repetition inside ANCHORED_VERSION_PATTERN.
+> 
 
-Note - do not credit me for finding this, I'm just the only person
-indignant enough to request a CVE
+Great, I guess we're going to need a new CVE. Before I assign one can
+we make sure we fix this so more fiddly expressions don't cause
+problems? Thanks.
 
-A colleague found this bug, only to notice that it was logged by somebody
-else (antong on github), and rejected:
-https://github.com/ansible/ansible/issues/857
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-This can be fixed by calling ssh.load_system_host_keys() after line 78 of
-https://github.com/ansible/ansible/blob/496f06c3c90cfd89802622c640480328436746c6/lib/ansible/runner/connection_plugins/paramiko_ssh.py
-
-While it is possible to call the SSH command instead of using paramiko,
-this isn't the default and the ramifications of not checking host keys
-aren't advertised to users.  A more reasonable approach would be to
-document how to un-cache a host key should it change.
-
-Regards,
-  Michael
-
+iQIcBAEBAgAGBQJSN7AjAAoJEBYNRVNeJnmT364QANqrjzrwEwdP3gJvjNY2e8j6
+/uSyVCeka3ipjvDnq/JMOVNMRmOuic54BXcJKxPaVhTSs1F6qn1yhz5loFbN7Iy7
+ra6J+VUGIPiRVJmNHZy5h6vXeugyhT72/WAUxOLHzpByZIswACIWU//+K4Wq3Tuq
+n6sFffsSyL4sVFul37wc9uKP3moP45tAd/VRoX2Puj7srfuTJ3NrmS4PhaMsgI60
+t1bh7I46IBxMjb0xLEDtw5EDe014hcN2MDfyPuvs8CYKDUPnYT37mauS7YjHyXO2
+/A6HvcI0oOIHrWqZD43gsf+mtWyEAmLvU0M+2mlFEnvAYRDXKHX5YWUwdRTgsQgd
+DOOmxktlFrwUxvcga/YiYzjxydg64x35II9C/ueVr8SWX9NYuKDCSZejXt/9wkQZ
+Ajmkvzdx7vpRVcCgxhyf0Qs0gcSp2t0KBidh/HKdmCeLW7iyEL2W4MChK6UOSZk/
+pNEFnGx4/3Le+MhU8a2vcSfMGXOjYNefsSTWUJl3AbcrJcWNFjGElCH4rjBZydwm
+PGEM38TOVHdeodQTCW0TIGNMhp/sNBR3J8wkh8Pv59xUD6X54JQf3C8NnIBQJ9yX
+nRxy9lVmPn6WxbQtsiS44N14a3yqvy5jsqTKuafFj6SdmvrdG0Fblb0C9dvLGzx9
+9GXwOmzhTqeVEOi2InYg
+=tciT
+-----END PGP SIGNATURE-----
