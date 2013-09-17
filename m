@@ -1,60 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/06/2
-Message-ID: <51D7A736.1090400@redhat.com>
-Date: Fri, 05 Jul 2013 23:12:22 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/17/2
+Message-ID: <5237AF28.9050705@redhat.com>
+Date: Mon, 16 Sep 2013 19:23:52 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Alan Coopersmith <alan.coopersmith@...cle.com>
-CC: oss-security@...ts.openwall.com, security@...e.de, Sebastian Krahmer <krahmer@...e.de>
-Subject: Re: Question about CVE for X!! DoS
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>, Moritz Naumann <security@...itz-naumann.com>, security@...plemachines.org
+Subject: Re: CVE request: Simple Machines Forum (SMF) <= 2.0.5 - multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/05/2013 09:22 PM, Alan Coopersmith wrote:
-> On 07/ 5/13 01:50 PM, Kurt Seifried wrote:
->> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->> 
->> http://lists.opensuse.org/opensuse-updates/2013-07/msg00023.html 
->> https://bugzilla.novell.com/show_bug.cgi?id=815583
->> 
->> Lists no CVE? I assume it needs one, or did upstream handle
->> this?
+On 09/15/2013 12:27 PM, Henri Salo wrote:
+> Please assign 2013 CVE for SMF vulnerabilities, thanks. Fixes at
+> least XSS issues. No reply from vendor when I asked if there is
+> CVE(s) assigned already.
 > 
-> Upstream discussion, including reps from both Red Hat & SuSE,
-> determined it didn't need a CVE, since it can only be triggered by
-> a client authorized to connect to the Xserver (via xauth, xhost,
-> etc.) and such a client, by design, can lock all other clients out
-> from the server, kill clients, etc.
-> 
-> It would be like wanting a CVE for the fact that another process
-> running under your UID can kill your process.
-> 
-> Not sure why SuSE decided to go ahead and release it as a security
-> fix anyway - it's certainly a bug fix though.
+> Advisory:
+> http://www.simplemachines.org/community/index.php?topic=509417 
+> Diff:
+> http://custom.simplemachines.org/upgrades/index.php?action=upgrade;file=smf_patch_2.0.5.tar.gz;smf_version=2.0.4
 
-Yeah that's what had me confused. I would classify this as security
-hardening (good to fix, but no trust boundary gets crossed), not a
-security vulnerability. Was wondering if it had been found to be worse
-or something.
+Can
+> 
+you provide a summary of the diff? thanks.
+
+> Other references: http://osvdb.org/96323 
+> http://secunia.com/advisories/54384/
+> 
+> --- Henri Salo
+> 
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR16c1AAoJEBYNRVNeJnmTGBwP/2uN26UIKrLsSxF7qCNaRmK0
-szTvWKDq4Q2Bqm3S6lAmsNItS4Sjilx7HEEjUW52NmJysdNvJwpO9v03bYUtMLqn
-8/PLVGh998BWDtby1kqZOb2VEhLDnAyfFMp3HsNjm+kwAgBv3NDgFgTI6sIhNdkA
-TVHP4jSoD1rAfSJzJqpB8saLeqR1T0wF5n6jDA+0Ghkv6R+C97EMUfz6wJnjlXRi
-eAXftO86GJVce4XunLxnS3hhGqTxzNlZ1nfo16UphkV36nQ5720SC+AzmnOWFsBp
-6JNF42H/JdHKdXOIa6WQa/CkpyTw2INOEmgzz2Pz2qjn12vR2GE4YzvsqZuoj/H3
-XGT1l8D3wj4I9CPeYOqAWC+6YgcgMU68Hx+kueiDIS7dMn+KpT/96im8ochbSM1v
-ay+wFLY6m6N3JaZo+ZsXmy3Hri74TMyXyAvo2wl0cZwE21tMKHDTJWa55lEKY/xr
-MdTSaKh9vhO9G7XHwAHiWI+zNwqK685HPV8JRq8kTvRa7b8hcbVem77n1zui2wJZ
-fXYXL5FtyZIFqd72da7coRzWK0h3GQUVfGysMSRZ0fxkvw2gB/euLF638al/b/1x
-JTsldj8LdkAFwGxGYE/iM1zFeB3bt2XOTi3g3d0XHD5j4D1hYKj8JvIYs+2d/QVe
-qzs1o9U7ocA5xHfNzMqq
-=9vM2
+iQIcBAEBAgAGBQJSN68nAAoJEBYNRVNeJnmT3awQAJcqKAx/vWODnmMoNb4BJiN4
+GurFg3oImCiTC/ocVoYXPE3fri7/i4utfI2NaiDt6fgrHZMBhcFVoFEeweDnIk8j
+JA4zzqmeBTPvEP4nKUfJNaIUVa513k77Y72dBmhCYUmQ/eH6ViPgjnKAkUHIMRXZ
+pviUV7wMJT5YWiLMhZfqZKDm5/I+4c3e4MVrflD7Tl5p5Fd3L+Rtb31bEXhezUZ4
+fOu5YLblLDV/qikIIYaGkfJ9ZH7MzRr6YB5HOOO8lZiIdZk+nxAkjsITWoEjxSQJ
+Fz2b/9N8xZiEhN3O9crXu3x+Spzz5y2a9k3CpzWdlPGoakH2C4eERzrtuqCbEzBs
+6T1H/cotjY4m5W+k3AmF5n0Vr8vkEbMrRsWE4IerOwygt4iuiy023MPCHcOs8dJu
+La7abPxzZ2Ks3SY6QpL7plek83gLbfO1KYbvhzXXO97lDSD5VaP/QfYp6r2G8+Zs
+Y7mUyUoPfFBfnp6GeJbSVzL6r4sOnHikpatQoISjZ8FfukesMpjSv+uuf6gYkHzO
+s5AGpzUiAkwfWEd0SL2oQFrpuhQz3rSPmDb+GoN2YrKX/yLlc6ehFh0JlqXhxP8W
+N3wAQDv5TRKKhfSFfaOxXJO3CCpfM2BicHj0R8MLHTus6G/wgqQo7hRtCOgkIPXa
+Md6eV1Keirpym02yaMjm
+=uCxB
 -----END PGP SIGNATURE-----
