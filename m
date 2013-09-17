@@ -1,61 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/25/4
-Message-ID: <5101DC0F.6090608@redhat.com>
-Date: Thu, 24 Jan 2013 18:12:47 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/17/5
+Message-ID: <5237C70A.1010903@redhat.com>
+Date: Mon, 16 Sep 2013 21:05:46 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed modules
+CC: Reno Robert <renorobert@...il.com>, Michael Niedermayer <michaelni@....at>
+Subject: Re: CVE-Request FFmpeg vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Ok not sure what my email client did there.
+On 09/14/2013 02:23 AM, Reno Robert wrote:
+> Hi, Issues in libavcodec H.264 code of FFmpeg 0.11.3 leading to out
+> of bound read/write. Below is the link to commit, used to fix the
+> issue 
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=39ed5442620a7a0fd2328b7d4aefc6ae152c5441
+>
+>  I would like to request CVE Identifier for the above.
 
-On 01/24/2013 01:46 PM, Forest Monsen wrote:
-> Hi, here's a request for CVE IDs for several contributed modules:
-> 
-> SA-CONTRIB-2013-006 - Video - Arbitrary Code Execution 
-> https://drupal.org/node/1896714
+Please use CVE-2013-4358 for this issue.
 
-Please use CVE-2013-0224 for this issue.
 
-> SA-CONTRIB-2013-007 User Relationships - Cross Site Scripting
-> (XSS) https://drupal.org/node/1896720
+Nifty, from the RFC:
 
-Please use CVE-2013-0225 for this issue.
+   The H.264 specification
+   includes two types of parameter sets: sequence parameter set and
+   picture parameter set.  An active sequence parameter set remains
+   unchanged throughout a coded video sequence, and an active picture
+   parameter set remains unchanged within a coded picture.  The sequence
+   and picture parameter set structures contain information such as
+   picture size, optional coding modes employed, and macroblock to slice
+   group map.
 
-> SA-CONTRIB-2013-009 - Keyboard Shortcut Utility - Access Bypass - 
-> module unsupported https://drupal.org/node/1896752
+   To be able to change picture parameters (such as the picture size)
+   without having to transmit parameter set updates synchronously to the
+   slice packet stream, the encoder and decoder can maintain a list of
+   more than one sequence and picture parameter set.  Each slice header
+   contains a codeword that indicates the sequence and picture parameter
+   set to be used.
 
-Please use CVE-2013-0226 for this issue.
 
-> SA-CONTRIB-2013-010 - Search API sorts - Cross Site Scripting
-> (XSS) https://drupal.org/node/1896782
 
-Please use CVE-2013-0227 for this issue.
-
-> Thanks, Forest
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRAdwPAAoJEBYNRVNeJnmT2akP/Rcev2faXs5job+phYJAn4wK
-53yCDq+YGY0q3x7J5i+MJoUgfPCDbM4QzaXB731EFmBKV9tm8dX3d84lTMqm3NXH
-mSLgK32LH9w/+o5frkZ89NlAGCDADOASE3BqqxagWk2sm9QWcgW1fjnrDkmAlk9b
-P7DWRhxnoyjeZ7x85gmJ5lB7XkcUKKhxKmI2BymYjuEVA0x5mOjXsE2hkXf1uVY0
-Py5TZkAgaQt5JHnVJY/LnOyeAREtQ8aPS0r7DO6o6AdGyv4PtFib4gl1lPkpXLTh
-FbAYrrcj/1xP9ohUw7pnGesnn6IgbrB4um3S6cZhkA1xR55Pz2Qw0ZBjOpzJxALX
-hZ8RVuKLkOXbrcEM36ev+L3vpglYdF9FPf07G3Qdji0+uoksio27jjGc8+M+RaBG
-C00ZSh0NzYo/wRZNcF0B9X3bReeKWbAvS1c8M34N7hs9oOVCh9XuqI1oEIYapUlj
-pswHwAURXdhuMm9WhBMyM1YuI1z9CIAcfFKKnS1lrzcSjYi/8w9WrTAodoxdxdOA
-IFrfOP19UURBlWMwEmOX/7HzrQWwfOJUl71iUY83Lu+A5Kmrxp7FuXaedbjnfHc6
-GKU4gouvEykRsXf5+HIT5KHqTqjkZ3Nqh62yI7hDro2bOk5+EYRTMvDuCjMla3vS
-eqUFGhMHqq5KJrt1xYYV
-=2gkS
+iQIcBAEBAgAGBQJSN8cJAAoJEBYNRVNeJnmTHSIP/iZMuO76ctSfqZqv/4snYrRv
+rZ56mvDgflGpl38C+kCu47dlShWdaSaWl5ne4TpzHtxF/DCnutA9YXv4V4eVpSM7
+CSU27fxcMhKd9x9LNPAW2VWLYtyaa+JmPG5N8O0YdbzLOYEZRM59AKRZ72rFTc2U
+OCmJWPi8u4WSLyfSBtFrT1s4YCSMarb+7u++VaTL+jzF7jPFnajlk3+Z+Ir2cCit
+Mh+xSu0BNXMKQmkm9efChqQOYc1we+RFObTuls3oFySR9lTYKWvCUuRJ69mZhQuh
+flXci52RrQmdD9t+0wXgv1OtkPidCPD+8Pr+Y3MM+1/0cOBGO916ckYs6kx2z6nv
+qxlX1aufySwostZ1fVFJFxaPHbEkZ3hBlELSCcBhPFhXunDkR6QP2LOGDm3pBio8
+2edM0gaCxVIcbV9D+24oZvxpF+AphrQgXvEAT0rjs33B3Q4ClnZOS95dXvp1/dRk
+ymQLZDmMB1E7cXYa0nKZoR1Fd1X8E2UV5YKw7gWFaaxmEQ9HtXmnee+VI9I9Ndaw
+MR/YinYvttROBCUj5nfQdlBlaEcjCXFqIoOax9g0Yynp2VPrQBxE0YBbUB2O37Ua
+wt4ChysOI6/3m2+T//rIF2znv07fbsi7AdZ1sP5Qx5BxCrNpIFDvlD95+rkODTPo
+7SWZw8hgyGSe+4FHBex4
+=QDoo
 -----END PGP SIGNATURE-----
