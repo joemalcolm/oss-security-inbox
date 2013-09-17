@@ -1,51 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/15/1
-Message-ID: <20130115002015.GT2638@redhat.com>
-Date: Mon, 14 Jan 2013 17:20:15 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/17/10
+Message-ID: <52389EE9.8040307@redhat.com>
+Date: Tue, 17 Sep 2013 20:26:49 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: 3 DoS conditions in Rake
+Subject: Research on better-than-brute-force attacks on PDF cryptography
 Content-Type: text/plain; charset=utf-8
 
-Three issues were noted in recent release of upstream Rake.  All are DoS
-issues.
+I've looked at a PDF implementation, compared it against the 
+specification (including Adobe's supplement covering AES-256), and 
+unless I'm missing something, there are a few odd things there.
 
- From https://bugzilla.redhat.com/show_bug.cgi?id=895277 (2 issues):
-
-Upstream released [1] Rack 1.4.2, 1.3.7, 1.2.6, and 1.1.4 to fix a
-denial of service condition when Rack parses content with a certain
-Content-Disposition header as noted in the original report [2].
-
-This has been fixed in git [3].
-
-Additionally, a second flaw that was fixed in 1.4.4, 1.3.9, 1.2.7, and
-1.1.5 was also announced [4] that creates a minor denial of service
-condition, this time in the Rack::Auth::AbstractRequest, where it
-symbolized arbitrary strings (apparently this has something to do with
-authentication, but there is no further information provided other than
-the fix [5] itself, which is noted as "a breaking API change").
-
-[1] http://rack.github.com/
-[2] https://groups.google.com/forum/#!msg/rack-devel/1w4_fWEgTdI/XAkSNHjtdTsJ
-[3] https://github.com/rack/rack/commit/4fc44671b3cad569421f4f8b775c0590b86f575e
-[4] https://groups.google.com/forum/#!topic/rack-devel/ImYOqcGiksw/discussion
-[5] https://github.com/rack/rack/commit/0c76175fcccad74ba2f991c487d3669c28a297c8
-
-And from https://bugzilla.redhat.com/show_bug.cgi?id=895282:
-
-Upstream released [1] Rack 1.4.3 and 1.3.8 to fix a denial of service
-condition due to a malicious client sending excessively long lines that
-trigger an out-of-memory error in Rack.
-
-This has been fixed in git [2].
-
-
-[1] https://groups.google.com/forum/#!topic/rack-devel/-MWPHDeGWtI/discussion
-[2] https://github.com/rack/rack/commit/f95113402b7239f225282806673e1b6424522b18
-
-
-
-Could three CVEs be assigned for these issues please?  Thanks.
+Does anyone know if there's published research into this topic?  I could 
+only find indications that the specification does not adequately defend 
+against brute-force password guessing.  Which is probably true, but not 
+exactly my concern.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Florian Weimer / Red Hat Product Security Team
