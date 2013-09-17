@@ -1,44 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/16
-Message-ID: <20130314161924.GC31744@dhcp-25-225.brq.redhat.com>
-Date: Thu, 14 Mar 2013 17:19:24 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/17/4
+Message-ID: <5237BDF8.1010708@redhat.com>
+Date: Mon, 16 Sep 2013 20:27:04 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request/Guidance: Linux kernel cdc-wdm buffer overflow triggered by device
+CC: Florian Weimer <fweimer@...hat.com>
+Subject: Re: Re: CVE Request: glibc getaddrinfo() stack overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi Marcus,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Thu, Mar 14, 2013 at 02:43:41PM +0100, Marcus Meissner wrote:
-> I am wondering ... do we consider attacks with special attack taylored USB
-> devices as CVE worthy?
+On 09/14/2013 04:56 AM, Florian Weimer wrote:
+> On 08/22/2013 09:18 AM, Florian Weimer wrote:
+>> On 07/04/2013 09:06 PM, Maksymilian wrote:
+>>>> Perhaps there are some missing CVE ids?
+>>> 
+>>> In 2011 the problem with alloca() was not defined as a
+>>> vulnerability.
+>>> 
+>>> http://sourceware.org/bugzilla/show_bug.cgi?id=12671
+>> 
+>> I believe the analysis in this bug report is incorrect.  The
+>> security implications are unclear.  A straight copy of a long
+>> name to a stack buffer should trigger a crash because it hits the
+>> guard page, but even that could be a problem for daemons.
+>> 
+>> On the other hand, it's impossible to know for sure that no GCC
+>> version ever lays out the stack in such a way that we end up with
+>> a problem. Multi-threaded programs linking in script interpreters
+>> are more exposed to these problems, too.
 > 
-> There is only some precedence in the CVE DB, but not much.
-> 
-> I stumbled over this fix from one of my colleagues where a specifically
-> made USB device reporting the "cdc-wdm" USB class could cause a kernel
-> heap overflow.
-> 
-> "Malicious attached devices" might fall into several categories:
-> 
-> 1. Attaching the device causes the issue directly within the kernel / autoloaded
->    module, without user interaction. (here the case)
-> 
-> 
-> 2. Attaching the device causes the issue when userspace, dependend on
->    e.g. desktop system, does initiate a seperate action (like an automount
->    and then exploitation of something) (so not direct a kernel, but a
->    kernel + GNOME/KDE interaction).
-> 
-> 
-> 3. User needs to do something with the attached device (like click on 
->    a file on a USB disk)
-> 
-> I would consider (1) and (2) CVE worthy at least, not so sure with (3).
+> Kurt told me that the above didn't make it sufficiently clear that
+> I consider this issue CVE-worthy.
 
-FWIW, I think all of the three options are CVE worthy. As Eugene said,
-some filesystem bugs fall into (3) and they have been issued CVE
-indentifiers.
+I prefer things to be explicit rather than assumed =).
+Please use CVE-2013-4357  for this issue.
 
--- 
-Petr Matousek / Red Hat Security Response Team
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSN733AAoJEBYNRVNeJnmT378P/1+MwskEw1/W62U4GiP6OvEM
+Jwx+NagiRoW1vSzmMxMeg623qH+oc5KrmtYHv8X/vG18CTm89gIf7Di4usKKWfOa
+2YL5nIwJZrmHVf8kBsH/J8TPZYzzIpkcLHW/w8uqpXQJrDjjJUuHAD5PNHJE+rYA
+ir1jK09r/Bbv+eGgPQyWMadvxHKRuyhTGNamz5URXJDggEhzlgs9DJkMlVZRmF8M
+apSWDXWwqf6851aPNornYq78aJEy6itVR5k59e/vFCl19irELj9/7yUDhOcNb8Fk
+R62uTP4KIOkYIiJONdJlfjvFNN1shhhnZGyiqR7JrD20S7qhLyUWLbIap+l9L0GV
+0S1uCrvYhd6spNEmMD2xPdQqF/x1hRqviWcBVtZ32J/jJznb7DRbzhalDxaCCdFr
+POfK3vo4REPp7rJZSOM68Synltc4uYMImY4YYGd4Ib7biGciKG+PdeFeqcCXfRtS
+RC3Af3c+yE3BpUuJO/ce3BKIRYw/K7LtUxEHVGfG86mn0teze/m3ghOCE62c1vOv
+A3zn79ykd2peuSyNOh3masCsuK3AiJG0F9N2U4KPYlDUvVzwJUPH1QAhYPBVPrYI
+yKz45S1HxeYacrOaf55a5eNSvUqIvvEs7Q7xoSWiV/WTqUO4EDp2jo1QuVgwpAFM
+2MObiF6IKdmIsKIZVF1i
+=Xt7J
+-----END PGP SIGNATURE-----
