@@ -1,35 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/9
-Message-id: <0b73a783-12f3-4f1e-8ffb-9c29b33f6539@me.com>
-Date: Mon, 09 Sep 2013 17:38:46 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Features 0.3.0 Ruby gem /tmp file injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/17/8
+Message-ID: <CAA7hUgEJ4RjDX_B+nUhDRT7F+Ju-VKeB9VU=6p6KY-dcdKnQTg@mail.gmail.com>
+Date: Tue, 17 Sep 2013 10:30:38 +0200
+From: Raphael Geissert <geissert@...ian.org>
+To: Kurt Seifried <kseifried@...hat.com>, Florian Weimer <fweimer@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request: glibc getaddrinfo() stack overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi, May I have a CVE for the following vulnerability?
+On 17 September 2013 04:27, Kurt Seifried <kseifried@...hat.com> wrote:
+> I prefer things to be explicit rather than assumed =).
+> Please use CVE-2013-4357  for this issue.
 
+What exactly is that id meant to cover? do you have commit references
+for the issue (singular)?
+(also note that glibc#12671 is from 2011)
 
-Title: Features 0.3.0 Ruby gem /tmp file injection vulnerability
+Or is the whole bunch of patches from extend_alloca supposed to be
+CVE-noisy^Wworthy?
 
-Date: 9/1/2013
-Author: Larry W. Cashdollar @_larry0 
-Download: http://rubygems.org/gems/features
-CVE: TBD
-Description: "Plaintext User Stories Parser supporting native programming languages. Especially Objective-C"
-Same vulnerability as http://vapid.dhs.org/advisories/show_in_browser.html
-By a malicious user creating /tmp/out.html first and repeatedly writing to it they can inject malicious html into the file right before it is about to be opened.
-PoC:
-nobody () sp0rk:/$ while (true); do echo "<script> alert('Hello'); </script>" >> /tmp/out.html; done
-Will pop up a java script alert in other gem users browser. 
-Code:
-Vulnerabile code in ./features-0.3.0/lib/suite.rb
-
-html = parse_results(results).html
-%x(touch '/tmp/out.html' && echo '#{html}' > /tmp/out.html && open '/tmp/out.html' ) end
-def parse_results_and_open_in_safari(results) -- end
-def open_in_safari(html)
-%x(touch '/tmp/out.html' && echo '#{html}' > /tmp/out.html && open '/tmp/out.html' ) end
-
-Vendor: Not notified
-Content of type "text/html" skipped
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
