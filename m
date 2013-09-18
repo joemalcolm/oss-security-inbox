@@ -1,38 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/11/3
-Message-Id: <A9E43DB4-BC61-4297-96F0-09C699DC2DB6@rooftopsolutions.nl>
-Date: Thu, 11 Apr 2013 15:12:51 +0200
-From: Evert Pot <evert@...ftopsolutions.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/18/2
+Message-ID: <mpro.mtaycf02rhzko035k.taviso@cmpxchg8b.com>
+Date: Tue, 17 Sep 2013 20:43:28 -0700
+From: Tavis Ormandy <taviso@...xchg8b.com>
 To: oss-security@...ts.openwall.com
-Subject: SabreDAV security advisory (CVE-2013-1939)
+Subject: Re: CVE request: davfs2 - Unsecure use of system()
 Content-Type: text/plain; charset=utf-8
 
-# Local file exposure issue
-Web: 
-https://groups.google.com/forum/?fromgroups=#!topic/sabredav-discuss/ehOUu7wTSGQ
+Luciano Bello <luciano@...ian.org> wrote:
+
+> Hi,
+>    A security vulnerability have been reported in davfs2 
+> http://bugs.debian.org/723034
+> 
+> Please, assign a CVE id.
+> 
+> Thanks, luciano
+> 
+
+I feel obliged to point at this ;-)
+
+http://article.gmane.org/gmane.comp.shells.dash/841
+
+Tavis.
 
 
-## CVE IDENTIFIERS
-- CVE-2013-1939
+-- 
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
 
-## AFFECTED SOFTWARE
-- SabreDAV < 1.6.8, < 1.7.6, < 1.8.4 running in Windows hosts. 
-
-## DESCRIPTION
-
-It was possible for authenticated users on to read any file on the local
-filesystem, accessible by the webserver.
-
-Thanks to Lukas Reschke for reporting this issue.
-
-## RESOLUTION
-Update to SabreDAV 1.6.9, 1.7.7 or 1.8.5 or turn off the 'Browser plugin'.
-
-Zipballs:
-http://code.google.com/p/sabredav/downloads/list
-
-Or with composer:
-composer update sabre/dav
-
-Regards,
-Evert Pot
