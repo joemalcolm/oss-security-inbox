@@ -1,63 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/11
-Message-ID: <51DEF470.8070707@redhat.com>
-Date: Thu, 11 Jul 2013 12:07:44 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/18/9
+Message-ID: <20130918213010.GU3522@sentinelchicken.org>
+Date: Wed, 18 Sep 2013 14:30:10 -0700
+From: Tim <tim-security@...tinelchicken.org>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, plugins@...dpress.org, moderators@...db.org
-Subject: Re: CVE request: WordPress plugin category-grid-view-gallery XSS
+Subject: Re: Re: CVE request: davfs2 - Unsecure use of system()
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 07/11/2013 12:05 PM, Henri Salo wrote:
-> On Thu, Jul 11, 2013 at 11:59:13AM -0600, Kurt Seifried wrote:
->> On 07/10/2013 08:12 PM, Henri Salo wrote:
->>> Can I get 2013 CVE identifier for XSS vulnerability in
->>> WordPress plugin category-grid-view-gallery, thanks.
->>> 
->>> Plugin page: 
->>> http://wordpress.org/plugins/category-grid-view-gallery/
->>> Original advisory: http://seclists.org/bugtraq/2013/Jul/17
->>> Version affected: 2.3.1 (older probably affected too) PoC: 
->>> https://example.com/wp-content/plugins/category-grid-view-gallery/includes/CatGridPost.php?ID=44%22%3E%3Cimg%20src=%22http://%22%20onerror=alert%28document.cookie%29;%3E
->>>
->>>
->>> 
-Not yet fixed as author did not contact vendor. Top 1277 plugin by
->>> popularity. WordPress guys could you coordinate this with
->>> plugin developer, thanks?
->>> 
->>> --- Henri Salo
->> 
->> Can you confirm the vulnerability? I don't see any follow up 
->> emails/etc. Thanks.
+> I feel obliged to point at this ;-)
 > 
-> This is the confirmation. I manually tested this in 2.3.1 version.
-> 
-> --- Henri Salo
-> 
+> http://article.gmane.org/gmane.comp.shells.dash/841
 
-Thanks, please use CVE-2013-4117 for this issue.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Any luck with pushing that through yet?
 
-iQIcBAEBAgAGBQJR3vRwAAoJEBYNRVNeJnmTTgkP/0uZnljcilLrqihfFslDzDcH
-6d/bKs6ilMl7x8NuO+7AnkyH7obmNByokXDmXnIsrDTtKE5sia7G/LxBsgVj6TTm
-pYRjUBhULdPlVj/69kYedOyDLtPJdoAvZAP5Z1WqE9Oqw7DY+gyZI5BbC2Id5n87
-A95VkvdZOM9QveiMpwIniCNCPewL1QXVkRk5wNohZ/zw+WEinWalI7D0gydFQcl2
-L7tHUOFi6HfHQNvh60MCW28A76bsqo7fJjJdTk8JKvehSOekoIRfTnBcqv7dDKXV
-DJ5YVKSzz2m4TFAm/NGQ/B6BJwH5rkiJ2OA4V2dwN1HkmTArfDBqCgjNKOGn203B
-sslzQ4JBwZypNEUFvwC7EXHehdmISJJS18VK0La+QvLcJZ1t2l/Je9klCwmlX72H
-4+dLYLRCyKn4BPRjWX5KUEAyf1M3mR1ENN4xJ6qgnTtJb+kFPbn/BuXZ1U/nVqkL
-zT7VdYPHlosrWcOi+CIRytsyWUf8+9ba0e7ILs7os2SwivUS+4bpxFCFk+BzoA2v
-jJifR9SpG+mKaAapP2029j9uEMdN0dA1YwA/Bg2cIDQITC1pepM+TWmZl6naYkdo
-ZDo7XvcRv8gOPViSx8QHe/vMjhnly3sm0IRzpEpb03gPMrMhlPNO6/jt/jEKX2dF
-9fRajh8JjBcSCzRiAU6+
-=PXEo
------END PGP SIGNATURE-----
+tim
