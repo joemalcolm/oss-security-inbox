@@ -1,86 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/27/4
-Message-ID: <51534E5C.8070303@linux.vnet.ibm.com>
-Date: Wed, 27 Mar 2013 15:54:04 -0400
-From: Corey Bryant <coreyb@...ux.vnet.ibm.com>
-To: oss-security@...ts.openwall.com, kernel-hardening@...ts.openwall.com
-Subject: Security vulnerability tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/18/8
+Message-ID: <523A1156.4090006@redhat.com>
+Date: Wed, 18 Sep 2013 14:47:18 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Eric Hodel <drbrain@...ment7.net>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Alexander Cherepanov <cherepan@...me.ru>, "dammer2k@...il.com Sharipov" <dammer2k@...il.com>, "security@...y-lang.org" <security@...y-lang.org>
+Subject: Re: CVE-2013-4287 Algorithmic complexity vulnerability in RubyGems 2.0.7 and older
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'd like to get a better understanding of tools used in the open source 
-community (kernel and user space) to detect security vulnerabilities.
+On 09/17/2013 06:11 PM, Eric Hodel wrote:
+> On Sep 16, 2013, at 18:28, Kurt Seifried <kseifried@...hat.com>
+> wrote:
+>> On 09/14/2013 03:11 PM, Alexander Cherepanov wrote:
+>>> On 2013-09-10 09:32, Eric Hodel wrote:
+>>>> The vulnerability can be fixed by changing the first grouping
+>>>> to an atomic grouping in Gem::Version::VERSION_PATTERN in 
+>>>> lib/rubygems/version.rb.  For RubyGems 2.0.x:
+>>>> 
+>>>> -  VERSION_PATTERN = 
+>>>> '[0-9]+(\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?'
+>>>> # :nodoc: +  VERSION_PATTERN = 
+>>>> '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?'
+>>>> # :nodoc:
+>>>> 
+>>>> For RubyGems 1.8.x:
+>>>> 
+>>>> -  VERSION_PATTERN = '[0-9]+(\.[0-9a-zA-Z]+)*' # :nodoc: + 
+>>>> VERSION_PATTERN = '[0-9]+(?>\.[0-9a-zA-Z]+)*' # :nodoc:
+>>> 
+>>> This is not enough. The following script:
+>>> 
+>>> # Regexes are from 
+>>> https://github.com/rubygems/rubygems/blob/master/lib/rubygems/version.rb#L150
+>>>
+>>>
+>>
+>>> 
+VERSION_PATTERN =
+>>> '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?'
+>>> # :nodoc: ANCHORED_VERSION_PATTERN = 
+>>> /\A\s*(#{VERSION_PATTERN})*\s*\z/ # :nodoc: 
+>>> '1111111111111111111111111111.' =~ ANCHORED_VERSION_PATTERN
+>>> 
+>>> takes ~1m on my machine. The problem is not in VERSION_PATTERN
+>>> but in its possible repetition inside
+>>> ANCHORED_VERSION_PATTERN.
+>>> 
+>> 
+>> Great, I guess we're going to need a new CVE. Before I assign one
+>> can we make sure we fix this so more fiddly expressions don't
+>> cause problems? Thanks.
+> 
+> Here's a new patch to go with the new (unassigned) CVE.  This new
+> patch replaces regular expression matches that are susceptible to
+> backtracking with a parser-like approach.
+> 
+> 
+> 
+> 
+> 
+> This patch applies to RubyGems 2.1.x releases.  I will create
+> patches for RubyGems 1.8.23.1, 1.8.26, 2.0.9 and 2.1.4 if it there
+> is no obvious flaw seen in it.
+> 
+> I would like to release this fix by Monday, 23 September as I will
+> be traveling mid-week.
+> 
+> The vulnerable regular expression constants are still present, but
+> I can't think of a way to construct them that does not allow
+> backtracking.  I think they should be removed for the security fix
+> release, but a fellow maintainer is worried about backwards
+> compatibility and thinks they should be removed in the next feature
+> release (2.2).  What do people typically do?
+> 
+> Here is a script to check the patch:
+> 
 
-I have a list below to get started.  If anyone has any input, I'd 
-appreciate it!
+Ok please please use CVE-2013-4363 for this issue (incomplete fix for
+CVE-2013-4287).
 
-I'll plan on updating http://oss-security.openwall.org/wiki/tools with 
-anything it doesn't already have.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-pscan
------
-Scans C/C++ source code for problematic uses of printf style functions
-
-rats
-----
-Rough auditing tool for security.  A general purpose scanner for 
-detecting potential security problems in a wide range of languages.
-
-flawfinder
-----------
-A general purpose scanner for finding and reporting upon potential flaws 
-in both C and C++ source code
-
-Valgrind
---------
-Detect many memory management and threading bugs, and profile your 
-programs in detail
-
-KEDR
-----
-Provides runtime analysis of Linux kernel modules including device 
-drivers, file system modules, etc
-
-kmemcheck, kmemleak
--------------------
-Linux Kernel debugging features for detecting memory issues
-
-Smatch
-------
-A static analysis tool for C
-
-Coverity
---------
-Provides static analysis tools for C, C++, and other languages (requires 
-license, Red Hat has one)
-
-Coccinelle
-----------
-A tool for matching and fixing source code for C, C++, and other languages
-
-Clang
------
-Static analysis tool for C/C++
-
-Metasploit
-----------
-Used for identifying security issues. It includes many capabilities, 
-including fuzzer support
-
-Trinity
--------
-A Linux system call fuzzer
-
-fsfuzzer
---------
-File system fuzzer
-
-scapy
------
-Network packet fuzzer
-
--- 
-Regards,
-Corey Bryant
-
+iQIcBAEBAgAGBQJSOhFWAAoJEBYNRVNeJnmToH0P/1CyOGW410XKu1E1scYTa+KG
+c1WHNXddyiNdagqi8b2l/j5Vks6ZGDxwXb9Zzj9dGU1V2htw/qv9An3jWK9Hu8Ui
+ZdNZ48agNQp8Oa+sQddjPyqZfsTd5vhRINCX4UVct62kdv7dAcVo4r++LVMGAz5s
+3i9Du1aebrkQZFMKf0Z3Nv/EbCajM8I9ykT53h4W+eFBopALfiAoHmWO1P9RyHXH
+xAviYzDJQ6TbuVzkKfUq+ogLH8waFSK4TW3YfIBmcnYP0HLvSornICVnrvFqgar/
+baCeZEM73Y3WM2TI1PCFlS8PsLaKk2Jy2gdZU1EV1G6QFwUjKwNg93g7T/zVEoQj
+Gdw1QdqrgR4M1Smf9Mwgec72ypj3l3ihx0qbTGmmauVn87nD+I3jSiuIdhCX3GR8
+v3HgCFJ1Y7QfRvJJk9UTFslZ+rawCkxCkPEx1st83oqEx0NGPpjMVWEkLVnjVPL+
+Er4HWWJwI92Nsg/rLTyDYhYLPC/UASXKMGJt2NVDb1lXGt72FjBOU/1+/O1q82Wz
+8F/QMyonfmA6aJVztGr7BRk+BftMgymVj7igYySbSOZlALqykkcY3kcXq4+w7f5k
+Y6mkgQtDXEJ8+/D1TzM/euzJfjZzJF0YmbZG7HQGxRtUh9iKVDV0tceNMAQGEzRN
+wVkXL/MLlUnAm6L7Varc
+=7el3
+-----END PGP SIGNATURE-----
