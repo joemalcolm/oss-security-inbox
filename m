@@ -1,34 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/3
-Message-ID: <20130116064959.GA21489@elende>
-Date: Wed, 16 Jan 2013 07:49:59 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/18/10
+Message-ID: <523A2397.2010200@mccme.ru>
+Date: Thu, 19 Sep 2013 02:05:11 +0400
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Cc: Florian Weimer <fw@...eb.enyo.de>, team@...urity.debian.org
-Subject: Re: CVE request: Digest::SHA double free when using load subroutine
+CC: Eric Hodel <drbrain@...ment7.net>, kseifried@...hat.com,  "dammer2k@...il.com Sharipov" <dammer2k@...il.com>, "security@...y-lang.org" <security@...y-lang.org>
+Subject: Re: CVE-2013-4287 Algorithmic complexity vulnerability in RubyGems 2.0.7 and older
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt and Florian
-
-On Tue, Jan 15, 2013 at 10:37:59PM -0700, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+On 2013-09-18 04:11, Eric Hodel wrote:
+> On Sep 16, 2013, at 18:28, Kurt Seifried <kseifried@...hat.com> wrote:
+>> On 09/14/2013 03:11 PM, Alexander Cherepanov wrote:
+>>> On 2013-09-10 09:32, Eric Hodel wrote:
+>>>> The vulnerability can be fixed by changing the first grouping to
+>>>> an atomic grouping in Gem::Version::VERSION_PATTERN in
+>>>> lib/rubygems/version.rb.  For RubyGems 2.0.x:
+>>>>
+>>>> -  VERSION_PATTERN =
+>>>> '[0-9]+(\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
+>>>> :nodoc: +  VERSION_PATTERN =
+>>>> '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
+>>>> :nodoc:
+>>>>
+>>>> For RubyGems 1.8.x:
+>>>>
+>>>> -  VERSION_PATTERN = '[0-9]+(\.[0-9a-zA-Z]+)*' # :nodoc: +
+>>>> VERSION_PATTERN = '[0-9]+(?>\.[0-9a-zA-Z]+)*' # :nodoc:
+>>>
+>>> This is not enough. The following script:
+>>>
+>>> # Regexes are from 
+>>> https://github.com/rubygems/rubygems/blob/master/lib/rubygems/version.rb#L150
+>>>
+>>>
+>> VERSION_PATTERN =
+>>> '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
+>>> :nodoc: ANCHORED_VERSION_PATTERN =
+>>> /\A\s*(#{VERSION_PATTERN})*\s*\z/ # :nodoc: 
+>>> '1111111111111111111111111111.' =~ ANCHORED_VERSION_PATTERN
+>>>
+>>> takes ~1m on my machine. The problem is not in VERSION_PATTERN but
+>>> in its possible repetition inside ANCHORED_VERSION_PATTERN.
+>>>
+>>
+>> Great, I guess we're going to need a new CVE. Before I assign one can
+>> we make sure we fix this so more fiddly expressions don't cause
+>> problems? Thanks.
 > 
-> On 01/15/2013 12:37 PM, Florian Weimer wrote:
-> > * Kurt Seifried:
-> > 
-> >> I'm not clear, how would an attacker exploit this? They'd need to
-> >> be able to specify the file that gets hashed, and the file would
-> >> have to be not present and would thus trigger the crash? Are
-> >> there any real world examples of an affected application? (web
-> >> based?)
-> > 
-> > My hunch is that this is just a bug, not a security issue.
+> Here's a new patch to go with the new (unassigned) CVE.  This new patch replaces regular expression matches that are susceptible to backtracking with a parser-like approach.
+
+According to your patch 'versions have only one "-" (per semver)'. This
+means that "*" after "(#{VERSION_PATTERN})" in ANCHORED_VERSION_PATTERN
+is a bug. It should be "?". If you fix it then there should be no
+problem with VERSION_PATTERN at all. AFAICT VERSION_PATTERN gives you a
+linear complexity. Hence there is no need to suppress backtracking...
+
+> This patch applies to RubyGems 2.1.x releases.  I will create patches for RubyGems 1.8.23.1, 1.8.26, 2.0.9 and 2.1.4 if it there is no obvious flaw seen in it.
 > 
-> I'll leave it for now, if anyone comes up with a security impact/etc.
-> let us know! (I bet this never happens, ah well =).
+> I would like to release this fix by Monday, 23 September as I will be traveling mid-week.
+> 
+> The vulnerable regular expression constants are still present, but I can't think of a way to construct them that does not allow backtracking.
 
-Thanks for your feedback on this.
+...but if you really want to suppress backtracking (say, for
+optimization) it is easy: either atomic grouping for every repetition
+(exactly the way you have already done but for other repetitions also)
+or add extra "+" after each "+" and "*". That's according to
+http://www.ruby-doc.org/core-2.0.0/Regexp.html .
 
-Regards,
-Salvatore
+-- 
+Alexander Cherepanov
