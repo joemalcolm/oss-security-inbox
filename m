@@ -1,41 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/19/1
-Message-ID: <1358555706.11550.17@d.hx.id.au>
-Date: Sat, 19 Jan 2013 11:35:06 +1100
-From: David Hicks <d@...id.au>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/18/4
+Message-ID: <20130918121549.GB28551@suse.de>
+Date: Wed, 18 Sep 2013 14:15:49 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Damien Regad <damien.regad@...ckgroup.com>
-Subject: CVE request: MantisBT before 1.2.13 "Change Status To" feature allows unauthorised workflow changes
+Subject: Fwd: [vs-plain] polkit races
 Content-Type: text/plain; charset=utf-8
 
-Hello again list,
+Hi list
 
-Damien Regad (MantisBT developer) discovered and fixed[1] an access
-control/permissions bug in MantisBT that exists in MantisBT version
-1.2.12 and prior.
+As required by distros list policy, I forward this to oss-security.
+The initial CRD was Sept 11th, but it was shifted to today as
+there were so many packages to be fixed.
 
-A MantisBT user with "Reporter" permissions (enabling them to
-report/create new issues) can modify the workflow status of any issue to
-"New" even if they do not have the necessary permission to make this
-change.
+regards
+Sebastian
 
-Details of the bug, including steps to reproduce and patches are
-available at [1].
+----- Forwarded message from Sebastian Krahmer <krahmer@...e.de> -----
 
-References:
-[1] http://www.mantisbt.org/bugs/view.php?id=15258
+From: Sebastian Krahmer <krahmer@...e.de>
+To: distros@...openwall.org
+Subject: [vs-plain] polkit races
+Date: Wed, 28 Aug 2013 10:17:37 +0200
 
-As per previous e-mails to this list within the past 24 hours, MantisBT
-1.2.13 is expected to be released early next week.
+Hi
 
-Can a CVE ID please be assigned to this issue?
+The polkit unix-process subject for authorization is racy. It depended
+on the (PID, startup_time) pair to be passed to polkit which then used /proc/PID/status
+to find out the UID the process belongs to. Meanwhile the process could
+have started a suid or pkexec process, changing the euid and/or uid at will.
+The startup_time does not protect here, as its not changed across an execve().
 
-With thanks,
-David Hicks
-MantisBT Developer
-#mantisbt irc.freenode.net
-http://www.mantisbt.org/bugs/
+Using /proc/PID/loginuid wont work either, as one could abuse fork-spawning
+processes such as sshd, apache etc. to re-use recently freed process slots,
+faking the loginuid. startup_time would theoretically help here, yet as
+its not atomically passed along the message which is subject to polkit
+authorization, the privileged process needs to learn it by looking up
+/proc/PID/, which is racy again.
 
-Bcc: mantisbt-dev@...ts.sourceforge.net
+Therefore the only thing that could be used is the UID that is passed
+atomically in the peer cred struct when receiving the message in question.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+The whole thing needs fixing in polkit, to deprecate PID authorization
+as well as several core packages to make use of the new API, or use
+systembus authorization.
+
+After discussing with upstream, Colin Walters made this private git of patches
+available:
+
+http://people.freedesktop.org/~walters/secret/38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b/
+
+Feel free to suggest improvements if necessary.
+
+As required by list policy, I request a CRD of Sept 11th.
+
+We also need CVE's assigned.
+
+A PoC with example client/server which demonstrates the race
+can be found here (it basically simulates libvirtd's way of
+checking):
+
+http://suse.de/~krahmer/priv/polkit-race.tgz
+
+Sebastian
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+
+
+----- End forwarded message -----
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
