@@ -1,47 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/15/2
-Message-ID: <51427D8A.80303@redhat.com>
-Date: Thu, 14 Mar 2013 19:46:50 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for a Drupal contributed module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/18/1
+Message-Id: <DA50FDA9-FF87-457F-BC2A-161A87DB9B66@segment7.net>
+Date: Tue, 17 Sep 2013 17:11:00 -0700
+From: Eric Hodel <drbrain@...ment7.net>
+To: kseifried@...hat.com
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Alexander Cherepanov <cherepan@...me.ru>, "dammer2k@...il.com Sharipov" <dammer2k@...il.com>, "security@...y-lang.org" <security@...y-lang.org>
+Subject: Re: CVE-2013-4287 Algorithmic complexity vulnerability in RubyGems 2.0.7 and older
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 03/14/2013 05:13 PM, Forest Monsen wrote:
-> Hi Kurt,
+On Sep 16, 2013, at 18:28, Kurt Seifried <kseifried@...hat.com> wrote:
+> On 09/14/2013 03:11 PM, Alexander Cherepanov wrote:
+> > On 2013-09-10 09:32, Eric Hodel wrote:
+> >> The vulnerability can be fixed by changing the first grouping to
+> >> an atomic grouping in Gem::Version::VERSION_PATTERN in
+> >> lib/rubygems/version.rb.  For RubyGems 2.0.x:
+> >> 
+> >> -  VERSION_PATTERN =
+> >> '[0-9]+(\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
+> >> :nodoc: +  VERSION_PATTERN =
+> >> '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
+> >> :nodoc:
+> >> 
+> >> For RubyGems 1.8.x:
+> >> 
+> >> -  VERSION_PATTERN = '[0-9]+(\.[0-9a-zA-Z]+)*' # :nodoc: +
+> >> VERSION_PATTERN = '[0-9]+(?>\.[0-9a-zA-Z]+)*' # :nodoc:
+> > 
+> > This is not enough. The following script:
+> > 
+> > # Regexes are from 
+> > https://github.com/rubygems/rubygems/blob/master/lib/rubygems/version.rb#L150
+> >
+> > 
+> VERSION_PATTERN =
+> > '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
+> > :nodoc: ANCHORED_VERSION_PATTERN =
+> > /\A\s*(#{VERSION_PATTERN})*\s*\z/ # :nodoc: 
+> > '1111111111111111111111111111.' =~ ANCHORED_VERSION_PATTERN
+> > 
+> > takes ~1m on my machine. The problem is not in VERSION_PATTERN but
+> > in its possible repetition inside ANCHORED_VERSION_PATTERN.
+> > 
 > 
-> Can we get a CVE identifier assigned for this?
-> 
-> SA-CONTRIB-2013-034 - Node Parameter Control - Access Bypass 
-> http://drupal.org/node/1942330
-> 
-> Thanks!
-> 
-> Forest
+> Great, I guess we're going to need a new CVE. Before I assign one can
+> we make sure we fix this so more fiddly expressions don't cause
+> problems? Thanks.
 
-Please use CVE-2013-1859 for this issue.
+Here's a new patch to go with the new (unassigned) CVE.  This new patch replaces regular expression matches that are susceptible to backtracking with a parser-like approach.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRQn2KAAoJEBYNRVNeJnmTgcQP/jfXXoVTc2X+1V1wr/dRZLto
-8FnAKdh5SieRiGJAPdPJLhSqZOyPCyiZlbJs1ghUmMbfzMe7cKWGwHV2bHDwB9yq
-02P1xtGllz9rhuzn0kxbKBrJAsmBfbk2uP5+33cpkRa/s3u96agSlnmLiNhmkH8x
-2HmxOdRm/Ty+zJpx1TJJyzbQgldxz7mGT951afsbev1PuaFMj6MIYGbsKkkxiDev
-Atn2fdXNHthWgWRwSKq0QruVY2KDv+0uoe9FXrxaFLHiaLu5Y3GCNtgdsOW4rry4
-ewLgsrgPko/L/k0280DT9SPHcbokOa8+1BZsVk5euCwwCuFA0z8x5lWzAm7KMfMk
-9r5I81Batcwyyg6ugTrVttIlzWgaVRXL8jh1a/bO4t48dXhZEapYm0HFRDbUOOZH
-Y5XlOg20KqbyneAUiqlvExZBl9eFVclg+N/tQC2FIJaaAZMxCs+dmuddxgRaFWst
-mG8jDby+90hLLlcX0ku0tgocWzACx43I8lTBijKOr4TfxM+0b0H2Hvx5MbW0v3W0
-J8GNjOzdZmHUZ3j0CsMC4vpON26+ba/qtEQ2NgFShzi51herN0YbrfoO4FfH3+bf
-/Si50UBTf/zprvKD6N7FeQISSZvE1SAUI0e9q/NciRLC49UiIrGKbTGAhDsLJAYj
-0HaOiVFdlhT6bKIftPPA
-=WrcU
------END PGP SIGNATURE-----
+Download attachment "CVE-2013-XXXX.patch" of type "application/octet-stream" (4710 bytes)
+
+
+
+This patch applies to RubyGems 2.1.x releases.  I will create patches for RubyGems 1.8.23.1, 1.8.26, 2.0.9 and 2.1.4 if it there is no obvious flaw seen in it.
+
+I would like to release this fix by Monday, 23 September as I will be traveling mid-week.
+
+The vulnerable regular expression constants are still present, but I can't think of a way to construct them that does not allow backtracking.  I think they should be removed for the security fix release, but a fellow maintainer is worried about backwards compatibility and thinks they should be removed in the next feature release (2.2).  What do people typically do?
+
+Here is a script to check the patch:
+
+
+View attachment "check.CVE-2013-XXXX.rb" of type "text/x-ruby-script" (472 bytes)
