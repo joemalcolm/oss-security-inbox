@@ -1,50 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/23/4
-Message-ID: <512857EE.9020707@redhat.com>
-Date: Fri, 22 Feb 2013 22:47:26 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/18/3
+Message-ID: <52395BFD.3010207@gmail.com>
+Date: Wed, 18 Sep 2013 09:53:33 +0200
+From: etienne <etiennehelluy@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: varnish world-readable logdir
+Subject: CVE Request : poppler < 0.13.0
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/22/2013 05:55 AM, Agostino Sarubbo wrote:
-> Hello, varnish[1], an high-performance HTTP accelerator, has a world-readable 
-> log/logdir. Please assign a CVE
-> 
-> 
-> # ls -la /var/log/varnish/    
-> total 8                                                                                                                                                                             
-> drwxr-xr-x 2 root root 4096 Feb 22 13:48 .                                                                                                                                          
-> drwxr-xr-x 8 root root 4096 Feb 22 13:50 ..                                                                                                                                         
-> -rw-r--r-- 1 root root    0 Feb 22 13:48 access.log   
-> 
-> 
-> [1]: https://www.varnish-cache.org/
+Hi,
+I'd like to request a CVE number for the following issue
+http://cgit.freedesktop.org/poppler/poppler/commit/poppler/DCTStream.cc?id=fc071d800cb4329a3ccf898d7bf16b4db7323ad8
 
-Please use CVE-2013-0345 for this issue.
+The bug has been fixed in poppler 0.13.3, back in 2010, though it is
+still present and exploitable in several distributions.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Thanks,
 
+Etienne
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJRKFfuAAoJEBYNRVNeJnmTpYEQALqOoWSvDZmyKWrqLG6vdcJY
-DZU9wYdpq/u8Dy7x2Q2EMRNorb7VzTtmWMWyjPyoYgN0le1IL/Eer7rfJK9Zzfnw
-/siLFkyt1TzZ3vvcBmDkCf2QyMpjKC4n1W3WczRhM2z7b8qfOZRTu+1Y2JaNoZTm
-azDT4Fb3W4rmQ5y7Yi9sUxEmMCxBrMor74nqk1lgjhDQ8NoG5CaEfdjtu9/P+8Vo
-QtdywuLb3M7vGL+W1ZnzyszVbs4do2tJL1bHeqH4FWcvbwqzGuYOGZjoelx+XOh3
-FUUsxbXLvQgGAYDvWy84gN7evguAn5z6fX8RSyXoOR7lUP0/LR6SeQmB3gORDJ+e
-5ilxPjUYjqrgv0e9Ik0csvxGoBuXSNW6B1S1B1uxM+22gW4WyhOlIu6qZTrjGnJk
-l27dMwCDkV5/YUbIn6LzwF7i1RZZUKU4wTq9D+JeahzK4xFLKb9BWJhMM4Zdyk/z
-doK/AfglZvxelGW9WlsAF6zFfVnlBIaiI34n/cMPnKFfxxUTBzeI2b7PTVnJY3EC
-IUJHK5T2YQX6oUuhbmI8i4GjdZ0RaKeb3dBS51/djx+3jwSRqzdFoglGZcnWGhC5
-qftZ7bmL83GGVgMEZxGuNZQMQiKdY7J6pZ4QqXrbh9hU1B5hBHnOh8YAxKuPG1nh
-DuWPoKMtkf4dLiAg6VCn
-=DWGc
+iEYEARECAAYFAlI5W/cACgkQCRpgAcXwxOcbEQCgoa8IZSrKjVjEfJRXBBLcNpom
+mggAmQGZmKXz/5eYy5JVETtWxVB/rH4Y
+=uavz
 -----END PGP SIGNATURE-----
+
+
+Download attachment "0xC5F0C4E7.asc" of type "application/pgp-keys" (1371 bytes)
