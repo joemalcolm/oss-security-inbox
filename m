@@ -1,37 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/1
-Message-Id: <09859221-B36B-4A9B-A961-EC619FB7F18E@kernel.sg>
-Date: Thu, 14 Mar 2013 08:59:04 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CLONE_NEWUSER|CLONE_FS root exploit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/19/1
+Message-Id: <F273072B-5984-4F59-8A25-9B6FC87C1F78@segment7.net>
+Date: Wed, 18 Sep 2013 18:03:00 -0700
+From: Eric Hodel <drbrain@...ment7.net>
+To: Alexander Cherepanov <cherepan@...me.ru>
+Cc: oss-security@...ts.openwall.com, kseifried@...hat.com, "dammer2k@...il.com Sharipov" <dammer2k@...il.com>, "security@...y-lang.org" <security@...y-lang.org>
+Subject: Re: CVE-2013-4287 Algorithmic complexity vulnerability in RubyGems 2.0.7 and older
 Content-Type: text/plain; charset=utf-8
 
-On 13 Mar, 2013, at 11:39 PM, Sebastian Krahmer <krahmer@...e.de> wrote:
+On Sep 18, 2013, at 15:05, Alexander Cherepanov <cherepan@...me.ru> wrote:
+> On 2013-09-18 04:11, Eric Hodel wrote:
+>> Here's a new patch to go with the new (unassigned) CVE.  This new patch replaces regular expression matches that are susceptible to backtracking with a parser-like approach.
+> 
+> According to your patch 'versions have only one "-" (per semver)'. This
+> means that "*" after "(#{VERSION_PATTERN})" in ANCHORED_VERSION_PATTERN
+> is a bug. It should be "?". If you fix it then there should be no
+> problem with VERSION_PATTERN at all. AFAICT VERSION_PATTERN gives you a
+> linear complexity. Hence there is no need to suppress backtracking…
 
-> Hi,
-> 
-> Seems like CLONE_NEWUSER|CLONE_FS might be a forbidden
-> combination.
-> During evaluating the new user namespace thingie, it turned out
-> that its trivially exploitable to get a (real) uid 0,
-> as demonstrated here:
-> 
-> http://stealth.openwall.net/xSports/clown-newuser.c
-> 
-> The trick is to setup a chroot in your CLONE_NEWUSER,
-> but also affecting the parent, which is running
-> in the init_user_ns, but with the chroot shared.
-> Then its trivial to get a rootshell from that.
-> 
-> Tested on a openSUSE12.1 with a custom build 3.8.2 (x86_64).
-> 
-> I hope I didnt make anything wrong, mixing up the UIDs,
-> or disabled important checks during kernel build on my test
-> system. ;)
+Good catch, I think this is a bug, but I'll need to check with the person who added that.
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=aea8b5d1e5c5482e7cdda849dc16d728f7080289
+>> This patch applies to RubyGems 2.1.x releases.  I will create patches for RubyGems 1.8.23.1, 1.8.26, 2.0.9 and 2.1.4 if it there is no obvious flaw seen in it.
+>> 
+>> I would like to release this fix by Monday, 23 September as I will be traveling mid-week.
+>> 
+>> The vulnerable regular expression constants are still present, but I can't think of a way to construct them that does not allow backtracking.
+> 
+> ...but if you really want to suppress backtracking (say, for
+> optimization) it is easy: either atomic grouping for every repetition
+> (exactly the way you have already done but for other repetitions also)
+> or add extra "+" after each "+" and "*". That's according to
+> http://www.ruby-doc.org/core-2.0.0/Regexp.html .
 
-Eugene
+Thank you.  I glossed over the * in ANCHORED_VERSION_PATTERN, and this fixes the problem with minimal change (something I would prefer for a security fix).
 
+Here is a complete updated patch including the backtracking and extra "-" fixes:
+
+
+Download attachment "CVE-2013-XXXX.2.patch" of type "application/octet-stream" (2406 bytes)
+
+
+
+The same script as my previous message can be used to verify it.
