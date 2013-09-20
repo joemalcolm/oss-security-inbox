@@ -1,46 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/14
-Message-ID: <CAHmME9qJjrLNsJMx4y-O2arjatg0VSkkHt-f0hnSEQZW6m3Zsw@mail.gmail.com>
-Date: Mon, 25 Feb 2013 20:50:12 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: kernel: tmpfs use-after-free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/20/4
+Message-ID: <loom.20130920T175116-753@post.gmane.org>
+Date: Fri, 20 Sep 2013 15:52:52 +0000 (UTC)
+From: Joel Weinberger <jww@...omium.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: browser document.cookie DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hey all,
+Just an FYI, we have fixed this in tip of the tree Chromium:
+https://src.chromium.org/viewvc/chrome?revision=224268&view=revision
+https://code.google.com/p/chromium/issues/detail?id=238041
+--Joel
 
-While everyone's going wild hndl->dump'ing with CVE-2013-1763, there's
-apparently been another silent security fix with
-5f00110f7273f9ff04ac69a5f85bb535a4fd0987 [1]:
-
-> tmpfs: fix use-after-free of mempolicy object
->
-> The tmpfs remount logic preserves filesystem mempolicy if the mpol=M
-> option is not specified in the remount request.  A new policy can be
-> specified if mpol=M is given.
->
-> Before this patch remounting an mpol bound tmpfs without specifying
-> mpol= mount option in the remount request would set the filesystem's
-> mempolicy object to a freed mempolicy object.
->
-> How far back does this issue go? I see it in both 2.6.36 and 3.3.  I did
-> not look back further.
-
-
-The commit message goes on with details on how to trigger it. Note
-that as of 5eaf563e53294d6696e651466697eb9d491f3946 [2], you can now
-mount filesystems as an unprivileged user after a call to
-unshare(CLONE_NEWUSER | CLONE_NEWNS), or a similar clone(2) call. This
-means all those random random filesystem bugs you have laying around
-in the junk bin are now quite useful. ++tricks;
-
-Cheers,
-Jason
-
-
-[1] http://git.zx2c4.com/linux/commit/?id=5f00110f7273f9ff04ac69a5f85bb535a4fd0987
-[2] http://git.zx2c4.com/linux/commit/?id=5eaf563e53294d6696e651466697eb9d491f3946
-
---
-Jason A. Donenfeld
-www.zx2c4.com
