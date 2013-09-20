@@ -1,73 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/4
-Message-ID: <5132BBC1.6060202@redhat.com>
-Date: Sat, 02 Mar 2013 19:56:01 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/20/5
+Message-ID: <523C8763.5020309@redhat.com>
+Date: Fri, 20 Sep 2013 11:35:31 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Salvatore Bonaccorso <carnil@...ian.org>
-Subject: Re: CVE Request: Gambas Directory hijack vulnerability
+CC: Raphael Geissert <geissert@...ian.org>, jmd@...epnet.net, moyo@...epnet.net, info@...ridge.com, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: CVE-2013-5696: split needed
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/01/2013 02:53 PM, Salvatore Bonaccorso wrote:
-> Hi Kurt
+On 09/20/2013 02:27 AM, Raphael Geissert wrote:
+> Hi,
 > 
-> It was found that Gambas is vulnerable to a (temorary files)
-> directory hijack vulnerability. Here two references:
+> GLPI 0.84.2 fixes a few security issues [1], for which
+> CVE-2013-5696 was assigned. However, from the bug tracker[2] it is
+> clear that there are multiple issues:
 > 
-> http://seclists.org/fulldisclosure/2013/Feb/116 (fulldisclosure) 
-> http://code.google.com/p/gambas/issues/detail?id=365 (upstream 
-> bugtracker)
+> * SQL Injection * PHP Code Execution * CSRF (seems that it is the
+> vector for the SQL injection)
 > 
-> Upstream also mentioned the following in their changelog for 3.4.0 
-> release:
+> There there are references to the above CVE id and an id from HTB. 
+> The latter's advisory [3] only refers to remote code execution.
 > 
-> * BUG: Ensure that the interpreter temporary directory is owned by
-> the current user and that its rights are accurate. Otherwise
-> abort. * BUG: When creating the process temporary directory, check
-> the permissions of both the top directory (gambas.) and the process
-> directory inside.
+> So, it looks like the CVE id was originally assigned to the CSRF 
+> vulnerability, then reused for the SQL injections, and the code 
+> execution vulns. were just added to the same bug report but it is 
+> completely independent and not covered by the existing CVE id.
 > 
-> http://gambasdoc.org/help/doc/release/3.4.0?view
+> CC'ing GLPI upstream so that they can, hopefully, shed some more 
+> light. Is the 0.83 branch affected by the way?
 > 
-> Upstream fixes done via #5438 and #5464:
+> CC'ing one of HTB's email addresses, in case they've already
+> requested an id directly from MITRE.
 > 
-> http://sourceforge.net/p/gambas/code/5438/ 
-> http://sourceforge.net/p/gambas/code/5464/
+> (oh and it appears that there's now a warning requesting the 
+> install.php script to be deleted after the installation. Does that 
+> mean that there are bugs left to be exploited otherwise?)
 > 
-> Can a CVE be assigned to this?
+> [1]http://www.glpi-project.org/spip.php?page=annonce&id_breve=308 
+> [2]https://forge.indepnet.net/issues/4480 
+> [3]https://www.htbridge.com/advisory/HTB23173
 > 
-> Regards, Salvatore
+> Cheers,
 
-This is one root issue, failure to create tmp dir safely, please use
-CVE-2013-1809 for this issue. Also please refer to:
-
-http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
-
-also if anyone has languages they'd like to see listed there that
-aren't let me know.
+I assume this was assigned by Mitre, probably best to have them do the
+split.
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRMrvBAAoJEBYNRVNeJnmTjp0P/iJyJyvW1/blF7EotqC+zIyw
-z5Mqi7qDr6+49PvdfK+lW5/R471+MHxUoYqn2bG2PeO31x6S0AUtdXpsfYAiXL/t
-j1YMD2sMXHb58/uxU9EBLS7s6qIHPyyI3EWxv9tX2d3t6PWLwtudIBh/fmDh3HBu
-Y4agivoPKrmh6kJQ8CwShasBTmv0bbdf5UpZ8uNHYmpbpAqRr0su1b9EtQ8VbACZ
-k+Nho7aoTIRtr7QeHE9PknCM4IFJ/I0tCm/9FLjr7yF4O5tGLpbYA5w19lfD57M5
-QvBgVxeNEGth5NTqy9P9oCECvyu5F+hu4zp6TcR9PkuG6yTyjr8/5UNn0pqI4H9a
-ODP1bUxpv7dpSTg/5EDHUGNEg/0LZ46Zg3AtiPpa35TXjorH90svsE8uwkDJ8iIN
-xXnf9fmzUIQilYt9J5eSRzm/iL7dzU8wA4TF66IMQbVWgBmpMG1g1O6xzp3LtrH2
-67nla72V69xVPkgjmJsYA6g1UAc+qAb4eAtmJ5vujH0eZyT6khvBucdzeCiVNh8Y
-UmToh+9GjXP5wNacCq4/WzG031Lv2e5IUdtnmbDBqojLJGANNd3qAXH3RoNTHNAv
-CtsEZ5cpOipgsayC7LORF2JTtvJzb70xDulAPdOJXA2GHjnpVIlVPIKDCdqt9A1U
-AQAc1QQif3MjOoWlkUcA
-=q6hc
+iQIcBAEBAgAGBQJSPIdjAAoJEBYNRVNeJnmTOo8QAJsImU6tt2fgeP2lhWonL0L6
+WBtkTSRtcbieBM5dOPv9JrfrfMqOFu9G/pBLbdu51zYo9/hu/owU1Lw+FFFKrgbO
+3zLwC/MHYYXaHtAxI9W8PyZtcx6F4q0sZT83DQjFPzmpPkNYegPuAYFtEYbszPJK
+OCv+He9eEE1gLmOM+kbO8ixx51uLu7lTpQcD2Q1YpP3lE8GFkcoLmsPCChhaLnYk
+17PdYtpIw/v97XIOVAnhlpu8HyMWxaVRAjrdkoLEdKNhnS2WiQMlgz6DEwKpgbE4
+GnulZ4+0lm74LA3cY9RThCKJDandiH4HC+7FivP/633QJ23rs6w85+29wuWUE+gJ
+XOS44OCmzbZSku9brbplHK/NgUGmxH8SsTSxDcgzKKFWCLt/2rwaKAb1M646O1yi
+H5mAKazPKvKISarbHFNiUDUt/35OiTg5AxgVvDTDj7cnejAEfRSiScpSNWSBQ/n8
++JizR1ElyU4rAnyufxSn4yNAUHzcS2kpLmCPr1Biy3nW5+xCyXlcbpgo9Z1fmPJ2
+VL08rHUtEC4vcpSjPvatRWaC+vgirky5xgN1/in1bY8tAURUkWLBRRvGuMQfaq7E
+H+XLbpSJIUn3nEy8sOSNL/z3uwdnXnKYgCcw4Zwp7Cix5mYVxFgi6xBNE6E9m150
+RbuLEH8U54XzNMpPOSZw
+=Qv2g
 -----END PGP SIGNATURE-----
