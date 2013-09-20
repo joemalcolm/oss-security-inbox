@@ -1,23 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/08/2
-Message-Id: <20131108040211.EA670C0624@smtp.hushmail.com>
-Date: Fri, 08 Nov 2013 04:02:11 +0000
-From: "mancha" <mancha1@...h.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request - OpenSSH
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/20/1
+Message-Id: <618072EB-9F9E-49BF-94DF-E7D16F06F171@segment7.net>
+Date: Fri, 20 Sep 2013 00:13:58 -0700
+From: Eric Hodel <drbrain@...ment7.net>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: security@...y-lang.org, "dammer2k@...il.com Sharipov" <dammer2k@...il.com>, kseifried@...hat.com, Alexander Cherepanov <cherepan@...me.ru>
+Subject: Re: CVE-2013-4287 Algorithmic complexity vulnerability in RubyGems 2.0.7 and older
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, vendors, et al.
+On Sep 18, 2013, at 18:03, Eric Hodel <drbrain@...ment7.net> wrote:
+> On Sep 18, 2013, at 15:05, Alexander Cherepanov <cherepan@...me.ru> wrote:
+>> ...but if you really want to suppress backtracking (say, for
+>> optimization) it is easy: either atomic grouping for every repetition
+>> (exactly the way you have already done but for other repetitions also)
+>> or add extra "+" after each "+" and "*". That's according to
+>> http://www.ruby-doc.org/core-2.0.0/Regexp.html .
+> 
+> Thank you.  I glossed over the * in ANCHORED_VERSION_PATTERN, and this fixes the problem with minimal change (something I would prefer for a security fix).
+> 
+> Here is a complete updated patch including the backtracking and extra "-" fixes:
+> 
+> <CVE-2013-XXXX.2.patch>
+> 
+> The same script as my previous message can be used to verify it.
 
-OpenSSH has released an advisory[1] detailing a memory corruption
-vulnerability in the post-authentication sshd process when using an
-aes*-gcm@...nssh.com cipher.
+Ok, I have a complete set of patches and vulnerability announcement.  Can I get a CVE?
 
-OpenSSH 6.4/6.4p1 were released to address the problem.
+= Algorithmic complexity vulnerability in RubyGems 2.1.4 and older
 
-Would you please allocate a CVE for this issue? Thanks.
+The patch for CVE-2013-4287 was insufficiently verified so the combined
+regular expression for verifying gem version remains vulnerable following
+CVE-2013-4287.
 
---mancha
+RubyGems validates versions with a regular expression that is vulnerable to
+denial of service due to backtracking.  For specially crafted RubyGems
+versions attackers can cause denial of service through CPU consumption.
 
-[1] http://www.openssh.com/txt/gcmrekey.adv
+RubyGems versions 2.1.4 and older are vulnerable.
 
+Ruby versions 1.9.0 through 2.0.0p247 are vulnerable as they contain embedded
+versions of RubyGems.
+
+It does not appear to be possible to exploit this vulnerability by installing a
+gem for RubyGems 1.8.x or newer.  Vulnerable uses of RubyGems API include
+packaging a gem (through `gem build`, Gem::Package or Gem::PackageTask),
+sending user input to Gem::Version.new, Gem::Version.correct? or use of the
+Gem::Version::VERSION_PATTERN or Gem::Version::ANCHORED_VERSION_PATTERN
+constants.
+
+Notably, users of bundler that install gems from git are vulnerable if a
+malicious author changes the gemspec to an invalid version.
+
+The vulnerability can be fixed by changing the "*" repetition to a "?"
+repetition in Gem::Version::ANCHORED_VERSION_PATTERN in
+lib/rubygems/version.rb.  For RubyGems 2.1.x:
+
+  -  ANCHORED_VERSION_PATTERN = /\A\s*(#{VERSION_PATTERN})*\s*\z/ # :nodoc:
+  +  ANCHORED_VERSION_PATTERN = /\A\s*(#{VERSION_PATTERN})?\s*\z/ # :nodoc:
+
+For RubyGems 2.0.x:
+
+  -  ANCHORED_VERSION_PATTERN = /\A\s*(#{VERSION_PATTERN})*\s*\z/ # :nodoc:
+  +  ANCHORED_VERSION_PATTERN = /\A\s*(#{VERSION_PATTERN})?\s*\z/ # :nodoc:
+
+For RubyGems 1.8.x:
+
+  -  ANCHORED_VERSION_PATTERN = /\A\s*(#{VERSION_PATTERN})*\s*\z/ # :nodoc:
+  +  ANCHORED_VERSION_PATTERN = /\A\s*(#{VERSION_PATTERN})?\s*\z/ # :nodoc:
+
+
+This vulnerability was discovered by Alexander Cherepanov <cherepan@...me.ru>
+
+Here are the patches for:
+
+RubyGems 2.1.x (upcoming release 2.1.5):
+
+
+Download attachment "CVE-2013-XXXX.master.patch" of type "application/octet-stream" (2299 bytes)
+
+
+
+RubyGems 2.0.x (upcoming release 2.0.10):
+
+
+Download attachment "CVE-2013-XXXX.2.0.patch" of type "application/octet-stream" (2277 bytes)
+
+
+
+RubyGems 1.8.x (upcoming release 1.8.27 and 1.8.23.2):
+
+
+Download attachment "CVE-2013-XXXX.1.8.patch" of type "application/octet-stream" (2190 bytes)
