@@ -1,47 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/21
-Message-ID: <CAEJizbb5LLWvWkxEzsbSm-T9SB04R7uTCf5PhD56Ey_pV=pkCA@mail.gmail.com>
-Date: Wed, 27 Feb 2013 16:22:48 +0000
-From: Benji <me@...ji.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/20/2
+Message-ID: <CAA7hUgECRnc3dd2oM9CFnsi8RDt11suZkKK=ULki6SArRrnDQA@mail.gmail.com>
+Date: Fri, 20 Sep 2013 10:27:02 +0200
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Cc: jmd@...epnet.net, moyo@...epnet.net, info@...ridge.com
+Subject: CVE-2013-5696: split needed
 Content-Type: text/plain; charset=utf-8
 
-Apparently I've misunderstood the post, sorry for the noise if that is the
-case.
+Hi,
 
+GLPI 0.84.2 fixes a few security issues [1], for which CVE-2013-5696
+was assigned.
+However, from the bug tracker[2] it is clear that there are multiple issues:
 
-On Wed, Feb 27, 2013 at 4:21 PM, Benji <me@...ji.com> wrote:
+* SQL Injection
+* PHP Code Execution
+* CSRF (seems that it is the vector for the SQL injection)
 
-> My response was directly due to this line for known security patches
-> "That's not going to happen, and you know that, to do so would be totally
-> irresponsible of us and directly harm your users."
->
-> As I have said to someone else already who queried my comment, as we have
-> seen before, hiding patches does not protect users and thus I'm not sure
-> where the 'directly harm your users' comes into this. I'd be interested to
-> hear how you think making security patches obvious, when they are obviously
-> marked as such, is going to cause harm or danger to users.
->
-> Regards
->
->
-> On Wed, Feb 27, 2013 at 4:17 PM, Greg KH <greg@...ah.com> wrote:
->
->> On Wed, Feb 27, 2013 at 02:59:17PM +0000, Benji wrote:
->> > Ah the logic. Open source software, hidden secret hush hush no public
->> > reporting patches.
->>
->> Every single patch we make to the kernel is public, it is up to you to
->> determine if you feel it is a "security fix" or not.  And to do so is a
->> non-trivial task, something that I sure don't want to be responsible for
->> trying to do.  And since no one else has ever stepped up to want to do
->> it either, there's not much more that can be done.
->>
->> Are you willing to do it?
->>
->> greg k-h
->>
->
->
+There there are references to the above CVE id and an id from HTB.
+The latter's advisory [3] only refers to remote code execution.
 
+So, it looks like the CVE id was originally assigned to the CSRF
+vulnerability, then reused for the SQL injections, and the code
+execution vulns. were just added to the same bug report but it is
+completely independent and not covered by the existing CVE id.
+
+CC'ing GLPI upstream so that they can, hopefully, shed some more
+light. Is the 0.83 branch affected by the way?
+
+CC'ing one of HTB's email addresses, in case they've already requested
+an id directly from MITRE.
+
+(oh and it appears that there's now a warning requesting the
+install.php script to be deleted after the installation. Does that
+mean that there are bugs left to be exploited otherwise?)
+
+[1]http://www.glpi-project.org/spip.php?page=annonce&id_breve=308
+[2]https://forge.indepnet.net/issues/4480
+[3]https://www.htbridge.com/advisory/HTB23173
+
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
