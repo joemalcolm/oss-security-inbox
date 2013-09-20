@@ -1,67 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/27/7
-Message-ID: <Pine.GSO.4.64.1306271230210.4601@faron.mitre.org>
-Date: Thu, 27 Jun 2013 12:57:07 -0400 (EDT)
-From: "Steven M. Christey" <coley@...re.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-cc: Salvatore Bonaccorso <carnil@...ian.org>, Mark Panaghiston <markp@...pyworm.com>, hello@...pyworm.com
-Subject: Re: Re: CVE-2013-1942 jPlayer 2.2.19 XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/20/3
+Message-ID: <20130920105050.5c1f54e8@redhat.com>
+Date: Fri, 20 Sep 2013 10:50:50 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: drbrain@...ment7.net
+Cc: oss-security@...ts.openwall.com, security@...y-lang.org, "dammer2k@...il.com Sharipov" <dammer2k@...il.com>, kseifried@...hat.com, Alexander Cherepanov <cherepan@...me.ru>
+Subject: Re: CVE-2013-4287 Algorithmic complexity vulnerability in RubyGems 2.0.7 and older
 Content-Type: text/plain; charset=utf-8
 
+On Fri, 20 Sep 2013 00:13:58 -0700 Eric Hodel wrote:
 
-Kurt,
+> Ok, I have a complete set of patches and vulnerability announcement.
+> Can I get a CVE?
 
-Your CVE assignment posts from [1] and [2] appear to be inconsistent, and 
-there are some questions about affected versions, so I wanted to get some 
-clarity about which CVEs go with which issues.
+CVE-2013-4363 was previously assigned, see this post form Wed:
 
-1) CVE-2013-1942 - fixed in 2.2.20.
-    Commit: e8ca190f7f972a6a421cb95f09e138720e40ed6d
+http://thread.gmane.org/gmane.comp.security.oss.general/11085/focus=11137
 
-    This one doesn't seem to have any issues.
-
-2) CVE-2013-2022 - based on [1] CVE-2013-2022 is listed after a section
-    that talks about an XSS fixed in 2.3.0 (which also includes the
-    CVE-2013-1942 assignment).   However, in [2] you say "CVE-2013-2022 is
-    for jPlayer 2.2.20 XSS" but http://www.jplayer.org/2.3.0/release-notes/
-    says that CVE-2013-2022 is fixed in 2.2.23.  (Maybe when you said
-    2.2.20, this also covered other unfixed versions UNTIL 2.2.23).
-
-3) CVE-2013-2023 - in [1] you assign CVE-2013-2023 to the security fix
-    that quotes the jPlayer changelog entry for 2.2.23 - which, as just
-    mentioned in the previous bullet, you already described as being
-    associated with CVE-2013-2022.  In [2], you also state that
-    CVE-2013-2023 is for jPlayer 2.2.23 XSS.
-
-4) There is no mention of issues that are FIXED in 2.3.0 based
-    on upstream changelog, but http://www.jplayer.org/2.4.0/release-notes/
-    lists fixes in both 2.3.1 and 2.3.2.
-
-5) According to jPlayer release notes, we have:
-
-    [2.3.1] Security Fix: The Flash SWF had a minor security vulnerability
-    that enabled XSS (Cross Site Scripting). Reported by Eugene Dokukin.
-    Security reference CVE-2013-2023.
-
-    [2.3.2] Security Fix: Closed Flash SWF security vulnerability that
-    enabled XSS (Cross Site Scripting). Reported by Eugene Dokukin. Security
-    reference CVE-2013-2023. The jPlayer noConflict option is now
-    restricted to strings that contain the term jQuery. For example:
-    lib.jQuery or myjQueryRocks.
-
-    [2.2.20] Security Fix: The Flash SWF had a security vulnerability that
-    enabled XSS (Cross Site Scripting). Reported by Malte Batram. Security
-    reference CVE-2013-1942.
-
-    [2.2.23] Security Fix: The Flash SWF had a minor security vulnerability
-    that enabled XSS (Cross Site Scripting). Reported by Eugene Dokukin.
-    Security reference CVE-2013-2022.
-
-I'm of the mindset to use the CVE assignments as provided by jQuery 
-upstream, but it may be good to get full clarity down to the individual 
-commits.
-
-
-[1] http://marc.info/?l=oss-security&m=136726705917858&w=2
-
-[2] http://marc.info/?l=oss-security&m=136773622321563&w=2
+-- 
+Tomas Hoger / Red Hat Security Response Team
