@@ -1,77 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/14
-Message-ID: <52A8DB39.3010500@gmail.com>
-Date: Wed, 11 Dec 2013 22:38:01 +0100
-From: Jurriaan Bremer <jurriaanbremer@...il.com>
-To: oss-security@...ts.openwall.com, ingmar.runge@...il.com
-Subject: CVE Request: ZNC IRC Bouncer DoS in FiSH Plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/23/1
+Message-Id: <201309232116.r8NLGhfM008259@linus.mitre.org>
+Date: Mon, 23 Sep 2013 17:16:43 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, geissert@...ian.org, jmd@...epnet.net, moyo@...epnet.net, info@...ridge.com
+Subject: Re: CVE-2013-5696: split needed
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-There's an issue in the way FiSH loads public keys from users when
-initiating a new private conversation (or "query" in irc.)
+> On 09/20/2013 02:27 AM, Raphael Geissert wrote:
 
-The main ZNC repository [1] does *not* ship with the FiSH extension by
-default. However, the Windows port [2] of ZNC does ship with the FiSH
-extension [3] by default. (You have to enable it manually though.)
+>> GLPI 0.84.2 fixes a few security issues [1], for which
+>> CVE-2013-5696 was assigned. However, from the bug tracker[2] it is
+>> clear that there are multiple issues:
 
-The vulnerable part of the code can be found at line 606 of fish.cpp
-[4]. When initiating a new query, both users send their public key to
-each other - FiSH does this automatically for you. The public keys are
-encoded using base64 when sent to the other user. In [4] you can see
-that the FiSH plugin decodes the base64 stream to obtain the other
-user's public key. However, no bounds are checked, and thus the buffer
-"raw_buf" can be overflowed.
+>> * SQL Injection * PHP Code Execution * CSRF (seems that it is the
+>> vector for the SQL injection)
 
-Luckily both x86 and x64 builds of the FiSH extension on Windows have
-stack cookies, rendering this vulnerability unexploitable. However, even
-though it's unexploitable, the stack cookie check does raise an
-exception when overflown, after which the process crashes, and the
-daemon won't function anymore - making it an easy Denial of Service.
+>> So, it looks like the CVE id was originally assigned to the CSRF 
+>> vulnerability, then reused for the SQL injections, and the code 
+>> execution vulns. were just added to the same bug report but it is 
+>> completely independent and not covered by the existing CVE id.
 
-An important side-note for non-Windows platforms. Even though ZNC
-doesn't ship with the FiSH plugin by default, it does reference the
-vulnerable Windows port implementation in their wiki [5] (see the
-"mirror" - the link to the SVN repository is dead.) Furthermore, the two
-referenced pastes [6][7] share the same vulnerability.
+>> [2]https://forge.indepnet.net/issues/4480
 
-PoC: Having opened a query with a user running ZNC with the FiSH
-extension loaded, send the following message. Right after this message
-has been sent the user will be disconnected as his or her ZNC daemon has
-crashed.
+> I assume this was assigned by Mitre, probably best to have them do the
+> split.
 
-/notice <user> DH1080_INIT QUFBQUFBQUFBQUFBQUFBQUFBQUF...
+CVE-2013-5696 was assigned by MITRE, but it was not originally
+assigned for CSRF.
 
-(Repeat the "QUFB" pattern until the string is, let's say, 400
-characters in length. Note, "QUFB" is "AAA" after base64 decoding.)
+The "Associated revisions" column of
+https://forge.indepnet.net/issues/4480 does show different types of
+changes to different parts of the code.
 
-Or, when scripting a simple DoS bot, you'd do something like this:
+As far as we can tell, install/install.php is part of the distributed
+software but is not intended to be part of the deployed product. In
+0.84.2, it seems that a warning to remove install/install.php is
+displayed to a privileged user every time that the showMyView function
+is executed in a privileged user's session.
 
-buf = ('A'*300).encode('base64').replace('\n', '')
-s.send("NOTICE %s :DH1080_INIT %s\r\n" % (user, buf))
+The root cause of the reported exploitation outcomes is that
+install/install.php is accessible with the unintended functionality of
+reaching the installation steps after an installation has been
+completed. There is one CVE for that:
 
-Workaround: Adding a simple buffer size argument to the b64toh function
-would suffice. An easier approach would be to check the length of the
-base64 encoded string. I.e., it must not exceed ~265 bytes if it has to
-fit in a 200-byte sized buffer after decoding.
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-5696
 
-Another fine workaround would be using this [8] implementation. (I'm
-honestly not really sure which version, if not a stripped down / merged
-into one file version, of FiSH is used by the Windows port.)
+Certainly we would assign more CVEs if there are exploitable
+vulnerabilities on a server that does not have the install/install.php
+file.
 
-Also CC'd the maintainer of the Windows port - hi! :p
+Other than that, it ultimately reduces to the general problem of CVE
+assignments for web-based installations of web applications, and how
+to decide whether the available behavior crosses privilege boundaries.
+In many common installation processes for web applications, the
+software distribution is extracted into a web-server directory, and
+the entire remainder of the installation process starts with an
+unauthenticated web session from an arbitrary client machine. The
+amount of time after extracting files until a legitimate user starts
+that web session could realistically range from seconds to years. From
+an absolutist perspective, this is always wrong and should always have
+a CVE assignment, because it offers no protection against an initial
+installation by an unauthorized person. In practice, we often don't
+assign CVEs for that. We usually consider it a valid
+usability/security tradeoff.
 
-Best Regards,
-Jurriaan
+One principal exception is that we do assign a CVE if the extracted or
+installed web application allows remote code execution -- even if it's
+intentional remote code execution by an admin. In other words, the
+usability/security tradeoff can be invalidated by the nature of the
+application.
 
-[1] https://github.com/znc/znc
-[2] https://code.google.com/p/znc-msvc/
-[3]
-https://code.google.com/p/znc-msvc/source/browse/trunk/main/znc-msvc/modules/extra_win32/fish.cpp
-[4]
-https://code.google.com/p/znc-msvc/source/browse/trunk/main/znc-msvc/modules/extra_win32/fish.cpp#606
-[5] http://wiki.znc.in/Fish#Getting_the_Code
-[6] http://pastebin.com/NDVtfcVG (Line 609)
-[7] http://slexy.org/view/s2poFq0BaF (Line 605)
-[8] http://mewbies.com/how_to_install_fish_for_irssi_tutorial.htm
+The current case is similar. CVE-2013-5696 is the ID associated with
+the root cause of the problem that was actually reported by Navixia.
+At least one other problem was strongly implied but not clearly
+disclosed. Specifically, if no legitimate user ever ran the GLPI
+installation procedure, install/install.php will exist and can be used
+for PHP code injection. So, we think we should assign a second CVE
+for:
+
+   GLPI before 0.84.2, when install/install.php exists because of no
+   installation or an incorrect installation, allows remote attackers
+   to execute arbitrary PHP code via an update_1 action to
+   install/install.php with a crafted databasename parameter, as
+   demonstrated by placing the PHP code after a ';} sequence, followed
+   by a direct request to index.php.
+
+with an additional reference of
+
+   https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/multi/http/glpi_install_rce.rb
+
+Here, "an incorrect installation" is intended to cover all of the
+possibilities: the legitimate user forgot to delete
+install/install.php, the legitimate user planned to delete
+install/install.php but the attack occurred before the deletion, etc.
+
+We're not sure if there's anything else important enough that more
+than two CVEs are really needed. We'll probably wait for the
+https://www.htbridge.com/advisory/HTB23173 update that's scheduled for
+October 2. Again, web-based installations of web applications are
+often inherently characterized by missing authentication, so the
+cutoff for what qualifies for a CVE is a bit different than in normal
+cases of already-installed products.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSQK3XAAoJEKllVAevmvmsbBgH/1HlyQynqKj7mazdxlXarQXv
+GY++bjB0mH1+umPcGfafDtF+ZdWMis2RzFGDftXxCLy5EVhvp3lHuxg7Pxf0uIzT
+lRHlU1mf92NY2i2KTI+juP0bHvc+erPXwNJk6GEQfTlH/XqxPUyX/QrjaaUqGK8/
+008bFC+HkQAwEbsLvzh+WniMyE/Kg3+WPx8we311jNODl+zLr59Pf5I7AHectn0Z
+PkHm0L3oAxPnsaluxnyvz351OZRjhz2CFndOIGZJ3KegGCRdz6soSBh4CsR4lBEE
+9pS3RX7+fCegpUHzzo4Q5bGydqy/sdFCXVvr67c7tY8m6zOpJN44DGxuIuTBsd4=
+=hgB3
+-----END PGP SIGNATURE-----
