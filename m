@@ -1,86 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/13
-Message-ID: <51F0F367.8040105@pipping.org>
-Date: Thu, 25 Jul 2013 11:44:07 +0200
-From: Sebastian Pipping <sebastian@...ping.org>
-To: kseifried@...hat.com
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mysecureshell: information disclosure (or worse)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/24/4
+Message-ID: <5241DAE4.9010506@gentoo.org>
+Date: Tue, 24 Sep 2013 14:33:08 -0400
+From: Chris Reffett <creffett@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: X2Go server
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt,
+Hi all,
+I couldn't find a CVE, so I would like to request one for a
+vulnerability in X2Go Server. The vendor reported an issue where a
+remote user could execute arbitrary code as the x2go user, apparently by
+leveraging a setgid executable which did not have a hardcoded path to
+"libx2go-server-db-sqlite3-wrapper.pl". [1] is the commit fixing the
+vulnerable code, [2] is the upstream release announcement.
+
+Thanks,
+Chris Reffett
 
 
-On 25.07.2013 10:33, Kurt Seifried wrote:
-> On 07/23/2013 11:17 AM, Sebastian Pipping wrote:
->> mysecureshell [1] is an SFTP-only shell to be used with sshd.
-> 
->> The latest release 1.31 makes use of shared memory to maintain 128
->> slots with one struct for each connection/process. Access to that
->> block of shared memory is not (or not properly) synchronized, so
->> two or more processes might end up occupying the very same slot
->> when process scheduling wants that to happen.  The effective 
->> permissions of the process remain untouched, though.  So it's
->> logging in as someone else and it isn't.
->>
->> The relevant code from SftpServer/SftpWho.c (lines 106 and after)
->> is:
->>
->> [cut out, same code below]
->>
->> The symptoms of this bug have been reported earlier at [2] by forum
->> user "voleg".  To my best knowledge, there is no CVE number
->> assigned yet.
->> [..]
->> [1] http://mysecureshell.sourceforge.net/
->> [2] http://mysecureshell.free.fr/forum/viewtopic.php?id=655
-> 
-> 
-> To reiterate: so I can confirm CVE assignments, and prevent duplicate
-> assignments you *MUST* provide links to the code commits/vulnerable
-> code. I don't have the time to go hunting through your source code for
-> them. People need to start making better CVE requests, or you're not
-> going to get CVEs from me.
-
-Upstream tarball
-================
-http://mysecureshell.free.fr/repository/index.php/debian/pool/main/m/mysecureshell/mysecureshell_1.31.tar.gz
+[1]
+http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=42264c88d7885474ebe3763b2991681ddfcfa69a
+[2]
+https://lists.berlios.de/pipermail/x2go-announcement/2013-May/000125.html
 
 
-Issue
-=====
-Race condition, lack of synchronization, user may end up in another
-directory.
-
-
-Guilty code
-===========
-
-Online
-~~~~~~
-http://mysecureshell.cvs.sourceforge.net/viewvc/mysecureshell/mysecureshell/SftpServer/SftpWho.c?revision=1.3&view=markup#l107
-
-Inlined  (from SftpServer/SftpWho.c, lines 107 and after)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-for (i = 0; i < SFTPWHO_MAXCLIENT; i++)
-    if (who[i].status == SFTPWHO_EMPTY)
-    {
-        (void) usleep(100);
-        if (who[i].status == SFTPWHO_EMPTY)
-        {
-            //clean all old infos
-            memset(&who[i], 0, sizeof(*who));
-            //marked structure as occuped
-            who[i].status = SFTPWHO_IDLE;
-            return (&who[i]);
-        }
-    }
-
-
-Please let me know if you need anything more.  Thanks for your time!
-
-Best,
-
-
-
-Sebastian
+Download attachment "signature.asc" of type "application/pgp-signature" (394 bytes)
