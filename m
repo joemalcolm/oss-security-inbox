@@ -1,44 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/4
-Message-ID: <CAGvVGP_KcZRmchxHrJRLZ+3inhxbgjfBj=i=qxzifYZr6MaUdw@mail.gmail.com>
-Date: Mon, 4 Nov 2013 22:37:11 +0900
-From: Fuminobu TAKEYAMA <ftake@...ko.jp>
-To: Marcus Meissner <meissner@...e.de>
-Cc: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: IBUS showing passwords during password input
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/24/5
+Message-ID: <20130924223420.GA12465@hunt>
+Date: Tue, 24 Sep 2013 15:34:20 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+Cc: security@...ntu.com
+Subject: graphite CVE-2013-5903 confusion
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hello, I'm looking at CVE-2013-5903 from graphite and I believe there has
+been a problem in how it has been applied.
 
-> The behaviour started (I think) with with IBUS 1.5.4
-Yes. It happens on IBus-enabled GNOME 3.6+ with IBus 1.5.4 if IBus's
-engines (plug-ins) do not support new API introduced by 1.5.4.
+The description from NVD and OSVDB says the vulnerability is cross-site
+scripting:
 
-Actually, this problem is not found by me, though.
-The upstream has already announced in [1].
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2013-5903
 
-An IBus developer (Mr. Fuijiwara) says in [1]:
-"1.5.2 or lower do not handle the input purpose so the typed chars are
-shown as the bug."
-So I think the same problem may happen also on GNOME 3.6 + IBus 1.5.2.
+    Cross-site scripting (XSS) vulnerability in Graphite before 0.9.11
+    allows remote attackers to inject arbitrary web script or HTML via
+    unspecified vectors.
 
-[1] https://groups.google.com/forum/#!topic/ibus-user/mvCHDO1BJUw
+http://osvdb.org/show/osvdb/97602
 
-Best regards,
-Fuminobu TAKEYAMA
+    Graphite contains a flaw that allows a remote cross-site scripting
+    (XSS) attack. This flaw exists because the application does not
+    validate certain unspecified input before returning it to the user.
+    This may allow an attacker to create a specially crafted request
+    that would execute arbitrary script code in a user's browser within
+    the trust relationship between their browser and the server.
 
-2013/11/4 Marcus Meissner <meissner@...e.de>:
-> Hi,
->
-> One of our Japanese users found that some IBUS input methods
-> show passwords while typing them, if a special "intent" is not
-> provided.
->
-> https://bugzilla.novell.com/show_bug.cgi?id=847718
-> https://groups.google.com/forum/#!topic/ibus-user/mvCHDO1BJUw
->
-> The behaviour started (I think) with with IBUS 1.5.4
->
-> Fuminobu Takeyama, is this correct?
->
-> Ciao, Marcus
+
+However, the checkins from the project appear to use this CVE for unsafe
+use of Python's pickle module:
+
+https://github.com/graphite-project/graphite-web/blob/master/docs/releases/0_9_11.rst
+
+    This release contains several security fixes for cross-site scripting
+    (XSS) as well as a fix for a remote-execution exploit in graphite-web
+    (CVE-2013-5903).
+
+    ...
+
+    Fix insecure deserialization of pickled objects (CVE-2013-5093)
+
+
+MITRE, please advise.
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
