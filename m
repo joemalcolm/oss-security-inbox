@@ -1,43 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/17/9
-Message-ID: <516F08C9.2040700@redhat.com>
-Date: Wed, 17 Apr 2013 14:40:41 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Fwd: Re: CVE Request: ownCloud 5.0.5 and 4.5.10
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/24/1
+Message-Id: <201309240529.r8O5TBAJ019180@linus.mitre.org>
+Date: Tue, 24 Sep 2013 01:29:11 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: SSL BREACH
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-This was brought to my attention:
+>Date: Tue, 6 Aug 2013 20:11:53 -0400 (EDT)
 
-https://github.com/johndyer/mediaelement/commit/9223dc6bfc50251a9a3cba0210e71be80fc38ecd
+>>I assume this will get handled like CVE-2009-3555?
+>>
+>>http://threatpost.com/breach-compression-attack-steals-https-secrets-in-under-30-seconds/101579
+>>
+>>http://it.slashdot.org/story/13/08/05/233216
+>>
+>>https://www.djangoproject.com/weblog/2013/aug/06/breach-and-django/
+>
+>MITRE has looked at this in some depth but has not yet decided whether
+>this can be treated as a vulnerability in a protocol, with one CVE
+>shared across every product. We do realize that
+>http://www.kb.cert.org/vuls/id/987798 currently contains one CVE ID.
 
-+* Fixed possible XSS attack through `file=` parameter in
-`flashmediaelement.swf`
+Our current thought is that BREACH is not a vulnerability in the HTTPS
+protocol, and instead should be considered a vulnerability class. In
+this view, there would be one CVE for each independent codebase that
+can be successfully attacked using the BREACH exploit methodology.
 
-This may have been requested already, I haven't seen it.
+As a vulnerability class, BREACH is somewhat similar to the XSS
+vulnerability class. They are both about limitations on what a web
+site can safely do with untrusted client input:
 
-Please use CVE-2013-1967 for this issue.
+  Reflected cross-site scripting (XSS) - your web site must
+  not take arbitrary markup strings from a client and include
+  them verbatim in an HTML document within an HTTP response
+
+  Cross-site duplicate compression (XSDC, aka BREACH) - your web
+  site (sometimes) must not take arbitrary strings from a
+  client and include them verbatim in the input to a compression
+  algorithm used for an HTTPS response
+
+(This is just a way to outline why we think that the
+one-CVE-per-codebase approach makes sense. It doesn't mean that MITRE
+is necessarily in favor of adopting this "XSDC" terminology.)
+
+MITRE is not currently seeing many reports in which the BREACH issue
+is being associated with an affected codebase of a specific web
+application. Maybe the only public example is the OWA codebase
+mentioned in the original BREACH paper:
+
+  http://breachattack.com/resources/BREACH%20-%20SSL,%20gone%20in%2030%20seconds.pdf
+
+(Yes, we realize that BREACH exploitation, in general, depends both on
+details of the web application and on details of the web-server
+configuration. As a practical matter, the details of the web
+application are very likely to be the limiting factor on the overall
+population size of exploitable web sites.)
+
+There are other reports indicating that other types of products can or
+should be fixed because they contribute to the possibility of a
+successful BREACH attack against a specific web application, but no
+specific web application is identified, e.g.,
+
+Open source:
+
+  https://www.djangoproject.com/weblog/2013/aug/06/breach-and-django/
+  https://github.com/rails/rails/pull/11729
+
+Non-open source:
+
+  http://support.f5.com/kb/en-us/solutions/public/14000/600/sol14634.html
+  https://techzone.ergon.ch/breach_mitigation
+
+There is nothing yet suggesting that a huge number of CVEs will
+ultimately come out of this.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJRbwjJAAoJEBYNRVNeJnmTRYIQALmGiZ9R7D2yuV3D+8EWTON4
-29y17zF2yfMdGgG98HXBVhNWCFST1qjhSzdDLZA1iH5B9cxI9m80ztB3ELehXemJ
-TZuv6kadgxbQN64hPbTP+TfoRpsIqA5cwdIitFbC5FhOm6K6tCySUlFxD9xrmiFf
-AVhMjGexIsbnuqSHAYHJGwWD2SIesF8rGNcOzb2AWLQvYetUcd2r62RZiaIbJi9m
-kqGOnjvnFS7RicL/xeJagkQD/9zuRXaZqstBieV9SyhKgPymvFITVPw9keXiE/W1
-D4G/az1f4FJ2Vuyh4qTeKEOVXb7HZDpCCn/mxQja/V0SzAhrh1/d8U29JXPsw03D
-aAY8tdZKFLU8UmyAsRFiNd09Pud5UV0dag/cNQstVrQnHuriaFurGNKC+bsf0n64
-6USjHmtSxc79skB3AilZmhmPQPFB5T0nG/47P9xKZiw/Thri+eGQGgoMfLKgSsNT
-izgyIwOVNah16RANHWJ55+ExrnbRI6MkHFSHbqgpSia2xgDt6JpUKKQQazgDoUOa
-pnubWg3jr14fyi53ytQuMh8mgEI8LYeSsktAMxAPJAKSI6303LEOwlgPTWYSfUlv
-YHDiQq6i9TE+cMI3XCR8djJ3Pv7gHhbPW7z3J2jFIBSgjxmtdCKX2yLPrf10S+/9
-ps6+fwe5HmCVbhd09NPE
-=LFeY
+iQEcBAEBAgAGBQJSQSF4AAoJEKllVAevmvms5H0H/Ag4jMKPYCL20yUGi79TFG0R
+g4Ec9byqY1nTdRFtni7X3Fj3hpZ65o8XTMK6QadZOlIyxxWew9COjuIhXBA3DGyE
+eidVDWM23TMHV6i9B4Ksqz4JO1UfrNMx3HjREijxQ3PO4E8sxb0QODIHwashUYnb
+ciw/Fj7b5dI9jTl6CTqfZfC4BT/HsbzjfnQKy4QHyOvq1AzoFFsQWCC+qnm3ixoM
+1x8s5z9lJ5XP0JpvDIrVFZWyx+P7XP0Py8kQLrBSM9ogqOSMEays/pZUcUlA8wIr
+sQWGt7NrBv/iPKMKXIaxp7NlkDnpAVgd5WTUCVfF86hGzCDQ70BuPSoS7iHsDE0=
+=dn4Z
 -----END PGP SIGNATURE-----
