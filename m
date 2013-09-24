@@ -1,61 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/2
-Message-ID: <529EAAC8.9060101@redhat.com>
-Date: Tue, 03 Dec 2013 21:08:40 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Jamie Strandboge <jamie@...onical.com>, oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: Duplicate OpenStack CVEs for Horizon?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/24/3
+Message-ID: <20130924162513.GA3173@lonestar>
+Date: Tue, 24 Sep 2013 21:55:13 +0530
+From: Dhiru Kholia <dhiru.kholia@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Reproducible Builds for Fedora
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 12/03/2013 08:50 PM, Jamie Strandboge wrote:
-> 
-> Hi,
-> 
-> I was looking at https://bugs.launchpad.net/ossa/+bug/1247675 and
-> it looks like upstream Horizon got CVE-2013-6406 assigned
-> (referenced in the bug).
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=730752 also
-> references this Launchpad bug, but does not reference a CVE.
-> 
-> Secunia http://secunia.com/advisories/55770 references
-> CVE-2013-6406.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-6858
-> references the Launchpad bug and the Secunia advisory, but has a
-> different CVE. The only reference I found to CVE-2013-6858 was the
-> RedHat bug.
-> 
-> Is CVE-2013-6858 simply a duplicate of CVE-2013-6406 or were these
-> supposed to be split out for some reason?
-> 
-> Thanks
+I have been working on having Reproducible Builds in Fedora for some
+time.
 
-It would appear I missed Mitre's assignment of CVE-2013-6406 (it was
-assigned 11-23, I assigned mine 11-28, confirmed I got the email,
-sigh, my bad). So a clear duplicate, please REJECT CVE-2013-6406 as it
-is a duplicate of CVE-2013-6858.
+At this point, I think I have something demoable. Ensuring Reproducible
+Builds is a big task and I want your feedback, ideas, code and support.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Please see https://github.com/kholia/ReproducibleBuilds for details.
 
-iQIcBAEBAgAGBQJSnqrIAAoJEBYNRVNeJnmTT9QP/1MUTokTJ3un3qtZGDPxUL6D
-NyLPCAREGnzD/eHujN6fxr4svQrZHes6qOnPZh3qul08PpXfdqzAtvLVbGGawA/X
-eR05TDzCdRtzlecwF0mUrNi+fgcCPueBZrvUBmO68DltOBoRzfLMJmVqbQh52Ex2
-ErvakEptJ7EV7wxZ0Un851+izR8+rYbNzFld9pZ/zfWxMuaz9o+kYk86NHKJdTTw
-AXuXyfxunUE6tcTEociRfeFdLVfqqcLpzCLsNbSkrzEConqY6AGoO5AIkN1MEJ1d
-gL0IjOViOk9MHEJsqJAif8bhuX508I0RDc2+kF6RkWja7I+zq0+Z7Uj4g8XDV89F
-mLK0SdF70PJxgu4yFz144WEmy0xwz+VFM2JS0P+MvDYG5AhQetnIpXf61Xv9nb5G
-bJc79VnZ3lLKS16GPJHnQp/B43ndf5pCgW/vPTCeCS0A+zcko5xCIPurSnE3knE8
-ElxsQJUMGfZyMh1UYY+Pr5LwfWmZKNru6GqqXxLGD1wkNnErEgvicBqfW/nRM8Zl
-66vy0kZpOhFkYaD/mIicKc2gXU5dCrvNyohW+K/sWwqi0VKcjIe9hZCE683gBEU4
-wcIx4y9JrO6J9zuZaXXAoWl0ZUkHr7l88FEbWYxF03JDdzNbivgYWcX37HdxilUO
-d9jUoV28XQs2xPQby5A/
-=tMnO
------END PGP SIGNATURE-----
+I would like to thank Debian and Ubuntu folks for starting similar
+projects (and inspiring this work).
+
+Reproducible Builds
+===================
+
+It should be possible to reproduce every build of every package in
+Fedora.
+
+We want to be able to show that our binary was the result of our source
+code from our compiler and nobody added anything along the way.
+
+Can we (upstream / vendor) show that one of our rpms was built from the
+source we ship?
+
+It should be possible for the users to verify that the binary matches
+what the source intended to produce, in an independent fashion. We (the
+distribution provider) shouldn't be forced to say "Trust Us" to our
+users at all.
+
+Steps Involved
+==============
+
+* Recording the build environment (DONE)
+
+  - Koji does this automatically :-)
+
+* Re-producing the build environment (DONE)
+
+  - Retrieve "brootid" (buildrootID) corresponding to the NVR we want to
+    test from Koji (DONE)
+
+  - Replicate this buildroot (DONE)
+
+  - Create replica build environment using "Mock" (DONE)
+
+* Do re-builds locally using mock (DONE)
+
+* Verify new build against upstream (DONE, Steve's script works great)
+
+Current State
+=============
+
+* Packages like git, john and qpdf are 100% reproducible as far as code
+  is concerned :-)
+
+*  We also support "Recursive Verification". For example, if building
+   "Z" requires installing "Y" RPM, then, once we have verified that Z
+   is OK, we can ask our tool to verify "Y" too and so on.
+
+Current Challenges
+==================
+
+See http://tinyurl.com/ReproducibleBuildsProblems
+
+* python-epydoc will add timestamps to the HTML file it produces (
+  needs FIXING).
+
+* javadoc will add timestamps to the HTML file it produces (needs
+  FIXING).
+
+Links
+=====
+
+https://wiki.debian.org/ReproducibleBuilds
+
+http://fedoraproject.org/wiki/Releases/FeatureBuildId#Unique_build_ID
+
+http://blogs.kde.org/2013/06/19/really-source-code-software
+
+https://blog.torproject.org/blog/deterministic-builds-part-one-cyberwar-and-global-compromise
+
+https://trac.torproject.org/projects/tor/ticket/5837
+
+https://trac.torproject.org/projects/tor/ticket/3688
+
+http://bazaar.launchpad.net/~ubuntu-security/ubuntu-security-tools/trunk/files/head:/package-tools/
+
+-- 
+Dhiru
