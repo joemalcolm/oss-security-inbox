@@ -1,25 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/1
-Message-ID: <CAA7hUgE0Wn5K-cSHzpw9O_0RMZrv4ctyo+aCJmXmqsnje+5REg@mail.gmail.com>
-Date: Wed, 29 May 2013 11:18:06 +0200
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/4
+Message-ID: <2836108.mUalApn0j6@x2>
+Date: Wed, 25 Sep 2013 09:59:59 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: libraw: multiple issues
+Cc: Sebastian Krahmer <krahmer@...e.de>
+Subject: Re: Reproducible Builds for Fedora
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+Hello,
 
-On 28 May 2013 19:58, Kurt Seifried <kseifried@...hat.com> wrote:
-> On 05/28/2013 02:43 AM, Raphael Geissert wrote:
->> So there's a double-free (fixed in 0.15.2[3])
+On Wednesday, September 25, 2013 10:08:01 AM Sebastian Krahmer wrote:
+> I was checking the rpm-compare how it actually is doing the compre
+> and you have:
+> 
+> [...]
+>                 base=`basename $f`
+>                 objdump -d rpm1/$f | grep -v $base > dump1
+>                 objdump -d rpm2/$f | grep -v $base > dump2
+>                 diff -u dump1 dump2 > /dev/null
+>                 if [ $? -ne 0 ] ; then
+>                           echo "File disassembly differs $f"
+>                           cnt=`expr $cnt + 1`
+>                 fi
+> [...]
+> 
+> for ELF files and doing a sha256sum for other file types. My concern is
+> that attackers could construct a package that contains function-names that
+> match the basename of the binary that you are checking.
 
-https://github.com/LibRaw/LibRaw/commit/19ffddb0fe1a4ffdb459b797ffcf7f490d28b5a6
+Thanks for the feedback. I think the 'grep -v' can be replaced with sed 
+'1,2d'. Its purpose was to delete the file path that objdump inserts at the top 
+which causes miscompares.
 
->> and a buffer overflow (fixed in 0.15.1[2]).
-
-https://github.com/LibRaw/LibRaw/commit/2f912f5b33582961b1cdbd9fd828589f8b78f21d
-
-Cheers,
---
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+-Steve
