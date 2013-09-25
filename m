@@ -1,41 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/26
-Message-ID: <CAHohh88tPm7F+Sxp3jZ6X-sftZp0_jx_MoGNzPnebqh2y7Ccxg@mail.gmail.com>
-Date: Thu, 21 Feb 2013 23:51:16 +0100
-From: Anders Petersson <anders@....se>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/11
+Message-ID: <5243043D.5000409@redhat.com>
+Date: Wed, 25 Sep 2013 09:41:49 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Henri Salo <henri@...v.fi>, Agostino Sarubbo <ago@...too.org>, security-alert@...nx.org
-Subject: Re: CVE request: nginx world-readable logdir
+CC: Chris Reffett <creffett@...too.org>, mike.gabriel@...-netzwerkteam.de
+Subject: Re: CVE request: X2Go server
 Content-Type: text/plain; charset=utf-8
 
-2013/2/21 Anders Petersson <anders@....se>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> However on Debian Squeeze the logs themselves are not world-readable (at
-> least on my system):
+On 09/24/2013 12:33 PM, Chris Reffett wrote:
+> Hi all, I couldn't find a CVE, so I would like to request one for
+> a vulnerability in X2Go Server. The vendor reported an issue where
+> a remote user could execute arbitrary code as the x2go user,
+> apparently by leveraging a setgid executable which did not have a
+> hardcoded path to "libx2go-server-db-sqlite3-wrapper.pl". [1] is
+> the commit fixing the vulnerable code, [2] is the upstream release
+> announcement.
+> 
+> Thanks, Chris Reffett
+> 
+> 
+> [1] 
+> http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=42264c88d7885474ebe3763b2991681ddfcfa69a
 >
-> $ ls -la /var/log/nginx/
-> total 452
-> drwxr-xr-x 2 root     root  4096 Feb 21 06:25 .
-> drwxr-xr-x 9 root     root  4096 Feb 21 06:25 ..
-> -rw-r----- 1 www-data adm    934 Feb 21 18:40 access.log
-> -rw-r----- 1 www-data adm  20134 Feb 21 03:46 access.log.1
+> 
+[2]
+> https://lists.berlios.de/pipermail/x2go-announcement/2013-May/000125.html
 >
+> 
+Please use CVE-2013-4376 for this issue.
 
-Apologies for the noise, Henri is absolutely correct. nginx on Debian
-Squeeze is affected. My observation is merely an artifact of the
-logrotation which fixes the permissions in a cron-job (hence if you have
-the logrotate package installed on Debian Squeeze the logs will have
-correct permissions as soon as the logs have been rotated once, but left to
-it's own devices nginx will create the log file world-readable, also the
-nginx package does not depend on the logrotate package so it may not be
-installed).
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-# rm /var/log/nginx/access.log
-# service nginx restart
-$ ls -l /var/log/nginx/
-total 1088
--rw-r--r-- 1 root     root     0 Feb 21 23:31 access.log
-
---
-Anders Petersson
-
+iQIcBAEBAgAGBQJSQwQ9AAoJEBYNRVNeJnmTOecP/jwT6Mm4bCyevHTlX4dFE7s2
+8WYVKrPnMAInp2cZmPRj8U7H/tsd4JO13ZLz7FdeG4uXWwoOUMn9RFEGPZ3WKN+S
+Ey5+OHT1ZHIc9OJLgnTpoMNY+B7u72F3p0EeXhPPjIPtv3WBw7ZTDk3Bb/X3bcKy
+AoUv3WJ56OSR/bB5N97PmhC+7+cXW725bWGQg7E3aSYV8zSDAv8UbGJU0GZNPMEq
+XV0e1Ah/ys+rvHkVYN46/pdg2HqkVk/fSDGwDQsP9sh7mSHJw8cZ1NnXRXPrJE5W
+cVBe9mHZCQE7g9GEdJtUThsCcY2rjkjIfTsHhGUvhR8+9pQbtZCiYzZbuw+GfufD
+ErgBZzzHnBbH6lDvWQsj8emsTuhcSFXAgLI9Oj9iq5O1K/NdGBOuEsE/qCrIKdey
+WTQvGLZLm9tSRAPN83inlw5mroVvjcLzj8mapqRL/FfuUe3s/vYGzrHeLpAts4vd
+HvuGDOdlBCRI2FpO3Kxh7qb/i+mPRxC8539J1sygKHcj792bPlRfuXfOjtS+uN+e
+6QXup9ODfbsGCvZJoh1JK46X/cp81UEXSwQX1+LVLtzbBn6vpIUAizOmjvy3FG46
+4N1dFZ1C2b0pYVj0U58xik0cIsdVTr22IgshIBgwcygCXhIitXDV7k62vRvof8WG
+VP0c3pp8zBgwCaiVcaBf
+=N2gC
+-----END PGP SIGNATURE-----
