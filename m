@@ -1,45 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/16
-Message-ID: <20130429195023.GA18654@frohike.xs4all.nl>
-Date: Mon, 29 Apr 2013 21:50:23 +0200
-From: Peter Bex <Peter.Bex@...all.nl>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: OS command injection vulnerability in Chicken Scheme
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/9
+Message-ID: <5243047E.8070502@redhat.com>
+Date: Wed, 25 Sep 2013 09:42:54 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Joel Weinberger <jww@...omium.org>
+Subject: Re: Re: browser document.cookie DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 29, 2013 at 01:33:12PM -0600, Kurt Seifried wrote:
-> > The full announcement is here: 
-> > http://lists.nongnu.org/archive/html/chicken-announce/2013-04/msg00000.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 09/20/2013 09:52 AM, Joel Weinberger wrote:
+> Just an FYI, we have fixed this in tip of the tree Chromium: 
+> https://src.chromium.org/viewvc/chrome?revision=224268&view=revision
+>
 > 
-> Please use CVE-2013-2024 for this issue.
-
-Thank you.
-
-> > By the way, I'm confused as to why the CVEs I've requested so far
-> > don't show up in NVD.  For example, 
-> > http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-6122 says
-> > the CVE does not exist, but Kurt assigned it in February: 
-> > http://www.openwall.com/lists/oss-security/2013/02/08/2
-> > 
-> > The other CVE numbers in that mail produce a "not found" page as
-> > well and an NVD database search for "chicken" turns up nothing
-> > related to Chicken Scheme.  The page says the database was last
-> > updated April 19th 2013, so that's not the cause either.
+https://code.google.com/p/chromium/issues/detail?id=238041
+> --Joel
 > 
-> Because Mitre has a large backlog of CVE's to research and write up.
-> Submitting researched/written entries to them will probably result in
-> your entries being posted faster. Try to remember that CVE pushed
-> thousands of these a year, the volume is considerable.
 
-What sort of information would they require, besides the advisory
-I posted in my mail?  If there's something I can do better to make
-their lives easier, I will certainly consider it!
+So I assume Google will not be handling CVE assignments for chromium?
 
-> Apologies for the late reply
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-No problem!
-
-Cheers,
-Peter
--- 
-http://www.more-magic.net
+iQIcBAEBAgAGBQJSQwR+AAoJEBYNRVNeJnmToo0P/3GFBzoS3BhfmWV68g/3tXOh
+hVEfYDI/KuDokcy5F3W1skOEs7ZjE55oM+CIOEYfDmIFKwho4/vRLi8Pm1U9XS/A
+wZBFPFAGrcC/0Ypb66V5nvFESJ3ImyMitSpRTXvXfW2jrRgzCrHSjpDS21cY7y5+
+AxkDAUpxSZwegElHcmGkFY6d+kPPAdxMT5HkYrLxnfOyWiMVpuAHjUNo0XyQ4O9s
+ya8vRZ/63dSBryk5DnHw8F4bgb7ESY+E7NC4siaea7UX99TScGQGaQFQ515L67+5
+Xs7q/H0AwUSpZaRWl4k/9IRl5fY0kwUBeFUoxft5zK/+ICsKtRbkCq6Uh5ery2f6
+VwHMCpPCaxQivp8dUYLz46yJG0zUnhl0KE/gUByfgibuUA2UCLBW1uxbyb21j3Oh
+2eoPfDE8vHfFjahKLmUIE1R1foHfvq6N+UwTvXrryQTCDgdTRyneovqPq62GzLcf
+1J2/lDUbMMsChxrMmA9blneGvc+fWq3KjA1eLk0CER4Jsujx1WYKeIM6yhUzCaaK
+jBPeolPZuE5apDKrU3epjUX8gaa2f1iEcXAj5eLJBd4M0syOhVSuPUs6HVxzdtf1
+nlLVFnYsEqfyisKkPZ/MuqJyg8AgYcWLg/WWA1VWVG8RNs+w1GntsLY9/2hAXBBq
+NHG/aJBTD4DMH8V3Kvf5
+=KsUn
+-----END PGP SIGNATURE-----
