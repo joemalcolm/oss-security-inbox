@@ -1,101 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/8
-Message-ID: <2cedcd8318b3c8bf134f88e463aedda9.squirrel@aphrodite.kinkhorst.nl>
-Date: Tue, 16 Apr 2013 14:00:43 +0200
-From: "Thijs Kinkhorst" <thijs@...ian.org>
-To: "Open Source Security" <oss-security@...ts.openwall.com>
-Subject: CVE Request: MediaWiki Security Releases 1.20.4 and 1.19.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/5
+Message-ID: <20130925141347.GC4589@mars-attacks.org>
+Date: Wed, 25 Sep 2013 16:13:47 +0200
+From: Nicolas Vigier <boklm@...s-attacks.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Reproducible Builds for Fedora
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Wed, 25 Sep 2013, Steve Grubb wrote:
 
-Please assign CVE names for the issues below in Mediawiki.
-The announcement contains references to bug numbers which have all the
-details.
+> Hello,
+> 
+> On Wednesday, September 25, 2013 10:08:01 AM Sebastian Krahmer wrote:
+> > I was checking the rpm-compare how it actually is doing the compre
+> > and you have:
+> > 
+> > [...]
+> >                 base=`basename $f`
+> >                 objdump -d rpm1/$f | grep -v $base > dump1
+> >                 objdump -d rpm2/$f | grep -v $base > dump2
+> >                 diff -u dump1 dump2 > /dev/null
+> >                 if [ $? -ne 0 ] ; then
+> >                           echo "File disassembly differs $f"
+> >                           cnt=`expr $cnt + 1`
+> >                 fi
+> > [...]
+> > 
+> > for ELF files and doing a sha256sum for other file types. My concern is
+> > that attackers could construct a package that contains function-names that
+> > match the basename of the binary that you are checking.
+> 
+> Thanks for the feedback. I think the 'grep -v' can be replaced with sed 
+> '1,2d'. Its purpose was to delete the file path that objdump inserts at the top 
+> which causes miscompares.
 
+Or something like this ?
 
-Thanks,
-Thijs
-
----------------------------- Original Message ----------------------------
-Subject: [MediaWiki-announce] MediaWiki Security Release: 1.20.4 and 1.19.5
-From:    "Chris Steipp" <csteipp@...imedia.org>
-Date:    Mon, April 15, 2013 22:37
-To:      mediawiki-announce@...ts.wikimedia.org
-         "MediaWiki-l" <mediawiki-l@...ts.wikimedia.org>
-         "Wikimedia developers" <wikitech-l@...ts.wikimedia.org>
---------------------------------------------------------------------------
-
-I would like to announce the release of MediaWiki 1.20.4 and 1.19.5.
-These releases fix 3 security related bugs that could affect users of
-MediaWiki. Download links are given at the end of this email.
-
-* An internal review discovered that specially crafted Lua function
-names could lead to XSS.
-<https://bugzilla.wikimedia.org/show_bug.cgi?id=46084>
-
-* Daniel Franke reported that during SVG parsing, MediaWiki failed to
-prevent XML external entity (XXE) processing. This could lead to local
-file disclosure, or potentially remote command execution in
-environments that have enabled expect:// handling.
-<https://bugzilla.wikimedia.org/show_bug.cgi?id=46859>
-
-* Internal review also discovered that Special:Import, and
-Extension:RSS failed to prevent XML external entity (XXE) processing.
-<https://bugzilla.wikimedia.org/show_bug.cgi?id=47251>
-
-
-Full release notes for 1.20.4:
-<https://www.mediawiki.org/wiki/Release_notes/1.20>
-
-Full release notes for 1.19.5:
-<https://www.mediawiki.org/wiki/Release_notes/1.19>
-
-For information about how to upgrade, see
-<https://www.mediawiki.org/wiki/Manual:Upgrading>
-
-
-**********************************************************************
-   1.20.4
-**********************************************************************
-Download:
-http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.4.tar.gz
-
-Patch to previous version (1.20.3):
-http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.4.patch.gz
-
-GPG signatures:
-http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.4.tar.gz.sig
-http://download.wikimedia.org/mediawiki/1.20/mediawiki-1.20.4.patch.gz.sig
-
-Public keys:
-https://secure.wikimedia.org/keys.html
-
-
-**********************************************************************
-   1.19.5
-**********************************************************************
-Download:
-http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.5.tar.gz
-
-Patch to previous version (1.19.4):
-http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.5.patch.gz
-
-GPG signatures:
-http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.5.tar.gz.sig
-http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.5.patch.gz.sig
-
-Public keys:
-https://secure.wikimedia.org/keys.html
-
-**********************************************************************
-   Extension:RSS
-**********************************************************************
-Information and Download:
-https://www.mediawiki.org/wiki/Extension:RSS
-
-_______________________________________________
-MediaWiki announcements mailing list
-To unsubscribe, go to:
-https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce
+  (cd rpm1; objdump -d $f > ../dump1)
+  (cd rpm2; objdump -d $f > ../dump2)
 
