@@ -1,90 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/5
-Message-ID: <20130425055559.GM17095@nef.pbox.org>
-Date: Thu, 25 Apr 2013 07:55:59 +0200
-From: Alistair Crooks <agc@...src.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/13
+Message-ID: <52432664.8030606@redhat.com>
+Date: Wed, 25 Sep 2013 12:07:32 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE request: Simple Machines Forum (SMF) <= 2.0.5 - multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 24, 2013 at 10:19:15PM -0400, Eric H. Christensen wrote:
-> This is a good discussion to have.  I've recently started working on
-> "best practices" articles at Red Hat and feel this would make an
-> excellent article on how we can all improve the security of our
-> source code that inevitably gets pushed into the various
-> distributions. 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 09/25/2013 10:45 AM, Henri Salo wrote:
+> On Wed, Sep 25, 2013 at 02:33:14PM +0000, Moritz Naumann wrote:
+>> This CSRF doesn't work for me on two 2.0.4 installations I tested
+>> on.
 > 
-> What is really the best, most proper way of desiminating releases? 
-> I really don't like the use of MD5 for checksums (I'd prefer
-> something out of the SHA-2 or SHA-3 family of hashing algorithms)
-> and I really *do* like the use of PGP for signing the code.  I do
-> foresee some practices within the use of PGP that might not be
-> great, though.
+> You are correct.
 > 
-> So what is the best way of authenticating the source code?
+>> Both return Unable to verify referring url. Please go back and
+>> try again.
+> 
+> Actual error message for me:
+> 
+> "Your session timed out while posting. Please go back and try
+> again."
+> 
+> I'm really sorry about this. I even tested using different computer
+> so I don't know what I previously did wrong/different. Thank you
+> for correcting this.
+> 
+> --- Henri Salo
+> 
 
-My apologies - obviously I didn't make myself clear previously.
+So to confirm: the XSS are legit, the CSRF is confirmed to not work?
+thanks.
 
-Verifying a signature on a (SHA1, by default) digest will get you the
-information that a person with access to the private key said that the
-digest was calculated at a certain time.  It also leads to the
-following questions:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-Q1. who has access to the private key?
-
-A1.  divulgence of creds and the key itself may be known or not, so
-even with the most stringent key protection and hygiene in place, the
-answer to (1) is "unknown"
-
-Q2. is the key protected by a passphrase?
-
-A2. We'll never know. It's irrelevant too, due to Q1/A1
-
-Q3. has the key expired or been revoked?
-
-A3. At last, one we can answer. Of course we'll know when it expires.
-Unfortunately, revocation may make itself to key servers, maybe not.
-And even if it did, what was the last time of refresh for the public
-key that we have?
-
-Q4. where's the public key for this?
-
-A4. could be anywhere. If it's on one of the HKP servers, then cool.
-Not, however, that it can be verified - I know of at least one person
-who has had pubkey information uploaded to the key servers for a key
-he had no knowledge about. Anyone can put whatever email address into
-the userid that they want. If it came with the tarball, ho hum.
-
-Q5. what was signed?
-
-A5.  if it comes out as a text document, according to RFC 4880, it has
-some weird properties; hopefully all tar files will be binary. 
-Whatever, what was signed was something with the same digest as the
-tarball.  Default algorithm is SHA1.  Second pre-image attacks on SHA1
-are getting closer to being possible, and there are means to modify
-entries in the tarball so that an attack is much easier.
-
-Q6. Is this a DSA key?  (DSA keys rely on good entropy at signing
-time) If so, how good was the entropy on the machine used to generate
-the signature?
-
-A6.  Again, unknown.
-
-Q7. Has someone found the k value for Q6/A6 previously?
-
-A7. They might have done. We'd only know if they told us.
-
-Q8. Did anyone have root access to the machine where gpgagent was
-running?
-
-A8. unknown
-
-So, all in all, what you have is a digest, signed by someone who knows
-the key, or who has access to the creds (if any) for the key, or who
-has found out the key creds, albeit with timestamp info for when the
-signature took place.
-
-I'm not sure what using PGP gains us?
-
-Regards,
-Alistair
+iQIcBAEBAgAGBQJSQyZkAAoJEBYNRVNeJnmT8bYP/3yOts16Cnj16c3tSBU8VIkM
+5SnB5xdCijsJ46m8X6CcsdHE78jYI+3hc+8OCqnUim+ukyN1wlRDBwNvmSkj4bjG
+JneJowablkQ3nS44rOjh/mRV1U9HLfZYttKUfhc3O3SMcMxBVx6QEO811dTAN8r7
+TZ90lR1Qgr/g5H6Ka74LlFaNH+8iPF7kjxTWWowp1Un45ptxnNtVORHr9/BVA5yG
+DHd8SlG+aSyZsEdbN2F8MlCyt1SmrG90OQ22Bg2P/M8U1gASo84vvgheBhHqoyEm
+P2fPAdpzqKi7XZGtxVXChttRVqxbS2OW2GxsbbFcFLJXeYQJDiJqyENxlO8TAh52
+UV+MOdRhMaBCAaciEcmCGck0SyN7/ySGQ+k9oHSOJLVa2vykJFuoVY0EBUSb8aZv
+G7Aev6pewx/T4ryc75MvVxstkc8QaRxgLUJ44DHQN50AhDyfNgjotEaVd2tQ7YvV
+Jnr7BexNiWRdGFGmDBTp7Ggqc17dTUyyIFr4FFBpUehp5Ot+DI69ANFwYwIiSQxl
+4tjg7gCy9OzkVwtnA+3JtrZYfBa4Kws3EHHAz1b1zYWx3do5pOcG9994e/WFArBc
+0zy/7JE5JPdypoCrsbE24hLiAW4V3x8MWONzECMWX+Lkzp2yLHrFLbREi5wCMXhk
+ErLr2YveBZT70qikdnlv
+=dUD4
+-----END PGP SIGNATURE-----
