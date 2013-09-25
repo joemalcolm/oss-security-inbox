@@ -1,18 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/04/12
-Message-ID: <CABLZJbxK4iUoppGTDw-v9-zBUQjDQgn95iRsDk+aBhuTGfF4SA@mail.gmail.com>
-Date: Thu, 4 Jul 2013 21:06:43 +0200
-From: Maksymilian <max@...t.cx>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/3
+Message-ID: <5242B0C2.4010004@suse.de>
+Date: Wed, 25 Sep 2013 11:45:38 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: glibc getaddrinfo() stack overflow
+Subject: Re: Reproducible Builds for Fedora
 Content-Type: text/plain; charset=utf-8
 
-> Perhaps there are some missing CVE ids?
+Dhiru Kholia wrote:
+> I have been working on having Reproducible Builds in Fedora for some
+> time.
+>
+> At this point, I think I have something demoable. Ensuring Reproducible
+> Builds is a big task and I want your feedback, ideas, code and support.
 
-In 2011 the problem with alloca() was not defined as a vulnerability.
+In openSUSE we have reproducible binaries to a certain extend. That
+project was started some years ago with different (non-security)
+intentions. Since the build service rebuilds packages automatically
+if any depending package changes, a way was needed to avoid publishing new
+rpms if the build result result didn't actually change. So there are
+now some scripts that automatically run at the of a new build and
+determine with some heuristics whether the new rpms match the old
+rpms¹. You can see the output of that script in every build log in
+openSUSE:Factory.
 
-http://sourceware.org/bugzilla/show_bug.cgi?id=12671
+cu
+Ludwig
 
-Maksymilian Arciemowicz
-http://cxsecurity.com/ <http://cxsec.org/>
+https://build.opensuse.org/package/show/openSUSE:Factory/build-compare
 
+-- 
+  (o_   Ludwig Nussel
+  //\
+  V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
