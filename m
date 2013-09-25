@@ -1,66 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/14/2
-Message-ID: <5191E261.5090406@redhat.com>
-Date: Tue, 14 May 2013 01:06:09 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/15
+Message-ID: <20130925204306.GA5877@eldamar.local>
+Date: Wed, 25 Sep 2013 22:43:06 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: John Lightsey <john@...nuts.net>
-Subject: Re: CVE Request: Storable::thaw called on cookie data in multiple CPAN modules
+Cc: security@...ntu.com, security@...ian.org, cve-assign@...re.org
+Subject: [notification] txt2man unsafe use of tempoarary files
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-On 05/12/2013 08:38 PM, John Lightsey wrote:
-> Hi everyone,
-> 
-> Several CPAN modules follow the same pattern of calling
-> Storable::thaw() on session data stored client side with no
-> signature verification mechanisms in place to prevent tampering.
-> Perl's Storable module was recently documented as being unsafe for
-> use with untrusted inputs:
-> 
-> http://perl5.git.perl.org/perl.git/commit/664f237a84176c09b20b62dbfe64dd736a7ce05e
->
-> 
-> 
-> The vulnerable modules are:
-> 
-> Both App::Session::Cookie and App::Session::HTMLHidden in the 
-> App::Context bundle. 
-> https://rt.cpan.org/Ticket/Display.html?id=85215
+This is a notification that CVE-2013-1444 was assigned to the
+following issue[1] (affecting Debian and derivatives syncing from
+Debian the txt2man package):
 
-Please use CVE-2012-6141 for this issue
+txt2man uses tempoary files in /tmp/ (specific /tmp/2222), Debian
+applied a patch including:
 
-> HTML::EP::Session::Cookie in the HTML::EP bundle. 
-> https://rt.cpan.org/Ticket/Display.html?id=85216
+echo $post > /tmp/2222
 
+in txt2man. This reported by Patrick J Cherry.
 
-Please use CVE-2012-6142  for this issue
+References:
 
-> Spoon::Cookie in the Spoon bundle. 
-> https://rt.cpan.org/Ticket/Display.html?id=85217
+ [1] http://bugs.debian.org/724614
 
-Please use CVE-2012-6143 for this issue
+Regards,
+Salvatore
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRkeJhAAoJEBYNRVNeJnmT60oQAJC41gsGkHU1SkjCkdNYkgcH
-av4WLfibJX+c2otdNJP7V88mytskcWw61SDMtS1EfS/EmZyGiZk+e0lDeg9x3yF/
-W9h8Bx5WElKSEb5aAus/m3Wddk41vNEAITwPv8DH3kNKZbOhHOthEVYio8PLO3bd
-KNW1hsQ+Pt5F7/GqNDKDEt3EyXkHIWGy9HjKPJddkFz+OwOgvWC1Ud6Wr0lSNBIM
-cGyMOrJjbnj/MAQG5RLXggGAinRUpYObzVdw7M7dx1J33dGVxjsNOpNdhGdzVa8B
-VWxXdoCatDf9WJzJ6Vgezs5CDIZpInA4ulclQhxFgQXOCDQwk0KRuV4rEG41EDsb
-VTiCCN86dWC5mgM5NKGC/xElZNl9R1qRIm5wCJ+HKo9Pe+vI8Og1X8lfXXLzGldL
-R+fkQ1m9fV49Ew4puTmngOx/4w249f99DGgrzDEUwt6V/QE7jAu5PtW/eBvOY7rU
-S4D9r27L9yJPGM+IXbkUGmyG9BFmWJvZ0OF5I8Bp8DbV+rJ2mlotNL0mSwhKAr/l
-Z5SKnNPBbwT8SDokvqyf33KUl92ngThGLUCF9ZZP5LPPr8n7mi2d+ksGDgELBEy9
-g2LM//sXKXIjvahKUBsz4KKDQCM0xwHLe6A6wYSu3cbBl5HjpmyA5hHRrgZfcjSH
-u0VVTwb16RR3fQk6Ys0Y
-=MBVM
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
