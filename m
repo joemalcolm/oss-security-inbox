@@ -1,28 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/11/3
-Message-ID: <20130211111258.GB30292@kludge.henri.nerv.fi>
-Date: Mon, 11 Feb 2013 13:12:58 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/10
+Message-ID: <20130925160754.GA2503@inutil.org>
+Date: Wed, 25 Sep 2013 18:07:55 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Trac Ticket Modification Workflow Permission Restriction Bypass
+Subject: Re: Reproducible Builds for Fedora
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Wed, Sep 25, 2013 at 11:45:38AM +0200, Ludwig Nussel wrote:
+> Dhiru Kholia wrote:
+>> I have been working on having Reproducible Builds in Fedora for some
+>> time.
+>>
+>> At this point, I think I have something demoable. Ensuring Reproducible
+>> Builds is a big task and I want your feedback, ideas, code and support.
+>
+> In openSUSE we have reproducible binaries to a certain extend. That
+> project was started some years ago with different (non-security)
+> intentions. Since the build service rebuilds packages automatically
+> if any depending package changes, a way was needed to avoid publishing new
+> rpms if the build result result didn't actually change. So there are
+> now some scripts that automatically run at the of a new build and
+> determine with some heuristics whether the new rpms match the old
+> rpms¹. You can see the output of that script in every build log in
+> openSUSE:Factory.
 
->From Secunia: A security issue has been reported in Trac, which can be exploited
-by malicious users to bypass certain security restrictions. The security issue
-is caused due to the application not properly checking workflow permissions
-before modifying a ticket, which can be exploited to change the status and
-resolution of tickets without having proper permissions.
+There are similar efforts for Debian:
+https://wiki.debian.org/ReproducibleBuilds
 
-http://secunia.com/advisories/39123/
-http://osvdb.org/show/osvdb/63317
-
-The security issue is reported in versions prior to 0.11.7.
-http://trac.edgewall.org/wiki/ChangeLog#a0.11.7
-
-Could you assign CVE-2010-XXXX, thank you. Please double verify this hasn't been
-assigned. I tried my best to avoid duplicates :)
-
---
-Henri Salo
+Cheers,
+        Moritz
