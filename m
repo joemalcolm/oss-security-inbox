@@ -1,31 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/15/1
-Message-ID: <CAGyNYUPfqUgxkaME0OBGqO+F1JerJEq973zxjUGqSfiXS71XWw@mail.gmail.com>
-Date: Wed, 15 May 2013 09:26:30 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: linux kernel perf out-of-bounds access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/2
+Message-Id: <E1VOkV5-0005Sa-KJ@xenbits.xen.org>
+Date: Wed, 25 Sep 2013 08:31:11 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 62 (CVE-2013-1442) - Information leak on AVX and/or LWP capable CPUs
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 14, 2013 at 8:25 PM, Marc Deslauriers <
-marc.deslauriers@...onical.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Hello,
->
-> Is there a CVE for this? If not, could one be assigned, please?
->
-> https://patchwork.kernel.org/patch/2441281/
->
-> 8176cced706b5e5d15887584150764894e94e02f
->
-> (BTW, there is currently an exploit for this going around...)
->
+            Xen Security Advisory CVE-2013-1442 / XSA-62
+                              version 2
 
-Nowhere did it say it is a security fix. Fix available since April 13.
-s@...s not aware too. Awesome.
+            Information leak on AVX and/or LWP capable CPUs
 
-Seriously, surely by now we should all know that silent fixes are not the
-wisest thing to do.
+UPDATES IN VERSION 2
+====================
 
-Eugene
+Public release.
 
+ISSUE DESCRIPTION
+=================
+
+When a guest increases the set of extended state components for a vCPU saved/
+restored via XSAVE/XRSTOR (to date this can only be the upper halves of YMM
+registers, or AMD's LWP state) after already having touched other extended
+registers restored via XRSTOR (e.g. floating point or XMM ones) during its
+current scheduled CPU quantum, the hypervisor would make those registers
+accessible without discarding the values an earlier scheduled vCPU may have
+left in them.
+
+IMPACT
+======
+
+A malicious domain may be able to leverage this to obtain sensitive information
+such as cryptographic keys from another domain.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.0 and onwards are vulnerable when run on systems with processors
+supporting AVX and/or LWP.  Any kind of guest can exploit the vulnerability.
+
+In Xen 4.0.2 through 4.0.4 as well as in Xen 4.1.x XSAVE support is disabled by
+default; therefore systems running these versions are not vulnerable unless
+support is explicitly enabled using the "xsave" hypervisor command line option.
+
+Systems using processors supporting neither AVX nor LWP are not vulnerable.
+
+Xen 3.x and earlier are not vulnerable.
+
+MITIGATION
+==========
+
+Turning off XSAVE support via the "no-xsave" hypervisor command line option
+will avoid the vulnerability.
+
+CREDITS
+=======
+
+Jan Beulich discovered this issue.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa62.patch                 Xen 4.2.x, 4.3.x, and unstable
+xsa62-4.1.patch             Xen 4.1.x
+
+$ sha256sum xsa62*.patch
+3cec8ec26552f2142c044422f1bc0f77892e681d789d1f360ecc06e1d714b6bb  xsa62-4.1.patch
+364577f317a714099c068eb1ab771643ada99b5067fdd1eb5149fa5db649b856  xsa62.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJSQp1tAAoJEIP+FMlX6CvZvMYIAKe6fyuMdVlP3gJVqAnttQb7
+E/TuXwIKBgUFNu34SdkGd6g1l13pfSeiovDD56SqNj5kwCD0rb6+LgHu/uqVsxSn
+w+JtPGFXQpAfNzEcDPqYP9ArJIp63ogC9CLwk9KcDoy0FnxpHFD3Ke5C62G83DAJ
+qhjEpknTQCwjXBG6fYXjYKhFR8kzkWHGRpECE3EwlLo1gWxQj8/p/TopY8kzmA5m
+ssDuM/XzBHjI+7NwiB5oNuZfS8Om+UVQUilv+bjarh9zJy55FGSL1gJzdcXGhFx5
+sXw/PcciIAcCC8k8f2+tYY1eN9Orthw81YMh9Q/n6JC4RMgBYK3tkZ9AsOR7H9s=
+=Qbk6
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa62-4.1.patch" of type "application/octet-stream" (1397 bytes)
+
+Download attachment "xsa62.patch" of type "application/octet-stream" (1350 bytes)
