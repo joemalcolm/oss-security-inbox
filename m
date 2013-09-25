@@ -1,20 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/10
-Message-ID: <alpine.LNX.2.00.1307101236140.952@forced.attrition.org>
-Date: Wed, 10 Jul 2013 12:36:32 -0500 (CDT)
-From: security curmudgeon <jericho@...rition.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/16
+Message-ID: <20130925192846.GD14841@dirac.q-ix.net>
+Date: Wed, 25 Sep 2013 21:28:46 +0200
+From: Leon Weber <leon@...nweber.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Re: cryptocat/decryptocat - needs a cve? 
+Cc: sebi@...ecware.net, j.wielicki@...ecware.net
+Subject: CVE request: pyxtrlock
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
+two security issues were found and fixed in pyxtrlock[1], a lightweight X
+screen locker.
 
-In reference to Kurt's post:
-http://seclists.org/oss-sec/2013/q3/66
+• A mis-spelled variable name could cause the program to crash and thus
+  unlock the screen without requiring a password if the erroneous code
+  line was reached, which could be achieved by correctly timing multiple
+  authentication failures.
 
-I went through the CryptoCat changelog, as well as the audit report from 2012 
-and broke out all the issues as I saw them. They are all live on OSVDB, which 
-may help on CVE assignments:
+  This was found by Paul Lhussiez and reported to us at
 
-http://direct.osvdb.org/search?search%5Bvuln_title%5D=cryptocat&search%5Btext_type%5D=titles
+      <https://github.com/leonnnn/pyxtrlock/issues/8>
 
+  Commit containing the fix, and security release announcement:
+
+      <https://github.com/leonnnn/pyxtrlock/commit/297a697ce1543451166a9c85ba1e0dd76fa4ae10>
+      <https://zombofant.net/blog/2013/8/pyxtrlock-release-0.1-130825>
+
+  All versions before release 0.1 or git commit 297a697 are vulnerable.
+
+• Incorrect return value checking after calling XCB library functions
+  led to the program seemingly starting up normally, but leaving the
+  keyboard or mouse not actually locked in case the xcb_grab_*()
+  functions returned an error. There would be no indication for the user
+  that one of the input devices is not locked.
+
+  Commit containing the fix, and security release announcement:
+
+      <https://github.com/leonnnn/pyxtrlock/commit/50a8522392809a5688638d074fb9f84264c8b58d>
+      <https://zombofant.net/blog/2013/9/pyxtrlock-release-0.2-130909>
+
+  All versions before release 0.2 or git commit 50a8522 are vulnerable.
+
+Could CVE-IDs be assigned for these, please?
+
+    -- Leon.        (pyxtrlock maintainer)
+
+[1]: <https://zombofant.net/hacking/pyxtrlock>
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
