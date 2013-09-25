@@ -1,95 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/18/3
-Message-ID: <20130318172117.GB46041@higgins.local>
-Date: Mon, 18 Mar 2013 10:21:17 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2013-1855] XSS vulnerability in sanitize_css in Action Pack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/8
+Message-ID: <20130925145548.GA16748@openwall.com>
+Date: Wed, 25 Sep 2013 18:55:48 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Reproducible Builds for Fedora
 Content-Type: text/plain; charset=utf-8
 
-XSS vulnerability in sanitize_css in Action Pack
+Dhiru, all -
 
-There is an XSS vulnerability in the `sanitize_css` method in Action Pack. This vulnerability has been assigned the CVE identifier CVE-2013-1855.
+I did not review the code, so my reply is based on Sebastian's message only:
 
-Versions Affected:  All.
-Not affected:       None.
-Fixed Versions:     3.2.13, 3.1.12, 2.3.18
+On Wed, Sep 25, 2013 at 10:08:01AM +0200, Sebastian Krahmer wrote:
+>                 base=`basename $f`
+>                 objdump -d rpm1/$f | grep -v $base > dump1
+>                 objdump -d rpm2/$f | grep -v $base > dump2
+>                 diff -u dump1 dump2 > /dev/null
+>                 if [ $? -ne 0 ] ; then
+>                           echo "File disassembly differs $f"
+>                           cnt=`expr $cnt + 1`
+>                 fi
+> [...]
+> 
+> for ELF files and doing a sha256sum for other file types. My concern is
+> that attackers could construct a package that contains function-names that
+> match the basename of the binary that you are checking. The "grep -v"
+> will remove that, leaving a clean compare for injected code like
+> 'call $base' etc. That would leave a wrong feeling about equal binaries.
 
-Impact 
------- 
-Carefully crafted text can bypass the sanitization provided in the `sanitize_css` method in Action Pack.  Impacted code will look like this:
+Ensuring that "objdump -d" has stayed the same between a known-good and
+another build of a binary is not sufficient to tell that the new build
+is not trojaned.  Changes to other sections (e.g., to embedded data that
+the program uses or/and to relocations) or/and to the ELF header may be
+sufficient to introduce meaningful backdoors.
 
-    sanitize_css(some_user_input)
+Recent research:
 
-All users running an affected release should either upgrade or use one of the work arounds immediately. 
+https://www.usenix.org/conference/woot13/weird-machines-elf-spotlight-underappreciated-metadata
 
-Releases 
--------- 
-The 3.2.13 and 3.1.12 releases are available at the normal locations. 
+"Our proof-of-concept toolkit highlights how important it is that
+defenders expand their focus beyond the code and data sections of
+untrusted binaries"
 
-Workarounds 
------------ 
-To work around this issue, you can apply the following monkey patch:
+[ Dhiru, weren't you there in person? ;-) ]
 
-```
-module HTML
-  class WhiteListSanitizer
-      # Sanitizes a block of css code. Used by #sanitize when it comes across a style attribute
-    def sanitize_css(style)
-      # disallow urls
-      style = style.to_s.gsub(/url\s*\(\s*[^\s)]+?\s*\)\s*/, ' ')
+December 2006 paper saying that a related technique has "been used in
+the virus world many years prior to this paper":
 
-      # gauntlet
-      if style !~ /\A([:,;#%.\sa-zA-Z0-9!]|\w-\w|\'[\s\w]+\'|\"[\s\w]+\"|\([\d,\s]+\))*\z/ ||
-          style !~ /\A(\s*[-\w]+\s*:\s*[^:;]*(;|$)\s*)*\z/
-        return ''
-      end
+http://uninformed.org/?v=6&a=3&t=sumry
 
-      clean = []
-      style.scan(/([-\w]+)\s*:\s*([^:;]*)/) do |prop,val|
-        if allowed_css_properties.include?(prop.downcase)
-          clean <<  prop + ': ' + val + ';'
-        elsif shorthand_css_properties.include?(prop.split('-')[0].downcase)
-          unless val.split().any? do |keyword|
-            !allowed_css_keywords.include?(keyword) &&
-              keyword !~ /\A(#[0-9a-f]+|rgb\(\d+%?,\d*%?,?\d*%?\)?|\d{0,2}\.?\d{0,2}(cm|em|ex|in|mm|pc|pt|px|%|,|\))?)\z/
-          end
-            clean << prop + ': ' + val + ';'
-          end
-        end
-      end
-      clean.join(' ')
-    end
-  end
-end
-```
+Besides ELF being Turing-complete on its own, the ELF header may contain
+native executable code too:
 
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
+http://www.muppetlabs.com/~breadbox/software/tiny/teensy.html
 
-* 3-2-css_sanitize.patch - Patch for 3.2 series 
-* 3-1-css_sanitize.patch - Patch for 3.1 series 
-* 3-0-css_sanitize.patch - Patch for 3.0 series 
-* 2-3-css_sanitize.patch - Patch for 2.3 series 
-
-Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
-Credits 
--------
-
-Thanks to Charlie Somerville for reporting this!
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "2-3-css_sanitize.patch" of type "text/plain" (2655 bytes)
-
-View attachment "3-0-css_sanitize.patch" of type "text/plain" (2463 bytes)
-
-View attachment "3-1-css_sanitize.patch" of type "text/plain" (2463 bytes)
-
-View attachment "3-2-css_sanitize.patch" of type "text/plain" (2464 bytes)
-
-Content of type "application/pgp-signature" skipped
+Alexander
