@@ -1,53 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/15/6
-Message-ID: <20130115174912.GA15905@inutil.org>
-Date: Tue, 15 Jan 2013 18:49:12 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/12
+Message-ID: <20130925164547.GB10672@kludge.henri.nerv.fi>
+Date: Wed, 25 Sep 2013 19:45:47 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Curl insecure usage
+Subject: Re: CVE request: Simple Machines Forum (SMF) <= 2.0.5 - multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 15, 2013 at 01:22:09AM -0700, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 12/25/2012 04:07 AM, Moritz M￼hlenhoff wrote:
-> > On Thu, Nov 29, 2012 at 02:49:58PM -0700, Kurt Seifried wrote:
-> >>>> Also can someone collate and post a list of all the other
-> >>>> apps using curl insecurely and need CVE's with appropriate
-> >>>> links to the upstreams/etc? Thanks.
-> >>> 
-> >>> There are some, which are potentially affected, but where 
-> >>> discussion with upstream is still pending.
-> >>> 
-> >>> Shall we go ahead and post them or do you prefer to have them 
-> >>> sorted out with upstream first?
-> >>> 
-> >>> Cheers, Moritz
-> >>> 
-> >> I trust you. Course if you mess up and I assign a bad CVE Steve
-> >> beats me with a stick... ;)
-> > 
-> > Sorry for the late followup and merry christmas to you!
-> > 
-> > There are two more issues related to this, which require CVE IDs
-> > (both also discovered by Alessandro Ghedini <ghedo@...ian.org>:
-> > 
-> > 1. In the implementation of the Falcon programming language: 
-> > (http://www.falconpl.org/)
-> > 
-> > 2. In nuSOAP (http://sourceforge.net/projects/nusoap/)
-> > 
-> > I'll post links with details to the Debian bugs once they've been
-> > filed.
+On Wed, Sep 25, 2013 at 02:33:14PM +0000, Moritz Naumann wrote:
+> This CSRF doesn't work for me on two 2.0.4 installations I tested on.
 
-Here we go:
+You are correct.
 
-CVE-2012-6070 (falconpl):
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=696681
+> Both return
+>   Unable to verify referring url. Please go back and try again.
 
-CVE-2012-6071 (nusoap)
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=696707
+Actual error message for me:
 
-Cheers,
-        Moritz
+"Your session timed out while posting. Please go back and try again."
+
+I'm really sorry about this. I even tested using different computer so I don't
+know what I previously did wrong/different. Thank you for correcting this.
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
