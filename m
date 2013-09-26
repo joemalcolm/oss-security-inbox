@@ -1,21 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/22
-Message-ID: <CAF6rxg=kcgPf1UB8DdCXcLmuL9iDbfXZ+HApgJYZYCnp9dwiEQ@mail.gmail.com>
-Date: Mon, 21 Jan 2013 16:17:43 -0500
-From: Eitan Adler <lists@...anadler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/26/9
+Message-ID: <2390202.3Iz7zfSX5G@x2>
+Date: Thu, 26 Sep 2013 19:46:01 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Whats worth a CVE?
+Cc: Alexander Cherepanov <cherepan@...me.ru>
+Subject: Re: Reproducible Builds for Fedora
 Content-Type: text/plain; charset=utf-8
 
-On 21 January 2013 14:50, Scott Herbert <scott.a.herbert@...glemail.com> wrote:
-> Well the subject sum's the question up really, are their any fixed
-> guidelines for what counts as a CVE and what doesn't? Or is it just up
-> to the CVE pool manager as to what they feel is of note?
+On Friday, September 27, 2013 02:46:33 AM Alexander Cherepanov wrote:
+> On 2013-09-25 18:55, Solar Designer wrote:
+> > Ensuring that "objdump -d" has stayed the same between a known-good and
+> > another build of a binary is not sufficient to tell that the new build
+> > is not trojaned.
+> 
+> Indeed. But I think the whole approach is wrong. Attempts to conduct
+> format-specific comparing are futile for several reasons:
+> 
+> 1) when you are against a state level adversary (and we are talking
+> about targeted attacks from organizations like NSA, right?) you are
+> better not to try to parse anything complex, like file and objdump do
+> (e.g. crashing objdump is quite easy);
 
-CVEs are given to vulnerabilities.
-A detailed explanation of what these are can be found here:
-https://cve.mitre.org/about/terminology.html
+Well, what choice do any of us have? I understand the attacker could know a 
+hole in the program doing disassembly or categorization of the file, but I have 
+to assume any bug there will be found eventually as gcc stack protector and 
+other mitigations get better. But we have to have a starting point.
+
+> 2) you cannot really determine format of a file (think GIFAR);
+> 
+> 3) an elaborate script which knows many formats is going to be complex
+> and to contain a lot of bugs which is bad in any security context.
+
+I don't believe in giving up. I can verify most rebuilds right now. When holes 
+are found they get addressed. So far, there has been great feedback on this. I 
+am adapting the detections based on this feedback. It may never be 100% fool-
+proof. The build environment could be thoroughly trojaned or the OS. But let's 
+start in the direction of proof and see what we find.
+
+For example, this tool kit might be of interest where people outsource 
+augmentation of a system and want to check what all the contractor changed. 
+You don't always need to think you are against the NSA to do something that is 
+worthwhile. But, hopefully, its tight enough to catch that threat eventually.
 
 
--- 
-Eitan Adler
+> Examples for the item 3:
+> 
+> - checks like "/usr/bin/file $2 2>/dev/null | grep ELF" are not strict
+> enough because file sometimes shows pieces of metadata which is
+> controlled by an attacker;
+
+That was changed to a sed '1,2d' which takes care of the same problem better.
+
+> - in a script from opensuse -- at least ".*" in html cleaning permits to
+> pass any html through;
+> 
+> - some files are not checked at all: jars in the script from redhat and
+> created.rid in the script from opensuse (.rid extension is not in my
+> /usr/share/mime/packages/freedesktop.org.xml so format will be
+> determined by the OS from content).
+
+This script is under development and not finished. I have only setup the 
+detection of jar files with the intent of completing their comparison by 
+unzipping them and doing a file by file comparison and/or further expansion 
+because it could contain more jar files. The whole purpose is to eliminate the 
+inherent time stamp in the file. The next major release should have this 
+solved.
+
+I appreciate the feedback. I want to make it better.
+
+-Steve
