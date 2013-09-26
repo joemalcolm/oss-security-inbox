@@ -1,35 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/21/2
-Message-ID: <1374436936.3799.22.camel@scapa>
-Date: Sun, 21 Jul 2013 22:02:16 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/26/8
+Message-ID: <5244B949.2010704@mccme.ru>
+Date: Fri, 27 Sep 2013 02:46:33 +0400
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: evolution mail client GPG key selection issue
+Subject: Re: Reproducible Builds for Fedora
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 2013-09-25 18:55, Solar Designer wrote:
+> Ensuring that "objdump -d" has stayed the same between a known-good and
+> another build of a binary is not sufficient to tell that the new build
+> is not trojaned.
 
-an issue with security impact was recently fixed in Evolution. More
-details can be found on the Red Hat bug report at
-https://bugzilla.redhat.com/show_bug.cgi?id=973728 but it basically
-boils down to a wrong selection when choosing the the keyid for a
-destination email address.
+Indeed. But I think the whole approach is wrong. Attempts to conduct
+format-specific comparing are futile for several reasons:
 
-Basically, when you have multiple keys in the keyrings, with overlapping
-email addresses (like foo@...mple.com and foobar@...mple.com), you can
-end up (silently) encrypting to the wrong recipient.
+1) when you are against a state level adversary (and we are talking
+about targeted attacks from organizations like NSA, right?) you are
+better not to try to parse anything complex, like file and objdump do
+(e.g. crashing objdump is quite easy);
 
-It actually happened to me when forwarding embargoed security issues so
-it can happen in real life. Now the wrong recipient would need to
-actually obtain a copy of the sent mail (since it's sent to the correct
-recipient, not the wrong one), but I still think it warrants a CVE.
+2) you cannot really determine format of a file (think GIFAR);
 
-Quick fix was to use the documented format for email searches in GnuPG
-(using <> around email addresses) but a more complete fix for explicit
-key selection should appear some time in the future.
+3) an elaborate script which knows many formats is going to be complex
+and to contain a lot of bugs which is bad in any security context.
 
-Regards,
+Examples for the item 3:
+
+- checks like "/usr/bin/file $2 2>/dev/null | grep ELF" are not strict
+enough because file sometimes shows pieces of metadata which is
+controlled by an attacker;
+
+- in a script from opensuse -- at least ".*" in html cleaning permits to
+pass any html through;
+
+- some files are not checked at all: jars in the script from redhat and
+created.rid in the script from opensuse (.rid extension is not in my
+/usr/share/mime/packages/freedesktop.org.xml so format will be
+determined by the OS from content).
+
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Alexander Cherepanov
