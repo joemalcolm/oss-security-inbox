@@ -1,74 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/1
-Message-ID: <CACYkhxjNX0Kk7pzWV9BAtHQZC9h85yBSbxkqh9BA+8HnGhojdw@mail.gmail.com>
-Date: Thu, 6 Jun 2013 14:19:50 +1000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/26/1
+Message-ID: <CACYkhxgNy0tCbWPih+4_cJnQ8GoV-uAFaCTQok1bQ+fbiARVPw@mail.gmail.com>
+Date: Thu, 26 Sep 2013 11:11:59 +1000
 From: Michael Samuel <mik@...net.net>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: pwgen
+To: oss-security@...ts.openwall.com
+Subject: RESEND: CVE Request: pwgen
 Content-Type: text/plain; charset=utf-8
 
-I've done some further analysis of the program after reading the previous
-thread, and I think there needs to be CVEs and fixes for:
+Hi,
 
-- When used from a non-tty passwords are trivially weak by default (first
-reported by Solar Designer)
-- Phonemes mode has heavy bias and is enabled by default (first reported by
-Solar Designer)
-- Silent fallback to insecure entropy (first reported by Jean-Michel
-Vourgère) (Debian bug #672241 - tagged as "wishlist")
-- Secure mode has bias towards numbers and uppercase letters
+No CVEs have been assigned for this, and as far as I can tell no
+distributions have patched.
 
-I've attached a patch that fixes most issues - it doesn't solve the bias
-towards numbers, because it's caused by requiring at-least one number per
-password - so in an 8 character password there'd have to be 0.1 numbers to
-avoid bias.  There's an argument to be made for removing the at-least-one
-rule, but if the system that password is being used with has those rules,
-it doesn't fix the problem anyway.  Perhaps a separate flag for that?
+On 6 June 2013 14:19, Michael Samuel <mik@...net.net> wrote:
 
-The changes are:
-
-- Print a message and abort() of there's trouble opening or reading
-/dev/urandom (So apport should pick up any packages that have been using
-insecure entropy)
-- Make "-s" the default
-- Add an argument --insecure-phonemes (or -P)
-- Non-tty passwords are now as secure as tty
-- Require lower-case characters be present to even out some bias
-- Pull in passwdqc as a Suggests on the debian package - pwqgen can
-generate sane random passphrases
-
-I can't imagine any reasonable use-case for the non-tty defaults (except
-maybe combining with espeak as an enhanced interrogation technique), and
-you can be certain that there's some people out there with it embedded in a
-script that's generating useless passwords.
-
-For phonemes mode in general, the bias is extreme, there are a limited
-number of possible combinations and it is generally not suitable for
-security purposes.  I have some fairly detailed analysis of it, but I
-believe this list has a no-exploits policy...
-
-Regards,
-  Michael
-
-
-On 28 May 2013 11:47, Solar Designer <solar@...nwall.com> wrote:
-
-> On Tue, May 28, 2013 at 01:33:48AM +0000, Michael Samuel wrote:
-> > The default mode of this program generates extremely low entropy
-> passwords -
-> > It is probably worth changing the default to "secure" mode and removing
-> > phonemes mode, to avoid putting users at risk.
+> I've done some further analysis of the program after reading the previous
+> thread, and I think there needs to be CVEs and fixes for:
 >
-> Yes.  You have seen the thread on pwgen from last year, right? -
+> - When used from a non-tty passwords are trivially weak by default (first
+> reported by Solar Designer)
+> - Phonemes mode has heavy bias and is enabled by default (first reported
+> by Solar Designer)
+> - Silent fallback to insecure entropy (first reported by Jean-Michel
+> Vourgère) (Debian bug #672241 - tagged as "wishlist")
+> - Secure mode has bias towards numbers and uppercase letters
 >
-> http://www.openwall.com/lists/oss-security/2012/01/22/6
+> I've attached a patch that fixes most issues - it doesn't solve the bias
+> towards numbers, because it's caused by requiring at-least one number per
+> password - so in an 8 character password there'd have to be 0.1 numbers to
+> avoid bias.  There's an argument to be made for removing the at-least-one
+> rule, but if the system that password is being used with has those rules,
+> it doesn't fix the problem anyway.  Perhaps a separate flag for that?
 >
-> (Use the "thread-prev" link for more messages from that thread.)
+> The changes are:
 >
-> Alexander
+> - Print a message and abort() of there's trouble opening or reading
+> /dev/urandom (So apport should pick up any packages that have been using
+> insecure entropy)
+> - Make "-s" the default
+> - Add an argument --insecure-phonemes (or -P)
+> - Non-tty passwords are now as secure as tty
+> - Require lower-case characters be present to even out some bias
+> - Pull in passwdqc as a Suggests on the debian package - pwqgen can
+> generate sane random passphrases
+>
+> I can't imagine any reasonable use-case for the non-tty defaults (except
+> maybe combining with espeak as an enhanced interrogation technique), and
+> you can be certain that there's some people out there with it embedded in a
+> script that's generating useless passwords.
+>
+> For phonemes mode in general, the bias is extreme, there are a limited
+> number of possible combinations and it is generally not suitable for
+> security purposes.  I have some fairly detailed analysis of it, but I
+> believe this list has a no-exploits policy...
+>
+> Regards,
+>   Michael
 >
 
-Content of type "text/html" skipped
-
-Download attachment "pwgen-security.patch" of type "application/octet-stream" (6141 bytes)
