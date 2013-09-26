@@ -1,52 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/1
-Message-ID: <511300A1.8060503@redhat.com>
-Date: Wed, 06 Feb 2013 18:17:21 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/26/3
+Message-ID: <CAJfirPmVcNiZtTuN-4ZBB=YuKSaibf7-xexmOsmy8hfNZcAL9w@mail.gmail.com>
+Date: Thu, 26 Sep 2013 20:01:45 +0200
+From: Rafael Luque <rafael.luque.leiva@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>, Mitre CVE assign department <cve-assign@...re.org>
-Subject: Re: e1000e/82574L hardware erratum
+Subject: CVE request: Javamelody blind XSS through X-Forwarded-For header
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Javamelody [1] includes a blind XSS vulnerability. An attacker could
+provide an specially-crafted "X-Forwarded-For" HTTP header while visiting a
+Java web application monitored with Javamelody that would lead to arbitrary
+HTML or Javascript execution in the context of the administrator user
+monitoring the panel of active sessions in the application.
 
-On 02/06/2013 03:00 PM, Florian Weimer wrote:
-> It's been reported that some Intel 82574L network controllers can
-> be brought into a non-processing state by receiving certain
-> Ethernet frames:
-> 
-> <http://blog.krisk.org/2013/02/packets-of-death.html>
-> 
-> The packet is not malformed at the lower layers and will travel
-> over the Internet.
-> 
-> I have not tried to reproduced this.  Disabling hardware
-> offloading features might constitue a workaround.
-> 
-> Reportedly, this can be fixed by appropriate EEPROM settings, so a 
-> driver-based workaround seems feasible/necessary.
+The versions affected are the last one 1.46 and all the previous that
+include the session monitoring panel feature.
 
-Probably best if Mitre handles this.
+The issue has been reported to the project [2] but whithout response by now.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+The proof of concept may use the own Javamelody online demo:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+1. Access the demo site [3] using a fake X-Forwarded-For header like the
+following: <script>alert('xss')</script>
+2. Then visit the Javamelody sessions monitoring page at [4] and you should
+see the Javascript running.
 
-iQIcBAEBAgAGBQJREwCgAAoJEBYNRVNeJnmTIbMP/3K0EE4VF5x2ysVnuTwpioY6
-dWsUWXMvgIs6v2jdupC5zwiwei5mJpIBJ7y8fbnAqCY3rEYkbzxVfGZ6tTgj53dv
-tvVfKP4DqhmWMjckyJkK1PeYdrd8aX4bIGdLsU7wWeJq+fmiFUPqYNIrqhMAQBJs
-drKc73sWVX/+64UzhcqU9Fuzwj98ITVKdULPQ0GNz494hAO2Bwlvdv8XujDB5KtS
-89/WsqJfKD73kwk5925DYxgQGs/FV8hwffbnkEPvY9C0Dyvdva06gsUvAeobcl4f
-GRrr/9CuhkUzQQ2pH827OPCeFEjQ9WGEgejQ9i8ocQeH0hmr2/7Zf83SBIDkI2B2
-FUJsdGL8YBcDSHV8BLo+b4VNYHxuaoIZNzQ2HWXYubrMMEGvhlWF3ivrwUHj6jYH
-s3nxb6YR4nG7hWH/T2VO/smNGAmgIRBYJagJB8FVhhfhOYgUszuTcJp2RscRO24F
-UIbcjPTJSVunKTT58UWbfpVZOZIRLLyJ78/8jqfUx3vRkFv5Dl7FFlQFov2CyEcb
-8s29+uUsPdx174Xcc/OK4dXS2jLlSLep1VePgtB88xWV3Or474PoNgMjcW+Zuc/Z
-eJFdMRMkGI7UZ5yv2euvHsjwFzWoBHLftGmZoAiPc7KrjjfVk8UmTcruVYlIYown
-fLL+R5lF55FMTN7NU1Dm
-=Enz5
------END PGP SIGNATURE-----
+Can you allocate a CVE identifier for this?
+
+Thank you && Regards,
+
+Rafael Luque
+
+[1] https://code.google.com/p/javamelody/
+[2] https://code.google.com/p/javamelody/issues/detail?id=346
+[3] http://demo.javamelody.cloudbees.net/
+[4] http://demo.javamelody.cloudbees.net/monitoring?part=sessions
+
