@@ -1,38 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/5
-Message-Id: <201308281706.r7SH6dSm028584@linus.mitre.org>
-Date: Wed, 28 Aug 2013 13:06:39 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2013-5641 CVE-2013-5642 recent Asterisk issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/26/7
+Message-ID: <20130926212701.GN10409@frohike.xs4all.nl>
+Date: Thu, 26 Sep 2013 23:27:01 +0200
+From: Peter Bex <Peter.Bex@...all.nl>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Buffer overrun vulnerability in CHICKEN Scheme
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi all,
 
-Here are two new CVE assignments for Asterisk advisories:
+I'd like to request a CVE for a recently discovered vulnerability in
+CHICKEN Scheme.  It affects a very particular, not very common use
+of the read-string! procedure.  If given a buffer and #f (the Scheme
+value for "false") as the buffer's size (which should trigger automatic
+size detection but doesn't), it will read beyond the buffer, until the
+input port (file, socket, etc) is exhausted.  This may result in the
+typical potential remote code execution or denial of service; in
+CHICKEN, these buffers are initially allocated on the stack and moved
+to the heap upon GC.
 
-http://downloads.asterisk.org/pub/security/AST-2013-004.html
-CVE-2013-5641
+In normal usage, users would usually pass in the buffer's size.  This
+is also the workaround for this bug.
 
+For the official announcement, see
+http://lists.nongnu.org/archive/html/chicken-announce/2013-09/msg00000.html
 
-http://downloads.asterisk.org/pub/security/AST-2013-005.html
-CVE-2013-5642
+The discussion thread's final accepted patch is at
+http://lists.nongnu.org/archive/html/chicken-hackers/2013-09/msg00009.html
+which got applied as http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commit;h=cd1b9775005ebe220ba11265dbf5396142e65f26
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+All versions of CHICKEN prior to 4.8.0.5 and 4.8.3 (not yet released)
+are affected.
 
-iQEcBAEBAgAGBQJSHi2XAAoJEGvefgSNfHMdU2UIAKfqSmCHEn5KUQ5p3BvuTDEN
-kvLprNxnS3fdgAQk/Es7Nsvdj1d5iXuajANN7SZABvbU8aWA7Xv+F9Kbnvn7gXYu
-zYmNEKIMV1E8APiFBjcdkl0LAxCJD/6b4mIMJA/Tewa+6Z9TMxgOc+KcH5LWIpXC
-LV9iVwXodz9QgTcjrnQhVpel4FoLnQONLmvFdXsHNp1YCl0j+yRfqbQBBExRposX
-jwUH0nLvnifiCccuhzeMT+xZR+zvJ61AIGDXnUwZMtZVS27U9WR0dUNkF6xHRtDh
-XbpISYzGcfTX7W5oVdohI7FiDCKpzcnbvrevljWD7Zd+a/+zdyeESpevMnqslQk=
-=xVxC
------END PGP SIGNATURE-----
+Cheers,
+Peter Bex
+-- 
+http://www.more-magic.net
