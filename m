@@ -1,34 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/5
-Message-ID: <51D6C084.3050604@canonical.com>
-Date: Fri, 05 Jul 2013 08:48:04 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/26/6
+Message-ID: <CABbbngBJqDeCmDtzpz=HG6_0Rb=e5bm9NrpseOFAu3GNmwGF3w@mail.gmail.com>
+Date: Thu, 26 Sep 2013 14:21:38 -0700
+From: Forest Monsen <forest.monsen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: libxml2 external parsed entities issue
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi there,
 
-libxml2 earlier than 2.9.0 fetches external parsed entities by default, with no
-way to disable the behaviour.
+I'd like to request CVE identifiers for:
 
-Fixed by the following commit:
+SA-CONTRIB-2013-073 - Make Meeting Scheduler - Access Bypass
+https://drupal.org/node/2081637
 
-https://git.gnome.org/browse/libxml2/commit/?id=4629ee02ac649c27f9c0cf98ba017c6b5526070f
+SA-CONTRIB-2013-074 - MediaFront - Cross Site Scripting (XSS)
+https://drupal.org/node/2087051
 
-More Information:
-https://mail.gnome.org/archives/xml/2012-October/msg00045.html
-https://github.com/sparklemotion/nokogiri/issues/693
-https://bugs.launchpad.net/ubuntu/+source/libxml2/+bug/1194410
+SA-CONTRIB-2013-075 - Click2Sell - Multiple Vulnerabilities (XSS and CSRF)
+(Now marked "unsupported," and no patch provided)
+https://drupal.org/node/2087055
 
+SA-CONTRIB-2013-076 - jQuery Countdown - Cross Site Scripting (XSS)
+https://drupal.org/node/2087095
 
-Could a CVE please be assigned to this issue?
+SA-CONTRIB-2013-077 - Google Site Search - Cross Site Scripting (XSS)
+https://drupal.org/node/2092395
 
-Thanks,
+Thanks!
 
-Marc.
+Best,
+Forest
 
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
