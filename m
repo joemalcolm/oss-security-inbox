@@ -1,60 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/2
-Message-ID: <20131230003418.GE9236@kludge.henri.nerv.fi>
-Date: Mon, 30 Dec 2013 02:34:18 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/2
+Message-ID: <5244E4BC.9040007@google.com>
+Date: Thu, 26 Sep 2013 18:51:56 -0700
+From: Paul Pluzhnikov <ppluzhnikov@...gle.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request: cmsmadesimple before 1.11.8 / bad upstream behaviour vs. CVE assignment
+CC: Alexander Cherepanov <cherepan@...me.ru>
+Subject: Re: Reproducible Builds for Fedora
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 21, 2013 at 02:10:53PM -0600, Kurt Seifried wrote:
-> On 10/21/2013 01:20 PM, Hanno Böck wrote:
-> > Hi,
-> > 
-> > I want to request a CVE, but also start some discussion about how
-> > to handle such issues.
-> > 
-> > The release notes for cmsmadesimple 1.11.8 mention a security
-> > issue: 
-> > http://www.cmsmadesimple.org/announcing-cmsms-1-11-8-fioreana/ 
-> > "This release brings a few minor features, some performance 
-> > improvements, documentation improvements, a Smarty upgrade, and a 
-> > number of bug fixes (including a minor security issue)."
-> > 
-> > Now, this is all the information you get. Nothing about the kind
-> > of security issue, let alone a bug nr or commit. The question is:
-> > What do we do with such shitty upstream behaviour?
-> > 
-> > Last time I reported something alike I was told that I should
-> > provide more info. The question is: How?
-> > 
-> > Sure, I could diff the release to the release before or try to
-> > find some repository and read all the commits in the timeframe. But
-> > I'm not getting paid for this, I merely want to improve overall
-> > security of free software voluntarily.
-> > 
-> > So how will we proceed with such stuff? In the past, we often had
-> > "CVE for unknown security issue in xxx"-alike assignments.
-> > 
-> > cu,
-> > 
-> 
-> Yeah, maybe if we can incentivize this research, e.g. give people
-> credit or something, not for discovering the issue but for researching
-> it and posting the details/diff/whatever. In general if no details are
-> available unless there's some reason not to, I would generally hand
-> these over to Mitre to deal with.
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
+On 9/26/13 6:36 PM, Alexander Cherepanov wrote:
 
-Can we get this assigned?
+> The choice is simple -- produce byte-for-byte identical builds. Both Tor
+> and Debian aim at it.
 
-Diff between 1.11.7 and 1.11.8: http://paste.nerv.fi/61005941.txt (too big for
-mailing list)
+FWIW, when we build compilers (and then all other binaries) at Google, 
+we don't just aim for, but actually achieve bit-identical rebuilds.
 
----
-Henri Salo
+New GCC releases often break this, but a few patches later the 
+capability is restored. Latest example: 
+http://comments.gmane.org/gmane.comp.gcc.devel/127875
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+The ability to do bit-identical rebuild is critical to our build system 
+(http://google-engtools.blogspot.com/2011/09/build-in-cloud-distributing-build-steps.html) 
+and in particular the high cache hit rates it achieves.
+
+
