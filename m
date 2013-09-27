@@ -1,41 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/15
-Message-ID: <alpine.LFD.2.10.1311282349500.21295@javelin.pnq.redhat.com>
-Date: Thu, 28 Nov 2013 23:56:26 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: Linux kernel: net: uninitialised memory leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/3
+Message-ID: <5244FD9B.7090809@directi.com>
+Date: Fri, 27 Sep 2013 09:08:03 +0530
+From: "donesh.l" <donesh.l@...ecti.com>
+To: oss-security@...ts.openwall.com
+Subject: Trend micro contact details
 Content-Type: text/plain; charset=utf-8
 
-   Hello Hannes,
+Hi Guys,
 
-+-- On Thu, 28 Nov 2013, Hannes Frederic Sowa wrote --+
-| This patch does break stuff, a follow-up is needed which did not get to 
-| Linus yet, but is already queued up for stable. Otherwise traceroute is 
-| broken:
-| 
-| https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=85fbaa75037d0b6b786ff18658ddf0b4014ce2a4
+I need contact details for trend micro feedback loop... Does anybody has it.
 
-  I see. Thanks so much for the heads-up and link to the follow-up patch.
-
- 
-| I found other leaks in non-inet protocols:
-| 
-| https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=f3d3342602f8bcbf37d7c46641cb9bca7618eb1c
-| 
-| The protocols where I did remove msg_namelen = 0 where actually
-| safe. Some of the protocols I did not touch could leak up to 128 bytes
-| of uninitialized data from the stack.
-| 
-| Hardening against out-of-bounds writes:
-| https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=68c6beb373955da0886d8f4f5995b3922ceda4be
-| 
-| Also there is a small 2-bytes memory leak in extended error reporting:
-| https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=68c6beb373955da0886d8f4f5995b3922ceda4be
-
-  Thank you for sharing these too!
-
-
-Thank you! :)
---
-Prasad J Pandit / Red Hat Security Response Team
+-- Donesh
