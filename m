@@ -1,19 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/10/5
-Message-ID: <20130910205213.GE10425@kludge.henri.nerv.fi>
-Date: Tue, 10 Sep 2013 23:52:13 +0300
-From: Henri Salo <henri@...v.fi>
-To: "Larry W. Cashdollar" <larry0@...com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Features 0.3.0 Ruby gem /tmp file injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/4
+Message-ID: <52451ED6.9050404@redhat.com>
+Date: Thu, 26 Sep 2013 23:59:50 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Paul Pluzhnikov <ppluzhnikov@...gle.com>, Alexander Cherepanov <cherepan@...me.ru>
+Subject: Re: Reproducible Builds for Fedora
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 09, 2013 at 05:38:46PM +0000, Larry W. Cashdollar wrote:
-> Vendor: Not notified
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Why not?
+On 09/26/2013 07:51 PM, Paul Pluzhnikov wrote:
+> On 9/26/13 6:36 PM, Alexander Cherepanov wrote:
+> 
+>> The choice is simple -- produce byte-for-byte identical builds.
+>> Both Tor and Debian aim at it.
+> 
+> FWIW, when we build compilers (and then all other binaries) at
+> Google, we don't just aim for, but actually achieve bit-identical
+> rebuilds.
+> 
+> New GCC releases often break this, but a few patches later the 
+> capability is restored. Latest example: 
+> http://comments.gmane.org/gmane.comp.gcc.devel/127875
+> 
+> The ability to do bit-identical rebuild is critical to our build
+> system 
+> (http://google-engtools.blogspot.com/2011/09/build-in-cloud-distributing-build-steps.html)
+>
+> 
+and in particular the high cache hit rates it achieves.
 
----
-Henri Salo
+Sorry I'm having trouble finding the patches, can you provide a URL?
+Thanks.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSRR7WAAoJEBYNRVNeJnmTDt4QALzf2Cpl591C5R+3HYgrd/v1
+qOyniZrWXUYec3hRwKlN8KHSQyTPzwbr6WJNsfYUbcrL155fd/14E6/cbijqHaoo
+kIfJg/yqKSfZtJQVQ+CCRqn7J5sYURa2u6my1qQoXvUx7usDBjaBGaxOW6XDAbSk
+KzRFMPejoexWu9uvrwxjqE6+MHLgnCMC7cE6p9EhAN2sojtfUDIH4/uP/DyzDUpN
+KELZKoKgkIsTp4gkKBSZZj7n7KnHi+lS3Pcle24hi38qTl1AJQeWxAR2GxvCdqL/
+LdyQ2lVBQIajfSf8/KVbAndQ6AKVsED1BLNOFVCtQVVcRnebEsszKLjvBXYa+iNL
+cRfmNL08DpLIE77beSAc6N72tyVvNYCIWttuafep/chdCNM6/z9Ohum9YWd5bEO0
+E/8pQKQoSQ1ZlaGBi/GLv+ivzKv5krsU6FkdxMfzra0TaC0pMPNgv0zR8tHxScTp
+U7NZg8iNWy4otqRmrcmUfrwedUBmQaX6gB6nuqKNTEJYpBCbU4SAHR+yNx8FM5Bt
+GO4gmTgs2Cp/Rq4gmH66u48wsec0RVtHRAUeAkdP7L7oEzbY6a/qd208F1tU9NUI
+NLkqufwCTWlVWP3G3xYI5Qep5ONWCoHarjPzDONOqWkHOWxVAg4otGU13UQbSzkS
+ifRVWrUarnl08UlzWioH
+=LBGU
+-----END PGP SIGNATURE-----
