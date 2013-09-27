@@ -1,69 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/19/2
-Message-ID: <52123D9E.2010706@redhat.com>
-Date: Mon, 19 Aug 2013 09:45:34 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: kseifried@...hat.com
-CC: oss-security@...ts.openwall.com, Thijs Kinkhorst <thijs@...ian.org>
-Subject: Re: [CVE request] Django 1.4.6 security release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/10
+Message-Id: <201309271257.r8RCusBJ010451@linus.mitre.org>
+Date: Fri, 27 Sep 2013 08:56:54 -0400 (EDT)
+From: cve-assign@...re.org
+To: seth.arnold@...onical.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: graphite CVE-2013-5903 confusion
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/14/2013 09:06 PM, Kurt Seifried wrote:
-> On 08/14/2013 02:11 AM, Thijs Kinkhorst wrote:
->> On Wed, August 14, 2013 09:42, Kurt Seifried wrote:
->>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->>> 
->>> On 08/13/2013 11:31 PM, Moritz Muehlenhoff wrote:
->>>> Hi, this needs two CVE assignments: 
->>>> https://www.djangoproject.com/weblog/2013/aug/13/security-releases-issued/
+>However, the checkins from the project appear to use this CVE for unsafe
+>use of Python's pickle module:
 >
->>>> 
->>>> 
->>> Please provide links to the vulnerable code/fixed code thanks.
-> 
->> Links to the patches of the various affected release branches
->> can be found at the bottom of the quoted URL.
-> 
-> 
->> Thijs
-> 
-> For the Issue: Cross-site scripting (XSS) in admin interface
-> please use CVE-2013-4249 for this issue.
-> 
-> For Issue: Cross-site scripting (XSS) in admin interface I'm going
-> to consider this as security hardening unless someone tells me
-> otherwise.
+>https://github.com/graphite-project/graphite-web/blob/master/docs/releases/0_9_11.rst
+>
+>    This release contains several security fixes for cross-site scripting
+>    (XSS) as well as a fix for a remote-execution exploit in graphite-web
+>    (CVE-2013-5903).
 
-Ahh this should be:
+This use of CVE-2013-5903 is a typo. The original CVE for this
+disclosure was correctly entered by the researcher at:
 
-For the Issue: Cross-site scripting (XSS) in admin interface please
-use CVE-2013-4249 for this issue.
+  http://ceriksen.com/2013/08/20/graphite-remote-code-execution-vulnerability-advisory/
 
-For the second issue: Issue: Possible XSS via is_safe_url I'm going to
-consider this as security hardening unless someone tells me otherwise.
+(Also, the original CVE was not intended to be an XSS CVE.)
 
-Thanks to vdanen for pointing this out.
+The correct assignments are:
+
+CVE-2013-5093: unsafe use of Python's pickle module in render/views.py
+
+CVE-2013-5942: unsafe use of Python's pickle module in other 0.9.10
+               files that were not mentioned in the ceriksen.com post
+
+CVE-2013-5943: XSS, as reported in 0_9_11.rst
+
+CVE-2013-5903: a rejected CVE - a use of this CVE could conceivably mean
+               any of CVE-2013-5093, CVE-2013-5942, or CVE-2013-5943
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJSEj2dAAoJEBYNRVNeJnmTKeoQAIz5AHdXMEji0E/6yY1vfqCZ
-yIoqoA9tGOcmdai7q0//6dHb4vBML/m6QmfBknc7BVEcehrA78A0pJeRGtQ/Waga
-IhSWSGU7Wr0Pk+rWFZhMu1DYWQqaa+fdGrB/d3jSU83lJMwMvEEnwodnp/LMCbC2
-0k4BL8rbj1E6R8pJcyqG85RMdWqoMJW4+7bnFxlz8di5UWuGwuThvCiqibqCYmv5
-fsj9E5OuXrm7eOa7HKddmhl8ZnLVln8E5jcGrdiC8s++qGDdoHps3+Q4DJwrV/J3
-KMm/PZPzHWQ5pI3/+XlMX+b00ekJsgJXzmpT1qw0wMinnQWjBb2/Mtc8C44ogPyr
-sl5gL9Py6+u2rcc3V0lY240BILMruQMB8NFolN3dXtmeQvxI1ip2tUphKjxJidfB
-d+0ntbPaKdA5v1+AxZOnnV9NmpUW20YBXqX6kznGdNjknBxjp6RqvbqfKYz0YUcn
-KjpCUzOcbnRcUrWhv8Vp/dtCLf+SAX2+KDj+Q6AHLTRuzwucgijH/tAhE8gaah3k
-JwxzpZh1DjlHxhjfGA4f74/+9yYTPPYuvbSMZ8NuCu/V9GMVTWjgq0A8HKUt9CH0
-urwqspp6hh4NG8EOICPF8uk0sYzOron3WMEuABnXzJTLTSmERdRARGXOYy0EbrO9
-O3urq3HysUte9cf5L5Bc
-=PR5f
+iQEcBAEBAgAGBQJSRX+pAAoJEKllVAevmvmsmmMH/AyhSi9AnNfHpbepIvN5NcfY
+V4JEnmNc6J2TA0VORCtRlQl0BKjCptjijPUQMTKIf1/ehdKnPwhrfyRW/kFqh/wk
+80uO6inZ/s8pOqb+08A4iLwTB2KDX/nqqJlvtsgv7OSyS1zLHWEmb3bX4o+P/sxC
+0/HPPJ5zuVAN+AO3pZHEEgJNsbPVx9voPZ6a7NwFiE0XG5jE5wCvOYtgm7R04yHM
+OdVkLDk7nb4OojjvrmSekoTSAv0QZQtALK2mFiYl3gFBFhu/pk9OBqlpMEDoD+ck
+uyQ+ltq1KULW8Pm00sTB0ED+J8itQsronVluCKXVA/rbAQvvpfFMnyGVSGueAW4=
+=B+3z
 -----END PGP SIGNATURE-----
