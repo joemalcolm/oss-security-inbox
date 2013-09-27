@@ -1,45 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/26/8
-Message-ID: <51CB3A9D.2080208@redhat.com>
-Date: Wed, 26 Jun 2013 13:01:49 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/7
+Message-ID: <52452245.7020206@redhat.com>
+Date: Fri, 27 Sep 2013 00:14:29 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: Buffer overrun vulnerability in CHICKEN Scheme
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/26/2013 12:44 PM, Raphael Geissert wrote:
-> On Wednesday 26 June 2013 20:36:21 Vincent Danen wrote:
->> I don't believe a CVE has been assigned to this issue yet.
+On 09/26/2013 03:27 PM, Peter Bex wrote:
+> Hi all,
 > 
-> I believe you are correct. We, as in the Debian security team, have
-> just received a CVE request from the reporter.
+> I'd like to request a CVE for a recently discovered vulnerability
+> in CHICKEN Scheme.  It affects a very particular, not very common
+> use of the read-string! procedure.  If given a buffer and #f (the
+> Scheme value for "false") as the buffer's size (which should
+> trigger automatic size detection but doesn't), it will read beyond
+> the buffer, until the input port (file, socket, etc) is exhausted.
+> This may result in the typical potential remote code execution or
+> denial of service; in CHICKEN, these buffers are initially
+> allocated on the stack and moved to the heap upon GC.
 > 
-> Cheers,
+> In normal usage, users would usually pass in the buffer's size.
+> This is also the workaround for this bug.
+> 
+> For the official announcement, see 
+> http://lists.nongnu.org/archive/html/chicken-announce/2013-09/msg00000.html
+>
+>  The discussion thread's final accepted patch is at 
+> http://lists.nongnu.org/archive/html/chicken-hackers/2013-09/msg00009.html
+>
+> 
+which got applied as
+http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commit;h=cd1b9775005ebe220ba11265dbf5396142e65f26
+> 
+> All versions of CHICKEN prior to 4.8.0.5 and 4.8.3 (not yet
+> released) are affected.
+> 
+> Cheers, Peter Bex
+> 
 
-Shall I assign one?
-
+Please use CVE-2013-4385 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRyzqdAAoJEBYNRVNeJnmTgPUQANUNQCFXoqpd6NNbAdHJmwhd
-aPAK3BBc96zNor59gMYBKTtkXhIlwGoHJ1T8FHGIUMbbTG/Ovu+4R8vCAF/PXC7/
-64iFSFdzWEQJnee5ZRO7vkqQ4x8AACBc7mtBIGZtMc5S6w8JKGzvTIHsI2QtHNpE
-MDWMfvW6oOMA24REDwygaJXySSg6usPLx/07Jg0uShvqWppte5etWTkeJ4sdCRJW
-42hqBM9d43fYUu47Tqr3P1eXLfvNeXPFV9CQ8Dty5JEvfEZVjN+wJ6gcQQn89S4n
-XCSc2q6sX2SiUgTRVZD9K2cCxQ67LArA8aVekTiAHUuZkOZMtsds6WpJOWLzcjkA
-qMnF4zyHsZza3WXz51DK9K8Gkd7TLXxa8ZNdFdiot2bm60p1zaNODV4IoQMc3Vgq
-S6OSo/GfvazwQKpz8XTRAJgzly1F4PAv+bC4UCyHjIDxpmpGHFDmiwup22Ll/De2
-wZDMRwbpmo4KbR1IXGx6tl6oAosoby5XGkMA4dXhGw/dvm/Uht7HklD/zpuKMcRs
-OaOCnZcsYa0ATd3NKY/6HuzdYma6ua6U8ehXrplJzwdTVVzHtVyApKhyxN132wSc
-YaTuE/liMmJaVS64s72Amjgr9lwwah4aw6g+2g30+W19uwnBqa41uAksr5EeFi3Q
-z1C7s7K0wRdbDytQEKet
-=T8V6
+iQIcBAEBAgAGBQJSRSJFAAoJEBYNRVNeJnmTp1EP/0zsOAo2k2c4DnwSk7K0XFiU
+uBz9zeIi+y+o2ejZrts0dkc0AFg05V1nbSnAc9Hq/mFNx8kOP+ZB3H+ExFechRLj
+PnE+Tl9dD/I8oKR2d8Rn95rY/z2gBZj0GoBla+EkERPwsXnXGwBklJOtjFYa1DFZ
+wqOg2WD17E3/P5ZdK8LoBMi86ZBwibXhWgdmNcJWGtpKWbdbO0Z7Tj6CYNLQrJMQ
+Nb9LqnBO5Mh2xq0unb8QegxcUdhTWPz23PciUrcml5tyL3SGrMiaBGWzunKN770B
+oiSV490xOpGyuoLHOAHuQcBysLYHGZ1wfOExAWvPGmuEJpjnma4KX96SCQW16PLl
+nfH0PpQso9D9PyATOq87hoQwtvDwR/Ez2ak0reAXyC6+kDEbpilY7r3TOiSRwrBM
+1uYVt5pLFfblo6MbzgotdvdOJfAmD3pUkU4OOGT6n60CoQSb5hH0HrY16uiTatmb
+nQvTJNjdPA+eZ1yp1p8x0n7wVkDWcA2C56OBNVHXby/sNUd38vg3za9xRu+UQ9vJ
+uKuhX/m5+SkVIXhcwBDc+6kAlV15I4EfDYjBS15PryWyapmFkyimA6APsQmDswCB
+a3NH1w28+ToJeIeL6bmrahOp+jnepiquJwD3eJLdkPwcLUMEN5P2+M/9cVCYpXbE
+8SCqKFuqKxPBAOVnpOvG
+=tO27
 -----END PGP SIGNATURE-----
