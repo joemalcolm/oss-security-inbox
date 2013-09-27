@@ -1,51 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/9
-Message-ID: <520BEFA0.4040209@redhat.com>
-Date: Wed, 14 Aug 2013 14:59:12 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security c <oss-security@...ts.openwall.com>
-Subject: rubygems insecure download (and other problems)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/9
+Message-ID: <CAJfirP=aPxvzzQWXb70GtioRnVETgohdb-vrkPu8Z9Pc60Di=g@mail.gmail.com>
+Date: Fri, 27 Sep 2013 10:29:34 +0200
+From: Rafael Luque <rafael.luque.leiva@...il.com>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Javamelody blind XSS through X-Forwarded-For header
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The issue has already been fixed in the trunk (revision 3515):
+http://code.google.com/p/javamelody/source/detail?r=3515
 
-I don't think this is CVE worthy, but it is worth fixing and not
-putting everyone at such risk:
+It's ready for the next release (1.47) and a new build including the fix
+it's available at:
+https://javamelody.googlecode.com/files/javamelody-20130927.jar
 
-https://bugzilla.novell.com/show_bug.cgi?id=834785
-https://bugzilla.redhat.com/show_bug.cgi?id=997179
+The release 1.47, including that fix, is supposed to be released in just a
+few days from now.
 
-Problem #1:
-install /etc/gemrc to install gems via https rather than http
+Rafa
 
-everyone should be enabling HTTPS where possible, intercepting and
-modifying HTTP is trivial.
 
-Problem #2:
-it redirects to  production.cf.rubygems.org which is on cloudfront so
-has certificate mismatch, so either users have to accept insecurity,
-or... well there is no second choice =(.
+2013/9/27 Kurt Seifried <kseifried@...hat.com>
 
-https://www.ssllabs.com/ssltest/analyze.html?d=production.cf.rubygems.org
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 09/26/2013 12:01 PM, Rafael Luque wrote:
+> > Javamelody [1] includes a blind XSS vulnerability. An attacker
+> > could provide an specially-crafted "X-Forwarded-For" HTTP header
+> > while visiting a Java web application monitored with Javamelody
+> > that would lead to arbitrary HTML or Javascript execution in the
+> > context of the administrator user monitoring the panel of active
+> > sessions in the application.
+> >
+> > The versions affected are the last one 1.46 and all the previous
+> > that include the session monitoring panel feature.
+> >
+> > The issue has been reported to the project [2] but whithout
+> > response by now.
+> >
+> > The proof of concept may use the own Javamelody online demo:
+> >
+> > 1. Access the demo site [3] using a fake X-Forwarded-For header
+> > like the following: <script>alert('xss')</script> 2. Then visit the
+> > Javamelody sessions monitoring page at [4] and you should see the
+> > Javascript running.
+> >
+> > Can you allocate a CVE identifier for this?
+> >
+> > Thank you && Regards,
+> >
+> > Rafael Luque
+> >
+> > [1] https://code.google.com/p/javamelody/ [2]
+> > https://code.google.com/p/javamelody/issues/detail?id=346 [3]
+> > http://demo.javamelody.cloudbees.net/ [4]
+> > http://demo.javamelody.cloudbees.net/monitoring?part=sessions
+> >
+>
+> Please use CVE-2013-4378 for this issue.
+>
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (GNU/Linux)
+>
+> iQIcBAEBAgAGBQJSRSIPAAoJEBYNRVNeJnmTESUP/03uh70VX0qS3yLBakwMFrpB
+> zUKnQElyqJzMh7N7Q0wBUk+eJPB5scJYqMeoi7HnCgyQPeuk0NGk3cmQT/DP/uXo
+> fs1ajYEX4KJS4ydKAdytvj1qI9aJdJF6cLoIf0ri7ZHtcbaFnFclYeaTXf9269L9
+> R1qJaM5+d3if8a3FGOXQbhDTFiY7ohzDzl/OsRybHTll8Z4UxaC+IlMgbMkDscHU
+> VVqQ6y0w7vqTyeG4vNhuE+XEeUmZxKdxNUQTsMqOhYGi4AS+unm553aQ+DAMeD9y
+> MODbkdAolh2CJkZsWdI8tfLQmWkRZ0FP8L5TQXkcu+EeE8aFdtlxoWPVU4PTXAak
+> LXCuMNQEG5ig/MNdYkNwTudBgRCUYKi50ek3XSf4tkovyNP+L9Lw3t/+5/EWpWg3
+> Y58hpzOKpL8ieRlrIFzW8rxOV0xFitn+aontZKuwxFv6wa+Av/Ku9eUvEZlkYmx1
+> LKzERCCz2V9dtjn0W/zpWf8Mg3A+KqST+7M22M0m9G4OwmIFwyWifs9TvigDwg/r
+> X4QbiJ9G8eWCk2Lpw1DNFVPoamIPoynYfRcOfQeC/P81QqeAyJ9yeejeIosR5TDc
+> 9yP2VPJJZ7ufGMqwy/u8k/3VkKNSMQykX03u/t7GpyriZnw4DNvjd/PTynNvZMsL
+> IfKZCYKOkAqx7SqL+tD6
+> =Id6a
+> -----END PGP SIGNATURE-----
+>
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSC++gAAoJEBYNRVNeJnmTb44P/243B7aF7hZCx23I3WnIP/in
-hQElGjUzTvzJIbPo4krhupYnZMxFNRyHC+YcrZeKeZvgwF0px2B/iK4T/4rB1MXU
-Hii6cgXWS9t9ULgPQtEYcvGIweV9oqU11W2ESCDqkddmzSclVOWTCvdNnUkFO+sd
-v4U5KsVt+1kNgeVcE17gy5vBmaiuKquvSM2xpZJAXx6ryTquTsq7IUfSG/ilOwY9
-CeCUBJAQyUfKomcGOuDUiY0Ta7deZP3/QjN0N2kQSHG78P21Eary4TqKLi9N10ii
-PQ+3G61h8FLBgyrT9THSWWEJHnQhJBx2/dg4WNmUuvwNIvI5un0Bwpr236/87Nkg
-nTnhUOxiMrbHS1/yJ6MJe+SnULDGw8o66YJNYeSTsoyN/HSPMXRiqJuhJAMV1mkf
-y8sCc2SQednAOoRkPHamEU1zfMG5e+lM5NDJBVrGSpT2Q/2M9dcD11/mXSaYY3qO
-kAOaFzwYt3/RNoXzgWfuP84brMDz66scWmKXUMuntMnuwcf1/2tGqaaZ4b16H6u1
-kPTrreciqYr/tGgwr0rmTCw3Ejmi18CMWfTEOipdtwQkTuY/4gSggBspLBC/Q2tJ
-hUqdMvz343MvnfLtQnFnP19FyQPQMpn4CNuFs9oOVNPJ6nzrnPc1c+kQrSRX/OYe
-NEs9EM69KFXdxcXcg6c9
-=PZMb
------END PGP SIGNATURE-----
