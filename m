@@ -1,71 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/6
-Message-ID: <20130819222713.7c5f5d81@jelerak.scrye.com>
-Date: Mon, 19 Aug 2013 22:27:13 -0600
-From: Kevin Fenzi <kevin@...ye.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/11
+Message-ID: <52459424.5000108@google.com>
+Date: Fri, 27 Sep 2013 07:20:20 -0700
+From: Paul Pluzhnikov <ppluzhnikov@...gle.com>
 To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com, "Eric H. Christensen" <echriste@...hat.com>, security@...tgresql.org
-Subject: Re: PostgreSQL insecure install via yum (multiple problems)
+CC: oss-security@...ts.openwall.com,  Alexander Cherepanov <cherepan@...me.ru>
+Subject: Re: Reproducible Builds for Fedora
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+On 9/26/13 10:59 PM, Kurt Seifried wrote:
 
-On Mon, 19 Aug 2013 22:11:13 -0600
-Kurt Seifried <kseifried@...hat.com> wrote:
+ >> http://comments.gmane.org/gmane.comp.gcc.devel/127875
+> Sorry I'm having trouble finding the patches, can you provide a URL?
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 08/19/2013 07:19 PM, Eric H. Christensen wrote:
-> > On Mon, Aug 19, 2013 at 06:58:22PM -0600, Kurt Seifried wrote:
-> >> Signing RPM's isn't very useful if you never make the signing
-> >> key available!
-> > 
-> > You mean like this:
-> > http://keys.fedoraproject.org/pks/lookup?search=0x442df0f8&op=vindex
-> >
-> >  I'm pretty sure pgp.mit.edu isn't the best source for PGP keys any
-> > longer, unfortunately.
-> 
-> Dunno who to ask, so adding Scrye: can we make sure Google indexes the
-> Fedora key server? 
+Here is the patch that resulted from above discussion:
+http://gcc.gnu.org/viewcvs/gcc?view=revision&revision=190648
 
-I'm happy to answer, but am not on some of the list's CC'ed, so feel
-free to pass my reply on. ;) 
+Some more:
+http://gcc.gnu.org/viewcvs/gcc?view=revision&revision=178031
+http://gcc.gnu.org/viewcvs/gcc?view=revision&revision=170054
 
-keys.fedoraproject.org is just recently revived. We had some issues
-with the sks software that runs on it and it was down for quite some
-time. Those issues are hopefully solved now so we can bring it up full
-time. 
-
-Hopefully google will notice it once it's been up for a while. 
-
-> This actually raises a good point, what are the key
-> servers now? The big 3 used to be:
-> 
-> http://pgp.mit.edu/
-> http://keyserver.pgp.com/
-> http://sks-keyservers.net/
-
-keys.fedoraproject.org should sync with sks-keyservers.net. 
-Not sure about the other 2. 
-
-kevin
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.20 (GNU/Linux)
-
-iQIcBAEBCgAGBQJSEvAkAAoJEEs3sNgP+7teOI4QAJa9pLrruBTevGKTL64nnHoP
-P+wVKOIeKLc00OCiF0zmLgCvgjG2i6FgcWgvbdzOvS3fBTF3P29fqZ1CtwQEWUko
-cU0i/sDOYspImg0F3kM65BzLZpTOW6jJFU29LFcNYDkFOailCfoszL9FX25wPDe4
-0pB6I3o7fAe4knQ4hUzyNrbWrwtUpE1IJVJedipC5pJu3OGt2lkT7jP48WiugWyz
-0lCQ/MZtcwOVmAztkK4PYH2iJfYI36EyviKRYHjbsywrrgAFshIKzYLROVkQco8C
-EVWt89L16wU/zFLYt00J6FJUGU+6xAkAYKg5GaUfcwI/swpd76FP71COfsz3c5l+
-HyXwtDRADNb3cCnFzCuBqNnaaDrT7hTxin69/XaFjKIuNSMm8YsnkbCYcNzHzKGh
-jBJ5gST6yJYaIlLIB2rlADdQ1jIeJG1plLMhmwjayi+m5lQh54mgWiok2jIKvENu
-/o0gJemhjzc4E3o8yMKzqiMsH9jwKeS70FRO1zpo87VTD/P+8v3SPTw9H/GpyrN0
-U1dc4S/XDoJEuUIHCoZCBRvWnnnl9Eue7wYjlCsj1Un0wtJz2hXbTfZONvSfO52A
-fHC5U5WZyDwl4NjBg/M0A1bHMwA90UztnYaQXJai326jsTLjf+5v1mT+9iRRFwKU
-AeZZpZZPugIEychcXVL0
-=mXzc
------END PGP SIGNATURE-----
