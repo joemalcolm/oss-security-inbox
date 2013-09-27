@@ -1,86 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/5
-Message-ID: <51E8DC59.7090305@redhat.com>
-Date: Fri, 19 Jul 2013 00:27:37 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/1
+Message-ID: <5244E10D.5090207@mccme.ru>
+Date: Fri, 27 Sep 2013 05:36:13 +0400
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-CC: Andrew Nacin <nacin@...dpress.org>, "Christey, Steven M." <coley@...re.org>, Jay Turla <shipcodez@...il.com>
-Subject: Re: Re: SWFUpload <= (Object Injection/CSRF) Vulnerabilities Multiple flaws
+Subject: Re: Reproducible Builds for Fedora
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 07/18/2013 03:29 PM, Andrew Nacin wrote:
-> On Thu, Jul 18, 2013 at 5:10 PM, Christey, Steven M.
-> <coley@...re.org> wrote:
->> CVE-2012-2399's only public details are that it's an unspecified
->> vulnerability in Wordpress before 3.3.2, yet
->> http://wordpress.org/news/2012/04/wordpress-3-3-2/ is pretty
->> vague and mentions multiple products (although it does credit
->> Neal Poole for at least one issue).  That said, a statement by a
->> lead developer of Wordpress is important for this clarification
->> ;-)  Andrew, can you confirm for sure that CVE-2012-2399 is
->> *also* the same as CVE-2012-3414 for Neal Poole's movieName
->> vector?
+On 2013-09-27 03:46, Steve Grubb wrote:
+> On Friday, September 27, 2013 02:46:33 AM Alexander Cherepanov wrote:
+>> On 2013-09-25 18:55, Solar Designer wrote:
+>>> Ensuring that "objdump -d" has stayed the same between a known-good and
+>>> another build of a binary is not sufficient to tell that the new build
+>>> is not trojaned.
+>>
+>> Indeed. But I think the whole approach is wrong. Attempts to conduct
+>> format-specific comparing are futile for several reasons:
+>>
+>> 1) when you are against a state level adversary (and we are talking
+>> about targeted attacks from organizations like NSA, right?) you are
+>> better not to try to parse anything complex, like file and objdump do
+>> (e.g. crashing objdump is quite easy);
 > 
-> Negative, I was mistaken. Sorry for the confusion. CVE-2012-2399
-> was a separate XSS, affecting buttonText, and reported by Szymon
-> Gruszecki. CVE-2012-3414 was Neal Poole's report, affecting
-> movieName.
-> 
-> So, CVE-2013-4145 is a duplicate of CVE-2012-3414, *not* of
-> CVE-2012-2399.
-> 
-> That said, given that CVE-2012-2399 was not publicly described at
-> the time, I would not be surprised if one or more CVEs have been
-> issued for the same XSS via buttonText at one point.
-> 
-> Christey, Steven M. <coley@...re.org> wrote:
->> Since swfupload.swf is apparently widely used, researchers may be
->> finding the same issue over and over again in different packages,
->> and presenting them as if they are new.  Yet there might be some
->> attack variants buried in there, too.
->> 
->> Because of the amount of attention by researchers who don't check
->> whether an issue has already been disclosed, and/or the number of
->> independent products that use this library, any "new"
->> swfupload.swf issues should be regarded with extreme suspicion
->> while CVE tries to iron out all the existing duplicates.
-> 
-> Related, for those who haven't seen, WordPress forked SWFUpload
-> last month. Both Neal and Szymon have been helping us with the
-> fork, as well. At this point, in terms of issues known to us, only
-> the image injection issue is unfixed.
-> 
-> Fork: https://github.com/wordpress/secure-swfupload Post:
-> http://make.wordpress.org/core/2013/06/21/secure-swfupload/
+> Well, what choice do any of us have? 
 
-So to confirm:
+The choice is simple -- produce byte-for-byte identical builds. Both Tor
+and Debian aim at it.
 
-CVE-2013-4144 swfupload KedAns-Dz object injection
-CVE-2013-4145 duplicate of CVE-2012-3414
-CVE-2013-4146 swfupload KedAns-Dz CSRF
+> I understand the attacker could know a 
+> hole in the program doing disassembly or categorization of the file, but I have 
+> to assume any bug there will be found eventually as gcc stack protector and 
+> other mitigations get better. But we have to have a starting point.
+> 
+>> 2) you cannot really determine format of a file (think GIFAR);
+>>
+>> 3) an elaborate script which knows many formats is going to be complex
+>> and to contain a lot of bugs which is bad in any security context.
+> 
+> I don't believe in giving up. I can verify most rebuilds right now. 
 
-and we're good?
+Please don't take me wrong, I'm not proposing to give up or trying to
+discourage you. It's great that you are working on reproducible builds.
+But we should not fool ourselves regarding the confidence level of
+available solutions. Maybe it's better to separate the problem of
+reproducing byte-for-byte identical builds from the problem of figuring
+the difference out when builds differ.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+> When holes 
+> are found they get addressed. So far, there has been great feedback on this. I 
+> am adapting the detections based on this feedback. It may never be 100% fool-
+> proof. The build environment could be thoroughly trojaned or the OS. But let's 
+> start in the direction of proof and see what we find.
+> 
+> For example, this tool kit might be of interest where people outsource 
+> augmentation of a system and want to check what all the contractor changed. 
+> You don't always need to think you are against the NSA to do something that is 
+> worthwhile. But, hopefully, its tight enough to catch that threat eventually.
 
-iQIcBAEBAgAGBQJR6NxZAAoJEBYNRVNeJnmTGwMQAIzLgZpf4ggH+ql8QAsdVqVs
-wH+0fCtRGvFW1wB4rCVQzAcJMF/L8ebL6McXrLwBJh5F1X3n7wvSjoh8T8VKIRov
-nDNCanJCXWCtm28sJ1OAhh8x2UngQXiVMvJpuFn3zBQCTU2JpCagJsKJugqTMS3B
-SggojonDX++AbfebqobqVpM5nDkhFU7AxhpWvHZz1IEZsOekN0cdEjaKpRHDsrxx
-N0SgWVBDhxkdqIoFuXNbiL1mjx0ZNrSbNhOYjzy4WMG3ZeENsHv85KMPhnP0CDj8
-xdc3s7ih4PF1a6bRIUvYWLpXk+J+5E/npYrqPyFeMEw+P/PoYtyFAujITcWwDSPm
-nQAgi97BUVOVpQ8zBYUyYREF5tJ1C3zqjOrq1mAO65Tp3BqkYUGsC+Mvw7Dz8elM
-EvdCrRdvKhE7ZVY1U+QzcORygsQ8D8KNK4iq9pHEW9mowRMmtgqMO8uFh83v68GV
-lnyzmvWZl0QI+7jm15l0u/tmp4snwi3aJuo7Hl8FymEggSFoHofkXO7TuD7wERpP
-VEHUmuI54XlT4MG0G9C3SnxFejLUY9ko2D0/EnygLF5V6hR4EalENY8cwPgq0Xbi
-nRf7gGJ+9l16IOjyhX6PfjPejnBjxqs9hFcI3U+6/D9GsatdH8zA69snRE0VyC6t
-hHwWve2IjD9tdoUkAGGc
-=BDEg
------END PGP SIGNATURE-----
+Indeed, the possibility to figure out the difference between two builds
+is quite useful.
+
+>> Examples for the item 3:
+>>
+>> - checks like "/usr/bin/file $2 2>/dev/null | grep ELF" are not strict
+>> enough because file sometimes shows pieces of metadata which is
+>> controlled by an attacker;
+> 
+> That was changed to a sed '1,2d' which takes care of the same problem better.
+
+You mean the problem with objdump mention earlier by Sebastian Krahmer?
+This is another problem.
+
+>> - in a script from opensuse -- at least ".*" in html cleaning permits to
+>> pass any html through;
+>>
+>> - some files are not checked at all: jars in the script from redhat and
+>> created.rid in the script from opensuse (.rid extension is not in my
+>> /usr/share/mime/packages/freedesktop.org.xml so format will be
+>> determined by the OS from content).
+> 
+> This script is under development and not finished. 
+
+Sure, but examples from the more mature script are quite similar.
+
+> I have only setup the 
+> detection of jar files with the intent of completing their comparison by 
+> unzipping them and doing a file by file comparison and/or further expansion 
+> because it could contain more jar files. The whole purpose is to eliminate the 
+> inherent time stamp in the file. The next major release should have this 
+> solved.
+> 
+> I appreciate the feedback. I want to make it better.
+
+Great, thanks for working on it.
+
+-- 
+Alexander Cherepanov
