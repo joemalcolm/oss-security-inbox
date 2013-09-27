@@ -1,30 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/13
-Message-ID: <8638udlj2o.fsf@ds4.des.no>
-Date: Fri, 26 Apr 2013 11:47:27 +0200
-From: Dag-Erling Smørgrav <des@....no>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com,  Alistair Crooks <agc@...src.org>,  Josh Bressers <bressers@...hat.com>
-Subject: Re: upstream source code authenticity checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/6
+Message-ID: <52452232.8050907@redhat.com>
+Date: Fri, 27 Sep 2013 00:14:10 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...hat.com> writes:
-> Dag-Erling Smørgrav <des@....no> writes:
-> > This is exactly the logic used by web browsers to justify scaring
-> > users away from https sites that haven't payed the Verisign tax...
-> Huh? That makes no sense. There's at least one free CA that has a root
-> cert in most browsers (http://cert.startcom.org/). I'm sorry but your
-> comment in this context doesn't appear to make any sense.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I wasn't aware of StartCom.  I've been using CACert, which is not
-included in browsers.
+On 09/26/2013 03:21 PM, Forest Monsen wrote:
+> Hi there,
+> 
+> I'd like to request CVE identifiers for:
+> 
+> SA-CONTRIB-2013-073 - Make Meeting Scheduler - Access Bypass 
+> https://drupal.org/node/2081637
+> 
+> SA-CONTRIB-2013-074 - MediaFront - Cross Site Scripting (XSS) 
+> https://drupal.org/node/2087051
+> 
+> SA-CONTRIB-2013-075 - Click2Sell - Multiple Vulnerabilities (XSS
+> and CSRF) (Now marked "unsupported," and no patch provided) 
+> https://drupal.org/node/2087055
+> 
+> SA-CONTRIB-2013-076 - jQuery Countdown - Cross Site Scripting
+> (XSS) https://drupal.org/node/2087095
+> 
+> SA-CONTRIB-2013-077 - Google Site Search - Cross Site Scripting
+> (XSS) https://drupal.org/node/2092395
+> 
+> Thanks!
+> 
+> Best, Forest
 
-My point was that browsers go to great lengths to prevent users from
-visiting sites that use self-signed certificates, or certificates signed
-by a CA which the browser does not know / trust, but will happily let
-users submit forms on unencrypted sites without even a warning.  This is
-the same "no security is better than imperfect security" logic.
+Please use:
 
-DES
--- 
-Dag-Erling Smørgrav - des@....no
+CVE-2013-4379 Drupal SA-CONTRIB-2013-073 - Make Meeting Scheduler -
+Access Bypass
+
+CVE-2013-4380 Drupal SA-CONTRIB-2013-074 - MediaFront - Cross Site
+Scripting (XSS)
+
+CVE-2013-4381 Drupal SA-CONTRIB-2013-075 - Click2Sell - Multiple
+Vulnerabilities XSS
+CVE-2013-4382 Drupal SA-CONTRIB-2013-075 - Click2Sell - Multiple
+Vulnerabilities CSRF
+
+CVE-2013-4383 Drupal SA-CONTRIB-2013-076 - jQuery Countdown - Cross
+Site Scripting (XSS)
+
+CVE-2013-4384 Drupal SA-CONTRIB-2013-077 - Google Site Search - Cross
+Site Scripting (XSS)
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSRSIyAAoJEBYNRVNeJnmT/dAP/j87eza8z/EQ1QDIXD/HYi3F
+p0eXP+p8vvfQPfsDF2y3+fckmWsRuGzYDYU3Lh3Z7rbUipJkHPc+ABKfXgQWJJiN
+3F0JqDBWlyz9Dih3tdXf+qX53oZ1jovhTYuBI8ktEUM4LRh0bnjFanAWumlkL2kK
+GswolTCw4TK+AGtJEPTpoAa6NpMW0SzrLGwLDYtlPFqXdjr2pdXpzLDikqPiaO3P
+K3c+FpM4J0AfsIdQUE3DVnm6pm+91mTzDVmGNKq48bvEAzMNw90bVPSEwWjseb8b
+Z+F5IfYOGvwxrqT8SnDt3aOb9tVCYbPw++F2DmXno6JvlQiswCRhfI0U5DHLW0TK
+isLHFS4HifPZk4LzZmw/jBnA8BTFDu3BXY6Rav1j0eOOa8yawAjkdi1fw60OCmmA
+tcgtPzxEVs8jH0MMl2hFdQrIJY/ladh9yyBrXPBQixH4ijZth8C74Y/R6czEehl/
+qSmn8zGNAWQkYPknNutb1nhthC9ho8zS3mV8ls5VQY/wCVCpLrxmKsDIn8Hi0vTL
+4Khx1zXLFENd6ne0qhxlFV55/KXu1FbNfyhyBPpd20aLOLnp6LPGMj2GHztRLaZI
+len35d5KzIIm+stqTNWRCpQ0cFDhGtkDElaUV78EIepH+zdhcIT83blxWmFz7RRU
+kw/wIWQdbrM6QcThG5P0
+=lGBK
+-----END PGP SIGNATURE-----
