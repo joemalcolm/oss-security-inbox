@@ -1,40 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/11
-Message-ID: <20130221114811.GA27599@elende>
-Date: Thu, 21 Feb 2013 12:48:11 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/8
+Message-ID: <20130927063054.GA1179@lonestar>
+Date: Fri, 27 Sep 2013 12:00:54 +0530
+From: Dhiru Kholia <dhiru.kholia@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: 700158@...s.debian.org, 700159@...s.debian.org
-Subject: Re: CVE request: XSS flaws fixed in ganglia
+Subject: Re: Reproducible Builds for Fedora
 Content-Type: text/plain; charset=utf-8
 
-Hi Raphael
+On 09/25/13 at 06:55pm, Solar Designer wrote:
+> Dhiru, all -
+> 
+> Ensuring that "objdump -d" has stayed the same between a known-good and
+> another build of a binary is not sufficient to tell that the new build
+> is not trojaned.  Changes to other sections (e.g., to embedded data that
+> the program uses or/and to relocations) or/and to the ELF header may be
+> sufficient to introduce meaningful backdoors.
+> 
+> Recent research:
+> 
+> https://www.usenix.org/conference/woot13/weird-machines-elf-spotlight-underappreciated-metadata
+> 
+> "Our proof-of-concept toolkit highlights how important it is that
+> defenders expand their focus beyond the code and data sections of
+> untrusted binaries"
+> 
+> [ Dhiru, weren't you there in person? ;-) ]
 
-On Thu, Feb 21, 2013 at 11:47:10AM +0100, Raphael Geissert wrote:
-> Hi,
-> 
-> On 8 February 2013 19:06, Vincent Danen <vdanen@...hat.com> wrote:
-> > A number of XSS issues were fixed in ganglia's web ui:
-> >
-> > https://github.com/ganglia/ganglia-web/commit/31d348947419058c43b8dfcd062e2988abd5058e
-> 
-> I've a hunch that there are a few issues with the changes. A quick
-> look at the patch shows that the change here breaks the preg_replace
-> call:
-> 
-> - $query_string = preg_replace("/(&trendhistory=)(\d+)/", "", $query_string);
-> + $query_string = preg_replace("/(&trendhistory=)(\d+)/", "",
-> htmlspecialchars($query_string, ENT_QUOTES) );
-> 
-> It looks as if the htmlspecialchars call was misplaced.  Not that it
-> is a security issue, but it's a bug.
-> 
-> Can anyone forward this upstream? I will try to take a look at the
-> rest of the patch later.
+I was there but the talk was too technical ;)
 
-Done as issue #157 for ganglia-web[1].
+> December 2006 paper saying that a related technique has "been used in
+> the virus world many years prior to this paper":
+> 
+> http://uninformed.org/?v=6&a=3&t=sumry
+> 
+> Besides ELF being Turing-complete on its own, the ELF header may contain
+> native executable code too:
+> 
+> http://www.muppetlabs.com/~breadbox/software/tiny/teensy.html
 
- [1]: https://github.com/ganglia/ganglia-web/issues/157
+After some thinking (and after reading Alexander's emails) I think that
+producing byte-for-byte identical builds is the only sane choice we are
+left with.
 
-Regards,
-Salvatore
+I had this "byte-for-byte" clause in my initial version of the proposal
+but I dropped it, thinking that it was too "ambitious" for an initial
+proof-of-concept. It was probably a bad decision on my part. 
+
+That being said, we have started working towards getting byte-for-byte
+identical builds.
+
+-- 
+Dhiru
