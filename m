@@ -1,27 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/06/1
-Message-ID: <5136BA40.1030604@newcomlink.com>
-Date: Tue, 5 Mar 2013 21:38:40 -0600
-From: Alton Moore <alton.moore@...comlink.com>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: handling of Linux kernel vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/29/1
+Message-ID: <52477C0D.8000004@redhat.com>
+Date: Sat, 28 Sep 2013 19:02:05 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Hannes Frederic Sowa <hannes@...essinduktion.org>, dvyukov@...gle.com
+Subject: Re: linux kernel memory corruption with ipv6 udp offloading
 Content-Type: text/plain; charset=utf-8
 
-I think this is a fairly meaningful discussion, not that I feel all that 
-qualified to speak to some of its particulars.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Everyone being well intentioned here, the question is how to put forward 
-the least amount of effort (work) and get the most results (overall 
-security).  When that issue gets hazy, it's often useful to fall back 
-upon some fundamental tenets that we as computer guys usually believe 
-in.  "Openness" springs to mind at the moment, although other similarly 
-respected concepts might be equally applicable.
+On 09/28/2013 12:30 AM, Hannes Frederic Sowa wrote:
+> Hi!
+> 
+> I guess the following patch might be worth a CVE:
+> 
+> | [PATCH] ipv6: udp packets following an UFO enqueued packet need
+> also be handled by UFO | | In the following scenario the socket is
+> corked: | If the first UDP packet is larger then the mtu we try to
+> append it to the | write queue via ip6_ufo_append_data. A following
+> packet, which is smaller | than the mtu would be appended to the
+> already queued up gso-skb via | plain ip6_append_data. This causes
+> random memory corruptions. | | In ip6_ufo_append_data we also have
+> to be careful to not queue up the | same skb multiple times. So
+> setup the gso frame only when no first skb | is available. | | This
+> also fixes a shortcoming where we add the current packet's length
+> to | cork->length but return early because of a packet > mtu with
+> dontfrag set | (instead of sutracting it again). | | Found with
+> trinity.
+> 
+> While writing a reproducer to test this patch, I have seen silent
+> memory corruption (which later manifests as e.g. a panic or hangs
+> on shutdown) and oopses.
+> 
+> It has been reported to netdev by Dmitry Vyukov
+> <dvyukov@...gle.com> and was found with the AddressSanitizer for
+> the kernel[1] and trinity.
+> 
+> The patch is queued up for stable: 
+> http://patchwork.ozlabs.org/patch/276835/ and is already committed
+> to linux-net: 
+> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=2811ebac2521ceac84f2bdae402455baa6a7fb47
+>
+>  I guess the erroneous behaviour was introduced here: | git
+> describe --contains e89e9cf539a28df7d0eb1d0a545368e9920b34ac |
+> v2.6.15-rc1~731^2~31
+> 
+> The reproducers are available on request.
+> 
+> [1]
+> https://code.google.com/p/address-sanitizer/wiki/AddressSanitizerForKernel
+>
+>  Thanks,
+> 
+> Hannes
+> 
 
-Not taking sides or anything; just suggesting that, all other things 
-being equal, the most philosophically appealing course might turn out to 
-be the best one.  Seems to work for physics.  :-)
+Please use CVE-2013-4387 for this issue.
 
-Regards,
-Alton Moore
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-
+iQIcBAEBAgAGBQJSR3wNAAoJEBYNRVNeJnmTfCQQAIoM5+fTHyrE4K9CGUqN5lsw
+we8cFnBHFeG3PcRQlaR2ItDOmFoMruqSEEqMhfnL9CUYvuV7rVlWc+2Xw4U2r995
+6heZ3VfLyarL7lbdcYDej9X3CiL9I33+FYCvyZdxTF8ulwkAbnOPD+eqFk6izv0m
+ICg0Rl4rhieMLlGTH3cfeNDCO8uFls5vCJ18pqgKiT5ioj+TyshHqiyA+2uqwUqj
+s6OnxZ2CJa6oTRvdfHC2OJFSXB4OqylN10OK8uypoydJ1UrmEJGnBH9UBD8ltLmo
+Ccg7SndC/QLa+gwn5MIRGBJdijkzHhFyCfTjjT4JhsRu+yI3loHbMvPf1sGfcNXL
+f75ohgvz1aAsvHGTyBWtt/zwImNjUoMLRuqpDRIN6Fb9OfdphmW0uXVZG0Om8Jjx
+T2HtsJDPKphgcDhM/YuTQJ/4jMKUUK3XzTBstQIKXxEQX5nz041z/Zs5Z5ibVmaS
+iikCqhx78dh+LMGWV4K+1HkNZQpoTRYCbwRdRT4PHvyoIjYV2luFcsAJcDIIYhzI
+g3A/df6/eFmNhJn02kzd0g33O4kbvNz3MQmoEhBSLalmHyqwKrtWhVNZG419M4tC
+C69t0tpxPJoNIfoRQ6sqJsmSoyJAeu4417Ut9lB0268BVGVLm2gH186hwMSnzBld
+mziNFW/q9kVxhJRPAom8
+=/r10
+-----END PGP SIGNATURE-----
