@@ -1,53 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/02/4
-Message-ID: <529CF276.1020205@redhat.com>
-Date: Mon, 02 Dec 2013 13:49:58 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: CVE Rejections
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/01/1
+Message-ID: <CA+e4TbdMu4LHbj8GU=xNdkF=97b2RZW0kmvsfDmnkZnKD7dEPA@mail.gmail.com>
+Date: Mon, 30 Sep 2013 23:31:20 +0200
+From: Laurent Butti <laurentb@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: VLC
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-With apologies, I;ve been doing some house cleaning, and I have some
-CVE's to REJECT. They have been used internally at Red Hat and
-partially disclosed privately, if they were Red Hat only I'd recycle
-them, but with some external use I don't want to run the risk of
-making a mess.
+I have found a security issue in vlc 2.0.8 which was reported to VLC
+team and fixed in both 2.0.9 and 2.1.0 (as "Fix buffer overflow in the
+mp4a packetizer").
 
-In the first case we had multiple issues in a program, two of which in
-later investigation turned out not to be exploitable, ditto for the
-third one.
+Here are the commit log and changelog:
 
-Please REJECT the following CVEs:
+* http://git.videolan.org/?p=vlc.git;a=commitdiff;h=9794ec1cd268c04c8bca13a5fae15df6594dff3e
+* http://www.videolan.org/developers/vlc-branch/NEWS
 
+Could a CVE be assigned?
 
-CVE-2013-4528
-CVE-2013-4543
-
-CVE-2013-4417
-
-Thanks.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSnPJ2AAoJEBYNRVNeJnmTXU4P+wVx5YT2m8a1J8cx3uusPyDN
-JTo3czgTkWWBG12Of+9T9LiV+RZVqJ64fnMUYUHuA5RRJRvAHKC6poQ/xpzp7P7G
-RTTDr1VEWNmLwMYMG+3DK/WylQegFMC981jJg2Q+NmGY2a2+SZ5WJQva0YBeTq66
-YqP+ElCmvuQocdCDFkvBUIh6eBppuiwqiI6G4411/bUgppbLQXs6k+w3+LVcQbTb
-dneCIw7a+E4zHYk6QQxU7oH5eNBFH5Euqcj4vZfHTs8tFjB0aXwL3b1q0oUrMeHU
-ozdFpIpiX0e139vnxp0GyCb6oLY2XNOWM6LwJWfVr/Y8U0nrdfSxM6EWs4CjZ44q
-7nN8JiOHauBKf1MUQ0em4yGFwtnNvgfdjx0yaci5UdQzdS0KSubTl7Ni4zLB3am8
-hCvYkyWhKK1OXYRt7SeFvI9YMh2tU8liBuJZxRzgZSWRTsIkffOtuZBqbQ/6Qz/c
-LLUbWN895gjupsPMa3xfprh7JEmkck5qjGJBHE+Bgg6KYdd/WYYS5FfxaWSiPbBL
-0yU1/F7lJYcMVPHCf5h2OPUJx1ugnh+Bm7MBuhG4agIgzut3MG8vj2RQDJPODmaV
-w3WmOafY3ugRgGr7NvSyH91d/Myeqve7PUoMJLrK8glq3Y3TCAWEHUdZEtq8yL4j
-4Gg4q4ZnC+NzAdTYC8Pa
-=Gr4s
------END PGP SIGNATURE-----
+Thanks,
+Laurent Butti.
