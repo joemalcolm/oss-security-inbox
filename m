@@ -1,91 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/23/1
-Message-ID: <51284B3B.4060602@redhat.com>
-Date: Fri, 22 Feb 2013 21:53:15 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fweimer@...hat.com>, Mitre CVE assign department <cve-assign@...re.org>
-Subject: Re: CVEs for libxml2 and expat internal and external XML entity expansion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/30/3
+Message-Id: <E1VQcDB-0000Pk-DR@xenbits.xen.org>
+Date: Mon, 30 Sep 2013 12:04:25 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 66 (CVE-2013-4361) - Information leak through fbld instruction emulation
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/22/2013 07:25 AM, Florian Weimer wrote:
->> Please use CVE-2013-0338 for libxml2 internal entity expansion
-> 
-> Hasn't libxml2 got countermeasures for that?
+              Xen Security Advisory CVE-2013-4361 / XSA-66
+                              version 3
 
-Against exponential, but not quadratic/fast linear.
+           Information leak through fbld instruction emulation
 
->> Please use CVE-2013-0341 for expat external entities expansion
-> 
-> I don't think expat resolves external entities at all.  Therefore,
-> the vulnerability resides entirely in the code which uses expat.
+UPDATES IN VERSION 3
+====================
 
-Yes but I think it's common enough to warrant it (this is one of those
-cases where things don't map super cleanly):
+Public Release.
 
-Handling External Entity References
+ISSUE DESCRIPTION
+=================
 
-Expat does not read or parse external entities directly. Note that
-any external DTD is a special case of an external entity.  If you've
-set no <code>ExternalEntityRefHandler</code>, then external entity
-references are silently ignored. Otherwise, it calls your handler with
-the information needed to read and parse the external entity.
+The emulation of the fbld instruction (which is used during I/O
+emulation) uses the wrong variable for the source effective address.
+As a result, the actual address used is an uninitialised bit pattern
+from the stack.
 
-Your handler isn't actually responsible for parsing the entity, but
-it is responsible for creating a subsidiary parser with <code><a href=
-"#XML_ExternalEntityParserCreate"
-> XML_ExternalEntityParserCreate</a></code> that will do the job.
-> This
-returns an instance of <code>XML_Parser</code> that has handlers and
-other data structures initialized from the parent parser. You may then
-use <code><a href= "#XML_Parse" >XML_Parse</a></code> or <code><a
-href= "#XML_ParseBuffer">XML_ParseBuffer</a></code> calls against this
-parser.  Since external entities my refer to other external entities,
-your handler should be prepared to be called recursively.
+A malicious guest might be able to find out information about the
+contents of the hypervisor stack, by observing which values are
+actually being used by fbld and inferring what the address must have
+been.  Depending on the actual values on the stack this attack might
+be very difficult to carry out.
 
-Parsing DTDs
+IMPACT
+======
 
-In order to parse parameter entities, before starting the parse,
-you must call <code><a href= "#XML_SetParamEntityParsing"
-> XML_SetParamEntityParsing</a></code> with one of the following
-arguments:
+A malicious guest might conceivably gain access to sensitive data
+relating to other guests.
 
- *<code>XML_PARAM_ENTITY_PARSING_NEVER</code>
-Don't parse parameter entities or the external subset
+VULNERABLE SYSTEMS
+==================
 
- *<code>XML_PARAM_ENTITY_PARSING_UNLESS_STANDALONE</code>
-Parse parameter entites and the external subset unless
-<code>standalone</code> was set to "yes" in the XML declaration.
+Xen 3.3.x and later are vulnerable.
 
- *<code>XML_PARAM_ENTITY_PARSING_ALWAYS</code>
-Always parse parameter entities and the external subset
+Only HVM guests can take advantage of this vulnerability.
 
-In order to read an external DTD, you also have to set an external
-entity reference handler as described above.
+MITIGATION
+==========
+
+Running only PV guests will avoid this issue.
+
+There is no mitigation available for HVM guests.  We believe this
+vulnerability would require significant research to exploit.
+
+CREDITS
+=======
+
+Jan Beulich discovered this issue.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa66.patch             Xen 4.2.x, Xen 4.3.x, xen-unstable
 
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+$ sha256sum xsa66.patch
+3a9b6bf114eb19d708b68dd5973763ac83b57840bc0f6fbd1fe487797eaffed4  xsa66.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRKEs7AAoJEBYNRVNeJnmT+hcQAMH0JsGT6V4D4Zd8gU7oWKR3
-zYeu/JeowUCceH/F7HQl4dySUYPNO2TWboX8u/6CGN/8IcmwdtM9W4yZPQ2KyXTO
-UKFnhztW4gD5DQ6q18uc9YKDMbGJPmRWAkaoAGGXU3m0fLRmRqZ9eMblQK22zeAH
-RFOIqZMJ7G7slrs2cFOJ6Wb7ZQb3wKgItP0B46ueyGe1MU/LRLykXLJfKBXltWNz
-3x4UzXWSCR/3bZcUJV43Nh7gUSBNJ2chOvIU+DUz625sSeanf3RQIgzJw3eQIgip
-W/4h8xwyoP+w9zaJE6/J1iNhNjpiEmeVkoEcsHFjtSHQ87wp3niqE7QxNvpO1XAA
-T61jUsZUNGCgqZlmA64gT7OFNAMClQ6w3g0EzQ5/lukpFA6uwItvTnnfyC2XzJC8
-pkAANcL5fOQowxPTkdjRZdlY02F65HbpGGQO0OZXokw1XDKlz5EDavwVJfGi8kvt
-VHfuqursFe4H7vnoWj+IX+ZYaydf9pwGRCxqTpI7B1JEC9syxwQce+B007dMlgcm
-faswtrbgM5TO6snjBJLzZKA0nvHBRMasR3f+wCXq7JrgmgiOqrPxxizZm0HlM18s
-olw4e+DOWpIN9wrvFNNlvkmc6fwMiEJfjp7W5N7SnI5TR+EbZGxQI/av1anjWR78
-231jJXfRNAxMh8tj5I/X
-=uJuT
+iQEcBAEBAgAGBQJSSUhOAAoJEIP+FMlX6CvZdTsIAISzxoVv5PVKcT3RlikuDPdS
+AN4b5d/AJHGUcVg0K8CAd5UpvP0y5UfVhMFc+LCNDoeTE6a+4PsS/2V49HX259tT
+oX1HDZUxzfDbNTgZL5/hS3RUNZvTlWxVS0E5SMRW5jDrScPFUOqliD9hNj2cyvlq
+Ne362V5VFFb9AcZsMPnl2V4FerUyyuTCncxcvsvDshFIhBaqBY8G/LBqIHE7CKZF
+qCK9688RIMlwgNag7fbSloCLOifC7Jrfp9k+wfhAUdLj6R6l2SuyItYa7KufTAof
+/bWddQVFxhxcapYMDiNExZNxbHoM51rAeSkC3eYn6BGWKjqfIetA4X+uzfP3LNc=
+=PSEF
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa66.patch" of type "application/octet-stream" (839 bytes)
