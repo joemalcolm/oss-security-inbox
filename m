@@ -1,20 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/19/4
-Message-Id: <DE402E70-B065-424C-B251-113CC51D2B82@titanous.com>
-Date: Sat, 19 Oct 2013 11:43:51 -0400
-From: Jonathan Rudenberg <jonathan@...anous.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/01/7
+Message-ID: <CAEDdjHcVFxP7zQvMfy8Zmsir4irMggyr+4QOJecWpAzrnZfjYQ@mail.gmail.com>
+Date: Tue, 1 Oct 2013 16:20:10 +0100
+From: Pedro Ribeiro <pedrib@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Node.js HTTP Pipelining DoS
+Subject: CVE request - VLC 2.0.0 to 2.0.8
 Content-Type: text/plain; charset=utf-8
 
-Node.js is vulnerable to DoS when a client sends too many pipelined HTTP requests.
+Hi,
 
-Links:
+I have discovered a denial of service / possible code execution in VLC via
+a crafted ASF file. This has been reported to VLC and was apparently fixed
+unintentionally in 2.0.8 with the entry "Improve handling of corrupt ASF
+files". Version 2.1.0 is not affected.
 
-https://groups.google.com/forum/#!topic/nodejs/NEbweYB0ei0
-http://blog.nodejs.org/2013/10/18/node-v0-10-21-stable/
-http://blog.nodejs.org/2013/10/18/node-v0-8-26-maintenance/
-https://github.com/joyent/node/issues/6214
-https://github.com/joyent/node/commit/085dd30e93da67362f044ad1b3b6b2d997064692
+The file contains a crafted ASF packet that causes VLC to crash on a read
+operation, with control of EDI and EAX. In the file attached you will find
+at starting offset 0x157AD the hex values 17 DE B4 71 in little endian,
+which attempts to use for a read operation. Control of other variables in
+the Demux function in asf.c is also possible by changing packet values
+before and after the offset as per the ASF specification.
 
-This issue affects all versions of Node released before 0.10.21 and 0.8.26.
+The file is located here:
+https://github.com/pedrib/PoC/blob/master/vlc-crash.asf
+
+I have not been able to obtain any program control so far, so at the moment
+this only crashes VLC. However someone more skilled might be able to
+control it.
+
+Can you please provide a CVE for this?
+
+Regards
+Pedro
+
