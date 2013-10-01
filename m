@@ -1,57 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/11/7
-Message-ID: <513E3C80.1090804@redhat.com>
-Date: Mon, 11 Mar 2013 14:20:16 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/01/9
+Message-ID: <524AF375.101@redhat.com>
+Date: Tue, 01 Oct 2013 10:08:21 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Amos Jeffries <amos@...enet.co.nz>
-CC: bugtraq@...urityfocus.com, tytusromekiatomek@...hmail.com, oss-security@...ts.openwall.com
-Subject: Re: Squid 3.2.7 DoS (loop, 100% cpu) strHdrAcptLangGetItem() at errorpage.cc
+To: oss-security@...ts.openwall.com
+Subject: Re: [CVE request] systemd
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/07/2013 05:37 PM, Amos Jeffries wrote:
-> On 6/03/2013 9:53 a.m., tytusromekiatomek@...hmail.com wrote:
->> ################################################################ 
->> # DoS (loop, 100% cpu) strHdrAcptLangGetItem() at errorpage.cc # 
->> ################################################################ 
->> # # Authors: # # 22733db72ab3ed94b5f8a1ffcde850251fe6f466 #
->> c8e74ebd8392fda4788179f9a02bb49337638e7b # AKAT-1 # 
->> #######################################
->> 
->> # Versions: 3.2.5, 3.2.7
+On 10/01/2013 01:26 AM, Huzaifa Sidhpurwala wrote:
+> Hi All,
 > 
-> Thank you very much for reporting this to us upstream and ensuring
-> a patch was available before publishing it publicly *cough*. This
-> has now been fixed.
+> I would like to request CVE ids for 4 systemd issues.
 > 
-> Would you care to do better on the other ones before someone else
-> has a chance to mail your exploit to our bugs@ address and grab all
-> the discovery glory?
-> 
-> Amos Jeffries Squid Project
+> 1. systemd: Integer overflow, leading to heap-based buffer overflow
+> by processing native messages 
+> https://bugzilla.redhat.com/show_bug.cgi?id=859051
 
-Please use CVE-2013-1839 for this issue.
+Please use CVE-2013-4391 for this issue.
+
+> 2. systemd: TOCTOU race condition when updating file permissions
+> and SELinux security contexts 
+> https://bugzilla.redhat.com/show_bug.cgi?id=859060
+
+Please use CVE-2013-4392 for this issue.
+
+> 3. systemd: Possibility of denial of logging service by processing 
+> native messages from file 
+> https://bugzilla.redhat.com/show_bug.cgi?id=859104
+
+Please use CVE-2013-4393 for this issue.
+
+> 4. systemd: Improper sanitization of invalid XKB layouts
+> descriptions (privilege escalation when custom PolicyKit local
+> authority file used) 
+> https://bugzilla.redhat.com/show_bug.cgi?id=862324
+
+Please use CVE-2013-4394 for this issue.
+
+> Thanks!
+> 
+> 
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRPjyAAAoJEBYNRVNeJnmT2akP/3a8sbpYdGYNcRfh1diMh8d9
-vXgTIWuCucln7xICDoav+qBJkVwXiRIQSaGlRtA56MdkIJBYj53gSrAOOsr2vOhq
-v8jmc65qQFH/fzt93Q0h/yF7ozY9IYY37frVMUmJeKs+JRsrkWSDvqpiiOgdmJON
-LW7YmW0lkt+p/ye14BMq072zsUikgz8oU4oJhJvbZR1o2El1LSzTj3EbCIxbwbYg
-dHAzPWKiujytkB6pziiU8OFowqhcOksEu/Qod8mMVFgG8L56bjkAhL5BVHdP2uY9
-JFHhPXi5P0XYQ04/975wG2qOZt56W7p9Hp7ji6SRiWC8wZhVe7FFoFk/y3DC3gdY
-ICh3BjtX7rh1hm1BYnf6gE8cC8KZFkpmO+Fltp2blbpd5IGDP64IdZ5Tj5elFI27
-CuvWJ8oY2vHHJ1+NmXRzSWrWkuSaRzSmcvItlOillP8qAXIYvTT8NY6rHbahkM/5
-mCuFo12yhUXVl31ilo0E8Y00mrgI2psDUfHv/Q+FNkRylMykhzpii+/XjW6llHDJ
-GM4XN+H4oLF3TEZ+3mPEBoQl5c0Vc8p0yk3x5tM/MhuRQ68X173+tsjmg4QtxLiv
-1LGYVtNphMsdwprWC01ci/xeh0kfHX4liK/9NY7aS3evScku94jGwHn9X+oVejOT
-XXkwifp3W+pf9AO5b8la
-=NngW
+iQIcBAEBAgAGBQJSSvN0AAoJEBYNRVNeJnmTvEkP/0O7fL7qM+qlir6O27hOoLLi
+42YBzSFM49TDP067kPPx+buKBmHBXDq5CulTa1fm/0yW6Z7Aj2L+sA81c8Ovrejf
+52AXUmbOwOd6pUFPTe+E/mBWLJ6c1kYcl5Q0+EEKJjbmmvsxsDJkUDrbavRJwymF
+plmMmspti+jUHge1vmFu0aNf/kGvBH6izYm/3rlZb0Z3itHid9W5AkcgcrqD5aBM
+RwRwNCY46reaSMZZSq0jDdFryZu2M/NazNTKsPgPQSA+8ww6Oq+ABPBm0UHhA5iy
+ZEy9bLDg1xcU1YezElc3m+BVivJVxE4cH+LEl7835SFCePhMquph3skBGRaBa2py
+QLnduv8zepOp3gTTCjcbVZGpCF7h1EjrIR7hKv9PaIA9F7wkyNvwOQCW/Hzp6SKO
+Q/Jf9zw9asFOicHq0iCf4FlwkX9sYBTXjVnDWYKQ0Z/97S0gwjkcTC+Uq+wKWv1F
+AbpMhGCKdR+I2cxPwYz6gLjuY78CG4qRiCp4zls1b33L1xlY6SHkxbOQ8dDVNrta
+LfqzqKoKTb5DsdQHqx9Bq2b74QG9xtsrqi7lv4dFrl9UDmbltc48ydtHomhN923h
+JANWDUtarDb5b2DsHnix1zFjRrdhX4RKHx1ocCajJPZM8u74nDkr0v1uLB/SNUyY
+RVTIDk6MY7bZvIk4lLpN
+=5Kt1
 -----END PGP SIGNATURE-----
