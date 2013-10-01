@@ -1,44 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/24/1
-Message-ID: <20130224073447.GA7419@gremlin.ru>
-Date: Sun, 24 Feb 2013 11:34:47 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/01/5
+Message-ID: <524A791F.3080008@redhat.com>
+Date: Tue, 01 Oct 2013 12:56:23 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: nginx CVE-2013-0337 world-readable logs
+Subject: [CVE request] systemd
 Content-Type: text/plain; charset=utf-8
 
-On 22-Feb-2013 15:46:15 +0400, I wrote:
+Hi All,
 
- >> Some distros are affected.
+I would like to request CVE ids for 4 systemd issues.
 
- > Alas for them... But the solution is simple.
+1. systemd: Integer overflow, leading to heap-based buffer overflow by
+processing native messages
+https://bugzilla.redhat.com/show_bug.cgi?id=859051
 
- >> This is not just misconfiguration.     
+2. systemd: TOCTOU race condition when updating file permissions and
+SELinux security contexts
+https://bugzilla.redhat.com/show_bug.cgi?id=859060
 
- > This issue isn't related to the nginx itself.
- > However, I'd agree that nginx could use restrictive mode for
- > its' log files:
- > +++ nginx-1.2.7/src/core/ngx_log.c
- > @@ -325,7 +325,7 @@
- > -  NGX_FILE_DEFAULT_ACCESS);
- > +  NGX_FILE_USR_GRP_ACCESS);
+3. systemd: Possibility of denial of logging service by processing
+native messages from file
+https://bugzilla.redhat.com/show_bug.cgi?id=859104
 
-I've contacted the nginx team via their security-alert@ and got
-the "won't fix" answer by Maxim Dounin:
+4. systemd: Improper sanitization of invalid XKB layouts descriptions
+(privilege escalation when custom PolicyKit local authority file used)
+https://bugzilla.redhat.com/show_bug.cgi?id=862324
 
- > We are fine with default permissions used for log files.
- > If in a particular configuration stricter permissions are
- > required, this may be done either by creating appropriate
- > log files with needed permissions, or by restricting access
- > to a directory with log files.
-
-Although respecting the umask value could be a better solution
-(and I'll try once again to convince the developers in that),
-the developers' opinion is clear: pre-creating the logs is the
-expected method to fix the ${subject}.
+Thanks!
 
 
 -- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+Huzaifa Sidhpurwala / Red Hat Security Response Team
