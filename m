@@ -1,44 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/11/1
-Message-ID: <51661DD5.6060708@redhat.com>
-Date: Wed, 10 Apr 2013 20:20:05 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE-2010-5109 libytnef buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/01/6
+Message-ID: <20131001095559.GB15214@suse.de>
+Date: Tue, 1 Oct 2013 11:55:59 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: [CVE request] systemd
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Oct 01, 2013 at 12:56:23PM +0530, Huzaifa Sidhpurwala wrote:
+> Hi All,
+> 
+> I would like to request CVE ids for 4 systemd issues.
+> 
+> 1. systemd: Integer overflow, leading to heap-based buffer overflow by
+> processing native messages
+> https://bugzilla.redhat.com/show_bug.cgi?id=859051
+> 
+> 2. systemd: TOCTOU race condition when updating file permissions and
+> SELinux security contexts
+> https://bugzilla.redhat.com/show_bug.cgi?id=859060
 
-So the nice folks at iSIGHT Partners caught this and notified me.
+That sounds interesting. Do you have a patch for this one? I cannot
+access the bug as is (at least I see no link to a real discussion
+or patch-link).
 
-http://lists.fedoraproject.org/pipermail/package-announce/2012-July/083853.html
+thx,
+Sebastian
 
-http://lists.fedoraproject.org/pipermail/package-announce/2012-July/083804.html
 
-https://bugzilla.redhat.com/show_bug.cgi?id=831322
+-- 
 
-http://sourceforge.net/p/ytnef/bugs/13/
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-Please use CVE-2010-5109 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRZh3VAAoJEBYNRVNeJnmTKpQQAIqEm83FKFq5r8vpH6tf7m/F
-lq9FIT8yE4raldIgDSHhJHhLsNrh3yFrGc06tPddLLfVkNbPnPAdtKjilmMoNIPt
-abnPzwngKiui846wKlYFxt5/hEvgOSmvM15rdUXrcn3wHd/gnAAYFysynyGJZlRw
-ANkuLeIhkKWf1NBEjJCaxFsmk/D4nNsxhpj1ccPkmvgMMws59ias8DeCE2xdu0MS
-5Lb9zsrj9ewhoef6pt6arVfVqBJy4O8b/RIcPulw+F155VEvKQmbIHJ+HjuIloMx
-y9mBD2Ax3KxPtYgx6fYzj6mTNvk6oEBFHTITHCPffYGciZb0p36NYsWBrXlrmBRZ
-UqDVTF9NKkRZA3ULeX3MNDy1KDBYgL6xVXi43hHnuFsq2uE3kQZdrnErDOW0F0lq
-IbZuS5bSYGfWGAz69CoZ67uxoxQ58FyDWG2hGdxCurFGT6xqJvddFi8lzfPbnaQK
-ebEK6ShRe8JSQsBsl2W3lyG6O0nkxkq1RUCRkQtWMXhwV2I4TQNN4cSrCko8lGjm
-GBOp30aUp2nzwPJTJTmgyKylsJquGXJdLbFVhaoLmjo4iMRtrm6G+DqPtF5vYhyD
-u9qqDtOkJgv40Ifbcc/VoQq3jwK65savIHuZLF/zlJBWXxcjR8dV9wxDeOt7Ladn
-B10gwdklHGCTSFQtVXtf
-=dPsg
------END PGP SIGNATURE-----
