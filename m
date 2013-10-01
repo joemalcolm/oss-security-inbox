@@ -1,32 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/1
-Message-ID: <Pine.GSO.4.64.1301101912300.4759@faron.mitre.org>
-Date: Thu, 10 Jan 2013 19:13:45 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/01/2
+Message-ID: <524A185D.7090603@redhat.com>
+Date: Mon, 30 Sep 2013 18:33:33 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2013-0422 assigned to today's Oracle Java 0-day
+CC: Laurent Butti <laurentb@...il.com>
+Subject: Re: CVE request: VLC
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-FYI - I saw a CERT/CC blog post that said this was exploitable on Linux.
+On 09/30/2013 03:31 PM, Laurent Butti wrote:
+> Hi,
+> 
+> I have found a security issue in vlc 2.0.8 which was reported to
+> VLC team and fixed in both 2.0.9 and 2.1.0 (as "Fix buffer overflow
+> in the mp4a packetizer").
+> 
+> Here are the commit log and changelog:
+> 
+> *
+> http://git.videolan.org/?p=vlc.git;a=commitdiff;h=9794ec1cd268c04c8bca13a5fae15df6594dff3e
+>
+> 
+* http://www.videolan.org/developers/vlc-branch/NEWS
+> 
+> Could a CVE be assigned?
+> 
+> Thanks, Laurent Butti.
 
-======================================================
-Name: CVE-2013-0422
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-0422
-Reference: MISC:http://blog.fireeye.com/research/2013/01/happy-new-year-from-new-java-zero-day.html
-Reference: MISC:http://krebsonsecurity.com/2013/01/zero-day-java-exploit-debuts-in-crimeware/
-Reference: MISC:http://labs.alienvault.com/labs/index.php/2013/new-year-new-java-zeroday/
-Reference: MISC:http://malware.dontneedcoffee.com/2013/01/0-day-17u10-spotted-in-while-disable.html
-Reference: MISC:https://threatpost.com/en_us/blogs/nasty-new-java-zero-day-found-exploit-kits-already-have-it-011013
-Reference: CERT-VN:VU#625617
-Reference: URL:http://www.kb.cert.org/vuls/id/625617
+Thanks, please use CVE-2013-4388  for this issue.
 
-The MBeanInstantiator in Oracle Java Runtime Environment (JRE) 1.7 in
-Java 7 Update 10 and earlier allows remote attackers to execute
-arbitrary code via vectors related to unspecified classes that allow
-access to the class loader, as exploited in the wild in January 2013,
-as demonstrated by Blackhole and Nuclear Pack, and a different
-vulnerability than CVE-2012-4681.
+Also do you know anything about:
 
+Demuxers:
+ * Add protection against several potential heap buffer overflow in
+libebml
 
+how potential are we talking?
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSShhdAAoJEBYNRVNeJnmTrnAP/jQ9KDaZZU0hYRg98Ee/E+DG
+5JMlvb8nge3TbdzgA38tE1J6oTALI/YiCFduyXJqieKdUiMDT7zqXPdg/Rtnimmj
+pcI4YHvLybHNS34sr9+mOSTq55kJfHrywmCboIkZE/lCQ0UX4LmsfR421lAWkUas
+XKgCA0B+MZPVlFx9BTJ6JUP0TbKtDIEmje6Tm1KTeyfgDgpp1nLmF237+mFfH/cC
+DTYmC3M8GhYltzQdIgTJCkBNfG0JOuS1NYdOWvsn3vSYpcC2nvqhzBJZwFWVR+ym
+iA9LcdS+hKvk/EWAVEw3vvlGfcbB6qAfE+Xkyo4SMEHoikcQlExiYvlet0YXIahK
+1Vsqnw1n9qTx4/mlDaXLFULMKj7PvC55wbhs3IPe51Y08icbmg4Egl4LzcYM7634
+Z0RQeF90WcrFhwJuaemxhC0SKtZYHZgfMvpLzMVlTLjEAFtxJ0ggnYopRdR/kg+t
+P/vdWu1J+M32gPQLQ7cUYTzeNUrIsg/kPoiwLzcvgsgvPQIkIVqCWHQ1aXJee0YV
+dgh3ygWFX5tzoOETlFbF5KszWAqi1r2aHpsGPQaDdrht6I0pyABWYdOucTg1EE09
+SmiPbwHVx9o14dk2oFF4ocblYdeIFmkw8frfdxfjghidA0mE+Oslk04io5v2AIhN
+51EibobpfKQ3CTaQhD4Z
+=d92s
+-----END PGP SIGNATURE-----
