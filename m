@@ -1,87 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/15
-Message-ID: <20130305232739.GA12420@openwall.com>
-Date: Wed, 6 Mar 2013 03:27:39 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: handling of Linux kernel vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/02/2
+Message-Id: <E1VRPFn-00053J-3A@xenbits.xen.org>
+Date: Wed, 02 Oct 2013 16:26:23 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 65 (CVE-2013-4344) - qemu SCSI REPORT LUNS buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Noel -
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Wed, Mar 06, 2013 at 08:48:57AM +1000, Noel Butler wrote:
-> I kinda agree with Kurt, this thread is like flogging a dead horse, so
-> much so Im starting to skip most posts in this thread,
+             Xen Security Advisory CVE-2013-4344 / XSA-65
+                              version 2
 
-Apparently, your skipping got to the point where you don't realize
-what's being discussed, as evidenced by some of the confusion below in
-your posting. ;-)  I'll try to explain (below).
+                 qemu SCSI REPORT LUNS buffer overflow
 
-> cause if I want to put to sleep Ill go outside and watch the grass grow :)
+UPDATES IN VERSION 2
+====================
 
-Thank you for sharing your opinion.  The reason why I felt I needed to
-comment on Kurt's posting was that it (inadvertently) sounded like a
-list moderator's, whereas it was not, and that it said that oss-security
-was not the right venue, which was not true (again, this error on Kurt's
-part was not intentional, as he explained to me off-list).
+Public release.
 
-> current way of doing things has worked for a long time, and, if it aint
-> broke, dont break it.
+ISSUE DESCRIPTION
+=================
 
-We've just had several examples of the current way of handling Linux
-kernel vulnerabilities not working as well as many of us would have
-liked it to, and, as many of us think, as it could work.  This is
-precisely what prompted the discussion.
+qemu contains a possible buffer overflow in the SCSI code that
+implements the REPORT LUNS command.  The buffer can be overflowed by
+creating a SCSI controller with more than 256 attached devices (such
+as disks) and sending a REPORT LUNS command with a short transfer
+buffer (less than 2056 bytes).
 
-> apart from that, it reads to me that some here just want to increase
-> their own importance and inflate their own egos, sorry, but that is
-> EXACTLY how I see things, like your insistence that Greg et al, post
-> notices about commits here days before publishing them.
+Xen systems do not use the qemu SCSI code by default.
 
-I never insisted that Greg et al. "post notices about commits here days
-before publishing them".  (How would that even be possible?  Posting in
-here is publishing.)
+IMPACT
+======
 
-I said that I wished (not insisted) that Greg et al. posted notices
-about commits in here on the commit day (not "before", but at about the
-same time with commits - even a few hours later is OK, just on same
-day).  I also said that I had little hope they would, as they said so
-before, so I did not argue about that (others had done plenty of it).
+On Xen systems where the device_model_args (or equivalent) parameters
+have been used to configure a SCSI controller for a guest, with more
+than 256 devices, a malicious guest might be able to escalate its
+privilege to that of the qemu process in the host (typically root).
 
-Thus, in my posting I focused on what we should do given that Greg et
-al. won't be notifying oss-security, but would only be notifying
-linux-distros.  This was not a repeat of any past discussion, as far as
-I'm aware, although the general and fundamental issues involved are very
-old indeed.
+VULNERABLE SYSTEMS
+==================
 
-I am referring to this posting:
+Only Xen systems whose administrators have deliberately configured HVM
+guests to have emulated SCSI controllers, and where those guests are
+provided with more than 256 devices, are vulnerable.
 
-http://www.openwall.com/lists/oss-security/2013/03/04/1
+We are not aware of any such systems.
 
-As you can see, I made this posting in response to a specific question
-from Petr.  The question was directly addressed to me and thus required
-a response, and a public one.  I also asked Greg a practically relevant
-question, and got his response: namely, that linux-distros "can notify
-the world when they decide to do so".  Before that point, it was unclear
-to me (and apparently to Petr as well) whether linux-distros would be
-required to keep the info private (despite of the public commits...) for
-at least a certain minimum time period.  This will have impact on how we
-proceed.  It's not just blabbering.
+MITIGATION AND RESOLUTION
+=========================
 
-> the net's got enough ego tripsters now, thanks, I left other security
-> lists because of people with inflated heads, sorry if thats not your
-> intention, but, that is how it comes across, and you know what they say,
-> never does just one person think something.
+Please refer to the advisories and information from the Qemu project.
 
-I think your impression is in part a result of you not paying attention
-to what's actually being discussed.  Perhaps you saw some "trigger
-words" and some familiar rhetoric in some of the postings, and stopped
-paying attention at that point.  And yes, I'm sure some others reading
-this thread have similar impression.
+If, during the embargo period, you have any questions about this
+advisory in the context of Xen, please contact the Xen Project
+Security Team.
 
-Besides the likely pointless arguing (as it is unlikely anyone's opinion
-will change), we're discussing very practical issues that will affect
-how and to whom information on Linux kernel vulnerabilities is
-communicated and with what delays.
+CREDITS
+=======
 
-Alexander
+This issue was reported to us by the Qemu project.
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJSTEiLAAoJEIP+FMlX6CvZsuIH/2f6vLkHvXLe862mX/bKF1Ix
+TQQjvoIxV8dAJmY6Rb5U1KKvNK8JoNNcxtv5rPkQ7n+5TcR2AuWGkuHA5CZGCa10
+ctW2dmf7/V46SOrJz0xPKzNcNJSdu7R9sLo6Dbw4c0m/+xs5H29AO38VHXyKNtgN
+eMZBcMt9GUgGt0PFMsqDkcGnk2RgA9aXzPycHumuCEtUlzF23m0PpqZK3qKUAK0s
+lTHjr4WBmsxBaQyqmjdyMPdmh2BtnYa6pkmGvNw3ALncuhO5aepL7rbeE0ZtUOEO
+o5pB88MRAOGeu0DRDgYm6r6aWLh2SjeGKJayljYTJXp2yS5tlSMBkXH6w0khZj8=
+=c8pu
+-----END PGP SIGNATURE-----
+
