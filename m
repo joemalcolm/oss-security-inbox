@@ -1,96 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/30/9
-Message-ID: <51D0BE36.5020900@redhat.com>
-Date: Sun, 30 Jun 2013 17:24:38 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/02/3
+Message-ID: <524C4B04.6020505@redhat.com>
+Date: Wed, 02 Oct 2013 10:34:12 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Mehrenberger, Xavier" <Xavier.Mehrenberger@...sidian.com>
-Subject: Re: CVE request for GLPI
+CC: security curmudgeon <jericho@...rition.org>
+Subject: Re: Re: CVE request: Simple Machines Forum (SMF) <= 2.0.5 - multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/27/2013 01:41 AM, Mehrenberger, Xavier wrote:
-> Hello,
+On 10/01/2013 06:23 PM, security curmudgeon wrote:
 > 
-> I'd like to request a CVE identifier for a vulnerability in GLPI. 
-> The unserialize() function was used in several places throughout
-> the codebase; one CVE identifier should (IMHO) be sufficient.
+> From: Kurt Seifried <kseifried () redhat com> Date: Tue, 01 Oct
+> 2013 10:07:22 -0600
 > 
-> It has been publicly fixed in the project's repository.
-> 
-> Thanks
-> 
-> ======================================= Advisory title: unserialize
-> vulnerability in GLPI 0.83.9 Product: GLPI 0.83.9 Discovered by:
-> Xavier Mehrenberger @Cassidian CyberSecurity Vulnerable version:
-> 0.83.9 Tested: v0.83.9, 2013-06-21 Fixed in repository: 2013-06-23
-> commits 21169 to 21180 Category: Potential PHP code execution 
-> Vulnerability type: [CWE-502] Deserialization of Untrusted Data CVE
-> IDs: none yet By: Xavier Mehrenberger Cassidian CyberSecurity 
-> http://www.cassidiancybersecurity.com 
-> =======================================
-> 
-> ----- CVE-2013-XXXX Required configuration: No specific
-> configuration required Steps to reproduce: * Issue a request to 
-> glpi/front/ticket.form.php?id=1&_predefined_fields=XXXX, *
-> replacing XXX with a serialized PHP object
-> 
-> Vulnerable code sample: --- file ticket.class.php, function
-> showFormHelpdesk if (isset($options['_predefined_fields'])) { 
-> $options['_predefined_fields'] = 
-> unserialize(rawurldecode(stripslashes($options['_predefined_fields'])));
->
-> 
-- ---
-> 
-> When passing a non-existent empty serialized class (ex: class
-> called "exploit" value "O%3A7%3A%22exploit%22%3A0%3A%7B%7D"), an
-> error occurs, which is caught by the userErrorHandlerNormal
-> function in toolbox.class.php.
-> 
-> When a PHP object gets unserialized, its __wakeup() function is 
-> executed. When this object gets destroyed, its __destruct()
-> function is executed (since PHP5). No such object exists throughout
-> the GLPI codebase. However, it might exist in a third-party
-> library, as demonstrated by Stefan Esser [2]. More information
-> about this vulnerability class can be found at [1].
-> 
-> The unsafe use of unserialize() has been fixed throughout the
-> codebase in commits 21169 [3] to 21180.
-> 
-> References: [1]
-> https://www.owasp.org/index.php/PHP_Object_Injection [2] 
-> http://www.suspekt.org/downloads/POC2009-ShockingNewsInPHPExploitation.p
->
-> 
-df part II
-> [3] 
-> https://forge.indepnet.net/projects/glpi/repository/revisions/21169/diff
->
-> 
-/branches/0.83-bugfixes/inc/ticket.class.php
+> Please use CVE-2013-4395 for the XSS vuln.
 
-Please use CVE-2013-2225 for this issue.
+CVE MERGE I thought (one researcher, same version, same vuln type).
+
+> --
+> 
+> Which XSS vuln? =) That thread was messy, but Henri and others
+> appear to have identified and/or confirmed four different ones:
+> 
+> /Sources/ManageServer.php Multiple XSS 
+> http://seclists.org/oss-sec/2013/q3/607 
+> http://custom.simplemachines.org/upgrades/index.php?action=upgrade;file=smf_patch_2.0.5.tar.gz;smf_version=2.0.4
+>
+>  http://www.simplemachines.org/community/index.php?topic=509417 
+> http://seclists.org/oss-sec/2013/q3/642
+> 
+> index.php admin Action board_name Parameter Stored XSS 
+> http://seclists.org/oss-sec/2013/q3/642 
+> http://hauntit.blogspot.co.uk/2013/04/en-smf-204-full-disclosure.html
+>
+>  index.php pm Action sa Parameter Stored XSS 
+> http://hauntit.blogspot.co.uk/2013/04/en-smf-204-full-disclosure.html
+>
+> 
+http://seclists.org/oss-sec/2013/q3/642
+> 
+> index.php admin Action desc Parameter Stored XSS 
+> http://seclists.org/oss-sec/2013/q3/642
+> 
+> 
+> That is what I took away from the entire thread at least. Can
+> someone confirm this is correct, and can you confirm the CVE
+> assignment please Kurt?
+> 
+> Brian
+> 
+> 
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR0L42AAoJEBYNRVNeJnmTDbEP/3BV/MWD0NNISceAgS7So1Za
-IhHUlZ2lF5po8iorsVH77ppIUL7TBRuTqogN1K3IOZCGAMMPuKgIydtj21+regiW
-gyc1PaePkMMBVVTUesFmHLn19pLyjo6bXKribWwJIz3bnSnZzUj5gjxzbXzUvLRG
-m7NHcnpywIcefHOGTWn6ysBQZFssAKLGOamBwMQCoKxXG/ecjs5U9mDMT2CaW5D3
-VI23yY+l8WeEokOgV+JXzmFaEns3XeImkjw/L2DKoljOTppIdisxV9OvhFTUlHlQ
-dz+WPzezBg4cS5DmlS2kpZ5f6IxclVa49On+1HeQpl7IrA/JWO8RjXZiWblDgfOK
-kasIuvU4lCCcZ6iBg6ZBypNF2NxDFB+hOo4F4V4CyRK6eiFCAAjIN49hlu75GmM5
-524DMXYgiQ9x6hcjs42yNbevUvJ+6wDkhf3jBQEKytlmeW9sazHY/7b2g6uSB0RB
-nIkG/WWW3X0O8cos1ouaB2RpYnN/oWEEuiD0u7+JMRmIeVov67xvSkXmgJJojo02
-RE6E7Nl3LM0SO+Ji4I0g90HUPJkSiGJvvMLVtZ2v9gdVaKvNFUjyzdQ22xOEZDQQ
-WdcUF+jqhqTGgF32vluWAS+b0Hd0AbWfxlgtxCr0u175knSEuSNBksmKXJymIUG9
-TTDmdcfqLkSS9mxBvkvN
-=JKWx
+iQIcBAEBAgAGBQJSTEsEAAoJEBYNRVNeJnmTbagP/2w6rjD42xZn+qvq6fD63/AB
+UeYTJ3vdGWz2ZHEs5gvuFKRs8O6DU86MLAuLDilme0i34dxDLIXQZxc/I5oPqlIF
+bH+I+bfE+C/rmaebPE1uiaG31CjubqEvUdk5CsXHeorVPkA9qePT4QUEfTzlKZk6
+tZjnm33GOrY7BXBpvFP1QcSezDqkoofR4DqJByD5vPHFIG6Konr608//0jm3nl2B
+l37HqBaAt/9zt0xh2ChQu3vUwBwCG+srhtkEUNt7gRN2P/mP4ohRZDj0PvNS8OTx
+xPhL5/BNR1b/dGkFxiGOCoCK4UT8DZOwpDBr91iuaSzX+VeX6n5MUh/9TSUORxai
+rnGMA9z06bN/hL2dyqkIsLIAK4vrdGU4pO1i7EI21ZURfR1gf3SRfiyAwzYzv5Yo
+1NbP9EiUeTkTQnaPwx3vfvX7JOkHYNkoAwqimozeusG9xplEWqIJ4dUrchEYVc3i
+sRGoFvig/cu3U2z5ZC4xb4nii1tYdYUfTWgrQy5k9xI7XOdnJFIP8Q7a6etbPG8i
+EEAbr+YnmB5YZq3E458GSIf8mjxbZVqt0jhWyY4R9dM6mESeHS0wfoGP+Fcs+3d2
+461SYArUFnFZ2DG0dGJS/54EfHvzPThdqOgKy+lA3O/pD6WPp1JIAHiSVuVS//rz
+nr/9Ip+GH7yykUjfI3yp
+=y3nP
 -----END PGP SIGNATURE-----
