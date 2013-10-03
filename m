@@ -1,24 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/10/1
-Message-ID: <CANTw=MPpBzvz0r6CQmU9qCuxtRnzSNnnWNWifTzwq_zhjM=+Ow@mail.gmail.com>
-Date: Wed, 10 Apr 2013 12:18:10 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/03/1
+Message-ID: <CAEDdjHeAEqU8DSwj8krZC5=puZWTOc_8Pe16Li+EVqLsLfh4=A@mail.gmail.com>
+Date: Thu, 3 Oct 2013 21:52:13 +0100
+From: Pedro Ribeiro <pedrib@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: cve request: util-linux
+Subject: Re: CVE request - VLC 2.0.0 to 2.0.8
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 8, 2013 at 3:19 AM, Adam D. Barratt wrote:
-> On 08.04.2013 01:28, Michael Gilbert wrote:
->>
->> Please assign an id for a somewhat minor information disclosure in
->> util-linux.  Details (including commit ids) about the problem can be
->> found in the Debian bug report:
->> http://bugs.debian.org/697464
+On 1 October 2013 16:20, Pedro Ribeiro <pedrib@...il.com> wrote:
+> Hi,
 >
+> I have discovered a denial of service / possible code execution in VLC via a
+> crafted ASF file. This has been reported to VLC and was apparently fixed
+> unintentionally in 2.0.8 with the entry "Improve handling of corrupt ASF
+> files". Version 2.1.0 is not affected.
 >
-> Isn't that CVE-2013-0157?
+> The file contains a crafted ASF packet that causes VLC to crash on a read
+> operation, with control of EDI and EAX. In the file attached you will find
+> at starting offset 0x157AD the hex values 17 DE B4 71 in little endian,
+> which attempts to use for a read operation. Control of other variables in
+> the Demux function in asf.c is also possible by changing packet values
+> before and after the offset as per the ASF specification.
+>
+> The file is located here:
+> https://github.com/pedrib/PoC/blob/master/vlc-crash.asf
+>
+> I have not been able to obtain any program control so far, so at the moment
+> this only crashes VLC. However someone more skilled might be able to control
+> it.
+>
+> Can you please provide a CVE for this?
+>
+> Regards
+> Pedro
 
-Yes, that is correct.  Sorry for the noise.
 
-Best wishes,
-Mike
+Hi,
+
+Do you need more information on this, do not consider it CVE-worthy or
+just swamped with work at the moment? :)
+
+Regards,
+Pedro
