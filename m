@@ -1,89 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/6
-Message-ID: <51943BAA.3030200@redhat.com>
-Date: Wed, 15 May 2013 19:51:38 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/11
+Message-ID: <524EE8E5.10804@redhat.com>
+Date: Fri, 04 Oct 2013 10:12:21 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Ian Weller <ianweller@...oraproject.org>
-Subject: Re: CVE Request (minor) -- Python 3.2: DoS when matching certificate with many '*' wildcard characters {was: CVE Request (minor) --  python-backports-ssl_match_hostname: Denial of service when matching certificate with many '*' wildcard characters }
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: Re: CVE request - VLC 2.0.0 to 2.0.8
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/15/2013 05:28 AM, Jan Lieskovsky wrote:
-> ----- Original Message -----
->> From: "Jan Lieskovsky" <jlieskov@...hat.com> To:
->> oss-security@...ts.openwall.com Cc: "Steven M. Christey"
->> <coley@...us.mitre.org>, "Florian Weimer" <fweimer@...hat.com>,
->> "Ian Weller" <ianweller@...oraproject.org> Sent: Wednesday, May
->> 15, 2013 1:19:33 PM Subject: [oss-security] CVE Request (minor)
->> --  python-backports-ssl_match_hostname: Denial of service when
->> matching certificate with many '*' wildcard characters
->> 
->> Hello Kurt, Steve, vendors,
->> 
->> A denial of service flaw was found in the way 
->> python-backports-ssl_match_hostname, an implementation that
->> brings the ssl.match_hostname() function from Python 3.2 to users
->> of earlier versions of Python, performed matching of the
->> certificate's name in the case it contained many '*' wildcard
->> characters. A remote attacker, able to obtain valid certificate
->> [*] with its name containing a lot of '*' wildcard characters, 
->> could use this flaw to cause denial of service (excessive CPU
->> time consumption) by issuing request to validate that certificate
->> for / in an application using the 
->> python-backports-ssl_match_hostname functionality.
->> 
->> Upstream bug report (no patch yet): [1]
->> http://bugs.python.org/issue17980
->> 
->> References: [2]
->> https://bugzilla.redhat.com/show_bug.cgi?id=963186
->> 
->> Credit: Issue was found by Florian Weimer of Red Hat Product
->> Security Team
->> 
->> Could you allocate a CVE identifier for this (it's possible that 
->> Python 3.2 implementation is vulnerable to the same problem too, 
->> will check that case yet)?
+On 10/04/2013 02:04 AM, Hanno Böck wrote:
+> On Thu, 03 Oct 2013 22:32:12 -0600 Kurt Seifried
+> <kseifried@...hat.com> wrote:
 > 
-> Replying to myself here. Issue is present in Python 3.2 code too -
-> so the CVE should be allocated for the original (Python 3.2) code,
-> rather than to python-backports-ssl_match_hostname package.
+>> Sorry forgot to reply. I'm not sure this is CVE worthy. In
+>> general crash bugs in services are CVE worthy, but crashes in
+>> client software are usually limited to things like email clients
+>> or web browsers where there is a high potential for processing
+>> untrusted data without much user interaction (e.g. displaying
+>> some random email or web page) whre you also have the potential
+>> to lose work (so there is an impact).
 > 
-> Updated subject of the request to reflect this.
+>> In the case of VLC you load a nasty file, it crashes, you don't
+>> do it again. There's not really any impact. You don't lose any
+>> work.
 > 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
->> 
->> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
->> Security Response Team -- [*] Would be minor issue because
->> ability to obtain such valid certificate would mean the necessity
->> to use some compromised CA. On the other hand though being corner
->> case, can't be completely excluded.
->> 
+> VLC is used as a browser plugin and can also be embedded in other 
+> applications. (though I'm not aware if this can crash the whole
+> browser with the modern sandboxing stuff browsers do)
 
-Please use CVE-2013-2099 for this issue.
+So if someone can test this and report back that'd be great and then
+we can deal with the CVE depending on how this plays out.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRlDupAAoJEBYNRVNeJnmTR4QQAJigfFc7LqZbJJ2zKAZrNJNe
-uXTXrhsNYGLWXXjInanJbDLgTtcuJp+xwhgBT/2GPLkZpapIrzmusysLnXXOh3mr
-FAktSJEMqIj8SMf2Zccb1mLmWUVACSHq5uTA6rvU6BErv2/0sHvmjMDulNlVhkYs
-vLf8i1D/yoE1hYef2xj6pkTcu7bRQQ9VbJWsiNwNU59MePMgIR78504HzmCkenYH
-oK4Uv3P0a566FtX2wkgpPKkkYS4wTakaUrbqt7HeSArQ8NSlPc8FKelzn2H2qgje
-YzzjZL0psOfpXsaj3wy8QLfRyVDAVdSXiLLMR8tFgA1KyXvmT+OJI05UAySe/NjY
-huMxIc8Gy9rrEjQcpDEz9KgQXsNmIrUAasZcYXCmAM5309Pn0m3uSMHC6WX8kVlu
-p2ikwjiVQc3iubBo2tVhgOuPshZ84tDrNz6CArtXpfBleYZ1Gk6qhRhngQCAPW6W
-TQhQ85KycnOzQZmkHeVme7Z1EgdpFF1fkw8xXu4mU+6aqYSgXdOVVf9oGNW5brd2
-27SVJj7eaYZyklqAnTKrIGpnLyg9e/GPr1T7q6L2I5QbX+8dls5U/0m0tw8COxLF
-vzjDQHgkg4C/vNLP9032b083Cgm56/ypGXOXQHFaz1b9yTS9HB6Biaix2R/6ieOJ
-RleZ90iLyFQKiUV9M/ua
-=M2WT
+iQIcBAEBAgAGBQJSTujlAAoJEBYNRVNeJnmT5wYP/3ijX88DMXQH2ESddStu8bjq
+5X4Pu+Vizi7aRFxYYg4T6XYFCvVWbzcJwQlRP1FrGzRrpS27warwz5XebZy+qGuQ
+bUgMWEnC0e06sokxJeWr2YZdBCxsTGTZdv0OzhtiRNXyoyEMogmzELhGnNh2zqWy
+VSr2eksFvIUmK5IEoxsCesbLy4mwiNixW2nvrZwS02juPpy6beyn5uKWhhU+1Phl
+O/OMf0yUEbFGFKsQOjesJwm1hIBGK6ZKn3CtlKjxLG5Z7VqmoCK9V1VlGEiyEwHr
+j4OInC6wK7NCfW+OOsg6ZQzrl5DC7CYrtT9KYtt9gpxObTk/7YhobTvYd38Abc9p
+G9sk08nOAesq0WF1c490ZmifQCkTKyZBO6NlRYo/Ci3VFbku6zOlzdyhM0LDimk/
+xLACmeGgsXFJjxaP/4gMzTIeaZR42AYljzLRqSDzlWMgAppkLxdiGyhllxmc/cXe
+MRK4s5Q1qgEdxVLgQLlltTDhcv8ZX42cg2xwraN45BIl+gl66Z1nvqhUFKKWUjNo
+CMU6g9Wjqf+nESyum3sF61n6X/et2far/nPXDn9IZZ2+8nLF8HYJKLQmzUFXyXJ0
+qBeXq6/dHzjsbZ66+c8eiLw6yH5rx9xFI66IARFFwdDzyQQPid1/Y8aAGZDwW+BQ
+YmesRzWsqCo5a4y4LN6Z
+=lLPp
 -----END PGP SIGNATURE-----
