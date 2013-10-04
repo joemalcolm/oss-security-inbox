@@ -1,33 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/7
-Message-Id: <201312301406.rBUE5uwk019625@linus.mitre.org>
-Date: Mon, 30 Dec 2013 09:05:56 -0500 (EST)
-From: cve-assign@...re.org
-To: mjo@...o.mi.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE to the ntp monlist DDoS issue?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/4
+Message-Id: <574DAA3C-1AC4-4B82-B444-FA484E003428@stufft.io>
+Date: Fri, 4 Oct 2013 01:26:46 -0400
+From: Donald Stufft <donald@...fft.io>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: A note on cookie based sessions
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I don't think this really is a vulnerability is it? I mean it's basically how
+the internet works. The only difference between a cooke backed session
+and a regular session is that there's no server side session to destroy.
+At least in Django's case, It's not a permanent session though, they are
+only good for a limited amount of time before the signature on the cookie
+expires.
 
-> Has anyone thought about assigning a CVE to this?
+If you have access to the session cookie you've already won the game, you've
+gotten an XSS or MITM and can do much worse then a session cookie.
 
-http://bugs.ntp.org/show_bug.cgi?id=1532 was assigned CVE-2013-5211.
+On Oct 4, 2013, at 12:40 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+> Signed PGP part
+> So this has been published:
+> 
+> http://maverickblogging.com/logout-is-broken-by-default-ruby-on-rails-web-applications/
+> 
+> http://maverickblogging.com/security-vulnerability-with-django-cookie-based-sessions/
+> 
+> Basically it boils down to this: cookie based session handling where
+> you don't store state data on the backend, but instead have a cookie,
+> possibly with an expiration time coded into it can be used in replay
+> attacks.
+> 
+> That's a problem, but also an inherent limitation of how such session
+> handling works. The advantages are a stateless backend, no need for
+> state DB, if you have many backends, especially distributed, logins
+> just work no matter which server you connect to.
+> 
+> In both Drupal and Ruby on Rails case the security issues are documented:
+> 
+> https://docs.djangoproject.com/en/1.5/topics/http/sessions/#using-cookie-based-sessions
+> 
+> http://guides.rubyonrails.org/action_controller_overview.html#session
+> 
+> the documentation can maybe be improved (especially mentioning
+> HTTPS/HSTS to prevent sniffing of the cookie) but generally speaking
+> this is covered, so no CVEs here.
+> 
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
 
-iQEcBAEBAgAGBQJSwX1QAAoJEKllVAevmvmscwEH/1g6X68lZ7l2he+rLW6wGeAd
-Rbk7N1kT3IOqTIfNyZx/L+I5eDdDHUvXoUD1rLi9XC6argUcQy2W+WDLBJTfRewc
-r8gIHlMNwY1xDf+2vBAAuJgSlA0INX+ylzL36HC3fz1TN7usAXrYpmpcU1TlTE2V
-G2uL9l1AmKZ9Okk5b7Brnkc0fMMUMaxtTKjASh4u3meA6BFW+Jsp+9hIXpcgkJ6y
-Tiw21WLW1t2UvyOphyCI1/5+M5hENisaCxmZ54Em/bINs9idcwvC5ejo172aJJQU
-kcMxY/7fnSr7+K/2TvRGfkqj4LTLceZVMwlqtgAPaBj0+gW9Z+pJ+HIw3xXC5C0=
-=f147
------END PGP SIGNATURE-----
+
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
