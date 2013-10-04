@@ -1,31 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/12
-Message-ID: <20131210140059.GJ27889@sym.noone.org>
-Date: Tue, 10 Dec 2013 15:00:59 +0100
-From: Axel Beckert <abe@...ian.org>
-To: Andy Lester <andy@...dance.com>
-Cc: oss-security@...ts.openwall.com, Debian Security Team <team@...urity.debian.org>, 731848@...s.debian.org
-Subject: Re: CVE request for remote code execution in ack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/2
+Message-ID: <524E46C1.6020900@redhat.com>
+Date: Thu, 03 Oct 2013 22:40:33 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: A note on cookie based sessions
 Content-Type: text/plain; charset=utf-8
 
-Hi Andy,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Andy Lester wrote:
-> On Dec 10, 2013, at 7:46 AM, Axel Beckert <abe@...ian.org> wrote:
-> > as discussed with Salvatore Bonaccorso of the Debian Security Team
-> > (team cc'ed), I'm herewith requesting a CVE ID for the following
-> > security issue in ack (http://beyondgrep.com/, also known as ack-grep
-> > in multiple distributions; upstream developer cc'ed):
-> 
-> Is there anything you need me to do?
+So this has been published:
 
-It would be nice if you could add the CVE-ID to the Changes file of
-ack retroactively as soon as it's known so that it's part of the
-Changes file in further ack releases.
+http://maverickblogging.com/logout-is-broken-by-default-ruby-on-rails-web-applications/
 
-		Regards, Axel
--- 
- ,''`.  |  Axel Beckert <abe@...ian.org>, http://people.debian.org/~abe/
-: :' :  |  Debian Developer, ftp.ch.debian.org Admin
-`. `'   |  1024D: F067 EA27 26B9 C3FC 1486  202E C09E 1D89 9593 0EDE
-  `-    |  4096R: 2517 B724 C5F6 CA99 5329  6E61 2FF9 CD59 6126 16B5
+http://maverickblogging.com/security-vulnerability-with-django-cookie-based-sessions/
+
+Basically it boils down to this: cookie based session handling where
+you don't store state data on the backend, but instead have a cookie,
+possibly with an expiration time coded into it can be used in replay
+attacks.
+
+That's a problem, but also an inherent limitation of how such session
+handling works. The advantages are a stateless backend, no need for
+state DB, if you have many backends, especially distributed, logins
+just work no matter which server you connect to.
+
+In both Drupal and Ruby on Rails case the security issues are documented:
+
+https://docs.djangoproject.com/en/1.5/topics/http/sessions/#using-cookie-based-sessions
+
+http://guides.rubyonrails.org/action_controller_overview.html#session
+
+the documentation can maybe be improved (especially mentioning
+HTTPS/HSTS to prevent sniffing of the cookie) but generally speaking
+this is covered, so no CVEs here.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSTkbBAAoJEBYNRVNeJnmTnI8QAJyoi0yWRmTzVHUiwMx/mcSa
+eum+9cMtxLi/TvB7KMtXJqCE9tRZ11R8gCqLpzxyuKOnFUoh2pK0OSm9oz2r0nkK
+xUsshwcEy9a4Ih9ICdPUBo9APQ8LoW0rGCqACP/BjKSs41As1IiJzN/wAm/Oshmj
+8n66ERqdpTeQlYfQQqHsAk3mbI4k9kKvYnO6yMrQe2GJ5vPW97O3FiSqasg8oqvt
+rvO6tdTElKfYIbp9JdgduMsNwyXsTSHUf4j2yW71NJHYf1Rh/CkldG1Q69Y3gCAo
+huYRBL/vzN3vDPhFWufovS7iHjSDDc20Uorxu7OO7WKp30yk9OpZZh/hx5myHQhd
+kZiaA9Zc2MkW8Fum1+onAJUqVJuAg8CH0ChABorCNhepvAfptS32UNFr9eBLVpxy
++YfXkMFV6aW9549SuUHOjOsXXNfctjaVx+e0gvPwYilCj5On8FlNoCCJGA1QtA3P
+9B6GCc8TfHd7+5wx3qOTMTJhbxUg2R6sZ+NLwxLYgjd+sImYnbRFBhjo+EtUXMEp
+iPWdsC6zXnFhciUcznf+Ggg3gNRVVkH9cZUnczmR4nFe2tT6Gu6B75juzXQWG4rq
+51Tl2TfiSGgVzSlHBksvtmJSBv9GO84JtH0hrI1u40h4HBvjJNJNZr8kILKIGXBu
+27G8kN5NeQh+oEYmIL9d
+=rjhT
+-----END PGP SIGNATURE-----
