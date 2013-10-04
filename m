@@ -1,50 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/01/11
-Message-ID: <513121DD.2080005@redhat.com>
-Date: Fri, 01 Mar 2013 14:47:09 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/3
+Message-ID: <524E51A5.4010708@gmail.com>
+Date: Fri, 04 Oct 2013 11:27:01 +0600
+From: "Alexander E. Patrakov" <patrakov@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: various gems in aftermath of rubygem actionpack issue
+Subject: Re: A note on cookie based sessions
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 03/01/2013 09:43 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> I think these rubygem updates have got no CVE entry/ies yet: 
-> https://support.cloud.engineyard.com/entries/22915701-january-14-2013-security-vulnerabilities-httparty-extlib-crack-nori-update-these-gems-immediately
+Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 >
->  Or should we use the Rubygem Action Pack CVE ids for it too
-> (CVE-2013-0156)?
-> 
-> Ciao, Marcus
-> 
+> So this has been published:
+>
+> http://maverickblogging.com/logout-is-broken-by-default-ruby-on-rails-web-applications/
+>
+> http://maverickblogging.com/security-vulnerability-with-django-cookie-based-sessions/
+>
+> Basically it boils down to this: cookie based session handling where
+> you don't store state data on the backend, but instead have a cookie,
+> possibly with an expiration time coded into it can be used in replay
+> attacks.
 
-I need details before I can assign CVEs for those. Can you maybe
-generate diffs that show the code fixes and post them? thanks.
+I am very much surprised that Flask is not mentioned at all in your 
+e-mail. Its default session handler uses only signed cookies, and they 
+can't even change the default because they don't have the DB layer or 
+any other persistent storage out of the box.
 
+Flask site is down at the moment, so no link to the documentation. But 
+the problem is known, see this link for example:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+http://stackoverflow.com/questions/13735024/invalidate-an-old-session-in-flask
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+-- 
+Alexander E. Patrakov
 
-iQIcBAEBAgAGBQJRMSHdAAoJEBYNRVNeJnmT++EQAMFrGA3xK63k8hnei6SlCbzr
-4NtLcwXMMbDLGiqUQU85TVwLZoqpCvD2AYee6BmvpFLMQK4x8MjS5fzqo2sU7ziO
-Q53nIed/brfvdC8b7Y0PnetIuH9wjS1zN7vwLrQAPuadH8jLvpYLE18daw7Yhg1R
-EHR8ZsFp4tt3zBAGHOATvHgZYUl235ZfJHf4YNy8kbNABgqkz7/h4/UdB8iW6oXO
-aQzV18Ote93+Zr0YB6TKBhKanCVOP06mX/QO8M5UpF8EGlci71pODy/VQdC9hfTn
-HEXYgr9zLTqItk//5xDKss1mjYg6+uTD50isO6vST/zpdK/K5pFehfRRN7dTb+7B
-XppJehNxJdtRxy4JRGBgbMjYydsrXKqkD2knOcBOCSm7bZ/UYYq4kdsiZrkrUHxs
-3QFidLOiOwxn0S5HrAmSYfpQ4KAnX9TzMZqjxAuvj4ehaGg12NsoU3uxC8YC53Nz
-woCBC3vAvx/C0WdVviLEkPSMfFh25fGlBR/B1ViNnYMrBEVKnyISVBhIdPqRyno2
-xHrvj0/Y19CCMLyHEIli4JnPlW1AwbkxAj88G82p/24HEB3VP8Bx0lQHyieTGm5E
-I2s1XxraGAqB+mn1i4EAQax3p0FoC4uU9rkd7FGefl0O9hMETafROLEsX7lSiB0B
-cp/rdxYeZrSB44XUjqOd
-=DtfD
------END PGP SIGNATURE-----
+-- 
+Alexander E. Patrakov
