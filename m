@@ -1,84 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/3
-Message-ID: <20131203034029.GA8807@kroah.com>
-Date: Mon, 2 Dec 2013 19:40:29 -0800
-From: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
-To: "Hans J. Koch" <hjk@...sjkoch.de>, Nico Golde <oss-security+ml@...lde.de>, oss-security@...ts.openwall.com, security@...nel.org, Dan Carpenter <dan.carpenter@...cle.com>
-Subject: Re: kernel: uio: CVE-2013-6763 [was: Re: some unstracked linux kernel security fixes]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/5
+Message-ID: <524E5B06.2030500@redhat.com>
+Date: Fri, 04 Oct 2013 00:07:02 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Donald Stufft <donald@...fft.io>
+CC: oss-security@...ts.openwall.com
+Subject: Re: A note on cookie based sessions
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 26, 2013 at 01:18:39PM +0100, Petr Matousek wrote:
-> Adding Greg as he's also UIO maintainer (at least according to
-> MAINTAINERS).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 10/03/2013 11:26 PM, Donald Stufft wrote:
+> I don't think this really is a vulnerability is it? I mean it's
+> basically how the internet works. The only difference between a
+> cooke backed session and a regular session is that there's no
+> server side session to destroy. At least in Django's case, It's not
+> a permanent session though, they are only good for a limited amount
+> of time before the signature on the cookie expires.
 > 
-> On Thu, Nov 14, 2013 at 05:52:12PM +0100, Petr Matousek wrote:
-> > On Thu, Nov 14, 2013 at 04:25:39PM +0300, Dan Carpenter wrote:
-> > > On Thu, Nov 14, 2013 at 11:33:10AM +0100, Petr Matousek wrote:
-> > > > On Tue, Nov 12, 2013 at 11:10:32AM +0100, Petr Matousek wrote:
-> > > > > Hi,
-> > > > > 
-> > > > > On Sun, Nov 03, 2013 at 05:32:52PM +0100, Nico Golde wrote:
-> > > > > > drivers/uio/uio.c: mapping of physical memory to user space without proper size check
-> > > > > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7314e613d5ff
-> > > > > 
-> > > > > there is a size check in uio_mmap() (the only caller of uio_mmap_physical()):
-> > > > > 
-> > > > >         requested_pages = vma_pages(vma);
-> > > > >         actual_pages = ((idev->info->mem[mi].addr & ~PAGE_MASK)
-> > > > >                         + idev->info->mem[mi].size + PAGE_SIZE -1) >> PAGE_SHIFT;
-> > > > >         if (requested_pages > actual_pages)
-> > > > >                 return -EINVAL;
-> > > > > 
-> > > > > why it wasn't sufficient?
-> > > > 
-> > > > Apparently there was a CVE split [1] and this is now CVE-2013-6763.
-> > > > 
-> > > >   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6763
-> > > > 
-> > > > I still think this is a non-issue based on the above mentioned size
-> > > > check. Can I please get second opinion from someone more knowledgeable
-> > > > on this?
-> > > > 
-> > > >
-> > > 
-> > > Added Hans to the CC list since he's the maintainer.  Petr is asking if
-> > > the size checks in uio_mmap() and uio_mmap_physical() are duplicative.
-> > > 
-> > > > Isn't the size check redundant because of 
-> > > > 
-> > > >         requested_pages = vma_pages(vma);
-> > > >         actual_pages = ((idev->info->mem[mi].addr & ~PAGE_MASK)
-> > > >                         + idev->info->mem[mi].size + PAGE_SIZE -1) >> PAGE_SHIFT;
-> > > >         if (requested_pages > actual_pages)
-> > > >                 return -EINVAL;
-> > > 
-> > > That check is worrying requested_pages is rounded down to the nearest
-> > > page
-> > 
-> > Is there any rounding down happening? I would expect both vma->vm_start
-> > and vma->vm_end to be page aligned.
-> > 
-> > > but actual_pages is rounded up. I don't understand why we are
-> > > adding "(mem[mi]addr % PAGE_SIZE)" to the pre rounded up actual_pages.
-> > 
-> > Imagine addr and size are not page aligned and
-> > ((addr & ~PAGE_MASK) + (size & ~PAGE_MASK)) > PAGE_SIZE.
-> > We need to round up two pages instead of one in that case.
-> > 
-> > > So, yeah, it seems like we do check the size twice now except the first
-> > > time we do it wrong.
-> > 
-> > With unaligned addr and/or size we can end up with mapping memory 
-> > not belonging to the UIO_MEM_PHYS registered region, but that is something
-> > you expect when using this interface from the drivers and/or userspace,
-> > because you want access to the whole region to properly handle the
-> > device, no?
-> > 
-> > IOW, with the current changes, isn't the functionality broken for
-> > non page-aligned addr and/or size?
+> If you have access to the session cookie you've already won the
+> game, you've gotten an XSS or MITM and can do much worse then a
+> session cookie.
+> 
 
-This should now be fixed in Linus's tree, right?
+Apologies I should have been more explicit. The difference is that
+with a stateful backend when the user  hits log out they are logged
+out in the back end, so the cookie can't be used any more. With these
+stateless solutions there is no way to prevent cookie reply other than
+encoding a time out in the cookie (so I guess you could encode like a
+short time out and keep rotating the cookie to close the window of
+opportunity).
 
-thanks,
+The concern is people using public terminals, cookie stealing attacks,
+XSS in the website you're using, etc allowing an attacker to snag your
+cookie and use it post "log out".
 
-greg k-h
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSTlsGAAoJEBYNRVNeJnmTTowQALWeB44M2xq1l6XZPYxfzoS3
+EqRmHP2FT0ZrZH5wSiq4gTzecyke/nIf7JnrrcdNeirPPAl+NNqPS6TaOeguL20g
+SS5oqpC2rsEu1XveZC6M8YenqaPn8UQ04PYH8dCkyIholUKrh+bET5sTa5N90s33
+wzYE80vAh9jdS9BH93iye+eFMzF+wfrEtgRsIg4kmD0Rt4L0f1KUkLoAQcdPq8tN
+0Md4RocD0dQibKZ3j54ToxB7NxiEThYztf9pQLrJUYjuo9lIlIk9JCDkjQfGaIuR
+CgpB5LgX9eYnIgi+yI9DmPJHLNkwJE2dGWZPGaFnzmuw5cUKyLL5IEzOpRRgGraR
+b90lEP1R4/WAAfOWGyQ9eOoPQDm5WMfvjpfGw/djpuIPRAywAo3X+HnQwTVhHD8y
+kfuoYLQn+ymse9WEZPzKEOvW+AhSx/7LQ3vc+RNLr043zSaCzcaBWX8C3GhYAH+E
+ACwipVV0LQHto3KY8Oi86/nj7IvLU5uevpzdfSiUnRI1seGgj964Ka4nGcRL5tuw
+ZGsAj+h+vsiWFm2n9HS0OanKE+XU5XgMxzoC3HTrU0QZyIH0s8hebR8HzB8BVFW9
+4uwvni/8AbhPY3ZUnNH2+/OTZvHm5V9O3frobA/c6eOOTG85JHpMnUR+pgur4rqV
+WsBNRKn596piipDwn1AS
+=Tqge
+-----END PGP SIGNATURE-----
