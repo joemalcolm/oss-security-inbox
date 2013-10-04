@@ -1,28 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/38
-Message-ID: <20130227191750.GC21286@kroah.com>
-Date: Wed, 27 Feb 2013 11:17:50 -0800
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/12
+Message-ID: <CAEDdjHen0BZNwjoAfmRVfKtNW97XHnFn0uEJ51TwuwDfdPUjyQ@mail.gmail.com>
+Date: Fri, 4 Oct 2013 17:39:45 +0100
+From: Pedro Ribeiro <pedrib@...il.com>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: Hanno Böck <hanno@...eck.de>
+Subject: Re: Re: CVE request - VLC 2.0.0 to 2.0.8
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 11:36:32AM -0800, Tim wrote:
-> 
-> 
-> Hmm, I wonder if perhaps the solution here isn't about spending a lot
-> of time analyzing hundreds of potentially serious bugs and notifying
-> the world about them all in an accurate way.  Perhaps the solution is
-> changing the development model or architecture of the kernel such that
-> there aren't so many bugs with *serious* impact in the first place.
-> 
-> Ooops... did I say that out loud?  
+On Oct 4, 2013 5:12 PM, "Kurt Seifried" <kseifried@...hat.com> wrote:
+>
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 10/04/2013 02:04 AM, Hanno Böck wrote:
+> > On Thu, 03 Oct 2013 22:32:12 -0600 Kurt Seifried
+> > <kseifried@...hat.com> wrote:
+> >
+> >> Sorry forgot to reply. I'm not sure this is CVE worthy. In
+> >> general crash bugs in services are CVE worthy, but crashes in
+> >> client software are usually limited to things like email clients
+> >> or web browsers where there is a high potential for processing
+> >> untrusted data without much user interaction (e.g. displaying
+> >> some random email or web page) whre you also have the potential
+> >> to lose work (so there is an impact).
+> >
+> >> In the case of VLC you load a nasty file, it crashes, you don't
+> >> do it again. There's not really any impact. You don't lose any
+> >> work.
+> >
+> > VLC is used as a browser plugin and can also be embedded in other
+> > applications. (though I'm not aware if this can crash the whole
+> > browser with the modern sandboxing stuff browsers do)
+>
+> So if someone can test this and report back that'd be great and then
+> we can deal with the CVE depending on how this plays out.
+>
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (GNU/Linux)
+>
+> iQIcBAEBAgAGBQJSTujlAAoJEBYNRVNeJnmT5wYP/3ijX88DMXQH2ESddStu8bjq
+> 5X4Pu+Vizi7aRFxYYg4T6XYFCvVWbzcJwQlRP1FrGzRrpS27warwz5XebZy+qGuQ
+> bUgMWEnC0e06sokxJeWr2YZdBCxsTGTZdv0OzhtiRNXyoyEMogmzELhGnNh2zqWy
+> VSr2eksFvIUmK5IEoxsCesbLy4mwiNixW2nvrZwS02juPpy6beyn5uKWhhU+1Phl
+> O/OMf0yUEbFGFKsQOjesJwm1hIBGK6ZKn3CtlKjxLG5Z7VqmoCK9V1VlGEiyEwHr
+> j4OInC6wK7NCfW+OOsg6ZQzrl5DC7CYrtT9KYtt9gpxObTk/7YhobTvYd38Abc9p
+> G9sk08nOAesq0WF1c490ZmifQCkTKyZBO6NlRYo/Ci3VFbku6zOlzdyhM0LDimk/
+> xLACmeGgsXFJjxaP/4gMzTIeaZR42AYljzLRqSDzlWMgAppkLxdiGyhllxmc/cXe
+> MRK4s5Q1qgEdxVLgQLlltTDhcv8ZX42cg2xwraN45BIl+gl66Z1nvqhUFKKWUjNo
+> CMU6g9Wjqf+nESyum3sF61n6X/et2far/nPXDn9IZZ2+8nLF8HYJKLQmzUFXyXJ0
+> qBeXq6/dHzjsbZ66+c8eiLw6yH5rx9xFI66IARFFwdDzyQQPid1/Y8aAGZDwW+BQ
+> YmesRzWsqCo5a4y4LN6Z
+> =lLPp
+> -----END PGP SIGNATURE-----
 
-There's nothing wrong with that, and we have made many changes in the
-kernel to help mitigate problems before they occur.
+Hi Kurt,
 
-If you know of any other ways that we can do this, please let us know.
+Thanks for the feedback, I'll keep that in mind for the future when
+requesting CVE's. I agree this is a minor issue, but because there is an
+invalid memory I read I thought it was relevant.
 
-thanks,
+I tested with the browser plugin on the latest Firefox, and while it
+crashes the plugin, it doesn't seem to crash the browser.
 
-greg k-h
+As I said previously, I will continue to investigate whether I can get some
+program control, but for now it's only a measly DoS.
+
+Regards
+Pedro
+
