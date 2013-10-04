@@ -1,103 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/16/1
-Message-ID: <1371383165.202789.564052523.2922.14@securityteam.typo3.org>
-Date: Sun, 16 Jun 2013 13:46:05 +0200
-From: TYPO3 Security Team <security@...o3.org>
-To: Kurt Seifried <kseifried@...hat.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: [Ticket#2012111110000015] TYPO3-CORE-SA-2012-005: Several Vulnerabilities in TYPO3 Core
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/10
+Message-ID: <CAAyQC43fMom8wxVmm=ZwpWuQQWhD3GkpfAa6tS9H_Jm63DDsig@mail.gmail.com>
+Date: Fri, 4 Oct 2013 10:20:06 +0200
+From: Igor Sverkos <igor.sverkos@...glemail.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: A note on cookie based sessions
 Content-Type: text/plain; charset=utf-8
 
-Dear Kurt Seifried,
+Hi,
 
-Thank you for your request.
+Kurt Seifried wrote:
+>> I don't think this really is a vulnerability is it? I mean it's
+>> basically how the internet works. The only difference between a
+>> cooke backed session and a regular session is that there's no
+>> server side session to destroy. At least in Django's case, It's not
+>> a permanent session though, they are only good for a limited amount
+>> of time before the signature on the cookie expires.
+>
+>> If you have access to the session cookie you've already won the
+>> game, you've gotten an XSS or MITM and can do much worse then a
+>> session cookie.
+>
+> [...]
+>
+> The concern is people using public terminals, cookie stealing attacks,
+> XSS in the website you're using, etc allowing an attacker to snag your
+> cookie and use it post "log out".
 
-I'm a bit embarrassed about our response time :(
+I am not sure about the intention of your mail.
 
-Very sorry for that. Things will vastly improve in the near future!
+But if you want to warn people, don't forget people using applications
+like vBulletin: They don't use SSL and if you got the cookies, you are in.
 
-12/10/2012 22:40 - Kurt Seifried wrote:
+Teaching these people to use the logout button won't fix the problem:
+This will only destroy the cookie on the user's browser. But if you have
+sniffed the cookies, you can restore the cookies and you are back in,
+because the cookies are always the same (as long as you don't change your
+password).
+For me this is a bigger problem, because people think "Hey I logged out,
+I am safe" but they aren't and because they don't know they will wonder...
 
-> Can the Typo3 security team please confirm the following:
-> 
-> > Component Type: TYPO3 Core Affected Versions: 4.5.0 up to 4.5.20,
-> > 4.6.0 up to 4.6.13, 4.7.0 up
-> to 4.7.5 and development releases of the 6.0 branch.
-> > Vulnerability Types: SQL Injection, Cross-Site Scripting,
-> Information Disclosure
-> 
-> so no CVE's needed for this, this is simply a summary of the below issues?
+I think I don't have to mention that it is really easy to get these
+cookies using technics FireSheeps & Co. demonstrated years ago.
 
-True!
-
-> > Vulnerable subcomponent: TYPO3 Backend History Module Vulnerability
-> > Type: SQL Injection, Cross-Site Scripting Solution: Update to the
-> > TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
-> fix the problem described!
-> > Credits: Credits go to Thomas Worm who discovered and reported the
-> issue.
-> 
-> Did he discover both the SQL Injection and the Cross-Site Scripting
-> issues? 
-
-No, he only discovered the XSS. We discovered the SQLi while fixing the XSS.
-
-> Can you provide a link to the specific code fixes?
-
-Here it is.
-https://review.typo3.org/16304
-
-> so 2 cve's needed correct?
-
-Yes.
-
-> > Vulnerable subcomponent: TYPO3 Backend History Module Vulnerability
-> > Type: Information Disclosure
-> Solution: Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that fix
-> the problem described!
-> > Credits: Credits go to Core Team Member Oliver Hader who
-> > discovered
-> and fixed the issue.
-> 
-> so one cve needed here? Can you provide a link to the specific code fixes?
-
-Yes.
-
-It's also fixed in the same change:
-https://review.typo3.org/16304
-
-> > Vulnerable subcomponent: TYPO3 Backend API Vulnerability Type:
-> > Cross-Site Scripting Solution: Update to the TYPO3 version 4.5.21,
-> > 4.6.14 or 4.7.6 that
-> fix the problem described!
-> > Credits: Credits go to Johannes Feustel who discovered and
-> > reported
-> the issue.
-> 
-> so one cve needed here? Can you provide a link to the specific code fixes?
-
-Yes: https://review.typo3.org/16305
-
-> > Vulnerability Type: Cross-Site Scripting Solution: Update to the
-> > TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
-> fix the problem described!
-> > Credits: Credits go to Richard Brain who discovered and reported
-> > the
-> issue.
-> 
-> so one cve needed here? Can you provide a link to the specific code fixes?
-
-Yes: https://review.typo3.org/16300
+And in times where people using every available network to access
+internet, because they don't know better/don't care about MITM, it isn't
+really hard to get cookies like that. Just go into a coffee shop with your
+UMTS hotspot, name your network "free-internet" and watch.
 
 
+PS: To be fair: To access vBulletin's {Admin,Mod}CP you will be prompted
+for the password again. But many boards are running modifications which
+allows staff to use many functions from the frontend (which will bypass
+this protection).
+
+
+-- 
 Regards,
-
-Helmut Hummel
-Member of the TYPO3 Security Team
-
---
-TYPO3 Security Team homepage: http://typo3.org/teams/security/
-
-E-Mail: security@...o3.org
-
-Please note: When replying to this e-mail, please leave the header intact.
+Igor
