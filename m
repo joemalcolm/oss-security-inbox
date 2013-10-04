@@ -1,107 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/16/2
-Message-ID: <511F27F6.9040900@redhat.com>
-Date: Fri, 15 Feb 2013 23:32:22 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...re.org>, Matthias Weckbecker <mweckbecker@...e.de>, mjt@....msk.ru
-Subject: Re: CVE# request: pigz creates temp file with insecure permissions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/9
+Message-Id: <6B716FAF-8501-44A5-B854-9C30180A3A23@dot.ee>
+Date: Fri, 4 Oct 2013 11:11:08 +0300
+From: Andri Möll <andri@....ee>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: A note on cookie based sessions
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+A lot of these frameworks or libraries also offer password remembering features which are often implemented as separate long lived token cookies that can't be invalidated server-side or can't be invalidated per-machine.
 
-On 02/15/2013 02:49 PM, Steven M. Christey wrote:
+Devise for Ruby on Rails does this too, for example, but because of a side-effect of the implementation it can be invalidated by changing the password — the token is a substring of the password hash.
+
+Andri
+
+On Oct 4, 2013, at 9:07 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> Kurt,
+> On 10/03/2013 11:26 PM, Donald Stufft wrote:
+>> I don't think this really is a vulnerability is it? I mean it's
+>> basically how the internet works. The only difference between a
+>> cooke backed session and a regular session is that there's no
+>> server side session to destroy. At least in Django's case, It's not
+>> a permanent session though, they are only good for a limited amount
+>> of time before the signature on the cookie expires.
+>> 
+>> If you have access to the session cookie you've already won the
+>> game, you've gotten an XSS or MITM and can do much worse then a
+>> session cookie.
+>> 
 > 
-> As Michael describes the issue: "When [pigz] finishes, it
-> correctly applies original file permissions to the newly created
-> file."
+> Apologies I should have been more explicit. The difference is that
+> with a stateful backend when the user  hits log out they are logged
+> out in the back end, so the cookie can't be used any more. With these
+> stateless solutions there is no way to prevent cookie reply other than
+> encoding a time out in the cookie (so I guess you could encode like a
+> short time out and keep rotating the cookie to close the window of
+> opportunity).
 > 
-> By changing the permissions of the file AFTER compression, pigz is 
-> clearly trying to implement a security policy of "preserve the 
-> permissions of the original file."  It is not properly obeying its
-> own security policy because of the race condition, so this is a
-> more clear argument for assigning a CVE than in the general case
-> where a program's default policy may be "rely on the umask."
+> The concern is people using public terminals, cookie stealing attacks,
+> XSS in the website you're using, etc allowing an attacker to snag your
+> cookie and use it post "log out".
 > 
-> So, pigz should have a CVE.
-
-Agreed, I read to quickly and sort of glossed over it.
-
-> Going forward, maybe the guidelines could look something like:
 > 
-> - if the program tries to implement a security-relevant policy but 
-> fails - assign CVE
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (GNU/Linux)
 > 
-> - if the program has functionality that is clearly for secrecy, 
-> e.g. gnupg - assign CVE (it should have a policy that preserves 
-> secrecy)
+> iQIcBAEBAgAGBQJSTlsGAAoJEBYNRVNeJnmTTowQALWeB44M2xq1l6XZPYxfzoS3
+> EqRmHP2FT0ZrZH5wSiq4gTzecyke/nIf7JnrrcdNeirPPAl+NNqPS6TaOeguL20g
+> SS5oqpC2rsEu1XveZC6M8YenqaPn8UQ04PYH8dCkyIholUKrh+bET5sTa5N90s33
+> wzYE80vAh9jdS9BH93iye+eFMzF+wfrEtgRsIg4kmD0Rt4L0f1KUkLoAQcdPq8tN
+> 0Md4RocD0dQibKZ3j54ToxB7NxiEThYztf9pQLrJUYjuo9lIlIk9JCDkjQfGaIuR
+> CgpB5LgX9eYnIgi+yI9DmPJHLNkwJE2dGWZPGaFnzmuw5cUKyLL5IEzOpRRgGraR
+> b90lEP1R4/WAAfOWGyQ9eOoPQDm5WMfvjpfGw/djpuIPRAywAo3X+HnQwTVhHD8y
+> kfuoYLQn+ymse9WEZPzKEOvW+AhSx/7LQ3vc+RNLr043zSaCzcaBWX8C3GhYAH+E
+> ACwipVV0LQHto3KY8Oi86/nj7IvLU5uevpzdfSiUnRI1seGgj964Ka4nGcRL5tuw
+> ZGsAj+h+vsiWFm2n9HS0OanKE+XU5XgMxzoC3HTrU0QZyIH0s8hebR8HzB8BVFW9
+> 4uwvni/8AbhPY3ZUnNH2+/OTZvHm5V9O3frobA/c6eOOTG85JHpMnUR+pgur4rqV
+> WsBNRKn596piipDwn1AS
+> =Tqge
+> -----END PGP SIGNATURE-----
 
-So as a rule of thumb:
+Content of type "text/html" skipped
 
-1) private encryption keys/certificates/tokens
-2) non hashed passwords for sure
-
-And less certain:
-
-3) hashed passwords (/etc/shadow being readable = security vuln)
-4) configuration data (of a sensitive nature?)
-5) User data (e.g. email/web files?)
-
-> - if the program's vendor explicitly states that the issue is a 
-> vulnerability - assign CVE (this is stating an explicit security 
-> policy)
-> 
-> - otherwise, if the program defaults to umask but does not have
-> any inherent secrecy requirements or explicit policies, or if the
-> vendor treats the issue as "hardening" but not a strict
-> vulnerability - maybe no CVE
-
-So just to be clear in the following situation:
-
-1) we have a file "foo" with permissions of say 0640 (-rw-r-----.)
-2) we have a umask that is less restrictive (e.g. 0007)
-3) we run a program "bar" on file "foo" which creates an output of say
-"baz"
-
-ANY program that operates on fiz and creates the output baz with the
-permissions of the umask (so 0660 or whatever) is not automatically
-considered to have a security vulnerable, we would then need to apply
-knowledge of the intent of the program/the data it handles.
-
-> Your past suggestions for MUST/SHOULD language could be one
-> mechanism for getting more clear about "security policy" in the
-> future.
-
-The benefit here would be projects/vendors could then state security
-policy and we would have a more clear situation (it would fall under
-your third point "if the program's vendor explicitly states that the
-issue is a vulnerability - assign CVE (this is stating an explicit
-security policy").
-
-> - Steve
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRHyf1AAoJEBYNRVNeJnmTxF4P/0jjkPSEhqRSTQk7Q7Nqe0vV
-VcHf8efCwlx7QahNpDrz86Jf5xmaDIxi5ogmZ34fBFos47LnIdedGzEE3q1bbkOD
-6YDUXRWlEb66vJa4Ci7iSpxCfkGAKomAbfQi3lAJt8PnP+o9zhpQdVKZ3HJUXC31
-SjzZAzzeF1Nmz70vLkYE+B9iqPd+VR2gzHhJG01b1VbId2HMwWZigozBSQj0tt6C
-leNR/79533cZQcKmgCt4ABHHIsxyk2Kr8Gcqeha/QhIsC30A1cRK7P653SwX23fz
-acUfBQyvY+XLs/jERhFm0PrQ3KVMqZgj8CphAQsEFRyKipqSLjFmLETmCVFb8vBF
-GQiWJMSNjk++yvfk/8TrVDVcleK7FCc/pc6/42N73cO98g8g0m8WkVuLWSv1vhX1
-YEZ0B8Z2IK865wlya96zQuI6Naeh2tupYiOEMDL7piL/ZEAIbZq3XooJd3R9C9ie
-WffixWnijrroGm1zJyv+EQ+Tlr+k4v4V5QqZaYK7J+vORHZ9OLkrpSOpJdxx2mMO
-rOISNQ+IhIr/23k+nbQJDuwAdVAQZRd07Tr6Rqvl6tkZr/B/keuYxayJ9bp/S2TY
-99Muj9E6sXYmHFd3RUSdF3eM9wX+0wgo74T+BRbGEFjzcEtGaIXBdNtu6M9vd5iA
-ae6bLkzCk/bnCbbiwnlX
-=WsN8
------END PGP SIGNATURE-----
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4790 bytes)
