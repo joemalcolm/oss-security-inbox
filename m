@@ -1,40 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/30/1
-Message-Id: <201308300644.r7U6iZbw010118@linus.mitre.org>
-Date: Fri, 30 Aug 2013 02:44:35 -0400 (EDT)
-From: cve-assign@...re.org
-To: pmatouse@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, libvirt-security@...hat.com
-Subject: Re: CVE request -- libvirt: virBitmapParse out-of-bounds read access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/7
+Message-ID: <20131004100421.135d2f25@hboeck.de>
+Date: Fri, 4 Oct 2013 10:04:21 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request - VLC 2.0.0 to 2.0.8
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA512
 
-> The virBitmapParse function was calling virBitmapIsSet() function that
-> requires the caller to check the bounds of the bitmap without checking
-> them. This resulted into crashes when parsing a bitmap string that was
-> exceeding the bounds used as argument.
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=997367
-> Upstream fix:
-> http://libvirt.org/git/?p=libvirt.git;a=commit;h=47b9127e883677a0d60d767030a147450e919a25
+On Thu, 03 Oct 2013 22:32:12 -0600
+Kurt Seifried <kseifried@...hat.com> wrote:
 
-Use CVE-2013-5651.
+> Sorry forgot to reply. I'm not sure this is CVE worthy. In general
+> crash bugs in services are CVE worthy, but crashes in client software
+> are usually limited to things like email clients or web browsers where
+> there is a high potential for processing untrusted data without much
+> user interaction (e.g. displaying some random email or web page) whre
+> you also have the potential to lose work (so there is an impact).
+> 
+> In the case of VLC you load a nasty file, it crashes, you don't do it
+> again. There's not really any impact. You don't lose any work.
+
+VLC is used as a browser plugin and can also be embedded in other
+applications.
+(though I'm not aware if this can crash the whole browser with the
+modern sandboxing stuff browsers do)
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Hanno Böck
+http://hboeck.de/
 
-iQEcBAEBAgAGBQJSIDcdAAoJEGvefgSNfHMdgoYH/1X2pJ8TbloT/iT9TpqTg2p1
-LplZwtLXbAqIwB1Rx79T1HxRvA72JkefgLlhPHMGmssKCAwfeZ3x0nGS4BnOnq9e
-i/dUa+InOznXMxEEsudl8AvGxepTpCk44j+Y4ab0XGllotzDM5iMWCjQItnVQxRi
-Yrms8W92Pn0WxTyMhfV5E8tQiEJwxTi3wih3vWE8RxPNuVDqS7qjnJk0Fzs/0RlY
-R4TRtaqsI4n3zY0pCtYYSwmoVGXOR0GA9MFJ39YzxtoKiw8nS/Xshf6/lffmxYlN
-1vH1ONyOEGmOamYQhnlJleHydAEfDGmptchEsHQTrpb7yvYsgsWw69wZ9yoCxzw=
-=uCdo
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.21 (GNU/Linux)
+
+iQIcBAEBCgAGBQJSTnaJAAoJEKWIAHK7tR5CNk0QALuO9LtxhFcRasZIsIHZMEY7
+1LDULOSR8HuBtjjbhFZKZde+jvH01686awnJRKGLHoFmFnmpVlCzmkbpPddj3pE3
+FN6VsXW/1j5GtmffrdHnWDYRjzM237NDMPiHqg5dp0wHw7udiL/zR4hiGbn5S0sJ
+xH5P94OhWiimMXAPtW1TGXdJRR66DuidYnHskl5526sHGyQtNeRkbjXZ3G00zlw9
+j/zfzoPsqaN42VG/IL0jknCsyf7cgv0K4q8+q0mXW8GI/AkgBqMiFIcsnriRAMtM
+NzNZ8HvxCGfqHbUrePETyWfT3MbKk5yRuZGgNESXw+H2LkyHwp+jJ13/1FBycAde
+ZOwwzAltbvh0abqZccfc6sXqAabjnO3YxLsivaEEkKzYW38ta+D2oxySQgrUN/xx
+NVaFv/xHPpNMxLxnC0ETtdfxmk+WbmrK3UBsMdj779y55A5c8Jsqc8Em/qi3SNoU
+c6ad01tL6esB83D/TxPu3XLRdJmpR8TYV5HsvwwIEsU8olOdzMqIoyEaLSEFdl+w
+vjksWChtS543oEwi9EK5rDMjAQEAdMEscwQXAciay9ZVqpBDD7NMtCWX6hKF2Ao3
+QHTfb2XMsQzx343PiuL0KNiogy2zrCeDkMj/yU6LSE8MrFedE/KvUa9EVKCtd88+
+byGlEQqYq/7R1Ywll6vC
+=75h5
 -----END PGP SIGNATURE-----
