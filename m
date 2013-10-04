@@ -1,130 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/2
-Message-Id: <201307270341.r6R3fS8C019137@freefall.freebsd.org>
-Date: Sat, 27 Jul 2013 03:41:28 GMT
-From: FreeBSD Security Advisories <security-advisories@...ebsd.org>
-To: oss-security@...ts.openwall.com
-Subject: FreeBSD Security Advisory FreeBSD-SA-13:07.bind
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/13
+Message-ID: <524F0A06.8060909@redhat.com>
+Date: Fri, 04 Oct 2013 12:33:42 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Pedro Ribeiro <pedrib@...il.com>
+CC: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
+Subject: Re: Re: CVE request - VLC 2.0.0 to 2.0.8
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-=============================================================================
-FreeBSD-SA-13:07.bind                                       Security Advisory
-                                                          The FreeBSD Project
+On 10/04/2013 10:39 AM, Pedro Ribeiro wrote:
+> 
+> On Oct 4, 2013 5:12 PM, "Kurt Seifried" <kseifried@...hat.com 
+> <mailto:kseifried@...hat.com>> wrote:
+>> 
+> On 10/04/2013 02:04 AM, Hanno Böck wrote:
+>> On Thu, 03 Oct 2013 22:32:12 -0600 Kurt Seifried 
+>> <kseifried@...hat.com <mailto:kseifried@...hat.com>> wrote:
+> 
+>>> Sorry forgot to reply. I'm not sure this is CVE worthy. In 
+>>> general crash bugs in services are CVE worthy, but crashes in 
+>>> client software are usually limited to things like email
+>>> clients or web browsers where there is a high potential for
+>>> processing untrusted data without much user interaction (e.g.
+>>> displaying some random email or web page) whre you also have
+>>> the potential to lose work (so there is an impact).
+> 
+>>> In the case of VLC you load a nasty file, it crashes, you
+>>> don't do it again. There's not really any impact. You don't
+>>> lose any work.
+> 
+>> VLC is used as a browser plugin and can also be embedded in
+>> other applications. (though I'm not aware if this can crash the
+>> whole browser with the modern sandboxing stuff browsers do)
+> 
+> So if someone can test this and report back that'd be great and
+> then we can deal with the CVE depending on how this plays out.
+> 
+> 
+> Hi Kurt,
+> 
+> Thanks for the feedback, I'll keep that in mind for the future
+> when requesting CVE's. I agree this is a minor issue, but because
+> there is an invalid memory I read I thought it was relevant.
+> 
+> I tested with the browser plugin on the latest Firefox, and while
+> it crashes the plugin, it doesn't seem to crash the browser.
+> 
+> As I said previously, I will continue to investigate whether I can
+> get some program control, but for now it's only a measly DoS.
+> 
+> Regards Pedro
+> 
 
-Topic:          BIND remote denial of service
+No problem, it's a fine line when it comes to client applications, but
+definitely if you start to see/strongly suspect code exec let me know
+and it'll get a CVE.
 
-Category:       contrib
-Module:         bind
-Announced:      2013-07-26
-Credits:        Maxim Shudrak and the HP Zero Day Initiative, ISC
-Affects:        FreeBSD 8.4-RELEASE and FreeBSD 9.x
-Corrected:      2013-07-26 22:53:17 UTC (stable/8, 8.4-STABLE)
-                2013-07-26 22:40:17 UTC (releng/8.4, 8.4-RELEASE-p2)
-                2013-07-26 22:43:09 UTC (stable/9, 9.2-BETA2)
-                2013-07-26 22:40:23 UTC (releng/9.1, 9.1-RELEASE-p5)
-CVE Name:       CVE-2013-4854
-
-For general information regarding FreeBSD Security Advisories,
-including descriptions of the fields above, security branches, and the
-following sections, please visit <URL:http://security.FreeBSD.org/>.
-
-I.   Background
-
-BIND 9 is an implementation of the Domain Name System (DNS) protocols.
-The named(8) daemon is an Internet Domain Name Server.  The libdns
-library is a library of DNS protocol support functions.
-
-II.  Problem Description
-
-Due to a software defect a specially crafted query which includes
-malformed rdata, could cause named(8) to crash with an assertion
-failure and rejecting the malformed query.  This issue affects both
-recursive and authoritative-only nameservers.
-
-III. Impact
-
-An attacker who can send a specially crafted query could cause named(8)
-to crash, resulting in a denial of service.
-
-IV.  Workaround
-
-No workaround is available, but systems not running the named(8) service
-and not using the base system DNS utilities are not affected.
-
-V.   Solution
-
-Perform one of the following:
-
-1) Upgrade your vulnerable system to a supported FreeBSD stable or
-release / security branch (releng) dated after the correction date.
-
-2) To update your vulnerable system via a source code patch:
-
-The following patches have been verified to apply to the applicable
-FreeBSD release branches.
-
-a) Download the relevant patch from the location below, and verify the
-detached PGP signature using your PGP utility.
-
-# fetch http://security.FreeBSD.org/patches/SA-13:07/bind.patch
-# fetch http://security.FreeBSD.org/patches/SA-13:07/bind.patch.asc
-# gpg --verify bind.patch.asc
-
-b) Execute the following commands as root:
-
-# cd /usr/src
-# patch < /path/to/patch
-
-Recompile the operating system using buildworld and installworld as
-described in <URL:http://www.FreeBSD.org/handbook/makeworld.html>.
-
-Restart the named daemon, or reboot the system.
-
-3) To update your vulnerable system via a binary patch:
-
-Systems running a RELEASE version of FreeBSD on the i386 or amd64
-platforms can be updated via the freebsd-update(8) utility:
-
-# freebsd-update fetch
-# freebsd-update install
-
-VI.  Correction details
-
-The following list contains the correction revision numbers for each
-affected branch.
-
-Branch/path                                                      Revision
-- -------------------------------------------------------------------------
-stable/8/                                                         r253696
-releng/8.4/                                                       r253692
-stable/9/                                                         r253695
-releng/9.1/                                                       r253693
-- -------------------------------------------------------------------------
-
-To see which files were modified by a particular revision, run the
-following command, replacing XXXXXX with the revision number, on a
-machine with Subversion installed:
-
-# svn diff -cXXXXXX --summarize svn://svn.freebsd.org/base
-
-Or visit the following URL, replacing XXXXXX with the revision number:
-
-<URL:http://svnweb.freebsd.org/base?view=revision&revision=XXXXXX>
-
-VII. References
-
-https://kb.isc.org/article/AA-01015
-
-<URL:http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4854>
-
-The latest revision of this advisory is available at
-http://security.FreeBSD.org/advisories/FreeBSD-SA-13:07.bind.asc
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iEYEARECAAYFAlHzPpMACgkQFdaIBMps37Jb2ACdFqaNTTBFiOCuz30MJ5s85UVd
-MzoAn2ebCjqULwyEbJaeTlck87NPfQWR
-=RFf2
+iQIcBAEBAgAGBQJSTwoGAAoJEBYNRVNeJnmTicwP/RIaXZx+UBvNZzNoHFPeA9n4
+Yj4TiAS1qfJR0KF9gya5LoQB/HZ92/jfb9icX02lYhwfYsX/NT0t8G4I/W/YOd8Z
+eolM4tXofh6qvPWNcc/9CaAR8KGuAoCk4Hfn2T3gYaLa1JaGba/0akwk433RhHv+
+tvC5y2gMiD+WRht6310UzuMlNIXvWYW2Vr/zUbx/cpj5C4emUyTJnTg9auydTHdX
+N74AmyRuEu7ZTgyXYurvV3wJaoIbyZCl+Qb4Ym6QU0m5e6DW9wEHmt7r8tWax0sJ
+xfLoI1rYjojq/DrwNSLkV+7ulQLfsmehKeDI3CUMLylYPr1AJnEjK4oSRBfoXEzl
+CqoeRaMQ/XeeZ77afSD9VqqHiTGsXbsLbX6U7WR5W06nDff3OUxEU65MMwuEqGSw
+V+zyFZjLoAfjI/mwETA31dXVhFF5gFVRSX5nc027ByyBCG8XnJm3Pj2YNZWdGvPb
+CyEL230t1/3hrZhEML4ybPTOsbXwVW9vQ85VtdipQslOAT6Qlg5GNsQDqTfFQQFC
+RieuvDx3KAq5FU5vnOM2A56NyDmFWttbocmkL9qbd9LLXF40ykqxe4kDG61Q8riu
+016OtFxVWm6uok5zZ5o68R+2H53FfnnvzYYQ3Udr/4hXD/bpgccF6xjw7Bdyptub
+t5EnoGPz5J7bpoKfXWbh
+=E76z
 -----END PGP SIGNATURE-----
