@@ -1,41 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/10/5
-Message-ID: <CAA7hUgG+mofrGa1=BcbUAxw0b_7RagbY9-Tn=fMBXfvOocFywA@mail.gmail.com>
-Date: Mon, 10 Jun 2013 16:54:21 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Insecure temp files usage in phusion passenger (other than CVE-2013-2119)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/05/2
+Message-ID: <20131005111044.GA6408@kludge.henri.nerv.fi>
+Date: Sat, 5 Oct 2013 14:10:44 +0300
+From: Henri Salo <henri@...v.fi>
+To: Forest Monsen <forest.monsen@...il.com>, security@...pal.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE duplicates SA-CONTRIB-2013-075
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Advisory https://drupal.org/node/2087055 says:
 
-While looking at  CVE-2013-2119 I noticed that Phusion Passenger
-2.2.11's ext/common/Utils.cpp makeDirTemp() uses mkdir(1) to create
-directories in /tmp (e.g. /tmp/phusion.$$) for use by the application
-and web server.
-A local user could create the directories and have write access to
-directories, and possibly files used by the application. I haven't
-confirmed, but I guess this would allow some sort of privilege
-escalation to the user executing the application or at least access to
-otherwise restricted data.
+CVE-2013-4381 (XSS)
+CVE-2013-4382 (CSRF)
 
-Additionally, some of the subdirectories might be chown(2)ed to a
-different user even if the directory already existed (it chowns iff
-mkdir(1) returns 0). Not sure if it could have an impact, however.
+Are these duplicate CVEs with CVEs below or is there something I am missing?
 
-Later versions of Phusion Passenger (namely, 3.0.13) use mkdir(2)
-directly but it only checks for EEXIST, in which case it even skips
-the chown. The directory is chmod'ed and chown'ed otherwise.
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2013-5937
 
-So, at least in 3.0.13 a file could be created instead of a directory
-and the code would go on, while in 2.2.11 one would need to win the
-race condition in mkdir(1) -p's stat check.
+Cross-site request forgery (CSRF) vulnerability in the Click2Sell Suite module
+6.x-1.x for Drupal allows remote attackers to hijack the authentication of
+administrators for requests that delete database information via vectors
+involving the Drupal Form API.
 
-Does anyone know enough about phusion passenger to know what the
-impact could be?
-(and depending on that, assigning CVE id(s))
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2013-5938
 
-Cheers,
---
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Cross-site scripting (XSS) vulnerability in the Click2Sell Suite module 6.x-1.x
+for Drupal allows remote attackers to inject arbitrary web script or HTML via a
+confirmation form.
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
