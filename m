@@ -1,70 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/18/8
-Message-ID: <50F9AAE0.4020603@redhat.com>
-Date: Fri, 18 Jan 2013 13:04:48 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/05/1
+Message-ID: <524F8E8D.30105@redhat.com>
+Date: Fri, 04 Oct 2013 21:59:09 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: David Hicks <d@...id.au>, Jakub Galczyk <jakub.galczyk@...il.com>
-Subject: Re: CVE request: MantisBT before 1.2.13 match_type XSS vulnerability
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed module
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/18/2013 04:31 AM, David Hicks wrote:
-> Hi list,
+On 10/04/2013 02:49 PM, Forest Monsen wrote:
+> Hi there... I would like to request a CVE identifier for:
 > 
-> Jakub Galczyk discovered[1][2] a cross site scripting (XSS) 
-> vulnerability in MantisBT 1.2.12 and earlier versions that allows
-> a malicious person to trick the browser of a target user into
-> executing arbitrary JavaScript via the URL:
-> search.php?match_type="><script...
+> SA-CONTRIB-2013-078 - Quick Tabs - Access Bypass 
+> https://drupal.org/node/2103187
 > 
-> This vulnerability is particularly wide reaching due to search.php
-> being usable by anonymous users on public facing installations of
-> MantisBT (no user account required).
+> Thanks!
 > 
-> Patches against 1.2.x and master branches are attached and
-> alternatively available at [2].
-> 
-> References: [1] 
-> http://hauntit.blogspot.de/2013/01/en-mantis-bug-tracker-1212-persistent.html
->
-> 
-[2] http://www.mantisbt.org/bugs/view.php?id=15373
-> 
-> The MantisBT project will release MantisBT 1.2.13 shortly and
-> advise popular Linux distributions packaging MantisBT to either
-> apply the patch or bump package versions to 1.2.13.
-> 
-> Can a CVE ID please be assigned to this issue?
-> 
-> With thanks, David Hicks MantisBT Developer #mantisbt
-> irc.freenode.net http://www.mantisbt.org/bugs/
-> 
-> Bcc: mantisbt-dev@...ts.sourceforge.net
+> Best, Forest
 > 
 
-Please use CVE-2013-0197 for this issue.
+Please use CVE-2013-4406 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ+arfAAoJEBYNRVNeJnmTmFEP/28iPEY+BZRxSnVeZEl+iK2c
-N7jpChQMGr/Pm+R8Zvi/wtwWretAs/TLitXFO+smd6X0LnM5ar1U/9SnJj9a2Ep7
-6ZOVDLRz7p6q8Op8twlFDYuAfnpWfAPe0ruEza5LFADyWEUUT0xXmv5NL+pqdF+0
-sx+5GHOUVqjnvm4vNPdJL5v3IMpEDH+9OWEuSSAFJ+RUG2cXW181PdRIvVXmsO/S
-/UcwiCJTLeM0VoYqFHt5r0aYpDGTAKoJs+9XPP/cfmK69rzG+HRx5IZXIrMbB3SY
-liCMQcD22lWTJhPLA68zRAxTPnJO1ec7NmjntJ5Gp0m+0pVKtXI2DVJFgRPpdHFH
-DIa30q9xsKof5d77QPisJkCJAJ+BvqLLG6PsMUwWlzF8vwGAmSHqzG8UZStMRe4W
-IWu0uj2l87g2o4P5ulJCcFDIqKO8LwoDBcu8yaCyMPX3N6d0z9SGmQSwL08zdxq8
-RXcN6vBQxNpnEBsyups99UyYXr5CEnXZqZlGfVbVNCz25yqLW8iPFZ6ihKN9jX7h
-XDDG+u1AuGk+7WBJ5EqHXFA2NKFiEtghGtot14LrqXHst8g6cNlyKpbHvpakVRF0
-F8yqqEzA4WYet0PTNnbHbA2jQoJ9l1n54GT51peNnocG+29m093tM7O5iF2daM/W
-bUxSPRuQ1qI1i1iS5p46
-=4IdZ
+iQIcBAEBAgAGBQJST46NAAoJEBYNRVNeJnmTYlIQAKN02mi+zlk0ZBwbFMMGhYZM
+J8RLYXrToACv8YzLrxVXVzki8Vn0vNEPA/f/eygeZH99oaSsBpI+rD38cTDjLgy5
+2laEzqFHKc0Vbn/p43hlwIoG4RCe3tPwMCHEdx8HvLZGu9X7jRc0aGpQndQhNZSJ
+KVTL1B7Hfm02aElGjwOyjtR4ZSRMr+7+8I5A5eGP2qRX0RjD5yER0sHX461kEPSi
+9yaZ/GCGrbFirx16/9cZpZrr39r8nVMc0IiqYIuZiu7IHRJf0sqs0p6jsVX69Rvr
+6iaRh72qSkgzIbYjWHdPTrbjwsiKMR03XR/jo5N0UosePtxVZXQFXRKeN1FnPKL9
+wi4HNIfIW3x+pZgUBzA+SLlznbrKekw2Na0MQgLdxI3I9aqFELPBr41TWaMhr/Kc
+Ab9JgTOOJ8wOEuXgq5pVT2g3M722JToIKZzNg+d6hnsgf1cslTPigdTkIwE+SMw8
+pyBb6/m/7C7EkOO7tdjVDxdW+TFAV8npxYeTo1al/YfwhP0c+fWTIds3L7qrpS8P
+fMCSp08CJz3WNIuzpk/BJiHJSsbdSqc9THj8W4KuYK+qnZL20HtxRgxyxZkrtxAJ
+0yAvaC1dpSsHicF95Db9xGCDXF5B71gIFzxVP/XznGxRrQLEJOko6059d6bKcABn
+QdmjyRyxyRrhlK0rjCn9
+=zpOe
 -----END PGP SIGNATURE-----
