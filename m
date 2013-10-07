@@ -1,59 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/06/4
-Message-ID: <CA+sLGzxAcYYP8hjDZZhKhk0N+qgrGK6OmQx3pditsqKfkYqPVg@mail.gmail.com>
-Date: Wed, 6 Feb 2013 14:22:02 -0500
-From: Sang Kil Cha <sangkilc@....edu>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: imview
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/07/2
+Message-ID: <20131007211718.GA4461@pisco.westfalen.local>
+Date: Mon, 7 Oct 2013 23:17:18 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: Salvatore Bonaccorso <carnil@...ian.org>
+Cc: oss-security@...ts.openwall.com, team@...urity.debian.org
+Subject: Re: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
-One can associate the program with ics file, but maybe it is not likely.
-Thank you for your help anyway.
+On Mon, Oct 07, 2013 at 10:47:29PM +0200, Salvatore Bonaccorso wrote:
+> I recently joined the Debian Security team and request membership to
+> the linux-distros@...openwall.org list so that I may participate fully
+> in reporting and fixing vulnerabilities in Debian and FOSS. Here is my
+> GPG fingerprint:
+> 
+> pub   4096R/0x789D6F057FD863FE 2009-05-11
+>       Key fingerprint = 04A4 407C B914 2C23 030C  17AE 789D 6F05 7FD8 63FE
+> uid                            Salvatore Bonaccorso <salvatore.bonaccorso@...il.com>
+> uid                            Salvatore Bonaccorso <carnil@...ian.org>
+> sub   4096R/0xA9A629B5F5FCF262 2009-05-11
+> sub   4096R/0x054CB8F31343CF44 2013-09-19
+> sub   4096R/0x215553264598FBA7 2013-09-21
+> 
+> Thank you for your consideration! I'm cc'ing also the Debian Security Team
+> address.
 
-Best,
--Sang Kil
+Confirmed.
 
-On Wed, Feb 6, 2013 at 1:38 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+Cheers,
+        Moritz
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 02/05/2013 02:59 PM, Sang Kil Cha wrote:
-> > It reads in .ics file (iCalendar). Typical scenario would be to
-> > share your schedule by sending the ics file to your friends. So
-> > someone can open a malicious calendar file from imview, and then
-> > crash.
-> >
-> > -Sang Kil
->
-> Is it loaded automatically somehow (e.g. ics file association?). It
-> seems like causing this program to crash won't cause any harm (e.g. no
-> lost data/etc. like you get when crashing a web browser/email
-> client/server). Right now I'm leaning towards not assigning a CVE as
-> it appears there is no real security related impact.
->
->
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.13 (GNU/Linux)
->
-> iQIcBAEBAgAGBQJREqMLAAoJEBYNRVNeJnmTwJgP+wVa+pIGBe/FerHCOAuFasLv
-> m7jtS3epo021F/bpwYHCmAJjS89mx6uoU9XgUUeBOQQqN4W3BawqD4kRgLvQ9P7B
-> BczWYmNmwWs/z7Ws+GBtK7ymt2fDfprRe7I3HYLCnV4M54LHzVCugn5RIZlmhcaq
-> j+YkSdayV/+Rfx1ZR95EU1okAwiJ4Is6/QL/GGLQPiAZUMJWKb8gmHUThUPcWsbr
-> 9so1bzN1Sidqst2FdsZtC88Cx+GGlIoIzU4h85Fo4Yu2ah4lXqeLUFUF8KHkf0HG
-> qfQ3zvM2gRe9/6YKWZroqEA0oXYjuBMuJPqag/pmqB9cGN+t9F9TsYXAmdXY5vfd
-> kSiVx2vXlvgLxyZrys784Tb2dfv8YCX8JTyV4BHMs0be6VuL/RcFPgJwhkpWAIYM
-> dtGsBR5BG/+cKKHScIoeihroR6Po9t3ESdTdSNAWi/W/pE3yzN6yQNGjXwrAxcvW
-> abw/rNZFB/KjWOEIRLgCrFMXeAfCoaOpih9jd3FVf6kP+mpGXn5MoTdQpsSb49e1
-> dXZyvbB3LyqC45zYhpZUnQgKhQ9aGgSvR7rCk6pLbtnjC5NtCJ3N4S3BYRMm6/XR
-> C+ocy+HptomqtwSRFFkb+ktJmOr+CbAwZkh3WZvtNXrXf+nJLDCPNXSzIh1m7IVb
-> e/4mxG4elhoBEdWxbef1
-> =TfWR
-> -----END PGP SIGNATURE-----
->
-
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
