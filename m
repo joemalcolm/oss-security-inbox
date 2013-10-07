@@ -1,28 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/19/2
-Message-ID: <20130719050056.GA9059@inutil.org>
-Date: Fri, 19 Jul 2013 07:00:56 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/07/1
+Message-ID: <20131007204729.GA7432@eldamar.local>
+Date: Mon, 7 Oct 2013 22:47:29 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com, Andreas Nilsson <andreas.nilsson@...en.com>, Florian <floriangaultier@...il.com>, "A. Jesse Jiryu Davis" <jesse@...en.com>
-Subject: Re: CVE Request - MongoDB <=2.4.4 uninitialized object
+Cc: team@...urity.debian.org
+Subject: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 18, 2013 at 08:14:39AM -0400, Dan Pasette wrote:
-> We already requested CVE-2013-2132 for this and it was fixed in version
-> 2.4.5.
-> 
-> We announced it on mongodb-announce and have it listed in our alerts page
-> here: http://www.mongodb.org/about/alerts/
+I recently joined the Debian Security team and request membership to
+the linux-distros@...openwall.org list so that I may participate fully
+in reporting and fixing vulnerabilities in Debian and FOSS. Here is my
+GPG fingerprint:
 
-CVE-2013-2132 was already assigned to this issue in the Python driver:
-http://www.openwall.com/lists/oss-security/2013/05/31/6
-https://jira.mongodb.org/browse/PYTHON-532
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-2132
+pub   4096R/0x789D6F057FD863FE 2009-05-11
+      Key fingerprint = 04A4 407C B914 2C23 030C  17AE 789D 6F05 7FD8 63FE
+uid                            Salvatore Bonaccorso <salvatore.bonaccorso@...il.com>
+uid                            Salvatore Bonaccorso <carnil@...ian.org>
+sub   4096R/0xA9A629B5F5FCF262 2009-05-11
+sub   4096R/0x054CB8F31343CF44 2013-09-19
+sub   4096R/0x215553264598FBA7 2013-09-21
 
-While "your" CVE-2013-2132 refers to
-https://jira.mongodb.org/browse/SERVER-9878, which AFAICS is a different
-issue.
+Thank you for your consideration! I'm cc'ing also the Debian Security Team
+address.
 
-Cheers,
-        Moritz
+Regards,
+Salvatore
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
