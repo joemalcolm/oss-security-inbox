@@ -1,63 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/13
-Message-ID: <51D1F594.1000209@redhat.com>
-Date: Mon, 01 Jul 2013 15:33:08 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Eric Blake <eblake@...hat.com>
-CC: oss-security@...ts.openwall.com, libvirt-security@...hat.com
-Subject: Re: [Libvirt-Security] CVE-2013-2218 -- libvirt: crash when listing network interfaces with filters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/08/7
+Message-ID: <20131008235752.GA14425@oevtugenva.nrevsny.pk>
+Date: Tue, 8 Oct 2013 19:57:52 -0400
+From: Rich Felker <dalias@...ifal.cx>
+To: oss-security@...ts.openwall.com
+Subject: Source of bad password hashing practices? MySQL manual...
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+It's come to my attention recently that the MySQL reference manual is
+recommending very poor password hashing practices as part of its
+security guidelines:
 
-On 07/01/2013 01:06 PM, Eric Blake wrote:
-> On 07/01/2013 12:49 PM, Kurt Seifried wrote:
->> On 07/01/2013 09:21 AM, Petr Matousek wrote:
->>> The virConnectListAllInterfaces method has a double-free of the
->>>  'struct netcf_if' object when any of the filtering flags cause
->>> an interface to be skipped over. For example when running the
->>> command 'virsh iface-list --inactive'
->> 
->>> Upstream fix: 
->>> http://libvirt.org/git/?p=libvirt.git;a=commit;h=244e0b8cf15ca2ef48d82058e728656e6c4bad11
->>
->>>
->>> 
-References: https://bugzilla.redhat.com/show_bug.cgi?id=980112
->> 
->>> Thanks,
->> 
->> 
->> Please use CVE-2013-2229 for this issue.
-> 
-> No, we already assigned CVE-2013-2218 to this issue.
-> CVE-2013-2229 should be closed as a mistake, or reused for some
-> other purpose.
+  "Do not store cleartext passwords in your database. If your computer
+  becomes compromised, the intruder can take the full list of
+  passwords and use them. Instead, use SHA2(), SHA1(), MD5(), or some
+  other one-way hashing function and store the hash value."
 
-Sorry that was really bad of me, totally didn't read the email, just
-saw from Jan and though "derp. needs a cve". Please REJECT
-CVE-2013-2229, duplicate assignment because Kurt isn't smarter than
-the average bear.
+  (http://dev.mysql.com/doc/refman/5.7/en/security-guidelines.html)
 
+With MySQL being one of the major traditional "LAMP stack" components,
+I wonder if this is the source from which many web developers are
+getting their ideas on how to do password hashing. What is the proper
+procedure for publicizing documentation bugs like this which are
+leading to poor security practice, and for getting them fixed?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJR0fWUAAoJEBYNRVNeJnmTgjEP/37CuvtbfytgGLsuk41HYLXq
-9i+h0nkvneoqfaad/x/c6nBUfD5zKW4bTmN6WraNAA3qbr+skpxkI8kTnnsYrI9v
-99sEZiR/YFbZpu/by2GdECbA5WnY7jPIirYHMkVP2aW3DSXCJd/HSiIwwz86vasu
-ZkVKiRdOutNs7XUxpFLhv0XNt8vKzBXFbgSdz9taigBUzY1ZnsSfMN1GauY6WZuD
-4Xsf52WIWykeubH3MBbLSqyDp5kc6BxoKIbJv/h5kwp1kQEGLtIoCQNuByc3dAiA
-w9egS6GffCrdROSbue0pedgmkJux1DvKW5H+0kR4eaKi09pIq/9KMZMgoZeD3z2A
-PTMl4DTRtE62toMjtlcypVWz3rcsF0lZyeVooEC/rdxQLp7+FtVrTtyv6a4Q9Qnz
-viAn0DnUXo1P8td/ORrt17jRZWrEEhIkDuFJKiFdocQ/JWNjcJO9aP7nq0Lgp8XS
-Y7Z49g5sHdQNCpl9jsJFMnvMpy7Ng9r4jehI4t4xO9WDS2WJOV2BBjklM9JQUPPw
-1db0A+5a4vUaix2M1cKkAt+1NCijdR0umD37YF1sBdAY48eIIB2vRLbuXZImxtQT
-Q0OWEQCYd3By8d9XtDsyljPVZ2XwgQUzXs4qHnKHNgSUmXcLugTUjdRl07jjbmc2
-ntG3o0jkx3w7vNWN87EA
-=Ispm
------END PGP SIGNATURE-----
+Rich
