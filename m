@@ -1,168 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/30/7
-Message-ID: <51F75DF9.6030203@redhat.com>
-Date: Tue, 30 Jul 2013 00:32:25 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/08/2
+Message-ID: <5253B323.7090201@redhat.com>
+Date: Tue, 08 Oct 2013 01:24:19 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Donald Stufft <donald@...fft.io>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Insecure Software Download in pip
+To: mmcallis@...hat.com
+CC: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request: remote command-injection flaw in HTTP::Body::Multipart versions 1.08 and later
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/30/2013 12:28 AM, Donald Stufft wrote:
+On 10/07/2013 07:27 PM, Murray McAllister wrote:
+> Good morning,
 > 
-> On Jul 30, 2013, at 2:21 AM, Kurt Seifried <kseifried@...hat.com 
-> <mailto:kseifried@...hat.com>> wrote:
+> A remote command-injection flaw was reported in
+> HTTP::Body::Multipart versions 1.08 and later:
 > 
->> Signed PGP part On 07/27/2013 01:10 AM, Donald Stufft wrote:
->>> 
->>> On Jul 27, 2013, at 3:08 AM, Kurt Seifried
->>> <kseifried@...hat.com
->> <mailto:kseifried@...hat.com>>
->>> wrote:
->>> 
->>>> On 07/25/2013 03:09 AM, Donald Stufft wrote:
->>>>> I'd like to request a CVE for pip 
->>>>> (https://pypi.python.org/pypi/pip/).
->>>>> 
->>>>> The mirroring support (-M, --use-mirrors) was implemented 
->>>>> without any sort of authenticity checks and is downloaded
->>>>> over plaintext HTTP. Further more by default it will
->>>>> dynamically discover the list of available mirrors by
->>>>> querying a DNS entry and extrapolating from that data. It
->>>>> does not attempt to use any sort of method of securing this
->>>>> querying of the DNS like DNSSEC. Software packages are
->>>>> downloaded over these insecure links, unpacked, and then
->>>>> typically the setup.py python file inside of them is
->>>>> executed.
->>>>> 
->>>>> The vulnerable code is located at: - 
->>>>> https://github.com/pypa/pip/blob/develop/pip/index.py#L60-L64
->>
->>>>> 
->>> -
->>>>> https://github.com/pypa/pip/blob/develop/pip/index.py#L205-L207
->>
->>>>> 
->>> -
->>>>> https://github.com/pypa/pip/blob/develop/pip/index.py#L553-L572
->>
->>>>> 
->>> -
->>>>> https://github.com/pypa/pip/blob/develop/pip/index.py#L999-L1024
->>
->>>>> 
->>> 
->>>>> 
->>>>> 
->> The affected versions are every released version since 0.8.1
->> which
->>>>> are: 0.8.1, 0.8.2, 0.8.3, 1.0, 1.0.1, 1.0.2, 1.1, 1.2,
->>>>> 1.2.1, 1.3, 1.3.1, 1.4
->>>>> 
->>>>> I'm not aware of this issue having ever had a CVE requested
->>>>> for it and my attempts to search the CVE database did not
->>>>> appear to turn up anything relevant but the search doesn't
->>>>> appear to be the greatest so I may have missed it.
->>>>> 
->>>>> I'm hoping to land a patch for this in a future release 
->>>>> (current iteration of patch available at 
->>>>> https://github.com/dstufft/pip/compare/remove-mirror-support)
->>
->>>>> 
->>> but there is no planned fix version as of yet.
->>>>> 
->>>>> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 
->>>>> 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
->>>> 
->>>> Was it supposed to be secure (like was this explicitly
->>>> supposed to be all encrypted/etc.)? This sounds more like
->>>> security hardening than a security vulnerability.
->>>> 
->>>> - -- Kurt Seifried Red Hat Security Response Team (SRT) PGP: 
->>>> 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->>>> 
->>> 
->>> The mirroring protocol explicitly included provisions for 
->>> verification which was not being done.
->>> 
->>> http://www.python.org/dev/peps/pep-0381/#mirror-authenticity
->>> 
->>> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA //
->>> 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
->>> 
->> 
->> So to confirm, we're talking about the line:
->> 
->> "Verification is not needed when downloading from central index,
->> and should be avoided to reduce the computation overhead."
->> 
->> So accessing the central index is done over HTTP by default, no 
->> support for HTTPS previous to commit 
->> https://github.com/pypa/pip/commit/e80c387a26858c4d7ff43c5f030b04b03fd43dfe
->>
->> 
-correct?
->> 
->> - -- Kurt Seifried Red Hat Security Response Team (SRT) PGP:
->> 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->> 
->> 
+> - http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=721634 -
+> https://rt.cpan.org/Public/Bug/Display.html?id=88342 -
+> https://bugzilla.redhat.com/show_bug.cgi?id=1005669
 > 
-> The central index is pypi.python.org <http://pypi.python.org> and 
-> historically (and at the time of that commit) it was not accessed
-> securely (plaintext HTTP, no authenticity checks etc). The 
-> mirroring support, (located at, a.pyp.python.org
-> <http://a.pyp.python.org>, b.pypi.python.org
-> <http://b.pypi.python.org>, …) which that commit adds and PEP381 
-> deals with, was supposed to have authenticity checking preventing
-> a malicious mirror operator from attacking you by checking a html
-> manifest that included hashes was signed by a key owned by the
-> central index (pypi.python.org <http://pypi.python.org>). That
-> commit does not include checking that the mirrors are not hosting
-> content that differs from the central index.
+> The affected code is noted in the Debian bug report.
 > 
-> So basically the lack of authenticity checking when installing
-> directly from the central index is a separate issue which has been
-> (mostly) addressed with pip 1.3, and more so with 1.4. However this
-> request deals explicitly with the implementation of the protocol
-> for installing from the hosts that mirror the central index, but
-> are not the central index.
+> Could a CVE please be assigned if one has not been already?
 > 
-> For what it's worth my PR to fix it is here
-> https://github.com/pypa/pip/pull/1098
+> Thanks,
 > 
-> Between myself, the comment on the PR, and the mailing list I have
-> 3 pip developers +1ing the change so it's likely it's going to land
-> unless one of the others has concerns.
-> 
-> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 7C6B
-> 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
-> 
+> -- Murray McAllister / Red Hat Security Response Team
 
-So does this need two CVEs potentially? E.g. one for the central issue
-and one for the mirror issue? In any event if it's the same issue but
-they get fixed in different versions that would trigger a CVE split.
+Please use CVE-2013-4407 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR9134AAoJEBYNRVNeJnmTkUcQAMuq7vGtkNK2Qw6UHpJUibKm
-Z67V4j9J5Q2eCrUFYCPKtLWopkEHdfxL79mf3XqSCg5fnCsV5N9Fi31x5BPe508d
-cYYB+EXQr9Brjyd+rxSjrEQ5ICEjrCcAOqzi9rDFqT529K9KxqPnXSR61KnavpIT
-T0sj24WUaICfQEsbLtGHOEozUU8yCUjiGl3hI28Rgmw2fPvAAsBzRBmpgvfbiYam
-Wy3cpaWgCtrES9GEI+HZKgqLHwK/bUQ2+OqjFF6PXVnRHAS724jdeihFdPqmn7pC
-m6jDAo58EUwOEWG4/ph6p8i1oPPDLN2Gp6EKnStzSqfUAgLZZ9Gph1SuaoiAT0BW
-si01RTbTRy2IPjabfAqJsA7yo5dsWWDYJKXWsMV9bBlcsbNGoiILh4ao8oAkJA47
-c4JJc22FoqutLjgXX14OTMqOyQo9aUhzEvgk6z18aWvGkLnGOODWowpSxC3fFwyD
-TJCp1aCXzKwyq6GmemBn/aPkQLiWe0CcbTDkdCSq8FY6aD17c/b3PpQPMkoF++8k
-KGoGaXXxM8jv7aDAL7huscVJdIE/mxkG9Jxxy9C+scxW7PWNDGzge9doKVgeWFjd
-amZbTMNuVKNIT0VRPy7QQgdbbfVTrUNDJU+CrZftfM+XlZDp8ggrtb7K6IbNDDUA
-N82OjOeIdYgieXsAAbNS
-=UKeo
+iQIcBAEBAgAGBQJSU7MjAAoJEBYNRVNeJnmTtnYQAMi9iBQ+KcfggCxGl5+XCUwv
+MCLwF2ULA+JvE/xttbEEEUs7aTyuH6eD59PDlZ6YQWZNFg1oEv93s1tDY9S8/DIL
+xGy0BD6NK5rEL+EdBWlltarB2EvKE3Ow+wtn7Gw4YDh0cv42jpIbJ/rf5bbqGYXz
+wZ4/Z5du+3GD9CxK1FUNlFrfy1bi+D57ZTmyw7DtVxoiHNppxXNsosHVd0ruuNVe
+pzg2ABjFWCAfZMShoU8r0egFtm+VSfGwcRMsYHZyqhiQmeKNu+dpLCLhJTPHJXgW
+hLUdrq0/m5K+BaF8SPsEdTiIKgd5e9gxffDKq0sSJgW0ZwBGtMKB/vNYLA23Chlg
+0WAiaxg3rceAMZMERNIdFmawEBEPtrSRJDBrTrXcGgvvZVqSG2y4BKEyC+ebsK5J
+6Ips8qOxFigTvyeoXATGefvs47/94arPH9e17ckOA3QhCLTgyxtZt4ZlfdPcK5Nx
+HjcAAhByp/5Zgs4Qk4XMhx8CvlIwBd9q99Jo3Qiqw4LkZ/mf1rO/MqIMp58bHCdf
+EjTsEBzasJswFba9/ZQ36qJZgeCUQMmuxjuaZ3n5Q6R+NWJJZixY/Pt0YWfUofSJ
+1C1r81wpdQ68frh1LeFHdm3hCYLm2W8H5y1fuC+xTZVykkSjwj+ea6c6dQ8zCCKF
+g3UqUiz9gSK6g8MZLFJZ
+=pp0O
 -----END PGP SIGNATURE-----
