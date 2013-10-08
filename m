@@ -1,55 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/11/7
-Message-ID: <5230D6C9.3020504@redhat.com>
-Date: Wed, 11 Sep 2013 14:47:05 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/08/1
+Message-ID: <52535F90.4000506@redhat.com>
+Date: Tue, 08 Oct 2013 12:27:44 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Will Newton <will.newton@...aro.org>
-Subject: Re: CVE Request: Three integer overflows in glibc memory allocator
+CC: cve-assign@...re.org, kseifried@...hat.com
+Subject: CVE Request: remote command-injection flaw in HTTP::Body::Multipart versions 1.08 and later
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Good morning,
 
-On 09/11/2013 05:49 AM, Will Newton wrote:
-> Hi,
-> 
-> I recently discovered three integer overflow issues in the glibc 
-> memory allocator functions pvalloc, valloc and 
-> posix_memalign/memalign/aligned_alloc. These issues cause a large 
-> allocation size to wrap around and cause a wrong sized allocation
-> and heap corruption. The issues are fixed in glibc mainline.
-> 
-> The relevant glibc bugzilla entries are here:
-> 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=15855 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=15856 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=15857
-> 
-> Thanks,
+A remote command-injection flaw was reported in HTTP::Body::Multipart 
+versions 1.08 and later:
 
-CVE MERGE, same researcher, version and vuln type.
+- http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=721634
+- https://rt.cpan.org/Public/Bug/Display.html?id=88342
+- https://bugzilla.redhat.com/show_bug.cgi?id=1005669
 
-Please use CVE-2013-4332  for this issue.
+The affected code is noted in the Debian bug report.
 
+Could a CVE please be assigned if one has not been already?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Thanks,
 
-iQIcBAEBAgAGBQJSMNbIAAoJEBYNRVNeJnmTHPkQAI7/UmQ/yybeEdLqB6VP7DM3
-r+4cTAkW5iI3xjLPHXchHrBofLnIj/TAxVensMR4A3wl2J28pcjwjjvmxka03HSD
-miVCfKoi4fMIGtnE9fOlTa1Gz3nTY/O26yU7sLbKWYZ4u6zgLY3asEcAySUFJJoC
-5OaTbxXqOu6+krwOZDGHL+sw0NevC+0hSk6989pPqDDu5pY24MmZw5SS7gKB+E0s
-D3Xb17duEvh273mvViwmi6qI8CrOstyX+Cxi9ERz/VtQ87s+t0z5HbDaIaeb+9hs
-07A+BJzdx64k3+0yzfmwzKXajGN3DqVaSAJE/wXmdNe6ug0I37OGh8VyxDVv14fG
-9agawmzp3UJ+0tELwD966D1lk8UiMB+wsIokOK91q7yihTCmcM9n0oWcGnaHCyVh
-QHfS5BADUu8k+KF1hP2Lef9lSjIHaxZhu5Nws9Kx4+Wmbe6qNKjpdYTo8y2Atrpr
-bXbc9xv9HLTTauv7kQMJh+woe1nf0d8e2IiIPU/hOc3TUkhoKdQ3DTffKPueIUeJ
-z/HT0IxmVCVKIBPBlzkMH7h3B78/GIjo8VQK47Ueg4w7bXTI22/pt9mR3Vf6c5Rn
-7u1CI/T1d26s6bXGncEt38mAUk7i0uL/BUcW+b9LSlV7lYw/WqgzPT9X0aVntKcB
-PuCXJxW0WblJubfTUOmp
-=/OeC
------END PGP SIGNATURE-----
+--
+Murray McAllister / Red Hat Security Response Team
