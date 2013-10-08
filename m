@@ -1,69 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/1
-Message-ID: <50E533B9.901@redhat.com>
-Date: Thu, 03 Jan 2013 00:31:05 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: Curl insecure usage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/08/4
+Message-ID: <5253DF86.7020900@gmail.com>
+Date: Tue, 08 Oct 2013 16:33:42 +0600
+From: "Alexander E. Patrakov" <patrakov@...il.com>
+To: oss-security@...ts.openwall.com,  pulseaudio-discuss@...ts.freedesktop.org, webkit-gtk@...ts.webkit.org
+Subject: Vulnerability in Webkit-GTK and PulseAudio volume handling
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello.
 
-On 01/02/2013 11:02 AM, Moritz Muehlenhoff wrote:
-> On Wed, Dec 26, 2012 at 12:38:19PM +0100, Moritz Muehlenhoff wrote:
->> On Thu, Nov 29, 2012 at 10:44:36PM +0100, Moritz Mühlenhoff wrote:
->>>> Also can someone collate and post a list of all the other apps using
->>>> curl insecurely and need CVE's with appropriate links to the
->>>> upstreams/etc? Thanks.
->>>
->>> There are some, which are potentially affected, but where discussion
->>> with upstream is still pending.
->  
-> Here are two more. These are the last two remaining issues found by 
-> Alessandro Ghedini:
-> Please assign CVE IDs:
-> 
-> 1. Zabbix
-> https://support.zabbix.com/browse/ZBX-5924
+Note: this is not a CVE request yet! Before making a formal CVE request, 
+I would need to collect "official" information on the topic who needs to 
+do what with this bug (although I do have my own opinion, see below). 
+For now, I just want to start a discussion by posting this to the 
+relevant mailing lists, and also I want to avoid the situation where 
+each side blames the other. Please note that I am not an upstream 
+developer of any of the mentioned projects. I will attend the audio 
+mini-conference at LinuxCon Europe 2013, it is OK to discuss the issue 
+there if representatives from both parties intend to come.
 
-Please use CVE-2012-6086 for this issue.
+The following combination of software has a nasty bug when used 
+together, that I personally consider to be a vulnerability:
 
-> 2. Moodle
-> This one is two-fold. First of all Moodle embeds PHP-Cas and Moodle is thus
-> affected by CVE-2012-5583 as well. (Same code, so same CVE ID).
-> 
-> Additionally there's another issue specific to Moodle, which requires a CVE
-> ID:
-> https://github.com/tpyo/amazon-s3-php-class/pull/36
+* PulseAudio (any version, especially when used in flat-volume mode that 
+is the default everywhere except Ubuntu).
+* Any browser based on Webkit-GTK 2.x (any version with HTML5 
+audio/video support based on GStreamer).
 
-Please use CVE-2012-6087 for this issue.
+The bug is that a malicious piece of javascript on the web page can 
+cause an audio file to play at an unexpectedly high volume, not obeying 
+the volume that the user has set for the web browser in pavucontrol or 
+gnome-volume-control, and effectively not letting the user move the 
+volume slider corresponding to the web browser. When flat volumes are in 
+effect, the web page can play that audio file at the full volume that 
+the sound card is capable of, which can in some cases damage 
+loudspeakers (especially tweeters) or the user's hearing.
 
-> 
-> Cheers,
->         Moritz
-> 
+The reproducer is already public at http://jsfiddle.net/bteam/FbkGD/ and 
+can be trivially enhanced to also prevent muting of the audio stream. 
+View that in Epiphany or Midori on any Linux distribution except Ubuntu.
 
+My own opinion is that both parties are equally responsible for the 
+vulnerability. The salt of the bug is that PulseAudio's security model 
+is based on clients not sending malicious requests to change the stream 
+volume, while Webkit passes all volume-changing requests (including 
+malicious) to GStreamer, because it has no way of telling user-initiated 
+volume change requests from automated malicious ones.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Even with non-flat volumes, passing the javascript-initiated volume
+changes to pulseaudio means that the user cannot drag the "Epiphany"
+volume slider or (with a trivial change to the JavaScript on the page)
+mote the Epiphany stream in pavucontrol. So, in my opinion, using a 
+pulseaudio stream volume to represent javascript volume (or, for that 
+matter, the volume visible to any other runtime that can execute 
+untrusted programs/scripts) is always wrong.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+However, the fact that flat volumes are enabled by default in upstream 
+PulseAudio makes this small annoyance a real vulnerability. Given that 
+the "100% hardware volume" type of bug is still present in some 
+applications given the vast amount of time the feature exists, I think 
+(but understand that it is an extreme position) that flat-volume mode, 
+by its mere existence, is a bug that needs to be removed. At the very 
+minimum, there is a documentation bug: it is nowhere explained that you 
+should never use PulseAudio stream volumes (and for that matter, 
+gstreamer sink volumes) for things that are not guaranteed to directly 
+correspond to user-draggable volume sliders that no automated script can 
+also move.
 
-iQIcBAEBAgAGBQJQ5TO5AAoJEBYNRVNeJnmTt0oQAINPPhlLqdmfpgOE/qMvUBLe
-xCezoVP7zj0T4cpvcmzxjAvcBsfsnYjF0XChfMC+vk5FpK0jmSBdcdyHivhzQP9L
-SrR3O1QMZbeo0N9UXgR4q3h9s1Xvccr/4CpZAyraq1d05f/fSRvLQ1oFejFlmOJc
-lmoRJl3V6ov5LPr16eiINQRXuq0+eERB8y3zQResJuu68CMzJlBbRsOf59As0gtK
-zVfuounDS4ggSLD7GbQiP8Fqu8RAKp47LDyxfKLEI5EwrBpE/e/mtYgx6TFWUk1L
-68K5wegMCxjqr1goROY9E/xeStfnrFr8ONKEgJOwNTgg1YiFjWvI3BFXCoVqjQ4e
-QIyCMmEhDj+hu81Ct5uraTHDqAynvqfC+nW2KS8LxRgXxMhJM8EWHMKp9Uu1+Adm
-k5FZiHRwJ9mc25eryLmn81+8JBe+KLLSAZDs2p54heP/JoW54nj8s32clnpl/6Uw
-utOiSnWMJgqByndOOli9Z6jQ3mo1iP1BRdoLNGN4azInq2IavtK2So2xiAoYuyUQ
-HQ24xRZB76OQpZoPTnisL/WX9gboOmsbc35DSm5T5uiT7yNb47cooD9o5Hq+U3Vb
-GKW5U4LmO4dKMTn/1aXgE6rt/k2Q3YrvuDur77pWTSuYLqIPuY4IEM5NnX8ukavI
-JLv+eFxyNQUVIA1kQw+B
-=hzGV
------END PGP SIGNATURE-----
+See also:
+
+https://bugs.webkit.org/show_bug.cgi?id=118974
+https://bugzilla.gnome.org/show_bug.cgi?id=675217
+https://bugs.freedesktop.org/show_bug.cgi?id=46466
+https://bugzilla.gnome.org/show_bug.cgi?id=680779
+
+-- 
+Alexander E. Patrakov
