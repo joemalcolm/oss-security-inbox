@@ -1,53 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/04/6
-Message-ID: <515DB200.1000700@redhat.com>
-Date: Thu, 04 Apr 2013 11:01:52 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/08/5
+Message-ID: <CAFA5uROtrEgNeN9=VP1pPbWGuAhCWoWbu2NsCq=qB+CZeT8uSw@mail.gmail.com>
+Date: Tue, 8 Oct 2013 12:21:55 -0500
+From: richard schneeman <richard.schneeman@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed modules
+Subject: Vulnerability Reported in my Ruby Gem
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I'm interested in creating a CVE for this issue and came to this mailing
+list from this link:
+http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
 
-On 04/03/2013 02:55 PM, Forest Monsen wrote:
-> Hi there,
-> 
-> I'd like to request CVE identifiers for the following issues:
-> 
-> SA-CONTRIB-2013-040 - Commerce Skrill (Formerly Moneybookers) -
-> Access bypass http://drupal.org/node/1960338
+I maintain the ruby gem 'wicked' (roughly 100k downloads). A vulnerability
+has been reported allowing an attacker to read arbitrary files on a system.
 
-Please use CVE-2013-1924 for this issue.
+All previously released versions are vulnerable. Version 1.0.1 has been
+released with the problem patched.
 
-> SA-CONTRIB-2013-041 - Chaos tool suite (ctools) - Access bypass 
-> http://drupal.org/node/1960406
+Email: richard.schneeman@...il.com
+Software Name: Wicked gem
 
-Please use CVE-2013-1925 for this issue.
-
-> Thanks!
-> 
-> Forest
+Commit of fix:
+https://github.com/schneems/wicked/commit/fe31bb2533fffc9d098c69ebeb7afc3b80509f53
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Please let me know if you need more information or if this is the wrong
+forum for this type of a request
 
-iQIcBAEBAgAGBQJRXbIAAAoJEBYNRVNeJnmTXPgQALZIV1Ps06fMqPL1GcciJiTy
-ltT63VfrJatx9jfTeGCXmoo6U7fz2lQltpKgphpltjkuDSj4C6elHe0/PnoYwUlV
-ALL3nsIbCFNucGpvx9kSIYjIRK67jr/ehD2LtrukMvREeRWbiim9Ybc5vB8PeXah
-P4XvCyEmsyolKW5Q1akmVC6xFtFv9W+In8WtnA9qhiicg4Zlexa+y5B61I20lYiz
-xz0/l66+HUHlb9zlXvt39JCsT5GcQHXgDNXiISsrYZFbFo3NEjQOXQAP37Keh4M8
-5gyExaCJI0vjHUiRaJdIsK6GP8oXFI5a1IpIroDSi0pi7p8661W28IMSvCpAe680
-4lxIIyrDWWnvevuPYB6lVCtqfF+yortnbbMpAxWEE/aBV+FJZSFn6xiMQ9hj7MPe
-XITm2HxE9s5Pz9mdgQjZ8yNyDvconXmwMFdntrGF0lzMJatYduarg9HyejvuOmHA
-yJgLdTJl3qxB1Iv4veMFE3DxERA9pq+oQhf6SpnlDKBvtI/JZOlQ8nL6eFxPBatQ
-v9ew1t13J5QVgJ9EXEyN8rRJ70bOsn8/0t26eeLHFLTT3YnSPRanY0SLpGKaQm6l
-SD/7FspVoQLiB4tkYh8T4zpNlVnuZLD/qO65cnMdhyfUn8oqmYhtOyIeaui4Lpux
-H1+ZgZkiEWDzfq1vDpGH
-=zgns
------END PGP SIGNATURE-----
+--
+Richard Schneeman
+
