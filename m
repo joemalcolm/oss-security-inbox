@@ -1,104 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/2
-Message-ID: <520B34EE.6090507@redhat.com>
-Date: Wed, 14 Aug 2013 01:42:38 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/08/6
+Message-ID: <525469CF.4000803@oracle.com>
+Date: Tue, 08 Oct 2013 13:23:43 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: [CVE request] Django 1.4.6 security release
+Subject: Fwd: X.Org security advisory: CVE-2013-4396: Use after free in Xserver handling of ImageText requests
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+-------- Original Message --------
+Subject: X.Org security advisory: CVE-2013-4396: Use after free in Xserver 
+handling of ImageText requests
+Date: Tue, 08 Oct 2013 13:20:16 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+Reply-To: xorg@...ts.freedesktop.org
+To: xorg-announce@...ts.x.org, xorg <xorg@...ts.freedesktop.org>
+CC: X.Org Security Team <xorg-security@...ts.x.org>,        Pedro Ribeiro 
+<pedrib@...il.com>
 
-On 08/13/2013 11:31 PM, Moritz Muehlenhoff wrote:
-> Hi, this needs two CVE assignments: 
-> https://www.djangoproject.com/weblog/2013/aug/13/security-releases-issued/
-> :
-> 
-> Cheers, Moritz
-> 
-> 
-> Issue: Cross-site scripting (XSS) in admin interface
-> 
-> The Django administrative application, django.contrib.admin,
-> provides functionality for CRUD (Creation, Retrieval, Updating and
-> Deleting) operations by trusted users, including facilities for
-> both automatic and customized data-manipulation interfaces.
-> 
-> When displaying the value of a URLField -- a model field type for
-> storing URLs -- this interface treated the values of such fields as
-> safe, thus failing to properly accommodate the potential for
-> dangerous values. A proof-of-concept application has been provided
-> to the Django project, showing how this can be exploited to perform
-> XSS in the administrative interface.
-> 
-> In a normal Django deployment, this will only affect the
-> administrative interface, as the incorrect handling occurs only in
-> form-widget code in django.contrib.admin. It is, however, possible
-> that other applications may be affected, if those applications make
-> use of form widgets provided by the admin interface.
-> 
-> To remedy this issue, the widget in question --
-> django.contrib.admin.widgets.AdminURLFieldWidget -- has been
-> corrected to treat its value the same as any other
-> potentially-user-supplied value; in other words, it will be treated
-> as unsafe, and subject to Django's (enabled by default) output
-> escaping.
-> 
-> Thanks to Łukasz Langa for reporting this issue to us.
-> 
-> 
-> 
-> 
-> Issue: Possible XSS via is_safe_url
-> 
-> A common pattern in Django applications is for a view to accept,
-> via querystring parameter, a URL to redirect to upon successful
-> completion of the view's processing. This pattern is used in code
-> bundled with Django itself; for example, the login view in
-> django.contrib.auth.views, which accepts such a parameter to
-> determine where to send a user following successful login.
-> 
-> A utility function -- django.utils.http.is_safe_url() -- is
-> provided and used to validate that this URL is on the current host
-> (either via fully-qualified or relative URL), so as to avoid
-> potentially dangerous redirects from maliciously-constructed
-> querystrings.
-> 
-> The is_safe_url() function works as intended for HTTP and HTTPS
-> URLs, but due to the manner in which it parses the URL, will permit
-> redirects to other schemes, such as javascript:. While the Django
-> project is unaware of any demonstrated ability to perform
-> cross-site scripting attacks via this mechanism, the potential for
-> such is sufficient to trigger a security response.
-> 
-> To remedy this issue, the is_safe_url() function has been modified
-> to properly recognize and reject URLs which specify a scheme other
-> than HTTP or HTTPS.
-> 
-> Thanks to Nick Bruun for reporting this issue to us.
-> 
+X.Org Security Advisory: October 8, 2013 - CVE-2013-4396
+Use after free in Xserver handling of ImageText requests
+========================================================
 
-Please provide links to the vulnerable code/fixed code thanks.
+Description:
+============
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Pedro Ribeiro (pedrib@...il.com) reported an issue to the X.Org security
+team in which an authenticated X client can cause an X server to use memory
+after it was freed, potentially leading to crash and/or memory corruption.
 
-iQIcBAEBAgAGBQJSCzTtAAoJEBYNRVNeJnmTms8QAMD1YlH09LBGN50Ya5ZDwY6q
-YlUky1790kHc3E8r86mz2o7+UX++Y2yyrurxPOzaeDPbi0jmQi/lV+RZQUvj0ukk
-+rfRciRdUm4dtQWPKHSZQOKvNA4carUI98O9BfsXacLLCHJRk8M2TWH7KodqI5sa
-+5r+gOAgiRzA+ExuuSRCDWVZLU7lZdnyaAAWHj7G1YfIhvW1bILuSxBxYwl6g0FV
-LuEfMnrpfCf2QKeoVHKrPtblGDRSQxxpKGbiyYNPhFYAhdxmLYWyxofiCnbh243k
-sJu0oQwpI2LyHEH6UhOwMsOg+8H1OiDFoT7Rai0U/g7BlOpE9hMp5sBalHu4IFEb
-kg9q43T7nZNYtoiYf6dJM/rnDpQdMJ3lQOpoG4KuGdfY9NoRhqUaxCf+8Y+mbiee
-AgWiTM1BSt6hC69PgObYxYr4hbwizC2o4ULi0SDMXdwFHMLdWp0eAhPIPBkJorRH
-9NZIGIWlgv4IwOaWYt4Vr4hxPiZJyx/Zlv3TqBEEvpnqflZp7N05T8JGCf6b61yg
-q5wJQ9h6FXmbZ7y5aSs/i4zWjA4AToZz5T+l5Flke/37Y1S+FdQxegfIDk1Eg2Zf
-va0YNfkmlrJzhEzjfrmrJWGmhh28tNrbz9ZKhr9SV50aGSh4ZbPAdFYyPHFbFIgD
-xPfjENXhPYruMSdmzhpt
-=y4tK
------END PGP SIGNATURE-----
+Affected Versions
+=================
+
+This bug appears to have been introduced in RCS version 1.42 on 1993/09/18,
+and is thus believed to be present in every X server release starting with
+X11R6.0 up to the current xorg-server 1.14.3.  (Manual inspection shows it
+is present in the sources from the X11R6 tarballs, but not in those from the
+X11R5 tarballs.)
+
+Fixes
+=====
+
+A fix is available via the attached patch, which is intended to be included
+in xorg-server 1.15.0 and 1.14.4.
+
+Thanks
+======
+
+X.Org thanks Pedro Ribeiro for reporting this issues to our security team at
+xorg-security@...ts.x.org.
+
+-- 
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	  X.Org Security Response Team - xorg-security@...ts.x.org
+
+
+
+
+
+View attachment "0001-Avoid-use-after-free-in-dix-dixfonts.c-doImageText-C.patch" of type "text/plain" (2808 bytes)
