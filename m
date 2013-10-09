@@ -1,70 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/9
-Message-Id: <6B716FAF-8501-44A5-B854-9C30180A3A23@dot.ee>
-Date: Fri, 4 Oct 2013 11:11:08 +0300
-From: Andri Möll <andri@....ee>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: A note on cookie based sessions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/09/6
+Message-ID: <52558D06.1020608@redhat.com>
+Date: Wed, 09 Oct 2013 11:06:14 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request - Slim 1.3.6 fixes a security issue
 Content-Type: text/plain; charset=utf-8
 
-A lot of these frameworks or libraries also offer password remembering features which are often implemented as separate long lived token cookies that can't be invalidated server-side or can't be invalidated per-machine.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Devise for Ruby on Rails does this too, for example, but because of a side-effect of the implementation it can be invalidated by changing the password — the token is a substring of the password hash.
+On 10/09/2013 07:03 AM, mancha wrote:
+> Hello Kurt, vendors, et al.
+> 
+> Slim 1.3.6 fixes a security flaw related to a potential NULL ptr. 
+> dereference when using crypt() from glibc 2.17+ (eglibc 2.17+). 
+> Without the fix, malformed or unsupported salts crash the login 
+> daemon.
+> 
+> Upstream fix: http://git.berlios.de/cgi- 
+> bin/cgit.cgi/slim/commit/?id=fbdfae3b406b1bb6f4e5e440e79b9b8bb8f071f
+>
+> 
+b
+> 
+> Would you please allocate a CVE for this issue?
+> 
+> Regards,
+> 
+> --mancha
+> 
 
-Andri
+Please use CVE-2013-4412 for this issue.
 
-On Oct 4, 2013, at 9:07 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 10/03/2013 11:26 PM, Donald Stufft wrote:
->> I don't think this really is a vulnerability is it? I mean it's
->> basically how the internet works. The only difference between a
->> cooke backed session and a regular session is that there's no
->> server side session to destroy. At least in Django's case, It's not
->> a permanent session though, they are only good for a limited amount
->> of time before the signature on the cookie expires.
->> 
->> If you have access to the session cookie you've already won the
->> game, you've gotten an XSS or MITM and can do much worse then a
->> session cookie.
->> 
-> 
-> Apologies I should have been more explicit. The difference is that
-> with a stateful backend when the user  hits log out they are logged
-> out in the back end, so the cookie can't be used any more. With these
-> stateless solutions there is no way to prevent cookie reply other than
-> encoding a time out in the cookie (so I guess you could encode like a
-> short time out and keep rotating the cookie to close the window of
-> opportunity).
-> 
-> The concern is people using public terminals, cookie stealing attacks,
-> XSS in the website you're using, etc allowing an attacker to snag your
-> cookie and use it post "log out".
-> 
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (GNU/Linux)
-> 
-> iQIcBAEBAgAGBQJSTlsGAAoJEBYNRVNeJnmTTowQALWeB44M2xq1l6XZPYxfzoS3
-> EqRmHP2FT0ZrZH5wSiq4gTzecyke/nIf7JnrrcdNeirPPAl+NNqPS6TaOeguL20g
-> SS5oqpC2rsEu1XveZC6M8YenqaPn8UQ04PYH8dCkyIholUKrh+bET5sTa5N90s33
-> wzYE80vAh9jdS9BH93iye+eFMzF+wfrEtgRsIg4kmD0Rt4L0f1KUkLoAQcdPq8tN
-> 0Md4RocD0dQibKZ3j54ToxB7NxiEThYztf9pQLrJUYjuo9lIlIk9JCDkjQfGaIuR
-> CgpB5LgX9eYnIgi+yI9DmPJHLNkwJE2dGWZPGaFnzmuw5cUKyLL5IEzOpRRgGraR
-> b90lEP1R4/WAAfOWGyQ9eOoPQDm5WMfvjpfGw/djpuIPRAywAo3X+HnQwTVhHD8y
-> kfuoYLQn+ymse9WEZPzKEOvW+AhSx/7LQ3vc+RNLr043zSaCzcaBWX8C3GhYAH+E
-> ACwipVV0LQHto3KY8Oi86/nj7IvLU5uevpzdfSiUnRI1seGgj964Ka4nGcRL5tuw
-> ZGsAj+h+vsiWFm2n9HS0OanKE+XU5XgMxzoC3HTrU0QZyIH0s8hebR8HzB8BVFW9
-> 4uwvni/8AbhPY3ZUnNH2+/OTZvHm5V9O3frobA/c6eOOTG85JHpMnUR+pgur4rqV
-> WsBNRKn596piipDwn1AS
-> =Tqge
-> -----END PGP SIGNATURE-----
-
-Content of type "text/html" skipped
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4790 bytes)
+iQIcBAEBAgAGBQJSVY0FAAoJEBYNRVNeJnmTmBUQAI7mc7UsIOY00ZgioN9vK+3T
+rkEsqaWceujRSMZY/f8hrjmVZvwqQ0ycRTXVZ2GZtYVnGLz2gYGnWB9pR3FBNZ+E
+L8XJuBW4ShjVkxuHIZRnWgijB97o3epKRKAKWIipIRYmqtGw9R1Bu4lTebyV3vTt
+TPzsfhC+6VZjtbCPZDr899pWKsRv8CAM2zKLPkjuhEzyQ6BZAK/BiBRDGsseM6Po
+dTwycNHnzJcZ+mzb59WYwAloe8LpJXEzzc7XNLCjvGijMd1F6ID4fy4gnlKJ45pN
+XbnHf0jYlGvOTxAdic9x32r0x5KtMpwqzLukmKoBkntdlBEoLOID4xWy8yBdNGIu
+hZ16HBJarcnGmnzbSeHbhcJ+DW9n782qCoUMZTqdHWVysLXmDfdnoJGjdp9oHRq7
+gEKWtur3y30s8IBjG7kNesdTniOG7ZEA2pZ5S2zLA0AOPc7A7ogBuVjdefGOB6Er
+huvz+as5wgpS/mI7pBfsptrlpaXe1M/aZm90WZf+Q7MFXcvFifDCia1haahwL7nc
+5CiICKV1hlASMfuAEFsdhcTrdZ+fEM8Z3nsa27BPUDUuIOCqNSdPUHxD9CzPPjuT
+KysGsdtEgbe498LUMC6trtidDFeKMcUqPlCXtBK0z2zi8cJ6WN+VJTqe0oKWGSql
+rWPIGof4/DH1P5A3qIzh
+=aKYM
+-----END PGP SIGNATURE-----
