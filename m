@@ -1,45 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/10/8
-Message-ID: <51B6381D.6000300@redhat.com>
-Date: Mon, 10 Jun 2013 14:33:33 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/09/5
+Message-ID: <52558CF5.5050604@redhat.com>
+Date: Wed, 09 Oct 2013 11:05:57 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Felipe Pena <felipensp@...il.com>
-Subject: Re: CVE request: Monkey HTTPD - DoS due bug on Range header handling
+Subject: Re: Vulnerability Reported in my Ruby Gem
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/07/2013 07:25 PM, Felipe Pena wrote:
-> I've found an issue on the way as Monkey HTTPD handle the Range HTTP header
-> when receiving Range:bytes=N-N where N is the exact file size, which causes
-> the
-> thread to go into an infinite loop, hence keeping the server busy on each
-> request until a server shutdown.
+On 10/08/2013 11:21 AM, richard schneeman wrote:
+> I'm interested in creating a CVE for this issue and came to this
+> mailing list from this link: 
+> http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
+>
+>  I maintain the ruby gem 'wicked' (roughly 100k downloads). A
+> vulnerability has been reported allowing an attacker to read
+> arbitrary files on a system.
 > 
-> More details on bug report at http://bugs.monkey-project.com/ticket/184
+> All previously released versions are vulnerable. Version 1.0.1 has
+> been released with the problem patched.
+> 
+> Email: richard.schneeman@...il.com Software Name: Wicked gem
+> 
+> Commit of fix: 
+> https://github.com/schneems/wicked/commit/fe31bb2533fffc9d098c69ebeb7afc3b80509f53
+>
+> 
+> 
+> Please let me know if you need more information or if this is the
+> wrong forum for this type of a request
+> 
+> -- Richard Schneeman
+> 
 
-Please use CVE-2013-2163 for this issue.
-
+Please use CVE-2013-4413 for this issue. Thanks for the perfectly
+formatted request =).
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRtjgdAAoJEBYNRVNeJnmTBp0P/i4IZOwrn/QRV4DQc7v6C7nC
-s3UfeKvjOlQkWkEON5/d2DzzJo0kXmA5ICkxOPAODicoHUElUKiepCyusQrVI1le
-QInYuSBfmFn4J/ygibMN7p70r275qdfBcduDU6qh+/5IwJMS829ed2pBWKjEO9t7
-A08rswQu2Qk5oPv04u6oNvT/m7Gz9+bIH6eSFCKhz64ptVZRFMk2aDNn/7EsMrw3
-o70ZSRxw6zoLP5NomokzK/qHootxnG3kgGjbnRCrPlHfuW2xetBa/9XcWkoeztcf
-flT8E/Dg1V2GLWeGv0cg5X3ixAFvraUua8u4ZOkJhIMmYZ3bnt632UYYhGS+jJpC
-qfKFUjq+dMa9xzBb4fK2SHKlK72+JR3JYZWh1QkcYbHPEn/TNgbsrJpOFlcyqEf0
-ZVTiPPkkOPAYW5HUlLfWQrCNtxqjbNZ2dRFv5JNW6WUZV6u4nYrQD3ixPwvCKsqP
-N194I31JXFB2zvFNp9ySGCUCRichXPFjNID28dPglEgIlmzVsn3ZgMca+9T+DN01
-q47R7pxIONdJNCmyrH70Q8jn/HFeGcvvoCJrcVZIwVYEwFIaV+PdFvSyrqK3amuH
-H6h2qgFsZYUFaOT/GWKFqTgFPKZZLZbUXUqC5qqmDK0ZuPRnHH5D9/Rv0Vjy+79j
-/bdrAlModIbZYoFbpK4s
-=I+ER
+iQIcBAEBAgAGBQJSVYz0AAoJEBYNRVNeJnmTCW8P/2oH7oWjyKPcrR3NKOqX50Xd
+pRXVOu24OBKYqFMOo2SDScat6xRKZ6U25/zxxUorTfr65oy+i05Jbdoe8lTcpZYR
+J8EEKscWX97lbsb92bnZNrnKmdj8xGrUrkha/rjD/ZF0kApmL5vGxo3h8hMmiZiY
+SIscO2PwKIAXiVcOxDb1cm9ipTSmWh0otuKVwlq5Smsexp8cQkNSCiOYPG4zahmK
+NVnkR30WuHUoNKgMj1sQTbq0Mua9RP9Yz1c+2s8UtSf/VZ1yQ2r8SgsxFL04R0EA
+2ydV40FocnywYTnbtKOSayiDmhYfICLQ8EbgCoUSgXGZM84xEf4CfswIW3GqKNZh
+6GJTaMf5Cf3djXLcSlpMHVjeARR7MZlrxZ4aBycEtaazmpD6GHhFNrUfX/LxIlEy
+9hhcvQF4UMYlnzIGAMbACjo8VfLIMrbZXSwyyOdsCDjnQPdzCkzOY1rpQpwi5V5L
+m2NBdcNmVSS1aX96v86Alkwi0DJ8ijgWdUfrS4IqtL6TVjGYVJCwalIF3PxLYQQX
+VfqjGO0tCkieFGtqW/YYxe5ObMS2y3upZ8pcwOSlxtME+vMjC2uu4o3sp9Y2Pa+p
+C3Ad8JI4tRM6kWuVqr6Z3YZlpOT9LSSbA/DH5tDcgd5AnH8kPl6h0IwtXRGnUuhp
+u9AWES7iBp3OBE3T0Lqd
+=Puw9
 -----END PGP SIGNATURE-----
