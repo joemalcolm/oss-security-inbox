@@ -1,59 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/13
-Message-ID: <51644D13.5070509@redhat.com>
-Date: Tue, 09 Apr 2013 11:17:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/09/2
+Message-ID: <CAFRnB2VKZugEabAVLo0q2atbEujO47n5gUh7FqSwgQXGgjfP6Q@mail.gmail.com>
+Date: Wed, 9 Oct 2013 00:47:38 -0700
+From: Alex Gaynor <alex.gaynor@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Salvatore Bonaccorso <carnil@...ian.org>
-Subject: Re: CVE Request: Self-XSS in phpmyadmin fixed in 3.5.8
+Subject: Re: Source of bad password hashing practices? MySQL manual...
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Nope, this is not correct either. You do not want to use a hashing function
+on a password, you want to use a key derivation function, which have
+entirely different properties from hashing functions. Most notably, hashing
+functions are typically designed to execute quickly, while KDFs are
+actually designed to be hard to implement quickly.
 
-On 04/09/2013 06:01 AM, Salvatore Bonaccorso wrote:
-> Hi Kurt
-> 
-> New phpMyAdmin release (3.5.8) contains the following changelog
-> entry:
-> 
-> 3.5.8.0 (2013-04-08) - bug #3828 MariaDB reported as MySQL - bug
-> #3854 Incorrect header for Safari 6.0 - bug #3705 Attempt to open
-> trigger for edit gives NULL - Use HTML5 DOCTYPE - [security]
-> Self-XSS on GIS visualisation page, reported by Janek Vind - bug
-> #3800 Incorrect keyhandler behaviour #2
-> 
-> refering to a XSS vulnerability on the GIS visualisation page. [1]
-> is the reference by Janek Vind, upstream commit afaics [2].
-> 
-> [1]: http://seclists.org/fulldisclosure/2013/Apr/100 [2]:
-> https://github.com/phpmyadmin/phpmyadmin/commit/79089c9bc02c82c15419fd9d6496b8781ae08a5a
+Alex
+
+
+On Wed, Oct 9, 2013 at 12:45 AM, <gremlin@...mlin.ru> wrote:
+
+> On 08-Oct-2013 19:57:52 -0400, Rich Felker wrote:
 >
->  Could a CVE be assigned to this issue?
-> 
-> Regards, Salvatore
+>  > It's come to my attention recently that the MySQL reference
+>  > manual is recommending very poor password hashing practices
+>  > as part of its security guidelines:
+>  > "Do not store cleartext passwords in your database.
+>
+> This is primary and undoubtedly correct recommendation.
+>
+>  > If your computer becomes compromised, the intruder can take
+>  > the full list of passwords and use them.
+>
+> True.
+>
+>  > Instead, use SHA2(), SHA1(), MD5(), or some other one-way
+>  > hashing function and store the hash value."
+>
+> Well, hashing functions may be reverted using rainbow tables, but
+> even this simple recommendation pushes web developers to think
+> about their sites' security.
+>
+>  > (http://dev.mysql.com/doc/refman/5.7/en/security-guidelines.html)
+>
+> This document is destined for people who never cared of security,
+> so I'd suggest only one addition:
+>
+> "To prevent password recovery using the rainbow tables, don't use
+> these functions on a plain password; instead, choose some string
+> to be used as a salt, and use hash(hash(password)+salt) values."
+>
+>  > With MySQL being one of the major traditional "LAMP stack"
+>  > components, I wonder if this is the source from which many
+>  > web developers are getting their ideas on how to do password
+>  > hashing. What is the proper procedure for publicizing
+>  > documentation bugs like this which are leading to poor
+>  > security practice, and for getting them fixed?
+>
+> This is not a bug, this is incompleteness. Minor one, I'd say...
+>
+>
+> --
+> Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+> GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+>
 
-Please use CVE-2013-1937 for this issue (perfect CVE request BTW,
-thanks!).
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+-- 
+"I disapprove of what you say, but I will defend to the death your right to
+say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
+"The people's good is the highest law." -- Cicero
+GPG Key fingerprint: 125F 5C67 DFE9 4084
 
-iQIcBAEBAgAGBQJRZE0SAAoJEBYNRVNeJnmTO5wQAKWUZnBtTi5F/xp0cakFX2rK
-0NBhcT4NOAxJBdXcUDIAFHb2yfHLvYgTTjrIrSI10Rv+vEl594h51nzYaL427xVJ
-RmKc0Na86bvBd/UxMxXidE1sHb+bqSNAAWEw4UKd/+WHVyTc6BlzPpsVuU+chRI6
-rQ+Iq0+8YWNqXYsRtHnLTEjdZ0B2PiPZGwu+bNA1j30BbXEz/mb6uJWLhCouBJvK
-7w2gan8YMOa7g7JWg+eF0HIdJ2xLHzDxHKN2mAYt6U/t4t0W0ewsTcc61YvoAqx7
-5IWoMcMq7g897Qayg0gbWsVVEQkKbQVLxpkklhn2PW3elai7LeOXcc5ZEAOqut9h
-Mhn0ZU4i9X1fIVFmKnbCERQ2aX5cCZKiWsm7k3TwrzlaevU9zK9hgM0dfZGeAc8E
-kSImV4ATW2AiO0KLBUepEB+FK00x8IvXzvlviIdVaNebvy9BdHIB2Br146tkVPQ9
-eycb8gQDP+1P6IpA9iBQRTmQ2pBqlNXpc3pO156yDrQXAgBL8AW0q23lrjXI7iU8
-Zni4c5sPjZNqCZoDUYMyovDwOit5OZpxxFa9tNqSnfHFxQdVgjViwJQj9GEmsSdV
-m2k/c+MQkEoyxUIFAzVOnpFtwmTpeHCfMrKZES1dVNn6kkfGW0frU2DbVJFuDvYH
-ANAayFplBv1LGSw03HBC
-=M3k7
------END PGP SIGNATURE-----
