@@ -1,25 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/15
-Message-ID: <CANTw=MOXoMamRnFXdZEdrF6tC=4Bm9Qdh7K4Vp2sUW1hgRwmNA@mail.gmail.com>
-Date: Mon, 12 Aug 2013 19:08:12 -0400
-From: Michael Gilbert <mgilbert@...ian.org>
-To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
-Cc: Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: Re: [CVE assignment notification] CVE-2012-2142 poppler, xpdf: Insufficient sanitization of escape sequences in the error message {AKA request for feedback if CVE to be marked as disputed / rejected}
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/09/8
+Message-ID: <20131009180844.GA7035@hunt>
+Date: Wed, 9 Oct 2013 11:08:44 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Rich Felker <dalias@...ifal.cx>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Source of bad password hashing practices? MySQL manual...
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 12, 2013 at 4:22 PM, Kurt Seifried wrote:
-> I assume we'll SPLIT this? In past some xpdf/poppler issues have been
-> merged circa 2010, but after that they appear to have been usually
-> treated as separate:
->
-> http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=poppler
-> http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=xpdf
+On Tue, Oct 08, 2013 at 07:57:52PM -0400, Rich Felker wrote:
+> It's come to my attention recently that the MySQL reference manual is
+> recommending very poor password hashing practices as part of its
+> security guidelines:
+> 
+>   "Do not store cleartext passwords in your database. If your computer
+>   becomes compromised, the intruder can take the full list of
+>   passwords and use them. Instead, use SHA2(), SHA1(), MD5(), or some
+>   other one-way hashing function and store the hash value."
+> 
+>   (http://dev.mysql.com/doc/refman/5.7/en/security-guidelines.html)
+> 
+> With MySQL being one of the major traditional "LAMP stack" components,
+> I wonder if this is the source from which many web developers are
+> getting their ideas on how to do password hashing. What is the proper
+> procedure for publicizing documentation bugs like this which are
+> leading to poor security practice, and for getting them fixed?
 
-It's the same codebase, just slightly diverged, so I would argue no.
-In fact Debian's xpdf is unaffected once poppler is fixed since it
-links against it (and the issue is in poppler's Error.cc).  I believe
-Gentoo does the same.
+I don't know if we can realistically assign a CVE number to bad advice
+on the Internet :) , but it would be immensely useful if this paragraph
+could be updated to say:
 
-Best wishes,
-Mike
+   "Do not store cleartext passwords in your database. If your computer
+   becomes compromised, the intruder can take the full list of
+   passwords and use them. Instead, use PBKDF2, bcrypt, or scrypt to
+   compute unique hash values suitable for storing in the database."
+
+A further change that might be nice would change "If your computer becomes
+compromised ..." to "When your computer becomes compromised ..." but I
+could understand if the MySQL team doesn't share my pessimism and choses
+to ignore this small change.
+
+But please, MySQL team, feel free to use my proposed paragraph under
+whatever license you wish. The old one has to go.
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
