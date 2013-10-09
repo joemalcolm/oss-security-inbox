@@ -1,20 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/9
-Message-ID: <20130820131358.GB20223@order.stressinduktion.org>
-Date: Tue, 20 Aug 2013 15:13:58 +0200
-From: Hannes Frederic Sowa <hannes@...essinduktion.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/09/1
+Message-ID: <20131009074518.GB29151@gremlin.ru>
+Date: Wed, 9 Oct 2013 11:45:18 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Subject: Fix for CVE-2013-0343 queued up (linux-kernel/ipv6 temp. addresses)
+Subject: Re: Source of bad password hashing practices? MySQL manual...
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On 08-Oct-2013 19:57:52 -0400, Rich Felker wrote:
 
-I just wanted to let you know that a fix for CVE-2013-0343 ("handling
-of of IPv6 temporary addresses") has been queued up for 3.11 and stable:
+ > It's come to my attention recently that the MySQL reference
+ > manual is recommending very poor password hashing practices
+ > as part of its security guidelines:
+ > "Do not store cleartext passwords in your database.
 
-  <https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=4b08a8f1bd8cb4541c93ec170027b4d0782dab52>
+This is primary and undoubtedly correct recommendation.
 
-Greetings,
+ > If your computer becomes compromised, the intruder can take
+ > the full list of passwords and use them.
 
-  Hannes
+True.
 
+ > Instead, use SHA2(), SHA1(), MD5(), or some other one-way
+ > hashing function and store the hash value."
+
+Well, hashing functions may be reverted using rainbow tables, but
+even this simple recommendation pushes web developers to think
+about their sites' security.
+
+ > (http://dev.mysql.com/doc/refman/5.7/en/security-guidelines.html)
+
+This document is destined for people who never cared of security,
+so I'd suggest only one addition:
+
+"To prevent password recovery using the rainbow tables, don't use
+these functions on a plain password; instead, choose some string
+to be used as a salt, and use hash(hash(password)+salt) values."
+
+ > With MySQL being one of the major traditional "LAMP stack"
+ > components, I wonder if this is the source from which many
+ > web developers are getting their ideas on how to do password
+ > hashing. What is the proper procedure for publicizing
+ > documentation bugs like this which are leading to poor
+ > security practice, and for getting them fixed?
+
+This is not a bug, this is incompleteness. Minor one, I'd say...
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+
+Content of type "application/pgp-signature" skipped
