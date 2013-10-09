@@ -1,21 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/11/2
-Message-ID: <20130411044623.GA31398@openwall.com>
-Date: Thu, 11 Apr 2013 08:46:23 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/09/4
+Message-Id: <20131009130315.0AFF120360@smtp.hushmail.com>
+Date: Wed, 09 Oct 2013 13:03:14 +0000
+From: "mancha" <mancha1@...h.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: PostgreSQL security update
+Subject: CVE Request - Slim 1.3.6 fixes a security issue
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 04, 2013 at 06:39:31PM +0400, Solar Designer wrote:
-> A heads-up in case someone missed today's news:
-> 
-> http://www.postgresql.org/about/news/1456/
-> http://www.postgresql.org/support/security/faq/2013-04-04/
+Hello Kurt, vendors, et al.
 
-A blog post on exploiting CVE-2013-1899 into (delayed) shell command
-execution:
+Slim 1.3.6 fixes a security flaw related to a potential NULL ptr.
+dereference when using crypt() from glibc 2.17+ (eglibc 2.17+).
+Without the fix, malformed or unsupported salts crash the login
+daemon.
 
-http://blog.blackwinghq.com/2013/04/08/2/
+Upstream fix: http://git.berlios.de/cgi-
+bin/cgit.cgi/slim/commit/?id=fbdfae3b406b1bb6f4e5e440e79b9b8bb8f071f
+b
 
-Alexander
+Would you please allocate a CVE for this issue?
+
+Regards,
+
+--mancha
+
