@@ -1,69 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/11
-Message-ID: <52151B59.3060702@redhat.com>
-Date: Wed, 21 Aug 2013 13:56:09 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/09/10
+Message-ID: <CALi+ztF57T3J5N_kYvNLL1b6vCjL1=Bcd9=P3T5E=ym_6kRX=g@mail.gmail.com>
+Date: Wed, 9 Oct 2013 14:16:27 -0700
+From: Chris Palmer <snackypants@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Michael Niedermayer <michaelni@....at>, ffmpeg-security@...peg.org
-Subject: Re: CVE Request: FFmpeg 2.0.1 multiple problems
+Cc: Rich Felker <dalias@...ifal.cx>
+Subject: Re: Source of bad password hashing practices? MySQL manual...
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+There is more bad advice on that page:
 
-On 08/20/2013 06:25 PM, Michael Niedermayer wrote:
-> Hi
-> 
-> Id like to request CVE(s) for FFmpeg 2.0.1, for the changes below:
-> 
-> 
-> https://github.com/FFmpeg/FFmpeg/commit/e43a0a232dbf6d3c161823c2e07c52e76227a1bc
->
-> 
-Out of array (on heap) write
-> Found-by: wm4
+"""
+...Even passwords like“xfish98” are very bad. Much better is “duag98”
+which contains the same word “fish” but typed one key to the left on a
+standard QWERTY keyboard. ...
+"""
 
-Please use CVE-2013-4263 for this issue.
+And then a rather wacky assertion:
 
-> https://github.com/FFmpeg/FFmpeg/commit/2960576378d17d71cc8dccc926352ce568b5eec1
->
-> 
-https://trac.ffmpeg.org/ticket/2842
-> testcase and valgrind output on bugtracker above Out of array (on
-> heap) write Found-by: Piotr Bandurski <ami_stuff@...pl>
+"""Invest in a firewall. This protects you from at least 50% of all
+types of exploits in any software. Put MySQL behind the firewall or in
+a demilitarized zone (DMZ)."""
 
-Please use CVE-2013-4264 for this issue.
+Ideally, someone (Seth Arnold started; want to finish?) should rewrite
+all the bad stuff on that page, and send it to MySQL's security
+contact as a patch. I'd remove the password creation advice completely
+(other sources do a better job), and change the firewall thing to just
+say something along the lines of, "Avoid exposing MySQL to the
+internet... if you must, require authentication... if you must, use
+TLS or an SSH tunnel... If you use TLS, make sure the client correctly
+authenticates your server, such as by checking for a specific
+end-entity certificate/key or a specific issuer certificate/key...".
 
-> https://github.com/FFmpeg/FFmpeg/commit/c94f9e854228e0ea00e1de8769d8d3f7cab84a55
->
-> 
-Found-by: Laurent Butti <laurentb@...il.com>
-> Wrong return code that could lead to NULL+offset to be written to
-> after memory allocation failure
+Part of the rewrite should be some advice along the lines of, "MySQL
+offers a delightful built-in function you can use for storing
+passwords, SCRYPT(). Prefer SCRYPT to other mechanisms like MD5(),
+ENCRYPT(), or ... Please note that the ENCRYPT() function is not safe
+and has been deprecated as of... To verify passwords, check that
+SCRYPT(...) = scrypted_password in your WHERE clause... Do not log
+plaintext passwords..." And then give them a patch to implement SCRYPT
+and to log a deprecation warning when ENCRYPT is used.
 
-Please use CVE-2013-4265 for this issue.
-
-> Thanks
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSFRtZAAoJEBYNRVNeJnmTJCcQAIUHn6MA6rAD9Bbg/+GPx3GP
-VL547+wrqu2qo+9nObJNn6ax7x0MUufcVK0W1aXnNqqhPsFaivo208lvxRAFho66
-F+lusaSJP7HoUz6EG8AxSdcyf0ScoXJGHXnZ89FP33SgLh6bOX6UjsnTF87KLMtY
-7NZpMyDpKtDp80toyVWVAyLEsJEJYM9KkWhuD9SzleaEW2I7zRzZO2QDv9DqazVL
-jrVrAU/4JbR8mwOUj66cM7Gddae0Y+52YclszkbiO+5KV4Um3CJAB3cSxMUzxhh5
-bMT/gPpCh0e2380pRM6pCz7p0fgrb6mQd01FYN5C0aJTJA2XIpdsZsn4nFp8xl22
-xRhueV3lSOgq+HYiMJW202mLNF7eeurMh+sOJ53Spz+7vxjQpv2BOZ9fgdYzqiua
-yGqzm25zcjY0yVOHxHZH0ktkRfkp/2KGJWcWvo0ly9Kql7D3LcYv8iOABy5rymJt
-sIJJZXKvfD6ZbgWQ/iAj9dOOAmHCZFsrzJNqP/35m39Rst0N45x6/6aujSOJrXzG
-WTxR8jDqITvCOc6NOU+qNKW6ZanVXAGjoqae0q1j41fHq4dnUKhg19aEOdNaD6Vg
-xE8kFAqcmg0zmmx+DeA4El9Y9IuWw2feIv27J4KnwGVpL1IhDvwKn8qPjKtutkEk
-4R/BgFMU27Ds2b4MyauY
-=wW2e
------END PGP SIGNATURE-----
+Easier said than done, of course; but I wanted to make the point that
+Rich was right to raise this issue here (or, at least, somewhere).
+Does anyone know the right MySQL security contact? It isn't
+immediately obvious from a few web searches, but maybe
+secalert_us@...cle.com is right? Making that clear, and maybe
+publishing a PGP key, is another thing they could do...
