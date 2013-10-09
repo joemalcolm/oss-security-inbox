@@ -1,28 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/20/5
-Message-ID: <20130620201632.GF26962@dhcp-25-225.brq.redhat.com>
-Date: Thu, 20 Jun 2013 22:16:33 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/09/3
+Message-ID: <CAA7hUgFtVMOpHHSLE=RB9D=PYhpNqtc-mQAFQ160r6dbydOvZg@mail.gmail.com>
+Date: Wed, 9 Oct 2013 11:27:51 +0200
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- Linux kernel: sctp: duplicate cookie handling NULL pointer dereference
+Subject: Re: Source of bad password hashing practices? MySQL manual...
 Content-Type: text/plain; charset=utf-8
 
-A flaw was found in the way Linux kernel's SCTP network protocol
-implementation handled duplicate cookies. A transient empty association
-is created while processing the duplicate cookie chunk that userspace
-could query, potentially leading to NULL pointer dereference. A remote
-attacker able to initiate SCTP connection to the system could use this
-flaw to create transient conditions that could lead to remote system
-crash if remote system user is querying SCTP connection info at the time
-these conditions exist.
+On 9 October 2013 01:57, Rich Felker <dalias@...ifal.cx> wrote:
+>   "Do not store cleartext passwords in your database. If your computer
+>   becomes compromised, the intruder can take the full list of
+>   passwords and use them. Instead, use SHA2(), SHA1(), MD5(), or some
+>   other one-way hashing function and store the hash value."
+>
+>   (http://dev.mysql.com/doc/refman/5.7/en/security-guidelines.html)
 
-Upstream fix:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=f2815633504b442ca0b0605c16bf3d88a3a0fcea
-(already in stable)
+They probably don't mention the use of ENCRYPT (think of it as an
+alias to crypt(3)) because it is not portable to Windows-based
+systems, but I find the following bit quite amusing:
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=976562
+http://sources.debian.net/src/mysql-5.5/5.5.33+dfsg-1/sql/item_strfunc.cc?hl=1877#L1889
 
-Thanks,
+(yeah, that's in their implementation of ENCRYPT())
+
+Cheers,
 -- 
-Petr Matousek / Red Hat Security Response Team
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
