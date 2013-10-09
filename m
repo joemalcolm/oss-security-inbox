@@ -1,31 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/06/2
-Message-ID: <alpine.LFD.2.10.1312061910160.4862@javelin.pnq.redhat.com>
-Date: Fri, 6 Dec 2013 19:13:32 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: Kernel: ping: NULL pointer dereference on write to msg_name
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/09/7
+Message-ID: <CAMoU6ubVd=32BHAisZVgu2M9avy33fMmHVJW+H8o0FNc9rt5KQ@mail.gmail.com>
+Date: Wed, 9 Oct 2013 18:48:01 +0200
+From: Bas Pape <baspape@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request - Quassel IRC SQL injection
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+Hi all,
 
-Linux kernel built with the TCP/IP networking support(CONFIG_NET) is 
-vulnerable to a NULL pointer dereference flaw. It could occur via a plain 
-read(2) call on a ping socket. Usage of ping sockets is generally restricted 
-to privileged users.
+Please assign a CVE to the following issue:
+Quassel IRC is vulnerable to SQL injection on all current versions
+(0.9.0 being the latest at the time of writing), if used with Qt 4.8.5
+(the vulnerability is caused by a change in its postgres driver[1,2])
+and PostgreSQL 8.2 or later with standard_conforming_strings enabled
+(which is the default in those versions). The vulnerability allows
+anyone to trick the core into executing SQL queries, which includes
+cascade deleting the entire database. It is tracked upstream in bug
+#1244 [3]. It was firstly noticed by due to minor issues with
+migration to postgres and problems with certain messages, a simple
+test with an unmodified installation of postgres and quassel showed
+that it was indeed possible to drop tables.
 
-A user/program able to read from ping sockets could use this flaw to crash a
-system resulting in DoS.
+No upstream fix is available at this time, although the below patch
+does fix the current issue.
 
-Upstream fix:
--------------
-  -> https://git.kernel.org/linus/cf970c002d270c36202bd5b9c2804d3097a52da0
+Regards,
+Bas Pape (Tucos)
 
-Reference:
-----------
-  -> https://bugzilla.redhat.com/show_bug.cgi?id=1039046
+[1] https://qt.gitorious.org/qt/qtbase/commit/e3c5351d06ce8a12f035cd0627356bc64d8c334a
+[2] https://bugreports.qt-project.org/browse/QTBUG-30076
+[3] http://bugs.quassel-irc.org/issues/1244
 
+commit 7c64ed0d05718d907770d11a38436aa4ed65f2bb
+Author: Bas Pape <baspape@...il.com>
+Date:   Mon Oct 7 19:51:52 2013 +0200
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+    Detect the need for standard_conforming_strings.
+
+diff --git a/src/core/postgresqlstorage.cpp b/src/core/postgresqlstorage.cpp
+index 3965704..70bf894 100644
+--- a/src/core/postgresqlstorage.cpp
++++ b/src/core/postgresqlstorage.cpp
+@@ -101,6 +101,15 @@ void PostgreSqlStorage::initDbSession(QSqlDatabase &db)
+     // this blows... but unfortunately Qt's PG driver forces us to this...
+     db.exec("set standard_conforming_strings = off");
+     db.exec("set escape_string_warning = off");
++
++    // Fortunately things can always blow more. Refer to the commit message for
++    // the juicy details, tread lightly.
++    // First standard_conforming_strings are turned off, because
+that's what used
++    // to be necessary, here the actual behaviour is tested.
++    QSqlQuery query = db.exec("SELECT '\\\\' x");
++    if (query.first())
++        if (query.value(0).toString() == "\\")
++            db.exec("set standard_conforming_strings = on");
+ }
