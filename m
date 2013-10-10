@@ -1,98 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/03/3
-Message-ID: <639857507.5633702.1367598668021.JavaMail.root@redhat.com>
-Date: Fri, 3 May 2013 12:31:08 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: esr@...rsus.com, Kurt Seifried <kseifried@...hat.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Miroslav Lichvar <mlichvar@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- gpsd 3.9 fixing a denial of service flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/1
+Message-ID: <5255FA86.9020801@redhat.com>
+Date: Wed, 09 Oct 2013 18:53:26 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Rich Felker <dalias@...ifal.cx>
+Subject: Re: Source of bad password hashing practices? MySQL manual...
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thank you for your time && reply, Eric.
+On 10/09/2013 03:16 PM, Chris Palmer wrote:
+> There is more bad advice on that page:
+> 
+> """ ...Even passwords like“xfish98” are very bad. Much better is
+> “duag98” which contains the same word “fish” but typed one key to
+> the left on a standard QWERTY keyboard. ... """
+> 
+> And then a rather wacky assertion:
+> 
+> """Invest in a firewall. This protects you from at least 50% of
+> all types of exploits in any software. Put MySQL behind the
+> firewall or in a demilitarized zone (DMZ)."""
+> 
+> Ideally, someone (Seth Arnold started; want to finish?) should
+> rewrite all the bad stuff on that page, and send it to MySQL's
+> security contact as a patch. I'd remove the password creation
+> advice completely (other sources do a better job), and change the
+> firewall thing to just say something along the lines of, "Avoid
+> exposing MySQL to the internet... if you must, require
+> authentication... if you must, use TLS or an SSH tunnel... If you
+> use TLS, make sure the client correctly authenticates your server,
+> such as by checking for a specific end-entity certificate/key or a
+> specific issuer certificate/key...".
+> 
+> Part of the rewrite should be some advice along the lines of,
+> "MySQL offers a delightful built-in function you can use for
+> storing passwords, SCRYPT(). Prefer SCRYPT to other mechanisms like
+> MD5(), ENCRYPT(), or ... Please note that the ENCRYPT() function is
+> not safe and has been deprecated as of... To verify passwords,
+> check that SCRYPT(...) = scrypted_password in your WHERE clause...
+> Do not log plaintext passwords..." And then give them a patch to
+> implement SCRYPT and to log a deprecation warning when ENCRYPT is
+> used.
+> 
+> Easier said than done, of course; but I wanted to make the point
+> that Rich was right to raise this issue here (or, at least,
+> somewhere). Does anyone know the right MySQL security contact? It
+> isn't immediately obvious from a few web searches, but maybe 
+> secalert_us@...cle.com is right? Making that clear, and maybe 
+> publishing a PGP key, is another thing they could do...
+> 
 
------ Original Message -----
-> From: "Eric S. Raymond" <esr@...rsus.com>
-> To: "Kurt Seifried" <kseifried@...hat.com>
-> Cc: oss-security@...ts.openwall.com, "Jan Lieskovsky" <jlieskov@...hat.com>, "Steven M. Christey"
-> <coley@...us.mitre.org>, "Miroslav Lichvar" <mlichvar@...hat.com>
-> Sent: Thursday, May 2, 2013 9:41:51 PM
-> Subject: Re: [oss-security] CVE Request -- gpsd 3.9 fixing a denial of service flaw
-> 
-> Kurt Seifried <kseifried@...hat.com>:
-> > On 05/02/2013 03:58 AM, Jan Lieskovsky wrote:
-> > > @Eric - Eric, could you please help us to solve this doubt? (which
-> > > of the patches is the correct one to fix the above mentioned DoS /
-> > > security issue)
-> 
-> There are two critical patches which solve two different DoSes (well,
-> one certain and one potential).  Yes, it's a strange coincidence that
-> both bugs were characterized at almost the same time after we haven't
-> had a crash bug since 2007.
-> 
-> The crash bug was in the NMEA driver.  There's particular kind of malformed
-> packet, sometimes emitted by SiRFStar-III receivers, that looks like this:
-> 
-> $GPGGA,030130$GPGLL,2638.1728,N,08011.3893,W,030131.000,A,A*41\r\n
-> 
-> See the incomplete GGA without trailing \r\n  at the front?  Usually
-> that was harmless and would be silently discarded. Under rare circumstances
-> it could core dump (but not any more, I now have a regression test to check
-> this case).
-> 
-> That fix was commit dd9c3c2830cb8f8fd8491ce68c82698dc5538f50.
+One note, has anyone checked the MariaDB documentation, Percona and so on?
 
-So this is observed / experienced DoS, right? Kurt, assuming the 
-CVE-2013-2038 identifier:
-  http://www.openwall.com/lists/oss-security/2013/05/02/17
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-has been assigned to this sub-case, correct?
-
-> 
-> The potential crash/DoS was in the AIS driver.
-> 
-> The first stage of what it does is un-armor an AIVDM ASCII packet
-> representation into an equivalent binary packet which is then examined
-> for data at specific bit offsets.
-> 
-> The un-armoring logic was not properly bounds-checked, potentially
-> opening up a hole. In theory, an overlong armored packet could be
-> crafted to overrun the binary-packet buffer.
-> 
-> I'm not sure that one was exploitable; there are other properties of
-> the code (notably the bounds-checked maximum length of the AIVDM ASCII
-> packet buffer) that seem to guarantee the end of the binary packet
-> buffer could never be reached.
-
-Meaning this wouldn't be a DoS attack vector? (asking to know if a
-separate / second CVE identifier is needed for this case yet, or not)
-
-> 
-> I put in a check anyway, because (a) I could be wrong about that, (b)
-> supposing I'm right, that invariant could get silently broken by a future
-> code change.
-> 
-> That was commit 08edc49d8f63c75bfdfb480b083b0d960310f94f, responding
-> to Savannah bug #38511.
-
-Application of the patch looks reasonable. Just would be good to know
-if it was applied just like a preventive measure (no DoS right now, just
-prevent its [possible] occurrence in the future in case of code change)
-or if under certain circumstances it might be used to DoS gpsd too?
-
-> 
-> Note: neither of these have privilege-escalation possibilities.  gpsd
-> needs root to initialize, but drops it long before either of these
-> code defects could fire.
-
-Ok, good.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-> 
-> If you have any other questions, do not hesitate to ask.
-> --
-> 		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
-> 
+iQIcBAEBAgAGBQJSVfqFAAoJEBYNRVNeJnmT2MIQAK6yvnjpE0cLdNIUxtQykrcT
+fLTmwRnljRaE5xSkui8Yn6qM6ycwL1rpqTK4lLrTpN2yf/jGyjMCj3G3Cm8TQOFJ
+rRb0wieIdTj9ZWWFTcnrX/wHJHp70tgBzD+TBun3paDT8DKP/BBuqbnWUJmFdKZI
+2eeSpnprkBhkEWfJV9zWRfxBLbmqU7n6bKMf8xamejSs7N4vXNrFBQiXpXFOro/x
+L9xJXt8uqxU87DVLv4COVRuh3Q+WmVeo3avAdmVO6ShjqCpCb8YqDXaSt+Kx9nPd
+QpSyLMNko7/QMol4++6zvsob48sZcYIE5BNvBuTdkwvmwZjI5Q4mvd64LkFof2ko
+2R5pmHwg7qHRa1THCacnokOs5GrQm7KDFSg4Lugibs4hDNbbk54tw8vo96GSGNqF
+7GfL7WdW8gsiKII4TVBdcAySbSfzt9ro7iVtiHnagVm9eYUjDdg13hU/mkjATjgM
+SBJv0RdMVeTOlgxoKUk6gfRDs5aYbNHABMMLsL2Cj7a2lqMhzw2dyCJBkKNvzYBB
+nBPxHMtZ9tzGexFCgRWuXtGxhu+G2dOrurgOCoQqY5Y26gGcWcWJ4t2oLx+f1k1/
+wq1Y8Jav6h754CUMgMWrWBXyaDzctgt5mbVg0Cyv0FeY88NtP9RZNFuSxLrGxlJl
+q86ofUJSABD0Mkh1lcve
+=n+C4
+-----END PGP SIGNATURE-----
