@@ -1,28 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/3
-Message-ID: <20130225104357.GD26664@suse.de>
-Date: Mon, 25 Feb 2013 11:43:57 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/8
+Message-ID: <CALi+ztHfzHKzPRO6JaHXTohM9j5h+WYR0gW+sYgaysU7Aahq7g@mail.gmail.com>
+Date: Wed, 9 Oct 2013 22:43:47 -0700
+From: Chris Palmer <snackypants@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
+Cc: timo.warns@...il.com, cdfrey@...rsquare.net
+Subject: Re: Integer overflow in libtar (<= 1.2.19)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 25, 2013 at 02:13:49PM +0400, Solar Designer wrote:
-> On Sun, Feb 24, 2013 at 10:10:45AM +0100, Mathias Krause wrote:
-> > An unprivileged user can send a netlink message resulting in an
-> > out-of-bounds access of the sock_diag_handlers[] array which, in turn,
-> > allows userland to take over control while in kernel mode.
-> > 
-> > Patch (already in net/master):
-> > http://thread.gmane.org/gmane.linux.network/260061
-> > 
-> > Affected versions:
-> > v3.3 - v3.8
-> 
-> Nice find!  Do you happen to know of distro backports of the affected
-> code to older kernels?  When you wrote that the bug is "in there for
-> ages", did you mean that 3.3 has been out "for ages" or something else?
+On Wed, Oct 9, 2013 at 9:36 PM, Huzaifa Sidhpurwala <huzaifas@...hat.com> wrote:
 
-We did not backport the sock_diag code to SUSE Linux Enterprise Server 11 SP2.
+> http://repo.or.cz/w/libtar.git/commit/45448e8bae671c2f7e80b860ae0fc0cedf2bdc04
 
-Ciao, Marcus
+I haven't read all the ultimate callees, but it might be that some
+internal/external APIs should change too. If these:
+
+146 /* macros for reading/writing tarchive blocks */
+147 #define tar_block_read(t, buf) \
+148     (*((t)->type->readfunc))((t)->fd, (char *)(buf), T_BLOCKSIZE)
+149 #define tar_block_write(t, buf) \
+150     (*((t)->type->writefunc))((t)->fd, (char *)(buf), T_BLOCKSIZE)
+
+boil down to functions that implement the same interface as read(2)
+and write(2), and it sure seems like it, then the |int i| in this:
+
+ int
+ th_read(TAR *t)
+ {
+-       int i, j;
+-       size_t sz;
++       int i;
++       size_t sz, j, blocks;
+        char *ptr;
+
+— and the callees, and their declared interfaces — should use ssize_t, not int.
