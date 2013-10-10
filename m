@@ -1,22 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/30/7
-Message-ID: <CAA7hUgE6d6BVuQ63gFdJVE6sGKW7NVtL=GwjQhejUjqjq8KZsg@mail.gmail.com>
-Date: Fri, 30 Aug 2013 16:14:06 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/18
+Message-ID: <CAA7hUgGrddQmF_Hfi+CJncgapLHjbpmBqEE42uy0y+M6FA1mDw@mail.gmail.com>
+Date: Thu, 10 Oct 2013 17:09:22 +0200
 From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: OSS at all? (was: YingZhi Lua Programming Language for iOS ftp .. bug & httpd arbitrary upload)
+Subject: Re: CVE request: mahara 1.7.3
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 8 October 2013 12:16, Raphael Geissert <geissert@...ian.org> wrote:
+[...]
+> To Hugh and the other mahara security people: please chime in if you
+> have already requested ids to somebody else.
 
-On 30 August 2013 15:16, Larry W. Cashdollar <larry0@...com> wrote:
-> During further investigation of the Python programming language by XiaoWen
-> for ipad/iphone [...]
+After a few mail exchanges with thee mahara security team it appears
+that the didn't request ids.
 
-Does this and the previous email regarding "iOS apps" even belong to this list?
-A quick web search doesn't reveal anything that looks like source code.
+(their mail address goes to RT)
 
-Regards,
+Cheers,
 -- 
 Raphael Geissert - Debian Developer
 www.debian.org - get.debian.net
