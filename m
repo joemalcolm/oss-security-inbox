@@ -1,35 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/12/7
-Message-ID: <20130612225634.GD899@openwall.com>
-Date: Thu, 13 Jun 2013 02:56:34 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/21
+Message-ID: <CAEWn2o97wzPEeSmPLcCMnJzWHvgLCVE0yJ8Wf-hsTTRVXrRABw@mail.gmail.com>
+Date: Thu, 10 Oct 2013 21:28:29 +0200
+From: Naufragium Est <naufragium.est@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: john-users@...ts.openwall.com
-Subject: Re: CVE request: WordPress 3.5.1 denial of service vulnerability
+Subject: libtar: missing validation of file names
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 13, 2013 at 12:05:14AM +0400, Alexander Cherepanov wrote:
-> On 2013-06-12 17:11, Solar Designer wrote:
-> >Arguably, library code should reject the most insane parameter values.
-> >For example, musl libc - http://www.musl-libc.org - version 0.9.10
-> >rejects bcrypt's log2(cost)>  19 and limits SHA-crypt's rounds count
-> >to<  10M for this reason (original SHA-crypt limits to<  1 billion).
-> 
-> On a related note: shouldn't John the Ripper also reject hashes with 
-> insane run-time or memory cost parameters?
+is this also CVE-worthy?
 
-I don't have strong feelings one way or the other, which is why I
-haven't implemented this so far.  Also, in JtR we did not support any
-hashes/ciphers with configurable memory cost until very recently, so
-that part of the issue did not arise.  As to processing time cost, in
-JtR it's at worst a DoS against a cracking run, which the user would
-notice and hopefully deal with.  Yes, having some warnings printed could
-help pinpoint the culprit hashes - we can add that.  As to the memory
-usage issue, maybe we need to have a configurable total memory limit (in
-john.conf) - not a per-hash limit.  We could use RLIMIT_AS (or the like)
-where supported.  It's more reliable than doing our own memory usage
-tracking, although then we'd need to ensure we're able to print a
-sensible error message when that limit is almost reached (this is not
-difficult, it's just something not to overlook).
+https://lists.feep.net:8080/pipermail/libtar/2013-October/000359.html
 
-Alexander
+> The functions tar_extract_glob and tar_extract_all accept a path prefix
+> on where to extract files to. However, libtar does not validate the file
+> names stored inside a tar file, possibly leading to a file extraction
+> outside the prefix path. For example, consider a file name
+> "../../etc/passwd". If extract_all is called with prefix "/home/USER/",
+> libtar would try to overwrite "/etc/passwd".
+
+
+not fixed yet:
+
+https://lists.feep.net:8080/pipermail/libtar/2013-October/000362.html
+
+> Once I figure out the right way of handling this, there will probably be
+> another libtar release.
