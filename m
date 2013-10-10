@@ -1,173 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/03/4
-Message-ID: <20130903230243.GF32641@redhat.com>
-Date: Tue, 3 Sep 2013 17:02:43 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: Jonas Meurer <jonas@...esources.org>, contribute@...ios.org
-Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/16
+Message-ID: <20131010133509.GB14445@suse.de>
+Date: Thu, 10 Oct 2013 15:35:09 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: RESEND: CVE Request: pwgen
 Content-Type: text/plain; charset=utf-8
 
-* [2013-09-03 13:41:03 -0600] Kurt Seifried wrote:
+Hi,
 
->-----BEGIN PGP SIGNED MESSAGE-----
->Hash: SHA1
->
->On 08/30/2013 09:47 AM, Jonas Meurer wrote:
->> Any news on that?
->>
->> I still believe that there's a misunderstanding. I still consider
->> the bug I found as security relevant. Hostnames are leaked to
->> unauthorized nagios-cgi users.
->>
->> In case that you don't agree with what I've written below, please
->> explain.
->>
->> Honestly, I cannot believe that it was meant as a _feature_ by
->> nagios devs that _all_ hostnames are displayed for _all_ users,
->> regardless whether they're listed in contacts/contactgroups.
->>
->> I don't consider this issue too important, but still a CVE would
->> be appropriative in my opinion. It should be fixed in future
->> uploads of nagios3 to the major distributions. Most nagios admins
->> might be unaware of this issue.
->>
->> Kind regards, jonas
->>
->>
->> Am 2013-08-04 02:40, schrieb Jonas Meurer:
->>> Hello,
->>>
->>> sorry, I'm on holidays and cannot work on this issue for the next
->>> two weeks. But I think that there is a missunderstanding. See my
->>> short comment below.
->>>
->>> Am 02.08.2013 19:27, schrieb Vincent Danen:
->>>> * [2013-07-10 17:17:08 +0200] Jonas Meurer wrote:
->>>>
->>>>> Hello,
->>>>>
->>>>> Am 2013-07-08 20:16, schrieb Kurt Seifried:
->>>>>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->>>>>>
->>>>>> On 06/26/2013 01:42 PM, Kurt Seifried wrote:
->>>>>>> On 06/26/2013 12:36 PM, Vincent Danen wrote:
->>>>>>>> I don't believe a CVE has been assigned to this issue
->>>>>>>> yet.
->>>>>>>
->>>>>>>> It was reported that Nagios 3.4.4 at least, and
->>>>>>>> possibly earlier versions, would allow users with
->>>>>>>> access to Nagios to obtain full access to the
->>>>>>>> servicegroup overview, even if they are not authorized
->>>>>>>> to view all of the systems (not configured for this
->>>>>>>> ability in the authorized_for_* configuration option).
->>>>>>>> This includes the servicegroup overview, summary, and
->>>>>>>> grid.
->>>>>>>
->>>>>>>> Provided the user has access to view some services,
->>>>>>>> they will be able to see all services (including those
->>>>>>>> they should not see). Note that the user in question
->>>>>>>> must have access to some services and must have access
->>>>>>>> to Nagios to begin with.
->>>>>>>
->>>>>>>> This has not yet been corrected upstream.
->>>>>>>
->>>>>>>> References:
->>>>>>>
->>>>>>>> http://www.mail-archive.com/nagios-users@lists.sourceforge.net/msg39749.html
->>>>>>>>
->>>>>>>>
->>>>>>>
->>>>>>>>
->>>>>>>>
->http://tracker.nagios.org/view.php?id=456
->>>>>>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714171
->>>>>>>>
->>>>>>>>
->https://bugzilla.redhat.com/show_bug.cgi?id=978531
->>>>>>>
->>>>>>>
->>>>>>>> Thanks.
->>>>>>>
->>>>>>> Please use CVE-2013-2214 for this issue.
->>>>>>
->>>>>> It appears there are may be some problems with this issue,
->>>>>> potentially this may have been a bad configuration and not
->>>>>> a source code based problem, however we haven't been able
->>>>>> to confirm it yet. I've also not been able to contact
->>>>>> upstream about this easily (no security@ address, if anyone
->>>>>> know whom to forward this to, please let me know, thanks.
->>>>>
->>>>> I'm wondering why you fail to reproduce this issue. I posted
->>>>> some details regarding my setup at the Nagios Tracker:
->>>>> http://tracker.nagios.org/view.php?id=456
->>>>>
->>>>> Unfortunately Nagios upstream sometimes rather unresponsive.
->>>>> At least that's what I observed.
->>>>>
->>>>> Please let me know if you need any further details regarding
->>>>> the bug or advice on how to reproduce it.
->>>>
->>>> To close the loop on this, the CVE should probably be
->>>> rejected. According to upstream, this is done by design.  One
->>>> of our users noted it in our bugzilla:
->>>>
->>>> https://bugzilla.redhat.com/show_bug.cgi?id=978531#c11
->>>>
->>>> He has a thorough explanation, but the bottom line is this
->>>> seems to be by design, as noted in the changelog:
->>>>
->>>> http://www.nagios.org/projects/nagioscore/history/core-3x
->>>>
->>>> * Users can now see hostgroups and servicegroups that contain
->>>> at least one host or service they are authorized for, instead
->>>> of having to be authorized for them all (Ethan Galstad)
->>>
->>> As I understand this changelog entry, it means the following:
->>>
->>> Hostgroups and servicegroups are listed with all the
->>> _authorized_ members if the user is authorized to see at least
->>> one member.
->>>
->>> To me it doesn't mean the following (which was the case without
->>> my patch):
->>>
->>> Servicegroups are listed with all members (regardless wether
->>> authorized or unauthorized) if the user is authorized to see at
->>> least one member.
->>>
->>> Another argument for my point of view is that the nagios
->>> maintainers (silently) accepted my patch (at least if I remember
->>> correctly, it has been incorporated into the upstream development
->>> repository). Unfortunately there's still not one single statement
->>> from upstream about the issue, that I'm aware of.
->>>
->>>> I suspect this CVE should be rejected as this is done by
->>>> design.
->>>
->>> Like explained above, I disagree with this suggestion :)
->>>
->>> Kind regards, jonas
->
->https://bugzilla.redhat.com/show_bug.cgi?id=978531#c11
->
->So as I understand it, NOTABUG, upstream documented it, etc.
+It might just not be that CVE worthy. But I saw no replies...
 
-Until and unless upstream acknowledges that this isn't by design (which
-the changelog entry most definitely indicates it _is_ by design) then I
-don't think there's anything we can do.
+(CVE worthyness:
+It does not fully meet the security expectations of generating
+a non-weak password by default....
+)
 
-I mean, if someone wants to shoot themselves in the foot and document it
-as a feature, who are we to say otherwise?  We may not agree with it,
-but it's a documented feature (deliberately changed), so we can't just
-very well call it a security flaw because we don't like the new
-behaviour.
+Solar? Kurt?
 
-Having said that, it would be fantastic if the folks at Nagios would
-speak up and put this to rest.  It could be a design decision that went
-too lax (thus being a flaw, exposing more than intended), or this might
-actually be what was meant.  Until upstream says one way or another, I
-would consider this not a security flaw.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+CIao, Marcus
+On Thu, Sep 26, 2013 at 11:11:59AM +1000, Michael Samuel wrote:
+> Hi,
+> 
+> No CVEs have been assigned for this, and as far as I can tell no
+> distributions have patched.
+> 
+> On 6 June 2013 14:19, Michael Samuel <mik@...net.net> wrote:
+> 
+> > I've done some further analysis of the program after reading the previous
+> > thread, and I think there needs to be CVEs and fixes for:
+> >
+> > - When used from a non-tty passwords are trivially weak by default (first
+> > reported by Solar Designer)
+> > - Phonemes mode has heavy bias and is enabled by default (first reported
+> > by Solar Designer)
+> > - Silent fallback to insecure entropy (first reported by Jean-Michel
+> > Vourgère) (Debian bug #672241 - tagged as "wishlist")
+> > - Secure mode has bias towards numbers and uppercase letters
+> >
+> > I've attached a patch that fixes most issues - it doesn't solve the bias
+> > towards numbers, because it's caused by requiring at-least one number per
+> > password - so in an 8 character password there'd have to be 0.1 numbers to
+> > avoid bias.  There's an argument to be made for removing the at-least-one
+> > rule, but if the system that password is being used with has those rules,
+> > it doesn't fix the problem anyway.  Perhaps a separate flag for that?
+> >
+> > The changes are:
+> >
+> > - Print a message and abort() of there's trouble opening or reading
+> > /dev/urandom (So apport should pick up any packages that have been using
+> > insecure entropy)
+> > - Make "-s" the default
+> > - Add an argument --insecure-phonemes (or -P)
+> > - Non-tty passwords are now as secure as tty
+> > - Require lower-case characters be present to even out some bias
+> > - Pull in passwdqc as a Suggests on the debian package - pwqgen can
+> > generate sane random passphrases
+> >
+> > I can't imagine any reasonable use-case for the non-tty defaults (except
+> > maybe combining with espeak as an enhanced interrogation technique), and
+> > you can be certain that there's some people out there with it embedded in a
+> > script that's generating useless passwords.
+> >
+> > For phonemes mode in general, the bias is extreme, there are a limited
+> > number of possible combinations and it is generally not suitable for
+> > security purposes.  I have some fairly detailed analysis of it, but I
+> > believe this list has a no-exploits policy...
+> >
+> > Regards,
+> >   Michael
+> >
