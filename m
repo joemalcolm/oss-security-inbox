@@ -1,49 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/08/6
-Message-ID: <51154278.9070206@redhat.com>
-Date: Fri, 08 Feb 2013 11:22:48 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: XSS flaws fixed in ganglia
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/14
+Message-Id: <E1VUFLt-0002yY-AA@xenbits.xen.org>
+Date: Thu, 10 Oct 2013 12:28:25 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 71 (CVE-2013-4375) - qemu disk backend (qdisk) resource leak
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/08/2013 11:06 AM, Vincent Danen wrote:
-> A number of XSS issues were fixed in ganglia's web ui:
-> 
-> https://github.com/ganglia/ganglia-web/commit/31d348947419058c43b8dfcd062e2988abd5058e
->
->  https://bugzilla.redhat.com/show_bug.cgi?id=892823
-> 
-> I think one CVE would cover all of these since they were fixed at
-> the same time, in the same commit.
-> 
-> Thanks.
-> 
+             Xen Security Advisory CVE-2013-4375 / XSA-71
+                              version 2
 
-Please use CVE-2013-0275 for this issue.
+               qemu disk backend (qdisk) resource leak
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+UPDATES IN VERSION 2
+====================
 
+Public release
+
+Fix patch header corruption in xsa71-qemu-xen-unstable.patch.
+
+ISSUE DESCRIPTION
+=================
+
+The qdisk PV disk backend in the qemu-xen flavour of qemu ("upstream
+qemu") can be influenced by a malicious frontend to leak mapped grant
+references.
+
+IMPACT
+======
+
+A malicious HVM guest can cause the backend domain to run out of grant
+references, leading to a DoS for any other domain which shares that
+driver domain.
+
+VULNERABLE SYSTEMS
+==================
+
+Any system which is using the qemu-xen qdisk backend for HVM guests is
+vulnerable.
+
+qemu-xen and qdisk are exposed by systems using libxl from Xen 4.2.0
+onwards. In Xen 4.2.0 qemu-xen was a non-default option, from Xen
+4.3.0 onwards qemu-xen is the default.
+
+Xen 4.1.0 exposes qdisk via libxl but does not support qemu-xen and
+therefore is not vulnerable.
+
+The xend toolstack has never supported qdisk as a disk backend and
+therefore such systems are not vulnerable.
+
+Upstream qemu is vulnerable from version 1.1 onwards.
+
+MITIGATION
+==========
+
+This vulnerability can be avoided by using a different block backend
+(e.g. blkback or blktap2) or by using the qemu-xen-traditional version
+of qemu.
+
+Users of the xl toolstack, see docs/misc/xl-disk-configuration.txt for
+information on forcing the use of a particular disk backend and
+xl.cfg(5) for information on forcing the use of qemu-xen-traditional.
+
+Systems which only run PV guests and/or run HVM guests without PV
+drivers are not vulnerable.
+
+CREDITS
+=======
+
+This issue was discovered by Coverity Scan and Matthew Daley.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa71-qemu-xen-unstable.patch        xen-unstable, Xen 4.3.x
+xsa71-qemu-xen-4.2.patch             Xen 4.2.x
+
+
+$ sha256sum xsa71*.patch
+a3f667e251a32fa5eff4a78eae49acd020b2f340fb203dc08a033d43841b0a2a  xsa71-qemu-xen-4.2.patch
+f5ec607babb01dc8f8065dfe121882af4c3d93c035bafbfed48825dea684d6d9  xsa71-qemu-xen-unstable.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRFUJ4AAoJEBYNRVNeJnmTcdIP/RMNBm2LriJjSA7tL8QWLECs
-6YAbg/npMptHRzWu7vZmC4BDa+3b89w7ofvvEHX4iSG3cHekjrTZgWSRfLIYkKTj
-6FXgsQd0Bv3SRBfGhbCV0SAp7jD7+UXFlo3j6jGWLPm99VfBL1eOrN+Kp3ckh51I
-IeLWYVSi4SUD/E73S6guqDvBpQpXqZmi3GthNtz3A5k5DIcfgerzKNGISy0NKfGv
-9IPzo+pKmZ8vnt/gqh5fDbiaZ9YOXSwFECwAUpop6bxk610smddy+0W6rbEDcePe
-e/Lcaqh4Jef9MUqwlbL3JsatxVk6CW0Q6vbyC4R4lYF5EI852gucdiBPdncKqFck
-tWOhrSuddWFftmbwBU9yuJfXzRA4CAW7tFlSYz+6xLlMCNeYuQ20ZONd2RPMBqFa
-ADaGWYcGl1dbH1sJj3R8W81MHOENV5e6tOBIeB7437e8ajft6VjHZZHTYOfIw/0e
-3/aMAzdQq5VUQenS5p5lQGLvVyUljEmuRJflpaZ1vzUYkmyVuwdtASGaUvQMr+R+
-z/rxnnyOegMDREWo8ceAXu9Ebh8cMyOvUEI7nfUcaiHi1hEujbNcuju0qMjPqzvt
-1kJJ2rRCR4T2xZoJ8eyTW+z84Hb5uUcExQPWKPnS4uUtQMthq5qRJQZMhw3DzixK
-4cr2V7PIVoGz+EZyWgBF
-=kBKp
+iQEcBAEBAgAGBQJSVp1bAAoJEIP+FMlX6CvZ8nMH/1sMYLD38viMSIJndL3Nlfz4
+cj5AaTHyPIYaX3RzLZfM08+qeRIcXcPDAcNwaYn97IOv0JJ/gppfNOeCdmHGvWhl
+z88vKbzI0RaDv3pL+eKo7RiGN/T32gsh6H4ltjrNGyO0LiDI4rfbxTBjVlzE8bB8
+M4weAWtgEa7/VAYeM4g7cOoCD7goE15lYLSRsrQJGn/iizLdL/I+IqSvTaGwgE+I
+yKvl7wJ1fEfy9sKCTls9INZdMnJXmlC4+Pq8phmW9QoSSIxNFqRDZ13IduXHbpXe
+xyeAr7U5b5GzPtGclu6XX0vyuOct2mf984xHbe06ecJF2KjsXi44spszPP2elHQ=
+=hcxy
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa71-qemu-xen-4.2.patch" of type "application/octet-stream" (1624 bytes)
+
+Download attachment "xsa71-qemu-xen-unstable.patch" of type "application/octet-stream" (1617 bytes)
