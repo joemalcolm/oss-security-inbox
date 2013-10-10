@@ -1,113 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/12/2
-Message-ID: <516840F0.7040307@redhat.com>
-Date: Fri, 12 Apr 2013 11:14:24 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/2
+Message-ID: <20131010013106.GA29693@openwall.com>
+Date: Thu, 10 Oct 2013 05:31:06 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: "Larry W. Cashdollar" <larry0@...com>
-Subject: Re: Remote command injection in Ruby Gem kelredd-pruview 0.3.8
+Subject: CVE-2013-4402 GnuPG infinite recursion in the compressed packet parser
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 04/10/2013 01:14 PM, Larry W. Cashdollar wrote:
-> 
-> Remote command injection in Ruby Gem kelredd-pruview 0.3.8
-> 
-> ------------------------------------------------------------------------
->
->  Larry W. Cashdollar 4/4/2013 @_larry0
-> 
-> *Description*: "A gem to ease generating image previews
-> (thumbnails) of various files."
-> 
-> https://rubygems.org/gems/kelredd-pruview
-> 
-> Remote commands can be executed if the file name contains shell
-> meta characters.
-> 
-> ./kelredd-pruview-0.3.0/lib/pruview/document.rb
-> 
-> In the following code snippet, we see the user input isn't
-> sanitized for shell metacharacters. A malicious file with special
-> characters in the filename could be used to execute commands as the
-> local user.
-> 
-> 69       run_system_command("convert -format jpg \"{source}[0]\"
-> \"{@...pfile.path}\"", "Error processing postscript document") 85
-> colorspace = run_system_command("identify #{GLOBAL_CMD_ARGS}
-> -format \"%r\" #{image.path}", "Error reading document
-> colorspace")
-> 
-> function run_system_comand() passes user supplied input to the
-> command line.
-> 
-> 141     def run_system_command(command, error_message) 142
-> output = `{command}` 143       raise "{error_message}: error given
-> {$?}\n{output}" if $? != 0 144       return output 145     end
-> 
-> In kelredd-pruview-0.3.0/lib/pruview/video.rb: Also the video
-> encoding and scaling features are vulnerable as well:
-> 
-> 27       run("#{FLVTOOL} -U #{target}", "Unable to add meta-data
-> for #{target}.")
-> 
-> 51       run(build_command(@source, target, width, height,
-> get_info(info_yml), scale_static), "Una    ble to convert
-> #{@...rce} to #{target}.")
-> 
-> Run is defined as:
-> 
-> 140     def run(command, error_message = "Unknown error.") 141
-> raise "Ffmpeg error: " + error_message + " - command: '#{command}'"
-> if !system(command) 142     end
-> 
-> User controlled data is being sent to the command line with out
-> any shell meta charatcers being escaped.
-> 
-> In kelredd-pruview-0.3.0/lib/pruview/video_image.rb:
-> 
-> 13       run(build_command(source, "-ss 00:00:#{duration * 0.1}",
-> 'mjpeg', target), "Unable to get     preview image for #{target}")
-> 
-> 30 def self.build_command(source, time_str, format, target) 31
-> command = %Q{#{Video::FFMPEG} -i "#{source}"} 32 command += "
-> #{time_str}" 33 command += " -f #{format}" if !format.empty? 34
-> command += " -an -y #{target}" 35 end
-> 
-> where function run() is defined as:
-> 
-> 37     def self.run(command, error_message = "Unknown error.") 38
-> raise "Ffmpeg error: " + error_message + " - command: '#{command}'"
-> if !system(command) 39     end
-> 
-> In line 38 user supplied data is passed to the command line. This
-> vulnerability doesn't have a CVE assigned yet.
-> 
-> http://vapid.dhs.org/advisories/kelredd-pruview-cmd-inject.html
-> 
+As many of you know, GnuPG 1.4.15 was released a few days ago with:
 
-Please use CVE-2013-1947 for this issue.
+  * Fixed possible infinite recursion in the compressed packet
+    parser. [CVE-2013-4402]
 
+http://lists.gnupg.org/pipermail/gnupg-announce/2013q4/000334.html
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+There's now a nice writeup by Taylor R. Campbell, who invented the
+attack on GnuPG, and it applies to more than just GnuPG:
 
-iQIcBAEBAgAGBQJRaEDvAAoJEBYNRVNeJnmTbNUP/RN999r1F5FLqP7598zcwJHi
-VkCIeYTDYkBUd1k+RVqYmFZ0kdpUKu2vQQfn82AZyHK6uLkI8R0DWvYgjSLx0Dco
-yL+xGwHGaDF++8k3DQqnAlRwRVk2TDn9AwEAkY3VN92cnb0myKbp2NNHdRTyLhMe
-K1yYeWTgAiHdjkqDbbPdxcUqaZXjBto/AOE0Vb9lPP6PudSKpH1Cc1IRO6wm8Vzq
-wnNRKL9k7wXhrudvl0ZQvDMpAYUuyrVMQjT6LPFViNGm14A0uucnNyFZCLki0t9k
-MZFpAS7yOlzi4cnjaOhy5YzGtU2RPPhSy6P/N+/Jj7Hiq5L9JAOMlQIomALbjclb
-WSBWgd3p16JQu9iHDOJV1m6Gdasgqsn1baKSx2PHkJDddQfqiqGZujhZkT7Osiqq
-8auftxod/7X9vOGaWCNggou4ZHNUYxVKQCmtwK41FshtflhAzd7lnShe3fDksTGJ
-pdnFNnXVzymbOZh84o33+L8lSdq2aPHZUXAHmcH5hY3UV4MWxD0T1V/fHmAujVmJ
-MBmM7o0JafUaSLC+vmA/8BuQ3d4Flfzxc8wuUuGZFIQLjWxAihkss7oPzDo5Ign0
-4L4d9siDJBhnrrVxTeN5O0Y+43A2B/ZWflV3rrI7623naVnLZVxK5fnk/qQQVkMJ
-5oyqRyckUjJWOeUNH07z
-=0xtR
------END PGP SIGNATURE-----
+http://mumble.net/~campbell/blag.txt
+
+I'll quote it below for those reading oss-security archives a while
+later, not to rely on it still being near the beginning of blag.txt.
+
+---
+2013-10-08 On compression in data formats
+
+   If you have a large message which you want to sign and encrypt with
+   OpenPGP, you might compress it first.  Or you might compress it
+   second.  Or, if you're not thinking much about it, you might
+   `compress' it last, although if that actually reduces the size
+   there are some cryptographers who would like to have a word with
+   you.
+
+   In any case, the OpenPGP message format lets you do any of these,
+   because there is a type of OpenPGP packet for compressed data,
+   whose content is interpreted as another OpenPGP packet.  OpenPGP
+   agents, such as GnuPG, are expected to recursively process packets
+   they encounter in a message, decrypting ciphertext and verifying
+   signatures and decompressing compressed data, until they hit a
+   ground case, usually a literal data packet.
+
+   Since messages are built up by starting with a literal data packet
+   and layering encryption, signature, and compression atop it, this
+   process should always halt at a ground case, right?  Well, no.
+   Decryption and verification (or, removing a signature) always yield
+   smaller packets than you began with, so there has to be a ground
+   case for those, but decompressing usually yields a larger packet
+   than you began with.
+
+   So you might play a cruel trick on your friend by sending a very
+   small email with a compressed packet that decompresses to a
+   terabyte of zeros.  Or you could send an email with a compressed
+   packet that decompresses to...itself.
+
+   How does that work?  The Lempel-Ziv compression language is
+   powerful enough to write a quine -- that is, a program that prints
+   its own source code.  Rather than repeat the story here, I'll defer
+   to Russ Cox's article on how to write these:
+
+      Russ Cox, `Zip Files All The Way Down', 2010-03-18.
+      http://research.swtch.com/zip
+
+   In the case of OpenPGP, it was particularly easy because OpenPGP
+   supports a number of compression algorithms including an option
+   without any CRC, so one can write a program that just spits out an
+   OpenPGP compression quine without iterating over CRCs or solving a
+   horrible system of equations.
+
+   The result is CVE-2013-4402, and the lesson is that systematic
+   recursive compression is no good -- not only that it's not useful,
+   but it is actively harmful.  It's especially harmful for programs
+   that process input sent unsolicited from anywhere on the internet,
+   namely mail readers.
+
+   And OpenPGP isn't the only data format that supports recursive
+   compression.  PGP/MIME, which recursively interleaves MIME entities
+   and OpenPGP packets, can probably exhibit the same issue, and the
+   small bound on recursion that GnuPG now imposes while processing
+   packets will be thwarted by the interleaving.  S/MIME 3.1 supports
+   a compressed data message type, although nobody seems to have
+   implemented it.  I'm sure there are formats outside mail that can
+   also involve recursive compression.  Which ones can you find?
+---
+
+Alexander
