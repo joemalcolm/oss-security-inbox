@@ -1,65 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/28/6
-Message-ID: <51A4F049.2080004@redhat.com>
-Date: Tue, 28 May 2013 11:58:33 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: CVE request: libraw: multiple issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/17
+Message-ID: <20131010133819.GR4394@ucc.gu.uwa.edu.au>
+Date: Thu, 10 Oct 2013 21:38:19 +0800
+From: Matt Johnston <matt@....asn.au>
+To: Marcus Meissner <meissner@...e.de>
+Cc: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: dropbear sshd daemon 2013.59 release
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi all,
 
-On 05/28/2013 02:43 AM, Raphael Geissert wrote:
-> Hi,
-> 
-> From [1]:
->> LibRaw 0.15.1 (26-05-2013)
-> This should be 0.15.2
->> 
->> Fixed possible double-free() on error recovery on damaged
->> full-color (Foveon, sRAW) files. wchar_t* file interface disabled
->> for MinGW32 compilation
->> 
->> LibRaw 0.15.1 (24-05-2013)
->> 
->> fixed wrong data maximum calculation for Panasonic files check
->> for possible buffer overrun in exposure correction code
-> 
-> So there's a double-free (fixed in 0.15.2[3]) and a buffer
-> overflow (fixed in 0.15.1[2]).
-> 
-> Could CVE ids be assigned please?
-> 
-> References: [1]http://www.libraw.org/download 
-> [2]http://www.libraw.org/news/libraw-0-15-1 
-> [3]http://www.libraw.org/news/libraw-0-15-2 
-> http://secunia.com/advisories/53547/
-> 
-> Cheers, -- Raphael Geissert - Debian Developer www.debian.org -
-> get.debian.net
-> 
+On Thu, Oct 10, 2013 at 03:27:07PM +0200, Marcus Meissner wrote:
+> has this changes entry:
+> - Limit the size of decompressed payloads, avoids memory exhaustion denial
+>   of service 
+>   https://secure.ucc.asn.au/hg/dropbear/rev/0bf76f54de6f
 
-Can you include links to the code commits? thanks.
+That's the right patch.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+> It also has this changes entry which might need one:
+> - Avoid disclosing existence of valid users through inconsistent delays
+>   https://secure.ucc.asn.au/hg/dropbear/rev/a625f9e135a4
 
-iQIcBAEBAgAGBQJRpPBJAAoJEBYNRVNeJnmTQBsP/2QS47rMG+mRHm9WY6VNYGH+
-ttovDzsBDRepFC5OufnDm73NZr4cPAuO5Z8GZvMtNmwSq7qnPZjB6vk7s9dO8kRL
-TImh7TqvHQpmQVZZ0dv0QFmW1LU6qrJTvOIvmhCzwq3GMnPiYSEELItDL276O6JV
-f06aSRjCQG8XTwPKCFCCJGM9T03O2Q/ZuESTQMDtgencu2UZr664UxO5ojdscxAs
-qtUVaHDM/WvuQfUgDs2IVWLWRtGBhJZMNOkfhMHxfbc86Se5LHjHFhD6dPF2lXyE
-7OIPkRtFqvwIB9m7YdmAHnTT0sctSG9ndTR6Ok8BMbz2hk+zqDjZT0GDjt1+rjHH
-AKEuMuHUpksoGuLenBbIxWL/+gnIKVG23EaS2CEX7ft7zcVdU2SH+zTCC4A8qFCY
-F5pDbga0/LJNvo1D/D6EpLIeK1fTNzcIespiZy1cJ+0sIzL/z7SwV7ja/Lm4sgT1
-dmRZdoflpqJFRsxzeHatUyGG5ZRE3CZinT7C/VZko4m3xAqtg+Er2nMRO/vqQ8le
-VpobgucoDGscTWak+rX+rmztahoPNxne0Hs0o+TBkmUASpNVNQyv906At0wMmZ+a
-Va01glMhMd8UPzbovmkAQ/9HVfTWsncFOCulfHqwxzToox5cYalTv243F21/3DxM
-Bl/JX6JrVpiTRdMIgtPq
-=LO+m
------END PGP SIGNATURE-----
+That should be https://secure.ucc.asn.au/hg/dropbear/rev/d7784616409a 
+for the user disclosure.
+
+I don't think the constant-time memcmp (a625f9e135a4) is
+worth noting with a CVE. The packet HMAC is non-repeatable
+for an attacker. The password crypt comparison has too long
+a delay between tries, I think the majority of programs
+would use straight strcmp().
+
+Cheers,
+Matt
