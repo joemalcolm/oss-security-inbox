@@ -1,25 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/10
-Message-ID: <alpine.LFD.2.03.1305300037070.30305@redhat.com>
-Date: Thu, 30 May 2013 00:40:49 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: Linux kernel: net: oops from tcp_collapse() when using splice(2)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/11
+Message-Id: <E1VUFGP-0002YX-VB@xenbits.xen.org>
+Date: Thu, 10 Oct 2013 12:22:45 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 68 (CVE-2013-4369) - possible null dereference when parsing vif ratelimiting info
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Linux kernel which supports splice(2) call to move data across file/socket
-descriptors via a pipe buffers, is vulnerable to a kernel crash that occurs
-while calling splice(2) over a tcp socket which in turn calls tcp_read_sock().
+             Xen Security Advisory CVE-2013-4369 / XSA-68
+                               version 2
 
-A user/program could use this flaw to cause system crash, resulting in DoS.
+     possible null dereference when parsing vif ratelimiting info
 
-Upstream fix:
--------------
-   -> https://git.kernel.org/linus/baff42ab1494528907bf4d5870359e31711746ae
+UPDATES IN VERSION 2
+====================
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+The libxlu library function xlu_vif_parse_rate does not properly
+handle inputs which consist solely of the '@' character, leading to a
+NULL pointer dereference.
+
+IMPACT
+======
+
+A toolstack which allows untrusted users to specify an arbitrary
+configuration for the VIF rate can be subjected to a DOS.
+
+The only known user of this library is the xl toolstack which does not
+have a central long running daemon and therefore the impact is limited
+to crashing the process which is creating the domain, which exists
+only to service a single domain.
+
+VULNERABLE SYSTEMS
+==================
+
+The vulnerable code is present from Xen 4.2 onwards.
+
+MITIGATION
+==========
+
+Disallowing untrusted users from specifying arbitrary VIF rate limits
+will avoid this issue.
+
+CREDITS
+=======
+
+This issue was discovered by Coverity Scan and Matthew Daley.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue in all branches
+
+xsa68.patch        xen-unstable, Xen 4.3.x, Xen 4.2.x
+
+$ sha256sum xsa68*.patch
+64716cb49696298e0bbd9556fe9d6f559a4e2785081e28d50607317b6e27ba32  xsa68.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJSVpv6AAoJEIP+FMlX6CvZh5AH/3eMQvmLfgXNbr/vBFKwwJFc
+FXd/5N76S17ZI5jTPLoXc1GiXOI9MhPNazKo6e/RLYkVrxgK4Cq8jowBJBgg8Q4R
+egOlTinu87uT3ik6DP1ZQVQXEC2Wot0lJwjkN5B/72Tx/ldnS7i/Wi7P5QW7kzcJ
+3FWSoCP/degKK/pBbPbt6keUjsUgkIXR3S0Vx/5+NXWeGMfjBFMqV6O1TQ1COkjw
+GrvYzXBPAnhmw0fUSYdh87Ed2MH0nZqBGuP/b4wlXqoYWBZN/1xs8M+txnfGLyRm
++vvoM5shs+IiC0cVUcOPF+o7xZRiF6ZNdEMZdMV0NPHNeVEKtdXd6zlc/7VWuvM=
+=9/V5
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa68.patch" of type "application/octet-stream" (1923 bytes)
