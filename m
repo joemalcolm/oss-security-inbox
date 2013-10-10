@@ -1,60 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/9
-Message-ID: <525E297F.4030006@redhat.com>
-Date: Tue, 15 Oct 2013 23:51:59 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for a vulnerability in OpenStack Glance
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/15
+Message-ID: <20131010132707.GA14445@suse.de>
+Date: Thu, 10 Oct 2013 15:27:07 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Cc: matt@....asn.au
+Subject: CVE Request: dropbear sshd daemon 2013.59 release
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi folks, hi Matt,
 
-On 10/15/2013 12:56 PM, Thierry Carrez wrote:
-> A vulnerability was discovered in OpenStack (see below). In order
-> to ensure full traceability, we need a CVE number assigned that we
-> can attach to further notifications. This issue is already public, 
-> although an advisory was not sent yet.
-> 
-> """ Title: Glance image_download policy not enforced for cached
-> images Reporter: Stuart McLaren (HP) Products: Glance Affects:
-> Folsom, Grizzly
-> 
-> Description: Stuart McLaren from HP reported a vulnerability in
-> Glance download_image policy enforcement in the case of cached
-> images. Deployers may opt to set a download_image policy to
-> restrict image download to specific roles. However, when an image
-> is previously cached by an authorized download, any authenticated
-> user could download image contents if it can determine the image
-> UUID, bypassing any download_image policy restrictions. This could
-> result in disclosure of image contents that were thought to be
-> protected by the download_image policy setting. Only setups making
-> use of the download_image policy are affected. """
-> 
-> References: https://bugs.launchpad.net/glance/+bug/1235378
-> 
-> Thanks in advance,
+https://matt.ucc.asn.au/dropbear/CHANGES seems to have two CVE worth entries.
 
-Please use CVE-2013-4428 for this issue.
+Version 2013.59 - Friday 4 October 2013
+
+has this changes entry:
+- Limit the size of decompressed payloads, avoids memory exhaustion denial
+  of service 
+  Thanks to Logan Lamb for reporting and investigating it
+
+  Source code fix for this is seems to be:
+  https://secure.ucc.asn.au/hg/dropbear/rev/0bf76f54de6f
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+It also has this changes entry which might need one:
+- Avoid disclosing existence of valid users through inconsistent delays
+  Thanks to Logan Lamb for reporting
 
-iQIcBAEBAgAGBQJSXil/AAoJEBYNRVNeJnmTVqEP/0fXr6PzYemb8RoW5fT0Lkdx
-FSWtPR4Uflv6XLSig3M+g+kOli8Wmef8nZPH1O/caWxccSC9c93jMH/A3zvyYh22
-hPrv5Q1Cxa3h2QSnlbnR6EUPs8lhROSlpsLSwA/DhDJfJNShOXPY6gw3ywYG0ZbS
-Nsc1TT81L/1FIh6OuA2e9HM0EZVjtyDtol9iAxIeF2IsSg5gXxrYnu0PhzR8klwf
-qZ33zLHKevSWOoij12BSnw97v02DLUx+c5qHlynEaJQCgceRVAGTRBIcFR+LrZ3u
-c+p3WF51+ewM3PWnCbPaF9jupSle+Vy3yWkr7/cKqXEctAE6bNfPXd2Fo1DmAuQD
-A37x2NfCONRMm0GIAcJHEKKOmfMX/TeQ3jBe/1UmnwHDPMUe3SY0M82x0/wKeMfT
-8+uZ2v7wpyGggl3e3/yWxw1kmDXZ8uI29OsZUYKR6kfd15CumTpCjyx6gQ0PzGw4
-1IhaikoxUV1kE8itZ0NTb8emHdz4UgpZjt2t5W5E2n7DEExdbFLkeVGkQ/WxiyEU
-9mL0GU54LGWE4rNyUhG/wdcKpLKzGoadBc4y593besEhjkE1ITlprVS4zndd7a7L
-It/VEk6JIyHwvZWRwwPjru05D4uz6Eu6tAvzKF40LiuCfhzzW+ynovHfdfDjUWse
-bhtOYUW6yiIfoNC83yfO
-=9gNj
------END PGP SIGNATURE-----
+  https://secure.ucc.asn.au/hg/dropbear/rev/a625f9e135a4
+
+Matt, if you are interested in requesting CVEs in the future
+for security relevant fixes, feel free to contact us.
+(Kurt, I looked for your howto, but my googlefu today is weak.)
+
+Ciao, Marcus
