@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/18/2
-Message-ID: <20131118144648.GO22293@dhcp-25-225.brq.redhat.com>
-Date: Mon, 18 Nov 2013 15:46:49 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/3
+Message-ID: <20131010024135.GF372@yuggoth.org>
+Date: Thu, 10 Oct 2013 02:41:37 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifrie@...hat.com>
-Subject: CVE-2013-4591 -- Linux kernel: kernel: nfs: missing check for buffer length in __nfs4_get_acl_uncached
+Subject: Re: Source of bad password hashing practices? MySQL manual...
 Content-Type: text/plain; charset=utf-8
 
-Commit 1f1ea6c ccidently dropped the checking for too small result
-buffer length.
-   
-If someone uses getxattr on "system.nfs4_acl" on an NFSv4 mount
-supporting ACLs, the ACL has not been cached and the buffer suplied is
-too short, we still copy the complete ACL, resulting in kernel and user
-space memory corruption.
+On 2013-10-09 14:16:27 -0700 (-0700), Chris Palmer wrote:
+[...]
+> Does anyone know the right MySQL security contact? It isn't
+> immediately obvious from a few web searches, but maybe
+> secalert_us@...cle.com is right? Making that clear, and maybe
+> publishing a PGP key, is another thing they could do...
 
-Introduced by:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1f1ea6c2d9d8c0be9ec56454b05315273b5de8ce
-
-Upstream commit:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7d3e91a89b7adbc2831334def9e494dd9892f9af
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=1031678
-
+Their vulnerability reporting contact page
+<URL: http://www.oracle.com/us/support/assurance/vulnerability-remediation/reporting-security-vulnerabilities/index.html >
+links to an encrypting key
+<URL: http://www.oracle.com/technetwork/topics/security/encryptionkey-090208.html?ssSourceSiteId=ocomen >
+assuming that's what you're looking for? (I had to get former MySQL
+developers to point me to it, as a cursory search wasn't turning up
+much for me either.)
 -- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
-
-Content of type "application/pgp-signature" skipped
+{ PGP( 48F9961143495829 ); FINGER( fungi@...ulhu.yuggoth.org );
+WWW( http://fungi.yuggoth.org/ ); IRC( fungi@....yuggoth.org#ccl );
+WHOIS( STANL3-ARIN ); MUD( kinrui@...arsis.mudpy.org:6669 ); }
