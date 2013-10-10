@@ -1,69 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/19/3
-Message-ID: <51985D31.3020100@redhat.com>
-Date: Sat, 18 May 2013 23:03:45 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/22
+Message-ID: <l370dg$np1$1@ger.gmane.org>
+Date: Thu, 10 Oct 2013 20:50:17 +0100
+From: Colin Guthrie <gmane@...in.guthr.ie>
 To: oss-security@...ts.openwall.com
-CC: "Jason A. Donenfeld" <Jason@...c4.com>, Gilles Chehade <gilles@...lp.org>, misc@...nsmtpd.org
-Subject: Re: Re: CVE Request: DoS in OpenSMTPD TLS Support
+Cc: pulseaudio-discuss@...ts.freedesktop.org,webkit-gtk@...ts.webkit.org
+Subject: Re: Vulnerability in Webkit-GTK and PulseAudio volume handling
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Alexander,
 
-On 05/18/2013 09:00 PM, Jason A. Donenfeld wrote:
-> On Sat, May 18, 2013 at 6:16 PM, Gilles Chehade <gilles@...lp.org>
-> wrote:
->> Not too nice to send a CVE request without ANY coordination with
->> us ...
+'Twas brillig, and Alexander E. Patrakov at 08/10/13 11:33 did gyre and
+gimble:
+> Note: this is not a CVE request yet! Before making a formal CVE request,
+> I would need to collect "official" information on the topic who needs to
+> do what with this bug (although I do have my own opinion, see below).
+> For now, I just want to start a discussion by posting this to the
+> relevant mailing lists, and also I want to avoid the situation where
+> each side blames the other. Please note that I am not an upstream
+> developer of any of the mentioned projects. I will attend the audio
+> mini-conference at LinuxCon Europe 2013, it is OK to discuss the issue
+> there if representatives from both parties intend to come.
 > 
-> Sorry about that. I was in the midst of bumping packages in gentoo
-> to the snapshot where you had fixed the issue, when I figured it
-> might be wise to also get the issue tracked with a CVE asap. Sorry
-> for jumping the gun.
-
-For future reference you can get CVEs privately, although if you're
-not the official upstream this means there is a greater chance of
-duplicates (and thus of me saying "no, make a public request). So if
-you want to do this a possible compromise is to email me and the
-upstream and if upstream replies that it's ok then I'd probably go ahead.
-
->> Just for the record, you contacted us today reporting a bug which
->> could be memory corruption and you didn't know if it could be
->> exploited.
+> The following combination of software has a nasty bug when used
+> together, that I personally consider to be a vulnerability:
 > 
-> The quote was "I haven't looked into why this happens or if memory 
-> corruption / code execution is a possibility, but at the very
-> least, it's a nasty DoS."
+> * PulseAudio (any version, especially when used in flat-volume mode that
+> is the default everywhere except Ubuntu).
+> * Any browser based on Webkit-GTK 2.x (any version with HTML5
+> audio/video support based on GStreamer).
 > 
->> The snapshot mail, commit log and diffs makes the issue obvious
+> The bug is that a malicious piece of javascript on the web page can
+> cause an audio file to play at an unexpectedly high volume, not obeying
+> the volume that the user has set for the web browser in pavucontrol or
+> gnome-volume-control, and effectively not letting the user move the
+> volume slider corresponding to the web browser. When flat volumes are in
+> effect, the web page can play that audio file at the full volume that
+> the sound card is capable of, which can in some cases damage
+> loudspeakers (especially tweeters) or the user's hearing.
 > 
-> Which is why I figured it was already a public issue, and
-> therefore not an issue to track it with a CVE. But apologies,
-> nonetheless, for jumping the gun. I'll coordinate with you more
-> closely in the future.
+> The reproducer is already public at http://jsfiddle.net/bteam/FbkGD/ and
+> can be trivially enhanced to also prevent muting of the audio stream.
+> View that in Epiphany or Midori on any Linux distribution except Ubuntu.
+> 
+> My own opinion is that both parties are equally responsible for the
+> vulnerability. The salt of the bug is that PulseAudio's security model
+> is based on clients not sending malicious requests to change the stream
+> volume, while Webkit passes all volume-changing requests (including
+> malicious) to GStreamer, because it has no way of telling user-initiated
+> volume change requests from automated malicious ones.
+> 
+> Even with non-flat volumes, passing the javascript-initiated volume
+> changes to pulseaudio means that the user cannot drag the "Epiphany"
+> volume slider or (with a trivial change to the JavaScript on the page)
+> mote the Epiphany stream in pavucontrol. So, in my opinion, using a
+> pulseaudio stream volume to represent javascript volume (or, for that
+> matter, the volume visible to any other runtime that can execute
+> untrusted programs/scripts) is always wrong.
+> 
+> However, the fact that flat volumes are enabled by default in upstream
+> PulseAudio makes this small annoyance a real vulnerability. Given that
+> the "100% hardware volume" type of bug is still present in some
+> applications given the vast amount of time the feature exists, I think
+> (but understand that it is an extreme position) that flat-volume mode,
+> by its mere existence, is a bug that needs to be removed. At the very
+> minimum, there is a documentation bug: it is nowhere explained that you
+> should never use PulseAudio stream volumes (and for that matter,
+> gstreamer sink volumes) for things that are not guaranteed to directly
+> correspond to user-draggable volume sliders that no automated script can
+> also move.
+> 
+> See also:
+> 
+> https://bugs.webkit.org/show_bug.cgi?id=118974
+> https://bugzilla.gnome.org/show_bug.cgi?id=675217
+> https://bugs.freedesktop.org/show_bug.cgi?id=46466
+> https://bugzilla.gnome.org/show_bug.cgi?id=680779
 
-Agreed, generally with public source code commits fixing an issue we
-consider it public and in general I would assign a CVE publicly,
-otherwise it gets to complicated to track/ensure embargoes/etc.
+It's certainly an interesting issue and your code highlights the problem
+quite well.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+I'm not sure I consider it a technical vulnerability tho' (just my
+personal opinion) but I do appreciate the damage to both h/w and hearing
+that could result and thus I won't argue about classifying it as such.
 
-iQIcBAEBAgAGBQJRmF0xAAoJEBYNRVNeJnmTvA4QAKJycT59hLMA+eod7hSmBiJi
-dIsSCe/g+m+TKZS0Vyx18+jh5+WDOBNvQXo+I9KD0tYs/s7zLfJymJcENRjqHJyG
-AutefIb+XqM+pVMh2FABe17unG94zWAlKSndjbPiK7X0yaSBnzUG3vAMA1ctCsfx
-N/HhlpG3VcJD9W+Ogt5gn333dTqcAJM9DE+dep86Ytk1DFe0IMBK0+sWRBtOmX/T
-xqVPsTPqjmO+GSTfJdLOEivLaUg0lvVdVziNvQ/lK8BNQX1WKOn8XLMqHCibLfd7
-GDQYprXZyoAa3KRpLp6gIedK5QI1tk3vk08mhuzitafDaUFf2Nyt4wG2aWCRToDe
-uUXf9mAf5vfBhEmcxGwlrTIDUWL5HNw2KyMzQK/C1+TpJrSvpHz2ffTn5+biTZeV
-dmi3pFgJOWPKJ5vQk8kKkCM4T0drf/PWMDe02ZFpfYB2iOes+Y8M5i7b7888nqVV
-Xa2cjiBqi0yTrVQr6OxNotqeesCi3WK0I6o9D5IalaiVMXtC1h3M9xElFjjulkMZ
-YOxykuRrQMK8LyYBLndt40gBrh3oaqDT0lWu8lkhLqLF+g12YtBz4uBENT++renh
-nKSW5ZQYIfnG58hN9+xkmB/fZ4kZAGeEd0G8NVaCj/DXw4jD6VZls+6AJC551/La
-6Ml9HMWFdxKrUmj6fP9f
-=81ky
------END PGP SIGNATURE-----
+What would be more interesting to me would be how the same code works on
+Windows 7 which I believe also implements a flat volume scheme (not sure
+about Win 8) and how it handles stream volumes in this context
+(background:
+http://www.patrickbaudisch.com/publications/2004-Baudisch-CHI04-FlatVolumeControl.pdf)
+
+
+Look forward to seeing you in a couple weeks at LinuxCon!
+
+Col
+
+
+-- 
+
+Colin Guthrie
+gmane(at)colin.guthr.ie
+http://colin.guthr.ie/
+
+Day Job:
+  Tribalogic Limited http://www.tribalogic.net/
+Open Source:
+  Mageia Contributor http://www.mageia.org/
+  PulseAudio Hacker http://www.pulseaudio.org/
+  Trac Hacker http://trac.edgewall.org/
+
