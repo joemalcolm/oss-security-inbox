@@ -1,28 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/25/8
-Message-ID: <86txmustd2.fsf@ds4.des.no>
-Date: Thu, 25 Apr 2013 14:11:05 +0200
-From: Dag-Erling Smørgrav <des@....no>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/6
+Message-ID: <CAEWn2o_ojrp412C-oL5qedtaAfqOskYa2ED69q7OytGeuo=Ztw@mail.gmail.com>
+Date: Thu, 10 Oct 2013 07:04:15 +0200
+From: Naufragium Est <naufragium.est@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com
-Subject: Re: Advisory dates
+Subject: Re: Integer overflow in libtar (<= 1.2.19)
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...hat.com> writes:
-> Dag-Erling Smørgrav <des@....no> writes:
-> > I'm curious as to what kind of policies various distros have in
-> > place wrt release dates for advisories.  We (FreeBSD) have a list
-> > of dates to avoid, which include major religious holidays, New
-> > Year's Day etc., and try to avoid releasing advisories on or
-> > immediately before these dates.  [...]
-> Ultimately if we start scoring off major holidays we've have no
-> release dates left ;)
+The announcement of version 1.2.20 can be found at
+https://lists.feep.net:8080/pipermail/libtar/2013-October/000361.html
 
-True, so we have to strike a balance.  The problem is that we've caught
-a lot of flak in the past for releasing advisories during or immediately
-prior to public holidays.  Maybe our users are more argumentative than
-yours :)
 
-DES
--- 
-Dag-Erling Smørgrav - des@....no
+2013/10/10 Huzaifa Sidhpurwala <huzaifas@...hat.com>
+
+> Hi All,
+>
+> Forwarding information from the linux-distros list to oss-sec, since
+> the issue is public now
+>
+> Details:
+>
+> An integer overflow vulnerability was identified in libtar 1.2.19 (and
+> olders) that can possibly be exploited for arbitrary code execution when
+> extracting a specially crafted tar file.
+>
+> A coordinated release date (CRD) of October 9th has been agreed with
+> Chris Frey (libtar developer).
+>
+> This issue is assigned CVE-2013-4397.
+> This issue is fixed in libtar-1.2.20
+>
+> Reference:
+>
+> Upstream patch:
+>
+> http://repo.or.cz/w/libtar.git/commit/45448e8bae671c2f7e80b860ae0fc0cedf2bdc04
+>
+> Announcement: This is an announcement about the release on
+> libtar list, but strangely i cant access the list archives.
+> (i am subscribed to the mailing list though)
+>
+> Red Hat bugzilla:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1014492
+>
+> --
+> Huzaifa Sidhpurwala / Red Hat Security Response Team
+>
+
