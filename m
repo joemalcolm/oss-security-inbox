@@ -1,29 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/18
-Message-ID: <20131016214950.GR2810@redhat.com>
-Date: Wed, 16 Oct 2013 15:49:50 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: slapd segfaults on certain queries with rwm overlay enabled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/23
+Message-ID: <CACYkhxiNS=qbNLwxpQCzFUDtmzniFP1gJ=PJO5MtHAA09e5-+g@mail.gmail.com>
+Date: Fri, 11 Oct 2013 09:28:26 +1100
+From: Michael Samuel <mik@...net.net>
+To: oss-security@...ts.openwall.com, security@...ian.org
+Subject: Re: RESEND: CVE Request: pwgen
 Content-Type: text/plain; charset=utf-8
 
-The following was reported to us, but has already been reported
-publicly upstream.  Could a CVE be assigned to it?
+On 11 October 2013 00:35, Marcus Meissner <meissner@...e.de> wrote:
+> (CVE worthyness:
+> It does not fully meet the security expectations of generating
+> a non-weak password by default....
+> )
 
-It was discovered that OpenLDAP, with the rwm overlay to slapd, could
-segfault if a user were able to query the directory and immediately
-unbind from the server.  This seems to be due to the rwm overlay not
-doing reference counting properly, so rwm_conn_destroy frees the session
-context while rwm_op_search is using it.  This condition also seems to
-require multiple cores/CPUs to trigger.
+"Exploiting in the wild" isn't what I do, but it wouldn't be hard to
+weed out some pwgen passwords from public dumps simply by doing:
+pwgen -cn 8 1000000000 | john --stdin pwfile
 
+I have a program that tries to mimic the internal state and generate
+in order of probability, but it still needs some tuning.  There will
+be a couple of slides on pwgen at my Ruxcon talk too.
 
-References:
+For distros not wanting to ship an insecure program, see
+https://github.com/therealmik/pwgen/compare/securityfixes
 
-http://www.openldap.org/its/index.cgi/Incoming?id=7723
-https://bugzilla.redhat.com/show_bug.cgi?id=1019490
+I think somebody at Debian needs to do an NMU, since the maintainer is
+still not responding.
 
-This is currently not fixed upstream.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Regards,
+  Michael
