@@ -1,28 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/20/3
-Message-ID: <20130720071344.GA13185@eldamar.local>
-Date: Sat, 20 Jul 2013 09:13:44 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: XSS in smokeping / start and end time fields not filtered
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/10
+Message-Id: <E1VUFGK-0002Xa-D5@xenbits.xen.org>
+Date: Thu, 10 Oct 2013 12:22:40 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 67 (CVE-2013-4368) - Information leak through outs instruction emulation
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-There is another XSS fix which was done after the 2.6.9 release for
-smokeping.
+             Xen Security Advisory CVE-2013-4368 / XSA-67
+                              version 2
 
-In [1] Steven Chamberlain pointed out that in 2.6.9 upstrem the
-"start" and "end" time fields are still not filtered.
+         Information leak through outs instruction emulation
 
-Tobi Oetiker fixed this in a commit following the 2.6.9 release at
-[2]. But this version is no yet released.
+UPDATES IN VERSION 2
+====================
 
- [1] http://bugs.debian.org/659899#67
- [2] https://github.com/oetiker/SmokePing/commit/bad9f9c28f0939b269f90072aa4cf41f20f15563
+Public release.
 
-Does this also needs a separate CVE, as a subsequent fix to the 2.6.9
-release?
+ISSUE DESCRIPTION
+=================
 
-Regards,
-Salvatore
+The emulation of the outs instruction for 64-bit PV guests uses an
+uninitialized variable as the segment base for the source data if an FS: or
+GS: segment override is used, and if the segment descriptor the respective
+non-null selector in the corresponding selector register points to cannot be
+read by the emulation code (this is possible if the segment register was
+loaded before a more recent GDT or LDT update, i.e. the segment register
+contains stale data).
+
+A malicious guest might be able to get hold of contents of the hypervisor
+stack, through the fault address passed to the page fault handler if the outs
+raises such a fault (which is mostly under guest control).  Other methods for
+indirectly deducing information also exist.
+
+IMPACT
+======
+
+A malicious 64-bit PV guest might conceivably gain access to sensitive data
+relating to other guests.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 3.1.x and later are vulnerable.
+
+Only 64-bit PV guests can take advantage of this vulnerability.
+
+MITIGATION
+==========
+
+Running only HVM or 32-bit PV guests will avoid this issue.
+
+CREDITS
+=======
+
+This issue was discovered by Coverity Scan and Matthew Daley.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa67.patch             Xen 4.2.x, Xen 4.3.x, xen-unstable
+
+$ sha256sum xsa67*.patch
+7de3ac9baa6cd9fead46e68912dfa0189e900095317645d0e33d85346fc8a028  xsa67.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJSVpv2AAoJEIP+FMlX6CvZBl4H/RAC7wtn0iA5AGj8197NJC0q
+kZDOT0h9QAgecWtYLaZ249MIWeFRGDLjw5IQKxQG+0c/BJyTZzyvLqbfAA/rjjX2
+FVSi9+6qtr23WTIgoMKDuSvO/MaC55Y2hkZ/9+j8c+jUD9OyOdbGpjYMF+n3ARB7
+GYJkDomxTD/5N8D25wCciaR3fKepM4eaBayXrjIVP2S/k6aQ8QQCjSLP+ito8EG8
+RD+MaRlYyBYrO3Q9hZdNju6AREKphpS0WEHqlChmql8Ij8+88ZFYXVHHmhw70G6D
+1d6OSm1kFikmroWby9AD97qDwX+estTA4kwKnXYxmcrgyWvkE7O9/uVQJbGGNwg=
+=thOF
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa67.patch" of type "application/octet-stream" (1307 bytes)
