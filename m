@@ -1,39 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/4
-Message-ID: <20130426054841.GF23082@nef.pbox.org>
-Date: Fri, 26 Apr 2013 07:48:41 +0200
-From: Alistair Crooks <agc@...src.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: gremlin@...mlin.ru
-Subject: Re: Nginx ngx_http_close_connection function integer overflow - can anyone confirm this?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/13
+Message-Id: <E1VUFGT-0002ZU-HA@xenbits.xen.org>
+Date: Thu, 10 Oct 2013 12:22:49 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 69 (CVE-2013-4370) - misplaced free in ocaml xc_vcpu_getaffinity stub
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 25, 2013 at 11:36:17PM -0600, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> - From Bugtraq:
-> 
-> http://www.securityfocus.com/archive/1/526439/30/0/threaded
-> 
-> Website: http://safe3.com.cn
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Is this legit?
+             Xen Security Advisory CVE-2013-4370 / XSA-69
+                               version 2
 
-I downloaded the index.html file with curl, and embedded around line 87
-was a flash file:
+           misplaced free in ocaml xc_vcpu_getaffinity stub
 
-<table width="930" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
-<tr><td>
-<object type="application/x-shockwave-flash" data="/banner.swf?xml=/banner.xml" width="930" height="180">
-<param name="movie" value="/banner.swf?xml=/banner.xml"/>
-</object>
-</td></tr>
-<tr>
+UPDATES IN VERSION 2
+====================
 
-so I took it to be an attempt at phishing.
+Public release.
 
-Maybe I'm just too paranoid in my old age?
+ISSUE DESCRIPTION
+=================
 
-Regards,
-Alistair
+The ocaml binding for the xc_vcpu_getaffinity function incorrectly
+frees a pointer before using it and subsequently freeing it again
+afterwards. The code therefore contains a use-after-free and
+double-free flaws.
+
+IMPACT
+======
+
+An attacker may be able to cause a multithreaded toolstack written in
+ocaml and using this function to race against itself leading to heap
+corruption and a potential DoS.
+
+Depending on the malloc implementation code execution cannot be ruled
+out.
+
+VULNERABLE SYSTEMS
+==================
+
+The flaw is present in Xen 4.2 onwards.
+
+Systems using an ocaml based toolstack (e.g. xapi) are vulnerable.
+
+MITIGATION
+==========
+
+Not calling the vcpu_getaffinity function will avoid this issue.
+
+Not allowing untrusted users access to toolstack functionality will
+avoid this issue.
+
+CREDITS
+=======
+
+This issue was discovered by Coverity Scan and Matthew Daley.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa69.patch             Xen 4.3.x, Xen 4.2.x, xen-unstable
+
+
+$ sha256sum xsa69*.patch
+d3beb662aacf628b6a25ff6cfcd9526ab689aa43a56cf25e792a001f89b4edbc  xsa69.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJSVpv9AAoJEIP+FMlX6CvZDDsIALyFWH1+Ox87+kncvYUHu6UJ
+m4r85Jqp7pD97hAWP0mbVu/RxZgIE2mUaLDruuRvyaA940HtmsYxYRd010uqxUGQ
+ouFdaChJpfyGAgKn15INEQnj7giX5Kd6tPFyza5N4TBm8HbK1N83rpGHDT8+unzA
+MTAPk5KXCiIJ0LBU23Ce5ryXwXIkDjwPP+hJ+G0Axv1UpBTn6BhxE135m7cTOemU
+oWHSrYbrM4zBpVPQHl1NX8YGtjbBILwDZOmtfJD/EDI2i7iqiIbVAAEoY6xFIHmL
+nk0ZSN/rLSBXV+FH+sdJJunQzj4MOXg+nTx6ptO2T1pzTssEVsz6JOgUcCEMIy8=
+=4eSf
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa69.patch" of type "application/octet-stream" (995 bytes)
