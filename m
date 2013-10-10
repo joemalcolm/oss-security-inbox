@@ -1,24 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/15
-Message-ID: <8680757.FSMgODTajn@devil>
-Date: Thu, 21 Feb 2013 18:50:14 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: nginx world-readable logdir
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/9
+Message-ID: <5256411C.2000502@redhat.com>
+Date: Wed, 09 Oct 2013 23:54:36 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: cve-assign@...re.org
+CC: oss-security@...ts.openwall.com
+Subject: Re: 2 CVE's to be rejected
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I just noticed my nginx logdir and its content are world-readable:
+On 10/09/2013 11:35 PM, cve-assign@...re.org wrote:
+>> The following two CVEs were used internally, one for an issue
+>> that turns out not to be an issue (looong story) and one for an
+>> issue with the same root cause as another (so duplicate). We
+>> could in theory recycle them but I feel it safer to not reuse
+>> them in case they leak out and cause confusion.
+> 
+>> Please REJECT CVE-2013-1870 Please REJECT CVE-2013-4398
+> 
+> Our current process for rejecting as a duplicate requires that the 
+> REJECT description specify the duplicated CVE ID. Would you be able
+> to say which one (1870 or 4398) had the duplicate/same-root-cause 
+> situation, and the correct CVE ID for the vulnerability with that
+> root cause?
+> 
+> We would want this information even if the correct CVE ID still
+> refers to an embargoed issue.
 
-drwxr-xr-x  2 root root  4096 Jan 10 00:11 .
-drwxr-xr-x 16 root root  4096 Feb 21 17:46 ..
--rw-r--r--  1 root root 69415 Feb 21 17:46 error_log
--rw-r--r--  1 root root 93017 Feb 18 22:03 localhost.access_log
--rw-r--r--  1 root root 86227 Feb 18 22:03 localhost.error_log
+The duplicate issue is still embargoed, the other one is also an
+embargoed issue. I have made notes in our system to notify
+oss-security/Mitre when they unembargo (so we'll announce the details
+then).
 
-What do you think about?
+In future should we hold CVE reject notifications until we can provide
+the information as to why? I figured sooner was better (but I can also
+see holding off until details can be released being a sane choice).
 
--- 
-Agostino Sarubbo / ago -at- gentoo.org
-Gentoo Linux Developer
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSVkEcAAoJEBYNRVNeJnmTUM0P/3CB2RG+KK4ZJXyoX9YJnwRR
+Bb5E4Tyu7fVS/IDZFM+ULLf/pThhZEbtlf4x/iNjq5Ss4qapJpQ5DfUOfAWe5wUl
+QVgCFLNKFVPgSpQdi5/DSWeJPCaYzTVxA5G7FCSIF1m7tOTyHHx2TCwaf2gQZaWZ
+t1U3vaaM/PMH1Qkcs5vvTiwpB6DZEmPWx1K3sw3tEwH/ufZ5FUX7FF5RkVFiWUds
+L0O3SWKWfF08B4sTxA9d0znNKwwQRl5OiKGKCcWavnED/Vt9TWXhAa/n68fcA7ny
++uBy3hzVDUSjB4PzssODzTmkGyoIvH7DeL801URr40E6vfc4YLYxdrPxIPsAUWvk
+fCtDRJ9e6QbBOay2JN+AEJEPAuLFCxQo35pjCCNAG7x5FhnoTk+BtUgizWVeHRi8
+MaF+jK/6dQX7eO0BklQL3EQvmqxvdOFuDzgIlFYTSkqoandks7JSZJc809hqzsYm
+3kLW/RrpqXfyWWwiTGNmOunjIoisXGyh+uxNWy30PpoVm59mxkuvQQEbEiYDvwNq
+6TfKQhFu6r22OooDwnlNgrAkUO9374dFqV4UvcBaDvKFTAqhoNBemUl+CMXFgfZ1
+yOifSOqnlvpNh1pa8M/s22qGnVNuvlwJu0dAT6p40qMwurvpKJw7n4NUI1isAhgd
+4u6y6uj/wdoTh49O9WC9
+=yOvB
+-----END PGP SIGNATURE-----
