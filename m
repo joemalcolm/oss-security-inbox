@@ -1,24 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/09/1
-Message-ID: <20130509130338.GB11765@frohike.xs4all.nl>
-Date: Thu, 9 May 2013 15:03:38 +0200
-From: Peter Bex <Peter.Bex@...all.nl>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: CHICKEN Scheme incomplete fix for CVE-2012-6122 (select() fs_set buffer overrun)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/5
+Message-ID: <52563719.9070200@redhat.com>
+Date: Wed, 09 Oct 2013 23:11:53 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: 2 CVE's to be rejected
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 08, 2013 at 11:07:02PM +0200, Peter Bex wrote:
-> There are two commits which together fix the bug:
-> http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commitdiff;h=9e2022652258e8a30e5cedbf0abc9cd85a0f6af7
-> http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commitdiff;h=556108092774086b6c86c2e27daf3f740ffec091
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Correction, this introduced a bug on systems where connect() can return
-EINPROGRESS, resulting in an exception being raised when connecting to a
-socket and immediately writing to it.  A third patch is required to fix
-this bug:
-http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commitdiff;h=766056cd5f26b1d529405705449cb534609c113f
+The following two CVEs were used internally, one for an issue that
+turns out not to be an issue (looong story) and one for an issue with
+the same root cause as another (so duplicate). We could in theory
+recycle them but I feel it safer to not reuse them in case they leak
+out and cause confusion.
 
-Cheers,
-Peter
--- 
-http://www.more-magic.net
+Please REJECT CVE-2013-1870
+Please REJECT CVE-2013-4398
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSVjcYAAoJEBYNRVNeJnmTlt0P/1Xym2y3kzscDCohP9tx4Pw5
+8HnB1R4if1oIqcnhkQHWqamqX6E4UGECcGVt/scMtajjVUqgIL/LcKyoNZjwQy6D
+ffh5LQ5BQAoEqtdSX01ft1kvL8eVXYpbNPGtDq1cFqnZe94bmELSmJo21K/5BxZf
+epv3NdjVww3wDwMUea+WqGW99CPxJCpEytm6VYzDoPKCQimHv1bo5YkFw49IyykQ
+i75bVT0WYdTY6nIRuGdSqJ3ob3DiuZxhd2nTIXkNnXMmpiaI1jeZuLDgazHF31dn
+HbXvjUEnsICGs3t53S89CRMvSu9slpWa1taoyYWksMYx0cbeAfdQRfEtC9xf7Ilm
+tdIVFJA4olos7jgi5OVTLUd70IbWLel7E59qPIixYMVlL6IKCF2QcmZvqcZ7mlmZ
+Wqh7soRpDJ7HNiLkd7Djfl6A1OtlKSpVZT4zOP3uXpq/xu0TNusEdhewrE8FwCEx
+dP5sZlbAcYXU18E7qu4hC+/fS5WZ/XgDrLT2B6eBGWXVlsOTiQieWrZynLdprI/s
+L4L3IjmHEjJZ3WqrwdUCtnKvPnH4A0nLdIcW2VkfxUBtIj7qvlBtMSsRTxfbHVQk
+drpPz24ESuhJ4AHl9pOhSz/gPd4w4kq5CdCZOKneyjAkhyVx+f+XaxaN+KXQxNGE
+i2cjvnCyusdR+XWIZufX
+=DUxe
+-----END PGP SIGNATURE-----
