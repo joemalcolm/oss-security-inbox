@@ -1,57 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/2
-Message-ID: <52982144.6090906@redhat.com>
-Date: Thu, 28 Nov 2013 22:08:20 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Apache Solr XXE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/7
+Message-Id: <201310100535.r9A5ZB9I000034@linus.mitre.org>
+Date: Thu, 10 Oct 2013 01:35:11 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: 2 CVE's to be rejected
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/28/2013 09:55 PM, David Jorm wrote:
-> Hi All
+> The following two CVEs were used internally, one for an issue that
+> turns out not to be an issue (looong story) and one for an issue with
+> the same root cause as another (so duplicate). We could in theory
+> recycle them but I feel it safer to not reuse them in case they leak
+> out and cause confusion.
 > 
-> Apache Solr 4.3.1, 4.4, 5.0 resolves multiple XXE flaws, as
-> described in the following bugs:
-> 
-> https://issues.apache.org/jira/browse/SOLR-3895
+> Please REJECT CVE-2013-1870
+> Please REJECT CVE-2013-4398
 
-Please use CVE-2013-6407 for this issue
+Our current process for rejecting as a duplicate requires that the
+REJECT description specify the duplicated CVE ID. Would you be able to
+say which one (1870 or 4398) had the duplicate/same-root-cause
+situation, and the correct CVE ID for the vulnerability with that root
+cause?
 
-> https://issues.apache.org/jira/browse/SOLR-4881
-
-Please use CVE-2013-6408 for this issue
-
-> I have confirmed that these issues can also be exploited on Apache
-> Solr 3.6.2. Please assign a CVE ID for these XXE flaws (I think a
-> single CVE ID is most appropriate).
-
-These have to be SPLIT, different reporters, and one was in a release
-so the second is a classic "incomplete fix for X" CVE as well.
-
-> Thanks
-
-
+We would want this information even if the correct CVE ID still refers
+to an embargoed issue.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJSmCFDAAoJEBYNRVNeJnmT7fYQAIKOMe+q8PqWDZKN5oMokwVU
-R1ukFZ7YIXfoxewUlSHrPBGFEf1Nhwni7luucrm53gCvqIEZ8tUKchirZOud+TVH
-kk/cZk5JZEC9IT7kfEqVkVhxz7xUf6/DTLxKiQ7266ehzyvD7Rmii01Dm8Jxdd9h
-Bl0EjXMANvVwaKSZjslM8RgA8T9sN/vWWD1GbfEHr9bHETbJ3Mns0LGRtZqzrdcF
-r76bW2guIgNODIV+8Y3ZWJ305ZcmZSXD7x+/yYiFGwDIcWeusbokafw++wpqj0Ix
-/miP9dAAm/lgyjZwi1Q+lC1UGTf/SPOQkTkwR9N77Gvsk0aRLPUMjDVWFgsNhKnt
-7+hD3HB/uarw7qaqC+RdJTvx25kkbFNk7dFDKNxnwvWNa/Nc5a3nkYdJmxzA3u2L
-VcXeGhEani8MkWbOCBtLvYi+gyCmSbmJ7W0sTz9yI4ABYVGSDk4DW4/V8sd07Kvd
-vnn4eQeR7DbXl/U1zIW+wKoETsbGoYAMC0F64nrnnbfp4IKdVwk1z29FC8eBPCQI
-Y2Tj+HEfEq1qNn1ACi1x2HmFKu9PxCpLMaW6s/7fhHC4d3/BBx+S+qkzyI8BLW24
-WRgmYvuQuunrN8sI+382cIg7SxocZjqm77ZknSAXqWWLMyF183LUkmxyB806QXtY
-P4EQesHGBHubthiQshka
-=VPpG
+iQEcBAEBAgAGBQJSVjw0AAoJEKllVAevmvmsm7wH/0Rgv/rfNE3KlAYUGd9XKo0k
+MmE2+H4v+93Sw7wSbUnSXDATUP80DSgex8O4o/UT8U1nfXJXUMYRsFvkZQrmPevo
+wBxDj2v6laSIT2NMuLGz/noBMoZeluCSLlr3GL0AuntBH3omjxKkY3MunW7WkWY2
+8Gut8AfrfGFepz83BdMSBx8UsMP7sOHGzAnmm+7hwpxTx/yWa/bsuNQqYSaTXQwe
+4jOoX1yvPxnqhacevn2nWZ7ewvlYERAkFif0sWHxRhbzIhv626ahb3dY0Gf6L6bF
+/UqEXMWSC2O2nkqBdwvpGbZ797JSmGMniaRQ2+BqtnjjlYuKOkPj+v+dp2+0+bw=
+=nxfR
 -----END PGP SIGNATURE-----
