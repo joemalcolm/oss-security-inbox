@@ -1,50 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/24
-Message-ID: <20130225233430.GA9203@openwall.com>
-Date: Tue, 26 Feb 2013 03:34:30 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: kernel: tmpfs use-after-free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/9
+Message-ID: <1381481490.4814.13.camel@localhost.localdomain>
+Date: Fri, 11 Oct 2013 10:51:30 +0200
+From: Xabier Rodríguez Calvar <calvaris@...il.com>
+To: General PulseAudio Discussion <pulseaudio-discuss@...ts.freedesktop.org>
+Cc: oss-security@...ts.openwall.com, webkit-gtk@...ts.webkit.org
+Subject: Re: [pulseaudio-discuss] Vulnerability in Webkit-GTK and PulseAudio volume handling
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 25, 2013 at 08:50:12PM +0100, Jason A. Donenfeld wrote:
-> While everyone's going wild hndl->dump'ing with CVE-2013-1763, there's
-> apparently been another silent security fix with
-> 5f00110f7273f9ff04ac69a5f85bb535a4fd0987 [1]:
+O Xov, 10-10-2013 ás 20:50 +0100, Colin Guthrie escribiu:
+> It's certainly an interesting issue and your code highlights the
+> problem
+> quite well.
 > 
-> > tmpfs: fix use-after-free of mempolicy object
-> >
-> > The tmpfs remount logic preserves filesystem mempolicy if the mpol=M
-> > option is not specified in the remount request.  A new policy can be
-> > specified if mpol=M is given.
-> > 
-> > Before this patch remounting an mpol bound tmpfs without specifying
-> > mpol= mount option in the remount request would set the filesystem's
-> > mempolicy object to a freed mempolicy object.
+> I'm not sure I consider it a technical vulnerability tho' (just my
+> personal opinion) but I do appreciate the damage to both h/w and
+> hearing
+> that could result and thus I won't argue about classifying it as such.
+> 
+> What would be more interesting to me would be how the same code works
+> on
+> Windows 7 which I believe also implements a flat volume scheme (not
+> sure
+> about Win 8) and how it handles stream volumes in this context
+> (background:
+> http://www.patrickbaudisch.com/publications/2004-Baudisch-CHI04-FlatVolumeControl.pdf)
 
-Apparently, the bug is only triggerable on builds with CONFIG_NUMA.
-Otherwise mpol_parse_str() is dummy, so it never sets the mpol pointer
-(which I guess is then left at NULL both at original mount and at any
-remount).
+For Colin to know, before touching anything in WebKitGtk+ the behavior
+was that the volume was ramping up to 100% with every website regardless
+their volume control.
 
-> > How far back does this issue go? I see it in both 2.6.36 and 3.3.  I did
-> > not look back further.
+I met Slomo and Lennart at GUADEC and we thought that the best was
+letting the sink, pulsesink in this case, set the volume and we would
+just get that for the slider, regardless the volume model applied. This
+was supposed to be a good compromise for the different situations (using
+PA with or without flat volumes, using another sink) as volume wouldn't
+ramp up to 100% always.
 
-RHEL5'ish kernels appear not vulnerable: they directly use a couple of
-integers in place of mpol struct pointers.  I did not check RHEL6.
+There are some other restrictions we have to observe, though:
 
-> The commit message goes on with details on how to trigger it. Note
-> that as of 5eaf563e53294d6696e651466697eb9d491f3946 [2], you can now
-> mount filesystems as an unprivileged user [...]
+     1. We want to be agnostic of the GStreamer sink used and of course,
+        to the volume model used by pulse, because we don't know it.
+     2. We want to allow audio passthrough when possible.
+     3. We want to be coherent with the rest of GNOME apps, and the
+        volume model they are using.
+     4. We have to comply with the HTML5 W3C standard that says that
+        volume will be 100% by default, though user agents can decide to
+        restore former volume (perfect if we let pulse decide it).
 
-This is also relevant to OpenVZ (and perhaps to other container-based
-virtualization systems/patches for Linux), where in-container root can
-mount/remount tmpfs.  While I did not check RHEL6 kernel code yet, I
-just had a quick look at OpenVZ's default config for those kernels, and
-it does include CONFIG_NUMA=y.  So if the code has the vulnerability,
-then OpenVZ based on these kernels is likely affected.  (Need to check
-this when I have more time, or maybe someone else will.  Luckily, we're
-still at RHEL5'ish OpenVZ kernels in released Owl versions, and we also
-don't build them with CONFIG_NUMA.)
+We would easily add a GStreamer volume element and solve what Alexander
+says, buy we would be breaking 2 and 3 rules and to fulfill 3 and 4, I
+actually tested that with the proposed fix, the volume could still ramp
+up to 100% because in our opinion, it is up to the web developer to
+sanitize their volume management or up to the user to change the volume
+model.
 
-Alexander
+Best regards.
+
+
