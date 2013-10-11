@@ -1,44 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/01/2
-Message-ID: <524A185D.7090603@redhat.com>
-Date: Mon, 30 Sep 2013 18:33:33 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/6
+Message-ID: <52579052.2010808@redhat.com>
+Date: Thu, 10 Oct 2013 23:44:50 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Laurent Butti <laurentb@...il.com>
-Subject: Re: CVE request: VLC
+CC: Joel Weinberger <jww@...omium.org>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: Re: browser document.cookie DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/30/2013 03:31 PM, Laurent Butti wrote:
-> Hi,
-> 
-> I have found a security issue in vlc 2.0.8 which was reported to
-> VLC team and fixed in both 2.0.9 and 2.1.0 (as "Fix buffer overflow
-> in the mp4a packetizer").
-> 
-> Here are the commit log and changelog:
-> 
-> *
-> http://git.videolan.org/?p=vlc.git;a=commitdiff;h=9794ec1cd268c04c8bca13a5fae15df6594dff3e
+On 09/25/2013 09:42 AM, Kurt Seifried wrote:
+> On 09/20/2013 09:52 AM, Joel Weinberger wrote:
+>> Just an FYI, we have fixed this in tip of the tree Chromium: 
+>> https://src.chromium.org/viewvc/chrome?revision=224268&view=revision
 >
+>> 
 > 
-* http://www.videolan.org/developers/vlc-branch/NEWS
+> https://code.google.com/p/chromium/issues/detail?id=238041
+>> --Joel
 > 
-> Could a CVE be assigned?
 > 
-> Thanks, Laurent Butti.
+> So I assume Google will not be handling CVE assignments for
+> chromium?
+> 
 
-Thanks, please use CVE-2013-4388  for this issue.
+Ping. Does anyone know if Google is acting as the CNA for Chromium? I
+assume they are, but I also see no CVE for this.
 
-Also do you know anything about:
-
-Demuxers:
- * Add protection against several potential heap buffer overflow in
-libebml
-
-how potential are we talking?
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -46,17 +36,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSShhdAAoJEBYNRVNeJnmTrnAP/jQ9KDaZZU0hYRg98Ee/E+DG
-5JMlvb8nge3TbdzgA38tE1J6oTALI/YiCFduyXJqieKdUiMDT7zqXPdg/Rtnimmj
-pcI4YHvLybHNS34sr9+mOSTq55kJfHrywmCboIkZE/lCQ0UX4LmsfR421lAWkUas
-XKgCA0B+MZPVlFx9BTJ6JUP0TbKtDIEmje6Tm1KTeyfgDgpp1nLmF237+mFfH/cC
-DTYmC3M8GhYltzQdIgTJCkBNfG0JOuS1NYdOWvsn3vSYpcC2nvqhzBJZwFWVR+ym
-iA9LcdS+hKvk/EWAVEw3vvlGfcbB6qAfE+Xkyo4SMEHoikcQlExiYvlet0YXIahK
-1Vsqnw1n9qTx4/mlDaXLFULMKj7PvC55wbhs3IPe51Y08icbmg4Egl4LzcYM7634
-Z0RQeF90WcrFhwJuaemxhC0SKtZYHZgfMvpLzMVlTLjEAFtxJ0ggnYopRdR/kg+t
-P/vdWu1J+M32gPQLQ7cUYTzeNUrIsg/kPoiwLzcvgsgvPQIkIVqCWHQ1aXJee0YV
-dgh3ygWFX5tzoOETlFbF5KszWAqi1r2aHpsGPQaDdrht6I0pyABWYdOucTg1EE09
-SmiPbwHVx9o14dk2oFF4ocblYdeIFmkw8frfdxfjghidA0mE+Oslk04io5v2AIhN
-51EibobpfKQ3CTaQhD4Z
-=d92s
+iQIcBAEBAgAGBQJSV5BSAAoJEBYNRVNeJnmTEkMQAJQhHCzOKxhgJELgagAm3O2g
+23pSmKNeXh27Px9Dq+RllMM/qN+jETPHQ/59y1l9GE4nMymqeMBBDbK0Ws5q050+
+Ay9aZTPr3vleClhmoqyFOZIU+oDlbZ0/IamoM0th9F8r4hjVHbzFVO0GXkTSaGk4
+CJKRP3fqli+yX+Wk8twUOXkr4Nr1bg4Ty7LugxeMlHCVrsMo4Lpbv2YcRVg/6x7f
+V6x326z9c00txtpKxbP0IgON7qeR7BBkPDgbf6APFcWSp/TSZIeXk2y/xgMVXiMd
+3IJt6HeKqhLzb35PlHeZJrcJjKlUHkrZniY61Ig3gc/GviwgegFuAwP3O9kUDxvc
+GYS6t7bUfJ/Mhwaki4tAW5JeYc6WV3zhCU31UeJmr/tqNJfunI6uxASQnW0IzzVf
+eS5AV20nHJn6PtJTB54jxw4EuYDvzpXor+9WB5KP76z+wgZhUjitHR4PHDHUIeyY
+jc9nJ7EOs2aqj1k7UGd1STRDE2xG0Rki37Yvf7oPIPulGLjHmPxL6kKCpSTt+pIM
+OaOomM1uZSSejG8BMWXZ4vNTzc0yFUN1C2h226E2i2Q5CykCdENIOXLXjFASfPQR
+aVS+IvRrYFy7+9DjAXU3vK2uoW9vnDUoidSkd76jToCinfkJ6uAYUhH23RJBB1Xe
+/oZA/ZljHxv2mqbc/XMM
+=XRg2
 -----END PGP SIGNATURE-----
