@@ -1,81 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/05/2
-Message-ID: <52A005CC.8040702@redhat.com>
-Date: Wed, 04 Dec 2013 21:49:16 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: mmcallis@...hat.com, oss-security@...ts.openwall.com
-CC: meissner@...e.de, Kurt Seifried <kseifrie@...hat.com>
-Subject: Re: CVE needed for hplip insecure auto update feature?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/10
+Message-ID: <5257C71B.3020904@gmail.com>
+Date: Fri, 11 Oct 2013 15:38:35 +0600
+From: "Alexander E. Patrakov" <patrakov@...il.com>
+To: oss-security@...ts.openwall.com,  General PulseAudio Discussion <pulseaudio-discuss@...ts.freedesktop.org>
+CC: webkit-gtk@...ts.webkit.org
+Subject: Re: Re: [pulseaudio-discuss] Vulnerability in Webkit-GTK and PulseAudio volume handling
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Xabier Rodríguez Calvar wrote:
 
-On 12/04/2013 09:02 PM, Murray McAllister wrote:
-> Hello,
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=853405 talks about an 
-> upgrade feature in hplip downloading (via HTTP) a binary and
-> executing it. Is a CVE needed for that?
-> 
-> Along with the versions in 
-> <https://bugzilla.novell.com/show_bug.cgi?id=853405#c6>, the hplip
-> 1.6.7 and hplip3 3.9.8 versions I looked at did not have the
-> upgrade.py file in the source (newer version like 3.13.11 had it in
-> the source but the RPM spec file looks to remove it at build time,
-> so it is not provided in the binary RPMs).
-> 
-> Thanks,
-> 
-> -- Murray McAllister / Red Hat Security Response Team
-> 
+> For Colin to know, before touching anything in WebKitGtk+ the behavior
+> was that the volume was ramping up to 100% with every website regardless
+> their volume control.
+>
+> I met Slomo and Lennart at GUADEC and we thought that the best was
+> letting the sink, pulsesink in this case, set the volume and we would
+> just get that for the slider, regardless the volume model applied. This
+> was supposed to be a good compromise for the different situations (using
+> PA with or without flat volumes, using another sink) as volume wouldn't
+> ramp up to 100% always.
+>
+> There are some other restrictions we have to observe, though:
+>
+>       1. We want to be agnostic of the GStreamer sink used and of course,
+>          to the volume model used by pulse, because we don't know it.
+>       2. We want to allow audio passthrough when possible.
+>       3. We want to be coherent with the rest of GNOME apps, and the
+>          volume model they are using.
+>       4. We have to comply with the HTML5 W3C standard that says that
+>          volume will be 100% by default, though user agents can decide to
+>          restore former volume (perfect if we let pulse decide it).
+>
+> We would easily add a GStreamer volume element and solve what Alexander
+> says, buy we would be breaking 2 and 3 rules and to fulfill 3 and 4, I
+> actually tested that with the proposed fix, the volume could still ramp
+> up to 100% because in our opinion, it is up to the web developer to
+> sanitize their volume management or up to the user to change the volume
+> model.
 
-I'm going to say this deserves a CVE due to the following factors:
+Well, my point is exactly that items (2) or (3) don't (and can't) make 
+any sense in the context of web apps (or rather, in _any_ context of 
+potentially untrusted non-native apps), even if a sane (non-flat) volume 
+model is implemented in PulseAudio. Please don't try to do the impossible.
 
-1) the default is insane:
-if HPLIP_PATH is None:
-url="http://sourceforge.net/projects/hplip/files/hplip/%s/hplip-%s.run/download"
+My current viewpoint is that the root of the problem is not in flat 
+volumes (they are just an aggravating factor), but in the fact that 
+untrusted javascript volume is directly connected to a pavucontrol 
+slider, potentially making that slider disobey the user.
 
-2) A google search for "HPLIP_PATH" yields 6 results. _6_. This is not
-documented anywhere I can find.
+And this is not about sanitizing the volume management in non-malicious 
+web pages. As I already said, this is about deliberately-malicious 
+scripts whose (no matter absolute or relative) volume and mute status 
+cannot be overridden. Think of them as a sound equivalent of a "1000 
+popups" problem.
 
-3) I checked the source code:
+P.S. I am not currently registered for GStreamer conference - should I 
+do so in order to discuss the issue in person with you or with other 
+GStreamer developers, or is my current LinuxCon registration sufficient?
 
-[kseifrie@...alhost hplip-3.13.9]$ find ./ -type f  | xargs grep
-HPLIP_PATH
-./upgrade.py:HPLIP_PATH=None
-./upgrade.py:        HPLIP_PATH=a
-./upgrade.py:        if HPLIP_PATH is not None:
-./upgrade.py:            if os.path.exists(HPLIP_PATH):
-./upgrade.py:                download_file = HPLIP_PATH
-./upgrade.py:                log.error("%s file is not present.
-Downloading from Net..." %HPLIP_PATH)
-./upgrade.py:                HPLIP_PATH = None
-./upgrade.py:        if HPLIP_PATH is None:
-
-Again no documents. Not even a hint (e.g. --help listing command line
-options)
-
-
-Definitely CVE worthy. Please use CVE-2013-6427  for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSoAXLAAoJEBYNRVNeJnmT+lgP/AhuTFQmKuiOV6S21CzTAXdw
-yFdu1P5K/vd6GyxyKKK45yt1wb73CISXVn9oGQEG3Zdpf5wFLrTG7H7wltAz+867
-lngeBhdF3IdYCe2w2eMM7kQGtDxny1Qa2eS1Xa+3l4vihsFoSS8z9Rbytn8ay4nQ
-tYrfWlJaMn3XZEx4U846E/7HTbi+/K4LTT4UDww5lKfhVR8QEBhy5IN4/Ols61Jn
-9Ditz0hyZfn4NQa91CIv6HGLsv2FBhm8dgH1rHZ5gUcyjuNvWWHG+m+8becv0Jdr
-n+bB5NUdqyJKeD8FWPRq7EmO4QSsOIX+HamAi+PmT8KkB9/rNhYfSHu+u2WGDjRj
-HY/+QdvCHphU5Lc176aAnSwwt6rs8I+saxjG3bibI921+Kj7U2ATUFAWEmG99fq6
-tbFMRaUtAGtHuqZ3RODic5iBib5AUqU/ElyJxqDnxrlmgeT7+NBQUaEYWzsJasYV
-SeCju0UvCSS3pM/aXojv26k2EeXGH7yBrHstCgK9SCq9QK5qr0joGbLQxj2LgLRl
-CNE0cuV+zcOVCLw3iNv6/ScvSJZ7XoJXFlyKLgoQ7xn1W9gGfiVpis3PG4HOR3mi
-syfDDt8xwCWYRTrYh1vu2eLR4ZiPcit41+d7yKBH3Ki2FGWwZgQJ/1UPWmH/If0G
-ZVFYJfBrO9VWQmUSyh2r
-=f8h2
------END PGP SIGNATURE-----
+-- 
+Alexander E. Patrakov
