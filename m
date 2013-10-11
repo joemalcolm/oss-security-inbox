@@ -1,55 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/12/3
-Message-ID: <513E967A.9090100@redhat.com>
-Date: Mon, 11 Mar 2013 20:44:10 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/5
+Message-ID: <52579009.1010607@redhat.com>
+Date: Thu, 10 Oct 2013 23:43:37 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: typo3 sql injection and open redirection
+To: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: RE: 2 CVE's to be rejected
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/09/2013 05:31 AM, Marcus Meissner wrote:
-> Hi,
+On 10/10/2013 10:35 PM, Christey, Steven M. wrote:
+>>> [cve-assign@...re] We would want this information even if the
+>>> correct CVE ID still refers to an embargoed issue.
+>> 
+>> [Kurt] The duplicate issue is still embargoed, the other one is
+>> also an embargoed issue.
 > 
-> http://typo3.org/support/teamssecuritysecurity-bulletins/security-bulletins-single-view/article/sql-injection-and-open-redirection-in-typo3-core/
+> To be (hopefully) more clear, we do not need to "populate" the CVE
+> description or references for the (still-valid) embargoed issue; we
+> only want to refer to its ID from the REJECTed CVE.  That way, if
+> for any reason the REJECTed CVE is used in public, there will be a
+> clear link to the appropriate CVE.  We don't feel that the
+> reference to the still-embargoed issue is an information leak of
+> any sort, given that Red Hat is likely to be working on dozens of
+> not-yet-disclosed vulnerabilities at any point in time, and you've
+> already publicly stated that CVE-2013-1870 (or CVE-2013-4398?) is a
+> dupe of *something*.
 > 
+> While it's unusual to do a REJECT of one CVE and say that it's a
+> duplicate of another CVE that's still not public and still shows up
+> as RESERVED, this action still gives useful information to certain
+> CVE consumers who rely on the CVE IDs to coordinate vulnerability
+> information between diverse parties (which is, after all, CVE's
+> primary goal).
 > 
-> has 2 new security issues without apparent CVE...
+> Similarly, while it's unusual to publicly claim a REJECT of one CVE
+> because it's not a security issue, in the past we have supported
+> various "private" REJECTs that occur when the original CVE
+> requester determines that the issue is just a "bug" (or "feature")
+> and not a vulnerability before the issue was ever published.  It
+> doesn't seem like much of an information leak to know *that* a
+> particular CVE ID was REJECTed because further research showed that
+> the issue was not a vulnerability.
+> 
+> As such, it doesn't seem like there would be any loss of
+> privacy/secrecy if we knew which of (CVE-2013-1870 or
+> CVE-2013-4398) was a duplicate [of some other CVE, whose ID would
+> be nice to know even if the issue isn't public yet], and which of
+> (CVE-2013-1870 or CVE-2013-4398) should be REJECTed because it's
+> not a CVE-qualifying vulnerability at all.
 
-Please use CVE-2013-1842 for Typo3 Extbase Framework SQL Injection
+Ah apologies, I misunderstood and thought that you needed details.
+CVE-2013-1870 is a duplicate if CVE-2013-1869 (we thought it was two
+separate issues, turned out to be a single issue).
 
-Please use CVE-2013-1843 for Typo3 Access tracking mechanism Open
-Redirection
-
-> Kurt, is this in your scope, or more in Mitres?
-
-I generally handle open source unless they are totally messy (I'm lazy
-=) or they go to Mitre first and I never get a chance any ways.
-
-> Ciao, Marcus
-
+> I recognize that we might not have sufficient insight into the
+> situation at hand, so any clarification would be welcome.
+> 
+> - Steve
+> 
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRPpZ6AAoJEBYNRVNeJnmTHXQQAMglUJpq+bfXV0CQn+o8SbA0
-qt36FhAdiwoMmxuXXjP181fjk8MakjpW/7N1psXfOmITOEFVmQUO415UyDqMAhDg
-P+2SHCHwir70WUlCa3Vshdt+xIGU8SPv36CsASnGuDZb0dp0MNuE5bz3vsJnZ/9N
-p5mvkoiOLeXb0WRXp4ALvrFABOBR71xNfQNiBfOzP9vOVZ/O9YUHJZ7Bg5whIxsn
-97yF0kYMEqJNYUSY+MBgl4hfRG7uabZM1Fp+Ydj0keIZDS/vfZrwUA7LIMNzzrwo
-hzCvUOWi0IV4TP1PtPBj9R+G9KXKfUoKShOe6vSWmRiSikgoi5nNBT6Rc7PLIOGI
-uE8Gr7+NNx/JEOK5eCqqE9/5OHV9/bFD70vC5EYkKOO5s2OGlgVb2DDty3K69H/7
-HSxKFR8SUJWRkFLuhuOdYKBaXDByo9DZ0elQPCxjuOTuf5KlItRPFdIO5q7RUct0
-IV7CjGaifbcbayArnq/9ZpI4uFkN/ZP1fRzKXxes/gt48tBg55jUsHjUkm104TFb
-Abvl0xMqnCNCNX5avNy+ZQ3f5XyfscgHyK00fFITXeDx273mDJsHrFHTLoAX1VOT
-4D7qM83Ef0/Xdjlvm4mLQxt2orh8juPjX3UpbQ4qNkET6n2pQJ/5je69qUzM/PY1
-1w2xdDSzoTFA36UI4Jt5
-=cWAY
+iQIcBAEBAgAGBQJSV5AJAAoJEBYNRVNeJnmTABIQAKTkQQm3TRdgK0VxjxZmsCcD
+YJUvPH5HC4d1qa/TDhrN6F33wZsdzL67JzPHlAXWh4jwlJiftEOKUQdec+6F61TS
+ILRmsMNZOShoMtq3wTGmyxrMngFGuYTjnF3aiMkuyueyr/5A64Xs7bGnT8mIYwuk
+sn10f0bmO0wkKCLKNnf7MQdWbqFWFKP9eM9PWP4qZolWMNDyhv/MzoAoHX/Zexsy
+Nmdpk0L6yt6mgDu+w+k70ns3/kEhtquVB/FHiw6+5/BQGM927aZuEyAwzF8O4IJ/
+Pow2ZXKKx99mIujuvraukxLfCniffIeNSefz9xpIuZW5bwBHh525U/hlGqHLWQUM
+6v1pQ6ed77CfqoeBEcmzhTVDLyNx0a5wJHCpJ4J+azIk+pBcp2FWhx87vFYU6Tyj
+WYUzg29af2TN1v7XZotcaU9gKrTv9TEjBNkMAypkqk3Z+XjA66QAiH22U9U9Ebrg
+HtsGDgs3Wa6t/ezVETFMFWOKQnwftFeBObUA6DvZRNOR/XOsGqPZQVmqKdwUS7mR
+fToJgcXeLA8Qd4MFnWkY5vaydVBvVRO35v1S2XP09Exws1RIexXvd7EDQql9Prd/
+nUFjzchE60WJeS5kk7Nh540J4aOfUuInnsF9acoUxri0jld/uuNZUCm/BiOOTeNS
+X/RSj8ke7D9YgB2PyXNS
+=SKLO
 -----END PGP SIGNATURE-----
