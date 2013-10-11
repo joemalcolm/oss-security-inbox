@@ -1,119 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/14
-Message-Id: <E1U8X3b-0007ni-Cw@xenbits.xen.org>
-Date: Thu, 21 Feb 2013 14:23:31 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 36 (CVE-2013-0153) - interrupt remap entries shared and old ones not cleared on AMD IOMMUs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/12
+Message-ID: <CAAAAxQ0vUwLN6fCYa3DfK5Z+Womsv_CwcoA+2NC4J8m=vqPOvQ@mail.gmail.com>
+Date: Fri, 11 Oct 2013 07:25:10 -0700
+From: aaron guzman <aaron23yankees@...il.com>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: Joel Weinberger <jww@...omium.org>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: Re: browser document.cookie DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Google is now paying for patches for apps like Chromium. This was announced
+yesterday. Patches are to be sent to security-patches@...gle.com according
+to this link here
+http://www.tomsguide.com/us/google-software-bounty,news-17676.html
 
-	     Xen Security Advisory CVE-2013-0153 / XSA-36
-			      version 4
 
-  interrupt remap entries shared and old ones not cleared on AMD IOMMUs
+On Thu, Oct 10, 2013 at 10:44 PM, Kurt Seifried <kseifried@...hat.com>wrote:
 
-UPDATES IN VERSION 4
-====================
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 09/25/2013 09:42 AM, Kurt Seifried wrote:
+> > On 09/20/2013 09:52 AM, Joel Weinberger wrote:
+> >> Just an FYI, we have fixed this in tip of the tree Chromium:
+> >> https://src.chromium.org/viewvc/chrome?revision=224268&view=revision
+> >
+> >>
+> >
+> > https://code.google.com/p/chromium/issues/detail?id=238041
+> >> --Joel
+> >
+> >
+> > So I assume Google will not be handling CVE assignments for
+> > chromium?
+> >
+>
+> Ping. Does anyone know if Google is acting as the CNA for Chromium? I
+> assume they are, but I also see no CVE for this.
+>
+>
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (GNU/Linux)
+>
+> iQIcBAEBAgAGBQJSV5BSAAoJEBYNRVNeJnmTEkMQAJQhHCzOKxhgJELgagAm3O2g
+> 23pSmKNeXh27Px9Dq+RllMM/qN+jETPHQ/59y1l9GE4nMymqeMBBDbK0Ws5q050+
+> Ay9aZTPr3vleClhmoqyFOZIU+oDlbZ0/IamoM0th9F8r4hjVHbzFVO0GXkTSaGk4
+> CJKRP3fqli+yX+Wk8twUOXkr4Nr1bg4Ty7LugxeMlHCVrsMo4Lpbv2YcRVg/6x7f
+> V6x326z9c00txtpKxbP0IgON7qeR7BBkPDgbf6APFcWSp/TSZIeXk2y/xgMVXiMd
+> 3IJt6HeKqhLzb35PlHeZJrcJjKlUHkrZniY61Ig3gc/GviwgegFuAwP3O9kUDxvc
+> GYS6t7bUfJ/Mhwaki4tAW5JeYc6WV3zhCU31UeJmr/tqNJfunI6uxASQnW0IzzVf
+> eS5AV20nHJn6PtJTB54jxw4EuYDvzpXor+9WB5KP76z+wgZhUjitHR4PHDHUIeyY
+> jc9nJ7EOs2aqj1k7UGd1STRDE2xG0Rki37Yvf7oPIPulGLjHmPxL6kKCpSTt+pIM
+> OaOomM1uZSSejG8BMWXZ4vNTzc0yFUN1C2h226E2i2Q5CykCdENIOXLXjFASfPQR
+> aVS+IvRrYFy7+9DjAXU3vK2uoW9vnDUoidSkd76jToCinfkJ6uAYUhH23RJBB1Xe
+> /oZA/ZljHxv2mqbc/XMM
+> =XRg2
+> -----END PGP SIGNATURE-----
+>
 
-Updated patches, to deal with a boot time crash resulting from the earlier
-changes on systems with firmware broken in a way not previously accounted
-for.
-
-ISSUE DESCRIPTION
-=================
-
-To avoid an erratum in early hardware, the Xen AMD IOMMU code by
-default chooses to use a single interrupt remapping table for the
-whole system.  This sharing implies that any guest with a passed
-through PCI device that is bus mastering capable can inject interrupts
-into other guests, including domain 0.
-
-Furthermore, regardless of whether a shared interrupt remapping table
-is in use, old entries are not always cleared, providing opportunities
-(which accumulate over time) for guests to inject interrupts into
-other guests, again including domain 0.
-
-In a typical Xen system many devices are owned by domain 0 or driver
-domains, leaving them vulnerable to such an attack. Such a DoS is
-likely to have an impact on other guests running in the system.
-
-IMPACT
-======
-
-A malicious domain which is given access to a physical PCI device can
-mount a denial of service attack affecting the whole system.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 3.3 onwards are vulnerable.  Earlier Xen versions do not
-implement interrupt remapping, and hence do not support secure AMD-Vi
-PCI passthrough in any case.
-
-Only systems using AMD-Vi for PCI passthrough are vulnerable.
-
-Any domain which is given access to a PCI device can take advantage of
-this vulnerability.
-
-MITIGATION
-==========
-
-This issue can be avoided by not assigning PCI devices to untrusted
-guests.
-
-In Xen versions 4.1.3 and above the sharing of the interrupt remapping
-table (and hence the more severe part of this problem) can be avoided
-by passing "iommu=amd-iommu-perdev-intremap" as a command line option
-to the hypervisor.  This option is not fully functional on earlier
-hypervisors.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that on certain systems (SP5100 chipsets with erratum 28 present,
-or such with broken IVRS ACPI table) these patches will result in the
-IOMMU not being enabled anymore.  This should be dealt with by a BIOS
-update, if available.  Alternatively the check can be overridden by
-specifying "iommu=no-amd-iommu-perdev-intremap" on the Xen command
-line ("iommu=amd-iommu-global-intremap" on 4.1.x), at the price of
-re-opening the security hole addressed by these patches.
-
-xsa36-unstable.patch              Xen unstable
-xsa36-4.2.patch                   Xen 4.2.x
-xsa36-4.1.patch                   Xen 4.1.x
-
-$ sha256sum xsa36*.patch
-4bdc0f1f94f82c6bc6c777971f22ef915215b72b98b29f9064e4df65c0efc6f4  xsa36-4.1.patch
-dd32ecaa84edbf6d11241045f40ba53ec4a3bc6c24f719bc21204067c4eb8964  xsa36-4.2.patch
-7c0b3a1b332a24a830c7a436b065943f60c54cd5b7e746c440e2992a7b5cfe41  xsa36-unstable.patch
-$
-
-Incremental patches on top of what was provided in version 3 can also be
-taken from the respective mercurial trees:
-
-http://xenbits.xen.org/hg/xen-unstable.hg/rev/e68f14b9e739
-http://xenbits.xen.org/hg/staging/xen-4.2-testing.hg/rev/6a03b38b9cd6
-http://xenbits.xen.org/hg/staging/xen-4.1-testing.hg/rev/4d522221fa77
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJRJf98AAoJEIP+FMlX6CvZ5ocH/jNY92kLw7BOencxa9R3TGTn
-20O0+j1id+xi2vjVVF2xm2SJ7g/6Egx5WURUfy2cu+I8GdDHKmRrp3Vkazltzcnd
-6AlI5aiPC2H1rFkU0FpneRk3mrluABLZO8Q5YcSJs24hwqded0W+SivH63aInki/
-PsDGoBu8HUjYMWjXyqCJVJIGToLS9ApaQ8+iTylWb1ZocRm2VcPS8yJI7z82kj3A
-zRNADG36oAFawSJsE9z3ykVoYv9UYckOaWkaXh7jZPHAvIjvP2wLb9gmMkMXbIOP
-ICpJJFf0w7oW6KTY3g9n8CxUMBMoUw/9Fv+CQBzOf0ZZY/vIE8q65A0NhCcWixo=
-=vmpB
------END PGP SIGNATURE-----
-
-Download attachment "xsa36-4.1.patch" of type "application/octet-stream" (14403 bytes)
-
-Download attachment "xsa36-4.2.patch" of type "application/octet-stream" (12586 bytes)
-
-Download attachment "xsa36-unstable.patch" of type "application/octet-stream" (12528 bytes)
