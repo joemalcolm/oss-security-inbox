@@ -1,26 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/06/1
-Message-ID: <20130506060617.GA27494@kludge.henri.nerv.fi>
-Date: Mon, 6 May 2013 09:06:17 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: Elites0ft <admin@...tes0ft.com>
-Subject: CVE request: WordPress advanced-xml-reader XXE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/1
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF33E106CE@IMCMBX01.MITRE.ORG>
+Date: Fri, 11 Oct 2013 04:35:26 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "kseifried@...hat.com" <kseifried@...hat.com>, Assign a CVE Identifier <cve-assign@...re.org>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: 2 CVE's to be rejected
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2013 CVE for issue:
+>> [cve-assign@...re]
+>> We would want this information even if the correct CVE ID still
+>> refers to an embargoed issue.
+>
+>[Kurt]
+>The duplicate issue is still embargoed, the other one is also an
+>embargoed issue. 
 
-Advanced XML Reader Plugin for WordPress contains an XXE (Xml eXternal Entity)
-injection flaw that is triggered during the parsing of XML data. The issue is
-due to an incorrectly configured XML parser accepting XML external entities from
-an untrusted source. By sending specially crafted XML data, a remote attacker
-can gain access to arbitrary files.
+To be (hopefully) more clear, we do not need to "populate" the CVE description or references for the (still-valid) embargoed issue; we only want to refer to its ID from the REJECTed CVE.  That way, if for any reason the REJECTed CVE is used in public, there will be a clear link to the appropriate CVE.  We don't feel that the reference to the still-embargoed issue is an information leak of any sort, given that Red Hat is likely to be working on dozens of not-yet-disclosed vulnerabilities at any point in time, and you've already publicly stated that CVE-2013-1870 (or CVE-2013-4398?) is a dupe of *something*.
 
-http://osvdb.org/92904
+While it's unusual to do a REJECT of one CVE and say that it's a duplicate of another CVE that's still not public and still shows up as RESERVED, this action still gives useful information to certain CVE consumers who rely on the CVE IDs to coordinate vulnerability information between diverse parties (which is, after all, CVE's primary goal).
 
-This issue is not yet fixed.
+Similarly, while it's unusual to publicly claim a REJECT of one CVE because it's not a security issue, in the past we have supported various "private" REJECTs that occur when the original CVE requester determines that the issue is just a "bug" (or "feature") and not a vulnerability before the issue was ever published.  It doesn't seem like much of an information leak to know *that* a particular CVE ID was REJECTed because further research showed that the issue was not a vulnerability.
 
----
-Henri Salo
+As such, it doesn't seem like there would be any loss of privacy/secrecy if we knew which of (CVE-2013-1870 or CVE-2013-4398) was a duplicate [of some other CVE, whose ID would be nice to know even if the issue isn't public yet], and which of (CVE-2013-1870 or CVE-2013-4398) should be REJECTed because it's not a CVE-qualifying vulnerability at all.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+I recognize that we might not have sufficient insight into the situation at hand, so any clarification would be welcome.
+
+- Steve
+
