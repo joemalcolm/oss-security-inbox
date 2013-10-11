@@ -1,86 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/01/1
-Message-Id: <E1VcGJe-000443-7V@xenbits.xen.org>
-Date: Fri, 01 Nov 2013 15:07:14 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 73 - Lock order reversal between page allocation and grant table locks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/14
+Message-ID: <1381530369.13764.484.camel@liliana.cdg.redhat.com>
+Date: Sat, 12 Oct 2013 00:26:09 +0200
+From: Michael Scherer <misc@...b.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request for saltstack minion identity usurpation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-                    Xen Security Advisory XSA-73
+While looking for saltstack issues on github, i stumbled on this pull
+request :
+https://github.com/saltstack/salt/pull/7356
 
-    Lock order reversal between page allocation and grant table locks
+It seems that saltstack, a client/server configuration system ( like
+puppet, chef, cfengine ) allowed to have any minions ( agent on the
+server to be configured ) to masquerade itself as any others agents when
+requesting stuff from the master ( ie, main server ).
+While I didn't fully check, this would permit a compromised server to
+request data from another server, thus leading to potential informations
+leak ( like passwword, etc ).
 
-NOTE REGARDING LACK OF EMBARGO
-==============================
+Can a CVE be assigned, and I will pass it to upstream on the bug
+report ?
 
-While the response to this issue was being prepared by the security
-team, the bug was independently discovered by a third party who
-publicly disclosed it without realising the security impact.
+-- 
+Michael Scherer
 
-ISSUE DESCRIPTION
-=================
-
-The locks page_alloc_lock and grant_table.lock are not always taken in
-the same order.  This opens the possibility of deadlock.
-
-IMPACT
-======
-
-A malicious guest administrator can deny service to the entire host.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions going back to at least Xen 3.2 are vulnerable.
-
-To exploit the vulnerability, the attacker must have control of more
-than one vcpu, either by controlling a malicious multi-vcpu guest, or
-by controlling more than one guest.
-
-MITIGATION
-==========
-
-There is no practical mitigation for this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Coverity Scan and diagnosed by Andrew
-Cooper.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa73-4.3-unstable.patch    Xen 4.3.x, xen-unstable
-xsa73-4.2.patch             Xen 4.2.x
-xsa73-4.1.patch             Xen 4.1.x
-
-$ sha256sum xsa73*.patch
-b828ff085f2dc1f2042bda1dc8a6c52b56ad1c1e3639c3efe32e5706e4ef424f  xsa73-4.1.patch
-10b809c39582a7f29150f0635b78bc2ce40df0bded963b78f42db3e21775da8c  xsa73-4.2.patch
-48411cd6b15e4e4fa3c4335298179a4b1094c5e1ae8dc7582bbfb9439d97037b  xsa73-4.3-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJSc8OAAAoJEIP+FMlX6CvZNoMH/Al1MD/FJXpJ6BnLZH3zV505
-wKc1x38OGpM61X2PrMLCqaqZfRTDuUWFkAx4wOdp1OXx6Do8nwtyzXYInNYKHjse
-xS5JhBM0GPY+pABVYJ4IDcskKHDCLew/L4RcPK3oDiS9sZACSrVRXGVLnNUupLit
-KmCbN1sZkFwUZSCpF+TBH7QbSkk9h2ytTGDaiZKgmrsmL7TMEOP4ikqxjBDC6gM7
-Ty6NzaGJUpIx3nIEjFTnggE8UYN0NkQVDjZlhsDJPbcEWCuHXMYNaXrqFjSY68ac
-4uDmwmR6exk38AGQhRir2FkwoXg2Gyim4pxWx7SYge/Ssc2Mft1aMNOdz7uCr3c=
-=6AqT
------END PGP SIGNATURE-----
-
-Download attachment "xsa73-4.1.patch" of type "application/octet-stream" (3726 bytes)
-
-Download attachment "xsa73-4.2.patch" of type "application/octet-stream" (3756 bytes)
-
-Download attachment "xsa73-4.3-unstable.patch" of type "application/octet-stream" (3707 bytes)
