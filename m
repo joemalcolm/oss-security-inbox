@@ -1,40 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/13/5
-Message-ID: <20130813230854.27d82c9d@redhat.com>
-Date: Tue, 13 Aug 2013 23:08:54 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: helmut@...divi.de
-Subject: Re: ISC DHCP client and unsolicited DHCP options
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/13
+Message-ID: <CAHQV2Kn8HJqXEJr_CWaODtFsDU3dJ2NN97Tr09tGFWgPwZBkvw@mail.gmail.com>
+Date: Fri, 11 Oct 2013 10:34:49 -0700
+From: Joel Weinberger <jww@...omium.org>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com,  Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: Re: browser document.cookie DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 28 Jul 2013 15:30:27 +0200 Helmut Grohne wrote:
+Hi there. Yes, we do CVEs, but in this case, we consider this very low
+severity and will not be creating a CVE for it. Sorry for the delayed
+response for it!
+--Joel
 
-> At least on Debian, the default configuration requests the host-name
-> option. The dhclient-script then evaluates this option and thereby
-> enables a DHCP server to change the hostname if the current hostname
-> is "(none)", "localhost" or a previously sent hostname. Changing the
-> hostname can have undesired consequences such as breaking a running
-> X11 session (can be considered remote denial of service).
-> 
-> That is why a number of people (including me) remove host-name from
-> the requested options. Now given the new findings, a DHCP server can
-> still change the hostname of a connecting client by first sending an
-> unsolicited host-name option with the current hostname and then
-> changing the hostname in a RENEW. Guessing the current hostname
-> should be easy in the presence of avahi or similar services.
 
-The dhclient-script in dhcp packages in recent Fedora and Red Hat
-Enterprise Linux versions allow administrator to define hook scripts
-which are sourced by the dhclient-script.  Those hooks can unset
-environment variables set by dhclient before they are processed by the
-dhclient-script.  Not sure if other distros may want to add similar
-mechanism:
+On Thu, Oct 10, 2013 at 10:44 PM, Kurt Seifried <kseifried@...hat.com>wrote:
 
-http://pkgs.fedoraproject.org/cgit/dhcp.git/plain/dhclient-script
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 09/25/2013 09:42 AM, Kurt Seifried wrote:
+> > On 09/20/2013 09:52 AM, Joel Weinberger wrote:
+> >> Just an FYI, we have fixed this in tip of the tree Chromium:
+> >> https://src.chromium.org/viewvc/chrome?revision=224268&view=revision
+> >
+> >>
+> >
+> > https://code.google.com/p/chromium/issues/detail?id=238041
+> >> --Joel
+> >
+> >
+> > So I assume Google will not be handling CVE assignments for
+> > chromium?
+> >
+>
+> Ping. Does anyone know if Google is acting as the CNA for Chromium? I
+> assume they are, but I also see no CVE for this.
+>
+>
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (GNU/Linux)
+>
+> iQIcBAEBAgAGBQJSV5BSAAoJEBYNRVNeJnmTEkMQAJQhHCzOKxhgJELgagAm3O2g
+> 23pSmKNeXh27Px9Dq+RllMM/qN+jETPHQ/59y1l9GE4nMymqeMBBDbK0Ws5q050+
+> Ay9aZTPr3vleClhmoqyFOZIU+oDlbZ0/IamoM0th9F8r4hjVHbzFVO0GXkTSaGk4
+> CJKRP3fqli+yX+Wk8twUOXkr4Nr1bg4Ty7LugxeMlHCVrsMo4Lpbv2YcRVg/6x7f
+> V6x326z9c00txtpKxbP0IgON7qeR7BBkPDgbf6APFcWSp/TSZIeXk2y/xgMVXiMd
+> 3IJt6HeKqhLzb35PlHeZJrcJjKlUHkrZniY61Ig3gc/GviwgegFuAwP3O9kUDxvc
+> GYS6t7bUfJ/Mhwaki4tAW5JeYc6WV3zhCU31UeJmr/tqNJfunI6uxASQnW0IzzVf
+> eS5AV20nHJn6PtJTB54jxw4EuYDvzpXor+9WB5KP76z+wgZhUjitHR4PHDHUIeyY
+> jc9nJ7EOs2aqj1k7UGd1STRDE2xG0Rki37Yvf7oPIPulGLjHmPxL6kKCpSTt+pIM
+> OaOomM1uZSSejG8BMWXZ4vNTzc0yFUN1C2h226E2i2Q5CykCdENIOXLXjFASfPQR
+> aVS+IvRrYFy7+9DjAXU3vK2uoW9vnDUoidSkd76jToCinfkJ6uAYUhH23RJBB1Xe
+> /oZA/ZljHxv2mqbc/XMM
+> =XRg2
+> -----END PGP SIGNATURE-----
+>
 
-But as mentioned before, NetworkManager does its own processing and
-does not use the standard dhclient-script.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
