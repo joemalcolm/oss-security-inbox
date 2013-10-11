@@ -1,47 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/09/2
-Message-Id: <201308090040.r790eMsh015630@linus.mitre.org>
-Date: Thu, 8 Aug 2013 20:40:22 -0400 (EDT)
-From: cve-assign@...re.org
-To: luigiwalser@...oo.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: tomcat CVE confusion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/2
+Message-ID: <52578E41.2070209@redhat.com>
+Date: Thu, 10 Oct 2013 23:36:01 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: security@...ara.org
+Subject: Re: CVE request: mahara 1.7.3
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
->I can't find any info about CVE-2013-3544, but the mitre page says
->it's reserved. Perhaps that CVE has already been allocated for some
->other piece of software?
+On 10/08/2013 04:16 AM, Raphael Geissert wrote:
+> Hi,
+> 
+> Multiple vulnerabilities have been discovered and fixed in the
+> 1.7.3 release of Mahara:
+> 
+> From [1]
+>> * Bug #1211758 Arbitrary image download * Bug #1175446 user
+>> supplied $_SERVER['HTTP_HOST'] can be used for injections * Bug
+>> #1233500 Not checking ownership of blocks before editing them
+> 
+> 1st and 3rd issues are described at: 
+> https://mahara.org/interaction/forum/topic.php?id=5753
+> 
+> 2nd issue is described at: 
+> https://mahara.org/interaction/forum/topic.php?id=5754
+> 
+> Could CVE ids be assigned please?
+> 
+> To Hugh and the other mahara security people: please chime in if
+> you have already requested ids to somebody else.
+> 
+> [1] https://launchpad.net/mahara/1.7/1.7.3#release-notes
+> 
+> Thanks,
+> 
 
-In this specific situation, it happens to be possible for MITRE to
-arrange for the CVE web site's CVE-2013-3544 entry to refer to
-CVE-2012-3544 as the correct identifier. There's a standard wording
-that we use for this scenario, so the entry will end up looking very
-similar to this one:
-
-  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-5217
-
-This should be completed on the CVE web site in the coming days. In
-general, the cve-assign@...re.org address can be used for any reports
-of a CVE typo in a disclosure. Depending on the exact state and usage
-of each of the CVEs, sometimes we need to do a multi-vendor typo
-coordination, and sometimes it's simpler than that.
+Can you include links to the code fixes thanks.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSBDh7AAoJEGvefgSNfHMd4PcH/0OfLRDeE0gm5eI7oD8MWY/i
-2FfkgKcvHVUA1Jvdb/47+DzM0Ri3AhiCevaY6cQhk0MR86e8dQo7yJj2aktw5ESZ
-XaG4uMlNgOMbEveX2Qs7gW0IaCXhmD71KrqbliNlUZYdlyreV+p5hK/U+Iy/WYiR
-2yKtI6S2OQmvPnq06hl23BO3PPPBAV6oFgNz7h5ONEA3RNk06K4Ahq/ibMf9rRX0
-bf6aH7S73kTa7SL3TWw0c9YPQwKkgFYzL9CZI+z+riazkdAqZyF+ptOUIDhKRaiX
-ejTpGJqVajns6m5Bj7tCgK4TEciSSV5p/tlmhSEaYfFb4H+wsxzOoCPkKW6DSKA=
-=l15v
+iQIcBAEBAgAGBQJSV45BAAoJEBYNRVNeJnmT0VUQANV2AX43o2CFzBvjeE8+po/r
+shRK+ItXKiQCb5+xQ5/h+Qp0yAZheaFu7uKlTjF+NVLgFaFux9UG52IZvQnap167
+Au0SyuQA+jmKVWTtHI+ShWU01P1dLQ/hRTtw8SKNF+IcUCUNOoVLM6Q6qL7k6RDg
+5R44srOATe9p9oV8171oDCBIpsgkLLaVCZkx2VgWZwZUgTmTqiPEDp+kXocfCSAN
+u1QGWacsD1oMFDnFhOwBwpz+zhLnY8WW/Bhy8/y/rkK1AAYbsGjRLn2jOpCquOzR
+38DQllD6P9LjFVUtaNRvPY3X9t3nyENzWYulDzPxZSrPB9nRH5HXhj13qyFsolCV
+5s6GszRU/udB96aKyXPiKeSl7SwrC+sc+EoYekyCvKUWeANsfycqJi9dlXjCY9W2
+79zdZLKoeCUFPGiiBrH3Bk5qpYnbIMZNUUr/CbjRAOf2BxuJ/Qnw4AJ4zANroP2w
+J7j1k2waGy4rAMh1yqDNW86wyc90oices93Q5FdmdI2BB3ed+FzlQQnZay8S7jta
+Boya1598kta36LmAXJEQanIFPN96dd/Cu9SlBZNAKU4IWkWimzFMWhZ0fLJVUy/V
+tLc9OzBMz7k5vXLbkt2UbisZzZ7c40vT43tIHEuwpPni02QwqtALe56dWx35ZP20
+oCp13xeUlSuA286rlTkL
+=K69/
 -----END PGP SIGNATURE-----
