@@ -1,39 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/4
-Message-ID: <52451ED6.9050404@redhat.com>
-Date: Thu, 26 Sep 2013 23:59:50 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/4
+Message-ID: <52578F87.9070908@redhat.com>
+Date: Thu, 10 Oct 2013 23:41:27 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Paul Pluzhnikov <ppluzhnikov@...gle.com>, Alexander Cherepanov <cherepan@...me.ru>
-Subject: Re: Reproducible Builds for Fedora
+CC: matt@....asn.au
+Subject: Re: CVE Request: dropbear sshd daemon 2013.59 release
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/26/2013 07:51 PM, Paul Pluzhnikov wrote:
-> On 9/26/13 6:36 PM, Alexander Cherepanov wrote:
+On 10/10/2013 07:27 AM, Marcus Meissner wrote:
+> Hi folks, hi Matt,
 > 
->> The choice is simple -- produce byte-for-byte identical builds.
->> Both Tor and Debian aim at it.
+> https://matt.ucc.asn.au/dropbear/CHANGES seems to have two CVE
+> worth entries.
 > 
-> FWIW, when we build compilers (and then all other binaries) at
-> Google, we don't just aim for, but actually achieve bit-identical
-> rebuilds.
+> Version 2013.59 - Friday 4 October 2013
 > 
-> New GCC releases often break this, but a few patches later the 
-> capability is restored. Latest example: 
-> http://comments.gmane.org/gmane.comp.gcc.devel/127875
+> has this changes entry: - Limit the size of decompressed payloads,
+> avoids memory exhaustion denial of service Thanks to Logan Lamb for
+> reporting and investigating it
 > 
-> The ability to do bit-identical rebuild is critical to our build
-> system 
-> (http://google-engtools.blogspot.com/2011/09/build-in-cloud-distributing-build-steps.html)
->
-> 
-and in particular the high cache hit rates it achieves.
+> Source code fix for this is seems to be: 
+> https://secure.ucc.asn.au/hg/dropbear/rev/0bf76f54de6f
 
-Sorry I'm having trouble finding the patches, can you provide a URL?
-Thanks.
+Please use CVE-2013-4421 for this issue.
+
+> 
+> It also has this changes entry which might need one: - Avoid
+> disclosing existence of valid users through inconsistent delays 
+> Thanks to Logan Lamb for reporting
+> 
+> https://secure.ucc.asn.au/hg/dropbear/rev/a625f9e135a4
+> 
+> Matt, if you are interested in requesting CVEs in the future for
+> security relevant fixes, feel free to contact us. (Kurt, I looked
+> for your howto, but my googlefu today is weak.)
+> 
+> Ciao, Marcus
+
+This one seems to not be as exploitable or did I misread the follow up
+emails?
 
 
 
@@ -43,17 +52,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSRR7WAAoJEBYNRVNeJnmTDt4QALzf2Cpl591C5R+3HYgrd/v1
-qOyniZrWXUYec3hRwKlN8KHSQyTPzwbr6WJNsfYUbcrL155fd/14E6/cbijqHaoo
-kIfJg/yqKSfZtJQVQ+CCRqn7J5sYURa2u6my1qQoXvUx7usDBjaBGaxOW6XDAbSk
-KzRFMPejoexWu9uvrwxjqE6+MHLgnCMC7cE6p9EhAN2sojtfUDIH4/uP/DyzDUpN
-KELZKoKgkIsTp4gkKBSZZj7n7KnHi+lS3Pcle24hi38qTl1AJQeWxAR2GxvCdqL/
-LdyQ2lVBQIajfSf8/KVbAndQ6AKVsED1BLNOFVCtQVVcRnebEsszKLjvBXYa+iNL
-cRfmNL08DpLIE77beSAc6N72tyVvNYCIWttuafep/chdCNM6/z9Ohum9YWd5bEO0
-E/8pQKQoSQ1ZlaGBi/GLv+ivzKv5krsU6FkdxMfzra0TaC0pMPNgv0zR8tHxScTp
-U7NZg8iNWy4otqRmrcmUfrwedUBmQaX6gB6nuqKNTEJYpBCbU4SAHR+yNx8FM5Bt
-GO4gmTgs2Cp/Rq4gmH66u48wsec0RVtHRAUeAkdP7L7oEzbY6a/qd208F1tU9NUI
-NLkqufwCTWlVWP3G3xYI5Qep5ONWCoHarjPzDONOqWkHOWxVAg4otGU13UQbSzkS
-ifRVWrUarnl08UlzWioH
-=LBGU
+iQIcBAEBAgAGBQJSV4+HAAoJEBYNRVNeJnmTnI0P/R4OSe2xrgdBj3883huklL9W
+8JB4p9sgVKt+Nhkd37E0nFYlmGu5oqpjsU2TxpLBH8PKtxJX1yhMGyrQnUw7AZff
+AZa74hkNimz1XPUjry5ubJ9Usf3CsX5W/Q+26Y+Q9QHXKJDMDbB+jeWUAyeZPtPM
+dlMyyF+00QuItgAYB4CcO1mgBQxckz5rLzRRO1Vq++MwhEaDIWigE2md+MTcgsha
+CoAfAl5iKskbXj2y5a3DKgwJnF+gC0y04qj5cVEEAgBLy41Ur6hs1eqqoR+yHf27
+kwV579UD5MeQyNIUsBBG64LuRmmuHFikNlQOYmSmrMtmEWCwloylducJRDmIACIC
+crky1ItgBb7Cse9ycSUr0M5WhgL+4fzvCEE0AWqKEK/J1l4NxDCPrCSkO4aiSJID
+gCiumOtofjlXJ/MPuztn/8HbkP1o4KWBhc7duksMFHngmCd2+jYbOzXWYYwMydnH
++KfuB9FBhXeJNAyG2vqVEoGp/KBZ6z2gQoDyrUx89YulbDA6SbEhvFXKVkFl5P9p
+07jFENRwItrZY/v98rGfvGczmcXve4ZjWbZvZDFwWbK8sIgYsbwK8b1xFLVX7zLU
+1UiYvTHe92I6MFd1M35/JcL3joy7tguq9xndjvBNjHNWs2r3H1BDj4FKdXf3IPCZ
+asogS9Zu8Jb6znMKb2yk
+=Ue1h
 -----END PGP SIGNATURE-----
