@@ -1,55 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/31/2
-Message-ID: <52C2660D.2030307@delphij.net>
-Date: Mon, 30 Dec 2013 22:37:01 -0800
-From: Xin Li <delphij@...phij.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE to the ntp monlist DDoS issue?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/7
+Message-ID: <52579861.2010100@gmail.com>
+Date: Fri, 11 Oct 2013 12:19:13 +0600
+From: "Alexander E. Patrakov" <patrakov@...il.com>
+To: General PulseAudio Discussion <pulseaudio-discuss@...ts.freedesktop.org>
+CC: oss-security@...ts.openwall.com, webkit-gtk@...ts.webkit.org
+Subject: Re: [pulseaudio-discuss] Vulnerability in Webkit-GTK and PulseAudio volume handling
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Colin Guthrie wrote:
+> What would be more interesting to me would be how the same code works 
+> on Windows 7 which I believe also implements a flat volume scheme (not 
+> sure about Win 8) and how it handles stream volumes in this context 
+> (background: 
+> http://www.patrickbaudisch.com/publications/2004-Baudisch-CHI04-FlatVolumeControl.pdf)
 
-On 12/30/13, 4:46 AM, Mike O'Connor wrote:
-> There's a recent rash of DDoS involving the monlist functionality 
-> in older ntp.org ntp.  Has anyone thought about assigning a CVE to 
-> this?  It looks like the issue may have been addressed back in
-> 2010, but only in the context of ntp.org's "dev" tree, not
-> "stable".
-> 
-> http://bugs.ntp.org/show_bug.cgi?id=1532 
-> https://cert.litnet.lt/en/docs/ntp-distributed-reflection-dos-attacks
->
-> 
-http://www.symantec.com/connect/blogs/hackers-spend-christmas-break-launching-large-scale-ntp-reflection-attacks
+Here is a Windows 7 screenshot relevant to the flat volume idea. You 
+need it to understand the text below.
 
-Both as a mitigation to this attack and a best practice, I think all
-public facing ntpd should configured to have 'nomodify nopeer noquery
-notrap' as default restrictions.  Something like:
+http://permalink.gmane.org/gmane.comp.audio.pulseaudio.general/17426
 
-===
-restrict default nomodify nopeer noquery notrap
-restrict -6 default nomodify nopeer noquery notrap
-restrict 127.0.0.1
-restrict -6 ::1
-restrict 127.127.1.0
-===
+Basically, Windows' flat volumes a just an UI feature of the default 
+mixer application. Volume sliders inside applications still show 
+relative-to-the-master volumes, as can be seen with Windows media player 
+on that screenshot. In other words, Microsoft did not go as far as the 
+referenced paper suggests.
 
-Cheers,
+As far as testing the bad javascript under Windows, I have asked my 
+colleague to do just that in all major browsers (Chrome, Firefox, IE 
+(with a different media file), non-webkit Opera, webkit Opera). Result: 
+no bug. Javascript volume does not correspond to anything in the mixer 
+application. The volume slider inside the browser jumps between 99% and 
+100%, but the volume slider in the mixer application can be set to any 
+value, stays there, and the browser obeys. So the inside-the-browser 
+volume control is just an additional element in the path, exposed to the 
+user only inside the browser.
 
------BEGIN PGP SIGNATURE-----
-
-iQIcBAEBCgAGBQJSwmYNAAoJEJW2GBstM+nsyqIP/2H6C6DFUqN1y0gApoEy3iKg
-JR6UjMmaOMLCNl6uXIQ730sSf9YxY5l+L1he0BI/q4+rCXN11E+2cLrAFHnNU/I4
-sR07wsM26COTxgdpqrEE32h4ODjyz9d3NPipXAvZsfMRy2DHrxEhPRGpBfmyjIjj
-JjVB6YU/rN57zgOu5zVq4GUR71KlYgL05M2wEyg+QItk2T7Tyvtt0UhBUgE8lzrp
-wjSlHuaAkatsk9+Z2zJCVPkEF6261ewCFCJ7Qs5QIWMyRI3THDS+V5BCDMH3/7RT
-R8LvXE0InEpW4Nu8EtbmoutVLy5P1yoCJyHFEa5GkmzqE3BEY7wteEj9aRb723Ae
-CucZeYUG8dIw+bHe1fYI7bzhUXrJvYeVUaUqEKAqv9udi7iplHJoln2N1fDdNce6
-leGxd6iCTNGikW4urdDPm6tSIdR8LuY4ifULAKQOa7jyKsnYplvwCiMpxN/HdDud
-/FStQW+OcvEVj7Carx9LwNdTb7HnW1G7EurBFJNKZ+Q37HyAwdz+omfapkqFJfjX
-bPVN2qbgUyc1/dTY+Cy/Z/2MEK7PPthmcxwXKNDS6+qEyQTc7cT1giO0xyCsiC05
-d6Yh0QKLCf0KPrWWuGmgMnQIT2ki9EQunEcZMbseLWhSq0hhzvwhMYBqV0dE9Fki
-VAiGvTbqac+6LWN3VLo9
-=UVX1
------END PGP SIGNATURE-----
+-- 
+Alexander E. Patrakov
