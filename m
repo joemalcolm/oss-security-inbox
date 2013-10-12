@@ -1,49 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/05/3
-Message-Id: <44661A02-48C2-4985-8E14-F7D58E2D2490@tigrish.com>
-Date: Thu, 5 Dec 2013 18:15:36 +0100
-From: Christopher Dell <chris@...rish.com>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com, tenderlove@...y-lang.org, "mattaimonetti@...il.com Aimonetti" <mattaimonetti@...il.com>, clemens@...lway.at, jose.valim@...il.com, stephan.soller@...ionweb.de, saimonmoore@...il.com, me@...nfuchs.com
-Subject: Re: Re: [CVE-2013-4491] Reflective XSS Vulnerability in Ruby on Rails
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/12/1
+Message-ID: <20131012012226.GS4394@ucc.gu.uwa.edu.au>
+Date: Sat, 12 Oct 2013 09:22:26 +0800
+From: Matt Johnston <matt@....asn.au>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: dropbear sshd daemon 2013.59 release
 Content-Type: text/plain; charset=utf-8
 
-Hello everyone,
+On Thu, Oct 10, 2013 at 11:41:27PM -0600, Kurt Seifried wrote:
+> On 10/10/2013 07:27 AM, Marcus Meissner wrote:
+> > It also has this changes entry which might need one: - Avoid
+> > disclosing existence of valid users through inconsistent delays 
+> > Thanks to Logan Lamb for reporting
 
-Just to clarify I18n.enforce_available_locales quickly, when I18n initialises, it creates an array of the known locales called I18n.available_locales.
-Typically, this array is created by scanning for YML files (in config/locales for a Rails app).
-With I8n.enforce_available_locales set to true, we check that the locale we're trying to use (eg. translate or localize) is included in the available_locales. This means we're certain it can't be malicious user submitted data even outside of the scope of a Rails app.
+> This one seems to not be as exploitable or did I misread the follow up
+> emails?
 
-I could really use a hand with the CVE announcements, I literally have no idea about any of this!
+This one needs a CVE too, just the link was wrong.                                                                                                            
+https://secure.ucc.asn.au/hg/dropbear/rev/d7784616409a is
+the correct patch.
 
 Cheers,
-
--- Chris
-
-PS. Including Sven's correct email address.
-
-On Dec 3, 2013, at 22:54 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-
-> Signed PGP part
-> On 12/03/2013 02:32 PM, kpolitowicz@...onik.ca wrote:
-> > Thanks. But what's the deal with I18n.enforce_available_locales ?
-> >
-> 
-> That's a good question, the technical side of which I would point you at:
-> 
-> http://rubygems.org/gems/i18n
-> 
-> The latest release fixes security stuff, however they don't do CVE
-> announcements/ChangeLog anywhere I can see. Adding them to this email
-> CC. Guys, if you need help drafting a security announcements I'd be
-> glad to help.
-> 
-> --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
-
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (497 bytes)
+Matt
