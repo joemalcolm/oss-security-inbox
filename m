@@ -1,34 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/2
-Message-ID: <20130304021253.GB8265@kroah.com>
-Date: Mon, 4 Mar 2013 10:12:53 +0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/12/3
+Message-ID: <5258D0F6.1020800@redhat.com>
+Date: Fri, 11 Oct 2013 22:32:54 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: handling of Linux kernel vulnerabilities (was: CVE request - Linux kernel: VFAT slab-based buffer overflow)
+CC: Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: Re: browser document.cookie DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 04, 2013 at 05:44:38AM +0400, Solar Designer wrote:
-> In my opinion, it'd be best if Linus, Greg, et al. would reconsider
-> their approach.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Reconsider just what specifically?  You bring up a bunch of issues that
-the distros need to consider, what can the Linux kernel security team do
-differently?  We were asked to notify the linux-distro list, and now we
-will be doing that.  Should we not and just go back to how things were
-before?
+On 10/11/2013 11:34 AM, Joel Weinberger wrote:
+> Hi there. Yes, we do CVEs, but in this case, we consider this very
+> low severity and will not be creating a CVE for it. Sorry for the
+> delayed response for it! --Joel
 
-> Overall, I think we should bite the bullet and accept sko's
-> notifications to linux-distros, with a grace period of up to 7 days.
-> Whenever a distro is ready to release an update, they should be able to
-> insist on doing so within another 1 day, even if the initially planned
-> grace period would expire later.  Would sko be OK with this?  Greg?
+So to confirm you are saying this is NOT a security issue in any way
+shape or form? I find this odd because DoS's in web browsers are often
+considered CVE worthy. Is there something in this issue that prevent
+exploitation/etc? If not then it deserves a CVE even if it is a "low"
+issue.
 
-Again, I don't think anyone that is part of security@...nel.org minds
-about having the issues publicized, after linux-distro has their time
-to get things fixed and to their users.  If the linux-distro people care
-about that, that does not seem to be a security@...nel.org group issue,
-right?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-totally confused,
-
-greg k-h
+iQIcBAEBAgAGBQJSWND2AAoJEBYNRVNeJnmToBMP/3wdilLPfV39Wm2h0fasOxUB
+ZiN1tWvslIxWsksFeO9xEQjS/MgNG6GfGoNpFt7uTl4NSb8ZQgkl7GWTGPJIyFnZ
+7bpqRjdjxlKTqH68FW0vSCKCTZYt1o1DVv2ownmHogIsPfj7nbPYNZDYGB5bHsWy
+TLBsJIPqyHbFX0Purqnw+QD7xXa3GnccAm58tzc2bxhKA/6t42+U0K/XFA8j+Jtm
+TGQ3yOCCk6C+gDpl0N+WnjBSaMJmZ75XXlelWShQLLsK+KRovLfQpKumIaUKa7oR
+Cq/61CN3Q0pTmkaHKwweVWgpFMZPCZJqY4Ddcej4zSSc5WaQJ9KgpABi0bXr1nDy
+VAaYDBMkZ5LX1hcguE+V9J583xUvQdN2N3jy60+OBl3R4Thwzd3kofejaarausfd
+N6RleZvVR+140KeG69HQ4CWmKkIatug+Y4N455xj/SHgdLTgJEmuu7GNIAMQePXH
+OTuUjAhAfwahYpi+hwVTejYSlfcN4PS1MaMZOFIh09KoxXZYXV6LpbRJJP0j0ssb
+n0oHk9uSRD6PDgU8UKfrAodcbdnd4Y31AP7G7hv0XUU1odPqK8D37eKqbr4KRCAj
+RGuaP1jbRHqLE1UmTZg7g3/KfVk3QwGlZqXD676W8cOsDAGmRnnQm2y8K1dBTArZ
+t/zfJi5xo298Cps0booP
+=6DTV
+-----END PGP SIGNATURE-----
