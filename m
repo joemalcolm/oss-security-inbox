@@ -1,70 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/20
-Message-ID: <52780105.1070505@redhat.com>
-Date: Mon, 04 Nov 2013 13:18:13 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/12/4
+Message-ID: <5258D189.6040303@redhat.com>
+Date: Fri, 11 Oct 2013 22:35:21 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Marcus Meissner <meissner@...e.de>
-Subject: Re: Re: CVE Request: IBUS showing passwords during password input
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request - Quassel IRC SQL injection
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/04/2013 06:37 AM, Fuminobu TAKEYAMA wrote:
-> Hello,
-> 
->> The behaviour started (I think) with with IBUS 1.5.4
-> Yes. It happens on IBus-enabled GNOME 3.6+ with IBus 1.5.4 if
-> IBus's engines (plug-ins) do not support new API introduced by
-> 1.5.4.
-> 
-> Actually, this problem is not found by me, though. The upstream has
-> already announced in [1].
-> 
-> An IBus developer (Mr. Fuijiwara) says in [1]: "1.5.2 or lower do
-> not handle the input purpose so the typed chars are shown as the
-> bug." So I think the same problem may happen also on GNOME 3.6 +
-> IBus 1.5.2.
-> 
-> [1] https://groups.google.com/forum/#!topic/ibus-user/mvCHDO1BJUw
-> 
-> Best regards, Fuminobu TAKEYAMA
-> 
-> 2013/11/4 Marcus Meissner <meissner@...e.de>:
->> Hi,
+On 10/11/2013 11:10 AM, Bas Pape wrote:
+> 2013/10/11 Kurt Seifried <kseifried@...hat.com>:
+>> On 10/09/2013 10:48 AM, Bas Pape wrote:
+>>> No upstream fix is available at this time, although the below 
+>>> patch does fix the current issue.
 >> 
->> One of our Japanese users found that some IBUS input methods show
->> passwords while typing them, if a special "intent" is not 
->> provided.
->> 
->> https://bugzilla.novell.com/show_bug.cgi?id=847718 
->> https://groups.google.com/forum/#!topic/ibus-user/mvCHDO1BJUw
->> 
->> The behaviour started (I think) with with IBUS 1.5.4
->> 
->> Fuminobu Takeyama, is this correct?
->> 
->> Ciao, Marcus
+>> Please use CVE-2013-4422 for this issue.
+> 
+> Thanks, glad to see I didn't botch the request. I am correct in 
+> thinking Mitre will fill the details (e.g. description and
+> references) once they get around to it, or does that require
+> something from my or upstream's end?
+> 
+> For completeness sake, upstream fixed it [1] and announced a new 
+> release (0.9.1 [2]).
+> 
+> [1]
+> https://github.com/quassel/quassel/commit/aa1008be162cb27da938cce93ba533f54d228869
+>
+> 
+[2] http://quassel-irc.org/node/120
+> 
+> -- Tucos
 
-Please use CVE-2013-4509 for this issue.
+Yes as per
+https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures
+
+Until The CVE is assigned AND Mitre is made aware of it (e.g. the
+embargo passes and the issue is made public) AND Mitre has researched
+the issue and written a description of it entries will show up as "**
+RESERVED **".
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSeAEFAAoJEBYNRVNeJnmTRJgQAMVajnP+1wU4vDb9KWaFW/iJ
-mTMxatUOOPfbYAuZ18CoFz3qCBP0dGNePul+xhyNsU2BaGvbegmqTlXW0uaEX+oS
-vw+0pKEJ2yUX+A5A4qsSNrFtiX6Rmd8OvEFCwYcWqeXkGf1f5KZStZLWPVcqiDTK
-pWW0hZD6mDDB+o9iF+OtlwTXi/MHztlPuwmU6+4N00a+gTSDrZ2U9mEWBCnt17mc
-RWVa5YlmMmzThjE37NiOSH1SqgdS75gKvYQWQsRvCISNXT7NpPP670yQDtduj3Gx
-nEKNeWJvGxUaI/0g5OydxehleRzK4n6rg/ap6oZ6D0pBDu25MRY5lk6BYXL0RnDy
-d6LeSRYwnaIM16Q9nKc7GLirNXpey99UVcg6VFCVEh9xzznwK+rgfcDQLF9MBz/f
-8gqGsskFNaLSTdUrYFBLvTNKClJkM+pkKjn67nxWDpwFklLzC+rvQTn5OXS0ci6j
-Mh5on+yYwasSfcYcLgv3NrMquEnXXGTK9cNLNvdftOejYWUu5ZuruuHzi5GqaR7n
-bmCEKh29FaKdPjgLWWjU/fHU3clk00zkPTRZFUbAP+Qf5+1ucaKdjYkzAO0h1xRr
-VgWYXsGoGtgAP5GOdo14PPB6BgjzzZDKUqqdtvhAbzV+QN/7FLbUA++47clJlb0e
-5AY9Z7oWkNCaMWWhersj
-=NtKe
+iQIcBAEBAgAGBQJSWNGJAAoJEBYNRVNeJnmTL3kP/2Zci9Gha0Pc8+Qo3YAam52j
+sC/XrdVxXpFSZcghl7GJSCwWmEmzNrFiuSPBqHAdzXs4iPcaJI1CKSXNNAd+IWmy
+iu0xJdl1H/tlFbnzV4ivO/BD0hWr49vBfvXQMd08WrfTCfGB3VSIHfSLjOWO1eLh
+pZafi80EwNW38sWqiygKL1FZAIXXZpf2+OSi5wFw+YSmnhsFPdVCBClp+/7/JTnd
+RCJ5iJMeJ9/fMCwywnZlLuNQGJjCDhapfk8+dcuc2O1Jhl2JgXXc0G6ZV0tClXee
+l/l78K8a2ZpgtUm5nDkOXAEcDtUka9CuB+OSx0KkgbupQcH1CFirTmfGBiywDEyu
+ekZA3i20Q00seHi3Eh8cayqgwtoA9M8rZDABx8887Jky5tYpfANlpNCrByNhmD7/
+ds9UX+FbLE5CGcZaRYL7YAxUsNoueLGsByX2a/LORLSXkkwHEwzvmwp409dfbK+d
+6/C5VeuhAERbpRdw59plliD73+xtYqX6lgsk7vfUzfvycCnKcJ2xYzFNqsIig4wZ
+p51POEfZjeKShfwZojhfVhsi4uByP7AY9SbEHN79fpGIE5b7C0btbyVs9V2HvAq+
+MulbaHWIl/v/wpVQQCahtKfCI6w/1xV8LETQpgy3jdXgeD1dcSa4DxibGqJovYjd
+KP4pXpwn3QoseHfLXUrq
+=zx5T
 -----END PGP SIGNATURE-----
