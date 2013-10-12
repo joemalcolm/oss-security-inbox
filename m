@@ -1,42 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/6
-Message-ID: <mpro.mryjti05v9ro802k8.taviso@cmpxchg8b.com>
-Date: Thu, 22 Aug 2013 17:24:54 -0700
-From: Tavis Ormandy <taviso@...xchg8b.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/12/2
+Message-ID: <20131012033420.GA10479@openwall.com>
+Date: Sat, 12 Oct 2013 07:34:20 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [PATCH] implement privmode support in dash
+Subject: Re: RESEND: CVE Request: pwgen
 Content-Type: text/plain; charset=utf-8
 
-Simon McVittie <smcv@...ian.org> wrote:
+Kurt, Steve, all -
 
-> On 22/08/13 18:59, Tavis Ormandy wrote:
-> > For example, here is one I just found in vmware-tools that manages to
-> > call popen("lsb_release") with effective uid zero:
+On Thu, Oct 10, 2013 at 03:35:09PM +0200, Marcus Meissner wrote:
+> It might just not be that CVE worthy. But I saw no replies...
+
+I now think it is CVE worthy.
+
+> (CVE worthyness:
+> It does not fully meet the security expectations of generating
+> a non-weak password by default....
+> )
+> 
+> Solar? Kurt?
+
+Kurt was "sitting on the fence for this one":
+
+http://www.openwall.com/lists/oss-security/2012/01/17/12
+
+At the time, I replied that it was too early for the CVE aspect, as I
+was still figuring out the magnitude of the problem:
+
+http://www.openwall.com/lists/oss-security/2012/01/17/14
+
+Steve replied that having an insecure feature documented does not always
+preclude from CVE assignment:
+
+http://www.openwall.com/lists/oss-security/2012/01/17/15
+
+To this, I can add that although the phoneme mode is documented as being
+less secure, the magnitude and ways in which it is less secure are
+unclear from the documentation.  Specifically, there's no mention that
+the distribution of generated passwords is highly non-uniform, and
+indeed this is not clear from merely looking at a handful of passwords.
+(I guess this non-uniformity was not expected by the author, and thus it
+is a bug.)
+
+Also, without looking at the documentation, it is not even immediately
+clear (to a new user of the program) that phonemes are being used.
+At first glance, the passwords look like they could potentially use the
+full 62^8 keyspace - but this is actually not the case, by far.  So the
+program's default behavior is misleading.
+
+The thread ended here, with some figures showing just how bad the
+problem is:
+
+http://www.openwall.com/lists/oss-security/2012/01/22/6
+
+The CVE aspect was not revisited.
+
+Here are the figures for pwgen's defaults with output to tty:
+
+Top 1 million of unique passwords from my 1 billion training set cracks
+3.7% of passwords in the test set.
+
+Top 10 million cracks 14.5%.
+
+Top 44 million cracks 21%.  (I chose this as an optimal wordlist size.)
+
+Top 100 million cracks 26.3%.
+
+With pwgen's defaults with output to non-tty:
+
+Top 45.5 million cracks 75%.  (Ouch!)
+
+These results can be improved a little bit (slightly higher percentages
+cracked per same wordlist size) by using a larger training set (beyond 1
+billion) or by considering all of the phoneme probabilities, etc. and
+creating a program that would output pwgen's possible passwords in an
+optimal order (this proves to be a non-trivial task so far, yet someone
+may do it).
+
+Alexander
+
+> On Thu, Sep 26, 2013 at 11:11:59AM +1000, Michael Samuel wrote:
+> > Hi,
 > > 
-> > $ cc -xc - -olsb_release<<<'main(){system("sh>`tty`
-> > 2>&1");}';PATH=.:$PATH vmware-mount # whoami root
-> 
-> Having (da)sh drop privileges is a useful bit of hardening, but it doesn't
-> help you if the vulnerable executable does a fork-and-exec without using
-> the shell (at least with one of the exec variants that respects $PATH,
-> like execvp), or some more friendly wrapper around fork-and-exec like
-> posix_spawnp() or GLib's g_spawn family of functions.
-> 
-
-Sure, but we shouldn't let the perfect be the enemy of the good.
--fstack-protector doesn't magically make anything safe, but it's still a
-useful mitigation tool that we would be worse off without.
-
-We can't produce a patch that makes every crazy thing someone might want to
-do while setuid safe, but this is a common pattern that Debian-derived
-distributions lag behind on. I guarantee it will save you a few CVE's over
-the next few years :)
-
-Tavis.
-
-
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
-
+> > No CVEs have been assigned for this, and as far as I can tell no
+> > distributions have patched.
+> > 
+> > On 6 June 2013 14:19, Michael Samuel <mik@...net.net> wrote:
+> > 
+> > > I've done some further analysis of the program after reading the previous
+> > > thread, and I think there needs to be CVEs and fixes for:
+> > >
+> > > - When used from a non-tty passwords are trivially weak by default (first
+> > > reported by Solar Designer)
+> > > - Phonemes mode has heavy bias and is enabled by default (first reported
+> > > by Solar Designer)
+> > > - Silent fallback to insecure entropy (first reported by Jean-Michel
+> > > Vourg?re) (Debian bug #672241 - tagged as "wishlist")
+> > > - Secure mode has bias towards numbers and uppercase letters
+> > >
+> > > I've attached a patch that fixes most issues - it doesn't solve the bias
+> > > towards numbers, because it's caused by requiring at-least one number per
+> > > password - so in an 8 character password there'd have to be 0.1 numbers to
+> > > avoid bias.  There's an argument to be made for removing the at-least-one
+> > > rule, but if the system that password is being used with has those rules,
+> > > it doesn't fix the problem anyway.  Perhaps a separate flag for that?
+> > >
+> > > The changes are:
+> > >
+> > > - Print a message and abort() of there's trouble opening or reading
+> > > /dev/urandom (So apport should pick up any packages that have been using
+> > > insecure entropy)
+> > > - Make "-s" the default
+> > > - Add an argument --insecure-phonemes (or -P)
+> > > - Non-tty passwords are now as secure as tty
+> > > - Require lower-case characters be present to even out some bias
+> > > - Pull in passwdqc as a Suggests on the debian package - pwqgen can
+> > > generate sane random passphrases
+> > >
+> > > I can't imagine any reasonable use-case for the non-tty defaults (except
+> > > maybe combining with espeak as an enhanced interrogation technique), and
+> > > you can be certain that there's some people out there with it embedded in a
+> > > script that's generating useless passwords.
+> > >
+> > > For phonemes mode in general, the bias is extreme, there are a limited
+> > > number of possible combinations and it is generally not suitable for
+> > > security purposes.  I have some fairly detailed analysis of it, but I
+> > > believe this list has a no-exploits policy...
+> > >
+> > > Regards,
+> > >   Michael
