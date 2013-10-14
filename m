@@ -1,228 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/31/3
-Message-ID: <51F8C6C2.4020505@redhat.com>
-Date: Wed, 31 Jul 2013 02:11:46 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/14/3
+Message-ID: <20131014123832.GF14043@suse.de>
+Date: Mon, 14 Oct 2013 14:38:33 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Donald Stufft <donald@...fft.io>
-Subject: Re: CVE Request: Insecure Software Download in pip
+Subject: Re: CVE Request : poppler < 0.13.0
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 07/30/2013 12:44 PM, Donald Stufft wrote:
+Kurt? Could you assign a CVE please?
+
+SUSE is affected by this in SLE11.
+
+Ciao, Marcus
+On Wed, Sep 18, 2013 at 09:53:33AM +0200, etienne wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> On Jul 30, 2013, at 2:32 AM, Kurt Seifried <kseifried@...hat.com 
-> <mailto:kseifried@...hat.com>> wrote:
+> Hi,
+> I'd like to request a CVE number for the following issue
+> http://cgit.freedesktop.org/poppler/poppler/commit/poppler/DCTStream.cc?id=fc071d800cb4329a3ccf898d7bf16b4db7323ad8
 > 
->> Signed PGP part On 07/30/2013 12:28 AM, Donald Stufft wrote:
->>> 
->>> On Jul 30, 2013, at 2:21 AM, Kurt Seifried
->>> <kseifried@...hat.com
->> <mailto:kseifried@...hat.com>
->>> <mailto:kseifried@...hat.com>> wrote:
->>> 
->>>> Signed PGP part On 07/27/2013 01:10 AM, Donald Stufft wrote:
->>>>> 
->>>>> On Jul 27, 2013, at 3:08 AM, Kurt Seifried 
->>>>> <kseifried@...hat.com <mailto:kseifried@...hat.com>
->>>> <mailto:kseifried@...hat.com>>
->>>>> wrote:
->>>>> 
->>>>>> On 07/25/2013 03:09 AM, Donald Stufft wrote:
->>>>>>> I'd like to request a CVE for pip 
->>>>>>> (https://pypi.python.org/pypi/pip/).
->>>>>>> 
->>>>>>> The mirroring support (-M, --use-mirrors) was
->>>>>>> implemented without any sort of authenticity checks and
->>>>>>> is downloaded over plaintext HTTP. Further more by
->>>>>>> default it will dynamically discover the list of
->>>>>>> available mirrors by querying a DNS entry and
->>>>>>> extrapolating from that data. It does not attempt to
->>>>>>> use any sort of method of securing this querying of the
->>>>>>> DNS like DNSSEC. Software packages are downloaded over
->>>>>>> these insecure links, unpacked, and then typically the
->>>>>>> setup.py python file inside of them is executed.
->>>>>>> 
->>>>>>> The vulnerable code is located at: - 
->>>>>>> https://github.com/pypa/pip/blob/develop/pip/index.py#L60-L64
->>
->>>>>>> 
->> 
->>>>>>> 
->>>>> -
->>>>>>> https://github.com/pypa/pip/blob/develop/pip/index.py#L205-L207
->>
->>>>>>> 
->> 
->>>>>>> 
->>>>> -
->>>>>>> https://github.com/pypa/pip/blob/develop/pip/index.py#L553-L572
->>
->>>>>>> 
->> 
->>>>>>> 
->>>>> -
->>>>>>> https://github.com/pypa/pip/blob/develop/pip/index.py#L999-L1024
->>
->>>>>>> 
->> 
->>>>>>> 
->>>>> 
->>>>>>> 
->>>>>>> 
->>>> The affected versions are every released version since 0.8.1 
->>>> which
->>>>>>> are: 0.8.1, 0.8.2, 0.8.3, 1.0, 1.0.1, 1.0.2, 1.1, 1.2, 
->>>>>>> 1.2.1, 1.3, 1.3.1, 1.4
->>>>>>> 
->>>>>>> I'm not aware of this issue having ever had a CVE
->>>>>>> requested for it and my attempts to search the CVE
->>>>>>> database did not appear to turn up anything relevant
->>>>>>> but the search doesn't appear to be the greatest so I
->>>>>>> may have missed it.
->>>>>>> 
->>>>>>> I'm hoping to land a patch for this in a future
->>>>>>> release (current iteration of patch available at 
->>>>>>> https://github.com/dstufft/pip/compare/remove-mirror-support)
->>
->>>>>>> 
->> 
->>>>>>> 
->>>>> but there is no planned fix version as of yet.
->>>>>>> 
->>>>>>> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA
->>>>>>> // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
->>>>>> 
->>>>>> Was it supposed to be secure (like was this explicitly 
->>>>>> supposed to be all encrypted/etc.)? This sounds more
->>>>>> like security hardening than a security vulnerability.
->>>>>> 
->>>>>> - -- Kurt Seifried Red Hat Security Response Team (SRT)
->>>>>> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553
->>>>>> 5E26 7993
->>>>>> 
->>>>> 
->>>>> The mirroring protocol explicitly included provisions for 
->>>>> verification which was not being done.
->>>>> 
->>>>> http://www.python.org/dev/peps/pep-0381/#mirror-authenticity
->>
->>>>> 
->>> 
->>>>> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 
->>>>> 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
->>>>> 
->>>> 
->>>> So to confirm, we're talking about the line:
->>>> 
->>>> "Verification is not needed when downloading from central
->>>> index, and should be avoided to reduce the computation
->>>> overhead."
->>>> 
->>>> So accessing the central index is done over HTTP by default,
->>>> no support for HTTPS previous to commit
->>>> 
->> https://github.com/pypa/pip/commit/e80c387a26858c4d7ff43c5f030b04b03fd43dfe
->>
->> 
->> 
->>>> 
->> correct?
->>>> 
->>>> - -- Kurt Seifried Red Hat Security Response Team (SRT) PGP: 
->>>> 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->>>> 
->>>> 
->>> 
->>> The central index is pypi.python.org <http://pypi.python.org>
->> <http://pypi.python.org> and
->>> historically (and at the time of that commit) it was not
->>> accessed securely (plaintext HTTP, no authenticity checks etc).
->>> The mirroring support, (located at, a.pyp.python.org
->> <http://a.pyp.python.org>
->>> <http://a.pyp.python.org>, b.pypi.python.org
->>> <http://b.pypi.python.org> <http://b.pypi.python.org>, …) which
->>> that commit adds and PEP381 deals with, was supposed to have
->>> authenticity checking preventing a malicious mirror operator
->>> from attacking you by checking a html manifest that included
->>> hashes was signed by a key owned by the central index
->>> (pypi.python.org <http://pypi.python.org>
->> <http://pypi.python.org>). That
->>> commit does not include checking that the mirrors are not
->>> hosting content that differs from the central index.
->>> 
->>> So basically the lack of authenticity checking when installing 
->>> directly from the central index is a separate issue which has
->>> been (mostly) addressed with pip 1.3, and more so with 1.4.
->>> However this request deals explicitly with the implementation
->>> of the protocol for installing from the hosts that mirror the
->>> central index, but are not the central index.
->>> 
->>> For what it's worth my PR to fix it is here 
->>> https://github.com/pypa/pip/pull/1098
->>> 
->>> Between myself, the comment on the PR, and the mailing list I
->>> have 3 pip developers +1ing the change so it's likely it's
->>> going to land unless one of the others has concerns.
->>> 
->>> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA //
->>> 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
->>> 
->> 
->> So does this need two CVEs potentially? E.g. one for the central
->> issue and one for the mirror issue? In any event if it's the same
->> issue but they get fixed in different versions that would trigger
->> a CVE split.
->> 
+> The bug has been fixed in poppler 0.13.3, back in 2010, though it is
+> still present and exploitable in several distributions.
 > 
-> There was a CVE for pip not verifying TLS,
-> https://access.redhat.com/security/cve/CVE-2013-1629 However that
-> says it was RESERVED so I'm not sure how to make that unreserved?
-> I've not done much with requesting CVEs before.
-
-Ok I have no info on that CVE, is it embargoed? I can't find it in
-google after a quick search. I need to see that one before I can
-assign anything. As for the reserved thing:
-
-http://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures#Description
-
-
-> I do believe they are separate issues though and deserve separate 
-> CVEs.
+> Thanks,
 > 
-> Also as a status update my fix for this just landed in the develop
-> branch this morning so the fix will be released in 1.5. It removes
-> --use-mirrors and the automatic discovery via DNS, and it makes the
-> --mirrors option (which allowed you to specify which mirror you
-> wanted) an alias for --extra-index-url. It's true that the mirrors
-> are all still only available on HTTP but I don't believe that piece
-> is a problem for pip as the user would have had to explicit use
-> ``--mirrors http://f.pypi.python.org/simple``.
+> Etienne
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.10 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 > 
-> So It's fixed :) Question is just now does it get a CVE so I can
-> try to document our change log with CVE numbers for these issues.
+> iEYEARECAAYFAlI5W/cACgkQCRpgAcXwxOcbEQCgoa8IZSrKjVjEfJRXBBLcNpom
+> mggAmQGZmKXz/5eYy5JVETtWxVB/rH4Y
+> =uavz
+> -----END PGP SIGNATURE-----
+> 
 
+> pub  1024D/C5F0C4E7 2013-03-05 Etienne Helluy-Lafont <etiennehelluy@...il.com>
+> sub  1024g/A2EAC3E7 2013-03-05 [verfällt: 2014-12-30]
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJR+MbBAAoJEBYNRVNeJnmTDAgP/Azcf4afj50Z5wzJlxCioMNw
-ywFWwdMdUTz25Jh/SVtTJnd6USeGEbBvALjcH4fDj7B++LXdhCFxYV/1VbfIbxl0
-kE/+TraTzA1x1UhHKHlQUmmXAYWwNiBpg/wvm4ygVj9b/yJsjE+3+XZCc8EMvZQo
-+pDOWbdzjPLkjiKfy20PCp3WUzKkS0/zt9XF4UDdUxjfz7w9al6EdXZJSR7LhttK
-XEt6fqbeM7BgILO10mjAwTpaGONXAWGnr2DROEMIHg/HDkPcAGNKr/3A633Ipw7W
-vTYdhsBcF84tADB0IlPKLiy/8S27NXZJu4VxBiPKufIBTGLYcCKwoKyZe5gLpYGK
-BFwLO45O9NaFavRghyVCqgQGkzF+rkNoBFmKKqM9mqBTa6yuKJfXgnh8uubnMjY4
-Y8f2kaCkh018bJ/1Y6eykq4QlZmC+zf5+sWUpfI4B1LeBIsm4+WGWidoyKWrIX0F
-ODeXKDpepGtY4X93tXVgOc19nD9ugHuRrcDmp2SJypMBgltn9u5RojlCH8PqM/x9
-uvd5KFpRjx4zlqiNCOCppb3UdBsPAbyJNo/iO0pj6soiovT5yeqWL945xQgLr9Zg
-kWA/aeG3WzWZ2MKQhAhrQbbEhdhtGgh58aFxIeyqc5GEGwWI8jFBlM3+U8ZKsMqC
-rES2/WxPzz0k19Fu3n0r
-=l7MA
------END PGP SIGNATURE-----
