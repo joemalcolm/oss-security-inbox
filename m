@@ -1,49 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/13/6
-Message-ID: <511B17BB.2020305@redhat.com>
-Date: Tue, 12 Feb 2013 21:34:03 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/14/2
+Message-ID: <525B97E8.7090408@redhat.com>
+Date: Mon, 14 Oct 2013 18:06:16 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: David Jorm <djorm@...hat.com>, Steven Christey <coley@...re.org>
-Subject: Re: CVE Request --  jakarta-commons-httpclient: Wildcard matching in SSL hostname verifier incorrect (a different issue than CVE-2012-5783)
+CC: Kurt Seifried <kseifried@...hat.com>, Assign a CVE Identifier <cve-assign@...re.org>, Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: Re: browser document.cookie DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 10/12/2013 03:32 PM, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 10/11/2013 11:34 AM, Joel Weinberger wrote:
+>> Hi there. Yes, we do CVEs, but in this case, we consider this very
+>> low severity and will not be creating a CVE for it. Sorry for the
+>> delayed response for it! --Joel
+>
+> So to confirm you are saying this is NOT a security issue in any way
+> shape or form? I find this odd because DoS's in web browsers are often
+> considered CVE worthy. Is there something in this issue that prevent
+> exploitation/etc? If not then it deserves a CVE even if it is a "low"
+> issue.
+>
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-On 02/12/2013 06:20 PM, David Jorm wrote:
-> On 02/13/2013 10:29 AM, Kurt Seifried wrote:
->>> Please use CVE-2012-6127 for this issue.
->> Ok I should have looked into this deeper, it looks like it may
->> not be a security issue but I'm not 100% certain, so for now I
->> will leave this, and if someone can show there is no security
->> impact I'll reject it. Sorry for the mixup.
-> 
-> This bug will cause valid certificates to be rejected, but not for 
-> invalid certificates to be accepted. Please reject the CVE.
-> 
-> Thanks David
+I don't think web browser dos's are suppose to be CVE worthy. Our (Red 
+Hat) advisories for Firefox and Thunderbird mention "crash...", but they 
+probably should not (my fault, sorry ;)).
 
-Please reject CVE-2012-6127, it is not a security issue.
+Adding Huzaifa to Cc.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRGxe6AAoJEBYNRVNeJnmTJ8EQAKT6LzCJ1Q0Moii19B9QYao+
-nY6rVqGX1RDfwbyYSN0SpxxHyUQ1915bL20MX/MD4elt2l92F5cShFox9yt7k5Ml
-ucdDq0vS3oEjvahaWrm6fNewW29HgUf+kLrtcRBGgDFZsWkfcIMJ/wbFd/ZBRp4B
-Ac9jMoq+bBbxV/N5ArjHH3oF6Vp1NU6fwnJTn1Ay7pOA0b905LXQd3Th3yJ86HTb
-zcmGQabM6URfyR/4IwdmgRX8NeDGqR2dCIw6TUeTYxvk6BkVygCJT32FyEIjy9RX
-bCxeaWohtPzwiJ2zy49zLE3hvlbbBgLG1WP52B2Rm1QJM8ZWS/6yUDds784f+nlL
-RjunG1lzpLjvvfrCD8E78sDTxlRAkFLjSoQiZUNcbs4edEz2TBxNn3fk1KOWJAfA
-pThbRLZRXDvPvgr1t5I8HoB+SrJWeVLiNKS5V0uO3CjS7dOsZij8Z5GWUrxTKsli
-2HVBdOpc1mq4lH932cM/pL70+ZaO/UXzjR31NHa2UieWRiAaMGAuTPFGn4sbvcY1
-v7h3IM4XG/wiYnB3wcPANNZWBlHyL3qGCE0yYMbsI1VA66e0j2hZPdkfv9QgQKjz
-QatdRdomwZ9UFD1SLYsbi5Lbh7i4vnXf2ts/jJ7J6XH8Fb0Ys7l7TzgdOH4o8SlP
-88zHNUGhMsGpe1+x/Tql
-=83Jm
------END PGP SIGNATURE-----
+--
+Murray McAllister / Red Hat Security Response Team
