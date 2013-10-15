@@ -1,35 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/26/2
-Message-ID: <20130926154215.GA10136@lonestar>
-Date: Thu, 26 Sep 2013 21:12:15 +0530
-From: Dhiru Kholia <dhiru.kholia@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/15/7
+Message-ID: <525D8D46.3030903@redhat.com>
+Date: Tue, 15 Oct 2013 12:45:26 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Reproducible Builds for Fedora
+CC: sebi@...ecware.net, j.wielicki@...ecware.net, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: CVE request: pyxtrlock
 Content-Type: text/plain; charset=utf-8
 
-On 09/25/13 at 11:45am, Ludwig Nussel wrote:
-> Dhiru Kholia wrote:
-> >I have been working on having Reproducible Builds in Fedora for some
-> >time.
-> >
-> >At this point, I think I have something demoable. Ensuring Reproducible
-> >Builds is a big task and I want your feedback, ideas, code and support.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 10/15/2013 12:19 PM, Leon Weber wrote:
+> On 15.10.2013 12:04:43, Kurt Seifried wrote:
+>> On 10/15/2013 07:14 AM, Leon Weber wrote:
+>>> Do you think this isn't CVE worthy, or was the request just
+>>> lost between other work? :-)
+>> 
+>> Sorry, meant to reply, forgot. This was the one where I was
+>> wondering how many people us it. Debian doesn't ship it, nor does
+>> Red Hat, Fedora. When I searched it in Google it tries to correct
+>> me to "xtrlock", and for the term I get 644 results, so I'm
+>> thinking this falls into the "not enough people use it to make a
+>> CVE worthwhile" category, is that correct, or is there a large
+>> user pool/other factors I'm unaware of?
 > 
-> In openSUSE we have reproducible binaries to a certain extend. That
-> project was started some years ago with different (non-security)
-> intentions. Since the build service rebuilds packages automatically
-> if any depending package changes, a way was needed to avoid publishing new
-> rpms if the build result result didn't actually change. So there are
-> now some scripts that automatically run at the of a new build and
-> determine with some heuristics whether the new rpms match the old
-> rpms¹. You can see the output of that script in every build log in
-> openSUSE:Factory.
+> No other factors, I think. We have received feedback and bug
+> reports once in a while from a couple of people, so my best guess
+> from that is a userbase of 10-100 people; but I can't really tell.
 > 
-> https://build.opensuse.org/package/show/openSUSE:Factory/build-compare
+> Thanks for the reply, though. I simply wasn't sure if project size 
+> matters for CVE worthiness :-)
+> 
+> -- Leon.
+> 
 
-These scripts look great. Thanks Ludwig!
+Honestly I don't know what the rule is, 10? 100? 1000? 10000? 65536?
 
-Hopefully, we can re-use them in Fedora.
+Also I assume it would depend on impact, e.g. a remote code execution
+flaw  in a low use product, but one that is critical to the
+internet/specific industry would maybe be seen as CVE worthy since it
+helps get people on fixing these things.
 
--- 
-Dhiru
+Mitre: any hints?
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSXY1FAAoJEBYNRVNeJnmT2ocQAJyJ1hi8s/TBv104D83TYScH
+rx0lPWu2NaUONIZxddwkxo7omykjIJsK7+JHBjns2qb9V1Y6WXSqU+Qux0AJQR8P
+rPnohnqDuVFcGa1ASbUVjFqdQaFGuI32otsoZSkyFvawaNNQ5gF/tbcWg820A4VP
+BMNkuEJcq8ZBoM0Aa3rQorIKas5eM5HMk4CXjJHt1OHs6yOS05jB5esQc2O2298L
+ofkzuNYazeUGS+OAFHRm4fTJdfQFF3spUfc/TI50Tm/TEB+xgG/WxX6V8uBU+uiL
+9fe0C27EvXec3ItZW2ELc/FAx+pGOLSP29wyvrObUdbdThSmUBgzNzH4JSER8fyA
+HKSqLlkJrj2snyZX2vuRpz7VHd0dlNanjRQra5ksGppq21sqZrhSszKpAcopDd0+
+DqpbAC+QUjMd4UIkdtVnsHgsG6vxR/a5KPTvGpRaegGvsycu2T6ZFe/M4vXlqyK4
+nhpAICFjCRlRJOAOox439KIegBlqgVdTkk3qbVHL4m/WAcQmGdKfvnqHPkLWD+L2
+fwW8B3UObTY3Wkg+wDGhfp74eLwCJW737eoiiswaaHBfOygPTsAVF+m7wcziHYaO
+pJ8cK50C4fH/Lnx0dl/rBqumQTnGBa6ji4OOgetWBdUI3mWEPKFW2frz7YMpKNtt
+/j2/hKTJRGkwzNmtLyEc
+=MRYP
+-----END PGP SIGNATURE-----
