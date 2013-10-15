@@ -1,20 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/29/3
-Message-ID: <1383033188.3170.262.camel@banzai>
-Date: Tue, 29 Oct 2013 08:53:08 +0100
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: libxml2 external parsed entities issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/15/3
+Message-Id: <201310151529.r9FFT5Kg019063@linus.mitre.org>
+Date: Tue, 15 Oct 2013 11:29:05 -0400 (EDT)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, huzaifas@...hat.com, kseifried@...hat.com
+Subject: Re: browser document.cookie DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> libxml has an API to disable external entity expansion.
+>I don't think web browser dos's are suppose to be CVE worthy.
 
-Are you talking about using xmlSetExternalEntityLoader()?
+A complete crash of a typical web browser is currently always eligible
+for a CVE assignment from MITRE. This, of course, doesn't mean that a
+Red Hat Security Advisory would necessarily be published for that
+issue alone. It also doesn't mean that browser vendors actively
+request CVE assignments for all such issues.
 
-It works, but changing the libxml default behavior to not being
-vulnerable to XXE seems a good idea.
+An example where a CVE assignment isn't made is a clean crash (no
+memory corruption) of a single process associated with browsing a
+single web site, i.e., a "tab crash" in some browsers. This might be
+caused by a malicious web site that triggers a divide by zero. In that
+situation, it's generally not possible for the crash to disrupt the
+end user's ongoing work.
 
-Cheers,
-Nicolas
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
+iQEcBAEBAgAGBQJSXV7PAAoJEKllVAevmvmsWPUIALwIMM3/pNTrK38DJju3vrjW
+qzmGXHlpCL2tjfYbElDuUmWhhop25VGGj1cNVCmaE3CQreuAHZZRiY3ahxpBXBwk
+A0pFVghcti85o+/QX/kXH8yLi3+LhXHYGrw4pt5BX15TDCp6dttKiSlulMQLgPzU
+ZhkfgEkge+Bt6vgBUOTB/128E6ZJu9CUUbXXmBPgCjLLgWNqVoL7AIojkvv6kfIp
+KyNmrBK4wFa4oWFckwIoECV/eVmRb9lwYP1y8sXEOQUgjd+OtcEw8JKec4UWMX1Q
+WRKel7tbKMp6SWparXMiZ2S5RNizV/7E9HWzzPddntaFyy15PNPSYKnpbMRa5rk=
+=M7qf
+-----END PGP SIGNATURE-----
