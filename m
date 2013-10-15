@@ -1,29 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/5
-Message-ID: <20130108065321.GA5525@cachalot>
-Date: Tue, 8 Jan 2013 10:53:21 +0400
-From: Vasily Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/15/5
+Message-ID: <525D83BB.7070607@redhat.com>
+Date: Tue, 15 Oct 2013 12:04:43 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: /dev/ptmx timing
+CC: sebi@...ecware.net, j.wielicki@...ecware.net
+Subject: Re: CVE request: pyxtrlock
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 08, 2013 at 06:43 +0400, Dmitry V. Levin wrote:
-> On Mon, Jan 07, 2013 at 08:11:11PM -0500, adam swanda wrote:
-> > Don't you need to be running as root for this to be possible?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 10/15/2013 07:14 AM, Leon Weber wrote:
+> Hi,
 > 
-> You certainly haven't followed the link listed below, have you?
+> On 25.09.2013 21:28:46, Leon Weber wrote:
+>> two security issues were found and fixed in pyxtrlock[1], a
+>> lightweight X screen locker.
 > 
-> The elegance of this timing attack is that all you need is
-> inotify_add_watch(fd, "/dev/ptmx", IN_MODIFY)
-> which is usually available to everybody who has read access to /dev/ptmx.
+> Do you think this isn't CVE worthy, or was the request just lost
+> between other work? :-)
+> 
+> -- Leon.
+> 
 
-FWIW, more harmless ways to (ab)use inotify were posted to ossec 2
-years ago:
+Sorry, meant to reply, forgot. This was the one where I was wondering
+how many people us it. Debian doesn't ship it, nor does Red Hat,
+Fedora. When I searched it in Google it tries to correct me to
+"xtrlock", and for the term I get 644 results, so I'm thinking this
+falls into the "not enough people use it to make a CVE worthwhile"
+category, is that correct, or is there a large user pool/other factors
+ I'm unaware of?
 
-http://www.openwall.com/lists/kernel-hardening/2011/07/22/1
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-Thanks,
-
--- 
-Vasily Kulikov
-http://www.openwall.com - bringing security into open computing environments
+iQIcBAEBAgAGBQJSXYO7AAoJEBYNRVNeJnmTZsYQAIkcalpsTie4nFQx+mgL7ctM
+RbTeSchNXuhdLGB2KKi/8AL/4K9yFU0ewGAqbM34nCY0WdvdfzHLqMUtNbWd00hy
+1aU6433ch/I63RVav1LvhVgYbSUW5tDq6SX8CIkNz0JGDSpcbLJBjiFlEYkirkyD
+2FcYQK3T8ShxDQNi3B1HbGBLBzK2FyXwcSRXC4DImCvElvMUytYbI2Oakl1OKZzL
+dy5UCdj3Z/ydPCr3STezHZHKhetBVyWNqch2FHuXyCocpRz8Kf2jWifCEQmKRmeL
+iPUuzj0NYk3Vad6FnP6eDKPCZVVQiWcdkNuwu26w8Fkywr0r4yv+38CJs2p2QCrv
+nthXhBsGM7KuGni2JV2VZtO4ZfjH8VUUYjl6fZyxpgJnW7JIfGPrQt7wHFNfvaWJ
+25AY+XGdKdx+c5wB+rqGJIR1WS/q5K0ag3ymfc7vLOmewI95rpveq1QB5WKt91Tt
+gF/hg+6G3D1UPLu5aKZnwnLRvzTPzElLbWkPgXVPxRy4S1zDDFZwwMXTlGSsbwJN
+GBnINunxdDIdF14UIytPtJ2sco1yOOJpZJP9lODeF2/X62gpQjSuUrBckBzcSnIm
+rDWQUsVqQ0szmSDjWKWLWoi/5IDg2oEicoIyHjVLaovkFRp7gCy70w/ywB9yUsuN
+t6wEu4CJuW5tE6U3rzDv
+=LBVC
+-----END PGP SIGNATURE-----
