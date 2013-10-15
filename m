@@ -1,83 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/10
-Message-ID: <CACyjiAg3SJvNsuYHJP_1QGkz6gK_uZeX+MaSJTo5Uhf2OZpbMA@mail.gmail.com>
-Date: Tue, 18 Jun 2013 11:16:34 +0100
-From: Dave Walker <davewalker@...ntu.com>
-To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com
-Subject: Re: Thoughts on a vuln/CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/15/9
+Message-Id: <201310152347.r9FNlAo9000823@linus.mitre.org>
+Date: Tue, 15 Oct 2013 19:47:10 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, leon@...nweber.de
+Subject: Re: CVE request: pyxtrlock
 Content-Type: text/plain; charset=utf-8
 
-On 18 June 2013 07:44, Kurt Seifried <kseifried@...hat.com> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 06/18/2013 12:24 AM, Moritz Muehlenhoff wrote:
->> On Tue, Jun 18, 2013 at 12:04:30AM -0600, Kurt Seifried wrote:
->>
->>> http://bits.debian.org/2013/06/remove-debian-multimedia.html
->>
->> [..]
->>
->>> We have software with a now insecure configuration as it points
->>> to a site that may or may not be under attacker control. It seems
->>> to me like this might be a candidate for a CVE. Thoughts and
->>> comments for and against are welcome (I'm on the fence myself).
->>
->> No way. This is not an insecure configuration: This was never a
->> Debian service and people are free to put whatever they want in
->> /etc/apt/sources.list. There are hundreds of external apt sources
->> and everyone of them could have their owner changed at some point.
->>
->> Also there's no security issue: If a domain is grabbed and someone
->> configures an apt repository on the site, he/she would lack the
->> repository key previously used to sign the repo.
->>
->> Cheers, Moritz
->>
->
-> Ah thanks, I forgot about that (I don't use Debian that often). So
-> with the signing key requirement in mind this is not a vuln.
->
-> However my original question still stands, can/should we consider a
-> common configuration of software that goes from being secure to
-> insecure to be worthy of a CVE? A lot of things that used to be common
-> practice (like shipping every service/server enabled, all accounts
-> active, all access enabled, anonymous uploads allowed, etc.) are now
-> seen as security vulnerabilities/exposures.
->
-> As for the security of the repo key proving that it it is safe/not
-> compromised would be hard, I'm guessing it wasn't held on an HSM, and
-> was it securely destroyed, or?
->
-> Also part of my thought process is that (for example) this would be a
-> good configuration to check for and ensure is disabled, something for
-> SCAP for example or the Debian security guide (e.g. a generic "make
-> sure all enabled repos are actually working as expected").
->
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hey,
+>Honestly I don't know what the rule is, 10? 100? 1000? 10000? 65536?
 
-If a weakness in Debian's package management system signature
-verification was identified recently, then this specific issue of
-debian-multimedia deserves dedicated attention as it would be a useful
-contributing vector; but until then - this isn't an documentable
-exposure risk IMO.
+At least at the moment, those numbers seem very high. From our
+perspective, the minimum required number of users is approximately 2.
+The closed issues page is sufficient:
 
-Comparing to the definition we use for 'Exposure', a "system
-configuration issue" certainly fits the grounds to be assigned a CVE
-identifier, but arbitrary package archives which are signed are not
-tied to a specific host (re-mirroring is often encouraged), as the
-assurance is provided by the signature - not by any means of
-transport.
+  https://github.com/leonnnn/pyxtrlock/issues?page=1&state=closed
 
-I think the direction Kurt is moving towards is making sure every
-distro is thinking what would happen if a popular update domain
-changes ownership, is this case considered?  If a CVE identifier helps
-make this co-ordinated, then - well, there have been worse uses for
-identifiers. :).
+Situations in which MITRE has previously declined a CVE are much more
+marginal; for example:
 
--- 
-Kind Regards,
-Dave Walker
+  - some cases of code that wasn't packaged in any way, and not even
+    necessarily intended for use as-is, e.g., something similar to
+    example code posted as a stackoverflow.com answer
+
+  - people a few years ago who were creating fake products that didn't
+    have any reasonable purpose, and then asking for CVEs in order to
+    have inbound links to their "vendor" web site
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSXdL8AAoJEKllVAevmvmsjgAIAJRyzNohFgeSEeXbq7Z820z3
+w2/ETthc8eO8kyk4yVZQaHWjHn90gI94m0DzAkBXPRY6b0GQMKOM75HXs6Yjx7Tj
+H9kh/+1Y1hm2v+8ANmOcWc6NlNFdnOJu2Ecfb//zQllKPp3XJsYAUVyKC+HjvTfr
+bomJuPM036uDhR+OZgswn6ZkGebLMbefjqq3b4guSHAWOoEw1D46rqHJspgM561a
+Tn8Bockj2cpbEIbWOrEFuSXfUx2mDXiFpnuAhLpcUpZDSE4DT73OzPH4XSB7GvC/
+1DaKDIH1eCYlGadGInBFdO2xNZMeztoRPswtsLmjJRgDR317S1iTmrGw8fZ1gRU=
+=WGDz
+-----END PGP SIGNATURE-----
