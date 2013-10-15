@@ -1,56 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/28/1
-Message-ID: <20130928063006.GD10343@order.stressinduktion.org>
-Date: Sat, 28 Sep 2013 08:30:06 +0200
-From: Hannes Frederic Sowa <hannes@...essinduktion.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/15/1
+Message-ID: <CAA7hUgH2+YdcjJ7z5Gc+Pb2F6KpohSjX120H98TXWBG4cHcbGQ@mail.gmail.com>
+Date: Tue, 15 Oct 2013 14:18:48 +0200
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: dvyukov@...gle.com
-Subject: linux kernel memory corruption with ipv6 udp offloading
+Subject: Re: CVE request: mahara 1.7.3
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+So, the commits...
 
-I guess the following patch might be worth a CVE:
+On 8 October 2013 12:16, Raphael Geissert <geissert@...ian.org> wrote:
+> Hi,
+>
+> Multiple vulnerabilities have been discovered and fixed in the 1.7.3
+> release of Mahara:
+>
+> From [1]
+>> * Bug #1211758 Arbitrary image download
 
-| [PATCH] ipv6: udp packets following an UFO enqueued packet need also be handled by UFO
-| 
-| In the following scenario the socket is corked:
-| If the first UDP packet is larger then the mtu we try to append it to the
-| write queue via ip6_ufo_append_data. A following packet, which is smaller
-| than the mtu would be appended to the already queued up gso-skb via
-| plain ip6_append_data. This causes random memory corruptions.
-| 
-| In ip6_ufo_append_data we also have to be careful to not queue up the
-| same skb multiple times. So setup the gso frame only when no first skb
-| is available.
-| 
-| This also fixes a shortcoming where we add the current packet's length to
-| cork->length but return early because of a packet > mtu with dontfrag set
-| (instead of sutracting it again).
-| 
-| Found with trinity.
+https://bazaar.launchpad.net/~mahara-release/mahara/1.7_STABLE/revision/5833
 
-While writing a reproducer to test this patch, I have seen silent memory
-corruption (which later manifests as e.g. a panic or hangs on shutdown)
-and oopses.
+>> * Bug #1175446 user supplied $_SERVER['HTTP_HOST'] can be used for injections
 
-It has been reported to netdev by Dmitry Vyukov <dvyukov@...gle.com>
-and was found with the AddressSanitizer for the kernel[1] and trinity.
+https://bazaar.launchpad.net/~mahara-release/mahara/1.7_STABLE/revision/5830
 
-The patch is queued up for stable:
-http://patchwork.ozlabs.org/patch/276835/
-and is already committed to linux-net:
-https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=2811ebac2521ceac84f2bdae402455baa6a7fb47
+>> * Bug #1233500 Not checking ownership of blocks before editing them
 
-I guess the erroneous behaviour was introduced here:
-| git describe --contains e89e9cf539a28df7d0eb1d0a545368e9920b34ac
-| v2.6.15-rc1~731^2~31
+https://bazaar.launchpad.net/~mahara-release/mahara/1.7_STABLE/revision/5832
 
-The reproducers are available on request.
 
-[1] https://code.google.com/p/address-sanitizer/wiki/AddressSanitizerForKernel
+And while at I found the following:
 
-Thanks,
+https://bugs.launchpad.net/mahara/+bug/1034180
+https://bazaar.launchpad.net/~mahara-release/mahara/1.7_STABLE/revision/5831
 
-  Hannes
+Which doesn't appear to be mentioned in the changelog, but the bug
+report clearly states it was meant to be handled as a security issue.
 
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
