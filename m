@@ -1,82 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/13
-Message-ID: <20130108201453.GA98992@higgins.local>
-Date: Tue, 8 Jan 2013 12:14:53 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
-Subject: Unsafe Query Generation Risk in Ruby on Rails (CVE-2013-0155)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/15/8
+Message-ID: <525D8FF9.1090304@openstack.org>
+Date: Tue, 15 Oct 2013 20:56:57 +0200
+From: Thierry Carrez <thierry@...nstack.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE request for a vulnerability in OpenStack Glance
 Content-Type: text/plain; charset=utf-8
 
-Unsafe Query Generation Risk in Ruby on Rails
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-There is a vulnerability when Active Record is used in conjunction with JSON parameter parsing. This vulnerability has been assigned the CVE identifier CVE-2013-0155.
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public,
+although an advisory was not sent yet.
 
-Versions Affected:  3.x series
-Not affected:       2.x series
-Fixed Versions:     3.2.11, 3.1.10, 3.0.19
+"""
+Title: Glance image_download policy not enforced for cached images
+Reporter: Stuart McLaren (HP)
+Products: Glance
+Affects: Folsom, Grizzly
 
-Impact
-------
+Description:
+Stuart McLaren from HP reported a vulnerability in Glance download_image
+policy enforcement in the case of cached images. Deployers may opt to
+set a download_image policy to restrict image download to specific
+roles. However, when an image is previously cached by an authorized
+download, any authenticated user could download image contents if it can
+determine the image UUID, bypassing any download_image policy
+restrictions. This could result in disclosure of image contents that
+were thought to be protected by the download_image policy setting. Only
+setups making use of the download_image policy are affected.
+"""
 
-Due to the way Active Record interprets parameters in combination with the way that JSON parameters are parsed, it is possible for an attacker to issue unexpected database queries with "IS NULL" or empty where clauses.  This issue does *not* let an attacker insert arbitrary values into an SQL query, however they can cause the query to check for NULL or eliminate a WHERE clause when most users wouldn't expect it.
+References:
+https://bugs.launchpad.net/glance/+bug/1235378
 
-For example, a system has password reset with token functionality:
+Thanks in advance,
 
-    unless params[:token].nil?
-      user = User.find_by_token(params[:token])
-      user.reset_password!
-    end
+- -- 
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-An attacker can craft a request such that `params[:token]` will return `[nil]`.  The `[nil]` value will bypass the test for nil, but will still add an "IN ('xyz', NULL)" clause to the SQL query.
-
-Similarly, an attacker can craft a request such that `params[:token]` will return an empty hash.  An empty hash will eliminate the WHERE clause of the query, but can bypass the `nil?` check.
-
-Note that this impacts not only dynamic finders (`find_by_*`) but also relations (`User.where(:name => params[:name])`).
-
-All users running an affected release should either upgrade or use one of the work arounds immediately. All users running an affected release should upgrade immediately. Please note, this vulnerability is a variant of CVE-2012-2660, and CVE-2012-2694.  Even if you upgraded to address those issues, you must take action again.
-
-If this chance in behavior impacts your application, you can manually decode the original values from the request like so:
-
-    ActiveSupport::JSON.decode(request.body)
-
-Releases
---------
-The FIXED releases are available at the normal locations.
-
-Workarounds
------------
-This problem can be mitigated by casting the parameter to a string before passing it to Active Record.  For example:
-
-    unless params[:token].nil? || params[:token].to_s.empty?
-      user = User.find_by_token(params[:token].to_s)
-      user.reset_password!
-    end
-
-Note the parameter is still cast to a string before being sent to Active Record. This is because an array with a nil value can still bypass the `to_s.empty?` test:
-
-    >> ['xyz', nil].to_s
-    => "xyz"
-    >> ['xyz', nil].to_s.empty?
-    => false
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset.
-
-* 3-0-null_array_param.patch - Patch for 3.0 series
-* 3-1-null_array_param.patch - Patch for 3.1 series
-* 3-2-null_array_param.patch - Patch for 3.2 series
-
-Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "3-0-null_array_param.patch" of type "text/plain" (7637 bytes)
-
-View attachment "3-1-null_array_param.patch" of type "text/plain" (7531 bytes)
-
-View attachment "3-2-null_array_param.patch" of type "text/plain" (7502 bytes)
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBCAAGBQJSXY/1AAoJEFB6+JAlsQQjzaQQAMA8y6U5MocsXSLbIduRruEl
+eu30WiUlpZFtrbHvsdxDuZdm0qH55cIAFLEnsvhtqcLCVMQz78/dYfNbH35awywc
+sT4t9kSuK05Ahx9j9J9GLO0Pw2krZP69ht3UphwrlbwyrbC9i1AwIhB8I1+BGNDo
+XnD/MvyHnKE4IYnXm4io2vhXEU4K92l8kRyqAgglmrZmOlgWINecXgbFalyNRMQZ
+FveYjv/4yODR2IAKCJIGKI3bF4GAions6dXAmyaMZ9Y6H08xS91sFgS7TqFraK9p
+W3OAbTglx12zdjGOh2KO8HC3C46g2JDTt6Vt1eYaaJDSZiWs3u1U+JI7ob5KuWEo
+xqRSVfPRNzdbO/NSJ80LbDFFrCfu61hO+HYmuLlCDs6Db1Wt0zIYjma2JtMsbl4L
+5Semh3J0UcxwoRK5+pMmKuzJ+Q+Qbr8FNIAx4rHbCXnPRTAHnecd+5WFIzHAezuf
+wW2z5j7jHqofSmPDcaoEZsw9Ar6LE3Edf9L3li1D7A2klI+vULRsd+41SzH4WgG0
++SeNogL+2SH8dB8KCLYpxayBMr8iCvHhr8DohkLJfRRJy0+ib1avuilnq3xDTIZq
+BvrvcSoJS3CiJg51M29upGXjH5fOyu5zhAYdq6nF6srmx5Lqd8AHLbYu/uxcMwmp
+A6Nm2aQI48wT5J3gJ21i
+=uDpa
+-----END PGP SIGNATURE-----
