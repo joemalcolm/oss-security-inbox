@@ -1,63 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/18/1
-Message-ID: <5197259F.8060301@redhat.com>
-Date: Sat, 18 May 2013 00:54:23 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/15/4
+Message-ID: <CAEmQOhACRqemORuf0FO-4i3-KWJvsvTDrLoFrndEz2Jg-Z1E0Q@mail.gmail.com>
+Date: Tue, 15 Oct 2013 18:44:58 +0100
+From: Jonathan Salwan <jonathan.salwan@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, plugins@...dpress.org
-Subject: Re: CVE request: WordPress plugin wp-cleanfix CSRF
+Subject: Report - Stack-based buffer overflow and memory disclosure in camera driver (CVE-2013-4748 CVE-2013-4739)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Source: https://www.codeaurora.org/projects/security-advisories/stack-based-buffer-overflow-and-memory-disclosure-camera-driver-cve-2013-4748-cve-2013-4739
 
-On 05/16/2013 08:59 AM, Henri Salo wrote:
-> Hello,
-> 
-> Can I get CVE for CSRF vulnerability in WordPress plugin
-> wp-cleanfix, thanks. Attacker can execute arbitrary PHP code using
-> eval() in wpCleanFixAjax.php with CSRF. I also noticed the plugin
-> contains wp-cleanfix.php:
-> 
-> <script type="text/javascript"
-> src="http://blog.wpxtre.me/widget/?<?php echo time() ?>"></script>
-> 
-> Tested: 2.4.4
-> 
-> Information posted originally 11 months ago, but eval() alone is
-> not dangerous. Not sure if this should be 2012 or 2013 CVE.
-> 
-> References: 
-> http://wordpress.org/support/topic/plugin-wp-cleanfix-remote-code-execution-warning
->
-> 
-https://github.com/wpscanteam/wpscan/issues/186
-> http://wordpress.org/extend/plugins/wp-cleanfix/
-> 
-> --- Henri Salo
 
-Sorry I'm not clear, this appears to be two vulns, a CSRF, and a
-remote code exec, the remote code exec can be triggered via the CSRF
-(so remote anon attacker can pull this off with some social
-engineering/etc.), but can also be done by users with access? Thanks.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Description
 
-iQIcBAEBAgAGBQJRlyWeAAoJEBYNRVNeJnmTh6QQAMLgGvd+D/4QuYaTqjS+Xo9w
-Mshtlh0GYOUvy6vNgFvdVTep7ymhm+Q9OwTOQe2NpnUwZ3NZz3D5NbA+eLgym+Lj
-M3g/rf0IIsLW2xo/hpcvHJgkpOf9OWn9/IZm1bMzMwaE+oPmPScvY3ZdHFNv4smX
-alza7RUWMeJ+dsEa/Hbrgh2GRvvdZqRQUbl3ZkgCcviTjWwwyrYdntnpcEu7/del
-Leu0drl5410QHQf7U+P+0yHGC/JTWt4sD8yw9xX06+KYOcmPjOuEH0mKyFTDc5NK
-PJO3tg1I5cGRGl4oYSLgObOU4TcJDo3qtela/lbRSez2VLTwt/amUApkhGfZ8ptU
-F1ykktKWaB55SP2P6gv/1jpmbjNxVXToA3CLoDlaGaqETzEBUgaRhunNZrmgq4F0
-Cm3InhxZhzaNHntccw5To7pA+0VSZ7vmwOIvqwFnpi6fYsEBrihNzMnC6qCQaEx5
-4IJaOJuifUvAYf35Co9nhp/nve7G7Ty3/+pGGGcRUdUCSUpOptLmCXB5UgKpX88q
-r8hKuOmRCYGnU0RCIPE9lBICzN9b5/4LDYU+QqTkGUE57yOoOdHD852J16yI/zQy
-V9yZgd90ccjIPZ6Tz6Gsxh48GxM2lXYXPtDykxxZSJOpZLyS1IOJ+z/XZWYXomE1
-e8DyjWwKi/UIBWkzYPJd
-=kjdk
------END PGP SIGNATURE-----
+A stack-based buffer overflow and a kernel memory disclosure
+vulnerability have been discovered in the system call handlers of the
+camera driver.
+
+CVE-2013-4738:
+The camera post processing engine (CPP) and video processing engine
+(VPE) provide an ioctl system call interface to user space clients for
+communication. When processing arguments passed to the
+VIDIOC_MSM_CPP_DEQUEUE_STREAM_BUFF_INFO or
+VIDIOC_MSM_VPE_DEQUEUE_STREAM_BUFF_INFO ioctl subdev handlers, a user
+space supplied length value is used to copy memory to a local stack
+buffer without proper bounds checking. An application with access to
+the respective device nodes can use this flaw to, e.g., elevate
+privileges.
+
+Access Vector: local
+Security Risk: high
+Vulnerability: CWE-121 (stack-based buffer overflow)
+
+CVE-2013-4739:
+The Gemini JPEG encoder and the Jpeg1.0 common encoder/decoder engines
+of the camera driver are not properly initializing all members of a
+structure before copying it to user space. This allows a local
+attacker to obtain potentially sensitive information from kernel stack
+memory via ioctl system calls.
+
+Access Vector: local
+Security Risk: low
+Vulnerability: CWE-200 (information exposure)
+
+Affected versions
+All Android releases from CAF using a Linux kernel from the following heads:
+
+msm-3.4
+jb_3*
+
+Patch
+
+We advise customers to apply the following patches:
+
+CVE-2013-4738:
+
+https://www.codeaurora.org/cgit/quic/la/kernel/msm/commit/?id=c9c81836ee44db9974007d34cf2aaeb1a51a8d45
+https://www.codeaurora.org/cgit/quic/la/kernel/msm/commit/?id=28385b9c3054c91dca1aa194ffa750550c50f3ce
+
+CVE-2013-4739:
+
+https://www.codeaurora.org/cgit/quic/la/kernel/msm/commit/?id=8604847927f952cc8e773b97eca24e1060a570f2
+
+Acknowledgement
+
+Qualcomm Innovation Center, Inc. (QuIC) thanks Jonathan Salwan of the
+Sysdream Security Lab for reporting the related issues and working
+with QuIC to help improve Android device security.
+
+Revisions
+
+Initial revision
+
+Contact
+security-advisory@...cinc.com
+
+
+-- Jonathan
