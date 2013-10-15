@@ -1,60 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/09/5
-Message-ID: <52558CF5.5050604@redhat.com>
-Date: Wed, 09 Oct 2013 11:05:57 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/15/6
+Message-ID: <20131015181913.GE20753@dirac.q-ix.net>
+Date: Tue, 15 Oct 2013 20:19:14 +0200
+From: Leon Weber <leon@...nweber.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vulnerability Reported in my Ruby Gem
+Cc: sebi@...ecware.net, j.wielicki@...ecware.net
+Subject: Re: CVE request: pyxtrlock
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 15.10.2013 12:04:43, Kurt Seifried wrote:
+> On 10/15/2013 07:14 AM, Leon Weber wrote:
+> > Do you think this isn't CVE worthy, or was the request just lost
+> > between other work? :-)
+> 
+> Sorry, meant to reply, forgot. This was the one where I was wondering
+> how many people us it. Debian doesn't ship it, nor does Red Hat,
+> Fedora. When I searched it in Google it tries to correct me to
+> "xtrlock", and for the term I get 644 results, so I'm thinking this
+> falls into the "not enough people use it to make a CVE worthwhile"
+> category, is that correct, or is there a large user pool/other factors
+>  I'm unaware of?
 
-On 10/08/2013 11:21 AM, richard schneeman wrote:
-> I'm interested in creating a CVE for this issue and came to this
-> mailing list from this link: 
-> http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
->
->  I maintain the ruby gem 'wicked' (roughly 100k downloads). A
-> vulnerability has been reported allowing an attacker to read
-> arbitrary files on a system.
-> 
-> All previously released versions are vulnerable. Version 1.0.1 has
-> been released with the problem patched.
-> 
-> Email: richard.schneeman@...il.com Software Name: Wicked gem
-> 
-> Commit of fix: 
-> https://github.com/schneems/wicked/commit/fe31bb2533fffc9d098c69ebeb7afc3b80509f53
->
-> 
-> 
-> Please let me know if you need more information or if this is the
-> wrong forum for this type of a request
-> 
-> -- Richard Schneeman
-> 
+No other factors, I think. We have received feedback and bug reports
+once in a while from a couple of people, so my best guess from that
+is a userbase of 10-100 people; but I can't really tell.
 
-Please use CVE-2013-4413 for this issue. Thanks for the perfectly
-formatted request =).
+Thanks for the reply, though. I simply wasn't sure if project size
+matters for CVE worthiness :-)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+    -- Leon.
 
-iQIcBAEBAgAGBQJSVYz0AAoJEBYNRVNeJnmTCW8P/2oH7oWjyKPcrR3NKOqX50Xd
-pRXVOu24OBKYqFMOo2SDScat6xRKZ6U25/zxxUorTfr65oy+i05Jbdoe8lTcpZYR
-J8EEKscWX97lbsb92bnZNrnKmdj8xGrUrkha/rjD/ZF0kApmL5vGxo3h8hMmiZiY
-SIscO2PwKIAXiVcOxDb1cm9ipTSmWh0otuKVwlq5Smsexp8cQkNSCiOYPG4zahmK
-NVnkR30WuHUoNKgMj1sQTbq0Mua9RP9Yz1c+2s8UtSf/VZ1yQ2r8SgsxFL04R0EA
-2ydV40FocnywYTnbtKOSayiDmhYfICLQ8EbgCoUSgXGZM84xEf4CfswIW3GqKNZh
-6GJTaMf5Cf3djXLcSlpMHVjeARR7MZlrxZ4aBycEtaazmpD6GHhFNrUfX/LxIlEy
-9hhcvQF4UMYlnzIGAMbACjo8VfLIMrbZXSwyyOdsCDjnQPdzCkzOY1rpQpwi5V5L
-m2NBdcNmVSS1aX96v86Alkwi0DJ8ijgWdUfrS4IqtL6TVjGYVJCwalIF3PxLYQQX
-VfqjGO0tCkieFGtqW/YYxe5ObMS2y3upZ8pcwOSlxtME+vMjC2uu4o3sp9Y2Pa+p
-C3Ad8JI4tRM6kWuVqr6Z3YZlpOT9LSSbA/DH5tDcgd5AnH8kPl6h0IwtXRGnUuhp
-u9AWES7iBp3OBE3T0Lqd
-=Puw9
------END PGP SIGNATURE-----
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
