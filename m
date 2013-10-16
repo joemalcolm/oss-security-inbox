@@ -1,26 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/14
-Message-ID: <1375900867.13773.YahooMailNeo@web140502.mail.bf1.yahoo.com>
-Date: Wed, 7 Aug 2013 11:41:07 -0700 (PDT)
-From: David Walser <luigiwalser@...oo.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: "marcus@....franken.de" <marcus@....franken.de>, "lwn@....net" <lwn@....net>
-Subject: tomcat CVE confusion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/8
+Message-ID: <525E295F.3000307@redhat.com>
+Date: Tue, 15 Oct 2013 23:51:27 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org, leon@...nweber.de
+Subject: Re: Re: CVE request: pyxtrlock
 Content-Type: text/plain; charset=utf-8
 
-OpenSuSE has issued an advisory for tomcat today:
-http://lists.opensuse.org/opensuse-updates/2013-08/msg00014.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This is also linked from LWN here:
-http://lwn.net/Vulnerabilities/562439/
+On 10/15/2013 05:47 PM, cve-assign@...re.org wrote:
+>> Honestly I don't know what the rule is, 10? 100? 1000? 10000?
+>> 65536?
+> 
+> At least at the moment, those numbers seem very high. From our 
+> perspective, the minimum required number of users is approximately
+> 2. The closed issues page is sufficient:
+> 
+> https://github.com/leonnnn/pyxtrlock/issues?page=1&state=closed
+> 
+> Situations in which MITRE has previously declined a CVE are much
+> more marginal; for example:
+> 
+> - some cases of code that wasn't packaged in any way, and not even 
+> necessarily intended for use as-is, e.g., something similar to 
+> example code posted as a stackoverflow.com answer
+> 
+> - people a few years ago who were creating fake products that
+> didn't have any reasonable purpose, and then asking for CVEs in
+> order to have inbound links to their "vendor" web site
 
-This CVE-2013-3544 is not mentioned on tomcat's security page:
-http://tomcat.apache.org/security-7.html
+Heh. I'll have to rmemeber that =)
 
-But CVE-2012-3544 is mentioned there (note the different year).
+So for pyxtrlock please use:
 
-Based on this Novell/OpenSuSE bug report, I believe OpenSuSE made a typo:
-https://bugzilla.novell.com/show_bug.cgi?id=831119
+CVE-2013-4426 pyxtrlock mis-spelled variable name
 
-I can't find any info about CVE-2013-3544, but the mitre page says it's reserved.  Perhaps that CVE has already been allocated for some other piece of software?  If so, this might cause some confusion.  I'm not sure how this should be handled, but I thought it would be appropriate to point this out.
+CVE-2013-4427 pyxtrlock Incorrect return value checking
 
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSXilfAAoJEBYNRVNeJnmTj50QANEzulzh2eHjSsjSsyVoBJ0E
+7M59Eg4PaD2qZmgRDihnOwisUeecb6CLsX3EIIxeW0/3Zrvhha31dBxq3NylcjmQ
+TbVg1eYj1+xwhrY1FHsar/laButQDkfkQNr1pqVWY6+R7ZBViXDYEAQbUxmQDNkM
+0DEJpGOdY3rC5MKnMH3Auh4Uzps0wP6qpDkkmmMjcgz+vLji3tz5c0naqZe7tuQD
+Fah5LOu94T1KgNqtmP3mqWWVaBxTs1cOh30ZjM0+0lxvdiYC2390E0lrOHe6JqDG
+S4KAkWWLT2nHXrMIs5HcmZxJdrsCmFcJeZOMFI/uIVpzItJgFB9VNnayj2Bd68DY
+6Kvlno6jhUhJ2kZ5nYjwNF1hCvlxgIJ1GPRoFu+SOEk7B2xLLj7nVAM50UUPl90S
+CuYjxzdwA/alLN3U1JzXUlsqxGTU4XYNyqSNjkGA0Nfohnz/CVHXMXJ8/YULFoqy
+/8/DUiSquVK6QsiWjt/N2fy0ZD9Z48kLD30/0RRdAhWcTvnOT/zlB8ehHrvroCGp
+IRSYvArP3IuQoCF0vdDvz1r3tSLtoSTfRiyfCzTBPVT96V6Nry4bxSRD4E6HakAD
+lwLxvG0wcRzM+MejEbGhra2trJn/OlGYf3IctMeYMETXqdono/bNQFt2vQWmWQFr
+akhfNe9uFpaxozP8qAHs
+=CNl8
+-----END PGP SIGNATURE-----
