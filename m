@@ -1,80 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/16/4
-Message-Id: <A5321B3E-6C62-4DD9-AC01-136D1790EBC4@bitchbrothers.com>
-Date: Mon, 16 Dec 2013 21:22:40 +0100
-From: Ricardo <ricardo@...chbrothers.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/5
+Message-ID: <525E26E7.4080300@redhat.com>
+Date: Tue, 15 Oct 2013 23:40:55 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: Vulnerability (Buffer Overflow) in Icinga 1.8, 1.9 and 1.10 (Icinga Issue #5250) Vulnerability (Off-by-one memory access) in Icinga 1.8, 1.9 and 1.10 (Icinga Issue #5251)
+CC: Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: Re: browser document.cookie DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-CVE-2013-7107 will be addressed with https://dev.icinga.org/issues/5346
+On 10/11/2013 11:34 AM, Joel Weinberger wrote:
+> Hi there. Yes, we do CVEs, but in this case, we consider this very
+> low severity and will not be creating a CVE for it. Sorry for the
+> delayed response for it! --Joel
 
-Nagios will be affected by following CVEs as well:
-CVE-2013-7107
-CVE-2013-7108
-
-CVE-2013-7106 is Icinga only.
-
-Cheers
-Ricardo
-
-Anfang der weitergeleiteten Nachricht:
-
-> Von: cve-assign@...re.org
-> Betreff: Aw: Vulnerability (Buffer Overflow) in Icinga 1.8, 1.9 and 1.10 (Icinga Issue #5250) Vulnerability (Off-by-one memory access) in Icinga 1.8, 1.9 and 1.10 (Icinga Issue #5251)
-> Datum: 15. Dezember 2013 19:29:59 MEZ
-> An: ricardo@...chbrothers.com
-> Kopie: cve-assign@...re.org
-> 
-> Signierter PGP Teil
-> Here are the three CVE IDs for your recent reports. Because one report
-> mentions CSRF, our expectation is that some type of CSRF impact would
-> remain even after the buffer overflows were fixed.
-> 
-> > This is fixed with Icinga (https://dev.icinga.org/issues/5250):
-> > 	1.10.2
-> > 	1.9.4
-> > 	1.8.5
-> >
-> > The icinga web gui is susceptible to several buffer overflow flaws,
-> > which can be triggered as a logged on user.
-> >
-> > controlling the program flow by modifying the stack content
-> 
-> Use CVE-2013-7106.
-> 
-> 
-> > A remote attacker may utilize a CSRF (cross site request forgery)
-> > attack vector against a logged in user
-> 
-> Use CVE-2013-7107.
-> 
-> 
-> > This is fixed with Icinga (https://dev.icinga.org/issues/5251):
-> > 	1.10.2
-> > 	1.9.4
-> > 	1.8.5
-> >
-> > This probably affects Nagios in current version as well!
-> >
-> > The icinga web gui are susceptible to an "off-by-one read" error ...
-> > the check routine can be forced to skip the terminating null pointer
-> > and read the heap address right after the end of the parameter list.
-> > Depending on the memory layout, this may result in a memory corruption
-> > condition/crash or reading of sensitive memory locations.
-> 
-> Use CVE-2013-7108.
-> 
-> --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> 
+So to confirm, this crashes just a single tab or thw whole browser?
 
 
-Content of type "text/html" skipped
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
+iQIcBAEBAgAGBQJSXibmAAoJEBYNRVNeJnmTWWsQANlys8wJPHjNI7EzVsB2CtdH
+KzAZpjbx6PN6REGL9DmogCOYeaHXv1wiibS9Zipate4yStLdkQ+gl5G1srqJ2EPf
+E5ZfDT3RVNaeutmRAyA4ZGMvAekAfhuDPRwY5xek1M0K734OBAMlcIDqHZalTRrM
+Ry6M4TD8hlSgNoH09vKTZaYxFPFHCxGL93v1+v8L4EpqqmpSyzAKNRaVFb+9F4ue
+Ol5tb2kveAt0F3xxw10F23xdApdmymUuygPDGvCiiHvx8EW0B/IjXKPkjQHJxRhn
+3j3jq4MauElO0CVOrLF0+lRyVvoU7Aa5CqB3Kp8XjWtHAROOrYeulmQrDf7uucSa
+hfd7HtGXgvNm1WFE81r4eYkTLl7TB0yOsHduxAkSb7c5n8kj2I5ixDxwyw3QGo09
+o8bbC2ADt+qfBeVU655O4le3TZdH0pWcNBQ/T4HRHECM+THBSA0pwQva/YzyE9gc
+bKBw4BkFWScdYHQPsHtOqj4xvpeiKe/s4P61dLKDsE7NXOeKSCjLcFrgk0H+9K3y
+OafjffSzh86KKp35QpmQnW2ProcUYNTp4gelCKZJFA1seLdkE8UFviY7i8Zh95kZ
+pUqRDcVDF7MKS9UZwzhCBA01lfEt4nL81H0WCegROZNIV3dLOTUimMpG4r3+yfEZ
+vywZdha+1biHEUSSNzIq
+=q0fJ
+-----END PGP SIGNATURE-----
