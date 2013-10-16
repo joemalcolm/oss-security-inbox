@@ -1,15 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/13
-Message-ID: <20130424195929.GB12258@kludge.henri.nerv.fi>
-Date: Wed, 24 Apr 2013 22:59:29 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/6
+Message-ID: <525E2910.7030103@redhat.com>
+Date: Tue, 15 Oct 2013 23:50:08 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: WP-Super-Cache XSS and Remote Code Exec
+Subject: Re: CVE Request : poppler < 0.13.0
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 24, 2013 at 10:53:35PM +0300, Henri Salo wrote:
-> Should CVE-2013-2009 be used also for w3-total-cache issue?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Answer: No. http://www.openwall.com/lists/oss-security/2013/04/24/9
+On 10/14/2013 06:38 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> Kurt? Could you assign a CVE please?
+> 
+> SUSE is affected by this in SLE11.
+> 
+> Ciao, Marcus On Wed, Sep 18, 2013 at 09:53:33AM +0200, etienne
+> wrote: Hi, I'd like to request a CVE number for the following
+> issue 
+> http://cgit.freedesktop.org/poppler/poppler/commit/poppler/DCTStream.cc?id=fc071d800cb4329a3ccf898d7bf16b4db7323ad8
+>
+>  The bug has been fixed in poppler 0.13.3, back in 2010, though it
+> is still present and exploitable in several distributions.
+> 
+> Thanks,
+> 
+> Etienne
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Please use CVE-2010-5110 for this issue. Apologies, we had
+Thanksgiving so I was out for a few days.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSXikPAAoJEBYNRVNeJnmToJkQANAi0Hz6HxDvwrK6MshUbrLj
+JmL9s4uZKni8eiVFVxmx30Kwrmct9guWebm9nyMs8Zjw+nOX8tyfXB2UJt4klyYi
+wb8UruqBWmOg329DYKWV0NgQ09V9e2mCOiW6Fjl0DPnRVipr3H55mvvQi4nQhgAA
+NU3QcJ93eFJeXZInav+1kaG3qz0/qUDiV+IPClscEYNG0IuC5fAbGYqUsKiZbkrq
+2+1mdoiTSTv7GIcYcr5l4bUaR/0c/smZKeobDHByNeGgPQZy7KYrD26U4cL+Jl+E
+Sv6On2eNkSnZjnLBJPuVAv5dZfRG77kgGxSY65emaukCWq9yRnNnL1KSG1hHbD48
+ya18BJmOrDBWdCDcReVW1kPK6fMkS8hmnaZEprKVHjJLslP9qTLBPqbNTaUx81n3
+OkNLCRlxaGOOi0njeZ4gY+hy5ccMcYuz5TFwKsXIXSrc0EdFtZSdyOsbUw9TRAI1
+5TWpCfjJ2q+tQolTCbPOx2AzrNeoLRCM9VFyESSO89VndCPdZd+809C8mlcjWjnk
+ikfFRDXjqu8M5hvZMGs0fsKtNJejFepvbCbgaquAZ1+o20Gwv2I2KQLLCH9M5vNJ
+H6jvw1MawDrzQUNZpwDZD4slpU9l4PJNa4XF4ds67A0hS/fWxtInd/EdXvzxuMiS
+/h5MK4NPZICoIga0vccG
+=vyNv
+-----END PGP SIGNATURE-----
