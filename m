@@ -1,72 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/04/7
-Message-Id: <E1UNoPX-0000C9-VT@xenbits.xen.org>
-Date: Thu, 04 Apr 2013 17:57:19 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 47 (CVE-2013-1920) - Potential use of freed memory in event channel operations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/3
+Message-ID: <20131016051844.GA20183@lorien.valinor.li>
+Date: Wed, 16 Oct 2013 07:18:44 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: team@...urity.debian.org
+Subject: Re: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-             Xen Security Advisory CVE-2013-1920 / XSA-47
+On Wed, Oct 16, 2013 at 05:46:59AM +0400, Solar Designer wrote:
+> On Mon, Oct 07, 2013 at 11:17:18PM +0200, Moritz Muehlenhoff wrote:
+> > On Mon, Oct 07, 2013 at 10:47:29PM +0200, Salvatore Bonaccorso wrote:
+> > > I recently joined the Debian Security team and request membership to
+> > > the linux-distros@...openwall.org list so that I may participate fully
+> > > in reporting and fixing vulnerabilities in Debian and FOSS. Here is my
+> > > GPG fingerprint:
+> [...]
+> > Confirmed.
+> 
+> I've just subscribed Salvatore to linux-distros.  Sorry for the delay.
 
-        Potential use of freed memory in event channel operations
+Thanks Alexander.
 
-ISSUE DESCRIPTION
-=================
-
-Wrong ordering of operations upon extending the per-domain event
-channel tracking table can cause a pointer to freed memory to be left
-in place, when the hypervisor is under memory pressure and XSM (Xen
-Security Module) is enabled.
-
-IMPACT
-======
-
-Malicious guest kernels could inject arbitrary events or corrupt other
-hypervisor state, possibly leading to code execution.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions from 3.2 onwards are vulnerable when making use of
-XSM.  Configurations without XSM or with a dummy module are not
-affected.
-
-MITIGATION
-==========
-
-Running without XSM (which is the default) will avoid this
-vulnerability, albeit doing so will likely lower overall security of
-systems that would otherwise have XSM enabled.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa47-4.1.patch             Xen 4.1.x
-xsa47-4.2-unstable.patch    Xen 4.2.x and xen-unstable
-
-$ sha256sum xsa47*.patch
-e49a03e0693de07ec1418eb16191854458e72088febd6948ea5bc1f900a1853a  xsa47-4.1.patch
-c29b59492f9d7e3f74bfc41877a2c5cff70436d3738fd91066f396f969aab0a7  xsa47-4.2-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJRXb5fAAoJEIP+FMlX6CvZ0RwH/AtcVQFvERB+16wSjN3GTguk
-LnakHD3NCVeaDNbkF0G4b4ibR5oOCAGO/9CQwcB1QKj67mvYJm2kglDnGWUmZUQC
-TKWZR5vA9D9YAQvll8mSwd3OdLBoN0IGYPp9AIVUi9zl34zF+ZzbtsC57dvmjQD6
-/E0tMDgOoCsA8ARnuknjbgk+CbfsGi/dbxYGDla4/wMC9wbUhG1wcA9lqNa37azT
-1lRIj8qI3TfWC4aMh1kZKPsljrHZLkfA2VxgkrTCjr7u2Usr7vgUsNT4F0rYouRI
-h5mo1JszJOnM2EHuzVbQrvBmaXlPIFF/S5cRvD6RIavEsOUet5au49Hnhb/ENG4=
-=/g6f
------END PGP SIGNATURE-----
-
-Download attachment "xsa47-4.1.patch" of type "application/octet-stream" (860 bytes)
-
-Download attachment "xsa47-4.2-unstable.patch" of type "application/octet-stream" (865 bytes)
+Regards,
+Salvatore
