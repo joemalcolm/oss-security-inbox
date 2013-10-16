@@ -1,26 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/26/1
-Message-ID: <52BC86F2.5000001@redhat.com>
-Date: Fri, 27 Dec 2013 01:13:46 +0530
-From: Ratul Gupta <ratulg@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/18
+Message-ID: <20131016214950.GR2810@redhat.com>
+Date: Wed, 16 Oct 2013 15:49:50 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: rubygem-will_paginate XSS vulnerabilities
+Subject: CVE request: slapd segfaults on certain queries with rwm overlay enabled
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+The following was reported to us, but has already been reported
+publicly upstream.  Could a CVE be assigned to it?
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1046642
+It was discovered that OpenLDAP, with the rwm overlay to slapd, could
+segfault if a user were able to query the directory and immediately
+unbind from the server.  This seems to be due to the rwm overlay not
+doing reference counting properly, so rwm_conn_destroy frees the session
+context while rwm_op_search is using it.  This condition also seems to
+require multiple cores/CPUs to trigger.
 
-Cross-Site Scripting (XSS) vulnerabilities were found in will_paginate 
-gem for Ruby, where certain input related to generated pagination links 
-were not properly sanitised before being returned. This could be 
-exploited to execute arbitrary HTML and script code in a user's browser 
-session in context of an affected site.
 
-Can a CVE please be assigned to this issue?
+References:
+
+http://www.openldap.org/its/index.cgi/Incoming?id=7723
+https://bugzilla.redhat.com/show_bug.cgi?id=1019490
+
+This is currently not fixed upstream.
 
 -- 
-Regards,
-
-Ratul Gupta / Red Hat Security Response Team
-
+Vincent Danen / Red Hat Security Response Team 
