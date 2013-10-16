@@ -1,57 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/6
-Message-ID: <512DA780.6070704@redhat.com>
-Date: Tue, 26 Feb 2013 23:28:16 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/13
+Message-ID: <525E2A22.9090602@redhat.com>
+Date: Tue, 15 Oct 2013 23:54:42 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: psi+ stores the cache file as world-readable
+Subject: Re: CVE request for saltstack minion identity usurpation
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/26/2013 03:27 PM, Seth Arnold wrote:
-> On Tue, Feb 26, 2013 at 11:04:24PM +0100, Agostino Sarubbo wrote:
->> Psi+, a fork of psi, stores its files in ~/.cache/psi+ as
->> world-readable.
->> 
->> ~/.cache $ ls -la psi+/ total 52 drwxr-xr-x 5 ago ago  4096 feb
->> 25 09:41 . drwx------ 5 ago ago  4096 feb 24 23:58 ..
+On 10/11/2013 04:26 PM, Michael Scherer wrote:
+> Hi,
 > 
-> It appears my ~/.cache and your ~/.cache are mode 0700.
-> Directories underneath are already unaccessible by other users,
-> except if one of your programs passes a filedescriptor to a
-> directory to another user's process (say, cwd is in ~/.cache/psi+
-> and then executes a setuid program, or uses unix(7) SCM_RIGHTS to
-> pass a directory file descriptor to another program).
+> While looking for saltstack issues on github, i stumbled on this
+> pull request : https://github.com/saltstack/salt/pull/7356
 > 
-> Are there environments where ~/.cache isn't 0700 by default?
+> It seems that saltstack, a client/server configuration system (
+> like puppet, chef, cfengine ) allowed to have any minions ( agent
+> on the server to be configured ) to masquerade itself as any others
+> agents when requesting stuff from the master ( ie, main server ). 
+> While I didn't fully check, this would permit a compromised server
+> to request data from another server, thus leading to potential
+> informations leak ( like passwword, etc ).
 > 
-> Thanks
+> Can a CVE be assigned, and I will pass it to upstream on the bug 
+> report ?
+> 
 
-In general if a program respects umask and creates files in ~/ then
-it's really unlikely that I'm going to assign a CVE for it unless it's
-something really significant like say an SSH client creating keys or
-similar.
+See previous email, but once again for clarity/archives:
+
+CVE-2013-4439 saltstack minion identity usurpation
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRLaeAAAoJEBYNRVNeJnmTP5cQANiJhZ4ShyxtFp0r5xTo79AH
-g6XtO9Ruof0Qf3cNXbpK5zMV8Y2wAWknYIxH8clljpl8C+jUx6+27r99FTJRPShN
-YDzcLDH3H7n65wcNGGaqqU3qqmXTI30lbixcNHFBoeI0NsxMQDgL6tfZoiYPgoT+
-5P46tLVDSbFaM7SEAR4TPVRSkZa7JYPJh84cO8g3NII5Jyu/1YsXlIkXfHFQ6CZG
-AdW4pPcMbcOuPByUFqJEhVIQyggvsnlwsXCYNu3IFGWtvQ6yVNn6XDZSJ1i2QJh4
-im1JJ1eOB/ZKRB59AW5k3qeNe5WpnESvJMT7zTOuBiVGhKmyziQAVWgudCdzGax0
-E3qekAfJYVLEmEj7kAfDnInWdTsdFzfAqXT1PBE90vNXDwwhAFOpJiMKIXil4PKH
-kNP1cMe41U4Wzoe6NRiQt/SKAM7lFxSmFHbbQMri9Jupi/CgT1uw2rqOWSHfMnFM
-9QGWpqj2PXrNAfISg97QtoopY4grfmm5/b9DGDTHSaSiPA5eJHFPEH8pKZR9vjYl
-JZVFXpbQggX/0f96QS+QfmeeHUdQIBv1veAlwpqrCHR9ct3RdI39kKWguYwJ+dVQ
-0+verQjS6U2YMQsYyoVa2LLva0iwgJyLfROhN8d5hHfA6J8ifSYvqPfXhLtskwMl
-q7rq0CjWb00cWVPj8j4/
-=/Q8U
+iQIcBAEBAgAGBQJSXiohAAoJEBYNRVNeJnmTL60QAJYD39/d43TyIvnGCilD4s25
+7yPnApJRWn9sEypQI9NqyOlKt8aU7pgQe2rgNLN1x0LuUT7/b69YGJv24LlLJE7d
+W92OqYTjuUh6dssZg7DUnOpOx6eYwnFE8Zb3fxk9m6px2TgSZt4IihKyDbQYyzRv
+5kQRWh8YBa7lSa+t4Rx7mpAzY82AmQS7/qSF/1dXmGhrgLvIn/qz9Xilo/fZR1x5
+DXX/+om5jyErN/QtNrN7OqL8TOKfQw2IuCZp2sFApYcwexwcH8Gv70UBWwOUrJ6q
+zBNjmbu50prGaE5smiZgLdcwRrqaFRZnC9VT3fx7rC5nu1rOllsdOX/UtQSZ5zGS
+uAYzXvOTlt5eAQnkBuxjJE1y39S9/3SDWOBEh7gNTAjOLxf8PDFDfKb6EWgDq9Vf
+FGQn7lBFuJOlOlcyzv1RQmvoLPcrcnIOxlQhM/d9IeBSKH+Nj8eAQP+gvGedHWF/
+EBoSWdVK16R6MoLSkw4lNFnSByYH6PMiR95u8HqCRMow6G5GekwHX3x/jpT9+2qi
+iMvIqV+ZeUQt+d0g+t4Ye+oc+noBJUdhGIofTC20XGHsnLPLiRzw9HecItbIiDT9
+uGemFxKDuxdc4tZjVm2nz+PVYA7n/kFfBtOUzDtDbu9qFCXDDtuINddytaBSp0DB
+3b2BGkVqCle/oZ19mqal
+=zUgC
 -----END PGP SIGNATURE-----
