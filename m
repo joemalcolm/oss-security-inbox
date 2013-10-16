@@ -1,54 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/30/8
-Message-ID: <51802AE0.60502@redhat.com>
-Date: Tue, 30 Apr 2013 14:34:40 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/10
+Message-ID: <525E2990.3050809@redhat.com>
+Date: Tue, 15 Oct 2013 23:52:16 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE-2013-2029: Nagios RPM nagios.upgrade_to_v3.sh
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org
+Subject: Re: CVE request: xss in XHProf
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-This was found by Grant Murphy
+On 10/13/2013 07:01 PM, Murray McAllister wrote:
+> Hello,
+> 
+> A cross-site scripting flaw was fixed in XHProf:
+> 
+> https://bugs.gentoo.org/show_bug.cgi?id=487858 
+> http://pecl.php.net/package-changelog.php?package=xhprof&release=0.9.4
+>
+> 
+https://bugzilla.redhat.com/show_bug.cgi?id=1018114
+> http://pecl.php.net/package/xhprof
+> 
+> Can a CVE please be assigned if one has not been already?
+> 
+> Thanks,
+> 
+> -- Murray McAllister / Red Hat Security Response Team
 
-So most Nagios RPM files seem to include a copy of
-"nagios.upgrade_to_v3.sh" which contains the following code:
-
- tmp1=/tmp/nagioscfg.$$.tmp
-...
-cat $nagios_cfg | sed --regexp-extended
-"s/^(\s*check_result_buffer_slots\s*=\s*)/# Line Commented out for
-Nagios v3 Compatibility\n#\1/g" > $tmp1
-...
-diff_output=`diff -u $nagios_cfg $tmp1`
-...
-   mv $tmp1 $nagios_cfg
-
-Oops.
-
-Covered in https://bugzilla.redhat.com/show_bug.cgi?id=958015
-
-Please use CVE-2013-2029 for this issue.
-
+Please use CVE-2013-4433 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRgCrgAAoJEBYNRVNeJnmTAsMQAL0d2qJCKO24AP15MT7Au4I7
-71VGuuUs2qcfrKBgCBkC+zIOn50e8P+k/MSTXcfbbSlzfr/LFGF4FJfEAEM9vnlv
-QJ++YJwDdSiqznwAPJEF3fXj2kflkAAqd8mPTLHBMh6Ow33e6vmBzl0JBcd8W96A
-mKlx5dX/7ICCxzNWBZxIP31FaBwvaLGOkbe5cFtBr6LYH2KEmlHCEg6NgFi3BCZJ
-a61d3WgoUjEd1M0H10sbM+di1VJFKgzgpXOkNW93b+XjPLan0Dmvc/9wAAWq0NMX
-E+tKMUxQc8Pwbpu/QhUs34gFvh2myMhUeLlvW39ccpaWclfqkn7pMeWPJKmYE4Ew
-FcSl8SOm4HVK1I1II2w/NCnpsqO/XgAEtAVaG0622jzUICZhf6c7NYoxoO5/kPjO
-WK4T3vUPcSkrR2xTYJb3uKkEiKOo80uDGS4MHwVwhsz93oX2T15RP+2yGDwePPPs
-NdfzRVUPiLFz1BHECvF7D58HXb056nbexlj8GYt0NKkipi0YHraMu+dprumX4YEk
-2H9RXaGGLEc4s7XCurOqF8L2TnOmvbFnOS62oCYm0rrdGtxKhhv+MEm/yJBbsWLi
-4kO1V23IVl4TuUVBri4wzeVBMBCxJPaABN1D30TaXwBAy0eTGzxM60hWacVeyrBP
-SljhlBPyI9nTtM5TMcMQ
-=8bFP
+iQIcBAEBAgAGBQJSXimQAAoJEBYNRVNeJnmTJeMQALKLWmKmPt2+JuYzRGMvYjKk
+XcN/rHLKa5+YJ+CpxJqQfruTiMVwpRhst1B/MrrDuQG27K2xW71GAYQ25i4mJn5l
+tWgBdUeKgLjXmovsLr46A1gPU4iBGkKtyO2laYkS8l1c3U2ibGDr+rbcPFW+MkEG
+DXiWnhQUWEJF3lmVUWobdZPk8laXWU/ozhuxBrfysCHIvKgvGyRtdEzIR4hwosyJ
+x8leEFHJnghIjU2T08z7K/++pqBx+NvnyfIyZNYDc5r6+4ceCKO2FaAGjYIISt8W
+HSZi4brymruGcBVzQaLuQBTDUqjHOxe4hbFJPygTYSFcSJ9B1CbE02YgAn0V2Jbp
+I7UwWxWoZx3WZ1+QIfc1enxm2dXNmSzrvS6cfURcSahGZBR997vwIKjHyW2TUiBo
+KysM1BkQGmufDHzjxmXa5SAzySp1wRRg90WdjsV9N+D52Y14buGUkPB+jmcs4gYU
+YBr8PyEB6IV9P3EIn80i/4VK1+uTC6qzLoSkp2L+dx/8OzVnrlHoP2L300aEWOL1
+p5FNlg+MjTUDBs2+c2GN6uU5DFAo4ut9yxteCDQJT2H1R/b4LCcN0we9po8SYEkv
+E7VqnIyy+WI9/G3gNeZbjtPAQeUUZo3lsd2yESJW/x0sjj9+OT37VFBq2GlRJkar
+y7TtvFVtQ4MmsXeCnS7B
+=9Hsb
 -----END PGP SIGNATURE-----
