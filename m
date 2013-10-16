@@ -1,58 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/29/8
-Message-ID: <20131029193008.GA15526@eldamar.local>
-Date: Tue, 29 Oct 2013 20:30:08 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: sup MUA Command Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/17
+Message-ID: <20131016172941.GA97616@higgins.local>
+Date: Wed, 16 Oct 2013 10:29:41 -0700
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
+Subject: Possible DoS Vulnerability in Action Mailer (CVE-2013-4389)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Possible DoS Vulnerability in Action Mailer
 
-On full-disclosure list there was reported a command injection
-vulnerability in 'sup', a console-based email client.
+There is a possible DoS vulnerability in the log subscriber component of
+Action Mailer. This vulnerability has been assigned the CVE identifier CVE-2013-4389.
 
- [0] http://rubyforge.org/pipermail/sup-talk/2013-October/004996.html
- [1] http://seclists.org/fulldisclosure/2013/Oct/272
+Versions Affected:  3.x.x
+Not affected:       4.0.x, 2.3.x
+Fixed Versions:     3.2.15
 
-For reference quoting the upstream announce:
+Impact 
+------ 
+A carefully crafted email address in conjunction with the Action Mailer logger
+format string could take advantage of a bug in Ruby's sprintf implementation
+and possibly lead to a denial of service attack.
 
-----cut---------cut---------cut---------cut---------cut---------cut-----
-Greetings,
+Impacted Ruby code will look something like this:
 
-Security advisory (#SBU1) for Sup
+  "some string #{user_input}" % some_number
 
-We have been notified of an potential exploit in the somewhat careless
-way Sup treats attachment metadata in received e-mails. The issues
-should now be fixed and I have released Sup 0.13.2.1 and 0.14.1.1 which
-incorporates these fixes. Please upgrade immediately and also ensure
-that your mime-decode or mime-view hooks are secure [0], [1].
+All users running an affected release should either upgrade or use one of the
+work arounds immediately. 
 
-This is specifically related to using quotes (',") around filename or
-content_type which is already escaped using Ruby Shellwords.escape -
-this means that the string (content_type, filename) is intended to be
-used _without_ any further quotes. Please make sure that if you use
-.mailcap (non OSX systems), you do not quote the string.
+Releases 
+-------- 
+The FIXED releases are available at the normal locations. 
 
-Credit goes to: joernchen of Phenoelit (http://phenoelit.de) who
-discovered and suggested fixes for these issues.
+Workarounds 
+----------- 
+If you can't upgrade or apply patch to your system, you can work around the
+issue by using the following monkey patch after requiring Action Mailer:
 
-[0] https://github.com/sup-heliotrope/sup/wiki/Viewing-Attachments
-[1] https://github.com/sup-heliotrope/sup/wiki/Secure-usage-of-Sup
+```ruby
+module ActionMailer
+  class LogSubscriber < ActiveSupport::LogSubscriber
+    def deliver(event)
+      recipients = Array.wrap(event.payload[:to]).join(', ')
+      info("\nSent mail to #{recipients} (#{event.duration.round(1)}ms)")
+      debug(event.payload[:mail])
+    end
+  end
+end
+```
 
-You can use 'gem' to upgrade or install sup. Please report any issues
-to: https://github.com/sup-heliotrope/sup/issues
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
 
-Regards, Gaute
-----cut---------cut---------cut---------cut---------cut---------cut-----
+* 3-2-log-subscriber.patch - Patch for 3.2 series 
+* 3-1-log-subscriber.patch - Patch for 3.1 series 
+* 3-0-log-subscriber.patch - Patch for 3.0 series 
 
-Upstream fixed (as mentioned in announce) the issue in 0.13.2.1 and
-0.14.1.1. Commits:
+Please note that only the 4.0.x, 3.2.x, and 2.3.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
 
- [2] https://github.com/sup-heliotrope/sup/compare/release-0.13.2...release-0.13.2.1
- [3] https://github.com/sup-heliotrope/sup/compare/release-0.14.1...release-0.14.1.1
+Credits 
+------- 
 
-Could a CVE be assigned for this issue?
+Thanks to Aaron Neyer for reporting this vulnerability!
 
-Regards,
-Salvatore
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "3-0-log-subscriber.patch" of type "text/plain" (4320 bytes)
+
+View attachment "3-1-log-subscriber.patch" of type "text/plain" (4262 bytes)
+
+View attachment "3-2-log-subscriber.patch" of type "text/plain" (4000 bytes)
+
+Content of type "application/pgp-signature" skipped
