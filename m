@@ -1,28 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/15
-Message-ID: <alpine.LFD.2.03.1302202337560.6910@redhat.com>
-Date: Thu, 21 Feb 2013 00:39:10 +0530 (IST)
-From: P J P <ppandit@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/11
+Message-ID: <525E29B3.6020100@redhat.com>
+Date: Tue, 15 Oct 2013 23:52:51 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request - Linux kernel: evm: NULL pointer de-reference flaw
+Subject: Re: CVE Request: dropbear sshd daemon 2013.59 release
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Linux kernel built with Extended Verification Module(EVM) and configured 
-properly, is vulnerable to a NULL pointer de-reference flaw, caused by 
-accessing extended attribute routines of sockfs inode object.
+On 10/11/2013 07:22 PM, Matt Johnston wrote:
+> On Thu, Oct 10, 2013 at 11:41:27PM -0600, Kurt Seifried wrote:
+>> On 10/10/2013 07:27 AM, Marcus Meissner wrote:
+>>> It also has this changes entry which might need one: - Avoid
+>>> disclosing existence of valid users through inconsistent delays 
+>>> Thanks to Logan Lamb for reporting
+> 
+>> This one seems to not be as exploitable or did I misread the follow up
+>> emails?
+> 
+> This one needs a CVE too, just the link was wrong.                                                                                                            
+> https://secure.ucc.asn.au/hg/dropbear/rev/d7784616409a is
+> the correct patch.
 
-An unprivileged user/program could use this to crash the kernel, resulting in 
-DoS.
+Please use CVE-2013-4434 for this issue.
 
-Upstream fix:
-  -> https://git.kernel.org/linus/a67adb997419fb53540d4a4f79c6471c60bc69b6
+> Cheers,
+> Matt
+> 
 
-Reference:
-  -> https://bugzilla.redhat.com/show_bug.cgi?id=913266
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSXimyAAoJEBYNRVNeJnmT5AUP/28rFBFJVCSfX3UQs614CPrG
+Op5zNzh6xJ1FY4GZW0uYtUE3Xu4Q/w6p5IzqiFpfkXpSuJPyFbiZ5sOuq4fS9zqE
+vGgxiBavCr82tjWnN7cYsBm5g92vUvzjmtUETjHgwlpqKw9N1OYoedpkfzDQGppb
+RQYlO0i3rOjs+xE9f1NQwBZquT1dijRYmq7P2bXHknQi0HUkJI4Xp77SEput9wZw
+IzSGzWnPpnDQzImMgKPpR06HBsZHmfjl7vW+WDJDwCTmdkMjO5/oba38stMgvKyA
+VdIggsHNzViyr9OFpt2Dtp5UKH/QwSmzM5drqej67LB7YX5ZIezp3RvfNoIRj6I8
+6WCTZ9Ang6ewTjYkgdr8v7ihTeQV7mqg8V35+dR2CMMpPBIThGC9NMFe9i6m1t1A
+Z6Nwslxd5eGBWUZaDuOffz9W1dVwJc0gY7YjJSUToyDsJsrgps/TbnSKDaQcaKzO
+Lg5ofB47uvZ1zNrQO1SlLtQyiHL7Sm2R9VFwd3J71YsqDKf9NHcBIyP3TO7I+10y
+B77ofy2+z2woezJU6OOJgUHMPzBMzosvGZoLkHmTDkIrO4QcQ9wn/kExO03kpN0f
+GcJqWwH0BOPea4Cr8rpW+bQwoUXLevjZd0q5CI1jixKTlTaFsogGtS4gghlCEcZe
+VO7uPmww+ZmeqVyxsEjp
+=mAl1
+-----END PGP SIGNATURE-----
