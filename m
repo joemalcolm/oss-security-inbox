@@ -1,74 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/23
-Message-ID: <51AF8F9E.7030702@redhat.com>
-Date: Wed, 05 Jun 2013 13:21:02 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>, a.p.zijlstra@...llo.nl, eranian@...gle.com, ak@...ux.intel.com, security@...nel.org
-Subject: Re: CVE Request: More perf security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/16
+Message-Id: <201310160857.r9G8vedS008699@linus.mitre.org>
+Date: Wed, 16 Oct 2013 04:57:40 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: browser document.cookie DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/04/2013 09:53 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> The perf kernel folks seem to have fixed some more perf issues
-> which have not yet got CVEs.
-> 
-> Our partner Intel thinks that these 3 are security relevant, so we
-> think they also need seperate CVEs.
-> 
-> I only glanced what the issue is, please correct if my
-> classification is wrong..
-> 
-> 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
+>So to confirm, this crashes just a single tab or thw whole browser?
 
-This
-> 
-one is a right proper mess. I'm going to suggest in future we
-send one email per Linux Kernel vuln so in case discussions takes off
-the other vulns included don't get caught up in the mess.
+The question here doesn't seem to make sense in this context.
 
-> 2. Denial of service (system crash)
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=f1923820c447e986a9da0fc6bf60c1dccdf0408e
+The "browser document.cookie DoS" doesn't cause anything to crash. Our
+Tuesday message in this thread was addressed to Murray McAllister, who
+brought up the related issue of whether Firefox crashes should have
+CVE assignments. That message of ours apparently contributed to the
+mixup.
 
-This
-> 
-one seems clear, please use CVE-2013-2146 for this issue.
+Very roughly, "browser document.cookie DoS" is a behavior, found in
+multiple web browsers, that lets attackers perform the equivalent of a
+Logout CSRF attack against many web sites.
 
-> 3. Information leak (??) via perf LBR filter
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6e15eb3ba6c0249c9e8c783517d131b47db995ca
+In a "normal" Logout CSRF scenario, the browser sends a request to
+(for example) /logout.php, and the web application interprets (or
+"misinterprets") this to mean that the client user actually wishes to
+be logged out. The web application might then change the state of
+something on the server side to indicate that the user is logged out.
 
-This
-> 
-one is a right proper mess. I'm going to suggest in future we
-send one email per Linux Kernel vuln so in case discussions takes off
-the other vulns included don't get caught up in the mess.
+In this Logout CSRF variant, the browser doesn't send a request to
+/logout.php and instead sends a request to someplace else, such as the
+/ URI, with parameters to force a web application to set a malformed
+cookie within the response. At the web-application layer, nothing
+happens to log out the user. However, at the HTTP server level, the
+user can be effectively logged out, because the HTTP server isn't
+wiling to accept requests with malformed Cookie request headers.
+What's even worse is that this is a Persistent Logout CSRF variant, in
+the sense that the user cannot login again without restarting the web
+browser.
 
+(Yes, we realize that this isn't exactly like Logout CSRF, because the
+behavior also prevents visiting unrestricted static pages, which
+almost always would remain accessible after a "real" logout. Logout
+CSRF just seemed to be the simplest model for describing the problem.)
+
+It seems fairly clear that the web browsers can be blamed for the
+problem, because they should not be sending the malformed Cookie
+headers at all. When the web browser sends the malformed Cookie
+header, it is (in effect) enabling a Logout CSRF vulnerability on a
+web site that does not have any server-side Logout CSRF problem.
+
+In addition, it would sometimes also be possible to blame code on the
+server side, which should not be trying to set a malformed cookie. In
+the case of Google Analytics, maybe the server-side issue is
+site-specific on the *.google-analytics.com servers, and therefore
+outside the scope of CVE.
+
+One might also argue that an HTTP server (such as lighttpd) shouldn't
+completely block access to the site upon seeing a malformed Cookie
+header. That's not necessarily a vulnerability, though.
+
+For now, it seems simplest to assign CVEs on this basis:
+
+  - at least two independently implemented web browsers are capable of
+    sending malformed Cookie headers that trigger the lighttpd
+    request.c "invalid char in header" code, leading to the 400 HTTP
+    status code
+
+  - yes, it can be considered an interaction error between the browser
+    and lighttpd
+
+  - however, enough blame belongs to the browser that there should be
+    one CVE assigned per independent browser implementation
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJRr4+eAAoJEBYNRVNeJnmT23AP/0V/QI3Ad/8oVXc/aXZVXuSf
-iefMVriDJAdmGIgX0lLqtGy7ovq1ckz8AwqdfA+6IuX3re7PgcX7qLBIMycyCJne
-VnKzuCAvUqS+8rjKvXgBJE5BYicYqTSXpDHzjt4C+rDFDhwGK+lswfcblXgVVTKZ
-3FBDbxQ4TrwCGI5YBILYw8p3lkArlBkALwU89Kj8z8nSKU/BRmWfmd5ACvwOgHhu
-1OLIvicOBMI7/UB/NhNNE8MZ7+fORtkIQdKKWAfiIrLhsR8sMPlu9WD7FSaFiZQl
-68LOQRMzrJGcFe2+oCOx2OQbl+0hcVBdLoQ50DtJ8dpFmo+YiQgJHG4192VFtvwk
-aA30jQKwsTEWTSrROtzvDBTTR5jHsp9oficT1MISnS1D3JtuzX5I4h+vqWtclzRo
-SLVSvysKHhIpkUXN4tieEfcWwlsR2IG2XPc+qXtxY7ZrFhGfdXq+78wHJQ4fuD/c
-bmlhwK+pNe0Il6eQHPld6uRvGpqGpZL/CBCQAOvs7KyqXcPq05sEwg3MVjX6HmAr
-QTYIlksdBeffeZ1ZX6Qpn7s5DjXvw2NsNkwhPNweWUdX8OFL2Fbc3oMVbxXlqi7o
-kjBa/+oZGBv0CIyKcwucBQOxhdYYrBjEYAs+qAq52NHfw8O2MbsBxCT6KKb4eFEl
-dPfQoKn2D0Tvu4R8p3Od
-=Xpu8
+iQEcBAEBAgAGBQJSXlRqAAoJEKllVAevmvmsLLgH/1YNbmFg7Wwthd0FDTco23dB
+00+/rffKeR7upR4b2oVWY4lqzVvOFxsOLuZQ873aLax2qXX6cAI1RBwQfjcCa3yb
+Lu4fuos8VxxHrooX/uI222BBNFnAGDGesYZgT+8loQp/RhSAxSW37HLgKFCbhqSP
+OdR6IStENL31nYLt6B8Lw4hEPkvsiGDcmT97SEoAFDFqGObmZmuouz13wNJRAccg
+RUI02GmZIBDErBqu5nWTDIUVNBEvK9tzkMUYXQ8nfqQzX1KyCrrcC5DVhnSwwdMw
+AxjwrvDOFG2ebkTYk2fNRhI00T18PE66YPBJnh6U0woQ+7svBS8w2TMq/qJbXIQ=
+=yeRa
 -----END PGP SIGNATURE-----
