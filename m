@@ -1,73 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/10/1
-Message-Id: <6B089F9C-C6A7-4A60-B655-C5CF7D26E732@segment7.net>
-Date: Mon, 9 Sep 2013 22:32:25 -0700
-From: Eric Hodel <drbrain@...ment7.net>
-To: Operating system distro security contacts <distros@...openwall.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2013-4287 Algorithmic complexity vulnerability in RubyGems 2.0.7 and older
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/9
+Message-ID: <525E297F.4030006@redhat.com>
+Date: Tue, 15 Oct 2013 23:51:59 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request for a vulnerability in OpenStack Glance
 Content-Type: text/plain; charset=utf-8
 
-RubyGems validates versions with a regular expression that is vulnerable to
-denial of service due to backtracking.  For specially crafted RubyGems
-versions attackers can cause denial of service through CPU consumption.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-RubyGems versions 2.0.7 and older, 2.1.0.rc.1 and 2.1.0.rc.2 are vulnerable.
+On 10/15/2013 12:56 PM, Thierry Carrez wrote:
+> A vulnerability was discovered in OpenStack (see below). In order
+> to ensure full traceability, we need a CVE number assigned that we
+> can attach to further notifications. This issue is already public, 
+> although an advisory was not sent yet.
+> 
+> """ Title: Glance image_download policy not enforced for cached
+> images Reporter: Stuart McLaren (HP) Products: Glance Affects:
+> Folsom, Grizzly
+> 
+> Description: Stuart McLaren from HP reported a vulnerability in
+> Glance download_image policy enforcement in the case of cached
+> images. Deployers may opt to set a download_image policy to
+> restrict image download to specific roles. However, when an image
+> is previously cached by an authorized download, any authenticated
+> user could download image contents if it can determine the image
+> UUID, bypassing any download_image policy restrictions. This could
+> result in disclosure of image contents that were thought to be
+> protected by the download_image policy setting. Only setups making
+> use of the download_image policy are affected. """
+> 
+> References: https://bugs.launchpad.net/glance/+bug/1235378
+> 
+> Thanks in advance,
 
-Ruby versions 1.9.0 through 2.0.0p247 are vulnerable as they contain embedded
-versions of RubyGems.
-
-It does not appear to be possible to exploit this vulnerability by installing a
-gem for RubyGems 1.8.x or 2.0.x.  Vulnerable uses of RubyGems API include
-packaging a gem (through `gem build`, Gem::Package or Gem::PackageTask),
-sending user input to Gem::Version.new, Gem::Version.correct? or use of the
-Gem::Version::VERSION_PATTERN or Gem::Version::ANCHORED_VERSION_PATTERN
-constants.
-
-Notably, users of bundler that install gems from git are vulnerable if a
-malicious author changes the gemspec to an invalid version.
-
-The vulnerability can be fixed by changing the first grouping to an atomic
-grouping in Gem::Version::VERSION_PATTERN in lib/rubygems/version.rb.  For
-RubyGems 2.0.x:
-
-  -  VERSION_PATTERN = '[0-9]+(\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' # :nodoc:
-  +  VERSION_PATTERN = '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?' # :nodoc:
-
-For RubyGems 1.8.x:
-
-  -  VERSION_PATTERN = '[0-9]+(\.[0-9a-zA-Z]+)*' # :nodoc:
-  +  VERSION_PATTERN = '[0-9]+(?>\.[0-9a-zA-Z]+)*' # :nodoc:
-
-This vulnerability was discovered by Damir Sharipov <dammer2k@...il.com>
-
-The above information is also posted at:
-
-http://blog.rubygems.org/2013/09/09/CVE-2013-4287.html
-
-Patches were committed for:
-
-RubyGems 2.1.0.rc.2, released as RubyGems 2.1.0:
-
-https://github.com/rubygems/rubygems/commit/938a7e31ac73655845ab9045629ff3f580a125da
-
-RubyGems 2.0.7, released as RubyGems 2.0.8:
-
-https://github.com/rubygems/rubygems/commit/b9baec03145aed684d1cd3c87dcac3cc06becd9b
-
-RubyGems 1.8.25, released as RubyGems 1.8.26:
-
-https://github.com/rubygems/rubygems/commit/ed733bc379d75620f5be4213f89d1d7b38be3191
-
-RubyGems 1.8.23, released as RubyGems 1.8.23.1:
-
-https://github.com/rubygems/rubygems/commit/b697536f2455e8c8853cf5cf8a1017a36031ed67
-
-The following program can be used to test if you are vulnerable to CVE-2013-4287:
+Please use CVE-2013-4428 for this issue.
 
 
-View attachment "check.CVE-2013-4287.rb" of type "text/x-ruby-script" (489 bytes)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-
-
-
-
+iQIcBAEBAgAGBQJSXil/AAoJEBYNRVNeJnmTVqEP/0fXr6PzYemb8RoW5fT0Lkdx
+FSWtPR4Uflv6XLSig3M+g+kOli8Wmef8nZPH1O/caWxccSC9c93jMH/A3zvyYh22
+hPrv5Q1Cxa3h2QSnlbnR6EUPs8lhROSlpsLSwA/DhDJfJNShOXPY6gw3ywYG0ZbS
+Nsc1TT81L/1FIh6OuA2e9HM0EZVjtyDtol9iAxIeF2IsSg5gXxrYnu0PhzR8klwf
+qZ33zLHKevSWOoij12BSnw97v02DLUx+c5qHlynEaJQCgceRVAGTRBIcFR+LrZ3u
+c+p3WF51+ewM3PWnCbPaF9jupSle+Vy3yWkr7/cKqXEctAE6bNfPXd2Fo1DmAuQD
+A37x2NfCONRMm0GIAcJHEKKOmfMX/TeQ3jBe/1UmnwHDPMUe3SY0M82x0/wKeMfT
+8+uZ2v7wpyGggl3e3/yWxw1kmDXZ8uI29OsZUYKR6kfd15CumTpCjyx6gQ0PzGw4
+1IhaikoxUV1kE8itZ0NTb8emHdz4UgpZjt2t5W5E2n7DEExdbFLkeVGkQ/WxiyEU
+9mL0GU54LGWE4rNyUhG/wdcKpLKzGoadBc4y593besEhjkE1ITlprVS4zndd7a7L
+It/VEk6JIyHwvZWRwwPjru05D4uz6Eu6tAvzKF40LiuCfhzzW+ynovHfdfDjUWse
+bhtOYUW6yiIfoNC83yfO
+=9gNj
+-----END PGP SIGNATURE-----
