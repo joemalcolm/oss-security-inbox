@@ -1,35 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/12/4
-Message-ID: <20130412194330.GA12353@openwall.com>
-Date: Fri, 12 Apr 2013 23:43:30 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/17/1
+Message-ID: <525FC779.1000905@gentoo.org>
+Date: Thu, 17 Oct 2013 15:18:17 +0400
+From: Sergey Popov <pinkbyte@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2013-1900 looks like an OpenSSL bug
+Subject: CVE request: echoping buffer overflow vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 12, 2013 at 09:14:46PM +0200, Florian Weimer wrote:
-> I believe it is wrong to fix this in PostgreSQL.  Rather, this is a
-> bug in the OpenSSL fork protection code.
+Echoping 6.0.2 and before contains several buffer overflow
+vulnerabilities that can lead to execution of arbitrary code on the
+system or cause the application to crash.
 
-Yes, I suggested this as a possibility here:
+Bug report in Gentoo:
+https://bugs.gentoo.org/show_bug.cgi?id=349569
 
-http://www.openwall.com/lists/oss-security/2013/04/04/2
+Some additional info:
+http://xforce.iss.net/xforce/xfdb/64141
+http://secunia.com/advisories/42619/
 
-> It should either install a fork hook,
+Issue is fixed in upstream[1], but no release yet.
 
-What is a fork hook, and how would it install one?
+Please assign a CVE for this, thanks.
 
-> or reseed the PRNG from /dev/urandom if a PID change is detected.
+[1] - http://sourceforge.net/p/echoping/bugs/55/
 
-Yes, or the PID may simply be mixed in on each and every request for a
-pseudo-random number.  (Isn't this already the case?  Need to check.)
-If such mixing, including of that of the rest of the entropy sources,
-is cryptographically strong, then one sibling process' pseudo-random
-number stream would not reveal another sibling's, unless there's also a
-memory contents leak.  The fact that the PID itself is low-entropy is OK
-as long as sufficient entropy is obtained from other sources (before the
-fork() is OK) and its mixing is cryptographically strong (and was such
-on any pre-fork() requests for random numbers as well), again assuming
-no memory contents leak from any of the processes.
+-- 
+Best regards, Sergey Popov
+Gentoo developer
+Gentoo Desktop Effects project lead
+Gentoo Qt project lead
+Gentoo Proxy maintainers project lead
 
-Alexander
+
+Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
