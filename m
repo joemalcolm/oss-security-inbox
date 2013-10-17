@@ -1,29 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/12/1
-Message-ID: <20131112101032.GG22293@dhcp-25-225.brq.redhat.com>
-Date: Tue, 12 Nov 2013 11:10:33 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: Nico Golde <oss-security+ml@...lde.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: some unstracked linux kernel security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/17/2
+Message-Id: <201310171353.r9HDrnmQ000161@linus.mitre.org>
+Date: Thu, 17 Oct 2013 09:53:49 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org, stbuehler@...httpd.net, jww@...omium.org, security@...illa.org
+Subject: Re: browser document.cookie DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Sun, Nov 03, 2013 at 05:32:52PM +0100, Nico Golde wrote:
-> drivers/uio/uio.c: mapping of physical memory to user space without proper size check
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7314e613d5ff
+>> http://www.openwall.com/lists/oss-security/2013/04/03/10
 
-there is a size check in uio_mmap() (the only caller of uio_mmap_physical()):
+>> Chromium 25.0.1364.160 (debian testing), Iceweasel/Firefox 19 and
+>> probably many other browsers allow javascript to set broken cookie
+>> values, leading to possible permanent "400 Bad Request" responses.
 
-        requested_pages = vma_pages(vma);
-        actual_pages = ((idev->info->mem[mi].addr & ~PAGE_MASK)
-                        + idev->info->mem[mi].size + PAGE_SIZE -1) >> PAGE_SHIFT;
-        if (requested_pages > actual_pages)
-                return -EINVAL;
+> http://www.openwall.com/lists/oss-security/2013/10/16/16
 
-why it wasn't sufficient?
+>   - at least two independently implemented web browsers are capable of
+>     sending malformed Cookie headers that trigger the lighttpd
+>     request.c "invalid char in header" code, leading to the 400 HTTP
+>     status code
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+> When the web browser sends the malformed Cookie header, it is (in
+> effect) enabling a Logout CSRF vulnerability on a web site that does
+> not have any server-side Logout CSRF problem.
+
+There didn't seem to be further discussion of this, and the public
+vendor references don't yet have CVE IDs, so we are assigning these:
+
+CVE-2013-6166 https://code.google.com/p/chromium/issues/detail?id=238041
+CVE-2013-6167 https://bugzilla.mozilla.org/show_bug.cgi?id=858215
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSX+s0AAoJEKllVAevmvmslvkH/1b5TzN4yzFoyjXIt/DZ0oPk
+NunvsxFQwc7PUusqU9p1tqoyavH0nEBF9i+2l41s33UwiD695AMScQThwAf2inJZ
+gAX0omLkqSDXx1JMaByK8ayzoVgqh7crpRAXyNo70TJN29Xnn7WqTN47eHFjCFPQ
+YWV3mGciGHPX/LL/ZBovtmAGtE1fNo9teDfTEMBORTkNiVW5vkvZahEeYDAsStEE
+ZJXvjLRbTE06GHw4OZX+8h7rmutrYW5NJ5o+J7HCtKsT21M7qOEgUw+tJa8PPqAS
+Rdvc9ixFgjuP/gz8l8TMi2JOCuT85GqRiQxlJb9eY9Axb9yBUpbfruwT0XS3hFo=
+=D2jQ
+-----END PGP SIGNATURE-----
