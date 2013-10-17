@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/19/2
-Message-ID: <52B27F36.2080408@redhat.com>
-Date: Thu, 19 Dec 2013 16:08:06 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: possible CVE request for rpath issues fixed via slackware updates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/17/4
+Message-ID: <526022C3.8040100@mozilla.org>
+Date: Thu, 17 Oct 2013 10:47:47 -0700
+From: Mozilla Security <security@...illa.org>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+CC: jww@...omium.org, stbuehler@...httpd.net,  Mozilla Security <security@...illa.org>
+Subject: Re: browser document.cookie DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Some recent slackware updates fixed some rpath issues:
+On 10/17/13 6:53 AM, cve-assign@...re.org wrote:
+> There didn't seem to be further discussion of this, and the public 
+> vendor references don't yet have CVE IDs, so we are assigning
+> these:
+> 
+> CVE-2013-6166
+> https://code.google.com/p/chromium/issues/detail?id=238041 
+> CVE-2013-6167 https://bugzilla.mozilla.org/show_bug.cgi?id=858215
 
-llvm: http://www.linuxsecurity.com/content/view/160596?rdf
+Acknowledged. Thanks.
 
-libiodbc: http://seclists.org/bugtraq/2013/Dec/93
+- -- 
+Al Billings
+Program Manager, Mozilla Security Assurance Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG/MacGPG2 v2.0.19 (Darwin)
 
-I do not have any further details, other than the llvm one may be from 2001:
-
-http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/sys-devel/llvm/files/llvm-3.3-insecure-rpath.patch?view=diff&r1=text&tr1=1.1&r2=text&tr2=1.1&diff_format=f
-
-Both issues possibly due to Slackware using /tmp/ for building (not
-saying they do, just guessing), whereas on Fedora etc, /builddir/ is used.
-
-Are CVEs needed (if not already assigned)?
-
-Thanks,
-
---
-Murray McAllister / Red Hat Security Response Team
+iQIcBAEBAgAGBQJSYCLCAAoJEBAMm4nfVaFGyV8QAJwQl/ltV0HLxAbIMPGC5Yj2
+cQIWpi2GuSm0c0aJwpjFzZrOB9qP0agEqMnLXNOX6vryzJtJT1NLvOuM0winXKTh
+O6jd+pYPlgm3nqDHA+9/zkBRSe2x4yvMa70G+MjLvTvR8IU9ljOhQFFewGSMXsZq
+Ol2bMTFXxSOVIXjBcWg5EFSOKTbxhFS3LvJSj86H4MLe6J0gZKNyYhz3vkeulYyt
+lENKI9JXk+dKvReQGFl18yUk0ix80ZOWtJ/DkNzysQSvJMWiW7EvQ7NRXo+GWH+i
+vwcGoJIGaEreMxkwe4/UDic8qzbN7XZ5j3ZV9EMlnClmePMWvET3I4C7MHq3ouoc
+z0qCvP0gmsd7EsFMSvGPyDKDxuLXTYgNDG2y5ci6WeFEBM+id7zdcEzvFINUcG9V
+gAQTEPkNKWg0c/SCyR8PMbI5knHUC3SUqc1Ez/0EF13PLDn9mmqmGOJ6kS+PwUlu
+WzIWdVD4DXY7R1fCsSjVaiGVyV4PnKfJ91M0TxWbc8hjP4Z/x7WEsEoa+UboTnKw
+eCYpivUOorzBX8ohaWy1rfPpKZqIGZKP4ATAWDXMv5ChXgDQBLgpSkoXz19MbTxB
+GNqkXDt4oS1piZczl9f5il5hHF8kTh5hRqcJKwhopzbDfgLMZJ3jG+Y+urPZaXuB
+NlnBea+Gna93BCeYaCf5
+=hNi+
+-----END PGP SIGNATURE-----
