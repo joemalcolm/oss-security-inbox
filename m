@@ -1,70 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/7
-Message-ID: <1534621804.5617953.1369225060745.JavaMail.root@redhat.com>
-Date: Wed, 22 May 2013 08:17:40 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Timo Sirainen <tss@....fi>
-Cc: Agostino Sarubbo <ago@...too.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: dovecot : "APPEND" Parameters Processing Denial of Service Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/18/6
+Message-ID: <20131018165014.0593708239.qww314159@soup>
+Date: Fri, 18 Oct 2013 16:50:16 -0400
+From: Jay Berkenbilt <ejb@...org>
+To: oss-security@...ts.openwall.com
+Subject: qpdf 5.0.1 has some security fixes
 Content-Type: text/plain; charset=utf-8
 
-Thank you for the report, Agostino.
+I have released qpdf 5.0.1 today.  This release includes some security
+fixes and hardening changes as suggested by Florian Weimer of Red Hat.
+Red Hat's security team analyzed the software and decided that there
+were no issues serious enough to warrant issuing any CVEs or creating
+any embargoed issues, so all the fixes are published on
+https://github.com/qpdf/qpdf
 
-Cc-ing Timo to clarify on the point below yet.
+Here are the commits that are relevant:
 
------ Original Message -----
-> From: "Agostino Sarubbo" <ago@...too.org>
-> To: oss-security@...ts.openwall.com
-> Sent: Tuesday, May 21, 2013 8:58:04 PM
-> Subject: [oss-security] CVE request: dovecot : "APPEND" Parameters Processing Denial of Service Vulnerability
-> 
-> From the secunia advisory SA53492[1] :
-> 
-> Description
-> A vulnerability has been reported in Dovecot, which can be exploited by
-> malicious users to cause a DoS (Denial of Service).
-> 
-> The vulnerability is caused due to an error within IMAP functionality when
-> processing the "APPEND" parameters and can be exploited to cause a hang.
+ac9c1f0 Security: replace operator[] with at
+4229457 Security: use a secure random number generator
+0bfe902 Security: avoid pre-allocating vectors based on file data
+10bceb5 Security: sanitize /W in xref stream
+3eb4b06 Security: better bounds checks for linearization data
+b097d7a Security: handle empty name in normalizeName
+eb1b126 Security: fix potential multiplication overflow
+c2e91d8 Security: keep cur_byte pointing into bytes array
 
-Timo, in relation with the previous (similar) one (thanks to Tomas Hoger for
-pointing out):
-  [1] http://thread.gmane.org/gmane.comp.security.oss.general/8916/focus=8934
-  [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695138#15
+5.0.0 and earlier used random() or rand() from the standard library for
+random numbers, but the TODO file for qpdf had mentioned this from the
+beginning.  qpdf 5.0.1 uses /dev/urandom on Linux MS Windows Crypto on
+Windows, and tries to find a suitable random device for other
+platforms.  It can fall back to insecure random only when configured
+with --enable-insecure-random.
 
-this time the CVE identifier should be allocated / issue is valid, right?
+Since there are no CVEs issued for this, I have not provided backports
+to other versions that some distributions may contain, but I was able to
+backport the changes into the 2.x releases in a throw-away branch.  The
+"replace operator[] with at" change was programmatically generated and
+wouldn't make sense to backport.  Instead, it could be regenerated for
+older versions.  If any distributions decide that they want to issue
+security bulletins for any of these issues, I can assist with doing
+backports.  To my knowledge, qpdf is a leaf node in every distribution
+that carries any version older than 4.0.0, which is the first version
+that was a dependency of open printing.  Most of the issues found in the
+qpdf code were in parts of the code that are not used by open printing.
+That said, the changes can be relatively easily backported to versions
+as recent as that.
 
-While in the former [1], [2] case just the connection for the user issuing
-the command would crash, this time (assuming) either whole dovecot daemon
-might hang or even if the whole daemon wouldn't hang (and request is handled
-within a thread), that request would made the particular thread to consume
-excessive amount of CPU due to infinite loop, right?
+For any debian security team members who may receive this, I have
+already upload qpdf 5.0.1 to debian unstable.
 
-Timo, can you confirm / disprove a CVE identifier should be assigned to this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-> 
-> The vulnerability is reported in version 2.2.
-> 
-> 
-> Solution
-> Update to version 2.2.2.
-> 
-> Provided and/or discovered by
-> Reported by the vendor.
-> 
-> Original Advisory
-> http://www.dovecot.org/list/dovecot-news/2013-May/000255.html
-> 
-> Commit:
-> http://hg.dovecot.org/dovecot-2.2/rev/ea0390e1789f
-> 
-> [1]: https://secunia.com/advisories/53492/
-> 
-> --
-> Agostino Sarubbo
-> Gentoo Linux Developer
-> 
+-- 
+Jay Berkenbilt <ejb@...org>
