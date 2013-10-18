@@ -1,74 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/11/1
-Message-ID: <51187856.3040205@redhat.com>
-Date: Sun, 10 Feb 2013 21:49:26 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>, Mitre CVE assign department <cve-assign@...re.org>
-Subject: Re: CVE request: piwigo XSS in password.php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/18/4
+Message-ID: <CABbbngDXkEzDZvmtwwFxEeRZ1n-auck+L1yA=SdWLQNT1Vjs8w@mail.gmail.com>
+Date: Fri, 18 Oct 2013 14:16:31 -0700
+From: Forest Monsen <forest.monsen@...il.com>
+To: Henri Salo <henri@...v.fi>
+Cc: "security@...pal.org" <security@...pal.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE duplicates SA-CONTRIB-2013-075
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sat, Oct 5, 2013 at 4:10 AM, Henri Salo <henri@...v.fi> wrote:
 
-On 02/09/2013 06:14 PM, Kurt Seifried wrote:
-> So Henri Salo pointed out that I never assigned a CVE for this:
-> 
-> http://www.openwall.com/lists/oss-security/2012/10/06/2
-> 
-> Which raises a good note: do not be afraid to bug me if some time
-> goes by without an answer or at least a reply/question.
-> 
->> Hi,
-> 
->> A XSS vulnerability has been reported in piwigo's password.php 
->> before 2.4.4: http://piwigo.org/bugs/view.php?id=0002750 
->> http://secunia.com/advisories/50510/
-> 
->> However, as stated in the Secunia advisory, the fix does not 
->> entirely address the issue. For context, the 
->> stripslashes/strip_tags'ed POST variable is included in the 
->> template as following: <input type="text" id="username_or_email" 
->> name="username_or_email" ... value="{$username_or_email}">
-> 
->> (some parts redacted for clarity)
-> 
->> So, two ids are needed. Thanks in advance.
-> 
->> Piwigo 2.3.1 also seems to be affected but 2.1.2 doesn't.
-> 
->> -- Raphael Geissert - Debian Developer www.debian.org - 
->> get.debian.net
-> 
-> Please use CVE-2012-6126 for this issue.
+> Advisory https://drupal.org/node/2087055 says:
+>
+> CVE-2013-4381 (XSS)
+> CVE-2013-4382 (CSRF)
+>
+> Are these duplicate CVEs with CVEs below or is there something I am
+> missing?
+>
 
-Someone (who wishes to remain anonymous, but they rock!) pointed out
-that this was already assigned:
+Henri, it certainly looks like these are duplicates. However, Kurt
+facilitated CVE assignment in
+http://www.openwall.com/lists/oss-security/2013/09/27/6 , so it's not clear
+to me how the NVD catalogued different identifiers.
 
-http://seclists.org/oss-sec/2012/q4/98
+Best,
+Forest
 
-Please REJECT CVE-2012-6126 and use CVE-2012-4525/CVE-2012-4526 as
-mentioned above instead. Thanks to my anonymous benefactor.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRGHhVAAoJEBYNRVNeJnmT4wgQAJtQ+ew7WmUw0PWp0UkQ9Tpg
-+tf85hIklvunyv88g7i9vh0NtPaP08J4CT8BWDhUMDOkMP72/+30i5gViayO/o3k
-FpgXZRnJupMUBe4/nz290xM/mjPomU8VTT7YJHT3Q9+y3rZ/D6SJj2JUs9jkfbD9
-ySU8v8l4bEH4NZegU1Xy4L55SaZ7vr9IBJ+V+1PNP/XdgGucIO0Lq6K00vad7QtV
-Nh8yUtyXcLv9M3v3UQeRnm912JDjxr50Mw/yNASAcqFYd9UzVUyvhAfcKA1VdFBy
-FPBO0ZotylLNyypShptmw3UgMQtrtDIDhdU4yv2nkjz08bipZEQJ5afl7PIUS2Mf
-U05HiNIcF5tXESCdEl2N/MW1QTaUs8UZ24snWMbHIfCfdDaAsbnU/xFg8pZrvxRw
-/Wg43w1TC9XzO0vSGYKEilh0BTbEpNhjatcqwQ1NYHdVs0CJjt9MX4tVh4P/PFKo
-VJIJB3dD0yItNJdzumYQRL2JGmHurRV8TlZ5GXf6nsSZkSd7l3EOdUz+CNSMr4t6
-nqxAysO1aP0LsxFyWg26aRvSfir6Q+TUTub0g1u/VySYwgZ4EoE+0IcCZ4SAUX7R
-8Af5sqTm38RY0F/4AldsQnbfVDx3HSmSa8MORisWBi5ZeH4yllczr6S5ZQ6/12Wa
-iX1Dq3juckHbhicDWiI2
-=3Bp6
------END PGP SIGNATURE-----
