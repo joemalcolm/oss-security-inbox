@@ -1,59 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/4
-Message-id: <0c94c850-e9cf-40cc-879b-182eef015423@me.com>
-Date: Tue, 26 Mar 2013 12:10:31 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/18/2
+Message-ID: <20131018151826.GL2810@redhat.com>
+Date: Fri, 18 Oct 2013 09:18:26 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: ibutils improper use of files in /tmp
+Subject: CVE-2013-4419: libguestfs insecure handling of socket file
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+As reported to the linux-distros mailing list:
 
-I doubled checked this, i﻿t looks like this was already assigned  CVE-2013-2561
 
-On Mar 25, 2013, at 08:09 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+libguestfs is a library for accessing and modifying guest disk images.
+It was found that guestfish, which enables shell scripting and command
+line access to libguestfs, insecurely created the temporary directory
+used to store the network socket when started in server mode (using the
+"--listen" option). If guestfish were run with the "--listen" option, a
+local attacker could use this flaw to intercept and modify other users'
+guestfish commands, allowing them to perform arbitrary guestfish actions
+(such as modifying virtual machines) with the privileges of a different
+user, or use this flaw to obtain authentication credentials.
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 03/25/2013 03:49 PM, Vincent Danen wrote:
-> > It was reported on full-disclosure that ibutils suffers from
-> > improper use of files /tmp that could allow a user to clobber files
-> > as the user running ibutils (probably usually root).
-> >
-> > I didn't see a CVE request for this or anything show up here; if
-> > one hasn't been assigned, could it be?
-> >
-> > Thanks.
-> >
-> > References:
-> >
-> > http://seclists.org/fulldisclosure/2013/Mar/87
-> > https://bugzilla.redhat.com/show_bug.cgi?id=927430
->
-> Please use CVE-2013-1894 for this issue.
->
->
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.13 (GNU/Linux)
->
-> iQIcBAEBAgAGBQJRURF/AAoJEBYNRVNeJnmTLAEQAJAJTUMELV+Cb1TO5VZ3bPXi
-> r+QmVkNQ3UmiOghXSrEli6xSam++o8BElOV0U8QvFNXgA+li+Q0cO2Q0Mr3tJul1
-> cN03uk2TqN23VE00zd6e+2cl+NNmNCe0b6qGuIJVjaz3CSMGGQ+IZXmbHFVxMeK3
-> fICzq94S0r/3PPhondXmX8QIaudaCa4pQey4dR0vWaIcoq7WN/QKk2p2zvDX+sVk
-> +2wKg4tKTP3luIHlF53VRGlIW0jYryI6s7Lcen15gELMa3AbcgYNAqMmiGAUlBBJ
-> lRe3W82FZM2vTh4fAjQU6hsmeXaJ6WYGg9btO4Br1Vubn3F5J6wChW8LTUMJaI7v
-> MB9glPv7LdY+L+0qDpLWbdq0DlIWRmBDZNL7Mwvh4ZSJIsCTENdp+FgRNaNoCMWP
-> uGybDpL3PIlam4XwhzYKgjMr31lwIc1nNzr6QVGRZOijSo+ZaLkV3It0ZG2a7JCf
-> 41Gdqjer3gyN3zSH5WQ33GA/UT0QHchJYmf+AnEQROMhsOGIZBvTpMmkEOQmcS00
-> sp7omCvootJIAmaHesKIo1U3lwZ4kbIYO+j0dbl/lmHewoL0O/zmULL/BHwdZc5s
-> S9EO7Qh/VZ03dM4rvnuRt3+zw+qWzzXqs1+wJS4IWMLKohbnHz364l3pLsQz2Gaa
-> PP1j2t5J9pE9URLDnfwF
-> =a+Xw
-> -----END PGP SIGNATURE-----
+This issue was discovered by Michael Scherer of the Red Hat Regional IT
+team.
 
-Content of type "text/html" skipped
+Further details are available in our bug, including the patch.
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=1016960
+https://www.redhat.com/archives/libguestfs/2013-October/msg00031.html
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
