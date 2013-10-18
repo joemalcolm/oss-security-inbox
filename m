@@ -1,94 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/29/9
-Message-ID: <52701E2D.2090600@redhat.com>
-Date: Tue, 29 Oct 2013 14:44:29 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, joernchen@...noelit.de
-Subject: Re: CVE Request: sup MUA Command Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/18/1
+Message-ID: <CACYkhxiJXg+Hzq9x8MiNDMJgu-Qg6fXOGSSUMMq7Q1_GnZhx9A@mail.gmail.com>
+Date: Fri, 18 Oct 2013 12:28:18 +1100
+From: Michael Samuel <mik@...net.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: RESEND: CVE Request: pwgen
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 16 October 2013 16:59, Kurt Seifried <kseifried@...hat.com> wrote:
+> CVE-2013-4443 pwgen Secure mode has bias towards numbers and uppercase
+> letters
 
-On 10/29/2013 01:30 PM, Salvatore Bonaccorso wrote:
-> Hi,
-> 
-> On full-disclosure list there was reported a command injection 
-> vulnerability in 'sup', a console-based email client.
-> 
-> [0]
-> http://rubyforge.org/pipermail/sup-talk/2013-October/004996.html 
-> [1] http://seclists.org/fulldisclosure/2013/Oct/272
-> 
-> For reference quoting the upstream announce:
-> 
-> ----cut---------cut---------cut---------cut---------cut---------cut-----
->
-> 
-Greetings,
-> 
-> Security advisory (#SBU1) for Sup
-> 
-> We have been notified of an potential exploit in the somewhat
-> careless way Sup treats attachment metadata in received e-mails.
-> The issues should now be fixed and I have released Sup 0.13.2.1 and
-> 0.14.1.1 which incorporates these fixes. Please upgrade immediately
-> and also ensure that your mime-decode or mime-view hooks are secure
-> [0], [1].
-> 
-> This is specifically related to using quotes (',") around filename
-> or content_type which is already escaped using Ruby
-> Shellwords.escape - this means that the string (content_type,
-> filename) is intended to be used _without_ any further quotes.
-> Please make sure that if you use .mailcap (non OSX systems), you do
-> not quote the string.
-> 
-> Credit goes to: joernchen of Phenoelit (http://phenoelit.de) who 
-> discovered and suggested fixes for these issues.
-> 
-> [0] https://github.com/sup-heliotrope/sup/wiki/Viewing-Attachments 
-> [1] https://github.com/sup-heliotrope/sup/wiki/Secure-usage-of-Sup
-> 
-> You can use 'gem' to upgrade or install sup. Please report any
-> issues to: https://github.com/sup-heliotrope/sup/issues
-> 
-> Regards, Gaute 
-> ----cut---------cut---------cut---------cut---------cut---------cut-----
->
->  Upstream fixed (as mentioned in announce) the issue in 0.13.2.1
-> and 0.14.1.1. Commits:
-> 
-> [2]
-> https://github.com/sup-heliotrope/sup/compare/release-0.13.2...release-0.13.2.1
->
-> 
-[3]
-https://github.com/sup-heliotrope/sup/compare/release-0.14.1...release-0.14.1.1
-> 
-> Could a CVE be assigned for this issue?
-> 
-> Regards, Salvatore
-> 
+Solar Designer picked up that this one should probably not have been assigned.
 
-Please use CVE-2013-4478 for this issue.
+The problem wasn't normal bias - it was that it was enforcing
+"password rules" requiring at-least one uppercase and number, but not
+lowercase (which was a normal bug).  So the "fix" would technically
+make the keyspace smaller.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+I added the -R / --no-rules flag to my branch which removes
+enforcement altogether, the full diff from 2.06 can be viewed here:
+https://github.com/therealmik/pwgen/compare/securityfixes
 
-iQIcBAEBAgAGBQJScB4tAAoJEBYNRVNeJnmT3lIP/jgwlNSUJF/OotzGXbjmHOYy
-kehaEwHRkUFi4mhb4uQSJUG69MFKkNb+6c1Cs3GMfPtChs5A1D2NOJAaEZ3LExjO
-CMHdvryhYuQepCdImHgJ9RhMcFSqmAQ1CM/Uo2DNRPko5fcp//QwZHeNEPvbnK5w
-d13Jw6exmXJ+iaanXyGYUkHY3btyY17i4GYdQN7ToTusULLk/JJ6KtHLhAZRQaK3
-OxI84NtFFTDAtgLhDQUdCN8jd0P0iTjvoWsFsASLVMg0XDNcQ5yCR09oIQK9Wz38
-nRpyUah1bkVBMUL67oTCgu5bRAMAwB3j6x14/b5utfFVIuSiRRh0RQEqwy2LYCUs
-yJBRTt+lpKAgroX+q4vNMqPkHqLLEayaI2I4xFR6YrR4s326aXenTfAKmC5LgHxL
-OSvm2p8kExjHTlF+DCRErNUMDdLGS64D4DlViWF4wk6h6O0FxtzOFoVhgIV6A7pr
-fiMzRmVX5SOId3hz+dmyjXMq1qcSn3YECDtCjj+fc5soeknhV/JWJN8oA88nwyPY
-8TQsERRdfOL0rtVkT3z+oYRczAZYNIgxjE9IDhliAlSwo39Th4K6AbyM7ohsdNd1
-gGVi1fzz0T5mPWDi/HCoBN9iZkOQeqK1QCiQChefzcqEtQTPo+QkMaB5Wj7yJs2F
-uax9T6urcVzVqJFJZqml
-=CJu3
------END PGP SIGNATURE-----
+Before using this flag, you should consider the minor negative effects
+on the keyspace vs. generating passwords which might be "accidentally"
+cracked while looking for simpler passwords.  Either way, generating a
+longer password has a far better effect on security.
+
+It is not my intent to maintain this package long-term.  If anyone is
+interested, please fork and push NMUs to Debian.
+
+Regards,
+  Michael
