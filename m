@@ -1,16 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/3
-Message-Id: <20130909081528.EE75520134@smtp.hushmail.com>
-Date: Mon, 09 Sep 2013 10:15:28 +0200
-From: "Adéla Goldová" <roguecoder@...h.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/18/5
+Message-ID: <CABbbngCMpJ6byAz7D=46H52YHKxkLAp6uL337-siBQ9ovSGztg@mail.gmail.com>
+Date: Fri, 18 Oct 2013 14:24:13 -0700
+From: Forest Monsen <forest.monsen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE Request] Event Easy Calendar
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-Hello
+Hi there,
 
-The wordpress plugin Event Easy Calendar suffers from CSRF and XSS vulnerability and improper input validation.
-Could someone please assign CVE's to this?
+I'd like to request CVE identifiers for:
 
-1: http://seclists.org/fulldisclosure/2013/Sep/41
+SA-CONTRIB-2013-079 - Context - Multiple vulns
+(Two issues: Arbitrary PHP code execution, and access bypass.)
+https://drupal.org/node/2113317
+
+SA-CONTRIB-2013-080 - Simplenews - Cross Site Scripting (XSS)
+https://drupal.org/node/2113515
+
+Thanks!
+
+best,
+Forest
 
