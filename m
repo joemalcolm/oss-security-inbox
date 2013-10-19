@@ -1,19 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/28
-Message-ID: <20130227180328.GB31167@kroah.com>
-Date: Wed, 27 Feb 2013 10:03:28 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/19/4
+Message-Id: <DE402E70-B065-424C-B251-113CC51D2B82@titanous.com>
+Date: Sat, 19 Oct 2013 11:43:51 -0400
+From: Jonathan Rudenberg <jonathan@...anous.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Subject: CVE Request: Node.js HTTP Pipelining DoS
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 06:43:24PM +0100, Jason A. Donenfeld wrote:
-> On Wed, Feb 27, 2013 at 3:48 PM, Greg KH <greg@...ah.com> wrote:
-> > That's not going to happen, and you know that, to do so would be totally
-> > irresponsible of us and directly harm your users.
-> 
-> At least send oss-sec an email after the commit goes into the tree.
+Node.js is vulnerable to DoS when a client sends too many pipelined HTTP requests.
 
-Again, no, that is not going to happen, sorry.
+Links:
 
-greg k-h
+https://groups.google.com/forum/#!topic/nodejs/NEbweYB0ei0
+http://blog.nodejs.org/2013/10/18/node-v0-10-21-stable/
+http://blog.nodejs.org/2013/10/18/node-v0-8-26-maintenance/
+https://github.com/joyent/node/issues/6214
+https://github.com/joyent/node/commit/085dd30e93da67362f044ad1b3b6b2d997064692
+
+This issue affects all versions of Node released before 0.10.21 and 0.8.26.
