@@ -1,48 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/18/4
-Message-ID: <52B1C6EC.8050006@openstack.org>
-Date: Wed, 18 Dec 2013 17:01:48 +0100
-From: Thierry Carrez <thierry@...nstack.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: [OSSA 2013-037] Nova compute DoS through ephemeral disk backing files (CVE-2013-6437)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/19/3
+Message-ID: <52620C13.8020800@redhat.com>
+Date: Fri, 18 Oct 2013 22:35:31 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: slapd segfaults on certain queries with rwm overlay enabled
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2013-037
-CVE: CVE-2013-6437
-Date: December 18, 2013
-Title: Nova compute DoS through ephemeral disk backing files
-Reporter: Phil Day (HP)
-Products: Nova
-Affects: All supported versions
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
-Phil Day from HP reported a vulnerability in the libvirt driver handling
-of ephemeral disk backing files on Nova compute nodes. By repeatedly
-creating snapshots, changing the os_type to a new random value, and
-spawning new instances from the snapshot (and quickly deleting those
-instances), an authenticated user could generate lots of different
-ephemeral disk backing files and fill up compute node disks, potentially
-resulting in a Denial of Service against a Nova setup. Only Nova setups
-running the libvirt driver are affected.
+On 10/16/2013 03:49 PM, Vincent Danen wrote:
+> The following was reported to us, but has already been reported 
+> publicly upstream.  Could a CVE be assigned to it?
+> 
+> It was discovered that OpenLDAP, with the rwm overlay to slapd,
+> could segfault if a user were able to query the directory and
+> immediately unbind from the server.  This seems to be due to the
+> rwm overlay not doing reference counting properly, so
+> rwm_conn_destroy frees the session context while rwm_op_search is
+> using it.  This condition also seems to require multiple cores/CPUs
+> to trigger.
+> 
+> 
+> References:
+> 
+> http://www.openldap.org/its/index.cgi/Incoming?id=7723 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1019490
+> 
+> This is currently not fixed upstream.
+> 
 
-Icehouse (development branch) fix:
-https://review.openstack.org/62910
+Please use CVE-2013-4449 for this issue.
 
-Havana fix:
-https://review.openstack.org/62912
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-Grizzly fix:
-https://review.openstack.org/62913
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6437
-https://bugs.launchpad.net/nova/+bug/1253980
-
-Regards,
-
--- 
-Thierry Carrez
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
+iQIcBAEBAgAGBQJSYgwTAAoJEBYNRVNeJnmTT6AP/R28qsuwa1PEK9gwGsQCN0h7
+wScSfy1biQ9EVz/HkgXNHTUBiogAKRAbKX42/FWMjBzt0p5NUW1zRCJdcWfXOPZ7
+dfqHPsB7XV+gAsZZNydS3AqGFqiKgTY9VBZn26V2q+RKnStfFyKnBpZJxMoYtzxS
+dfse3qLREGIPwH1ljpOEaW0hpGIEnpiAoDU1kRCG2bg2GH1Wx8T7OjjcvVGGW38o
+yNF0g9AYgJoLiWLxYagOjqNJeDRG6Jiu015p40Ta3AG5wrJfpx2xlW+0/PXOu+Vv
+8o96LwqAtu9WO0kmAZaSF7vBcOApBceoyMHf+478Um6ZIhKhozUMpVw6QeHl6l77
+saoD8rp01vrgjttKtWym/cdQM/khedTuT9JFvcHkWgKIMjd8tFp0fF+ExMMpbYt+
+51Gnwrh8DZ0z4FIne9dib8vxbTkyscGGuhrlj3jmCYYd3b1E24+WpVfRkbLe9aVG
+kj3ubTngaaKdlSPxoYI9qHVVnGswc57Y6WI3ZX8wgg9FLyyfmBMVc7+wINzsgIFN
+i862DdNtz7B5fASLDEQGYUihcKRe+/bmiuZCHfixCiu8Hdb/3sSFr+edS+yo8AkL
+H6xgwe7p4DKM4QIDAymT5zRbdntAWhcGhXFbk63y1tliChvHm+5sOz4QPw9qeKQb
+9sYVfzINsHtXegCKGrvZ
+=NzM8
+-----END PGP SIGNATURE-----
