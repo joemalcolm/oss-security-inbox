@@ -1,89 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/30/2
-Message-ID: <51D0B0EB.5030804@redhat.com>
-Date: Sun, 30 Jun 2013 16:27:55 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/19/1
+Message-ID: <52620BF0.5020808@redhat.com>
+Date: Fri, 18 Oct 2013 22:34:56 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: Multiple issues in GNU ZRTPCPP
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/29/2013 08:05 AM, Dan Rosenberg wrote:
-> I'd like to request CVEs for multiple security vulnerabilities 
-> discovered, reported, and published by Mark Dowd of Azimuth
-> Security in GNU ZRTPCPP, an open-source ZRTP implementation used in
-> a number of "secure phone" solutions:
+On 10/18/2013 03:24 PM, Forest Monsen wrote:
+> Hi there,
 > 
-> http://blog.azimuthsecurity.com/2013/06/attacking-crypto-phones-weaknesses-in.html
-
-I
+> I'd like to request CVE identifiers for:
 > 
-guess since this is on the front page of Slashdot I should get the
-CVEs for it out =)
-
-
-> 1. Remote heap overflow
+> SA-CONTRIB-2013-079 - Context - Multiple vulns (Two issues:
+> Arbitrary PHP code execution, and access bypass.) 
+> https://drupal.org/node/2113317
 > 
-> A remote attacker can cause a heap-based buffer overflow by sending
-> an overly-large ZRTP packet of several possible types, including a
-> "Hello" packet. Successful exploitation would allow an attacker to
-> execute arbitrary code in the context of a vulnerable application.
-
-Please use CVE-2013-2221 for this issue.
-
-> 2. Multiple remote stack overflows
+> SA-CONTRIB-2013-080 - Simplenews - Cross Site Scripting (XSS) 
+> https://drupal.org/node/2113515
 > 
-> A remote attacker can cause multiple stack-based buffer overflows
-> by sending a malformed ZRTP Hello packet with an overly-large value
-> in certain fields, including the count of public keys. Exploitation
-> may be difficult due to the details of the layout of stack
-> variables in memory, but successful exploitation would allow an
-> attacker to execute arbitrary code in the context of a vulnerable
-> application.
-
-Please use CVE-2013-2222 for this issue.
-
-> 3. Multiple remote heap memory disclosures
+> Thanks!
 > 
-> By sending a truncated ZRTP Ping packet, the response packet will 
-> include several bytes of the affected application's heap memory due
-> to a lack of validation on the incoming packet. This flaw could be
-> exploited to gain knowledge about the heap state of an affected
-> application to enable further attacks, or potentially reveal
-> sensitive information stored on the heap.
-
-Please use CVE-2013-2223 for this issue.
-
-> The fixes for all of these flaws were included in the following
-> commit: 
-> https://github.com/wernerd/ZRTPCPP/commit/c8617100f359b217a974938c5539a1dd8a120b0e
->
-> 
-> 
-> Regards, Dan
+> best, Forest
 > 
 
+CVE-2013-4445 Drupal SA-CONTRIB-2013-079 - Context - access bypass
+
+CVE-2013-4446 Drupal SA-CONTRIB-2013-079 - Context - PHP code exec
+
+CVE-2013-4447 Drupal SA-CONTRIB-2013-080 - Simplenews - Cross Site
+Scripting
+
+Thanks.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR0LDrAAoJEBYNRVNeJnmTLXMP/1yzS8rnivHC8AbDHl9QVmSI
-tX5qPZpnS9mnXgy7W11nChZFCsh2C6Q6DXge4kB5b45QHll4+hAyUueVWhS2WhAb
-Qx0v1+NBHbSvp4sDlX5WzkoSY7a+ce94uPczdjvQK33Xoka5GTEFXt0rv59SSeSa
-tskErR52E6nI+GQBhG1FJqzLxe3vsAr06Mc6EW1mbYyrXwNAJfA0QdVZPbNHMxeX
-hqkRXBGsESLHI2JHNRJXcznd9nKVqWk2alkmsBDdVvbyvdtCNdMDCIg5lVjFszuR
-GEdDLHH5enzXL3VQ3XhCzg+yJSNS2Z2T7Y2tNW354Qi80Rn1TRsSDCSaGvzK+gNU
-42VRrSei6mHpRGiCWGwb9fE2E1YYfeodEAqD5Bf1Sbctuk6exHRRNmzTrgs2iJId
-UVJY2AD79cNn318oL3Rj57XdswDvpNlpnGkzp8T/v4LT99VrhrRN/S4YZlp4j8l1
-B71HYp7wNMKPiI+y4O2kltPXOts9Da2k8m/v0f7Rkm19+p0gbDX+ANgqmO92fGol
-rQk+9rlNnvtyjfdvYo6XEWKdhhWYjobFZvQEzTARHJ7E288B/fHO4xOqy2s5dy8Q
-RKAmPpoTCoB6JJRn96PH8ISasMu83msh0cm/6S9y63XVduFgeezK9ZjvWzJasQTe
-n7gJWS9XcD/SjmSWQQkh
-=qje4
+iQIcBAEBAgAGBQJSYgvwAAoJEBYNRVNeJnmTaBoP/3IxtFysl6iwU0NNSydYD/AB
+ZC/AjIWh17LnEgh5BD26393jTDNJVxSM+8ssEeDNFeQQnzDFUyPaXN0HgIzFLO0W
+b/ymVdK4g/RtsNUf+ai/rzC7U3ldVyVTutRJNJOKxklN7jA/VbJLyofE3b7ldvqO
+lM2nUYuulEdC4PdhjKsfAhxzAEVpMyvxLtZP3wXtckCMp0PeefFLNcRXS8pCI0sf
+eID+pdI6DKKhWfOMmJ3Yr34ypVWo0Y/fiuQxGbnNYu+H5/ugD3e6TaQMMJ7YW8yy
+COv0gZmH/rphGtVxt9JrSkDU7kIZqutnpbYfzs87koBfA/WIR03egskyADsYmDtZ
+Opn1+QOnnDlrZwhquJhovttK66T+urvFAiiTbJiEALDJjNWoxGmx/uoCPa0ke53a
+0jedRvwuImGZY471GF+7MygZHqPUzHShJ2v680olTn3EpGFJBm3Nk/P2wekbE6wc
+gqjMvieM0uO8gNmXJhSuqACJmJRyD6tXENNess4/TFRc7qqxeXfsvAIVOzQA/Wr/
+waqpD5ZhWlpYE3+uKoWfUzcNsbS3D61+Z65DnHunr3WR4XILIcriTiNIu04GL/gk
+wY9xD5x74xCFlCISZLZ8MOJt9ss+rg+mLr7I34zCBaxH6FyxoeEO2OeA1W5Cc3VZ
+6CBCBWoVw4bLN4GpLaHO
+=CN+B
 -----END PGP SIGNATURE-----
