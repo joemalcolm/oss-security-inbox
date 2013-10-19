@@ -1,17 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/12
-Message-ID: <CAHmME9pWu6VH9vZvAqChEdZX_d+DQqwQv3_tirm=QS46fjs2Zw@mail.gmail.com>
-Date: Mon, 25 Feb 2013 20:21:17 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/19/2
+Message-ID: <52620C06.50706@redhat.com>
+Date: Fri, 18 Oct 2013 22:35:18 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
+Subject: Re: CVE request: echoping buffer overflow vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Easy easy, you're both right.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The original code in the aforementioned commit was written during the
-v3.2-rc4 days, as Dan said, but it wasn't merged into Linus' tree
-until the following January, in time for the v3.3 release with
-9753dfe19a85e7e45a34a56f4cb2048bb4f50e27, as Mathias said.
+On 10/17/2013 05:18 AM, Sergey Popov wrote:
+> Echoping 6.0.2 and before contains several buffer overflow 
+> vulnerabilities that can lead to execution of arbitrary code on
+> the system or cause the application to crash.
+> 
+> Bug report in Gentoo: 
+> https://bugs.gentoo.org/show_bug.cgi?id=349569
+> 
+> Some additional info: http://xforce.iss.net/xforce/xfdb/64141 
+> http://secunia.com/advisories/42619/
+> 
+> Issue is fixed in upstream[1], but no release yet.
+> 
+> Please assign a CVE for this, thanks.
+> 
+> [1] - http://sourceforge.net/p/echoping/bugs/55/
 
-Jason
+Please use CVE-2013-4448 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSYgwGAAoJEBYNRVNeJnmT86gP/A91wAw4i9j63pkwI01+7fxJ
+FUiG9SvzA4IUEqyLInwzPq2UbldWfU4i62N9oPq968qxOAPN11XGK1L+OYeuvOXy
+TQ7ZYo2l9CcLXqeAW4noyjHV3axZoL8zr+Sb2JQlZpRyUUqJ5Re5xVxSxtIMs4cS
+Ydznh700chkCOXFZoT0IRO87Fr6Pe0aAcHZksfpfS0n+ceEALYgcrs0BSm0DBP6r
+a3T8JxludZXEghBPtSwCBMuSyq9XTOuqY/MNQOrdzc5e/0bSLPw6JQhHUnAujVJy
+tXyqj7LSVHsyX8PdX+BQbIqUFq52tm9//UUNKx0IO7w1RaPOj+oIl3DN2V2UPlWG
+8eXvZJB282UIWWsm8nYtrQSiXCgutrvEYHvjUK8sS3/sUIpB/vQ1alV69VzSjv4w
+8d1QwgOl10sYLMo8w6OZl3KfVgMbi3ZbDSgBqVwlRDYknBa76QYYh6Je+4/T+MJd
+rVAmvj7i3jKWZjmlyzq1TxEmH3ERVRQ1SZz7y4SQDjZlGfEvt6L7yjc+gPwkKpJS
+ihIuPtuWK39QjpbbO7cskdGT5clAFVCd0vC9cK0xN03FyjuNGng+zVOn2Sqx9Fz9
+l1BNBtutzcVwbfDnKc2O5raMT6U/MjQxxe91JAISiwfhXGUV4qZWxzIYOexwfCOM
+OelKbGrUeMaE6Vz0LK1x
+=hN9J
+-----END PGP SIGNATURE-----
