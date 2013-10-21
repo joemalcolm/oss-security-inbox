@@ -1,61 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/6
-Message-ID: <516D1590.1050805@redhat.com>
-Date: Tue, 16 Apr 2013 03:10:40 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/12
+Message-ID: <52658A4D.6040305@redhat.com>
+Date: Mon, 21 Oct 2013 14:10:53 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE for XSS in EasyPHPCalender script
+Subject: Re: CVE request: cmsmadesimple before 1.11.8 / bad upstream behaviour vs. CVE assignment
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/12/2013 05:47 PM, Anant Shrivastava wrote:
-> Hi Team,
+On 10/21/2013 01:20 PM, Hanno Böck wrote:
+> Hi,
 > 
-> can i please have a CVE for this issues
+> I want to request a CVE, but also start some discussion about how
+> to handle such issues.
 > 
-> http://www.easyphpcalendar.com/forums/showthread.php?p=45554#post45554
->
->  technical details are not issued however the two issues are
-> pertaining to XSS in following two files in the package.
+> The release notes for cmsmadesimple 1.11.8 mention a security
+> issue: 
+> http://www.cmsmadesimple.org/announcing-cmsms-1-11-8-fioreana/ 
+> "This release brings a few minor features, some performance 
+> improvements, documentation improvements, a Smarty upgrade, and a 
+> number of bug fixes (including a minor security issue)."
 > 
-> index.php datePicker.php
+> Now, this is all the information you get. Nothing about the kind
+> of security issue, let alone a bug nr or commit. The question is:
+> What do we do with such shitty upstream behaviour?
 > 
-> This issue affect both free version i.e. version 6. as well as
-> commerical version < 7.0.13
+> Last time I reported something alike I was told that I should
+> provide more info. The question is: How?
 > 
-> Changelog visible here for v7 : 
-> http://docs7.easyphpcalendar.com/source/ChangeLog/changeLog.htm for
-> v6 patch is listed here
-> :http://www.easyphpcalendar.com/v6download.php as  Security Patch -
-> Released April 9, 
-> 2013<http://www.easyphpcalendar.com/files/EPC6Patch.zip>
+> Sure, I could diff the release to the release before or try to
+> find some repository and read all the commits in the timeframe. But
+> I'm not getting paid for this, I merely want to improve overall
+> security of free software voluntarily.
 > 
-> Thanks in advance.
+> So how will we proceed with such stuff? In the past, we often had
+> "CVE for unknown security issue in xxx"-alike assignments.
 > 
-> -Anant
+> cu,
 > 
 
-Please use CVE-2013-1955 for this issue.
+Yeah, maybe if we can incentivize this research, e.g. give people
+credit or something, not for discovering the issue but for researching
+it and posting the details/diff/whatever. In general if no details are
+available unless there's some reason not to, I would generally hand
+these over to Mitre to deal with.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRbRWPAAoJEBYNRVNeJnmTROcP/icTW6vQqTSbnCjt3z6/S6u6
-0zQyXKmDUqtAPsNAPH0VGg6PSoTa88eiM1Bfxme0sRPEyLh15jjjNhvKVi0LfdqZ
-ImWkohMp3QBGjhIw8jwu1p752cQ7lRq9OvT9W5bshwusrSlxi66q2wf59OCwLUQ6
-oRRhwoaYlYzZNl1s7/yXL3QvbgCjjPtuTxvHQZlFbOvqzrH37yMkqyVoBgjIPik5
-fDwt4jlY6g/zl1Vc9iMpr349bP8qsz9hqQWPu72D7LwpVc+yqda74guhk0GNYroM
-z6ZRj5CrqLSVgOSaFMOyfCU7q+N12stKkQdDdVGg0sIimVsAk/rC0keoaOSPVKa2
-ker4X/u3HhEGz2zCg/Z7eaOo/oBrtdG74el8kEmlXi5im+MLw1q9IXmAp9jJ3TRU
-8AzlCXhX9tqIOeoac+6EAQIaDg7b88Ht15QghoNLJu1SHVEJcxzn8Ird74tVVEuY
-7ifFnr/WNlzlvcmW6pookxhiapBe5FdkQZbkAJLC8mUpM+zIknew+4mCjoG/KUQl
-JwlYYjR+5iNs7y2g/ruDIYMoIUOdkdomBTStmFOdu0Q0hDWyl1v0t5FJ7AhY8V7Q
-FK24CqA42LQuATeHkmePyI1kqEXOOW3qH1lnYbSgNmz+u7anHmigsyQn4IF11m5i
-YSXrBgVLy0Bwmazhxggt
-=PDo4
+iQIcBAEBAgAGBQJSZYpNAAoJEBYNRVNeJnmTah4P/11dpXzYiiNhg0SsUf69U5un
+exRZfItnH8EWJcZDhIZAdiIDbBwqAkiTIKGoL4nek+bn8j/cDKmxdt528tutjn63
+fxlLbGvmeuT4QBWqFa0cGuuofj1TjftTgwkGGxi6BW2stnbCHWf7AtVYgJ5rI8NH
+rcjYIOJoM8jYxlNXAViglYYsCoXs+XmV/Vja19fvE7ji7xJ1PrAclZ3DhwarOIQZ
+s4bDjebsSs3yq5x7Mn3Wp7E5dA4+RvjYgw7f2IA+S94dzsWq/NQI0j8mZfG38eK9
+zT2wANHHE8RfFjDSlgjgXk27yvxG7d5ATSr8wL3cklLfEa5YxsD0/PSXxpDFkVsa
+DosaocolygV4YfoPjYhutrUsVj0o9ELfx5Zhtj74/0DGMWbPNIgGJtSVBb89Wyky
+V1nIX3ApzpyQWvB9kp7AF+BpPjuB874mK7X5ckxy/Vz3a+IqPP9zJHVG/G8rzslM
+pP7VcH+VK62t91JUfsARchjDvxmMwp/4VnBGEfL+eChwYoDKCTXWoE0e2slRdpgC
+4T09ZLAwP8W6+D69UcxhbtgqcgsAJhKBtvilV2BGPZOWkmftF8qZTmkjF9cezhyT
+j3aBLVhG1YszJ8z+LXZT14NYcIjCRMFIpo0/aYlQiExMe+MFBJZx9lay91THFfnB
+K06Hkj5n2b/Bs+t65r6y
+=GvzO
 -----END PGP SIGNATURE-----
