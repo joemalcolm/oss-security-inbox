@@ -1,37 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/14/6
-Message-ID: <201906441.2440500.1360860467274.JavaMail.root@redhat.com>
-Date: Thu, 14 Feb 2013 11:47:47 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, David Vossel <dvossel@...hat.com>, Andrew Beekhof <abeekhof@...hat.com>
-Subject: [FYI / CVE assignment notification] CVE-2013-0281 pacemaker: Denial of service when remote CIB management enabled due to use of no-timeout blocking socket to wait for the arrival of the authentication credentials
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/7
+Message-ID: <CAN_LGv1X7iR5LRpPFnDLk-HG1aBf=22wbAzDP=W_tHM2O26=iw@mail.gmail.com>
+Date: Mon, 21 Oct 2013 20:46:31 +0100
+From: "Alexander E. Patrakov" <patrakov@...il.com>
+To: General PulseAudio Discussion <pulseaudio-discuss@...ts.freedesktop.org>
+Cc: oss-security@...ts.openwall.com, webkit-gtk@...ts.webkit.org,  xrcalvar@...lia.com
+Subject: Re: [pulseaudio-discuss] Vulnerability in Webkit-GTK and PulseAudio volume handling
 Content-Type: text/plain; charset=utf-8
 
-Hello vendors,
+2013/10/11 Xabier Rodríguez Calvar <xrcalvar@...lia.com>:
+> For Colin to know, before touching anything in WebKitGtk+ the behavior
+> was that the volume was ramping up to 100% with every website regardless
+> their volume control.
+>
+> I met Slomo and Lennart at GUADEC and we thought that the best was
+> letting the sink, pulsesink in this case, set the volume and we would
+> just get that for the slider, regardless the volume model applied. This
+> was supposed to be a good compromise for the different situations (using
+> PA with or without flat volumes, using another sink) as volume wouldn't
+> ramp up to 100% always.
+>
+> There are some other restrictions we have to observe, though:
+>
+>      1. We want to be agnostic of the GStreamer sink used and of course,
+>         to the volume model used by pulse, because we don't know it.
+>      2. We want to allow audio passthrough when possible.
+>      3. We want to be coherent with the rest of GNOME apps, and the
+>         volume model they are using.
+>      4. We have to comply with the HTML5 W3C standard that says that
+>         volume will be 100% by default, though user agents can decide to
+>         restore former volume (perfect if we let pulse decide it).
+>
+> We would easily add a GStreamer volume element and solve what Alexander
+> says, buy we would be breaking 2 and 3 rules and to fulfill 3 and 4, I
+> actually tested that with the proposed fix, the volume could still ramp
+> up to 100% because in our opinion, it is up to the web developer to
+> sanitize their volume management or up to the user to change the volume
+> model.
+>
+> Best regards.
 
-* A denial of service flaw was found in the way Pacemaker,
-an advanced, scalable high-availability cluster resource
-manager for Linux-HA (Heartbeat) and/or Corosync, performed
-authentication and processing of remote connections in certain
-circumstances. In general Pacemaker used a blocking socket
-(without a timeout) to wait for authentication credentials
-to arrive. When Pacemaker was configured to allow remote
-Cluster Information Base (CIB) cluster's configuration /
-cluster's resources management, a remote attacker could use
-this flaw to cause Pacemaker to block indefinitely
-(preventing it from serving another requests).
+As promised, I have raised this issue at the Audio Miniconf in
+Edinburgh. Unfortunately, Xabier was not at that miniconf, so I cannot
+treat the resulting discussion as including opinions from both sides
+and thus, personally, I treat all results as invalid. Too bad, but
+hopefully we can fix that tomorrow in a separate meeting.
 
-* The CVE identifier of CVE-2013-0281 has been assigned to this issue.
+I tired to summarize the stated opinions of PulseAudio developers on
+paper and then asked each one whether he agrees to what is written. It
+is worth noting that there is no 100% agreement even among PulseAudio
+developers. Arun Raghavan told me that he needs to think more about
+one of the points, and I think it is fair.
 
-* This issue was found by David Vossel of Red Hat.
+Given those factors, I do not request a CVE at this time, but will do
+it later, either when there is an agreement about who fixes what, or
+if the discussion with both sides does not occur at all.
 
-* Relevant upstream patch:
-[1] https://github.com/ClusterLabs/pacemaker/commit/564f7cc2a51dcd2f28ab12a13394f31be5aa3c93
+So, below are the viewpoints that were stated. The first two points
+were written on paper and each participant was asked about agreement
+or disagreement. For each of the two points below, there is a
+(non-100%) majority supporting it.
 
-* References:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-0281
+1. This is not an audio issue. It is a sandboxing issue in Webkit-GTK.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+(that's the statement that Arun needs to think about a bit more, but
+which, I think, captures the most essential component of the problem,
+even without flat volumes, due to disobeying sliders in pavucontrol if
+a web app resets the volume using a periodic timer)
+
+2. There is nothing to fix in PulseAudio code.
+
+(that's the statement that David Henningsson disagrees with (while
+stating that it is his personal opinion and non the opinion of
+Canonical), he wants to disable flat volumes by default, and Tanu
+Kaskinen is willing to review a documentation-only patch if I create
+one)
+
+I did not try to ask about agreement or disagreement with the points
+below, so please treat them as "just notes".
+
+3. There were attempts to say "is this an issue at all?" / "If a web
+page does this, I will not go there anymore, problem solved", but it
+looks like this is a matter of opinion. This may or may not be a valid
+solution according to the EU law (or whatever law that causes Android
+to display a popup warning if a user goes over 70% volume). There was
+also a suggestion to display a warning if the volume of an analog
+output goes over 70%, or to display a "do you want to allow this?"
+popup when a web application tries to control the volume.
+
+4. Lennart Poettering continued to state the importance of seamless
+integration of web applications into the desktop environment. That's
+actually where the four requirements in the quote above come from,
+however, they do conflict with the sandboxing requirements, and nobody
+so far knows a good solution to both kinds of requirements.
+
+5. An analogy was made with a page that displays an unwanted and
+unclosable popup in a web browser or tries to eat 100% of the CPU with
+javascript. We already have popup blockers and a warning about
+misbehaving javascript, so why not try to detect unsolicited volume
+changes?
+
+6. Three volume sliders (in-browser, stream volume and master volume)
+would be too many, it would be nice to avoid that even though Windows
+does just that.
+
+7. There is no way to notify javascript code about externally-made
+volume changes. Such notifications are, however, essential for usable
+desktop integration, so that the application correctly updates its
+internal volume slider.
+
+My own opinion is unchanged: this is a security issue that no single
+party is fully responsible for, definitely a sandboxing bug in
+Webkit-GTK + definitely a documentation bug in PulseAudio + maybe a
+good idea to change the default volume mode, because this would have
+moved this from a "security issue" to "just a bug".
+
+If I have misrepresented the discussion, please reply to this e-mail
+and correct me.
+
+-- 
+Alexander E. Patrakov
