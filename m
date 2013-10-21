@@ -1,55 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/17/7
-Message-ID: <516EEAC4.4060709@fifthhorseman.net>
-Date: Wed, 17 Apr 2013 14:32:36 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/8
+Message-ID: <526589AE.7070602@redhat.com>
+Date: Mon, 21 Oct 2013 14:08:14 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>, Thomas Biege <thomas@...e.de>
-Subject: Re: debian: gpg --verify suggests entire file was verified, even if file contains auxiliary data
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: Re: CVE duplicates SA-CONTRIB-2013-075
 Content-Type: text/plain; charset=utf-8
 
-On 04/17/2013 02:23 PM, Kurt Seifried wrote:
-> I've run into this before, sadly enigmail (Thunderbird gpg plugin)
-> displays the same green bar for message signed ok, but displays the
-> text as "Part of the message signed" so unless you're really paying
-> attention, you'll miss it.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 10/21/2013 09:41 AM, Christey, Steven M. wrote:
+> Note that with two CNAs handling already-public issues, there are
+> multiple ways that duplicates can arise.  This risk grows as
+> MITRE's output increases.  On the MITRE side, we are revisiting our
+> procedures for reducing the number of duplicates.  We already
+> privately identified the increased duplicate risk with Kurt and
+> will work with him to make things more manageable.
 > 
-> My thinking is this:
+> For this specific situation: MITRE processed the Drupal advisories
+> on September 25, creating new CVEs that were thus available in NVD
+> at approximately 11 AM Eastern time.  Forest's request to
+> oss-security happened on September 26.  Kurt's response to
+> oss-security was on September 27.  So in this case, there were
+> multiple opportunities for requesters to check for pre-existing
+> CVEs in NVD.
 > 
-> 1) It's pretty easy to find signed content for people using GPG
-> 2) It's pretty easy to append/embed signed content into a larger message
+> The MITRE-assigned CVE-2013-5937 and CVE-2013-5938 are in more
+> active use and were published first, so they will be kept.
 > 
-> So the attack would be: create malicious content/email, embed/append a
-> valid message harvested from somewhere. Send to user. The user
-> verifies then reads the message, unless they are really paying
-> attention they probably won't notice that the content isn't signed
-> properly (e.g. have an email, ton of whitespace, then the signed
-> message). Personally I'm inclined to assign a CVE, enigmail for
-> example does mostly the right thing (makes a distinction between fully
-> signed and partially signed). I think GPG should too.
-> Thoughts/comments before I assign this?
-
-A similar attack (related to PGP/MIME) has been under discussion on the
-enigmail list last month.  see the thread starting at:
-
- https://lists.enigmail.net/pipermail/enigmail-users_enigmail.net/2013-March/000721.html
-
-I think the enigmail issues are distinct from the gpg issues, and i
-don't think they should be conflated into the same CVE.
-
-In particular, i see the enigmail issues as (security-related) UI/UX
-problems, but i see the gpg problems as (security-related)
-API/programmatic-use problems.
-
-By comparison with enigmail, thunderbird's native S/MIME verification
-routines display no cryptographic indicators at all if only part of a
-message is signed.  This means that S/MIME-signed messages sent through
-common mailing list software which attaches a text/plain MIME footer
-(like mailman) will not indicate that they are verifiable at all.
-
-it's not a pretty set of tradeoffs. :/
-
-	--dkg
+> REJECT CVE-2013-4381 as a duplicate of CVE-2013-5938.
+> 
+> REJECT CVE-2013-4382 as a duplicate of CVE-2013-5937.
+> 
+> Forest, please update the advisory to use the MITRE-assigned
+> numbers.
+> 
+> - Steve
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+Yup, I failed to check because well in past it had never been a
+problem and I didn't know Mitre was increasing their output with
+respect to the open source public assignments. Hopefully shouldn't
+happen again.
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSZYmuAAoJEBYNRVNeJnmT19AP+gMlW0BxSiM1jZIRDVWl7x4E
+QOzjZ4Wrf0iw7jjg+Xz/wD1GOUMkqPqXPoEe75xIHhOkcB4gcgtfwxx8JlMer+r8
+GOfuHPPvWsFQdT0N+8rETPyFr8mCNzGlFv6bJuwMoc9/6S8JJnoXZx+GYjtN9lfJ
+fqCVqzeiuF+C86pdW5p6Eb4JEgE7fzpAprEO6oXMCvJwi0n9Q2IO2gjE1mLo64Nr
+u2DLbsj6TqW8Vr6q+/889WRkAYdP4HLeOwK6HNiUtBF9iULERhRkVoAPJhqQoPWd
+cqp3JjhT6CGv1JhjCmXYPX5MDM/4wVj2Xd8Tu0VR8KAVTZRdp9j8dNgtqP1xsiM7
+TSxpfcZxoNvNmEOIIbelEjGqdC7Nl6rEhgk4lolyDDUq+BeYhum0SE/A3/al+KOz
+m5NcoTiZSw29kwBZJ5nyT/VkBipOYNCZ92IMaXBQaq/xk+oh9UaGFX0HgEglC8LX
+ktx5Il4/yRRnNxuUCITlN1kdMyUYhT15Wn5171SE37ii5qvvJbfK4DIOyBninuHr
+9YMxH3qTF6xUBYEkzliU52m0IywFLF2DrFgTKKF6ENbCiAlQP1MZxXtj2bmfm32s
++5Bm2LKbZDRjLkzLE0EDxrQfLX8l6TUjKBlij3EyvuXsA8+nq5ylt0kpw3ywBHKT
+Cy81JmErK59LDnU4ddph
+=EW1Q
+-----END PGP SIGNATURE-----
