@@ -1,44 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/3
-Message-ID: <CANTw=MOLjFg+J-ABr+C8u-37+zHKCLygnW6aohmghTfdzVYA5A@mail.gmail.com>
-Date: Tue, 26 Feb 2013 23:41:53 -0500
-From: Michael Gilbert <mgilbert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/5
+Message-ID: <5265AA27.6060000@mantisbt.org>
+Date: Tue, 22 Oct 2013 00:26:47 +0200
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Subject: CVE Request: MantisBT before 1.2.16 XSS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 26, 2013 at 6:05 PM, Jason A. Donenfeld wrote:
-> On Tue, Feb 26, 2013 at 10:05 PM, Kurt Seifried
->> The problem with security is you have to basically do it 100%
->> correctly 100% of the time, otherwise things fall through the cracks
->> (like this VFAT thing).
->
-> Also, what about the tmpfs one from yesterday? Nobody involved in the
-> patch reported that as a security bug to this list, until I saw it
-> myself, just by chance, as a random person on the internet, and posted
-> it to the list. In that case, it was clearly marked "use-after-free",
-> but nobody involved requested a CVE.
+Greetings
 
-I actually see Greg KH's recent interest in oss-sec as a positive
-sign.  For years and years kernel developers have been stuck at the
-first stage of grieving (denial).  Thanks to recent public shaming,
-the second stage (anger) is seeming to set in, which at the very least
-is progress.  Personally, I'm hoping to see bargaining in fewer than
-the 20 years it took to get here.  There are five stages total, so if
-each takes as long as the first, there is the distinct possibility
-that we'll be waiting a century for a high-quality kernel security
-posture ;)
+Roland Becker (MantisBT developer) discovered and fixed [1] an XSS 
+vulnerability issue affecting MantisBT releases 1.0.0 to 1.2.15 included.
 
-Anyway, on a more serious note, at some point, acceptance will look
-something like a real kernel-sec team that does essentially what you
-just did, but on a continual basis: reviewing most/all commits for
-potential security concerns and forwarding them to oss-sec to increase
-identification and awareness to be applied downstream.  Unfortunately
-a person/group needs to want to scratch that particular itch, and more
-importantly be able to deal with leaders antipathetic to their work.
-Also, as Kurt was alluding to, the rewards don't seem to be there, and
-of course there is a lot of potential for pain (i.e. dealing with the
-anger).
+Account_sponsor_page.php.php did not correctly sanitize project names, 
+enabling a malicious user to execute malicious JavaScript when visiting 
+that page.
 
-Best wishes,
-Mike
+The criticality of this issue is compounded by the fact that a 
+high-privilege account (typically project manager or administrator) is 
+required to edit project names.
+
+Patches attached to [1]. Can you please assign a CVE ID to this issue ?
+
+Thank you
+
+D. Regad
+MantisBT Developer
+http://mantisbt.org/
+
+[1] http://www.mantisbt.org/bugs/view.php?id=16513
+
+BCC: mantisbt-dev@...ts.sourceforge.net
+
