@@ -1,55 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/30/3
-Message-ID: <51A7B3C5.7090809@redhat.com>
-Date: Thu, 30 May 2013 14:17:09 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/11
+Message-ID: <52658C0D.9050100@redhat.com>
+Date: Mon, 21 Oct 2013 14:18:21 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: CVE request: znc: null pointer dereference in webadmin
+Subject: Re: CVE Request: gitolite world writable files for fresh installs of v3.5.3
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/30/2013 02:50 AM, Raphael Geissert wrote:
-> Hi,
-> 
-> A null pointer dereference was found in ZNC 1.0 in the webadmin
-> module which can be triggered by non-admins and cause denial of
-> service[0].
-> 
-> Could a CVE id be assigned please?
-> 
-> Thanks in advance.
-> 
-> References: [0]
-> https://github.com/znc/znc/commit/2bd410ee5570cea127233f1133ea22f25174eb28
+On 10/20/2013 10:54 PM, Sitaram Chamarty wrote:
+> Announcement: 
+> https://groups.google.com/forum/#!topic/gitolite/Tu1sjaf7A4A/discussion
+>
+>  Code change: 
+> https://github.com/sitaramc/gitolite/commit/3dad4f8e3214d6ab5f71823019a624fa48b055a3
 >
 > 
-[1] https://secunia.com/advisories/53450/
+(or)
+> http://code.google.com/p/gitolite/source/detail?r=3dad4f8e3214d6ab5f71823019a624fa48b055a3#
+>
+>  Brief description (main points of announcement): Fresh installs
+> between fa06a34 (approx Sep 3rd) and v3.5.3, inclusive, create a
+> few world writable files.  Sites which installed before that date
+> are not affected, even if they subsequently upgraded to the faulty
+> commit or beyond.  Affected sites need to run a one-time 'chmod -R'
+> to fix.
 > 
-> Cheers, -- Raphael Geissert - Debian Developer www.debian.org -
-> get.debian.net
 
-Please use CVE-2013-2130 for this issue.
+Please use CVE-2013-4451 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRp7PFAAoJEBYNRVNeJnmTwxoQAJSCdnDUK3hRAZFLrChyN4UL
-ERQdptENDqkj+B5uIMkyc2UCcXaSLtE5vv7e4dgnvLz2e6PrnOeUhbk0pHU68cYu
-1Mi0i5F1Dzv675UWYob5+EQsYQ19Yt4OWnAFJ+KK4r0d61aMP6mKznV09cOzmjQ9
-dVy1W34LnHH2dR4hv+5k2jv57xs1zLvsa1iKUCgcL3SmsPgr6i4iFH2YOsifbIqx
-KCvFmFPCqKQwNmAhksRGH8Q8SIlH6ESl/MvSu77drG2BcgAfEBgfMjfInS+3vvWO
-xUzkxJCUOockl/C+E5Vw2NIjlysOdYg/WO1Aifq37+YrGQXSIk4xqgeTfccm/UQe
-A0uWI4FmlXsr9DOrbXjtkH3N/J2e3HDIF67GeZo+hOz5HQtJg8y04gBYmtxGPO58
-TjtyZR4ryjyqXdUcXF5n1s27CS6eefbphMD2fDkna+gHS3YEKUwz2pEMZGaMcpsv
-qdqRl0OI8M9lcqLObNyWD7IH/ADCGYHg/D8nH3tVCOlwC0XdzuIfANP9bWZSUTUf
-xW9C9lBhGPiYMTfhDn9HzEElyqZINaSWTzGNI89bESqeB9ODev1ShiEaQv2VnY0E
-B0MWU8w9RRW+MyGfNd8uEO2nXHayg8Cn4rEp5Eg5zSbPcz0wZcDKdwPTin7Gx0ME
-XiDLCbDY6AEB/Td8tC57
-=0S2S
+iQIcBAEBAgAGBQJSZYwMAAoJEBYNRVNeJnmTykwQANeDVBkzMykOucoXevV3pd99
+YQS6Agd7sF+zgkVkq6YdYperQX2MlXgo7kFwIsGazxpRRswk4i4prpD9CATYwg5V
+XdCf5i3DFr1mQ/hPnFoD59f354gLK7CBK/BfkUnURFoA/TSVH3R8RuTWsfQ6wIGl
+pgVp5X+9WiBZazsSFiEM8fCuCgBGY34RBucLhJL45guZE05mJb06fyaLK2dOYLgz
+neHHiClmeBmb85Vgjy7anCNnOpgkm6h8wsW5DZOd+9hlchoZiv6dc9Jc04tUpS7f
+/AX+w/TWonIDfy9PtyIons4xt4rvs+G5le2xSIAsRxM9HkAANLcsm/HAWTcM1I3m
+Z61KOe2Visi/5Yh3C7lW+MQBS5SmjEkX5N5VhLI3UIg3BPVpTfZTVNScIkYcOZm3
+gmW+uS/5BmSugooA6Clnh79Q7gIuVY6aFPchy8S5VGDjVSnw+Cbbvjy0kfoUaH8m
+4CKA+nPfkHqoSxGaNOSSCOt89gHIOZ3ZYOvD3qBwbMASPnIAf7xZ34XfimOP3ryl
+EYysT4PIM3gk55Ksl+4NLs/mkZ1m36FEzE3NaIQlAx3uwa9qqD7QiugSWv4Tp6Oy
+TksAcQZKU7D5BnYxiSAIC1tbmMmSAnp0dNo8F8HoSbyOa15MLqt/53FXNv664mD2
+hQX/wBlo8ZJi6mrc6W64
+=jdn1
 -----END PGP SIGNATURE-----
