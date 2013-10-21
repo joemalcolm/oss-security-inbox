@@ -1,28 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/1
-Message-ID: <alpine.LFD.2.03.1306051241480.10573@redhat.com>
-Date: Wed, 5 Jun 2013 12:53:33 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: kernel: cpqarray/c: info leak in ida_locked_ioctl()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/9
+Message-ID: <52658B0F.7070507@redhat.com>
+Date: Mon, 21 Oct 2013 14:14:07 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: echoping buffer overflow vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-   Hello
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A Linux kernel built with the Compaq SMART2(CONFIG_BLK_CPQ_DA) & Compaq Smart 
-Array 5xxx(CONFIG_BLK_CPQ_CISS_DA) support is vulnerable to an information 
-leakage flaw. This could occur while doing an ioctl(2) calls on the block 
-device with command `IDAGETPCIINFO' or `CCISS_PASSTHRU32'.
+On 10/21/2013 12:04 AM, Moritz Muehlenhoff wrote:
+> On Fri, Oct 18, 2013 at 10:35:18PM -0600, Kurt Seifried wrote:
+>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>> 
+>> On 10/17/2013 05:18 AM, Sergey Popov wrote:
+>>> Echoping 6.0.2 and before contains several buffer overflow 
+>>> vulnerabilities that can lead to execution of arbitrary code
+>>> on the system or cause the application to crash.
+>>> 
+>>> Bug report in Gentoo: 
+>>> https://bugs.gentoo.org/show_bug.cgi?id=349569
+>>> 
+>>> Some additional info: http://xforce.iss.net/xforce/xfdb/64141 
+>>> http://secunia.com/advisories/42619/
+>>> 
+>>> Issue is fixed in upstream[1], but no release yet.
+>>> 
+>>> Please assign a CVE for this, thanks.
+>>> 
+>>> [1] - http://sourceforge.net/p/echoping/bugs/55/
+>> 
+>> Please use CVE-2013-4448 for this issue.
+> 
+> This should receive a CVE-2010-xxxx ID. It was originally reported
+> to the Debian BTS in December 2010 (as linked in the sf
+> bugtracker): 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=606808
+> 
+> Cheers, Moritz
+> 
 
-A user/program could use this flaw to leak kernel memory bytes.
+COrrect, I wasn't paying attention to the created/etc dates. Please
+REJECT CVE-2013-4448 and use CVE-2010-5111 instead.
 
-Upstream fixes:
----------------
-  -> https://lkml.org/lkml/2013/6/3/131
-  -> https://lkml.org/lkml/2013/6/3/127
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+iQIcBAEBAgAGBQJSZYsOAAoJEBYNRVNeJnmT6joP/0V7xtZpJ0LRQBATuBANncYh
+aqrLie9+VuUhkYHzX2Cng/3kycy150OaqfLRHwz/qGeeUvCpvp0Ks4r2m3onXFfK
+hAZbJoFVK5jqwc91LNeUXm3i8X9UWS9lDcoxxQNlBROWKcphhzEl8oV12f5JjI82
+sN42NRJGS5bDqXSIepzlymHZbslpn4pJYKgq61oVe2+/Ag6rpaVExFFCnBj3Qskb
+zUaOQfzL6OhgN8iIHTdKGJQiJDHCFeD3E4n306j9gKmGr4eqKewd7Qqju4lsreeh
+Lv89eOE7k5Pvsxusc8aDDX7pmntPPgRk5ei4WF7a+8Wv7BGLl50EF7b06b9J/pgU
+RyWGPTy3Je47xFfsM4whrlVLtnyLjmlTSf30DBWapnJenvkpergfcBrRdQvOhkLA
+tjyCpsmAPI8G4m7AlvV+fzUWHL9LMbrESDMwmTRXlpiHIjBlAR+kXenyUjiw5KHV
+9l1o5fB9jdaWUrYbx9IHEwXObHhKDVtRWwN8Az1d8J8/AaNBi/yWRfFYm3zFlGvQ
+g/siJ+XfiTnI+STKx7FbHVXWQOLvpqfHE52p2sqdUzU5VzhtTfp0VSc99tU4Omzf
+7wGw6K954NXCm9oVVe51ZAR6q9baOnA46tkolqxfZZ9kqocpPxMDz6A30KrKJGc4
+Mc2pq05aKrasEmn9bWMn
+=5CSE
+-----END PGP SIGNATURE-----
