@@ -1,18 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/10
-Message-ID: <1419758.eH1rNfhxKm@sarpedon>
-Date: Fri, 23 Aug 2013 12:29:41 +0100
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/6
+Message-ID: <20131021212054.61a8f3cf@pc>
+Date: Mon, 21 Oct 2013 21:20:54 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: [PATCH] implement privmode support in dash
+Subject: CVE request: cmsmadesimple before 1.11.8 / bad upstream behaviour vs. CVE assignment
 Content-Type: text/plain; charset=utf-8
 
-If we're going to fix dash to drop privs by default, might it also be worth 
-reevaluating bash-as-sh where upon it *doesn't* drop privileges?  I can see 
-the argument as to why, but Tavis' arguments also hold true for this case.
+Hi,
 
-Tim
+I want to request a CVE, but also start some discussion about how to
+handle such issues.
+
+The release notes for cmsmadesimple 1.11.8 mention a security issue:
+http://www.cmsmadesimple.org/announcing-cmsms-1-11-8-fioreana/
+"This release brings a few minor features, some performance
+improvements, documentation improvements, a Smarty upgrade, and a
+number of bug fixes (including a minor security issue)."
+
+Now, this is all the information you get. Nothing about the kind of
+security issue, let alone a bug nr or commit. The question is: What do
+we do with such shitty upstream behaviour?
+
+Last time I reported something alike I was told that I should provide
+more info. The question is: How?
+
+Sure, I could diff the release to the release before or try to find
+some repository and read all the commits in the timeframe. But I'm not
+getting paid for this, I merely want to improve overall security of
+free software voluntarily.
+
+So how will we proceed with such stuff? In the past, we often had "CVE
+for unknown security issue in xxx"-alike assignments.
+
+cu,
 -- 
-Tim Brown
-<mailto:tmb@...35.com>
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
 Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
