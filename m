@@ -1,41 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/11/5
-Message-ID: <5167133A.5050803@redhat.com>
-Date: Thu, 11 Apr 2013 13:47:06 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, hello@...pyworm.com
-Subject: CVE-2013-1942 jPlayer 2.2.19 XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/5
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF33E19574@IMCMBX01.MITRE.ORG>
+Date: Mon, 21 Oct 2013 15:41:09 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Forest Monsen <forest.monsen@...il.com>, Kurt Seifried <kseifried@...hat.com>
+Subject: RE: Re: CVE duplicates SA-CONTRIB-2013-075
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Note that with two CNAs handling already-public issues, there are multiple ways that duplicates can arise.  This risk grows as MITRE's output increases.  On the MITRE side, we are revisiting our procedures for reducing the number of duplicates.  We already privately identified the increased duplicate risk with Kurt and will work with him to make things more manageable.
 
-ownCloud brought this to my intention (they use it, I'm guessing other
-people use it as well.
+For this specific situation: MITRE processed the Drupal advisories on September 25, creating new CVEs that were thus available in NVD at approximately 11 AM Eastern time.  Forest's request to oss-security happened on September 26.  Kurt's response to oss-security was on September 27.  So in this case, there were multiple opportunities for requesters to check for pre-existing CVEs in NVD.
 
-https://github.com/happyworm/jPlayer/commit/e8ca190f7f972a6a421cb95f09e138720e40ed6d
+The MITRE-assigned CVE-2013-5937 and CVE-2013-5938 are in more active use and were published first, so they will be kept.
 
-Please use CVE-2013-1942 for this issue. The only contact info I can
-find is hello@...pyworm.com for upstream.
+REJECT CVE-2013-4381 as a duplicate of CVE-2013-5938.
+
+REJECT CVE-2013-4382 as a duplicate of CVE-2013-5937.
+
+Forest, please update the advisory to use the MITRE-assigned numbers.
+
+- Steve
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRZxM6AAoJEBYNRVNeJnmTBOMP/0Pd8JoimqTdjLk2Uv0QDnyW
-Hz9ea3SKVrqFywMqEn+HSM1gH4XmB6wCeSjbkfhsj/TWqmckoH4MW8okKhFYEyHX
-eO5YIHeY/XAquyP+mJhEsChs6FM77SLu5WeuJXgQRfRwC1L7vyvIjYuZdVK+X7g0
-RXc+EyAqKXdhKs08GhORC+DVdzivX0iqBxaNDVBccwVbjilmpGJEyS+REU694nWf
-tei0f+Z2p7BotvJfBRhtGiU+gY2e/TRkwdEDAp44SPOnK7Gj4KcFdZaMiv9WePTd
-cH/GgmhH9iIJGho3sKUc+oH3JttqGc8lbN55Sm9z/vJbavCb1zWFQdwbimXK52ZY
-1PRUUw5HjPRnj9uZtxpLaIcD+kN6NUGgyp2VV+e0iwd0ntHgGyYUMIPGLRRgPlyU
-62JCaMfhX0qrbYdrrK9fUnzi/sqtNgR5cSCWa/XlirG9eYRqE6O9kfl8vZ6NmBjz
-BYRIr1Lb8OpBuA8wHdBXb8SMJBCted9JKcqQi1pt+bLrcuk/xJxZ1hJAhLVaJgn8
-s00Jimu7RUDra9DLM4tS4s9Y0gRpQHU+NbT9U+zzVE/W//NqWsY4LH2K5xAauQD7
-zEv51Qwludnj956lDv4bfC+1vP5JoQI0sk/QsiTig6nFAD1OQrLrPecQFs784gpr
-SPZCBk7V/zcDtKXdBEcz
-=Dt27
------END PGP SIGNATURE-----
+>-----Original Message-----
+>From: Henri Salo [mailto:henri@...v.fi]
+>Sent: Monday, October 21, 2013 5:38 AM
+>To: oss-security@...ts.openwall.com
+>Cc: Forest Monsen; Kurt Seifried
+>Subject: [oss-security] Re: CVE duplicates SA-CONTRIB-2013-075
+>
+>On Fri, Oct 18, 2013 at 02:16:31PM -0700, Forest Monsen wrote:
+>> On Sat, Oct 5, 2013 at 4:10 AM, Henri Salo <henri@...v.fi> wrote:
+>>
+>> > Advisory https://drupal.org/node/2087055 says:
+>> >
+>> > CVE-2013-4381 (XSS)
+>> > CVE-2013-4382 (CSRF)
+>> >
+>> > Are these duplicate CVEs with CVEs below or is there something I am
+>> > missing?
+>> >
+>>
+>> Henri, it certainly looks like these are duplicates. However, Kurt
+>> facilitated CVE assignment in
+>> http://www.openwall.com/lists/oss-security/2013/09/27/6 , so it's not clear
+>> to me how the NVD catalogued different identifiers.
+>>
+>> Best,
+>> Forest
+>
+>Kurt, could you REJECT (or rotate) another CVEs, thanks.
+>
+>You assigned these, which are currently used by Drupal project:
+>CVE-2013-4381, CVE-2013-4382
+>
+>>From NVD:
+>CVE-2013-5937, CVE-2013-5938
+>
+>How do we avoid this in the future?
+>
+>---
+>Henri Salo
