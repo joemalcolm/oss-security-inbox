@@ -1,46 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/05/1
-Message-ID: <524F8E8D.30105@redhat.com>
-Date: Fri, 04 Oct 2013 21:59:09 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/13
+Message-ID: <20131021211647.GA26203@eldamar.local>
+Date: Mon, 21 Oct 2013 23:16:47 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed module
+Subject: CVE Request: LDAP Account Manager XSS in login.php
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Kurt,
 
-On 10/04/2013 02:49 PM, Forest Monsen wrote:
-> Hi there... I would like to request a CVE identifier for:
-> 
-> SA-CONTRIB-2013-078 - Quick Tabs - Access Bypass 
-> https://drupal.org/node/2103187
-> 
-> Thanks!
-> 
-> Best, Forest
-> 
+Eric Sesterhenn discovered a XSS vulnerability in login.php of
+LDAP Account Manager and reported this to the Debian BTS[1]. It
+requires to send malicious data via POST.
 
-Please use CVE-2013-4406 for this issue.
+ [1] http://bugs.debian.org/726976
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Upstream Bugreport:
 
-iQIcBAEBAgAGBQJST46NAAoJEBYNRVNeJnmTYlIQAKN02mi+zlk0ZBwbFMMGhYZM
-J8RLYXrToACv8YzLrxVXVzki8Vn0vNEPA/f/eygeZH99oaSsBpI+rD38cTDjLgy5
-2laEzqFHKc0Vbn/p43hlwIoG4RCe3tPwMCHEdx8HvLZGu9X7jRc0aGpQndQhNZSJ
-KVTL1B7Hfm02aElGjwOyjtR4ZSRMr+7+8I5A5eGP2qRX0RjD5yER0sHX461kEPSi
-9yaZ/GCGrbFirx16/9cZpZrr39r8nVMc0IiqYIuZiu7IHRJf0sqs0p6jsVX69Rvr
-6iaRh72qSkgzIbYjWHdPTrbjwsiKMR03XR/jo5N0UosePtxVZXQFXRKeN1FnPKL9
-wi4HNIfIW3x+pZgUBzA+SLlznbrKekw2Na0MQgLdxI3I9aqFELPBr41TWaMhr/Kc
-Ab9JgTOOJ8wOEuXgq5pVT2g3M722JToIKZzNg+d6hnsgf1cslTPigdTkIwE+SMw8
-pyBb6/m/7C7EkOO7tdjVDxdW+TFAV8npxYeTo1al/YfwhP0c+fWTIds3L7qrpS8P
-fMCSp08CJz3WNIuzpk/BJiHJSsbdSqc9THj8W4KuYK+qnZL20HtxRgxyxZkrtxAJ
-0yAvaC1dpSsHicF95Db9xGCDXF5B71gIFzxVP/XznGxRrQLEJOko6059d6bKcABn
-QdmjyRyxyRrhlK0rjCn9
-=zpOe
------END PGP SIGNATURE-----
+ [2] http://sourceforge.net/p/lam/bugs/156/
+
+Upstream also has already commited fixes to the VCS:
+
+ [3] http://sourceforge.net/p/lam/code/5074/
+ [4] http://sourceforge.net/p/lam/code/5075/
+
+Could you please assign a CVE for this issue?
+
+Regards,
+Salvatore
