@@ -1,87 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/11
-Message-ID: <1375981821.16243.20.camel@dcbw.foobar.com>
-Date: Thu, 08 Aug 2013 12:10:21 -0500
-From: Dan Williams <dcbw@...hat.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>
-Subject: Re: CVE Request -- Four flaws in WiMAX (afaik upstream is dead for this)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/3
+Message-ID: <20131021093745.GA13128@kludge.henri.nerv.fi>
+Date: Mon, 21 Oct 2013 12:37:45 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: Forest Monsen <forest.monsen@...il.com>, Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE duplicates SA-CONTRIB-2013-075
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2013-08-08 at 12:55 -0400, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+On Fri, Oct 18, 2013 at 02:16:31PM -0700, Forest Monsen wrote:
+> On Sat, Oct 5, 2013 at 4:10 AM, Henri Salo <henri@...v.fi> wrote:
 > 
->   this is some kind of strange CVE request, since WiMAX upstream
-> seems to be dead already. Anyway, couple of security flaws were found
-> by Florian during security review:
+> > Advisory https://drupal.org/node/2087055 says:
+> >
+> > CVE-2013-4381 (XSS)
+> > CVE-2013-4382 (CSRF)
+> >
+> > Are these duplicate CVEs with CVEs below or is there something I am
+> > missing?
+> >
+> 
+> Henri, it certainly looks like these are duplicates. However, Kurt
+> facilitated CVE assignment in
+> http://www.openwall.com/lists/oss-security/2013/09/27/6 , so it's not clear
+> to me how the NVD catalogued different identifiers.
+> 
+> Best,
+> Forest
 
-Long dead actually; I have kept it working in the past but have no real
-interesting in doing that in the future.  Intel hasn't been involved in
-their wimax stack or drivers for about 2+ years.
+Kurt, could you REJECT (or rotate) another CVEs, thanks.
 
-The code is *horrible* and it's a complete port of the Windows wimax
-stack over to Linux, including re-implementing crypto, liked-lists, and
-a whole bunch of other stuff.  It's just awful.
+You assigned these, which are currently used by Drupal project:
+CVE-2013-4381, CVE-2013-4382
 
-If anyone does patches I'm happy to review them and (maybe) test them
-and push them to my wimax clone repos on git.freedesktop.org, but I
-unfortunately don't have time to do it.
+From NVD:
+CVE-2013-5937, CVE-2013-5938
 
-There don't have to be public bugs yet, but if nobody writes patches in
-a reasonable amount of time perhaps they should just be made public.
+How do we avoid this in the future?
 
-Dan
+---
+Henri Salo
 
-> * Issue #1: Log file created with insecure (world-writable) permissions
->   https://bugzilla.redhat.com/show_bug.cgi?id=911122
-> 
->   A security flaw was found in the way Trace module of WiMAX, an user space
->   daemon for the Intel 2400m Wireless WiMAX link, used to set permissions
->   when opening the log file (was created with world-readable / writable
->   permissions). A local attacker could use this flaw to, in an unauthorized
->   way, alter the content of WiMAX daemon log file (possibly leading to un-enforced
->   actions to be performed by system administrator).
-> 
-> * Issue #2: (OSAL crypt module): By setting encrypted password writes unencrypted passwords to log files
->   https://bugzilla.redhat.com/show_bug.cgi?id=911121
-> 
->   A security flaw was found in the way OSAL crypt module of WiMAX, an user
->   space daemon for the Intel 2400m Wireless WiMAX link, used to perform
->   its internal encrypted password setting action (a failed attempt to set
->   the encrypted password was logged into the WiMAX's log file with provided
->   password logged in plaintext form). A local attacker could use this flaw
->   to obtain sensitive information or conduct unauthorized actions on behalf
->   of the user setting the encrypted password.
-> 
-> * Issue #3: Supplicant agent ships RSA private key in the package
->   https://bugzilla.redhat.com/show_bug.cgi?id=911126
-> 
->   A security flaw was found in the way supplicant agent of WiMAX,
->   an user space daemon for the Intel 2400m Wireless WiMAX link, used to
->   manage its private key (private key was shipped together with the source
->   code). A local attacker could use this flaw to obtain security sensitive
->   data or, to conduct actions on behalf of private key owner.
-> 
-> * Issue #4:  Three integer overflows, leading to heap-based buffer overflows when handling PDUs for L5 connections
->   https://bugzilla.redhat.com/show_bug.cgi?id=911129
-> 
->   Three cases of integer overflow, leading to heap-based buffer overflow flaw,
->   were found in the way socket dispatcher and connector modules for L5
->   connections of WiMAX, an user space daemon for the Intel 2400m Wireless
->   WiMAX link, used to handle certain payload data units (PDUs) for L5
->   connections. A remote attacker could issue a connection request with
->   specially-crafted PDU value that, when processed would lead to socket
->   dispatcher / connector module crash or, potentially, arbitrary code
->   execution with the privileges of the user running these modules.
-> 
-> There are no patches for these issues yet. They were checked previously
-> privately with Dan Williams and the suggestion was to file public bugs
-> even when there are no patches available for these.
-> 
-> Could you allocate CVE ids for these?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
