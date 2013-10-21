@@ -1,57 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/20/3
-Message-Id: <20130520174343.6489CE673F@smtp.hushmail.com>
-Date: Mon, 20 May 2013 17:43:40 +0000
-From: "mancha" <mancha1@...h.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/10
+Message-ID: <52658B2C.3010400@redhat.com>
+Date: Mon, 21 Oct 2013 14:14:36 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: tty-hijacking & CVE-2005-4890 - redux
+CC: plugins@...dpress.org, Ciprian Popescu <ciprian@...butterfly.com>
+Subject: Re: CVE for Wordpress plugin Portable-phpmyadmin
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A recent use-case on Slackware made me re-visit CVE-2005-4890
-in the context of "su -c". Particularly, shadow's implementation
-as of shadow 4.1.5.
+On 10/21/2013 09:08 AM, Anant Shrivastava wrote:
+> Hi Team,
+> 
+> Please issue CVE for following issues identified in a wordpress
+> plugin portable-phpmyadmin
+> 
+> 
+> *PHP information Disclosure * /pma/phpinfo.php
+> 
+> *Security Bypass * Allows direct access (with each file level of
+> access differs but you get DB access with wordpress database
+> username and password) /pma/db_create.php /pma/main.php - reveals
+> all the details of database stuff. /pma/db_datadict.php 
+> /pma/import.php /pma/querywindow.php /pma/server_databases.php -
+> Full access to all features including SQL window 
+> /pma/server_export.php
+> 
+> 
+> *Disclosure Status. * Author (marked in CC) as well as Wordpress
+> Plugin team (marked in CC) is aware of the issues. Wordpress plugin
+> team has disabled the plugin download till issues are resolved. 
+> Author initially responded but stopped responding after a point.
+> 
+> *Timeline* First contact : 24 July 2013 Last response from Author :
+> 9 Aug 2013 Wordpress plugin team contacted : 11 Sep 2013 Plugin
+> Disabled in plugin repository : 15 Sep 2013 CVE Requested : 21 Oct
+> 2013
+> 
+> 
+> -Anant Shrivastava
+> 
 
-During the discussions of this CVE (see footer links), it was
-pointed out shadow's fix is partial given interactive su remains
-vulnerable to tty-hijacking. It was also mentioned this vector
-is less worrisome given use cases for interactive su are primarily
-privilege escalation.
+Can you post the url/download link for this app?
 
-The CVE was always a bit controversial with many believing
-using su and sudo to drop privileges is unsafe and more an
-administration issue than a design flaw.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-All that said, at the very least would it be reasonable to
-apply the same threat-assessment criterion to the crippling
-of "su -c" and not drop the controlling tty for the case when
-the callee is root?
-
-Slackware doesn't use PAM so the fix in shadow relies on a
-TIOCNOTTY ioctl() request and not a setsid() call. One result
-of this change is summarized in the table below:
-
-                                        shadow 
-                             4.1.4.3   4.1.5.1   4.1.5.1+patch*
-
-1. As unpriv user user1:
-xterm -e su -c $COMM          SUCCESS    FAIL     SUCCESS
-xterm -e su user2 -c $COMM    SUCCESS    FAIL     FAIL
-
-2. As root:
-xterm -e su user1 -c $COMM    SUCCESS    FAIL     FAIL
-
------
-* See attached
-
-Cheers.
-
---mancha
-
-
-===
-
-[1] http://thread.gmane.org/gmane.comp.security.oss.general/5172
-[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
-Download attachment "shadow-4.1.5.1-tty.diff" of type "application/octet-stream" (321 bytes)
+iQIcBAEBAgAGBQJSZYssAAoJEBYNRVNeJnmTPJgQANtKvnRl4scnR98T1mye1qwB
+14IqpjNgQhYnhajrEUK+heJhudbIN4CS4Mwu01mVIoUdj2GKBP0iRgdc9vBJCDSY
+FbVfGjshuQvCKMDd1KGRcKPJG0fxnDk+CKk0HDP/pwgyot6toSeP37WYdEgZH70g
+XwWXR//OT0/B7n77EB9jQT/izFBhuea4tTN1mtLHjfQMLCOdLsbF2umTp6A7eg9K
+u44ENGbO5sVekDMvUE1QwnKH7LnsKzbQXp7ZYreEVyPBB3FMqcmg5Yob38JKDWmb
+/1lSOA3C9NS4SIxXwkNkDHcg/vK2kOWDeGO8/hde/JOnv8tBlUHpTSKC1hF6gv7F
+WS66n0dfhKgIHBOma4vU5sXtUdys1wKnjqwgyyWNfKgaoiHrtS66ngVDOkzdBTCX
+7Mp1KHm9zFN9zJbugY9un7EoE1ftTbDC2LUbDbz5sg9Sc4delsuzH302emvM6YcD
+pIM2ppf6+Q2VLpvCF44TjymU/5p8x+JsqoxVQmqqREcpniKs59ZAhBWcjSfDXRl1
+oyNOKpny3uqVoPvgTsX07UUdW5ZW9x/UQWXWSaYWXYXGS/Ul0sCy6eTHjL6RzZAa
+OjuzUvMpOjVzuPN2i7hbCWSBhfKv8fzmUtWCCgSoaTNeugDIFrNKBPVauP0cczZQ
+iO/91DCwjvyxb0aNX5yg
+=YBh8
+-----END PGP SIGNATURE-----
