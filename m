@@ -1,41 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/29/4
-Message-ID: <521EE6E5.6000403@gentoo.org>
-Date: Thu, 29 Aug 2013 10:15:01 +0400
-From: Sergey Popov <pinkbyte@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE oops in GLSA 201308-05 (wireshark)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/2
+Message-ID: <20131021060427.GA4086@pisco.westfalen.local>
+Date: Mon, 21 Oct 2013 08:04:28 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: CVE request: echoping buffer overflow vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-28.08.2013 19:24, Vincent Danen пишет:
-> I just saw via a Gentoo bug report that their GLSA 201308-05 advisory
-> mentioned some CVEs as related to wireshark that were incorrect.
+On Fri, Oct 18, 2013 at 10:35:18PM -0600, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> Instead of mentioning CVE-2013-{3560,3561,3562} they mentioned
-> CVE-2013-{3540,3541,3542}.  I checked on MITRE's site and those three
-> are still reserved.
+> On 10/17/2013 05:18 AM, Sergey Popov wrote:
+> > Echoping 6.0.2 and before contains several buffer overflow 
+> > vulnerabilities that can lead to execution of arbitrary code on
+> > the system or cause the application to crash.
+> > 
+> > Bug report in Gentoo: 
+> > https://bugs.gentoo.org/show_bug.cgi?id=349569
+> > 
+> > Some additional info: http://xforce.iss.net/xforce/xfdb/64141 
+> > http://secunia.com/advisories/42619/
+> > 
+> > Issue is fixed in upstream[1], but no release yet.
+> > 
+> > Please assign a CVE for this, thanks.
+> > 
+> > [1] - http://sourceforge.net/p/echoping/bugs/55/
 > 
-> I don't know who those three (354[012]) are assigned to, but you might
-> want to see if they've been used already or not and dupe them against
-> 356[012] if they have not.
-> 
-> See:
-> 
-> http://www.net-security.org/advisory.php?id=16517
-> https://bugs.gentoo.org/show_bug.cgi?id=482794
-> 
-> Thanks.
-> 
+> Please use CVE-2013-4448 for this issue.
 
-That was my mistake and i am truly sorry about it. Our GLSA will be
-fixed soon, but i can not undo sent mail to gentoo-announce@ :-(
+This should receive a CVE-2010-xxxx ID. It was originally reported to the 
+Debian BTS in December 2010 (as linked in the sf bugtracker):
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=606808
 
--- 
-Best regards, Sergey Popov
-Gentoo developer
-Gentoo Desktop Effects project lead
-Gentoo Qt project lead
-Gentoo Proxy maintainers project lead
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
+Cheers,
+        Moritz
