@@ -1,16 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/3
-Message-ID: <20130325070232.GB30528@kludge.henri.nerv.fi>
-Date: Mon, 25 Mar 2013 09:02:32 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com, MustLive <mustlive@...security.com.ua>
-Subject: Re: XSS vulnerabilities in ZeroClipboard and multiple web applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/4
+Message-ID: <CAE5KnOcuXNeEZz90V6Vs1AbyvNvTfs8TT0otjAj6-3mnttUDZQ@mail.gmail.com>
+Date: Mon, 21 Oct 2013 20:38:17 +0530
+From: Anant Shrivastava <anant@...ntshri.info>
+To: oss-security@...ts.openwall.com
+Cc: plugins@...dpress.org, Ciprian Popescu <ciprian@...butterfly.com>
+Subject: CVE for Wordpress plugin Portable-phpmyadmin
 Content-Type: text/plain; charset=utf-8
 
-Your emails are very hard to read. How many of these did you report to vendor?
-Are you going to track what software fixes this vulnerability in what version?
+Hi Team,
 
---
-Henri Salo
+Please issue CVE for following issues identified in a wordpress plugin
+portable-phpmyadmin
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+
+*PHP information Disclosure
+*
+/pma/phpinfo.php
+
+*Security Bypass *
+Allows direct access (with each file level of access differs but you get DB
+access with wordpress database username and password)
+/pma/db_create.php
+/pma/main.php - reveals all the details of database stuff.
+/pma/db_datadict.php
+/pma/import.php
+/pma/querywindow.php
+/pma/server_databases.php - Full access to all features including SQL window
+/pma/server_export.php
+
+
+*Disclosure Status.
+*
+Author (marked in CC) as well as Wordpress Plugin team (marked in CC) is
+aware of the issues.
+Wordpress plugin team has disabled the plugin download till issues are
+resolved.
+Author initially responded but stopped responding after a point.
+
+*Timeline*
+First contact : 24 July 2013
+Last response from Author : 9 Aug 2013
+Wordpress plugin team contacted : 11 Sep 2013
+Plugin Disabled in plugin repository : 15 Sep 2013
+CVE Requested : 21 Oct 2013
+
+
+-Anant Shrivastava
+
