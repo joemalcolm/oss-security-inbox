@@ -1,35 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/24/1
-Message-ID: <1873121591.25789374.1372085219308.JavaMail.root@redhat.com>
-Date: Mon, 24 Jun 2013 10:46:59 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stephen Gallagher <sgallagh@...hat.com>
-Subject: CVE Request --  Review Board: Stored XSS due improper sanitization of user's full name in the reviews dropdown (fixed in upstream v1.7.10, v1.6.17 versions)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/4
+Message-ID: <52669A31.8060009@openstack.org>
+Date: Tue, 22 Oct 2013 17:30:57 +0200
+From: Thierry Carrez <thierry@...nstack.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: [OSSA 2013-027] Glance image_download policy not enforced for cached images (CVE-2013-4428)
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-  A persistent / stored cross-site scripting (XSS) flaw was found in
-the way reviews dropdown of Review Board, a web-based code review tool,
-performed sanitization of certain user information (full name). A remote
-attacker could provide a specially-crafted URL that, when visited would
-lead to arbitrary HTML or web script execution in the context of
-Review Board user's session.
+OpenStack Security Advisory: 2013-027
+CVE: CVE-2013-4428
+Date: October 22, 2013
+Title: Glance image_download policy not enforced for cached images
+Reporter: Stuart McLaren (HP)
+Products: Glance
+Affects: Grizzly, Folsom (and earlier versions)
+
+Description:
+Stuart McLaren from HP reported a vulnerability in Glance download_image
+policy enforcement in the case of cached images. Deployers may opt to
+set a download_image policy to restrict image download to specific
+roles. However, when an image is previously cached by an authorized
+download, any authenticated user could download image contents if it can
+determine the image UUID, bypassing any download_image policy
+restrictions. This could result in disclosure of image contents that
+were thought to be protected by the download_image policy setting. Only
+setups making use of the download_image policy are affected.
+
+The Havana release (2013.2) is not affected.
+
+Grizzly fix (included in 2013.1.4 recent release):
+https://review.openstack.org/#/c/50103/
+
+Folsom fix:
+https://review.openstack.org/#/c/50860/
 
 References:
-[1] http://www.reviewboard.org/docs/releasenotes/reviewboard/1.7.10/
-[2] http://www.reviewboard.org/docs/releasenotes/reviewboard/1.6.17/
-[3] http://www.reviewboard.org/news/2013/06/22/review-board-1617-and-1710-released/
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=977423
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4428
+https://bugs.launchpad.net/glance/+bug/1235378
 
-Upstream patch:
-[5] https://github.com/reviewboard/reviewboard/commit/4aaacbb1e628a80803ba1a55703db38fccdf7dbf
+Regards,
 
-Upstream acknowledges Craig Young at Tripwire as the original issue reporter.
+- -- 
+Thierry Carrez
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-Can you allocate a CVE identifier for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQIcBAEBCAAGBQJSZpoxAAoJEFB6+JAlsQQjGIcP/jH6o0gGVUxYcZxlE6sOZtCj
+npshvXY1iEdgzegh+IT8CF3rJNSbC/01QOu0oLwmBLxrT/jF5nhgdlcB33ixuutV
+K9bK47nKHJPma4pOaLAXRlJKLoogGJ1BJ4IQGLsQNE5HngTp2atD75+TwSpbifTa
+5yR+Uc8+3zJzvwFkyPrxKRWk4lX2bu1QQkCZWkJCI63QI73N1rJOZ7j2oyX5xxra
+lJEizl5gJ5CiD/I3R2LSH1o0i8BmbnSKUsB4qVv2RDtoW2AW1HW0v85HfAi9K18n
+5Ze2znfl5rsa7aeS1ilSzg5hyYIQWEqccEfMAWxztyr3r99hCbtilFprpjvYM3h5
+9Q1FmL4sWUOozpbqQZ36Jijw9UADxZaNAwi4HyoiZeoe08lST8KsPwXZQuPoy2do
+IFpmKMo32un2NMCQbfyUQ4c3eQOLL1GVEKvbAuho1kX0EJ5BlfzMmS0+GzHrGm5c
+UlJZ+BAvYyPoNNBplk+FHxgBUl5MTIl5hKVPCA5Evrs+xRysr2tTgovRyS1X5O8W
+oNTBFmCI9aFu2cehAp629yR0oVVQBx2NE7UUJd8J9LuhW5YjHlpK9rhZTvyuTt+E
+MNvsnX7NHZJe62pTg3TQl6ZJJWp9hZmZrE0jGDxluxPCSh2lD4TS3+Ree6jnsSrD
+5s5N1mttexTCVndzfFPP
+=y9Fg
+-----END PGP SIGNATURE-----
