@@ -1,115 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/5
-Message-ID: <51F36FAD.4050601@redhat.com>
-Date: Sat, 27 Jul 2013 00:58:53 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/2
+Message-ID: <5266110D.70106@redhat.com>
+Date: Mon, 21 Oct 2013 23:45:49 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Sebastian Pipping <sebastian@...ping.org>
-Subject: Re: CVE request: mysecureshell: local denial of service (or worse)
+Subject: Re: CVE Request: LDAP Account Manager XSS in login.php
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/25/2013 04:28 AM, Sebastian Pipping wrote:
-> Hello Kurt,
+On 10/21/2013 03:16 PM, Salvatore Bonaccorso wrote:
+> Hi Kurt,
 > 
+> Eric Sesterhenn discovered a XSS vulnerability in login.php of LDAP
+> Account Manager and reported this to the Debian BTS[1]. It requires
+> to send malicious data via POST.
 > 
-> On 25.07.2013 10:33, Kurt Seifried wrote:
->> On 07/23/2013 11:19 AM, Sebastian Pipping wrote:
->>> mysecureshell [1] is an SFTP-only shell to be used with sshd.
->>
->>> The latest release 1.31 makes use of shared memory with permissions
->>> 666 to maintain 128 slots with one struct for each
->>> connection/process. An unprivileged user can mark mark all
->>> remaining slots as occupied (and optionally wait for remaining
->>> clients to leave to block those slots, too).
->>
->>> To demonstrate the issue, I have written a small command line
->>> tool. It's free software and can be found at [2].  Use it like
->>> this:
->>
->>> # make cc -std=c99 -Wall -Wextra -pedantic local-dos.c -o
->>> local-dos
->>
->>> # ./local-dos USAGE: ./local-dos (block|unblock|show)
->>
->>> # watch -n 1 -d ./local-dos block [..]
->>
->>> Besides the local DoS it might be possible to attack the call to
->>> chdir, since that is reading from shared memory, too.
->>
->>> Any ideas on other attacks based on writing to that block of
->>> shared memory?  File /bin/MySecureShell is mode 4755 setuid root if
->>> that makes it more interesting :-)
->>> [..]
->>> [1] http://mysecureshell.sourceforge.net/
->>> [2] https://github.com/hartwork/mysecureshell-issues
->>
->> To reiterate: so I can confirm CVE assignments, and prevent duplicate
->> assignments you *MUST* provide links to the code commits/vulnerable
->> code. I don't have the time to go hunting through your source code for
->> them. People need to start making better CVE requests, or you're not
->> going to get CVEs from me.
->>
->> I think if I repeat this enough times it'll work.
+> [1] http://bugs.debian.org/726976
 > 
-> Upstream tarball
-> ================
-> http://mysecureshell.free.fr/repository/index.php/debian/pool/main/m/mysecureshell/mysecureshell_1.31.tar.gz
+> Upstream Bugreport:
 > 
+> [2] http://sourceforge.net/p/lam/bugs/156/
 > 
-> Issue
-> =====
-> Mode 0666 for shared memory, local denial of service
+> Upstream also has already commited fixes to the VCS:
 > 
+> [3] http://sourceforge.net/p/lam/code/5074/ [4]
+> http://sourceforge.net/p/lam/code/5075/
 > 
-> Guilty code
-> ===========
+> Could you please assign a CVE for this issue?
 > 
-> Online
-> ~~~~~~
-> http://mysecureshell.cvs.sourceforge.net/viewvc/mysecureshell/mysecureshell/SftpServer/SftpWho.c?revision=1.3&view=markup#l73
-> 
-> Inlined  (from SftpServer/SftpWho.c, lines 73 and after)
-> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> //try to join to existing shm
-> if ((shmid = shmget(key, sizeof(t_shm), 0)) == -1)
->   if (create == 1)
->     {
->       shmid = shmget(key, sizeof(t_shm), IPC_CREAT | IPC_EXCL | 0666);
->       eraze = 1;
->     }
-> 
-> 
-> Please let me know if you need anything more.  Thanks for your time!
-> 
-> Best,
-> 
-> 
-> 
-> Sebastian
+> Regards, Salvatore
 > 
 
-Perfect! Please use CVE-2013-4175 for this issue.
+Thanks, please use CVE-2013-4453 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR82+tAAoJEBYNRVNeJnmTdCQQAJvRAEOpCyo314tT6nbIiMu/
-VUk2eHeFsqv5H744x+HjySb8CZVPtZ+dWQnF7LCfeDhWerLrt23OlE6mU7QpJX0b
-BiiOviQlkwAxyE2CDaMiZBO8mwRQc4soXlWQZD/qOASVpWrHpYlyFOH49cYwA0pA
-46fbqmY6BKmdlSSQRKfNGjr2kuhFccMut2CxoGlLqbf1frELTtWZNstcYLHLVUCx
-dXghNVMVbh1Bs4KYbuCogJcyFy6JQHrpmFtAI1tEOqUNsOJJ7EyShMaicPsw05zq
-PA/d1GJ9GhdzviEOytfLwNlWqZm+yCnsFvcPEC7pclymDj4honeXb1AyY4FrcILM
-FiHCtg4HmnNM464Zki5EGice3lJ6haBWGdm7V1v/lWP2KIC8mKh13XbQUCj2AvBm
-Hjl9DShNpo54OI+6B2SSvdBbOBFBSOzb90Ig1i4XbxjaOKxOeB7z2MA14+dHrXCi
-3B3vzGFZfIhUYQySmUtwZQYsiPgKHgu7mvrNpB62uaXmBIr6DJTQ6IWGF6yyusp8
-uBrCSI6BX8J4nz9AvUmjSZtzTvDlRtXsysmManSKnbZZfndD3AIwVGPqh9qE8YTE
-Jqvj/O6hol+yHMd6vCwV5YROtxwJbrbXuGxPLPv2o4YFQ6lizSNMYoLKUUIBBq8E
-XhvjwtqGlsg+sXAmn8UZ
-=VarJ
+iQIcBAEBAgAGBQJSZhENAAoJEBYNRVNeJnmTbEMP/imXMXt9yFjHSh42fMNDjx2g
+1lrVFPC6VoZiJ63qhTy/DYf3vO2sgXOXQn5r5NypnBN+Oyq40dtX56wbV+hULioa
+7W7JlXpcJLrjXxQi/dGF46XR3KZL0kpW2lUgJ+jfLKOqa5Do0LfzHtcRRnxI/CIs
+p4hzBqRhJ1laAGkCAYwoitloAnmRFHyoGnRomgkWS4xSHI7DT5k3m8X28R9rBxJ1
+CCpfhtVqVhrjpY/IzJ8rzwob9voTOgDPZVsVfI5sB0qOkwKWxgGzBs/jHrG1nBQD
+ucONhql0zNF6n3Z720RcI60jNqcdNBsxyF54CBj5ZHIjicB36AXJxg9r1eSxrg2w
+pqdI3AhI5TN9f/y0USkOsJnUK4wkYhqugHRyIEapVd0/D5g8r2wUjkxNSvQueLtt
+6VAousV8sPP0UngytOrppgKuSyWjIsvQmo9bOFRScbAQ6IF8c6VMBF+YXkw1d+Vg
+/K9hkqBloStlWHIiwm/gb8dWRq3OLYna3vQobjKDAqfPgiw9BEFZvfbUgB/fcTY0
+QZhVv7C8TaGodz3zkFEMHhAZRK5klMrXTM9i/kK0DgC+Gtgbj+K3ihwsDvS5F0F6
+Zxevrxk+1jgy9KIGK89wQG6tinwD4JHJ5JR6LGSYELbqKoE8Ww3upkjSvCC7nysu
+tABNBx4fgPoMxJSpn5Yd
+=R3A8
 -----END PGP SIGNATURE-----
