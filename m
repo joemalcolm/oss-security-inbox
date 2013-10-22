@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/07/7
-Message-ID: <20130307194816.GA412@openwall.com>
-Date: Thu, 7 Mar 2013 23:48:16 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/7
+Message-ID: <5266C954.5030804@canonical.com>
+Date: Tue, 22 Oct 2013 14:52:04 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
+Subject: CVE Request: lightdm no longer confines guest profile with AppArmor
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+Hello,
 
-On Thu, Mar 07, 2013 at 06:09:52PM +0000, Christey, Steven M. wrote:
-> This is a major challenge for CVE, but to do bug-based assignments [...]
+Christian Prim discovered that Light Display Manager 1.8.0 and later no longer
+use the appropriate wrapper when launching guest sessions, resulting in the
+session not being confined by AppArmor.
 
-What about per-subsystem assignments?  (In Linux kernel context and in
-general.)  I think this is what would make sense here.  Kurt assigned
-just one CVE ID for 21 bugs across multiple subsystems, with the only
-things in common being that these are infoleak bugs and that they were
-brought to oss-security at once.  With per-subsystem assignments, we'd
-have up to 11 CVE IDs for these 21 bugs, or maybe fewer (depending on
-what to count as separate subsystems) - but definitely not just 1.
+Bug report:
+https://bugs.launchpad.net/lightdm/+bug/1243339
 
-> Note - the more fundamental problem here is that CVE is being used much earlier in the disclosure process than it used to be, and it's basically being used as a universal bug ID.
+Could a CVE please be assigned to this issue?
 
-Maybe CVE should support such use to the extent that it is reasonable
-for CVE to do so.
+Thanks,
 
-Alexander
+Marc.
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
