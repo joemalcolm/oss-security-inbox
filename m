@@ -1,49 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/17
-Message-ID: <20130227161306.GP1722@dhcp-25-225.brq.redhat.com>
-Date: Wed, 27 Feb 2013 17:13:06 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: Greg KH <greg@...ah.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/12
+Message-ID: <20131022224204.GC2810@redhat.com>
+Date: Tue, 22 Oct 2013 16:42:04 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: another glibc flaw, similar to CVE-2013-1914, but in AF_INET6
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 06:48:34AM -0800, Greg KH wrote:
-> On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
-> > For starters, security@...nel.org submissions should be posted to
-> > oss-security or any other security related public mailing list when
-> > the
-> > patch is being committed.
-> 
-> That's not going to happen, and you know that, to do so would be
-> totally
-> irresponsible of us and directly harm your users.  That's what
-> vendor-sec (or whatever it is called now) is for.
+It was found that the CVE-2013-1914 fix in glibc for AF_UNSPEC missed a
+an identical case but with AF_INET6.  Could a CVE be assigned to this?
+This issue has the same impact as CVE-2013-1914.
 
-linux-distros [1] is vendor-sec replacement for Linux related issues.
+References:
 
-  [1] http://oss-security.openwall.org/wiki/mailing-lists/distros
+https://sourceware.org/ml/libc-alpha/2013-10/msg00733.html
+https://bugzilla.redhat.com/show_bug.cgi?id=1022280
 
-> Hasn't that been
-> happening for a while now, or has no one been notifying that list of
-> these issues?
+Thanks.
 
-Regrettably no. No notifications of Linux kernel security issues
-reported to security@...nel.org mailing list to linux-distros (former
-vendor-sec) are happening on regular basis. I (speaking as Red Hat
-Security Response Team member in charge of kernel security issues) would
-really appreciate the notifications. Even marking commits that were
-committed as a result of security@...nel.org submission as sko
-originated would be really helpful.
-
-The linux-distros/oss-sec members can make sure that each issue gets CVE
-and it's properly publicly communicated at the right time (preferably
-when the issue is public -- when it is committed).
-
-Should you consider this approach, is there anything I can help with to
-make that happen?
-
-Thank you,
 -- 
-Petr Matousek / Red Hat Security Response Team
-
+Vincent Danen / Red Hat Security Response Team 
