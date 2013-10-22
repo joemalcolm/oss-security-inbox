@@ -1,83 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/18/6
-Message-ID: <528A7C4C.3010307@redhat.com>
-Date: Mon, 18 Nov 2013 13:45:00 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/11
+Message-ID: <20131022215013.GE18735@openwall.com>
+Date: Wed, 23 Oct 2013 01:50:13 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: RubyGem omniauth-facebook access token security vulnerability
+Subject: Re: RESEND: CVE Request: pwgen
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 11/18/2013 12:29 PM, Josef Šimánek wrote:
-> Sorry for bumping, but is there any problem with this CVE request?
+On Fri, Oct 18, 2013 at 12:28:18PM +1100, Michael Samuel wrote:
+> On 16 October 2013 16:59, Kurt Seifried <kseifried@...hat.com> wrote:
+> > CVE-2013-4443 pwgen Secure mode has bias towards numbers and uppercase
+> > letters
 > 
-> Fix is here
-> (https://github.com/mkdynamic/omniauth-facebook/commit/115c0a768cd6f4b9bfae8900f8e3fc4fbeec3ad8)
->
-> 
-and release is prepared. We're waiting for CVE only.
-> 
-> regards Josef
-> 
-> 2013/11/15 Josef Šimánek <josef.simanek@...il.com>:
->> # RubyGem omniauth-facebook access token security vulnerability
->> 
->> There is a security vulnerability in the omniauth-facebook <=
->> 1.5.0.
->> 
->> Versions affected: <= 1.5.0 Fixed versions:    >= 1.5.1
->> 
->> ## Impact
->> 
->> Because omniauth-facebook <= 1.5.0 supports passing an access
->> token directly in the URL, an attacker may be able to
->> authenticate as another user by passing a valid access token
->> obtained from Facebook for another app.
->> 
->> If you're currently using this feature, and passing the access
->> token directly, you should change your integration to use one of
->> the secure methods using either a signed request or the code
->> flow. These secure methods are default, so unless you are
->> explicitly passing an access token you should not need to make
->> any integration changes to upgrade to 1.5.1.
->> 
->> All users running an affected release should upgrade to >=
->> 1.5.1.
->> 
->> ## Releases
->> 
->> The 1.5.1 releases is available at the normal locations.
->> 
->> ## Workarounds
->> 
->> None.
->> 
->> ## Credits
->> 
->> Egor Homakov (@homakov)
+> Solar Designer picked up that this one should probably not have been assigned.
 
-Nope, I've been sick the last few days. Please use CVE-2013-4593 for
-this issue.
+Michael is referring to discussion that we had off-list.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+My current understanding, based on Michael's messages only, is that the
+bias was only at character level, but not at full password level, given
+the policy-reduced keyspace.  I'll illustrate this by a trivial example:
 
-iQIcBAEBAgAGBQJSinxMAAoJEBYNRVNeJnmTk5MQALRrwxUqrHd+rxhKUmDV8s/p
-95lx/W+osKjKw+6pfGo5fF9plrz/tI0QPEPEwOjbrobmnixnOngA3YF9Y1exLKiF
-aRl9gYz7UA4Ii3gSxvp54301QtYLSqe8iFC5xWW7+bCMAVgvCwkbHhHAR3gyMoT0
-BN4KnmLuNK0oADfYHv1TlxrHWmAa+BvT2i+izIVdLpy3nZDJxaPSJvKsfXw0IKbg
-xYoNSwuegonDdpe6HLmxjZE+vrmv7rii24kvrhDi0ZnkbUdkm5+1zMcFtZcS3ztc
-SzcstDmtRF9+xUrZ1/G8XNrvkXJlrn5xlO1VeU+enF6ebltJcI2hUgFEjM9mGzoW
-BSiNdvE4Dh1N5aHawxjfNQN9jcaAxkBxFUoEV+zkO3d6YLIq0nIr7S6wmz5fpONx
-h136iYhHJMB91GMTWOUeHVvUCaTBOM4JZu1baUC2Gbnj94dmOTtsvWl9kuM3zwOf
-wlvz1ZRAb/38SHDTB2V+W5xn8EEWUkLrX5PG/drhQxL4oov+U/lgwTYwcNOTWfe0
-1pkUo6VzR098hmkXHctH7DmqaQ5OX+3U8eAucBwgq83sJx5UV4Rr0yApMLABUq+I
-GNzBXpdkc2O7Id+HKRPrWHmU4V+fg5Fj/NsENswGboXPU2YmOLvxULRCVH2IV4dn
-qD1ORTk+4jzb0ukBUwbo
-=E8Hu
------END PGP SIGNATURE-----
+Suppose we have a password generator configured to produce two character
+long passwords consisting of lowercase and uppercase letters.  It can
+produce four kinds of passwords: LL, LU, UL, UU, where the L's and U's
+denote lowercase and uppercase letters.  These four kinds have equal
+probability, and so do the individual L's and U's.  Now let's add some
+policy enforcement into the generator: have it require at least one
+uppercase letter.  Let's have it implement that by generating a new
+password unless and until the generated password meets the policy, and
+only then to print the password.  This generator may now produce LU, UL,
+and UU.  It is easy to see that U is now more common than L, however
+this is not a security issue on its own (arguably, the keyspace
+reduction might be, but it is expected).  If we look at the full
+passwords within this reduced keyspace, then it is also easy to see that
+all three of LU, UL, and UU are still equally likely.  So there's no
+password-level bias, and this is normally the only kind of bias that
+would actually matter for security.  Thus, no security issue (other than
+the expected keyspace reduction).
+
+The same applies to longer passwords and to additional character
+classes, such as, if I understand its behavior correctly, to pwgen's
+"secure" mode passwords.
+
+Michael, is the above correct?  If so, should Kurt reject CVE-2013-4443?
+I think so.
+
+To avoid the character-level bias while still requiring at least one
+uppercase letter, we'd have to either introduce password-level bias
+(would be a real security issue) or reduce the keyspace even further
+(require at least one lowercase letter as well).
+
+> The problem wasn't normal bias - it was that it was enforcing
+> "password rules" requiring at-least one uppercase and number, but not
+> lowercase (which was a normal bug).  So the "fix" would technically
+> make the keyspace smaller.
+
+This was not necessarily a bug at all, although I agree that if we
+require at least one uppercase letter and at least one digit, it does
+seem natural to also require at least one lowercase letter.  So
+adjusting the behavior like you did makes sense.
+
+> I added the -R / --no-rules flag to my branch which removes
+> enforcement altogether,
+
+This also makes sense.
+
+> the full diff from 2.06 can be viewed here:
+> https://github.com/therealmik/pwgen/compare/securityfixes
+> 
+> Before using this flag, you should consider the minor negative effects
+> on the keyspace vs. generating passwords which might be "accidentally"
+> cracked while looking for simpler passwords.  Either way, generating a
+> longer password has a far better effect on security.
+
+Alexander
