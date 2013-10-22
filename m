@@ -1,47 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/2
-Message-ID: <5177A206.20201@openstack.org>
-Date: Wed, 24 Apr 2013 11:12:38 +0200
-From: Thierry Carrez <thierry@...nstack.org>
-To: kseifried@...hat.com
-CC: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2013-2006 OpenStack keystone LDAP password disclosure in log files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/8
+Message-ID: <748398D0CD9CD447915FABD4FEF9BBC826B4560B73@SMO92WEXVS01.corp.dm.local>
+Date: Tue, 22 Oct 2013 12:40:58 -0700
+From: Kevin Pawloski <Kevin.Pawloski@...andmedia.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request: Simple Machines Forum (SMF) Remote file inclusion vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+https://github.com/SimpleMachines/SMF2.1/issues/701
 
-Kurt Seifried wrote:
-> So as part of https://bugs.launchpad.net/ossn/+bug/1168252 we have 
-> CVE-2013-1977 for the insecure file permissions (devstack/etc.).
-> We also have the password being logged and exposed in the log
-> files:
-> 
-> https://review.openstack.org/#/c/26826/2/keystone/common/config.py
-> 
-> Please use CVE-2013-2006 for this issue (password being logged to
-> the log file).
+Affects 2.0.X and 2.1.X.
 
-This is tracked at https://bugs.launchpad.net/keystone/+bug/1172195
-Note that it only affects DEBUG level logs.
+Could a CVE please be assigned to this issue?
 
-- -- 
-Thierry Carrez (ttx)
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+Thank you.
 
-iQIcBAEBCAAGBQJRd6IDAAoJEFB6+JAlsQQjPTgP/0O+/scukQmmSf4LZ1ORtabK
-Y7i+9yGPlFmm0EYCgbsr67Wj64uzUnWpLxpWPX33BqHRv+qSJeIMpi6qQ7kpPqFa
-bDO3PrVdgicOn3sthTmhjOk2xds1V9cv7J7KwibcWRGTsBzdz3/9QgIvNWsyTFY5
-s4KDXdjArHx2/POOFnEc54AlQdOZmSySRiSbYYoz8r6BF8y88S2eqAnxmrPh3oUW
-fIQGA+SUahgEbNOLVI6/WrrjSJ9mAs4+9mRO/g5oGbXe1Q48O7LRlDPchPpCqO1d
-2MH+w3n6gC64WVZksogn6P9KiI0tkd1er2AN1waMMtlfuYVz2kz++UGflqmbZr1e
-Y34GNA1DLnK7nYhxP00ii1F4UtdBWQfg2AXrdiCeGP9iZ5S5oX/XAFHYsIVi4Hsv
-l+h6achLa5g/0ujccT0lukMtTLsQky4uakhaiO+m1ur1iQ14dKwunBIeTpjCcBUe
-TL3pc3hNL1e0MQf8FQbBoVpzSPXi7faiS448M/aB1cOUPGmiMhm0sb8n2yC+AHmq
-PXPCjdkxWZt4H9+/HVQm760rA3bkUcE74ONUiW9wQUtY0YMTFENAFlw+J/xYaBkn
-uiLuRXplLmnZ4iNBiUVVFpuT9UQgNhLhD+o32p1m5MprX8GSwRBWAjV9fHZqHevf
-r/bT692V4jdx9SFYaGgW
-=7BAD
------END PGP SIGNATURE-----
+------------------------------
+Kevin Pawloski
+Lead Information Security Engineer
+www.demandmedia.com
+310.319.6810
+pgp DD26 4747 6091 7F0A C30F F985 D3FF 0C70 4780 1669
+------------------------------
+
+
+
+Please NOTE: This electronic message, including any attachments, may include privileged, confidential and/or inside information owned by Demand Media, Inc. Any distribution or use of this communication by anyone other than the intended recipient(s) is strictly prohibited and may be unlawful.  If you are not the intended recipient, please notify the sender by replying to this message and then delete it from your system. Thank you.
