@@ -1,25 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/04/3
-Message-ID: <20130404144816.GA6485@openwall.com>
-Date: Thu, 4 Apr 2013 18:48:16 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: PostgreSQL security update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/13
+Message-ID: <CABbbngDPPsTEhWgbDqs4GfGyr_hg3meNupJ+B7tGhNP=kXPhfQ@mail.gmail.com>
+Date: Tue, 22 Oct 2013 16:01:39 -0700
+From: Forest Monsen <forest.monsen@...il.com>
+To: "Christey, Steven M." <coley@...re.org>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Kurt Seifried <kseifried@...hat.com>
+Subject: Re: Re: CVE duplicates SA-CONTRIB-2013-075
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 04, 2013 at 06:39:31PM +0400, Solar Designer wrote:
-> A heads-up in case someone missed today's news:
-> 
-> http://www.postgresql.org/about/news/1456/
-> http://www.postgresql.org/support/security/faq/2013-04-04/
+On Mon, Oct 21, 2013 at 8:41 AM, Christey, Steven M. <coley@...re.org>wrote:
 
-HD Moore's quick tweets on possible exploitability of CVE-2013-1899 into
-remote code execution (beyond the attack vectors mentioned in
-"2013-04-04 Security Release FAQ" above):
+> Forest, please update the advisory to use the MITRE-assigned numbers.
 
-<@hdmoore> @quine exploitation seems tricky, I wonder if -c shared_preload_libraries=\\unc\share\blah.dll is doable
-<@hdmoore> @quine Another options appears to be something like: -c archive_command=rm${IFS}-rf${IFS}/
 
-Indeed, these have not been verified yet and they might not be doable.
+Updated, thanks Steve.
 
-Alexander
