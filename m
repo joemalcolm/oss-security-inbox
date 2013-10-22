@@ -1,54 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/13
-Message-ID: <525E2A22.9090602@redhat.com>
-Date: Tue, 15 Oct 2013 23:54:42 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/1
+Message-ID: <CAE5KnOfMSWc+mZQD9cno9OtLprgZexhxj1C4f84dB5aCyMH7KQ@mail.gmail.com>
+Date: Tue, 22 Oct 2013 08:15:34 +0530
+From: Anant Shrivastava <anant@...ntshri.info>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for saltstack minion identity usurpation
+Cc: Ciprian Popescu <ciprian@...butterfly.com>, plugins@...dpress.org
+Subject: Re: CVE for Wordpress plugin Portable-phpmyadmin
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
+Old download URL http://wordpress.org/plugins/portable-phpmyadmin/
+As already informed the download link will not work as it is disabled by
+word press plugin team
+
+Svn repository http://plugins.svn.wordpress.org/portable-phpmyadmin/
+
+Effected version 1.4.1
+
+-Anant
+ -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/11/2013 04:26 PM, Michael Scherer wrote:
-> Hi,
-> 
-> While looking for saltstack issues on github, i stumbled on this
-> pull request : https://github.com/saltstack/salt/pull/7356
-> 
-> It seems that saltstack, a client/server configuration system (
-> like puppet, chef, cfengine ) allowed to have any minions ( agent
-> on the server to be configured ) to masquerade itself as any others
-> agents when requesting stuff from the master ( ie, main server ). 
-> While I didn't fully check, this would permit a compromised server
-> to request data from another server, thus leading to potential
-> informations leak ( like passwword, etc ).
-> 
-> Can a CVE be assigned, and I will pass it to upstream on the bug 
-> report ?
-> 
+On 10/21/2013 09:08 AM, Anant Shrivastava wrote:
+> Hi Team,
+>
+> Please issue CVE for following issues identified in a wordpress
+> plugin portable-phpmyadmin
+>
+>
+> *PHP information Disclosure * /pma/phpinfo.php
+>
+> *Security Bypass * Allows direct access (with each file level of
+> access differs but you get DB access with wordpress database
+> username and password) /pma/db_create.php /pma/main.php - reveals
+> all the details of database stuff. /pma/db_datadict.php
+> /pma/import.php /pma/querywindow.php /pma/server_databases.php -
+> Full access to all features including SQL window
+> /pma/server_export.php
+>
+>
+> *Disclosure Status. * Author (marked in CC) as well as Wordpress
+> Plugin team (marked in CC) is aware of the issues. Wordpress plugin
+> team has disabled the plugin download till issues are resolved.
+> Author initially responded but stopped responding after a point.
+>
+> *Timeline* First contact : 24 July 2013 Last response from Author :
+> 9 Aug 2013 Wordpress plugin team contacted : 11 Sep 2013 Plugin
+> Disabled in plugin repository : 15 Sep 2013 CVE Requested : 21 Oct
+> 2013
+>
+>
+> -Anant Shrivastava
+>
 
-See previous email, but once again for clarity/archives:
+Can you post the url/download link for this app?
 
-CVE-2013-4439 saltstack minion identity usurpation
-
-- -- 
+- --
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSXiohAAoJEBYNRVNeJnmTL60QAJYD39/d43TyIvnGCilD4s25
-7yPnApJRWn9sEypQI9NqyOlKt8aU7pgQe2rgNLN1x0LuUT7/b69YGJv24LlLJE7d
-W92OqYTjuUh6dssZg7DUnOpOx6eYwnFE8Zb3fxk9m6px2TgSZt4IihKyDbQYyzRv
-5kQRWh8YBa7lSa+t4Rx7mpAzY82AmQS7/qSF/1dXmGhrgLvIn/qz9Xilo/fZR1x5
-DXX/+om5jyErN/QtNrN7OqL8TOKfQw2IuCZp2sFApYcwexwcH8Gv70UBWwOUrJ6q
-zBNjmbu50prGaE5smiZgLdcwRrqaFRZnC9VT3fx7rC5nu1rOllsdOX/UtQSZ5zGS
-uAYzXvOTlt5eAQnkBuxjJE1y39S9/3SDWOBEh7gNTAjOLxf8PDFDfKb6EWgDq9Vf
-FGQn7lBFuJOlOlcyzv1RQmvoLPcrcnIOxlQhM/d9IeBSKH+Nj8eAQP+gvGedHWF/
-EBoSWdVK16R6MoLSkw4lNFnSByYH6PMiR95u8HqCRMow6G5GekwHX3x/jpT9+2qi
-iMvIqV+ZeUQt+d0g+t4Ye+oc+noBJUdhGIofTC20XGHsnLPLiRzw9HecItbIiDT9
-uGemFxKDuxdc4tZjVm2nz+PVYA7n/kFfBtOUzDtDbu9qFCXDDtuINddytaBSp0DB
-3b2BGkVqCle/oZ19mqal
-=zUgC
+iQIcBAEBAgAGBQJSZYssAAoJEBYNRVNeJnmTPJgQANtKvnRl4scnR98T1mye1qwB
+14IqpjNgQhYnhajrEUK+heJhudbIN4CS4Mwu01mVIoUdj2GKBP0iRgdc9vBJCDSY
+FbVfGjshuQvCKMDd1KGRcKPJG0fxnDk+CKk0HDP/pwgyot6toSeP37WYdEgZH70g
+XwWXR//OT0/B7n77EB9jQT/izFBhuea4tTN1mtLHjfQMLCOdLsbF2umTp6A7eg9K
+u44ENGbO5sVekDMvUE1QwnKH7LnsKzbQXp7ZYreEVyPBB3FMqcmg5Yob38JKDWmb
+/1lSOA3C9NS4SIxXwkNkDHcg/vK2kOWDeGO8/hde/JOnv8tBlUHpTSKC1hF6gv7F
+WS66n0dfhKgIHBOma4vU5sXtUdys1wKnjqwgyyWNfKgaoiHrtS66ngVDOkzdBTCX
+7Mp1KHm9zFN9zJbugY9un7EoE1ftTbDC2LUbDbz5sg9Sc4delsuzH302emvM6YcD
+pIM2ppf6+Q2VLpvCF44TjymU/5p8x+JsqoxVQmqqREcpniKs59ZAhBWcjSfDXRl1
+oyNOKpny3uqVoPvgTsX07UUdW5ZW9x/UQWXWSaYWXYXGS/Ul0sCy6eTHjL6RzZAa
+OjuzUvMpOjVzuPN2i7hbCWSBhfKv8fzmUtWCCgSoaTNeugDIFrNKBPVauP0cczZQ
+iO/91DCwjvyxb0aNX5yg
+=YBh8
 -----END PGP SIGNATURE-----
+
