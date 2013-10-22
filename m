@@ -1,80 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/5
-Message-ID: <529D627A.9010108@redhat.com>
-Date: Mon, 02 Dec 2013 21:47:54 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/10
+Message-Id: <777A8DF3-2A37-46F8-A3B3-91595AC04CEF@thoughtbot.com>
+Date: Tue, 22 Oct 2013 16:18:05 -0400
+From: Jon Yurek <jyurek@...ughtbot.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: samba pam_winbind authentication fails open
+Subject: Recursive Interpolation Vulnerability in Cocaine rubygem (CVE-2013-4457)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Recursive Interpolation Vulnerability in Cocaine rubygem
 
-On 12/02/2013 02:24 PM, Vincent Danen wrote:
-> Just cutting-and-pasting from the bug I just filed.  The following
-> was reported to us, but had been reported upstream last year.
-> 
-> It was reported [1] that Samba's pam_winbind module would fail
-> open (allowing access) when the require_membership_of option is
-> used as an argument to pam_winbind, and contains a non-existent
-> group as the value.  In such a configuration, rather then failing
-> and not permitting authentication which is what would be expected,
-> pam_winbind will allow authentication to proceed.
-> 
-> For instance, if the following is specified and the user is not a
-> member of the group 'Admin', they will not obtain access to the
-> system:
-> 
-> auth        sufficient    pam_winbind.so use_first_pass 
-> require_membership_of=Admin
-> 
-> On the other hand, if the non-existent group 'AdminOops' is
-> specified, the user is obviously not a member of said group,
-> authentication will be permitted:
-> 
-> auth        sufficient    pam_winbind.so use_first_pass 
-> require_membership_of=AdminOops
-> 
-> The commit [2] that most likely introduced this flaw indicates that
-> this was introduced October 2009 and another commit [3] looks like
-> the fix, although that is for another bug [4] that's somewhat
-> related to this issue and somewhat not.
-> 
-> [1]
-> https://lists.samba.org/archive/samba-technical/2012-June/084593.html
->
-> 
-[2]
-> http://git.samba.org/?p=samba.git;a=commit;h=31f1a36901b5b8959dc51401c09c114829b50392
->
->  [3] 
-> http://git.samba.org/?p=samba.git;a=commitdiff;h=f62683956a3b182f6a61cc7a2b4ada2e74cde243
->
->  [4] https://bugzilla.samba.org/show_bug.cgi?id=8598
-> 
-> 
-> Could a CVE be assigned to this issue?
-> 
+There is a vulnerability interpolating variabled recursively in Cocaine. This vulnerability has been assigned the CVE identifier CVE-2013-4457
 
-Please use CVE-2012-6150 for this issue.
+Versions Affected:  0.4.x, 0.5.1, 0.5.2
+Not affected:       0.3.x
+Fixed Versions:     0.5.3
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Impact
+------
 
-iQIcBAEBAgAGBQJSnWJ5AAoJEBYNRVNeJnmTCFEP/R3S3K+zOCmAzl0Stf/au+KI
-EIbwXHzNOibVhtXTq46ohJdpNaw+ydEImJKqn9+iACRvXAdHiUESpKjbdoX9NRN7
-Yi4r5AC6bkwOtqWnl/xZ+nZO1n+NoNgxxfpBFH6eXfjDCDT79k/jAO+V9tA1UtFL
-TJClWHsFzjiejjIpEXzqKImwxkbsrwLsVoh1FwTEgMF1MO/Z78+RzR2GeimzQtB0
-1obMWbodk8xPKcVi7SkHMBGHnfdmbbPZTG3i8sl2bxmMDh47ypuEsqKut7EZm8gI
-Th0d9vgm/gLwx/HW6/SfgyjSaLvzucaOsAWfe+EKNG6dsB/JI1Vv3w1gGeAWh6I0
-CdPz0/bLkaIkELpr1f35Ccy7/x+D0WN7jaNdIxx2NPXDeqlPnRDAuPACgzXT5FmZ
-YFm+RumMa1v2b3POFNgFB+r8Yl4iNENUoSue+G/LolYzhS6uM+30Tj1f1O5Zkckb
-Ur55VJtbh6eQfoahE8DCyIdUvS4cTOFtkGemWQUxdwBmvYBoIwHc40UY2HGzf5nR
-yMEdwlJUW8o2PF6MXgf/XTYY8fxnvF/c+3Jyn4e0O1cIugdsLH7iIT6Uf3z6suyg
-RYwMLB/d6K2MdBO0kLsMxAKLUpJAMud398n5i2+wl5LdSuDsPV743sFl7DCaMUd/
-u8XceG/IpW8EVL8MXXIQ
-=OcHn
------END PGP SIGNATURE-----
+Due to the method of variable interpolation in Cocaine 0.4.0 to 0.5.2, an attacker may be able to inject hostile commands into a command line via a crafted hash object which are not properly escaped.
+
+The impact is lessened on Ruby version 1.8.* because hashed are not ordered by default, and so an attacker must rely on luck for the attack to work.
+
+An attack of this sort cannot take place if there is only one value being interpolated into the command line.
+
+Users of the Paperclip gem are encouraged to upgrade to the latest version of Cocaine. Users of the 2.7 branch of Paperclip will not need to upgrade as the version of Cocaine it uses is not vulnerable to this attack.
+
+Releases
+--------
+Version 0.5.3 fixes the problem involved and is available at rubygems.org
+
+Credits
+-------
+
+Thanks to Holger Just for reporting this! 
+
+--
+Jon Yurek
+http://thoughtbot.com
