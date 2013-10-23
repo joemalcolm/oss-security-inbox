@@ -1,43 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/26/8
-Message-ID: <5244B949.2010704@mccme.ru>
-Date: Fri, 27 Sep 2013 02:46:33 +0400
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/23/6
+Message-ID: <52672EC1.6040702@redhat.com>
+Date: Tue, 22 Oct 2013 20:04:49 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Reproducible Builds for Fedora
+Subject: Re: CVE Request: Simple Machines Forum (SMF) Remote file inclusion vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 2013-09-25 18:55, Solar Designer wrote:
-> Ensuring that "objdump -d" has stayed the same between a known-good and
-> another build of a binary is not sufficient to tell that the new build
-> is not trojaned.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Indeed. But I think the whole approach is wrong. Attempts to conduct
-format-specific comparing are futile for several reasons:
+On 10/22/2013 01:40 PM, Kevin Pawloski wrote:
+> https://github.com/SimpleMachines/SMF2.1/issues/701
+> 
+> Affects 2.0.X and 2.1.X.
+> 
+> Could a CVE please be assigned to this issue?
+> 
+> Thank you.
+> 
+> ------------------------------ Kevin Pawloski Lead Information
+> Security Engineer www.demandmedia.com 310.319.6810 pgp DD26 4747
+> 6091 7F0A C30F F985 D3FF 0C70 4780 1669 
+> ------------------------------
+> 
+> 
+> 
+> Please NOTE: This electronic message, including any attachments,
+> may include privileged, confidential and/or inside information
+> owned by Demand Media, Inc. Any distribution or use of this
+> communication by anyone other than the intended recipient(s) is
+> strictly prohibited and may be unlawful.  If you are not the
+> intended recipient, please notify the sender by replying to this
+> message and then delete it from your system. Thank you.
 
-1) when you are against a state level adversary (and we are talking
-about targeted attacks from organizations like NSA, right?) you are
-better not to try to parse anything complex, like file and objdump do
-(e.g. crashing objdump is quite easy);
+I am not sure if I'm the intended recipient of this email (it's not
+addressed to me) so you'll have to remove this footer from your email
+if you want a CVE from me.
 
-2) you cannot really determine format of a file (think GIFAR);
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-3) an elaborate script which knows many formats is going to be complex
-and to contain a lot of bugs which is bad in any security context.
-
-Examples for the item 3:
-
-- checks like "/usr/bin/file $2 2>/dev/null | grep ELF" are not strict
-enough because file sometimes shows pieces of metadata which is
-controlled by an attacker;
-
-- in a script from opensuse -- at least ".*" in html cleaning permits to
-pass any html through;
-
-- some files are not checked at all: jars in the script from redhat and
-created.rid in the script from opensuse (.rid extension is not in my
-/usr/share/mime/packages/freedesktop.org.xml so format will be
-determined by the OS from content).
-
--- 
-Alexander Cherepanov
+iQIcBAEBAgAGBQJSZy7AAAoJEBYNRVNeJnmTYzEP/0bnG/zflvln1A6hDhsEuz9Z
+uSghjQtGIU0ZmeNPgoC+qnv2ZFkbveeH+KOFTM5K6ZzVlLDXkDy/VxBRqFuX8JyM
+bdog4ATIidkHxyqkQa93YC69yLjQn/XbiIi6F+EDO8p9HiCn/s01xP+VOxIBwAhK
+fx5EV1EEuru2nbkQdzSO8SOgOVbOM0arCotKXyTqFbUP5rsaP8t+TQUo+1HoQ4yZ
++nzldoo8AfdscBOkkIuFN8wMzoxBcQlfwHBzOcVEDiq5CW6lZm8OWtOdLIJyJ7YH
+pxnWhgaFyEv3Ui0qAChfaiagkTWNeTbZDNJJT0OZVQmXMgBQxvhrL8oOgyvhXE53
+f8DnR6OWAfTonp5KcIVhLon5sqnrZt5mZXYF6IaCihykkxeuUyNzAmblwzlIl0Ug
+LBfVOYM++sikGSyvz5B4ujJp0vf/KkVj2FMA/12SH3AmNDYsJV05j760TdAQp9Wk
+YJJwgrPSwzp4VCZPnLu+WEHukVFS2zuq7huxPpl/ujsLP/xQoEmtbwnSEJreZBdd
+I+ntAIlA1MhgwOi5/wJ44gKHw5qT98WMd1s3whNp1HW5iI/HfuthOPL8+P/xwIK7
+K6bTMdW8rc6SrySD66cvDaVgRsUjDOzDUHg73AQwZpl9gNZb7NIQ7Qpd9FRQfYHZ
+1a6AGiECukVAK7ksltWK
+=3Ok/
+-----END PGP SIGNATURE-----
