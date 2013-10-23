@@ -1,40 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/07/1
-Message-ID: <527B76F1.1090801@oracle.com>
-Date: Thu, 07 Nov 2013 11:18:09 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/23/3
+Message-ID: <52672B69.3020800@redhat.com>
+Date: Tue, 22 Oct 2013 19:50:33 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Source of bad password hashing practices? MySQL manual...
+Subject: Re: CVE Request: lightdm no longer confines guest profile with AppArmor
 Content-Type: text/plain; charset=utf-8
 
-On 09/10/13 00:57, Rich Felker wrote:
-> It's come to my attention recently that the MySQL reference manual is
-> recommending very poor password hashing practices as part of its
-> security guidelines:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 10/22/2013 12:52 PM, Marc Deslauriers wrote:
+> Hello,
 > 
->   "Do not store cleartext passwords in your database. If your computer
->   becomes compromised, the intruder can take the full list of
->   passwords and use them. Instead, use SHA2(), SHA1(), MD5(), or some
->   other one-way hashing function and store the hash value."
+> Christian Prim discovered that Light Display Manager 1.8.0 and
+> later no longer use the appropriate wrapper when launching guest
+> sessions, resulting in the session not being confined by AppArmor.
 > 
->   (http://dev.mysql.com/doc/refman/5.7/en/security-guidelines.html)
+> Bug report: https://bugs.launchpad.net/lightdm/+bug/1243339
 > 
-> With MySQL being one of the major traditional "LAMP stack" components,
-> I wonder if this is the source from which many web developers are
-> getting their ideas on how to do password hashing. What is the proper
-> procedure for publicizing documentation bugs like this which are
-> leading to poor security practice, and for getting them fixed?
-
-
-I passed on the comments from this message and its replies and they
-eventually made their way to the MySQL documentation team and I got this
-reply about a week ago:
-
+> Could a CVE please be assigned to this issue?
 > 
-> Just to let you know that the MySQL documentation team have committed the change based your suggestion and it should show up soon in the MySQL Reference Manual.
+> Thanks,
+> 
+> Marc.
+> 
 
+Ok to confirm the app armor profile is applied by default to lightdm
+and the guest account, and was meant to prevent guest from touching
+/home at all? I just wanna confirm this is a security vuln and not
+security hardening.
 
-jch
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-(Other than having the same employer I don't have anything to do with
-MySQL so I haven't seen the changes.)
+iQIcBAEBAgAGBQJSZytpAAoJEBYNRVNeJnmTzzoP/iPZWVmyzy+9p5L9hZl8n7yD
+dxehTeZ5T+/jCuMPB9NXiNFpErYlmQL0stLsrJ+14dIk1Xd/JUV0+VX0HfUN4P88
+ubQ6is4MmCGk3MydK9JMHB8qvOcOMNYjp8F77BrbLzQxOE0v2O3dma2QAkm4dids
+xGfvi0ci52jNLrd3we5gfH4TyQ3lvnRpFdglShn95QVSlVK/2D4W8S+pPKI0G9zH
+wF7xrmIw2fb4FURznvcTbDkY1W7nwTpssG3o9XWaJDpw1dNyuMVd6YszPolgWXfw
+H/xcWZtT5qa2lnHlA7KSfSEcG/ABP8a7uy0RoGrHUvrXEpHZPQQXn42EDU/J9fHp
+8x6v9CTZE/MDyMJqgOUl5znYjMtzyMLt8wBS6OBETfHc+lmi8uNr1oilLULGCRXv
+aRxTdffaTrTzjSZLKQuMVGPuFK3oZLGwyfjSHXJemQ0ify4O9IB/wB0vy/MC7+o3
+nQ1LvM2SXNF32FzWYD+BfynCeNdQGnrGNrI5DyZ45H1UQ9OwTO2rmJtEShcWcNPF
+SrBphV9Jr4yANF9KmuyK/hafhDndzBKOq4Puepq1EP0ZeyESrgGmUglncHaJwaf4
+n03vT59llDt/2hhx+uBvkDCYq6uvN7ITkYasMnFRhC//mL1tnkCwneGwxBMW0vkv
+pxxWV0dGOh8n+YnQos0J
+=CuO1
+-----END PGP SIGNATURE-----
