@@ -1,36 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/13/1
-Message-ID: <51905242.1080201@nixnuts.net>
-Date: Sun, 12 May 2013 21:38:58 -0500
-From: John Lightsey <john@...nuts.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/23/4
+Message-ID: <52672D6B.6010708@redhat.com>
+Date: Tue, 22 Oct 2013 19:59:07 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Storable::thaw called on cookie data in multiple CPAN modules
+Subject: Re: CVE request: another glibc flaw, similar to CVE-2013-1914, but in AF_INET6
 Content-Type: text/plain; charset=utf-8
 
-Hi everyone,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Several CPAN modules follow the same pattern of calling Storable::thaw()
-on session data stored client side with no signature verification
-mechanisms in place to prevent tampering. Perl's Storable module was
-recently documented as being unsafe for use with untrusted inputs:
+On 10/22/2013 04:42 PM, Vincent Danen wrote:
+> It was found that the CVE-2013-1914 fix in glibc for AF_UNSPEC
+> missed a an identical case but with AF_INET6.  Could a CVE be
+> assigned to this? This issue has the same impact as CVE-2013-1914.
+> 
+> References:
+> 
+> https://sourceware.org/ml/libc-alpha/2013-10/msg00733.html 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1022280
+> 
+> Thanks.
+> 
 
-http://perl5.git.perl.org/perl.git/commit/664f237a84176c09b20b62dbfe64dd736a7ce05e
+Please use CVE-2013-4458 for this issue.
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-The vulnerable modules are:
-
-Both App::Session::Cookie and App::Session::HTMLHidden in the
-App::Context bundle.
-https://rt.cpan.org/Ticket/Display.html?id=85215
-
-
-HTML::EP::Session::Cookie in the HTML::EP bundle.
-https://rt.cpan.org/Ticket/Display.html?id=85216
-
-
-Spoon::Cookie in the Spoon bundle.
-https://rt.cpan.org/Ticket/Display.html?id=85217
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
+iQIcBAEBAgAGBQJSZy1qAAoJEBYNRVNeJnmTF/4P/2+5FLBkwlUwC55vTvbb2lq0
+gnRYK3Ukme8ViRy0XZw/vm6p5g/7Wm8aj3DaTzA4cMuMMQ7fUL9E3ZUqP/xmltb6
+CfvzcDhqZCNp8OyKSn5ELK8GFJxOToiwTijlN4gHJ+FostNq+PRtkBRh6x3HN9h5
+sNBtXFKIqISRaZOVZD1mNCuPC2dvypP4SbCVuBNa7s24drwO2/rKMIVQxrJVbzMt
+XTRvMEWNqz83gUA4orBcDWB6dQvIfjQPxrtIebvLnZ0pL3iiRXhQsfRexmNjtQtc
+gCpmfKoa9bl1x9elExhAduSkFjoiaMlj5HT8vSWXT21ADd6r+0elu9LJLYKNNf6s
+HZ6WsuK3fSLLPWQ1oK0mve1PLbOEDykWxTUwtNdmeRTE3d1qWg7nE26O0MA8+W3t
+aTu/68gHCe+d7USlcUcvgF6cGKaqC4o3yS4iDcOMHVaStDUePXL6Kz+HGJ/pOzPc
+oBcUCCJ5ud88bGg2q1URXnEoyxHdVmgYRwDiNnWl6wX6cK86oaBHTAHmzoMTr0ro
+dm/+o5Lgz7R/3fXQHXswIez+DwhjKb+kd3sbkqAtDsn1NhVDy0rBSI1exMxMQaQe
+1jfqae57/aKLzMJsDIX7+CLNz5tmcAoG+sZZr5daIMIfUYzIY26dV74QPTLjDql7
+bW3SvoKIC5uiVqqDTKNk
+=BHAT
+-----END PGP SIGNATURE-----
