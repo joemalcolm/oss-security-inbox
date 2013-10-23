@@ -1,38 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/24/4
-Message-ID: <20130424134927.GA29461@kludge.henri.nerv.fi>
-Date: Wed, 24 Apr 2013 16:49:27 +0300
-From: Henri Salo <henri@...v.fi>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: Felix Groebert <groebert@...gle.com>, "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: Re: Multiple potential security issues fixed in ClamAV 0.97.8 - any further details?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/23/1
+Message-ID: <52672946.9060801@redhat.com>
+Date: Tue, 22 Oct 2013 19:41:26 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: RESEND: CVE Request: pwgen
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 24, 2013 at 07:59:04AM -0400, Jan Lieskovsky wrote:
-> Hello Felix,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 10/22/2013 05:39 PM, Michael Samuel wrote:
+> On 23 October 2013 08:50, Solar Designer <solar@...nwall.com>
+> wrote:
+>> Michael, is the above correct?  If so, should Kurt reject
+>> CVE-2013-4443? I think so.
 > 
->   this is due the ClamAV 0.97.8 release:
->   [1] http://blog.clamav.net/2013/04/clamav-0978-has-been-released.html
->   [2] https://github.com/vrtadmin/clamav-devel/blob/0.97/ChangeLog
->   [3] https://bugzilla.redhat.com/show_bug.cgi?id=956176
->   [4] https://bugzilla.novell.com/show_bug.cgi?id=816865
+> Yes, that was correct - if you generated 1 extremely long password 
+> (rather than a ton of passwords) and made a histogram, there would
+> be no bias.
 > 
-> Could you clarify how many and what kind of possible security issues
-> has been corrected within this release? (so we would know how many
-> CVE identifiers should be allocated to these)
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Information from Joel Esler. No CVEs assigned yet.
+Ok please REJECT CVE-2013-4443, not a vuln.
 
-commit 270e368b99e93aa5447d46c797c92c3f9f39f375
-commit 24ff855c82d3f5c62bc5788a5776cefbffce2971
-commit c6870a6c857dd722dffaf6d37ae52ec259d12492
-commit 3cbd8b5668bd0f262a8c00b1fd57eb03c117b00a
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQIcBAEBAgAGBQJSZylGAAoJEBYNRVNeJnmTKpsQAIrrnqvsrExNFw3xCjtbabGI
+7/15Njx+WqWxECVlxWzvYs8POmojsV9lRKD9KOK31PTCOwc0hiMhE7lQQFS4JUIU
+l+2XckTD9DgyTgK1X6ZStGTGb21WxzOMBlpLbDjx2h/1k5zKZOCReUdvpnkljJw2
+OCv6cYegen5N4oQ6Q8apgCcGOXhm+fgL3iCxXoc0mif13E4gsZH3nGWluK39pCdN
+y1vebI72jwHOKtSuU+0/CutYkhZkr3/+7tQn1jTLqOLjFyGjpdE+1Ow+V5ZnymzX
+bDGLRzmIWS34F72i8mc+UW1Le8igVXdbuHbE7UNM/n72nFz/sWKtY3/t+BqpoHwl
+qK3Rsf/ruOvCTfHPNw8bM1P0sWFJCoOWEY9G+p9gYQqHZPwsvhQ/1FX16wmWJ60l
+tyOdQi4o4Hu8vhr/egthdujsbIp92kRyvNgoWXxDYjZD0nBxh2bYQ4tgTRYNWPDE
+4gcxjEKNfJwwlzgVgbZMgHPNcewfz82HZZ82+HMc9UjvQjB+weum80dIiHNmjTPt
+W6Pi7U5rNU8T4CIZkGB2Ow9vVKXc4AIH3RgvOASb5dAfeylp1NoPRvvjZMrFqcZE
+5lpQxfj6AFq8QlwSyp3+C3xvWv/w3fBueJynWIPg6AoRrhxX+TjY8SYv2Q/YHJ+E
+WVcByXDhVKtNhy5LQfHV
+=KWYQ
+-----END PGP SIGNATURE-----
