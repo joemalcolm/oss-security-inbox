@@ -1,122 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/7
-Message-ID: <CAN_LGv1X7iR5LRpPFnDLk-HG1aBf=22wbAzDP=W_tHM2O26=iw@mail.gmail.com>
-Date: Mon, 21 Oct 2013 20:46:31 +0100
-From: "Alexander E. Patrakov" <patrakov@...il.com>
-To: General PulseAudio Discussion <pulseaudio-discuss@...ts.freedesktop.org>
-Cc: oss-security@...ts.openwall.com, webkit-gtk@...ts.webkit.org,  xrcalvar@...lia.com
-Subject: Re: [pulseaudio-discuss] Vulnerability in Webkit-GTK and PulseAudio volume handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/23/7
+Message-ID: <52672EF4.8060802@redhat.com>
+Date: Tue, 22 Oct 2013 20:05:40 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: MantisBT before 1.2.16 XSS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-2013/10/11 Xabier Rodríguez Calvar <xrcalvar@...lia.com>:
-> For Colin to know, before touching anything in WebKitGtk+ the behavior
-> was that the volume was ramping up to 100% with every website regardless
-> their volume control.
->
-> I met Slomo and Lennart at GUADEC and we thought that the best was
-> letting the sink, pulsesink in this case, set the volume and we would
-> just get that for the slider, regardless the volume model applied. This
-> was supposed to be a good compromise for the different situations (using
-> PA with or without flat volumes, using another sink) as volume wouldn't
-> ramp up to 100% always.
->
-> There are some other restrictions we have to observe, though:
->
->      1. We want to be agnostic of the GStreamer sink used and of course,
->         to the volume model used by pulse, because we don't know it.
->      2. We want to allow audio passthrough when possible.
->      3. We want to be coherent with the rest of GNOME apps, and the
->         volume model they are using.
->      4. We have to comply with the HTML5 W3C standard that says that
->         volume will be 100% by default, though user agents can decide to
->         restore former volume (perfect if we let pulse decide it).
->
-> We would easily add a GStreamer volume element and solve what Alexander
-> says, buy we would be breaking 2 and 3 rules and to fulfill 3 and 4, I
-> actually tested that with the proposed fix, the volume could still ramp
-> up to 100% because in our opinion, it is up to the web developer to
-> sanitize their volume management or up to the user to change the volume
-> model.
->
-> Best regards.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-As promised, I have raised this issue at the Audio Miniconf in
-Edinburgh. Unfortunately, Xabier was not at that miniconf, so I cannot
-treat the resulting discussion as including opinions from both sides
-and thus, personally, I treat all results as invalid. Too bad, but
-hopefully we can fix that tomorrow in a separate meeting.
+On 10/21/2013 04:26 PM, Damien Regad wrote:
+> Greetings
+> 
+> Roland Becker (MantisBT developer) discovered and fixed [1] an XSS 
+> vulnerability issue affecting MantisBT releases 1.0.0 to 1.2.15
+> included.
+> 
+> Account_sponsor_page.php.php did not correctly sanitize project
+> names, enabling a malicious user to execute malicious JavaScript
+> when visiting that page.
+> 
+> The criticality of this issue is compounded by the fact that a 
+> high-privilege account (typically project manager or administrator)
+> is required to edit project names.
+> 
+> Patches attached to [1]. Can you please assign a CVE ID to this
+> issue ?
+> 
+> Thank you
+> 
+> D. Regad MantisBT Developer http://mantisbt.org/
+> 
+> [1] http://www.mantisbt.org/bugs/view.php?id=16513
+> 
+> BCC: mantisbt-dev@...ts.sourceforge.net
+> 
 
-I tired to summarize the stated opinions of PulseAudio developers on
-paper and then asked each one whether he agrees to what is written. It
-is worth noting that there is no 100% agreement even among PulseAudio
-developers. Arun Raghavan told me that he needs to think more about
-one of the points, and I think it is fair.
+Please use CVE-2013-4460 for this issue.
 
-Given those factors, I do not request a CVE at this time, but will do
-it later, either when there is an agreement about who fixes what, or
-if the discussion with both sides does not occur at all.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-So, below are the viewpoints that were stated. The first two points
-were written on paper and each participant was asked about agreement
-or disagreement. For each of the two points below, there is a
-(non-100%) majority supporting it.
-
-1. This is not an audio issue. It is a sandboxing issue in Webkit-GTK.
-
-(that's the statement that Arun needs to think about a bit more, but
-which, I think, captures the most essential component of the problem,
-even without flat volumes, due to disobeying sliders in pavucontrol if
-a web app resets the volume using a periodic timer)
-
-2. There is nothing to fix in PulseAudio code.
-
-(that's the statement that David Henningsson disagrees with (while
-stating that it is his personal opinion and non the opinion of
-Canonical), he wants to disable flat volumes by default, and Tanu
-Kaskinen is willing to review a documentation-only patch if I create
-one)
-
-I did not try to ask about agreement or disagreement with the points
-below, so please treat them as "just notes".
-
-3. There were attempts to say "is this an issue at all?" / "If a web
-page does this, I will not go there anymore, problem solved", but it
-looks like this is a matter of opinion. This may or may not be a valid
-solution according to the EU law (or whatever law that causes Android
-to display a popup warning if a user goes over 70% volume). There was
-also a suggestion to display a warning if the volume of an analog
-output goes over 70%, or to display a "do you want to allow this?"
-popup when a web application tries to control the volume.
-
-4. Lennart Poettering continued to state the importance of seamless
-integration of web applications into the desktop environment. That's
-actually where the four requirements in the quote above come from,
-however, they do conflict with the sandboxing requirements, and nobody
-so far knows a good solution to both kinds of requirements.
-
-5. An analogy was made with a page that displays an unwanted and
-unclosable popup in a web browser or tries to eat 100% of the CPU with
-javascript. We already have popup blockers and a warning about
-misbehaving javascript, so why not try to detect unsolicited volume
-changes?
-
-6. Three volume sliders (in-browser, stream volume and master volume)
-would be too many, it would be nice to avoid that even though Windows
-does just that.
-
-7. There is no way to notify javascript code about externally-made
-volume changes. Such notifications are, however, essential for usable
-desktop integration, so that the application correctly updates its
-internal volume slider.
-
-My own opinion is unchanged: this is a security issue that no single
-party is fully responsible for, definitely a sandboxing bug in
-Webkit-GTK + definitely a documentation bug in PulseAudio + maybe a
-good idea to change the default volume mode, because this would have
-moved this from a "security issue" to "just a bug".
-
-If I have misrepresented the discussion, please reply to this e-mail
-and correct me.
-
--- 
-Alexander E. Patrakov
+iQIcBAEBAgAGBQJSZy7zAAoJEBYNRVNeJnmTJbQQAKtmOfKLuorxnrgvX+1lApw9
+FWmvTBG03WTYhERpP7TCLAMFn2PEdna4/7prfcxUswR09RaJnsc1ThwynNFvbi5H
+rv2N53RvieD8tHVpFRI3z0STLXshe8E61WaSRW2anZDsw3Bcj0sVLrbv4MF3Suhr
+GtueiO73KF229e4DpY1jpXCLMgJiruQYAdG+1DVbFm94eM5D4JkWIln0rkJHLE0Y
+7AdJ7GN+It3UaXhkPEwE9xZ2pdvO0koSpGPYLjLJxLIYV6v2HTNtidMCgHONVI6e
+nsxKymufL6RnuR5ycb3vP2Y/5GEUhnXCQZftziDtYAWiB2bBG9PoCdJJGsMm9wAH
+YsyZfMqf28wcpZ1U/YY5XuOVDUCWNEnnjDKZH95i5pZmKXZhhUb3+kg4v9BJhYGw
+nsLKkHT2F/lJEbZecDtf/G3xrAmBgptc/76+fZSoqCb/1JvlMrFsCYiXMBr5W69j
+ItOlc2rwrbinU0KhjW+U53KvT2EekrTkc4XHOYo1W56jG4Byse6RtrAcZRxDt/gt
+u597YrsXb9ImJFhwSA80Lq7MmjBLX34TyedvtM7sCe2U2NK5bOvwZMn57R5HOCxe
+uGytwgmRtY04FHbziDkAYpSbuW8Apn6/38NbFThZeZrgOR7dQWaXvfLJxRUeNo/8
+grYD/r1nVF6aENVOfgc7
+=OwHh
+-----END PGP SIGNATURE-----
