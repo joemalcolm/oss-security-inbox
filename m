@@ -1,67 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/14
-Message-ID: <962175989.11127791.1358437849489.JavaMail.root@redhat.com>
-Date: Thu, 17 Jan 2013 10:50:49 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/23/8
+Message-ID: <52672F46.9000108@redhat.com>
+Date: Tue, 22 Oct 2013 20:07:02 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Forest Monsen <forest.monsen@...il.com>, Drupal Security Team <security@...pal.org>, Mitre CVE assign department <cve-assign@...re.org>
-Subject: CVE Request - SA-CORE-2013-001 (one JQuery X < 1.63 issue and two Drupal modules issues)
+Subject: Re: CVE Request: lightdm no longer confines guest profile with AppArmor
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, Forest, Drupal Security Team, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  @Forest: Apologize for requesting CVE ids instead of you,
-but I will explain the reasons below shortly.
+On 10/22/2013 08:00 PM, Marc Deslauriers wrote:
+> On 13-10-22 09:50 PM, Kurt Seifried wrote:
+>> On 10/22/2013 12:52 PM, Marc Deslauriers wrote:
+>>> Hello,
+>> 
+>>> Christian Prim discovered that Light Display Manager 1.8.0 and 
+>>> later no longer use the appropriate wrapper when launching
+>>> guest sessions, resulting in the session not being confined by
+>>> AppArmor.
+>> 
+>>> Bug report: https://bugs.launchpad.net/lightdm/+bug/1243339
+>> 
+>>> Could a CVE please be assigned to this issue?
+>> 
+>>> Thanks,
+>> 
+>>> Marc.
+>> 
+>> 
+>> Ok to confirm the app armor profile is applied by default to
+>> lightdm and the guest account, and was meant to prevent guest
+>> from touching /home at all? I just wanna confirm this is a
+>> security vuln and not security hardening.
+>> 
+> 
+> lightdm is supposed to run the guest account through a special
+> wrapper that applies an AppArmor security policy so the guest is
+> confined and has a limited set of files which it can access. Kind
+> of like a sandbox.
+> 
+> The lightdm code was refactored at some point during the 1.8
+> development cycle, and the code no longer executes the wrapper,
+> resulting in the guest account on Ubuntu 13.10 being unconfined and
+> is now able to access user's files, which wasn't the case in
+> earlier Ubuntu versions.
+> 
+> Basically, a security feature that is applied by default got
+> inadvertently dropped in a rewrite.
+> 
+> Marc.
+> 
+> 
 
-  Drupal upstream has released Drupal 6.28 and Drupal 7.19 versions,
-correcting multiple security flaws:
-[A] http://drupal.org/SA-CORE-2013-001
-* Issue #1 - Cross-site scripting (Various core and contributed modules - Drupal 6 and 7)
-* Issue #2 - Access bypass (Book module printer friendly version - Drupal 6 and 7)
-* Issue #3 - Access bypass (Image module - Drupal 7)
+Understood, please use CVE-2013-4459 for this issue.
 
-While the issue #1 affects also version of jquery.js JQuery JavaScript library,
-as shipped within Drupal, the original XSS JQuery upstream report is here:
-[B] http://bugs.jquery.com/ticket/9521
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-with mention about the fix in JQuery 1.6.3 version here:
-[C] http://blog.jquery.com/2011/09/01/jquery-1-6-3-released/
-
-After further look the same issue needs to be fixed also in drupal7-jquery_update:
-[D] https://bugzilla.redhat.com/show_bug.cgi?id=896467
-[E] http://drupal.org/project/jquery_update
-
-and python-tw-jquery packages: 
-[F] http://toscawidgets.org
-
-Also python-tw2-jquery package:
-[G] http://toscawidgets.org
-
-seems to ship various embedded versions of the jquery.js library implementation.
-Since there might be more of the components / packages, shipping the vulnerable
-JQuery version the first CVE identifier should be allocated to the original
-JQuery issue.
-
-@Drupal security team - could you clarify if to fix the first issue,
-there was yet some other Drupal specific patch / change (besides the
-JQuery library update), which would require yet another (fourth) CVE
-id to be allocated?
-
-@Mitre CVE assign department team, could you clarify, if you have already
-assigned CVE identifiers for these issue and if so, for which source code
-base it was?
-
-If Drupal upstream just updated JQuery version to not-vulnerable 1.6.3 [B], [C]
-within Drupal core, then three ids are sufficient (one for JQuery, one for
-Drupal Book module issue, one for Drupal Image module issue).
-
-On the other hand, if there was yet some Drupal specific patch (besides JQuery
-update) needed to fix #1 issue - four CVE identifiers should be allocated
-(after my understanding).
-
-Could you allocate them / if allocated already, let us know the particular
-ids and which source code they were allocated for?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQIcBAEBAgAGBQJSZy9GAAoJEBYNRVNeJnmTPN4P/jtAcXtW9sUaLXNpH3Z7HgUH
+06QNzlHGf2bm+xgtgjFx5sj55VHZyThUw017KoLO9uMZq5DbzJ3wB2qdgAyxBOtX
+vasJY69cBQQJKEC/3iRtvbEHzwro4cKTW4Kr0+1OYUVxGqAoimwYLfDepz/yX7RV
+jgLJcBNqB1jDbMCa6eNx7oGp5a/ZVB1W2HZs1RC8TPrMXNDKy+W5Wqs73yvi4xJk
+JXfGeFsQMYTxRptyoXEwD3XBjXiWNi/Tk2ze1svKdUHeDCa9CvFAJ7u7kXdOJI6l
+mfnhTYupP3YcqFn7vZ4p2CHjHMF8UKFJGezY17oIkIspdFiNgyKmZMzNQnneTyzc
+pooLiaCg5lXDyd3ssSErpRDe+/z/sLsYijKfjeJXP+oY8wmKKQ7zQsg3KwndrVgQ
+6xG2wKMSa9RsN0t9UdRGnxG4DpLqm//SyOP787nNtoJzJauV3TqQOhPlWWb/bhxP
+A5hal7pGZM+6NN7luyTfmtPEoHFhhuYGC7RxLXOsnC4zSbGm+dnJcUx3VjI2y5Xb
+o9AntUvQKsZYytHhCk0YiEGkrfs1zP5c7kHejMSH6PGvtCu+o6ojOA8y/c3z0glR
+pSEjakt39w8ZzY+hx+ck6B46qOHpuUI2Vg/cxJ9A2dK2Kh0RxROTZJBBkuXwY5qj
+Gx3oVuzl3mG/dO3DmtZr
+=nMob
+-----END PGP SIGNATURE-----
