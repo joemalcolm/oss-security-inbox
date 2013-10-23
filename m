@@ -1,29 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/7
-Message-Id: <201302151443.06424.mweckbecker@suse.de>
-Date: Fri, 15 Feb 2013 14:43:06 +0100
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/23/10
+Message-Id: <55E26474-109B-4D88-BEAF-6B9E55B17653@adamcaudill.com>
+Date: Wed, 23 Oct 2013 02:52:06 -0400
+From: Adam Caudill <adam@...mcaudill.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE# request: pigz creates temp file with insecure permissions
+Subject: VICIDIAL 2.7 - SQL Injection, Command Injection
 Content-Type: text/plain; charset=utf-8
 
-On Friday 15 February 2013 09:33:30 Michael Tokarev wrote:
-> I think this one well deserves a CVE#.  I just submitted the following
-> bug #700608 to Debian BTS:
->
 
-Not sure if this qualifies for a CVE. At least similar issues did not
-get one in the past.
+Requestor: Adam Caudill, adam@...mcaudill.com
+Software: VICIDIAL (http://www.vicidial.org/vicidial.php)
+Vendor: The Vicidial Group (http://www.vicidial.com/)
+Vulnerability Type: Authenticated SQL Injection, Authenticated Command Injection
 
-> Thanks!
->
-> /mjt
+Source Code: http://sourceforge.net/projects/astguiclient/files/astguiclient_2.7rc1.zip/download
+ Flaws exist in /www/agc/manager_send.php
+ SQL Injection: Line 285
+ Command Injection: Line 429
 
-Thanks,
-Matthias
+Affected Versions: 2.7RC1, 2.7, 2.8-403a (others likely)
+
+Current released version is vulnerable; vendor confirmed issue on 6/3, set timeline for mid-July release, has delayed continually. Vendor has deployed fixes to users of their hosted service, still no updates or advisory for OSS users.
+
+Affected lines of code:
+
+manager_send.php:285
+  $stmt="SELECT count(*) from web_client_sessions where session_name='$session_name' and server_ip='$server_ip';";
+
+manager_send.php:429
+  passthru("/usr/local/bin/sipsak -M -O desktop -B \"$SIPSAK_prefix$campaign\" -r 5060 -s sip:$extension@...one_ip > /dev/null");
+
+In both of these cases, parameters are passed through without validation or escaping.
+
+During setup, two accounts with hard-coded passwords are created (VDAD, VDCL), these can be used to bypass the authentication check, allowing access to where the SQL Injection vulnerability is, which can be used to bypass an additional check, thus giving access to the Command Injection vulnerability. The output from shell commands are returned in the server response.
+
+There are MANY other issues of various types in this software, but I am not documenting them.
 
 -- 
-Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Adam Caudill
+adam@...mcaudill.com
+http://adamcaudill.com/
+
+
+
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
