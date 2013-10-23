@@ -1,46 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/12
-Message-ID: <20131211155412.GL2348@openstack.org>
-Date: Wed, 11 Dec 2013 15:54:13 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/23/5
+Message-ID: <52672DC1.4090007@canonical.com>
+Date: Tue, 22 Oct 2013 22:00:33 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2013-036] Insufficient sanitization of Instance Name in Horizon (CVE-2013-6858)
+Subject: Re: CVE Request: lightdm no longer confines guest profile with AppArmor
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2013-036
-CVE: CVE-2013-6858
-Date: December 11, 2013
-Title: Insufficient sanitization of Instance Name in Horizon
-Reporter: Cisco PSIRT
-Products: Horizon
-Affects: All supported releases
+On 13-10-22 09:50 PM, Kurt Seifried wrote:
+> On 10/22/2013 12:52 PM, Marc Deslauriers wrote:
+>> Hello,
+> 
+>> Christian Prim discovered that Light Display Manager 1.8.0 and
+>> later no longer use the appropriate wrapper when launching guest
+>> sessions, resulting in the session not being confined by AppArmor.
+> 
+>> Bug report: https://bugs.launchpad.net/lightdm/+bug/1243339
+> 
+>> Could a CVE please be assigned to this issue?
+> 
+>> Thanks,
+> 
+>> Marc.
+> 
+> 
+> Ok to confirm the app armor profile is applied by default to lightdm
+> and the guest account, and was meant to prevent guest from touching
+> /home at all? I just wanna confirm this is a security vuln and not
+> security hardening.
+> 
 
-Description:
-Cisco PSIRT reported a vulnerability in the OpenStack Horizon
-dashboard. By embedding HTML tags in an Instance Name, a tenant may
-execute a script within an administrator's browser resulting in a
-cross-site scripting (XSS) attack. Only setups using the Horizon
-dashboard are affected.
+lightdm is supposed to run the guest account through a special wrapper that
+applies an AppArmor security policy so the guest is confined and has a limited
+set of files which it can access. Kind of like a sandbox.
 
-Icehouse (development branch) fix:
-https://review.openstack.org/55175
+The lightdm code was refactored at some point during the 1.8 development cycle,
+and the code no longer executes the wrapper, resulting in the guest account on
+Ubuntu 13.10 being unconfined and is now able to access user's files, which
+wasn't the case in earlier Ubuntu versions.
 
-Havana fix:
-https://review.openstack.org/58465
+Basically, a security feature that is applied by default got inadvertently
+dropped in a rewrite.
 
-Grizzly fix:
-https://review.openstack.org/58820
+Marc.
 
-Notes:
-This fix is included in the icehouse-1 development milestone and
-will appear in a future 2013.2.1 stable point release.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6858
-https://launchpad.net/bugs/1247675
 
 -- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
