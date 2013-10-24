@@ -1,97 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/2
-Message-ID: <5135621E.2080106@redhat.com>
-Date: Mon, 04 Mar 2013 20:10:22 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/24/1
+Message-ID: <52687839.4000105@redhat.com>
+Date: Wed, 23 Oct 2013 19:30:33 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: handling of Linux kernel vulnerabilities
+Subject: Re: Re: CVE for Wordpress plugin Portable-phpmyadmin
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/04/2013 06:20 PM, Greg KH wrote:
-> On Mon, Mar 04, 2013 at 10:12:56PM +0100, Eric Lacombe wrote:
->> Hi,
->> 
->> Le lundi 4 mars 2013 11:48:58, Greg KH a écrit :
->>> On Sun, Mar 03, 2013 at 10:39:30PM -0500, Michael Gilbert
->>> wrote:
->>>> I was getting encouraged by the recent anger-centric posts,
->>>> the "what is it that we're supposed to do better?" ones. That
->>>> gave me some encouragement that there was the possibility of
->>>> positive change, but the "we're not going to make users more
->>>> unsafe by telling them about issues affecting them" is a
->>>> persistence of the denial state.  That logic completely
->>>> violates the known idiom that knowledge is power: give users
->>>> the knowledge that they need to protect themselves, and they
->>>> will; starve them of that knowledge, and they remain
->>>> vulnerable.
->>> 
->>> That's a load of crap.
->>> 
->>> Seriously, you know it only benefits the "bad guys" if I were
->>> to say, "This patch just went into Linus's tree that fixes a
->>> security problem that you can exploit in this manner".  No user
->>> would have a chance to fix their systems before the
->>> vulnerability was added to the "ultra-sploit" tool and everyone
->>> would have their systems trashed.
->> 
->> I think there's a difference between disclosing the vulnerability
->> and disclosing it with a related exploit. The first one allows to
->> fulfill what Michael Gilbert explains without the consequences
->> that you focus on.
+On 10/22/2013 09:00 PM, Anant Shrivastava wrote:
+> Exactly, You request the proper url and it lets you in as well as
+> let you perform all database level operations available on that
+> specific file. some sample screenshots should clear the issue
+> (attached for reference). [while phpmyadmin requires a valid userid
+> and password for mysql db these credentials are pulled from
+> wp-config.php (wordpress config fle) file directly in this plugin]
 > 
-> You really think there is a difference?  I assert that there is
-> none, and history has shown that this is the case, but feel free to
-> prove me wrong.
+> Besides these two, there are a large number of full path disclosure
+> on the whole project also however as wordpress itself doesn't
+> consider that as a security issue rather mark it as a configuration
+> issue 
+> (http://codex.wordpress.org/Security_FAQ#Why_are_there_path_disclosures_when_directly_loading_certain_files.3F)
+>  Hence those are not reported.
 > 
->> And as Michael Gilbert insisted on, I deeply think that the
->> asymmetry of the problem should be taken into account for
->> defining the way of dealing with security flaws.
 > 
-> Then why do we even have the linux-distros list at all?
-> 
-> greg k-h
+> Anant Shrivastava GWAPT | CEH | RHCE Mob : 91-9880166033 E-mail :
+> anant@...ntshri.info <mailto:anant@...ntshri.info> Web :
+> http://anantshri.info
 
-It's not just for kernel vulns? At this point I literally don't
-understand the conversation, it appears some people have theoretical
-concerns about openness/etc. but I'm not seeing anything remotely
-evidence based to support their positions. OTOH we have the kernel
-devs like Greg who are making arguments based on past
-behaviour/evidence of basically what works/what doesn't work. I should
-note that the standards and current processes have worked quite well
-AFAIK (I've only really been tracking Linux security closely for 14
-years now, prior to summer of 1999 I can't really say).
-
-If anyone has really evidence based problems/issues to bring up,
-please do so. Otherwise can we stop with all the hand waving, keep
-doing what we have been doing which seems to work quite well and let
-Greg/etc. get back to work?
-
-If you want to discuss the theoretical/philosophical nature of
-information security as applied to the Linux kernel I'd be happy to
-set up a separate list for that, OSS-Security isn't really the right
-venue.
+Please use CVE-2013-4462 for the auth bypass portion of these
+vulnerabilitties.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRNWIeAAoJEBYNRVNeJnmTohIQAMMVc7jO9zEe4GUAOU8Zfd1P
-lTIBzFPKlz9aAZriT3ONoJXqqduyK/APlSLjfj4DGUuEJ6kM/zg5JafvehOl7aRI
-/o0CgcpH4ebFbcR4NQSi5jl0qYnDQe1XiTvVGBehX1ULdXNHb5ID+x956GNHRCKY
-zQV2aJTeqOQ1R6BsfGc24rtW0g1OLSGav4dqgPCjdZ5HNSjgI7P1mTN28XheaVjz
-grlFELvSBJqGiuqxngDiyNjzzAfC8M/hr+FJrTUzNFBaSqTPbl/PzZCobQ9176gX
-v9GtdqwXY+Ww1GWpi3/WX8foAasig2XNlKPyfogzNerLLASqVt66kc509lHrpDmG
-tworl82CpGsTe/H5vTZbUFZD8Ja4NtfQfZyVqduo+xoSpZxRoSBOzMoSzmr9qYIr
-EGg5V6qV9a06Wn1aJfXAbto4FoBE7UmcZmoej0ALbdDZcw6AONjehBx9vH3cR1zs
-69ADe8zLa9QXavu1GFeMgv4aoXeVXMx1MuB8ovJr7vn+RFgmDmA25vd83ssIdSrI
-rqY61YCu+kKfcAD1H46n7tXGt/bzQkHmEmnyjOMy0Ds87HCoC4HCaVM4xUTKOkrK
-RG9WfeLSdV7EYgl7pRMOB8W5yKDuiICTXzKtr1q7+TVkYzz0UYIbOVAiHS61/I3N
-UEoWYnqq6+qRmrx5Ytc3
-=ScBC
+iQIcBAEBAgAGBQJSaHg5AAoJEBYNRVNeJnmTQksP/2NlMC93l36a3Oe/ymjuXWcz
+7dwAleXexfiLpAAANOtyT6c2G5yZSgAzUp3A2W6My2JgQE1i5gtgIBcpuegggXlE
+lhuQaZN0Xg/2aLsB8VV1lNRfmr+t+/4MzdMxfJ+ssuTCPi/o/5V/kQy5pKJMUjP7
+lh1O+OfjFqtdk5q23elS5hvd6IQFIF+zv7H6s3UAiydcN5FYIbzVikVJdKwX0ldW
+SuU3JLOsuVbfiqdjcP34ao56PP7Oc3kDNTduD6s9QO85/yGmKjP9JzEKjWGLvl9+
+4GRliHW1hAYC3f177hfrgf0umWpyesA64i7FbfRCNoGONyEDOR8ow7/t5cIg0lkY
+ZaLkBAMPXQrxxoDeGOUXNgL1YJv8iZfHTNi6FuapaZ2CWOetu1SmBft2aSUoeXAx
+nM4iOpWJ6aZOzAgCgU8Axcn6BjIHZb1K4+QTbt5kVrHa3L8ByjwhyzIqUc/Jq3d4
+G4GvnXlA60UnpcTFb+ju1fFVwI/Mnr5GmR8ef0/+blLUGsB+gp1VR+2Xo7JlRONQ
+Gy93p6VCsTuFwT9jNIz0dvsV0xs8xGhaEIkuIq5DL0n6TGyDw9B/VLygEAy322X2
+Eaa/4AB/epPwtBEh3acS7Xn+l2VCg3S+cQsRxhMPj8JhqEM0sUuI9lNYZzUXSBqO
+Y66NUitSzjzNWAZ2XxFf
+=epl0
 -----END PGP SIGNATURE-----
