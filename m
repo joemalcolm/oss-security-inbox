@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/7
-Message-ID: <51C01CC5.9070108@redhat.com>
-Date: Tue, 18 Jun 2013 10:39:33 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: gnome-shell crash, screen unlock on resume
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/24/2
+Message-ID: <20131024140409.GF13413@suse.de>
+Date: Thu, 24 Oct 2013 16:04:10 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: gnutls/libdane buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Upstream GNOME recently fixed a bug that could crash gnome-shell 
-immediately after resume:
+Hi,
 
-https://bugzilla.gnome.org/show_bug.cgi?id=701974
+GNUTLS just posted a security adivsory which needs a CVE:
 
-As noted here, the impact is that after resume, the password entry 
-dialog disappears and the user is dropped into the pre-existing X session:
+http://www.gnutls.org/security.html#GNUTLS-SA-2013-3
+GNUTLS-SA-2013-3
+Denial of service
+This vulnerability affects the DANE library of gnutls 3.1.x and gnutls
+3.2.x. A server that returns more 4 DANE entries could corrupt the memory
+of a requesting client.  Recommendation: Upgrade to the latest gnutls
+version (3.1.15 or 3.2.5)
 
-https://bugzilla.redhat.com/show_bug.cgi?id=954054
+Commit for 3.1:
+https://gitorious.org/gnutls/gnutls/commit/916deedf41604270ac398314809e8377476433db
 
-I haven't figured out the exact trigger conditions, but this has 
-happened to me a couple of times since switching to Fedora 19 last 
-weekend.  It does not appear to be a once-in-a-blue-moon bug.
+Commit for 3.2:
+https://gitorious.org/gnutls/gnutls/commit/ed51e5e53cfbab3103d6b7b85b7ba4515e4f30c3
 
-I think this needs to be tracked as a security bug because screen 
-locking is a security feature (which is part of many security policies).
-
--- 
-Florian Weimer / Red Hat Product Security Team
+Ciao, Marcus
