@@ -1,40 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/9
-Message-ID: <52A5F7B4.9040501@redhat.com>
-Date: Mon, 09 Dec 2013 18:02:44 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: two issues in libmicrohttpd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/25/4
+Message-ID: <alpine.LFD.2.03.1310251926490.17630@redhat.com>
+Date: Fri, 25 Oct 2013 19:41:24 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request: Linux kernel: net: memory corruption with UDP_CORK and UFO
 Content-Type: text/plain; charset=utf-8
 
-On 12/09/2013 03:04 AM, Murray McAllister wrote:
+    Hello,
 
-> Florian Weimer of the Red Hat Product Security Team discovered two
-> issues in libmicrohttpd:
->
-> 1) https://bugzilla.redhat.com/show_bug.cgi?id=1039384
->
-> 2) https://bugzilla.redhat.com/show_bug.cgi?id=1039390
->
-> References:
->
-> https://gnunet.org/svn/libmicrohttpd/ChangeLog
-> http://secunia.com/advisories/55903/
-> https://bugs.gentoo.org/show_bug.cgi?id=493450
->
-> Can CVEs please be assigned?
+Linux kernel built with an Ethernet driver(ex virtio-net) which has UDP 
+Fragmentation Offload(UFO) feature ON is vulnerable to a memory corruption 
+flaw when UDP_CORK socket option is set. It could occur when sending large 
+messages, wherein all messages are not greater than maximum transfer unit(MTU) 
+of the underlying medium.
 
-There are two more patches I recommend cherry-picking (if you consider 
-the other two worth fixing).  All these fixes border on hardening.
+An unprivileged user/program could use this flaw to crash the kernel resulting 
+in DoS, or potentially execute arbitrary code to escalate privileges to gain 
+root access to a system.
 
-------------------------------------------------------------------------
-r30927 | grothoff | 2013-11-28 11:05:52 +0100 (Thu, 28 Nov 2013) | 1 line
+Upstream fix:
+-------------
+  -> http://patchwork.ozlabs.org/patch/285292/
 
--handle case that original allocation request was zero
-------------------------------------------------------------------------
-r30926 | grothoff | 2013-11-28 10:16:38 +0100 (Thu, 28 Nov 2013) | 1 line
+Reference:
+----------
+  -> https://bugzilla.redhat.com/show_bug.cgi?id=1023477
 
--fix theoretical overflow issue reported by Florian Weimer
 
--- 
-Florian Weimer / Red Hat Product Security Team
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
