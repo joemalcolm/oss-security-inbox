@@ -1,33 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/05/8
-Message-ID: <CAA7hUgGF7wN69VuUR900_29QHMdRPvbpwwZxhSvudcPOk1R1aA@mail.gmail.com>
-Date: Thu, 5 Sep 2013 10:38:14 +0200
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/25/5
+Message-ID: <526ACF83.4060108@redhat.com>
+Date: Fri, 25 Oct 2013 14:07:31 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [notification] exactimage DoS, jumping into the unknown
+Subject: Re: CVE request: Linux kernel: net: memory corruption with UDP_CORK and UFO
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-While testing the update of exactimage for the fixes in its embedded
-copy of dcraw (CVE-2013-1438) I noticed that it did not initialize
-(setjmp) the jump pointer used by dcraw for error handling.
-In addition to the new checks introduced to fix the above-mentioned
-issue, there were already some cases where longjmp was called, causing
-the execution to jump to a location defined by an uninitialized
-variable.
+On 10/25/2013 08:11 AM, P J P wrote:
+>    Hello,
+> 
+> Linux kernel built with an Ethernet driver(ex virtio-net) which has UDP
+> Fragmentation Offload(UFO) feature ON is vulnerable to a memory
+> corruption flaw when UDP_CORK socket option is set. It could occur when
+> sending large messages, wherein all messages are not greater than
+> maximum transfer unit(MTU) of the underlying medium.
+> 
+> An unprivileged user/program could use this flaw to crash the kernel
+> resulting in DoS, or potentially execute arbitrary code to escalate
+> privileges to gain root access to a system.
+> 
+> Upstream fix:
+> -------------
+>  -> http://patchwork.ozlabs.org/patch/285292/
+> 
+> Reference:
+> ----------
+>  -> https://bugzilla.redhat.com/show_bug.cgi?id=1023477
+> 
+> 
+> Thank you.
+> -- 
+> Prasad J Pandit / Red Hat Security Response Team
 
-This new issue has been assigned CVE-2013-1441.
+Please use CVE-2013-4470 for this issue.
 
-Note that this is specific to exactimage and is not a bug, per-se, in dcraw.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-According to the Debian maintainer this bug has probably been present
-since ExactImage 0.0.12
-
-This has been fixed in Debian with the patch added in the following commit:
-http://anonscm.debian.org/gitweb/?p=collab-maint/exactimage.git;a=commitdiff;h=1dff2eb586a3d10d8528a984bc471292e3789f5c;hp=acfe54193b18b46e880f4b474d2e40b4fdb44a8d
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+iQIcBAEBAgAGBQJSas+CAAoJEBYNRVNeJnmTbvwQAJ+unAsNrmKoFQpp01saoDF4
+pUlgdgV1RFdFK8iOHYn7hq1OXjJvRoZLx4UMC/JTykDyYnUiuAe+NCN2GBZoNK8Z
+xvCTjYK0NGNG/izsxBCqUnirUJlFwykmJjE/rjuXkjmJXiPna0l42UPr+xxOaynS
+xX1IP516i2k2FMAvvKqLa5LaH2k94QDWfSl4KleTQ4hv3mMC72h31y4EGt5t5avE
+GH2ZA44PFUr69xO2lJP6EoT2jdislOmTnSjEXngq3jgawBfeIJb2u5slB4SMaULQ
+sdi9dLqdIe4k6oE07ip4yBU3UIwEjb1b+cmfLtFmx8Gqliab6T5NHspW2F5u9Sek
+baVpRAGH+0HuHrIFI1p1me+s9cIDLbXTeHktUZUuHiR4z7Moxz1Sc2axoGnyumha
+Qo7EbyQ1dVaokwAI7GjAa5en/3cFNFdj+/wdBa7dLecfcDbQfTDenbVtnHXiesD3
+L1+XEKQ4X6ONZ1HNvwjoo/s/YcMOlT2oSQmAcmmjFYVKWcGkzFLHPKPkQzz2BBXi
+687Zlh+sk46ptnZXx5N1IB2gOqXDuOLDMAYXilmDX1HPZWUAPg1g4uArIW30eiQG
+SgM0yjrVrJi0M8+oDMhdgN4EYRBRufUd9urweChNOC7NFeCQzppIlIJKYq/WBhGm
+3tjOGfppsAjWi5FtvYjH
+=Eg+0
+-----END PGP SIGNATURE-----
