@@ -1,48 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/5
-Message-ID: <51EEBB23.40204@pipping.org>
-Date: Tue, 23 Jul 2013 19:19:31 +0200
-From: Sebastian Pipping <sebastian@...ping.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/25/3
+Message-ID: <5269BB3D.80701@redhat.com>
+Date: Thu, 24 Oct 2013 18:28:45 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mysecureshell: local denial of service (or worse)
+Subject: Re: CVE Request: Simple Machines Forum (SMF) Remote file inclusion vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello everyone,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+On 10/24/2013 11:00 AM, Kevin Pawloski wrote:
+> https://github.com/SimpleMachines/SMF2.1/issues/701
+> 
+> Affects 2.0.X and 2.1.X.
+> 
+> Can a CVE please be assigned to this issue?
+> 
+> Thank you. Kevin
+> 
 
-mysecureshell [1] is an SFTP-only shell to be used with sshd.
+Please use CVE-2013-4465 for this issue.
 
-The latest release 1.31 makes use of shared memory with permissions 666
-to maintain 128 slots with one struct for each connection/process.
-An unprivileged user can mark mark all remaining slots as occupied (and
-optionally wait for remaining clients to leave to block those slots, too).
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-To demonstrate the issue, I have written a small command line tool.
-It's free software and can be found at [2].  Use it like this:
-
-  # make
-  cc -std=c99 -Wall -Wextra -pedantic local-dos.c -o local-dos
-
-  # ./local-dos
-  USAGE:
-    ./local-dos (block|unblock|show)
-
-  # watch -n 1 -d ./local-dos block
-  [..]
-
-Besides the local DoS it might be possible to attack the call to chdir,
-since that is reading from shared memory, too.
-
-Any ideas on other attacks based on writing to that block of shared
-memory?  File /bin/MySecureShell is mode 4755 setuid root if that makes
-it more interesting :-)
-
-Best,
-
-
-
-Sebastian
-
-
-[1] http://mysecureshell.sourceforge.net/
-[2] https://github.com/hartwork/mysecureshell-issues
+iQIcBAEBAgAGBQJSabs9AAoJEBYNRVNeJnmTy+cQAJ5j93YmLHGB4YfX65T4aohe
+L1tvKACdqGmlYAsuzG+qMYNWvyYhD6bo2I3l67m5bPWalWiOvmY7SmbHnobqJxBt
+YoCmZyba/t5ho8cNdqEyyBciQjACQQfK9HqqWY5vogP0bovZWyk3W/wlji1lYw4t
+JvW91JK9LgVcDs+oA9rw7zEMp8CaVwS6pS/cPG+XhTwSNjm6rHzMizWcyON5/7Z7
+MVozd9292RPlyLbr6ElKyY/hMwS2NNPew/AjbLroAv6kaJ+ZhcSsezoM2XpMRyW0
+ObuKyM/wjlQ/R2fOBfPcTYmSk2ijRSs1YdZnO2hxxlK7i2L7GsO541/xm+JglalU
+x+4bmr86oSyOnApCvM1bRru8XnH+z+x3ZSyw2Wmnm9BAkBEeYtgJ9jlkNB9l4V7m
+TZcfQsoMzwgUP6GjyvWMM/QVkjDwkOgCw6KTRbCtt9JI6mmmxN6Y4gNl4LKwUKeF
+E1bhoWZ07vnrRmTouAfiyMvSf88RG2feC2LVk9zbWmk/2NZHVOeq23TyfKjM893n
+WWsbePB9g84pmH/aeAD+Ml/mWVQt+GX+vNoZta5ie5OLyNWqEH4HvyGpP8nNLIWc
+d9ZJQ3HioT6A9+GfVjHrw5OQnZc6k+ncRu029b0sTVudjwAzwEloVclu7vxfTsat
+i46aVVcrJlVYdiMYG0rP
+=j/VG
+-----END PGP SIGNATURE-----
