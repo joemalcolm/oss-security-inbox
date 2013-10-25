@@ -1,78 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/08/4
-Message-ID: <5253DF86.7020900@gmail.com>
-Date: Tue, 08 Oct 2013 16:33:42 +0600
-From: "Alexander E. Patrakov" <patrakov@...il.com>
-To: oss-security@...ts.openwall.com,  pulseaudio-discuss@...ts.freedesktop.org, webkit-gtk@...ts.webkit.org
-Subject: Vulnerability in Webkit-GTK and PulseAudio volume handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/25/6
+Message-ID: <20131025231704.GA29781@eldamar.local>
+Date: Sat, 26 Oct 2013 01:17:04 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: joeyh@...ian.org
+Subject: [Notification] CVE-2013-6047: ikiwiki-hosting: XSS in site creation interface
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+Hi
 
-Note: this is not a CVE request yet! Before making a formal CVE request, 
-I would need to collect "official" information on the topic who needs to 
-do what with this bug (although I do have my own opinion, see below). 
-For now, I just want to start a discussion by posting this to the 
-relevant mailing lists, and also I want to avoid the situation where 
-each side blames the other. Please note that I am not an upstream 
-developer of any of the mentioned projects. I will attend the audio 
-mini-conference at LinuxCon Europe 2013, it is OK to discuss the issue 
-there if representatives from both parties intend to come.
+This is a notification for the following assigned CVE:
 
-The following combination of software has a nasty bug when used 
-together, that I personally consider to be a vulnerability:
+CVE-2013-6047: ikiwiki-hosting: XSS in site creation.
 
-* PulseAudio (any version, especially when used in flat-volume mode that 
-is the default everywhere except Ubuntu).
-* Any browser based on Webkit-GTK 2.x (any version with HTML5 
-audio/video support based on GStreamer).
+The XSS only affects ikiwiki-hosting installations
+that have a controlsite set up with the makesite plugin enabled. This
+vulnerability was found by Gopal Bisht.
 
-The bug is that a malicious piece of javascript on the web page can 
-cause an audio file to play at an unexpectedly high volume, not obeying 
-the volume that the user has set for the web browser in pavucontrol or 
-gnome-volume-control, and effectively not letting the user move the 
-volume slider corresponding to the web browser. When flat volumes are in 
-effect, the web page can play that audio file at the full volume that 
-the sound card is capable of, which can in some cases damage 
-loudspeakers (especially tweeters) or the user's hearing.
+XSS fixed in ikiwiki-hosting 0.20131025[1].
 
-The reproducer is already public at http://jsfiddle.net/bteam/FbkGD/ and 
-can be trivially enhanced to also prevent muting of the audio stream. 
-View that in Epiphany or Midori on any Linux distribution except Ubuntu.
+ [1] http://packages.qa.debian.org/i/ikiwiki-hosting/news/20131025T224825Z.html
 
-My own opinion is that both parties are equally responsible for the 
-vulnerability. The salt of the bug is that PulseAudio's security model 
-is based on clients not sending malicious requests to change the stream 
-volume, while Webkit passes all volume-changing requests (including 
-malicious) to GStreamer, because it has no way of telling user-initiated 
-volume change requests from automated malicious ones.
+Upstream commits can be found in the upstream git repository:
 
-Even with non-flat volumes, passing the javascript-initiated volume
-changes to pulseaudio means that the user cannot drag the "Epiphany"
-volume slider or (with a trivial change to the JavaScript on the page)
-mote the Epiphany stream in pavucontrol. So, in my opinion, using a 
-pulseaudio stream volume to represent javascript volume (or, for that 
-matter, the volume visible to any other runtime that can execute 
-untrusted programs/scripts) is always wrong.
+git://ikiwiki-hosting.branchable.com/
 
-However, the fact that flat volumes are enabled by default in upstream 
-PulseAudio makes this small annoyance a real vulnerability. Given that 
-the "100% hardware volume" type of bug is still present in some 
-applications given the vast amount of time the feature exists, I think 
-(but understand that it is an extreme position) that flat-volume mode, 
-by its mere existence, is a bug that needs to be removed. At the very 
-minimum, there is a documentation bug: it is nowhere explained that you 
-should never use PulseAudio stream volumes (and for that matter, 
-gstreamer sink volumes) for things that are not guaranteed to directly 
-correspond to user-draggable volume sliders that no automated script can 
-also move.
+in commits 83b221799e409b407c60fd246fd883d068775016 and
+060f1b7728a0983cc010eacebdb94f0a440d98f1.
 
-See also:
+(attached for this notification).
 
-https://bugs.webkit.org/show_bug.cgi?id=118974
-https://bugzilla.gnome.org/show_bug.cgi?id=675217
-https://bugs.freedesktop.org/show_bug.cgi?id=46466
-https://bugzilla.gnome.org/show_bug.cgi?id=680779
+Regards,
+Salvatore
 
--- 
-Alexander E. Patrakov
+View attachment "0001-Fix-XSS-in-site-creation-interface.-Thanks-Gopal-Bis.patch" of type "text/x-diff" (4869 bytes)
+
+View attachment "0002-also-need-to-escape-the-HOSTNAME.patch" of type "text/x-diff" (2901 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
