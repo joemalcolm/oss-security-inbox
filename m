@@ -1,29 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/20/1
-Message-ID: <517258A6.5080902@archlinux.org>
-Date: Sat, 20 Apr 2013 18:58:14 +1000
-From: Allan McRae <allan@...hlinux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/25/2
+Message-ID: <5269BB21.2040807@redhat.com>
+Date: Thu, 24 Oct 2013 18:28:17 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Request for linux-distros list membership
+Subject: Re: CVE Request: gnutls/libdane buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I would like to request membership to the linux-distros mailing list
-representing Arch Linux.
+On 10/24/2013 08:04 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> GNUTLS just posted a security adivsory which needs a CVE:
+> 
+> http://www.gnutls.org/security.html#GNUTLS-SA-2013-3 
+> GNUTLS-SA-2013-3 Denial of service This vulnerability affects the
+> DANE library of gnutls 3.1.x and gnutls 3.2.x. A server that
+> returns more 4 DANE entries could corrupt the memory of a
+> requesting client.  Recommendation: Upgrade to the latest gnutls 
+> version (3.1.15 or 3.2.5)
+> 
+> Commit for 3.1: 
+> https://gitorious.org/gnutls/gnutls/commit/916deedf41604270ac398314809e8377476433db
+>
+>  Commit for 3.2: 
+> https://gitorious.org/gnutls/gnutls/commit/ed51e5e53cfbab3103d6b7b85b7ba4515e4f30c3
+>
+>  Ciao, Marcus
 
-Here is my GPG fingerprint:
+Please use CVE-2013-4466 for this issue.
 
-pub   2048R/EAE999BD 2011-06-03
-      Key fingerprint = 6645 B0A8 C700 5E78 DB1D  7864 F99F FE0F EAE9 99BD
-uid                  Allan McRae <me@...anmcrae.com>
-uid                  Allan McRae (Developer) <allan@...hlinux.org>
-sub   2048R/753CCF8D 2011-06-03
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-Thanks,
-Allan McRae
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+iQIcBAEBAgAGBQJSabsgAAoJEBYNRVNeJnmT7T8P/iHgZosxSuSlne24Wz/77VoZ
+NJQCWquH2MfC1GfhQASMIaEBexBZcWGptnCBokP2bLwqQcEOp8Yb3N6AatNkkK9s
+7/Taub2hpkwrOHIGSxe/DWnsyKZyFLiUadzByG+mrGlYiYQmXBTIHhkiXC5sYUKs
+YAvXyJPi+G+cl0ZM1feE5oWCQOocJisR3u2cQmtJDZik2EXrWjfharRT12uB5dzX
+4YajH1QA1U9G6nm1iIdCCBO1e5jNseBPwoaEwymTxllERb6ejFA3HCDqXjQoBJIM
+S6wcnxAWwRQRLYEQwdVKZPJAlrEEPTWk8mAy/CuX6y+DYYWR9UyEFJsfNli4fseW
+r+KTnf9VyZMHn5SriBvnPo6Oy7NqjOvYotAGjl0zE5CtkP5j3QC02gxpDogcdtzC
+OE/HWoMOLEG8xCqOc3VJy6i5g12kBuyv5O4MYsjDuMo1GtbLWD+qL03J59jmxg2M
+0/EyKeJE6qObflFaIsOaU48PqNZYFIvI34b67487SFv7tg5WbhQYuHT9MUUXIC3I
+pjGtmtqYIyhQai3DBxb6K7EP7I3TOylmntf+gMCVpFHSOT3h+H8nAr5GdhOIT2p+
+6zzr8p2YMfIrJUagn7kjVsd1remVVvfTkUaRBD8xX7EzZr4NEjf//1ISOeH6mSD1
+LiQ5VYuEXb2+jUbD9Z7a
+=MZwH
+-----END PGP SIGNATURE-----
