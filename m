@@ -1,40 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/22/3
-Message-ID: <528F8808.7010106@redhat.com>
-Date: Fri, 22 Nov 2013 09:36:24 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/25/1
+Message-ID: <5269BAE7.4090502@redhat.com>
+Date: Thu, 24 Oct 2013 18:27:19 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for a vulnerability in OpenStack Ceilometer
+Subject: Re: VICIDIAL 2.7 - SQL Injection, Command Injection
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/22/2013 08:57 AM, Thierry Carrez wrote:
-> A vulnerability was discovered in OpenStack (see below). In order
-> to ensure full traceability, we need a CVE number assigned that we
-> can attach to further notifications. This issue is already public,
-> although an advisory was not sent yet.
+On 10/23/2013 12:52 AM, Adam Caudill wrote:
 > 
-> """ Title: Ceilometer DB2/MongoDB backend password leak Reporter:
-> Eric Brown (IBM) Products: Ceilometer Affects: All supported
-> versions
+> Requestor: Adam Caudill, adam@...mcaudill.com
+> <mailto:adam@...mcaudill.com> Software: VICIDIAL
+> (http://www.vicidial.org/vicidial.php) Vendor: The Vicidial Group
+> (http://www.vicidial.com/) Vulnerability Type: Authenticated SQL
+> Injection, Authenticated Command Injection
 > 
-> Description: Eric Brown from IBM reported an information leak in
-> Ceilometer logs. The password for the DB2 or MongoDB backends was
-> logged at INFO level in the ceilometer-api logs. An attacker with
-> access to the logs (local shell, log aggregation system access, or
-> accidental leak) may leverage this vulnerability to elevate
-> privileges and gain direct full access to the Ceilometer backend.
-> Only Ceilometer setups using the DB2 or MongoDB backends are
-> affected. """
+> Source Code:
+> http://sourceforge.net/projects/astguiclient/files/astguiclient_2.7rc1.zip/download
+>
 > 
-> References: https://bugs.launchpad.net/ceilometer/+bug/1244476
+Flaws exist in /www/agc/manager_send.php
+> SQL Injection: Line 285 Command Injection: Line 429
 > 
-> Thanks in advance,
+> Affected Versions: 2.7RC1, 2.7, 2.8-403a (others likely)
+> 
+> Current released version is vulnerable; vendor confirmed issue on
+> 6/3, set timeline for mid-July release, has delayed continually.
+> Vendor has deployed fixes to users of their hosted service, still
+> no updates or advisory for OSS users.
+> 
+> Affected lines of code:
+> 
+> manager_send.php:285 $stmt="SELECT count(*) from
+> web_client_sessions where session_name='$session_name' and
+> server_ip='$server_ip';";
+
+Please use CVE-2013-4467 for the SQL injection
+
+> manager_send.php:429 passthru("/usr/local/bin/sipsak -M -O desktop
+> -B \"$SIPSAK_prefix$campaign\" -r 5060 -s sip:$extension@...one_ip
+> > /dev/null");
+
+
+Please use CVE-2013-4468 for the command injection
+
+> In both of these cases, parameters are passed through without
+> validation or escaping.
+> 
+> During setup, two accounts with hard-coded passwords are created
+> (VDAD, VDCL), these can be used to bypass the authentication check,
+> allowing access to where the SQL Injection vulnerability is, which
+> can be used to bypass an additional check, thus giving access to
+> the Command Injection vulnerability. The output from shell commands
+> are returned in the server response.
+> 
+> There are MANY other issues of various types in this software, but
+> I am not documenting them.
+
+Security vulns rarely come alone or just in pairs, usually they travel
+in packs :P.
+
+> -- Adam Caudill adam@...mcaudill.com <mailto:adam@...mcaudill.com> 
+> http://adamcaudill.com/
+> 
 > 
 
-Please use CVE-2013-6384 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -42,17 +75,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSj4gIAAoJEBYNRVNeJnmTN3EQAL2sYBkh9CpGpaa0Ues2HgcL
-VebR8UIoOOM0jAUATDnDJinLMYOViTvAE4xyCb/oP9k8NkAgUq0ENRoFkqeEgZjY
-hQCCEQR2m7yu5v9uf8cO3U9B0FPy7WEnWnw9Le5y/HRRC1Mga/WpUcWsODfyd2+q
-6sDuLxluM0I34cdLMmCxgESYneR7PQR6yaXW6e3GOFunFGtoDhR10x7fpiSfY5ar
-cAmvUneQ//StfEYAvGIUYCiQTxz1Sgmk9dnly89N67nyXHUZMgTnz50GS2xRjhxz
-Y9Ke4yyOeiWkcRQz9lS8wXZfA/FJS3xGAyTVOvcVM5PV4aEQg/bhqRZcnNUqRntm
-AWq7qFhgVNxlyY49CyBU7sbVx4LB1dniDvV1ZIUvyAYXdX48bEONGKkuWLOBJcZ+
-wP9W4llCqiL80Q1GmaLnVzh5KyO5RpTt0EfgoaJb3yKQNKxruYFmf/zzZoozhx5A
-rV7bljaNWBG0qyaKc7jQKUVqVA0w6Zxcc93UDz2CJddInAS/PWBxpW498nLPb5Zk
-j90ObbOL4gIv46Qh8Hm7mOt+HT2Yg8D3csTITJnJKP3WLzRXaQcn5sOoj3Lxt8Zk
-owkzAXHQV3H+449/6CuzZgYdRKiu+BfoQwxi4gTyH4n2BnvFCD18V/JZqTJQuI4T
-vyvsFDXmJEei03mJqYr0
-=/tjF
+iQIcBAEBAgAGBQJSabrmAAoJEBYNRVNeJnmToo8P/286FkhTdcRYLv7rBd35v/Kr
+dyH8/BCWDB2OIBdT1wHyuKk7aB15HuxYLb2rPfuqe2c1PlX2o6ebIDu0CsuukBEl
+E4G8kUU7eXlsBeF+HHQGyExiz76GtlNn8SRedSQ72Z9D9tnMfqXFDIgM8oZaJvks
+mmfy0ldqsvRirT8C0IqjPXuMU8AFOrA2dYTU2A7eUclHmIT+DqJWPgbsA1lorUha
+jXKP35IsHN5NjGpJToKOHxxn1aAWTZj5XOIcRuF8yni8EMxxV0ytmubmNAlxmHKz
+Ek+PpFejWGrpFGn4yaurcq0MDip3RYdzYKRzr1/N7i1agM33y17UpedSq7WhpEm0
+GkCWCectaHCBCAJEkidu144ZSm9t3OEzvTsLoY76RNFepN+8UoZMMpiLcEm3UX2w
+nCwiVpamoCMn5ou5KuEhwGrFk7XXfn4b5GPbMXPSbh0B8ZC3v8eDlWiinj3Cv6F3
+kbF9l4NT9W0dz3h7Kkd3iqKPrv+pDJ58l/5QaFIgOPmGIKR6qENiRtp0kKSf25L6
+lgYp+R1L3lRvDzjZFLOIOX5TrHJi+8UMIaYwwMqyVpA/fddzSnbVaVhleNC0TpeB
+jqTGY881xQ7CdLpKXB6MEYPJ6nPRMJoulvmRtR8wWRTQQ44Z1ar1NfuFQcAE7+J0
+dnEfFt009+5pk4InyM+6
+=BxGQ
 -----END PGP SIGNATURE-----
