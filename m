@@ -1,25 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/10/4
-Message-ID: <20130310141824.2da88e84@melee>
-Date: Sun, 10 Mar 2013 14:18:24 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: XSS in piwik 1.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/29/4
+Message-ID: <526F909B.6090503@openstack.org>
+Date: Tue, 29 Oct 2013 11:40:27 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE request for a vulnerability in OpenStack Keystone
 Content-Type: text/plain; charset=utf-8
 
-Quote:
-"Security: We would like to thank the Security Researcher Leone
-Pontorieri who responsibly disclosed a XSS vulnerability (which we’ve
-fixed) as part of our Security Bug Bounty Program."
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-from
-http://piwik.org/blog/2013/03/piwik-1-11/
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public,
+although an advisory was not sent yet.
 
-As we already discussed here recently, the piwik devs are fans of
-security by obscurity, so they don't provide further details.
+"""
+Title: Unintentional role granting with Keystone LDAP backend
+Reporter: The IBM OpenStack test team
+Products: Keystone
+Affects: Grizzly, Havana
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+Description:
+The IBM OpenStack test team reported a vulnerability in role change
+code within the Keystone LDAP backend. When a role on a tenant is
+removed from a user, and that user doesn't have that role on the
+tenant, then the user may actually be granted the role on the tenant.
+A user could use social engineering and leverage that vulnerability to
+get extra roles granted, or may accidentally be granted extra roles.
+Only Keystone setups using a LDAP backend are affected.
+"""
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+References:
+https://bugs.launchpad.net/keystone/+bug/1242855
+
+Thanks in advance,
+
+- -- 
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQIcBAEBCAAGBQJSb5CZAAoJEFB6+JAlsQQjgocP/1Gkak2GjjcTS1/rT9qQhjkF
+2kz6St5X0FVs/PR9GNpv5QXzBDDpidfQ1Qh6q+YP9yFdlBX1uZqHJjProb255PnZ
+8BboQxg+Te4g24vYPZJITEImv41HSiu0YTMI7bGpiHBToBGm5mivu8nLj8lr2Yqc
+SUw4bUPUQQELVUSE9UYGfyT3SHdrYHxt4yKj86sC8HsUfP8V5EgmRqZQbWV093EK
+PJ87cd5OvfAkUEymBZv81h/CzvneP5ywRcEWnWmaTJOWDSoMTIRh2EdeLHOrtUss
+AZAK8tJvKu2bENWLT7coLwFa9np8bTkDRF7ZoEiFJ1xCCCiOB/h9eKDBClyfd87L
+Gg1+3srnIldBH1EVQtRycugqVUiWLMIG7/mhq6tv7mP1qWLVs7A7K6FZqY9malXB
+20LVUFSLxpCPpekmQc4yEMiH2hrPGaw/PEWeRqEbidLTl08nlLLzWm8KjPLNyJOn
+I92e+IWGBhymM2avrAGKPSkUElSKmjK7UpxDU1PhZIIcEz0qpJfWD34X23yfZFiY
+zNum8Hfx//7CWITIi4S0P9iXpSgUBlMf1GIu2XL244mwFRy+at2DA/5M5dGWvDrL
+5YHtEluik97lmX25Rwcot0cb4pvwjMWPqVgCJ8ufmgqpSrP6sW1yjk0gw+YMRjlT
+K7DpeGdgW7nnDIO7hghF
+=jmSw
+-----END PGP SIGNATURE-----
