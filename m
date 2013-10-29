@@ -1,47 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/6
-Message-ID: <51483843.6030906@redhat.com>
-Date: Tue, 19 Mar 2013 04:04:51 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/29/7
+Message-ID: <526FDA6F.3010607@redhat.com>
+Date: Tue, 29 Oct 2013 09:55:27 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Henri Salo <henri@...v.fi>
-CC: oss-security@...ts.openwall.com, larry0@...com
-Subject: Re: Ruby CVEs
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request for a vulnerability in OpenStack Keystone
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/19/2013 04:00 AM, Henri Salo wrote:
-> Please note that in private email Larry said he will request CVEs
-> for these security vulnerabilities. Adding Larry as CC so he can
-> tell us if he already did that and if he didn't we can assign those
-> in this thread.
-
-Ah I did not know that =). Larry for future reference:
-
-http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
-
-> --- Henri Salo
+On 10/29/2013 04:40 AM, Thierry Carrez wrote:
+> A vulnerability was discovered in OpenStack (see below). In order
+> to ensure full traceability, we need a CVE number assigned that we
+> can attach to further notifications. This issue is already public, 
+> although an advisory was not sent yet.
 > 
+> """ Title: Unintentional role granting with Keystone LDAP backend 
+> Reporter: The IBM OpenStack test team Products: Keystone Affects:
+> Grizzly, Havana
+> 
+> Description: The IBM OpenStack test team reported a vulnerability
+> in role change code within the Keystone LDAP backend. When a role
+> on a tenant is removed from a user, and that user doesn't have that
+> role on the tenant, then the user may actually be granted the role
+> on the tenant. A user could use social engineering and leverage
+> that vulnerability to get extra roles granted, or may accidentally
+> be granted extra roles. Only Keystone setups using a LDAP backend
+> are affected. """
+> 
+> References: https://bugs.launchpad.net/keystone/+bug/1242855
+> 
+> Thanks in advance,
 
+Please use CVE-2013-4477 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRSDhDAAoJEBYNRVNeJnmT7QMQAK7NkOI3pj84aS7TKZNwdx9K
-DeO9UNuz2ROk2ZuHXpB+zTRrkPSRA/U3TBR7zzzbeCWM1umCCH3NtRnJQwboOc4B
-uhq07tf+n6CkXliCp95zjvm2JPscuvg14NTRaavE8bsMcJhnij7xNezcaB6HwnDe
-7HgLGdtnpCg836/4JLY2SAcVA61YKzYRi928bnp+juC1gp0AsE+pzt6SwdbUhH2X
-bP1vsJ9JI/TBDc+gV+pj03npJOY/HqCLniHS1rx1KpcDSlp5ragzx8N4USFU4bb/
-zgWrJOPuC17Nf+cKW1DEjs3pfL6qRmr/lWdQ8JwmNKIOyyQRRzvrdPgNPznyHfUC
-VzjjktDhDw4VceKDCXmu3G66FqJmNW801YdZBHEOhtCfijCMa3VfVYA0Sa+qqmOS
-BFVGZUCFlG0B0DESmBusn9pI1qEL9MG+N+pdFZqMPlZpLnzRRYmfHZxOyJZAanx4
-7Df+LAmnfcAvOOCQ9KEqZ5y1E3IZeeZw4O4wYgFVDCiZkgXXD9U/1oPzgdiy1xKW
-GTTCkz5k6X+c2CG6YJpqps0Xnc+WdsMqPLg/LS4kZYWW/dmP6jT3d3na3upK6U3P
-9HKlufz0G04YumpKISLfA6SX8j9GmMFSNmnIWUm5eXdKc8yRMqvvqctZqFYKnz15
-W5CufiIbUwWYOWwNVy+G
-=/+Vv
+iQIcBAEBAgAGBQJSb9pvAAoJEBYNRVNeJnmTmjoP/0A7aJSD7WuV8NaDE799Qb1S
+O80YYx6KrCmUCcVf3kkx1h0WfRo/3JDq74k0S4g9+ooXYkJZ8+aygWj1XtAEpOc9
+V4uKtExTXDJ+UDtvLHp0CFz+cLw+cK/no2uRbQA89EwZWYywe/6SdcSADBw8Rb55
+XJ897SBbHzkCSot7af/Ps+EnP4tN4YrxAilhyCvQbNfKOgCQhRmNh4dSnjaXDaAY
+fviQCpbKEYqvZvdxxIAfb2fqBsG/UaXBKOcivqw9UHMLN8w8tiHE1RfAHEPb4C48
+ElfpQ2VopTSp20wd1gwS6z76YzCSuDVMEB7kGbn3BIs0IIUsTNvzGbkpAGK6hAYW
+sc9Cyx3JcnmTDCAyxCvA90lwymU59PkylnUK+Sq9+ofX+ZU9HNtqX+uj+ohFoU1y
+E6WduJv3fCe8qs2cBk5RUgUvrJozQ2QYmpPTXYt09Aqtm5gODfTto1VS1IAjEy7N
+PZkF/MBsM+UoYEiDJwF1h5dpU8E/YHS3uEjOv9d3ngrSec6De6fseaAAdtBLriWt
+09iL7SnrJJxvZ13SmpKS8nBIyT/zPE7y2QXZvAxwxjmVU48kFFLoVbfK484KJoe3
+j013FiYW7e4kc4Udn24n1LzWMaFuGTlkyIpLDNYKMgfOdvFZsPXp0WIZDI7IR3Z8
+CVhPTI0G3m8QacTu+46n
+=Ux12
 -----END PGP SIGNATURE-----
