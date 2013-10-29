@@ -1,72 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/39
-Message-ID: <CAHmME9r8kr5fQ=PUHs507UyNPcVfNCD6LXRxirbt9Z1_Mei74Q@mail.gmail.com>
-Date: Wed, 27 Feb 2013 20:26:47 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/29/2
+Message-ID: <526F2825.5070500@redhat.com>
+Date: Tue, 29 Oct 2013 08:44:45 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Subject: Re: CVE Request: libxml2 external parsed entities issue
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 6:03 AM, Greg KH <greg@...ah.com> wrote:
-> I will say flat out that this is an impossible task to accomplish.
+On 10/28/2013 11:47 PM, Nicolas Grégoire wrote:
 
-Maybe so, and the theory of the whole situation may lead to some
-interesting debates.
+> For RedHat, it covers both but "libxml2 already provides mechanisms to
+> disable external entities which applications can use. Closing this flaw
+> as 'wontfix'": https://bugzilla.redhat.com/show_bug.cgi?id=915149
+> 
+> And the official page for the CVE isn't helpful:
 
-But let's step back from the lofty arguments and look at a very simple
-and practical situation:
 
-Facts:
+libxml has an API to disable external entity expansion. Applications
+linked against libxml, can use this API if they dont have enough
+protections built-in. For this reason we believe that the
+responsibility for correctly handling XEE lies with the app. and not
+the library.
 
-1. Nefarious folks notice security bugs, upon introduction commit,
-upon fix commit, and in between the two.
-2. Security bugs are often fixed in the upstream kernel.
-3. Various organizations and individuals like to maintain stable
-branches of a particular kernel version.
-4. They like these branches to be as secure as possible.
-5. They thus benefit from knowing which upstream changes affect
-security bugs that are present in their branch.
 
-This should be pretty plain and obvious.
 
-The solution involves informing such stable maintainers of the issue
-and of the fix. CVEs and oss-sec are supposed to help fulfill this
-purpose.
 
-Greg -- you then raise the issue, "Well who shall be responsible for
-such reporting? It's an awful lot of pressure to figure out what's a
-security fix and what isn't. I don't want to do that! Who wants to do
-that?"
-
-Plenty of people would gladly do that, but maybe that's besides the
-point, as is this objection.
-
-The solution to oss-sec being informed isn't for one person to be
-responsible for mailing oss-sec, but for there to be a general climate
-of, "oh, hey, I noticed this is security related. I've got a duty to
-email oss-sec about it, because people's kernels getting owned is not
-a good thing, and I like good things."
-
-Folks on security@ are likely in a position to make such observations.
-Other people on the various subsystem mailing lists are also in that
-position. Occasionally I myself will peruse Linus' tree and notice
-some silent fixes here or there (such as the tmpfs use-after-free
-yesterday). Lots of people are in a position to notice.
-
-How many of those people actually feel like it's a good and
-quasi-necessary thing to email oss-sec about it? Nefarious folks,
-obviously not. But it also seems like many of the individuals on
-security@ don't feel that way either. Nor do many core kernel
-developers (it would seem).
-
-If people in a position to notice security related fixes don't feel
-it's a good thing to pipe up to oss-sec, the practicality of the
-matter is that we'll be worse off security-wise. As Kurt said, we
-can't do it 100%, but I think if the general attitude would shift
-amongst many of those who are in a position to notice security fixes,
-we'd be a lot better off.
-
-The solution is really a practical one. Go to NYC for a day, ride
-around on MTA, and observe their flyers:
-
-"If you see something, say something."
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
