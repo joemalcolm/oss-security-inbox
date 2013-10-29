@@ -1,28 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/21/5
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF0904EC2B@IMCMBX01.MITRE.ORG>
-Date: Thu, 21 Mar 2013 14:05:13 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "larry Cashdollar" <larry0@...com>
-CC: "kseifried@...hat.com" <kseifried@...hat.com>
-Subject: RE: Ruby CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/29/9
+Message-ID: <52701E2D.2090600@redhat.com>
+Date: Tue, 29 Oct 2013 14:44:29 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, joernchen@...noelit.de
+Subject: Re: CVE Request: sup MUA Command Injection
 Content-Type: text/plain; charset=utf-8
 
-I agree with Alexander.  The CVE assignment process is never intended to introduce unnecessary delays to the publication of vulnerability information.  Merely noting whether CVEs have already been requested should reduce most of the risk of duplicates without forcing people to delay publication.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-- Steve
-
-
->-----Original Message-----
->From: Solar Designer [mailto:solar@...nwall.com]
->Sent: Wednesday, March 20, 2013 10:58 PM
->To: larry Cashdollar
->Cc: oss-security@...ts.openwall.com; kseifried@...hat.com
->Subject: Re: [oss-security] Ruby CVEs
+On 10/29/2013 01:30 PM, Salvatore Bonaccorso wrote:
+> Hi,
+> 
+> On full-disclosure list there was reported a command injection 
+> vulnerability in 'sup', a console-based email client.
+> 
+> [0]
+> http://rubyforge.org/pipermail/sup-talk/2013-October/004996.html 
+> [1] http://seclists.org/fulldisclosure/2013/Oct/272
+> 
+> For reference quoting the upstream announce:
+> 
+> ----cut---------cut---------cut---------cut---------cut---------cut-----
 >
->[snip]
->Overall, I think all of you have tried to do the right thing, and I
->would not want to have information withheld from this list merely to
->avoid duplicate CVE IDs in the future.  CVEs are handy, but the CVE
->assignment process should not affect what is posted publicly and when.
+> 
+Greetings,
+> 
+> Security advisory (#SBU1) for Sup
+> 
+> We have been notified of an potential exploit in the somewhat
+> careless way Sup treats attachment metadata in received e-mails.
+> The issues should now be fixed and I have released Sup 0.13.2.1 and
+> 0.14.1.1 which incorporates these fixes. Please upgrade immediately
+> and also ensure that your mime-decode or mime-view hooks are secure
+> [0], [1].
+> 
+> This is specifically related to using quotes (',") around filename
+> or content_type which is already escaped using Ruby
+> Shellwords.escape - this means that the string (content_type,
+> filename) is intended to be used _without_ any further quotes.
+> Please make sure that if you use .mailcap (non OSX systems), you do
+> not quote the string.
+> 
+> Credit goes to: joernchen of Phenoelit (http://phenoelit.de) who 
+> discovered and suggested fixes for these issues.
+> 
+> [0] https://github.com/sup-heliotrope/sup/wiki/Viewing-Attachments 
+> [1] https://github.com/sup-heliotrope/sup/wiki/Secure-usage-of-Sup
+> 
+> You can use 'gem' to upgrade or install sup. Please report any
+> issues to: https://github.com/sup-heliotrope/sup/issues
+> 
+> Regards, Gaute 
+> ----cut---------cut---------cut---------cut---------cut---------cut-----
+>
+>  Upstream fixed (as mentioned in announce) the issue in 0.13.2.1
+> and 0.14.1.1. Commits:
+> 
+> [2]
+> https://github.com/sup-heliotrope/sup/compare/release-0.13.2...release-0.13.2.1
+>
+> 
+[3]
+https://github.com/sup-heliotrope/sup/compare/release-0.14.1...release-0.14.1.1
+> 
+> Could a CVE be assigned for this issue?
+> 
+> Regards, Salvatore
+> 
 
+Please use CVE-2013-4478 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJScB4tAAoJEBYNRVNeJnmT3lIP/jgwlNSUJF/OotzGXbjmHOYy
+kehaEwHRkUFi4mhb4uQSJUG69MFKkNb+6c1Cs3GMfPtChs5A1D2NOJAaEZ3LExjO
+CMHdvryhYuQepCdImHgJ9RhMcFSqmAQ1CM/Uo2DNRPko5fcp//QwZHeNEPvbnK5w
+d13Jw6exmXJ+iaanXyGYUkHY3btyY17i4GYdQN7ToTusULLk/JJ6KtHLhAZRQaK3
+OxI84NtFFTDAtgLhDQUdCN8jd0P0iTjvoWsFsASLVMg0XDNcQ5yCR09oIQK9Wz38
+nRpyUah1bkVBMUL67oTCgu5bRAMAwB3j6x14/b5utfFVIuSiRRh0RQEqwy2LYCUs
+yJBRTt+lpKAgroX+q4vNMqPkHqLLEayaI2I4xFR6YrR4s326aXenTfAKmC5LgHxL
+OSvm2p8kExjHTlF+DCRErNUMDdLGS64D4DlViWF4wk6h6O0FxtzOFoVhgIV6A7pr
+fiMzRmVX5SOId3hz+dmyjXMq1qcSn3YECDtCjj+fc5soeknhV/JWJN8oA88nwyPY
+8TQsERRdfOL0rtVkT3z+oYRczAZYNIgxjE9IDhliAlSwo39Th4K6AbyM7ohsdNd1
+gGVi1fzz0T5mPWDi/HCoBN9iZkOQeqK1QCiQChefzcqEtQTPo+QkMaB5Wj7yJs2F
+uax9T6urcVzVqJFJZqml
+=CJu3
+-----END PGP SIGNATURE-----
