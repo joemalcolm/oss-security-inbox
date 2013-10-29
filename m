@@ -1,50 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/12
-Message-ID: <20130604191716.GH3638@redhat.com>
-Date: Tue, 4 Jun 2013 13:17:16 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: CVE request: libsrtp buffer overflow flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/29/6
+Message-ID: <526FDA0B.5090004@redhat.com>
+Date: Tue, 29 Oct 2013 09:53:47 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: libxml2 external parsed entities issue
 Content-Type: text/plain; charset=utf-8
 
-* [2013-06-04 12:43:20 -0600] Kurt Seifried wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->On 06/04/2013 09:51 AM, Vincent Danen wrote:
->> A buffer overflow flaw was reported in libsrtp, Cisco's reference
->> implementation of the Secure Real-time Transport Protocol (SRTP),
->> in how the crypto_policy_set_from_profile_for_rtp() function
->> applies cryptographic profiles to an srtp_policy.  This could allow
->> for a crash of a client linked against libsrtp (like asterisk or
->> linphone).
->>
->> A pull request in git has a patch to correct this issue (doesn't
->> look like it's been merged into master yet though).
->>
->> References:
->>
->> http://seclists.org/fulldisclosure/2013/Jun/10
->> https://github.com/cisco/libsrtp/pull/26
->> https://bugzilla.redhat.com/show_bug.cgi?id=970697
->
->Please use CVE-2013-2139 for this issue.
+On 10/29/2013 01:53 AM, Nicolas Grégoire wrote:
+> 
+>> libxml has an API to disable external entity expansion.
+> 
+> Are you talking about using xmlSetExternalEntityLoader()?
+> 
+> It works, but changing the libxml default behavior to not being 
+> vulnerable to XXE seems a good idea.
+> 
+> Cheers, Nicolas
 
-Thanks.  I noted the wrong commit above, it should be this one:
+This then breaks applications that need XXE to work, like docbook. We
+can't disable every potential dangerous feature across the board, some
+applications actually need these to work.
 
-https://github.com/cisco/libsrtp/pull/27
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
->> As an aside, when I was poking around in github, I also found this
->> but I don't know anything about libsrtp so I don't know if this is
->> something that can be triggered by a remote user or if this is just
->> a hardening thing, but the commit message is "Security fix to not
->> ignore RTCP encryption, if required."
->>
->> https://github.com/cisco/libsrtp/commit/8ad50a05279b61a382da3cc730ff1560ab4272e8
->>
->>
->>
->> Is there someone more familiar with libsrtp that might be able to
->> comment on whether or not this is a flaw (so can a remote user
->> request to disable encryption and do ... something?)
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+iQIcBAEBAgAGBQJSb9oLAAoJEBYNRVNeJnmTAPwP/1+tiPejcAQnzJPiJvuMZSEb
+itNzuCCJn/IRBDUMcMXOV35004nKNnvS1vtShJOR1FFr+8BLHgXnk/t2Az69LTQp
+zWPWJGa0wvBaAvTJmkgYYSytciCs/J9blDt6J3QU1azKPaGHoj+nUsOYLYWDen+e
+myo2pFzLwUkGlmIGAm7FBj1cTzxXKq4oGnj1gsIj6SyxbSMLz/sToNd85VGEvnzw
+2dTRoWKxYEDabGbAID6N4lPHK90I5g8lcz/DE/4/zN9SPygcK7dPm3huDshSmV+m
+it2YalcvsrvoX4VYDs7RBGZhstpxdqY4IWShrXcyNU+ryC/Yh15FnTA0cMyNONkL
+FyddxOqxnKFBg1kmmew4mKOHZRv4ka/liG7Lqp2Sl30gjvbooBjIhKCC57QeVWz5
++CNee5kyIrh0ydcXCWVRPnOrn4lrtj+42XDm9ucJvbmJCYO3PAD01m7TYM0le9YW
+tFxsQx6p4ryJphcVIZQf5cs1bxEj8kNDvRPSsXC7xNuLUblgq9JZTVrBPm8V8E+8
+snreCmrUBvcB65AsK/x5zPIAYV9oymOc+bZLjdPpuXsOjWHhO3a/U2QpJ/XW++DC
+2LjgsY0JoMweQcHmQtL+Pcd8FSJfpxNiMP/QFVMd+JarNH6+j/SpKPqeg8YPYWG4
+mEXq+2dEXGsOBsEt+dOh
+=lAZF
+-----END PGP SIGNATURE-----
