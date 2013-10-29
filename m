@@ -1,45 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/3
-Message-Id: <201312300421.rBU4Lh1x023525@linus.mitre.org>
-Date: Sun, 29 Dec 2013 23:21:43 -0500 (EST)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, jakob@...oblell.com
-Subject: Re: CVE request: SMF 1.1.19, 2.0.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/29/8
+Message-ID: <20131029193008.GA15526@eldamar.local>
+Date: Tue, 29 Oct 2013 20:30:08 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: sup MUA Command Injection
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> http://www.jakoblell.com/blog/2013/12/13/multiple-vulnerabilities-in-smf-forum-software/
+On full-disclosure list there was reported a command injection
+vulnerability in 'sup', a console-based email client.
 
-> fix the clickjacking problem (via an X-Frame-Options header)
+ [0] http://rubyforge.org/pipermail/sup-talk/2013-October/004996.html
+ [1] http://seclists.org/fulldisclosure/2013/Oct/272
 
-Use CVE-2013-7234.
+For reference quoting the upstream announce:
 
+----cut---------cut---------cut---------cut---------cut---------cut-----
+Greetings,
 
-> the username faking possibility via multiple consecutive spaces
+Security advisory (#SBU1) for Sup
 
-Use CVE-2013-7235.
+We have been notified of an potential exploit in the somewhat careless
+way Sup treats attachment metadata in received e-mails. The issues
+should now be fixed and I have released Sup 0.13.2.1 and 0.14.1.1 which
+incorporates these fixes. Please upgrade immediately and also ensure
+that your mime-decode or mime-view hooks are secure [0], [1].
 
+This is specifically related to using quotes (',") around filename or
+content_type which is already escaped using Ruby Shellwords.escape -
+this means that the string (content_type, filename) is intended to be
+used _without_ any further quotes. Please make sure that if you use
+.mailcap (non OSX systems), you do not quote the string.
 
-> the Unicode homoglyph attack has not yet been fixed
+Credit goes to: joernchen of Phenoelit (http://phenoelit.de) who
+discovered and suggested fixes for these issues.
 
-Use CVE-2013-7236.
+[0] https://github.com/sup-heliotrope/sup/wiki/Viewing-Attachments
+[1] https://github.com/sup-heliotrope/sup/wiki/Secure-usage-of-Sup
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+You can use 'gem' to upgrade or install sup. Please report any issues
+to: https://github.com/sup-heliotrope/sup/issues
 
-iQEcBAEBAgAGBQJSwPRcAAoJEKllVAevmvmsQ1kH/2ZrCB1o551VzG5TAxOAaV3g
-dkG3HqHp9Z05jwH1jlaljj7VSC2MLRCItCZzPuKHhMtY5c2xnHcDrvKNz+VPL+7F
-82zRpkH5R7VWKMH2IOBwnnObEGMubIX5v19/0U0sbp3C9BO2pe2s7lQ9g+5DyFLI
-7VbAy56Qaujvwz+NE9AtSmFXkLeuvXMCVHz01zKnc994wQmxqyhD0H/ZwtvYcDhC
-mV2mcpBr2kuaF5nNxveNDZ+t4OVBA6rlqxchGW6dO4ywm/O9som0aVKRQjU2/RZw
-7eyl4FItvZwFfgLYdkJotF/G/0II3gajssSR4mmMoN+nvOSQBJDj7+EpWBFVlqA=
-=2fsf
------END PGP SIGNATURE-----
+Regards, Gaute
+----cut---------cut---------cut---------cut---------cut---------cut-----
+
+Upstream fixed (as mentioned in announce) the issue in 0.13.2.1 and
+0.14.1.1. Commits:
+
+ [2] https://github.com/sup-heliotrope/sup/compare/release-0.13.2...release-0.13.2.1
+ [3] https://github.com/sup-heliotrope/sup/compare/release-0.14.1...release-0.14.1.1
+
+Could a CVE be assigned for this issue?
+
+Regards,
+Salvatore
