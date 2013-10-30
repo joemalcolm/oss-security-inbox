@@ -1,28 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/12
-Message-ID: <20130409135810.GB1834@gmail.com>
-Date: Tue, 9 Apr 2013 14:58:11 +0100
-From: Athmane Madjoudj <athmanem@...il.com>
-To: Breno Silva <breno.silva@...il.com>
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request -- ModSecurity (X < 2.7.3): Vulnerable to XXE attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/30/5
+Message-ID: <52713003.2030107@redhat.com>
+Date: Wed, 30 Oct 2013 10:12:51 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Tollef Fog Heen <tfheen@...nish-software.com>
+CC: ingvar@...pill-linpro.com, ssm@...ian.org, team@...urity.debian.orgteam, Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: CVE number needed for Varnish DoS, also heads-up
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 09, 2013 at 10:43:48AM -0300, Breno Silva wrote:
-> Good. Do you have any idea when it will be available for users ?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Adding oss-security to cc as per
+http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
+since it's public.
+
+
+On 10/30/2013 08:05 AM, Tollef Fog Heen wrote:
+> Hi Kurt,
 > 
-> The guy who discovered it want to write a blog post with details. So i ask
-> him to wait at least when we have some packages backported.
+> I'm being told by the Debian security team that they can't assign a
+> CVE as there has been a public bug report about this issue, but
+> that you can help.  (https://www.varnish-cache.org/trac/ticket/1367
+> is the bug report)
 > 
-> Thanks
+> Can you please get me a CVE id?
 > 
-<...snip...>
+> Thanks, - Tollef Fog Heen
+> 
+> ]] Tollef Fog Heen
+> 
+>> Hi,
+>> 
+>> (Cc to varnish maintainer in Debian and Fedora)
+>> 
+>> we've had a denial of service attack reported in Varnish.  I
+>> believe we should get this fixed in stable (we're working on a
+>> patch), but I'd like a CVE # to go with the advisory.  Draft
+>> advisory at http://etherpad.wikimedia.org/p/WnwRT4FH6e
+>> 
+>> Regards, -- Tollef Fog Heen Technical lead | Varnish Software AS 
+>> 📞: +47 21 98 92 64 We Make Websites Fly!
+> 
 
-We should have epel5 packages in next 24H, but note that they will not be
-available in stable repos until after 15 days or get enough testing from
-users (EPEL policy).
+Please use CVE-2013-4484 for this issue.
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-Thanks.
-
--- Athmane
+iQIcBAEBAgAGBQJScTADAAoJEBYNRVNeJnmTDqIQALHYdrKe6DwLSO53z/RhXApG
+iZbKmalHlO8SEoMP8DCW6ln20/eBIzn/vgNoBQUy8DSt2prnllaAjLpXtZkPwX0O
+ZG6DQOq79FeEGEHA5/3VN7gFYoFKYYYrPnfJGrQ//RmT1wh/IFJweOONWi0w686/
+APfER2THBfe05jGEti6MB6JcV31S4VtEWNBqToasW7UInHqxuG2ryQsTMaiU/oXW
+FR29oTbRoBr8gPTOX5aroQuH9gO72WNcRQ1SXupQAfUYwyM/9Y2KrnYR5xDg8Uop
+n2A4ON2bqFxD0vmqod8SmB96FoTRzMemBTpqx4pCEEdEV2B9OVD7c+K3U5+6QFLP
+KoJc3hdHqZj2T98OZyVKfWFzkZPy/WHOX8pjgzgPmNR9syvufoe5zL9iox8HvSk6
+1mhq5xpXL00wu4Z9V7DdiSKZUJ1zEWSukZy3gTrGIDDYpX6lkxtnLmIH3gaM3tvY
+v5QEYPwBsDagnxsslrt5gA8gE4Hf0j/b9AjGngK96SkN+77zkHo8qjAIR373w9/k
+SRXc4OFs2V0YB1rm4jV44X2hY2UbWN6631Hy60KZrknWkA6Ij/+lslZ4ShUK2LXt
+Gc512k/q6MrkguCesHCpTmWaHO+Q+HK9e+vkpoj8jnj+rNHFGyFL+jO4vXN2QuXk
+mBZpOoGORQnvfaSYBadq
+=cio8
+-----END PGP SIGNATURE-----
