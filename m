@@ -1,73 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/07/1
-Message-ID: <52A29FCF.9020909@redhat.com>
-Date: Fri, 06 Dec 2013 21:10:55 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/30/2
+Message-ID: <5270917A.4070203@redhat.com>
+Date: Tue, 29 Oct 2013 22:56:26 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ClamAV vulnerabilities
+To: mmcallis@...hat.com, oss-security@...ts.openwall.com
+CC: carnil@...ian.org
+Subject: Re: CVE Request: sup MUA Command Injection
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/29/2013 06:35 PM, George Theall wrote:
+On 10/29/2013 08:26 PM, Murray McAllister wrote:
+> On 10/30/2013 07:44 AM, Kurt Seifried wrote:
+>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>> 
+>> On 10/29/2013 01:30 PM, Salvatore Bonaccorso wrote:
+>>> Hi,
+>>> 
+>>> On full-disclosure list there was reported a command injection 
+>>> vulnerability in 'sup', a console-based email client.
+>>> 
+>>> [0] 
+>>> http://rubyforge.org/pipermail/sup-talk/2013-October/004996.html
+>>>
+>>> 
+[1] http://seclists.org/fulldisclosure/2013/Oct/272
+>>> 
+>>> For reference quoting the upstream announce:
+>>> 
+>>> ----cut---------cut---------cut---------cut---------cut---------cut-----
+>>>
+>>>
+>>
+>>> 
+Greetings,
+>>> 
+>>> Security advisory (#SBU1) for Sup
+>>> 
+>>> We have been notified of an potential exploit in the somewhat 
+>>> careless way Sup treats attachment metadata in received
+>>> e-mails. The issues should now be fixed and I have released Sup
+>>> 0.13.2.1 and 0.14.1.1 which incorporates these fixes. Please
+>>> upgrade immediately and also ensure that your mime-decode or
+>>> mime-view hooks are secure [0], [1].
+>>> 
+>>> This is specifically related to using quotes (',") around
+>>> filename or content_type which is already escaped using Ruby 
+>>> Shellwords.escape - this means that the string (content_type, 
+>>> filename) is intended to be used _without_ any further quotes. 
+>>> Please make sure that if you use .mailcap (non OSX systems),
+>>> you do not quote the string.
+>>> 
+>>> Credit goes to: joernchen of Phenoelit (http://phenoelit.de)
+>>> who discovered and suggested fixes for these issues.
+>>> 
+>>> [0]
+>>> https://github.com/sup-heliotrope/sup/wiki/Viewing-Attachments 
+>>> [1]
+>>> https://github.com/sup-heliotrope/sup/wiki/Secure-usage-of-Sup
+>>> 
+>>> You can use 'gem' to upgrade or install sup. Please report any 
+>>> issues to: https://github.com/sup-heliotrope/sup/issues
+>>> 
+>>> Regards, Gaute 
+>>> ----cut---------cut---------cut---------cut---------cut---------cut-----
+>>>
+>>>
+>>> 
+Upstream fixed (as mentioned in announce) the issue in 0.13.2.1
+>>> and 0.14.1.1. Commits:
+>>> 
+>>> [2] 
+>>> https://github.com/sup-heliotrope/sup/compare/release-0.13.2...release-0.13.2.1
+>>>
+>>>
+>>>
+>>
+>>> 
+[3]
+>> https://github.com/sup-heliotrope/sup/compare/release-0.14.1...release-0.14.1.1
+>>
+>>>
+>>>
+>> 
+Could a CVE be assigned for this issue?
+>>> 
+>>> Regards, Salvatore
+>>> 
+>> 
+>> Please use CVE-2013-4478 for this issue.
 > 
-> On Nov 29, 2013, at 12:58 PM, Kurt Seifried <kseifried@...hat.com>
-> wrote:
+> To confirm, is this CVE for both the content_type issue and the
+> filename issue?
 > 
-> On 11/29/2013 02:20 AM, Sergey Popov wrote:
->>>> It's a bit late, but i would like to request CVE for two 
->>>> vulnerabilities, that present in ClamAV before 0.97.7[1]:
->>>> 
->>>> 1) A double-free error exists within the 
->>>> "unrar_extract_next_prepare()" function 
->>>> (libclamunrar_iface/unrar_iface.c) when parsing a RAR file.
->>>> 
->>>> 2) An unspecified error within the "wwunpack()" function 
->>>> (libclamav/wwunpack.c) when unpacking a WWPack file can be 
->>>> exploited to corrupt heap memory.
->>>> 
->>>> [1] - https://secunia.com/advisories/52647/
->>>> 
+> Thanks,
 > 
-> The blog entry
-> 
-> http://blog.clamav.net/2013/03/clamav-0977-has-been-released.html
-> 
-> contains no mention of security flaws,
-> 
->> Hrm, at least the copy I see says “ClamAV 0.97.7 addresses
->> several reported potential security bugs.”. While it doesn’t
->> identify the issues per se, it does at least indicate this is a
->> security release.
-> 
->> Jan Lieskovsky talked about both of these last March — see
->> <http://seclists.org/oss-sec/2013/q1/672>. The double-free was
->> fixed in this commit :
-> 
->> https://github.com/vrtadmin/clamav-devel/commit/b2212def1bb92b5ac45c82da100dc0d1376de6a3
->
->>  and the 'wwunpack()’ issue maps to :
-> 
->> https://bugzilla.clamav.net/show_bug.cgi?id=6806
-> 
->> Hope that helps,
-> 
-> 
-> Also the ChangeLog:
-> 
-> https://github.com/vrtadmin/clamav-devel/blob/0.97/ChangeLog
-> 
-> Doesn't contain any mention of the above flaws. Can you provide
-> links to source code/bug reports or something so I can verify this?
-> Thanks.
+> -- Murray McAllister / Red Hat Security Response Team
 
-Just a heads up I know at least one person is trying to get details
-from SourceFire (they bought ClamAV some time back). Until I can match
-issues up I can't assign CVEs.
+CVE-2013-4478 is for the issue specifically covered in
+http://seclists.org/fulldisclosure/2013/Oct/att-272/whatsup.txt
 
-> George
-> 
+which is
+https://github.com/sup-heliotrope/sup/commit/8b46cdbfc14e07ca07d403aa28b0e7bc1c544785
+(security: shellwords escape attachment file names to prevent remote
+code execution).
+
+I missed that they fixed a second issue:
+
+https://github.com/sup-heliotrope/sup/commit/ca0302e0c716682d2de22e9136400c704cc93e42
+(security: prevent remote command injection in content_type)
+
+Pleas use CVE-2013-4479 for this
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -75,17 +119,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSop/OAAoJEBYNRVNeJnmTOl8P/3F+8wBFgC2AHXllbYnPa4ZP
-HDYbDCaTsqNQdBdFyZuKuwN7UbnUnXL2HYm+VQrRf6HeMjXj4ghPBasnzwQrHhcR
-9wlBvKwDJkn5LRQJItHZ7AG6T3FlkKA2ksFFkzLgKmRgT+aW3TVlj6MJP8uaD5KQ
-kivaiXwToPNGz8u/HiDB9DLDBDz+ObImhNQEClmrQkPLUFVGmShkp6UZGVen7MiH
-9iCrvtxHQ12fevdXfqOHFuFCtrn6X23Y8uccCWdAZWFx0t8dlhC0loXugIrnL0xv
-kxoSsDAMtPWB1FkO31hVSFXlvPSe90Ji7k1Yow9hThncL3qbcWQJ7hR31qVQeEkp
-dXBwLAXbi5Bd2zZJvpGtyDfPKJtgzqtXTMQXSeWj2FcSkBqk9sOjn8tCyoCiBNF7
-V2ayPrW/PCaVhDsCtwICbbKSnz+M7hIc6ggCK7Ng4QcvBRXkAM6k07+H5S9VBmdu
-BowhiVPSjErHUDqL4llHjnfmBS44FatEWkyz13/9nh5+avHAX48vQp8FFm1oqPvc
-K/AlfVNFXkp1GF2bb/j7qqkv9J7fTqyIN6zFM8BrDjCb8QZZ98CtAlYnIh4UVTRE
-IOEGGVY/2qdYP+p6+1TXeDq83uK7uXve/8Sbg0X8mWe4wGkZIgkx5Ymi5yXgmIr5
-WXq9kVEcAGVG3C55rNZX
-=1yV3
+iQIcBAEBAgAGBQJScJF5AAoJEBYNRVNeJnmT57MQANYex5v0uoNLQ6LfkHM16hnH
+quIf0urWlIC/CwY9KfkON8rh3seP1J9H+0iDcdOIzxCvDqFUXMTY4gJU5G1j1DDh
+SDoXoMW94kzW8xWb8tTJWqqfzSXb/teOUtlqPdcbzper15OjU6R6Ga9wJ6zzuQQZ
+w8dVH27oskgqmEplu/2vT+uop4JIv0fR0um6QiWdKHEpfGsAVjrm81OhEW519cvn
+H4FNSzgNl4Q+KuF3V1cZBsFDT/bCmm+MrMMYccAVn+anGV62H4Az8wM7aaDU4aTZ
+/mhiPgoNxtRbE+NzeAGDbNw9gsNtOzSRI+/t/rd605z3hhwwfNlF0MCyU1wiGhjF
+K2KjKnil4VlyUewjxNhLJRVzJ6wrJtKOrQi/od6eBN6Hv3AJhrK7RqmnzxBWlRQ1
+1/JBRL5qJiYquesgMwd4GPrhpar04p38+FMYnWbCcNkuAlqoNiivI8yt2knvLRKr
+mDjJAJY7FlxWd7Flz0/6GfPj3U0lxRn0vEFEPmy+BhnYZY5qnoP/77Kv1tuyWcbj
+/gzhrGTtkrNMaBEvYJ3UQtKCYlCRpQCvnWnQ9X/aG3aEGUPfxsVCWb42vht66AWg
+03n0GVAjtf7mWgFJ9KVVEgRf0oId6AJcSAGMSmnPqsrT55d7x84tTycqR0SRZ0Fo
+jWuwNu4O8S4oj9Z350z/
+=Zaxg
 -----END PGP SIGNATURE-----
