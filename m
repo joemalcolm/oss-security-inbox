@@ -1,61 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/10
-Message-ID: <51082BEA.2010101@openstack.org>
-Date: Tue, 29 Jan 2013 21:07:06 +0100
-From: Thierry Carrez <thierry@...nstack.org>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA 2013-002] Backend password leak in Glance error message (CVE-2013-0212)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/30/1
+Message-ID: <52706E57.5090405@redhat.com>
+Date: Wed, 30 Oct 2013 13:26:31 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Kurt Seifried <kseifried@...hat.com>, carnil@...ian.org
+Subject: Re: CVE Request: sup MUA Command Injection
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 10/30/2013 07:44 AM, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 10/29/2013 01:30 PM, Salvatore Bonaccorso wrote:
+>> Hi,
+>>
+>> On full-disclosure list there was reported a command injection
+>> vulnerability in 'sup', a console-based email client.
+>>
+>> [0]
+>> http://rubyforge.org/pipermail/sup-talk/2013-October/004996.html
+>> [1] http://seclists.org/fulldisclosure/2013/Oct/272
+>>
+>> For reference quoting the upstream announce:
+>>
+>> ----cut---------cut---------cut---------cut---------cut---------cut-----
+>>
+>>
+> Greetings,
+>>
+>> Security advisory (#SBU1) for Sup
+>>
+>> We have been notified of an potential exploit in the somewhat
+>> careless way Sup treats attachment metadata in received e-mails.
+>> The issues should now be fixed and I have released Sup 0.13.2.1 and
+>> 0.14.1.1 which incorporates these fixes. Please upgrade immediately
+>> and also ensure that your mime-decode or mime-view hooks are secure
+>> [0], [1].
+>>
+>> This is specifically related to using quotes (',") around filename
+>> or content_type which is already escaped using Ruby
+>> Shellwords.escape - this means that the string (content_type,
+>> filename) is intended to be used _without_ any further quotes.
+>> Please make sure that if you use .mailcap (non OSX systems), you do
+>> not quote the string.
+>>
+>> Credit goes to: joernchen of Phenoelit (http://phenoelit.de) who
+>> discovered and suggested fixes for these issues.
+>>
+>> [0] https://github.com/sup-heliotrope/sup/wiki/Viewing-Attachments
+>> [1] https://github.com/sup-heliotrope/sup/wiki/Secure-usage-of-Sup
+>>
+>> You can use 'gem' to upgrade or install sup. Please report any
+>> issues to: https://github.com/sup-heliotrope/sup/issues
+>>
+>> Regards, Gaute
+>> ----cut---------cut---------cut---------cut---------cut---------cut-----
+>>
+>>   Upstream fixed (as mentioned in announce) the issue in 0.13.2.1
+>> and 0.14.1.1. Commits:
+>>
+>> [2]
+>> https://github.com/sup-heliotrope/sup/compare/release-0.13.2...release-0.13.2.1
+>>
+>>
+> [3]
+> https://github.com/sup-heliotrope/sup/compare/release-0.14.1...release-0.14.1.1
+>>
+>> Could a CVE be assigned for this issue?
+>>
+>> Regards, Salvatore
+>>
+>
+> Please use CVE-2013-4478 for this issue.
 
-OpenStack Security Advisory: 2013-002
-CVE: CVE-2013-0212
-Date: January 29, 2013
-Title: Backend password leak in Glance error message
-Reporter: Dan Prince (Red Hat)
-Products: Glance
-Affects: All versions
+To confirm, is this CVE for both the content_type issue and the filename 
+issue?
 
-Dan Prince of Red Hat discovered an issue in Glance error reporting. By
-creating an image in Glance by URL that references a mis-configured
-Swift endpoint, or if the Swift endpoint that a previously-ACTIVE image
-references for any reason becomes unusable, an authenticated user may
-access the Glance operator's Swift credentials for that endpoint. Only
-setups that use the single-tenant Swift store are affected.
+Thanks,
 
-Grizzly (development branch) fix:
-http://github.com/openstack/glance/commit/e96273112b5b5da58d970796b7cfce04c5030a89
-
-Folsom fix (included in upcoming Glance 2012.2.3 stable update):
-http://github.com/openstack/glance/commit/96a470be64adcef97f235ca96ed3c59ed954a4c1
-
-Essex fix:
-http://github.com/openstack/glance/commit/37d4d96bf88c2bf3e7e9511b5e321cf4bed364b7
-
-References:
-https://bugs.launchpad.net/glance/+bug/1098962
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-0212
-
-- -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJRCCvqAAoJEFB6+JAlsQQj9scP/1bQzhQ5lA/jNoPIPMlUKOr4
-NlrT9+QA6pF3xOjTQeyViTTUfMn1YHdOTS8bi/NeSlL3UuEhpdCb59APwqmZva3u
-Tx+so6L3nc5qNRdDAAr6oNBYmD08T41ceLpzjv9BbTgPxD4gUCg9WeySBAa+I7MU
-1w1hvhObhQWZ8Xvqf/2tKTrMpGuJOS/0aoMSQUMqFR47moyYgBznNT6J3FaC3haE
-jRh4RSv7XKN2MU0Cv05m/txXNUTP6rtl+qAiGW9UZvhTHY/kafaJLi/HuGkmANf0
-fkuoKL5VxFYoIbHDlJ+ymPUz/jgoZJNkvvmS5mQH7YFBdgAvzAIAYJ4jk8uOMMmo
-AHqaVdfZYCWRP6pMDzjnU5EGhRrgt2RafWsnU8MyYePrF3G8dcikvQlIki+PlmPT
-+zXjPoIsirFJh3XSTRNbUDwIww6AuBbhxgJD78NhQY/12MC5zELOasWcpTKPyvLs
-HTIe8AbVLf5Z0blZdUZHGlzFBQlgPU3ydIjY1UStWPYNCQs2hTrtoq9y68LmDzix
-jRQ3jmKhMGsLwlrcskSyD/1qGGD6NNPRJwME7pXspy7mBlN0LS9OLRwhYHTzNGwx
-YTSKhy12xooqYkaJncZEduTBKwMJLMwk/HZxD7KRuKPM7xoK64mkyz/03rUsQORj
-na6Kqw9rcPfJG0jfh3/c
-=PyUp
------END PGP SIGNATURE-----
+--
+Murray McAllister / Red Hat Security Response Team
