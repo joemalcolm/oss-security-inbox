@@ -1,32 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/1
-Message-ID: <51538CD8.20204@redhat.com>
-Date: Thu, 28 Mar 2013 11:20:40 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: Corey Bryant <coreyb@...ux.vnet.ibm.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Security vulnerability tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/31/4
+Message-ID: <5272A4AA.4000303@redhat.com>
+Date: Thu, 31 Oct 2013 12:42:50 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: gnutls/libdane buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On 03/28/2013 06:54 AM, Corey Bryant wrote:
-> Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 10/31/2013 07:47 AM, Tomas Hoger wrote:
+> On Thu, 24 Oct 2013 16:04:10 +0200 Marcus Meissner wrote:
+> 
+>> GNUTLS just posted a security adivsory which needs a CVE:
+>> 
+>> http://www.gnutls.org/security.html#GNUTLS-SA-2013-3 
+>> GNUTLS-SA-2013-3
+> 
+> It is updated now and recommends using 3.1.16 or 3.2.6, which
+> correct off-by-one issue in the original fix: 
+> https://gitorious.org/gnutls/gnutls/commit/0dd5529509e46b11d5c0f3f26f99294e0e5fa6dc
 >
-> I'd like to get a better understanding of tools used in the open source
-> community (kernel and user space) to detect security vulnerabilities.
->
-> I have a list below to get started.  If anyone has any input, I'd
-> appreciate it!
->
-> I'll plan on updating http://oss-security.openwall.org/wiki/tools with
-> anything it doesn't already have.
+>  I assume this needs a new CVE.
 
-Hi,
+Yup, winner, winner chicken dinner.
 
-I am sometimes using Splint. From http://www.splint.org/ "Splint is a 
-tool for statically checking C programs for security vulnerabilities and 
-coding mistakes. With minimal effort, Splint can be used as a better 
-lint. If additional effort is invested adding annotations to programs, 
-Splint can perform stronger checking than can be done by any standard lint."
+Please use CVE-2013-4487 for this issue.
 
-Cheers.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
+iQIcBAEBAgAGBQJScqSqAAoJEBYNRVNeJnmT1XQP/2iFwQR9QAu6P2eLVhi7u3zE
+Qimn3Imq/xz3haWsGQxg8+FCCRktxLqufCP44Avh71qDKj3mt/fjeXV2SKeCWU3C
+RHIpm1RUCtGjJvHgamd2G64KVOcE5Gq78l7gd0vyL+SiTzvRjky+IpnIPhX0aN8+
+IwSnPWPpzKNI2sE/OXNcDEZAzUoEEnQuhef/p/+Jdv/cruiQNfBOcI133zQZvPHh
+NYTfV9Tj1zl7QKP6qJ4Ix4NwYztcWobkhlIqoCrblASj7js/0rx0TQucp45G1Jsg
+0M/pCm1LCEsy8wzTYwp57TX5xuj/hSFJ2NErYQgbM7x0FjbCBGUeyzAPMtCYxwvh
+2xEljP8ixkiug5gGusefGAIfXDkmb/wIBYUgKJc0+C+xsBE1wFlAbdo353df0FJ5
+A7VNPY3AINqGbuHgtOOD5OO4Ul4G3Gjdw2PLMQrbk3jagpqoIo1c0MOmt+Z3lGsL
+fLuNeV5+RgOnjjM7zMH2BGysWAyU98iURxnImA0lYwAqvlfXIxof/KI3+z2rfREh
+f2aX4XqL+qVJSbRyyNlXV8x9HEwTtlYchx54lngTGHRGPFpxFshK0C+Gf+/i6KT/
+Yh2No2k5x99UYhDV0pWr8unX0/9J38foJlzO9uVuV46S0x788s2g/1fXZEB7frzy
+LBfr2/j9PPjzTY73sEPy
+=h/nI
+-----END PGP SIGNATURE-----
