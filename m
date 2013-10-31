@@ -1,52 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/17
-Message-Id: <CFC87055-AAB2-4CAE-BA2A-8E15D16DA39C@stufft.io>
-Date: Wed, 21 Aug 2013 16:28:03 -0400
-From: Donald Stufft <donald@...fft.io>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Insecure Software Download in pip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/31/3
+Message-ID: <527289B8.70304@openstack.org>
+Date: Thu, 31 Oct 2013 17:47:52 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: [OSSA 2013-029] Potential Nova denial of service through compressed disk images (CVE-2013-4463, CVE-2013-4469)
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Aug 21, 2013, at 4:19 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+OpenStack Security Advisory: 2013-029
+CVE: CVE-2013-4463, CVE-2013-4469
+Date: October 31, 2013
+Title: Potential Nova denial of service through compressed disk images
+Reporter: Bernhard M. Wiedemann (SUSE) & Pádraig Brady (Red Hat)
+Products: Nova
+Affects: All versions
 
-> Signed PGP part
-> On 08/07/2013 11:23 AM, Donald Stufft wrote:
-> > 
-> > On Jul 31, 2013, at 4:11 AM, Kurt Seifried <kseifried@...hat.com 
-> > <mailto:kseifried@...hat.com>> wrote:
-> > 
-> >> Ok I have no info on that CVE, is it embargoed? I can't find it
-> >> in google after a quick search. I need to see that one before I
-> >> can assign anything. As for the reserved thing:
-> > 
-> > This CVE has been fixed, and it is for the issue where pip prior to
-> > 1.3 did not download from the central repository using TLS
-> > 
-> > https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1629
-> > 
-> > So back to the question of mirroring, possible to get a CVE for
-> > that now? :)
-> > 
-> > ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 7C6B
-> > 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
-> > 
-> 
-> Ack sorry catching up. Please use CVE-2013-4266  for the insecure
-> mirroring stuff. Can you post the Python bug URL for this again? thanks.
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
+Description:
+Bernhard M. Wiedemann from SUSE reported a vulnerability in Nova's
+control of the size of disk images. By using malicious compressed qcow2
+disk images, an authenticated user may consume large amounts of disk
+space for each image, potentially resulting in a Denial of Service
+attack on Nova compute nodes (CVE-2013-4463). While fixing this issue,
+Pádraig Brady from Red Hat additionally discovered that OSSA 2013-012
+did not fully address CVE-2013-2096 in the non-default case where
+use_cow_images=False, and malicious qcow images are being transferred
+from Glance. In that specific case, an authenticated user could still
+consume large amounts of disk space for each instance using the
+malicious image, potentially also resulting in a Denial of Service
+attack on Nova compute nodes (CVE-2013-4469). The provided fixes
+address both issues.
 
-@Kurt can you reject CVE-2013-4266,
+Icehouse (development branch) fix:
+https://review.openstack.org/54765
 
-I had assumed you weren't going to assign one so I contacted cve-assign@...re and they assigned CVE-2013-5123
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+Havana fix:
+https://review.openstack.org/54767
 
+Grizzly fix:
+https://review.openstack.org/54768
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4463
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4469
+https://bugs.launchpad.net/nova/+bug/1206081
+
+Regards,
+
+- -- 
+Thierry Carrez
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQIcBAEBCAAGBQJScom4AAoJEFB6+JAlsQQjds8P/RHc+cYZTRRvoRM2BIIbbfB0
+d28WZPGGHKpKY99XQ/Q0+rDfmZb3N1KJ0nsCrLOdaNUXydIO7kE3wNElvyY8ES4x
+6AJcocK6+3IPdazdu7tTiU/wfhx7DjjFZP+jk91JOmd4jcJ83TGqBT1nUhwDyhIf
+YNjyPoZNnMIz9ga/yn1Drk9RyH0CCNHIL1h4OT9V8CQ4jmbmNOoqw0Benrk+o2Rn
+eFpQfagUm6uKjhyCvbowZueVZv8KB/johfj/w3gpAiuQEMana9dU7fLX18qRhUlh
+xJzCfUanD0JGWUkLtHsy9SapStjqclme4vEjBhLJxhqST547jDjWHnNylPDNHKXa
+OnZ8r7mYrpx3hAhrDe+hWjPmrZ/dOMIwNP8nuWIY+Hyenyv1henSJX0qeppXeAbA
+swTeQhet1iCDw9v+1KadCdPyVLNft7aIa9jw40WUV+Ff60HW8lzNAH0EXf5YWDuG
+rQ5fZoHSRBmOF3GsVtuNDKTABsZz1ecxgwJ4oXV23b79VLV87n1RN5sZLHIu5FY8
+303ci7O7xwFh1mV3VgiQZJzub7/Ey1CBmj8ds/Bg/TyxsraVkDoOxdg216OdvVzs
+VdhgN9dOzD3UEW7kL4uBYNWNSNYoAhTmEphotvtWIR8n/Y4olEYO61YaYZFJvIOy
+hVLCGyCGF9uUbWqkCs5D
+=AdLt
+-----END PGP SIGNATURE-----
