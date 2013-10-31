@@ -1,49 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/06/2
-Message-ID: <522A410C.4020907@redhat.com>
-Date: Fri, 06 Sep 2013 14:54:36 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/31/1
+Message-ID: <CAMYfGhAzP+HEDh3N4yus7MkiWoHnx7bcNL05=R2oQznfQC31wA@mail.gmail.com>
+Date: Thu, 31 Oct 2013 18:00:56 +0530
+From: Radhesh Krishnan K <radheshkrishnank@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: pyOpenSSL hostname check bypassing vulnerability
+Subject: CVE Request
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 09/06/2013 10:28 AM, Vincent Danen wrote:
-> pyOpenSSL suffers from the same NULL-byte truncation issue that
-> ruby, python, php, etc. suffered from (like ruby CVE-2013-4073).
-> 
-> 0.13.1 was recently released to correct this.  Could a CVE be
-> assigned?
-> 
-> References:
-> 
-> https://mail.python.org/pipermail/pyopenssl-users/2013-September/000478.html
->
->  https://bugzilla.redhat.com/show_bug.cgi?id=1005325
-> 
 
-Please use CVE-2013-4314 for this issue.
+I would like to request a CVE for this bug fix in libgadu[1].
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSKkELAAoJEBYNRVNeJnmTsEIP/A8piMsssgPuYynOFvr8AH3s
-kF45hHOMMjVYXPXfsr6m1GFMC2IM7nPGIG2XD8NEruSZJhfi35aR4Oeh3QyL5vHg
-QmOkGILy1Va0P5CsrRmoGJ9gpvmA7HBs21sU0cUizy+f25nRm7Nx4vtAteZ9Jdh6
-rIGC8bGNg9JxmkOiWjQZh1otXAb6QpTAamhE6h7oIqZOoYh3uM0CCwmB15arGCMU
-sOssLQATAnp+xIufXwM7yUCO6zZ0tT2JWebXIPJuTq9/J+sMizcY/mwUtbcSjuQa
-Lw6wOKjPXyjFTw+MB4Ysf3f9sTzc4QSSKe7K8eLUCbyGuzJ3JJaTjfchK3QBetwk
-SX2hssXXogos0xPDoYaXNImkPh0fwf+PIiw6JexKg53V4g8t3DQRogeDJEtkkfEi
-u1LluxnBFMTOQ7L3k7u0ix0lU+LO1vd77y9hl73c8KP5QDDh67oJ3/gRD0DUOA+o
-rMWCM8CrMCOtpjgfNbJNZIu+s7iQvcUgdXk4vna7Wist/yq6OhOnOdGWRS0rX8br
-MF8AFD/eXFqoGDBQmRg8ToxT4AysIUdBpbp7Qv9HKWydOmGjKfXchygssdn8zd5Z
-Ioqpusxxol1mb+gcVk2rIhO6j6a38bGK3lmSC3NlTkv+8VHYZGJBqrQY5J4Qk6dz
-PVGm477HZN0wJKfS2+Wk
-=o5nu
------END PGP SIGNATURE-----
+[1]  http://www.mail-archive.com/libgadu-devel@lists.ziew.org/msg01017.html
+
+
+
+
+<http://www.mail-archive.com/libgadu-devel@lists.ziew.org/msg01017.html>--
+
+Regards,
+Radhesh Krishnan K.
+
