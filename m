@@ -1,17 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/29/2
-Message-ID: <87wqlzindg.fsf@mid.deneb.enyo.de>
-Date: Sun, 29 Sep 2013 18:49:47 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/31/2
+Message-ID: <20131031144701.73becd57@redhat.com>
+Date: Thu, 31 Oct 2013 14:47:01 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "donesh.l" <donesh.l@...ecti.com>
-Subject: Re: Trend micro contact details
+Subject: Re: CVE Request: gnutls/libdane buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-* donesh l.:
+On Thu, 24 Oct 2013 16:04:10 +0200 Marcus Meissner wrote:
 
-> I need contact details for trend micro feedback loop... Does anybody
-> has it.
+> GNUTLS just posted a security adivsory which needs a CVE:
+> 
+> http://www.gnutls.org/security.html#GNUTLS-SA-2013-3
+> GNUTLS-SA-2013-3
 
-Is this about mail filtering?  Then the mailop list might be the
-better venue for this type of query.
+It is updated now and recommends using 3.1.16 or 3.2.6, which correct
+off-by-one issue in the original fix:
+https://gitorious.org/gnutls/gnutls/commit/0dd5529509e46b11d5c0f3f26f99294e0e5fa6dc
+
+I assume this needs a new CVE.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
