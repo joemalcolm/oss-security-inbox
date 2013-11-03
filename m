@@ -1,71 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/12/6
-Message-ID: <511AB399.1080406@redhat.com>
-Date: Tue, 12 Feb 2013 14:26:49 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/03/4
+Message-ID: <20131103163252.GL26456@ngolde.de>
+Date: Sun, 3 Nov 2013 17:32:52 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, David Jorm <djorm@...hat.com>
-Subject: Re: CVE Request --  jakarta-commons-httpclient: Wildcard matching in SSL hostname verifier incorrect (a different issue than CVE-2012-5783)
+Subject: some unstracked linux kernel security fixes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
+Fabian Yamaguchi and myself stumbled upon a few kernel issues.
 
-On 02/12/2013 06:23 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> Originally, Common Vulnerabilities and Exposures assigned an
-> identifier CVE-2012-5783 to the following vulnerability:
-> 
-> Apache Commons HttpClient 3.x, as used in Amazon Flexible Payments
-> Service (FPS) merchant Java SDK and other products, does not verify
-> that the server hostname matches a domain name in the subject's
-> Common Name (CN) or subjectAltName field of the X.509 certificate,
-> which allows man-in-the-middle attackers to spoof SSL servers via
-> an arbitrary valid certificate.
-> 
-> Later it was found, that the SSL hostname verifier implementation 
-> (CVE-2012-5783 fix) contained a bug in wildcard matching: [1]
-> https://issues.apache.org/jira/browse/HTTPCLIENT-1255
-> 
-> which still allowed certain type of certificates checks to pass, 
-> even if they shouldn't.
-> 
-> Relevant upstream patches: [2]
-> https://fisheye6.atlassian.com/changelog/httpcomponents?cs=1406213 
-> (against 4.2.x branch) [3]
-> https://fisheye6.atlassian.com/changelog/httpcomponents?cs=1406217 
-> (against trunk)
-> 
-> References: [4]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=700268 [5]
-> https://bugzilla.redhat.com/show_bug.cgi?id=910358
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+Can someone assign CVE ids for these?
 
-Please use CVE-2012-6127 for this issue.
+drivers/uio/uio.c: mapping of physical memory to user space without proper size check
+drivers/video/au1100fb.c: integer overflow in checking of range when mapping physical memory to user space
+drivers/video/au1200fb.c: integer overflow in checking of range when mapping physical memory to user space
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7314e613d5ff
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+arch/um/kernel/exitcode.c: buffer overflow in write syscall handler
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=201f99f170df14ba52ea4c52847779042b7a623b
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+drivers/staging/ozwpan/ozcdev.c: buffer overflow in write syscall handler
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c2c65cd2e14ada6de44cb527e7f1990bede24e15
 
-iQIcBAEBAgAGBQJRGrOZAAoJEBYNRVNeJnmTHhUQAK94liX7ROncLrSLEOsW/tFB
-5uQrAdUsrZtR7Tzpk4XaEIgT2wXo/hbvfS8cYo6TPQ6OExYRCfJCEnFLIbtlEC2B
-T0p1xOBS1nwvS8/sUOg5Bj63hWRqE/4IY+DOVDD7ik23n5LlWoDllnbvM4FI+JwT
-G2U0FW4SfjpX+eb2KmnOHNABXNfMebfUs9gGMRisSLlESjrUWqQJrkAxbZ7osrXb
-AHmopz1MuMuY5xQ/FtjsukNXwCBWK/nVZumiqwLBzipA3iGNuxPsT63sUya13eyd
-tWFfOR196I/lr8JQfHU2Xui0gMBHuH9qVdhs2taq1FLpnoNN9xG5LWnzG5J9m8dH
-xUY/69UitCg6Echum9X9JCWhpNDjC9TV+XWxxmopYATEr5z8cvS45jhz69Vk71B8
-ieApYTqZKTgjv5nWEqTS3MkPlb6OTEjatPDuSLl8ZFqNiV1kZ8lXwNFLmqRbverj
-+UVEkFk9uFYFbltEiaXgUq248XBwItxoHm/Z1jxwSOOoCF7nLxApFTdz2+7/P/bj
-gS0nszMPSMrsULYR2tl70C5jA5HmWfv9eQjAwygD5bjvyCYgH5DXZO9vOa2NfxKN
-m8rZNV8ZZ5QVwJ/NqVDx9i2oWG2CP+DYqKjgvSOO3A4OcdxH4TdJEFNCp0hT7paX
-vLPbftX9DC9ZA7t2cmKZ
-=icmK
------END PGP SIGNATURE-----
+drivers/staging/wlags49_h2/wl_priv.c: buffer overflow when setting station name
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b5e2f339865fb443107e5b10603e53bbc92dc054
+
+drivers/staging/bcm/Bcmchar.c: kernel memory disclosure via uninitialized structure members
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=8d1e72250c847fa96498ec029891de4dc638a5ba
+
+drivers/staging/sb105x/sb_pci_mp.c: kernel memory disclosure via uninitialized structure members
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a8b33654b1e3b0c74d4a1fed041c9aae50b3c427
+
+Thanks
+Nico
