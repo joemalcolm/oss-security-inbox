@@ -1,56 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/24/1
-Message-ID: <514E4A03.2060902@redhat.com>
-Date: Sat, 23 Mar 2013 18:34:11 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/03/5
+Message-ID: <52767B91.2010003@redhat.com>
+Date: Sun, 03 Nov 2013 09:36:33 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, come2waraxe@...oo.com
-Subject: Re: CVE request: OpenCart filemanager.php parameter traversal arbitrary file access
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/23/2013 06:19 AM, Henri Salo wrote:
-> Hello Kurt and list members,
+On 11/02/2013 11:37 PM, Forest Monsen wrote:
+> Hi there! I'd like to request CVE identifiers for:
 > 
-> Can we assign CVE identifier for security vulnerability in
-> OpenCart, thanks.
-> 
-> References: http://www.waraxe.us/advisory-98.html 
-> http://osvdb.org/91500 
-> http://seclists.org/fulldisclosure/2013/Mar/176
-> 
-> Credits: Janek Vind "waraxe" Advisory ID: waraxe-2013-SA#098 
-> Disclosure date: 2013-03-19 Status: not fixed in upstream CVSSv2
-> Base Score = 5.0 Affected (from advisory) are all OpenCart
-> versions, from 1.4.7 to 1.5.5.1, maybe older too.
-> 
-> Janek confirmed he has not requested CVE yet. I will contact
-> OpenCart again later today and ask status for the fix.
-> 
-> -- Henri Salo
+> SA-CONTRIB-2013-081 - Spaces - Access bypass 
+> https://drupal.org/node/2118717
 
-Please use CVE-2013-1891 for this issue.
+Please use CVE-2013-4498 for this issue.
+
+> SA-CONTRIB-2013-082 - Bean - Cross Site Scripting (XSS) 
+> https://drupal.org/node/2118873
+
+Please use CVE-2013-4499 for this issue.
+
+> SA-CONTRIB-2013-083 - Quiz - Access Bypass 
+> https://drupal.org/node/2123995 (This appears to me to be two
+> issues; an access bypass, and an access bypass leading to
+> information disclosure.)
+
+Yes, two issues, two reporters, so CVE SPLIT to two CVE's, I can't
+match the reporter to the issue though without more info, if you can
+post that in a follow up it'd be helpful to Mitre.
+
+Please use  CVE-2013-4500 for Drupal SA-CONTRIB-2013-083 - Quiz -
+Access Bypass in deleting quiz results
+
+Please use CVE-2013-4501 for Drupal SA-CONTRIB-2013-083 - Quiz -
+Access Bypass in viewing quiz results
+
+
+> SA-CONTRIB-2013-084 - FileField Sources - Access Bypass 
+> https://drupal.org/node/2124241
+
+Please use CVE-2013-4502 for this issue.
+
+> SA-CONTRIB-2013-085 - Feed Element Mapper - Cross Site Scripting 
+> https://drupal.org/node/2124279
+
+Please use CVE-2013-4503 for this issue.
+
+> SA-CONTRIB-2013-086 - Monster Menus - Access bypass 
+> https://drupal.org/node/2124289
+
+Please use CVE-2013-4504 for this issue.
+
+> Thanks! Forest
+> 
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRTkoDAAoJEBYNRVNeJnmTyCUQAKKY+PpIw+/FAXkL44eVFv9p
-j7XqFdUVjDvAKzZPlh859hCj8P2AXTJ0is8h2lomFqRIHeJIfHui9truwH/01akF
-u3m1ifWlseNOBJ4xRCt1pxM2nonl4He9BZeg3m6tVUyLqgKILsr8Yxrynh+VAyog
-ZhAYLtpnvDM6+DVo66A5heeKCvNuViUUWJ+Fn5M6yPqLBt2vY3ATuE2BpurmElEM
-AapKo6FYV6lsnQBQUMbSLqOZkC/PiRRxrRtF0PLbtW6zNJIMD0xVfMkEO6Tczfbj
-2Y4dBoEl7V+9lugjTboAo3wxv0DjqYKOqE/gFNmof2kGxV1UCIJXjEviuGXCJl0v
-210bhIHtFs66MPZH6Dlkj5TsdDdp89NNKbl2zU1PytSeoQfBrXsP3sdh+cmcuffY
-8vm5Dw2VTTc7uolXsIoYiTM28PphN2xlma6BzFje49/PyLAiFSY0RSffQunywzki
-6ju97ndQuc+E6FAyE2FvF3kAInSkuyI7ljLXanllDsvz3kB60SvB3Pj155qUBt3D
-wJ0obQkACXCpHbAb3a/tEIEWqas99AoaIrDhzXZZ7pfEkQQ0W3k6Wc+iJbWHn2NU
-kceBMaXwdJCAuwq8I76ZBCFv71EsSqUPJIOwuTxnEH7HTM0fx1yAx8Ew9pepT/YN
-8ZFZj6W5qXr0jsevo65+
-=IZNn
+iQIcBAEBAgAGBQJSdnuRAAoJEBYNRVNeJnmTkxIP/3PfWX7Ocvfa3HiPDAK/LKOR
+XI42NsYmEs77HrdugoJvMQ78Fh/UQD8yxVmlVNBCYqN2xpdfpmcNYiLhtouIRiO4
+1VTUixhehBJtSKPSHfpJJEcnK34Bnw4o+lMgDO0LiEMWNfiyD+aIShewWtNFhnvl
+/r9hqOO6YKe498uqT312sn3tGh2G1Y28YRnALfa5dU9VjrNEk5bECN1+qE7BhrLw
+23H9JkPR8shpP8t8MGHoTfEptnv+/ooWvovnmjqNhoJVpufQEJj9oqbkyhrtK0c2
+BD7PSt3XuS17kQTVsQ1/L9XGB0bD6HS+VABp779yOTg+AX5caRGh1vMYbdzjyrPC
+Ao6J7auwzQiLd/+48gnU3c3gVuaplXxcSuhoK9FiqlFXyts7H8Dp/1LiNiZsMz9d
+TPHxQE3WV18ZLSElJ6FPlz+EL2s5V9bZZ4EKLMsnWuA67tKH5HiSDE0DiVYF0E7e
+wgQPv5W2XgkkUTneaECIF83MSrKnVgp65/q/OMG4agdUPsFhcsREIKa1NgVSjAmq
+EqSJ/cHsP8Aqb8xZyUB2yBMHpwjziwrI7NHmrbv1jwXsw0PrRZlfmR1MPn3rpmO8
+N4n0XQZRREd72Nc8sSAaatRv56b9elvTC2A8mDTyww4yI28Rh6M8NPnMj+jKqQWT
+hMRoULxGSouOrdHoeNkD
+=Keg+
 -----END PGP SIGNATURE-----
