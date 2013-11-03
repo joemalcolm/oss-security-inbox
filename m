@@ -1,15 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/14
-Message-ID: <20130314142325.GA27660@kludge.henri.nerv.fi>
-Date: Thu, 14 Mar 2013 16:23:25 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/03/2
+Message-ID: <20131103160706.GC2305@openstack.org>
+Date: Sun, 3 Nov 2013 16:07:06 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
 To: oss-security@...ts.openwall.com
-Subject: US national vulnerability database hacked
+Subject: CVE request for a vulnerability in OpenStack Nova
 Content-Type: text/plain; charset=utf-8
 
-http://www.theregister.co.uk/2013/03/14/us_malware_catalogue_hacked/
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public,
+although an advisory was not sent yet.
 
---
-Henri Salo
+Title: XenAPI security groups not kept through migrate or resize
+Reporter: Chris Behrens (Rackspace) and Vangelis Tasoulas
+Products: Nova
+Affects: Folsom, Grizzly
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Description:
+Chris Behrens with Rackspace and Vangelis Tasoulas reported a set of
+vulnerabilities in OpenStack Nova. When migrating or resizing an
+instance, including live migration, existing security groups may not
+be reapplied after the operation completes. This can lead to
+unintentional network exposure for virtual machines. Only setups
+using the XenAPI backend are affected.
+
+References:
+https://launchpad.net/bugs/1073306
+https://launchpad.net/bugs/1202266
+
+Thanks in advance,
+
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
