@@ -1,30 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/08/5
-Message-ID: <20130608113316.GB12877@gremlin.ru>
-Date: Sat, 8 Jun 2013 15:33:16 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/03/3
+Message-ID: <527677FE.2020804@redhat.com>
+Date: Sun, 03 Nov 2013 09:21:18 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
+Subject: Re: CVE request for a vulnerability in OpenStack Nova
 Content-Type: text/plain; charset=utf-8
 
-On 08-Jun-2013 07:22:44 -0400, larry Cashdollar wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- > According to the bug report details that's a race condition.
- > A malicious user is using a vulnerability in the way the
- > installation script handles changing file permissions to disclose
- > sensitive information.
+On 11/03/2013 09:07 AM, Jeremy Stanley wrote:
+> A vulnerability was discovered in OpenStack (see below). In order
+> to ensure full traceability, we need a CVE number assigned that we
+> can attach to further notifications. This issue is already public, 
+> although an advisory was not sent yet.
+> 
+> Title: XenAPI security groups not kept through migrate or resize 
+> Reporter: Chris Behrens (Rackspace) and Vangelis Tasoulas Products:
+> Nova Affects: Folsom, Grizzly
+> 
+> Description: Chris Behrens with Rackspace and Vangelis Tasoulas
+> reported a set of vulnerabilities in OpenStack Nova. When migrating
+> or resizing an instance, including live migration, existing
+> security groups may not be reapplied after the operation completes.
+> This can lead to unintentional network exposure for virtual
+> machines. Only setups using the XenAPI backend are affected.
+> 
+> References: https://launchpad.net/bugs/1073306 
+> https://launchpad.net/bugs/1202266
+> 
+> Thanks in advance,
+> 
 
-Yes. And, once again, that's a misconfiguration - the file should
-be created as 0600 root:root during installation and only after
-that chmod() and chown() may be applied.
+Please use CVE-2013-4497 for this issue.
 
- > On Jun 8, 2013, at 7:00 AM, gremlin@...mlin.ru wrote:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-- Because it messes up the order in which people normally read text.
-- Why top-posting is considered the most annoying thing in messages?
-
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+iQIcBAEBAgAGBQJSdnf+AAoJEBYNRVNeJnmTZEQQAItK3aWfzjV392UCszk6P5hX
+73dNS59bP4hGTQh3cSYPENl6ZkncFxj1FRQEmmHrp0TtGJaFPfOROReCHxGr0YOX
+ZjIDS7jhnDLxxxwon2LqjkV/69PXfTesNDjOm/bObkXhDgM6zJrL8ba6cmHF2GJv
+Ne2JAZKMXJyU9uj/0KFYltH6DZRD/CxxTdm264pd64iH0UkXb+OQg44cGcN+XyFs
+y/JDluc1WiILmEC65/rP9Dv4cN0/Pt4r2KhExY0cCJ10Mhq/qIHivHviNFdcVjpu
+5CBgqX6WVT+4JAPtgpXYtFbaxwQ6roAoQ+MPEgjoDOHIX0FDWlpTephzbJhVmdHi
+60/5MY+tIuATSEBQW8PuqiV6gJi3UckHJmhPSze/E4JOuXeMTwjB5whEUVfy/5g6
+2HMMirjwCD97dzB93NaA88h1GmBf80vfCrKnLihuO09/61HboAa7N8vh+wEFlglj
++yKFDPsGahvq0oZ4ZRvDH0GcaP/zxQw2qH2ewR0gBumT8chytQ8kRRyPU0ROSe1m
+XO5BfDJi9BE8M5tChZ8LTYcLa3HMlP7VqTIbygpKfQv8fGKzIrvWfC2noTyhPo0E
+8lJVOSxno8+DeyLBcP45jp+pMTTyomfo5aJzRIh8lNVccZrFV36c2uycpEOK9UVb
+ElykQSGedXNXatPHFfA5
+=EkPq
+-----END PGP SIGNATURE-----
