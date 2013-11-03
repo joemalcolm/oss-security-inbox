@@ -1,45 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/06/3
-Message-ID: <20130506154807.GA11656@kroah.com>
-Date: Mon, 6 May 2013 08:48:07 -0700
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com
-Subject: Re: CVE request: Linux kernel: chipidea: allow disabling streaming in host mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/03/1
+Message-ID: <CABbbngC3h1YMC+WNu9V9KN6dPJbJhxHdEEadcf+eJfRRwCjYCQ@mail.gmail.com>
+Date: Sat, 2 Nov 2013 22:37:02 -0700
+From: Forest Monsen <forest.monsen@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 06, 2013 at 05:40:24PM +0200, Marcus Meissner wrote:
-> On Sun, May 05, 2013 at 12:37:44AM -0600, Kurt Seifried wrote:
-> > On 05/03/2013 05:22 AM, P J P wrote:
-> > > Hello,
-> > > 
-> > > Linux kernel built with the ChipIdia Highspeed Dual Role
-> > > Controller (CONFIG_USB_CHIPIDEA) along with the ChipIdea host
-> > > controller (CONFIG_USB_CHIPIDEA_HOST) modules, is vulnerable to a
-> > > kernel crash. It occurs while streaming content over network via
-> > > USB/Ethernet adapter
-> > > 
-> > > A user/program could use this flaw to crash the kernel resulting in
-> > > DoS.
-> > > 
-> > > Upstream fix: ------------- ->
-> > > https://git.kernel.org/linus/929473ea05db455ad88cdc081f2adc556b8dc48f
-> > >
-> > >  Reference: ---------- ->
-> > > https://bugzilla.redhat.com/show_bug.cgi?id=959210
-> > > 
-> > > Thank you. -- Prasad J Pandit / Red Hat Security Response Team DB7A
-> > > 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
-> > 
-> > Please use CVE-2013-2058 for this issue.
-> 
-> JFYI, the respective code was added in Linux 3.5 as far as I see.
+Hi there! I'd like to request CVE identifiers for:
 
-And given the hardware involved, I really doubt any desktop/server
-distro ever enabled the driver.  Or if they did, I doubt they had any
-users with this hardware present, it's an embedded USB controller core,
-so maybe a few Android systems might have it present.
+SA-CONTRIB-2013-081 - Spaces - Access bypass
+https://drupal.org/node/2118717
 
-thanks,
+SA-CONTRIB-2013-082 - Bean - Cross Site Scripting (XSS)
+https://drupal.org/node/2118873
 
-greg k-h
+SA-CONTRIB-2013-083 - Quiz - Access Bypass
+https://drupal.org/node/2123995
+(This appears to me to be two issues; an access bypass, and an access
+bypass leading to information disclosure.)
+
+SA-CONTRIB-2013-084 - FileField Sources - Access Bypass
+https://drupal.org/node/2124241
+
+SA-CONTRIB-2013-085 - Feed Element Mapper - Cross Site Scripting
+https://drupal.org/node/2124279
+
+SA-CONTRIB-2013-086 - Monster Menus - Access bypass
+https://drupal.org/node/2124289
+
+Thanks!
+Forest
+
