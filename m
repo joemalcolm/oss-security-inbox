@@ -1,61 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/6
-Message-ID: <515C4558.1040001@redhat.com>
-Date: Wed, 03 Apr 2013 09:06:00 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/7
+Message-ID: <5277DB10.8050803@fifthhorseman.net>
+Date: Mon, 04 Nov 2013 12:36:16 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: glibc getaddrinfo() stack overflow
+Subject: Re: openssl default ciphers
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 11/04/2013 12:16 PM, Stefan Bühler wrote:
 
-On 04/03/2013 05:10 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> A customer reported a glibc crash, which turned out to be a stack
-> overflow in getaddrinfo().
-> 
-> getaddrinfo() uses: struct sort_result results[nresults]; with
-> nresults controlled by the nameservice chain (DNS or /etc/hosts).
-> 
-> This will be visible mostly on threaded applications with smaller
-> stacksizes, or operating near out of stack.
-> 
-> Reproducer I tried: $ for i in `seq 1 10000000`; do echo "ff00::$i
-> a1" >>/etc/hosts; done $ ulimit -s 1024 $ telnet a1 Segmentation
-> fault (clean out /etc/hosts again )
-> 
-> 
-> I am not sure you can usually push this amount of addresses via DNS
-> for all setups.
-> 
-> Andreas is currently pushing the patch to glibc GIT.
-> 
-> Reference: https://bugzilla.novell.com/show_bug.cgi?id=813121
-> 
-> Ciao, Marcus
+> while working on the lighttpd SNI bug I realized that openssl defaults
+> to a very bad set of ciphers.
+>
+> I also couldn't find a sane recommendation from upstream openssl to use
+> as default, as "DEFAULT" obviously is not a good choice. (I also don't
+> see any reason why "DEFAULT" includes export and "LOW" ciphers...)
+>
+> Is 'DEFAULT@...ENGTH:!LOW:!EXP' (should
+> be similar to 'HIGH:MEDIUM:!aNULL') a reasonably default?
+>
+> I don't want to enforce PFS or break compatibility on purpose; so I
+> think the default could be a little bit less "secure" than what I would
+> actually recommend to use.
+>
+> So I'm not interested in how to get a super extra secure cipher set
+> (there are many cipher strings in the wild by various folks for that),
+> but more in a reasonable lower bound.
 
-Please use CVE-2013-1914 for this issue.
+There is ongoing discussion on one of the major users of OpenSSL 
+(apache) about what the defaults should be for that user:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+  https://issues.apache.org/bugzilla/show_bug.cgi?id=49559#c11
 
-iQIcBAEBAgAGBQJRXEVYAAoJEBYNRVNeJnmTJAwQAJxeNaGDoLRQ0PRzWshaxk/R
-VR/yXYe4DfugtL+lgMgL82T8sQJeSBSWsgBx+f43mnAcGSPhZlHVtPAl5g7Vhe38
-/04kiHRGr5srLrl8HFwNLCMRv8nAbslYdHeID6bu6eUN8VoUrhbp5Nd0Fh7I+gqQ
-9ryci9tfPaMOmV6gxs1Ug97wGmlBHiXcTlzQR/zGYxDnZe1KS+zMBUgrhrvWxI+z
-6L1hZeGJd1aRe61D/HDSZZGuj/olrgSphdN5tUQaKb/TmJlbhfbk1ds2oX4vNcbm
-sjnKnT0ttQHfGJHJCTgYOfO13MK2KwEcEBsnUfhUKvx5HdbpMMnPTMT+3IV4I0+K
-a07asqZ2P6/zdOz2UeUNJyNXIM5Ruprb0Wy9XbPZUcoWaqBBUGYawdbwqdfAENUs
-FTBcqUOhv85igtSoCauYNwpKgBv1xjyYpsxdMRMOMyZsf3b8g4atU2sEumzWxcw3
-Jlu4+Nh9JuZtHvHFfpRmA5JPM9mARqAecEDMGS6ZUdeuTCMKIQBkI29Q7pVZG9Jd
-30U/evCus1p6K/7iWz5S1iazt1EZOBhAJy4ebrnMIM3eGQGaivwjppIQj8EgtTTh
-BIRzW9qVYgf7EpJK9xODx/Oer8AO4+/OYdJ/v9Qq3PCApJRUurBdE/6uc6hTc6cD
-I03eGoB7ue4PmzWCFfDk
-=eAD0
------END PGP SIGNATURE-----
+I agree that the OpenSSL defaults seem too lax.
+
+	--dkg
