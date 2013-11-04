@@ -1,30 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/13
-Message-ID: <87ha9qotcq.fsf@mid.deneb.enyo.de>
-Date: Mon, 30 Dec 2013 23:40:37 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/12
+Message-ID: <20131104194149.2ee4504b@chromobil.localdomain>
+Date: Mon, 4 Nov 2013 19:41:49 +0100
+From: Stefan Bühler <stbuehler@...httpd.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE to the ntp monlist DDoS issue?
+Cc: hanno@...eck.de
+Subject: Re: openssl default ciphers
 Content-Type: text/plain; charset=utf-8
 
-* Moritz Muehlenhoff:
+On Mon, 4 Nov 2013 18:49:06 +0100
+Hanno Böck <hanno@...eck.de> wrote:
 
-> On Mon, Dec 30, 2013 at 09:05:56AM -0500, cve-assign@...re.org wrote:
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA1
->> 
->> > Has anyone thought about assigning a CVE to this?
->> 
->> http://bugs.ntp.org/show_bug.cgi?id=1532 was assigned CVE-2013-5211.
->
-> Shouldn't this rather be CVE-2010-XXXX ?
+> On Mon, 4 Nov 2013 18:16:30 +0100
+> Stefan Bühler <stbuehler@...httpd.net> wrote:
+> 
+> > Is 'DEFAULT@...ENGTH:!LOW:!EXP' (should
+> > be similar to 'HIGH:MEDIUM:!aNULL') a reasonably default?
+> 
+> SSLCipherSuite HIGH:!MEDIUM:!LOW:!aNULL@...ENGTH
+> should be fine. There are basically near zero browsers out there that
+> should have any problems with that. Even dinosaurs like IE6 can work
+> with this, you don't need "medium" ciphers as long as you don't want
+> to make a site accessible to browser museums.
 
-I don't think this was previously discussed as a security issue in
-public.  There is a 2011 reference here that explicitly cites
-amplification factors, though:
+There is no difference to HIGH:!aNULL on my system. I don't see why
+HIGH:!MEDIUM:!LOW could be not equal to HIGH anyway...
 
-<http://lists.ntp.org/pipermail/pool/2011-December/005616.html>
+> And looking at what medium includes that high doesn't, it seems you
+> really don't want that ancient cipher suites:
+> -DHE-RSA-SEED-SHA
+> -DHE-DSS-SEED-SHA
+> -SEED-SHA
+> -IDEA-CBC-SHA
+> -IDEA-CBC-MD5
+> -RC2-CBC-MD5
+> -ECDHE-RSA-RC4-SHA
+> -ECDHE-ECDSA-RC4-SHA
+> -ECDH-RSA-RC4-SHA
+> -ECDH-ECDSA-RC4-SHA
+> -RC4-SHA
+> -RC4-MD5
+> -RC4-MD5
+> -PSK-RC4-SHA
 
-This has an odd feeling of déjà vu to me, but I suspect the previous
-discusssions have been on private channels of which I no longer have
-records.
+This is not what I get for "MEDIUM" (debian testing); I see only SEED +
+RC4; RC2 is an export cipher; wikipedia has some stuff on IDEA, and it
+seems indeed "ancient". SEED might be more relevant (for Korea...), and
+RC4 is having a big comeback due to the BEAST attack.
+
+I think due to BEAST a default collection should include RC4; that is
+why I included MEDIUM.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
