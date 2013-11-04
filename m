@@ -1,37 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/15
-Message-ID: <610745677.13549970.1375982939625.JavaMail.root@redhat.com>
-Date: Thu, 8 Aug 2013 13:28:59 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Seth Arnold <seth.arnold@...onical.com>
-Cc: Dan Williams <dcbw@...hat.com>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>
-Subject: Re: Re: CVE Request -- Four flaws in WiMAX (afaik upstream is dead for this)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/20
+Message-ID: <52780105.1070505@redhat.com>
+Date: Mon, 04 Nov 2013 13:18:13 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Marcus Meissner <meissner@...e.de>
+Subject: Re: Re: CVE Request: IBUS showing passwords during password input
 Content-Type: text/plain; charset=utf-8
 
-> 
-> On Thu, Aug 08, 2013 at 12:10:21PM -0500, Dan Williams wrote:
-> > There don't have to be public bugs yet, but if nobody writes patches in
-> > a reasonable amount of time perhaps they should just be made public.
-> 
-> They are public already:
-> http://www.openwall.com/lists/oss-security/2013/08/08/10
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Yes, made them public. As can be seen in timestamp for Red Hat bugs,
-original notes have been added by Florian pretty long time ago (but
-still within this year, so 2013 ones should be applied).
-
+On 11/04/2013 06:37 AM, Fuminobu TAKEYAMA wrote:
+> Hello,
 > 
-> This is probably for the best, sounds like anyone reliant upon this code
-> would be wise to re-write much of it anyway...
-
-Since these did not seem to follow some progress, made them public
-(so people would at least know about the issues and could deprecate / obsolete
-the package or look for other ways of solution).
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+>> The behaviour started (I think) with with IBUS 1.5.4
+> Yes. It happens on IBus-enabled GNOME 3.6+ with IBus 1.5.4 if
+> IBus's engines (plug-ins) do not support new API introduced by
+> 1.5.4.
 > 
-> Thanks
+> Actually, this problem is not found by me, though. The upstream has
+> already announced in [1].
 > 
+> An IBus developer (Mr. Fuijiwara) says in [1]: "1.5.2 or lower do
+> not handle the input purpose so the typed chars are shown as the
+> bug." So I think the same problem may happen also on GNOME 3.6 +
+> IBus 1.5.2.
+> 
+> [1] https://groups.google.com/forum/#!topic/ibus-user/mvCHDO1BJUw
+> 
+> Best regards, Fuminobu TAKEYAMA
+> 
+> 2013/11/4 Marcus Meissner <meissner@...e.de>:
+>> Hi,
+>> 
+>> One of our Japanese users found that some IBUS input methods show
+>> passwords while typing them, if a special "intent" is not 
+>> provided.
+>> 
+>> https://bugzilla.novell.com/show_bug.cgi?id=847718 
+>> https://groups.google.com/forum/#!topic/ibus-user/mvCHDO1BJUw
+>> 
+>> The behaviour started (I think) with with IBUS 1.5.4
+>> 
+>> Fuminobu Takeyama, is this correct?
+>> 
+>> Ciao, Marcus
+
+Please use CVE-2013-4509 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSeAEFAAoJEBYNRVNeJnmTRJgQAMVajnP+1wU4vDb9KWaFW/iJ
+mTMxatUOOPfbYAuZ18CoFz3qCBP0dGNePul+xhyNsU2BaGvbegmqTlXW0uaEX+oS
+vw+0pKEJ2yUX+A5A4qsSNrFtiX6Rmd8OvEFCwYcWqeXkGf1f5KZStZLWPVcqiDTK
+pWW0hZD6mDDB+o9iF+OtlwTXi/MHztlPuwmU6+4N00a+gTSDrZ2U9mEWBCnt17mc
+RWVa5YlmMmzThjE37NiOSH1SqgdS75gKvYQWQsRvCISNXT7NpPP670yQDtduj3Gx
+nEKNeWJvGxUaI/0g5OydxehleRzK4n6rg/ap6oZ6D0pBDu25MRY5lk6BYXL0RnDy
+d6LeSRYwnaIM16Q9nKc7GLirNXpey99UVcg6VFCVEh9xzznwK+rgfcDQLF9MBz/f
+8gqGsskFNaLSTdUrYFBLvTNKClJkM+pkKjn67nxWDpwFklLzC+rvQTn5OXS0ci6j
+Mh5on+yYwasSfcYcLgv3NrMquEnXXGTK9cNLNvdftOejYWUu5ZuruuHzi5GqaR7n
+bmCEKh29FaKdPjgLWWjU/fHU3clk00zkPTRZFUbAP+Qf5+1ucaKdjYkzAO0h1xRr
+VgWYXsGoGtgAP5GOdo14PPB6BgjzzZDKUqqdtvhAbzV+QN/7FLbUA++47clJlb0e
+5AY9Z7oWkNCaMWWhersj
+=NtKe
+-----END PGP SIGNATURE-----
