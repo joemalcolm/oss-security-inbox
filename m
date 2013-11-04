@@ -1,113 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/04/5
-Message-ID: <51D4FA87.7060706@redhat.com>
-Date: Wed, 03 Jul 2013 22:31:03 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/14
+Message-ID: <CAB8Fin-YXafn==c1nTb_AqncfCSYQsAo4RDsj7TyXbo37E1GDA@mail.gmail.com>
+Date: Mon, 4 Nov 2013 19:58:15 +0100
+From: Jacob Vosmaer <jacob@...lab.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...re.org>, Salvatore Bonaccorso <carnil@...ian.org>, Mark Panaghiston <markp@...pyworm.com>, hello@...pyworm.com
-Subject: Re: Re: CVE-2013-1942 jPlayer 2.2.19 XSS
+Subject: CVE-2013-4489 Remote code execution vulnerability in the code search feature of GitLab
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA512
 
-On 06/27/2013 10:57 AM, Steven M. Christey wrote:
-> 
-> Kurt,
-> 
-> Your CVE assignment posts from [1] and [2] appear to be
-> inconsistent, and there are some questions about affected versions,
-> so I wanted to get some clarity about which CVEs go with which
-> issues.
-> 
-> 1) CVE-2013-1942 - fixed in 2.2.20. Commit:
-> e8ca190f7f972a6a421cb95f09e138720e40ed6d
-> 
-> This one doesn't seem to have any issues.
+Remote code execution vulnerability in the code search feature of GitLab
 
-My understanding of this one is that it now filters out \\ < > = which
-could be previously used to insert content into the parameters passed
-to the SWF file resulting in XSS.
+There is a remote code execution vulnerability in the code search feature
+of GitLab. This vulnerability has been assigned the CVE identifier
+CVE-2013-4489.
 
-> 
-> 2) CVE-2013-2022 - based on [1] CVE-2013-2022 is listed after a
-> section that talks about an XSS fixed in 2.3.0 (which also includes
-> the CVE-2013-1942 assignment).   However, in [2] you say
-> "CVE-2013-2022 is for jPlayer 2.2.20 XSS" but
-> http://www.jplayer.org/2.3.0/release-notes/ says that CVE-2013-2022
-> is fixed in 2.2.23.  (Maybe when you said 2.2.20, this also covered
-> other unfixed versions UNTIL 2.2.23).
+Versions affected: 5.2, 5.3, 5.4, 6.0, 6.1, 6.2
 
-that was probably the case, I typically assume when I assign a CVE
-that the next release will assign it (because usually people do fix
-things quickly =). I was going off of
-http://www.jplayer.org/latest/release-notes/ when I assigned these
+Not affected: 5.1 and earlier
 
+Fixed Versions: 5.4.1, 6.2.3
 
-> 3) CVE-2013-2023 - in [1] you assign CVE-2013-2023 to the security
-> fix that quotes the jPlayer changelog entry for 2.2.23 - which, as
-> just mentioned in the previous bullet, you already described as
-> being associated with CVE-2013-2022.  In [2], you also state that 
-> CVE-2013-2023 is for jPlayer 2.2.23 XSS.
-> 
-> 4) There is no mention of issues that are FIXED in 2.3.0 based on
-> upstream changelog, but
-> http://www.jplayer.org/2.4.0/release-notes/ lists fixes in both
-> 2.3.1 and 2.3.2.
+Impact
+- ---
+The Grit gem which serves as the Git backend for GitLab has an unsafe code
+path for internal use which allows strings to be evaluated by the Bourne
+shell. In affected versions, the GitLab code search feature exposes this
+unsafe code path to user input from the search box. Code search in GitLab
+is only available for authenticated users.
 
+All users running an affected release should upgrade immediately or disable
+code search using the workaround below.
 
+Releases
+- ---
+The 5.4.1 and 6.2.3 releases are available from
+https://github.com/gitlabhq/gitlabhq and
+https://gitlab.com/gitlab-org/gitlab-ce .
 
-> 5) According to jPlayer release notes, we have:
-> 
-> [2.3.1] Security Fix: The Flash SWF had a minor security
-> vulnerability that enabled XSS (Cross Site Scripting). Reported by
-> Eugene Dokukin. Security reference CVE-2013-2023.
-> 
-> [2.3.2] Security Fix: Closed Flash SWF security vulnerability that 
-> enabled XSS (Cross Site Scripting). Reported by Eugene Dokukin.
-> Security reference CVE-2013-2023. The jPlayer noConflict option is
-> now restricted to strings that contain the term jQuery. For
-> example: lib.jQuery or myjQueryRocks.
-> 
-> [2.2.20] Security Fix: The Flash SWF had a security vulnerability
-> that enabled XSS (Cross Site Scripting). Reported by Malte Batram.
-> Security reference CVE-2013-1942.
-> 
-> [2.2.23] Security Fix: The Flash SWF had a minor security
-> vulnerability that enabled XSS (Cross Site Scripting). Reported by
-> Eugene Dokukin. Security reference CVE-2013-2022.
-> 
-> I'm of the mindset to use the CVE assignments as provided by
-> jQuery upstream, but it may be good to get full clarity down to the
-> individual commits.
+Workarounds
+- ---
+If you are unable to upgrade, you can disable code search by deleting the
+following line from `app/contexts/search_context.rb` and restarting GitLab:
 
-Yeah, partly what happened is I was specifically asked for a cve for
-jplayer by the ownCloud guys, I looked at the changelog, saw a bunch
-more and assigned them as best I could.
+result[:blobs] = project.repository.search_files(query,
+params[:repository_ref]) unless project.empty_repo?
 
-> 
-> [1] http://marc.info/?l=oss-security&m=136726705917858&w=2
-> 
-> [2] http://marc.info/?l=oss-security&m=136773622321563&w=2
+Credits
+- ---
+Thanks to joernchen of http://www.phenoelit.org/ for reporting the
+vulnerability to us.
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Comment: GPGTools - https://gpgtools.org
 
-iQIcBAEBAgAGBQJR1PqGAAoJEBYNRVNeJnmT7LkP/12lDuC26SCngF1M8jAoMLdd
-lyLnjlIxgtJSh1/01JzdTlLUjLoNXCslQKuDuvv9VXPNNhec3CTVF5Gpyqufwnnh
-96KaUK8Bb20uBjLRISwoEnS416vZK8WG0RDpDj0jZeBL/cbhzRbJxFvOozM62FWG
-iHnhRGOHIUm5J+j1DK50eDaSi+gNCCNsYxrYbXzyO34EcpBb48OTDWHK0LC/jelL
-FvtpiDDwP7pYOMme63e5TRN5WBCwH9VcFeLFaCa8Cfabu6k4qy0IqwUU5wYDvg6C
-Z5zIROkVSvD1O4zWAdfZqwhpJ0bGKHdFRwQ2TphOiW2aHwOjKy58Brtrfa3qCvrB
-7CNqEc9KykxkYwwsoACC6iUnW5CLxOF9Nvm0pWGEB+PZErfYDuS7o3vvDFkb5nNg
-pnq+icz4M4U3OxRmA1g3EiZEsCwGQzL5pOzZS9IsoofYMuZd5oUuT0N9kZV330Cj
-JVUvIDwNx5iUb/gpvfh3UXKD6EA2myRmVL5adbEghKh0U4UVg9Dqb20asr/fbQsE
-YbT2fJTdG/VMPQUA5HXXOpkPlfafDSr016TKD3OvWrhi+P9hrNKJd2A7J7zNf6Tn
-EM4nvCBMU02mx/aCRPdgagcPCTbjhFVC16yDcTrXaPwI/INxVdCxfnikRDxjXXdb
-KzQofUuEeBFRyhRySuHR
-=Cocf
+iQEcBAEBCgAGBQJSd+4EAAoJEB2vXw0YK62WiKgH/j3qNmEVhYwxN8tJTqbrfg17
+S74xVZDujeTinYdyo6qfjQA2xmOG4dbQb+HyfwcFatKPLXFfHwqrYI1T5Edd9Xyi
+Qn+nVmOEzIqYwj6r4k4wZeYp57T0rRjhPN/6yOvqW3SGY8HR6e2MOq8XYCuTBUXE
++pT1KKHwJxQF1xhupGIULcNyWBZDJYk9gwB5ccxbdajfPsLP54RFUCBmOfZ7m9bc
+KSMkJJ0tuuaAs1NZCvqhpxA8oNv/zqkailc0b97Pj6VJMsW1Zv6lxw+hnqa688tL
+a73xAHXkTKNW2kRfTTpdrMo47E+P1eYXO/LtyqzEEfz0fEdOrGFtbUEdznMXx5Q=
+=ds23
 -----END PGP SIGNATURE-----
+
+
+Best regards,
+
+Jacob Vosmaer
+GitLab.com
+
