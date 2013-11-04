@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/7
-Message-ID: <4227697.E1WEXqzqgd@x2>
-Date: Thu, 28 Mar 2013 11:58:32 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/10
+Message-ID: <878ux4hwvo.fsf@windlord.stanford.edu>
+Date: Mon, 04 Nov 2013 09:58:35 -0800
+From: Russ Allbery <eagle@...ie.org>
 To: oss-security@...ts.openwall.com
-Cc: Corey Bryant <coreyb@...ux.vnet.ibm.com>, Tim Brown <tmb@...35.com>
-Subject: Re: Re: [kernel-hardening] Security vulnerability tools
+Subject: Re: openssl default ciphers
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday, March 27, 2013 05:51:19 PM Corey Bryant wrote:
-> Thanks Tim.  Sounds nice.  This is the first security audit tool on the 
-> list so if we could add more in this category that would be nice.
+Hanno Böck <hanno@...eck.de> writes:
 
-There is also openscap if you are wanting security auditing.
-http://www.open-scap.org/page/Main_Page
+> SSLCipherSuite HIGH:!MEDIUM:!LOW:!aNULL@...ENGTH
+> should be fine. There are basically near zero browsers out there that
+> should have any problems with that. Even dinosaurs like IE6 can work
+> with this, you don't need "medium" ciphers as long as you don't want to
+> make a site accessible to browser museums.
 
-You can get SCAP content from various places.
+Just to data-point on compatibility, we've been using:
 
-As far as tools, I often look at the collection at the owasp web site:
-https://www.owasp.org/index.php?title=Phoenix/Tools
+SSLProtocol all -SSLv2
+SSLCipherSuite HIGH:MEDIUM:!ADH:!SSLv2:@STRENGTH
 
-web scarab and sqlmap are good.
+(not quite as strong as what you mention above; we should look at
+changing) for all of Stanford's SSL web sites for years and years now, and
+have never had a single complaint.
 
-There are lots of tools here as well:
-http://securitytools.wikidot.com/penetration-vulnerability-ids-ips
-
-There are so many tools, its hard to find the ones that are well maintained. 
-Many are good at first and then bit rot over the years.
-
--Steve
+-- 
+Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
