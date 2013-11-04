@@ -1,43 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/8
-Message-ID: <CAB8Fin8wpU8YZ6Zie=LTfdpJashiQTpRbj6x5kQH5yZpZ2n8Ow@mail.gmail.com>
-Date: Thu, 14 Nov 2013 17:11:15 +0100
-From: Jacob Vosmaer <jacob@...lab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/6
+Message-ID: <20131104181630.18e77c19@chromobil.localdomain>
+Date: Mon, 4 Nov 2013 18:16:30 +0100
+From: Stefan Bühler <stbuehler@...httpd.net>
 To: oss-security@...ts.openwall.com
-Subject: Requesting four (4) CVE identifiers for GitLab
+Subject: openssl default ciphers
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hi,
 
-We have just released a new security advisory for GitLab at
-http://blog.gitlab.org/multiple-critical-vulnerabilities-in-gitlab/,
-concerning the following four vulnerabilities:
+while working on the lighttpd SNI bug I realized that openssl defaults
+to a very bad set of ciphers.
 
- - Unauthenticated API access to GitLab when using MySQL
- - Remote code execution vulnerability via Git SSH access in GitLab
- - Local file inclusion vulnerability in GitLab
- - Repository access privilege escalation vulnerability in GitLab
+I also couldn't find a sane recommendation from upstream openssl to use
+as default, as "DEFAULT" obviously is not a good choice. (I also don't
+see any reason why "DEFAULT" includes export and "LOW" ciphers...)
 
-We would like to request four CVE identifiers for these issues.
+Is 'DEFAULT@...ENGTH:!LOW:!EXP' (should
+be similar to 'HIGH:MEDIUM:!aNULL') a reasonably default?
 
-Thanks to joernchen of http://www.phenoelit.org/ for reporting these issues
-to us.
+I don't want to enforce PFS or break compatibility on purpose; so I
+think the default could be a little bit less "secure" than what I would
+actually recommend to use.
 
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
+So I'm not interested in how to get a super extra secure cipher set
+(there are many cipher strings in the wild by various folks for that),
+but more in a reasonable lower bound.
 
-iQEcBAEBCgAGBQJShPXnAAoJEB2vXw0YK62W0G0IAKUHfE/D4VtAo8Wf6tvv5d29
-gvam1TXScSwId1U1mOQQi8Qm1+OlNffJ4fG30LXSD3/AHN5i/40e0F9jLLo4Q4U5
-UVsNdKbRw/0c/g/2hPtXc9jer85lS9j6hJ5xlwj8QfRvcwyEIJSAuANR8zkupL6p
-GtsTuiH8RMJWabI5ohxi11J3kDMHj9ILY1f3y9WFwDJaN6VViHfjW2yVy5QzW1gw
-mFMJlNcQbPs6wssQ/4ogJZSXsEoxdpjeWhjDCnGFZSyEQXWfRdWIV9Epx7nAoomP
-soFiTDgnyYSqI1J1viGhUCZn+y1rFyLEZvfelt028gh5o5IAutP3RMZyqIMWG9U=
-=donG
------END PGP SIGNATURE-----
+regards,
+Stefan
 
-Best regards,
-
-Jacob Vosmaer
-GitLab.com
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
