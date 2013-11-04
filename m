@@ -1,47 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/23/2
-Message-ID: <52672AB3.2050808@redhat.com>
-Date: Tue, 22 Oct 2013 19:47:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/23
+Message-ID: <20131104123738.57d82ee5.reed@reedloden.com>
+Date: Mon, 4 Nov 2013 12:37:38 -0800
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE for Wordpress plugin Portable-phpmyadmin
+Subject: Re: openssl default ciphers
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/22/2013 02:13 PM, security curmudgeon wrote:
-> 
-> : Thanks, please use CVE-2013-4454 for this issue.
-> 
-> Which issue Kurt?
-> 
-> The original post had phpinfo disclosure, and an auth bypass issue 
-> affecting multiple scripts.
+The Mozilla opsec guys wrote up some good guidelines recently on what
+they consider a good TLS cipher suite choice should be, but even if you
+didn't want to go all-out by making the default ultra-secure (with
+full PFS, etc.), they explain their choices fairly well, so should be
+useful in trying to figure out a middle ground that makes most people
+happy.
 
-Sorry wrote the email in draft, then got distracted and sent it. The
-CVE is for the phpinfo() issue.
+https://wiki.mozilla.org/Security/Server_Side_TLS
 
-Also a question: security bypass means what exactly? you simply
-request the file directly and it lets you in?
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+~reed
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSZyqyAAoJEBYNRVNeJnmTJNgP+wQS2NxvYsUUM0urirrf9vrv
-iKyJX+7J0QpGihtOesawYjkQDkAe8TjiE7RrSRUqw9I6Y7B1XCeo8afp25AS81Oq
-P82LKgVidTAEZuvzFjD7jG6w2ouXL0/idqpBkxwMCKlniUkUHwkhkLztXFHL6fAt
-qk2WVx/vSxg4eO9OXMymbbBlREX5XB/gaM3i0JV/Nlr1PXNIXF9n1rTn0Co7uWWU
-fToPmC8ekREkb3xWIpOrFrjg7ZsOR1QPlz1K132jAZPYSRVlxPgWUq0yXZqziz41
-Ez2u9REOVM9u4Jazts1AYBhmHc34K2IYDKZWrpGNaS65drf3E11YarBCa+xH2HJT
-rJf/gzPPHtUOx75Gh79RDgv4i9M7Nit60f+4aE6tbsg8osaRg8PgFx7g9hdgf+TJ
-C8fWNyEA8rBp/WAOZY0Y33zLtlxsV0bECPT/lL3ltbtXEc9aw7hz3wFA4+6bKm2N
-PehG2qJwnwoLODzB3fqByZJi5b4lv8Dq72NVKvuFYQ4sqzzbmtZ0sslt7x/qFNyW
-MP1vpo3GZvNB/9R36j5dd2WG0fZG1p8VXp3FtYMemGYcWDt5zCWLK/uVCck33VK1
-Z8nFfjFdAG8CRser9HZuyQ4MlTL0NxHkZpJK2fFuSJHrUKniFdmm9GjL3yBfa/MJ
-tEbbhAOkReaqTRtK0by8
-=Jxc0
+iKYEARECAGYFAlJ4BZJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3Bl
+bnBncC5maWZ0aGhvcnNlbWFuLm5ldDZCNTZGOUFDMDdCNjg1RDdEQzQ1NjBEQTZC
+QTIyMjI2RjNDMzNENUEACgkQa6IiJvPDPVrsJwCeIw5lo0/5JiV1z0fsz+rGigai
+0UYAoMRIc5jKSxKRpd2iM54hwyotLPid
+=uOgO
 -----END PGP SIGNATURE-----
