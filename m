@@ -1,58 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/5
-Message-ID: <50FCED0A.3080006@redhat.com>
-Date: Mon, 21 Jan 2013 00:23:54 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/8
+Message-ID: <20131104174830.GC26778@localhost.localdomain>
+Date: Mon, 4 Nov 2013 12:48:30 -0500
+From: "Eric H. Christensen" <echriste@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed modules
+Subject: Re: openssl default ciphers
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA512
 
-On 01/20/2013 10:29 PM, Forest Monsen wrote:
-> Hello there -- requesting CVE identifiers for issues with three 
-> contributed modules:
-> 
-> SA-CONTRIB-2013-003 - RESTful Web Services - CSRF 
-> https://drupal.org/node/1890222
+On Mon, Nov 04, 2013 at 06:16:30PM +0100, Stefan Bühler wrote:
+> I don't want to enforce PFS or break compatibility on purpose; so I
+> think the default could be a little bit less "secure" than what I would
+> actually recommend to use.
 
-Please use CVE-2013-0205 for this issue.
+What software would we be breaking compatibility with?  Perhaps it would be a good idea to start a list of software that can't handle HIGH ciphers and attempt to work with those developers to "fix" the problem.
 
-> SA-CONTRIB-2013-004 - Live CSS - Arbitrary Code Execution 
-> https://drupal.org/node/1890318
+- -- Eric
 
-Please use CVE-2013-0206 for this issue.
+- --------------------------------------------------
+Eric "Sparks" Christensen
+Red Hat, Inc - Product Security Team
 
-> SA-CONTRIB-2013-005 - Mark Complete Module - CSRF 
-> https://drupal.org/node/1890538
-
-Please use CVE-2013-0207 for this issue.
-
-> Thanks in advance.
-> 
-> Best, Forest
-> 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+sparks@...hat.com - sparks@...oraproject.org
+097C 82C3 52DF C64A 50C2  E3A3 8076 ABDE 024B B3D1
+- --------------------------------------------------
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ/O0KAAoJEBYNRVNeJnmT1zEP/3aKDRXSX1orkvDsZHFMXfIb
-b95lPtt/xg5mEVwZh3ndVGv5dtHe2+ovidGtUzOZ9sge+E3KDvME5/otnvhJ7Q8N
-9pelDki8bEycSscbWJ1r06EpjynPvDl6sz9tz96pNzXl3ty6rt7Z02tswDT3d12f
-qR/TnwktRnDNq4xoAKmEl/Wdg4U5AsrJim37qbmXfqb4LqzdQAl+CFU/NnIK6kTX
-Q6+HO0nJxCJUqkx6NVK/yAwi3N9cV8JGVCEd0G9xgEb+Fle4LeV03LZY/pGgVw15
-6mmnA7Jg1co2jkf7N+UIgmuvCqfaZq/GZDBbRl/4gU+cUCRX0aBbnoN0QS1fnopH
-bkfRFtM59WzrXuCaaFRU5IS+YM9XVWNFDXEejVBsp7A2nd1aYzoB7tBzw4nWISJr
-0S2hxk0P3WwKQSsJPBfu0Isll8IyyPmwOl7PcbEE9mDCzEKusJ+9fL+J29Vk72aq
-qVodnlCsn+YEtYGnfTpjCi/7d5zcHJ49pToobBs0f8wKbL8AtgewGk/wpwrG/Cfl
-0Slo9W/ky88sexKL4IiDm9WaRyrDNVxTEZuReyZKiQcAE7cWzW+ZyEnJ6x1r0acV
-pTS1+XftpCAtK2PLO93DKtGkeS82b8khXGxUMyY991gBTdBJsdU6yvKskuySsxMb
-brVTakyH8xPTl7vdrEYT
-=cD2h
+iQGcBAEBCgAGBQJSd93nAAoJEB/kgVGp2CYvtsEMAJNeDquQDR670PPp/S6tpc+y
+C4ldVebgQ7fAJjawjq53ZKgi72sUz6yhP713BoLt+j0hZTAy6HXhlpLuaekv+qJo
+wgRIN8uGTvXvK9eY/7EXR5XvWe1SKUROiHvKNHTCtIlONPtdDZqMlbsWgFRwBT3W
+x5GvZdiXKDE5lAfJE2RjlfYauwq/SDZY2fqlRvgVfOLAi1pZr/iIQIllfcgSQXRk
+vqe93WZYkQWAOzk+t5AFmpEK30yXtkOkisbqQfbOGopQVioqj6RgqlE31IiVCj01
+X5LJDe+lzTj0pZkdYnv9zMt/hik+rzGsc386ZW4V6UF/5CziH74OKs7S0w7DdxdX
+UXNpS8pAsasNvbboXKVfutWfE3bf1/tJ7XMD0jG8u4I0a84BJWuiaXk9RzsVvViC
+hIPyYgYNoTbSS9czAgJKnxLSQ//jq25mxns9DyL7Un8O2q5KkqfILqehPhf41BjH
+lFUA6ioW1j2xmI/5FDY9ZkK2AZ4tIiA/Y8UnGPtFHQ==
+=DovG
 -----END PGP SIGNATURE-----
