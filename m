@@ -1,41 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/15
-Message-ID: <CALi+ztEa-M_-WRoFN6bfBSyfQ+D4rgYa1dka1BV8-EMR7noV+A@mail.gmail.com>
-Date: Fri, 15 Nov 2013 11:18:33 -0800
-From: Chris Palmer <snackypants@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/21
+Message-ID: <5278011E.30002@redhat.com>
+Date: Mon, 04 Nov 2013 13:18:38 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: cryptographic primitive choices [was: Re: Microsoft Warns Customers Away From RC4 and SHA-1]
+CC: cve-assign@...re.org, security@...ian.org
+Subject: Re: possible CVE request: Tryton client input sanitization flaw
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 14, 2013 at 10:58 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Compatibility, for example HTTPS, you can disable a lot but if you
-> only allowed one cipher chances are a good chunk of clients wouldn't
-> be able to connect. There's a LOT of software out there, some open
-> source, some commercial, some written in house, it all uses encryption
-> and signing (usually wrongly, sigh) and a lot of it cannot or will not
-> be updated any time soon, if at all. Think of all the devices that act
-> as a web client and will never have TLS 1.2 support (e.g. "smart" TVs)
-> for example. Would I prefer the world to ditch SSL, TLS 1.0 and 1.1
-> and move to TLS 1.2 entirely? Of course. Is it going to happen? Not
-> for a loooong time.
+On 11/04/2013 03:43 AM, Murray McAllister wrote:
+> Hello,
+> 
+> An input sanitization flaw was found in the Tryton client:
+> 
+> http://lists.debian.org/debian-security-announce/2013/msg00203.html
 >
-> Think of all the things that currently use (often older versions of)
-> OpenSSL/PolarSSL/GnuTLS/etc and will never get updated...
+> 
+https://bugs.tryton.org/issue3446
+> http://hg.tryton.org/tryton/rev/357d0a4d9cb8
+> 
+> A malicious server could use this flaw to write to files accessible
+> to the user running the Tryton client.
+> 
+> There is some discussion in issue3446 about why a CVE may not be
+> needed (starting at msg14493), and msg14507 notes a CVE could have
+> possibly been assigned via OpenBSD ... so I defer to the CVE
+> experts.
+> 
+> Cheers,
+> 
+> -- Murray McAllister / Red Hat Security Response Team
 
-I posit that there is a strong correlation between un-updated,
-un-updatable software that did not ship with (for example) support for
-modern cipher suites and protocols, and software that should be
-recalled for a variety of reasons. Random example:
+Please use CVE-2013-4510 for this issue.
 
-https://securityledger.com/2013/08/samsung-smart-tv-like-a-web-app-riddled-with-vulnerabilities/
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-Let's unpack your use of the passive voice: Who, exactly, is choosing
-not to update the OpenSSL they ship? Why do we forgive that?
-
-To an extent, even security engineers are acting as enablers, allowing
-obsolete software/protocols/cipher suites to live far longer than they
-should have.
-
-"LTS", "ESR", and not EOL'ing Windows XP 4+ years ago is a significant
-part of the problem.
+iQIcBAEBAgAGBQJSeAEeAAoJEBYNRVNeJnmTGG0QAIP55On+rsuPXfpErvUo4jms
+Ipku19ts/zeMWtFhtrj/5e54tZwtGowlAqTAUaraQC29537ImKwwWIbC3fjrr5nZ
+ynZ/h6EYUtpvbTITZhSQZYmq/Y9vWYPWH5qaga4R7A1rnZu6VdOcb2eR9YqB3ZPO
+SBVmlhryDT+/i+UY2Gyfb2odX6cUq/xHq7CF8g6TO9wtT2Ar48vNy4vXxK2oe0eB
+e/Qjib+ouLIRoBdGAH5Dw67jjjL3e1qQo7DDiVBGteJGcgn8jU5mvP2hLnU/v+F5
+8WBWPfI6e9F4NAJxLJB0JMwdZklLkyIXYDd38yRE1ZaXp+hyxfuvt1bVaRFIVfqn
+om/sFLLjttlgPNoJSX6f1Hv9C7OmJx33holsGjnW1x/NmCh7ffBPqNCdVNvtqDxl
+7m0fXdizZFxRms/YEdpirDTx8RZNzddiu8B7XSVvDyKK3Yydo3UoWZ/VvUb+PSKR
+q0mxrh5oiUEl3BJaOOFPmFUj/QqqdNQFnUamIztPPTHfO5YavIwKigBFtzvaKizB
+jQFfHu/OHzi0OgoJ335g9ZFhdFutr5Qqnby90b5gG40wP2kFiPuZ6/drIoLfMt27
+CYPDNhe+MqTpQUUF6LJw7yFca+hZHN1obXdZ33Dzrl34m4HGxKIMVfVuidCqWfTi
+3/qMQReJ+USpGIPfCTq4
+=i5Rz
+-----END PGP SIGNATURE-----
