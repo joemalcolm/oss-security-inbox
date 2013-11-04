@@ -1,21 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/3
-Message-ID: <CAA7hUgHEtsDXqXSVrewnzRcWXBP68m0dANQtz_Bw80HP73ARYw@mail.gmail.com>
-Date: Mon, 12 Aug 2013 12:32:20 +0200
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/11
+Message-ID: <5277E84A.2070301@fifthhorseman.net>
+Date: Mon, 04 Nov 2013 13:32:42 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - LibModPlug <=0.8.8.4 multiple heap overflow
+CC: Seth <seth@...rl-i-gig.com>
+Subject: XSS in CollectiveAccess 1.3 and earlier
 Content-Type: text/plain; charset=utf-8
 
-On 7 August 2013 19:29, Florian <floriangaultier@...il.com> wrote:
-> https://github.com/gardaud/libmodplug/blob/master/ [...]
+There was a cross-site scripting (XSS) vulnerability in 
+CollectiveAccess, a web-based archive cataloging system written in PHP.
 
-Just a quick note on this: that repository is not even a mirror of the
-upstream repository.
-Upstream's can be found at http://sourceforge.net/p/modplug-xmms/git/
-and has a couple of additional commits.
+CollectiveAccess 1.3.1 was released including this fix.
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+http://www.collectiveaccess.org/news/collectiveaccess-version-1-3-1-released/
+
+The issue was reported at:
+
+  http://clangers.collectiveaccess.org/jira/browse/PROV-638
+
+  (the PROV-638 ticket may not be accessible to the public)
+
+The changeset fixing it is:
+
+https://github.com/collectiveaccess/providence/commit/b54e01419966c8d8f23db532caad91304c977776
+
+Regards,
+
+	--dkg
