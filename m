@@ -1,72 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/21/4
-Message-ID: <20130421185929.GB16719@suse.de>
-Date: Sun, 21 Apr 2013 20:59:29 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/19
+Message-ID: <527800EC.6090808@redhat.com>
+Date: Mon, 04 Nov 2013 13:17:48 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: upstream source code authenticity checking
+Subject: Re: CVE Request: lighttpd using vulnerable cipher suites with SNI
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 21, 2013 at 10:05:53AM -0700, Alan Coopersmith wrote:
-> On 04/20/13 01:39 PM, Solar Designer wrote:
->> I just found this recent blog post by Allan McRae of Arch Linux:
->>
->> http://allanmcrae.com/2012/04/how-secure-is-the-source-code/
->>
->> Thank you for doing this, Allan!  Are you contacting the upstream
->> authors to request that they start to properly sign their releases?
->> (I've been doing that on some occasions, sometimes with success.)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 11/04/2013 10:16 AM, Stefan Bühler wrote:
+> Hi,
+> 
+> I'd like to request a CVE id for the following bug:
+> 
+> Nathan Bishop <me@...shop.name> reported 
+> (http://redmine.lighttpd.net/issues/2525) that lighttpd uses
+> vulnerable cipher suites when SNI is used:
+> 
+> $HTTP["Host"] == "example.com" { ssl.pemfile =
+> "/etc/ssl/certs/example.com.pem" } $SERVER["socket"] == ":443" { 
+> ssl.engine = "enable" ssl.pemfile = "/etc/ssl/certs/default.pem" 
+> ssl.cipher-list = "HIGH" }
+> 
+> This config uses the "DEFAULT" cipher list for "example.com",
+> which includes export ciphers.
+> 
+> More details are available at: 
+> http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2013_01.txt
 >
-> Coming from one of the common upstreams (X.Org), it would really be
-> helpful if there was a "Best Practices" page we could reference, since
-> we've gotten a couple complaints that we're not doing enough, but not
-> concrete enough suggestions that we can go modify our release script to
-> implement them.   (Currently we include MD5, SHA1, & SHA256 checksums in
-> the release announcement e-mails, which we tell maintainers to pgp sign
-> with their own keys when sending - though unfortunately most of the
-> mailing list archives break the ability to verify when they mangle
-> email addresses to prevent spam harvesting from their archives.)
->
-> If there was a common standard, with instructions, we'd be far more
-> likely to spend the time to adopt it, than just a "make signatures
-> appear somewhere, in an unspecified format".
+>  Please note that the patch is not final yet, and can't be found in
+> SVN.
+> 
+> We're still discussing: * whether other options should work in SNI
+> context (we could add all ssl.ca-files to all SSL_CTX instances) *
+> whether to set a default ssl.cipher-list, and which string to pick
+> 
+> regards, Stefan
+> 
 
-SUSE has started to adjust its spec files to help here,
+Please use CVE-2013-4508 for this issue.
 
-1. we use full Source URLs for the download tarballs.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-   This can ensure that the tarballs do not change, or if they change
-   a warning can pop up.
-
-2. We are trying GPG signature checking, in cases where parallel to the tarball
-   lies a .sig or .asc file and there is a known keyring.
-
-   started here:
-   http://lists.opensuse.org/opensuse-factory/2012-12/msg00235.html
-
-   In case they are provided:
-
-   a. We refer the .sig/.asc file as with Source URL in the .spec file
-   b. We store the keyring in the package sources, also as a Source (no URL)
-   c. We use RPM macros to verify the gpg signature during build.
-
-   Our source review team has to check when the keyring changes. 
-
-This has the usual problems:
-- Usage of gpg causes buildcycles if you do full transient builds of the distribution.
-
-- Need to verify the keyring at begin and also when it changes somehow.
-
-
-But yes, for upstream source providers I think it would really be nice if
-they would also sign their binaries and upload the signature in parallel.
-
-And also publish their keyring and let some keys be in the chain of trust
-that could be gained from e.g. Linux fairs/conferences (LinuxTag usually
-does keysigning etc.)
-
-Savannah hosting does parts of that already, the hosting service also
-offers the keyring per project.
-
-Ciao, Marcus
+iQIcBAEBAgAGBQJSeADrAAoJEBYNRVNeJnmT8bcQAI3dNXYLuIug+kRLz1wfWSay
+xTY0SBB53w/fvjHYEc2hDHBnGfEeIXuRU4DVO0HVZB2i3djy4sEI1z1jlrWP6WW8
+Xk/Xyu63vfuMBoLmUqtKQQ9Zn88uekyr2h5lY/3VlILZtcB5Hfk9SpxcaQzBhOP5
+T8fmTR8qsIgWVK1XfNJNmeA1teEReFu5vboTNZQALGKb0zivyqHAWZAORAJ4Pf+6
+d0d4ZixNimFQFQQc+HXE28IuRQ8uf27uBjqWgdjdYh/rxtnOnGamfEIwvCCHyT7A
+7avX1lxN4w+2oqFfkHISp6o3LXwmePtDUkYVa1zPmTO6TYmlv8e01mSMYwuOlb0G
+N53LxD1nKRlWa5HutXk1IudTx/WT/dKpM6b6JE56jvqAS16mrxneCPDcPmt4N5bL
+Yc/W4SVdcLjWar3s0SKHbADCoDLJEawEiXhjcikLbUjOjXMfiRtPyfncr6hyFn5u
+jQ2cF/8C3En0eyR3iBgYm9kzdK23+/cpzfdQpN5p3MO7mqd3ZChNZzx9PdZrwKpd
+s+CSD0TVRrNRZD/PaHnoYnEkkmCyPmmQXcS/jE+3ATn33LoYwHUx1tfHpiuJQMqc
+s8w9Q7u/vrHpM8lephvYYdHOzLXm+ai2i2RU+9/PnInygP8MII7ztVOlqA9eQM7X
+kzFIJ4X8r1Exiy+Ihpft
+=1Bl4
+-----END PGP SIGNATURE-----
