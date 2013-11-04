@@ -1,29 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/29/2
-Message-ID: <526F2825.5070500@redhat.com>
-Date: Tue, 29 Oct 2013 08:44:45 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/13
+Message-ID: <CAH1ochwmt7Km6JzZUttXP_cq5iMt_y4EBUJbBP78Awg+fE7B0Q@mail.gmail.com>
+Date: Mon, 4 Nov 2013 11:47:12 -0700
+From: Mike <mikedawg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: libxml2 external parsed entities issue
+Cc: hanno@...eck.de
+Subject: Re: openssl default ciphers
 Content-Type: text/plain; charset=utf-8
 
-On 10/28/2013 11:47 PM, Nicolas Grégoire wrote:
+RC4 should absolutely not be included.
 
-> For RedHat, it covers both but "libxml2 already provides mechanisms to
-> disable external entities which applications can use. Closing this flaw
-> as 'wontfix'": https://bugzilla.redhat.com/show_bug.cgi?id=915149
-> 
-> And the official page for the CVE isn't helpful:
+RC4 is just as broken, if not broken worse than other cryptographic
+algorithms. I recommend you check out Matthew Green's blog:
+http://blog.cryptographyengineering.com/2013/03/attack-of-week-rc4-is-kind-of-broken-in.html
 
+If you search around, you can find similar stories of problems with
+RC4 (like this one from Qualys:
+https://community.qualys.com/blogs/securitylabs/2011/10/17/mitigating-the-beast-attack-on-tls
+ )
 
-libxml has an API to disable external entity expansion. Applications
-linked against libxml, can use this API if they dont have enough
-protections built-in. For this reason we believe that the
-responsibility for correctly handling XEE lies with the app. and not
-the library.
+Mike
 
+On Mon, Nov 4, 2013 at 11:41 AM, Stefan Bühler <stbuehler@...httpd.net> wrote:
+> On Mon, 4 Nov 2013 18:49:06 +0100
+> Hanno Böck <hanno@...eck.de> wrote:
+>
+>> On Mon, 4 Nov 2013 18:16:30 +0100
+>> Stefan Bühler <stbuehler@...httpd.net> wrote:
+>>
+>> > Is 'DEFAULT@...ENGTH:!LOW:!EXP' (should
+>> > be similar to 'HIGH:MEDIUM:!aNULL') a reasonably default?
+>>
+>> SSLCipherSuite HIGH:!MEDIUM:!LOW:!aNULL@...ENGTH
+>> should be fine. There are basically near zero browsers out there that
+>> should have any problems with that. Even dinosaurs like IE6 can work
+>> with this, you don't need "medium" ciphers as long as you don't want
+>> to make a site accessible to browser museums.
+>
+> There is no difference to HIGH:!aNULL on my system. I don't see why
+> HIGH:!MEDIUM:!LOW could be not equal to HIGH anyway...
+>
+>> And looking at what medium includes that high doesn't, it seems you
+>> really don't want that ancient cipher suites:
+>> -DHE-RSA-SEED-SHA
+>> -DHE-DSS-SEED-SHA
+>> -SEED-SHA
+>> -IDEA-CBC-SHA
+>> -IDEA-CBC-MD5
+>> -RC2-CBC-MD5
+>> -ECDHE-RSA-RC4-SHA
+>> -ECDHE-ECDSA-RC4-SHA
+>> -ECDH-RSA-RC4-SHA
+>> -ECDH-ECDSA-RC4-SHA
+>> -RC4-SHA
+>> -RC4-MD5
+>> -RC4-MD5
+>> -PSK-RC4-SHA
+>
+> This is not what I get for "MEDIUM" (debian testing); I see only SEED +
+> RC4; RC2 is an export cipher; wikipedia has some stuff on IDEA, and it
+> seems indeed "ancient". SEED might be more relevant (for Korea...), and
+> RC4 is having a big comeback due to the BEAST attack.
+>
+> I think due to BEAST a default collection should include RC4; that is
+> why I included MEDIUM.
 
 
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Mike
