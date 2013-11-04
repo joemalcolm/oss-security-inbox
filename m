@@ -1,86 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/3
-Message-ID: <51131016.7020706@redhat.com>
-Date: Wed, 06 Feb 2013 19:23:18 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/18
+Message-ID: <527800DB.9080105@redhat.com>
+Date: Mon, 04 Nov 2013 13:17:31 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: openssh?
+CC: Seth <seth@...rl-i-gig.com>
+Subject: Re: XSS in CollectiveAccess 1.3 and earlier
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/06/2013 02:20 PM, Nico Golde wrote:
-> Hello, years ago CVE-2006-1206 was raised for a denial of service
-> attack against dropbear based on exhausting the maximum number of
-> connections. Back in 2010 I played around with this in openssh to
-> find out if similar attacks work against that. Since then I never
-> really knew what to do with this, but every now and then I remember
-> it and after this bugged me for a while, I finally brought up the
-> topic to the openssh developers.
+On 11/04/2013 11:32 AM, Daniel Kahn Gillmor wrote:
+> There was a cross-site scripting (XSS) vulnerability in 
+> CollectiveAccess, a web-based archive cataloging system written in
+> PHP.
 > 
-> The attached program demonstrates a similar attack against a
-> default openssh installation. The program simply connects to an ssh
-> server and waits for the socket to be closed, thus determining the
-> LoginGraceTime setting of the server. Next, it opens up connections
-> to the server, keeping them open until no further connection is
-> allowed and thus determining the MaxStartUps setting (of course,
-> this may not be always accurate depending on the currently active 
-> sessions etc, but this is a minor detail).
+> CollectiveAccess 1.3.1 was released including this fix.
 > 
-> The code continues to sleep for logingracetime seconds and spawns
-> maxstartup connections again. As a result, unless you are very
-> lucky and you hit the time window between the connection respawn, a
-> user can not login anymore.
-> 
-> While this is a standard problem for any network service that
-> limits the number of connections, I think in openssh's case this is
-> supported by very historically very long LoginGraceTime default
-> settings (2 minutes) and a lack of random early drop usage for
-> MaxStartups.
-> 
-> While you could argue that this is not per-se an openssh security
-> issue, the default settings aid here to a trivial denial of service
-> attack against ssh installations by all linux distributions I've
-> seen.
-> 
-> The result for a user who tries to login is this: 
-> ssh_exchange_identification: Connection closed by remote host
-> 
-> The openssh maintainers actually agree here and it resulted in the
-> following changes: 
-> http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/servconf.c?r1=1.234#rev1.234
+> http://www.collectiveaccess.org/news/collectiveaccess-version-1-3-1-released/
 >
 > 
-http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/sshd_config.5?r1=1.156#rev1.156
-> http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/sshd_config?r1=1.89#rev1.89
->
->  I personally don't mind whether this get's a CVE id or not,but
-> considering that dropbear got one in the past,I thought I'd bring
-> this up.
 > 
-> Kind regards Nico
+> The issue was reported at:
+> 
+> http://clangers.collectiveaccess.org/jira/browse/PROV-638
+> 
+> (the PROV-638 ticket may not be accessible to the public)
+> 
+> The changeset fixing it is:
+> 
+> https://github.com/collectiveaccess/providence/commit/b54e01419966c8d8f23db532caad91304c977776
+>
+> 
+> 
+> Regards,
+> 
+> --dkg
 
-Please use CVE-2010-5107  for this issue.
+Please use CVE-2013-4507 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRExAWAAoJEBYNRVNeJnmTkjIP/1OZL0I3yaXM/f7QUQbC9TcF
-yVKK8s6FsXgUcIMigtvm1CwHLWU1QVDXr+Q6SgytPqo/SF6r8+xWTOOLslPgKL39
-oUEAE+0kIZ5900q3bsbLeJ7vLT0YXbPeFtd4tCE8WhFLKnX8zpbYx17xPtwowO0C
-cFXLYbkl8XS6ZFOynxaSxexXLJCrhtJMqSqfJBDFd/tjRU8jM0WHne85+wGIPiI6
-vQWNbV59aAn3GAmKk2j+lET2D+3JHwHS/QkCRvkxiEuhka+Gx+nmdqQ5ms0hdeIi
-4h65F+ppOfeQ6gkS+fnTPvkajPo7RQGwQ5GPGkaLX3i54q9aCIc5JCfXv7L3r1uA
-J9Ix+4zlTdLPcTy2m2aU5m4G9yk2cv7OgwQvilZTGQF9Ro1acIYSm019WNSvr47N
-9ItUQHfUsEqrY89Lnd/fS/gviCjW9cYTPaJCcPfWO38j+L7mD15UgrQXGyzwXrY0
-RbYqWOGJ83aAGzFm8Xa24wo7g5spk1zlCYQoKiFPKq8yAXMb258SDkgDPrXPgY0o
-+HQ7NkE4pAK2x9qvkeZ/LLHvwPYGiSjJdvivnCQMNtZPqkbHdyF4ULOu93sw6PkO
-++Ih1RmeyKyTiVB60UkiCIMHNMvCGk6Zp4OJxpMmPPhq2K/usWXEGqTDrKa+LgL6
-4bajkNh3HLA5ZdC+Wq0g
-=tGUF
+iQIcBAEBAgAGBQJSeADbAAoJEBYNRVNeJnmTURYP/0ZSFU1OC2O5JFkaCRvVhgzF
+ypKBkBlPVHQggxnXq77E3HjPjqRBPJtea3zISPwLk0mBFaCPnmGSVSNwicxo2ry7
+QR3cxv5QPl8wWni23xNGByoEwI7RqNUTmrhriSP3wWQ3tsFuu9Bio+L3Mjr/OqG7
+YuosmpfSv0zTKWBGmhAJzRtyhqmp4INC1uu/omTc2fELrOKaL9lhnpPGJdehZnRB
+DqjG9lNpwpLK+7YknTlSwVd6HN4ZNONy0gsEG6Uo19O/l8fSuDn2gcV61Sse92F7
+Lc4mVSluWBoforQlE9KrE4PDI6rcXh/32hZAjeXezVa3bweGWg+9A/94aau+cDsF
+FRSkoruw094//8+Xg9O2EqoIhuaZBIzFleNp0EdxAxDFOJ51pBvQpJD08H9OHjqJ
+rUrdj2HiIItFnpPl178c/YYoewiNDnyCAYp90K5EVRpWnQsoYQMiTJTYQCdwuQXv
+eHPcrwLbUEGyIzPUQxrYseslQIWq+Cr/110nYq0QU8iBkxI4bDxkV2QeyuOPbPtn
+4TmH5C7Auq7DFEtMaj1BXgd1DeJvaPTj2oEPt0JGgMzEwBo9iBDpD7PFopFcLsv7
+oGAHd0+KMr/W/RnhRh6IxuCcGti1zYWbmi3z/t+XSJeTDuqKEdEqAtHY8n+iDCjP
+E4IcaBRlRbgotx8407bW
+=jRnU
 -----END PGP SIGNATURE-----
