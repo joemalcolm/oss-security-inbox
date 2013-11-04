@@ -1,64 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/2
-Message-ID: <50F76DC6.10000@redhat.com>
-Date: Wed, 16 Jan 2013 20:19:34 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/16
+Message-ID: <20131104194039.GD26778@localhost.localdomain>
+Date: Mon, 4 Nov 2013 14:40:39 -0500
+From: "Eric H. Christensen" <echriste@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fweimer@...hat.com>
-Subject: Re: gnome-keyring does not discard stored secrets in some cases
+Cc: hanno@...eck.de
+Subject: Re: openssl default ciphers
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA512
 
-On 01/11/2013 02:36 AM, Florian Weimer wrote:
-> On 01/11/2013 08:38 AM, Kurt Seifried wrote:
->> On 01/10/2013 11:45 PM, Florian Weimer wrote:
->>> I had trouble finding a caller of this function, but the
->>> submitter indicated that gnome-power-manager uses it in older
->>> versions:
->>> 
->>> <http://git.gnome.org/browse/gnome-power-manager/tree/src/gpm-control.c?h=gnome-2-32#n162>
->>>
->>>
->>>
->>> 
-I'm not sure if this needs a CVE, but it's probably worth fixing
->>> anyway.
->> 
->> What security violation occurs/what trust boundary is crossed?
-> 
-> I think the expectation was that key material is discarded on 
-> suspend/hibernate.  This seems quite desirable for hibernate
-> without encrypted swap.
-> 
-> I've verified that Fedora 17 (GNOME 3.4) does not discard cached
-> keys on suspend and hibernate, either.  (Swap is encrypted, though,
-> at least I selected that in the installer.)  However, I suspect
-> that users expect that suspend (but perhaps not hibernate) does not
-> discard keys.
+On Mon, Nov 04, 2013 at 07:41:49PM +0100, Stefan Bühler wrote:
+> I think due to BEAST a default collection should include RC4; that is
+> why I included MEDIUM.
 
-Just to confirm, is this behavior documented at all in the gnome
-keyring documentation (e.g. that it does or doesn't do it)? Thanks.
+BEAST is now mitigated on most browsers so we can drop the very broken RC4 cipher.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+- -- Eric
 
+- --------------------------------------------------
+Eric "Sparks" Christensen
+Red Hat, Inc - Product Security Team
+
+sparks@...hat.com - sparks@...oraproject.org
+097C 82C3 52DF C64A 50C2  E3A3 8076 ABDE 024B B3D1
+- --------------------------------------------------
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ923GAAoJEBYNRVNeJnmTpzoP/jh0ZZmoGl01M6Ee7dHSVNWj
-Unt2ERxMKifWqn19eNxrgpc6eja0J54qc+guij+NqSb4wbd8H+zwkLapbvO/lOpa
-X8WtaFSUdZfLPnBddgwn0uf2ZiC8VQ10svi2zWFcjdcDB5ctENTuGz0rsmXB07MU
-9476GVOaVO5HnDDgfKDybVFfTaxrJpf6UjQyOy5i3aZNVsKtd2SKy4TLsBFhIZrc
-zAvPQ1bRI++N1IiN7BwUaq4deQS7loStbBSeDqMDQqTJ5Z6RIJPJbkPQh7s1xjX9
-vc2HpTHJ+LQOCcII/Ncgwep/dnTpZC/moXhGv6B0cXidYgNouIhqg01zQA+8shLZ
-98JcFCiXNcKJIf3u451ukXVqN6gpcSEuFDVbknBNGhkbBc2kUyDgCAL4DqCQjI4F
-1s7GiHSiCsJf2BlkIviYnwUEnMd6eUt1LH0nl37uAHyNQG85jXWcCty8xAUt7lha
-6w/ksWoZaoRHEXzxQIVtFO0H4/aXG9RL+0bd+EUQZbKzyPtmJFjOunim1mqADM+Q
-OFWx+4Sa/uOg8825AxbuFZSqCM4oablGXgE5RxIs1NBM4GHdhMER7HRAkQDZ1usm
-omcWOhQj+yblh8i2ACLO3T0kNiT2PE75MFebXK+OnVvTOntP+gz5rF30rzSc6OLo
-pZtKK+gz/EfSs+ZO++M/
-=+2ir
+iQGcBAEBCgAGBQJSd/gxAAoJEB/kgVGp2CYv7EML/RxVGNPGjL/7PLJK85GfANHf
+hYpT7BSRYWruraXDhk2HhkhaE8IL4GLKZZDsyOfmX/8IHte2K3Dz8+zNKDnu++Qm
+0UOxr/n6LurMGk6mXb07Im+91xQ/iWumb7eQG2XqSqlcuQON5YWWFpHXe8dHcru+
+ySBWchfVbcIrvH72+BtWinAGTpawCXfaRdRuaqQkyR8bkHbX2xdwwXrfMzVddMOb
+j9aIpbmReSf9v+HjbWbAgfXt8PZTPyAJPzYOFCA8Da19LGwN0lyX//P6At405pzp
+0j841cnjz9qEkQsJnPeXZEbFbbUEz2aBZseCXIMTx4WQ6wH6pfKBWhtrjiC04D/j
+9jzEHit9m2H1MJEYuB8bkJzlAuKbF5FgL8qs79Nl1hg0/zWl6sfzhUpXst+EpqCS
+WpVfR5wacbIQ0cgnUmTyaQ/8mlQh1MBjUzccVdxo0AcM7iRgfkTRusDWHHKf8NrH
+I/AAbmX0/O+nHH5hML4GxzXelBtE+eMpuFYGKIiNkw==
+=s/RW
 -----END PGP SIGNATURE-----
