@@ -1,61 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/14
-Message-ID: <517ECB54.4090903@redhat.com>
-Date: Mon, 29 Apr 2013 13:34:44 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/5
+Message-ID: <20131104181617.7bc70610@chromobil.localdomain>
+Date: Mon, 4 Nov 2013 18:16:17 +0100
+From: Stefan Bühler <stbuehler@...httpd.net>
 To: oss-security@...ts.openwall.com
-CC: Robbie Mackay <robbie@...ahidi.com>
-Subject: Re: CVE Request for XSS vulnerability in Ushahidi Web
+Subject: CVE Request: lighttpd using vulnerable cipher suites with SNI
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 04/23/2013 04:04 PM, Robbie Mackay wrote:
-> Hi,
-> 
-> Robb Driscoll (ohrodr) has reported an exploitable XSS bug with
-> report descriptions in Ushahidi_Web
-> (https://github.com/ushahidi/Ushahidi_Web).
-> 
-> Original bug report
-> https://github.com/ushahidi/Ushahidi_Web/issues/1009
+I'd like to request a CVE id for the following bug:
 
-Please use CVE-2013-2025 for this issue.
+Nathan Bishop <me@...shop.name> reported
+(http://redmine.lighttpd.net/issues/2525) that lighttpd uses vulnerable
+cipher suites when SNI is used:
 
-> This will be fixed in the next release Ushahidi 2.7, along with
-> other general XSS issues. We've done a general overhaul of our XSS 
-> protection and  https://github.com/ushahidi/Ushahidi_Web/pull/1056
-> 
-> Would a CVE normally be assigned just for the specific issue? or
-> for the general fixes to XSS protection as well?
+    $HTTP["Host"] == "example.com" {
+        ssl.pemfile = "/etc/ssl/certs/example.com.pem"
+    }
+    $SERVER["socket"] == ":443" {
+        ssl.engine = "enable"
+        ssl.pemfile = "/etc/ssl/certs/default.pem"
+        ssl.cipher-list = "HIGH"
+    }
 
-Are these exploitable currently, or is this hardening?
+This config uses the "DEFAULT" cipher list for "example.com", which
+includes export ciphers.
 
-> 
-> Regards, Robbie Mackay
-> 
-> Software Developer, External Projects Ushahidi Inc e:
-> robbie@...ahidi.com skype: robbie.mackay
-> 
+More details are available at:
+http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2013_01.txt
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Please note that the patch is not final yet, and can't be found in SVN.
 
-iQIcBAEBAgAGBQJRfstTAAoJEBYNRVNeJnmTEyUP+wciRDiLHkI9zj20ObikZTzh
-Q192ePay4Pf67FBECSZWEIEC3rC3WX2p6iVfreYBSwHBPvAdZRaMeXQZiR3XiivW
-pmeCrAO+P+IGpukQly3Vqz9ju7QYiz3gfKamtlf319n1THVf+4AmwwecELN1NqKj
-sbI0f/CQOzuL4zFnjSpwaWDFveXY++72VljedDE/T2NFDIv2Tx57Ev7EXt0D7Xp3
-kO1os1V1j53kOlmFzSjMEx9eLDND7OTowmGlcMYjatSV5TuHt9VfZrNHA9nRoX86
-jGKgzsIFJvrT4YS0iM/NSMY3rerhc4D/ie2XGXdHVrsJnRl/5/YbwDCh4wRdLupI
-3Iw9K4NE2IgtoHwtr6tuj/wkYh2KFIJP4jImbAq3CmRbBN1Ysr6O+GhiMyLIbfUK
-T+6ub9rtW3aOxkY9E93sWiGqdjKjOU52YmxIQo0+ufugjR0Y4c6ylGSFM2LbG/dU
-TIF4lxlxJalRfNP31mFcahscGiMbGwNN6dBwX6B9ulbYcGtawl97kUgk51nMmEOy
-cb7I9YmTOegbOkdgiDT1RLKJV5OQIqUrmep4sGuUJvRYk8P3nKuXC/okKY3D5Y61
-XtrsfUtX++NLW/iz9ZE/Ke0rP2KpRhu+N1i+Ulm4ClZ7DKYxM7qimU8/zWeJNztZ
-vuRyB6xWBoXs5xbfdpgR
-=ZLSp
------END PGP SIGNATURE-----
+We're still discussing:
+* whether other options should work in SNI context (we could
+  add all ssl.ca-files to all SSL_CTX instances)
+* whether to set a default ssl.cipher-list, and which string to pick
+
+regards,
+Stefan
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
