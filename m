@@ -1,77 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/4
-Message-ID: <608296419.13968118.1364205741063.JavaMail.root@redhat.com>
-Date: Mon, 25 Mar 2013 06:02:21 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: kseifried@...hat.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Drupal Security Team <security@...pal.org>, oss-security@...ts.openwall.com, Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE Request -- drupal7-views : SA-CONTRIB-2013-035 - Views - Cross Site Scripting (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/4
+Message-ID: <CAGvVGP_KcZRmchxHrJRLZ+3inhxbgjfBj=i=qxzifYZr6MaUdw@mail.gmail.com>
+Date: Mon, 4 Nov 2013 22:37:11 +0900
+From: Fuminobu TAKEYAMA <ftake@...ko.jp>
+To: Marcus Meissner <meissner@...e.de>
+Cc: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: IBUS showing passwords during password input
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+Hello,
 
-  thanks for assigning the CVE id. To follow-up
-on the doubt below yet.
+> The behaviour started (I think) with with IBUS 1.5.4
+Yes. It happens on IBus-enabled GNOME 3.6+ with IBus 1.5.4 if IBus's
+engines (plug-ins) do not support new API introduced by 1.5.4.
 
------ Original Message -----
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 03/22/2013 07:23 AM, Jan Lieskovsky wrote:
->> Hello Kurt, Steve, Drupal Security Team, vendors,
->> 
->> Drupal upstream has released: [1] http://drupal.org/node/1948358
+Actually, this problem is not found by me, though.
+The upstream has already announced in [1].
+
+An IBus developer (Mr. Fuijiwara) says in [1]:
+"1.5.2 or lower do not handle the input purpose so the typed chars are
+shown as the bug."
+So I think the same problem may happen also on GNOME 3.6 + IBus 1.5.2.
+
+[1] https://groups.google.com/forum/#!topic/ibus-user/mvCHDO1BJUw
+
+Best regards,
+Fuminobu TAKEYAMA
+
+2013/11/4 Marcus Meissner <meissner@...e.de>:
+> Hi,
 >
-> CVE-2013-1887
+> One of our Japanese users found that some IBUS input methods
+> show passwords while typing them, if a special "intent" is not
+> provided.
 >
->> and updated version of the Views module (Views 7.x-3.6): [2]
->> http://drupal.org/node/1948354
->> 
->> correcting one cross-site scripting (XSS) flaw.
+> https://bugzilla.novell.com/show_bug.cgi?id=847718
+> https://groups.google.com/forum/#!topic/ibus-user/mvCHDO1BJUw
 >
-> The security issue in views is caused by various places in the views
-> UI where a string is not sanitized,
-> because it has been assumed to be static and by commiters, though you
-> can change some of these strings using other administrative
-> permissions. SA-CONTRIB-2013-035 - Views - Cross Site Scripting (XSS)
-> 
-> I'm a bit confused, is this via SA-CONTRIB-2013-035 or a separate
-> issue as well?
-
-Those are the same issues (it's possible to get from SA-CONTRIB-2013-035
-link to the http://drupal.org/node/1948354 link [just click in at
-Views 7.x-3.6 in SA-CONTRIB-2013-035]).
-
-In yet other words, looks like CVE-2013-1887 (previously) occurred at
-various places. Relevant upstream patch seems to be this one:
-  http://drupalcode.org/project/views.git/commitdiff/ddf8181bd13f69ffbeeee14ae72168418785d7ac
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
->> AFAICT from [1], there doesn't seem to be a CVE identifier for this
->> issue yet.
->> 
->> Could you allocate one?
-
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.13 (GNU/Linux)
+> The behaviour started (I think) with with IBUS 1.5.4
 >
-> iQIcBAEBAgAGBQJRTMJrAAoJEBYNRVNeJnmTjIUP/0rn+yNqLpAPVoZJOKKjzC/O
-> AComiUFEBzLPxWbJGPS8aEY738ABh3G557U3QH0xab0WKHsq4y7pOb8i2iGmUTOM
-> 9t62qmZssTf80omcPZ0rKMo+dZXIXrwNsQbqB/yApuVixfbbUPKf4vF8PQVraijm
-> NaBt/Gjl7G7bpHW5ZqellBNO7eHEUqAt2FQZp+UcWfR7NFASef+8BR6plrco/Sjn
-> c75GySKWia99lm7qt65Q8ddT2P9ECQIoDileWzWyrWhqHpsTilWGTe+xyF5fzob4
-> Zz6Z/EE0VP/ZIbfLaNip2+8Oa665T1B2tgLuUDV3jrRu11lnB3vcNfAErWdwSULM
-> sy98z8NujPPmPhXa2F1jIqZN9adPHjYuvOOEYOdZL+yiA698XxRQKmHkHom4cB4Y
-> FpXk/F+YrTE+Qn0XayJZriEUIzVe8z1LWC8lQDA8xWmCEptu81fIVd97A6Tk2MrV
-> 4Z2pNuJ1Z3EGkZBuFNbf1FZ6M8KTbwE8qz0gEia0GpmNDegecUWewxtlxqRM4xLD
-> CVfpYWN3EsS2u2M7Maw2kdHWuWjxaS69xLncVKaDB5oEFrpU61PIhLoglneDdZxH
-> BgANfSjucbxvfeOWapjk0GPd9cNKQ5jtKMRZb/x6JtkLBjX+GZTMlDvI82A0BN76
-> JOYCC9mTQ1uRfCHsITzV
-> =gTiE
-> -----END PGP SIGNATURE-----
+> Fuminobu Takeyama, is this correct?
+>
+> Ciao, Marcus
