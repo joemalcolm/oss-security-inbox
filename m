@@ -1,32 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/24/6
-Message-ID: <knn9q2$a6i$1@ger.gmane.org>
-Date: Fri, 24 May 2013 09:53:27 +0100
-From: Matthew Wilkes <matthew@...thewwilkes.co.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/22
+Message-ID: <52780198.5030506@redhat.com>
+Date: Mon, 04 Nov 2013 13:20:40 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: plone, rrdtool, zenoss bugs
+Subject: Re: some unstracked linux kernel security fixes
 Content-Type: text/plain; charset=utf-8
 
-On 2013-04-18 21:08, Kurt Seifried wrote:
-> Was this previously exploitable, or is this just a hardening measure?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hi, Plone checking in here. Sorry, didn't see this until the ping just now.
+On 11/03/2013 09:32 AM, Nico Golde wrote:
+> Hi, Fabian Yamaguchi and myself stumbled upon a few kernel issues.
+> 
+> Can someone assign CVE ids for these?
+> 
+> drivers/uio/uio.c: mapping of physical memory to user space without
+> proper size check drivers/video/au1100fb.c: integer overflow in
+> checking of range when mapping physical memory to user space 
+> drivers/video/au1200fb.c: integer overflow in checking of range
+> when mapping physical memory to user space 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7314e613d5ff
 
-This is technically a bug in PluggableAuthService, an optional part of 
-Zope that we use. In a correctly set up Plone site this won't be 
-accessible, but if people are using an account that's set up to access 
-the Zope management interface (such as the initial admin user created on 
-install) then it would be.
+Please
+> 
+use CVE-2013-4511 for this issue.
 
-We discourage people from using these users specifically because the 
-administration forms that make up the ZMI are not high quality. We're 
-looking into longer term solutions to make it safer, but the advice 
-right now is to stick with the Site Administrator role we added in Plone 
-4.1 or the Editor/Contributor/Reviewer roles that we've always had.
+> arch/um/kernel/exitcode.c: buffer overflow in write syscall
+> handler 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=201f99f170df14ba52ea4c52847779042b7a623b
 
-There is no valid reason for anyone to be logged in as a user that could 
-access these forms on a production system.
+Please
+> 
+use CVE-2013-4512 for this issue.
 
-Matt
+> drivers/staging/ozwpan/ozcdev.c: buffer overflow in write syscall
+> handler 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c2c65cd2e14ada6de44cb527e7f1990bede24e15
+
+Please
+> 
+use CVE-2013-4513 for this issue.
+
+> drivers/staging/wlags49_h2/wl_priv.c: buffer overflow when setting
+> station name 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b5e2f339865fb443107e5b10603e53bbc92dc054
+
+Please
+> 
+use CVE-2013-4514 for this issue.
+
+> drivers/staging/bcm/Bcmchar.c: kernel memory disclosure via
+> uninitialized structure members 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=8d1e72250c847fa96498ec029891de4dc638a5ba
+
+Please
+> 
+use CVE-2013-4515 for this issue.
+
+> drivers/staging/sb105x/sb_pci_mp.c: kernel memory disclosure via
+> uninitialized structure members 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a8b33654b1e3b0c74d4a1fed041c9aae50b3c427
+
+Please
+> 
+use CVE-2013-4516 for this issue.
+
+> Thanks Nico
+> 
 
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSeAGYAAoJEBYNRVNeJnmT9WsP/0v90gW0nCVbDhV9GcYRSUcm
+1S7urfq/qAMM0D4FfZ0f6SkJfy4eL0UNibh1s6VSUHOLjswllbn+693GYup7ngF4
+M4OgSItoUZcIzBN0dXRe232jemHcKNVIYTxQrnh0aj7Otpc5B37073j1nM2LfGHk
+JbOu2UArEUnktMGUHwFJe4cos/YFv965WdO0q8cES6kuC2WAgvnhVolniyd8UPG5
+4BhqN2MW8vDUh3qOkCwyOnNRnooSJoHZ0n+0TuGSx5i8zM3vdvSaJIKaF6YTeBC6
+lGFhCTxRh5Gq5AgS0+91BwoHL5VQoYs7S1r/qWIEQ6Eb571c64dHF26gSOCjW329
+dFk9GK9sTIFzpVSxVXdNRdCGNp452Hu59M+qMLzNgF8zcGBcCCs8jY2Kyauc+daV
+sm7AIeJcnr3CzdeeQxRO9UzAZkmfmlM3hUdfEhQpxmbfqVYa9eyYOUZCqS9YQ1gE
+R6D7B28N3BBXJsjE5u6in5JWXsChLyAokYpDPF9oLkaBDsYTh6XwTjgCl2Y/C9WB
+mfjfUc9U4oxWWQUWHDPweozZheTb/U71cIFOSvqDaXvd+UMh3ubr5tz0OExcmFgO
+KMVqicNTQSMXJzoBq8Ag5HTOViIsi1ijPJkA8RwLOQyI0LSaRBmiKWAJi4RW3T96
+nDtUr8SaPAKpDTDnDpQm
+=aZQ9
+-----END PGP SIGNATURE-----
