@@ -1,66 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/30/5
-Message-ID: <51096780.5070204@redhat.com>
-Date: Wed, 30 Jan 2013 11:33:36 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/9
+Message-ID: <20131104184906.0d3270d6@hboeck.de>
+Date: Mon, 4 Nov 2013 18:49:06 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jeff Law <law@...hat.com>, Paolo Bonzini <pbonzini@...hat.com>, Florian Weimer <fweimer@...hat.com>
-Subject: Re: CVE Request -- glibc: DoS due to a buffer overrun in regexp matcher by processing multibyte characters
+Subject: Re: openssl default ciphers
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, 4 Nov 2013 18:16:30 +0100
+Stefan Bühler <stbuehler@...httpd.net> wrote:
 
-On 01/30/2013 04:40 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> a security flaw was found in the regular expression matching 
-> routine of glibc, the GNU libc libraries, processed multibyte 
-> characters input. If an application utilized the glibc's regular 
-> expression matching mechanism, an attacker could provide a
-> specially-crafted input that, when processed would lead to that
-> executable crash.
-> 
-> Upstream bug report: [1]
-> http://sourceware.org/bugzilla/show_bug.cgi?id=15078
-> 
-> Relevant patch: [2]
-> http://sourceware.org/ml/libc-alpha/2013-01/msg00967.html
-> 
-> More background: * (from Paolo): Jan 30 11:34:19 <bonzini> iankko:
-> it is a memset(foo, 0, ...) that overruns the buffer, so it's not
-> controllable by the attacker
-> 
-> * but the denial of service scenario / attack vector is valid
-> (consider network facing application using glibc's regexp matching
-> on untrusted input)
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+> Is 'DEFAULT@...ENGTH:!LOW:!EXP' (should
+> be similar to 'HIGH:MEDIUM:!aNULL') a reasonably default?
+
+SSLCipherSuite HIGH:!MEDIUM:!LOW:!aNULL@...ENGTH
+should be fine. There are basically near zero browsers out there that
+should have any problems with that. Even dinosaurs like IE6 can work
+with this, you don't need "medium" ciphers as long as you don't want to
+make a site accessible to browser museums.
+
+And looking at what medium includes that high doesn't, it seems you
+really don't want that ancient cipher suites:
+-DHE-RSA-SEED-SHA
+-DHE-DSS-SEED-SHA
+-SEED-SHA
+-IDEA-CBC-SHA
+-IDEA-CBC-MD5
+-RC2-CBC-MD5
+-ECDHE-RSA-RC4-SHA
+-ECDHE-ECDSA-RC4-SHA
+-ECDH-RSA-RC4-SHA
+-ECDH-ECDSA-RC4-SHA
+-RC4-SHA
+-RC4-MD5
+-RC4-MD5
+-PSK-RC4-SHA
 
 
-Please use CVE-2013-0242 for this issue.
+-- 
+Hanno Böck
+http://hboeck.de/
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRCWeAAAoJEBYNRVNeJnmT0Z0P+wSTrhiIc6Z0t16BubaBDdLA
-4/gTkN1KnNyOPCJ2og3TwmpE5X6rRmEQZTKb82orTjxP3k2Sjj7fDZASlbE3P/Ou
-o89od35CAyPMOyTTQsDop4AKTKFUverwrPCf0HrNp9vAKaZxvVmzA3Bm2TNEtG8Z
-uZL/2OwV9RaXxot0RL9Lr8t6KNNutDwKazImJsWjBAXgZnvhiRh+ZuXcScPP0VS2
-0zw9dhb42p0JJs3mdeOrDXte12549eZqBMuN9Gl9DM6bpGA56YxEYk6jHsBTb3Ku
-dcRLOqb/cGv9oT/ngCFKUO8bktq318972icYASXsUeQx/fcnYKWn8AvztDHzo0fD
-oB3O10J4/v6JiqVQaiCurnEYSMRAuBDn1NKnRTThha++1pn0SdfkpYKC6CbIXcZH
-QeYsRP9UfSMALIa/b8neqdsaD3Z1Xn+o3wf8j6meTWGukyabjYYJ7FKIwESIw7Y5
-1uHlVqbtq7nYjJYa57tiQuvMWd7c0erBBXfMZL3+YMixHKmxTaLnHvnMzAvFjzUZ
-bjnumZbOUMfGlDBlwzJy0DV8Agmv/1uXMIXx57ppAlS38vX+/qgl8Acv0m+0EUnB
-UymeDjP1PILMY9z8LBYXm+ccvMzsOH1mNqXgCJVHdVUQge8kqtZqII/CD76O83Lg
-GSlgDX5hjLr9rmE3av2/
-=y3K+
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
