@@ -1,41 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/15/5
-Message-Id: <201312152026.rBFKQCZ9021635@linus.mitre.org>
-Date: Sun, 15 Dec 2013 15:26:12 -0500 (EST)
-From: cve-assign@...re.org
-To: larry0@...com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Bio Basespace SDK 0.1.7 Ruby Gem exposes API Key via command line
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/15
+Message-ID: <CAB8Fin_eXgePbW5OdH1iWxyiwm60y13sD2ooWKCCceeEWixSKA@mail.gmail.com>
+Date: Mon, 4 Nov 2013 20:01:15 +0100
+From: Jacob Vosmaer <jacob@...lab.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2013-4490 Remote code execution vulnerability in the SSH key upload feature of GitLab
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA512
 
-> Download: http://rubygems.org/gems/bio-basespace-sdk
-> 
-> bio-basespace-sdk-0.1.7/lib/basespace/api/api_client.rb
-> 
-> The API client code passes the API_KEY to a curl command.
-> 
-> Another user on the system could snag the api key by just monitoring the process table.
-> 
-> Advisory: http://www.vapid.dhs.org/advisories/bio-basespace-sdk.html
+# Remote code execution vulnerability in the SSH key upload feature of
+GitLab
 
-Use CVE-2013-7111.
+There is a remote code execution vulnerability in the SSH key upload
+feature of GitLab. This vulnerability has been assigned the CVE identifier
+CVE-2013-4490.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Versions affected: 5.0, 5.1, 5.2, 5.3, 5.4, 6.0, 6.1, 6.2
+
+Not affected: 4.2 and earlier
+
+Fixed versions: 5.4.1, 6.2.3
+
+### Impact
+The gitlab-shell SSH access endpoint manages the authorized_keys file for
+the git user. When a user adds a public key using the GitLab web interface
+a gitlab-shell command is invoked to add the public key to authorized_keys.
+In affected versions, the public key text entered by the user is exposed to
+the Bourne shell in a way that can be exploited to achieve code execution
+as the git user. Only authenticated users can upload an SSH key.
+
+All users running an affected release should upgrade gitlab-shell
+immediately.
+
+### Releases
+Gitlab-shell 1.7.4, available from https://github.com/gitlabhq/gitlab-shell,
+fixes the vulnerability and has been tested with GitLab 5.4.1 and GitLab
+6.2.3.
+
+### Workarounds
+If you are using GitLab 5.0 or newer and you cannot upgrade to GitLab 5.4.1
+or GitLab 6.2.3 you should apply the following edit to gitlab-shell.
+
+- --- a/lib/gitlab_keys.rb
++++ b/lib/gitlab_keys.rb
+@@ -29,8 +29,7 @@ class GitlabKeys
+   def add_key
+     $logger.info "Adding key #{@..._id} => #{@....inspect}"
+     cmd = "command=\"#{ROOT_PATH}/bin/gitlab-shell
+#{@..._id}\",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty
+#{@...}"
+- -    cmd = "echo \'#{cmd}\' >> #{auth_file}"
+- -    system(cmd)
++    open(auth_file, 'a') { |file| file.puts(cmd) }
+   end
+
+   def rm_key
+
+### Credits
+Thanks to Nigel Kukard of http://www.allworldit.com/ for reporting the
+vulnerability to us.
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Comment: GPGTools - https://gpgtools.org
 
-iQEcBAEBAgAGBQJSrhANAAoJEKllVAevmvmspSYH/27+bRPGr06UE1a5z1L1ze17
-X4uiXjBpR5hgOn1QGTxDiTGGdS3vUL7vVT5N6IhqVPgn+VRKNcorrZ/4E063JgAw
-vlKyMlykQJnyVyA5nfLo1xtW044hZJoTsXIJQsIjFaaTmoznAcEGNlepUF1bqP+7
-mvW8k60wBrAENPB2r3Xo5xqjvonlg5J/jGwvPC2/hudYz+6UCMbGGbVc/6so/4CB
-13J4vSb1cqgswbyNIVL86yTPe/tLZSPNgYATOA1mjeBwA9jHXhfvBn6WYAestEkE
-I9HyyfAiVTWWEcYNvVWBJNIZlElBVcOW7TtvQft3pAm4sgVB7RLxWUEicmxnS1Q=
-=qN3z
+iQEcBAEBCgAGBQJSd+6/AAoJEB2vXw0YK62WNNoIAJr4Mz0d4LjznjXzYjE/So0/
+cy3QxXjgNLjF2MiuAzDlnLCCRbUYcSpy50LZmGYSbv5YOF0cUknVge2R9+EJaSkk
+qJDxTDr02zX13e2YKEv158lgljJWI3+hT3+UjwCpSasPckkcyD48X8o2dT4BYRGc
+SbZxXMSLUg63np4db2zHjZqvpOr0txNYflduYsAZv5uld/Koy0YIBec2TfBVJWrg
+ghtooOQ/IIXQRe3Qjl+8uRLGEBlPmmsMv0mC5/t5Wo/3RMg/3MQ4Ez1FAAeutbPw
+qTZLxh7sXcMvVdkx24KoCSK+//IRa91bNxRiK2pDi6fNGuzxs2a21PEKAwHfJsA=
+=UL60
 -----END PGP SIGNATURE-----
+
+Best regards,
+
+Jacob Vosmaer
+GitLab.com
+
