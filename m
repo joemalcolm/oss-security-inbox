@@ -1,24 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/5
-Message-ID: <20130812144408.GF25525@dhcp-25-225.brq.redhat.com>
-Date: Mon, 12 Aug 2013 16:44:08 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/05/8
+Message-ID: <20131105235033.GC2471@redhat.com>
+Date: Tue, 5 Nov 2013 16:50:33 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifrie@...hat.com>
-Subject: CVE Request -- vdsm: incomplete fix for CVE-2013-0167 issue
+Subject: Re: CVE Request: additional fix for CVE-2012-2825 libxslt crash
 Content-Type: text/plain; charset=utf-8
 
-It was found that fix for CVE-2013-0167 was not complete. A privileged
-guest user could still potentially make the host the guest is running on
-unavailable to the management server by making guest agent return data
-with invalid XML characters.
+* [2013-11-05 23:29:08 +0100] Marcus Meissner wrote:
 
-Upstream fix:
-http://gerrit.ovirt.org/gitweb?p=vdsm.git;a=commit;h=5fe1615b7949999fc9abd896bde63bf24f8431d6
+>On Tue, Nov 05, 2013 at 11:17:21PM +0100, Florian Weimer wrote:
+>> * Vincent Danen:
+>>
+>> > The reason this doesn't crash for me on Red Hat Enterprise Linux 5 which
+>> > ships 1.1.17 is because we included this patch (well, the developer did)
+>> > a day after the initial build with the comment:
+>> >
+>> > - CVE-2012-2825 requires an extra patch on 1.1.17
+>> >
+>> > So, I think this does require a second CVE.
+>>
+>> Has anyone shipped an incomplete update?  If yes, then I think we
+>> actually need a second CVE.  In the past, we got them for similar
+>> cases, and at least Debian's tracking more or less assumes that it's
+>> possible to assign CVEs to deal with such corner cases.
+>
+>SUSE did, otherwise we would not have noticed :/
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=996166
+Heh.
 
-Thanks,
+The other point is that CVE-2012-2825 affected before and after 1.1.25,
+whereas this one really only affects < 1.1.25 so it's either a different
+flaw or that commit (fixed in 1.1.25) is actually an incomplete fix, and
+CVE-2012-2825 is the "fix of the fix" CVE.
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+Vincent Danen / Red Hat Security Response Team 
