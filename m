@@ -1,29 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/11
-Message-ID: <5297736A.3000205@debian.org>
-Date: Thu, 28 Nov 2013 17:46:34 +0100
-From: Wouter Verhelst <wouter@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/05/3
+Message-ID: <5278DDCE.5040806@redhat.com>
+Date: Tue, 05 Nov 2013 13:00:14 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: incorrect parsing of access control file in nbd-server
+Subject: Re: openssl default ciphers
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 11/04/2013 09:37 PM, Reed Loden wrote:
 
-nbd-server has the ability to deny connection requests to clients unless
-their IP addresses are listed in a tcpwrappers-style configuration file.
-Due to incorrect use of strncmp() in the parser for this file, however,
-it would allow clients to connect so long as their IP address in ASCII
-representation would start with something in the ACL file; e.g.,
-198.51.100.12 would be allowed if 198.51.100.1 was listed.
+> The Mozilla opsec guys wrote up some good guidelines recently on what
+> they consider a good TLS cipher suite choice should be, but even if you
+> didn't want to go all-out by making the default ultra-secure (with
+> full PFS, etc.), they explain their choices fairly well, so should be
+> useful in trying to figure out a middle ground that makes most people
+> happy.
+>
+> https://wiki.mozilla.org/Security/Server_Side_TLS
 
-I'd like a CVE id for this.
+Personally, I find the push towards PFS rather odd.  TLS with PFC is 
+structured in a way that PFS does not unconditionally enhance security. 
+  Without PFC, part of the session key handshake is encrypted to the 
+server's public key.  With PFC, the entire DH handshake is unencrypted, 
+and the server signs its part.  This means that a potential attacker 
+gains another angle, targeting the DH handshake, and it also shifts the 
+picture somewhat as far as the server's public key operation is 
+concerned (decryption vs signing).  There is also the possibility that 
+the asymmetric protection of the DH handshake is insufficient.  (In this 
+discussion, I'm ignoring DSA server certificates in this discussion 
+because they are so rare.)
 
-Thanks,
+In short, I think it's fairly likely that PFS cipher suites offer weaker 
+security compared to their non-PFS counterparts.  I suspect most PFS's 
+attractiveness stems from its spelled-out name, not its actual technical 
+merits in the context of TLS.
 
 -- 
-This end should point toward the ground if you want to go to space.
-
-If it starts pointing toward space you are having a bad problem and you
-will not go to space today.
-
-  -- http://xkcd.com/1133/
+Florian Weimer / Red Hat Product Security Team
