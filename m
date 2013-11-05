@@ -1,100 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/8
-Message-ID: <512D1BBF.3040102@redhat.com>
-Date: Tue, 26 Feb 2013 13:31:59 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/05/2
+Message-ID: <20131105100235.19a5cf16@chromobil.localdomain>
+Date: Tue, 5 Nov 2013 10:02:35 +0100
+From: Stefan Bühler <stbuehler@...httpd.net>
 To: oss-security@...ts.openwall.com
-CC: Greg KH <greg@...ah.com>
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Subject: Re: openssl default ciphers
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, 04 Nov 2013 21:02:44 +0100
+leToff <letoff@...il.com> wrote:
 
-On 02/26/2013 11:16 AM, Greg KH wrote:
-> On Tue, Feb 26, 2013 at 11:56:02AM -0600, Joshua J. Drake wrote:
->> All,
->> 
->> I'd like to request a CVE for an issue leading to a buffer
->> overflow of a slab allocated buffer in the VFAT file system code.
->> The issue manifests when converting UTF8 characters to UTF16
->> inside the "utf8s_to_utf16s" function. Reaching this code
->> requires writing to a VFAT partition that has been mounted with
->> the "utf8" option. Ubuntu 10.04 mounts USB sticks with this
->> option by default. Most Android devices mount eMMC/SD cards/etc
->> with this option.
->> 
->> The issue affects kernels prior to 3.2. Many Android devices
->> remain affected today.
->> 
->> I'm not entirely sure when the issue was introduced at this
->> moment. It appears to have been introduced here: 
->> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=74675a58507e769beee7d949dbed788af3c4139d
->>
->>
->> 
-The issue was fixed here:
->> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=0720a06a7518c9d0c0125bd5d1f3b6264c55c3dd
->>
->>
->> 
-The issue was partially disclosed here (this spurred my investigation):
->> http://www.exploit-db.com/exploits/23248/
->> 
->> Props to G13 for finding it. It's pretty disappointing that 
->> Google/Android security teams (and of course Linux maintainers)
->> didn't responsibly disclose the issue so other Linux kernel
->> packagers could package a fix.
-
-Please use CVE-2013-1773 for this issue.
-
-> Ok, how could the Linux maintainers have done anything about this,
-> when the developers involved in creating this patch didn't even
-> realize it was a "security" issue in the first place?
+> On 04/11/2013 20:40, Eric H. Christensen wrote:
+> >
+> > BEAST is now mitigated on most browsers so we can drop the very
+> > broken RC4 cipher.
+> I guess Stephan is working with Safari...
 > 
-> I'm tired of people complaining about how the Linux kernel
-> developers handle security issues, when no one seems to have a
-> suggestion as to how anything could actually be done better.
-> 
-> And note, I was one of the people involved in this patch, and I
-> didn't notice anything special about it, so if you want to blame
-> anyone, blame me for not tagging it for inclusion in the stable
-> kernel releases.
-> 
-> greg k-h
+> leToff
 
-I suspect part of the problem is scale. Most people don't understand
-the scale at which the Linux Kernel and vendors handle bug fixes and
-code changes. External people simply see a few poorly handled security
-related issues and probably think "well how hard can it be to properly
-a few extra security flaws?" but they don't see that those 5 security
-issues were buried in 10,000 other code fixes. The resources needed to
-audit every code change for a security impact simply aren't available
-(and even if we had enough talented people who exactly is going to pay
-them all?).
+This is certainly not about which browser I am using, or what clients
+I have to support with my servers. Also the latest Safari versions
+support TLS1.2 (this itself doesn't mitigate BEAST on TLS1.0
+connections, yes...)
 
-While things are not perfect (and likely never will be) I think they
-are pretty good overall considering how much code and code change the
-Linux Kernel handles.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+I didn't mention this in my first post: this is not only about setting
+a default cipher suite in a new software, but also about what I propose
+to dist maintainers to backport.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+So in my case (lighttpd SNI bug) I could add "HIGH:!aNULL@...ENGTH" as
+default cipher string in the patch fixing the SNI bug. Do you who
+voted so fast for dropping MEDIUM also vote for backporting such
+change to all long term support dists?
 
-iQIcBAEBAgAGBQJRLRu/AAoJEBYNRVNeJnmTbZsP/RWINtKLJwZW4iQwiNC6ax6W
-vgdLP1xmcwytVXn+z7NasD2z7Q+25hYLyZcQ3WjFSyUEhMusBMlpuw7wy2w8lK7d
-JwgvXCES+qfgmUyn9DQwOCxnF0V71AjLhxlFRXMzlcD1zXbk1urXzaxgLW58Wltt
-d7WnpwolcMRj6iRVVe6RKIKKqg5UVJEtcVwWMyq0IFkLq6lEvFQ0/ABZv++HSZ4v
-LmChrvfqX+gesZ8+uMhI707eXq1T0m3AZHUyNIjGVPwDpv3Gy3DY2ARD49nAONpl
-aw+4FH8NdN906IuzzpVMOiB0Xdc/PfcdwZSEbk+tPwdcnc1a9fG75cGL+A5yusVT
-UfaocKhFkBVAv4LK5lSBZwTi24UMa1QXkosEGzrB5aw22dfmbgbFGkVJlcd9Zg6g
-1fq9ZtS5PmsGjKpqIr8/2CfJLFWHTw4wQoRQb5LbfZeoM5bfmOYhVNFSBnJxDzEz
-79QtHv0f1GKnas9jUKO6RN4ULfBghv30fBtEEQ2aGyH/AR2BQXm8JJFsx2d+FhZi
-9SI66s+vESJqAgGu4oBNrKwwH6yyRAp36g9M4wwVV5dHYtbQQTMMfmjZhmpbt90P
-cujU4WMEHXAKiU9vuxsErmhHBPvmgtUAYuEJo7cMpeVL5fLCn//yrzIx2QgJxwfW
-tyQMZRl3tMeUTBD03CL3
-=SQJ7
------END PGP SIGNATURE-----
+In this case I think it would be better if instead openssl gets fixed
+to use "HIGH:!aNULL@...ENGTH" as default (including backporting this
+fix), fixing all applications using openssl at once.
+
+
+regards,
+Stefan
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
