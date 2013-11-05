@@ -1,19 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/25/7
-Message-ID: <20130125091357.GB815@kludge.henri.nerv.fi>
-Date: Fri, 25 Jan 2013 11:13:57 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/05/6
+Message-ID: <878ux2trwu.fsf@mid.deneb.enyo.de>
+Date: Tue, 05 Nov 2013 23:17:21 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: WordPress 3.5.1 Maintenance and Security Release
+Subject: Re: CVE Request: additional fix for CVE-2012-2825 libxslt crash
 Content-Type: text/plain; charset=utf-8
 
->From http://wordpress.org/news/2013/01/wordpress-3-5-1/
+* Vincent Danen:
 
-WordPress 3.5.1 also addresses the following security issues:
+> The reason this doesn't crash for me on Red Hat Enterprise Linux 5 which
+> ships 1.1.17 is because we included this patch (well, the developer did)
+> a day after the initial build with the comment:
+>
+> - CVE-2012-2825 requires an extra patch on 1.1.17
+>
+> So, I think this does require a second CVE.
 
-- A server-side request forgery vulnerability and remote port scanning using pingbacks. This vulnerability, which could potentially be used to expose information and compromise a site, affects all previous WordPress versions. This was fixed by the WordPress security team. We’d like to thank security researchers Gennady Kovshenin and Ryan Dewhurst for reviewing our work.
-- Two instances of cross-site scripting via shortcodes and post content. These issues were discovered by Jon Cave of the WordPress security team.
-- A cross-site scripting vulnerability in the external library Plupload. Thanks to the Moxiecode team for working with us on this, and for releasing Plupload 1.5.5 to address this issue.
-
---
-Henri Salo
+Has anyone shipped an incomplete update?  If yes, then I think we
+actually need a second CVE.  In the past, we got them for similar
+cases, and at least Debian's tracking more or less assumes that it's
+possible to assign CVEs to deal with such corner cases.
