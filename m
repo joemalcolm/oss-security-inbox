@@ -1,40 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/01/3
-Message-ID: <20131001062323.GA26934@lakka.kapsi.fi>
-Date: Tue, 1 Oct 2013 09:23:23 +0300
-From: Henri Salo <henri@...v.fi>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Simple Machines Forum (SMF) <= 2.0.5 - multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/05/7
+Message-ID: <20131105222908.GI9495@suse.de>
+Date: Tue, 5 Nov 2013 23:29:08 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: additional fix for CVE-2012-2825 libxslt crash
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 25, 2013 at 12:07:32PM -0600, Kurt Seifried wrote:
-> On 09/25/2013 10:45 AM, Henri Salo wrote:
-> > On Wed, Sep 25, 2013 at 02:33:14PM +0000, Moritz Naumann wrote:
-> >> This CSRF doesn't work for me on two 2.0.4 installations I tested
-> >> on.
-> > 
-> > You are correct.
-> > 
-> >> Both return Unable to verify referring url. Please go back and
-> >> try again.
-> > 
-> > Actual error message for me:
-> > 
-> > "Your session timed out while posting. Please go back and try
-> > again."
-> > 
-> > I'm really sorry about this. I even tested using different computer
-> > so I don't know what I previously did wrong/different. Thank you
-> > for correcting this.
-> > 
-> > --- Henri Salo
-> > 
+On Tue, Nov 05, 2013 at 11:17:21PM +0100, Florian Weimer wrote:
+> * Vincent Danen:
 > 
-> So to confirm: the XSS are legit, the CSRF is confirmed to not work?
-> thanks.
+> > The reason this doesn't crash for me on Red Hat Enterprise Linux 5 which
+> > ships 1.1.17 is because we included this patch (well, the developer did)
+> > a day after the initial build with the comment:
+> >
+> > - CVE-2012-2825 requires an extra patch on 1.1.17
+> >
+> > So, I think this does require a second CVE.
+> 
+> Has anyone shipped an incomplete update?  If yes, then I think we
+> actually need a second CVE.  In the past, we got them for similar
+> cases, and at least Debian's tracking more or less assumes that it's
+> possible to assign CVEs to deal with such corner cases.
 
-Can we get these assigned or do you have open questions, thanks.
+SUSE did, otherwise we would not have noticed :/
 
----
-Henri Salo
+Ciao, Marcus
