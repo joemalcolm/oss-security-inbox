@@ -1,103 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/4
-Message-ID: <20130604155316.GE19097@suse.de>
-Date: Tue, 4 Jun 2013 17:53:16 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: a.p.zijlstra@...llo.nl, eranian@...gle.com, ak@...ux.intel.com, security@...nel.org
-Subject: CVE Request: More perf security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/06/2
+Message-ID: <CABbbngAhkgEVTjf=Nt26zNJAhpemnAMG5uqoF9z8Ov6QRBwcvA@mail.gmail.com>
+Date: Wed, 6 Nov 2013 10:32:37 -0800
+From: Forest Monsen <forest.monsen@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Sun, Nov 3, 2013 at 8:36 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-The perf kernel folks seem to have fixed some more perf issues which have not yet got CVEs.
+> > SA-CONTRIB-2013-083 - Quiz - Access Bypass
+> > https://drupal.org/node/2123995 (This appears to me to be two
+> > issues; an access bypass, and an access bypass leading to
+> > information disclosure.)
+>
+> Yes, two issues, two reporters, so CVE SPLIT to two CVE's, I can't
+> match the reporter to the issue though without more info, if you can
+> post that in a follow up it'd be helpful to Mitre.
+>
 
-Our partner Intel thinks that these 3 are security relevant, so we think
-they also need seperate CVEs.
-
-I only glanced what the issue is, please correct if my classification is wrong..
-
-1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
-
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
-
-commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
-Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-Date:   Fri May 3 14:11:25 2013 +0200
-
-    perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
-
-    We should always have proper privileges when requesting kernel
-    data.
-
-    Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-    Cc: <stable@...nel.org>
-    Cc: Andi Kleen <ak@...ux.intel.com>
-    Cc: eranian@...gle.com
-    Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
-    [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
-    Signed-off-by: Ingo Molnar <mingo@...nel.org>
-    Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
+No problem. See below:
 
 
-2. Denial of service (system crash)
+> Please use  CVE-2013-4500 for Drupal SA-CONTRIB-2013-083 - Quiz -
+> Access Bypass in deleting quiz results
+>
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=f1923820c447e986a9da0fc6bf60c1dccdf0408e
+Reported by 'nirvanajyothi', https://drupal.org/user/252387
 
-commit f1923820c447e986a9da0fc6bf60c1dccdf0408e
-Author: Stephane Eranian <eranian@...gle.com>
-Date:   Tue Apr 16 13:51:43 2013 +0200
-
-    perf/x86: Fix offcore_rsp valid mask for SNB/IVB
-    
-    The valid mask for both offcore_response_0 and
-    offcore_response_1 was wrong for SNB/SNB-EP,
-    IVB/IVB-EP. It was possible to write to
-    reserved bit and cause a GP fault crashing
-    the kernel.
-    
-    This patch fixes the problem by correctly marking the
-    reserved bits in the valid mask for all the processors
-    mentioned above.
-    
-    A distinction between desktop and server parts is introduced
-    because bits 24-30 are only available on the server parts.
-    
-    This version of the  patch is just a rebase to perf/urgent tree
-    and should apply to older kernels as well.
-    
-    Signed-off-by: Stephane Eranian <eranian@...gle.com>
-    Cc: peterz@...radead.org
-    Cc: jolsa@...hat.com
-    Cc: gregkh@...uxfoundation.org
-    Cc: security@...nel.org
-    Cc: ak@...ux.intel.com
-    Signed-off-by: Ingo Molnar <mingo@...nel.org>
+ Please use CVE-2013-4501 for Drupal SA-CONTRIB-2013-083 - Quiz -
+> Access Bypass in viewing quiz results
 
 
-3. Information leak (??) via perf LBR filter 
-
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6e15eb3ba6c0249c9e8c783517d131b47db995ca
-
-commit 6e15eb3ba6c0249c9e8c783517d131b47db995ca
-Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-Date:   Fri May 3 14:11:24 2013 +0200
-
-    perf/x86/intel/lbr: Fix LBR filter
-    
-    The LBR 'from' adddress is under full userspace control; ensure
-    we validate it before reading from it.
-    
-    Note: is_module_text_address() can potentially be quite
-    expensive; for those running into that with high overhead
-    in modules optimize it using an RCU backed rb-tree.
-    
-    Reported-by: Andi Kleen <ak@...ux.intel.com>
-    Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-    Cc: <stable@...nel.org>
-    Cc: eranian@...gle.com
-    Link: http://lkml.kernel.org/r/20130503121256.158211806@chello.nl
-    Signed-off-by: Ingo Molnar <mingo@...nel.org>
-    Link: http://lkml.kernel.org/n/tip-mk8i82ffzax01cnqo829iy1q@git.kernel.org
-
+Reported by 'Cat Hirst,' https://drupal.org/user/162748
 
