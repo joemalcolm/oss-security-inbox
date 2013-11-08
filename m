@@ -1,33 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/3
-Message-ID: <20130823054215.GA22947@hunt>
-Date: Thu, 22 Aug 2013 22:42:15 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/08/7
+Message-ID: <527D3ACA.9000100@redhat.com>
+Date: Fri, 08 Nov 2013 12:26:02 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [PATCH] implement privmode support in dash
+Subject: Re: CVE Request: bip denial of service via resource leak
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 22, 2013 at 09:31:03PM -0600, Kurt Seifried wrote:
-> On 08/22/2013 11:59 AM, Tavis Ormandy wrote:
-> > Here is a related blog post on the topic
-> > http://blog.cmpxchg8b.com/2013/08/security-debianisms.html
-> > 
-> > If you care about tracking vulnerabilities, the vmware issue is
-> > called CVE-2013-1662.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 11/08/2013 10:02 AM, Marc Deslauriers wrote:
+> Hello,
 > 
-> Do we need one for Debian as well? Seems like a strong maybe.
+> bip 0.8.8 and earlier contains an issue where failed SSL handshakes
+> result in a resource leak. A remote attacker can use this flaw to
+> cause bip to run out of resources, resulting in a denial of
+> service.
+> 
+> Upstream bug: https://projects.duckcorp.org/issues/261
+> 
+> Fixed by the following commit in 0.8.9: 
+> https://projects.duckcorp.org/projects/bip/repository/revisions/df45c4c2d6f892e3e1dec23ce0ed2575b53a7d8c
+>
+>  Downstream bug: 
+> https://bugs.launchpad.net/ubuntu/precise/+source/bip/+bug/1247888
+> 
+> Could a CVE please be assigned to this issue?
+> 
+> Thanks,
+> 
+> Marc.
+> 
 
-I don't think so -- it isn't the shell at fault when a setuid program
-fails to manage its privileges properly.
+Please use CVE-2013-4550 for this issue.
 
-Incidentally, I'm curious to know how the vmware-mount problem was
-discovered. Was it discovered because dash does not have bash's
-mitigation in place? Or was it discovered via some other mechanism?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-Regardless of the answer, it is probably worth using bash's mitigation
-in dash, but I'm curious if we'll make discovering future bugs in setuid
-programs more difficult to spot by happenstance by doing so.
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+iQIcBAEBAgAGBQJSfTrJAAoJEBYNRVNeJnmTl0MQALTTu6rzAPz/we1y3/s++MMv
+4ZIqeoGgJsk7D7aEnHGMVYniTfzf5b6AmyLuTYLKUB2uvJgIFLDeGfTGokYbsH+F
+YW9SClKsHRvAB5WQ1Sj+XKXDVmP1UZV0Rg3D9Uh7Wsi6LKsqjx5L+eECf3FOyChI
+xMYglMDmDeXSw5aH4aEti4/jxm1zOpBlPb9T9ZzaLKoN3B93NVva2er/suEG475e
+GxDF1WLTbxl5iirtuOI8vnH+McMukSTYdrYdVxfusR/O0w1lSZq7jjdVhx/foCJL
+9bTN1RVaGT8/YThW0Ia9OsOCj8bPEAA26w0fMCB7QDzuoavXLb4z4sFOB9Qm+HDv
+AzP9q1eFzmqouzXomBNSq5SqMmjx2c2MQo071ybVnIvAq9f9RuVAroUyPq6w6f9J
+5nfb1it76bRHKktxBtc8OwGm7WaYzwLL5oyhfEVZZawUmT/+a3JuZ4K4kPB8D+er
+ILFJCRpG207bW7Z+kixR2GPTrgbCsMWDsBHLkphaEow0rfA0wfvYtNbfadwooL4U
+aG4Fb5XJV5ct3+PmcB4ep5Fy7exx99mp+ElRswTd0ia6xVK9WhxYqHdWUkRZW8PH
+0FSBdxne2/PHioHgVsQ5Aina/w5aTNDBG1KGVKENxSp4IBL+KWs1c2g06fCdbZWQ
+PTJ6G1MG4+plByWSXc3P
+=oQ9g
+-----END PGP SIGNATURE-----
