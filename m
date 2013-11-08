@@ -1,46 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/11
-Message-ID: <51F0E96D.9070903@redhat.com>
-Date: Thu, 25 Jul 2013 03:01:33 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Jean-Baptiste Kempf <jb@...eolan.org>
-CC: oss-security@...ts.openwall.com, Michael Niedermayer <michaelni@....at>, Moritz Muehlenhoff <jmm@...til.org>, Moritz Muehlenhoff <jmm@...ian.org>, ffmpeg-security@...peg.org, security@...eolan.org
-Subject: Re: new FFMpeg stuff
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/08/1
+Message-ID: <CAEmQOhDfUJAFyK3L0a2DS03s69ATvSJG_ZZrCdN+gRYZBrGH0w@mail.gmail.com>
+Date: Fri, 8 Nov 2013 01:01:58 +0000
+From: Jonathan Salwan <jonathan.salwan@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Advisory report - Multiple memory corruption and race condition in Goodix gt915 Android touchscreen driver (CVE-2013-4740 & CVE-2013-6122)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Description
+========
+Multiple issues have been identified in the Goodix gt915 touchscreen
+driver for Android. The issues were found in the write handler of the
+procfs entry created by the driver, which by default is readable and
+writeable to users without any specific privileges.
 
-On 07/25/2013 02:52 AM, Jean-Baptiste Kempf wrote:
-> On 25 Jul, Kurt Seifried wrote :
->> Can the VLC security team confirm/correct this as needed so we
->> can ensure it's correct before I assign CVEs? thanks.
-> 
-> Why the VLC security team should be involved in that?
+CVE-2013-4740
+----------------------
+When processing data written to the procfs file, the Goodix gt915
+touchscreen driver is using user space supplied content as length
+values in subsequent memory manipulation operations without
+bounds checking. This can lead to multiple memory corruption issues.
+An application with access to the respective file can use this flaw
+to, e.g., elevate privileges.
 
-Because they want to help make sure the CVEs get correctly assigned?
+Access Vector: local
+Security Risk: high
+Vulnerability: CWE-20 (Improper Input Validation)
 
-If you guys don't care about getting CVE's done properly well that's
-your choice I guess and I'll assign the CVEs as best I can. But I was
-hoping VLC upstream might help out.
+CVE-2013-6122
+-----------------------
+When processing arguments passed to the procfs write handler of
+the Goodix gt915 touchscreen driver, user space data is copied to
+a global variable and used without a mutual-exclusion mechanism.
+The global structure used by the procfs write handler can be accessed
+concurrently by more than one process. This would allow local attackers
+to bypass the input validation checks (such as introduced by the fix for
+CVE-2013-4740). An application with access to the respective file can use
+this flaw to, e.g., alter the internal state of the handler, bypass security
+checks, or create a denial-of-service condition.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Access Vector: local
+Security Risk: medium
+Vulnerability: CWE-362 (Concurrent Execution using Shared Resource
+with Improper Synchronization)
 
-iQIcBAEBAgAGBQJR8OltAAoJEBYNRVNeJnmTrQgQAIV55cIEFWiCsm292zRI9IgX
-UnrEsa5WBHznZDVHva49QRsZYFrDcYNFsnvgyn7Jc+UHHKr90b/zlcGvvMxVYopE
-1uWTScgdcbDbZe7MI0KPV19Ig5rMRdD0fWJDM/hnvQLqt2aMHpVyGU30oE/b9z2/
-Iom2jjNrkHPZLo9hPLHJHqYb798g7KStsQtt9cpjTXVdsZx94N0tGoBZFqR4BxVW
-Q5B4izEwR6hObY5rm94gQEeGOYxZiJ+CCt5Mc1eEhktcnSpS5POj6qwDUlQsKYZC
-r0iAh4jDFaqsR1583voaiUbDFVTgKnOV2dGNS8TJkLMP6ATJSlC+lw1WS2Sf30nf
-kzxAdunIeZIP4ZpEDorJv8v0jLdY+bPW/AX2mx0MwMB5nNjVNuoImPT/DjI5dxxF
-mgcES5P8sULr2TWDdcJFZrFT0OUgsnkFtoSzzfcy0VhGzDnmOYTzjM6RqGEjzs2u
-01MxVRdNnEmxy5oEfpqxZdeRpObbf9RCrHku0t7v2ZoIv1aO0fRXQTEhbu7crD3J
-Fb3ggWC9lBXHyN5g6c7uTwJABns2VpPl9H6gR4uN+NXJEirJElcdrL38seo/hJUs
-ROYBKnPj6Nh9HRtmZevSHOTeGcfUg2GxpG/2XfxnAJUC1HSRScWB7tery6u2cQi6
-Nl83Yw2FBMgv365yHRvy
-=p9qJ
------END PGP SIGNATURE-----
+Affected versions
+All Android releases from CAF using a Linux kernel from the following heads:
+
+jb_3*
+msm-3.10
+Patch
+We advise customers to apply the following patches:
+https://www.codeaurora.org/cgit/quic/la/kernel/msm-3.10/commit/?id=f53bcf29a6e7a66b3d935b8d562fa00829261f05
+
+Acknowledgement
+=============
+Qualcomm Innovation Center, Inc. (QuIC) thanks Jonathan Salwan of the
+Sysdream Security Lab for reporting the related issues and working with
+QuIC to help improve Android device security.
+
+https://www.codeaurora.org/projects/security-advisories/multiple-memory-corruption-issues-and-race-condition-goodix-gt915-touchscreen-driver-procfs-handler
