@@ -1,54 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/2
-Message-ID: <5201D823.6010706@redhat.com>
-Date: Tue, 06 Aug 2013 23:16:19 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/08/3
+Message-ID: <527C89D2.1080703@redhat.com>
+Date: Thu, 07 Nov 2013 23:50:58 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Nathan March <nathan@...net>
-CC: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>, "Steven M. Christey" <coley@...re.org>
-Subject: Re: OpenX Ad Server Backdoor CVE?
+To: oss-security@...ts.openwall.com, markus@...nbsd.org
+Subject: Re: CVE Request - OpenSSH
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/06/2013 06:10 PM, Nathan March wrote:
-> On 8/6/2013 4:52 PM, Kurt Seifried wrote:
->> According to a post by Heise Security, a backdoor has been
->> spotted in the popular open source ad software OpenX [1][2].
->> Appearantly the backdoor has been present since at least November
->> 2012. I tried to download the source to verify the information,
->> but it appears the files have been removed.
+On 11/07/2013 09:02 PM, mancha wrote:
+> Hello Kurt, vendors, et al.
 > 
-> I can confirm this is in 2.8.10 that was downloaded on July 15th.
-> It's inside the /etc/plugins/openXVideoAds.zip at 
-> ./plugins/deliveryLog/vastServeVideoPlayer/flowplayer/3.1.1/flowplayer-3.1.1.min.js
->
+> OpenSSH has released an advisory[1] detailing a memory corruption 
+> vulnerability in the post-authentication sshd process when using
+> an aes*-gcm@...nssh.com cipher.
 > 
+> OpenSSH 6.4/6.4p1 were released to address the problem.
 > 
-> md5sum on the zip matches 6b3459f16238aa717f379565650cb0cf
+> Would you please allocate a CVE for this issue? Thanks.
 > 
-> - Nathan
+> --mancha
+> 
+> [1] http://www.openssh.com/txt/gcmrekey.adv
 > 
 
-Please use CVE-2013-4211 for this issue.
+- From the advisory:
+
+If exploited, this vulnerability might permit code execution
+with the privileges of the authenticated user and may
+therefore allow bypassing restricted shell/command
+configurations.
+
+So based on that it sounds like a security issue.
+
+Please use CVE-2013-4548 for this issue.
+
+CC'ing Markus in case he already requested a CVE.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSAdgiAAoJEBYNRVNeJnmTbxMP/RnSpjLObSpR9aY7qf4iT0EF
-6knTvjDGxAlcpdjYiZFb/eKqQU6HEz7AY8jmnIcUZxdcOz2gqJWRrfRIlsq60MPK
-2DeQqs1YTeI8y/MW5zG992e0zl83F5L9hZ+jthI1K5pOAdodyov+iAKoaEVc1Jtc
-BVY0wctV/rJG31Z3ljnwq9xoHpTgGhKfviqAlVHENja7bagmp9fm9mxd4JwFB9W4
-VYiNbKUSjbjWRFW4jEUb9+3bzD4AY3mlOqhsqBeHbT/yvw1UvLlsy7PF/VLwlf/i
-nhtcUJk/61kgiCr0AOj+Nn17BLQ7HQyjFrnbEAucoXH02ZXdnwAp3lBc81/1J0eQ
-x3avpvOP44ghxjWGnPXZnb1JwURtoqVq3BdV3LOPFaSjci8dDoMmqRSPxotGT0WX
-725tgnlgaItvEMR/bU5MbkNRtuJwzWnOiIgorG1soInjCZNRy0ojZHpRT9JCc0mo
-88/veCmfIQvwRLG9d23CBUyuWqKR3UKqHIVUYsdO5iuzDyAntT00OIBy7YMaeVPQ
-vGJFPMj8s8JLZX/Z0BpP09uvHjsTgqfrgA3GQkpSct8E+40FMNFuqxzANk1Vxy/Z
-p/JB0NH33aAu4NVnhcJ2lpJ8FHx4/RZ6RyKT7t7+G1R4hSACYsJK+X3zXeNWzYHu
-iCIRl4sDn3hSJ8qdPDcd
-=vwwV
+iQIcBAEBAgAGBQJSfInSAAoJEBYNRVNeJnmTRlcQAKkAk98ZEoqbqZYo7QOyTfud
+miK44LqEBK2p4moyFdC6OlGQsiDQpz86ekge/f4STbiBuCOSedvUEGaC8sqBiP5u
+xOTXPIt0AtR0IIdg3jnVtK/YgHBLjp+dB1iFUjLd4N6KnQRqYyjLA4QkHlfKW4iv
+OI2qdeoHIk8OHYqcygudsq2o2FsyaH2WfNWqtPcT0Sc0LuLqKgjrX4KPrcHRw9ho
+QWkBWxsdUJW9CJYhk2ncs/NvScNSkWRPGBKITAjvBW8l+JYpW2CESGnuKLMEwLF5
+V+DbmHbBzVkTws7C+ZFVvQZxCZhxbwTjN+v8q98oX/buKI+yCxJeM4oUG2qTFAA1
+cqqarbFURhBQvj/qTUB/PVAtuOLhFH0APjV9ltfBB5glGHrPMNIxI+zknCwELMQd
+qWotcMZc1XadnE97bvLKytY/1yxh72v1gJmWWTCdGxY+gf0nBTvxi7wXYSGKFlzW
+Luk8mTfiD0p1fgxGAsSdbfFQ1S5Er+Uh+/5w9pwfo3qoeiuWGwTeTFM2sRMRosmh
+epH//OVrGxQmDHkVdDjt+wdhheWLn613koQo91w7csoRFjrtaI3yUIpAAXZ50ezN
+VH2pqciEoNid0ezI9OU+LgDXuOyo1g4BsQDNbirvrLs12iK8gxgaq+DUrsh182Cr
+KiEs8ppMg1MIEJieRzPe
+=b+P6
 -----END PGP SIGNATURE-----
