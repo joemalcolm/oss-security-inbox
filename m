@@ -1,18 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/31/3
-Message-ID: <51A89AE9.70307@kde.org>
-Date: Fri, 31 May 2013 08:43:21 -0400
-From: Jeff Mitchell <mitchell@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/08/5
+Message-ID: <527D192D.9010404@canonical.com>
+Date: Fri, 08 Nov 2013 12:02:37 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: KDE Paste Applet
+Subject: CVE Request: bip denial of service via resource leak
 Content-Type: text/plain; charset=utf-8
 
-Michael Samuel wrote:
-> Is anyone from KDE working on fixing this?  I wrote a quick patch and
-> was hoping somebody from the KDE team could vet and incorporate it.
+Hello,
 
-Actually sending the patch to the thread you started at security@....org 
-would probably help grease wheels...
+bip 0.8.8 and earlier contains an issue where failed SSL handshakes result in a
+resource leak. A remote attacker can use this flaw to cause bip to run out of
+resources, resulting in a denial of service.
 
---Jeff
+Upstream bug:
+https://projects.duckcorp.org/issues/261
 
+Fixed by the following commit in 0.8.9:
+https://projects.duckcorp.org/projects/bip/repository/revisions/df45c4c2d6f892e3e1dec23ce0ed2575b53a7d8c
+
+Downstream bug:
+https://bugs.launchpad.net/ubuntu/precise/+source/bip/+bug/1247888
+
+Could a CVE please be assigned to this issue?
+
+Thanks,
+
+Marc.
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
