@@ -1,35 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/27/1
-Message-ID: <5295399B.6040601@redhat.com>
-Date: Tue, 26 Nov 2013 17:15:23 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/08/6
+Message-ID: <527D3A96.5000906@redhat.com>
+Date: Fri, 08 Nov 2013 12:25:10 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Apache Solr 4.6.0
+Subject: Re: CVE request: drupalauth module for simpleSAMLphp trivial impersonation
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/26/2013 04:06 PM, Nicolas Grégoire wrote:
-> Hello,
+On 11/05/2013 01:54 AM, Thijs Kinkhorst wrote:
+> Hi,
 > 
-> Apache Solr 4.6.0 was released a few days ago. This version
-> includes a fix for bug SOLR-4882 (directory traversal when
-> accessing XSLT stylesheets and Velocity templates): 
-> http://lucene.apache.org/solr/4_6_0/changes/Changes.html#v4.6.0.security
->
+> Alan Barrett reported an issue in the drupalauth module for simpleSAMLphp,
+> which takes the username out of a cookie which is obviously under control
+> of the user.
 > 
-https://issues.apache.org/jira/browse/SOLR-4882
+> Report and patch:
+> http://code.google.com/p/drupalauth/issues/detail?id=9
 > 
-> If the user can store his own files on the server, this
-> vulnerability could be abused to gain remote code execution.
+> (Note that this is an independently developed module not part of the
+> simpleSAMLphp core distribution. Note also that this module is used for
+> Drupal as an authentication source, and is not related to using Drupal
+> with simpleSAMLphp as an SP).
 > 
-> Regards, Nicolas Grégoire
 > 
-> 
+> Cheers,
+> Thijs
 > 
 
-Please use CVE-2013-6397 for this issue.
+Please use CVE-2013-4552 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -37,17 +38,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSlTmbAAoJEBYNRVNeJnmT0l8P/2i0kuG+e/OnnKXVLRe4ntY3
-0MgHu6RnMfDkWxEnBRojCGvvohHv61Nb+vn1ap/PnbmoG7o0uk0fKc850potUkJA
-vI9snU0n2Lt6FLMtQIUuv+kplqpPilem+/Tdfr02G9e19H/04WaeTLEtboSNDLYR
-ZTkjxGg4om6KK2hVwYs0OsrFFxe70f/4wxMC2KOwJmnR1HNQAKPZ2jD9HkNSxSWQ
-dC7g07TTyE7/r1ns952ushCtuboiuOnAoimHBURhD7OB+VeUXM5FUsp6siw/XBkH
-/UJyeBK9wAo4atzNOGBydaJwm/do9v88N5QXiU095LVBtuePt6rMrmthx9OrwD98
-+tC2R7fpfeQ1tolpzVGW1KBDTMEHiFUwPGAYXwHVsPAor0fTDHg93C1N4dSgh+yF
-MB4tMM8OsWeC+QBAicPL8Dw1DiVPK15TL4kgYHqX2cr4Wf1dd9oVqlYpdRj2VCl+
-ouAlI/xYJxmb6tYsFrNwsiqmMFiSsLMy5dmmkafWbMJklWyhcZwkfkUcd9IHZMi1
-U0EJzZUuOC3WJjqNm6KLsj7LzVoqy4qBFkoDwpE0EvvCn6R7WJ+GWgZMsnvWpDEo
-MlEGI9AejhvT47gtHwFukunurDYx70B9fSk3WuYnBWRnl3gZDbUshY27pa+2tlio
-MmtBaT2CQvzaRZb2sRYP
-=32bH
+iQIcBAEBAgAGBQJSfTqWAAoJEBYNRVNeJnmT5NAQAMQOyN4OE1whskacsjO8mBMH
+iWmRZNjFA2ab/Wjhn4i6uPKEeVtx556EgavwNYkihsXGifi5wNpjHmWAbYxISSvE
+XgLZvrh4lF9+v6fEDL5KSjvnGDEAdIwu5/aw1nC9CqIDtk7xoROIpCPIZJOT7y9l
+TUVr+I0Dn6EMeCab3OILpUXtOyyxB+2HWlViBHdJSmxPE7qI9XeOib1IQ+wuHU+c
+h0/tuNOU8ATrJL4/LP1AnmFkBZvuNzEZD1JhOPn5DvbCY1CVHrW4BTM0OpY0PSt4
+UPHJhYUqOZZisxqAOAMKEsm36G1EoKe/grMfI+YGdQjPhudncoZyHQzP/2F8EPn4
+do3SRLd/c21w7LnKuoJpbJvjFwMYBmlx6CJB6kV0QdzQfPZ6wHR3Jpop1awsEB0f
+vYS1eZyJ7swfgGWDgmpr413jp9H3wb17Pl0J3kNm96m8AVWQL2FO4oXHzI+xn84J
+3f99vnB76Wha35NsVLkkNH74BLQbMzyVQKS4Uo5jkvOCubIOcjAZieiB4s1COmCG
+c7oKjquHEkoJuEeUElx0zQCQYQ++U+z6dFoBo10uSNI8NGbMjALFI3eEQ7/uB/BT
+TpqE3RWah433NzEs3uBnakvA0B1h/SPE3C1ijCSQaH1hyUNRVX1eMk7pSenk+RAI
+xemOhTv7B7j4Wl6dDRpm
+=6UjU
 -----END PGP SIGNATURE-----
