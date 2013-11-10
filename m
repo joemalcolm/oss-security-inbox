@@ -1,33 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/05/10
-Message-ID: <20130905215450.GL5194@redhat.com>
-Date: Thu, 5 Sep 2013 15:54:50 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/10/4
+Message-ID: <52800148.4090607@redhat.com>
+Date: Sun, 10 Nov 2013 14:57:28 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: GDM TOCTTOU race condition on /tmp/.X11-unix (CVE-2013-4169)
+CC: taffit@...ian.org, team@...urity.debian.org
+Subject: Re: CVE Request: multiple vulnerabilities in spip
 Content-Type: text/plain; charset=utf-8
 
-As per the distros@ list recommendations, I'm writing to alert of a
-problem with older versions of GDM.  As per our bugzilla [1]:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Vladz reported that GDM versions < 2.21.1 were vulnerable to a TOCTTOU
-(time of check to time of use) flaw in the way that GDM checked for the
-existence of, and created if missing, the /tmp/.X11-unix/ special
-directory.  A local attacker could use this flaw to overwrite arbitrary
-file contents via symbolic link attacks or to manipulate the contents of
-arbitrary files, including those files owned by the root user that would
-normally be inaccessible.  This is because GDM will chown /tmp/.X11-unix
-to the user and group root, but also changes the permissions to 1777.
+On 11/09/2013 11:23 PM, Salvatore Bonaccorso wrote:
+> Hi
+> 
+> (Cc'ing David Prévot, maintainer in Debian for the spip package;
+> I'm not a native french speaker, so he might help get it right)
+> 
+> Upstream for SPIP, a website engine for publishing fixed the
+> following issues in their upstream release for 2.1.24 (and
+> 3.0.12):
+> 
+> - cross-site request forgery on logout. The patch adds a
+> confirmation button when loggin out. commit for 2.1.24:
+> http://core.spip.org/projects/spip/repository/revisions/20874 3.0.x
+> did not contain the fix, and is probably not affected (David can
+> you confirm?)
 
-Newer versions of GDM no longer create the /tmp/.X11-unix/ directory and
-are thus not vulnerable to this flaw.
 
-This issue was assigned CVE-2013-4169.  We fixed the problem by having
-rc.sysinit pre-create /tmp/.X11-unix at boot, like it does for
-/tmp/.ICE-unix (and removing the offending code from GDM).
+Please use CVE-2013-4555 for this issue.
+
+> 
+> - cross-site scripting on author page: commit for 2.1.24:
+> http://core.spip.org/projects/spip/repository/revisions/20880 
+> commit for 3.0.12:
+> http://core.spip.org/projects/spip/repository/revisions/20879
+
+Please use CVE-2013-4556 for this issue.
+
+> - updates the security screen for possible php injection (updates
+> the "Écran de sécurité" to version 1.1.8):
+
+Please use CVE-2013-4557 for this issue.
+
+> commit:
+> http://zone.spip.org/trac/spip-zone/changeset/75105/_core_/securite/ecran_securite.php
+>
+>  References: - http://bugs.debian.org/729172 -
+> http://www.spip.net/fr_article5646.html (2.1.24; french) -
+> http://www.spip.net/fr_article5648.html (3.0.12; french)
+> 
+> Regards, Salvatore
+> 
 
 
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=988498
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+iQIcBAEBAgAGBQJSgAFIAAoJEBYNRVNeJnmTbegP/inqTKv35N6MyneLUfUNvI7F
+ktuVni1nFhFH8Hd3xGdaoVtgw5CtuFWbf9B3e1IuOsD7FkGCrU7MD1UUy1f7CkN2
+xLOcbKsBbaKxyEJuAds/7xYYJkbgH/VqAdsMoCZQY0icZrk7poSWjGDd0K4jVDFT
+tfN5Et4hRAdNMN8eH+fEk+XlPoq88UoMIBD8BI4NJsMLhCV2uEDk23JDNIbuc+M5
+DTKfosgeVr2l1b38Sg5D0vvfBM1fk8QUJ90/QII8TTMv5sStJXzXW6nbB9Qw2IvD
+j8ViDHM3x3cy81zlAQTxlsdAVocRvlFL1NKSStbhif1daH22YZy6osFW58QWVOjq
+aX6erQ2Ww5s8mfhL5ROUIoo75RNt+LErInit6/r/X4j8xdKoNnktilHuIc+deyb3
+Km5Odv0nLtetFJrVKcf40lUD+gn3on+GcojCmqw2irFk1OtuG4LKnDWm+Fvbjlmu
+qD6Z5YJZhpqcUaXsyVrCTZkJ0ugJVQ78w4sIM7DSlBP4rUtYj84VnTAOBXYe5PVM
+4DFqhqXFuPkGZqfdVv0seXzNef9qfEiEmWbCRIFFAhIwUwlZIJAtN0Y9J1CZpfqo
+LZHDuV7RZhI5p3jrhsWHsnvvPS7uKcKKcmcWp/1g0/gBl+6IKpDQGlwaHHSxc/Ap
+l8mnW+4LVbX8tPnsDTT3
+=ZPDs
+-----END PGP SIGNATURE-----
