@@ -1,32 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/25/1
-Message-ID: <20130825074415.GA15384@eldamar.local>
-Date: Sun, 25 Aug 2013 09:44:15 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Gandalf <gandalf@...ti.net>, Paul Gevers <elbrus@...ian.org>
-Subject: CVE Request: 3 XSS vulnerabilities in Cacti <= 0.8.8b
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/10/3
+Message-ID: <527F913A.1070700@debian.org>
+Date: Sun, 10 Nov 2013 09:59:22 -0400
+From: David Prévot <taffit@...ian.org>
+To: Salvatore Bonaccorso <carnil@...ian.org>
+CC: oss-security@...ts.openwall.com, team@...urity.debian.org
+Subject: Re: CVE Request: multiple vulnerabilities in spip
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Three cross-site scripting vulnerabilities were reported in the Cacti
-Bugtracker at [1]:
+Hi,
 
- - Reflected XSS in the "step" parameter of the "/install/index.php"
-   script
- - Stored XSS in the id parameter in the "/cacti/host.php" script
- - "/cacti/host.php" script is vulnerable to Blind SQL Injection in
-   the "id" parameter.
+Le 10/11/2013 02:23, Salvatore Bonaccorso a écrit :
 
-Upstream (Cc'ed) has commited r7420[2] and r7421[3]
-for 0.8.8 and 0.8.9 respectively to fix these issues.
+>  - cross-site request forgery on logout. The patch adds a confirmation
+>    button when loggin out.
+>    commit for 2.1.24: http://core.spip.org/projects/spip/repository/revisions/20874
+>    3.0.x did not contain the fix, and is probably not affected (David
+>    can you confirm?)
 
- [1] http://bugs.cacti.net/view.php?id=2383
- [2] http://svn.cacti.net/viewvc?view=rev&revision=7420
- [3] http://svn.cacti.net/viewvc?view=rev&revision=7421
+It had been fix in 3.0.10:
+http://core.spip.org/projects/spip/repository/revisions/20593
 
-Can CVE's be assigned for these issues?
+Regards
 
-Regards,
-Salvatore
+David
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBCAAGBQJSf5E6AAoJEAWMHPlE9r08IlAH/A5cqzSWU+EkjLRgRlzlElYM
+lrlnd78X494bXzkLehyWJC9SSi6FyxEU/q27138jZ0i8DawY1xazpVibWBB4UP8n
+au4yg+0WWR/mcLZ0Tj7cuACyMAVMjZ/85uPZ0KNyTmIdwcIXGe/4+oDPSYOXkLas
+yrWW9UZDzN4bi7DMU3NAlSmHCabHu5wCsS/XQogg65jjVlX315Ko8AjWV5c/XDl9
+Xzft+k2vF8AS1HjGoN0whE9I4xfoscy5Sve8z4CcgLgN1tQcFKKO7q3NrSoTep3s
+WWmI3Z5bwCT7qfUcSQfzH1oPfWMUi90C5tM4yEEQHmvvIfq9yifXTzKh4fjs1rw=
+=bfST
+-----END PGP SIGNATURE-----
