@@ -1,39 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/3
-Message-ID: <20130604155141.GF3638@redhat.com>
-Date: Tue, 4 Jun 2013 09:51:41 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/10/1
+Message-ID: <20131110062336.GA7849@eldamar.local>
+Date: Sun, 10 Nov 2013 07:23:36 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libsrtp buffer overflow flaw
+Cc: taffit@...ian.org, team@...urity.debian.org
+Subject: CVE Request: multiple vulnerabilities in spip
 Content-Type: text/plain; charset=utf-8
 
-A buffer overflow flaw was reported in libsrtp, Cisco's reference
-implementation of the Secure Real-time Transport Protocol (SRTP), in how
-the crypto_policy_set_from_profile_for_rtp() function applies
-cryptographic profiles to an srtp_policy.  This could allow for a crash
-of a client linked against libsrtp (like asterisk or linphone).
+Hi
 
-A pull request in git has a patch to correct this issue (doesn't look
-like it's been merged into master yet though).
+(Cc'ing David Prévot, maintainer in Debian for the spip package; I'm
+not a native french speaker, so he might help get it right)
+
+Upstream for SPIP, a website engine for publishing fixed the following
+issues in their upstream release for 2.1.24 (and 3.0.12):
+
+ - cross-site request forgery on logout. The patch adds a confirmation
+   button when loggin out.
+   commit for 2.1.24: http://core.spip.org/projects/spip/repository/revisions/20874
+   3.0.x did not contain the fix, and is probably not affected (David
+   can you confirm?)
+
+ - cross-site scripting on author page:
+   commit for 2.1.24: http://core.spip.org/projects/spip/repository/revisions/20880
+   commit for 3.0.12: http://core.spip.org/projects/spip/repository/revisions/20879
+
+ - updates the security screen for possible php injection (updates the
+   "Écran de sécurité" to version 1.1.8):
+
+   commit: http://zone.spip.org/trac/spip-zone/changeset/75105/_core_/securite/ecran_securite.php
 
 References:
+ - http://bugs.debian.org/729172
+ - http://www.spip.net/fr_article5646.html (2.1.24; french)
+ - http://www.spip.net/fr_article5648.html (3.0.12; french)
 
-http://seclists.org/fulldisclosure/2013/Jun/10
-https://github.com/cisco/libsrtp/pull/26
-https://bugzilla.redhat.com/show_bug.cgi?id=970697
+Regards,
+Salvatore
 
-
-As an aside, when I was poking around in github, I also found this but I
-don't know anything about libsrtp so I don't know if this is something
-that can be triggered by a remote user or if this is just a hardening
-thing, but the commit message is "Security fix to not ignore RTCP
-encryption, if required."
-
-https://github.com/cisco/libsrtp/commit/8ad50a05279b61a382da3cc730ff1560ab4272e8
-
-Is there someone more familiar with libsrtp that might be able to
-comment on whether or not this is a flaw (so can a remote user request
-to disable encryption and do ... something?)
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
