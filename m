@@ -1,47 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/13
-Message-ID: <20130605141614.GG32700@dhcp-25-225.brq.redhat.com>
-Date: Wed, 5 Jun 2013 16:16:15 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: Peter Zijlstra <peterz@...radead.org>, Andi Kleen <ak@...ux.jf.intel.com>
-Cc: Marcus Meissner <meissner@...e.de>, eranian@...gle.com, security@...nel.org, oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: More perf security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/11/2
+Message-ID: <CAB8Fin8xcw-w3g=N0KTuERzZ7NSWddOQf=dGQZHYYv8mmO9jbg@mail.gmail.com>
+Date: Mon, 11 Nov 2013 14:58:45 +0100
+From: Jacob Vosmaer <jacob@...lab.com>
+To: oss-security@...ts.openwall.com
+Subject: Security vulnerability in gitlab-shell (CVE-2013-4546)
 Content-Type: text/plain; charset=utf-8
 
-Andi, Peter.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-On Wed, Jun 05, 2013 at 10:23:02AM +0200, Peter Zijlstra wrote:
-> On Tue, Jun 04, 2013 at 10:59:33AM -0700, Andi Kleen wrote:
-> > > 3. Information leak (??) via perf LBR filter 
-> > 
-> > Leak + crash actually.
+### Security vulnerability in gitlab-shell (CVE-2013-4546)
 
-Was the leak supposed to be addressed via
-7cc23cd6c0c7d7f4bee057607e7ce01568925717 (and thus was never there)?
+We have learned about a second remote code execution vulnerability in
+gitlab-shell. This issue was fixed in gitlab-shell 1.7.4, so users who
+updated gitlab-shell after [our recent security
+announcement](../gitlab-ce-6-2-and-5-4-security-release/) are not affected.
 
-Or how was the fix below supposed to fix the info leak?
+# Remote code execution vulnerability in the repository import feature of
+older versions of GitLab
 
-> > 
-> > > 
-> > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6e15eb3ba6c0249c9e8c783517d131b47db995ca
-> > > 
-> > > commit 6e15eb3ba6c0249c9e8c783517d131b47db995ca
-> > > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-> > > Date:   Fri May 3 14:11:24 2013 +0200
-> > > 
-> > >     perf/x86/intel/lbr: Fix LBR filter
-> > >     
-> > >     The LBR 'from' adddress is under full userspace control; ensure
-> > >     we validate it before reading from it.
-> > 
-> > This patch is known broken and causes additional crashes.
-> > There's no updated patch for that so far.
-> 
-> And yet there's no crash report in my inbox.. how kind you you andi.
-> 
-> And I know you don't agree with the patch, but since you're too lazy to
-> provide a better one I didn't think you minded _that_ much :-)
+There is a remote code execution vulnerability in the repository import
+feature of older versions of GitLab. This vulnerability has been assigned
+the CVE identifier CVE-2013-4546.
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Versions affected: 5.0, 5.1, 5.2, 5.3, 5.4, 6.0, 6.1, 6.2
+
+Not affected: 4.2 and earlier
+
+Fixed versions: 5.4.1, Community Edition 6.2.3, Enterprise Edition 6.2.0
+(all using gitlab-shell 1.7.4)
+
+### Impact
+When creating a new project a GitLab user can specify that a remote
+repository should be imported into the new project. In affected versions
+the import URL text field can be used to execute code on the GitLab server.
+Only authenticated users can create new projects and import repositories.
+
+This vulnerability was fixed in gitlab-shell 1.7.4. All users running
+GitLab 5.4 or newer should verify that they are using gitlab-shell 1.7.4 or
+newer (`cat /home/git/gitlab-shell/VERSION`) and upgrade gitlab-shell
+immediately if necessary.
+
+### Releases
+Gitlab-shell 1.7.4 is available from
+https://gitlab.com/gitlab-org/gitlab-shell and
+https://github.com/gitlabhq/gitlab-shell . To upgrade gitlab-shell it
+suffices to run `sudo su git -c 'git fetch && git checkout v1.7.4'` in
+/home/git/gitlab-shell .
+
+### Workarounds
+If you are unable to upgrade you can disable the repository import
+functionality in GitLab by deleting the following code block from
+`app/contexts/projects/create_context.rb` and restarting GitLab:
+
+<pre>
+# Import project from cloneable resource
+if @project.valid? && @project.import_url.present?
+  shell = Gitlab::Shell.new
+  if shell.import_repository(@project.path_with_namespace,
+@project.import_url)
+    # We should create satellite for imported repo
+    @project.satellite.create unless @project.satellite.exists?
+    @project.imported = true
+    true
+  else
+    @project.errors.add(:import_url, 'cannot clone repo')
+  end
+end
+</pre>
+
+### Credits
+Thanks to Remy van Elst https://raymii.org/ for reporting the vulnerability
+to us.
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - https://gpgtools.org
+
+iQEcBAEBCgAGBQJSgOJ/AAoJEB2vXw0YK62WVbQH/3dUD1e9A03Y5RxfzmWdzEIw
+hWGFziF4ZobNAKZd3lCynZZBKGHDaBHvBnzhFNkk6IZuwYNvDy7/2UOvvlxBhAYq
+ts8/Il8Rr/z27DkBlxvIwaOgSxx/CRvJkxqUDbpQ9QOTEkmf9USe1RDFrsXvBz7Y
+I10AXrVewm3sWW7qCaB2l4srS25ja/ohmIEXGaujr2Ppjk1N67krEj6l8EIYbW3m
+p8UEPH4NGN1+bDkA9j0/Gj/ABX6W9q0N6NpVzd2E70IQ8dgnisxYgmTwuObGcIbP
+tdNoWleKsk/K4slV97ISlXR5tGKHfKiAVZEAC87odYBcRe57mLEd9Ppt0ykHVKo=
+=Qj+H
+-----END PGP SIGNATURE-----
+
+Best regards,
+
+Jacob Vosmaer
+GitLab.com
+
