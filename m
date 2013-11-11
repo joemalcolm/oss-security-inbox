@@ -1,45 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/15/3
-Message-ID: <20130515044733.GA2667@kroah.com>
-Date: Wed, 15 May 2013 00:47:33 -0400
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: linux kernel perf out-of-bounds access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/11/1
+Message-Id: <E1Vfpt7-0000ZE-H4@xenbits.xen.org>
+Date: Mon, 11 Nov 2013 11:42:37 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 75 (CVE-2013-4551) - Host crash due to guest VMX instruction execution
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 15, 2013 at 09:26:30AM +0800, Eugene Teo wrote:
-> On Tue, May 14, 2013 at 8:25 PM, Marc Deslauriers <
-> marc.deslauriers@...onical.com> wrote:
-> 
-> > Hello,
-> >
-> > Is there a CVE for this? If not, could one be assigned, please?
-> >
-> > https://patchwork.kernel.org/patch/2441281/
-> >
-> > 8176cced706b5e5d15887584150764894e94e02f
-> >
-> > (BTW, there is currently an exploit for this going around...)
-> >
-> 
-> Nowhere did it say it is a security fix. Fix available since April 13.
-> s@...s not aware too. Awesome.
-> 
-> Seriously, surely by now we should all know that silent fixes are not the
-> wisest thing to do.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I do not think anyone realized it was a "security" fix.  It was never
-mentioned to the security@...nel.org alias, and I only picked it up
-for the stable releases because someone said, "hey, here's another
-trinity bugfix that userspace can trigger".  We fix those all the time,
-every single stable kernel release.
+             Xen Security Advisory CVE-2013-4551 / XSA-75
+                              version 2
 
-The only thing different this time is someone took the time to develop a
-simple exploit for others to use.
+           Host crash due to guest VMX instruction execution
 
-So I don't think this was any more or less "silent" than the normal
-kernel bug fixes that happen every single week.
+UPDATES IN VERSION 2
+====================
 
-thanks,
+This issue has been assigned CVE-2013-4551.
 
-greg k-h
+ISSUE DESCRIPTION
+=================
+
+Permission checks on the emulation paths (intended for guests using
+nested virtualization) for VMLAUNCH and VMRESUME were deferred too
+much.  The hypervisor would try to use internal state which is not set
+up unless nested virtualization is actually enabled for a guest.
+
+IMPACT
+======
+
+A malicious or misbehaved HVM guest, including malicious or misbehaved user
+mode code run in the guest, might be able to crash the host.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.2.x and later are vulnerable.
+Xen 4.1.x and earlier are not vulnerable.
+
+Only HVM guests run on VMX capable (e.g. Intel) hardware can take
+advantage of this vulnerability.
+
+MITIGATION
+==========
+
+Running only PV guests, or running HVM guests on SVM capable
+(e.g. AMD) hardware will avoid this issue.
+
+Enabling nested virtualization for a HVM guest running on VMX capable
+hardware would also allow avoiding the issue.  However this
+functionality is still considered experimental, and is not covered by
+security support from the Xen Project security team.  This approach is
+therefore not recommended for use in production.
+
+CREDITS
+=======
+
+This issue was discovered by Jeff Zimmerman.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This issue was disclosed publicly on the xen-devel mailing list.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa75-4.3-unstable.patch    Xen 4.3.x, xen-unstable
+xsa75-4.2.patch             Xen 4.2.x
+
+$ sha256sum xsa75*.patch
+5d7bd39e4077dcdf97abf8cf3ceb662403bedf8642ce7d15840b329bc9e56727  xsa75-4.2.patch
+7e61b457c9ad8d7c598d88163d2760041033ddb1631cfe989f853b7c2b5cd0bf  xsa75-4.3-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJSgMKZAAoJEIP+FMlX6CvZNC0H/0DZ1mBOiGpfSsn+HjCQuVup
+U81kWQp+SjVKVWvJbG+/vdL/418gIJ/jS9PzL7Qhordb63l7fq1d+Gi9vsQApnku
+25/rKpFQzbJCud/67P3DyO3RAw33z5rQ+S/7nLLx7K6oDKNS3knQpcQwjeNIH040
+NekPA2qBEuIi/0G72fYzU1wzc5XWve3lftzgYVyW+CFE1CUDq9OdWxHm5FTI41TH
+v1/WURQelw4a6BTVvV6NxK8J4ibQvWpL0Id4kXs1DnrSl39Al6gBUf2dO/JQwjCo
+fxMMjFAqWtpOrJjbWntUSJSzsFp/UfIh23a2AEmgdo4H/5yRG5RnomgSw2jOjw8=
+=gTUt
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa75-4.2.patch" of type "application/octet-stream" (1602 bytes)
+
+Download attachment "xsa75-4.3-unstable.patch" of type "application/octet-stream" (1763 bytes)
