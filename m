@@ -1,26 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/15
-Message-ID: <5123276.QYWy9rty4J@devil>
-Date: Tue, 26 Feb 2013 23:04:24 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/12/5
+Message-ID: <CAFp7Qwpok0LY-Uimckrz5B+BiDqd14rXFAAYFFsJDHnifpx-3A@mail.gmail.com>
+Date: Tue, 12 Nov 2013 21:58:35 +0100
+From: Josef Šimánek <josef.simanek@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: psi+ stores the cache file as world-readable
+Cc: Mark Dodwell <mark@...ynamic.co.uk>
+Subject: CVE request: rubygem omniauth-facebook CSRF vurnerability
 Content-Type: text/plain; charset=utf-8
 
-Psi+, a fork of psi, stores its files in ~/.cache/psi+ as world-readable.
+# RubyGem omniauth-facebook CSRF vulnerability
 
-~/.cache $ ls -la psi+/
-total 52
-drwxr-xr-x 5 ago ago  4096 feb 25 09:41 .
-drwx------ 5 ago ago  4096 feb 24 23:58 ..
-drwxr-xr-x 2 ago ago  4096 feb 25 09:41 avatars
-drwxr-xr-x 2 ago ago  4096 feb 25 09:33 bob
--rw-r--r-- 1 ago ago 32610 feb 25 09:41 caps.xml
-drwxr-xr-x 3 ago ago  4096 feb 24 23:58 profiles
+There is a security vulnerability in the CSRF protection of
+omniauth-facebook 1.4.1.
 
-An unauthorized user could read sensitive informations in such dir.
+    Versions affected: 1.4.1
+    Not affected:      <= 1.4.0 (*)
+    Fixed versions:    >= 1.5.0
 
-Probably psi is affected as well.
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+(*) Versions <= 1.4.0 did not have any CSRF protection. So, while this
+vulnerability does not directly affect versions <= 1.4.0, downgrading
+to <= 1.4.0 is not a fix.
+
+## Impact
+
+Because of the way that omniauth-facebook supports setting a
+per-request state parameter by storing it in the session, it is
+possible to circumvent the automatic CSRF protection. Therefore the
+CSRF added in 1.4.1 should be considered broken.
+
+If you are currently providing a custom state, you will need to store
+and retrieve this yourself (for example, by using the session store)
+to use 1.5.0.
+
+All users running an affected release should upgrade to 1.5.0.
+
+## Releases
+
+The 1.5.0 releases is available at the normal locations.
+
+
+## Workarounds
+
+None.
+
+## Credits
+
+Egor Homakov (@homakov)
+
+
+regardsJosef Šimánek
+
