@@ -1,40 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/19/2
-Message-ID: <20131119205849.GA4572@dhcp-25-225.brq.redhat.com>
-Date: Tue, 19 Nov 2013 21:58:50 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: Moritz Muehlenhoff <jmm@...ian.org>
-Cc: oss-security@...ts.openwall.com, Prasad Pandit <ppandit@...hat.com>
-Subject: Re: CVE requests for three Linux kernel issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/12/3
+Message-ID: <20131112171415.6f80c34a@chromobil.localdomain>
+Date: Tue, 12 Nov 2013 17:14:15 +0100
+From: Stefan Bühler <stbuehler@...httpd.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: lighttpd multiple issues (setuid/... unchecked return value, FAM: read after free)
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-On Tue, Nov 19, 2013 at 09:14:14PM +0100, Moritz Muehlenhoff wrote:
-> "x90c" reported four kernel issues on f-d. One already has a CVE ID assigned,
-> can you please assign one for the remainders?
+I'd like to request CVE ids for the following issues in lighttpd:
 
-we've requested only one CVE to be assigned because the rest are
-non-issues. Prasad (CC'ed) can provide reasons why.
+1. setuid/setgid/setgroups return values are not checked
 
-> 
-> XADV-2013008 Linux Kernel 3.11.7 <= sk_attach_filter Kernel Heap Corruption
->   http://seclists.org/fulldisclosure/2013/Nov/139
-> 
-> XADV-2013007 Linux Kernel bt8xx Video Driver IOCTL Heap Overflow
->   http://seclists.org/fulldisclosure/2013/Nov/126
-> 
-> XADV-2013004 Linux Kernel ipvs Kernel Stack Overflow
->   http://seclists.org/fulldisclosure/2013/Nov/77
-> -> This was already assigned CVE-2013-4588
-> 
-> XADV-2013003 Linux Kernel bt8xx Video Driver IOCTL Heap Overflow 
->   http://seclists.org/fulldisclosure/2013/Nov/75
-> 
-> Cheers,
->         Moritz
+If setuid() fails for any reason (RLIMIT_NPROC) lighttpd runs as root.
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2013_02.txt
+
+
+2. If FAMMonitorDirectory fails, lighttpd reads a value from already
+free()d memory.
+
+http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2013_03.txt
+
+
+Both issues were found with clang static analyzer, so I assume the bad
+guys already know these.
+
+regards,
+Stefan
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
