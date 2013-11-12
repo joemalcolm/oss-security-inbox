@@ -1,47 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/9
-Message-ID: <20131104184906.0d3270d6@hboeck.de>
-Date: Mon, 4 Nov 2013 18:49:06 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/12/4
+Message-ID: <52826FBA.3090804@redhat.com>
+Date: Tue, 12 Nov 2013 11:13:14 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: openssl default ciphers
+Subject: Re: CVE Request: lighttpd multiple issues (setuid/... unchecked return value, FAM: read after free)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 4 Nov 2013 18:16:30 +0100
-Stefan Bühler <stbuehler@...httpd.net> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Is 'DEFAULT@...ENGTH:!LOW:!EXP' (should
-> be similar to 'HIGH:MEDIUM:!aNULL') a reasonably default?
+On 11/12/2013 09:14 AM, Stefan Bühler wrote:
+> Hi,
+> 
+> I'd like to request CVE ids for the following issues in lighttpd:
+> 
+> 1. setuid/setgid/setgroups return values are not checked
+> 
+> If setuid() fails for any reason (RLIMIT_NPROC) lighttpd runs as
+> root.
+> 
+> http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2013_02.txt
 
-SSLCipherSuite HIGH:!MEDIUM:!LOW:!aNULL@...ENGTH
-should be fine. There are basically near zero browsers out there that
-should have any problems with that. Even dinosaurs like IE6 can work
-with this, you don't need "medium" ciphers as long as you don't want to
-make a site accessible to browser museums.
+Please
+> 
+use CVE-2013-4559 for this issue.
 
-And looking at what medium includes that high doesn't, it seems you
-really don't want that ancient cipher suites:
--DHE-RSA-SEED-SHA
--DHE-DSS-SEED-SHA
--SEED-SHA
--IDEA-CBC-SHA
--IDEA-CBC-MD5
--RC2-CBC-MD5
--ECDHE-RSA-RC4-SHA
--ECDHE-ECDSA-RC4-SHA
--ECDH-RSA-RC4-SHA
--ECDH-ECDSA-RC4-SHA
--RC4-SHA
--RC4-MD5
--RC4-MD5
--PSK-RC4-SHA
+> 2. If FAMMonitorDirectory fails, lighttpd reads a value from
+> already free()d memory.
+> 
+> http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2013_03.txt
+
+Please
+> 
+use CVE-2013-4560 for this issue.
+
+> Both issues were found with clang static analyzer, so I assume the
+> bad guys already know these.
+> 
+> regards, Stefan
 
 
--- 
-Hanno Böck
-http://hboeck.de/
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+iQIcBAEBAgAGBQJSgm+6AAoJEBYNRVNeJnmTnVsP/1A9khbtz2dSTrCfO//ZrDag
+qF2BJokhILhkUtM4lAwHpIlbO/uVD5CLLR4Y8g6gilR2fQDWa9GU6xeoejgH60NQ
+ZM65qVNFYbPgx0j/anfTigzhiLiFqvYCpubdsp+s8FvBvVh07VXhVjxl1UJfT5cU
+m7ifw274qYtyXfu+3pLAGXqYST0onJ0oB1UA6iEuTZRU2nK7KNaEZXCFHhIiNqMR
+iMMFCoJERJyvXCgf19LEbjn0XFrwHW9Qbqm+jDVjh/xEDhg4SJJ59sUdODbOaEQI
+HQroJhfA1IWdKUPmVWe57WdPsTFYGpvB5R6P7i0y7zeeoTl1jGUnoIiaSS/t/+Yn
+kjpq4uqFbGa6BgC7s+hjloGk031zouIRQ8vZyt67fIWC8qU7IOH1qpUx8mRwfFtq
+8smrDyWNPYEye3McYEw50GtSdrVy/EmCA+mClnskwY2GpcIPCK0X0OOzDrXgbbjC
+QSIKVcP/PuqTDA1JfiGYx6xq/KjtPSr5obJqQSH0sYoiIdMuBITIz8wsdOFOBhyo
+FoRy/c8nh8SFbxcolXpW/WCv/CYskVcOGClxXdsLEZ0tnvZUfTtNLeYcO/YfdN29
+TWNcCX0l6RZyoz6L+sP94HGLP+PYhLjZiv8cXktnJzX+LIeI1wyvbHI6588OvpkE
+0yYAJ1vStCWr3J5duQ1k
+=00La
+-----END PGP SIGNATURE-----
