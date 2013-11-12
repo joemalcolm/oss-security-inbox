@@ -1,84 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/27/9
-Message-ID: <Pine.GSO.4.64.1306271712580.4601@faron.mitre.org>
-Date: Thu, 27 Jun 2013 17:37:09 -0400 (EDT)
-From: "Steven M. Christey" <coley@...re.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com, alexandre.rebert@...il.com
-cc: Russ Allbery <rra@...nford.edu>, cve-assign@...re.org
-Subject: Re: 1.2k bug reports for Debian, some may be security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/12/7
+Message-ID: <CAFp7QwoJMjOHLHjpiPrT3v8NX7YGeM5zpedm-+E+w_0v3P_8PQ@mail.gmail.com>
+Date: Tue, 12 Nov 2013 22:47:06 +0100
+From: Josef Šimánek <josef.simanek@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: rubygem omniauth-facebook CSRF vurnerability
 Content-Type: text/plain; charset=utf-8
 
+Patch prepared to release:
 
-On Thu, 27 Jun 2013, Kurt Seifried wrote:
+https://github.com/mkdynamic/omniauth-facebook/commit/ccfcc26fe7e34acbd75ad4a095fd01ce5ff48ee7
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+
+2013/11/12 Josef Šimánek <josef.simanek@...il.com>
+
+> # RubyGem omniauth-facebook CSRF vulnerability
 >
-> On 06/26/2013 11:56 PM, Russ Allbery wrote:
->> Kurt Seifried <kseifried@...hat.com> writes:
->>
->>> I will of course be doing CVEs for these (*sob*). In order to
->>> make this possible though I'm going to need some help in the form
->>> of good CVE requests in this case I will be fascist.
+> There is a security vulnerability in the CSRF protection of omniauth-facebook 1.4.1.
+>
+>     Versions affected: 1.4.1
+>     Not affected:      <= 1.4.0 (*)
+>     Fixed versions:    >= 1.5.0
+>
+> (*) Versions <= 1.4.0 did not have any CSRF protection. So, while this vulnerability does not directly affect versions <= 1.4.0, downgrading to <= 1.4.0 is not a fix.
+>
+> ## Impact
+>
+> Because of the way that omniauth-facebook supports setting a per-request state parameter by storing it in the session, it is possible to circumvent the automatic CSRF protection. Therefore the CSRF added in 1.4.1 should be considered broken.
+>
+> If you are currently providing a custom state, you will need to store and retrieve this yourself (for example, by using the session store) to use 1.5.0.
+>
+> All users running an affected release should upgrade to 1.5.0.
+>
+> ## Releases
+>
+> The 1.5.0 releases is available at the normal locations.
+>
+>
+> ## Workarounds
+>
+> None.
+>
+> ## Credits
+>
+> Egor Homakov (@homakov)
+>
+>
+> regardsJosef Šimánek
+>
+>
 
-The following is just my opinion and not an official CVE-Assign position. 
-I am concerned that we could assign too many CVEs to issues that don't 
-turn out to be vulnerabilities.
-
-Past experience suggests that when it comes to "local" exploitation, many 
-people involved in security do not necessarily draw clear boundaries 
-between bugs and vulnerabilities, at least as vulnerabilities have been 
-"classically" understood in the last couple decades.  We occasoinally see 
-examples of this on oss-security.  Multiply that by 1.2K and we may wind 
-up with some mayhem of our own.
-
-There should be very clearly-specified reasons for why an issue crosses 
-privilege boundaries.  If an attacker can only exploit an issue through a 
-command-line parameter, configuration file, or other input that must be 
-inherently trusted (otherwise the app can't function properly), then that 
-may not qualify as a vulnerability.
-
-If the program is exploitable through input that could be untrusted in 
-common usage scenarios (e.g., "sort" may be executed on log file output as 
-in CVE-2013-0221), then that may be worthy of a CVE.
-
-As far as I can see on the current Debian threads, some of the reported 
-issues do not actually cross privilege boundaries, and would therefore 
-fall more under the "bug" category than a vulnerability worthy of a CVE.
-
-To fully understand which inputs or usage scenarios pose a real risk, it 
-may require a deep familiarity with the software itself - such as the 
-package maintainers.
-
-
-Russ Allbery said:
-
->> I suspect you will not want to be doing CVEs for most of these.
->> The ones I've seen so far aren't really security issues.  They're
->> cases of command-line programs crashing on input, but usually input
->> that is not feasibly under the control of an attacker (command-line
->> options provided by the user, etc.).
-
-Hopefully this is the case.  Perhaps we should rely more heavily on the 
-package maintainers to help determine this.
-
-> Yup. hence the "Attack outcome (is this a security vulnerability in
-> other words)". I'm hoping <10% of these are security vulnerabilities.
-> But anything setuid/setgid, etc.... all sorts of potential for problems.
-
-An issue in a setuid/setgid program still might not automatically be a 
-vulnerability - for example, if the issue is in a configuration file, or 
-if it only appears after privileges have been dropped, it might not be an 
-issue.
-
-I was under the impression from an incomplete read of the MAYHEM paper 
-that it could generate shellcode for code execution, yet I'm only hearing 
-of reports for crashes.  If code execution can be proven, then that may be 
-informative.  However, if person X can already run code (like executing 
-the "vulnerable" program in the first place), and they can only introduce 
-shellcode through "trusted" inputs like configuration files, and the 
-shellcode will only run with the same privileges as X, then there is no 
-security gain and no privilege boundaries are crossed, thus not a 
-"vulnerability" in the classic sense and not worthy of a CVE.
-
-- Steve
