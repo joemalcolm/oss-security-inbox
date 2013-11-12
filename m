@@ -1,49 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/2
-Message-ID: <5181E657.1000707@redhat.com>
-Date: Wed, 01 May 2013 22:06:47 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/12/6
+Message-ID: <52829913.5090506@redhat.com>
+Date: Tue, 12 Nov 2013 14:09:39 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Andrés Gómez Ramírez <andresgomezram7@...il.com>
-Subject: Re: Flightgear remote format string
+CC: Mark Dodwell <mark@...ynamic.co.uk>
+Subject: Re: CVE request: rubygem omniauth-facebook CSRF vurnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/01/2013 02:18 PM, Andrés Gómez Ramírez wrote:
->> What is the default setting for flight tree? does it listen t
->> the network public interface, localhost, is it disabled by
->> default, or? Thanks.
->> 
+On 11/12/2013 01:58 PM, Josef Šimánek wrote:
+> # RubyGem omniauth-facebook CSRF vulnerability
+> 
+> There is a security vulnerability in the CSRF protection of 
+> omniauth-facebook 1.4.1.
+> 
+> Versions affected: 1.4.1 Not affected:      <= 1.4.0 (*) Fixed
+> versions:    >= 1.5.0
+> 
+> (*) Versions <= 1.4.0 did not have any CSRF protection. So, while
+> this vulnerability does not directly affect versions <= 1.4.0,
+> downgrading to <= 1.4.0 is not a fix.
+> 
+> ## Impact
+> 
+> Because of the way that omniauth-facebook supports setting a 
+> per-request state parameter by storing it in the session, it is 
+> possible to circumvent the automatic CSRF protection. Therefore
+> the CSRF added in 1.4.1 should be considered broken.
+> 
+> If you are currently providing a custom state, you will need to
+> store and retrieve this yourself (for example, by using the session
+> store) to use 1.5.0.
+> 
+> All users running an affected release should upgrade to 1.5.0.
+> 
+> ## Releases
+> 
+> The 1.5.0 releases is available at the normal locations.
 > 
 > 
-> It has to be configured by command line, but it is not an uncommon
-> usage.
+> ## Workarounds
 > 
-> http://wiki.flightgear.org/Property_Tree
+> None.
+> 
+> ## Credits
+> 
+> Egor Homakov (@homakov)
+> 
+> 
+> regardsJosef Šimánek
 > 
 
-So it's not on by default? Is there any documentation specifically you
-can point me to regarding enabling/securing it?
+Can you link to the vulnerable code  or the code commit fixing this?
+thanks.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRgeZXAAoJEBYNRVNeJnmTL2AP/iXZD//2zHdsTRqF1ob/DtuL
-NVEVT5FXcqkI0BDtB/X4ibZHRWZbc1nwKYixNz+4QqRlZLktx0e9NK/8Xq2LXLtP
-muQzEQch3p2H7LE1Dn7GOE5EPPwefXJSDKw4aWmRvigN7+J4z65oXKpZ5oKTQNWv
-SHqql8e+1YRTV7sd5k2zfaOLuZbNd06wgK4t4NvfJLxw1PzJdDjn7LT1EQsYUdvl
-HVkV2cQiSdhrjvZY896eN4JfllDNt/2xgr9XWqIUiMbkVdesQ7mlpQ+rpX0XyFDH
-HTkqCTiDJcacP9LLkyrOZwZHU6ZhC3jIjRH6E11Wsq84lYnKv/AFChtFmFgXh3EA
-r2eOS9rEvzqir/fPTlmsMsaJs1mSyLBExlHcpP7TtxOOH4bvVBGgZ17N2i2WTlL7
-5eugcZqamj0jnh021nuebINxPjRI07fn2/8u6koh2C7TI2cDv7sE/9g3FMbRCxOa
-5zL/2zfo6e77ISp5wyNhfuXNVkWZLQOBGzrbWAswplByR6jCWPD7HjEKF4GRQAPM
-dA3r2S6lwx7VVhfsEX89Cjv7oN95lrGD7wph0BrGCAv+CUS1wYg20odbNGBUmo6Z
-v4yb5jL6V+S9oC/erY3lSmsXwjUTt5+/F59nNc1GRtONf8QxKTwlzifccgNaHw4S
-u+eyT5zD/BTqKFsyKs6/
-=sOfA
+iQIcBAEBAgAGBQJSgpkSAAoJEBYNRVNeJnmTiJkP/jON6q5ZPsPNV+5Ib8yMIK+K
+cGGvskIE/2+LOS9ThwvqjMiAG/w+97Q9bqr0cHiSH0Tcehg6GWlCkggW3Jq72ZP1
+P6ECUU62VuemtaYfsCjPLunQP9S0zZpS2bdOYFyl22pUSKncwPy4fiZZ8cpyGkfe
+0qCJxf36mOJjQTRzJe+IAFCBzLshkHroK//fnT326Mv172hEr/z40JoQKw/df0+b
+DL4XDjbkxLcCXJH8pNelU/qbBwpLBlHgT9/noFX7Ic9oIkoZDKDTBhJ8QhXHAarO
+5DJWgRdEw9tvdf3XsRjbVFsT2UKcCufvnKXUmwbFslTpVWrLRUYnI18Q4Sh3xzGw
+gme/u0fecRQKW1nR8j+m1BS8a9rzAX267RmQJCqQsoQTOGf0c53dTZuBBTup/b3W
+1aMjxbovvhXSomQID/GNvTTL8BeiJk6nOhddHYRe+zyLWI7+mOqkQKZRRGn/xTH6
+LFjdsPNYoRfCwqt8GEuHpUeBTGe+tztNxa6AePXbtN6ucW4ADBdPHswXE5b7JWsI
+amCOAh5+EUpN1YVcolW2KESEW8lW8XC6zHJIqF53oBUf77gzmIcLyfq5KQG/fFxM
+Jque0YAq2xfkx0hQBg/m6f6oi/5AGKdgTLTRi3NvRx079N+/veS4JnLzcX8lwSKB
+AzvOWhoza+2y7iPRyULE
+=ZZJQ
 -----END PGP SIGNATURE-----
