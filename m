@@ -1,16 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/24/2
-Message-ID: <87622mgxgb.fsf@mid.deneb.enyo.de>
-Date: Thu, 24 Jan 2013 21:03:48 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE ID Syntax Change - Call for Public Feedback
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/12/1
+Message-ID: <20131112101032.GG22293@dhcp-25-225.brq.redhat.com>
+Date: Tue, 12 Nov 2013 11:10:33 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: Nico Golde <oss-security+ml@...lde.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: some unstracked linux kernel security fixes
 Content-Type: text/plain; charset=utf-8
 
-> *) Option C (Year + arbitrary digits + check digit)
->
->    Examples: CVE-2014-1-8, CVE-2014-9999-3, CVE-2014-123456-5
+Hi,
 
-If you add a check digit, please do not separate it with a hyphen.
-The additional hyphen requires additional changes to parsers, changes
-which could be avoided easily.
+On Sun, Nov 03, 2013 at 05:32:52PM +0100, Nico Golde wrote:
+> drivers/uio/uio.c: mapping of physical memory to user space without proper size check
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7314e613d5ff
+
+there is a size check in uio_mmap() (the only caller of uio_mmap_physical()):
+
+        requested_pages = vma_pages(vma);
+        actual_pages = ((idev->info->mem[mi].addr & ~PAGE_MASK)
+                        + idev->info->mem[mi].size + PAGE_SIZE -1) >> PAGE_SHIFT;
+        if (requested_pages > actual_pages)
+                return -EINVAL;
+
+why it wasn't sufficient?
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
