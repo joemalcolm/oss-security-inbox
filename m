@@ -1,57 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/9
-Message-ID: <20130221082823.GA11718@elende>
-Date: Thu, 21 Feb 2013 09:28:23 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: zoneminder: local file inclusion vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/12/2
+Message-Id: <201311121246.rACCkG6M023918@linus.mitre.org>
+Date: Tue, 12 Nov 2013 07:46:16 -0500 (EST)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-2013-6780 for YUI 2.x 2013-11-11 uploader.swf issue
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thank you for the CVE assignment!
+See https://yuilibrary.com/support/20131111-vulnerability/ for the
+vendor's disclosure.
 
-On Wed, Feb 20, 2013 at 11:59:58PM -0700, Kurt Seifried wrote:
-> > Hi
-> > 
-> > In zoneminder forum the following announce was done already in
-> > 2011:
-> > 
-> > http://www.zoneminder.com/forums/viewtopic.php?f=1&t=17979
-> 
-> Stupid Q, is there like an official security page? POsting stuff to a
-> forum is not exactly the easiest place to find things, can they setup
-> like zoneminder.com/security/ and at least list all the security
-> issues and link to them there so people don't have to dig through the
-> forums?
-> 
-> I say this because this is the first cve request I've ever seen for
-> zoneminder since I started assigning, and indeed, since 2008, so I'm
-> guessing there's a few more missing ones......
+In some previous cases, YUI CVE assignments were made in conjunction
+with new releases of an open-source product such as Bugzilla or
+Moodle. In this case, CVE-2013-6780 was coordinated with YUI upstream,
+and will supersede any private CVE assignments that might have been
+planned for this YUI issue within Bugzilla, Moodle, etc.
 
-I further know about the wikipage with the ChangeLog, but there is no
-patch referenced (thus the forum post). It's here:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
- [1] http://www.zoneminder.com/wiki/index.php/Change_History
-
-But I have not read trough yet, to see if there are more changes
-indicating some security implication. For the one of my request there
-was only
-
-FIX - Fixed Local File Inclusion (LFI) vulnerability. Please note a
-patch for this is also available for 1.24.4 which the 1.24.4 tarball
-also contains for recent downloads.
-
-> If someone wants to big through the forums to find them and post them
-> here that would probably be helpful (seriously, wanna pad your resume
-> and get a reference from me? first person to make 100 good CVE
-> requests wins).
-
-I can check indeed if I find more. The the forum post for
-CVE-2013-0232 there is still no answer from upstream[2]
-
- [2]: http://www.zoneminder.com/forums/viewtopic.php?f=29&t=20771
-
-Regards,
-Salvatore
+iQEcBAEBAgAGBQJSgiKyAAoJEKllVAevmvms6pMH/3n01VK7TSBep/Ju0YRwTovD
+wAx9jd++NtKtYfOmhuW7FgSVpsy1e+spjcPb4R9cfa/kQkO/khbpN7aIqHUzhkCK
+Sc5IgM9H6BZ4z/L8JNipenq15EKv14nQfUUq7/n5wl9XHRaxis5Omq525IiII/Y+
+D5Z4cA2uINKXsItQjV6/GoNqpCCBFIViLXCQhdUgvP167lnBzgcT87KT/7aCthbl
+T/QkdZmDwhpowC/8V7KZeFbKHr2QirLtbgz2JqtoziwHJO9MPn4d+gtMHSU//lUI
+B9g1deUiFwUjAuVhlCUlZDKN9FYSXw5KP+BxQUGLmxZe5Pgf6cfwaCGEM3Scg0Q=
+=94PZ
+-----END PGP SIGNATURE-----
