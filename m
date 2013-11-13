@@ -1,22 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/1
-Message-ID: <568854659.9812058.1385700917964.JavaMail.root@redhat.com>
-Date: Thu, 28 Nov 2013 23:55:17 -0500 (EST)
-From: David Jorm <djorm@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request: Apache Solr XXE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/7
+Message-ID: <5283AEB9.1070601@fifthhorseman.net>
+Date: Wed, 13 Nov 2013 11:54:17 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com
+Subject: cryptographic primitive choices [was: Re: Microsoft Warns Customers Away From RC4 and SHA-1]
 Content-Type: text/plain; charset=utf-8
 
-Hi All
+On 11/13/2013 10:57 AM, Tim wrote:
+> Using a weak encyption algorithm alone isn't a sufficient condition to
+> issue a CVE against software, since often the context of the usage
+> matters a lot.  If you use MD5 or SHA-1 for password hashing (with
+> lots of salt and rounds), then there's no vulnerability.  If you use
+> them for HMACs, then there's also likely no problem.  But if you use
+> them for a signature with a public key, there is.
 
-Apache Solr 4.3.1, 4.4, 5.0 resolves multiple XXE flaws, as described in the following bugs:
+I'm inclined to try to apply your suggested guidelines to GnuPG:
 
-https://issues.apache.org/jira/browse/SOLR-3895
-https://issues.apache.org/jira/browse/SOLR-4881
+gnupg uses SHA-1 as its default digest algorithm when making public key
+signatures, both for cleartext "data signatures" and "certifications"
+(OpenPGP keysigning).
 
-I have confirmed that these issues can also be exploited on Apache Solr 3.6.2. Please assign a CVE ID for these XXE flaws (I think a single CVE ID is most appropriate).
+Suggestions in the past to change the default digest algorithm to
+SHA-256 have been resisted for the sake of interoperability, despite
+every OpenPGP implementation in wide use having been capable of SHA-256
+for many years.
 
-Thanks
--- 
-David Jorm / Red Hat Security Response Team
+Are you saying we should assign a CVE for the fact that GnuPG generates
+data signatures over SHA-1 by default?  What about its generation of
+certifications over SHA-1 by default?
 
+What about for the fact that GnuPG validates and accepts OpenPGP
+certificates made via SHA-1 (note that this is a different question from
+whether generating them warrants a CVE)?
+
+GnuPG also currently accepts and validates certifications and data
+signatures made with MD5. (it prints a warning, but it still treats the
+certifications as acceptable when computing certificate validity, for
+example).  Should we assign a CVE for this as well?
+
+As a reference point, the recent ENISA recommendations [0] recommend
+digests of 160 bits (SHA-1) for "legacy" applications, 256 bits
+(SHA-256) for "near-term future" (at least 10 years) applications and
+512 bits (SHA-512) for "long-term future" (30 to 50 years, which they
+acknowledge is difficult to predict).
+
+I've been encouraging gnupg to move to stronger default cryptographic
+primitives for years.  i would appreciate any guidance the community
+wants to give about how seriously to take these configuration choices.
+
+	--dkg
+
+[0]
+http://www.enisa.europa.eu/activities/identity-and-trust/library/deliverables/algorithms-key-sizes-and-parameters-report
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
