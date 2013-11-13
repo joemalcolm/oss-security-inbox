@@ -1,32 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/8
-Message-ID: <20130215163414.627346c3@redhat.com>
-Date: Fri, 15 Feb 2013 16:34:14 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: ago@...too.org
-Subject: Re: CVE request: unauthorized SSL certificates by Türktrust discovered
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/10
+Message-ID: <5283D4DF.9040903@redhat.com>
+Date: Wed, 13 Nov 2013 12:37:03 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Kurt Seifried <kseifrie@...hat.com>, Saran.Neti@...us.com
+Subject: Re: CVE-2013-4563 -- Linux kernel: net: large udp packet over IPv6 over UFO-enabled device with TBF qdisc panic
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 15 Feb 2013 12:45:16 +0100 Agostino Sarubbo wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Title:        unauthorized SSL certificates by Türktrust discovered
-> Risk Rating:  Medium
-> Platforms:    All
-> Modules:      QtNetwork
-> Versions:     All
-> Author:       Peter Hartmann
-> Date:         7th January 2013
+On 11/13/2013 10:34 AM, Petr Matousek wrote:
+> Commit 1e2bd517c108816220f262d7954b697af03b5f9c ("udp6: Fix udp 
+> fragmentation for tunnel traffic.") changed the calculation if 
+> there is enough space to include a fragment header in the skb from
+> a skb->mac_header dervived one to skb_headroom. Because we already
+> peeled off the skb to transport_header this is wrong.
 > 
-> More info and code commit at:
-> http://lists.qt-project.org/pipermail/announce/2013-January/000021.html
+> This fixes a panic Saran Neti reported. He used the tbf scheduler
+> which skb_gso_segments the skb. The offsets get negative and we
+> panic in memcpy because the skb was erroneously not expanded at the
+> head.
 > 
-> I don't see a cve for it, please assign one.
+> Introduced by: 
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1e2bd517c108816220f262d7954b697af03b5f9c
+>
+>  Introduced in: v3.10-rc5
+> 
+> Upstream fix: 
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=0e033e0
+>
+>  References: 
+> http://marc.info/?l=linux-netdev&m=138305762205012&w=2 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1030015
+> 
+> Acknowledgements:
+> 
+> Red Hat would like to thank Saran Neti of TELUS Security Labs for 
+> reporting this issue.
+> 
+> Thanks,
 
-This is not expected to have CVE, see:
+One note, Petr will be handling some of the Red Hat discovered CVE
+assignments for Kernel stuff, he already raises a lot of them/or I ask
+him to confirm them so I figured this would be less error prone and
+efficient.
 
-https://bugzilla.mozilla.org/show_bug.cgi?id=825022#c67
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-0743
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+iQIcBAEBAgAGBQJSg9TfAAoJEBYNRVNeJnmT408P/2hLzTKiIVryGV5nuHpaytsw
+6HDbkkFWBPgTtjyJRQgDItbBAuJKTP6olOJw44aoDSxwq6IAnK/54OyDPI3Dk0pe
+0uWX8miszfdJLsKkxC3tAtEGHpxiX/t2mhl7OlKaMtj038VsfBTQTeBeBS9gO+vB
+VEY8NorvsoBRcjtPTx8gRwQbEGY63qLuI2Y+cTZf1LoZGKvR0jJOd4+EizoefHwx
+F4gXPyIpnD5S8xE/uzMlrtVFfchDVAXzEHid/tYzYNHKMfz+6g/yEHWILBhj7Ism
+3O4bdw5PrSMmZ5W9AQ03Mjs3RKU+iWyzTfxEh4g/A3yDe9CuMOr0mVAOT4c9UPhW
+U2+gzsUvUD2yxLTcQztLagB8oWlAXM2j+Q8n+UI8vfBpHPCIXOfFO8G+8T35Nkhf
+W3L+utADfhmZCwTCO5C+4bVGAYYUkUqBz4raD4vFOH4jIfi7IY/YstkerftU3ybf
+Q9CaRgD7UhI4URQGW9Xj7QP5VKRWG91ZaiwuWduChBEq0vfGw9Q6pwoeTvppV/AD
+yFAErvItS34UqXizzKPML49GiEmA1088IAYc0rp3CeNS9I3qYGuNxacCcmWC1vmf
+pCkK/Si64/hWsazHsE6iT4igTufQC7ewgtKxSMuU/NwUD2yIv/6v9ZKS0pbfAUyc
+firEba9r49s2ih5iVmIP
+=/cw/
+-----END PGP SIGNATURE-----
