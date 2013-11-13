@@ -1,104 +1,138 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/20
-Message-ID: <51421076.4090603@redhat.com>
-Date: Thu, 14 Mar 2013 12:01:26 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Christey, Steven M." <coley@...re.org>
-Subject: Re: CVE Request/Guidance: Linux kernel cdc-wdm buffer overflow triggered by device
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/8
+Message-ID: <A67209E6467BC34B85296CE030F98B0E1421FED2@GQ1-MB01-02.y.corp.yahoo.com>
+Date: Wed, 13 Nov 2013 17:14:03 +0000
+From: Jenny Han Donnelly <jennydonnelly@...oo-inc.com>
+To: Kurt Seifried <kseifried@...hat.com>, "michaeld@...dle.com" <michaeld@...dle.com>, Open Source Security <oss-security@...ts.openwall.com>
+CC: "security@...library.com" <security@...library.com>
+Subject: RE: [vs-plain] Request for CVE Identifiers
 Content-Type: text/plain; charset=utf-8
+
+Hi Kurt,
+
+Thanks for your help. We now have CVE IDs for YUI-related security vulnerabilities. We're updating the site with them now. For your reference, I've pasted them here:
+
+
+CVE-2013-6780
+https://yuilibrary.com/support/20131111-vulnerability/ use.
+
+
+
+CVE-2012-5881
+http://www.yuiblog.com/blog/2012/10/30/security-announcement-swf-vulnerability-in-yui-2/
+http://www.yuiblog.com/blog/2012/11/05/post-mortem-swf-vulnerability-in-yui-2/
+http://yuilibrary.com/support/20121030-vulnerability/
+
+Cross-site scripting (XSS) vulnerability in the Flash component infrastructure in YUI 2.4.0 through 2.9.0 allows remote attackers to inject arbitrary web script or HTML via vectors related to charts.swf, a similar issue to CVE-2010-4207.
+
+
+
+CVE-2012-5882
+http://www.yuiblog.com/blog/2012/10/30/security-announcement-swf-vulnerability-in-yui-2/
+http://www.yuiblog.com/blog/2012/11/05/post-mortem-swf-vulnerability-in-yui-2/
+http://yuilibrary.com/support/20121030-vulnerability/
+
+Cross-site scripting (XSS) vulnerability in the Flash component infrastructure in YUI 2.5.0 through 2.9.0 allows remote attackers to inject arbitrary web script or HTML via vectors related to uploader.swf, a similar issue to CVE-2010-4208.
+
+
+
+CVE-2012-5883
+http://www.yuiblog.com/blog/2012/10/30/security-announcement-swf-vulnerability-in-yui-2/
+http://www.yuiblog.com/blog/2012/11/05/post-mortem-swf-vulnerability-in-yui-2/
+http://yuilibrary.com/support/20121030-vulnerability/
+
+Cross-site scripting (XSS) vulnerability in the Flash component infrastructure in YUI 2.8.0 through 2.9.0, as used in Bugzilla 3.7.x and 4.0.x before 4.0.9, 4.1.x and 4.2.x before 4.2.4, and 4.3.x and 4.4.x before 4.4rc1, allows remote attackers to inject arbitrary web script or HTML via vectors related to swfstore.swf, a similar issue to CVE-2010-4209.
+
+
+
+CVE-2013-4939
+http://yuilibrary.com/support/20130515-vulnerability/
+
+Cross-site scripting (XSS) vulnerability in io.swf in the IO Utility component in Yahoo! YUI 3.0.0 through 3.9.1, as used in Moodle through 2.1.10, 2.2.x before 2.2.11, 2.3.x before 2.3.8, 2.4.x before 2.4.5, 2.5.x before 2.5.1, and other products, allows remote attackers to inject arbitrary web script or HTML via a crafted string in a URL.
+
+
+
+CVE-2013-4940
+http://yuilibrary.com/support/20130515-vulnerability/
+
+Cross-site scripting (XSS) vulnerability in io.swf in the IO Utility component in Yahoo! YUI 3.10.2, as used in Moodle through 2.1.10, 2.2.x before 2.2.11, 2.3.x before 2.3.8, 2.4.x before 2.4.5, 2.5.x before 2.5.1, and other products, allows remote attackers to inject arbitrary web script or HTML via a crafted string in a URL.  NOTE: this vulnerability exists because of a CVE-2013-4939 regression.
+
+
+
+CVE-2013-4941
+http://yuilibrary.com/support/20130515-vulnerability/
+
+Cross-site scripting (XSS) vulnerability in uploader.swf in the Uploader component in Yahoo! YUI 3.2.0 through 3.9.1, as used in Moodle through 2.1.10, 2.2.x before 2.2.11, 2.3.x before 2.3.8, 2.4.x before 2.4.5, 2.5.x before 2.5.1, and other products, allows remote attackers to inject arbitrary web script or HTML via a crafted string in a URL.
+
+
+
+CVE-2013-4942
+http://yuilibrary.com/support/20130515-vulnerability/
+
+Cross-site scripting (XSS) vulnerability in flashuploader.swf in the Uploader component in Yahoo! YUI 3.5.0 through 3.9.1, as used in Moodle through 2.1.10, 2.2.x before 2.2.11, 2.3.x before 2.3.8, 2.4.x before 2.4.5, 2.5.x before 2.5.1, and other products, allows remote attackers to inject arbitrary web script or HTML via a crafted string in a URL.
+
+
+
+-----Original Message-----
+From: Kurt Seifried [mailto:kseifried@...hat.com] 
+Sent: Thursday, August 01, 2013 8:12 PM
+To: michaeld@...dle.com; security@...library.com; Open Source Security
+Subject: Re: [vs-plain] Request for CVE Identifiers
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/14/2013 11:36 AM, Christey, Steven M. wrote:
-> While perhaps a questionable action in many environments, attaching
-> a USB device is a common use case.  The person attaching the device
-> has a reasonable expectation that code will NOT be executed, and
-> files will NOT be written outside the device, etc. without their
-> explicit permission or configuration.  There is also a reasonable
-> expectation that the operation of the device will not perform
-> actions against the OS without implicit user permission.
+On 07/05/2013 12:01 AM, Michael de Raadt wrote:
+> Hi, Kurt.
 > 
-> So, scenario 1 would clearly require a CVE.
+> Thanks for getting back to me.
 > 
-> For other scenarios, it should be considered whether the
-> user/victim uses a "common" operation that is not obviously
-> dangerous.  In scenario 3, clicking on a file in a USB device is a
-> common and reasonable operation, and unless that file is an
-> executable or otherwise automatically implies code execution, then
-> it is likely CVE-worthy if code execution, DoS, or some other
-> operation can be performed that is not within the intended
-> operation of the device.
-> 
-> I'm not sure I understand scenario 2 well enough to give direct
-> advice, but even if the user installing the USB is targeted instead
-> of the kernel, then it may qualify for a CVE.
-> 
-> - Steve
-> 
-> 
->> -----Original Message----- From: Eugene Teo
->> [mailto:eugeneteo@...nel.sg] Sent: Thursday, March 14, 2013 9:51
->> AM To: oss-security@...ts.openwall.com Subject: Re:
->> [oss-security] CVE Request/Guidance: Linux kernel cdc-wdm buffer
->> overflow triggered by device
->> 
->> Hi Marcus,
->> 
->> On Thursday, 14 March 2013, Marcus Meissner wrote:
->> 
->>> Hi,
->>> 
->>> I am wondering ... do we consider attacks with special attack
->>> taylored USB devices as CVE worthy?
->>> 
->>> There is only some precedence in the CVE DB, but not much.
->>> 
->>> I stumbled over this fix from one of my colleagues where a
->>> specifically made USB device reporting the "cdc-wdm" USB class
->>> could cause a kernel heap overflow.
->>> 
->>> "Malicious attached devices" might fall into several
->>> categories:
->>> 
->>> 1. Attaching the device causes the issue directly within the
->>> kernel / autoloaded module, without user interaction. (here the
->>> case)
->>> 
->>> 
->>> 2. Attaching the device causes the issue when userspace,
->>> dependend on e.g. desktop system, does initiate a seperate
->>> action (like an automount and then exploitation of something)
->>> (so not direct a kernel, but a kernel + GNOME/KDE
->>> interaction).
+> The YUI issue (reported as Moodle security issue MSA-13-0025) seems to 
+> have affected YUI versions 3.0.0 through 3.10.0 and was fixed in 
+> 3.10.1. There was a smaller related problem still in
+> 3.10.2 that they also fixed. Here are some links to the YUI 
+> announcements...
 
-A contrived example: you plug in a (fake) evil GPS device which causes
-the system to go "oh a GPS device, I'll start up the GPS service, if
-said GPS service had a buffer overflow in handling the data sent by
-the evil (fake) GPS device could send data that causes code execution.
-I know this example (plug GPS device in, GPS service starts) works in
-Fedora by default for a few years now. I'm sure there are other
-exmaples too.
+Hi YUI guys, can we get the CVE situation for YUI sorted out please and thank you? I'd be happy to assign CVEs or to help you get them from Mitre.
+
+> 
+> http://www.yuiblog.com/blog/2013/05/14/yui-3-10-1-released-to-fix-swf-
+> vulnerability/
+>
+> 
+http://yuilibrary.com/support/20130515-vulnerability/
+> 
+> I couldn't find an existing CVE for this. Perhaps there is not one 
+> yet.  Michael de Raadt /BSci(Hons), PhD/ *Development Manager,
+> Moodle HQ <http://moodle.com/hq/>* Availability:  	Calendar
+> <http://dl.dropbox.com/u/11561272/calendar.html> Web:
+> moodle.com/michaeld <http://moodle.com/michaeld> Blog:
+> salvetore.wordpress.com <http://salvetore.wordpress.com/> Email:
+> michaeld@...dle.com <mailto:michaeld@...dle.com> LinkedIn:
+> linkedin.com/in/michaelderaadt 
+> <http://linkedin.com/in/michaelderaadt> Twitter:  	@salvetore
+> <https://twitter.com/salvetore>
+> 
+> <http://moodle.org>
 
 
-- -- 
+
+- --
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRQhB2AAoJEBYNRVNeJnmTAm0QAMxA5lF4uHGSMNVfsCoHUQAL
-GsqR+rCy+KCH5FLCLcISSj9x6YdBegVHNjohJ308Z3gtb546GUQNIobqZNW1MjuL
-ghk8+bPw8ZPQ2W22Fc6HrXGF1Aehy6minm2Icf/qADVf7NEz7A9TWWWu3FQmIL4k
-bZot3upy9wbJNhmeGjegb0EpFaJlhE4L8xQgb6CM6aImNTVaJsvSpvAMhpjf0DLp
-5j4EA6i3QWBDHYHCtLcoLQCiADmXAZceaDqSX4cJQqIlqm+2WwOMFwozlBBb8ItP
-I4RtCepGVhxpI+G1s58uNj0J+GgMh6/UjmyxHvM2c16wYL6Dhb6FADGGpA5msY1W
-rmdmrFRGr86kqVBwB5i7VOKvX7ALeVNN5sCOkkaavzRZpsGRsz2yc3KFm0VdH+n7
-TqJIo16ozzmzFGiH2M+pZpp9MdYxshmBhwwNWtOJJSiTfRVi2gSznk1OtKMWjB9c
-ocrRkaSbvjKrZ17yDs6Q7/BJC22SqevQhh9tKOw4ib5Pn48WxZEChHiYJAzY5n4L
-c9iCLCNzpInV5Iy6IoBKkAZ+odQSPmho30s3HBTm+qRVrvEzn90wxanuQbV8rEKg
-Y/Emtgj2Jb0ZTlLzNc4RFjOgWTD3Z1KObQfXvyKUeClOlSfc/eZD90vazQaCNjgt
-2YFzg8XbHiSz9bzND0cl
-=fIP2
+iQIcBAEBAgAGBQJR+yOBAAoJEBYNRVNeJnmTEHwP/iLHXRhGK0FTjLnaRm1+gnU4
+LLpL4g67iSpvKC8b1uU1HDMGX0XqPFdUHsbfhDh1SSFyQk/zF9aDLmdcO+5iuDZv
+hSaElDQuqLfMFzLpu76462YrWJn4juhKQ9jXZfMo5behIu7vaJIutXnDdBS62Trq
+0EhSGiOVBif5cglZlEwRzw0N7PNI3of3ym1DFgHgXa3KQTl6qqavRMYTPyj0FggD
+FZkUgJOPCsIv196EMiG9y4b8p8SKLBvhqUqvHkAcUyeauvtFXWGIMiHYs5wyReD/
+mo39xRgccIJCQARiymRfuJ4zAkvsY7r3K+RFJbegSff4JK55dBBHjaNeDu6uQd9J
+i6dGxCkIXmzu46J7t2qlVhLc1hpcxpMOFBnlAJTsFxd+OTFuyVZpIi9iM/uOEz1y
+EdEtFzj/IGLKxzV7qnq0wSNVAdcC/njK3ztwTUUMNKGl4lRps3V/2NIUVnb+5bnl
+WyNBW6Oa6xUcrrWQusm7Q5souFD3LC8Jbt4LwsgKVcyNL2c3oAf1c2S2/HYBCe/S
+Lsoyjw8255zBjRYBvauEH4lqhGRTVh2ThzmZGllvXzZlLGQ0oJsL8f/Vntc1R+M0
+oTLaVMIC/vR1IWrNpeDJNiUUpINNHTmt6KI2qHAWXO1pG30YrG1b028feVXHZ/nA
+rQThVR7Lw0Nw2ZjuykpY
+=RbCn
 -----END PGP SIGNATURE-----
