@@ -1,54 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/16
-Message-ID: <1757812633.13565576.1375985164167.JavaMail.root@redhat.com>
-Date: Thu, 8 Aug 2013 14:06:04 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Pedro Ribeiro <pedrib@...il.com>, Frank Warmerdam <warmerdam@...ox.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Four (stack-based) buffer overflows and one use-after-free in libtiff v4.0.3 reported by Pedro Ribeiro
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/6
+Message-ID: <20131113163722.GD28665@sentinelchicken.org>
+Date: Wed, 13 Nov 2013 08:37:22 -0800
+From: Tim <tim-security@...tinelchicken.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Microsoft Warns Customers Away From RC4 and SHA-1
 Content-Type: text/plain; charset=utf-8
 
-Hello vendors,
+On Wed, Nov 13, 2013 at 11:09:10AM -0500, Eric H. Christensen wrote:
+> On Wed, Nov 13, 2013 at 07:57:51AM -0800, Tim wrote:
+> > > I'm inclined to agree. The question I suppose is, like DES (and
+> > > 3DES/MD5) at what point do we start assigning CVE's for some of this?
+> > > thoughts and comments welcome.
+> > 
+> > Using a weak encyption algorithm alone isn't a sufficient condition to
+> > issue a CVE against software, since often the context of the usage
+> > matters a lot.  If you use MD5 or SHA-1 for password hashing (with
+> > lots of salt and rounds), then there's no vulnerability.  If you use
+> > them for HMACs, then there's also likely no problem.  But if you use
+> > them for a signature with a public key, there is.
+> 
+> It's answers like this that make it difficult for non-security-literate system administrators to make good decisions.  I completely understand and agree with what you wrote but I wonder if we're making it harder for people to understand how to protect themselves.
+> 
+> After having many similar conversations with people that manage systems I find that it's usually easier to say "MD5 bad, SHA-256 good" and then just walk away.  Perhaps some sort of chart should be published that allows people to make better decisions?
 
-  since Kurt asked for it, below is the summary of the issues.
+Oh sure, I totally agree with you.  But sysadmins and programmers
+don't make the decisions on when to assign a CVE.  My recommendation
+here applies to security people trying to decide whether or not to
+call the baby ugly.  Once the CVE is published (with a description of
+actual risk) , sysadmins can just apply the patch.
 
-> 
-> Hello Kurt, Steve, vendors,
-> 
->   Pedro Ribeiro has recently reported the following five security
-> flaws being present in the tools of TIFF library:
->   [1] http://www.asmail.be/msg0055359936.html
-
-* Issue #1 (tools/gif2tiff.c): Stack-based buffer overflow in the gif2tiff tool when reading GIF extension block on crafted GIF image
-* Issue #2 (tools/gif2tiff.c): Stack-based buffer overflow in the gif2tiff tool when decoding a GIF raster image
-* Issue #3 (tools/gif2tiff.c): Stack-based buffer overflow in the gif2tiff tool when decoding a GIF raster image (same routine like
-                               in case #2, just different line code)
-* Issue #4 (tools/tiff2pdf.c): Use after free in tiff2pdf tool when reading TIFF file raster image data and writing them to the output PDF XObject's
-                               image dictionary stream
-* Issue #5 (tools/rgb2ycbcr.c): Stack-based buffer overflow in the rgb2ycbcr tool when performing RGBA to YCbCr conversion (converting
-                                non-YCbCr TIFF image to a YCbCr one) when processing crafted rasted date of provided TIFF image file
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-> 
-> While they are present in the tools (=> not that urgent like they
-> would be in the library itself), there's been CVE ids assigned
-> in the past for TIFF library tools issues too. To mention some examples:
->   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1961
->   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1960
->   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-4564
->   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-3401
-> 
-> Since there doesn't seem to be CVE identifiers assigned for these
-> [1] issues yet, could you allocate them?
-> 
-> FWIW regarding the patches and upstream bugs - if my information
-> is up2date, there aren't upstream bugs and patches for these issues
-> yet.
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
+tim
