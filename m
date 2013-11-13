@@ -1,61 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/19/1
-Message-ID: <5170B9B2.8060206@redhat.com>
-Date: Thu, 18 Apr 2013 21:27:46 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/2
+Message-ID: <52832895.7050604@fifthhorseman.net>
+Date: Wed, 13 Nov 2013 02:21:57 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>, veillard@...hat.com
-Subject: Re: CVE request : libxml2 Multiple Use-After-Free Vulnerabilities
+CC: 729028@...s.debian.org, Simon Horman <horms@...ge.net.au>
+Subject: perdition: ssl_outgoing_ciphers not applied to STARTTLS connections
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Perdition, the IMAP and POP proxy server, fails to apply the
+administrator's specified ciphersuite preferences when making outbound
+connections to IMAP and POP servers using STARTTLS.  For these outbound
+connections, it applies the administrator's listening ciphersuite
+preferences, which in many cases may be significantly weaker.
 
-On 04/18/2013 02:16 PM, Kurt Seifried wrote:
-> On 04/17/2013 06:45 AM, Agostino Sarubbo wrote:
->> From the secunia advisory SA53061[1]:
-> 
->> 1) An use-after-free error in "htmlParseChunk()" can be
->> exploited to dereference already freed memory.
-> 
-> Please use CVE-2013-1969 for this issue.
-> 
->> 2) Two use-after-free errors in "xmldecl_done()" can be
->> exploited to dereference already freed memory.
-> 
-> Please use CVE-2013-1970 for this issue.
-> 
->> The vulnerabilities are reported in version 2.9.0. Other
->> versions may also be affected.
-> 
->> Commit: 
->> https://git.gnome.org/browse/libxml2/commit/?id=de0cc20c29cb3f056062925395e0f68d2250a46f
->
->>  [1]: https://secunia.com/advisories/53061/
-> 
-> Thanks
+This was first noted publicly on the debian BTS:
 
-Please REJECT CVE-2013-1970, these two issues should have been merged,
-I derped and for some reason SPLIT instead of MERGE'ing these as it
-should have been. So just use CVE-2013-1969 for both issues.
+  http://bugs.debian.org/729028
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+All versions of perdition up to 2.0 appear to be affected, and the fix
+is a one-line patch.
 
-iQIcBAEBAgAGBQJRcLmyAAoJEBYNRVNeJnmT9hIQAL7pm6XqRrzZxx92St7Aozfq
-eKPtZT8joPDBKVEw+NwDZhoVBv220tI+S1gajZ6CdBveP+3Ev93CcsPF7MdJWTvE
-xU5Dl5+awxZjG4M9YPPQJhhuNDCeCPlplaeCube2KQj2mwchYjaLUQf5z4S7lmdz
-zFvSPqIr3TmQDIW5ikAtcPpC7mt6zQn//hjB/+74ZKD5fdkfzfW7tp77OFN6O4d1
-/wOvTRx8b2Elf2g1iVsZLr8Y0c5CLiRc7HAeSZh6mUD88bCR9CAVCfoA4UmLnBOU
-NKgARNJeUCSoXx1p3Uk+ctLaz3IwtXf82VHoTxAO45zyKvN5K6ua2KyXwCVupJTK
-I7yEsKzKQNXlUs/4Q6eCpg1wO7odGCgeoN1O625tKQ4RgwCgzmDwQlg++qrbiFRp
-5qk5eyqpcCOe2+T/B+DzPBwrkzkweCW4W5u0pPw5SgkRGyVcjaCxG8n4epXHuYhS
-GWD+DQ4rBwmZZBCz+TAF8qAZAgqbSQBeOEz/w9jrJaG7nxUjy3jArqhPtCVnx+7O
-LtcDgCAMgjDWkjpYtXFc4kRKXxNMyNg8mdvmuGsc8GDfa1CH+3FZbZbs4eYkBpO8
-M+w7VdgxNpC3OzN0dD26nZuWkSbZ4BYr58c1KGwzX/wJzh9j4qi3A8OxCksC3vjq
-tIvWv8W8XEJ1psjcWJh+
-=03FD
------END PGP SIGNATURE-----
+This is not a critical vulnerability (it can be mitigated, for example,
+by enforcing a strict minimalist ciphersuite on the backend server), but
+in the absence of any such mitigation, it may cause the connections
+between the proxy server and the backend server to negotiate a weaker
+ciphersuite than the administrator's stated intent.
+
+Could a CVE be issued for this issue?
+
+Thanks,
+
+	--dkg
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
