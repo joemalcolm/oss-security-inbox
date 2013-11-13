@@ -1,37 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/27/6
-Message-ID: <52BD44EB.2060705@redhat.com>
-Date: Fri, 27 Dec 2013 14:44:19 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/9
+Message-ID: <20131113173438.GR22293@dhcp-25-225.brq.redhat.com>
+Date: Wed, 13 Nov 2013 18:34:38 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: Re: Two CVE request for gnome-shell/screensaver issues
+Cc: Kurt Seifried <kseifrie@...hat.com>, Saran.Neti@...us.com
+Subject: CVE-2013-4563 -- Linux kernel: net: large udp packet over IPv6 over UFO-enabled device with TBF qdisc panic
 Content-Type: text/plain; charset=utf-8
 
-On 12/27/2013 12:03 PM, cve-assign@...re.org wrote:
->> https://bugzilla.gnome.org/show_bug.cgi?id=686740
->> https://git.gnome.org/browse/gnome-shell/log/js/ui/screenShield.js?qt=grep&q=686740
->> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1030431
-> 
-> The discussion in 686740 focuses on usability problems, not security
-> problems. Comment 11 in 1030431 says "typing away at the lock screen
-> will now trigger the unlock dialog (and redirect input to the password
-> field)." Does this mean that 209014b083dbe86ed0e0860a6016735571b56f94
-> is a security fix, and the other screenShield.js commits are usability
-> fixes? Or does it mean that 127f10e7a8bbbbd089d217f8cd89971c187ae9c3
-> is a security fix because the "will be dropped in the void"
-> description isn't always accurate, and "will be dropped into the
-> Activities panel" or "will be dropped into the 'Enter a command'
-> dialog box" can occur instead?
-> 
-> 
+Commit 1e2bd517c108816220f262d7954b697af03b5f9c ("udp6: Fix udp
+fragmentation for tunnel traffic.") changed the calculation if
+there is enough space to include a fragment header in the skb from a
+skb->mac_header dervived one to skb_headroom. Because we already peeled
+off the skb to transport_header this is wrong.
 
-209014b083dbe86ed0e0860a6016735571b56f94 ensures that the keypress
-always goes to the login dialog box, while
-127f10e7a8bbbbd089d217f8cd89971c187ae9c3 seems to be usability fix to me.
+This fixes a panic Saran Neti reported. He used the tbf scheduler which
+skb_gso_segments the skb. The offsets get negative and we panic in
+memcpy because the skb was erroneously not expanded at the head.
 
+Introduced by:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1e2bd517c108816220f262d7954b697af03b5f9c
 
+Introduced in:
+v3.10-rc5
 
+Upstream fix:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=0e033e0
 
+References:
+http://marc.info/?l=linux-netdev&m=138305762205012&w=2
+https://bugzilla.redhat.com/show_bug.cgi?id=1030015
+
+Acknowledgements:
+
+Red Hat would like to thank Saran Neti of TELUS Security Labs for
+reporting this issue.
+
+Thanks,
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Petr Matousek / Red Hat Security Response Team
+
+Content of type "application/pgp-signature" skipped
