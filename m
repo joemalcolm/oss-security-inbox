@@ -1,83 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/2
-Message-ID: <514810F7.1050404@redhat.com>
-Date: Tue, 19 Mar 2013 01:17:11 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, "Christey, Steven M." <coley@...re.org>
-Subject: Ruby CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/4
+Message-ID: <20131113155751.GC28665@sentinelchicken.org>
+Date: Wed, 13 Nov 2013 07:57:51 -0800
+From: Tim <tim-security@...tinelchicken.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Microsoft Warns Customers Away From RC4 and SHA-1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> I'm inclined to agree. The question I suppose is, like DES (and
+> 3DES/MD5) at what point do we start assigning CVE's for some of this?
+> thoughts and comments welcome.
 
-http://direct.osvdb.org/search?search[vuln_title]=ruby&search[text_type]=titles
+Using a weak encyption algorithm alone isn't a sufficient condition to
+issue a CVE against software, since often the context of the usage
+matters a lot.  If you use MD5 or SHA-1 for password hashing (with
+lots of salt and rounds), then there's no vulnerability.  If you use
+them for HMACs, then there's also likely no problem.  But if you use
+them for a signature with a public key, there is.
 
+So to answer the "at what point" question: *right now*, but *only* in
+the proper context.  There needs to be a demonstrable attack in that
+context. 
 
-===================
-These 4 are all the ";" URL parsing issues ny larry0@...com
-===================
-http://direct.osvdb.org/show/osvdb/91450
-command_wrap gem
-
-http://direct.osvdb.org/show/osvdb/91232
-fastreader gem
-
-http://direct.osvdb.org/show/osvdb/91231
-MiniMagic gem
-
-http://direct.osvdb.org/show/osvdb/91230
-Curl gem
-
-
-===================
-http://direct.osvdb.org/show/osvdb/90717
-fileutils - has CVE-2013-2516 - where did this come from (I assume
-Mitre?)? Does it cover just this issue or the next 3?
-===================
-
-http://direct.osvdb.org/show/osvdb/90718
-fileutils gem
-code exec
-
-http://direct.osvdb.org/show/osvdb/90716
-fileutils gem
-dir creation
-
-http://direct.osvdb.org/show/osvdb/90715
-fileutils gem
-tmp file creation
-===================
-
-http://direct.osvdb.org/show/osvdb/90206
-typecasting - mysql/etc. - we probably need another long email from
-steve on how to handle this =)
-
-http://direct.osvdb.org/show/osvdb/89612
-gemcutter - Psych YAML parse - do we assign a vuln for psych?
-
-http://direct.osvdb.org/show/osvdb/90946
-libxml2 entity expansion *** see Steven's long posting, I need to
-figure this out yet.
-
-Also am I missing anything else?
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRSBD3AAoJEBYNRVNeJnmTKIoP/A/hArfD7sNALPrrQhZPg4w1
-0KeAV7sAkfaYw4+g8nikUsAq+/b6wq6uSMjsbhyd/UNp9CR/KBJ0uKRAxHBPSLs1
-QdB/GG6wygFU8mBUXbUBZSvyIepyAKdzAUl3vu0IEyVn2311+kVCa9y+FG3JUiZ4
-3VDeqdlS+tcuryirD2te0LvwNuAYtqC6qiK2p9VQZaibVla8tE0U1L3CjKMy2IKY
-0UYHTrjlBflgSebgebCQPHjYLdeGbCV3CIF1Nn0gCXpD/O/6q6y+FQRXo8dPQ7f4
-YRgy3UgM9pB7m4XIngb9KfPAo7G9jbXb9OwgPHwUyvicr66O3p8+I2oLqOIkDLAH
-CB1HiegYkGOVpBxN6i5WZO2AYCRlMNjRkD7L/IUwX8aiR0dXzm9KRLSSMawkNS02
-xJqaLzKRQ/PceZgStI5tAGcheovhlpbMdTUyE0oKIZ3L6mLd0m4aM7i3CJHRNR+L
-EVDDa+UtNFc0UsKwK3QzttYys7inNk+rrsz9RV3MHY/uAOpI7RYtXLdLhD8O91NP
-BHzQRabZ80uSDDlQp6TefdpvdB7xXxzymr+JAAk/R7x48+rS2YqVmA4mKm6l376o
-kBsIiElclc3D0BnIS7PrzZqC7/7Pw/oYenIX9nqSmcBQr36xgr+QRyfWq9euk0vA
-hYbkyNOwCUyIejv6xze7
-=fU5C
------END PGP SIGNATURE-----
+tim
