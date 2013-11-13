@@ -1,63 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/11
-Message-ID: <20130426083410.GD30089@suse.de>
-Date: Fri, 26 Apr 2013 10:34:10 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/1
+Message-ID: <528327D7.5080800@redhat.com>
+Date: Wed, 13 Nov 2013 00:18:47 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+Subject: Re: Re: CVE request: rubygem omniauth-facebook CSRF vurnerability
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 25, 2013 at 08:55:00AM -0400, Josh Bressers wrote:
-> > 
-> > So, all in all, what you have is a digest, signed by someone who knows
-> > the key, or who has access to the creds (if any) for the key, or who
-> > has found out the key creds, albeit with timestamp info for when the
-> > signature took place.
-> > 
-> > I'm not sure what using PGP gains us?
-> > 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 11/12/2013 02:47 PM, Josef Šimánek wrote:
+> Patch prepared to release:
 > 
-> I'm going to take a hard stance against this statement and use it as my
-> soapbox for a bit here.
+> https://github.com/mkdynamic/omniauth-facebook/commit/ccfcc26fe7e34acbd75ad4a095fd01ce5ff48ee7
+
+Perfect
 > 
-> This attitude is really dangerous in the world of security (but it has
-> infected our universe). Security is hard, we all know that, but I think we
-> like to draw a line at 100% and say "it's this or nothing". No, PGP isn't
-> perfect, but it gains us a ton. It's a way we can say "this was signed by
-> someone with the key". Did the bad guy have they key? Maybe, the goal isn't
-> to get to 100%, it's to make the job of an attacker harder, which this
-> would do.
-> 
-> There is no system that exists in this instance that is 100% safe. What we
-> need to do isn't talk about how useless PGP is (which it isn't), we need to
-> talk about what's right about it and give advice so people understand how
-> to avoid silly mistakes.
-> 
-> A great example is to use a smart card. If a project is using a smart card,
-> and tells us they're using a smart card, that would be helpful in letting
-> us know their signatures are probably trustworthy. We would certainly know
-> their signatures are more trustworthy than a project who uses a private key
-> shared between 10 people. Is the smart card a perfect solution? Certainly
-> not, but it's better than not using a smart card. How many non security
-> people really understand this? How many of us have tried to explain it in a
-> calm and understanding manner?
-> 
-> This is Red Hat's goal here. We want to help folks understand what some
-> easy wins are. Security is hard, it will never be 100%. I'd rather see us
-> all working together to improve what we can.
+thanks. Please use CVE-2013-4562 for this issue.
 
-I have to agree here, with additions:
 
-Security must not be thought of a state, but a process.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-It is a continuous and stepwise process and each small step counts.
-
-Sourceverification, regardless what method, is a small step to avoid
-this existing threat of modified tarballs.
-
-We have the technology available to do this, and it clearly is the GPG
-signatures in this case.
-
-That they must be used securely and consistently is yet another step. 
-
-Ciao, Marcus
+iQIcBAEBAgAGBQJSgyfXAAoJEBYNRVNeJnmTKOQQAKaTmf5r+dKHkB4dYlIxZarP
+kX4gbn7GC+RPc7V1tRh3nFvK6XYOScHfNR6Cz14jplmEFyg5wMPYMjv2bgwBclv+
+5X403Vg2Sv0eR8bxq9g7anx5cW+Fqi5I/uIaDI/4p/Y8+ACCxZ0wxhP8LfA9VjUU
+awi7rlBhZc3vnntwWu9lBxGJH/+5YCyRRpRYeW4W5AiloT7U7i9U4mlw39BYkbcC
+LgzNhBzjsopIIXRuGZOuhkXW1lAbB3aQGBBaXoZdKYk1O4OcbQbSOGhzDaom2xkW
+9MofWZMAq+z+7CGj4A8OxCuYwdpN0VBZBy0yr/rVUw9ej5sNLLdy7MishLoK2kyZ
+3B2zADkXf9J8R4HRlDBJcBI6HBrjabaNPET38aWG+LweNgn4LnBDyq5Sd6XU7rkN
+pnvjk1Cou6s97j7oM/YR1L2+CYO55i7xAGa89/vyxxtaBqHIQUgYjfqztovNe5CF
+WdtnuS9x+N6g3F183t5Gw1N3pYr+I08GzQwrYkf4QewBWer+3jbC3OHnRmRmjZON
+nC2QrluhRCfkeEpJwLgsGjLZT+bcfINVqqU2pZ1KeL1YbtBinFtoxPX5vw5/ILL4
+1hjTPVkbmDlTjMVWL2q68ZganEsoAjDdA05Y93vFXgr1Fz9ZrNSh0+aoT1QKTrqY
+PH46mQjDliit+5iek3pS
+=lfBO
+-----END PGP SIGNATURE-----
