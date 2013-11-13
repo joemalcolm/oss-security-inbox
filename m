@@ -1,79 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/15/4
-Message-ID: <CAEmQOhACRqemORuf0FO-4i3-KWJvsvTDrLoFrndEz2Jg-Z1E0Q@mail.gmail.com>
-Date: Tue, 15 Oct 2013 18:44:58 +0100
-From: Jonathan Salwan <jonathan.salwan@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Report - Stack-based buffer overflow and memory disclosure in camera driver (CVE-2013-4748 CVE-2013-4739)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/3
+Message-ID: <52832BE0.1070905@redhat.com>
+Date: Wed, 13 Nov 2013 00:36:00 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Microsoft Warns Customers Away From RC4 and SHA-1
 Content-Type: text/plain; charset=utf-8
 
-Source: https://www.codeaurora.org/projects/security-advisories/stack-based-buffer-overflow-and-memory-disclosure-camera-driver-cve-2013-4748-cve-2013-4739
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+- From Slashdot:
 
+"The RC4 and SHA-1 algorithms have taken a lot of hits in recent
+years, with new attacks popping up on a regular basis. Many security
+experts and cryptographers have been recommending that vendors begin
+phasing the two out, and Microsoft on Tuesday said it is now
+recommending to developers that they deprecate RC4 and stop using the
+SHA-1 hash algorithm. RC4 is among the older stream cipher suites in
+use today, and there have been a number of practical attacks against
+it, including plaintext-recovery attacks. The improvements in
+computing power have made many of these attacks more feasible for
+attackers, and so Microsoft is telling developers to drop RC4 from
+their applications. The company also said that as of January 2016 it
+will no longer will validate any code signing or root certificate that
+uses SHA-1."
 
-Description
+http://threatpost.com/microsoft-warns-customers-away-from-sha-1-and-rc4/102902
 
-A stack-based buffer overflow and a kernel memory disclosure
-vulnerability have been discovered in the system call handlers of the
-camera driver.
+http://blogs.technet.com/b/srd/archive/2013/11/12/security-advisory-2868725-recommendation-to-disable-rc4.aspx
 
-CVE-2013-4738:
-The camera post processing engine (CPP) and video processing engine
-(VPE) provide an ioctl system call interface to user space clients for
-communication. When processing arguments passed to the
-VIDIOC_MSM_CPP_DEQUEUE_STREAM_BUFF_INFO or
-VIDIOC_MSM_VPE_DEQUEUE_STREAM_BUFF_INFO ioctl subdev handlers, a user
-space supplied length value is used to copy memory to a local stack
-buffer without proper bounds checking. An application with access to
-the respective device nodes can use this flaw to, e.g., elevate
-privileges.
+http://blogs.technet.com/b/srd/archive/2013/11/12/security-advisory-2880823-recommendation-to-discontinue-use-of-sha-1.aspx
 
-Access Vector: local
-Security Risk: high
-Vulnerability: CWE-121 (stack-based buffer overflow)
+I'm inclined to agree. The question I suppose is, like DES (and
+3DES/MD5) at what point do we start assigning CVE's for some of this?
+thoughts and comments welcome.
 
-CVE-2013-4739:
-The Gemini JPEG encoder and the Jpeg1.0 common encoder/decoder engines
-of the camera driver are not properly initializing all members of a
-structure before copying it to user space. This allows a local
-attacker to obtain potentially sensitive information from kernel stack
-memory via ioctl system calls.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-Access Vector: local
-Security Risk: low
-Vulnerability: CWE-200 (information exposure)
-
-Affected versions
-All Android releases from CAF using a Linux kernel from the following heads:
-
-msm-3.4
-jb_3*
-
-Patch
-
-We advise customers to apply the following patches:
-
-CVE-2013-4738:
-
-https://www.codeaurora.org/cgit/quic/la/kernel/msm/commit/?id=c9c81836ee44db9974007d34cf2aaeb1a51a8d45
-https://www.codeaurora.org/cgit/quic/la/kernel/msm/commit/?id=28385b9c3054c91dca1aa194ffa750550c50f3ce
-
-CVE-2013-4739:
-
-https://www.codeaurora.org/cgit/quic/la/kernel/msm/commit/?id=8604847927f952cc8e773b97eca24e1060a570f2
-
-Acknowledgement
-
-Qualcomm Innovation Center, Inc. (QuIC) thanks Jonathan Salwan of the
-Sysdream Security Lab for reporting the related issues and working
-with QuIC to help improve Android device security.
-
-Revisions
-
-Initial revision
-
-Contact
-security-advisory@...cinc.com
-
-
--- Jonathan
+iQIcBAEBAgAGBQJSgyvgAAoJEBYNRVNeJnmTrSIQAJs4xB656Th6dRpFKgIcipB8
+HKeKt+fKYBV+a5njw3EXBVlDuQ8pbFhngMrPA0Ym5qSvgpTlRD0tSKIYB+nmnA2Q
+nNby58VGGPfRrSaMFwLPS6Kt8p/vSXdyES/CkwHrN2uzUZ1IihuKs8p37pTgiM/U
+QJK43tt1wRgSy/vIjiWatz1aeGtz/jXDpq3b+EInPsc9xmvnmchptmU6rZH/xtyu
+nBadOwWiYOTqEAE2EZvoH1QQD2u/JQiWMnJf3MzFAnLus2CtdJO6Ol/1Y6lvDpw3
+9W5994Tf00D90Rduerev8vugPgfDTHZJS8vpzLVHS4V4Sm5Lah2mWyFYrKLaIOQY
+pzhofdLI2KWw9Ecjhj+z7FNsCr9goSbZILOKUrH0oVRoMtSH4a8V+MJLP1IQSpnN
+ceOBo2ukJW+kSm6D0ZMDXOV/rmWfC4HEZIuhi8vxFXvSEGUgQaZzdd1JZK20iwPz
+3BjGMqgrmcC8qUsXVraJfrG4NAWPUuB1L/I4qGLuqYo8L8NrLN0F0VApHP95kHn8
+Q/iEHx+0+s/17D0KcjDgsR17A601oJjw4ku4CnXU9+sdlhdhERAKY70CZEBIcjPn
+yPwtnq0w4l0lxcQb+qIi9C+fCx9xnBrhTLorLLkx2JUB5qk+QOKMi6tV0k6Hxr83
+l+hmVlhruE4OctgTtNHp
+=fAYL
+-----END PGP SIGNATURE-----
