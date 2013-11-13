@@ -1,55 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/08/2
-Message-ID: <51395BB3.8090602@redhat.com>
-Date: Thu, 07 Mar 2013 20:32:03 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, spender@...ecurity.net, Kurt Seifried <kseifrie@...hat.com>
-Subject: Re: CVE Request -- Linux kernel: sctp: SCTP_GET_ASSOC_STATS stack overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/5
+Message-ID: <20131113160910.GI7623@localhost.localdomain>
+Date: Wed, 13 Nov 2013 11:09:10 -0500
+From: "Eric H. Christensen" <echriste@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Microsoft Warns Customers Away From RC4 and SHA-1
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA512
 
-On 03/07/2013 08:23 PM, Petr Matousek wrote:
-> A local user could use the missing size check in 
-> sctp_getsockopt_assoc_stats() function to escalate their
-> privileges. On x86 this might be mitigated by destination object
-> size check as the destination size is known at compile time.
+On Wed, Nov 13, 2013 at 07:57:51AM -0800, Tim wrote:
+> > I'm inclined to agree. The question I suppose is, like DES (and
+> > 3DES/MD5) at what point do we start assigning CVE's for some of this?
+> > thoughts and comments welcome.
 > 
-> Upstream fix: 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=726bc6b0
->
->  Introduced by: 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=196d6759
->
->  Introduced in: v3.8-rc1
-> 
-> References: 
-> https://twitter.com/grsecurity/status/309805924749541376 
-> http://grsecurity.net/~spender/sctp.c
-> 
-> Thanks,
+> Using a weak encyption algorithm alone isn't a sufficient condition to
+> issue a CVE against software, since often the context of the usage
+> matters a lot.  If you use MD5 or SHA-1 for password hashing (with
+> lots of salt and rounds), then there's no vulnerability.  If you use
+> them for HMACs, then there's also likely no problem.  But if you use
+> them for a signature with a public key, there is.
 
-Please use CVE-2013-1828 for this issue.
+It's answers like this that make it difficult for non-security-literate system administrators to make good decisions.  I completely understand and agree with what you wrote but I wonder if we're making it harder for people to understand how to protect themselves.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+After having many similar conversations with people that manage systems I find that it's usually easier to say "MD5 bad, SHA-256 good" and then just walk away.  Perhaps some sort of chart should be published that allows people to make better decisions?
 
+- -- Eric
+
+- --------------------------------------------------
+Eric "Sparks" Christensen
+Red Hat, Inc - Product Security Team
+
+sparks@...hat.com - sparks@...oraproject.org
+097C 82C3 52DF C64A 50C2  E3A3 8076 ABDE 024B B3D1
+- --------------------------------------------------
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJROVuzAAoJEBYNRVNeJnmTgrEP/1t7nexDh1neyWVu91vPpLSa
-Y4yTteT4upyPE5icg6zobUW6FV/gOxsleduj427zn+uq7IcwspAc3QH3QAjgeaIj
-0vlYlD7PBwk9HnIMjH03+ttbJolP7JGdU/Qh43LH+wDoxDI5OfmGNoN3+znpMXKn
-vplIYvFtqBsVrk3ead6f4MTPrdvv5+v/kSiXaXBD6GHL0uQP1+RR2XfnkUTiuJhQ
-ggd35oUz5IUMGVgwEoLCh93n/KdTq1f80gNZSQU9exjHwS45TQ7iS1bdm5adS4eq
-U6QNX9BHTZNGGq3edajHsmdmr/DKsYrul8bzTOWnfjCpdmCLzYQ9GKemvzlTM4+J
-E+53TTAFDAkhDzbzNo6TX9jN71Iv4CYHITu3N0qa7PL3Q/B5He/1NRK2Tx5bKJIv
-YsJRiojwTg/6hcv+tQEEnrnWeNj0BZeQ8B4RI/Y8uZavuKffG0rZx2/iRtLty/TE
-vzMWLuyZgNaIZ6xMF0lTveHUaNYggoCtkLR7crY+s4qeltao1WdARYAWWRM2/2mv
-kZBWApR3sQbsNbJtxj4RmEegKaK+Hyoq+SRN/YIGlIzhsAIpuzNUOEj8MCbyZ7T8
-E7uQdR9z/BL8wDlmwgcKSGVnLqy9RkoKFGOrPLvTD2RumtwqfcWUQ2T9z/+NT+LP
-LxHxLq9KgHOCIxSEfZN6
-=Mtxy
+iQGcBAEBCgAGBQJSg6QjAAoJEB/kgVGp2CYvHCoL/0lcSKwfskG9b8ltQoWFfBUF
+WEVB8JJOa+tfLG66tFFtIJtqBgR4cXK6fVaFu4N5n7J/xJ5ULPdE6OX72njSEH28
+4WHi0I8N0otvUe0RPETTKgm5UW4cIFbamc3RGtwYtmA6N0Y2w6Xpzvnu7TAQ2lr7
+6tz1gMy1GUKbwDxeyRgVqqAZk5uQp90L4mqPadMXTtqfUtbDX6JOU1lSN6rFd88S
+IGXMNICDJx3i6ErwJfxyfhLU/GcnLx4g7evTcet/LVR/An6V7FrCMf9PW19Lx5xv
+CIbHZGxhJDzA1pJ1/h+Oh2X4qGvmV5w5NUMIhdyVH2Mf/4DscxWZS6FpvaBKb0ax
+WZLWtoC2K9LEyiJq+VYMVMXhLwUy6oTMnenS/yGfdxBHLdI3uP9Sva7E0otdReLo
+6qrQVNW0KStL8D8MJ832tJ5jYx01SBQA5l1cUMwHrmGzC+VxE6cDAQ9FUc1v9+8p
+M/YbSc35J0paRZCpcL9tzQV38fZb/hvO8zbvKJ4zDQ==
+=MiSz
 -----END PGP SIGNATURE-----
