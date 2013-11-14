@@ -1,31 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/4
-Message-ID: <CA+55aFx2wO3PBrFrCB-dy1QTjJc1MhvNkuUZpUf8jK2FNde+1w@mail.gmail.com>
-Date: Mon, 2 Dec 2013 19:44:53 -0800
-From: Linus Torvalds <torvalds@...ux-foundation.org>
-To: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
-Cc: "Hans J. Koch" <hjk@...sjkoch.de>, Nico Golde <oss-security+ml@...lde.de>,  oss-security@...ts.openwall.com, "security@...nel.org" <security@...nel.org>,  Dan Carpenter <dan.carpenter@...cle.com>
-Subject: Re: kernel: uio: CVE-2013-6763 [was: Re: some unstracked linux kernel security fixes]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/6
+Message-Id: <201311141220.31600.tmb@65535.com>
+Date: Thu, 14 Nov 2013 12:20:23 +0000
+From: Tim Brown <tmb@...35.com>
+To: oss-security@...ts.openwall.com
+Subject: "I miss LSD", slides, paper and tools relating to finding UNIX system level vulnerabilities (as given at 44CON)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 2, 2013 at 7:40 PM, Greg Kroah-Hartman
-<gregkh@...uxfoundation.org> wrote:
-> On Tue, Nov 26, 2013 at 01:18:39PM +0100, Petr Matousek wrote:
->> >
->> > IOW, with the current changes, isn't the functionality broken for
->> > non page-aligned addr and/or size?
->
-> This should now be fixed in Linus's tree, right?
+All,
 
-Well, that depends on what you mean by "fixed".
+Some of you may already have spotted this, but last night we published our 
+slides, paper and some tools from my talk at 44CON earlier in the year.  The 
+content can be found at:
 
-If somebody depended on "we'll just mmap the page(s) that contained
-the partial and unaligned resource", then current git is very very
-broken, because it doesn't allow that at all.
+* http://labs.portcullis.co.uk/presentations/i-miss-lsd/
 
-But if you meant that somebody could mess with things and try to
-access crud *around* a non-page-aligned resource, then current git
-fixed that and no longer allows mmap's that expose other resources
-aside from the one explicitly managed by uio.
+The take home points around the System V shared memory issues (detailed in 
+more detail in the linked to paper) are:
 
-          Linus
+* System V shared memory is often created with weak permissions.
+* Usage of System V shared memory by X11 applications is particularly 
+problematic.
+* Qt Project patched Qt APIs (CVE-2013-0254), Oracle patched Java JRE
+(CVE-2013-1500), Google patched Chrome independently.
+* No progress has been made on the problem more generally by either Red Hat or
+Debian.
+* Coccinelle is an effective tool for performing static analysis on large 
+corpuses of C.
+* Memory corruption attacks against System V shared memory are unlikely.
+
+I've also released a tool called smaSHeM (again linked to) for dumping System 
+V shared memory and for manipulating it.
+
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
