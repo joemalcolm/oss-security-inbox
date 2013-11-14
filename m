@@ -1,77 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/7
-Message-ID: <520C81B9.6000001@redhat.com>
-Date: Thu, 15 Aug 2013 01:22:33 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/1
+Message-ID: <52844D7B.9040905@redhat.com>
+Date: Thu, 14 Nov 2013 15:11:39 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: gremlin@...mlin.ru
-Subject: Re: HTTPS
+CC: Kurt Seifried <kseifrie@...hat.com>, carnil@...ian.org
+Subject: CVE request: ppthtml heap-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Morning,
 
-On 08/15/2013 12:38 AM, gremlin@...mlin.ru wrote:
-> On 14-Aug-2013 14:59:12 -0600, Kurt Seifried wrote:
-> 
->> everyone should be enabling HTTPS where possible,
-> 
-> Very dangerous mistake. HTTPS should be used only for
-> non-anonymous access, otherwise plain HTTP is preferred. In any
-> case, let the users choose whether they want to use it.
+A heap-based buffer overflow flaw was reported in ppthtml:
 
-This is literally the first time I've ever heard anyone say this, I'm
-curious though, can you explain your reasoning/evidence for this
-statement? You do realize HTTPS can be just as "anonymous" (ignoring
-the fact you have the persons IP/time stamp, browser string, etc =) as
-normal HTTP.
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=729279
 
-> Compare to FTP vs SCP/SFTP: first is for getting files from anyone 
-> (into /incoming) and giving files for everyone (from /pub), second 
-> is for transferring your own files. Obviously, I presume FTP
-> daemon to be configured for anonymous-only access.
+Looking in xlhtml-0.5-15.fc19.src.rpm, I think the root cause of the 
+problem is in __OLEdecode() with an under allocation here:
 
-Now I'm just confused.
+163   BDepot = (U8 *) malloc (0x0200 * (num_bbd_blocks + num_xbbd_blocks));
 
->> intercepting and modifying HTTP is trivial.
-> 
-> Yes. But intercepting and modifying HTTPS requires just an ability 
-> to issue client-trusted certificates (sufficient for 99% of HTTPS 
-> applications), so the content signing should always be preferred 
-> over distributor validation.
+That still passes this check:
 
-And now I'm seriously confused. For clients that do not validate
-hostnames it would be true that you could get an HTTPS cert for any
-domain name and use it, this would also work for the case where you
-first use HTTP to get a redirect to HTTPS (the attacker intercepts the
-HTTP and sends you to an attacker controlled HTTPS). Hence ALWAYS
-using HTTPS!
+167   assert (num_bbd_blocks <=  (0x0200 / 4 - 1) * num_xbbd_blocks +
+168                              (0x0200 / 4) - 19);
 
-I really suspect you have misunderstood what encrypted network
-protocols are for. Typically they address three major problems:
-integrity (attackers modifying traffic en route), confidentiality (by
-encrypting it) and as an offshoot of these two properties, and the
-magic of key exchanges you can also handle authentication securely, if
-desired.
+I suspect the overflow eventually occurs in this loop:
 
+184   for (i = 0; i < num_xbbd_blocks; i++)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+with:
 
-iQIcBAEBAgAGBQJSDIG5AAoJEBYNRVNeJnmTJSsP/2NEp83Rfm6OUNj9Ti7rQFsm
-ybBae1RsqoMOS0+IUwI67DldrTH/9Zh8JymaAPXrSASVKJ1/ZxbIP6Vg8rP+tDCF
-OMX3364kZDfF0+UvG0r1X1S9GJLF7GEXEoUT1n8mSQF6vX2k/pIj1clSfSHG6rcZ
-LX7Fh6v6Zb3PINK9QTzq0cDVAB+0X6PmKaXIVL1155yXuNV4zMenr8pdnVrJJVDS
-oURISFMMvPsrHT9ziwG9X8bqxfmUNCh77DR5yRHM5Ir/d0gfK7Eg76uyiDPYCKIp
-5fpIJcF2ujo2b7uVscQWjspWuTbD3Ns3zDC4VvydzT1W/H3Or98elS2e/5MMxr9K
-Inhh8giI7jQnyECjIxBygb2gVmu1WBITSpOMfwNtggyIqozoA3ItVMvtG6UZaAXJ
-0xq2Qb54eobzzNwgef2lzzq+CVvV7GfkTv1F/EJtzsWlYn0/a3cE/Cuq78uOqTnu
-wR1R/QvWJDhU0iTKNFUJTySUn3HVVWq9a8rrVOVEZJh4FVi2cU+wUBfUvs1+56Zf
-hlNDFtDpiawyajNSgZ0ALrLJHozY2Nc9J4r1joEhMG45flf1OyjVrE+qvWqqGNB+
-N3fycpRJHite7HN/Y/F4Yz6EuxdYlnbsquwDt7SaAj1HBElGsJeEK1Lp2KkvWe4D
-6aSxSVbOoCC0Yg/JjUdL
-=8cIv
------END PGP SIGNATURE-----
+203       fread (s, 0x0200, 1, input);
+204       test_exitf (!ferror (input), 5, ends ());
+205       s += 0x0200;
+
+continually executed (but haven't tested thoroughly!!!).
+
+Can a CVE please be assigned?
+
+(Cc'ing Salvatore in case there is more information in the Debian report 
+that I cannot see.)
+
+Cheers,
+
+--
+Murray McAllister / Red Hat Security Response Team
