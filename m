@@ -1,29 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/9
-Message-ID: <52A9A6FC.9060508@redhat.com>
-Date: Thu, 12 Dec 2013 17:37:24 +0530
-From: Ratul Gupta <ratulg@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/3
+Message-ID: <CANTw=MOKmL3OW5euSvejjDddyxZXJtkF8JrwE6nCshKHaZ3qdw@mail.gmail.com>
+Date: Wed, 13 Nov 2013 23:49:07 -0500
+From: Michael Gilbert <mgilbert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: devscripts (uscan) broken handling of filenames with whitespace
+Cc: mmcallis@...hat.com
+Subject: Re: CVE request: ppthtml heap-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Wed, Nov 13, 2013 at 11:11 PM, Murray McAllister wrote:
+> (Cc'ing Salvatore in case there is more information in the Debian report
+> that I cannot see.)
 
-A flaw is reported in the uscan script of devscripts:
+FYI, there is no non-public information anywhere in the debian bug
+tracking system.  Item 3 of the social contract [0] necessitates that
+kind of transparency.
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=732006
+Best wishes,
+Mike
 
- From the bug:
-
-If USCAN_EXCLUSION is enabled, uscan doesn't correctly handle filenames 
-containing whitespace. This can be abused my malicious upstream to 
-delete files of their choice.
-
-Can a CVE please be assigned to it? devscripts looks like it will be in 
-the next fedora release.
-
--- 
-Regards,
-
-Ratul Gupta / Red Hat Security Response Team
-
+[0] http://www.debian.org/social_contract
