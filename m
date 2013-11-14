@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/17/4
-Message-ID: <20130617224021.GA27916@kroah.com>
-Date: Mon, 17 Jun 2013 15:40:21 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/4
+Message-ID: <52845A74.6040102@redhat.com>
+Date: Thu, 14 Nov 2013 16:07:00 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux - ext4 support
+CC: Kurt Seifried <kseifrie@...hat.com>, carnil@...ian.org
+Subject: Re: CVE request: ppthtml heap-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 17, 2013 at 11:52:47PM +0200, Jonathan Salwan wrote:
-> On Mon, Jun 17, 2013 at 10:29 PM, Greg KH <greg@...ah.com> wrote:
-> > On Mon, Jun 17, 2013 at 10:12:34PM +0200, Jonathan Salwan wrote:
-> >> Hi,
-> >>
-> >> Could you assign a CVE for this issue please?
-> >>
-> >> https://bugzilla.redhat.com/show_bug.cgi?id=971170
-> >
-> > I thought we (the ext4 developers and kernel security team) discussed
-> > this and determined that a user could _not_ trigger this problem.  Or
-> > was I mistaken as to the output of that conversation?
-> >
-> > thanks,
-> >
-> > greg k-h
-> 
-> Only with CAP_SYS_RESOURCE indeed.
+On 11/14/2013 03:11 PM, Murray McAllister wrote:
+> Morning,
+>
+> A heap-based buffer overflow flaw was reported in ppthtml:
+>
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=729279
+>
+> Looking in xlhtml-0.5-15.fc19.src.rpm, I think the root cause of the
+> problem is in __OLEdecode() with an under allocation here:
+>
+> 163   BDepot = (U8 *) malloc (0x0200 * (num_bbd_blocks + num_xbbd_blocks));
 
-So, given that this really isn't a viable issue, why do you need a CVE?
-
-confused,
-
-greg k-h
+Setting num_bbd_blocks and num_xbbd_blocks both to "1" also leads 
+similar problems.
