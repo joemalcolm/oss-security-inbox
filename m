@@ -1,60 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/08/6
-Message-ID: <525469CF.4000803@oracle.com>
-Date: Tue, 08 Oct 2013 13:23:43 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/10
+Message-ID: <20131114204948.GM2305@openstack.org>
+Date: Thu, 14 Nov 2013 20:49:49 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: X.Org security advisory: CVE-2013-4396: Use after free in Xserver handling of ImageText requests
+Subject: [OSSA 2013-030] XenAPI security groups not kept through migrate or resize (CVE-2013-4497)
 Content-Type: text/plain; charset=utf-8
 
--------- Original Message --------
-Subject: X.Org security advisory: CVE-2013-4396: Use after free in Xserver 
-handling of ImageText requests
-Date: Tue, 08 Oct 2013 13:20:16 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-Reply-To: xorg@...ts.freedesktop.org
-To: xorg-announce@...ts.x.org, xorg <xorg@...ts.freedesktop.org>
-CC: X.Org Security Team <xorg-security@...ts.x.org>,        Pedro Ribeiro 
-<pedrib@...il.com>
-
-X.Org Security Advisory: October 8, 2013 - CVE-2013-4396
-Use after free in Xserver handling of ImageText requests
-========================================================
+OpenStack Security Advisory: 2013-030
+CVE: CVE-2013-4497
+Date: November 14, 2013
+Title: XenAPI security groups not kept through migrate or resize
+Reporter: Chris Behrens (Rackspace) and Vangelis Tasoulas
+Products: Nova
+Affects: All supported versions prior to Havana
 
 Description:
-============
+Chris Behrens with Rackspace and Vangelis Tasoulas reported a set of
+vulnerabilities in OpenStack Nova's XenAPI hypervisor backend. When
+migrating or resizing an instance, including live migration,
+existing security groups may not be reapplied after the operation
+completes. This can lead to unintentional network exposure for
+virtual machines. Only setups using the XenAPI backend are affected.
 
-Pedro Ribeiro (pedrib@...il.com) reported an issue to the X.Org security
-team in which an authenticated X client can cause an X server to use memory
-after it was freed, potentially leading to crash and/or memory corruption.
+The Havana release (2013.2) is not affected.
 
-Affected Versions
-=================
+Grizzly fixes (will be included in a future stable point release):
+https://review.openstack.org/52987
+https://review.openstack.org/52991
 
-This bug appears to have been introduced in RCS version 1.42 on 1993/09/18,
-and is thus believed to be present in every X server release starting with
-X11R6.0 up to the current xorg-server 1.14.3.  (Manual inspection shows it
-is present in the sources from the X11R6 tarballs, but not in those from the
-X11R5 tarballs.)
-
-Fixes
-=====
-
-A fix is available via the attached patch, which is intended to be included
-in xorg-server 1.15.0 and 1.14.4.
-
-Thanks
-======
-
-X.Org thanks Pedro Ribeiro for reporting this issues to our security team at
-xorg-security@...ts.x.org.
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4497
+https://launchpad.net/bugs/1073306
+https://launchpad.net/bugs/1202266
 
 -- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	  X.Org Security Response Team - xorg-security@...ts.x.org
+Jeremy Stanley
+OpenStack Vulnerability Management Team
 
-
-
-
-
-View attachment "0001-Avoid-use-after-free-in-dix-dixfonts.c-doImageText-C.patch" of type "text/plain" (2808 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
