@@ -1,24 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/14
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF26F991C6@IMCMBX01.MITRE.ORG>
-Date: Thu, 18 Jul 2013 21:33:21 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: Andrew Nacin <nacin@...dpress.org>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "Kurt Seifried" <kseifried@...hat.com>, Jay Turla <shipcodez@...il.com>
-Subject: RE: Re: SWFUpload <= (Object Injection/CSRF) Vulnerabilities Multiple flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/7
+Message-ID: <20131114132539.GO5443@mwanda>
+Date: Thu, 14 Nov 2013 16:25:39 +0300
+From: Dan Carpenter <dan.carpenter@...cle.com>
+To: Nico Golde <oss-security+ml@...lde.de>, oss-security@...ts.openwall.com, security@...nel.org, "Hans J. Koch" <hjk@...sjkoch.de>
+Subject: Re: some unstracked linux kernel security fixes
 Content-Type: text/plain; charset=utf-8
 
-Andrew Nacin said:
+On Thu, Nov 14, 2013 at 11:33:10AM +0100, Petr Matousek wrote:
+> On Tue, Nov 12, 2013 at 11:10:32AM +0100, Petr Matousek wrote:
+> > Hi,
+> > 
+> > On Sun, Nov 03, 2013 at 05:32:52PM +0100, Nico Golde wrote:
+> > > drivers/uio/uio.c: mapping of physical memory to user space without proper size check
+> > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7314e613d5ff
+> > 
+> > there is a size check in uio_mmap() (the only caller of uio_mmap_physical()):
+> > 
+> >         requested_pages = vma_pages(vma);
+> >         actual_pages = ((idev->info->mem[mi].addr & ~PAGE_MASK)
+> >                         + idev->info->mem[mi].size + PAGE_SIZE -1) >> PAGE_SHIFT;
+> >         if (requested_pages > actual_pages)
+> >                 return -EINVAL;
+> > 
+> > why it wasn't sufficient?
+> 
+> Apparently there was a CVE split [1] and this is now CVE-2013-6763.
+> 
+>   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6763
+> 
+> I still think this is a non-issue based on the above mentioned size
+> check. Can I please get second opinion from someone more knowledgeable
+> on this?
+> 
+>
 
->So, CVE-2013-4145 is a duplicate of CVE-2012-3414, *not* of CVE-2012-2399.
+Added Hans to the CC list since he's the maintainer.  Petr is asking if
+the size checks in uio_mmap() and uio_mmap_physical() are duplicative.
 
-OK, thanks for the clarification.  I found some additional clarity in your announcement of the SWFUpload fork: http://make.wordpress.org/core/2013/06/21/secure-swfupload/
+> Isn't the size check redundant because of 
+> 
+>         requested_pages = vma_pages(vma);
+>         actual_pages = ((idev->info->mem[mi].addr & ~PAGE_MASK)
+>                         + idev->info->mem[mi].size + PAGE_SIZE -1) >> PAGE_SHIFT;
+>         if (requested_pages > actual_pages)
+>                 return -EINVAL;
 
->That said, given that CVE-2012-2399 was not publicly described at the
->time, I would not be surprised if one or more CVEs have been issued
->for the same XSS via buttonText at one point.
+That check is worrying requested_pages is rounded down to the nearest
+page but actual_pages is rounded up.  I don't understand why we are
+adding "(mem[mi]addr % PAGE_SIZE)" to the pre rounded up actual_pages.
 
-Oh, me neither.  Think I ran across a couple examples already.
+So, yeah, it seems like we do check the size twice now except the first
+time we do it wrong.
 
-- Steve
+regards,
+dan carpenter
 
