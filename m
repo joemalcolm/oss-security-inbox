@@ -1,62 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/13/1
-Message-Id: <201312130309.rBD38wIA015706@linus.mitre.org>
-Date: Thu, 12 Dec 2013 22:08:58 -0500 (EST)
-From: cve-assign@...re.org
-To: pinkbyte@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: ClamAV vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/9
+Message-ID: <20131114165212.GA22293@dhcp-25-225.brq.redhat.com>
+Date: Thu, 14 Nov 2013 17:52:13 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: Dan Carpenter <dan.carpenter@...cle.com>
+Cc: Nico Golde <oss-security+ml@...lde.de>, oss-security@...ts.openwall.com, security@...nel.org, "Hans J. Koch" <hjk@...sjkoch.de>
+Subject: Re: some unstracked linux kernel security fixes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
->    https://github.com/vrtadmin/clamav-devel/commit/71990820d01c246e4e61408a3659dd9d92949b38
->    from https://github.com/vrtadmin/clamav-devel/commits/master/libclamav/wwunpack.c
+On Thu, Nov 14, 2013 at 04:25:39PM +0300, Dan Carpenter wrote:
+> On Thu, Nov 14, 2013 at 11:33:10AM +0100, Petr Matousek wrote:
+> > On Tue, Nov 12, 2013 at 11:10:32AM +0100, Petr Matousek wrote:
+> > > Hi,
+> > > 
+> > > On Sun, Nov 03, 2013 at 05:32:52PM +0100, Nico Golde wrote:
+> > > > drivers/uio/uio.c: mapping of physical memory to user space without proper size check
+> > > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7314e613d5ff
+> > > 
+> > > there is a size check in uio_mmap() (the only caller of uio_mmap_physical()):
+> > > 
+> > >         requested_pages = vma_pages(vma);
+> > >         actual_pages = ((idev->info->mem[mi].addr & ~PAGE_MASK)
+> > >                         + idev->info->mem[mi].size + PAGE_SIZE -1) >> PAGE_SHIFT;
+> > >         if (requested_pages > actual_pages)
+> > >                 return -EINVAL;
+> > > 
+> > > why it wasn't sufficient?
+> > 
+> > Apparently there was a CVE split [1] and this is now CVE-2013-6763.
+> > 
+> >   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6763
+> > 
+> > I still think this is a non-issue based on the above mentioned size
+> > check. Can I please get second opinion from someone more knowledgeable
+> > on this?
+> > 
+> >
 > 
-> in which input validation was added. This commit did make it into
-> 0.97.7 (and it's not in 0.97.6). It is also apparently discussed in
-> https://bugzilla.clamav.net/show_bug.cgi?id=6806 Comment 2.
-
-Use CVE-2013-7087.
-
-
->  https://bugzilla.clamav.net/show_bug.cgi?id=6809  possible buffer overflow
->   https://github.com/vrtadmin/clamav-devel/commit/e8e3746266dd3f82054ca137b81b800e54de6ebd
+> Added Hans to the CC list since he's the maintainer.  Petr is asking if
+> the size checks in uio_mmap() and uio_mmap_physical() are duplicative.
 > 
->   For example, libclamav/yc.c in 0.97.7 has the max_emu variable that is
->   apparently involved in preventing the overflow. libclamav/yc.c in 0.97.6
->   does not have the max_emu variable at all.
-
-Use CVE-2013-7088.
-
-
->   https://bugzilla.clamav.net/show_bug.cgi?id=6804  dbg_printhex possible information leak
+> > Isn't the size check redundant because of 
+> > 
+> >         requested_pages = vma_pages(vma);
+> >         actual_pages = ((idev->info->mem[mi].addr & ~PAGE_MASK)
+> >                         + idev->info->mem[mi].size + PAGE_SIZE -1) >> PAGE_SHIFT;
+> >         if (requested_pages > actual_pages)
+> >                 return -EINVAL;
 > 
->   We don't know the commit for this, but libclamav/pdf.c in 0.97.6 has
->   'dbg_printhex("md5", result, 32)' whereas libclamav/pdf.c in 0.97.7
->   has 'dbg_printhex("md5", result, 16)' instead. We realize that the
->   security impact might occur in very limited situations (e.g., the
->   debug output is given to an untrusted person and the 16 extra bytes
->   are somehow sensitive data). But the vendor describes it as "The
->   vulnerability is merely debug-level printing" and the word
->   "vulnerability" is enough for us in this context.
+> That check is worrying requested_pages is rounded down to the nearest
+> page
 
-Use CVE-2013-7089.
+Is there any rounding down happening? I would expect both vma->vm_start
+and vma->vm_end to be page aligned.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+> but actual_pages is rounded up. I don't understand why we are
+> adding "(mem[mi]addr % PAGE_SIZE)" to the pre rounded up actual_pages.
 
-iQEcBAEBAgAGBQJSqnnrAAoJEKllVAevmvmsty0H/16a7n4zs1ogQ2AL0dDDUf4f
-ebW5FWnsQNa6hTKNYuO71eLbFfjAE/G+uVDGOc++nQ2Vv6gYbG61ufpeN2iaRibs
-rkmdEW18vFTcWZQArx4WU5XBtZlA4A7ndugGi1cQPztZgaw8N7e9htLPH+Jc6ab2
-GPcHnfILRS+enV0VOIOmQyfvuIGAYMDOrFjc90bT5Mz150U3rPZpAX0sAUi+DQQT
-XwVcFbkzmBA9Gp/gwrQpmRLXO9aijMKuGN4l90G/4UpVG5ypxRafAxe4Nszug4ZQ
-9RnzTaPKghVAtHzYK/zMAFxqPs2JWL03NqzyYZNBZpW+gsul/WNbSdKJUo8GSQw=
-=bnPX
------END PGP SIGNATURE-----
+Imagine addr and size are not page aligned and
+((addr & ~PAGE_MASK) + (size & ~PAGE_MASK)) > PAGE_SIZE.
+We need to round up two pages instead of one in that case.
+
+> So, yeah, it seems like we do check the size twice now except the first
+> time we do it wrong.
+
+With unaligned addr and/or size we can end up with mapping memory 
+not belonging to the UIO_MEM_PHYS registered region, but that is something
+you expect when using this interface from the drivers and/or userspace,
+because you want access to the whole region to properly handle the
+device, no?
+
+IOW, with the current changes, isn't the functionality broken for
+non page-aligned addr and/or size?
+
+-- 
+Petr Matousek / Red Hat Security Response Team
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
