@@ -1,93 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/30/9
-Message-ID: <114727289.8753339.1375177191187.JavaMail.root@redhat.com>
-Date: Tue, 30 Jul 2013 05:39:51 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: cve-assign@...re.org
-Cc: security@...myadmin.net, oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request -- phpMyAdmin 3.5.8.2 and 4.0.4.2 are released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/13
+Message-ID: <000001cee185$5db2ec30$1918c490$@cs.kuleuven.be>
+Date: Thu, 14 Nov 2013 23:03:34 +0100
+From: "Mathy Vanhoef" <Mathy.Vanhoef@...kuleuven.be>
+To: <oss-security@...ts.openwall.com>
+Subject: CVE request: ath9k_htc improperly updates MAC address
 Content-Type: text/plain; charset=utf-8
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> >* http://www.phpmyadmin.net/home_page/security/PMASA-2013-8.php
-> 
-> Use CVE-2013-4995.
-> 
-> As far as we can tell, this should be the only CVE needed for
-> PMASA-2013-8; however, this link gives us a 404 error:
-> 
->   "The following commits have been made on the 3.5 branch to
->   fix this issue: 51f343b91908d1b1bacaebe6db87c3d7aa522581"
+Hi,
 
-The proper link wrt to PMASA-2013-8 fix in phpMyAdmin v3.5.x seems to be
-the following:
-  https://github.com/phpmyadmin/phpmyadmin/commit/01d35b3558e47fba947719857bd71f6fd9e5dce8
+ 
 
-> 
-> 
-> >* http://www.phpmyadmin.net/home_page/security/PMASA-2013-9.php
-> >* http://www.phpmyadmin.net/home_page/security/PMASA-2013-11.php
-> 
-> Use CVE-2013-4996 for the PMASA-2013-9 XSS issues that affect both
-> 3.5.x and 4.0.x, and for the PMASA-2013-11 XSS issue.
-> 
-> Use CVE-2013-4997 for the PMASA-2013-9 XSS issues that affect only
-> 3.5.x. (We think this may be the first two issues, but the CVE is
-> assigned on the basis of affected versions, not the vulnerability
-> details.)
-> 
-> (We didn't notice any XSS issues that affected only 4.0.x.)
-> 
-> 
-> >* http://www.phpmyadmin.net/home_page/security/PMASA-2013-12.php
-> 
-> Use CVE-2013-4998 for the path-disclosure issues affecting both 3.5.x
-> and 4.0.x (approximately three affected files).
-> 
-> Use CVE-2013-4999 for the path-disclosure issues affecting only
-> version 4.0.x (approximately two affected files).
-> 
-> Use CVE-2013-5000 for the path-disclosure issues affecting only
-> version 3.5.x (several affected files).
-> 
-> 
-> >* http://www.phpmyadmin.net/home_page/security/PMASA-2013-13.php
-> 
-> Use CVE-2013-5001.
-> 
-> 
-> >* http://www.phpmyadmin.net/home_page/security/PMASA-2013-14.php
-> 
-> Use CVE-2013-5002.
-> 
-> 
-> >* http://www.phpmyadmin.net/home_page/security/PMASA-2013-15.php
-> 
-> Use CVE-2013-5003.
+This concerns a bug in the ath9k_htc driver: When a user changes/spoofs
+their MAC address, an attacker can retrieve the original MAC address, which
+is a potential privacy risk. Debian bug report:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=729573
 
-Thank you for the CVE ids.
+ 
 
-Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Background of the bug:
+http://www.mathyvanhoef.com/2013/11/unmasking-spoofed-mac-address.html
 
-> 
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.11 (SunOS)
-> 
-> iQEcBAEBAgAGBQJR9wY/AAoJEGvefgSNfHMdcgUIAK7ylWgGM6Yt+qfqf+7ZWX+e
-> VBM7/OcyPT7+GuFmE+PCsb7dVf4DAJOZBwTHx7JzabLFXhOWV+iFhxHyXzErTgmM
-> ncDAb3ThOFUd3gjw81Wuk4O2JNehPQ/SJ5DxPWHFCyK/Ky/w/krbJ3FabDdcuP+X
-> whbYQV8H2wIGtoZqrHuDL0kAg2/tuFGg1Kw1I7v4mraqPVWGV+sFyvE1eZmE+WlH
-> ypDDorpLLdOjGfetRnjAVLVIMVKkQ5TZEeU8IC5HyI9m0lBk6aBNIFeoB/yCUcLP
-> +VnIbFHdRTyThabvg84qkeD7CJROZU3HUsUZjSdo/57jXG5PP6rNakhpjfFhwbc=
-> =efXp
-> -----END PGP SIGNATURE-----
-> 
+ 
+
+The cause of the bug is in ath9k_htc_set_bssid_mask [1]. Here the MAC
+address of one of the virtual interfaces should be picked as the new main
+MAC address of the device. However the main MAC address (stored in
+common->macaddr) is never updated. The ath9k does implement this properly
+and sets the main MAC address to the MAC address of one of the virtual
+interfaces (by first writing it to iter_data->hw_macaddr and then copying it
+over to common->macaddr [2]). Note that ath_hw_setbssidmask updates the main
+MAC address register for both the ath9k and ath9k_htc drivers [3].
+
+ 
+
+Can a CVE please be assigned?
+
+ 
+
+Cheers,
+
+Mathy
+
+ 
+
+ 
+
+[1]
+<http://lxr.free-electrons.com/source/drivers/net/wireless/ath/ath9k/htc_drv
+_main.c?a=microblaze#L145>
+http://lxr.free-electrons.com/source/drivers/net/wireless/ath/ath9k/htc_drv_
+main.c?a=microblaze#L145
+
+[2]
+<http://lxr.free-electrons.com/source/drivers/net/wireless/ath/ath9k/main.c#
+L831>
+http://lxr.free-electrons.com/source/drivers/net/wireless/ath/ath9k/main.c#L
+831
+
+[3]
+<http://lxr.free-electrons.com/source/drivers/net/wireless/ath/hw.c#L118>
+http://lxr.free-electrons.com/source/drivers/net/wireless/ath/hw.c#L118
+
+
+Disclaimer: http://www.kuleuven.be/cwis/email_disclaimer.htm
+
