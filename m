@@ -1,58 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/10
-Message-ID: <512D1BF0.90902@redhat.com>
-Date: Tue, 26 Feb 2013 13:32:48 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/8
+Message-ID: <CAB8Fin8wpU8YZ6Zie=LTfdpJashiQTpRbj6x5kQH5yZpZ2n8Ow@mail.gmail.com>
+Date: Thu, 14 Nov 2013 17:11:15 +0100
+From: Jacob Vosmaer <jacob@...lab.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>, Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: monkeyd world-readable logdir
+Subject: Requesting four (4) CVE identifiers for GitLab
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA512
 
-On 02/26/2013 02:52 AM, Moritz Muehlenhoff wrote:
-> On Mon, Feb 25, 2013 at 02:02:00PM -0700, Kurt Seifried wrote:
->> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->> 
->> On 02/24/2013 12:00 PM, Agostino Sarubbo wrote:
->>> Monkeyd, a small, fast, and scalable web server, produces, at
->>> least on gentoo a world-readable log.
->>> 
->>> # ls /var/log/monkeyd/master.log -la -rw-r--r-- 1 root root 0
->>> Feb 24 19:56 /var/log/monkeyd/master.log
->>> 
->>> Upstream site: http://www.monkey-project.com/
->>> 
->> 
->> This also doesn't look to be very active/widely used.
-> 
-> This is part of Debian stable, please do assign a CVE ID for proper
-> tracking.
-> 
-> Cheers, Moritz
-> 
+We have just released a new security advisory for GitLab at
+http://blog.gitlab.org/multiple-critical-vulnerabilities-in-gitlab/,
+concerning the following four vulnerabilities:
 
-Please use CVE-2013-1771 for this issue.
+ - Unauthenticated API access to GitLab when using MySQL
+ - Remote code execution vulnerability via Git SSH access in GitLab
+ - Local file inclusion vulnerability in GitLab
+ - Repository access privilege escalation vulnerability in GitLab
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+We would like to request four CVE identifiers for these issues.
+
+Thanks to joernchen of http://www.phenoelit.org/ for reporting these issues
+to us.
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Comment: GPGTools - https://gpgtools.org
 
-iQIcBAEBAgAGBQJRLRvwAAoJEBYNRVNeJnmTKgQQAJzXSyFBVWemJUzvOwSb7BwM
-zPLb3l/gxAWimB65e/+KdtENFHeKnRSnVm97WFWPMi8+QZ+fIqtiuGevTbxxB4ts
-riWFjb5oo8g02C72QJUI3biXXesd9+5fEqOs/eGypma0Q43iZ+hVyr9wFrhRS5du
-1FPV15HTWHWBKlvChgzDILNo0xc7miSO8NrIBqwvDAm4LYybLySAg03jqPILyWWG
-CyzVpaSb3RuYfmD/tLNuKzgi2o30mTXBIyqCkINacBEfk6/4vf3N0SxdbTagT9ws
-LLnHMwgDfN1tkFH2eKRaACGrNH7ME3fsqFXs1ZhfC4cZoXvcqpn9n5sclKEB3pLp
-zYIeEtILRyMLyIiX6Js74kNNhO5+2IXsePuEDV/doiUNiQ2BcV9Z1xb3GzLWDy/8
-lWaSlBF6ZI0hznHq+VdTF96dLXVrhY0qlPdKKEuisbO8aZWzYNVgJF8MHu4jSzVq
-Bv3NrnBgb8aC1kdGdJIV+0UF5AgN8uC1I1JR5TjwV3oEZZvm5QxuXl5CFw8lVED/
-1Uh1wFT0kg1fPc1szEM1n1uIYFQaQ/QRDaTlc4HwEW967xe2wjAuei/wEVxxivhI
-d5NiRiRS+lurwicYnNZ8YIm06DKDo6+mcGpHXBvMbU4Bgw5GPIK9J+5IKR7Q1ptc
-WJYlgoEdz8LJPyQu3yLq
-=4lMW
+iQEcBAEBCgAGBQJShPXnAAoJEB2vXw0YK62W0G0IAKUHfE/D4VtAo8Wf6tvv5d29
+gvam1TXScSwId1U1mOQQi8Qm1+OlNffJ4fG30LXSD3/AHN5i/40e0F9jLLo4Q4U5
+UVsNdKbRw/0c/g/2hPtXc9jer85lS9j6hJ5xlwj8QfRvcwyEIJSAuANR8zkupL6p
+GtsTuiH8RMJWabI5ohxi11J3kDMHj9ILY1f3y9WFwDJaN6VViHfjW2yVy5QzW1gw
+mFMJlNcQbPs6wssQ/4ogJZSXsEoxdpjeWhjDCnGFZSyEQXWfRdWIV9Epx7nAoomP
+soFiTDgnyYSqI1J1viGhUCZn+y1rFyLEZvfelt028gh5o5IAutP3RMZyqIMWG9U=
+=donG
 -----END PGP SIGNATURE-----
+
+Best regards,
+
+Jacob Vosmaer
+GitLab.com
+
