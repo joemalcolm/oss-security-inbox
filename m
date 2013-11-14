@@ -1,49 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/6
-Message-ID: <5296F39A.8090900@redhat.com>
-Date: Thu, 28 Nov 2013 00:41:14 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/12
+Message-ID: <20131114233354.66143975@redhat.com>
+Date: Thu, 14 Nov 2013 23:33:54 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: security@...cloud.com
-Subject: Re: CVE Request: ownCloud security bypass on admin page
+Subject: mod_nss FakeBasicAuth authentication bypass
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi!
 
-On 11/28/2013 12:13 AM, Murray McAllister wrote:
-> Hello,
-> 
-> ownCloud 5.0.13 fixes a security issue:
-> 
-> http://owncloud.org/changelog/ SECURITY: Fix a possible security
-> bypass on admin page under certain circumstances and MariaDB
-> 
-> Can a CVE please be assigned?
-> 
-> Thanks,
-> 
-> -- Murray McAllister / Red Hat Security Response Team
+A FakeBasicAuth authentication bypass issue was reported for mod_nss
+some time ago:
 
-Please use CVE-2013-6403  for this issue.
+https://www.redhat.com/archives/mod_nss-list/2011-May/msg00001.html
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+The issue was fixed in upstream git:
 
-iQIcBAEBAgAGBQJSlvOaAAoJEBYNRVNeJnmTp9IQAJoZwJce6cUwF3Jr/Xx8atOL
-ZiJJvU7Faq+xCGjBG1RTZPRnDt0GhzWparlCvXC4H96yDUFk5tQIpUzVKwvbgA2P
-TKMUKwIdEh6cIBJz1ltj5MaeeY5JXXz4bwaM4WrDgy+0VUPArsVgHdBCP/6WCNz0
-BgeY5jfs1reh4pkB39qpLQ0xUab/wt2GzcVTpWznIRy9wvk5tmKmyZ6vyTKj0gvn
-YvXOJ0wNFnAaSLb2WCCLsV4J4f8JvIhuT2UQXaS3lgl7q3MDH4ijZ0dDgDWErZFu
-2JNzLc/WT2L/T+/puIzuutmRDDgbkW4AjMPiWk0vetXuzPTknMtux7FwEVVKHawV
-Td9Ld/pYllJstA0eHu3EvWn3PD9DjNzkcYNeuSby3wAw0FGBBFcYhzuFyJhbdemb
-WQ4SakWAsFCRFPNum6BE1tVesVt6ALWggnkxZ8VZGWlCTB/xGK2tSKEddd/aI6rf
-f8DnDh1lTpCJOJWoWdS7j/CwJH7BfbBj0cqpXqaXSbQswCsc9lOikrLKZr56ldJx
-LDPuDepD6YdpM2mlS8I/tYx8Hp3ivKKaF7whrDq9nKp1E1gz+w7SuQHmOyiQs5nA
-O2vnKYTxFPUrjutEdWCmdykcAPPJ486YFxnBjbnVJcrO8uxNQ6jmGlGYXGcKvpA2
-kEsafw/0LMjMCkUwsjY7
-=FBGe
------END PGP SIGNATURE-----
+https://git.fedorahosted.org/cgit/mod_nss.git/commit/?id=a6c3370491ae1d3bc552e8de9353c82f73e510e3
+
+but there was no new release of mod_nss since to include the fix.
+
+The issue now got CVE-2011-4973 assigned.
+
+Note that the fix changes the user name that needs to be specified in
+htpasswd when using FakeBasicAuth.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
