@@ -1,41 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/21/4
-Message-ID: <20130321113936.05ad3259@redhat.com>
-Date: Thu, 21 Mar 2013 11:39:36 +0100
-From: Stefan Cornelius <scorneli@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/11
+Message-ID: <20131114205725.GE26456@ngolde.de>
+Date: Thu, 14 Nov 2013 21:57:25 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2012-5662 x3270 improper validation of SSL certificates
+Subject: CVE-2013-6282 - linux kernel: missing access checks in get_user/put_user on ARM
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Via https://www.codeaurora.org/projects/security-advisories/missing-access-checks-putusergetuser-kernel-api-cve-2013-6282
 
-Florian Weimer of the Red Hat Product Security Team reported that x3270
-did not properly validate SSL certificates. When connecting to a host
-that has a mismatched hostname in the certificate, x3270 does not warn
-that there is a problem with the certificate.
+Upstream commit: https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/arm/include/asm/uaccess.h?id=8404663f81d212918ff85f493649a7991209fa04
 
-For x3270 versions that implemented SSL certificate verification, but
-did not properly handle the mismatched hostname case (e.g. the 3.3.12
-series prior to 3.3.12ga12), this has been assigned CVE-2012-5662.
+Cheers
+Nico
 
-Please note that CVE-2012-5662 should not be used for older x3270
-versions that supported SSL, but did not implement any kind of
-certificate verification at all. No CVE identifier has been assigned to
-this problem.
-
-Version 3.3.12ga12, which fixes this issue, is available via the
-project's SourceForge page [1].
-
-In the new code, host certificate checking is turned off. To turn it
-on, add '-verifycert' to the command line. The checks will include the
-hostname.
-
-References:
-[1] http://sourceforge.net/projects/x3270/files/x3270/3.3.12ga12/
-
-RH bug #889373:
-https://bugzilla.redhat.com/show_bug.cgi?id=889373
-
-Thanks,
--- 
-Stefan Cornelius / Red Hat Security Response Team
+Content of type "application/pgp-signature" skipped
