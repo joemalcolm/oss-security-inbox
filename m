@@ -1,70 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/6
-Message-ID: <3309438.VaA6tJcEJn@hoth>
-Date: Tue, 05 Mar 2013 10:26:22 +0100
-From: Eric Lacombe <goretux@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/5
+Message-ID: <52859C01.5060203@redhat.com>
+Date: Thu, 14 Nov 2013 20:58:57 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: handling of Linux kernel vulnerabilities (was: CVE request - Linux kernel: VFAT slab-based buffer overflow)
+Subject: Re: "I miss LSD", slides, paper and tools relating to finding UNIX system level vulnerabilities (as given at 44CON)
 Content-Type: text/plain; charset=utf-8
 
-Le mardi 5 mars 2013 09:20:49, Greg KH a écrit :
-> On Mon, Mar 04, 2013 at 10:12:56PM +0100, Eric Lacombe wrote:
-> > Hi,
-> > 
-> > Le lundi 4 mars 2013 11:48:58, Greg KH a écrit :
-> > > On Sun, Mar 03, 2013 at 10:39:30PM -0500, Michael Gilbert wrote:
-> > > > I was getting encouraged by the recent anger-centric posts, the "what
-> > > > is it that we're supposed to do better?" ones. That gave me some
-> > > > encouragement that there was the possibility of positive change, but
-> > > > the "we're not going to make users more unsafe by telling them about
-> > > > issues affecting them" is a persistence of the denial state.  That
-> > > > logic completely violates the known idiom that knowledge is power:
-> > > > give users the knowledge that they need to protect themselves, and
-> > > > they will; starve them of that knowledge, and they remain vulnerable.
-> > > 
-> > > That's a load of crap.
-> > > 
-> > > Seriously, you know it only benefits the "bad guys" if I were to say,
-> > > "This patch just went into Linus's tree that fixes a security problem
-> > > that you can exploit in this manner".  No user would have a chance to
-> > > fix their systems before the vulnerability was added to the
-> > > "ultra-sploit" tool and everyone would have their systems trashed.
-> > 
-> > I think there's a difference between disclosing the vulnerability and
-> > disclosing it with a related exploit. The first one allows to fulfill what
-> > Michael Gilbert explains without the consequences that you focus on.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 11/14/2013 05:20 AM, Tim Brown wrote:
+> All,
 > 
-> You really think there is a difference?  I assert that there is none,
-> and history has shown that this is the case, but feel free to prove me
-> wrong.
+> Some of you may already have spotted this, but last night we
+> published our slides, paper and some tools from my talk at 44CON
+> earlier in the year.  The content can be found at:
+> 
+> * http://labs.portcullis.co.uk/presentations/i-miss-lsd/
+> 
+> The take home points around the System V shared memory issues
+> (detailed in more detail in the linked to paper) are:
+> 
+> * System V shared memory is often created with weak permissions. *
+> Usage of System V shared memory by X11 applications is particularly
+>  problematic. * Qt Project patched Qt APIs (CVE-2013-0254), Oracle
+> patched Java JRE (CVE-2013-1500), Google patched Chrome
+> independently. * No progress has been made on the problem more
+> generally by either Red Hat or Debian. * Coccinelle is an effective
+> tool for performing static analysis on large corpuses of C. *
+> Memory corruption attacks against System V shared memory are
+> unlikely.
+> 
+> I've also released a tool called smaSHeM (again linked to) for
+> dumping System V shared memory and for manipulating it.
+> 
+> Tim
+> 
 
-It depends on the way you look at it :
+One consistent issue I've noticed is any file/object/pipe/whatever
+gets created is that 99% use the default umask and don't set any
+explicitly safe permissions. And in most of these cases that leads to
+problems.
 
-For really skilled bad guys, disclosing the vulnerability and the exploit with 
-it or not doesn't make such a difference, because in the first place they are 
-able to look at the kernel commits and spot what they care about for their 
-evil job. No matter, there is public disclosure or not. And these really bad 
-guys are not pushed to share this information to everyone. Besides, it seems 
-more interesting for this kind of guys to keep their findings secret (to make 
-money, to rebel on something through cyber attack means, ...)
-(What would be the purpose otherwise? --> Pure Evil? ).
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-But disclosing to everyone the vulnerability and the exploit _altogether_, 
-does benefit all the script kiddies, all the malicious persons not skilled 
-enough to develop their own exploits (and we can agree that it depends on the 
-vulnerabilities. Remember CVE-2008-0009 and CVE-2008-0010, about vmsplice. It 
-was not thoroughly understood by everyone from the beginning).
-
-Thus, my point is that disclosing the vulnerability benefits more the good guys 
-than it does increase the risk of the exploitation of the vuln. But disclosing 
-the exploit _at the same time_ can only negatively impact the outcome, because 
-lots of good guys (end users, but not only, some admins, ...) will not look at 
-it, they only bother to know if there is security issues, in order to take a 
-decision on updating their systems.
-
-By the way it's only my feelings on this topic.
-
-Best regards,
-
-	Eric Lacombe
-
+iQIcBAEBAgAGBQJShZwBAAoJEBYNRVNeJnmTRV4QAIDndwUHA0KkRR77X0BAfHL5
+carpp+BHqagcj66kCfov5Dlb0v+yqs1J99FhJQXcASyjUlA7v1iKizOdHdRLmrtU
+dQKm7eUX2W0OLVX0g+scv41Lkd/A+J+xGwLnpbktdxxq997R9E7ogLewiTe13x9s
+TeTf3guAY2JMOY/bonc792FiA/iW6NiUos0UKyluBdkP7t3S+C7yvif2A44UqrqI
+1fqZzQBmEywcuX0jtQ899+jVHNw8yAgdI5BfYGoCR7o/DaRZyd/cQzI3Hj3EecG0
+wX1yS3ypHauDBFRE/meJ43CfIZi7V3cJbSXarj6NrRygfyFsuvQ6w4pFG4ZEKVNK
+54V0bWwbqmML/WGbWxsULzZjfUTpCsw16xLpvUj89c/PQxma+KAYOCI0pEVARbhe
+YP6eYqBLp4Rx2amLtPTWNljolhF7KOHJNFhEJkJ5uFvRwrN1v+zySPiM/sigrdoq
+hvbD5yGTDfpEogB47zUW/AdCE4tCZ9mS2MwCJ3xaD4I8jdY2Be75FEsN7f8hHa5v
+YbgHTAe6DVsKdyGRqdt5qs0+SCYTJ2PMPWLoj/eb25RdZbjB3/Au3eT6dEXGrIm3
+OHFwP127dPlFeKWusy00esKlEyq9k+tlYqhi1MOVoGeM/09X1LLiHpdQLU6f4U6n
+30QG0ufgRj3sRikY0ySL
+=oo/U
+-----END PGP SIGNATURE-----
