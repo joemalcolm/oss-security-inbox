@@ -1,41 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/18
-Message-ID: <20131115210741.GC22126@suse.de>
-Date: Fri, 15 Nov 2013 22:07:42 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/9
+Message-ID: <CALi+ztGQsawYKVetGQE4H9oVBLDZo9pG1qV-8VdqSuGzEPZCTQ@mail.gmail.com>
+Date: Thu, 14 Nov 2013 22:39:04 -0800
+From: Chris Palmer <snackypants@...il.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: cryptographic primitive choices [was: Re: Microsoft Warns Customers Away From RC4 and SHA-1]
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 15, 2013 at 11:18:33AM -0800, Chris Palmer wrote:
-> On Thu, Nov 14, 2013 at 10:58 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> 
-> > Compatibility, for example HTTPS, you can disable a lot but if you
-> > only allowed one cipher chances are a good chunk of clients wouldn't
-> > be able to connect. There's a LOT of software out there, some open
-> > source, some commercial, some written in house, it all uses encryption
-> > and signing (usually wrongly, sigh) and a lot of it cannot or will not
-> > be updated any time soon, if at all. Think of all the devices that act
-> > as a web client and will never have TLS 1.2 support (e.g. "smart" TVs)
-> > for example. Would I prefer the world to ditch SSL, TLS 1.0 and 1.1
-> > and move to TLS 1.2 entirely? Of course. Is it going to happen? Not
-> > for a loooong time.
-> >
-> > Think of all the things that currently use (often older versions of)
-> > OpenSSL/PolarSSL/GnuTLS/etc and will never get updated...
-> 
-> I posit that there is a strong correlation between un-updated,
-> un-updatable software that did not ship with (for example) support for
-> modern cipher suites and protocols, and software that should be
-> recalled for a variety of reasons. Random example:
-> 
-> https://securityledger.com/2013/08/samsung-smart-tv-like-a-web-app-riddled-with-vulnerabilities/
-> 
-> Let's unpack your use of the passive voice: Who, exactly, is choosing
-> not to update the OpenSSL they ship? Why do we forgive that?
+On Nov 14, 2013 9:31 PM, "Kurt Seifried" <kseifried@...hat.com> wrote:
 
-You cannot easily update an openssl 0.x version to 1.0.x if you ahd
-no symbol versioning set up as the symbols overlap and you would need
-to rebuild _all_ software using libssl, inlcuding libcrypto.
+> So essentially in my head I see a couple slider bars, as they go
+> towards the riskier end of the spectrum (e.g. protecting a CA
+> certificate vs. protecting a single SSL session) stronger encryption
+> is needed.
 
-Ciao, Marcus
+But the cost of setting the sliders all the way to the secure side is so
+low, why bother making the distinction?
+
