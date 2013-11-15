@@ -1,43 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/11
-Message-ID: <522E2967.6040702@redhat.com>
-Date: Mon, 09 Sep 2013 14:02:47 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/14
+Message-ID: <52866D4F.7070303@redhat.com>
+Date: Fri, 15 Nov 2013 11:51:59 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Agostino Sarubbo <ago@...too.org>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Torque privilege escalation
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request for graphicsmagick DoS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/09/2013 11:31 AM, Agostino Sarubbo wrote:
-> On Monday 09 September 2013 10:35:20 Kurt Seifried wrote:
->> Please include links to the vulns/source code fixes/original 
->> information thanks.
+On 11/15/2013 10:30 AM, Vincent Danen wrote:
+> I don't think this has been brought up here yet, but could a CVE
+> be provided for the following?
 > 
-> Did you see the link that contains the patch?
+> A vulnerability has been reported in GraphicsMagick, which can be 
+> exploited by malicious people to cause a DoS (Denial of Service).
+> 
+> The vulnerability is caused due to an error within the 
+> "ExportAlphaQuantumType()" function (magick/export.c) when
+> exporting 8-bit RGBA images and can be exploited to cause a crash.
+> 
+> The vulnerability is reported in versions prior to 1.3.18.
+> 
+> References:
+> 
+> https://bugs.gentoo.org/show_bug.cgi?id=488050 
+> http://sourceforge.net/p/graphicsmagick/discussion/250737/thread/20888e8b/
+>
+> 
+https://secunia.com/advisories/55288/
+> http://sourceforge.net/p/graphicsmagick/code/ci/1a2d7a38363f7f23b63d626887d22d39c7240144/
+>
+>  https://bugzilla.redhat.com/show_bug.cgi?id=1019085 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=729661
+> 
 > 
 
-No I did not, please use CVE-2013-4319 for this issue.
+Please use CVE-2013-4589 for this issue.
+
+S'il vous plaît utiliser CVE-2013-4589 pour cette question.
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSLilnAAoJEBYNRVNeJnmT0SAQAJgpUm/H0ZRSh/YdkvparFfC
-mbI80AHUjz3Vp3KldGX+DB3yOgw7iWo/o/+Ocfpqng/8TgTSOU8TZWlS/J7aGxK2
-ifgNfsClWeDmlIRIj795BhsPYe7Z3yJxdKfi1Ep2wIeuOmeQlIKsQXBnWs9/W49T
-01BaIYQbGHAq2379Ki4uMF/YBpj6kgBMcMwR8O9komngCmfWMqIPEHw02UFhoQGG
-H5AEMWvbdR4x1SYD38LS8X5MMgNP+2XUP3ahJplii/zfwBUbcMZPB9R18aRAM0i8
-wDxJA85M6LViewAU24X4FBBVuGhxAJZtIb6FG9HtGGqMbWYNdUN+xVFrHwHyxOiI
-drgWNQePZz39mH2iLNVp9jC67OUlBoFFCrqEWShG0E9hxXxJKQwQhTkqKK3MuOGs
-QaD6Z3sFxsLXQJMJx4g9ZYQ9y/kfzb3zAjKkyvaaiEFUaqJpqNQRXRaXyOu8sFFQ
-9g8+ejJ4bqChoCEPdeeDd/KauQEX94yV7nvl1p1T1Xiapdj5vseVhOzPnWCwgqsi
-vJBrDWxiGoV+YyqXh9qyosW/9109n0f/ceAHwDl+Dm5anFvgiM3iYY8LVNFFncvD
-6vYXLfO46YhwuC4dpNc/5SZwAJgbW/Mg+M9KoQH7L+msEyodnAvZYz6/OkOGeeoe
-LIRku2ZF5XXoJzOuczRh
-=IDzk
+iQIcBAEBAgAGBQJShm1PAAoJEBYNRVNeJnmT+9kP/292YyjS12oZLUif6JtHQO/V
+EIw8mRZdtofax+pgXUUpj3IhibwCOM5HvJn7vIEaBgWXMjH3wxfDFRHNg/DBldHY
+QBPeOcMbGOTAmOSRkq3j62v3vJ+t72kjzvTSX22EspQ+ngUnFZt7WMY3D82JxNdu
+Jrk4PA3s9BUfiyGwS6/XjF7oj3drsdkeKuo91yUA77fKn4nPAExiouj/xdh3mir9
+VycSSZDzzgvyoofr1iZ5spBXxzsZSmksTuMmUiS8JdOIM6ulvAA3PmfIZcC+vJyu
+pD1mDxWul2k7ga+lo/1jZHHfzISrM1UTkA+cLWLNzzlQ7Ez91G2TUQaqlCuJL9lB
+njn3xZjfn7ElxuWUhsfiXpYAvrXbIExUyePlhUySYzsoeshWgIdX/7o+dbnyBLOg
+1995tNCqz/FdYDvYTyvcOI5oMSPxXBm0xLUgBYJGLYJWcLhwPwlI3PhrHfZpao/p
+C7I6I1TDRt2lPia40/DJe29q/emTKo+qYS7vigrgZSxrmU3heagULYrekSHKmQ9S
+5AWPndC5Ybph3j/yrjYSTZork2C644tE7R8XF3qKmBH7z5sV7L9qu4xY/GtMZ2L5
+z8ilk5Y9o9KkGmhpc3MXSVxLZ2smkhXJM1HAZ1erZ8umKLF0Yykau6LVxnyJ4JSv
+R6lB2YN74vxP//aDH+wS
+=8FRM
 -----END PGP SIGNATURE-----
