@@ -1,63 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/12/4
-Message-ID: <52826FBA.3090804@redhat.com>
-Date: Tue, 12 Nov 2013 11:13:14 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/7
+Message-ID: <20131115053905.GW28665@sentinelchicken.org>
+Date: Thu, 14 Nov 2013 21:39:05 -0800
+From: Tim <tim-security@...tinelchicken.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: lighttpd multiple issues (setuid/... unchecked return value, FAM: read after free)
+Subject: Re: cryptographic primitive choices [was: Re: Microsoft Warns Customers Away From RC4 and SHA-1]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 11/12/2013 09:14 AM, Stefan Bühler wrote:
-> Hi,
-> 
-> I'd like to request CVE ids for the following issues in lighttpd:
-> 
-> 1. setuid/setgid/setgroups return values are not checked
-> 
-> If setuid() fails for any reason (RLIMIT_NPROC) lighttpd runs as
-> root.
-> 
-> http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2013_02.txt
+Hi Daniel,
 
-Please
+> > Using a weak encyption algorithm alone isn't a sufficient condition to
+> > issue a CVE against software, since often the context of the usage
+> > matters a lot.  If you use MD5 or SHA-1 for password hashing (with
+> > lots of salt and rounds), then there's no vulnerability.  If you use
+> > them for HMACs, then there's also likely no problem.  But if you use
+> > them for a signature with a public key, there is.
 > 
-use CVE-2013-4559 for this issue.
-
-> 2. If FAMMonitorDirectory fails, lighttpd reads a value from
-> already free()d memory.
+> I'm inclined to try to apply your suggested guidelines to GnuPG:
 > 
-> http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2013_03.txt
-
-Please
+> gnupg uses SHA-1 as its default digest algorithm when making public key
+> signatures, both for cleartext "data signatures" and "certifications"
+> (OpenPGP keysigning).
 > 
-use CVE-2013-4560 for this issue.
+> Suggestions in the past to change the default digest algorithm to
+> SHA-256 have been resisted for the sake of interoperability, despite
+> every OpenPGP implementation in wide use having been capable of SHA-256
+> for many years.
+>
+> Are you saying we should assign a CVE for the fact that GnuPG generates
+> data signatures over SHA-1 by default?  What about its generation of
+> certifications over SHA-1 by default?
 
-> Both issues were found with clang static analyzer, so I assume the
-> bad guys already know these.
+To be honest I haven't followed the latest research on SHA-1 attacks
+(and I'm not a cryptographer! just a pentester who likes attacking bad
+crypto), but clearly the general consensus amongst cryptographers is
+that it is broken.  _Practically_ broken for most attackers?  Maybe
+not.  But we shouldn't wait for a debacle like the MD5 SSL signature
+collision to assign a CVE.
+
+So yes, if software still relies on SHA-1 for collision resistance,
+(that is, generates signatures) then I think we should assign a CVE.
+
+I haven't thought a lot about the distinction between data signatures
+and certifications, but my gut says certifications are the scarier
+one.  Then again, you have GPG signatures on software packages, so
+actually that's just as bad.
+
+ 
+> What about for the fact that GnuPG validates and accepts OpenPGP
+> certificates made via SHA-1 (note that this is a different question from
+> whether generating them warrants a CVE)?
+
+Right, so here I don't think we should assign a CVE for validating
+past SHA-1 signatures, at least right now. We can always assign CVEs
+against the software still generating them.  Warnings are a good idea,
+though.  Consider that collision attacks require that the attacker can
+*generate* two separate messages that hash to the same value.  Then
+later they can swap them out somehow.
+
+So lets just assume for the sake of argument that in 2003 no one,
+including large governments with supercomputers, had the ability and
+know-how to break the collision resistance of SHA-1.  Alice writes some
+software and publishes the SHA-1 of it.  The hash value is public
+knowledge from reliable archive sources.  30 years later, in 2033,
+everyone and their dog can break SHA-1 collision resistance on their
+mobile phone (or brain implant, whatever).  Should we trust that
+hash?  If we also assume that in 2033, SHA-1's second preimage
+resistance was not broken, then of course we should still trust the
+hash (and that Alice hasn't swapped out the code with a malicious
+version). 
+
+This is why it is very important to understand the very different
+attack scenarios against hashes.  The public key signature scenario is
+a bit more complex though...  And as soon as second preimage
+resistance is broken, all bets are off with old signatures.
+
+
+> GnuPG also currently accepts and validates certifications and data
+> signatures made with MD5. (it prints a warning, but it still treats the
+> certifications as acceptable when computing certificate validity, for
+> example).  Should we assign a CVE for this as well?
+
+I think my above answer covers this.  Obviously I made a lot of
+assumptions above about when the bad guys could/couldn't break
+something, but it does tell you something about the shelf life of
+signatures, if they do indeed have reliable time stamps associated
+with them. 
+
+
+> As a reference point, the recent ENISA recommendations [0] recommend
+> digests of 160 bits (SHA-1) for "legacy" applications, 256 bits
+> (SHA-256) for "near-term future" (at least 10 years) applications and
+> 512 bits (SHA-512) for "long-term future" (30 to 50 years, which they
+> acknowledge is difficult to predict).
 > 
-> regards, Stefan
+> I've been encouraging gnupg to move to stronger default cryptographic
+> primitives for years.  i would appreciate any guidance the community
+> wants to give about how seriously to take these configuration choices.
 
+Keep up the good fight.  And thanks for your thoughtful email.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Given the number of practical attacks against a variety of
+cryptographic algorithms and protocols lately, I have it in my head
+that we need far more *redundancy*.  Computers are really fast these
+days.  For the vast majority of applications, there's no reason we
+can't compute two hashes, combine two ciphers in CTR mode, and merge
+RNG output.  It seems the chain of trust in every cryptosystem is
+easily broken with a single break.  Newer, faster algorithms can let
+us get away with additional redundancy this without incurring a lot of
+overhead.  Something to think about anyway.
 
-iQIcBAEBAgAGBQJSgm+6AAoJEBYNRVNeJnmTnVsP/1A9khbtz2dSTrCfO//ZrDag
-qF2BJokhILhkUtM4lAwHpIlbO/uVD5CLLR4Y8g6gilR2fQDWa9GU6xeoejgH60NQ
-ZM65qVNFYbPgx0j/anfTigzhiLiFqvYCpubdsp+s8FvBvVh07VXhVjxl1UJfT5cU
-m7ifw274qYtyXfu+3pLAGXqYST0onJ0oB1UA6iEuTZRU2nK7KNaEZXCFHhIiNqMR
-iMMFCoJERJyvXCgf19LEbjn0XFrwHW9Qbqm+jDVjh/xEDhg4SJJ59sUdODbOaEQI
-HQroJhfA1IWdKUPmVWe57WdPsTFYGpvB5R6P7i0y7zeeoTl1jGUnoIiaSS/t/+Yn
-kjpq4uqFbGa6BgC7s+hjloGk031zouIRQ8vZyt67fIWC8qU7IOH1qpUx8mRwfFtq
-8smrDyWNPYEye3McYEw50GtSdrVy/EmCA+mClnskwY2GpcIPCK0X0OOzDrXgbbjC
-QSIKVcP/PuqTDA1JfiGYx6xq/KjtPSr5obJqQSH0sYoiIdMuBITIz8wsdOFOBhyo
-FoRy/c8nh8SFbxcolXpW/WCv/CYskVcOGClxXdsLEZ0tnvZUfTtNLeYcO/YfdN29
-TWNcCX0l6RZyoz6L+sP94HGLP+PYhLjZiv8cXktnJzX+LIeI1wyvbHI6588OvpkE
-0yYAJ1vStCWr3J5duQ1k
-=00La
------END PGP SIGNATURE-----
+tim
