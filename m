@@ -1,39 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/6
-Message-ID: <52A87A12.2070706@openstack.org>
-Date: Wed, 11 Dec 2013 15:43:30 +0100
-From: Thierry Carrez <thierry@...nstack.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE request for a vulnerability in OpenStack Nova
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/4
+Message-ID: <528596D3.3060902@redhat.com>
+Date: Thu, 14 Nov 2013 20:36:51 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Requesting four (4) CVE identifiers for GitLab
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public,
-although an advisory was not sent yet.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-"""
-Title: Nova live snapshots use an insecure local directory
-Reporter: Daniel Berrange (Red Hat)
-Products: Nova
-Affects: Grizzly and later
-
-Description:
-Daniel Berrange from Red Hat reported that the directories used to
-temporarily store live snapshots on Nova compute nodes were writeable to
-all local users. A local attacker with shell access on compute nodes
-could therefore read and modify the contents of live snapshots before
-those are uploaded to the image service.
-"""
-
-References:
-https://bugs.launchpad.net/nova/+bug/1227027
-
-Thanks in advance,
-
--- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
+On 11/14/2013 09:11 AM, Jacob Vosmaer wrote:
+> We have just released a new security advisory for GitLab at 
+> http://blog.gitlab.org/multiple-critical-vulnerabilities-in-gitlab/,
+>
+> 
+concerning the following four vulnerabilities:
+> 
+> - Unauthenticated API access to GitLab when using MySQL - Remote
+> code execution vulnerability via Git SSH access in GitLab - Local
+> file inclusion vulnerability in GitLab - Repository access
+> privilege escalation vulnerability in GitLab
+> 
+> We would like to request four CVE identifiers for these issues.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
+Nice blog write up, one note if you can post a copy with emails it's
+better in case the URL ever dies or something.
+
+CVE-2013-4580 GitLab Unauthenticated API access to GitLab when using MySQL
+
+CVE-2013-4581 GitLab Remote code execution vulnerability via Git SSH
+access in GitLab
+
+CVE-2013-4582 GitLab Local file inclusion vulnerability in GitLab
+
+CVE-2013-4583 GitLab Repository access privilege escalation
+vulnerability in GitLab
+
+
+> Thanks to joernchen of http://www.phenoelit.org/ for reporting
+> these issues to us.
+> 
+> 
+> Best regards,
+> 
+> Jacob Vosmaer GitLab.com
+> 
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJShZbTAAoJEBYNRVNeJnmTvPwQALLZnHWNwP6P4E8mtKz2c8J7
+v8+2n1vgTkJsUrxALogci6UnCPPC0z0+Xe8dKSY7Iti7V6aLmGIeRVZzTqDTTKfK
+gtBaOjR/PIAkzHDCkU/XXvXik555knE9SqvYQ3hR3baVZeh+zd1KacibcW03mahJ
+QDJUlT5x0KN6ZobxCUXzGChjsRclD5E3+Kyft2p2ndnqC5B0jS9iwUNVwTE2sGZw
+3pJTuNmjo73qXGNSeMWfv6QfXBpueU+W40Qiz3yTwLwzmHTU7BXr3joWZ12hEibx
+6CwJ2NYQmB9GJTlh/jVmrk42hfEcGmdYLWSw4nEQe2JD2CrfGfUTesCaOs9HNmOM
+T8AuzaSBSRpCt4dSBoRQ1NH2k8JiF21cWB1C1TGYrCFjKadzVY62VkJLP0WToF7y
+VOywzSuQQQAm7ZEznNE10XwReQnoZ0l9VgdACSEMmDOdiVwsSFnvPTiFDaM3YGru
+HUYOAXZ56ZXBsRjmC3kp0AWdPpLMOYN1rvfZKWhadNFP6IU8qw3t5JycEPj23Fzm
+l23ggiFmOdgHU6GJ7wCMB1V7Cds4dIYB91QGAdhMy7KB5Ujl2IonqVBqV0nEuHFf
+r67GGx0tvwVJYQJli68coowfZdbPRyP34/cQXcnsDdkYsFuPyEYo7IN5mReqCToh
+rjb7N6oMra/9b4iZ1DQC
+=DKCL
+-----END PGP SIGNATURE-----
