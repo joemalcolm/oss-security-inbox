@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/8
-Message-ID: <20130227063129.GZ1722@dhcp-25-225.brq.redhat.com>
-Date: Wed, 27 Feb 2013 07:31:30 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/15
+Message-ID: <CALi+ztEa-M_-WRoFN6bfBSyfQ+D4rgYa1dka1BV8-EMR7noV+A@mail.gmail.com>
+Date: Fri, 15 Nov 2013 11:18:33 -0800
+From: Chris Palmer <snackypants@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Subject: Re: cryptographic primitive choices [was: Re: Microsoft Warns Customers Away From RC4 and SHA-1]
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 26, 2013 at 09:03:46PM -0800, Greg KH wrote:
-> On Tue, Feb 26, 2013 at 11:41:53PM -0500, Michael Gilbert wrote:
-> > Anyway, on a more serious note, at some point, acceptance will look
-> > something like a real kernel-sec team that does essentially what you
-> > just did, but on a continual basis: reviewing most/all commits for
-> > potential security concerns and forwarding them to oss-sec to increase
-> > identification and awareness to be applied downstream.
-> 
-> I will say flat out that this is an impossible task to accomplish.
-> 
-> As proof of that, I suggest you do this for just one major kernel
-> release cycle (2-3 months long).
-> 
-> You do know the number of patches applied to the Linux kernel every
-> hour, right?
-> 
-> Would you have caught the patch that started this thread?  I sure
-> didn't, and I was the one who originally applied it to the kernel tree
-> in the first place.  Doing "root-cause" research for every patch is
-> non-trivial, as I know you realize.
+On Thu, Nov 14, 2013 at 10:58 PM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-For starters, security@...nel.org submissions should be posted to
-oss-security or any other security related public mailing list when the
-patch is being committed.
+> Compatibility, for example HTTPS, you can disable a lot but if you
+> only allowed one cipher chances are a good chunk of clients wouldn't
+> be able to connect. There's a LOT of software out there, some open
+> source, some commercial, some written in house, it all uses encryption
+> and signing (usually wrongly, sigh) and a lot of it cannot or will not
+> be updated any time soon, if at all. Think of all the devices that act
+> as a web client and will never have TLS 1.2 support (e.g. "smart" TVs)
+> for example. Would I prefer the world to ditch SSL, TLS 1.0 and 1.1
+> and move to TLS 1.2 entirely? Of course. Is it going to happen? Not
+> for a loooong time.
+>
+> Think of all the things that currently use (often older versions of)
+> OpenSSL/PolarSSL/GnuTLS/etc and will never get updated...
 
--- 
-Petr Matousek / Red Hat Security Response Team
+I posit that there is a strong correlation between un-updated,
+un-updatable software that did not ship with (for example) support for
+modern cipher suites and protocols, and software that should be
+recalled for a variety of reasons. Random example:
+
+https://securityledger.com/2013/08/samsung-smart-tv-like-a-web-app-riddled-with-vulnerabilities/
+
+Let's unpack your use of the passive voice: Who, exactly, is choosing
+not to update the OpenSSL they ship? Why do we forgive that?
+
+To an extent, even security engineers are acting as enablers, allowing
+obsolete software/protocols/cipher suites to live far longer than they
+should have.
+
+"LTS", "ESR", and not EOL'ing Windows XP 4+ years ago is a significant
+part of the problem.
