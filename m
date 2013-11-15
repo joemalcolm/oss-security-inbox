@@ -1,50 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/11/3
-Message-ID: <518DAA73.3000900@redhat.com>
-Date: Fri, 10 May 2013 20:18:27 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/2
+Message-ID: <52859617.6040608@redhat.com>
+Date: Thu, 14 Nov 2013 20:33:43 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: CHICKEN Scheme incomplete fix for CVE-2012-6122 (select() fs_set buffer overrun)
+To: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: Re: CVE Request: grub-mkconfig
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/09/2013 07:03 AM, Peter Bex wrote:
-> On Wed, May 08, 2013 at 11:07:02PM +0200, Peter Bex wrote:
->> There are two commits which together fix the bug: 
->> http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commitdiff;h=9e2022652258e8a30e5cedbf0abc9cd85a0f6af7
->>
->> 
-http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commitdiff;h=556108092774086b6c86c2e27daf3f740ffec091
+On 11/14/2013 05:04 PM, Seth Arnold wrote:
+> Hello Kurt, all,
 > 
-> Correction, this introduced a bug on systems where connect() can
-> return EINPROGRESS, resulting in an exception being raised when
-> connecting to a socket and immediately writing to it.  A third
-> patch is required to fix this bug: 
-> http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commitdiff;h=766056cd5f26b1d529405705449cb534609c113f
+> Please assign a CVE for grub-mkconfig.
+> 
+> grub-mkconfig on Debian and derivatives sets mode 444 on grub.cfg 
+> configuration files if there are no plaintext passwords in the 
+> configuration file. However, the permissions are still set world
+> readable if the password_pbkdf2 directive includes a hashed
+> password.
+> 
+> The original bug report and proposed patch is by Francesco Poli:
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=632598
+> 
+> Original compressed patch:
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=safer_grub_cfg_perms.diff.gz;att=1;bug=632598
 >
->  Cheers, Peter
+>  Patch, uncompressed and inlined:
+> 
+> diff -ruN a/grub-mkconfig b/grub-mkconfig --- a/grub-mkconfig
+> 2011-05-31 11:33:31.000000000 +0200 +++ b/grub-mkconfig	2011-07-03
+> 21:15:53.000000000 +0200 @@ -293,7 +293,7 @@ esac done
+> 
+> -if [ "x${grub_cfg}" != "x" ] && ! grep -q "^password "
+> ${grub_cfg}.new ; then +if [ "x${grub_cfg}" != "x" ] && ! grep -q
+> "^password" ${grub_cfg}.new ; then chmod 444 ${grub_cfg}.new ||
+> true fi
+> 
+> 
+> 
+> 
+> Thanks
+> 
 
-Please use CVE-2013-2075 for this issue.
+Please use CVE-2013-4577 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRjapyAAoJEBYNRVNeJnmTFKEP/ikEqJ3WOxMEo1EhvggwY6QV
-oTo5T14w6XVMTvbo+MTunojqHPqBUC2l4W0fYPFsTaLF3UTlJl7GiAf+v0d4YVDG
-Y/4GJg13Fef93IW5dQaAXn8gcxf6zswwmS619tbjE6Qi3IThlGK6pdoNnBjYbDIG
-m+3m2JR3pXXdDtzuJVtRjhz/LZA5aj3ZHGxyKsbT4kB1LEXBS4JJJBVPtRCAb9/B
-yntXaccjneaH2ngxe8oxv6PVTqX5f7mhMWZQUM770OkyOgeDZmd7qQhIGQlCKskl
-qye6zGRuOYstSYo9Symnv4UXebvrGmgcMmMsKnmiCLwd4zGHe1JB6u6F/6rF/rV+
-olli432bHI78rTUkRByNw509iD0gSKbhOn3+QGaTcZyzkXHqvib+W69qduLAl8kr
-11njmoWuTpf3+8B84KUJEqpSyKCZ2iidYge46utiFlgVIEnGYAnMT5G/rvU8a4nv
-sk4zt894rJIIVp5+S4Siz1kQP5hlplEKJlhH3lR77lXRhCGQZcFerJ8nIh6RHM3k
-l91X+Kd/NITybydAby5tA9RhT1xXuacbgehY5zYeuc2nSQl0N29Y4CRNJuZATChM
-V7iC1pyGPnlEH1CIIl7toJm2fEdnm+5tN6YYbF8fKJDoawZpOdTVkclAwkrYv6n0
-iNzGpGaeC2/pd/VtWTPB
-=YGIN
+iQIcBAEBAgAGBQJShZYWAAoJEBYNRVNeJnmTtykQANfZ6n3UlaLWAUa2BzT5+rIS
+YOOa7/F2cftHK/7zpGqAe50ZI4pB+Vq9PGIoi2exh5ulVxXpe3Gu8DbUOj4NoHVg
+sZ47rJMJThs+LG1TLNLP5VcyrBDHOHBRL2y0wBeDn4dftw1Tz+w+rBXInzSxIcxk
+W8RjA+OM+CoT+qAeGIvCXc5BZcQ59vVzVSD1qvJLIkf1GaZD+8zeYr4KwrlYY+Za
+P74QxC6yX0fhQ2AltxLaqMeHakRAVeuTddrP4VtOX0WcURizrVqfGCLPp90THADm
+emVrhR032IpTapY0voX+c5n9qipvitvbl9h3XDpWDBFluSNZ5NRjOxgWajSq4rAg
+PT7MUia1GkRyhfMVnmGT85cbET3/CdFkzKH+tuV7+E6tJhlvcTYHHBkslGjGK8fX
+KPX9BCxgOx+1HPpzTZnTNTxBsDkBurmW5JK4VG6H+Z3zJuXobnuNn90bItHVMz1t
+B/isfHRLHo8WbgvdJ4GQxuByOmVHuMv7BqrJpus6Wuavph7m6VMFaKRwKKUtwzOm
+JocjPrZ3nBh8GEmrLdhktUhtsRqLFOyjL6wNB/KRdZyy2lAK7/srn+o+x7DwHweh
+9goCkSLkCoM/GDehg5hEIR4YWDsEvdGGeMaUCk2XHGvQ3kC1EfhZnIRcfyxtHAVe
+cFwckbOjqim5oHW9h9Fg
+=DSXv
 -----END PGP SIGNATURE-----
