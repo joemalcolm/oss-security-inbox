@@ -1,67 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/26/5
-Message-ID: <20130726141637.GA15592@hesperos>
-Date: Fri, 26 Jul 2013 11:16:37 -0300
-From: Raúl Benencia <rul@...gan.cc>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/16
+Message-ID: <20131115193828.GA8495@hunt>
+Date: Fri, 15 Nov 2013 11:38:28 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: Joachim Breitner <nomeata@...ian.org>, security@...ian.org, adam vogt <vogt.adam@...il.com>
-Subject: CVE-2013-1436: xmonad-contrib remote command injection
+Subject: Re: cryptographic primitive choices [was: Re: Microsoft Warns Customers Away From RC4 and SHA-1]
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Thu, Nov 14, 2013 at 11:58:47PM -0700, Kurt Seifried wrote:
+> Think of all the things that currently use (often older versions of)
+> OpenSSL/PolarSSL/GnuTLS/etc and will never get updated...
 
-I've discovered a remote command injection vulnerability in xmonad-contrib.
-The vulnerability is in the XMonad.Hooks.DynamicLog module. It has been
-assigned the name CVE-2013-1436.
+This is an argument for agressively assigning CVEs. If we're going to
+have devices on our networks that are known to be a decade behind the
+state of technology we should clearly label them as the security risk
+they are. (TLS 1.2 is over five years old.)
 
-Background
-==========
-DynamicLog module feeds information to others programs about what's
-happening on xmonad window manager. Such programs generally are status bars
-as xmobar or dzen2. These programs features the ability of receiving
-formatted input from stdin, and that's the way used by xmonad to
-communicate information such as workspace status, current layout and window
-title. So far, so good.
+Thanks
 
-Both bars uses some meta-language to format their input. For example,
-xmobar will make the following text clickable.
-
-  <action=xclock>Click to clock</action>
-
-Vulnerability & exploit
-=======================
-As we know, web browsers usually set the window title to the current tab. A
-malicious user, then, can craft a special title in order to inject commands
-in the current bar. In xmobar this will be something like this:
-
-<html>
-        <head>
-                <title>&lt;action=xclock&gt;An innocent title&lt;/action&gt;</title>
-        </head>
-        <body>
-                <h1>Good bye, cruel world</h1>
-        </body>
-</html>
-
-So, if the user accidentally (or incidentally) clicks on the xmobar window
-title, the command will be executed. In dzen2 this is also possible,
-although I haven't tried to execute code. A (harmless) proof of concept is
-attached for both bars. The proof for dzen2 just changes the background
-color of the bar.
-
-Fix
-===
-A fix for this issue is already available in xmonad webpage[0]. A patch
-written by Adam Vogt can be retrieved from the commit in the darcs repo[1].
-If you use this module, please make sure to recompile your xmonad binary
-after upgrading the package.
-
-I would like to thank Joachim Breitner and the Debian Security Team for
-their help in disclosing this issue.
-
-Cheers.
-
-[0] http://hackage.haskell.org/packages/archive/xmonad-contrib/0.11.2/xmonad-contrib-0.11.2.tar.gz
-[1] http://handra.rampa.sk/dawb/patch?repoPURL=http%3A%2F%2Fcode.haskell.org%2FXMonadContrib&repoPHash=20130708144813-1499c-0c3e284d3523c0694b9423714081761813bc1e89
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
