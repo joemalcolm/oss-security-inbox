@@ -1,25 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/21/6
-Message-ID: <20130321142147.GA4602@kludge.henri.nerv.fi>
-Date: Thu, 21 Mar 2013 16:21:47 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/1
+Message-ID: <20131115000431.GA22216@hunt>
+Date: Thu, 14 Nov 2013 16:04:31 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Ruby CVEs
+Cc: security@...ntu.com
+Subject: CVE Request: grub-mkconfig
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 21, 2013 at 02:05:13PM +0000, Christey, Steven M. wrote:
-> I agree with Alexander.  The CVE assignment process is never intended to introduce unnecessary delays to the publication of vulnerability information.  Merely noting whether CVEs have already been requested should reduce most of the risk of duplicates without forcing people to delay publication.
-> 
-> - Steve
+Hello Kurt, all,
 
-There hasn't been any delays in publication of this security vulnerability.
-Advisory was made in different mailing list without CVE. This is the reason I
-asked him to request CVE identifier and pointed to oss-security mailing list.
+Please assign a CVE for grub-mkconfig.
 
-CVE got assigned. List knows about the issue. End of story. Next problem,
-please.
+grub-mkconfig on Debian and derivatives sets mode 444 on grub.cfg
+configuration files if there are no plaintext passwords in the
+configuration file. However, the permissions are still set world readable
+if the password_pbkdf2 directive includes a hashed password.
 
----
-Henri Salo
+The original bug report and proposed patch is by Francesco Poli:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=632598
+
+Original compressed patch:
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=safer_grub_cfg_perms.diff.gz;att=1;bug=632598
+
+Patch, uncompressed and inlined:
+
+diff -ruN a/grub-mkconfig b/grub-mkconfig
+--- a/grub-mkconfig	2011-05-31 11:33:31.000000000 +0200
++++ b/grub-mkconfig	2011-07-03 21:15:53.000000000 +0200
+@@ -293,7 +293,7 @@
+   esac
+ done
+ 
+-if [ "x${grub_cfg}" != "x" ] && ! grep -q "^password " ${grub_cfg}.new ; then
++if [ "x${grub_cfg}" != "x" ] && ! grep -q "^password" ${grub_cfg}.new ; then
+   chmod 444 ${grub_cfg}.new || true
+ fi
+ 
+
+
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
