@@ -1,59 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/19/9
-Message-id: <4036C1E8-7129-46B8-9B6F-8342114A058B@me.com>
-Date: Tue, 19 Mar 2013 09:49:02 -0400
-From: larry Cashdollar <larry0@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/13
+Message-ID: <20131115173031.GI2563@redhat.com>
+Date: Fri, 15 Nov 2013 10:30:31 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: CVE requests
+Subject: CVE request for graphicsmagick DoS
 Content-Type: text/plain; charset=utf-8
 
+I don't think this has been brought up here yet, but could a CVE be
+provided for the following?
+
+A vulnerability has been reported in GraphicsMagick, which can be
+exploited by malicious people to 
+cause a DoS (Denial of Service).
+
+The vulnerability is caused due to an error within the
+"ExportAlphaQuantumType()" function 
+(magick/export.c) when exporting 8-bit RGBA images and can be exploited
+to cause a crash.
+
+The vulnerability is reported in versions prior to 1.3.18.
+
+References:
+
+https://bugs.gentoo.org/show_bug.cgi?id=488050
+http://sourceforge.net/p/graphicsmagick/discussion/250737/thread/20888e8b/
+https://secunia.com/advisories/55288/
+http://sourceforge.net/p/graphicsmagick/code/ci/1a2d7a38363f7f23b63d626887d22d39c7240144/
+https://bugzilla.redhat.com/show_bug.cgi?id=1019085
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=729661
 
 
-> From: cve-assign@...re.org
-> Date: March 19, 2013, 8:27:40 AM AST
-> To: larry0@...com
-> Cc: cve-assign@...re.org
-> Subject: Re: CVE requests
-> 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> Here are three CVE numbers related to your latest message, and one
-> related to a previous message.
-> 
->> Hi, I've been asked to assign CVEs to the following vulnerabilities.
-> 
-> http://www.osvdb.org/show/osvdb/91232  fastreader CVE-2013-2615
-> http://www.osvdb.org/show/osvdb/91231  MiniMagic  CVE-2013-2616
-> http://www.osvdb.org/show/osvdb/91230  Curl       CVE-2013-2617
-> 
->> From: "Larry W. Cashdollar" <larry0@...com>
->> Subject: CVE requests
->> Date: Fri, 8 Mar 2013 20:36:20 +0000
->> Message-ID: <83661761-bee3-49c3-8bf8-acf0d4f8bc22@...com>
->> 
->> I was looking to see if the following vulnerabilities could have CVE numbers assigned to them?
-> 
->> http://osvdb.org/show/osvdb/89910
-> 
->> 89910 : Oracle Auto Service Request (SUNWswasr) asr Symlink Arbitrary File Overwrite
-> 
-> CVE-2013-1495 is assigned to this Oracle Auto Service Request issue.
-> 
-> - -- 
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.11 (SunOS)
-> 
-> iQEcBAEBAgAGBQJRSFkhAAoJEGvefgSNfHMdXawH/2QxH/nUlmBbeI+ZHzNqQPTx
-> mEMofROmq9/N8Cvb7rewjWo6AgOVgHWUwWlXBoTtCuO7/PSp42RUTdXa2gM90kjv
-> FNtwazw58LB+RZBZTgTdwMiMH5ltSAFIHDjc5agQpJxdQTBNFtxDlbzSMIkTbqSQ
-> wS9rz3r4cHnfPj5cV2WPBMR2B3doQriWeJn20sOBg9C5sTaR5NYLk9PBRRNvLDf+
-> 0XtASjxDppTbwDRuvxWo5H4yAMprtflWlp8wwK86zzvBbU9/qrDzE2WAc8ukb96m
-> VwDM9wrncGVZTSYqQxwGBrElhH4V03XmDSL6CpOwbKfiI2J0Tyk93r1ts5ndX+o=
-> =VCQx
-> -----END PGP SIGNATURE-----
-
+-- 
+Vincent Danen / Red Hat Security Response Team 
