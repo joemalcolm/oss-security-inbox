@@ -1,74 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/18/11
-Message-ID: <517052A9.60606@redhat.com>
-Date: Thu, 18 Apr 2013 14:08:09 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/12
+Message-ID: <52862675.3090609@redhat.com>
+Date: Fri, 15 Nov 2013 06:49:41 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Thomas Pollet <thomas.pollet@...il.com>
-Subject: Re: plone, rrdtool, zenoss bugs
+Subject: Re: CVE request: Linux kernel: net: ipvs stack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/18/2013 06:05 AM, Thomas Pollet wrote:
-> Hi,
+On 11/15/2013 01:42 AM, P J P wrote:
+> Hello,
 > 
-> I reported a csrf bug in plone pluggable authentication service,
-> fixed in 4.2.5 http://plone.org/products/plone/releases/4.2.5 "
-> CSRF protection for the ZODBUserManager, ZODBGroupManager, 
-> ZODBRoleManger, and DynamicGroupsPlugin plugins."
-
-Was this previously exploitable, or is this just a hardening measure?
-
-> Also, the rrdtool python module crashes on format string exploit $
-> python -c "import rrdtool 
-> rrdtool.graph('/tmp/out.png','-f','%n%n')" Segmentation fault
-
-Have you notified upstream?
-
-> this module is used by zenoss to create graphs (zenoss users are
-> able to pass arguments to rrdtool).
+> Linux kernel built with the IP Virtual Server(CONFIG_IP_VS) support
+> is vulnerable to a buffer overflow flaw. It could occur while
+> setting or retrieving socket options via setsockopt(2) or
+> getsockopt(2) calls. Though a user needs to have CAP_NET_ADMIN
+> privileges to perform these IP_VS operations.
 > 
-> On zenoss, I reported some bugs to them (and to this list) which
-> have been fixed in the latest release (4.2.3). for example, zenoss
-> displayed syslog and snmp input without filtering html characters
-> which results in xss.
-
-This was done via rrdtool backend, or something else as well?
-
-> example syslog exploit : echo '<130>' Aug 29 07:17:34 test '<xss>'
-> | nc -u zenoss 514
+> A user/program with CAP_NET_ADMIN privileges could use this flaw
+> to further escalate their privileges on a system.
 > 
-> another bug was that the test_datasource feature doesn't escape the
-> snmp oid which is passed by zenoss to the shell as an argument for
-> the snmpwalk command example: https:// 
-> [ZENOSS_HOST]/zport/dmd/Devices/rrdTemplates/Device/datasources/sysUpTime/test_datasource?data={%22newId%22:%22DetectedVirus%22,%22oid%22:%22$%28ls%20%3E%20/tmp/pwn%29%22,%22enabled%22:%22on%22,%22testDevice%22:%22127.0.0.1%22,%22uid%22:%22%22}
+> Upstream fix: ------------- ->
+> https://git.kernel.org/linus/04bcef2a83f40c6db24222b27a52892cba39dffb
 >
->  http://jira.zenoss.com/jira/browse/ZEN-3183
+>  References: ----------- ->
+> http://seclists.org/fulldisclosure/2013/Nov/77 ->
+> https://bugzilla.redhat.com/show_bug.cgi?id=1030800
 > 
 > 
-> Cheers, T
-> 
+> Thank you. -- Prasad J Pandit / Red Hat Security Response Team
 
+Please use CVE-2013-4588 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRcFKpAAoJEBYNRVNeJnmTWO0P/26BYjgPDb1jRjNL84MLiD55
-fe2iGW0DjTjT8EjegE1jtjBazUdtn45Eis3ZFmgZEnTwXUBoaED43fCRKpbyu/vW
-nZBGSNkJldWR3uxEU3N14J7Ab+5K7DkpahIAta0mhEorTdtzvvjJT1+vVdibiSkd
-F/SfE2BjsgXxmlbPMjcF1WN+sF5eengDTOlCnrD7AsAXYtnexvMOMJBK+iMtdQW8
-ChrIMhef5P5d1mYRAz7vHcFwttB14aWUSQn5Fyi40FMZMAeA9XQQ9MskP7te89mu
-n9YaQvqxjnO+macpPbZZnX1xdWJU2TMiP4cDcNLgKVp1QcxoK517aJMrs2tMK2tn
-QZ7SMHDx90gBsXKytXHOIEHJHUCEQD+qxIyFEVeQeKWLx9eQNhbglMBFnw+SGgyY
-c51DRamjSlqtPHzOTntsSw7mlcdDbAEImFj+NdCxZiXMQZv3NY0+YflJe0M8/cbz
-pFiwkjla/IwddfkXgZx/YnsSkTSGOBvYs15pJTz7nXgpfLPxHQlSDX3bjTehQY+u
-kEXaycf0/QbLBDa/jxJp/SDt3RxkI2sgtcChHACrIXt2MDbpq3k1XZRwxyQT/L1A
-/PhtTAcpFbIgf5GSNdmz5i5kOIhwqtlvALA252MKV9Jd+NWOJcfOTjgHregZcSV5
-XF7qZdYV9xPLMLHZTKLU
-=7hTc
+iQIcBAEBAgAGBQJShiZ1AAoJEBYNRVNeJnmTnlIQANaGT3+5IHHSwr9aHibkS2+A
+H9mGwCNcvcgcmfXwdFLsK8mccE3GVdFK4llSYBg5qJZiO+F5fkGYkt3PG84D9+QB
+nkuXOr6brtblYThs7qcsPS55YLvFpe6shq+ujJypHiy39EeQj8WqbyOq/T+U2gnu
+o8tL/Evc/Q34hteKt57nDQLDfHYImH8phyZJz9ooZTQHa+hLnDPA0Lu1669MUkKU
+IrOGzMfP1EeMi72+PdcTk64C9G2jIw0FOjWtEdO6R7kUH5JW8qQdt2jfYxbmeOsd
+OFKiQC+OCzQuxrgOpU8A9J+SPxLCcx1ni/w5WGOCJhHCln3qFm0VOnKDL5ZagyXO
+ru+4jxiox9/tpZ+/OYlhiWm2k8PBxkNAUnBx7j7JSj5Udp7Ir1XUoQ50lFo9CYlb
+Fo7DxsZfUa6rFKEQH48D5tb2hGzPlBMkXK0bIXFqan+kJEXafEeNJW6kMWOnS/dG
+C+jLsgjP05oj7WuiqkysQFl0b/IMxIyumwQmHa7TUVK2MHd+9RmPxKyMgUxDrEMh
+upxNbGp6KIAVL0IzxD17Wt9j2w+xPMjPbifCHPZOQcXqFPJ2W2EXrvh+tsJJ7srS
+D1T49RhietVozcZVsiMqvQ/9gJBU9Vsq1IOBF9ZC2pwvk8sISYNBKuTFOt6q+O29
+nw3JXUXq/QGhAv/l7Wjf
+=DtLs
 -----END PGP SIGNATURE-----
