@@ -1,26 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/9
-Message-ID: <20130220081904.GA27144@ugly.local>
-Date: Wed, 20 Feb 2013 09:19:04 +0100
-From: Oswald Buddenhagen <ossi@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/6
+Message-ID: <52859C15.9080704@redhat.com>
+Date: Thu, 14 Nov 2013 20:59:17 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: isync/mbsync security advisory: missing SSL subject verification (CVE-2013-0289)
+CC: 729028@...s.debian.org, Simon Horman <horms@...ge.net.au>
+Subject: Re: perdition: ssl_outgoing_ciphers not applied to STARTTLS connections
 Content-Type: text/plain; charset=utf-8
 
-Christian Schneider <software [at] chschneider [dot] eu> discovered that
-isync does no SSL subject (hostname) verification.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This means that any host with a valid certificate could pretend to be
-the wanted host, as long as the certificate store contained the relevant
-root certificate. This could be used for man-in-the-middle attacks, which
-could be used to steal passwords.
+On 11/13/2013 12:21 AM, Daniel Kahn Gillmor wrote:
+> Perdition, the IMAP and POP proxy server, fails to apply the 
+> administrator's specified ciphersuite preferences when making
+> outbound connections to IMAP and POP servers using STARTTLS.  For
+> these outbound connections, it applies the administrator's
+> listening ciphersuite preferences, which in many cases may be
+> significantly weaker.
+> 
+> This was first noted publicly on the debian BTS:
+> 
+> http://bugs.debian.org/729028
+> 
+> All versions of perdition up to 2.0 appear to be affected, and the
+> fix is a one-line patch.
+> 
+> This is not a critical vulnerability (it can be mitigated, for
+> example, by enforcing a strict minimalist ciphersuite on the
+> backend server), but in the absence of any such mitigation, it may
+> cause the connections between the proxy server and the backend
+> server to negotiate a weaker ciphersuite than the administrator's
+> stated intent.
+> 
+> Could a CVE be issued for this issue?
+> 
+> Thanks,
+> 
+> --dkg
+> 
 
-Workaround: Specify a CertificateFile which contains only the wanted
-host's certificate, thus disabling trust chain based verification. Early
-versions of isync's SSL support tried to enforce this mode of operation.
+Please use CVE-2013-4584for this issue.
 
-Isync releases 0.4 up to including 1.0.5 are affected. Version 1.0.6 has
-been just released to address the issue.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-Download: https://sourceforge.net/projects/isync/files/isync/1.0.6/
-Patch: http://isync.git.sourceforge.net/git/gitweb.cgi?p=isync/isync;a=patch;h=914ede18664980925628a9ed2a73ad05f85aeedb
+iQIcBAEBAgAGBQJShZwUAAoJEBYNRVNeJnmTBjwP/A2Vlei1HYf9w8wFNcOkwyLd
+1ZDKp4zaRymcVlrWYvm4bDXuHh0VWe84o1bGM5YHpQ5RXNSAQ7nzwHtIKKp9vbL8
+r7Zd5bUwTHLIAs2J+fA10CIDaOma7LJFeUKLPMr2IJtV+ZssKVlazVm+oniQPEkR
+PoQZyWYAM/kjs4KOsabW6c1eRLcew4BCimKdnFEfg+JWyC84Jn9DWMD09RwpUexN
+vkiMs3oohqkfXFSS6LnSnYN9h/Ni1otJmbjp0tyFu/+MMCk5w2XehnIUB3RuPdwW
+HaVxjyXzALQWIMn4PZ9xowtmXjyj1/tsKEfYh/2jkb1ll7t+PUnE3NtxXKnzLAXb
+JXa9zmyOZ4TS1j9bfL8A99BgkcdQcfQeWpx/5IgN4yiNcPpRDSKKUUpUVUuknydP
+rf9hzvIh/F0kzgSIHbPZ6HwlC6AWksx8jdwQ8+Xvpks97CP3OA/2pLgdfpKSjwPX
+giEWeFjkxEdinYZr9jeoz/tSz/NwVVkC/R7kc3ncRPOBuzucm8sFhwJQ4T8QWTDd
+Kz09I1twWnoY4kTCdeVdKMwVmsz6YRwka3XIjQnmJEIGb0tDxFbZDozLFQxYgkic
+t1ireQQPK084k9wAVjvh2ZrcHJXnjZ6MyFvgucrPgQWJXXy084xC8kNpO/6eFAFs
+GDFmRUBuNGPWzDmKl2yt
+=J/Xd
+-----END PGP SIGNATURE-----
