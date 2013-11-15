@@ -1,37 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/3
-Message-ID: <52A552CB.10808@redhat.com>
-Date: Mon, 09 Dec 2013 15:19:07 +1000
-From: Nick Coghlan <ncoghlan@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/20
+Message-ID: <20131115222314.GM28665@sentinelchicken.org>
+Date: Fri, 15 Nov 2013 14:23:14 -0800
+From: Tim <tim-security@...tinelchicken.org>
 To: oss-security@...ts.openwall.com
-Subject: CPython hash secret can be recoved remotely
+Subject: Re: cryptographic primitive choices [was: Re: Microsoft Warns Customers Away From RC4 and SHA-1]
 Content-Type: text/plain; charset=utf-8
 
-Software: CPython
-Vendor: Python Software Foundation
-Vulnerability: remote target-specific CPU usage DOS
+> You cannot easily update an openssl 0.x version to 1.0.x if you ahd
+> no symbol versioning set up as the symbols overlap and you would need
+> to rebuild _all_ software using libssl, inlcuding libcrypto.
 
-This is a followup to CVE-2012-1150 (hash table collision CPU usage DOS
-in CPython)
 
-http://bugs.python.org/issue14621 points out that the hash secret in
-CPython can be recovered remotely, so while the original fix addressed
-the "blind DOS" problem (of being able to DOS any Python based service
-with a single prepared payload), it didn't completely eliminate the
-potential for remote DOS attacks based on hash collisions.
-(http://bugs.python.org/issue14621#msg173455 has the details)
+These are all good points.  SSL/TLS truly are used all over the place
+and updating is not easy.
 
-Python 3.4+ will use SipHash by default
-(http://www.python.org/dev/peps/pep-0456), which should resolve the
-vulnerability completely.
 
-Regards,
-Nick.
+But I don't think the act of assigning a CVE has anything to do with
+"is it hard to fix?", does it?  In assigning CVEs for weak crypto,
+MITRE and the community is saying "there's a problem here".  Vendors
+don't *have* to fix it.  Users don't *have* to listen to MITRE.  Will
+it put pressure on vendors and users to fix?  Sure, of course, and
+that's a good thing.  But difficulty of providing backward
+compatibility should not be a consideration in my view.
 
--- 
-Nick Coghlan
-Red Hat Hosted & Shared Services
-Software Engineering & Development, Brisbane
 
-Testing Solutions Team Lead
-Beaker Development Lead (http://beaker-project.org/)
+With that said, I still stand by previous argument that we must assign
+CVEs for this kind of thing judiciously, and only when there's a
+demonstrable attack.  At least a sound argument must exist, in theory,
+that a real attack could be conducted.
+
+
+And a final note about backward compatibility:  If I use an SSL/TLS
+library that supports RC4, but only chooses RC4 as a last resort
+during negotiation, aren't I ok?  I was under the impression that the
+SSL/TLS handshake validated that no one could tamper with the list of
+supported cipher suites advertised by each end of the conversation.
+So, if a library only falls back to RC4 for compatibility, then I
+don't think such a thing deserves a CVE.  The CVEs should be assigned
+to implementations that *prefer* weak ciphers or support *only* weak
+ciphers.
+
+Cheers,
+tim
