@@ -1,34 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/4
-Message-ID: <20130111034756.GA15908@hunt>
-Date: Thu, 10 Jan 2013 19:47:56 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/19
+Message-ID: <CAFp7Qwrjn6dWddmW4bm=p4Uudtz0NLqArkAV+W7-ejC7kx1E6A@mail.gmail.com>
+Date: Fri, 15 Nov 2013 22:47:14 +0100
+From: Josef Šimánek <josef.simanek@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org, security@...ntu.com
-Subject: CVE Request -- Axis2/c
+Subject: CVE request: RubyGem omniauth-facebook access token security vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, all,
+# RubyGem omniauth-facebook access token security vulnerability
 
-In November, I asked if a CVE had been assigned to Axis2/C for failing
-to check hostnames when validating SSL/TLS certificates:
-http://www.openwall.com/lists/oss-security/2012/11/07/1
-This was part of the fallout from this paper:
-http://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf
+There is a security vulnerability in the omniauth-facebook <= 1.5.0.
 
-I was not confident enough in my reading of the source code to say that
-Axis2/C was vulnerable, so I did not pursue the issue at the time.
+    Versions affected: <= 1.5.0
+    Fixed versions:    >= 1.5.1
 
-Since then, I have re-read the code, emailed three developers privately,
-emailed the axis-c-dev mail list, and filed a JIRA bug report. None of
-these communications have received any kind of response.
+## Impact
 
-https://issues.apache.org/jira/browse/AXIS2C-1619
-http://mail-archives.apache.org/mod_mbox/axis-c-dev/201301.mbox/browser
+Because omniauth-facebook <= 1.5.0 supports passing an access token
+directly in the URL, an attacker may be able to authenticate as
+another user by passing a valid access token obtained from Facebook
+for another app.
 
-Please assign a CVE for Axis2/C for failing to validate hostnames when
-checking SSL certificates.
+If you're currently using this feature, and passing the access token
+directly, you should change your integration to use one of the secure
+methods using either a signed request or the code flow. These secure
+methods are default, so unless you are explicitly passing an access
+token you should not need to make any integration changes to upgrade
+to 1.5.1.
 
-Thank you
+All users running an affected release should upgrade to >= 1.5.1.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+## Releases
+
+The 1.5.1 releases is available at the normal locations.
+
+## Workarounds
+
+None.
+
+## Credits
+
+Egor Homakov (@homakov)
