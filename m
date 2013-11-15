@@ -1,54 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/6
-Message-ID: <525E2910.7030103@redhat.com>
-Date: Tue, 15 Oct 2013 23:50:08 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request : poppler < 0.13.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/11
+Message-ID: <alpine.LFD.2.10.1311151408030.26561@javelin.pnq.redhat.com>
+Date: Fri, 15 Nov 2013 14:12:52 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request: Linux kernel: net: ipvs stack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+    Hello,
 
-On 10/14/2013 06:38 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> Kurt? Could you assign a CVE please?
-> 
-> SUSE is affected by this in SLE11.
-> 
-> Ciao, Marcus On Wed, Sep 18, 2013 at 09:53:33AM +0200, etienne
-> wrote: Hi, I'd like to request a CVE number for the following
-> issue 
-> http://cgit.freedesktop.org/poppler/poppler/commit/poppler/DCTStream.cc?id=fc071d800cb4329a3ccf898d7bf16b4db7323ad8
->
->  The bug has been fixed in poppler 0.13.3, back in 2010, though it
-> is still present and exploitable in several distributions.
-> 
-> Thanks,
-> 
-> Etienne
+Linux kernel built with the IP Virtual Server(CONFIG_IP_VS) support is 
+vulnerable to a buffer overflow flaw. It could occur while setting or 
+retrieving socket options via setsockopt(2) or getsockopt(2) calls. Though a 
+user needs to have CAP_NET_ADMIN privileges to perform these IP_VS operations.
 
-Please use CVE-2010-5110 for this issue. Apologies, we had
-Thanksgiving so I was out for a few days.
+A user/program with CAP_NET_ADMIN privileges could use this flaw to further 
+escalate their privileges on a system.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Upstream fix:
+-------------
+  -> https://git.kernel.org/linus/04bcef2a83f40c6db24222b27a52892cba39dffb
 
-iQIcBAEBAgAGBQJSXikPAAoJEBYNRVNeJnmToJkQANAi0Hz6HxDvwrK6MshUbrLj
-JmL9s4uZKni8eiVFVxmx30Kwrmct9guWebm9nyMs8Zjw+nOX8tyfXB2UJt4klyYi
-wb8UruqBWmOg329DYKWV0NgQ09V9e2mCOiW6Fjl0DPnRVipr3H55mvvQi4nQhgAA
-NU3QcJ93eFJeXZInav+1kaG3qz0/qUDiV+IPClscEYNG0IuC5fAbGYqUsKiZbkrq
-2+1mdoiTSTv7GIcYcr5l4bUaR/0c/smZKeobDHByNeGgPQZy7KYrD26U4cL+Jl+E
-Sv6On2eNkSnZjnLBJPuVAv5dZfRG77kgGxSY65emaukCWq9yRnNnL1KSG1hHbD48
-ya18BJmOrDBWdCDcReVW1kPK6fMkS8hmnaZEprKVHjJLslP9qTLBPqbNTaUx81n3
-OkNLCRlxaGOOi0njeZ4gY+hy5ccMcYuz5TFwKsXIXSrc0EdFtZSdyOsbUw9TRAI1
-5TWpCfjJ2q+tQolTCbPOx2AzrNeoLRCM9VFyESSO89VndCPdZd+809C8mlcjWjnk
-ikfFRDXjqu8M5hvZMGs0fsKtNJejFepvbCbgaquAZ1+o20Gwv2I2KQLLCH9M5vNJ
-H6jvw1MawDrzQUNZpwDZD4slpU9l4PJNa4XF4ds67A0hS/fWxtInd/EdXvzxuMiS
-/h5MK4NPZICoIga0vccG
-=vyNv
------END PGP SIGNATURE-----
+References:
+-----------
+  -> http://seclists.org/fulldisclosure/2013/Nov/77
+  -> https://bugzilla.redhat.com/show_bug.cgi?id=1030800
+
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
