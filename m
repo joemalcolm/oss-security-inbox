@@ -1,46 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/18/1
-Message-ID: <2252220.kyydmObEyQ@devil>
-Date: Mon, 18 Mar 2013 16:36:40 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/8
+Message-ID: <5285B191.70000@redhat.com>
+Date: Thu, 14 Nov 2013 22:30:57 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CLONE_NEWUSER|CLONE_FS root exploit
+Subject: Re: cryptographic primitive choices [was: Re: Microsoft Warns Customers Away From RC4 and SHA-1]
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 13 March 2013 18:33:00 Greg KH wrote:
-> On Thu, Mar 14, 2013 at 09:03:20AM +0800, Eugene Teo wrote:
-> > On 14 Mar, 2013, at 8:59 AM, Eugene Teo <eugeneteo@...nel.sg> wrote:
-> > > On 13 Mar, 2013, at 11:39 PM, Sebastian Krahmer <krahmer@...e.de> wrote:
-> > >> Hi,
-> > >> 
-> > >> Seems like CLONE_NEWUSER|CLONE_FS might be a forbidden
-> > >> combination.
-> > >> During evaluating the new user namespace thingie, it turned out
-> > >> that its trivially exploitable to get a (real) uid 0,
-> > >> as demonstrated here:
-> > >> 
-> > >> http://stealth.openwall.net/xSports/clown-newuser.c
-> > >> 
-> > >> The trick is to setup a chroot in your CLONE_NEWUSER,
-> > >> but also affecting the parent, which is running
-> > >> in the init_user_ns, but with the chroot shared.
-> > >> Then its trivial to get a rootshell from that.
-> > >> 
-> > >> Tested on a openSUSE12.1 with a custom build 3.8.2 (x86_64).
-> > >> 
-> > >> I hope I didnt make anything wrong, mixing up the UIDs,
-> > >> or disabled important checks during kernel build on my test
-> > >> system. ;)
-> > > 
-> > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?
-> > > id=aea8b5d1e5c5482e7cdda849dc16d728f7080289> 
-> > I realised that the link is incorrect. Will post again when I see the
-> > patches.
-> It is commit e66eded8309ebf679d3d3c1f5820d1f2ca332c71 in Linus's tree,
-> so replace the sha in the above link with this one instead.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Someone know exactly in which version the bug appears and which series are 
-affected?
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+So after some though I think what's really needed here is to decide
+what are safe limits for the encryption/hashing of data. E.g. Using a
+"weak" encryption algorithm like 3DES for something like an SSL
+connection to a website for a single banking transaction is a LOT
+different than using that 3DES to protect the transfer of data that is
+sensitive in the long term. So some factors to consider:
+
+1) How long is the data sensitive for? Does the sensitivity decay over
+time or stop being sensitive at some point? Basically is there a time
+limit on how long the attacker has to decrypt the data for it to be of
+any use.
+
+2) Is the data transmitted over networks? third party networks?
+completely random public networks? My bank has no control over where
+customers log in from for example. Log ins from within a company
+controlled network can be more tightly controlled. Basically how
+likely is the data to have been exposed to an attacker?
+
+3) Is the data stored? E.g. an SSL session is typically not stored,
+but encrypted health records are stored for a long time.
+
+So essentially in my head I see a couple slider bars, as they go
+towards the riskier end of the spectrum (e.g. protecting a CA
+certificate vs. protecting a single SSL session) stronger encryption
+is needed. But I'm not sure where to place those limits. Do we come up
+with something like a CVSS2 score (E.g.: a scenario where the exposure
+is high, time sensitiveness is low and the data is not stored, so a
+score of 6.3 which means RC4 is to weak or whatever). I think general
+rules of thumb are probably ok, like:
+
+DES is not safe at all
+3DES is not safe for stored data, but may be safe for data transfer
+that isn't sensitive for a long time
+and so on.
+
+Same goes for hashing algorithms. These would also be useful as
+software development / configuration guidelines. Thoughts/comments?
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJShbGQAAoJEBYNRVNeJnmTGL0QAMvLf7zuvbK/D1k7d3NCR9pd
+IaV+6TiL8pHThQrZto7HA5TnFoHm8/uLuKDlzfdE2iFKRH9pcLVGvqtX1v9LW5u+
+TYlbcRxmFOg8/nteLgcXYQwkHIDN6LQDFhCQirt7bR01Nw6kWUHWB5CB7DIJE+bs
+Ox7eT0D08as55fj2dU8QAM6+LAodOZT2qVqkBF+dJiyxi7M1cU2PwCPZIVLTZnh7
+lHklTY+O2qs7Dbbjcq65/Lsj+LiyHzHtBu8lpw0SWMnL3octddkI1e8janZRWJbA
+nq4GmIaG+PTRcHdTgdt5GEV3GqR/WbrKXTTYR9rdM2E3jSBoVMQcx++QL1GRvYYj
+YgiUwgbpFQZZz9XON7Ghi0IkxekJfqBgVEIoWhcprAYYEqCJNFpLw3tuB7bbCoDR
+KOA1DF7v19Axy2Vcm6ztNErR2hTIQowwWGpVVzbU8iC0eKm3MKuwun8v2DdS6ZtJ
+IYozgalGjajhbXPZozO44yNOpuo9nnTyqxFcwUwVG8JEqBcphmA8QQ4SqvwtTfgU
+ZBmXP9Fv2Gc5QD15ujI4UukcWZs3FP3DS54t2v0P3f7GtPXYtnYz0p7X68V/yu5Z
+h3susAV10IIEPk5IjNH0Awqf2PCUvKZ2SBhXaEL2PI5LGVP8Q6oT63tuGoO6UwpA
+dsPTc5PB1cxWd2Z9cAjk
+=bc4p
+-----END PGP SIGNATURE-----
