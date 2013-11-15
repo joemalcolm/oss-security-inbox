@@ -1,51 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/5
-Message-ID: <512DA6C1.5010608@redhat.com>
-Date: Tue, 26 Feb 2013 23:25:05 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/3
+Message-ID: <528596A1.4030403@redhat.com>
+Date: Thu, 14 Nov 2013 20:36:01 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Jason A. Donenfeld" <Jason@...c4.com>
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Subject: Re: CVE request: ath9k_htc improperly updates MAC address
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/26/2013 04:05 PM, Jason A. Donenfeld wrote:
-> On Tue, Feb 26, 2013 at 10:05 PM, Kurt Seifried
->> The problem with security is you have to basically do it 100% 
->> correctly 100% of the time, otherwise things fall through the
->> cracks (like this VFAT thing).
+On 11/14/2013 03:03 PM, Mathy Vanhoef wrote:
+> Hi,
 > 
-> Also, what about the tmpfs one from yesterday? Nobody involved in
-> the patch reported that as a security bug to this list, until I saw
-> it myself, just by chance, as a random person on the internet, and
-> posted it to the list. In that case, it was clearly marked
-> "use-after-free", but nobody involved requested a CVE.
+> 
+> 
+> This concerns a bug in the ath9k_htc driver: When a user
+> changes/spoofs their MAC address, an attacker can retrieve the
+> original MAC address, which is a potential privacy risk. Debian bug
+> report: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=729573
 
-That's my point. We're not doing this 100% of the time 100% correctly
-due to resource constraints, and I highly doubt we ever will, again
-due to resource constraints. That and reality, proving negatives is
-hard and all that.
+Nifty, please use CVE-2013-4579 for this issue.
+
+> 
+> Background of the bug: 
+> http://www.mathyvanhoef.com/2013/11/unmasking-spoofed-mac-address.html
+>
+> 
+> 
+> 
+> The cause of the bug is in ath9k_htc_set_bssid_mask [1]. Here the
+> MAC address of one of the virtual interfaces should be picked as
+> the new main MAC address of the device. However the main MAC
+> address (stored in common->macaddr) is never updated. The ath9k
+> does implement this properly and sets the main MAC address to the
+> MAC address of one of the virtual interfaces (by first writing it
+> to iter_data->hw_macaddr and then copying it over to
+> common->macaddr [2]). Note that ath_hw_setbssidmask updates the
+> main MAC address register for both the ath9k and ath9k_htc drivers
+> [3].
+> 
+> 
+> 
+> Can a CVE please be assigned?
+> 
+> 
+> 
+> Cheers,
+> 
+> Mathy
+> 
+> 
+> 
+> 
+> 
+> [1] 
+> <http://lxr.free-electrons.com/source/drivers/net/wireless/ath/ath9k/htc_drv
+>
+> 
+_main.c?a=microblaze#L145>
+> http://lxr.free-electrons.com/source/drivers/net/wireless/ath/ath9k/htc_drv_
+>
+> 
+main.c?a=microblaze#L145
+> 
+> [2] 
+> <http://lxr.free-electrons.com/source/drivers/net/wireless/ath/ath9k/main.c#
+>
+> 
+L831>
+> http://lxr.free-electrons.com/source/drivers/net/wireless/ath/ath9k/main.c#L
+>
+> 
+831
+> 
+> [3] 
+> <http://lxr.free-electrons.com/source/drivers/net/wireless/ath/hw.c#L118>
+>
+> 
+http://lxr.free-electrons.com/source/drivers/net/wireless/ath/hw.c#L118
+> 
+> 
+> Disclaimer: http://www.kuleuven.be/cwis/email_disclaimer.htm
+> 
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRLabBAAoJEBYNRVNeJnmT2qsQANeImRW8lghq8GbUC8XRo6CY
-OFybn2zn9pFQwB/hdlkq9ziXVwv0LiyRPkOLy89+FxC0TuTTYCb5Pa2bmowgLmVW
-52IqinnNuW2IpFG5njNC0i0YDWekYXg++kzpBDWmmGGhW4CxlvS8prI14c/xTgaR
-1CEQblDWs4HGru1ieKVTdLZRKTvXQo+HGvVjYHTAdh/4OPwnlDz9KS+q55qbLeKC
-E5D398Tz0cR4vPh0SgXoeMEezjAQgbcGB34CQpN/YLmwGozTzo0VOwh3EAh966Ja
-wsbWil0sFSfl8CAGf72C53q4o+zFExmhMLzCD50ytyl7P1lmS5JK+NPlg0YPHEB2
-24vv/65pyg5QSWfrZC7a/auo7y0CzNavDoJNzO2WENdsYF1M/UyycUwzI92O+Sdv
-5ALo3t89pedtVgfyUVRyBa4+dUTJcT/ym4rBcLcqsPGdUN9tZtYQd1P7t7eQCicM
-r0y/+vMRYkG3QEyLvvVKGrU/Kap+64vjfV6bF/ZrtIOrn4kNZoL1Rq6qEWD6u97k
-Mr0y0ur3KlAH24R72H1fdOgMkXjGOCVvKWh/4OaNlV0vpvw5NfiEfppuND87ZRzA
-Dxjr7K0HycCRrjBhX8ZBq1OikoKDgx/48D8pk+XmhERbpt+bL5GmJjMZaCDQOgvx
-JgqgVa2ZfZlzitfaThU9
-=UfRA
+iQIcBAEBAgAGBQJShZahAAoJEBYNRVNeJnmTrY8QAKqpmcLHP4uKj0G5XJa6kim/
+flveF69o9xzumM3Is+CYhA4XXzvVp7ibFIXgUKLc8TjNX7K7xJ/KssIrOw34SlG9
+vX4oXSvtHFDgvteF/ZzRwe/yfxtJH9EN2T8vHSUUNgkJxmmE31R5SWIcVQRHHH9Z
+yn6JxnTWSTs+fsme7j80hsrIXWQghdDTz38BAyCKM4QysV74Ke6aaFljeK/zwJxK
+wDIr0CMwTnApjzq1jNnqApuM41K9qCQFp/1U5XrWmbFXoj8N+wq2TWQug9Xpxgpw
+0+c4U2sqDR4Ea/OyCT8C8EYzhX1UPzSCDEKAs77FIFvslbNI8VwHs9jDKqk6RaJ5
+igSbD5GIZ5islRJgVT18jWZPHVyaZKKo9LVxO7xQjowi0oVMWMLQuyXQqtone5ox
+QyBnI4Aiuou57RfTB+/8pNBtZmbDJZ/AKpAyjMDxGO1DzY10pk1DgqGj7c0DmCtH
+HTAQvbgSRoOGj1+cYEDKOSOeXLGrZrbBec2HTfVksynLNhyXWC5Vh6FwqtZXFMcK
+fyxnojR2AQj7uDY+GOEvtTtsEtAsLKuYgtn7jQc1ZoMnwMQk1ATYWvQ1bMnWuWeG
+k1A9VSGZTTGMisrRHIQbds0RVG5AqoyU6/G+9caDFQ5plJ8chGNQbi92VBS4ucWe
+AZy1SPy46ESrMNSXG4cx
+=N2nW
 -----END PGP SIGNATURE-----
