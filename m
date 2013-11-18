@@ -1,34 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/31/5
-Message-ID: <51A8B708.30005@canonical.com>
-Date: Fri, 31 May 2013 10:43:20 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/18/7
+Message-ID: <528A7C70.4090404@redhat.com>
+Date: Mon, 18 Nov 2013 13:45:36 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: libimobiledevice insecure /tmp use
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-In libimobiledevice, the following commit:
+Top posting because lazy:
 
-http://cgit.sukimashita.com/libimobiledevice.git/commit/src?id=825d...
+CVE-2013-4594 SA-CONTRIB-2013-087 - Payment for Webform - Access Bypass
 
-Falls back to creating files in /tmp if $XDG_CONFIG_HOME and $HOME are
-unset. In some distros, upowerd runs this as root, which causes files in
-/tmp to be created and updated in an insecure manner as root, allowing
-for symlink attacks.
+CVE-2013-4595 SA-CONTRIB-2013-088 - Secure Pages - Missing Encryption
+of Sensitive Data
 
-Bugs:
-http://libiphone.lighthouseapp.com/projects/27916-libiphone/tickets/331-insecure-tmp-directory-use
-https://bugs.launchpad.net/ubuntu/+source/libimobiledevice/+bug/1164263
+CVE-2013-4596 SA-CONTRIB-2013-089 - Node Access Keys - Access Bypass
 
-Could a CVE please be assigned to this issue?
+CVE-2013-4597 SA-CONTRIB-2013-090 - Revisioning - Access Bypass
 
-Thanks,
+CVE-2013-4598 SA-CONTRIB-2013-091 - Groups, Communities and Co (GCC) -
+Access Bypass
 
-Marc.
+CVE-2013-4599 SA-CONTRIB-2013-092 - Misery - Denial of Service (DOS)
+vulnerability
 
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+
+On 11/17/2013 10:34 PM, Forest Monsen wrote:
+> Hi there, I'd like to request CVEs for:
+> 
+> SA-CONTRIB-2013-087 - Payment for Webform - Access Bypass 
+> https://drupal.org/node/2129373
+> 
+> SA-CONTRIB-2013-088 - Secure Pages - Missing Encryption of
+> Sensitive Data https://drupal.org/node/2129381
+> 
+> SA-CONTRIB-2013-089 - Node Access Keys - Access Bypass 
+> https://drupal.org/node/2129379
+> 
+> SA-CONTRIB-2013-090 - Revisioning - Access Bypass 
+> https://drupal.org/node/2135257
+> 
+> SA-CONTRIB-2013-091 - Groups, Communities and Co (GCC) - Access
+> Bypass https://drupal.org/node/2135267
+> 
+> SA-CONTRIB-2013-092 - Misery - Denial of Service (DOS)
+> vulnerability https://drupal.org/node/2135273 (Says multiple, but
+> it seems to me this is really just a single DoS vuln.)
+
+Agreed.
+
+> Thanks Kurt.
+> 
+> Best, Forest
+> 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSinxwAAoJEBYNRVNeJnmTfsYQAKDd6OXXbuBLaimNkuLSc0Np
+xnfjCJJy991BduMAzzya2hbW5GSP4pwW+yPInf5HeDZTbGfmncoss4HE3EUHbOrI
+8DXhRtLHbUOHii0jONB6ESxMGT5F45oQQO5R4LmIzVsJ1ImPa3kcUUCE8/okibx5
+LlozL5GDTo4YMGD0VrlUkEi7j3Ec1Eel/DMPytmI5dUJE+OFIw7Hm2TsvwrKp55y
+422pwFI/sBQHwcZRKNlteQ8W3nK+nMd7ll88o5ewf3fynkoj5GILGnaV4wSKVbQm
+iPXj/Wa/dUsGOR4VUZpMdD6fmKvTjLtLPrTSm/qARbqS4qAiuv9V9e3ZqUskD8Xy
+RL/iglLv27wnOl3oj0PKHlJJNjmXnL5s/BW5ctJauiwSjKD0diA4qBjCyxwaNxIq
+1f2LWcUq0pX1199tachsp7BKB7GoZDaSaV5PA+MXd4uPYpTswvNIiRgtf8KX6kq6
+rFstkjpDM7W/f2YLsKgtGw9OrLmBNSUJBCWFpEk35FrEO/8tla/jJAMaSkHAjc3I
+N1tLDpN+0O0h1CSDkyN5oB9UcC32uF9FIMdqdPNz+1Fy6ypusgjGS4OgamOf1NcB
+PQ7Tv1bBWbZkkKsFkUdrHvamgXxBihubFL2mjpzaDEql0YC1DK73tiakix3CWU6m
+sZ3Ka4UuFzwMuqYJI2Z9
+=6vwF
+-----END PGP SIGNATURE-----
