@@ -1,39 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/20
-Message-ID: <CAEJizbaWFCGt8sHEv6i83v+=AyjVyukBnad-Q3FVZpe4sMm8nw@mail.gmail.com>
-Date: Wed, 27 Feb 2013 16:21:04 +0000
-From: Benji <me@...ji.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/18/3
+Message-ID: <20131118151728.GP22293@dhcp-25-225.brq.redhat.com>
+Date: Mon, 18 Nov 2013 16:17:29 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Cc: Kurt Seifried <kseifrie@...hat.com>
+Subject: CVE-2013-4592 -- Linux kernel: kvm: memory leak when memory slot is moved with assigned device
 Content-Type: text/plain; charset=utf-8
 
-My response was directly due to this line for known security patches
-"That's not going to happen, and you know that, to do so would be totally
-irresponsible of us and directly harm your users."
+When a user memory slot is moved (ie. the base_gfn changes), iommu pages
+are neither unpinned nor unmapped.  The memory for these pages then
+cannot be recovered without rebooting the system.
 
-As I have said to someone else already who queried my comment, as we have
-seen before, hiding patches does not protect users and thus I'm not sure
-where the 'directly harm your users' comes into this. I'd be interested to
-hear how you think making security patches obvious, when they are obviously
-marked as such, is going to cause harm or danger to users.
+Local user with ability to assign device (with access to PCI sysfs files
+for a device) could use this flaw to DoS the system.
 
-Regards
+Upstream fixes:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=12d6e7538e2d418c08f082b1b44ffa5fb7270ed8
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=e40f193f5bb022e927a57a4f5d5194e4f12ddb74
 
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=1031702
 
-On Wed, Feb 27, 2013 at 4:17 PM, Greg KH <greg@...ah.com> wrote:
+-- 
+Petr Matousek / Red Hat Security Response Team
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
 
-> On Wed, Feb 27, 2013 at 02:59:17PM +0000, Benji wrote:
-> > Ah the logic. Open source software, hidden secret hush hush no public
-> > reporting patches.
->
-> Every single patch we make to the kernel is public, it is up to you to
-> determine if you feel it is a "security fix" or not.  And to do so is a
-> non-trivial task, something that I sure don't want to be responsible for
-> trying to do.  And since no one else has ever stepped up to want to do
-> it either, there's not much more that can be done.
->
-> Are you willing to do it?
->
-> greg k-h
->
-
+Content of type "application/pgp-signature" skipped
