@@ -1,54 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/15/7
-Message-ID: <51E4544D.3030802@redhat.com>
-Date: Mon, 15 Jul 2013 13:58:05 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Linux kernel: vhost-net: use-after-free in vhost_net_flush
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/18/1
+Message-ID: <CABbbngC6gO1ry3Biad2qsWwmaTyjnh82oG72ptMKaPkw9m+65g@mail.gmail.com>
+Date: Sun, 17 Nov 2013 21:34:23 -0800
+From: Forest Monsen <forest.monsen@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi there, I'd like to request CVEs for:
 
-On 07/15/2013 01:53 PM, Petr Matousek wrote:
-> vhost_net_ubuf_put_and_wait has a confusing name: it will actually
-> also free it's argument. vhost_net_flush tries to use the argument
-> after passing it to vhost_net_ubuf_put_and_wait, this results in
-> use after free.
-> 
-> Upstream fix: 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=dd7633ecd553a5e304d349aa6f8eb8a0417098c5
->
->  Introduced by: 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1280c27f8e29acf4af2da914e80ec27c3dbd5c01
->
->  Introduced in upstream version: v3.8-rc1
-> 
-> References: https://bugzilla.redhat.com/show_bug.cgi?id=984722 
-> https://bugzilla.redhat.com/show_bug.cgi?id=980643 
-> http://pkgs.fedoraproject.org/cgit/kernel.git/commit/?h=f19&id=da4ebd83da1869778909f394f6ebd50850ef5fec
->
-> 
-Please use CVE-2013-4127  for this issue.
+SA-CONTRIB-2013-087 - Payment for Webform - Access Bypass
+https://drupal.org/node/2129373
 
+SA-CONTRIB-2013-088 - Secure Pages - Missing Encryption of Sensitive Data
+https://drupal.org/node/2129381
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+SA-CONTRIB-2013-089 - Node Access Keys - Access Bypass
+https://drupal.org/node/2129379
 
-iQIcBAEBAgAGBQJR5FRNAAoJEBYNRVNeJnmThewP/2d4PF5GgBP5gIHnxCjoArxb
-pW8HxgC+FJT2J+eUcAbXrUysT/W5gBLNdAWPxt89dFoWH7Tn+QsGMD0cndP5qiZQ
-8j51xEnSE7G3aHQjiNw+KeJm8mzdvuhdDFhetG3ugZWRUQJe1FXOZ8fry4GrMTes
-EVXXVyzYfVSi0JYI0/tnVmNea94yL7OTl3Tujo4QCDTIsDQN1hoINCIXPT6VXLlL
-Ro8UdGYk9VYD6RbThWSGukce1QHaq9qjmdcwqH6WNb7AdGQOudAYDbPLnQQJybHs
-Fjczmy2IGTuYUxPYQshvEwZkwaRE/FMHHYwUiRwk5qvxJQ2cgAAHAkcVZZGRAjjr
-ILvkKAdV8lC242mkmcXB3W+19BypqlSxrU9gx+2Rzhn9tY5esArLjN7qmtW6DQvw
-i9XU4OikIrOzuAsJ60igOKiYowaBmfdSshRo6q5q9LeBwAF9XIyvRQN68aJn+G4X
-6L3GBsw2qba6kTo73jMcsVRcwK57m6VeRvntFNsUaoJCBwtrHIWGEHVURgXo+2Kb
-tor5KE392Z62nEO9um3HQZ4VP3vvV6uGI5QCnQjlivEmd5tAKFxNWYxjZ0HpOYrU
-3Jvjsf6wk85MohOmZZYsnfIwUAqLBuMq29R2p3V0J5OVjUIol7Vy6GqUIDBLP0Gm
-XGZfDz++5VZzT7RRaGI4
-=k0v2
------END PGP SIGNATURE-----
+SA-CONTRIB-2013-090 - Revisioning - Access Bypass
+https://drupal.org/node/2135257
+
+SA-CONTRIB-2013-091 - Groups, Communities and Co (GCC) - Access Bypass
+https://drupal.org/node/2135267
+
+SA-CONTRIB-2013-092 - Misery - Denial of Service (DOS) vulnerability
+https://drupal.org/node/2135273
+(Says multiple, but it seems to me this is really just a single DoS vuln.)
+
+Thanks Kurt.
+
+Best,
+Forest
+
