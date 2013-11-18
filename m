@@ -1,45 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/23/1
-Message-ID: <52672946.9060801@redhat.com>
-Date: Tue, 22 Oct 2013 19:41:26 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/18/5
+Message-ID: <CAFp7QwpV0n9S4nQBFpqheT2_hjTep36-c8C=63PWNF6rX3vOfg@mail.gmail.com>
+Date: Mon, 18 Nov 2013 20:29:21 +0100
+From: Josef Šimánek <josef.simanek@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: RESEND: CVE Request: pwgen
+Subject: Re: CVE request: RubyGem omniauth-facebook access token security vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Sorry for bumping, but is there any problem with this CVE request?
 
-On 10/22/2013 05:39 PM, Michael Samuel wrote:
-> On 23 October 2013 08:50, Solar Designer <solar@...nwall.com>
-> wrote:
->> Michael, is the above correct?  If so, should Kurt reject
->> CVE-2013-4443? I think so.
-> 
-> Yes, that was correct - if you generated 1 extremely long password 
-> (rather than a ton of passwords) and made a histogram, there would
-> be no bias.
-> 
+Fix is here (https://github.com/mkdynamic/omniauth-facebook/commit/115c0a768cd6f4b9bfae8900f8e3fc4fbeec3ad8)
+and release is prepared. We're waiting for CVE only.
 
-Ok please REJECT CVE-2013-4443, not a vuln.
+regards
+Josef
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSZylGAAoJEBYNRVNeJnmTKpsQAIrrnqvsrExNFw3xCjtbabGI
-7/15Njx+WqWxECVlxWzvYs8POmojsV9lRKD9KOK31PTCOwc0hiMhE7lQQFS4JUIU
-l+2XckTD9DgyTgK1X6ZStGTGb21WxzOMBlpLbDjx2h/1k5zKZOCReUdvpnkljJw2
-OCv6cYegen5N4oQ6Q8apgCcGOXhm+fgL3iCxXoc0mif13E4gsZH3nGWluK39pCdN
-y1vebI72jwHOKtSuU+0/CutYkhZkr3/+7tQn1jTLqOLjFyGjpdE+1Ow+V5ZnymzX
-bDGLRzmIWS34F72i8mc+UW1Le8igVXdbuHbE7UNM/n72nFz/sWKtY3/t+BqpoHwl
-qK3Rsf/ruOvCTfHPNw8bM1P0sWFJCoOWEY9G+p9gYQqHZPwsvhQ/1FX16wmWJ60l
-tyOdQi4o4Hu8vhr/egthdujsbIp92kRyvNgoWXxDYjZD0nBxh2bYQ4tgTRYNWPDE
-4gcxjEKNfJwwlzgVgbZMgHPNcewfz82HZZ82+HMc9UjvQjB+weum80dIiHNmjTPt
-W6Pi7U5rNU8T4CIZkGB2Ow9vVKXc4AIH3RgvOASb5dAfeylp1NoPRvvjZMrFqcZE
-5lpQxfj6AFq8QlwSyp3+C3xvWv/w3fBueJynWIPg6AoRrhxX+TjY8SYv2Q/YHJ+E
-WVcByXDhVKtNhy5LQfHV
-=KWYQ
------END PGP SIGNATURE-----
+2013/11/15 Josef Šimánek <josef.simanek@...il.com>:
+> # RubyGem omniauth-facebook access token security vulnerability
+>
+> There is a security vulnerability in the omniauth-facebook <= 1.5.0.
+>
+>     Versions affected: <= 1.5.0
+>     Fixed versions:    >= 1.5.1
+>
+> ## Impact
+>
+> Because omniauth-facebook <= 1.5.0 supports passing an access token
+> directly in the URL, an attacker may be able to authenticate as
+> another user by passing a valid access token obtained from Facebook
+> for another app.
+>
+> If you're currently using this feature, and passing the access token
+> directly, you should change your integration to use one of the secure
+> methods using either a signed request or the code flow. These secure
+> methods are default, so unless you are explicitly passing an access
+> token you should not need to make any integration changes to upgrade
+> to 1.5.1.
+>
+> All users running an affected release should upgrade to >= 1.5.1.
+>
+> ## Releases
+>
+> The 1.5.1 releases is available at the normal locations.
+>
+> ## Workarounds
+>
+> None.
+>
+> ## Credits
+>
+> Egor Homakov (@homakov)
