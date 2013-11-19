@@ -1,17 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/13
-Message-ID: <CABbbngDPPsTEhWgbDqs4GfGyr_hg3meNupJ+B7tGhNP=kXPhfQ@mail.gmail.com>
-Date: Tue, 22 Oct 2013 16:01:39 -0700
-From: Forest Monsen <forest.monsen@...il.com>
-To: "Christey, Steven M." <coley@...re.org>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Kurt Seifried <kseifried@...hat.com>
-Subject: Re: Re: CVE duplicates SA-CONTRIB-2013-075
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/19/1
+Message-ID: <20131119201413.GG31117@inutil.org>
+Date: Tue, 19 Nov 2013 21:14:14 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE requests for three Linux kernel issues
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 21, 2013 at 8:41 AM, Christey, Steven M. <coley@...re.org>wrote:
+Hi,
+"x90c" reported four kernel issues on f-d. One already has a CVE ID assigned,
+can you please assign one for the remainders?
 
-> Forest, please update the advisory to use the MITRE-assigned numbers.
+XADV-2013008 Linux Kernel 3.11.7 <= sk_attach_filter Kernel Heap Corruption
+  http://seclists.org/fulldisclosure/2013/Nov/139
 
+XADV-2013007 Linux Kernel bt8xx Video Driver IOCTL Heap Overflow
+  http://seclists.org/fulldisclosure/2013/Nov/126
 
-Updated, thanks Steve.
+XADV-2013004 Linux Kernel ipvs Kernel Stack Overflow
+  http://seclists.org/fulldisclosure/2013/Nov/77
+-> This was already assigned CVE-2013-4588
 
+XADV-2013003 Linux Kernel bt8xx Video Driver IOCTL Heap Overflow 
+  http://seclists.org/fulldisclosure/2013/Nov/75
+
+Cheers,
+        Moritz
