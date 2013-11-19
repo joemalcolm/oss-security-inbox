@@ -1,76 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/9
-Message-Id: <E1VlM2o-0002ZM-PL@xenbits.xen.org>
-Date: Tue, 26 Nov 2013 17:03:26 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 76 (CVE-2013-4554) - Hypercalls exposed to privilege rings 1 and 2 of HVM guests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/19/2
+Message-ID: <20131119205849.GA4572@dhcp-25-225.brq.redhat.com>
+Date: Tue, 19 Nov 2013 21:58:50 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: Moritz Muehlenhoff <jmm@...ian.org>
+Cc: oss-security@...ts.openwall.com, Prasad Pandit <ppandit@...hat.com>
+Subject: Re: CVE requests for three Linux kernel issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-             Xen Security Advisory CVE-2013-4554 / XSA-76
-                              version 3
+On Tue, Nov 19, 2013 at 09:14:14PM +0100, Moritz Muehlenhoff wrote:
+> "x90c" reported four kernel issues on f-d. One already has a CVE ID assigned,
+> can you please assign one for the remainders?
 
-      Hypercalls exposed to privilege rings 1 and 2 of HVM guests
+we've requested only one CVE to be assigned because the rest are
+non-issues. Prasad (CC'ed) can provide reasons why.
 
-UPDATES IN VERSION 3
-====================
+> 
+> XADV-2013008 Linux Kernel 3.11.7 <= sk_attach_filter Kernel Heap Corruption
+>   http://seclists.org/fulldisclosure/2013/Nov/139
+> 
+> XADV-2013007 Linux Kernel bt8xx Video Driver IOCTL Heap Overflow
+>   http://seclists.org/fulldisclosure/2013/Nov/126
+> 
+> XADV-2013004 Linux Kernel ipvs Kernel Stack Overflow
+>   http://seclists.org/fulldisclosure/2013/Nov/77
+> -> This was already assigned CVE-2013-4588
+> 
+> XADV-2013003 Linux Kernel bt8xx Video Driver IOCTL Heap Overflow 
+>   http://seclists.org/fulldisclosure/2013/Nov/75
+> 
+> Cheers,
+>         Moritz
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The privilege check applied to hypercall attempts by a HVM guest only refused
-access from ring 3; rings 1 and 2 were allowed through.
-
-IMPACT
-======
-
-Code running in the intermediate privilege rings of HVM guest OSes may be able
-to elevate its privileges inside the guest by careful hypercall use.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 3.0.3 and later are vulnerable.
-Xen 3.0.2 and earlier are not vulnerable.
-
-MITIGATION
-==========
-
-Running only PV guests, or running HVM guests known to not make use of
-protection rings 1 and 2 will avoid this issue. As far as we are aware no
-mainstream OS (Linux, Windows, BSD) make use of these rings.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa76.patch        xen-unstable, Xen 4.3.x, Xen 4.2.x, Xen 4.1.x
-
-$ sha256sum xsa76*.patch
-8c4d460c71e8e8dffa32ce24f57ce872ccd8623ab72fd38be432f0a2b097e7c1  xsa76.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJSlNMiAAoJEIP+FMlX6CvZn4kH/38vSCRckKM2JuQJfIJb8WtT
-hz7XFDLhDBgeei7J3G3HiZIdaVGVYvThKDl6Dk0Kfc7V7vqIOEYN6OGAOqsJY5GL
-Yqqxqol4ncyM0okLn3mvgeX1FlpLi1rlkwWkR7on7KMahxITjeGpWs00z9o9fpxy
-21hIEw3vtXxg+C22QK2GS2fHKrkU23Fi7OPC09aU179nWjQWom+7qNsRvJlw+dRq
-NZs5EvvGofqXN7KaLAirJkNUmxDOS0+XxNcF/1zLpXa/bIXjKCju6LoLb86UZOsM
-JkSSfFYiz3UxAqjZtr4x4cbUl/0LeGUETVygIOOtx/56TKMxzgbaXHDevCiu3bw=
-=oChf
------END PGP SIGNATURE-----
-
-Download attachment "xsa76.patch" of type "application/octet-stream" (556 bytes)
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
