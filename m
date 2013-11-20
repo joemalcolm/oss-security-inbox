@@ -1,62 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/06/1
-Message-ID: <52A158A8.4010008@redhat.com>
-Date: Thu, 05 Dec 2013 21:55:04 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com, tenderlove@...y-lang.org, "mattaimonetti@...il.com Aimonetti" <mattaimonetti@...il.com>, clemens@...lway.at, jose.valim@...il.com, stephan.soller@...ionweb.de, saimonmoore@...il.com, me@...nfuchs.com
-Subject: Re: Re: [CVE-2013-4491] Reflective XSS Vulnerability in Ruby on Rails
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/20/3
+Message-Id: <E1VjBGa-0005yn-QD@xenbits.xen.org>
+Date: Wed, 20 Nov 2013 17:08:40 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 78 - Insufficient TLB flushing in VT-d (iommu) code
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/05/2013 10:15 AM, Christopher Dell wrote:
-> Hello everyone,
-> 
-> Just to clarify I18n.enforce_available_locales quickly, when I18n 
-> initialises, it creates an array of the known locales called 
-> I18n.available_locales. Typically, this array is created by
-> scanning for YML files (in config/locales for a Rails app). With
-> I8n.enforce_available_locales set to true, we check that the
-> locale we're trying to use (eg. translate or localize) is included
-> in the available_locales. This means we're certain it can't be
-> malicious user submitted data even outside of the scope of a Rails
-> app.
-> 
-> I could really use a hand with the CVE announcements, I literally
-> have no idea about any of this!
-> 
-> Cheers,
-> 
-> -- Chris
-> 
-> PS. Including Sven's correct email address.
+                    Xen Security Advisory XSA-78
 
-Thanks. Contact me offlist, I can walk you through it. In general I'll
-be documenting this, it's not something that is documented at all in
-an actually useful fashion (there's 800 page books on doing security
-response which are basically useless for actually getting things done
-in Open Source projects =).
+           Insufficient TLB flushing in VT-d (iommu) code
 
+ISSUE DESCRIPTION
+=================
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+An inverted boolean parameter resulted in TLB flushes not happening
+upon clearing of a present translation table entry.  Retaining stale
+TLB entries could allow guests access to memory that ought to have
+been revoked, or grant greater access than intended.
+
+IMPACT
+======
+
+Malicious guest administrators might be able to cause host-wide denial
+of service, or escalate their privilege to that of the host.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.2.x and later are vulnerable.
+Xen 4.1.x and earlier are not vulnerable.
+
+Only systems using Intel VT-d for PCI passthrough are vulnerable.
+
+MITIGATION
+==========
+
+This issue can be avoided by not assigning PCI devices to untrusted guests on
+systems supporting Intel VT-d.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This issue was disclosed publicly on the xen-devel mailing list.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa78.patch        Xen 4.2.x, Xen 4.3.x, xen-unstable
+
+$ sha256sum xsa78*.patch
+2b858188495542b393532dfeb108ae95cbb507a008b5ebf430b96c95272f9e0e  xsa78.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSoVioAAoJEBYNRVNeJnmT5h8P/iyJNz0qETb4gdedis9HMSc8
-vmQpEFnw2r7rwUpapDZjr9Y9pJSlQh61zTFR6HHrwHlFLdD6O9Jc2l+MkTF6RYy5
-LhJD6e5OaTNSNGAFZgGv4GNUAwGYQQ5PMMeeiPMmHy7lkW30TBOn22m+UvwvIMGi
-vLhe5PF6jXUaHH5rKVgDeLPa8F7uHXZl5VwejirbO57TW9BcpDe0v1//Ioh/KWhg
-DvpcoVOdzXloDWeJ2qDj4ph0pfTqFkUuMF85EY5Lc6DZLWODHqiZJs6BVd8VsywW
-Byt0s4oSTZL2hqZo9beYo8BlYpwUhzOTSRWi31VwyDo/pn30iXTp828Ogbtbu3i3
-2vI6pAw0uj9AFERDY267D6lgbhMNu0cx8FAcMPfOwHgVdM7mBEXhjijaK7POUw8v
-sjzT4gYWn9TnXD/uSJJtvnEcktKrZINvA1cj2jzFAIvr0sK4LdZgxAqlo/m8W8ua
-K2YNYMxiglmTBdwC/gBDgITmFNeEVcb6gA0EglXQApM7KdyhK6VMO2NMjZzhSGP7
-iDoqjNA/u9ykXehCB2pAWyDNDaJ4khKfnWnFy6aMMWYW5R0rbpZgKQWw/5ttXY6O
-HQvetRQ2OsTRRC1l2/a1lMb1vEVemaZZ0XCTg8FtPQMgB3v9ACnAA7TpAPqTC++V
-wZWBValU5HcnCj23X8zE
-=tFFx
+iQEcBAEBAgAGBQJSjOx1AAoJEIP+FMlX6CvZiRgIAL1iKDQGOT+uULBy+pi8El/H
+ptqI1qsEX1CKkrl0tTTueXlIWqvpDP5iHJR3tqj10OeNn/tSyV/PCCuJonFaPDUJ
+aNucKbiiXvaHlfw4CNMOuWa2xaWUdoiTN8RM8OCWQgM9Ybk6weZtCNcp/dQk5gwL
+NzMHl+aD2Av0NiLZM3K857nk3wikcJAr+Lhd/wOx3W0oqmvRq+tszj3p4qOgNJ7/
+CpTQd1TifkBaE7y3BxX3jofkSPM451oxyIz5WcsripnbL+psQK1T9ASkqr5iI8O7
+cWJheDS64MlRRF7SujcJz1MekVvubg6njw8Gg3HPxIqagQJMn4GEkQT+98Kelf0=
+=wrTD
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa78.patch" of type "application/octet-stream" (872 bytes)
