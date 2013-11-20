@@ -1,22 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/02/2
-Message-ID: <3230301C09DEF9499B442BBE162C5E48253D16F1@sestoex05.enea.se>
-Date: Tue, 2 Jul 2013 07:58:46 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: Solar Designer <solar@...nwall.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Request for linux-distros list membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/20/2
+Message-ID: <528C765E.3020500@redhat.com>
+Date: Wed, 20 Nov 2013 09:44:14 +0100
+From: Daniel Borkmann <dborkman@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: P J P <ppandit@...hat.com>, Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE requests for three Linux kernel issues
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander,
+On 11/20/2013 07:49 AM, P J P wrote:
+>    Hello Moritz,
+>
+> +-- On Tue, 19 Nov 2013, Petr Matousek wrote --+
+> | non-issues. Prasad (CC'ed) can provide reasons why.
+> | > XADV-2013008 Linux Kernel 3.11.7 <= sk_attach_filter Kernel Heap Corruption
+> | >   http://seclists.org/fulldisclosure/2013/Nov/139
+>
+>     Here, integer overflow does not occur because 'fprog->len' is of type
+> 'unsigned short' and sizeof(struct sock_filter) = 8 bytes.
+>
+>     unsigned int fsize = sizeof(struct sock_filter) * fprog->len;
+>                        = 8 * 65535(0xffff)
+>                        = 524280 => 0x0007fff8
+>
+> ===
+>      // XXX Integer overflow (+ sizeof(*fp)) and causing a little allocation.
+>      fp = sock_kmalloc(sk, fsize+sizeof(*fp), GFP_KERNEL);
+> ===
+>
+> Adding few more bytes 'sizeof(*fp)' to 'fsize' above is unlikely to overflow
+> an unsigned int.
 
->  I went to your website at http://www.enea.com and was not able to (quickly) find any information on your 
->  security response, advisories, software updates, etc.  Without such information, we cannot even consider
->  you for membership of the private list.
+Agreed, it's somewhat stupid though that we only check for that later on after
+allocation in sk_chk_filter():
 
-Thanks for the quick response.  
-Our security office is in the startup phase, we will update the Enea website with security information soon.
-
-BR
-Sona 
-
+if (flen == 0 || flen > BPF_MAXINSNS)
+	return -EINVAL;
