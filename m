@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/15/9
-Message-ID: <20130215161436.GD3015@redhat.com>
-Date: Fri, 15 Feb 2013 09:14:36 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/21/3
+Message-ID: <20131121151507.GP2523@redhat.com>
+Date: Thu, 21 Nov 2013 08:15:07 -0700
 From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: python-pyrad insecurities
+Subject: 389-ds DoS due to improper handling of ger attr searches (CVE-2013-4485)
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned to the following two issues please?
+A flaw in how 389-ds-base and Red Hat Directory Server handled the
+checking of access rights on entries using GER (Get Effective Rights), a
+way to extend directory searches to also display what access rights a
+user has to a specified entry.  When an attribute list is given in the
+search request, and if there are several attributes whose names contain
+the '@' character, 389-ds-base and Red Hat Directory Server would crash.
+An attacker able to contact the server would be able to submit this type
+of search request with no authentication required.
 
-#1: https://bugzilla.redhat.com/show_bug.cgi?id=911682
-
-Nathaniel McCallum of Red Hat reported that pyrad was using Python's
-random module in a number of places to generate pseudo-random data.  In
-the case of the authenticator data, it was being used to secure a
-password sent over the wire.  Because Python's random module is not
-really suited for this purpose (not random enough), it could lead to
-password hashing that may be predictable.
-
-#2: https://bugzilla.redhat.com/show_bug.cgi?id=911685
-
-Nathaniel McCallum of Red Hat reported that pyrad was creating
-serialized RADIUS packet IDs in the CreateID() function in packet.py.
-This is not suitable for RADIUS as the RFC specifies that the ID must
-not be predictable.  As a result, the ID of the next packet sent can be
-spoofed.
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-4485
 
 
-These have been corrected in upstream's forthcoming version 2.1 via:
-
-https://github.com/wichert/pyrad/commit/38f74b36814ca5b1a27d9898141126af4953bee5
+(Obviously no CVE is required, posting here as this was previously sent
+to the distros@ mailing list)
 
 -- 
 Vincent Danen / Red Hat Security Response Team 
