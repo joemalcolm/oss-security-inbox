@@ -1,97 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/16/4
-Message-ID: <511F28E5.40401@redhat.com>
-Date: Fri, 15 Feb 2013 23:36:21 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/21/1
+Message-ID: <528DBC61.90104@redhat.com>
+Date: Thu, 21 Nov 2013 00:55:13 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>, "Christey, Steven M." <coley@...re.org>
-Subject: Re: CVE request: python-pyrad insecurities
+To: oss-security@...ts.openwall.com, xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org
+CC: "Xen.org security team" <security@....org>
+Subject: Re: Xen Security Advisory 78 - Insufficient TLB flushing in VT-d (iommu) code
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/15/2013 04:53 PM, Vincent Danen wrote:
-> * [2013-02-15 19:51:07 +0000] Christey, Steven M. wrote:
+On 11/20/2013 10:08 AM, Xen.org security team wrote:
+> Xen Security Advisory XSA-78
 > 
->> These two issues were fixed in the same diff and reflect poor 
->> randomness - should we have only assigned one CVE?  (If the
->> RADIUS feature was introduced in different versions than the 
->> authenticator-password feature, then maybe the SPLIT is
->> acceptable.)
+> Insufficient TLB flushing in VT-d (iommu) code
 > 
-> I'm not sure.  I didn't go digging to see when they were introduced
-> -- both features may have been introduced at the same time (or
-> not).
+> ISSUE DESCRIPTION =================
 > 
-> Ok, so doing a quick peek at the first full blob of it in git:
+> An inverted boolean parameter resulted in TLB flushes not
+> happening upon clearing of a present translation table entry.
+> Retaining stale TLB entries could allow guests access to memory
+> that ought to have been revoked, or grant greater access than
+> intended.
 > 
-> https://github.com/wichert/pyrad/blob/c206b1dfc362db8b0ef9c256814377bde8ed91cf/pyrad/packet.py
->
+> IMPACT ======
 > 
+> Malicious guest administrators might be able to cause host-wide
+> denial of service, or escalate their privilege to that of the
+> host.
 > 
-> The use of random.randrange() is in both the CreateAuthenticator()
-> and CreateID() functions, so I would bet that they've been like
-> that the whole time (that blob is from Sept 2007).  So I guess one
-> CVE is probably sufficient.
+> VULNERABLE SYSTEMS ==================
 > 
-> I only noted them as two issues as we had two separate bug reports
-> about them.
+> Xen 4.2.x and later are vulnerable. Xen 4.1.x and earlier are not
+> vulnerable.
 > 
->> -----Original Message----- From: Kurt Seifried
->> [mailto:kseifried@...hat.com] Sent: Friday, February 15, 2013
->> 2:37 PM To: oss-security@...ts.openwall.com Cc: Vincent Danen 
->> Subject: Re: [oss-security] CVE request: python-pyrad
->> insecurities
->> 
-> On 02/15/2013 09:14 AM, Vincent Danen wrote:
->>>> Could a CVE be assigned to the following two issues please?
->>>> 
->>>> #1: https://bugzilla.redhat.com/show_bug.cgi?id=911682
->>>> 
->>>> Nathaniel McCallum of Red Hat reported that pyrad was using 
->>>> Python's random module in a number of places to generate 
->>>> pseudo-random data.  In the case of the authenticator data,
->>>> it was being used to secure a password sent over the wire.
->>>> Because Python's random module is not really suited for this
->>>> purpose (not random enough), it could lead to password
->>>> hashing that may be predictable.
+> Only systems using Intel VT-d for PCI passthrough are vulnerable.
 > 
-> Please use CVE-2013-0294 for this issue.
+> MITIGATION ==========
 > 
+> This issue can be avoided by not assigning PCI devices to untrusted
+> guests on systems supporting Intel VT-d.
 > 
->>>> #2: https://bugzilla.redhat.com/show_bug.cgi?id=911685
->>>> 
->>>> Nathaniel McCallum of Red Hat reported that pyrad was
->>>> creating serialized RADIUS packet IDs in the CreateID()
->>>> function in packet.py. This is not suitable for RADIUS as the
->>>> RFC specifies that the ID must not be predictable.  As a
->>>> result, the ID of the next packet sent can be spoofed.
+> NOTE REGARDING LACK OF EMBARGO ==============================
 > 
-> Please use CVE-2013-0295 for this issue.
+> This issue was disclosed publicly on the xen-devel mailing list.
+> 
+> RESOLUTION ==========
+> 
+> Applying the attached patch resolves this issue.
+> 
+> xsa78.patch        Xen 4.2.x, Xen 4.3.x, xen-unstable
+> 
+> $ sha256sum xsa78*.patch 
+> 2b858188495542b393532dfeb108ae95cbb507a008b5ebf430b96c95272f9e0e
+> xsa78.patch $
 
-Please REJECT CVE-2013-0295 and use CVE-2013-0294 for both issues
-(same code issue, same version, same reporter).
+Please use CVE-2013-6375 for this issue.
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRHyjlAAoJEBYNRVNeJnmT02YP/0IgeqytaZjW0ltY10te6RSu
-osz/ZS6ZREPJha4WkV/Zy/TeEDQ3MbA5jvIZGHu95wn3j5LG9JkNh10ufqlOY/OF
-vajvm/2ICqUI3onjhSk0tY1eV/3vxcfkHzZFG3ARaM/cU21Rj40AbX/DA8mKNX80
-x7LI0999hGZeuDb+sYhKYCulSt041HbRcFQDpBPwZJcX46FFZusSA9xevP+iuQxG
-oqDURPfxa4eM3BmUeSO4ONiTDLMVlkwHmnyUE+GOYEt7Jabh+VufH2z3HLaxUy6C
-NWW5YJNdejBzUKjZnrdRBIPGaXG2Uo4JJKh3I8SKchhxqHp+zvIYWtmGVTtVP11P
-jULoSoaevKpQqwqycFYopnGra/AY/wBBIPWLrhlbr2kcSOLuSCcMqpF5hrr1MAKT
-c8oWGbBDkRUFJArDlzPk7sNvxAWtViYLPTMA2hKDGGgOYMNJ8NeWjFVks8zuJkEo
-SuLZnUJ4Com4kNLsfvFXjlWrK6fwMCgn1s/2Iz4F2b/dt6f1ziSuTAxCU4/mxwQS
-XSBipPV+YxM/qbYhBa8g+LoMCT88ukPqmUOFzLavL8vvkpQlrusnLj9ditbl9GPh
-gjoaLbt8PVhPs24mZuTdgLaXuDHbK43QdSBBTLGUx5VaKeeNInmxWs/78y3oO837
-Cf9LQDqUMcENF5L1s9jp
-=fObK
+iQIcBAEBAgAGBQJSjbxgAAoJEBYNRVNeJnmT+rsQANa8v60e5q9IlEAYEjqb/Tar
+NqozqDg0BY5ujLOapUY8ZKP7vFJqy17E3WlQCz0Hzucxozn6XwqBD2GZwyHVy9m/
+yH7sqoTrlJfhl+sC2FAU9eR0y7U1+Z1yXSF4aXmXZgUfawa+36X8e+FYDzV30hqe
+zYf6CxhZoiZ6Ngb5rH+Rtup4pdH4nuSULrgv3gir1EBCIBv8ElMItslGCbbvwv5J
+AizlzJThJZmZN6DblJewzFaddmT5YMVDuzvRWGav0dBFkDHdlPqdNx5CSDF33I/h
+tPXYH8ecgP8IXpSMeW+YgRLnq5B4WTQiXoiJz8VqsvbwrmUEZz85IkVmpznnfBkf
+WqGrgUT0Y1S0w2N309xyz/VM+QIgTRjhUDlgyLunEQaIS183c9wuYMAEAEgLLj6D
+R1gul6PM5d6nsNSt2AvRAd01Fr3fmZorQXxjyhY/AP1YDTbDsshcjRirEXhowjUk
+WEcNmDEK1OyigilospoHLMBChYiY5SulMc/J1uMFsMHhY9kPa7321KNvM/9wMxyx
+2tOZUN6J5r2tbDYtifOH9pyd38Ezi86HJUeniFWqn5sKMquWydKIczx6AbKrrmqW
+5U7qGQS3PNj9w+AC+pUhn9T5x6LyPrsRK1qqfIHnKg/1uXMSJwfDKI1vHFfWBoZD
+qaBYD1JWmWc/va1D8mKB
+=Ra7v
 -----END PGP SIGNATURE-----
