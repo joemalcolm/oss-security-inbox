@@ -1,68 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/02/1
-Message-ID: <20130202135903.GB16583@frohike.homeunix.org>
-Date: Sat, 2 Feb 2013 14:59:03 +0100
-From: Peter Bex <Peter.Bex@...all.nl>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: A small backlog of vulnerabilities in Chicken Scheme
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/21/2
+Message-Id: <E1VjSVD-0003Q6-SO@xenbits.xen.org>
+Date: Thu, 21 Nov 2013 11:32:56 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 78 (CVE-2013-6375) - Insufficient TLB flushing in VT-d (iommu) code
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Recently a handful of security bugs have been found and fixed in the
-Chicken Scheme compiler (http://www.call-cc.org).  We (the core team)
-have decided we'd like to start using CVE identifiers for the benefit
-of our users and distributions.
+             Xen Security Advisory CVE-2013-6375 / XSA-78
+                              version 2
 
-I'd like to request CVEs for the currently known security bugs:
+           Insufficient TLB flushing in VT-d (iommu) code
 
-* POSIX select() buffer overrun, fixed on in Chicken 4.8.2 (development
-snapshot) by switching to POSIX poll() on platforms where supported.
-This is also fixed in 4.8.0.1 (stability release).
+UPDATES IN VERSION 2
+====================
 
-Original announcement, with workaround (followed by preliminary patch):
-http://lists.nongnu.org/archive/html/chicken-users/2012-06/msg00031.html
-Final patch:
-http://lists.nongnu.org/archive/html/chicken-hackers/2012-11/msg00075.html
+This issue has been assigned CVE-2013-6375.
 
-* Poisoned NUL byte injection due to incomplete protection by missing
-checks in some procedures, fixed in Chicken 4.8.0:
-http://lists.nongnu.org/archive/html/chicken-users/2012-09/msg00004.html
+ISSUE DESCRIPTION
+=================
 
-* Broken randomization procedure on 64-bit platforms (it returned a
-constant value).  This function wasn't used for security purposes
-(and is advertised as being unsuitable), so I'm unsure a CVE is needed:
-http://lists.nongnu.org/archive/html/chicken-hackers/2012-02/msg00084.html
-Fixed in 4.8.0.
+An inverted boolean parameter resulted in TLB flushes not happening
+upon clearing of a present translation table entry.  Retaining stale
+TLB entries could allow guests access to memory that ought to have
+been revoked, or grant greater access than intended.
 
-* Vulnerability to algorithmic complexity attacks due to hash table
-collisions.  Fixed in 4.8.0.
-First public confirmation of the issue, with preliminary (broken) patch:
-http://lists.nongnu.org/archive/html/chicken-hackers/2012-01/msg00002.html
-Proper fix:
-http://lists.nongnu.org/archive/html/chicken-hackers/2012-01/msg00020.html
+IMPACT
+======
 
-Please let me know if more info is required or if this is even the
-proper way to request CVEs.
+Malicious guest administrators might be able to cause host-wide denial
+of service, or escalate their privilege to that of the host.
 
-I'd also like to know if it's possible to get CVE numbers assigned
-*before* issuing a security advisory, but without immediate full
-disclosure, so an initial advisory can be complete with CVE number.
-The CVE can be updated afterwards with the link to the advisory when
-it is issued.  This should make it easier for users to find information
-about the bug.  This list's Openwall wiki seems to imply that it's
-only possible to request a CVE for an issue given all the information
-immediately, but a recent message from Kurt Seifried in a thread about
-Jenkins says that it can be done.  If it's indeed okay to e-mail Kurt
-directly, it would be helpful to include this in the documentation wiki.
+VULNERABLE SYSTEMS
+==================
 
-Finally, how do CVE entries in MITRE and/or the NVD get updated?
-I couldn't find anything about this in the FAQ.  For example, if we
-find and fix a noncritical vulnerability but the fix is rather
-complicated and needs to be thoroughly tested, the fix might appear
-in a release after CVE and advisory are issued.  How will this be
-reflected in the information once the version in which the fix appears
-is finally known?
+Xen 4.2.x and later are vulnerable.
+Xen 4.1.x and earlier are not vulnerable.
 
-Cheers,
-Peter Bex (on behalf of the Chicken core team)
+Only systems using Intel VT-d for PCI passthrough are vulnerable.
+
+MITIGATION
+==========
+
+This issue can be avoided by not assigning PCI devices to untrusted guests on
+systems supporting Intel VT-d.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This issue was disclosed publicly on the xen-devel mailing list.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa78.patch        Xen 4.2.x, Xen 4.3.x, xen-unstable
+
+$ sha256sum xsa78*.patch
+bb13b280bb456c1d7c8f468e23e336e6b2d06eb364c6823f1b426fcfe09f6ed3  xsa78.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJSje8rAAoJEIP+FMlX6CvZ1kkIALhafGTk2hNupn2YyvqaUchF
+P7lnff8PohFj9WRM3I5axrJGkZeOozjeRSbgaVwlg5UY1A6vNqtT9GSQtSWRWbk/
+/0ysGvwbBTdRQeGhvENhpFOJRF/4TjGn1xmCBgQbmrhZuS9iAQvJL8yUY/HdCVyf
+gk9Vw/yuBZff15h97FH9M+zrdz+DbBTlR0t5HlVkLMvXyFkYIRafwaZVKWaH/C9y
+S1Wz6M9q1U9KrE8wBsNNHMgywdTiriCkzhfxEQbsPKnn/NFCOS0ehqct0JeZx100
+Eritdmkr805EUCcFUdS5R1EDP6xiRUCUAdbL/tvTJExzmPEG0sg7kKWIArRujLU=
+=ZgNn
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa78.patch" of type "application/octet-stream" (888 bytes)
