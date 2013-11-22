@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/14/3
-Message-ID: <CA+5g0SKjc=D_GDy=JOUoJHjwzUmgPN64KspYwM0S8f9MrqC+9Q@mail.gmail.com>
-Date: Fri, 14 Jun 2013 14:21:34 -0300
-From: Felipe Pena <felipensp@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: XSS on Monkey HTTPD - dirlisting plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/22/2
+Message-ID: <528F7F00.6010704@openstack.org>
+Date: Fri, 22 Nov 2013 16:57:52 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE request for a vulnerability in OpenStack Ceilometer
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was found in the Monkey HTTP - dirlisting plugin, which does not
-filter file names before printing on HTML page, hence vulnerable to XSS attack.
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public, although
+an advisory was not sent yet.
 
-PoC
-----
-$ touch "' onmouseover='alert(1);"
+"""
+Title: Ceilometer DB2/MongoDB backend password leak
+Reporter: Eric Brown (IBM)
+Products: Ceilometer
+Affects: All supported versions
+
+Description:
+Eric Brown from IBM reported an information leak in Ceilometer logs. The
+password for the DB2 or MongoDB backends was logged at INFO level in the
+ceilometer-api logs. An attacker with access to the logs (local shell,
+log aggregation system access, or accidental leak) may leverage this
+vulnerability to elevate privileges and gain direct full access to the
+Ceilometer backend. Only Ceilometer setups using the DB2 or MongoDB
+backends are affected.
+"""
+
+References:
+https://bugs.launchpad.net/ceilometer/+bug/1244476
+
+Thanks in advance,
+
+-- 
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
 
 
-Report
-------
-http://bugs.monkey-project.com/ticket/185
-
-
-CREDITS
--------
-Felipe Pena
-
---
-Regards,
-Felipe Pena
+Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
