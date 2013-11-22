@@ -1,22 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/11
-Message-ID: <52459424.5000108@google.com>
-Date: Fri, 27 Sep 2013 07:20:20 -0700
-From: Paul Pluzhnikov <ppluzhnikov@...gle.com>
-To: kseifried@...hat.com
-CC: oss-security@...ts.openwall.com,  Alexander Cherepanov <cherepan@...me.ru>
-Subject: Re: Reproducible Builds for Fedora
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/22/1
+Message-ID: <528EC75E.3060200@redhat.com>
+Date: Thu, 21 Nov 2013 19:54:22 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Please REJECT CVE-2013-6377
 Content-Type: text/plain; charset=utf-8
 
-On 9/26/13 10:59 PM, Kurt Seifried wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- >> http://comments.gmane.org/gmane.comp.gcc.devel/127875
-> Sorry I'm having trouble finding the patches, can you provide a URL?
+Please REJECT CVE-2013-6377, I assigned it to an issue that turned out
+to be security hardening, not a proper vuln.
 
-Here is the patch that resulted from above discussion:
-http://gcc.gnu.org/viewcvs/gcc?view=revision&revision=190648
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-Some more:
-http://gcc.gnu.org/viewcvs/gcc?view=revision&revision=178031
-http://gcc.gnu.org/viewcvs/gcc?view=revision&revision=170054
-
+iQIcBAEBAgAGBQJSjsdeAAoJEBYNRVNeJnmTFI0P/jHgqUtOrADzZU0fdZRyEe0+
+JkuDHW0maLpILpuUMx6UFMNGezR0VaLXxva6oSNQM5lDZBZaWmBNyO/BGqfldbEd
+9kCmn89vP5AL2tn4FqFghdJd0mYSggO5YD+SdobzeqL6KwvLeZhYgTxzh7Rcp7k4
+BGxuVGXR2m6a0WHpbetcKWJjoIcmbfJ5OQa9Tt9M7HjbMvO0oxujWzn3dWNM1AVU
+JpY9xsR4zygjMjAMvn6BmIQ+w+KvhmADC35B9EbVkV5PxFSq940A8QqetXMfQc6X
+QUqZAZg0E4c7zzNhkmTwljVhO8LV/ylYVPAGNAOSK1jb7fbDZGDPBd9MHwH89f/i
+LFtziGqApfhMpCttGYU8K9KjNvfXx+LcRQ6BXs3cmvQ3YjK9f15rTjqdDYSY5Kpx
++JV2IV1xVZoMp69KllAvLV3UYkGEMOZBXnb00tnaYsxeH1xG1L54q+fYVgqr66JA
+E2Z4bhJ2pZJO20MegQbPNJdp8s+ZzfP63kUlUOHIqy8q63wfjxz3zVv+panoBv07
+43paHUXk6qZOO6gHdadrYWcRDYVDt1ZgrZvVaAWMuGDiZWzOCkXJBL7UO3REKYLH
+TzHYQpLIYHnJ+On9Hf0c8ozHVQoCJpgWuRi8eeahT5OGcCZByZb1gRCc8uC4cdfM
+ly2KOP0/SX+ujETz1Dnw
+=4A89
+-----END PGP SIGNATURE-----
