@@ -1,17 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/4
-Message-ID: <alpine.LFD.2.03.1304091154390.15032@redhat.com>
-Date: Tue, 9 Apr 2013 12:01:04 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/22/4
+Message-ID: <528FB9E0.8090807@redhat.com>
+Date: Fri, 22 Nov 2013 13:09:04 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Drupal Security Team <security@...pal.org>, Open Source Security <oss-security@...ts.openwall.com>
+Subject: SA-CORE-2013-003 - Drupal core - Multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-+-- On Mon, 8 Apr 2013, Dan Carpenter wrote --+
-| Oh, you're saying that access_ok() can't fail.  That's true on some arches, 
-| and not on others.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Also, many on arch's `get_user' initialises `x' to 0.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+https://drupal.org/SA-CORE-2013-003
+
+SA-CORE-2013-003 - Drupal core - Multiple vulnerabilities
+
+Multiple vulnerabilities due to optimistic cross-site request forgery
+protection (Form API validation
+Please use CVE-2013-6385 for this issue.
+
+Multiple vulnerabilities due to weakness in pseudorandom number
+generation using mt_rand() (Form API, OpenID and random password
+generation - Drupal 6 and 7)
+Please use CVE-2013-6386 for this issue.
+
+Code execution prevention (Files directory .htaccess for Apache -
+Drupal 6 and 7)
+Treating as security hardening
+
+Access bypass (Security token validation - Drupal 6 and 7)
+Treating as security hardening
+
+Cross-site scripting (Image module - Drupal 7)
+Please use CVE-2013-6387 for this issue.
+
+Cross-site scripting (Color module - Drupal 7)
+Please use CVE-2013-6388 for this issue.
+
+Open redirect (Overlay module - Drupal 7)
+Please use CVE-2013-6389 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSj7nfAAoJEBYNRVNeJnmTQA8P+QEFJ5zwMuWRSELGUCnTQ0Tu
+ja1pMMKI/USbUvbX+YBgy/PoEcJNbam5lOwl5COUpxTgh3kZ/WQuHeQEFqEyJZ1W
+SausFeO8Om1eza4xZHf7UHpbgVpKCDkM3AI1PAXc8/ofMY+dfUY7+xzcea2dRFUQ
+MaClVJraYl4Ifa1TrdM/mdNDqWVuyulpXBlZLp3zrs9nwINjl1C6MjWL7W/4cRI8
+rCdVZOlF1CqR5PF0Y3Qw2uLhoQsBdEIcLIL0W8H+mTLAoGsdze4b6dVwZM7i+nE4
+TQL+f7l+cBcKlBLzQJFc5fKZ29pprkXlpUdfVHQxjp7CH+sQA0waQFn6fcQn5GJR
+yebhrFJHv6LrTaTjr8S6YxVVyC6cWTENkhSxYDbqrk4Jg+MXedh84MqKyutuo5AP
+nxhDvPtpT/RjuyRckQoKxMur6Zs3LlGetrKOvOza1bnHhG8Yq78HQcup1rom0Qz9
+hbFK6sQkVFTfoJdM/X17FM7B/WfLqjLUZY3nXpQqbIvrgKg7945/KT403iDLDTZu
+LGF2zvEhDT53HZDMK/bXglKr7X3Cg0tip71Trw5g4Zc3ZY3zdNf2SS+Onz22HXlj
+dzkb95tSE6KrVmFELnFok83Zs7EvJYrKwfVTDIo8u4kFrDFAvO+zTwEBmrQ4NVq6
+JvALQ9kTlBBcccAkF+Ts
+=26oq
+-----END PGP SIGNATURE-----
