@@ -1,22 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/13
-Message-ID: <20130408184905.GT18466@mwanda>
-Date: Mon, 8 Apr 2013 21:49:05 +0300
-From: Dan Carpenter <dan.carpenter@...cle.com>
-To: P J P <ppandit@...hat.com>
-Cc: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/22/3
+Message-ID: <528F8808.7010106@redhat.com>
+Date: Fri, 22 Nov 2013 09:36:24 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request for a vulnerability in OpenStack Ceilometer
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 08, 2013 at 09:44:33PM +0300, Dan Carpenter wrote:
-> On Mon, Apr 08, 2013 at 10:18:30PM +0530, P J P wrote:
-> > 
-> > Unless `access_ok()' in `__get_user' returns 0, which it does not, OR 
-> > sizeof(*ptr) is > 8 bytes.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 11/22/2013 08:57 AM, Thierry Carrez wrote:
+> A vulnerability was discovered in OpenStack (see below). In order
+> to ensure full traceability, we need a CVE number assigned that we
+> can attach to further notifications. This issue is already public,
+> although an advisory was not sent yet.
+> 
+> """ Title: Ceilometer DB2/MongoDB backend password leak Reporter:
+> Eric Brown (IBM) Products: Ceilometer Affects: All supported
+> versions
+> 
+> Description: Eric Brown from IBM reported an information leak in
+> Ceilometer logs. The password for the DB2 or MongoDB backends was
+> logged at INFO level in the ceilometer-api logs. An attacker with
+> access to the logs (local shell, log aggregation system access, or
+> accidental leak) may leverage this vulnerability to elevate
+> privileges and gain direct full access to the Ceilometer backend.
+> Only Ceilometer setups using the DB2 or MongoDB backends are
+> affected. """
+> 
+> References: https://bugs.launchpad.net/ceilometer/+bug/1244476
+> 
+> Thanks in advance,
 > 
 
-Oh, you're saying that access_ok() can't fail.  That's true on some
-arches, and not on others.
+Please use CVE-2013-6384 for this issue.
 
-regards,
-dan carpenter
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSj4gIAAoJEBYNRVNeJnmTN3EQAL2sYBkh9CpGpaa0Ues2HgcL
+VebR8UIoOOM0jAUATDnDJinLMYOViTvAE4xyCb/oP9k8NkAgUq0ENRoFkqeEgZjY
+hQCCEQR2m7yu5v9uf8cO3U9B0FPy7WEnWnw9Le5y/HRRC1Mga/WpUcWsODfyd2+q
+6sDuLxluM0I34cdLMmCxgESYneR7PQR6yaXW6e3GOFunFGtoDhR10x7fpiSfY5ar
+cAmvUneQ//StfEYAvGIUYCiQTxz1Sgmk9dnly89N67nyXHUZMgTnz50GS2xRjhxz
+Y9Ke4yyOeiWkcRQz9lS8wXZfA/FJS3xGAyTVOvcVM5PV4aEQg/bhqRZcnNUqRntm
+AWq7qFhgVNxlyY49CyBU7sbVx4LB1dniDvV1ZIUvyAYXdX48bEONGKkuWLOBJcZ+
+wP9W4llCqiL80Q1GmaLnVzh5KyO5RpTt0EfgoaJb3yKQNKxruYFmf/zzZoozhx5A
+rV7bljaNWBG0qyaKc7jQKUVqVA0w6Zxcc93UDz2CJddInAS/PWBxpW498nLPb5Zk
+j90ObbOL4gIv46Qh8Hm7mOt+HT2Yg8D3csTITJnJKP3WLzRXaQcn5sOoj3Lxt8Zk
+owkzAXHQV3H+449/6CuzZgYdRKiu+BfoQwxi4gTyH4n2BnvFCD18V/JZqTJQuI4T
+vyvsFDXmJEei03mJqYr0
+=/tjF
+-----END PGP SIGNATURE-----
