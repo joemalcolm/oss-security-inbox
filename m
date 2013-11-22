@@ -1,23 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/11/10
-Message-ID: <CABRvpqDSf25+YyDZj4gC=F7PKc=3cymHBx=bzh1mpGTBYBu19Q@mail.gmail.com>
-Date: Wed, 11 Sep 2013 17:28:26 -0400
-From: Andrew Nacin <nacin@...dpress.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE Requests for WordPress 3.6.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/22/5
+Message-ID: <20131122211645.GB5274@outflux.net>
+Date: Fri, 22 Nov 2013 13:16:45 -0800
+From: Kees Cook <keescook@...omium.org>
+To: oss-security@...ts.openwall.com
+Cc: Nico Golde <nico@...lde.de>, Fabian Yamaguchi <fabs@...sec.de>
+Subject: Linux kernel CVE fixes
 Content-Type: text/plain; charset=utf-8
 
-Three issues fixed in WordPress 3.6.1:
-http://codex.wordpress.org/Version_3.6.1
+Hi,
 
- * Unsafe PHP unserialization. CWE-502.
-http://core.trac.wordpress.org/changeset/25325.
+Here are some further issues found by Nico Golde and Fabian Yamaguchi:
 
- * Open Redirect / Insufficient Input Validation. CWE-601.
-http://core.trac.wordpress.org/changeset/25323 and
-http://core.trac.wordpress.org/changeset/25324.
+http://git.kernel.org/linus/a497e47d4aec37aaf8f13509f3ef3d1f6a717d88
+CVE-2013-6378
 
- * Privilege Escalation: a user with an Author role, using a specially
-crafted request, was able to create a post that was marked as "written by"
-another user. http://core.trac.wordpress.org/changeset/25321.
+http://git.kernel.org/linus/c2c65cd2e14ada6de44cb527e7f1990bede24e15
+CVE-2013-6379
 
+http://git.kernel.org/linus/b4789b8e6be3151a955ade74872822f30e8cd914
+CVE-2013-6380
+
+http://git.kernel.org/linus/f856567b930dfcdbc3323261bf77240ccdde01f5
+CVE-2013-6383
+
+http://git.kernel.org/linus/6fb392b1a63ae36c31f62bc3fc8630b49d602b62
+CVE-2013-6381
+
+linux-next "xfs: underflow bug in xfs_attrlist_by_handle()"
+CVE-2013-6382
+
+Thanks,
+
+-Kees
+
+-- 
+Kees Cook
+Chrome OS Security
