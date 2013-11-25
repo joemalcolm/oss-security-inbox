@@ -1,58 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/06/7
-Message-ID: <CABbbngBZtC76ss+1Mey4uYA3U6GM7z9oo+z6NBT7sRN4BF189A@mail.gmail.com>
-Date: Fri, 6 Dec 2013 15:19:18 -0800
-From: Forest Monsen <forest.monsen@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE request for Drupal core, and contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/25/4
+Message-ID: <5293C3A4.2060700@redhat.com>
+Date: Mon, 25 Nov 2013 14:39:48 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Kernel MSM - Memory leak in drivers/base/genlock.c
 Content-Type: text/plain; charset=utf-8
 
-Hi there, here is a combined request for CVE identifiers for Drupal core,
-and contributed modules.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-First, core:
-SA-CORE-2013-003 - Drupal core - Multiple vulnerabilities
- https://drupal.org/SA-CORE-2013-003
+On 11/25/2013 05:12 AM, Jonathan Salwan wrote:
+> Hello,
+> 
+> The Genlock driver does not properly initialize all members of a
+> structure before copying it to user space. This allows a local
+> attacker to obtain potentially sensitive information from kernel
+> stack memory via ioctl system calls.
 
-- "Multiple vulnerabilities due to optimistic cross-site request forgery
-protection (Form API validation - Drupal 6 and 7)": Correct me if I'm
-wrong, but I read this as a single vulnerability in the underlying core
-CSRF prevention code; it manifests differently based on the user-created
-("contrib") callbacks that employ it.
+This should be classified as CWE-200 Information Disclosure, "memory
+leak" refers to memory being used and not released properly, resulting
+in out of memory conditions.
 
-- "Multiple vulnerabilities due to weakness in pseudorandom number
-generation using mt_rand() (Form API, OpenID and random password generation
-- Drupal 6 and 7)": Not sure if further classification of this one is
-necessary.
+> 
+> Upstream fixes: 
+> https://www.codeaurora.org/cgit/quic/la/kernel/msm/commit/drivers/base/genlock.c?id=e3c43027bdb59f03eec7ead0a01c77e4bf801625&h=jb_3.2.3
+>
+>  Could you please assign a CVE id for this issue?
+> 
+> Thanks,
+> 
+> - Jonathan
 
-- "Code execution prevention" for the "files" directory .htaccess for
-Apache: Execution of local code.
+Please use CVE-2013-6392 for this issue.
 
-- Access bypass in security token validation (as performed by
-drupal_valid_token() ).
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-- Cross-site scripting in Drupal core's Image module.
-
-- Open redirect in Drupal core's Overlay module.
-
-Now the contributed modules:
-SA-CONTRIB-2013-093 - Invitation - Access Bypass
-https://drupal.org/node/2140097
-
-SA-CONTRIB-2013-094 - EU Cookie Compliance - Cross Site Scripting (XSS)
-https://drupal.org/node/2140123
-
-SA-CONTRIB-2013-095 - Organic Groups - Access bypass
-https://drupal.org/node/2140217
-
-SA-CONTRIB-2013-096 - Entity reference - Access bypass
-https://drupal.org/node/2140237
-
-SA-CONTRIB-2013-097 - OG Features - Access bypass
-https://drupal.org/node/2149791
-
-Thanks!
-
-Forest
-
+iQIcBAEBAgAGBQJSk8OkAAoJEBYNRVNeJnmTlEUP/1TrJoUCoRFq3Yq6y60Yzc0J
+W0xPsRy4HvT74bXg0VzwymuzIue9LqzzDlEFPSPDPDF3iEpXiLCOjLwvhu7FE03X
+YSnfCqIcTtaMDUBsFNDCq5Ze7I82O8ttu3ThSqaURcS8BPKYNqhJ3U+lUh8CUI1k
+myMbAmec+pUvg2HhEd8eeL3VIL2TmbIK8weI19EM9JdV/pG1m4lwpKXcui7L68ax
+F6kX9ZLsETN0OL5DXthKStg79eD/8rO5gptQ/Ks1QqRooUzzeTW9iCTlQ8qHrpEz
+V7o/2M4nKNVvneBnDXDQrTSo4+xiMSm74BA/k5qdm8nWHJOHXFUJD+m+F9Cgfjap
+YKAxqOrIUzCz/8ffm3En+yMdXcZyALfHqMauLzRIumNkzGrVHZsZKHus76hHNd4B
+SbUoosGKUw9ZBhajE3KIzjnir6kVnz2GS7HCL3RvTt0/Hbqfo8Q8dOYrM/Ffxj08
+0MiWQ3epvuwrvsSYzcA3kSA9eytnKiv/qqDO1Y7w5vhqJNf5Tkh6I1gN9IaC/ZYV
+dVGCRxMQwqeLH6enMXZrEmb/y5ko0gS68AW6fA8K/7PH1GGBofyh1a0ufDQx0rQW
+iLjZ++Swo6k16LUHIY2o1G3mBfqdeGizC4tOrWfK4DTFJFoZFK+K7zfkw09YoS/B
+rt7xxAwqZzf9TA90DQEs
+=htq/
+-----END PGP SIGNATURE-----
