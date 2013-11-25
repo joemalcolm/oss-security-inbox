@@ -1,104 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/14
-Message-Id: <E1VUFLt-0002yY-AA@xenbits.xen.org>
-Date: Thu, 10 Oct 2013 12:28:25 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 71 (CVE-2013-4375) - qemu disk backend (qdisk) resource leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/25/1
+Message-ID: <52929E82.1040101@moodle.com>
+Date: Mon, 25 Nov 2013 08:49:06 +0800
+From: Michael de Raadt <michaeld@...dle.com>
+To: oss-security@...ts.openwall.com
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: Moodle security notifications public
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The following security notifications are now public after a delayed release.
 
-             Xen Security Advisory CVE-2013-4375 / XSA-71
-                              version 2
+*Please note that the MSA security numbers reported earlier were 
+incorrect and out of sequence. These should be corrected.*
 
-               qemu disk backend (qdisk) resource leak
+Thanks to OSS members for their continued cooperation.
 
-UPDATES IN VERSION 2
-====================
+=======================================================================
+MSA-13-0036 (not MSA-13-25): Incorrect headers sent for secured resources
 
-Public release
+Description:       Some files were being delivered with incorrect
+                    headers, meaning they could be cached downstream.
+Issue summary:     Incorrect headers emitted for secured resources
+Severity/Risk:     Minor
+Versions affected: 2.5 to 2.5.2, 2.4 to 2.4.6, 2.3 to 2.3.9 and
+                    earlier unsupported versions
+Versions fixed:    2.6, 2.5.3, 2.4.7 and 2.3.10
+Reported by:       Tony Levi
+Issue no.:         MDL-38743, MDL-42686
+CVE identifier:    CVE-2013-4522
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-38743
 
-Fix patch header corruption in xsa71-qemu-xen-unstable.patch.
+=======================================================================
+MSA-13-0037 (not MSA-13-26): Cross site scripting in Messages
 
-ISSUE DESCRIPTION
-=================
+Description:       JavaScript in messages was being executed on some
+                    pages.
+Issue summary:     Cross Site Scripting in Messages
+Severity/Risk:     Serious
+Versions affected: 2.5 to 2.5.2, 2.4 to 2.4.6, 2.3 to 2.3.9 and
+                    earlier unsupported versions
+Versions fixed:    2.6, 2.5.3, 2.4.7 and 2.3.10
+Reported by:       Panagiotis Petasis
+Issue no.:         MDL-41941
+CVE identifier:    CVE-2013-4523
+Workaround:        Disable messages
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-41941
 
-The qdisk PV disk backend in the qemu-xen flavour of qemu ("upstream
-qemu") can be influenced by a malicious frontend to leak mapped grant
-references.
+=======================================================================
+MSA-13-0038 (not MSA-13-27): Access to server files through repository
 
-IMPACT
-======
+Description:       The file system repository was allowing access
+                    to files beyond the Moodle file area.
+Issue summary:     File System repository gives read access to the
+                    whole file system
+Severity/Risk:     Serious
+Versions affected: 2.5 to 2.5.2, 2.4 to 2.4.6, 2.3 to 2.3.9 and
+                    earlier unsupported versions
+Versions fixed:    2.6, 2.5.3, 2.4.7 and 2.3.10
+Reported by:       Frédéric Massart
+Issue no.:         MDL-41807
+CVE identifier:    CVE-2013-4524
+Workaround:        Do not enable File System repository (default)
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-41807
 
-A malicious HVM guest can cause the backend domain to run out of grant
-references, leading to a DoS for any other domain which shares that
-driver domain.
+=======================================================================
+MSA-13-0039 (not MSA-13-28): Cross site scripting in Quiz
 
-VULNERABLE SYSTEMS
-==================
+Description:       JavaScript in question answers was being executed on
+                    the Quiz Results page.
+Issue summary:     XSS on view quiz results page
+Severity/Risk:     Serious
+Versions affected: 2.5 to 2.5.2, 2.4 to 2.4.6, 2.3 to 2.3.9 and
+                    earlier unsupported versions
+Versions fixed:    2.6, 2.5.3, 2.4.7 and 2.3.10
+Reported by:       Michael Hess
+Issue no.:         MDL-41820
+CVE identifier:    CVE-2013-4525
+Workaround:        Disable text-based question types.
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-41820
 
-Any system which is using the qemu-xen qdisk backend for HVM guests is
-vulnerable.
+=======================================================================
+MSA-13-0040: Cross site scripting vulnerability in YUI library
 
-qemu-xen and qdisk are exposed by systems using libxl from Xen 4.2.0
-onwards. In Xen 4.2.0 qemu-xen was a non-default option, from Xen
-4.3.0 onwards qemu-xen is the default.
-
-Xen 4.1.0 exposes qdisk via libxl but does not support qemu-xen and
-therefore is not vulnerable.
-
-The xend toolstack has never supported qdisk as a disk backend and
-therefore such systems are not vulnerable.
-
-Upstream qemu is vulnerable from version 1.1 onwards.
-
-MITIGATION
-==========
-
-This vulnerability can be avoided by using a different block backend
-(e.g. blkback or blktap2) or by using the qemu-xen-traditional version
-of qemu.
-
-Users of the xl toolstack, see docs/misc/xl-disk-configuration.txt for
-information on forcing the use of a particular disk backend and
-xl.cfg(5) for information on forcing the use of qemu-xen-traditional.
-
-Systems which only run PV guests and/or run HVM guests without PV
-drivers are not vulnerable.
-
-CREDITS
-=======
-
-This issue was discovered by Coverity Scan and Matthew Daley.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa71-qemu-xen-unstable.patch        xen-unstable, Xen 4.3.x
-xsa71-qemu-xen-4.2.patch             Xen 4.2.x
-
-
-$ sha256sum xsa71*.patch
-a3f667e251a32fa5eff4a78eae49acd020b2f340fb203dc08a033d43841b0a2a  xsa71-qemu-xen-4.2.patch
-f5ec607babb01dc8f8065dfe121882af4c3d93c035bafbfed48825dea684d6d9  xsa71-qemu-xen-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJSVp1bAAoJEIP+FMlX6CvZ8nMH/1sMYLD38viMSIJndL3Nlfz4
-cj5AaTHyPIYaX3RzLZfM08+qeRIcXcPDAcNwaYn97IOv0JJ/gppfNOeCdmHGvWhl
-z88vKbzI0RaDv3pL+eKo7RiGN/T32gsh6H4ltjrNGyO0LiDI4rfbxTBjVlzE8bB8
-M4weAWtgEa7/VAYeM4g7cOoCD7goE15lYLSRsrQJGn/iizLdL/I+IqSvTaGwgE+I
-yKvl7wJ1fEfy9sKCTls9INZdMnJXmlC4+Pq8phmW9QoSSIxNFqRDZ13IduXHbpXe
-xyeAr7U5b5GzPtGclu6XX0vyuOct2mf984xHbe06ecJF2KjsXi44spszPP2elHQ=
-=hcxy
------END PGP SIGNATURE-----
-
-Download attachment "xsa71-qemu-xen-4.2.patch" of type "application/octet-stream" (1624 bytes)
-
-Download attachment "xsa71-qemu-xen-unstable.patch" of type "application/octet-stream" (1617 bytes)
+Description:       Flash files distributed with the YUI library
+                    may have allowed for cross-site scripting attacks.
+                    This is additional to MSA-13-0025.
+Issue summary:     YUI2 security vulnerability
+Severity/Risk:     Serious
+Versions affected: 2.3 to 2.3.9 and earlier unsupported versions
+Versions fixed:    2.3.10
+Reported by:       Petr Škoda
+Issue no.:         MDL-42780
+CVE identifier:    CVE-2013-6780
+Workaround:        Remove all SWF files under the lib/yui directory.
+Changes (2.3): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-42780
