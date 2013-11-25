@@ -1,41 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/5
-Message-ID: <20130925141347.GC4589@mars-attacks.org>
-Date: Wed, 25 Sep 2013 16:13:47 +0200
-From: Nicolas Vigier <boklm@...s-attacks.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/25/2
+Message-ID: <CAEmQOhBA6tK4OZELCBbeQWJMni=8MBdbDH+BmKb03hoy+LumbA@mail.gmail.com>
+Date: Mon, 25 Nov 2013 12:12:16 +0000
+From: Jonathan Salwan <jonathan.salwan@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Reproducible Builds for Fedora
+Subject: CVE request: Kernel MSM - Memory leak in drivers/base/genlock.c
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 25 Sep 2013, Steve Grubb wrote:
+Hello,
 
-> Hello,
-> 
-> On Wednesday, September 25, 2013 10:08:01 AM Sebastian Krahmer wrote:
-> > I was checking the rpm-compare how it actually is doing the compre
-> > and you have:
-> > 
-> > [...]
-> >                 base=`basename $f`
-> >                 objdump -d rpm1/$f | grep -v $base > dump1
-> >                 objdump -d rpm2/$f | grep -v $base > dump2
-> >                 diff -u dump1 dump2 > /dev/null
-> >                 if [ $? -ne 0 ] ; then
-> >                           echo "File disassembly differs $f"
-> >                           cnt=`expr $cnt + 1`
-> >                 fi
-> > [...]
-> > 
-> > for ELF files and doing a sha256sum for other file types. My concern is
-> > that attackers could construct a package that contains function-names that
-> > match the basename of the binary that you are checking.
-> 
-> Thanks for the feedback. I think the 'grep -v' can be replaced with sed 
-> '1,2d'. Its purpose was to delete the file path that objdump inserts at the top 
-> which causes miscompares.
+The Genlock driver does not properly initialize all members of a structure
+before copying it to user space. This allows a local attacker to obtain
+potentially sensitive information from kernel stack memory via ioctl system
+calls.
 
-Or something like this ?
+Upstream fixes:
+https://www.codeaurora.org/cgit/quic/la/kernel/msm/commit/drivers/base/genlock.c?id=e3c43027bdb59f03eec7ead0a01c77e4bf801625&h=jb_3.2.3
 
-  (cd rpm1; objdump -d $f > ../dump1)
-  (cd rpm2; objdump -d $f > ../dump2)
+Could you please assign a CVE id for this issue?
+
+Thanks,
+
+- Jonathan
 
