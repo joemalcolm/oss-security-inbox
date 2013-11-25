@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/11
-Message-ID: <alpine.LFD.2.03.1301211728280.15280@redhat.com>
-Date: Mon, 21 Jan 2013 18:02:46 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss-security@...ts.openwall.com
-cc: kargig@...d.gr
-Subject: Re: Linux kernel handling of IPv6 temporary addresses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/25/3
+Message-ID: <52936054.3000905@openstack.org>
+Date: Mon, 25 Nov 2013 15:36:04 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: [OSSA 2013-031] Ceilometer DB2/MongoDB backend password leak (CVE-2013-6384)
 Content-Type: text/plain; charset=utf-8
 
-+-- On Sun, 20 Jan 2013, George Kargiotakis wrote --+
-| Yes and no. When flooding finishes everything still works ok,
-| temp. addresses haven't been disabled, but when the preferred timer
-| of the temp. address of the original acquired prefix expires, the kernel
-| won't be able to acquire a new temporary address because the interface
-| is already full with 16 addresses from flooding. An already acquired
-| address only gets removed when it's validity timer expires. So, the
-| host will be left using the global non-temp address acquired by slaac
-| until another 'slot' (from the default 16) becomes free/expires.
-| 
-| Summarizing, one is still able to remotely, inside a LAN, cause
-| problems to another host, that is make it lose it's temp. address
-| functionality at least for some time.
+OpenStack Security Advisory: 2013-031
+CVE: CVE-2013-6384
+Date: November 25, 2013
+Title: Ceilometer DB2/MongoDB backend password leak
+Reporter: Eric Brown (IBM)
+Products: Ceilometer
+Affects: All supported versions
 
-  Ah right. I just wanted to confirm if it makes sense to push that patch 
-upstream. I think we'll defer it for now.
+Description:
+Eric Brown from IBM reported an information leak in Ceilometer logs. The
+password for the DB2 or MongoDB backends was logged at INFO level in the
+ceilometer-api logs. An attacker with access to the logs (local shell,
+log aggregation system access, or accidental leak) may leverage this
+vulnerability to elevate privileges and gain direct full access to the
+Ceilometer backend. Only Ceilometer setups using the DB2 or MongoDB
+backends are affected.
 
-Thanks so much.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+Icehouse (development branch) fix:
+https://review.openstack.org/#/c/54553/
+
+Havana fix:
+https://review.openstack.org/#/c/56396/
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6384
+https://bugs.launchpad.net/ceilometer/+bug/1244476
+
+Regards,
+
+-- 
+Thierry Carrez
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
