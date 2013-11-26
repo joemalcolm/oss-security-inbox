@@ -1,61 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/4
-Message-ID: <52A5843F.7020109@gentoo.org>
-Date: Mon, 09 Dec 2013 12:50:07 +0400
-From: Sergey Popov <pinkbyte@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ClamAV vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/5
+Message-ID: <20131126105229.GB8743@suse.de>
+Date: Tue, 26 Nov 2013 11:52:29 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: static IV used in Percona XtraBackup
 Content-Type: text/plain; charset=utf-8
 
-29.11.2013 21:58, Kurt Seifried пишет:
-> On 11/29/2013 02:20 AM, Sergey Popov wrote:
->> It's a bit late, but i would like to request CVE for two
->> vulnerabilities, that present in ClamAV before 0.97.7[1]:
-> 
->> 1) A double-free error exists within the
->> "unrar_extract_next_prepare()" function
->> (libclamunrar_iface/unrar_iface.c) when parsing a RAR file.
-> 
->> 2) An unspecified error within the "wwunpack()" function
->> (libclamav/wwunpack.c) when unpacking a WWPack file can be
->> exploited to corrupt heap memory.
-> 
->> [1] - https://secunia.com/advisories/52647/
-> 
-> 
-> The blog entry
-> 
-> http://blog.clamav.net/2013/03/clamav-0977-has-been-released.html
-> 
-> contains no mention of security flaws,
-> 
-> Also the ChangeLog:
-> 
-> https://github.com/vrtadmin/clamav-devel/blob/0.97/ChangeLog
-> 
-> Doesn't contain any mention of the above flaws. Can you provide links
-> to source code/bug reports or something so I can verify this? Thanks.
-> 
-> 
+Hi,
 
-What's about:
+This came to our desk:
+https://bugzilla.novell.com/show_bug.cgi?id=852224
+https://bugs.launchpad.net/percona-xtrabackup/+bug/1185343
 
-"ClamAV 0.97.7 addresses several reported potential security bugs.
-Thanks to Felix Groebert, Mateusz Jurczyk and Gynvael Coldwind of the
-Google Security Team for finding and reporting these issues."[1]
+constant IV used in CTR Mode, allowing plaintext retrieval
+attacks.
 
-I know that there are no details provided here, but secunia advisory
-also points on 'unspecified vulnerabilities'.
+I think it needs a CVE.
 
-[1] - quote from
-http://blog.clamav.net/2013/03/clamav-0977-has-been-released.html
-
--- 
-Best regards, Sergey Popov
-Gentoo developer
-Gentoo Desktop Effects project lead
-Gentoo Qt project lead
-Gentoo Proxy maintainers project lead
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
+Ciao, Marcus
