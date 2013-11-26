@@ -1,25 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/11
-Message-ID: <20130207185032.489d9451@melee>
-Date: Thu, 7 Feb 2013 18:50:32 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/4
+Message-ID: <52941B59.6060707@redhat.com>
+Date: Tue, 26 Nov 2013 14:54:01 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: XSS in roundcube before 0.8.5
+CC: cve-assign@...re.org, Kurt Seifried <kseifrie@...hat.com>
+Subject: CVE request: XSS flaw in Ganglia web interface
 Content-Type: text/plain; charset=utf-8
 
-Release notes:
-http://sourceforge.net/news/?group_id=139281&id=310213
+Hello,
 
-Corresponding bug:
-http://trac.roundcube.net/ticket/1488850
+A cross-site scripting (XSS) flaw was discovered in the Ganglia web 
+interface:
 
-Commit:
-https://github.com/roundcube/roundcubemail/commit/74cd0a9b62f11bc07c5a1d3ba0098b54883eb0ba
+https://github.com/ganglia/ganglia-web/issues/218
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=730507
 
-Please assign CVE.
+Quoting from the original report:
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+""
+Temporary Workaround and Fix
+============================
+Apply the following patch to properly encode the variable:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+--- header.php.old	2013-09-30 21:07:26.272287657 +0200
++++ header.php	2013-09-30 21:09:42.226281990 +0200
+@@ -491,7 +491,7 @@ $data->assign("custom_time", $custom_tim
+  /////////////////////////////////////////////////////////////////////////
+  if ( $context == "cluster" ) {
+    if ( isset($user['host_regex']) && $user['host_regex'] != "" )
+-    $set_host_regex_value="value='" . $user['host_regex'] . "'";
++    $set_host_regex_value="value='" . htmlentities($user['host_regex'], 
+ENT_QUOTES) . "'";
+    else
+      $set_host_regex_value="";
+""
+
+The fix does not apply to the older versions in EPEL (3.0.7 and 3.1.7), 
+but I did not test to see if they were affected.
+
+Can a CVE please be assigned if one has not been already?
+
+Thanks,
+
+--
+Murray McAllister / Red Hat Security Response Team
