@@ -1,38 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/31/1
-Message-id: <e5c674f9-fa62-4517-b3c3-5cc342cc409d@me.com>
-Date: Sun, 31 Mar 2013 16:11:27 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Cc: Packet Storm <packet@...ketstormsecurity.org>
-Subject: Remote command execution in Ruby Gem ldoce 0.0.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/2
+Message-ID: <20131126012017.GB26817@hunt>
+Date: Mon, 25 Nov 2013 17:20:17 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
+To: "Christey, Steven M." <coley@...re.org>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: Kernel MSM - Memory leak in drivers/base/genlock.c
 Content-Type: text/plain; charset=utf-8
 
-Remote command execution in Ruby Gem ldoce 0.0.2
-Larry W. Cashdollar
-@_larry0
-3/25/2013
+On Tue, Nov 26, 2013 at 12:57:23AM +0000, Christey, Steven M. wrote:
+> Kurt said:
+> 
+> >> The Genlock driver does not properly initialize all members of a
+> >> structure before copying it to user space. This allows a local
+> >> attacker to obtain potentially sensitive information from kernel
+> >> stack memory via ioctl system calls.
+> >
+> >This should be classified as CWE-200 Information Disclosure, "memory
+> >leak" refers to memory being used and not released properly, resulting
+> >in out of memory conditions.
+> 
+> In CWE, we discourage the "memory leak" term because it has multiple
+> meanings and interpretations: (1) that memory is allocated but never
+> released, or (2) that sensitive portions of memory are accidentally
+> disclosed to untrusted parties.
+> 
+> This request sounds like variant (2) of the varying uses of the "memory
+> leak" term, although Kurt's interpretation seems to be that it's about
+> variant (1), which further reinforces my personal desire to see that
+> term go away forever.
 
-Ldoce Ruby Gem:
+I wrote a response to Kurt, suggesting that he had mis-diagnosed the
+problem but did not send my response when I found that his message said
+the same thing mine said once you replace his first ',' with a ';'. Try
+this instead:
 
-Easily interface with the Longman Dictionary of Contemporary English API from Ruby:
+> >This should be classified as CWE-200 Information Disclosure; "memory
+> >leak" refers to memory being used and not released properly, resulting
+> >in out of memory conditions.
 
-NB currently mac only as it depends on the afplay command.
+[Kurt's words with the first comma replaced with a semicolon.]
 
-https://github.com/markburns/ldoce
+It's amazing what a difference two pixels can make. :)
 
-Ldoce passes an mp3 url to commandline for audio output of the pronunciation of a dictonary word:
+> Anyway... Note that, as this issue is described, "information
+> disclosure" actually results from a root cause in which certain
+> locations are not properly initialized.  Thus CWE-665: Improper
+> Initialization (or its child CWE-457 Use of Uninitialized Variable) are
+> probably more appropriate characterizations of the core issue; in this
+> case, it happens to lead to memory disclosure, but in other cases, it
+> might lead to privilege escalation or other consequences (depending on
+> how the uninitialized data is used.)
 
-If the URL or filename for the mp3 files contain shell met﻿acharacters code can be executed remotely as the client:
+I came up with CWE 212 before I properly parsed Kurt's mail:
+CWE-212: Improper Cross-boundary Removal of Sensitive Data
 
-[./ldoce-0.0.2/lib/ldoce/word.rb]
+With so much to chose from it's surprising the fix is one line of code. :)
 
-      if mp3?
-        unless File.exists? filename
-          command = "curl #{mp3_url} -silent > {filename}"
-          `{command}`
-        end
-        `afplay #{filename}`
-      end
 
-Content of type "text/html" skipped
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
