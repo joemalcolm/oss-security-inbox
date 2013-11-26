@@ -1,19 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/1
-Message-ID: <CANTw=MOxfu5qR+MP86+J4FOxRXzfMRz7qDiepty5xRPsYN_+Tg@mail.gmail.com>
-Date: Sun, 7 Apr 2013 20:28:48 -0400
-From: Michael Gilbert <mgilbert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/14
+Message-ID: <1385507213.8432.15.camel@banzai>
+Date: Wed, 27 Nov 2013 00:06:53 +0100
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
 To: oss-security@...ts.openwall.com
-Subject: cve request: util-linux
+Subject: CVE request: Apache Solr 4.6.0
 Content-Type: text/plain; charset=utf-8
 
-Please assign an id for a somewhat minor information disclosure in
-util-linux.  Details (including commit ids) about the problem can be
-found in the Debian bug report:
-http://bugs.debian.org/697464
+Hello,
 
-Based on the git commit log, the relevant commits appear to be first
-included with the v2.23 release.
+Apache Solr 4.6.0 was released a few days ago. This version includes a
+fix for bug SOLR-4882 (directory traversal when accessing XSLT
+stylesheets and Velocity templates):
+http://lucene.apache.org/solr/4_6_0/changes/Changes.html#v4.6.0.security
+https://issues.apache.org/jira/browse/SOLR-4882
 
-Thanks,
-Mike
+If the user can store his own files on the server, this vulnerability
+could be abused to gain remote code execution.
+
+Regards,
+Nicolas Grégoire
+
+
+
