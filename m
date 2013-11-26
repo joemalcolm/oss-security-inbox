@@ -1,47 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/10
-Message-ID: <20130314084710.GA12061@kludge.henri.nerv.fi>
-Date: Thu, 14 Mar 2013 10:47:10 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/11
+Message-ID: <5294DCD9.8050000@redhat.com>
+Date: Tue, 26 Nov 2013 10:39:37 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: plugins@...dpress.org
-Subject: Re: CVE-2009-4168: WordPress plugin vkontakte-api XSS vulnerability
+Subject: Re: CVE Request: static IV used in Percona XtraBackup
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 11, 2013 at 09:44:33AM +0200, Henri Salo wrote:
-> Plugin URL: http://wordpress.org/extend/plugins/vkontakte-api/
-> Affected file: tagcloud.swf 368b01e1728111f99d93ac5805d97abbb899a910
-> PoC: wp-content/plugins/vkontakte-api/swf/tagcloud.swf?mode=tags&tagcloud=<tags><a+href=%27javascript:alert%28document.cookie%29%27+style=%27font-size:+40pt%27>oss-security</a></tags>
-> Affected versions: 1.21, 1.22, 1.23, 1.24, 1.25, 1.26, 1.27, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5, 2.7
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 11/26/2013 03:52 AM, Marcus Meissner wrote:
+> Hi,
 > 
-> Currently no fix available.
+> This came to our desk:
+> https://bugzilla.novell.com/show_bug.cgi?id=852224
+> https://bugs.launchpad.net/percona-xtrabackup/+bug/1185343
+> 
+> constant IV used in CTR Mode, allowing plaintext retrieval
+> attacks.
+> 
+> I think it needs a CVE.
+> 
+> Ciao, Marcus
+> 
 
-WordPress plugin-guys replied Mon, 11 Mar 2013 21:32:52 +0000
+Please use CVE-2013-6394 for this issue.
 
-"Closed this morning :)"
+P.S. has anyone considered packaging this for Fedora? looks nifty.
 
-Now the changelog says:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-------------------------------------------------------------------------
-r681668 | kowack | 2013-03-14 09:39:40 +0200 (Thu, 14 Mar 2013) | 1 line
-
-2.7 to 3.0
-------------------------------------------------------------------------
-r681323 | kowack | 2013-03-13 18:04:13 +0200 (Wed, 13 Mar 2013) | 1 line
-
-amen
-------------------------------------------------------------------------
-r681320 | kowack | 2013-03-13 18:01:49 +0200 (Wed, 13 Mar 2013) | 1 line
-
-major update, may has bugs :(
-------------------------------------------------------------------------
-r568584 | kowack | 2012-07-07 09:49:19 +0300 (Sat, 07 Jul 2012) | 1 line
-
-And it seems that tagcloud.swf is removed from version 3.0 of the plugin.
-Changelog does not include CVE nor notification about security issues fixed.
-Well at least it is fixed.
-
---
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQIcBAEBAgAGBQJSlNzYAAoJEBYNRVNeJnmT91QP/1Mnd31z82+CKrLklfRidV/Y
+McdFlOm9AQJvUTKy5U8/7JroWx5wQpGBOVqp7KKB30m/PId+mzoVPF+0AwHhfleg
+CQ37UowmYx6izjSS+A3yHXFYdm7Bm46ulghnSF7slM+tEn9SiiP6IjGJLJfJStZ9
+9KkCdUDepq67UmLA9ny10/Fhc+NBcAJj6VIPGzQPFyFlqw91RFLnnqpX+Sb7qCGj
+lIXikWYmmCtKtl6DzPPNgbcejMY9OJulacHQ8V8fngAIcHzuofkMRyv17zDvtreP
+MiUB7NeMpwzWZBqIv3WE+/kzmxubVf8pI50Y847bDwzMd1HhVv0RrigqGhg8reiG
+dIHGFk+LS60PTPHEFs7K7r2xAk+GOmHPOCpaZlQqDrNRqQ/Zxu9MDjockYN4+rS/
+4qJD9N8jeyDHhZmR2BnIIlZkjHzwYlDcAiAX06NB4mppVTTHadaWYTc6620NhG9F
+BzV3KIxyFnAVPD3aeXaWCtLqCaKmq3kAJHsTF2QkmlsVNNwcnMdIvMnbyyjn5oeY
+Dw1bZcmdRfchYavozkuM5898PH8+yzvXl/k60e/8zjgGIVbVIRYblznK+5bqPlpb
+GPoYGAmmy8knV2E/6YR7kFXdzVC8n/XYUL9h7HGNy74pLGEZLHlxlhM52fRPE9qs
+P6fxvlll8e/bfvZj2CDZ
+=b8Jv
+-----END PGP SIGNATURE-----
