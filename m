@@ -1,173 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/03/2
-Message-ID: <52263B4F.9090108@redhat.com>
-Date: Tue, 03 Sep 2013 13:41:03 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jonas Meurer <jonas@...esources.org>, Vincent Danen <vdanen@...hat.com>, contribute@...ios.org
-Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/9
+Message-Id: <E1VlM2o-0002ZM-PL@xenbits.xen.org>
+Date: Tue, 26 Nov 2013 17:03:26 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 76 (CVE-2013-4554) - Hypercalls exposed to privilege rings 1 and 2 of HVM guests
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/30/2013 09:47 AM, Jonas Meurer wrote:
-> Any news on that?
-> 
-> I still believe that there's a misunderstanding. I still consider
-> the bug I found as security relevant. Hostnames are leaked to
-> unauthorized nagios-cgi users.
-> 
-> In case that you don't agree with what I've written below, please
-> explain.
-> 
-> Honestly, I cannot believe that it was meant as a _feature_ by
-> nagios devs that _all_ hostnames are displayed for _all_ users,
-> regardless whether they're listed in contacts/contactgroups.
-> 
-> I don't consider this issue too important, but still a CVE would
-> be appropriative in my opinion. It should be fixed in future
-> uploads of nagios3 to the major distributions. Most nagios admins
-> might be unaware of this issue.
-> 
-> Kind regards, jonas
-> 
-> 
-> Am 2013-08-04 02:40, schrieb Jonas Meurer:
->> Hello,
->> 
->> sorry, I'm on holidays and cannot work on this issue for the next
->> two weeks. But I think that there is a missunderstanding. See my
->> short comment below.
->> 
->> Am 02.08.2013 19:27, schrieb Vincent Danen:
->>> * [2013-07-10 17:17:08 +0200] Jonas Meurer wrote:
->>> 
->>>> Hello,
->>>> 
->>>> Am 2013-07-08 20:16, schrieb Kurt Seifried:
->>>>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->>>>> 
->>>>> On 06/26/2013 01:42 PM, Kurt Seifried wrote:
->>>>>> On 06/26/2013 12:36 PM, Vincent Danen wrote:
->>>>>>> I don't believe a CVE has been assigned to this issue
->>>>>>> yet.
->>>>>> 
->>>>>>> It was reported that Nagios 3.4.4 at least, and
->>>>>>> possibly earlier versions, would allow users with
->>>>>>> access to Nagios to obtain full access to the
->>>>>>> servicegroup overview, even if they are not authorized
->>>>>>> to view all of the systems (not configured for this 
->>>>>>> ability in the authorized_for_* configuration option).
->>>>>>> This includes the servicegroup overview, summary, and
->>>>>>> grid.
->>>>>> 
->>>>>>> Provided the user has access to view some services,
->>>>>>> they will be able to see all services (including those
->>>>>>> they should not see). Note that the user in question
->>>>>>> must have access to some services and must have access
->>>>>>> to Nagios to begin with.
->>>>>> 
->>>>>>> This has not yet been corrected upstream.
->>>>>> 
->>>>>>> References:
->>>>>> 
->>>>>>> http://www.mail-archive.com/nagios-users@lists.sourceforge.net/msg39749.html
->>>>>>>
->>>>>>>
->>>>>>
->>>>>>>
->>>>>>> 
-http://tracker.nagios.org/view.php?id=456
->>>>>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714171
->>>>>>>
->>>>>>> 
-https://bugzilla.redhat.com/show_bug.cgi?id=978531
->>>>>> 
->>>>>> 
->>>>>>> Thanks.
->>>>>> 
->>>>>> Please use CVE-2013-2214 for this issue.
->>>>> 
->>>>> It appears there are may be some problems with this issue,
->>>>> potentially this may have been a bad configuration and not
->>>>> a source code based problem, however we haven't been able
->>>>> to confirm it yet. I've also not been able to contact
->>>>> upstream about this easily (no security@ address, if anyone
->>>>> know whom to forward this to, please let me know, thanks.
->>>> 
->>>> I'm wondering why you fail to reproduce this issue. I posted
->>>> some details regarding my setup at the Nagios Tracker: 
->>>> http://tracker.nagios.org/view.php?id=456
->>>> 
->>>> Unfortunately Nagios upstream sometimes rather unresponsive.
->>>> At least that's what I observed.
->>>> 
->>>> Please let me know if you need any further details regarding
->>>> the bug or advice on how to reproduce it.
->>> 
->>> To close the loop on this, the CVE should probably be
->>> rejected. According to upstream, this is done by design.  One
->>> of our users noted it in our bugzilla:
->>> 
->>> https://bugzilla.redhat.com/show_bug.cgi?id=978531#c11
->>> 
->>> He has a thorough explanation, but the bottom line is this
->>> seems to be by design, as noted in the changelog:
->>> 
->>> http://www.nagios.org/projects/nagioscore/history/core-3x
->>> 
->>> * Users can now see hostgroups and servicegroups that contain
->>> at least one host or service they are authorized for, instead
->>> of having to be authorized for them all (Ethan Galstad)
->> 
->> As I understand this changelog entry, it means the following:
->> 
->> Hostgroups and servicegroups are listed with all the
->> _authorized_ members if the user is authorized to see at least
->> one member.
->> 
->> To me it doesn't mean the following (which was the case without
->> my patch):
->> 
->> Servicegroups are listed with all members (regardless wether
->> authorized or unauthorized) if the user is authorized to see at
->> least one member.
->> 
->> Another argument for my point of view is that the nagios
->> maintainers (silently) accepted my patch (at least if I remember
->> correctly, it has been incorporated into the upstream development
->> repository). Unfortunately there's still not one single statement
->> from upstream about the issue, that I'm aware of.
->> 
->>> I suspect this CVE should be rejected as this is done by
->>> design.
->> 
->> Like explained above, I disagree with this suggestion :)
->> 
->> Kind regards, jonas
+             Xen Security Advisory CVE-2013-4554 / XSA-76
+                              version 3
 
-https://bugzilla.redhat.com/show_bug.cgi?id=978531#c11
+      Hypercalls exposed to privilege rings 1 and 2 of HVM guests
 
-So as I understand it, NOTABUG, upstream documented it, etc.
+UPDATES IN VERSION 3
+====================
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+The privilege check applied to hypercall attempts by a HVM guest only refused
+access from ring 3; rings 1 and 2 were allowed through.
+
+IMPACT
+======
+
+Code running in the intermediate privilege rings of HVM guest OSes may be able
+to elevate its privileges inside the guest by careful hypercall use.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 3.0.3 and later are vulnerable.
+Xen 3.0.2 and earlier are not vulnerable.
+
+MITIGATION
+==========
+
+Running only PV guests, or running HVM guests known to not make use of
+protection rings 1 and 2 will avoid this issue. As far as we are aware no
+mainstream OS (Linux, Windows, BSD) make use of these rings.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa76.patch        xen-unstable, Xen 4.3.x, Xen 4.2.x, Xen 4.1.x
+
+$ sha256sum xsa76*.patch
+8c4d460c71e8e8dffa32ce24f57ce872ccd8623ab72fd38be432f0a2b097e7c1  xsa76.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSJjtPAAoJEBYNRVNeJnmTnggQALVCX8uQUeKVCty0vuP0f40l
-gBmXm5Lz8kCL3XnoFhUY6r3KcPNA24zL+1R70V/bfAxP0ahbmBHhWpL2ad8QF/im
-ibyCo+bAydOmugePW+iKtABVXzUJ+Iz6T5HigD8D36W1oq+anogATGKbojOmfWqz
-/xT0KSIDSnzCJHvpi63fisbwKcuJiOgV4zQ2EfgRDrDvGMIPzNOAsuU/BwdkTZ75
-TtyWpl0GLIUDAcZBkP7n4b2CofqbHnevdmWx9otC+SqPdZOaqOGe8KUzVbukwxUZ
-kLzXHtKUKimH+Ot2U9bJXuvmn8UdmQBaVR8/NFjb1ZNjFPCd/FIPZNDw1RVlOFZM
-jtlX5WkOu0CYPrQriDuFLBAbODr4hcudWLq5Jw9AsR/IfqS4rKfVY1lEnkVQ99dI
-ZK/HhogzAVZ0bwQT9uSi9RgxUiyyZmIWlNVkk4s89Fz6kuTE7eJDlYe6ajnqcDsP
-dkLkA1IInlj7NoQHOGhuTzPkABQPCJdxXp35RsZO6MlQLZ4CP2u9L3fW6vPucj9L
-jlJszN8d+Nfb2qDRGvoKWR2AjQoeIw0UaUn4wkF5FkY2ADCrfL5lv1Z94jdJzHM6
-DH/dWedJfsg7REAnXfanVciLg900R8kHfgQ5bNZXvb0Xj38U/uDNbSip/4hoti2o
-cF7TayfCOAsbbyq6JtD2
-=HcpY
+iQEcBAEBAgAGBQJSlNMiAAoJEIP+FMlX6CvZn4kH/38vSCRckKM2JuQJfIJb8WtT
+hz7XFDLhDBgeei7J3G3HiZIdaVGVYvThKDl6Dk0Kfc7V7vqIOEYN6OGAOqsJY5GL
+Yqqxqol4ncyM0okLn3mvgeX1FlpLi1rlkwWkR7on7KMahxITjeGpWs00z9o9fpxy
+21hIEw3vtXxg+C22QK2GS2fHKrkU23Fi7OPC09aU179nWjQWom+7qNsRvJlw+dRq
+NZs5EvvGofqXN7KaLAirJkNUmxDOS0+XxNcF/1zLpXa/bIXjKCju6LoLb86UZOsM
+JkSSfFYiz3UxAqjZtr4x4cbUl/0LeGUETVygIOOtx/56TKMxzgbaXHDevCiu3bw=
+=oChf
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa76.patch" of type "application/octet-stream" (556 bytes)
