@@ -1,43 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/01/4
-Message-ID: <1362147503.4116.27.camel@scapa>
-Date: Fri, 01 Mar 2013 15:18:23 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/13
+Message-ID: <5294E5C4.2060108@redhat.com>
+Date: Tue, 26 Nov 2013 19:17:40 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Subject: Re: CVE Request: static IV used in Percona XtraBackup
 Content-Type: text/plain; charset=utf-8
 
-On mer., 2013-02-27 at 13:44 -0800, Greg KH wrote:
-> On Wed, Feb 27, 2013 at 10:26:16PM +0100, Yves-Alexis Perez wrote:
-> > On mer., 2013-02-27 at 10:05 -0800, Greg KH wrote:
-> > > Yes, I need someone to actually do this.  There used to be a Red Hat
-> > > security team member that did this, or so I thought.  What happened to
-> > > that process?  I'll ask on security@...nel.org if someone wants to
-> > > volunteer to do this, but if not, are you, or anyone else you
-> > > know/trust
-> > > willing to do so?
-> > 
-> > And do you think it'd be possible to have the same kind of notifications
-> > for (know security) issues not on security@k.o but committed to the
-> > tree?
-> 
-> That's the whole problem here, who is going to do such a classification,
-> and after that, the notification?  The first part is the toughest to do,
-> as discussed elsewhere in this thread.
+On 11/26/2013 11:52 AM, Marcus Meissner wrote:
+> Hi,
+>
+> This came to our desk:
+> https://bugzilla.novell.com/show_bug.cgi?id=852224
+> https://bugs.launchpad.net/percona-xtrabackup/+bug/1185343
+>
+> constant IV used in CTR Mode, allowing plaintext retrieval
+> attacks.
 
-I might have been not clear, but I was merely speaking of *already
-known* security issues, not “to be classified (or not)” ones. I do know
-classification is hard, but if I understand correctly:
+Is suppose this is part of the fix.
 
-- there are issues which are known to be security ones at commit times
-- some of them have been sent before to security@k.o
-- some of them have not because subsystems maintainers don't want (like
-networking) to go through that alias (why?)
++void
++xb_crypt_init_iv()
++{
++	uint seed = time(NULL);
++	srandom(seed);
++}
++
++void
++xb_crypt_create_iv(void* ivbuf, size_t ivlen)
++{
++	size_t i;
++	ulong rndval;
++
++	for (i = 0; i < ivlen; i++) {
++		if (i % 4 == 0) {
++			rndval = (ulong) random();
++		}
++		((uchar*)ivbuf)[i] = ((uchar*)&rndval)[i % 4];
++	}
++}
 
-I was merely speaking of those latter issues.
+This still risks keystream reuse because time() is fairly coarse.
 
-Regards,
+What's worse, on 64-bit big-endian architectures, it results in a 
+constant zero IV because RAND_MAX is not large enough to reach the upper 
+32 bits in the first four bytes of the rndval variable.
+
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Florian Weimer / Red Hat Product Security Team
