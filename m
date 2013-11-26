@@ -1,48 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/13/6
-Message-ID: <51BA5C36.6080101@redhat.com>
-Date: Thu, 13 Jun 2013 17:56:38 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/12
+Message-ID: <5294DCE5.7020802@redhat.com>
+Date: Tue, 26 Nov 2013 10:39:49 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contrib module
+CC: cve-assign@...re.org, Kurt Seifried <kseifrie@...hat.com>
+Subject: Re: CVE request: XSS flaw in Ganglia web interface
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/12/2013 02:37 PM, Forest Monsen wrote:
-> Hi there,
+On 11/25/2013 08:54 PM, Murray McAllister wrote:
+> Hello,
 > 
-> Please issue a CVE identifier for:
+> A cross-site scripting (XSS) flaw was discovered in the Ganglia
+> web interface:
 > 
-> SA-CONTRIB-2013-052 - Display Suite - Cross Site Scripting (XSS)
-> https://drupal.org/node/2017933
+> https://github.com/ganglia/ganglia-web/issues/218 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=730507
 > 
-> Thanks!
+> Quoting from the original report:
 > 
-> Forest
+> "" Temporary Workaround and Fix ============================ Apply
+> the following patch to properly encode the variable:
+> 
+> --- header.php.old    2013-09-30 21:07:26.272287657 +0200 +++
+> header.php    2013-09-30 21:09:42.226281990 +0200 @@ -491,7 +491,7
+> @@ $data->assign("custom_time", $custom_tim 
+> /////////////////////////////////////////////////////////////////////////
+>
+> 
+if ( $context == "cluster" ) {
+> if ( isset($user['host_regex']) && $user['host_regex'] != "" ) -
+> $set_host_regex_value="value='" . $user['host_regex'] . "'"; +
+> $set_host_regex_value="value='" .
+> htmlentities($user['host_regex'], ENT_QUOTES) . "'"; else 
+> $set_host_regex_value=""; ""
+> 
+> The fix does not apply to the older versions in EPEL (3.0.7 and
+> 3.1.7), but I did not test to see if they were affected.
+> 
+> Can a CVE please be assigned if one has not been already?
+> 
+> Thanks,
+> 
+> -- Murray McAllister / Red Hat Security Response Team
 
-Please use CVE-2013-2177 for this issue.
-
+Please use CVE-2013-6395 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRulw2AAoJEBYNRVNeJnmTO/QQALxIMN+FDkHgDxNEMUB1Tchf
-nIS8uBkZIHemMwelRxaSiMZHjj231UPQ+WZjcxOcAZcn7RMzX3BKLuDGae86ijHi
-ZKsqqbWsC/E8RJRyphk/AGdutCbdXgmxe7dM353YGd03Srp9ZmHE6Xax2GbQX7Y5
-Q5pWXShLMxq5HY83I6l+fvMzXijkmoxxLDEeNCXiRlQ43JP9Y8tvgB/6+mWvk27O
-iL00zuvWW8VNMlqOcKVLSluQvXTiLlZCLR4fsJcbWL/Ibau8y0tHFKr2P4oJc/cJ
-73zrHjL4nPOqwt6BkjSkO2MW25mPtl69mTWoKAMJ/XF2vx9FI3JoLbz9E5Fv2PVZ
-xwJUFCoMT0OAKA9H6gyRVgtGnwzUc0nFsoYNSswKdVd7o2uiECERVIDVRIT7Ckj1
-WQkRErCfq0Vnf9xre3orpljySPv8sZYpdpppSt6FQxyYS0kNdQ/yGxZulWTuSTBO
-HuON9P59X89Zo9hrKfZnBTnr2EbpijxUgjJobOGGSw32HkqhXIL8XYNtpfB8BF3C
-rdf4F6iTDDbTExRl0jmIFVBL6tjBRtqmZCA7KJYsxXzZqQHLNwB68f2lGBdHDV3d
-duFR9JqoJOSxBzE8NfwMW8yHWJiYbqO/WeCRSnfrcrwZoBsgVgOqImRCzmIg1fEO
-kdZZzDyGpokL3lbtQGuP
-=sDzA
+iQIcBAEBAgAGBQJSlNzkAAoJEBYNRVNeJnmTH5cP/11Aq/nP0ZxBpUi6ngjysz8E
+5Toc5UQfspL+BJKtyUvyUjJtvCuOQ8pMwOv/3Q3b6Em1u37CMdKyGS8e/yuH13yA
+lIE5BgTBSxO1bdHp5wwCMt7AEwjD7f/bR6DSosJy6+xKS+o0Y4qSjDP6WbalwJeQ
+iVXPsGWOeenLMUIm9nePJ9TlAXt7zpwJwVpzvXXUtbr7sR33lJdwjl79YVHoy+mK
+zDXDh4khSSou8WdzSVHfcaz2rndlKGz+ObHjDZvC5tlfR6JnDCvxi1LQDVVXGl6h
+J5N4732hDO2zKmohxM3tdNlMQ60/rMherH6Iy2Hc1QzEatbG/VAq/wFOhd5NRWU9
+36H64C12PH9oPLJHEaK0yetIpdzJ4zMLDLmUpBygNBqR5IQRQXVYOBCgnXQMF+w3
+sNg3RXJDpwuv8jlDPHh6M12HbExI74DQE+DJOnMFsByDsb800iya2Yt0si6GUURl
+6AyVGSPuDxY9Vky3LqtcWqZw/uE7NysGG8at8HIKJ8tzUvRCZ308nLmfoSdS/CiZ
+6jhMCvTNGGwN3ll3Tilwg5NvDK7zJ2a0nNZsP4Kp+NmtJCrkh/f2r3AWCnEx+ycv
+iVGnrfA99gkjoFePL91ilBOhVRhYpmpvcXPz0MPGgmxs3qaBiz5H9xnUD8wSl/Zc
+GDcsOzSQjJAkuV/5GW1Y
+=QRIY
 -----END PGP SIGNATURE-----
