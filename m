@@ -1,103 +1,155 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/18/6
-Message-ID: <20130918150654.GM2414@redhat.com>
-Date: Wed, 18 Sep 2013 09:06:54 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/10
+Message-ID: <5294DC97.2010607@redhat.com>
+Date: Tue, 26 Nov 2013 10:38:31 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: [vs-plain] polkit races
+CC: ffmpeg-security@...peg.org
+Subject: Re: CVE Request: FFmpeg 2.1 multiple problems
 Content-Type: text/plain; charset=utf-8
 
-* [2013-09-18 14:15:49 +0200] Sebastian Krahmer wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Probably should have noted the related CVEs.  Since this affects not
-only polkit, but the usage of such by other applications, this is a
-(probably preliminary) list of CVEs and applications affected:
+On 11/26/2013 07:01 AM, Michael Niedermayer wrote:
+> Hi
+> 
+> Id like to request CVE(s) for FFmpeg 2.1, for the changes below:
+> 
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/29ffeef5e73b8f41ff3a3f2242d356759c66f91f
+>
+> 
+fixes a deadlock in h264 decoding
+> https://trac.ffmpeg.org/ticket/2927
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/3819db745da2ac7fb3faacb116788c32f4753f34
+>
+> 
+Fixes out of array (on heap) writes in rpza decoding
+> https://trac.ffmpeg.org/ticket/2850
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/454a11a1c9c686c78aa97954306fb63453299760
+>
+> 
+avcodec/dsputil: fix signedness in sizeof() comparissions leading
+> to interger overflow and out of array accesses
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/547d690d676064069d44703a1917e0dab7e33445
+>
+> 
+Fixes out of array (on heap) writes in ffv1 decoding
+> https://trac.ffmpeg.org/ticket/2906 Found-by: ami_stuff
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/780669ef7c23c00836a24921fcc6b03be2b8ca4a
+>
+> 
+Fixes out of array write in jpeg2000 decoding
+> https://trac.ffmpeg.org/ticket/3080 Found-by: ami_stuff
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/821a5938d100458f4d09d634041b05c860554ce0
+>
+> 
+Fix order of align and pixel size multiplication.
+> Fixes out of array accesses in g2m4 
+> https://trac.ffmpeg.org/ticket/2922 Found-by: ami_stuff
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/86736f59d6a527d8bc807d09b93f971c0fe0bb07
+>
+> 
+avcodec/pngdsp: fix (un)signed type in end comparission
+> Fixes out of array writes in png decoding 
+> https://trac.ffmpeg.org/ticket/2919 Found_by: ami_stuff
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/880c73cd76109697447fbfbaa8e5ee5683309446
+>
+> 
+avcodec/flashsv: check diff_start/height
+> Fixes out of array accesses https://trac.ffmpeg.org/ticket/2844 
+> Found-by: ami_stuff
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/8bb11c3ca77b52e05a9ed1496a65f8a76e6e2d8f
+>
+> 
+Check cdx/y values more carefully
+> Fixes out of array accesses in jpeg2000 decoding 
+> https://trac.ffmpeg.org/ticket/2848 Found-by: Piotr Bandurski
+> <ami_stuff@...pl>
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/912ce9dd2080c5837285a471d750fa311e09b555
+>
+> 
+fix dereferencing invalid pointers in jpeg2000 decoding
+> Found-by: Laurent Butti <laurentb@...il.com>
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/9a271a9368eaabf99e6c2046103acb33957e63b7
+>
+> 
+jpeg2000: check log2_cblk dimensions
+> Fixes out of array access https://trac.ffmpeg.org/ticket/2895 
+> Found-by: Piotr Bandurski <ami_stuff@...pl>
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/a1b9004b768bef606ee98d417bceb9392ceb788d
+>
+> 
+avcodec/jpeg2000dec: fix context consistency with too large lowres
+> Fixes out of array accesses in jpeg2000 decoding 
+> https://trac.ffmpeg.org/ticket/2898
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/b05cd1ea7e45a836f7f6071a716c38bb30326e0f
+>
+> 
+ffv1dec: Check bits_per_raw_sample and colorspace for equality in ver
+0/1 headers
+> prevents inconsistency and out of array write
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/cdd5df8189ff1537f7abe8defe971f80602cc2d2
+>
+> 
+avfilter/vf_fps: make sure the fifo is not empty before using it
+> fixes double free in the fps filter 
+> https://trac.ffmpeg.org/ticket/2905
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/e07ac727c1cc9eed39e7f9117c97006f719864bd
+>
+> 
+fixes out of array access in g2m4
+> https://trac.ffmpeg.org/ticket/2971 Found-by: ami_stuff
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/f31011e9abfb2ae75bb32bc44e2c34194c8dc40a
+>
+> 
+out of array write (on heap) in case of realloc failure
+> https://trac.ffmpeg.org/ticket/2982
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/fe448cd28d674c3eff3072552eae366d0b659ce9
+>
+> 
+avcodec/jpeg2000dec: prevent out of array accesses in pixel addressing
+> https://trac.ffmpeg.org/ticket/2921
+> 
+> 
 
-CVE-2013-4288 polkit: unix-process subject for authorization is racy
-CVE-2013-4311 libvirt: insecure calling of polkit via libgobject API
-CVE-2013-4324 spice-gtk: use of insecure polkit libgobject-1 API
-CVE-2013-4325 hplip: use of insecure polkit DBUS API
-CVE-2013-4326 rtkit: use of insecure polkit DBUS API
-CVE-2013-4327 systemd: use of insecure polkit DBUS API
+I will get to this ticket probably tonight, it's going to take a while
+to process.
 
-I will be opening up our bugs shortly, but all of these are in the Red
-Hat bugzilla and should provide more specifics (they can be found by
-visiting https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-????
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-
->Hi list
->
->As required by distros list policy, I forward this to oss-security.
->The initial CRD was Sept 11th, but it was shifted to today as
->there were so many packages to be fixed.
->
->regards
->Sebastian
->
->----- Forwarded message from Sebastian Krahmer <krahmer@...e.de> -----
->
->From: Sebastian Krahmer <krahmer@...e.de>
->To: distros@...openwall.org
->Subject: [vs-plain] polkit races
->Date: Wed, 28 Aug 2013 10:17:37 +0200
->
->Hi
->
->The polkit unix-process subject for authorization is racy. It depended
->on the (PID, startup_time) pair to be passed to polkit which then used /proc/PID/status
->to find out the UID the process belongs to. Meanwhile the process could
->have started a suid or pkexec process, changing the euid and/or uid at will.
->The startup_time does not protect here, as its not changed across an execve().
->
->Using /proc/PID/loginuid wont work either, as one could abuse fork-spawning
->processes such as sshd, apache etc. to re-use recently freed process slots,
->faking the loginuid. startup_time would theoretically help here, yet as
->its not atomically passed along the message which is subject to polkit
->authorization, the privileged process needs to learn it by looking up
->/proc/PID/, which is racy again.
->
->Therefore the only thing that could be used is the UID that is passed
->atomically in the peer cred struct when receiving the message in question.
->
->The whole thing needs fixing in polkit, to deprecate PID authorization
->as well as several core packages to make use of the new API, or use
->systembus authorization.
->
->After discussing with upstream, Colin Walters made this private git of patches
->available:
->
->http://people.freedesktop.org/~walters/secret/38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b/
->
->Feel free to suggest improvements if necessary.
->
->As required by list policy, I request a CRD of Sept 11th.
->
->We also need CVE's assigned.
->
->A PoC with example client/server which demonstrates the race
->can be found here (it basically simulates libvirtd's way of
->checking):
->
->http://suse.de/~krahmer/priv/polkit-race.tgz
->
->Sebastian
->
->-- 
->
->~ perl self.pl
->~ $_='print"\$_=\47$_\47;eval"';eval
->~ krahmer@...e.de - SuSE Security Team
->
->
->
->----- End forwarded message -----
->
->-- 
->
->~ perl self.pl
->~ $_='print"\$_=\47$_\47;eval"';eval
->~ krahmer@...e.de - SuSE Security Team
->
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+iQIcBAEBAgAGBQJSlNyXAAoJEBYNRVNeJnmTvA8P/Rus/3mHg5WBTWT8FzTgXQTI
+ylhRR89QCXhS74c2QyCiSqI880vnZaxN5IJOEOMwdozw+vhCnyMOGTB8ZB+lbMqy
+goJRQvi6djY9EAPQPc8R0st1wARJfEDwisUiIiRvfJHGoAz7xwkXiJ7uNjqJmUBn
+whPs8JhayMaRKPKDVjK74FNYLiZPEE8rHpLFl28r8t/L5Mh2q/I74s2gDbOwZvAy
+Mm4RpCwpRCgMoWhPjSwM7qwTThVTJaWgGWa9aYcibJO8BcWk2UtUvTdwh77t1VSn
+aQSvy2gd+fQdxLmmReFUnHcVZUX0jwavCSLuskcA8w4VPXSe6kBW9HcdYjlA7yOn
+/l5O4Ih6IT2QA382ofnbP3iwOzIXA3LGFmmGt2DrCMIlqs/FpSk8aBiwMkmzkTHT
+CkbrZ88LTSiwbjiXXFg+gKzsr0f7Tt7eXPcwfEUBb/zQMLQvbG9RAWq4v0Uq8nsN
+rbBx4QM2i8QPJIorq/fGLsd/B5BoE5+ekAqC5amXLwCJxeN6YjLnkgT/r/hxPVzp
+HuxocQ8XmyC4v5/ZDZGeHU7lR7fhLALLTEFK7Qi1IFJcKTdBeLdGcOArksCnUmpR
+6aNB8IiM+OLD6Te103BxXMKkbIdRlPk2o9S3W+noW6YOwaag05/yLvsKtMwfR705
+d7AkQQz82aYh4KuB3fxm
+=kRcK
+-----END PGP SIGNATURE-----
