@@ -1,44 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/01/2
-Message-id: <5184316d-a68c-4c75-bcee-b1633886b082@me.com>
-Date: Sun, 01 Sep 2013 05:11:05 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Remote Command Injection in fog-dragonfly-0.8.2 Ruby Gem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/3
+Message-ID: <666096169.15446346.1385428638408.JavaMail.root@vmware.com>
+Date: Mon, 25 Nov 2013 17:17:18 -0800 (PST)
+From: Ramon de C Valle <rdecvalle@...are.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Kernel MSM - Memory leak in drivers/base/genlock.c
 Content-Type: text/plain; charset=utf-8
 
 
-Hi Can I have a CVE for the following please?
 
-TITLE: Remote Command Injection in fog-dragonfly-0.8.2 Ruby Gem
+----- Original Message -----
+> From: "Steven M. Christey" <coley@...re.org>
+> To: oss-security@...ts.openwall.com
+> Sent: Monday, November 25, 2013 10:57:23 PM
+> Subject: RE: [oss-security] CVE request: Kernel MSM - Memory leak in drivers/base/genlock.c
+> 
+> Kurt said:
+> 
+> >> The Genlock driver does not properly initialize all members of a
+> >> structure before copying it to user space. This allows a local
+> >> attacker to obtain potentially sensitive information from kernel
+> >> stack memory via ioctl system calls.
+> >
+> >This should be classified as CWE-200 Information Disclosure, "memory
+> >leak" refers to memory being used and not released properly, resulting
+> >in out of memory conditions.
+> 
+> In CWE, we discourage the "memory leak" term because it has multiple meanings
+> and interpretations: (1) that memory is allocated but never released, or (2)
+> that sensitive portions of memory are accidentally disclosed to untrusted
+> parties.
+> 
+> This request sounds like variant (2) of the varying uses of the "memory leak"
+> term, although Kurt's interpretation seems to be that it's about variant
+> (1), which further reinforces my personal desire to see that term go away
+> forever.
+> 
+> Anyway... Note that, as this issue is described, "information disclosure"
+> actually results from a root cause in which certain locations are not
+> properly initialized.  Thus CWE-665: Improper Initialization (or its child
+> CWE-457 Use of Uninitialized Variable) are probably more appropriate
+> characterizations of the core issue; in this case, it happens to lead to
+> memory disclosure, but in other cases, it might lead to privilege escalation
+> or other consequences (depending on how the uninitialized data is used.)
+I'd rather use "Missing Initialization of Resource (CWE-909)" to "Use of Uninitialized Resource (CWE-908)" to describe the chain of primary weaknesses. Although CWE-665 and CWE-909 seem very similar, even the examples—do we have a duplicate?
 
-Credit: Larry W. Cashdollar, @_larry0
+> 
+> Note that vulnerabilities can be combinations of 2 or more less-significant
+> errors, which in CWE are called chains or composites:
+> http://cwe.mitre.org/data/reports/chains_and_composites.html
+> 
+> That is, just like there can be attack chains, there can be vulnerability
+> chains.
+> 
+> As vulnerabilities become more and more complex (because the easy stuff is
+> slowly getting eliminated), chains and composites are likely to pose more
+> and more challenges for vulnerability classification in the future.  The
+> Linux kernel is one of those places.
+> 
+> For CVE assignment purposes, we generally try to classify based on the root
+> cause, but there is a recognition that opinions may vary widely in this
+> area.
+> 
+> - Steve
+> 
 
-Date: 8/16/2013
-
-CVE: TBD
-
-Download: https://rubygems.org/gems/fog-dragonfly
-
-Description:
-"Dragonfly is an on-the-fly Rack-based image handling framework. It is suitable for use with Rails, Sinatra and other web frameworks. Although it's mainly used for images, it can handle any content type."
-Unescaped user supplied input is passed to the command line for shell execution:
-from fog-dragonfly-0.8.2/lib/dragonfly/imagemagickutils.rb:
-
-20     def convert(tempobject, args='', format=nil)
- 21       tempfile = newtempfile(format)
- 22       run "#{convertcommand} #{args} #{tempobject.path} #{tempfile.path}"
- 23       tempfile
- 24     end
-.
-.
-.
-
-61     def run(command)
- 62       log.debug("Running command: #{command}") if ImageMagickUtils.log_commands
- 63       begin
- 64         result = #{command}
-
-
-Vendor Notified: 8/16/2013
-Content of type "text/html" skipped
+-- 
+Ramon de C Valle
+VMware (vSECR) Security Engineering Team
