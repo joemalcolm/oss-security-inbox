@@ -1,167 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/11/4
-Message-ID: <CAD1NwhgK=_o-RpG=+ACxGs1ey0tKZ5-kLkMJjzs5FzKM_8vtrw@mail.gmail.com>
-Date: Thu, 11 Apr 2013 15:45:30 +0200
-From: Lukas Reschke <lukas@...cloud.org>
-To: oss-security@...ts.openwall.com
-Cc: Evert Pot <evert@...ftopsolutions.nl>,  "security@...cloud.com" <security@...cloud.com>
-Subject: ownCloud Security Advisories (2013-014, 2013-015, 2013-016)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/7
+Message-ID: <20131126140111.GA25373@nb4>
+Date: Tue, 26 Nov 2013 15:01:11 +0100
+From: Michael Niedermayer <michaelni@....at>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Cc: ffmpeg-security@...peg.org
+Subject: CVE Request: FFmpeg 2.1 multiple problems
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-Some notes at the beginning:
-
-- oC-SA-2013-014 affects a vulnerability in the external jPlayer
-plugin, Kurt will send a mail about this later.
-- oC-SA-2013-016 affects a vulnerability in SabreDAV, Evert has
-already posted a notice about that.
-- Please notice that we highly recommend any PostgreSQL user to change
-the database user password due to the insecure generation.  (see
-oC-SA-2013-015)
-
----------------------------------------
-
-# XSS vulnerability in jPlayer (oC-SA-2013-014)
-Web: https://owncloud.org/about/security/advisories/oC-SA-2013-014/
-
-## CVE IDENTIFIERS
-- CVE-2013-1942 (jPlayer)
-
-## AFFECTED SOFTWARE
-- ownCloud Server < 5.0.4
-- ownCloud Server < 4.5.9
-- ownCloud Server < 4.0.14
-
-## RISK
-- High
-
-## COMMITS
-- 53672a0 (stable5)
-- 8716b7f (stable45)
-- 60f6bfa (stable4)
+Id like to request CVE(s) for FFmpeg 2.1, for the changes below:
 
 
-## DESCRIPTION
-A cross-site scripting (XSS) vulnerability in all ownCloud versions
-prior to 5.0.4 including the 4.x branch allows remote attackers to
-execute arbitrary javascript when a user opens a special crafted URL.
+https://github.com/FFmpeg/FFmpeg/commit/29ffeef5e73b8f41ff3a3f2242d356759c66f91f
+    fixes a deadlock in h264 decoding
+    https://trac.ffmpeg.org/ticket/2927
 
-This vulnerability exists in the used 3rdparty plugin “jPlayer”,
-“jPlayer” released version 2.2.20 which addresses the problem. This
-version is not yet officially released and only available via their
-GIT repository.
+https://github.com/FFmpeg/FFmpeg/commit/3819db745da2ac7fb3faacb116788c32f4753f34
+    Fixes out of array (on heap) writes in rpza decoding
+    https://trac.ffmpeg.org/ticket/2850
+
+https://github.com/FFmpeg/FFmpeg/commit/454a11a1c9c686c78aa97954306fb63453299760
+    avcodec/dsputil: fix signedness in sizeof() comparissions leading
+    to interger overflow and out of array accesses
+
+https://github.com/FFmpeg/FFmpeg/commit/547d690d676064069d44703a1917e0dab7e33445
+    Fixes out of array (on heap) writes in ffv1 decoding
+    https://trac.ffmpeg.org/ticket/2906
+    Found-by: ami_stuff
+
+https://github.com/FFmpeg/FFmpeg/commit/780669ef7c23c00836a24921fcc6b03be2b8ca4a
+    Fixes out of array write in jpeg2000 decoding
+    https://trac.ffmpeg.org/ticket/3080
+    Found-by: ami_stuff
+
+https://github.com/FFmpeg/FFmpeg/commit/821a5938d100458f4d09d634041b05c860554ce0
+    Fix order of align and pixel size multiplication.
+    Fixes out of array accesses in g2m4
+    https://trac.ffmpeg.org/ticket/2922
+    Found-by: ami_stuff
+
+https://github.com/FFmpeg/FFmpeg/commit/86736f59d6a527d8bc807d09b93f971c0fe0bb07
+    avcodec/pngdsp: fix (un)signed type in end comparission
+    Fixes out of array writes in png decoding
+    https://trac.ffmpeg.org/ticket/2919
+    Found_by: ami_stuff
+
+https://github.com/FFmpeg/FFmpeg/commit/880c73cd76109697447fbfbaa8e5ee5683309446
+    avcodec/flashsv: check diff_start/height
+    Fixes out of array accesses
+    https://trac.ffmpeg.org/ticket/2844
+    Found-by: ami_stuff
+
+https://github.com/FFmpeg/FFmpeg/commit/8bb11c3ca77b52e05a9ed1496a65f8a76e6e2d8f
+    Check cdx/y values more carefully
+    Fixes out of array accesses in jpeg2000 decoding
+    https://trac.ffmpeg.org/ticket/2848
+    Found-by: Piotr Bandurski <ami_stuff@...pl>
+
+https://github.com/FFmpeg/FFmpeg/commit/912ce9dd2080c5837285a471d750fa311e09b555
+    fix dereferencing invalid pointers in jpeg2000 decoding
+    Found-by: Laurent Butti <laurentb@...il.com>
+
+https://github.com/FFmpeg/FFmpeg/commit/9a271a9368eaabf99e6c2046103acb33957e63b7
+    jpeg2000: check log2_cblk dimensions
+    Fixes out of array access
+    https://trac.ffmpeg.org/ticket/2895
+    Found-by: Piotr Bandurski <ami_stuff@...pl>
+
+https://github.com/FFmpeg/FFmpeg/commit/a1b9004b768bef606ee98d417bceb9392ceb788d
+    avcodec/jpeg2000dec: fix context consistency with too large lowres
+    Fixes out of array accesses in jpeg2000 decoding
+    https://trac.ffmpeg.org/ticket/2898
+
+https://github.com/FFmpeg/FFmpeg/commit/b05cd1ea7e45a836f7f6071a716c38bb30326e0f
+    ffv1dec: Check bits_per_raw_sample and colorspace for equality in ver 0/1 headers
+    prevents inconsistency and out of array write
+
+https://github.com/FFmpeg/FFmpeg/commit/cdd5df8189ff1537f7abe8defe971f80602cc2d2
+    avfilter/vf_fps: make sure the fifo is not empty before using it
+    fixes double free in the fps filter
+    https://trac.ffmpeg.org/ticket/2905
+
+https://github.com/FFmpeg/FFmpeg/commit/e07ac727c1cc9eed39e7f9117c97006f719864bd
+    fixes out of array access in g2m4
+    https://trac.ffmpeg.org/ticket/2971
+    Found-by: ami_stuff
+
+https://github.com/FFmpeg/FFmpeg/commit/f31011e9abfb2ae75bb32bc44e2c34194c8dc40a
+    out of array write (on heap) in case of realloc failure
+    https://trac.ffmpeg.org/ticket/2982
+
+https://github.com/FFmpeg/FFmpeg/commit/fe448cd28d674c3eff3072552eae366d0b659ce9
+    avcodec/jpeg2000dec: prevent out of array accesses in pixel addressing
+    https://trac.ffmpeg.org/ticket/2921
 
 
-## CREDITS
-The ownCloud Team would like to thank Malte Batram (batr.am) for
-discovering this vulnerability and responsibly disclosing this to us
-and upstream.
+-- 
+Michael     GnuPG fingerprint: 9FF2128B147EF6730BADF133611EC787040B0FAB
 
+When the tyrant has disposed of foreign enemies by conquest or treaty, and
+there is nothing more to fear from them, then he is always stirring up
+some war or other, in order that the people may require a leader. -- Plato
 
-## RESOLUTION
-Update to ownCloud Server 5.0.4, 4.5.9 or 4.0.14
-http://download.owncloud.org/community/owncloud-5.0.4.tar.bz2
-http://download.owncloud.org/community/owncloud-4.5.9.tar.bz2
-http://download.owncloud.org/community/owncloud-4.0.13.tar.bz2
-
----------------------------------------
-
-# Postgre: Insecure database password generator (oC-SA-2013-015)
-Web: https://owncloud.org/about/security/advisories/oC-SA-2013-015/
-
-## CVE IDENTIFIERS
-- CVE-2013-1941
-
-## AFFECTED SOFTWARE
-- ownCloud Server < 5.0.4
-- ownCloud Server < 4.5.9
-- ownCloud Server < 4.0.14
-
-## RISK
-- Critical
-
-## COMMITS
-- 9a4fe09 (stable5)
-- 463039d (stable45)
-- cdd10ba (stable4)
-
-## DESCRIPTION
-
-Due to using “time()” as random source in the installation routine,
-the entropy of the generated PostgreSQL database user password is very
-low and can be easily guessed.
-
-We recommend every PostgreSQL admin to change the database user
-password as soon as possible!
-
-Note: This vulnerability affects just servers using PostgreSQL as database.
-
-## RESOLUTION
-Update to ownCloud Server 5.0.4, 4.5.9 or 4.0.14
-http://download.owncloud.org/community/owncloud-5.0.4.tar.bz2
-http://download.owncloud.org/community/owncloud-4.5.9.tar.bz2
-http://download.owncloud.org/community/owncloud-4.0.13.tar.bz2
-
-
- ---------------------------------------
-
-# Windows: Local file disclosure (oC-SA-2013-016)
-Web: https://owncloud.org/about/security/advisories/oC-SA-2013-016/
-
-## CVE IDENTIFIERS
-- CVE-2013-1939 (SabreDAV)
-
-## AFFECTED SOFTWARE
-- ownCloud Server < 5.0.4
-- ownCloud Server < 4.5.9
-- ownCloud Server < 4.0.14
-
-## RISK
-- High
-
-## COMMITS
-- c23a065 (stable5)
-- ade2831 (stable45)
-- 792c5ec (stable4)
-
-## DESCRIPTION
-Due to not rejecting “\” as path separator in all ownCloud versions
-prior to 5.0.4 including the 4.x branch an authenticated remote
-attacker is able to download arbitrary files from the server when
-running under Windows.
-
-This vulnerability exists inside our used DAV implementation
-“SabreDAV” and was found by the ownCloud security team. SabreDAV
-released fixed versions to address this problem.
-
-## RESOLUTION
-Update to ownCloud Server 5.0.4, 4.5.9 or 4.0.14
-http://download.owncloud.org/community/owncloud-5.0.4.tar.bz2
-http://download.owncloud.org/community/owncloud-4.5.9.tar.bz2
-http://download.owncloud.org/community/owncloud-4.0.13.tar.bz2
-
---
-ownCloud
-Your Cloud, Your Data, Your Way!
-
-GPG: 0xEB32B77BA406BE99
-
------BEGIN PGP SIGNATURE-----
-
-wsFcBAEBAgAQBQJRZr5yCRDrMrd7pAa+mQAAsKkP/3Hcp8Y64tjnYzDFBAoz
-R6Vquiz590tHa7mho7lgV+eZzR0IWYZoIRcl8DDe+ofsCu5KIk7dg5TI8TyX
-rMmAWPkVSgQ4VAqbBm3yt+RXxNYYsuxU34DoHvZ4hDnPXNpTWqdiciSl1ZTY
-5eXAVqscYvHU3w4SB4fRKoWYqwxAUuo066Se8TUM142lg9sTDVfcxicvd0XT
-DSDm/eqfzfSG0t1EvSYa0VOu6SRXSPMqK+8mzDMCwJ7MVU2zuCT5PAcaSvCi
-NLJMoSs4WH/5f5MAMaY7AZK3DQ2sOOnNynw2ygRWC5+vVr7eH5ghfyFy26oM
-VXO5OSNGHGBc6Nw1OUMvNX+6KcTRzERAa8xBGYwbpyYafF7JSrwo1C5VMsTw
-m06Ceb65iFBklP4KqUCyY8hXlQ56eo7dM6BBQnEXmNPloUhbzd06aZ+azvn7
-et6daMqvDSISvdJwff6/9p36QA9oPchY47KCdnwU5CdC99/agOv32d/Lv3Cp
-7CsIC/K469jccJ3s+y94lodS86uscIEN3NW/PAl4oxYZas9B5WjFhPF8kIIY
-iskXpkqrrwPjrzqtsD7n9+5FWORnsGHz/Z5sry5ur4IjwCulIXhb7FvVC+vQ
-TkRgw972Ym4KkotKbDFsfYS35cqLIsFqHX6OGnjLBlZMa1S2V0+pmvnwStRA
-yxxc
-=l4xr
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
