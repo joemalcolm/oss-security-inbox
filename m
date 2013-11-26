@@ -1,40 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/08/6
-Message-id: <DD900A17-E031-4833-AEFE-45C7E1FA9BB9@me.com>
-Date: Sat, 08 Jun 2013 07:43:21 -0400
-From: larry Cashdollar <larry0@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/1
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF33E35B3E@IMCMBX01.MITRE.ORG>
+Date: Tue, 26 Nov 2013 00:57:23 +0000
+From: "Christey, Steven M." <coley@...re.org>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
+Subject: RE: CVE request: Kernel MSM - Memory leak in drivers/base/genlock.c
 Content-Type: text/plain; charset=utf-8
 
-On Jun 8, 2013, at 7:33 AM, gremlin@...mlin.ru wrote:
+Kurt said:
 
-> On 08-Jun-2013 07:22:44 -0400, larry Cashdollar wrote:
-> 
->> According to the bug report details that's a race condition.
->> A malicious user is using a vulnerability in the way the
->> installation script handles changing file permissions to disclose
->> sensitive information.
-> 
-> Yes. And, once again, that's a misconfiguration - the file should
-> be created as 0600 root:root during installation and only after
-> that chmod() and chown() may be applied.
-> 
+>> The Genlock driver does not properly initialize all members of a
+>> structure before copying it to user space. This allows a local
+>> attacker to obtain potentially sensitive information from kernel
+>> stack memory via ioctl system calls.
+>
+>This should be classified as CWE-200 Information Disclosure, "memory
+>leak" refers to memory being used and not released properly, resulting
+>in out of memory conditions.
 
-I'd agree if this were a configuration file we were talking about, but it's an installation script.
+In CWE, we discourage the "memory leak" term because it has multiple meanings and interpretations: (1) that memory is allocated but never released, or (2) that sensitive portions of memory are accidentally disclosed to untrusted parties.
 
+This request sounds like variant (2) of the varying uses of the "memory leak" term, although Kurt's interpretation seems to be that it's about variant (1), which further reinforces my personal desire to see that term go away forever.
 
->> On Jun 8, 2013, at 7:00 AM, gremlin@...mlin.ru wrote:
-> 
-> - Because it messes up the order in which people normally read text.
-> - Why top-posting is considered the most annoying thing in messages?
-> 
+Anyway... Note that, as this issue is described, "information disclosure" actually results from a root cause in which certain locations are not properly initialized.  Thus CWE-665: Improper Initialization (or its child CWE-457 Use of Uninitialized Variable) are probably more appropriate characterizations of the core issue; in this case, it happens to lead to memory disclosure, but in other cases, it might lead to privilege escalation or other consequences (depending on how the uninitialized data is used.)
 
-My apologies. 
+Note that vulnerabilities can be combinations of 2 or more less-significant errors, which in CWE are called chains or composites:
+http://cwe.mitre.org/data/reports/chains_and_composites.html
 
-> 
-> -- 
-> Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-> GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-> GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+That is, just like there can be attack chains, there can be vulnerability chains.
+
+As vulnerabilities become more and more complex (because the easy stuff is slowly getting eliminated), chains and composites are likely to pose more and more challenges for vulnerability classification in the future.  The Linux kernel is one of those places.
+
+For CVE assignment purposes, we generally try to classify based on the root cause, but there is a recognition that opinions may vary widely in this area.
+
+- Steve
+
