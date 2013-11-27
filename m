@@ -1,69 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/15/7
-Message-ID: <613240865.1871835.1368617318295.JavaMail.root@redhat.com>
-Date: Wed, 15 May 2013 07:28:38 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/27/1
+Message-ID: <5295399B.6040601@redhat.com>
+Date: Tue, 26 Nov 2013 17:15:23 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Ian Weller <ianweller@...oraproject.org>
-Subject: CVE Request (minor) -- Python 3.2: DoS when matching certificate with many '*' wildcard characters {was: CVE Request (minor) --  python-backports-ssl_match_hostname: Denial of service when matching certificate with many '*' wildcard characters }
+Subject: Re: CVE request: Apache Solr 4.6.0
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> From: "Jan Lieskovsky" <jlieskov@...hat.com>
-> To: oss-security@...ts.openwall.com
-> Cc: "Steven M. Christey" <coley@...us.mitre.org>, "Florian Weimer" <fweimer@...hat.com>, "Ian Weller"
-> <ianweller@...oraproject.org>
-> Sent: Wednesday, May 15, 2013 1:19:33 PM
-> Subject: [oss-security] CVE Request (minor) --  python-backports-ssl_match_hostname: Denial of service when matching
-> certificate with many '*' wildcard characters
-> 
-> Hello Kurt, Steve, vendors,
-> 
->   A denial of service flaw was found in the way
->   python-backports-ssl_match_hostname,
-> an implementation that brings the ssl.match_hostname() function from Python
-> 3.2 to
-> users of earlier versions of Python, performed matching of the certificate's
-> name
-> in the case it contained many '*' wildcard characters. A remote attacker,
-> able to
-> obtain valid certificate [*] with its name containing a lot of '*' wildcard
-> characters,
-> could use this flaw to cause denial of service (excessive CPU time
-> consumption) by
-> issuing request to validate that certificate for / in an application using
-> the
-> python-backports-ssl_match_hostname functionality.
-> 
-> Upstream bug report (no patch yet):
-> [1] http://bugs.python.org/issue17980
-> 
-> References:
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=963186
-> 
-> Credit: Issue was found by Florian Weimer of Red Hat Product Security Team
-> 
-> Could you allocate a CVE identifier for this (it's possible that
-> Python 3.2 implementation is vulnerable to the same problem too,
-> will check that case yet)?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Replying to myself here. Issue is present in Python 3.2 code too - so
-the CVE should be allocated for the original (Python 3.2) code, rather
-than to python-backports-ssl_match_hostname package.
-
-Updated subject of the request to reflect this.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+On 11/26/2013 04:06 PM, Nicolas Grégoire wrote:
+> Hello,
 > 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> --
-> [*] Would be minor issue because ability to obtain such valid certificate
-> would
->     mean the necessity to use some compromised CA. On the other hand though
->     being corner case, can't be completely excluded.
+> Apache Solr 4.6.0 was released a few days ago. This version
+> includes a fix for bug SOLR-4882 (directory traversal when
+> accessing XSLT stylesheets and Velocity templates): 
+> http://lucene.apache.org/solr/4_6_0/changes/Changes.html#v4.6.0.security
+>
 > 
+https://issues.apache.org/jira/browse/SOLR-4882
+> 
+> If the user can store his own files on the server, this
+> vulnerability could be abused to gain remote code execution.
+> 
+> Regards, Nicolas Grégoire
+> 
+> 
+> 
+
+Please use CVE-2013-6397 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSlTmbAAoJEBYNRVNeJnmT0l8P/2i0kuG+e/OnnKXVLRe4ntY3
+0MgHu6RnMfDkWxEnBRojCGvvohHv61Nb+vn1ap/PnbmoG7o0uk0fKc850potUkJA
+vI9snU0n2Lt6FLMtQIUuv+kplqpPilem+/Tdfr02G9e19H/04WaeTLEtboSNDLYR
+ZTkjxGg4om6KK2hVwYs0OsrFFxe70f/4wxMC2KOwJmnR1HNQAKPZ2jD9HkNSxSWQ
+dC7g07TTyE7/r1ns952ushCtuboiuOnAoimHBURhD7OB+VeUXM5FUsp6siw/XBkH
+/UJyeBK9wAo4atzNOGBydaJwm/do9v88N5QXiU095LVBtuePt6rMrmthx9OrwD98
++tC2R7fpfeQ1tolpzVGW1KBDTMEHiFUwPGAYXwHVsPAor0fTDHg93C1N4dSgh+yF
+MB4tMM8OsWeC+QBAicPL8Dw1DiVPK15TL4kgYHqX2cr4Wf1dd9oVqlYpdRj2VCl+
+ouAlI/xYJxmb6tYsFrNwsiqmMFiSsLMy5dmmkafWbMJklWyhcZwkfkUcd9IHZMi1
+U0EJzZUuOC3WJjqNm6KLsj7LzVoqy4qBFkoDwpE0EvvCn6R7WJ+GWgZMsnvWpDEo
+MlEGI9AejhvT47gtHwFukunurDYx70B9fSk3WuYnBWRnl3gZDbUshY27pa+2tlio
+MmtBaT2CQvzaRZb2sRYP
+=32bH
+-----END PGP SIGNATURE-----
