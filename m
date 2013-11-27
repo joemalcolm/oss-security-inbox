@@ -1,45 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/13
-Message-ID: <Pine.GSO.4.64.1303131718450.1504@faron.mitre.org>
-Date: Wed, 13 Mar 2013 17:22:22 -0400 (EDT)
-From: "Steven M. Christey" <coley@...re.org>
-To: oss-security@...ts.openwall.com
-Subject: Temporary Notifications of New CVE Entries During NVD Outage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/27/2
+Message-ID: <alpine.LFD.2.10.1311271352200.19951@javelin.pnq.redhat.com>
+Date: Wed, 27 Nov 2013 14:00:20 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: static IV used in Percona XtraBackup
 Content-Type: text/plain; charset=utf-8
 
+   Hi,
 
-As some people know, the National Vulnerability Database (NVD) is
-having a temporary outage.  At http://nvd.nist.gov/, NIST says "We are
-working to restore service as quickly as possible."
++-- On Tue, 26 Nov 2013, Kurt Seifried wrote --+
+| P.S. has anyone considered packaging this for Fedora? looks nifty.
 
-Many people rely on NVD feeds to learn about newly-updated CVEs.  The
-CVE web site does not provide such feeds, since that would duplicate
-NVD functionality.
+  IIUC, the package is called maatkit(http://www.maatkit.org). It used to be 
+an independent collection of MySQL tools. Percona folks acquired it a while 
+ago.
 
-However, the CVE project sends notification emails for newly-updated
-CVEs to a limited set of CVE-compatible users, often several times a
-day.  Until NVD service is reliably restored, I will be posting these
-"CVENEW" messages to the Vulnerability Information Managers (VIM)
-list.  While CVENEW messages do not contain the extra data that NVD
-provides, such as CVSS and CPE names, hopefully this will help some
-people to monitor new CVEs.
+   # yum info maatkit.noarch
 
-CVENEW messages will be found in the VIM archives at:
+I'm not sure if maatkit includes tools from Percona Toolkit too.
 
-    http://www.attrition.org/pipermail/vim/2013-March/thread.html
-
-Note that the VIM list is not the place to post general vulnerability 
-announcements; it is specifically for maintainers of vulnerability 
-databases and information services, who use VIM to discuss accuracy 
-problems and other challenges in the post-disclosure analysis of 
-vulnerability announcements.
-
-This is only a temporary action for the convenience of the security
-community.  We will disable the CVENEW announcements to the VIM list
-once NVD service has been restored.
-
-
-
-Regards,
-Steve Christey
-CVE Editor
+--
+Prasad J Pandit / Red Hat Security Response Team
