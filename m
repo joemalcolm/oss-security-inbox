@@ -1,41 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/7
-Message-ID: <529D7218.60800@redhat.com>
-Date: Mon, 02 Dec 2013 22:54:32 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: SNMPD DoS #2411 snmpd crashes/hangs when AgentX subagent times-out
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/27/5
+Message-ID: <CAA7hUgEDM4du=mvCF4j7OQxG46Zj+V1uJxm1XjQZh_DCRbkorQ@mail.gmail.com>
+Date: Wed, 27 Nov 2013 12:46:54 +0100
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: hplip insecure temporary file handling in pkit.py
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-Just cleaning out old email, ran across this:
+On 27 November 2013 12:22, Ratul Gupta <ratulg@...hat.com> wrote:
+> Hello,
+>
+> A temporary file handling flaw was found in hplip/pkit.py.
+>
+> References:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=725876
 
-http://sourceforge.net/p/net-snmp/bugs/2411/
+Thanks for sending the request, I was waiting for the problem to be
+confirmed but later forgot about it.
 
-It's a DoS, requires authenticated access but snmpd is often used to
-monitor a lot of systems not always under your direct control (e.g.
-read only access). I'm inclined to assign a CVE unless someone objects
-strongly.
+> Can a CVE please be assigned if one has not been already?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+None has been assigned as far as I'm aware of.
 
-iQIcBAEBAgAGBQJSnXIYAAoJEBYNRVNeJnmT87AQAJr9IATEMbyfD8FZmoiuu7MK
-5HmsknSMS3bFzMFuG9G0S9APCsO25tX9w6+6hBR8T4hPsjlhhs2ADv78QxCf4bkT
-7/bD2tDbI2GUM2vJUbdgZWQsOgxI9EX+Lzk6uJ4NN2rcUj+p19LJknbNe0Wv/bLb
-QcQCUM6bOPnZ19u1Z429dJl4vi7C18TjGjePA6YjxUA2oNALYD/Uurh4GZLFerUh
-+Q/Zi1JuApZsat96X+qgY0SOjiG1uEcg9pVKMcohilqTqXjaIJiOqi+bEsdDnVeC
-8Zrv715Zl2uG2sH+2KQQVbR707Hcwk2YF2BAEBAZWqGyWZxEt9DkLuYevJGs/dUG
-Ideat5GqHIyBq5N3cWuKhN+/Vc+7c4hTZZxrY2IMmeBfWuW+lUTDR7pmOal2Jbmt
-XYcaNLGLh/vx+OegTmpGHGas48CesTnw/y/iayHulYSP0dqwgVfvGxGNn9SxSv7P
-B+D+5pThDavtQsv5CBMmYiZ936zWlfd+ImNlqLiGDVTTdiTc+ikhIVvqkSGUSFHx
-obXWg1sjqAJdmSv5SaM+gRa2qLeJDgd21N8iKOxNHFjFe7TD02OaOaxUfPj6Krax
-JOTfd3eCDLJCmrqF26x2gi7IAYVmBLhp7cM+PWBVrEAY0E9IyChk495EgDM0uE38
-K9xD2tNTOGVMfIUCkhsa
-=AAvE
------END PGP SIGNATURE-----
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
