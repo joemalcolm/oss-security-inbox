@@ -1,28 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/50
-Message-ID: <CAHmME9phWpgdqeHmGKPZ3hW8rR293Z5xo2b8x=roKT01euoUUw@mail.gmail.com>
-Date: Thu, 28 Feb 2013 00:24:09 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/2
+Message-ID: <5253943.W4ZRUskLPB@fermion>
+Date: Wed, 27 Nov 2013 22:37:57 +0100
+From: Manuel Nickschas <sputnick@...ssel-irc.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Subject: CVE Request: Quassel IRC - manipulated clients can access backlog of all users on a shared core
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 28, 2013 at 12:07 AM, Greg KH <greg@...ah.com> wrote:
-> Really?  Ok then, please go ahead and try doing this yourself if you
-> feel it is so "obvious" to do.
+Hi all,
 
-I did yesterday, actually. I saw some commit that said "use after
-free!", saw that it was triggerable by an unpriv'd user, and sent it
-into the list. Kurt took a look at it, agreed with the assessment, and
-assigned a CVE. The commit itself said "use after free" -- I didn't
-even have to do any heavy lifting or hair-splitting investigation.
+I'd like to request a CVE for the following vulnerability in Quassel IRC:
 
+Affected versions: all versions prior to 0.9.2 (released 2013-11-26)
 
->> Kernel developers are super smart -- some of the brightest guys out
->> there.
->
-> Nope, we are dumb, we do uninteresting, boring work, dealing with broken
-> hardware and demanding users every day.  If we were smarter, we wouldn't
-> be doing this type of thing.
+Description:
 
-Come on...
+A Quassel core (server daemon) supports being used by multiple users, who all 
+have independent settings, backlog and so on. The backlog is stored in a 
+database shared by all users on a Quassel core, tagged with a user ID. 
+However, some SQL queries didn't check for the correct user ID being provided.
+
+This has the undesired effect that the Quassel core can be tricked into 
+providing the backlog for an IRC channel or query that does not belong to the 
+user session requesting it. Doing this requires a manipulated client sending 
+appropriately crafted requests to the core. This client also needs to be 
+properly authenticated, i.e. to have supplied valid user credentials for one 
+of the users on the core.
+
+Credit for finding this issue goes to Andrew Hampe.
+
+Fix [1] has been released in 0.9.2 [2].
+
+This patch can be cleanly applied to any version starting from 0.6.0, and 
+easily backported to even older versions by adapting the schema version 
+number.
+
+Thanks,
+~ Manuel Nickschas (Sput)
+
+[1] <https://github.com/quassel/quassel/commit/a1a24da>
+[2] <http://quassel-irc.org/pub/quassel-0.9.2.tar.bz2>
