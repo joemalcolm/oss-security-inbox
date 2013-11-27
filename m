@@ -1,37 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/11
-Message-ID: <20130812181948.GK25525@dhcp-25-225.brq.redhat.com>
-Date: Mon, 12 Aug 2013 20:19:49 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/27/3
+Message-ID: <20131127084132.GE14463@suse.de>
+Date: Wed, 27 Nov 2013 09:41:32 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: libvirt-security@...hat.com
-Subject: CVE Request -- libvirt: memory corruption in xenDaemonListDefinedDomains function
+Cc: Nico Golde <nico@...lde.de>, Fabian Yamaguchi <fabs@...sec.de>
+Subject: Re: Linux kernel CVE fixes
 Content-Type: text/plain; charset=utf-8
 
-Commit 632180d1 introduced memory corruption in
-xenDaemonListDefinedDomains()
-by starting to populate the names array at index -1, causing all sorts
-of havoc in libvirtd such as aborts like the following
+On Fri, Nov 22, 2013 at 01:16:45PM -0800, Kees Cook wrote:
+> Hi,
+> 
+> Here are some further issues found by Nico Golde and Fabian Yamaguchi:
+> 
+> http://git.kernel.org/linus/b4789b8e6be3151a955ade74872822f30e8cd914
+> CVE-2013-6380
 
-*** Error in `/usr/sbin/libvirtd': double free or corruption (out):
-0x00007fffe00ccf20 ***
+I got the question why this warrants a CVE as it is protected by CAP_SYS_ADMIN.
 
-The xenDaemonListDefinedDomains() function is reached by the
-virConnectListDefinedDomains() public API, which can be used on
-read-only connections.
+Only reason I would see is a "root user" -> "kernel code execution" path
+which might otherwise be blocked by secure boot or other protection mechanisms?
 
-Introduced in:
-libvirt v1.1.1
-
-Introduced by:
-http://libvirt.org/git/?p=libvirt.git;a=commit;h=632180d1
-
-Fixed by:
-http://libvirt.org/git/?p=libvirt.git;a=commit;h=0e671a16
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=996241
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Ciao, Marcus
