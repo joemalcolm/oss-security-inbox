@@ -1,49 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/16/1
-Message-ID: <520D7582.5060702@python.org>
-Date: Fri, 16 Aug 2013 02:42:42 +0200
-From: Christian Heimes <christian@...hon.org>
-To: Brian Cameron <brian.cameron@...cle.com>
-CC: oss-security@...ts.openwall.com, security@...y-lang.org,  cve-assign@...re.org, security@...hon.org
-Subject: Re: [PSRT] CVE Request -- Python SSL module does not handle certificates that contain hostnames with NULL bytes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/6
+Message-ID: <5296F39A.8090900@redhat.com>
+Date: Thu, 28 Nov 2013 00:41:14 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: security@...cloud.com
+Subject: Re: CVE Request: ownCloud security bypass on admin page
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA1
 
-Am 16.08.2013 00:23, schrieb Brian Cameron:
+On 11/28/2013 12:13 AM, Murray McAllister wrote:
+> Hello,
 > 
-> I notice the upstream bug has patches for many versions of Python,
-> but not for Python 2.6.  Will a Python 2.6 patch be provided, or is
-> it a reasonable fix to just backport the patched 2.7 files to 2.6
-> directly?
+> ownCloud 5.0.13 fixes a security issue:
+> 
+> http://owncloud.org/changelog/ SECURITY: Fix a possible security
+> bypass on admin page under certain circumstances and MariaDB
+> 
+> Can a CVE please be assigned?
+> 
+> Thanks,
+> 
+> -- Murray McAllister / Red Hat Security Response Team
 
-Hi Brian,
+Please use CVE-2013-6403  for this issue.
 
-I have back ported my patch to 2.6 and uploaded it for you [1]. Enjoy! :)
-
-Python 2.6 will get a final security release in October. Barry plans
-to include the patch, too.
-
-Regards,
-Christian
-
-[1] http://bugs.python.org/issue18709
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBCgAGBQJSDXV9AAoJEMeIxMHUVQ1Fc3cP/irGYbzpqXISUrQt+OAd1KPB
-5M4SNJE2rUebhXiihic+YfjdrtjPkqmwD6dK2dnmMAmcRIyWGbluf434PgGmV1Uk
-6fmDU/j/h7zTK21wd6lttmJVdbsS85cxHsTTEi8Vtm6dBsblpdKCxaNMQx3f4o0/
-wmBdvEcoH7BSpz9GC7gSg6iOWUfuQAyLXTBHtEHM49gG9CGfqlZrRFe/iOjpRCXa
-gzQRiskyqIq8lv7foDHVaX4XO9n3HLmlbeQnVbeLjAWslpZSU9bl+bxIwaqq7Oi1
-fG/B18/x7o+x11LkaZ2Su6P0zGyh3Drm0dxX3MwC9Q2SEOlQtV1PxJigj1KKoHzR
-XogVUcIpzsC6wa7EJxQbd63ggyOOaQx20ozDYISLdcjD0GvTZgnmkm/UyVgSoLJi
-PTL07FOXXu1o2aDHRIYoBKkEgxWAuiPYM6ancav/jOLlpvoVEiUN++5ouosoAKBe
-i5JAfwlku+txNxaFvJerlhKN0Vfs3K+t5PRqeAq+sMQc/9T3QbAVnjOe8fgHkkX1
-5WP1LPN8Om43zVuClyv6jULwBP1ozYR0Cbmmf4ioJUOs8pxOgIggncUd1wVm84Xu
-rx6xhcbIHqwmxrZLoepCdcOupqgfjeuexWOg0uENjuiOPVzoUUA/u6kL9pEYqisM
-tYE4oKNRBZpmWcS8Y/yK
-=YvTP
+iQIcBAEBAgAGBQJSlvOaAAoJEBYNRVNeJnmTp9IQAJoZwJce6cUwF3Jr/Xx8atOL
+ZiJJvU7Faq+xCGjBG1RTZPRnDt0GhzWparlCvXC4H96yDUFk5tQIpUzVKwvbgA2P
+TKMUKwIdEh6cIBJz1ltj5MaeeY5JXXz4bwaM4WrDgy+0VUPArsVgHdBCP/6WCNz0
+BgeY5jfs1reh4pkB39qpLQ0xUab/wt2GzcVTpWznIRy9wvk5tmKmyZ6vyTKj0gvn
+YvXOJ0wNFnAaSLb2WCCLsV4J4f8JvIhuT2UQXaS3lgl7q3MDH4ijZ0dDgDWErZFu
+2JNzLc/WT2L/T+/puIzuutmRDDgbkW4AjMPiWk0vetXuzPTknMtux7FwEVVKHawV
+Td9Ld/pYllJstA0eHu3EvWn3PD9DjNzkcYNeuSby3wAw0FGBBFcYhzuFyJhbdemb
+WQ4SakWAsFCRFPNum6BE1tVesVt6ALWggnkxZ8VZGWlCTB/xGK2tSKEddd/aI6rf
+f8DnDh1lTpCJOJWoWdS7j/CwJH7BfbBj0cqpXqaXSbQswCsc9lOikrLKZr56ldJx
+LDPuDepD6YdpM2mlS8I/tYx8Hp3ivKKaF7whrDq9nKp1E1gz+w7SuQHmOyiQs5nA
+O2vnKYTxFPUrjutEdWCmdykcAPPJ486YFxnBjbnVJcrO8uxNQ6jmGlGYXGcKvpA2
+kEsafw/0LMjMCkUwsjY7
+=FBGe
 -----END PGP SIGNATURE-----
