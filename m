@@ -1,39 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/43
-Message-ID: <20130227200813.GC23388@kroah.com>
-Date: Wed, 27 Feb 2013 12:08:13 -0800
-From: Greg KH <greg@...ah.com>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/10
+Message-ID: <20131128114149.GA31082@lorien.valinor.li>
+Date: Thu, 28 Nov 2013 12:41:49 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: team@...urity.debian.org
+Subject: CVE Request: adequate: privilege escalation via tty hijacking
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 07:26:39PM +0100, Petr Matousek wrote:
-> On Wed, Feb 27, 2013 at 10:05:20AM -0800, Greg KH wrote:
-> > On Wed, Feb 27, 2013 at 05:13:06PM +0100, Petr Matousek wrote:
-> > > On Wed, Feb 27, 2013 at 06:48:34AM -0800, Greg KH wrote:
-> > > > On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
-> > > > > For starters, security@...nel.org submissions should be posted to
-> > > > > oss-security or any other security related public mailing list when
-> > > > > the
-> > > > > patch is being committed.
-> > > > 
-> > > > That's not going to happen, and you know that, to do so would be
-> > > > totally
-> > > > irresponsible of us and directly harm your users.  That's what
-> > > > vendor-sec (or whatever it is called now) is for.
-> > > 
-> > > linux-distros [1] is vendor-sec replacement for Linux related issues.
-> > > 
-> > >   [1] http://oss-security.openwall.org/wiki/mailing-lists/distros
-> 
-> Greg, FYI. The linux-distros mailing list has strict rules about the
-> maximum embargo period. It is ~14 days. I hope that ~14 days are
-> acceptable as a grace period for you when the commit goes public. At the
-> end of the embargo period the info is always sent to oss-sec with CVE id
-> assigned. 
+Hi Kurt,
 
-That's fine with me.
+I would like to request a CVE for an issue with 'adequate':
 
-thanks,
+ http://bugs.debian.org/730691 (adequate: privilege escalation via tty
+ hijacking):
 
-greg k-h
+----cut---------cut---------cut---------cut---------cut---------cut-----
+Package: adequate
+Version: 0.4
+Severity: serious
+Tags: security
+Justification: user security hole
+
+If root uses the --user option, then the user can hijack the tty with
+the 
+TIOCSTI ioctl.
+
+This is similar to CVE-2005-4890.
+
+-- 
+Jakub Wilk
+----cut---------cut---------cut---------cut---------cut---------cut-----
+
+Fix for this was commited at:
+
+ https://bitbucket.org/jwilk/adequate/commits/94e5fc5d810057bffb673501ed809f7c2dabd9ee
+
+Could a CVE be assigned to this issue?
+
+Regards,
+Salvatore
