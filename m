@@ -1,29 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/13/1
-Message-ID: <52099BF4.1030705@redhat.com>
-Date: Tue, 13 Aug 2013 12:37:40 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/13
+Message-ID: <529782BE.6030309@redhat.com>
+Date: Thu, 28 Nov 2013 10:51:58 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: security@...hon.org, security@...y-lang.org, cve-assign@...re.org
-Subject: CVE Request -- Python SSL module does not handle certificates that contain hostnames with NULL bytes
+Subject: Re: CVE Request: Linux kernel: net: uninitialised memory leakage
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-An issue similar to CVE-2013-4073[1] was found in Python:
+On 11/28/2013 10:40 AM, P J P wrote:
+> Hello,
+> 
+> Linux kernel built with the networking support(CONFIG_NET), is 
+> vulnerable to a memory leakage flaw. It occurs while doing the 
+> recvmsg(2), recvfrom(2), recvmmsg(2) socket calls.
+> 
+> A user/program could use this flaw to leak kernel memory bytes.
+> 
+> Upstream fix: ------------- -> 
+> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=bceaa90240b6019ed73b49965eac7d167610be69
+>
+> 
+> 
+> Reference: ---------- ->
+> https://bugzilla.redhat.com/show_bug.cgi?id=1035875
+> 
+> 
+> Thank you. -- Prasad J Pandit / Red Hat Security Response Team
 
-https://bugs.mageia.org/show_bug.cgi?id=10989
-http://bugs.python.org/issue18709
+Please use CVE-2013-6405 for this issue.
 
-Could a CVE for the Python instance of this flaw please be assigned (if 
-one has not already been assigned)?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-Thanks.
-
-[1] 
-<http://www.ruby-lang.org/en/news/2013/06/27/hostname-check-bypassing-vulnerability-in-openssl-client-cve-2013-4073/>
-
-<https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-4073>
-
---
-Murray McAllister / Red Hat Security Response Team
+iQIcBAEBAgAGBQJSl4K9AAoJEBYNRVNeJnmTM30QAIYom/aiW5mrTDybMrMptahv
+k8/Hw+ReosACc8nHGc8WJNaMUnuxqH9j4735skEHZyE+mS3nXRNadLx+tFqKmg7M
+SOuZAZHyM7pKUKx/pdzJv7AsTT0BleH8T5sJtud468cQYrG/2qRvCuctalpHnswb
+Y04KFRndCehnYM/amH9/5LJjSRTjvz5CMDn2QCuf/K1jBny9XOIql9fWY3DjzM95
+3yoQul846P6Mz6c56iCJcH5mSCa+HW8LS+8iNjTb4Yx7Wi4Y8wEB46psDeQ1hdB3
+LeVOo1KlmclNynRKd0Fut5DDQtrAaRU/XtfJKIEgfyktw7RJLJD6GHy150KwEBmC
+yIgV0REfuQxlhdEWwxURE7PhdFt6xmF4X4e73vE4GoVzOllf8bGRlW5J9GNcKOyP
+BPdKYw87E4Y1fbTyoFTNgR09rrglaQA97o6/AWMS4Mh6Z/Ri27+I/zwVfjnREVjH
+Z0mgncZrHD9FRjH3UA1ua4VHxU1GY/De3it05jaiUZ5NUY6lZQl30ofPRua/W3JY
+0xqSqATtrpUe2J501qYQx8oVTg0SkbTi8qDHMiQB2JdTUvW19AKtlbH3EHOC4cys
+Hm8iw1iUfDxdRE9STKu4dbn3q+y3DOvR8oXlxcGNoawYiMFM4i4OKXqEjtR6jimj
+OT7FO7eRm5IL0HqO3JLz
+=DqvJ
+-----END PGP SIGNATURE-----
