@@ -1,51 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/7
-Message-ID: <20130605121559.GJ27176@twins.programming.kicks-ass.net>
-Date: Wed, 5 Jun 2013 14:15:59 +0200
-From: Peter Zijlstra <peterz@...radead.org>
-To: OSS Security List <oss-security@...ts.openwall.com>, eranian@...gle.com, ak@...ux.intel.com, security@...nel.org, Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: More perf security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/16
+Message-ID: <52979ACE.7070900@gentoo.org>
+Date: Thu, 28 Nov 2013 20:34:38 +0100
+From: Alex Legler <a3li@...too.org>
+To: nvd@...t.gov
+CC: oss-security@...ts.openwall.com,  Gentoo Linux Security Team <security@...too.org>
+Subject: http://nvd.nist.gov/nvd.cfm?cvename=CVE-XXX URLs result in 404
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 05, 2013 at 02:10:54PM +0200, Petr Matousek wrote:
-> Hello, Peter.
-> 
-> On Tue, Jun 04, 2013 at 05:53:16PM +0200, Marcus Meissner wrote:
-> > 1. Info leak (?) via PERF_SAMPLE_BRANCH_KERNEL
-> > 
-> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7cc23cd6c0c7d7f4bee057607e7ce01568925717
-> > 
-> > commit 7cc23cd6c0c7d7f4bee057607e7ce01568925717
-> > Author: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-> > Date:   Fri May 3 14:11:25 2013 +0200
-> > 
-> >     perf/x86/intel/lbr: Demand proper privileges for PERF_SAMPLE_BRANCH_KERNEL
-> > 
-> >     We should always have proper privileges when requesting kernel
-> >     data.
-> > 
-> >     Signed-off-by: Peter Zijlstra <a.p.zijlstra@...llo.nl>
-> >     Cc: <stable@...nel.org>
-> >     Cc: Andi Kleen <ak@...ux.intel.com>
-> >     Cc: eranian@...gle.com
-> >     Link: http://lkml.kernel.org/r/20130503121256.230745028@chello.nl
-> >     [ Fix build error reported by fengguang.wu@...el.com, propagate error code back. ]
-> >     Signed-off-by: Ingo Molnar <mingo@...nel.org>
-> >     Link: http://lkml.kernel.org/n/tip-v0x9ky3ahzr6nm3c6ilwrili@git.kernel.org
-> 
-> There is similar check in perf_copy_attr() which is called from
-> perf_event_open syscall --
-> 
->                 /* kernel level capture: check permissions */
->                 if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
->                     && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
->                         return -EACCES;
-> 
-> It seems to me that it covers PERF_SAMPLE_BRANCH_KERNEL as well. Am I
-> missing something?
-> 
+Hello,
 
-I overlooked it, also its slightly broken. See the discussion at: 
-  https://lkml.org/lkml/2013/5/21/166
+a few days ago, CVE links using the scheme noted in the subject stopped
+working, and started returning HTTP 404 error codes.
+Is this intended?
 
-  
+We have been using this URL scheme for our advisories for the better
+part of 2 years now, and as we publish advisories via mailing lists and
+several sites import our advisories, we have no way to retroactively
+change most of the links. If the change was intended, could you at least
+have the 'old' URLs reply with a permanent redirect to a new, valid URL?
+
+Thanks,
+
+-- 
+Alex Legler <a3li@...too.org>
+Gentoo Security/Ruby/Infrastructure
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
