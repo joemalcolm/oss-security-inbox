@@ -1,102 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/2
-Message-ID: <5132B607.8090503@redhat.com>
-Date: Sat, 02 Mar 2013 19:31:35 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/3
+Message-ID: <5296CCFF.2080004@redhat.com>
+Date: Wed, 27 Nov 2013 21:56:31 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, come2waraxe@...oo.com
-Subject: Re: CVE request: PHP-Fusion waraxe-2013-SA#097
+Subject: Re: CVE request: hplip insecure temporary file handling in pkit.py
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/02/2013 05:02 PM, Henri Salo wrote:
-> Hello list,
+On 11/27/2013 04:46 AM, Raphael Geissert wrote:
+> Hi,
 > 
-> Can I get CVEs for vulnerabilities fixed in PHP-Fusion version
-> 7.02.06, thanks.
+> On 27 November 2013 12:22, Ratul Gupta <ratulg@...hat.com> wrote:
+>> Hello,
+>> 
+>> A temporary file handling flaw was found in hplip/pkit.py.
+>> 
+>> References: 
+>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=725876
 > 
-> http://www.waraxe.us/advisory-97.html waraxe-2013-SA#097
-
-Ok grouped these into the 5 sets of vulns:
-
+> Thanks for sending the request, I was waiting for the problem to
+> be confirmed but later forgot about it.
 > 
-> OSVDB ID    title 90714     PHP-Fusion /downloads.php orderby
-> Parameter SQL Injection 90713     PHP-Fusion /forum/postedit.php
-> delete_attach_* Parameter SQL Injection 90712     PHP-Fusion
-> /forum/postnewthread.php poll_opts Parameter SQL Injection 90711
-> PHP-Fusion /administration/settings_messages.php Multiple Parameter
-> SQL Injection 90710     PHP-Fusion
-> /administration/settings_photo.php Multiple Parameter SQL Injection
->  90709     PHP-Fusion /administration/bbcodes.php enable Parameter
-> SQL Injection 90695     PHP-Fusion /administration/news.php
-> Multiple Parameter SQL
-Injection
-> 90693     PHP-Fusion /administration/articles.php article_id
-Parameter SQL Injection
-> 90359     PHP-Fusion includes/classes/Authenticate.class.php
-Multiple Cookie SQL Injection
-
-Please use CVE-2013-1803 for these issues.
-
-> 90708     PHP-Fusion /forum/viewthread.php highlight Parameter XSS
->  90707     PHP-Fusion /messages.php Multiple Parameter XSS 90706
-> PHP-Fusion /infusions/shoutbox_panel/shoutbox_admin.php message
-> Parameter XSS 90705     PHP-Fusion /administration/news.php message
-> Parameter XSS 90704     PHP-Fusion /administration/panel_editor.php
-> panel_list Parameter XSS 90703     PHP-Fusion
-> /administration/phpinfo.php User-Agent HTTP Header XSS 90702
-> PHP-Fusion /administration/bbcodes.php __BBCODE__ Parameter XSS 
-> 90701     PHP-Fusion /administration/article_cats.php Multiple
-> Parameter XSS 90700     PHP-Fusion
-> /administration/download_cats.php Multiple Parameter XSS 90699
-> PHP-Fusion /administration/news_cats.php Multiple Parameter XSS 
-> 90698     PHP-Fusion /administration/weblink_cats.php Multiple
-> Parameter XSS 90697     PHP-Fusion /administration/articles.php
-> Multiple Parameter XSS
-
-Please use CVE-2013-1804 for these issues.
-
-> 90696     PHP-Fusion /administration/db_backup.php file Parameter
-> Traversal Arbitrary File Deletion
-
-Please use CVE-2013-1805 for these issues.
-
-> 90694     PHP-Fusion /maincore.php user_theme Parameter Traversal
-> Local File Inclusion 90692     PHP-Fusion
-> /administration/user_fields.php enable Parameter Traversal Local
-> File Inclusion
-
-Please use CVE-2013-1806 for these issues.
-
-> 90691     PHP-Fusion /administration/db_backup.php Database Backup
-> Direct Request Information Disclosure
-
-Please use CVE-2013-1807 for these issues.
-
-> -- Henri Salo
+>> Can a CVE please be assigned if one has not been already?
 > 
+> None has been assigned as far as I'm aware of.
+> 
+> Cheers,
+
+Please use CVE-2013-6402 for this issue.
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRMrYHAAoJEBYNRVNeJnmTCiwP/AnADFWBxSi7WZgdordsi2et
-QxJEWJ6b20KCgDTTCNwrIkHgVuEptiLZBAdyb8vHGJH34s/2WOPBrb6cTybXhQMf
-hgnjhRGOuk8i29Z8bG1eQxilfiyckmklLNITnfmWdSTI+o0ZwGNpxvfuE5lCCPMM
-+T1gVp1GEx9+pbFTj9W3Ud/Rfozq4ESBqhG3gk1D5iG57yPKstpeS6m9HDMzD1ou
-YVEH9QeqwUgxQHJ5EVV3ovs2zrHbNpoTOdS2Bqdm2P2xuQCXxwJQFquii9DC0FMb
-HFdysguYxTBXBkFrV4YpPXGdpSGYkazsCb6WMjC7886FDOKH+LMZoDK5mY++sLr0
-6AUtoc1L+X5KvpIrod2BUS4QMt4P6yJIndxkG+dvWUZWbjHReQjBwHNOtttnXRAd
-vOpwxzu8rzxZVErentXXu+04nffcjaxPmnngoQCH6nwf+wwjyOdCqW0hnSopa6zm
-RHp7X6kGuuXDUVELRI7seuUcCOnY2eCwlSe+rzMZZjtqlwovCW9Gpi0MhwK9YF1c
-VXCVIi6jtJbFwPS9s5JKCaqV0hFyfvUi2gmuMehmAREtBGyMINX93i4lY2Kz8SId
-bBQJH/hdpZsiAUZ295fbDuIEO9CvNKWOPm+cI7bujGh14deuBH48rlU62MhHlbbs
-US+dX4d0lZe0DkK81o65
-=KrvT
+iQIcBAEBAgAGBQJSlsz+AAoJEBYNRVNeJnmT8I8P/j+XBW/SzksKSi5dtUkLmbI8
+5V1Xd6cI/xhS94ls3rLGba23MjozdElgYnMI8XvgvvRhNRbeutTRYwEFHJbL5jqh
+kqDqa3nIwZHlYCbQT5QrIbDmI6FGjLbCRckryh+lkS7nkdedjOibOjgZuLP8HQED
+xuV4hFi9s3Tx0EVdNR1VxBLCLyVBX+F9QFOFz6dTrXH+lcriYb9u6CF7CEs/Gev7
+NuVdVYGFxsEm+ZsyOmZ/Cn2nB9RMTKVk6QbkFes2RGeY1pwxrFmtwUf4hyrnSeBB
+42TmTHSV/t6JhRq0iDBWXC1b6R83Upt/41Ir9lGsI/719wG8EOVb38phxgiV3xMg
+sz6BaUrNzo/Ecu8nkHJqnhbdgwHCVfo/oJ3uG275ChI6XJYdAPdNNZmvK44es8DN
+zbzRiEMbrBE6UmqZqIAPzD2X1fCaelbrHxODeK1VCkeOokqxd65u2/PXRVkx3xdW
+4u8qIonGAPghIxn8XYlnjyNumLmi84M1JtZ1HXcilJoMk0MM9RZ9GdA7lig+VrYX
+FAT4PrlYSo6lONFpo2gMY1TYTQOCLHYKOVantgaa8Zqrk/Whz4Bo0Gi23fbrXunR
+gYmLwoX2C8OndPQ5Y7atUzH5f9wBTuAV8kMRX4gZC5Ukcuh98YNwnBq2C6K0n2th
+QWE5qT3+bTi5ySnCy84S
+=xMka
 -----END PGP SIGNATURE-----
