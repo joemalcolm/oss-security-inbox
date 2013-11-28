@@ -1,62 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/13
-Message-Id: <678F3CA5-B7BF-4FA7-B273-2487CA8165D4@dwwright.net>
-Date: Tue, 4 Jun 2013 15:51:23 -0400
-From: Derek Wright <drupal@...right.net>
-To: kseifried@...hat.com, security@...pal.org
-Cc: oss-security@...ts.openwall.com, Henri Salo <henri@...v.fi>
-Subject: Re: [security] CVE request: CKEditor module for Drupal access bypass SA-CONTRIB-2011-054
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/4
+Message-ID: <5296CDD2.5010009@redhat.com>
+Date: Wed, 27 Nov 2013 22:00:02 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: hplip insecure temporary file handling in pkit.py
 Content-Type: text/plain; charset=utf-8
 
-I updated https://drupal.org/node/1337006 accordingly.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks,
--Derek Wright (dww) of the Drupal Security Team
-
-
-On Jun 4, 2013, at 2:42 PM, Kurt Seifried wrote:
-
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+On 11/27/2013 05:10 AM, Sebastian Krahmer wrote:
+> Hi,
 > 
-> On 06/04/2013 10:07 AM, Henri Salo wrote:
->> This does not seem to have CVE yet. Please assign. Drupal guys
->> could you confirm, thanks.
->> 
->> Advisory ID: DRUPAL-SA-CONTRIB-2011-054 Project: CKEditor - WYSIWYG
->> HTML editor (third-party module) Version: 7.x Date:
->> 2011-November-09 Security risk: Critical Exploitable from: Remote 
->> Vulnerability: Access bypass Versions affected: CKEditor 7.x-1.4
->> version only Solution: Upgrade to CKEditor 7.x-1.5
->> 
->> https://drupal.org/node/1337006 http://osvdb.org/77005 
->> http://secunia.com/advisories/46772/
->> 
->> --- Henri Salo
+> Funny. I just told upstream about that yesterday:
 > 
-> Please use CVE-2011-4972  for this issue.
+> https://bugzilla.novell.com/show_bug.cgi?id=852368
 > 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.13 (GNU/Linux)
+> I think hplip could deserve a deeper look.
 > 
-> iQIcBAEBAgAGBQJRrjULAAoJEBYNRVNeJnmTZuMQAIa2xfRWpbwfe9LCKbsC7xal
-> XnAJZE8xSty/8ixGajcZjOZ8RlcZ37eLGxcfNNE4/7QsxZGZ6eH/y98DndkL9ncX
-> eRkukrlLDwgH0WnoXK84RT5PQuUmECmHC6JE1HkPW58IHQlHC/90j2ZGYX8xecqO
-> nXpL4JKqoFPU5vFTp4A1H31X4QvZkKEqdw+FFh9P7vM27gOyZuu7cvSeAWABygbr
-> QzKQ/BYk6Ivc1kUnhX0N6lFOxCzliGY2c2tGHDU+yEvnHQmCKk1NOUgfEU0lWZTd
-> hTC6Bbh3FWdISl28qPjE1K/Ay55xXNZJaG+dhbPdRiZ0ONvphJbj8EB4W7P4NfHo
-> aKItCZuyn9vN72x8ScDulwkCU4smI0lAOw2hB+02mYJPZh2OXpbsbqTj/6n++/U7
-> hzA/nGs7gl4OXtYz4DCM9Hk5Un783TYt6eOguaJULHeraxrITf+u6ghPNWHufbG7
-> bUoTnRBc3ody4lGpEFK1mMTBmMJ6XIK87I4+CYMmKpNICjVcorglRyidKvhjAOyZ
-> 7Vvg7IQfu6iJBHl+kWrTfMgc1IVsuRcaAeciZNPVFezxCAhulJpesbz/isftHn2r
-> 6Ivwj+m4feivCGLlZ6/ey3dfU83D2PP9ulJeiYJvTLyXaOdfXeNXtL41uKefeih9
-> S5MKxDC9JnSgu1o5DLED
-> =v3qw
-> -----END PGP SIGNATURE-----
-> -- 
-> [ Security | http://lists.drupal.org/mailman/listinfo/security ]
-> [Security team mailing list management and scheduling is documented here | https://security.drupal.org/handling-list-emails]
+> Sebastian
 
+I'll be honest, this is how I audit for tmp files:
+
+find ./ -type f -exec grep "/tmp" {} \;
+
+Then I look to see how those files/dirs are created, if it's anything
+other than the secure ways listed here:
+
+http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
+
+it's probably wrong. I can't think of any software I've looked at that
+have been 100% correct (there were two that were correct in the actual
+code but had tests/etc. that were insecure).
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSls3SAAoJEBYNRVNeJnmTlsEP/jBKHK5OcOKN+YrnI+j+Mr/B
+XRBJ/r52eBlSvXowieEq8mk2M3oEAWDizhZkGTID/u8brclXBrUQdoQt2u2eA/pc
+arSoZfgDdVaQ5qgC+hEx+43XPemrVLDCRmR2f71XXUWS0mK7LvxGQthYnjWAlal7
+XyF6N3KjCEOXWIVTiPGEFDnQ/wuIsl31ZPL7/5lZpCXOMX/HEFMS+oywyJ7tWCWq
+CoS4GvBAyz/g1EG/X+lMWZCGtw8OSM1CrcqWp5WhTCMT1Uiw5ZADcS/YdALnXd4J
+umlrR4bc3z1GSbREeCEaz9zdtKFWtX1ggbruzSmuw4JjZ+GppbT0lOOaZKmqP9wv
+V9aqnjZXfUUJ7yqpi/6MB738A5E13TyPr6F+Vz8fAnx1SmPaTx3ydzMCoD7EuvXc
+ApyJbn7u4xHpoRrN55MfN517fII3ptEoObPVFXEtKG0HbFu8V5SATruXWKQO6Wmx
+Hd5+Tfp0aUvoA+iJwDxjlWxWj+mSni6ayAK7bbWUt7RmY0talz/jaIkCzXeHD9qn
++wamFEu11oVDZha/B/EZBL6r+tgImIPiMUWcbXvt5sfERqVyJwYoSaTa3mSrZ8Ly
+ehsENBfC6NlKPy2NUf23q2MlX8lbudQHm30F1+ea6hSd86Y0k5sfgyrIq2fQLCzD
+1U/hrAUnVICXFPQ2UHQ1
+=GJSU
+-----END PGP SIGNATURE-----
