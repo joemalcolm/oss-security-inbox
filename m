@@ -1,31 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/11
-Message-ID: <63140AD44DF9493C81881ACAE3C6E1D6@celsius>
-Date: Wed, 10 Jul 2013 20:56:57 +0200
-From: "Stefan Kanthak" <stefan.kanthak@...go.de>
-To: <oss-security@...ts.openwall.com>
-Subject: CVE request for Mozilla Firefox (Windows)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/9
+Message-ID: <20131128110948.GT10262@nb4>
+Date: Thu, 28 Nov 2013 12:09:48 +0100
+From: Michael Niedermayer <michaelni@....at>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, ffmpeg-security@...peg.org
+Subject: Re: CVE Request: FFmpeg 2.1 multiple problems
 Content-Type: text/plain; charset=utf-8
 
-The installer of Mozilla Firefox writes the following command line
-with unquoted spaces for uninstallation into the Windows registry:
+On Thu, Nov 28, 2013 at 01:02:52AM -0700, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> Ok tracked down who reported most of these, but two are still unknown:
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Mozilla Firefox 22.0 (x86 en-US)]
-"UninstallString"="C:\\Program Files\\Mozilla Firefox\\uninstall\\helper.exe"
+[...]
 
-See <https://bugzilla.mozilla.org/show_bug.cgi?id=871084>,
-<https://bugzilla.mozilla.org/show_bug.cgi?id=786407> and
-<https://bugzilla.mozilla.org/show_bug.cgi?id=868746>
+> https://github.com/FFmpeg/FFmpeg/commit/454a11a1c9c686c78aa97954306fb63453299760
+>     avcodec/dsputil: fix signedness in sizeof() comparissions leading
+>     to interger overflow and out of array accesses
+> Who reported this?
 
-Due to a well-known and well-documented idiosyncrasy of Windows'
-CreateProcess() API this can result in the execution of a rogue
-program "C:\Program.exe" or "C:\Program Files\Mozilla.exe" with the
-privileges of the caller.
-Since the caller of this command line typically has administrative
-rights this vulnerability can lead to a privilege escalation.
+IIRC after i fixed ticket2919, i searched for similar issues in
+the codebase and that was what i found.
 
-Affected versions: all current releases.
 
-Fixed version: 23.0.
+> 
+> 
+> 
+> 
+> https://github.com/FFmpeg/FFmpeg/commit/547d690d676064069d44703a1917e0dab7e33445
+>     Fixes out of array (on heap) writes in ffv1 decoding
+>     https://trac.ffmpeg.org/ticket/2906 ami_stuff
+>     Found-by: ami_stuff
+> 
+[...]
 
-Stefan Kanthak
+> https://github.com/FFmpeg/FFmpeg/commit/86736f59d6a527d8bc807d09b93f971c0fe0bb07
+>     avcodec/pngdsp: fix (un)signed type in end comparission
+>     Fixes out of array writes in png decoding
+>     https://trac.ffmpeg.org/ticket/2919 ami_stuff
+>     Found_by: ami_stuff
+> 
+
+[...]
+
+> https://github.com/FFmpeg/FFmpeg/commit/b05cd1ea7e45a836f7f6071a716c38bb30326e0f
+>     ffv1dec: Check bits_per_raw_sample and colorspace for equality in
+> ver 0/1 headers
+>     prevents inconsistency and out of array write
+> Who reported this?
+
+IIRC it probably was the result of code review which was done due to
+Ticket 2906
+
+[...]
+-- 
+Michael     GnuPG fingerprint: 9FF2128B147EF6730BADF133611EC787040B0FAB
+
+Rewriting code that is poorly written but fully understood is good.
+Rewriting code that one doesnt understand is a sign that one is less smart
+then the original author, trying to rewrite it will not make it better.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
