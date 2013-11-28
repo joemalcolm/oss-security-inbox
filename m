@@ -1,29 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/25/5
-Message-ID: <1646672.lBURYHEfCB@x2>
-Date: Thu, 24 Jan 2013 22:10:52 -0500
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/1
+Message-Id: <201311280223.rAS2NbPL019021@linus.mitre.org>
+Date: Wed, 27 Nov 2013 21:23:37 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: [Security hardening] [Notification] haproxy (previously) failed to drop supplementary groups after setuid / setgid calls properly
+Cc: cve-assign@...re.org
+Subject: CVE-2013-6885 AMD Publ. 51810 Errata 793 system hang
 Content-Type: text/plain; charset=utf-8
 
-On Thursday, January 24, 2013 05:53:38 PM Kurt Seifried wrote:
-> So again, if you know of a way to exploit this please let us know,
-> otherwise we will continue to consider this a security hardening issue
-> and not a security vulnerability.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The way these supplemental group issues work is that depending on the groups 
-file, the daemon may try to change to user/group "nobody", but retains group 
-root. This means that any file with group root write privs could be 
-replaced/altered. My experience is that distros have enough files that 
-permissions are wrong on something, somewhere. Its just a matter of finding it.
+The person who requested CVE-2013-6885 asked that we send the CVE
+assignment here because various open-source software will probably be
+adding code to prevent this denial of service attack.
 
-find / -type f -perm -00020 -printf "%-60p %g\t%M\n" 2>/dev/null
+http://support.amd.com/TechDocs/51810_16h_00h-0Fh_Rev_Guide.pdf
+http://lists.dragonflybsd.org/pipermail/kernel/2011-December/046594.html
+http://www.zdnet.com/blog/hardware/amd-owns-up-to-cpu-bug/18924
 
-So, it boils down to the problem isn't a vulnerability by itself. However, 
-should a _real_ vulnerability be found in the program, the CVSS score would be 
-higher because the program has CWE-250.
+  793 Specific Combination of Writes to Write Combined Memory
+  Types and Locked Instructions May Cause Core Hang
 
--Steve
+  Under a highly specific and detailed set of internal timing
+  conditions, a locked instruction may trigger a timing sequence whereby
+  the write to a write combined memory type is not flushed, causing the
+  locked instruction to stall indefinitely.
 
+  Potential Effect on System
+  Processor core hang.
+
+  Suggested Workaround
+  BIOS should set MSRC001_1020[15] = 1b.
+
+  No fix planned
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSlqj0AAoJEKllVAevmvmsDbEH/iqJkLRAEIAvUYExwqhvC61N
+/Td6GRxx9O8anj6fqn73slSUGJ5SM+SPaZ/8ZFwG7SMg1MzZEbMmzLAm3RON86Ru
+cM58GDw395sxepmCOWIGUx0dWa5s7n8hhvq2YxPv53GACorTtpmUM5g5HkcR//yR
+ipmQCmtQ86vwAQg9m+ZywKexy1DG8bsx3YmuMSkl+5jLkKkLaBGU78AiLJKzqDns
+Wq5Bt6uVpqo6y+ORxIlDl5OP1TOLsoyIiHM+94hEpdp472gKOoF20laqaIpK9nTU
+0/VK2Tp9UqCA7LC+4KbEbKS4SudN8OKAFBcobXIofBpcI13d90Eoii4QqSzjP9s=
+=sAu5
+-----END PGP SIGNATURE-----
