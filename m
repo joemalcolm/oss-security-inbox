@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/18
-Message-ID: <1BBED702BB5D4F349B5568A5D57CFC09@wildbit.com>
-Date: Tue, 9 Apr 2013 14:55:39 -0400
-From: Russ Thompson <russ@...dbit.com>
-To: Michael Tokarev <mjt@....msk.ru>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Postfix incorrect permissions on configurations. Request.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/12
+Message-ID: <alpine.LFD.2.10.1311282307500.20723@javelin.pnq.redhat.com>
+Date: Thu, 28 Nov 2013 23:10:46 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE Request: Linux kernel: net: uninitialised memory leakage
 Content-Type: text/plain; charset=utf-8
 
-The scripts inside are -world- executable, is the main concern here.  Certainly this can be changed by the end user but seems like an insecure default.  I've seen discussions and CVE's assigned for past cases where log directories are world readable and vice versa, if this is not the correct place to send, please advise.
+   Hello,
 
-- Russ
+Linux kernel built with the networking support(CONFIG_NET), is vulnerable to a 
+memory leakage flaw. It occurs while doing the recvmsg(2), recvfrom(2), 
+recvmmsg(2) socket calls.
 
+A user/program could use this flaw to leak kernel memory bytes.
 
-On Tuesday, April 9, 2013 at 2:19 PM, Michael Tokarev wrote:
+Upstream fix:
+-------------
+  -> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=bceaa90240b6019ed73b49965eac7d167610be69
 
-> 09.04.2013 22:08, Russ Thompson wrote:
-> > Postfix is setting the following permissions by default on Debian Squeeze. I'm seeing roughly the same on RHEL/CentOS 6.x, this appears to be a requirement of "sendmail.postfix" 
-> > 
-> > 0755 /etc/postfix
-> > 0644 /etc/postfix/*
-> > 0755 /etc/postfix-script
-> > 0755 /etc/post-install
-> > 
-> > Which allows all users to execute these scripts and read configurations. Setting to tighter/more typical permissions (i.e 640) results in: postfix/sendmail[21007]: fatal: open /etc/postfix/main.cf: Permission denied
-> 
-> That's all nice, but can you elaborate a bit -- what is wrong
-> with that? Which request do you have? What it has to do with
-> oss-security?
-> 
-> Thanks,
-> 
-> /mjt 
+Reference:
+----------
+  -> https://bugzilla.redhat.com/show_bug.cgi?id=1035875
 
 
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
