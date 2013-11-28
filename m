@@ -1,51 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/5
-Message-ID: <20130426055705.GG23082@nef.pbox.org>
-Date: Fri, 26 Apr 2013 07:57:05 +0200
-From: Alistair Crooks <agc@...src.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>
-Subject: Re: upstream source code authenticity checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/5
+Message-ID: <5296ED11.6030202@redhat.com>
+Date: Thu, 28 Nov 2013 18:13:21 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Kurt Seifried <kseifrie@...hat.com>
+Subject: CVE Request: ownCloud security bypass on admin page
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 25, 2013 at 01:30:23AM -0600, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 04/24/2013 11:55 PM, Alistair Crooks wrote:
-> > I'm not sure what using PGP gains us?
-> > 
-> > Regards, Alistair
-> 
-> So some possible outcomes are:
-> 
-> 1) They do PGP/GPG and don't get compromised. Long term outcome: we
-> come out way ahead.
-> 
-> 2) They do PGP/GPG and do get compromised. Long term outcome: we trust
-> bad things and lose, hopefully this gets spotted quickly and dealt with.
+Hello,
 
-Sure.  I actually agree with you.  But I'd also like it if we could
-bear in mind that, with PGP, trust is earned, trust signatures are
-snapshots in time, and trust levels are private, best guessses by
-people.  All people can see from a key listing is who trusted them and
-when, not how much, or whether the trust was warranted.
- 
-> At a minimum this raises the bar for attackers when trying to insert a
-> fake release/whatever. The real problem however is the cost of doing
-> this. Key creation/storage/management/backup/etc is all non trivial
-> and not free. Is the cost of this worth it?
-> 
-> I think if we are going to push this we need to come up with a pretty
-> good set of guidelines that are easy to follow and implement. Things
-> like creation of keys, usage, storage, how to handle key roll overs,
-> lost keys, etc. Maybe even have a trusted party signs packages sent to
-> them, confirms the package with the project through some other trusted
-> channel like secure email or because they know the guy in real life/etc.
+ownCloud 5.0.13 fixes a security issue:
 
-I do like this idea, although think there should be more than one "trusted"
-party. But the tools we have don't do that kind of third-party verification;
-it would be good to get that in there.
+http://owncloud.org/changelog/
+SECURITY: Fix a possible security bypass on admin page under certain 
+circumstances and MariaDB
 
-Regards,
-Alistair
+Can a CVE please be assigned?
+
+Thanks,
+
+--
+Murray McAllister / Red Hat Security Response Team
