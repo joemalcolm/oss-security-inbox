@@ -1,105 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/02/1
-Message-Id: <E1VnX4T-0000AR-1P@xenbits.xen.org>
-Date: Mon, 02 Dec 2013 17:14:09 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 82 (CVE-2013-6885) - Guest triggerable AMD CPU erratum may cause host hang
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/15
+Message-ID: <alpine.LFD.2.10.1311282349500.21295@javelin.pnq.redhat.com>
+Date: Thu, 28 Nov 2013 23:56:26 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: Linux kernel: net: uninitialised memory leakage
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+   Hello Hannes,
 
-             Xen Security Advisory CVE-2013-6885 / XSA-82
-                              version 3
++-- On Thu, 28 Nov 2013, Hannes Frederic Sowa wrote --+
+| This patch does break stuff, a follow-up is needed which did not get to 
+| Linus yet, but is already queued up for stable. Otherwise traceroute is 
+| broken:
+| 
+| https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=85fbaa75037d0b6b786ff18658ddf0b4014ce2a4
 
-          Guest triggerable AMD CPU erratum may cause host hang
+  I see. Thanks so much for the heads-up and link to the follow-up patch.
 
-UPDATES IN VERSION 3
-====================
+ 
+| I found other leaks in non-inet protocols:
+| 
+| https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=f3d3342602f8bcbf37d7c46641cb9bca7618eb1c
+| 
+| The protocols where I did remove msg_namelen = 0 where actually
+| safe. Some of the protocols I did not touch could leak up to 128 bytes
+| of uninitialized data from the stack.
+| 
+| Hardening against out-of-bounds writes:
+| https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=68c6beb373955da0886d8f4f5995b3922ceda4be
+| 
+| Also there is a small 2-bytes memory leak in extended error reporting:
+| https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=68c6beb373955da0886d8f4f5995b3922ceda4be
 
-Early public release.
+  Thank you for sharing these too!
 
-This issue was predisclosed under embargo by the Xen Project Security
-team, on the 27th of November.  We treated the issue as not publicly
-known because it was not evident from the public sources that this
-erratum constitutes a vulnerability (particularly, that it was a
-vulnerability in relation to some Xen configurations).
 
-Since then, the fact that this CPU erratum is likely to constitute a
-security problem has been publicly disclosed, on the oss-security
-mailing list.
-
-Under the circumstances, and in accordance with the Xen Project
-security vulnerability policy, it has been decided that it is no
-longer appropriate to retain the embargo, as the key facts are now in
-the open.
-
-ISSUE DESCRIPTION
-=================
-
-AMD CPU erratum 793 "Specific Combination of Writes to Write Combined
-Memory Types and Locked Instructions May Cause Core Hang" describes a
-situation under which a CPU core may hang.
-
-IMPACT
-======
-
-A malicious guest administrator can mount a denial of service attack
-affecting the whole system.
-
-VULNERABLE SYSTEMS
-==================
-
-The vulnerability is applicable only to family 16h model 00h-0fh AMD
-CPUs.
-
-Such CPUs running Xen versions 3.3 onwards are vulnerable.  We have
-not checked earlier versions of Xen.
-
-HVM guests can always exploit the vulnerability if it is present.
-PV guests can exploit the vulnerability only if they have been granted
-access to physical device(s).
-
-Non-AMD CPUs are not vulnerable.
-
-CREDITS
-=======
-
-This issue's security impact was discovered by Jan Beulich.
-
-MITIGATION
-==========
-
-This issue can be avoided by neither running HVM guests, nor assigning
-PCI devices to PV guests.
-
-RESOLUTION
-==========
-
-The attached patch contains a software workaround which resolves this
-issue.
-
-Alternatively, the recommended workaround can be implemented in
-firmware, so a suitable firmware update will resolve the issue.
-If you require a firmware update please consult your vendor.
-
-xsa82.patch             Xen 4.1.x, Xen 4.2.x, Xen 4.3.x, xen-unstable
-
-$ sha256sum xsa82*.patch
-0a58f3564ca91fd2668c202446c607fdb1ec8643e558a3921046d43675f58c08  xsa82.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJSnL+JAAoJEIP+FMlX6CvZw6gIAKqUkevFcn14iRT7g6iiTjbw
-Fq9oiu/RtSmPDS/8FkAW6vdhYTe5cA6wCxUbErp/oZ6IwtlAmbZUQ2oVrfw8Tep/
-G1hpLDkGLeRD4sqPB3Yj/RS8MUWlZhX3H9FwJLzhDqFaGiVAOHe3zl/OgwMFEnUx
-PYSxdgPeiU3gavpJcDd5JamID+wLkihXMOHFKtdziOZsEAuv2lhIBSCamOVc638m
-vRMtE4LbcUCv80EvvMxtrUDkt+M+TS2JfQK+09mr5/hFkyicoeEawYLgeWUbuNhj
-CWbcKdyat6GauvhL46NE/aWlbUqSXHc8jcIdCDM2pRK1NR86qJiMC5av5EcPjOo=
-=V/Az
------END PGP SIGNATURE-----
-
-Download attachment "xsa82.patch" of type "application/octet-stream" (1390 bytes)
+Thank you! :)
+--
+Prasad J Pandit / Red Hat Security Response Team
