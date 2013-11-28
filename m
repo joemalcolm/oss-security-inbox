@@ -1,42 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/13/3
-Message-Id: <201312130332.rBD3WQmj015973@linus.mitre.org>
-Date: Thu, 12 Dec 2013 22:32:26 -0500 (EST)
-From: cve-assign@...re.org
-To: larry0@...com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Command injection in Ruby Gem Webbynode 1.0.5.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/17
+Message-ID: <5297A34D.9020805@openttd.org>
+Date: Thu, 28 Nov 2013 21:10:53 +0100
+From: Rubidium <rubidium@...nttd.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request for OpenTTD
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello folks,
 
-> Download: http://rubygems.org/gems/webbynode
-> ./webbynode-1.0.5.3/lib/webbynode/notify.rb
-> Messages via the growlnotify command line can possibly be used to
-> execute shell commands if the message contains shell meta characters.
-> 
-> %x(growlnotify -t "#{TITLE}" -m "#{message}" --image "#{IMAGE_PATH}")
-> 
-> it doesn't strip characters like ;&|
-> 
-> Advisory: http://www.vapid.dhs.org/advisories/webbynode-command-inj.html
+the OpenTTD team and contributors have discovered several a security
+vulnerability in OpenTTD. Please be so kind to allocate a CVE id for
+the issues detailed below:
 
-Use CVE-2013-7086.
+Denial of service (server) using forcefully crashed aircrafts
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+A missing validation allows remote attackers to cause a denial of 
+service (crash) by forcefully crashing aircraft near the corner of the 
+map. This triggers a corner case where data outside of the allocated map 
+array is accessed.
 
-iQEcBAEBAgAGBQJSqn70AAoJEKllVAevmvmsrn4IALX6oGBAzgETwM6RAoYmW2Do
-aFmNgcj0+YaIsV7aRKhv8eEvV89brSNuWAkkdRPOtjp+vD2aBuTI2rbh9RA4lNt+
-yFEvAUz4jyTJu7DMi7AA74mHtln1YIFtWJdmK9Mr+ATJNEagsTiGaBKoNoLNlkhl
-pwyYlPqbOfaNhyrd5gMT9OnBJL31RO0zZwIa4D5YtKg5ML+surdtbxUxybu2ew+0
-e6n+OiDX/IFSmSRQqDzj7dAT4wJ1Fxdd0u6FKpg/CnIWtXyVy2JCUDsxOdnmw1hy
-YwRiR7sYIOaHfsgYvrx2NtkdowSQB5v1oh+hUVoDlPgFmjcVLT6rN6XyEutRpgM=
-=zuHG
------END PGP SIGNATURE-----
+A test case, and simple guide how to reproduce it can be found in the 
+issue in our bug tracker at http://bugs.openttd.org/task/5820
+
+Vulnerability is present since 0.3.6 and will be fixed in the upcoming
+1.3.3 release.
+
+Once the CVE id is allocated, the issue will be fully documented at
+http://security.openttd.org/en/CVE-2013-xxxx
+
+Thanks,
+Remko 'Rubidium' Bijker
+
+[Please CC me, I'm not subscribed.]
+
