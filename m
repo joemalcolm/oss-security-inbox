@@ -1,16 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/11/2
-Message-ID: <20130211072423.GA30292@kludge.henri.nerv.fi>
-Date: Mon, 11 Feb 2013 09:24:23 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/14
+Message-ID: <20131128180200.GL4118@order.stressinduktion.org>
+Date: Thu, 28 Nov 2013 19:02:00 +0100
+From: Hannes Frederic Sowa <hannes@...essinduktion.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: piwigo XSS in password.php
+Subject: Re: CVE Request: Linux kernel: net: uninitialised memory leakage
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Feb 09, 2013 at 06:14:35PM -0700, Kurt Seifried wrote:
-> http://www.openwall.com/lists/oss-security/2012/10/06/2
+Hello!
 
-Sorry about duplicate! Does your sources know if http://www.openwall.com/lists/oss-security/2012/10/06/3 ever got assigned?
+On Thu, Nov 28, 2013 at 11:10:46PM +0530, P J P wrote:
+> Linux kernel built with the networking support(CONFIG_NET), is vulnerable 
+> to a memory leakage flaw. It occurs while doing the recvmsg(2), 
+> recvfrom(2), recvmmsg(2) socket calls.
+> 
+> A user/program could use this flaw to leak kernel memory bytes.
+> 
+> Upstream fix:
+> -------------
+>  -> 
+>  https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=bceaa90240b6019ed73b49965eac7d167610be69
 
---
-Henri Salo
+This patch does break stuff, a follow-up is needed which did not get
+to Linus yet, but is already queued up for stable. Otherwise traceroute
+is broken:
+
+https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=85fbaa75037d0b6b786ff18658ddf0b4014ce2a4
+
+I found other leaks in non-inet protocols:
+
+https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=f3d3342602f8bcbf37d7c46641cb9bca7618eb1c
+
+The protocols where I did remove msg_namelen = 0 where actually
+safe. Some of the protocols I did not touch could leak up to 128 bytes
+of uninitialized data from the stack.
+
+Hardening against out-of-bounds writes:
+https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=68c6beb373955da0886d8f4f5995b3922ceda4be
+
+Also there is a small 2-bytes memory leak in extended error reporting:
+https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=68c6beb373955da0886d8f4f5995b3922ceda4be
+
+Greetings,
+
+  Hannes
+
