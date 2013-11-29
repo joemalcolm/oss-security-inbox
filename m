@@ -1,38 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/01/12
-Message-ID: <20130301215308.GA11297@elende>
-Date: Fri, 1 Mar 2013 22:53:08 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: Gambas Directory hijack vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/4
+Message-ID: <52984A09.20203@redhat.com>
+Date: Fri, 29 Nov 2013 01:02:17 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: incorrect parsing of access control file in nbd-server
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It was found that Gambas is vulnerable to a (temorary files) directory
-hijack vulnerability. Here two references:
+On 11/28/2013 09:46 AM, Wouter Verhelst wrote:
+> Hi,
+> 
+> nbd-server has the ability to deny connection requests to clients
+> unless their IP addresses are listed in a tcpwrappers-style
+> configuration file. Due to incorrect use of strncmp() in the parser
+> for this file, however, it would allow clients to connect so long
+> as their IP address in ASCII representation would start with
+> something in the ACL file; e.g., 198.51.100.12 would be allowed if
+> 198.51.100.1 was listed.
+> 
+> I'd like a CVE id for this.
+> 
+> Thanks,
+> 
 
- http://seclists.org/fulldisclosure/2013/Feb/116 (fulldisclosure)
- http://code.google.com/p/gambas/issues/detail?id=365 (upstream
- bugtracker)
+Please use CVE-2013-6410 for this issue.
 
-Upstream also mentioned the following in their changelog for 3.4.0
-release:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-* BUG: Ensure that the interpreter temporary directory is owned by the
-  current user and that its rights are accurate. Otherwise abort.
-* BUG: When creating the process temporary directory, check the permissions
-  of both the top directory (gambas.) and the process directory
-  inside.
-
- http://gambasdoc.org/help/doc/release/3.4.0?view
-
-Upstream fixes done via #5438 and #5464:
-
- http://sourceforge.net/p/gambas/code/5438/
- http://sourceforge.net/p/gambas/code/5464/
-
-Can a CVE be assigned to this?
-
-Regards,
-Salvatore
+iQIcBAEBAgAGBQJSmEoJAAoJEBYNRVNeJnmTmxQP/1TRAXPoxfwk7rL1DDAIejWP
+Zxwqa/6heBDkGBccg1p1NBV810dnK0URhp6XoYwto8XPkhVcRQtxBDdJ5iTI8waW
+j/aoAtIByOidWP6ZNm7NA1f0ltsrs036htehoT3IfbBJTrRjtGkW2GejGUBM60bs
+hxVYtp2+WsPZfe3I15iouwB40gLe72e18vPU/apyW9M/T4yf2ptsdS5Q9nL1t/B4
+KkYmv66QkY+ibQTV+xqPZ0nAW76ikO0TyxZqLEXQyhB3kt00Julz3vSfEVOVGYK/
+8/RfarCOvkpDKdDqPfMdvDyfZoJ+Pz6J2BKTBO/aHsBkifcoSKqi7HpZBHZyTaMh
+hOP01ucUha5lORYyWG+U/eKlXuY5ah/FA43U6vU+sSZqHXPTvlzVeDtg4f39wMXx
+Af5b89czqb6z2poTKzAGp3sj1kgcGTCggAr2yEHjpgNLmB+vM0SrOgPUV/bb+X5X
+NZtCoZiyoTp3eMg9HZYRCzGYA7UC+KzuZdBlMsuZ1p+NFKlCWNirjDS+94nszZPD
+aBLN2r7IGTqkmJ3Spgg29AW8C6WCsbkzTMJ/irdWpAzIAwRzngi7HVGa/nMMnNfL
+aUd3FLZVtVsrCvMa+3Nsc/ORKDK0Le152XwSGGyNDlt7HyiPvica0oprQLJDqevW
+0QjTGtPChKTNLDejiOgr
+=XH9a
+-----END PGP SIGNATURE-----
