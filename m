@@ -1,54 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/21
-Message-ID: <51AF8E14.7040205@redhat.com>
-Date: Wed, 05 Jun 2013 13:14:28 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Konrad Rzeszutek Wilk <konrad.wilk@...cle.com>
-Subject: Re: xen/blkback: Check device permissions before allowing OP_DISCARD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/10
+Message-ID: <9804024b588141d49791084f850ea8da@BL2PR09MB004.namprd09.prod.outlook.com>
+Date: Fri, 29 Nov 2013 23:16:56 +0000
+From: "Izadjoo, Meisam" <meisam.izadjoo@...t.gov>
+To: Alex Legler <a3li@...too.org>
+CC: nvd <nvd@...t.gov>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Gentoo Linux Security Team <security@...too.org>
+Subject: RE: http://nvd.nist.gov/nvd.cfm?cvename=CVE-XXX URLs result in 404
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Good evening, this issue has now been resolved. We apologize for any inconvenience.
 
-On 06/05/2013 11:46 AM, Konrad Rzeszutek Wilk wrote:
-> Hey,
-> 
-> John Haxby and Dan Carpenter recommended I ask for an CVE number
-> here.
-> 
-> The bug is that if a system admin provides a disk (which supports 
-> the discard aka TRIM or SCSI UNMAP) to a guest as read-only - there
-> are no checks done. Which means that the OS can destroy the data.
-> 
-> The likehood of somebody using 'ro' disks I think is small - but
-> there is probably one person who does it and would be unhappy that
-> a guest OS can destroy the underlaying data.
-> 
-> I have a patch (and a test-case) ready (see attached). I think I
-> just need an CVE number and need to send the mentioned patch to
-> Linus?
-> 
 
-Please use CVE-2013-2140 for this issue.
+Mase Izadjoo
+National Vulnerability Database
+National Institute of Standards and Technology
+nvd.nist.gov
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRr44UAAoJEBYNRVNeJnmTYhUQAMndCp3wbt65oG/kPDRPIcgz
-tOAzJTw99IIQ/n/n+Wxui5c/Rq/RhShahDgsFKXx/PcBw0oZcBQPAwo3j6XqK8Ea
-ocXT2BW/IbBOJLEi/A/4lFQtNBMB4CLC02OVaYjRxUqvnGoWFCVGUIBr4S18jMEA
-Aqx3fzbPqvL7W0FGNqdpFGaqO4bvZfMTHep9TM4LDRhkLFEntQIFzZ6wCk1CD+iP
-sNRTbbOxDl7Pi5ex+jhSUcaudRUGpXb3hr6An6N9llHDuSkQpE9fVKYR8nRYvsyJ
-pBrk1piiWKHmQDV+8pxKl4OKjZUpClAu6HLOQ7THzybLIXCdZMbBxIcDzD0zyjpD
-g+CblUAwMX3VhaxNRhOXQF3JzViR9fbv6+Etf0TG/iKLfwOMnXoBkz8bbm+rPc79
-cnFSEHmFZqVIpnMYDVXTe2hmHGf7T65ZFNM658EZA+ttchiG+70xPqq2W6/XuiGM
-Gvqy8MmO2Ufv6/DnL6WtXsLjQFE0nhZzcyGZg3dIjS8tr7o0iQrRITCPaCjGwlL2
-cqXl9rPuJOBiojtdM3klF8Trk8d7jD12nmvqYZN/1YBP/s2d3q/G+rRMotPYGpOt
-HnKmS/0eTnw0D8pdZz6JAVbljViNY3wgpr9NnpNt2ooKhuJ0awpAu6tN4BagXVda
-OtVZADzDl5AkeGZIC0+v
-=Rnva
------END PGP SIGNATURE-----
+-----Original Message-----
+From: Izadjoo, Meisam 
+Sent: Friday, November 29, 2013 8:52 AM
+To: 'Alex Legler'
+Cc: nvd; oss-security@...ts.openwall.com; Gentoo Linux Security Team
+Subject: RE: http://nvd.nist.gov/nvd.cfm?cvename=CVE-XXX URLs result in 404
+
+Good morning Alex, the issue you point out below was an unintended result of our upgrade earlier in the week. We will work to have this issue resolved as quickly as possible.
+
+Thank you for bringing this matter to our attention.
+
+
+Mase Izadjoo
+National Vulnerability Database
+National Institute of Standards and Technology nvd.nist.gov
+
+
+-----Original Message-----
+From: Alex Legler [mailto:a3li@...too.org]
+Sent: Thursday, November 28, 2013 2:35 PM
+To: nvd
+Cc: oss-security@...ts.openwall.com; Gentoo Linux Security Team
+Subject: http://nvd.nist.gov/nvd.cfm?cvename=CVE-XXX URLs result in 404
+
+Hello,
+
+a few days ago, CVE links using the scheme noted in the subject stopped working, and started returning HTTP 404 error codes.
+Is this intended?
+
+We have been using this URL scheme for our advisories for the better part of 2 years now, and as we publish advisories via mailing lists and several sites import our advisories, we have no way to retroactively change most of the links. If the change was intended, could you at least have the 'old' URLs reply with a permanent redirect to a new, valid URL?
+
+Thanks,
+
+--
+Alex Legler <a3li@...too.org>
+Gentoo Security/Ruby/Infrastructure
+
