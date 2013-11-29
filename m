@@ -1,192 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/16/5
-Message-ID: <51E584E5.30005@redhat.com>
-Date: Tue, 16 Jul 2013 11:37:41 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/9
+Message-ID: <5298D5AC.5050508@redhat.com>
+Date: Fri, 29 Nov 2013 10:58:04 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Matthew Wilkes <matt@...distillery.eu>
-Subject: Re: CVE Request - PloneFormGen, multiple vulnerabilities
+Subject: Re: CVE request: ClamAV vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/04/2013 02:54 PM, Matthew Wilkes wrote:
-> Hello all,
+On 11/29/2013 02:20 AM, Sergey Popov wrote:
+> It's a bit late, but i would like to request CVE for two 
+> vulnerabilities, that present in ClamAV before 0.97.7[1]:
 > 
-> I'd like to request some CVE identifiers for the following 
-> vulnerabilities, recently patched in PloneFormGen[1]
+> 1) A double-free error exists within the
+> "unrar_extract_next_prepare()" function
+> (libclamunrar_iface/unrar_iface.c) when parsing a RAR file.
 > 
-> Here are some descriptions of the vulnerabilities, along with the
-> CVSSv2 base score we calculated, and our determination of the
-> relevant CWE identifiers. We're not sure about potential merges,
-> especially as there are two pairs of very similar attacks.
+> 2) An unspecified error within the "wwunpack()" function 
+> (libclamav/wwunpack.c) when unpacking a WWPack file can be
+> exploited to corrupt heap memory.
 > 
-> 
-> # Execute arbitrary shell commands **CVSSv2 base score**: 10
-> 
-> CWE-78 - Improper Neutralisation of Special Elements used in an OS
-> Command CWE-573 - Improper Following of Specification by Caller 
-> CWE-749 - Exposed dangerous method or function
-> 
-> Passing a urlencoded shell command to a support function that is 
-> accessible through the web causes that shell command to be run with
-> the same privileges as the Zope server.
-> 
-> 
-> 
-> # Set custom script body **CVSSv2 base score**: 8.2 CWE-306 -
-> Missing authentication for critical resource CWE-749 - Exposed
-> dangerous method or function
-> 
-> When using a custom script action adapter, it is possible for
-> anonymous users to overwrite the content of the script. This allows
-> an attacker complete control over what happens to the received
-> data. The script is executed within Zope's RestrictedPython
-> environment, however, so it doesn't allow escape from the process
-> sandbox.
-> 
-> 
-> 
-> # Can set body of mail template on mailer object **CVSSv2 base
-> score**: 7.5 CWE-863 - Incorrect authorization CWE-749 - Exposed
-> dangerous method or function
-> 
-> An unused method has a declarePublic call, allowing anyone to
-> invoke it. This allows any PloneFormGen form with a mailer object
-> to have the email template modified by anonymous users. As the
-> template is a ZPT object it can include inline Python expressions
-> evaluated in the process sandbox.
-> 
-> 
-> 
-> # Insufficient CSRF protection on SaveData adapter allows changing
-> data **CVSSv2 base score**: 6.3 CWE-352 - Cross-site request
-> forgery (CSRF) CWE-749 - Exposed dangerous method or function
-> 
-> If a privileged user is tricked into accessing an attacker
-> controlled URL, it is possible to craft a request which would allow
-> setting the saved data to any value, thus compromising the
-> integrity of the data.
-> 
-> 
-> 
-> # Can determine the success page without filling in form **CVSSv2
-> base score**: 5 CWE-767 - Access to critical private variable via
-> public method
-> 
-> Often this is just a thank you page, however it is used by some
-> users to expose access to a private URL or further logic. In this
-> case it *may* provide an attacker with access to sensitive
-> information.
-> 
-> 
-> 
-> # Render body of mail template on mailer object **CVSSv2 base
-> score**: 5 CWE-767 - Access to critical private variable via public
-> method
-> 
-> Like the above attack, this allows users who have not filled in a
-> form to see the email they would have received if they had. It
-> stacks with the set body vulnerability to allow the attacker to
-> execute Python embedded in the custom template.
-> 
-> 
-> 
-> # Run ScriptAdapter script without submitting form **CVSSv2 base
-> score**: 5 (???) CWE-767 - Access to critical private variable via
-> public method
-> 
-> As above, but with the set custom script body vulnerability. The
-> effect of running the script varies by deployment.
-> 
-> 
-> 
-> # Can add spurious blank records to SaveDataAdapter **CVSSv2 base
-> score**: 5 CWE-306 - Missing authentication for critical resource 
-> CWE-20 - Improper input validation CWE-749 - Exposed dangerous
-> method or function
-> 
-> When using the default action adapter for saving data, it's
-> possible to create blank, likely invalid records. A malicious user
-> could automate this to add many invalid responses.
-> 
-> 
-> 
-> # Can enable or disable form actions **CVSSv2 base score**: 4.3 
-> CWE-306 - Missing authentication for critical resource CWE-352 -
-> Cross-site request forgery
-> 
-> If the ids of the action adapters within a form are known, it is 
-> possible to disable or enable them as an anonymous user. This would
-> allow an attacker to effectively disable the form, or to redirect
-> input.
-> 
-> 
-> 
-> # Vector for determining user details in XSS attacks **CVSSv2 base
-> score**: 3.5 (???) CWE-352 - Cross-site request forgery CWE-359 -
-> Privacy violation
-> 
-> Multiple methods are exposed which allow determination of the
-> email address, name and id of the currently authenticated member in
-> custom script adapters. If an attacker were already performing a
-> cross site scripting vulnerability elsewhere on the domain, these
-> methods could be used to identify users and leak sensitive
-> information.
-> 
-> 
-> 
-> All but 'Insufficient CSRF protection on SaveData adapter allows 
-> changing data' have official fixes; that one is unpatched.
-> Disclosure of reproducers has only been to the maintainer at this
-> stage, but happen more widely sometime in the next few weeks.
-> Credits for all the vulnerabilities go to The Code Distillery
-> 
-> Kurt, or whoever assigns the CVEs for this, I'm happy to provide
-> more information if you need it.
-> 
-> Thanks,
-> 
-> Matthew Wilkes
-> 
-> [1] - 
-> http://plone.org/products/plone/security/advisories/ploneformgen-vulnerability-requires-immediate-upgrade
->
-> 
-> 
-> 
-> ------ http://thedistillery.eu. The Code Distillery Ltd. Is
-> registered in England & Wales (#7747893). Registered address
-> 145-157 St John Street, London, EC1V 4PW.
+> [1] - https://secunia.com/advisories/52647/
 > 
 
-Sorry thought i had replied to this. I need links to the code
-commits/vuln code so I can confirm these.
+The blog entry
 
-To reiterate: so I can confirm CVE assignments, and prevent duplicate
-assignments you *MUST* provide links to the code commits/vulnerable
-code. I don't have the time to go hunting through your source code for
-them. People need to start making better CVE requests, or you're not
-going to get CVEs from me.
+http://blog.clamav.net/2013/03/clamav-0977-has-been-released.html
+
+contains no mention of security flaws,
+
+Also the ChangeLog:
+
+https://github.com/vrtadmin/clamav-devel/blob/0.97/ChangeLog
+
+Doesn't contain any mention of the above flaws. Can you provide links
+to source code/bug reports or something so I can verify this? Thanks.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR5YTlAAoJEBYNRVNeJnmT0pIP/2LCSBkcOd/yx0L/zAUHg8hD
-XV/W0VGNk+3ibM9aJjnMNLJieG2sgmzGxumEj+KmF5G7j1+cdXVEFOIxnBnfNNXJ
-xjURM5ajOwat6B3uGeP9GW+qhcbxfjJ7vpPVp9AbdGDToIYovlz9+mLaTSutKpZo
-VtS0yRf6F5pW1Bl7ssxtiUaja425RpgLXNNgcVeYMLBBXFldQ76QE6cPftP4daoV
-cQ5NWYz7ULJyLKVAO2B7kjvQOwvQGMi5VH0x4uMXs9eVnEKQS5M4sGXTy73M9V6u
-cMIpUspGZFBV2/P6Nnh9hGUHLK9L96ylAhMlkdeJJWAJhgZaEVjOsZVJR9/jM/su
-+PXBoMfcgmOYcPFOWq5BONhpgvYuomdJhzdh4UojW1mPStcXV5Xz6uIpqS9UcZEV
-zBoL+0o0isQZNtIKGLlJbVoB9+o3UtDHtHAXCLl4VaTxokqVkhTkJWYjNWU9/r9E
-iqDlnX9D8UfuTldZRS4F/Zll2goVI8+PU622MjfaJGnsIIq1BKAPkkgyLQrCUPbG
-6PiupxhyjPEf78CT+c3fAwwZgf1ARVhmz5cxKysGJuWo62MCsnoOf1Fy9buT0Pq2
-uWXMuMKgUq5SyR48SoX8XT9i3S30ELhJMU63PRecBok4QdNaW1y30GQgMRgXcY0d
-WFIZ5snSLeDrgos7p+vC
-=h+BX
+iQIcBAEBAgAGBQJSmNWsAAoJEBYNRVNeJnmThXsP/jeOtL/zWdpxvSX6JEDw0OPj
+jhOr77n6thgze2U/wAnzqJNYrVu9zgbXo7PeIursWztKWOky90TZsVaYjsiCgQ0N
+iDo6WfG4h2Ee0b0L6MLTyADx9LCvYwdLcnjVOgzgAaQDirSTU0nc7oUdkMixTOXR
+xn6HEnGBxhw7o9xZbGWJL9fLxGrqnSvMowpTiH+qG1oiC7ShUvdI/k+5Fr2adX1E
+47gz+dZazGdj39u2aryXA3uRA1PFMFm5zVJcPz6Vuv0tZlZVWh1dA2OMeOSZdok4
+q8pd6WYiXDJdIWq9hpGwyR70GrJg0gsE8Dhw6KVtGu2V61BdX0dLxqnT5zhxxmFY
+DdyeFLkPTsEDUUj7wj7mciEgwXgUT2aiHrhXD6m9t+FvmU6MFD18HH0y7uD3vACU
+OBvOExWqcV/8rWmA3+VTAvgLXFCmVfNca6NP/d5oAnmeJRTGvBnyIGQwB95ozSbs
+fo0OvTm45CPzJVyiEX/7P1S73qLgnWV4Y0FLNg4mj5Qs2GkMs+LVGFxGOKr5XKed
+MdIk7Fa+xNMwI/qzJEYdA0xK1WPeDrwt5fpxJFoMjKqwF6jImmgUuQMZ5bvC0sqY
+bVTUzww4iPBvdY75yGH9F4BHacw+kw7MI9WUo9SJ32n047NB+UViRpAtvhshV6na
+bRvHsNYzqwUdW8msUh+0
+=MZ61
 -----END PGP SIGNATURE-----
