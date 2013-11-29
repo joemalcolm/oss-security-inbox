@@ -1,53 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/6
-Message-ID: <517A1E8C.60904@redhat.com>
-Date: Fri, 26 Apr 2013 00:28:28 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/5
+Message-ID: <52984A1A.80909@redhat.com>
+Date: Fri, 29 Nov 2013 01:02:34 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Thierry Carrez <thierry@...nstack.org>
-Subject: CVE-2013-2013 - OpenStack keystone password disclosure on command line
+To: oss-security@...ts.openwall.com
+CC: team@...urity.debian.org
+Subject: Re: CVE Request: adequate: privilege escalation via tty hijacking
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-While auditing OpenStack bugs for flaws needing CVE's I came across
-this (as of yet unfixed) one:
+On 11/28/2013 04:41 AM, Salvatore Bonaccorso wrote:
+> Hi Kurt,
+> 
+> I would like to request a CVE for an issue with 'adequate':
+> 
+> http://bugs.debian.org/730691 (adequate: privilege escalation via
+> tty hijacking):
+> 
+> ----cut---------cut---------cut---------cut---------cut---------cut-----
+>
+> 
+Package: adequate
+> Version: 0.4 Severity: serious Tags: security Justification: user
+> security hole
+> 
+> If root uses the --user option, then the user can hijack the tty
+> with the TIOCSTI ioctl.
+> 
+> This is similar to CVE-2005-4890.
+> 
 
-https://bugs.launchpad.net/python-keystoneclient/+bug/938315
-
-[root@...s ~]# keystone user-password-update --user=jake
-usage: keystone user-password-update --pass <password> <user-id>
-keystone user-password-update: error: too few arguments
-
-This class of vuln typically gets a CVE.
-
-http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=command+line+password
-
-CVE text:
-
-OpenStack keystone places a username and password on the command line,
-which allows local users to obtain credentials by listing the process.
-
-Please use CVE-2013-2013 for this issue.
-
+Please use CVE-2013-6409 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJReh6MAAoJEBYNRVNeJnmTOwMQALncWYbJlDodfKDEbQdqE8aW
-JrnFGx+Jm2D8UCUlTIObKbjhhk1Puacc9M9VhQ+Z9/sKuXeP8NwEhVqz8vm1nXul
-p7jqPi9DN83+Mg3KGBIATvNFwQb5y0k4GXiOBMuPSew5nfljK8M8PG5VaZ9maBRW
-sEmrBUfse1/cnXK/CkHwzT2wbxFZ7z54NHW4cB8CNyF34Wg1saZqAnImJshuVbcF
-nPo2TbI6GrpoNzPoBhuWeB2bp48NfZlznL5agTgjLFodpms9qr/cWxpbYlYXlYeV
-ENZCpR5ABNvLCxiREE31+0a9q3N7Vi8hpws1ErWKx4HAlsH0cmoqsypvNUIJckhG
-Z8UCxOfzpO4QwE2vSQDzz1tpCRyBeWX2USoMqKqIJ2LxbkQCQJROkQ9GMZLvtocL
-emLHivjO24tqf+EQAmh6rO5MH2S4kPIQS8x7/tIFoWn+OA1IAUqI2zjSDdLXpiOQ
-xwFJ4hVgmEPKOOWEwMhJpLAuwS+m5L9VEo75tFjUKM8OyJB4omtibrqKkoW6sV41
-uTiqH9htSuaOwhSqg/Rq0qy/OgOuftQOGBFF9eWsI2ydGZzqUggA7B8B0NBuY7aD
-43z8RBCvKeDBpbSZQTBFaoMbeNTNLK4WsdY8zqY1JDDJHby6B3g3ETIKy/KA/4Oc
-YmObot4YI6Lo4BOu63U7
-=TdT1
+iQIcBAEBAgAGBQJSmEoZAAoJEBYNRVNeJnmTPY8P/0vsH+KVUmCJK5CVGDh2EkDX
+GP8JoZjBzdaasyCK0QoNiNtkShrea4Uju6ngOFxMYJouo7xa29mZ4oTI71W+ehIA
+ff6TlDPvbO17DcOwjR+FhhY2vCcbXU3sLyWZGAgbnQAW+GQbxcFyVVF/Ws00Ejc8
+frS9pyvZVkmBJogoWnd2QR1FVRYBajizlJB9KSZMEjiVrPpUo5ARNxKUiRVHEv7n
+glHKF82ZxqSDSNZ1QRhnNlcx7n14XrnhlUia0GsYqzF1hDLh/5M5RmU9dCayZOUe
+noGrLLt3BA21hAIjQMSyURSklQgoQFThjsOynsA7XKu8j/uvCTU49lUClROf75/G
+TmCGQKrzciheRRN/ezstb5GledYNRQtO+8ShcOHeKAaaQ3dMowy4xonSrVBxSw3s
+1lXgtYE1oMPis25FaepSXydcSLU9DdPAujig+2m5v5Fv4t5u39QyKxZcOrkg4a9B
+725mIr3yIkPWfr8ECSCOZqDeK6SOTy8578+jnlkrch1CQxrP21nNoO+cDYpaFmdF
+wM9F3XQb8NOBfOd+gQMBxSBx62S9UHC+6/MzhKgnwzP1eZqojSEDgdWuX60Kt4LL
+idKA5P+bz03nfdPcFTQXLqF9mtX8uvGtlsaKne5SvsBIoox/RQd1QNkxFXFM6f/h
+Duy1GvBKmHcGYH32/vbA
+=U2b4
 -----END PGP SIGNATURE-----
