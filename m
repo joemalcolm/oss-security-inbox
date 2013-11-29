@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/2
-Message-ID: <50FCD240.2030806@gmail.com>
-Date: Sun, 20 Jan 2013 21:29:36 -0800
-From: Forest Monsen <forest.monsen@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/6
+Message-ID: <52985C6A.1060307@gentoo.org>
+Date: Fri, 29 Nov 2013 13:20:42 +0400
+From: Sergey Popov <pinkbyte@...too.org>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE request for Drupal contributed modules
+Subject: CVE request: ClamAV vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+It's a bit late, but i would like to request CVE for two
+vulnerabilities, that present in ClamAV before 0.97.7[1]:
 
-Hello there -- requesting CVE identifiers for issues with three
-contributed modules:
+1) A double-free error exists within the "unrar_extract_next_prepare()"
+function (libclamunrar_iface/unrar_iface.c) when parsing a RAR file.
 
-SA-CONTRIB-2013-003 - RESTful Web Services - CSRF
-https://drupal.org/node/1890222
+2) An unspecified error within the "wwunpack()" function
+(libclamav/wwunpack.c) when unpacking a WWPack file can be exploited to
+corrupt heap memory.
 
-SA-CONTRIB-2013-004 - Live CSS - Arbitrary Code Execution
-https://drupal.org/node/1890318
+[1] - https://secunia.com/advisories/52647/
 
-SA-CONTRIB-2013-005 - Mark Complete Module - CSRF
-https://drupal.org/node/1890538
+-- 
+Best regards, Sergey Popov
+Gentoo developer
+Gentoo Desktop Effects project lead
+Gentoo Qt project lead
+Gentoo Proxy maintainers project lead
 
-Thanks in advance.
 
-Best,
-Forest
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iEYEARECAAYFAlD80joACgkQ/ILCL9e1Br42awCfVJkH/CsOzbUYTOk0aADnUaNn
-1jwAoIJI3RmlYa1Bqvlt4vOK1rgAnUfg
-=St9B
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
