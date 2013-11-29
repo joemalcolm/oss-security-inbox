@@ -1,27 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/07/5
-Message-ID: <20130107222348.GA9967@devzero.fr>
-Date: Mon, 7 Jan 2013 23:23:49 +0100
-From: vladz <vladz@...zero.fr>
-To: oss-security@...ts.openwall.com
-Subject: /dev/ptmx timing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/8
+Message-ID: <966dcee3ae5f464abf0d76e7f4e177fa@BL2PR09MB004.namprd09.prod.outlook.com>
+Date: Fri, 29 Nov 2013 13:51:54 +0000
+From: "Izadjoo, Meisam" <meisam.izadjoo@...t.gov>
+To: Alex Legler <a3li@...too.org>
+CC: nvd <nvd@...t.gov>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Gentoo Linux Security Team <security@...too.org>
+Subject: RE: http://nvd.nist.gov/nvd.cfm?cvename=CVE-XXX URLs result in 404
 Content-Type: text/plain; charset=utf-8
 
+Good morning Alex, the issue you point out below was an unintended result of our upgrade earlier in the week. We will work to have this issue resolved as quickly as possible.
 
-Hi list,
+Thank you for bringing this matter to our attention.
 
-I noticed that it was possible to measure inter-keystrokes timing thanks
-to the /dev/ptmx character device.  Any local user that is using
-pseudo-terminal can be targeted.
 
-As it may also be used to disclose sensible information such as password
-length, I was wondering if it should be treat as a security issue?                      
+Mase Izadjoo
+National Vulnerability Database
+National Institute of Standards and Technology
+nvd.nist.gov
 
-Description + PoC: http://vladz.devzero.fr/013_ptmx-timing.php.
 
-No sure right now but I think the only way to solve this is to modify
-the pts handling at kernel level.  Any opinions on that?
+-----Original Message-----
+From: Alex Legler [mailto:a3li@...too.org] 
+Sent: Thursday, November 28, 2013 2:35 PM
+To: nvd
+Cc: oss-security@...ts.openwall.com; Gentoo Linux Security Team
+Subject: http://nvd.nist.gov/nvd.cfm?cvename=CVE-XXX URLs result in 404
+
+Hello,
+
+a few days ago, CVE links using the scheme noted in the subject stopped working, and started returning HTTP 404 error codes.
+Is this intended?
+
+We have been using this URL scheme for our advisories for the better part of 2 years now, and as we publish advisories via mailing lists and several sites import our advisories, we have no way to retroactively change most of the links. If the change was intended, could you at least have the 'old' URLs reply with a permanent redirect to a new, valid URL?
 
 Thanks,
-vladz.
+
+--
+Alex Legler <a3li@...too.org>
+Gentoo Security/Ruby/Infrastructure
 
