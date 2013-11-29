@@ -1,55 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/22/10
-Message-ID: <514CC2E3.5000502@redhat.com>
-Date: Fri, 22 Mar 2013 14:45:23 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/2
+Message-ID: <52982144.6090906@redhat.com>
+Date: Thu, 28 Nov 2013 22:08:20 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: David Black <disclosure@....org>
-Subject: Re: CVE Request: python-pip insecure temporary directory handling
+Subject: Re: CVE Request: Apache Solr XXE
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/22/2013 02:20 AM, David Black wrote:
-> On Fri, Mar 22, 2013 at 5:28 PM, Kurt Seifried
-> <kseifried@...hat.com> wrote:
->> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->> 
->> On 03/20/2013 08:13 AM, David Black wrote:
->>> Prior to version 1.3 pip used '/tmp/pip-build' as a temporary 
->>> directory and as per the report in 
->>> https://github.com/pypa/pip/issues/725 would follow a symbolic 
->>> link placed at '/tmp/pip-build' when writing temporary files.
->>> 
->> 
->> Is this the one actually fixed in 
->> https://github.com/pypa/pip/pull/780/files
->> 
->> ? thanks.
+On 11/28/2013 09:55 PM, David Jorm wrote:
+> Hi All
 > 
-> Yes it is.
+> Apache Solr 4.3.1, 4.4, 5.0 resolves multiple XXE flaws, as
+> described in the following bugs:
+> 
+> https://issues.apache.org/jira/browse/SOLR-3895
 
-Please use CVE-2013-1888 for this issue.
+Please use CVE-2013-6407 for this issue
+
+> https://issues.apache.org/jira/browse/SOLR-4881
+
+Please use CVE-2013-6408 for this issue
+
+> I have confirmed that these issues can also be exploited on Apache
+> Solr 3.6.2. Please assign a CVE ID for these XXE flaws (I think a
+> single CVE ID is most appropriate).
+
+These have to be SPLIT, different reporters, and one was in a release
+so the second is a classic "incomplete fix for X" CVE as well.
+
+> Thanks
+
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRTMLiAAoJEBYNRVNeJnmTiiwP/Atu7MxcqCiID9Aj2XrAlYZE
-JJlFdCWu9f/UDrv7bSgJg9ri6+2lopNpCfy1hV8cUopbVC2T+Xz7ia1b4SlZNgEI
-XmasWayo/LxMnJaKiIV3UZuALXSPmMu3sA2wOkn9kCfpPAW7d7CSs4Xi05aEX9Qn
-AcSKbPB46jzXl00ADSPc+ayOKh3b++j2FohKLcA37gjtYivt0XJVpZAZ4fRFGzZH
-VXpUzh3S2IsCwNUD9yUSkdT+Gzds2p6QnvYopqqF2YFPt+H35AKk3QSFBlDJHesT
-fO3Ct5MbP9EYVA9XcmXj/X7K10dJldTF9PKg2bcvc6bmYX8RWzg4ar2VWvgKcCMK
-azvZM+CWPnqQYqFUPDq5UA/OzJ4iUG8rej0nVYjEVWu8OL1B/tro6gQ/xuuV0Y3I
-aH1pEAo5zJcqSO2LuFNSmGECoYY0XTLtL1Pn3GVP75KCBmd+pFko/pwprwQqdEDk
-vqOIwZto+OLuukRHLsX1oFU2EyrAUloW7MsrxyGUvjYeaXywtLS5ad3+QiXrS916
-wFCl1K5kfBYRceQvd3y6o0qrWV1N4oreE3L1ESxnJMHvDuP+4qBTCCsHRX9YrtOG
-mOzvGATFoOE0MQWlA7ntz5tLc6OY/1t/RZDoqPkIjmt+ThNkHo2XL/4PXD4uRUVa
-VbCLDiXX+uVAEi2Txyna
-=Y0cv
+iQIcBAEBAgAGBQJSmCFDAAoJEBYNRVNeJnmT7fYQAIKOMe+q8PqWDZKN5oMokwVU
+R1ukFZ7YIXfoxewUlSHrPBGFEf1Nhwni7luucrm53gCvqIEZ8tUKchirZOud+TVH
+kk/cZk5JZEC9IT7kfEqVkVhxz7xUf6/DTLxKiQ7266ehzyvD7Rmii01Dm8Jxdd9h
+Bl0EjXMANvVwaKSZjslM8RgA8T9sN/vWWD1GbfEHr9bHETbJ3Mns0LGRtZqzrdcF
+r76bW2guIgNODIV+8Y3ZWJ305ZcmZSXD7x+/yYiFGwDIcWeusbokafw++wpqj0Ix
+/miP9dAAm/lgyjZwi1Q+lC1UGTf/SPOQkTkwR9N77Gvsk0aRLPUMjDVWFgsNhKnt
+7+hD3HB/uarw7qaqC+RdJTvx25kkbFNk7dFDKNxnwvWNa/Nc5a3nkYdJmxzA3u2L
+VcXeGhEani8MkWbOCBtLvYi+gyCmSbmJ7W0sTz9yI4ABYVGSDk4DW4/V8sd07Kvd
+vnn4eQeR7DbXl/U1zIW+wKoETsbGoYAMC0F64nrnnbfp4IKdVwk1z29FC8eBPCQI
+Y2Tj+HEfEq1qNn1ACi1x2HmFKu9PxCpLMaW6s/7fhHC4d3/BBx+S+qkzyI8BLW24
+WRgmYvuQuunrN8sI+382cIg7SxocZjqm77ZknSAXqWWLMyF183LUkmxyB806QXtY
+P4EQesHGBHubthiQshka
+=VPpG
 -----END PGP SIGNATURE-----
