@@ -1,19 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/14/5
-Message-ID: <CAA7hUgHOvdJapwVqXEWKCE_1jva4SccAxE0gA8a6oJfXd6zz0w@mail.gmail.com>
-Date: Tue, 14 May 2013 14:32:35 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: linux kernel perf out-of-bounds access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/1
+Message-ID: <568854659.9812058.1385700917964.JavaMail.root@redhat.com>
+Date: Thu, 28 Nov 2013 23:55:17 -0500 (EST)
+From: David Jorm <djorm@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request: Apache Solr XXE
 Content-Type: text/plain; charset=utf-8
 
-On 14 May 2013 14:25, Marc Deslauriers <marc.deslauriers@...onical.com> wrote:
-[...]
-> (BTW, there is currently an exploit for this going around...)
+Hi All
 
-It is in ycombinator, it can't be any more public:
-https://news.ycombinator.com/item?id=5703758
+Apache Solr 4.3.1, 4.4, 5.0 resolves multiple XXE flaws, as described in the following bugs:
 
---
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+https://issues.apache.org/jira/browse/SOLR-3895
+https://issues.apache.org/jira/browse/SOLR-4881
+
+I have confirmed that these issues can also be exploited on Apache Solr 3.6.2. Please assign a CVE ID for these XXE flaws (I think a single CVE ID is most appropriate).
+
+Thanks
+-- 
+David Jorm / Red Hat Security Response Team
+
