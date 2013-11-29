@@ -1,28 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/05/7
-Message-ID: <20131105222908.GI9495@suse.de>
-Date: Tue, 5 Nov 2013 23:29:08 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/29/7
+Message-ID: <20131129111232.GB23653@kludge.henri.nerv.fi>
+Date: Fri, 29 Nov 2013 13:12:32 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: additional fix for CVE-2012-2825 libxslt crash
+Subject: CVE request: UnrealIRCd remote DoS
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 05, 2013 at 11:17:21PM +0100, Florian Weimer wrote:
-> * Vincent Danen:
-> 
-> > The reason this doesn't crash for me on Red Hat Enterprise Linux 5 which
-> > ships 1.1.17 is because we included this patch (well, the developer did)
-> > a day after the initial build with the comment:
-> >
-> > - CVE-2012-2825 requires an extra patch on 1.1.17
-> >
-> > So, I think this does require a second CVE.
-> 
-> Has anyone shipped an incomplete update?  If yes, then I think we
-> actually need a second CVE.  In the past, we got them for similar
-> cases, and at least Debian's tracking more or less assumes that it's
-> possible to assign CVEs to deal with such corner cases.
+Can I get two CVEs for new issues in UnrealIRCd, thank you.
 
-SUSE did, otherwise we would not have noticed :/
+Release notification: http://forums.unrealircd.com/viewtopic.php?f=2&t=8221
+Release notes: http://www.unrealircd.com/txt/unreal3_2_10_2_release_notes.txt
+Fixed in: 3.2.10.2
+Secunia: http://secunia.com/advisories/55839/
 
-Ciao, Marcus
+http://osvdb.org/100353 Unspecified NULL Pointer Dereference Remote DoS
+http://osvdb.org/100352 Unspecified Use-after-free Remote DoS
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
