@@ -1,50 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/31/7
-Message-Id: <F309E96C-9148-49FD-A2BF-4FD7460F9D6C@stufft.io>
-Date: Wed, 31 Jul 2013 05:11:41 -0400
-From: Donald Stufft <donald@...fft.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/30/1
+Message-ID: <52994079.1040106@redhat.com>
+Date: Fri, 29 Nov 2013 18:33:45 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Insecure Software Download in pip
+Subject: Re: CVE request: UnrealIRCd remote DoS
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Jul 31, 2013, at 4:33 AM, Raphael Geissert <geissert@...ian.org> wrote:
-
-> On 31 July 2013 10:11, Kurt Seifried <kseifried@...hat.com> wrote:
->> On 07/30/2013 12:44 PM, Donald Stufft wrote:
->>> There was a CVE for pip not verifying TLS,
->>> https://access.redhat.com/security/cve/CVE-2013-1629 However that
->>> says it was RESERVED so I'm not sure how to make that unreserved?
->>> I've not done much with requesting CVEs before.
->> 
->> Ok I have no info on that CVE, is it embargoed? I can't find it in
->> google after a quick search. I need to see that one before I can
->> assign anything.
+On 11/29/2013 04:12 AM, Henri Salo wrote:
+> Can I get two CVEs for new issues in UnrealIRCd, thank you.
 > 
-> From the bugzilla info: "source=debian", and looking at our tracker:
-> https://security-tracker.debian.org/tracker/CVE-2013-1629 points to:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=710163
+> Release notification:
+> http://forums.unrealircd.com/viewtopic.php?f=2&t=8221 Release
+> notes:
+> http://www.unrealircd.com/txt/unreal3_2_10_2_release_notes.txt 
+> Fixed in: 3.2.10.2 Secunia: http://secunia.com/advisories/55839/
 > 
-> I don't know who assigned the id, however.
+> http://osvdb.org/100353 Unspecified NULL Pointer Dereference Remote
+> DoS http://osvdb.org/100352 Unspecified Use-after-free Remote DoS
 > 
-> Cheers,
-> -- 
-> Raphael Geissert - Debian Developer
-> www.debian.org - get.debian.net
+> --- Henri Salo
+> 
 
-Ha, Awesome. This CVE is some sort of ghost ;)
+Please use CVE-2013-6413  for this issue.
 
-Debian bug links to https://security-tracker.debian.org/tracker/CVE-2013-1629
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-Which links to.. This conversation in oss-sec, NVD which says it doesn't exist, The RedHat Bugzilla, Gentoo which says it doesn't exist, Ubuntu which says it does but doesn't give any more info other than linking to the page on Mitre that just says the reserved bit.
-
-A google search turns up http://www.reddit.com/r/Python/comments/17rfh7/warning_dont_use_pip_in_an_untrusted_network_a/c8ay4xt but it's unclear if that person requested the CVE or not.
-
-So uh how do we figure it out? Can I as a pip developer contact Mitre and release data for it?
-
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+iQIcBAEBAgAGBQJSmUB5AAoJEBYNRVNeJnmT9zQP/1AuGRu1IW0E8xDmJsM2ss/E
+wbBsj8gE8UVe0lc0OfT5SaSqeTR1OYOow8GwtQBhCqiR9BxSezrJ7i9Ssi4TwlQ+
+mxTuR8RXbyu1yh5nuGHWXoLZJb+mMS5hdCkZPhirhRU2ttoO1qUNocth2Z39ZaYf
+rm4Ws1z0M2haqJ4XzjADsoBTqXVb69HzkyKkQnRWkNYRCItc+DOxDuIt7zWYTI8L
+x+kV8M6cbBemTJEw9lMwF6mmWpMPyx82k5tLH/9lwzccivo9WwwAczLdwno/U0v/
+ZFE0thODkfbkJbuI8NA6iXeOcW5A6g4fn4fHbf5GAL66EgDSFVabxAUOKcz+1ayC
+SxjHRGHJuMhecgWjL2bixgUSFfDzkXA7vyn3pr0BMdD0fCSu5+yx9w2jPyeMY5AY
+Ol8GbPGO3F2eM/afJH31XHRUzBSdl2IY1gyuVYa9iGMR5Ug2fP3JZjwX5SUXN7j2
+kuQMOcWMsv8/mmqmK+BltFGlmCxYPwMHBBQijR/kHWKhs5sL/o5rX3a5DmyjhkLo
+jgp6Qv+7IXy/ki1uEcq1yUqd02lb+Ir4GWc/yUNUJyAFNNRGbYDtC0pwYlJqZYvY
+GwlE1tUD9l7wrcBO6CThxZHtMPXPuCoDGj+/PrQISAog/DSqu4Olt6ycQg5d1ECC
+FTHFRQyPFQViUvOg+JxW
+=ZjS9
+-----END PGP SIGNATURE-----
