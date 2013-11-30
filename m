@@ -1,74 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/18/7
-Message-ID: <50F9AAB8.5060303@redhat.com>
-Date: Fri, 18 Jan 2013 13:04:08 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Tomas Hozza <thozza@...hat.com>, Josh Stone <jistone@...hat.com>
-Subject: Re: CVE Request -- dnsmasq: Incomplete fix for the CVE-2012-3411 issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/30/2
+Message-ID: <37D38768-A6C7-4FC2-974F-7AB54A0B7AE2@tenable.com>
+Date: Sat, 30 Nov 2013 01:35:45 +0000
+From: George Theall <gtheall@...able.com>
+To: "<oss-security@...ts.openwall.com>" <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: ClamAV vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 01/18/2013 06:31 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> the CVE-2012-3411 identifier has been originally assigned to the 
-> following issue:
-> 
-> When dnsmasq is used in conjunctions with certain configurations of
-> libvirtd, network packets from prohibited networks (e.g. packets
-> that should not be passed in) may be sent to the dnsmasq
-> application and processed. This can result in DNS amplification
-> attacks for example. [1]
-> http://www.openwall.com/lists/oss-security/2012/07/12/5
-> 
-> Later it was found: [2]
-> https://bugzilla.redhat.com/show_bug.cgi?id=894486 [3]
-> https://bugzilla.redhat.com/show_bug.cgi?id=894486#c3
-> 
-> the upstream patch for CVE-2012-3411 it not to be working
-> properly, as it still allowed (from [3]):
-> 
-> * replies to remote TCP-protocol based DNS queries (UDP protocol
-> ones were corrected, but TCP ones not) from prohibited networks,
-> when the --bind-dynamic option was used,
-> 
-> * when --except-interface lo option was used dnsmasq didn't answer
-> local or remote UDP DNS queries, but still allowed TCP protocol
-> based DNS queries,
-> 
-> * when --except-interface lo option was not used local / remote TCP
-> DNS queries were also still answered by dnsmasq.
-> 
-> Could you allocate a new CVE identifier for this? (as an incomplete
-> fix for CVE-2012-3411 issue)
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+On Nov 29, 2013, at 12:58 PM, Kurt Seifried <kseifried@...hat.com> wrote:
 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 11/29/2013 02:20 AM, Sergey Popov wrote:
+>> It's a bit late, but i would like to request CVE for two 
+>> vulnerabilities, that present in ClamAV before 0.97.7[1]:
+>> 
+>> 1) A double-free error exists within the
+>> "unrar_extract_next_prepare()" function
+>> (libclamunrar_iface/unrar_iface.c) when parsing a RAR file.
+>> 
+>> 2) An unspecified error within the "wwunpack()" function 
+>> (libclamav/wwunpack.c) when unpacking a WWPack file can be
+>> exploited to corrupt heap memory.
+>> 
+>> [1] - https://secunia.com/advisories/52647/
+>> 
+> 
+> The blog entry
+> 
+> http://blog.clamav.net/2013/03/clamav-0977-has-been-released.html
+> 
+> contains no mention of security flaws,
 
-Please use CVE-2013-0198 for this issue.
+Hrm, at least the copy I see says “ClamAV 0.97.7 addresses several reported potential security bugs.”. While it doesn’t identify the issues per se, it does at least indicate this is a security release. 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Jan Lieskovsky talked about both of these last March — see <http://seclists.org/oss-sec/2013/q1/672>. The double-free was fixed in this commit :
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+  https://github.com/vrtadmin/clamav-devel/commit/b2212def1bb92b5ac45c82da100dc0d1376de6a3
 
-iQIcBAEBAgAGBQJQ+aq3AAoJEBYNRVNeJnmTRxUP/2Qrpz52gOOcAk5Pdc50kue4
-nP8i7VOVsV+0rjmJ3U8xbbnERQkzvoNtuTel/wsjg4qT9EY3XUQ4N8qJyYPpJD3U
-Gsy4BrBeVT9ZpUXiRtKfYxP0E9G6OPGu5tMTK1baYuFRS9czObTBk4JamPnapv9Z
-t+48GmilchuYlyn0yxRp77aG7nrSt/YCgX7MTdEyAOWP8q+wYPc2/jBkNERcRp1U
-VMqnTgOWH9IjUXhLWKwmCoJKescbVjRH8snGHeShDx1l+fzwKVEcFt2s5sEX/fll
-aLoRUOZ9qxAP3wYo0vkeoWEJZr/TxqqAraHi95gkCxtcPCIJ1w+qh1Zg9cOZ8Rnl
-KfmGbNaiqo3zQo/3lBqCZmTn/DovppQv992b0HMGsGyaRpw1Btylr5txGqWHldcG
-y31L8Ij5SuKmh4vnqTpZb1ax18OgxUCD91Id7RNk5ofTv676zr3xaSqbk0+nqYqe
-KRKrfoD7ShlAWqO1J0QYVCY63hzS+YdvwrT9C1QMa7yvgpsaIeVgPnhrfQEaGazd
-QXJFd76oD6V6+/AlTMFCdY6VgsFy8rLhDXj0RDC/3u+ZZnxl9RXZ9x/gwXYv/EnO
-TvSNJluKAjWcebuJbZzPn25IWnGVXyjppOoy9ZjOEFoz78N2y2qE8oJeALL6RlXe
-fnjNc4y3IkmdWllKnzPM
-=H+Cc
------END PGP SIGNATURE-----
+and the 'wwunpack()’ issue maps to :
+
+ https://bugzilla.clamav.net/show_bug.cgi?id=6806
+
+Hope that helps,
+
+> 
+> Also the ChangeLog:
+> 
+> https://github.com/vrtadmin/clamav-devel/blob/0.97/ChangeLog
+> 
+> Doesn't contain any mention of the above flaws. Can you provide links
+> to source code/bug reports or something so I can verify this? Thanks.
+> 
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.15 (GNU/Linux)
+> 
+> iQIcBAEBAgAGBQJSmNWsAAoJEBYNRVNeJnmThXsP/jeOtL/zWdpxvSX6JEDw0OPj
+> jhOr77n6thgze2U/wAnzqJNYrVu9zgbXo7PeIursWztKWOky90TZsVaYjsiCgQ0N
+> iDo6WfG4h2Ee0b0L6MLTyADx9LCvYwdLcnjVOgzgAaQDirSTU0nc7oUdkMixTOXR
+> xn6HEnGBxhw7o9xZbGWJL9fLxGrqnSvMowpTiH+qG1oiC7ShUvdI/k+5Fr2adX1E
+> 47gz+dZazGdj39u2aryXA3uRA1PFMFm5zVJcPz6Vuv0tZlZVWh1dA2OMeOSZdok4
+> q8pd6WYiXDJdIWq9hpGwyR70GrJg0gsE8Dhw6KVtGu2V61BdX0dLxqnT5zhxxmFY
+> DdyeFLkPTsEDUUj7wj7mciEgwXgUT2aiHrhXD6m9t+FvmU6MFD18HH0y7uD3vACU
+> OBvOExWqcV/8rWmA3+VTAvgLXFCmVfNca6NP/d5oAnmeJRTGvBnyIGQwB95ozSbs
+> fo0OvTm45CPzJVyiEX/7P1S73qLgnWV4Y0FLNg4mj5Qs2GkMs+LVGFxGOKr5XKed
+> MdIk7Fa+xNMwI/qzJEYdA0xK1WPeDrwt5fpxJFoMjKqwF6jImmgUuQMZ5bvC0sqY
+> bVTUzww4iPBvdY75yGH9F4BHacw+kw7MI9WUo9SJ32n047NB+UViRpAtvhshV6na
+> bRvHsNYzqwUdW8msUh+0
+> =MZ61
+> -----END PGP SIGNATURE-----
+
+George
+-- 
+theall@...able.com
+
