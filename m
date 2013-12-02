@@ -1,29 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/8
-Message-ID: <20130129153719.GA17680@kludge.henri.nerv.fi>
-Date: Tue, 29 Jan 2013 17:37:19 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: moderators@...db.org
-Subject: ircd-hybrid: Denial of service vulnerability in hostmask.c:try_parse_v4_netmask()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/02/4
+Message-ID: <529CF276.1020205@redhat.com>
+Date: Mon, 02 Dec 2013 13:49:58 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: CVE Rejections
 Content-Type: text/plain; charset=utf-8
 
-Mr. Bob Nomnomnom from Torland reported a denial of service security
-vulnerability in ircd-hybrid. Function hostmask.c:try_parse_v4_netmask() is
-using strtoul to parse masks. Documentation says strtoul can parse "-number" as
-well. Validation of input does not catch evil bits. I can give proof of concept
-if needed.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Fixed in commit: http://svn.ircd-hybrid.org:8000/viewcvs.cgi/ircd-hybrid/trunk/src/hostmask.c?r1=1786&r2=1785&pathrev=1786
-Fixed in: ircd-hybrid 8.0.6
+With apologies, I;ve been doing some house cleaning, and I have some
+CVE's to REJECT. They have been used internally at Red Hat and
+partially disclosed privately, if they were Red Hat only I'd recycle
+them, but with some external use I don't want to run the risk of
+making a mess.
 
-I have requested CVE identifier for this vulnerability in another email to Kurt.
-Other ircds are using the same code. Consider this email as official advisory. I
-tried to embargo this issue, but the commit is out already.
+In the first case we had multiple issues in a program, two of which in
+later investigation turned out not to be exploitable, ditto for the
+third one.
 
-Program received signal SIGSEGV, Segmentation fault.
-0x000000000041c799 in try_parse_v4_netmask (text=<value optimized out>, addr=0x113e270, b=0x113e2f8) at hostmask.c:229
-229     addb[bits / 8] &= ~((1 << (8 - bits % 8)) - 1);
+Please REJECT the following CVEs:
 
---
-Henri Salo
+
+CVE-2013-4528
+CVE-2013-4543
+
+CVE-2013-4417
+
+Thanks.
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSnPJ2AAoJEBYNRVNeJnmTXU4P+wVx5YT2m8a1J8cx3uusPyDN
+JTo3czgTkWWBG12Of+9T9LiV+RZVqJ64fnMUYUHuA5RRJRvAHKC6poQ/xpzp7P7G
+RTTDr1VEWNmLwMYMG+3DK/WylQegFMC981jJg2Q+NmGY2a2+SZ5WJQva0YBeTq66
+YqP+ElCmvuQocdCDFkvBUIh6eBppuiwqiI6G4411/bUgppbLQXs6k+w3+LVcQbTb
+dneCIw7a+E4zHYk6QQxU7oH5eNBFH5Euqcj4vZfHTs8tFjB0aXwL3b1q0oUrMeHU
+ozdFpIpiX0e139vnxp0GyCb6oLY2XNOWM6LwJWfVr/Y8U0nrdfSxM6EWs4CjZ44q
+7nN8JiOHauBKf1MUQ0em4yGFwtnNvgfdjx0yaci5UdQzdS0KSubTl7Ni4zLB3am8
+hCvYkyWhKK1OXYRt7SeFvI9YMh2tU8liBuJZxRzgZSWRTsIkffOtuZBqbQ/6Qz/c
+LLUbWN895gjupsPMa3xfprh7JEmkck5qjGJBHE+Bgg6KYdd/WYYS5FfxaWSiPbBL
+0yU1/F7lJYcMVPHCf5h2OPUJx1ugnh+Bm7MBuhG4agIgzut3MG8vj2RQDJPODmaV
+w3WmOafY3ugRgGr7NvSyH91d/Myeqve7PUoMJLrK8glq3Y3TCAWEHUdZEtq8yL4j
+4Gg4q4ZnC+NzAdTYC8Pa
+=Gr4s
+-----END PGP SIGNATURE-----
