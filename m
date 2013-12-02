@@ -1,64 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/02/6
-Message-ID: <51D33DA0.30505@redhat.com>
-Date: Tue, 02 Jul 2013 14:52:48 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/02/3
+Message-ID: <529CCE8C.6010005@redhat.com>
+Date: Mon, 02 Dec 2013 11:16:44 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Michael Samuel <mik@...net.net>
-Subject: Re: CVE Request: Ansible not caching SSH host keys
+To: oss-security@...ts.openwall.com, xen-devel@...ts.xen.org
+CC: "Xen.org security team" <security@....org>
+Subject: Re: Re: Xen Security Advisory 82 (CVE-2013-6885) - Guest triggerable AMD CPU erratum may cause host hang
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/30/2013 10:45 PM, Michael Samuel wrote:
-> http://www.ansibleworks.com/
+On 12/02/2013 10:22 AM, Ian Jackson wrote:
+> Xen.org security team writes ("Xen Security Advisory 82
+> (CVE-2013-6885) - Guest triggerable AMD CPU erratum may cause host
+> hang"):
+>> This issue was predisclosed under embargo by the Xen Project
+>> Security team, on the 27th of November.  We treated the issue as
+>> not publicly known because it was not evident from the public
+>> sources that this erratum constitutes a vulnerability
+>> (particularly, that it was a vulnerability in relation to some
+>> Xen configurations).
+>> 
+>> Since then, the fact that this CPU erratum is likely to
+>> constitute a security problem has been publicly disclosed, on the
+>> oss-security mailing list.
 > 
-> Problem: Default configuration does not cache SSH host keys,
-> effectively disabling host key checking
+> This is a reference to this message: 
+> http://www.openwall.com/lists/oss-security/2013/11/28/1
 > 
-> Note - do not credit me for finding this, I'm just the only person 
-> indignant enough to request a CVE
+> This was sent by MITRE as part of the CVE assignment.  It seems
+> likely to us (the Xen Project security team) that the CVE
+> assignment was a consequence of our embargoed predisclosure to
+> xen-security-issues.
 > 
-> A colleague found this bug, only to notice that it was logged by
-> somebody else (antong on github), and rejected: 
-> https://github.com/ansible/ansible/issues/857
+> The effect of this has been that we have had to end the embargo
+> early. I think there is room for discussion here about whether we
+> all did the right thing.  In particular:
 > 
-> This can be fixed by calling ssh.load_system_host_keys() after line
-> 78 of 
-> https://github.com/ansible/ansible/blob/496f06c3c90cfd89802622c640480328436746c6/lib/ansible/runner/connection_plugins/paramiko_ssh.py
->
->  While it is possible to call the SSH command instead of using
-> paramiko, this isn't the default and the ramifications of not
-> checking host keys aren't advertised to users.  A more reasonable
-> approach would be to document how to un-cache a host key should it
-> change.
-> 
-> Regards, Michael
+> * Should the Xen Project security te4am have treated this issue
+> with an embargo at all, given that the flaw itself was public ?
 
-Please use CVE-2013-2233 for this issue. After some thought I think it
-qualifies, host key caching is def. a security feature designed to
-prevent mitm (if you constantly hammer the user to check/accept keys
-at some point they'll just go "sure whatever, they must have changed
-something on the remote end).
+I would say this depends on the level of public disclosure. For
+example from "upstream" (AMD) there was a very limited disclosure (no
+public announcement I'm aware of) and just some notes in a single PDF.
+However this was also made public via the person who found it and then
+picked up by ZDnet in an article, so I would personally count that as
+quite public.
+
+> * Should we have anticipated that other software would be in a 
+> similar position and sent message(s) to some other suitable set of 
+> vendor(s) ?  Which vendors, and how ?
+
+Yes and no, with hardware obviously it's likely that other software
+will leave the bug exposed, the problem is finding all of it and
+notifying people is a very non trivial task.
+
+> * Should MITRE have been asked /not/ to publicly disclose the 
+> relationship between CVE-2013-6885 and AMD CPU erratum 793, until
+> the embargo ended ?
+
+That was my fault, I didn't think to ask them to handle this as a
+private assignment since the issue was quite public/old (see above).
+
+> * Were we right to treat MITRE's message as a trigger for
+> disclosure ?
+
+Don't know.
+
+> Thanks, Ian.
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR0z2gAAoJEBYNRVNeJnmTGvoP/0sanyVTjjjwTo/Jhf+aXDUX
-YTZvJgjQ7Eg4mrPg+voxAP0boYke4WaEps0J9H5CvMLAnq/o/LSdg6M5mZnCukcf
-fX8hdqdo5WZjhBO8y1lF7ozEc+CuWOKKtY221C4uI4Q8IZ9+2Ad70YwkauBTVzlN
-BIIRncBLfLmccDoQbGjWLwbKOqq1RXXsUR58a8rNj8TxmsYtNNNmUBUr5do69ytX
-mIDYtu/mtQLWZVAsKk+7oQu/4lWtoYNK4zTIzQTO04i7plPjLkSivTCAjvPhn9+W
-qXjTps+aEb6h/jEZC9fi6mtb6rBGIvRSZNxMaILso9x1N0Aqr6zdKzLOTWOVnaG5
-tcMXmArZePPeM6TGh+o3lLAH7NmmDDMkzoiHUow3ExhD5fnqM/KjTO1JM1u+W6J3
-r6XGqkjvlzHUQEIuVKcHGlSrAfgQ4Kz3lL9wNcrZnd/yYxxeJEAbjnJhfDyXKUHe
-BuxZWHKlWDebtZoFEtg1QICPKzW4VWwMISSdzu0iI9rZQoKivyTILvG8kB+oG/p/
-r8Y7cVfelATL4VvZeO7oXTDpuJlsrpkRr8qKvZL96d1GkCZrPIVznYy2qHAZSKr4
-V8psXCYzad3uwBM37Do3e21ysSkwypY7irFotBPIpccQChjAtAQOc339s66EXhW4
-9gea7LiuYO+VK5k4fKW8
-=hVHG
+iQIcBAEBAgAGBQJSnM6LAAoJEBYNRVNeJnmTX+kQANqW6JvY/c9IYcuVel8DD5+S
+5351tgVQkKfqVRqFT3R+azlTlk/Y2Kg/YTaqTSJmwQ/WtT61P3d8WKH2P9eD35OM
+9CCnL+xc5r60zMcEokvdxBPYvtSkhDHvy2hp2RtFmnrMbIHrSO9cs1vvu+j9L480
+ZR1rtrhNt7q/+I7Cpy++iOLtpARiBHDivKdpk47gsE3s/mVlhrAbQWA6Dl1TSJs2
+/ByUdsBUhwiwvhEALZrH+/ovqX52RwvCqmFPYfgLo1y+I1uk536NnV3qlcvU3gxP
+O4mtSQ6jGVzAnaiBHMYY6yVrPggB/WhxnWCmIaMQ3Taz/qYIyM5sGL2iljClvjsj
+WlT2Ve3KCZ7sOsiIAgZS31XST/Ey70xacs2FzzF74UUFCPbint1bEC2adlRQlMQG
+jBcVi9k+lFm/XUeRh8LorRyyMGutdnOMbsu3REjHRycjhc4U0hXunQLAJZbmqChY
+9lkrbkm2K6J0mrTIXZy2Y+Wl+kaWzdSMtUyU5QHHyqv3OAQbODH7Li0vxjwDT7/K
+iFQb4sPwUAUAWQTuZ/qloCJRTcFzVNIF97vPpOQVlGouTSTfUvQJ7NDY+Yta5RwM
+PzkJjPHDZvGVrK07jw5w1kpjj4C/RcopvZaW0dxc62N8RPE60HsTZ/rSmT2IP9yQ
+qPROKaphfmISa4AwZSTp
+=r3rU
 -----END PGP SIGNATURE-----
