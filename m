@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/1
-Message-ID: <20130225101349.GA392@openwall.com>
-Date: Mon, 25 Feb 2013 14:13:49 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/02/6
+Message-ID: <CAD3CanfhSatMstdbeZzFr=uAPDGxdmVE9dOHteyYA5EmcVDuVg@mail.gmail.com>
+Date: Tue, 3 Dec 2013 11:43:19 +1300
+From: Matthew Daley <mattd@...fuzz.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
+Cc: Xen-devel <xen-devel@...ts.xen.org>, "Xen.org security team" <security@....org>
+Subject: Re: Re: Xen Security Advisory 82 (CVE-2013-6885) - Guest triggerable AMD CPU erratum may cause host hang
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 24, 2013 at 10:10:45AM +0100, Mathias Krause wrote:
-> An unprivileged user can send a netlink message resulting in an
-> out-of-bounds access of the sock_diag_handlers[] array which, in turn,
-> allows userland to take over control while in kernel mode.
-> 
-> Patch (already in net/master):
-> http://thread.gmane.org/gmane.linux.network/260061
-> 
-> Affected versions:
-> v3.3 - v3.8
+On Tue, Dec 3, 2013 at 7:16 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+> On 12/02/2013 10:22 AM, Ian Jackson wrote:
+>> * Should the Xen Project security te4am have treated this issue
+>> with an embargo at all, given that the flaw itself was public ?
+>
+> I would say this depends on the level of public disclosure. For
+> example from "upstream" (AMD) there was a very limited disclosure (no
+> public announcement I'm aware of) and just some notes in a single PDF.
+> However this was also made public via the person who found it and then
+> picked up by ZDnet in an article, so I would personally count that as
+> quite public.
 
-Nice find!  Do you happen to know of distro backports of the affected
-code to older kernels?  When you wrote that the bug is "in there for
-ages", did you mean that 3.3 has been out "for ages" or something else?
+Can you post a link to this ZDnet article? I don't think it can be the
+one linked in the CVE description itself, because that talks about a
+different, earlier bug IIUC; I privately asked Matt Dillon, who
+discovered Errata 721, and he agreed that this CVE talks about a
+different (but maybe related) Errata, #793.
 
-> PoC is not attached this time but can be requested on demand. Hint:
-> Works well on Fedora 18, bypassing all mmap_min_addr checks. ;)
-
-SynQ posted a (different?) PoC here:
-
-https://rdot.org/forum/showthread.php?p=30828
-
-Apparently, high values of mmap_min_addr (like 131072) happen to work
-against this one, but they might not work against other attack vectors
-or/and kernel builds.  The bug is not a NULL+offset dereference, so
-mmap_min_addr was not supposed to help against its exploitation - it
-just happens to, sometimes.
-
-Alexander
+- Matthew
