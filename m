@@ -1,40 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/10
-Message-Id: <777A8DF3-2A37-46F8-A3B3-91595AC04CEF@thoughtbot.com>
-Date: Tue, 22 Oct 2013 16:18:05 -0400
-From: Jon Yurek <jyurek@...ughtbot.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/02/5
+Message-ID: <20131202212442.GX2523@redhat.com>
+Date: Mon, 2 Dec 2013 14:24:42 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Recursive Interpolation Vulnerability in Cocaine rubygem (CVE-2013-4457)
+Subject: CVE request: samba pam_winbind authentication fails open
 Content-Type: text/plain; charset=utf-8
 
-Recursive Interpolation Vulnerability in Cocaine rubygem
+Just cutting-and-pasting from the bug I just filed.  The following was
+reported to us, but had been reported upstream last year.
 
-There is a vulnerability interpolating variabled recursively in Cocaine. This vulnerability has been assigned the CVE identifier CVE-2013-4457
+It was reported [1] that Samba's pam_winbind module would fail open (allowing
+access) when the require_membership_of option is used as an argument to
+pam_winbind, and contains a non-existent group as the value.  In such a
+configuration, rather then failing and not permitting authentication which is
+what would be expected, pam_winbind will allow authentication to proceed.
 
-Versions Affected:  0.4.x, 0.5.1, 0.5.2
-Not affected:       0.3.x
-Fixed Versions:     0.5.3
+For instance, if the following is specified and the user is not a member of the
+group 'Admin', they will not obtain access to the system:
 
-Impact
-------
+auth        sufficient    pam_winbind.so use_first_pass require_membership_of=Admin
 
-Due to the method of variable interpolation in Cocaine 0.4.0 to 0.5.2, an attacker may be able to inject hostile commands into a command line via a crafted hash object which are not properly escaped.
+On the other hand, if the non-existent group 'AdminOops' is specified, the user
+is obviously not a member of said group, authentication will be permitted:
 
-The impact is lessened on Ruby version 1.8.* because hashed are not ordered by default, and so an attacker must rely on luck for the attack to work.
+auth        sufficient    pam_winbind.so use_first_pass require_membership_of=AdminOops
 
-An attack of this sort cannot take place if there is only one value being interpolated into the command line.
+The commit [2] that most likely introduced this flaw indicates that this was
+introduced October 2009 and another commit [3] looks like the fix, although
+that is for another bug [4] that's somewhat related to this issue and somewhat
+not.
 
-Users of the Paperclip gem are encouraged to upgrade to the latest version of Cocaine. Users of the 2.7 branch of Paperclip will not need to upgrade as the version of Cocaine it uses is not vulnerable to this attack.
+[1] https://lists.samba.org/archive/samba-technical/2012-June/084593.html
+[2] http://git.samba.org/?p=samba.git;a=commit;h=31f1a36901b5b8959dc51401c09c114829b50392
+[3] http://git.samba.org/?p=samba.git;a=commitdiff;h=f62683956a3b182f6a61cc7a2b4ada2e74cde243
+[4] https://bugzilla.samba.org/show_bug.cgi?id=8598
 
-Releases
---------
-Version 0.5.3 fixes the problem involved and is available at rubygems.org
 
-Credits
--------
+Could a CVE be assigned to this issue?
 
-Thanks to Holger Just for reporting this! 
-
---
-Jon Yurek
-http://thoughtbot.com
+-- 
+Vincent Danen / Red Hat Security Response Team 
