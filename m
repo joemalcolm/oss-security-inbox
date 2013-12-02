@@ -1,74 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/11/6
-Message-ID: <20130211182523.GB79156@higgins.local>
-Date: Mon, 11 Feb 2013 10:25:23 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
-Subject: Serialized Attributes YAML Vulnerability with Rails 2.3 and 3.0 [CVE-2013-0277]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/02/2
+Message-ID: <21148.49637.13497.191457@mariner.uk.xensource.com>
+Date: Mon, 2 Dec 2013 17:22:45 +0000
+From: Ian Jackson <Ian.Jackson@...citrix.com>
+To: <xen-devel@...ts.xen.org>, <oss-security@...ts.openwall.com>
+CC: Xen.org security team <security@....org>
+Subject: Re: Xen Security Advisory 82 (CVE-2013-6885) - Guest triggerable AMD CPU erratum may cause host hang
 Content-Type: text/plain; charset=utf-8
 
-Serialized Attributes YAML Vulnerability with Rails 2.3 and 3.0
+Xen.org security team writes ("Xen Security Advisory 82 (CVE-2013-6885) - Guest triggerable AMD CPU erratum may cause host hang"):
+> This issue was predisclosed under embargo by the Xen Project Security
+> team, on the 27th of November.  We treated the issue as not publicly
+> known because it was not evident from the public sources that this
+> erratum constitutes a vulnerability (particularly, that it was a
+> vulnerability in relation to some Xen configurations).
+> 
+> Since then, the fact that this CPU erratum is likely to constitute a
+> security problem has been publicly disclosed, on the oss-security
+> mailing list.
 
-There is a vulnerability in the serialized attribute handling code in Ruby on Rails 2.3 and 3.0, applications which allow users to directly assign to the serialized fields in their models are at risk of Denial of Service or Remote Code Execution vulnerabilities. This vulnerability has been assigned the CVE identifier CVE-2013-0277.
+This is a reference to this message:
+  http://www.openwall.com/lists/oss-security/2013/11/28/1
 
-Versions Affected:  2.3.x, 3.0.x and all earlier versions
-Not affected:       3.1.0 and Above
-Fixed Versions:     2.3.17
+This was sent by MITRE as part of the CVE assignment.  It seems likely
+to us (the Xen Project security team) that the CVE assignment was a
+consequence of our embargoed predisclosure to xen-security-issues.
 
-Impact 
------- 
-The +serialize+ helper in Active Record allows developers to store various objects serialized to a BLOB column in the database.  The objects are serialized and deserialized using YAML.  If developers allow their users to directly provide values for this attribute, an attacker could use a specially crafted request to cause the application to deserialize arbitrary YAML. 
+The effect of this has been that we have had to end the embargo early.
+I think there is room for discussion here about whether we all did the
+right thing.  In particular:
 
-Vulnerable applications will have models similar to this:
+ * Should the Xen Project security te4am have treated this issue with
+   an embargo at all, given that the flaw itself was public ?
 
-  class Post < ActiveRecord::Base
-    serialize :tags
-  end
+ * Should we have anticipated that other software would be in a
+   similar position and sent message(s) to some other suitable set of
+   vendor(s) ?  Which vendors, and how ?
 
-and will allow foreign input to be directly assigned to the serialized column like this:
+ * Should MITRE have been asked /not/ to publicly disclose the
+   relationship between CVE-2013-6885 and AMD CPU erratum 793,
+   until the embargo ended ?
 
-  post = Post.new
-  post.tags = params[:tags]
+ * Were we right to treat MITRE's message as a trigger for disclosure ?
 
-All users running an affected release should either apply one of the patches or use one of the work arounds immediately. 
-
-Releases 
--------- 
-The 2.3.17 release is available in the normal locations.
-
-In accordance with our maintenance policy, there will be no new release of Ruby on Rails 3.0 to address this vulnerability.  The patches included below have been pushed to the relevant branches in git.
-
-Workarounds 
------------ 
-To work around this issue, you must ensure that users cannot assign directly to the serialized column.  For example if you have a model Post which serializes an array of tags you should use attr_accessible to prevent attackers from changing these values directly:
-
-  class Post < ActiveRecord::Base
-    serialize :tags
-    # because :tags isn't included in the accessible list, it will be protected from assignment by attackers.
-    attr_accessible :title, :content
-  end
-
-Note: There are additional security concerns caused by allowing your users to directly provide values for a serialized attribute like this. You should consider making this change even if you apply the patches. 
-
-Patches 
-------- 
-To aid users who are still running 2.3 or 3.0, we have included patches against this vulnerability.  They are in git-am format and consist of a single changeset. 
-
-* 2-3-serialize.patch - Patch for 2.3 series 
-* 3-0-serialize.patch - Patch for 3.0 series 
-
-Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
-Credits 
-------- 
-Thanks to Tobias Kraze for reporting this issue to us and working with us on the fix.
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "2-3-serialize.patch" of type "text/plain" (3086 bytes)
-
-View attachment "3-0-serialize.patch" of type "text/plain" (2433 bytes)
-
-Content of type "application/pgp-signature" skipped
+Thanks,
+Ian.
