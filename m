@@ -1,33 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/9
-Message-ID: <20130821162603.GB4369@domone.kolej.mff.cuni.cz>
-Date: Wed, 21 Aug 2013 18:26:03 +0200
-From: Ondřej Bílka <neleai@...nam.cz>
-To: Stephen Röttger <stephen.roettger@...il.com>
-Cc: oss-security@...ts.openwall.com, gcc@....gnu.org
-Subject: Re: PoC: Function Pointer Protection in C Programs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/9
+Message-ID: <20131203190654.GA27953@higgins.local>
+Date: Tue, 3 Dec 2013 11:06:54 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2013-6414] Denial of Service Vulnerability in Action View
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 21, 2013 at 04:43:13PM +0200, Stephen Röttger wrote:
-> Hi everyone,
-> 
-> I'd like to present you my master's thesis "Malicious Code Execution
-> Prevention through Function Pointer Protection" [0] and its
-> proof-of-concept implementation [1] for the gcc+glibc and would
-> appreciate some feedback.
-> 
+Denial of Service Vulnerability in Action View
 
-> 
-> Performance:
-> Though my PoC implementation is not free of bugs, I was able to compile
-> an nginx webserver and have it serve static websites, which I used for a
-> performance evaluation. On my test system, the number of requests per
-> second that the nginx could was reduced to 96% compared to a nginx
-> without the scheme. Handling of a single request included 71 function
-> pointer calls in this case. (More details can be found in my thesis [0])
-> 
-What is performance impact for program that just qsorts big array? It
-looks like worst case scenario for me.
+There is a denial of service vulnerability in the header handling component of
+Action View. This vulnerability has been assigned the CVE identifier CVE-2013-6414.
 
-Well now when gcc-4.7 can resolve function pointers it is possible to
-create header to inline comparison but still.
+Versions Affected:  3.0.0 and all later versions
+Not affected:       2.3.x
+Fixed Versions:     4.0.2, 3.2.16
+
+Impact 
+------ 
+Strings sent in specially crafted headers will be cached indefinitely.  This
+can cause the cache to grow infinitely, which will eventually consume all
+memory on the target machine, causing a denial of service.  All users running
+an affected release should either upgrade or use one of the work arounds
+immediately. 
+
+Releases 
+-------- 
+The 4.0.2 & 3.2.16 releases are available at the normal locations. 
+
+Workarounds 
+----------- 
+Users who cannot upgrade may apply this monkey patch as an initializer to work around the issue:
+
+```
+ActiveSupport.on_load(:action_view) do
+  ActionView::LookupContext::DetailsKey.class_eval do
+    class << self
+      alias :old_get :get
+
+      def get(details)
+        if details[:formats]
+          details = details.dup
+          syms    = Set.new Mime::SET.symbols
+          details[:formats] = details[:formats].select { |v|
+            syms.include? v
+          }
+        end
+        old_get details
+      end
+    end
+  end
+end
+```
+
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
+
+* 3-0-header_dos.patch - Patch for 3.0 series 
+* 3-1-header_dos.patch - Patch for 3.1 series 
+* 3-2-header_dos.patch - Patch for 3.2 series 
+* 4-0-header_dos.patch - Patch for 4.0 series 
+
+Please note that only the 4.0.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+Credits 
+------- 
+Thanks to Toby Hsieh of SlideShare for reporting the issue to us
+
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "3-0-header_dos.patch" of type "text/plain" (1161 bytes)
+
+View attachment "3-1-header_dos.patch" of type "text/plain" (1161 bytes)
+
+View attachment "3-2-header_dos.patch" of type "text/plain" (964 bytes)
+
+View attachment "4-0-header_dos.patch" of type "text/plain" (978 bytes)
+
+Content of type "application/pgp-signature" skipped
