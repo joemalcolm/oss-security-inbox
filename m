@@ -1,22 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/17
-Message-ID: <51113C76.6040907@debian.org>
-Date: Tue, 05 Feb 2013 17:08:06 +0000
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/8
+Message-ID: <529E1AE2.5000809@canonical.com>
+Date: Tue, 03 Dec 2013 11:54:42 -0600
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE Assignment Notification] CVE-2013-0240 - Gnome Online Accounts (GOA) (previously) failed to verify SSL certificates when creating e.g. Windows Live or Facebook accounts
+CC: security <security@...ntu.com>, xorg_security@...rg
+Subject: CVE Request: xorg-server and pixman
 Content-Type: text/plain; charset=utf-8
 
-On 05/02/13 16:12, Jan Lieskovsky wrote:
->   it was found that Gnome Online Accounts (GOA)
-> did not perform SSL certificate validation, when
-> performing Windows Live and Facebook accounts creation.
-...
-> The CVE identifier of CVE-2013-0240 has been assigned
-> to this issue.
 
-Now that this is public, I've opened GNOME bug
-https://bugzilla.gnome.org/show_bug.cgi?id=693214 to track this bug and
-its fixes for the various available branches.
+Hi,
 
-    S
+This bug has been public since August but I could find a CVE for it:
+https://launchpad.net/bugs/1197921
+
+There are two bugs - Xorg can be made to crash and pixman can trigger the
+aformentioned Xorg crash. A simplified reproducer is in the pixman patches with
+another reproducer in the Launchpad bug. The xorg
+
+xorg-server - exa: only draw valid trapezoids
+The patch was submitted in October but doesn't seem to be applied yet, so I'm
+CC'ing xorg_security. Patch references the pixman f.d.o bug, but doesn't seem to
+have an associated xorg bug.
+http://patchwork.freedesktop.org/patch/14769/
+http://lists.x.org/archives/xorg-devel/2013-October/037996.html
+
+Pixman - Corrupted CustomShape crashes Xorg
+https://bugs.freedesktop.org/show_bug.cgi?id=67484
+Patch:
+ - 5e14da97f16e421d084a9e735be21b1025150f0c (fix)
+ - 2f876cf86718d3dd9b3b04ae9552530edafe58a1 (test case)
+
+Thanks!
+
+-- 
+Jamie Strandboge                 http://www.ubuntu.com/
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
