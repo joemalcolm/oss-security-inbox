@@ -1,50 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/15/5
-Message-ID: <1075211583.8128053.1363356499117.JavaMail.root@redhat.com>
-Date: Fri, 15 Mar 2013 10:08:19 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Mateusz ‘j00ru’ Jurczyk <j00ru.vx@...il.com>, "Gynvael \"GynDream\" Coldwind" <gynvael@...dwind.pl>
-Cc: oss-security@...ts.openwall.com
-Subject: Further issue details about flaws corrected in upstream ClamAV 0.97.7 version
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/15
+Message-ID: <529E52FD.5020802@redhat.com>
+Date: Tue, 03 Dec 2013 14:54:05 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+CC: rubyonrails-security@...glegroups.com, tenderlove@...y-lang.org, mattaimonetti@...il.com, clemens@...lway.at, svenfucks@...web-design.de, jose.valim@...il.com, stephan.soller@...ionweb.de, saimonmoore@...il.com, chris@...rish.com
+Subject: Re: Re: [CVE-2013-4491] Reflective XSS Vulnerability in Ruby on Rails
 Content-Type: text/plain; charset=utf-8
 
-Hello Mateusz, Gynvael, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  this is due the following ones:
-  [1] https://bugs.mageia.org/show_bug.cgi?id=9399
-  [2] http://blog.clamav.net/2013/03/clamav-0977-has-been-released.html
-  [3] https://github.com/vrtadmin/clamav-devel/blob/0.97/ChangeLog
+On 12/03/2013 02:32 PM, kpolitowicz@...onik.ca wrote:
+> Thanks. But what's the deal with I18n.enforce_available_locales ?
+> 
 
-I have tried to grep CLamAV's git log for further information, but many
-of the commits prior to 2013-02-20 have form of:
+That's a good question, the technical side of which I would point you at:
 
-'Fix CID#...' :(.
+http://rubygems.org/gems/i18n
 
-The only two security related ones seem to be the following two:
-commit b2212def1bb92b5ac45c82da100dc0d1376de6a3
-Author: Steve Morgan <smorgan@...rcefire.com>
-Date:   Thu Feb 14 18:29:53 2013 -0500
+The latest release fixes security stuff, however they don't do CVE
+announcements/ChangeLog anywhere I can see. Adding them to this email
+CC. Guys, if you need help drafting a security announcements I'd be
+glad to help.
 
-    cid 10776 - fix double free
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-commit 71990820d01c246e4e61408a3659dd9d92949b38
-Author: Ryan Pentney <rpentney@...rcefire.com>
-Date:   Fri Feb 15 03:10:50 2013 -0800
-
-    Fixed heap corruption in wwunpack.c
-
-We to be better able to tell, which concrete security flaws
-got corrected in 0.97.7 version and based on that to properly
-allocate CVE identifiers, could you please provide further
-information about:
-a) how many and what kind of issues got corrected in that
-   version?,
-b) links to relevant upstream patches? (since patch log telling
-   CID# wouldn't be enough either to find out the appropriate
-   commits).
-
-Thank you for your time, look && cooperation in advance.
-
-Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQIcBAEBAgAGBQJSnlL9AAoJEBYNRVNeJnmTylQQAMRM0bW7cvZXqGxdveD3Gtdf
+IV66MkWeHyMLQllhvUP5v0cc8yhIf5H2/wxC1OHMClfl7GMbCT/zE+yWGer2I7Vx
+FacFh1FpRIU+//FE/4480LgEzGukm/VIECAwgLv/IZEx9CprkQDpCvaE9UfKG+cm
+SGJYSEsFnfRuqJHY/oYTXBK/uRY6xQ0e8gr1LPV4nl3K+W8fHWeZUB+gRIb0GbZH
+6A4PIYYaY5TQRPhMf/kPclySefFiqiGaGW0v2D19wWIdrQVHSDWkeEGh228A7coR
+C32HKZEN/XM3EOGmv0hXfRRKeBMu0GsR0Yd7eoTAKmcpvAsJb6whyoogU0ejegPt
+BnArVapjgzzABM/qXSChrckIw9C5NVCLOnfl0JWiNuLGictGjPDFEKL51CM0uPRj
+LbSYbDgn4JxSOTQvSdoNE7XqqY5Ao34AEuv3NZZXwZ5qHTIPM6jHEeSPF5MJT3ZB
+jQ/iCszUbHIitgkT0Md9NHFv6Brb5LA2i7UoIzKralvnHfcwp+Rjnmtn5g6iGbYv
+Cggj07MnL3zCgcfpXUbLHJVvc4Cgp4TaJGViV2xp6pOkEcBpy0Qn6gI+8lNQlkBp
+UVDDtRKmAWB7xsBwClyxQpDTeOTIT1blwJgfmuap6WaeNzSxjaudtvJDv6Bfo/aZ
+v1oX/WY7gos+m5ixtDWi
+=adoO
+-----END PGP SIGNATURE-----
