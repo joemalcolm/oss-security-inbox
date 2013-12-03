@@ -1,64 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/21/4
-Message-ID: <51C4773A.8010700@redhat.com>
-Date: Fri, 21 Jun 2013 09:54:34 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Axel Beckert <abe@...ian.org>, Nico Golde <nion@...ian.org>, "W. Martin Borgert" <debacle@...ian.org>
-Subject: Re: CVE Request -- tpp: Possibility of arbitrary code execution when processing untrusted TPP template
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/4
+Message-ID: <CA+55aFx2wO3PBrFrCB-dy1QTjJc1MhvNkuUZpUf8jK2FNde+1w@mail.gmail.com>
+Date: Mon, 2 Dec 2013 19:44:53 -0800
+From: Linus Torvalds <torvalds@...ux-foundation.org>
+To: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
+Cc: "Hans J. Koch" <hjk@...sjkoch.de>, Nico Golde <oss-security+ml@...lde.de>,  oss-security@...ts.openwall.com, "security@...nel.org" <security@...nel.org>,  Dan Carpenter <dan.carpenter@...cle.com>
+Subject: Re: kernel: uio: CVE-2013-6763 [was: Re: some unstracked linux kernel security fixes]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 06/21/2013 02:09 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> A security flaw was found in the way tpp, a ncurses-based
-> presentation tool, processed TPP templates containing --exec clause
-> (input provided as an argument of the --exec clause would be
-> immediately executed without requesting a second confirmation from
-> the user). A remote attacker could provide a specially-crafted text
-> presentation program (TPP) template that, when processed with the
-> tpp binary would lead to arbitrary code execution with the
-> privileges of the user running the tpp executable.
-> 
-> References: [1]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=706644 [2]
-> http://patch-tracker.debian.org/patch/series/view/tpp/1.3.1-3/15-optional-exec.patch
+On Mon, Dec 2, 2013 at 7:40 PM, Greg Kroah-Hartman
+<gregkh@...uxfoundation.org> wrote:
+> On Tue, Nov 26, 2013 at 01:18:39PM +0100, Petr Matousek wrote:
+>> >
+>> > IOW, with the current changes, isn't the functionality broken for
+>> > non page-aligned addr and/or size?
 >
-> 
-(Debian distribution patch)
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=976684
-> 
-> Upstream patch / GitHub link: [4]
-> https://github.com/xtaran/tpp/commit/350aafbd9a3256f6d479dacb9740bf3f0b9a3fc3
->
->  Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
+> This should now be fixed in Linus's tree, right?
 
-Please use CVE-2013-2208 for this issue.
+Well, that depends on what you mean by "fixed".
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+If somebody depended on "we'll just mmap the page(s) that contained
+the partial and unaligned resource", then current git is very very
+broken, because it doesn't allow that at all.
 
-iQIcBAEBAgAGBQJRxHc6AAoJEBYNRVNeJnmTwrAP/jrtBpw2jTSLeN/nPd23k0B1
-DhSGpu/73H+7d/h6ZQHC46mKU0u4jthsKOYlpyb0NN0QkTQSWvCEKPL5DoaGkpMp
-ZSr+k0aFfyZxSrUn12L+Of2T5/CBFIUkyYpJPQpIomcSYAH2JtCLuXhJ2ox0oc5R
-oK0g4EKrtH1CUXwXHS5MNvJjh4vajghPRucFRu4oMQjf3ETL1mgk/vrtKGAhUWyd
-sA4cgyXziWsYxl9PAobi6ftrAfNKUSy003hzg+i6A+xzmnvWsFFeklsYjolBLWlN
-wIbeF4H52z2mlvF+kk6M1EQ8fijxry1Y85HYq53vAaevsoibPQ5cDdWm35bYEnZL
-mToJ+2+xV/07yxSg6MgR8F2BTfk94pxGgSzRmq7i5UpxDre78Lu8bCKLJIjKDayy
-44p4cN7yroZtDfvelx96pqbrPS0dkwOynwFF2XE4yr6bcDR3M29dLnP70ybMd8ua
-v3jJOineQUZsAkm/BkC3eArtsE2dYO6RZCgyZHzP+fUbI45Z7lJ013oI6ssISiM2
-9/Z1OpL5TCJwF2veC1KpYyUVbQOcmxzQEw1EB3jMudC8fGCnKD6VfPhekl0cDIeF
-gu8txEzUBk5ZRJ1H3fo77SWG+nz2ltCq7NAHDvgJ100FXoKa0ehV7PIbH8njl9E+
-4qyMwAzWb9AnHFEorgVL
-=anQ1
------END PGP SIGNATURE-----
+But if you meant that somebody could mess with things and try to
+access crud *around* a non-page-aligned resource, then current git
+fixed that and no longer allows mmap's that expose other resources
+aside from the one explicitly managed by uio.
+
+          Linus
