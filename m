@@ -1,38 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/18/7
-Message-Id: <CCC10610-064F-48A5-961B-E2A9C9F66FA0@redhat.com>
-Date: Wed, 18 Dec 2013 12:58:17 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE already assigned for 1026891?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/7
+Message-ID: <529D7218.60800@redhat.com>
+Date: Mon, 02 Dec 2013 22:54:32 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: SNMPD DoS #2411 snmpd crashes/hangs when AgentX subagent times-out
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Dec 18, 2013, at 12:43 PM, cve-assign@...re.org wrote:
+Just cleaning out old email, ran across this:
 
-> Signed PGP part
-> http://www.openwall.com/lists/oss-security/2013/12/18/3 raises the
-> question of whether there is a CVE assignment in
-> https://bugzilla.redhat.com/show_bug.cgi?id=1026891 already, in order
-> to avoid a duplicate assignment. Our guess is that security issues
-> tracked privately by Red Hat typically do have pre-assigned CVE IDs,
-> so MITRE will delay a CVE assignment indefinitely.
-> 
-> Although it would be great to know what CVE ID you have assigned,
-> replying with something like "yes, it has a CVE ID, but it's only
-> being shared with the embargo audience" would be quite useful as well.
+http://sourceforge.net/p/net-snmp/bugs/2411/
 
-There is a CVE assigned to this, but based on what Sebastian wrote, I can’t tell if it’s the same issue so I’m hesitant to say what the CVE is in case it does end up being different.
+It's a DoS, requires authenticated access but snmpd is often used to
+monitor a lot of systems not always under your direct control (e.g.
+read only access). I'm inclined to assign a CVE unless someone objects
+strongly.
 
-Sebastian, can you give me access to your bug?  Or did you intend to make it public?  I’m assuming that since you are asking about a CVE here, you maybe did not mean to keep it private?  Your other message said your bug contained upstream URLs (so maybe even pasting those here would be helpful).
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-Once I can look at it, I can let you know for sure whether or not it is the same issue (and should then use the same CVE).
-
-Thanks.
-
-— 
-Vincent Danen / Red Hat Security Response Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (671 bytes)
+iQIcBAEBAgAGBQJSnXIYAAoJEBYNRVNeJnmT87AQAJr9IATEMbyfD8FZmoiuu7MK
+5HmsknSMS3bFzMFuG9G0S9APCsO25tX9w6+6hBR8T4hPsjlhhs2ADv78QxCf4bkT
+7/bD2tDbI2GUM2vJUbdgZWQsOgxI9EX+Lzk6uJ4NN2rcUj+p19LJknbNe0Wv/bLb
+QcQCUM6bOPnZ19u1Z429dJl4vi7C18TjGjePA6YjxUA2oNALYD/Uurh4GZLFerUh
++Q/Zi1JuApZsat96X+qgY0SOjiG1uEcg9pVKMcohilqTqXjaIJiOqi+bEsdDnVeC
+8Zrv715Zl2uG2sH+2KQQVbR707Hcwk2YF2BAEBAZWqGyWZxEt9DkLuYevJGs/dUG
+Ideat5GqHIyBq5N3cWuKhN+/Vc+7c4hTZZxrY2IMmeBfWuW+lUTDR7pmOal2Jbmt
+XYcaNLGLh/vx+OegTmpGHGas48CesTnw/y/iayHulYSP0dqwgVfvGxGNn9SxSv7P
+B+D+5pThDavtQsv5CBMmYiZ936zWlfd+ImNlqLiGDVTTdiTc+ikhIVvqkSGUSFHx
+obXWg1sjqAJdmSv5SaM+gRa2qLeJDgd21N8iKOxNHFjFe7TD02OaOaxUfPj6Krax
+JOTfd3eCDLJCmrqF26x2gi7IAYVmBLhp7cM+PWBVrEAY0E9IyChk495EgDM0uE38
+K9xD2tNTOGVMfIUCkhsa
+=AAvE
+-----END PGP SIGNATURE-----
