@@ -1,56 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/25
-Message-ID: <51AF91A7.6020105@redhat.com>
-Date: Wed, 05 Jun 2013 13:29:43 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: P J P <ppandit@...hat.com>
-Subject: Re: CVE request: kernel: cpqarray/c: info leak in ida_locked_ioctl()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/11
+Message-ID: <20131203190853.GC27953@higgins.local>
+Date: Tue, 3 Dec 2013 11:08:53 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2013-6415] XSS Vulnerability in number_to_currency
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+XSS Vulnerability in number_to_currency
 
-On 06/05/2013 01:23 AM, P J P wrote:
->   Hello
-> 
-> A Linux kernel built with the Compaq SMART2(CONFIG_BLK_CPQ_DA) & Compaq
-> Smart Array 5xxx(CONFIG_BLK_CPQ_CISS_DA) support is vulnerable to an
-> information leakage flaw. This could occur while doing an ioctl(2) calls
-> on the block device with command `IDAGETPCIINFO' or `CCISS_PASSTHRU32'.
-> 
-> A user/program could use this flaw to leak kernel memory bytes.
-> 
-> Upstream fixes:
-> ---------------
->  -> https://lkml.org/lkml/2013/6/3/131
->  -> https://lkml.org/lkml/2013/6/3/127
-> 
-> 
-> Thank you.
-> -- 
-> Prasad J Pandit / Red Hat Security Response Team
-> DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+There is an XSS vulnerability in the number_to_currency helper in Ruby on Raile. This vulnerability has been assigned the CVE identifier CVE-2013-6415.
 
-Please use CVE-2013-2147 for this issue.
+Versions Affected:  All.
+Fixed Versions:     4.0.2, 3.2.16.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Impact 
+------ 
+The number_to_currency helper allows users to nicely format a numeric value. One of the parameters to the helper (unit) is not escaped correctly.  Application which pass user controlled data as the unit parameter are vulnerable to an XSS attack.
 
-iQIcBAEBAgAGBQJRr5GnAAoJEBYNRVNeJnmTOf8P/jZiOBCDRD9bDSQle2cemDNf
-AjOShewC5mn0cL/ttxIboMj5P2MPBfxLAJdUG9Mpv3Q6dekoj21n24uIUBe1K3ih
-xoYLmm6akHRj9CdmK7g8iqCsdGFu+QTdcbUUOa6zZK38+UJWfYSn4m7pliPvpwtT
-YN4j7456gDTAsXkgykdhVqdhG5HuyatOL1oc/5fcPX8mucHpG5zfsPqlgmPSuuC7
-DermoQhEiGEn3hcctwK/MAuc0ueOs/QYTfqt14SocdjOLZ5dDjneSxO6obUc4Oqu
-rIBYU/y+H2bbrUTI0dUIy0zwtoPI9Pji0jDm0vK7dckYUr8xSkeZpwKVIXLkih/N
-lcoipvd6PNDPN9pgST9zRQeLCUCbsmlrRktLEIG5McsjP5Qx0tsHkszx3HNtpAIK
-/mE1TFIYcn+M1EaaCByjiMsxEdQJZpBZaUfNJIb5ZvpKgEAfhD0ujf6QYtaOoI/6
-jedSCx7b8M1RzPzQMJrrAzHHqRJRGkOPHhoTDWqyIlvHdfRlSF47wvLiaCTq4d2y
-7QuCgwHEs2o801jCqNB4dCgnvIId5h031aD9GOOCCYaN5WctmqvdHL34ao9XkLlP
-Q0zlFxHd5CPuWAz9+kzyvXzcylggJGnTQPpyfJJP9GzFL5Z0ryAI22NPEZNoN/9V
-pZa2vljtmGQYQvfSzHlS
-=5B0a
------END PGP SIGNATURE-----
+All users passing user controlled data as number_to_currency's unit parameters should either upgrade or use one of the workarounds immediately. 
+
+Releases 
+-------- 
+The 4.0.2 and 3.2.16 releases are available at the normal locations. 
+
+Workarounds 
+----------- 
+
+The workaround for this issue is to escape the value passed to the :unit parameter.  For example, replace code like this:
+
+  <%= number_to_currency(1.02, unit: params[:currency]) %>
+
+With code like this
+
+  <%= number_to_currency(1.02, unit: h(params[:currency])) %>
+
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
+
+* 4-0-number_to_currency_xss.patch - Patch for 4.0 series 
+* 3-2-number_to_currency_xss.patch - Patch for 3.2 series 
+
+Please note that only the 4.0.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+Credits 
+------- 
+
+Thanks to Ankit Gupta for reporting the issue to us and working with us on a fix.
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "3-2-number_to_currency_xss.patch" of type "text/plain" (2897 bytes)
+
+View attachment "4-0-number_to_currency_xss.patch" of type "text/plain" (2249 bytes)
+
+Content of type "application/pgp-signature" skipped
