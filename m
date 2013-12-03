@@ -1,30 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/01/1
-Message-ID: <20130901070155.08b17abd@hboeck.de>
-Date: Sun, 1 Sep 2013 07:01:55 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE request: serendipity before 1.7.3 XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/1
+Message-id: <2D2EC044-77F8-4B63-8966-8DA6CE8051A0@me.com>
+Date: Mon, 02 Dec 2013 19:13:14 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Command injection vulnerability in Ruby Gem sprout 0.7.246
 Content-Type: text/plain; charset=utf-8
 
-Serendipity blog software contains an XSS in the shipped
-htmlarea-code for spell checking.
+Title: Command injection vulnerability in Ruby Gem sprout 0.7.246
 
-Vulnerability report:
-http://osvdb.org/87395
-Upstream confirmation:
-http://blog.s9y.org/archives/250-Serendipity-1.7.3-released.html
-Git commit:
-https://github.com/s9y/Serendipity/commit/d7dbe7757371c7f25a39463d1b924604785ae475
+Download: http://rubygems.org/gems/sprout, http://projectsprouts.org/
 
-Please assign CVE.
+Vulnerability:
 
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
+The unpack_zip() function contains the following code:
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+sprout-0.7.246/lib/sprout/archive_unpacker.rb
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+60           zip_dir = File.expand_path(File.dirname(zip_file))
+61           zip_name = File.basename(zip_file)
+62           output = File.expand_path(dir)
+63           # puts ">> zip_dir: #{zip_dir} zip_name: #{zip_name} output: #{output}    "     
+64           %x(cd #{zip_dir};unzip #{zip_name} -d #{output})
+
+
+If the attacker can control zip_dir, zip_name or output then they can possibly 
+execute shell commands by injecting shell meta characters as input. 
+
+
+PoC:
+
+For example: filename;id;.zip
+
+I contacted the developer a few weeks ago but received no response.
+
+
+Thanks!
+Larry W. Cashdollar
+@_larry0
+http://vapid.dhs.org/advisories/
