@@ -1,36 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/8
-Message-ID: <CALi+ztHfzHKzPRO6JaHXTohM9j5h+WYR0gW+sYgaysU7Aahq7g@mail.gmail.com>
-Date: Wed, 9 Oct 2013 22:43:47 -0700
-From: Chris Palmer <snackypants@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: timo.warns@...il.com, cdfrey@...rsquare.net
-Subject: Re: Integer overflow in libtar (<= 1.2.19)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/12
+Message-ID: <20131203190945.GD27953@higgins.local>
+Date: Tue, 3 Dec 2013 11:09:45 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2013-6417] Incomplete fix to CVE-2013-0155 (Unsafe Query Generation Risk)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 9, 2013 at 9:36 PM, Huzaifa Sidhpurwala <huzaifas@...hat.com> wrote:
+Incomplete fix to CVE-2013-0155 (Unsafe Query Generation Risk)
 
-> http://repo.or.cz/w/libtar.git/commit/45448e8bae671c2f7e80b860ae0fc0cedf2bdc04
+The prior fix to CVE-2013-0155 was incomplete and the use of common 3rd party libraries can accidentally circumvent the protection. This vulnerability has been assigned the CVE identifier CVE-2013-6417.
 
-I haven't read all the ultimate callees, but it might be that some
-internal/external APIs should change too. If these:
+Versions Affected:  All.
+Not affected:       None
+Fixed Versions:     4.0.2 & 3.2.16
 
-146 /* macros for reading/writing tarchive blocks */
-147 #define tar_block_read(t, buf) \
-148     (*((t)->type->readfunc))((t)->fd, (char *)(buf), T_BLOCKSIZE)
-149 #define tar_block_write(t, buf) \
-150     (*((t)->type->writefunc))((t)->fd, (char *)(buf), T_BLOCKSIZE)
+Impact 
+------
+Due to the way that Rack::Request and Rails::Request interact, it is possible for a 3rd party or custom rack middleware to parse the parameters insecurely and store them in the same key that Rails uses for its own parameters.  In the event that happens the application will receive unsafe parameters and could be vulnerable to the earlier vulnerability.
 
-boil down to functions that implement the same interface as read(2)
-and write(2), and it sure seems like it, then the |int i| in this:
+All users running an affected release should either upgrade or use one of the work arounds immediately. 
 
- int
- th_read(TAR *t)
- {
--       int i, j;
--       size_t sz;
-+       int i;
-+       size_t sz, j, blocks;
-        char *ptr;
+Releases 
+-------- 
+The 4.0.2 & 3.2.16 releases are available at the normal locations. 
 
-— and the callees, and their declared interfaces — should use ssize_t, not int.
+Workarounds 
+-----------
+To work around this issue you need to audit your middleware chain and ensure that each of the libraries in use does not create an instance of Rack::Request. 
+
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
+
+* 4-0-rack-params.patch - Patch for 4.0 series 
+* 3-2-rack-params.patch - Patch for 3.2 series 
+
+Please note that only the 4.0.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+Credits 
+------- 
+Thanks to Sudhir Rao for reporting the issue to us and to James Tucker for assisting with the fix.
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "3-2-rack-params.patch" of type "text/plain" (2718 bytes)
+
+View attachment "4-0-rack-params.patch" of type "text/plain" (2810 bytes)
+
+Content of type "application/pgp-signature" skipped
