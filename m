@@ -1,64 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/7
-Message-ID: <20130304035254.GC1274@kroah.com>
-Date: Mon, 4 Mar 2013 11:52:54 +0800
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: handling of Linux kernel vulnerabilities (was: CVE request - Linux kernel: VFAT slab-based buffer overflow)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/13
+Message-ID: <20131203191037.GE27953@higgins.local>
+Date: Tue, 3 Dec 2013 11:10:37 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2013-6416] XSS Vulnerability in simple_format helper
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 04, 2013 at 06:57:23AM +0400, Solar Designer wrote:
-> Greg,
-> 
-> Note that I am not even asking you to reconsider.  I have little hope
-> that you would, as you appeared to have a firm opinion on this.
-> I merely mentioned this aspect, with no intent to prompt a discussion of
-> it.  That said, I've commented inline, just to clear up your confusion.
+XSS Vulnerability in simple_format helper 
 
-Thanks for doing this.
+There is a vulnerability in the simple_format helper in Ruby on Rails. This vulnerability has been assigned the CVE identifier CVE-2013-6416.
 
-> > You bring up a bunch of issues that
-> > the distros need to consider, what can the Linux kernel security team do
-> > differently?
-> 
-> Post to oss-security on commit day.
+Versions Affected:  4.0.0 & 4.0.1
+Not affected:       Versions prior to 4.0
+Fixed Versions:     4.0.2
 
-You know why we will not do that, sorry.
+Impact 
+------ 
+The simple_format helper converts user supplied text into html text which is intended to be safe for display.  A change  made to the implementation of this helper means that any user provided HTML attributes will not be escaped correctly.  As a result of this error, applications which pass user-controlled data to be included as html attributes will be vulnerable to an XSS attack.
 
-> Optionally, also notify linux-distros a few days before the commit.
+All users running an affected release and passing user-controlled html attributes to simple_format should either upgrade or use one of the work arounds immediately. 
 
-We don't usually have "days" before things are committed.  We find out
-about a problem, we make up a fix, and it is committed.  Usually all
-within 1-2 days.  Sometimes things take longer to fix, but usually it's
-prettty fast.
+Releases 
+-------- 
+The 4.0.2 release is available at the normal locations. 
 
-> > > Overall, I think we should bite the bullet and accept sko's
-> > > notifications to linux-distros, with a grace period of up to 7 days.
-> > > Whenever a distro is ready to release an update, they should be able to
-> > > insist on doing so within another 1 day, even if the initially planned
-> > > grace period would expire later.  Would sko be OK with this?  Greg?
-> > 
-> > Again, I don't think anyone that is part of security@...nel.org minds
-> > about having the issues publicized, after linux-distro has their time
-> > to get things fixed and to their users.  If the linux-distro people care
-> > about that, that does not seem to be a security@...nel.org group issue,
-> > right?
-> 
-> Right, but since you previously refused to notify oss-security right
-> away, I thought that you could possibly stipulate that you'd only keep
-> notifying linux-distros if the linux-distros folks keep the issues from
-> hitting oss-security for at least a certain amount of time, or at least
-> until fixes are available (from at least one distro? from all?), or
-> whatever.  If you're fine with letting linux-distros decide on this
-> fully on their own, and you would not stop notifying linux-distros if
-> you deem that they fully-disclose the issues publicly "too soon", that's
-> great (and logical)!
+Workarounds 
+----------- 
+To work around this issue, take care to escape any user provided data before passing it to simple_format.  For example, instead of:
 
-As far as I am concerned, I trust linux-distros to manage this in a sane
-and proper manner, and they can notify the world when they decide to do
-so.  If that trust is somehow broken, we can revisit the issue in the
-future.
+  simple_format(some_text, class: params[:class])
 
-thanks,
+You should use
 
-greg k-h
+  simple_format(some_text, class: h(params[:class]))
+
+
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided a patch for the 4.0 release series.  It is in git-am format and consists of a single changeset. 
+
+* 4-0-simple_format_xss.patch - Patch for 4.0 series 
+
+Please note that only the 4.0.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+Credits 
+------- 
+Thanks to Kevin Reintjes for reporting the vulnerability to us and helping us work on a fix.
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "4-0-simple_format_xss.patch" of type "text/plain" (1137 bytes)
+
+Content of type "application/pgp-signature" skipped
