@@ -1,47 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/18
-Message-ID: <512BD0E6.9030800@redhat.com>
-Date: Mon, 25 Feb 2013 14:00:22 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: skunkweb world-readable logdir
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/10
+Message-ID: <20131203190800.GB27953@higgins.local>
+Date: Tue, 3 Dec 2013 11:08:00 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2013-4491] Reflective XSS Vulnerability in Ruby on Rails
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Reflective XSS Vulnerability in Ruby on Rails
 
-On 02/24/2013 11:45 AM, Agostino Sarubbo wrote:
-> skunkweb, a robust Python web application server, produces a
-> world-readable log.
-> 
-> # ls -la /var/log/skunkweb/sw.log -rw-r--r-- 1 skunkweb skunkweb
-> 4529 Feb 24 19:41 /var/log/skunkweb/sw.log
-> 
-> The development seems dead. Upstream site:
-> http://skunkweb.sourceforge.net/
-> 
+There is a vulnerability in the internationalization component of Ruby on Rails. Under certain common configurations an attacker can provide specially crafted input which will execute a reflective XSS attack.  This vulnerability has been assigned the CVE identifier CVE-2013-4491.
 
-This is not maintained/used much, not assigning a CVE for now.
+Versions Affected:  3.0.6 and all later versions.
+Not affected:       3.0.5 and earlier 3.0.x versions.
+Fixed Versions:     4.0.2, 3.2.16.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+The root cause of this issue is a vulnerability in the i18n gem which has been assigned the identifier CVE-2013-4492. For this reason applications are also not affected if they have upgraded to the following i18n versions: 
+* i18n-0.6.6 for Rails 4.0.x and 3.2.x applications
+* i18n-0.5.1 for Rails 3.1.x and 3.0.x applications
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Impact 
+------ 
+When the i18n gem is unable to provide a translation for a given string, it creates a fallback HTML string.  Under certain common configurations this string can contain user input which would allow an attacker to execute a reflective XSS attack.
 
-iQIcBAEBAgAGBQJRK9DmAAoJEBYNRVNeJnmTOo0P/RjyKdNoYacl23sSapKWCumQ
-i0TwRj0A9q2jcJJ4xKiKrMmfqhL7OAZuvyWz1Pm3KuzQdxhZ3Sne1rRy4501Bp+4
-TkREQOv50SByHEdozarM3Z5Nos5ysknW4yJIJtCHCFatAxPt0Ksizd+LLeQf7ic7
-wSOOzFJPxkRORlTU118+iO+CwWUokuPGxPLiYBFTNtWYCRb+GUH+CdsP+qq64dHa
-aWhFouUaCvl+M4uwkSwEAzhe1d4L7BpiRmffJVZKW+ELRkcEyXh1lq848Y8qhBOX
-st59h+SJ9NIXrsvO6CSFcHmM2Xk1+sqGLBIZybWUJmn740HVlrE1UdruGE3XUlG1
-q3oDBLkUuMb9G0OnsnQjxBzgFRIAemOa7Muv2Lpa7O9PNKJAzcare1Kh+tKfqFrM
-QocRESKgXmssg+I+bo8/qOTRNTvnFO2mvogZVqunqFgVOQto3xxq0f8xCVbQh20+
-FASnNx59qcEnmPSrxCKfU/Q2WbiF0A48Oobm+8W1zs/6duiqaX0twswSYcmFMcOE
-HWonorW8JqMQ6dRbjahcOI9Xo6Gr25yFQN511XcUvukz6kX1SdERo4fMPVup6YKZ
-kouTdcyjSNGgHCnCJZ71/ywaSsos3oTdPC6IaWEevC9vzPrwyevN+4cKoFOOSiT2
-XwMMxurOOpzoFEAfMxx2
-=as7y
------END PGP SIGNATURE-----
+All users running an affected release should either upgrade or use one of the workarounds immediately. 
+
+Releases 
+-------- 
+The 4.0.2 and 3.2.16 releases are available at the normal locations. 
+
+Workarounds 
+----------- 
+To work around this issue you must replace the standard i18n exception handler with a fixed one.  Place the following code into a file in the config/initializers directory of your project and restart the server.
+
+  require 'i18n'
+
+  # Override exception handler to more carefully html-escape missing-key results.
+  class HtmlSafeI18nExceptionHandler
+    Missing = I18n.const_defined?(:MissingTranslation) ? I18n::MissingTranslation : I18n::MissingTranslationData
+
+    def initialize(original_exception_handler)
+      @original_exception_handler = original_exception_handler
+    end
+
+    def call(exception, locale, key, options)
+      if exception.is_a?(Missing) && options[:rescue_format] == :html
+        keys = exception.keys.map { |k| Rack::Utils.escape_html k }
+        key = keys.last.to_s.gsub('_', ' ').gsub(/\b('?[a-z])/) { $1.capitalize }
+        %(<span class="translation_missing" title="translation missing: #{keys.join('.')}">#{key}</span>)
+      else
+        @original_exception_handler.call(exception, locale, key, options)
+      end
+    end
+  end
+
+  I18n.exception_handler = HtmlSafeI18nExceptionHandler.new(I18n.exception_handler)
+
+This initializer has also been attached to this message as html_safe_i18n_exception_handler.rb
+
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
+
+* 4-0-i18n_xss.patch - Patch for 4.0 series 
+* 3-2-i18n_xss.patch - Patch for 3.2 series 
+
+Please note that only the 4.0.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+Credits 
+------- 
+Thanks to Peter McLarnan of Matasano Security for reporting the issue to us, and to Sven Fuchs and Christopher Dell for working with us on the fix.
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "3-2-i18n_xss.patch" of type "text/plain" (3891 bytes)
+
+View attachment "4-0-i18n_xss.patch" of type "text/plain" (3863 bytes)
+
+Content of type "application/pgp-signature" skipped
