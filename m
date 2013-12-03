@@ -1,38 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/2
-Message-ID: <20131021060427.GA4086@pisco.westfalen.local>
-Date: Mon, 21 Oct 2013 08:04:28 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: CVE request: echoping buffer overflow vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/3
+Message-ID: <20131203034029.GA8807@kroah.com>
+Date: Mon, 2 Dec 2013 19:40:29 -0800
+From: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
+To: "Hans J. Koch" <hjk@...sjkoch.de>, Nico Golde <oss-security+ml@...lde.de>, oss-security@...ts.openwall.com, security@...nel.org, Dan Carpenter <dan.carpenter@...cle.com>
+Subject: Re: kernel: uio: CVE-2013-6763 [was: Re: some unstracked linux kernel security fixes]
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 18, 2013 at 10:35:18PM -0600, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+On Tue, Nov 26, 2013 at 01:18:39PM +0100, Petr Matousek wrote:
+> Adding Greg as he's also UIO maintainer (at least according to
+> MAINTAINERS).
 > 
-> On 10/17/2013 05:18 AM, Sergey Popov wrote:
-> > Echoping 6.0.2 and before contains several buffer overflow 
-> > vulnerabilities that can lead to execution of arbitrary code on
-> > the system or cause the application to crash.
+> On Thu, Nov 14, 2013 at 05:52:12PM +0100, Petr Matousek wrote:
+> > On Thu, Nov 14, 2013 at 04:25:39PM +0300, Dan Carpenter wrote:
+> > > On Thu, Nov 14, 2013 at 11:33:10AM +0100, Petr Matousek wrote:
+> > > > On Tue, Nov 12, 2013 at 11:10:32AM +0100, Petr Matousek wrote:
+> > > > > Hi,
+> > > > > 
+> > > > > On Sun, Nov 03, 2013 at 05:32:52PM +0100, Nico Golde wrote:
+> > > > > > drivers/uio/uio.c: mapping of physical memory to user space without proper size check
+> > > > > > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7314e613d5ff
+> > > > > 
+> > > > > there is a size check in uio_mmap() (the only caller of uio_mmap_physical()):
+> > > > > 
+> > > > >         requested_pages = vma_pages(vma);
+> > > > >         actual_pages = ((idev->info->mem[mi].addr & ~PAGE_MASK)
+> > > > >                         + idev->info->mem[mi].size + PAGE_SIZE -1) >> PAGE_SHIFT;
+> > > > >         if (requested_pages > actual_pages)
+> > > > >                 return -EINVAL;
+> > > > > 
+> > > > > why it wasn't sufficient?
+> > > > 
+> > > > Apparently there was a CVE split [1] and this is now CVE-2013-6763.
+> > > > 
+> > > >   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6763
+> > > > 
+> > > > I still think this is a non-issue based on the above mentioned size
+> > > > check. Can I please get second opinion from someone more knowledgeable
+> > > > on this?
+> > > > 
+> > > >
+> > > 
+> > > Added Hans to the CC list since he's the maintainer.  Petr is asking if
+> > > the size checks in uio_mmap() and uio_mmap_physical() are duplicative.
+> > > 
+> > > > Isn't the size check redundant because of 
+> > > > 
+> > > >         requested_pages = vma_pages(vma);
+> > > >         actual_pages = ((idev->info->mem[mi].addr & ~PAGE_MASK)
+> > > >                         + idev->info->mem[mi].size + PAGE_SIZE -1) >> PAGE_SHIFT;
+> > > >         if (requested_pages > actual_pages)
+> > > >                 return -EINVAL;
+> > > 
+> > > That check is worrying requested_pages is rounded down to the nearest
+> > > page
 > > 
-> > Bug report in Gentoo: 
-> > https://bugs.gentoo.org/show_bug.cgi?id=349569
+> > Is there any rounding down happening? I would expect both vma->vm_start
+> > and vma->vm_end to be page aligned.
 > > 
-> > Some additional info: http://xforce.iss.net/xforce/xfdb/64141 
-> > http://secunia.com/advisories/42619/
+> > > but actual_pages is rounded up. I don't understand why we are
+> > > adding "(mem[mi]addr % PAGE_SIZE)" to the pre rounded up actual_pages.
 > > 
-> > Issue is fixed in upstream[1], but no release yet.
+> > Imagine addr and size are not page aligned and
+> > ((addr & ~PAGE_MASK) + (size & ~PAGE_MASK)) > PAGE_SIZE.
+> > We need to round up two pages instead of one in that case.
 > > 
-> > Please assign a CVE for this, thanks.
+> > > So, yeah, it seems like we do check the size twice now except the first
+> > > time we do it wrong.
 > > 
-> > [1] - http://sourceforge.net/p/echoping/bugs/55/
-> 
-> Please use CVE-2013-4448 for this issue.
+> > With unaligned addr and/or size we can end up with mapping memory 
+> > not belonging to the UIO_MEM_PHYS registered region, but that is something
+> > you expect when using this interface from the drivers and/or userspace,
+> > because you want access to the whole region to properly handle the
+> > device, no?
+> > 
+> > IOW, with the current changes, isn't the functionality broken for
+> > non page-aligned addr and/or size?
 
-This should receive a CVE-2010-xxxx ID. It was originally reported to the 
-Debian BTS in December 2010 (as linked in the sf bugtracker):
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=606808
+This should now be fixed in Linus's tree, right?
 
-Cheers,
-        Moritz
+thanks,
+
+greg k-h
