@@ -1,34 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/23/2
-Message-ID: <20130323121922.GA16947@kludge.henri.nerv.fi>
-Date: Sat, 23 Mar 2013 14:19:22 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/6
+Message-ID: <529D628A.6090709@redhat.com>
+Date: Mon, 02 Dec 2013 21:48:10 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: come2waraxe@...oo.com
-Subject: CVE request: OpenCart filemanager.php parameter traversal arbitrary file access
+Subject: Re: Command injection vulnerability in Ruby Gem sprout 0.7.246
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt and list members,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Can we assign CVE identifier for security vulnerability in OpenCart, thanks.
+On 12/02/2013 05:13 PM, Larry W. Cashdollar wrote:
+> Title: Command injection vulnerability in Ruby Gem sprout 0.7.246
+> 
+> Download: http://rubygems.org/gems/sprout,
+> http://projectsprouts.org/
+> 
+> Vulnerability:
+> 
+> The unpack_zip() function contains the following code:
+> 
+> sprout-0.7.246/lib/sprout/archive_unpacker.rb
+> 
+> 60           zip_dir = File.expand_path(File.dirname(zip_file)) 61
+> zip_name = File.basename(zip_file) 62           output =
+> File.expand_path(dir) 63           # puts ">> zip_dir: #{zip_dir}
+> zip_name: #{zip_name} output: #{output}    " 64           %x(cd
+> #{zip_dir};unzip #{zip_name} -d #{output})
+> 
+> 
+> If the attacker can control zip_dir, zip_name or output then they
+> can possibly execute shell commands by injecting shell meta
+> characters as input.
+> 
+> 
+> PoC:
+> 
+> For example: filename;id;.zip
+> 
+> I contacted the developer a few weeks ago but received no
+> response.
+> 
+> 
+> Thanks! Larry W. Cashdollar @_larry0 
+> http://vapid.dhs.org/advisories/
+> 
 
-References:
-http://www.waraxe.us/advisory-98.html
-http://osvdb.org/91500
-http://seclists.org/fulldisclosure/2013/Mar/176
+Please use CVE-2013-6421 for this issue.
 
-Credits: Janek Vind "waraxe"
-Advisory ID: waraxe-2013-SA#098
-Disclosure date: 2013-03-19
-Status: not fixed in upstream
-CVSSv2 Base Score = 5.0
-Affected (from advisory) are all OpenCart versions, from 1.4.7 to 1.5.5.1, maybe
-older too.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-Janek confirmed he has not requested CVE yet. I will contact OpenCart again
-later today and ask status for the fix.
-
---
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQIcBAEBAgAGBQJSnWKKAAoJEBYNRVNeJnmTsCQP/0JOzVgGlr/oLH3szDIwtU4Y
+IvRepWCAH0fZtWXmal9rY4bGaHlaRE61gTSnfn6+6Sj4psqNWU2wezwNdVkSwIbN
+G08vrEvNJ5b0k6yHUwsnPpYHbZUWCDpceK5aN/ZLoYUOQnZw5pCMjZ5jQpw6Do6t
+/9Cey9dKERSkJHDP2IOFwzSmAAQOfsX14/3VTzlaKHvhKUaQyCWNRvY5EXTZ/API
+X2Xz5z2N0AB7huQR7GU8EgYiXlsxPdr1XU1ZxfKp8WjgZhDW/F1WSa64Zyy2nFHX
+M/YSyHkzyHStMfDc2pFRiNZUHeqCle2GD9xlJc/GZmpMroQnYClmV9ZN+i3Fqr5V
+bRkZQ0NpLk+BumsXLpYUcPXZwOce2AI6OAZ6Qyf2leRH+4XqE7PsR5M3a3jE/pYJ
+CYrZ6ZpVRS1bSb8HPqYUUbelaMSE/2uRCo14s4yxg5I3Hq1Vu2pEXtYhQJfR8sur
+LdX1usO5DffmG0bVvjntqDcXTK0YLcuS/DrqLlo0+OlxySKzuOGZ672Dblvnn4Gw
+H4Zd/aJ44GmgAdtJC2nduM6kO/BhYa/d1ieRyujTvG4V96zsjxY6tbsZFJhOsEk1
+pDKNUESYb3Bwm0FW/6nbJWF26I8t53ao+gPEEaivyOTdMdU+Ww7bEeC+2YO2AuCE
+CGtqiVx/cBkTRdJti47l
+=og9A
+-----END PGP SIGNATURE-----
