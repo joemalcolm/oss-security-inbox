@@ -1,39 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/17
-Message-ID: <51DDBDC5.7020501@fifthhorseman.net>
-Date: Wed, 10 Jul 2013 16:02:13 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-CC: 715325@...s.debian.org
-Subject: npm uses predictable temporary filenames when unpacking tarballs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/2
+Message-ID: <529D317D.7040200@redhat.com>
+Date: Mon, 02 Dec 2013 18:18:53 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: Re: Xen Security Advisory 82 (CVE-2013-6885) - Guest triggerable AMD CPU erratum may cause host hang
 Content-Type: text/plain; charset=utf-8
 
-hi oss-sec folks--
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-i recently learned that npm, the node.js language-specific package
-manager, created predictable temporary directory names in a
-world-writable filesystem (/tmp) by default when unpacking archives.
+On 12/02/2013 04:35 PM, cve-assign@...re.org wrote:
+>> This was sent by MITRE as part of the CVE assignment. It seems
+>> likely to us (the Xen Project security team) that the CVE
+>> assignment was a consequence of our embargoed predisclosure to
+>> xen-security-issues.
+> 
+> MITRE typically does not know about multi-party embargo
+> arrangements affecting Linux vendors and various other vendors, and
+> did not know about any multi-party embargo arrangement in this
+> case. If anyone who is regularly involved in vulnerability
+> remediation affecting the open-source community asks MITRE to send
+> an announcement of a CVE assignment to oss-security, we send that
+> announcement without any investigation of disclosure restrictions.
+> Although it is unfortunate if such an announcement had an adverse
+> effect on a planned disclosure timeline, we feel that this is an
+> isolated case and does not mean that we need to reevaluate our
+> approach. Also, once an issue is mentioned on oss-security by
+> anyone, we consider the issue fully public and we sometimes proceed
+> to publish a CVE immediately.
 
-It looks like this might leave open a classic symlink race such that one
-user could control the location where another user unpacked packages
-coming from an npm installation.
-
-if the superuser was the one running npm, this might have led to a
-non-privileged user who wins the race getting a privilege escalation as
-well, depending on the contents of the fetched package.
-
-The issue appears to have been fixed upstream today, here:
-
-  https://github.com/isaacs/npm/commit/f4d31693
-
-I first learned about the problem during a related a bug report
-http://bugs.debian.org/715325 (cc'ed here)
-
-If you think this needs a CVE, could you assign one please?
-
-Regards,
-
-	--dkg
+To be clear I asked Mitre for the CVE for AMD (since it's not open
+source software). I didn't think to tell them it was embargoed since
+the AMD release notes and so on were public. However in future with
+hardware related CVE's I'll make sure to ask Mitre to keep them
+private if the software side is still embargoed as appropriate.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSnTF9AAoJEBYNRVNeJnmTQc0P/1KnCOkN+zJrrw8XuX+IaFnG
+PU8k+7H7L4gNv0Cuy2aaFZiWOaOu2BHuQ8kPNdQlcRjKxfAo6TIzxKjRHAfdjAwh
+RTExqkGGp1twzWeYa//509fb3qXIjZ0g0FAqkLHg/8aBds7Dpu4dpk1169LM4/jo
+nFIB32Izrzl+P4SO99FhiW/k3HmE7YHlqliGNNpiOGAZkCB/xouGns9z4iL90vcY
+BQsaqRdSTFtxc84Y8ws1lk5lxDdgAKV10/cpZZyPpJm2dk9bG+slFrJ2hL8Y+b93
+2Q30LIQrx4cfF9D+djXXckuxQzP+dCfikcIKER/tWX11ZoRoDB35pT7pMPy/X6W0
+jJ3ijcZqgsfH4GZnTUIjccLC2RMXEEsb2ZueTgaSJ315giLxaZFanfekA/44fds4
+Wg/tlchEKiBrlKBNRTqsqrud0DAL2fQny/J8Dg2VIAqC3FQOdipaTthYkjrcofOP
+WWf78D95+PC4txB2kpbY05AA1eDvdtmvIeBbtDnzkG8UU+KxuYmfd3Al7J2I+AqV
+avavh/akdyWkCC59LiVB2aRA3J7Ovr3V2dsQkO60i52ClYR1E6d9xiKLmU6Y8kFL
+hpHcRqIROJvwOOUOrZGQRzFAZXmN/WKJNaN2p6vo+L19u/Rsf838pSsa6NDUblq/
+Ca30JT72lmgzyuq/qgKF
+=ncvQ
+-----END PGP SIGNATURE-----
