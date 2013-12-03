@@ -1,46 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/19
-Message-ID: <512BD148.5060001@redhat.com>
-Date: Mon, 25 Feb 2013 14:02:00 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/5
+Message-ID: <529D627A.9010108@redhat.com>
+Date: Mon, 02 Dec 2013 21:47:54 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: monkeyd world-readable logdir
+Subject: Re: CVE request: samba pam_winbind authentication fails open
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/24/2013 12:00 PM, Agostino Sarubbo wrote:
-> Monkeyd, a small, fast, and scalable web server, produces, at least
-> on gentoo a world-readable log.
+On 12/02/2013 02:24 PM, Vincent Danen wrote:
+> Just cutting-and-pasting from the bug I just filed.  The following
+> was reported to us, but had been reported upstream last year.
 > 
-> # ls /var/log/monkeyd/master.log -la -rw-r--r-- 1 root root 0 Feb
-> 24 19:56 /var/log/monkeyd/master.log
+> It was reported [1] that Samba's pam_winbind module would fail
+> open (allowing access) when the require_membership_of option is
+> used as an argument to pam_winbind, and contains a non-existent
+> group as the value.  In such a configuration, rather then failing
+> and not permitting authentication which is what would be expected,
+> pam_winbind will allow authentication to proceed.
 > 
-> Upstream site: http://www.monkey-project.com/
+> For instance, if the following is specified and the user is not a
+> member of the group 'Admin', they will not obtain access to the
+> system:
+> 
+> auth        sufficient    pam_winbind.so use_first_pass 
+> require_membership_of=Admin
+> 
+> On the other hand, if the non-existent group 'AdminOops' is
+> specified, the user is obviously not a member of said group,
+> authentication will be permitted:
+> 
+> auth        sufficient    pam_winbind.so use_first_pass 
+> require_membership_of=AdminOops
+> 
+> The commit [2] that most likely introduced this flaw indicates that
+> this was introduced October 2009 and another commit [3] looks like
+> the fix, although that is for another bug [4] that's somewhat
+> related to this issue and somewhat not.
+> 
+> [1]
+> https://lists.samba.org/archive/samba-technical/2012-June/084593.html
+>
+> 
+[2]
+> http://git.samba.org/?p=samba.git;a=commit;h=31f1a36901b5b8959dc51401c09c114829b50392
+>
+>  [3] 
+> http://git.samba.org/?p=samba.git;a=commitdiff;h=f62683956a3b182f6a61cc7a2b4ada2e74cde243
+>
+>  [4] https://bugzilla.samba.org/show_bug.cgi?id=8598
+> 
+> 
+> Could a CVE be assigned to this issue?
 > 
 
-This also doesn't look to be very active/widely used.
+Please use CVE-2012-6150 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRK9FIAAoJEBYNRVNeJnmTje0QAJ4xJB1qwVL1gWIHCS6HxZHp
-7+GMwU7QeTYtmRVMmtbdAW38A55FylDGHO6LTNQP5CX+4sZgA8taLRrhCMTcTgzu
-zvLNp4BeIIqtDwRD2QXIOII8xUastL4w5/X25zWFFbmMBOlQHy0SXwFqIOgzbdnO
-bLBw6wJB6EkFY5X+oFcQtvnjT6VmQXEX2v4hTJR0Nl3x1AUD3A6+99V9XVgIsBKJ
-MvkeGa59WIO9WXwMWpJNH5FqNL8KIqPBnqaKGcAgUFVMGb1grIcfb4wGXBI8L8ak
-jP6NesjI/IAfsTYcgggHP8R1NFc3+nGtdW4nwwAZTg/85x6zMwh6egEwbfLIXc7B
-MmiJCb1B6YneNjW5bI1bw0yUzKG7lEtnjZBcmjKRvFKDaUpGOd9bsuLfM4zx6Rpa
-18qeNrr5vwql3NOMY+8JRw4/1mSL4y8Bb4G7j+dCxQY/t9sNF3x7LgYLWUmD76Yk
-fgSjbIuO78ERdZcROgy0tgQrKvGT09/DTj9quMg4koGXgsoWek9nF4AMjQ2jKUWp
-okEqfvOodcla5QfWk40JGWVksWh/pQf1JaTY1hG3vS8aon2Q/bjEBSniRxPp5QI5
-TDgpjWzcya6wTGN8SKtXlskNjvGGXQvP5M4mCAwLnJ/HDPfZdHmScxGBtoZYd/v9
-5JgoBdLcyLQ1Gn6kJz63
-=9TG5
+iQIcBAEBAgAGBQJSnWJ5AAoJEBYNRVNeJnmTCFEP/R3S3K+zOCmAzl0Stf/au+KI
+EIbwXHzNOibVhtXTq46ohJdpNaw+ydEImJKqn9+iACRvXAdHiUESpKjbdoX9NRN7
+Yi4r5AC6bkwOtqWnl/xZ+nZO1n+NoNgxxfpBFH6eXfjDCDT79k/jAO+V9tA1UtFL
+TJClWHsFzjiejjIpEXzqKImwxkbsrwLsVoh1FwTEgMF1MO/Z78+RzR2GeimzQtB0
+1obMWbodk8xPKcVi7SkHMBGHnfdmbbPZTG3i8sl2bxmMDh47ypuEsqKut7EZm8gI
+Th0d9vgm/gLwx/HW6/SfgyjSaLvzucaOsAWfe+EKNG6dsB/JI1Vv3w1gGeAWh6I0
+CdPz0/bLkaIkELpr1f35Ccy7/x+D0WN7jaNdIxx2NPXDeqlPnRDAuPACgzXT5FmZ
+YFm+RumMa1v2b3POFNgFB+r8Yl4iNENUoSue+G/LolYzhS6uM+30Tj1f1O5Zkckb
+Ur55VJtbh6eQfoahE8DCyIdUvS4cTOFtkGemWQUxdwBmvYBoIwHc40UY2HGzf5nR
+yMEdwlJUW8o2PF6MXgf/XTYY8fxnvF/c+3Jyn4e0O1cIugdsLH7iIT6Uf3z6suyg
+RYwMLB/d6K2MdBO0kLsMxAKLUpJAMud398n5i2+wl5LdSuDsPV743sFl7DCaMUd/
+u8XceG/IpW8EVL8MXXIQ
+=OcHn
 -----END PGP SIGNATURE-----
