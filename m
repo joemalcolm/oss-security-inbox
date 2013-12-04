@@ -1,55 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/27/10
-Message-ID: <515369D7.4090700@linux.vnet.ibm.com>
-Date: Wed, 27 Mar 2013 17:51:19 -0400
-From: Corey Bryant <coreyb@...ux.vnet.ibm.com>
-To: Tim Brown <tmb@...35.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Re: [kernel-hardening] Security vulnerability tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/2
+Message-ID: <529EAAC8.9060101@redhat.com>
+Date: Tue, 03 Dec 2013 21:08:40 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Jamie Strandboge <jamie@...onical.com>, oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: Duplicate OpenStack CVEs for Horizon?
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+On 12/03/2013 08:50 PM, Jamie Strandboge wrote:
+> 
+> Hi,
+> 
+> I was looking at https://bugs.launchpad.net/ossa/+bug/1247675 and
+> it looks like upstream Horizon got CVE-2013-6406 assigned
+> (referenced in the bug).
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=730752 also
+> references this Launchpad bug, but does not reference a CVE.
+> 
+> Secunia http://secunia.com/advisories/55770 references
+> CVE-2013-6406.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-6858
+> references the Launchpad bug and the Secunia advisory, but has a
+> different CVE. The only reference I found to CVE-2013-6858 was the
+> RedHat bug.
+> 
+> Is CVE-2013-6858 simply a duplicate of CVE-2013-6406 or were these
+> supposed to be split out for some reason?
+> 
+> Thanks
 
-On 03/27/2013 03:58 PM, Tim Brown wrote:
-> On Wednesday 27 Mar 2013 19:54:04 Corey Bryant wrote:
->> Hi,
->>
->> I'd like to get a better understanding of tools used in the open source
->> community (kernel and user space) to detect security vulnerabilities.
->>
->> I have a list below to get started.  If anyone has any input, I'd
->> appreciate it!
->>
->> I'll plan on updating http://oss-security.openwall.org/wiki/tools with
->> anything it doesn't already have.
->>
->
-> Hey Corey,
->
-> One you might want to add is unix-privesc-check from myself, @inquisb and
-> @pentestmonkey.  There are two versions in existence:
->
-> 1.x - @pentestmonkey's quick and dirty with some hacks by me
-> trunk - a full blown privesc check framework designed by me with contributions
-> from the other two, it has multiple modes of operation, a standard library
-> which can be leveraged for new checks and (already) enhanced capabilities.
-> Its not perfect yet, I still need to clean it up and port it to the commercial
-> UNIX platforms we support but it should give a good idea of where we're going
->
-> Once I've stabilised the API of trunk, it will become 2.x and we'll open it up
-> formerly for contributions.
->
-> It's on Google Code if people want to take a look:
->
-> * http://code.google.com/p/unix-privesc-check
->
-> Tim
->
+It would appear I missed Mitre's assignment of CVE-2013-6406 (it was
+assigned 11-23, I assigned mine 11-28, confirmed I got the email,
+sigh, my bad). So a clear duplicate, please REJECT CVE-2013-6406 as it
+is a duplicate of CVE-2013-6858.
 
-Thanks Tim.  Sounds nice.  This is the first security audit tool on the 
-list so if we could add more in this category that would be nice.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
--- 
-Regards,
-Corey Bryant
-
+iQIcBAEBAgAGBQJSnqrIAAoJEBYNRVNeJnmTT9QP/1MUTokTJ3un3qtZGDPxUL6D
+NyLPCAREGnzD/eHujN6fxr4svQrZHes6qOnPZh3qul08PpXfdqzAtvLVbGGawA/X
+eR05TDzCdRtzlecwF0mUrNi+fgcCPueBZrvUBmO68DltOBoRzfLMJmVqbQh52Ex2
+ErvakEptJ7EV7wxZ0Un851+izR8+rYbNzFld9pZ/zfWxMuaz9o+kYk86NHKJdTTw
+AXuXyfxunUE6tcTEociRfeFdLVfqqcLpzCLsNbSkrzEConqY6AGoO5AIkN1MEJ1d
+gL0IjOViOk9MHEJsqJAif8bhuX508I0RDc2+kF6RkWja7I+zq0+Z7Uj4g8XDV89F
+mLK0SdF70PJxgu4yFz144WEmy0xwz+VFM2JS0P+MvDYG5AhQetnIpXf61Xv9nb5G
+bJc79VnZ3lLKS16GPJHnQp/B43ndf5pCgW/vPTCeCS0A+zcko5xCIPurSnE3knE8
+ElxsQJUMGfZyMh1UYY+Pr5LwfWmZKNru6GqqXxLGD1wkNnErEgvicBqfW/nRM8Zl
+66vy0kZpOhFkYaD/mIicKc2gXU5dCrvNyohW+K/sWwqi0VKcjIe9hZCE683gBEU4
+wcIx4y9JrO6J9zuZaXXAoWl0ZUkHr7l88FEbWYxF03JDdzNbivgYWcX37HdxilUO
+d9jUoV28XQs2xPQby5A/
+=tMnO
+-----END PGP SIGNATURE-----
