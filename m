@@ -1,28 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/20
-Message-ID: <1358801326.12546.2.camel@scapa>
-Date: Mon, 21 Jan 2013 21:48:46 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/7
+Message-ID: <529F404F.1070608@canonical.com>
+Date: Wed, 04 Dec 2013 08:46:39 -0600
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: 697666@...s.debian.org
-Subject: CVE request for Movable Type
+CC: Kurt Seifried <kseifried@...hat.com>, security <security@...ntu.com>,  xorg_security@...rg
+Subject: Re: CVE Request: xorg-server and pixman
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 12/04/2013 01:09 AM, Murray McAllister wrote:
+> On 12/04/2013 03:32 PM, Kurt Seifried wrote:
+>> On 12/03/2013 10:54 AM, Jamie Strandboge wrote:
+>>
+>>> Hi,
+>>
+>>> This bug has been public since August but I could find a CVE for
+>>> it: https://launchpad.net/bugs/1197921
+>>
+>>> There are two bugs - Xorg can be made to crash and pixman can
+>>> trigger the aformentioned Xorg crash. A simplified reproducer is in
+>>> the pixman patches with another reproducer in the Launchpad bug.
+>>> The xorg
+>>
+>>> xorg-server - exa: only draw valid trapezoids The patch was
+>>> submitted in October but doesn't seem to be applied yet, so I'm 
+>>> CC'ing xorg_security. Patch references the pixman f.d.o bug, but
+>>> doesn't seem to have an associated xorg bug. 
+>>> http://patchwork.freedesktop.org/patch/14769/ 
+>>> http://lists.x.org/archives/xorg-devel/2013-October/037996.html
+>>
+>>> Pixman - Corrupted CustomShape crashes Xorg 
+>>> https://bugs.freedesktop.org/show_bug.cgi?id=67484 Patch: -
+>>> 5e14da97f16e421d084a9e735be21b1025150f0c (fix) -
+>>> 2f876cf86718d3dd9b3b04ae9552530edafe58a1 (test case)
+>>
+>>> Thanks!
+>>
+>>
+>> So only x.org crashes, you can trigger it via X.org, or via pixman? or
+>> is pixman also crashing?
+>>
+>>
+> 
+> From https://bugs.freedesktop.org/show_bug.cgi?id=67484 and
+> http://patchwork.freedesktop.org/patch/14769/ it sounded like it would
+> affect both 1) crash an application using pixman 2) crash the X server
+> 
+> Is that correct?
+> 
 
-Movable Type 4.38 has been released few weeks ago, fixing a security
-issue in the upgrade page.
+AIUI, this is correct. See:
+https://bugs.launchpad.net/ubuntu/+source/xorg-server/+bug/1197921/comments/28
 
-More information can be found at [1] but basically it looks like missing
-input sanitation on the mt-upgrade.cgi page.
+"No, it really is a bug in pixman too. I just fixed the same comparison that
+happens in xorg-server, but pixman is still affected."
 
-As far as I can tell, no CVE has been allocated yet, could someone
-allocate one?
 
-Regards,
-
-[1]: http://www.movabletype.org/2013/01/movable_type_438_patch.html
 -- 
-Yves-Alexis
+Jamie Strandboge                 http://www.ubuntu.com/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
