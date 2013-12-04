@@ -1,48 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/15/7
-Message-ID: <5143550E.9020008@redhat.com>
-Date: Fri, 15 Mar 2013 11:06:22 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/12
+Message-ID: <20131204235029.72692bfa@redhat.com>
+Date: Wed, 4 Dec 2013 23:50:29 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: billion laughs flaw in ptlib
+Subject: mod_nss - NSSVerifyClient handling issue
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi!
 
-On 03/15/2013 10:42 AM, Vincent Danen wrote:
-> Ekiga 4.0.1 was released and noted a security fix in ptlib (seems
-> to be embedded in Ekiga) for a "billion laughs" style attack.
-> Could a CVE be assigned to this?
-> 
-> Thanks.
-> 
-> References: 
-> http://www.ekiga.org/news/2013-02-21/ekiga-4.0.1-stable-available 
-> http://opalvoip.svn.sourceforge.net/viewvc/opalvoip?view=revision&revision=28856
->
->  https://bugzilla.redhat.com/show_bug.cgi?id=922177
+A mod_nss issue related to handling of NSSVerifyClient was made public
+yesterday.  The following bug has relevant details and links:
 
-Please use CVE-2013-1864  for this issue.
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-4566
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRQ1UOAAoJEBYNRVNeJnmTyf0P/39DtBbi0eRU77J7vXDbkP/6
-gbZC4ivx+76m39lxio57eHrB4QH5pO0d6Ls17POnUWQSqnIn7k6OwBgMIT6XV5Ci
-9L/9u1eaNftbdQ3n/sA72sCObWtQvAxaNgL04vuePXjz+RFuhS+Na6CSQPfWAXBa
-D0/5Gq4FzsffUL0NZCB7phcdhpibu4be1ujbjSMQodGGd5Zw705SpScHaH2yI0an
-nysaFCzojlLJV5pdJS5uTArE8CLXWuy3yhK2UYST0n6T0pjDuDrhFuyZsAap6IMI
-8j8R5Z8rm8ChaBaWFp+SoKneFZarj8+ujq4pBuuzFl/Tyqefnv0K/+H5dPzO4zG1
-hFBsHIB0sFy/ne/v/VBTZq+crjiUv6XWEnHl9wOoA504rbJZ9luyElSHcn62nBrk
-+60JnQM6E0f3SiNsrW29okBfW+Dzl6Vax4uZr1kfpo1B9qxYA1bWKMBGqcifzu1d
-+a8qMzLt572H6JiMtljChwWfmnd4occP9M40DFCCllDK2l2DhS7HNSRGLDRs+/g+
-ursPDkqIy9AUCKp7ArjrzbEx36o7to8jKbFJXGr6si4a4pFAfvxHIKiSrJrsEHqp
-sgDF2WyreeiTlWcgJBzH5jEbFPy3xTsDEhOR5a/QDVAHs7ziUPAyWyCYxXUb9x3J
-cWmesGGY5QV3d8wVd7PU
-=Mw1G
------END PGP SIGNATURE-----
+-- 
+Tomas Hoger / Red Hat Security Response Team
