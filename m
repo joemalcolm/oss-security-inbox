@@ -1,40 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/03/8
-Message-ID: <CAJ3HoZ3XNCHL+Q_LVyezVB7Lk+AGNcKT-fVt3UWzmO8mCMVqbg@mail.gmail.com>
-Date: Tue, 4 Jun 2013 07:11:40 +1200
-From: Robert Collins <robertc@...ertcollins.net>
-To: Jeremy Stanley <fungi@...goth.org>
-Cc: openstack@...ts.launchpad.net, oss-security@...ts.openwall.com
-Subject: Re: [Openstack] [OSSA 2013-013] Keystone client local information disclosure (CVE-2013-2013)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/3
+Message-ID: <529EB061.5060105@redhat.com>
+Date: Tue, 03 Dec 2013 21:32:33 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: security <security@...ntu.com>, xorg_security@...rg
+Subject: Re: CVE Request: xorg-server and pixman
 Content-Type: text/plain; charset=utf-8
 
-What if we were to always do a release after a security advisory?
-On 4 Jun 2013 06:25, "Jeremy Stanley" <fungi@...goth.org> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On 2013-06-03 10:51:19 -0700 (-0700), Lloyd Dewolf wrote:
-> [...]
-> > Interestingly, the OSSA 2013-014 notice did include
-> > "python-keystoneclient fix (will be included in upcoming 0.2.4
-> > release)".
->
-> I'm going to chalk that up to Thierry knowing the version number at
-> that point, since the OSSA 2013-014 fix is what got tagged with
-> 0.2.4 the next morning. On the other hand the -013 fix was a
-> lower-priority feature enhancement and I didn't want to rely on a
-> versioning guess a week ahead. Client releases are handled a bit
-> more independently compared to OpenStack server components (where we
-> can predict release milestone dates fairly accurately).
->
-> As a general rule I'm going to try to include the release version
-> numbers in advance when I can do so safely, and otherwise rely on
-> subsequent release announcements.
-> --
-> Jeremy Stanley
->
-> _______________________________________________
-> Mailing list: https://launchpad.net/~openstack
-> Post to     : openstack@...ts.launchpad.net
-> Unsubscribe : https://launchpad.net/~openstack
-> More help   : https://help.launchpad.net/ListHelp
->
+On 12/03/2013 10:54 AM, Jamie Strandboge wrote:
+> 
+> Hi,
+> 
+> This bug has been public since August but I could find a CVE for
+> it: https://launchpad.net/bugs/1197921
+> 
+> There are two bugs - Xorg can be made to crash and pixman can
+> trigger the aformentioned Xorg crash. A simplified reproducer is in
+> the pixman patches with another reproducer in the Launchpad bug.
+> The xorg
+> 
+> xorg-server - exa: only draw valid trapezoids The patch was
+> submitted in October but doesn't seem to be applied yet, so I'm 
+> CC'ing xorg_security. Patch references the pixman f.d.o bug, but
+> doesn't seem to have an associated xorg bug. 
+> http://patchwork.freedesktop.org/patch/14769/ 
+> http://lists.x.org/archives/xorg-devel/2013-October/037996.html
+> 
+> Pixman - Corrupted CustomShape crashes Xorg 
+> https://bugs.freedesktop.org/show_bug.cgi?id=67484 Patch: -
+> 5e14da97f16e421d084a9e735be21b1025150f0c (fix) -
+> 2f876cf86718d3dd9b3b04ae9552530edafe58a1 (test case)
+> 
+> Thanks!
+> 
 
+So only x.org crashes, you can trigger it via X.org, or via pixman? or
+is pixman also crashing?
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSnrBgAAoJEBYNRVNeJnmTezEP/03QEjtOV38i8iaCs67r2Ldp
+69qjo2RLgvlW0djDCPVXQVJMP5nQb7hSLVTWlyRdV9MvKKzCXMrRcUwz9AEZyeJW
+Hn9qRF+Eytn1cIuP6UXcG978pqwMgnyU7Lfiq4PqI+s4pheMtwT8eX4VYKFFuJ3/
+0tgXK4AvrpEKcYO3+xezx36bO6SklGMNsV4WTdENHqCBK3IrjwzyQ7+AI0K2iIPR
+gRMnl1OB/D2XXQa3/lWUz8D9cReoLVJI1NPrSbPPhNDMqbc6bq5hxXkF8cKNjRwW
+pT+hTMDg/YIpuRTgXRIHsB4idjSLhLKIxsujTqASZn6Rxb1Ckbi53WN+x5kQ+Nq8
+X+Pxxx+Yw9YCzupRSmmgTyfvurfQy8b5ZoIocMI3Itud3IW3ZH51s6ICPe+1CWTb
+s903F8vIObnL2NqSGs4D6iBGcgJ4U1MNhOP0nqo4GOJVFueO/mhrVG6kSA4T+SBl
+L4Gx1d9EwywT6pC82OxN7WPopkCAepUEa0iH0ei4MiygSBdv3OX3wV3g9hKz1Siv
+v8ObilLFz3hW/yYtVqAbYGrsqPakivuyzAHOYp6UtiNxrfBlVAs7plRaD2BnbZqS
+5YmvZ9Uw4H6Hr1jQ4/J97ZFfpnq2Sv9OSp6mdP5j9Nmg7KsfUY1WwXwno7joolju
+jmArlWRbqZUTS4Qz5VSp
+=Punz
+-----END PGP SIGNATURE-----
