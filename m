@@ -1,63 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/2
-Message-ID: <20131126012017.GB26817@hunt>
-Date: Mon, 25 Nov 2013 17:20:17 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
-To: "Christey, Steven M." <coley@...re.org>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Kernel MSM - Memory leak in drivers/base/genlock.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/11
+Message-ID: <20131204234927.7a6d6294@redhat.com>
+Date: Wed, 4 Dec 2013 23:49:27 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: gimp - two xwd plugin issues
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 26, 2013 at 12:57:23AM +0000, Christey, Steven M. wrote:
-> Kurt said:
-> 
-> >> The Genlock driver does not properly initialize all members of a
-> >> structure before copying it to user space. This allows a local
-> >> attacker to obtain potentially sensitive information from kernel
-> >> stack memory via ioctl system calls.
-> >
-> >This should be classified as CWE-200 Information Disclosure, "memory
-> >leak" refers to memory being used and not released properly, resulting
-> >in out of memory conditions.
-> 
-> In CWE, we discourage the "memory leak" term because it has multiple
-> meanings and interpretations: (1) that memory is allocated but never
-> released, or (2) that sensitive portions of memory are accidentally
-> disclosed to untrusted parties.
-> 
-> This request sounds like variant (2) of the varying uses of the "memory
-> leak" term, although Kurt's interpretation seems to be that it's about
-> variant (1), which further reinforces my personal desire to see that
-> term go away forever.
+Hi!
 
-I wrote a response to Kurt, suggesting that he had mis-diagnosed the
-problem but did not send my response when I found that his message said
-the same thing mine said once you replace his first ',' with a ';'. Try
-this instead:
+Two gimp xwd plugin issues were made public yesterday.  The following
+bugs should have all relevant links:
 
-> >This should be classified as CWE-200 Information Disclosure; "memory
-> >leak" refers to memory being used and not released properly, resulting
-> >in out of memory conditions.
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-1978
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-1913
 
-[Kurt's words with the first comma replaced with a semicolon.]
-
-It's amazing what a difference two pixels can make. :)
-
-> Anyway... Note that, as this issue is described, "information
-> disclosure" actually results from a root cause in which certain
-> locations are not properly initialized.  Thus CWE-665: Improper
-> Initialization (or its child CWE-457 Use of Uninitialized Variable) are
-> probably more appropriate characterizations of the core issue; in this
-> case, it happens to lead to memory disclosure, but in other cases, it
-> might lead to privilege escalation or other consequences (depending on
-> how the uninitialized data is used.)
-
-I came up with CWE 212 before I properly parsed Kurt's mail:
-CWE-212: Improper Cross-boundary Removal of Sensitive Data
-
-With so much to chose from it's surprising the fix is one line of code. :)
-
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+-- 
+Tomas Hoger / Red Hat Security Response Team
