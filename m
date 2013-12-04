@@ -1,75 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/13/1
-Message-ID: <87li31kz8w.fsf@alice.fifthhorseman.net>
-Date: Fri, 13 Sep 2013 02:32:47 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/8
+Message-ID: <529F6E9C.9050606@redhat.com>
+Date: Wed, 04 Dec 2013 11:04:12 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: GnuPG treats no-usage-permitted keys as all-usages-permitted
+CC: security <security@...ntu.com>, xorg_security@...rg
+Subject: Re: CVE Request: xorg-server and pixman
 Content-Type: text/plain; charset=utf-8
 
-RFC 4880 permits OpenPGP keyholders to mark their primary keys and
-subkeys with a "key flags" packet that indicates the capabilities of the
-key [0].  These are represented as a set of binary flags, including
-things like "This key may be used to encrypt communications."
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-If a key or subkey has this "key flags" subpacket attached with all bits
-cleared (off), GnuPG currently treats the key as having all bits set
-(on).  While keys with this sort of marker are very rare in the wild,
-GnuPG's misinterpretation of this subpacket could lead to a breach of
-confidentiality or a mistaken identity verification.
+On 12/04/2013 07:46 AM, Jamie Strandboge wrote:
+> On 12/04/2013 01:09 AM, Murray McAllister wrote:
+>> On 12/04/2013 03:32 PM, Kurt Seifried wrote:
+>>> On 12/03/2013 10:54 AM, Jamie Strandboge wrote:
+>>> 
+>>>> Hi,
+>>> 
+>>>> This bug has been public since August but I could find a CVE
+>>>> for it: https://launchpad.net/bugs/1197921
+>>> 
+>>>> There are two bugs - Xorg can be made to crash and pixman
+>>>> can trigger the aformentioned Xorg crash. A simplified
+>>>> reproducer is in the pixman patches with another reproducer
+>>>> in the Launchpad bug. The xorg
+>>> 
+>>>> xorg-server - exa: only draw valid trapezoids The patch was 
+>>>> submitted in October but doesn't seem to be applied yet, so
+>>>> I'm CC'ing xorg_security. Patch references the pixman f.d.o
+>>>> bug, but doesn't seem to have an associated xorg bug. 
+>>>> http://patchwork.freedesktop.org/patch/14769/ 
+>>>> http://lists.x.org/archives/xorg-devel/2013-October/037996.html
+>>>
+>>>>
+>>>> 
+Pixman - Corrupted CustomShape crashes Xorg
+>>>> https://bugs.freedesktop.org/show_bug.cgi?id=67484 Patch: - 
+>>>> 5e14da97f16e421d084a9e735be21b1025150f0c (fix) - 
+>>>> 2f876cf86718d3dd9b3b04ae9552530edafe58a1 (test case)
+>>> 
+>>>> Thanks!
+>>> 
+>>> 
+>>> So only x.org crashes, you can trigger it via X.org, or via
+>>> pixman? or is pixman also crashing?
+>>> 
+>>> 
+>> 
+>> From https://bugs.freedesktop.org/show_bug.cgi?id=67484 and 
+>> http://patchwork.freedesktop.org/patch/14769/ it sounded like it
+>> would affect both 1) crash an application using pixman 2) crash
+>> the X server
+>> 
+>> Is that correct?
+>> 
+> 
+> AIUI, this is correct. See: 
+> https://bugs.launchpad.net/ubuntu/+source/xorg-server/+bug/1197921/comments/28
+>
+>  "No, it really is a bug in pixman too. I just fixed the same
+> comparison that happens in xorg-server, but pixman is still
+> affected."
+> 
+> 
 
-Potential Confidentiality Breach
---------------------------------
+Thanks. Please use CVE-2013-6424 for the issue in xorg-server
 
-For example, if Alice has a subkey X whose "key flags" subpacket has all
-bits cleared (because she is using it for something not documented in
-the spec, perhaps something experimental or risky), and Bob sends Alice
-an e-mail encrypted using GnuPG, Bob may accidentally encrypt the
-message to key X, depsite Alice having clearly stated that the key is
-not to be used for encrypted communications.  If Alice's intended use of
-X turns out to compromise the key itself somehow, then the attacker can
-read Bob's otherwise confidential communication to Alice.
+Please use CVE-2013-6425 for the issue in pixman.
 
-Potential Mistaken Identity Verification
-----------------------------------------
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-Consider the scenario above, but where Bob is in general willing to rely
-on OpenPGP certifications made by Alice.  The legitimate form of these
-certifications are usually made by Alice's primary key, which is marked
-as "certification-capable".  Because Bob's GnuPG misinterprets the usage
-flags on subkey X, Bob may be able to be tricked into believing that
-Alice has certified someone else's OpenPGP identity if an attacker
-manages to coax Alice into using subkey X in a way that is replayable as
-an OpenPGP certification.
-
-
-
-These risks are unlikely today (there are very few certifications in the
-wild with an all-zero key flags subpacket), and they are not
-particularly dangerous (for a compromise to happen, there needs to also
-be a cross-context abuse of the mis-classified key, which i do not have
-a concrete example of).  But the keyholder's stated intent of separating
-out keys by context of use is being ignored, so there is a window of
-vulnerability that should not be open.
-
-There is also a (maybe non-security) functionality issue here, in that
-GnuPG may mis-use the user's own keys if they are marked as described
-above (e.g. signing messages or certifying identities with a subkey that
-is explicitly marked as not being for that purpose).
-
-
-This problem was first reported to the GnuPG team back in March [1].
-Patches are available, but appear to only be applied on the development
-branch (2.1.x).  So stable branches 1.4.x and 2.0.x remain vulnerable at
-the moment.
-
-Could a CVE be issued for this?
-
-Regards,
-
-        --dkg
-
-[0] https://tools.ietf.org/html/rfc4880#section-5.2.3.21
-[1] http://thread.gmane.org/gmane.comp.encryption.gpg.devel/17712/focus=18138
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBAgAGBQJSn26cAAoJEBYNRVNeJnmTguYP/3TopPXbCDX05nRTa66Ujpbr
+A27KAVV/f9kRJInqKAND9pPqn3gxqlMdTyHftFsffn9qqf2b09rnO5jGDr7w/Mcp
+L/0kXWrCRLjL6ATHOtncONx98sD1xH/u+5kdx9YmsHEqj4r0zbNrKOqXHVd9hOIe
+y+7LyL2zOj4sWa+jG9rzYEDSlErE8OKgpKHE2MA+4wO0Ke5CICNd07ipXz5no2fW
+fKfaYvoh+95bTEKzQJT95jmbIxj8nrsYIWQSu7Cn68XUwsR7vCxZVCU5zQkk6vmi
+Hxeyv4Xo4QG4z5atMgg8NwTb2xLHjay9N8nFxYTu5J10MOGMqPncp90RYCjOZe5A
+pP8pKjCIxC6CtgubuwF0gMRVO4U/jSOSbU949h8TUyCQNqM2CNpTBY1kmfbkSd+X
+D6UBHfz1Sx0zt98h4bPhvq4hD+jn6yTfHpad8u2CxYalr3PMyxK4HtOTBTQTpJQL
+TH75F1Fy7+S+fjSaXT+jl4yqQXyGJ6coDGUzHimuBiPAOrAw4pDHAqOYwRz2LH6a
+laSnDYniRuA0MY9AhLvBxoepxFtazWW25m82efZzO93ayDo2QbNNrDo8lHWXws1k
+Lq4gWL7dgx/LuD3XMmdZN6nagWHYGETsYrw4w90bxUH9DFCChEj+M00I6sPSh151
+ceZqoiWqnt5tCOtd2dAe
+=cdlh
+-----END PGP SIGNATURE-----
