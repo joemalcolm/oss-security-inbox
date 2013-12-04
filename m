@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/24/2
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF26F9CFE2@IMCMBX01.MITRE.ORG>
-Date: Wed, 24 Jul 2013 04:26:41 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "security@...ngoproject.com" <security@...ngoproject.com>, "Salvatore Bonaccorso" <carnil@...ian.org>, Henri Salo <henri@...v.fi>
-Subject: RE: CVE Request: Django: Account enumeration through timing attack in password verification in django.contrib.auth
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/5
+Message-ID: <20131204102641.GL3072@dhcp-25-225.brq.redhat.com>
+Date: Wed, 4 Dec 2013 11:26:42 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: Greg Kroah-Hartman <gregkh@...uxfoundation.org>, "Hans J. Koch" <hjk@...sjkoch.de>, Nico Golde <oss-security+ml@...lde.de>, oss-security@...ts.openwall.com, "security@...nel.org" <security@...nel.org>, Dan Carpenter <dan.carpenter@...cle.com>
+Subject: Re: kernel: uio: CVE-2013-6763 [was: Re: some unstracked linux kernel security fixes]
 Content-Type: text/plain; charset=utf-8
 
-Donald Stufft said:
+On Mon, Dec 02, 2013 at 07:44:53PM -0800, Linus Torvalds wrote:
+> On Mon, Dec 2, 2013 at 7:40 PM, Greg Kroah-Hartman
+> <gregkh@...uxfoundation.org> wrote:
+> > On Tue, Nov 26, 2013 at 01:18:39PM +0100, Petr Matousek wrote:
+> >> >
+> >> > IOW, with the current changes, isn't the functionality broken for
+> >> > non page-aligned addr and/or size?
+> >
+> > This should now be fixed in Linus's tree, right?
+> 
+> Well, that depends on what you mean by "fixed".
 
->I don't think this really deserves a CVE. All versions of Django prior to
->1.6 (unreleased) have allowed you to determine if a username existed
->or not via the login failure message, negating the need to do any sort
->of timing attack.
+I was going to say no, but then saw b6550287.
 
-The simple existence of a timing issue does not automatically qualify something for a CVE.  We have typically taken the approach that if there's a "policy" of a product in which the information is not regarded as sensitive - such as intended functionality - then this does not cross "privilege boundaries" and would not qualify for a CVE.  For example, if users automatically get public profiles, then the username might not be private.  If Django was intentionally providing this specific login failure details as a convenience to its users, then that forms a "policy" (which still might deserve its own CVE because Django admins might not want that).
+Just for the record, the CVE-2013-6763 fix consists of
 
-This is an interesting case, because the "legitimate functionality" (login error message infoleak) is itself (potentially) an issue.
+  * uio part of 7314e613
+  * b6550287
 
-Is the login failure message hard-coded, or is it dependent on configuration?  If there's a possible configuration that hides the cause of login failure such as a custom message, then the timing attack would still be a valid scenario for enumerating usernames under that otherwise-good configuration, and would get a CVE.
+> If somebody depended on "we'll just mmap the page(s) that contained
+> the partial and unaligned resource", then current git is very very
+> broken, because it doesn't allow that at all.
 
-Regardless, there probably needs to be a CVE for the login failure username enumeration before 1.6 (unless there already is one).
+Intuitively I'd assume that the rounding up in uio_mmap is there for a
+reason, but what do I know.
 
-There is still a (minor) question about whether a CVE is necessary for the timing discrepancy.  When dealing with closely-related issues, another question is "if issue 1 is fixed, then would that automatically fix issue 2?"  (This is effectively finding chains.)  In this case, a fix for the login failure error message would not fix the timing discrepancy, so they are distinguishable issues, at the least.
-
-- Steve
-
+Regards,
+-- 
+Petr Matousek / Red Hat Security Response Team
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
