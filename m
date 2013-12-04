@@ -1,59 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/17
-Message-ID: <50FD861A.4070402@redhat.com>
-Date: Mon, 21 Jan 2013 11:16:58 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Steven Christey <coley@...re.org>
-Subject: Re: CVE Request coreutils
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/1
+Message-ID: <529EA687.50306@canonical.com>
+Date: Tue, 03 Dec 2013 21:50:31 -0600
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Duplicate OpenStack CVEs for Horizon?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 01/21/2013 07:59 AM, Michael Tokarev wrote:
-> 21.01.2013 18:54, Sebastian Krahmer wrote:
->> Hi,
->> 
->> Can someone assign a CVE id for a buffer overflow in coreutils? 
->> Its the same code snippet (coreutils-i18n.patch) and it affects
->> sort, uniq and join:
-> 
-> It's probably worth to mention that these are SuSE-specific and not
-> in upstream, if I understand correctly.
-> 
->> https://bugzilla.novell.com/show_bug.cgi?id=798538 
->> https://bugzilla.novell.com/show_bug.cgi?id=796243 
->> https://bugzilla.novell.com/show_bug.cgi?id=798541
-> 
-> Thanks,
-> 
-> /mjt
+Hi,
 
-I'm not clear on exploitation. You would have to run sort/uniq/join
-against attacker supplied input, and then the sort/uniq/join binaries
-would crash. Is there any code execution possible? In general DoS's in
-user programs doesn't get CVE's unless the user program loads remote
-content easily/commonly (e.g. email/web browsers). Although I could be
-wrong, STeve can you confirm that these issues don't need a CVE?
+I was looking at https://bugs.launchpad.net/ossa/+bug/1247675 and it looks like
+upstream Horizon got CVE-2013-6406 assigned (referenced in the bug).
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=730752 also references this
+Launchpad bug, but does not reference a CVE.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Secunia http://secunia.com/advisories/55770 references CVE-2013-6406.
 
-iQIcBAEBAgAGBQJQ/YYaAAoJEBYNRVNeJnmTpAIQAMVV7HiKZ+Pq2YMnVVV3CD1k
-YUPr3ruhmW9CFhmgbKfH3sgrp9LxaDWRyLo5nCg1SOy4m2rE9UNpT89AcbVv5gz4
-rlhAFZkZsjfjMjd12Ak/qNwzoGlOJEQPVu6GNv5O1TnpzGglQeEudLxxnleJmWdE
-zf/CJHESrWOIaJRi/BlsPzA1ur3QP78k2wJ5+J1B0ZSybqNAtv1EhoIzIoEv9CXS
-9Lq/LYi2HcIH6dEFxLKoiva6N2R3iT2IkvS7iP+hiorc+qey6U3WWVqwuRPQjnBs
-RKjcV33JzZMSx/dJ2UfSxAcReBW6QKtLP1Gt2aREctBb5KkSSVL+tYp+L/KTF5FP
-toJa05BTv2EkZ+sqFfny0vZ1hmiAj4e9x7WPKfPcOBZkUB89CpqMjURsqdLx/4wJ
-UCvX3SMXyrNEdcwAEHIGkYyqGvt5iH7sT3Fs4oUvxXSoOPHJjtmcsT04OYaB/YjM
-W8bVH+WhT5ZA7zk3ePOLOmW7amx2nKN+yEZrbKy2C1sXJe605U+1MBvm5xwJFjkE
-RTV2s2CvxciR1WuYMacDX+HgWxifQcpr8hFdISYZxvvZo2egN+52dJS1+BjWdsf1
-/JSUpIWUg7Wy3JaA2qf7Q/uCtPcB0oTiBrT65vxJISl1nA/IQHXwtWZ3RI5dfvyt
-JtbC/DuLBeoklmfgx+TT
-=UBrB
------END PGP SIGNATURE-----
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-6858 references the
+Launchpad bug and the Secunia advisory, but has a different CVE. The only
+reference I found to CVE-2013-6858 was the RedHat bug.
+
+Is CVE-2013-6858 simply a duplicate of CVE-2013-6406 or were these supposed to
+be split out for some reason?
+
+Thanks
+
+-- 
+Jamie Strandboge                 http://www.ubuntu.com/
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
