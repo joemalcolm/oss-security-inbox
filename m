@@ -1,79 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/4
-Message-ID: <20130122072522.GA16211@suse.de>
-Date: Tue, 22 Jan 2013 08:25:23 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE Request coreutils
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/9
+Message-ID: <529F89E1.3050103@redhat.com>
+Date: Wed, 04 Dec 2013 13:00:33 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: SNMPD DoS #2411 snmpd crashes/hangs when AgentX subagent times-out
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Generally, I see your point. However sometimes services running as
-root 'sort' or 'uniq' user input e.g. via grepping logfiles etc,
-so there is indeed a real chance to indirectly trigger a privilege 
-escalation. The past shows that segfaults can be turned into a 
-code exec often. Its a stack overflow after all.
-
-regards,
-Sebastian
-
-
-On Mon, Jan 21, 2013 at 06:33:07PM -0700, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+On 12/02/2013 10:54 PM, Kurt Seifried wrote:
+> Just cleaning out old email, ran across this:
 > 
-> On 01/21/2013 01:39 PM, Vincent Danen wrote:
-> > * [2013-01-21 19:17:49 +0100] Moritz Muehlenhoff wrote:
-> > 
-> >>> Can someone assign a CVE id for a buffer overflow in
-> >>> coreutils? Its the same code snippet (coreutils-i18n.patch) and
-> >>> it affects sort, uniq and join:
-> >>> 
-> >>> https://bugzilla.novell.com/show_bug.cgi?id=798538 
-> >>> https://bugzilla.novell.com/show_bug.cgi?id=796243 
-> >>> https://bugzilla.novell.com/show_bug.cgi?id=798541
-> >> 
-> >> Could you send the faulty patch to the list so that distros can
-> >> validate that they don't include it themselves?
-> > 
-> > Red Hat/Fedora do include this patch, so it's more than just SUSE
-> > that ships them.  However, when I was looking at them last week,
-> > this struck me as just a non-exploitable crash and unless I'm
-> > missing something, I think it would be quite the stretch to call it
-> > a security flaw.
+> http://sourceforge.net/p/net-snmp/bugs/2411/
 > 
-> Agreed, there is no significant impact of exploitation and there is no
-> real easy way to trick a victim into doing this (and even if you do,
-> so what? now if it was code exec we might be talking about something
-> interesting).
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
-> 
-> iQIcBAEBAgAGBQJQ/exTAAoJEBYNRVNeJnmTrW0P/3B/L/SE7akzCPUU6TW9wy1L
-> Rpb8IIITLCz1qkb/gkUayUFJHQDjpEfmxNPJQWm1fJBrWI0bFr0wvHRuGHgyXZEA
-> Bl+js2w0uu7kAEEf1bHjZjf7zVHZ2tvoAdzi8ypLASZisxXwSa4acy++sqmPTrSf
-> oNOu3ChqG919VSLfD8Zf5AsGFs6G3tRzNEmYtvllt9liUFKgL6WsCNWNWUZdpWm2
-> crZPdyf343VvQcG5p7vYPEJLUBmnUSIauakssYPxGSp1vNBDNCC8xuVnyf1KOLfc
-> r3BHDPRX5ooe8EcoK/zgo1owK7tP9d7FT94gIsJte3OUOP5dq6LR/R0ZMMUsneNA
-> EjJScDCkh0hcZYCdJkqtah5aoAYI6IQvXJVtbwDM+rAvHfoMV2nkbWVZL0SgCMW/
-> B/hvhQJejFN3dd0wfiO5sQf5o2UxxYyIIpTE+GQP/pe8Q7F1BzR5nV87Jd3sWQY8
-> J873KRADBgt4RwbVUpI7dUL67UeRZCN4FiNtYYEuD5BeJWMSVoVXRHP7zBkx8GhG
-> vgfUc02+IyxS0HTO5HIxSJnLYOSa++SxJ4/w85aqcWPLrLHhL4s1k4GELPg/JhdW
-> Um35zAkcLNnxsxySCMIWZKEUTZ3xdpBspc3QVkw/IoyZpk+QhQTM2S/C3yWv4Q0z
-> xwHEEqesvl8l7UlpQ2mC
-> =rw4/
-> -----END PGP SIGNATURE-----
+> It's a DoS, requires authenticated access but snmpd is often used to
+> monitor a lot of systems not always under your direct control (e.g.
+> read only access). I'm inclined to assign a CVE unless someone objects
+> strongly.
 
--- 
+Please use CVE-2012-6151 for this issue.
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
+iQIcBAEBAgAGBQJSn4nhAAoJEBYNRVNeJnmTkXIP/2aUuLaKF1kfF8e9ZbN/8KBj
+m9ry80sAPt58JQLNtTuKImW5HQ12N1A5lYeDoqgHpS9/RUka6GSUApgRr7Z7qv4m
+5loGnswD0Y4SB7kdM2YSUuRqPo3CGUnlbE1GWZMUxQlQKdItrbQmatxhRAUzpYVR
+TkW8zMUJ0CvT5th3OlTqRW82FzQB9e69qXWEtfCxuk/WA7iSlzF38pFxp2DbM+PV
+kQYxFKHgyL4OsuT+tT1Zcm9eItO7MCCOjXFRnRiEqM7NVODBCvGRLsceOXQdcfb2
+yJwaci+dU4jWQBXbiNuoGSIxPeaWG/BHaExtvONnq9EivLgcgh4C42/ia6qd6EXb
+ObqlWatq3CY0MaSEuCoYymLum+apR4YQMgeMqqtzasi7qxTBnsw9zcjb6lwLUNIq
+0/RZ9bqSPA5IJG/o2LS6hf7/P2i4jzHr7ROahnVUEkfkFqglI17wKLBjrPXe5WT4
+S53rTkL/HRfD6ZrSWKvQhJNR7Tu5fXouOizuVinzTcQn9oUo3JMdQN42/5cctVvW
+WztnSSWfpJ/0qIRELLPRPndvrnIm40+wpo8GNw8CSd/Pg4IILXJzFsc8BFLDuAVG
+Y8KmRQRNXnq9q3dfngwB9fSWKRtufXPktpUfnGKn/2cyFID54Qj35RTFu1Z6ZdzF
+tRdheIVoJHoY1eDnJLEH
+=v98p
+-----END PGP SIGNATURE-----
