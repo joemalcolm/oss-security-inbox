@@ -1,27 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/17/4
-Message-ID: <8936213.V2pMiTmxHY@devil>
-Date: Wed, 17 Apr 2013 14:45:33 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/4
+Message-ID: <529ED534.7020901@redhat.com>
+Date: Wed, 04 Dec 2013 18:09:40 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request : libxml2 Multiple Use-After-Free Vulnerabilities
+CC: Kurt Seifried <kseifried@...hat.com>, security <security@...ntu.com>, xorg_security@...rg, jamie@...onical.com
+Subject: Re: CVE Request: xorg-server and pixman
 Content-Type: text/plain; charset=utf-8
 
->From the secunia advisory SA53061[1]:
+On 12/04/2013 03:32 PM, Kurt Seifried wrote:
+> On 12/03/2013 10:54 AM, Jamie Strandboge wrote:
+> 
+>> Hi,
+> 
+>> This bug has been public since August but I could find a CVE for
+>> it: https://launchpad.net/bugs/1197921
+> 
+>> There are two bugs - Xorg can be made to crash and pixman can
+>> trigger the aformentioned Xorg crash. A simplified reproducer is in
+>> the pixman patches with another reproducer in the Launchpad bug.
+>> The xorg
+> 
+>> xorg-server - exa: only draw valid trapezoids The patch was
+>> submitted in October but doesn't seem to be applied yet, so I'm 
+>> CC'ing xorg_security. Patch references the pixman f.d.o bug, but
+>> doesn't seem to have an associated xorg bug. 
+>> http://patchwork.freedesktop.org/patch/14769/ 
+>> http://lists.x.org/archives/xorg-devel/2013-October/037996.html
+> 
+>> Pixman - Corrupted CustomShape crashes Xorg 
+>> https://bugs.freedesktop.org/show_bug.cgi?id=67484 Patch: -
+>> 5e14da97f16e421d084a9e735be21b1025150f0c (fix) -
+>> 2f876cf86718d3dd9b3b04ae9552530edafe58a1 (test case)
+> 
+>> Thanks!
+> 
+> 
+> So only x.org crashes, you can trigger it via X.org, or via pixman? or
+> is pixman also crashing?
+> 
+> 
 
-1) An use-after-free error in "htmlParseChunk()" can be exploited to 
-dereference already freed memory.
+>From https://bugs.freedesktop.org/show_bug.cgi?id=67484 and
+http://patchwork.freedesktop.org/patch/14769/ it sounded like it would
+affect both 1) crash an application using pixman 2) crash the X server
 
-2) Two use-after-free errors in "xmldecl_done()" can be exploited to 
-dereference already freed memory.
+Is that correct?
 
-The vulnerabilities are reported in version 2.9.0. Other versions may also be 
-affected.
-
-Commit:
-https://git.gnome.org/browse/libxml2/commit/?id=de0cc20c29cb3f056062925395e0f68d2250a46f
-
-[1]: https://secunia.com/advisories/53061/
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+--
+Murray McAllister / Red Hat Security Response Team
