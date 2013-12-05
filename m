@@ -1,40 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/8
-Message-ID: <20130815011147.096b4c1e.reed@reedloden.com>
-Date: Thu, 15 Aug 2013 01:11:47 -0700
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/05/1
+Message-ID: <529FFAD6.2030600@redhat.com>
+Date: Thu, 05 Dec 2013 15:02:30 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: rubygems insecure download (and other problems)
+CC: meissner@...e.de, Kurt Seifried <kseifrie@...hat.com>
+Subject: CVE needed for hplip insecure auto update feature?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On Wed, 14 Aug 2013 14:59:12 -0600
-Kurt Seifried <kseifried@...hat.com> wrote:
+https://bugzilla.novell.com/show_bug.cgi?id=853405 talks about an
+upgrade feature in hplip downloading (via HTTP) a binary and executing
+it. Is a CVE needed for that?
 
-> Problem #2:
-> it redirects to  production.cf.rubygems.org which is on cloudfront so
-> has certificate mismatch, so either users have to accept insecurity,
-> or... well there is no second choice =(.
-> 
-> https://www.ssllabs.com/ssltest/analyze.html?d=production.cf.rubygems.org
+Along with the versions in
+<https://bugzilla.novell.com/show_bug.cgi?id=853405#c6>, the hplip 1.6.7
+and hplip3 3.9.8 versions I looked at did not have the upgrade.py file
+in the source (newer version like 3.13.11 had it in the source but the
+RPM spec file looks to remove it at build time, so it is not provided in
+the binary RPMs).
 
-It only does that if you use http://. If you use https://rubygems.org,
-it goes through S3 directly
-(https://s3.amazonaws.com/production.s3.rubygems.org/)
+Thanks,
 
-See this code:
-https://github.com/rubygems/rubygems-aws/blob/master/chef/site-cookbooks/rubygems/templates/default/nginx_balancer.conf.erb
-
-I do wish they would fix their cipher suite choices, though. :/
-
-~reed
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iEYEARECAAYFAlIMjUMACgkQa6IiJvPDPVr9pACfcbDy0A0NtHZbXfLgkzahGPsU
-+tMAn0g7YtbhyA7e7sGuFNudJNkKlae5
-=J+1x
------END PGP SIGNATURE-----
+--
+Murray McAllister / Red Hat Security Response Team
