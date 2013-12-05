@@ -1,67 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/03/3
-Message-ID: <5132B94F.1010502@redhat.com>
-Date: Sat, 02 Mar 2013 19:45:35 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/05/2
+Message-ID: <52A005CC.8040702@redhat.com>
+Date: Wed, 04 Dec 2013 21:49:16 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Henri Salo <henri@...v.fi>
-CC: MustLive <mustlive@...security.com.ua>, full-disclosure@...ts.grok.org.uk, jon@...rohan.me, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: [Full-disclosure] XSS vulnerabilities in em-shorty, RepRapCalculator, Fulcrum, Django and aCMS - ZeroClipboard.swf
+To: mmcallis@...hat.com, oss-security@...ts.openwall.com
+CC: meissner@...e.de, Kurt Seifried <kseifrie@...hat.com>
+Subject: Re: CVE needed for hplip insecure auto update feature?
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/02/2013 10:17 AM, Henri Salo wrote:
-> On Fri, Mar 01, 2013 at 11:50:00PM +0200, MustLive wrote:
->> I'm resending my letter from February 23, 2013 (since FD was not
->> working that day).
->> 
->> After my previous list of vulnerable software with
->> ZeroClipboard.swf, here is a list of software with
->> ZeroClipboard10.swf. These are Cross-Site Scripting
->> vulnerabilities in em-shorty, RepRapCalculator, Fulcrum, Django 
->> and aCMS.
->> 
->> Earlier I've wrote about Cross-Site Scripting vulnerabilities in 
->> ZeroClipboard (http://seclists.org/fulldisclosure/2013/Feb/103).
->> I wrote that this is very widespread flash-file and it's placed
->> at tens of thousands of web sites. And it's used in hundreds of
->> web applications. Among them are em-shorty, RepRapCalculator,
->> Fulcrum (CMS), Django and aCMS. And there are many other
->> vulnerable web applications with ZeroClipboard10.swf (some of 
->> them also contain ZeroClipboard.swf).
+On 12/04/2013 09:02 PM, Murray McAllister wrote:
+> Hello,
 > 
-> So did you report this vulnerability to those projects? Even to
-> security@ or similar address? I noticed this vulnerability from
-> WordPress plugins. Did you report those? Did you ask CVE
-> identifiers?
+> https://bugzilla.novell.com/show_bug.cgi?id=853405 talks about an 
+> upgrade feature in hplip downloading (via HTTP) a binary and
+> executing it. Is a CVE needed for that?
+> 
+> Along with the versions in 
+> <https://bugzilla.novell.com/show_bug.cgi?id=853405#c6>, the hplip
+> 1.6.7 and hplip3 3.9.8 versions I looked at did not have the
+> upgrade.py file in the source (newer version like 3.13.11 had it in
+> the source but the RPM spec file looks to remove it at build time,
+> so it is not provided in the binary RPMs).
+> 
+> Thanks,
+> 
+> -- Murray McAllister / Red Hat Security Response Team
+> 
 
-Please use CVE-2013-1808 for this issue. Added the author to the CC so
-he's aware of it. Also thanks to Henri Salo who has taken on
-coordinating this issue (it appears to affect quite a few things).
+I'm going to say this deserves a CVE due to the following factors:
 
-> -- Henri Salo
+1) the default is insane:
+if HPLIP_PATH is None:
+url="http://sourceforge.net/projects/hplip/files/hplip/%s/hplip-%s.run/download"
+
+2) A google search for "HPLIP_PATH" yields 6 results. _6_. This is not
+documented anywhere I can find.
+
+3) I checked the source code:
+
+[kseifrie@...alhost hplip-3.13.9]$ find ./ -type f  | xargs grep
+HPLIP_PATH
+./upgrade.py:HPLIP_PATH=None
+./upgrade.py:        HPLIP_PATH=a
+./upgrade.py:        if HPLIP_PATH is not None:
+./upgrade.py:            if os.path.exists(HPLIP_PATH):
+./upgrade.py:                download_file = HPLIP_PATH
+./upgrade.py:                log.error("%s file is not present.
+Downloading from Net..." %HPLIP_PATH)
+./upgrade.py:                HPLIP_PATH = None
+./upgrade.py:        if HPLIP_PATH is None:
+
+Again no documents. Not even a hint (e.g. --help listing command line
+options)
 
 
+Definitely CVE worthy. Please use CVE-2013-6427  for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRMrlPAAoJEBYNRVNeJnmTdIcP/jCg7dnLg39HSNiFCpSUtp4m
-I5kvJqyCcIEfVH7E6buHjN81tD8j4HTQBm89lxwD5E+Ukk0vwLrJ8hekEn10hY6A
-Mhr1oaxM6RlRLYEkNLt9njnd1iyLW5Vt47SCuqv5p0EmFZ7Uy/2fdZMziIAUEuIM
-kh2Si3097ntuZL+HagF6SQziiVIBIpLVI5qwCi4aULix949rVIHUhOFgP1AMTMKp
-b64nSCGkxxd/hZ1j8qOTt/zSdkMwmRyIteP5UcJ2C8opRPU8TKR780kq7PyAPZhi
-ZYPUhztgEnTKVbvtv8eZ5aS4IjVGZGNC4yF5+GOtCMs6OCToMW7WZ5STbCK1uR1n
-1ArPFBYg4kK+ul33NYlUOJcdXbGoQE/ImIjh+jmzI4NjREwGGbBawICl3Q1GFvLd
-+tBrKY8C4q9LDQzIR0ctkywkLi/6t95ds5iRzZhBL2V+4EjjmWDoo8Zyx+gQuQ4A
-BTWsV5IdT9DIarIw7lW09DU2pGjkFm/y8mNBde2a5ZnSqZIsTBwCu2M2NhyfQ8vi
-MQI4M/aGB8pG/DeGmaYNmQkYk4a/Hb8tyApSWLsVmrDQgpEpQ9Y9rrbuM+K6GspA
-1MC2/bCZGYf3GM0EApGJY64UCE9s0qzGs0Sy3g5cUNFUsoDRrKPdxnkiA8rk1yY9
-eMC+bdCYgeHd/CZwsMYp
-=oHXG
+iQIcBAEBAgAGBQJSoAXLAAoJEBYNRVNeJnmT+lgP/AhuTFQmKuiOV6S21CzTAXdw
+yFdu1P5K/vd6GyxyKKK45yt1wb73CISXVn9oGQEG3Zdpf5wFLrTG7H7wltAz+867
+lngeBhdF3IdYCe2w2eMM7kQGtDxny1Qa2eS1Xa+3l4vihsFoSS8z9Rbytn8ay4nQ
+tYrfWlJaMn3XZEx4U846E/7HTbi+/K4LTT4UDww5lKfhVR8QEBhy5IN4/Ols61Jn
+9Ditz0hyZfn4NQa91CIv6HGLsv2FBhm8dgH1rHZ5gUcyjuNvWWHG+m+8becv0Jdr
+n+bB5NUdqyJKeD8FWPRq7EmO4QSsOIX+HamAi+PmT8KkB9/rNhYfSHu+u2WGDjRj
+HY/+QdvCHphU5Lc176aAnSwwt6rs8I+saxjG3bibI921+Kj7U2ATUFAWEmG99fq6
+tbFMRaUtAGtHuqZ3RODic5iBib5AUqU/ElyJxqDnxrlmgeT7+NBQUaEYWzsJasYV
+SeCju0UvCSS3pM/aXojv26k2EeXGH7yBrHstCgK9SCq9QK5qr0joGbLQxj2LgLRl
+CNE0cuV+zcOVCLw3iNv6/ScvSJZ7XoJXFlyKLgoQ7xn1W9gGfiVpis3PG4HOR3mi
+syfDDt8xwCWYRTrYh1vu2eLR4ZiPcit41+d7yKBH3Ki2FGWwZgQJ/1UPWmH/If0G
+ZVFYJfBrO9VWQmUSyh2r
+=f8h2
 -----END PGP SIGNATURE-----
