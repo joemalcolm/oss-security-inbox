@@ -1,49 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/30/5
-Message-ID: <52713003.2030107@redhat.com>
-Date: Wed, 30 Oct 2013 10:12:51 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/06/5
+Message-ID: <52A21AC2.2060406@redhat.com>
+Date: Fri, 06 Dec 2013 11:43:14 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Tollef Fog Heen <tfheen@...nish-software.com>
-CC: ingvar@...pill-linpro.com, ssm@...ian.org, team@...urity.debian.orgteam, Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: CVE number needed for Varnish DoS, also heads-up
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Linux kernel: net: fib: fib6_add: potential NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Adding oss-security to cc as per
-http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
-since it's public.
+On 12/06/2013 06:46 AM, P J P wrote:
+> Hello,
+> 
+> Linux kernel built with the IPv6 protocol(CONFIG_IPv6) along with
+> the IPv6 source address based routing support(CONFIG_IPV6_SUBTREE)
+> is vulnerable to a NULL pointer dereference flaw. It could occur
+> while doing an ioctl(SIOCADDRT) call on an IPv6 socket. User would
+> need to have CAP_NET_ADMIN privileges to perform such a call.
+> 
+> A user/program with CAP_NET_ADMIN privileges could use this flaw to
+> crash a system resulting in DoS.
+> 
+> Upstream fix: ------------- ->
+> https://git.kernel.org/linus/ae7b4e1f213aa659aedf9c6ecad0bf5f0476e1e2
+>
+>  Reference: ---------- ->
+> https://bugzilla.redhat.com/show_bug.cgi?id=1039054
+> 
+> 
+> Thank you. -- Prasad J Pandit / Red Hat Security Response Team
 
-
-On 10/30/2013 08:05 AM, Tollef Fog Heen wrote:
-> Hi Kurt,
-> 
-> I'm being told by the Debian security team that they can't assign a
-> CVE as there has been a public bug report about this issue, but
-> that you can help.  (https://www.varnish-cache.org/trac/ticket/1367
-> is the bug report)
-> 
-> Can you please get me a CVE id?
-> 
-> Thanks, - Tollef Fog Heen
-> 
-> ]] Tollef Fog Heen
-> 
->> Hi,
->> 
->> (Cc to varnish maintainer in Debian and Fedora)
->> 
->> we've had a denial of service attack reported in Varnish.  I
->> believe we should get this fixed in stable (we're working on a
->> patch), but I'd like a CVE # to go with the advisory.  Draft
->> advisory at http://etherpad.wikimedia.org/p/WnwRT4FH6e
->> 
->> Regards, -- Tollef Fog Heen Technical lead | Varnish Software AS 
->> 📞: +47 21 98 92 64 We Make Websites Fly!
-> 
-
-Please use CVE-2013-4484 for this issue.
+Please use CVE-2013-6431 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -51,17 +39,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJScTADAAoJEBYNRVNeJnmTDqIQALHYdrKe6DwLSO53z/RhXApG
-iZbKmalHlO8SEoMP8DCW6ln20/eBIzn/vgNoBQUy8DSt2prnllaAjLpXtZkPwX0O
-ZG6DQOq79FeEGEHA5/3VN7gFYoFKYYYrPnfJGrQ//RmT1wh/IFJweOONWi0w686/
-APfER2THBfe05jGEti6MB6JcV31S4VtEWNBqToasW7UInHqxuG2ryQsTMaiU/oXW
-FR29oTbRoBr8gPTOX5aroQuH9gO72WNcRQ1SXupQAfUYwyM/9Y2KrnYR5xDg8Uop
-n2A4ON2bqFxD0vmqod8SmB96FoTRzMemBTpqx4pCEEdEV2B9OVD7c+K3U5+6QFLP
-KoJc3hdHqZj2T98OZyVKfWFzkZPy/WHOX8pjgzgPmNR9syvufoe5zL9iox8HvSk6
-1mhq5xpXL00wu4Z9V7DdiSKZUJ1zEWSukZy3gTrGIDDYpX6lkxtnLmIH3gaM3tvY
-v5QEYPwBsDagnxsslrt5gA8gE4Hf0j/b9AjGngK96SkN+77zkHo8qjAIR373w9/k
-SRXc4OFs2V0YB1rm4jV44X2hY2UbWN6631Hy60KZrknWkA6Ij/+lslZ4ShUK2LXt
-Gc512k/q6MrkguCesHCpTmWaHO+Q+HK9e+vkpoj8jnj+rNHFGyFL+jO4vXN2QuXk
-mBZpOoGORQnvfaSYBadq
-=cio8
+iQIcBAEBAgAGBQJSohrBAAoJEBYNRVNeJnmTGGYP/1wXcro/6xSG8SmKqUUJXC0I
+0WF9oKNyDx2ikUI9gM5f82N3ez2mtHRwygU8WkWRp9rf/XqiE5KvMlVwrRXf+hHB
+CHpaw9Yc9IoPjXIdBbmXSlgurP362I/b9QwG36qNwEQya78f0eHqnWbDb8VSETpm
+lhSB3V/3EvFEY+U2/alaIcShrU22xLBknNdTxmkrW9ydloTUIAYpVKv6HXEv+l1+
+ZkibEsOG/fIlmRrGqHf0yafyXxooB3Cq9V5zfhrCHntFgZ7HVLS8B7/tTMKhphAH
+TJvWnU84BE6zF/CiCy5CdlJVA8/h2VSahxB5zbTBkKcoSerbI0QumsRsF4a71J8K
+xq+PP8eqAVz2LSmfZtul6GD6JirvH6QuHVWN2YhisCUC2wKqcp8uSPI0QneKaf4I
+SchQMAAQiEIqYCrJpGTY2u6NbGnZeih+vkBbBlJgpzH4CXKl5DoPl3/KsBFwd4kK
+7Na8aZWQMYUzvTHywN4WkN/m5OjfyErK89+F0eQqPXFnLUaHKDVOKjzhJ/fcbO2w
+iUKpHUtc4Wu24moi+NNa4ovvuv9XJ6sjl0easlQZVHlU6MiQZ9d/m640nTz270zC
+Gc4/NIAD+7Cco+0FgygBgYENkIazKpm8R6uUm3+4NAIVK7m++zD6t1FBdzH7P0A0
+mSIRRpTRjeGkGHxEhkId
+=yU7W
 -----END PGP SIGNATURE-----
