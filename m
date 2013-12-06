@@ -1,21 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/8
-Message-ID: <51C02219.5080200@redhat.com>
-Date: Tue, 18 Jun 2013 11:02:17 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/06/6
+Message-ID: <52A21AEB.5080203@redhat.com>
+Date: Fri, 06 Dec 2013 11:43:55 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on a vuln/CVE?
+Subject: Re: CVE request: Kernel: ping: NULL pointer dereference on write to msg_name
 Content-Type: text/plain; charset=utf-8
 
-On 06/18/2013 08:44 AM, Kurt Seifried wrote:
-> However my original question still stands, can/should we consider a
-> common configuration of software that goes from being secure to
-> insecure to be worthy of a CVE? A lot of things that used to be common
-> practice (like shipping every service/server enabled, all accounts
-> active, all access enabled, anonymous uploads allowed, etc.) are now
-> seen as security vulnerabilities/exposures.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We definitely do.  A recent example is CVE-2012-4446.
+On 12/06/2013 07:01 AM, Vasily Kulikov wrote:
+> Hi,
+> 
+> On Fri, Dec 06, 2013 at 19:13 +0530, P J P wrote:
+>> Linux kernel built with the TCP/IP networking support(CONFIG_NET)
+>> is vulnerable to a NULL pointer dereference flaw. It could occur
+>> via a plain read(2) call on a ping socket. Usage of ping sockets
+>> is generally restricted to privileged users.
+>> 
+>> A user/program able to read from ping sockets could use this flaw
+>> to crash a system resulting in DoS.
+>> 
+>> Upstream fix: ------------- ->
+>> https://git.kernel.org/linus/cf970c002d270c36202bd5b9c2804d3097a52da0
+>>
+>>
+>> 
+Reference:
+>> ---------- ->
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1039046
+> 
+> The bug was introduced with ping6 sockets implementation in:
+> 
+> https://git.kernel.org/linus/6d0bfe22611602f36617bc7aa2ffa1bbb2f54c67
+>
+>  Thanks,
 
--- 
-Florian Weimer / Red Hat Product Security Team
+Please use CVE-2013-6432 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSohrrAAoJEBYNRVNeJnmT1ecQAJWe9HwJpAqrLECRlH7WfKQ4
+fCdBn7NtbJDfEJiLrWEPL6VRh/kRGUQwWmT3ZgfBmz8xRBYUSPmt7mMJL8ruf7k5
+S9NDS1rv0OPiIivCc73+g36Tk2TPG27FET2y2pEIwnln80zVm4zc0uhM6aFR3gG9
+Bs17kw3+L9jRronXncoM6VR8X4BEg5Aydg23cqnuGbYAZDoX5YeGQhQV29ooGgjN
+ZE9C3xjzfSw9JhgIBMncID1iQt0F0YP8hcjyIJw8cnRVb+FbEY98TkRopSWufxhM
+pnZJmUKoyCl8qm2Kb72IZQlm9Wt6veABdf5LOleLHlJfk1MadYyEZdM/cEHOHjgC
+2GprLuF4p/UJkm+t7Z9XySWnG2bWMurDJWM773379qYmOpJ1QC1CqAM1RHIQuHBy
+yaqAGvEP4HXgHjWkeIEaxloKsTh04fFRnlKr/+hquKcdew6zvy74VuqiOKyRGKxr
+5x07k4JpkQt2C8ZxJOUfCc8ZqZVqdmbaxixwKMO1KTZYD4fxn+5BmFWkG4b3fKya
+J9zlJ+iQMzguWwh0IYIVgvKDmBmMSYau51bSN4n4gV+/YdBuIHyTc/ViSLSHqgNO
+xPsB7i0ThTcN6wpfDHXAPNDRuEpZjgfroGlh55tdkvEUrNmZm411OojjbkM0biGa
+NbeYrvJcCaf+1C3kj3jB
+=/c5r
+-----END PGP SIGNATURE-----
