@@ -1,64 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/11
-Message-ID: <50F6CAFE.3050707@redhat.com>
-Date: Wed, 16 Jan 2013 08:45:02 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/06/4
+Message-ID: <20131206140153.GA16411@cachalot>
+Date: Fri, 6 Dec 2013 18:01:53 +0400
+From: Vasily Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>, Steven Christey <coley@...re.org>, Eygene Ryabinkin <rea@...ebsd.org>, Tomas Hoger <thoger@...hat.com>
-Subject: Re: pam-pgsql NULL password handling issue
+Subject: Re: CVE request: Kernel: ping: NULL pointer dereference on write to msg_name
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 01/15/2013 10:49 PM, Kurt Seifried wrote:
-> On 01/15/2013 12:23 PM, Florian Weimer wrote:
->> Lucas Clemente Vella discovered that pam-pgsql (aka pam_pgsql) 
->> might allow login with any password the SQL query for the
->> password returns NULL.
+On Fri, Dec 06, 2013 at 19:13 +0530, P J P wrote:
+> Linux kernel built with the TCP/IP networking support(CONFIG_NET) is
+> vulnerable to a NULL pointer dereference flaw. It could occur via a
+> plain read(2) call on a ping socket. Usage of ping sockets is
+> generally restricted to privileged users.
 > 
->> Bug report: <https://sourceforge.net/p/pam-pgsql/bugs/13/>
->> Patch: 
->> <https://sourceforge.net/u/lvella/pam-pgsql/ci/9361f5970e5dd90a747319995b67c2f73b91448c/>
->
->>  As usual, I'm not sure if this constitutes a security bug, but 
->> we'll probably fix this nevertheless if we get the opportunity.
+> A user/program able to read from ping sockets could use this flaw to crash a
+> system resulting in DoS.
 > 
-> Please use CVE-2013-0188 for this issue.
+> Upstream fix:
+> -------------
+>  -> https://git.kernel.org/linus/cf970c002d270c36202bd5b9c2804d3097a52da0
 > 
-> In general I think we take a strict line on password parsing, I
-> can see programs that might create new accounts with a NULL
-> password especially on the theory that the front end/etc forces a
-> password to be entered that isn't NULL.
+> Reference:
+> ----------
+>  -> https://bugzilla.redhat.com/show_bug.cgi?id=1039046
 
-Argh I made a typo in the CVE assignment for Squid and accidentally
-typed CVE-2013-0188 for it as well (normally I cut and paste, this is
-why).
+The bug was introduced with ping6 sockets implementation in:
 
-Please REJECT CVE-2013-0188.
+https://git.kernel.org/linus/6d0bfe22611602f36617bc7aa2ffa1bbb2f54c67
 
-Please use CVE-2013-0191 for the "pam-pgsql NULL password issue"
+Thanks,
 
-Please use CVE-2013-0189 for the "SQUID incomplete fix for CVE-2012-5643"
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ9sr+AAoJEBYNRVNeJnmTRxMP/jD+63eSrIeEEDdL4LbgyHKG
-bgwSRaIfwuTuY7xlxRwbjo8YFoTfHBnkb2GvzBbTA5S3/EjF0MJWxnNZj5ypDceB
-vIxNm91U+vun4fDtJnmM0F29fWew+D4c4PUi+5OqEojVmSIjx9QUQLBjYbyH/ayD
-UhsOMgFQkhbyIlxtyls+GTZ6y4oVkcOTLeANkqtrsqooEJL1sxHC2sNZvt22rx/H
-HXo2x+sSWijGdSec/h+RPdoLjeOWhhlRta4545qGPNMNFi6XoRXW5rkglJ9vdBPs
-QcH36ASr9WIkfdgvtztmFnFO4f1HkvQOfmUvlNd55DT7sIyu8syAZjeeyyi8ko1x
-IDKirAtgT/65rNqoyVC1oCLGWbYwT3kQo3tnNkqiUpIwWOMXhSBr+UZ2dMdvMCE4
-HKur/kEuTCbYg1ijJWAa6wjRhqW8ScJiqjCBbeAGYXWDiXxKrvuLjh811qqnntMw
-8JIeSH5n5wn16H4ORSWVtRIl1C/0nX+5tWlRWAkxs1FvK+BeI8WOj1mR+c2uIp30
-5hILcZYoMiis8T7TnUtMzsRkeHanzMFnJfaWClI3z+qlU97zOH3EvvlukQZNneHd
-k7HWmfWD3YlgF9/YdiGdi/4cAXX2PHEeHh9m6FDqo/Wteuvy+x/qAuNripyIn7WB
-xESARPNBORuTNy2vlADE
-=yA5C
------END PGP SIGNATURE-----
+-- 
+Vasily Kulikov
+http://www.openwall.com - bringing security into open computing environments
