@@ -1,59 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/7
-Message-ID: <20130806173855.GB24908@redhat.com>
-Date: Tue, 6 Aug 2013 19:38:55 +0200
-From: Oleg Nesterov <oleg@...hat.com>
-To: security@...nel.org, oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Cc: "Eric W. Biederman" <ebiederm@...ssion.com>, Andy Lutomirski <luto@...capital.net>, David Howells <dhowells@...hat.com>, linux-kernel@...r.kernel.org
-Subject: [PATCH 1/1] userns: unshare_userns(&cred) should not populate cred on failure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/06/3
+Message-ID: <alpine.LFD.2.10.1312061913410.4862@javelin.pnq.redhat.com>
+Date: Fri, 6 Dec 2013 19:16:01 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request: Linux kernel: net: fib: fib6_add: potential NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-unshare_userns(new_cred) does *new_cred = prepare_creds() before
-create_user_ns() which can fail. However, the caller expects that
-it doesn't need to take care of new_cred if unshare_userns() fails.
+    Hello,
 
-We could change the single caller, sys_unshare(), but I think it
-would be more clean to avoid the side effects on failure, so with
-this patch unshare_userns() does put_cred() itself and initializes
-*new_cred only if create_user_ns() succeeeds.
+Linux kernel built with the IPv6 protocol(CONFIG_IPv6) along with the IPv6 
+source address based routing support(CONFIG_IPV6_SUBTREE) is vulnerable to a 
+NULL pointer dereference flaw. It could occur while doing an ioctl(SIOCADDRT) 
+call on an IPv6 socket. User would need to have CAP_NET_ADMIN privileges to 
+perform such a call.
 
-Cc: stable@...r.kernel.org
-Signed-off-by: Oleg Nesterov <oleg@...hat.com>
----
- kernel/user_namespace.c |   13 +++++++++----
- 1 files changed, 9 insertions(+), 4 deletions(-)
+A user/program with CAP_NET_ADMIN privileges could use this flaw to crash a
+system resulting in DoS.
 
-diff --git a/kernel/user_namespace.c b/kernel/user_namespace.c
-index d8c30db..6e50a44 100644
---- a/kernel/user_namespace.c
-+++ b/kernel/user_namespace.c
-@@ -105,16 +105,21 @@ int create_user_ns(struct cred *new)
- int unshare_userns(unsigned long unshare_flags, struct cred **new_cred)
- {
- 	struct cred *cred;
-+	int err = -ENOMEM;
- 
- 	if (!(unshare_flags & CLONE_NEWUSER))
- 		return 0;
- 
- 	cred = prepare_creds();
--	if (!cred)
--		return -ENOMEM;
-+	if (cred) {
-+		err = create_user_ns(cred);
-+		if (err)
-+			put_cred(cred);
-+		else
-+			*new_cred = cred;
-+	}
- 
--	*new_cred = cred;
--	return create_user_ns(cred);
-+	return err;
- }
- 
- void free_user_ns(struct user_namespace *ns)
--- 
-1.5.5.1
+Upstream fix:
+-------------
+  -> https://git.kernel.org/linus/ae7b4e1f213aa659aedf9c6ecad0bf5f0476e1e2
+
+Reference:
+----------
+  -> https://bugzilla.redhat.com/show_bug.cgi?id=1039054
 
 
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
