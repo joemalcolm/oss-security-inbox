@@ -1,76 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/13
-Message-ID: <517ECAF8.4010500@redhat.com>
-Date: Mon, 29 Apr 2013 13:33:12 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: OS command injection vulnerability in Chicken Scheme
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/06/7
+Message-ID: <CABbbngBZtC76ss+1Mey4uYA3U6GM7z9oo+z6NBT7sRN4BF189A@mail.gmail.com>
+Date: Fri, 6 Dec 2013 15:19:18 -0800
+From: Forest Monsen <forest.monsen@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for Drupal core, and contributed modules
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi there, here is a combined request for CVE identifiers for Drupal core,
+and contributed modules.
 
-On 04/21/2013 01:11 PM, Peter Bex wrote:
-> Hello,
-> 
-> I'd like to request a CVE identifier for a bug in Chicken Scheme
-> which allows a malicious user to cause shell command execution
-> through injection of a pipe symbol and possibly other shell meta
-> characters.
-> 
-> This bug is present in all versions of CHICKEN.  It will be fixed 
-> in 4.8.3 and 4.8.2 as per commit
-> 58684f69572453acc6fed7326fa9df39be98760e. Version 4.9.0 will likely
-> be the first stable release to include this fix, unless it is
-> decided to backport this fix to the stability release.
-> 
-> The full announcement is here: 
-> http://lists.nongnu.org/archive/html/chicken-announce/2013-04/msg00000.html
+First, core:
+SA-CORE-2013-003 - Drupal core - Multiple vulnerabilities
+ https://drupal.org/SA-CORE-2013-003
 
-Please
-> 
-use CVE-2013-2024 for this issue.
+- "Multiple vulnerabilities due to optimistic cross-site request forgery
+protection (Form API validation - Drupal 6 and 7)": Correct me if I'm
+wrong, but I read this as a single vulnerability in the underlying core
+CSRF prevention code; it manifests differently based on the user-created
+("contrib") callbacks that employ it.
 
-> By the way, I'm confused as to why the CVEs I've requested so far
-> don't show up in NVD.  For example, 
-> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-6122 says
-> the CVE does not exist, but Kurt assigned it in February: 
-> http://www.openwall.com/lists/oss-security/2013/02/08/2
-> 
-> The other CVE numbers in that mail produce a "not found" page as
-> well and an NVD database search for "chicken" turns up nothing
-> related to Chicken Scheme.  The page says the database was last
-> updated April 19th 2013, so that's not the cause either.
+- "Multiple vulnerabilities due to weakness in pseudorandom number
+generation using mt_rand() (Form API, OpenID and random password generation
+- Drupal 6 and 7)": Not sure if further classification of this one is
+necessary.
 
-Because Mitre has a large backlog of CVE's to research and write up.
-Submitting researched/written entries to them will probably result in
-your entries being posted faster. Try to remember that CVE pushed
-thousands of these a year, the volume is considerable.
+- "Code execution prevention" for the "files" directory .htaccess for
+Apache: Execution of local code.
 
-> Cheers, Peter Bex
+- Access bypass in security token validation (as performed by
+drupal_valid_token() ).
 
-Apologies for the late reply
+- Cross-site scripting in Drupal core's Image module.
 
+- Open redirect in Drupal core's Overlay module.
 
+Now the contributed modules:
+SA-CONTRIB-2013-093 - Invitation - Access Bypass
+https://drupal.org/node/2140097
 
+SA-CONTRIB-2013-094 - EU Cookie Compliance - Cross Site Scripting (XSS)
+https://drupal.org/node/2140123
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+SA-CONTRIB-2013-095 - Organic Groups - Access bypass
+https://drupal.org/node/2140217
 
-iQIcBAEBAgAGBQJRfsr4AAoJEBYNRVNeJnmTUeQP/jyLkpkuLZZ/fgYUOj13X4UG
-TxnD3Yt8szD7xca/g/0f8SEFRH5+MinlUzYBjB/WS8ZZH2jMR2mJef/GJso48UXZ
-MKq9bEfBtyHL92RZwjIlzZyTMEK9l7/7nQX5psfr10NkA4UrHF9OXmyI4xrqi6+p
-CspfDaHlct8LkMjnQGCeXlT49onbsn2Ujq3vOCrHi0EcRArFHbSyplwnKC/zNj90
-/jPjuv/A6S5bpebv2ygFMGVGzNIOMoJn/R0wFMvDpztrCl87jJiErMaYVzyZA9KA
-PEvR+sbB5niIRjEHSW0Vp42ZTUbnryZXNsR7LHOKO7J+qupx76eYuW4kuslnYNx2
-GukDDLmI9/3wkcYqUmAX40srYzn3p8QE4hRjnLAl4fti0VMLTiBrYebF0VLk5H3A
-4EobmqUK4EtfeFheQuVX+515wDmGbAd1RXZQ0uMGmwNvGDE8lTRkPItPcGa55EMz
-PVDSt8fX4BeXZIXGi+NZ4Ul3UhNRfJLXNEa27DUvFeg89uwOT2Pgz5MNjtTgUAD+
-21XlfWp41+ChPikw+mfTPnXoHNwL47bPfqHTKlhI7KRhnkQTLUiqP7U7N+CNvfaJ
-P9sCOgTqTrqlBiOBJ72pOVfq0Cd0ZGGWmWaN12BkzA+qQces6vZrpxpO+HZsCpwq
-jJAcO+jUToZh+7u0UcpS
-=1CAw
------END PGP SIGNATURE-----
+SA-CONTRIB-2013-096 - Entity reference - Access bypass
+https://drupal.org/node/2140237
+
+SA-CONTRIB-2013-097 - OG Features - Access bypass
+https://drupal.org/node/2149791
+
+Thanks!
+
+Forest
+
