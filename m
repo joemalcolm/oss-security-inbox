@@ -1,22 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/19/2
-Message-ID: <871u7ypqu8.fsf@mid.deneb.enyo.de>
-Date: Wed, 19 Jun 2013 08:17:03 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/06/1
+Message-ID: <52A158A8.4010008@redhat.com>
+Date: Thu, 05 Dec 2013 21:55:04 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on a vuln/CVE?
+CC: ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com, tenderlove@...y-lang.org, "mattaimonetti@...il.com Aimonetti" <mattaimonetti@...il.com>, clemens@...lway.at, jose.valim@...il.com, stephan.soller@...ionweb.de, saimonmoore@...il.com, me@...nfuchs.com
+Subject: Re: Re: [CVE-2013-4491] Reflective XSS Vulnerability in Ruby on Rails
 Content-Type: text/plain; charset=utf-8
 
-* Kurt Seifried:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> I care a lot less about what is "officially endorsed" or not endorsed
-> and a lot more with what is actually going on. If a large percentage
-> of people are exposed to a vuln, even if they "shouldn't" be then it
-> would still get a CVE. I see a lot of CVEs that should never be
-> exploitable, but people do crazy things/configurations.
+On 12/05/2013 10:15 AM, Christopher Dell wrote:
+> Hello everyone,
+> 
+> Just to clarify I18n.enforce_available_locales quickly, when I18n 
+> initialises, it creates an array of the known locales called 
+> I18n.available_locales. Typically, this array is created by
+> scanning for YML files (in config/locales for a Rails app). With
+> I8n.enforce_available_locales set to true, we check that the
+> locale we're trying to use (eg. translate or localize) is included
+> in the available_locales. This means we're certain it can't be
+> malicious user submitted data even outside of the scope of a Rails
+> app.
+> 
+> I could really use a hand with the CVE announcements, I literally
+> have no idea about any of this!
+> 
+> Cheers,
+> 
+> -- Chris
+> 
+> PS. Including Sven's correct email address.
 
-But the present situation is really not that clear-cut.  We have no
-indicator of malicious intent from the current domain owner, and users
-would still have to disable signature checking *and* they must have
-configured the problematic repository.  That's a little bit
-far-fetched.
+Thanks. Contact me offlist, I can walk you through it. In general I'll
+be documenting this, it's not something that is documented at all in
+an actually useful fashion (there's 800 page books on doing security
+response which are basically useless for actually getting things done
+in Open Source projects =).
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSoVioAAoJEBYNRVNeJnmT5h8P/iyJNz0qETb4gdedis9HMSc8
+vmQpEFnw2r7rwUpapDZjr9Y9pJSlQh61zTFR6HHrwHlFLdD6O9Jc2l+MkTF6RYy5
+LhJD6e5OaTNSNGAFZgGv4GNUAwGYQQ5PMMeeiPMmHy7lkW30TBOn22m+UvwvIMGi
+vLhe5PF6jXUaHH5rKVgDeLPa8F7uHXZl5VwejirbO57TW9BcpDe0v1//Ioh/KWhg
+DvpcoVOdzXloDWeJ2qDj4ph0pfTqFkUuMF85EY5Lc6DZLWODHqiZJs6BVd8VsywW
+Byt0s4oSTZL2hqZo9beYo8BlYpwUhzOTSRWi31VwyDo/pn30iXTp828Ogbtbu3i3
+2vI6pAw0uj9AFERDY267D6lgbhMNu0cx8FAcMPfOwHgVdM7mBEXhjijaK7POUw8v
+sjzT4gYWn9TnXD/uSJJtvnEcktKrZINvA1cj2jzFAIvr0sK4LdZgxAqlo/m8W8ua
+K2YNYMxiglmTBdwC/gBDgITmFNeEVcb6gA0EglXQApM7KdyhK6VMO2NMjZzhSGP7
+iDoqjNA/u9ykXehCB2pAWyDNDaJ4khKfnWnFy6aMMWYW5R0rbpZgKQWw/5ttXY6O
+HQvetRQ2OsTRRC1l2/a1lMb1vEVemaZZ0XCTg8FtPQMgB3v9ACnAA7TpAPqTC++V
+wZWBValU5HcnCj23X8zE
+=tFFx
+-----END PGP SIGNATURE-----
