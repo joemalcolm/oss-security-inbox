@@ -1,21 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/16
-Message-ID: <2326732.azha692O1B@devil>
-Date: Fri, 22 Feb 2013 14:04:54 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: webfs world-readable log
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/06/2
+Message-ID: <alpine.LFD.2.10.1312061910160.4862@javelin.pnq.redhat.com>
+Date: Fri, 6 Dec 2013 19:13:32 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request: Kernel: ping: NULL pointer dereference on write to msg_name
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+    Hello,
 
-webfs[1], a Lightweight HTTP server for static content creates its log with 
-world-readable permission:
+Linux kernel built with the TCP/IP networking support(CONFIG_NET) is 
+vulnerable to a NULL pointer dereference flaw. It could occur via a plain 
+read(2) call on a ping socket. Usage of ping sockets is generally restricted 
+to privileged users.
 
-# ls /var/log/webfsd.log -la
--rw-r--r-- 1 root root 0 Feb 22 14:02 /var/log/webfsd.log
+A user/program able to read from ping sockets could use this flaw to crash a
+system resulting in DoS.
 
-Please assign a CVE.
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Upstream fix:
+-------------
+  -> https://git.kernel.org/linus/cf970c002d270c36202bd5b9c2804d3097a52da0
+
+Reference:
+----------
+  -> https://bugzilla.redhat.com/show_bug.cgi?id=1039046
+
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
