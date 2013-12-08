@@ -1,70 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/3
-Message-ID: <666096169.15446346.1385428638408.JavaMail.root@vmware.com>
-Date: Mon, 25 Nov 2013 17:17:18 -0800 (PST)
-From: Ramon de C Valle <rdecvalle@...are.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/2
+Message-ID: <52A505CD.6000702@redhat.com>
+Date: Mon, 09 Dec 2013 09:50:37 +1000
+From: Grant Murphy <gmurphy@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Kernel MSM - Memory leak in drivers/base/genlock.c
+Subject: Issue with PYTHON_EGG_CACHE
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+Not sure if this warrants a CVE -
 
------ Original Message -----
-> From: "Steven M. Christey" <coley@...re.org>
-> To: oss-security@...ts.openwall.com
-> Sent: Monday, November 25, 2013 10:57:23 PM
-> Subject: RE: [oss-security] CVE request: Kernel MSM - Memory leak in drivers/base/genlock.c
-> 
-> Kurt said:
-> 
-> >> The Genlock driver does not properly initialize all members of a
-> >> structure before copying it to user space. This allows a local
-> >> attacker to obtain potentially sensitive information from kernel
-> >> stack memory via ioctl system calls.
-> >
-> >This should be classified as CWE-200 Information Disclosure, "memory
-> >leak" refers to memory being used and not released properly, resulting
-> >in out of memory conditions.
-> 
-> In CWE, we discourage the "memory leak" term because it has multiple meanings
-> and interpretations: (1) that memory is allocated but never released, or (2)
-> that sensitive portions of memory are accidentally disclosed to untrusted
-> parties.
-> 
-> This request sounds like variant (2) of the varying uses of the "memory leak"
-> term, although Kurt's interpretation seems to be that it's about variant
-> (1), which further reinforces my personal desire to see that term go away
-> forever.
-> 
-> Anyway... Note that, as this issue is described, "information disclosure"
-> actually results from a root cause in which certain locations are not
-> properly initialized.  Thus CWE-665: Improper Initialization (or its child
-> CWE-457 Use of Uninitialized Variable) are probably more appropriate
-> characterizations of the core issue; in this case, it happens to lead to
-> memory disclosure, but in other cases, it might lead to privilege escalation
-> or other consequences (depending on how the uninitialized data is used.)
-I'd rather use "Missing Initialization of Resource (CWE-909)" to "Use of Uninitialized Resource (CWE-908)" to describe the chain of primary weaknesses. Although CWE-665 and CWE-909 seem very similar, even the examples—do we have a duplicate?
+Python .egg files can be loaded dynamically as dependencies. In order
+to process native DSO in .egg distributions the content of the file is
+unpacked. By default Python unpacks the files to $HOME/.python-eggs
+however this 'egg cache' directory can be overwritten by setting the
+environment variable PYTHON_EGG_CACHE.
 
-> 
-> Note that vulnerabilities can be combinations of 2 or more less-significant
-> errors, which in CWE are called chains or composites:
-> http://cwe.mitre.org/data/reports/chains_and_composites.html
-> 
-> That is, just like there can be attack chains, there can be vulnerability
-> chains.
-> 
-> As vulnerabilities become more and more complex (because the easy stuff is
-> slowly getting eliminated), chains and composites are likely to pose more
-> and more challenges for vulnerability classification in the future.  The
-> Linux kernel is one of those places.
-> 
-> For CVE assignment purposes, we generally try to classify based on the root
-> cause, but there is a recognition that opinions may vary widely in this
-> area.
-> 
-> - Steve
-> 
+It is common practice to set this to a world writeable directory such
+as /tmp in the instances where the user the process is executing as
+does not have a home directory (e.g. httpd). Unfortunately the
+extraction is done in such a way that the extraction path for the DSO
+is deterministic. As such it exposes a TOCTOU attack vector where a
+user my pre-emptively injecting a specially crafted DSO to achieve
+arbitrary code execution and potentially privilege escalation.
 
--- 
-Ramon de C Valle
-VMware (vSECR) Security Engineering Team
+The current version of setuptools attempts to mitigate this threat by
+a number of additional integrity checks in conjunction with issuing a
+warning if the extract directory is group or world writeable.
+
+This fix was introduced in version 0.6.46 of Python setuptools
+(https://pypi.python.org/pypi/setuptools#id48).
+
+The discovery of this issue can be attributed to Dhiru Kohlia and myself.
+
+- - Grant.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iF4EAREIAAYFAlKlBckACgkQcd9RAn5tszrDUQD9E7ZzCeLu2ojoSL/vtonbhCoX
+WASCa5LxDjIRlv2Fq7IA/jXb+ppEOdj8KBnnWbm4XRl8vbocKW5w2sNOvpZu9MhV
+=Sifa
+-----END PGP SIGNATURE-----
