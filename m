@@ -1,27 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/16/11
-Message-ID: <CABbbngAG9gpkEMHnxZO6KSF6+Ezsf=MyLpxFy8eJ_je58wVg1g@mail.gmail.com>
-Date: Tue, 16 Jul 2013 14:36:37 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/08/1
+Message-ID: <CABbbngDXDdLuLJ8vjHa03FPvFYjg7vQ-pn+uHr04jH9NG6wmbg@mail.gmail.com>
+Date: Sat, 7 Dec 2013 16:39:17 -0800
 From: Forest Monsen <forest.monsen@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE request for Drupal contrib modules
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE request for Drupal core, and contributed modules
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+On Fri, Dec 6, 2013 at 3:54 PM, Henri Salo <henri@...v.fi> wrote:
 
-I'd like to request CVE identifiers for:
+> These already received CVE IDs. Please see following post:
 
-SA-CONTRIB-2013-055 - Hatch - Cross Site Scripting
-https://drupal.org/node/2038363
 
-SA-CONTRIB-2013-056 - Stage File Proxy - Denial of Service
-https://drupal.org/node/2038801
+Thanks Henri.
 
-SA-CONTRIB-2013-057 - TinyBox - Cross Site Scripting (XSS)
-https://drupal.org/node/2038807
+Kurt, on Drupal Core vulnerabilities, would you like me to wait, or would
+you prefer to be prompted?
 
-Thanks!
-
+Best,
 Forest
 
