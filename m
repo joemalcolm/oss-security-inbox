@@ -1,38 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/54
-Message-ID: <20130227235757.GA1991@kroah.com>
-Date: Wed, 27 Feb 2013 15:57:57 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/08/2
+Message-ID: <52A3FA25.8030905@redhat.com>
+Date: Sat, 07 Dec 2013 21:48:37 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Subject: Re: CVE request for Drupal core, and contributed modules
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 28, 2013 at 12:33:00AM +0100, Jiri Kosina wrote:
-> On Wed, 27 Feb 2013, Greg KH wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 12/07/2013 05:39 PM, Forest Monsen wrote:
+> On Fri, Dec 6, 2013 at 3:54 PM, Henri Salo <henri@...v.fi> wrote:
 > 
-> > > Hmm, I wonder if perhaps the solution here isn't about spending a lot
-> > > of time analyzing hundreds of potentially serious bugs and notifying
-> > > the world about them all in an accurate way.  Perhaps the solution is
-> > > changing the development model or architecture of the kernel such that
-> > > there aren't so many bugs with *serious* impact in the first place.
-> > > 
-> > > Ooops... did I say that out loud?  
-> > 
-> > There's nothing wrong with that, and we have made many changes in the
-> > kernel to help mitigate problems before they occur.
-> > 
-> > If you know of any other ways that we can do this, please let us know.
+>> These already received CVE IDs. Please see following post:
 > 
-> - W^X
+> 
+> Thanks Henri.
+> 
+> Kurt, on Drupal Core vulnerabilities, would you like me to wait, or
+> would you prefer to be prompted?
+> 
+> Best, Forest
+> 
 
-I thought we tried this, and had to revert it due to problems it caused
-with some dyanmic code generators.  Or am I totally mistaken here?
+Earliest notification is best notification.
 
-> - not letting kernel dereference userspace pointers (and PMAP is not 
->   available everywhere, unfortunately)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-What do you mean by this?
-
-thanks,
-
-greg k-h
+iQIcBAEBAgAGBQJSo/okAAoJEBYNRVNeJnmTIPQQALjHNjREAapYwp/eMOxoBuXC
+H3G+Z7EWcq0sr+pdOf2GDndB0DjeWdrH5wCT7ROBqayoYRyBX0E1yEtycASWSeDk
+QQ0S4PZ+rCXhNZDS+slkahbtOt4VOAw0hWcir11Rgtm7uaj21VAcxTt0JTzSBGr1
+bKPxRta6oa0hh/Y++iabzyGE+RnFN/pQLXkvb1pJ5jE+AtpD0Q452ZIZ7NKpyd57
+s/81CaiScHntLBOM53BZHCvgcwC8uhlVIESyc3PKQS2WrS2I2Svwr9V6K6gVcD70
+z6XNOJ6MMRAWXRhsQrmKQkOVrLzECFI3C8FH8muIM2WWGPvHrxeozPPilOgKdPKS
+lhFw+jORNqtXXQfqEmXjLmB4Q1gx3tKIMGYmeqar6mIOrfmbEhktM5Uh5fVgaaN4
+/H6I5H021q33B8sNjYuymZ9ZqAvO66i1PbP0wBLnHjp+uYcJb9ftpXw2P+3PdB1/
++g1AAR2GeZjC+Ag8Kft3GmKm3ZqWDGU4/fAypWDTLfxh5ELQ6lQtN5UNGcFoX7Gj
+lhve4x1wVt+qghlO72O6mC5QAMpIwcIgZ/h1YZe+j87+pFV3K7ePVNAgoXJgAxTG
+LSBkCJtBIRdIIkOnJbj4Df6p5QsLBfDVwtHMDcbfYXdKQMB69+++6zjE7rWJdT4Q
+zTcqEREZzRlFQj6QTqXw
+=e+dt
+-----END PGP SIGNATURE-----
