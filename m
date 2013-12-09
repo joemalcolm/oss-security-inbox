@@ -1,24 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/2
-Message-ID: <20131104123817.GG19172@suse.de>
-Date: Mon, 4 Nov 2013 13:38:17 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: ftake@...ko.jp
-Subject: CVE Request: IBUS showing passwords during password input
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/10
+Message-ID: <CABbbngAe5BK1Z_+XOyTwX4iJjF3b-tv9up-f8qt5yQUgAaGAuA@mail.gmail.com>
+Date: Mon, 9 Dec 2013 09:34:27 -0800
+From: Forest Monsen <forest.monsen@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE request for Drupal core, and contributed modules
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Sat, Dec 7, 2013 at 8:48 PM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-One of our Japanese users found that some IBUS input methods
-show passwords while typing them, if a special "intent" is not
-provided.
+> Earliest notification is best notification.
 
-https://bugzilla.novell.com/show_bug.cgi?id=847718
-https://groups.google.com/forum/#!topic/ibus-user/mvCHDO1BJUw
 
-The behaviour started (I think) with with IBUS 1.5.4
+Hah! Thanks, got it.
 
-Fuminobu Takeyama, is this correct?
-
-Ciao, Marcus
