@@ -1,48 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/08/1
-Message-ID: <51149823.6050205@redhat.com>
-Date: Thu, 07 Feb 2013 23:16:03 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/4
+Message-ID: <52A5843F.7020109@gentoo.org>
+Date: Mon, 09 Dec 2013 12:50:07 +0400
+From: Sergey Popov <pinkbyte@...too.org>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: XSS in roundcube before 0.8.5
+Subject: Re: CVE request: ClamAV vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 02/07/2013 10:50 AM, Hanno B￶ck wrote:
-> Release notes: 
-> http://sourceforge.net/news/?group_id=139281&id=310213
+29.11.2013 21:58, Kurt Seifried пишет:
+> On 11/29/2013 02:20 AM, Sergey Popov wrote:
+>> It's a bit late, but i would like to request CVE for two
+>> vulnerabilities, that present in ClamAV before 0.97.7[1]:
 > 
-> Corresponding bug: http://trac.roundcube.net/ticket/1488850
+>> 1) A double-free error exists within the
+>> "unrar_extract_next_prepare()" function
+>> (libclamunrar_iface/unrar_iface.c) when parsing a RAR file.
 > 
-> Commit: 
-> https://github.com/roundcube/roundcubemail/commit/74cd0a9b62f11bc07c5a1d3ba0098b54883eb0ba
->
->  Please assign CVE.
+>> 2) An unspecified error within the "wwunpack()" function
+>> (libclamav/wwunpack.c) when unpacking a WWPack file can be
+>> exploited to corrupt heap memory.
+> 
+>> [1] - https://secunia.com/advisories/52647/
+> 
+> 
+> The blog entry
+> 
+> http://blog.clamav.net/2013/03/clamav-0977-has-been-released.html
+> 
+> contains no mention of security flaws,
+> 
+> Also the ChangeLog:
+> 
+> https://github.com/vrtadmin/clamav-devel/blob/0.97/ChangeLog
+> 
+> Doesn't contain any mention of the above flaws. Can you provide links
+> to source code/bug reports or something so I can verify this? Thanks.
+> 
 > 
 
-Please use CVE-2012-6121 for this issue.
+What's about:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+"ClamAV 0.97.7 addresses several reported potential security bugs.
+Thanks to Felix Groebert, Mateusz Jurczyk and Gynvael Coldwind of the
+Google Security Team for finding and reporting these issues."[1]
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+I know that there are no details provided here, but secunia advisory
+also points on 'unspecified vulnerabilities'.
 
-iQIcBAEBAgAGBQJRFJgjAAoJEBYNRVNeJnmTjggP/3G1qmOK4YgR/fbb7woNwfyl
-dMhGYcPcPOIte7onPjYGO1L79ui0xKezPi8/bwdd8EIe30/EkpPzUGulRp0/T5nL
-ptQ1CKM0Ra58zg/gY4iGnRPAxDFGjZpRIaKfY3o490rk07QQqfTApQjmUYRJWRe4
-ugQGmoWPj9SMIiDzlk+2WnMSqOk4Rb472neXExjdb24ufrSwo2ZraRNkhkhgBneM
-XufOPPCyfwjzuGIoK/nSVeJKioprtAlvXpaoCGG3mJ3iP+bLcLSbBQOKe/6V/d7F
-14u1jhfNEMcJw2j4uyQmPu5R9j2wFfPp2CYfJdDDoWNaSXyTb3IpoNRvuVtELJ9G
-jluPdkP1Bk68TFPBt/YzVLVfmv1Rcp7h/Ik8XU7WIiOr6pLrx5Bmo4ADyy7D2Fq3
-d0hk/iINhbB1AOnsg4PJPgI871TWa7yM3e+23UZgb+jQQD88iULvDmV6hpKFOWwc
-OvJeXTq91rZccMwXUQ4baBqCufgu7cDQeCT0qDXWEJFlAMgz69P8Zn1eTYfhPnFs
-lKLbVcHYRySaPBdpsJ1VBXWuk/wyOXWrq0NjxPluaVzu9SvU6spumg/B0UYl+/P1
-SnYdnLFa/BBPiMpZBK0gUA8Aap8oe3Hf+dKeqY8t6eeU9ARWLZRAoP/xuGQL7jzR
-ISag3l/Pl0vxM2xnM2jS
-=OpIt
------END PGP SIGNATURE-----
+[1] - quote from
+http://blog.clamav.net/2013/03/clamav-0977-has-been-released.html
+
+-- 
+Best regards, Sergey Popov
+Gentoo developer
+Gentoo Desktop Effects project lead
+Gentoo Qt project lead
+Gentoo Proxy maintainers project lead
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
