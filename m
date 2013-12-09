@@ -1,54 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/23/6
-Message-ID: <20131223190555.GA14467@eldamar.local>
-Date: Mon, 23 Dec 2013 20:05:55 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: David Bremner <bremner@...ian.org>
-Subject: Re: CVE Request: gitolite world writable files for fresh installs of v3.5.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/12
+Message-Id: <201312092339.rB9NdU5E026777@linus.mitre.org>
+Date: Mon, 9 Dec 2013 18:39:30 -0500 (EST)
+From: cve-assign@...re.org
+To: gmurphy@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Issue with PYTHON_EGG_CACHE
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Mon, Oct 21, 2013 at 02:18:21PM -0600, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+> Python .egg files can be loaded dynamically as dependencies. In order
+> to process native DSO in .egg distributions the content of the file is
+> unpacked. By default Python unpacks the files to $HOME/.python-eggs
+> however this 'egg cache' directory can be overwritten by setting the
+> environment variable PYTHON_EGG_CACHE.
 > 
-> On 10/20/2013 10:54 PM, Sitaram Chamarty wrote:
-> > Announcement: 
-> > https://groups.google.com/forum/#!topic/gitolite/Tu1sjaf7A4A/discussion
-> >
-> >  Code change: 
-> > https://github.com/sitaramc/gitolite/commit/3dad4f8e3214d6ab5f71823019a624fa48b055a3
-> >
-> > 
-> (or)
-> > http://code.google.com/p/gitolite/source/detail?r=3dad4f8e3214d6ab5f71823019a624fa48b055a3#
-> >
-> >  Brief description (main points of announcement): Fresh installs
-> > between fa06a34 (approx Sep 3rd) and v3.5.3, inclusive, create a
-> > few world writable files.  Sites which installed before that date
-> > are not affected, even if they subsequently upgraded to the faulty
-> > commit or beyond.  Affected sites need to run a one-time 'chmod -R'
-> > to fix.
-> > 
+> It is common practice to set this to a world writeable directory such
+> as /tmp in the instances where the user the process is executing as
+> does not have a home directory (e.g. httpd). Unfortunately the
+> extraction is done in such a way that the extraction path for the DSO
+> is deterministic. As such it exposes a TOCTOU attack vector where a
+> user my pre-emptively injecting a specially crafted DSO to achieve
+> arbitrary code execution and potentially privilege escalation.
 > 
-> Please use CVE-2013-4451 for this issue.
+> The current version of setuptools attempts to mitigate this threat by
+> a number of additional integrity checks in conjunction with issuing a
+> warning if the extract directory is group or world writeable.
+> 
+> This fix was introduced in version 0.6.46 of Python setuptools
+> (https://pypi.python.org/pypi/setuptools#id48).
 
-A small side note on this CVE: David Bremner found that gitolite
-previous to that commit also was vulnerable to a local filesystem
-information leak: Depending on the user umask running gitolite setup,
-he might create world readable files in the repositories, in
-particular the gitolite-admin one.
+This report didn't have enough information to assign any CVE IDs. When
+you say "It is common practice to set this to a world writeable
+directory such as /tmp in the instances where the user the process is
+executing as does not have a home directory (e.g. httpd)," can you
+describe where this common practice is observed? It seems likely that
+a separate CVE ID could be assigned for each application that follows
+this unsafe practice, as long as the application is an open-source
+product intended for deployment at multiple arbitrary sites.
 
-As example in the Debian packaging postinst, [1] would result in a
-world-readable /var/lib/gitolite3/repositories/gitolite-admin.git.
+Looking at this from the perspective of setuptools "Issue a warning if
+the PYTHON_EGG_CACHE or otherwise customized egg cache location
+specifies a directory that's group- or world-writable," this seems to
+be a security improvement, not a vulnerability fix. Accordingly, a CVE
+ID would probably not be assigned with setuptools as the
+affected/responsible product.
 
- [1] http://sources.debian.net/src/gitolite3/3.5.2-1/debian/postinst#L74
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-But this actually might not need a separate CVE for this issue
-(altough different versions are affected, if I understand it correctly
-both fall under CWE-276, Incorrect Default Permissions?).
-
-Regards,
-Salvatore
+iQEcBAEBAgAGBQJSplCSAAoJEKllVAevmvmsQCMIAKY/Z3HKUGt64j/sCCK8QlC8
+esrR9EGrGDpL+Rqog+RdARYeFnTjWWf7umKppFu5Pw6rsX+r/Gjg1izh3AZDP+rs
+y7I+efa7JyOeVSeUd3CecgdEztNiF1Vqg6jrMvvNyix7zpUyAkvz/frJQDgmHv+1
+kpdiwBBHDkQhVPR0wLGbna6Yrj4JZuG30/I0Zxp/8cMsGnkfv2NAuqZJQ0C4U2Jv
+uMA2cHfY8A6Fz+Rm1IhJxxNjkVJ/qgFZVqAlo3E4HfnJTCxTGajHHyRF1oxJIjqu
+dszkIVYADr542Bd28JT1ARjvEdJzWPLN5BjHC+1T7+HIxUkhkGi6IJV8KL9mdqs=
+=qxcY
+-----END PGP SIGNATURE-----
