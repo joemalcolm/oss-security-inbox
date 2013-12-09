@@ -1,62 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/28/5
-Message-ID: <20130228065316.GA5094@elende>
-Date: Thu, 28 Feb 2013 07:53:16 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: poppler 0.22.1 security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/11
+Message-Id: <201312092337.rB9NbYxt021435@linus.mitre.org>
+Date: Mon, 9 Dec 2013 18:37:34 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: two issues in libmicrohttpd
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Just noticed the following and wanted to ask:
-
-On Wed, Feb 27, 2013 at 08:39:40PM -0700, Kurt Seifried wrote:
-> > So far I see: 
-> > http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=8b6dc55e530b2f5ede6b9dfb64aafdd1d5836492
-> >
-> > 
-> Fix invalid memory access in 1150.pdf.asan.8.69
-> > 
-> > http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=e14b6e9c13d35c9bd1e0c50906ace8e707816888
-> >
-> > 
-> Fix invalid memory access in 2030.pdf.asan.69.463
-> > 
-> > http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=0388837f01bc467045164f9ddaff787000a8caaa
-> >
-> > 
-> Fix another invalid memory access in 1091.pdf.asan.72.42
-> > 
-> > http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=957aa252912cde85d76c41e9710b33425a82b696
-> >
-> > 
-> Fix invalid memory accesses in 1091.pdf.asan.72.42
-> > 
-> > http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=bbc2d8918fe234b7ef2c480eb148943922cc0959
-> >
-> > 
-> Fix invalid memory accesses in 1036.pdf.asan.23.17
+> Florian Weimer of the Red Hat Product Security Team discovered two
+> issues in libmicrohttpd:
 > 
-> Please use CVE-2013-1788 for these invalid memory issues.
-             ^^^^^^^^^^^^^
-> 
-> > http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a9b8ab4657dec65b8b86c225d12c533ad7e984e2
-> >
-> > 
-> Fix crash in broken file 1031.pdf.asan.48.15
-> > 
-> > http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a205e71a2dbe0c8d4f4905a76a3f79ec522eacec
-> >
-> > 
-> Do not crash in broken documents like 1007.pdf.asan.48.4
-> 
-> Please use CVE-2013-1788 for these crash issues.
-             ^^^^^^^^^^^^^
+> https://gnunet.org/svn/libmicrohttpd/ChangeLog
+> http://secunia.com/advisories/55903/
+> https://bugs.gentoo.org/show_bug.cgi?id=493450
 
-Was this intentional that there where both assigned CVE-2013-1788, for
-both the 'invalid memory issues' and the 'crash issues'?
+> 1) https://bugzilla.redhat.com/show_bug.cgi?id=1039384
 
-Regards,
-Salvatore
+Use CVE-2013-7038.
+
+ 
+> 2) https://bugzilla.redhat.com/show_bug.cgi?id=1039390
+
+Use CVE-2013-7039.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSpk/lAAoJEKllVAevmvmsDE0H/1D7xkrXZKwkvlEKzu78KDaF
+Q1mEJj0boixLOe0DnYRd1QqWm45F4XJE/bNoFdDEGQ6k2eqStsIT48HvwMjy6UaN
+bXR55cIduJOn507OHBGV2To5u5falb5+gvAurA6of77KoAHv/EbXZMw8Qn57840h
+gw7YR97rhzuZv792UtKgGP6da6pYIpc+Fn1Dc98WtIqAIgZ7Z5TeWZZh6AQSwKeJ
+UqSmbixi0SY0+5l47XKlVu3dlWPpe9vzL+68oTaq3iWI/N1XPAMHK/BMc1qGxqqd
+eYQJR0aKidKuSmPQD7YNCzyKxnMWqPmW2nrXpqBZsNV+hnTTlmM5Z7DodZZyq+8=
+=3xDS
+-----END PGP SIGNATURE-----
