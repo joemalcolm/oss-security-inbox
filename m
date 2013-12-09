@@ -1,73 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/29/8
-Message-id: <495b6b69-11f4-4f7d-a341-28b8dc704c30@me.com>
-Date: Thu, 29 Aug 2013 18:35:00 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: YingZhi Python Programming Language for iOS ftp .. bug & httpd arbitrary upload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/7
+Message-ID: <20131209123945.GA16680@openwall.com>
+Date: Mon, 9 Dec 2013 16:39:45 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: pam: password hashes aren't compared case-sensitively
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Dec 09, 2013 at 03:21:39PM +0530, Ratul Gupta wrote:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1038555
+> 
+> It was found that in pam_userdb module for Pam, password hashes weren't 
+> compared case-sensitively, which could lead to acceptance of hashes for 
+> completely different passwords, which shouldn't be accepted.
+> 
+> After hashing the user's password with crypt(), pam_userdb compares the 
+> result to the stored hash case-insensitively with strncasecmp(), which 
+> should be avoided, as it could result in an increased possibility of a 
+> successful brute-force attack.
 
-I'd like to request a CVE for these vulnerabilities I disclosed back on Sept 27 2012.
+Ouch.  A funny bug.  I just took a look at the code:
 
- 
+https://git.fedorahosted.org/cgit/linux-pam.git/tree/modules/pam_userdb/pam_userdb.c
 
-YingZhi Python Programming Language for iOS
+and here are some additional observations:
 
-Vendor:﻿ XiaoWen Huang, YingZhi Python for iOS.
+The limited length comparison is also slightly problematic.  In an older
+revision of the code (e.g. in Linux-PAM-1.1.2), pam_userdb.c had:
 
-Ver 1.9.
+	  if (data.dsize != 13) {
+	    compare = -2;
 
-OSVDB IDs: 96719 & 96720
+which was later changed to:
 
-Product Websites
-http://sosilen.blog.163.com
-http://www.iphoneappstorm.com/iphone-apps/utilities/com.yingzhi.python/yingzhipython.php?id=493505744 YingZhi
+	  if (data.dsize < 13) {
+	    compare = -2;
 
-Description:
-Python Interpreter is a native python development application for the iPad/iPhone. It is available for iOS 4 and above.
+I think that along with this change, a length comparison of the computed
+vs. stored hash should have been added, but this was not done.  I think
+the line:
 
-The product is packaged with its own httpd and ftpd servers. Enabling the local daemons for development by Touching Computer<->This Machine starts up an httpd server and ftpd server, both daemons are bound to device IP not localhost.
-Vulnerabilities:
+	    if (cryptpw) {
 
-httpd server allows upload of arbitrary files to root WWW directory.
+should be changed to:
 
-Browsing to http://<target_ip>:8080/ presents an index page in which anyone can upload files to the web servers root 
-directory.
+	    if (cryptpw && strlen(cryptpw) == (size_t)data.dsize) {
 
-ftp server vulnerable to ../ bug
+This is consistent with the approach pam_userdb already uses when
+comparing plaintext passwords (ouch).  Speaking of which:
 
-The ftp server doesn't sanitize user input and allows remote users to read and possibly write to the devices storage.
+There are two code paths that compare plaintext passwords.  Luckily,
+both check exact lengths and both only use case-insensitive comparison
+if PAM_ICASE_ARG is set.  However, they are not constant time, so
+correct passwords may possibly be determined remotely in linear rather
+than exponential time (as function of password length):
 
-ftp://192.168.0.24:10000/../../../../../../../private/etc/passwd
+http://rdist.root.org/2010/07/19/exploiting-remote-timing-attacks/
+http://rdist.root.org/2010/08/05/optimized-memcmp-leaks-useful-timing-differences/
+http://rdist.root.org/2010/11/09/blackhat-2010-video-on-remote-timing-attacks/
 
-The ftp server doesn't bother authenticating users, any username/password combination will allow you in.
+Additionally, the length comparison, while having it is crucial, leaks
+even more timing information: it tells a remote attacker whether the
+tested password length is correct or not.  The result of such comparison
+could be obtained and merged into the final authentication outcome in a
+constant time fashion, although doing so may be non-trivial (especially
+given possible compiler optimizations).
 
-Larry W. Cashdollar @_larry0
+Is repairing all of this for real worth the effort?  Repairing plaintext
+password comparisons (so that they are not even weaker than they appear
+at first) feels weird.  Can pam_userdb be dropped from Linux-PAM and
+from distros?  I hope people aren't using it because it looks unsuitable
+for use, but I'm probably wrong.
 
+(The hash comparisons aren't constant time either, but with large enough
+salts that are unpredictable by a remote attacker and that are stored
+only along with the hashes, this is OK.  In practice not all of these
+conditions might be met all the time, but anyhow this is a more general
+topic that is not limited to pam_userdb, so let's not focus on it in
+this context.)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-http://vapid.dhs.org/advisories/python_for_ipad.html
-
-http://seclists.org/fulldisclosure/2012/Sep/199
-Content of type "text/html" skipped
+Alexander
