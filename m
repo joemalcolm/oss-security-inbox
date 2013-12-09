@@ -1,89 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/12
-Message-ID: <51DEFDF3.2090609@redhat.com>
-Date: Thu, 11 Jul 2013 12:48:19 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Marc-André Moreau <marcandre.moreau@...il.com>, Bernhard Miklautz <bmiklautz@...nstuff.at>, Martin Fleisz <mfleisz@...nstuff.at>
-Subject: Re: CVE Request -- FreeRDP: Multiple security fixes in 1.1.0-beta1 version
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/13
+Message-Id: <201312092341.rB9NfQ6j028967@linus.mitre.org>
+Date: Mon, 9 Dec 2013 18:41:26 -0500 (EST)
+From: cve-assign@...re.org
+To: ncoghlan@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CPython hash secret can be recoved remotely
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/10/2013 07:10 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+> This is a followup to CVE-2012-1150 (hash table collision CPU usage DOS
+> in CPython)
 > 
-> (some time ago) FreeRDP upstream has released 1.1.0-beta1 version: 
-> [1] http://sourceforge.net/mailarchive/message.php?msg_id=30591956
+> http://bugs.python.org/issue14621 points out that the hash secret in
+> CPython can be recovered remotely, so while the original fix addressed
+> the "blind DOS" problem (of being able to DOS any Python based service
+> with a single prepared payload), it didn't completely eliminate the
+> potential for remote DOS attacks based on hash collisions.
+> (http://bugs.python.org/issue14621#msg173455 has the details)
 > 
-> correcting multiple security flaws: * library / client side fixes: 
-> https://github.com/FreeRDP/FreeRDP/pull/887
+> Python 3.4+ will use SipHash by default
+> (http://www.python.org/dev/peps/pep-0456), which should resolve the
+> vulnerability completely.
 
-Can someone from upstream confirm if these are hardening or a security
-fix?
-
-> https://github.com/FreeRDP/FreeRDP/commit/0dc22d5a30a1c7d146b2a835b2032668127c33e9
-
-Can
-> 
-someone from upstream confirm if these are hardening or a security
-fix?
-
-> https://github.com/FreeRDP/FreeRDP/commit/bceec083677a609ba2f06cc75924ab0accac5388
-
-Can
-> 
-someone from upstream confirm if these are hardening or a security
-fix?
-
-> * server side fixes: 
-> https://github.com/FreeRDP/FreeRDP/commit/7d58aac24fe20ffaad7bd9b40c9ddf457c1b06e7
-
-Please
-> 
-use CVE-2013-4118 for this issue.
-
-> https://github.com/FreeRDP/FreeRDP/commit/0773bb9303d24473fe1185d85a424dfe159aff53
-
-Please
-> 
-use CVE-2013-4119 for this issue.
-
-
-> CC-ed Marc-Andre, Bernhard and Martin of FreeRDP upstream to
-> clarify if the above list of patches is complete wrt to security
-> fixes, corrected within 1.0.1-beta1 version. Marc-Andre, Bernhard,
-> Martin, please complete the set of security fixes if / where
-> necessary.
-> 
-> Kurt / Steve, could you allocate CVE ids for these?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
-> P.S.: Thanks goes to Florian Weimer of Red Hat Product Security
-> Team for pointing these out.
-> 
-
+Use CVE-2013-7040.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJR3v3zAAoJEBYNRVNeJnmTVfwQAL68o31SjenHZ6/4w8cfLhaO
-JeD1V6vaSj8WZdWXLivMo99naYhEd185EMzGZPXapGWkZ1viVoL/q9lWFT6UHRfE
-hhwmmhbRoBv0zeCrwQe+puNWV5WyVpy6dEczJh/sDacMLNPBlW35EnBtckV7tZSw
-xLHK/SqOEjcbq5xCtXWIYKgHBLN3PWIuEhmghPCcshg7v/K1QmtlpQzdQyv5Gw5P
-xVvTjHM3aUJJBztR4OGQRybsL5CH61GiDUYGbFd2Uo5IWDjq8pMp0JddNgjocw9m
-x2wzwQual+zNjHhx+8oiJm9xCN21MnGNO1d14yPxVdibNKHSMzBI6i7xxOkeRb3x
-Mc/uJt3Vq3VeuTlmv3oO0Nr0UGWk/1AK0T1+CjqZpIbI4UKdiRhliI8QMjEFbSQZ
-c05iOou7aTOEZtHjxEkG47zLSx1/80u+ctK2tsVqb5RlfgX2w/fAUXnRrW0rvF8N
-Kq9mUJy7iS24v/rS5p3IxLJ2qGeKW+LqZTdXv1RIlu4Rno8dPbaG+zvpS5eWOSoA
-rYBljsKcWURUuJ6dLLH42yQoSRWe6XdZXhzJpyIJtadXbNWWRJS2nKEA4BJ8mjod
-8rwi3V4EEeHwUDXVPMm+1AgDQD6PJeH2t4K/gh5My5Rr6L8oKqqGTQsHG0HxqA0O
-CZV6W6lhLF0rZKu3TfvZ
-=hL5K
+iQEcBAEBAgAGBQJSplDSAAoJEKllVAevmvmsnusH+wZ4KrZq+VgroTsISAbCqcCH
+2KVHnCwsVsbfpdFP8J4TLrRKfueFR53lqgGAi5TbMV9LbT7PYmp3PhVnepjG0h9c
+1hbcBNnOcex6Nv/t0gEzOpoW7mMAJ5NkkrLa5zQdqpAox5Oa0G5WJWCgUIrCXhsd
+xaAJtXC72rWH2iDqvZB8gxVnMAjhbcM+QB5RYHymBh647yTWEm/wY2tuSWGZmmM2
+68cof3jY+L0f/UbhpVGKrRKFPVnfqD2TQTwJCYkC0bsAgYf/MVLi7Tw7K0ihi4x0
+w5Epxc5dOiN/im1JJq/bnQZmt+JXbenQdKYhnyw1PlHQwG/yJj/8Pboqpu53SGY=
+=F0rN
 -----END PGP SIGNATURE-----
