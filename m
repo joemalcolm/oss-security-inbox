@@ -1,78 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/16
-Message-Id: <201312092348.rB9NmC46029070@linus.mitre.org>
-Date: Mon, 9 Dec 2013 18:48:12 -0500 (EST)
-From: cve-assign@...re.org
-To: ratulg@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: pam: password hashes aren't compared case-sensitively
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/9
+Message-ID: <52A5F7B4.9040501@redhat.com>
+Date: Mon, 09 Dec 2013 18:02:44 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: two issues in libmicrohttpd
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 12/09/2013 03:04 AM, Murray McAllister wrote:
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1038555
-> 
-> It was found that in pam_userdb module for Pam, password hashes weren't 
-> compared case-sensitively, which could lead to acceptance of hashes for 
-> completely different passwords, which shouldn't be accepted.
-> 
-> After hashing the user's password with crypt(), pam_userdb compares the 
-> result to the stored hash case-insensitively with strncasecmp(), which 
-> should be avoided, as it could result in an increased possibility of a 
-> successful brute-force attack.
+> Florian Weimer of the Red Hat Product Security Team discovered two
+> issues in libmicrohttpd:
+>
+> 1) https://bugzilla.redhat.com/show_bug.cgi?id=1039384
+>
+> 2) https://bugzilla.redhat.com/show_bug.cgi?id=1039390
+>
+> References:
+>
+> https://gnunet.org/svn/libmicrohttpd/ChangeLog
+> http://secunia.com/advisories/55903/
+> https://bugs.gentoo.org/show_bug.cgi?id=493450
+>
+> Can CVEs please be assigned?
 
-Use CVE-2013-7041.
+There are two more patches I recommend cherry-picking (if you consider 
+the other two worth fixing).  All these fixes border on hardening.
 
-Just for clarification, this refers to case sensitivity of password
-hashes, not case sensitivity of cleartext passwords. It could
-conceivably be legitimate for a product to process cleartext passwords
-on Linux in a case-insensitive way (perhaps for compatibility with
-another system on which passwords are supposed to be
-case-insensitive). There doesn't seem to be any plausible reason for
-supporting case-insensitivity of password hashes. A legitimate user
-isn't going to try a password that hashes to one of the differently
-cased values.
+------------------------------------------------------------------------
+r30927 | grothoff | 2013-11-28 11:05:52 +0100 (Thu, 28 Nov 2013) | 1 line
 
-We also looked at other comments about this issue but did not assign
-additional CVE IDs:
+-handle case that original allocation request was zero
+------------------------------------------------------------------------
+r30926 | grothoff | 2013-11-28 10:16:38 +0100 (Thu, 28 Nov 2013) | 1 line
 
-> From: Solar Designer <solar@...nwall.com>
-> Message-ID: <20131209123945.GA16680@...nwall.com>
+-fix theoretical overflow issue reported by Florian Weimer
 
-> a length comparison of the computed vs. stored hash should have been added
-
-This seems to be a suggested security improvement to address the
-possibility of a system that contained stored hashes with invalid
-lengths. We would not consider this a vulnerability fix in the
-traditional sense.
-
-> correct passwords may possibly be determined remotely in linear rather
-> than exponential time (as function of password length):
-> 
-> Additionally, the length comparison, while having it is crucial, leaks
-> even more timing information: it tells a remote attacker whether the
-> tested password length is correct or not.
-
-Again, there is a possible security improvement to address
-computation-time information leaks that were not considered during the
-product design. We would not consider this a vulnerability fix in the
-traditional sense unless the product tried to prevent such leaks but
-had an implementation error.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSplL+AAoJEKllVAevmvms9AcIAIUfLGRdvnbmF5Dn150qmv2e
-OOXR1tvoaPZBlU/LIuLCLZVUTkjpY9rvla8CFrtuGwTMX9/5XjpujYzkwTovSCyp
-+e2jGv2dz/fcsQ7Ul0SVmIxNmxfGaOXaykphyNhiC5jrefHQrCvolb21WJxC5y+9
-ohdPUSjykBkrmV3aMk9TOn9Z1jxI1fb9douh+RqPvj0TmNwkjX9iMWOEnYjE+Sk6
-eXBvqv4e3RPHOa0kpUH2MvLxWD383NG8ttsU3pyTLARPgViNpWCGRb2Wt+fJgZT6
-rwi2gCS8NUY+kT9oQL1b7NLlUmjRdThHZwSMpHPoQ79T49dV67TpOnqYI0IrtCw=
-=46gA
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security Team
