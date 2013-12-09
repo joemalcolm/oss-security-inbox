@@ -1,60 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/10
-Message-ID: <CAAyQC43fMom8wxVmm=ZwpWuQQWhD3GkpfAa6tS9H_Jm63DDsig@mail.gmail.com>
-Date: Fri, 4 Oct 2013 10:20:06 +0200
-From: Igor Sverkos <igor.sverkos@...glemail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/6
+Message-ID: <52A59319.4020604@redhat.com>
+Date: Mon, 09 Dec 2013 15:23:29 +0530
+From: Ratul Gupta <ratulg@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: A note on cookie based sessions
+Subject: CVE request: monitorix: HTTP server 'handle_request()' session fixation & XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+https://bugzilla.redhat.com/show_bug.cgi?id=1038071
 
-Kurt Seifried wrote:
->> I don't think this really is a vulnerability is it? I mean it's
->> basically how the internet works. The only difference between a
->> cooke backed session and a regular session is that there's no
->> server side session to destroy. At least in Django's case, It's not
->> a permanent session though, they are only good for a limited amount
->> of time before the signature on the cookie expires.
->
->> If you have access to the session cookie you've already won the
->> game, you've gotten an XSS or MITM and can do much worse then a
->> session cookie.
->
-> [...]
->
-> The concern is people using public terminals, cookie stealing attacks,
-> XSS in the website you're using, etc allowing an attacker to snag your
-> cookie and use it post "log out".
+Monitorix, an open source system monitoring tool, was found to be 
+vulnerable to two XSS vulnerabilities, which could allow attackers to 
+execute arbitrary script code in a user's browser in the context of the 
+Web server process, access sensitive data, or hijack a user's session.
 
-I am not sure about the intention of your mail.
+The issue is that the built-in HTTP server failed to adequately sanitize 
+request strings of malicious JavaScript. So by leveraging this issue, an 
+attacker may be able to inject arbitrary cookies. The same issue could 
+also cause arbitrary HTML and script code to be executed in a user's 
+browser within the security context of the affected site. Input passed 
+via requests to the "handle_request()" function (lib/HTTPServer.pm) is 
+not properly sanitised before being returned to the user. This can be 
+exploited to execute arbitrary HTML and script code in a user's browser 
+session in context of an affected site.
 
-But if you want to warn people, don't forget people using applications
-like vBulletin: They don't use SSL and if you got the cookies, you are in.
-
-Teaching these people to use the logout button won't fix the problem:
-This will only destroy the cookie on the user's browser. But if you have
-sniffed the cookies, you can restore the cookies and you are back in,
-because the cookies are always the same (as long as you don't change your
-password).
-For me this is a bigger problem, because people think "Hey I logged out,
-I am safe" but they aren't and because they don't know they will wonder...
-
-I think I don't have to mention that it is really easy to get these
-cookies using technics FireSheeps & Co. demonstrated years ago.
-
-And in times where people using every available network to access
-internet, because they don't know better/don't care about MITM, it isn't
-really hard to get cookies like that. Just go into a coffee shop with your
-UMTS hotspot, name your network "free-internet" and watch.
-
-
-PS: To be fair: To access vBulletin's {Admin,Mod}CP you will be prompted
-for the password again. But many boards are running modifications which
-allows staff to use many functions from the frontend (which will bypass
-this protection).
-
+Can a CVE be assigned to this issue?
 
 -- 
 Regards,
-Igor
+
+Ratul Gupta / Red Hat Security Response Team
+
