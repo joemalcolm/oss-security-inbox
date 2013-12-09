@@ -1,63 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/18
-Message-Id: <201302051745.r15Hjmfi013644@linus.mitre.org>
-Date: Tue, 5 Feb 2013 12:45:48 -0500 (EST)
-From: cve-assign@...re.org
-To: vdanen@...hat.com, kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/5
+Message-ID: <52A592AB.1020303@redhat.com>
+Date: Mon, 09 Dec 2013 15:21:39 +0530
+From: Ratul Gupta <ratulg@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: pam: password hashes aren't compared case-sensitively
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+https://bugzilla.redhat.com/show_bug.cgi?id=1038555
 
->cc'ing cve-assign to see if they can provide some guidance here.  I also
->noticed that OpenSSL has a CVE for this (I'm assuming that the
->CVE-2012-2686 issue is _not_ the same thing, but that CVE-2013-0169 is
->this issue).
->
->Since it's a weakness in TLS/DTLS itself, from my understanding, and not
->necessarily in a particular implementation, I'm not sure if this
->qualifies as one CVE for the weakness, or if it needs one per
->implementation.
->
->MITRE, can someone provide some guidance on this?
+It was found that in pam_userdb module for Pam, password hashes weren't 
+compared case-sensitively, which could lead to acceptance of hashes for 
+completely different passwords, which shouldn't be accepted.
 
-[ This is mostly directed to Red Hat at this point. We'll expand to
-the other recipients or vendors later. ]
+After hashing the user's password with crypt(), pam_userdb compares the 
+result to the stored hash case-insensitively with strncasecmp(), which 
+should be avoided, as it could result in an increased possibility of a 
+successful brute-force attack.
 
-We're not exactly sure that MITRE has the next step here. A CVE
-exists, CVE-2013-0169, that was issued by the Red Hat CNA. When the
-CVE assignment was made, presumably one or more persons at Red Hat had
-a working understanding of what the name CVE-2013-0169 means. (For
-example: was the CVE assigned with a multi-vendor scope in mind? Was
-the CVE assigned to cover the entirety of the content of the
-www.isg.rhul.ac.uk/tls/TLStiming.pdf research paper?) MITRE would, in
-general, want to preserve this original meaning if it makes sense to
-do that. Because there's no specific statement on this list about what
-CVE-2013-0169 means, we'd next go to
+Can a CVE be assigned for this?
 
-  https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-0169
+-- 
+Regards,
 
-to see if that may be a canonical statement of what CVE-2013-0169
-means. But there's nothing there yet.
+Ratul Gupta / Red Hat Security Response Team
 
-Before offering a guess from MITRE, we'll wait for some more
-information.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJREUKdAAoJEGvefgSNfHMdf7QH/1Pwhz88Getd4QEG5W7aM4Xy
-Wyu9c+HxX/PdkqmEcJuWXRvfMVPex9Gv8wD6qCGGQLIX6aHp2gLIrqjfOlUrHmoD
-5adHOPhJRAGM4UxZPKM7Y7KU8/etoZGQeJsuH1EUNUIzZmG6pJN2l3++j0vpNoN9
-12r4pDHvop3LCY1kMz75uarC+7vKD63xu+jvCQWNqVFV/gOmCkknNq9wLfZWTg+L
-xA1sooDw80Vkdrv6kIhMSCbdtZ/GqAv4R0b7CDyCuRJOqT1Ml0P/JiE0n0DSjR3u
-1FsqEw2RtkfzgDKJQbcm4n4miuwh5da9hCMR/aY4jL/bKT5Cy/MlggAb+VJW3mg=
-=a2X7
------END PGP SIGNATURE-----
