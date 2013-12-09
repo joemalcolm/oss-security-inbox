@@ -1,45 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/22/1
-Message-ID: <514BFA1C.6040301@redhat.com>
-Date: Fri, 22 Mar 2013 00:28:44 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/1
+Message-ID: <52A5252A.6080009@redhat.com>
+Date: Mon, 09 Dec 2013 13:04:26 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: David Black <disclosure@....org>
-Subject: Re: CVE Request: python-pip insecure temporary directory handling
+Subject: CVE request: two issues in libmicrohttpd
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 03/20/2013 08:13 AM, David Black wrote:
-> Prior to version 1.3 pip used '/tmp/pip-build' as a temporary 
-> directory and as per the report in 
-> https://github.com/pypa/pip/issues/725 would follow a symbolic
-> link placed at '/tmp/pip-build' when writing temporary files.
-> 
+Florian Weimer of the Red Hat Product Security Team discovered two
+issues in libmicrohttpd:
 
-Is this the one actually fixed in
-https://github.com/pypa/pip/pull/780/files
+1) https://bugzilla.redhat.com/show_bug.cgi?id=1039384
 
-? thanks.
+2) https://bugzilla.redhat.com/show_bug.cgi?id=1039390
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+References:
 
-iQIcBAEBAgAGBQJRS/obAAoJEBYNRVNeJnmTZLoP/jKyjznzB0IIFJ9MP0fR8lh3
-JtxidUWEPpTBBse74c/xEpI3K5k+atITJKryvLDJzCYzeRziNo8vX5MU1j/ok0tP
-wLrSnP9zVd0lRQBdr4C9Ym8m+/D+RLtRmJqhCV9ijXrTuNJblogyEJBC08JR6wuR
-mDGejMmw895KRh+23O5vW38GLR4nk6hyyPHwFVgNWSc+28yrSj/M472Mq9QmnpwV
-l7wcep5G91SoIMMQHV2iDUzBvOktIzdI0kxLfZFZjfyUS9mLJ8lfgCyHXjJ/05fk
-08C3T3bLjjgkl/5F7wtrsnRFfBkzeML348D6H/+A7B6okdPGAsaBtMK1oAe7d/dl
-KrjQqmya4DY53BejghuCzo00NJUfTo1i8FbNPYZCHVj73FivBxjeDss7btVWpFYo
-06lidSqEt5Huy/n6AYGOU8zm9FCebrtm7SfD1KMQnW+3ZOmMfAieztdfuxzNwOeT
-N4+9LYsx1TtVXUZknfMCJQKX1xIPtU7B420gQZMlbvQaPFuyVSx0l7JLlnSaYz45
-PNrVZvqDfdpicacPMdS3HXCJUy6WEYElJetiiZjPrK6ccBeNa3NCuWQBkcMg5Pno
-kT7pMW0n0V5YlCNSHDg2/Itj+hanWp5iK96wqmm+JrKCxRxzOpx0lTp8NCiaHRzh
-ccwj9wn5r/djvEingyi0
-=WU5i
------END PGP SIGNATURE-----
+https://gnunet.org/svn/libmicrohttpd/ChangeLog
+http://secunia.com/advisories/55903/
+https://bugs.gentoo.org/show_bug.cgi?id=493450
+
+Can CVEs please be assigned?
+
+Thanks,
+
+--
+Murray McAllister / Red Hat Security Response Team
