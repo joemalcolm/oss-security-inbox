@@ -1,29 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/08/4
-Message-ID: <20130308045543.GE20032@dhcp-25-225.brq.redhat.com>
-Date: Fri, 8 Mar 2013 05:55:44 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/3
+Message-ID: <52A552CB.10808@redhat.com>
+Date: Mon, 09 Dec 2013 15:19:07 +1000
+From: Nick Coghlan <ncoghlan@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
+Subject: CPython hash secret can be recoved remotely
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 07, 2013 at 01:19:05PM +0400, Solar Designer wrote:
-> Kurt -
-> 
-> On Thu, Mar 07, 2013 at 02:13:37AM -0700, Kurt Seifried wrote:
-> > Bundling the following into a single CVE:
-> [...]
-> > Please use CVE-2012-6138 for these issues.
-> 
-> I think this is wrong.  I would understand if those issues were all in
-> the same subsystem at least (or if you assigned per-subsystem CVE IDs
-> for these), but this is not the case.  Many distros will fix some, but
-> not the others, or not all at the same time.  There's room for a little
-> bit of bundling here, but not that much.
+Software: CPython
+Vendor: Python Software Foundation
+Vulnerability: remote target-specific CPU usage DOS
 
-In the past we've usually assigned one CVE per issue even for info leak
-bugs. Or at least one CVE per subsystem, as Alexander says. I agree with
-Alexander that one CVE for about ~20 issues is not right.
+This is a followup to CVE-2012-1150 (hash table collision CPU usage DOS
+in CPython)
+
+http://bugs.python.org/issue14621 points out that the hash secret in
+CPython can be recovered remotely, so while the original fix addressed
+the "blind DOS" problem (of being able to DOS any Python based service
+with a single prepared payload), it didn't completely eliminate the
+potential for remote DOS attacks based on hash collisions.
+(http://bugs.python.org/issue14621#msg173455 has the details)
+
+Python 3.4+ will use SipHash by default
+(http://www.python.org/dev/peps/pep-0456), which should resolve the
+vulnerability completely.
+
+Regards,
+Nick.
 
 -- 
-Petr Matousek / Red Hat Security Response Team
+Nick Coghlan
+Red Hat Hosted & Shared Services
+Software Engineering & Development, Brisbane
+
+Testing Solutions Team Lead
+Beaker Development Lead (http://beaker-project.org/)
