@@ -1,61 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/12
-Message-ID: <8738qmilme.fsf@xmission.com>
-Date: Tue, 06 Aug 2013 13:56:41 -0700
-From: ebiederm@...ssion.com (Eric W. Biederman)
-To: Oleg Nesterov <oleg@...hat.com>
-Cc: security@...nel.org,  oss-security@...ts.openwall.com,  Petr Matousek <pmatouse@...hat.com>,  Andy Lutomirski <luto@...capital.net>,  David Howells <dhowells@...hat.com>,  linux-kernel@...r.kernel.org
-Subject: Re: [PATCH 1/1] userns: unshare_userns(&cred) should not populate cred on failure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/15
+Message-Id: <201312092345.rB9NjKDK029036@linus.mitre.org>
+Date: Mon, 9 Dec 2013 18:45:20 -0500 (EST)
+From: cve-assign@...re.org
+To: pinkbyte@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: ClamAV vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Oleg Nesterov <oleg@...hat.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> unshare_userns(new_cred) does *new_cred = prepare_creds() before
-> create_user_ns() which can fail. However, the caller expects that
-> it doesn't need to take care of new_cred if unshare_userns() fails.
->
-> We could change the single caller, sys_unshare(), but I think it
-> would be more clean to avoid the side effects on failure, so with
-> this patch unshare_userns() does put_cred() itself and initializes
-> *new_cred only if create_user_ns() succeeeds.
+> I know that there are no details provided here, but secunia advisory
+> also points on 'unspecified vulnerabilities'.
 
-Doh!
+It is possible to have a CVE ID for multiple unspecified
+vulnerabilities but this can usually only occur when the expectation
+is that no details will be available. In this case, a previous message
+said:
 
-Reviewed-by: "Eric W. Biederman" <ebiederm@...ssion.com>
+>> From: Kurt Seifried <kseifried@...hat.com>
+>> 
+>> Just a heads up I know at least one person is trying to get details
+>> from SourceFire (they bought ClamAV some time back). Until I can match
+>> issues up I can't assign CVEs.
 
-> Cc: stable@...r.kernel.org
-> Signed-off-by: Oleg Nesterov <oleg@...hat.com>
-> ---
->  kernel/user_namespace.c |   13 +++++++++----
->  1 files changed, 9 insertions(+), 4 deletions(-)
->
-> diff --git a/kernel/user_namespace.c b/kernel/user_namespace.c
-> index d8c30db..6e50a44 100644
-> --- a/kernel/user_namespace.c
-> +++ b/kernel/user_namespace.c
-> @@ -105,16 +105,21 @@ int create_user_ns(struct cred *new)
->  int unshare_userns(unsigned long unshare_flags, struct cred **new_cred)
->  {
->  	struct cred *cred;
-> +	int err = -ENOMEM;
->  
->  	if (!(unshare_flags & CLONE_NEWUSER))
->  		return 0;
->  
->  	cred = prepare_creds();
-> -	if (!cred)
-> -		return -ENOMEM;
-> +	if (cred) {
-> +		err = create_user_ns(cred);
-> +		if (err)
-> +			put_cred(cred);
-> +		else
-> +			*new_cred = cred;
-> +	}
->  
-> -	*new_cred = cred;
-> -	return create_user_ns(cred);
-> +	return err;
->  }
->  
->  void free_user_ns(struct user_namespace *ns)
+suggesting that some information gathering may be in progress.
+
+Although these items:
+
+>> 1) A double-free error exists within the "unrar_extract_next_prepare()"
+>> function (libclamunrar_iface/unrar_iface.c) when parsing a RAR file.
+>> 
+>> 2) An unspecified error within the "wwunpack()" function
+>> (libclamav/wwunpack.c) when unpacking a WWPack file can be exploited to
+>> corrupt heap memory.
+
+can have CVE IDs, we can't correctly define the scope of any CVE ID
+until more is known about what was fixed in 0.9.7. For example, in
+some cases, two different double-free issues fixed in 0.9.7 would be
+covered by a single CVE ID.
+
+So, it is probably best to wait a short time for the information
+gathering.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSplJmAAoJEKllVAevmvms+dkH/inM5aP+TvcychU/CygZUIBo
+eCaMOYwaoCgq1PIAKAIHkSxe8RQMvcZqF4W4V2YzXMDYFGRDOocOv7celNz213tJ
+Ur2vbIBN7eq9ZenenYZ4kr1mv9E84tRpVIm69Th5tBwEbPKbQiJcCVFsmHmMKQ80
+C/aDHpVngu6gCkcEdgUX2GTaC7xAc+QkHlFFcaDbxdr860lpiJB7FaF5BysCs69M
+035c9SQEr0S/eiRJnNFRFNu+rcJvLSCK+NBsiPXGZqS0u9riUx2//0V0ilXNZzt1
+K7dPazHgVvb5cwWMqfVHCwOGN5Nk/xqCOgDNBffNjGC+SaZggCWq/NLM+5foeMM=
+=hkx8
+-----END PGP SIGNATURE-----
