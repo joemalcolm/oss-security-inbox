@@ -1,114 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/10/3
-Message-Id: <E1VJLcT-0004k4-LQ@xenbits.xen.org>
-Date: Tue, 10 Sep 2013 10:56:29 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 61 - libxl partially sets up HVM passthrough even with disabled iommu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/14
+Message-Id: <201312092343.rB9NhIhb029000@linus.mitre.org>
+Date: Mon, 9 Dec 2013 18:43:18 -0500 (EST)
+From: cve-assign@...re.org
+To: ratulg@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: monitorix: HTTP server 'handle_request()' session fixation & XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-                    Xen Security Advisory XSA-61
+> https://bugzilla.redhat.com/show_bug.cgi?id=1038071
 
-     libxl partially sets up HVM passthrough even with disabled iommu
+In reading this, we were not sure what vulnerability or
+vulnerabilities you are referring to. First, the Subject line mentions
+session fixation, but the body of the message doesn't mention session
+fixation.
 
-ISSUE DESCRIPTION
-=================
+https://github.com/mikaku/Monitorix/issues/30 says "The remote host is
+running a web server that fails to adequately sanitize request strings
+of malicious JavaScript. By leveraging this issue, an attacker may be
+able to inject arbitrary cookies. Depending on the structure of the
+web application, it may be possible to launch a 'session fixation'
+attack using this mechanism." This suggests some possibility that the
+session fixation issue is resultant from an XSS vulnerability. In that
+situation, the session fixation issue could not be assigned a separate
+CVE ID.
 
-With HVM domains, libxl's setup of PCI passthrough devices does the
-IOMMU setup after giving (via the device model) the guest access to
-the hardware and advertising it to the guest.
+Also, https://github.com/mikaku/Monitorix/issues/30 says "The remote
+host is running GoScript. The installed version fails to properly
+sanitize user-supplied input to the 'go.cgi' script. An
+unauthenticated, remote attacker could exploit this flaw to execute
+arbitrary commands on the remote host." This is apparently a 2004
+issue but does not have a CVE ID. Monitorix 3.3.1 apparently has a
+patch for it.
 
-If the IOMMU is disabled the overall setup fails, but after the device
-has been made available to the guest; subsequent DMA instructions from
-the guest to the device will cause wild DMA.
+http://www.monitorix.org/news.html says "3.3.1 version released ...
+21-Nov-2013 ... This is a maintenance release that fixes a serious bug
+in the built-in HTTP server. It was discovered that the
+handle_request() routine did not properly perform input sanitization
+which led into a number of security vulnerabilities." (This is about
+some or all of the https://github.com/mikaku/Monitorix/issues/30
+page).
 
-IMPACT
-======
+http://www.monitorix.org/news.html also says "3.4.0 version
+released ... 02-Dec-2013 ... This version also fixes an important
+number of bugs and two security issues ... not covered yet in the
+previous 3.3.1 version." These would very likely need separate CVE
+IDs.
 
-A HVM domain, given access to a device which bus mastering capable in
-the absence of a functioning IOMMU, can mount a privilege escalation
-or denial of service attack affecting the whole system.
-
-VULNERABLE SYSTEMS
-==================
-
-1. Only systems which pass busmastering-capable PCI devices through to
-   untrusted guests are vulnerable.  (Most PCI devices are
-   busmastering-capable.)
-
-2. Only systems which use libxl as part of the toolstack are
-   vulnerable.
-
-   The major consumer of libxl functionality is the xl toolstack which
-   became the default in Xen 4.2.
-
-   In addition to this libvirt can optionally make use of libxl. This
-   can be queried with
-           # virsh version
-   which will report "xenlight" if libxl is in use.  libvirt currently
-   prefers the xend backend if xend is running.
-
-   The xend and xapi toolstacks do not currently use libxl.
-
-3. Only Xen versions 4.0.x through 4.2.x are vulnerable.
-
-4. Only HVM domains can take advantage of this vulnerability.
-
-5. Systems which have a functioning IOMMU are NOT vulnerable.
-
-MITIGATION
-==========
-
-This issue can be avoided by not assigning PCI devices to HVM guests when
-there is no functioning IOMMU.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This issue was disclosed publicly on xen-devel; the person reporting
-it did not appreciate that it was a security issue.  Additionally the
-patch to fix the issue was already applied to the respective branches
-(in particular resulting in Xen 4.3 not being vulnerable).  Under the
-circumstances the Xen.org security team do not consider that this
-advisory should be embargoed.
-
-Also, we apologise for the delay to this advisory message, which was
-due to an oversight by us.
-
-CREDITS
-=======
-
-George Dunlap found the issue as a bug, which on examination by the
-Xenproject.org Security Team turned out to be a security problem.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa61-4.1.patch             Xen 4.1.x
-xsa61-4.2-unstable.patch    Xen 4.2.x, xen-unstable
-
-$ sha256sum xsa61*.patch
-19caa5f1ce91ebc908c899b8be216034dc67c3e890f59597f659caed41d468f6  xsa61-4.1.patch
-5898926de86dd6a27f8e34a2c103e3d0c6267b1d7d947434f294423ed3b0eefd  xsa61-4.2-unstable.patch
-$
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJSLvrIAAoJEIP+FMlX6CvZDy4H/09N5lJYfQBEjYtFKsYTRRL3
-hQC2SyH5oXeRguHpCEYLy5EXJ5k0+lrrQ/Kpgf8yP9xUlfkZ19e+Zm20XpcTzRDL
-yi0VTLv12lNF02Iraml7OfK15FJbCk5BkwgL9aKdiNJX/42IeC49/LOWgAHpuen1
-YUEC7fTtwrbr5AER45jVNCcw94OccBzXOiEPA56nJBYzSFPD/iWjrNWTuto5BTOg
-nzf9JFtvoX40LyXy/p5qMmgu1veIiwUvVuMl8UUudwH0h03hDm1v2hRGtT1/BbQB
-bJRzaw1a/x6HmpkbHqWC2jq63S6FIrigpv+f9HmiRGmNxpm8DR6aCFMa4OquXiY=
-=Ag3V
+iQEcBAEBAgAGBQJSplHIAAoJEKllVAevmvms0jAH/0RNtdKYSSGixfL2e4TABdMo
+27U2T/rM0cH6Bk9xMyIH0vtqhHsOsaMB266PEym9iy+Hntf+/OiCizA8HAbdeLoi
+xFjyYnWNAmuLnictLQ7S4zuwHMlA/3S9MsPS4ZaSpYmKkyb7YsxzSXNHmawss/XB
+wOuLDHyFu5JV6/5o6CfACKdAXxUjE569O8v647zH6XYhsaaEQJTe7TxRybJzLKgY
+YQrzp4Mh8QhMB2KNR9FO8zR9HfkTU0UoLzBQ/t52+ZmKi4eBOdzhi9La1hBgXleW
+NWBpx7zgnrAVN8bZ6xR3MiIa3fQtS4ncHhmliLzW5Qjrz7rZWNiTIKdwLiutDiI=
+=vNaA
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa61-4.1.patch" of type "application/octet-stream" (1816 bytes)
-
-Download attachment "xsa61-4.2-unstable.patch" of type "application/octet-stream" (1748 bytes)
