@@ -1,56 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/16
-Message-ID: <51252141.4060602@redhat.com>
-Date: Wed, 20 Feb 2013 12:17:21 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: P J P <ppandit@...hat.com>
-Subject: Re: CVE request - Linux kernel: evm: NULL pointer de-reference flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/7
+Message-Id: <E1VqMtV-0007EA-Nj@xenbits.xen.org>
+Date: Tue, 10 Dec 2013 12:58:33 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 80 (CVE-2013-6400) - IOMMU TLB flushing may be inadvertently suppressed
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/20/2013 12:09 PM, P J P wrote:
-> Hello,
-> 
-> Linux kernel built with Extended Verification Module(EVM) and
-> configured properly, is vulnerable to a NULL pointer de-reference
-> flaw, caused by accessing extended attribute routines of sockfs
-> inode object.
-> 
-> An unprivileged user/program could use this to crash the kernel, 
-> resulting in DoS.
-> 
-> Upstream fix: ->
-> https://git.kernel.org/linus/a67adb997419fb53540d4a4f79c6471c60bc69b6
->
->  Reference: -> https://bugzilla.redhat.com/show_bug.cgi?id=913266
+             Xen Security Advisory CVE-2013-6400 / XSA-80
+                              version 3
 
-Please use CVE-2013-0313for this issue.
+          IOMMU TLB flushing may be inadvertently suppressed
 
-> Thank you. -- Prasad J Pandit / Red Hat Security Response Team DB7A
-> 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+UPDATES IN VERSION 3
+====================
 
+Public release.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Corrected explanatory text to refer to the correct patch filename.
 
+ISSUE DESCRIPTION
+=================
+
+An internal flag is used to temporarily suppress IOMMU TLB flushes, in
+order to consolidate multiple single page flushes into one wider
+flush.  This flag is not cleared again, on certain error paths.  This
+can result in TLB flushes not happening when they are needed.
+Retaining stale TLB entries could allow guests access to memory that
+ought to have been revoked, or grant greater access than intended.
+
+IMPACT
+======
+
+Malicious guest administrators might be able to cause host-wide denial of
+service, or escalate their privilege to that of the host.
+
+VULNERABLE SYSTEMS
+==================
+
+Only VMs which have been assigned PCI devices can exploit the bug.
+
+Only systems using Intel VT-d are vulnerable, since the bug is in the
+VT-d specific code in Xen.
+
+Xen 4.2.x and later are vulnerable.
+Xen 4.1.x and earlier are not vulnerable.
+
+MITIGATION
+==========
+
+This issue can be avoided by not assigning PCI devices to untrusted guests on
+systems supporting Intel VT-d.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa80.patch                Xen 4.2.x, Xen 4.3.x, xen-unstable
+
+$ sha256sum xsa80*.patch
+d15e627c59dd48e1cacb2fbcd5e2148975daa426df1f693b991d69201c048e77  xsa80.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRJSFAAAoJEBYNRVNeJnmTGp8QAMhrgMc45wgfynP+WhUesws6
-dUB+acCrE9a0TCnAvJAV03ula/hqy5SZmoyZgSZI14Szy5ocZZQesauprKyWzJc3
-KQqr8pp3isiACJWz7ZjOyGYpEweP1df1q/WLyfAa4uzdHjQ8S1CP7kIlIrV3yfyB
-RUBIkR9PLi3CtAwzn08BIIJHOXLhNL0U3eFd47G83fdsb549BHcF56/wo4MaMtF2
-CgShhhQjOl+N5zIs0NR1qwtQoFHO0B4QJPAAqPPK0jdWul/+XBXWxvCh6SPIZHjy
-ty7YJ2+lP54J1ZMAQUDXlKwjHqqwPmnGk1BRZ2ARfOtDUhkDPObYiqMjXbuE/DPQ
-Vz0Hs8hmx8RSfCqrhcOUL72Sr+4WlkMLiGsNp+zS+pGCOIe3bCTpnA9I+Ef4Z4vl
-Z+amEM0+5c+9JTMxuvvO/ScOKUkSRIgbXf0qswduBoy+r5pGn+cR2qdLAmwFUZdF
-aXJwoE5C85PxnsAMSsVuSD6w4S9AceQhFnVJz4tOT85OuBjUTWkWkEAMpi/ZjS+m
-YRR39qQZ590zJxYNi7c3XwG0Wzx/ZIANLkzxy5qm7CJeAaYtpmBIn4Q39+KJPOmb
-cM6pDRdWfIZcApHcgzqUlHo2ZTCFJKKYJNsoqDtv5a1Ijg09Je95TycAVKflMsMd
-oEUiQX1871yzYMbaDsBr
-=iYQK
+iQEcBAEBAgAGBQJSpw/SAAoJEIP+FMlX6CvZu48IAIsJz4NRVXqCYl9hjtFhgfhL
+/V2J9T9Xp0/iNTmfP6FMu2wIZohAcosMOaZ5NXouIb50bta2mpeQhA0K0RZLEin5
+2QH9rcfYYchAeQjPt72QVPH3iMTWdPXXV3HDuqXI+G+II64bonHvArtAwYxeJpWM
+ZwegEnxsEk2YsYk+TYGMzQws2sXygx06JxEJsE9/Q6BOJG9jnwvtRsleVDuMuBMR
+6U1DdaxZohk5k1xqS5Y6udyXpJQgob7fMdwAoLWxxlb7vB3kOgzMoorVrzRZ0LcZ
+LmqBYxdCQRV+Tn19eE9xo1LjBr9qBS13nGDQbyIADoF85N/SmZoMycRsqunUQ2U=
+=rB23
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa80.patch" of type "application/octet-stream" (2072 bytes)
