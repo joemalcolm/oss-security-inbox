@@ -1,51 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/6
-Message-Id: <201308281810.r7SIAAQ5000352@linus.mitre.org>
-Date: Wed, 28 Aug 2013 14:10:10 -0400 (EDT)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE oops in GLSA 201308-05 (wireshark)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/1
+Message-ID: <CABbbngA7vk2Mbye196NcEDvyiSNGNyaybLPbZPMV-1Rpaf72tQ@mail.gmail.com>
+Date: Mon, 9 Dec 2013 16:25:38 -0800
+From: Forest Monsen <forest.monsen@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE request for Drupal core, and contributed modules
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Dec 6, 2013 at 3:19 PM, Forest Monsen <forest.monsen@...il.com>wrote:
 
->I just saw via a Gentoo bug report that their GLSA 201308-05 advisory
->mentioned some CVEs as related to wireshark that were incorrect.
+> Now the contributed modules:
+> SA-CONTRIB-2013-093 - Invitation - Access Bypass
+> https://drupal.org/node/2140097
 >
->Instead of mentioning CVE-2013-{3560,3561,3562} they mentioned
->CVE-2013-{3540,3541,3542}. I checked on MITRE's site and those three
->are still reserved.
+> SA-CONTRIB-2013-094 - EU Cookie Compliance - Cross Site Scripting (XSS)
+> https://drupal.org/node/2140123
 >
->I don't know who those three (354[012]) are assigned to, but you might
->want to see if they've been used already or not and dupe them against
->356[012] if they have not.
+> SA-CONTRIB-2013-095 - Organic Groups - Access bypass
+> https://drupal.org/node/2140217
+>
+> SA-CONTRIB-2013-096 - Entity reference - Access bypass
+> https://drupal.org/node/2140237
+>
+> SA-CONTRIB-2013-097 - OG Features - Access bypass
+> https://drupal.org/node/2149791
+>
 
-Those are in use:
+These still require CVE identifiers. Thanks!
 
-http://archives.neohapsis.com/archives/fulldisclosure/2013-06/0085.html
+Forest
 
-Airlive
-CVE-2013-3540. Cross Site Request Forgery(CWE-352) and Clickjacking(CAPEC-103) 
-CVE-2013-3541. Relative Path Traversal(CWE-23)
-
-Grandstream
-CVE-2013-3542. Backdoor in Telnet Protocol(CAPEC-443)
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSHjxYAAoJEGvefgSNfHMdTzwH/imDk8DaDY4Q3FyKkFrO2r2q
-70cQCSbBWjMdU/GsFErfpeurrreNtjuROSUWTgI9P8AEtyFfdC6XicQcEetlkueY
-rwwghhbim3APXYODX0cxx3K7Ww38BhXfa8iZXjRs1Rn9oj1OLWB0+X9XY1KTd2Pb
-FLoyAOrVVYWOIn029osm5nG8lSJCzyJz21u1ErSB8nXDzTQSMtIIgkRaX229fo0d
-VV+1OXmNwKbMwZeqRQUaHNC21Djo6SzLtEBFkCcVrb+kQArkVT+DPVHlxHtqOtTW
-d4NMX0LwAK0GVk1m4PW6PkRsOX/+iXuPEDJ04OpGE6W8a/PBrxTmVEbFIS01PIw=
-=tPeQ
------END PGP SIGNATURE-----
