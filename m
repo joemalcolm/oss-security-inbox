@@ -1,35 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/21/19
-Message-ID: <8f48872739535e03d78809949ef30371.squirrel@aphrodite.kinkhorst.nl>
-Date: Wed, 21 Aug 2013 22:52:33 +0200
-From: "Thijs Kinkhorst" <thijs@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: lcms 1.x buffer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/16
+Message-Id: <201312101735.rBAHZksN020616@linus.mitre.org>
+Date: Tue, 10 Dec 2013 12:35:46 -0500 (EST)
+From: cve-assign@...re.org
+To: ratulg@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: monitorix: HTTP server 'handle_request()' session fixation & XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Wed, August 21, 2013 22:20, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 08/05/2013 06:49 AM, Raphael Geissert wrote:
->> On 5 August 2013 07:25, Thijs Kinkhorst <thijs@...ian.org> wrote:
->>> Buffer overflows have been reported in Little CMS 1.x:
->>> http://bugs.debian.org/718682
->>
->> Just a quick note: one of the affected parts of the code is a
->> sample and the other is the tiffdiff(1) tool, where the buffer
->> overflow is triggered by the file names passed as arguments.
->>
->> Cheers,
->>
->
-> can you post the filenames/affected code? thanks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-You can find it in this patch:
-https://bugzilla.redhat.com/attachment.cgi?id=783274
-linked from:
-https://bugzilla.redhat.com/show_bug.cgi?id=991757
+Yes, we recognize that http://secunia.com/advisories/55857/ is an
+additional reference. Relative to what we previously posted, existence
+of this reference does not simplify the situation, because it says
+"Two vulnerabilities have been reported" and then perhaps proceeds to
+state what only one of the vulnerabilities is. Or, alternatively,
+maybe that Secunia advisory is implicitly categorizing $target and
+$target_cgi as separate vulnerabilities.
 
+Does anyone wish to contribute the information about whether the first
+problem fix (involving allowable characters in the $target and
+$target_cgi variables in lib/HTTPServer.pm) was part of 3.3.1, or only
+part of 3.4.0? If not, we can have someone at MITRE try to locate a
+copy of 3.3.1 later.
 
-Cheers,
-Thijs
+https://github.com/mikaku/Monitorix/blob/master/Changes says
+
+   Fixed to correctly sanitize the input string in the built-in HTTP server
+   which led into a number of security vulnerabilities. [#30]
+
+in both the 3.3.1 and 3.4.0 changelog entries. Also, as we previously
+posted, the vendor referred to "two security issues ... not covered
+yet in the previous 3.3.1 version" when announcing 3.4.0. We see that
+there is a second XSS-related commit involving the PATH_INFO (aka the
+$url variable) but this isn't necessarily "two security issues" by
+itself. So, we still don't know how many CVE IDs to assign, and we
+would prefer not to assign any CVE IDs until the meaning and scope of
+each ID is at least somewhat understood.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSp1A6AAoJEKllVAevmvmstTsH/iCuzA8UqbTbMQCYQ7PfNFE5
+O0uYBMLgjBq801xz+aLF0FIhlm6Ruac3qfi7pXv+CV9OgtcHqoOuLTsnrUM4vNi/
+dCH5o3l+5aD4DMasP/Q8upSwqJl8GgUhyr78lgNRUxA/Wdje6o4+HM/v7lLLr6Hf
+uWLWndMzSzDw79R3RChz4cnXhDRYrSesBEDGdwFwN4/wRQ4Tp9WX3ocRGvhxw1fk
+5yo789nJzL3jYhXczqcUUR50OBQREUmB7eF1Kt4wU0idumaAm3mWARxnaWoA5Xgu
+dEyHhaNpu/uml4m1NswPmar9L1hh2kOORAmoY5KyhH6y2UIPmQDEKEcSX8tenPY=
+=JnLr
+-----END PGP SIGNATURE-----
