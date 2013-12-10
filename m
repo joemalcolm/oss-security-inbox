@@ -1,22 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/51
-Message-ID: <CAHmME9qGH4xSP1EfqY3J-Kp=yi5Rojw3X9nXMqnmXd5Lfe-czQ@mail.gmail.com>
-Date: Thu, 28 Feb 2013 00:27:09 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/5
+Message-ID: <52A7064E.9000200@redhat.com>
+Date: Tue, 10 Dec 2013 17:47:18 +0530
+From: Ratul Gupta <ratulg@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org
+Subject: Re: CVE request: monitorix: HTTP server 'handle_request()' session fixation & XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 28, 2013 at 12:17 AM, Daniel Kahn Gillmor
-<dkg@...thhorseman.net> wrote:
-> Even if this were true, it takes much more than a single cycle to write
-> up a decent security report that can be understood by other people.
-> Communication takes time and effort.  Good communication takes even more
-> time and effort.
+On 12/10/2013 05:13 AM, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1038071
+> In reading this, we were not sure what vulnerability or
+> vulnerabilities you are referring to. First, the Subject line mentions
+> session fixation, but the body of the message doesn't mention session
+> fixation.
+>
+> https://github.com/mikaku/Monitorix/issues/30 says "The remote host is
+> running a web server that fails to adequately sanitize request strings
+> of malicious JavaScript. By leveraging this issue, an attacker may be
+> able to inject arbitrary cookies. Depending on the structure of the
+> web application, it may be possible to launch a 'session fixation'
+> attack using this mechanism." This suggests some possibility that the
+> session fixation issue is resultant from an XSS vulnerability. In that
+> situation, the session fixation issue could not be assigned a separate
+> CVE ID.
+>
+> Also, https://github.com/mikaku/Monitorix/issues/30 says "The remote
+> host is running GoScript. The installed version fails to properly
+> sanitize user-supplied input to the 'go.cgi' script. An
+> unauthenticated, remote attacker could exploit this flaw to execute
+> arbitrary commands on the remote host." This is apparently a 2004
+> issue but does not have a CVE ID. Monitorix 3.3.1 apparently has a
+> patch for it.
+>
+> http://www.monitorix.org/news.html says "3.3.1 version released ...
+> 21-Nov-2013 ... This is a maintenance release that fixes a serious bug
+> in the built-in HTTP server. It was discovered that the
+> handle_request() routine did not properly perform input sanitization
+> which led into a number of security vulnerabilities." (This is about
+> some or all of the https://github.com/mikaku/Monitorix/issues/30
+> page).
+>
+> http://www.monitorix.org/news.html also says "3.4.0 version
+> released ... 02-Dec-2013 ... This version also fixes an important
+> number of bugs and two security issues ... not covered yet in the
+> previous 3.3.1 version." These would very likely need separate CVE
+> IDs.
+>
+> - -- 
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+>
+> iQEcBAEBAgAGBQJSplHIAAoJEKllVAevmvms0jAH/0RNtdKYSSGixfL2e4TABdMo
+> 27U2T/rM0cH6Bk9xMyIH0vtqhHsOsaMB266PEym9iy+Hntf+/OiCizA8HAbdeLoi
+> xFjyYnWNAmuLnictLQ7S4zuwHMlA/3S9MsPS4ZaSpYmKkyb7YsxzSXNHmawss/XB
+> wOuLDHyFu5JV6/5o6CfACKdAXxUjE569O8v647zH6XYhsaaEQJTe7TxRybJzLKgY
+> YQrzp4Mh8QhMB2KNR9FO8zR9HfkTU0UoLzBQ/t52+ZmKi4eBOdzhi9La1hBgXleW
+> NWBpx7zgnrAVN8bZ6xR3MiIa3fQtS4ncHhmliLzW5Qjrz7rZWNiTIKdwLiutDiI=
+> =vNaA
+> -----END PGP SIGNATURE-----
+The issues which needs CVE are described here: 
+http://secunia.com/advisories/55857/
 
-I agree with this. I was referring to Greg's first mentioned stage of
-classifying the bug, which for some cases is easy, though, as I said,
-not in all cases. What you refer to is Greg's mentioned second stage,
-of notification. This often can indeed be time consuming, as you
-mentioned.
+-- 
+Regards,
+
+Ratul Gupta / Red Hat Security Response Team
+
