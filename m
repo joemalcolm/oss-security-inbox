@@ -1,83 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/04/8
-Message-ID: <loom.20130405T003828-246@post.gmane.org>
-Date: Thu, 4 Apr 2013 23:17:24 +0000 (UTC)
-From: Damien Regad <damien.regad@...ckgroup.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/4
+Message-ID: <20131210093037.GQ27570@suse.de>
+Date: Tue, 10 Dec 2013 10:30:37 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Multiple CVE requests for MantisBT
+Subject: Re: CVE request: Linux kernel: net: memory leak in recvmsg handler msg_name & msg_namelen logic
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+On Tue, Dec 10, 2013 at 01:00:43PM +0530, P J P wrote:
+>    Hello,
+>
+> Linux kernel built with the networking support(CONFIG_NET) is vulnerable to 
+> an information leakage flaw in the socket layer. It could occur while doing 
+> recvmsg(2), recvfrom(2) socket calls. It occurs due to improperly 
+> initialised msg_name & msg_namelen message header parameters.
+>
+> A user/program could use this flaw to leak kernel memory bytes.
+>
+> Upstream fix:
+> -------------
+>  -> https://git.kernel.org/linus/f3d3342602f8bcbf37d7c46641cb9bca7618eb1c
+>
+> Reference:
+> ----------
+>  -> https://bugzilla.redhat.com/show_bug.cgi?id=1039845
 
-The following 4 issues were discovered in the Mantis Bug Tracker:
+CVE-2013-6405 covers parts of that already I think and could be extended?
 
-
-1. Close button available to users despite workflow restrictions
-
-This issue affects Mantis 1.2.12 and later.
-
-It allows low-privileged users to close issues even though the workflow
-settings do not permit it.
-
-Reference: http://www.mantisbt.org/bugs/view.php?id=15453
-
-
-2. XSS vulnerability when deleting a version
-
-This issue affects Mantis 1.2.14 only. 
-
-Arbitrary JavaScript could be executed in the client's browser when deleting
-a version containing embedded code in its name. The criticality of this
-issue is compounded by the fact that a high-privilege account (typically
-project manager or administrator) is required to both to create and delete a
-version.
-
-Reference: http://www.mantisbt.org/bugs/view.php?id=15511
-
-
-3. XSS vulnerability on Configuration Report page
-
-This issue affects Mantis 1.2.13 only [1]. 
-
-If the system defines a Project containing embedded JavaScript code in its
-name, that code would be executed in the client's browser when displaying
-the configuration report page (adm_config_report.php).
-
-The severity of this issue is mitigated by the need to have a
-high-privileged account both to set the project's name and to access the
-configuration report page.
-
-Reference: http://www.mantisbt.org/bugs/view.php?id=15415
-
-
-4. XSS issue on Configuration Report page when displaying complex value
-
-This issue affects Mantis 1.2.0rc1 and later.
-
-Lack of proper string escaping allows users (having admin access) to enter
-arbitrary javascript code and have it executed on the user's browser.
-
-Reference: http://www.mantisbt.org/bugs/view.php?id=15416
-
-
-Issues resolution:
-
- - 1 & 2 will be fixed in upcoming release 1.2.15, expected to go live 
-   sometime next week (patches are available in the referenced issues)
-
- - 3 & 4 were both resolved in version 1.2.14, released on 29-Jan-2013 
-
-
-Could you kindly assign CVEs for the above issues ? Thanks in advance.
-
-
-Best regards,
-D. Regad
-MantisBT Developer
-http://www.mantisbt.org
-
-[1] MantisBT version 1.2.13 was tagged in the repository but never formally
-released, as we discovered several critical issues at the last minute and
-decided to pull it and released 1.2.14 a week later instead.
-
-
+Ciao, Marcus
