@@ -1,138 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/8
-Message-ID: <A67209E6467BC34B85296CE030F98B0E1421FED2@GQ1-MB01-02.y.corp.yahoo.com>
-Date: Wed, 13 Nov 2013 17:14:03 +0000
-From: Jenny Han Donnelly <jennydonnelly@...oo-inc.com>
-To: Kurt Seifried <kseifried@...hat.com>, "michaeld@...dle.com" <michaeld@...dle.com>, Open Source Security <oss-security@...ts.openwall.com>
-CC: "security@...library.com" <security@...library.com>
-Subject: RE: [vs-plain] Request for CVE Identifiers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/14
+Message-ID: <20131210145610.GA16747@eldamar.local>
+Date: Tue, 10 Dec 2013 15:56:10 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Axel Beckert <abe@...ian.org>
+Subject: Re: CVE Request: ack-grep: potential remote code execution via per-project .ackrc files
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+Hi
 
-Thanks for your help. We now have CVE IDs for YUI-related security vulnerabilities. We're updating the site with them now. For your reference, I've pasted them here:
-
-
-CVE-2013-6780
-https://yuilibrary.com/support/20131111-vulnerability/ use.
-
-
-
-CVE-2012-5881
-http://www.yuiblog.com/blog/2012/10/30/security-announcement-swf-vulnerability-in-yui-2/
-http://www.yuiblog.com/blog/2012/11/05/post-mortem-swf-vulnerability-in-yui-2/
-http://yuilibrary.com/support/20121030-vulnerability/
-
-Cross-site scripting (XSS) vulnerability in the Flash component infrastructure in YUI 2.4.0 through 2.9.0 allows remote attackers to inject arbitrary web script or HTML via vectors related to charts.swf, a similar issue to CVE-2010-4207.
-
-
-
-CVE-2012-5882
-http://www.yuiblog.com/blog/2012/10/30/security-announcement-swf-vulnerability-in-yui-2/
-http://www.yuiblog.com/blog/2012/11/05/post-mortem-swf-vulnerability-in-yui-2/
-http://yuilibrary.com/support/20121030-vulnerability/
-
-Cross-site scripting (XSS) vulnerability in the Flash component infrastructure in YUI 2.5.0 through 2.9.0 allows remote attackers to inject arbitrary web script or HTML via vectors related to uploader.swf, a similar issue to CVE-2010-4208.
-
-
-
-CVE-2012-5883
-http://www.yuiblog.com/blog/2012/10/30/security-announcement-swf-vulnerability-in-yui-2/
-http://www.yuiblog.com/blog/2012/11/05/post-mortem-swf-vulnerability-in-yui-2/
-http://yuilibrary.com/support/20121030-vulnerability/
-
-Cross-site scripting (XSS) vulnerability in the Flash component infrastructure in YUI 2.8.0 through 2.9.0, as used in Bugzilla 3.7.x and 4.0.x before 4.0.9, 4.1.x and 4.2.x before 4.2.4, and 4.3.x and 4.4.x before 4.4rc1, allows remote attackers to inject arbitrary web script or HTML via vectors related to swfstore.swf, a similar issue to CVE-2010-4209.
-
-
-
-CVE-2013-4939
-http://yuilibrary.com/support/20130515-vulnerability/
-
-Cross-site scripting (XSS) vulnerability in io.swf in the IO Utility component in Yahoo! YUI 3.0.0 through 3.9.1, as used in Moodle through 2.1.10, 2.2.x before 2.2.11, 2.3.x before 2.3.8, 2.4.x before 2.4.5, 2.5.x before 2.5.1, and other products, allows remote attackers to inject arbitrary web script or HTML via a crafted string in a URL.
-
-
-
-CVE-2013-4940
-http://yuilibrary.com/support/20130515-vulnerability/
-
-Cross-site scripting (XSS) vulnerability in io.swf in the IO Utility component in Yahoo! YUI 3.10.2, as used in Moodle through 2.1.10, 2.2.x before 2.2.11, 2.3.x before 2.3.8, 2.4.x before 2.4.5, 2.5.x before 2.5.1, and other products, allows remote attackers to inject arbitrary web script or HTML via a crafted string in a URL.  NOTE: this vulnerability exists because of a CVE-2013-4939 regression.
-
-
-
-CVE-2013-4941
-http://yuilibrary.com/support/20130515-vulnerability/
-
-Cross-site scripting (XSS) vulnerability in uploader.swf in the Uploader component in Yahoo! YUI 3.2.0 through 3.9.1, as used in Moodle through 2.1.10, 2.2.x before 2.2.11, 2.3.x before 2.3.8, 2.4.x before 2.4.5, 2.5.x before 2.5.1, and other products, allows remote attackers to inject arbitrary web script or HTML via a crafted string in a URL.
-
-
-
-CVE-2013-4942
-http://yuilibrary.com/support/20130515-vulnerability/
-
-Cross-site scripting (XSS) vulnerability in flashuploader.swf in the Uploader component in Yahoo! YUI 3.5.0 through 3.9.1, as used in Moodle through 2.1.10, 2.2.x before 2.2.11, 2.3.x before 2.3.8, 2.4.x before 2.4.5, 2.5.x before 2.5.1, and other products, allows remote attackers to inject arbitrary web script or HTML via a crafted string in a URL.
-
-
-
------Original Message-----
-From: Kurt Seifried [mailto:kseifried@...hat.com] 
-Sent: Thursday, August 01, 2013 8:12 PM
-To: michaeld@...dle.com; security@...library.com; Open Source Security
-Subject: Re: [vs-plain] Request for CVE Identifiers
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 07/05/2013 12:01 AM, Michael de Raadt wrote:
-> Hi, Kurt.
+On Tue, Dec 10, 2013 at 02:49:25PM +0100, Salvatore Bonaccorso wrote:
+> Hi
 > 
-> Thanks for getting back to me.
-> 
-> The YUI issue (reported as Moodle security issue MSA-13-0025) seems to 
-> have affected YUI versions 3.0.0 through 3.10.0 and was fixed in 
-> 3.10.1. There was a smaller related problem still in
-> 3.10.2 that they also fixed. Here are some links to the YUI 
-> announcements...
+> I would like to request a CVE for the following vulnerability in
+> ack-grep:
+[...]
 
-Hi YUI guys, can we get the CVE situation for YUI sorted out please and thank you? I'd be happy to assign CVEs or to help you get them from Mitre.
+Due to a missunderstanding of mine between me and Axel we requested
+that twice. Please ignore this one. First CVE request for the same
+issue is at Message-ID: <20131210134614.GI27889@....noone.org>
 
-> 
-> http://www.yuiblog.com/blog/2013/05/14/yui-3-10-1-released-to-fix-swf-
-> vulnerability/
->
-> 
-http://yuilibrary.com/support/20130515-vulnerability/
-> 
-> I couldn't find an existing CVE for this. Perhaps there is not one 
-> yet.  Michael de Raadt /BSci(Hons), PhD/ *Development Manager,
-> Moodle HQ <http://moodle.com/hq/>* Availability:  	Calendar
-> <http://dl.dropbox.com/u/11561272/calendar.html> Web:
-> moodle.com/michaeld <http://moodle.com/michaeld> Blog:
-> salvetore.wordpress.com <http://salvetore.wordpress.com/> Email:
-> michaeld@...dle.com <mailto:michaeld@...dle.com> LinkedIn:
-> linkedin.com/in/michaelderaadt 
-> <http://linkedin.com/in/michaelderaadt> Twitter:  	@salvetore
-> <https://twitter.com/salvetore>
-> 
-> <http://moodle.org>
-
-
-
-- --
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJR+yOBAAoJEBYNRVNeJnmTEHwP/iLHXRhGK0FTjLnaRm1+gnU4
-LLpL4g67iSpvKC8b1uU1HDMGX0XqPFdUHsbfhDh1SSFyQk/zF9aDLmdcO+5iuDZv
-hSaElDQuqLfMFzLpu76462YrWJn4juhKQ9jXZfMo5behIu7vaJIutXnDdBS62Trq
-0EhSGiOVBif5cglZlEwRzw0N7PNI3of3ym1DFgHgXa3KQTl6qqavRMYTPyj0FggD
-FZkUgJOPCsIv196EMiG9y4b8p8SKLBvhqUqvHkAcUyeauvtFXWGIMiHYs5wyReD/
-mo39xRgccIJCQARiymRfuJ4zAkvsY7r3K+RFJbegSff4JK55dBBHjaNeDu6uQd9J
-i6dGxCkIXmzu46J7t2qlVhLc1hpcxpMOFBnlAJTsFxd+OTFuyVZpIi9iM/uOEz1y
-EdEtFzj/IGLKxzV7qnq0wSNVAdcC/njK3ztwTUUMNKGl4lRps3V/2NIUVnb+5bnl
-WyNBW6Oa6xUcrrWQusm7Q5souFD3LC8Jbt4LwsgKVcyNL2c3oAf1c2S2/HYBCe/S
-Lsoyjw8255zBjRYBvauEH4lqhGRTVh2ThzmZGllvXzZlLGQ0oJsL8f/Vntc1R+M0
-oTLaVMIC/vR1IWrNpeDJNiUUpINNHTmt6KI2qHAWXO1pG30YrG1b028feVXHZ/nA
-rQThVR7Lw0Nw2ZjuykpY
-=RbCn
------END PGP SIGNATURE-----
+Regards,
+Salvatore
