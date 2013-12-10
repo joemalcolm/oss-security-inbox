@@ -1,36 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/15
-Message-ID: <20130225193555.GA5127@waldi.eu.org>
-Date: Mon, 25 Feb 2013 20:36:19 +0100
-From: Bastian Blank <waldi@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/10
+Message-ID: <20131210134614.GI27889@sym.noone.org>
+Date: Tue, 10 Dec 2013 14:46:14 +0100
+From: Axel Beckert <abe@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libvirt kvm-group writable storage
+Cc: Debian Security Team <team@...urity.debian.org>, Andy Lester <andy@...dance.com>, 731848@...s.debian.org
+Subject: CVE request for remote code execution in ack
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi,
 
-libvirtd in privileged (root) mode runs qemu/kvm guests with a different
-user. It set owner/group of storage used by this guests to this user and
-group. In Debian this is libvirt-qemu:kvm.
+as discussed with Salvatore Bonaccorso of the Debian Security Team
+(team cc'ed), I'm herewith requesting a CVE ID for the following
+security issue in ack (http://beyondgrep.com/, also known as ack-grep
+in multiple distributions; upstream developer cc'ed):
 
-| brw-rw---T 1 libvirt-qemu kvm  254, 11 Feb 25 17:08 /dev/dm-11
-| brw-rw---T 1 libvirt-qemu kvm  254, 12 Feb 25 17:50 /dev/dm-12
+* Remote code execution via options --pager, --output, and --regexp in
+  per-project .ackrc files
 
-The kvm group is used for generic access control on /dev/kvm, so a lot
-of users may have access to this group.
+  Details and original report: https://github.com/petdance/ack2/issues/399
+  Changelog: https://metacpan.org/source/PETDANCE/ack-2.12/Changes
+  Further references: http://bugs.debian.org/731848
 
-| crw-rw---T 1 root kvm 10, 232 Feb 25 18:04 kvm
+  Affected versions: 2.00 to 2.10.
+  Not affected versions: Below 2.00
+  Fixed versions: 2.12 so far
 
-This allows write access to unrelated users to this storage.
-
-Affected is at least Debian Squeeze (0.8.3-5+squeeze2) and Debian
-experimental (1.0.1-2). Reference is http://bugs.debian.org/701649
-
-Please assign a CVE.
-
-Bastian
-
+		Regards, Axel
 -- 
-Oh, that sound of male ego.  You travel halfway across the galaxy and
-it's still the same song.
-		-- Eve McHuron, "Mudd's Women", stardate 1330.1
+ ,''`.  |  Axel Beckert <abe@...ian.org>, http://people.debian.org/~abe/
+: :' :  |  Debian Developer, ftp.ch.debian.org Admin
+`. `'   |  1024D: F067 EA27 26B9 C3FC 1486  202E C09E 1D89 9593 0EDE
+  `-    |  4096R: 2517 B724 C5F6 CA99 5329  6E61 2FF9 CD59 6126 16B5
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
