@@ -1,55 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/25/2
-Message-ID: <5101DB3B.2030309@redhat.com>
-Date: Thu, 24 Jan 2013 18:09:15 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/13
+Message-Id: <F285ED6D-5788-4CB0-BF9C-CA5B2428CBBE@petdance.com>
+Date: Tue, 10 Dec 2013 08:01:31 -0600
+From: Andy Lester <andy@...dance.com>
+To: Axel Beckert <abe@...ian.org>
+Cc: oss-security@...ts.openwall.com, Debian Security Team <team@...urity.debian.org>, 731848@...s.debian.org
+Subject: Re: CVE request for remote code execution in ack
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 01/24/2013 01:46 PM, Forest Monsen wrote:
+On Dec 10, 2013, at 8:00 AM, Axel Beckert <abe@...ian.org> wrote:
 
-
-Please use CVE-2013-0224 for this issue.
-
+> It would be nice if you could add the CVE-ID to the Changes file of
+> ack retroactively as soon as it's known so that it's part of the
+> Changes file in further ack releases.
 
 
-Please use CVE-2013-0225 for this issue.
+OK.  Just help me through this and I’ll do what needs to be done.  I’m glad to do whatever is necessary to help y’all.
+
+xoa
+
+--
+Andy Lester => andy@...dance.com => www.petdance.com => AIM:petdance
 
 
-
-Please use CVE-2013-0226 for this issue.
-
-
-
-Please use CVE-2013-0227 for this issue.
-
-
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRAds7AAoJEBYNRVNeJnmTAXEQAMI/V10NW9wwzUtcO8/C1NZV
-TqwmMFp/kWQr2VaNBMi3QrVCEsJwB5k74LFHmfygUsrq88fT/GTaHMh95fQEYSqP
-miQUtKekZOUmm3+1g1F5FxKi2bmL+3UocYWbONbUHqHFfuzQOLv8MKma3utoXu/V
-9hb91qazehieIi25ktutQ5F5tHayvlmKPmRFIsCunof+Y8cfpqrupBVWQDLduItr
-TOCv8CFy4pUeF5WTMe2cEdxpFMIh8F9SkJtCGapcINJyxfGHj+OGhIopTEt+SzLl
-9hUugxCPnVtCyzLUviBpoHuauJSosatzCj1TLbTF0KsrwiTDUe3TUkUtmOT55zdn
-7K1MVSTZYQVr3BsgPWy1+ynXep1xk3K6a1Q2Rhhzq3+suxdo60RyRckC9EJhOlN7
-exZICpKoYcrslVgNBvaTd+9QrP5SCke3hVsz5Y/a7GqPvTlb3pECNSLzmFlOICKV
-mQx0I7X4lDpBV2LSqJ7DbTBPGrSYP7nB8LDK44NP7+b+n9sYAA2/A2+Ay8KiwBuK
-kN6gaoQRfZFV4jBmREqvJ4dVKumrN5Coz97A886OIldmmVaim0MY1WWH9igLMCeu
-G2/J+QZOzvZmxupvOJwsYbyOgkBL65HBmskWutDo+QSfTB2aBj7bsvG3lbcO2QYb
-H0tYw2HH6NzrYtM606dl
-=hIZ2
------END PGP SIGNATURE-----
