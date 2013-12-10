@@ -1,44 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/18/7
-Message-ID: <523A1097.7050604@redhat.com>
-Date: Wed, 18 Sep 2013 14:44:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Luciano Bello <luciano@...ian.org>
-Subject: Re: CVE request: davfs2 - Unsecure use of system()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/9
+Message-ID: <20131210134925.GA22804@lorien.valinor.li>
+Date: Tue, 10 Dec 2013 14:49:25 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: Axel Beckert <abe@...ian.org>
+Subject: CVE Request: ack-grep: potential remote code execution via per-project .ackrc files
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-On 09/17/2013 02:13 AM, Luciano Bello wrote:
-> Hi, A security vulnerability have been reported in davfs2 
-> http://bugs.debian.org/723034
-> 
-> Please, assign a CVE id.
-> 
-> Thanks, luciano
-> 
+I would like to request a CVE for the following vulnerability in
+ack-grep:
 
-Please use CVE-2013-4362 for this issue.
+ https://github.com/petdance/ack2/issues/399
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Upstream for ack-grep fixed a security issue which could possibly lead
+to a remote code execution:
 
-iQIcBAEBAgAGBQJSOhCWAAoJEBYNRVNeJnmTYYkP/iLJyKzvtxoO+6REBK8MILzx
-QqoCTZS4L7Msv4v/GEsi4aAqvxukm5fTfJPpGNNl+EZYgSPsAN0W3cQwkB2+eLQw
-SY6GgK0IGtWsPzeZ1etP5hauTK1hd8+BzT2Ax48ndwYK8Jjk1QP4M0tX8ODoHy9d
-FwHMRnlmwZScVelORZEub46g1+G/n1fX856fi9n6vX2UAlmqPfIpEABbOobk49YX
-I0Ewh7rmpPE/ZoZVpUmzU7EqsxRa29bhGJ6TjKYBrr5rCi3qwLH3Rnzgl6Q4xQKq
-yfzeiO0BoEHvOlp0+hbSGVxg1MKEfEDbQoTiW7l4OvVHTwK9TjoP943s84WODRVD
-yj0HMd/f8kG8c90ho7PYVhyzd4YIKNDjwpm4hA3K+/1QYchmnoQ3fN6OHBWqe+2B
-jurdDFqKvbXqLTMYNx0DBZZmaGvUr+Xqj5YZGoLWC+9TBtQUJgwuaT5YrhnIPImI
-ncqc1i9g1Yzy/5k0DvFwDMPWvvCcFNw9W47sFYatt7vogZ40s/YSxxNyfuHlPaFO
-Dl1m1LqYivq/ivdlzMaH5azwc0sETD9YYpzqUJD3SMZpiYbHZdPWsF5rl5Dq/7Ls
-TTxVBNwZD8GvwIUZZN/k/oEo8TFFGY3jAQ/rBMcJkS86M/Hv6UQquO1Frm8IEgkm
-ARQ/6hc8XxsDS6dZzza/
-=/TP2
------END PGP SIGNATURE-----
+2.12    Tue Dec  3 07:05:02 CST 2013
+====================================
+[SECURITY FIXES]
+This verison of ack prevents the --pager, --regex and --output
+options from being used from project-level ackrc files.  It is
+possible to execute malicious code with these options, and we want
+to prevent the security risk of acking through a potentially malicious
+codebase, such as one downloaded from an Internet site or checked
+out from a code repository.
+ 
+The --pager, --regex and --output options may still be used from
+the global /etc/ackrc, your own private ~/.ackrc, the ACK_OPTIONS
+environment variable, and of course from the command line.
+
+The relevant commit seems to be
+
+https://github.com/petdance/ack2/commit/a9233abad71225c1cfb300c03841c723bceb0f07
+
+(plus some adjusting the testsuite).
+
+Reference in the Debian Bugtracker:
+
+ http://bugs.debian.org/731848
+
+See also https://github.com/petdance/ack2/issues/414 which contains further
+restrictions to the command line options.
+
+Could a CVE be assigned to this issue?
+
+Regards,
+Salvatore
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
