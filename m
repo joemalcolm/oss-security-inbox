@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/4
-Message-ID: <20131113155751.GC28665@sentinelchicken.org>
-Date: Wed, 13 Nov 2013 07:57:51 -0800
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Microsoft Warns Customers Away From RC4 and SHA-1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/12
+Message-ID: <20131210140059.GJ27889@sym.noone.org>
+Date: Tue, 10 Dec 2013 15:00:59 +0100
+From: Axel Beckert <abe@...ian.org>
+To: Andy Lester <andy@...dance.com>
+Cc: oss-security@...ts.openwall.com, Debian Security Team <team@...urity.debian.org>, 731848@...s.debian.org
+Subject: Re: CVE request for remote code execution in ack
 Content-Type: text/plain; charset=utf-8
 
-> I'm inclined to agree. The question I suppose is, like DES (and
-> 3DES/MD5) at what point do we start assigning CVE's for some of this?
-> thoughts and comments welcome.
+Hi Andy,
 
-Using a weak encyption algorithm alone isn't a sufficient condition to
-issue a CVE against software, since often the context of the usage
-matters a lot.  If you use MD5 or SHA-1 for password hashing (with
-lots of salt and rounds), then there's no vulnerability.  If you use
-them for HMACs, then there's also likely no problem.  But if you use
-them for a signature with a public key, there is.
+Andy Lester wrote:
+> On Dec 10, 2013, at 7:46 AM, Axel Beckert <abe@...ian.org> wrote:
+> > as discussed with Salvatore Bonaccorso of the Debian Security Team
+> > (team cc'ed), I'm herewith requesting a CVE ID for the following
+> > security issue in ack (http://beyondgrep.com/, also known as ack-grep
+> > in multiple distributions; upstream developer cc'ed):
+> 
+> Is there anything you need me to do?
 
-So to answer the "at what point" question: *right now*, but *only* in
-the proper context.  There needs to be a demonstrable attack in that
-context. 
+It would be nice if you could add the CVE-ID to the Changes file of
+ack retroactively as soon as it's known so that it's part of the
+Changes file in further ack releases.
 
-tim
+		Regards, Axel
+-- 
+ ,''`.  |  Axel Beckert <abe@...ian.org>, http://people.debian.org/~abe/
+: :' :  |  Debian Developer, ftp.ch.debian.org Admin
+`. `'   |  1024D: F067 EA27 26B9 C3FC 1486  202E C09E 1D89 9593 0EDE
+  `-    |  4096R: 2517 B724 C5F6 CA99 5329  6E61 2FF9 CD59 6126 16B5
