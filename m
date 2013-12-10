@@ -1,79 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/12/6
-Message-ID: <52829913.5090506@redhat.com>
-Date: Tue, 12 Nov 2013 14:09:39 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/15
+Message-ID: <l87a6f$3f1$1@ger.gmane.org>
+Date: Tue, 10 Dec 2013 14:58:37 +0000
+From: Matthew Wilkes <matthew@...thewwilkes.co.uk>
 To: oss-security@...ts.openwall.com
-CC: Mark Dodwell <mark@...ynamic.co.uk>
-Subject: Re: CVE request: rubygem omniauth-facebook CSRF vurnerability
+Subject: CVE request for Plone
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello all,
 
-On 11/12/2013 01:58 PM, Josef Šimánek wrote:
-> # RubyGem omniauth-facebook CSRF vulnerability
-> 
-> There is a security vulnerability in the CSRF protection of 
-> omniauth-facebook 1.4.1.
-> 
-> Versions affected: 1.4.1 Not affected:      <= 1.4.0 (*) Fixed
-> versions:    >= 1.5.0
-> 
-> (*) Versions <= 1.4.0 did not have any CSRF protection. So, while
-> this vulnerability does not directly affect versions <= 1.4.0,
-> downgrading to <= 1.4.0 is not a fix.
-> 
-> ## Impact
-> 
-> Because of the way that omniauth-facebook supports setting a 
-> per-request state parameter by storing it in the session, it is 
-> possible to circumvent the automatic CSRF protection. Therefore
-> the CSRF added in 1.4.1 should be considered broken.
-> 
-> If you are currently providing a custom state, you will need to
-> store and retrieve this yourself (for example, by using the session
-> store) to use 1.5.0.
-> 
-> All users running an affected release should upgrade to 1.5.0.
-> 
-> ## Releases
-> 
-> The 1.5.0 releases is available at the normal locations.
-> 
-> 
-> ## Workarounds
-> 
-> None.
-> 
-> ## Credits
-> 
-> Egor Homakov (@homakov)
-> 
-> 
-> regardsJosef Šimánek
-> 
+I'd like to request some CVEs for Plone as we have a hotfix release today.
 
-Can you link to the vulnerable code  or the code commit fixing this?
-thanks.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Filesystem path information leak
+--------------------------------
 
-iQIcBAEBAgAGBQJSgpkSAAoJEBYNRVNeJnmTiJkP/jON6q5ZPsPNV+5Ib8yMIK+K
-cGGvskIE/2+LOS9ThwvqjMiAG/w+97Q9bqr0cHiSH0Tcehg6GWlCkggW3Jq72ZP1
-P6ECUU62VuemtaYfsCjPLunQP9S0zZpS2bdOYFyl22pUSKncwPy4fiZZ8cpyGkfe
-0qCJxf36mOJjQTRzJe+IAFCBzLshkHroK//fnT326Mv172hEr/z40JoQKw/df0+b
-DL4XDjbkxLcCXJH8pNelU/qbBwpLBlHgT9/noFX7Ic9oIkoZDKDTBhJ8QhXHAarO
-5DJWgRdEw9tvdf3XsRjbVFsT2UKcCufvnKXUmwbFslTpVWrLRUYnI18Q4Sh3xzGw
-gme/u0fecRQKW1nR8j+m1BS8a9rzAX267RmQJCqQsoQTOGf0c53dTZuBBTup/b3W
-1aMjxbovvhXSomQID/GNvTTL8BeiJk6nOhddHYRe+zyLWI7+mOqkQKZRRGn/xTH6
-LFjdsPNYoRfCwqt8GEuHpUeBTGe+tztNxa6AePXbtN6ucW4ADBdPHswXE5b7JWsI
-amCOAh5+EUpN1YVcolW2KESEW8lW8XC6zHJIqF53oBUf77gzmIcLyfq5KQG/fFxM
-Jque0YAq2xfkx0hQBg/m6f6oi/5AGKdgTLTRi3NvRx079N+/veS4JnLzcX8lwSKB
-AzvOWhoza+2y7iPRyULE
-=ZZJQ
------END PGP SIGNATURE-----
+First up, we have a vulnerability that allows people to find the install 
+path of Plone on a server. I can't actually think of any attacks that 
+happen with this, but we had a CVE assigned for it before so I'm 
+requesting another.
+
+Details, including source links are at:
+     https://plone.org/security/20131210/path-leak
+
+
+Privilege escalation through exposed underlying API
+---------------------------------------------------
+
+Plone's searching infrastructure is based on CMF's, which is based on 
+Zope's. Plone wraps the search API with additional filters for 
+permissions and expired content. One of the methods that allows 
+searching wasn't so wrapped, so people who can write untrusted Python 
+can gain access to content they aren't authorised to. In addition, this 
+can accidentally expose information.
+
+Details, including source links are at:
+     https://plone.org/security/20131210/catalogue-exposure
+
+
+
+
+
+In addition, we are releasing two patches to vulnerabilities in Zope 
+today. Can somebody advise if these should be merged?
+
+
+Reflexive XSS in browser_id_manager
+-----------------------------------
+
+Zope's session infrastructure includes a method for encoding URLs, which 
+is accessible through the web. By passing HTML into this method a 
+reflexive XSS attack can be achieved.
+
+Details, including source links are at:
+     https://plone.org/security/20131210/zope-xss-in-browseridmanager
+
+
+Reflexive XSS in OFS.Image
+--------------------------
+
+Zope's image objects include a method for generating tags, which allow 
+for arbitrary classes to be included. This method is accessible through 
+the web and these classes are not sanitised, so the image tag can be 
+broken out of and arbitrary HTML included.
+
+Details, including source links are at:
+     https://plone.org/security/20131210/zope-xss-in-OFS
+
+
+Thanks for your attention,
+
+Matt
+
+
