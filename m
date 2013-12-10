@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/3
-Message-ID: <20130807072502.GH15178@dhcp-25-225.brq.redhat.com>
-Date: Wed, 7 Aug 2013 09:25:03 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: Oleg Nesterov <oleg@...hat.com>
-Cc: security@...nel.org, oss-security@...ts.openwall.com, "Eric W. Biederman" <ebiederm@...ssion.com>, Andy Lutomirski <luto@...capital.net>, David Howells <dhowells@...hat.com>
-Subject: Re: [PATCH 0/1] (Was: CLONE_NEWUSER local DoS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/11
+Message-Id: <231C5898-F9F3-408A-8693-056B03C5E9B7@petdance.com>
+Date: Tue, 10 Dec 2013 07:55:44 -0600
+From: Andy Lester <andy@...dance.com>
+To: Axel Beckert <abe@...ian.org>
+Cc: oss-security@...ts.openwall.com, Debian Security Team <team@...urity.debian.org>, 731848@...s.debian.org
+Subject: Re: CVE request for remote code execution in ack
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 06, 2013 at 07:38:27PM +0200, Oleg Nesterov wrote:
-> On 08/06, Oleg Nesterov wrote:
-> >
-> > On 08/06, Petr Matousek wrote:
-> > >
-> > > spender reported [1] a local DoS triggerable by unprivileged user when
-> > > user namespaces are enabled (CONFIG_USER_NS).
-> > >
-> > >   [1] https://twitter.com/grsecurity/status/364566062336978944
-> 
-> I see nothing related there, so the patch lacks Reported-by.
-> 
-> Who is reporter?
 
-spender@...ecurity.net
+On Dec 10, 2013, at 7:46 AM, Axel Beckert <abe@...ian.org> wrote:
 
--- 
-Petr Matousek / Red Hat Security Response Team
+> Hi,
+> 
+> as discussed with Salvatore Bonaccorso of the Debian Security Team
+> (team cc'ed), I'm herewith requesting a CVE ID for the following
+> security issue in ack (http://beyondgrep.com/, also known as ack-grep
+> in multiple distributions; upstream developer cc'ed):
+
+Is there anything you need me to do?
+
+--
+Andy Lester => andy@...dance.com => www.petdance.com => AIM:petdance
+
+
