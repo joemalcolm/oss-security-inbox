@@ -1,37 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/27/6
-Message-ID: <20130327201251.GA6480@openwall.com>
-Date: Thu, 28 Mar 2013 00:12:51 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/10
+Message-ID: <20131211155058.GH2348@openstack.org>
+Date: Wed, 11 Dec 2013 15:50:58 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
 To: oss-security@...ts.openwall.com
-Cc: kernel-hardening@...ts.openwall.com
-Subject: Re: Security vulnerability tools
+Subject: [OSSA 2013-034] Heat CFN policy rules not all enforced (CVE-2013-6426)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+[Apologies for the duplicate--forgot to sign the previous one.]
 
-Guys, can we continue this thread on oss-security only, please?  It is a
-topic for oss-security, but less so for kernel-hardening.  Anyone on
-kernel-hardening who is interested in this topic should join oss-security.
+OpenStack Security Advisory: 2013-034
+CVE: CVE-2013-6426
+Date: December 11, 2013
+Title: Heat CFN policy rules not all enforced
+Reporter: Steven Hardy (Red Hat)
+Products: Heat
+Affects: All supported releases
 
-Just drop kernel-hardening from further replies.
+Description:
+Steven Hardy from Red Hat reported a vulnerability in Heat's default
+API policy enforcement. By calling the CreateStack or UpdateStack
+methods, an in-instance user may be able to create or update a stack
+in violation of the default policy. Only setups using Heat's
+cloudformation-compatible API are affected.
 
-On Wed, Mar 27, 2013 at 03:54:04PM -0400, Corey Bryant wrote:
-> I'll plan on updating http://oss-security.openwall.org/wiki/tools with
-> anything it doesn't already have.
+Icehouse (development branch) fix:
+https://review.openstack.org/61452
 
-Yes, please!
+Havana fix:
+https://review.openstack.org/61454
 
-> Clang
-> -----
-> Static analysis tool for C/C++
+Notes:
+This fix will be included in the icehouse-2 development milestone
+and in a future 2013.2.1 release.
 
-Clang and very recent GCC also have dynamic "sanitizers":
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6426
+https://launchpad.net/bugs/1256049
 
-http://clang.llvm.org/docs/AddressSanitizer.html
-http://clang.llvm.org/docs/ThreadSanitizer.html
-http://clang.llvm.org/docs/MemorySanitizer.html
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
 
-Thanks,
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
