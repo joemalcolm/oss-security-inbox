@@ -1,72 +1,210 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/27/8
-Message-ID: <51F371DE.8010608@redhat.com>
-Date: Sat, 27 Jul 2013 01:08:14 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/5
+Message-ID: <20131211115602.GE8944@kludge.henri.nerv.fi>
+Date: Wed, 11 Dec 2013 13:56:02 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Insecure Software Download in pip
+Subject: CVE request: TYPO3-CORE-SA-2013-004 and TYPO3-FLOW-SA-2013-001
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Can we assign 10 CVEs for following TYPO3 issues, thank you. Project's security
+team is aware of this request. Upgrade is recommended.
 
-On 07/25/2013 03:09 AM, Donald Stufft wrote:
-> I'd like to request a CVE for pip
-> (https://pypi.python.org/pypi/pip/).
-> 
-> The mirroring support (-M, --use-mirrors) was implemented without
-> any sort of authenticity checks and is downloaded over plaintext
-> HTTP. Further more by default it will dynamically discover the list
-> of available mirrors by querying a DNS entry and extrapolating from
-> that data. It does not attempt to use any sort of method of
-> securing this querying of the DNS like DNSSEC. Software packages
-> are downloaded over these insecure links, unpacked, and then
-> typically the setup.py python file inside of them is executed.
-> 
-> The vulnerable code is located at: -
-> https://github.com/pypa/pip/blob/develop/pip/index.py#L60-L64 -
-> https://github.com/pypa/pip/blob/develop/pip/index.py#L205-L207 -
-> https://github.com/pypa/pip/blob/develop/pip/index.py#L553-L572 -
-> https://github.com/pypa/pip/blob/develop/pip/index.py#L999-L1024
-> 
-> The affected versions are every released version since 0.8.1 which
-> are: 0.8.1, 0.8.2, 0.8.3, 1.0, 1.0.1, 1.0.2, 1.1, 1.2, 1.2.1, 1.3,
-> 1.3.1, 1.4
-> 
-> I'm not aware of this issue having ever had a CVE requested for it
-> and my attempts to search the CVE database did not appear to turn
-> up anything relevant but the search doesn't appear to be the
-> greatest so I may have missed it.
-> 
-> I'm hoping to land a patch for this in a future release (current
-> iteration of patch available at
-> https://github.com/dstufft/pip/compare/remove-mirror-support) but
-> there is no planned fix version as of yet.
-> 
-> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 7C6B
-> 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+Reference for issues 1-9:
+http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2013-004/
+Reference for issue 10:
+http://typo3.org/teams/security/security-bulletins/typo3-flow/typo3-flow-sa-2013-001/
 
-Was it supposed to be secure (like was this explicitly supposed to be
-all encrypted/etc.)? This sounds more like security hardening than a
-security vulnerability.
+Vulnerable subcomponent: Content Editing Wizards
+1)
+Vulnerability Type: Information Disclosure
+Affected Versions: Versions 4.5.0 to 4.5.31, 4.7.0 to 4.7.16, 6.0.0 to 6.0.11,
+6.1.0 to 6.1.6 and the development branch of 6.2
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:C/I:N/A:N/E:F/RL:O/RC:C
+Problem Description: Failing to check for user permissions, it is possible for
+authenticated editors to read (but not update or change) content from arbitrary
+TYPO3 table columns by forging URL parameters.
+Solution: Update to the TYPO3 version 4.5.32, 4.7.17, 6.0.12 or 6.1.7 that fix
+the problem described.
+Credits: Credits go to Security Team member Georg Ringer who discovered and
+reported the issue.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+2)
+Vulnerability Type: Cross-Site Scripting
+Affected Versions: Versions 4.5.0 to 4.5.31, 4.7.0 to 4.7.16, 6.0.0 to 6.0.11,
+6.1.0 to 6.1.6 and the development branch of 6.2
+Severity: Low
+Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:N/I:P/A:N/E:F/RL:O/RC:C
+Problem Description: Failing to properly encode user input, several content
+wizards are susceptible to Cross-Site Scripting, allowing authenticated editors
+to inject arbitrary HTML or JavaScript by crafting URL parameters.
+Solution: Update to the TYPO3 version 4.5.32, 4.7.17, 6.0.12 or 6.1.7 that fix
+the problem described.
+Credits: Credits go to Richard Brain and Security Team member Georg Ringer who
+discovered and reported the issues. 
 
-iQIcBAEBAgAGBQJR83HdAAoJEBYNRVNeJnmTZHAQALOm7lBjIZUCgej+8eW5YVut
-f6Z6KiJtJo1m5nITrtAxS9lg7vrwWZ4bg2VhRBT9NQ3kYCP4QHbD80O5jeC2timf
-xuelk/qX3htCG0Jl/of9N1VveGGc+IKd96se8QrR5ZdwSu6T5fbdEuXTvAuDSDXf
-a2ov7M6tw0K6/78VWrw9iqwpN+qnirfpgeNYtpt9opcQt67YR0YImbvKY/jHGIEz
-PrCWRLfsIjNgn4jKo1hDvjtoIo0AJ0cQGAQZi+hZbnK3/KbQK23qAA59OCElD0ZZ
-lfdiAbqXEuonyfH/DKA/dpB2kNKRb8rJpGh+SDGMfYFgrQv+Hw7x7DAd0a9js9Oi
-JBM9T1kWqTNtwSeN8WrOVVdR7VUKO3Up3+nzsd6et8c/3v2ZDEUgWWxnkA8qWSeS
-EaGvSjHWuHeR/DxEoZCQksiceeiWwS3glFVcSqXACH1JKroCU8e//AjB3awOhmkN
-cGSArMXGRtkvPwVt/eMmjA8UzXQPjnX+Q2NnkyepLeJuDm2PQPrQkciNAQ3TpfmZ
-t9tHO5E0NIfXQ3+W5YJhal4FHjue55ebK4K3ydj/QUiAe7gTFpqkTwA9+azXa8SS
-y7O/riAjm/Sr1veGnM3BNK4xGDmrNVdD0Cfjp0nq+CpXWpAqy/TipomsBcW6nPat
-R02LjbWbFPuoUAT0+xr4
-=1uQa
------END PGP SIGNATURE-----
+3)
+Vulnerability Type: Insecure Unserialize
+Affected Versions: Versions from 4.5.0 to 4.5.31, 4.7.0 to 4.7.16, 6.0.0 to
+6.0.11, 6.1.0 to 6.1.6 and the development branch of 6.2
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:N/I:P/A:P/E:F/RL:O/RC:C
+Problem Description: Due to a missing signature for an input parameter an
+attacker could unserialize arbitrary objects within TYPO3. We are aware of a
+working exploit which can be used to delete arbitrary files which are writable
+for the PHP server process. A valid backend user login or a successful
+Cross-Site Request Forgery attack are required to exploit this vulnerability.
+Solution: Update to the TYPO3 version 4.5.32, 4.7.17, 6.0.12 or 6.1.7 that fix
+the problem described.
+Credits: Credits go to Rupert Germann who discovered and reported the issue. 
+
+Vulnerable subcomponent: Extension Manager
+4)
+Vulnerability Type: Cross-Site Scripting
+Affected Versions: Versions 4.5.0 to 4.5.31 and 4.7.0 to 4.7.16
+Severity: Low
+Suggested CVSS v2.0: AV:N/AC:H/Au:S/C:N/I:P/A:N/E:F/RL:O/RC:C
+Problem Description: Failing to properly encode user input, the extension
+manager is susceptible to Cross-Site Scripting. To exploit this vulnerability,
+attackers could trick authenticated administrators to follow a forged URL which
+executes injected JavaScript on behalf of the administrator.
+Solution: Update to the TYPO3 version 4.5.32 or 4.7.17 that fix the problem
+described.
+Credits: Credits go to Steffen Müller who discovered and reported the issue.
+
+Vulnerable subcomponent: Backend User Administration
+5)
+Vulnerability Type: Cross-Site Scripting
+Affected Versions: Versions 6.0.0 to 6.0.11, 6.1.0 to 6.1.6 and the development
+branch of 6.2
+Severity: Low
+Suggested CVSS v2.0: AV:N/AC:H/Au:S/C:N/I:P/A:N/E:F/RL:O/RC:C
+Problem Description: Failing to properly encode user input, the Backend User
+Administration Module is susceptible to Cross-Site Scripting. To exploit this
+vulnerability, attackers could trick authenticated administrators to follow a
+forged URL which executes injected JavaScript on behalf of the administrator.
+Solution: Update to the TYPO3 version 6.0.12 or 6.1.7 that fix the problem
+described.
+Credits: Credits go to Sebastian Nerz and Security Team member Georg Ringer who
+discovered and reported the issues. 
+
+Vulnerable subcomponent: Extbase
+6)
+Vulnerability Type: Cross-Site Scripting
+Affected Versions: Versions from 4.5.0 to 4.5.31, 4.7.0 to 4.7.16, 6.0.0 to
+6.0.11, 6.1.0 to 6.1.6 and the development branch of 6.2
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:N/I:P/A:N/E:H/RL:O/RC:C
+Problem Description: The errorAction method in the ActionController base class
+of Extbase returns error messages without properly encoding them. Because these
+error messages can contain user input, this could lead to a Cross-Site Scripting
+vulnerability in Extbase Framework driven TYPO3 extensions. For this
+vulnerability to exploited the following conditions must be fulfilled:
+- An Extbase extension must be installed and be available as plugin or module.
+- The plugin or module must have the Rewritten Property Mapper enabled.
+- The errorAction has not been overridden in the controller subclass in a way
+  that removes error messages from the return values.
+
+Although we are not aware of any possibility to exploit this issue with the old
+property mapper or the Extbase version that has been delivered with TYPO3 4.5.x,
+we removed potentially offending output from these versions as well.
+Hint: If you have customized the errorAction in your Extbase extension which
+have controller classes that override the error action,we advice you to check
+that the error messages returned in these actions only contain static strings
+and are not derived from any kind of user input. If you are not sure whether
+your code is fine in that regard, feel free to ask on a public mailing list or
+the forum.
+Important: We have received reports that this issue has been actively exploited
+in the wild.
+Solution: Update to the TYPO3 version 4.5.32, 4.7.17, 6.0.12 or 6.1.7 that fix
+the problem described.
+Note: The same problem applies to the TYPO3 Flow Framework.The according
+advisory is: TYPO3-FLOW-SA-2013-001
+Credits: Credits go to André Koch who discovered and reported the issue. 
+
+Vulnerable subcomponent: OpenID Extension
+7)
+Vulnerability Type: Open Redirection
+Affected Versions: Versions from 4.5.0 to 4.5.31, 4.7.0 to 4.7.16, 6.0.0 to
+6.0.11, 6.1.0 to 6.1.6 and the development branch of 6.2
+Severity: Low
+Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:C/I:C/A:C/E:F/RL:O/RC:C
+Problem Description: Failing to validate user-provided input, the openid
+extension allows redirects to arbitrary URLs. For this vulnerability to exist,
+the openid extension must be installed.
+Solution: Update to the TYPO3 version 4.5.32, 4.7.17, 6.0.12 or 6.1.7 that fix
+the problem described.
+Credits: Credits go to Security Team member Georg Ringer who discovered and
+reported the issue. 
+
+Vulnerable subcomponent: Extension table administration library
+8)
+Vulnerability Type: Mass Assignment
+Affected Versions: Versions from 4.5.0 to 4.5.31, 4.7.0 to 4.7.16 and 6.0.0 to
+6.0.11
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:M/Au:N/C:P/I:P/A:N/E:F/RL:O/RC:C
+Problem Description: Extensions that make use of the feuser_adminLib.inc library
+to create records are susceptible to Mass Assignment. This means that any links
+for creating records generated by this library can be manipulated to fill any
+field in the configured database table with arbitrary values. An attack is not
+limited to the fields listed in the configuration or the link itself. This
+library has been deprecated and removed from TYPO3 versions 6.1 and later but we
+still decided to fix this issue in previous versions.
+Hint: Extension authors are highly encouraged not to use this deprecated library
+anymore.
+Solution: Update to the TYPO3 version 4.5.32, 4.7.17 or 6.0.12 that fix the
+problem described.
+Credits: Credits go to Bernhard Kraft who discovered and reported the issue. 
+
+Vulnerable subcomponent: (Old) Form Content Element
+9)
+Vulnerability Type: Information Disclosure potentially leading to Privilege
+Escalation
+Affected Versions: Versions from 4.5.0 to 4.5.31, 4.7.0 to 4.7.16, 6.0.0 to
+6.0.11, 6.1.0 to 6.1.6 and the development branch of 6.2
+Severity: Low
+Suggested CVSS v2.0: AV:N/AC:M/Au:S/C:P/I:N/A:N/E:F/RL:O/RC:C
+Problem Description: Editors that have access to the (old) form content element
+were able to generate arbitrary signatures (HMACs) that could be used in
+contexts which the editor should not have access to. As a precaution we changed
+the generation of the signature in a way to prevent usage in a different
+context.
+Note: The old form content element is used by TYPO3 if the delivered extension
+"form" is not active.
+Solution: Update to the TYPO3 version 4.5.32, 4.7.17, 6.0.12 or 6.1.7 that fix
+the problem described.
+Credits: Credits go to Security Team member Franz Jahn who discovered and
+reported the issue. 
+
+10)
+ID: TYPO3-FLOW-SA-2013-001
+Component Type: TYPO3 Flow
+Affected Versions: 1.1.0, 2.0.0 and current development branch.
+Release Date: December 10, 2013
+Vulnerability Type: Cross-Site Scripting
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:N/I:P/A:N/E:H/RL:O/RC:C
+Problem Description: The errorAction method in the ActionController base class
+of Flow returns error messages without properly encoding them. Because these
+error messages can contain user input, this could lead to a Cross-Site Scripting
+vulnerability in Flow driven applications.
+Hint: If you have customized the error action in your Flow application, we
+advice you to check that the error messages returned in these actions only
+contain static strings and are not derived from any kind of user input. If you
+are not sure whether your code is fine in that regard, feel free to ask on a
+public mailing list or the forum.
+Solution: Update to Flow Versions 1.1.1 or 2.0.1 which fix the problem
+described!
+Note: The same problem applies to the Extbase Framework in TYPO3. Read the
+according advisory TYPO3-CORE-SA-2013-004 for more information. 
+
+Same issue like in "Vulnerable subcomponent: Extbase", because Extbase (part of
+TYPO3 CMS) is a backport of TYPO3 Flow. So oth products are affected by the same
+bug. In my opinion this requires own CVE as there is different codebase.
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
