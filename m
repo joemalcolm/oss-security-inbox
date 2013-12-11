@@ -1,23 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/19/3
-Message-ID: <20130919194937.GB2214@yuggoth.org>
-Date: Thu, 19 Sep 2013 19:49:38 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/9
+Message-ID: <20131211154735.GF2348@openstack.org>
+Date: Wed, 11 Dec 2013 15:47:36 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenStack: Glance image creation in other tenant accounts (CVE-2013-4354)
+Subject: [OSSA 2013-034] Heat CFN policy rules not all enforced (CVE-2013-6426)
 Content-Type: text/plain; charset=utf-8
 
-On 2013-09-19 12:52:09 -0600 (-0600), Kurt Seifried wrote:
-[...]
-> With apologies, I was supposed to send this out yesterday but missed
-> it. I spoke with upstream and we agreed that making this public does
-> not present a major risk.
-> 
-> - From https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-4354
-[...]
+OpenStack Security Advisory: 2013-034
+CVE: CVE-2013-6426
+Date: December 11, 2013
+Title: Heat CFN policy rules not all enforced
+Reporter: Steven Hardy (Red Hat)
+Products: Heat
+Affects: All supported releases
 
-Also, this is tracked upstream in https://launchpad.net/bugs/1226078
+Description:
+Steven Hardy from Red Hat reported a vulnerability in Heat's default
+API policy enforcement. By calling the CreateStack or UpdateStack
+methods, an in-instance user may be able to create or update a stack
+in violation of the default policy. Only setups using Heat's
+cloudformation-compatible API are affected.
+
+Icehouse (development branch) fix:
+https://review.openstack.org/61452
+
+Havana fix:
+https://review.openstack.org/61454
+
+Notes:
+This fix will be included in the icehouse-2 development milestone
+and in a future 2013.2.1 release.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6426
+https://launchpad.net/bugs/1256049
+
 -- 
 Jeremy Stanley
-
-Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
+OpenStack Vulnerability Management Team
