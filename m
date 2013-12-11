@@ -1,40 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/17
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF26FC0BBC@IMCMBX01.MITRE.ORG>
-Date: Thu, 15 Aug 2013 16:51:20 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "kseifried@...hat.com" <kseifried@...hat.com>, Marcus Meissner <meissner@...e.de>
-Subject: RE: rubygems insecure download (and other problems)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/8
+Message-ID: <20131211154418.GD2348@openstack.org>
+Date: Wed, 11 Dec 2013 15:44:18 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2013-033] Metadata queries from Neutron to Nova are not restricted by tenant (CVE-2013-6419)
 Content-Type: text/plain; charset=utf-8
 
-Kurt asked:
+OpenStack Security Advisory: 2013-033
+CVE: CVE-2013-6419
+Date: December 11, 2013
+Title: Metadata queries from Neutron to Nova are not restricted by tenant
+Reporter: Aaron Rosen (VMware)
+Products: Neutron, Nova
+Affects: All supported releases
 
->Can someone generate a list of all the client software that pulls gems
->insecurely from rubygems.org and post it here? thanks. I can't assign
->CVE's to services, only to software.
+Description:
+Aaron Rosen from VMware reported a vulnerability in the metadata
+access from OpenStack Neutron to Nova. Because of a missing
+authorization check on port binding, by guessing an instance_id a
+tenant may retrieve another tenant's metadata resulting in
+information disclosure. Only OpenStack setups running
+neutron-metadata-agent are affected.
 
-Just some quick thoughts here...
+Icehouse (development branch) fix:
+https://review.openstack.org/61439 (neutron)
+https://review.openstack.org/61428 (nova)
 
-Downloading and automatic execution of code without ensuring its integrity does have precedent in CVE, as already noted.
+Havana fix:
+https://review.openstack.org/61442 (neutron)
+https://review.openstack.org/61435 (nova)
 
-However, we might want to further narrow CVE's scope to issues in which:
+Grizzly fix:
+https://review.openstack.org/61443 (neutron)
+https://review.openstack.org/61437 (nova)
 
-1) The rubygems.org site is hard-coded or default, and
+Notes:
+This fix will be included in the icehouse-2 development milestone
+and in a future 2013.2.1 release.
 
-2) The installation/update is performed automatically (or semi-automatically) in a way that the sysadmin cannot directly influence or otherwise validate the code.
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6419
+https://launchpad.net/bugs/1235450
 
-For item 1, we don't want to assign CVEs if the admin *could* configure something to use unsafe sources, but the default is safe.
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
 
-For item 2, maybe there are cases where the gem's sysadmin is expected to download the gem and compare the download's hash against a separately-published list of hashes.  (I don't know if this is the case.)  In this context, there is clearly an expectation for the sysadmin to perform the verification, and we don't often assign CVEs for cases when sysadmins do not follow vendor instructions.  If the product's installation documentation and/or vendor web page includes some kind of validation step (such as hash-checking), then this might not qualify for a CVE.
-
-
-Marcus Meissner said:
-
->I think a "package management" solution that installs software on a system should
->have good security measurements by default these days, and trivial man-in-the-middle
->attacks should not be possible.
-
-I think I agree.  This is not like the "old days" when there was no other recourse (or when there was a dependency on the sysadmin to validate hashes or do other integrity checks).  The increasing connectedness of software, and especially the increasing automation of code distribution or upgrades, makes this a bigger problem than it used to be.
-
-- Steve
-
+Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
