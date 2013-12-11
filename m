@@ -1,19 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/07/2
-Message-ID: <20130107182522.GA30578@elende>
-Date: Mon, 7 Jan 2013 19:25:22 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/7
+Message-ID: <20131211154315.GB2348@openstack.org>
+Date: Wed, 11 Dec 2013 15:43:15 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Jenkins possible remote code execution
+Subject: [OSSA 2013-032] Keystone trust circumvention through EC2-style tokens (CVE-2013-6391)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+OpenStack Security Advisory: 2013-032
+CVE: CVE-2013-6391
+Date: December 11, 2013
+Title: Keystone trust circumvention through EC2-style tokens
+Reporter: Steven Hardy (Red Hat)
+Products: Keystone
+Affects: Havana and later
 
-There was another advisory for Jenkins[1]. According to the advisory
-remote code execution should be possible. Could a CVE be assigned to
-this issue?
+Description:
+Steven Hardy from Red Hat reported a vulnerability in Keystone
+trusts when used in conjunction with the ec2tokens API. By
+generating EC2 credentials using a trust-scoped token, a trustee may
+retrieve a token not scoped to the trust, therefore elevating
+privileges to all of the trustor's roles. Only Keystone setups
+enabling EC2-style authentication are affected.
 
- [1]: https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2013-01-04
+Icehouse (development branch) fix:
+https://review.openstack.org/61419
 
-Regards,
-Salvatore
+Havana fix:
+https://review.openstack.org/61425
+
+Notes:
+This fix will be included in the icehouse-2 development milestone
+and in a future 2013.2.1 release.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6391
+https://launchpad.net/bugs/1242597
+
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
