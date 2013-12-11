@@ -1,53 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/4
-Message-id: <c1a489cf-688c-40eb-a1a8-4a5e423dc999@me.com>
-Date: Mon, 08 Apr 2013 12:56:01 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Remote Command Injection Ruby Gem Karteek Docsplit 0.5.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/2
+Message-ID: <52A7E3FE.60302@redhat.com>
+Date: Wed, 11 Dec 2013 15:03:10 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: devscripts (uscan) command execution flaw
 Content-Type: text/plain; charset=utf-8
 
-Remote Command Injection Karteek Docsplit 0.5.4
+Good morning,
 
-4/1/2013
-Larry W. Cashdollar
-@_larry0
+A flaw was reported in the uscan script of devscripts:
 
-User supplied input isn't sanitized against shell metacharacters and is fed directly to the shell. If the user is tricked into extracting a file with shell characters in the name code can be executed remotely.
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=731849
 
-https://rubygems.org/gems/karteek-docsplit
+>From that bug report:
 
-./karteek-docsplit-0.5.4/lib/docsplit/text_extractor.rb
+""
+The newfangled debian/copyright-driven repacking can be exploited by
+malicious upstream to execute arbitrary code.
+""
 
- 59     def extract_from_ocr(pdf, pages)
- 60       tempdir = Dir.mktmpdir
- 61       base_path = File.join(@output, @pdf_name)
- 62       if pages
- 63         pages.each do |page|
- 64           tiff = "{tempdir}/{@..._name}{page}.tif"
- 65           file = "{basepath}{page}"
- 66           run "MAGICKTMPDIR={tempdir} OMP_NUM_THREADS=2 gm convert -despeckle +adjoin #{MEMORY_ARGS} #{OCR_FLAGS} {pdf}[{page - 1}] #{tiff} 2>&1"
- 67           run "tesseract #{tiff} {file} -l eng 2>&1"
- 68           clean_text(file + '.txt') if @clean_ocr
- 69           FileUtils.remove_entry_secure tiff
- 70         end
- 71       else
- 72         tiff = "{tempdir}/{@..._name}.tif"
- 73         run "MAGICK_TMPDIR={tempdir} OMP_NUM_THREADS=2 gm convert -despeckle #{MEMORY_ARGS} #{OCR_FLAGS} #{pdf} #{tiff} 2>&1"
- 74         run "tesseract #{tiff} #{base_path} -l eng 2>&1"
- 75         clean_text(base_path + '.txt') if @clean_ocr
- 76       end
+The fix:
 
-Run is defined as:
+http://anonscm.debian.org/gitweb/?p=collab-maint/devscripts.git;a=commitdiff;h=91f05b5
 
- 94     def run(command)
- 95       result = `#{command}`
- 96       raise ExtractionFailed, result if $? != 0
- 97       result
- 98     end
+Can a CVE please be assigned? (I guess this is not Debian specific,
+devscripts looks like it is/will be in the next Fedora release.)
 
-This vulnerability doesn't have a CVE yet assigned.﻿
+Thanks!
 
-http://vapid.dhs.org/advisories/karteek-docsplit-cmd-inject.html 
-
-Content of type "text/html" skipped
+--
+Murray McAllister / Red Hat Security Response Team
