@@ -1,52 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/15/6
-Message-ID: <52AE19F3.60106@redhat.com>
-Date: Sun, 15 Dec 2013 14:06:59 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Issue with PYTHON_EGG_CACHE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/14
+Message-ID: <52A8DB39.3010500@gmail.com>
+Date: Wed, 11 Dec 2013 22:38:01 +0100
+From: Jurriaan Bremer <jurriaanbremer@...il.com>
+To: oss-security@...ts.openwall.com, ingmar.runge@...il.com
+Subject: CVE Request: ZNC IRC Bouncer DoS in FiSH Plugin
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 12/15/2013 01:23 PM, Jeremy Stanley wrote:
-> On 2013-12-15 14:47:12 -0500 (-0500), cve-assign@...re.org wrote:
->> This message seems to disclose a vulnerability in an unspecified 
->> version of OpenStack Swift.
-> [...]
->> Use CVE-2013-7109 for this report about OpenStack Swift. Again, 
->> CVE-2013-7109 is not an ID for which setuptools is the affected 
->> product.
-> 
-> I don't think this was intended as a CVE request. The OpenStack
-> VMT had already determined this was non-exploitable in Swift over
-> the course of https://launchpad.net/bugs/1192966 and explicitly
-> decided not to request a CVE nor issue an advisory.
-> 
+There's an issue in the way FiSH loads public keys from users when
+initiating a new private conversation (or "query" in irc.)
 
-Sorry yeah I should have been more clear, I was trying to show that
-it's a pretty common coding pattern to use /tmp for PYTHON_EGG_CACHE,
-that specific instance was a bad one (it's about the only example
-where it isn't actually a vulnerability =).
+The main ZNC repository [1] does *not* ship with the FiSH extension by
+default. However, the Windows port [2] of ZNC does ship with the FiSH
+extension [3] by default. (You have to enable it manually though.)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+The vulnerable part of the code can be found at line 606 of fish.cpp
+[4]. When initiating a new query, both users send their public key to
+each other - FiSH does this automatically for you. The public keys are
+encoded using base64 when sent to the other user. In [4] you can see
+that the FiSH plugin decodes the base64 stream to obtain the other
+user's public key. However, no bounds are checked, and thus the buffer
+"raw_buf" can be overflowed.
 
-iQIcBAEBAgAGBQJSrhnzAAoJEBYNRVNeJnmThEIQANRpRcScoEpFlEEOqx+KD2mz
-ATIVF1xrH5FDAr4tY8Mtg+5QuxcUwsWj69Z0C2sgQ/1xEcNX6VJwTD9576tCBWDv
-x6J4ZzXhGxFvlcCi2XiKb9qgD0WUy/TeBU2+EOoT1fwhRUhvJED/4QHxcQ8RM4aW
-IaBUMuf/MYE/cu2mYjRqFYXCEsy+1oLHztnI361pwWa8XplKxfi+K1slw4BAof6M
-Kw3CsErzQQkn/g1fIH3AbruBnnbmJjaXkC3dIahOJGWZfKcYLb84i7Gr3x5Crpkg
-Zdr8SdqFfm8b28s1EWDDJ/M5w+LeDg6n6y/LlPkVxK3jPKAQsAm4BUwcMK5sPFV6
-G4uAzOYvbjbVyPHKW5ASXqPqcXazzuy0ObPpglp9l18jECRsXYmriTY6OR/YLUMF
-VmzPo39VoQZ1CTB28dASrKLrtsvBzBw7ZZelUMRh+WXto1OiJtAG9VVoG+nWO4jy
-or+HRAGX2fzEhHsr0GPWuubzOQ/t+Q0EotJ3pdTimPtWWCla7kIDZBHvbm42VtOq
-emow+XFS5an8Gh2niTAyOuCmijNusUEaPSF2VfepOzHkfty9oGpRvp7K3YMVCg0Y
-ex2hAboT9xXshvutVFaUU/31gQTQvoEiCZkNt36SVBIeU5fTPmvBJRy6fFgyfKJ7
-OCqwxY4qSu/HY6px76TV
-=9kSr
------END PGP SIGNATURE-----
+Luckily both x86 and x64 builds of the FiSH extension on Windows have
+stack cookies, rendering this vulnerability unexploitable. However, even
+though it's unexploitable, the stack cookie check does raise an
+exception when overflown, after which the process crashes, and the
+daemon won't function anymore - making it an easy Denial of Service.
+
+An important side-note for non-Windows platforms. Even though ZNC
+doesn't ship with the FiSH plugin by default, it does reference the
+vulnerable Windows port implementation in their wiki [5] (see the
+"mirror" - the link to the SVN repository is dead.) Furthermore, the two
+referenced pastes [6][7] share the same vulnerability.
+
+PoC: Having opened a query with a user running ZNC with the FiSH
+extension loaded, send the following message. Right after this message
+has been sent the user will be disconnected as his or her ZNC daemon has
+crashed.
+
+/notice <user> DH1080_INIT QUFBQUFBQUFBQUFBQUFBQUFBQUF...
+
+(Repeat the "QUFB" pattern until the string is, let's say, 400
+characters in length. Note, "QUFB" is "AAA" after base64 decoding.)
+
+Or, when scripting a simple DoS bot, you'd do something like this:
+
+buf = ('A'*300).encode('base64').replace('\n', '')
+s.send("NOTICE %s :DH1080_INIT %s\r\n" % (user, buf))
+
+Workaround: Adding a simple buffer size argument to the b64toh function
+would suffice. An easier approach would be to check the length of the
+base64 encoded string. I.e., it must not exceed ~265 bytes if it has to
+fit in a 200-byte sized buffer after decoding.
+
+Another fine workaround would be using this [8] implementation. (I'm
+honestly not really sure which version, if not a stripped down / merged
+into one file version, of FiSH is used by the Windows port.)
+
+Also CC'd the maintainer of the Windows port - hi! :p
+
+Best Regards,
+Jurriaan
+
+[1] https://github.com/znc/znc
+[2] https://code.google.com/p/znc-msvc/
+[3]
+https://code.google.com/p/znc-msvc/source/browse/trunk/main/znc-msvc/modules/extra_win32/fish.cpp
+[4]
+https://code.google.com/p/znc-msvc/source/browse/trunk/main/znc-msvc/modules/extra_win32/fish.cpp#606
+[5] http://wiki.znc.in/Fish#Getting_the_Code
+[6] http://pastebin.com/NDVtfcVG (Line 609)
+[7] http://slexy.org/view/s2poFq0BaF (Line 605)
+[8] http://mewbies.com/how_to_install_fish_for_irssi_tutorial.htm
