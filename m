@@ -1,72 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/19/4
-Message-ID: <5123C761.50105@redhat.com>
-Date: Tue, 19 Feb 2013 11:41:37 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Steven Christey <coley@...re.org>
-Subject: REJECT CVE-2013-0278, CVE-2013-0279 and CVE-2013-0280
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/12
+Message-ID: <20131211155412.GL2348@openstack.org>
+Date: Wed, 11 Dec 2013 15:54:13 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2013-036] Insufficient sanitization of Instance Name in Horizon (CVE-2013-6858)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+OpenStack Security Advisory: 2013-036
+CVE: CVE-2013-6858
+Date: December 11, 2013
+Title: Insufficient sanitization of Instance Name in Horizon
+Reporter: Cisco PSIRT
+Products: Horizon
+Affects: All supported releases
 
-- From Thierry Carrez:
-====
-After discussion with the Python security team and Kurt, we'll use the
-following common CVEs:
+Description:
+Cisco PSIRT reported a vulnerability in the OpenStack Horizon
+dashboard. By embedding HTML tags in an Instance Name, a tenant may
+execute a script within an administrator's browser resulting in a
+cross-site scripting (XSS) attack. Only setups using the Horizon
+dashboard are affected.
 
-CVE-2013-1664 Unrestricted entity expansion induces DoS
-vulnerabilities in Python XML libraries (XML bomb)
-^ affects Keystone, Cinder, Nova
+Icehouse (development branch) fix:
+https://review.openstack.org/55175
 
-CVE-2013-1665 External entity expansion in Python XML libraries
-inflicts potential security flaws and DoS vulnerabilities
-^ affects Keystone
+Havana fix:
+https://review.openstack.org/58465
 
-The vulnerabilities are actually in those Python libraries, they are
-just being worked around in OpenStack patches. The description will be
-updated to clarify this (see below).
-====
+Grizzly fix:
+https://review.openstack.org/58820
 
-As you can see from the advisories:
+Notes:
+This fix is included in the icehouse-1 development milestone and
+will appear in a future 2013.2.1 stable point release.
 
-http://seclists.org/oss-sec/2013/q1/338
-CVE: CVE-2013-1664, CVE-2013-1665
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6858
+https://launchpad.net/bugs/1247675
 
-They were correctly referenced in the OpenStack advisories, however
-the CVE's did get used elsewhere:
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
 
-http://blog.python.org/2013/02/announcing-defusedxml-fixes-for-xml.html
-
-CVE-2013-0278
-    OpenStack Keystone
-CVE-2013-0279
-    Cinder
-CVE-2013-0280
-    Nova
-
-So please REJECT CVE-2013-0278, CVE-2013-0279 and CVE-2013-0280 and
-use CVE-2013-1664, CVE-2013-1665 as appropriate instead to identify
-these issues. Sorry for the confusion.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRI8dgAAoJEBYNRVNeJnmTTMIP/18XTcCcIcl20hXe00Fwav+2
-QPta6YzTikKc4dKlA40+3HwCX1uNwfC5CwndJVbLHDvsf8iC1cCOeFqeMIfmvPNW
-+NSOOpAfceNAwpoSskvjQlsaNhp8oBhjNLQinsAEIYEwtxxfKzKUrejX5S8OG52n
-+12WH4k4mn4SCkLL3A34hwzmNUHXTE0sl9/OC7+T66lsfMuWUAVzrZrw1g1J+hb0
-kfIPaSKeyCi/ycKCtDTQEFD6JevK43mmuyYkPvG2wwLNYFvnWsHwWfaN4Bo7ax1L
-fPhfHhmgAG5Imnp8m57Ne4ZXzpaPuPxvGUfWqPYSAbtHKDNRX5qOoamcyQQDlR1e
-6qjc4ia8EtPwadV1p4Qu7KxqKF2N8I4xbaWmaFEeULMJtKUpQhRZCNolJf0yd6Qu
-8pakJbz9m8pyj49IGBqeX2odJ3VfkPnR9Ct4VuDD+QT7SqOCCYuR992h1naQhTTz
-QP6ItgeWMR6vhGw/QTU2Ersg99Gqv8200hIVpvNNV9qq8Fb2R7F1MaBn0C8Yc9CA
-ndjEVnjwy9ifnByeiIDnhRB5MHP4M1ziXyF2zdxaHHTVyDqd+NK/uzxYOB7Wx3Am
-zI/2zoPxHattfPEVHs7GGsdOTS/LwNVNiO++yhJtnCECY5fbIVCe/YYl3s9EllSB
-uaoA++URDNHIsKXCd4if
-=3Edi
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
