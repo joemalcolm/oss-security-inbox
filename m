@@ -1,35 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/21
-Message-ID: <20130222182412.GC14906@sentinelchicken.org>
-Date: Fri, 22 Feb 2013 10:24:12 -0800
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Cc: Mitre CVE assign department <cve-assign@...re.org>
-Subject: Re: CVEs for libxml2 and expat internal and external XML entity expansion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/6
+Message-ID: <52A87A12.2070706@openstack.org>
+Date: Wed, 11 Dec 2013 15:43:30 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE request for a vulnerability in OpenStack Nova
 Content-Type: text/plain; charset=utf-8
 
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public,
+although an advisory was not sent yet.
 
->  > Please use CVE-2013-0338 for libxml2 internal entity expansion
-> 
-> Hasn't libxml2 got countermeasures for that?
+"""
+Title: Nova live snapshots use an insecure local directory
+Reporter: Daniel Berrange (Red Hat)
+Products: Nova
+Affects: Grizzly and later
 
-Yeah, I believe so.  Last I looked, I came up with recommendations for
-folks to use xmlCtxtUseOptions with XML_PARSE_NOENT, XML_PARSE_NONET,
-and XML_PARSE_DTDLOAD set appropriately.  However, it wasn't 100%
-clear to me at the time if these addressed all edge cases.  In
-particular, I didn't care much about the DoS cases at the time, but
-hopefully if DTDs are ignored, then it wouldn't be an issue.  
+Description:
+Daniel Berrange from Red Hat reported that the directories used to
+temporarily store live snapshots on Nova compute nodes were writeable to
+all local users. A local attacker with shell access on compute nodes
+could therefore read and modify the contents of live snapshots before
+those are uploaded to the image service.
+"""
 
-I'd love to hear from an expert on this matter.  For sure the
-documentation needs to be improved...
+References:
+https://bugs.launchpad.net/nova/+bug/1227027
+
+Thanks in advance,
+
+-- 
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
 
 
->  > Please use CVE-2013-0341 for expat external entities expansion
-> 
-> I don't think expat resolves external entities at all.  Therefore, the
-> vulnerability resides entirely in the code which uses expat.
-
-Last I checked, I came to the same conclusion.
-
-
-tim
+Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
