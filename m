@@ -1,72 +1,196 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/01/2
-Message-ID: <51815850.5060700@redhat.com>
-Date: Wed, 01 May 2013 12:00:48 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>, security@...iawiki.org
-Subject: Re: Mediawiki CVE request ( was Fw: [MediaWiki-announce] MediaWiki Security Release: 1.20.5 and 1.19.6)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/13
+Message-Id: <201312112041.rBBKfD43016038@linus.mitre.org>
+Date: Wed, 11 Dec 2013 15:41:13 -0500 (EST)
+From: cve-assign@...re.org
+To: pinkbyte@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: ClamAV vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/01/2013 01:42 AM, Hanno Böck wrote:
-> Two CVEs for mediawiki please.
-
-Thanks, Mediawiki guys, please feel free to request these in advance.
-
-http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
-
-> Begin forwarded message:
+> CVE for two vulnerabilities, that present in ClamAV before 0.97.7[1]:
 > 
-> Date: Tue, 30 Apr 2013 13:14:43 -0700 From: Chris Steipp
-> <csteipp@...imedia.org> To: mediawiki-announce@...ts.wikimedia.org,
-> MediaWiki-l <mediawiki-l@...ts.wikimedia.org>,      Wikimedia
-> developers <wikitech-l@...ts.wikimedia.org> Subject:
-> [MediaWiki-announce] MediaWiki Security Release: 1.20.5 and 1.19.6
+> 1) A double-free error exists within the "unrar_extract_next_prepare()"
+> function (libclamunrar_iface/unrar_iface.c) when parsing a RAR file.
 > 
+> 2) An unspecified error within the "wwunpack()" function
+> (libclamav/wwunpack.c) when unpacking a WWPack file can be exploited to
+> corrupt heap memory.
 > 
-> I would like to announce the release of MediaWiki 1.20.5 and
-> 1.19.6. These releases fix 2 security related issues that could
-> affect users of MediaWiki. Download links are given at the end of
-> this email.
-> 
-> * Jan Schejbal / Hatforce.com reported that SVG script filtering
-> could be bypassed for Chrome and Firefox clients by using an
-> encoding that MediaWiki understood, but these browsers interpreted
-> as UTF-8. <https://bugzilla.wikimedia.org/show_bug.cgi?id=47304>
+> [1] - https://secunia.com/advisories/52647/
 
-Please use CVE-2013-2031 for this issue.
+There are several aspects of this situation that are potentially
+misleading.
 
-> * Internal review discovered that extensions were not given the 
-> opportunity to disable a password reset, which could lead to 
-> circumvention of two-factor authentication. 
-> <https://bugzilla.wikimedia.org/show_bug.cgi?id=46590>
+First, ClamAV 0.97.7 was announced on 2013-03-20 with a mention of:
 
-Please use CVE-2013-2032  for this issue.
+  "ClamAV 0.97.7 addresses several reported potential security bugs.
+   Thanks to Felix Groebert, Mateusz Jurczyk and Gynvael Coldwind of the
+   Google Security Team for finding and reporting these issues."
+
+(note that the
+http://lurker.clamav.net/message/20130320.012736.c0695075.en.html
+announcement mentions "Sorry this is late," suggesting that 0.97.7 had
+been released for a while before it was announced there - the actual
+release date seems to be 2013-03-14)
+
+Separately, in
+
+  http://openwall.com/lists/oss-security/2013/03/15/5
+
+Jan Lieskovsky sent a message about "Further issue details about flaws
+corrected in upstream ClamAV 0.97.7 version" and referred to commits
+b2212def1bb92b5ac45c82da100dc0d1376de6a3 and
+71990820d01c246e4e61408a3659dd9d92949b38. Note that this message does
+not directly comment on whether those commits made it into version
+0.97.7. Furthermore, one of the commits has a "cid" number. This often
+means that the issue was identified by the Coverity Scan service, and
+perhaps was not also identified by a human researcher.
+
+The posted details were:
+
+   b2212def1bb92b5ac45c82da100dc0d1376de6a3:  cid 10776 - fix double free
+   71990820d01c246e4e61408a3659dd9d92949b38:  Fixed heap corruption in wwunpack.c
+  
+
+Then, on 2013-03-18, https://secunia.com/advisories/52647/ was
+published, stating:
+
+  Two vulnerabilities with an unknown impact have been reported in
+  ClamAV.
+
+  1) A double-free error exists within the
+     "unrar_extract_next_prepare()" function
+     (libclamunrar_iface/unrar_iface.c) when parsing a RAR file.
+
+  2) An unspecified error within the "wwunpack()" function
+     (libclamav/wwunpack.c) when unpacking a WWPack file can be
+     exploited to corrupt heap memory.
+
+  The vulnerabilities are reported in version 0.97.6. Prior versions
+  may also be affected.
+
+  Solution:
+  Update to version 0.97.7.
+
+  Provided and/or discovered by:
+  The vendor credits Felix Groebert, Mateusz Jurczyk, and Gynvael
+  Coldwind, Google Security Team.
 
 
+Here's where it becomes potentially misleading. The first issue
+apparently refers to:
+  
+  https://github.com/vrtadmin/clamav-devel/commit/b2212def1bb92b5ac45c82da100dc0d1376de6a3
+  from https://github.com/vrtadmin/clamav-devel/commits/master/libclamunrar_iface/unrar_iface.c
+
+in which a "free(comment);" line was removed. This commit did occur
+before the date of the 0.97.7 release. However, anyone can download
+version 0.97.7 from
+
+   http://sourceforge.net/projects/clamav/files/clamav/0.97.7/clamav-0.97.7.tar.gz/download
+
+and verify that this line is still present in version 0.97.7. This
+would suggest that version 0.97.7 is not actually a "Solution" for
+this issue. Actually, the libclamunrar_iface/unrar_iface.c file is
+identical between version 0.97.6 and version 0.97.7. Also, because
+this is not an issue fixed in 0.97.7, the attribution of "The vendor
+credits Felix Groebert, Mateusz Jurczyk, and Gynvael Coldwind, Google
+Security Team" doesn't seem to apply to this specific issue.
+
+The second issue apparently refers to:
+
+   https://github.com/vrtadmin/clamav-devel/commit/71990820d01c246e4e61408a3659dd9d92949b38
+   from https://github.com/vrtadmin/clamav-devel/commits/master/libclamav/wwunpack.c
+
+in which input validation was added. This commit did make it into
+0.97.7 (and it's not in 0.97.6). It is also apparently discussed in
+https://bugzilla.clamav.net/show_bug.cgi?id=6806 Comment 2.
+
+Based on the http://openwall.com/lists/oss-security/2013/03/19/10
+post, the other issues fixed in 0.97.7 include:
+
+  https://bugzilla.clamav.net/show_bug.cgi?id=6809  possible buffer overflow
+  https://github.com/vrtadmin/clamav-devel/commit/e8e3746266dd3f82054ca137b81b800e54de6ebd
+
+  For example, libclamav/yc.c in 0.97.7 has the max_emu variable that is
+  apparently involved in preventing the overflow. libclamav/yc.c in 0.97.6
+  does not have the max_emu variable at all.
+
+and
+
+  https://bugzilla.clamav.net/show_bug.cgi?id=6804  dbg_printhex possible information leak
+
+  We don't know the commit for this, but libclamav/pdf.c in 0.97.6 has
+  'dbg_printhex("md5", result, 32)' whereas libclamav/pdf.c in 0.97.7
+  has 'dbg_printhex("md5", result, 16)' instead. We realize that the
+  security impact might occur in very limited situations (e.g., the
+  debug output is given to an untrusted person and the 16 extra bytes
+  are somehow sensitive data). But the vendor describes it as "The
+  vulnerability is merely debug-level printing" and the word
+  "vulnerability" is enough for us in this context.
 
 
+Some Linux distributions have already processed a subset of the above
+information, e.g., see the
+https://bugzilla.novell.com/show_bug.cgi?id=809945 discussion.
+
+So, unless there are further corrections, MITRE will make three CVE
+assignments:
+
+(1) 71990820d01c246e4e61408a3659dd9d92949b38
+(2) e8e3746266dd3f82054ca137b81b800e54de6ebd
+(3) the dbg_printhex issue with 32 instead of 16
+
+The relevance of all this depends on the interaction between
+open-source partial-disclosure approaches and the patch-backporting
+mechanism. The originally questioned combination of
+b2212def1bb92b5ac45c82da100dc0d1376de6a3 and
+71990820d01c246e4e61408a3659dd9d92949b38 is apparently not a
+complete/correct reflection of the 0.97.7 vulnerability fixes. If
+someone just directly uses the upstream distribution (i.e., upgrades
+from 0.97.6 to 0.97.7), then it's perhaps not critical. If something
+was fixed, they get the fix. A problem would have occurred if a
+distribution decided to stay with the 0.97.6 codebase (for "stability"
+reasons) and only backport b2212def1bb92b5ac45c82da100dc0d1376de6a3
+and 71990820d01c246e4e61408a3659dd9d92949b38. We don't know if that
+happened. In a number of cases, it did not happen - the distribution
+simply moved to the 0.97.7 codebase (e.g., see
+http://ftp-master.metadata.debian.org/changelogs//main/c/clamav/clamav_0.97.8+dfsg-1_changelog
+and http://lists.opensuse.org/opensuse-updates/2013-03/msg00116.html).
+
+For b2212def1bb92b5ac45c82da100dc0d1376de6a3, MITRE is generally
+uncomfortable with assigning CVE IDs on the basis of someone noticing
+a Coverity Scan CID number in a changelog, even if the changelog seems
+to use vulnerability-style terminology such as "double free," if the
+vendor isn't identifying that issue as a vulnerability. Novell/SUSE
+bug 809945 (mentioned earlier) had a similar reaction in a related
+context: "So far no actual security issues have been identified, just
+various Coverity hardening issues were fixed." If a person would like
+to produce an actual RAR file that exploits the
+b2212def1bb92b5ac45c82da100dc0d1376de6a3 issue, we would of course
+give you a CVE ID. Otherwise, if nothing else, adding CVE mappings
+based solely on Coverity Scan CID numbers is a huge scalability issue
+for us. Also, the ClamAV git apparently has several other cases where
+a Coverity Scan CID number was associated with removing a "free" call,
+and the others don't have CVE IDs.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJRgVhQAAoJEBYNRVNeJnmTtScP/A+qFEv4P2YxTiuEkaO+GStY
-7H0MlvJAF4eO7/Pq1bTthbuSWmYIbxFp2E/aZDb5LVk0qS6QgDC/IyQrKHs/wOWz
-DQhbXZ18bQ0QZHxjXjqZ/McE/x3kkCZbAkBI5e9ngEhjdq4/39mfg2DPrzFInj7w
-Sh2Nn6Bs6fMx+18LEOlLgUVSscHwgmv4cVMV/ST3bSagV4GCqQCoAcDhtoPrX/sb
-bOKQcHAGup/q//WZyrgLzNs4S0sHlAx9L5Z0qRErpYrfGMObvvLL/+5UHOFFzD/T
-/IyaWL+em3UvvfdnePOsVhTgnL9oXoo2yAu3Fl7SZoPuHBYXWuBmcHamYkmaP2xl
-QLGVbZe0DDYA2ubPWThXltxNpCueu6HUMSOfqye1mMNWpWiaojkr4zeucTfO47re
-+Wg1Doo18CIv/RsCimb5VggKrk/QCopC1yNWYaXRxeM3SEGuDOAhB5OhVqst4Lnf
-VUWcaK4tDQIwPfh3ooarvgIWoaVcFeauIGlZ0Sf5cE3x5WhKb/D3LDdRdYU63Jwl
-FinbRJ6Kk+6DeZJe9d+rnaS2Z67EQXH2i7uP5lk6WWm9ngzU244phUy9Lgjx2szw
-yaOiNuhzMHlwVTEkc5/IC96vVU10Dqq3RbEQ2vLP5OraXbZlUP5i4NOS8Hn20aVO
-vasVO7cSxySLbKc3cq8P
-=WPVE
+iQEcBAEBAgAGBQJSqMvkAAoJEKllVAevmvms9L8IAKErSdUNZNnFP2EJVrYrr0Ey
+VoC2aaz6ogNyeNZHaNh7M5NTXDVaU+xR9hI9Nlb3XdNMS31+vdedFUSy+2OOlPdq
+hUlQaSJ/+lDQNi2g7PGvxbTqi10kllkxdyw7077Kd/SCAQso0Q1tAUKl9qlZmli1
+lPbk8PlOot2gAb/GmQnn9imc8h/XBWfSmSs4DTtAhE7xymn3qI/LUZkRWOlaVZhy
+tBs8y0zrdqG1kJWMhxjVB+HUvntd4R2pOoLwicRh79nVxDGgbgupPm4OwSp9vt8T
+ZysnfhfNiBzXiJ9//2EpCfGR7+2zGbCZ4umZwiHBUXBNezZoUYDGZ277lsaKdxU=
+=e+6t
 -----END PGP SIGNATURE-----
