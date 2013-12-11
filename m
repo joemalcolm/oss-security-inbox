@@ -1,31 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/16/7
-Message-ID: <3155530.eGWR7f6goc@k>
-Date: Fri, 16 Aug 2013 19:20:06 +0200
-From: Stefan Fritsch <sf@...itsch.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/11
+Message-ID: <20131211155249.GJ2348@openstack.org>
+Date: Wed, 11 Dec 2013 15:52:50 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: SSL BREACH
+Subject: [OSSA 2013-035] Heat ReST API doesn't respect tenant scoping (CVE-2013-6428)
 Content-Type: text/plain; charset=utf-8
 
-Am Dienstag, 6. August 2013, 20:11:53 schrieb cve-assign@...re.org:
-> >I assume this will get handled like CVE-2009-3555?
-> >
-> >http://threatpost.com/breach-compression-attack-steals-https-secret
-> >s-in-under-30-seconds/101579
-> >
-> >http://it.slashdot.org/story/13/08/05/233216
-> >
-> >https://www.djangoproject.com/weblog/2013/aug/06/breach-and-django/
-> 
-> MITRE has looked at this in some depth but has not yet decided
-> whether this can be treated as a vulnerability in a protocol, with
-> one CVE shared across every product. We do realize that
-> http://www.kb.cert.org/vuls/id/987798 currently contains one CVE ID.
+OpenStack Security Advisory: 2013-035
+CVE: CVE-2013-6428
+Date: December 11, 2013
+Title: Heat ReST API doesn't respect tenant scoping
+Reporter: Steven Hardy (Red Hat)
+Products: Heat
+Affects: All supported releases
 
-Not sure if anyone had this idea before: Browsers could mitigate this 
-by not sending "Accept-Encoding: gzip" if a request is cross-domain 
-and contains some sort of credentials (HTTP-auth, cookies with the 
-'secure' attribute, client certificate, ...). This would stop the vast 
-majority of attack scenarios while leaving compression enabled for 
-most requests.
+Description:
+Steven Hardy from Red Hat reported a vulnerability in the Heat ReST
+API. By changing the request path, an authenticated client may
+override their tenant scope resulting in privilege escalation. Only
+setups exposing the Heat orchestration ReST interface are affected.
 
+Icehouse (development branch) fix:
+https://review.openstack.org/61455
+
+Havana fix:
+https://review.openstack.org/61456
+
+Notes:
+This fix will be included in the icehouse-2 development milestone
+and in a future 2013.2.1 release.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6428
+https://launchpad.net/bugs/1256983
+
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
