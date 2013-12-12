@@ -1,48 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/5
-Message-ID: <20130129064345.GA12698@1wt.eu>
-Date: Tue, 29 Jan 2013 07:43:45 +0100
-From: Willy Tarreau <w@....eu>
-To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: [Security hardening] [Notification] haproxy (previously) failed to drop supplementary groups after setuid / setgid calls properly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/5
+Message-Id: <201312120501.rBC51RVC026250@linus.mitre.org>
+Date: Thu, 12 Dec 2013 00:01:27 -0500 (EST)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: TYPO3-CORE-SA-2013-004 and TYPO3-FLOW-SA-2013-001
 Content-Type: text/plain; charset=utf-8
 
-Hi guys,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Thu, Jan 24, 2013 at 10:10:52PM -0500, Steve Grubb wrote:
-> On Thursday, January 24, 2013 05:53:38 PM Kurt Seifried wrote:
-> > So again, if you know of a way to exploit this please let us know,
-> > otherwise we will continue to consider this a security hardening issue
-> > and not a security vulnerability.
-> 
-> The way these supplemental group issues work is that depending on the groups 
-> file, the daemon may try to change to user/group "nobody", but retains group 
-> root. This means that any file with group root write privs could be 
-> replaced/altered. My experience is that distros have enough files that 
-> permissions are wrong on something, somewhere. Its just a matter of finding it.
-> 
-> find / -type f -perm -00020 -printf "%-60p %g\t%M\n" 2>/dev/null
-> 
-> So, it boils down to the problem isn't a vulnerability by itself. However, 
-> should a _real_ vulnerability be found in the program, the CVSS score would be 
-> higher because the program has CWE-250.
+For the issues that were numbered 1-10 in your message:
 
-We had no problem having a CVE for this and I initially asked for one.
-However, no vulnerability can be described, precisely because haproxy
-is designed *not* to access the FS at all once started. The normal way
-of working is to start it as root, jail into a chroot and drop privileges,
-as it's just a network daemon. That's also why it logs over UDP, as it
-cannot access /dev/log. The user/group priv drop are just a hardening
-measure "just in case". Same for the chroot. Still, many people run it
-as root because they need transparent proxy support, and other ones don't
-chroot it because they start it as an application user. That does not
-make them vulnerable at all. So if normal use cases are not vulnerable,
-it seems reasonable to think that the slightly hardened ones are not much.
+1) CVE-2013-7073
+2) CVE-2013-7074
+3) CVE-2013-7075
+4) CVE-2013-7076
+5) CVE-2013-7077
+6) CVE-2013-7078
+7) CVE-2013-7079
+8) CVE-2013-7080
+9) CVE-2013-7081
+10) CVE-2013-7082
 
-But again, I'm not against a CVE, quite the opposite! Someone just has
-to describe how to abuse it for this I think.
+Also, for issue 3, are you disclosing a CSRF vulnerability? Or are you
+just saying that, theoretically, if a CSRF vulnerability existed, that
+would be one way to conduct the attack?
 
-Regards,
-Willy
+We'll assign another CVE ID if CSRF is being disclosed here.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSqULiAAoJEKllVAevmvmsYY0H/REu+zTywg4aZvUJWF5QSXLT
+5iPAUgal7JQWBKW7g5H6UKkoZ/WoDqyqlZ4Jtut39B4luu82OLEBArmEyA2VoSWZ
+r42u53fQH1OmLv/mDumHpIQ3Of42AjNVsafE2+5gqSumi+e1neIDMCYyV0mfvwG8
++9VLO/Y9wh91srA7ZLmXMU4it15RM6z4CAcNQjQGS+ylIOx3M5grIC8uRCoYqKP4
+sVz8CNMIR65+X2Q7Aaw42b5IyRRpb0qwMFL46ScJWFJGQUdO08I3n4YBaMQOz0Yl
+vKOG43sE2vNK3kq9f0zT2U5vYINIafXYadw0mpi79AVIirS5xeSqLyMpJUkneGs=
+=luW2
+-----END PGP SIGNATURE-----
