@@ -1,36 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/2
-Message-ID: <20130128163832.5c0a5fde.reed@reedloden.com>
-Date: Mon, 28 Jan 2013 16:38:32 -0800
-From: Reed Loden <reed@...dloden.com>
-To: <oss-security@...ts.openwall.com>
-Subject: CVE request for 'devise' ruby gem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/1
+Message-Id: <201312120444.rBC4iiud025981@linus.mitre.org>
+Date: Wed, 11 Dec 2013 23:44:44 -0500 (EST)
+From: cve-assign@...re.org
+To: forest.monsen@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for Drupal core, and contributed modules
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Devise is a flexible authentication solution for Rails.
+SA-CONTRIB-2013-093   CVE-2013-7063
 
-Security announcement made earlier today:
+SA-CONTRIB-2013-094   CVE-2013-7064
 
-http://blog.plataformatec.com.br/2013/01/security-announcement-devise-v2-2-3-v2-1-3-v2-0-5-and-v1-5-3-released/
+Note that this says 'The module doesn't sufficiently fiter [sic] and
+validate configuration values entered by administrators. This
+vulnerability is mitigated by the fact that an attacker must have a
+role with the permission "Administer EU Cookie Compliance popup".' Our
+perspective is that, typically, web applications do not have a threat
+model in which crafted configuration settings entered by admins are a
+vector that qualifies for a CVE assignment. You, in the context of
+representing the "vendor" of the module, are allowed to have that
+threat model if you want to. (This is entirely reasonable if an XSS
+attack would realistically result in privilege escalation to a
+higher-level admin account.) If you want to reconsider, we can
+optionally reject this CVE for you. Otherwise, it will remain a valid
+(and non-disputed) CVE.
 
-""""
-Using a specially crafted request, an attacker could trick the database
-type conversion code to return incorrect records. For some token values
-this could allow an attacker to bypass the proper checks and gain
-control of other accounts.
-""""
 
-I don't see a CVE yet for this issue, so could one be assigned, please?
+SA-CONTRIB-2013-095
+  Posting content into groups where a user is not a member CVE-2013-7065
+  Inconsistent access checking in posting content CVE-2013-7068
 
-Thanks,
-~reed
+SA-CONTRIB-2013-096   CVE-2013-7066
+
+SA-CONTRIB-2013-097   CVE-2013-7067
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iEYEARECAAYFAlEHGggACgkQa6IiJvPDPVrpdwCfRZ74c++qybHRAY59U+U6a/VA
-ok4An1pPVTZP4tRprJ+3HdWX1KDQUCUv
-=LJdT
+iQEcBAEBAgAGBQJSqT71AAoJEKllVAevmvms7aAH/j6E+fBmktGi/1OQgPxDJ/6R
+Fsd45/cHZPqRR3Yx95hQEpCP2lSBkzfdJuyqpq2rrKU0x34nogR9eotbt5rk06qY
+jM9Wr1yEY6VWtvkF+7PT7OtYY4eBk3GR66iPwJSxE+za2j6xxfAegyYxBYPnNyZ3
+StE20jX4Wr01TPOEfS6mJYJuiOcHbJphf5w2UuGXXnUvVAR7MT5l0d2LJcKwuxCl
+2pkD8jWgkKtPgr+RyYUHdk8LhzIpo6ENLtruJRY66wz0sF+XRxds9jyvQovsuhJy
+SuJQ1iHK9gf3k/dL+84YA2VpPb1GNKQVjER1AqALpqjWWiwqotySqEQ3GeDW3sk=
+=0M9J
 -----END PGP SIGNATURE-----
