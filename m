@@ -1,100 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/8
-Message-Id: <E1U2iMi-0008AG-9I@xenbits.xen.org>
-Date: Tue, 05 Feb 2013 13:15:12 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 39 (CVE-2013-0216,CVE-2013-0217) - Linux netback DoS via malicious guest ring.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/12
+Message-ID: <20131212204916.GP29601@dhcp-25-225.brq.redhat.com>
+Date: Thu, 12 Dec 2013 21:49:17 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: linux-distros@...openwall.org
+Cc: ahonig@...gle.com, gleb@...hat.com, pbonzini@...hat.com, digitaleric@...gle.com, larsbull@...gle.com, oss-security@...ts.openwall.com
+Subject: Re: [vs-plain] kvm issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+These bugs are public now.
 
-    Xen Security Advisory CVE-2013-0216,CVE-2013-0217 / XSA-39
-			      version 2
+@Gleb/@...lo -- can you please commit the patches upstream?
 
-          Linux netback DoS via malicious guest ring.
+Thanks,
+Petr
 
-UPDATES IN VERSION 2
-====================
+On Wed, Nov 27, 2013 at 06:32:32PM +0100, Petr Matousek wrote:
 
-Public release.
+> Hello, vendors.
+> 
+> We've been informed about four issues affecting kvm:
+> 
+> CVE-2013-4587 kernel: kvm: rtc_status.dest_map out-of-bounds access
+> CVE-2013-6367 kernel: kvm: division by zero in apic_get_tmcct()
+> CVE-2013-6368 kernel: kvm: cross page vapic_addr access
+> CVE-2013-6376 kernel: kvm: BUG_ON() in apic_cluster_id()
+> 
+> Please see attachment for kvm upstream acked patches and descriptions.
+> 
+> First three issues were found by Andrew Honig <ahonig@...gle.com> and
+> the last one by Lars Bull <larsbull@...gle.com>
+> 
+> All four issues are embargoed until 2013-12-12 12:12 UTC.
+> 
+> Regards,
+> -- 
+> Petr Matousek / Red Hat Security Response Team
+> PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
 
-ISSUE DESCRIPTION
-=================
-
-The Xen netback implementation contains a couple of flaws which can
-allow a guest to cause a DoS in the backend domain, potentially
-affecting other domains in the system.
-
-CVE-2013-0216 is a failure to sanity check the ring producer/consumer
-pointers which can allow a guest to cause netback to loop for an
-extended period preventing other work from occurring.
-
-CVE-2013-0217 is a memory leak on an error path which is guest
-triggerable.
-
-IMPACT
-======
-
-A malicious guest can mount a DoS affecting the entire system.
-
-VULNERABLE SYSTEMS
-==================
-
-All systems running guests with access to PV network devices are
-vulnerable.
-
-CVE-2013-0216 affects both mainline ("pvops") and classic-Xen patch
-kernels.
-
-CVE-2013-0217 affects only mainline ("pvops") kernels.
-
-MITIGATION
-==========
-
-Running HVM guests with only emulated or passthrough NICs or PV guests
-with only passthrough NICs will avoid this vulnerability.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patches in sequence resolves this issue.
-
-xsa39-pvops-*.patch            Apply to mainline Linux 3.8-rc2
-xsa39-classic-*.patch          Apply to linux-2.6.18-xen tree.
-
-All patches for the given branch should be applied in numerical order.
-
-$ sha256sum xsa39*.patch
-4b75961673b940f5eb31451080dd668b9119eb88db1df44db1a3ba4b0d037ce1  xsa39-classic-0001-xen-netback-garbage-ring.patch
-096143750b99eb2d88970338c3f9debfbbfdaef766525a620281b28528ebe0ce  xsa39-classic-0002-xen-netback-wrap-around.patch
-99cf93e37985908243b974cc726f57e592e62ae005eca52969f11fb6fdea6fb5  xsa39-pvops-0001-xen-netback-shutdown-the-ring-if-it-contains-garbage.patch
-e0c4226b0910ca455f22ae117e8346d87053e9faf03ec155dd6c31e2f58a1969  xsa39-pvops-0002-xen-netback-don-t-leak-pages-on-failure-in-xen_netbk.patch
-70e6cb644a57cdda7f29eb86086a8e697706c3fc974a44c52322e451fd6b9d5c  xsa39-pvops-0003-xen-netback-free-already-allocated-memory-on-failure.patch
-5d0db59bbd5ad3a7efae78a6c26fc2491b7c553e5519dd946d1422a116af73dd  xsa39-pvops-0004-netback-correct-netbk_tx_err-to-handle-wrap-around.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJREQI5AAoJEIP+FMlX6CvZLbcIAL7gpD+EzDjb+g3ZlORl1jPV
-+icqyDoPWeWructbggY+YcJJc2IavNrRXBSN/9edSTUXSi7YTW+Tjeh8bcLza1JM
-McWKxPtJB8CKEIAjAeT8qMVaNUNQuJQTtTLtXHGuQE6xwxK8YmgLzQSx91OOp9Bx
-49GK1Ptnp7bQoEoc7B3oN6GXr/hs/FvaD0Cr481yUxXX1GxV+AL7sxXiJ4kXu1rE
-UTSLFAzUfw1KWI5wP3GQCREhysCvgIq4mZyD5+TF8MUagpg+m1aURs2AUUxrJ/Zw
-o+LVEKWYRsTtWIRtwYOdPHn73bllyPOrBgimTDBM9rY9CztOnN8yoPRlUz0Sux0=
-=UhBt
------END PGP SIGNATURE-----
-
-Download attachment "xsa39-classic-0001-xen-netback-garbage-ring.patch" of type "application/octet-stream" (7936 bytes)
-
-Download attachment "xsa39-classic-0002-xen-netback-wrap-around.patch" of type "application/octet-stream" (464 bytes)
-
-Download attachment "xsa39-pvops-0001-xen-netback-shutdown-the-ring-if-it-contains-garbage.patch" of type "application/octet-stream" (8321 bytes)
-
-Download attachment "xsa39-pvops-0002-xen-netback-don-t-leak-pages-on-failure-in-xen_netbk.patch" of type "application/octet-stream" (5021 bytes)
-
-Download attachment "xsa39-pvops-0003-xen-netback-free-already-allocated-memory-on-failure.patch" of type "application/octet-stream" (1467 bytes)
-
-Download attachment "xsa39-pvops-0004-netback-correct-netbk_tx_err-to-handle-wrap-around.patch" of type "application/octet-stream" (868 bytes)
+Download attachment "kvm-issues.tgz" of type "application/x-gzip" (3912 bytes)
