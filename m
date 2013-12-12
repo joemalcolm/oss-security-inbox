@@ -1,47 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/29/6
-Message-ID: <526FDA0B.5090004@redhat.com>
-Date: Tue, 29 Oct 2013 09:53:47 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: libxml2 external parsed entities issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/4
+Message-Id: <201312120456.rBC4uaIO026136@linus.mitre.org>
+Date: Wed, 11 Dec 2013 23:56:36 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: devscripts (uscan) command execution flaw
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/29/2013 01:53 AM, Nicolas Grégoire wrote:
-> 
->> libxml has an API to disable external entity expansion.
-> 
-> Are you talking about using xmlSetExternalEntityLoader()?
-> 
-> It works, but changing the libxml default behavior to not being 
-> vulnerable to XXE seems a good idea.
-> 
-> Cheers, Nicolas
+shell metacharacters in
+>newfangled debian/copyright-driven repacking
 
-This then breaks applications that need XXE to work, like docbook. We
-can't disable every potential dangerous feature across the board, some
-applications actually need these to work.
+Use CVE-2013-7050.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJSb9oLAAoJEBYNRVNeJnmTAPwP/1+tiPejcAQnzJPiJvuMZSEb
-itNzuCCJn/IRBDUMcMXOV35004nKNnvS1vtShJOR1FFr+8BLHgXnk/t2Az69LTQp
-zWPWJGa0wvBaAvTJmkgYYSytciCs/J9blDt6J3QU1azKPaGHoj+nUsOYLYWDen+e
-myo2pFzLwUkGlmIGAm7FBj1cTzxXKq4oGnj1gsIj6SyxbSMLz/sToNd85VGEvnzw
-2dTRoWKxYEDabGbAID6N4lPHK90I5g8lcz/DE/4/zN9SPygcK7dPm3huDshSmV+m
-it2YalcvsrvoX4VYDs7RBGZhstpxdqY4IWShrXcyNU+ryC/Yh15FnTA0cMyNONkL
-FyddxOqxnKFBg1kmmew4mKOHZRv4ka/liG7Lqp2Sl30gjvbooBjIhKCC57QeVWz5
-+CNee5kyIrh0ydcXCWVRPnOrn4lrtj+42XDm9ucJvbmJCYO3PAD01m7TYM0le9YW
-tFxsQx6p4ryJphcVIZQf5cs1bxEj8kNDvRPSsXC7xNuLUblgq9JZTVrBPm8V8E+8
-snreCmrUBvcB65AsK/x5zPIAYV9oymOc+bZLjdPpuXsOjWHhO3a/U2QpJ/XW++DC
-2LjgsY0JoMweQcHmQtL+Pcd8FSJfpxNiMP/QFVMd+JarNH6+j/SpKPqeg8YPYWG4
-mEXq+2dEXGsOBsEt+dOh
-=lAZF
+iQEcBAEBAgAGBQJSqUHQAAoJEKllVAevmvmstv8IAL+PGA94uA3UM4SCWJ/6LXp1
+ysAg7LVK0GAryAu5z2u/mia1FLtYsjUlGsEDvHBQvjSIAeIQPmZ55bCo8F7liELK
+ThrHJ/ruI/F2ceW0mCNJU6sCB3/hQfSIRnPUptVCNta16O/jqAMhBmUAn7VzaDl4
+/7bigq53troroN5gHZmFOqP8e3hUuWBrGYU8n5jhZLp32dju60TuEMhUcgeN0QDN
+zquFqGr6ek3FXuwPiIWHyAIedKshC5XUSqLh4x6zGuvkMTzUZ80CHM5lno+jBGOZ
+oX1h+XyyaoxBUgfxCQwKK4inkG/nabJq9vmtribRNhuvZLYbTOl4OxcYEnzjoWI=
+=9Dq3
 -----END PGP SIGNATURE-----
