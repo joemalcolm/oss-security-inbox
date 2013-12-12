@@ -1,29 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/3
-Message-ID: <1705863526.3270323.1373562441477.JavaMail.root@redhat.com>
-Date: Thu, 11 Jul 2013 13:07:21 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Henri Wahl <henriwww@...rs.sourceforge.net>
-Subject: CVE Request -- Nagstamon (prior 0.9.10): Monitor server user credentials exposure in automated requests to get update information
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/7
+Message-Id: <201312120509.rBC591s7026591@linus.mitre.org>
+Date: Thu, 12 Dec 2013 00:09:01 -0500 (EST)
+From: cve-assign@...re.org
+To: jurriaanbremer@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: ZNC IRC Bouncer DoS in FiSH Plugin
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  an user details information exposure flaw was found in the way Nagstamon,
-Nagios status monitor for desktop, performed automated requests to get
-information about available updates. Remote attacker could use this flaw
-to obtain user credentials for server monitored by the desktop status
-monitor due to their improper (base64 encoding based) encoding in the
-HTTP request, when the HTTP Basic authentication scheme was used.
+>no bounds are checked, and thus the buffer "raw_buf" can be overflowed
 
-References:
-[1] http://nagstamon.ifw-dresden.de/docs/security/
-[2] https://bugs.gentoo.org/show_bug.cgi?id=476538
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=983673
+Use CVE-2013-7049.
 
-Can you allocate a CVE id for this?
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQEcBAEBAgAGBQJSqUS5AAoJEKllVAevmvmsFP8H/2nnWV/ZvMeRPco9M7N5YcrL
+gBL2I1hXcL3nh+NblNaEnP+mCdM3Q5zNgiStLtyjE39slCZoElyIbQSnSn2BjWAw
+NE29+PcpKnOqgfu7SjS5HePF+U/f788ksQdizoCtQ3lRcWzaGWj3gv/es7pPg4Dg
+W1HbB9Gmp8SvOkt0DAeFBK93eC+QOw/HGRnQeM32ScGLg0Qac9dCwbGIG3AM5bV9
+1v73xWv1XnU41LPbwir/eGPdiGNGC4vtjsABEL9CJzw4v5frPnLjznySc2rOCGqq
++sOUGZKUXpJox/lXmCzkD2MAVuK8vKIAyGXMZGkode3Hvu2VhVr1/l8BK2TwYw8=
+=moi9
+-----END PGP SIGNATURE-----
