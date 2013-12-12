@@ -1,30 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/07/1
-Message-ID: <20131007204729.GA7432@eldamar.local>
-Date: Mon, 7 Oct 2013 22:47:29 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: team@...urity.debian.org
-Subject: Request for linux-distros@...openwall.org membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/11
+Message-id: <F31EE7CA-D16C-451B-BD2E-E6F6E3F13802@me.com>
+Date: Thu, 12 Dec 2013 13:55:22 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Command injection in Ruby Gem Webbynode 1.0.5.3
 Content-Type: text/plain; charset=utf-8
 
-I recently joined the Debian Security team and request membership to
-the linux-distros@...openwall.org list so that I may participate fully
-in reporting and fixing vulnerabilities in Debian and FOSS. Here is my
-GPG fingerprint:
+Command injection in Ruby Gem Webbynode 1.0.5.3
 
-pub   4096R/0x789D6F057FD863FE 2009-05-11
-      Key fingerprint = 04A4 407C B914 2C23 030C  17AE 789D 6F05 7FD8 63FE
-uid                            Salvatore Bonaccorso <salvatore.bonaccorso@...il.com>
-uid                            Salvatore Bonaccorso <carnil@...ian.org>
-sub   4096R/0xA9A629B5F5FCF262 2009-05-11
-sub   4096R/0x054CB8F31343CF44 2013-09-19
-sub   4096R/0x215553264598FBA7 2013-09-21
+Date: 11/11/2014 
 
-Thank you for your consideration! I'm cc'ing also the Debian Security Team
-address.
+Author: Larry W. Cashdollar, @_larry0
 
-Regards,
-Salvatore
+Download: http://rubygems.org/gems/webbynode 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Vulnerability Description: 
+The following code located in: ./webbynode-1.0.5.3/lib/webbynode/notify.rb doesn't fully sanitize user supplied input before passing it to the shell via %x.
+
+Messages via the growlnotify command line can possibly be used to execute shell commands if the message contains shell meta characters.
+
+def self.message(message)
+  if self.installed? and !$testing
+    message = message.gsub(/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]/, "")
+    %x(growlnotify -t "#{TITLE}" -m "#{message}" --image "#{IMAGE_PATH}")
+  end
+end
+
+The message.gsub regex strips ANSI encoded characters from the #{message} variable, it doesn't strip characters like ;&| etc. If the attacker can control the contents of #{message}, #{TITLE} or #{IMAGE_PATH} they can possibly inject shell commands and execute them as the client user.
+
+
+Vendor: Notified 11/11/2013
+
+I also submitted a pull request 
+
+Advisory: http://www.vapid.dhs.org/advisories/webbynode-command-inj.html
