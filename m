@@ -1,75 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/17
-Message-ID: <528684C4.6030103@redhat.com>
-Date: Fri, 15 Nov 2013 13:32:04 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: cryptographic primitive choices [was: Re: Microsoft Warns Customers Away From RC4 and SHA-1]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/8
+Message-Id: <201312120520.rBC5KE6D026698@linus.mitre.org>
+Date: Thu, 12 Dec 2013 00:20:14 -0500 (EST)
+From: cve-assign@...re.org
+To: ratulg@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: monitorix: HTTP server 'handle_request()' session fixation & XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/15/2013 12:18 PM, Chris Palmer wrote:
-> On Thu, Nov 14, 2013 at 10:58 PM, Kurt Seifried
-> <kseifried@...hat.com> wrote:
->> 
->> Think of all the things that currently use (often older versions
->> of) OpenSSL/PolarSSL/GnuTLS/etc and will never get updated...
-> 
-> I posit that there is a strong correlation between un-updated, 
-> un-updatable software that did not ship with (for example) support
-> for modern cipher suites and protocols, and software that should
-> be recalled for a variety of reasons. Random example:
-> 
-> https://securityledger.com/2013/08/samsung-smart-tv-like-a-web-app-riddled-with-vulnerabilities/
->
->  Let's unpack your use of the passive voice: Who, exactly, is
-> choosing not to update the OpenSSL they ship? Why do we forgive
-> that?
+> https://github.com/mikaku/Monitorix/issues/30
+> allowable characters in the $target and $target_cgi variables
+> in lib/HTTPServer.pm
 
-We don't have a choice? We already paid our money and as far as I know
-we have no recourse? We can buy "not that vendor" but all the vendors
-do this, simple economics, you paid for it, why would I spend money
-supporting it? Especially when that model is no longer being
-manufactured. Especially when my customers appear to have no
-expectation that I'll support it?
+Use CVE-2013-7070.
 
-This is why I bought a "dumb" TV. And why I won't get a carrier
-controlled Android phone ever (they have a less then perfect upgrade
-track record). But most people are not crazy and paranoid like me.
+Note that, at the moment, we think there isn't sufficient evidence
+that "session fixation" in this context is an independent
+vulnerability, and thus there is no CVE ID for that.
 
-> To an extent, even security engineers are acting as enablers,
-> allowing obsolete software/protocols/cipher suites to live far
-> longer than they should have.
 
-We can't force stuff to die, and I bet those security engineers
-usually lose to managers talking about margins and such.
+> http://www.monitorix.org/news.html also says "3.4.0 version
+> released ... 02-Dec-2013 ... This version also fixes an important
+> number of bugs and two security issues ... not covered yet in the
+> previous 3.3.1 version."
 
-> "LTS", "ESR", and not EOL'ing Windows XP 4+ years ago is a
-> significant part of the problem.
+For the XSS issue for the PATH_INFO (aka the $url variable), fixed in
+3.4.0, use CVE-2013-7071.
 
-I can't speak to that, even if we support OpenSSL/whatever long term
-that's only the tip of the proverbial ice berg. The supply chain for
-this stuff is _deep_.
+For the other issue (the unspecified issue of the "two security
+issues") fixed in 3.4.0, use CVE-2013-7072.
+
+For the out-of-context reference to go.cgi in GoScript, use
+CVE-2004-2776.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJShoTEAAoJEBYNRVNeJnmTEo8QAL0VRMCKMS3nzd9Dhd7I1+Rx
-yhov1UmK9WhZyK2aLsy21XZ33vjGd2uhkynCrq+Uo/x8hxGTrbrXVzT8jDuU+b7I
-NCZfo2pks7y/Qp+KtSiIw3IyF9b8OFGuMgEK5znLFigz1wFWGwjRQnybiMag3WAQ
-F5HDDgEshbiTCyWBrUvjyY0lIok1Y9CyzkTFcnSGQ9WhUPDQxOZ1laUhJVvz5yX8
-kbAnbblnnSwpW1zMPRB79RLJFy4Rkq+rGm1tzbsavaesmPRhdDf3PZ1ZTFEwI/bn
-No0I5xzUPpiD1jBgHxWFfD40+CAr2VISR7FObD/JHeSF0+Tpy2pBeq7RW4/MM5w7
-/cznS7Cd17A74InICfjfbTkRaMCY2qfrdPo7sI4O33QteaeXRGKg1BrNimLq+LF+
-KRTVlb5RkuHVfgppq9/Jh4n3B4avDkeiUYyAtTRNvmhgu9Hyj8tN9I3nIylWXIzI
-wCoHMr7oYc6Xa/RydnVVy9h2LVdZiuePCQ0RyEatW59HuPL471DxLr6o2HCZe8TT
-/kOdjGz22CooKryIa+pm434sdVlPMVTRtkJkWKtWlEf7NfdGqiK4rlEebuQWiRR2
-ylqFn7vgWfCT9jsYEzJW92NnqV1F9Swh9ZuOU4Ac8oLDqcVx3ckHPWWWjOhFnrnY
-Bq0PRSTYZPP/PvNlrVS4
-=wdou
+iQEcBAEBAgAGBQJSqUcEAAoJEKllVAevmvmswZAH/1leJqwAxCnc5u7RKLAWRzHB
+88Gu/cWfoEdKPEidBENINQC/sctPkfXz6DEf7r6wtzbMfqtRANnB+GVra0dvDeTj
+tkukvV6+QibUDzcIpuqOdEVTorFSF0Vf3bQg2czjJ4vDkPKjgTWz5DCjeBn508Pq
+HE/veUJivmWj1xE+cux7muiuHZTpBO9t2IF6/18O2Fzhm0rlpfWWEZWF5UlpmZu0
+o1NG+n80+KSSVhYVNczzjPpDEIxelLfcgTvlZWUuKwnOWG9VA4jgu0bBNBDOAHwJ
+20o1APNWCWshOrgmvg8CRhneMvKAcQTjiKQDLCkjwFfwB3o/HHNBIusgqSEXG2w=
+=f/e4
 -----END PGP SIGNATURE-----
