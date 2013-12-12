@@ -1,29 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/6
-Message-ID: <20130313115415.GB20033@gremlin.ru>
-Date: Wed, 13 Mar 2013 15:54:15 +0400
-From: gremlin@...mlin.ru
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel + devtmpfs automount == insecure /dev/{,u}random mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/6
+Message-Id: <201312120504.rBC54l3S026549@linus.mitre.org>
+Date: Thu, 12 Dec 2013 00:04:47 -0500 (EST)
+From: cve-assign@...re.org
+To: thierry@...nstack.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for a vulnerability in OpenStack Nova
 Content-Type: text/plain; charset=utf-8
 
-On 13-Mar-2013 17:55:07 +0800, Pavel Labushev wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- > http://lkml.indiana.edu/hypermail/linux/kernel/0012.2/0502.html
+>writeable to all local users
 
-Yes, I've found that while investigating the possible impact. Also,
-the random.c doesn't use the data directly, but instead hashes it.
+Use CVE-2013-7048.
 
-But my opinion stays exactly the same: devices should be 0644, and
-only trusted random data sources should be used to add entropy to
-the pool via add_device_randomness(). For my own needs, I prefer a
-$5 hardware RNG (consisting of ATtiny85 and LM393) plugged to USB,
-or even several such devices working in parallel.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-So, I'll just restrict the access to /dev/{,u}random locally :-)
-
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+iQEcBAEBAgAGBQJSqUO7AAoJEKllVAevmvmsEX0IAI/IoYtztvePAIg0t3GukVng
+4Awl+bzlpsNyLuw/nfFeOFbiOZSMFAooiy5n7B6gQumWVPnKxDtuZ1PPbFdsJDkW
+mhIEAWJc1txJ9fV82jiFPCxxU2MGH7SbWz0FpWoWK8ktVRGoDt8yMOcOQOnjbKO1
++TpJ/UyhPJxk6lr+YeThylFkijBeLMtRY9ndgwOkH5qIASQW79Il1aoaTsnseeVs
+RpOsWWIS2zs0hjymipDtkJjGs7rUD/GO3XGuDR8rjsdUXFYYK1VekNh3+6tLI/YP
+08CEqDkk65XyUkVFstZAcVJ8TLwqJ/X93DXJkbJmZXgtb23+SCyg1zDnHs0GRKE=
+=9tew
+-----END PGP SIGNATURE-----
