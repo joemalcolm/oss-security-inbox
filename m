@@ -1,66 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/10
-Message-ID: <529FAFFC.90605@citrix.com>
-Date: Wed, 4 Dec 2013 22:43:08 +0000
-From: Andrew Cooper <andrew.cooper3@...rix.com>
-To: Matthew Daley <mattd@...fuzz.com>, <oss-security@...ts.openwall.com>
-CC: Xen.org security team <security@....org>, Xen-devel <xen-devel@...ts.xen.org>
-Subject: Re: [Xen-devel] Re: Xen Security Advisory 82 (CVE-2013-6885) - Guest triggerable AMD CPU erratum may cause host hang
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/2
+Message-Id: <201312120450.rBC4nv9f026054@linus.mitre.org>
+Date: Wed, 11 Dec 2013 23:49:57 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, abe@...ian.org, team@...urity.debian.org, 731848@...s.debian.org, andy@...dance.com
+Subject: Re: CVE Request: ack-grep: potential remote code execution via per-project .ackrc files
 Content-Type: text/plain; charset=utf-8
 
-On 02/12/2013 22:43, Matthew Daley wrote:
-> On Tue, Dec 3, 2013 at 7:16 AM, Kurt Seifried <kseifried@...hat.com> wrote:
->> On 12/02/2013 10:22 AM, Ian Jackson wrote:
->>> * Should the Xen Project security te4am have treated this issue
->>> with an embargo at all, given that the flaw itself was public ?
->> I would say this depends on the level of public disclosure. For
->> example from "upstream" (AMD) there was a very limited disclosure (no
->> public announcement I'm aware of) and just some notes in a single PDF.
->> However this was also made public via the person who found it and then
->> picked up by ZDnet in an article, so I would personally count that as
->> quite public.
-> Can you post a link to this ZDnet article? I don't think it can be the
-> one linked in the CVE description itself, because that talks about a
-> different, earlier bug IIUC; I privately asked Matt Dillon, who
-> discovered Errata 721, and he agreed that this CVE talks about a
-> different (but maybe related) Errata, #793.
->
-> - Matthew
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The email (ID 201311280223.rAS2NbPL019021@...us.mitre.org) has the
-following links
+> This verison of ack prevents the --pager, --regex and --output
+> options from being used from project-level ackrc files.  It is
+> possible to execute malicious code with these options
 
-http://lists.dragonflybsd.org/pipermail/kernel/2011-December/046594.html
+Use CVE-2013-7069.
 
-http://www.zdnet.com/blog/hardware/amd-owns-up-to-cpu-bug/18924
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-And identifies them as related to CVE-2013-6885
-
-Unless DragonflyBSD is giving Write Combining memory to its regular
-userspace processes (which would frankly be crazy and cause abysmal
-performance - uncacheable reads have a habit of slowing things down
-somewhat), I cant see any similarity between the CVE and the problem
-described by Matt Dillon in the links.
-
-The zdnet article quotes a statement from AMD of:
-
-Also, this marginal erratum impacts the previous four generations of AMD
-Opteron processors which include the AMD Opteron 2300,8300
-8300("Barcelona" and "Shanghai",) 2400, 8400 ("Istanbul",) and 4100,
-6100 ("Lisbon" and "Magny-Cours") series processors.
-
-
-None of these generations are the "Jaguar Architecture" Family 16h
-identified in the erratum description from #793  Furthermore, Matt
-Dillon appears to be under the impression that he found erratum #721.
-
-It therefore appears that the original MITRE email was incorrect as
-identifying the two links (refering to #721, and nearly 2 years old
-judging by http://article.gmane.org/gmane.os.dragonfly-bsd.kernel/14518)
-as related to #793 (whos errata document's inital release was June of
-this year).
-
-Can anyone from AMD formally confirm or deny a link between errata #721
-and #793 ?
-
-~Andrew
+iQEcBAEBAgAGBQJSqT/wAAoJEKllVAevmvms2mUH+gMG97hD1ieJnU8eDSBz2jTP
+ZOy+PH/QzLcaSEtFrPG7ge9SfY8sowGGpTQPPyMI08zAdWZNlPCKzi/Y0Od0tohv
+dxkXwUoluY/KGvpoUD1doVGf49mGNTfP7x/KxIdYQn/0aMTOQ9uf95QA640AV3k9
+kKTdUiCBs3pvQ0yT//euC0nQMEUC+cWzs6DvDtckAyGc2Dn53MLTSlL2jx3fkrvj
+JM/kDaWB3yebdF0anDbrnq6lDSo+XfoTie4XQgHU+AMCopVYYXryipK2xt95DKtW
+SwXZnBMjeWtcQMV1i0E5awL5GFEkA20sUMBcc/aDadQMGuBTcL9dn/lzhPvEy8E=
+=7136
+-----END PGP SIGNATURE-----
