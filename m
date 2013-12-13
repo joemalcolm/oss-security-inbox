@@ -1,26 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/01/2
-Message-ID: <50E2838E.90908@redhat.com>
-Date: Tue, 01 Jan 2013 12:04:54 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Charybdis and ircd-ratbox remote crash flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/13/4
+Message-ID: <52AB0058.2060600@redhat.com>
+Date: Fri, 13 Dec 2013 13:40:56 +0100
+From: Paolo Bonzini <pbonzini@...hat.com>
+To: linux-distros@...openwall.org, ahonig@...gle.com, Gleb Natapov <gleb@...nel.org>, digitaleric@...gle.com, larsbull@...gle.com, oss-security@...ts.openwall.com
+Subject: Re: [vs-plain] kvm issues
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+Il 12/12/2013 21:49, Petr Matousek ha scritto:
+> These bugs are public now.
+> 
+> @Gleb/@...lo -- can you please commit the patches upstream?
 
-Saw this report about Charybdis and ircd-ratbox remote crash flaw at:
+Pull request already sent to Linus.
 
-http://rabbit.dereferenced.org/~nenolod/ASA-2012-12-31.txt
-http://tech.slashdot.org/story/12/12/31/2241229/efnet-paralyzed-by-vulnerability
+Paolo
 
-Researcher advisory suggests both the products are affected.
-
-Sadly i could not get the contact details of either of the products
-to copy on this email.
-
-Should we be assigning CVEs to these issues?
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
