@@ -1,63 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/05/7
-Message-ID: <20130805213338.GA10738@eldamar.local>
-Date: Mon, 5 Aug 2013 23:33:38 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com, security@...cloud.com
-Subject: owncloud 5.0.8 and 4.5.13 (oC-SA-2013-029 and oC-SA-2013-030) - CVE assignments?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/13/5
+Message-ID: <20131213143018.29b309b8@redhat.com>
+Date: Fri, 13 Dec 2013 14:30:18 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: jlieskov@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>, Apostolis Bessas <mpessas@...nsifex.com>, Ilias Vrachnis <vid@...nsifex.com>, Radek Vokal <rvokal@...hat.com>, Florian Weimer <fweimer@...hat.com>
+Subject: Re: CVE-2013-2073 transifex-client: Does not validate HTTPS server certificate (fixed in transifex-client v0.9)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Wed, 22 May 2013 11:46:39 -0400 (EDT) Jan Lieskovsky wrote:
 
-(not a CVE request per se more to clarify/ask back): Owncloud 4.5.13
-and 5.0.8 fixed both bugs marked SECURITY at [1].
+> It was found that Transifex command-line client, a command line
+> tool for Transifex translation management, did not perform X.509
+> certificate verification when using secured SSL connection. A
+> man-in-the-middle attacker could use this flaw to spoof a Transifex
+> server via an arbitrary certificate.
+> 
+> The CVE identifier of CVE-2013-2073 has been allocated to this issue.
 
- [1] http://owncloud.org/releases/Changelog
+The way certificate check was implemented to fix CVE-2013-2073 was
+incorrect (check was done on "probe" connection, but not the actual
+connection used to transfer data).  This should now be fixed in 0.10
+(I can't confirm atm), which switches to use urllib3 with proper
+certificate checks.
 
-Release  "5.0.8"
-July 9. 2013
+https://github.com/transifex/transifex-client/issues/42
+https://github.com/transifex/transifex-client/commit/6d69d61
 
-- SECURITY: XSS vulnerability in "Share Interface" (oC-SA-2013-029)
-- SECURITY: Authentication bypass in "user_webdavauth" (oC-SA-2013-030)
-- New anonymous upload feature
-- Fix syncing of external filesystems
-- External filesystems performance improvements
-- Improve compatibility with Oracle
-- Improved and simplified theming
-- Internet explorer 8 fixes
-- Fixes for partial file uploads
-- LDAP: fix handling of User and Group Bases
-- Improved and more robust upgrade system
-- A lot of encryption system fixes
-- Do not add groups if user has no groups
-- Several Contacts fixes
-- A lot of smaller bugfixes all over the place
+This should get a new CVE.
 
-Download: http://download.owncloud.org/community/owncloud-5.0.8.tar.bz2
-MD5: http://download.owncloud.org/community/owncloud-5.0.8.tar.bz2.md5
-
--------------------------------
-Release  "4.5.13"
-July 9. 2013
-
-- SECURITY: Authentication bypass in "user_webdavauth" (oC-SA-2013-030)
-- Fixed deleting old files versions
-
-Download: http://download.owncloud.org/community/owncloud-4.5.13.tar.bz2
-MD5: http://download.owncloud.org/community/owncloud-4.5.13.tar.bz2.md5
-
-Looking at [2] there are no reference to oC-SA-2013-029 and
-oC-SA-2013-030 and CVE assignments for these issues. Where they
-already requested? (Cc'ing also the security@...cloud.com team,
-reading from [3] it's not clear if they where already assigned).
-
-But the following might be emphasized (from [3]):
-
-[11:38:54] <AnybodyElse> Luigi12_work: I'll release them as soon as possible. Sorry. I'm actually *very* busy with my job.
-[11:40:00] <AnybodyElse> Luigi12_work: that said: the vulnerabilities aren't really severe and only exploitable in some very special and unusuable setups
-
- [2] http://owncloud.org/about/security/advisories/
- [3] https://bugs.mageia.org/show_bug.cgi?id=10763#c8
-
-Regards,
-Salvatore
+-- 
+Tomas Hoger / Red Hat Security Response Team
