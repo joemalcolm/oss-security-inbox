@@ -1,114 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/5
-Message-ID: <51270990.6010608@redhat.com>
-Date: Thu, 21 Feb 2013 23:00:48 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, bugtraq <bugtraq@...urityfocus.com>, full-disclosure <full-disclosure@...ts.grok.org.uk>, luislavena@...il.com, ryand-ruby@...spider.com, rubyforge@...1.net, rubysec@...glegroups.com
-Subject: CVE-2013-0162 rubygem-ruby_parser: incorrect temporary file usage / Public Service Announcement
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/13/2
+Message-Id: <201312130325.rBD3PaaM015876@linus.mitre.org>
+Date: Thu, 12 Dec 2013 22:25:36 -0500 (EST)
+From: cve-assign@...re.org
+To: ratulg@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: devscripts (uscan) broken handling of filenames with whitespace
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-This is a relatively minor issue, hence no embargo.
+> If USCAN_EXCLUSION is enabled, uscan doesn't correctly handle filenames
+> containing whitespace. This can be abused my malicious upstream to
+> delete files of their choice.
 
-Michael Scherer (mscherer@...hat.com) of Red Hat found:
-
-Looking for incorrect /tmp/ usage, I found the following piece of code
-in /usr/share/gems/gems/ruby_parser-2.0.4/lib/gauntlet_rubyparser.rb
-(https://rubygems.org/gems/ruby_parser)
-
-  def diff_pp o1, o2
-    require 'pp'
-
-    File.open("/tmp/a.#{$$}", "w") do |f|
-      PP.pp o1, f
-    end
-
-    File.open("/tmp/b.#{$$}", "w") do |f|
-      PP.pp o2, f
-    end
-
-    `diff -u /tmp/a.#{$$} /tmp/b.#{$$}`
-  ensure
-    File.unlink "/tmp/a.#{$$}" rescue nil
-    File.unlink "/tmp/b.#{$$}" rescue nil
-  end
-
-This was assigned CVE-2013-0162. The current version of ruby_parser is
-3.1.1 and is affected. Fixing this is simple:
-
-diff --git a/lib/gauntlet_rubyparser.rb b/lib/gauntlet_rubyparser.rb
-index 4463c38..85137f9 100755
-- --- a/lib/gauntlet_rubyparser.rb
-+++ b/lib/gauntlet_rubyparser.rb
-@@ -35,18 +35,19 @@ class RubyParserGauntlet < Gauntlet
-   def diff_pp o1, o2
-     require 'pp'
-
-- -    File.open("/tmp/a.#{$$}", "w") do |f|
-- -      PP.pp o1, f
-- -    end
-+    file_a = Tempfile.new('ruby_parser_a')
-+    PP.pp o1, file_a
-+    file_a.close
-+
-+    file_b = Tempfile.new('ruby_parser_b')
-+    PP.pp o2, file_b
-+    file_b.close
-
-- -    File.open("/tmp/b.#{$$}", "w") do |f|
-- -      PP.pp o2, f
-- -    end
-
-- -    `diff -u /tmp/a.#{$$} /tmp/b.#{$$}`
-+    `diff -u #{file_a.path} #{file_b.path}`
-   ensure
-- -    File.unlink "/tmp/a.#{$$}" rescue nil
-- -    File.unlink "/tmp/b.#{$$}" rescue nil
-+    file_a.unlink
-+    file_b.unlink
-   end
-
-CC'ing the 3 people listed on ruby_parser as "owners".
-
-Also I will be auditing a number of rubygems for various easy things,
-as a reminder tmp file vulns are EASY to fix, just use the functions
-listed in:
-
-http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
-
-===============================
-Public Service Announcement
-===============================
-
-For public issues please start CC'ing oss-security@ (especially if it
-needs a CVE), and also rubysec@...glegroups.com which will notify the
-Ruby Security people (and then cool things like their tools will warn
-users of outdated/insecure versions and so on).
-
-For private/embargoed issues the rubygems.org/community is considering
-some ways to make it easier to report security issues in gems, we'll
-keep you posted.
+Use CVE-2013-7085.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJRJwmQAAoJEBYNRVNeJnmTtiUQALQ80GH11AWQS+YmGKA6Yhk/
-dZ65MdEDAHvyAJ/LewY/URShpEJmwtxOIu2rzlniKwzPSpNZtz15u/jUeNA94ez+
-1glzGc5pYF19yL6E/aUf181ZzIhJaI2h9iWNjElui2+l/vkZKuEoygu6fB1CqxUv
-d2ykR13dRP+IMj7BLBduLO8WztQ7maOncI9eIv6JgvgysRfffPqbhrUHQyvsow8q
-fRSa52cMVvM+4Y6Zc4UvjWlEZwBC8DFt4UlJsa0OoY+UMjqqiKwWIK4/OjgPtd43
-ID5CxtjT6x2ANPNLE9UJXoJPKgjvgbghN5wbdOthA8N3jM1s1tbvXDhvKl8zA90d
-Eymjelo2iGhHiuQNaAsNqRmab1UlJDcy2UuiIg9IMH7qSMd5l6gosWMHpx4gM39c
-moUdNucdpEX0Y33VNMhmjQEhFWy93uGALeHmQZeAAjO+k2/San78nF8luaHyUTXL
-qba5VNHdBsWfL0ttHv1XhkWlWT/osRtgQLutLngr9h0nXDGqSJ0RvFOtAsGpvhCh
-SfQMAHWPu6GUjhNG+7MedQX/P7kWfDy4qvdDu9kUN++EVcjtK4IOxXBx9KAF8Hj4
-//xobZYswtp3zOFzVy5kWqLa5NyqNKye8ZAuqIpDGYfBlR/T5jGM8cMqqRtYyKkE
-trGaadlo3zHW1K0Rplea
-=FAr9
+iQEcBAEBAgAGBQJSqnyLAAoJEKllVAevmvmspLgIALFtX//Ly03mk4N40kjk88en
+YndflL0ZwPDDcZPd59CgyUaNOaOYGq+NsVFzrAacLA88Xnt76zHe7gT2EXHOYl4y
+iaigFLDzsbYTW1kY1+A9lTn96LhVyGhGlr1sUyGWdV0js6BuTOf1qon3DNheTSRk
+MEHsc6dl2bmxVCCsPl3un81tWP8GUQKqx5Z4f520Uwobild3UHwJM6rWfmsTPuif
+kzpjvV+s1oG+vx4gLagg3IJ/IaD6ujlI2iw7fx8thc26ikcbPiHQHIGhKQWgXMYn
+k1JyMZBizx/9gBCk9g/7dCp8SQTFI/fPAugsJWQGPcv/sQ59T1G8+T37Ph/rUaE=
+=k0jK
 -----END PGP SIGNATURE-----
