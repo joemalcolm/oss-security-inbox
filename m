@@ -1,60 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/12/14
-Message-ID: <52094418.1040708@redhat.com>
-Date: Mon, 12 Aug 2013 14:22:48 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: mancha <mancha1@...h.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: Re: [CVE assignment notification] CVE-2012-2142 poppler, xpdf: Insufficient sanitization of escape sequences in the error message {AKA request for feedback if CVE to be marked as disputed / rejected}
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/13/3
+Message-Id: <201312130332.rBD3WQmj015973@linus.mitre.org>
+Date: Thu, 12 Dec 2013 22:32:26 -0500 (EST)
+From: cve-assign@...re.org
+To: larry0@...com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Command injection in Ruby Gem Webbynode 1.0.5.3
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/10/2013 11:47 PM, mancha wrote:
-> Jan Lieskovsky <jlieskov@...> writes:
+> Download: http://rubygems.org/gems/webbynode
+> ./webbynode-1.0.5.3/lib/webbynode/notify.rb
+> Messages via the growlnotify command line can possibly be used to
+> execute shell commands if the message contains shell meta characters.
 > 
->> Poppler upstream patch:
->> 
-> http://cgit.freedesktop.org/poppler/poppler/commit/?id=71bad47ed6a36d825b0d08992c8db56845c71e40
->>
->>
+> %x(growlnotify -t "#{TITLE}" -m "#{message}" --image "#{IMAGE_PATH}")
 > 
-Regards, Jan.
->> -- Jan iankko Lieskovsky / Red Hat Security Response Team
->> 
+> it doesn't strip characters like ;&|
 > 
-> Hi. I've adapted Poppler's CVE-2012-2142 fix to xpdf-3.03 and
-> posted here: 
-> http://sourceforge.net/projects/miscellaneouspa/files/misc/xpdf-3.03-CVE-2012-2142.diff
->
->  --mancha
-> 
+> Advisory: http://www.vapid.dhs.org/advisories/webbynode-command-inj.html
 
-I assume we'll SPLIT this? In past some xpdf/poppler issues have been
-merged circa 2010, but after that they appear to have been usually
-treated as separate:
-
-http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=poppler
-http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=xpdf
+Use CVE-2013-7086.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJSCUQYAAoJEBYNRVNeJnmTC6gQANU/SwWPW8nRgWHGwjzf65uK
-pt5DxZfaD+CXdCClh54qrDxdo+LjGAo4UwZ3wnccZBZZPdz5332J3ReB+Mg87mSJ
-apj87d9ygLIPs9axHOeQfPUReg0b45fk+gZXepn1CnndXX5nyqB9yQxZxXxt51Qe
-aG5UDxIn/ZDXuc+NYQyEKY8pWHkSo/7kti19EPDLDbl3gZJQUglaOVozfiTdJT2j
-XE0sg+CBc4azEzBw3flEYJ3lXLGXw85RTDgt4/+KfqfqI4BrorfqYNgm9ZrhjSQO
-z2XomL/0zM4hVnJOLbdbUPICR3uekbDRY2ne/+zP4HebWg0ckY4Jhm9kTMU6eVVo
-l2yIcw5CByfjTqg91yLItfBuGIxivj1W76Da0I6l8UNUDni6tj7ze3B2r27cYT4Y
-gTqOpUF7AUvxbLhu7Op7kHxQfsXcmpjWjK9EE7BwY8IAVmA4C+VOqciQISOIZZt5
-0ejLvXasZxqGWmq570A9f2c4g5ADjr06shQW/KPl0Oo72PfUUni4SXHAf/YoE2M2
-BgghaQ/mf/Q0nznLK60azKwypazcU4HziRwjaROz0qg8Q/5bpemcAfKTXbDQCHcq
-Gu97hqVYyXgHJyYcwbZ9QZBww3xIUtR7XaThIa8gqw/Xl9bufmBSn7HRxad1cHlh
-mKrmsatsNitCAbGcM3b2
-=IeYL
+iQEcBAEBAgAGBQJSqn70AAoJEKllVAevmvmsrn4IALX6oGBAzgETwM6RAoYmW2Do
+aFmNgcj0+YaIsV7aRKhv8eEvV89brSNuWAkkdRPOtjp+vD2aBuTI2rbh9RA4lNt+
+yFEvAUz4jyTJu7DMi7AA74mHtln1YIFtWJdmK9Mr+ATJNEagsTiGaBKoNoLNlkhl
+pwyYlPqbOfaNhyrd5gMT9OnBJL31RO0zZwIa4D5YtKg5ML+surdtbxUxybu2ew+0
+e6n+OiDX/IFSmSRQqDzj7dAT4wJ1Fxdd0u6FKpg/CnIWtXyVy2JCUDsxOdnmw1hy
+YwRiR7sYIOaHfsgYvrx2NtkdowSQB5v1oh+hUVoDlPgFmjcVLT6rN6XyEutRpgM=
+=zuHG
 -----END PGP SIGNATURE-----
