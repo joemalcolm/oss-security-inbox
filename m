@@ -1,46 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/11
-Message-ID: <20130502152442.GD16749@nef.pbox.org>
-Date: Thu, 2 May 2013 17:24:42 +0200
-From: Alistair Crooks <agc@...src.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/14/2
+Message-id: <3C8DA812-61DF-42FD-8478-97154D2A8E1B@me.com>
+Date: Sat, 14 Dec 2013 17:31:49 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Bio Basespace SDK 0.1.7 Ruby Gem exposes API Key via command line
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 30, 2013 at 02:24:24PM -0400, Daniel Kahn Gillmor wrote:
-> On 04/26/2013 01:57 AM, Alistair Crooks wrote:
-> > All people can see from a key listing is who trusted them and
-> > when, not how much, or whether the trust was warranted.
-> 
-> Just for the record, most OpenPGP key certification listings don't
-> indicate anything at all about trust, including "who trusted them".
-> they show cryptographically-verifiable assertions of identity and
-> control over key material.
-> 
-> Put another way, a signature on an OpenPGP key+userid says "I believe
-> that this key belongs to this person" -- it doesn't say anything about
-> trust in that person (or about their intrinsic trustworthiness).
-> 
-> Sorry for the nit-pick, but the term "trust" is so overused and confused
-> in these contexts that i think it's important to clarify it when it's
-> getting muddled.
+Title: Bio Basespace SDK 0.1.7 Ruby Gem exposes API Key via command line
 
-Oh, I'm not muddled, I was using the word "trust" as it appears (34
-times) in RFC 4880 - mostly relating to 5.2.3.13 "Trust Signature" and
-5.10 "Trust Packet".
+Date: 11/15/2013
 
-And if you seriously think someone who searches for my public key on a
-webserver, or through mail, or business card, etc, downloads my public
-key from one of the servers, imports it into their own pubring, signs
-it with their own private key, then mails it to me, or uploads it to
-one of the key servers, all without trusting me in any way, then I'll show
-you a pretty awful stalker (and fairly inefficient one, due to the
-need to sign my pubkey), a fan boy (which is hardly likely to happen
-in my case), or someone who is rather sad. (I'm discounting impaired
-judgement due to the baroque processes involved here, sorry xkcd).
+Author: Larry W. Cashdollar, @_larry0
 
-i.e. no-one goes to that kind of trouble just to say "I know this
-person" - that's what facebook and google+ are for.
+Download: http://rubygems.org/gems/bio-basespace-sdk
 
-Regards,
-Alistair
+Description:
+"BaseSpace Ruby SDK is a Ruby based Software Development Kit to be used in the development of Apps and scripts for working with Illumina's BaseSpace cloud-computing solution for next-gen sequencing data analysis. The primary purpose of the SDK is to provide an easy-to-use Ruby environment enabling developers to authenticate a user, retrieve data, and upload data/results from their own analysis to BaseSpace."
+
+Vulnerability: The API client code passes the API_KEY to a curl command.  This exposes the api key to the shell and process table.  Another user on the system could snag the api key by just monitoring the process table. 
+
+In the following code snippet:
+
+bio-basespace-sdk-0.1.7/lib/basespace/api/api_client.rb
+  # +headers+:: Header of the PUT call.
+  # +trans_file+:: Path to the file that should be transferred.
+  def put_call(resource_path, post_data, headers, trans_file)
+    return %x(curl -H "x-access-token:#{@..._key}" -H "Content-MD5:#{headers['Content-MD5'].strip}" -T "#{trans_file}" -X PUT #{resource_path})
+  end
+
+
+Vendor: Notified 11/15/2013
+
+Advisory: http://www.vapid.dhs.org/advisories/bio-basespace-sdk.html
