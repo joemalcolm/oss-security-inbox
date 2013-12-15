@@ -1,54 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/18
-Message-ID: <20130227161547.GC21645@kroah.com>
-Date: Wed, 27 Feb 2013 08:15:47 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/15/6
+Message-ID: <52AE19F3.60106@redhat.com>
+Date: Sun, 15 Dec 2013 14:06:59 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Subject: Re: Re: Issue with PYTHON_EGG_CACHE
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 27, 2013 at 07:08:58PM +0400, Solar Designer wrote:
-> On Wed, Feb 27, 2013 at 06:48:34AM -0800, Greg KH wrote:
-> > On Wed, Feb 27, 2013 at 07:31:30AM +0100, Petr Matousek wrote:
-> > > For starters, security@...nel.org submissions should be posted to
-> > > oss-security or any other security related public mailing list when the
-> > > patch is being committed.
-> > 
-> > That's not going to happen, and you know that, to do so would be totally
-> > irresponsible of us and directly harm your users.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 12/15/2013 01:23 PM, Jeremy Stanley wrote:
+> On 2013-12-15 14:47:12 -0500 (-0500), cve-assign@...re.org wrote:
+>> This message seems to disclose a vulnerability in an unspecified 
+>> version of OpenStack Swift.
+> [...]
+>> Use CVE-2013-7109 for this report about OpenStack Swift. Again, 
+>> CVE-2013-7109 is not an ID for which setuptools is the affected 
+>> product.
 > 
-> Huh?!  Maybe you misread what Petr wrote?  Note: "when the patch is
-> being committed".  At this point, the security issue is public, and it
-> just needs to be properly communicated to all those interested
-> (including distros, sysadmins, etc.), such as via oss-security.  Not
-> doing this favors those few who spend time to review commits on their
-> own; some of them do it for purposes other than informing the public.
+> I don't think this was intended as a CVE request. The OpenStack
+> VMT had already determined this was non-exploitable in Swift over
+> the course of https://launchpad.net/bugs/1192966 and explicitly
+> decided not to request a CVE nor issue an advisory.
+> 
 
-We (the kernel team) well know this, and have been over this topic
-numerous times in the past.  We have come to the conclusion that it is
-not good for us to be publicly stating "here look, here's how you
-exploit the kernel!" at the exact moment we commit the patch to the
-public tree because suddenly you now have shown how all systems in the
-world are exploitable, with no chance for anyone to have protected their
-systems ahead of time.
+Sorry yeah I should have been more clear, I was trying to show that
+it's a pretty common coding pattern to use /tmp for PYTHON_EGG_CACHE,
+that specific instance was a bad one (it's about the only example
+where it isn't actually a vulnerability =).
 
-Instead, we have no problem with groups like vendor-sec being notified
-of these issues, and allowing them to push out updates, before _they_
-notify the world of the problem.  And, for a long time, I thought
-vendor-sec was being notified of all of the issues that
-security@...nel.org knew about, if this has suddenly changed, please let
-me know and I will be glad to resolve it.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-Yes, this does seem to favor those who pay closer attention to the
-commits going into the tree than those who do not, but we do this to try
-to balance the needs of the larger majority of users.
-
-It's a tough problem, full of grey areas, like the real world requires,
-and I personally wrestle with it all the time.  At the moment, I feel
-this is the best that we have come up with, and I know that others
-strongly disagree, which is fine, debate about stuff like this is good
-to have.
-
-thanks,
-
-greg k-h
+iQIcBAEBAgAGBQJSrhnzAAoJEBYNRVNeJnmThEIQANRpRcScoEpFlEEOqx+KD2mz
+ATIVF1xrH5FDAr4tY8Mtg+5QuxcUwsWj69Z0C2sgQ/1xEcNX6VJwTD9576tCBWDv
+x6J4ZzXhGxFvlcCi2XiKb9qgD0WUy/TeBU2+EOoT1fwhRUhvJED/4QHxcQ8RM4aW
+IaBUMuf/MYE/cu2mYjRqFYXCEsy+1oLHztnI361pwWa8XplKxfi+K1slw4BAof6M
+Kw3CsErzQQkn/g1fIH3AbruBnnbmJjaXkC3dIahOJGWZfKcYLb84i7Gr3x5Crpkg
+Zdr8SdqFfm8b28s1EWDDJ/M5w+LeDg6n6y/LlPkVxK3jPKAQsAm4BUwcMK5sPFV6
+G4uAzOYvbjbVyPHKW5ASXqPqcXazzuy0ObPpglp9l18jECRsXYmriTY6OR/YLUMF
+VmzPo39VoQZ1CTB28dASrKLrtsvBzBw7ZZelUMRh+WXto1OiJtAG9VVoG+nWO4jy
+or+HRAGX2fzEhHsr0GPWuubzOQ/t+Q0EotJ3pdTimPtWWCla7kIDZBHvbm42VtOq
+emow+XFS5an8Gh2niTAyOuCmijNusUEaPSF2VfepOzHkfty9oGpRvp7K3YMVCg0Y
+ex2hAboT9xXshvutVFaUU/31gQTQvoEiCZkNt36SVBIeU5fTPmvBJRy6fFgyfKJ7
+OCqwxY4qSu/HY6px76TV
+=9kSr
+-----END PGP SIGNATURE-----
