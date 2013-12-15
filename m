@@ -1,76 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/8
-Message-ID: <51A64260.1020306@redhat.com>
-Date: Wed, 29 May 2013 12:01:04 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Richard W.M. Jones" <rjones@...hat.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: CVE Request -- libguestfs (1.20.6 | 1.22.0 | 1.23.0 <= X < 1.22.1 | 1.23.1): Denial of service due to a double-free when inspecting certain guest files / images
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/15/5
+Message-Id: <201312152026.rBFKQCZ9021635@linus.mitre.org>
+Date: Sun, 15 Dec 2013 15:26:12 -0500 (EST)
+From: cve-assign@...re.org
+To: larry0@...com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Bio Basespace SDK 0.1.7 Ruby Gem exposes API Key via command line
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/29/2013 06:25 AM, Richard W.M. Jones wrote:
-> On Wed, May 29, 2013 at 08:21:42AM -0400, Jan Lieskovsky wrote:
->> Hello Kurt, Steve, vendors,
->> 
->> LibguestFS upstream has issued the following patch: [1]
->> https://github.com/libguestfs/libguestfs/commit/fa6a76050d82894365dfe32916903ef7fee3ffcd
->>
->>
->> 
-to correct a double-free flaw in the virt-inspector / other virt-* tools,
->> which could lead to denial of service if some of the tools were
->> used by 3rd party applications for inspection of untrusted guest
->> files / images:
->> 
->> [2]
->> https://www.redhat.com/archives/libguestfs/2013-May/msg00079.html
->>
->> 
-[3] https://www.redhat.com/archives/libguestfs/2013-May/msg00080.html
->> 
->> Could you allocate a CVE identifier for this?
+> Download: http://rubygems.org/gems/bio-basespace-sdk
+> 
+> bio-basespace-sdk-0.1.7/lib/basespace/api/api_client.rb
+> 
+> The API client code passes the API_KEY to a curl command.
+> 
+> Another user on the system could snag the api key by just monitoring the process table.
+> 
+> Advisory: http://www.vapid.dhs.org/advisories/bio-basespace-sdk.html
 
-Please use CVE-2013-2124 for this issue.
-
-> Small adjustment to the subject line.
-> 
-> Just to be clear this affects:
-> 
-> 1.20.x, x <= 6 1.21.x, all x (this is an obsolete development
-> branch) 1.22.0 1.23.0
-> 
-> NOT affected are:
-> 
-> anything < 1.20 1.20.7 (fix backported to this stable version
-> yesterday) 1.22.1 (fix backported to this stable version
-> yesterday) 1.23.1 (this is the upstream version, fixed yesterday)
-> 
-> Credit for finding the bug goes to the Coverity static analyzer.
-> 
-> Rich.
-> 
-
+Use CVE-2013-7111.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJRpkJgAAoJEBYNRVNeJnmTd+EP/RkYk9n7T+MCIHgCt2/A32y9
-sSuQypdt7q8JDpdgg2Cscrd9IopgT5iwAo/N9HCP7vZ7FGGGjHw1Cdk5YwY+RRpz
-3OLngcmFz0nTNFYxQRq1u6iFJpxZBE49Yt9KYzhipWOmzK3PmpBT7j6hPHmVMhst
-Qf2qm23hTOJ4axBphht/iGJ8Uze6HGaiNXf4T+ZbMWho9wSGkkOA1L5JpR5Yq4BU
-GRWKHKRqoIm8h2J/KClUQdrjKbF5OO70VRORQhiPeREANyXucn9KvfHsPOrtZt/Y
-lGxPgNOgw58+QjTZjO3U+a8m3SPoGQONg49d5F0Ti0RoSbk3reZfLFSlrHwXBIp/
-e4QJjpipfQ4R4kQu3TpcajofoeVkNyh4qPKbO0iCXWrJlrMl5o1MP89DyA0DOlUy
-RtCHUJbgFi4Z4o0wqi9JYHz1pvdfBWb8+y0iTRecOQmsEjn0miT6ppjwJTF45S6P
-pXrBTJ4gHT17OPcEpJKbA5nN3e/7eN1XqDKEcTEadW+tZJ8dM2ufGNVe4R1GGTmw
-I/slo2kmBfm/ryg/FscknF4tTiAaU2IKsObpdYZ3hNCusqAtU3jSo2zHPYhvaKzL
-nMkpFT/Ik1S6CEWkKx2ZX3h3+888tNUSMxj+RAnDFhs7FCaSCgQG2teJzn4PCIHu
-ax+hfIBtrTPbwJW5wC2C
-=j0HU
+iQEcBAEBAgAGBQJSrhANAAoJEKllVAevmvmspSYH/27+bRPGr06UE1a5z1L1ze17
+X4uiXjBpR5hgOn1QGTxDiTGGdS3vUL7vVT5N6IhqVPgn+VRKNcorrZ/4E063JgAw
+vlKyMlykQJnyVyA5nfLo1xtW044hZJoTsXIJQsIjFaaTmoznAcEGNlepUF1bqP+7
+mvW8k60wBrAENPB2r3Xo5xqjvonlg5J/jGwvPC2/hudYz+6UCMbGGbVc/6so/4CB
+13J4vSb1cqgswbyNIVL86yTPe/tLZSPNgYATOA1mjeBwA9jHXhfvBn6WYAestEkE
+I9HyyfAiVTWWEcYNvVWBJNIZlElBVcOW7TtvQft3pAm4sgVB7RLxWUEicmxnS1Q=
+=qN3z
 -----END PGP SIGNATURE-----
