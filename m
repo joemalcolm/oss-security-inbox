@@ -1,46 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/22
-Message-ID: <51117D21.2040506@redhat.com>
-Date: Tue, 05 Feb 2013 14:44:01 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Sang Kil Cha <sangkilc@....edu>
-Subject: Re: CVE Request: imview
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/15/3
+Message-Id: <201312152020.rBFKJsbt021584@linus.mitre.org>
+Date: Sun, 15 Dec 2013 15:19:54 -0500 (EST)
+From: cve-assign@...re.org
+To: thoger@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, mpessas@...nsifex.com, vid@...nsifex.com, rvokal@...hat.com, fweimer@...hat.com
+Subject: Re: CVE-2013-2073 transifex-client: Does not validate HTTPS server certificate (fixed in transifex-client v0.9)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/05/2013 12:23 PM, Sang Kil Cha wrote:
-> Hi,
+> The way certificate check was implemented to fix CVE-2013-2073 was
+> incorrect (check was done on "probe" connection, but not the actual
+> connection used to transfer data).
 > 
-> I am requesting a CVE for " 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=699820".
-> 
-> Thanks, Sang Kil
-> 
+> This should get a new CVE.
 
-How do you get the crashing input to imview? does it get used in web
-browsers or email clients to load images automatically or something?
+To have two CVEs assigned in response to two different patches for the
+same security problem, it's generally necessary for the first patch to
+fix some aspect of the problem. If the first patch accomplished
+nothing, a total of only one CVE is used.
+
+Here, it seems that the first patch might help with a situation in
+which the attacker doesn't have complete man-in-the-middle access, but
+the attacker can replace the server. In that case, the attacker
+perhaps can't avoid having the probe connection and the later
+connection go to the same server. Because of that, checking only the
+probe connection might have a security benefit.
+
+(https://github.com/transifex/transifex-client/issues/42 says "MITM
+attacker should be able to steal all transferred data by allowing
+"probe" connection opened by verify_ssl to connect to the real
+transifex server and only intercept subsequent urllib2 connection.")
+
+Use CVE-2013-7110 for the vulnerability in the "actual connection used
+to transfer data."
+
+If the above analysis is incorrect, and there are absolutely no cases
+in which the original patch had any security benefit, we will reject
+one of the two CVEs.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJREX0gAAoJEBYNRVNeJnmT4CoP/RJbC/ri3ZQkHyYCSzsiWdSz
-mybDB3J7NRpMeqVcOWK0M65EYmImV9VhH+pjDvDzuFCncpzWQqGFsRg4fWnD3CpU
-85JOl1bXmcsOqWyzev0ulariGpf/zgvKsA3iigEA+DlVy7amCTs9vRdnh+b7vyEg
-X49iEJ7uy5nGZ+SOMYzA5pDcCY4gpDvA/JWlqCoMmI2WDG/t7+Uph0t5yco0bg8v
-4UsFskUgZnLWMN9nNmdvJX0/1Bhlz5UXpNgf22Ie+3erH5196IuhbFmCy6AG8FtA
-u8FRg4dB0mMeVJlsVg768uFygVSP1+W/vSHtkaTznuttLSA78lamhou9bgRiLNh0
-76nzcFxcp9IRph4BV31sh4Vic9BmYplCEzmYac0tTHrpFVrV7gI+DEdrtcDhUkIP
-RFYXJeM+0ZaOWIWjWItxY4MGIRDLLofVjyMeiWZAE+2TCUysL38d6YXahj4WKVaf
-XjviwS4p1dP/f9VHRQveTuQxCsnNQORPT76h9Vn4t5f/v66UxbqlF6c1hMUmblcy
-BrKdJEUvQmBHK0Yw2YeVGFJ5FUT+GFP7cH3gsmV9tvMGQyD9RYBPp5aZUpopTbSK
-Twouuh3UEB4/wI2uvU/QHC5wNAGXWsoC9UUIi8pRat2cdBvNR16jDBjRuuPO2vtP
-PLk4ZkV4mZ5li5WvPG6B
-=2eMT
+iQEcBAEBAgAGBQJSrg4fAAoJEKllVAevmvms4aMH/RhyyOIEV1btaidX23WeV67a
+Sv2ROQV0WI66YmdKiGHnNafZfTKt5XluKEQ/DNOJcD/v67sJipiY3eagYWo+01W8
+cjNSUvuU5I1qTcSm/86cebip+gRVd+PeMDWItZpR7V/HojQUy1MjrAAXm0q1Td6i
+ghbmbVVaUQl8Vuj0nnf5b1+rhZura9huT5KhnTovjgHIvCiKddA6/kKhSahFiTtB
+J0vAcI4AQnjqJ/96RXJYTHjdMyWw2vKCib43Cbx5UKahoSIlup+GOFIEsMdHOeId
+H3AXB4K5oMi8G2wLzlgEx2yiFzK8tWJkaaSnt0zv9tKehk25JIXwyr25W8wq0F8=
+=hLDC
 -----END PGP SIGNATURE-----
