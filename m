@@ -1,48 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/19/4
-Message-ID: <20130519090759.GA5331@poolp.org>
-Date: Sun, 19 May 2013 11:07:59 +0200
-From: Gilles Chehade <gilles@...lp.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, "Jason A. Donenfeld" <Jason@...c4.com>, misc@...nsmtpd.org
-Subject: Re: Re: CVE Request: DoS in OpenSMTPD TLS Support
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/15/2
+Message-Id: <201312151947.rBFJlCbA021002@linus.mitre.org>
+Date: Sun, 15 Dec 2013 14:47:12 -0500 (EST)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, gmurphy@...hat.com
+Subject: Re: Issue with PYTHON_EGG_CACHE
 Content-Type: text/plain; charset=utf-8
 
-On Sat, May 18, 2013 at 11:03:45PM -0600, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> OpenStack swift:
+
+> os.environ['PYTHON_EGG_CACHE'] = '/tmp'
+
+This message seems to disclose a vulnerability in an unspecified
+version of OpenStack Swift. It might be the same as this part of the
+http://tarballs.openstack.org/swift/swift-1.11.0.tar.gz distribution:
+
+swift/common/manager.py
+
+  def setup_env():
+  ...
+  os.environ.setdefault('PYTHON_EGG_CACHE', '/tmp')
+
+http://git.openstack.org/cgit/openstack/swift/tree/swift/common/manager.py
+
+http://www.openstack.org/projects/openstack-security/ says "How to
+Report Security Issues to OpenStack ... Open a bug in Launchpad and
+mark it as a 'security bug'. This will make the bug Private and only
+accessible to the Vulnerability Management Team." We don't know
+whether that has been done. It may be inapplicable because the
+information isn't private.
+
+Use CVE-2013-7109 for this report about OpenStack Swift. Again,
+CVE-2013-7109 is not an ID for which setuptools is the affected
+product.
+
+> Google search:
 > 
-> On 05/18/2013 09:00 PM, Jason A. Donenfeld wrote:
-> > On Sat, May 18, 2013 at 6:16 PM, Gilles Chehade <gilles@...lp.org>
-> > wrote:
-> >> Not too nice to send a CVE request without ANY coordination with
-> >> us ...
-> > 
-> > Sorry about that. I was in the midst of bumping packages in gentoo
-> > to the snapshot where you had fixed the issue, when I figured it
-> > might be wise to also get the issue tracked with a CVE asap. Sorry
-> > for jumping the gun.
-> 
-> For future reference you can get CVEs privately, although if you're
-> not the official upstream this means there is a greater chance of
-> duplicates (and thus of me saying "no, make a public request). So if
-> you want to do this a possible compromise is to email me and the
-> upstream and if upstream replies that it's ok then I'd probably go ahead.
-> 
+> PYTHON_EGG_CACHE "/tmp" filetype:py
 
-Yes, that would have been much nicer.
+This seems very useful, but it's not a type of information that MITRE
+is interested in working with at this exact moment. At first glance,
+the Google search results seem to include all of the following:
 
-We discovered the CVE request at the same time as everyone, on two
-public lists along with a script that allows any kiddie to trigger
-it... sent by a package maintainer we had talked to minutes ago to
-explain the issue and who knew the fix release was two days away.
+  - cases in which something equivalent to
+    "os.environ.setdefault('PYTHON_EGG_CACHE', '/tmp')" is used within
+    code that's intended for distribution as a "product"
 
-Anyway, what's done is done, we released earlier, hopefully we get
-a bit more coordination next time.
+  - cases in which something equivalent to
+    "os.environ.setdefault('PYTHON_EGG_CACHE', '/tmp')" is used within
+    other types of code such as site-specific code or example code
 
-Hopefully, we don't need too many CVE request anyways ;-)
+  - cases in which setting PYTHON_EGG_CACHE would not actually occur
+    (comments, documentation, discussion, etc.)
 
--- 
-Gilles Chehade
+We can assign CVE IDs for the first category, i.e., cases in which
+someone has identified this as a security problem within a specific
+software product.
 
-https://www.poolp.org                                          @poolpOrg
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSrgaXAAoJEKllVAevmvmsaf4IAKucJyDDjHoKlexqpH2lk2iZ
+sArZ3BXydRbvwSsQYiwB6gh/0ncqjszaE4fqcoPLSdG1s9FTHaIwQWAdbVBNYlwM
+CPuRj4iQbce5D8+PBIgnbF051W/vIDnJAgcE67FfVG0gX1DbOCR/UHkiy6kgrlt8
+r92uO2KQ7DtJ68g6xf4N0iHiF5wM4IAbIRAvx4ia7Qj6mdYdXWbLRQnDP4qfeSnJ
+X0qzn9eVIutWp1VM3+dIarGUOeaRCV8yOvWPz2nt3HGrCMMWEiZhecUUBIUqPLrN
+orLeQuU1u1qi72kaYldWKbT9/4SZgjKHs2QkuUcghMyY5vaYNwXbN8IbmHdseqk=
+=e156
+-----END PGP SIGNATURE-----
