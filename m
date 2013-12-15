@@ -1,53 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/18/4
-Message-ID: <407133982.12056890.1358523105381.JavaMail.root@redhat.com>
-Date: Fri, 18 Jan 2013 10:31:45 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Tomas Hozza <thozza@...hat.com>, Josh Stone <jistone@...hat.com>
-Subject: Re: CVE Request -- dnsmasq: Incomplete fix for the CVE-2012-3411 issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/15/1
+Message-id: <3453F677-D2AF-4149-A188-FF997B43EB20@me.com>
+Date: Sun, 15 Dec 2013 09:38:20 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Bio Basespace SDK 0.1.7 Ruby Gem exposes API Key via command line
 Content-Type: text/plain; charset=utf-8
 
+Hello Folks,
 
-Simultaneously in the second breath it needs to be said
-(yet) that this would be issue of a lower severity (for TCP)
-than for the UDP protocol case (for TCP it's not that easy
-to spoof the source IP address as for UDP).
+I have been admonished off list to request a CVE number for this vulnerability.  May I have one assigned at your convenience.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks!
+Larry C$
+  
 
------ Original Message -----
-Hello Kurt, Steve, vendors,
+On Dec 14, 2013, at 5:31 PM, Larry W. Cashdollar <larry0@...com> wrote:
 
-  the CVE-2012-3411 identifier has been originally assigned to the
-following issue:
+> Title: Bio Basespace SDK 0.1.7 Ruby Gem exposes API Key via command line
+> 
+> Date: 11/15/2013
+> 
+> Author: Larry W. Cashdollar, @_larry0
+> 
+> Download: http://rubygems.org/gems/bio-basespace-sdk
+> 
+> Description:
+> "BaseSpace Ruby SDK is a Ruby based Software Development Kit to be used in the development of Apps and scripts for working with Illumina's BaseSpace cloud-computing solution for next-gen sequencing data analysis. The primary purpose of the SDK is to provide an easy-to-use Ruby environment enabling developers to authenticate a user, retrieve data, and upload data/results from their own analysis to BaseSpace."
+> 
+> Vulnerability: The API client code passes the API_KEY to a curl command.  This exposes the api key to the shell and process table.  Another user on the system could snag the api key by just monitoring the process table. 
+> 
+> In the following code snippet:
+> 
+> bio-basespace-sdk-0.1.7/lib/basespace/api/api_client.rb
+>  # +headers+:: Header of the PUT call.
+>  # +trans_file+:: Path to the file that should be transferred.
+>  def put_call(resource_path, post_data, headers, trans_file)
+>    return %x(curl -H "x-access-token:#{@..._key}" -H "Content-MD5:#{headers['Content-MD5'].strip}" -T "#{trans_file}" -X PUT #{resource_path})
+>  end
+> 
+> 
+> Vendor: Notified 11/15/2013
+> 
+> Advisory: http://www.vapid.dhs.org/advisories/bio-basespace-sdk.html
 
-When dnsmasq is used in conjunctions with certain configurations of libvirtd, network packets from prohibited networks (e.g. packets that should not be passed in) may be sent to the dnsmasq application and processed. This can result in DNS amplification attacks for example.
-[1] http://www.openwall.com/lists/oss-security/2012/07/12/5
-
-Later it was found:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=894486
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=894486#c3
-
-the upstream patch for CVE-2012-3411 it not to be working properly,
-as it still allowed (from [3]):
-
-* replies to remote TCP-protocol based DNS queries
-(UDP protocol ones were corrected, but TCP ones not)
-from prohibited networks, when the --bind-dynamic option was used,
-
-* when --except-interface lo option was used dnsmasq didn't
-answer local or remote UDP DNS queries, but still allowed
-TCP protocol based DNS queries,
-
-* when --except-interface lo option was not used local / remote
-TCP DNS queries were also still answered by dnsmasq.
-
-Could you allocate a new CVE identifier for this? (as an
-incomplete fix for CVE-2012-3411 issue)
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
