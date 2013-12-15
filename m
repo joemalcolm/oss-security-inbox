@@ -1,45 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/13
-Message-Id: <201312092341.rB9NfQ6j028967@linus.mitre.org>
-Date: Mon, 9 Dec 2013 18:41:26 -0500 (EST)
-From: cve-assign@...re.org
-To: ncoghlan@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CPython hash secret can be recoved remotely
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/15/4
+Message-ID: <20131215202327.GN2348@openstack.org>
+Date: Sun, 15 Dec 2013 20:23:27 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Issue with PYTHON_EGG_CACHE
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 2013-12-15 14:47:12 -0500 (-0500), cve-assign@...re.org wrote:
+> This message seems to disclose a vulnerability in an unspecified
+> version of OpenStack Swift.
+[...]
+> Use CVE-2013-7109 for this report about OpenStack Swift. Again,
+> CVE-2013-7109 is not an ID for which setuptools is the affected
+> product.
 
-> This is a followup to CVE-2012-1150 (hash table collision CPU usage DOS
-> in CPython)
-> 
-> http://bugs.python.org/issue14621 points out that the hash secret in
-> CPython can be recovered remotely, so while the original fix addressed
-> the "blind DOS" problem (of being able to DOS any Python based service
-> with a single prepared payload), it didn't completely eliminate the
-> potential for remote DOS attacks based on hash collisions.
-> (http://bugs.python.org/issue14621#msg173455 has the details)
-> 
-> Python 3.4+ will use SipHash by default
-> (http://www.python.org/dev/peps/pep-0456), which should resolve the
-> vulnerability completely.
+I don't think this was intended as a CVE request. The OpenStack VMT
+had already determined this was non-exploitable in Swift over the
+course of https://launchpad.net/bugs/1192966 and explicitly decided
+not to request a CVE nor issue an advisory.
+-- 
+Jeremy Stanley
 
-Use CVE-2013-7040.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSplDSAAoJEKllVAevmvmsnusH+wZ4KrZq+VgroTsISAbCqcCH
-2KVHnCwsVsbfpdFP8J4TLrRKfueFR53lqgGAi5TbMV9LbT7PYmp3PhVnepjG0h9c
-1hbcBNnOcex6Nv/t0gEzOpoW7mMAJ5NkkrLa5zQdqpAox5Oa0G5WJWCgUIrCXhsd
-xaAJtXC72rWH2iDqvZB8gxVnMAjhbcM+QB5RYHymBh647yTWEm/wY2tuSWGZmmM2
-68cof3jY+L0f/UbhpVGKrRKFPVnfqD2TQTwJCYkC0bsAgYf/MVLi7Tw7K0ihi4x0
-w5Epxc5dOiN/im1JJq/bnQZmt+JXbenQdKYhnyw1PlHQwG/yJj/8Pboqpu53SGY=
-=F0rN
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
