@@ -1,31 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/23
-Message-ID: <5142599F.8040506@gmail.com>
-Date: Thu, 14 Mar 2013 16:13:35 -0700
-From: Forest Monsen <forest.monsen@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/16/2
+Message-ID: <20131216171456.GD2645@scapa.corsac.net>
+Date: Mon, 16 Dec 2013 18:14:56 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE request for a Drupal contributed module
+Subject: Re: Re: Issue with PYTHON_EGG_CACHE
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA512
 
-Hi Kurt,
+On Sun, Dec 15, 2013 at 02:06:59PM -0700, Kurt Seifried wrote:
+> On 12/15/2013 01:23 PM, Jeremy Stanley wrote:
+> > On 2013-12-15 14:47:12 -0500 (-0500), cve-assign@...re.org wrote:
+> >> This message seems to disclose a vulnerability in an unspecified 
+> >> version of OpenStack Swift.
+> > [...]
+> >> Use CVE-2013-7109 for this report about OpenStack Swift. Again, 
+> >> CVE-2013-7109 is not an ID for which setuptools is the affected 
+> >> product.
+> > 
+> > I don't think this was intended as a CVE request. The OpenStack
+> > VMT had already determined this was non-exploitable in Swift over
+> > the course of https://launchpad.net/bugs/1192966 and explicitly
+> > decided not to request a CVE nor issue an advisory.
+> > 
+> 
+> Sorry yeah I should have been more clear, I was trying to show that
+> it's a pretty common coding pattern to use /tmp for PYTHON_EGG_CACHE,
+> that specific instance was a bad one (it's about the only example
+> where it isn't actually a vulnerability =).
 
-Can we get a CVE identifier assigned for this?
+Does this mean CVE-2013-7109 should be REJECTed or not?
 
-SA-CONTRIB-2013-034 - Node Parameter Control - Access Bypass
-http://drupal.org/node/1942330
-
-Thanks!
-
-Forest
+Regards,
+- -- 
+Yves-Alexis
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-iEYEARECAAYFAlFCWZQACgkQ/ILCL9e1Br4vXwCgoeGSmtUgMsEiF4ZQLWfpxnH8
-PQ4An2FNM8CAE0J25GqGpJJnI6f8HIKh
-=yNYW
+iQEcBAEBCgAGBQJSrzUMAAoJEG3bU/KmdcClvrkH/2BEhKHg11/3i5+d12QzHjdl
+LsvKQxgTslOVE4S9Pej++rGUrEx+HtKw09nosCg0kp/8X75nH0NScr78UvW0g9/L
+azpqkBPSPK42FktL1z+V8igiv5gS0WNQfILV6lXMhvNng18VO0+FIkDuBZYKXFw3
+C5i8geFsLKrFwJT0n3nUAm6o8eaTW2sGt5SINA8enGJHV0hFRqZ7reI/fiRbiVmw
+4QzIPlkFukVPnbTyUN47NXIvhlyP/mcy0d5dh0HNt/6/TKbflhHBnB7wjskJS3Cm
+dgj+75e3hdllqP0McTCt8uPvVadtLYtHzAr/6BdevNrAh4jk4jAilp0Y3HO04C4=
+=XegA
 -----END PGP SIGNATURE-----
