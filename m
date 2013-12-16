@@ -1,38 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/2
-Message-ID: <20130403111021.GC6137@suse.de>
-Date: Wed, 3 Apr 2013 13:10:21 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: glibc getaddrinfo() stack overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/16/4
+Message-Id: <A5321B3E-6C62-4DD9-AC01-136D1790EBC4@bitchbrothers.com>
+Date: Mon, 16 Dec 2013 21:22:40 +0100
+From: Ricardo <ricardo@...chbrothers.com>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: Vulnerability (Buffer Overflow) in Icinga 1.8, 1.9 and 1.10 (Icinga Issue #5250) Vulnerability (Off-by-one memory access) in Icinga 1.8, 1.9 and 1.10 (Icinga Issue #5251)
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-A customer reported a glibc crash, which turned out to be a stack overflow in
-getaddrinfo().
+CVE-2013-7107 will be addressed with https://dev.icinga.org/issues/5346
 
-getaddrinfo() uses:
-	struct sort_result results[nresults];
-with nresults controlled by the nameservice chain (DNS or /etc/hosts).
+Nagios will be affected by following CVEs as well:
+CVE-2013-7107
+CVE-2013-7108
 
-This will be visible mostly on threaded applications with smaller stacksizes,
-or operating near out of stack.
+CVE-2013-7106 is Icinga only.
 
-Reproducer I tried:
-	$ for i in `seq 1 10000000`; do echo "ff00::$i a1" >>/etc/hosts; done
-	$ ulimit -s 1024
-	$ telnet a1
-	Segmentation fault
-	(clean out /etc/hosts again )
+Cheers
+Ricardo
+
+Anfang der weitergeleiteten Nachricht:
+
+> Von: cve-assign@...re.org
+> Betreff: Aw: Vulnerability (Buffer Overflow) in Icinga 1.8, 1.9 and 1.10 (Icinga Issue #5250) Vulnerability (Off-by-one memory access) in Icinga 1.8, 1.9 and 1.10 (Icinga Issue #5251)
+> Datum: 15. Dezember 2013 19:29:59 MEZ
+> An: ricardo@...chbrothers.com
+> Kopie: cve-assign@...re.org
+> 
+> Signierter PGP Teil
+> Here are the three CVE IDs for your recent reports. Because one report
+> mentions CSRF, our expectation is that some type of CSRF impact would
+> remain even after the buffer overflows were fixed.
+> 
+> > This is fixed with Icinga (https://dev.icinga.org/issues/5250):
+> > 	1.10.2
+> > 	1.9.4
+> > 	1.8.5
+> >
+> > The icinga web gui is susceptible to several buffer overflow flaws,
+> > which can be triggered as a logged on user.
+> >
+> > controlling the program flow by modifying the stack content
+> 
+> Use CVE-2013-7106.
+> 
+> 
+> > A remote attacker may utilize a CSRF (cross site request forgery)
+> > attack vector against a logged in user
+> 
+> Use CVE-2013-7107.
+> 
+> 
+> > This is fixed with Icinga (https://dev.icinga.org/issues/5251):
+> > 	1.10.2
+> > 	1.9.4
+> > 	1.8.5
+> >
+> > This probably affects Nagios in current version as well!
+> >
+> > The icinga web gui are susceptible to an "off-by-one read" error ...
+> > the check routine can be forced to skip the terminating null pointer
+> > and read the heap address right after the end of the parameter list.
+> > Depending on the memory layout, this may result in a memory corruption
+> > condition/crash or reading of sensitive memory locations.
+> 
+> Use CVE-2013-7108.
+> 
+> --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> 
 
 
-I am not sure you can usually push this amount of addresses via DNS for all
-setups.
+Content of type "text/html" skipped
 
-Andreas is currently pushing the patch to glibc GIT.
-
-Reference:
-https://bugzilla.novell.com/show_bug.cgi?id=813121
-
-Ciao, Marcus
+Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
