@@ -1,47 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/05/5
-Message-ID: <20131105202456.GZ2471@redhat.com>
-Date: Tue, 5 Nov 2013 13:24:56 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/16/3
+Message-ID: <20131216203537.32d1f7e4@chromobil.localdomain>
+Date: Mon, 16 Dec 2013 20:35:37 +0100
+From: Stefan Bühler <stbuehler@...httpd.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: additional fix for CVE-2012-2825 libxslt crash
+Subject: CVE request: Juvia secret token handling
 Content-Type: text/plain; charset=utf-8
 
-* [2013-11-05 13:50:09 +0100] Marcus Meissner wrote:
+Hi!
 
->Our QA found that the reproducer in CVE-2012-2825 (magic.xsl and magic.xml)
->also expose another libxslt crash in older libxslt versions.
->
->https://bugzilla.novell.com/show_bug.cgi?id=849019
->
->This bug was fixed in libxslt 1.1.25 with this commit:
->https://gitorious.org/libxslt/libxslt/commit/7089a62b8f133b42a2981cf1f920a8b3fe9a8caa
->
->commit 7089a62b8f133b42a2981cf1f920a8b3fe9a8caa
->Author: Martin <gzlist@...glemail.com>
->Date:   Wed Sep 16 19:02:16 2009 +0200
->
->    Crash compiling stylesheet with DTD
->
->    * libxslt/xslt.c: when a stylesheet embbeds a DTD the compilation
->      process could get seriously wrong
->
->Crash as a xmlDtd struct is accessed as a xmlNode, not really attacker controllable
->I would say, but a denial of service (crash).
+Juvia is a Ruby on Rails application to host "comments":
+> A commenting server similar to Disqus and IntenseDebate
 
-As you probably saw, I commented in your bug regarding this and now that
-I've seen this I did some further digging.
+It includes a "default" secret to validate cookies in 
+`app/config/initializers/secret_token.rb', and the install instructions
+do not include generating a new secret.
+Also the file in question is maintained in git, and configuration
+should not touch these files.
 
-The reason this doesn't crash for me on Red Hat Enterprise Linux 5 which
-ships 1.1.17 is because we included this patch (well, the developer did)
-a day after the initial build with the comment:
+This means an attacker could modify session state, which is somehow
+trusted by the Rails application.
 
-- CVE-2012-2825 requires an extra patch on 1.1.17
-
-So, I think this does require a second CVE.  This also explains why I
-didn't see any crashes with our updated packages because we already have
-this patch.
+A workaround for Juvia is to generate a new secret (`rake secret') and
+replace the one in
+`app/config/initializers/secret_token.rb' (invalidating all cookies,
+don't forget to restart Juvia).
+You have to be careful when switching between git branches and so on to
+not loose the change.
 
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+The core problem is that rails generated the file that way; other gems
+have similar issues.
+The rails security team has been informed about this.
+
+Kind regards,
+Stefan
+
+References:
+* Juvia "public" secret:
+  https://github.com/phusion/juvia/blob/master/config/initializers/secret_token.rb
+* Juvia issue for this: https://github.com/phusion/juvia/issues/55
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
