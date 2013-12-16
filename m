@@ -1,53 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/6
-Message-ID: <5181F885.1090902@redhat.com>
-Date: Wed, 01 May 2013 23:24:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/16/1
+Message-ID: <20131216101033.19fb8c82@redhat.com>
+Date: Mon, 16 Dec 2013 10:10:33 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marc Deslauriers <marc.deslauriers@...onical.com>
-Subject: Re: CVE Request: httplib2 ssl cert incorrect error handling
+Cc: cve-assign@...re.org, mpessas@...nsifex.com, vid@...nsifex.com, rvokal@...hat.com, fweimer@...hat.com
+Subject: Re: Re: CVE-2013-2073 transifex-client: Does not validate HTTPS server certificate (fixed in transifex-client v0.9)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sun, 15 Dec 2013 15:19:54 -0500 (EST) cve-assign@...re.org wrote:
 
-On 05/01/2013 05:15 PM, Marc Deslauriers wrote:
-> Hello,
+> > The way certificate check was implemented to fix CVE-2013-2073 was
+> > incorrect (check was done on "probe" connection, but not the actual
+> > connection used to transfer data).
 > 
-> httplib2 only validates SSL certificates on the first request to a 
-> connection, and doesn't report validation failures on subsequent
-> requests.
-> 
-> Bugs:
-> 
-> http://code.google.com/p/httplib2/issues/detail?id=282 
-> https://bugs.launchpad.net/httplib2/+bug/1175272
-> 
-> Could a CVE please be assigned to this issue?
-> 
-> Thanks,
-> 
-> Marc.
+> To have two CVEs assigned in response to two different patches for the
+> same security problem, it's generally necessary for the first patch to
+> fix some aspect of the problem. If the first patch accomplished
+> nothing, a total of only one CVE is used.
 
-Please use CVE-2013-2037 for this issue.
+That's not consistent with guidance I've seen in the past - if update
+is released claiming to fix some issue without actually fixing it, new
+CVE is needed.  Not doing so leads to inconsistent security update data
+with two different updates or package versions of the same component
+being listed as fixing the same CVE.  Release text can probably explain
+id reuse, and consider it sufficient for human consumption, but it's
+probably more upsetting to tools processing machine readable versions
+of update notifications (e.g. OVAL).
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+> Here, it seems that the first patch might help with a situation in
+> which the attacker doesn't have complete man-in-the-middle access, but
+> the attacker can replace the server. In that case, the attacker
+> perhaps can't avoid having the probe connection and the later
+> connection go to the same server. Because of that, checking only the
+> probe connection might have a security benefit.
 
-iQIcBAEBAgAGBQJRgfiFAAoJEBYNRVNeJnmTg+UQAL5ueIwrbq6ns/GXuiJgvxYN
-YjI/jX1scN6SEKWUzLdJx6Mewmj4sbHZ2hR2wtcICcc7OuyeZqtqTC3eEPPF04a9
-3Y5eX5hzFbRBY6TXGgbxX4ZpzSbhri1Ro1NiGnR4xVbdyvtSr+Y8uBZBol2A7E+q
-aEmq+iNO2yzlzoK8xOzi0mIGNVo50mMnEdFOt8xVKOQLwL+oY8IXul30VMm79CHK
-0VCIXY9W9CAdBxXo5UYm8Wb9l9w6l5A0e3G/czxxGnuXcKB1HQPUUyVAFlqEaSoD
-sAvXJ3POKzC9g/2LdNFfcSl7GBVsfWK1/RQyeUgUYullePKy2GVjgvKyN1DESscj
-VP1unLjS4gNyDaCXWTLbSgcFA5Rv0wL4H3aZ+qzDVgZd2l9a8DsR0Y/Lj93ldpAA
-bn6OVRaj41spYiLgS0ncAcORh6eDTIHjefvzOGuU22+NS7S+WfG81KYROgligUjg
-jkrkyjups6Hq9QrroH5L/1QzjICxBKjaE63bI0zxH4xBTUpktEzpeeIcbLE+WZKn
-9WPTG2W3Wpq82GLtoPDGLScM5vIEKnuRxTZJdEMrpAAALQenWeDdRzgeQgPLI7wD
-mCNibsd7iEk39GCkMc2wAa6P2AF81oZ2tmpJEbC9SWW7h8hzwDFvpudi18IYNIdg
-G8IvkreCuaSIiwqm9kQG
-=cTrc
------END PGP SIGNATURE-----
+Yes, I can agree with that.  Previous patch makes it more difficult for
+MITM attacker to perform their attack, as they can no longer intercept
+all connections, but they need to let certain connections pass through
+and intercept other.
+
+> If the above analysis is incorrect, and there are absolutely no cases
+> in which the original patch had any security benefit, we will reject
+> one of the two CVEs.
+
+As mentioned above, I believe the fact that 0.9 was previously
+announced to fix CVE-2013-2073 should be sufficient to trigger new CVE
+assignment regardless of how incomplete the original fix is.
+
+Thank you!
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
