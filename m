@@ -1,34 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/13/1
-Message-ID: <CAE5KnOdQXB56FB1t19Pr7=5aQazATba8-uiEDJ3D2ZdM-ahqmg@mail.gmail.com>
-Date: Sat, 13 Apr 2013 05:17:39 +0530
-From: Anant Shrivastava <anant@...ntshri.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/17/3
+Message-ID: <20131217103925.GE16929@scapa.corsac.net>
+Date: Tue, 17 Dec 2013 11:39:26 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE for XSS in EasyPHPCalender script
+Subject: Re: Re: Issue with PYTHON_EGG_CACHE
 Content-Type: text/plain; charset=utf-8
 
-Hi Team,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-can i please have a CVE for this issues
+On Mon, Dec 16, 2013 at 06:59:53PM -0700, Kurt Seifried wrote:
+> On 12/16/2013 10:14 AM, Yves-Alexis Perez wrote:
+> > On Sun, Dec 15, 2013 at 02:06:59PM -0700, Kurt Seifried wrote:
+> > Does this mean CVE-2013-7109 should be REJECTed or not?
+> > 
+> Sorry I misspoke, the last week has been not good, I was supposed to
+> be on PTO and instead hurt my back and was taking pain pills, my focus
+> was not so very good. Everything is as it should be CVE wise with
+> respect to PYTHON_EGG_CACHE dir thing.
 
-http://www.easyphpcalendar.com/forums/showthread.php?p=45554#post45554
+Erf, sorry to insist, but (maybe because I'm not a native speaker) I'm
+still confused by this answer. So, is CVE-2013-7109 REJECTed?
 
-technical details are not issued however the two issues are pertaining to
-XSS in following two files in the package.
+Regards,
+- -- 
+Yves-Alexis Perez
+Debian security team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-index.php
-datePicker.php
-
-This issue affect both free version i.e. version 6.
-as well as commerical version < 7.0.13
-
-Changelog visible here for v7 :
-http://docs7.easyphpcalendar.com/source/ChangeLog/changeLog.htm
-for v6 patch is listed here :http://www.easyphpcalendar.com/v6download.php
- as  Security Patch - Released April 9,
-2013<http://www.easyphpcalendar.com/files/EPC6Patch.zip>
-
-Thanks in advance.
-
--Anant
-
+iQEcBAEBCgAGBQJSsCnZAAoJEG3bU/KmdcClmVsH/30GuXUAK7edTHPRv9a24SJb
+GKq8/V7W/wQ5DQ/lGq+15CoHyY73J6/RA9Af16m+mMED9yria8Jq7hl3AyDXbG0i
+V/SDVbiksmhZItiiCQNY7N9V5250HmPReEeLlgl7x2AfPzPaccvLPb+ZBVEoyHHE
+ZR5GQsvdUchQCYnvI90G6zsIQJ6/WOidhp78Lhj5Gz3fJo4K3+pW79FTLk7+IKwV
+DQjR/pG1EGIx1VZUhO0KZyUS4tmhMd9WZ5acKG2ynZQmSSPLIGKuszccxHAVMcnY
+iDcw1CsddwsJNgjtoq2VpP8QubvaLcGwSWbvdxziX4kPs0Ybj4PSN6OqwyaTSFs=
+=dEVD
+-----END PGP SIGNATURE-----
