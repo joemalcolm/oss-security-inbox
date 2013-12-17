@@ -1,50 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/7
-Message-ID: <51AE350B.6070102@redhat.com>
-Date: Tue, 04 Jun 2013 12:42:19 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/17/2
+Message-ID: <52AFB019.5020003@redhat.com>
+Date: Mon, 16 Dec 2013 18:59:53 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, security@...pal.org
-Subject: Re: CVE request: CKEditor module for Drupal access bypass SA-CONTRIB-2011-054
+Subject: Re: Re: Issue with PYTHON_EGG_CACHE
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/04/2013 10:07 AM, Henri Salo wrote:
-> This does not seem to have CVE yet. Please assign. Drupal guys
-> could you confirm, thanks.
+On 12/16/2013 10:14 AM, Yves-Alexis Perez wrote:
+> On Sun, Dec 15, 2013 at 02:06:59PM -0700, Kurt Seifried wrote:
+>> On 12/15/2013 01:23 PM, Jeremy Stanley wrote:
+>>> On 2013-12-15 14:47:12 -0500 (-0500), cve-assign@...re.org
+>>> wrote:
+>>>> This message seems to disclose a vulnerability in an
+>>>> unspecified version of OpenStack Swift.
+>>> [...]
+>>>> Use CVE-2013-7109 for this report about OpenStack Swift.
+>>>> Again, CVE-2013-7109 is not an ID for which setuptools is the
+>>>> affected product.
+>>> 
+>>> I don't think this was intended as a CVE request. The
+>>> OpenStack VMT had already determined this was non-exploitable
+>>> in Swift over the course of https://launchpad.net/bugs/1192966
+>>> and explicitly decided not to request a CVE nor issue an
+>>> advisory.
+>>> 
 > 
-> Advisory ID: DRUPAL-SA-CONTRIB-2011-054 Project: CKEditor - WYSIWYG
-> HTML editor (third-party module) Version: 7.x Date:
-> 2011-November-09 Security risk: Critical Exploitable from: Remote 
-> Vulnerability: Access bypass Versions affected: CKEditor 7.x-1.4
-> version only Solution: Upgrade to CKEditor 7.x-1.5
+>> Sorry yeah I should have been more clear, I was trying to show
+>> that it's a pretty common coding pattern to use /tmp for
+>> PYTHON_EGG_CACHE, that specific instance was a bad one (it's
+>> about the only example where it isn't actually a vulnerability
+>> =).
 > 
-> https://drupal.org/node/1337006 http://osvdb.org/77005 
-> http://secunia.com/advisories/46772/
+> Does this mean CVE-2013-7109 should be REJECTed or not?
 > 
-> --- Henri Salo
+> Regards,
 
-Please use CVE-2011-4972  for this issue.
+Sorry I misspoke, the last week has been not good, I was supposed to
+be on PTO and instead hurt my back and was taking pain pills, my focus
+was not so very good. Everything is as it should be CVE wise with
+respect to PYTHON_EGG_CACHE dir thing.
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRrjULAAoJEBYNRVNeJnmTZuMQAIa2xfRWpbwfe9LCKbsC7xal
-XnAJZE8xSty/8ixGajcZjOZ8RlcZ37eLGxcfNNE4/7QsxZGZ6eH/y98DndkL9ncX
-eRkukrlLDwgH0WnoXK84RT5PQuUmECmHC6JE1HkPW58IHQlHC/90j2ZGYX8xecqO
-nXpL4JKqoFPU5vFTp4A1H31X4QvZkKEqdw+FFh9P7vM27gOyZuu7cvSeAWABygbr
-QzKQ/BYk6Ivc1kUnhX0N6lFOxCzliGY2c2tGHDU+yEvnHQmCKk1NOUgfEU0lWZTd
-hTC6Bbh3FWdISl28qPjE1K/Ay55xXNZJaG+dhbPdRiZ0ONvphJbj8EB4W7P4NfHo
-aKItCZuyn9vN72x8ScDulwkCU4smI0lAOw2hB+02mYJPZh2OXpbsbqTj/6n++/U7
-hzA/nGs7gl4OXtYz4DCM9Hk5Un783TYt6eOguaJULHeraxrITf+u6ghPNWHufbG7
-bUoTnRBc3ody4lGpEFK1mMTBmMJ6XIK87I4+CYMmKpNICjVcorglRyidKvhjAOyZ
-7Vvg7IQfu6iJBHl+kWrTfMgc1IVsuRcaAeciZNPVFezxCAhulJpesbz/isftHn2r
-6Ivwj+m4feivCGLlZ6/ey3dfU83D2PP9ulJeiYJvTLyXaOdfXeNXtL41uKefeih9
-S5MKxDC9JnSgu1o5DLED
-=v3qw
+iQIcBAEBAgAGBQJSr7AZAAoJEBYNRVNeJnmTrd0QAJREAbaXqyZaDWeFY0eKSkxf
+Lw2PXR0jl0O9D01NySDDCCtggRbfCv36OodNkJhGozFnpKYX00mYtTKcBI0owmuL
+INfa47i2tqHV0yEY6gDweupjxEy4SaMCIqipe1xNwckbrK92UAn5NBob40EH24CJ
+UIr49iQZWWWkCnqMykiGQyWJBfXhmtHUCWTXeHcp0C+H3PZa/SHCCmoDLTIzQ2KV
+KTwgWzHLDJ5hlm+W5PMT1PLDqJMMYXdhOfbgW3EspPHs+EENQYCxhWwvrUVfYIEG
++g3Uz55NPO8Nw1I6oLOqzne/K9Wyw36Fy4Gpf2bL7EEAkbt62GZxE4BZqoXsV0Cm
+e1L3NvuyyliQHN8HNWz6LfqvhzaNb2ICdAerQdoDv9j9MSQ3qt4iJonj2Wi35Znz
+OvuWU3glR3yrrQ+ScXu91tuvarskXF+u/ebMP0IeflCe5NFJKnSx5CevNtvZn5o3
+a1vOsevzkPPi6pkVwD1Sa3dzaj44iXMzgmBQb6+oO+I4bDo2qCQjlu8EZjiHmIeL
+2hgiHpoxMqvOO4/7NI0YzRk+nkQ6Ucy+qhhgdbKVZxNtYPlFmqzFQxmvxnL2LHKt
+qsQe2rLj24QieJZXcxPei7SbVBbw7JKThm8qA2msnLDzP/Jkmh9DnplznLKrwuIP
+/1urLj7BoVUr9PZcCDX8
+=nFWY
 -----END PGP SIGNATURE-----
