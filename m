@@ -1,49 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/3
-Message-ID: <51412685.1010602@redhat.com>
-Date: Wed, 13 Mar 2013 19:23:17 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/17/1
+Message-ID: <52AFB08F.6090100@redhat.com>
+Date: Mon, 16 Dec 2013 19:01:51 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Salvatore Bonaccorso <carnil@...ian.org>, Russ Allbery <rra@...nford.edu>, Remi Gacogne <rgacogne-bugs@...edump.fr>
-Subject: Re: Reverse lookup issue in Net::Server
+CC: cve-assign@...re.org, mpessas@...nsifex.com, vid@...nsifex.com, rvokal@...hat.com, fweimer@...hat.com
+Subject: Re: Re: CVE-2013-2073 transifex-client: Does not validate HTTPS server certificate (fixed in transifex-client v0.9)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/13/2013 02:56 PM, Salvatore Bonaccorso wrote:
-> Hi
+On 12/16/2013 02:10 AM, Tomas Hoger wrote:
+> On Sun, 15 Dec 2013 15:19:54 -0500 (EST) cve-assign@...re.org
+> wrote:
+> 
+>>> The way certificate check was implemented to fix CVE-2013-2073
+>>> was incorrect (check was done on "probe" connection, but not
+>>> the actual connection used to transfer data).
+>> 
+>> To have two CVEs assigned in response to two different patches
+>> for the same security problem, it's generally necessary for the
+>> first patch to fix some aspect of the problem. If the first patch
+>> accomplished nothing, a total of only one CVE is used.
+> 
+> That's not consistent with guidance I've seen in the past - if
+> update is released claiming to fix some issue without actually
+> fixing it, new CVE is needed.  Not doing so leads to inconsistent
+> security update data with two different updates or package versions
+> of the same component being listed as fixing the same CVE.  Release
+> text can probably explain id reuse, and consider it sufficient for
+> human consumption, but it's probably more upsetting to tools
+> processing machine readable versions of update notifications (e.g.
+> OVAL).
 
->> Yup. Please use CVE-2013-1841 for this issue.
-> 
-> Thank you Kurt for assinging the CVE. Upstream already answered on 
-> this on the request tracker[1] and Paul mentions they will add an 
-> option to do the forward lookup.
-> 
-> [1]: https://rt.cpan.org/Ticket/Display.html?id=83909
-> 
-> Regards, Salvatore
-
-Shouldn't that be the default and not an option?
+If there was a patch to try and fix it, then a release, then a new
+patch to fix it for real and a new release  that would definitely get
+a new CVE. If there was a patch, then a new patch, but no official
+release in between it's a grey area.
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRQSaFAAoJEBYNRVNeJnmTPRYQAIs4HQZ12i23N5rfD92zFJBA
-zLYeF6vf57hiqxPOYBlA2por9VLZV8yDRt6ylZBXYfblSezWAC+qNzFO4hfwjA0b
-V2zoyEHlC+VZ7xAbJF4+oXOlmph7nHTGdW4o5iDmIEATOEnINnFnfPFghh//CAhZ
-qgDtYNayzY/t9RR5PMc04CBSDyjoX/I7SSzUA8zFsqQZGBTiHcq00YrRv1YmEpvl
-kyX377EEY7b+C6bt2TFLzfGupUFJ6IywLS6zB9wq0Vu8wBm7Xl7tGPPRBADU/q1h
-1Ve0zMWSAVAzjyERPyIoSt6+pq46IA9xXSs95INuspxAEN5030coKYo4cKrgxCe1
-xhLQCZLBQNag+12ic2f6cu/F8GsnW9JW6gOQIoFsVHx1WuYS316ZomoA2GH9+jqk
-64Xe7dp97m3pzr/YrMLN7KGr13jBBDBXuebiBjRCPjwpP/pcKuuQ8sNqr3wJ6qV4
-lBqTdSPcHRQhLfYoThRfYiKHmH3d7cH9tw04gPKX9PdJ9bHQ509VGOlCX1wsm9yw
-Xz7C0Xb/kbLmKpoO2HxpA2FNS0GHr7MR5mqtrirqytrurfEoDSWIPS6eq9PklScv
-asGbhnjkeRAXJBFq1m2CD0wFCZMDtQW7WZjtGPVcDEW5vT1gazEy8ZtVa4JMis94
-ipyrrSM8zOHT3TmrJ5MT
-=1VhZ
+iQIcBAEBAgAGBQJSr7CPAAoJEBYNRVNeJnmTIBAP/jhRFbUgxulS42chjgGgftwA
+ZY+QF0ElJTCKtOXXiAdb4XQNIxG30UGV9IFXjWzk6+OI0wDe8HfbZKc+h0mV1Bf0
+B6xCic9E3S2JjH1jnrwIpMAyzyFzTsA6UfbtqbRe5hYqaWP7Rn+VvtvcEGNO27iS
+3yOfYpSCNAZvXqAgL4TmO1Z+frXQNXylaLf6OxRGi6td/yGL/F4sJsbjJRDO3xwA
+j8r92bVTqZVYdtFLyLJL/VQYxDnj+n9PAdgCceCs23sahbu5sAt/1pmjGUUJcgaz
+LmMLJdhbU3Z1Fd7OtDd9d7cp/5l8pRCEE9ldO8aKdoFegKnmNWe959Al/Pgu93t6
+nvAnm9NshmPSn8cKQkuKkyER1SvWUDfZlv+TrRHM7sahucNIYWSsRVvrdVmBnwvM
+RLkyY18541k5MnVLnwIW0cJCLtQrRgsAUNXMvkmMJ2YXV53EVJdyQz7N9VQJousJ
+xLow3+Vlb3oUdud1wmhDc/Y5vaXiNpcXG+qPeJuiIgNHl4Mf9/Q4yU1eTgfALLIC
+C+Rqm/HbG6s9bpk3MJ57bFBvAWoTM/2TJnv2l6qNpJWMf/j6Y/D5o2SFwEaTUCq6
+6uxa4wog+PXBTcT3s7pHkMDxo3eGXgqgCU5PwbBznm2cmFS2Etzs5SqAmFwtYldh
+RbZlQLnZArxSrItpZYVZ
+=IGxK
 -----END PGP SIGNATURE-----
