@@ -1,35 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/13
-Message-ID: <515C975F.5010801@gmail.com>
-Date: Wed, 03 Apr 2013 13:55:59 -0700
-From: Forest Monsen <forest.monsen@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/18/7
+Message-Id: <CCC10610-064F-48A5-961B-E2A9C9F66FA0@redhat.com>
+Date: Wed, 18 Dec 2013 12:58:17 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE request for Drupal contributed modules
+Cc: cve-assign@...re.org
+Subject: Re: CVE already assigned for 1026891?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Hi there,
+On Dec 18, 2013, at 12:43 PM, cve-assign@...re.org wrote:
 
-I'd like to request CVE identifiers for the following issues:
+> Signed PGP part
+> http://www.openwall.com/lists/oss-security/2013/12/18/3 raises the
+> question of whether there is a CVE assignment in
+> https://bugzilla.redhat.com/show_bug.cgi?id=1026891 already, in order
+> to avoid a duplicate assignment. Our guess is that security issues
+> tracked privately by Red Hat typically do have pre-assigned CVE IDs,
+> so MITRE will delay a CVE assignment indefinitely.
+> 
+> Although it would be great to know what CVE ID you have assigned,
+> replying with something like "yes, it has a CVE ID, but it's only
+> being shared with the embargo audience" would be quite useful as well.
 
-SA-CONTRIB-2013-040 - Commerce Skrill (Formerly Moneybookers) - Access
-bypass
-http://drupal.org/node/1960338
+There is a CVE assigned to this, but based on what Sebastian wrote, I can’t tell if it’s the same issue so I’m hesitant to say what the CVE is in case it does end up being different.
 
-SA-CONTRIB-2013-041 - Chaos tool suite (ctools) - Access bypass
-http://drupal.org/node/1960406
+Sebastian, can you give me access to your bug?  Or did you intend to make it public?  I’m assuming that since you are asking about a CVE here, you maybe did not mean to keep it private?  Your other message said your bug contained upstream URLs (so maybe even pasting those here would be helpful).
 
-Thanks!
+Once I can look at it, I can let you know for sure whether or not it is the same issue (and should then use the same CVE).
 
-Forest
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+Thanks.
 
-iEYEARECAAYFAlFcl1kACgkQ/ILCL9e1Br5j/QCcDrHieK3tns9C5ZhcsFQVodHk
-+YgAnjYvBsq+Dn4lzZQnWaeNXbvKYycK
-=6YeZ
------END PGP SIGNATURE-----
+— 
+Vincent Danen / Red Hat Security Response Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (671 bytes)
