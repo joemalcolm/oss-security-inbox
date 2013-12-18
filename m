@@ -1,68 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/8
-Message-ID: <50EC1E25.1080806@igalia.com>
-Date: Tue, 08 Jan 2013 14:24:53 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: WHK Yan <yan.uniko.102@...il.com>
-CC: full-disclosure@...ts.grok.org.uk,  submissions@...ketstormsecurity.com, mr.inj3ct0r@...il.com,  submit@...ecurity.com, vuln@...unia.com, vuldb@...urityfocus.com,  oss-security@...ts.openwall.com
-Subject: Re: [Full-disclosure] File Disclosure in SimpleMachines Forum <= 2.0.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/18/3
+Message-ID: <20131218152423.GA32050@suse.de>
+Date: Wed, 18 Dec 2013 16:24:23 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE Request: pywbem certificate TOCTOU
 Content-Type: text/plain; charset=utf-8
 
-On 07/01/13 15:54, WHK Yan wrote:
-> *Summary:*
-> --------------
-> A security flaw allows an attacker to know the full source file of the web
-> system.
-> 
-> *Details:
-> -----------
-> Sources/ManageErrors.php Line 340:
-> // Make sure the file we are looking for is one they are allowed to look at
-> if (!is_readable($file) || (strpos($file, '../') !== false && (
-> strpos($file, $boarddir) === false || strpos($file, $sourcedir) === false)))
->     fatal_lang_error('error_bad_file', true,
-> array(htmlspecialchars($file)));
-> 
-> Bypass function strpos($file, '../'), no need "../", example:
-> /home/foo/www/Settings.php
-> 
-> *PoC:
-> -------
-> http://test.con/forum/index.php?action=admin;area=logs;sa=errorlog;file=L2V0Yy9wYXNzd2Q=
-> Read /etc/passwd
-> 
-> works with path disclosure for read Settings.php:
-> http://whk.drawcoders.net/index.php/topic,2792.0.html
-> 
-> *Reproduce:
-> 1. Open http://example.com/forumpath/SSI.php?ssi_function=fetchPosts
-> 2. Get full path of web app ( /home/1337/public_html/SSI.php ).
-> 3. Exploit in base64:
-> http://test.con/forum/index.php?action=admin;area=logs;sa=errorlog;file=L2hvbWUvc3BhZG1pbi9wdWJsaWNfaHRtbC9TZXR0aW5ncy5waHA=
-> To read /home/spadmin/public_html/Settings.php
-> 
-> Referer and Mirror:
-> -------------------------
-> http://whk.drawcoders.net/index.php/topic,2805.0.html
-> 
-> 
-> 
-> 
-> _______________________________________________
-> Full-Disclosure - We believe in it.
-> Charter: http://lists.grok.org.uk/full-disclosure-charter.html
-> Hosted and sponsored by Secunia - http://secunia.com/
+Hi
 
-Hi!
+There is an issue with pywbem checking x509 certifcates.
+Our BZ is
 
+https://bugzilla.novell.com/show_bug.cgi?id=856108
 
-I have verified SMF is affected by this issue.
+It contains the upstream URLs. There also seems to be a ticket
+open for it at RH (1026891) but I cannot access that, so I dont know
+whether they already assigned a CVE for it? At least in upstream commits
+there is no CVE mentioned.
 
-The PoC requires an admin login to be exploited. Is there any
-possibility to exploit this issue without an admin login?
+If there is not already one, can you assign one?
 
+thx,
+Sebastian
 
-I guess a CVE should be assigned. Do you already asked for one?
+-- 
 
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
