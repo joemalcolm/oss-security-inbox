@@ -1,46 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/5
-Message-ID: <522DEB0F.9080103@redhat.com>
-Date: Mon, 09 Sep 2013 09:36:47 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Adéla Goldová <roguecoder@...h.com>
-Subject: Re: [CVE Request] Event Easy Calendar
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/18/1
+Message-Id: <201312180056.rBI0uIGs000429@linus.mitre.org>
+Date: Tue, 17 Dec 2013 19:56:18 -0500 (EST)
+From: cve-assign@...re.org
+To: stbuehler@...httpd.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Juvia secret token handling
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/09/2013 02:15 AM, Adéla Goldová wrote:
-> Hello
+> Juvia is a Ruby on Rails application to host "comments":
+> > A commenting server similar to Disqus and IntenseDebate
 > 
-> The wordpress plugin Event Easy Calendar suffers from CSRF and XSS
-> vulnerability and improper input validation. Could someone please
-> assign CVE's to this?
+> It includes a "default" secret to validate cookies in 
+> `app/config/initializers/secret_token.rb', and the install instructions
+> do not include generating a new secret.
+> Also the file in question is maintained in git, and configuration
+> should not touch these files.
 > 
-> 1: http://seclists.org/fulldisclosure/2013/Sep/41
+> This means an attacker could modify session state, which is somehow
+> trusted by the Rails application.
 > 
+> A workaround for Juvia is to generate a new secret (`rake secret') and
+> replace the one in
+> `app/config/initializers/secret_token.rb' (invalidating all cookies,
+> don't forget to restart Juvia).
+> You have to be careful when switching between git branches and so on to
+> not loose the change.
+> 
+> The core problem is that rails generated the file that way; other gems
+> have similar issues.
+> The rails security team has been informed about this.
 
-Please include links to the vulns/source code fixes/original
-information thanks.
+They would be eligible for their own CVE ID if they conclude that this is
+a security-relevant implementation error in the file-generation process.
+The CVE below is specific to Juvia, for the issue in which a valid
+Juvia::Application.config.secret_token value is "shipped" in the product
+without an installation step in which the value must be changed.
+
+> * Juvia "public" secret:
+>   https://github.com/phusion/juvia/blob/master/config/initializers/secret_token.rb
+> * Juvia issue for this: https://github.com/phusion/juvia/issues/55
+
+Use CVE-2013-7134.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJSLesOAAoJEBYNRVNeJnmTo78QAMSYgdcz1nGX01klyr3heuHd
-gTiTeVUl6EtiLH+0VF13pDZJM4UI8kRxEOmKwGfv6qz5zIfxQmfaMk5+IUtdW4sA
-jLpjbUuIieuFOCwUGNle04K9faqeq/44BkqaEv024KBtiHRvE1UqFpv0FGzMmr/T
-LRVgBPL2AikF0EgZADPualhv+mwzvSEbE87f2OoUj8Oa55mhzLiE+umQv+cs/4mQ
-4RmOnX8oBSS6HOwy5y/BKr6wplKDLAleDpOjEvK/GdkpxHJOShJkV21buWg1zKfF
-X3qOysIY1QS9DcAQDSlY0sYGMT1G0M22NkSxtOF8NG7Y4R2Uc56eNS3z0grU1RmZ
-XRj6MCULBxWzgbFymKRyfswDIQcPjK7pEdkitKBLbZeZSuu0WqQC+lHcjLnHOpkq
-YVRoO7BIrHacgMMgQRhGB1Eqasf1fG9mGGxMrL/zeE/JJvIPqNAkrEq+ageoHW8L
-5Eph56Ipy/uIWkrKWfrlD2YE3cWGAjUBlC5qh6fjD0T84LSpte3pc8Ib/7+P3ODA
-bkxCY4XpS9M4PhZYOV/k7HBTM7p9wQWme1eMn1ld8q+YImf8Em9jYFWVFvDVGZrj
-74PZrPzuh2gOrp0Sb754SsgZ4ZuXPTE8HCIVGgT0io2K+OcYnvm9NLtUSm8Vc0qS
-x0R4dJZ0BzBkmr4HNxju
-=IXdn
+iQEcBAEBAgAGBQJSsPGmAAoJEKllVAevmvms38cH/2MOQkPQcH6E3P/OB6Gb+joD
+DsqJz+03vWIO++M3JlbEESry7CwhyBJqwzIJUDeMb/zz4AcUR+xnIx0u3gVQzq9k
+bJF3r3QdVRg0gkQoA8wx1eXaNhPDCRboqXI9Q9FopkvP9r9A5PSQF1QytITI/7b4
+TzSqx9VMK3Acp4gGx4DKiQSFJRuFPLm1HWWuvFwg3G3J2/77hAegOs5z6Jo1vbHi
+VL2A/LTOBE+AHkhvdcBXQmtsLWUnf+cb3HRL6R5Ekt4ke+gWkLlRdau0Mq4YpnWa
+5n4GUEmasWLOfVDgblGIrMrbjplPZneGw8VsMXCjIWswQuFaVyyTEmBZD9EXcG4=
+=qD6C
 -----END PGP SIGNATURE-----
