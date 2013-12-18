@@ -1,31 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/23/11
-Message-ID: <alpine.LFD.2.03.1307240138510.6898@redhat.com>
-Date: Wed, 24 Jul 2013 01:45:26 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Linux kernel: panic while appending data to a corked IPv6 socket in ip6_append_data_mtu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/18/4
+Message-ID: <52B1C6EC.8050006@openstack.org>
+Date: Wed, 18 Dec 2013 17:01:48 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: [OSSA 2013-037] Nova compute DoS through ephemeral disk backing files (CVE-2013-6437)
 Content-Type: text/plain; charset=utf-8
 
-+-- On Tue, 23 Jul 2013, Seth Arnold wrote --+
-| UDP_CORKED? I don't see this string in my /usr/include/ or recent Linux git 
-| tree. 
-| Am I missing something?
+OpenStack Security Advisory: 2013-037
+CVE: CVE-2013-6437
+Date: December 18, 2013
+Title: Nova compute DoS through ephemeral disk backing files
+Reporter: Phil Day (HP)
+Products: Nova
+Affects: All supported versions
 
-  It's one of those non-portable Linux socket options.
+Description:
+Phil Day from HP reported a vulnerability in the libvirt driver handling
+of ephemeral disk backing files on Nova compute nodes. By repeatedly
+creating snapshots, changing the os_type to a new random value, and
+spawning new instances from the snapshot (and quickly deleting those
+instances), an authenticated user could generate lots of different
+ephemeral disk backing files and fill up compute node disks, potentially
+resulting in a Denial of Service against a Nova setup. Only Nova setups
+running the libvirt driver are affected.
 
-===
-$ man 7 udp 
- ...
- UDP_CORK (since Linux 2.5.44)
-              If  this  option is enabled, then all data output on this socket
-              is accumulated into a single datagram that is  transmitted  when
-              the  option is disabled.  This option should not be used in code
-              intended to be portable.
-===
+Icehouse (development branch) fix:
+https://review.openstack.org/62910
 
-Though the crash is more of due to IPV6_MTU value set. (from commit log)
+Havana fix:
+https://review.openstack.org/62912
 
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+Grizzly fix:
+https://review.openstack.org/62913
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6437
+https://bugs.launchpad.net/nova/+bug/1253980
+
+Regards,
+
+-- 
+Thierry Carrez
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
