@@ -1,40 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/12
-Message-Id: <201403121505.s2CF5kth015778@linus.mitre.org>
-Date: Wed, 12 Mar 2014 11:05:46 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/7
+Message-Id: <201312180104.rBI14VPX000859@linus.mitre.org>
+Date: Tue, 17 Dec 2013 20:04:31 -0500 (EST)
 From: cve-assign@...re.org
-To: stbuehler@...httpd.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: lighttpd 1.4.34 SQL injection and path traversal CVE request
+To: carnil@...fee.int, cve-assign@...fee.int, oss-security@...fee.int,  cm@...fee.int, 732283@...fee.int
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, cm@...etec.at, 732283@...s.debian.org
+Subject: Bug#732283: CVE Request: Proc::Daemon writes pidfile with mode 666
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> I requested a CVE on distros, but Kurt wasn't sure whether one or
-> multiple CVE ids should be assigned
+> christian mock <cm@...etec.at> has reported[1] that Proc::Daemon, when
+> instructed to write a pid file, does that with a umask set to 0, so
+> the pid file ends up with world-writable permissions.
+> 
+> Upstream bugreport is at [2].
+> 
+>  [1] http://bugs.debian.org/732283
+>  [2] https://rt.cpan.org/Ticket/Display.html?id=91450
+>  
+> Axel Beckert has commited a patch to the Debian packaging[3] and
+> forwarded it to upstream.
+> 
+>  [3] http://anonscm.debian.org/gitweb/?p=pkg-perl/packages/libproc-daemon-perl.git;a=blob;f=debian/patches/pid.patch
+> 
+> Could a CVE be assigend for this issue?
 
-The number of CVEs doesn't necessarily depend on the number of changes
-that were required to address the reported attacks; instead, the
-number of CVEs can depend on whether issues could have been fixed
-independently. For example, the HTTP protocol specification doesn't
-require that a server validate that the Host header has the expected
-"host" or "host:port" syntax and otherwise send an error status code.
-If that were required, then there would only be one CVE.
-
-Here, the issues could have been fixed independently, e.g., SQL
-injection fixed in mod_mysql_vhost.c, and then directory traversal
-fixed in the mod_simple_vhost_docroot function in mod_simple_vhost.c
-and the mod_evhost_parse_host function in mod_evhost.c. This could
-conceivably have been chosen if someone wanted
-mod_simple_vhost.c/mod_evhost.c to have access to the original string
-(maybe anticipating that "Host: host/pathname" could become meaningful
-for vhosts in a future HTTP protocol revision, or whatever).
-
-So, there are two CVE assignments:
-
-SQL injection - use CVE-2014-2323.
-path traversal - use CVE-2014-2324.
+Use CVE-2013-7135.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -44,11 +37,18 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTIHajAAoJEKllVAevmvmstNoH/1Dd2ejZGVReh2d9HVAM9Vun
-jYHPRbLdIaZLPewt4OiMJkMWPR0XqMc3FZqucw3NUlnaGJ4iY+BxJoKn6e7Xelws
-JBggVjdX+RMqPeRWNHNAyamPd80FZrOai5dil4QUG7Zv1L5nNV+jl8bUpQBw5nAj
-zRM+insdgJVKtr7nR0mBKRLr84kZ1pU2A9uW2qWABl5/oScuC/pkdcOJYzTYEtUX
-eSC3UPF2TIfhchrfmHKEeqi/wwQ3m3R2DyaWVAV5u9F/I5GzAVR7catxGCSN5Qd8
-mml6VhYvIkpp03Y3Q3ZX18N3DELIOX/vfN5OYXxVf6Ab54rrj3I7G0xCTQ6JURM=
-=TjxJ
+iQEcBAEBAgAGBQJSsPPCAAoJEKllVAevmvmsDjkH/0ArQqMr437ZRT3i8pvsAP+6
+Wc39qGXxcEZCPxSHGv9HdoeGrYBWBwLLWKjtPV+iSKE67BtBV1YS+j1ISI9ST6cz
+93dhjxnN2n9VyvXStRTo3nj20wRkbWEyBWN1hUaR3niDb7bd+QqRd7m79MGY6VkG
+uAkXP5pJacezleLBM1900W3rvppbdU/tCe4Oc5pMSRUZU9V2XWB8Y9yrCOztYVH4
+2sojMuUv9kMdeHRM9iskOw1oGPX4GK5eKj0c/unJ1w82zF/56hM5Rw+yqYIY0mcH
+er0Cl1N7TFPfQEVPhYg2s2kZUVOjA4UuHEWuArY3hv4m8XFC+GlBtkm36/7wfv0=
+=jG8p
 -----END PGP SIGNATURE-----
+
+
+-- 
+To UNSUBSCRIBE, email to debian-bugs-dist-REQUEST@...ts.debian.org
+with a subject of "unsubscribe". Trouble? Contact listmaster@...ts.debian.org
+
+
