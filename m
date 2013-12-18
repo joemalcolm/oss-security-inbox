@@ -1,41 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/21/9
-Message-ID: <20130421225153.GA7113@openwall.com>
-Date: Mon, 22 Apr 2013 02:51:53 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Request for linux-distros list membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/18/6
+Message-Id: <201312181943.rBIJhUhU022270@linus.mitre.org>
+Date: Wed, 18 Dec 2013 14:43:30 -0500 (EST)
+From: cve-assign@...re.org
+To: secalert@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: CVE already assigned for 1026891?
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 21, 2013 at 10:42:26AM +1000, Allan McRae wrote:
-> On 21/04/13 06:29, Solar Designer wrote:
-> > How do you expect to use the information arriving via linux-distros?
-> 
-> I am intending to form a more official security response in Arch Linux
-> rather than the quite adhoc process we have at the moment.  The
-> information on linux-distros will be used to prepare updates to be
-> released at the end of relevant embargo.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-OK, I've just subscribed you.
+http://www.openwall.com/lists/oss-security/2013/12/18/3 raises the
+question of whether there is a CVE assignment in
+https://bugzilla.redhat.com/show_bug.cgi?id=1026891 already, in order
+to avoid a duplicate assignment. Our guess is that security issues
+tracked privately by Red Hat typically do have pre-assigned CVE IDs,
+so MITRE will delay a CVE assignment indefinitely.
 
-I think it wouldn't have been unreasonable for the oss-security
-community to expect you "to form a more official security response"
-before joining linux-distros, so now you're sort of in debt. ;-)
+Although it would be great to know what CVE ID you have assigned,
+replying with something like "yes, it has a CVE ID, but it's only
+being shared with the embargo audience" would be quite useful as well.
 
-Specifically, there doesn't appear to be an announcement channel for
-Arch Linux security updates, nor even an issue tracker or change log
-with security issues and fixes clearly marked as such.  You've listed a
-bug tracker URL at:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-http://oss-security.openwall.org/wiki/vendors#arch-linux
-
-which is:
-
-https://bugs.archlinux.org
-
-Going to that URL, I see a list of all sorts of bugs.  Searching it for
-"security", I find only 2 bugs.  Perhaps there were many more security
-issues that you've actually dealt with, and you need to start
-documenting them as such for your users.
-
-Alexander
+iQEcBAEBAgAGBQJSsfpLAAoJEKllVAevmvms85IH/1IZY31z4BA1n/wz1iIxd4H+
+9Sv6E3ZExTIfpgHuLgMqFvnX6yaejW2M+MACgslQ4EWa00+zI1on9LIukeYCBfTo
+wi1RLWSpwT3eGGfqd++Z+LrVxMtLCVRO9J20ntxJCe8GEU6YSkkkfbai48YeFE2P
+4oTiIaLAjJx0BGQxYxDn2y6tj+U/bQBObAgVIJXwo4yofmk8R+RS/ZvGX+zvI9uO
+fnywBOgcYfJ0opD1eDqZ9/clsc8TJuSHHuDQD0POqjA/6Ssx6ZxHj9D9msP3Gdgz
+4TU1eUNwutQu2lsbZgX0/Lkj8J87snNghYxQlNVZ1jD/2rn2EYuxbNjlfJ2Di1M=
+=iZA7
+-----END PGP SIGNATURE-----
