@@ -1,40 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/7
-Message-ID: <516D169A.1000308@redhat.com>
-Date: Tue, 16 Apr 2013 03:15:06 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: A note on CVE assignment timelines
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/18/2
+Message-Id: <201312180104.rBI14VPX000859@linus.mitre.org>
+Date: Tue, 17 Dec 2013 20:04:31 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, cm@...etec.at, 732283@...s.debian.org
+Subject: Re: CVE Request: Proc::Daemon writes pidfile with mode 666
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-I'm trying to not work on the weekends (I know, crazy huh?) so in
-general CVE requests sent in later on Friday or any time on Saturday
-and Sunday (north american time) won't be handled until Monday at the
-earliest. Also please send private requests as early as possible,
-sometimes they take time to handle so giving me 1-2 hours prior to a
-public release is probably not enough (assuming I'm even awake/at my
-computer/reading email).
+> christian mock <cm@...etec.at> has reported[1] that Proc::Daemon, when
+> instructed to write a pid file, does that with a umask set to 0, so
+> the pid file ends up with world-writable permissions.
+> 
+> Upstream bugreport is at [2].
+> 
+>  [1] http://bugs.debian.org/732283
+>  [2] https://rt.cpan.org/Ticket/Display.html?id=91450
+>  
+> Axel Beckert has commited a patch to the Debian packaging[3] and
+> forwarded it to upstream.
+> 
+>  [3] http://anonscm.debian.org/gitweb/?p=pkg-perl/packages/libproc-daemon-perl.git;a=blob;f=debian/patches/pid.patch
+> 
+> Could a CVE be assigend for this issue?
+
+Use CVE-2013-7135.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJRbRaaAAoJEBYNRVNeJnmTxy8P/iU06V4tlWvitSq5/A7wkMl9
-22vfWUlYGrIyZCG3bAnUpX3c6FfGWA0SVClImCPPwm7kWG2j7ws2DsuzAixx/6XI
-ZYa8WmeUS4R/6vMvfZvwupvxzfoGzD/p76myZrpf8QvahL+5Yo9UsjT7+mUhoChh
-t8lTtlJEAsF+Wmz6WT0YLpm4aIqRo/f2vLmRNdIZYZ0fhJZbAA1HkBdvzJKMRkTS
-Z153FFygkMiwGNedXbFDVcfdZM66/1in2OLe9IlCwr2sn8sdYuDVmhkBfT61GPOC
-bbSD+nNIi0i7cm0IHH2EeTh3HqXBEEfW7VWXJ7S3UU16Iipy37WFW61TwoVoMEoN
-kI/WCGeZOVGWX2Hf2ES/CjlN3xMhC8e8ZVwPkH114YEbTGmgTg68f52KVN+jjCu9
-4SZ1l52adqx/cqmtVDREs2XuJ3XGO0o8/NBlzGJrZNiFPQ3GccLx+icXDVXUXerW
-B5nxAfOOSVqYVQ/VnUwSE6blIG/iFMcDyDmEyuG+BZpAote2+I3GrpY3gA+uFo1s
-M45dYHZ0r5D1PaSFGJMn5/pHRRu6nl3RPw7xRayOQ2QVKqT1tREdZZcFa1aZrRJs
-tFn8nIpTe8OSTKyUxccIi32amrpeoX79OTpsTCKynLKyp/+0v7qVGistaOUMXuaM
-7Ve1SHY/XB7fDunFrwny
-=9gvc
+iQEcBAEBAgAGBQJSsPPCAAoJEKllVAevmvmsDjkH/0ArQqMr437ZRT3i8pvsAP+6
+Wc39qGXxcEZCPxSHGv9HdoeGrYBWBwLLWKjtPV+iSKE67BtBV1YS+j1ISI9ST6cz
+93dhjxnN2n9VyvXStRTo3nj20wRkbWEyBWN1hUaR3niDb7bd+QqRd7m79MGY6VkG
+uAkXP5pJacezleLBM1900W3rvppbdU/tCe4Oc5pMSRUZU9V2XWB8Y9yrCOztYVH4
+2sojMuUv9kMdeHRM9iskOw1oGPX4GK5eKj0c/unJ1w82zF/56hM5Rw+yqYIY0mcH
+er0Cl1N7TFPfQEVPhYg2s2kZUVOjA4UuHEWuArY3hv4m8XFC+GlBtkm36/7wfv0=
+=jG8p
 -----END PGP SIGNATURE-----
