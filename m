@@ -1,35 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/3
-Message-Id: <201304290553.r3T5rMJU027144@linus.mitre.org>
-Date: Mon, 29 Apr 2013 01:53:22 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: tracing NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/18/8
+Message-ID: <loom.20131218T203727-424@post.gmane.org>
+Date: Wed, 18 Dec 2013 19:41:13 +0000 (UTC)
+From: mancha <mancha1@...h.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: GnuPG 1.4.16 fixes RSA key extraction via acoustic side channel (CVE-2013-4576)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Solar Designer <solar@...> writes:
+> 
+> Hi,
+> 
+> GnuPG 1.4.16 was released today with a curious security fix:
+> 
+> http://lists.gnupg.org/pipermail/gnupg-devel/2013-December/028102.html
+> 
+>  * Fixed the RSA Key Extraction via Low-Bandwidth Acoustic
+>    Cryptanalysis attack as described by Genkin, Shamir, and Tromer.
+>    See <http://www.cs.tau.ac.il/~tromer/acoustic/>.  [CVE-2013-4576]
+> 
+> Direct link to paper (8 MB; the website feels very slow at the moment):
+> 
+> http://www.cs.tau.ac.il/~tromer/papers/acoustic-20131218.pdf
+> 
+> Copy on SlideShare:
+> 
+> http://www.slideshare.net/daniel_bilar/acoustic-20131218
+> 
+> Alexander
 
->writing to `set_ftrace_pid' and `set_graph_function' files
+As the primary fix for CVE-2013-4576, GnuPG 1.x now uses blinding to
+mitigate RSA key extraction attacks. This doesn't affect GnuPG 2.x as
+libgcrypt does blinding by default.
 
->  -> https://git.kernel.org/linus/6a76f8c0ab19f215af2a3442870eeb5f0e81998d
+The acoustic attack leveraged some particulars of GnuPG by zero-padding
+input to force modular reductions in GnuPG's RSA implementation. GnuPG
+now cripples this lever by normalizing MPIs used as inputs to secret
+key functions.
 
-Use CVE-2013-3301.
+This secondary mitigation measure was introduced in GnuPG 1.4.16 and
+libgcrypt 1.6.0 (relevant for vendors shipping GnuPG 2.x).
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+--mancha
 
-iQEcBAEBAgAGBQJRfgnNAAoJEGvefgSNfHMde+IH+QFBlfFwREWpUB2mu9/2QboM
-tOVnZdMGcByqsfoLGOt67RAJfMtyoN7hUhR84sxFwQoOt0k92CXdOnFs9DDf+yui
-CZypA+t1qPtuYQMht1vHUzH1FoOtgJ2USvCPXdNS3Vpu1RSBxNeV/0LDiYB/zn4d
-IQISca+p6n5SXD8c8GHdDnUDkVch1nDr1/RdhjMBm0ijDdWo05n8XY/32luqe7OA
-E64mm1Lj4YWK6UyKC3MAvoxUwTcjRZ0NCui8CtAOWyla3JpHOlYXdSaWhCGHy9aA
-ybtFPWDMoKMksARFqBFe/c1/3aAh6u7L4Q5bsQm8dACtwRbt71fsu8z8M0SJ4Uk=
-=RaAZ
------END PGP SIGNATURE-----
