@@ -1,60 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/05/3
-Message-ID: <5227ECAD.8030604@redhat.com>
-Date: Wed, 04 Sep 2013 20:30:05 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/19/3
+Message-ID: <52B29243.8000004@redhat.com>
+Date: Wed, 18 Dec 2013 23:29:23 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: Kernel PID Spoofing Privilege Escalation Vulnerability
+To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: CVE REJECTS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/04/2013 08:39 AM, Agostino Sarubbo wrote:
-> A vulnerability has been reported in the Linux Kernel, which can be
-> exploited by malicious, local users to gain escalated privileges.
-> 
-> The vulnerability is caused due to an error within the
-> "scm_check_creds()" function (net/core/scm.c) and can be exploited
-> to gain escalated privileges by spoofing a PID.
-> 
-> The vulnerability is reported in version 3.10.10.
-> 
-> 
-> Solution: Fixed in the GIT repository.
-> 
-> Provided and/or discovered by: Disclosed within a GIT commit.
-> 
-> Original Advisory: 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/net/core/scm.c?id=d661684cf6820331feae71146c35da83d794467e
->
->  Source: https://secunia.com/advisories/54675/
+CVE-2013-4403 - turns out CVE-2013-4404 covered the issue, no need for
+4403.
 
-Please use CVE-2013-4300 for this issue.
-
-Stupid Q, any reason why this couldn't be sent to
-http://oss-security.openwall.org/wiki/mailing-lists/distros to give
-vendors a heads up (also we can get it a CVE prior to public release
-then)?
+CVE-2013-4418 - turns out to be security hardening, not a security
+flaw, just like CVE-2013-4417
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSJ+ysAAoJEBYNRVNeJnmTs0QP/2CYOp2nHDlpq1KGsUNVi+uS
-jPsPoBuLp5nyJpjpg9ZN5zZZXUiQXruv9e1iQsN52Vv1IlnhyMeyOrA5qGrUFyy9
-KlXBAfBF8TRZqR8G5VdCFsFPHzy2uk2KOtA/THHEiIX5cSER9NTjh4Z5MALyg7RC
-imvw6D2SOjBsillT514pa24/BHwb9/H+ivDlRZ3lD66AI+anB247pj/32izFDK/Z
-X2qBEUPIjbWgAgVhuFPqaoxjMKmHJ960hL7v73NuH33gkOq61wyaBH9LSAP7Upgo
-H0goYSMlJ2sFSF3H48Oa62LJqHGMJXg1xBnJ/mHeVIJ5PSnxjSWLJ74TW1hOL+89
-PduKOnYoHaMlHESFlmZlxJVO/S520IBl9XiEDaTYEBjHh3pXHBEDDeerpdJ5K4Ek
-FFQSPXQFEQ8bKHq0EUrKs/6B/XtIsX4BZN/rsD4K7Ra1t9jsvGWIquwPckgJabzj
-q0m8nXih7BO7xuNMsljF7JZLpTqfeqkPhP06ML/u17YIYjK9W3lJPB+CmhIvKmRS
-oxuprIqbtd0vgqZEfo/VdqM50cNkZP1R8tjeMYmbFNumGQImzu+CXKKXSsdjRqap
-xJl2ROvpoqNqv4JRzGrAhsNRDOCV5CYkMVsMlHcuCFoXUuxuW7bea5qlU3mHKlgY
-IljNNvtK/IeYxqoZXrtu
-=FTZc
+iQIcBAEBAgAGBQJSspJCAAoJEBYNRVNeJnmTwoAP/isr/4oNRkp/xLCNKpVS+rWL
+fo/6K/+OOOuCxFX/iWbCm8Efg1TgJl0JU6OpCya9nyruaCJr0EI8WeMi68OYYiQx
+Z65ez1JqLO9rwptI6WlA6Nu2tcDLf06qorQ1aOlkPOPd1S3ELaEcerBhmYQnkCpE
+SBgIKB3PyEpmJotNj6RwBqqP0C+jqRGxiXhDe0nNFfBWJtxz/oiJ+tRct9F8pSXV
+nANP184e6MQsQLg94IfR5FdjrT4sDgz5Wn9L91DU0VdPWTdOWqed9aHFU13ydjiK
+S7fi4BaGEmuzyyBmc1RZhOW4DPd/VC5b/3u3ssncj+AbwiKGrYWMTp6oHyiYPrE0
+IJu0g2VR87olMkvRaCJNu/1zJnNUlixFTTM68PIvPqwa2zZB0xDngRM5v2fljpHJ
+nw5ruGWIIIztWO8zAgpKp9kI+4ZpiVqE04eZ095Chohq5NL2KDVWr+DxDbZbICSE
+gKBPFhBg3moMG6a0vIIyBD/jKlJEwNPBLKiy3mBudqA/0a9RpDBUQuANH5/7zHyD
+iwxpfUHM1HADCjv/bH9sGH3vSA9DoDV13naq4fGB9NOyfgaUnq14rImRgid2+9iE
+kq312SrrVzoXEyV7ulXE4nT4sxCioZQeCOknZ+aQL1D0yytPWPQC+o+h7mUwKyx5
+AJxifqQDLGxyHxiOcUtk
+=1wzm
 -----END PGP SIGNATURE-----
