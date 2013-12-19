@@ -1,38 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/19/3
-Message-ID: <52B29243.8000004@redhat.com>
-Date: Wed, 18 Dec 2013 23:29:23 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: CVE REJECTS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/19/2
+Message-ID: <52B27F36.2080408@redhat.com>
+Date: Thu, 19 Dec 2013 16:08:06 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org
+Subject: possible CVE request for rpath issues fixed via slackware updates
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-CVE-2013-4403 - turns out CVE-2013-4404 covered the issue, no need for
-4403.
+Some recent slackware updates fixed some rpath issues:
 
-CVE-2013-4418 - turns out to be security hardening, not a security
-flaw, just like CVE-2013-4417
+llvm: http://www.linuxsecurity.com/content/view/160596?rdf
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+libiodbc: http://seclists.org/bugtraq/2013/Dec/93
 
-iQIcBAEBAgAGBQJSspJCAAoJEBYNRVNeJnmTwoAP/isr/4oNRkp/xLCNKpVS+rWL
-fo/6K/+OOOuCxFX/iWbCm8Efg1TgJl0JU6OpCya9nyruaCJr0EI8WeMi68OYYiQx
-Z65ez1JqLO9rwptI6WlA6Nu2tcDLf06qorQ1aOlkPOPd1S3ELaEcerBhmYQnkCpE
-SBgIKB3PyEpmJotNj6RwBqqP0C+jqRGxiXhDe0nNFfBWJtxz/oiJ+tRct9F8pSXV
-nANP184e6MQsQLg94IfR5FdjrT4sDgz5Wn9L91DU0VdPWTdOWqed9aHFU13ydjiK
-S7fi4BaGEmuzyyBmc1RZhOW4DPd/VC5b/3u3ssncj+AbwiKGrYWMTp6oHyiYPrE0
-IJu0g2VR87olMkvRaCJNu/1zJnNUlixFTTM68PIvPqwa2zZB0xDngRM5v2fljpHJ
-nw5ruGWIIIztWO8zAgpKp9kI+4ZpiVqE04eZ095Chohq5NL2KDVWr+DxDbZbICSE
-gKBPFhBg3moMG6a0vIIyBD/jKlJEwNPBLKiy3mBudqA/0a9RpDBUQuANH5/7zHyD
-iwxpfUHM1HADCjv/bH9sGH3vSA9DoDV13naq4fGB9NOyfgaUnq14rImRgid2+9iE
-kq312SrrVzoXEyV7ulXE4nT4sxCioZQeCOknZ+aQL1D0yytPWPQC+o+h7mUwKyx5
-AJxifqQDLGxyHxiOcUtk
-=1wzm
------END PGP SIGNATURE-----
+I do not have any further details, other than the llvm one may be from 2001:
+
+http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/sys-devel/llvm/files/llvm-3.3-insecure-rpath.patch?view=diff&r1=text&tr1=1.1&r2=text&tr2=1.1&diff_format=f
+
+Both issues possibly due to Slackware using /tmp/ for building (not
+saying they do, just guessing), whereas on Fedora etc, /builddir/ is used.
+
+Are CVEs needed (if not already assigned)?
+
+Thanks,
+
+--
+Murray McAllister / Red Hat Security Response Team
