@@ -1,82 +1,124 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/21
-Message-ID: <51F15ADC.8080109@fifthhorseman.net>
-Date: Thu, 25 Jul 2013 13:05:32 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/19/1
+Message-ID: <52B255CB.90907@redhat.com>
+Date: Thu, 19 Dec 2013 13:11:23 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>,  Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: CVE Request: evolution mail client GPG key selection issue
+CC: cve-assign@...re.org, krahmer@...e.de
+Subject: Re: CVE already assigned for 1026891?
 Content-Type: text/plain; charset=utf-8
 
-On 07/25/2013 04:46 AM, Kurt Seifried wrote:
-> Yeah this was discussed internally a bit at Red Hat after you filed
-> the bug, it's a messy problem. I think one concern was where do you
-> want to place policy decisions for key usage and trust, in GPG, in the
-> app using it, or something else?
+On 12/19/2013 06:58 AM, Vincent Danen wrote:
+> 
+> On Dec 18, 2013, at 12:43 PM, cve-assign@...re.org wrote:
+> 
+>> Signed PGP part
+>> http://www.openwall.com/lists/oss-security/2013/12/18/3 raises the
+>> question of whether there is a CVE assignment in
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1026891 already, in order
+>> to avoid a duplicate assignment. Our guess is that security issues
+>> tracked privately by Red Hat typically do have pre-assigned CVE IDs,
+>> so MITRE will delay a CVE assignment indefinitely.
+>>
+>> Although it would be great to know what CVE ID you have assigned,
+>> replying with something like "yes, it has a CVE ID, but it's only
+>> being shared with the embargo audience" would be quite useful as well.
+> 
+> There is a CVE assigned to this, but based on what Sebastian wrote, I can’t tell if it’s the same issue so I’m hesitant to say what the CVE is in case it does end up being different.
+> 
+> Sebastian, can you give me access to your bug?  Or did you intend to make it public?  I’m assuming that since you are asking about a CVE here, you maybe did not mean to keep it private?  Your other message said your bug contained upstream URLs (so maybe even pasting those here would be helpful).
+> 
+> Once I can look at it, I can let you know for sure whether or not it is the same issue (and should then use the same CVE).
+> 
+> Thanks.
+> 
+> — 
+> Vincent Danen / Red Hat Security Response Team
+> 
 
-This is a critical observation.  there currently exists a lot of
-infrastructure which uses gpg as the backend for dealing with keys.
-Moving those decision processes out of gpg and into frontends means that
-any tool which relies on gpg itself won't be able to make use of those
-policy decisions implemented only in a frontend.
+Hi all,
 
-> One concern I have is I sometimes
-> used to (not any more!) download all the signing keys for keys I was
-> using to see if I could establish a web of trust.
+Sorry for the poor handling here on my part, the build in Fedora took me
+by surprise...There are two pywbem CVEs (assigned by Red Hat):
 
-Do you refresh your keyring regularly?  If not, you risk not receiving
-notification of revocation and other updates.  If you do refresh your
-keyring regularly, then you are also vulnerable to arbitrary user ID and
-subkey injection, since keys are fetched by keyid or fingerprint
-(including by subkey) and anyone can graft someone else's primary key to
-their own key as a subkey (even an expired one, or one without proper
-usage flags).
+CVE-2013-6418 is about pywbem doing an SSL connection with verification
+enabled, closing it, and doing the real data transfer over another
+connection with verification disabled.
 
-In short: if anyone is relying on their local keyring as a "safe"
-storage place for keys they believe are valid, they're in an untenable
-position.
+CVE-2013-6444 is about pywbem failing to verify the URI matches the
+Subject of the certificate (missing hostname check).
 
-GnuPG needs the user to explicitly indicate which keys are valid, and
-user agents which use GnuPG to encrypt messages need to only send to
-keys which are known to be validly bound (by a trusted certifier) to the
-User ID in question.
+According to
+http://sourceforge.net/mailarchive/message.php?msg_id=31757312 both of
+these CVEs are fixed by the following patch:
 
-This can be done by either (a) designating certain keys with strong
-enough "ownertrust" and then being willing to rely on their
-certifications, or by the user themselves certifying keys that they
-believe to be valid.  If the user is the only trusted certifier, and
-they have a key that they are willing to use for a remote peer but they
-do not want to publish their certification, they can make a
-non-exportable certification (a.k.a. "local signature") to indicate to
-gpg that the peer's key is valid for their address.
+http://sourceforge.net/mailarchive/attachment.php?list_name=pywbem-devel&message_id=52AF1EE9.8080805%40redhat.com&counter=1
 
-> Any ways for evolutions please use CVE-2013-4166 for this issue. Has
-> anyone checked other popular mail clients like thunderbird/mutt/etc?
+However, I don't think that is the final fix, and I'm in the wrong
+timezone to ask :( so I'm just going to paste the comments from a bug I
+won't be able to open:
 
-Thunderbird's enigmail plugin has a user preference (in the "advanced"
-pane of the expert preferences dialog, in the config editor as
-extensions.enigmail.hushMailSupport) that says "Use '<' and '>' to
-specify email addresses".  The help text also mentions "disable if
-recipients have old hushmail keys" -- this defaults to being checked
-(the config option is "false" when the checkbox is checked,
-confusingly).  So by default enigmail is "fixing" things in the same way
-as the proposed evolution fix, if i understand the bug report correctly.
+""
++        for path in (
++                '/etc/pki/tls/certs',
++                '/etc/ssl/certs',
++                '/etc/ssl/certificates'):
++            if os.path.exists(path):
++                get_default_ca_certs._path = path
++                break
 
-However, enigmail also has an option (under the "sending" pane of the
-hexpert preferences dialog, in the config editor as
-extensions.enigmail.alwaysTrustSend) which says "Always trust people's
-keys", with the help text of "Do not use the Web of Trust to determine
-the validaty of keys".  this defaults to "true" (checked), which means
-that enigmail will happily send mail to a key that gpg does not believe
-belongs to the recipient address (i just tested this; it looks like with
-the default settings, enigmail will encrypt to the first key returned by
-gpg that has the given user ID, even if a later matching key has a
-higher validity).
+I'm not sure if this works because the /etc/pki/tls/certs directory does
+not contain individual PEM certificate files under special hashed file
+names, which is what SSL_CTX_load_verify_locations expects.
 
-This is a separate issue from the User ID matching issue originally
-raised in this thread though.
++            ctx = SSL.Context('sslv3')
 
-	--dkg
+The above results in an SSL 3.0 client hello:
 
+        Handshake Protocol: Client Hello
+            Handshake Type: Client Hello (1)
+            Length: 121
+            Version: SSL 3.0 (0x0300)
+            Random
+                gmt_unix_time: Dec 17, 2013 13:37:12.000000000 CET
+                random_bytes:
+xxx
+            Session ID Length: 0
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+You need to use 'sslv23' to get the most recent protocol version.
+""
+
+""
+I've gathered some information about the paths you mentioned. I agree
+this approach is not correct. Perhaps this is better:
+
+        for path in (
+                # newer distributions using update-ca-trust
+                '/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt',
+                # use these directories as a fallback
+                '/etc/ssl/certs',
+                '/etc/ssl/certificates'):
+            if os.path.exists(path):
+                get_default_ca_certs._path = path
+                break
+
+On f19+, update-ca-trust is used to regenerate ca bundles under
+/etc/pki/ca-trust/extracted directory. As you say it's wrong to use
+directory path here, since cacertdir_rehash is not used to make symlinks
+with hashes.
+On f18 and older, '/etc/ssl/certs' is used with symlinks created by
+cacertdir_rehash.
+
+If '/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt' does not
+exist, the '/etc/ssl/certs' will be used as a fallback.
+""
+
+I will open our bugs soon
+(https://bugzilla.redhat.com/show_bug.cgi?id=1039801 and
+https://bugzilla.redhat.com/show_bug.cgi?id=1044246).
+
+Apologies again for the mess here and lack of a heads up before it went
+public.
+
+--
+Murray McAllister / Red Hat Security Response Team
