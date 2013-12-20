@@ -1,57 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/26/7
-Message-ID: <51F2C779.1040002@redhat.com>
-Date: Fri, 26 Jul 2013 13:01:13 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/20/3
+Message-ID: <20131220152803.GP5714@suse.de>
+Date: Fri, 20 Dec 2013 16:28:03 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Thijs Kinkhorst <thijs@...ian.org>, wk@...pg.org
-Subject: Re: CVE request: GnuPG side-channel attack on RSA secret keys
+Cc: cve-assign@...re.org
+Subject: Re: CVE already assigned for 1026891?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 07/25/2013 05:38 AM, Thijs Kinkhorst wrote:
-> Hi list,
+On Wed, Dec 18, 2013 at 12:58:17PM -0700, Vincent Danen wrote:
 > 
-> I'd like to request a CVE name for the side channel attack
-> described in attached release announcements of GnuPG and Libgrypt.
+> On Dec 18, 2013, at 12:43 PM, cve-assign@...re.org wrote:
 > 
+> > Signed PGP part
+> > http://www.openwall.com/lists/oss-security/2013/12/18/3 raises the
+> > question of whether there is a CVE assignment in
+> > https://bugzilla.redhat.com/show_bug.cgi?id=1026891 already, in order
+> > to avoid a duplicate assignment. Our guess is that security issues
+> > tracked privately by Red Hat typically do have pre-assigned CVE IDs,
+> > so MITRE will delay a CVE assignment indefinitely.
+> > 
+> > Although it would be great to know what CVE ID you have assigned,
+> > replying with something like "yes, it has a CVE ID, but it's only
+> > being shared with the embargo audience" would be quite useful as well.
 > 
-> Thanks, Thijs
+> There is a CVE assigned to this, but based on what Sebastian wrote, I can’t tell if it’s the same issue so I’m hesitant to say what the CVE is in case it does end up being different.
+> 
+> Sebastian, can you give me access to your bug?  Or did you intend to make it public?  I’m assuming that since you are asking about a CVE here, you maybe did not mean to keep it private?  Your other message said your bug contained upstream URLs (so maybe even pasting those here would be helpful).
+> 
+> Once I can look at it, I can let you know for sure whether or not it is the same issue (and should then use the same CVE).
 
-Quick note: even though the code has been split out (e.g. gpg,
-gpg+libgcrypt) I'm treating it as a single code base for the purposes
-of CVE assignment.
+I have moved the bug to our Security Incidents product, so it should be visible now.
 
-Please use CVE-2013-4242  for this issue.
-
-Also Werner if you want to get CVE's in advance of announcements for
-security issues I would be happy to pre-assign them to you. Email me
-for details or check out:
-
-https://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
-
-This of course goes for any other projects that want to get CVEs in
-advance.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJR8sd5AAoJEBYNRVNeJnmTMbkP/1+d5l1sdXKhYu3Ta1dtBdTl
-JRf6qg9zbBghrEczxH8WTMuLyshwGuzPL2UH8eWQJoRQP7hzOi54hsHKXHnUtLUl
-FrFqiaaf8v0lHzyPbgJFLS81onRanMFWh6osiDk/qOx4yG8fUs4P2CKCdUBhkXMZ
-SRMr8T4qilNx+jyr9pEusBLIznjgTE+TiJUUYhzSq+hkGZ2MKhXF43JAvWWFmKFR
-L0iFpruY54S53aNVHSG5a1Uk0x5dxzi3XE48GvmUW3VB/jJsJVYgBD2D67D6c+m9
-wnrnDfExx4GVM9faaoMvxso1ahWHecuphqeho+/y3/QftlRelHHnzQmO15rdezaE
-kCD9+duoxvzkRja7EfTQ4l3BUc1D9eRpOA1iv6ntlZBjpgAGeoJSipI+wpUZ9PjG
-QqJf2IPc21i1N2Me/kdovA+1rRfVHIOBLDGZ6Ms4sqUMaWAXgr3wZ0HQGD6B91ws
-srildeaW0Y5Ivx8YJwudhIhIbBJYd1lqUyDM+yrsH83Gt5u0FkJrAC9wLpEJgGj7
-pH4YhR8tFZCgHAhIaJmBn4aLJ/H2Yq33UfUf+bmgZEQZEUQQrhpFFi8saSVuc0+O
-vv+LuCowAD65vRyg49mDTHXVtGg6/mxl5kAtTU24jxw84PCvLFBtRkYozUmjzA+E
-2NlSd00a+dnzICBygJMV
-=w6xH
------END PGP SIGNATURE-----
+Ciao, Marcus
