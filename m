@@ -1,99 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/27
-Message-ID: <20130221231210.GY2859@redhat.com>
-Date: Thu, 21 Feb 2013 16:12:10 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/20/5
+Message-Id: <F98F00CB-1003-4424-955A-12C638E304BB@redhat.com>
+Date: Fri, 20 Dec 2013 11:22:24 -0700
 From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Christey, Steven M." <coley@...re.org>
-Subject: Re: CVE request: python-pyrad insecurities
+Subject: Re: CVE already assigned for 1026891?
 Content-Type: text/plain; charset=utf-8
 
-* [2013-02-15 23:36:21 -0700] Kurt Seifried wrote:
 
->-----BEGIN PGP SIGNED MESSAGE-----
->Hash: SHA1
->
->On 02/15/2013 04:53 PM, Vincent Danen wrote:
->> * [2013-02-15 19:51:07 +0000] Christey, Steven M. wrote:
->>
->>> These two issues were fixed in the same diff and reflect poor
->>> randomness - should we have only assigned one CVE?  (If the
->>> RADIUS feature was introduced in different versions than the
->>> authenticator-password feature, then maybe the SPLIT is
->>> acceptable.)
->>
->> I'm not sure.  I didn't go digging to see when they were introduced
->> -- both features may have been introduced at the same time (or
->> not).
->>
->> Ok, so doing a quick peek at the first full blob of it in git:
->>
->> https://github.com/wichert/pyrad/blob/c206b1dfc362db8b0ef9c256814377bde8ed91cf/pyrad/packet.py
->>
->>
->>
->> The use of random.randrange() is in both the CreateAuthenticator()
->> and CreateID() functions, so I would bet that they've been like
->> that the whole time (that blob is from Sept 2007).  So I guess one
->> CVE is probably sufficient.
->>
->> I only noted them as two issues as we had two separate bug reports
->> about them.
->>
->>> -----Original Message----- From: Kurt Seifried
->>> [mailto:kseifried@...hat.com] Sent: Friday, February 15, 2013
->>> 2:37 PM To: oss-security@...ts.openwall.com Cc: Vincent Danen
->>> Subject: Re: [oss-security] CVE request: python-pyrad
->>> insecurities
->>>
->> On 02/15/2013 09:14 AM, Vincent Danen wrote:
->>>>> Could a CVE be assigned to the following two issues please?
->>>>>
->>>>> #1: https://bugzilla.redhat.com/show_bug.cgi?id=911682
->>>>>
->>>>> Nathaniel McCallum of Red Hat reported that pyrad was using
->>>>> Python's random module in a number of places to generate
->>>>> pseudo-random data.  In the case of the authenticator data,
->>>>> it was being used to secure a password sent over the wire.
->>>>> Because Python's random module is not really suited for this
->>>>> purpose (not random enough), it could lead to password
->>>>> hashing that may be predictable.
->>
->> Please use CVE-2013-0294 for this issue.
->>
->>
->>>>> #2: https://bugzilla.redhat.com/show_bug.cgi?id=911685
->>>>>
->>>>> Nathaniel McCallum of Red Hat reported that pyrad was
->>>>> creating serialized RADIUS packet IDs in the CreateID()
->>>>> function in packet.py. This is not suitable for RADIUS as the
->>>>> RFC specifies that the ID must not be predictable.  As a
->>>>> result, the ID of the next packet sent can be spoofed.
->>
->> Please use CVE-2013-0295 for this issue.
->
->Please REJECT CVE-2013-0295 and use CVE-2013-0294 for both issues
->(same code issue, same version, same reporter).
+On Dec 20, 2013, at 8:28 AM, Marcus Meissner <meissner@...e.de> wrote:
 
-Ok, so the reporter indicated that the patch noted does not fix both
-issues.  It fixed one issue and the other CreateID() function referenced
-wasn't actually the CreateID() function he meant:
+> On Wed, Dec 18, 2013 at 12:58:17PM -0700, Vincent Danen wrote:
+>> 
+>> On Dec 18, 2013, at 12:43 PM, cve-assign@...re.org wrote:
+>> 
+>>> Signed PGP part
+>>> http://www.openwall.com/lists/oss-security/2013/12/18/3 raises the
+>>> question of whether there is a CVE assignment in
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=1026891 already, in order
+>>> to avoid a duplicate assignment. Our guess is that security issues
+>>> tracked privately by Red Hat typically do have pre-assigned CVE IDs,
+>>> so MITRE will delay a CVE assignment indefinitely.
+>>> 
+>>> Although it would be great to know what CVE ID you have assigned,
+>>> replying with something like "yes, it has a CVE ID, but it's only
+>>> being shared with the embargo audience" would be quite useful as well.
+>> 
+>> There is a CVE assigned to this, but based on what Sebastian wrote, I can’t tell if it’s the same issue so I’m hesitant to say what the CVE is in case it does end up being different.
+>> 
+>> Sebastian, can you give me access to your bug?  Or did you intend to make it public?  I’m assuming that since you are asking about a CVE here, you maybe did not mean to keep it private?  Your other message said your bug contained upstream URLs (so maybe even pasting those here would be helpful).
+>> 
+>> Once I can look at it, I can let you know for sure whether or not it is the same issue (and should then use the same CVE).
+> 
+> I have moved the bug to our Security Incidents product, so it should be visible now.
 
-https://github.com/wichert/pyrad/blob/38f74b36814ca5b1a27d9898141126af4953bee5/pyrad/packet.py#L518
+I see it.  That should be CVE-2013-6418 as Murray had already indicated.
 
-Different function and you can see that:
-
-     CurrentID = (CurrentID + 1) % 256
-     return CurrentID
-
-isn't that great.
-
-Now that CVE-2012-0295 has been rejected, I suppose we cannot re-use it
-for this, but I think we need another CVE for the "real" CreateID()
-sequential RADIUS packet ID issue.
-
-Sorry about this.  I hadn't realized there was more than one CreateID()
-function in there and the original report was short on details.
+https://bugzilla.redhat.com/show_bug.cgi?id=1039801
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Vincent Danen / Red Hat Security Response Team
+
