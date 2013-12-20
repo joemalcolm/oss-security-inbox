@@ -1,45 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/1
-Message-ID: <550806746.14013224.1370350265382.JavaMail.root@redhat.com>
-Date: Tue, 4 Jun 2013 08:51:05 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request -- Gallery < 3.0.8 - Improper stripping of URL fragments in uploadify and flowplayer SWF files might lead to replay attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/20/4
+Message-Id: <201312201538.rBKFcBQI021587@linus.mitre.org>
+Date: Fri, 20 Dec 2013 10:38:11 -0500 (EST)
+From: cve-assign@...re.org
+To: jmm@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Asterisk AST-2013-007
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  Gallery 3 upstream has released v3.0.8 version:
-  [1] http://sourceforge.net/mailarchive/message.php?msg_id=30925931
-  [2] http://galleryproject.org/gallery_3_0_8
+> But an ID is missing for
+> http://downloads.asterisk.org/pub/security/AST-2013-007.html
 
-correcting one security flaw (or two if you would consider uploadify
-and flowplayer SWF files as two separate cases):
+It is missing because that disclosure does not qualify for a CVE ID.
+The rationale sent to upstream was:
 
-A security flaw was found in the way uploadify and flowplayer SWF files
-handling functionality of Gallery version 3, an open source project with
-the goal to develop and support leading photo sharing web application
-solutions, processed certain URL fragments passed to these files (certain
-URL fragments were not stripped properly when these files were called
-via direct URL request(s)). A remote attacker could use this flaw to
-conduct replay attacks.
+'We don't think we'll be able to assign a CVE number for the
+downloads.asterisk.org/pub/security/AST-2013-007.html announcement. As
+far as we can tell, the announcement is about introducing an optional
+new security feature. An example of a type of issue that could have a
+CVE assignment is: ... a third party ships a product based on
+Asterisk ... this product implements an external control protocol that
+is capable of calling the SHELL and FILE functions with untrusted user
+input ... the third party publishes a security announcement stating
+that the new release of their product ships with a revised
+asterisk.conf containing a "no" value for the "live_dangerously"
+option, in order to fix this vulnerability ... We would generally
+assign one CVE number for each such security announcement, if any are
+found.'
 
-Relevant upstream tickets (and patches):
-* uploadify case:
-  [3] http://sourceforge.net/apps/trac/gallery/ticket/2068
-  [4] https://github.com/gallery/gallery3/commit/80bb0f2222dd99ed2ce59e804b833bab63cc376a
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-* flowplayer case:
-  [5] http://sourceforge.net/apps/trac/gallery/ticket/2070
-  [6] https://github.com/gallery/gallery3/commit/3e5bba2cd4febe8331c0158c11ea418f21c72efa
-  [7] https://github.com/gallery/gallery3/commit/12e51694fdc39c752cc439424cf309866f9f914a
-
-References:
-[8] https://bugzilla.redhat.com/show_bug.cgi?id=970596
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQEcBAEBAgAGBQJStGRFAAoJEKllVAevmvmsT7sH/jG+t0zvQPHnDdQNWzta/dOX
+v+qoi1ej0V8NYNflNY5A7SPNGtCJrvsCewyYwprZ04tEiFhPV5SwgF6YbMOIGPFl
+6dJA6oyu4Hyl7+28Snacesi1xh5F7oBaRA+uBdTfVeKTXC8OacfsfCQSXdjWWFbV
+Hi/JY4cjRJIZEQLEOGxxIka8E3nnpKhz0+CkQKqGeVAZLEN2wsiZpaYUFKtg6DIx
+VbDF+GoX8MNK4ueKcuDDw3CRTGbnC5mpc1zJXrvaKLQWh607VrWzxBMoIGycpGFR
+EhIjmKL0nD0IoplbSZrU0KDSMZSzO9ZOA10HgUncI1L5+jFRCHkQlTjtxT7yHgk=
+=zlC7
+-----END PGP SIGNATURE-----
