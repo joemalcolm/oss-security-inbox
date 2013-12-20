@@ -1,67 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/5
-Message-ID: <20131230113803.GD23667@kludge.henri.nerv.fi>
-Date: Mon, 30 Dec 2013 13:38:03 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/20/2
+Message-ID: <20131220143131.GA4102@inutil.org>
+Date: Fri, 20 Dec 2013 15:31:31 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: plugins@...dpress.org
-Subject: CVE-request: Dewplayer issues
+Subject: CVE request: Asterisk AST-2013-007
 Content-Type: text/plain; charset=utf-8
 
-While verifying (lunch break) dewplayer issues announced here
-http://seclists.org/fulldisclosure/2013/Dec/209 I noticed that there is same
-component also used with other plugins. Please notify me in case this list does
-not care about WordPress plugin security overall as it can make our list less
-readable. Only listing active (non-disabled) plugins.
+There are two new Asterisk advisories:
 
-Q: Does content spoofing issues normally get CVE as the risk is probably
-minimal?
+http://downloads.asterisk.org/pub/security/AST-2013-006.html already lists CVE-2013-7100
 
-Assigning one CVE for vulnerability in different software components e.g.
-libraries used in WordPress plugins makes it very difficult to coordinate
-updates with end-users. Examples:
-    http://osvdb.org/83413
-    http://osvdb.org/90374
+But an ID is missing for http://downloads.asterisk.org/pub/security/AST-2013-007.html
 
-I hope to get new CVEs for these issues below.
-
-#1
-Plugin: flash-player-widget
-Version tested: 1.3
-Type: CAPEC-148: Content Spoofing
-PoC: http://example.com/wp-content/plugins/flash-player-widget/dewplayer.swf?mp3=http://example.mp3
-SHA1: 97a4b45212be83bf8dc5dd7a289a3decac7889ab
-
-Notes:
-- No XSS vector by using ?xml=xss.xml
-- No full path disclosure
-
-#2
-Plugin: advanced-dewplayer
-Version tested: 1.2
-Type: CAPEC-148: Content Spoofing
-PoC: http://example.com/wp-content/plugins/advanced-dewplayer/dewplayer.swf?mp3=http://example.mp3
-SHA1: 2947cc06ab1bd6e8af2229511e6797f9709ca615 (same as
-dewplayer-flash-mp3-player in the announcement)
-
-Notes:
-- No XSS vector by using ?xml=xss.xml
-- No full path disclosure
-
-Also at the process I noticed that there is additional security vulnerability.
-Details below.
-
-#3
-Plugin: advanced-dewplayer
-Version tested: 1.2
-Type: Information Disclosure / CAPEC-118: Data Leakage Attacks
-PoC: http://example.com/wp-content/plugins/advanced-dewplayer/admin-panel/download-file.php?dew_file=../../../../wp-config.php
-Impact: File wp-config.php contains database passwords, authentication
-keys/salts etc. Does not need authentication.
-
-General note: No time to make proper analysis so there is probably more issues :)
-
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Cheers,
+        Moritz
