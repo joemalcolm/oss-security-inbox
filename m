@@ -1,37 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/30/1
-Message-ID: <540932871.18362792.1359546030409.JavaMail.root@redhat.com>
-Date: Wed, 30 Jan 2013 06:40:30 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Jeff Law <law@...hat.com>, Paolo Bonzini <pbonzini@...hat.com>, Florian Weimer <fweimer@...hat.com>
-Subject: CVE Request -- glibc: DoS due to a buffer overrun in regexp matcher by processing multibyte characters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/20/1
+Message-Id: <201312200306.rBK365rt015176@linus.mitre.org>
+Date: Thu, 19 Dec 2013 22:06:05 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: possible CVE request for rpath issues fixed via slackware updates
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  a security flaw was found in the regular expression matching
-routine of glibc, the GNU libc libraries, processed multibyte
-characters input. If an application utilized the glibc's regular
-expression matching mechanism, an attacker could provide
-a specially-crafted input that, when processed would lead
-to that executable crash.
+> Some recent slackware updates fixed some rpath issues:
+> 
+> Both issues possibly due to Slackware using /tmp/ for building (not
+> saying they do, just guessing), whereas on Fedora etc, /builddir/ is used.
 
-Upstream bug report:
-[1] http://sourceware.org/bugzilla/show_bug.cgi?id=15078
+> llvm: http://www.linuxsecurity.com/content/view/160596?rdf
 
-Relevant patch:
-[2] http://sourceware.org/ml/libc-alpha/2013-01/msg00967.html
+Use CVE-2013-7171.
 
-More background:
-* (from Paolo): Jan 30 11:34:19 <bonzini> iankko: it is a memset(foo, 0, ...) that
- overruns the buffer, so it's not controllable by the attacker
 
-* but the denial of service scenario / attack vector is valid (consider network
-facing application using glibc's regexp matching on untrusted input)
+> libiodbc: http://seclists.org/bugtraq/2013/Dec/93
 
-Could you allocate a CVE id for this?
+Use CVE-2013-7172.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> I do not have any further details, other than the llvm one may be from 2001:
+> 
+> http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/sys-devel/llvm/files/llvm-3.3-insecure-rpath.patch?view=diff&r1=text&tr1=1.1&r2=text&tr2=1.1&diff_format=f
+
+A "Mon Sep 17 00:00:00 2001" line actually doesn't mean that the patch
+occurred in September 2001. That date is hardcoded into the git source
+code; see the https://github.com/git/git/blob/master/log-tree.c file.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSs7LEAAoJEKllVAevmvmsWsIH/jSoDTMWpCNGTG+DSn3pmJV4
+rJtN6LzJ11LYAZv7R/y4El8/8xH6EphaGUKJGWx/mt/cBa/MmKIout7S6dAZuXfP
+NWZh0gCqYnBdrQKP1gjQlGBTaxzmI6IEmtBkXeBx9oqr4KOTrPrg9dcQR2R46HuT
+K7G9Jf2EAPBLIgB9wNV5TEJ7N0j24Jr0oVcJELJMumTOs/urIrkQzOKRfxwiLi83
+6q/8X3I3mMe+kNcOKkaIcgTOVqI56NCFfLn75aiu3Wypjvd0/5NHaneGHAcSQGOP
+1Yet4EvneBcJYJ3SiCQv+iOUv4xzClAXpm34oTp/HM+g13+JcnrEwxn5OdasV2k=
+=jWdQ
+-----END PGP SIGNATURE-----
