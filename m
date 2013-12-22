@@ -1,64 +1,158 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/7
-Message-ID: <515C45A7.5010304@redhat.com>
-Date: Wed, 03 Apr 2013 09:07:19 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- ModSecurity (X < 2.7.3): Vulnerable to XXE attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/22/1
+Message-Id: <a05b64b1-22d2-4de5-a043-7d7501c1b5a3@googlegroups.com>
+Date: Sun, 22 Dec 2013 01:29:58 -0800 (PST)
+From: nick@...edev.com
+To: ruby-security-ann@...glegroups.com
+Cc: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com,  tenderlove@...y-lang.org
+Subject: Re: [CVE-2013-4491] Reflective XSS Vulnerability in Ruby on Rails
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 04/03/2013 06:23 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, Breno, vendors,
-> 
-> ModSecurity upstream has released v2.7.3 version: [1]
-> https://github.com/SpiderLabs/ModSecurity/blob/master/CHANGES
-> 
-> correcting one security flaw (from [2]): "It was reported that the
-> XML files parser of ModSecurity, a security module for the Apache
-> HTTP Server, was vulnerable to XML External Entity attacks. A
-> remote attacker could provide a specially-crafted XML file that,
-> when processed might lead to local files disclosure or,
-> potentially, excessive resources (memory, CPU) consumption."
-> 
-> References: [2] https://bugzilla.redhat.com/show_bug.cgi?id=947842 
-> [3] https://bugs.gentoo.org/show_bug.cgi?id=464188 [4]
-> https://secunia.com/advisories/52847/
-> 
-> Relevant upstream patch (seems to be the following): [5]
-> https://github.com/SpiderLabs/ModSecurity/commit/d4d80b38aa85eccb26e3c61b04d16e8ca5de76fe
->
->  Could you allocate a CVE id [*] for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
-> [*] According to:
-> https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ModSecurity there
-> doesn't seem to have been a CVE id allocated for this issue yet.
+I am trying to upgrade but the suggested error handler doesn't work. Even if I shorten the `call` method to:
 
-Please use CVE-2013-1915 for this issue.
+```
+def call(exception, locale, key, options) 
+  key
+end 
+``` 
 
+Missing translations are still wrapped in span.missing_translation tag. I have also reported this on github here: https://github.com/rails/rails/issues/13429
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Maybe it worth adding a "default_fallback_locale" setting so it doesn't raise errors for the missing keys in this locale? 
 
-iQIcBAEBAgAGBQJRXEWnAAoJEBYNRVNeJnmTUZIQAIkhQahuYjc5Ovnbv8ogLOnQ
-MODEgw44qkS+dTisAGjlP7ARbx6qnOKOqIWxc8c1CLKDy8oE8B13wTbopD05XwSq
-uoe0stzq8QQeOeWMa6ix+P50jG5rFOE5MtxH3DmpyGSSHShLe8VogvwgJexb6qX+
-WVP91dFh/+9I5lIY71R2HKKF55sSritF9b+EzY4r3nZnFmnMzMk/ZrHjqIMNJ9wi
-8kmVlXoeEnhs5fhDSH7XDTRgghXKSQClaZApUKLUcCLlDADUGSuY2jQyBZxCEXSd
-SongTe2wMSx9CGVSaQkDq10xcr4iy72DiEjEgUfoxjyKoVWakKSeRtHddXSSXARz
-hh4lM6XU+b2BYnqpUCwNp+PIIwhEcTs839LSPnAbzjCfNBPGqyyAQFNLVOaLpDnG
-e6868FLco4T1LPNXLpbZxmcY40hdXMj3BLyaLYh8Ep1A49tixMiUeBXYuj6brnwe
-c9Agt+zzm2fTWJLaY3IG5lOiL+2tZgFN1u43pb1yjtPFUIl/3QhZ5wVyYYvARDBF
-yHSOQgAFaygHeqT3JhArqbCVO8fLGdVuu82ANU7ze4zGrJsB9NYA6F+kl8Gpr01G
-hDFj1tgcMxUiykfJEbC9HRkJIs8sBye63EJfnWN67b7sUVJ9o6y3Sm8tlpsXKLYm
-P2Wv+gkDRWugYlaw06Sr
-=F1yx
------END PGP SIGNATURE-----
+On Wednesday, December 4, 2013 2:08:00 AM UTC+7, Aaron Patterson wrote:
+> Reflective XSS Vulnerability in Ruby on Rails
+> 
+> 
+> 
+> There is a vulnerability in the internationalization component of Ruby on Rails. Under certain common configurations an attacker can provide specially crafted input which will execute a reflective XSS attack.  This vulnerability has been assigned the CVE identifier CVE-2013-4491.
+> 
+> 
+> 
+> Versions Affected:  3.0.6 and all later versions.
+> 
+> Not affected:       3.0.5 and earlier 3.0.x versions.
+> 
+> Fixed Versions:     4.0.2, 3.2.16.
+> 
+> 
+> 
+> The root cause of this issue is a vulnerability in the i18n gem which has been assigned the identifier CVE-2013-4492. For this reason applications are also not affected if they have upgraded to the following i18n versions: 
+> 
+> * i18n-0.6.6 for Rails 4.0.x and 3.2.x applications
+> 
+> * i18n-0.5.1 for Rails 3.1.x and 3.0.x applications
+> 
+> 
+> 
+> Impact 
+> 
+> ------ 
+> 
+> When the i18n gem is unable to provide a translation for a given string, it creates a fallback HTML string.  Under certain common configurations this string can contain user input which would allow an attacker to execute a reflective XSS attack.
+> 
+> 
+> 
+> All users running an affected release should either upgrade or use one of the workarounds immediately. 
+> 
+> 
+> 
+> Releases 
+> 
+> -------- 
+> 
+> The 4.0.2 and 3.2.16 releases are available at the normal locations. 
+> 
+> 
+> 
+> Workarounds 
+> 
+> ----------- 
+> 
+> To work around this issue you must replace the standard i18n exception handler with a fixed one.  Place the following code into a file in the config/initializers directory of your project and restart the server.
+> 
+> 
+> 
+>   require 'i18n'
+> 
+> 
+> 
+>   # Override exception handler to more carefully html-escape missing-key results.
+> 
+>   class HtmlSafeI18nExceptionHandler
+> 
+>     Missing = I18n.const_defined?(:MissingTranslation) ? I18n::MissingTranslation : I18n::MissingTranslationData
+> 
+> 
+> 
+>     def initialize(original_exception_handler)
+> 
+>       @original_exception_handler = original_exception_handler
+> 
+>     end
+> 
+> 
+> 
+>     def call(exception, locale, key, options)
+> 
+>       if exception.is_a?(Missing) && options[:rescue_format] == :html
+> 
+>         keys = exception.keys.map { |k| Rack::Utils.escape_html k }
+> 
+>         key = keys.last.to_s.gsub('_', ' ').gsub(/\b('?[a-z])/) { $1.capitalize }
+> 
+>         %(<span class="translation_missing" title="translation missing: #{keys.join('.')}">#{key}</span>)
+> 
+>       else
+> 
+>         @original_exception_handler.call(exception, locale, key, options)
+> 
+>       end
+> 
+>     end
+> 
+>   end
+> 
+> 
+> 
+>   I18n.exception_handler = HtmlSafeI18nExceptionHandler.new(I18n.exception_handler)
+> 
+> 
+> 
+> This initializer has also been attached to this message as html_safe_i18n_exception_handler.rb
+> 
+> 
+> 
+> Patches 
+> 
+> ------- 
+> 
+> To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
+> 
+> 
+> 
+> * 4-0-i18n_xss.patch - Patch for 4.0 series 
+> 
+> * 3-2-i18n_xss.patch - Patch for 3.2 series 
+> 
+> 
+> 
+> Please note that only the 4.0.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+> 
+> 
+> 
+> Credits 
+> 
+> ------- 
+> 
+> Thanks to Peter McLarnan of Matasano Security for reporting the issue to us, and to Sven Fuchs and Christopher Dell for working with us on the fix.
+> 
+> 
+> 
+> -- 
+> 
+> Aaron Patterson
+> 
+> http://tenderlovemaking.com/
