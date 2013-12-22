@@ -1,60 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/15
-Message-ID: <51113194.8050201@openstack.org>
-Date: Tue, 05 Feb 2013 17:21:40 +0100
-From: Thierry Carrez <thierry@...nstack.org>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA 2013-003] Keystone denial of service through invalid token requests (CVE-2013-0247)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/22/3
+Message-ID: <20131222104247.GA11108@openwall.com>
+Date: Sun, 22 Dec 2013 14:42:47 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE REJECTS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Kurt, all -
 
-OpenStack Security Advisory: 2013-003
-CVE: CVE-2013-0247
-Date: February 5, 2013
-Title: Keystone denial of service through invalid token requests
-Reporter: Dan Prince (Red Hat)
-Products: Keystone
-Affects: All versions
+On Wed, Dec 18, 2013 at 11:29:23PM -0700, Kurt Seifried wrote:
+> CVE-2013-4403 - turns out CVE-2013-4404 covered the issue, no need for
+> 4403.
+> 
+> CVE-2013-4418 - turns out to be security hardening, not a security
+> flaw, just like CVE-2013-4417
 
-Description:
-Dan Prince of Red Hat reported a vulnerability in token creation error
-handling in Keystone. By requesting lots of invalid tokens, an
-unauthenticated user may fill up logs on Keystone API servers disks,
-potentially resulting in a denial of service attack against Keystone.
+While I greatly appreciate your work on CVE assignments, I'd appreciate
+it if you and others include at least project names and preferably also
+vulnerability types and/or brief descriptions along with CVE IDs in
+postings such as the above.  That would make them a lot more useful to
+those of us who are not focused on CVE as much, but may nevertheless be
+interested in findings about the actual security issues.  We're unlikely
+to go and look up each CVE ID mentioned without detail just in case it's
+relevant to our projects.
 
-Grizzly (development branch) fix:
-https://github.com/openstack/keystone/commit/8ec247bf61be0e487332d5d891246d2b7b606989
+Thanks,
 
-Folsom fix:
-https://github.com/openstack/keystone/commit/bb2226f944aaa38beb7fc08ce0a78796e51e2680
-
-Essex fix:
-https://review.openstack.org/#/c/21216/
-
-References:
-https://bugs.launchpad.net/keystone/+bug/1098307
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-0247
-
-- -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJRETGUAAoJEFB6+JAlsQQjbC0QAIzjY1gNe/Lr2X+xDOvz+q2v
-7O6Tn2ZV3X1/fgdVbicl4CVnNzkb3mbG1/pIEl7FbpSFfY6a3a8leJZD7u9bKB6z
-M4xNGXITGJoT7HBo8ABvDH4X6p5oA/LDkuCZVotY4SHa5xIYRcQk884DbnIYoGe7
-zXEek352gHgX7m0DmABm8Pz8E+IpyFIp8rdPEv4w9EeVDJmjhZvcgsMhKZmNahph
-DyBMDvdGY7nXeurzI43tMdWHkqYCljq1qagLqzNxjXJj796FNixUdwnBfmvkRuDI
-XvNOGQEnwWMdwRhHgQm9C6o9Y8OYnA2XXLxjKhYuNOYT09c2ZPqhITuT1Aka8eg4
-Xnqt6OnGLhA8qq0zYfRPGAZFXghQ20NqSDU4CaZntYS9bFUZjQegnKA9qmo2bdJp
-TbtE/UoZgDAxAvm5n0myHuT2nw75RCM0FWvbKA6VpgK2qikx77rK6/Y5M68F1288
-hj7qxMUrbsj0aNBPoWkgpUdIzH3oLsvVq4tRxhSUGj06UIOtXo9QVpxRjmOU46eM
-HKKL0n2Gfmi+kXgJfUdlGeQjlYUnNIx4pljn0RHRwyc5nLGdLUTy6ufnRclYRKSY
-roS2qlrR+gDkKeHP3JS1zcdFblg/VKrAK5IN+JIeKRbZ+l/g2ghFemoVYjdduR3E
-IRB0CC4khRi7njgBdDl1
-=CzsK
------END PGP SIGNATURE-----
+Alexander
