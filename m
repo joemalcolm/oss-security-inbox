@@ -1,66 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/15/7
-Message-ID: <525D8D46.3030903@redhat.com>
-Date: Tue, 15 Oct 2013 12:45:26 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/22/5
+Message-ID: <20131222220322.GB25293@scapa.corsac.net>
+Date: Sun, 22 Dec 2013 23:03:22 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: sebi@...ecware.net, j.wielicki@...ecware.net, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: CVE request: pyxtrlock
+Subject: Re: Re: [SECURITY] [DSA 2826-1] denyhosts security update
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA512
 
-On 10/15/2013 12:19 PM, Leon Weber wrote:
-> On 15.10.2013 12:04:43, Kurt Seifried wrote:
->> On 10/15/2013 07:14 AM, Leon Weber wrote:
->>> Do you think this isn't CVE worthy, or was the request just
->>> lost between other work? :-)
->> 
->> Sorry, meant to reply, forgot. This was the one where I was
->> wondering how many people us it. Debian doesn't ship it, nor does
->> Red Hat, Fedora. When I searched it in Google it tries to correct
->> me to "xtrlock", and for the term I get 644 results, so I'm
->> thinking this falls into the "not enough people use it to make a
->> CVE worthwhile" category, is that correct, or is there a large
->> user pool/other factors I'm unaware of?
+On Sun, Dec 22, 2013 at 07:51:29PM +0100, Helmut Grohne wrote:
+> The proposed solution is to tighten up the regular expressions for
+> matching log file entries. Specifically including the $ pattern to match
+> the end of log lines. For your convenience I attach the final patch.
 > 
-> No other factors, I think. We have received feedback and bug
-> reports once in a while from a couple of people, so my best guess
-> from that is a userbase of 10-100 people; but I can't really tell.
+> The Debian security advisory is the initial public disclosure.
 > 
-> Thanks for the reply, though. I simply wasn't sure if project size 
-> matters for CVE worthiness :-)
-> 
-> -- Leon.
-> 
+> I am not aware of any upstream response to this issue and the last
+> denyhosts release is from 2008.
 
-Honestly I don't know what the rule is, 10? 100? 1000? 10000? 65536?
+On top of that, we really advise anyone still using denyhosts to switch
+to a more maintained solution. fail2ban apparently does the same job. I
+can't judge the code quality, but at least someone is taking care of it.
 
-Also I assume it would depend on impact, e.g. a remote code execution
-flaw  in a low use product, but one that is critical to the
-internet/specific industry would maybe be seen as CVE worthy since it
-helps get people on fixing these things.
-
-Mitre: any hints?
-
+Regards,
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Yves-Alexis Perez
+Debian security team
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSXY1FAAoJEBYNRVNeJnmT2ocQAJyJ1hi8s/TBv104D83TYScH
-rx0lPWu2NaUONIZxddwkxo7omykjIJsK7+JHBjns2qb9V1Y6WXSqU+Qux0AJQR8P
-rPnohnqDuVFcGa1ASbUVjFqdQaFGuI32otsoZSkyFvawaNNQ5gF/tbcWg820A4VP
-BMNkuEJcq8ZBoM0Aa3rQorIKas5eM5HMk4CXjJHt1OHs6yOS05jB5esQc2O2298L
-ofkzuNYazeUGS+OAFHRm4fTJdfQFF3spUfc/TI50Tm/TEB+xgG/WxX6V8uBU+uiL
-9fe0C27EvXec3ItZW2ELc/FAx+pGOLSP29wyvrObUdbdThSmUBgzNzH4JSER8fyA
-HKSqLlkJrj2snyZX2vuRpz7VHd0dlNanjRQra5ksGppq21sqZrhSszKpAcopDd0+
-DqpbAC+QUjMd4UIkdtVnsHgsG6vxR/a5KPTvGpRaegGvsycu2T6ZFe/M4vXlqyK4
-nhpAICFjCRlRJOAOox439KIegBlqgVdTkk3qbVHL4m/WAcQmGdKfvnqHPkLWD+L2
-fwW8B3UObTY3Wkg+wDGhfp74eLwCJW737eoiiswaaHBfOygPTsAVF+m7wcziHYaO
-pJ8cK50C4fH/Lnx0dl/rBqumQTnGBa6ji4OOgetWBdUI3mWEPKFW2frz7YMpKNtt
-/j2/hKTJRGkwzNmtLyEc
-=MRYP
+iQEcBAEBCgAGBQJSt2GnAAoJEG3bU/KmdcClyB4H/2TIISrDlhgv5nQUcp01Y96H
+Y0XIJBgA/2C03AKnk7TtBHc0KB79DuaTVP9YljtqDmYWZ8t1S0D+ZBmZvqZA0yRy
+OvBDqRu180lRUHfZNVtzcmigqaNABCbjpMXSRhHoJ9wyuMO/vYvzV89fwTLMnUjA
+xR6sDLT9Mr7VQi2HqCdLzxB9TgVjpKEdyGcYZJRpxosEJtbT3cQMPf936ZLbZTKr
+WJcLdnCv9Bjt48EtUtAm/2OYbiLe7uWRruD5d0hffA6wTqlPPR+6WJFNDKl4GzOy
+4LTBEhUuNTKjvWGti4olkGwmiYiyknLnLOpC4+sT3rfNe8XuR3/6r6LdvepNUZ8=
+=gtu+
 -----END PGP SIGNATURE-----
