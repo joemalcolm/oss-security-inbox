@@ -1,68 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/5
-Message-ID: <52452210.9020701@redhat.com>
-Date: Fri, 27 Sep 2013 00:13:36 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Rafael Luque <rafael.luque.leiva@...il.com>
-Subject: Re: CVE request: Javamelody blind XSS through X-Forwarded-For header
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/22/2
+Message-ID: <20131222103407.GA11061@openwall.com>
+Date: Sun, 22 Dec 2013 14:34:07 +0400
+From: Solar Designer <solar@...nwall.com>
+To: nick@...edev.com
+Cc: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, tenderlove@...y-lang.org
+Subject: Re: [CVE-2013-4491] Reflective XSS Vulnerability in Ruby on Rails
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi all,
 
-On 09/26/2013 12:01 PM, Rafael Luque wrote:
-> Javamelody [1] includes a blind XSS vulnerability. An attacker
-> could provide an specially-crafted "X-Forwarded-For" HTTP header
-> while visiting a Java web application monitored with Javamelody
-> that would lead to arbitrary HTML or Javascript execution in the
-> context of the administrator user monitoring the panel of active
-> sessions in the application.
-> 
-> The versions affected are the last one 1.46 and all the previous
-> that include the session monitoring panel feature.
-> 
-> The issue has been reported to the project [2] but whithout
-> response by now.
-> 
-> The proof of concept may use the own Javamelody online demo:
-> 
-> 1. Access the demo site [3] using a fake X-Forwarded-For header
-> like the following: <script>alert('xss')</script> 2. Then visit the
-> Javamelody sessions monitoring page at [4] and you should see the
-> Javascript running.
-> 
-> Can you allocate a CVE identifier for this?
-> 
-> Thank you && Regards,
-> 
-> Rafael Luque
-> 
-> [1] https://code.google.com/p/javamelody/ [2]
-> https://code.google.com/p/javamelody/issues/detail?id=346 [3]
-> http://demo.javamelody.cloudbees.net/ [4]
-> http://demo.javamelody.cloudbees.net/monitoring?part=sessions
-> 
+On Sun, Dec 22, 2013 at 01:29:58AM -0800, nick@...edev.com wrote:
+> I am trying to upgrade but the suggested error handler doesn't work.
+...
 
-Please use CVE-2013-4378 for this issue.
+Are these followup postings still on topic for oss-security, or should
+this possibly be discussed elsewhere and, if necessary and when ready,
+summarized for/on oss-security as well (e.g., in the form of a revised
+security advisory)?  I am not sure, and as a co-moderator I am wondering
+if/when we should start rejecting messages in this thread that are CC'ed
+to oss-security by non-subscribers.  I'd appreciate advice.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+This is actually part of a more generic issue: whenever an upstream
+project posts a security advisory CC'ed to that project's list(s) and to
+oss-security, we often end up getting followup postings by users of the
+project's software who are not into security and thus comment on
+non-security aspects.  This is sometimes fine and maybe even desirable,
+but sometimes it gets too far off topic for oss-security, and it's often
+difficult for moderators to decide when to start rejecting.  A better
+approach may be for upstream projects to be sending such announcements
+to their lists and to oss-security separately, not by CC'ing.
+(I actually asked OpenStack to start doing that a while ago, and I guess
+they're doing it that way now.)
 
-iQIcBAEBAgAGBQJSRSIPAAoJEBYNRVNeJnmTESUP/03uh70VX0qS3yLBakwMFrpB
-zUKnQElyqJzMh7N7Q0wBUk+eJPB5scJYqMeoi7HnCgyQPeuk0NGk3cmQT/DP/uXo
-fs1ajYEX4KJS4ydKAdytvj1qI9aJdJF6cLoIf0ri7ZHtcbaFnFclYeaTXf9269L9
-R1qJaM5+d3if8a3FGOXQbhDTFiY7ohzDzl/OsRybHTll8Z4UxaC+IlMgbMkDscHU
-VVqQ6y0w7vqTyeG4vNhuE+XEeUmZxKdxNUQTsMqOhYGi4AS+unm553aQ+DAMeD9y
-MODbkdAolh2CJkZsWdI8tfLQmWkRZ0FP8L5TQXkcu+EeE8aFdtlxoWPVU4PTXAak
-LXCuMNQEG5ig/MNdYkNwTudBgRCUYKi50ek3XSf4tkovyNP+L9Lw3t/+5/EWpWg3
-Y58hpzOKpL8ieRlrIFzW8rxOV0xFitn+aontZKuwxFv6wa+Av/Ku9eUvEZlkYmx1
-LKzERCCz2V9dtjn0W/zpWf8Mg3A+KqST+7M22M0m9G4OwmIFwyWifs9TvigDwg/r
-X4QbiJ9G8eWCk2Lpw1DNFVPoamIPoynYfRcOfQeC/P81QqeAyJ9yeejeIosR5TDc
-9yP2VPJJZ7ufGMqwy/u8k/3VkKNSMQykX03u/t7GpyriZnw4DNvjd/PTynNvZMsL
-IfKZCYKOkAqx7SqL+tD6
-=Id6a
------END PGP SIGNATURE-----
+Alexander
