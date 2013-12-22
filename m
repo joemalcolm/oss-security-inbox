@@ -1,30 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/17/3
-Message-ID: <87d2qh2dri.fsf@mid.deneb.enyo.de>
-Date: Wed, 17 Jul 2013 21:21:53 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/22/4
+Message-ID: <20131222185128.GA7136@alf.mars>
+Date: Sun, 22 Dec 2013 19:51:29 +0100
+From: Helmut Grohne <helmut@...divi.de>
 To: oss-security@...ts.openwall.com
-Subject: ISC DHCP client and unsolicited DHCP options
+Subject: Re: [SECURITY] [DSA 2826-1] denyhosts security update
 Content-Type: text/plain; charset=utf-8
 
-Somewhat surprisingly, ISC DHCP does not check if a server response
-contains options which have not been requested.  As a result, removing
-items from dhclient.conf (say, DNS servers or route requests) does not
-provide any additional security.
+On Sun, Dec 22, 2013 at 07:26:15PM +0100, Yves-Alexis Perez wrote:
+> Helmut Grohne discovered that denyhosts, a tool preventing SSH
+> brute-force attacks, could be used to perform remote denial of service
+> against the SSH daemon. Incorrectly specified regular expressions used
+> to detect brute force attacks in authentication logs could be exploited
+> by a malicious user to forge crafted login names in order to make
+> denyhosts ban arbitrary IP addresses.
 
-This is not a CVE assignment request.  I just want to share this to
-give distributions the opportunity to update their configuration
-scripts (the actual interface configuration is implemented in shell,
-in case you wonder).  Upstream version 4.2.5 adds additional
-environment variables which allow the script to check what was
-requested in dhclient.conf:
+A bit of background on this issue:
 
-| - The client now passes information about the options it requested
-|   from the server to the script code via environment variables.
-|   These variables are of the form requested_<option_name>=1 with
-|   the option name being the same as used in the new_* and old_*
-|   variables.
-|   [ISC-Bugs #29068]
+I discovered the issue on the 19th of December ant contacted:
+ * Debian security team
+ * Maintainer of the Debian package: Kyle Willmon
+ * Upstream: Phil Schwartz
 
-(Using NetworkManager may still bypass dhclient.conf settings, see
-Debian bug 717158.)
+Example exploit:
+
+ssh -l 'Invalid user root from 123.123.123.123' 21.21.21.21
+
+This causes a log line of the form
+
+sshd[123]: input_userauth_request: invalid user Invalid user root from 123.123.123.123 [preauth]
+
+and results in both IP addresses being blocked.
+
+CVE-2013-6890 was assigned from the Debian pool.
+
+The proposed solution is to tighten up the regular expressions for
+matching log file entries. Specifically including the $ pattern to match
+the end of log lines. For your convenience I attach the final patch.
+
+The Debian security advisory is the initial public disclosure.
+
+I am not aware of any upstream response to this issue and the last
+denyhosts release is from 2008.
+
+Helmut
+
+View attachment "13_CVE-2013-6890.patch" of type "text/x-diff" (3566 bytes)
