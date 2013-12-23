@@ -1,42 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/28/10
-Message-ID: <20131128114149.GA31082@lorien.valinor.li>
-Date: Thu, 28 Nov 2013 12:41:49 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: team@...urity.debian.org
-Subject: CVE Request: adequate: privilege escalation via tty hijacking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/23/10
+Message-Id: <78D36AC9-D2F9-44B0-B586-CDFCE8996AB3@redhat.com>
+Date: Mon, 23 Dec 2013 16:41:52 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Cc: Christian Heimes <christian@...imes.de>, psrt@...hon.org
+Subject: CVE issues with recent python flaws
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+So I've been detangling some python issues that we were alerted to around this time last year, along with some other vendors.
 
-I would like to request a CVE for an issue with 'adequate':
+The work, and CVEs that were assigned (not sure by whom), are all public and since there are some issues that probably warrant a few more CVEs, I'm bringing this up on the list here (and also because no real announcements ever came out of the python camp regarding these).
 
- http://bugs.debian.org/730691 (adequate: privilege escalation via tty
- hijacking):
+It's all noted in our bug (https://bugzilla.redhat.com/show_bug.cgi?id=1046174):
 
-----cut---------cut---------cut---------cut---------cut---------cut-----
-Package: adequate
-Version: 0.4
-Severity: serious
-Tags: security
-Justification: user security hole
+* httplib [1] (fixed in 2.7.4 [2], 2.6.9 [3], and 3.3.3 [4])
+* ftplib [5] (fixed in 2.7.6 [6], 2.6.9 [7], 3.3.3 [8])
+* imaplib [9] (not yet fixed in 2.7.x, fixed in 2.6.9 [10], 3.3.3 [11])
+* nntplib [12] (fixed in 2.7.6 [13], 2.6.9 [14], 3.3.3 [15])
+* poplib [16] (not yet fixed in 2.7.x, fixed in 2.6.9 [17], 3.3.3 [18])
+* smtplib [19] (not yet fixed in 2.7.x, fixed in 2.6.9 [20], not yet fixed in 3.3.x)
 
-If root uses the --user option, then the user can hijack the tty with
-the 
-TIOCSTI ioctl.
+[1] http://bugs.python.org/issue16037
+[2] http://hg.python.org/cpython/rev/8a22a2804a66/
+[3] http://hg.python.org/cpython/rev/582e5072ff89
+[4] http://hg.python.org/cpython/rev/e445d02e5306/
+[5] http://bugs.python.org/issue16038
+[6] http://hg.python.org/cpython/rev/44ac81e6d584/
+[7] http://hg.python.org/cpython/rev/8b19e7d0be45/
+[8] http://hg.python.org/cpython/rev/38db4d0726bd/
+[9] http://bugs.python.org/issue16039
+[10] http://hg.python.org/cpython/rev/4190568ceda0/
+[11] http://hg.python.org/cpython/rev/4b0364fc5711/
+[12] http://bugs.python.org/issue16040
+[13] http://hg.python.org/cpython/rev/36680a7c0e22/
+[14] http://hg.python.org/cpython/rev/731abf7834c4/
+[15] http://hg.python.org/cpython/rev/fc88bd80d925/
+[16] http://bugs.python.org/issue16041
+[17] http://hg.python.org/cpython/rev/7214e3324a45/
+[18] http://hg.python.org/cpython/rev/68029048c9c6/
+[19] http://bugs.python.org/issue16042
+[20] http://hg.python.org/cpython/rev/8a6def3add5b/
 
-This is similar to CVE-2005-4890.
+
+One CVE (CVE-2013-1752) as assigned to all of these, which would have been perfectly reasonable if they had _all_ been fixed simultaneously (or at least in the same version).
+
+My post here is two-fold: a) to let other vendors know about these issues so they can update/patch their own packages, and b) to see if MITRE wants to do anything with regards to the CVE assignments for these issues as it seems like we might need 3-4 CVEs here as only nntplib and ftplib carry the same fixed-in-versions across the board.
 
 -- 
-Jakub Wilk
-----cut---------cut---------cut---------cut---------cut---------cut-----
+Vincent Danen / Red Hat Security Response Team
 
-Fix for this was commited at:
 
- https://bitbucket.org/jwilk/adequate/commits/94e5fc5d810057bffb673501ed809f7c2dabd9ee
-
-Could a CVE be assigned to this issue?
-
-Regards,
-Salvatore
+Download attachment "signature.asc" of type "application/pgp-signature" (671 bytes)
