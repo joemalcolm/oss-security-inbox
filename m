@@ -1,80 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/11
-Message-Id: <E1VUFGP-0002YX-VB@xenbits.xen.org>
-Date: Thu, 10 Oct 2013 12:22:45 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 68 (CVE-2013-4369) - possible null dereference when parsing vif ratelimiting info
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/23/9
+Message-Id: <E1B8D029-0E61-4B34-8CEA-FAEE3EC07C14@redhat.com>
+Date: Mon, 23 Dec 2013 14:01:04 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: cve-assign@...re.org
+Cc: OSS Security List <oss-security@...ts.openwall.com>, carnil@...ian.org
+Subject: Re: CVE request: denial of service in Nagios (process_cgivars())
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-             Xen Security Advisory CVE-2013-4369 / XSA-68
-                               version 2
+On Dec 23, 2013, at 1:19 PM, cve-assign@...re.org wrote:
 
-     possible null dereference when parsing vif ratelimiting info
+> Signed PGP part
+> > http://sourceforge.net/p/nagios/nagioscore/ci/d97e03f32741a7d851826b03ed73ff4c9612a866/
+> 
+> Relative to CVE-2013-7108, Nagios changed two files that Icinga did
+> not change. If the additional changes are vulnerability fixes, we will
+> assign two more CVE IDs. (The vulnerability types would not be the
+> same.) We are currently coordinating with Icinga upstream on this. In
+> any case, CVE-2013-7108 will represent a set of off-by-one error
+> issues that are common to Icinga and Nagios, and were all announced at
+> the same time. CVE-2013-7108 is not specific to only Icinga.
 
-UPDATES IN VERSION 2
-====================
+I was unaware of any Icinga issues, but I guess that makes sense (we don't ship Icinga so have no reason to look at it).
 
-Public release.
+Can you please advise if any additional CVE(s) will be assigned to this commit in Nagios then?  In the meantime I'll associate CVE-2013-7108 with our bug.
 
-ISSUE DESCRIPTION
-=================
+Thanks!
 
-The libxlu library function xlu_vif_parse_rate does not properly
-handle inputs which consist solely of the '@' character, leading to a
-NULL pointer dereference.
+-- 
+Vincent Danen / Red Hat Security Response Team
 
-IMPACT
-======
 
-A toolstack which allows untrusted users to specify an arbitrary
-configuration for the VIF rate can be subjected to a DOS.
-
-The only known user of this library is the xl toolstack which does not
-have a central long running daemon and therefore the impact is limited
-to crashing the process which is creating the domain, which exists
-only to service a single domain.
-
-VULNERABLE SYSTEMS
-==================
-
-The vulnerable code is present from Xen 4.2 onwards.
-
-MITIGATION
-==========
-
-Disallowing untrusted users from specifying arbitrary VIF rate limits
-will avoid this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Coverity Scan and Matthew Daley.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue in all branches
-
-xsa68.patch        xen-unstable, Xen 4.3.x, Xen 4.2.x
-
-$ sha256sum xsa68*.patch
-64716cb49696298e0bbd9556fe9d6f559a4e2785081e28d50607317b6e27ba32  xsa68.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJSVpv6AAoJEIP+FMlX6CvZh5AH/3eMQvmLfgXNbr/vBFKwwJFc
-FXd/5N76S17ZI5jTPLoXc1GiXOI9MhPNazKo6e/RLYkVrxgK4Cq8jowBJBgg8Q4R
-egOlTinu87uT3ik6DP1ZQVQXEC2Wot0lJwjkN5B/72Tx/ldnS7i/Wi7P5QW7kzcJ
-3FWSoCP/degKK/pBbPbt6keUjsUgkIXR3S0Vx/5+NXWeGMfjBFMqV6O1TQ1COkjw
-GrvYzXBPAnhmw0fUSYdh87Ed2MH0nZqBGuP/b4wlXqoYWBZN/1xs8M+txnfGLyRm
-+vvoM5shs+IiC0cVUcOPF+o7xZRiF6ZNdEMZdMV0NPHNeVEKtdXd6zlc/7VWuvM=
-=9/V5
------END PGP SIGNATURE-----
-
-Download attachment "xsa68.patch" of type "application/octet-stream" (1923 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (671 bytes)
