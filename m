@@ -1,30 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/23/4
-Message-ID: <alpine.LFD.2.03.1304231505540.16790@redhat.com>
-Date: Tue, 23 Apr 2013 15:52:32 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: cve-assign@...re.org
-Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/23/7
+Message-Id: <201312232020.rBNKJsn2007176@linus.mitre.org>
+Date: Mon, 23 Dec 2013 15:19:54 -0500 (EST)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, carnil@...ian.org
+Subject: Re: CVE request: denial of service in Nagios (process_cgivars())
 Content-Type: text/plain; charset=utf-8
 
-+-- On Mon, 22 Apr 2013, cve-assign@...re.org wrote --+
-| ef3313e84acbf349caecae942ab3ab731471f1a1 CVE-2013-3223
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-   *sax = (struct sockaddr_ax25 *)msg->msg_name;
+> http://sourceforge.net/p/nagios/nagioscore/ci/d97e03f32741a7d851826b03ed73ff4c9612a866/
 
-Here, - *sax - seems to point to users `msg_name' object, no? Because of 
-the earlier copy_from_user in net/socket.h:
+Relative to CVE-2013-7108, Nagios changed two files that Icinga did
+not change. If the additional changes are vulnerability fixes, we will
+assign two more CVE IDs. (The vulnerability types would not be the
+same.) We are currently coordinating with Icinga upstream on this. In
+any case, CVE-2013-7108 will represent a set of off-by-one error
+issues that are common to Icinga and Nagios, and were all announced at
+the same time. CVE-2013-7108 is not specific to only Icinga.
 
-===
-  get_compat_msghdr(msg_sys, msg_compat)
-   OR
-  copy_from_user(msg_sys, msg, sizeof(struct msghdr)
-===
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Is - memset(sax, 0, sizeof(full_sockaddr_ax25)) - setting users memory area? 
-
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+iQEcBAEBAgAGBQJSuJoTAAoJEKllVAevmvmsyM4H/1x5l2PIC4gqguCMgegrR1X4
+c8/kAkjxV1JoTFPYZhjyw5/fKtlZ/5f2QNmP00mZcWKEf2466jRuRb6mm3LNwdPC
+rnheq4iaIFMi+KGksEMvb1cmO0VC4kEB7gnFMyfFNG6R3CVOLlsbaAiDovJR+ZXJ
+RfDcqTYFqpV3BMsTmbFs8C/72KOtED2ZBoRW/hTBUh8lz3E8kud68cjXhddrRXFB
+MDmmmHiaFwJ/4nR2LwFdap5iHUJ87YaezrFKCl75bVtVYBqPtnLaI9jOwUKkB5sf
+FDeK+6AoKsEhWEYLyqLrHIu6vyIRs3QTbxZ7w9PRUXILnfTz4btG8laUgKBWdNc=
+=HvwP
+-----END PGP SIGNATURE-----
