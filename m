@@ -1,51 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/12/7
-Message-ID: <511AB410.9040504@redhat.com>
-Date: Tue, 12 Feb 2013 14:28:48 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>, Mike Miller <mtmiller@...e.org>
-Subject: Re: CVE request: openconnect buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/23/3
+Message-Id: <201312231429.rBNESrMS014130@linus.mitre.org>
+Date: Mon, 23 Dec 2013 09:28:53 -0500 (EST)
+From: cve-assign@...re.org
+To: ratulg@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: wordpress: information leakage and backdoor vulnerabilities in writing settings
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/11/2013 12:52 PM, Florian Weimer wrote:
-> Kevin Cernekee discovered that a malicious VPN gateway can send a
-> very long hostname/path (for redirects) or cookie list (in
-> general), which OpenConnect will attempt to write on a fixed length
-> buffer.
-> 
-> Upstream commit:
-> 
-> <http://git.infradead.org/users/dwmw2/openconnect.git/commitdiff/26f752c3dbf69227679fc6bebb4ae071aecec491>
->
->  This needs a CVE name from 2012.
+> It was found that the login and password from e-mail are saved in DB
+> in plain text
 
-Please use CVE-2012-6128 for this issue.
+We don't currently understand how any of this information could
+qualify for a CVE assignment. As far as we can tell, the use of
+cleartext credentials is an intentional design choice to support the
+"Post via e-mail" feature described on the
+http://codex.wordpress.org/Settings_Writing_Screen web page.
+Essentially, this feature requires the ability to send USER and PASS
+commands outbound to a POP3 server during unattended operation. The
+USER and PASS arguments must be sent as cleartext. Therefore, the
+product must have the cleartext credentials at connection time.
+Although one could envision an alternative approach in which the
+stored credentials are reversibly encrypted, we don't feel that that's
+been established as a design requirement. Similarly, one might argue
+that the product should not be using this specific outbound POP3
+approach to control posting, but it seems reasonable that there was
+customer demand for this.
 
-It should be noted that this can be executed by a man in the middle
-attacker (which is exactly why you're using a VPN Usually =).
+> Also, this functionality can be used as backdoor. When attacker's
+> e-mail is set in options Writing Settings, from which the posts will
+> be published at web site. With XSS code, with black SEO links, with
+> malware code, etc.
+
+This seems to mean that, after a compromise, an attacker could decide
+to use the "Post via e-mail" feature instead of one of the other
+posting options. This does not seem to cross privilege boundaries, and
+the availability of the "Post via e-mail" feature does not seem to be
+an implementation mistake. We don't happen to know whether "XSS code"
+is any easier to insert when using "Post via e-mail" posting instead
+of another type of posting. However, in WordPress, an admin typically
+has the unfiltered_html capability anyway (see the
+http://codex.wordpress.org/Roles_and_Capabilities web page).
+
+Admittedly, there is some risk in supporting stored "Post via e-mail"
+data that perhaps is entered by only a tiny fraction of legitimate
+customers, and might be missed during an incomplete cleanup from a
+compromise. However, "might be missed during an incomplete cleanup"
+situations are not really within the scope of CVE.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJRGrQQAAoJEBYNRVNeJnmTPGwQAINZYQzKx4N77zOpEqm7iHWI
-kJV82S4bRs44X8aavpZjndxlaPG21W2pxciS52cVMd6He5nL3dEi6ftXayIeSYWy
-deQ15soD0+/oGPOq76u0Mql4D+tCrS+/U75X0jwY9RsdcOso47Bm+zQnVgYuvxBh
-AdnyB3MFxk1VGilt+jdKoys3P1Vj9Wsgq0rJ9UN1+aVu7McVndc8Y19ZjTXMIYHi
-6z9buUz88mVCzTTDcgq3m/4/ikOeOIgRjpBV1/xpdffj/Vixws0K8a9lHO6McJ+5
-WYZtQ2V8NgEeq6D0zZtgqDpasee/sVQYAtDgmFerItVFdTqQcyc7CPtqN4TZUkcH
-SCRabgE8XQ9sw7Umop7lyG2H+fhM6LmYwdWSq4hqeOGrehceYDv6/e0BWd0+pp2d
-daNcV+beaFg5+b/ndbVF+KqFgcAUSAtz7zrP5uagoJdY+T1eYVl0fPb+wibgCfUE
-vxkRTt1/Y2sKGm/L83fSW87suflYWF0qbntcpu8BZBLyI/V2F3rTn8LRK30Ca9dO
-tWXJ9c8OyDRFwtHHdTzETVr6gsKvFTin5qzjgheWmKPLQm+k8uRiGvezWbEGQ9ct
-8sjIFZqcWk3bPUnBTPjQfJGYvquG4OIW0liGfolaA6YPUG8kAc0pmX/c0/LzURIH
-7wgL41jESIpDLC3zRouv
-=5wZF
+iQEcBAEBAgAGBQJSuEguAAoJEKllVAevmvms6akH/i7WAlOURAetaPvdRY+TMVm2
+aqWDXRsL8pNClP5W6zplBy5IU5XgBMXPsJepd2Z3uyg5kTQemmIXBd4X+B1qoy5/
+WZPGn2BROjiIB1dtPvY+xhM2NURzpoprdfRnmGyqLgzt1L4OnbcYPIKxPV3WJyEK
+0ZNT6UwyNikyiuryh4F55wHS1evUOJjLXUBSphQboDrZm4BxcuLOS7yjhs/JPa4O
+laOAy024Fofi24NEFHWBZjokQA4s1Sj4MkyKTOPZ3UaoenY8Vti45uPQMdRCP+V+
+zKYazeLS0wbFwlmvyTUHhpyCu4RYJcoTTleuIyazv4XfgAH91Z9dc9bBGMNkrPE=
+=VTS5
 -----END PGP SIGNATURE-----
