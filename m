@@ -1,120 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/13/8
-Message-ID: <511B649D.2080704@redhat.com>
-Date: Wed, 13 Feb 2013 03:02:05 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/23/1
+Message-ID: <52B7BDDB.9010401@redhat.com>
+Date: Sun, 22 Dec 2013 21:36:43 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Michel Alexandre Salim <michel+fdr@...vestre.me>, Richard Jones <richard@...hanicalcat.net>, Ralf Schlatterbeck <rsc@...tux.com>
-Subject: Re: CVE Request -- roundup: Multiple XSS flaws plus other security related fixes corrected in upstream 1.4.20 version
+Subject: Re: CVE REJECTS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/10/2012 04:42 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-
-Ok some questions/comments inline
-
-> Roundup upstream has released new upstream 1.4.20 version, 
-> correcting multiple cross-site scripting (XSS) flaws (and couple of
-> other security related issues): [1]
-> http://pypi.python.org/pypi/roundup [2]
-> https://bugzilla.redhat.com/show_bug.cgi?id=722672
+On 12/22/2013 03:42 AM, Solar Designer wrote:
+> Kurt, all -
 > 
-> More from [1] (plus relevant tickets inlined too, where possible to
-> find out): 
-> --------------------------------------------------------- [A] *
-> issue2550729: Fix password history display for anydbm backend, 
-> thanks to Ralf Hemmecke for reporting. (Ralf) [3]
-> http://issues.roundup-tracker.org/issue2550729
-
-rsc@...tux.com
-
-[A] Doesn't have security implications if roundup is correnctly
-configured. The bug would create a python backtrace. Unless the "debug"
-option in section [web] is set (which is explicitly discouraged) this
-will only display "an error has occurred" in the web-interface. Even if
-someone sets the debug option in a production release only the hashed
-password could be disclosed. Note that this bug only affects the anydbm
-backend which should not be used for a production version either.
-
-
-> [B] * issue2550684 Fix XSS vulnerability when username contains
-> HTML code, thanks to Thomas Arendsen Hein for reporting and patch.
-> (Ralf) [4] http://issues.roundup-tracker.org/issue2550684
-
-Please use CVE-2012-6130 for this issue
-
-> [C] * issue2550711 Fix XSS vulnerability in @action parameter, 
-> thanks to "om" for reporting. (Ralf) [5]
-> http://issues.roundup-tracker.org/issue2550711
-
-Please use CVE-2012-6131 for this issue
-
-> [D] * Fix wrong execute permissions on some files, thanks to Cheer
-> Xiao for the patch. (Ralf)
-
-rsc@...tux.com
-
-[D] No security implications: Fixed some permissions on files in
-roundup/cgi and locale directories. These are not accessible via the
-web-server. So this doesn't constitute a remote vulnerability. Local
-users don't gain anything executing these files as no privilege
-escalation is involved (they could copy the file which is readable
-anyway and make their local copy executable).
-
-> [E] * Fix another XSS with the "otk" parameter, thanks to Jesse
-> Ruderman for reporting. (Ralf)
-
-Please use CVE-2012-6132 for this issue
-
-> [F] * Mark cookies HttpOnly and -- if https is used -- secure.
-> Fixes issue2550689, but is untested if this really works in
-> browsers. Thanks to Joseph Myers for reporting. (Ralf) [6]
-> http://issues.roundup-tracker.org/issue2550689
-
-This appears to be security hardening, not a vulnerability, is that
-correct?
-
-> [G] * Fix another XSS with the ok- and error message, see
-> issue2550724. We solve this differently from the proposals in the
-> bug-report by not allowing any html-tags in ok/error messages 
-> anymore. Thanks to David Benjamin for the bug-report and to Ezio
-> Melotti for several proposed fixes. (Ralf) [7]
-> http://issues.roundup-tracker.org/issue2550724
-
-Please use CVE-2012-6133 for this issue
-
-> Cc-ed Ralf Schlatterbeck on this post too to clarify, if issues [A]
-> and [D] would also have security implications / IOW if those would
-> be security flaws too. Ralf please clarify. Thank you, Jan.
+> On Wed, Dec 18, 2013 at 11:29:23PM -0700, Kurt Seifried wrote:
+>> CVE-2013-4403 - turns out CVE-2013-4404 covered the issue, no
+>> need for 4403.
+>> 
+>> CVE-2013-4418 - turns out to be security hardening, not a
+>> security flaw, just like CVE-2013-4417
 > 
-> Could you allocate CVE ids for these (once clarified)?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+> While I greatly appreciate your work on CVE assignments, I'd
+> appreciate it if you and others include at least project names and
+> preferably also vulnerability types and/or brief descriptions along
+> with CVE IDs in postings such as the above.  That would make them a
+> lot more useful to
 
+Uhmm but they aren't security issues, they are mistakes (usually
+either duplicate or issues that turn out not to be a security
+vulnerability). As well some of these issues (in this case both I
+think) are still under embargo/not public so I can't always release
+details when they are being publicly rejected.
+
+> those of us who are not focused on CVE as much, but may
+> nevertheless be interested in findings about the actual security
+> issues.  We're unlikely to go and look up each CVE ID mentioned
+> without detail just in case it's relevant to our projects.
+
+This part I don't really understand. If you want to see what security
+related bugs Red Hat products have you can simply search our BZ for
+products and use look for the  keyword "Security". Not clear what
+looking up CVE's that have been rejected due to errors/etc. has to do
+with this?
+
+> Thanks,
+> 
+> Alexander
+> 
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRG2ScAAoJEBYNRVNeJnmTJ8oQAMp2mTStjRiKohBQ05VMfxzp
-YHCB4CxfxXQ8Y1KOm76jGcXV/ti+dpLL8guc8UnwzRbdodBcYvzxzIN/y9zYlOby
-uPlqdal8i/MIswDHk4vMwt4qh5CKmwZhGHzS6E+qckfjeznwBJJAYOIXU6k4sgUQ
-ZZqbeYfv7J2KnDk3eFBq7iWv9gNy2pnsZcgZr/yoxUFWTFR8eVsLDX8fPDEsi/zR
-N14lH//p8Q2ejY+cKRR1gRn35L8UOsfC3+EYAt2vhW31Bcwt3HVbo6fojSAYkMqK
-YrTSnSAKWvyjZ7imjHlf7i3BNYh3jxUVRdnWyLYp/2Zr0w04wrIzjaxaiXn75T5u
-OUj8gNOUPBFvIgfVHP931WPiDQVCNGZ6AM9XkThQhMRoaBqalshb59ukKPZn2j7i
-oC72Dgw0iv+wW1N1KBUA/OPMvKIMlvJ/laRDRVpigzOPuRSOrcI0TislTF/YBCp/
-TrnQ7XAr2HQPmDUQKRXMzUMLiDdHQFq7nTOqtSZ3jxryE9uWQqG5DehnfHQ/qW1j
-b5cLXImV49Y5D2iRgWzsc6MAa9R5w4jryh3BD6WKGE40Zp2YhuZj3b5yXcoNV+9Z
-ZOobITtM+gi4vbKTkFkIj8rK8ebWGCyg645XCthi+D4eSNOpq4eqqKKDl3MPgl3q
-UN3HD3nphRFZ1iEjxzVb
-=dlUe
+iQIcBAEBAgAGBQJSt73aAAoJEBYNRVNeJnmT0zsQAJ5iTVxZi1Q7WlqdfSA8QbFd
+Zgwypvy6eRhA+ElCcqmPc0SuA7ywFyiAuFkLMRe+gOz4T3t4hp2riv3cH/Bg2kAV
+UoNjgnzDfkV1VrAGvvchIBpao4dr6QZRx5ldTLkupeJmmXpx/lpHVerKBX30OgHh
+tPZyXM8Xw+TKZxlXMc3W35PgLsWmIw/Mb3IFEfVD15WS49eA2cWO/Kjdf5zTJ0je
+qDyKyvp5n6QCdBp0Qu4Gr9WFXH4jpqE3xtRxVMEpJBUtO6W1fWYQ9jGQ9tYfwRZi
+MXzz9MaN74VJqY7+KAXYk0pnEKp47nyPcawIp50L5OcrjiVRVP1OZCXMwop+4QmG
+LKALlnexFTk3FJ7RQPI7WxN9WAoPu2S94pkhX+zWKYetX4X2Go/nQd35HlYPYxLH
+3WO0+IkkVNb9RM4K66O7zRqh44XTxiYz2ygPOkcYAtGATjomeFsxYbyWb6YH4Z04
+0mt3GfmoQiHkFwWX+c5vdJpW64q9Ozdc25Od2jXjjXfAkh24XgCAeF/ys6cMCKDA
+Hvcs5chmV98wYbSvMG5dm7vzo4koCrcHh8lXZYZGEodwZsTws+2RrNZxWEdjTjgc
+BGgOVwCq0SZB587uzNp2uktcyQuQuqwb5gLP7rk8QN/Ndv7xkrjMPw1nXFlOXqBx
+Ec7b0lALoSMKevnOWmQT
+=meBi
 -----END PGP SIGNATURE-----
