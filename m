@@ -1,57 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/14
-Message-ID: <52166A73.5050107@debian.org>
-Date: Thu, 22 Aug 2013 20:45:55 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/23/2
+Message-ID: <52B7CE84.1000809@redhat.com>
+Date: Mon, 23 Dec 2013 11:17:48 +0530
+From: Ratul Gupta <ratulg@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [PATCH] implement privmode support in dash
+Subject: CVE Request: wordpress: information leakage and backdoor vulnerabilities in writing settings
 Content-Type: text/plain; charset=utf-8
 
-On 22/08/13 18:59, Tavis Ormandy wrote:
-> For example, here is one I just found in vmware-tools that manages to call
-> popen("lsb_release") with effective uid zero:
-> 
-> $ cc -xc - -olsb_release<<<'main(){system("sh>`tty` 2>&1");}';PATH=.:$PATH vmware-mount
-> # whoami
-> root
+Hello,
 
-Having (da)sh drop privileges is a useful bit of hardening, but it
-doesn't help you if the vulnerable executable does a fork-and-exec
-without using the shell (at least with one of the exec variants that
-respects $PATH, like execvp), or some more friendly wrapper around
-fork-and-exec like posix_spawnp() or GLib's g_spawn family of functions.
+https://bugzilla.redhat.com/show_bug.cgi?id=1045416
 
-After researching this sort of thing a bit a few months ago, I'm of the
-opinion that any set*id executable that doesn't filter its environment
-through a whitelist is Doing It Wrong. If it might find that its caller
-is in fact trusted, or if it's going to drop to their privileges later,
-then saving the untrusted environment and putting it back later is fine
-- e.g. in an ideal world, sudo would save the untrusted environment,
-check its configuration, authenticate the user, and (depending on
-configuration) put none, part or all of the untrusted environment back
-before it execs the target executable.
+It was found that the login and password from e-mail are saved in DB in 
+plain text (unencrypted) in Writing Settings 
+(http://site/wp-admin/options-writing.php), if this functionality is 
+used. So by receiving data from DB via SQL Injection or Information 
+Leakage vulnerability, or by receiving content of this page via XSS, or 
+by accessing admin panel via any vulnerability, it's possible to get 
+login and password from e-mail account.
 
-Unfortunately, many set*id executables don't do that: notably, many
-su(8) implementations call into PAM (and hence into arbitrary
-distribution- or sysadmin-chosen libraries) with a caller-supplied
-environment. I think sudo might do the same, but it wasn't clear to me.
-I asked the PAM mailing list what their security policy is[1] but
-haven't seen any reply so far. I didn't find anything actually
-exploitable at the time, but I didn't audit out-of-tree PAM plugins in
-any particular detail either.
+Also, this functionality can be used as backdoor. When attacker's e-mail 
+is set in options Writing Settings, from which the posts will be 
+published at web site. With XSS code, with black SEO links, with malware 
+code, etc.
 
-If the vulnerable executable uses non-trivial libraries, and those
-libraries don't second-guess what their caller actually intended to do
-(as e.g. libdbus and libgio now do, as a result of CVE-2012-3524), then
-you get the same situation. I don't think "make every library or helper
-binary that might conceivably be used in a set*id executable distrust
-its environment" is really an approach that scales - it's the set*id
-executable that's crossing a privilege boundary, not the library or
-helper binary (which doesn't necessarily even know what the caller's
-security model is), so I think the onus should be on the set*id
-executable to be suitably paranoid.
+Can a CVE please be assigned to this?
 
-    S
+-- 
+Regards,
 
-[1] https://www.redhat.com/archives/pam-list/2013-January/msg00005.html
+Ratul Gupta / Red Hat Security Response Team
 
