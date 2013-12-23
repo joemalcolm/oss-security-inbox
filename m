@@ -1,19 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/11/3
-Message-ID: <520790A5.4040608@redhat.com>
-Date: Sun, 11 Aug 2013 15:24:53 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- glibc: Buffer overwrite when using readdir_r on file systems returning file names longer than NAME_MAX characters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/23/6
+Message-ID: <20131223190555.GA14467@eldamar.local>
+Date: Mon, 23 Dec 2013 20:05:55 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: David Bremner <bremner@...ian.org>
+Subject: Re: CVE Request: gitolite world writable files for fresh installs of v3.5.3
 Content-Type: text/plain; charset=utf-8
 
-On 08/11/2013 03:05 PM, Jan Lieskovsky wrote:
+Hi,
 
-> This issue was found by Florian Weimer of Red Hat Product Security Team.
+On Mon, Oct 21, 2013 at 02:18:21PM -0600, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 10/20/2013 10:54 PM, Sitaram Chamarty wrote:
+> > Announcement: 
+> > https://groups.google.com/forum/#!topic/gitolite/Tu1sjaf7A4A/discussion
+> >
+> >  Code change: 
+> > https://github.com/sitaramc/gitolite/commit/3dad4f8e3214d6ab5f71823019a624fa48b055a3
+> >
+> > 
+> (or)
+> > http://code.google.com/p/gitolite/source/detail?r=3dad4f8e3214d6ab5f71823019a624fa48b055a3#
+> >
+> >  Brief description (main points of announcement): Fresh installs
+> > between fa06a34 (approx Sep 3rd) and v3.5.3, inclusive, create a
+> > few world writable files.  Sites which installed before that date
+> > are not affected, even if they subsequently upgraded to the faulty
+> > commit or beyond.  Affected sites need to run a one-time 'chmod -R'
+> > to fix.
+> > 
+> 
+> Please use CVE-2013-4451 for this issue.
 
-I think this is actually folklore by now, it's been floating around for 
-a couple of years.
+A small side note on this CVE: David Bremner found that gitolite
+previous to that commit also was vulnerable to a local filesystem
+information leak: Depending on the user umask running gitolite setup,
+he might create world readable files in the repositories, in
+particular the gitolite-admin one.
 
--- 
-Florian Weimer / Red Hat Product Security Team
+As example in the Debian packaging postinst, [1] would result in a
+world-readable /var/lib/gitolite3/repositories/gitolite-admin.git.
+
+ [1] http://sources.debian.net/src/gitolite3/3.5.2-1/debian/postinst#L74
+
+But this actually might not need a separate CVE for this issue
+(altough different versions are affected, if I understand it correctly
+both fall under CWE-276, Incorrect Default Permissions?).
+
+Regards,
+Salvatore
