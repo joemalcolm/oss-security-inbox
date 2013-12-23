@@ -1,47 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/18/2
-Message-Id: <201312180104.rBI14VPX000859@linus.mitre.org>
-Date: Tue, 17 Dec 2013 20:04:31 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, cm@...etec.at, 732283@...s.debian.org
-Subject: Re: CVE Request: Proc::Daemon writes pidfile with mode 666
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/23/5
+Message-ID: <20131223181925.GA11815@eldamar.local>
+Date: Mon, 23 Dec 2013 19:19:25 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: denial of service in Nagios (process_cgivars())
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Vincent,
 
-> christian mock <cm@...etec.at> has reported[1] that Proc::Daemon, when
-> instructed to write a pid file, does that with a umask set to 0, so
-> the pid file ends up with world-writable permissions.
+On Mon, Dec 23, 2013 at 10:55:35AM -0700, Vincent Danen wrote:
+> Could a CVE be assigned to the following flaw?
 > 
-> Upstream bugreport is at [2].
+> A flaw was reported and fixed in Nagios, which can be exploited to cause a denial of service.  This vulnerability is caused due to an off-by-one error within the process_cgivars() function, which can be exploited to cause an out-of-bounds read by sending a specially-crafted key value to the Nagios web UI.
 > 
->  [1] http://bugs.debian.org/732283
->  [2] https://rt.cpan.org/Ticket/Display.html?id=91450
->  
-> Axel Beckert has commited a patch to the Debian packaging[3] and
-> forwarded it to upstream.
-> 
->  [3] http://anonscm.debian.org/gitweb/?p=pkg-perl/packages/libproc-daemon-perl.git;a=blob;f=debian/patches/pid.patch
-> 
-> Could a CVE be assigend for this issue?
+> References:
+> https://secunia.com/advisories/55976/
+> http://sourceforge.net/p/nagios/nagioscore/ci/d97e03f32741a7d851826b03ed73ff4c9612a866/
+> https://bugs.gentoo.org/show_bug.cgi?id=495132
+> https://bugzilla.redhat.com/show_bug.cgi?id=1046113
 
-Use CVE-2013-7135.
+Only a cross reference (not saying it should get the same CVE): This
+seems to be the equivalent to the icinga issue [1], which got
+CVE-2013-7108.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+ [1] https://dev.icinga.org/issues/5251
 
-iQEcBAEBAgAGBQJSsPPCAAoJEKllVAevmvmsDjkH/0ArQqMr437ZRT3i8pvsAP+6
-Wc39qGXxcEZCPxSHGv9HdoeGrYBWBwLLWKjtPV+iSKE67BtBV1YS+j1ISI9ST6cz
-93dhjxnN2n9VyvXStRTo3nj20wRkbWEyBWN1hUaR3niDb7bd+QqRd7m79MGY6VkG
-uAkXP5pJacezleLBM1900W3rvppbdU/tCe4Oc5pMSRUZU9V2XWB8Y9yrCOztYVH4
-2sojMuUv9kMdeHRM9iskOw1oGPX4GK5eKj0c/unJ1w82zF/56hM5Rw+yqYIY0mcH
-er0Cl1N7TFPfQEVPhYg2s2kZUVOjA4UuHEWuArY3hv4m8XFC+GlBtkm36/7wfv0=
-=jG8p
------END PGP SIGNATURE-----
+Regards,
+Salvatore
