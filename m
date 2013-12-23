@@ -1,26 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/15
-Message-ID: <50FD57E4.1060203@msgid.tls.msk.ru>
-Date: Mon, 21 Jan 2013 18:59:48 +0400
-From: Michael Tokarev <mjt@....msk.ru>
-To: oss-security@...ts.openwall.com
-CC: Sebastian Krahmer <krahmer@...e.de>, coley@...us.mitre.org
-Subject: Re: CVE Request coreutils
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/23/4
+Message-Id: <63DC1E14-12C0-4EE7-A6B3-161310502AF7@redhat.com>
+Date: Mon, 23 Dec 2013 10:55:35 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE request: denial of service in Nagios (process_cgivars())
 Content-Type: text/plain; charset=utf-8
 
-21.01.2013 18:54, Sebastian Krahmer wrote:
-> Hi,
-> 
-> Can someone assign a CVE id for a buffer overflow in coreutils?
-> Its the same code snippet (coreutils-i18n.patch) and it affects sort, uniq and join:
+Could a CVE be assigned to the following flaw?
 
-It's probably worth to mention that these are SuSE-specific and not in upstream,
-if I understand correctly.
+A flaw was reported and fixed in Nagios, which can be exploited to cause a denial of service.  This vulnerability is caused due to an off-by-one error within the process_cgivars() function, which can be exploited to cause an out-of-bounds read by sending a specially-crafted key value to the Nagios web UI.
 
-> https://bugzilla.novell.com/show_bug.cgi?id=798538
-> https://bugzilla.novell.com/show_bug.cgi?id=796243
-> https://bugzilla.novell.com/show_bug.cgi?id=798541
+References:
+https://secunia.com/advisories/55976/
+http://sourceforge.net/p/nagios/nagioscore/ci/d97e03f32741a7d851826b03ed73ff4c9612a866/
+https://bugs.gentoo.org/show_bug.cgi?id=495132
+https://bugzilla.redhat.com/show_bug.cgi?id=1046113
 
-Thanks,
+Thanks.
 
-/mjt
+-- 
+Vincent Danen / Red Hat Security Response Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (671 bytes)
