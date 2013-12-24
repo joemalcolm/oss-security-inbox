@@ -1,54 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/14
-Message-ID: <5213BBC0.7000209@fifthhorseman.net>
-Date: Tue, 20 Aug 2013 14:56:00 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>,  "Eric H. Christensen" <echriste@...hat.com>, security@...tgresql.org, kevin@...ye.com
-Subject: Re: PostgreSQL insecure install via yum (multiple problems)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/24/1
+Message-Id: <201312241521.rBOFL3RJ029682@linus.mitre.org>
+Date: Tue, 24 Dec 2013 10:21:03 -0500 (EST)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, carnil@...ian.org
+Subject: Re: CVE request: denial of service in Nagios (process_cgivars())
 Content-Type: text/plain; charset=utf-8
 
-On 08/20/2013 12:11 AM, Kurt Seifried wrote:
-> Dunno who to ask, so adding Scrye: can we make sure Google indexes the
-> Fedora key server? This actually raises a good point, what are the key
-> servers now? The big 3 used to be:
-> 
-> http://pgp.mit.edu/
-> http://keyserver.pgp.com/
-> http://sks-keyservers.net/
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-None of the above represent the dominant set of keyservers currently
-actively gossiping on the 'net today.  Probably the best mechanism to
-track actively-syncing peers is pool.sks-keyservers.net  (*not*
-sks-keyservers.net on its own).  The various pools in the
-pool.sks-keyservers.net subzones are well-maintained DNS round-robins.
+> http://sourceforge.net/p/nagios/nagioscore/ci/d97e03f32741a7d851826b03ed73ff4c9612a866/
 
-for more details, see:
+> Can you please advise if any additional CVE(s) will be assigned to
+> this commit in Nagios then?
 
- http://sks-keyservers.net/overview-of-pools.php
+The situation is a bit complicated but it appears that the best choice
+is to add one CVE assignment.
 
-If you want to discuss the keyserver network, the dominant keyserver
-implementation (SKS) or the DNS pools, the best place to do so is:
+As mentioned in the
+http://openwall.com/lists/oss-security/2013/12/16/4 post,
+CVE-2013-7108 is for the https://dev.icinga.org/issues/5251 report.
+This mentions specific affected Icinga files. The issue in the same
+files in Nagios has this same CVE ID.
 
-  SKS development list <sks-devel@...gnu.org>
+Nagios changed two other files. The first file is contrib/daemonchk.c.
+This is a fix for the same type of off-by-one issue covered by
+CVE-2013-7108, but it was announced at a different time and therefore
+is assigned a different CVE ID, CVE-2013-7205 for Nagios. Our
+information from Icinga upstream is that the contrib/daemonchk.c code
+isn't exposed to untrusted input with the Icinga distribution as
+shipped, and would only be exposed if the user decides to change the
+build/installation process. Therefore, Icinga upstream is not
+accepting this as an Icinga vulnerability.
 
-GnuPG's default keyserver of keys.gnupg.net is now a CNAME for
-pool.sks-keyservers.net, fwiw.
+Another observation about contrib/daemonchk.c is that the
+process_cgivars function apparently accomplishes nothing, and the call
+and the code itself (with the originally erroneous length checking)
+could perhaps just be omitted, because the variables[x] values are
+never used. However, later use of the variables[x] values is
+irrelevant to the reported attack possibility.
 
----------------
+The second file is cgi/statuswml.c. Here, the Nagios commit adds a
+block of new code -- this isn't an off-by-one change like the other
+cases. As far as we can tell, this block of new code doesn't correct
+any exploitable vulnerability and thus there won't be any associated
+CVE ID. The code might be a good idea for consistency reasons, but we
+didn't notice any viable attack that would involve long variables[x]
+values.
 
-I agree with Moritz Naumann's analysis of the weakness of the postgresql
-RPM key overall -- a 5.5 year-old 1024-bit DSA key is probably not
-appropriate for use any more.  If the psql RPM folks are going to do any
-work to improve this, they're probably better off starting with a new,
-strong key entirely.
+Finally (although it's not directly relevant to CVE assignment),
+Icinga does not use the cgi/statuswml.c code and is no longer even
+shipping it.
 
-If they want to upgrade their key but don't want to change their
-documentation at all, they can contact me off-list and i'll help them
-generate a 4096-bit RSA key that has the matching short keyID, since
-short keyIDs are trivial to spoof these days :P
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-	--dkg
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+iQEcBAEBAgAGBQJSuaVyAAoJEKllVAevmvmsE/sIALIOCCsIyfU4kDVoQOjB2FYC
+bqS1B/OfcYkIhcSqGiH/MS+aCaP7bdiVXsy6d89se8XIWe7GRni54rS6nBROmQ6b
+trvXGGy/SJkEvgYE0CQb6UEQl1FFej7lUzHEWCsRaHaUK+s90dEngAi6WjcZj/fc
+Udyr/V/22uBA++Q96IlL0GokAQE0DLymifWwSgkE5EDkQvulEuZ+6TqK+cDIKcFJ
+tnRWk5uLEtEpu84i2RaXC/FeHPSdjrPtIX0FVO/Q1LX0yTxwk5+ilJNQsdWZqcMv
+BPpIXY8xE8BWAnGuQ72odtiSoiV8jzZ4nJIxkjDYTCShwhkJNBWznB9R5VOw/hQ=
+=onXN
+-----END PGP SIGNATURE-----
