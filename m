@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/20/3
-Message-ID: <20131220152803.GP5714@suse.de>
-Date: Fri, 20 Dec 2013 16:28:03 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/26/1
+Message-ID: <52BC86F2.5000001@redhat.com>
+Date: Fri, 27 Dec 2013 01:13:46 +0530
+From: Ratul Gupta <ratulg@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE already assigned for 1026891?
+Subject: CVE Request: rubygem-will_paginate XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 18, 2013 at 12:58:17PM -0700, Vincent Danen wrote:
-> 
-> On Dec 18, 2013, at 12:43 PM, cve-assign@...re.org wrote:
-> 
-> > Signed PGP part
-> > http://www.openwall.com/lists/oss-security/2013/12/18/3 raises the
-> > question of whether there is a CVE assignment in
-> > https://bugzilla.redhat.com/show_bug.cgi?id=1026891 already, in order
-> > to avoid a duplicate assignment. Our guess is that security issues
-> > tracked privately by Red Hat typically do have pre-assigned CVE IDs,
-> > so MITRE will delay a CVE assignment indefinitely.
-> > 
-> > Although it would be great to know what CVE ID you have assigned,
-> > replying with something like "yes, it has a CVE ID, but it's only
-> > being shared with the embargo audience" would be quite useful as well.
-> 
-> There is a CVE assigned to this, but based on what Sebastian wrote, I can’t tell if it’s the same issue so I’m hesitant to say what the CVE is in case it does end up being different.
-> 
-> Sebastian, can you give me access to your bug?  Or did you intend to make it public?  I’m assuming that since you are asking about a CVE here, you maybe did not mean to keep it private?  Your other message said your bug contained upstream URLs (so maybe even pasting those here would be helpful).
-> 
-> Once I can look at it, I can let you know for sure whether or not it is the same issue (and should then use the same CVE).
+Hello,
 
-I have moved the bug to our Security Incidents product, so it should be visible now.
+https://bugzilla.redhat.com/show_bug.cgi?id=1046642
 
-Ciao, Marcus
+Cross-Site Scripting (XSS) vulnerabilities were found in will_paginate 
+gem for Ruby, where certain input related to generated pagination links 
+were not properly sanitised before being returned. This could be 
+exploited to execute arbitrary HTML and script code in a user's browser 
+session in context of an affected site.
+
+Can a CVE please be assigned to this issue?
+
+-- 
+Regards,
+
+Ratul Gupta / Red Hat Security Response Team
+
