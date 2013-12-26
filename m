@@ -1,107 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/30/4
-Message-ID: <51F75B74.4010807@redhat.com>
-Date: Tue, 30 Jul 2013 00:21:40 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/26/2
+Message-ID: <52BC87E6.4080604@redhat.com>
+Date: Fri, 27 Dec 2013 01:17:50 +0530
+From: Ratul Gupta <ratulg@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Donald Stufft <donald@...fft.io>
-Subject: Re: CVE Request: Insecure Software Download in pip
+Subject: CVE Request: rubygem-nokogiri Multiple DoS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 07/27/2013 01:10 AM, Donald Stufft wrote:
-> 
-> On Jul 27, 2013, at 3:08 AM, Kurt Seifried <kseifried@...hat.com>
-> wrote:
-> 
->> On 07/25/2013 03:09 AM, Donald Stufft wrote:
->>> I'd like to request a CVE for pip 
->>> (https://pypi.python.org/pypi/pip/).
->>> 
->>> The mirroring support (-M, --use-mirrors) was implemented
->>> without any sort of authenticity checks and is downloaded over
->>> plaintext HTTP. Further more by default it will dynamically
->>> discover the list of available mirrors by querying a DNS entry
->>> and extrapolating from that data. It does not attempt to use
->>> any sort of method of securing this querying of the DNS like
->>> DNSSEC. Software packages are downloaded over these insecure
->>> links, unpacked, and then typically the setup.py python file
->>> inside of them is executed.
->>> 
->>> The vulnerable code is located at: - 
->>> https://github.com/pypa/pip/blob/develop/pip/index.py#L60-L64
->>> - 
->>> https://github.com/pypa/pip/blob/develop/pip/index.py#L205-L207
->>> - 
->>> https://github.com/pypa/pip/blob/develop/pip/index.py#L553-L572
->>> - 
->>> https://github.com/pypa/pip/blob/develop/pip/index.py#L999-L1024
->>>
->>>
->>> 
-The affected versions are every released version since 0.8.1 which
->>> are: 0.8.1, 0.8.2, 0.8.3, 1.0, 1.0.1, 1.0.2, 1.1, 1.2, 1.2.1,
->>> 1.3, 1.3.1, 1.4
->>> 
->>> I'm not aware of this issue having ever had a CVE requested for
->>> it and my attempts to search the CVE database did not appear to
->>> turn up anything relevant but the search doesn't appear to be
->>> the greatest so I may have missed it.
->>> 
->>> I'm hoping to land a patch for this in a future release
->>> (current iteration of patch available at 
->>> https://github.com/dstufft/pip/compare/remove-mirror-support)
->>> but there is no planned fix version as of yet.
->>> 
->>> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA //
->>> 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
->> 
->> Was it supposed to be secure (like was this explicitly supposed
->> to be all encrypted/etc.)? This sounds more like security
->> hardening than a security vulnerability.
->> 
->> - -- Kurt Seifried Red Hat Security Response Team (SRT) PGP:
->> 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->> 
-> 
-> The mirroring protocol explicitly included provisions for
-> verification which was not being done.
-> 
-> http://www.python.org/dev/peps/pep-0381/#mirror-authenticity
-> 
-> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 7C6B
-> 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
-> 
+1) https://bugzilla.redhat.com/show_bug.cgi?id=1046663
 
-So to confirm, we're talking about the line:
+Nokogiri gem for Ruby was found to be affected by a DoS vulnerability, 
+where an error when parsing XML documents can be exploited by an 
+attacker to cause an infinite loop and subsequently exhaust memory and 
+cause a crash via a specially crafted XML document.
 
-"Verification is not needed when downloading from central index, and
-should be avoided to reduce the computation overhead."
+2) https://bugzilla.redhat.com/show_bug.cgi?id=1046664
 
-So accessing the central index is done over HTTP by default, no
-support for HTTPS previous to commit
-https://github.com/pypa/pip/commit/e80c387a26858c4d7ff43c5f030b04b03fd43dfe
-correct?
+Nokogiri gem for Ruby was found to be affected by a DoS vulnerability, 
+where an error when parsing XML entities and can be exploited to exhaust 
+memory and cause a crash via a specially crafted XML document including 
+external entity references.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Can CVE's please be assigned to these issues?
 
-iQIcBAEBAgAGBQJR91t0AAoJEBYNRVNeJnmTTYUP/RXpnqUKcaBTXZXCGl2M7NrY
-3G+qvedOWg4M0j3iVe6H1xhoVy3ABYd/Mh/GbTFyZ5cAPo6ur6Emzje+5miuCe17
-72XOrDhU/o7syxVrCAF9j6D2nsJt0Plq+s4U/gMdDpBBcZpTgW/5RmO/dJIKPjxd
-3ajiBJ80ezdhsDRYIpKRNbMv17xK2g5k7ywkvBlzAM7rvzg0W1bWFI5hk3yb8g+L
-x0H0iFpRix4FIaF8Y6tk6AmCXnIm0Y16SUuZZP/ybbk8Y9thNGxEjeLswkB3THKU
-WXKyLF1gaEzGhqWTQXKqgCJ6/G/Y0/71UkNCna6EHysQ8mCJPioXowmn+BXxPGad
-bN1Hn8+HwxxS5w4EHlLC2ChFoxhCj28MTeIvTmndzjlYXD8xzDfU6XuuPNKZSKsq
-QN54/Q0e/gkY7Q6jpV3F5j43/SZmP2h/gVN+lrV+e0llhjULcOyUo/YDasHi3v4I
-ppQpF+PiIljOpxWXSFKtbdlbkFupFF67GptwtWkgZUChJ9L/pn7Dwh0KRtVH9aut
-toB9swy5aM2ypNra0LSKfG0WUAY55ce9Tr4pi+8jwA8+jVSGxYXGWJKtZIHw4m04
-LUMEtHSm2yvp85GKukPBoxiRl18x2ELaYMhmRaHKRkKE9Q3m8g0SpxmZxSsRXg8A
-dNm8003wLnCSHsOMr4dF
-=gJ2D
------END PGP SIGNATURE-----
+-- 
+Regards,
+
+Ratul Gupta / Red Hat Security Response Team
+
