@@ -1,81 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/30/2
-Message-ID: <37D38768-A6C7-4FC2-974F-7AB54A0B7AE2@tenable.com>
-Date: Sat, 30 Nov 2013 01:35:45 +0000
-From: George Theall <gtheall@...able.com>
-To: "<oss-security@...ts.openwall.com>" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: ClamAV vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/27/5
+Message-Id: <201312270633.rBR6XWne003964@linus.mitre.org>
+Date: Fri, 27 Dec 2013 01:33:32 -0500 (EST)
+From: cve-assign@...re.org
+To: huzaifas@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Two CVE request for gnome-shell/screensaver issues
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Nov 29, 2013, at 12:58 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> https://bugzilla.gnome.org/show_bug.cgi?id=686740
+> https://git.gnome.org/browse/gnome-shell/log/js/ui/screenShield.js?qt=grep&q=686740
+> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1030431
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 11/29/2013 02:20 AM, Sergey Popov wrote:
->> It's a bit late, but i would like to request CVE for two 
->> vulnerabilities, that present in ClamAV before 0.97.7[1]:
->> 
->> 1) A double-free error exists within the
->> "unrar_extract_next_prepare()" function
->> (libclamunrar_iface/unrar_iface.c) when parsing a RAR file.
->> 
->> 2) An unspecified error within the "wwunpack()" function 
->> (libclamav/wwunpack.c) when unpacking a WWPack file can be
->> exploited to corrupt heap memory.
->> 
->> [1] - https://secunia.com/advisories/52647/
->> 
-> 
-> The blog entry
-> 
-> http://blog.clamav.net/2013/03/clamav-0977-has-been-released.html
-> 
-> contains no mention of security flaws,
+The discussion in 686740 focuses on usability problems, not security
+problems. Comment 11 in 1030431 says "typing away at the lock screen
+will now trigger the unlock dialog (and redirect input to the password
+field)." Does this mean that 209014b083dbe86ed0e0860a6016735571b56f94
+is a security fix, and the other screenShield.js commits are usability
+fixes? Or does it mean that 127f10e7a8bbbbd089d217f8cd89971c187ae9c3
+is a security fix because the "will be dropped in the void"
+description isn't always accurate, and "will be dropped into the
+Activities panel" or "will be dropped into the 'Enter a command'
+dialog box" can occur instead?
 
-Hrm, at least the copy I see says “ClamAV 0.97.7 addresses several reported potential security bugs.”. While it doesn’t identify the issues per se, it does at least indicate this is a security release. 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Jan Lieskovsky talked about both of these last March — see <http://seclists.org/oss-sec/2013/q1/672>. The double-free was fixed in this commit :
-
-  https://github.com/vrtadmin/clamav-devel/commit/b2212def1bb92b5ac45c82da100dc0d1376de6a3
-
-and the 'wwunpack()’ issue maps to :
-
- https://bugzilla.clamav.net/show_bug.cgi?id=6806
-
-Hope that helps,
-
-> 
-> Also the ChangeLog:
-> 
-> https://github.com/vrtadmin/clamav-devel/blob/0.97/ChangeLog
-> 
-> Doesn't contain any mention of the above flaws. Can you provide links
-> to source code/bug reports or something so I can verify this? Thanks.
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.15 (GNU/Linux)
-> 
-> iQIcBAEBAgAGBQJSmNWsAAoJEBYNRVNeJnmThXsP/jeOtL/zWdpxvSX6JEDw0OPj
-> jhOr77n6thgze2U/wAnzqJNYrVu9zgbXo7PeIursWztKWOky90TZsVaYjsiCgQ0N
-> iDo6WfG4h2Ee0b0L6MLTyADx9LCvYwdLcnjVOgzgAaQDirSTU0nc7oUdkMixTOXR
-> xn6HEnGBxhw7o9xZbGWJL9fLxGrqnSvMowpTiH+qG1oiC7ShUvdI/k+5Fr2adX1E
-> 47gz+dZazGdj39u2aryXA3uRA1PFMFm5zVJcPz6Vuv0tZlZVWh1dA2OMeOSZdok4
-> q8pd6WYiXDJdIWq9hpGwyR70GrJg0gsE8Dhw6KVtGu2V61BdX0dLxqnT5zhxxmFY
-> DdyeFLkPTsEDUUj7wj7mciEgwXgUT2aiHrhXD6m9t+FvmU6MFD18HH0y7uD3vACU
-> OBvOExWqcV/8rWmA3+VTAvgLXFCmVfNca6NP/d5oAnmeJRTGvBnyIGQwB95ozSbs
-> fo0OvTm45CPzJVyiEX/7P1S73qLgnWV4Y0FLNg4mj5Qs2GkMs+LVGFxGOKr5XKed
-> MdIk7Fa+xNMwI/qzJEYdA0xK1WPeDrwt5fpxJFoMjKqwF6jImmgUuQMZ5bvC0sqY
-> bVTUzww4iPBvdY75yGH9F4BHacw+kw7MI9WUo9SJ32n047NB+UViRpAtvhshV6na
-> bRvHsNYzqwUdW8msUh+0
-> =MZ61
-> -----END PGP SIGNATURE-----
-
-George
--- 
-theall@...able.com
-
+iQEcBAEBAgAGBQJSvR5OAAoJEKllVAevmvmscS4IAIvJNoHMY3Ew+4SDIZuVzNdw
+nMNx8U89bxWREv5XG17sTN2RuXwLjUjUQsBgS0FGgvQpbBxPp08Xy67t8thBuCRC
+6EG/9cxSQtwXUVOoUGu6yHMrD9H3m2MxocOGPK+IkPHbkLJkpCU+Cp9kyX+wvSS1
+1wwHMeiVlSxZb/pLkBGynrfuHSJ4IkJiuFOo6Z8kVHW1K5FuIS0kKDJ10LlWKi3Z
+gzET39N3PR5cD2rrluYxc4v/LtZnkFvgCPa7aFifknbJFk5LfeJfYqZX6N0F6Oad
+kgO5kNbjuAwm7c1qzbCcruOM+Q1eE/WG031gUVGmmsLedro+eYwr4OF4C+wPNa0=
+=XmWl
+-----END PGP SIGNATURE-----
