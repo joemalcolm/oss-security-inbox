@@ -1,56 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/7
-Message-ID: <51DEF37F.3040403@redhat.com>
-Date: Thu, 11 Jul 2013 12:03:43 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/27/1
+Message-ID: <52BD01EF.3090108@redhat.com>
+Date: Thu, 26 Dec 2013 21:28:31 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Henri Wahl <henriwww@...rs.sourceforge.net>
-Subject: Re: CVE Request -- Nagstamon (prior 0.9.10): Monitor server user credentials exposure in automated requests to get update information
+Subject: Re: CVE Request: rubygem-will_paginate XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/11/2013 11:07 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+On 12/26/2013 12:43 PM, Ratul Gupta wrote:
+> Hello,
 > 
-> an user details information exposure flaw was found in the way
-> Nagstamon, Nagios status monitor for desktop, performed automated
-> requests to get information about available updates. Remote
-> attacker could use this flaw to obtain user credentials for server
-> monitored by the desktop status monitor due to their improper
-> (base64 encoding based) encoding in the HTTP request, when the HTTP
-> Basic authentication scheme was used.
+> https://bugzilla.redhat.com/show_bug.cgi?id=1046642
 > 
-> References: [1] http://nagstamon.ifw-dresden.de/docs/security/ [2]
-> https://bugs.gentoo.org/show_bug.cgi?id=476538 [3]
-> https://bugzilla.redhat.com/show_bug.cgi?id=983673
+> Cross-Site Scripting (XSS) vulnerabilities were found in
+> will_paginate gem for Ruby, where certain input related to
+> generated pagination links were not properly sanitised before being
+> returned. This could be exploited to execute arbitrary HTML and
+> script code in a user's browser session in context of an affected
+> site.
 > 
-> Can you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
+> Can a CVE please be assigned to this issue?
 
-Please use CVE-2013-4114 for this issue.
+Please use CVE-2013-6459 for this issue.
+
+References:
+https://bugs.gentoo.org/show_bug.cgi?id=495220
+
+Original Advisory:
+https://github.com/mislav/will_paginate/releases/tag/v3.0.5
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR3vN/AAoJEBYNRVNeJnmTn/YP/2nZfxqYxKPdxui1WoFpwMDv
-IXzGGxHWpF+yATP/C1bx14qxJ8cbjDjkqWVhF4sy1q81bpjCZMGYscp+CT+X7jGD
-0dE8d+rlMP4Jh5jaIrnNH9EPwNh8b1HL0OYbXgq2HEBeGc3FS4dPCIteyvtTEv5u
-KScySH2YR607nC4oC2xOo/feVgCTEuTIdpkXJTTKbWtKsVSOTZo9+06B/ZrvBbVd
-7cr3kg4dvXJ+y+7e3zFe7J4X1Qg2TSBjBFODMFCwYpdwTRgT1yWx/TCqx6d5Qwzk
-gHCCzBvQHMmowD5ARpku8cqwLZ4ZPFHERZ+zn9usQyleEBMFx8ehxOfhaOPAgpO/
-v3duOZhzujZHWvLV7+zCph15hjjF2MiY0xbbnhNMiSRF8zrTre/1GZNJeFk/zfik
-tBSwd27EyL2wqKmie8qHcXtw6Eh+Pvqvs8gqbtOYIrrqLN0rpZd7QX/5Il5d3ACD
-8oVnY1HGxAh3tLYCATUtHRLMtDc5UYjT8QciTiDdCdOrOleqEylMh+OBNf/2BUou
-mmnsTHIc+ekkFGv1ee3IIglPX29o6+d7mJoWwtHeV1OPupKNiLRrXrSi97aDIwda
-C0acCuXCUfTunDQse2y8gQbqgzbfOM0CF0W+yCWnVfuxdA37m00GMyPwOWCwxkyC
-p0zjLSxdvUZr4pK0ZP5f
-=GUAx
+iQIcBAEBAgAGBQJSvQHuAAoJEBYNRVNeJnmTBhYQANl9B1XuAA2gf7+0FuchOUmM
+LGwLqQDTI589E2BtRj6UsWE04Q1TtqvbJMdpjLhoqQsNMzavmrbG/hqGqwWwZ0bd
+8SDVWWZ0pOJgD0c22xLdMfrDzDakLxwvDFTgOHLuGrLHS/19i+P/Woza2CKADLny
+bYnWkw3O4QzsPU1QGPXH6k46jd01IznJPIL+3J8Bb4WNnlVV0FpGJBHhWw8yfDm1
+gDTEDH1NFDtlEMPcbsbvNXESo0AOZnBJNLmCWBZAbPcNPtWSNbuPd9wTPCwvVSCR
+aKnPYSouGnKD8aCPPpIFo4NmnYre3qnb88PHvTje1dC/llR1r5/tnu1Cb0X7cFqn
+lDjQegFjg74sDesIZXuzkiKUGLgwNaM2pr35CA4r5wZpCYePq61nLTmJE1Ecf28U
+UjE3uzXY8QNxwQZ1/5i7+tlecMFUFWPYq8udiMtmRNH2NN7ODTM6C2i0cWmdba1y
+sLtIGley3w9rrFR/gV2oG5EzSPa+OaEfHF+3DGxBQNNb26ssvp8Yogb2KyJGqGMU
+Jay8SDiLwIIME6tkuTNrioGQZWNtAAGiug+rln80pNEpljJmroTCaHYyw1AEeT82
+qPyLRYqoYDcZCHt/R4yeBkP2S/InZRHUlaDWL4Y3EGZlHCj7It3mDRCmlCaDjh9e
+aPVrjbrbBSS/5mhk204F
+=y0IJ
 -----END PGP SIGNATURE-----
