@@ -1,52 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/11
-Message-ID: <5151FAE6.9040204@redhat.com>
-Date: Tue, 26 Mar 2013 13:45:42 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/27/3
+Message-ID: <52BD02DB.4050501@redhat.com>
+Date: Thu, 26 Dec 2013 21:32:27 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>, "Larry W. Cashdollar" <larry0@...com>
-Subject: Re: CVE request: ibutils improper use of files in /tmp
+CC: Christian Heimes <christian@...imes.de>, psrt@...hon.org, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: CVE issues with recent python flaws
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/26/2013 12:44 PM, Kurt Seifried wrote:
-> On 03/26/2013 08:51 AM, Vincent Danen wrote:
->> * [2013-03-26 08:28:53 -0600] Vincent Danen wrote:
+On 12/23/2013 04:41 PM, Vincent Danen wrote:
+> So I've been detangling some python issues that we were alerted to
+> around this time last year, along with some other vendors.
 > 
->> Yeah, you're right.  It was pointed out to me that it was noted 
->> here:
+> The work, and CVEs that were assigned (not sure by whom), are all
+> public and since there are some issues that probably warrant a few
+> more CVEs, I'm bringing this up on the list here (and also because
+> no real announcements ever came out of the python camp regarding
+> these).
 > 
->> http://www.openwall.com/lists/oss-security/2013/03/19/8
+> It's all noted in our bug
+> (https://bugzilla.redhat.com/show_bug.cgi?id=1046174):
 > 
->> Can CVE-2013-1894 be rejected?  Sorry about this, I didn't
->> notice that it was assigned one already.
+> * httplib [1] (fixed in 2.7.4 [2], 2.6.9 [3], and 3.3.3 [4]) *
+> ftplib [5] (fixed in 2.7.6 [6], 2.6.9 [7], 3.3.3 [8]) * imaplib [9]
+> (not yet fixed in 2.7.x, fixed in 2.6.9 [10], 3.3.3 [11]) * nntplib
+> [12] (fixed in 2.7.6 [13], 2.6.9 [14], 3.3.3 [15]) * poplib [16]
+> (not yet fixed in 2.7.x, fixed in 2.6.9 [17], 3.3.3 [18]) * smtplib
+> [19] (not yet fixed in 2.7.x, fixed in 2.6.9 [20], not yet fixed in
+> 3.3.x)
 > 
-> Please REJECT CVE-2013-1894 and use CVE-2013-1894 instead.
+> [1] http://bugs.python.org/issue16037 [2]
+> http://hg.python.org/cpython/rev/8a22a2804a66/ [3]
+> http://hg.python.org/cpython/rev/582e5072ff89 [4]
+> http://hg.python.org/cpython/rev/e445d02e5306/ [5]
+> http://bugs.python.org/issue16038 [6]
+> http://hg.python.org/cpython/rev/44ac81e6d584/ [7]
+> http://hg.python.org/cpython/rev/8b19e7d0be45/ [8]
+> http://hg.python.org/cpython/rev/38db4d0726bd/ [9]
+> http://bugs.python.org/issue16039 [10]
+> http://hg.python.org/cpython/rev/4190568ceda0/ [11]
+> http://hg.python.org/cpython/rev/4b0364fc5711/ [12]
+> http://bugs.python.org/issue16040 [13]
+> http://hg.python.org/cpython/rev/36680a7c0e22/ [14]
+> http://hg.python.org/cpython/rev/731abf7834c4/ [15]
+> http://hg.python.org/cpython/rev/fc88bd80d925/ [16]
+> http://bugs.python.org/issue16041 [17]
+> http://hg.python.org/cpython/rev/7214e3324a45/ [18]
+> http://hg.python.org/cpython/rev/68029048c9c6/ [19]
+> http://bugs.python.org/issue16042 [20]
+> http://hg.python.org/cpython/rev/8a6def3add5b/
+> 
+> 
+> One CVE (CVE-2013-1752) as assigned to all of these, which would
+> have been perfectly reasonable if they had _all_ been fixed
+> simultaneously (or at least in the same version).
+> 
+> My post here is two-fold: a) to let other vendors know about these
+> issues so they can update/patch their own packages, and b) to see
+> if MITRE wants to do anything with regards to the CVE assignments
+> for these issues as it seems like we might need 3-4 CVEs here as
+> only nntplib and ftplib carry the same fixed-in-versions across the
+> board.
+> 
 
-Cut and paste fail.
-
-Please REJECT CVE-2013-1894 and use CVE-2013-2561 instead.
+I'm leaving this one up to Mitre, my personal take: these are very
+different code modules (different protocols) so CVE split, but I defer
+to Mitre.
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRUfrmAAoJEBYNRVNeJnmTBOMP/1NCR2VvH/Rh7Ot8P8elT6CD
-gZhAu4P/Mgvsp3i0lPHWG78qDpfP8A1dagJp5k5ZJs7TJHhfOtRvRC94cKslxziO
-qv3nXH6V4ncE71wmWsVjHmCpHPx6Bu+6loA0cVa6uTnfZrojO8vdc076/eXN0y6Y
-tLHBAlRFqrHQRy/IphwTAmx8cmRMWuPpogMdfBWQ9SZIcd+yDy4EoJgctrE/c0Er
-9lFttX34OL2Q5fjqX9qO1tGHV1IAigMivSbx7BJo64+3zSozOupg1QiHr9nhBt/1
-g6hBxmX3a4LYN/RkmyKhyIUuQFs9ASTSHw4yGxK4tAmBIu9dTNMDsDskGrCKlr0x
-NGw4G9kLC/i7zP4PvjYd89WTS+a2xOIukNEWtaE/8QopstvIakhrGHIodgm9VRaO
-LhzV/2jUDMtqP37QK+YHoSBJWzbubFBvf+c2ewTm060Z2s9ydiXntQdbYgWAeI/a
-Bp1GwdxDQdQHf99Vecm6uovx4m2+A4JK1d4NmshWDnaC6THaT6nXlNGAEXrFrVP5
-1P8eCoOaQBUNkSXhcAJaEesqvqILEfmE7KEViTSbpjGFzcc1mjNJJZg1RVilp69L
-3eYJo07ugWLOx5XTEb1DJFOQmCfCsPkW8AvHzVdkg7mMXtNovrrGXaMIiyzCnuG+
-ohgI3IFYTIW9aUowq1pk
-=+KSP
+iQIcBAEBAgAGBQJSvQLbAAoJEBYNRVNeJnmTlAMP/ilFiZ370HGfXUU5ON8EgToY
+Dq6d2jPBlI77UF/igg1zYbjktDMWmA1M3v98gQ0iA0xV2q+kdwBKlb9sLVOZqe2V
+/PCao9VX3GLonzcj2hUgqR/VTFvIoqibAiDaw2wWQohFzcweuKFCWJmkdI5Snzej
+8j/2nJdAIEAO10LHGvoMgYh3MHNTC02dxe0SvrlYNfgE8yrQhm5CEtw+s2zAqEGT
+8c20SbUgNrcwqDrVTjTDJ7hFHg27GC9plY4B3cSTg9gn/dwVMMH0N4xEMyAgoHVq
+SL2lDC7kpcIshmvOQtZyHPY7ws6NWV4frHt9e2U61HeLhI8AZEJp/U6lfs0eeOcJ
+UlRei61ACCd9GNTjGYzign46r4nbpqJJ0hbd1PZlhk1jKa6IVrsSyehWvd2JeYz7
+2CDEWB4dleFIpfV3o1k1aeGwkEX9EEWGlv/k9nD6H68U1I3xMwEH7G/BXveITKYF
+tltUU1JyYVt2BdurzduuaM+aR1b2AP7JtGKr5jLpBnIpBIx1mreGwPjDE2VFF2av
+3VjnyQrmnOX7TLV23B2RW64+g4drml57VRhearyJpSacQcyNenpIn2F3KY730CCC
+Q0Cx7IaT8SqN/CJ06JWsMiQkihG50Uqg/TADc11cJ12JMhRTjObGfaVDCSmhARJx
+pER4ZFf1q/ub5o3dv4QO
+=gatT
 -----END PGP SIGNATURE-----
