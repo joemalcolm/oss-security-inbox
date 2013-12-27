@@ -1,36 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/10
-Message-ID: <20131210134614.GI27889@sym.noone.org>
-Date: Tue, 10 Dec 2013 14:46:14 +0100
-From: Axel Beckert <abe@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/27/2
+Message-ID: <52BD026E.7040901@redhat.com>
+Date: Thu, 26 Dec 2013 21:30:38 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Debian Security Team <team@...urity.debian.org>, Andy Lester <andy@...dance.com>, 731848@...s.debian.org
-Subject: CVE request for remote code execution in ack
+Subject: Re: CVE Request: rubygem-nokogiri Multiple DoS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-as discussed with Salvatore Bonaccorso of the Debian Security Team
-(team cc'ed), I'm herewith requesting a CVE ID for the following
-security issue in ack (http://beyondgrep.com/, also known as ack-grep
-in multiple distributions; upstream developer cc'ed):
+On 12/26/2013 12:47 PM, Ratul Gupta wrote:
 
-* Remote code execution via options --pager, --output, and --regexp in
-  per-project .ackrc files
+I double checked these issues, they are subtly different, one is
+infinite loop from error parsing and the other fails to apply limits.
 
-  Details and original report: https://github.com/petdance/ack2/issues/399
-  Changelog: https://metacpan.org/source/PETDANCE/ack-2.12/Changes
-  Further references: http://bugs.debian.org/731848
+> Hello,
+> 
+> 1) https://bugzilla.redhat.com/show_bug.cgi?id=1046663
+> 
+> Nokogiri gem for Ruby was found to be affected by a DoS
+> vulnerability, where an error when parsing XML documents can be
+> exploited by an attacker to cause an infinite loop and subsequently
+> exhaust memory and cause a crash via a specially crafted XML
+> document.
 
-  Affected versions: 2.00 to 2.10.
-  Not affected versions: Below 2.00
-  Fixed versions: 2.12 so far
+Please use CVE-2013-6460 for this issue.
 
-		Regards, Axel
--- 
- ,''`.  |  Axel Beckert <abe@...ian.org>, http://people.debian.org/~abe/
-: :' :  |  Debian Developer, ftp.ch.debian.org Admin
-`. `'   |  1024D: F067 EA27 26B9 C3FC 1486  202E C09E 1D89 9593 0EDE
-  `-    |  4096R: 2517 B724 C5F6 CA99 5329  6E61 2FF9 CD59 6126 16B5
+> 2) https://bugzilla.redhat.com/show_bug.cgi?id=1046664
+> 
+> Nokogiri gem for Ruby was found to be affected by a DoS
+> vulnerability, where an error when parsing XML entities and can be
+> exploited to exhaust memory and cause a crash via a specially
+> crafted XML document including external entity references.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Please use CVE-2013-6461 for this issue.
+
+> Can CVE's please be assigned to these issues?
+
+Please note original references:
+
+References:
+https://bugs.gentoo.org/show_bug.cgi?id=495218
+
+Original Advisory:
+https://groups.google.com/forum/#!topic/ruby-security-ann/DeJpjTAg1FA
+
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSvQJuAAoJEBYNRVNeJnmT+QoP/1c2L1HrrqrCWwk+sM60P1WB
+iqVF+N643XkNsNgFbK/3eAa2T1Bsj3uOKqxyEGLePPGblqH3+kPzqlT+IPCPy/0H
+UiiPSjO43WFv8kmSHo6hzIzn7us7oww8DNK4xBWItLYMfP/5SK/ANv5viFJBTCTu
+K5nrbUvTOIwWueAUMY/DgXLpfcssdITp7VH70uFrSgF+LzDtXGeOdscIMpu85FVU
+5+sqJQy2yE939Q3XlEZzN1IeTwLghZkVb2WX5HLUBGEVBkFRvB8bY+nl4OtERSS1
+R+ya6X4h9XAVyKXE3lgvHI1MFA3D8gotJqK8xPFjnuLBvcR0Scx63DfSf2hatcqI
+dbyQ8xR/qVYJGcOXpAENAPjrfyBCnd1GiozjECgZfB2A1T8+ahK4LWawd037lWbx
++izFHURKFThLpdikdiwZ3hAZVjQpR3oHlxbEW83QlZPu2xCGDn66GtfFDtjHm8DA
+xxrgkMEkBlvRRCstVJsU7op5TBoCBofi8rXzpdWd/vtwuTg/PHV6fVb63PEPFkVd
+aBsL9oxFPW1WjJwU0JRYfSo2EeBg1laGWIbfy29xVX3deVOdMTWb2h3v9xAMhkEs
+qtTO8bLgB6Dym5wkugaj05PniZEGUoBHPOcli0ApjEFys4tLkctP1tBcwD39sPfc
+Xea35dJTkozZtlrQMBAU
+=Wrs6
+-----END PGP SIGNATURE-----
