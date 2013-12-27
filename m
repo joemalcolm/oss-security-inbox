@@ -1,65 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/8
-Message-ID: <51548712.6000608@redhat.com>
-Date: Thu, 28 Mar 2013 12:08:18 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- roundcubemail: Local file inclusion via web UI modification of certain config options
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/27/8
+Message-Id: <201312271207.rBRC7Vxx026079@linus.mitre.org>
+Date: Fri, 27 Dec 2013 07:07:31 -0500 (EST)
+From: cve-assign@...re.org
+To: huzaifas@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Two CVE request for gnome-shell/screensaver issues
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/28/2013 08:47 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> RoundCube Webmail upstream has released 0.8.6 and 0.7.3 versions to
-> correct one security flaw:
-> 
-> A local file inclusion flaw was found in the way RoundCube Webmail,
-> a browser-based multilingual IMAP client, performed validation of
-> the 'generic_message_footer' value provided via web user interface
-> in certain circumstances. A remote attacker could issue a
-> specially-crafted request that, when processed by RoundCube Webmail
-> could allow an attacker to obtain arbitrary file on the system,
-> accessible with the privileges of the user running RoundCube
-> Webmail client.
-> 
-> References: [1] https://bugzilla.redhat.com/show_bug.cgi?id=928835 
-> [2] http://sourceforge.net/news/?group_id=139281&id=310497 [3]
-> http://lists.roundcube.net/pipermail/dev/2013-March/022328.html [4]
-> https://bugs.gentoo.org/show_bug.cgi?id=463554
-> 
-> Upstream patches: [5] http://ow.ly/jtQD0 [6] http://ow.ly/jtQHM [7]
-> http://ow.ly/jtQK0 [8] http://ow.ly/jtQNd
-> 
-> Could you allocate a CVE id for this?
+> 1. gnome-shell: blind command execution via activities search keyboard focus
+> https://bugzilla.gnome.org/show_bug.cgi?id=686740
+> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1030431
+> https://git.gnome.org/browse/gnome-shell/commit/js/ui/screenShield.js?id=209014b083dbe86ed0e0860a6016735571b56f94
 
-Please use CVE-2013-1904 for this issue.
+Use CVE-2013-7220.
 
-> Than you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
 
+> 2. gnome-shell: run command dialog visible above screen locker
+> https://bugzilla.gnome.org/show_bug.cgi?id=708313
+> https://git.gnome.org/browse/gnome-shell/commit/js/ui/main.js?id=efdf1ff755943fba1f8a9aaeff77daa3ed338088
+> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1046839
+
+Use CVE-2013-7221.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJRVIcSAAoJEBYNRVNeJnmT1OIQAKUfTbk8G9/EPpYq6Fb1Cnrh
-6LSb9FJQtIwJBmC0PeId8HGOU3H1NSFwkbQT9bdXpA+EITHgtzyTlRME8uMvrz0A
-82L7dlk1hJS9mhgcm5ED460Belue7AHSfolHZ8Ny7i+r2QK4f5kNdubBa9uPu7rg
-hgWAkas2hpTB8MCslXOZR8BanqI3QRCpm2/T+/pP9f5GXTUL6BFEZD+ovyTeYvhQ
-16QdTheiR6hMhL2FKZpZF94FmV/rBe7sFa6VbrmPH4Hbn5AqP+bxuhjf0sRPyj9X
-ivkxc44s4i4MSz/N6iB2XCXKTUxhpD2ZysKP65CJCbMoEMvQPYohi7Bs9Ez+2iN2
-1+18ll29z/IY4a4FyoTD6dsUXZqRiw69SRyZCYG+gqkffGF0pLsyG1U1YWAo0TBy
-9lBu6dq/upUPI4+JzWJAVBewKxcGgf9W3+7rpK//qRDi8/2b1Ruq3NpFVTo8AxiY
-YmUIt2tt0G6xwz9jk09La7T+4iYGAfkRwWO+eXQV6dopapsOxUCOPEell2kefeex
-ozsAmQLY5ciLElj0YRXBNoKFZB0zoBhn6o4ZG4Svjuk7pH/MzR9SbQ0B15hCrK4U
-Mlp5y+AxrrLdLKwltCLnT6mzXK8n1LL60R+8NpQn4JGVoKXh3ZWlN5EORqSD69ZP
-wEbIKM9n8B+9LND0zZks
-=HnvA
+iQEbBAEBAgAGBQJSvWy7AAoJEKllVAevmvmsBKIH9i5j8T+1kItAC6Lxy5kSfHca
+pDllGu1EsCuFXVkSHSVExTo1lLebBLtU4ZvHB9lJ7pSIp2WgSEmQ5jGTuNYSg4Er
+EAcbBHqJOy56iRKW7nVbVszn4aWmMSWOotUtJFjFsjYkY0lpKec4/UwLmb1y7Lsl
+mGQ0Vwjrtd3BxxhADcjPfcVynl4mxAp8sOcZlCt4OZid71ZSN3S6YfX/FeG7cNJ6
+axwTmWjOQYjOTqPcBkdbaUaYoDk5F4yZoev3IKiOxcq/4GGduqfMDgUnksLaELqM
+rPjCNErsnEAKxyS1KbISa9wqbV3os0ENIzqfJcGqxRk7wZDaiIo5ZnqjEQkrRg==
+=BWdH
 -----END PGP SIGNATURE-----
