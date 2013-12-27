@@ -1,32 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/10
-Message-ID: <20130925160754.GA2503@inutil.org>
-Date: Wed, 25 Sep 2013 18:07:55 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Reproducible Builds for Fedora
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/27/9
+Message-Id: <201312271622.rBRGMAFA000305@linus.mitre.org>
+Date: Fri, 27 Dec 2013 11:22:10 -0500 (EST)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, christian@...imes.de, psrt@...hon.org, kseifried@...hat.com
+Subject: Re: CVE issues with recent python flaws
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 25, 2013 at 11:45:38AM +0200, Ludwig Nussel wrote:
-> Dhiru Kholia wrote:
->> I have been working on having Reproducible Builds in Fedora for some
->> time.
->>
->> At this point, I think I have something demoable. Ensuring Reproducible
->> Builds is a big task and I want your feedback, ideas, code and support.
->
-> In openSUSE we have reproducible binaries to a certain extend. That
-> project was started some years ago with different (non-security)
-> intentions. Since the build service rebuilds packages automatically
-> if any depending package changes, a way was needed to avoid publishing new
-> rpms if the build result result didn't actually change. So there are
-> now some scripts that automatically run at the of a new build and
-> determine with some heuristics whether the new rpms match the old
-> rpms¹. You can see the output of that script in every build log in
-> openSUSE:Factory.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-There are similar efforts for Debian:
-https://wiki.debian.org/ReproducibleBuilds
+> One CVE (CVE-2013-1752) as assigned to all of these, which would have
+> been perfectly reasonable if they had _all_ been fixed simultaneously
+> (or at least in the same version).
 
-Cheers,
-        Moritz
+> https://bugzilla.redhat.com/show_bug.cgi?id=1046174
+> Unfortunately, upstream assigned a single CVE to all of these
+
+MITRE is responsible for the CVE-2013-1752 assignment. (In other
+words, the upstream Python vendor was not responsible for deciding how
+many CVEs were originally assigned.)
+
+The background is that, months ago, MITRE received a request from an
+authoritative upstream vendor contact indicating that bugs
+16037/16038/16039/16040/16041/16042 needed vulnerability remediation
+and that a CVE mapping was desired. At the time of the request, no fix
+had been released for any of the six bugs. As far as we could tell,
+all of the six pieces of affected code were shipped in the primary
+downloadable Python distributions. (In other words, they weren't third
+party components distributed elsewhere for use with Python.) The six
+pieces of code seemed to have the same type of implementation issue,
+so one CVE was assigned.
+
+We do realize that many CVE consumers rely on separate CVE IDs for
+vulnerabilities with different affected versions, and thus MITRE can
+generate the appropriate number of new CVE IDs (apparently either 4 or
+5), and include explanatory references to the new CVEs within the
+upcoming "REJECT" entry at:
+
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1752
+
+The decision between 4 and 5 only depends on:
+
+  imaplib [9] (not yet fixed in 2.7.x, fixed in 2.6.9 [10], 3.3.3 [11])
+  poplib [16] (not yet fixed in 2.7.x, fixed in 2.6.9 [17], 3.3.3 [18])
+
+If anyone knows that the upstream vendor is specifically planning to
+fix imaplib and poplib in different 2.7.x versions, then these two
+will have separate CVE IDs, and the total will be 5.
+
+Otherwise (e.g., if both fixes are probably going to be in 2.7.7, or
+if just no one knows when the fixes will be shipped), then we assign
+the same CVE ID for imaplib and poplib, and the total will be 4.
+
+Finally, we had one comment about this:
+
+> Date: Thu, 26 Dec 2013 21:32:27 -0700
+> From: Kurt Seifried
+> my personal take: these are very different code modules (different
+> protocols) so CVE split
+
+Differences in the implemented protocol typically aren't something
+that MITRE looks at in deciding how many CVE IDs are needed, as long
+as each protocol provides an opportunity for untrusted input to
+arrive.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSvabzAAoJEKllVAevmvmsnukH/RfuVHsRTFQ/xlOSvTpjJEf6
+/yGADoL8ES4VqwvhvYsmpro70UIDDlHthcLoqNG8vl3rTD50t6p1BvtQL/tMfg38
+c4x6aKDTu69IiHDFB1glBC22Sx6qLyRTCLwhQsjKirKa9fCH1xlnPU7zRU7rOOVl
+c3R6mBZuHv2zg41TZYy+iraEtii4FTiQiKG+75X7xDAKVJJ3k6q7roiciHTZwsye
+27/sZ/QalMWMgiYA6S/lQBcxO/AZYKS8ARWvmPZgNXpXuwYx4QTtLvd+GS518I48
+0rlUAS1kFUsCd0VNC7vwTzr6w/FQZ6vfxABk8zjzfcsXBDnoi1QZ3nPlWHzmhsE=
+=7kEO
+-----END PGP SIGNATURE-----
