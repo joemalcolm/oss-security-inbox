@@ -1,25 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/14
-Message-ID: <20131210145610.GA16747@eldamar.local>
-Date: Tue, 10 Dec 2013 15:56:10 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/27/7
+Message-ID: <27fba3c77773857305a143c85dcfe5e6@webmail.fibranet.cat>
+Date: Fri, 27 Dec 2013 11:24:15 +0100
+From: Jordi Sanfeliu <jordi@...ranet.cat>
 To: oss-security@...ts.openwall.com
-Cc: Axel Beckert <abe@...ian.org>
-Subject: Re: CVE Request: ack-grep: potential remote code execution via per-project .ackrc files
+Subject: Re: CVE request: monitorix: HTTP server 'handle_request()' session fixation & XSS vulnerabilities (clearing up confusion)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi,
 
-On Tue, Dec 10, 2013 at 02:49:25PM +0100, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> I would like to request a CVE for the following vulnerability in
-> ack-grep:
-[...]
+Following the suggestion from Brian Martin (Open Security Foundation), I 
+write here to try to clear up things [1] related to the latest security 
+vulnerabilities that affected the Monitorix built-in HTTP server.
 
-Due to a missunderstanding of mine between me and Axel we requested
-that twice. Please ignore this one. First CVE request for the same
-issue is at Message-ID: <20131210134614.GI27889@....noone.org>
+In 20-Nov-2013 Jacob Amey from Security Inspection, Inc. opened a new 
+issue #30 [2] exposing the three different security vulnerabilities he 
+found. One of them was classified as High while the last two were as 
+Medium.
 
-Regards,
-Salvatore
+In 21-Nov-2013 I released the new 3.3.1 version fixing the first one, 
+that is the one that was classified as High. The security vulnerability 
+was described as "Arbitrary Command Execution" and the function affected 
+was 'handle_request()'. I left the other two vulnerabilities to be fixed 
+in the next 3.4.0 version that was almost ready to be released.
+
+In 02-Dec-2013 I released the new 3.4.0 version which included fixes for 
+the remain two security vulnerabilities discovered by Jacob Amey in the 
+same issue #30.
+
+These two security vulnerabilities fixed in 3.4.0 were described as "Web 
+Server Generic Cookie Injection" and "Web Server Generic XSS" as stated 
+in the issue #30 and the function affected was again 'handle_request()'. 
+[3]
+
+Since it seemed that the fact I put a link in the news pointing to BID 
+63913 added some confusion, I've recently updated the news in the 
+Monitorix web site to make things as clear as possible. [4]
+
+Thank you very much.
+Best regards.
+
+[1] <http://seclists.org/oss-sec/2013/q4/442>
+[2] <https://github.com/mikaku/Monitorix/issues/30>
+[3] 
+<https://github.com/mikaku/Monitorix/commit/cc9ba672bbf3015aef69f0053209ece81eb6d934>
+[4] <http://www.monitorix.org/news.html#N340>
+
+-- 
+Jordi Sanfeliu
+FIBRANET Network Services Provider
+http://www.fibranet.cat
+
