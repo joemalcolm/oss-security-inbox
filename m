@@ -1,71 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/12
-Message-ID: <5294DCE5.7020802@redhat.com>
-Date: Tue, 26 Nov 2013 10:39:49 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/27/6
+Message-ID: <52BD44EB.2060705@redhat.com>
+Date: Fri, 27 Dec 2013 14:44:19 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, Kurt Seifried <kseifrie@...hat.com>
-Subject: Re: CVE request: XSS flaw in Ganglia web interface
+CC: cve-assign@...re.org
+Subject: Re: Re: Two CVE request for gnome-shell/screensaver issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 12/27/2013 12:03 PM, cve-assign@...re.org wrote:
+>> https://bugzilla.gnome.org/show_bug.cgi?id=686740
+>> https://git.gnome.org/browse/gnome-shell/log/js/ui/screenShield.js?qt=grep&q=686740
+>> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1030431
+> 
+> The discussion in 686740 focuses on usability problems, not security
+> problems. Comment 11 in 1030431 says "typing away at the lock screen
+> will now trigger the unlock dialog (and redirect input to the password
+> field)." Does this mean that 209014b083dbe86ed0e0860a6016735571b56f94
+> is a security fix, and the other screenShield.js commits are usability
+> fixes? Or does it mean that 127f10e7a8bbbbd089d217f8cd89971c187ae9c3
+> is a security fix because the "will be dropped in the void"
+> description isn't always accurate, and "will be dropped into the
+> Activities panel" or "will be dropped into the 'Enter a command'
+> dialog box" can occur instead?
+> 
+> 
 
-On 11/25/2013 08:54 PM, Murray McAllister wrote:
-> Hello,
-> 
-> A cross-site scripting (XSS) flaw was discovered in the Ganglia
-> web interface:
-> 
-> https://github.com/ganglia/ganglia-web/issues/218 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=730507
-> 
-> Quoting from the original report:
-> 
-> "" Temporary Workaround and Fix ============================ Apply
-> the following patch to properly encode the variable:
-> 
-> --- header.php.old    2013-09-30 21:07:26.272287657 +0200 +++
-> header.php    2013-09-30 21:09:42.226281990 +0200 @@ -491,7 +491,7
-> @@ $data->assign("custom_time", $custom_tim 
-> /////////////////////////////////////////////////////////////////////////
->
-> 
-if ( $context == "cluster" ) {
-> if ( isset($user['host_regex']) && $user['host_regex'] != "" ) -
-> $set_host_regex_value="value='" . $user['host_regex'] . "'"; +
-> $set_host_regex_value="value='" .
-> htmlentities($user['host_regex'], ENT_QUOTES) . "'"; else 
-> $set_host_regex_value=""; ""
-> 
-> The fix does not apply to the older versions in EPEL (3.0.7 and
-> 3.1.7), but I did not test to see if they were affected.
-> 
-> Can a CVE please be assigned if one has not been already?
-> 
-> Thanks,
-> 
-> -- Murray McAllister / Red Hat Security Response Team
+209014b083dbe86ed0e0860a6016735571b56f94 ensures that the keypress
+always goes to the login dialog box, while
+127f10e7a8bbbbd089d217f8cd89971c187ae9c3 seems to be usability fix to me.
 
-Please use CVE-2013-6395 for this issue.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSlNzkAAoJEBYNRVNeJnmTH5cP/11Aq/nP0ZxBpUi6ngjysz8E
-5Toc5UQfspL+BJKtyUvyUjJtvCuOQ8pMwOv/3Q3b6Em1u37CMdKyGS8e/yuH13yA
-lIE5BgTBSxO1bdHp5wwCMt7AEwjD7f/bR6DSosJy6+xKS+o0Y4qSjDP6WbalwJeQ
-iVXPsGWOeenLMUIm9nePJ9TlAXt7zpwJwVpzvXXUtbr7sR33lJdwjl79YVHoy+mK
-zDXDh4khSSou8WdzSVHfcaz2rndlKGz+ObHjDZvC5tlfR6JnDCvxi1LQDVVXGl6h
-J5N4732hDO2zKmohxM3tdNlMQ60/rMherH6Iy2Hc1QzEatbG/VAq/wFOhd5NRWU9
-36H64C12PH9oPLJHEaK0yetIpdzJ4zMLDLmUpBygNBqR5IQRQXVYOBCgnXQMF+w3
-sNg3RXJDpwuv8jlDPHh6M12HbExI74DQE+DJOnMFsByDsb800iya2Yt0si6GUURl
-6AyVGSPuDxY9Vky3LqtcWqZw/uE7NysGG8at8HIKJ8tzUvRCZ308nLmfoSdS/CiZ
-6jhMCvTNGGwN3ll3Tilwg5NvDK7zJ2a0nNZsP4Kp+NmtJCrkh/f2r3AWCnEx+ycv
-iVGnrfA99gkjoFePL91ilBOhVRhYpmpvcXPz0MPGgmxs3qaBiz5H9xnUD8wSl/Zc
-GDcsOzSQjJAkuV/5GW1Y
-=QRIY
------END PGP SIGNATURE-----
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
