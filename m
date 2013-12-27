@@ -1,24 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/9
-Message-ID: <20130207105518.GX9348@dhcp-25-225.brq.redhat.com>
-Date: Thu, 7 Feb 2013 11:55:19 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/27/4
+Message-ID: <52BD1554.3060007@redhat.com>
+Date: Fri, 27 Dec 2013 11:21:16 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifrie@...hat.com>, spender@...ecurity.net
-Subject: CVE request -- Linux kernel: x86/msr: /dev/cpu/*/msr local privilege escalation
+Subject: Two CVE request for gnome-shell/screensaver issues
 Content-Type: text/plain; charset=utf-8
 
-Access to /dev/cpu/*/msr was protected only using filesystem checks. A
-local uid 0 (root) user with all capabilities dropped could use this
-flaw to execute arbitrary code in kernel mode.
+Hi All,
 
-Upstream commit:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=c903f0456bc69176912dee6dd25c6a66ee1aed00
+I would like to request CVEs for two slightly related
+gnome-shell/screensaver issues. Details as follows:
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=908693
-http://grsecurity.net/~spender/msr32.c
+1. gnome-shell: blind command execution via activities search keyboard focus
+The issue is that in Fedora 18, when you open either the Activities
+panel or "Enter a command" dialog box (Alt+F2), and then lock the screen
+or let the screensaver lock the screen, then if you start typing on the
+lock screen, instead of entering the password or just waking the screen,
+it actually types anything you type on the Activities panel or "Enter a
+command" dialog box, so anyone who enters a executable command and press
+enter, the command is executed even when the screen is locked.
 
-Thanks,
+https://bugzilla.gnome.org/show_bug.cgi?id=686740
+
+And a series of commits fix this issue via:
+
+https://git.gnome.org/browse/gnome-shell/log/js/ui/screenShield.js?qt=grep&q=686740
+
+This issue was addressed in upstream release of gnome-shell-3.7.92
+
+Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1030431
+
+2. gnome-shell: run command dialog visible above screen locker
+In Fedora 19, the "Enter the Command" dialog box is visible even after
+you lock the screen, so anyone can write the commands in the box and
+execute them over a locked screen.
+
+Upstream bug:
+https://bugzilla.gnome.org/show_bug.cgi?id=708313
+
+Upstream patch:
+https://git.gnome.org/browse/gnome-shell/commit/js/ui/main.js?id=efdf1ff755943fba1f8a9aaeff77daa3ed338088
+
+This issue has been addressed in gnome-shell-3.10.0
+
+Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1046839
+
+
+Can two CVEs be please assigned to these issues?
+
+Thanks!
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+Huzaifa Sidhpurwala / Red Hat Security Response Team
