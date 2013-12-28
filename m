@@ -1,21 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/26/10
-Message-ID: <86ehdxlmvz.fsf@ds4.des.no>
-Date: Fri, 26 Apr 2013 10:25:04 +0200
-From: Dag-Erling Smørgrav <des@....no>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/28/1
+Message-ID: <20131228071626.GA4434@kludge.henri.nerv.fi>
+Date: Sat, 28 Dec 2013 09:16:26 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com,  Alistair Crooks <agc@...src.org>,  Josh Bressers <bressers@...hat.com>
-Subject: Re: upstream source code authenticity checking
+Cc: joernchen@...noelit.de, steveyken@...il.com
+Subject: CVE request: Fat Free CRM multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...hat.com> writes:
-> This makes no sense. So you don't trust their signature because they
-> have to "earn trust", but you do trust their software and you compile
-> and run it? That's literally insane.
+Can I get four 2013 CVE identifiers for following Fat Free CRM issues, thanks.
 
-This is exactly the logic used by web browsers to justify scaring users
-away from https sites that haven't payed the Verisign tax...
+Advisory:
+http://www.phenoelit.org/stuff/ffcrm.txt
+http://seclists.org/fulldisclosure/2013/Dec/199
 
-DES
--- 
-Dag-Erling Smørgrav - des@....no
+Notification to vendor:
+https://github.com/fatfreecrm/fat_free_crm/issues/300
+
+New versions 0.13.0 and 0.12.1 released:
+https://github.com/fatfreecrm/fat_free_crm/wiki/Fixing-security-vulnerabilities-%2827th-Dec-2013%29
+
+Issues:
+1. Known Session Secret
+2. Lack of CSRF Protection
+3. Default to_json for models
+4. Multiple SQL Injections
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
