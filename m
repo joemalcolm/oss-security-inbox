@@ -1,36 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/25/3
-Message-ID: <CAHmME9o-34DVwr9XJ3kqv_nt6tWs0GLkStbCE1VjSQF8tq33Wg@mail.gmail.com>
-Date: Sat, 25 May 2013 20:16:20 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: cgit@...ts.zx2c4.com
-Subject: CVE Request: cgit directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/28/2
+Message-Id: <201312281223.rBSCNFKJ000867@linus.mitre.org>
+Date: Sat, 28 Dec 2013 07:23:15 -0500 (EST)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, steveyken@...il.com, joernchen@...noelit.de
+Subject: Re: CVE request: Fat Free CRM multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-As mentioned in early messages to oss-sec, I've inherited
-maintainership of the cgit codebase and am gradually auditing it.
-Today I found a nasty directory traversal:
+> http://www.phenoelit.org/stuff/ffcrm.txt
+> http://seclists.org/fulldisclosure/2013/Dec/199
+> https://github.com/fatfreecrm/fat_free_crm/issues/300
+> https://github.com/fatfreecrm/fat_free_crm/wiki/Fixing-security-vulnerabilities-%2827th-Dec-2013%29
 
-http://somehost/?url=/somerepo/about/../../../../etc/passwd
+> 1. Known Session Secret
+> https://github.com/fatfreecrm/fat_free_crm/commit/93c182dd4c6f3620b721d2a15ba6a6ecab5669df
 
-This should be pretty straightforward to categorize.
+Use CVE-2013-7222.
 
-Exploitation looks like:
-http://data.zx2c4.com/cgit-directory-traversal.png
 
-I've committed a fix for it here:
-http://git.zx2c4.com/cgit/commit/?h=wip&id=babf94e04e74123eb658a823213c062663cdadd6
+> 2. Lack of CSRF Protection
+> https://github.com/fatfreecrm/fat_free_crm/commit/a7fedbb36388bad0c0f32b2346481e0ea126dea6
 
-And this fix will be in the master branch and a new release will be made soon.
+Use CVE-2013-7223.
 
-Cgit by default is not vulnerable to this, and the vulnerability only
-exists when a user has configured cgit to use a readme file from a
-filesystem filepath instead of from the git repo itself. Until a
-release is made, administrators are urged to disable reading the
-readme file from a filepath, if currently enabled.
 
-Thanks,
-Jason
+> 3. Default to_json for models
+> https://github.com/fatfreecrm/fat_free_crm/commit/cf26a04b356ad2161c4c6160260eb870a3de5328
+
+Use CVE-2013-7224.
+
+
+> 4. Multiple SQL Injections
+> https://github.com/fatfreecrm/fat_free_crm/commit/078035f1ef73ed85285ac9d128c3c5f670cef066
+> https://github.com/fatfreecrm/fat_free_crm/commit/d4b2de81a4d8c1b201482edcb2488ed9280a65fd
+
+Use CVE-2013-7225.
+
+For item 3: if there is an information-disclosure vulnerability
+involving to_xml, please let us know and we can assign an additional
+CVE ID. The joernchen advisory mentioned only to_json, and therefore
+to_xml has a different discoverer and may require a separate CVE ID.
+
+If there is a denial of service issue involving :delete, please let us
+know and we can assign an additional CVE ID. The joernchen advisory
+mentioned only "renders JSON requests with a full JSON object," and
+therefore :delete has a different discoverer and may require a
+separate CVE ID.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSvsH6AAoJEKllVAevmvmsjksIAMeaH2HBfTrSNt83LAy1Sk0c
+Q+lexLe6vIsOQLeh02/vk4zk/piqcuQGcmTmpEQ+X5lT+7zwrBoZAe3/g36Nb+mM
+uJh9gBzsJkq0JUnqRVn84e9gxnJpqXjUB0aRRhaFrMBKB5jdTDFpWzKWS77KVzhI
+QlgEMBObp4WUQHjAfsZcN+cs+xWjMVvR7+rk1AWJ9hAjT02UBGigVNWe5PmDrb8z
+/yqcrQiEFTENbdQKSjNxlSSoEFWxEUF1b4PInNl7451ep0Ee2ZKoi9bte8h8pgsP
+rOzEsPzu0yevLI7Wgrvl+clSdesuvIi6/2kGklv5LTsM23Rw/spat4nkAuFPKlU=
+=PZmt
+-----END PGP SIGNATURE-----
