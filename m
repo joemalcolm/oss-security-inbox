@@ -1,30 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/12
-Message-ID: <51B0E85C.4020807@gmail.com>
-Date: Thu, 06 Jun 2013 12:51:56 -0700
-From: Forest Monsen <forest.monsen@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/1
+Message-ID: <20131230001955.GC9236@kludge.henri.nerv.fi>
+Date: Mon, 30 Dec 2013 02:19:55 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE request for Drupal contributed module
+Cc: Jakob Lell <jakob@...oblell.com>
+Subject: CVE request: SMF 1.1.19, 2.0.6
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Can I get two CVEs for following SMF issues, thanks.
 
-Hi there -- can we get a CVE identifier for:
+Advisory:
+http://www.jakoblell.com/blog/2013/12/13/multiple-vulnerabilities-in-smf-forum-software/
+http://seclists.org/fulldisclosure/2013/Dec/83
 
-SA-CONTRIB-2013-051 - Services - Cross site request forgery (CSRF)
-https://drupal.org/node/2012982
+http://osvdb.org/101004 "Unspecified Clickjacking Arbitrary Code Execution"
+http://osvdb.org/101005 "Unicode Homoglyph Username Spoofing Weakness"
 
-? Thanks.
+Fixed in 1.1.19 and 2.0.6 versions.
+Credit: Jakob Lell
 
-Best,
-Forest
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+Changelog:
 
-iEYEARECAAYFAlGw6FYACgkQ/ILCL9e1Br4uKQCdFdTdD0bIsAqpAvUebcYjoJsh
-z7IAnRxFb8ytv+rlBx4EI/isXghxSTIX
-=7Dug
------END PGP SIGNATURE-----
+"""
+October 2013
+-------------------------------------------------------------------------------
+ ! Added some headers to help protect against clickjacking (thanks Jakob Lell for the report)
+ ! Invalid avatars were not always properly cleaned up (thanks chaoztc for the report)
+ ! Added protection against usernames being impersonated with Unicode space characters (thanks Jakob Lell for the report)
+ ! Sessions weren't always cleaned up properly on logout (thanks creepernex for the report)
+ ! Certain fields were accepted during registration even when they shouldn't be (thanks tomreyn for the report)
+ ! Certain errors were unnecessarily shown during a failed registration and some of those were inappropriate anyway (thanks Labradoodle-360 for the report)
+ ! Approving an account from a member's profile was not logged (thanks emanuele for the report)
+ ! Approving an account from a member's profile did not always properly enforce security rules (thanks emanuele for the report)
+ ! The PHPSESSID injector would also add it to the canonical link, breaking it (thanks to all who reported it)
+ ! An invalid character was indicated in legacy attachment handling
+ ! Under some circumstances the admin panel would not accept the number of verification questions you had entered (thanks BurkeKnight for the report)
+ ! The help pages could sometimes accidentally direct users to non-existing pages (thanks AngelinaBelle for the report and Illori for the fix)
+"""
+
+Changes:
+
+http://custom.simplemachines.org/upgrades/index.php?action=upgrade;file=smf_patch_1.1.19_2.0.6.tar.gz;smf_version=2.0.5
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
