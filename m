@@ -1,107 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/3
-Message-ID: <528596A1.4030403@redhat.com>
-Date: Thu, 14 Nov 2013 20:36:01 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ath9k_htc improperly updates MAC address
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/8
+Message-Id: <201312301506.rBUF68PW028543@linus.mitre.org>
+Date: Mon, 30 Dec 2013 10:06:08 -0500 (EST)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: cmsmadesimple before 1.11.8 / bad upstream behaviour vs. CVE assignment
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/14/2013 03:03 PM, Mathy Vanhoef wrote:
-> Hi,
-> 
-> 
-> 
-> This concerns a bug in the ath9k_htc driver: When a user
-> changes/spoofs their MAC address, an attacker can retrieve the
-> original MAC address, which is a potential privacy risk. Debian bug
-> report: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=729573
+> Can we get this assigned?
 
-Nifty, please use CVE-2013-4579 for this issue.
+> Diff between 1.11.7 and 1.11.8: http://paste.nerv.fi/61005941.txt
 
-> 
-> Background of the bug: 
-> http://www.mathyvanhoef.com/2013/11/unmasking-spoofed-mac-address.html
->
-> 
-> 
-> 
-> The cause of the bug is in ath9k_htc_set_bssid_mask [1]. Here the
-> MAC address of one of the virtual interfaces should be picked as
-> the new main MAC address of the device. However the main MAC
-> address (stored in common->macaddr) is never updated. The ath9k
-> does implement this properly and sets the main MAC address to the
-> MAC address of one of the virtual interfaces (by first writing it
-> to iter_data->hw_macaddr and then copying it over to
-> common->macaddr [2]). Note that ath_hw_setbssidmask updates the
-> main MAC address register for both the ath9k and ath9k_htc drivers
-> [3].
-> 
-> 
-> 
-> Can a CVE please be assigned?
-> 
-> 
-> 
-> Cheers,
-> 
-> Mathy
-> 
-> 
-> 
-> 
-> 
-> [1] 
-> <http://lxr.free-electrons.com/source/drivers/net/wireless/ath/ath9k/htc_drv
->
-> 
-_main.c?a=microblaze#L145>
-> http://lxr.free-electrons.com/source/drivers/net/wireless/ath/ath9k/htc_drv_
->
-> 
-main.c?a=microblaze#L145
-> 
-> [2] 
-> <http://lxr.free-electrons.com/source/drivers/net/wireless/ath/ath9k/main.c#
->
-> 
-L831>
-> http://lxr.free-electrons.com/source/drivers/net/wireless/ath/ath9k/main.c#L
->
-> 
-831
-> 
-> [3] 
-> <http://lxr.free-electrons.com/source/drivers/net/wireless/ath/hw.c#L118>
->
-> 
-http://lxr.free-electrons.com/source/drivers/net/wireless/ath/hw.c#L118
-> 
-> 
-> Disclaimer: http://www.kuleuven.be/cwis/email_disclaimer.htm
-> 
+The paste includes:
 
+> +Version 1.11.8 - Fioreana
+> +Core - Bug Reports
+> +  - #8807 Section headers are accessible through changing URL
+
+Does anyone here have a dev.cmsmadesimple.org account (possibly
+available through http://dev.cmsmadesimple.org/signup registration)
+and want to comment on the contents of 8807?
+
+(A CVE assignment based solely on "a minor security issue" is not
+impossible, but checking the listed bug numbers first is often
+useful.)
+
+MITRE, in general, can't take responsibility for doing original
+research on every diff of every product to determine what changes are
+vulnerability fixes. Possibly we, or others, could suggest a guess in
+case someone more familiar with the product can quickly confirm or
+reject that. So, here is a guess offered with VERY LOW confidence:
+
+The paste also includes:
+
+>  function expandall()
+>  {
+> 	$userid = get_userid();
+> -	$contentops = cmsms()->GetContentOperations();
+> -	$all = $contentops->GetAllContent(false);
+> -	$cs = '';
+> -	foreach ($all as $thisitem)
+> +	$hiermanager = cmsms()->GetHierarchyManager();
+
+suggesting that expandall is now done in a different way. The source
+code says:
+
+> $lang['admin']['expandall'] = 'Expand All Sections';
+
+so maybe it's possible that incorrect expandall behavior has some
+relationship to the visibility of private "Section headers" referenced
+in 8807. In other words, if expandall is done unsafely, maybe the
+information produced later by the display_content_list function can
+contain unintended section headers if there's a URL manipulation
+(adding "&expandall=1" or whatever). If any of this is relevant (and,
+quite possibly, it's not), this would seem consistent with the
+vendor's "minor security issue" wording.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJShZahAAoJEBYNRVNeJnmTrY8QAKqpmcLHP4uKj0G5XJa6kim/
-flveF69o9xzumM3Is+CYhA4XXzvVp7ibFIXgUKLc8TjNX7K7xJ/KssIrOw34SlG9
-vX4oXSvtHFDgvteF/ZzRwe/yfxtJH9EN2T8vHSUUNgkJxmmE31R5SWIcVQRHHH9Z
-yn6JxnTWSTs+fsme7j80hsrIXWQghdDTz38BAyCKM4QysV74Ke6aaFljeK/zwJxK
-wDIr0CMwTnApjzq1jNnqApuM41K9qCQFp/1U5XrWmbFXoj8N+wq2TWQug9Xpxgpw
-0+c4U2sqDR4Ea/OyCT8C8EYzhX1UPzSCDEKAs77FIFvslbNI8VwHs9jDKqk6RaJ5
-igSbD5GIZ5islRJgVT18jWZPHVyaZKKo9LVxO7xQjowi0oVMWMLQuyXQqtone5ox
-QyBnI4Aiuou57RfTB+/8pNBtZmbDJZ/AKpAyjMDxGO1DzY10pk1DgqGj7c0DmCtH
-HTAQvbgSRoOGj1+cYEDKOSOeXLGrZrbBec2HTfVksynLNhyXWC5Vh6FwqtZXFMcK
-fyxnojR2AQj7uDY+GOEvtTtsEtAsLKuYgtn7jQc1ZoMnwMQk1ATYWvQ1bMnWuWeG
-k1A9VSGZTTGMisrRHIQbds0RVG5AqoyU6/G+9caDFQ5plJ8chGNQbi92VBS4ucWe
-AZy1SPy46ESrMNSXG4cx
-=N2nW
+iQEcBAEBAgAGBQJSwYteAAoJEKllVAevmvmsHPkH/iPq6iwsAwATjeernEUqi7oF
+Apsc6ZwlirR+QY742Na4S6pjdweOjfcpmC1r3JcomPykVr1aLb372OrwVU7h6Kk+
+39W8iRI+A28DTj4QyHXr9x+tdq4h8f1E8CxLA0HflqJCZ3eMOa4deGvArQnxs9nC
+LPxpW/Remn+nARkNJE0W2pUr6CjLN3hrJwtGk1Lu8SUg39V8E26A+hWiVdkPxk9g
+dJ5wyuBktIuX3zM8VOs0I6GJVHddr0+ROxC9Ubue+2AaKMwr6XbSWgm0OmLtJhmc
+c1WU17ukL+ygVEeO1iWqSmD9/7x50g9Hc4w++lqAqsn3WSEydID2Hq5FuO3VDVA=
+=GyJT
 -----END PGP SIGNATURE-----
