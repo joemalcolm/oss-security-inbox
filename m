@@ -1,93 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/30/10
-Message-ID: <CAJojH49h5hF9JCC9dzABKRmXBz31P8V-vMZNXj=P-VEULuVU-g@mail.gmail.com>
-Date: Tue, 30 Jul 2013 13:11:56 +0100
-From: Andreas Nilsson <andreas.nilsson@...en.com>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>,  Florian <floriangaultier@...il.com>, "A. Jesse Jiryu Davis" <jesse@...en.com>,  "Steven M. Christey" <coley@...re.org>, Dan Pasette <dan@...en.com>
-Subject: Re: CVE Request - MongoDB <=2.4.4 uninitialized object
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/13
+Message-ID: <87ha9qotcq.fsf@mid.deneb.enyo.de>
+Date: Mon, 30 Dec 2013 23:40:37 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE to the ntp monlist DDoS issue?
 Content-Type: text/plain; charset=utf-8
 
-Kurt,
+* Moritz Muehlenhoff:
 
-Please let me clarify the CVE numbers involved and let me know if this
-satisfies your concerns.
+> On Mon, Dec 30, 2013 at 09:05:56AM -0500, cve-assign@...re.org wrote:
+>> -----BEGIN PGP SIGNED MESSAGE-----
+>> Hash: SHA1
+>> 
+>> > Has anyone thought about assigning a CVE to this?
+>> 
+>> http://bugs.ntp.org/show_bug.cgi?id=1532 was assigned CVE-2013-5211.
+>
+> Shouldn't this rather be CVE-2010-XXXX ?
 
-CVE-2013-2132 - Remote denial of server vulnerability in the
-mongo-python-driver
-(pymongo)
-CVE-2013-3969 - RCE in MongoDB
-http://blog.scrt.ch/2013/06/04/mongodb-rce-by-databasespraying/ . This
-issue is fixed as of version 2.4.5.
-CVE-2013-4142 - This CVE should be recycled since it duplicates
-CVE-2013-3969.
+I don't think this was previously discussed as a security issue in
+public.  There is a 2011 reference here that explicitly cites
+amplification factors, though:
 
-Thank you,
-Andreas
+<http://lists.ntp.org/pipermail/pool/2011-December/005616.html>
 
-
-On Fri, Jul 26, 2013 at 8:18 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 07/18/2013 11:00 PM, Moritz Muehlenhoff wrote:
-> > On Thu, Jul 18, 2013 at 08:14:39AM -0400, Dan Pasette wrote:
-> >> We already requested CVE-2013-2132 for this and it was fixed in version
-> >> 2.4.5.
-> >>
-> >> We announced it on mongodb-announce and have it listed in our alerts
-> page
-> >> here: http://www.mongodb.org/about/alerts/
-> >
-> > CVE-2013-2132 was already assigned to this issue in the Python driver:
-> > http://www.openwall.com/lists/oss-security/2013/05/31/6
-> > https://jira.mongodb.org/browse/PYTHON-532
-> > https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-2132
-> >
-> > While "your" CVE-2013-2132 refers to
-> > https://jira.mongodb.org/browse/SERVER-9878, which AFAICS is a different
-> > issue.
-> >
-> > Cheers,
-> >         Moritz
-> >
->
-> Can upstream please confirm/deny what is going on here, I'm pressed
-> for time recently and don't have time to wade through the code to
-> determine what's up, as I see it:
->
-> 1) did a CVE number get recycled? E.g. you fixed the issue referred to
-> in CVE-2013-4142 in mongodb but then label it with CVE-2013-2132?
->
-> 2) are these in fact in need of a CVE merge? (seems unlikely since one
-> is mongodb, and the other is the python driver, so different code bases)
->
-> 3) some other option?
->
-> I guess my biggest concern right now is confirming that CVE-2013-4142
-> ( http://blog.scrt.ch/2013/06/04/mongodb-rce-by-databasespraying/) is
-> in fact fixed in release 2.4.5 of mongoDB. Thanks!
->
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.13 (GNU/Linux)
->
-> iQIcBAEBAgAGBQJR8sucAAoJEBYNRVNeJnmThyoP/1iLNar6Ebax4ini7ZsUIDOP
-> fQVtXD0H5soEMmaqtgVLvmpobvCmcKdk1Yx6GbARgvCiR9aRxODRr6uUHTqWYo8l
-> YkH7RHLXBNPfo31itzvF2psKkS0rcfhNw9eWIYkx7wbKd4eGSi64s/F8+A/Ewtql
-> 7ZDo6lwxlmY8vEDaAo98Ts+Cavs0lF1EOFQ3z3nF6gDkZWKMER1R/WnZXnnop/j7
-> kc5xVWifdHJWkJOJ90wlhthZmyp+YijAMKINScPBv+/tgCZT5OKBM+7+VJFGKJLg
-> ZngwIcEkRRfqd/G9l+fQ1q6lMQPzKcFIIONeGSzIjxUay++uHBHUbxSS1A4YYwSW
-> VoOj7IZZ5BG+UZfG/Z8fQunG074W+QHKI8mx9XnmuZnZA9zo4MJ8PdvaVxhQE+mL
-> ACdOjBQQtHCyT46hOpPVE3RVXuFdzI3uDXaTN3YaWo63I03220vytr3gFkbT5Vv2
-> 5+v2vE1wDQixXoH+92Y6fJkEoyk43s26BhEHrhvnKXzorxV7OUPvnIcOaWZR/JQA
-> cdetu9duQa3Kn95x0GS4OU/qE9CJ6WC+gsO90SD4p/8B9/6eARVZ+DzUaw798eaP
-> +X4SbvNu0+eUO85hMfGhDT3STrr8E7MzVTBYSn70QZduzA8FXpzM0p42h8KTbo8S
-> Cyp09K0HbsPMTte1nuNN
-> =qHRK
-> -----END PGP SIGNATURE-----
->
-
+This has an odd feeling of déjà vu to me, but I suspect the previous
+discusssions have been on private channels of which I no longer have
+records.
