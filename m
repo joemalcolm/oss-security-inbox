@@ -1,33 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/6
-Message-ID: <20130304034858.GB1274@kroah.com>
-Date: Mon, 4 Mar 2013 11:48:58 +0800
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: handling of Linux kernel vulnerabilities (was: CVE request - Linux kernel: VFAT slab-based buffer overflow)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/9
+Message-Id: <201312301616.rBUGGPZ0009399@linus.mitre.org>
+Date: Mon, 30 Dec 2013 11:16:25 -0500 (EST)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-request: Dewplayer issues
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Mar 03, 2013 at 10:39:30PM -0500, Michael Gilbert wrote:
-> I was getting encouraged by the recent anger-centric posts, the "what
-> is it that we're supposed to do better?" ones. That gave me some
-> encouragement that there was the possibility of positive change, but
-> the "we're not going to make users more unsafe by telling them about
-> issues affecting them" is a persistence of the denial state.  That
-> logic completely violates the known idiom that knowledge is power:
-> give users the knowledge that they need to protect themselves, and
-> they will; starve them of that knowledge, and they remain vulnerable.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-That's a load of crap.
+> PoC: /wp-content/plugins/advanced-dewplayer/admin-panel/download-file.php?dew_file=../../../../wp-config.php
 
-Seriously, you know it only benefits the "bad guys" if I were to say,
-"This patch just went into Linus's tree that fixes a security problem
-that you can exploit in this manner".  No user would have a chance to
-fix their systems before the vulnerability was added to the
-"ultra-sploit" tool and everyone would have their systems trashed.
+Use CVE-2013-7240 for this dew_file directory traversal issue.
 
-If you so strongly believe this, why is there a linux-distros list in
-the first place?
+> Assigning one CVE for vulnerability in different software components e.g.
+> libraries used in WordPress plugins makes it very difficult to coordinate
+> updates with end-users. Examples:
+>     http://osvdb.org/83413
+>     http://osvdb.org/90374
 
-Come on, be realistic people.
+When a vulnerability originally came into existence through a single
+action of a single developer, we currently don't like to assign
+multiple CVE IDs on the basis of the vulnerable code later being
+shipped in many separately maintained products. We can enter an
+internal issue report about the effect on CVE usability because of this
+"difficult to coordinate" observation.
 
-greg k-h
+> PoC: http://example.com/wp-content/plugins/flash-player-widget/dewplayer.swf?mp3=http://example.mp3
+> PoC: http://example.com/wp-content/plugins/advanced-dewplayer/dewplayer.swf?mp3=http://example.mp3
+
+Just to clarify: the dewplayer.swf file is thought to be essentially
+the same in these two cases, and you're asking for two different CVE
+IDs to be assigned? It seems very unlikely at this point that we can
+provide more than one CVE ID for those, but we just wanted to confirm
+that we're answering the right question.
+
+> Q: Does content spoofing issues normally get CVE as the risk is probably
+> minimal?
+
+If we think the vendor's security policy is that dewplayer.swf should
+not be able to reference off-site media files in this way, then the
+issue is currently eligible for a CVE assignment. We're not sure that
+a spoofing impact would be the primary motivation for changing this.
+Perhaps a stronger motivation is that the vendor doesn't want
+dewplayer.swf to trigger arbitrary outbound TCP traffic from the web
+host, possibly including traffic to intranet servers in some
+environments.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSwZu2AAoJEKllVAevmvmsuWoIAI3mI5Yc4YxnJH2Fds04k9LJ
+bwSMONh+1rxxnjImg864NJAPTCEWKoCdczV+5kMK8TL5puu8vM352hBixtJ/Tq9q
+vsxGWxwV1v/yIPkSAorxYJ1yhCmLj3KXunwujmc4qQUcMr0OCPb4ITdKps58mt9d
+aR+rNy31nrtwc1uJIa5OXg//Fp6jE877hWBFBKTzcLwMdVNqSzDzhW6KdqKWJEG8
+JMxQ1o6qHz4h6mm34m+vQn45Qbt6KroiVgkNgXfP5FaJNWRONsvj2WYbrRyhE0/i
+u3JKfuquPCKtjDocBdeihdHjwiNE93M1x6swaZ1jpcrF0pjT7NAFKDQk8S/emVA=
+=ykRj
+-----END PGP SIGNATURE-----
