@@ -1,68 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/10/4
-Message-ID: <20130810073830.GB31059@kludge.henri.nerv.fi>
-Date: Sat, 10 Aug 2013 10:38:30 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/7
+Message-Id: <201312301406.rBUE5uwk019625@linus.mitre.org>
+Date: Mon, 30 Dec 2013 09:05:56 -0500 (EST)
+From: cve-assign@...re.org
+To: mjo@...o.mi.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE to the ntp monlist DDoS issue?
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 09, 2013 at 10:02:59PM -0600, Kurt Seifried wrote:
-> On 08/09/2013 05:29 PM, Forest Monsen wrote:
-> > Hi there,
-> > 
-> > I'd like to request CVE identifiers for...
-> > 
-> > SA-CONTRIB-2013-061 - Flippy - Access Bypass 
-> > https://drupal.org/node/2054701
-> > 
-> > SA-CONTRIB-2013-062 - RESTful Web Services (RESTWS) - Access
-> > Bypass https://drupal.org/node/2059603
-> > 
-> > SA-CONTRIB-2013-063 - Authenticated User Page Caching (Authcache)
-> > - Information Disclosure https://drupal.org/node/2059589
-> > 
-> > SA-CONTRIB-2013-064 - Persona - Cross site request forgery (CSRF) 
-> > https://drupal.org/node/2059599
-> > 
-> > SA-CONTRIB-2013-065 - Organic Groups - Access Bypass 
-> > https://drupal.org/node/2059765
-> > 
-> > SA-CONTRIB-2013-066 - Monster Menus - Multiple Vulnerabilities 
-> > (Looks like two here: XSS, and an Access Bypass vuln) 
-> > https://drupal.org/node/2059823
-> > 
-> > Thanks!
-> > 
-> > Best, Forest
-> > 
-> 
-> Yup
-> 
-> CVE-2013-4224 SA-CONTRIB-2013-061 - Flippy - Access Bypass
-> 
-> CVE-2013-4225 SA-CONTRIB-2013-062 - RESTful Web Services (RESTWS) -
-> Access Bypass
-> 
-> CVE-2013-4226 SA-CONTRIB-2013-063 - Authenticated User Page Caching
-> (Authcache) -Information Disclosure
-> 
-> CVE-2013-4227 SA-CONTRIB-2013-064 - Persona - Cross site request
-> forgery (CSRF)
-> 
-> CVE-2013-4228 SA-CONTRIB-2013-065 - Organic Groups - Access Bypass
-> 
-> CVE-2013-4229 SA-CONTRIB-2013-066 - Monster Menus XSS
-> 
-> CVE-2013-4230 SA-CONTRIB-2013-066 - Monster Menus Access Bypass
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-CVE-2013-4187 has been assigned already for SA-CONTRIB-2013-061[1].
-CVE-2013-4224 should be REJECTED if I am correct, thanks.
+> Has anyone thought about assigning a CVE to this?
 
-1: http://www.openwall.com/lists/oss-security/2013/08/01/1
+http://bugs.ntp.org/show_bug.cgi?id=1532 was assigned CVE-2013-5211.
 
----
-Henri Salo
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQEcBAEBAgAGBQJSwX1QAAoJEKllVAevmvmscwEH/1g6X68lZ7l2he+rLW6wGeAd
+Rbk7N1kT3IOqTIfNyZx/L+I5eDdDHUvXoUD1rLi9XC6argUcQy2W+WDLBJTfRewc
+r8gIHlMNwY1xDf+2vBAAuJgSlA0INX+ylzL36HC3fz1TN7usAXrYpmpcU1TlTE2V
+G2uL9l1AmKZ9Okk5b7Brnkc0fMMUMaxtTKjASh4u3meA6BFW+Jsp+9hIXpcgkJ6y
+Tiw21WLW1t2UvyOphyCI1/5+M5hENisaCxmZ54Em/bINs9idcwvC5ejo172aJJQU
+kcMxY/7fnSr7+K/2TvRGfkqj4LTLceZVMwlqtgAPaBj0+gW9Z+pJ+HIw3xXC5C0=
+=f147
+-----END PGP SIGNATURE-----
