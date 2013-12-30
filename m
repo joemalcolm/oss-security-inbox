@@ -1,31 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/8
-Message-ID: <20130409120124.GA13964@elende>
-Date: Tue, 9 Apr 2013 14:01:24 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: Self-XSS in phpmyadmin fixed in 3.5.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/5
+Message-ID: <20131230113803.GD23667@kludge.henri.nerv.fi>
+Date: Mon, 30 Dec 2013 13:38:03 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: plugins@...dpress.org
+Subject: CVE-request: Dewplayer issues
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt
+While verifying (lunch break) dewplayer issues announced here
+http://seclists.org/fulldisclosure/2013/Dec/209 I noticed that there is same
+component also used with other plugins. Please notify me in case this list does
+not care about WordPress plugin security overall as it can make our list less
+readable. Only listing active (non-disabled) plugins.
 
-New phpMyAdmin release (3.5.8) contains the following changelog entry:
+Q: Does content spoofing issues normally get CVE as the risk is probably
+minimal?
 
-3.5.8.0 (2013-04-08)
-- bug #3828 MariaDB reported as MySQL
-- bug #3854 Incorrect header for Safari 6.0
-- bug #3705 Attempt to open trigger for edit gives NULL
-- Use HTML5 DOCTYPE 
-- [security] Self-XSS on GIS visualisation page, reported by Janek Vind
-- bug #3800 Incorrect keyhandler behaviour #2
+Assigning one CVE for vulnerability in different software components e.g.
+libraries used in WordPress plugins makes it very difficult to coordinate
+updates with end-users. Examples:
+    http://osvdb.org/83413
+    http://osvdb.org/90374
 
-refering to a XSS vulnerability on the GIS visualisation page. [1] is
-the reference by Janek Vind, upstream commit afaics [2].
+I hope to get new CVEs for these issues below.
 
- [1]: http://seclists.org/fulldisclosure/2013/Apr/100
- [2]: https://github.com/phpmyadmin/phpmyadmin/commit/79089c9bc02c82c15419fd9d6496b8781ae08a5a
+#1
+Plugin: flash-player-widget
+Version tested: 1.3
+Type: CAPEC-148: Content Spoofing
+PoC: http://example.com/wp-content/plugins/flash-player-widget/dewplayer.swf?mp3=http://example.mp3
+SHA1: 97a4b45212be83bf8dc5dd7a289a3decac7889ab
 
-Could a CVE be assigned to this issue?
+Notes:
+- No XSS vector by using ?xml=xss.xml
+- No full path disclosure
 
-Regards,
-Salvatore
+#2
+Plugin: advanced-dewplayer
+Version tested: 1.2
+Type: CAPEC-148: Content Spoofing
+PoC: http://example.com/wp-content/plugins/advanced-dewplayer/dewplayer.swf?mp3=http://example.mp3
+SHA1: 2947cc06ab1bd6e8af2229511e6797f9709ca615 (same as
+dewplayer-flash-mp3-player in the announcement)
+
+Notes:
+- No XSS vector by using ?xml=xss.xml
+- No full path disclosure
+
+Also at the process I noticed that there is additional security vulnerability.
+Details below.
+
+#3
+Plugin: advanced-dewplayer
+Version tested: 1.2
+Type: Information Disclosure / CAPEC-118: Data Leakage Attacks
+PoC: http://example.com/wp-content/plugins/advanced-dewplayer/admin-panel/download-file.php?dew_file=../../../../wp-config.php
+Impact: File wp-config.php contains database passwords, authentication
+keys/salts etc. Does not need authentication.
+
+General note: No time to make proper analysis so there is probably more issues :)
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
