@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/18/1
-Message-ID: <CABbbngC6gO1ry3Biad2qsWwmaTyjnh82oG72ptMKaPkw9m+65g@mail.gmail.com>
-Date: Sun, 17 Nov 2013 21:34:23 -0800
-From: Forest Monsen <forest.monsen@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/4
+Message-ID: <20131230071725.GA8278@eldamar.local>
+Date: Mon, 30 Dec 2013 08:17:26 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: SASL authentication allows wrong credentials to access memcache
 Content-Type: text/plain; charset=utf-8
 
-Hi there, I'd like to request CVEs for:
+Hi
 
-SA-CONTRIB-2013-087 - Payment for Webform - Access Bypass
-https://drupal.org/node/2129373
+>From upstream release notes for 1.4.17[1] it states "The other notable
+bug is a SASL authentication bypass glitch. If a client makes an
+invalid request with SASL credentials, it will initially fail. However
+if you issue a second request with bad SASL credentials, it will
+authenticate. This has now been fixed.".
 
-SA-CONTRIB-2013-088 - Secure Pages - Missing Encryption of Sensitive Data
-https://drupal.org/node/2129381
+The upstream bugreport is at [2], with the corresponding commit fixing
+this issue at [3].
 
-SA-CONTRIB-2013-089 - Node Access Keys - Access Bypass
-https://drupal.org/node/2129379
+ [1] https://code.google.com/p/memcached/wiki/ReleaseNotes1417
+ [2] https://code.google.com/p/memcached/issues/detail?id=316
+ [3] https://github.com/memcached/memcached/commit/87c1cf0f20be20608d3becf854e9cf0910f4ad32
 
-SA-CONTRIB-2013-090 - Revisioning - Access Bypass
-https://drupal.org/node/2135257
+Could a CVE be assigned to this issue?
 
-SA-CONTRIB-2013-091 - Groups, Communities and Co (GCC) - Access Bypass
-https://drupal.org/node/2135267
+Regards, and thanks in advance
 
-SA-CONTRIB-2013-092 - Misery - Denial of Service (DOS) vulnerability
-https://drupal.org/node/2135273
-(Says multiple, but it seems to me this is really just a single DoS vuln.)
-
-Thanks Kurt.
-
-Best,
-Forest
-
+Salvatore
