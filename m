@@ -1,67 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/01/9
-Message-ID: <524AF375.101@redhat.com>
-Date: Tue, 01 Oct 2013 10:08:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [CVE request] systemd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/11
+Message-Id: <201312301626.rBUGQbdg009553@linus.mitre.org>
+Date: Mon, 30 Dec 2013 11:26:37 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: SASL authentication allows wrong credentials to access memcache
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/01/2013 01:26 AM, Huzaifa Sidhpurwala wrote:
-> Hi All,
-> 
-> I would like to request CVE ids for 4 systemd issues.
-> 
-> 1. systemd: Integer overflow, leading to heap-based buffer overflow
-> by processing native messages 
-> https://bugzilla.redhat.com/show_bug.cgi?id=859051
+> If a client makes an invalid request with SASL credentials, it will
+> initially fail. However if you issue a second request with bad SASL
+> credentials, it will authenticate.
 
-Please use CVE-2013-4391 for this issue.
-
-> 2. systemd: TOCTOU race condition when updating file permissions
-> and SELinux security contexts 
-> https://bugzilla.redhat.com/show_bug.cgi?id=859060
-
-Please use CVE-2013-4392 for this issue.
-
-> 3. systemd: Possibility of denial of logging service by processing 
-> native messages from file 
-> https://bugzilla.redhat.com/show_bug.cgi?id=859104
-
-Please use CVE-2013-4393 for this issue.
-
-> 4. systemd: Improper sanitization of invalid XKB layouts
-> descriptions (privilege escalation when custom PolicyKit local
-> authority file used) 
-> https://bugzilla.redhat.com/show_bug.cgi?id=862324
-
-Please use CVE-2013-4394 for this issue.
-
-> Thanks!
-> 
-> 
-
+Use CVE-2013-7239.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJSSvN0AAoJEBYNRVNeJnmTvEkP/0O7fL7qM+qlir6O27hOoLLi
-42YBzSFM49TDP067kPPx+buKBmHBXDq5CulTa1fm/0yW6Z7Aj2L+sA81c8Ovrejf
-52AXUmbOwOd6pUFPTe+E/mBWLJ6c1kYcl5Q0+EEKJjbmmvsxsDJkUDrbavRJwymF
-plmMmspti+jUHge1vmFu0aNf/kGvBH6izYm/3rlZb0Z3itHid9W5AkcgcrqD5aBM
-RwRwNCY46reaSMZZSq0jDdFryZu2M/NazNTKsPgPQSA+8ww6Oq+ABPBm0UHhA5iy
-ZEy9bLDg1xcU1YezElc3m+BVivJVxE4cH+LEl7835SFCePhMquph3skBGRaBa2py
-QLnduv8zepOp3gTTCjcbVZGpCF7h1EjrIR7hKv9PaIA9F7wkyNvwOQCW/Hzp6SKO
-Q/Jf9zw9asFOicHq0iCf4FlwkX9sYBTXjVnDWYKQ0Z/97S0gwjkcTC+Uq+wKWv1F
-AbpMhGCKdR+I2cxPwYz6gLjuY78CG4qRiCp4zls1b33L1xlY6SHkxbOQ8dDVNrta
-LfqzqKoKTb5DsdQHqx9Bq2b74QG9xtsrqi7lv4dFrl9UDmbltc48ydtHomhN923h
-JANWDUtarDb5b2DsHnix1zFjRrdhX4RKHx1ocCajJPZM8u74nDkr0v1uLB/SNUyY
-RVTIDk6MY7bZvIk4lLpN
-=5Kt1
+iQEcBAEBAgAGBQJSwZ47AAoJEKllVAevmvms7nkH/jgHsNU+zkkEyQXYNr6mokRI
+cicSUgRLMThGI9d0x0FMkH+XP37YPcS/WkV4WZhyNa36/6ZoWVUJZZ4Nxnmm5iKm
+bHncQlJmfAeSYI6zSbYaIV6lMZPEOr/mqbosvkodQq+cEGVRzbZbg6pdGelTUyzt
+eTNmocm5oBJwIq/OZagMoMaMDI3iIIAiQejIE/6XjttgE0jIGwWbWHavgVkovLTA
+gu3YfDerQq0RZ6WYg5wDRaVOCmJWxt6ninFNd5xIgNtZ+fekU3fAOpXHZZHfmr8Y
+44f3obbH7sS7Bqgsw9wgiOsNw9LSZ2H+cgHXTRl1l813ab2x7bFq35q+V3UcWbM=
+=BVbl
 -----END PGP SIGNATURE-----
