@@ -1,36 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/06/2
-Message-ID: <CABbbngAhkgEVTjf=Nt26zNJAhpemnAMG5uqoF9z8Ov6QRBwcvA@mail.gmail.com>
-Date: Wed, 6 Nov 2013 10:32:37 -0800
-From: Forest Monsen <forest.monsen@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/6
+Message-ID: <20131230124640.GB53544@dojo.mi.org>
+Date: Mon, 30 Dec 2013 07:46:40 -0500
+From: "Mike O'Connor" <mjo@...o.mi.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE to the ntp monlist DDoS issue?
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 3, 2013 at 8:36 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+There's a recent rash of DDoS involving the monlist functionality
+in older ntp.org ntp.  Has anyone thought about assigning a CVE to
+this?  It looks like the issue may have been addressed back in 2010, 
+but only in the context of ntp.org's "dev" tree, not "stable".  
 
-> > SA-CONTRIB-2013-083 - Quiz - Access Bypass
-> > https://drupal.org/node/2123995 (This appears to me to be two
-> > issues; an access bypass, and an access bypass leading to
-> > information disclosure.)
->
-> Yes, two issues, two reporters, so CVE SPLIT to two CVE's, I can't
-> match the reporter to the issue though without more info, if you can
-> post that in a follow up it'd be helpful to Mitre.
->
-
-No problem. See below:
+http://bugs.ntp.org/show_bug.cgi?id=1532
+https://cert.litnet.lt/en/docs/ntp-distributed-reflection-dos-attacks
+http://www.symantec.com/connect/blogs/hackers-spend-christmas-break-launching-large-scale-ntp-reflection-attacks
 
 
-> Please use  CVE-2013-4500 for Drupal SA-CONTRIB-2013-083 - Quiz -
-> Access Bypass in deleting quiz results
->
+-- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"To collect sulphur, hold a deacon over a flame..."        -Anguished English
 
-Reported by 'nirvanajyothi', https://drupal.org/user/252387
-
- Please use CVE-2013-4501 for Drupal SA-CONTRIB-2013-083 - Quiz -
-> Access Bypass in viewing quiz results
-
-
-Reported by 'Cat Hirst,' https://drupal.org/user/162748
-
+Content of type "application/pgp-signature" skipped
