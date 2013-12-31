@@ -1,36 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/10
-Message-ID: <20130711180519.GG18562@kludge.henri.nerv.fi>
-Date: Thu, 11 Jul 2013 21:05:19 +0300
-From: Henri Salo <henri@...v.fi>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, plugins@...dpress.org, moderators@...db.org
-Subject: Re: CVE request: WordPress plugin category-grid-view-gallery XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/31/2
+Message-ID: <52C2660D.2030307@delphij.net>
+Date: Mon, 30 Dec 2013 22:37:01 -0800
+From: Xin Li <delphij@...phij.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE to the ntp monlist DDoS issue?
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 11, 2013 at 11:59:13AM -0600, Kurt Seifried wrote:
-> On 07/10/2013 08:12 PM, Henri Salo wrote:
-> > Can I get 2013 CVE identifier for XSS vulnerability in WordPress
-> > plugin category-grid-view-gallery, thanks.
-> > 
-> > Plugin page:
-> > http://wordpress.org/plugins/category-grid-view-gallery/ Original
-> > advisory: http://seclists.org/bugtraq/2013/Jul/17 Version affected:
-> > 2.3.1 (older probably affected too) PoC:
-> > https://example.com/wp-content/plugins/category-grid-view-gallery/includes/CatGridPost.php?ID=44%22%3E%3Cimg%20src=%22http://%22%20onerror=alert%28document.cookie%29;%3E
-> >
-> >  Not yet fixed as author did not contact vendor. Top 1277 plugin by
-> > popularity. WordPress guys could you coordinate this with plugin
-> > developer, thanks?
-> > 
-> > --- Henri Salo
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+On 12/30/13, 4:46 AM, Mike O'Connor wrote:
+> There's a recent rash of DDoS involving the monlist functionality 
+> in older ntp.org ntp.  Has anyone thought about assigning a CVE to 
+> this?  It looks like the issue may have been addressed back in
+> 2010, but only in the context of ntp.org's "dev" tree, not
+> "stable".
 > 
-> Can you confirm the vulnerability? I don't see any follow up
-> emails/etc. Thanks.
+> http://bugs.ntp.org/show_bug.cgi?id=1532 
+> https://cert.litnet.lt/en/docs/ntp-distributed-reflection-dos-attacks
+>
+> 
+http://www.symantec.com/connect/blogs/hackers-spend-christmas-break-launching-large-scale-ntp-reflection-attacks
 
-This is the confirmation. I manually tested this in 2.3.1 version.
+Both as a mitigation to this attack and a best practice, I think all
+public facing ntpd should configured to have 'nomodify nopeer noquery
+notrap' as default restrictions.  Something like:
 
----
-Henri Salo
+===
+restrict default nomodify nopeer noquery notrap
+restrict -6 default nomodify nopeer noquery notrap
+restrict 127.0.0.1
+restrict -6 ::1
+restrict 127.127.1.0
+===
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Cheers,
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCgAGBQJSwmYNAAoJEJW2GBstM+nsyqIP/2H6C6DFUqN1y0gApoEy3iKg
+JR6UjMmaOMLCNl6uXIQ730sSf9YxY5l+L1he0BI/q4+rCXN11E+2cLrAFHnNU/I4
+sR07wsM26COTxgdpqrEE32h4ODjyz9d3NPipXAvZsfMRy2DHrxEhPRGpBfmyjIjj
+JjVB6YU/rN57zgOu5zVq4GUR71KlYgL05M2wEyg+QItk2T7Tyvtt0UhBUgE8lzrp
+wjSlHuaAkatsk9+Z2zJCVPkEF6261ewCFCJ7Qs5QIWMyRI3THDS+V5BCDMH3/7RT
+R8LvXE0InEpW4Nu8EtbmoutVLy5P1yoCJyHFEa5GkmzqE3BEY7wteEj9aRb723Ae
+CucZeYUG8dIw+bHe1fYI7bzhUXrJvYeVUaUqEKAqv9udi7iplHJoln2N1fDdNce6
+leGxd6iCTNGikW4urdDPm6tSIdR8LuY4ifULAKQOa7jyKsnYplvwCiMpxN/HdDud
+/FStQW+OcvEVj7Carx9LwNdTb7HnW1G7EurBFJNKZ+Q37HyAwdz+omfapkqFJfjX
+bPVN2qbgUyc1/dTY+Cy/Z/2MEK7PPthmcxwXKNDS6+qEyQTc7cT1giO0xyCsiC05
+d6Yh0QKLCf0KPrWWuGmgMnQIT2ki9EQunEcZMbseLWhSq0hhzvwhMYBqV0dE9Fki
+VAiGvTbqac+6LWN3VLo9
+=UVX1
+-----END PGP SIGNATURE-----
