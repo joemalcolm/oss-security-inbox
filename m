@@ -1,76 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/4
-Message-ID: <50F7A3E2.6030409@redhat.com>
-Date: Thu, 17 Jan 2013 00:10:26 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: gnome-keyring does not discard stored secrets in some cases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/31/1
+Message-ID: <CAKWKj9Oy5XQ3iMiQABNAhP2+0Q04pzu0OY=68MgevKOq9qq5Kg@mail.gmail.com>
+Date: Tue, 31 Dec 2013 09:10:11 +0800
+From: Steve Kenworthy <steveyken@...il.com>
+To: cve-assign@...re.org
+Cc: henri@...v.fi, oss-security@...ts.openwall.com, joernchen@...noelit.de
+Subject: Re: CVE request: Fat Free CRM multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Thanks for assigning.
 
-On 01/16/2013 10:27 PM, Florian Weimer wrote:
-> * Kurt Seifried:
-> 
->>> I've verified that Fedora 17 (GNOME 3.4) does not discard
->>> cached keys on suspend and hibernate, either.  (Swap is
->>> encrypted, though, at least I selected that in the installer.)
->>> However, I suspect that users expect that suspend (but perhaps
->>> not hibernate) does not discard keys.
->> 
->> Just to confirm, is this behavior documented at all in the gnome 
->> keyring documentation (e.g. that it does or doesn't do it)?
->> Thanks.
-> 
-> I think the clearest part is 
-> <https://live.gnome.org/GnomeKeyring/SecurityPhilosophy>, which 
-> proclaims:
-> 
-> | * Try to keep your secrets from being swapped out or otherwise |
-> written to disk. | * Hunkering down and discarding all secrets when
-> your computer is |   locked.
-> 
-> The documentation for gnome_keyring_lock_all_sync 
-> <http://developer.gnome.org/gnome-keyring/unstable/gnome-keyring-Keyrings.html#gnome-keyring-lock-all-sync>
+I can confirm for issue 3 that the disclosure also involves to_xml. Please
+assign the additional CVE ID.
+
+Re: denial of service, I don't believe this is an issue as the exploit only
+relates to read operations.
+
+
+
+On Sat, Dec 28, 2013 at 8:23 PM, <cve-assign@...re.org> wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 >
-> 
-says:
-> 
-> | Lock all the keyrings, so that their contents may not eb
-> accessed | without first unlocking them with a password.
-> 
-> In addition, 
-> <http://developer.gnome.org/gnome-keyring/unstable/gnome-keyring-Non-pageable-Memory.html>
+> > http://www.phenoelit.org/stuff/ffcrm.txt
+> > http://seclists.org/fulldisclosure/2013/Dec/199
+> > https://github.com/fatfreecrm/fat_free_crm/issues/300
+> >
+> https://github.com/fatfreecrm/fat_free_crm/wiki/Fixing-security-vulnerabilities-%2827th-Dec-2013%29
 >
-> 
-suggests that locked memory is never written to disk.  This is not
-> true with hibernation.
+> > 1. Known Session Secret
+> >
+> https://github.com/fatfreecrm/fat_free_crm/commit/93c182dd4c6f3620b721d2a15ba6a6ecab5669df
+>
+> Use CVE-2013-7222.
+>
+>
+> > 2. Lack of CSRF Protection
+> >
+> https://github.com/fatfreecrm/fat_free_crm/commit/a7fedbb36388bad0c0f32b2346481e0ea126dea6
+>
+> Use CVE-2013-7223.
+>
+>
+> > 3. Default to_json for models
+> >
+> https://github.com/fatfreecrm/fat_free_crm/commit/cf26a04b356ad2161c4c6160260eb870a3de5328
+>
+> Use CVE-2013-7224.
+>
+>
+> > 4. Multiple SQL Injections
+> >
+> https://github.com/fatfreecrm/fat_free_crm/commit/078035f1ef73ed85285ac9d128c3c5f670cef066
+> >
+> https://github.com/fatfreecrm/fat_free_crm/commit/d4b2de81a4d8c1b201482edcb2488ed9280a65fd
+>
+> Use CVE-2013-7225.
+>
+> For item 3: if there is an information-disclosure vulnerability
+> involving to_xml, please let us know and we can assign an additional
+> CVE ID. The joernchen advisory mentioned only to_json, and therefore
+> to_xml has a different discoverer and may require a separate CVE ID.
+>
+> If there is a denial of service issue involving :delete, please let us
+> know and we can assign an additional CVE ID. The joernchen advisory
+> mentioned only "renders JSON requests with a full JSON object," and
+> therefore :delete has a different discoverer and may require a
+> separate CVE ID.
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+>
+> iQEcBAEBAgAGBQJSvsH6AAoJEKllVAevmvmsjksIAMeaH2HBfTrSNt83LAy1Sk0c
+> Q+lexLe6vIsOQLeh02/vk4zk/piqcuQGcmTmpEQ+X5lT+7zwrBoZAe3/g36Nb+mM
+> uJh9gBzsJkq0JUnqRVn84e9gxnJpqXjUB0aRRhaFrMBKB5jdTDFpWzKWS77KVzhI
+> QlgEMBObp4WUQHjAfsZcN+cs+xWjMVvR7+rk1AWJ9hAjT02UBGigVNWe5PmDrb8z
+> /yqcrQiEFTENbdQKSjNxlSSoEFWxEUF1b4PInNl7451ep0Ee2ZKoi9bte8h8pgsP
+> rOzEsPzu0yevLI7Wgrvl+clSdesuvIi6/2kGklv5LTsM23Rw/spat4nkAuFPKlU=
+> =PZmt
+> -----END PGP SIGNATURE-----
+>
 
-Perfect that's exactly what I needed to know. Please use CVE-2012-6111
-for this issue.
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ96PiAAoJEBYNRVNeJnmT8EwP/09jnBQcIT3SQwlMGEbc7Y6f
-VuQvqt1iYvyBRKGnSQu5IJ3LC/JN3cDjKOFROGkS0qUKuF0QD++q+YKU2NSslAJ4
-/hh56vu/zHhxo38nxH4qhBJAA6oQy5xKBsPiIOUnhB9xbr8cq2RWOwSC4+UXIrP2
-1Fr0lUR8v+cAQ5PbJhl1Bsy/TDmLzpXR4db/4mgZ0o484D+D4mHipIyYqIPIGWoH
-K97Jg5D20K3T4t2UOAelcbgl0OPEcDhK3YUOI7YPUuynrVN3mF28yZTfwdUX88ZD
-BXhJfT8AG1gavzZFNZdi8RhpTbV1K+IcB/tpLVlhJdppad6a0A9K+/GEIMu+Rkxb
-+kcbHaWfl+mavAfkI5WEBjfhbg5JyqgIlh+s3g0mhiiTWq9AUeZwsqYOE5/5orxQ
-AM9x8K8w/bKqP2O3o+lk0S8xA9ZmGymOhHMW0TgOsotpzeAi/CQn3LL4knRBe55L
-u3cJakmvro1t7mh9dxhidbpEbl6gByqsat64E9JJUFfJEkRhwawvq6RYcstR+T4X
-vpZabyoSYzCPMttIwG1xbfdo8zOzTN6Tl018UQxLNcshB8vkF+ETwIAhdrzf7Rlj
-gb0AVTMpeS2NnUXN1w/2aPPccW1vPFY5EOfB1x5F0Cw56fXtmyFnTBv9824Gf107
-GDa1dgzuDeKFVENnrJ/f
-=y9Rt
------END PGP SIGNATURE-----
