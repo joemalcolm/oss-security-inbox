@@ -1,49 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/12/3
-Message-ID: <87bo9j36jd.fsf@mid.deneb.enyo.de>
-Date: Fri, 12 Apr 2013 21:14:46 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/31/7
+Message-ID: <52C27568.8030100@redhat.com>
+Date: Tue, 31 Dec 2013 00:42:32 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2013-1900 looks like an OpenSSL bug
+Subject: Re: CVE request: Linux kernel: net: memory leak in recvmsg handlermsg_name & msg_namelen logic
 Content-Type: text/plain; charset=utf-8
 
-I was made aware of this commit to the PostgreSQL sources:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-commit 0d1ecd6300191a450978ca2fcd12bbbb7c5e65e6
-Author: Tom Lane <tgl@....pgh.pa.us>
-Date:   Wed Mar 27 18:50:21 2013 -0400
+On 12/31/2013 12:06 AM, P J P wrote:
+> Hello,
+> 
+> Linux kernel built with the networking support(CONFIG_NET) is
+> vulnerable to an information leakage flaw in the socket layer. It
+> could occur while doing recvmsg(2), recvfrom(2) socket calls. It
+> occurs due to improperly initialised msg_name & msg_namelen message
+> header parameters.
+> 
+> A user/program could use this flaw to leak information from kernel 
+> memory bytes.
+> 
+> Upstream fix: ------------- ->
+> https://git.kernel.org/linus/f3d3342602f8bcbf37d7c46641cb9bca7618eb1c
+>
+>  Reference: ---------- ->
+> https://bugzilla.redhat.com/show_bug.cgi?id=1039845
+> 
+> Thank you. -- Prasad J Pandit / Red Hat Security Response Team
 
-    Reset OpenSSL randomness state in each postmaster child process.
-    
-    Previously, if the postmaster initialized OpenSSL's PRNG (which it will do
-    when ssl=on in postgresql.conf), the same pseudo-random state would be
-    inherited by each forked child process.  The problem is masked to a
-    considerable extent if the incoming connection uses SSL encryption, but
-    when it does not, identical pseudo-random state is made available to
-    functions like contrib/pgcrypto.  The process's PID does get mixed into any
-    requested random output, but on most systems that still only results in 32K
-    or so distinct random sequences available across all Postgres sessions.
-    This might allow an attacker who has database access to guess the results
-    of "secure" operations happening in another session.
-    
-    To fix, forcibly reset the PRNG after fork().  Each child process that has
-    need for random numbers from OpenSSL's generator will thereby be forced to
-    go through OpenSSL's normal initialization sequence, which should provide
-    much greater variability of the sequences.  There are other ways we might
-    do this that would be slightly cheaper, but this approach seems the most
-    future-proof against SSL-related code changes.
-    
-    This has been assigned CVE-2013-1900, but since the issue and the patch
-    have already been publicized on pgsql-hackers, there's no point in trying
-    to hide this commit.
-    
-    Back-patch to all supported branches.
-    
-    Marko Kreen
+Please use CVE-2013-6463 for this issue.
 
-I believe it is wrong to fix this in PostgreSQL.  Rather, this is a
-bug in the OpenSSL fork protection code.  It should either install a
-fork hook, or reseed the PRNG from /dev/urandom if a PID change is
-detected.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
 
-Comments?
+iQIcBAEBAgAGBQJSwnVoAAoJEBYNRVNeJnmTtWEQAMzznw0nuad4vG0SnyDguNda
+1FcFYxt8/VYyhOrtbN35NZgV4I51/KocNghCFlXicRIGl7XFIsXQ5XVaeLsUOGzL
+0DPURFPTzX11NMQOHs7vVcz7UJ65QldvzvZnfGGSkMiX2W8Z7vIZce1AdM3t/aQw
+rqupmJ7h+WFwvJdNp7fzqvS1dt0gtfOB6OCtXqUDCeTp5Xo19GaYaTNN2fKW7TN+
+9GA0eeJDphP937zc8tO07fVC7tTruj5ZFJw1fsYCX9vEUcPZF3xrqHDJ+MmJRQJh
+nHGKjlq1uQ3lX/8kt4M/tdYPM9a13Go4+HSk9y+zSSgM7ycpSLs+2+3L5YRMRlnu
+h8VMwuijLdYMYawpNtBv8x74sh4zUwRPJz+r24/a5ordwnuzXpkUsp7tzTE80Or5
+FciQizomMfAySnBSvHpmNOZL4lMTa6DKW0jlv89iKd1Q9TsRKgq0RXumvtEQVweR
+GrcG/uzmL/cmTDejC10R57/OvOeVnorWmxRmLTwaqAG8Kq9UQSdrmbc5JCnGoOJ4
+GKDcAfwmdqLJHEk6J48b74lmr3ZZuiuNu8cXZtuEueh4eoVD9IKjXxaTR0yk0BBu
+61Bg7+5T0OKWRNMAf74bGmar8CFk0kFOCddKdnn61SYo8b/RivLqL/k06vN11J3/
+UEn7UOTvXU18T2+KqQ4F
+=OyNz
+-----END PGP SIGNATURE-----
