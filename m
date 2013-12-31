@@ -1,88 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/04/9
-Message-Id: <20130704191218.2baafde31bb32970baba99eb@gmail.com>
-Date: Thu, 4 Jul 2013 19:12:18 +0200
-From: Jonathan Salwan <jonathan.salwan@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: OpenVZ security repport - Multiple memory leaks (CVE-2013-2239)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/31/8
+Message-Id: <201312311458.rBVEvqC7006687@linus.mitre.org>
+Date: Tue, 31 Dec 2013 09:57:52 -0500 (EST)
+From: cve-assign@...re.org
+To: stephen.kenworthy@...le.oxon.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, henri@...v.fi, joernchen@...noelit.de
+Subject: Re: CVE request: Fat Free CRM multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
+> I can confirm for issue 3 that the disclosure also involves to_xml.
+> Please assign the additional CVE ID.
 
-CVE-2013-2239 - Multiple memory leaks in OpenVZ kernel 2.6.32 (042stab080.1)
-
-
-Description
-===========
-
-Two memory leaks was discovered in the versions before vzkernel
-patch 042stab080.2.
-
-One memory leak in ploop:
-
-    The ploop_getdevice_ioc function in drivers/block/ploop/dev.c in 
-    the vzkernel patch before 042stab080.2 does not initialize a certain 
-    length variable, which allows local users to obtain sensitive 
-    information from kernel stack memory.
-
-One memory leak in quota:
-
-    The compat_quotactl function in fs/quota/quota.c in the vzkernel patch 
-    before 042stab080.2 does not initialize a certain length variable, 
-    which allows local users to obtain sensitive information from kernel 
-    stack memory.
-
-Fixed in the 042stab080.2
-
-  - [security/ploop] memory info leak fixed (PSBM-20690)
-  - [security/quota] memory info leak fixed (PSBM-20690)
+Use CVE-2013-7249.
 
 
-Classification
-==============
+> Re: denial of service, I don't believe this is an issue as the exploit
+> only relates to read operations.
 
-Location    : Local Access Required 
-Attack Type : Information Disclosure, Input Manipulation 
-Version     : vzkernel 2.6.32 (Patch 042stab080.1)
-Impact      : Loss of Confidentiality 
-Solution    : Patch / RCS 
-Disclosure  : Vendor Verified
+OK, there is no CVE assignment for this. Just for clarification, the
+"denial of service" theory was related to:
 
+  https://github.com/fatfreecrm/fat_free_crm/commit/cf26a04b356ad2161c4c6160260eb870a3de5328
 
-References
-==========
+specifically:
 
-CVE ID    : CVE-2013-2239
-Changelog : http://wiki.openvz.org/Download/kernel/rhel6-testing/042stab080.2
-Credit    : Jonathan Salwan (Sysdream Security Lab)
+   -  resources :users, :id => /\d+/ do
+   +  resources :users, :id => /\d+/, :except => [:index, :destroy] do
 
+and:
 
-Timeline
-========
+   -   it "recognizes and generates #destroy" do
+   -      { :delete => "/users/1" }.should route_to(:controller => "users", :action => "destroy", :id => "1")
+   +    it "doesn't recognize #destroy" do
+   +      { :delete => "/users/1" }.should_not be_routable
 
-2013-06-16 : Bugs found
-2013-06-19 : Bugs reported
-2013-06-28 : Bugs fixed
-2013-06-29 : CVE request
-2013-07-04 : CVE assigned
+in which a reader might infer that a "destroy" of some data associated
+with a user account would be a denial of service.
 
+Our understanding now is that the presence of ":destroy" in the added
+code string:
 
+   , :except => [:index, :destroy]
 
-Thanks,
+does not prevent any type of attack, and therefore it is not a
+vulnerability fix.
 
-- -- Jonathan
-
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.20 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJR1az4AAoJEH9bXKkQj2JzLYIIAKQ7O9mggrngzbiF2sPl4QQt
-HH2li83jltUPRJGa9lAeaMFmOrh4VHW4DZOlKpN5Q/iYRzThCr8t6H/gnn2HeHXA
-GBLurAFv2zdKswa87Dzr9B0ySy3O7iuQjzjYQwTnQm+ZWNsKbEyrQVR1uG/5qjH8
-UqkhHOqN5jJqFUlfhrLNOPN2O4JYPf9ZyvBklHkKHySmSYhER08Hyy382+Htu3u/
-D4uiIhhsORBldAss5t8bcxzUoZDi5qsIFWYux0y5Vo5n9RUw/xmvjTWAlfEKxGEa
-uwEXHWDXGVzf41X6B8neBpqfsBF4pFC8LPBciKT/cchR1gNjtiIklaFFgZwlI28=
-=672Y
+iQEcBAEBAgAGBQJSwtq0AAoJEKllVAevmvmsd7IH/1zw1OPyRZMnweFANOFheRMg
+QfJxobXUXBHa30uZeRaOBujRNzx/ptTl0CrfyCSDpktcXQ803TW8MmfOCwEfzvym
+8QtH41XTxkXDzVNujl5jtVCMCEw9+/zPYvvsRT9vrQPNp1F2cIkUxcggn3PGJ4Et
+Exuo83rI5ciyWgPOdB/s748PhPNRPIw8rx5zahxw9fepsxNnlXngdpGmxa6dD4YU
+NZ7pNjc2RpUq22gVcSks17/JnqetCrvkwmUgTHT0VbYhu/c+Zf7DUd/vL6uvkmxh
+GUUJsmsP/oUwmWrw8a4m2/cKFYMjORsOYK1KU2IjhtezddiiysOtg6E/eEs1SZQ=
+=RNUF
 -----END PGP SIGNATURE-----
