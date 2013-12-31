@@ -1,57 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/27/10
-Message-Id: <201309271257.r8RCusBJ010451@linus.mitre.org>
-Date: Fri, 27 Sep 2013 08:56:54 -0400 (EDT)
-From: cve-assign@...re.org
-To: seth.arnold@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: graphite CVE-2013-5903 confusion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/31/6
+Message-ID: <alpine.LFD.2.10.1312311234230.23217@javelin.pnq.redhat.com>
+Date: Tue, 31 Dec 2013 12:36:54 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request: Linux kernel: net: memory leak in recvmsg handlermsg_name & msg_namelen logic
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+   Hello,
 
->However, the checkins from the project appear to use this CVE for unsafe
->use of Python's pickle module:
->
->https://github.com/graphite-project/graphite-web/blob/master/docs/releases/0_9_11.rst
->
->    This release contains several security fixes for cross-site scripting
->    (XSS) as well as a fix for a remote-execution exploit in graphite-web
->    (CVE-2013-5903).
+Linux kernel built with the networking support(CONFIG_NET) is vulnerable to an 
+information leakage flaw in the socket layer. It could occur while doing 
+recvmsg(2), recvfrom(2) socket calls. It occurs due to improperly initialised 
+msg_name & msg_namelen message header parameters.
 
-This use of CVE-2013-5903 is a typo. The original CVE for this
-disclosure was correctly entered by the researcher at:
+A user/program could use this flaw to leak information from kernel memory 
+bytes.
 
-  http://ceriksen.com/2013/08/20/graphite-remote-code-execution-vulnerability-advisory/
+Upstream fix:
+-------------
+   -> https://git.kernel.org/linus/f3d3342602f8bcbf37d7c46641cb9bca7618eb1c
 
-(Also, the original CVE was not intended to be an XSS CVE.)
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1039845
 
-The correct assignments are:
-
-CVE-2013-5093: unsafe use of Python's pickle module in render/views.py
-
-CVE-2013-5942: unsafe use of Python's pickle module in other 0.9.10
-               files that were not mentioned in the ceriksen.com post
-
-CVE-2013-5943: XSS, as reported in 0_9_11.rst
-
-CVE-2013-5903: a rejected CVE - a use of this CVE could conceivably mean
-               any of CVE-2013-5093, CVE-2013-5942, or CVE-2013-5943
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSRX+pAAoJEKllVAevmvmsmmMH/AyhSi9AnNfHpbepIvN5NcfY
-V4JEnmNc6J2TA0VORCtRlQl0BKjCptjijPUQMTKIf1/ehdKnPwhrfyRW/kFqh/wk
-80uO6inZ/s8pOqb+08A4iLwTB2KDX/nqqJlvtsgv7OSyS1zLHWEmb3bX4o+P/sxC
-0/HPPJ5zuVAN+AO3pZHEEgJNsbPVx9voPZ6a7NwFiE0XG5jE5wCvOYtgm7R04yHM
-OdVkLDk7nb4OojjvrmSekoTSAv0QZQtALK2mFiYl3gFBFhu/pk9OBqlpMEDoD+ck
-uyQ+ltq1KULW8Pm00sTB0ED+J8itQsronVluCKXVA/rbAQvvpfFMnyGVSGueAW4=
-=B+3z
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
