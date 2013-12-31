@@ -1,26 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/16/9
-Message-ID: <516D41C5.9080009@redhat.com>
-Date: Tue, 16 Apr 2013 14:19:17 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/31/4
+Message-ID: <CABVvea15aMSR5ZB9e-BppnSzGanbCeCgBq2JRx3Mj=K+jtLgUw@mail.gmail.com>
+Date: Tue, 31 Dec 2013 14:33:57 +0800
+From: Yongjian Xu <xuyongjiande@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Andy Lutomirski <luto@...capital.net>, "linux-kernel@...r.kernel.org" <linux-kernel@...r.kernel.org>
-Subject: Re: Summary of security bugs (now fixed) in user namespaces
+Subject: CVE request - kernel: char: Int overflow in lp_do_ioctl()
 Content-Type: text/plain; charset=utf-8
 
-On 04/13/2013 07:16 PM, Andy Lutomirski wrote:
-> I previously reported these bugs privatley.  I'm summarizing them for
-> the historical record.  These bugs were never exploitable on a
-> default-configured released kernel, but some 3.8 versions are
-> vulnerable depending on configuration.
+Hi,
 
-Looking at this list, is there some way to restrict this new 
-functionality to, say, membership in a certain group?  At present, most 
-system users (daemons) do not need this functionality, so it would make 
-sense to restrict access to it.
+https://git.kernel.org/cgit/linux/kernel/git/next/linux-next.git/commit/?id=1c2de820d66d704c7d6fffdd872b7670eb4e29bb
 
-Or is the expectation that we disable CONFIG_USER_NS until things 
-stabilize further?
+This is an integer overflow, and can be controlled via ioctl.
 
--- 
-Florian Weimer / Red Hat Product Security Team
+arg comes from user-space, so int overflow may occur in this:
+LP_TIME(minor) = arg * HZ/100;
