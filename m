@@ -1,63 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/26/9
-Message-ID: <51CB4432.3070606@redhat.com>
-Date: Wed, 26 Jun 2013 13:42:42 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/31/5
+Message-ID: <20131231070501.GA5874@kroah.com>
+Date: Mon, 30 Dec 2013 23:05:01 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
+Subject: Re: CVE request - kernel: char: Int overflow in lp_do_ioctl()
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Dec 31, 2013 at 02:33:57PM +0800, Yongjian Xu wrote:
+> Hi,
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/next/linux-next.git/commit/?id=1c2de820d66d704c7d6fffdd872b7670eb4e29bb
+> 
+> This is an integer overflow, and can be controlled via ioctl.
+> 
+> arg comes from user-space, so int overflow may occur in this:
+> LP_TIME(minor) = arg * HZ/100;
 
-On 06/26/2013 12:36 PM, Vincent Danen wrote:
-> I don't believe a CVE has been assigned to this issue yet.
-> 
-> It was reported that Nagios 3.4.4 at least, and possibly earlier 
-> versions, would allow users with access to Nagios to obtain full
-> access to the servicegroup overview, even if they are not
-> authorized to view all of the systems (not configured for this
-> ability in the authorized_for_* configuration option).  This
-> includes the servicegroup overview, summary, and grid.
-> 
-> Provided the user has access to view some services, they will be
-> able to see all services (including those they should not see).
-> Note that the user in question must have access to some services
-> and must have access to Nagios to begin with.
-> 
-> This has not yet been corrected upstream.
-> 
-> References:
-> 
-> http://www.mail-archive.com/nagios-users@lists.sourceforge.net/msg39749.html
->
->  http://tracker.nagios.org/view.php?id=456 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714171 
-> https://bugzilla.redhat.com/show_bug.cgi?id=978531
-> 
-> 
-> Thanks.
+What exactly can happen if you set that value to a really high number?
+(hint, I really don't think anything happens at all, no matter what you
+set that value to...)
 
-Please use CVE-2013-2214 for this issue.
+How does this warrent a CVE?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+thanks,
 
-iQIcBAEBAgAGBQJRy0QxAAoJEBYNRVNeJnmTmiQQANqHxjDihPtiDF+fOMIEm3Gg
-7jegPnW574tdZuiPXSr5bsoUKz9t6CnZ9s0TRNogZfv0w7WiXEQs8uPsttHwAbAP
-xsLOI+TJa7VryrCW6J8Nad75zYwuYVsuiwHU8X1T6eijbinr6rTJlTRniDrf16la
-5Dn+pu3077Zcao3M2rcsLrtJLDp2eGA0j+n9c1CCA3qgYZ52KjGYJ2GHBuR/lwY8
-56+o0W5x4TBxHoRDqYXEb5SIyzMFlvQFWFJUWUGwqdFV+4LR9Kcp8BcoraMtDuLg
-Wor1CBuVB4RaYVx9ljb0IcZiQhLG3MllLWe32mXQKQeIvCTtXI2BWxq9g3Q4brzX
-V6DL5GFBaGg+zhDIqzwN5LMYsNeYdss/QR8fltnCg6ijUz4MrlEr+J7gtwPipa0A
-N+muSm+tValcNRXK1lzz5Emrqz3BOSxIBGuQSNcskO+hpIjpljmUEZ5rprF8FV6v
-HEPNgxFLsQ004J0tLjFI1H+CapTpIPIXtOCIYaMuMuwy/O8Q56fxXZSR0EINF/zu
-DKjhA5hZd8ICUHqScChopSR7ur7T+XxTD42N18WiPi8+DbhEXuYBWqdRNt3ki8Tc
-StVX+mxA4Sd2AHU6wa8G04jaq/MTm5MMaEGkjCmbO6SzpbEuhLDcRrImVX+3Svza
-Couxa/Nd733MeYJGcvz6
-=wrcn
------END PGP SIGNATURE-----
+greg k-h
