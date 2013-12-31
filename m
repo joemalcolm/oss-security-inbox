@@ -1,46 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/5
-Message-ID: <20130226175601.GA5984@dq>
-Date: Tue, 26 Feb 2013 11:56:02 -0600
-From: "Joshua J. Drake" <oss-sec-vfat@...p.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request - Linux kernel: VFAT slab-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/31/3
+Message-ID: <alpine.LFD.2.10.1312311205550.23034@javelin.pnq.redhat.com>
+Date: Tue, 31 Dec 2013 12:09:24 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: Linux kernel: net: memory leak in recvmsg handler msg_name & msg_namelen logic
 Content-Type: text/plain; charset=utf-8
 
-All,
+  Hello,
 
-I'd like to request a CVE for an issue leading to a buffer overflow of
-a slab allocated buffer in the VFAT file system code. The issue
-manifests when converting UTF8 characters to UTF16 inside the
-"utf8s_to_utf16s" function. Reaching this code requires writing to a
-VFAT partition that has been mounted with the "utf8" option. Ubuntu
-10.04 mounts USB sticks with this option by default. Most Android
-devices mount eMMC/SD cards/etc with this option.
++-- On Tue, 10 Dec 2013, Marcus Meissner wrote --+
+| CVE-2013-6405 covers parts of that already I think and could be extended?
 
-The issue affects kernels prior to 3.2. Many Android devices remain
-affected today.
+So, do we use the same CVE for this issue too? Or does it qualify for a 
+separate one?? (just checking) I think a separate CVE would be good, but not 
+sure how such cases are handled previously.
 
-I'm not entirely sure when the issue was introduced at this moment. It
-appears to have been introduced here:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=74675a58507e769beee7d949dbed788af3c4139d
-
-The issue was fixed here:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=0720a06a7518c9d0c0125bd5d1f3b6264c55c3dd
-
-The issue was partially disclosed here (this spurred my investigation):
-http://www.exploit-db.com/exploits/23248/
-
-Props to G13 for finding it. It's pretty disappointing that
-Google/Android security teams (and of course Linux maintainers) didn't
-responsibly disclose the issue so other Linux kernel packagers could
-package a fix.
-
-If anyone wishes to contact me off-list with questions or concerns,
-feel free. 
-
-Thanks,
-
-Joshua J. Drake
-jduck
-
-Download attachment "signature.asc" of type "application/pgp-signature" (191 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
