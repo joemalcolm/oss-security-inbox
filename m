@@ -1,51 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/1
-Message-Id: <201402200510.s1K5APxn013085@linus.mitre.org>
-Date: Thu, 20 Feb 2014 00:10:25 -0500 (EST)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for CGI::Application information disclosure flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/02/1
+Message-ID: <CAKWKj9MKQXUUAbPRa6F0xj+T_bnHzyRd33adH1+1QkhdMkoX0Q@mail.gmail.com>
+Date: Thu, 2 Jan 2014 10:16:05 +0800
+From: Steve Kenworthy <steveyken@...il.com>
+To: cve-assign@...re.org
+Cc: Stephen Kenworthy <stephen.kenworthy@...le.oxon.org>, oss-security@...ts.openwall.com,  Henri Salo <henri@...v.fi>, joernchen@...noelit.de
+Subject: Re: CVE request: Fat Free CRM multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Thanks for CVE-2013-7249.
 
-> it would unexpectedly dump a complete set of web query data and server
-> environment information as an error page
+Re: "destroy", ordinarily, this would be true as that commit fragment just
+removes the destroy route. However, in this case there has not been any
+actual code to delete the user in this controller (user deletion is handled
+elsewhere in a separate admin section). The effect of the "  , :except =>
+[:index, :destroy]" commit was simply to tighten up the routes, rather than
+leaving exposed a route that didn't actually perform a delete function.
 
-> https://rt.cpan.org/Public/Bug/Display.html?id=84403
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=739505
-> https://github.com/markstos/CGI--Application/pull/15
-> https://github.com/markstos/CGI--Application/commit/61d327646f01fe
-> https://bugzilla.redhat.com/show_bug.cgi?id=1067180
+Hope that makes sense. Let me know if you have any other outstanding
+questions.
 
-> until 2008, if you overloaded setup() - which everyone does - you had
-> NO start->dump_html default at all in run_mode!
+
+
+On Tue, Dec 31, 2013 at 10:57 PM, <cve-assign@...re.org> wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 >
-> After the change, you ALWAYS have dump_html as a default run_mode
-> unless you explicitly redefine it in your code.
+> > I can confirm for issue 3 that the disclosure also involves to_xml.
+> > Please assign the additional CVE ID.
 >
-> Behaviour of an otherwise unmodified application changed due to an
-> update of Application.pm. Data that should not be shown AND was not
-> shown when using versions before v4.19 was now on screen. Customers
-> were not amused.
+> Use CVE-2013-7249.
+>
+>
+> > Re: denial of service, I don't believe this is an issue as the exploit
+> > only relates to read operations.
+>
+> OK, there is no CVE assignment for this. Just for clarification, the
+> "denial of service" theory was related to:
+>
+>
+> https://github.com/fatfreecrm/fat_free_crm/commit/cf26a04b356ad2161c4c6160260eb870a3de5328
+>
+> specifically:
+>
+>    -  resources :users, :id => /\d+/ do
+>    +  resources :users, :id => /\d+/, :except => [:index, :destroy] do
+>
+> and:
+>
+>    -   it "recognizes and generates #destroy" do
+>    -      { :delete => "/users/1" }.should route_to(:controller =>
+> "users", :action => "destroy", :id => "1")
+>    +    it "doesn't recognize #destroy" do
+>    +      { :delete => "/users/1" }.should_not be_routable
+>
+> in which a reader might infer that a "destroy" of some data associated
+> with a user account would be a denial of service.
+>
+> Our understanding now is that the presence of ":destroy" in the added
+> code string:
+>
+>    , :except => [:index, :destroy]
+>
+> does not prevent any type of attack, and therefore it is not a
+> vulnerability fix.
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+>
+> iQEcBAEBAgAGBQJSwtq0AAoJEKllVAevmvmsd7IH/1zw1OPyRZMnweFANOFheRMg
+> QfJxobXUXBHa30uZeRaOBujRNzx/ptTl0CrfyCSDpktcXQ803TW8MmfOCwEfzvym
+> 8QtH41XTxkXDzVNujl5jtVCMCEw9+/zPYvvsRT9vrQPNp1F2cIkUxcggn3PGJ4Et
+> Exuo83rI5ciyWgPOdB/s748PhPNRPIw8rx5zahxw9fepsxNnlXngdpGmxa6dD4YU
+> NZ7pNjc2RpUq22gVcSks17/JnqetCrvkwmUgTHT0VbYhu/c+Zf7DUd/vL6uvkmxh
+> GUUJsmsP/oUwmWrw8a4m2/cKFYMjORsOYK1KU2IjhtezddiiysOtg6E/eEs1SZQ=
+> =RNUF
+> -----END PGP SIGNATURE-----
+>
 
-Use CVE-2013-7329.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTBYznAAoJEKllVAevmvms7eIH/2A2wmKR1/15a9WPmC2pgyFD
-Ees3KWHHcKXGf/5gXy+ci2e0BPTH61R+k5sJqk3ljHfKGDjsy+4bdFvzoaroM/q5
-NduEjXJHC/+RIsYoZ1ZdXUZbjwa7zDqeaqvcPjy6kQmeinYT4VYHkYioxvveCCZ6
-KomoKkpSfFt01ddsPumw99CVB44yFuhBqfTjCilyJAFqHpMzqxq2JSMbcXwIB1v6
-EBsUnFS0f6mG5iR1yNJbfpUCD5xoOtyty7GtIaGFAvB8jxZn3JZFQzGQ4rTZLh8J
-Xs0IGtMEVA6jP3vdo8LTlQAzvrzgMkMPdbGn0ICSr0O2CW0U1unEMSeG4VugJUA=
-=Ge6r
------END PGP SIGNATURE-----
