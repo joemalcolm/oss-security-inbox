@@ -1,45 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/6
-Message-ID: <5497EF36.6000400@oracle.com>
-Date: Mon, 22 Dec 2014 10:15:18 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/02/9
+Message-ID: <Pine.GSO.4.64.1401021436310.10677@faron.mitre.org>
+Date: Thu, 2 Jan 2014 14:55:09 -0500 (EST)
+From: "Steven M. Christey" <coley@...re.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: can we talk about secure time?
+Subject: Re: Duplicated CVE assignment for bip
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-On 22/12/14 05:51, Hanno Böck wrote:
-> On Sun, 21 Dec 2014 12:31:07 +0100 Florian Weimer
-> <fw@...eb.enyo.de> wrote:
-> 
->>> Some folks want to run their servers within a few milliseconds
->>> of each other, and do not care so much about security or
->>> resiliency.
-> I perfectly understand that some people need more accuracy than
-> tlsdate can give. However it's probably rare, right? I don't see
-> any reason why average consumer hardware (Desktop, smartphone etc.)
-> would have any problem with the 1-2 sec max inaccuracy of tlsdate.
-> 
+Moritz,
 
-Basically to agree with Kurt: reconciling logs across multiple systems
-often requires clocks to agree to within a few milliseconds a most.
-The log files you're trying to reconcile may be from machines on
-different continents as well which is why ntp is so useful: everyone
-has the same idea of time.  The potential for an added or removed
-second at end of of June and December can cause some excitement.
+These are two slightly different issues, although a casual reading of the 
+descriptions does not make that sufficiently clear.
 
-I've also known a one or two second discrepancy break 'make'.   That
-was probably more to do with the fragility of that particular build
-system rather than a a clock synchronization issue, but the point is
-that properly accurate time is important to a lot of people.
+The original CNA assignment of CVE-2013-4550 did not consider that there 
+appear to be two different types of issues, which means a SPLIT of the CVE 
+ID.
 
-jch
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+The issues are disclosed in Bug 261 here:
 
-iF4EAREIAAYFAlSX7y0ACgkQRQu7fpQvo8itMQD9Fbuiov2yuXo+3TOpuQxaD/if
-ZzCPwr93TbZ8PNIuYdYA/jUWPz7KyOTs6+0S8M/WP53pgJyBY77Y4ei72Txl7KrA
-=fN2l
------END PGP SIGNATURE-----
+https://projects.duckcorp.org/issues/261
+
+The first issue is that Bip will write to arbitrary sockets when run in 
+daemon mode because stderr is closed: "when using SSL (client_side_ssl = 
+true), bip will write an error to stderr when the SSL handshake fails. 
+However, if it is running as a daemon, stderr will have been closed."
+
+We narrowed the scope of CVE-2013-4550 to this first issue.  Note that 
+while the bug was apparently filed and public in 2011, it was given a 
+CVE-2013-xxxx ID, but we don't usually reject an ID simply because it is 
+out of sync with the disclosure date.  We also didn't see a need to REJECT 
+this CVE because of the scope change either, since it's in reasonably wide 
+use.
+
+The second issue covers connections that are never closed: "Also, when an 
+SSL handshake error occurs, a socket is never closed, but remains in 
+CLOSE_WAIT state forever. This happens because a socket that is set to 
+have an error will never be closed."
+
+A fix for the first issue would not necessarily guarantee a fix of the 
+second issue, and the bugs are of different types.  Therefore the second 
+issue is SPLIT from the first.  We assigned CVE-2011-5268 accordingly, 
+since at the time of assignment, we knew that 2011 was the disclosure 
+date.
+
+When we published these CVEs, we probably should have notified 
+oss-security, or at least modified CVE-2011-5268 and CVE-2013-4550's 
+descriptions to reflect the close relationships.  I apologize for that.
+
+- Steve
+
+
+On Thu, 2 Jan 2014, Moritz Muehlenhoff wrote:
+
+> Hi,
+> Seems there's a duplicated CVE ID for bip:
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4550 and
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-5268 refer
+> to the same bugreport.
+>
+> Since CVE-2013-4550 was used for much longer, CVE-2011-5268 should
+> be rejected?
+>
+> Cheers,
+>        Moritz
+>
