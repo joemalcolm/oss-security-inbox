@@ -1,87 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/10
-Message-Id: <20140930045342.46A38C50174@smtptsrv1.mitre.org>
-Date: Tue, 30 Sep 2014 00:53:42 -0400 (EDT)
-From: cve-assign@...re.org
-To: pabs3@...edaddy.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: various NodeJS module vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/02/7
+Message-ID: <20140102173607.GA5382@pisco.westfalen.local>
+Date: Thu, 2 Jan 2014 18:36:07 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE to the ntp monlist DDoS issue?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Dec 30, 2013 at 11:40:37PM +0100, Florian Weimer wrote:
+> * Moritz Muehlenhoff:
+> 
+> > On Mon, Dec 30, 2013 at 09:05:56AM -0500, cve-assign@...re.org wrote:
+> >> -----BEGIN PGP SIGNED MESSAGE-----
+> >> Hash: SHA1
+> >> 
+> >> > Has anyone thought about assigning a CVE to this?
+> >> 
+> >> http://bugs.ntp.org/show_bug.cgi?id=1532 was assigned CVE-2013-5211.
+> >
+> > Shouldn't this rather be CVE-2010-XXXX ?
+> 
+> I don't think this was previously discussed as a security issue in
+> public.  There is a 2011 reference here that explicitly cites
+> amplification factors, though:
+> 
+> <http://lists.ntp.org/pipermail/pool/2011-December/005616.html>
+> 
+> This has an odd feeling of déjà vu to me, but I suspect the previous
+> discusssions have been on private channels of which I no longer have
+> records.
 
-> qs Denial-of-Service Memory Exhaustion
-> https://nodesecurity.io/advisories/qs_dos_memory_exhaustion
+This blog posting from 2010 already describes the attack:
+https://www.securepla.net/using-ntp-to-enumerate-client-ips/
 
-The description seems to suggest that there should be an arbitrary
-limit on the index value. That, by itself, might not be considered a
-vulnerability report; however, omitting the call to the compact
-function can probably be considered a security problem. Use
-CVE-2014-7191 for the
-https://github.com/raymondfeng/node-querystring/commit/43a604b7847e56bba49d0ce3e222fe89569354d8
-commit.
+| ADDITIONAL ATTACKS
+| HD Moore also discussed that he had figured out a way to DDoS a
+| system using NTP with very minimal requests.  Although he has not
+| released data on this type of DDoS, we put our heads together here
+| on what the attack could be.  When you make a monlist request, you
+| send 1 udp packet to the NTP server and 600+ responses are returned.
+| We think that using this request against all the NTP servers and
+| peers, you could send hundreds of thousands of UDP packets to a
+| victim with minimal request packets.  By spoofing the source address
+| and requesting monlists repetitively, all responses from those NTP
+| servers will be forwarded to the victim.
 
+Cheers,
+        Moritz
 
-> qs Denial-of-Service Extended Event Loop Blocking
-> https://nodesecurity.io/advisories/qs_dos_extended_event_loop_blocking
-
-This has no references to the specific code changes, and the
-discussion suggests that this is a security enhancement -- adding new
-resource-limit functionality that hadn't existed before 1.0.0 -- not a
-fix to the implementation of existing functionality. Accordingly, no
-CVE ID is currently being assigned.
-
-
-> syntax-error potential for script injection
-> https://nodesecurity.io/advisories/syntax-error-potential-script-injection
-
-This seems to have multiple possible interpretations of where the
-vulnerability is.
-
-"In node 0.10, Function() seems to be implemented in terms of eval(),
-so malicious code can execute even if the function returned by
-Function() was never called" doesn't seem to be a statement of an eval
-injection vulnerability affecting all 0.10.x versions. Instead,
-https://nodesecurity.io/advisories/syntax-error-potential-script-injection
-seems to be only about the
-https://github.com/substack/node-syntax-error/commit/9aa4e66eb90ec595d2dba55e6f9c2dd9a668b309
-commit. The affected product is only the syntax-error package from the
-http://www.npmjs.org/package/syntax-error web site.
-
-Use CVE-2014-7192.
-
-
-> send Directory Traversal
-> https://nodesecurity.io/advisories/send-directory-traversal
-
-The CVE ID is already listed on that web page.
-
-
-> Crumb CORS Token Disclosure
-> https://nodesecurity.io/advisories/crumb_cors_token_disclosure
-
-Use CVE-2014-7193.
-
-
-> Arbitrary JavaScript Execution in Bassmaster
-> https://nodesecurity.io/advisories/bassmaster_js_injection
-
-Use CVE-2014-7205.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUKjayAAoJEKllVAevmvmsyGUIAIn3usYJEiGNn1bV2MKMLViU
-SPZjEGB94Uq3CbJHnAFXUGveRwANkdaePoyBDGB8xWDGcPsCBsBIcxD1W31LCNOf
-x4R7hEB/+AmGtiZI+AiwxMlOzG508ymEygK/YgP3RUT8HwJhDmfT9Gs9S1hC83XN
-5BcmBojhEZuESm5w7V/jV+xTUgb9KEEDNldiNRpyn/iFy++5TArtiYF6ldfllpFL
-VQBiC3npo+eJUABFkFWZxm9e7GcI8asYpVdhXE1z5lvc2/4x43auKUcDLOXZJP6h
-O7liLJ44g/phRRhal53FUxG8rO1mzP8zcmHKVKnm1lnNSFBwRbMA/nG16gKUhh8=
-=oKCI
------END PGP SIGNATURE-----
