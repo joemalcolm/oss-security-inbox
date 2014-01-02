@@ -1,64 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/1
-Message-ID: <53A2508B.4020208@redhat.com>
-Date: Wed, 18 Jun 2014 20:52:59 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, andrew@...l.org
-Subject: TMP flaw in rackspace jclouds?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/02/4
+Message-Id: <201401021303.s02D3ZHO026497@linus.mitre.org>
+Date: Thu, 2 Jan 2014 08:03:35 -0500 (EST)
+From: cve-assign@...re.org
+To: fweimer@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: kwallet crypto misuse
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-https://github.com/rackspace/jclouds/
+> http://security.stackexchange.com/a/44010/32167
 
-So CC'ing Andrew, he's a consistent contributor, I can't file an issue
-in Github (no link to it) so posting here and CC'ing him.
+> then fill it with zeros; then XOR all these zeros with the data to
+> encrypt (which won't change the data...); then proceed to encrypt each
+> block independently of each other. This is, indeed, ECB mode, not CBC.
+> It is quite obvious that this is a programming error ... This implies
+> that the random IV which was computed does nothing here; it is
+> encrypted by itself but does not impact any other byte in the whole
+> file.
 
-https://github.com/rackspace/jclouds/blob/master/scriptbuilder/src/main/java/org/jclouds/scriptbuilder/domain/Statements.java
+> From: Florian Weimer
+> Should we treat this as a minor vulnerability?
 
-  public static Statement extractTargzAndFlattenIntoDirectory(URI tgz,
-String dest) {
-      return new StatementList(ImmutableSet.<Statement> builder()
-            .add(exec("mkdir /tmp/$$"))
-            .add(extractTargzIntoDirectory(tgz, "/tmp/$$"))
-            .add(exec("mkdir -p " + dest))
-            .add(exec("mv /tmp/$$/*/* " + dest))
-            .add(exec("rm -rf /tmp/$$")).build());
-   }
+Yes; use CVE-2013-7252.
 
+> http://gaganpreet.in/blog/2013/07/24/kwallet-security-analysis/
 
-This is insecure, $$ == PID == predictable
+> KWallet uses QDataStream, which encodes QString objects (used in
+> KWallet maps) as UTF-16. So, the string "abcd" will be stored as
+> "\0a\0b\0c\0d", which gives four bytes of information per block.
 
-http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
-
-use java.io.File.createTempFile() ? some interesting info at
-http://www.veracode.com/blog/2009/01/how-boring-flaws-become-interesting/
-
-for directories there is a helpful posting at
-http://stackoverflow.com/questions/617414/create-a-temporary-directory-in-java
-
-Thanks.
-
+Does anyone know whether the KWallet user interface could make it
+possible to enter passwords containing 16-bit characters (i.e.,
+characters that cannot be represented using 8 bits)? If that would not
+be possible, then this issue could potentially qualify for an
+additional CVE assignment.
 
 - -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJTolCLAAoJEBYNRVNeJnmTrVYQAJ5glkD/0Ha5+F99Qj9ioNmm
-ZnO4G6TqKctfiqW/X02wMocKLMRV8q5WI/nvs71hCoK5HaVmbtNrV71wE0omHLjB
-smzFz6d8qZaTcOHdvgbSlWEGPjcVnESo0F3K0vgK2L/LtB5mgny6pHDn+c/cqrgt
-Er4n+U3oXlkon/ksW+drWpKOpmGOhn7c4fbE45ci6KnzDbbGpGHF0fZL3lSEfJR0
-0D/HQzKIAJpI7VvZU8+/d/MHasndgJoAHmUCkTBYU55Vf5eYsm+xWZ1Mt46IyAap
-crMTCHHE1GVUAexYbMxy+lohHbpl+pB/d////LzesJjByRSv87r+1oLhdwank3P9
-Fz1h3sq57JyLFQIcpm4TS7xh3TaByFGCiA5G/mR+CkuS6sZEapSkviu/x7ygmOdG
-cJKM+5CogeE1P1PWsoQ41JcSwfuWAfc5IODvkjLb3MfyoXJRaKcBVdVcdHBUK4BA
-7xcD9SbDsujxHOJLknFaO22uTtlrDS4yXJaNal6L9P7DCsSSrxG1PmmE+t5qrtYw
-HQoz+RuOMhY/2FWJqOxa7ru99rIQmxxpWgoknUlT+yYJRfoub0kpibyJLBLy2SEx
-xmdqe/i9nHCsGAworK4bEL2vLvsNBiJgdSHlzg7E5POI1tbveE12fIUmSgrgV+zO
-WjPZ/O4oOj0FVWoeyQUN
-=SUf5
+iQEcBAEBAgAGBQJSxWKOAAoJEKllVAevmvmsb/gH/j2SfS2GXgaPa5K9OQ3d6fqw
+1yqHOfxb3azeB2bsgj7bScNVA8oKZRFLiuI7mkEfeOB6bIltcHyA3ZE07fG4dgeh
+B3yEe9+QUs5dWcAaTif+adbmT9+nU8hLRN09/D4lYUoI/y9SkSn4X0xe9jYfwoCE
+tKE2VaCrqMVpYe/LD1T5Z9TPZR6oEEXet0t65T8LZgWbh1S+Qo3LMcyfeyBAnJ1q
+qdspM0EPruNSTHjPJB0v/jP3x/iwMt2xuz6KAFyJqci6RpDMPUmw0JW2iSi2QLSS
+Chk3tlfeunZHbYS3lueQpqHClqb0H0CN7gHunBvBZyLCj+TwMaLeqL/Y5bRfxEI=
+=zyg0
 -----END PGP SIGNATURE-----
