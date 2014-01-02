@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/09/1
-Message-ID: <CAPWnmWC-xSp-fa570sKE_DBfTd8dW8=jOSGK_NJHWA=eLngEBA@mail.gmail.com>
-Date: Sun, 8 Jun 2014 19:27:11 -0400
-From: rea <rea@....org>
-To: oss-security@...ts.openwall.com
-Subject: Re: transparency on message moderation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/02/8
+Message-Id: <201401021945.s02Jj5eM028477@linus.mitre.org>
+Date: Thu, 2 Jan 2014 14:45:05 -0500 (EST)
+From: cve-assign@...re.org
+To: dkg@...thhorseman.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, fweimer@...hat.com
+Subject: Re: kwallet crypto misuse
 Content-Type: text/plain; charset=utf-8
 
-On Jun 8, 2014 3:17 PM, "Josh Bressers" <bressers@...hat.com> wrote:
->
-> > general.  I also like to take this opportunity to thank Kurt Seifried,
-> > Josh Bressers, and Vincent Danen for their help approving obviously
-> > on-topic oss-security postings sometimes quicker than I do.
->
->
-> I can't take credit for this. I'm probably the worst list moderator ever.
-> It would certainly make sense to have someone replace me as a moderator,
-> probably not from Red Hat to help avoid any possible conspiracies.
->
-> Thanks.
->
-> --
->     JB
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I have no stake in the game. If you need a hand just let me know.
+Thanks very much for this additional information. At this point, it
+seems very unlikely that the "\0a\0b\0c\0d" issue will have an
+additional CVE assignment. We were asking just because of the
+possibility of a clear implementation error in which security was
+weakened by using a "wrong" character width.
 
+> Do you think MITRE or other folks should be recommending pre-whitening
+> the strings before encrypting them
+
+It's possible that a group elsewhere at MITRE would work on
+recommendations in that area or other areas. For purposes of the CVE
+assignments in this situation, that type of opportunity for security
+improvement wasn't being considered.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSxcEIAAoJEKllVAevmvmsyJoH/R/Z4u6+P/T7Hk3Mj0h1nidp
+cmG3PUnqQFSzYwWoo3NIst8KTpt1MZQmbAtfTkY3w2hEpqwbQk18pNLzY+lcUFIr
+wamgvXoyWPOYNcp7NypQfHoRQOT9TdFjhIxJXy9R1VLqfyeubs19uN+iYILDS+ik
+BgdStB2F1geISFG6M+hO+WtFouk61b5ZaC5ejEjkkEs7U6LQnRcF4WxNmZ3ym2ml
+zO/kSfpUpzgjMurtRbBFhuh13L2Ohl0nxiizsUv735JH5aL+TX7V8d1B/+11ZXTs
+RP85J3qyCRYswi0oaCLhOx4Qv/YcUZlCJZIHyTb7seJvJShV6xclQunJD3GFZDU=
+=YscU
+-----END PGP SIGNATURE-----
