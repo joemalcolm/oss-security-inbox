@@ -1,50 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/8
-Message-ID: <538EDB62.5090509@gmail.com>
-Date: Wed, 04 Jun 2014 14:40:02 +0600
-From: "Alexander E. Patrakov" <patrakov@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/02/10
+Message-ID: <CAATyssdhHLSdkb160q+6j_WOPzP=0yDkYs4qFgA3TJZXQHJUzg@mail.gmail.com>
+Date: Fri, 3 Jan 2014 00:02:53 +0100
+From: "Simon ." <bofh666ftw@...glemail.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: PulseAudio crash due to empty UDP packet
+Subject: radare2 endless loop
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+Hi,
 
-If one has module-rtp-recv loaded into PulseAudio, then a remote 
-attacker can crash this instance of PulseAudio by sending an empty UDP 
-packet to the multicast address where module-rtp-recv has decided to 
-receive the stream due to a previous SAP/SDP announcement.
+just got mailed this simple poc by gitclown!
 
-When PulseAudio crashes, it says to the log:
+http://sprunge.us/IhNT
 
-E: [alsa-sink-ALC275 Analog] memblock.c: Assertion 'b' failed at 
-.../pulseaudio-5.0/src/pulsecore/memblock.c:596, function 
-pa_memblock_unref(). Aborting.
+isse #485 fixed in teh git by pancake
 
-So this doesn't look exploitable - just a DoS attack, and PulseAudio 
-usually gets respawned anyway.
 
-The problem has been reported upstream, but got no response yet:
-
-http://lists.freedesktop.org/archives/pulseaudio-discuss/2014-May/020740.html
-
-The problematic code is in the pa_rtp_recv() function, in the handling 
-of the result of the FIONREAD ioctl. It existed since the introduction 
-of the module, i.e. since 2006-04-16 (git commit f1ddf0523), which is 
-before version 1.0.
-
-The problem I found is that the function just returns immediately, 
-without even attempting to read the zero-sized packet. I don't know how 
-this later leads to the failed assertion.
-
-http://cgit.freedesktop.org/pulseaudio/pulseaudio/tree/src/modules/rtp/rtp.c#n185
-
-A patch has been sent, but not reviewed and thus not accepted, and thus 
-the problem still exists in git master:
-
-http://lists.freedesktop.org/archives/pulseaudio-discuss/2014-May/020741.html
-
-I have also tested SAP/SDP handling for the same type of vulnerability, 
-but PulseAudio survived an empty UDP packet there just fine.
-
--- 
-Alexander E. Patrakov
+Greetings
+Simon .
