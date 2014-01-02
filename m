@@ -1,37 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/20
-Message-ID: <20141015135519.39227154@pc.my-domain>
-Date: Wed, 15 Oct 2014 13:55:19 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/02/2
+Message-ID: <20140102074514.GA31484@inutil.org>
+Date: Thu, 2 Jan 2014 08:45:14 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
+Subject: Duplicated CVE assignment for bip
 Content-Type: text/plain; charset=utf-8
 
-Am Wed, 15 Oct 2014 11:13:37 +0200
-schrieb Pierre Schweitzer <pierre@...ctos.org>:
+Hi,
+Seems there's a duplicated CVE ID for bip:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4550 and
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-5268 refer
+to the same bugreport.
 
-> It says you can recover plain text of ciphered text, using a specific
-> method.
-> But, in the end it means you'll have plain text + ciphered text of the
-> same text. Does that mean you can easily bruteforce the key that was
-> used? So that you can actually, if you logged the complete session,
-> decipher the whole session of the user? And not only the cookie?
+Since CVE-2013-4550 was used for much longer, CVE-2011-5268 should
+be rejected?
 
-No.
-If you could brute force the key then this would indicate a completely
-broken ciphersuite.
-We're usually talking about AES or 3DES here. These are considered
-reasonably safe.
-
-You only get the cookie. The reason this matters is that cookies often
-contain a secure token that is used to indicate the session. So you can
-takeover a session e.g. for a mailaccount.
-
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Cheers,
+        Moritz
