@@ -1,25 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/16/3
-Message-ID: <20141216170622.6fd5c627@pc>
-Date: Tue, 16 Dec 2014 17:06:22 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/02/3
+Message-ID: <52C52013.3060608@redhat.com>
+Date: Thu, 02 Jan 2014 09:15:15 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: file(1): multiple denial of service issues (resource consumption), CVE-2014-8116 and CVE-2014-8117
+CC: security@....org
+Subject: kwallet crypto misuse
 Content-Type: text/plain; charset=utf-8
 
-Don't know if this deserves a CVE, but this release also fixes this
-fuzzing-found issue:
-http://bugs.gw.com/view.php?id=398
+I just noticed this is now public:
 
-Commit:
-https://github.com/file/file/commit/59e63838913eee47f5c120a6c53d4565af638158
+<http://gaganpreet.in/blog/2013/07/24/kwallet-security-analysis/>
 
+Short summary: kwallet uses Blowfish to encrypt its password store, and 
+despite an attempt at implementing CBC mode (in a file called cbc.cc no 
+less), it's actually ECB mode.  UTF-16 encoding combined with Blowfish's 
+64 bit block size means there are just four password characters per 
+block.  Encryption is convergent as well.  This may enable recovery of 
+passwords through codebook attacks.
+
+Should we treat this as a minor vulnerability?
 
 -- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Florian Weimer / Red Hat Product Security Team
