@@ -1,37 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/25
-Message-ID: <loom.20141107T221529-292@post.gmane.org>
-Date: Fri, 7 Nov 2014 21:21:52 +0000 (UTC)
-From: jb <jb.1234abcd@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: random number generators - rand(), random(), etc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/02/6
+Message-ID: <52C594A8.9090008@fifthhorseman.net>
+Date: Thu, 02 Jan 2014 11:32:40 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com, fweimer@...hat.com
+CC: cve-assign@...re.org
+Subject: Re: Re: kwallet crypto misuse
 Content-Type: text/plain; charset=utf-8
 
-Michal Zalewski <lcamtuf@...> writes:
-
+On 01/02/2014 08:03 AM, cve-assign@...re.org wrote:
+>> http://gaganpreet.in/blog/2013/07/24/kwallet-security-analysis/
 > 
-> > https://sourceware.org/ml/libc-alpha/2014-11/msg00143.html
+>> KWallet uses QDataStream, which encodes QString objects (used in
+>> KWallet maps) as UTF-16. So, the string "abcd" will be stored as
+>> "\0a\0b\0c\0d", which gives four bytes of information per block.
 > 
-> In general, rand() and random() are not backed by cryptosafe PRNGs and
-> should not be used for security purposes.
-> 
-> /mz
-> 
-> 
+> Does anyone know whether the KWallet user interface could make it
+> possible to enter passwords containing 16-bit characters (i.e.,
+> characters that cannot be represented using 8 bits)? If that would not
+> be possible, then this issue could potentially qualify for an
+> additional CVE assignment.
 
-Well, rand() in Linux and ISO C standard are not threadsafe, but random(),
-srandom(), etc in Linux are claimed to be threadsafe:
+according to its man page, kwalletcli itself assumes strings are input
+at UTF-8.  This is not exactly "16-bit characters", but it's certainly
+possible to input characters that are beyond unicode codepoint U+7f (or
+U+ff if you prefer that limit).
 
-- pthread(7) - the function random() is listed as threadsafe
-- random(3)
-  Multithreading (see pthreads(7))
-       The random(), srandom(),  initstate(),  and  setstate()  functions  are
-       thread-safe.
+kwalletaskpass also uses whatever keyboard entry mechanism your X11
+session is configured for, and can easily accept whatever characters you
+can generate with your keyboard -- much of the world uses keyboards
+where at least some key combinations (e.g. €, which is U+20AC) generate
+characters outside of the standard 7-bit ASCII range.  I had no trouble
+entering a passphrase with ♥ (U+2665) just now.
 
-But apparently they are not.
+Of course, none of this suggests that the cleartext of these strings is
+evenly distributed bitwise (or byte-wise).  It clearly isn't.  That
+said, very little cleartext *is* high-entropy in this way.  Do you think
+MITRE or other folks should be recommending pre-whitening the strings
+before encrypting them (e.g. by compressing them before encrypting)?
+compressing before encryption smells like a possible gateway to
+something like a CRIME attack in some circumstances, so i think this
+proposal in general might be riskier than we'd like.
 
-A problem ?
+Regards,
 
-jb
+	--dkg
 
 
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
