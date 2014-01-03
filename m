@@ -1,73 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/11
-Message-ID: <20140501090904.GA29115@kludge.henri.nerv.fi>
-Date: Thu, 1 May 2014 12:09:04 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-3114 WordPress plugin ezpz-one-click-backup cmd parameter os command injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/7
+Message-Id: <201401031703.s03H2ulO024236@linus.mitre.org>
+Date: Fri, 3 Jan 2014 12:02:56 -0500 (EST)
+From: cve-assign@...re.org
+To: geissert@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, huzaifas@...hat.com
+Subject: Re: CVE for freerdp int overflow?
 Content-Type: text/plain; charset=utf-8
 
-Product: WordPress plugin EZPZ One Click Backup
-Vulnerability type: CWE-78 OS Command Injection
-Vulnerable versions: 12.03.10 and some earlier versions
-Fixed version: N/A
-Solution: Remove plugin
-Vendor notification: Contact details N/A
-WordPress plugins team notification: 2014-04-30
-Risk: High
-CVE: CVE-2014-3114
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Vulnerability Details:
+> https://bugzilla.redhat.com/show_bug.cgi?id=998941
+> This is from libfreerdp-core/license_read_scope_list():
 
-Contains a flaw that is triggered as input passed via the 'cmd' parameter in
-ezpz-archive-cmd.php is not properly sanitized. With a specially crafted
-request, an unauthenticated remote attacker can execute arbitrary commands
-directly on the operating system.
+> From: Huzaifa Sidhpurwala 
 
-http://plugins.svn.wordpress.org/ezpz-one-click-backup/tags/12.03.10/functions/ezpz-archive-cmd.php
+> No CVE has been assigned yet. The crash seems to be non-exploitable and
+> I am not really sure if only the client and/or server are affected.
 
-  1 <?php
-  2 if (isset($_GET['cmd'])){
-  3     exec(urldecode($_GET['cmd']));
-  4     tmp_write("<h2>Running zip page...<h2>");
-  5 }
-  6  
-  7 ?>
+The function in question is in the client code for the Remote Desktop
+Protocol Licensing Extension described on the
+http://msdn.microsoft.com/en-us/library/cc241880.aspx web page. The
+code is part of the reading of a Server License Request packet. The
+integer overflow affects a malloc argument. After this, the client
+would normally make separate malloc calls and write (a potentially
+very large amount of) data from the server into that separately
+malloced memory. Effects depend on the malloc implementation and the
+architecture. Even if code execution were essentially impossible,
+other conceivable security impacts exist. For example, the client
+might later send unintended private information (license data for a
+different server?) over the connection to the current server.
 
-Steps to reproduce:
+http://en.wikipedia.org/wiki/Comparison_of_remote_desktop_software
+says "Multiple sessions ... Yes" but we don't know whether that refers
+to FreeRDP 1.x or FreeRDP 0.x (which is a different codebase and
+allowed the user to start multiple sessions with a single command as
+described in the
+http://sourceforge.net/mailarchive/message.php?msg_id=24558104 post).
+If one server can send a crafted Server License Request packet that
+causes memory corruption and leads to a crash of multiple sessions, a
+CVE ID can be assigned. (The crash could perhaps not happen
+immediately, and instead happen after the user established important
+state in a session to a non-malicious server.)
 
-http://example.com/wp-content/plugins/ezpz-one-click-backup/functions/ezpz-archive-cmd.php?cmd=uptime
+Even without that, a CVE ID seems probably worthwhile for the largely
+unpredictable client behavior after the erroneous malloc call.
 
-Notes:
+Use CVE-2014-0791.
 
-Plugin can't be downloaded anymore by using WordPress admin panel or from links
-below, but still used by many as per:
-inurl:"/wp-content/plugins/ezpz-one-click-backup/"
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-https://wordpress.org/plugins/ezpz-one-click-backup/
-http://downloads.wordpress.org/plugin/ezpz-one-click-backup.latest-stable.zip
-
-From the developer's website 2012-04-27:
-"""
-Do to recent changes in the Dropbox API, EZPZ One Click Backup can no longer
-save files to Dropbox.
-
-I apologize but due to various reasons there will be no new versions released or
-further support for EZPZ OCB in the foreseeable future.
-
-For a reliable, inexpensive alternative I recommend trying MyRepono and the
-MyRepono Plugin. This service, while not entirely free (the fees are as low as
-2¢ a day for a small site), works great on WordPress sites as large as 5GB,
-maybe even larger. MyRepono gives a $5.00 credit when signing up for the service
-so there is no cost to try it out.
-
-Again, I apologize to all EZPZ One Click Backup users and wish you all the best.
-"""
-
-Might be related:
-http://wordpress.org/support/topic/plugin-ezpz-one-click-backup-possible-security-flaw
-
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQEcBAEBAgAGBQJSxu0XAAoJEKllVAevmvms6hQH/Rgejpz5x4evfagXceQAx/61
+pNWtFgeWt/DG6OT+yoggf5F/skn80FduXZ8IYP47ssBP6gDgyGnPsaq5/eYjyL9G
+R5ruNaw5Zeq1GCoyHJEXyK7FZtCME2wvsGjwyZ60EZg/wLiEhU3EX8at+6s8h6Ya
+wHI60o7oqB01xenPe/huGb5RbtBPZ5L7dhe8euHF1JO7UijPwsY6+mO+x/R/Eef0
+09TNi9h9sJOinGXR9yh2a0Lt6sXYfJRY2R3nqC2tlN/frjsV9OQ7fNuKtCBmMRgk
+8ewuZYy+hLIenNDS89UHOzjTMT+8EtfDRycLP73JXNEQC7+0FBTvp/H4HziLGd4=
+=8WuC
+-----END PGP SIGNATURE-----
