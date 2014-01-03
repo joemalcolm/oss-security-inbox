@@ -1,55 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/10
-Message-ID: <CAH4rwTL-nYktGhf+npph+u_XBxWHk9J=jp2gCWpCRU1+_moosg@mail.gmail.com>
-Date: Tue, 9 Dec 2014 13:35:16 +0530
-From: Reno Robert <renorobert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/2
+Message-ID: <52C61B94.80706@redhat.com>
+Date: Thu, 02 Jan 2014 19:08:20 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: PIE bypass using VDSO ASLR weakness
+Subject: Re: radare2 endless loop
 Content-Type: text/plain; charset=utf-8
 
-Even in 64 bit addressing, randomization of VDSO seems to be low and the
-base address could be bruteforced, thus allowing to use gadgets from VDSO
-if not from executable. Though VDSO is not rich in gadgets, it has few good
-ones to make interesting syscalls including execve(). The below blog post
-describes the availability of gadgets and feasibility of bruteforce, which
-could be combined for an effective payload.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-http://v0ids3curity.blogspot.in/2014/12/return-to-vdso-using-elf-auxiliary.html
+On 01/02/2014 04:02 PM, Simon . wrote:
+> Hi,
+> 
+> just got mailed this simple poc by gitclown!
+> 
+> http://sprunge.us/IhNT
+> 
+> isse #485 fixed in teh git by pancake
+> 
+> 
+> Greetings Simon .
 
+Not clear how this would get exploited (you try to reverse a binary)
+in any meaningful sense (you get bored and kill it). Can you provide
+an exploitation scenario?
 
-renorobert@...ntu:~$ readelf -h ./pie
-ELF Header:
-  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00
-  Class:                             ELF64
-  Data:                              2's complement, little endian
-  Version:                          1 (current)
-  OS/ABI:                          UNIX - System V
-  ABI Version:                    0
-  Type:                              DYN (Shared object file)
-  Machine:                         Advanced Micro Devices X86-64
-  Version:                          0x1
-  Entry point address:         0x620
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-renorobert@...ntu:~$ while true; do ldd ./pie; done | grep
-0x00007fff969fe000
-        linux-vdso.so.1 =>  (0x00007fff969fe000)
-        linux-vdso.so.1 =>  (0x00007fff969fe000)
-        linux-vdso.so.1 =>  (0x00007fff969fe000)
-        linux-vdso.so.1 =>  (0x00007fff969fe000)
-        linux-vdso.so.1 =>  (0x00007fff969fe000)
-        linux-vdso.so.1 =>  (0x00007fff969fe000)
-        linux-vdso.so.1 =>  (0x00007fff969fe000)
-        linux-vdso.so.1 =>  (0x00007fff969fe000)
-        linux-vdso.so.1 =>  (0x00007fff969fe000)
-        linux-vdso.so.1 =>  (0x00007fff969fe000)
-        linux-vdso.so.1 =>  (0x00007fff969fe000)
-        linux-vdso.so.1 =>  (0x00007fff969fe000)
-        linux-vdso.so.1 =>  (0x00007fff969fe000)
-
-Do we need better ASLR for VDSO to make PIE more effective?
-
--- 
-Regards,
-Reno Robert
-http://v0ids3curity.blogspot.in/
-
+iQIcBAEBAgAGBQJSxhuTAAoJEBYNRVNeJnmT8/MP/jLOLzSmDpjDsR7Dt5QWFU2l
+cBPxMYd8TMLRjCVWjlItEsJgJFZ8coirzFl6QUWWKuTHdAsKZpPnHeHAGRrBRVBo
+9iEQjAw3MufZTNZLqY91Fn3fDWSQ1qCSOuPOv6V9BfL6+uCeBROfpl2K3JtMfO6u
+uXQ1o5swuJuOHm+ImX0wnt1dGM4chgrehZ+39NqU2dxiPFwIfYrMhojU385+8kBS
+vG5xyzcadsFVfxQFotQLpVaB3/BIDKuA9jWLZcHTEVa5pOMqLcMvYsKJ/Y784fRy
+//NI2Qd8F7k5oJtOedTn/KTTmZ/UXud+sASK6zOk9xM/10bHUhbIKhELyyJ/viWT
+eK9UmkGZ+MzbbqH99I/YNq4diE9yjLvbUPyoNDyfDYtlBwyOoM5m4ljPnpYDkHGg
+OHcSNXrOYB2E9pfvkDywZOS4lTHwHABMZrEYTqyuMZZTjkCMMgw0txelOcmp48sV
+3DhlieZQPvtDlvkrHd/qHTpmnglPjJiCkp1lfTj6G51135lF1tzAESRBulDdUsj6
+sibCVzy02X2dpRvonQj903HTctS8OzcEYoc9ScgRGFSoIpjE55uzCPKHhuG9pYx7
+ao+VNBBvQ7OpHIfbkQbtwlEUD/nODP4ZdRbmpfqes4p0WoIlV8olEeBclhQbg0qO
+Ra0iIkb7lJOdchhwQHfb
+=wIky
+-----END PGP SIGNATURE-----
