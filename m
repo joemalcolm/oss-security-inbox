@@ -1,59 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/18
-Message-ID: <20140131180623.GA20526@openwall.com>
-Date: Fri, 31 Jan 2014 22:06:23 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/10
+Message-ID: <52C6FDC6.7020606@debian.org>
+Date: Fri, 03 Jan 2014 18:13:26 +0000
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+Subject: Re: kwallet crypto misuse
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 31, 2014 at 06:54:17PM +0100, rf@...eap.de wrote:
-> >>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
->     SD> The "assigned" date seen on CVE IDs often indicates when a pool
->     SD> of CVE IDs was created and then assigned to a CNA (Red Hat in
->     SD> this case), not when individual CVE IDs are assigned to actual
->     SD> issues.  It is perfectly normal (albeit confusing) for the
->     SD> "assigned" date to be earlier than the vulnerability discovery
->     SD> date.  This was discussed in here before:
-> 
->     SD> http://www.openwall.com/lists/oss-security/2012/01/23/4
-> 
->     SD> CNAs:
-> 
->     SD> http://cve.mitre.org/cve/cna.html
-> 
-> Sorry for the repetition,
+On 03/01/14 17:44, Daniel Kahn Gillmor wrote:
+> what kind of hashing and salting are you talking about?  i don't
+> think hashing and salting makes sense in the context that you were
+> quoting above.  Are you aware that kwallet stores a database of
+> passwords that need to be able to be produced back for the user (or
+> the user's applications) in the clear?
 
-That's OK.
+My understanding was that kwallet is like gnome-keyring or the Firefox
+password store: it contains a large number of stored passwords, all
+encrypted with a (key derived from a) master password. (Terminology in
+this email is borrowed from Firefox, and might not match KWallet.)
+It's important to distinguish between the stored passwords and the
+master password.
 
-> but I wasn't subscribed yet at the time
+Issue 1[1] described in that blog post: the *master* password is
+passed through a key derivation function (which does not need to be
+reversible) in order to turn it into an encryption key, but that KDF
+is not very good (hashing, but no salt), making it vulnerable to
+dictionary or brute-force attacks assisted by precomputation (rainbow
+tables), particularly if the password used is relatively weak. As far
+as I can see, MITRE has not allocated a CVE ID for this. (Or is it
+considered to be part of CVE-2013-7252?)
 
-I think you were in fact not subscribed in 2012.
+You're right that the *stored* passwords cannot be hashed/salted in a
+non-reversible way for this particular use case, because the user
+needs to be able to recover the original stored password.
 
-> or is this a FAQ?
+Issue 2 described in that blog post: when the stored passwords are
+encrypted using the key derived from the master password, KWallet uses
+ECB, which is bad at hiding patterns in data. For instance, if a
+password is stored more than once, an attacker can determine that this
+is likely to have been done, by noticing the corresponding pattern in
+the output. As far as I can see, this is now CVE-2013-7252.
 
-This is not a very frequent question, but I've seen this sort of
-confusion several times, in different places.  I don't know if it's
-addressed in some sort of FAQ list.
+Issue 3 (which exacerbates issue 2 rather than being something
+separate, AIUI?) is that the encoding of the stored passwords is
+relatively low-entropy: if the stored password happens to be entirely
+Latin-1 (which is quite likely in practice), then it has a pattern,
+namely "odd-numbered bytes are zero".
 
-I think there's room for improvement for the language used on CVE ID
-pages like https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0038 ,
-which currently says:
+    S
 
-"Date Entry Created
-20131203	 Disclaimer: The entry creation date may reflect when
-the CVE-ID was allocated or reserved, and does not necessarily indicate
-when this vulnerability was discovered, shared with the affected vendor,
-publicly disclosed, or updated in CVE."
+[1] I don't know where the boundary between vulnerability and lack of
+hardening is, so I'm deliberately using a more neutral term
 
-but follows this with:
-
-"Phase (Legacy)
-Assigned (20131203)"
-
-I'm not surprised the latter continues to confuse people, as it appears
-not to fall under the disclaimer.  I think the disclaimer should be
-worded such that it'd clearly apply to "Phase (Legacy) \n Assigned" as
-well.  (And even then some confusion will remain, just maybe less of it.)
-
-Alexander
