@@ -1,43 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/05/3
-Message-ID: <20140905065328.GA17330@kludge.henri.nerv.fi>
-Date: Fri, 5 Sep 2014 09:53:28 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/4
+Message-ID: <52C6460D.5020701@redhat.com>
+Date: Fri, 03 Jan 2014 10:39:33 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: TYPO3 Security Team <security@...o3.org>
-Subject: CVE request: TYPO3-EXT-SA-2014-006
+Subject: Re: CVE for freerdp int overflow?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 01/02/2014 08:01 PM, Raphael Geissert wrote:
+> Hi,
+> 
+> Has a CVE id been assigned already for the following bug?
+> https://bugzilla.redhat.com/show_bug.cgi?id=998941
+> 
 
-Can I get 2014 CVE for TYPO3-EXT-SA-2014-006, thanks.
+Hi,
 
-http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-006/
-http://osvdb.org/105758
+No CVE has been assigned yet. The crash seems to be non-exploitable and
+I am not really sure if only the client and/or server are affected.
 
-Release Date: April 10, 2014
-Affected Versions: powermail: Version 2.0.0 - 2.0.10
-Vulnerability Type: Captcha Bypass
-Severity: Low
-Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:N/I:N/A:P/E:F/RL:O/RC:C
-Problem Description: The extension powermail offers the use of a captch
-validation to secure forms. It was possible to bypass the captcha validation and
-submit forms.
-Important Note: Other field validators weren't involved so any other validation
-worked as expected.
-Solution: Updated version 2.0.11 is available from the TYPO3 extension manager
-and at http://typo3.org/extensions/repository/download/powermail/2.0.11/t3x/.
-Users of the extension are advised to update the extension as soon as possible
-as long as they use captchas in their forms.
-Credits: Credits go to Jigal van Hemert who discovered and reported this issue.
+If you have some spare bandwidth, feel free to investigate and let us
+all know :)
 
-- ---
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
 
-iEYEARECAAYFAlQJXegACgkQXf6hBi6kbk8S6QCcDgRePHwBPfgTAdzL+8xxFK+L
-0BkAn3ZGwxRoHTlALdOdoETUK+dkugV6
-=ZOfL
------END PGP SIGNATURE-----
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
