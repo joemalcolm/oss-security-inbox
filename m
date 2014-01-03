@@ -1,94 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/28/5
-Message-ID: <53FF5BEF.9090905@reactos.org>
-Date: Thu, 28 Aug 2014 18:42:23 +0200
-From: Pierre Schweitzer <pierre@...ctos.org>
-To: oss-security@...ts.openwall.com
-Subject: Full disclosure: denial of service in srvx
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/8
+Message-Id: <201401031730.s03HUoZm024633@linus.mitre.org>
+Date: Fri, 3 Jan 2014 12:30:50 -0500 (EST)
+From: cve-assign@...re.org
+To: abn@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Neo4J CSRF: Potential CVE candidate
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-ZeRoFiGhter and I (Pierre Schweitzer), at OnlineGamesNet.net discovered
-the following issue on OnlineGamesNet.net on the 14th of July.
+> Last August, Dinis Cruz wrote a blog entry detailing a CSRF attack
 
-This is full disclosure of a denial of service security issue in srvx
-software (http://www.srvx.net/). Vendor was contacted a month ago (on
-the 16th of July) and acknowledge good reception of the issue and the
-patches. The issues is today still unfixed in development trunk.
+> http://blog.diniscruz.com/2013/08/neo4j-csrf-payload-to-start-processes.html
 
-1 - Description:
-=========
-When configuring the HelpServ bots in srvx, there is not bound check for
-intervals in which various functions are executed (for instance the
-EmptyInterval parameter). These parameters can be accessed and set by
-either IRCops (with access to OpServ bot) or by HelpServ bot managers
-(who do not require to be IRCops).
+> on a Neo4J Server resulting in an RCE. The server's documentation
+> mentions the following.
+> 
+>   "By default, the Neo4j Server comes with some places where arbitrary
+>   code code execution can happen. These are the Section 19.15,
 
-Putting an extremely high value to these parameters, such as
-184467440723049 will lead to an integer overflow. When attempting to
-queue the function execution, srvx will add it in the past, will attempt
-to execute it immediately and thus will loop forever on this, and will
-finally crash due to memory exhaustion.
+> This could mean that the RCE itself is not CVE worthy as it is a
+> documented/expected behavior. However, should the CSRF flaw be
+> considered a vulnerability and assigned a CVE?
 
-Furthermore, any restart of the service will not be possible, as the
-value is stored in the configuration file. It will be required to
-manually edit the configuration file to correct the wrongly set values
-for the bot.
+Use CVE-2013-7259 for the CSRF. There is no CVE assignment for the
+documented Section 19.15 behavior.
 
-2 - How to reproduce:
-=============
-Simply create a bot with HelpServ module.
-Set the high value: ?helpserv set HelpServ EmptyInterval 184467440723049
-To fasten the coming crash: ?writeall and then ?restart
-srvx will not show up again, it will crash on boot.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-3 - Risks:
-=====
-Low. HelpServ module needs to be activated on your server. Furthermore,
-only supposedly trusted people can change these settings (bot managers &
-IRCops).
-
-4 - Available fixes:
-===========
-See the two patches attached (generated against the development trunk).
-These two patches are not dependent and can be applied separately and
-both fix the issue.
-
-0001-Ensure-that-timeq-added-function-isn-t-added-in-the-.patch: most
-generic fix. It is here to deny any function adding in the past. In such
-case, it will be dropped.
-This patches fixes any issue linked to integer overflow for timeq
-functions execution.
-Applied alone it fixes the said issue.
-
-0002-Bound-check-for-intervals-in-mod-helpserv.-This-prev.patch: the
-bound check fix. It adds controls to the input of the users for the
-function interval execution. And thus, prevents any overflow. It's set
-to 2y, a widely used value in srvx for intervals (see timed bans).
-Applied alone it fixes the said issue.
-
-5 - Mitigation:
-========
-Inform concerned people (ie, with enough accesses) about the risks. 2y
-is enough for maximum bound. Reduce accesses to not trusted enough people.
-
-6 - Affected versions:
-=============
-1.3.1
-Development trunk
-
-With my best regards,
-
--- 
-Pierre Schweitzer <pierre at reactos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
-
-
-View attachment "0001-Ensure-that-timeq-added-function-isn-t-added-in-the-.patch" of type "text/x-patch" (647 bytes)
-
-View attachment "0002-Bound-check-for-intervals-in-mod-helpserv.-This-prev.patch" of type "text/x-patch" (3557 bytes)
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (3968 bytes)
+iQEcBAEBAgAGBQJSxvNhAAoJEKllVAevmvmscdkH/2ujYyUGrDQwoSXdENDgUCAS
+fpyQfXnbL6dATF41P8y4cz7e7lCUMb/RxFJ6WBsLd/smCS/K9Q4yF0l4VAwp+2bg
+Ztxcqzz4mQafgXGwAcKMtQ6ZXSk4I9r67PlBcFdO/mddhaLUDQT3MTxYBGJVfJSP
+NlIuCp49QGJGpypRssK0bFkmLymHY9bMrz7n2EzgzPbk4GilVRhBrjEo3R2oJtKW
+DZfRT8JO3op/3515wGXu0jeOtlKQg+YcKJbkpD3jwzmOANQsSFtfKgzNEUU9GCMt
+XO7FYhLg4RyPs9/Lgy1AuFO/crqAck2SLyNTl7rd0KEKLgeANm1j8km4itnvZ+0=
+=/rAS
+-----END PGP SIGNATURE-----
