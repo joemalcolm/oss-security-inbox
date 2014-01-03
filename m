@@ -1,131 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/8
-Message-ID: <CA+rthh-H5aExtSk2vf-EkPhOjA+y240rk9GKGHHK3G41Va06Ug@mail.gmail.com>
-Date: Thu, 18 Dec 2014 11:36:03 +0100
-From: Mathias Krause <minipli@...glemail.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: How GNU/Linux distros deal with offset2lib attack?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/5
+Message-ID: <52C663A7.2050602@redhat.com>
+Date: Fri, 03 Jan 2014 00:15:51 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: AMD Security contact
 Content-Type: text/plain; charset=utf-8
 
-On 18 December 2014 at 10:35, Amos Jeffries <squid3@...enet.co.nz> wrote:
-> On 18/12/2014 9:24 p.m., Lionel Debroux wrote:
->>
->> In addition to what I wrote earlier: PaX contains several hundreds
->> of lines of hunks dealing with local variables needlessly made
->> static: ============================== ---
->> linux-3.17.6/drivers/mfd/max8925-i2c.c +++
->> linux-3.17.6-pax/drivers/mfd/max8925-i2c.c @@ -152,7 +152,7 @@
->> static int max8925_probe(struct i2c_clie const struct i2c_device_id
->> *id) { struct max8925_platform_data *pdata =
->> dev_get_platdata(&client->dev); -    static struct max8925_chip
->> *chip; +    struct max8925_chip *chip; struct device_node *node =
->> client->dev.of_node;
->>
->> if (node && !pdata) {
->>
->> (the first reference to the "chip" variable in that function is an
->> unconditional devm_kzalloc)
->
->
-> NP: I have not looked at either version of code outside the thread
-> here. Just responding to your statement of needless...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Well, you better should have. It took less time to verify the bug than
-reading your comments about it.
-
-> The above sounds to me like the author wanted the alloc to only happen
-> once, lazily on first use and remain allocated until the kerel or
-> module was released. Or perhapse they wanted data in it to persist
-> between calls.
->
-> Neither of those cases is necessarily needless. But its utility does
-> depend on how often the function is called. Saving a handful of rare
-> event allocations per kernel lifetime is almost needless (unless they
-> happen to all occur in a batch at some critical point). Saving
-> thousands per second is very much useful.
->
-> In the former case security is best served by removing the static, in
-> the latter it is served by ensuring the struct content is fully
-> cleaned or revalidated before use in each call.
-
-All wrong. As Lionel wrote, the code assigns the variable before
-reading it. So no data is meant to persist between multiple calls to
-this function. However, if max8925_probe() gets called concurrently,
-the 'chip' pointer may change beneath one of the threads -- not good.
-So this is clearly a fix.
-
->
-> - From my long experience lurking on some of the mainline dev lists ...
-> in order to get such "trivial" patches merged you will have to justify
-> that you at least considered and investigated which cases like the
-> above was the cause of the codes current form. And what the effect of
-> the proposed change would be in both the security and performance arenas.
-
->  People using PaX code are trusting that they have done the analysis,
-
-Obviously they did.
-
-> but that very code not being in mainline means there is possibly no
-> hard proof of that.
-
-You're wrong, again. No-one submitted the fix to LKML, that's the reason.
-
-> PaX may have decided that a huge performance
-> penalty for some odd-ball drivers was worth some minor security gain
-> for everybody.
-
-PaX cares about security and security only -- not about performance in
-some odd-ball driver.
-The above change fixes a possible race that may lead to memory
-corruption (concurrent writes to the same memory location) -- stuff
-PaX cares about.
-
->
->> ============================== or local structs which are not meant
->> to be modified and should therefore probably be made static /
->> static const (mainline doesn't use the GCC plugin for
->> constification): ============================== ---
->> linux-3.17.6/arch/arm/mach-omap2/wd_timer.c +++
->> linux-3.17.6-pax/arch/arm/mach-omap2/wd_timer.c @@ -110,7 +110,9 @@
->> static int __init omap_init_wdt(void) struct omap_hwmod *oh; char
->> *oh_name = "wd_timer2"; char *dev_name = "omap_wdt"; -    struct
->> omap_wd_timer_platform_data pdata; +    static struct
->> omap_wd_timer_platform_data pdata = { +        .read_reset_sources
->> = prm_read_reset_sources +    };
->>
->> if (!cpu_class_is_omap2() || of_have_populated_dt()) return 0; @@
->> -121,8 +123,6 @@ static int __init omap_init_wdt(void) return
->> -EINVAL; }
->>
->> -    pdata.read_reset_sources = prm_read_reset_sources; - pdev =
->> omap_device_build(dev_name, id, oh, &pdata, sizeof(struct
->> omap_wd_timer_platform_data)); WARN(IS_ERR(pdev), "Can't build
->> omap_device for %s:%s.\n", ==============================
->>
->
-> Now *that* does just appear to be a gratuitous cleanup / performance
-> booster. Not security related.
-
-Wrong. PaX contains a gcc plugin that does *automatic* constification
-of eligible structures (structures containing function pointers).
-That's incompatible with run-time modification of the data structures
-in question. Therefore this change fixes the incompatibility by making
-the run-time assignment a compile time constant.
-
-Making structures containing function pointers r/o actually is
-security related. Read only data structures cannot be abused by memory
-corruption bugs, e.g., like the exploit for CVE-2013-2094 which
-overwrites function pointers in ptmx_fops to get code execution. But,
-well, that's true for PaX only, as write protected kernel r/o data is
-something mainline only gets when CONFIG_DEBUG_RODATA is set -- a
-'"Kernel hacking" debug option. Tells much about the state of security
-philosophy in the mainline kernel...
+BTW with respect to
 
 
-Mathias
+I tried to find an AMD security contact, couldn't find one. Emailed
+several email addresses, no luck:
 
->
-> If there is a security angle to it I have an interest in learning what
-> that is exactly. Implicit NULL'ing by the compiler?
->
-> AYJ
+security@....com
+The server has tried to deliver this message, without success, and has
+stopped trying. Please try sending this message again. If the problem
+continues, contact your helpdesk.
+
+If anyone knows how to get ahold of them please add it to the OSVDB
+vendor database. This is with respect to
+http://seclists.org/oss-sec/2013/q4/416 if anyone is wondering. not
+something new.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJSxmOnAAoJEBYNRVNeJnmTWQwQAMZ8FwWm74o81zN0GuiYNeWA
+jO7l0N9mbHl6YrZDRelcwpNuQ0TouKev+BcOYnPljEyeAPiKW2MBrM02riRo/ir0
+e3Yq7O9smU/Q/lSMtCAxcKtiiXuflNQw0R2H+dbQBia78Pr1fV2tEqChTSdk6w7Y
+xiM7HbWoZrKUWuSMwMYnWxD6cSOE43ysokL+bQ3R4f4MqPB5ifUVsyrPhVqu/s6M
+9vUdU3pA7OyCIGLxxM/XqwzVJdpUpFtnLMMNpb96/MdOJErH8LOgOuvx99njbW0M
+AMXSS6IsGsvbeKw3i5xCMNUm90q0YZuOah4pPdKL74ZtteOJtjz2sSBUdt2SvBWj
+zAWw/UBPVFPwmY0B5IccViBD3sqvjkXIXMbPZsikPS3YJv8qaTLi0AFNIAfyrMxL
+3N2ZFeCR+oNNSg2zDNhl5GTcvval7fLCnpm1mXKxGf7SA9QNaqgpHuP6MMEKuG4l
+m71qh35T6lGjqjzFZBBTkh/aUVySCGqyQ3lWZDcloZdC8nh0AoKrFGdWD3Tr6Izd
+D9h4YFhD3erP6XhXZOyxOMEam65LougqQRM1LsW4nfsZpufhCtL3xePaktCYyW5T
+BpMFYOJqLKBT7uh4SrM42/1lsS6QMlMAzjZryvKIi6DynYAn8K4HDdp469ImyfAf
+/cJpjMXnMgsxUbWZOtuQ
+=eUU8
+-----END PGP SIGNATURE-----
