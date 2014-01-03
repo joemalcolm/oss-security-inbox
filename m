@@ -1,80 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/01/1
-Message-ID: <52EC3F6A.2050207@redhat.com>
-Date: Fri, 31 Jan 2014 17:27:22 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/6
+Message-ID: <20140103072712.GB16139@gremlin.ru>
+Date: Fri, 3 Jan 2014 11:27:12 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+Cc: gremlin@...mlin.ru
+Subject: Re: kwallet crypto misuse
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 02-Jan-2014 09:15:15 +0100, Florian Weimer wrote:
 
-On 01/31/2014 09:34 AM, rf@...eap.de wrote:
->>>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
-> 
-> SD> Hi, This issue was brought to linux-distros and security@k.o 2 
-> SD> days ago via the message quoted below, and it was just made SD>
-> public at 22:00 UTC today (two hours ago) via grsecurity and PaX 
-> SD> (who were the ones to find the issue).  Normally, the person
-> who SD> brought this to linux-distros would be the one responsible
-> to SD> bring the issue to oss-security as soon as the issue is
-> public, SD> but Kees does not appear to be around at the moment and
-> the SD> issue is critical enough that I find it inappropriate to
-> delay SD> this posting by a few hours more, hence I am doing Kees'
-> job by SD> posting this in here.
-> 
-> SD> This is CVE-2014-0038 (assigned shortly after Kees sent the SD>
-> message below).  I will also include PaX Team's revised patch SD>
-> below.
-> 
-> Are you sure this is the correct CVE? It was assigned already
-> beginning of Dec. last year.
-> 
-> Roland
-> 
+ > I just noticed this is now public:
+ > http://gaganpreet.in/blog/2013/07/24/kwallet-security-analysis/
+ > Short summary: kwallet uses Blowfish to encrypt its password
+ > store, and despite an attempt at implementing CBC mode (in a
+ > file called cbc.cc no less), it's actually ECB mode.
 
-According to the Wikipedia entry on CVE (which I rewrote =):
+That's unpleasant, but not really a fatal issue...
 
-http://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures#Date_Entry_Created
+ > UTF-16 encoding combined with Blowfish's 64 bit block size means
+ > there are just four password characters per block.
 
-=======
-Date Entry Created
+But this is: any and all passwords, being used for encryption key
+generation, must be hashed, then salted, then hashed again. SHA-256
+may be a good choice for generating Blowfish 256-bit key this way.
 
-This is the date the entry was created. Please note that for CVEs
-assigned directly by Mitre this is the date Mitre created the CVE
-entry. For CVEs assigned by CNAs (e.g. Microsoft, Oracle, HP, Red Hat,
-etc.) this is also the date the entry was create by Mitre, not by the
-CNA. So in the case where a CNA requests a block of CVE numbers in
-advance (e.g. Red Hat currently requests CVEs in blocks of 500) the
-entry date would be when that CVE is assigned to the CNA. The CVE
-itself may not be used for days, weeks, months or even possibly years
-(e.g. Red Hat maintains blocks of CVEs for older security issues in
-Open Source software that were not assigned a CVEs yet).
-=======
+ > Encryption is convergent as well. This may enable recovery of
+ > passwords through codebook attacks. Should we treat this as a
+ > minor vulnerability?
 
-So late last year I asked for and received a block of 2014 CVE's from
-Mitre which we are now assigning as issues come to light. So yeah,
-we're all good.
+Is it really minor?
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJS7D9qAAoJEBYNRVNeJnmTX4gQAKok67l2lqOoXWA60ov4NZX2
-J+Y714dqOo7hOH08AaERkr+OXft1oDH4mTfR9FFXEIyyqOOquxeaJHguUBtITZSv
-53eWBoQXsZVaU33gCwjEL/HlmoBLV5PyB6wyzNquwCMQjVH7S7Ch3oq45n44OJ8l
-9cnUpIkGOpAIVD8dGxpc4ANmYYIsDCS4NkZKYxILJl90VPMBK5Kd4lZtY9SSvZuE
-dpeg/JlNFSFdS4UJrfJekjIJyT28Z46DvJ4Q8y9YRW5te6eTKIn6N178taMGAmUc
-lkmKU7A0zrPET+uegy3hTZFh8NZK8DzTK6q7+BDzyU6+R+Y19M+lxmGgOvM/Ddwr
-scoWeS6K8XGfMKG5J/20m0k4WQMe2IUyBay1VuC1LfbGVZGWCUVadeFKM9i+bKUx
-F5atdFtXkjtxSvbxbeAAIM8t+GIYbPeklvgP50nKwyDNkvz4dYOIJklxsqVJWoDy
-5Ns0vQ2ZPCCL4GE9D4i9A8xBU2i1O0DDSWpi1Lsvho7l3TmL5XSDdN49QYQLpVYq
-rvtibr62vPlN92b013UwVvZwtN3BWG6p/5eVxPwYicesDgRFOontTxTBULC2olQX
-pfpmMInkZ2BKz5ZN4I6odJWOZ5LgN/cyJW/nvY7QXzwwrb0FSUchEjjJvOveJkEo
-xscCJrVfQl67y7FF2k1v
-=ypIU
------END PGP SIGNATURE-----
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
