@@ -1,40 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/10
-Message-Id: <201403311602.s2VG2SpK004419@linus.mitre.org>
-Date: Mon, 31 Mar 2014 12:02:28 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/3
+Message-ID: <1388719896.2952.4.camel@localhost.localdomain>
+Date: Fri, 03 Jan 2014 13:31:36 +1000
+From: Arun Babu Neelicattu <abn@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2013-7348 CVE-2014-2678 Linux kernel aio and rds issues
+Subject: Neo4J CSRF: Potential CVE candidate
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-Here are two CVE assignments for Linux kernel issues:
+Last August, Dinis Cruz wrote a blog entry [1] detailing a CSRF attack
+on a Neo4J Server resulting in an RCE. The server's documentation [2]
+mentions the following.
 
-CVE-2013-7348 is for the
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=d558023207e008a4476a3b7bb8706b2a2bf5d84f
-"aio: prevent double free in ioctx_alloc" commit.
+"By default, the Neo4j Server comes with some places where arbitrary
+code code execution can happen. These are the Section 19.15,
+“Traversals” REST endpoints. To secure these, either disable them
+completely by removing offending plugins from the server class-path, or
+secure access to these URLs through proxies or Authorization Rules."
 
-CVE-2014-2678 is for "[PATCH v2] rds: prevent dereference of a NULL
-device in rds_iw_laddr_check" in the
-https://lkml.org/lkml/2014/3/29/188 post (not yet available at
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/net/rds/iw.c).
+This could mean that the RCE itself is not CVE worthy as it is a
+documented/expected behavior. However, should the CSRF flaw be
+considered a vulnerability and assigned a CVE?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Regards,
+Arun
 
-iQEcBAEBAgAGBQJTOZDWAAoJEKllVAevmvmscEkH/1nCMgzKU6Ce9GfIn8eFdKl8
-l6swoOC7OwWupOSA2YdL8IwiIoPTzAIW8M955EY+tXEQV2A3AE4XlClsnO/mIHOi
-wfkk/8DedeKcmDyeEaWvVvcrA+HdGwjhP6tifibgEcvl4mMMP5laQc44C6OLuSo1
-85Xt1ujjOKbNfJs09ddRzlEP0nsLngVOd/b17YurjTs/79pO7Opq47FRY29pNs7x
-clPFdWV711cwFVRHbHqp9ScUp3ZU+YYZBnCdm05gpdCQeDl4GhIafZgGc/+F+E7d
-gUUPzEHZmKUtTiF5+sfdE0za51rKEehHhUrOGkbIBR27ouI58fiK3TU6DuWTPPs=
-=neLd
------END PGP SIGNATURE-----
+[1]
+http://blog.diniscruz.com/2013/08/neo4j-csrf-payload-to-start-processes.html
+[2]
+http://docs.neo4j.org/chunked/stable/security-server.html#_arbitrary_code_execution
+
+-- 
+Arun Neelicattu / Red Hat Security Response Team 
+PGP: 0xC244393B 5229 F596 474F 00A1 E416  CF8B 36F5 5054 C244 393B
+
+
+
