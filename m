@@ -1,45 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/5
-Message-Id: <201402030350.s133oTil015991@linus.mitre.org>
-Date: Sun, 2 Feb 2014 22:50:29 -0500 (EST)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: temp file issues in python's logilab-common module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/9
+Message-ID: <52C6F70A.5090100@fifthhorseman.net>
+Date: Fri, 03 Jan 2014 12:44:42 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com
+CC: gremlin@...mlin.ru
+Subject: Re: kwallet crypto misuse
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 01/03/2014 02:27 AM, gremlin@...mlin.ru wrote:
+> On 02-Jan-2014 09:15:15 +0100, Florian Weimer wrote:
+> 
+>  > I just noticed this is now public:
+>  > http://gaganpreet.in/blog/2013/07/24/kwallet-security-analysis/
+>  > Short summary: kwallet uses Blowfish to encrypt its password
+>  > store, and despite an attempt at implementing CBC mode (in a
+>  > file called cbc.cc no less), it's actually ECB mode.
+> 
+> That's unpleasant, but not really a fatal issue...
+> 
+>  > UTF-16 encoding combined with Blowfish's 64 bit block size means
+>  > there are just four password characters per block.
+> 
+> But this is: any and all passwords, being used for encryption key
+> generation, must be hashed, then salted, then hashed again. SHA-256
+> may be a good choice for generating Blowfish 256-bit key this way.
 
-> In logilab/common/pdf_ext.py it uses fully predictable names:
-> lines = file('/tmp/toto.fdf').readlines()
-> write_fields(file('/tmp/toto.fdf', 'w'), fields)
+what kind of hashing and salting are you talking about?  i don't think
+hashing and salting makes sense in the context that you were quoting
+above.  Are you aware that kwallet stores a database of passwords that
+need to be able to be produced back for the user (or the user's
+applications) in the clear?
 
-Use CVE-2014-1838.
+	--dkg
 
 
-> And in logilab/common/shellutils.py:
->         outfile = tempfile.mktemp()
->         errfile = tempfile.mktemp()
-> tempfile.mktemp() should be replaced with tempfile.mkstemp() as it is documented as insecure.
-
-> http://docs.python.org/2/library/tempfile.html
-
-Use CVE-2014-1839.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS7xGDAAoJEKllVAevmvmsNNEIAJSprr1QxmFg9K4naoR7DpVb
-ZW3yoemuklcx371AQhiBcqLIau4FbJqWLEl0GAhzCNgMwT1hVEcDAYJoDxbL+GJe
-n+JtwXJOY8oJc4c/DODjw3E+NYMo0Rh/FHn3xNBaLl5gTbex9s3/u6E3/bCT4W6+
-G4e/S4rhbd5cbibrwQEzbnwXPeQIkpcG0FZP/5/Vdripsgjm1YoTA1gXSe4leAnQ
-NMHDhvIyKR4BSrAKYZzx4PgC1wjQKvJsL8RHyRT0W9lr2UIiDWsdumY/R8m+AxvA
-eRpM9jZbbDH0K4IsSlUd/Jf0ozFXZQAPXcQxhafNf/q8LMRY9F5sb4OyIxB34bA=
-=lKoz
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
