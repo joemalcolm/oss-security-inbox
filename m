@@ -1,23 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/1
-Message-ID: <20140624053615.GA24684@zoho.com>
-Date: Tue, 24 Jun 2014 05:36:15 +0000
-From: mancha <mancha1@...o.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: GnuPG-1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/1
+Message-ID: <52C61B44.8010807@redhat.com>
+Date: Thu, 02 Jan 2014 19:07:00 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, dkg@...thhorseman.net
+CC: cve-assign@...re.org, fweimer@...hat.com, "Christey, Steven M." <coley@...re.org>
+Subject: Re: Re: kwallet crypto misuse
 Content-Type: text/plain; charset=utf-8
 
-GnuPG 1.4.17 released on 20140623 [1] fixes a security flaw, reported by
-Olivier Levillain and Florian Maury, that can be exploited via crafted
-input to cause a denial of service by triggering an infinite loop [2].
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please allocate a CVE identifier for this issue.
+On 01/02/2014 12:45 PM, cve-assign@...re.org wrote:
+> Thanks very much for this additional information. At this point,
+> it seems very unlikely that the "\0a\0b\0c\0d" issue will have an 
+> additional CVE assignment. We were asking just because of the 
+> possibility of a clear implementation error in which security was 
+> weakened by using a "wrong" character width.
+> 
+>> Do you think MITRE or other folks should be recommending
+>> pre-whitening the strings before encrypting them
+> 
+> It's possible that a group elsewhere at MITRE would work on 
+> recommendations in that area or other areas. For purposes of the
+> CVE assignments in this situation, that type of opportunity for
+> security improvement wasn't being considered.
 
-Many thanks.
+Hrmm, I assumed this would be handled a lot by getting things accepted
+in CWE (http://cwe.mitre.org/), and once done that means we can start
+assigning CVEs for them.
 
---mancha
+Stupid question but what is the process to propose a new CWE? I poked
+around the site but can't find any hints.
 
-[1] http://lists.gnupg.org/pipermail/gnupg-announce/2014q2/000344.html
-[2] http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=commitdiff;h=11fdfcf82bd8
 
-Content of type "application/pgp-signature" skipped
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJSxhtEAAoJEBYNRVNeJnmTxNUP/R6MJn9vNAUxmkzm3moE/OGm
+8dE3bMwyIzrwgslG9kROTL44V1iWkHriGoV85hQsNYjzPa4+thy8fEs20aycJ/Tb
+qgmyuR7juJ84OIzy6AH1xOTMGTfW9yuJqIaY1fvajkJfUrvSuGzuONjZ1XhJFOGn
+kLUXRJotxg7cuKijyNxZlgBTzqVfJ+bxo3ZN3EtDg7RUClm7VWGMf3BaekeC3e3s
+jOU4WESxn1s+WOCNMaNuyE/KkyxIeeALLJcdJ54BxrKCdJBiqfNSwbRaOe87f2Z+
+tL5GW5KKjZ2ZblZrlrCR66kyBr6ce3j+INqXTL2AhJUBTHOAphI8X9dcb+5Q4+Db
+0f/s89HhKc1tJuNnZt0mBVsvl1K04DjLzaOixmlxHi7iNQL1D+T/T3xMEqE5fKZj
+n8D0QPNbwOhITEC4a08NytymuqX/JjXYrI1IAfC4ltt41fYmlYSB9N5BmnkZKS7M
+HZdrwyhemNwjgur2ZCnNuqzl8S4wtqy4Y61XNCYptBK6T10aprz94rGxBxbdlm5S
+zKQlNJaaobJGYsJhQp6xGXW8a5e3RVTqyAaF9Me47ODR8WcjY3j+AceYwHwcTtKt
+BsPknQ6Xp92L06x01JmgpQz3TcuJMZwce6TtGSSn0xuOT0UVRnYvVTRMI5zLxc0x
+o8lRHdYJVZaTdnbbD++h
+=z7ST
+-----END PGP SIGNATURE-----
