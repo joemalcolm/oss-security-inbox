@@ -1,63 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/10/4
-Message-ID: <5410874B.5010608@oracle.com>
-Date: Wed, 10 Sep 2014 10:15:55 -0700
-From: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/06/2
+Message-ID: <CAA7hUgFLwK1dNUyCd4FZMFF_jjjfWDqK5jn5Pb4aS6wA58vTsw@mail.gmail.com>
+Date: Mon, 6 Jan 2014 11:57:06 +0100
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+Cc: Ratul Gupta <ratulg@...hat.com>
+Subject: [notification] CVE-2013-6888: uscan: remote code execution
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
- 
-I'll look into this and get back to you shortly.
+Given the recent issues in uscan (part of devscripts) I took a look at
+it and found a few other issues.
+The bugs fixed by the following commit basically allow remote code
+execution when uscan is used to download upstream's tarball. With and
+without repacking (contrary to the commit message).
 
-Thanks,
-- -Ritwik
+http://anonscm.debian.org/gitweb/?p=collab-maint/devscripts.git;a=commitdiff;h=02c6850d973e3e1246fde72edab27f03d63acc52
 
+This was assigned CVE-2013-6888.
 
-On 9/10/2014 9:29 AM, Kurt Seifried wrote:
-> Technically speaking Oracle is a CNA and should be handling this, I have
-> no idea how to contact them though, Mitre, can you guys reach out to
-> them? Also does this affect MariaDB?
->
-> On 10/09/14 10:00 AM, Salvatore Bonaccorso wrote:
->> Hi
->>
->> The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference to
->> the following issue, which could be exploited by a local user to run
->> arbitrary code in context of the mysqld server.
->>
->> MyISAM temporary files could be used to mount a code-execution attack.
->> (Bug #18045646).
->>
->> This is also tracked in[3] and [4] mentioning as relevant fix [5].
->>
->> Was a CVE already requested for this issue? If not, could one be
->> assigned?
->>
->> Regards,
->> Salvatore
->>
->>  [1] https://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-39.html
->>  [2] https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-20.html
->>  [3] https://bugzilla.redhat.com/show_bug.cgi?id=1126271
->>  [4] https://bugs.gentoo.org/show_bug.cgi?id=518718
->>  [5] https://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/4638
->>
->
+Two other changes were made that IMO should be considered as hardening:
+http://anonscm.debian.org/gitweb/?p=collab-maint/devscripts.git;a=commitdiff;h=4b7e58ee6000cdefac0682601cec6ecce0137467
+http://anonscm.debian.org/gitweb/?p=collab-maint/devscripts.git;a=commitdiff;h=b815aa438f018b5afc566eb403b0319a99a32995
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
- 
-iQEcBAEBAgAGBQJUEIdFAAoJEB1zxS9196ou0qwIAIKBYjuDJJJPRHxCnTWacMrz
-ZQV/tZ7ajz2u0sY6m22Tpq1QUr5u4gf4rM6TL6MQS+r1Req4dsIXdicJvHrSQgmM
-N5yrWdbwMbx3mZOw0LZp/clV8fWJCb1e9IWckaWyn0IaDp/yyzQl7vHHmWvkOiUt
-qDUgpYbEVF8U/mrVYGT6Gmz3Rm8d9p9NcTRgxLoPShFKrwWlsDJoczdhE3UA+NTf
-sZ5n+q1hYmKymW300KcsSbV6JMvETAu6N5w48n2i8llFyiTkAGwjmtbVRjxbrLgw
-zHs6NVal793YUDRPFLeZxJV/0gkefxai7UfmXSe8z9ShtPE152GBoxN0TJsfKhQ=
-=+ZJ9
------END PGP SIGNATURE-----
+At least I'm not aware of a way to exploit them.
 
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
