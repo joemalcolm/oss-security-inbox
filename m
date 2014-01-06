@@ -1,18 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/5
-Message-ID: <5488E189.1030305@mccme.ru>
-Date: Thu, 11 Dec 2014 03:12:57 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/06/1
+Message-ID: <20140106054904.GA24925@lorien.valinor.li>
+Date: Mon, 6 Jan 2014 06:49:04 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: so, can we do something about lesspipe? (+ a cpio bug to back up the argument)
+Cc: Dominic Hargreaves <dom@...th.li>
+Subject: CVE Request: cross-site scripting vulnerabilities in movable type 6.0.1, 5.2.9, and 5.161
 Content-Type: text/plain; charset=utf-8
 
-On 2014-11-23 12:52, Hanno Böck wrote:
-> Now lesspipe: I didn't know that this thing exists until very
-> recently but I was aware that less did some kind of parsing and e.g. I
-> quite liked the idea that you can "less" gz/bzip2 files.
+Hi
 
-You can use zless/bzless for this.
+A movable type update to 6.0.1, 5.29 and 5.161 fixes cross-site
+scripting attacks, from the announcement:
 
--- 
-Alexander Cherepanov
+> The Rich Text Editor in previous versions of Movable Type 6 and
+> Movable Type 5 are susceptible to cross-site scripting (XSS) attacks.
+> A remote attacker can inject JavaScript into a page or entry in a
+> Movable Type blog or website. This JavaScript can be executed on the
+> client browser when that page or entry is subsequently displayed in
+> the Rich Text Editor.
+>
+> These vulnerabilities were reported by a member of the Movable Type
+> community, and were kept confidential until the release of the updated
+> versions of Movable Type.
+
+ [0]  http://movabletype.org/news/2013/11/movable_type_601_529_and_5161_released_to_close_security_vul.html
+
+Looking trough the git repository at [1], there is at least [2] which
+seems to indicate the fix for the 5.2.x branch (I cannot say tough if
+this the complete one).
+
+ [1] https://github.com/movabletype/movabletype
+ [2] https://github.com/movabletype/movabletype/commit/c85903b3ee23ea2b4ddf981a75815c737f6f6040
+
+Debian Bugtracker reference is at [3].
+
+ [3] http://bugs.debian.org/734304
+
+Is there enough information to identify the vulnerability and to get a
+CVE assigned for this issue?
+
+Regards,
+Salvatore
