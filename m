@@ -1,34 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/40
-Message-ID: <CAD6CYKOUv0g=YW_j9juQ_DyV-jyKyU=ujOw31UfDCNEbf1=cwA@mail.gmail.com>
-Date: Thu, 25 Sep 2014 20:48:25 +0200
-From: Alexandre Dulaunoy <a@....be>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/17
+Message-ID: <20140107235818.GA16720@openwall.com>
+Date: Wed, 8 Jan 2014 03:58:18 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: huzaifas@...hat.com, chet.ramey@...e.edu, chet@...cwru.edu,  lcamtuf@...edump.cx
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Cc: security@...godb.com
+Subject: Re: MongoDB memory over-read via incorrect BSON object length (was: [HITB-Announce] HITB Magazine Issue 10 Out Now)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 25, 2014 at 8:35 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
+On Tue, Jan 07, 2014 at 05:15:11PM -0500, cve-assign@...re.org wrote:
+> >There is a memory over-read bug that can be used by an authenticated
+> >user (if applicable) to obtain raw MongoDB server process memory
+> >contents via incorrect BSON object length.  I guess that under most
+> >deployments this does not cross a security boundary, but for some it
+> >could (differently-privileged MongoDB users, data already deleted from
+> >the DB yet staying in process memory, or/and metadata that is not
+> >normally retrievable).
+> 
+> Use CVE-2012-6619.
 
->> On 09/25/2014 08:31 AM, Chet Ramey wrote:
->
->> Wondering if you saw
->> http://www.openwall.com/lists/oss-security/2014/09/24/40 ?
->
-> The (one-line) patch I sent last night appears to fix this.  Please verify.
+Thanks!  To make sure MongoDB developers are aware of this, I am CC'ing
+this reply to security@...godb.com as specified here:
 
-Indeed, we tested the yacc fix along with bash43-025 on different systems.
+http://docs.mongodb.org/manual/tutorial/create-a-vulnerability-report/
 
-Applying bash43-025 and eol-pushback.patch fixed it.
+Past MongoDB security issues are listed here:
 
-We made some notes there for the people upgrading from the source:
+http://www.mongodb.org/about/alerts/#security-related
 
-http://www.circl.lu/pub/tr-27/#recommendations
+and they don't appear to include this "new" issue yet.
 
-Feedback welcome.
+I've just added these two links to:
 
--- 
---                   Alexandre Dulaunoy (adulau) -- http://www.foo.be/
---
---         "Knowledge can create problems, it is not through ignorance
---                                that we can solve them" Isaac Asimov
+http://oss-security.openwall.org/wiki/software#mongodb
+
+MongoDB - here's some more context regarding the specific vulnerability
+(now known as CVE-2012-6619, as per the assignment above):
+
+http://www.openwall.com/lists/oss-security/2014/01/07/2
+
+Alexander
