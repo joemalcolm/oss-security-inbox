@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/15
-Message-ID: <545CB8C4.4080101@mccme.ru>
-Date: Fri, 07 Nov 2014 15:19:16 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: oss-security@...ts.openwall.com
-CC: binutils@...rceware.org
-Subject: Re: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/14
+Message-Id: <201401072219.s07MJ7JQ026776@linus.mitre.org>
+Date: Tue, 7 Jan 2014 17:19:07 -0500 (EST)
+From: cve-assign@...re.org
+To: ratulg@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: graphviz: stack-based buffer overflow in yyerror()
 Content-Type: text/plain; charset=utf-8
 
-On 2014-11-07 15:09, Alexander Cherepanov wrote:
->> I was just curious how well
->> this works for real world tasks like objdump crashes.
->
-> Back to real world deduping. IMHO it's not ideal but works quite well,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Ah, I forgot to add that to really know the quality of the results of 
-this approach we have to ask Nick Clifton which actually worked with the 
-resulted crashers. I mostly didn't look into the sources and just run 
-the script which in the end prepares a tarball for uploading (modulo 
-manually filtering out some garbage which I didn't yet manage to 
-blacklist in the script).
+>an error within the "yyerror()"
+>function (lib/cgraph/scan.l) and can be exploited to cause a stack-based
+>buffer overflow via a specially crafted file.
 
-Nick, any feedback appreciated.
+Use CVE-2014-0978.
 
--- 
-Alexander Cherepanov
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSzH0dAAoJEKllVAevmvmsdcAIALBfNun5cNjVGVEVmWYQIncL
+cZIWWhasJDtZoSSP7sEqSWUnTvIft/9Ke6O6dCykngQo6kIEQYqUfxeKpB2c+Asi
+b144u4i7nLyustXMCAHkJ58Z2sr5+IfvrjY8g7MzCQU3eRVw4O4NcNGK7qmU3nyv
+D3YX3b4ON2a6FWmGNFYmo9aJ7x1suMIjXKPqM7m//+6qpEdSH7kETMvLR86lJZuj
+L2FBvbPVvpN8VgAMrASONQBMsVAaqXDSuizQgfAxqktqBCO/8lSsJ+0kE4ybMHkr
+gN1hL4z+mo7gkVqeaemtds41ZaM51pAQvp+vkUGx3y35SppqcxiSr55GqjZTBts=
+=F0p9
+-----END PGP SIGNATURE-----
