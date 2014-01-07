@@ -1,33 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/02/1
-Message-Id: <20140902042333.B317733200B@smtpvbsrv1.mitre.org>
-Date: Tue,  2 Sep 2014 00:23:33 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/15
+Message-Id: <201401072225.s07MP0rx026819@linus.mitre.org>
+Date: Tue, 7 Jan 2014 17:25:00 -0500 (EST)
 From: cve-assign@...re.org
-To: fweimer@...hat.com
+To: guido+openwall.com@...hoerster.name
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: glibc character set conversion from IBM code pages
+Subject: Re: CVE request: lightdm-gtk-greeter - local DOS due to NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> In 2012, a crasher in IBM930 decoding was reported and fixed:
-> 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=14134
-> https://sourceware.org/git/?p=glibc.git;a=commit;h=6e230d11837f3ae7b375ea69d7905f0d18eb79e5
-> 
-> This change went into glibc 2.16.
+>it is trivial to crash
+>lightdm-gtk-greeter by entering an empty username due to a NULL
+>pointer dereference. When a greeter crashes the lightdm daemon
+>exits.
+>This constitutes a local denial of service which can be triggered
+>by any unprivileged attacker requiring the intervention of an
+>administrator to restart lightdm.
 
-Use CVE-2012-6656.
-
-
-> additional code page decoding functions (IBM933, IBM935, IBM937,
-> IBM939, IBM1364):
-> 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17325
-> https://sourceware.org/ml/libc-alpha/2014-08/msg00473.html
-
-Use CVE-2014-6040.
+Use CVE-2014-0979.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -37,11 +29,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUBUWzAAoJEKllVAevmvmsdCYH/RKCplNUGUz2+hey24f9mQnO
-Ecq/zoDEQL61tJn9QY/JdW6x0GSn9QHy8qCKRDv+M6m3PVi3kp74oK17M66sg0tF
-uznZdUXWQGfJdPwOyKplufYij3j1TMOgwjL+VGwQ63bddmBGJLCVxgHe/j+dI6z5
-nIVT0vxcVylDpNI4AyBunTg1Pu13D/zGkreDI6tVarfpExk44Tw9v4Zg/z0Sh8Nz
-8xwG2QnXFctMUQhlLn8zGHD27USO96Sj5YFT4LZBlgOusyaUOUi9vjm/xdgSD0wv
-+g5rSKwAUW/UYsU263FvZg7ZYM04lD0ShCYmLAHWKcM1Dq9N+NX9vjzyd18fK9U=
-=tGjg
+iQEcBAEBAgAGBQJSzH5JAAoJEKllVAevmvms9wIH/A9WdJzXAHd/GFVKWdl95xKZ
+knswD8xFptO9IIII1M8Du/eDomM0CU3fZHzgBBxtJYfCP1WZc7c7a0RG791FpWDh
+VMF7DeB8Kd18J9uqzQSBnZOaEtjpJHbAM8eRDjoG/MgUAzkYixTwg4lVk41mOl/l
+rymq3vTVgIFBHJfwQRKgxl/MlHc0qxWqC9ahw68Xg9jTsTkU1uXBVo8o3+Gr6I6b
+5F4fmtAl5c3uiX570TGj03vt8mK9NTYqwwfprin9jH+SPaQZhsBb5jUQLF+SK1qD
+KWGWNJiwg4OUHHOmAOcRBtA4LckXaxCXceUN196QjIJmlHPtoSjXZ/ZngTAGUOw=
+=x4LB
 -----END PGP SIGNATURE-----
