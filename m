@@ -1,49 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/37
-Message-Id: <20141007203500.EC183C50B42@smtptsrv1.mitre.org>
-Date: Tue,  7 Oct 2014 16:35:00 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Discussion: information leakage from server and client software - CVE/hardening/other?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/1
+Message-Id: <PKMFV5UQ-3HCS-ARTL-VEHX-CI0WP8YJNQ7@hackinthebox.org>
+Date: Tue, 7 Jan 2014 10:37:01 +0800
+From: Hafez Kamal <aphesz@...kinthebox.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: [HITB-Announce] HITB Magazine Issue 10 Out Now
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Issue #10 is now available!
 
-The main cases in which a CVE could exist are:
+Hello readers and welcome to the somewhat overdue Issue 010 of HITB
+Magazine. As they say, better late than never!
 
-1. The author of the software states that the information-leakage
-behavior was a violation of the product's security policy.
+Since the last issue, we've also changed the HITB Security Conference
+Call for Papers submission guidelines to now require speakers to submit
+a research 'white paper' to accompany their talk. The first round of
+papers came to us via #HITB2013KUL in October and thankfully we now have
+loads of AWESOME CONTENT! We've got so much good stuff we could have
+probably put together two issues even!
 
-2. The information-leakage behavior directly contradicts the product's
-documentation stating that the specific information leakage doesn't
-occur.
+With the new change to the CFP submissions, we've decided to also change
+our publication schedule for 2014 to a 'per HITB SecConf' release cycle.
+This means you can expect a new magazine approximately every 6 months
+which we'll release alongside a HITB Security event.
 
-3. The author of the software makes no statement, but all (or nearly
-all) similar products follow a standard practice in which the
-information-leakage behavior doesn't occur. For example: common web
-browsers don't send a file: URL in a Referer header.
+What else do we have planned for 2014? Well next year also marks the 5th
+year anniversary of the HITB Security Conference in Amsterdam and we're
+celebrating it in traditional HITB fashion - by adding something special
+to our line up - our first ever HITB hacker expo! A 3-day IT security
+and technology exhibition unlike anything that's been done before. Think
+RSA or Mobile World Congress meets Makerfaire with a generous touch of
+HITBSecConf thrown in for good measure. What exactly does that mean?
+Imagine an area dedicated to hackerspaces; makers with 3D printers,
+laser cutters and other fabrication goodies coupled with TOOOL's Lock
+Picking Village, HITB and Mozilla's HackWEEKDAY developer hackathon, our
+Capture the Flag 'live hacking' competition and more all wrapped around
+a 3-day exhibition with Microsoft and Google as the main anchors. The
+cost to attend? ABSOLUTELY NOTHING! Yup, entrance to HITB Haxpo will be
+F-R-E-E! Head over to http://haxpo.nl for further details and to
+register (we've got a new registration system too!)
 
-4. The author of the software makes no statement, and disclosing the
-information results in no benefit to the user, and the information
-would not be useful to the vendor in further developing the product or
-complying with restrictions on the data that the vendor offers in
-conjunction with the product.
+On behalf of The HITB Editorial Team, I hope you enjoy this special end
+of year issue we've put together and we wish you all a very Happy New
+Year, and have a great time ahead!
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Download Issue #10 - http://magazine.hackinthebox.org/hitb-magazine.html
 
-iQEcBAEBAgAGBQJUNE1sAAoJEKllVAevmvmsfGwIAK3AZYGPKsOQhdaAorKi8Bly
-SFuaSXCjmhkswmH74fN11UCmU4OWwV+3Vv66iE/YGpZDk4j1yFJR3fYLTeTcYCuH
-xTPyAbsBI4UcrcNtay9iujUgcXe7lRxc8b8E2l962dEm3Xw1FzzFUUtC+kVUCoyR
-4qHWsS+1eUIZ7+q6L5ITG12K4hvYHwGRDzr08+IvESfmvskgc3tCEgV/eHa009Rs
-rM/M6o9EE0CEyDCyhFk4LiZgSq8UjG5lJCMP4aeA8t43eSNGeWSSXnaZIwOiPwsC
-UNl4GDN3Ro1+WPumX6fiJmXVq/h5B7S5oCBjPyjUOsz2ZI9Kce+T9Dug3l/PtU0=
-=wGXw
------END PGP SIGNATURE-----
+Regards,
+Hafez Kamal
+Hack in The Box (M) Sdn. Bhd
+36th Floor, Menara Maxis
+Kuala Lumpur City Centre
+50088 Kuala Lumpur, Malaysia
+Tel: +603-26157299
+Fax: +603-26150088
+
