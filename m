@@ -1,75 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/26/5
-Message-ID: <53FC4D2F.7070902@redhat.com>
-Date: Tue, 26 Aug 2014 11:02:39 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: cve-assign@...re.org, mmcallis@...hat.com
-CC: oss-security@...ts.openwall.com
-Subject: Re: Lua CVE request [was Re: CVE request: possible overflow in vararg functions]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/11
+Message-ID: <20140107200954.GB6284@scapa.corsac.net>
+Date: Tue, 7 Jan 2014 21:09:54 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: LightDM Mailing List <lightdm@...ts.freedesktop.org>, Robert Ancell <robert.ancell@...il.com>
+Subject: Re: CVE request: lightdm-gtk-greeter - local DOS due to NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-On 08/25/2014 11:08 PM, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> We wanted to check whether we were interpreting this correctly before
-> proceeding to CVE assignment.
->
-> http://openwall.com/lists/oss-security/2014/08/21/4 says "loadstring
-> accepts precompiled bytecode and does not perform sufficient
-> verification on it ... But it is not entirely clear if we can assume
-> that a trust boundary is crossed." We think this may mean something
-> like: "By default, an attacker who is able to control input to the
-> loadstring function can include a representation of os.execute in that
-> input. A realistic Lua program is (probably?) not going to call
-> loadstring unless it plans to run the chunk. Therefore the attacker
-> already has the privileges of the Lua process, and it is not relevant
-> that the attacker can also exploit implementation flaws in the
-> bytecode interpreter."
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Lua has some sandboxing functionality, but it can be bypassed by 
-supplying precompiled bytecode.  There have been extensive discussions 
-about this on the lua-users mailing list, e.g.:
+On Tue, Jan 07, 2014 at 11:47:31AM +0100, Guido Berhoerster wrote:
+> Hi,
+> 
+> an openSUSE user discovered that it is trivial to crash
+> lightdm-gtk-greeter by entering an empty username due to a NULL
+> pointer dereference. When a greeter crashes the lightdm daemon
+> exits.
+> This constitutes a local denial of service which can be triggered
+> by any unprivileged attacker requiring the intervention of an
+> administrator to restart lightdm. It affects all versions of
+> lightdm-gtk-greeter.
 
-<http://lua-users.org/lists/lua-l/2011-10/msg01215.html>
+I've just checked in Debian Wheezy (lightdm 1.2.2, lightdm-gtk-greeter
+1.1.6), and a crashed greeter (because of that NULL username) doesn't
+lead to a lightdm exit.
 
-> http://openwall.com/lists/oss-security/2014/08/21/4 also says "It is
-> possible to recognize a bytecode argument string filter that out, but
-> if you do not that, attacks against the bytecode interpreter are
-> possible." Were there missing words here (possibly "string and filter
-> that out")?
+I'm not sure what was the reason for changing that (if there's a
+reason), but it might be a problem in itself.
 
-Right, and that's a valid observation.
+Regards,
+- -- 
+Yves-Alexis Perez
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-> In general, it seems that this observation about the bytecode
-> interpreter is largely unrelated to the
-> http://www.lua.org/bugs.html#5.2.2-1 bug report.
-
-It's relevant to deciding whether there's security impact or not.  If 
-this functionality is utterly insecure anyway, this bug wouldn't be a 
-security bug.
-
-> Alternatively, there could be separate CVE IDs for
-> Lua programs that lack the filtering mentioned above. Is this issue
-> best considered to be not yet publicly disclosed?
-
-No, oss-security is a public list, and the general problem has been 
-widely discussed (see above).
-
->> this modified reproducer crashes as well
->
-> As far as we can tell, this is within the scope of the vendor's
-> disclosure, and isn't a separate problem. The
-> http://www.lua.org/bugs.html#5.2.2-1 bug report is about "vararg
-> functions with many fixed parameters called with few arguments."
-
-What I was trying to show is this: Existing code which uses a large 
-number of arguments (for example, for dissecting a table or string) 
-could expose this issue when called with too few arguments (say, if the 
-table was too short).  This means that a crafted argument to loadstring 
-is not always needed to trigger this bug, and the security properties of 
-loadstring do not matter.  In short, I think this vararg processing bug 
-should be treated as a security bug.
-
--- 
-Florian Weimer / Red Hat Product Security
+iQEcBAEBCgAGBQJSzF8PAAoJEG3bU/KmdcClVR8H/jRLkzUzniSxOifUSslX7a8U
++fw3efTrj5OZUlVlrwskj1Lvt0v9Pd+639p41FVCFTTfWCcARw0kPo9M13+hXM5V
+nooy91SMDoOqZ+Ok9lpqIfpRSnQRWMt4c9H6eTSCr2TfNhw/3smMy6zpJqjMUnWU
+o5R3vqxsdySgYIdVG90RPQ81+jlYTThthZWN9zRE9tnnOSQK++A9/YxKnfWCr77A
+bS0CE9a0CAvfosMxaeHdLtNLUN0c0EDHZENX89XUd6xCy9m2UYYR0BSxEq30dAJG
+UrlHVy0F65jt9G8H+8EuCMQXbdWjJNOI2s+fP04n/HodZUvsO3P/0w9BtjHTAEs=
+=JlIY
+-----END PGP SIGNATURE-----
