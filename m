@@ -1,39 +1,12 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/7
-Message-ID: <20141112124829.GC4976@suse.de>
-Date: Wed, 12 Nov 2014 13:48:29 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/9
+Message-ID: <52CC2FA1.70208@oracle.com>
+Date: Tue, 07 Jan 2014 08:47:29 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: systemd-resolved DNS cache poisoning
+Subject: Fwd: X.Org Security Advisory: CVE-2013-6462: Stack buffer overflow in parsing of BDF font files in libXfont
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 12, 2014 at 01:35:43PM +0100, Florian Weimer wrote:
-> On 11/12/2014 12:15 PM, Sebastian Krahmer wrote:
->> At its simplest, an attacker triggers a query to a domain he controls
->> via SMTP or SSH-login. Upon receipt of the question, he can just add
->> any answer he wants to have cached to the legit answer he provides
->> for the query, e.g. providing two anser RR's: One for the question asked
->> and one for a question that has never been asked - even if the DNS server
->> is not authoritative for this domain.
->
-> BIND 9 is supposed to filter such garbage from upstream answers, but there 
-> are other resolvers out there which will pass through such answers 
-> unchanged, so this is very much CVE-worthy.
 
-You may answer to the resolver directly, bypassing any filtering.
-Even behind a NAT this may work (depending on your
-DNS setup if theres no intermediate DNS server). In the mail-server example the
-local UDP port should be reachable directly, so you can spoof
-to be the legit DNS upstream and do not even are on race,
-since upstream DNS will wait for your legit answer
-while you are enumerating the XIDs through systemd (constant src port).
-
-Sebastian
-
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+Download attachment "X_Org Security Advisory: CVE-2013-6462: Stack buffer overflow in parsing of
+ BDF font files in libXfont.eml" of type "message/rfc822" (9329 bytes)
