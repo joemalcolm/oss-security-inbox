@@ -1,77 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/30/3
-Message-ID: <20140330183211.GB8534@openwall.com>
-Date: Sun, 30 Mar 2014 22:32:11 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Georgi Guninski <guninski@...inski.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/10
+Message-ID: <52CC5A80.5050205@fifthhorseman.net>
+Date: Tue, 07 Jan 2014 14:50:24 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com, 683338@...s.debian.org
+Subject: Re: CVE request: lightdm-gtk-greeter - local DOS due to NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Georgi,
+[replying to http://www.openwall.com/lists/oss-security/2014/01/07/5]
 
-I reluctantly approved your posting for distribution to oss-security (so
-far, 100% of your postings made it to the list), although I find it of
-very little value for the reasons given below.  If you post another one
-that is about as useless, we will likely reject it.  However, if you
-finally do explain things clearly, this might be worth another message.
-Maybe make a blog post and announce that.  Try to write it really well.
+On 01/07/2014 05:47 AM, Guido Berhoerster wrote:
+> an openSUSE user discovered that it is trivial to crash
+> lightdm-gtk-greeter by entering an empty username due to a NULL
+> pointer dereference. When a greeter crashes the lightdm daemon
+> exits.
+> This constitutes a local denial of service which can be triggered
+> by any unprivileged attacker requiring the intervention of an
+> administrator to restart lightdm. It affects all versions of
+> lightdm-gtk-greeter.
 
-On Sun, Mar 30, 2014 at 07:41:22PM +0300, Georgi Guninski wrote:
-> Just for the record of the old FD,
-> i posted there anonymously and
-> even killed at least one bug in 
-> widely used open source warez in
-> un-orthodoxal way.
-> 
-> The CVE servants got the bug
-> significantly later after the
-> announcement :)
+Hm, if this warrants a CVE for lightdm, then gdm3 needs one also:
 
-What's the purpose of posting this?
+ https://bugzilla.gnome.org/show_bug.cgi?id=704284
+ http://bugs.debian.org/683338
 
-Like with much other stuff you posted, you're failing to make it clear
-just what message you're trying to get across.  Do you want someone to
-be doing something differently?  If so, who, and what exactly?  I think
-you do have a message, but it's all obfuscated by the hints, sarcasm,
-you pretending to be humble ("OT", "don't care" - then why post, as
-someone told you).  Maybe try to write _one_ essay where you'd explain
-your point of view and the rationale behind it in a way that would be
-clear to most readers.  Right now, your anti-CVE stance looks plain
-ridiculous to most people, and it'd stay that way unless you explain it
-very clearly, with rationale given.  "Oh, those guys support responsible
-disclosure, so I'll boycott CVEs even for vulns to be disclosed publicly
-right away" does not sound reasonable to most readers, regardless of
-whether they'd possibly agree with your opinion (if you did give the
-rationale) or not.  If you do have a good rationale for what you're
-doing or advocating that others to do(*), then do explain it clearly!
+Basically, when gdm3 is configured to not show a list of users (but
+instead shows a blank box for the login prompt), if the user clicks
+"cancel" or hits the escape key, then the greeter gets put into a mode
+without any way to log in (no prompts available).
 
-(*) It is unclear what you're advocating people to do, even.  One thing
-you did mention is you want a fully unmoderated full-disclosure list -
-and you were told (by Fyodor, I think) that you're welcome to set one
-up if you like.  I don't think anything else may be done in that respect.
+I've tried to debug it but it appears to be due to some sort of
+timing-dependent case.  When i step through the code with gdb, i haven't
+been able to reproduce the issue.
 
-For CVEs, it is _totally_ unclear what you'd like people to be doing or
-not doing.  Did you ever explain that?
+It is definitely a bad situation for machines in public locations with
+this configuration.
 
-> maybe solardiz is using the
-> mainstream patch i suspect.
+	--dkg
 
-I have no idea what you're referring to.  Chances are most folks on
-oss-security don't know either.
 
-I'd appreciate it if you tried to make your postings actually useful to
-at least someone.
-
-No brief/partial responses to the above, please.  Let's not continue
-this thread one tiny bit at a time.  If you feel like responding, and I
-hope so, please respond in the form of an essay, covering all of the
-issues you find important - without sarcasm, without hints (but with
-clear references instead), without pretending to be humble.
-
-And in case you are in fact that humble and you actually "don't care" (I
-doubt it), then please don't waste your and anyone else's time.
-
-Thanks,
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
