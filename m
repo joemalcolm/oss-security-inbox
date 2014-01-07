@@ -1,47 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/10
-Message-ID: <53A2E0B8.8090904@enovance.com>
-Date: Thu, 19 Jun 2014 09:08:08 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-020] XSS in Swift requests through WWW-Authenticate header (CVE-2014-3497)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/4
+Message-ID: <alpine.LFD.2.10.1401071251580.18916@javelin.pnq.redhat.com>
+Date: Tue, 7 Jan 2014 13:04:29 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: cve@...re.org
+Subject: CVE split and a missed file
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-020
-CVE: CVE-2014-3497
-Date: June 19, 2014
-Title: XSS in Swift requests through WWW-Authenticate header
-Reporter: Globo.com Security Team
-Products: Swift
-Versions: 1.11.0 to 1.13.1
+    Hello,
 
-Description:
-Globo.com Security Team reported a vulnerability in Swift's header value
-escaping. By tricking a Swift user into clicking a malicious URL, a
-remote attacker may inject data in Swift response while still appearing
-to come from the Swift server, potentially leading to other client-side
-vulnerabilities. All Swift setups are affected.
+Recently Mitre split up a cve 'CVE-2013-6405' into 3 separate CVEs. Each for 
+subset of files touched by a commit 'bceaa90240'.
 
-Juno (development branch) fix:
-https://review.openstack.org/101031
+  -> https://git.kernel.org/linus/bceaa90240b6019ed73b49965eac7d167610be69
 
-Icehouse (1.13.*) fix:
-https://review.openstack.org/101032
+But the 3 new CVEs do not seem to cover patch to a file
 
-Notes:
-This fix will be included in the upcoming 2.0.0 release.
+   -> net/ieee802154/dgram.c.
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3497
-https://launchpad.net/bugs/1327414
+Is that intentional or a miss. (just checking)
 
---·
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+===
+Name: CVE-2013-6405
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6405 [Open URL]
+Final-Decision:
+Interim-Decision:
+Modified:
+Proposed:
+Assigned: 20131104
+Category:
+
+** REJECT **
+
+DO NOT USE THIS CANDIDATE NUMBER. ConsultIDs: CVE-2013-7263,
+CVE-2013-7264, CVE-2013-7265. Reason: This candidate is a duplicate
+of CVE-2013-7263, CVE-2013-7264, and CVE-2013-7265. Notes: All CVE
+users should reference CVE-2013-7263, CVE-2013-7264, and/or
+CVE-2013-7265 instead of this candidate. All references and
+descriptions in this candidate have been removed to prevent accidental
+usage.
+
+--
+CVE-2013-7263
+
+The Linux kernel before 3.12.4 updates certain length values before
+ensuring that associated data structures have been initialized, which
+allows local users to obtain sensitive information from kernel stack
+memory via a (1) recvfrom, (2) recvmmsg, or (3) recvmsg system call,
+related to net/ipv4/ping.c, net/ipv4/raw.c, net/ipv4/udp.c,
+net/ipv6/raw.c, and net/ipv6/udp.c.
+
+--
+CVE-2013-7264
+
+The l2tp_ip_recvmsg function in net/l2tp/l2tp_ip.c in the Linux kernel
+before 3.12.4 updates a certain length value before ensuring that an
+associated data structure has been initialized, which allows local
+users to obtain sensitive information from kernel stack memory via a
+(1) recvfrom, (2) recvmmsg, or (3) recvmsg system call.
+
+--
+CVE-2013-7265
+
+The pn_recvmsg function in net/phonet/datagram.c in the Linux kernel
+before 3.12.4 updates a certain length value before ensuring that an
+associated data structure has been initialized, which allows local
+users to obtain sensitive information from kernel stack memory via a
+(1) recvfrom, (2) recvmmsg, or (3) recvmsg system call.
+===
 
 
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
