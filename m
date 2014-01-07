@@ -1,63 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/13
-Message-Id: <E1Xe9uI-0003qA-6x@rmm6prod02.runbox.com>
-Date: Tue, 14 Oct 2014 17:45:26 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/12
+Message-Id: <201401072205.s07M5ASW026523@linus.mitre.org>
+Date: Tue, 7 Jan 2014 17:05:10 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, dom@...th.li
+Subject: Re: CVE Request: cross-site scripting vulnerabilities in movable type 6.0.1, 5.2.9, and 5.161
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 15 Oct 2014 02:10:41 +0800, Pavel Labushev <pavel.labushev@...box.no> wrote:
-> By "Haskell" I mean any technology, its scientific basis and the
-> other aspects altogether, that I think have the potential of
-> significantly shifting the paradigm.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A rose by any other name will smell as sweet, but calling it a
-"pig" inhibits communication. If you mean
-"significantly better tools", just say that.  Or create a new name and define it.
+>A movable type update to 6.0.1, 5.29 and 5.161 fixes cross-site
+>scripting attacks, from the announcement:
+>
+>> The Rich Text Editor in previous versions of Movable Type 6 and
+>> Movable Type 5 are susceptible to cross-site scripting (XSS) attacks.
 
+Use CVE-2014-0977.
 
-> I know that many would disagree and say that the devil is in the details.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-I'm one of those who disagrees.  The devil, as well as the rest of the universe,
-*is* in the details.  In particular, I think a lot of tools are hideously oversold,
-leading to serious problems.  All tools have limitations; knowing those limitations
-is key to developing (more) secure software.
-
-That said, tools that make it *easy* to write secure code (or at least
-eliminate certain mistakes) often produce more secure code, simply because
-developers are people who make mistakes.
-
-
-> Imagine you're writing a shell and decide to introduce the high level
-> distinguished concepts of code, data, data source, and derive the
-> concepts of trusted|untrusted data|code [source].
-
-That might help, though that's simply *one* approach
-(among many) for stronger separation of code and data.
-What we need are examples of such approaches, and experimental data
-to show that they're really better.
-
-> > I don't think Haskell is a magic bullet.  I do think type-rich
-> > languages (and languages with memory safety) have a lot to offer, but
-> > writing secure software in them is still hard.
-> 
-> And I'm convinced that "Haskell", in a broader sense and together with
-> the other factors, is a part of a solution, capable of making a
-> qualitative change.
-
-I agree that better tools can be part of a solution, and in some cases
-(especially together) could produce a qualitative change.
-
-The most obvious example of an underused tool is memory-safe languages.
-Shellshock would not have been countered by them,
-but Heartbleed (and many others) *would* have been countered.
-But many people are not willing to pay the runtime costs, and the
-developer-retooling effort, to switch to a memory-safe language for
-low-level components like operating systems, runtimes, crypto libraries,
-image processing libraries, and the like.  We *have* languages like Ada
-which run at the same speed as C, and other languages are relatively close
-(e.g., D, Go, Rust, Nimrod), but as yet there has
-been no big switch.  For a variety of reasons, it's hard to change.
-
---- David A. Wheeler
+iQEcBAEBAgAGBQJSzHnQAAoJEKllVAevmvmsSxwIAK3XmQVzjWymnfgO4yOwUED4
+W36oPPz6Kz4cP6Hd/m2FrVo5HxzbONHmrovZZ4gx2QPPD2xXvXGq9u4QSsUXkeLM
+gTTC2TwWFIXpceqw8tFJbNadJNe/tce1fckoQx+ZZcbvftOk60cEe5dxH6YF90Ku
+AezYNomQ0H9ho6MvzVwuHmKt/1BTIkPUgxP87SaRvn57zVday84dz9sQxn68LgI+
+0lPRmVUmzLp1XtYaL5CuD6m/R6ilkKbpnZ69sJHw4GIIKrye9D+On/psm6IBzeml
+zpPC/bQKMVqN/UzdHN6sCRpSXBkXVc4LeWglvygi9w94HGUGfokL1hEpjUp5MGY=
+=XDcq
+-----END PGP SIGNATURE-----
