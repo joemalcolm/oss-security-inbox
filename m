@@ -1,24 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/21/3
-Message-ID: <20140321092352.GB2509@sivokote.iziade.m$>
-Date: Fri, 21 Mar 2014 11:23:52 +0200
-From: Georgi Guninski <guninski@...inski.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/16
+Message-Id: <201401072233.s07MXK4E026919@linus.mitre.org>
+Date: Tue, 7 Jan 2014 17:33:20 -0500 (EST)
+From: cve-assign@...re.org
+To: dkg@...thhorseman.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 683338@...s.debian.org
+Subject: Re: CVE request: lightdm-gtk-greeter - local DOS due to NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-For a start I suggest a group of people start
-a public mailing list on some public service.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I can volunteer time.
+> http://www.openwall.com/lists/oss-security/2014/01/07/10
 
-Off the top of my head options are:
-A. googlegroups
-B. sourceforge:  http://sourceforge.net/apps/trac/sourceforge/wiki/Mailing%20lists
+> gdm3 needs one also
 
-google are BB, have no experience with sourceforge ML.
-(not sure sourceforge is applicable because of need of project).
+> Basically, when gdm3 is configured to not show a list of users (but
+> instead shows a blank box for the login prompt), if the user clicks
+> "cancel" or hits the escape key, then the greeter gets put into a mode
+> without any way to log in (no prompts available).
 
-This approach has disadvantages, but an advantage is
-not dealing with DDOS/legal stuff.
+Use CVE-2013-7273.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSzIACAAoJEKllVAevmvmshH0IAI7wY+ot8z57Mo8hEIHoWfK7
++7BqyjzAV10B9hZ/9B5cWhHkt7wWfbi3n/e9TSHGrjjQCkhF8jMwHqEP3ZZVQWMI
+jKmr1itzzBwJ5NCNFTfGyIM2aw4OYDiEBhybQSyOitldRztoR2doY7Kj+X/62QVy
+iTrx0oUmCkyqsxode7CNpH44KEZJ+SkwLjQxtUVSyB4vTRY3+VqxsG+jvhaTU3kC
+teKWvSwr3Un9mLOKVNyGXIPH1+b6l8sko04i+J6Vu9bUHG7HMjc+Zhqmgfn8UID8
+BwPe/otGan2pfi9e8b40pu9u5N1d7+qDUSoJypCLjG0rwQEVM64KYHxCfJsexCg=
+=pNJS
+-----END PGP SIGNATURE-----
