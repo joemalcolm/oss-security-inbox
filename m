@@ -1,25 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/42
-Message-ID: <20140929200634.GA31580@hunt>
-Date: Mon, 29 Sep 2014 13:06:34 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: atd (was: Re: Re: Healing the bash fork)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/13
+Message-Id: <201401072215.s07MFB1S026718@linus.mitre.org>
+Date: Tue, 7 Jan 2014 17:15:11 -0500 (EST)
+From: cve-assign@...re.org
+To: solar@...nwall.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: MongoDB memory over-read via incorrect BSON object length (was: [HITB-Announce] HITB Magazine Issue 10 Out Now)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 29, 2014 at 09:59:47AM -0600, Eric Blake wrote:
-> So even on Debian, where /bin/sh is dash, this script attempts to
-> execute the file named /tmp/exploit=me, possibly under the privileges of
-> 'at' rather than as the user that created the file.  No bash needed.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Where does 'at' use the privileges of the at daemon when executing
-scripts?
+>There is a memory over-read bug that can be used by an authenticated
+>user (if applicable) to obtain raw MongoDB server process memory
+>contents via incorrect BSON object length.  I guess that under most
+>deployments this does not cross a security boundary, but for some it
+>could (differently-privileged MongoDB users, data already deleted from
+>the DB yet staying in process memory, or/and metadata that is not
+>normally retrievable).
 
-With just a quick check of the atd sources it looks like privileges are
-properly changed before executing the script:
+Use CVE-2012-6619.
 
-http://sources.debian.net/src/at/3.1.15-1/atd.c/#L380
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+iQEcBAEBAgAGBQJSzHs8AAoJEKllVAevmvmssI8H/3aRWpV8sFg4JI7QNRtvaFKx
+vabdt8Yy97/6Yiaa3GbB7UzbI4YSBkMC00ikwG9urbbOden7FWgGZx94EbAn0jag
+v+EnbYkHp2eNBR69c9C1px76hYSAi2SimsqSaJEzkRvWGz8xRhF1L7FuUZPaw7x0
+lBpG9gxxaLfrBDPpwAV5WKsSU4vxOqNIoJV17onVCe7eihRbY8THn6raCUUtNIYt
+ZUPLqoijx5ZwWuz7F+W8BxV9m27kXuU7F/vWv4U6FBGg3O/2aBCGId/GNTgXvjVJ
+VIupOHBtynG1flDmtXyPsnXNChGZGhJe7RuRoUkEDb7DWKazyQpjvxTGciOAHg8=
+=dzbh
+-----END PGP SIGNATURE-----
