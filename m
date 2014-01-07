@@ -1,77 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/5
-Message-ID: <CAOfWR+GBcDEr_MNTKGhGQXdSzePRVKvLH0PihSfX6ZPuqPc5gg@mail.gmail.com>
-Date: Mon, 17 Nov 2014 02:44:27 -0500
-From: Robert Watson <robertcwatson1@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/8
+Message-ID: <20140107133950.GB9302@scapa.corsac.net>
+Date: Tue, 7 Jan 2014 14:39:50 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+Subject: Re: CVE request: lightdm-gtk-greeter - local DOS due to NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-30+ years of programming Unix/Linux systems has taught me that old tools
-(like old cars) usually work very well for the intended purpose,​ but are
-far from as safe to use as we expect nowadays.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-All of these tools were written years ago for use in an environment where
-there was no such thing as "anonymous access." Yes, bad practices like
-shared logins were common. But there was still always someone to hold
-responsible.
+On Tue, Jan 07, 2014 at 11:47:31AM +0100, Guido Berhoerster wrote:
+> Hi,
+> 
+> an openSUSE user discovered that it is trivial to crash
+> lightdm-gtk-greeter by entering an empty username due to a NULL
+> pointer dereference. When a greeter crashes the lightdm daemon
+> exits.
+> This constitutes a local denial of service which can be triggered
+> by any unprivileged attacker requiring the intervention of an
+> administrator to restart lightdm. It affects all versions of
+> lightdm-gtk-greeter.
+> 
+> The initial downstream report is at
+> https://bugzilla.novell.com/show_bug.cgi?id=857303, the bug has
+> been reported upstream at
+> https://bugs.launchpad.net/lightdm-gtk-greeter/+bug/1266449 and
+> fixes for the 1.1 and 1.3 series are available at
+> https://build.opensuse.org/package/view_file/home:gberh:branches:OBS_Maintained:lightdm-gtk-greeter/lightdm-gtk-greeter.openSUSE_12.2_Update/lightdm-gtk-greeter-handle-invalid-user.patch?expand=1
+> and
+> https://build.opensuse.org/package/view_file/home:gberh:branches:OBS_Maintained:lightdm-gtk-greeter/lightdm-gtk-greeter.openSUSE_13.1_Update/lightdm-gtk-greeter-handle-invalid-user.patch?expand=1
+> 
+> Could a CVE be assigned to this issue please?
 
-Most of the authors of these tools are long since retired and/or deceased.
-Thus, someone new must be found with sufficient interest to learn the
-software and correct these fuzzing-uncovered problems.
+I can confirm the bug on Debian (lightdm-gtk-greeter 1.6.1-4 and
+1.7.0-1) as well as that the patch above seems to correctly fix it.
 
-It would be far more beneficial to "adopt" one of these "orphaned" tools
-that you'd like use. Then fork a new version, or an entirely new tool for
-the intended function, that incorporates the safety standards we expect.
+Regards,
+- -- 
+Yves-Alexis Perez
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-If every car on the road had to be kept upgraded to current safety
-standards, only the well-off would own cars.
-
-*Trust in truth keeps hope alive*
-
-*     iCare for AffordableCare
-<http://www.nationalpartnership.org/issues/health/HIT/>*
-
-*robertcwatson1@...il.com <robertcwatson1@...il.com>*
-
-*www.docsalvage.info <http://www.docsalvage.info/>*
-*www.softwarerevisions.net <http://www.softwarerevisions.net/>*
-*www.CivicChorale.org <http://www.civicchorale.org/>*
-
-<http://www.charliecrist.com/> <https://www.healthcare.gov/>
-<http://www.wunderground.com/cgi-bin/findweather/getForecast?query=Tallahassee,%20FL>
-
-
-On Sun, Nov 16, 2014 at 6:10 PM, Robert Święcki <robert@...ecki.net> wrote:
-
-> 2014-11-16 21:43 GMT+01:00 Michal Zalewski <lcamtuf@...edump.cx>:
-> >> However, even if tools like file/ndisasm/gimp/readelf can be used by
-> >> many (w/o strong system isolation boundaries) to analyze untrusted
-> >> inputs (for reverse engineering, malware analysis and similar
-> >> purposes) - I'd simply put a blame on those users
-> >
-> > Well, it's always the easy option, but keep in mind that there are
-> > countless tutorials that tell people to use 'file' or 'strings' to
-> > examine sketchy file, or use tools such as objdump to do hobby
-> > forensics.
-> >
-> > We can blame the authors of the tutorials - but it goes back to a
-> > fairly fundamental problem: the use cases aren't completely crazy
-> > (nothing *fundamentally* wrong in using 'strings' on a file you don't
-> > trust, right?), and their unsafe design is a fairly counterintuitive
-> > property to laypeople and many experts alike [*].
-> >
-> > So, for high-profile tools used in ways that are sort of plausible and
-> > probably common, we may just need to try & make them robust.
->
-> Agreed.
->
-> > (But of
-> > course, I'd be pragmatic in drawing the line: the Mayhem fuzzing thing
-> > went completely overboard.)
->
->
-> --
-> Robert Święcki
->
-
+iQEcBAEBCgAGBQJSzAOiAAoJEG3bU/KmdcClIVcH/iiWbn87U8CSi7Lpkw3qT/X5
+eNgtg9uPflrkPUjmCq2GcagCZHWB8voKOGTZUaSQ9gE1vS/AsjcqZFt7vc+YYoEZ
++IgR2jbJj/6qlFxB78kKKvscsxX0W5iwmRiTjwLwnCb6rt5AmnHm6Qp7KhEXM5mA
+DgHr+1zDzuQwQoGicDq+pU9yDxWrvXn/d0y1WbpYliqkh+Ao2jtl3CrboLsJaU/e
+scuxy0QDBaOWZAbgdUTWjhnERzTd9ZxC68IcsnXb3gdHw77TYzDOf8Muu9H0OV95
+L4ClypusfRdsNR71hiG8c5+YxVxBiJayd4iDK7AXcmwZhWTpvxMK6ef78SjPXjs=
+=gy2y
+-----END PGP SIGNATURE-----
