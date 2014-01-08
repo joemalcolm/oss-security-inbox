@@ -1,19 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/10
-Message-ID: <87d2alglkw.fsf@mid.deneb.enyo.de>
-Date: Wed, 24 Sep 2014 16:05:51 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/8
+Message-Id: <201401081718.s08HI8SJ005829@linus.mitre.org>
+Date: Wed, 8 Jan 2014 12:18:08 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE split and a missed file
 Content-Type: text/plain; charset=utf-8
 
-Stephane Chazelas discovered a vulnerability in bash, related to how
-environment variables are processed: trailing code in function
-definitions was executed, independent of the variable name.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-In many common configurations, this vulnerability is exploitable over
-the network.
+> It is split into 6 new CVEs covering 6 files of the 35
 
-Chet Ramey, the GNU bash upstream maintainer, will soon release
-official upstream patches.
+The CVEs are about vulnerability fixes, and don't necessarily capture
+all of the information that would be used in integrating the patches
+into one's own kernel build tree. For example, a file can be changed
+in order to be compatible with a vulnerability fix that affects
+interaction between functions, or a file can be changed so that its
+code executes faster after a vulnerability fix.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSzYblAAoJEKllVAevmvmsKZYIAIKFAy8u6j5R8gQPO9ts940y
+98QyUGVyFTCHCEJ0JRxOXgBC5ZjcSyGv2+eu5XCHed02l8D9y5o0wn8CgO5qxWrO
+cYrjfB2Ekwhq+AygPQs+jKDpb9UW6DYozR5tOUP/SRq5dWAJ5IiwKQ6nGCoNSd/J
+y8meGGM/meeMlJS1NkPtD/EOGeBNB254NZijFZFjKtx82ZjpKInAt8RU/jU37LAw
+WTRMP1J6SuSksfqn8vaUkUc0JxmizdDf5mAPUIzvBp8U9vwTfoi+3RavsfUQ1UU+
+8JgVO5UcUjXY26vZ6p6rlbw+Jst0BUtCRcEA5VnLz4F6O3GOUtSC0UMD3XB+k2Y=
+=pMzz
+-----END PGP SIGNATURE-----
