@@ -1,58 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/9
-Message-Id: <201407222007.s6MK7n5O028490@linus.mitre.org>
-Date: Tue, 22 Jul 2014 16:07:49 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/12
+Message-Id: <201401081801.s08I0rXT014429@linus.mitre.org>
+Date: Wed, 8 Jan 2014 13:00:53 -0500 (EST)
 From: cve-assign@...re.org
-To: jmm@...ian.org
+To: larry0@...com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: cacti XSS
+Subject: Re: Paratrooper-newrelic 1.0.1 Ruby Gem exposes API key
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://bugs.cacti.net/view.php?id=2456
-
-> Product Version 0.8.8b
-
-> You need console access to create any of these items, but you don't
-> need full administrator privileges.
-
-(One of the vectors reported by flekyy was separately disclosed a week
-before the others reported by flekyy.)
-
-
-> Add a new Data Source with the following name: [XSS] -- Browse to
-> http://<IP>/cacti/data_sources.php [^] and you'll see a popup with the
-> text "XSS"
-
-Use CVE-2014-5025.
-
-
->  - If you create a Graph Tree with Title: [XSS]
+> curl ... -H "X-Api-Key: #{api_key}"
 > 
->  - If you create a CDEF with Name: [XSS]
-> 
->  - If you create a Data Source with Title: [XSS] you'll see a popup
->    with the text "XSS" if you try any action (Delete, Change data
->    template, Change Host, Enable...)
-> 
->  - If you create a Graph with Title: [XSS]
-> 
->  - If you create a Data Input Method with Name: [XSS]
-> 
->  - If you create a Graph Template with Name: [XSS]
-> 
->  - If you create a Host Templates with Name: [XSS]
+> a malicious user can monitor the process tree and steal the API key.
 
-Use CVE-2014-5026.
-
-
-If anyone has found that the patch fixes an additional attack vector
-(if that vector crosses privilege boundaries), then we could assign an
-additional CVE ID for the discovery by paulgevers. For example, there
-is not yet any report stating that the patch to user_admin.php
-resolves an issue that crosses privilege boundaries.
+Use CVE-2014-1234.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -62,11 +25,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTzsLfAAoJEKllVAevmvmshB0H/1eC2Rn9LHI+3uZfjv53VwyK
-JklpHD/yWvLQVZjIed9qrEUb3qjISnztp600LpqB6aesv+4qsDlwh6rHlpYLQuLj
-Z1tYowsE85auhZofCuM+2KsY3K+pYiN8/6E/w27WQEDozbd1sDO8ViWvLmEtrfAP
-waTfqbJqRVChd+9xxKM1/gxAmcRBQB3QS/6a+MZTwzzxiLSnkdIzzX0H9I8VEVQu
-chosLdj5VhOtMVkDfDx6a8eZeUSC4DFTkj0PG1RxgIny83CspuzuppjIAZ1RZFXP
-V52Mak1HZ137Nl9n3W669CDNtg/o9mVVqczoqcjTvm/VlK8ZqkI3x9cMfpYZVF4=
-=XUHr
+iQEcBAEBAgAGBQJSzZHhAAoJEKllVAevmvmsAw0H/196zSQmOtll/0ES/trWM3tv
+FNIFbvE4aPj2u+aieytxYz6FMsCR5O1N9X7KVg5JNeWArd+yGA+iYGLKq/VxZ7FB
+lozoW703pGtslNC/VGujGThgOQYbIG/sXwCx/K3iFZehg+6DRTVc5iLml5ffXWVJ
+8eUnfRn2FuUD+4wkHbEgOgxc6436DTGSLaXV61AAAufUXelmQEwE7GeICDEL51+5
+6oBsvilMWChPpQLcDntgj9MFiC9mqExt7vkmnzxyp2VQU1atcE1eYHdf//eqNVl7
+h0kKEMrgVzW/tzdFxaj1SGA4h6WTrRsi/78OMTmFmbwms5d/PyUqTtVBHNDsvEw=
+=hAhi
 -----END PGP SIGNATURE-----
