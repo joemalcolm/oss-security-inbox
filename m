@@ -1,41 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/28/6
-Message-ID: <1403941006.29897.18.camel@scapa>
-Date: Sat, 28 Jun 2014 09:36:46 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: "H. Peter Anvin" <hpa@...or.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: LMS-2014-06-16-1: Oberhumer LZO
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/6
+Message-ID: <87d2k2s8k1.fsf@windlord.stanford.edu>
+Date: Wed, 08 Jan 2014 09:11:10 -0800
+From: Russ Allbery <eagle@...ie.org>
+To: oss-security@...ts.openwall.com
+Cc: ratulg@...hat.com,  erg@...m.mit.edu
+Subject: Re: Re: CVE Request: graphviz: stack-based buffer overflow in yyerror()
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2014-06-27 at 14:46 -0700, H. Peter Anvin wrote:
-> On 06/26/2014 02:21 PM, Yves-Alexis Perez wrote:
-> > - syslinux [5] seems to embeds lzo but I'm unsure if the vulnerable
-> > code is really present, I can't find lzo1x_decompress_safe() code
-> 
-> For the record, I just upgraded Syslinux to LZO 2.07.  The only code
-> that ends up in the Syslinux build at all changed only in comments and
-> in #if'd out code. 
+Sebastian Krahmer <krahmer@...e.de> writes:
 
-Thanks for the investigation. Is there a reason not to link with lzo
-instead of embedding it?
+> Funny enough that tools like graphviz qualify for CVE assignments :)
 
->  The only use of LZO is in the Syslinux core, which
-> uses the assembly LZO implementation, which seems to have been unaffected.
+> Do not get me wrong, I really like graphviz, its a great tool and I use
+> it myself; but probably like 2 scientists or 1 anti-terror fed plotting
+> his graphs in the whole world would be targeted attacked using dot files
+> sent via mail I guess.
 
-Good point, my searches indeed usually don't include any non-C
-implementation, which might or might not be affected.
-> 
-> Syslinux does not use LZO on arbitrary data.
+I wouldn't be so certain.  :)  I've gotten dot files in email a fair bit
+while working on free software projects since it's a really useful way of
+expressing dependency trees and similar structures.  So the possibility of
+a targetted exploit is there, particularly given that mailing list traffic
+is generally completely unauthenticated.  It's not hard for someone to
+pretend to be another participant and mail a doctored dot file to a
+development team.  The deception would probably be discovered reasonably
+quickly, but possibly not before damage was done.
 
-Thanks, so that's three reasons syslinux itself is not affected:
-
-- embedded LZO didn't contain the affected code;
-- syslinux core LZO assembly implementation is not touched;
-- LZO is done only on controlled data (not under anyone control?)
-
-Regards,
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
