@@ -1,18 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/17
-Message-Id: <E1XatFk-000621-2L@rmm6prod02.runbox.com>
-Date: Sun, 05 Oct 2014 17:22:04 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/7
+Message-Id: <201401081717.s08HH5Pc005818@linus.mitre.org>
+Date: Wed, 8 Jan 2014 12:17:05 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE split and a missed file
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 5 Oct 2014 19:43:21 +0400, Solar Designer <solar@...nwall.com> wrote:
-> I think you're exaggerating my contribution when crediting me for this
-> simple test, and it's not that new either...
-> As to your timeline, you may add: ...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Excellent, thanks for the pointers.
-I have now updated: http://www.dwheeler.com/essays/shellshock.html
+>    -> net/ieee802154/dgram.c.
 
---- David A. Wheeler
+Use CVE-2013-7281. (The ordering of the unpatched code wasn't
+precisely the same as in the other files, but "Only update *addr_len
+when we actually fill in sockaddr" in
+bceaa90240b6019ed73b49965eac7d167610be69 still applies.)
+
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6405 will be
+updated in the coming days to reference CVE-2013-7281.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSzYbcAAoJEKllVAevmvmsgJAH/1bf3t4VeSFwY1PXX3RImGd0
+ya2X3TA6/mmcy9EUF9WYKq3L4d7GPZ+oQv4iP3NGHfBlFqd6ZU1L9JzB61aWfGkR
+zKvr4zTQn6Em+wZyAoVkcXTDN/40UOmJrLoAwPtUCWnxkTJmT/b2w/s1Kkr76jwu
+/Kt9ivPilhM5jATIOUY5PpPVwwW5carl0AHm5q/Koqz3j3PMKdtnh/UyJt/6RWUk
+DPELVbYgJqH9jg3uCLoZIuuXsroZdZcaTqZNJNY/9342KDM6wgFnFWGMMUzAvIH7
+UoTc+MMJFLIlQQ9bYlO1Kij9Z44BMAFbcW1v5mJTg3eV5sm2hMBqBM1HTSXzFbA=
+=XrSU
+-----END PGP SIGNATURE-----
