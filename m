@@ -1,45 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/12
-Message-Id: <20140707181358.45E061A41139@me.com>
-Date: Mon,  7 Jul 2014 14:13:58 -0400 (EDT)
-From: larry0@...com (Larry W. Cashdollar)
-To: <oss-security@...ts.openwall.com>
-Subject: Vulnerability Report for Ruby Gem backup_checksum-3.0.23
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/13
+Message-Id: <201401081819.s08IJLs7014986@linus.mitre.org>
+Date: Wed, 8 Jan 2014 13:19:21 -0500 (EST)
+From: cve-assign@...re.org
+To: krahmer@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: graphviz: stack-based buffer overflow in yyerror()
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerability Report for Ruby Gem backup_checksum-3.0.23
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Author: Larry W. Cashdollar, @_larry0
+> a sprintf() which is also later removed by commit
+> d266bb2b4154d11c27252b56d86963aef4434750 just for safety reasons.
 
-Date: 06/01/2014
-
-OSVDB: 108569
-
-CVE:Please Assign
-
-Download: http://rubygems.org/gems/backup_checksum
-
-Gem Author:  lukasz.kaniowski@...il.com
-
-From: ./backup_checksum-3.0.23/lib/backup/cli/utility.rb
-
-Lines 178 exposes the password to the process table, their is also remote command injection points if this gem is used in the context of a rails application as the user input isn't properly sanitized for #{password}.
-
-0175-          base64   = options[:base64] ? -base64 : 
-176-          password = options[:password_file] ? "-pass file:#{options[:password_file]}" : 
-177-          salt     = options[:salt] ? -salt : 
-178:          %x[openssl aes-256-cbc -d #{base64} #{password} #{salt} -in #{options[:in]} -out #{options[:out]}]
-179-        when gpg
-180:          %x[gpg -o #{options[:out]} -d #{options[:in]}]
-181-        else
-182-          puts "Unknown encryptor: #{options[:encryptor]}"
-183-          puts "Use either openssl or gpg."
---
-220-          puts "Please wait..\n\n"
-222-        end
-223-      end
-224-
+Use CVE-2014-1235.
 
 
-Advisory: http://www.vapid.dhs.org/advisories/backup_checksum-3.0.23.html
+> chkNum:
+> also looks like a buffer overflow from user input; yet unfixed.
+> (the regex seems to accept arbitrary long digit list)
 
+Use CVE-2014-1236.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSzZY+AAoJEKllVAevmvmsYAsIAIGZEGcuh835WrA73b1kTMjn
+R13vriO4p+2+JDJi/dBeiCAIKM/yS/HiNhNSKnzpRGtfVCIGGO0ugTNpashLcOU6
+weAgRfyqEQJjla0tHkdAKALeYqOUB0bh9iWAJ/S8563ciuNR6dg0B5h8zFMaExTG
+iSEWAap4FFQgcr2UjPX00mbbFkmLAfPXxU5YuBnsMnWoFHKwOvzPJws6bduqXRHb
+18e8hsHD+xfTfd2sohabAkizC43rc5m4B/ByDNOWij1Gzi13vIqIaiHicHCidbtS
+GFgOP1XceMgspT/8DYBnkP74SK2qDts4CHWxICwIJhZ+mpGdHkt84uPSUgArwHQ=
+=a1Ys
+-----END PGP SIGNATURE-----
