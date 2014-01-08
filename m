@@ -1,34 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/14
-Message-Id: <201403201937.s2KJav3P008456@linus.mitre.org>
-Date: Thu, 20 Mar 2014 15:36:57 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2013-7339 Linux kernel - rds: prevent dereference of a NULL device
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/1
+Message-id: <C8480EAF-453C-4417-8099-D73E11016A46@me.com>
+Date: Tue, 07 Jan 2014 19:57:03 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: paratrooper-pingdom-1.0.0 ruby gem exposes API login credentials
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Title: paratrooper-pingdom-1.0.0 ruby gem exposes API login credentials
 
-CVE-2013-7339 has been assigned to this "prevent dereference of a NULL
-device" issue in the Linux kernel:
+Author: Larry W. Cashdollar, @_larry0
 
-  https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c2349758acf1874e4c2b93fe41d072336f1a31d0
+Date: 12/26/2013
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+CVE: Please assign.
 
-iQEcBAEBAgAGBQJTK0J4AAoJEKllVAevmvmsyxMH/jhzfJQvnoKV7L1dEcFzgAJz
-WD+9CSfq6OzKGuki1w62cELfgntpdgOiIUOk2wFaO6+ogjUxUqPVD4U/6hcSpFPD
-9YBzCb/ODFRNwashXpOA2z4YXVImYt7lIN11MiTsVuQuG9bnPCMooHwV7QA1qPPT
-o1BM6YaGTqnH2DSSM5AofkVkVuIesstqrsty2gcLDAVB2nfDvRLE12bggb/R8//2
-UF2dQnrhZEHM0ktG1QQjMP+GnlKFNt1x0GGhI0zDmTxIfn2cD5smnN9AzEOguEp2
-K9FfwmH06gJDelUbLDngz2cug0EHjVbNqCpnnyGgDvBlXXC8qCPxA23iTrHsNLg=
-=zJB9
------END PGP SIGNATURE-----
+Download: http://rubygems.org/gems/paratrooper-pingdom 
+
+Description: "Send deploy notifications to Pingdom service when deploying with Paratrooper"
+Vulnerable Code:
+
+From: paratrooper-pingdom-1.0.0/lib/paratrooper-pingdom.rb
+
+ 24       def setup(options = {})
+ 25         %x[curl 
+https://api.pingdom.com/api/2.0/checks -X PUT -d "paused=tru    e" -H "App-Key: {app_key}" -u "
+{username}:#{password}"]
+ 26       end
+ 27 
+ 28       def teardown(options = {})
+ 29         %x[curl 
+https://api.pingdom.com/api/2.0/checks -X PUT -d "paused=fal    se" -H "App-Key: {app_key}" -u "
+{username}:#{password}"]
+ 30       end
+
+A malicious user could monitor the process tree to steal the API key, username and password for the API login.
+
+http://www.vapid.dhs.org/advisories/paratrooper-api-key-pingdom.html
