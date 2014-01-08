@@ -1,78 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/30/3
-Message-Id: <201401301426.s0UEQXJY027363@linus.mitre.org>
-Date: Thu, 30 Jan 2014 09:26:33 -0500 (EST)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, geissert@...ian.org, support@...sion.nl, jwilk@...ian.org, 736958@...s.debian.org
-Subject: Re: CVE request: temporary file issue in Passenger rubygem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/5
+Message-ID: <20140108101547.GA27200@suse.de>
+Date: Wed, 8 Jan 2014 11:15:47 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: ratulg@...hat.com, erg@...m.mit.edu
+Subject: Re: Re: CVE Request: graphviz: stack-based buffer overflow in yyerror()
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-> If a local attacker can predict this filename, and precreates a
-> symlink with the same filename that points to an arbitrary directory
-> with mode 755, owner root and group root, then the attacker will
-> succeed in making Phusion Passenger write files and create
-> subdirectories inside that target directory.
+Funny enough that tools like graphviz qualify for CVE assignments :)
+
+Do not get me wrong, I really like graphviz, its a great tool and I use it myself;
+but probably like 2 scientists or 1 anti-terror fed plotting his graphs
+in the whole world would be targeted attacked using dot files sent via mail I guess.
+
+Seems like the initial fix:
+
+https://github.com/ellson/graphviz/commit/7aaddf52cd98589fb0c3ab72a393f8411838438a
+
+also contains a sprintf() which is also later removed by commit
+
+d266bb2b4154d11c27252b56d86963aef4434750 just for safety reasons.
+
+And finally there also is:
+
+
+/* chkNum:
+ * The regexp for NUMBER allows a terminating letter.
+ * This way we can catch a number immediately followed by a name
+ * and report this to the user.
+ */
+static int chkNum(void) {
+  unsigned char c = (unsigned char)yytext[yyleng-1];   /* last character */
+  if (!isdigit(c) && (c != '.')) {  /* c is letter */
+        char    buf[BUFSIZ];
+        sprintf(buf,"syntax error - badly formed number '%s' in line %d of %s\n",yytext,line_num, InputFile);
+    strcat (buf, "splits into two name tokens\n");
+        agerr(AGWARN,buf);
+    return 1;
+  }
+  else return 0;
+}
+
+
+which also looks like a buffer overflow from user input; yet unfixed.
+(the regex seems to accept arbitrary long digit list)
+
+So for the 3 potential victims, we need to fix that too :)
+
+Sebastian
+
+
+On Tue, Jan 07, 2014 at 05:19:07PM -0500, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> It is fixed in upstream version 4.0.33.
+> >an error within the "yyerror()"
+> >function (lib/cgraph/scan.l) and can be exploited to cause a stack-based
+> >buffer overflow via a specially crafted file.
 > 
-> https://github.com/phusion/passenger/commit/34b1087870c2bf85ebfd72c30b78577e10ab9744
-
-> One thing to notice, however, is that there's a race condition between
-> the stat check introduced in 34b1087870c2.
-> The following sequence still triggers the bogus behaviour:
+> Use CVE-2014-0978.
 > 
-> <user> mkdir $dir
-> <phusion> lstat() (getFileTypeNoFollowSymlinks)
-> <user> rmdir $dir
-> <user> ln -s /target $dir
-> <phusion> stat() (from verifyDirectoryPermissions)
+> - -- 
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+> 
+> iQEcBAEBAgAGBQJSzH0dAAoJEKllVAevmvmsdcAIALBfNun5cNjVGVEVmWYQIncL
+> cZIWWhasJDtZoSSP7sEqSWUnTvIft/9Ke6O6dCykngQo6kIEQYqUfxeKpB2c+Asi
+> b144u4i7nLyustXMCAHkJ58Z2sr5+IfvrjY8g7MzCQU3eRVw4O4NcNGK7qmU3nyv
+> D3YX3b4ON2a6FWmGNFYmo9aJ7x1suMIjXKPqM7m//+6qpEdSH7kETMvLR86lJZuj
+> L2FBvbPVvpN8VgAMrASONQBMsVAaqXDSuizQgfAxqktqBCO/8lSsJ+0kE4ybMHkr
+> gN1hL4z+mo7gkVqeaemtds41ZaM51pAQvp+vkUGx3y35SppqcxiSr55GqjZTBts=
+> =F0p9
+> -----END PGP SIGNATURE-----
 
-> Upstream has now fixed this with the following commit (basically using
-> the structure from lstat() for the two checks):
-> https://github.com/phusion/passenger/commit/94428057c602da3d6d34ef75c78091066ecac5c0
+-- 
 
-Use CVE-2014-1831 for the vulnerability with the "before 4.0.33"
-affected versions.
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-Use CVE-2014-1832 for the vulnerability with the "4.0.33 and earlier"
-affected versions.
-
-This is an unusual situation because it depends on a decision about
-whether the fix in version 4.0.33 solves part of the problem or
-addresses one of the threat models. It also depends on whether two
-CVEs should be used to cover a set of reports that are only relevant
-to symlink attacks, but arguably have different flaw types.
-
-CVE-2014-1831 requires the ability to create a symlink but apparently
-does not require the ability to conduct the described race-condition
-attack. The attacker could lack direct shell access, but have some
-type of slow or limited access to the system. This could potentially
-involve the ability to upload and run scripts that can create symlinks
-but can't execute arbitrary commands or code. Alternatively, the
-attacker could have access to a file manager with the same
-constraints.
-
-Also, in some cases, multiple CVEs are used in the case of a single
-original report of a symlink-handling problem, e.g., CVE-2008-1569 and
-CVE-2008-1570.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS6l9uAAoJEKllVAevmvmsj9oH/RlmH2kO7M1WIIvuD3FlH1SD
-Fe0bqmWlVQRR77Q61IS7trfCd88sSTiyWZAm7g8EJn6Prct6AGAIH1tE0EaPbzm1
-VrCcxPXJh22LPDNv0p+4ug9CjjWLVhj8cHP/T50M5bgRbbj/EKF4CbkHsDxdLtf8
-crpDsvQVTZLS2d2460tCe3gjVk0Ew2bP99PgW0p7NHz4IbbwL2mX/1L0shUqMnkB
-UAJW1YSU1n5sAX37iz49Neyw5ptqrXsFcZNvqyuW5ch+LBnMKg8fcgg6t78ATqBE
-1bw1HMSPyXhmmajk1ED/+8qc4+wMe0/iqItiVQQTO/JqL3qMGr+1rmGbLkPH43U=
-=5HHG
------END PGP SIGNATURE-----
