@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/07/4
-Message-ID: <CAMPmzRsSsA95R_xUeRSristeC3KwFR_qyBMhWy2Rss=kHy9ZsQ@mail.gmail.com>
-Date: Wed, 7 May 2014 11:53:12 -0500
-From: Jacob Kaplan-Moss <jacob@...oku.com>
-To: oss-security@...ts.openwall.com,  Rafael Mendonça França <rafaelmfranca@...il.com>
-Cc: "security@...oku.com" <security@...oku.com>
-Subject: Re: [AMENDED] [CVE-2014-0130] Ruby on Rails: Directory Traversal Vulnerability With Certain Route Configurations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/4
+Message-ID: <52CCDB4E.2040300@redhat.com>
+Date: Tue, 07 Jan 2014 21:59:58 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: https://updateframework.com/ down for a few days now
 Content-Type: text/plain; charset=utf-8
 
-Hey Rafael -
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Tue, May 6, 2014 at 5:50 PM, Rafael Mendonça França <
-rafaelmfranca@...il.com> wrote:
+and I'm not sure how to contact them, as the website is down  and no
+contact info can be found easily =).
 
-> An earlier version of this advisory incorrectly assumed that the only way
-> to trigger this vulnerability was with routes containing '*action'.  There
-> are additional attack vectors and as a result *all* users are advised to
-> upgrade to a fixed version as soon as possible.
->
+project: Error
+(The Trac Environment needs to be upgraded. Run "trac-admin
+/var/data/projects/trac/project upgrade")
 
-Can you clarify what these "additional attack vectors" are? We've been
-looking at this closely here at Heroku, and as far as we can tell it's only
-the original vector (*action/:action). What are we missing here?
+I figure someone on here know how to contact them.
 
-We'd like to be better able to evaluate if we're vulnerable -- and, more
-importantly, we'd like to understand if this is a big enough deal for us to
-notify our customers and directly encourage them to upgrade (a step we've
-taken in the past). However, without more details about these "additional
-vectors" we're kinda shooting in the dark. Can you share more details?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Thanks!
-
-Jacob Kaplan-Moss
-Director of Security, Heroku
-
+iQIcBAEBAgAGBQJSzNtNAAoJEBYNRVNeJnmTQxEP/2pqkLA1BpaBw3zW3/Fdxzmm
+4NRN7ru+qRmOy1yNUoI4559lyhnaD1e8l4Ml6pMlDlGsXL8c+HOl9syfQY/QbNl5
+ecfwpqvUxAFft3QYFvmvzO791q7DkQhWLczh8khbbO3pTfv0Ez/zQ/1YXULrHlD0
+9jumx1v7YAgIWwYhphi7eT07Rc4I2FsTs0LRy7Onuk9OBmoQvecilAFXkGl2oBmF
+m6v6r9rsphqGjiymD08tI/IsELQ/Ofs54/tRxRRP/8s+SDN/e/lNqcgCt+GIcWyC
+YI5tEXUTWLwGq/x33e4YTzmg1L+ReTs1lrZ0Cai1KcQmJOcLITIrEORotG7Ozpdt
+mWIti4RBzdda+ZqrmZ/5/Fcav8M4PeLZriddNKnFYbI5D+RVbMFkrRaWqvGpzrHe
+5+0HPMuEWAf/7wahg7AN4B0AApbMv51QKE8p+aMhpwXFOi0BjSNo9tsXNHcHC+ti
+Fkygd9OCnqsJ6S0gs6qQVHUh3wR0Eqis2fwt+RC71cZWwPvhxdPSIbfysMF8h3Vj
+n94lUmVBvqXEbq0ui5qhqMNjsUNzseT1W0qO1VNoIO8BR0B2ciJP3E7Qkbv6O9f2
+qXXwKYULw4fjfNIFOKgTj55CXOSIH1j/chewObhonU40AueAxzLRlCMoV48BFgqF
+G2JzNC5uPsRGAlFSX/gp
+=12Ia
+-----END PGP SIGNATURE-----
