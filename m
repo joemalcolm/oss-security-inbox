@@ -1,29 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/4
-Message-ID: <20141001064415.GA18948@frohike.xs4all.nl>
-Date: Wed, 1 Oct 2014 08:44:15 +0200
-From: Peter Bex <Peter.Bex@...all.nl>
-To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/3
+Message-ID: <alpine.LFD.2.10.1401080900400.27637@javelin.pnq.redhat.com>
+Date: Wed, 8 Jan 2014 09:05:30 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: cve@...re.org
+Subject: Re: CVE split and a missed file
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 01, 2014 at 12:18:48AM +0000, Zach Wikholm wrote:
-> >The main problem is that for a very long time, we apparently had no
-> overlap between these groups. At the face of it, it seemed like
-> there's absolutely no reason for bash to try to parse generic env
-> variables. With no convincing reason to study or test the code, nobody
-> did.
-> 
-> There really isn't any overlap anymore. Another issue I think (though I do not believe that this is the case here) is that vulnerabilities announcements are becoming more and more about marketing. Heartbleed brought in a new era in vulnerability releases. But that's another topic for another day...
-> 
-> This feels like time for a new mailing list. I'm sure that there are many other things just like this, and now everybody will be looking for the next "shellshock" in places where nobody has looked before. It's very difficult sometimes to know who to reach to. As far as I can tell oss-security is really more focused on how to get found vulnerabilities to the world in some sort of organized fashion, which is it does well (please correct me if I'm wrong here) but it seems very easy to stray off topic. 
++-- On Tue, 7 Jan 2014, P J P wrote --+
+| But the 3 new CVEs do not seem to cover patch to a file
 
-As far as I can tell, oss-security has turned out to be a focal point for
-requesting CVE identifiers, but AFAIK the topic is broader than that;
-anything regarding security in open source software is on-topic.  See
-the description: http://oss-security.openwall.org/wiki/mailing-lists/oss-security
+The same applies to 'CVE-2013-6463' too. It is split into 6 new CVEs covering 
+6 files of the 35 that are patched by commit - 'f3d3342602f8'.
 
-Cheers,
-Peter
--- 
-http://www.more-magic.net
+ -> https://git.kernel.org/linus/f3d3342602f8bcbf37d7c46641cb9bca7618eb1c
+
+CVE-2013-6463 =>
+
+   - CVE-2013-7266 (drivers/isdn/mISDN/socket.c),
+   - CVE-2013-7267 (net/appletalk/ddp.c),
+   - CVE-2013-7268 (net/ipx/af_ipx.c),
+   - CVE-2013-7269 (net/netrom/af_netrom.c),
+   - CVE-2013-7270 (net/packet/af_packet.c),
+   - CVE-2013-7271 (net/x25/af_x25.c)
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
