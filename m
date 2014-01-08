@@ -1,36 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/21/1
-Message-ID: <1395376655.6168.41.camel@lappy>
-Date: Fri, 21 Mar 2014 14:37:35 +1000
-From: Grant Murphy <gmurphy@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request for vulnerability in OpenStack Nova
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/2
+Message-id: <CECB5160-E586-4116-ADCF-A454BB13761F@me.com>
+Date: Tue, 07 Jan 2014 20:43:47 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Paratrooper-newrelic 1.0.1 Ruby Gem exposes API key
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although
-an advisory was not sent yet.
+Title: Paratrooper-newrelic 1.0.1 Ruby Gem exposes API key
 
-Title: Nova VMWare driver leaks rescued images
-Reporter: Jaroslav Henner (Red Hat)
-Products: Nova
-Versions: 2013.2 to 2013.2.2
+Author: Larry W. Cashdollar, @_larry0
 
-Description:
-Jaroslav Henner from Red Hat reported a vulnerability in Nova. By
-requesting Nova place an image into rescue, then deleting
-the image, an authenticated user my exceed their quota. This can
-result in a denial of service via excessive resource consumption. Only
-setups using the Nova VMWare driver are affected.
+CVE: Please assign one.
 
-References:
-https://bugs.launchpad.net/nova/+bug/1269418
+Download: http://rubygems.org/gems/paratrooper-newrelic
 
-Thanks in advance,
+Description: "Send deploy notifications to Newrelic service when deploying with Paratrooper."
 
--- 
-Grant Murphy
-OpenStack Vulnerability Management Team
+Vulnerable Code: 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (231 bytes)
+From paratrooper-newrelic-1.0.1/lib/paratrooper-newrelic.rb:
+
+lines 25 and 29 expose the API key, a malicious user can monitor the process tree and steal the API key.
+
+ 24       def setup(options = {})
+ 25         %x[curl https://heroku.newrelic.com/accounts/#{account_id}/applications/#{application_id}/ping_targets/disable -X POST -H "X-Api-Key: #{api_key}    "]  
+ 26       end
+ 27   
+ 28       def teardown(options = {})
+ 29         %x[curl https://heroku.newrelic.com/accounts/#{account_id}/applications/#{application_id}/ping_targets/enable -X POST -H "X-Api-Key: #{api_key}"    ]
+ 30       end
+
+Advisory: http://www.vapid.dhs.org/advisories/paratrooper-newrelic-api.html
