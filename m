@@ -1,41 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/4
-Message-ID: <53E070A8.4040508@redhat.com>
-Date: Tue, 05 Aug 2014 15:50:32 +1000
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: submit@...ec.org
-Subject: CVE request: issues in ISO C++ 2011 regex library
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/10
+Message-ID: <52CD7DB9.7020900@research.att.com>
+Date: Wed, 08 Jan 2014 11:32:57 -0500
+From: "Emden R. Gansner" <erg@...earch.att.com>
+To: Sebastian Krahmer <krahmer@...e.de>, oss-security@...ts.openwall.com
+CC: ratulg@...hat.com, erg@...m.mit.edu
+Subject: Re: Re: CVE Request: graphviz: stack-based buffer overflow in yyerror()
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+The chkNum  problem should now be fixed. Thanks for pointing it out.
 
-Maksymilian Arciemowicz reported a number of issues in the ISO C++ 2011 
-regex libraries:
+     Emden
 
-http://seclists.org/fulldisclosure/2014/Aug/1
-
-Bugs:
-
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61601
-
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61582
-
-http://llvm.org/bugs/show_bug.cgi?id=20291
-
-For the memory corruption bug (61582), there seems to be more than one 
-issue here (at least a heap-based buffer overflow and a stack overflow 
-of some sort). Can a single CVE be assigned, or do you need specific 
-details for each issue (I don't currently have those)?
-
-With GCC 4.8 in Fedora, the affected program needs to be compiled using 
-the "-std=c++11" option.
-
-Thanks,
-
---
-Murray McAllister / Red Hat Product Security
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1126688
-https://bugzilla.redhat.com/show_bug.cgi?id=1126691
-https://bugzilla.redhat.com/show_bug.cgi?id=1126695
