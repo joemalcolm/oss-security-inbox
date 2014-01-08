@@ -1,44 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/19/4
-Message-ID: <CAEDdjHdeHV9raEiyFt47=f9y+uePcpH7BqkmBOB+NY8ZOSxdzw@mail.gmail.com>
-Date: Sat, 19 Apr 2014 11:54:19 +0100
-From: Pedro Ribeiro <pedrib@...il.com>
-To: oss-security@...ts.openwall.com, Cve-assign@...re.org
-Cc: Bernhard Rusch <Bernhard.Rusch@...ments.at>
-Subject: CVE request: Fwd: Remote code execution in Pimcore CMS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/9
+Message-ID: <CAF=DYSLMQW=Oq=XKdx3KnV-kbd8dvC1UUo1cUd+RWRz2s_Pvxg@mail.gmail.com>
+Date: Wed, 8 Jan 2014 11:13:26 -0500
+From: Chris Sandulow <security@...godb.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: MongoDB memory over-read via incorrect BSON object length (was: [HITB-Announce] HITB Magazine Issue 10 Out Now)
 Content-Type: text/plain; charset=utf-8
 
-Resending this as it hasn't been picked up most likely because of the lack
-of "CVE request" in the subject line.
+The issue described in
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-6619 was originally
+reported to MongoDB by Positive Technologies (ptsecurity.ru) in November
+2012, with credit listed to Mikhail Firstov of Positive Research Center
+(Positive Technologies Company).  See
+https://jira.mongodb.org/browse/SERVER-7769 for more details.  The issue
+had also been identified earlier as a potential denial of service condition.
 
-Regards
-Pedro
----------- Forwarded message ----------
-From: "Pedro Ribeiro" <pedrib@...il.com>
-Date: 14 Apr 2014 10:16
-Subject: Remote code execution in Pimcore CMS
-To: <oss-security@...ts.openwall.com>
-Cc: "Bernhard Rusch" <Bernhard.Rusch@...ments.at>
+The issue was resolved in December 2012 in MongoDB 2.3.2 when strict BSON
+object checking was enabled by default.  In earlier versions this check
+needs to be explicitly enabled with the --objcheck argument to the server,
+which prevents insertion of records which could trigger the issue.
 
-Hi,
+Thanks,
 
-I have discovered a PHP object injection in Pimcore CMS.
 
-Depending on the PHP version under which Pimcore is running, it is possible
-to achieve remote code execution in the worst case, and arbitrary file
-deletion at best.
 
-Please find attached the report, which is also available at
+On Tue, Jan 7, 2014 at 6:58 PM, Solar Designer <solar@...nwall.com> wrote:
 
-https://github.com/pedrib/PoC/blob/master/pimcore-2.1.0.txt
+> On Tue, Jan 07, 2014 at 05:15:11PM -0500, cve-assign@...re.org wrote:
+> > >There is a memory over-read bug that can be used by an authenticated
+> > >user (if applicable) to obtain raw MongoDB server process memory
+> > >contents via incorrect BSON object length.  I guess that under most
+> > >deployments this does not cross a security boundary, but for some it
+> > >could (differently-privileged MongoDB users, data already deleted from
+> > >the DB yet staying in process memory, or/and metadata that is not
+> > >normally retrievable).
+> >
+> > Use CVE-2012-6619.
+>
+> Thanks!  To make sure MongoDB developers are aware of this, I am CC'ing
+> this reply to security@...godb.com as specified here:
+>
+> http://docs.mongodb.org/manual/tutorial/create-a-vulnerability-report/
+>
+> Past MongoDB security issues are listed here:
+>
+> http://www.mongodb.org/about/alerts/#security-related
+>
+> and they don't appear to include this "new" issue yet.
+>
+> I've just added these two links to:
+>
+> http://oss-security.openwall.org/wiki/software#mongodb
+>
+> MongoDB - here's some more context regarding the specific vulnerability
+> (now known as CVE-2012-6619, as per the assignment above):
+>
+> http://www.openwall.com/lists/oss-security/2014/01/07/2
+>
+> Alexander
+>
 
-Can you please provide a CVE number for this?
-
-Thanks in advance.
-
-Regards
-Pedro
-
-Content of type "text/html" skipped
-
-View attachment "pimcore-2.1.0.txt" of type "text/plain" (7191 bytes)
