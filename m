@@ -1,43 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/46
-Message-ID: <371E240E6FC1D44DA5E51EE9DCDCB7840105C6A5BF@NA-MBX-01.mgc.mentorg.com>
-Date: Thu, 20 Nov 2014 21:35:02 +0000
-From: "Mehaffey, John" <John_Mehaffey@...tor.com>
-To: mancha <mancha1@...o.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "falonsoe@...hat.com" <falonsoe@...hat.com>
-Subject: RE: CVE-2014-7817 glibc: command execution in wordexp() with WRDE_NOCMD specified
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/11
+Message-Id: <201401081756.s08HuBZJ014313@linus.mitre.org>
+Date: Wed, 8 Jan 2014 12:56:11 -0500 (EST)
+From: cve-assign@...re.org
+To: larry0@...com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: paratrooper-pingdom-1.0.0 ruby gem exposes API login credentials
 Content-Type: text/plain; charset=utf-8
 
-> From: mancha [mancha1@...o.com]
-> Sent: Thursday, November 20, 2014 11:17 AM
-> To: oss-security@...ts.openwall.com
-> Cc: falonsoe@...hat.com
-> Subject: Re: [oss-security] CVE-2014-7817 glibc: command execution in wordexp() with WRDE_NOCMD specified
-> 
-> On Thu, Nov 20, 2014 at 11:38:20AM -0500, Francisco Alonso wrote:
-> > Hello,
-> >
-> > It was discovered that the wordexp() function could ignore the WRDE_NOCMD flag under certain input conditions resulting in the execution
-> > of a shell for command substitution when the applicaiton did not request it.
-> >
-> > Bug report:
-> > https://sourceware.org/bugzilla/show_bug.cgi?id=CVE-2014-7817
-> >
-> > Git commit:
-> > https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=a39208bd7fb76c1b01c127b4c61f9bfd915bfe7c
-> >
-> > References:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=1157689
-> > https://sourceware.org/ml/libc-alpha/2014-11/msg00519.html
-> 
-> Francisco, thanks for the post.
-> 
-> After a lightning review of one of my systems, I found the following use
-> glibc's wordexp: adobe's flash plugin, ardour2, mailx, enca. I've not
-> looked into which input is under a would-be-attacker's control.
-> 
-> --mancha
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-alsa-lib is also affected.
+> curl ... -H "App-Key: {app_key}" -u " {username}:#{password}"
+> 
+> A malicious user could monitor the process tree to steal the API key,
+> username and password for the API login.
 
--mehaf
+Use CVE-2014-1233.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSzZDoAAoJEKllVAevmvmsY4cH/Rr4UkVUc8uqZQ/zAhlT76DX
++bbmSJRrdZbZR1MaRPao16EWuLKeC4eSQRl6UADX9pC0rxh6Wq3+aaZK66T8pwTp
+Qgk8fn8nxZ9SJpTheYjDJkIbpQ2SmzMNd+DUUXxNQ/HrXO6wv/gDMK2Z1hOBYk6f
+45ue9WAmwXjBnVbnizIs4okC3ZcSE1+H4Djpq+c0EKacan9IxEMVACB95Op0049V
+B33cWdUrvKxTjaELtS/oRgOUuaTx+093wqMP3PuDSSHhZ51DiqGQ7+qLAVjEJTvb
+ri/fQECLxyWSyIoiEDnpFCAdTaGVpuJEq+lVgqYsphBwAlvt29USM0LXH7HoMtw=
+=79GU
+-----END PGP SIGNATURE-----
