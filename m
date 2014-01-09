@@ -1,83 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/11
-Message-Id: <201403121503.s2CF3fuZ015701@linus.mitre.org>
-Date: Wed, 12 Mar 2014 11:03:41 -0400 (EDT)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request for Quick Blind TCP Connection Spoofing with SYN Cookies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/1
+Message-ID: <52CE42B4.2090406@redhat.com>
+Date: Thu, 09 Jan 2014 12:03:24 +0530
+From: Ratul Gupta <ratulg@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: drupal7-entity: multiple access bypass vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-> Did this issue:
-> http://www.jakoblell.com/blog/2013/08/13/quick-blind-tcp-connection-spoofing-with-syn-cookies/
-> ever get a CVE or should it get one?
+The entity module for Drupal was recently reported to be affected by 
+multiple access bypass vulnerabilites, which could be exploited by an 
+attacker to gain unauthorized access to the data.
 
-There are no CVE assignments specific to that report, but
-CVE-1999-0077 is related.
+1) Comment, User and Node Statistics property access bypass
 
-> Made "4 times" harder in 3.13 by these two patches:
+The module's entity wrapper access API doesn't sufficiently protect 
+comment, user and node statistics properties from unprivileged user access.
+This vulnerability is mitigated by the fact that a module must be 
+enabled that relies on the Entity property access API and it must be 
+configured to expose either comment, user or node statistics properties. 
+One example would be the RESTful Web Services module (RESTWS) with the 
+permission configured to access the comment, user or node resource for 
+untrusted web service consumers.
 
-This may be best interpreted as a security-hardening step that was
-made as a tradeoff against other possible functionality goals. Those
-types of issues typically don't have CVE assignments. It's not, for
-example, a case of the Linux kernel security team announcing this as a
-vulnerability fix. (We're not suggesting that the Linux kernel
-security team needs to change anything about announcement approaches.)
+2) Entity list property access bypass
 
-One of the side issues is:
+The module's entity wrapper access API doesn't sufficiently check entity 
+access on referenced entities such as taxonomy terms.
+This vulnerability is mitigated by the fact that a module must be 
+enabled that uses the access() method of entity metadata wrappers to 
+determine access to a property which references multiple entities to 
+which access is not granted. One example would be the RESTful Web 
+Services module (RESTWS) with respectively configured permissions on an 
+entity property or (entity reference) field, for example a list of 
+(unaccessible) referenced user entities on a node entity.
 
-  http://article.gmane.org/gmane.linux.network/279779
+3) Unpublished comments access bypass
 
-says:
+The module's entity_access() API doesn't protect unpublished comments 
+from being viewed by unprivileged users.
+This vulnerability is mitigated by the fact a module must be enabled 
+which uses the provided entity access API on comments and the comment 
+module must be enabled.
 
-  This patch slows down the timer used in syncookies from 1/60 Hz to 1/60/4 Hz
-  so that at any moment only two differrent timer values can be accepted.
+The issues are said to be fixed in drupal7-entity-1.3.
 
-  This changes the maximum cookie age limit from 4 - 5 minutes to 4 - 8 minutes.
+References:
+https://drupal.org/node/2169595
+https://bugzilla.redhat.com/show_bug.cgi?id=1050802
 
-but the actual accepted patch was:
+Can CVE's please be assigned to these issues?
 
-  https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=8c27bd75f04fb9cb70c69c3cfe24f4e6d8e15906
+-- 
+Regards,
 
-  tcp: syncookies: reduce cookie lifetime to 128 seconds
+Ratul Gupta / Red Hat Security Response Team
 
-If we understand this correctly, this is a direct tradeoff against
-usability on slow network connections, possibly including connections
-to the moon or Mars. Admittedly a different protocol or other tuning
-might be needed for successful network sessions to Mars; the point is
-that the patch is a behavior change that may often make spoofing more
-costly, but is not really a "fix for a vulnerability." The blog post
-suggests that even the patched code could realistically allow a
-successful spoof within much less than an hour.
-
-Similarly, http://article.gmane.org/gmane.linux.network/281265
-suggests other tradeoffs in other parts of the 3.13 changes, e.g.,
-
-  Some services are secure enough at application level and don't
-  care at all about TCP connection spoofing. These can use the
-  sysctl to revert back to the MSS table we have now (or anyting
-  that better serves their traffic).
-
-  Other services are not so secure and some MSS values can be
-  sacrified to mitigate the risk. With a smaller MSS table, tuning
-  the values for specific traffic may make even more sense.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTIHXqAAoJEKllVAevmvms7XkH/0B+ITSUUffLjFGOv4ubHhsY
-L2Ksq/H8riFL78surEY7LD3sU6a/k7JNJecqEAvRsB1f7mI63hsKqiHOFx1VxULD
-K7xKUGpUEYrhXfWu/HBAEXzzTXy+RmPrfdofeiTOMI7Tk6FXWtBXAOYvf24tgTH9
-7/pj6dixuUdZwfX+O78gf/pUWrCgS2dPyVZhxdXvBErUtZq81zEX9XY55r2cixVL
-XBmVU3CEzXYkpGVKG+Deja0BUm8jnzKQJW85Pq/mE3G7ZOjo0huNJXfVb+PiipjH
-dKUvs2rbDnJV7xexQSP/Lv0LXxuBvMY1fIsDMXOHmf/AbAztW/AdJrhPsmUuglg=
-=/J2Y
------END PGP SIGNATURE-----
