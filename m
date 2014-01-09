@@ -1,45 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/09/1
-Message-ID: <1407575867.1757.17.camel@scapa>
-Date: Sat, 09 Aug 2014 11:17:47 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/14
+Message-Id: <201401092201.s09M1GcH015434@linus.mitre.org>
+Date: Thu, 9 Jan 2014 17:01:16 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE split and a missed file
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2014-08-08 at 14:36 -0700, Greg KH wrote:
-> On Fri, Aug 08, 2014 at 11:27:06PM +0200, Yves-Alexis Perez wrote:
-> > On ven., 2014-08-08 at 14:20 -0700, Greg KH wrote:
-> > > > Actually, since it's a module parameter, it doesn't seem possible to
-> > > > toggle it without reloading the module (or rebooting if it's
-> > > builtin).
-> > > > So it might not be that easy to do the locking part.
-> > > 
-> > > echo "0" > /sys/module/usbcore/parameters/authorized_default
-> > 
-> > I did that, but unplugging/replugging my mouse still works after that.
-> 
-> Hm, not good, take it to the linux-usb@...r.kernel.org mailing list and
-> we can debug it there.
-> 
-To follow up on this.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The correct way to do this is to do:
+>  -> net/ax25/af_ax25.c
 
-for bus in /sys/bus/usb/usb*;
-do
-  echo 0 > ${bus}/authorized_default
-done
+The unpatched code does not have the fundamental problem of updating
+msg_namelen in a situation where "sax" is uninitialized.
 
-to disable registration of new USB devices (kernel will still enumerate
-them, but no driver will handle them).
+>  -> net/rose/af_rose.c
 
-Echo 1 (or -1) to re-enable registration. Current devices will keep
-working. If you want to completely disable a bus (including power), use
-'authorized' instead of 'authorized_default' sysfs entry.
+The unpatched code does not have the fundamental problem of updating
+msg_namelen in a situation where "srose" is uninitialized.
 
-Regards,
--- 
-Yves-Alexis
+>  -> net/compat.c
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+This is for the case of a nonzero msg_namelen accompanied by a NULL
+msg_name, as mentioned in the comment in the commit. The same choice
+was made in net/core/iovec.c (a file that you didn't ask about).
+
+>  -> net/socket.c
+
+Lack of "msg_namelen = 0" statements is not something that would
+really be considered a vulnerability in the previous net/socket.c
+implementation. From the perspective of net/socket.c itself, the
+"msg_namelen = 0" additions are a design improvement that can
+contribute to the security of other code.
+
+>  -> net/rxrpc/ar-recvmsg.c
+
+The complete absence of a "msg_namelen =" statement in the unpatched
+code seems to be a bug, but it's not the same as updating msg_namelen
+in an uninitialized-data situation.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSzxprAAoJEKllVAevmvmsUzMH/3VKhBHQipalZA4G+8mkscZK
+fanNLNwhBXK61rhbQwewXbKAJu2/zuJlCYGiPJcMQ9zIUgRIl4cyDQMK0Wh9JtXc
+0ThbrKFWx6Iwan6q/ygs7uX3jMJK2bhnjob8zt1ZN1etrsyTP4cIityk2n/nJf3e
+HTeys00RVSUwo6P33EvVjYep8qvsf4ZzZq5Bh+WhxapgU0eCHisZ4+aKfOcvaIB4
+qEJjVmr783/jSq0SlKEk9pKeeu6gLhcU0mrdQQ9fOEo3Bvp574W7jjel1IKPFpfO
+OE+mP0ULvsE+cH1H/5WTLsxEAyK0GowfCiBH+5M/xdu/AXPx1hsZg4V9p40JnZ4=
+=mqWd
+-----END PGP SIGNATURE-----
