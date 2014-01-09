@@ -1,38 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/9
-Message-ID: <5464F278.9050702@fifthhorseman.net>
-Date: Thu, 13 Nov 2014 08:03:36 -1000
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com, krahmer@...e.de
-CC: cve-assign@...re.org
-Subject: Re: Re: CVE-request: systemd-resolved DNS cache poisoning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/6
+Message-ID: <52CED0B7.1020609@redhat.com>
+Date: Thu, 09 Jan 2014 17:39:19 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: tmux local denial of service (2009)
 Content-Type: text/plain; charset=utf-8
 
-On 11/13/2014 04:56 AM, Florian Weimer wrote:
-> 
-> I asked Bert to be sure, and he says that it was his intent that the
-> advice applied to non-recursive resolvers as well.  (Note that
-> systemd-resolved is more than a minimal stub because it has a cache.)
+Alexander Wirt discovered that local users can block other users from 
+using tmux by creating suitably named directories in /tmp:
 
-I have to agree with Florian here.
+<http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529082>
 
-It's possible that rfc5452 was the wrong citation, since it seems to be
-devoted mainly to making sure that you don't accept packets from remote
-DNS servers you didn't request them from.
+This is a minor local denial of service issue.  This was reported 
+publicly in 2009, so it receive an ID for that year.
 
-the problem with systemd-resolved as i understand it not that it's
-accepting packets from DNS servers it didn't request from, but that it's
-caching unrelated responses in those records.
+Corresponding Red Hat bug:
 
-This isn't typically an issue for cache-less stub resolvers, because
-they're being invoked by things like gethostbyname(), which might
-receive the extra information but won't actually process it, cache it,
-or do anything with it.
+<https://bugzilla.redhat.com/show_bug.cgi?id=1036136>
 
-It sounds like a vulnerability to me, and i hope that MITRE will
-reconsider its decision here.
-
-	--dkg
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+-- 
+Florian Weimer / Red Hat Product Security Team
