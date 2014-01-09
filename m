@@ -1,54 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/7
-Message-ID: <20141106163335.GI24397@suse.de>
-Date: Thu, 6 Nov 2014 17:33:35 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: Linux kernel mac80211 plain text leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/11
+Message-ID: <52CEF328.4070404@redhat.com>
+Date: Thu, 09 Jan 2014 20:06:16 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: cve-assign@...re.org, guido+openwall.com@...hoerster.name
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE request: tmux local denial of service (2009)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 01/09/2014 07:44 PM, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>> allows users to override the socket path using the -S command line option.
+>
+> We'd like to consider this ineligible for a CVE unless there's new
+> information. In many cases, "ability to cause an inconvenience" is not
+> sufficient for a CVE assignment. The nature of the application
+> apparently makes it unlikely that this would, for example, disrupt
+> unattended root-executed scripts that have a hardcoded tmux command
+> line.
 
-While searching for another kernel issue I found this gem which apparently has no CVE yet:
+I reported this here because tmux is sometimes used to start servers on 
+system boot:
 
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=338f977f4eb441e69bb9a46eaa0ac715c931a67f
+http://unix.stackexchange.com/questions/71372/using-tmux-on-boot-up-of-linux-centos
+http://askubuntu.com/questions/62434/why-does-upstart-keep-respawning-my-process
+https://bowerstudios.com/node/953
+http://code.google.com/p/webrtc2sip/issues/detail?id=80
 
-I think it needs a CVE.
-
-Ciao, Marcus
-
-commit 338f977f4eb441e69bb9a46eaa0ac715c931a67f
-Author: Johannes Berg <johannes.berg@...el.com>
-Date:   Sat Feb 1 00:16:23 2014 +0100
-
-    mac80211: fix fragmentation code, particularly for encryption
-
-    The "new" fragmentation code (since my rewrite almost 5 years ago)
-    erroneously sets skb->len rather than using skb_trim() to adjust
-    the length of the first fragment after copying out all the others.
-    This leaves the skb tail pointer pointing to after where the data
-    originally ended, and thus causes the encryption MIC to be written
-    at that point, rather than where it belongs: immediately after the
-    data.
-
-    The impact of this is that if software encryption is done, then
-     a) encryption doesn't work for the first fragment, the connection
-        becomes unusable as the first fragment will never be properly
-        verified at the receiver, the MIC is practically guaranteed to
-        be wrong
-     b) we leak up to 8 bytes of plaintext (!) of the packet out into
-        the air
-
-    This is only mitigated by the fact that many devices are capable
-    of doing encryption in hardware, in which case this can't happen
-    as the tail pointer is irrelevant in that case. Additionally,
-    fragmentation is not used very frequently and would normally have
-    to be configured manually.
-
-    Fix this by using skb_trim() properly.
-
-    Cc: stable@...r.kernel.org
-    Fixes: 2de8e0d999b8 ("mac80211: rewrite fragmentation")
-    Reported-by: Jouni Malinen <j@...fi>
-    Signed-off-by: Johannes Berg <johannes.berg@...el.com>
-
+-- 
+Florian Weimer / Red Hat Product Security Team
