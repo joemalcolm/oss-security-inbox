@@ -1,24 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/4
-Message-ID: <20140710115902.GB15915@mail.corp.redhat.com>
-Date: Thu, 10 Jul 2014 13:59:02 +0200
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: transmission peer communication vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/15
+Message-Id: <201401092346.s09NkJGn003693@linus.mitre.org>
+Date: Thu, 9 Jan 2014 18:46:19 -0500 (EST)
+From: cve-assign@...re.org
+To: djorm@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: remote code execution via deserialization in XStream
 Content-Type: text/plain; charset=utf-8
 
-Transmission version 2.84 fixes peer communication vulnerability (no
-known exploits) reported by Ben Hawkes.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Changelog: http://trac.transmissionbt.com/wiki/Changes#version-2.84
-References:
-https://bugs.gentoo.org/show_bug.cgi?id=516822
-https://bugzilla.redhat.com/show_bug.cgi?id=1118290
+> http://blog.diniscruz.com/2013/12/xstream-remote-code-execution-exploit.html
 
-Can we have CVE assigned for this?
+Use CVE-2013-7285.
 
--- 
-Vasyl Kaigorodov | Red Hat Product Security Team
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+At least initially, the scope of this CVE is "XStream is an
+'reflection-based XML-to-Object conversion'" in that file, and all of
+the implications of unrestricted conversion, including "allows the
+creation of server side objects based on reflection (which means that
+you could have all sorts of business-logic sensitive objects being
+created)" -- which is mentioned separately in that file.
 
-Content of type "application/pgp-signature" skipped
+If this does not make sense, and multiple CVEs are needed, please let
+us know.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSzzPZAAoJEKllVAevmvms3cEH/3MBAH57R/LhQfI5ZMUm9FOD
+eZm7p9IGl3PpSMtrwqSNwXS6InpfAmc04P0xX/HM4yFSRX6yHVaTZA9vbNGRs6PV
+VdZg/A+WiUwdBdGhsFfXCb82QvCthdxyv6AAK5uNpVqQTqmikVPNk8gYxcHXZz3+
+xUmUGLxwlCtImSZ1WiZMSCMYul3jsFsuOiVlqHF2NBoXh+55xmy8hLTOCUijILeG
+lAXfMo25S971OJalr5pzGUC2EPUclV5D08+jv3KCNqryNphsepa3+14OKrvvz1yX
+Q19c3+suDKWOUDvur9ENeHkf//Va881GNGZkcvppfvIkYCMI3vKFaWGMYRWR+jE=
+=Jkgd
+-----END PGP SIGNATURE-----
