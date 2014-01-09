@@ -1,23 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/7
-Message-ID: <52EB1128.3050605@redhat.com>
-Date: Fri, 31 Jan 2014 13:57:44 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: carnil@...ian.org
-Subject: CVE request: uupdate (devscripts) directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/3
+Message-Id: <201401091112.s09BBtAZ015692@linus.mitre.org>
+Date: Thu, 9 Jan 2014 06:11:55 -0500 (EST)
+From: cve-assign@...re.org
+To: ratulg@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: drupal7-entity: multiple access bypass vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Jakub Wilk reported a directory traversal flaw in uupdate that "can 
-trick uupdate into patching files outside the source package directory".
+> The entity module for Drupal
+> 
+> The module's entity wrapper access API doesn't sufficiently protect 
+> comment, user and node statistics properties from unprivileged user access.
 
-Full details: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737160
+Use CVE-2014-1398.
 
-Can a CVE please be assigned?
 
-Thanks,
+> The module's entity wrapper access API doesn't sufficiently check entity 
+> access on referenced entities such as taxonomy terms.
 
---
-Murray McAllister / Red Hat Security Response Team
+Use CVE-2014-1399. (We are interpreting "doesn't sufficiently protect" and
+"doesn't sufficiently check" as different flaw categories.)
+
+
+> The module's entity_access() API doesn't protect unpublished comments 
+> from being viewed by unprivileged users.
+
+Use CVE-2014-1400.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSzoMZAAoJEKllVAevmvmsO+sH/j/OSRR3n2FzkO3oV7w8MvH9
+6kKhqfvft9DftI2AXP2W9/ugRr+RUgf0/8mFk+dJeJ5UMlGn/f8MajDXsSD66mc0
+xR1PrAkkTwYiEcnVb/esFEEPoBKiezPRlPbaR1c33cuo82MS+VoUTVQmp3snz5v2
+OcSW1AWX/zulIRxjASF/uAKD+HUQLtPf8Fx/0Qh1qFA7jA1A8MGQ94xvXbR+vk9b
+3OhMLf1cY8ROG0nO+FSMDVly0InmYqABb9AByHXhf45gu/sCnYrmYxChbyLA8M5P
+fsEVpDeojUwBOAccJdRqIJZAO+lZ7lcwYVxSgLBCCJ6GiWAcwMZLsVIDbtyZIHc=
+=QQmr
+-----END PGP SIGNATURE-----
