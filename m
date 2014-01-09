@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/23/5
-Message-Id: <1Wz42z-0002JP-AJ@redteam-pentesting.de>
-Date: Mon, 23 Jun 2014 15:05:37 +0200
-From: Till Maas <till.maas@...team-pentesting.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/7
+Message-ID: <20140109165152.GA14212@hal.lan>
+Date: Thu, 9 Jan 2014 17:51:52 +0100
+From: Guido Berhoerster <guido+openwall.com@...hoerster.name>
 To: oss-security@...ts.openwall.com
-Subject: CVE ID Request for Python CGIHTTPServer File Disclosure
+Subject: Re: CVE request: tmux local denial of service (2009)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* Florian Weimer <fweimer@...hat.com> [2014-01-09 17:39]:
+> Alexander Wirt discovered that local users can block other users
+> from using tmux by creating suitably named directories in /tmp:
+> 
+> <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529082>
+> 
+> This is a minor local denial of service issue.  This was reported
+> publicly in 2009, so it receive an ID for that year.
+> 
+> Corresponding Red Hat bug:
+> 
+> <https://bugzilla.redhat.com/show_bug.cgi?id=1036136>
 
-I would like to request a CVE ID for a file disclosure vulnerability in
-the Python CGIHTTPServer class. Current details are available in the
-Python bug tracker:
-http://bugs.python.org/issue21766
-
-Kind Regards
-Till
-
+How is that a DOS? $TMPDIR/tmux-<uid> is merely a default, tmux
+allows users to override the socket path using the -S command line
+option.
 -- 
-RedTeam Pentesting GmbH                   Tel.: +49 241 510081-0
-Dennewartstr. 25-27                       Fax : +49 241 510081-99
-52068 Aachen                    https://www.redteam-pentesting.de
-Germany                         Registergericht: Aachen HRB 14004
-Geschäftsführer:                       Patrick Hof, Jens Liebchen
-
-Content of type "application/pgp-signature" skipped
+Guido Berhoerster
