@@ -1,105 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/10
-Message-ID: <20140716165210.49013968@redhat.com>
-Date: Wed, 16 Jul 2014 16:52:10 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: cve-assign@...re.org
-Cc: gmollett@...hat.com, oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: Re: CVE request - Snoopy incomplete fix for CVE-2008-4796
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/9
+Message-Id: <201401091844.s09Iin0k018319@linus.mitre.org>
+Date: Thu, 9 Jan 2014 13:44:49 -0500 (EST)
+From: cve-assign@...re.org
+To: fweimer@...hat.com, guido+openwall.com@...hoerster.name
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: tmux local denial of service (2009)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 16 Jul 2014 01:57:27 -0400 (EDT) cve-assign@...re.org wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> The information that has been sent so far doesn't determine whether
-> there should be one CVE ID or two CVE IDs. A statement of "does still
-> allow command injection" would potentially mean two CVE IDs, whereas
-> "may still allow command injection" could end up as "does not still
-> allow command injection."
+> allows users to override the socket path using the -S command line option.
 
-The fix applied in Snoopy rev 1.28 was insufficient / incomplete and it
-did allow command execution.  There should be 2 CVEs, afaics.
+We'd like to consider this ineligible for a CVE unless there's new
+information. In many cases, "ability to cause an inconvenience" is not
+sufficient for a CVE assignment. The nature of the application
+apparently makes it unlikely that this would, for example, disrupt
+unattended root-executed scripts that have a hardcoded tmux command
+line.
 
-It seems there actually is a longer list of incomplete fixes for this
-issue.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-
-2002
-http://sourceforge.net/p/snoopy/bugs/13/
-
-It seems this allowed the most simple injections:
-  https://example.com;id
-  https://example.com/foo.html;id
-
-Fixed in 2004 via:
-http://snoopy.cvs.sourceforge.net/viewvc/snoopy/Snoopy/Snoopy.class.php?view=log#rev1.11
-
-This strips double quotes and adds quotes around URI argument.
-
-
-2005
-http://marc.info/?l=full-disclosure&m=113027008504631&w=3
-SEC-Consult SA 20051025-0
-CVE-2005-3330
-
-This was via curl -H argument value, required use of double quote to
-escape double quotes quoting of header argument, and required command in
-the host part of the url:
-  https://example.com";id
-
-Fixed in a similar way the previous one was addressed:
-http://snoopy.cvs.sourceforge.net/viewvc/snoopy/Snoopy/Snoopy.class.php?view=log#rev1.20
-
-
-2008
-(I guess this is the initial report)
-http://archives.neohapsis.com/archives/bugtraq/2008-09/0078.html
-CVE-2008-4796
-
-The version of the _httpsrequest quoted there does not use $safer_URI
-and hence seems to pre-date the fix from 2004, so it might be the same
-issue as the 2002/2004 one.  However, the use of backtick in the
-example exploit should have made it work on Snoopy versions with the
-above two fixes.
-  https://example.com`id`
-  https://example.com/foo.html`id`
-
-Fixed using escapeshellcmd():
-http://snoopy.cvs.sourceforge.net/viewvc/snoopy/Snoopy/Snoopy.class.php?view=log#rev1.25
-
-Followed by a similar fix for headers few days later, which probably
-was not picked up by folks backporting the above commit as the fix for
-this CVE:
-http://snoopy.cvs.sourceforge.net/viewvc/snoopy/Snoopy/Snoopy.class.php?view=log#rev1.27
-
-
-2014
-http://mstrokin.com/sec/feed2js-magpierss-0day-vulnerability-not-really-it-is-actually-cve-2005-3330-cve-2008-4796/
-
-The above blog post shows how to inject additional command line
-arguments for curl and what can be achieved with that.
-
-Fixed using escapeshellarg():
-http://snoopy.cvs.sourceforge.net/viewvc/snoopy/Snoopy/Snoopy.class.php?view=log#rev1.28
-
-So this should be new 2014 CVE-1.
-
-The above commit reverts rev 1.27 change (I don't dare to guess if that
-was intentional or not), and hence for the header / -H case, it changed
-curl command line argument injection into direct arbitrary code
-injection using backticks as noted for the 2008 issue above.
-
-If you need public reference, there's:
-https://github.com/cogdog/feed2js/pull/12#issuecomment-48283706
-
-or UPD3 update near the end of the mstrokin's blog post.
-
-I believe this is should get different 2014 CVE-2, because there was
-upstream version that was believed to have all issues fixed.
-
-Rather than fixing escaping of header arguments, Snoopy upstream
-removed curl code and made Snoopy open SSL connection to https server
-directly.  That was done in rev 1.29, that was further corrected in
-subsequent commits.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+iQEcBAEBAgAGBQJSzu1/AAoJEKllVAevmvmskekH/2A4wotaBeyRrTUT99tKnoCd
+DOizyyQys3yF+1+UnV95nuaa6JKChsZvK96Q5U3fhJ94Sqw4Cq04q2Kac5MBTHub
+E/R8/gNru8TlDKq3IGwBmigQYjXO56p3nps/a6b/NcZ0DhT2JBm+VTCUgJMtTs2Z
+hAEhNr5fvihRUdlpfyGNT2PXdGqcHZZSdEqB1oMkNAAEKGSNNOlKK+lzQhi6SBIp
+TPOVizxKKjG0xBXxlCfkla+uJnOYHWaVYTGR+3rfCe71ZKJdpx3mbBDCEu76+ojh
+xCUkruwZhtw9XtcSp9OzZEJKhm6gN4QXeSq3ifzZ3v0+f66UrBSjf04ewD9RSkM=
+=M+g3
+-----END PGP SIGNATURE-----
