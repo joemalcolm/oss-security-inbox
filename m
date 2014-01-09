@@ -1,112 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/22/1
-Message-Id: <201405220341.s4M3fNO5002449@linus.mitre.org>
-Date: Wed, 21 May 2014 23:41:23 -0400 (EDT)
-From: cve-assign@...re.org
-To: kent.baxley@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request, multiple vulnerabilities in openwsman
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/5
+Message-ID: <52CEABC5.3020803@redhat.com>
+Date: Fri, 10 Jan 2014 01:01:41 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: temporary file issue in flite
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+As reported to the linux-distros mailing list:
 
-> https://github.com/Openwsman/openwsman/releases/tag/v2.4.4
+Florian Weimer of the Red Hat Product Security Team discovered a
+temporary file handling flaw in flite, a speech synthesis engine
+(text-to-speech). A local attacker could use this flaw to perform a
+symbolic link attack to modify an arbitrary file accessible to the user
+running flite, or possibly obtain sensitive information as the temporary
+file may contain text-to-speech output (screen contents). (CVE-2014-0027)
 
-> A recent security code review was performed on openwsman version 2.4.3
-> and several issues were identified and fixed in version 2.4.4.
-> 
-> Can we please get CVEs assigned to them?
+The issue is here:
 
-There isn't enough information in this request. These commit messages
-don't describe how an attack can occur that crosses privilege
-boundaries, or explain why the apparently mishandled data comes from
-an untrusted source. A CVE ID can't be assigned solely on the basis of
-locating code that is potentially unsafe or simply wrong. For example,
-we don't assign CVE IDs on the basis of output produced by the
-Coverity Scan service, and we also don't assign CVE IDs on the basis
-of similar detail generated in a manual review.
+src/audio/auserver.c contains:
 
-At this point, we aren't going to comment separately on each of the
-commits but here are some initial observations:
+static int play_wave_from_socket(snd_header *header,int audiostream)
+{
+…
+fff = cst_fopen("/tmp/awb.wav",CST_OPEN_WRITE|CST_OPEN_BINARY);
+…
+n = audio_write(audio_device,shorts,q);
+cst_fwrite(fff,shorts,2,q);
 
+As this is debugging functionality and never read by flite, the fix is 
+just to ifdef the lines out...
 
-https://github.com/Openwsman/openwsman/commit/a61b2074a90c9fb3019f49b6b347ad651a3f80af
+A patch is available from 
+https://bugzilla.redhat.com/show_bug.cgi?id=1048678
 
-  char buf[20];
-  sprintf(buf, "PT%fS", options->expires);
+Cheers,
 
-  ==>
-
-  snprintf(buf, 20, "PT%fS", options->expires);
-
-The source code says "unsigned long expires; // expiration time in
-msecs since the epoch." Are there values of options->expires that can
-occur, but result in too many characters with the format string? If
-so, would it make sense to reject those options->expires values, or
-use a larger buffer, instead of using snprintf with the same buffer
-size as before?
-
-The filename is src/lib/wsman-client.c. Would this typically be used
-only by a client application, e.g., an application that calls the
-wsman_create_client function? Are there realistic use cases in which
-the expires value is untrusted: for example, it originates in a web
-form, or the application is installed setuid and can be executed by
-unprivileged users? In other words, can untrusted input be used for
-privilege escalation, or in a denial of service attack affecting a
-client that was supposed to remain running for additional users?
-
-
-https://github.com/Openwsman/openwsman/commit/09c3fcf4d209f6890eb9cb9e554bff637eae73b5
-
-Does this depend on misconfiguration, or is it exploitable by an
-attacker against a realistic installation of the product? In other
-words, is the essential problem that, if the product or machine is
-misconfigured so that required repository pathnames don't exist or
-have permission problems, then an application could crash?
-
-
-https://github.com/Openwsman/openwsman/commit/ca68ddd7c24b238cbb94bc97ffac349ff25f07bf
-
-Does this mean that the product would realistically be reading an
-attacker-controlled XML document, and could crash?
-
-  char *subcode_value = ws_xml_get_xpath_value(doc, FAULT_SUBCODE_VALUE_XPATH);
-  ...
-  if (strlen(subcode_value) == 0)
-    return;
-
-Can a zero-length return value occur?
-
-The source code has:
-
-  char *ws_xml_get_xpath_value(WsXmlDocH doc, char *expression)
-  {
-          return xml_parser_get_xpath_value(doc, expression);
-  }
-
-
-  char *xml_parser_get_xpath_value(WsXmlDocH doc, const char *expression)
-  ...
-  return NULL;
-
-
-Given that the function's return value can be NULL, why does the
-patched code still call strlen on this value?
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTfXD2AAoJEKllVAevmvms+mgH/js/m9qIp7BP9A8BTWnemEHB
-GZH8bAHaJYYAk2dmWA47Ons7FWu17ufdPhsrfSFVxR+qQUrcYJCp0/9N8ZM6Wdtq
-fYzZVT+F4K4pohJSQpRLKdZEIPefT6md8gqm55fQvDh/Wsgl5EYMs8e2kIKyyOwL
-4EGSLiZfXScWJW4FnWrqHz2PyMWhujZpLY2l3Vo5q1UxyODJyDGaPAhaRtsI/2PP
-DqkkBEiDKFzsFfJN/yFTF0T20ezkLAZDqcPxlMcROLrFeHKgOss3znImnO2VkwiK
-FRxvPcN4seUoGCzfzHAAeDaN3eE3E/epKAUIUnP0Htw3JIvRdKoQGKQsZuvTChw=
-=zRqc
------END PGP SIGNATURE-----
+--
+Murray McAllister / Red Hat Security Response Team
