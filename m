@@ -1,28 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/03/6
-Message-ID: <6DA72294-7749-423B-AA9F-3E8C21F724C4@redhat.com>
-Date: Wed, 03 Sep 2014 10:32:05 -0600
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: CVE request for nodejs/v8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/13
+Message-ID: <52CF15B7.7030905@redhat.com>
+Date: Fri, 10 Jan 2014 07:33:43 +1000
+From: David Jorm <djorm@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: remote code execution via deserialization in XStream
 Content-Type: text/plain; charset=utf-8
 
-I don't see a CVE mentioned for this issue anywhere.  Can one be assigned if it has not already been?
+Hi All
 
-Described on the nodejs blog as:
+As per the following email thread on the xstream-dev list:
 
-A memory corruption vulnerability, which results in a denial-of-service, was identified in the versions of V8 that ship with Node.js 0.8 and 0.10. In certain circumstances, a particularly deep recursive workload that may trigger a GC and receive an interrupt may overflow the stack and result in a segmentation fault. For instance, if your work load involves successive JSON.parse calls and the parsed objects are significantly deep, you may experience the process aborting while parsing.
+http://markmail.org/message/kfqoqdfj5fnup5co?q=list:org.codehaus.xstream.dev&page=3
 
-This issue was identified by Tom Steele of ^Lift Security and Fedor Indunty, Node.js Core Team member worked closely with the V8 team to find our resolution.
+Dinis Cruz et. al. have reported a remote code execution flaw in 
+XStream's XML deserialization. A PoC exploit is available here:
 
+http://blog.diniscruz.com/2013/12/xstream-remote-code-execution-exploit.html
 
-https://codereview.chromium.org/339883002
-http://blog.nodejs.org/2014/07/31/v8-memory-corruption-stack-overflow/
-https://github.com/joyent/node/commit/530af9cb8e700e7596b3ec812bad123c9fa06356
-https://bugzilla.redhat.com/show_bug.cgi?id=1125464
+An initial patch has been committed, adding a whitelist that limits 
+deserialization to specified types:
 
+https://fisheye.codehaus.org/changelog/xstream?cs=2210
 
--- 
-Vincent Danen / Red Hat Product Security
+Please assign a CVE ID to this issue.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+Thanks
+--
+David Jorm / Red Hat Security Response Team
