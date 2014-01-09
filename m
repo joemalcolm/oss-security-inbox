@@ -1,41 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/36
-Message-Id: <E1XYg1P-0007bB-Jr@rmm6prod02.runbox.com>
-Date: Mon, 29 Sep 2014 14:50:07 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-CC: "ekobrin" <ekobrin@...mai.com>, "chet.ramey" <chet.ramey@...e.edu>, "solar" <solar@...nwall.com>, "lcamtuf" <lcamtuf@...edump.cx>, "fweimer" <fweimer@...hat.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/10
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF33E86965@IMCMBX01.MITRE.ORG>
+Date: Thu, 9 Jan 2014 19:05:18 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: P J P <ppandit@...hat.com>, Assign a CVE Identifier <cve-assign@...re.org>
+CC: oss security list <oss-security@...ts.openwall.com>
+Subject: RE: CVE split and a missed file
 Content-Type: text/plain; charset=utf-8
 
-> On Sep 29, 2014, at 11:59 AM, Eric Blake <eblake@...hat.com> wrote:
->> But I see no reason to move away from %% suffixing.
+Some people may be wondering why these CVEs were even split at all, as many of them appear to have exactly the same vulnerability type, affected version, and commit.
 
-On 29 September 2014 10:39, Kobrin, Eric <ekobrin@...mai.com> wrote:
-> The suffix fixes the obvious CGI hole, but it leaves exposed programs in which the adversary gets to choose the variable name as well...
+For example, CVE-2013-7267, CVE-2013-7268, CVE-2013-7269,  CVE-2013-7270, and CVE-2013-7271 are fixed in the same version and are the same type: "updates a certain length value without ensuring that an associated data structure has been initialized."
 
-On Mon, 29 Sep 2014 10:49:22 -0700, Tavis Ormandy <taviso@...xchg8b.com> wrote:
-> If an adversary can choose the variable name, it's game over by definition.
-> He can choose LD_PRELOAD, SHELLOPTS='xtrace' PS4='$(foo)', ...
+However, we had information that these files were introduced to the kernel at different times.  While we don't list a specific minimum-version in the description, it's apparent that each affects a slightly different range of kernel versions.
 
-I agree. If an adversary can arbitrary control the environment, it is definitely game over.
-What's more, this has been true for decades and this is *clearly* documented all over the place.
-If some program allows an untrusted user to control the content in arbitrary environment variables,
-that would be a security vulnerability in that other program, not in bash.
+CVE-2013-7266 also comes from the same commit, but it's a length inconsistency, so on the surface it's a different vuln type than the others, which could be characterized as a length-calculation and/or initialization error.
 
-> This general solution is robust, now we're just hammering out the details.
+- Steve
 
-I agree, Florian Weimer's approach does a *great* job of completely countering
-the general attack path as currently understood.
-I also like Chet Ramey's tweak that changes the suffix from "()" to "%%", that's a nice refinement
-(the suffix no longer contains metacharacters).
-
-That said, a lot of people are looking to find other attack paths.  Shellshock has pointed out
-a kind of attack path that most people hadn't examined before.
-I'd still like to see Christos Zoulas's approach included eventually, since that's an even stronger
-countermeasure.  After all, if function imports only happen on request, then
-non-requesters will have no problem. But I also understand that Zoulas's approach
-is backwards-incompatible, and thus the bash folks are hesitant to apply it.
-If that can't be added now, perhaps it could be added in a next release of bash?
-
---- David A. Wheeler
