@@ -1,42 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/19
-Message-ID: <m550rn$ukk$1@ger.gmane.org>
-Date: Wed, 26 Nov 2014 17:58:31 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: CAPTCHA bypass in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/4
+Message-ID: <alpine.LFD.2.10.1401091628380.4527@javelin.pnq.redhat.com>
+Date: Thu, 9 Jan 2014 16:52:57 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: cve-assign@...re.org
+cc: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE split and a missed file
 Content-Type: text/plain; charset=utf-8
 
-Description:
++-- On Wed, 8 Jan 2014, cve-assign@...re.org wrote --+
+| The CVEs are about vulnerability fixes, and don't necessarily capture
+| all of the information that would be used in integrating the patches
+| into one's own kernel build tree. For example, a file can be changed
+| in order to be compatible with a vulnerability fix that affects
+| interaction between functions, or a file can be changed so that its
+| code executes faster after a vulnerability fix.
 
-There is a weakness on the CAPTCHA system that is used upon registration 
-of a new user that could allow a malicious individual to perform a 
-denial of service attack by indiscriminately creating new accounts, thus 
-generating a high load on the server.
+  Agreed. But then do these files need CVE? (just checking)
 
+ -> net/ax25/af_ax25.c
+ -> net/rose/af_rose.c
+ -> net/compat.c
+ -> net/socket.c
+ -> net/rxrpc/ar-recvmsg.c
 
-Affected versions:
-<= 1.2.17
-
-Fixed in versions:
-1.2.18 (not yet released)
-
-Patch:
-See Github [1]
-
-Credit:
-Issue was discovered by Alejo Popovici and fixed by Victor Boctor 
-(MantisBT Developer)
-
-References:
-Further details available in our issue tracker [2]
-
-
-D. Regad
-MantisBT Developer
-http://www.mantisbt.org
-
-
-[1] http://github.com/mantisbt/mantisbt/commit/7bb78e45
-[2] https://www.mantisbt.org/bugs/view.php?id=17811
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
