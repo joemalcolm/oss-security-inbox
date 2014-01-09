@@ -1,27 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/11
-Message-ID: <20140320162237.GI2503@sivokote.iziade.m$>
-Date: Thu, 20 Mar 2014 18:22:37 +0200
-From: Georgi Guninski <guninski@...inski.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/12
+Message-ID: <20140109195115.GB14212@hal.lan>
+Date: Thu, 9 Jan 2014 20:51:15 +0100
+From: Guido Berhoerster <guido+openwall.com@...hoerster.name>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: FD mailing list died. Time for new one (or something better!)
+Subject: Re: Re: CVE request: tmux local denial of service (2009)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 20, 2014 at 01:25:10PM +0000, Simon Ward wrote:
-> Georgi Guninski <guninski@...inski.com> wrote:
-> >So far several alternatives are:
+* Florian Weimer <fweimer@...hat.com> [2014-01-09 20:06]:
+> On 01/09/2014 07:44 PM, cve-assign@...re.org wrote:
+> >-----BEGIN PGP SIGNED MESSAGE-----
+> >Hash: SHA1
 > >
-> >1. Public service mailing list (easy)
-> >2. Standard mailing list (legal issues)
-> >3. coderman's solution
-> >4. forum or Question&Answers site (might support email)
+> >>allows users to override the socket path using the -S command line option.
+> >
+> >We'd like to consider this ineligible for a CVE unless there's new
+> >information. In many cases, "ability to cause an inconvenience" is not
+> >sufficient for a CVE assignment. The nature of the application
+> >apparently makes it unlikely that this would, for example, disrupt
+> >unattended root-executed scripts that have a hardcoded tmux command
+> >line.
 > 
-> Every so often on full-disclosure someone would bring up the topic of moving to Usenet. I'm surprised no one has! (Or I just haven't seen it.)
+> I reported this here because tmux is sometimes used to start servers
+> on system boot:
 > 
-> Simon
+> http://unix.stackexchange.com/questions/71372/using-tmux-on-boot-up-of-linux-centos
+> http://askubuntu.com/questions/62434/why-does-upstart-keep-respawning-my-process
+> https://bowerstudios.com/node/953
+> http://code.google.com/p/webrtc2sip/issues/detail?id=80
 
-usenet is certainly an option :)
-
-isn't there a problem with deleting commercial spam
-vs moderation?
-
+In that case the right thing to do is setting TMPDIR to a
+directory only writable by the user (TMPDIR/-S/-L are documented
+in the manpage so this can hardly count as suprising to users).
+The development version also supports TMUX_TMPDIR in which
+sockets are created without a subdirectory and which e.g. may be
+set to XDG_RUNTIME_DIR.
+The Debian patch makes tmux potentially less secure due to being
+setgid and it was rejected by upstream, see
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529082#12
+In 2011 Debian reverted to the upstream behavior and no longer
+carries the patch referenced in the above bug report.
+-- 
+Guido Berhoerster
