@@ -1,39 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/22/2
-Message-Id: <20140922061228.16D576C0039@smtpvmsrv1.mitre.org>
-Date: Mon, 22 Sep 2014 02:12:28 -0400 (EDT)
-From: cve-assign@...re.org
-To: alex.gaynor@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Twisted Security Issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/10/1
+Message-ID: <52CF39DD.90801@redhat.com>
+Date: Fri, 10 Jan 2014 10:07:57 +1000
+From: David Jorm <djorm@...hat.com>
+To: cve-assign@...re.org
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE request: remote code execution via deserialization in XStream
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 01/10/2014 09:46 AM, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>> http://blog.diniscruz.com/2013/12/xstream-remote-code-execution-exploit.html
+> Use CVE-2013-7285.
+>
+> At least initially, the scope of this CVE is "XStream is an
+> 'reflection-based XML-to-Object conversion'" in that file, and all of
+> the implications of unrestricted conversion, including "allows the
+> creation of server side objects based on reflection (which means that
+> you could have all sorts of business-logic sensitive objects being
+> created)" -- which is mentioned separately in that file.
+>
+> If this does not make sense, and multiple CVEs are needed, please let
+> us know.
+>
+> - -- 
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+>
+> iQEcBAEBAgAGBQJSzzPZAAoJEKllVAevmvms3cEH/3MBAH57R/LhQfI5ZMUm9FOD
+> eZm7p9IGl3PpSMtrwqSNwXS6InpfAmc04P0xX/HM4yFSRX6yHVaTZA9vbNGRs6PV
+> VdZg/A+WiUwdBdGhsFfXCb82QvCthdxyv6AAK5uNpVqQTqmikVPNk8gYxcHXZz3+
+> xUmUGLxwlCtImSZ1WiZMSCMYul3jsFsuOiVlqHF2NBoXh+55xmy8hLTOCUijILeG
+> lAXfMo25S971OJalr5pzGUC2EPUclV5D08+jv3KCNqryNphsepa3+14OKrvvz1yX
+> Q19c3+suDKWOUDvur9ENeHkf//Va881GNGZkcvppfvIkYCMI3vKFaWGMYRWR+jE=
+> =Jkgd
+> -----END PGP SIGNATURE-----
 
-> When specifying the trustRoot (CA store) for the HTTP client, Twisted
-> did not respect the user's specification, and always used the default
-> of the platform trust. This means that users attempting to use this
-> feature to implement certificate pinning, or otherwise restrict the
-> trust CAs would still have accepted any certificate signed by a CA.
-> 
-> Twisted 14.0.1 has been issued to resolve this
+That makes sense, and I think a single CVE ID is all that is needed in 
+this case.
 
-Use CVE-2014-7143.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUH71eAAoJEKllVAevmvmsRaAH/2qxppDYa1jQSSgD+wMzROaA
-WerCsjha9VIhcYATLNRl/YIItZn2v+oQBbNOfFgFUpETzIupk2ZC0CQitE7JarWG
-tGbd6gjllfj6Or5swjgYvOGvst6WIcgW58iWUseQ5dOO2OmAiSwdFzsbameR3uXQ
-SiTbn0VV0CLj4X45NPpONOx2PFdNDU4pxcz/GHaNGc1C++E1LCQgX2gX/DAuFqc0
-pd/srMentAQxLmRkFvDsYlzDgxl/GAWHk9zzh4IXOwhLthWOP9V3NB50UGtZ9Owu
-PcJzpXN3qktXDD8xS/2t8xFm3mqIDDkJx1uyA58F81j7MGqv0IulRir+mcyhtqo=
-=hS6Z
------END PGP SIGNATURE-----
+Thanks
+David
