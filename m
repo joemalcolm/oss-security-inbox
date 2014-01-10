@@ -1,47 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/22/3
-Message-Id: <20140922061548.6CAAE6C0039@smtpvmsrv1.mitre.org>
-Date: Mon, 22 Sep 2014 02:15:48 -0400 (EDT)
-From: cve-assign@...re.org
-To: gmurphy@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for vulnerability in OpenStack keystonemiddleware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/10/2
+Message-ID: <52CFC3FB.2010007@redhat.com>
+Date: Fri, 10 Jan 2014 15:27:15 +0530
+From: Ratul Gupta <ratulg@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: python-jinja2: arbitrary code execution vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-> http://launchpad.net/bugs/1353315
+Jinja2, a template engine written in pure python, was found to use /tmp 
+as a default directory for jinja2.bccache.FileSystemBytecodeCache, which 
+is insecure because the /tmp directory is world-writable and the 
+filenames used like 'FileSystemBytecodeCache' are often predictable. A 
+malicious user could exploit this bug to execute arbitrary code as 
+another user.
 
-> Products: keystonemiddleware, python-keystoneclient
-> Versions: versions up to 1.1.1 (keystonemiddleware), versions up to 0.10.1
-> (python-keystoneclient)
+PoC is given on the debian page: 
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=734747
 
-> When the 'insecure' SSL option is set in a paste configuration file it
-> is effectively ignored
+References:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=734747
+https://bugzilla.redhat.com/show_bug.cgi?id=1051421
 
-> The scenario where a deployer specifically sets:
-> 
->   ssl_insecure = false
-> 
-> ... in an attempt to ensure that verification is performed will be
-> sorely disappointed
+Can a CVE please be assigned to this issue?
 
-Use CVE-2014-7144.
+-- 
+Regards,
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Ratul Gupta / Red Hat Security Response Team
 
-iQEcBAEBAgAGBQJUH740AAoJEKllVAevmvmsGwwH/1+0pBSPRa2l1eSYsznGI8Ar
-7c0UPVCsPAN5vCveHMYWAa+/BnfsSCXAkGOumu8/l+QIHjQIdcp0RFB5DXeIYqGi
-+6JxooSvqOBan2pAyYZX6nVkEPTQ9/13xFyf14bYlGRHlR5E9wHxyjqSJawBmOln
-OxcTG3piOdcGdCFtAgp4mzkLTlx9reKxAsub8dUD0lVA0w0NNAEWk4amMMIOEBIS
-s7IyU31C+eAxyf9BaIAdNumB5Dd3/LTc3mvyUlSmwcmhpIykRg+5Tzvlo+sFkt6G
-tszw/Y2IHQZiD0oYBcFzcdR4DsVUQ/HsOeWntGhoQgDvKp+iQW3meAe6uNo0i48=
-=CHBP
------END PGP SIGNATURE-----
