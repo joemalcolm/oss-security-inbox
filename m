@@ -1,28 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/2
-Message-ID: <54236E85.1020708@case.edu>
-Date: Wed, 24 Sep 2014 21:23:17 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu, Tavis Ormandy <taviso@...xchg8b.com>
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/10/3
+Message-Id: <201401101221.s0ACLW13011021@linus.mitre.org>
+Date: Fri, 10 Jan 2014 07:21:32 -0500 (EST)
+From: cve-assign@...re.org
+To: ratulg@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: python-jinja2: arbitrary code execution vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 9/24/14, 5:32 PM, Solar Designer wrote:
-> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
->> Tavis Ormandy just tweetet this:
->> https://twitter.com/taviso/status/514887394294652929
->>
->> The bash patch seems incomplete to me, function parsing is still
->> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
-> 
-> Thanks for bringing this to oss-security.  I've added CC to Chet and
-> Tavis on this "reply".
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I have a fix for this.
+> Jinja2, a template engine written in pure python, was found to use /tmp
+> as a default directory for jinja2.bccache.FileSystemBytecodeCache, which
+> is insecure because the /tmp directory is world-writable and the
+> filenames used like 'FileSystemBytecodeCache' are often predictable. A
+> malicious user could exploit this bug to execute arbitrary code as
+> another user.
 
-Chet
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+Use CVE-2014-1402.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJSz+UnAAoJEKllVAevmvms9n4IAJCBezPErKYaadymt5zqE7WN
+LjJ7UBfg6424Rgyg2rIuk/8oYxkWglYQnhlnByoLSm9u4Jk9Z4m0Bvgc2tNtyyrk
+dg1eI8XYQcHU/TwsJEwZxq5bL581FjH3YlKN3a8GMg0jFGiIZfXoZ4Ucn7PllrNi
+WaA8oXIHp6zqkZTLvdC3wd6WQiCyhtIccOYGR8j91N6IF94iy5YssvYctKX6OhfY
+/1NT9TCxv6y4qQObYqxPCszd39HkxoM7MlZMqNOgjQeH+dlh1Wxyo2MQhVzOGNic
+G7m+LMIRLw9yZKwwy2F1W7wOgh3q5aLsQ7FwwbqLOH83ZLODOuia37SzgoO+eIQ=
+=vTFW
+-----END PGP SIGNATURE-----
