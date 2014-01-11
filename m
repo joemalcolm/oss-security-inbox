@@ -1,42 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/12
-Message-Id: <CBB993FB-E658-4713-8F2A-305432D31F0A@netherlabs.nl>
-Date: Tue, 9 Dec 2014 09:30:50 +0100
-From: Peter van Dijk <peter.van.dijk@...herlabs.nl>
-To: oss-security@...ts.openwall.com
-Subject: Re: PowerDNS Security Advisory 2014-02
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/11/1
+Message-ID: <52D0D7D2.7050204@redhat.com>
+Date: Fri, 10 Jan 2014 22:34:10 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE assignment for jinja2
 Content-Type: text/plain; charset=utf-8
 
-Hello Hanno,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 09 Dec 2014, at 9:22 , Hanno Böck <hanno@...eck.de> wrote:
+https://github.com/mitsuhiko/jinja2/commit/acb672b6a179567632e032f547582f30fa2f4aa7
 
-> On Tue, 9 Dec 2014 08:16:20 +0100
-> Peter van Dijk <peter.van.dijk@...herlabs.nl> wrote:
-> 
->> Somebody asked me to (help him) check djbdns today, which we’ll do.
->> Any other implementations you are interested in? I have a lab setup
->> for this issue so I’m happy to check.
-> 
-> I think dnsmasq would be interesting. Don't know which servers from the
-> proprietary world may be worth investigating.
+dirname = '_jinja2-cache-%d' % os.getuid()
 
-As far as I know, dnsmasq cannot actually recurse. Please let me know if I’m wrong, and I’ll test it.
+Arun Babu Neelicattu of Red Hat spotted this commit which introduces a
+temporary file creation vulnerability. This issue has been assigned
+CVE-2014-0012. For information on how to safely create temporary files
+please see
+http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
 
->> I’m convinced the loop could involve unwilling victims (unless they
->> send responses that break the loop!), but I have not tried this in
->> practice.
-> 
-> However that would be very interesting to know. DNS reflection attacks
-> are a big thing, if they could be amplified with a loop on the resolver
-> that'd almost certainly boost this issue to a whole new level.
+For Python simply use ?mkstemp? for files and ?mkdtemp? for
+directories from the ?tempfile? module.
 
- I may test this later :)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Kind regards,
--- 
-Peter van Dijk
-Netherlabs Computer Consulting BV - http://www.netherlabs.nl/
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
+iQIcBAEBAgAGBQJS0NfSAAoJEBYNRVNeJnmT9BMQAMg1DOmYdeZc+E4iKDf8DB8Z
+pUwmv0fq64L1zkWK6tPi4PcEAh2b37RaVKTW8pU7QAzsDYiQvuPpgFKrAKD/wKJq
+S6ySyyILmc8+ZDdamkRTq97i8Cfe/tf5wR/el4Cax+P8sL5qlfAKzfzdoG6PHErk
+zlvfv6ESAPDAmh6iC4ckd4+Kkda6xdN1pAJsY3y+TTtE/tnCRJfR5r6QZLsJma8p
+ovRZ4zzbn0I+i5/kyReVKKRQSaHF2jMY5Mt12V/vkIFyHovL9MJC7GrSos0VM6C1
+V6YtkWjc/GYyIeookaHXRpaJx65BLqPcaQ6EpQ8jcogkfnHT0Eyh9G9EItcfqA9g
+2rd7/1H6zpM+ijzq4SVFZAzhXvUmstk6ruUzbP90BPwrD6YEobzRTys/ZsV9Wnek
+HCTW2NYh/qXRSvQrwNoKB8rIrvg2YKoz40LBsMF3fsvrWKZ86zBNYsgebXecdc+T
+F+fNh7ioBWZnKGpZFCCzarAzrV1OjkSuAmf7cLLITSttJOAZkD1bcn40R2Z6YiRf
+fWKgR8Af/SqIq6/8EVk9FEzJ9ni2I/0qaPOzX5927xSV+4vogyYBq4RZhEwqCQjs
++zfpiOUwzDuiQ5aRmMYqJSXK5ww+qO5hNiLyyxfLY/psaP2Y2df5zaRltvMLxCuk
+wU92wxHFjUBKS5wBgwlP
+=7f5m
+-----END PGP SIGNATURE-----
