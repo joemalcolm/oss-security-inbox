@@ -1,66 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/13
-Message-ID: <20141007090540.GC25530@zoho.com>
-Date: Tue, 7 Oct 2014 09:05:40 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/11/5
+Message-ID: <5473D581-4015-4ED5-BF36-B2E036A6E3EE@redhat.com>
+Date: Sat, 11 Jan 2014 16:07:23 -0700
+From: "Vincent Danen" <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+Subject: Re: CVE assignment for jinja2
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 07, 2014 at 11:35:41AM +0400, Solar Designer wrote:
+On 01/11/2014, at 13:58 PM, Salvatore Bonaccorso wrote:
 
-I'll reply to the more salient points.
+> Hi Vicnent,
+>
+> Disclaimer: to be taken with some caution.
+>
+> On Sat, Jan 11, 2014 at 01:37:51PM -0700, Vincent Danen wrote:
+>> On 01/10/2014, at 22:34 PM, Kurt Seifried wrote:
+>>
+>>> https://github.com/mitsuhiko/jinja2/commit/acb672b6a179567632e032f547582f30fa2f4aa7
+>>>
+>>> dirname = '_jinja2-cache-%d' % os.getuid()
+>>>
+>>> Arun Babu Neelicattu of Red Hat spotted this commit which introduces a
+>>> temporary file creation vulnerability. This issue has been assigned
+>>> CVE-2014-0012. For information on how to safely create temporary files
+>>> please see
+>>> http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
+>>>
+>>> For Python simply use ?mkstemp? for files and ?mkdtemp? for
+>>> directories from the ?tempfile? module.
+>>
+>> MITRE assigned CVE-2014-1402 to this yesterday:
+>>
+>> http://seclists.org/oss-sec/2014/q1/71 (the report, the followup has the CVE assignment).
+>>
+>> That means you'll need to reject this assignment; the commit that Arun spotted was due to the Debian bug report (which the git commit notes, and Ratul linked to in his initial CVE request to the list).
+>
+> Aren't the two CVE assignments correct this way as the second
+> temporary file creation vulnerability was introduced by the mentioned
+> commit?
+>
+> Initially there was assigned CVE-2014-1402 for:
+>
+> http://seclists.org/oss-sec/2014/q1/71
+>
+> wich is also http://bugs.debian.org/734747 and was attempted to be
+> fixed with commit
+> https://github.com/mitsuhiko/jinja2/commit/acb672b6a179567632e032f547582f30fa2f4aa7
+>
+> But the above commit introduces a new temporary file creation
+> vulnerability, which then got CVE-2014-0012 assigned by Kurt.
 
-> I am not saying I arrived at the above lesson.  Notice the word
-> "arguably".  No change to distros list membership is being proposed.
+Yes, all correct.  Which is why I apologized in a subsequent email about the confusion.  =)
 
-OK. given these two comments:
-
-> > In this case, it was because the right ones (as it turned out) of
-> > the "many eyeballs" - Tavis and Michal - were not party to the
-> > "selective disclosure"...Arguably, this suggests that we should
-> > expand the distros list membership with security researchers who are
-> > capable, willing, and have (paid?) time to review upcoming security
-> > patches and the software being patched for possible other flaws
-> > closely related to those being patched.
-
-and 
-
-> > Would immediate full disclosure of Shellshock have helped?  I doubt
-> > it.
-
-I assumed you leaned towards steps like expanding private lists versus
-more rapid engagement of the broader community. As you say, you use
-"arguably" so it would help if you'd clarify your position more
-explicitely.
-
-> Unfortunately, those same people were also less productive than usual
-> at their other duties (including security-related) during this time
-> period.
-
-That's a fact of life: resources are constrained. The question isn't
-whether there are 24 hours in the day but whether the overall good was
-being maximized in an embargo framework or not.
-
-> It sounds like it's obvious to you that we've seen a case of
-> "over-use" of embargo and that "few" people "consider the negative
-> effects".
-
-In this case was embargo under-used? over-used? just right? I don't know
-but one way to arrive at an answer is to consider things empirically.
-How did the process evolve in practice? Did things improve (by various
-metrics) post disclosure, or not, etc.
-
-> Also, you're quoting only part of the context.  More context for Chet:
-> http://www.openwall.com/lists/oss-security/2014/10/07/7
-
-I added Chet because I was thanking him for his efforts and because he
-has a unique perspective: how was working with the community and how did
-things change for him, as upstream, pre and post disclosure. Thanks for
-adding the link to the full message but I wasn't intentionally trying to
-filter context.
-
---mancha
-
-Content of type "application/pgp-signature" skipped
+-- 
+Vincent Danen / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
