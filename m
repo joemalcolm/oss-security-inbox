@@ -1,89 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/12
-Message-ID: <CAC9YFzd9hW7yXA+di24PiTm9Ziw938yR+UDZOQbfUtFNdLE3sg@mail.gmail.com>
-Date: Mon, 18 Aug 2014 15:52:17 -0300
-From: Rafael Mendonça França <rafaelmfranca@...il.com>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com,  ruby-security-ann@...glegroups.com
-Subject: Re: [Ruby on Rails] [CVE-2014-3514] Strong Parameter bypass with create_with
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/11/4
+Message-ID: <20140111205823.GA16165@eldamar.local>
+Date: Sat, 11 Jan 2014 21:58:23 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE assignment for jinja2
 Content-Type: text/plain; charset=utf-8
 
-These are the attached patches.
+Hi Vicnent,
 
-Rafael Mendonça França
-http://twitter.com/rafaelfranca
-https://github.com/rafaelfranca
+Disclaimer: to be taken with some caution.
 
+On Sat, Jan 11, 2014 at 01:37:51PM -0700, Vincent Danen wrote:
+> On 01/10/2014, at 22:34 PM, Kurt Seifried wrote:
+> 
+> > https://github.com/mitsuhiko/jinja2/commit/acb672b6a179567632e032f547582f30fa2f4aa7
+> >
+> > dirname = '_jinja2-cache-%d' % os.getuid()
+> >
+> > Arun Babu Neelicattu of Red Hat spotted this commit which introduces a
+> > temporary file creation vulnerability. This issue has been assigned
+> > CVE-2014-0012. For information on how to safely create temporary files
+> > please see
+> > http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
+> >
+> > For Python simply use ?mkstemp? for files and ?mkdtemp? for
+> > directories from the ?tempfile? module.
+> 
+> MITRE assigned CVE-2014-1402 to this yesterday:
+> 
+> http://seclists.org/oss-sec/2014/q1/71 (the report, the followup has the CVE assignment).
+> 
+> That means you'll need to reject this assignment; the commit that Arun spotted was due to the Debian bug report (which the git commit notes, and Ratul linked to in his initial CVE request to the list).
 
-On Mon, Aug 18, 2014 at 2:11 PM, Rafael Mendonça França <
-rafaelmfranca@...il.com> wrote:
+Aren't the two CVE assignments correct this way as the second
+temporary file creation vulnerability was introduced by the mentioned
+commit?
 
-> There is a vulnerability in the create_with method in Active Record. This
-> vulnerability has been assigned the CVE identifier CVE-2014-3514.
->
-> Versions Affected:  4.0.0 and All Later Versions.
-> Not affected:       Versions earlier than 4.0.0
-> Fixed Versions:     4.0.9 4.1.5
->
-> Impact
-> ------
-> The create_with functionality in Active Record was implemented incorrectly
-> and completely bypasses the strong parameters protection.  Applications
-> which pass user-controlled values to create_with could allow attackers to
-> set arbitrary attributes on models.
->
-> All users running an affected release should either upgrade or use one of
-> the workarounds immediately.
->
-> Releases
-> --------
-> The 4.0.9 and 4.1.5 releases are available at the normal locations.
->
-> Workarounds
-> -----------
-> To avoid this vulnerability you will have to either remove all calls to
-> create_with, or carefully audit your codebase to ensure it sanitizes the
-> input first.  For example you should replace code like this:
->
->   user.blog_posts.create_with(params[:blog_post]).create
->
-> with either:
->
->   user.blog_posts.create(params[:blog_post])
->
-> or:
->
->   user.blog_posts.create_with(params[:blog_post].permit(:title, :body,
-> :etc)).create
->
->
-> Patches
-> -------
-> To aid users who aren't able to upgrade immediately we have provided
-> patches for the two supported release series.  They are in git-am format
-> and consist of a single changeset.
->
-> * 4-1-create_with.patch - Patch for 4.1 series
-> * 4-0-create_with.patch - Patch for 4.0 series
->
-> Please note that only the 4.0.x and 4.1.x series receive regular security
-> updates at present.  Users of earlier unsupported releases are advised to
-> upgrade as soon as possible as we cannot guarantee the continued
-> availability of security fixes for earlier releases.
->
-> Credits
-> -------
->
-> Thanks to Stephen Touset of Square for reporting the vulnerability to us,
-> and to Jeff Jarmoc of Matasano and Charlie Somerville of GitHub for helping
-> verify the patches and advisories.
->
-> Rafael Mendonça França
-> http://twitter.com/rafaelfranca
-> https://github.com/rafaelfranca
->
+Initially there was assigned CVE-2014-1402 for:
 
-Content of type "text/html" skipped
+http://seclists.org/oss-sec/2014/q1/71
 
-Download attachment "4-0-create_with.patch" of type "application/octet-stream" (4128 bytes)
+wich is also http://bugs.debian.org/734747 and was attempted to be
+fixed with commit
+https://github.com/mitsuhiko/jinja2/commit/acb672b6a179567632e032f547582f30fa2f4aa7
 
-Download attachment "4-1-create_with.patch" of type "application/octet-stream" (4136 bytes)
+But the above commit introduces a new temporary file creation
+vulnerability, which then got CVE-2014-0012 assigned by Kurt.
+
+Regards,
+Salvatore
