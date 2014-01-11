@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/24/2
-Message-ID: <CACYkhxiG76ZGeQKkWpXohKMCdcF7YHWHFT3dSDRfxPvEo9F6aQ@mail.gmail.com>
-Date: Mon, 24 Nov 2014 11:25:34 +1100
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: so, can we do something about lesspipe? (+ a cpio bug to back up the argument)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/11/3
+Message-ID: <A1492A79-88FE-40BF-9C2D-349DC5EF573E@redhat.com>
+Date: Sat, 11 Jan 2014 13:51:47 -0700
+From: "Vincent Danen" <vdanen@...hat.com>
+To: "Open Source Security" <oss-security@...ts.openwall.com>
+Subject: Re: CVE assignment for jinja2
 Content-Type: text/plain; charset=utf-8
 
-On 23 November 2014 at 20:24, Michal Zalewski <lcamtuf@...edump.cx> wrote:
-> Ultimately, I think that there's an expectation that running less on a
-> downloaded file won't lead to RCE, and the lesspipe behavior in many
-> distros is almost certainly violating that. I'm also not sure if the
-> automation actually scratches any real itch - I doubt that people try
-> to run 'less' on CD images or ar archives when knowingly working with
-> files of that sort.
+On 01/11/2014, at 13:37 PM, Vincent Danen wrote:
+
+> On 01/10/2014, at 22:34 PM, Kurt Seifried wrote:
 >
-> WDYT?
+>> https://github.com/mitsuhiko/jinja2/commit/acb672b6a179567632e032f547582f30fa2f4aa7
+>>
+>> dirname = '_jinja2-cache-%d' % os.getuid()
+>>
+>> Arun Babu Neelicattu of Red Hat spotted this commit which introduces a
+>> temporary file creation vulnerability. This issue has been assigned
+>> CVE-2014-0012. For information on how to safely create temporary files
+>> please see
+>> http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
+>>
+>> For Python simply use ?mkstemp? for files and ?mkdtemp? for
+>> directories from the ?tempfile? module.
+>
+> MITRE assigned CVE-2014-1402 to this yesterday:
+>
+> http://seclists.org/oss-sec/2014/q1/71 (the report, the followup has the CVE assignment).
+>
+> That means you'll need to reject this assignment; the commit that Arun spotted was due to the Debian bug report (which the git commit notes, and Ratul linked to in his initial CVE request to the list).
 
-It's distros that are shipping the lesspipe defaults (AFAIK), and
-at-least the ones you
-mentioned have "sandbox" capabilities.  I think it's reasonable on
-Ubuntu and RHEL
-to use AppArmor/SELinux to be paranoid in a lesspipe context (eg. not
-allow access
-to private files etc - it pipes right?).
 
-Regards,
-  Michael
+Sorry, I thought the same thing as what Ratul requested for (CVE-2014-1402) was being reported again.  This is indeed something different as the git commit to fix CVE-2014-1402 introduced this new temporary file issue.
+
+Sorry for the noise/confusion.
+
+-- 
+Vincent Danen / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
