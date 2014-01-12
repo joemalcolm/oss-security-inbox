@@ -1,138 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/20/9
-Message-ID: <CANyjYNbtJ4feGxVMWXBL6o48jqWqc7ap+irANpa_5wV40JXmWw@mail.gmail.com>
-Date: Fri, 20 Jun 2014 12:05:25 +0200
-From: Ignasi Barrera <nacx@...che.org>
-To: Ignasi Barrera <nacx@...che.org>
-Cc: private@...ouds.apache.org, Kurt Seifried <kseifried@...hat.com>,  oss-security@...ts.openwall.com
-Subject: Re: TMP flaw in rackspace jclouds?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/12/1
+Message-ID: <52D2F2A9.50208@halfdog.net>
+Date: Sun, 12 Jan 2014 19:53:13 +0000
+From: halfdog <me@...fdog.net>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel: missing CPU-state sanitation during task-switch causes DOS / privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-How did you generate the patch, BTW? Did you use git format-patch?
-I'm getting this error when applying it with a "git am": Patch format
-detection failed
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Anyway, I've been able to apply it with:
-git apply --whitespace=fix
+Hello list,
 
+Although of low impact (only some processors/kernels affected,
+escalation currently only with mmap_min_addr=0), this might still be
+CVE-worthy:
 
-On 20 June 2014 09:03, Ignasi Barrera <nacx@...che.org> wrote:
-> Thanks Andrew! I'll test your patch in a while and give feedback.
->
-> El 20/06/2014 00:56, "Andrew Gaul" <gaul@...che.org> escribió:
->
->> [bcc: jclouds private list]
->>
->> I attached a patch which changes ScriptBuilder to use the "mktemp -d"
->> approach that Ignasi suggested.  I verified this against the ec2 live
->> tests, specifically testCreateAndRunAService, as well as the
->> scriptbuilder unit tests.  I encourage someone more familiar with
->> compute to test this since I have limited experience with those
->> services.
->>
->> The code runs on the target node as Ignasi describes and thus it poses
->> no risk to the master jclouds application.  However, users could run
->> untrusted software on their target nodes and we should address this in
->> the next minor release.  I estimate a low severity to this issue and
->> prefer to continue discussion on the public bug tracker.  Does anyone
->> have a different understanding of this flaw?
->>
->> On Thu, Jun 19, 2014 at 09:32:25AM +0200, Ignasi Barrera wrote:
->> > Take into account that the "statement" list will be rendered to a
->> > String,
->> > composed with other script fragments into a final bash script, uploaded
->> > to
->> > a node, and executed there locally as a bash script.
->> >
->> > That code won't be executed in the machine running jclouds, but as a
->> > bash
->> > script in the provisioned node, so the name of the temporal directory
->> > should better be generated in the script itself. A good approach would
->> > be
->> > to directly use the "mktemp"command.
->> > El 19/06/2014 06:36, "Andrew Gaul" <gaul@...che.org> escribió:
->> >
->> > > Kurt, thank you for bringing this flaw to my attention and I will
->> > > address it tomorrow.  I do not have a security background; can you
->> > > estimate the severity and whether we can continue discussion on the
->> > > public bug tracker?  For now I have bcc the Apache jclouds private
->> > > mailing list.  Also note that jclouds is an Apache project not a
->> > > Rackspace project and the canonical URLs are:
->> > >
->> > > https://github.com/jclouds/jclouds
->> > > https://issues.apache.org/jira/browse/JCLOUDS
->> > >
->> > > On Wed, Jun 18, 2014 at 08:52:59PM -0600, Kurt Seifried wrote:
->> > > > -----BEGIN PGP SIGNED MESSAGE-----
->> > > > Hash: SHA1
->> > > >
->> > > > https://github.com/rackspace/jclouds/
->> > > >
->> > > > So CC'ing Andrew, he's a consistent contributor, I can't file an
->> > > > issue
->> > > > in Github (no link to it) so posting here and CC'ing him.
->> > > >
->> > > >
->> > >
->> > > https://github.com/rackspace/jclouds/blob/master/scriptbuilder/src/main/java/org/jclouds/scriptbuilder/domain/Statements.java
->> > > >
->> > > >   public static Statement extractTargzAndFlattenIntoDirectory(URI
->> > > > tgz,
->> > > > String dest) {
->> > > >       return new StatementList(ImmutableSet.<Statement> builder()
->> > > >             .add(exec("mkdir /tmp/$$"))
->> > > >             .add(extractTargzIntoDirectory(tgz, "/tmp/$$"))
->> > > >             .add(exec("mkdir -p " + dest))
->> > > >             .add(exec("mv /tmp/$$/*/* " + dest))
->> > > >             .add(exec("rm -rf /tmp/$$")).build());
->> > > >    }
->> > > >
->> > > >
->> > > > This is insecure, $$ == PID == predictable
->> > > >
->> > > >
->> > > > http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
->> > > >
->> > > > use java.io.File.createTempFile() ? some interesting info at
->> > > >
->> > >
->> > > http://www.veracode.com/blog/2009/01/how-boring-flaws-become-interesting/
->> > > >
->> > > > for directories there is a helpful posting at
->> > > >
->> > >
->> > > http://stackoverflow.com/questions/617414/create-a-temporary-directory-in-java
->> > > >
->> > > > Thanks.
->> > > >
->> > > >
->> > > > - --
->> > > > Kurt Seifried -- Red Hat -- Product Security -- Cloud
->> > > > PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->> > > > -----BEGIN PGP SIGNATURE-----
->> > > > Version: GnuPG v1
->> > > > Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
->> > > >
->> > > > iQIcBAEBAgAGBQJTolCLAAoJEBYNRVNeJnmTrVYQAJ5glkD/0Ha5+F99Qj9ioNmm
->> > > > ZnO4G6TqKctfiqW/X02wMocKLMRV8q5WI/nvs71hCoK5HaVmbtNrV71wE0omHLjB
->> > > > smzFz6d8qZaTcOHdvgbSlWEGPjcVnESo0F3K0vgK2L/LtB5mgny6pHDn+c/cqrgt
->> > > > Er4n+U3oXlkon/ksW+drWpKOpmGOhn7c4fbE45ci6KnzDbbGpGHF0fZL3lSEfJR0
->> > > > 0D/HQzKIAJpI7VvZU8+/d/MHasndgJoAHmUCkTBYU55Vf5eYsm+xWZ1Mt46IyAap
->> > > > crMTCHHE1GVUAexYbMxy+lohHbpl+pB/d////LzesJjByRSv87r+1oLhdwank3P9
->> > > > Fz1h3sq57JyLFQIcpm4TS7xh3TaByFGCiA5G/mR+CkuS6sZEapSkviu/x7ygmOdG
->> > > > cJKM+5CogeE1P1PWsoQ41JcSwfuWAfc5IODvkjLb3MfyoXJRaKcBVdVcdHBUK4BA
->> > > > 7xcD9SbDsujxHOJLknFaO22uTtlrDS4yXJaNal6L9P7DCsSSrxG1PmmE+t5qrtYw
->> > > > HQoz+RuOMhY/2FWJqOxa7ru99rIQmxxpWgoknUlT+yYJRfoub0kpibyJLBLy2SEx
->> > > > xmdqe/i9nHCsGAworK4bEL2vLvsNBiJgdSHlzg7E5POI1tbveE12fIUmSgrgV+zO
->> > > > WjPZ/O4oOj0FVWoeyQUN
->> > > > =SUf5
->> > > > -----END PGP SIGNATURE-----
->> > >
->> > > --
->> > > Andrew Gaul
->> > > http://gaul.org/
->> > >
->>
->> --
->> Andrew Gaul
->> http://gaul.org/
+Faults during task-switch due to unhandled FPU-exceptions allow to
+kill processes at random on all affected kernels, resulting in local
+DOS in the end. One some architectures, privilege escalation under
+non-common circumstances is possible, POC for escalation via
+shmem_xattr_handlers is available for about 5 days.
+
+See [1] for information about discovery, exploitation, [2] about LKML
+discussion, [3] for patch.
+
+hd
+
+[1] http://www.halfdog.net/Security/2013/Vm86SyscallTaskSwitchKernelPanic/
+[2] https://lkml.org/lkml/2013/12/28/95
+[3]
+http://git.kernel.org/cgit/linux/kernel/git/tip/tip.git/commit/?id=26bef1318adc1b3a530ecc807ef99346db2aa8b0
+
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iEYEARECAAYFAlLS8q4ACgkQxFmThv7tq+5O2ACeJ2spKwVgWhLSklOtg7WlvkIl
+wXMAn1Mn/9vrQPlMP53zdL/XmXLrCsIu
+=ObvK
+-----END PGP SIGNATURE-----
