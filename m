@@ -1,38 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/30
-Message-ID: <CAAnPYQ7NcW7PGAuiX6LSiUAbD9LPhwhXWypjGmWYG3FnGz4R4A@mail.gmail.com>
-Date: Thu, 20 Nov 2014 17:54:20 +0100
-From: Gynvael Coldwind <gynvael@...dwind.pl>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing project brainstorming
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/13/2
+Message-ID: <52D3EDD3.9080006@openstack.org>
+Date: Mon, 13 Jan 2014 14:44:51 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: [OSSA 2014-001] Nova live snapshots use an insecure local directory (CVE-2013-7048)
 Content-Type: text/plain; charset=utf-8
 
->
-> Since they are coming from fuzzing a copy of the exact input which led
-> to it is also valuable. There is nothing worse than having to guess at
-> what might have led to a crash when the input could literally have
-> been anything at all.
+OpenStack Security Advisory: 2014-001
+CVE: CVE-2013-7048
+Date: January 13, 2013
+Title: Nova live snapshots use an insecure local directory
+Reporter: Daniel Berrange (Red Hat)
+Products: Nova
+Affects: Grizzly and later
+
+Description:
+Daniel Berrange from Red Hat reported that the directories used to
+temporarily store live snapshots on Nova compute nodes were writable to
+all local users. A local attacker with shell access on compute nodes
+could therefore read and modify the contents of live snapshots before
+those are uploaded to the image service.
+
+Icehouse (development branch) fix:
+https://review.openstack.org/#/c/58852/
+
+Havana fix:
+https://review.openstack.org/#/c/60548/
+
+Grizzly fix:
+https://review.openstack.org/#/c/60550/
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-7048
+https://bugs.launchpad.net/nova/+bug/1227027
+
+Regards,
+
+-- 
+Thierry Carrez
+OpenStack Vulnerability Management Team
 
 
-I would argue that "is also valuable" is underplaying it a little ;)
-IMO having the input (and information on how was it loaded in some cases)
-is much more valuable than having anything else (be it stack traces or
-whatever) as it allows devs to actually look at the crashing app in using
-any tool they like to use (be it gdb, valgrind, windbg, or what not), which
-speeds things up.
-
-If it came from a mutation-based fuzzer, the original (not-mutated) sample
-can be useful too.
-
-In most* cases the above is enough for the devs to reproduce the problem
-even without a detailed report.
-* - in case of weird environment/context setting sometimes a report is a
-must
-
-So, personally I would phrase it like this "crashing sample is a must;
-everything else is good to have".
-
-ym2c :)
---
-Gynvael Coldwind
-
+Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
