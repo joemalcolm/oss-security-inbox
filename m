@@ -1,43 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/15/8
-Message-ID: <D0B461D3.AA6%grant.murphy@hp.com>
-Date: Mon, 15 Dec 2014 18:00:53 +0000
-From: "Murphy, Grant Charles" <grant.murphy@...com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE request for vulnerability in OpenStack Glance
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/14/9
+Message-ID: <alpine.LNX.2.00.1401141717040.23181@forced.attrition.org>
+Date: Tue, 14 Jan 2014 17:18:24 -0600 (CST)
+From: security curmudgeon <jericho@...rition.org>
+To: Maksymilian A <max@...t.cx>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Apache Archiva Remote Command Execution 0day
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-A vulnerability was discovered in OpenStack (see below). In order to ensure full traceability, we need a CVE number assigned that we can attach to further notifications. This issue is already public, although an advisory was not sent yet.
+: Please assign CVE for Apache Archiva 0day
+: 
+: http://cxsecurity.com/issue/WLB-2014010087
 
-Title: Glance v2 API unrestricted path traversal
-Reporter: Masahito Muroi (NTT)
-Products: Glance
-Versions: up to 2014.1.3 and 2014.2 version up to 2014.2.1
+>From that link:
 
-Description:
-Masahito Muroi from NTT reported a vulnerability in Glance. By setting a malicious image location an authenticated user can download or delete any file on the Glance server for which the Glance process user has access to. Only setups using the Glance V2 API are affected by this flaw.
+Apache Archiva use Apache Struts2:
+  "In Struts 2 before 2.3.15.1 the information following "action:", 
+"redirect:" or "redirectAction:" is not properly sanitized. Since said 
+information will be evaluated as OGNL expression against the value stack, 
+this introduces the possibility to inject server side code."
 
 References:
-https://launchpad.net/bugs/1400966
 
-Thanks in advance,
-
-Grant Murphy
-OpenStack Vulnerability Management Team
+http://struts.apache.org/release/2.3.x/docs/s2-016.html
 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQEcBAEBAgAGBQJUjyEvAAoJEJ3kO55VGiJS2ZwH/RmVDlq6ZycvDB+TRicOf1Ho
-kam2t/cc/4fvaZN1BYTrcjaPn+HK9ETdNdh3cHwiC6UYgtEa7Gb3IiboY4fK/7Si
-hrVdgdOWRB+I3dkGrHb+kAaWNGSKJoHahq3mQ5NuXg+oFjR42caslX3vn2f8tBnA
-Ybgqvelu5S1ht5x4XBoagmb0gSafp6a4xik4cwf0FkbkqCnO/EE5beHVSYXu4aVG
-VLGtgd3+l6EjvMoSKXkWKAGwMC1fLCV+ISr1e4CBng5EGSqFmiTYZghQ0e5mvO2q
-4QgEqAgUl1DwpRJYyNeS3dHILA32Nuu0NEKvGn61AdXzxfMZpok1GwLPTq+DWyk=
-=meRY
------END PGP SIGNATURE-----
+^ All that is CVE-2013-2251.
+
 
