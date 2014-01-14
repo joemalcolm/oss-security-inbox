@@ -1,26 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/4
-Message-ID: <20141017093252.GA4040@balvenie>
-Date: Fri, 17 Oct 2014 11:32:53 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/14/2
+Message-ID: <20140114093510.GY9943@dhcp-25-225.brq.redhat.com>
+Date: Tue, 14 Jan 2014 10:35:10 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: attacking hsts through ntp
+Cc: libvirt-security@...hat.com, Jiri Denemark <jdenemar@...hat.com>, Eric Blake <eblake@...hat.com>
+Subject: CVE Request -- libvirt: denial of service with keepalive
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 17, 2014 at 09:53:29AM +0200, Hanno Böck wrote:
-> Am Thu, 16 Oct 2014 18:45:18 -0600
-> schrieb Kurt Seifried <kseifried@...hat.com>:
-> 
-> > You can't trust remote servers you're getting the content from... what
-> > if I send wonky times to try and screw with your browser? Or header
-> > injection attacks? No thanks.
-> 
-> It's not entirely a bad idea. You could say "if http header time and
-> system time differ severely (> 1 week or something) then don't connect
-> to hsts sites".
+On Thu, Jan 09, 2014 at 02:58:06PM -0700, Eric Blake wrote:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1047577 is a publicly
+> reported bug that details a libvirtd crash caused by a race when
+> keepalive is requested but the connection is closed prior to
+> establishing connection credentials.  Since this crash occurs before
+> libvirtd can distinguish between read-only vs. read-write clients, it
+> can be used as a denial of service attack by read-only clients, and
+> therefore needs a CVE.
 
-Sounds a bit like kerberos
+Upstream patches:
+http://libvirt.org/git/?p=libvirt.git;a=commit;h=173c291
+http://libvirt.org/git/?p=libvirt.git;a=commit;h=066c8ef
+
+Thanks,
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Petr Matousek / Red Hat Security Response Team
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
