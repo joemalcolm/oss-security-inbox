@@ -1,28 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/1
-Message-ID: <loom.20141205T090608-202@post.gmane.org>
-Date: Fri, 5 Dec 2014 08:10:00 +0000 (UTC)
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/14/4
+Message-ID: <21205.19539.255512.431236@gargle.gargle.HOWL>
+Date: Tue, 14 Jan 2014 15:40:19 +0100
+From: rf@...eap.de
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Multiple XSS vulnerabilities in MantisBT
+Subject: linux-distros membership
 Content-Type: text/plain; charset=utf-8
 
- <cve-assign@...> writes:
+Hi,
 
-> Issues 3 and 5 are MERGED into the same CVE ID because they are the
-> same type of issue, affecting the same versions, disclosed at the same
-> time, and found by the same person.
+I hope this is the right place to ask for inclusion of a Qlustar contact
+in the linux-distros list.
 
-OK, noted.
+Qlustar is a Ubuntu/Debian based distro targeted at HPC/Storage/Cloud
+clusters. We use our own kernels (typically based on vanilla) since many
+years, but have the need to supply timely security fixes to our users. So
+far we have to wait for other distros to come out with their
+announcements and then start analyzing the fixes they have done. This
+leaves us/our users with a vulnerability window that is way too large,
 
-Many thanks for assigning these CVEs.
+Please let me know what are the requirements to be included in the list.
 
-Any chance that you could also assign CVE IDs to the following two issues
-(requests were sent a week ago), I'm waiting for these to release 1.2.18.
+Thanks,
 
-- http://article.gmane.org/gmane.comp.security.oss.general/14952
-- http://article.gmane.org/gmane.comp.security.oss.general/14953
+Roland
 
-Thanks in advance !
-
+----
+Roland Fehrenbacher, PhD
+Founder/CEO
+Q-Leap Networks GmbH
+Tel. : +49(0)7034/277620
+EMail: rf@...eap.com
+http://www.q-leap.com / http://qlustar.com
 
