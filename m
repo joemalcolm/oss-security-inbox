@@ -1,79 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/12/2
-Message-Id: <20141012053255.4B943C504DC@smtptsrv1.mitre.org>
-Date: Sun, 12 Oct 2014 01:32:55 -0400 (EDT)
-From: cve-assign@...re.org
-To: tomek@...asano.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Authentication Bypass in ROR Ecommerce
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/14/7
+Message-ID: <CABLZJby4k9SFawqFtVMCChVXV3TQAxOmO4Aob8=SA9kn3fjZEA@mail.gmail.com>
+Date: Tue, 14 Jan 2014 18:54:55 +0100
+From: Maksymilian A <max@...t.cx>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Apache Archiva Remote Command Execution 0day
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> I've worked with David Henner, the Ruby on Rails Ecommerce owner to fix a
-> security issue in the password reset functionality of the ROR Ecommerce
-> application. When a user is created in the ROR Ecommerce application,
-> a perishable_token is generated for that user. This perishable token is
-> then used for password resets. Note that a password reset request never
-> needs to be initiated as this token is immediately available.
-> 
-> Due to the way MySQL handles typecasting, it is possible to send
-> a token value of the integer 0 which will then match the first
-> perishable token in the database. The way the application is first
-> initialized and setup, the administrative user is the first user
-> to be created. This can be seen in the Getting Started section:
-> https://github.com/drhenner/ror_ecommerce#getting-started. As a result,
-> the integer 0 passed to the application will match the administrator's
-> account. The application then logs the matched user in and allows them
-> to change the password.
-> 
-> This bug is the same as joernchen's example in his MySQL madness and
-> Rails post.
-> 
-> http://www.phenoelit.org/blog/archives/2013/02/05/mysql_madness_and_rails/
-> 
-> The fix is simple and can be found in this commit:
-> https://github.com/drhenner/ror_ecommerce/commit/25fe5ebb2f193978e9f9967c9dfe6be5716e8650
->
-> Would it be possible to get a CVE assigned to this?
+Please assign CVE for Apache Archiva 0day
 
-http://www.phenoelit.org/blog/archives/2013/02/05/mysql_madness_and_rails/
-has already been mapped to CVE-2013-3221. This reflects a perspective
-that it is a Ruby on Rails issue. Other perspectives may exist. The
-two main options for handling this type of situation are:
+http://cxsecurity.com/issue/WLB-2014010087
 
-1. The 25fe5ebb2f193978e9f9967c9dfe6be5716e8650 vendor fix can be
-mapped to CVE-2013-3221, either by just stating that the associated
-vulnerability is CVE-2013-3221, or by describing the fix as a
-CVE-2013-3221 workaround or something similar.
+Maksymilian Arciemowicz
+http://cxsecurity.com/
 
-2. If the vendor feels that ror-e.com ror_ecommerce itself is
-responsible for the successful password-reset attack (i.e., the vendor
-considers the lack of to_s to be a security-relevant implementation
-mistake, regardless of any opinions about what Ruby on Rails could or
-should be doing), then the vendor can have a CVE ID specific to the
-ror_ecommerce product.
-
-For option 2, it's not required that the vendor send e-mail here.
-We'll accept reasonable efforts at passing along what's been heard
-from the vendor. Right now, however, the available vendor statement is
-"add to_s just in case," and this isn't quite enough for us to
-conclude that the vendor wants to accept option 2.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUOhGGAAoJEKllVAevmvmsOl8IAJkUHg66x+q//kILel7b0aMq
-bjE/a7OmFYeFdm782JTckQHGMl8+p7ADmKM/MBhedMeRN+9xdEzhpwz8kXRB+7U2
-YhlmlD4SCNae2aK4K5Ms3GfCfgoutpsNiUW3hBLHHNWosnQA8v7tvEITAynAyy/6
-tYAEbGOA2Gt6PPp/b5q6g0nkmE1WLYNOtIsFZFehe1M02W5lAoVsHF2ee2I3uqU1
-pFUj2uu+oGqFFgeZbuDSXW3CwkChDHWU/NQ7TCuTqWQW6TtM4RkRnkOf9TcsbHMD
-w7J0RGJ3amBu4MUrrtrnXU3lihfy1snpQCtFp3bx3CRQI5DuWSrUlXDpSutOlMc=
-=jvA3
------END PGP SIGNATURE-----
