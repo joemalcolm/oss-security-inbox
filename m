@@ -1,25 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/05/2
-Message-Id: <201405050334.s453Yphl000602@linus.mitre.org>
-Date: Sun, 4 May 2014 23:34:51 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/14/5
+Message-Id: <201401141625.s0EGP7PY016109@linus.mitre.org>
+Date: Tue, 14 Jan 2014 11:25:07 -0500 (EST)
 From: cve-assign@...re.org
-To: kristian.fiskerstrand@...ptuouscapital.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: SKS non-persistent XSS
+To: pmatouse@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, libvirt-security@...hat.com, jdenemar@...hat.com, eblake@...hat.com
+Subject: Re: CVE Request -- libvirt: denial of service with keepalive
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> A non-persistent client-side cross-site scripting attack was reported
-> against SKS resulting from improper input sanitation before writing
-> to a client. The issue has been fixed in the development trunk
-> 
-> https://bugzilla.mozilla.org/show_bug.cgi?id=952077
-> https://bitbucket.org/skskeyserver/sks-keyserver/issue/26/unfiltered-xss
-> https://bitbucket.org/skskeyserver/sks-keyserver/pull-request/30/issue26-fix-a-non-persistent-cross-site
+> https://bugzilla.redhat.com/show_bug.cgi?id=1047577
 
-Use CVE-2014-3207.
+> This is now fixed upstream by v1.2.1-rc1-33-g173c291:
+
+> To avoid the crash, virNetServerClientStartKeepAlive needs to check if
+> the connection is still open before starting keep-alive protocol.
+
+Use CVE-2014-1447 for this issue in which the product does not check
+whether the connection is still open. This corresponds to
+173c2914734eb5c32df6d35a82bf503e12261bcf, which apparently would be of
+some value in some attack scenarios.
+
+
+> And really fixed by v1.2.1-rc1-37-g066c8ef:
+
+> it is possible to hit a window when client->keepalive is NULL while
+> client->sock is not NULL. I was thinking client->sock == NULL was a
+> better check for a closed connection but apparently we have to go with
+> client->keepalive == NULL to actually fix the crash.
+
+Use CVE-2014-1448 for this issue in which the product does not
+properly check whether the connection is still open. This corresponds
+to 066c8ef6c18bc1faf8b3e10787b39796a7a06cc0, which apparently is of
+value in additional attack scenarios.
+
+In deciding to SPLIT, all of these factors were considered but we
+don't want to try to precisely specify whether any one factor would be
+sufficient on its own:
+
+1. There seem to be two distinct version-like identifiers,
+v1.2.1-rc1-33-g173c291 and v1.2.1-rc1-37-g066c8ef, which can be
+interpreted as different affected versions.
+
+2. The first patch alone was accepted in the
+https://www.redhat.com/archives/libvir-list/2014-January/msg00532.html
+and
+https://www.redhat.com/archives/libvir-list/2014-January/msg00554.html
+messages.
+
+3. http://libvirt.org/downloads.html says "Once an hour, an automated
+snapshot is made from the git server source tree. These snapshots
+should be usable." This suggests that a "version" with only the first
+patch was, in some realistic sense, "packaged for distribution," and
+could conceivably be in use somewhere.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -29,11 +64,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTZwaKAAoJEKllVAevmvms4fwH/jLakVp6T5bvRw390evMk9l4
-0ScGy99+bMaJFa38gH9ezAmvthJQTJnKyeDr/0IQCFds1+gulKx90P1+xIwVBxdl
-H07s+B/4/+2rDGVZuytzCerm4qkkh/pq/nZJ+OM53bZL1FMHxuHtyrU1Yhrg8ueS
-Wx+pFmSRjFkI+dNuElaqcMMgL8mBx5CiWM2cvw0vKSYcWYfhLxHS7880aDGdRpXi
-upqyBEGkkW6FZAaSDMlNOfMn12Xfd7NzUt1eVLxc2SorQwyi37Bl5ARqfZjuDRfS
-5OFuJbA55EWCl8fU275ag8WDB2CXJliCabrmLiwAyCdALNbRd6z9yUfTevNb+TM=
-=bTUM
+iQEcBAEBAgAGBQJS1WRSAAoJEKllVAevmvmsIt8H/jCNn0XONft+Gt8BJcj/GdnU
+UF/3f0Q9w3yvn94o39BYmHGpd1ComLzdWHDCEIg0b8J88jvSRCZCqLjgQQvWKKWZ
+CEnTnnaeJhmYLGTNFKmbA/4eBLAr8fTbUJUjfZMxZoCOA5pfYY1pWne6ofU0nC7w
+5A89qUre9HKCsjCL7TzPgQOsp38TJG+dHdkhWEmmMRA499If9QHjv5Qkb429QGqS
+rcMb72E4TVG4l9ItNyhu4E3GB/k3UDpLLBbGyfdysQLml0Ut+0Dnp2hOdpcOBSTr
+tY8i8kQhNuGKyfeP6gzWHUeh2SRSJRcDzGzjVMVf/in1EUWvUaMgYwqz9tfpLOg=
+=9kpY
 -----END PGP SIGNATURE-----
