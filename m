@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/23/1
-Message-ID: <54717EBF.2020100@internot.info>
-Date: Sun, 23 Nov 2014 17:29:19 +1100
-From: Joshua Rogers <oss@...ernot.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/14/3
+Message-ID: <52D51E59.7000909@ai2.upv.es>
+Date: Tue, 14 Jan 2014 12:24:09 +0100
+From: Salva Peiró <speiro@....upv.es>
 To: oss-security@...ts.openwall.com
-Subject: Re: Off-by-one question
+Subject: CVE request: assorted kernel infoleak security fixes
 Content-Type: text/plain; charset=utf-8
 
-On 23/11/14 03:47, Stuart Gathman wrote:
->>
-> The snippet will print Fou.  The contract for strncpy is:
->
->        The strncpy() function is similar, except that at most n bytes 
-> of  src
->        are  copied.  Warning: If there is no null byte among the first
-> n bytes
->        of src, the string placed in dest will not be null terminated.
->
-> So you are correct.  Unless strncpy is broken.
-That's what I thought.
+Hi,
+I've found some kernel security issues.
+Can someone assign CVE IDs for them?
 
-I wonder why MITRE says otherwise.
+- [PATCH] farsync: fix info leak in ioctl
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=96b340406724d87e4621284ebac5e059d67b2194
 
-Thanks Stuart and Simon.
--- 
--- Joshua Rogers <https://internot.info/>
+- [PATCH] wanxl: fix info leak in ioctl
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=2b13d06c9584b4eb773f1e80bbaedab9a1c344e1
+
+- [PATCH] hamradio/yam: fix info leak in ioctl
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=8e3fbf870481eb53b2d3a322d1fc395ad8b367ed
+
+Thanks!
+--
+Salva Peiró
+http://speirof.appspot.com
+
