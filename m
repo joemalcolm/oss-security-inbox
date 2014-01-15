@@ -1,20 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/3
-Message-ID: <20141204075749.GA15581@cantor.unex.es>
-Date: Thu, 4 Dec 2014 08:57:49 +0100
-From: Santiago Vila <sanvila@...x.es>
-To: "Joshua J. Drake" <oss-sec-pmgetbl@...p.org>
-Cc: oss-security@...ts.openwall.com, Tero Marttila <terom@...me.fi>
-Subject: Re: CVE request: procmail heap overflow in getlline()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/15/3
+Message-Id: <201401151228.s0FCSMJ0018351@linus.mitre.org>
+Date: Wed, 15 Jan 2014 07:28:22 -0500 (EST)
+From: cve-assign@...re.org
+To: speiro@....upv.es
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: assorted kernel infoleak security fixes
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 03, 2014 at 05:30:57PM -0600, Joshua J. Drake wrote:
-> Is it possible to trigger this issue with untrusted input or only
-> trusted input from procmailrc?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This is an issue with the handling of .procmailrc file, which contains
-the filter rules for procmail. An external attacker is not supposed to
-provide the .procmailrc file at /home/user, only the email to be
-filtered, so, IMHO, this is a bug but maybe not a security bug.
+> - [PATCH] farsync: fix info leak in ioctl
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=96b340406724d87e4621284ebac5e059d67b2194
 
-Thanks.
+Use CVE-2014-1444.
+
+
+> - [PATCH] wanxl: fix info leak in ioctl
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=2b13d06c9584b4eb773f1e80bbaedab9a1c344e1
+
+Use CVE-2014-1445.
+
+
+
+> - [PATCH] hamradio/yam: fix info leak in ioctl
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=8e3fbf870481eb53b2d3a322d1fc395ad8b367ed
+
+Use CVE-2014-1446.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS1n39AAoJEKllVAevmvmsfHEIAK5ooGPxepk0Hcd1V0qVrPsl
+IYa2O398TsB+85ar+0NndzFtVSuUidJFTnpZy9fZ/gR4a25K8KUF6WqjiksEBhwR
+e7PqntAgXLwHBAJJeHvii3xFN8QNy0MRKvq9yKtA5If2PgA4BhZZ/o/SkoHz0Td3
+jJ8iWI49aeWVpuTm8RabFNom4xoC7ASC64xZ/FoEPOD/U1mtIO3/E8zI+KhAeP+m
+ao7fNTjnR4b/etasFoBh0W9fxUDk698sJe3Xffysj7VVoRU3qJmSv86s2W7UFNqv
+2NTl9Vzd1EF3BYRjLJxNN17ijQnFJktGfi09lRGxhWtkL5wDIOKD31r3iY6cxxM=
+=B9LN
+-----END PGP SIGNATURE-----
