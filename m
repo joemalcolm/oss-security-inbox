@@ -1,25 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/12
-Message-ID: <7719b136.37c1cef6@fabiankeil.de>
-Date: Thu, 4 Dec 2014 16:41:31 +0100
-From: Fabian Keil <freebsd-listen@...iankeil.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Buffer overflow in antiword 0.37
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/15/2
+Message-ID: <CABLZJbySd2f+VR8cPwgJQHuaabKiAe5mTsRfX7aLBKxcxweXcQ@mail.gmail.com>
+Date: Wed, 15 Jan 2014 07:23:53 +0100
+From: Maksymilian A <max@...t.cx>
+To: security curmudgeon <jericho@...rition.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Apache Archiva Remote Command Execution 0day
 Content-Type: text/plain; charset=utf-8
 
-Fabian Keil <freebsd-listen@...iankeil.de> wrote:
+Thanks. Last Archiva version 1.3.6 (7 January 2014) is unpatched. This is
+the same vendor for Archiva and Struts. Why is it still not patched? Good
+question for Apache.
 
-> The attached patch prevents a buffer overflow in antiword 0.37
-> (http://www.winfield.demon.nl/):
-[...]
-> The buffer overflow has been reported upstream and the patch was accepted,
-> but apparently there will not be an official antiword release any time soon.
-> 
-> The bug was found with afl-fuzz.
+Maksymilian Arciemowicz
+http://cxsecurity.com/
 
-Apparently zzuf found it first, though:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=771768
+2014/1/15 security curmudgeon <jericho@...rition.org>
 
-Fabian
+>
+> : Please assign CVE for Apache Archiva 0day
+> : : http://cxsecurity.com/issue/WLB-2014010087
+>
+> From that link:
+>
+> Apache Archiva use Apache Struts2:
+>  "In Struts 2 before 2.3.15.1 the information following "action:",
+> "redirect:" or "redirectAction:" is not properly sanitized. Since said
+> information will be evaluated as OGNL expression against the value stack,
+> this introduces the possibility to inject server side code."
+>
+> References:
+>
+> http://struts.apache.org/release/2.3.x/docs/s2-016.html
+>
+>
+>
+> ^ All that is CVE-2013-2251.
+>
+>
+>
 
-Content of type "application/pgp-signature" skipped
