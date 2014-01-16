@@ -1,39 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/16
-Message-ID: <20140927215110.GW23797@oevtugenva.nrevsny.pk>
-Date: Sat, 27 Sep 2014 17:51:10 -0400
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/16/4
+Message-ID: <21207.54896.884404.459550@gargle.gargle.HOWL>
+Date: Thu, 16 Jan 2014 13:54:08 +0100
+From: rf@...eap.de
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+Subject: Re: linux-distros membership
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 26, 2014 at 12:26:05PM -0600, Kurt Seifried wrote:
-> On 26/09/14 12:12 PM, Rich Felker wrote:
-> > On Fri, Sep 26, 2014 at 02:06:21PM +0100, Simon McVittie wrote:
-> >>> Tell everyone to stop using setuid/setgid now and forever?
-> > 
-> > Yes!
-> > 
-> >> Minimizing use of setuid/setgid, and making sure the setuid/setgid
-> >> things are suitably hardened, is a good idea. However, tools for
-> >> controlled privilege escalation (sudo, pkexec, Apache suexec) rely on
-> >> setuid in order to work. There's a reason the feature exists at all.
-> > 
-> > These could all be done by having the process with root privileges
-> > inherit them from a daemon parent that already has root, rather than
-> > requiring the kernel to elevate the privileges of a process via the
-> > setuid bit. This inherently eliminates all attacker control of the
-> > process's initial state and limits the input/attack surface to the
-> > communication channel clients have with the daemon (e.g. a single unix
-> > socket).
-> 
-> setuid/setgid is not just for root. For example the Postfix server makes
-> use of various groups and setuid/setgid binaries and directories so that
-> there are well defined interfaces between Postfix components that run
-> with different privilege levels.
+Hi Yves,
 
-But the same could be achieved, with none of the risks of
-setuid/setgid, via IPC to a daemon that already has the right
-user/group.
+ >> I hope this is the right place to ask for inclusion of a Qlustar contact
+ >> in the linux-distros list.
+ >> 
+ >> Qlustar is a Ubuntu/Debian based distro targeted at HPC/Storage/Cloud
+ >> clusters. We use our own kernels (typically based on vanilla) since many
+ >> years, but have the need to supply timely security fixes to our users. So
+ >> far we have to wait for other distros to come out with their
+ >> announcements and then start analyzing the fixes they have done. This
+ >> leaves us/our users with a vulnerability window that is way too large,
 
-Rich
+> I can't speak for Ubuntu, but you're welcome to participate in the
+> Debian security effort.
+
+thanks a lot for your offer. Could you explain a little more what
+participation in the Debian security effort would mean? Note that the issue I
+currently have is mostly about kernel fixes and we don't use Debian nor
+Ubuntu kernels.
+
+Cheers,
+
+Roland
