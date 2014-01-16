@@ -1,21 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/30/2
-Message-ID: <547BAD6C.1010004@redhat.com>
-Date: Mon, 01 Dec 2014 10:51:08 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/16/5
+Message-Id: <20140116185525.04D9A60161@smtp.hushmail.com>
+Date: Thu, 16 Jan 2014 18:55:24 +0000
+From: "mancha" <mancha1@...h.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: OpenVAS Manager SQL injection (OVSA20141128)
+Subject: CVE Request - Poppler library: DoS fixed in 0.24.5
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello.
 
-An SQL injection flaw has been fixed in OpenVAS Manager:
+It was discovered the JBIG2Stream::readSegments function in the
+Poppler library (prior to 0.24.5) does not properly handle
+segExtraBytes values, which allows remote attackers to cause a
+denial of service (application crash) via a crafted PDF that
+triggers a segmentation fault caused by an improper format
+control string. [1]
 
-http://www.openvas.org/OVSA20141128.html
+Upstream fix: 
+http://cgit.freedesktop.org/poppler/poppler/commit/?id=58e04a08afee
 
-Can a CVE please be assigned?
+Would you please allocate a CVE for this issue? Thanks.
 
-Thanks,
+--mancha
 
---
-Murray McAllister / Red Hat Product Security
+[1] https://bugs.kde.org/show_bug.cgi?id=328511
+
