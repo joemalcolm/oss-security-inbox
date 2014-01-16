@@ -1,44 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/4
-Message-ID: <CAKcmtDxqiE23X49EzxO3MUhNnTi0+Wnp62y3JyRqUxUe-5DmAw@mail.gmail.com>
-Date: Fri, 28 Mar 2014 07:19:13 -0700
-From: Chris Steipp <csteipp@...imedia.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/16/2
+Message-ID: <52D7B4FC.9000807@redhat.com>
+Date: Thu, 16 Jan 2014 16:01:24 +0530
+From: Ratul Gupta <ratulg@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: MediaWiki 1.22.5 login csrf
+Subject: CVE Request: drupal: multiple vulnerabilities corrected in 6.30 and 7.26 (SA-CORE-2014-001)
 Content-Type: text/plain; charset=utf-8
 
-The session-id is renewed when the user successfully logs in with a
-password reset. The issue that we patched was that the anti-CSRF token for
-non-authenticated users on the password change form was guessable, and
-would remain that way even if we regenerated the user's session-id each
-time they accessed the password rest / login form.
+Hello,
 
+Multiple vulnerabilities were fixed in the supported Drupal core 
+versions 6 and 7.
 
+1) Impersonation (OpenID module - Drupal 6 and 7 - Highly critical)
 
+A vulnerability was found in the OpenID module that allows a malicious 
+user to log in as other users on the site, including administrators, and 
+hijack their accounts.
+This vulnerability is mitigated by the fact that the malicious user must 
+have an account on the site (or be able to create one), and the victim 
+must have an account with one or more associated OpenID identities.
 
-On Fri, Mar 28, 2014 at 2:23 AM, Florent Daigniere <
-florent.daigniere@...stmatta.com> wrote:
+2) Access bypass (Taxonomy module - Drupal 7 - Moderately critical)
 
-> On Thu, 2014-03-27 at 18:37 -0700, Chris Steipp wrote:
-> > Hi, we just patched a login CSRF in MediaWiki today. An attacker could
-> > login a victim as the attacker. Can we get a cve assigned for this?
-> >
-> > Patch:
-> >
-> https://gerrit.wikimedia.org/r/#/c/121517/1/includes/specials/SpecialChangePassword.php
-> >
-> > Release announcement:
-> >
-> http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-March/000145.html
-> >
-> > Wikimedia bug:
-> > https://bugzilla.wikimedia.org/show_bug.cgi?id=62497
->
->
-> That looks like a session-fixation bug to me; not a CSRF... and
-> therefore it's the wrong control: the session-id should be "renewed",
-> that's all.
->
-> Florent
->
+The Taxonomy module provides various listing pages which display content 
+tagged with a particular taxonomy term. Custom or contributed modules 
+may also provide similar lists. Under certain circumstances, unpublished 
+content can appear on these pages and will be visible to users who 
+should not have permission to see it.
+This vulnerability is mitigated by the fact that it only occurs on 
+Drupal 7 sites which upgraded from Drupal 6 or earlier.
+
+3) Security hardening (Form API - Drupal 7 - Not critical)
+
+The form API provides a method for developers to submit forms 
+programmatically using the function drupal_form_submit(). During 
+programmatic form submissions, all access checks are deliberately 
+bypassed, and any form element may be submitted regardless of the 
+current user's access level.
+This is normal and expected behavior for most uses of programmatic form 
+submissions; however, there are cases where custom or contributed code 
+may need to send data provided by the current (untrusted) user to 
+drupal_form_submit() and therefore need to respect access control on the 
+form.
+To facilitate this, a new, optional 
+$form_state['programmed_bypass_access_check'] element has been added to 
+the Drupal 7 form API. If this is provided and set to FALSE, 
+drupal_form_submit() will perform the normal form access checks against 
+the current user while submitting the form, rather than bypassing them.
+This change does not fix a security issue in Drupal core itself, but 
+rather provides a method for custom or contributed code to fix security 
+issues that would be difficult or impossible to fix otherwise.
+
+Upstream advisory:
+https://drupal.org/SA-CORE-2014-001
+
+Could CVE's please be assigned to these issues?
+
+-- 
+Regards,
+
+Ratul Gupta / Red Hat Security Response Team
 
