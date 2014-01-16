@@ -1,105 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/08/1
-Message-ID: <20140608111542.GA12848@openwall.com>
-Date: Sun, 8 Jun 2014 15:15:42 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/16/6
+Message-ID: <20140116210837.GC24962@scapa.corsac.net>
+Date: Thu, 16 Jan 2014 22:08:37 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: transparency on message moderation
+Subject: Re: Re: linux-distros membership
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Among all the rants on OpenBSD lists, Theo de Raadt happened to
-indirectly remind me that more transparency is needed regarding message
-moderation on oss-security.  Yes, a positive effect of the rants, no
-matter how dirty they were.  Thank you, Theo!  The message below focuses
-on Kurt Seifried's role, although that is only a side-effect of how the
-discussion unfolded.  By posting this to oss-security, I mainly want to
-increase transparency on how oss-security message moderation works in
-general.  I also like to take this opportunity to thank Kurt Seifried,
-Josh Bressers, and Vincent Danen for their help approving obviously
-on-topic oss-security postings sometimes quicker than I do.  (Kurt and
-Josh are current co-moderators, Vincent was a co-moderator before.)
-As I explain below, only a small subset of postings actually get held
-for moderation, yet processing them quicker is highly desirable.
-
-Here's what I've just posted to a thread on OpenBSD misc and tech lists:
-
-On Fri, Jun 06, 2014 at 10:26:48AM +0400, Solar Designer wrote:
-> On Thu, Jun 05, 2014 at 04:38:24PM -0600, Theo de Raadt wrote:
-> > Kurt and Solar --
-> > 
-> > You are the primary contacts for the oss-security email list.
+On Thu, Jan 16, 2014 at 01:54:08PM +0100, rf@...eap.de wrote:
+> Hi Yves,
 > 
-> Kurt is not.
+>  >> I hope this is the right place to ask for inclusion of a Qlustar contact
+>  >> in the linux-distros list.
+>  >> 
+>  >> Qlustar is a Ubuntu/Debian based distro targeted at HPC/Storage/Cloud
+>  >> clusters. We use our own kernels (typically based on vanilla) since many
+>  >> years, but have the need to supply timely security fixes to our users. So
+>  >> far we have to wait for other distros to come out with their
+>  >> announcements and then start analyzing the fixes they have done. This
+>  >> leaves us/our users with a vulnerability window that is way too large,
+> 
+> > I can't speak for Ubuntu, but you're welcome to participate in the
+> > Debian security effort.
+> 
+> thanks a lot for your offer. Could you explain a little more what
+> participation in the Debian security effort would mean? Note that the issue I
+> currently have is mostly about kernel fixes and we don't use Debian nor
+> Ubuntu kernels.
 
-Sorry for going slightly off-topic, since this is not an OpenBSD thing,
-but I think it's appropriate to post the below in here.
+Most of the documentation can be found in the secure-testing repository
+[1] and on the Debian wiki [2].
 
-I think I need to clarify Kurt's exact role on oss-security and distros,
-given how suspicious people are and for the sake of transparency, even
-though I find this otherwise irrelevant to the issue at hand.  BTW, I
-am not CC'ing this to Kurt because we managed to offend him so much that
-he doesn't want to receive these e-mails anymore.  I'll post the main
-content of this message to oss-security as well, crediting Theo for the
-indirect reminder that more transparency is needed.
+[1]: http://anonscm.debian.org/viewvc/secure-testing/doc/narrative_introduction?view=markup
+[2]: https://wiki.debian.org/Teams/Security
 
-On the linux-distros lists, Kurt is one of the members from Red Hat.
-He has no special privileges there.  Kurt happens to be assigning CVE
-IDs from Red Hat's pool when people (those reporting vulnerabilities
-externally and/or other list members) ask for those.
+Regards,
+- -- 
+Yves-Alexis Perez
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-Kurt used to be assigning CVE IDs from Red Hat's pool on the public
-oss-security list as well.  He was doing this for a long while, and I
-think is well recognized for that.  Now MITRE takes care of this.
-
-Kurt currently has co-moderator privileges on oss-security, for the sole
-purpose of approving obviously on-topic messages from new addresses (not
-yet pre-approved), especially when I am not around (but usually I am).
-This minimizes delivery delays.  This does not make Kurt a "primary
-contact" for the list - it's a rather limited and technical role, and an
-unpleasant one (since most messages in the moderation queue are spam),
-that Kurt at some point agreed to help with (but may resign from it
-anytime).  Another current co-moderator on oss-security is Josh
-Bressers.  Both Kurt and Josh are from Red Hat.  The set of
-co-moderators is occasionally changing as people volunteer or resign.
-I think I should adopt a practice to announce such changes on
-oss-security itself right away, for the sake of transparency, even
-though the additional co-moderators (everyone besides me) only approve
-obvious on-topic messages and don't reject anything, so the
-responsibility for the list's policies remains mine (and I am the only
-one to blame).
-
-"Conspiracy theorists" may now say that this is a "privilege" that
-provides (a few hours of?) advance notification, and that messages may
-be deliberately delayed.  I've heard such claims about Bugtraq (they
-might or might not be right).  On oss-security, most messages are from
-pre-approved senders (so they get posted right away, with no ability for
-a co-moderator to even see them before they're sent to everyone), and
-the few that get into the moderation queue are approved quickly (from
-minutes to hours, but not days - whenever I or a co-moderator gets a
-chance to check our e-mail and confirm that the message is not spam and
-is on-topic).  Such concerns could apply to Bugtraq (and do apply, as
-we've seen from some public criticism of Bugtraq) and to FD as well.
-I think they apply to oss-security to a smaller extent, because a lot of
-people (who post to oss-security) actually know that delays are usually
-non-existent or, when they do occur, are much smaller than those on
-Bugtraq (and likely smaller than those on FD as well, but I'd need to
-actually analyze the data to make sure).  (I do think Bugtraq's delays
-are often unacceptable, regardless of why they occur.)
-
-As far as I'm aware, no oss-security posting was ever abusively delayed.
-There are some rare occasions where a posting is questionable (neither
-obviously on-topic nor obviously off-topic) and a moderation decision
-takes time to make - e.g., sometimes I contact the sender to have them
-clarify why their posting would be appropriate for oss-security.  In
-those cases, as well as even for obviously off-topic messages, the
-co-moderators do nothing, and I handle these (almost always same day).
-IIRC, none of these were vulnerability reports in open source software.
-I do recall some that were vulnerability reports in closed source
-software (and this needed to be clarified before they got rejected as
-off-topic).  When such misdirected reports happen, we don't make use of
-the information in the rejected postings (and the sender typically posts
-to FD or/and Bugtraq).
-
-Alexander
+iQEcBAEBCgAGBQJS2EpOAAoJEG3bU/KmdcCli/IH/3sLTXrwi2qCX9+obZSqF0kt
+8YWJSfMCTDSb0tibzOPlbjqVdEmb7PM22beG3j3+lBfPmcBNUOpzqtYTfhaiVF1X
+K4B/E1ob9YBkTu1B9oBskm/D2zvyDanU/NeXSCaKFBntI/nkimNDpqtrmWskm/rN
+zVHD/nNrZebKfiNEKdoOqPsxuSCHBKhNEh72uqkv3i34IWF3K2vQS1GZvwbka+Bd
+L74ZNIBzZGAdZryQ/eaN8APJK0I+khs3h+YuOXRxvJGQrVmA3POSQHBHKMqAp+hu
+UD9t3h7hIgpxhEIeMHfj/yWzcUcrjD45taSmW1lIkudvPqvMiQhyKksIPnTlMDI=
+=ARH7
+-----END PGP SIGNATURE-----
