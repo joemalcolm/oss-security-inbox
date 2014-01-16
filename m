@@ -1,35 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/18
-Message-ID: <CAP145pgQknbGUsMSSyp-ZJLOhdPKfLhRg6vPY4xbyA86AdfCcQ@mail.gmail.com>
-Date: Fri, 7 Nov 2014 16:58:44 +0100
-From: Robert Święcki <robert@...ecki.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/16/1
+Message-ID: <20140116092401.GF15194@scapa.corsac.net>
+Date: Thu, 16 Jan 2014 10:24:01 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Alexander Cherepanov <cherepan@...me.ru>, binutils@...rceware.org
-Subject: Re: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
+Subject: Re: linux-distros membership
 Content-Type: text/plain; charset=utf-8
 
-2014-11-07 11:08 GMT+01:00 Yury Gribov <y.gribov@...sung.com>:
-> On 11/07/2014 07:43 AM, Alexander Cherepanov wrote:
->>
->> Longer version: I started with the most simple approach I could get
->> results with and improved it only a little bit so far. There was just no
->> need for improvements -- until recently I was getting more crashes than
->> I can analyze (i.e. run through valgrind:-).
->
->
-> This looks rather impressive.  Have you considered automatically detecting
-> duplicates by e.g. analyzing stacktraces?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Feel free to take a look at honggfuzz - https://code.google.com/p/honggfuzz/
+On Tue, Jan 14, 2014 at 03:40:19PM +0100, rf@...eap.de wrote:
+> Hi,
+> 
+> I hope this is the right place to ask for inclusion of a Qlustar contact
+> in the linux-distros list.
+> 
+> Qlustar is a Ubuntu/Debian based distro targeted at HPC/Storage/Cloud
+> clusters. We use our own kernels (typically based on vanilla) since many
+> years, but have the need to supply timely security fixes to our users. So
+> far we have to wait for other distros to come out with their
+> announcements and then start analyzing the fixes they have done. This
+> leaves us/our users with a vulnerability window that is way too large,
 
-It provides a crude version of unification on the basis of offending
-program counter (as well as simple disassembly of the offending
-instruction). It also disables address randomization to get repeatable
-crashes. Example output (from testing strings-multiarch):
-http://alt.swiecki.net/.t/strings-multiarch.txt
+I can't speak for Ubuntu, but you're welcome to participate in the
+Debian security effort.
 
-Usage:
-honggfuzz -f in/ -r 0.1 -q -- /usr/bin/strings ___FILE___
+Regards,
+- -- 
+Yves-Alexis Perez
+ Debian Security
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
--- 
-Robert Święcki
+iQEcBAEBCgAGBQJS16UuAAoJEG3bU/KmdcCljU8H/iu1m3wgUKAFyCg57qf0eDfa
+i2GhaewaC8S2wPqyZkTcFPlTMzqIqEcrpuJjCMHUnElx75389Ov/wt//PUKx/qhx
+4ydBpVnfMGMHvrDRkfit2YP72z014ib1MPxOdN5+ni25XMe/EVTGigCyAUxtFG/T
+GCWpCP3Ro5DrTYIE1dMGF/vBVnV6GtoNSJrm08a9//4Koi6iIym2wp/jdPH7xGeM
+8EmSVEJneXJ8oh7G1EuNrADTB92DwYa2CokgUuZVBJVj8j7wTVdluDjyVzS4rTYp
+VELAJsSWYcBOqn4nnDNYOfuvDalRcWOFJRZj9lQYlt2QpuistJHkUSu3oEye4mQ=
+=Wztl
+-----END PGP SIGNATURE-----
