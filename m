@@ -1,74 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/8
-Message-ID: <1251940714.23099142.1403856038932.JavaMail.zimbra@redhat.com>
-Date: Fri, 27 Jun 2014 04:00:38 -0400 (EDT)
-From: Arun Babu Neelicattu <abn@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request for commons-beanutils: 'class' property is exposed, potentially leading to RCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/16/3
+Message-Id: <201401161252.s0GCqO0M006542@linus.mitre.org>
+Date: Thu, 16 Jan 2014 07:52:24 -0500 (EST)
+From: cve-assign@...re.org
+To: ratulg@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: drupal: multiple vulnerabilities corrected in 6.30 and 7.26 (SA-CORE-2014-001)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Is there a decision on this one? Did this one get missed?
+> 1) Impersonation (OpenID module - Drupal 6 and 7 - Highly critical)
 
--arun
+Use CVE-2014-1475.
 
------ Original Message -----
-> From: "David Jorm" <djorm@...hat.com>
-> To: oss-security@...ts.openwall.com
-> Sent: Monday, June 16, 2014 8:39:28 AM
-> Subject: [oss-security] CVE request for commons-beanutils: 'class' property is exposed, potentially leading to RCE
+
+> 2) Access bypass (Taxonomy module - Drupal 7 - Moderately critical)
 > 
-> Hi All
-> 
-> I have raised this twice with security@...che.org, on 30 April and June
-> 3. I have received no response either time, therefore I am raising it on
-> oss-security.
-> 
-> CVE-2014-0114 describes a well-known issue in Apache Struts 1:
-> 
-> "It was found that the Struts 1 ActionForm object allowed access to the
-> 'class' parameter, which is directly mapped to the getClass() method. A
-> remote attacker could use this flaw to manipulate the ClassLoader used
-> by an application server running Struts 1. This could lead to remote
-> code execution under certain conditions."
-> 
-> The root cause of this flaw is that commons-beanutils exposes the class
-> property by default, with no mechanism to disable access to it. Struts 1
-> is considered EOL upstream, and upstream has not yet shipped a patch for
-> this flaw. Red Hat has shipped a patch, which was submitted upstream as
-> a pull request:
-> 
-> https://github.com/apache/struts1/pull/1
-> 
-> This patch disables access to the class property in struts itself,
-> rather than in commons-beanutils. Other frameworks built on
-> commons-beanutils, such as Apache Stripes, are likely to expose similar
-> issues. I think it would be a good idea to also assign a separate CVE ID
-> to commons-beanutils, and ship a patch for commons-beanutils itself. The
-> commons-beanutils patch could be inherited by other frameworks that may
-> not have the resources to produce their own patch.
-> 
-> commons-beanutils 1.9.2 has now shipped:
-> 
-> http://commons.apache.org/proper/commons-beanutils/javadocs/v1.9.2/RELEASE-NOTES.txt
-> 
-> Incorporating a patch for this issue:
-> 
-> https://issues.apache.org/jira/browse/BEANUTILS-463
-> 
-> "A specialized BeanIntrospector implementation has been added which
-> allows suppressing properties. There is also a pre-configured instance
-> removing the class property from beans. Some notes have been added to
-> the user's guide."
-> 
-> I think it would be appropriate to assign a CVE ID to this issue in
-> commons-beanutils, and publish an advisory. This would provide framework
-> developers with the necessary information and impetus to upgrade to
-> commons-beanutils 1.9.2 and make use of SuppressPropertiesBeanIntrospector.
-> 
-> Thanks
-> --
-> David Jorm / Red Hat Product Security
-> 
+> The Taxonomy module provides various listing pages which display content 
+> tagged with a particular taxonomy term. Custom or contributed modules 
+> may also provide similar lists. Under certain circumstances, unpublished 
+> content can appear on these pages and will be visible to users who 
+> should not have permission to see it.
+
+Use CVE-2014-1476 for the vulnerability in the Taxonomy module. The
+other information seems to have at least two possible interpretations.
+One interpretation is that this vulnerability in the Taxonomy module
+affects whether it is safe for other modules to have these "similar
+lists." A second interpretation is that "tagged with a particular
+taxonomy term" means that the attack involves a crafted taxonomy term.
+In this second interpretation, a custom or contributed module may
+require its own vulnerability fix to block the crafted taxonomy term.
+In that situation, each contributed module may require its own CVE ID,
+because those issues would not be within the scope of CVE-2014-1476.
+
+ 
+> 3) Security hardening (Form API - Drupal 7 - Not critical)
+> To facilitate this, a new, optional 
+> $form_state['programmed_bypass_access_check'] element has been added
+
+There is no CVE for the action of adding this functionality to Drupal core.
+
+> provides a method for custom or contributed code to fix security 
+> issues that would be difficult or impossible to fix otherwise.
+
+If contributed code uses this element to address a vulnerability, each
+such vulnerability may be eligible for a CVE ID.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS19SWAAoJEKllVAevmvmsCG4IAJ9J9l6zio9tZzXZamxuGS6O
+EeTkI+u4GIYZPNgDO/SLdlws6OuAG11lvbt0IcQWF9ngYqAtgfcazoOUpenOPXJj
+6Vs5x4p29QutF6fv25zvQWzu/CCxLTDLIBJJkE2huMthSbq4/wKEG7Qp4sYvUJ/Z
+6Em5aLP/J2VSvVQnUbDFv181kl1XyadRnKw8pCSXoPvGWGm2apWSjanTmT+2kYY3
+uBBC1OqktbjIJJULZgYQ3x94JKixG5B/cMxZKA8Z2D95toE1D6xPPhetp5B5QuBC
+PH484Hh+pAq3/r0e6f8UUgUifhPSLakuWSKbfLyo4t5dmnvTIKfZ3C7XBuxcOEM=
+=1RjG
+-----END PGP SIGNATURE-----
