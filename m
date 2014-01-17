@@ -1,53 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/15
-Message-Id: <20140707181406.529E81A41139@me.com>
-Date: Mon,  7 Jul 2014 14:14:06 -0400 (EDT)
-From: larry0@...com (Larry W. Cashdollar)
-To: <oss-security@...ts.openwall.com>
-Subject: Vulnerability Report for Ruby Gem gnms-2.1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/17/5
+Message-ID: <52D8FD67.1080000@openstack.org>
+Date: Fri, 17 Jan 2014 10:52:39 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: [OSSA 2014-002] Swift TempURL timing attack (CVE-2014-0006)
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerability Report for Ruby Gem gnms-2.1.1
+OpenStack Security Advisory: 2014-002
+CVE: CVE-2014-0006
+Date: January 16, 2013
+Title: Swift TempURL timing attack
+Reporter: Samuel Merritt (SwiftStack)
+Products: Swift
+Affects: All supported versions
 
-Author: Larry W. Cashdollar, @_larry0
+Description:
+Samuel Merritt from SwiftStack reported a timing attack vulnerability in
+Swift TempURL middleware. By analyzing response times to arbitrary
+TempURL requests, an attacker may be able to guess valid secret URLs and
+get access to objects that were only intended to be publicly shared with
+specific recipients. In order to use this attack, the attacker needs to
+know the targeted object name, and the object account needs to have a
+TempURL key set. Only Swift setups enabling the TempURL middleware are
+affected.
 
-Date: 06/01/2014
+Icehouse (development branch) fix:
+https://review.openstack.org/#/c/67185/
 
-OSVDB: 108594
+Havana (1.10.0) fix:
+https://review.openstack.org/#/c/67186/
 
-CVE:Please Assign
+Grizzly (1.8.0) fix:
+https://review.openstack.org/#/c/67187/
 
-Download: http://rubygems.org/gems/gnms
+Note: the Icehouse fix will be included in upcoming 1.12.0 release.
 
-Gem Author:  david.maciejak@...il.com
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0006
+https://bugs.launchpad.net/swift/+bug/1265665
 
-From: ./gnms-2.1.1/lib/cmd_parse.rb
+Regards,
 
-The #{ip} variable isn't properly sanitized and can lead to remote command injection if a malicious user specifies an IP address with shell meta characters like ; and &. 
-
-0Command injection via #{ip} in ping and other functions.
-147-    lp=""
-148-    nmap_version = $config.nmap_vers.to_f()
-149-    if nmap_version >= 6.0 
-150:      lp=`#{$config.nmap_path} -sU -sT #{ip} --host_timeout 60 2>/dev/null| grep open | grep "^[0-9]"`
-151-    else
-152-      if nmap_version > 0.0
-153:        lp=`#{$config.nmap_path} -sU -sT #{ip} --host_timeout 60000 2>/dev/null| grep open | grep "^[0-9]"`
-154-      end
-155-    end
-177-# Return mac adress of the ip if in local arp table
-178-#
-179-def mac_tablelocal(ip)
-180:        `ping -c 1 -W 1 #{ip}`
-181:	lp=`arp -n #{ip} | grep #{ip} | awk {print $3;}`
-182-	#there is no entry
-183-	if lp.chomp == "--"
-184-	  lp=""
-232-def ping (ip)
-233:	pip=`#{$config.ping_path} #{ip} -c 1 -n -W 4 2>/dev/null | grep ^64`
-234-	return pip!=""
-235-end
+-- 
+Thierry Carrez
+OpenStack Vulnerability Management Team
 
 
-Advisory: http://www.vapid.dhs.org/advisories/gnms-2.1.1.html
 
+
+Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
