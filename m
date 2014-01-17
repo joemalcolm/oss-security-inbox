@@ -1,25 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/14/3
-Message-ID: <CAEZPtU4T79he47uJRFzAZ7MDQcxTvxgULkrj+KZqg=d_cdkSPg@mail.gmail.com>
-Date: Fri, 14 Mar 2014 15:03:25 +0100
-From: Pierre Joye <pierre.php@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE request, libgd and php's gd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/17/7
+Message-Id: <201401172032.s0HKWiMi017597@linus.mitre.org>
+Date: Fri, 17 Jan 2014 15:32:44 -0500 (EST)
+From: cve-assign@...re.org
+To: mancha1@...h.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request - Poppler library: DoS fixed in 0.24.5
 Content-Type: text/plain; charset=utf-8
 
-hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Can someone request a CVE for
+> It was discovered the JBIG2Stream::readSegments function in the
+> Poppler library (prior to 0.24.5) does not properly handle
+> segExtraBytes values, which allows remote attackers to cause a
+> denial of service (application crash) via a crafted PDF that
+> triggers a segmentation fault caused by an improper format
+> control string.
+> 
+> https://bugs.kde.org/show_bug.cgi?id=328511
+> Upstream fix: 
+> http://cgit.freedesktop.org/poppler/poppler/commit/?id=58e04a08afee
 
-https://bugs.php.net/bug.php?id=66901
+Use CVE-2013-7296.
 
-please?
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Affect all versions of libgd and php with XPM support enabled. This
-issue is already public.
-
-Cheers,
--- 
-Pierre
-
-@pierrejoye | http://www.libgd.org
+iQEcBAEBAgAGBQJS2ZLMAAoJEKllVAevmvmsTbQH/3xqY6FrVy2LyO3g/9ko+g9v
+gREbkwfRBwkOURyZbNjExr1bKPibeogGIeW4gnFT//D7UOPtPA+teGCoCFxh4ASX
+ud8QPbqphhCT6IT/3xcd7Ln5JOZlJzrpm6OhWmld7kit5BcVg8b0diaVQRuaYw8c
+tiTjbonWIaWQCdBiBCTmtKWu7KT3pdznAFm9zmr8qBAEkGkzodtd2ogj2A+4vR0E
+kmZuA+dzy/qHZmoDGgqQjfJw0+lk7pyrjxthDzlpgjAQlKM4TNQs2EcAqz9MVOEQ
+J9x0hbzKYL+n3VpCNLN9xqAf0K0vDBCeGOhoMGFR1TaBMJqhcfqtvF+w8VTzsZA=
+=26w8
+-----END PGP SIGNATURE-----
