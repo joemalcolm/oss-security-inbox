@@ -1,31 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/14/2
-Message-ID: <1394778274.21841.0@ssh>
-Date: Fri, 14 Mar 2014 06:24:34 +0000
-From: Steve Kemp <steve@...ve.org.uk>
-To: oss-security@...ts.openwall.com
-Cc: 
-Subject: Re: Re: CVE-Request - pen issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/17/9
+Message-ID: <183574BC-AA15-473C-85F5-0E218D665F5F@redhat.com>
+Date: Fri, 17 Jan 2014 15:54:33 -0700
+From: "Vincent Danen" <vdanen@...hat.com>
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Subject: CVE-2014-0021: chrony traffic amplification in cmdmon protocol
 Content-Type: text/plain; charset=utf-8
 
-> > webfile = "/tmp/webfile.html";
-> > 2> /tmp/penctl.cgi
-> Use CVE-2014-2387 for both issues involving files in the /tmp directory.
+With the news about the traffic amplification issue in ntpd, one of our developers looked at chronyd and it suffers from the same flaw.
 
-  Thanks.
+We've filed a bug [1] and it's also been brought up upstream [2].  There is currently no fix, but as the ntpd issue has been gaining some interest, I'm bringing this up here now for other who may ship chrony.  We assigned it CVE-2014-0021.
 
-> Furthermore, the example in question:
-> 
->   sudo pen 4444 localhost:9000 -C 127.0.0.1:5043
-> 
-> suggests that the person is aware that "a control port" means a TCP
-> port, not some other type of port with obvious permission-based
-> restrictions. 
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=1054790
+[2] http://listengine.tuxfamily.org/chrony.tuxfamily.org/chrony-dev/2014/01/msg00001.html
 
-  Noted, thanks.  It seems the author is going to migrate to a 
- unix domain socket in the future, to ease restrictions in the future.
+Thanks.
 
-Steve
 -- 
-http://www.steve.org.uk/
-
+Vincent Danen / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
