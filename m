@@ -1,85 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/2
-Message-ID: <CAFRnB2VfPuRtWxy6VKbhi=VO8Trb=yqq-CR=wg+YZCe+SgYt3w@mail.gmail.com>
-Date: Wed, 18 Jun 2014 19:56:43 -0700
-From: Alex Gaynor <alex.gaynor@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/17/4
+Message-ID: <20140116223951.63336947.reed@reedloden.com>
+Date: Thu, 16 Jan 2014 22:39:51 -0800
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Cc: andrew@...l.org
-Subject: Re: TMP flaw in rackspace jclouds?
+Cc: mmcallis@...hat.com
+Subject: Re: CVE-2013-6488: Jenkins fails to sanitize input before adding it to the page
 Content-Type: text/plain; charset=utf-8
 
-I'm a Rackspace employee and I've reached out several co-workers who work
-on JClouds for us.
+On Fri, 17 Jan 2014 13:02:03 +1100
+Murray McAllister <mmcallis@...hat.com> wrote:
 
-Alex
+> We recently received a report from Teguh P. Alko about an issue 
+> affecting Jenkins. Input was not sanitized before adding it to the page. 
+> The fix is public here since the start of 2013:
+> 
+> https://github.com/jenkinsci/jenkins/commit/f8d2a0ba6c2e261f48287bdd95bd7a2d7a8d2d0e
 
+https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2013-02-16
+is the security advisory that includes the above fix.
 
-On Wed, Jun 18, 2014 at 7:52 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> This could be used for copy and paste attacks, with the end result being 
+> similar to that of cross-site scripting attacks. It has been assigned 
+> CVE-2013-6488.
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> https://github.com/rackspace/jclouds/
->
-> So CC'ing Andrew, he's a consistent contributor, I can't file an issue
-> in Github (no link to it) so posting here and CC'ing him.
->
->
-> https://github.com/rackspace/jclouds/blob/master/scriptbuilder/src/main/java/org/jclouds/scriptbuilder/domain/Statements.java
->
->   public static Statement extractTargzAndFlattenIntoDirectory(URI tgz,
-> String dest) {
->       return new StatementList(ImmutableSet.<Statement> builder()
->             .add(exec("mkdir /tmp/$$"))
->             .add(extractTargzIntoDirectory(tgz, "/tmp/$$"))
->             .add(exec("mkdir -p " + dest))
->             .add(exec("mv /tmp/$$/*/* " + dest))
->             .add(exec("rm -rf /tmp/$$")).build());
->    }
->
->
-> This is insecure, $$ == PID == predictable
->
-> http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
->
-> use java.io.File.createTempFile() ? some interesting info at
-> http://www.veracode.com/blog/2009/01/how-boring-flaws-become-interesting/
->
-> for directories there is a helpful posting at
->
-> http://stackoverflow.com/questions/617414/create-a-temporary-directory-in-java
->
-> Thanks.
->
->
-> - --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
-> Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
->
-> iQIcBAEBAgAGBQJTolCLAAoJEBYNRVNeJnmTrVYQAJ5glkD/0Ha5+F99Qj9ioNmm
-> ZnO4G6TqKctfiqW/X02wMocKLMRV8q5WI/nvs71hCoK5HaVmbtNrV71wE0omHLjB
-> smzFz6d8qZaTcOHdvgbSlWEGPjcVnESo0F3K0vgK2L/LtB5mgny6pHDn+c/cqrgt
-> Er4n+U3oXlkon/ksW+drWpKOpmGOhn7c4fbE45ci6KnzDbbGpGHF0fZL3lSEfJR0
-> 0D/HQzKIAJpI7VvZU8+/d/MHasndgJoAHmUCkTBYU55Vf5eYsm+xWZ1Mt46IyAap
-> crMTCHHE1GVUAexYbMxy+lohHbpl+pB/d////LzesJjByRSv87r+1oLhdwank3P9
-> Fz1h3sq57JyLFQIcpm4TS7xh3TaByFGCiA5G/mR+CkuS6sZEapSkviu/x7ygmOdG
-> cJKM+5CogeE1P1PWsoQ41JcSwfuWAfc5IODvkjLb3MfyoXJRaKcBVdVcdHBUK4BA
-> 7xcD9SbDsujxHOJLknFaO22uTtlrDS4yXJaNal6L9P7DCsSSrxG1PmmE+t5qrtYw
-> HQoz+RuOMhY/2FWJqOxa7ru99rIQmxxpWgoknUlT+yYJRfoub0kpibyJLBLy2SEx
-> xmdqe/i9nHCsGAworK4bEL2vLvsNBiJgdSHlzg7E5POI1tbveE12fIUmSgrgV+zO
-> WjPZ/O4oOj0FVWoeyQUN
-> =SUf5
-> -----END PGP SIGNATURE-----
->
+Fairly sure that's just a dupe of CVE-2013-0328. See
+http://seclists.org/oss-sec/2013/q1/368.
 
+> Please credit at least "Teguh P. Alko" in any advisories.
 
+Why? He/she's not the original reporter.
 
--- 
-"I disapprove of what you say, but I will defend to the death your right to
-say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
-"The people's good is the highest law." -- Cicero
-GPG Key fingerprint: 125F 5C67 DFE9 4084
+> I am Cc'ing Reed to see if he knows who the other independent reporter 
+> is (from that Jira "SECURITY-46" bug in the above commit; as I 
+> understand it those bugs are not made public but I could be wrong).
 
+Jenkins's SECURITY-46 maps to
+https://bugzilla.mozilla.org/show_bug.cgi?id=819251, which I just
+opened up. The reporter is "Atulkumar Hariba Shedage".
+
+Hope that helps.
+
+~reed
