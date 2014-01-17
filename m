@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/20/6
-Message-ID: <324234793.19597612.1408552022569.JavaMail.zimbra@redhat.com>
-Date: Wed, 20 Aug 2014 12:27:02 -0400 (EDT)
-From: Arun Babu Neelicattu <abn@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/17/2
+Message-ID: <52D88F1B.6030909@redhat.com>
+Date: Fri, 17 Jan 2014 13:02:03 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Multiple issues in com.ning:async-http-client
+CC: reed@...dloden.com
+Subject: CVE-2013-6488: Jenkins fails to sanitize input before adding it to the page
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi all,
 
-We noticed these issues were filed upstream and were never assigned 
-CVE(s). Can we please get CVE(s) assigned to the following issues 
-please?
+We recently received a report from Teguh P. Alko about an issue 
+affecting Jenkins. Input was not sanitized before adding it to the page. 
+The fix is public here since the start of 2013:
 
-1. async-http-client: SSL/TLS certificate verification disabled
-https://github.com/AsyncHttpClient/async-http-client/issues/352
+https://github.com/jenkinsci/jenkins/commit/f8d2a0ba6c2e261f48287bdd95bd7a2d7a8d2d0e
 
-2. async-http-client: No SSL HostName verification
-https://github.com/AsyncHttpClient/async-http-client/issues/197
+This could be used for copy and paste attacks, with the end result being 
+similar to that of cross-site scripting attacks. It has been assigned 
+CVE-2013-6488.
+
+Please credit at least "Teguh P. Alko" in any advisories.
+
+I am Cc'ing Reed to see if he knows who the other independent reporter 
+is (from that Jira "SECURITY-46" bug in the above commit; as I 
+understand it those bugs are not made public but I could be wrong).
 
 Cheers,
-Arun
--- 
-Arun Neelicattu / Red Hat Product Security
-PGP: 0xC244393B 5229 F596 474F 00A1 E416  CF8B 36F5 5054 C244 393B
+
+--
+Murray McAllister / Red Hat Security Response Team
