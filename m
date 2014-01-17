@@ -1,97 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/15
-Message-ID: <5475F522.10701@mccme.ru>
-Date: Wed, 26 Nov 2014 18:43:30 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-CC: Michael Meeks <michael.meeks@...labora.com>,  officesecurity@...ts.freedesktop.org, Caolán McNamara <caolanm@...hat.com>, Miklos Vajna <vmiklos@...e.cz>,  Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: Re: CVE Request: LibreOffice -- several issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/17/3
+Message-ID: <52D8CD2C.4050600@redhat.com>
+Date: Thu, 16 Jan 2014 23:26:52 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: imapsync default version check with,http://imapsync.lamiral.info information leakage (CVE-2013-4279)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-[I'm CC'ing Michael Meeks, officesecurity@...ts.freedesktop.org and
-the guys from the cited thread. The start of the current thread is
-here: http://openwall.com/lists/oss-security/2014/11/19/3 .]
+imapsync http://imapsync.lamiral.info/
 
-On 26.11.2014 10:46, cve-assign@...re.org wrote:
- >> https://bugs.freedesktop.org/show_bug.cgi?id=86449
- >> Crash importing malformed .rtf -- potentially exploitable for RCE
- >
- > Use CVE-2014-9093 for bug 86449.
+Title: imapsync default version check with
+http://imapsync.lamiral.info information leakage (CVE-2013-4279)
 
-Thanks!
+Threat: Availability: no timeout so an attacker simply sends a slow
+response
+Threat: Confidentiality: connects to http://imapsync.lamiral.info and
+sends version # and operating system name and person version
 
- > (For reference, http://openwall.com/lists/oss-security/2014/11/19/3 is
- > about finding a series of bugs in version 3.5.4 on Debian stable -- in
- > other words, a version based on a mid-2012 codebase -- and reporting
- > them directly upstream without commenting on 4.2.x or 4.3.x.)
- >
- > For the others, in addition to the
- > http://openwall.com/lists/oss-security/2014/11/19/18 post,
+Impact: Moderate (Medium)
+CVSS2: 6.4/AV:N/AC:L/Au:N/C:P/I:P/A:P
 
-This post linked to
-http://www.openwall.com/lists/oss-security/2012/04/19/18. Unfortunately,
-the discussion there was quite brief and the only reason mentioned
-seems to be a potentially sheer number of such issues. I don't feel
-it's a valid reason without clearly documenting such an approach in
-documentation intended for users (and for security researchers).
+Affected: imapsync version 1.580 and earlier
 
-Then, in http://www.openwall.com/lists/oss-security/2012/04/19/18,
-Moritz Muehlenhoff writes: "For an application profile such as an
-office suite handing out CVE IDs to crash/CPU overload bug w/o
-potential of code injection is a waste of time and impractical". This
-is ambiguous as there are different office suite with different
-behabvior in regard to crashes. E.g., crashed instance of AbiWord
-doesn't take other windows with it.
+Description: By default imapsync runs a "release check" when executed,
+this causes imapsync to connect to http://imapsync.lamiral.info and
+send information about the version of imapsync, the operating system
+and perl.
 
-Then, there is autosaving in LibreOffice. By default it's triggered
-every 15 minutes. Hence only the last 15 minutes (or less) of work in
-all windows is lost when a crash (or cpu load bug) happens (in default
-configuration). This can also affect assessment of crashes as
-non-/security issues. But it will be nice to explicitly state why and
-which issues are considered non-/security.
+This feature is not well documented. It is enabled by default. The
+only hint it exists is the "--noreleasecheck" which is not documented
+anywhere other then running the program with the help option.
 
- > "Michael
- > Meeks from officesecurity@...ts.freedesktop.org indicated that they
- > are not interested in CVEs for DoS-only crashers" is also relevant.
- > This has multiple possible interpretations, e.g., "not interested"
- > because their security team won't track the issues using CVEs, or "not
- > interested" because they are not vulnerabilities.
+Affected code:
 
-I guess it will be better for folks from LibreOffice to comment on
-this directly.
+sub imapsync_version_public {
+    my $local_version = imapsync_version();
+	my $imapsync_basename = imapsync_basename();
+    my $agent_info = "$OSNAME system, perl "
+		. sprintf("%vd", $PERL_VERSION)
+        . ", Mail::IMAPClient $Mail::IMAPClient::VERSION"
+        . " $imapsync_basename";
+    my $sock = IO::Socket::INET->new(
+        PeerAddr => 'imapsync.lamiral.info',
+        PeerPort => '80',
+		Proto => 'tcp'
+        ) ;
+	return( 'unknown' ) if not $sock ;
+    print $sock
+        "GET /prj/imapsync/VERSION HTTP/1.0\n",
+        "User-Agent: imapsync/$local_version ($agent_info)\n",
+        "Host: ks.lamiral.info\n\n";
+    my @line = <$sock>;
+    close($sock);
+	my $last_release = $line[-1];
+    chomp($last_release);
+    return($last_release);
+}
 
- > The "is a security
- > issue because it takes down all other windows with it" is often
- > relevant to CVE because it represents a default security policy if
- > there is no information from a vendor about their security policy.
+Suggested solution:
 
-Yes, that's what I got from your earlier emails. Thanks for confirming
-it.
+1) $releasecheck should be changed to default to 0 (False) and convert
+- --noreleasecheck to --releasecheck
+2) this feature should use HTTPS to prevent information leakage to
+attackers
+3) or disable this feature entirely
 
- > However, a vendor is free to establish a security policy such as "if
- > you are working with a potentially untrusted file, you MUST NOT have
- > any other windows open in which you are maintaining state about your
- > other editing work." In other words, they can define all DoS-only
- > crashers to be applicable only in unsupported use cases.
+Workaround:
 
-And a vendor can even establish a security policy such as "you MUST
-NOT work with potentially untrusted files". It's not ideal but it's
-better to have a policy which accurately reflect the real
-situation. (The example is speculative, I don't imply anything about
-the real situation with LibreOffice.)
+Make sure you also use --noreleasecheck when running imapsync (maybe
+alias the full command?).
 
-Unfortunately I don't see any such policy stated anywhere. One of the
-natural places for it would be the page dedicated to security in
-LibreOffice: https://www.libreoffice.org/about-us/security/ . But it
-doesn't touch the question of security policy. Instead, it links to
-the list of security advisories:
-https://www.libreoffice.org/about-us/security/advisories/ , which
-happily lists several DoS issues: CVE-2012-4233, CVE-2013-4156. IMHO
-this reaffrims the default security policy.
+Timeline:
 
-I don't see any security policy in the Help too.
+2013-Aug-22: notified upstream vendor at gilles.lamiral@...oste.net
+2014-Jan-16: public release (what can I say, I got busy).
 
--- 
-Alexander Cherepanov
+External links:
+Red Hat: https://bugzilla.redhat.com/show_bug.cgi?id=1000215
+
+I can also handle notifying all the other vendors no problem via
+distros@ list.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJS2M0sAAoJEBYNRVNeJnmT7rAP/jk813TQ7pJJ/zNQu01ZQpCq
+S7GXDAz6YsbprkoPDmaPGduCS7czsBXXJQKQWQfn25nJGGVdNeMOtD2PPfe22CT8
+A4ZfwG9J8Rnc7THrkSqBD1Bn/IRmcaLqA/D+5RyFm3AhvDpq4MXCBti9f8Jq4m98
+YTISjfjEIX1dctVWXZe/6uh+d3T1/pO1R0WlIawcnzVfzPZVtTlSXjddshHPUijM
+C/xZkA79s3nFS3Ec9Sg4Nei3Jttmm4K4tBZmNA5zUh6cMQKRDMJe9HBxaJ6hGoW7
+Mm1A2fjRswFP+bVtgmZ7yvp6IniBEFky10TmRvqOWvD30azSlXFOcgGXyCBAhGDz
+Zs/R54LoAQY+22veBcdEK9CPKhv6GPrIEVLEsRdi2y1d9BEhTkVu39lfHGX4tjIG
+zPoye1L2TCBbjgEdNhf2c/NejBeW4HyxbsEo2zlZyBeDzzT6p5OqFrmTdSuBlszP
+wA9euuoKmt/2FnL17b9E/pco9ph1iIRZjRP88L8wvBGg96danuLJT6NfOIFi+h7R
+euW2P7lHQ9aPiE+vOMkahh6SSD4y7s4jmnxi5ng9NHODecl3/K/rlFg92AeV52L9
+xlgPvTqUlVdZtRkO6okbw1Vv33OBUMqXhxJS/FLvp5+walpiNMwFGLDWPLJjUju2
+erqpozG+5DNAnSSagpPy
+=qhx7
+-----END PGP SIGNATURE-----
