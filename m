@@ -1,27 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/16/5
-Message-Id: <20140116185525.04D9A60161@smtp.hushmail.com>
-Date: Thu, 16 Jan 2014 18:55:24 +0000
-From: "mancha" <mancha1@...h.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request - Poppler library: DoS fixed in 0.24.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/18/4
+Message-Id: <201401180207.s0I2719f002735@linus.mitre.org>
+Date: Fri, 17 Jan 2014 21:07:01 -0500 (EST)
+From: cve-assign@...re.org
+To: dkg@...thhorseman.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Fwd: [Python-modules-team] Bug#735263: python-rply: insecure use of /tmp
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It was discovered the JBIG2Stream::readSegments function in the
-Poppler library (prior to 0.24.5) does not properly handle
-segExtraBytes values, which allows remote attackers to cause a
-denial of service (application crash) via a crafted PDF that
-triggers a segmentation fault caused by an improper format
-control string. [1]
+> an insecure tempfile usage in rply
+> 
+> http://bugs.debian.org/735263
+> 
+> https://github.com/alex/rply/commit/fc9bbcd25b0b4f09bbd6339f710ad24c129d5d7c
 
-Upstream fix: 
-http://cgit.freedesktop.org/poppler/poppler/commit/?id=58e04a08afee
+Use CVE-2014-1604.
 
-Would you please allocate a CVE for this issue? Thanks.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
---mancha
-
-[1] https://bugs.kde.org/show_bug.cgi?id=328511
-
+iQEcBAEBAgAGBQJS2eFKAAoJEKllVAevmvmslHkIAMQsuOlcHjs2LY/fv3KhtSII
+3Nj/uIT2Ha9h+lzIgA4fgpBEhTctrSolyJ8i4+sE2xTrXjhThZpffoeMB2Fewozw
+KBsBooOBocqSPy6gihC7MKzyU+xctJ7UYJ7zEbgUEPmCGtT+lgOWRMpO/7V5NhJ9
+2BH3LGamK1cp13k4aR6Y7sK4SwjVbnJiraNo5a2zkTDjmRRPkKzTdJuxQeT2y3xF
+G6VCqctF2e/FpC7lchPXsoF0VGnDwVWCjkiydpYVWHFqQTVFsrVa9Rz2T8inbJuC
+qaUrje7sYphml0RmB1wGISH3OZKsfSo+XhzfaQSSYvb2dUT8nflPRoDNtIK70MU=
+=ScxP
+-----END PGP SIGNATURE-----
