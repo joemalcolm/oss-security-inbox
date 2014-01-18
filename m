@@ -1,29 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/13
-Message-id: <545CB06B.8010302@samsung.com>
-Date: Fri, 07 Nov 2014 14:43:39 +0300
-From: Yury Gribov <y.gribov@...sung.com>
-To: oss-security@...ts.openwall.com
-Cc: binutils@...rceware.org, cherepan@...me.ru
-Subject: Re: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/18/1
+Message-Id: <201401180039.s0I0dR4L001227@linus.mitre.org>
+Date: Fri, 17 Jan 2014 19:39:27 -0500 (EST)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-0021: chrony traffic amplification in cmdmon protocol
 Content-Type: text/plain; charset=utf-8
 
-On 11/07/2014 01:59 PM, Hanno Böck wrote:
-> Am Fri, 07 Nov 2014 13:08:09 +0300
-> schrieb Yury Gribov <y.gribov@...sung.com>:
->
->> This looks rather impressive.  Have you considered automatically
->> detecting duplicates by e.g. analyzing stacktraces?
->
-> american-fuzzy-lop kind of does that. It creates a hash among the code
-> path and groups fuzzing samples by that. That's quite convenient.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-[Cc-ing Binutils ML back again]
+> With the news about the traffic amplification issue in ntpd, one of
+> our developers looked at chronyd
 
-Yeah, I think there was even an article in one of recent PLDIs which 
-discussed different approaches to filtering duplicates arising in 
-compiler fuzz testing (they did various combinations of stacktraces, 
-Valgrind output, program coverage, etc.).  I was just curious how well 
-this works for real world tasks like objdump crashes.
+At cve-assign@...re.org, we've received a number of reports that have
+protocol descriptions, and ask for CVE assignments for amplification
+attacks. We've declined making assignments for those. One of the
+criteria we're currently using is:
 
--Y
+  - cases in which a vendor of a UDP protocol implementation announces
+    that they made a security-relevant mistake by having configuration
+    or code elements that allow amplification attacks, and publishes
+    a fix for this mistake
+
+One of the other CVE Numbering Authorities was also receiving similar
+reports. We coordinated with them and learned that they were looking
+at CVE eligibility in much the same way.
+
+The "in which a vendor of a UDP protocol implementation" above was
+what we had for the CVE-2013-5211 ntpd issue (with some definition of
+"announces"). We don't know the ultimate outcome of how amplification
+attacks will interact with the scope of CVE, but we did want to point
+out that this CVE-2014-0021 assignment seemed inconsistent with what
+we've been doing.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS2cuHAAoJEKllVAevmvmsurYIALjzoZDswrD9TcHR/ObNIU9G
+6qIsWM49HJ0VRnY88DJj1aO3vB2bnGiPNVK7Xe3RNkIBW6OPZ4cQyypv2ZijjhSC
+QLMlGgzgGAvJq4MQjOeq2RQinS3MUuqj4cHcoQ9Fy64avonXlfuJEsDu5WC3yEah
+M6el74ZmwPZupfs0hTvq0aGjvSqRd2alSFsSRUwUxHMS8PZLj4bP/l/NfHMPLC9V
+vdQFm90JhccAkn0uzPc87lOeVlqQCpX1KH8R587S2MneoommzKEBrVQI1xTlNjrR
+gLyz58pHC9kxPwkbztBr5hS5isSyKpsmrcvKhLRQlLi/51Kd9zTAucj9RdF6gLU=
+=S4od
+-----END PGP SIGNATURE-----
