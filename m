@@ -1,56 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/8
-Message-ID: <20141007064622.GB25530@zoho.com>
-Date: Tue, 7 Oct 2014 06:46:22 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/18/6
+Message-ID: <52DA221B.3050700@redhat.com>
+Date: Fri, 17 Jan 2014 23:41:31 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+CC: mmcallis@...hat.com, Kohsuke Kawaguchi <kk@...suke.org>
+Subject: Re: CVE-2013-6488: Jenkins fails to sanitize input before adding it to the page
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 07, 2014 at 09:51:50AM +0400, Solar Designer wrote:
-> Shellshock is actually an example of "selective disclosure" (as Ted
-> Unangst calls it) arguably not working well enough to be worthwhile.
-> In this case, it was because the right ones (as it turned out) of the
-> "many eyeballs" - Tavis and Michal - were not party to the "selective
-> disclosure".  Florian was, but I am guessing that without finding more
-> parser bugs convincing Chet and distros to remove exposure of the
-> parser so urgently would have been difficult.  Arguably, this suggests
-> that we should expand the distros list membership with security
-> researchers who are capable, willing, and have (paid?) time to review
-> upcoming security patches and the software being patched for possible
-> other flaws closely related to those being patched.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I've been thinking about this for the past week and agree with your
-problem identification. However, the lesson I rescue is diametrically
-opposed to the one you arrived at.
+On 01/16/2014 11:39 PM, Reed Loden wrote:
+> On Fri, 17 Jan 2014 13:02:03 +1100 Murray McAllister
+> <mmcallis@...hat.com> wrote:
+> 
+>> We recently received a report from Teguh P. Alko about an issue 
+>> affecting Jenkins. Input was not sanitized before adding it to
+>> the page. The fix is public here since the start of 2013:
+>> 
+>> https://github.com/jenkinsci/jenkins/commit/f8d2a0ba6c2e261f48287bdd95bd7a2d7a8d2d0e
+>
+>> 
+> https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2013-02-16
+>
+> 
+is the security advisory that includes the above fix.
+> 
+>> This could be used for copy and paste attacks, with the end
+>> result being similar to that of cross-site scripting attacks. It
+>> has been assigned CVE-2013-6488.
+> 
+> Fairly sure that's just a dupe of CVE-2013-0328. See 
+> http://seclists.org/oss-sec/2013/q1/368.
+> 
+>> Please credit at least "Teguh P. Alko" in any advisories.
+> 
+> Why? He/she's not the original reporter.
+> 
+>> I am Cc'ing Reed to see if he knows who the other independent
+>> reporter is (from that Jira "SECURITY-46" bug in the above
+>> commit; as I understand it those bugs are not made public but I
+>> could be wrong).
+> 
+> Jenkins's SECURITY-46 maps to 
+> https://bugzilla.mozilla.org/show_bug.cgi?id=819251, which I just 
+> opened up. The reporter is "Atulkumar Hariba Shedage".
+> 
+> Hope that helps.
+> 
+> ~reed
 
-An effect few mention is how dramatically things changed post-embargo.
-Sure, Chet's been burning the midnight oil (many thanks, Chet; you're
-owed many beers) but on some level, or maybe only after the dust
-settles, he'll be very appreciative of the way the community rallied in
-a highly dynamic way to ultimately help make Bash a better product.
+The problem is we can't easily map things against a security advisory
+such as
 
-From the identification of key breach points (thanks Stephane, Tavis,
-and Michal) to the development of critical hardening (thanks Florian),
-the level of engagement has been, and continues to be, extraordinary.
+https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2013-02-16
 
-I don't know how long the initial report was embargo'd but I'm pretty
-sure the process became infinitely more productive after the veil of
-semi-secrecy was lifted (be it in metrics like LoC/hour or reports/day).
+because there is minimal details. There is no mention of which issue
+if which and so on. If you can include the ISSUE-NN number in
+advisories in future that will prevent such problems, thanks!
 
-It's amazing how productive people can be when incentives are properly
-aligned.
+If this is indeed a duplicate than yes we need to REJECT CVE-2013-6488
 
-Your solution is to add Tavis and Michal to distros@. What about the
-next flaw when the two researchers who turn out to be key are Bob and
-Fred? Add them next? You'll be playing catch-up.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-I think the overarching lesson here is there are costs to the embargo
-paradigm some have grown to love and over-use. Few consider the negative
-effects that removing one aspect of "open" from open source can have and
-how energetic the process can become once it's reintroduced.
-
---mancha
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBAgAGBQJS2iIbAAoJEBYNRVNeJnmTCPkP/jowT8Y+V2yCHoi3gtUq2miF
+RbZiXL9xussZEs2e3B6F1jGua7lDa7sYC5vi4hDgRZU38+GMhQSj3pAEVykddnL5
+5s9X8AFtpwOfs7N556BYGloDeIRpQ3GpgyIOzh8l7rV5r5C39sQsGcIqJr3DuiOf
+EODHTayODOW2kULvhJyqvWtHywjAWYHxL4AVVnQ6vio+j8pDk7mX2/MDRLNn4cI4
+fG0YIZWAVycBvxRbOsSj+ocim3YiDGUXo7kdagDXyHxFBZJMJUh2NJ4TnbOAefKG
+hS9QsdI2fey+8XLisT3bA6fJH3gtGT3qjctdSz9pOTklwNGzTss3rTMs7UeDo97i
+5AfyznIZDbl2/GoXtV3nJvoX3QuK1RgnvA70C28bNMfx+qh6rPYvAD5/ziDOnlEn
+EepXuGVgW+KLgv81EdC/4h1RPJceRrjuCpV1baRUBOfLsAid8udSwccMf6+z1PQp
+DQ/srBSXWYOx7Erp58jFLfjnTJiBa2syhlFoOJ6asenik+spNWehmXzURTdujtHW
+PJQSXj7DYv8J2GeLOG8CoUnpaHXhV8tp2g/d23i0ygHeIDWISCo19o/eNWLdfydk
+D9AX47dy4dB20s7eVIcx3O17++t0W83mczj/8nXUZGViYHdfVc0Jal5dnatvIjIn
+uSNKaaP57hIXeHGdaDKC
+=vb1o
+-----END PGP SIGNATURE-----
