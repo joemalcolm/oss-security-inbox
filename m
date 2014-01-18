@@ -1,123 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/02/5
-Message-Id: <E1WVJg9-0006Ma-A2@xenbits.xen.org>
-Date: Wed, 02 Apr 2014 11:50:01 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 90 (CVE-2014-2580) - Linux netback crash trying to disable due to malformed packet
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/18/2
+Message-ID: <5FE3BA37-EA93-41FA-817E-36863E27705C@redhat.com>
+Date: Fri, 17 Jan 2014 17:47:26 -0700
+From: "Vincent Danen" <vdanen@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-0021: chrony traffic amplification in cmdmon protocol
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 01/17/2014, at 17:39 PM, cve-assign@...re.org wrote:
 
-             Xen Security Advisory CVE-2014-2580 / XSA-90
-                              version 2
+>> With the news about the traffic amplification issue in ntpd, one of
+>> our developers looked at chronyd
+>
+> At cve-assign@...re.org, we've received a number of reports that have
+> protocol descriptions, and ask for CVE assignments for amplification
+> attacks. We've declined making assignments for those. One of the
+> criteria we're currently using is:
+>
+> - cases in which a vendor of a UDP protocol implementation announces
+>   that they made a security-relevant mistake by having configuration
+>   or code elements that allow amplification attacks, and publishes
+>   a fix for this mistake
+>
+> One of the other CVE Numbering Authorities was also receiving similar
+> reports. We coordinated with them and learned that they were looking
+> at CVE eligibility in much the same way.
+>
+> The "in which a vendor of a UDP protocol implementation" above was
+> what we had for the CVE-2013-5211 ntpd issue (with some definition of
+> "announces"). We don't know the ultimate outcome of how amplification
+> attacks will interact with the scope of CVE, but we did want to point
+> out that this CVE-2014-0021 assignment seemed inconsistent with what
+> we've been doing.
 
-      Linux netback crash trying to disable due to malformed packet
+Is this not a same/similar case?  chronyd, much like ntpd, has some commands that allow for amplification, just like ntpd does.
 
-UPDATES IN VERSION 2
-====================
+I'm not going to argue (I didn't assign it, I'm just reporting that it was assigned), but it struck me as being essentially the same type of flaw.  So if ntpd received a CVE for essentially the same thing, I can see why this one was assigned as well.
 
-This issue has been assigned CVE-2014-2580.
+I'm not sure which part is inconsistent here.  Granted, chrony does not yet have a published fix, but my understanding is that is in the works.  In other words, there will be a fix of some sort (to at least reduce the amplification quite substantially).  Is that the part that seemed inconsistent?  The lack of a published fix?
 
-A fix has been accepted into the Linux network subsystem maintainer's
-tree.  The final fix differs substantially from the initial patch,
-which calls xenvif_carrier_off from an invalid context resulting in a
-kernel panic in the backend.  The updated patch defers this work to
-kthread context and ensures that no traffic is processed in the
-meantime.
-
-The attached patches have been updated accordingly.  Since the patch
-in v1 of the advisory does not eliminate the vulnerability, users are
-strongly encouraged to update to the latest patch.
-
-ISSUE DESCRIPTION
-=================
-
-When Linux's netback sees a malformed packet, it tries to disable the
-interface which serves the misbehaving frontend.
-
-This involves taking a mutex, which might sleep.  But in recent
-versions of Linux the guest transmit path is handled by NAPI in
-softirq context, where sleeping is not allowed.  The end result is
-that the backend domain (often, Dom0) crashes with "scheduling while
-atomic".
-
-IMPACT
-======
-
-Malicious guest administrators can cause denial of service.  If driver
-domains are not in use, the impact is a host crash.
-
-VULNERABLE SYSTEMS
-==================
-
-This bug affects systems using Linux as the driver domain, including
-non-disaggregated systems using Linux as dom0.
-
-Only versions of Linux whose netback uses NAPI are affected.  In Linux
-mainline this is all versions of Linux containing git changeset
-b3f980bd82, which was introduced between Linux 3.11 and 3.12-rc1.
-
-Systems using a different OS as dom0 (eg, NetBSD, Solaris) are not
-vulnerable.
-
-Both x86 and ARM systems are affected.
-
-MITIGATION
-==========
-
-Using driver domains may limit the scope of the denial of service, and
-may make it possible to resume service without restarting guests (by
-restarting the driver domain).  Advice on reconfiguring a system to
-use driver domains is beyond the reasonable scope of this advisory.
-
-In the case of an x86 HVM guest, the exploit can be prevented by
-disabling the PV IO paths; normally this would come with a substantial
-performance cost, and it may involve reconfiguring the guest as well
-as the host.  This is not recommended.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This bug was publicly reported on xen-devel, before it was appreciated
-that there was a security problem.  The public mailing list thread
-nevertheless contains information strongly suggestive of a security
-bug, and a different security bug (with CVE) is suggested as seeming
-"similar".
-
-For these reasons we (the Xen Project Security Team) have concluded
-that the presence of this bug, as a security problem, is not (any
-longer) a secret.
-
-CREDITS
-=======
-
-This issue was discovered as a bug by Török Edwin and analysed by
-Wei Liu of Citrix.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-$ sha256sum xsa90*.patch
-364d94db6dc2b151eb1bb359dc90c71cbb8c5e3dc99b73fc01d981c018777ff4  xsa90.patch
-$
-
-This patch has also been applied to the network subsystem maintainer's git tree:
-https://git.kernel.org/cgit/linux/kernel/git/davem/net-next.git/commit/?id=e9d8b2c2968499c1f96563e6522c56958d5a1d0d
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJTO/lVAAoJEIP+FMlX6CvZkYAH/1DY0nKcCsG718IFOdtuu1LA
-tWhoEACOkqCrqfg/L/6/Tljd0okBlOa15v9amBAJvy7amxAIzlGHDgD3BgQ1w5Te
-Rc+GDVIoHhYq/LdqSj2Jr4TFXCuekOxTER3idvg+E1RrCOoEqNEFbIKey16vo/ll
-tn7qKs+qZ7LlQHhjLmwFuDfSromYzOoSiS43nqy4vFHgFXC1Zmk/K8p8DLHxz92y
-gt6EvMdoDIdgk9hZdLkRIPlqvprV6wQ69pX3MVB6WKIWwW6OYDxbMLfICbubESST
-7af33QABFimadkalnN+4+xGblS1WRC5wz2XpSfNNe1bbaKkbPhXe7o9j0+mLX8g=
-=FL5w
------END PGP SIGNATURE-----
-
-Download attachment "xsa90.patch" of type "application/octet-stream" (4624 bytes)
+-- 
+Vincent Danen / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
