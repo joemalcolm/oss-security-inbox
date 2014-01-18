@@ -1,39 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/06/1
-Message-ID: <53B89A56.9060606@canonical.com>
-Date: Sat, 05 Jul 2014 20:37:42 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-4699: Linux ptrace bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/18/9
+Message-Id: <201401181116.s0IBGAdH010853@linus.mitre.org>
+Date: Sat, 18 Jan 2014 06:16:10 -0500 (EST)
+From: cve-assign@...re.org
+To: mattd@...fuzz.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE requests / advisory: cxxtools <= 2.2, Tntnet <= 2.2
 Content-Type: text/plain; charset=utf-8
 
-On 14-07-05 05:22 PM, Yves-Alexis Perez wrote:
-> On sam., 2014-07-05 at 22:25 +0400, Solar Designer wrote:
->> Here are some distro vendor status pages on this bug:
->>
->> "x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX (CVE-2014-4699)"
->> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1337339
->>
->> Ubuntu has just sent out 7 update announcements (for different of
->> their
->> supported distros/kernels), USN-2266-1 through USN-2272-1.
->>
->> "ptrace,x86: force IRET path after a ptrace_stop()"
->> http://kernel.opensuse.org/cgit/kernel/commit/?h=openSUSE-13.1&id=d1f26676dad578a65c94782f0c2bd00b7aa68f1b
->>
->> "CVE-2014-4699 Kernel: x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX"
->> https://bugzilla.redhat.com/show_bug.cgi?id=1115927
-> 
-> Hmhm, what are the reasons why the mainline (and opensuse) fix
-> (b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a) is to force using IRET
-> instead of SYSRET, while distros like Ubuntu and Redhat seem to “only”
-> make sure RIP is canonical?
-> 
-> Regards,
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-AFAIK, our plan is to switch to the upstream fix for the next kernel updates.
+> Affected software: cxxtools
+> Description: By sending a crafted HTTP query parameter containing two
+> percent signs in a row, URL parsing would enter an infinite recursive
+> loop, leading to a crash. This allows a remote attacker to DOS the
+> server.
+> Affected versions: current releases (<= 2.2)
+> Fixed in version: 2.2.1
+> Fix: https://github.com/maekitalo/cxxtools/commit/142bb2589dc184709857c08c1e10570947c444e3
+> Release notes: http://www.tntnet.org/download/cxxtools-2.2.1/Releasenotes-2.2.1.markdown
 
-Marc.
+Use CVE-2013-7298.
 
 
+> Affected software: Tntnet
+> Description: By sending a crafted HTTP request that uses "\n" to end
+> its headers instead of the expected "\r\n", it is possible that
+> headers from a previous unrelated request will seemingly be appended
+> to the crafted request (due to a missing null termination). This
+> allows a remote attacker to use sensitive headers from other users'
+> requests in their own requests, such as cookies or HTTP authentication
+> credentials.
+> Affected versions: current releases  (<= 2.2)
+> Fixed in version: 2.2.1
+> Fix: https://github.com/maekitalo/tntnet/commit/9bd3b14042e12d84f39ea9f55731705ba516f525
+> and https://github.com/maekitalo/tntnet/commit/9d1a859e28b78bfbf769689454b529ac7709dee4
+> Release notes: http://www.tntnet.org/download/tntnet-2.2.1/Releasenotes-2.2.1.markdown
+
+Use CVE-2013-7299.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS2mEZAAoJEKllVAevmvmsAuAH/j2glwHNt4bzFqxhBOYOdxtM
++qY/LOuyX24aHDi9JASGeedm+kmVnRMqQXept4M+tNGdJo+vwgnQkV2HtQhdrZWB
+cWwowS2+7FEbdJ/HXPfrmHDLS8vfWdMeQ1SzkXctnQeti+/jYnBMVC61Lr2boNBn
+478zDHV6h9FV8xnZZFRS5+j3/UGtJOqWzKhZgvDZBLaAHLbut9+vFuCKImvaq0iZ
+S6j/x1u/ZoBZ0vpkub2UGzhhiEylmSEGe/+WAORqzdiS4ey8rbbrCaaZcgY3QePg
+v2MUn/VFpPlhM3CZRokNq96h+BqQGQ/c4yr5phtfH0weZtGicxUmP6zMUcbH87M=
+=KsAd
+-----END PGP SIGNATURE-----
