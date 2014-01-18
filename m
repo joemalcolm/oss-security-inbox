@@ -1,54 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/25
-Message-ID: <20140605155454.GD23993@kroah.com>
-Date: Thu, 5 Jun 2014 08:54:54 -0700
-From: Greg KH <greg@...ah.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: Thomas Gleixner <tglx@...utronix.de>, oss-security@...ts.openwall.com
-Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/18/5
+Message-ID: <CAD3Canf8ZQ=29mRPPGWd353LJVO6ojSHAH1fxqVOcMAHZTyimQ@mail.gmail.com>
+Date: Sat, 18 Jan 2014 14:43:23 +1300
+From: Matthew Daley <mattd@...fuzz.com>
+To: oss-security@...ts.openwall.com
+Cc: Tommi Mäkitalo <tommi@...net.org>
+Subject: CVE requests / advisory: cxxtools <= 2.2, Tntnet <= 2.2
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 05, 2014 at 07:24:30PM +0400, Solar Designer wrote:
-> Greg, Thomas -
-> 
-> On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer wrote:
-> > This was handled via linux-distros, hence the mandatory oss-security
-> > posting.  The issue was made public earlier today, and is included in
-> > this Debian advisory:
-> > 
-> > https://lists.debian.org/debian-security-announce/2014/msg00130.html
-> > 
-> > ---
-> > CVE-2014-3153
-> > 
-> >     Pinkie Pie discovered an issue in the futex subsystem that allows a
-> >     local user to gain ring 0 control via the futex syscall. An
-> >     unprivileged user could use this flaw to crash the kernel (resulting
-> >     in denial of service) or for privilege escalation.
-> > ---
-> > 
-> > I've attached patches by Thomas Gleixner (four e-mails, in mbox format),
-> 
-> Can you comment on how the four patches:
-> 
-> Subject: [patch 1/4] futex-prevent-requeue-pi-on-same-futex.patch
-> Subject: [patch 2/4] futex: Validate atomic acquisition in
-> Subject: [patch 3/4] futex: Always cleanup owner tid in unlock_pi
-> Subject: [patch 4/4] futex: Make lookup_pi_state more robust
+Hi,
 
-Those have to go on top of:
+I'd like to request CVE IDs for these 2 issues. They were found in
+software from the Tntnet Project (www.tntnet.org), which develop
+Tntnet, an open-source web server for C++ web applications.
 
-> relate to these two on LKML:
-> 
-> Subject: [PATCH 3.14 001/228] futex: Add another early deadlock detection check
-> Subject: [PATCH 3.14 002/228] futex: Prevent attaching to kernel threads
+This is the first such request and the issues are (now) public; this
+message serves as an advisory as well.
 
-These, as these two patches are already in Linus's tree.
 
-Now if these two are needed for the first 4 to work properly, that I do
-not know, Thomas might.  I see no reason why a distro would not want
-these two patches anyway, as they made the stable kernel criteria.
+* Issue #1
 
-thanks,
+Affected software: cxxtools
+Description: By sending a crafted HTTP query parameter containing two
+percent signs in a row, URL parsing would enter an infinite recursive
+loop, leading to a crash. This allows a remote attacker to DOS the
+server.
+Affected versions: current releases (<= 2.2)
+Fixed in version: 2.2.1
+Fix: https://github.com/maekitalo/cxxtools/commit/142bb2589dc184709857c08c1e10570947c444e3
+Release notes: http://www.tntnet.org/download/cxxtools-2.2.1/Releasenotes-2.2.1.markdown
+Reported by: Julian Wiesener
 
-greg k-h
+
+* Issue #2
+
+Affected software: Tntnet
+Description: By sending a crafted HTTP request that uses "\n" to end
+its headers instead of the expected "\r\n", it is possible that
+headers from a previous unrelated request will seemingly be appended
+to the crafted request (due to a missing null termination). This
+allows a remote attacker to use sensitive headers from other users'
+requests in their own requests, such as cookies or HTTP authentication
+credentials.
+Affected versions: current releases  (<= 2.2)
+Fixed in version: 2.2.1
+Fix: https://github.com/maekitalo/tntnet/commit/9bd3b14042e12d84f39ea9f55731705ba516f525
+and https://github.com/maekitalo/tntnet/commit/9d1a859e28b78bfbf769689454b529ac7709dee4
+Release notes: http://www.tntnet.org/download/tntnet-2.2.1/Releasenotes-2.2.1.markdown
+Reported by: Matthew Daley
+
+Please let me know if you need any further information.
+
+Thanks,
+
+- Matthew Daley
