@@ -1,41 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/20/1
-Message-ID: <20141220122736.771e1ccd@pc>
-Date: Sat, 20 Dec 2014 12:27:36 +0100
-From: Hanno Böck <hanno@...eck.de>
-To:  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: can we talk about secure time?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/18/3
+Message-Id: <201401180121.s0I1LDdN001981@linus.mitre.org>
+Date: Fri, 17 Jan 2014 20:21:13 -0500 (EST)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-0021: chrony traffic amplification in cmdmon protocol
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-So we know now that the default ntp implementation most people use has
-some severe security vulnerabilities. And some people think we should
-either rewrite it or use the one from openbsd.
+> Is this not a same/similar case?
 
-A strange discussion. Because ntp is insecure by design. It is an
-unauthenticated, insecure protocol that is suspectible to
-man-in-the-middle-attacks. Frankly, I don't care which implementation
-of an insecure protocol has less buffer overflows.
+There are many UDP protocols in which the reply traffic is larger than
+the request traffic. A vendor can handle this in several possible
+ways, including (for example) a statement that the protocol
+implementation details were intentional, and that adverse effects are
+a network-operations problem, not a software problem. CVE is about
+software mistakes. So, at least at the moment, we are looking for
+vendors who characterize the issue as a software mistake, and fix it.
 
-This is not a theoretical problem:
-https://www.blackhat.com/docs/eu-14/materials/eu-14-Selvi-Bypassing-HTTP-Strict-Transport-Security-wp.pdf
-https://github.com/PentesterES/Delorean
+In the chronyd case, this seems likely, so we don't expect any
+long-term issue with including CVE-2014-0021 in CVE.
 
+There may well be other reasonable approaches. An example approach
+might be making CVE assignments for any protocol implementation that's
+similar to one that already has a CVE (e.g., similar to ntpd). We're
+not currently using that approach.
 
-Is there any reason not to tell everyone to use tlsdate?
-What's the distro's take on this? afaik many ship ntp-based solutions
-by default.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Also see my comment:
-https://blog.hboeck.de/archives/863-Dont-update-NTP-stop-using-it.html
-
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+iQEcBAEBAgAGBQJS2dYfAAoJEKllVAevmvmsCpcH/AlwpzADNsdZtfJsvLBontoq
+Btpl9yry86vVt9HKks3/C4C8l2agPkFKj466TxRFAnRtqgaG5zbxex4CRk09EEmB
+yMOlzRTWSYSC4UHH3nsVvNJsikuMR0N3vcdlVqoIfnfTOWyD9DwPgo/OSABm+dMa
+vcQmw6JHugTL4ZXju1fKnqbu44QePKc96LXlrcqE4z4AWbzyr3Fc6A2kRWb5g7qt
+40ltpwG2vntUzXqSyIN2IvY1OA3wHy8OOh9Hh/a8LXqjqyasWvxSUHNvSF4H/Ezo
+a/Rmsq5+x+41Ai3GdYlsH6TSf2B7HMRYMgPKr0FQ/jn6k340NdCzi6WlJpPdPmc=
+=Qby5
+-----END PGP SIGNATURE-----
