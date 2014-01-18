@@ -1,34 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/08/2
-Message-Id: <818FF3C1-7291-4AEB-B5F6-13D73B3C8E15@corman.io>
-Date: Mon, 7 Apr 2014 23:05:42 -0400
-From: Ben Corman <ben@...man.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/18/8
+Message-ID: <CAD3CanehJRwbSa16OxyBwrc3zD3BEwbfjpCH5tofnc3swYdbXg@mail.gmail.com>
+Date: Sat, 18 Jan 2014 22:52:08 +1300
+From: Matthew Daley <mattd@...fuzz.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Icecast world readable log/logdir
+Subject: Re: CVE requests / advisory: cxxtools <= 2.2, Tntnet <= 2.2
 Content-Type: text/plain; charset=utf-8
 
-This seems to be the behavior on Ubuntu 12.04 as well.
+On Sat, Jan 18, 2014 at 10:46 PM, Henri Salo <henri@...v.fi> wrote:
+> On Sat, Jan 18, 2014 at 02:43:23PM +1300, Matthew Daley wrote:
+>> Hi,
+>>
+>> I'd like to request CVE IDs for these 2 issues. They were found in
+>> software from the Tntnet Project (www.tntnet.org), which develop
+>> Tntnet, an open-source web server for C++ web applications.
+>>
+>> This is the first such request and the issues are (now) public; this
+>> message serves as an advisory as well.
+>>
+>>
+>> * Issue #1
+>>
+>> Affected software: cxxtools
+>> Description: By sending a crafted HTTP query parameter containing two
+>> percent signs in a row, URL parsing would enter an infinite recursive
+>> loop, leading to a crash. This allows a remote attacker to DOS the
+>> server.
+>> Affected versions: current releases (<= 2.2)
+>> Fixed in version: 2.2.1
+>> Fix: https://github.com/maekitalo/cxxtools/commit/142bb2589dc184709857c08c1e10570947c444e3
+>> Release notes: http://www.tntnet.org/download/cxxtools-2.2.1/Releasenotes-2.2.1.markdown
+>> Reported by: Julian Wiesener
+>>
+>>
+>> * Issue #2
+>>
+>> Affected software: Tntnet
+>> Description: By sending a crafted HTTP request that uses "\n" to end
+>> its headers instead of the expected "\r\n", it is possible that
+>> headers from a previous unrelated request will seemingly be appended
+>> to the crafted request (due to a missing null termination). This
+>> allows a remote attacker to use sensitive headers from other users'
+>> requests in their own requests, such as cookies or HTTP authentication
+>> credentials.
+>> Affected versions: current releases  (<= 2.2)
+>> Fixed in version: 2.2.1
+>> Fix: https://github.com/maekitalo/tntnet/commit/9bd3b14042e12d84f39ea9f55731705ba516f525
+>> and https://github.com/maekitalo/tntnet/commit/9d1a859e28b78bfbf769689454b529ac7709dee4
+>> Release notes: http://www.tntnet.org/download/tntnet-2.2.1/Releasenotes-2.2.1.markdown
+>> Reported by: Matthew Daley
+>>
+>> Please let me know if you need any further information.
+>>
+>> Thanks,
+>>
+>> - Matthew Daley
+>
+> Just a small note for assigner. These were fixed last year so should get 2013
+> CVE IDs if I'm correct.
 
-$ ls -al /var/log/icecast2/
-total 1044
-drwxr-xr-x  2 icecast2 icecast   4096 Apr  6 06:53 .
-drwxr-xr-x 12 root     root      4096 Apr  7 06:30 ..
--rw-r--r--  1 icecast2 icecast 135830 Apr  7 22:59 access.log
--rw-r--r--  1 icecast2 icecast 339901 Apr  7 22:59 error.log
+Sorry, I forgot to mention that. Yes, they were both reported and
+fixed (in master, at least) in 2013.
 
-On Apr 6, 2014, at 1:32 PM, Agostino Sarubbo <ago@...too.org> wrote:
+- Matthew
 
-> I just noticed that (at least on gentoo), the following package produces a 
-> world readable log:
-> 
-> Icecast (http://www.icecast.org):
-> # ls -la /var/log/icecast 
-> total 18648
-> drwxrw-r--  2 icecast nogroup     4096 Apr  6 12:23 .
-> drwxr-xr-x 15 root    root        4096 Apr  5 04:20 ..
-> -rw-r--r--  1 icecast nogroup  5646894 Apr  6 19:27 access.log
-> -rw-r--r--  1 icecast nogroup  3181987 Apr  6 19:27 error.log
-> -- 
-> Agostino Sarubbo
-> Gentoo Linux Developer
-
+>
+> ---
+> Henri Salo
