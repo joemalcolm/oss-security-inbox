@@ -1,70 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/28/1
-Message-ID: <78D457E8-E99E-4DAE-80C6-D4E84048D042@redhat.com>
-Date: Fri, 27 Jun 2014 19:05:28 -0600
-From: "Vincent Danen" <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/18/7
+Message-ID: <20140118094614.GA21235@kludge.henri.nerv.fi>
+Date: Sat, 18 Jan 2014 11:46:14 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Question regarding CVE applicability of missing HttpOnly flag
+Subject: Re: CVE requests / advisory: cxxtools <= 2.2, Tntnet <= 2.2
 Content-Type: text/plain; charset=utf-8
 
-On 06/27/2014, at 12:42 PM, Kurt Seifried wrote:
+On Sat, Jan 18, 2014 at 02:43:23PM +1300, Matthew Daley wrote:
+> Hi,
+> 
+> I'd like to request CVE IDs for these 2 issues. They were found in
+> software from the Tntnet Project (www.tntnet.org), which develop
+> Tntnet, an open-source web server for C++ web applications.
+> 
+> This is the first such request and the issues are (now) public; this
+> message serves as an advisory as well.
+> 
+> 
+> * Issue #1
+> 
+> Affected software: cxxtools
+> Description: By sending a crafted HTTP query parameter containing two
+> percent signs in a row, URL parsing would enter an infinite recursive
+> loop, leading to a crash. This allows a remote attacker to DOS the
+> server.
+> Affected versions: current releases (<= 2.2)
+> Fixed in version: 2.2.1
+> Fix: https://github.com/maekitalo/cxxtools/commit/142bb2589dc184709857c08c1e10570947c444e3
+> Release notes: http://www.tntnet.org/download/cxxtools-2.2.1/Releasenotes-2.2.1.markdown
+> Reported by: Julian Wiesener
+> 
+> 
+> * Issue #2
+> 
+> Affected software: Tntnet
+> Description: By sending a crafted HTTP request that uses "\n" to end
+> its headers instead of the expected "\r\n", it is possible that
+> headers from a previous unrelated request will seemingly be appended
+> to the crafted request (due to a missing null termination). This
+> allows a remote attacker to use sensitive headers from other users'
+> requests in their own requests, such as cookies or HTTP authentication
+> credentials.
+> Affected versions: current releases  (<= 2.2)
+> Fixed in version: 2.2.1
+> Fix: https://github.com/maekitalo/tntnet/commit/9bd3b14042e12d84f39ea9f55731705ba516f525
+> and https://github.com/maekitalo/tntnet/commit/9d1a859e28b78bfbf769689454b529ac7709dee4
+> Release notes: http://www.tntnet.org/download/tntnet-2.2.1/Releasenotes-2.2.1.markdown
+> Reported by: Matthew Daley
+> 
+> Please let me know if you need any further information.
+> 
+> Thanks,
+> 
+> - Matthew Daley
 
-> On 27/06/14 10:35 AM, Vincent Danen wrote:
->> On 06/26/2014, at 10:00 AM, Kurt Seifried wrote:
->>
->>> On 26/06/14 05:45 AM, Jamie Strandboge wrote:
->>>> Based on this email and the one this is in response to, I find
->>>> this comment unclear. Is MITRE saying that:
->>>>
->>>> a) lack of implementing SELinux, AppArmor, virus scanner,
->>>> firewall, <insert hardening software here> does not justify a
->>>> CVE because of the complexity? b) lack of implementing SELinux,
->>>> AppArmor, virus scanner, firewall, <insert hardening software
->>>> here> does not justify a CVE and also cannot be considered an
->>>> implementation error because of the complexity? c) implementing
->>>> SELinux, AppArmor, virus scanner, firewall, and/or <insert
->>>> hardening software here> is not worth it because the added
->>>> complexity intrinsically makes the system less secure? d)
->>>> something else?
->>>>
->>>> Thanks
->>>
->>> So one comment on this, replace the above with "DAC"
->>> (http://en.wikipedia.org/wiki/Discretionary_access_control) and I
->>> bet we'd hand it a CVE =).
->>>
->>> Security lines move, I would expect most modern system of any
->>> type (Windows, Linux, router, maybe not my bathroom scale that
->>> talks wifi... yet) to have some sort of firewall enabled by
->>> default and not simply leave everything exposed to the world. So
->>> in that case not having a fire enabled by default would
->>> definitely violate the principle of least surprise and maybe even
->>> qualify for a CVE.
->>
->> Wait.  You're saying that not having a firewall enabled by default
->> qualifies for a CVE?  I mean, firewalls are pretty common sense and
->> should definitely be used/available/whatever but to say that an
->> operating system or device doesn't have a firewall enabled by
->> default should have a CVE assigned seems... excessive, doesn't it?
->
-> I'm saying in quite a few common situations it should probably qualify
-> for a CVE. Not every single situation. Same for HTTPOnly.
->>
->> How is not having a firewall enabled by default a _vulnerability_?
->> If we look at it this way, it's a good thing CVEs go past 9999 per
->> year because we need to change everything we used to call
->> "hardening" to be a vulnerability, do we not?
->
-> How is not having DAC a _vulnerability_? and yet now DAC support is
-> required....
+Just a small note for assigner. These were fixed last year so should get 2013
+CVE IDs if I'm correct.
 
-That is my question.  If not having DAC is a vulnerability, why do I find absolutely _no_ CVEs for its absence?  Whether it's required or not has no bearing on whether or not it's a flaw.  But now HttpOnly is not only _not_ required, but its absence is being considered a flaw.
+---
+Henri Salo
 
-This is where my concern/confusion is.  Are we calling things flaws because they have an actual vulnerability, or are we starting to call things "flaws" even tough they don't have vulnerabilities, don't fix vulnerabilities, but they're extremely useful things to have?  I don't think that's the definition of a flaw.
-
-
-
--- 
-Vincent Danen / Red Hat Product Security
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
