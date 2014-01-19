@@ -1,110 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/2
-Message-Id: <201406030443.s534hI7u008923@linus.mitre.org>
-Date: Tue, 3 Jun 2014 00:43:18 -0400 (EDT)
-From: cve-assign@...re.org
-To: jmm@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE ID request: typo3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/19/1
+Message-ID: <52DBBD7A.3080402@redhat.com>
+Date: Sun, 19 Jan 2014 12:56:42 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-0021: chrony traffic amplification in cmdmon protocol
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 01/17/2014 11:54 PM, Vincent Danen wrote:
+> With the news about the traffic amplification issue in ntpd, one of our developers looked at chronyd and it suffers from the same flaw.
+>
+> We've filed a bug [1] and it's also been brought up upstream [2].  There is currently no fix, but as the ntpd issue has been gaining some interest, I'm bringing this up here now for other who may ship chrony.  We assigned it CVE-2014-0021.
 
-> http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2014-001/
+I noticed this as well when reviewing chrony quite a while ago, but I 
+did not press the issue because its restricted to localhost by default 
+and the amplification factor is low, especially in packet count terms. 
+At the time, I did not consider it comparable to the ntpd issue at all, 
+and I still don't.
 
-> Failing to properly validate the HTTP host-header TYPO3 CMS is
-> susceptible to host spoofing.
+Comparable levels of amplification are present in TCP itself and many 
+other UDP-based protocols.
 
-Use CVE-2014-3941.
-
-(It is possible that, with more information, multiple CVE IDs may have
-been assigned. In CVE, missing input validation is often not
-considered a single type of vulnerability, e.g., failure to recognize
-that a parameter must be an integer could lead to both XSS and SQL
-injection, and two CVE IDs would be assigned. Here, however, there is
-no statement of which of (or how many of) the concerns in
-http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
-is the motivation for treating the missing input validation as a
-vulnerability. Thus, only one CVE ID makes sense. Note that "reported a
-particular exploit possibility" suggests that there is at least one
-motivation. If TYPO3 CORE were unaffected, and the change were made
-solely to address a theoretical possibility that an extension could
-misuse the _SERVER["HTTP_HOST"] value, then a CVE ID may not have been
-assigned.)
-
-
-> Vulnerable subcomponent: Color Picker Wizard
-> Vulnerability Type: Insecure Unserialize
-
-Use CVE-2014-3942.
-
-
-> Vulnerable subcomponent: Backend
-> Vulnerability Type: Cross-Site Scripting
-
-Use CVE-2014-3943.
-
-
-> Vulnerable subcomponent: ExtJS
-> Vulnerability Type: Cross-Site Scripting
-> delete the file typo3/contrib/extjs/resources/charts.swf
-
-It seems likely that this is a copy of some version of the YUI
-charts.swf file. If so, this issue can be mapped to an existing CVE
-such as CVE-2010-4207 or CVE-2012-5881. Going further, it seems
-plausible that different versions of TYPO3 might incorporate different
-versions of ExtJS, and different versions of ExtJS might incorporate
-charts.swf from different versions of YUI. Although we would like to
-offer a precise CVE mapping, at this point it seems reasonable to map
-the "Vulnerable subcomponent: ExtJS" part of TYPO3-CORE-SA-2014-001 to
-both CVE-2010-4207 and CVE-2012-5881.
-
-
-> Vulnerable subcomponent: Authentication
-> Vulnerability Type: Improper Session Invalidation
-
-Use CVE-2014-3944.
-
-
-> Vulnerable subcomponent: Authentication
-> Vulnerability Type: Authentication Bypass
-> Affected Versions: All TYPO3 versions not configured to use salted passwords
-
-Use CVE-2014-3945.
-
-This CVE ID is for the CWE-836 issue, i.e., the "can be used directly
-to authenticate" statement in the Security Bulletin. There is no CVE
-ID assigned for either of the CWE-759 issues, i.e.,
-
-  - salting is not the default before 4.6
-  - salting is not mandatory before 6.2
-
-Those are considered security improvements, because the vendor is not
-specifically making an announcement that they are vulnerability fixes
-(or, at least, that announcement isn't in the TYPO3-CORE-SA-2014-001
-Security Bulletin).
-
-
-> Vulnerable subcomponent: Extbase Framework
-> Vulnerability Type: Information Disclosure
-> Failing to respect user groups of logged in users when caching queries
-
-Use CVE-2014-3946.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTjVITAAoJEKllVAevmvms7VEIAKul/Mi9Q3Wdl3GHpsrxv3h+
-/ClT454GclowvIgUdfkd6jLK13diEGE43qiQ2DZ8oSBG3MnTscMKHJaLa2Tk8onF
-xX1g5DAYBTSsyoZnmVbcaP0/BFbVdtM6tcua77rKmR0XAQRBIlGO33RASIFxl6tm
-VYpH5f/UDW5nJABEOjV3KwJilPwiVikMQyVCEYKzm0wipmRt+j6TffGsZDP+rsB8
-yA3Ymrmqk6fJ2SC1sTcP6XFiDb7pvE+7s+yPcha0JopjpGwOnU0P3XHG81RT5Iv7
-Qpje047P/v/8QX5Ri5ZQyCl8i2CsBDMgsNbkYIzkusm9wgGPwFpYLT5Vt7oiyyE=
-=58uw
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security Team
