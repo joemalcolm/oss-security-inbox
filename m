@@ -1,46 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/16
-Message-ID: <52EFBAA8.4070509@redhat.com>
-Date: Tue, 04 Feb 2014 02:50:00 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/19/2
+Message-ID: <20140119124833.GA8740@kludge.henri.nerv.fi>
+Date: Sun, 19 Jan 2014 14:48:33 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: 737385@...s.debian.org
-Subject: Re: CVE request: a2ps insecure temporary file use
+Subject: Re: more info on "radiotap: bitmap-end-finding buffer overrun"
 Content-Type: text/plain; charset=utf-8
 
-On 02/03/2014 05:12 PM, Murray McAllister wrote:
-> Hello,
->
-> Jakub Wilk found that a2ps, a tool to convert text and other types of
-> files to PostScript, insecurely used a temporary file in spy_user(). A
-> local attacker could use this flaw to perform a symbolic link attack to
-> modify an arbitrary file accessible to the user running a2ps:
->
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737385
->
-> The original report notes there are calls to tempname_ensure(). If any
-> of those are found to be vulnerable, would they use the same CVE number,
-> or require a different one?
->
-> References:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737385
-> https://bugzilla.redhat.com/show_bug.cgi?id=1060630
->
-> Thanks,
->
-> --
-> Murray McAllister / Red Hat Security Response Team
->
+On Fri, Jan 17, 2014 at 12:50:55PM +0100, Raphael Geissert wrote:
+> Hi,
+> 
+> I was wondering if anyone has more info on the following commit:
+> https://github.com/torvalds/linux/commit/bd02cd2549cfcdfc57cb5ce57ffc3feb94f70575
+> 
+> AFAICS it is a different issue than CVE-2013-7027.
+> 
+> A web search points to the following Secunia advisory, but not much else:
+> http://secunia.com/community/advisories/56282
+> 
+> (not asking for a CVE at this time)
+> 
+> Cheers,
+> -- 
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
 
-Tim Waugh pointed out this was fixed in 2001:
+Johannes Berg replied:
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1060630#c5
+"""
+It's not important at all in the current code base, let me explain why I think so.
 
-And notes 
-http://pkgs.fedoraproject.org/cgit/a2ps.git/plain/a2ps-4.13-security.patch 
-is the patch.
+The only (current) user of this code is the mac80211 injection code, so you
+already need permission to create raw sockets, which I believe is usually
+equivalent to root permissions.
 
-Cheers,
+With that aside, let's assume you build and manage to send a packet specifically
+to hit this particular issue. By nature of the issue, this packet must consist
+solely of a radiotap header, with header extension bitmap and at most 3 bytes of
+data. The latter is crucial as otherwise the bitmap would just overlap the data
+and you can't cause the invalid read. Now this means that your packet is really
+just the size of the fixed radiotap header, plus 3 bytes at most, so at most 11
+bytes.
 
---
-Murray McAllister / Red Hat Security Response Team
+Let's also say that the length field in your radiotap header is 8 (the minimum),
+which doesn't matter for the parser but does for the surrounding code. As a
+result, the checking code in ieee80211_monitor_start_xmit() will see that there
+are at least 2 more bytes after the radiotap header, and treat them as the
+802.11 frame control field. Regardless of the contents of those two bytes,
+ieee80211_hdrlen() will return at least 10.
+
+Since 10 + 8 (the radiotap length we put into the packet) is far bigger than 11,
+I believe you can't even trigger the invalid read, since the packet will be
+dropped as invalid before the real radiotap parser is even initialized (i.e. the
+previously buggy code invoked.)
+"""
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
