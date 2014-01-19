@@ -1,38 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/10
-Message-ID: <20141002021127.GA25320@openwall.com>
-Date: Thu, 2 Oct 2014 06:11:27 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/19/3
+Message-ID: <52DC605D.8090900@redhat.com>
+Date: Mon, 20 Jan 2014 10:31:41 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kohsuke Kawaguchi <kk@...suke.org>
-Subject: Re: Security advisory in Jenkins
+CC: Reed Loden <reed@...dloden.com>, Kurt Seifried <kseifrie@...hat.com>
+Subject: Re: CVE-2013-6488: Jenkins fails to sanitize input before adding it to the page
 Content-Type: text/plain; charset=utf-8
 
-Bryan - I think Kohsuke is not subscribed.  I've added CC.
+On 01/17/2014 05:39 PM, Reed Loden wrote:
+> On Fri, 17 Jan 2014 13:02:03 +1100
+> Murray McAllister <mmcallis@...hat.com> wrote:
+>
+>> We recently received a report from Teguh P. Alko about an issue
+>> affecting Jenkins. Input was not sanitized before adding it to the page.
+>> The fix is public here since the start of 2013:
+>>
+>> https://github.com/jenkinsci/jenkins/commit/f8d2a0ba6c2e261f48287bdd95bd7a2d7a8d2d0e
+>
+> https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2013-02-16
+> is the security advisory that includes the above fix.
+>
+>> This could be used for copy and paste attacks, with the end result being
+>> similar to that of cross-site scripting attacks. It has been assigned
+>> CVE-2013-6488.
+>
+> Fairly sure that's just a dupe of CVE-2013-0328. See
+> http://seclists.org/oss-sec/2013/q1/368.
 
-On Wed, Oct 01, 2014 at 08:36:59PM -0500, Bryan Drewery wrote:
-> On 10/1/2014 6:25 PM, Kohsuke Kawaguchi wrote:
-> > I just wanted to share that the Jenkins project issued a security advisory
-> > today. These issues are independently found and we've aggregated into a
-> > single release.
-> > 
-> > The relevant CVE IDs, our bug tracking IDs are available here
-> > <https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-10-01>
-> > .
-> > 
-> > The new versions can be downloaded from here
-> > <http://mirrors.jenkins-ci.org/>.
-> > 
-> > (This is the first time I do this, so my apologies in advance for probably
-> > failing to follow the expected format.)
-> 
-> Kudos to all for finding and fixing these issues. It was quite a
-> surprising list though. Were these fixes kept from release for an
-> extended time? The timeframe for CVE-2013-2186 is especially concerning.
+It is a dupe :( Thanks for pointing this out.
 
-Many of these issues were brought to the distros list on Fri Sep 26
-17:10:16 2014 UTC, and got their CVE IDs assigned there.  However,
-CVE-2013-2186 was not among those.  I don't know why the old CVE ID,
-nor how that issue was handled.
-
-Alexander
+--
+Murray McAllister / Red Hat Security Response Team
