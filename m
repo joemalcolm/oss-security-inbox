@@ -1,75 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/3
-Message-ID: <Pine.GSO.4.64.1403280959070.24827@faron.mitre.org>
-Date: Fri, 28 Mar 2014 10:02:29 -0400 (EDT)
-From: "Steven M. Christey" <coley@...re.org>
-To: oss-security@...ts.openwall.com
-Subject: JBoss EJBInvokerServlet/JMXInvokerServlet confusion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/5
+Message-Id: <201401201605.s0KG5iI2015317@linus.mitre.org>
+Date: Mon, 20 Jan 2014 11:05:44 -0500 (EST)
+From: cve-assign@...re.org
+To: pinkbyte@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Cantata vulnerability
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-There are several CVEs related to the lack of authentication for JBoss
-invoker servlets, but there's a bit of confusion and a likely
-duplicate.
+> https://code.google.com/p/cantata/issues/detail?id=356
 
-CVE-2012-0874 is associated with various Red Hat advisories that
-mention JMXInvokerHAServlet and EJBInvokerHAServlet - with "HA" in the
-name - in JBoss.
+Use CVE-2013-7300 for the lack of restrictions on the set of files
+available through the web server, i.e., an absolute path traversal
+vulnerability.
 
-The description for CVE-2013-4810 is currently focused on HP products,
-but it mentions EJBInvokerServlet and JMXInvokerServlet (different
-servlets without "HA" in the name).  Through the associated ZDI
-advisory, this issue is associated with some exploit(s) authored by
-Andrea Micalizzi (rgod), who reported the issue in various products
-that utilize JBoss.  In addition,
-https://access.redhat.com/site/articles/545183 - "Does CVE-2013-4810
-affect Red Hat JBoss products?" - clarifies that these servlets are
-"exposed without authentication on older, unsupported community
-releases of JBoss AS (WildFly) 4.x and 5.x."
+Use CVE-2013-7301 for the default configuration in which the external
+network interface is used with no access control for reading queued
+music files.
 
-CVE-2013-4810 is used heavily with references to ZDI-13-229.
+These could have been fixed independently. For example, fixing only
+CVE-2013-7300 means that a remote attacker could read "private" song
+data (but that might be irrelevant in some situations on a network
+within a home). Fixing only CVE-2013-7301 means that local users could
+read arbitrary files (but that might be irrelevant on a single-user
+system).
 
-The openness of JMXInvokerServlet is covered in a 2011-era disclosure
-in http://www.matasano.com/research/OWASP3011_Luca.pdf, although
-EJBInvokerServlet is not mentioned then.
+The other issues mentioned in id=356 are probably best considered
+suggestions for security improvement (e.g., availability of an HTTP
+service in fewer circumstances, defaulting to the lo interface, better
+access control, additional build options, etc.).
 
-The key question is whether CVE-2013-4810 is a duplicate of an
-existing CVE that covers EJBInvokerServlet and JMXInvokerServlet, and
-if so, which CVE is it a duplicate of.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-It is not a duplicate of CVE-2012-0874, since that deals with the
-exposure of different servlets - the "HA" servlets - so is effectively
-a variant of the original issue.
-
-CVE-2007-1036 is heavily used.  Although it does not mention 
-EJBInvokerServlet or JMXInvokerServlet, it is related to insecure JBoss 
-configuration.  None of the commonly-associated references mention 
-EJBInvokerServlet and JMXInvokerServlet, either.  If we can clearly link 
-CVE-2007-1036 with those servlets, then it becomes possible to reject 
-CVE-2013-4810 as a duplicate.
-
-Original links such as
-http://wiki.jboss.org/wiki/Wiki.jsp?page=SecureJBoss are now gone,
-which is unfortunate because this is a "bridge reference" that is
-included in both CVE-2007-1036 and Red Hat's "Does CVE-2013-4810
-affect Red Hat JBoss products?" article.
-https://community.jboss.org/wiki/securethejmxconsole doesn't name the
-servlets.
-
-There is, at least, a Metasploit module that maps to CVE-2007-1036 and
-calls JMXInvokerServlet:
-
-https://www.rapid7.com/db/modules/exploit/multi/http/jboss_invoke_deploy
-
-There's still a question of EJBInvokerServlet - I haven't seen it
-mentioned in conjunction with CVE-2007-1036 yet.
-
-Also, it appears that there are mentions of other vectors besides
-servlets, e.g.
-http://archives.neohapsis.com/archives/bugtraq/2007-02/0356.html
-
-Red Hat, can you confirm that the scope of CVE-2007-1036 is the lack
-of authentication for both JMXInvokerServlet and EJBInvokerServlet?
-
-
-- Steve
+iQEcBAEBAgAGBQJS3UglAAoJEKllVAevmvmslR4IALRpqiR6R6K8mUuqeEDhnzKV
+TY4cY6E5sRbpM4jCLKKSlTX6eLFuOEP0yXJfnyAr5opGTslmecfCTVuvTxa9u7E5
+KHviH9Qlinzt31BnxNvXJPntIRHr87YVPYPvHNeBMVcVyl3Z9tRMBngGn7pXfPh3
+3ILDISHeKtbGrSO/7PycIxqEJuNgaU0sckcp2NGYkMDNF6fjLdKak+nGHSA8tvML
+ssvGayQ2EUcfSEWUdltDR8omDcTKEAR8w86Bpu1usf0mOczh15bn9rJNb/BjLQIH
+Wx2EyVeuDVrOftmdK4IzqchfrEsvKmJOKA8ZiyG1XY9n7n7T8iKjjeCvHwOQM6o=
+=Arrv
+-----END PGP SIGNATURE-----
