@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/9
-Message-Id: <201403261957.s2QJvT4C000535@linus.mitre.org>
-Date: Wed, 26 Mar 2014 15:57:29 -0400 (EDT)
-From: cve-assign@...re.org
-To: thijs@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssh client does not check SSHFP if server offers certificate
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/4
+Message-ID: <20140120150846.GA19365@eldamar.local>
+Date: Mon, 20 Jan 2014 16:08:46 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: David Prévot <taffit@...ian.org>
+Subject: CVE request: spip: cross-site scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-> a malicious server can disable SSHFP-checking by presenting a certificate
-> https://bugs.debian.org/742513
+I would like to request a CVE for the following cross-site scripting
+vulnerability in spip: authors could inject code via their name, which
+is displayed in the signature of their articles and author page.
 
-Use CVE-2014-2653.
+Upstream fixed this issue in 3.0.13[1,2,3] and also for the 2.1 branch
+in [4,5].
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+ [1] http://www.spip.net/fr_article5648.html
+ [2] http://core.spip.org/projects/spip/repository/revisions/20902
+ [3] http://zone.spip.org/trac/spip-zone/changeset/77768
+ [4] http://core.spip.org/projects/spip/repository/revisions/20972
+ [5] http://www.spip.net/fr_article5665.html
 
-iQEcBAEBAgAGBQJTMy9xAAoJEKllVAevmvmsV34IAJ4eu2WLLkrN7ANZZEmsZh7P
-l+fOlbx7irfAvifz2iiKDtKCJIFr3JwmeOmea1QbDxFuJIx7A16OdjZNB4EU1aLf
-0XcPxd3jJSLq99UN5Osi8xJs7GTwqwlrX08dUgpopG86+7EPhaKkVkbTZsNz+F/o
-Z4N1oHBmp5quvO2/yfDsbr9+lSB67KIgtfRvGZhhgelpnFDHR00je4BRV5kpE7lF
-4R+VT77+iw/zdYve95XkO69fwp7hPFzDNBzDPWw3iWEBaBOFcnO3Py3kFhsCNXdI
-nDt8rXoQ1WjhSYT9/hwpQaXNvkb8NvDwdjRK05yMJ/Y2WiKx0kKOAoWlpzYBN5s=
-=I0pr
------END PGP SIGNATURE-----
+Could a CVE be assigned for this issue? (unfortunately the changes
+entries are only in french)
+
+Regards,
+Salvatore
