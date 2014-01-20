@@ -1,54 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/5
-Message-ID: <5404D08E.9030803@sumptuouscapital.com>
-Date: Mon, 01 Sep 2014 22:01:18 +0200
-From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/6
+Message-ID: <20140120161848.GB18661@kludge.henri.nerv.fi>
+Date: Mon, 20 Jan 2014 18:18:48 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: dhcpcd DoS attack
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
-
-On 07/30/2014 08:32 PM, Roy Marples wrote:
-> Hi
+On Mon, Jan 20, 2014 at 03:30:34AM -0800, Forest Monsen wrote:
+> Hi there, I'd like to request CVE identifiers for:
 > 
-> dhcpcd-4.0.0 though to dhcpcd.6.4.2 are vulnerable to a DoS
-> attack.
+> SA-CONTRIB-2013-098 - Ubercart - Session Fixation Vulnerability
+> https://drupal.org/node/2158651
 > 
-
-...
-
+> SA-CONTRIB-2014-001 - Entity API - Access Bypass
+> https://drupal.org/node/2169595
 > 
-> I would like to request a CVE for the issue.
+> SA-CONTRIB-2014-002 - Anonymous Posting - Cross Site Scripting (XSS)
+> https://drupal.org/node/2173321
 > 
+> Thanks!
+> 
+> Best,
+> Forest
 
-Has a CVE been assigned to this request?
+https://drupal.org/node/2169595 already has CVEs:
 
-- -- 
-- ----------------------------
-Kristian Fiskerstrand
-Blog: http://blog.sumptuouscapital.com
-Twitter: @krifisk
-- ----------------------------
-Public OpenPGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-- ----------------------------
-Adde parvum parvo magnus acervus erit
-Add little to little and there will be a big pile
------BEGIN PGP SIGNATURE-----
+CVE-2014-1398 (Comment, User and Node Statistics property access bypass)
+CVE-2014-1399 (Entity list property access bypass)
+CVE-2014-1400 (Unpublished comments access bypass)
 
-iQIcBAEBCgAGBQJUBNCGAAoJEPw7F94F4TagukAQALEQe9InKcrsX8lsZ3ak5Nvv
-iUGNSpoWGihT7BWNT2OFwuRVpXITLym5M/cPL4Uupg5FCQRIDf6w66bRHnd1+0Ll
-XcQkuK9KYP5fu4Fqb/0w7FCz+Wgrf8SaRg+2qXymgbBlO830fjfMZ+7oapBOYy+Y
-vc8cLH1nTMM7nCuoMKNt4oerTPAvLcafJnMaEEGkjomeP91LhLBohwLTfyXH2lym
-KOickeJ/1Ni670LfLrcl4xzYaUHlL3sQloYKDApOzb3RPT6c7Xh7K+lr0j8QW52p
-km/9ymm3Zm3HPN+rU0QASu1y1ibbz9prMF5ydRZAjNAEj2ocG+TupKspnqfpdf+b
-LJkFj9dEtZ4F9zzczEA8Gbz7Yae/3xcBxu2Lcy07/jJyfCYXnXeZTbX+tx4He/Zz
-2Fa4vUxN6/oQBoiegsAT5QAn81CUZbnkGuTJSTbTuMQohDCWRhKrDBHvcyFT8UL3
-S9axKwfJXjRqp3DR1o1FYjrw9IyJrkJu16P+qr2j4G3DvZC2QzwpMIuWsSgQxc93
-acblzJt0FoaH6RBmpUJqcUDArVRad0UFTIcFGq+PLIzUlExv1VF2679ImHN0USY7
-a8ELascBdOKyn9ZLa4Xl5jDXsOY1J+W4Cd5O+BHq7I9hcWlIjvP8viYDWq5eD202
-6OfZwpeWwdLSgC5Y0Bjd
-=TqOP
------END PGP SIGNATURE-----
+As far as I know SA-CONTRIB-2013-098 and SA-CONTRIB-2014-002 are still missing
+CVEs.
+
+---
+Henri Salo
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
