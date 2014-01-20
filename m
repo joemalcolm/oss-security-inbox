@@ -1,77 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/26/2
-Message-Id: <20141026220501.33E638BC018@smtpvmsrv1.mitre.org>
-Date: Sun, 26 Oct 2014 18:05:01 -0400 (EDT)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: strings / libbfd crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/10
+Message-ID: <52DD80E3.7090602@redhat.com>
+Date: Mon, 20 Jan 2014 13:02:43 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Reed Loden <reed@...dloden.com>, Kurt Seifried <kseifrie@...hat.com>
+Subject: Re: CVE-2013-6488: Jenkins fails to sanitize input before adding it to the page
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://lcamtuf.blogspot.com/2014/10/psa-dont-run-strings-on-untrusted-files.html
+On 01/19/2014 04:31 PM, Murray McAllister wrote:
+> On 01/17/2014 05:39 PM, Reed Loden wrote:
+>> On Fri, 17 Jan 2014 13:02:03 +1100 Murray McAllister
+>> <mmcallis@...hat.com> wrote:
+>> 
+>>> We recently received a report from Teguh P. Alko about an
+>>> issue affecting Jenkins. Input was not sanitized before adding
+>>> it to the page. The fix is public here since the start of
+>>> 2013:
+>>> 
+>>> https://github.com/jenkinsci/jenkins/commit/f8d2a0ba6c2e261f48287bdd95bd7a2d7a8d2d0e
+>>>
+>>
+>>
+>>> 
+https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2013-02-16
+>> 
+>> is the security advisory that includes the above fix.
+>> 
+>>> This could be used for copy and paste attacks, with the end
+>>> result being similar to that of cross-site scripting attacks.
+>>> It has been assigned CVE-2013-6488.
+>> 
+>> Fairly sure that's just a dupe of CVE-2013-0328. See 
+>> http://seclists.org/oss-sec/2013/q1/368.
+> 
+> It is a dupe :( Thanks for pointing this out.
+> 
+> -- Murray McAllister / Red Hat Security Response Team
 
-First, here are the two current CVE assignments for libbfd in GNU
-binutils. More CVE assignments may occur later (in particular, see
-below about versados.c). Affected programs apparently include strings
-(on some but not all platforms) as well as objdump and nm. The readelf
-program is not affected.
-
-CVE-2014-8484 is for the incorrect decrements in cases of S-records
-that are too short. References are:
-
-  https://sourceware.org/bugzilla/show_bug.cgi?id=17509
-  http://openwall.com/lists/oss-security/2014/10/23/5
-    
-The available information at the moment is that this is fixed in
-binutils 2.25 (not yet available on the
-http://ftp.gnu.org/gnu/binutils/ site), whereas new discoveries in
-October 2014 might not all be fixed in 2.25. Regardless of the actual
-content of 2.25, CVE-2014-8484 will remain a separate CVE.
-
-http://openwall.com/lists/oss-security/2014/10/23/8 (i.e., the
-five-byte S100\n file) is not, by itself, an attack that crosses
-privilege boundaries in realistic circumstances, so this report is not
-currently part of any CVE.
-
-
-CVE-2014-8485 is for the current
-https://sourceware.org/bugzilla/show_bug.cgi?id=17510 content, i.e.,
-incorrect "--n_elt / ++idx" code that makes the attachment 7846 and
-attachment 7848 attacks possible.
-
-
-The much earlier research by Tavis Ormandy is already covered by
-CVE-2005-1704. There is also CVE-2006-2362, which is an unrelated
-discovery.
-
-There is currently no CVE ID for the
-psa-dont-run-strings-on-untrusted-files.html "0xdeadbabe October 25,
-2014 7:20 PM" comment about "another one related with PE file headers
-parsing." In general, a separate discovery that's potentially
-exploitable for code execution could have its own CVE ID. Does anyone
-want a CVE ID for that?
-
-Similarly, there are currently no CVE IDs for the
-https://sourceware.org/bugzilla/show_bug.cgi?id=16825 versados.c
-report. Does anyone want that report covered in CVE? Depending on
-exploitability, it would have approximately two CVE IDs.
+Sorry, I should have been more be explicit: please REJECT
+CVE-2013-6488 as it is a duplicate of CVE-2013-6488
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJUTW9VAAoJEKllVAevmvmswQ8IAIylWSMBjluWJVfD3DJtR8cf
-ij8mT0ODIzBlX/Nki29QcaRP20iUChqk+TMh7xHCFUe2p3gHm3dY+AilQSJk7hCh
-JYDC4yhKMe9bjA9YSnD8A9yUtDPww81wdOmdLHbKd31pN46pM3T6Bgu/IZv3zDbl
-UcEtBH7kYTK5SbZalDccMLTnkoT+SrGkvfOwoyyp2yoHFJt2KNPaipza/BKLyARl
-I4wVa/sv83FihpQy8Th7lEVXfltKISUU2rSCd7YZNRaxZeuUKEwni3eJkwzE7oDX
-oyPVXd+uLoyh2GPO75qro9ZP3vd3hq5diyjZVP4loPhJNcEO88v+Xlw3mjEZgH0=
-=+vIX
+iQIcBAEBAgAGBQJS3YDjAAoJEBYNRVNeJnmTayYQAJsCcIuDeiGmn+0lLSHAfokN
+cnz15OjOMRXUNdGk7qAzUcsBAGArN8iUyA/dGay5bv6/SmWRG8gWXgUsx3uCzDoL
+s2ZiMAXNi8qawKKuTQf3wM8YK/Q9jVI88vWDBE1ubbF9hJR+BmMVPHXTvyuoqURx
+tnwSwBf0H1Fcom0WSghMJfHZDBsMCYw9V/zWJ6X9CB/5CwPF6sBgECiS2x/cwAQh
+fV4xzybedIe62opUVblCbnw2YCu+NCCKpbRluM6NVcFL+Z4U73UPDEWzfpUtllIi
+JSas0FBsvjuh9F8svcfDn5h10mH0YtNkkCawKJlXjLjgLYXw35vVXZ+jkAYYzzDA
+4eAnJcKSRDTeATLVdYEpqgbUciq91HpH3l6ZVjbeRM8VyzhWhVAMOWHplCKTkCcC
+nTh9VQ7J1EemWCa9fH+vWqsxDLJ1quOyBiP/NC2lJxTkytAX9igZ6BdQgQQz2UhR
+ZPlil7RwdujZopU5py9TleY2n/fqZSvStLm/CwdIVM4JA/LgcksPLjuol1IiK8ee
+oc7UtHcAG0aNsulBk16xJk3LRZLRdOgm0ZqDdjDLSsTeeHm7BLnQIO07gJKqD6+l
+pVjx5jITgBJdnyWIMIZMUMs4ps0l+odVlHnOoJzvYVl7YH71VLD/CJpRET33nnQD
+3aCCYkM7RS2fsgL4EbVz
+=lWID
 -----END PGP SIGNATURE-----
