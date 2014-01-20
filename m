@@ -1,61 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/10
-Message-ID: <20141222152059.GA13352@hp.com>
-Date: Mon, 22 Dec 2014 07:20:59 -0800
-From: Grant Murphy <grant.murphy@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/1
+Message-ID: <52DC750B.5010301@moodle.com>
+Date: Mon, 20 Jan 2014 08:59:55 +0800
+From: Michael de Raadt <michaeld@...dle.com>
 To: oss-security@...ts.openwall.com
-Subject: [grant.murphy@...com: CVE request for vulnerability in OpenStack Glance]
+Subject: Moodle security notifications public
 Content-Type: text/plain; charset=utf-8
 
-Just wondering if this has been missed? All changes have been merged and
-we are just waiting on a CVE id. The OpenStack VMT consider this to be a 
-critical issue.  
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-- Grant
+The following security notifications are now public after release.
+
+Thanks to OSS members for their continued cooperation.
+
+=======================================================================
+MSA-14-0001: Config passwords visibility issue
+
+Description:       Some password changes on admin pages were being
+                   recorded and shown to administrators in the config
+                   log report.
+Issue summary:     Config Changes Report reveals passwords as plain
+                   text
+Severity/Risk:     Minor
+Versions affected: 2.6, 2.5 to 2.5.4, 2.4 to 2.4.7 and earlier
+                   unsupported versions
+Versions fixed:    2.6.1, 2.5.4 and 2.4.8
+Reported by:       Andrew Steele
+Issue no.:         MDL-36721
+CVE identifier:    CVE-2014-0008
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-36721
+
+=======================================================================
+MSA-14-0002: Group constraints lacking in "login as"
+
+Description:       Users were able to log in as a user who in a is not
+                   in the same group without the permission to see all
+                   groups.
+Issue summary:     Users with loginas permission and access all groups
+                   prohibited can login as user not in their group by
+                   direct url
+Severity/Risk:     Minor
+Versions affected: 2.6, 2.5 to 2.5.4, 2.4 to 2.4.7, 2.3 to 2.3.10 and
+                   earlier unsupported versions
+Versions fixed:    2.6.1, 2.5.4, 2.4.8 and 2.3.11
+Reported by:       Itamar Tzadok
+Issue no.:         MDL-42643
+CVE identifier:    CVE-2014-0009
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-42643
+
+=======================================================================
+MSA-14-0003: Cross-site request forgery vulnerability in profile fields
+
+Description:       Custom profile fields and categories were open to
+                   deletion without proper session checking.
+Issue summary:     Two Cross-site Request Forgery(CSRF) vulnerabilities
+                   found in /user/profile/index.php
+Severity/Risk:     Serious
+Versions affected: 2.6, 2.5 to 2.5.4, 2.4 to 2.4.7, 2.3 to 2.3.10 and
+                   earlier unsupported versions
+Versions fixed:    2.6.1, 2.5.4, 2.4.8 and 2.3.11
+Reported by:       Jun Zhu
+Issue no.:         MDL-42883
+CVE identifier:    CVE-2014-0010
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-42883
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJS3HS7AAoJECGmGwK/mszPKxMIAIkiFaKtzEKI/3n4TOqU5AcF
+Mkm4k60lQgXxRYVptpReDqCUEX08oI86rCtz8vqNx0p04nerhd54An6l9E6uRQrg
+40uHGR++LkD2ULflZyFPyQl+GgzGiuAtkvlIq84k5t5WtpkfqQi9DA5GMEpRzu4G
+26yCd1oaVKPr22vLfGGbjtYdDHaSGTEdFuB6hvDM5pl7WsTzNg35n9Bwb7QnmbqL
+saMiPrRJ8uVgDqP6roZDuidMTdOcxHPfAxuv4pNhkTbjmB4jtYs7Wz91sbqX90cb
+u8LbFygvgZ5UnjuCxVlycL/MLaMDr8ucfl1tVBWp/iBzipd0AOh6zurI1tijORs=
+=xb4F
+-----END PGP SIGNATURE-----
 
 
------ Forwarded message from "Murphy, Grant Charles" <grant.murphy@...com> -----
-
-> Date: Mon, 15 Dec 2014 18:00:53 +0000
-> From: "Murphy, Grant Charles" <grant.murphy@...com>
-> To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-> Subject: [oss-security] CVE request for vulnerability in OpenStack Glance
-> 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> A vulnerability was discovered in OpenStack (see below). In order to ensure full traceability, we need a CVE number assigned that we can attach to further notifications. This issue is already public, although an advisory was not sent yet.
-> 
-> Title: Glance v2 API unrestricted path traversal
-> Reporter: Masahito Muroi (NTT)
-> Products: Glance
-> Versions: up to 2014.1.3 and 2014.2 version up to 2014.2.1
-> 
-> Description:
-> Masahito Muroi from NTT reported a vulnerability in Glance. By setting a malicious image location an authenticated user can download or delete any file on the Glance server for which the Glance process user has access to. Only setups using the Glance V2 API are affected by this flaw.
-> 
-> References:
-> https://launchpad.net/bugs/1400966
-> 
-> Thanks in advance,
-> 
-> Grant Murphy
-> OpenStack Vulnerability Management Team
-> 
-> 
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
-> 
-> iQEcBAEBAgAGBQJUjyEvAAoJEJ3kO55VGiJS2ZwH/RmVDlq6ZycvDB+TRicOf1Ho
-> kam2t/cc/4fvaZN1BYTrcjaPn+HK9ETdNdh3cHwiC6UYgtEa7Gb3IiboY4fK/7Si
-> hrVdgdOWRB+I3dkGrHb+kAaWNGSKJoHahq3mQ5NuXg+oFjR42caslX3vn2f8tBnA
-> Ybgqvelu5S1ht5x4XBoagmb0gSafp6a4xik4cwf0FkbkqCnO/EE5beHVSYXu4aVG
-> VLGtgd3+l6EjvMoSKXkWKAGwMC1fLCV+ISr1e4CBng5EGSqFmiTYZghQ0e5mvO2q
-> 4QgEqAgUl1DwpRJYyNeS3dHILA32Nuu0NEKvGn61AdXzxfMZpok1GwLPTq+DWyk=
-> =meRY
-> -----END PGP SIGNATURE-----
-> 
-
------ End forwarded message -----
-
-Content of type "application/pgp-signature" skipped
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (3748 bytes)
