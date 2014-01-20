@@ -1,39 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/11/7
-Message-ID: <52FA239E.2090407@redhat.com>
-Date: Wed, 12 Feb 2014 00:20:30 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2013-6401 Jansson hash collision issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/3
+Message-ID: <CABbbngB+GY32=HM_i39x-VjuBE1JR1xuuPCBGurPiwV9HiZhgg@mail.gmail.com>
+Date: Mon, 20 Jan 2014 03:30:34 -0800
+From: Forest Monsen <forest.monsen@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-As reported to the distros mailing list:
+Hi there, I'd like to request CVE identifiers for:
 
-Hi all,
+SA-CONTRIB-2013-098 - Ubercart - Session Fixation Vulnerability
+https://drupal.org/node/2158651
 
-Florian Weimer of the Red Hat Product Security Team found that the
-hashing implementation in Jansson, a library for encoding, decoding and
-manipulating JSON data, was susceptible to predictable hash collisions.
-A remote attacker could use this flaw to cause an application using
-Jansson to use an excessive amount of CPU time by sending a crafted JSON
-document containing a large number of parameters whose names map to the
-same hash value. (CVE-2013-6401)
+SA-CONTRIB-2014-001 - Entity API - Access Bypass
+https://drupal.org/node/2169595
 
-With regards to affected versions, I am guessing only 2.4-2 and 2.4-3
-were checked (by Red Hat).
+SA-CONTRIB-2014-002 - Anonymous Posting - Cross Site Scripting (XSS)
+https://drupal.org/node/2173321
 
-Many thanks to Florian Weimer and Petri Lehtinen (upstream) for their
-extensive work on the patch:
+Thanks!
 
-https://github.com/akheron/jansson/commit/8f80c2d83808150724d31793e6ade92749b1faa4
+Best,
+Forest
 
-(Feel free to copy the above CVE-2013-6401 description paragraph in any
-of your bugs or advisories.)
-
-Red Hat bug: https://bugzilla.redhat.com/show_bug.cgi?id=1035538 (to be
-opened shortly)
-
-Cheers,
-
---
-Murray McAllister / Red Hat Security Response Team
