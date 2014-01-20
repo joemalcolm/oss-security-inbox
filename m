@@ -1,45 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/11
-Message-ID: <543261CF.6040806@reactos.org>
-Date: Mon, 06 Oct 2014 11:33:03 +0200
-From: Pierre Schweitzer <pierre@...ctos.org>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: OpenSSL RSA 1024 bits implementation broken?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/2
+Message-ID: <52DCFAB7.4070208@gentoo.org>
+Date: Mon, 20 Jan 2014 14:30:15 +0400
+From: Sergey Popov <pinkbyte@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Cantata vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I would like to request CVE for vulnerability in Cantata[1], which
+allows attacker to steal valuable information from user's home directory
+via internal HTTP server, that are not properly handled requests and
+allows to download every file it has access to from host, where it runs.
 
-Dear all,
+More details can be acquired from upstream bugreport[2].
 
-There appear to have some noise on the Internet regarding a possible
-flaw in the 1024 bits RSA implementation in OpenSSL which would allow
-bruteforcing the private key in ~20 minutes.
+[1] - https://code.google.com/p/cantata/
+[2] - https://code.google.com/p/cantata/issues/detail?id=356
 
-Does anyone has any information about this? The associated pastebin to
-the said information is: http://pastebin.com/D8itq6Ff
-Is this serious?
+-- 
+Best regards, Sergey Popov
+Gentoo developer
+Gentoo Desktop Effects project lead
+Gentoo Qt project lead
+Gentoo Proxy maintainers project lead
 
-Cheers,
-- -- 
-Pierre Schweitzer <pierre@...ctos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBAgAGBQJUMmHPAAoJEHVFVWw9WFsLrg0P/1ka7bz16HGh/4GKU6DzY3WM
-Y+bDARcGPo0aEIL7pDqNmjbhaTQnnVYNHFoEhYzxmvgGnMPeMCtOOp+m/esviuBD
-3IdGIkWNE/i6tDnBQzMyW97Da3QlGedcyverTI5DJ0HhDq7vONR2wpEsEWGhRelI
-pZxDJbL50SFQ9ajoTTcBZZTOxI5Iq5eDBdGlwHbNUVDNH+9q556e26PEZdNWkpUM
-2qixEsVdO036Dva3o75wLFkLkgV9xrnBSeaMEdcnOW0tCkxsob1LTvIrjO6eAwDJ
-TEUn2SOHbdSwlSyNbzUVAJPlcOCv+hBrAGOQq+u0KiyLoYk2qbaaY8FkDKiHnb4R
-kmlIWz2D95DJwsq2QLGeFi6jIM2aDH6/ZtILKUvgbuzrgYD8i44jzEhgQ7TDLb7V
-NP0HUNDYlbG+RUbsVPjnZHF63tXcMfOCurb8m+vPouOIwiowyXoOZ06Ew7FuYPCD
-wlwzy02CxDVhT0w/BjHq6qGJyREW7cfuR2p7O29DJ5HTyf7aL/AqKIPsBoa4x1iM
-ZfGu03C6q/QHn7Bc7/nvehiCr7k6+xoa5/naT7933WKbpADtCQEteooc/RQMVhop
-oDaJiGuKHXU1HfIRERkXPyFAhzSy0g9Q+EzWBxdRXLg9wjxhB0IbSCWAT+YiDVZj
-G2bUwNI4T1SMRRwPtTQc
-=0EPA
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
