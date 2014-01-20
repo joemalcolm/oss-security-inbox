@@ -1,25 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/11
-Message-ID: <20141002022052.GA25523@openwall.com>
-Date: Thu, 2 Oct 2014 06:20:52 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/8
+Message-ID: <21213.20619.553482.760759@gargle.gargle.HOWL>
+Date: Mon, 20 Jan 2014 17:36:27 +0100
+From: rf@...eap.de
 To: oss-security@...ts.openwall.com
-Cc: Kohsuke Kawaguchi <kk@...suke.org>
-Subject: Re: Security advisory in Jenkins
+Subject: Re: linux-distros membership
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 02, 2014 at 06:11:27AM +0400, Solar Designer wrote:
-> Many of these issues were brought to the distros list on Fri Sep 26
-> 17:10:16 2014 UTC, and got their CVE IDs assigned there.  However,
-> CVE-2013-2186 was not among those.  I don't know why the old CVE ID,
-> nor how that issue was handled.
+>>>>> "Yves" == Yves-Alexis Perez <corsac@...ian.org> writes:
 
-Looks like it was already public in 2013:
+Thanks again Yves. Unfortunately this doesn't help me with getting the timely
+reports about kernel security bugs from the linux-distros list. Can
+somebody, who knows the details of the process, please answer what we need
+to do, to get on the list?
 
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2013-2186
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-2186
+Roland
 
-(and in many other places).  I guess it was just not mentioned in an
-upstream advisory before, hence the mention now?
+    >> >> I hope this is the right place to ask for inclusion of a
+    >> >> Qlustar contact in the linux-distros list.
+    >> >>
+    >> >> Qlustar is a Ubuntu/Debian based distro targeted at
+    >> >> HPC/Storage/Cloud clusters. We use our own kernels (typically
+    >> >> based on vanilla) since many years, but have the need to
+    >> >> supply timely security fixes to our users. So far we have to
+    >> >> wait for other distros to come out with their announcements
+    >> >> and then start analyzing the fixes they have done. This leaves
+    >> >> us/our users with a vulnerability window that is way too
+    >> >> large,
+    >>
+    >> > I can't speak for Ubuntu, but you're welcome to participate in
+    >> > the Debian security effort.
+    >>
+    >> thanks a lot for your offer. Could you explain a little more what
+    >> participation in the Debian security effort would mean? Note that
+    >> the issue I currently have is mostly about kernel fixes and we
+    >> don't use Debian nor Ubuntu kernels.
 
-Alexander
+    Yves> Most of the documentation can be found in the secure-testing
+    Yves> repository [1] and on the Debian wiki [2].
+
+    Yves> [1]:
+    Yves> http://anonscm.debian.org/viewvc/secure-testing/doc/narrative_introduction?view=markup
+    Yves> [2]: https://wiki.debian.org/Teams/Security
