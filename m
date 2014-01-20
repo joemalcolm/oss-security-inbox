@@ -1,26 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/3
-Message-Id: <20141126073850.6DAEF336009@smtpvbsrv1.mitre.org>
-Date: Wed, 26 Nov 2014 02:38:50 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/7
+Message-Id: <201401201632.s0KGWDgP015688@linus.mitre.org>
+Date: Mon, 20 Jan 2014 11:32:13 -0500 (EST)
 From: cve-assign@...re.org
-To: carnil@...ian.org
+To: forest.monsen@...il.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: buffer overflow in ksba_oid_to_str in Libksba
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
->> By using special crafted S/MIME messages or ECC based OpenPGP data, it
->> is possible to create a buffer overflow.
+> Hi there, I'd like to request CVE identifiers for:
+> 
+> SA-CONTRIB-2013-098 - Ubercart - Session Fixation Vulnerability
+> https://drupal.org/node/2158651
 
-> Announce: http://lists.gnupg.org/pipermail/gnupg-announce/2014q4/000359.html
-> Upstream fix: http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=f715b9e156dfa99ae829fc694e5a0abd23ef97d7
+Use CVE-2013-7302. The advisory says "attacker must have access to the
+original session ID of the victim." Do you know whether the relevant
+attacks occur at times when this original session ID is invalid?
 
-> Due to the unsigned integer this results in a pretty long value which
-> won't fit anymore into the allocated buffer.
 
-Use CVE-2014-9087.
+> SA-CONTRIB-2014-001 - Entity API - Access Bypass
+> https://drupal.org/node/2169595
+
+This file already has CVE identifiers.
+
+
+> SA-CONTRIB-2014-002 - Anonymous Posting - Cross Site Scripting (XSS)
+> https://drupal.org/node/2173321
+
+Use CVE-2014-1611.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -30,11 +40,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUdYKjAAoJEKllVAevmvmsW0MIAK0AXXRqyrQZdqRfd+EXeJze
-HyXqqJVngMbdgwZwaGjhFVRBneCDn1GQVQ3zfFaqqREtl+8ult/QYKNKjl+525Gl
-AYtTWH1uxlf69RPxpkJN4wtgEEsky1+Z+FZx7EyVzg7PB4sImsixZDiveHl0tOdi
-+Ga9tie2aGZNEdWi+L2YmI80rg7pblg6v9eKLx/nd0dAKbi6zR/+rz1hNreOl13z
-TfN9cY2fEL0I2adKcH84Gm/JXoYX594hNqwUploDk1vgjfdXeqxVpPIDWhUeEs/S
-5Jg/FnSa66fbDNrkXv561fAo7wafeS02bn+2pg+bdxLSbPxEPYQQ1qbB7prK3Ro=
-=Biqr
+iQEcBAEBAgAGBQJS3U4rAAoJEKllVAevmvms/7cH/i58BA1NhJhsoyjo3zKSycwt
+uPDk9TT2mW7OTamRD/GNnx7MdIMD4noiu37Hdl9fCenDovZDFo73Lr1mQkMQpLrh
+DSvyt3TSQ5PSxGnv3e3KbK5Gj2FNyYSkaQ3tenhZJ7mL4/gXgAoZJs3LEXD8uwc9
+Jl5gvcRJ0Zy0UOC7OavQoi+nvvOeqbY2FlyA4zAL9uZbNL5zOx5kiKLUdDXOYv44
+3HjGQwvr9Aek9nC2Rvs9B3ETxPjNP/gIXQCDjWZF1cAm1Kof4+t7jXmqjJsyscQB
+GGWnAy6ps1E+7pTAPOC5eWiwPuOrqaVK/h6JyP7IW5aPS4v0qMYu+jaXQFz4mac=
+=c31C
 -----END PGP SIGNATURE-----
