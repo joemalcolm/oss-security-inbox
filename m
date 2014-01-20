@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/25/1
-Message-Id: <20141225072832.4899B13A53F@smtpvmsrv1.mitre.org>
-Date: Thu, 25 Dec 2014 02:28:32 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/9
+Message-Id: <201401201701.s0KH1F7O023821@linus.mitre.org>
+Date: Mon, 20 Jan 2014 12:01:15 -0500 (EST)
 From: cve-assign@...re.org
-To: luto@...capital.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux x86_64 userspace address leak
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, taffit@...ian.org
+Subject: Re: CVE request: spip: cross-site scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> On all* Linux x86_64 kernels, malicious user programs can learn the
-> TLS base addresses of threads** that they preempt.
+> I would like to request a CVE for the following cross-site scripting
+> vulnerability in spip: authors could inject code via their name, which
+> is displayed in the signature of their articles and author page.
+> 
+> http://core.spip.org/projects/spip/repository/revisions/20902
+> http://core.spip.org/projects/spip/repository/revisions/20972
 
-> In principle, this bug will allow programs to partially bypass ASLR
-
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86?id=f647d7c155f069c1a068030255c300663516420e
-
-Use CVE-2014-9419.
+Use CVE-2013-7303.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -28,11 +28,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUm7woAAoJEKllVAevmvms++EIALuBBPWGrt7W8K5kbrMb5bzG
-Sy8JSp42fXiZ8wgenlrrhzU70VvvjjKYcwklsO3MFTQI/6PEb8297hbc/q+lL6TW
-00p6vhfwUIgFdx2QSj/hzU143mE5F7zygMDRcHe4YupTWZNRmXKIvizn/JJ94gjO
-dghgjBXqW4jh4i6StIDruwoG4gQOu8BDUQ/bmlYB4MJOBBT2OBaDZeNc2DtTJpDI
-d2Dd0PO7jFGzvXZulVXgfIkuSh51aEtXyJ0vwQQ9EtE89EFcBCHlmFFZt+N9sX0M
-U5Nz7gHGeCtakGRMHnt9+94mRaERb/91mS2U8GEBKzRM1LGKWpOnztCHaOwGxc8=
-=S2To
+iQEcBAEBAgAGBQJS3VXGAAoJEKllVAevmvmslTsH/0yvyNjPNeUZPRcXSi90qY9I
+GlJrGi6+j/H1qxryhdZqQMLBhghIwdh54kJWHBSQauZ/rVZ1NwZXaF+Vq8otzTAP
+SAtfOHoVxXhVCKkiu6yXkq+NvZzYa86wc7sUiZTS8tFg3/0UbmDqEyFpqPUF3LH3
+ZdkUOscGI8zuc9IzVk5TvBjyeEU2lHRvFYlvwTA1CDQ1xA63F9eFrPdTJdrHgqrz
+FtactymuoBuuZlOK9WU4SzbTuYoLjC0yNU+6JmWfqoABEQb56DVOCsw/G475Cx4h
++0sZm9rwxR8KX4PrZPgVq6MxNasBfBCY+Il4Qr+1dbq2Ih200aFs+JG3kSfVQPw=
+=gkGc
 -----END PGP SIGNATURE-----
