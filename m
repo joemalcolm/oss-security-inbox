@@ -1,40 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/08/5
-Message-ID: <20141208124512.GA29797@mail.corp.redhat.com>
-Date: Mon, 8 Dec 2014 13:45:12 +0100
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: 772008@...s.debian.org
-Subject: CVE request:  mpfr: buffer overflow in mpfr_strtofr
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/21/4
+Message-Id: <201401211808.s0LI8LBk009013@linus.mitre.org>
+Date: Tue, 21 Jan 2014 13:08:21 -0500 (EST)
+From: cve-assign@...re.org
+To: dkg@...thhorseman.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 736247@...s.debian.org
+Subject: Re: Fwd: [Python-modules-team] Bug#736247: python-xdg: get_runtime_dir(strict=False): insecure use of /tmp
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A buffer overflow was reported [1] in mpfr.
-This is due to incorrect GMP documentation for mpn_set_str about the
-size of a buffer (discussion is at [1]; first fix in the GMP
-documentation is at [2]). This bug is present in the MPFR versions
-from 2.1.0 (adding mpfr_strtofr) to this one, and can be detected by
-running "make check" in a 32-bit ABI under GNU/Linux with alloca
-disabled (this is currently possible by using the --with-gmp-build
-configure option where alloca has been disabled in the GMP build). It
-is fixed by the strtofr patch [3].
-Corresponding changeset in the 3.1 branch: 9110 [4].
+> as reported by Jakub Wilk in http://bugs.debian.org/736247, there is a
+> TOCTOU failure in python's xdg module
+> 
+> 1) Create symlink /tmp/pyxdg-runtime-dir-fallback-victim, pointing to a 
+> directory owned by the victim
 
-[1]: https://gmplib.org/list-archives/gmp-bugs/2013-December/003267.html
-[2]: https://gmplib.org/repo/gmp-5.1/raw-rev/d19172622a74
-[3]: http://www.mpfr.org/mpfr-3.1.2/patch11
-[4]: https://gforge.inria.fr/scm/viewvc.php?view=rev&root=mpfr&revision=9110
+Use CVE-2014-1624.
 
-References:
-- https://bugzilla.redhat.com/show_bug.cgi?id=1171701
-- https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=772008
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Can a CVE be assigned to this please?
-
-Thanks.
--- 
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
-
-Content of type "application/pgp-signature" skipped
+iQEcBAEBAgAGBQJS3rYbAAoJEKllVAevmvmsstgH/0w3D687UMenhRZvTHdoPWwi
+nk1vTE9SGraAUIe24g0VbdqI3vVUuMN1XqQnljFr2fkCWvhw2c2KCXg99TIcCmLo
+wlqRIAf37dCgHXLyHjzlboNKZm+Mlrh57vis4VJIyrq8byW0jmgR9Dv+tACMeWkj
+9Wkt1slsPiIMvFOjIZKjN8r8a85XbhpCQIrV4/uFMyOOarQHB9IT25YKNaldegFY
+CylvlLM7mi4Ux1JU+ZIUMdwxQoSOtvq3OKYwbHNZoYMH5mGcwwgRN4/tTbuqxmOn
+u8TYG3xqqVS4j2QuUG//LACrftlcJ0e/XtQTmSvJlVju/9bE2KD1U3ewrvUYHE0=
+=9769
+-----END PGP SIGNATURE-----
