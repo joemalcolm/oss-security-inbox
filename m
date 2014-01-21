@@ -1,40 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/11/1
-Message-Id: <201406111916.s5BJFwAf012916@linus.mitre.org>
-Date: Wed, 11 Jun 2014 15:15:58 -0400 (EDT)
-From: cve-assign@...re.org
-To: jmm@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux kernel / target information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/21/3
+Message-ID: <52DE8417.1040902@fifthhorseman.net>
+Date: Tue, 21 Jan 2014 09:28:39 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com, 736247@...s.debian.org
+Subject: Fwd: [Python-modules-team] Bug#736247: python-xdg: get_runtime_dir(strict=False): insecure use of /tmp
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+as reported by Jakub Wilk in http://bugs.debian.org/736247, there is a
+TOCTOU failure in python's xdg module (see attached message).
 
-> an information leak in the rd_mcp backend of the iSCSI target
-> subsystem in the Linux kernel
+Could a CVE be assigned to this?
 
-> Introduced in 2.6.38 and fixed in 3.14 with
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=4442dc8a92b8f9ad8ee9e7f8438f4c04c03a22dc
+	--dkg
 
-> add explicit memset of pages within rd_allocate_sgl_table() based upon
-> passed 'init_payload' value.
+Download attachment "[Python-modules-team] Bug#736247: python-xdg: get_runtime_dir(strict=False):
+ insecure use of /tmp.eml" of type "message/rfc822" (5796 bytes)
 
-Use CVE-2014-4027.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTmKpOAAoJEKllVAevmvmsdVsH/RjQUYnVK0zKr7JoC1lSm4MD
-fQTujx/hCWPFO4LCl1U9N81qAcX/oFUdsoEE0FC0IFnvZ7HEcczatOdX/ciYLX/y
-onVmwxNYtINWDe5EZtDjS5JvJNdd/e5PEGTLFBhRX3AQSei7VzAhyYlvJIe9SqdC
-madRM9T5VEhr0mXT9Jr+cS1IppLPrzjnouMr+oHQ1Fztq6EngjWHNpoTqX5nv3QJ
-U5qILrscWU6VtnJILoj+EycvqnoXoS24ajNIEuD2PeIpQ5jJcABdBrR6b9ZpCYU7
-B61ihNP0xa2yzQC+DGX5q/+i5jy9mX3/lJZQzlqB7IZyQaTO9nLFf9CSchNvIok=
-=9yK1
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (1011 bytes)
