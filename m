@@ -1,34 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/30/5
-Message-id: <330033C2-D929-4392-ADA6-374430E648DB@me.com>
-Date: Thu, 30 Jan 2014 13:22:26 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: oss-security@...ts.openwall.com
-Subject: echor 0.1.6 Ruby Gem exposes login credentials
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/21/6
+Message-Id: <201401212318.s0LNI7rP025272@linus.mitre.org>
+Date: Tue, 21 Jan 2014 18:18:07 -0500 (EST)
+From: cve-assign@...re.org
+To: gmc@...library.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Perl module MARC::File::XML
 Content-Type: text/plain; charset=utf-8
 
-Title: echor 0.1.6 Ruby Gem exposes login credentials
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Date: 1/14/2014
+> the Perl module MARC::File::XML
 
-CVE: Please assign one.
+> an XXE vulnerability that is fixed in version 1.0.2
 
-Author: Larry W. Cashdollar, @_larry0
+Use CVE-2014-1626.
 
-Download: http://rubygems.org/gems/echor
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Description: Echo ruby wrapper
-
-Vulnerability
-in file echor-0.1.6/lib/echor/backplane.rb:
-The function perform_request passes sensitive data to the shell and unsanitized user input, if this gem is used in a rails application a user could get remote command injection simply by putting a semi-colon in their username or password. At a minimum a local user can steal the login credentials just by watching the process table on the system.
-
- 45     def perform_request(data)
- 46       JSON.parse(`curl -u 
-{Echo.backplane_user}:
-{Echo.backplane_password}     --data-binary '#{data}' #{@...nnel}`)
- 47     end
-
-Vendor: Not notified, I don't think this Gem is maintained anymore.
-
-Advisory: http://www.vapid.dhs.org/advisories/echor-expose-login-creds.html
+iQEcBAEBAgAGBQJS3vuoAAoJEKllVAevmvmsYWUH/iezhYWAQ2PRaRt6jRkMbAo1
+GIKgRs4nPK34bWOsIiyyLAOzl5vjRg6S4WIEGgTS7JsZhTrhyli036ussHMEvhU4
+aTyXesJsaKPuqMq0WMoEeyT9VYB3hwV8XzMMFaQ+X6ETYe/ryj+aGhu3N6F6wHXd
+nWZKNjhDJPMgerm94hQ1mBHWMbZc185OtQmTXDBbTDx72iVrCXk2RVR4ZgONjSth
+FPsfhC9cjzvV4Cyuix5OKgpuSmV0prxrywPnH0ldmS8OxGY5rPW/VqJa6LQDoCaG
+h+v+avEGmHp++S/ttMDDM05qJXCa8q6tdEOSULLgRlVyuLhwWCCLsLMtFuWms88=
+=oo+Y
+-----END PGP SIGNATURE-----
