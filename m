@@ -1,56 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/12/8
-Message-ID: <548AFCB4.4060004@reactos.org>
-Date: Fri, 12 Dec 2014 15:33:24 +0100
-From: Pierre Schweitzer <pierre@...ctos.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/21/1
+Message-ID: <52DE08C5.2070808@redhat.com>
+Date: Mon, 20 Jan 2014 22:42:29 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: denial of service in suricata
+CC: Reed Loden <reed@...dloden.com>, Kurt Seifried <kseifrie@...hat.com>
+Subject: Re: CVE-2013-6488: Jenkins fails to sanitize input before adding it to the page
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/12/2014 02:58 PM, Victor Julien wrote:
-> 
-> Btw, 2 other fixes directly in suri are somewhat related:
-> 
-> https://github.com/inliniac/suricata/commit/4eff27c108ecbcd4fc61453590f0a3d3bcf9105d
+On 01/20/2014 01:02 PM, Kurt Seifried wrote:
+> On 01/19/2014 04:31 PM, Murray McAllister wrote:
+>> On 01/17/2014 05:39 PM, Reed Loden wrote:
+>>> On Fri, 17 Jan 2014 13:02:03 +1100 Murray McAllister 
+>>> <mmcallis@...hat.com> wrote:
+>>> 
+>>>> We recently received a report from Teguh P. Alko about an 
+>>>> issue affecting Jenkins. Input was not sanitized before
+>>>> adding it to the page. The fix is public here since the start
+>>>> of 2013:
+>>>> 
+>>>> https://github.com/jenkinsci/jenkins/commit/f8d2a0ba6c2e261f48287bdd95bd7a2d7a8d2d0e
+>>>>
+>>>
+>>>
+>>>>
 >
+>>>> 
+https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2013-02-16
+>>> 
+>>> is the security advisory that includes the above fix.
+>>> 
+>>>> This could be used for copy and paste attacks, with the end 
+>>>> result being similar to that of cross-site scripting
+>>>> attacks. It has been assigned CVE-2013-6488.
+>>> 
+>>> Fairly sure that's just a dupe of CVE-2013-0328. See 
+>>> http://seclists.org/oss-sec/2013/q1/368.
 > 
-https://github.com/inliniac/suricata/commit/2c9ce634a9667ba89b22d953e3102d35badd1912
+>> It is a dupe :( Thanks for pointing this out.
 > 
-> What is the policy of crashing when out of memory? On most systems
-> this will likely be an effective DoS even w/o crash. If you can
-> force your IDS to go into swap it's pretty much ineffective.
+>> -- Murray McAllister / Red Hat Security Response Team
+> 
+> Sorry, I should have been more be explicit: please REJECT 
+> CVE-2013-6488 as it is a duplicate of CVE-2013-6488
 
-Not sure about that one...
+Gah I mean: please REJECT CVE-2013-6488 as it is a duplicate of
+CVE-2013-0328
 
-Especially with Out-Of-Memory killer which is on most servers and that
-will actually kill your daemons before they can crash due to the lack
-of memory.
 
-Or you can even disable your server swap abilities (vm.swappiness) to
-always keep all your applications in memory, which will trigger OOM
-killer even faster.
 - -- 
-Pierre Schweitzer <pierre@...ctos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBAgAGBQJUivy0AAoJEHVFVWw9WFsLjasP/06zTGgC6gAmfHCQJAWYV3cD
-IK5HEwbbeTR7/J/FhYF+hdKBvEJ0LJ+dUQ5VOvGbP+l2KtKQ3twPnmzdZxGbsIUQ
-5spdu1ci83QUgjvTQenYPquJW3bTI8bqytQYoMjQmtxMrYCycvduKRU9zGDItO8P
-ew4JVaJSkofLSheM7WNRmkCk/vxifrxLMh2QKsqK5kwFLZgCOUvdTDxqpE5KEDN0
-PDXngToNj5ua6oDX3TsOey7Cpp528RKj9YDiG9lnhySwvL8/TsB+deWMUOGdKs5Q
-3O+5fQCJ9loFgbYGtwndOv8ML3oRrzNmPxCLOrWekNyyfHA8njvoCXLZhRAbSp58
-qcv14HOvg4wT5ORjgMeHngrcXnl39ykHIGQTTTTbhFIfVioT4ehnoEEm+iML71H/
-G3DadE2enh4tXWH4eYAJbabUEALD9ZdtDbtUUv04jhGjaRx3CKnlZCq1t14hwfLZ
-sFgtWanbQQQooqGpXCQuXC1IgdDIljnc02rBtZsNqASKbz6fr0rP485cRQyNsHZm
-AbZUzG8SuQxDG8zM08t2T21HUOHCqFWMwM5mFfhtup8VSW4BVo/zqEJGw9DZ67EF
-/Xu1r6HoF/hkxMxVrNHNHEs1/h2prGk5b/REpNueLgVPZRKYpMQC1QnkAElmMD4X
-w9PzbIdC0i52kBvRIL7+
-=mYid
+iQIcBAEBAgAGBQJS3gjFAAoJEBYNRVNeJnmTf/QQANyGhTXgl5kkbSk//E6qEDxo
+UaDG2IhmiW3fOS9Ee4w0p82QboJeMcBRRqXfZTDvXUohTkCLvs8q+RVfDN5AHIis
+nLXBNQGetjYkwehNU+Z9INwZXuBl/7xI1vWogOR+6nzoGUbURxTSceRhYPhQrPwK
+rVaqU1BRbhHJGVHAHN0Y5qgMvDnfPYG6/H1zlwPI4tZW7qfzbAmphtUYu039640U
+WJRD3xtrAdcwjwb9rld1ok0FxXcq6Jr0lcuZot0r2aUy78ymK92mdxQDM8G/Nccu
+jXMqsETgoG2i3fX8P0vb9XBpdVDluvguO5SVd61SEpe2OUJvoMgK0Q905st1LLHr
+IEvOKqIMnd2NNYMg2CkjiwnTMlPW8CemAjcHTdNom8TxPXtD1NfnPH8V+Ye8MiK6
+4+ttEtEZHepATRif3x1NZBqN2+fonX1EY140CkkXqxQINO7a9lKJjEbrFAm5+BUo
+Huz0IIdkJM99NPfX3iRhypRwZImP6OTHenbyiETsRtPbJ5OiZbv6tUMov7BIALfO
+63ZvnnxJPF8z0Y1Ok9eUUdlvFDElKS/sjf2qkZRx4LjeCV5t5U2BCxTBO4l1r6CR
+CnSLVSUgiHYz1RGowaj7iWr0UhMwdelky2Ne0k67/DvpB0I7GR5KExTyxZaKqdRV
+6En8E9VoUGpk9pJh8O/D
+=9XFg
 -----END PGP SIGNATURE-----
