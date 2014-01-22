@@ -1,75 +1,138 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/20
-Message-ID: <CAOp4FwRKzeBw+9ZhiEkj0bCBMuLGyExuRG5AXSKJtkUYd=tvnA@mail.gmail.com>
-Date: Wed, 1 Oct 2014 23:53:52 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/22/1
+Message-ID: <20140122002913.GA2180@openwall.com>
+Date: Wed, 22 Jan 2014 04:29:13 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+Cc: rf@...eap.de
+Subject: Re: linux-distros membership
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 1, 2014 at 8:14 PM, Greg KH <greg@...ah.com> wrote:
-> On Wed, Oct 01, 2014 at 12:08:15PM -0400, Jason Cooper wrote:
->> On Wed, Oct 01, 2014 at 08:55:35AM -0700, Greg KH wrote:
->> > On Wed, Oct 01, 2014 at 07:15:56AM -0400, Jason Cooper wrote:
->> > > On Wed, Oct 01, 2014 at 01:08:09PM +0200, Hanno Böck wrote:
->> > > > Am Tue, 30 Sep 2014 19:19:55 -0400 (EDT)
->> > > > schrieb "David A. Wheeler" <dwheeler@...eeler.com>:
->> > > >
->> > > > > Finally: *PLEASE* let me know if you have any good ideas on how to
->> > > > > find vulnerabilities like this ahead-of-time. My article "How to
->> > > > > Prevent the Next
->> > > > > Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html) lists a
->> > > > > number of ways that Heartbleed-like vulnerabilities could have been
->> > > > > detected ahead-of-time, in ways that are general enough to be
->> > > > > useful.  I'd like to do the same with Shellshock, so we can quickly
->> > > > > eliminate a whole class of problems.
->> > > >
->> > > > The "class of problems" here is imho that we have a bunch of tools that
->> > > > get rare attention from anyone, are run by few volunteers, but they're
->> > > > an essential part in running the Internet.
->> > > >
->> > > > Just think about busybox, curl, wget, coreutils, gettext, gzip, ... - a
->> > > > vuln in any of these could have severe consequences.
->> > > >
->> > > > Maybe the topic here should be: "How can we get the (whitehat) IT
->> > > > seucrity community to have a deeper look at neglected but important
->> > > > opensource projects."
->> > >
->> > > The LF has the Core Infrastructure Initiative:
->> > >
->> > >   http://www.linuxfoundation.org/programs/core-infrastructure-initiative/faq
->> >
->> > Yes, that's exactly what that group is doing, and they have a huge list
->> > of these types of projects that they are looking into funding to help
->> > prevent this type of thing from happening again.  I'll go add bash to
->> > the list there as I don't think it is currently on it at the moment.
->>
->> Could we also update the FAQ to include "How to recommend a project?"?
->> A few days ago I tried to recommend bash.  I dug around, and finally
->> just sent an email to Ted.  Which I don't think is the correct answer
->> ;-)
->
-> It isn't, but Ted is a good contact for it :)
->
-> Fixing the FAQ is on the list of things to do that was discussed at the
-> last meeting, hopefully it will be done soon.
->
-> thanks,
->
-> greg k-h
+Hi Roland,
 
-I believe that small companies can benefit from committing engineering
-efforts to audit Open Source software that they all rely heavily upon.
+On Mon, Jan 20, 2014 at 05:36:27PM +0100, rf@...eap.de wrote:
+> >>>>> "Yves" == Yves-Alexis Perez <corsac@...ian.org> writes:
+> 
+> Thanks again Yves. Unfortunately this doesn't help me with getting the timely
+> reports about kernel security bugs from the linux-distros list. Can
+> somebody, who knows the details of the process, please answer what we need
+> to do, to get on the list?
 
-I keep arguing and try to talk to managers that they need to become
-more active in Open Source, as they would also benefit in terms of
-less downtime, and better vulnerability management. Having a good Open
-Source strategy helps IT managers have better control of their IT
-infrastructure. On top of training IT staff, maybe it's a good time to
-introduce the idea of "Strong Open Source rating", and committing 10%
-of their IT employees working hours to improve relevant Open Source
-projects.
+Given that you seem to be interested only in Linux kernel vulnerabilities,
+I think you're overestimating the value that being on linux-distros
+will provide to you.  There are more Linux kernel vulnerabilities being
+disclosed on oss-security right away (yes, in public) than those that
+pass through linux-distros first.  Yet you were not on oss-security
+until after you've posted the request to join linux-distros a week ago.
+Did you not actually care?  Or was someone else from Qlustar subscribed?
 
--- 
-This message is strictly personal and the opinions expressed do not
-represent those of my employers, either past or present.
+Asking to join linux-distros before you've been on oss-security for a
+while (and preferably, having contributed to the discussions in here) is
+putting the cart before the horse.
+
+I did not count them carefully, but I think there are relatively more
+non-kernel vulnerabilities passing through linux-distros (than kernel
+ones).  Actually, it might be the same ratio as on oss-security, with
+the difference being that on oss-security you're not unnecessarily
+exposed to additional sensitive info.
+
+Unfortunately, we don't currently have a sub-list for just Linux kernel,
+and if we set one up it might not work all that well (we already saw
+some confusion with having distros and linux-distros; adding a third
+list might make it worse).
+
+I found Qlustar security advisories here:
+
+https://www.qlustar.com/security-advisories
+
+This is great, although I guess in "a Ubuntu/Debian based distro" there
+are many more vulnerabilities being discovered.  How do you choose which
+packages to issue advisories for?  Are they possibly the packages that
+differ from Ubuntu/Debian (that is, that have your customizations)?
+At first glance, it appears that about one half of your advisories are
+about the kernel.
+
+Would having about 7 days of advance notice (and at most 19 on some
+occasions, per list policy) on a small subset of Linux kernel
+vulnerabilities be of much help in preparing update packages?  Would it
+significantly reduce the window of exposure for your users?  e.g.,
+reducing it from 8 days to 1 day is significant, but from 30 days to 23
+days is much less so.
+
+As to "the details of the process", we don't currently have it fully
+formalized.  We did have a simple process for accepting a subset of
+old vendor-sec members into the distros and linux-distros lists, but
+after that point I'm afraid we never arrived at a decision on whether we
+should introduce a voting/vouching process like vendor-sec had.
+Instead, we had a few discussions in here, like the one we're having now
+due to your request.  There were several membership requests that I
+think fell in the grey area, and I think yours does too: it's not
+unreasonable, but it fails to convince me that Qlustar being on
+linux-distros would likely significantly benefit the users of your
+distro.  Is anyone else in here convinced?  (Genuine question.)
+
+Among the criteria we do have is the distro issuing timely security
+updates and advisories.  Qlustar appears to do that, although only for a
+subset of packages, and I'm unsure how timely the updates are (e.g., if
+they're late by 30 days, then reducing that by ~7 days doesn't help all
+that much, as in the example above).
+
+Of the distros currently on the list, I find it most difficult to
+justify (to myself) the membership of MontaVista and Wind River.  (This
+was discussed before.)  Qlustar appears similar in some aspects, but
+without a track record (known to me) of having participated in the
+security community (which both MontaVista and Wind River have).
+In fact, I don't recall hearing about Qlustar before (and Google web
+search finds very little, too).
+
+Are Qlustar's security updates (not just security advisories) publicly
+available?
+
+Let's discuss.  Roland, your own opinion counts too - it's not just you
+trying to justify this to the rest of us, but it's us all (including
+you) trying to arrive at what's deemed the best decision.  We have a
+community here on oss-security, and you're welcome to join us and
+participate in discussions regardless of whether Qlustar gets on
+linux-distros or not.
+
+Meanwhile, please add Qlustar info to:
+
+http://oss-security.openwall.org/wiki/vendors
+
+>     >> >> I hope this is the right place to ask for inclusion of a
+>     >> >> Qlustar contact in the linux-distros list.
+
+Yes, it is the right place.
+
+>     >> >> Qlustar is a Ubuntu/Debian based distro targeted at
+>     >> >> HPC/Storage/Cloud clusters. We use our own kernels (typically
+>     >> >> based on vanilla) since many years, but have the need to
+>     >> >> supply timely security fixes to our users. So far we have to
+>     >> >> wait for other distros to come out with their announcements
+>     >> >> and then start analyzing the fixes they have done. This leaves
+>     >> >> us/our users with a vulnerability window that is way too
+>     >> >> large,
+>     >>
+>     >> > I can't speak for Ubuntu, but you're welcome to participate in
+>     >> > the Debian security effort.
+>     >>
+>     >> thanks a lot for your offer. Could you explain a little more what
+>     >> participation in the Debian security effort would mean? Note that
+>     >> the issue I currently have is mostly about kernel fixes and we
+>     >> don't use Debian nor Ubuntu kernels.
+> 
+>     Yves> Most of the documentation can be found in the secure-testing
+>     Yves> repository [1] and on the Debian wiki [2].
+> 
+>     Yves> [1]:
+>     Yves> http://anonscm.debian.org/viewvc/secure-testing/doc/narrative_introduction?view=markup
+>     Yves> [2]: https://wiki.debian.org/Teams/Security
+
+Alexander
+
+P.S. Somehow your replies arrive as entirely new messages, not as
+replies to whatever message you're replying to.  They lack proper
+In-Reply-To header.  It'd be helpful if you correct that (for further
+replies), as it is needed for proper threading in the list archives.
+Normally, In-Reply-To is set if you simply use your mail program's
+"reply" feature.  I don't know why this was not happening for you.
