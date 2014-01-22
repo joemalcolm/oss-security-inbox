@@ -1,67 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/1
-Message-ID: <5345FC16.4020704@redhat.com>
-Date: Wed, 09 Apr 2014 20:04:06 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Anthony Liguori <aliguori@...zon.com>, Matt Wilson <msw@...zon.com>, Max Spevack <spevack@...zon.com>
-Subject: Re: Request for linux-distros list membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/22/4
+Message-Id: <201401222314.s0MNEo1v002954@linus.mitre.org>
+Date: Wed, 22 Jan 2014 18:14:50 -0500 (EST)
+From: cve-assign@...re.org
+To: helmut@...divi.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Getting tempfile/mktemp wrong
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/09/2014 09:23 AM, Anthony Liguori wrote:
-> Hi,
+> TEMPFILE=`tempfile`.suffix
 > 
-> I would like to request membership to the closed linux-distros mailing
-> list on behalf of the Amazon Linux AMI distribution.  We do not
-> currently have anyone on this list from Amazon but we would like to
-> change that.  The Amazon Linux AMI distribution is RPM based,
-> optimized for EC2, and tracks a number of packages (including the
-> kernel) directly from upstream.
-> 
-> Here is my GPG fingerprint:
-> 
-> pub   2048R/5682E5FF 2013-07-30
->       Key fingerprint = EF0F 60F4 390F A270 BC30  4A93 1AAD C710 5682 E5FF
-> uid                  Anthony Liguori <anthony@...emonkey.ws>
-> sub   2048R/44FFA77F 2013-07-30
-> 
-> I'm sending this from my personal account since this is the uid
-> associated with my GPG key but I would prefer to be subscribed to my
-> @amazon.com (CC'd here).
-> 
-> If anyone has any questions, please don't hestitate to ask.  Thanks
-> for your consideration!
-> 
-> Regards,
-> 
-> Anthony Liguori
+> 1) localepurge
+> http://bugs.debian.org/736359
 
-I find it a bit odd you can't send this from your work email address.
-Would it be possible to add that email address to your key and then use
-your work email address? I guess I'm wondering is this an official
-request on behalf of Amazon or some random Amazon (employee?
-contractor?) asking for access to distros@.
+Use CVE-2014-1638.
+
+
+> 2) syncevolution
+> http://bugs.debian.org/736357
+
+Use CVE-2014-1639.
+
+
+> 3) axiom (packaging)
+> http://bugs.debian.org/736358
+
+Use CVE-2014-1640.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJTRfwWAAoJEBYNRVNeJnmTlWQQANHPWJPeDuWxWZWcUd9/Eu+w
-VXV4l6zNy5LjdBrpxBSxzGihgOAnMRfmEZ3tj6HM0U1aeUSeFvxK7eUevJGnN7RN
-6OSXd7cwLEftfhPHBA1G3pFYmr+MyZsYPSYKCLtBB6CGmblLY2+5/1bVBdxGd7Pl
-m2mXTHH15youPSCSZ7JnrBv/H8Dnh2hfP6V+VuSbYWAa1S+6zbMk1rRRvpdgZHDP
-+cWS0ioBGpEoqF6p5PrecetQVeym8E2wdorsJ8djaeCx8gMP+Xpg4RXb6d/3OOIg
-GrSKkMIzNtmT8gP8BbB/LLSLa4/QgFl8/cSvcSqW+3PRxf0qoimRVyrZAS1dPH9y
-elie9OGE26N0+pgixdk+zx3yqsguhwjHSk9Oo6NJ5LscXeTX143lP1redyz57hVd
-0U28esfQvo2LKwmLnBR57PO+lovh6eoWPfHt+ebE1jJ2jtMX9PIbK+8kjIc/ODDa
-vwBBzRSCUbxpI4EjXiArkrT+XSZNCJwnwFtLFjKgZ58t/VeBlChbyqnEJpeC54YS
-g7PYYBqF4iwviP+WR+SMNhss4+d+Wv6pNRnMWQef8lcZMZi28OnuIX5j7f8h8lIA
-ODKcXKxTS3Bi4TQhfBcGRqPwUX4LQnzXKbg1QuCsdAYGWjnAKutkEVH8o9G46R0U
-F17qaMYrpMdICV2JnKPM
-=SNPU
+iQEcBAEBAgAGBQJS4E8BAAoJEKllVAevmvmsaVcH/iJFgeuCWqpbrXvXEPHeZ1V7
+FgTmtfXxC7zxGyqRcw0Tb1HuuWM/eZo8HdhXX8+Q7Qis64HUPNdi2Rb9hRgwUON8
+1LflImtrCXCnsOsJcW4UKs87Fq4XTMUlIhJOYf25m0PrgqBRoIO8zAMaVj64ruvf
+0vrmuTziCNi4vvWgquVQrhHx5aCmSOld3/g1w/+GVuZl/DOkHalwJuJueeGO1/ID
+sdESteKmET9TjohS/QZH/2cP09MairxwF/vZqrJUNrwiFXSGMOYO8EWBUQSjd4Ro
+n4zBErFwWoN/no0vXo/wbkXpYKWGoiRc/EoAjz4lkAlDoiAieiskWK5n4Kj1Ap8=
+=kmhi
 -----END PGP SIGNATURE-----
