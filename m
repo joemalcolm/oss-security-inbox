@@ -1,45 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/25/2
-Message-ID: <20140425003439.GA12735@openwall.com>
-Date: Fri, 25 Apr 2014 04:34:39 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/22/3
+Message-ID: <20140122185144.GA12136@alf.mars>
+Date: Wed, 22 Jan 2014 19:51:45 +0100
+From: Helmut Grohne <helmut@...divi.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Request for linux-distros list membership
+Subject: Getting tempfile/mktemp wrong
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 25, 2014 at 04:11:51AM +0400, Solar Designer wrote:
-> - Amazon Linux AMI having a significant userbase, which is unclear for
-> Qlustar yet.  When the first request to subscribe Qlustar was made, IIRC
-> my Google web search for it found surprisingly few results (like 20),
-> and even fewer not on Qlustar's own sites.  This has improved since: a
-> Google web search for "Qlustar" (in quotes) gives "About 2,060 results"
-> results now, although there's relatively little vendor-independent
-> content (postings other than by or forwarded from Roland, etc.)  Hitting
-> "Next" exhausts the actual distinct search results on page 6, saying "In
-> order to show you the most relevant results, we have omitted some
-> entries very similar to the 57 already displayed."
+Hi,
 
-For comparison and for the record, Google web search for "Amazon Linux
-AMI" (in quotes) gives "About 515,000 results", and the distinct results
-it displays are exhausted on page 16 with "In order to show you the most
-relevant results, we have omitted some entries very similar to the 170
-already displayed."  With the duplicates detection disabled, I am getting
-to "Page 52 of about 458,000 results" until Google refuses to display
-more results.  It is unclear at first glance whether there are actually
-many duplicates within those 52 pages (vs. 16 pages) or not.  So perhaps
-that was not a very good check for either distro.
+I (re?)discovered an entertaining way to introduce tmpfile
+vulnerabilities while using the right tools (tempfile/mktemp). The
+general pattern is:
 
-More important than these (unreliable) numbers of search results are the
-findings on actually relevant pages that I checked manually (I did check
-a handful for either distro).  Like I said, I couldn't find any users'
-discussions of Qlustar.  There are clear users' postings about Amazon
-Linux AMI among those web search results I saw.
+TEMPFILE=`tempfile`.suffix
 
-Also, the three-word search query may have worse luck than the one-word
-"Qlustar", because many users would not bother to type all the three
-words (and consistently do it in the canonical way).  So I'd expect
-significant bias towards more "Qlustar" results if these distros had
-similar userbases.  For obvious reasons, a comparison against just
-"Amazon" would be differently unfair (and mostly irrelevant).
+as opposed to
 
-Alexander
+TEMPFILE=`tempfile --suffix .suffix`
+
+An attacker can monitor /tmp using inotify, wait for the relevant file
+to be created and can the quickly create the corresponding
+tmpfile.suffix symbolic link to escalate privileges.
+
+This can be found in:
+
+1) localepurge
+http://bugs.debian.org/736359
+$ grep tempfile -r .
+./debian/postrm:    DEBREINSTALL="$(tempfile).$$"
+./debian/localepurge.config:TEMPFILE=$(tempfile).$$
+./debian/localepurge.config:LOCALEGEN=$(tempfile).locale.gen
+$
+The localepurge package is Debian-specific. The relevant runs at
+installation time as root.
+
+2) syncevolution
+http://bugs.debian.org/736357
+$ grep 'mktemp`\.' -r .
+./src/syncevo/installcheck-local.sh:TMPFILE_CXX=`mktemp`.cxx
+./src/syncevo/installcheck-local.sh:TMPFILE_O=`mktemp`.o
+$
+The relevant code is part of the upstream package and is executed at
+build time.
+
+3) axiom (packaging)
+http://bugs.debian.org/736358
+$ grep 'tempfile).' -r .
+./debian/axiom-test.sh:k=$(tempfile).input
+$
+The relevant code is part of the Debian packaging (upstream axiom is not
+affected). It can be used on Debian systems to run the test suite when
+the relevant package is installed.
+
+The Debian bug reports are the initial public mentioning of these
+particular issues. Please assign CVE identifiers as needed.
+
+Helmut
