@@ -1,31 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/12
-Message-ID: <20140709090652.GW1821@symphytum.spacehopper.org>
-Date: Wed, 9 Jul 2014 10:06:52 +0100
-From: Stuart Henderson <stu@...cehopper.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/23/1
+Message-ID: <21216.58480.835476.961700@gargle.gargle.HOWL>
+Date: Thu, 23 Jan 2014 10:44:16 +0100
+From: rf@...eap.de
 To: oss-security@...ts.openwall.com
-Subject: Re: FreeBSD Security Advisory FreeBSD-SA-14:13.pam
+Subject: Re: linux-distros membership
 Content-Type: text/plain; charset=utf-8
 
-On 2014/07/09 08:14, Sven Kieske wrote:
-> Am 04.06.2014 07:42, schrieb Solar Designer:
-> > I mention this so that people are not confused why this one advisory is
-> > posted in here, even though we had decided that vendor-specific
-> > advisories are normally not to be posted to oss-security.
-> 
-> I'm sorry, but I'm still relatively new to this list, so forgive
-> me my questioning:
-> 
-> I see lots of "vendor specific" advisories here. So my guess
-> is that "vendor" means "a vendor who bundles software into
-> a linux/bsd/whatever distribution"?
+>>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
 
-This policy is presumably trying to stop the problem where lists receive
-notification from 20 OS distributions that they have updated some common
-package like PHP.
+    SD> Meanwhile, please add Qlustar info to:
 
-Personally I'm happy to see vendor-specific advisories for some problems
-that just affect that vendor (but not the advisories for other problems
-common to many vendors), but think that it needs to be a manual selective
-process rather than just as another place where the advisories are CC'd.
+    SD> http://oss-security.openwall.org/wiki/vendors
 
+Done.
+
+Roland
