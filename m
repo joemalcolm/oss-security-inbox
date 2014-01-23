@@ -1,28 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/8
-Message-ID: <20140912140442.35eef409@redhat.com>
-Date: Fri, 12 Sep 2014 14:04:42 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/23/2
+Message-Id: <E1W6JiW-0005PJ-M7@xenbits.xen.org>
+Date: Thu, 23 Jan 2014 12:49:08 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 83 - Out-of-memory condition yielding memory corruption during IRQ setup
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 11 Sep 2014 16:49:45 -0700 Ritwik Ghoshal wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On 9/11/2014 7:39 AM, Tomas Hoger wrote:
-> > April CPU mentions client issue CVE-2014-2440.  Is it the same issue
-> > that got CVE-2014-0001 publicly assigned before?  The versions that
-> > fixed CVE-2014-2440 are the same that got CVE-2014-0001 fix, and
-> > there's no mention of the CVE-2014-0001 in April CPU.
-> 
-> Yes, CVE-2014-2440 is same as CVE-2014-0001. We have updated our CPU
-> April, 14 advisory with a note under MySQL risk matrix that states the
-> same. Please see -
-> http://www.oracle.com/technetwork/topics/security/cpuapr2014-1972952.html
+                    Xen Security Advisory XSA-83
+                              version 2
 
-Awesome, thank you for the confirmation!
+       Out-of-memory condition yielding memory corruption during IRQ setup
 
-Any hints on the remaining questions from the mail? :)
+UPDATES IN VERSION 2
+====================
 
--- 
-Tomas Hoger / Red Hat Product Security
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+When setting up the IRQ for a passed through physical device, a flaw
+in the error handling could result in a memory allocation being used
+after it is freed, and then freed a second time.  This would typically
+result in memory corruption.
+
+IMPACT
+======
+
+Malicious guest administrators can trigger a use-after-free error, resulting
+in hypervisor memory corruption.  The effects of memory corruption could be
+anything, including a host-wide denial of service, or privilege escalation.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.2.x and later are vulnerable.
+Xen 4.1.x and earlier are not vulnerable.
+
+Only systems making use of device passthrough are vulnerable.
+
+Only systems with a 64-bit hypervisor configured to support more than 128
+CPUs or with a 32-bit hypervisor configured to support more than 64 CPUs are
+vulnerable.
+
+MITIGATION
+==========
+
+This issue can be avoided by not assigning PCI devices to untrusted guests on
+systems supporting Intel VT-d or AMD Vi.
+
+CREDITS
+=======
+
+This issue was discovered by Coverity Scan, prompted by modelling
+improvements contributed by Andrew Coooper.  The issue was diagnosed
+by Matthew Daley and Andrew Coooper.  The patch was prepared by Andrew
+Cooper.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa83.patch                 Xen 4.2.x, Xen 4.3.x, xen-unstable
+
+$ sha256sum xsa83*.patch
+71ba62c024ed867f99f335ed63d7e04a7981d348cc29a3718e5c48f15a1e0fb1  xsa83.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJS4Q+yAAoJEIP+FMlX6CvZjQQIALVrMD9bMEfBbQJ6ZvZZBP2f
+g8y7FvzGMC2fiP1gPyOxwHYI2lAsT6euiFgEunamlWAtTpgFhTeXLrx/pbdKpMv9
+AwWA94umPrSSNVoUGtX9JqPcg9lzWCxgTjkKcmGyH6Yo/Z78juYeQMTss3/DQ0ms
+asIYS011i/6lyKDo1XKJiabzOYI0F/R1JQEDnaVZBTk57+1Ux+9acnt5KK1dt9t3
+KpcOQCiJKqVDFMaQ0NmTUQS7pC/5N/QZRe5AdMG1LhJI7Yw5tbHnTxdSYxnprQEn
+KUJfYQYycp4XJU7U6GMFE0Ybqf3FMlNqS+KHcetgN7XA6C8xjyDoMIUsGzA9/3E=
+=P/H4
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa83.patch" of type "application/octet-stream" (598 bytes)
