@@ -1,32 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/2
-Message-ID: <54374FF9.4080604@redhat.com>
-Date: Fri, 10 Oct 2014 14:18:17 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Zend Framework ZF2014-05 and ZF2014-06
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/23/7
+Message-ID: <966D5BC4-E4E8-45FE-89B9-C4A92B11A648@redhat.com>
+Date: Thu, 23 Jan 2014 16:46:54 -0700
+From: "Vincent Danen" <vdanen@...hat.com>
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Subject: CVE-2014-0022 insecure install of rpm packages via yum cron
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+Just wanted to give a heads up of a flaw that was reported to our bugzilla.  Our primary bug on this is here:
 
-The 1.12.9, 2.2.8, and 2.3.3 releases of the Zend Framework fix two issues:
+https://bugzilla.redhat.com/show_bug.cgi?id=1057377
 
-http://framework.zend.com/blog/zend-framework-1-12-9-2-2-8-and-2-3-3-released.html
+I'm just going to cut-n-paste what I wrote in the bug.  Obviously no CVE needs to be assigned; this is for others who may be shipping yum.
 
-http://framework.zend.com/security/advisory/ZF2014-05
+Gabriel VLASIU reported [1] that yum-cron would install unsigned RPM packages that yum itself would refuse to install.  The yum-cron code is based on that in yum-updatesd.py.  This is due to  the installUpdates() function (processPkgs() in yum-updatesd.py) failing to fully check the return code of the called sigCheckPkg() function.  sigCheckPkg() is described thus:
 
-http://framework.zend.com/security/advisory/ZF2014-06
+    def sigCheckPkg(self, po):
+        """Verify the GPG signature of the given package object.
 
-Could CVEs please be assigned?
+        :param po: the package object to verify the signature of
+        :return: (result, error_string)
+           where result is::
 
-(For the ZF2014-05 advisory, the discussion in 
-http://www.openwall.com/lists/oss-security/2014/06/09/2 may be helpful 
-if needed.)
+              0 = GPG signature verifies ok or verification is not required.
+              1 = GPG verification failed but installation of the right GPG key
+                    might help.
+              2 = Fatal GPG verification error, give up.
+        """
 
-Thanks,
+However, the processPkgs() and installUpdates() calling function do not account for return code 2:
 
---
-Murray McAllister / Red Hat Product Security
+    def processPkgs(self, dlpkgs):
+...
+        for po in dlpkgs:
+            result, err = self.updd.sigCheckPkg(po)
+            if result == 0:
+                continue
+            elif result == 1:
+                try:
+                    self.updd.getKeyForPackage(po)
+                except yum.Errors.YumBaseError, errmsg:
+                    self.failed([str(errmsg)])
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1151276
-https://bugzilla.redhat.com/show_bug.cgi?id=1151277
+and:
+
+    def installUpdates(self, emit):
+...
+        for po in dlpkgs:
+            result, err = self.sigCheckPkg(po)
+            if result == 0:
+                continue
+            elif result == 1:
+                try:
+                    self.getKeyForPackage(po)
+                except yum.Errors.YumBaseError, errmsg:
+                    self.emitUpdateFailed(errmsg)
+                    return False
+
+yum-cron.py replaced yum-cron.sh in Fedora 19 (3.4.3-47); earlier versions of Fedora use yum-updatesd.
+
+This has been corrected upstream [2] and in Fedora via yum-3.4.3-132.fc19 and yum-3.4.3-130.fc20.
+
+This does not affect Red Hat Enterprise Linux 6 as it used neither yum-updatesd nor yum-cron; it used a shellscript that called yum itself to do updates.
+
+
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=1052440
+[2] http://yum.baseurl.org/gitweb?p=yum.git;a=commitdiff;h=9df69e579496ccb6df5c3f5b5b7bab8d648b06b4
+
+-- 
+Vincent Danen / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
