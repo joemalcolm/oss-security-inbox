@@ -1,44 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/12/1
-Message-ID: <52D2F2A9.50208@halfdog.net>
-Date: Sun, 12 Jan 2014 19:53:13 +0000
-From: halfdog <me@...fdog.net>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel: missing CPU-state sanitation during task-switch causes DOS / privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/23/3
+Message-Id: <201401231340.s0NDeojk017432@linus.mitre.org>
+Date: Thu, 23 Jan 2014 08:40:50 -0500 (EST)
+From: cve-assign@...re.org
+To: security@....org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 83 - Out-of-memory condition yielding memory corruption during IRQ setup
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Hello list,
+> Xen Security Advisory XSA-83
+> Malicious guest administrators can trigger a use-after-free error
 
-Although of low impact (only some processors/kernels affected,
-escalation currently only with mmap_min_addr=0), this might still be
-CVE-worthy:
-
-Faults during task-switch due to unhandled FPU-exceptions allow to
-kill processes at random on all affected kernels, resulting in local
-DOS in the end. One some architectures, privilege escalation under
-non-common circumstances is possible, POC for escalation via
-shmem_xattr_handlers is available for about 5 days.
-
-See [1] for information about discovery, exploitation, [2] about LKML
-discussion, [3] for patch.
-
-hd
-
-[1] http://www.halfdog.net/Security/2013/Vm86SyscallTaskSwitchKernelPanic/
-[2] https://lkml.org/lkml/2013/12/28/95
-[3]
-http://git.kernel.org/cgit/linux/kernel/git/tip/tip.git/commit/?id=26bef1318adc1b3a530ecc807ef99346db2aa8b0
+Use CVE-2014-1642.
 
 - -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iEYEARECAAYFAlLS8q4ACgkQxFmThv7tq+5O2ACeJ2spKwVgWhLSklOtg7WlvkIl
-wXMAn1Mn/9vrQPlMP53zdL/XmXLrCsIu
-=ObvK
+iQEcBAEBAgAGBQJS4RseAAoJEKllVAevmvmshVkIALxl5LOA1zRbmZQxpe4e/0dv
+XTPSYx/TdVh8lsyAht50BtfrCNQxWyGeZcIXuQrHgp+6C91EQidZnR/ylhKuPT5X
+n/YP23jJ0tfmUCnkciFWIEVz025IMJnOys1vk/fi+ZLHQz9wvIpR7c6TrKsrUlvV
+OlBgAJIGRkxEFuOrzLDoM9eH94J6dhY1viZ1uGPcrTu541BXPt8qn64jKxLaid2V
+SmK20kudkku6z2DbVrEt2a2ul22m7jefYEW52x1smmNFaj5Ekh2i5R3BQzfX+7YO
+B/MuXuf3lMcF0vL6311ObXTZdO2utWuB2he1ozCwytiNaPem3w/cPzT4QuZ/jv8=
+=Ueqv
 -----END PGP SIGNATURE-----
