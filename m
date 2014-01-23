@@ -1,36 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/39
-Message-ID: <20141007215242.GJ9817@openstack.org>
-Date: Tue, 7 Oct 2014 21:52:42 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/23/6
+Message-ID: <20140123214203.GA13344@pisco.westfalen.local>
+Date: Thu, 23 Jan 2014 22:42:03 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for vulnerability in OpenStack Swift
+Cc: rf@...eap.de
+Subject: Re: linux-distros membership
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public,
-although an advisory was not sent yet.
+On Wed, Jan 22, 2014 at 04:29:13AM +0400, Solar Designer wrote:
+> As to "the details of the process", we don't currently have it fully
+> formalized.  We did have a simple process for accepting a subset of
+> old vendor-sec members into the distros and linux-distros lists, but
+> after that point I'm afraid we never arrived at a decision on whether we
+> should introduce a voting/vouching process like vendor-sec had.
+> Instead, we had a few discussions in here, like the one we're having now
+> due to your request.  There were several membership requests that I
+> think fell in the grey area, and I think yours does too: it's not
+> unreasonable, but it fails to convince me that Qlustar being on
+> linux-distros would likely significantly benefit the users of your
+> distro.  Is anyone else in here convinced?  (Genuine question.)
 
-Title: Swift metadata constraints are not correctly enforced
-Reporter: Rajaneesh Singh
-Products: Swift
-Versions: up to 2.1.0
+I'm not convinced. There's a three digit number of Debian-derived distros 
+and many of them come and go. The oldest Qlustar advisory is less than 
+a year old and there's no visible participation in any security processes.
 
-Description:
-Rajaneesh Singh reported a vulnerability in Swift enforcement of
-metadata contraints. By adding metadata in several separate calls,
-an authenticated attacker can bypass the max_meta_count constraint,
-potentially resulting in the storage of more metadata than allowed
-in configuration.
+We maintain the http://anonscm.debian.org/viewvc/kernel-sec/ repository
+which tracks all kernel vulnerabilities as soon as they're public. That's
+a good base for every Debian-derived distro with a modified kernel.
 
-References:
-https://launchpad.net/bugs/1365350
+Cheers,
+        Moritz
 
-Thanks in advance,
 
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
