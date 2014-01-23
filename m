@@ -1,51 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/15/7
-Message-Id: <20140915172009.403996C0024@smtpvmsrv1.mitre.org>
-Date: Mon, 15 Sep 2014 13:20:09 -0400 (EDT)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: libceph auth token overflow / Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/23/4
+Message-Id: <E1W6LFX-0000mR-TA@xenbits.xen.org>
+Date: Thu, 23 Jan 2014 14:27:20 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 83 (CVE-2014-1642) - Out-of-memory condition yielding memory corruption during IRQ setup
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c27a3e4d667fdcad3db7b104f75659478e0c68d8
-> http://tracker.ceph.com/issues/8979
+               Xen Security Advisory CVE-2014-1642 / XSA-83
+                              version 3
 
-Bug 8979 says "about 1 month ago ... pushed wip-8979 which removes the
-fixed buffer size. but, we still need to make things not crash when
-the auth reply processing fails. that could still happen if we get a
-huge ticket (>4k) and kmalloc fails on a large page size. or the auth
-reply from the mon is simply not understood by the client."
+       Out-of-memory condition yielding memory corruption during IRQ setup
 
-This apparently has multiple known vulnerability types.
+UPDATES IN VERSION 3
+====================
 
-Use CVE-2014-6416 for the buffer overflow.
+CVE assigned.
 
-Use CVE-2014-6417 for the issue of incorrect handling of kmalloc
-failures.
+ISSUE DESCRIPTION
+=================
 
-Use CVE-2014-6418 for ths missing validation of the auth reply.
+When setting up the IRQ for a passed through physical device, a flaw
+in the error handling could result in a memory allocation being used
+after it is freed, and then freed a second time.  This would typically
+result in memory corruption.
 
-Our guess is that c27a3e4d667fdcad3db7b104f75659478e0c68d8 is intended
-to address all three of these crash issues, but additional CVE IDs
-might be needed if there were an incomplete fix.
+IMPACT
+======
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Malicious guest administrators can trigger a use-after-free error, resulting
+in hypervisor memory corruption.  The effects of memory corruption could be
+anything, including a host-wide denial of service, or privilege escalation.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.2.x and later are vulnerable.
+Xen 4.1.x and earlier are not vulnerable.
+
+Only systems making use of device passthrough are vulnerable.
+
+Only systems with a 64-bit hypervisor configured to support more than 128
+CPUs or with a 32-bit hypervisor configured to support more than 64 CPUs are
+vulnerable.
+
+MITIGATION
+==========
+
+This issue can be avoided by not assigning PCI devices to untrusted guests on
+systems supporting Intel VT-d or AMD Vi.
+
+CREDITS
+=======
+
+This issue was discovered by Coverity Scan, prompted by modelling
+improvements contributed by Andrew Coooper.  The issue was diagnosed
+by Matthew Daley and Andrew Coooper.  The patch was prepared by Andrew
+Cooper.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa83.patch                 Xen 4.2.x, Xen 4.3.x, xen-unstable
+
+$ sha256sum xsa83*.patch
+71ba62c024ed867f99f335ed63d7e04a7981d348cc29a3718e5c48f15a1e0fb1  xsa83.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJUFx92AAoJEKllVAevmvmspFUH/RHfrkakYAUwmoN3qgGKC1La
-KiKgvljZn4WUt7p5pMQyb1FYIjMF7vIEdV2GR5hdG+gec0wVjlyw7SfLPvwXIjO+
-KykcaXfHIp4IMJ0/62FFVeZbB6izU4Qgep0a27ynBCg0+vhfIOuiyLfgiVL5IfES
-HqUXdUyxvRL+1e+TyMweQQezEDJL5FLc5YUU8kwRhSydDLOdjMjIWY5KvKYp3xyo
-ETG6HHwFzQaHu8ty9Hyx3oLDVH113nE5gUbjG4kI5MjaLcCq8zer+cE57YCEnOBu
-eOmrs4An/CZhuGho0ThYFr1G4N821af8ycPb1kts5h7u2e4SycFYG0k9N7/UN68=
-=XnWo
+iQEcBAEBAgAGBQJS4SaHAAoJEIP+FMlX6CvZ4GEH/1iRjPPj+FedKNsROJ4XZDYQ
+rhu5evDxGjFKC1YD5aDexDPMKYn1lLtOy2YnsW4nqPJdHCpBpPIhzTFisaNUqMzE
+XQwQwBSVYhxZAV2J9v3e7nsz0wswVdAHkbFf2df1eUvmiGsKQPHuCqlCZEbQjW/w
+7F9MC2Qo9nlg/1GtNE5J4U4jB9EtEhI5Kbvh3WFoOLz7vtJDKlsYQlcTZLJVdDjN
+OFoptImqig7Yin0/ix4AKYt5+trnkpvKjR3dfIeM3WUxG3Nc4qKxy5C5cbVfgKnr
+/sidbCO4K4G56fvl3aBg49594x8aFh8MYZF42CDCEnojXCaiXidwBiWUV9KHN5g=
+=5A46
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa83.patch" of type "application/octet-stream" (598 bytes)
