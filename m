@@ -1,86 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/10
-Message-ID: <540EA4C8.3020703@redhat.com>
-Date: Tue, 09 Sep 2014 00:57:12 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: luigi tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/24/2
+Message-ID: <21218.18131.870738.776866@gargle.gargle.HOWL>
+Date: Fri, 24 Jan 2014 11:56:19 +0100
+From: rf@...eap.de
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros membership
 Content-Type: text/plain; charset=utf-8
 
-https://pypi.python.org/pypi/luigi
-luigi-1.0.17/luigi/hdfs.py
+>>>>> "RF" == rf  <rf@...eap.de> writes:
 
-We have a creative attempt to implement mkstemp:
+>>>>> "MM" == Moritz Muehlenhoff <jmm@...ian.org> writes:
+    MM> We maintain the http://anonscm.debian.org/viewvc/kernel-sec/
+    MM> repository which tracks all kernel vulnerabilities as soon as
+    MM> they're public. That's a good base for every Debian-derived
+    MM> distro with a modified kernel.
 
-def tmppath(path=None):
-    """
-    @param path: target path for which it is needed to generate
-temporary location
-    @type path: str
-    @rtype: str
-    """
-    addon = "luigitemp-%08d" % random.randrange(1e9)
-    temp_dir = tempfile.gettempdir()
+    RF> Sounds interesting. How am I supposed to extract information
+    RF> from this page? Are there some docs about how to use it?
 
-    #1. Figure out to which temporary directory to place
-    configured_hdfs_tmp_dir = configuration.get_config().get('core',
-'hdfs-tmp-dir', None)
-    if configured_hdfs_tmp_dir is not None:
-        #config is superior
-        base_dir = configured_hdfs_tmp_dir
-    elif path is not None:
-        #need to copy correct schema and network location
-        parsed = urlparse.urlparse(path)
-        base_dir = urlparse.urlunparse((parsed.scheme, parsed.netloc,
-temp_dir, '', '', ''))
-    else:
-        #just system temporary directory
-        base_dir = temp_dir
+OK, think I got the basic idea. However, judging from a few CVE examples
+on the site, it seems there is no time advantage in using this site as
+compared to posts on this list. In fact the entries appear a couple of
+days later in some cases. So I'm afraid this won't be of too much help
+concerning the timing issue.
 
-    #2. Figure out what to place
-    if path is not None:
-        if path.startswith(temp_dir + '/'):
-            #Not 100%, but some protection from directories like
-/tmp/tmp/file
-            subdir = path[len(temp_dir):]
-        else:
-            #Protection from /tmp/hdfs:/dir/file
-            parsed = urlparse.urlparse(path)
-            subdir = parsed.path
-        subdir = subdir.lstrip('/') + '-'
-    else:
-        #just return any random temporary location
-        subdir = ''
-
-    return os.path.join(base_dir, subdir + addon)
-
-
-And then it gets used:
-
-class HdfsAtomicWriteDirPipe(luigi.format.OutputPipeProcessWrapper):
-    """ Writes a data<data_extension> file to a directory at <path> """
-    def __init__(self, path, data_extension=""):
-        self.path = path
-        self.tmppath = tmppath(self.path)
-        self.datapath = self.tmppath + ("/data%s" % data_extension)
-        super(HdfsAtomicWriteDirPipe, self).__init__([load_hadoop_cmd(),
-'fs', '-put', '-', self.datapath])
-
-===================================
-		
-luigi-1.0.17/luigi/interface.py
-
-Also we have a PID file:
-
-    lock_pid_dir = parameter.Parameter(
-        is_global=True, default='/var/tmp/luigi',
-        description='Directory to store the pid file')
-
-
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Roland
