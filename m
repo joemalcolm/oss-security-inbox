@@ -1,52 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/13/4
-Message-Id: <20140813054959.D96781F025B@smtpksrv1.mitre.org>
-Date: Wed, 13 Aug 2014 01:49:59 -0400 (EDT)
-From: cve-assign@...re.org
-To: kenton@...dstorm.io
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: ro bind mount bypass using user namespaces
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/24/4
+Message-Id: <E1W6f8L-0004Sl-QT@xenbits.xen.org>
+Date: Fri, 24 Jan 2014 11:41:14 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 87 - PHYSDEVOP_{prepare,release}_msix exposed to unprivileged guests
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-We are assigning two CVE IDs because the available information is that
-there were two discoverers. Even if the discoverer information is
-later clarified, there will still be these two CVE IDs.
+                   Xen Security Advisory XSA-87
 
-> https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=db181ce011e3c033328608299cd6fac06ea50130
-> 
-> Kenton Varda <kenton@...dstorm.io> discovered that by remounting a
-> read-only bind mount read-only in a user namespace the
-> MNT_LOCK_READONLY bit would be cleared, allowing an unprivileged user
-> to the remount a read-only mount read-write.
+     PHYSDEVOP_{prepare,release}_msix exposed to unprivileged guests
 
-Use CVE-2014-5206.
+ISSUE DESCRIPTION
+=================
 
+The PHYSDEVOP_{prepare,release}_msix operations are supposed to be available
+to privileged guests (domain 0 in non-disaggregated setups) only, but the
+necessary privilege check was missing.
 
-> https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=9566d6742852c527bf5af38af5cbb878dad75705
-> 
-> While investigating the issue where in "mount --bind -oremount,ro ..."
-> would result in later "mount --bind -oremount,rw" succeeding even if
-> the mount started off locked I realized that there are several
-> additional mount flags that should be locked and are not.
+IMPACT
+======
 
-Use CVE-2014-5207.
+Malicious or misbehaving unprivileged guests can cause the host or other
+guests to malfunction. This can result in host-wide denial of service.
+Privilege escalation, while seeming to be unlikely, cannot be excluded.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.1.5 and 4.1.6.1 as well as 4.2.2 and later are vulnerable.
+Xen 4.2.1 and 4.2.0 as well as 4.1.4 and earlier are not vulnerable.
+
+Only PV guests can take advantage of this vulnerability.
+
+MITIGATION
+==========
+
+Running only HVM guests will avoid this issue.
+
+There is no mitigation available for PV guests.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This issue was disclosed publicly on the xen-devel mailing list.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa87-unstable-4.3.patch    xen-unstable, Xen 4.3.x
+xsa87-4.2.patch             Xen 4.2.x
+xsa87-4.1.patch             Xen 4.1.x
+
+$ sha256sum xsa87*.patch
+45e5cc892626293067cc088a671a6bbdc18b018f54ff09b6a1cbb1fabbdf114d  xsa87-4.1.patch
+df9c1507d7bb0e5266a2fadd992d1e6ed0f7bf5be7466b8a93ed3bd8e3ab8e8d  xsa87-4.2.patch
+a13ce270b177d33537d627b85471abaa01215cd458541f4c6524914d7c81eb38  xsa87-unstable-4.3.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJT6vjTAAoJEKllVAevmvmsEI4H+wWrFmadZJwDhgU8i5IfiVIl
-Oz/iPTeSCelGIH6BA5GAMbaEmMUf/ay0Jpa31y6MhOiw1KMsGGFvzGkLoy3Pb/T5
-G682hBmQbZD1OnBdk3z2EnMd5i0/B3kzc1rXi4m9QJcmi216xnJnD0+lEVbRj5nf
-jruRJplaRiwYuXszZSWhAOBVMFb5MJ/4aNmUkKdpiywQjOWhykgjNNyxXby9Rxpo
-AkoLecJPn/IJ4mRmLTp3vo1x/GZUXmXFvKfsJdB5Ps+kOnX7ptMyap4GTjSvXcIc
-FSJ9Zfad0iAnflEQTAKEVHFu5vSzbUdWVC+qMapVjZXRnku8y3UzYJVEvqQDUTc=
-=Qzne
+iQEcBAEBAgAGBQJS4TtaAAoJEIP+FMlX6CvZd+IH/i2WTmxuMRe4znSrGg2JJE1L
+Wx3ioEKGnU/+5n2T94radln7lA85QvQJpIhwK6aA+BrPYhbtLKI5cq+d5LQ+RLmM
+4YUvKZuoolyaHUZSs6XZCopExCz537CCW+rAPhUEGYgP6sLr5aGEG0x8AQimDAJX
+YwlF1MqhfxYyWWI6xplzBo3ZoKlMQNikGOQN9isBF5J6ygQZYBgyfeK/M8C7PZlp
+GAtVfLNYhbMuZLCJpUcrei7QXSERKf++Li7Vfc6WOZ4OzqPysNrJmMVlPwe/k9RZ
+ldNznuYNsTV6WNl/SB4u6W1iygvYhXk4t1xyzIDlmVP+GwsHtuFW9IFiV2aZohc=
+=ekUq
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa87-4.1.patch" of type "application/octet-stream" (598 bytes)
+
+Download attachment "xsa87-4.2.patch" of type "application/octet-stream" (616 bytes)
+
+Download attachment "xsa87-unstable-4.3.patch" of type "application/octet-stream" (916 bytes)
