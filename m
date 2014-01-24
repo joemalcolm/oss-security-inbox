@@ -1,32 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/3
-Message-ID: <leqhb6$nk8$1@ger.gmane.org>
-Date: Fri, 28 Feb 2014 18:34:44 +0100
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/24/1
+Message-ID: <21218.17184.388742.23426@gargle.gargle.HOWL>
+Date: Fri, 24 Jan 2014 11:40:32 +0100
+From: rf@...eap.de
 To: oss-security@...ts.openwall.com
-Subject: CVE request: MantisBT 1.2.13 SQL injection vulnerability
+Subject: Re: linux-distros membership
 Content-Type: text/plain; charset=utf-8
 
-Greetings
+>>>>> "MM" == Moritz Muehlenhoff <jmm@...ian.org> writes:
 
-Jakub Galczyk (HauntIT blog http://hauntit.blogspot.com/) discovered an 
-SQL injection vulnerability issue affecting MantisBT >= 1.2.13.
+    MM> We maintain the http://anonscm.debian.org/viewvc/kernel-sec/
+    MM> repository which tracks all kernel vulnerabilities as soon as
+    MM> they're public. That's a good base for every Debian-derived
+    MM> distro with a modified kernel.
 
-admin_config_report.php relied on unsanitized, inlined query parameters, 
-enabling a malicious user to perform an SQL injection attack.
+Sounds interesting. How am I supposed to extract information from this
+page? Are there some docs about how to use it?
 
-The criticality of this issue is compounded by the fact that typically a 
-high-privilege account (i.e. having an access level >= 
-$g_view_configuration_threshold, which is set to ADMINISTRATOR by 
-default) is required to access this page.
-
-Patches are attached to [1]. Can you please assign a CVE ID to this issue ?
-
-Thank you
-
-D. Regad
-MantisBT Developer
-http://mantisbt.org/
-
-[1] http://www.mantisbt.org/bugs/view.php?id=17055
-
+Roland
