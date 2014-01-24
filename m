@@ -1,44 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/4
-Message-ID: <20140808133612.GA4427@kroah.com>
-Date: Fri, 8 Aug 2014 06:36:12 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/24/3
+Message-ID: <52E2482F.9040608@oracle.com>
+Date: Fri, 24 Jan 2014 11:02:07 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+Subject: Re: linux-distros membership
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 08, 2014 at 02:20:21PM +0300, Dan Carpenter wrote:
-> I'm surprised we haven't had any discussion about the recent BadUSB
-> articles.
+On 24/01/14 10:40, rf@...eap.de wrote:
+>>>>>> "MM" == Moritz Muehlenhoff <jmm@...ian.org> writes:
+>     MM> We maintain the http://anonscm.debian.org/viewvc/kernel-sec/
+>     MM> repository which tracks all kernel vulnerabilities as soon as
+>     MM> they're public. That's a good base for every Debian-derived
+>     MM> distro with a modified kernel.
 > 
-> http://arstechnica.com/security/2014/07/this-thumbdrive-hacks-computers-badusb-exploit-makes-devices-turn-evil/
-> http://security.stackexchange.com/questions/64524/how-to-prevent-badusb-attacks-on-linux-desktop
-> 
-> We could put a popup if there is a second keyboard attached to check
-> that the person controlling the existing keyboard is aware of the second
-> one.
+> Sounds interesting. How am I supposed to extract information from this
+> page? Are there some docs about how to use it?
 
-"popup" where?  Multi-seat machines wouldn't like that very much, as
-would yubikeys (as was pointed out), or a raft of other USB devices that
-export a keyboard device for the buttons they control (video cameras,
-external speakers, barcode scanners, etc.)
+Try this:
 
-> The attack looks like someone who says, "Can you copy some files from
-> my USB flash drive which?" (not knowing it is infected) and then there
-> is a popup, "This newly inserted USB device is trying to type commands,
-> is that ok?  y/N?".
+  svn co svn://svn.debian.org/svn/kernel-sec
 
-Shoudn't we just ensure that copying "bad" files to a location they
-shouldn't be at is the thing to protect from instead?  This isn't a USB
-thing explicitly at all, there have been loads of devices out there that
-do this type of thing for a while (can't remember the name, one is
-programmable to do this very thing with lots of fun scripts that come
-with it).
-
-Oh, and we should also ensure that if you plug in a "malformed" USB
-device, we don't crash the kernel, like we have in the past, hopefully
-all bugs there are now addressed, many thanks to Kees for that work.
-
-thanks,
-
-greg k-h
+jch
