@@ -1,43 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/11/2
-Message-ID: <20141111131559.GA9732@mail.corp.redhat.com>
-Date: Tue, 11 Nov 2014 14:15:59 +0100
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: cve request: libbfd?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/24/6
+Message-Id: <E1W6ipm-0003Y2-D5@xenbits.xen.org>
+Date: Fri, 24 Jan 2014 15:38:18 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 87 (CVE-2014-1666) - PHYSDEVOP_{prepare,release}_msix exposed to unprivileged guests
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-In addition to the above, I'd like to request a CVE(s) for the below
-issues:
+             Xen Security Advisory CVE-2014-1666 / XSA-87
+                              version 2
 
-Directory traversal vulnerability allowing random files deleteion/creation
-Upstream tracker: https://sourceware.org/bugzilla/show_bug.cgi?id=17552
-Upstream patch:   https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=dd9b91de2149ee81d47f708e7b0bbf57da10ad42
+     PHYSDEVOP_{prepare,release}_msix exposed to unprivileged guests
 
-Out-of-bounds memory write while processing a crafted "ar" archive
-Upstream tracker: https://sourceware.org/bugzilla/show_bug.cgi?id=17533
-Upstream patch:   https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=bb0d867169d7e9743d229804106a8fbcab7f3b3f
+UPDATES IN VERSION 2
+====================
 
-Thanks.
--- 
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
-On Sat, 25 Oct 2014, Michal Zalewski wrote:
+CVE assigned.
 
-> Hey,
-> 
-> You may want to assign something to:
-> 
-> http://lcamtuf.blogspot.com/2014/10/psa-dont-run-strings-on-untrusted-files.html
-> http://sourceware.org/bugzilla/show_bug.cgi?id=17510
-> 
-> This is slightly complicated by the fact that libbfd is just bad in
-> general and there likely are dozens of individual bugs, but the
-> write-to-arbitrary-pointer issues with ELF section parsing in elf.c
-> sort of stand out.
-> 
-> /mz
+ISSUE DESCRIPTION
+=================
 
-Content of type "application/pgp-signature" skipped
+The PHYSDEVOP_{prepare,release}_msix operations are supposed to be available
+to privileged guests (domain 0 in non-disaggregated setups) only, but the
+necessary privilege check was missing.
+
+IMPACT
+======
+
+Malicious or misbehaving unprivileged guests can cause the host or other
+guests to malfunction. This can result in host-wide denial of service.
+Privilege escalation, while seeming to be unlikely, cannot be excluded.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.1.5 and 4.1.6.1 as well as 4.2.2 and later are vulnerable.
+Xen 4.2.1 and 4.2.0 as well as 4.1.4 and earlier are not vulnerable.
+
+Only PV guests can take advantage of this vulnerability.
+
+MITIGATION
+==========
+
+Running only HVM guests will avoid this issue.
+
+There is no mitigation available for PV guests.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This issue was disclosed publicly on the xen-devel mailing list.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa87-unstable-4.3.patch    xen-unstable, Xen 4.3.x
+xsa87-4.2.patch             Xen 4.2.x
+xsa87-4.1.patch             Xen 4.1.x
+
+$ sha256sum xsa87*.patch
+45e5cc892626293067cc088a671a6bbdc18b018f54ff09b6a1cbb1fabbdf114d  xsa87-4.1.patch
+df9c1507d7bb0e5266a2fadd992d1e6ed0f7bf5be7466b8a93ed3bd8e3ab8e8d  xsa87-4.2.patch
+a13ce270b177d33537d627b85471abaa01215cd458541f4c6524914d7c81eb38  xsa87-unstable-4.3.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJS4ojJAAoJEIP+FMlX6CvZKpsH/3lVDKRMvFVkaHVPt1uRhqQo
+HxBDflm//lR5M8j8364rRSknSv8X2m/JfKJ7DCbX0WQWPrIU/i8MzTHM9fQqLvAR
+QYEhXYZC+ctkqk/sUvQaxOkyu8bNszuIOlWM9GuH2OnFN68zSl7kXiX7KZ5dHoYQ
+eNAjQeCXNaXTiSo3X3ZIFwZOlpkUj+NxJnZlZx5Hb/m5WH86FeqBNMi/jZB/i53F
+LFu7rhJ4rq25jbfuLp1ISBs5GA+71pNRvhukHijQHks1fApKhqmUiDhrBYX21l/Y
+5GJLG6L3sYdScjoeHu+QH0akwTC5L+BauMLMWljJOTKvL0p2yU/vDc2JMjXXnzk=
+=morx
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa87-4.1.patch" of type "application/octet-stream" (598 bytes)
+
+Download attachment "xsa87-4.2.patch" of type "application/octet-stream" (616 bytes)
+
+Download attachment "xsa87-unstable-4.3.patch" of type "application/octet-stream" (916 bytes)
