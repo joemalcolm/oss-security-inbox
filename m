@@ -1,24 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/17
-Message-ID: <20141006133945.GG9817@openstack.org>
-Date: Mon, 6 Oct 2014 13:39:45 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL RSA 1024 bits implementation broken?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/24/5
+Message-Id: <201401241358.s0ODvu4D024909@linus.mitre.org>
+Date: Fri, 24 Jan 2014 08:57:56 -0500 (EST)
+From: cve-assign@...re.org
+To: security@....org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 87 - PHYSDEVOP_{prepare,release}_msix exposed to unprivileged guests
 Content-Type: text/plain; charset=utf-8
 
-On 2014-10-06 11:33:03 +0200 (+0200), Pierre Schweitzer wrote:
-> There appear to have some noise on the Internet regarding a possible
-> flaw in the 1024 bits RSA implementation in OpenSSL which would allow
-> bruteforcing the private key in ~20 minutes.
-> 
-> Does anyone has any information about this? The associated pastebin to
-> the said information is: http://pastebin.com/D8itq6Ff
-> Is this serious?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It's been picked apart somewhat in a thread[1] on Perry Metzger's
-moderated cryptography mailing list.
+> Xen Security Advisory XSA-87
+> the necessary privilege check was missing
 
-[1] http://www.metzdowd.com/pipermail/cryptography/2014-October/023142.html
--- 
-Jeremy Stanley
+Use CVE-2014-1666.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEbBAEBAgAGBQJS4nDBAAoJEKllVAevmvmsaNgH+ISA3OKriLrIaJjbF9LrOvra
+biDtJXr9nyPC6nLIOc1uLb2BRsbYEmQJEKGCf8LkahxX5shwlELazi0zTRER+NCT
+fNi0TshG27+It5Msij/AqJLyTbGBhz8evVH71/CsdhuPZ4ldUcrpgF25wzE6Oi9z
+32G1F/iCSyqrAhc+pCGqrA3fFnpZOn4HmhMDG7AEEn5b1+rGh0pNzRpQzUouf++e
+5/U/Mp/sTRaifwpy6tJJDn/35pPKs4dCYmorn1CnRFjWXDsBgXxfaSe1RCCWnO8/
+u0WDxBI8RkqR+wPgGM5yjLf5Bxb/9M22gMOKxfDGLQBQ/EI9QN0U3Vztm72GjQ==
+=J/zq
+-----END PGP SIGNATURE-----
