@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/16
-Message-ID: <542A9A20.90904@mittwald.de>
-Date: Tue, 30 Sep 2014 13:55:12 +0200
-From: Sven Kieske <s.kieske@...twald.de>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: vulnerability in rsyslog
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/28/2
+Message-ID: <alpine.LFD.2.10.1401281857490.9872@javelin.pnq.redhat.com>
+Date: Tue, 28 Jan 2014 19:00:06 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request Linux kernel: netfilter: nf_nat: leakage of uninitialized buffer in IRC NAT helper 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+    Hello,
 
-I don't understand the following statement in the
-pri-vuln.txt in section "Patches":
+Linux kernel built with the NetFilter Connection Tracking(NF_CONNTRACK)
+support for IRC protocol(NF_NAT_IRC), is vulnerable to an information leakage
+flaw. It could occur when communicating over direct client-to-client IRC
+connection(/dcc) via a NAT-ed network. Kernel attempts to mangle IRC TCP
+packet's content, wherein an uninitialised 'buffer' object is copied to a
+socket buffer and sent over to the other end of a connection.
 
-"Version 7.4.6, while no longer being project
-supported received a patch and is also not vulnerable."
+Upstream fix:
+-------------
+   -> https://git.kernel.org/linus/2690d97ade05c5325cbf7c72b94b90d265659886
 
-What was patched when this version is not vulnerable?
-Or do you mean it is not vulnerable after the patch got applied?
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1058748
 
--- 
-Mit freundlichen Grüßen / Regards
 
-Sven Kieske
-
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+Thank you
+--
+Prasad J Pandit / Red Hat Security Response Team
