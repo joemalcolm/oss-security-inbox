@@ -1,49 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/10/1
-Message-ID: <52CF39DD.90801@redhat.com>
-Date: Fri, 10 Jan 2014 10:07:57 +1000
-From: David Jorm <djorm@...hat.com>
-To: cve-assign@...re.org
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE request: remote code execution via deserialization in XStream
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/28/3
+Message-Id: <201401282014.s0SKEdw3007820@linus.mitre.org>
+Date: Tue, 28 Jan 2014 15:14:39 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request Linux kernel: netfilter: nf_nat: leakage of uninitialized buffer in IRC NAT helper
 Content-Type: text/plain; charset=utf-8
 
-On 01/10/2014 09:46 AM, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
->> http://blog.diniscruz.com/2013/12/xstream-remote-code-execution-exploit.html
-> Use CVE-2013-7285.
->
-> At least initially, the scope of this CVE is "XStream is an
-> 'reflection-based XML-to-Object conversion'" in that file, and all of
-> the implications of unrestricted conversion, including "allows the
-> creation of server side objects based on reflection (which means that
-> you could have all sorts of business-logic sensitive objects being
-> created)" -- which is mentioned separately in that file.
->
-> If this does not make sense, and multiple CVEs are needed, please let
-> us know.
->
-> - -- 
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
->
-> iQEcBAEBAgAGBQJSzzPZAAoJEKllVAevmvms3cEH/3MBAH57R/LhQfI5ZMUm9FOD
-> eZm7p9IGl3PpSMtrwqSNwXS6InpfAmc04P0xX/HM4yFSRX6yHVaTZA9vbNGRs6PV
-> VdZg/A+WiUwdBdGhsFfXCb82QvCthdxyv6AAK5uNpVqQTqmikVPNk8gYxcHXZz3+
-> xUmUGLxwlCtImSZ1WiZMSCMYul3jsFsuOiVlqHF2NBoXh+55xmy8hLTOCUijILeG
-> lAXfMo25S971OJalr5pzGUC2EPUclV5D08+jv3KCNqryNphsepa3+14OKrvvz1yX
-> Q19c3+suDKWOUDvur9ENeHkf//Va881GNGZkcvppfvIkYCMI3vKFaWGMYRWR+jE=
-> =Jkgd
-> -----END PGP SIGNATURE-----
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-That makes sense, and I think a single CVE ID is all that is needed in 
-this case.
+> Linux kernel built with the NetFilter Connection Tracking(NF_CONNTRACK)
+> support for IRC protocol(NF_NAT_IRC), is vulnerable to an information leakage
+> flaw. It could occur when communicating over direct client-to-client IRC
+> connection(/dcc) via a NAT-ed network. Kernel attempts to mangle IRC TCP
+> packet's content, wherein an uninitialised 'buffer' object is copied to a
+> socket buffer and sent over to the other end of a connection.
+> 
+> https://git.kernel.org/linus/2690d97ade05c5325cbf7c72b94b90d265659886
+> https://bugzilla.redhat.com/show_bug.cgi?id=1058748
 
-Thanks
-David
+Use CVE-2014-1690.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS6A6QAAoJEKllVAevmvms8oUIAIue3EnbDUNmDojuAhfS2G8W
+ar7B6BknStwQo6VggXIwqrmFyLbf8aykupuAXTusCE3fIbR5Mz2l1GVF1jbJRjfT
+HRvG40HPTyI+AXWRoAiCHP9DdsN4Q55CV+HDd/8zUDllRVWjZQ3B+1lP6HK+X9yp
+j8Jlqvmdz1sac9F01/OhfvCJlwzajGNEn1gZMHMzNao0+QpEBhIoqbAIuNdwn44Z
+tWTe2Y/rXhayjY5QHzxbn+umC+rHDppJzuqstjzva0Dr6RAYAD+tWif1d/qGfwty
+8boM7M/doelpKjR6FSPJUXYzH1bHybAbtj6ho6jnwK5hgqrgmnu+l3ojlOjLUoQ=
+=C1pO
+-----END PGP SIGNATURE-----
