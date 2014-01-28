@@ -1,79 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/2
-Message-ID: <CAH-jhOBVmFiE5WhQXWm1XqDB4szKMuJ3dr-VKdKQKmoJ0u=SyQ@mail.gmail.com>
-Date: Tue, 18 Nov 2014 18:11:29 -0500
-From: Steven Morgan <smorgan@...rcefire.com>
-To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com
-Subject: Fwd: [Clamav-devel] ClamAV(R) blog: ClamAV 0.98.5 has been released!
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/28/4
+Message-Id: <201401282020.s0SKK6ju007926@linus.mitre.org>
+Date: Tue, 28 Jan 2014 15:20:06 -0500 (EST)
+From: cve-assign@...re.org
+To: pedrib@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, jan@...de.org, carnil@...ian.org, seth.arnold@...onical.com, security@...ian.org, security@...ntu.com, security@...de.org
+Subject: Re: Remote code execution in horde < 5.1.1
 Content-Type: text/plain; charset=utf-8
 
-FYI:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
----------- Forwarded message ----------
-From: Joel Esler (jesler) <jesler@...co.com>
-Date: Tue, Nov 18, 2014 at 5:11 PM
-Subject: [Clamav-devel] ClamAV® blog: ClamAV 0.98.5 has been released!
-To: ClamAV Development <clamav-devel@...ts.clamav.net>, ClamAV users ML <
-clamav-users@...ts.clamav.net>, "clamav-announce@...ts.clamav.net" <
-clamav-announce@...ts.clamav.net>
+> There is a remote code execution bug in horde affecting all versions from
+> at least horde 3.1.x to 5.1.1.
+> This has been fixed in commit
+> https://github.com/horde/horde/commit/da6afc7e9f4e290f782eca9dbca794f772caccb3
+> Also check changelog
+> https://github.com/horde/horde/blob/82c400788537cfc0106b68447789ff53793ac086/bundles/groupware/docs/CHANGES#L215
 
+Use CVE-2014-1691.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-
-http://blog.clamav.net/2014/11/clamav-0985-has-been-released.html
-
-ClamAV 0.98.5 has been released!
-
-Welcome to ClamAV 0.98.5! ClamAV 0.98.5 includes important new features
-for collecting and analyzing file properties. Software developers and
-analysts may collect file property meta data using the ClamAV API for
-subsequent analysis by ClamAV bytecode programs. Using these features
-will require that libjson-c is installed, but otherwise libjson-c is not
-needed.
-
-Look for our upcoming series of blog posts to learn more about using the
-ClamAV API and bytecode facilities for collecting and analyzing file
-properties.
-
-ClamAV 0.98.5 also includes these new features and bug fixes:
-
-
-• Support for the XDP file format and extracting, decoding, and scanning
-PDF files within XDP files. Addition of shared library support for LLVM
-versions 3.1 - 3.5 for the purpose of just-in-time(JIT) compilation of
-ClamAV bytecode signatures. Andreas Cadhalpun submitted the patch
-implementing this support.
-• Enhancements to the clambc command line utility to assist ClamAV bytecode
-signature authors by providing introspection into compiled bytecode
-programs.
-• Resolution of many of the warning messages from ClamAV compilation.
-• Improved detection of malicious PE files.
-• Security fix for ClamAV crash when using 'clamscan -a'. This issue was
-identified by Kurt Siefried of Red Hat.
-• Security fix for ClamAV crash when scanning maliciously crafted yoda's
-crypter files. This issue, as well as several other bugs fixed in this
-release, were identified by Damien Millescamp of Oppida.
-• ClamAV 0.98.5 now works with OpenSSL in FIPS compliant mode. Thanks to
-Reinhard Max for supplying the patch.
-• Bug fixes and other feature enhancements. See Changelog or git log for
-details.
-
-
-Thanks to the following ClamAV community members for code submissions
-and bug reporting included in ClamAV 0.98.5:
-
-Andreas Cadhalpun
-Sebastian Andrzej Siewior
-Damien Millescamp
-Reinhard Max
-Kurt Seifried
-
-Please download the latest release of ClamAV from 0.98.5 from our download
-page.
-_______________________________________________
-http://lurker.clamav.net/list/clamav-devel.html
-Please submit your patches to our Bugzilla: http://bugs.clamav.net
-
-http://www.clamav.net/contact.html#ml
-
+iQEcBAEBAgAGBQJS6BBOAAoJEKllVAevmvmsxC0H/3N7rzO2EaPMilm2rVygcZe/
+CEfkLhuu/85I5/4MZUkFE4dXkd5pn5pqFT5t4IgCxHGsoVK2q4sdHXGt1bLcPYjR
+6V9EvwmI7X/HKeC6Ic3nomPSwiw+0FSuc7ofW0Yp/BbRmc5nLoNZiUhpGXv3A1wF
+IpEH7J5o9/gmRQilnA2pl/fnBzDdRrdFjM6lKr30ntTlguRAVVRUBpi1uKNwK3fz
+D1doE4/sixCmaF6qfT5VSJhnX1jOOz4bnpR2b8S5H0LSghiahCchTKVCtEiv/uAL
+snVOmJhVEAjYZ4mrk8410i6nTd0vri8QCe4qsR5E6zQEsKzazDBuTM1AZc533sE=
+=+xzP
+-----END PGP SIGNATURE-----
