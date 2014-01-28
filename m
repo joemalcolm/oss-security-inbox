@@ -1,40 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/1
-Message-ID: <Pine.LNX.4.64.1412021941360.27520@beijing.mitre.org>
-Date: Tue, 2 Dec 2014 19:42:45 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/28/1
+Message-ID: <CAEDdjHfvz+6c_tAfg55adZy9q_HhgW_rq1viFfqzx5ebN+925A@mail.gmail.com>
+Date: Tue, 28 Jan 2014 10:10:19 +0000
+From: Pedro Ribeiro <pedrib@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: OpenVAS Manager SQL injection (OVSA20141128)
+Cc: Jan Schneider <jan@...de.org>, Salvatore Bonaccorso <carnil@...ian.org>,  Seth Arnold <seth.arnold@...onical.com>, security@...ian.org, security@...ntu.com,  security@...de.org
+Subject: Remote code execution in horde < 5.1.1
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+There is a remote code execution bug in horde affecting all versions from
+at least horde 3.1.x to 5.1.1.
+This has been fixed in commit
+https://github.com/horde/horde/commit/da6afc7e9f4e290f782eca9dbca794f772caccb3
+Also check changelog
+https://github.com/horde/horde/blob/82c400788537cfc0106b68447789ff53793ac086/bundles/groupware/docs/CHANGES#L215
 
->An SQL injection flaw has been fixed in OpenVAS Manager:
->
->http://www.openvas.org/OVSA20141128.html
+Can you please assign a CVE for this issue?
 
-Use CVE-2014-9220.
+Thanks in advance.
 
-The original finder, Michael Eissele, has requested that Michael Meyer
-(mime), also of Greenbone Networks, be publicly recognized because he
-"worked out the final exploitation PoC which was needed to get some
-output of the Database."
+PS: while I discovered this bug independently reviewing horde3 code, the
+full credit should go to the horde maintainers as they discovered and fixed
+it first on horde5.
 
-- ---
+Regards
+Pedro
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEVAwUBVH5bPqllVAevmvmsAQItJQgAhhxh8qKdxuykhmBRq98HN102+RJjglak
-5DsBO8jBtqiNgI7dWGCMQjxScWkfIVR3wNOl+2nKRq2g8mljjpIYTHwB3953NDVJ
-yF7g9KBCwYroMYkTEhQVnI+NK4nh/URXmAdOxYwkFVh+kFcbrMxHt4eS1/UN0EnB
-1OAvH7Deadj69+F56rgoU3jMvVUe+6GBOhxwIqx8ySSLBoEsuiJ+HTjvBqHkX+gV
-MoAaysX4yo9BzL6CIwNAfYe70AQpWKY+gBJVqqpp62Sl1vKtkIc9S6KfpfnocQBv
-6bY5kX2RNEv5cGGzAHY4nMeFfrchIpRe7QZeRrlVyRb4NiXtgbwNHw==
-=+rTC
------END PGP SIGNATURE-----
