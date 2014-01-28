@@ -1,28 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/11
-Message-ID: <54295975.4050809@case.edu>
-Date: Mon, 29 Sep 2014 09:07:01 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Giles Coochey <giles.coochey@...secspec.co.uk>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/28/5
+Message-ID: <52E8178A.7040406@redhat.com>
+Date: Tue, 28 Jan 2014 13:48:10 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request Linux kernel: netfilter: nf_nat: leakage of uninitialized buffer in IRC NAT helper
 Content-Type: text/plain; charset=utf-8
 
-On 9/29/14, 8:55 AM, Giles Coochey wrote:
-> On 29/09/2014 12:17, Loganaden Velvindron wrote:
->> HI Chet, As you are aware, a sixth security issue has been discovered.
->> Due to the nature of the vulnerability, I believe that it's best to break
->> backward compatibility as done by FreeBSD and NetBSD until a proper patch
->> is developed. We are lucky to have security researchers reporting their
->> findings publicly. What about others that don't ? I strongly believe that
->> it's much safer to have it disabled, and have a complete and
->> comprehensive audit of the source code, and then re-enable it.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 01/28/2014 06:30 AM, P J P wrote:
+> Hello,
 > 
-> Am I the only one who is wondering: Who is paying Chet to do this?
+> Linux kernel built with the NetFilter Connection
+> Tracking(NF_CONNTRACK) support for IRC protocol(NF_NAT_IRC), is
+> vulnerable to an information leakage flaw. It could occur when
+> communicating over direct client-to-client IRC connection(/dcc) via
+> a NAT-ed network. Kernel attempts to mangle IRC TCP packet's
+> content, wherein an uninitialised 'buffer' object is copied to a 
+> socket buffer and sent over to the other end of a connection.
+> 
+> Upstream fix: ------------- ->
+> https://git.kernel.org/linus/2690d97ade05c5325cbf7c72b94b90d265659886
+>
+>  Reference: ---------- ->
+> https://bugzilla.redhat.com/show_bug.cgi?id=1058748
+> 
+> 
+> Thank you -- Prasad J Pandit / Red Hat Security Response Team
 
-Nobody is paying me to do this.
+Please use CVE-2014-0025 for this issue.
 
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJS6BeJAAoJEBYNRVNeJnmTDLMP/2y+jDme/VhuTwR5niOBIIkd
+pSssyobeNdxFYBNMf9CfRMOsA1qm1HwPn0V7zE6I6+RKb+pxB6ywnZE/1EkqvHCv
+7LU02JZAEGXe1d1uoZ+KaXlCuRk6ppDITJ+aPix3aqJBLlE5varGjzzZcPNpgFLv
+OJQLyy6WMZu/nMMY0pxcztkgs35ym+y59II9X8pvIXHmQMID1ACd61lYeGyyo5ZW
+r5dQB8lddFLU8XOQVkIYN6J/A5aZO0V30XaNur0yJSwyGLp/7McgPt7GL6fY/lHJ
+AzmYpNMjJCkE9AqaSuUFfLuxbCg/wXijSF0kuvqFYaimt7Whsul4WaUt1w3kWVQH
+Z+kdQ0uTxCrTT/gOC29oJUWwX5HxW0w7PIkSXin42EZeaMPcmvGKOjwsvOgalN+V
+e68TgkGQQTT/qRmujvuzwMt103HP1klO2Zl8wfNZIPzy5ZaVUc7AYRUiVqbjC83p
+GGqYy87JX8veuoz8zetHV1PZ7bcy8fEBVDlQIylT+kVtXXa8POg7WnkuV+ktkbKR
+c3Mly+c9q7GIZD3wxK9xL1K61DdT2TgLlFt5bCuV9tQZH/iwVqCALlyK007MK9Zq
+I29oxI6+z64gx3r+rwd844hmr+5AEyJTyQGi4DSA/a9wDBqcOpmTTnmDW86sPb1p
+kOqiN5h6K8fuJhP+Pdkn
+=R2KD
+-----END PGP SIGNATURE-----
