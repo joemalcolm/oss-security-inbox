@@ -1,41 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/25/2
-Message-ID: <1804246.Yr4AJFuk5I@eee>
-Date: Sun, 25 May 2014 11:31:51 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Cc: guillem@...ian.org
-Subject: CVE request: another path traversal in dpkg-source during unpack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/7
+Message-ID: <20140129095757.GA12576@lorien.valinor.li>
+Date: Wed, 29 Jan 2014 10:57:57 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: security@...s.org, pmatthaei@...ian.org
+Subject: CVE Request: otrs: CSRF issue in customer web interface
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi
 
-Another path traversal was discovered[1] in dpkg-source, related to the 
-unpacking of source packages with specially-crafted patches.
-While waiting for the original reporter's PoC/more information, Guillem 
-Jover (dpkg maintainer) independently re-discovered the issue, and a second 
-one.
-This second issue has now been publicly reported as [2] to ease the 
-assignment of CVE id(s) given the combination of private and not-very-
-specific public information.
+A CSRF issue in otrs was announced in [1]. Is a CVE for this issue
+already assigned?
 
-Both issues are independent of the version of the patch tool.
+>From upstream announcement:
 
-While figuring out whether one or two ids should be requested (at least from 
-our POV), it appears that we can say that [2] is a superset of [1] - this is 
-based on the minimal fixes needed to fix either vulnerability: the fix for [1] 
-does not fix [2], but the fix for [2] does fix [1].
+An attacker that managed to take over the session of a logged in
+customer could create tickets and/or send follow-ups to existing
+tickets due to missing challenge token checks.
 
-Could a CVE id be assigned please?
+Commits for various branches (3.1.x, 3.2.x and 3.3.x) are in [2], [3]
+and [4].
 
-CC'ing Guillem for any complimentary information.
+Bugreport at [5].
 
-Thanks in advance.
+ [1] https://www.otrs.com/security-advisory-2014-01-csrf-issue-customer-web-interface/
+ [2] https://github.com/OTRS/otrs/commit/ca2c3390fd60d9a3f810ed2c22cbc2c193457b77
+ [3] https://github.com/OTRS/otrs/commit/6f324aaf8647729d509eebf063a0181f9f9196f7
+ [4] https://github.com/OTRS/otrs/commit/92f417277f43832f1a0462f2485fe1fd3fd52312
+ [5] http://bugs.otrs.org/show_bug.cgi?id=10099
 
-[1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746498
-[2] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=749183
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Regards,
+Salvatore
