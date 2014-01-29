@@ -1,46 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/03/3
-Message-Id: <201403031306.36529.tmb@65535.com>
-Date: Mon, 3 Mar 2014 13:06:25 +0000
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/19
+Message-ID: <52E99414.2080704@gmail.com>
+Date: Thu, 30 Jan 2014 10:51:48 +1100
+From: dawg <mlyodawg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
+Subject: Re: CVE Request: Juju phpmyadmin charm
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 27 February 2014 17:30:54 Marcus Meissner wrote:
-> Hi,
-> 
-> I am wondering a bit ...
-> 
-> We received this bugreport for the KDE default webbrowser Konqueror:
-> https://bugzilla.novell.com/show_bug.cgi?id=865241
-> 
-> Basically https://www.howsmyssl.com reports that even the weak
-> EXPORT ciphera are in use by konqueror.
-> 
-> And yes, it is right...
-> DES40, RC2, DES_CBC  (single DES) ... should definitely not be used these
-> days anymore.
-> 
-> 
-> Do you think use of export ciphers should get CVEs these days?
-> 
-> It does not seem intentional, konqueror just uses everything openssl has
-> without explicit filtering by default.
+Hello,
 
-Note: Not part of KDE and not speaking on their behalf, but...
+The second (replacement) argument passed to preg_replace is empty : it
+doesn't use matched input. This can't be exploited.
 
-IMO SSL on KDE needs some pretty big love. Pretty sure I've discussed this and 
-other aspects of SSL with the relevant people at KDE before but as with many 
-aspects of KDE, noones really had time to tackle it. Basically. Konqueror 
-doesn't really deal with SSL, that's delegated down the stack which ends up 
-with OpenSSL. There's a lot of oddities in KDEs SSL more generally but the 
-original KSSL author has abandoned it (IIRC), and no one has really stepped up 
-to fill the slack. 
+Examples:
 
-Tim
--- 
-Tim Brown
-<mailto:tmb@...35.com>
+$ php -r 'print(preg_replace("/(.*)/e","","phpinfo();"));'
+=> Nothing
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+$ php -r 'print(preg_replace("/(.*)/e","$1","phpinfo();"));'
+=> phpinfo() get executed
+
+Bye
+
+Le 30/01/2014 10:16, Seth Arnold a écrit :
+> Hello Kurt, vendors, MITRE,
+> 
+> Please assign a CVE for the following issue:
+> 
+> I discovered a potentially unsafe use of PHP's preg_replace() /e option in
+> the Juju charm phpmyadmin:
+> 
+> $xml = simplexml_load_string(preg_replace("/(<\/?)media\:content([^>]*>)/e",
+>     '', str_replace('media:hash',
+>         'hash',
+> 	file_get_contents('https://sourceforge.net/api/file/index/project-id/23067/mtime/desc/limit/40/rss'))));
+> 
+> An attacker able to spoof ARP, DNS, or BGP, or control any of the routers
+> between the client and sourceforge.net, or control over the sourceforge
+> project or sourceforge servers, would be in a position to insert likely
+> aribtrary code into the PHP interpreter.
+> 
+> The full source of this file can be found at:
+> 
+> http://bazaar.launchpad.net/~charmers/charms/precise/phpmyadmin/trunk/view/head:/bin/parse_upstream
+> 
+> I have reported the bug to:
+> 
+> https://bugs.launchpad.net/charms/+source/phpmyadmin/+bug/1274264
+> 
+> The problem appears to have been introduced in revision 18. No fix is
+> currently available.
+> 
+> Thanks
+> 
