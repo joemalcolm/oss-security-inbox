@@ -1,73 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/11
-Message-ID: <53A041A4.6050603@crc.id.au>
-Date: Tue, 17 Jun 2014 23:24:52 +1000
-From: Steven Haigh <netwiz@....id.au>
-To: Andres Lagar Cavilla <andres@...arcavilla.org>,  xen-devel@...ts.xen.org, security@....org, xen-announce@...ts.xen.org,  oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 99 - unexpected pitfall in xenaccess API
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/11
+Message-ID: <CAA7hUgHDZ2pCTe=hs4M8jmzh4uQwi-tW6tf0BZH=Mw+TtNWX9g@mail.gmail.com>
+Date: Wed, 29 Jan 2014 15:02:07 +0100
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Jakub Wilk <jwilk@...ian.org>, 736958@...s.debian.org
+Subject: Re: CVE request: temporary file issue in Passenger rubygem
 Content-Type: text/plain; charset=utf-8
 
-On 17/06/14 23:13, Andres Lagar Cavilla wrote:
->                     Xen Security Advisory XSA-99
->                              version 2
-> 
->                  unexpected pitfall in xenaccess API
-> 
-> UPDATES IN VERSION 2
-> ====================
-> 
-> Public Release.
-> 
-> Added note regarding CVE.
-> 
-> ISSUE DESCRIPTION
-> =================
-> 
-> A test/example program, for exercising the Xen memaccess API, does not
-> take all necessary precautions against hostile guest behaviour.
-> 
-> As a result, software developers using it as an example or template
-> might have written and deployed vulnerable code.
-> 
->> How?
-> 
->> I've looked at the patch. It's the refactor proposed in a separate
->> thread by Dushyant Behl, lifted up a level. Obviously useful, +2.
-> 
->> But fundamentally, how is this a vulnerability? Since the dawn of time
->> guests can poke at the qemu and PV frontend rings. So self DoS, check.
->> But, privilege escalation?
-> 
->> Is this predicated on the potential (lack of) software quality of the
->> xenaccess backends? That's a fair argument, but a different story.
-> 
->> I am puzzled how this is an XSA that addresses "privilege escalation".
+On 29 January 2014 09:57, Raphael Geissert <geissert@...ian.org> wrote:
+[...]
+> One thing to notice, however, is that there's a race condition between
+> the stat check introduced in 34b1087870c2.
+> The following sequence still triggers the bogus behaviour:
+>
+> <user> mkdir $dir
+> <phusion> lstat() (getFileTypeNoFollowSymlinks)
+> <user> rmdir $dir
+> <user> ln -s /target $dir
+> <phusion> stat() (from verifyDirectoryPermissions)
+> ...
 
-Also note:
-[netwiz@dev xen-4.2.4]$ patch -p1 < ../xsa-99.patch
-patching file tools/libxc/xc_mem_access.c
-Hunk #1 succeeded at 24 with fuzz 2.
-patching file tools/libxc/xc_mem_event.c
-patching file tools/libxc/xenctrl.h
-Hunk #1 succeeded at 1907 (offset -116 lines).
-Hunk #2 succeeded at 1933 with fuzz 2 (offset -116 lines).
-patching file tools/tests/xen-access/xen-access.c
-Hunk #1 succeeded at 233 (offset 10 lines).
-Hunk #2 succeeded at 254 (offset 10 lines).
-Hunk #3 succeeded at 269 (offset 10 lines).
-Hunk #4 FAILED at 293.
-1 out of 4 hunks FAILED -- saving rejects to file
-tools/tests/xen-access/xen-access.c.rej
+Upstream has now fixed this with the following commit (basically using
+the structure from lstat() for the two checks):
+https://github.com/phusion/passenger/commit/94428057c602da3d6d34ef75c78091066ecac5c0
 
-In a nutshell, it doesn't apply cleanly either...
-
+Cheers,
 -- 
-Steven Haigh
-
-Email: netwiz@....id.au
-Web: http://www.crc.id.au
-Phone: (03) 9001 6090 - 0412 935 897
-Fax: (03) 8338 0299
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
