@@ -1,24 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/2
-Message-ID: <CAAWYm=tfUhXZojO6GnJhat3sJf1yXoOrNns1c0mT-339OQ0DEw@mail.gmail.com>
-Date: Wed, 3 Dec 2014 04:24:27 -0500
-From: David White <dmwhite823@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-8104 - Critical OpenVPN DoS Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/12
+Message-Id: <201401291513.s0TFDX1S000258@linus.mitre.org>
+Date: Wed, 29 Jan 2014 10:13:33 -0500 (EST)
+From: cve-assign@...re.org
+To: argos83@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Erlang OTP - ftp module - FTP Command Injection
 Content-Type: text/plain; charset=utf-8
 
-I saw an email come through the pfSense list yesterday, but haven't seen
-anything about it discussed here. So I'm bringing it to this list's
-attention.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://community.openvpn.net/openvpn/wiki/SecurityAnnouncement-97597e732b
+> http://erlang.org/pipermail/erlang-bugs/2014-January/003998.html
 
-[ As a side note, I mistakenly thought the OP on the pfSense list
-mistakenly posted his link to a forum post on OpenVPN that was written in
-2010, when in fact, that user had joined in 2010 but posted to the pfSense
-forum recently - https://forums.openvpn.net/topic17625.html ]
+> There is an FTP Command Injection vulnerability in the "ftp" module.
 
+Use CVE-2014-1693.
 
--- 
-David
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
+iQEcBAEBAgAGBQJS6RoLAAoJEKllVAevmvmsTbMH/1WIf22nkXfqAI8iBeBpQSwi
+I459t/EhfrgiNYKQZPnzc8SgxgQgY3q8tXr4Kcgz+CqMxVyb7gAP8t3wh+Ltqtfc
+B1vZjrepQviiWd1vjJ/pOUbQFtu+wBz/vkOQ2o4ptDZP3Di3jtpPRhpNdviUh8we
+YUsyCwi0D1sfk+e1A7BW02qjjvJ4HjYcMWZgfMDXngMHvHM8pVYJNzKKOMwZ6pes
+d8GLZN8hg1dYQFubD1KrYjMUuIQ4CPA0FUtPAzmBmXnSlu+JmzA+WkUeWFtzYcn7
+s2SomoIVhl9bUYTZrGqXZMw02QIkheoHwkRQ8s9lrdvv+FoulHhoAxf1RUfcAPw=
+=Yt6e
+-----END PGP SIGNATURE-----
