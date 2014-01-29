@@ -1,40 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/16
-Message-Id: <201401072233.s07MXK4E026919@linus.mitre.org>
-Date: Tue, 7 Jan 2014 17:33:20 -0500 (EST)
-From: cve-assign@...re.org
-To: dkg@...thhorseman.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 683338@...s.debian.org
-Subject: Re: CVE request: lightdm-gtk-greeter - local DOS due to NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/1
+Message-ID: <52E846DE.2070904@redhat.com>
+Date: Wed, 29 Jan 2014 11:10:06 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Pedro Ribeiro <pedrib@...il.com>, Jan Schneider <jan@...de.org>, Salvatore Bonaccorso <carnil@...ian.org>, Seth Arnold <seth.arnold@...onical.com>, security@...ian.org, security@...ntu.com, security@...de.org
+Subject: Re: Remote code execution in horde < 5.1.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 01/28/2014 09:10 PM, Pedro Ribeiro wrote:
+> Hi,
+>
+> There is a remote code execution bug in horde affecting all versions from
+> at least horde 3.1.x to 5.1.1.
+> This has been fixed in commit
+> https://github.com/horde/horde/commit/da6afc7e9f4e290f782eca9dbca794f772caccb3
+> Also check changelog
+> https://github.com/horde/horde/blob/82c400788537cfc0106b68447789ff53793ac086/bundles/groupware/docs/CHANGES#L215
+>
+> Can you please assign a CVE for this issue?
+>
+> Thanks in advance.
+>
+> PS: while I discovered this bug independently reviewing horde3 code, the
+> full credit should go to the horde maintainers as they discovered and fixed
+> it first on horde5.
+>
+> Regards
+> Pedro
+>
 
-> http://www.openwall.com/lists/oss-security/2014/01/07/10
+Morning,
 
-> gdm3 needs one also
+In Fedora there is horde and php-horde-Horde-Util:
 
-> Basically, when gdm3 is configured to not show a list of users (but
-> instead shows a blank box for the login prompt), if the user clicks
-> "cancel" or hits the escape key, then the greeter gets put into a mode
-> without any way to log in (no prompts available).
+http://koji.fedoraproject.org/koji/buildinfo?buildID=446660
+http://koji.fedoraproject.org/koji/buildinfo?buildID=449705
 
-Use CVE-2013-7273.
+I am not familiar with Horde or know the difference between those 
+packages, whether one is an older version and the other providing 
+equivalent functionality to version 5. The github commit in the original 
+message is in php-horde-Horde-Util for us.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+The same vulnerability is in our horde package too, but I could not find 
+this (horde-3.3.13/lib/Horde/Variables.php) in github:
 
-iQEcBAEBAgAGBQJSzIACAAoJEKllVAevmvmshH0IAI7wY+ot8z57Mo8hEIHoWfK7
-+7BqyjzAV10B9hZ/9B5cWhHkt7wWfbi3n/e9TSHGrjjQCkhF8jMwHqEP3ZZVQWMI
-jKmr1itzzBwJ5NCNFTfGyIM2aw4OYDiEBhybQSyOitldRztoR2doY7Kj+X/62QVy
-iTrx0oUmCkyqsxode7CNpH44KEZJ+SkwLjQxtUVSyB4vTRY3+VqxsG+jvhaTU3kC
-teKWvSwr3Un9mLOKVNyGXIPH1+b6l8sko04i+J6Vu9bUHG7HMjc+Zhqmgfn8UID8
-BwPe/otGan2pfi9e8b40pu9u5N1d7+qDUSoJypCLjG0rwQEVM64KYHxCfJsexCg=
-=pNJS
------END PGP SIGNATURE-----
+21 class Variables {
+22
+23     var $_vars;
+24     var $_expectedVariables = array();
+25
+26     function Variables($vars = array())
+27     {
+28         if (is_null($vars)) {
+29             $vars = Util::dispelMagicQuotes($_REQUEST);
+30         }
+31         if (isset($vars['_formvars'])) {
+32             $this->_expectedVariables = @unserialize($vars['_formvars']);
+33             unset($vars['_formvars']);
+34         }
+35         $this->_vars = $vars;
+
+Mailing here in case anyone else is shipping in a similar way (or if 
+another CVE is needed?).
+
+Cheers,
+
+--
+Murray McAllister / Red Hat Security Response Team
