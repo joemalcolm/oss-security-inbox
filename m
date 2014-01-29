@@ -1,46 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/10
-Message-ID: <20141207194455.GB27260@kroah.com>
-Date: Sun, 7 Dec 2014 11:44:55 -0800
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: How GNU/Linux distros deal with offset2lib attack?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/15
+Message-Id: <201401291914.s0TJEAlk006201@linus.mitre.org>
+Date: Wed, 29 Jan 2014 14:14:10 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, pmatthaei@...ian.org
+Subject: Re: CVE Request: otrs: CSRF issue in customer web interface
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Dec 07, 2014 at 10:43:17PM +0800, Shawn wrote:
-> Hi Lionel,
-> 
-> Thanks for your extraordinary explanation about Grsec/PaX. I'm a big
-> fan of Grsec/PaX. But I think compare the ASLR implementation of
-> vallina kernel with Grsecurity/PaX is not fair. Linux upstream doesn't
-> hold the security-oriented philosophy, while Grsecurity/PaX community
-> are expertise of system-lvl security.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Ok, do you seriously think this?  If so, please provide details as to
-why you feel this way.  The Linux kernel developers take security very
-seriously, otherwise no one would be using Linux for "secure" systems,
-right?
+We coordinated this separately with the upstream vendor, and the
+outcome was:
 
-> Developer/users could take bear of 5%-10% performance penalty caused
-> by new features, but I don't think most developers/users would accept
-> even 1% performance penalty caused by security defensive mitigation.
-> Personally, I hope we could see Grsecurity/PaX being part of mainline
-> linux kernel in the future.
+CVE-2014-1471 = https://www.otrs.com/security-advisory-2014-02-sql-injection-issue/
 
-Great, please do the work to split it up and submit it to be merged,
-that would be a wonderful thing for you to do if you think the features
-there are needed.
+CVE-2014-1694 = https://www.otrs.com/security-advisory-2014-01-csrf-issue-customer-web-interface/
 
-> IMOHO, offset2lib is a very critical impact to the GNU/Linux
-> mitigation. What if the bad buys already have some 0day vulns? This
-> will make their work so much easier to write massive exploit. Hope
-> upstream could patch this issue as quickly as possible. Plz don't let
-> this work to the burden of GNU/Linux distro community.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-What exactly do you mean here?  The fact that this option isn't enabled
-by lots of distros already means that there isn't much of an issue,
-right?
-
-thanks,
-
-greg k-h
+iQEcBAEBAgAGBQJS6VKOAAoJEKllVAevmvmsCPIIALtbtthzewyLGa4sQp/CRC29
+8oMYwQa+AjdUSfBXZnrxZ8BqL4rQZ1y/WTHAVwUNWTInOxUXUlhGh+kIi0SXtKT6
+aDvi8rl3NYfU56j1wMe2VQVWe4QlzPJMlBhqhymZG0cEy0wY8tcDmXC7LkkKOUkF
+G0iQXeNkLBg+A8Z3EyxfSTBoLvh2AOViC3gdyNRpUXSMK2p1rwvmphygbxiIeoGZ
+xfpvpBKDDUqlsnt27irLuQzKWyFhKSfV9hpwX5bRymb30JfMxA31zeTxfuybos/9
+ZSnRc+E5KsJTPq+viT0kGKoyRyeopVl1z68CqhlOub3R+D+r5mHW4RL8Jeldj1U=
+=m2SP
+-----END PGP SIGNATURE-----
