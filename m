@@ -1,71 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/24/9
-Message-ID: <20140324212056.GP21794@core.inversepath.com>
-Date: Mon, 24 Mar 2014 22:20:56 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2014-002] Xalan-Java insufficient secure processing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/13
+Message-ID: <CACd+vpfmKJmbdU5VywzvqfRtTApKbP2GVg6RTJVQuVHxJOWKLA@mail.gmail.com>
+Date: Wed, 29 Jan 2014 20:40:43 +0530
+From: Puneeth Gowda <puneethis021@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE: Request
 Content-Type: text/plain; charset=utf-8
 
+Kindly issue the CVE-ID.
 
-#2014-002 Xalan-Java insufficient secure processing
+I have reported cross site scripting(xss) in Nokia Maps & Places(v:1.6.6)
+wordpress plugin.
 
-Description:
+Link: http://wordpress.org/plugins/nokia-mapsplaces/
+Disclosed to plugins@...dpress.org : 18/01/2014
+Contacted author via twitter : No response
+vulnerable link from wordpress svn :
+http://plugins.svn.wordpress.org/nokia-mapsplaces/tags/1.6.6/page/place.html
 
-The Xalan-Java library is a popular XSLT processor from the Apache Software
-Foundation.
+Issue Fixed on : 20/01/2014
+Reference for change log :
+https://plugins.trac.wordpress.org/log/nokia-mapsplaces/
 
-The library implements the Java API for XML Processing (JAXP) which supports a
-secure processing feature for interpretive and XSLCT processors. The intent of
-this feature is to limit XSLT/XML processing behaviours to "make the XSLT
-processor behave in a secure fashion".
+Regards
+Puneeth Gowda
+CEH | OSCP
+puneethis021@...il.com
 
-It has been discovered that the secure processing features suffers from several
-limitations that undermine its purpose. The enabling of the secure processing
-feature in fact still allows the following processing to take place:
 
-  * Java properties, bound to XSLT 1.0 system-property(), are accessible.
-  * output properties that allow to load arbitrary classes or resources
-    are allowed (XALANJ-2435).
-  * arbitrary code can be executed if the Bean Scripting Framework (BSF)
-    is in the classpath, as it allows to spawn available JARs with secure
-    processing disabled, effectively bypassing the intended protection.
 
-Affected version:
 
-Xalan-Java >= 2.7.0
 
-Fixed version:
+---------- Forwarded message ----------
+From: Puneeth Gowda <puneethis021@...il.com>
+Date: Sat, Jan 18, 2014 at 5:15 PM
+Subject: Vulnerability in Nokia Maps & Places (Version:1.6.6)
+To: plugins@...dpress.org
 
-Xalan-Java >= r1581058 (see references)
 
-Credit: vulnerability report received from Nicolas Gregoire
-        <nicolas.gregoire AT agarri.fr>.
+Hi,
 
-CVE: CVE-2014-0107
+I would like to report cross site scripting(xss) in Nokia Maps &
+Places(v:1.6.6) wordpress plugin.
 
-Timeline:
-2014-02-05: vulnerability report received
-2014-02-05: reporter provides disclosure date set to 2014-03-21
-2014-02-06: contacted Apache Security Team
-2014-03-17: maintainer provides patch for review
-2014-03-17: reporter confirms patch
-2014-03-21: assigned CVE
-2014-03-24: maintainer commits patch
-2014-03-24: advisory release
+Please find the attached document for POC.
 
-References:
-http://xml.apache.org/xalan-j
-https://issues.apache.org/jira/browse/XALANJ-2435
-http://svn.apache.org/viewvc?view=revision&revision=1581058
+Kindly let me know if you face any issues while reproducing POC.
 
-Permalink:
-http://www.ocert.org/advisories/ocert-2014-002.html
+Thanks
+Puneeth Gowda
 
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
+Content of type "text/html" skipped
 
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Download attachment "XSS in Nokia Maps & Places plugin v 1.6.6.pdf" of type "application/pdf" (54456 bytes)
