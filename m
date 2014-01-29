@@ -1,34 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/15
-Message-ID: <CALCETrXQ5RhSjnsqDX1KXO0aeMe-bDh84JZfAkLD5ug+XZEd4w@mail.gmail.com>
-Date: Tue, 17 Jun 2014 14:47:46 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-4014: Linux kernel user namespace bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/14
+Message-ID: <alpine.LFD.2.10.1401292034410.25782@javelin.pnq.redhat.com>
+Date: Wed, 29 Jan 2014 20:51:00 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE REJECT request: CVE-2013-4588
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 10, 2014 at 2:49 PM, Andy Lutomirski <luto@...capital.net> wrote:
-> The internal function inode_capable was used inappropriately.
-> Depending on configuration, this may be usable to escalate privileges.
-> A cursory inspection of my Fedora box suggests that it is not
-> vulnerable to the obvious way to exploit this bug.
->
-> The fix should appear in Linus' -master shortly, and it's tagged for
-> stable.  In the mean time, I've attached it here.
->
+    Hello,
 
-The commit that fixes this is:
+CVE-2013-4588 was assigned to a stack overflow flaw in the Linux kernel.
 
-23adbe12ef7d3d4195e80800ab36b37bee28cd03
+  -> http://seclists.org/fulldisclosure/2013/Nov/77
 
-The bug is that, if you created a user namespace and retained
-capabilities in that namespace, then you could use chmod to set the
-setgid bit on any file you owned, including files with, say, group 0.
+===
+Kernel: net: ipvs: stack buffer overflow
 
-The impact depends on what files are available that have gids that
-shouldn't be available to the users who own the file.  For example,
-the existence of a uid != 0, gid == 0 file would allow that uid to
-escalate privileges to gid 0, which is likely good enough for full
-root.
+Linux kernel built with the IP Virtual Server(CONFIG_IP_VS) support is
+vulnerable to a buffer overflow flaw. It could occur while setting or
+retrieving socket options via setsockopt(2) or getsockopt(2) calls.
+Though a user needs to have CAP_NET_ADMIN privileges to perform these IP_VS
+operations.
 
---Andy
+Upstream fix:
+-------------
+   -> https://git.kernel.org/linus/04bcef2a83f40c6db24222b27a52892cba39dffb
+===
+
+The bounds check added by the above patch are found to be redundant, as the 
+same is done in routine 'nf_sockopt_find'. [1]
+
+   + if (cmd < IP_VS_BASE_CTL || cmd > IP_VS_SO_SET_MAX)
+   +     return -EINVAL;
+   + if (len < 0 || len > MAX_ARG_LEN)
+   +     return -EINVAL;
+
+[1] https://lkml.org/lkml/2009/9/30/265
+
+
+That makes it a security non-issue. Please kindly reject this CVE.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
