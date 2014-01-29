@@ -1,46 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/45
-Message-ID: <20141002213854.GA778@openwall.com>
-Date: Fri, 3 Oct 2014 01:38:54 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Chad Vizino <cvizino@...ptivecomputing.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: tm_adopt() vulnerability in TORQUE Resource Manager
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/5
+Message-ID: <52E8B052.6090706@redhat.com>
+Date: Wed, 29 Jan 2014 18:40:02 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Pedro Ribeiro <pedrib@...il.com>, Jan Schneider <jan@...de.org>, Salvatore Bonaccorso <carnil@...ian.org>, Seth Arnold <seth.arnold@...onical.com>, security@...ian.org, security@...ntu.com, security@...de.org
+Subject: Re: Remote code execution in horde < 5.1.1
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 02, 2014 at 03:26:21PM -0600, Chad Vizino wrote:
-> Within a TORQUE Resource Manager job, the tm_adopt() TORQUE library call
-> enables a user-built executable calling tm_adopt() to adopt any session id
-> (and its child processes) regardless of the session id owner on any node
-> within a job. When a job that includes the executable calling tm_adopt()
-> exits, the adopted processes are killed along with the job processes during
-> normal job cleanup. This can enable a non-root user to kill processes
-> he/she doesn't own including root-owned ones on any node in a job.
+On 01/29/2014 11:10 AM, Murray McAllister wrote:
+> On 01/28/2014 09:10 PM, Pedro Ribeiro wrote:
+>> Hi,
+>>
+>> There is a remote code execution bug in horde affecting all versions from
+>> at least horde 3.1.x to 5.1.1.
+>> This has been fixed in commit
+>> https://github.com/horde/horde/commit/da6afc7e9f4e290f782eca9dbca794f772caccb3
+>>
+>> Also check changelog
+>> https://github.com/horde/horde/blob/82c400788537cfc0106b68447789ff53793ac086/bundles/groupware/docs/CHANGES#L215
+>>
+>>
+>> Can you please assign a CVE for this issue?
+>>
+>> Thanks in advance.
+>>
+>> PS: while I discovered this bug independently reviewing horde3 code, the
+>> full credit should go to the horde maintainers as they discovered and
+>> fixed
+>> it first on horde5.
+>>
+>> Regards
+>> Pedro
+>>
+>
+> Morning,
+>
+> In Fedora there is horde and php-horde-Horde-Util:
+>
+> http://koji.fedoraproject.org/koji/buildinfo?buildID=446660
+> http://koji.fedoraproject.org/koji/buildinfo?buildID=449705
+>
+> I am not familiar with Horde or know the difference between those
+> packages, whether one is an older version and the other providing
+> equivalent functionality to version 5. The github commit in the original
+> message is in php-horde-Horde-Util for us.
+>
+> The same vulnerability is in our horde package too, but I could not find
+> this (horde-3.3.13/lib/Horde/Variables.php) in github:
+>
+> 21 class Variables {
+> 22
+> 23     var $_vars;
+> 24     var $_expectedVariables = array();
+> 25
+> 26     function Variables($vars = array())
+> 27     {
+> 28         if (is_null($vars)) {
+> 29             $vars = Util::dispelMagicQuotes($_REQUEST);
+> 30         }
+> 31         if (isset($vars['_formvars'])) {
+> 32             $this->_expectedVariables =
+> @unserialize($vars['_formvars']);
+> 33             unset($vars['_formvars']);
+> 34         }
+> 35         $this->_vars = $vars;
+>
+> Mailing here in case anyone else is shipping in a similar way (or if
+> another CVE is needed?).
+>
+> Cheers,
+>
+> --
+> Murray McAllister / Red Hat Security Response Team
 
-Chad - thank you for posting this!
+As noted by Remi Collet at [1]:
 
-All - Chad had brought this issue to the distros list yesterday (not
-realizing that public issues like it should go to oss-security right
-away, which we've explained), and it was assigned CVE-2014-3684.
+""horde" is the old application (version 3) build from a single tarball 
+(but still available in the repository)
 
-> The issue has been fixed in the following commit numbers for the listed
-> TORQUE Resource Manager versions:
-> 
-> 4.2-dev
-> 967cdc80150690459a47a35a658abeee0ca6e5cb
-> f2f4c950f3d461a249111c8826da3beaafccace9
-> 
-> 4.5-dev
-> 6c4a57b2d7a56b5bda1c57e2af425ff517ffe331
-> 
-> 5.0-dev
-> e2b6253b62fe7e59c5852e2b914b71a095328558
-> 
-> develop
-> dd7f729eedead89c9253707f85572706077ff1d3
+horde is now distributed via a pear channel and split in ~100 packages.
 
-These commits can be seen at:
+php-pear-Horde-Util 2.3.0 (with this fix) is already in the repository 
+(but not yet used as pear-horde-horde 5.1.5 is still under  review)."
 
-https://github.com/adaptivecomputing/torque
+Sorry for the noise!
 
-Alexander
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=1059000#c3
+
+--
+Murray McAllister / Red Hat Security Response Team
