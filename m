@@ -1,52 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/15/2
-Message-ID: <alpine.LFD.2.10.1409151702240.15703@javelin.pnq.redhat.com>
-Date: Mon, 15 Sep 2014 17:03:47 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request Linux kernel: net: guard tcp_set_keepalive against crash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/6
+Message-ID: <CAA7hUgEXUvo0NyZWUcpOncvOATdtrnPLxzpn=kKmeDn6=-MAgA@mail.gmail.com>
+Date: Wed, 29 Jan 2014 09:57:27 +0100
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: "support@...sion.nl" <support@...sion.nl>, Jakub Wilk <jwilk@...ian.org>
+Subject: Re: CVE request: temporary file issue in Passenger rubygem
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-    Hello,
+On 29 January 2014 00:23, Vincent Danen <vdanen@...hat.com> wrote:
+> Phusion Passenger creates a "server instance directory" in /tmp during startup,
+> which is a temporary directory that Phusion Passenger uses to store working files.
+> This directory is deleted after Phusion Passenger exits. For various technical
+> reasons, this directory must have a semi-predictable filename. If a local attacker
+> can predict this filename, and precreates a symlink with the same filename that
+> points to an arbitrary directory with mode 755, owner root and group root, then
+> the attacker will succeed in making Phusion Passenger write files and create
+> subdirectories inside that target directory.
 
-Linux kernel built with the Networking support(CONFIG_NET) is vulnerable to a
-crash, while resetting a socket timer. It could occur while doing a
-setsockopt(SO_KEEPALIVE) call.
+Ah, nice catch Jakub. Needless to say, this is related to but
+different from CVE-2013-4136.
 
-A privileged user/process able to create RAW socket could use this flaw to
-crash the system kernel resulting in DoS.
+One thing to notice, however, is that there's a race condition between
+the stat check introduced in 34b1087870c2.
+The following sequence still triggers the bogus behaviour:
 
-Upstream fix:
-- -------------
-   -> https://git.kernel.org/linus/3e10986d1d698140747fcfc2761ec9cb64c1d582
+<user> mkdir $dir
+<phusion> lstat() (getFileTypeNoFollowSymlinks)
+<user> rmdir $dir
+<user> ln -s /target $dir
+<phusion> stat() (from verifyDirectoryPermissions)
+...
 
-Reference:
-- ----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1141742
-
-
-Thank you.
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJUFs6bAAoJEN0TPTL+WwQfMF0P/3tYlFTCHpF594o/p84wdpyK
-KS6LaQIryYcxbZR6Pk28fpSf9bejXcj8RE0+eX2qCtZsCJYa2x8YhxoIppODqe+E
-EhMzedgxBlnOyg8xfbi/Mj92uYuf3ipLBMyBdMUUop8rb7cXw3wCEX4rgG+cih5n
-3EhlcBJu6qFcpn463CUFtWAkv+pGGYtA1Ts7qNJB1A2BuWWIo0RjnNWO7VpxnFum
-b2BE2kVKkWCgT1UtDNFiTl3tOvuCQMjvmqSeFg/VdgWikXHEXjZVtOBi2JMzqkCA
-qCJO5A54grC2HwIMvRKcd8JnUqVKdZ7j4oO6KVngEH+jDTrJgilRoQ4goa+g0Ex2
-UWiHqF7Z5IdeT2xRsf8bA1yZCHvciJleuVincYw96x70KBDqB4GgafabUaPYVZbw
-zwCm5sYB1yGecRjf3ggjIa9W1amJ6WH+R0We7AfK/wU7E0lmKJeQBYYT5i4dB+dg
-S4weE7kBYxcyIIJ+76pkTWtG/mbPPV1RTZ4nih9QwgHtMM3Ak0fmuBNhR34w80BL
-uj80qFXFs5ADnIpWKiE2091EJOQWrKVj22WVP5IznNGsUKvm7VItwjimfOFZRu32
-AlzgjLRl4bq/GxNdLJGnirDW6HainPMIY4kZkdi4C7ItA81odIpdcEMol9QrcJjS
-3RwyDR2QPgcqYmYCA3W/
-=skE4
------END PGP SIGNATURE-----
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
