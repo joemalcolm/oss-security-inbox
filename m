@@ -1,27 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/15/1
-Message-ID: <loom.20140815T031210-201@post.gmane.org>
-Date: Fri, 15 Aug 2014 01:15:46 +0000 (UTC)
-From: Vincent Lefevre <vincent@...c17.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/16
+Message-ID: <CACYkhxiaJfaFR6HU9ZOQ_=jdP=3TSj+dPSwX7uT2hwCZ5WE6Dw@mail.gmail.com>
+Date: Thu, 30 Jan 2014 08:28:41 +1100
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+Subject: collectd security contact
 Content-Type: text/plain; charset=utf-8
 
-Yves-Alexis Perez <corsac@...> writes:
-> for bus in /sys/bus/usb/usb*;
-             ^^^^^^^^^^^^^^^^^
+Hi,
 
-should be: /sys/bus/usb/devices/usb*
+Does anyone here know who the security contact for collectd is?
 
-> do
->   echo 0 > ${bus}/authorized_default
-> done
-> 
-> to disable registration of new USB devices (kernel will still enumerate
-> them, but no driver will handle them).
-
-[posted via gmane, I hope this will not break the thread]
-
-Regards,
-Vincent Lefevre.
+Thanks,
+  Michael
 
