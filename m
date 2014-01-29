@@ -1,43 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/1
-Message-Id: <201406180257.s5I2vgnq026214@linus.mitre.org>
-Date: Tue, 17 Jun 2014 22:57:42 -0400 (EDT)
-From: cve-assign@...re.org
-To: yarrick@...o.se
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, oscar@...araz.net
-Subject: Re: CVE Request: iodine: authentication bypass by client
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/8
+Message-ID: <1390990488.513834.821092246.4792691.27@portal.otrs.com>
+Date: Wed, 29 Jan 2014 10:14:48 +0000
+From: Jens Bothe via OTRS Security Team <security@...s.org>
+To: carnil@...ian.org
+CC: pmatthaei@...ian.org, oss-security@...ts.openwall.com
+Subject: Re: [Ticket#2014012942020471] CVE Request: otrs: CSRF issue in customer web interface
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
+2014-01-29 10:58 (+1) - Salvatore Bonaccorso wrote: A CSRF issue in otrs was
+announced in [1]. Is a CVE for this issue
+already assigned?
+ 
+ 
+For the OSA-2014-01 we don't have a CVE, just the OTRS Bug report.
 
-> iodine 0.7.0 has just been released, which fixes an authentication bypass
-> issue
+Regards,
 
-> https://github.com/yarrick/iodine/commit/b715be5cf3978fbe589b03b09c9398d0d791f850
+Jens Bothe
 
-> The client could bypass the password check by continuing after getting error
-> from the server and guessing the network parameters. The server would still
-> accept the rest of the setup and also network traffic.
-> 
-> Add checks for normal and raw mode that user has authenticated before allowing
-> any other communication.
+-- 
+OTRS AG
+Norsk-Data-Straße 1
+61352 Bad Homburg
+T: +49 (0) 6172 681988 0
+F: +49 (0) 9421 56818 18
+E: [1]sales@...s.com
+I: [2]http://www.otrs.com/ 
 
-Use CVE-2014-4168.
+Business location: Bad Homburg, Country Court: Bad Homburg, HRB 10751, VAT ID:
+DE256610065
+Chairman: Burchard Steinbild, Managing Board: André Mindermann (CEO),
+Christopher Kuhn, Sabine Riedel
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Easier Planning and Improved Overviews - Enhance your Service Management with
+OTRS 3.3 - [3]Download and Test the Stable Release Now!
 
-iQEcBAEBAgAGBQJToMEDAAoJEKllVAevmvmsNwgIAKFLSxMA6JXBvw5J+JiMJOVx
-W61HnD6zhcfD2/5C4mQsfZx0hnqxVQHUcbPiydWVW6oRYn/GQRrpC7JkTkEP6wSt
-bQdj+5krJAjiGG6ilQbHGEypdh5bZPs1rIaB0ZthnxGvEOmhJq2jO8vg+7DDoJf/
-hm5rqx/BVToMCXqBjAniCJpRvnibTfBRd4n9r2wkYks4PB3wV43bI2k/UbkS3ya4
-7FXWs1pFuVilJFlVRyEV4IzYb/32SU7Xl02G/8fNshczKZ0MrNqCh2OCqplUBqpN
-wxjsgejqOY+PGu2md035LQWDMpxP4YlgwwtWFPyD+EsPJ8384C53TXcyQ9N1fZM=
-=1/SN
------END PGP SIGNATURE-----
+
+
+[1] mailto:sales@...s.com
+[2] http://www.otrs.com/
+[3] https://www.otrs.com/new-in-otrs-3-3/
+
+Content of type "text/html" skipped
+
+Download attachment "pgp_sign.asc" of type "application/pgp-signature" (491 bytes)
