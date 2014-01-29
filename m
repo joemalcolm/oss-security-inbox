@@ -1,62 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/4
-Message-Id: <201402191541.s1JFfQur016389@linus.mitre.org>
-Date: Wed, 19 Feb 2014 10:41:26 -0500 (EST)
-From: cve-assign@...re.org
-To: pedrib@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, rb@...lite.de
-Subject: Re: CVE request: remote code execution in egroupware <= 1.8.005
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/17
+Message-ID: <20140129231617.GA32154@hunt>
+Date: Wed, 29 Jan 2014 15:16:17 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Cc: security@...ntu.com
+Subject: CVE Request: Juju phpmyadmin charm
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, vendors, MITRE,
 
-> I have discovered a remote code execution via php unserialize in egroupware
-> <= 1.8.005.
+Please assign a CVE for the following issue:
 
-Use CVE-2014-2027.
+I discovered a potentially unsafe use of PHP's preg_replace() /e option in
+the Juju charm phpmyadmin:
 
-> https://github.com/pedrib/PoC/raw/master/egroupware-1.8.005.txt
-> http://www.egroupware.org/changelog
+$xml = simplexml_load_string(preg_replace("/(<\/?)media\:content([^>]*>)/e",
+    '', str_replace('media:hash',
+        'hash',
+	file_get_contents('https://sourceforge.net/api/file/index/project-id/23067/mtime/desc/limit/40/rss'))));
 
-> Security: fixed arbitrary file overwrite and remote code execution
-> reported by Pedro Ribeiro (pedrib@...il.com) of Agile Information
-> Security
+An attacker able to spoof ARP, DNS, or BGP, or control any of the routers
+between the client and sourceforge.net, or control over the sourceforge
+project or sourceforge servers, would be in a position to insert likely
+aribtrary code into the PHP interpreter.
 
-We could not immediately determine whether the egroupware-1.8.005.txt
-disclosure means that:
+The full source of this file can be found at:
 
-  Arbitrary file overwrite in __destruct:
+http://bazaar.launchpad.net/~charmers/charms/precise/phpmyadmin/trunk/view/head:/bin/parse_upstream
 
-  Remote code execution in __destruct:
+I have reported the bug to:
 
-are both exploitable only as a consequence of unsafe unserialize use.
-If eliminating the unsafe unserialize use would not completely address
-those issues, additional CVE IDs may be needed.
+https://bugs.launchpad.net/charms/+source/phpmyadmin/+bug/1274264
 
-There are no new CVE assignments yet for possible other issues in the
-1.8.006.20140217 changelog entry, such as:
+The problem appears to have been introduced in revision 18. No fix is
+currently available.
 
-  CalDAV/Calendar: fixed permanent auth request in iCal, if
-  accountselection is set to "selectbox with groupmembers" and rights
-  granted from group without being a member
+Thanks
 
-  SiteMgr: fixed not working anonymous user and using now a random
-  password
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTBM46AAoJEKllVAevmvmsxAMIAJkEBcmLzIHLG9wYtP1kGKhL
-kl6SYyRmSiXW0YVgOJsua6WcdDHcnhIGyg/pMKRNBf2367ox2M6mp6s2x3zPqULF
-TLZZps7IdT/armUe9jf5OBzDLhj6yE9bPCp+MTJ0YAN1T6jVGWKU5rd8HDDuR9CR
-1yAjrTJi3JpkqggZSwzsO0lJg4Me7d+7YnsvEYAp59tRE02hCzT+3vfWBOEm//VL
-h0tWpFBgPchm51QslLNAKAWFzjjggu6BBfmdfJCHp12Y1Cp62zjPHYL4PYjkYSb1
-95AOGPd8a7zTyrUhexTMz8tVCs1TK1ZVyWOKRx99UpS/wNxJeBwidMd4KVOM/A8=
-=usF1
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
