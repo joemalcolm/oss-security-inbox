@@ -1,92 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/5
-Message-ID: <52E8B052.6090706@redhat.com>
-Date: Wed, 29 Jan 2014 18:40:02 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/18
+Message-ID: <52E991C7.8030703@redhat.com>
+Date: Wed, 29 Jan 2014 16:41:59 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Pedro Ribeiro <pedrib@...il.com>, Jan Schneider <jan@...de.org>, Salvatore Bonaccorso <carnil@...ian.org>, Seth Arnold <seth.arnold@...onical.com>, security@...ian.org, security@...ntu.com, security@...de.org
-Subject: Re: Remote code execution in horde < 5.1.1
+Subject: Re: collectd security contact
 Content-Type: text/plain; charset=utf-8
 
-On 01/29/2014 11:10 AM, Murray McAllister wrote:
-> On 01/28/2014 09:10 PM, Pedro Ribeiro wrote:
->> Hi,
->>
->> There is a remote code execution bug in horde affecting all versions from
->> at least horde 3.1.x to 5.1.1.
->> This has been fixed in commit
->> https://github.com/horde/horde/commit/da6afc7e9f4e290f782eca9dbca794f772caccb3
->>
->> Also check changelog
->> https://github.com/horde/horde/blob/82c400788537cfc0106b68447789ff53793ac086/bundles/groupware/docs/CHANGES#L215
->>
->>
->> Can you please assign a CVE for this issue?
->>
->> Thanks in advance.
->>
->> PS: while I discovered this bug independently reviewing horde3 code, the
->> full credit should go to the horde maintainers as they discovered and
->> fixed
->> it first on horde5.
->>
->> Regards
->> Pedro
->>
->
-> Morning,
->
-> In Fedora there is horde and php-horde-Horde-Util:
->
-> http://koji.fedoraproject.org/koji/buildinfo?buildID=446660
-> http://koji.fedoraproject.org/koji/buildinfo?buildID=449705
->
-> I am not familiar with Horde or know the difference between those
-> packages, whether one is an older version and the other providing
-> equivalent functionality to version 5. The github commit in the original
-> message is in php-horde-Horde-Util for us.
->
-> The same vulnerability is in our horde package too, but I could not find
-> this (horde-3.3.13/lib/Horde/Variables.php) in github:
->
-> 21 class Variables {
-> 22
-> 23     var $_vars;
-> 24     var $_expectedVariables = array();
-> 25
-> 26     function Variables($vars = array())
-> 27     {
-> 28         if (is_null($vars)) {
-> 29             $vars = Util::dispelMagicQuotes($_REQUEST);
-> 30         }
-> 31         if (isset($vars['_formvars'])) {
-> 32             $this->_expectedVariables =
-> @unserialize($vars['_formvars']);
-> 33             unset($vars['_formvars']);
-> 34         }
-> 35         $this->_vars = $vars;
->
-> Mailing here in case anyone else is shipping in a similar way (or if
-> another CVE is needed?).
->
-> Cheers,
->
-> --
-> Murray McAllister / Red Hat Security Response Team
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-As noted by Remi Collet at [1]:
+On 01/29/2014 02:28 PM, Michael Samuel wrote:
+> Hi,
+> 
+> Does anyone here know who the security contact for collectd is?
+> 
+> Thanks, Michael
+> 
 
-""horde" is the old application (version 3) build from a single tarball 
-(but still available in the repository)
+- From AUTHORS file:
 
-horde is now distributed via a pear channel and split in ~100 packages.
+Permanent project members
+=========================
 
-php-pear-Horde-Util 2.3.0 (with this fix) is already in the repository 
-(but not yet used as pear-horde-horde 5.1.5 is still under  review)."
+Florian "octo" Forster <octo at verplant.org>
+ - Initial author.
 
-Sorry for the noise!
+Sebastian "tokkee" Harl <sh at tokkee.org>
+ - Bugfixes and enhancments in many places all around the project.
+ - perl plugin.
+ - users plugin.
+ - vserver plugin.
+ - Debian package.
 
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=1059000#c3
+so one of them would be my guess. If you figure it out can you send an
+update to:
 
---
-Murray McAllister / Red Hat Security Response Team
+http://osvdb.org/vendor/89051-collectd/1
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJS6ZHHAAoJEBYNRVNeJnmTU9gP/3sk3VUbUvfXjBWwJFyprIOt
+at/xzJgh2Axaf+BW2PdIhaI0sKWDFg+Y1p5SOduhu/t7baIj0MGfAFJey+JFTl38
+eHQT+ydy8ghwvJ5LP8KDTbL7tG7U8KtgZsX0zw0iDtYqP42/eQM8YXZtqMstOwPP
+ttos34+mjuRp7Fqc1h2yWDRnreALcZsF7agm9KU8hWiSY6uUXWcsq/lJpWyLBAt2
+GEU7OAWJln7uL/zHJloNJ9kzL1wbYvgRmS6Q7NaOSSOYNNwaYD2HmwWMcu+mQtZ1
+P2yfzo0Nid+wUYUM/dSWvLAHbFphhCKgu5/RmzZLZtZNaS8RRvzq7+4zNarygbLZ
+HPCMxmAH9tNqBDHomgPgDfwP4hz7a5M83TFfUxtY7FbT96IoEcXBbB4Rly0AQ83j
+JVa4xPA8VwVzJzom7UAcnnwJMy7pWNDZ475LHrnR6eyIpyjPyDSVlWnwRjkZ6SuX
+6Ci7z/Qwdpd7rc3NV34TsN9LZzx6AfWX6y47EzAVYEhpdNDsy/mpHJ7mrUZihGa9
+Y7+j7BySD26C62USH001wMVE14E44A+SzKydL9yLJnPsbL4tR1utMRnCXNulAbpM
+g/GZjIS5j2vXm+4N12yHsI4EnYmBSvqt5HiIDfqAoWMK8kAhukeYRviY27+OhF5s
+E7hJ6ma6AVukvmw1eU45
+=vKd+
+-----END PGP SIGNATURE-----
