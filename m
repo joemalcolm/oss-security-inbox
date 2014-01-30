@@ -1,36 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/10
-Message-ID: <538766BF.8030500@redhat.com>
-Date: Thu, 29 May 2014 10:56:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Please REJECT CVE-2014-3463
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/30/1
+Message-ID: <20140130000819.GA374@hunt>
+Date: Wed, 29 Jan 2014 16:08:19 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Juju phpmyadmin charm
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Jan 30, 2014 at 10:51:48AM +1100, dawg wrote:
+> Hello,
+> 
+> The second (replacement) argument passed to preg_replace is empty : it
+> doesn't use matched input. This can't be exploited.
 
-Please REJECT CVE-2014-3463 (it went out on distros@ so I think it's
-best to reject in case anyone accidentally uses it), Debian already
-had assigned a CVE I wasn't aware of, distros@ was informed.
+Thanks dawg for finding my mistake.
 
-- -- 
-Kurt Seifried - Red Hat - Product Security - Cloud stuff and such
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I retract this CVE request.
 
-iQIcBAEBAgAGBQJTh2a/AAoJEBYNRVNeJnmT/UUP/3XAieAE7HKTJybBO69OFaI8
-sXPe+EqCvDnnrtU64RuKjYglNzGvBIKixIfNd1DCEDbcwfW/yHEs8UKmMcP6P+te
-fCl0A0xdyH5UNfXL3Lfd9qFeFrBRvSZ/Sjrr11EJRtRF8qNLmvL2QdwRk3VVdwoD
-k78hWeWEs68oJ8Plgn14+0bcccquD1pIXd+mt0p+BILiFIAIfWQf7kuNGY8Ft67T
-iuFd/wrcFy7aPyK6IOHNHOURkoVFk/W41g9hfPgwwpJSrlenXL1R2OiIM39JnX0P
-zh3H+y6c1PeYYoxx085P14AkZjHt4Fv2MLxU9HgxNe3QcIx8ngAubnQDkcv3Nnvl
-t60O6rE8Yj5ZYmqqZqeiIWXA0z0gzfXVLZGjGp6UI+r2Af8T200nVPzuIRPOiY0L
-fiYLDdtArq4EkQBoLZLe4pZ0KVlswLb3fF0Ic8DpjUoqfsqAeZpIsXfujJdYGvVh
-y60gt9GqQipNIIR/PQyIeYVv4aam17I8uyM2IA7CSkjkS1N7Hlf0zVQfNPdD9ocz
-oPJ0LoPosvgzuzNj6wWqqKlIjKI1rYwPT25xJpJ8iW8e31T7P/sTg5PKjy3YHVgJ
-26QjPVS3l0HcFdS6YSQRLernSRn3zoGLV3gH5342G87n/NmpJhqlTOJ+DMq1ZnE7
-97k2AXxMLag6lTD3yMQp
-=erSH
------END PGP SIGNATURE-----
+Thanks
+
+> Examples:
+> 
+> $ php -r 'print(preg_replace("/(.*)/e","","phpinfo();"));'
+> => Nothing
+> 
+> $ php -r 'print(preg_replace("/(.*)/e","$1","phpinfo();"));'
+> => phpinfo() get executed
+> 
+> Bye
+> 
+> Le 30/01/2014 10:16, Seth Arnold a écrit :
+> > Hello Kurt, vendors, MITRE,
+> > 
+> > Please assign a CVE for the following issue:
+> > 
+> > I discovered a potentially unsafe use of PHP's preg_replace() /e option in
+> > the Juju charm phpmyadmin:
+> > 
+> > $xml = simplexml_load_string(preg_replace("/(<\/?)media\:content([^>]*>)/e",
+> >     '', str_replace('media:hash',
+> >         'hash',
+> > 	file_get_contents('https://sourceforge.net/api/file/index/project-id/23067/mtime/desc/limit/40/rss'))));
+> > 
+> > An attacker able to spoof ARP, DNS, or BGP, or control any of the routers
+> > between the client and sourceforge.net, or control over the sourceforge
+> > project or sourceforge servers, would be in a position to insert likely
+> > aribtrary code into the PHP interpreter.
+> > 
+> > The full source of this file can be found at:
+> > 
+> > http://bazaar.launchpad.net/~charmers/charms/precise/phpmyadmin/trunk/view/head:/bin/parse_upstream
+> > 
+> > I have reported the bug to:
+> > 
+> > https://bugs.launchpad.net/charms/+source/phpmyadmin/+bug/1274264
+> > 
+> > The problem appears to have been introduced in revision 18. No fix is
+> > currently available.
+> > 
+> > Thanks
+> > 
+> 
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
