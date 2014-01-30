@@ -1,14 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/24
-Message-ID: <CADBjfCFcmZ-UNiP1-W=Lwp8rU6RLnsDBmy48Ct-ER8C=0Uq-aQ@mail.gmail.com>
-Date: Fri, 26 Sep 2014 17:03:35 +0100
-From: Riot <rain.backnet@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/30/5
+Message-id: <330033C2-D929-4392-ADA6-374430E648DB@me.com>
+Date: Thu, 30 Jan 2014 13:22:26 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Subject: echor 0.1.6 Ruby Gem exposes login credentials
 Content-Type: text/plain; charset=utf-8
 
-For anyone running Fail2ban, here is a simple filter to detect this attack
-with Apache:
+Title: echor 0.1.6 Ruby Gem exposes login credentials
 
-https://github.com/slowriot/fail2ban/blob/master/config/filter.d/apache-shellshock.conf
+Date: 1/14/2014
 
+CVE: Please assign one.
+
+Author: Larry W. Cashdollar, @_larry0
+
+Download: http://rubygems.org/gems/echor
+
+Description: Echo ruby wrapper
+
+Vulnerability
+in file echor-0.1.6/lib/echor/backplane.rb:
+The function perform_request passes sensitive data to the shell and unsanitized user input, if this gem is used in a rails application a user could get remote command injection simply by putting a semi-colon in their username or password. At a minimum a local user can steal the login credentials just by watching the process table on the system.
+
+ 45     def perform_request(data)
+ 46       JSON.parse(`curl -u 
+{Echo.backplane_user}:
+{Echo.backplane_password}     --data-binary '#{data}' #{@...nnel}`)
+ 47     end
+
+Vendor: Not notified, I don't think this Gem is maintained anymore.
+
+Advisory: http://www.vapid.dhs.org/advisories/echor-expose-login-creds.html
