@@ -1,68 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/3
-Message-ID: <m61omj$6g9$1@ger.gmane.org>
-Date: Sun, 07 Dec 2014 15:37:07 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Cc: 0@...ne.gmane.org,oss-security@...ts.openwall.com
-Subject: MantisBT 1.2.18 Released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/30/2
+Message-Id: <201401300454.s0U4sMLc002888@linus.mitre.org>
+Date: Wed, 29 Jan 2014 23:54:22 -0500 (EST)
+From: cve-assign@...re.org
+To: puneethis021@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE: Request
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please see the announcement below. This release fixes a number of CVEs I 
-requested over the past few weeks (plus a few others). See the 
-announcement for further details.
+> I have reported cross site scripting(xss) in Nokia Maps & Places(v:1.6.6)
+> wordpress plugin.
 
-D. Regad
+> Issue Fixed on : 20/01/2014
 
+> https://plugins.trac.wordpress.org/changeset?new=842384%40nokia-mapsplaces%2Ftrunk%2Fnokia-mapsplaces.php&old=802499%40nokia-mapsplaces%2Ftrunk%2Fnokia-mapsplaces.php
 
--------- Forwarded Message --------
-Subject: 	MantisBT 1.2.18 Released
-Date: 	Fri, 5 Dec 2014 19:50:40 -0800
-Newsgroups: 	gmane.comp.bug-tracking.mantis.devel
+> https://plugins.trac.wordpress.org/browser/nokia-mapsplaces/trunk/nokia-mapsplaces.php?rev=841883
+> fixing href sec. issue. Place is is extracted instead of passing the full url which can be compromised
 
+> https://plugins.trac.wordpress.org/browser/nokia-mapsplaces/trunk/nokia-mapsplaces.php?rev=842384
+> adding context to placeid when stored, removing href to prevent url injection
 
+Use CVE-2014-1750.
 
-MantisBT 1.2.18 is an important security update for the stable 1.2.x branch.
-All installations that are currently running any 1.2.x version are strongly
-advised to upgrade to this release. Download it from [2].
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-This release resolves a total of 43 issues, including fixes for 23 security-
-related bugs and vulnerabilities:
-
--  7 Cross-Site Scripting (XSS) issues: #17297/CVE-2014-9272,
-    #17583/CVE-2014-9270, #17870/CVE-2014-8987, #17874/CVE-2014-9271,
-    #17876/CVE-2014-9281, #17889/CVE-2014-8986, #17890/CVE-2014-9269
-
--  2 Code injection issues: #17725/CVE-2014-7146, #17875/CVE-2014-9280
-
--  2 SQL injection (XSS) issues: #17812/CVE-2014-8554, #17841/CVE-2014-9089
-
--  5 Information disclosure issues: #9885, #17744, #17877/CVE-2014-9279,
-    #17742/CVE-2014-8988, #17243/CVE-2014-8553
-
--  7 Other security issues: #10966, #17338, #17640/CVE-2014-6387,
-    #17648/CVE-2014-6316, #17780/CVE-2014-8598, #17811/CVE-2014-9117, #17878
-
-Please refer to the changelog [1] on the MantisBT web site for complete 
-details
-on each of these issues.
-
-We would like to thank the following individuals and organizations for their
-valued contribution in discovering and fixing these issues, in no particular
-order: Mati Aharoni from Offensive Security and their bug bounty program,
-Matthias Karlsson, Matthew Daley, Egidio Romano, Florian Fuchs, Shahee 
-Mirza,
-Oleg K, Alejo Popovici, Edwin Gozeling, Paul Richards, Roland Becker,
-Victor Boctor and Damien Regad.
-
-
-[1] http://www.mantisbt.org/bugs/changelog_page.php?version_id=191
-[2] http://sourceforge.net/projects/mantisbt/files/mantis-stable/
-
-Thanks,
-MantisBT Team
-
-
-
+iQEcBAEBAgAGBQJS6dgPAAoJEKllVAevmvms2RUIALgdXfCiG7qNw9vDGay7u6fK
+k00XiXVomz74EZ5NcFQhowXeDD7w/3SB/b1184DSxeAyV8OgzbNNZIM2eebb3n/7
+ZeoVni1mifs9SreoQj1mp8bzSr/IDCUgjU58qAHYC7Bekqw1Sy/nSvWFfEGxxxJ3
+paccCGcfJqcJyoIVuAKJre0avFB7fXXsFwovOjgto/K4TqDGa2wabrYF9lcx6kew
+3uu3D4gyBdCbioZRhoe0F5R32XQrlHep9OX9wIhveIKUV/JqHxROxO+3oZmjDpr4
+qU5qVvG1eLy7ZOM3bl/rQWnEE6opoNLJ/HonQxN2d9rXXwlnh+tLl5m3AjM46jU=
+=oS6K
+-----END PGP SIGNATURE-----
