@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/15/7
-Message-ID: <20140815180213.GQ16682@ngolde.de>
-Date: Fri, 15 Aug 2014 20:02:13 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/1
+Message-ID: <52EAE85A.40904@redhat.com>
+Date: Fri, 31 Jan 2014 11:03:38 +1100
+From: Garth Mollett <gmollett@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: cacti remote code execution and SQL injection
+Subject: CVE-2013-6393 / libyaml buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Murray McAllister <mmcallis@...hat.com> [2014-08-14 09:48]:
-> On 08/13/2014 07:07 AM, Nico Golde wrote:
-> >Hi,
-> >Mischa Sallé and Wilco Baan Hofman reported a security issue in cacti to
-> >Debian when processing arguments passed to the graph settings script:
-> >http://svn.cacti.net/viewvc?view=rev&revision=7454
-> >
-> >We consider this issue to be public given the public fix.
-> >Can someone assign a CVE id? We do have some indication that this was reported
-> >in parallel Fedora, in case anyone from RedHat already assigned a CVE id to
-> >this.
-> 
-> Red Hat did not assign a CVE for this (the original report was 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1127165).
+Florian Weimer of the Red Hat Product Security Team discovered a heap
+based buffer overflow due to integer misuse maybe triggered when parsing
+large yaml documents.
 
-Can someone from Mitre assign a CVE id in this case?
+This issue has been assigned CVE-2013-6393.
 
-Thanks!
-Nico
+https://bugzilla.redhat.com/show_bug.cgi?id=1033990
+
 -- 
-Nico Golde - XMPP: nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+Garth Mollett / Red Hat Security Response Team
 
-Content of type "application/pgp-signature" skipped
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
