@@ -1,53 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/18/1
-Message-Id: <201401180039.s0I0dR4L001227@linus.mitre.org>
-Date: Fri, 17 Jan 2014 19:39:27 -0500 (EST)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0021: chrony traffic amplification in cmdmon protocol
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/22
+Message-ID: <20140131185121.GA20780@openwall.com>
+Date: Fri, 31 Jan 2014 22:51:21 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros membership
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Jan 22, 2014 at 11:51:39AM +0100, rf@...eap.de wrote:
+> >>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
+>     SD> Are Qlustar's security updates (not just security advisories)
+>     SD> publicly available?
+> 
+> Yes, all our packages are publicly available from our website.
 
-> With the news about the traffic amplification issue in ntpd, one of
-> our developers looked at chronyd
+Where do I find them?  Somehow I only found "Qlustar Installer
+8.1.0-3/precise Size: 705MB".
 
-At cve-assign@...re.org, we've received a number of reports that have
-protocol descriptions, and ask for CVE assignments for amplification
-attacks. We've declined making assignments for those. One of the
-criteria we're currently using is:
-
-  - cases in which a vendor of a UDP protocol implementation announces
-    that they made a security-relevant mistake by having configuration
-    or code elements that allow amplification attacks, and publishes
-    a fix for this mistake
-
-One of the other CVE Numbering Authorities was also receiving similar
-reports. We coordinated with them and learned that they were looking
-at CVE eligibility in much the same way.
-
-The "in which a vendor of a UDP protocol implementation" above was
-what we had for the CVE-2013-5211 ntpd issue (with some definition of
-"announces"). We don't know the ultimate outcome of how amplification
-attacks will interact with the scope of CVE, but we did want to point
-out that this CVE-2014-0021 assignment seemed inconsistent with what
-we've been doing.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS2cuHAAoJEKllVAevmvmsurYIALjzoZDswrD9TcHR/ObNIU9G
-6qIsWM49HJ0VRnY88DJj1aO3vB2bnGiPNVK7Xe3RNkIBW6OPZ4cQyypv2ZijjhSC
-QLMlGgzgGAvJq4MQjOeq2RQinS3MUuqj4cHcoQ9Fy64avonXlfuJEsDu5WC3yEah
-M6el74ZmwPZupfs0hTvq0aGjvSqRd2alSFsSRUwUxHMS8PZLj4bP/l/NfHMPLC9V
-vdQFm90JhccAkn0uzPc87lOeVlqQCpX1KH8R587S2MneoommzKEBrVQI1xTlNjrR
-gLyz58pHC9kxPwkbztBr5hS5isSyKpsmrcvKhLRQlLi/51Kd9zTAucj9RdF6gLU=
-=S4od
------END PGP SIGNATURE-----
+Alexander
