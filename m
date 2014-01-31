@@ -1,69 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/8
-Message-Id: <C6D755E6-CC0D-4EEA-868D-CFF4185FA89A@gmail.com>
-Date: Wed, 18 Jun 2014 20:43:31 +1000
-From: Graham Dumpleton <graham.dumpleton@...il.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Security release for mod_wsgi (version 3.5)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/10
+Message-Id: <201401311414.s0VEEWRg006348@linus.mitre.org>
+Date: Fri, 31 Jan 2014 09:14:32 -0500 (EST)
+From: cve-assign@...re.org
+To: larry0@...com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: echor 0.1.6 Ruby Gem exposes login credentials
 Content-Type: text/plain; charset=utf-8
 
-I saw the email as it popped up in my twitter feed of all places.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Am about to make a release which improves the error handling and the one off error.
+> http://www.vapid.dhs.org/advisories/echor-expose-login-creds.html
 
-Graham
-
-On 18/06/2014, at 8:03 PM, Solar Designer <solar@...nwall.com> wrote:
-
-> On Wed, Jun 18, 2014 at 08:08:10PM +1200, Matthew Daley wrote:
->> I may be wrong as I haven't been following this discussion entirely, but...
+> lib/echor/backplane.rb
 > 
-> I think Graham is not on oss-security.  CC added.
-> 
-> Graham, please comment on the potential off-by-one bug reported by
-> Matthew below:
-> 
->> On Wed, Jun 18, 2014 at 12:39 AM, Graham Dumpleton
->> <graham.dumpleton@...il.com> wrote:
->>> This feature was added for one specific user and wouldn't be a well known feature unless people were reading change notes diligently as don't believe it is even covered in the documentation.
->>> 
->>> Given that this code also only executes as root, the only error which could technically arise in this code for setgroups() is if the number of groups exceeded NGROUPS_MAX.
->>> 
->>> This should not occur though as the number of groups was previously validated when the configuration was read:
->>> 
->>>    if (groups_list) {
->>>        const char *group_name = NULL;
->>>        long groups_maximum = NGROUPS_MAX;
->>>        const char *items = NULL;
->>> 
->>> #ifdef _SC_NGROUPS_MAX
->>>        groups_maximum = sysconf(_SC_NGROUPS_MAX);
->>>        if (groups_maximum < 0)
->>>            groups_maximum = NGROUPS_MAX;
->>> #endif
->>>        groups = (gid_t *)apr_pcalloc(cmd->pool,
->>>                                      groups_maximum*sizeof(groups[0]));
->>> 
->>>        groups[groups_count++] = gid;
->>> 
->>>        items = groups_list;
->>>        group_name = ap_getword(cmd->pool, &items, ',');
->>> 
->>>        while (group_name && *group_name) {
->>>            if (groups_count > groups_maximum)
->> 
->> This is an off-by-one error, isn't it? As in, it should be testing for
->> groups_count >= groups_maximum and not the current test.
->> 
->>>                return "Too many supplementary groups WSGI daemon process";
->>> 
->>>            groups[groups_count++] = ap_gname2id(group_name);
->>>            group_name = ap_getword(cmd->pool, &items, ',');
->>>        }
->>>    }
->>> 
->>> Thus was pre-validated input.
->> 
->> - Matthew Daley
+> `curl -u {Echo.backplane_user}:{Echo.backplane_password}
 
+> if this gem is used in a rails application a user could get remote
+> command injection simply by putting a semi-colon
+
+Use CVE-2014-1834.
+
+
+> a local user can steal the login credentials just by watching the
+> process table
+
+Use CVE-2014-1835.
+
+
+(This has separate CVEs because the user and password characters could
+be restricted but still provided on the curl command line.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS663HAAoJEKllVAevmvmsXHkIAINwPIzgJ5MkRgveTKA1mH94
+nm4W4JqX4wVao7zmrTw/DEDk2CVyasJsZc9MBIIPKvhb8//Cp8zEShEdkqZHKT3b
+GKWn5rCi0uO7DDpSfhB+vC2pwSSWxCz817wEhuDJeUb2naZFgTOJtkg/bAgdBtdd
+f5j1KTQY8VBdI0c+NM0V+Fgdc2BgZGAR56r7KVxFwSQRpCm4jczmXao4JeNQYe32
+4gfOaG1M9iK9KHU+1g3yQVV8YH3lKIFZAj4gUeRi14tzntRxq4ar/BOMbTHMU+27
+ZHJ9fzcD2Rc8SDPpeDhD+sVW/0QN92apIaqANC9nIBpdoHjDYuu/d0Cf6eXBR0E=
+=Smf4
+-----END PGP SIGNATURE-----
