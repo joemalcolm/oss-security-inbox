@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/26/1
-Message-Id: <201405261829.s4QITAm1011521@linus.mitre.org>
-Date: Mon, 26 May 2014 14:29:10 -0400 (EDT)
-From: cve-assign@...re.org
-To: dolev@...nflare.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: userCake <= 2.0.2 CSRF vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/13
+Message-ID: <21227.53373.394779.921199@gargle.gargle.HOWL>
+Date: Fri, 31 Jan 2014 17:34:05 +0100
+From: rf@...eap.de
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+>>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
 
-> http://usercake.com/thread.php?id=757
-> http://research.openflare.org/advisories/OF-2014-11/usercake_csrf.txt
+    SD> Hi, This issue was brought to linux-distros and security@k.o 2
+    SD> days ago via the message quoted below, and it was just made
+    SD> public at 22:00 UTC today (two hours ago) via grsecurity and PaX
+    SD> (who were the ones to find the issue).  Normally, the person who
+    SD> brought this to linux-distros would be the one responsible to
+    SD> bring the issue to oss-security as soon as the issue is public,
+    SD> but Kees does not appear to be around at the moment and the
+    SD> issue is critical enough that I find it inappropriate to delay
+    SD> this posting by a few hours more, hence I am doing Kees' job by
+    SD> posting this in here.
 
-Use CVE-2014-3866.
+    SD> This is CVE-2014-0038 (assigned shortly after Kees sent the
+    SD> message below).  I will also include PaX Team's revised patch
+    SD> below.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Are you sure this is the correct CVE? It was assigned already beginning
+of Dec. last year.
 
-iQEcBAEBAgAGBQJTg4etAAoJEKllVAevmvmswFkH/0BTQ79W2WPwfNnwZiZVfS+6
-kWLGsjhU3sniidwFuP3aiuQZ3lqnULfH2D4pa/WK768/7HwCnh79UTReSNhjYyGh
-mXo0wEH+4pBPCDhEoQdpqrAdog/PDUojdgwipnt9wRw1FZmrXr6ZXCC36QmmH0eX
-egeg6dhBqhX+SLICjj5eBVqxLYP3VeXhV8MCiIvlRjat1WWXf+ykom313P+BH9jC
-SRYumLHhaUDllVHDpJcSDH2yVl88/1wDvWpcynQr+9aFYstmXGrDEl/f3V3yzx2g
-iFJusMj/1H51VPBYy69rriiWSb4HeoccGnhQkmVYanceOXIK9V1Ubu2rdupO0ZQ=
-=zi82
------END PGP SIGNATURE-----
+Roland
