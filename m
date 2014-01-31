@@ -1,37 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/9
-Message-ID: <20141008092305.GC6890@pc.thejh.net>
-Date: Wed, 8 Oct 2014 11:23:05 +0200
-From: Jann Horn <jann@...jh.net>
-To: oss-security@...ts.openwall.com
-Cc: Damien Miller <djm@...drot.org>
-Subject: Re: openssh on linux rce in sftp-only mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/20
+Message-ID: <DF86991A-119D-4768-8829-506BB30FC9A7@redhat.com>
+Date: Fri, 31 Jan 2014 11:28:42 -0700
+From: "Vincent Danen" <vdanen@...hat.com>
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Subject: CVE request: temp file issues in python's logilab-common module
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 08, 2014 at 11:07:59AM +0200, Hanno Böck wrote:
-> This seems CVE-worthy:
-> http://seclists.org/fulldisclosure/2014/Oct/35
-> 
-> Quote:
-> "OpenSSH lets you grant SFTP access to users without allowing full
-> command execution using "ForceCommand internal-sftp". However, if you
-> misconfigure the server and don't use ChrootDirectory, the user will be
-> able to access all parts of the filesystem that he has access to -
-> including procfs. On modern Linux kernels (>=2.6.39, I
-> think), /proc/self/maps reveals the memory layout and /proc/self/mem
-> lets you write to arbitrary memory positions. Combine those and you get
-> easy RCE."
-> 
-> It involves a number of issues coming together, however in the end it
-> is an RCE with a legit configuration.
+Some temporary file issues were reported by Jakub Wilk (quoting from our bug report):
 
-I reported this to the OpenSSH developers, and although they included my
-patch as a mitigation, they did not treat it as a vuln in OpenSSH.
+In logilab/common/pdf_ext.py it uses fully predictable names:
 
-I believe that treating this as a hardening patch makes sense. The SFTP
-server behaves exactly as documented, it allows access to the whole
-filesystem. And on Linux, that happens to equal write access to the
-process RAM, so you should never give that access to someone who
-shouldn't be able to run arbitrary code.
+def extract_keys_from_pdf(filename):
+    # what about using 'pdftk filename dump_data_fields' and parsing the output ?
+    os.system('pdftk %s generate_fdf output /tmp/toto.fdf' % filename)
+    lines = file('/tmp/toto.fdf').readlines()
+    return extract_keys(lines)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+
+def fill_pdf(infile, outfile, fields):
+    write_fields(file('/tmp/toto.fdf', 'w'), fields)
+    os.system('pdftk %s fill_form /tmp/toto.fdf output %s flatten' % (infile, outfile))
+
+
+And in logilab/common/shellutils.py:
+
+class Execute:
+    """This is a deadlock safe version of popen2 (no stdin), that returns
+    an object with errorlevel, out and err.
+    """
+
+    def __init__(self, command):
+        outfile = tempfile.mktemp()
+        errfile = tempfile.mktemp()
+        self.status = os.system("( %s ) >%s 2>%s" %
+                                (command, outfile, errfile)) >> 8
+        self.out = open(outfile, "r").read()
+        self.err = open(errfile, "r").read()
+        os.remove(outfile)
+        os.remove(errfile)
+
+
+tempfile.mktemp() should be replaced with tempfile.mkstemp() as it is documented as insecure.
+
+
+I don't believe a CVE has been requested for this already.  Can one be assigned please?
+
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=1060304
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737051
+https://bugs.gentoo.org/show_bug.cgi?id=499872
+http://secunia.com/advisories/56720/
+
+-- 
+Vincent Danen / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
