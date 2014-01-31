@@ -1,82 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/23/5
-Message-Id: <E1Wcyr8-0001eE-Nk@xenbits.xen.org>
-Date: Wed, 23 Apr 2014 15:13:02 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 94 (CVE-2014-2986) - ARM hypervisor crash on guest interrupt controller access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/15
+Message-ID: <20140131172039.GA19351@openwall.com>
+Date: Fri, 31 Jan 2014 21:20:39 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Jan 31, 2014 at 05:34:05PM +0100, rf@...eap.de wrote:
+> >>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
+>     SD> This is CVE-2014-0038 (assigned shortly after Kees sent the
+>     SD> message below).
 
-              Xen Security Advisory CVE-2014-2986 / XSA-94
-                             version 2
+> Are you sure this is the correct CVE?
 
-      ARM hypervisor crash on guest interrupt controller access
+Pretty sure, yes.  I am not aware of a reason to think otherwise.
 
-UPDATES IN VERSION 2
-====================
+It was kindly assigned by Petr Matousek (of Red Hat, even though their
+products are not affected) on Wed, 29 Jan 2014 10:01:59 +0100.
 
-This issue has been assigned CVE-2014-2986.
+> It was assigned already beginning of Dec. last year.
 
-ISSUE DESCRIPTION
-=================
+The "assigned" date seen on CVE IDs often indicates when a pool of CVE
+IDs was created and then assigned to a CNA (Red Hat in this case), not
+when individual CVE IDs are assigned to actual issues.  It is perfectly
+normal (albeit confusing) for the "assigned" date to be earlier than the
+vulnerability discovery date.  This was discussed in here before:
 
-When handling a guest access to the virtual GIC distributor (interrupt
-controller) Xen could dereference a pointer before checking it for
-validity leading to a hypervisor crash and host Denial of Service.
+http://www.openwall.com/lists/oss-security/2012/01/23/4
 
-IMPACT
-======
+CNAs:
 
-A buggy or malicious guest can crash the host.
+http://cve.mitre.org/cve/cna.html
 
-VULNERABLE SYSTEMS
-==================
-
-Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onward.
-
-x86 systems are not vulnerable.
-
-MITIGATION
-==========
-
-None.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This bug was publicly reported on xen-devel, before it was appreciated
-that there was a security problem.
-
-CREDITS
-=======
-
-The initial bug was discovered by Thomas Leonard and the security
-aspect was diagnosed by Julien Grall.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa94.patch        xen-unstable, Xen 4.4.x
-
-$ sha256sum xsa94*.patch
-ad0f20577400756a1786daeafef86fa870727ec35b48f71f565e4a30dcbda58d  xsa94.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJTV9hdAAoJEIP+FMlX6CvZmDwH/2sBH/w9kPhOu+hdOAMX3dlb
-bmj1sLTehOKqEy8sZpDsCuJw8cRAIQn+xWPMDPj2lUggz5iVWHUgfs4Zk8o9l3qQ
-9/RcnQQHFSw1Bu8lDLlH0FpE6R98ZcdX//PAviJewj10FiMOpIoBSzNpKLxst1IZ
-5YPmBVCn6DfgsCjWYPPaGQMLtBWU/LbAPmpYUiIDywOd58OScekNL2hfKM0ZWzgo
-HPuB2DwpPsj7P43kuEJyXIHYLu00see+uEXXKd591mmznVtSXSrzVVaKPjeTfh9D
-WEGqCxOof5slzwofbMFflBL1SW6d6f0Llui/7cMEDITSXeCaP2wqMb34p/g68+w=
-=BNcq
------END PGP SIGNATURE-----
-
-Download attachment "xsa94.patch" of type "application/octet-stream" (1164 bytes)
+Alexander
