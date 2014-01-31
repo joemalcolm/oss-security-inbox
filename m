@@ -1,57 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/22/2
-Message-ID: <20140822052648.GA47946@redoubt.spodhuis.org>
-Date: Fri, 22 Aug 2014 01:26:48 -0400
-From: Phil Pennock <oss-security-phil@...dhuis.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/19
+Message-ID: <21227.59641.784184.419064@gargle.gargle.HOWL>
+Date: Fri, 31 Jan 2014 19:18:33 +0100
+From: rf@...eap.de
 To: oss-security@...ts.openwall.com
-Subject: Re: SaltStack 2014.1.10 released
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
-On 2014-08-21 at 19:02 +0200, Kristian Fiskerstrand wrote:
-> On 08/21/2014 07:00 PM, Kurt Seifried wrote:
-> > Ok several people replied privately now, Thunderbird definitely
-> > has issues with this, and one person reports apple mail can't see
-> > it either. Perhaps we found a new way to send stealthy emails? ;)
-> 
-> Not sure if it is new - from a quick glance it looks like the email in
-> question is missing a MIME boundary before the body.
+>>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
 
-Kristian is right; slightly disappointing that it took so many mails for
-someone to just look at the structure and report on the root cause,
-instead of just trying to see how various different clients handle a
-"dodgy" message.  Memo to self: I know how to spread malware amongst the
-security community, now.
+    SD> On Fri, Jan 31, 2014 at 04:11:16AM +0400, Solar Designer wrote:
+    >> [...] I guess the newer patch (from the second forwarded message
+    >> above) is preferable (the one I expect to see committed soon).
 
-Per specification for multipart/* types, if there is content before the
-first MIME boundary then it is deliberately not displayed by
-MIME-capable email clients; this is usually used by user-agents to
-insert a "this message is MIME, upgrade your ancient client" type of
-message, but even that is rare today.
+    SD> Here's the commit:
 
-Given a boundary defined as "foo" then the message is divided up into
-sections ("body parts") by lines "\r\n--foo\r\n" and ending with a final
-line "\r\n--foo--\r\n".
+    SD> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/net/compat.c?id=2def2ef2ae5f3990aabdbe8a755911902707d268
 
-When the first boundary line got dropped, the content of the message
-became preamble.  The definition is in RFC2046.  The definition for
-OpenPGP in MIME is in RFC3156, which states:
+    >> It appears, from the linux-distros discussion, that a couple of
+    >> distros are going to release emergency security updates for this.
+    >> If they did not express interest in an extra day of embargo, the
+    >> issue would likely be made public on the first day (not on the
+    >> second).
 
-----------------------------8< cut here >8------------------------------
-   The multipart/signed body MUST consist of exactly two parts.  The
-   first part contains the signed data in MIME canonical format,
-   including a set of appropriate content headers describing the data.
+    SD> Ubuntu advisories and updates:
 
-   The second body MUST contain the OpenPGP digital signature.  It MUST
-   be labeled with a content type of "application/pgp-signature".
-----------------------------8< cut here >8------------------------------
+    SD> http://www.ubuntu.com/usn/usn-2096-1/
+    SD> http://www.ubuntu.com/usn/usn-2095-1/
+    SD> http://www.ubuntu.com/usn/usn-2094-1/
 
-So: message as posted to list was malformed, something dropped a
-significant line; every MIME compliant mail-client, by deliberate
-design, dropped everything before the first boundary line, so yes this
-is a way to sneak through messages.  The only MIME part left was a
-signature, which is a protocol violation, and so the behaviours observed
-are just "how do mail-clients report malformed signed messages".
+    SD> Even though the issue was easy to patch, I nevertheless find
+    SD> this impressively quick for a major distro like Ubuntu, and this
+    SD> probably justifies the extra day of embargo.
 
--Phil
+Yup, was good for us too, so we could double-check that the proposed fix
+from your mail is working OK for others as well, since it hasn't arrived in
+the kernel.org stable-queue git yet. By the way, Ubuntu used the longer
+original patch, which we used [1] in the end as well (saw too late that Linus
+already committed the shorter one).
 
-Content of type "application/pgp-signature" skipped
+Coming back to our earlier discussion about linux-distros membership [2]:
+It definitely helped being on the list. Since the patch was trivial,
+we didn't suffer a significant time delay compared to other distros. In
+case of more complicated patches, this could have gotten tough though
+given the fact that the new builds need a significant amount of testing as
+well.
+
+It would be nice, if we (and others in a similar boat) could get a
+head-start of at least a couple of days (that's how I understood your
+question in [2]). Maybe a "second-class citizen" list could complement
+the linux-distros list with notifications slightly earlier than on
+oss-security.
+
+[1] https://qlustar.com/news/qsa-0131141-linux-kernel-vulnerabilities
+[2] http://www.openwall.com/lists/oss-security/2014/01/22/1
+
+Roland
