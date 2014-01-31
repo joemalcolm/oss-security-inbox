@@ -1,41 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/5
-Message-ID: <20140501030637.GA24836@openwall.com>
-Date: Thu, 1 May 2014 07:06:37 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Steve Grubb <sgrubb@...hat.com>
-Cc: oss-security@...ts.openwall.com, Andy Lutomirski <luto@...capital.net>
-Subject: Re: local privilege escalation due to capng_lock as used in seunshare
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/14
+Message-Id: <zarafa.52eb8411.0a4f.69b9c913004bc018@zarafaserver>
+Date: Fri, 31 Jan 2014 12:08:01 +0100
+From: Michael Kromer <m.kromer@...afa.com>
+To: oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>
+Cc: Robert Scheck <robert@...oraproject.org>,  Robert Scheck <robert.scheck@...s.de>,  secalert@...hat.com <secalert@...hat.com>
+Subject: Security Flaw CVE-2014-0037
 Content-Type: text/plain; charset=utf-8
 
-On Thu, May 01, 2014 at 06:43:10AM +0400, Solar Designer wrote:
-> On Wed, Apr 30, 2014 at 09:27:10PM -0400, Steve Grubb wrote:
-> > And switching to NO_NEW_PRIVS broke the sandbox:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=1091761
-> > 
-> > So, perhaps fixing SECURE_NOROOT is the safest bet? Are there any other 
-> > opinions on this?
-> 
-> If SECURE_NOROOT is meant to be usable to run entire Linux distros
-> (whether "on host" or/and "in containers"),
+CVE-2014-0037
 
-Actually, I think it won't work well for that unless the distro in
-question doesn't use any SUID root programs that need capabilities,
-because SECURE_NOROOT breaks the raising of capabilities for SUID root
-exec (on purpose).  So generic implementations of containers capable of
-running arbitrary Linux distro userlands are probably not making use of
-SECURE_NOROOT.
+Affected product: Zarafa Collaboration Platform <= 7.1.7
 
-> then it must not have an
-> effect of excluding UID 0 from "appropriate privileges" for setuid(2).
-> 
-> Do we know reliably that in this case excluding UID 0 from "appropriate
-> privileges" for setuid(2) was an effect specifically of SECURE_NOROOT?
+Access Vector: Network
+Access Complexity: Low
+Authentication: None
+Confidentiality Impact: None
+Integrity Impact: None
+Availability Impact: Complete
 
-Per my quick greps, this does not appear to be the case.  The only
-checks for SECURE_NOROOT that I could find are in cap_bprm_set_creds(),
-so SECURE_NOROOT should affect execve(2), but not setuid(2).
+A flaw in Zarafa has been discovered that allows a remote unauthenticated attacker to crash the zarafa-server daemon with a segmentation fault, preventing access to any other legitimate Zarafa users. This flaw has been fixed beginning with the release of Zarafa 7.1.8 beta2 ( http://download.zarafa.com/community/beta/7.1/7.1.8beta2-43059/ ). We encourage any users of Zarafa to update to this new version or apply the patch supplied below.
 
-Why are we talking about it in this context, then?
+Zarafa would like to thank Robert Scheck from ETES (http://www.etes.de) for discovering and reporting this issue.
 
-Alexander
+Index: provider/libserver/ECSession.cpp
+===================================================================
+diff -u -N -r41872 -r42919
+--- provider/libserver/ECSession.cpp	(.../ECSession.cpp)	(revision 41872)
++++ provider/libserver/ECSession.cpp	(.../ECSession.cpp)	(revision 42919)
+@@ -846,6 +846,13 @@
+ {
+ 	ECRESULT er = erSuccess;
+ 	
++	if (!lpszName)
++	{
++		// Commandment 2: Thou shalt not follow the NULL pointer, for chaos and madness await thee at its end.
++		m_lpSessionManager->GetLogger()->Log(EC_LOGLEVEL_FATAL, "Invalid argument lpszName in call to ECAuthSession::ValidateUserLogon()");
++		er = ZARAFA_E_INVALID_PARAMETER;
++		goto exit;
++	}
+ 	// SYSTEM can't login with user/pass
+ 	if(stricmp(lpszName, ZARAFA_ACCOUNT_SYSTEM) == 0) {
+ 		er = ZARAFA_E_NO_ACCESS;
+@@ -888,6 +895,12 @@
+ 	char			*localAdminUsers = NULL;
+ #endif
+ 
++	if (!lpszName)
++	{
++		m_lpSessionManager->GetLogger()->Log(EC_LOGLEVEL_FATAL, "Invalid argument lpszName in call to ECAuthSession::ValidateUserSocket()");
++		er = ZARAFA_E_INVALID_PARAMETER;
++		goto exit;
++	}
+ 	p = m_lpSessionManager->GetConfig()->GetSetting("allow_local_users");
+ 	if (p && !stricmp(p, "yes")) {
+ 		allowLocalUsers = true;
+
+
+--
+Mit freundlichen Grüßen,
+Best regards,
+Met vriendelijke groet,
+Sincèrement,
+Cordiali saluti,
+Atentamente,
+
+Michael Kromer
+VP Products & Architecture
+
+[T] +49 179 9300840
+[E] m.kromer@...afa.com
+------------------------------------------------- 
+Zarafa: Open - Compatible - Enterprise
