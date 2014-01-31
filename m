@@ -1,61 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/1
-Message-ID: <53153F3F.1040807@redhat.com>
-Date: Tue, 04 Mar 2014 13:49:35 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/21
+Message-ID: <20140131184801.GA20716@openwall.com>
+Date: Fri, 31 Jan 2014 22:48:01 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: 740670@...s.debian.org
-Subject: possible CVE requests: perltidy insecure temporary file usage
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+On Fri, Jan 31, 2014 at 07:18:33PM +0100, rf@...eap.de wrote:
+> >>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
+>     SD> Even though the issue was easy to patch, I nevertheless find
+>     SD> this impressively quick for a major distro like Ubuntu, and this
+>     SD> probably justifies the extra day of embargo.
+> 
+> Yup, was good for us too, so we could double-check that the proposed fix
+> from your mail is working OK for others as well, since it hasn't arrived in
+> the kernel.org stable-queue git yet.
 
-Jakub Wilk and Don Armstrong are discussing in 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=740670 1) perltidy 
-creating a temporary file with default permissions instead of 0600 2) 
-the use of tmpnam().
+I think there's some confusion here.  By "the extra day of embargo" I
+was referring to the second day of the issue being known to
+linux-distros and security@...nel.org, but not made public yet.  So it's
+the day right before the oss-security posting.
 
- From that bug:
+You're probably referring to the half-day delay between the oss-security
+posting and the upstream commit by Linus.
 
-     my $name = "perltidy.TMP";
-     if ( $^O =~ /win32|dos/i || $^O eq 'VMS' || $^O eq 'MacOs' ) {
-         return $name;
-     }
+> By the way, Ubuntu used the longer
+> original patch, which we used [1] in the end as well (saw too late that Linus
+> already committed the shorter one).
 
-Would this be a separate issue on those platforms (predictable temporary 
-file in current working directory, run perltidy in attacker-controlled 
-directory...)? On perltidy-20090616-2.1.el6.src.rpm this was only called 
-when using the "-html" option and a pod file as input, and looks to then 
-possibly open it insecurely:
+That's curious, but not surprising: I guess Ubuntu was already in the
+process of testing kernels built with the longer patch when PaX Team
+came up with the shorter patch.  Since either patch was considered good
+enough and the proposed embargo period was very short, it made sense for
+them not to restart the process.
 
-     else {
-         $tmpfile = Perl::Tidy::make_temporary_filename();
-     }
-     my $fh_tmp = IO::File->new( $tmpfile, 'w' );
+> Coming back to our earlier discussion about linux-distros membership [2]:
+> It definitely helped being on the list.
 
-Trying with a much newer version on Fedora, I received errors about 
-tmpnam not working and it didn't appear to be called, but haven't spent 
-time debugging that yet.
+Do you mean being on oss-security?
 
-Regarding other platforms:
+> Since the patch was trivial,
+> we didn't suffer a significant time delay compared to other distros. In
+> case of more complicated patches, this could have gotten tough though
+> given the fact that the new builds need a significant amount of testing as
+> well.
+> 
+> It would be nice, if we (and others in a similar boat) could get a
+> head-start of at least a couple of days (that's how I understood your
+> question in [2]). Maybe a "second-class citizen" list could complement
+> the linux-distros list with notifications slightly earlier than on
+> oss-security.
 
-     my $name = "perltidy.TMP";
-     if ( $^O =~ /win32|dos/i || $^O eq 'VMS' || $^O eq 'MacOs' ) {
-         return $name;
-     }
-     eval "use POSIX qw(tmpnam)";
-     if ($@) { return $name }
+In this case, it was 2 days of advance notice to all on linux-distros.
+I see no point in splitting this further.
 
-Is the POSIX module a core part of Perl, as in, the "return $name" part 
-will never be called?
+> [1] https://qlustar.com/news/qsa-0131141-linux-kernel-vulnerabilities
+> [2] http://www.openwall.com/lists/oss-security/2014/01/22/1
 
-Regarding the use of tmpnam, is it safe/not an issue if you open the 
-resulting filename with O_CREAT and O_EXCL (as perltidy does)?
+OK, you have demonstrated nicely that you're able to issue advisories
+and updates promptly.  Well done!
 
-I am not sure if these 	qualify for CVEs but I believe the 
-"perltidy.TMP" on Windows or Mac OS X etc would.
+However, since you ended up updating your kernel based on which fixes
+went into Ubuntu's, would you do that any quicker if you were on
+linux-distros?  Ubuntu's kernel updates became available only after
+public disclosure anyway.  Would you approach fixing this issue in your
+kernels differently if you had advance notice (but no access to Ubuntu's
+work-in-progress on their updates)?  Of course, you could, by applying
+one of PaX Team's patches posted to linux-distros directly, or:
 
-Thanks,
+Given the specialized nature of your distro, I think it'd be best for
+you to disable x32 support until you possibly include an x32 userland.
 
---
-Murray McAllister / Red Hat Security Response Team
+BTW, Ubuntu's advisory text (and thus also yours) is slightly wrong:
+
+<grsecurity> Ubuntu's advisory says the vulnerability is in recvmsg.  It should say recvmmsg (newer syscall).
+
+Alexander
