@@ -1,43 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/7
-Message-Id: <20141016141606.1253F6C0129@smtpvmsrv1.mitre.org>
-Date: Thu, 16 Oct 2014 10:16:06 -0400 (EDT)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: ejabberd compression allows cirucumvention of encryption despite starttls_required
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/17
+Message-ID: <21227.58185.522043.16044@gargle.gargle.HOWL>
+Date: Fri, 31 Jan 2014 18:54:17 +0100
+From: rf@...eap.de
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+>>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
 
-> http://mail.jabber.org/pipermail/operators/2014-October/002438.html
-> https://github.com/processone/ejabberd/commit/7bdc1151b11d26d33649c5cce2817b74a4f231a8
-> 
-> Basically these things often work under a more or less
-> "trust-on-first-use"-assumption.
-> 
-> E.g. the client will check the server config on the first connection
-> and use that settings in the future.
-> 
-> So there is a scenario where this leads to unintended unencrypted
-> connections.
+    SD> On Fri, Jan 31, 2014 at 05:34:05PM +0100, rf@...eap.de wrote:
+    >> >>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
+    SD> This is CVE-2014-0038 (assigned shortly after Kees sent the
+    SD> message below).
 
-Use CVE-2014-8760.
+    >> Are you sure this is the correct CVE?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+    SD> Pretty sure, yes.  I am not aware of a reason to think
+    SD> otherwise.
 
-iQEcBAEBAgAGBQJUP9KSAAoJEKllVAevmvms3HIH+wYbM86VpoBrkJEaSlOpw5CI
-krwSBSzRhDqw8uXeV6FeGKI7Cy5vmaUDTXoj0z/jVmAjaJB2MCVXYzdeiywA1pcQ
-/LCROcb2O80DIC6pHK0VoWPa+4lWpoxYwtVQxexcA7mHL+bym3pjt5Jf/ZmP7Uqe
-tPumOEL9xMdL97CAYTeptTLXlxQ1uipQOYIARnxtQ9neWDMxQPV1JQdAQDjJxZoY
-ZdjJB2/MNzcARkiHc+njEebIDvnn39yoiGo/5Wlo7N+mJ6oIRn9ritm4aQRkLE71
-D+1g3HkjelxXlqMkmXOCimh5r7Euupeyi0L40aLY1ft4Da3sJx/to9eteRzEzJo=
-=RSsh
------END PGP SIGNATURE-----
+    SD> It was kindly assigned by Petr Matousek (of Red Hat, even though
+    SD> their products are not affected) on Wed, 29 Jan 2014 10:01:59
+    SD> +0100.
+
+OK, thanks for the fast explanation.
+
+    >> It was assigned already beginning of Dec. last year.
+
+    SD> The "assigned" date seen on CVE IDs often indicates when a pool
+    SD> of CVE IDs was created and then assigned to a CNA (Red Hat in
+    SD> this case), not when individual CVE IDs are assigned to actual
+    SD> issues.  It is perfectly normal (albeit confusing) for the
+    SD> "assigned" date to be earlier than the vulnerability discovery
+    SD> date.  This was discussed in here before:
+
+    SD> http://www.openwall.com/lists/oss-security/2012/01/23/4
+
+    SD> CNAs:
+
+    SD> http://cve.mitre.org/cve/cna.html
+
+Sorry for the repetition, but I wasn't subscribed yet at the time or is
+this a FAQ?
