@@ -1,49 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/1
-Message-ID: <538D1571.5020509@delphij.net>
-Date: Mon, 02 Jun 2014 17:23:13 -0700
-From: Xin Li <delphij@...phij.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/24
+Message-ID: <21227.64994.76012.685709@gargle.gargle.HOWL>
+Date: Fri, 31 Jan 2014 20:47:46 +0100
+From: rf@...eap.de
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, gshapiro@...apiro.net
-Subject: sendmail close-on-exec issue -- CVE assigned?
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+>>>>> "SD1" == Solar Designer <solar@...nwall.com> writes:
 
-Hi,
+    SD1> On Fri, Jan 31, 2014 at 07:18:33PM +0100, rf@...eap.de wrote:
+    >> >>>>> "SD0" == Solar Designer <solar@...nwall.com> writes:
+    SD0> Even though the issue was easy to patch, I nevertheless find
+    SD0> this impressively quick for a major distro like Ubuntu, and this
+    SD0> probably justifies the extra day of embargo.
+    >>
+    >> Yup, was good for us too, so we could double-check that the
+    >> proposed fix from your mail is working OK for others as well,
+    >> since it hasn't arrived in the kernel.org stable-queue git yet.
 
-There is a security issue with sendmail which was fixed in 8.14.9 but
-there is no CVE to my knowledge:
+    SD1> I think there's some confusion here.  By "the extra day of
+    SD1> embargo" I was referring to the second day of the issue being
+    SD1> known to linux-distros and security@...nel.org, but not made
+    SD1> public yet.  So it's the day right before the oss-security
+    SD1> posting.
 
-(Quote from ftp://ftp.sendmail.org/pub/sendmail/RELEASE_NOTES )
+    SD1> You're probably referring to the half-day delay between the
+    SD1> oss-security posting and the upstream commit by Linus.
 
-8.14.9/8.14.9	2014/05/21
-	SECURITY: Properly set the close-on-exec flag for file
-		descriptors (except stdin, stdout, and stderr) before
-		executing mailers.
+I'm referring to the following part of your message in [1]:
 
-Can someone confirm if there is no duplicate request for this and
-assign one if that's the case?  (I have searched a few CVE databases
-and found nothing).
+Would having about 7 days of advance notice (and at most 19 on some
+occasions, per list policy) on a small subset of Linux kernel
+vulnerabilities be of much help in preparing update packages?
 
-Thanks in advance!
+    >> By the way, Ubuntu used the longer original patch, which we used
+    >> [1] in the end as well (saw too late that Linus already committed
+    >> the shorter one).
 
-Cheers,
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (FreeBSD)
+    SD1> That's curious, but not surprising: I guess Ubuntu was already
+    SD1> in the process of testing kernels built with the longer patch
+    SD1> when PaX Team came up with the shorter patch.  Since either
+    SD1> patch was considered good enough and the proposed embargo
+    SD1> period was very short, it made sense for them not to restart
+    SD1> the process.
 
-iQIcBAEBCgAGBQJTjRVxAAoJEJW2GBstM+nsT9kP/1MhlBSg9yc/KNpwp9pKF8Xj
-5oM59xI4anSLn8JtKIcFojBaK+Mx+xQ5gkA8bKdGSS3uVSlpPH2MdoILleD9FAPn
-gRzW1bum4BeV2bGtJ5D92nql0uzpa7Mnxb6bhv/dY0H+KQzbZIC4SDZRCVbBGg+H
-QBCbCTTdNcBb5rKSkPpqRmR+FdEHhO8zYsVLpLOA6rmoi7Bn4T+g46U3SIgFh3yL
-bwsUrNTBtaHfslrl77/WwDz1qBTiirqfCKzuwxwSXvfxuaA0i5iglAs0fnaf6/Rm
-OVxhWOZklJmnLHCH3c/4IQkuiZNx8JTjqF9PxoGVsoHbjrDG6NCWjxKxdwrYSFTP
-nwNu3WoCpKjCf2AOnCC64iNshxkDDIfI/88F85uyxbrM9eGyLczPS5EKf2jBV3+x
-rMQWFVCodZ/843fLC00/bplQoBTbXivyqELOT8BSaYUNIohS/nOEmleToHislOOS
-S/9vTSvDFd5hHMqZF8eMfw1097tVcQjGFbW3/FHJ/wxr44zBcwrfz+trX5EV19Bg
-Ue6g8y6BpKu0ILVFR5jo9kGv8adq6zr5xrc0scUUiDrpyNoziKEpdGE7w6Dm1Lv7
-voqrbVQqlhk6C9Lbtl2XDv3tamDUXe0bFvKVYMQwYqPIXvUz63wIBKso5WZpyYrC
-f5HNmNxh3ViQEUU5XeWn
-=ysYl
------END PGP SIGNATURE-----
+Exactly, same for us in the end.
+
+    >> Coming back to our earlier discussion about linux-distros
+    >> membership [2]: It definitely helped being on the list.
+
+    SD1> Do you mean being on oss-security?
+
+Yes.
+
+    >> Since the patch was trivial, we didn't suffer a significant time
+    >> delay compared to other distros. In case of more complicated
+    >> patches, this could have gotten tough though given the fact that
+    >> the new builds need a significant amount of testing as well.
+    >>
+    >> It would be nice, if we (and others in a similar boat) could get
+    >> a head-start of at least a couple of days (that's how I
+    >> understood your question in [2]). Maybe a "second-class citizen"
+    >> list could complement the linux-distros list with notifications
+    >> slightly earlier than on oss-security.
+
+    SD1> In this case, it was 2 days of advance notice to all on
+    SD1> linux-distros.  I see no point in splitting this further.
+
+Definitely true in this case.
+
+    >> [1] https://qlustar.com/news/qsa-0131141-linux-kernel-vulnerabilities
+    >> [2] http://www.openwall.com/lists/oss-security/2014/01/22/1
+
+    SD1> OK, you have demonstrated nicely that you're able to issue
+    SD1> advisories and updates promptly.  Well done!
+
+    SD1> However, since you ended up updating your kernel based on which
+    SD1> fixes went into Ubuntu's, would you do that any quicker if you
+    SD1> were on linux-distros?
+
+This time I was lucky in that a) Ubuntu was fast, b) the patch was
+trivial and c) the patch was identical to the one needed for our kernel.
+None of these are guaranteed. Usually I would take the upstream
+kernel.org patch or if not yet available the original patch and adapt it
+to our kernel. We will run/support 3.12 longer than kernel.org will
+provide updates, so at some stage, we need to start porting patches
+ourselves. Note that since we're providing Lustre/ZFS support, we have some
+restrictions in what kernel versions we use.
+
+    SD1> Ubuntu's kernel updates became available only after public
+    SD1> disclosure anyway.  Would you approach fixing this issue in
+    SD1> your kernels differently if you had advance notice (but no
+    SD1> access to Ubuntu's work-in-progress on their updates)?  Of
+    SD1> course, you could, by applying one of PaX Team's patches posted
+    SD1> to linux-distros directly, or:
+
+Yes, see above.
+
+    SD1> Given the specialized nature of your distro, I think it'd be
+    SD1> best for you to disable x32 support until you possibly include
+    SD1> an x32 userland.
+
+Sure, I know.
+
+    SD1> BTW, Ubuntu's advisory text (and thus also yours) is slightly
+    SD1> wrong:
+
+    SD1> <grsecurity> Ubuntu's advisory says the vulnerability is in
+    SD1> recvmsg.  It should say recvmmsg (newer syscall).
+
+Thanks, fixed.
+
+Roland
