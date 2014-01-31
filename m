@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/3
-Message-Id: <20141113074828.D88466C0030@smtpvmsrv1.mitre.org>
-Date: Thu, 13 Nov 2014 02:48:28 -0500 (EST)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Joomla component com_sexycontactform and WordPress plugin sexy-contact-form unrestricted file upload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/8
+Message-ID: <52EB1CBB.8020100@redhat.com>
+Date: Fri, 31 Jan 2014 14:47:07 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE needed for libotr's support for OTR v1?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-> Can I get 2014 CVE ID for unrestricted file upload vulnerability
+Is a CVE needed for versions of libotr that support OTR v1? Quoting the 
+Debian bug[1]:
 
-Use CVE-2014-8739.
+""
+as you are surely aware of, it's been known [1] since 2006 that
+clients supporting both OTRv1 and v2 (such as libotr 3.x) are subject
+to protocol downgrade attacks clients. It's also been known for
+a while that OTRv1 has serious security issues (that were the main
+reason for a v2, actually). In short, support v2 only is the only safe
+way to go these days.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+[1] http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.165.7945
+""
 
-iQEcBAEBAgAGBQJUZGDCAAoJEKllVAevmvmsMi4IAKz0CPfUgGdfYabYlHrmRD1t
-wZnR4UPERRea4tIBA7PEivMmW2FPMDxQVx0r6+Xch6dRfMyjfTwSP1sMz4W/iDrX
-1Wzo3NUr+KnTqulnb339YxUkVkOEIJko70oJPhhXDozzDis2zhFONvu8W3IAaaKT
-2pERXwKmooc4/ukPcqa1yN1zEFPXfvPqgsoM2u3T6DPFnGvwN6rToaTh/U3xyjp3
-BF3HQGsws2ohFQts0VcLy5toTHLnc2/yCegI8veWvYxSpYxx33X3tPFyPmF2sydu
-ijXwt4q8CVv0BJyoGUtSo0oqQZ/6Nm/4IRGpK3Pwg3XplujGaCErN5XbqmSBQSQ=
-=1xNu
------END PGP SIGNATURE-----
+Ubuntu advisory: http://www.ubuntu.com/usn/usn-2091-1/
+Launchpad bug: https://bugs.launchpad.net/ubuntu/+source/libotr/+bug/1266016
+
+Thanks,
+
+--
+Murray McAllister / Red Hat Security Response Team
+
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=725779
