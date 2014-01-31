@@ -1,31 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/5
-Message-ID: <2283446.WXyUMIYtWY@devil>
-Date: Sun, 07 Dec 2014 16:49:47 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/16
+Message-ID: <20140131173610.GA19423@openwall.com>
+Date: Fri, 31 Jan 2014 21:36:10 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: postgresql: pg_dump creates world-readable dump
+Cc: PaX Team <pageexec@...email.hu>
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Fri, Jan 31, 2014 at 04:11:16AM +0400, Solar Designer wrote:
+> [...] I guess the newer patch (from the
+> second forwarded message above) is preferable (the one I expect to see
+> committed soon).
 
-I just discovered that pg_dump creates the database dump with world readable 
-permission (644 to be exactly).
+Here's the commit:
 
-I provided to inform upstream about, and this was the response:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/net/compat.c?id=2def2ef2ae5f3990aabdbe8a755911902707d268
 
-On Sunday 07 December 2014 10:34:19 Noah Misch wrote:
-> You presumably have umask 0022.  Like most programs, pg_dump does not
-> constrain modes of files it creates; adjust your umask for that.  A few
-> programs do otherwise; for example, ssh-keygen specifically constrains the
-> mode of new private key files.  A database dump is not in such a special
-> category, so pg_dump should continue to do the standard thing.
+> It appears, from the linux-distros discussion, that a couple of distros
+> are going to release emergency security updates for this.  If they did
+> not express interest in an extra day of embargo, the issue would likely
+> be made public on the first day (not on the second).
 
-A local user is able to copy it and discover sensitive data.
+Ubuntu advisories and updates:
 
-In my opinion it deserves a cve.
+http://www.ubuntu.com/usn/usn-2096-1/
+http://www.ubuntu.com/usn/usn-2095-1/
+http://www.ubuntu.com/usn/usn-2094-1/
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Even though the issue was easy to patch, I nevertheless find this
+impressively quick for a major distro like Ubuntu, and this probably
+justifies the extra day of embargo.
+
+Alexander
