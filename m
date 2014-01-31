@@ -1,83 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/25/5
-Message-Id: <E1WzmS0-0008Jz-0c@xenbits.xen.org>
-Date: Wed, 25 Jun 2014 12:37:20 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 101 - information leak via gnttab_setup_table on ARM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/23
+Message-ID: <21227.63819.629767.375269@gargle.gargle.HOWL>
+Date: Fri, 31 Jan 2014 20:28:11 +0100
+From: rf@...eap.de
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros membership
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+>>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
 
-                    Xen Security Advisory XSA-101
-                            version 2
+    SD> On Wed, Jan 22, 2014 at 11:51:39AM +0100, rf@...eap.de wrote:
+    >> >>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
+    SD> Are Qlustar's security updates (not just security advisories)
+    SD> publicly available?
+    >>
+    >> Yes, all our packages are publicly available from our website.
 
-            information leak via gnttab_setup_table on ARM
+    SD> Where do I find them?  Somehow I only found "Qlustar Installer
+    SD> 8.1.0-3/precise Size: 705MB".
 
-UPDATES IN VERSION 2
-====================
+http://repo.qlustar.com/repo/ubuntu
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-When initialising an internal data structure on ARM platform Xen was
-not correctly initialising the memory containing the list of a
-domain's grant table pages. This list is returned by the
-GNTTABOP_setup_table subhypercall, leading to an information leak.
-
-IMPACT
-======
-
-Malicious guest administrators can obtain some of the memory contents
-of other domains:
-
-Up to 8*max_nr_grant_frames bytes of uninitialised memory can be
-leaked to the calling domain. This memory may have been previously
-used by either the hypervisor or other guests.
-
-The default max_nr_grant_frames is 32, hence by default 256 bytes may
-be leaked in this way.  However this can be overridden via the
-"gnttab_max_nr_frames" hypervisor command line option.
-
-VULNERABLE SYSTEMS
-==================
-
-Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onward.
-
-MITIGATION
-==========
-
-None.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa101.patch        xen-unstable, Xen 4.4.x
-
-$ sha256sum xsa101*.patch
-12ea475265a0804a3a42f620d7065a7408a5ae4b017c871847424c7247c204e9  xsa101.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJTqsJaAAoJEIP+FMlX6CvZ0MkIALeL89QbVy7yAsLQ/JY6HhZA
-Y61HLh7VX9rwZd2pQJoJC3dSPtMCfeo25yd8ryDB4QEQci5qSk/P5gnBkXMUjDTL
-PbLHimTvGXdAOI3+TYGC6H/dHfqkMeOr/w9cNuS3GuvmpYGpDnb3iE14x5I+JKJJ
-JPY1tMwettCU3aWmMd1DHzM3cY2qUxQBPN5Itwev6AjPu9w4eFUBV2/u1CsRIQKT
-2UBl7uFPm70MmYAzhr30RHOZRQD70ixFDbs1RH1vQsIbF+J8dTOsuzRd03CwVe4A
-ib0CUm6Emd8zvnGAFU7WZdY6roIukp/Qk5T4mdtlmFtKXuVfBhlCPuc45cBvwyM=
-=uOne
------END PGP SIGNATURE-----
-
-Download attachment "xsa101.patch" of type "application/octet-stream" (690 bytes)
+Roland
