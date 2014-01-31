@@ -1,33 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/7
-Message-ID: <87r41tvyfr.fsf@mid.deneb.enyo.de>
-Date: Thu, 10 Jul 2014 20:52:24 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/25
+Message-ID: <CAD3CanezYLgpBWC0FbMB+AeZh6M-tobMkAiKyJf_OSizC2dNXQ@mail.gmail.com>
+Date: Sat, 1 Feb 2014 11:24:37 +1300
+From: Matthew Daley <mattd@...fuzz.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-0475: glibc directory traversal in LC_* locale handling
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
-Stephane Chazelas discovered that directory traversal issue in locale
-handling in glibc.  glibc accepts relative paths with ".." components
-in the LC_* and LANG variables.  Together with typical OpenSSH
-configurations (with suitable AcceptEnv settings in sshd_config), this
-could conceivably be used to bypass ForceCommand restrictions (or
-restricted shells), assuming the attacker has sufficient level of
-access to a file system location on the host to create crafted locale
-definitions there.
+> Reported by pageexec at
+> https://code.google.com/p/chromium/issues/detail?id=338594, which is
+> restricted, so here's the full report:
 
-Bug report: https://sourceware.org/bugzilla/show_bug.cgi?id=17137
+Was this was reported to the Chromium bugtracker in the first
+instance? If so, why? I can't see what the relation between Chromium
+and Linux kernel issues would be, unless I suppose it was found
+through work on sandboxing/NaCl/seccomp.
 
-Git commits:
+(Not assuming or implying anything at all, I'm just confused!)
 
-https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=d183645616b
-  Related alloca hardening (technically not covered by the CVE assignment)
-
-https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=4e8f95a0df7
-  Actual fix
-
-https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=58536726692
-  Documentation updates
-
-(To backport the new test in a reliable fashion, you need to tweak the
-Makefile to set the LOCPATH environment variable.)
+- Matthew
