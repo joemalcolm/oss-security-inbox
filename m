@@ -1,56 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/15
-Message-ID: <543E3AC1.90605@reactos.org>
-Date: Wed, 15 Oct 2014 11:13:37 +0200
-From: Pierre Schweitzer <pierre@...ctos.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/26
+Message-ID: <20140131230232.GA22758@openwall.com>
+Date: Sat, 1 Feb 2014 03:02:32 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
+Cc: PaX Team <pageexec@...email.hu>
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-I've a naive question regarding the vulnerability, actually.
-
-It says you can recover plain text of ciphered text, using a specific
-method.
-But, in the end it means you'll have plain text + ciphered text of the
-same text. Does that mean you can easily bruteforce the key that was
-used? So that you can actually, if you logged the complete session,
-decipher the whole session of the user? And not only the cookie?
-Or breaking the key would be too complex yet?
-
-Cheers,
-
-On 10/15/2014 12:41 AM, Hanno Böck wrote:
-> It's out:
+On Sat, Feb 01, 2014 at 11:24:37AM +1300, Matthew Daley wrote:
+> > Reported by pageexec at
+> > https://code.google.com/p/chromium/issues/detail?id=338594, which is
+> > restricted, so here's the full report:
 > 
-> https://www.openssl.org/~bodo/ssl-poodle.pdf 
-> http://googleonlinesecurity.blogspot.de/2014/10/this-poodle-bites-exploiting-ssl-30.html
->
->  My conclusion stays the same: Disable SSLv3.
+> Was this was reported to the Chromium bugtracker in the first
+> instance? If so, why? I can't see what the relation between Chromium
+> and Linux kernel issues would be, unless I suppose it was found
+> through work on sandboxing/NaCl/seccomp.
 > 
+> (Not assuming or implying anything at all, I'm just confused!)
 
+Google is offering bounties for responsible disclosure of bugs in
+Google's software, and I guess this includes use of Linux kernel by
+Chromium OS.  (I don't know if this specific vulnerability was relevant
+to Google's products, but I wouldn't be surprised if Google is generous
+enough to pay a bounty anyway.)
 
-- -- 
-Pierre Schweitzer <pierre@...ctos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+On a related note, Google is also offering bounties for security
+enhancements to some Open Source projects once such enhancements are
+accepted upstream.  This includes Linux kernel and many more:
 
-iQIcBAEBAgAGBQJUPjrBAAoJEHVFVWw9WFsL1lsP/jp1l1qTBChu7rC4Z/JJovdb
-RTER+6C7RpwYB9krldhBtlqvcQoyDTr/XPaOaBgBaG311Ue3NnRjaG5iuskn5sSx
-Ej+uZj5Eet269AlW9MzldXCFMkI5C0cnhtBypd8QGXC1h79GZlnvp4aa22kVzovd
-hmzv9IgU+GYpdgFMFNsBCOAUPpBTTEbGCjXD3/T9h0nmKfJq1CFY4ztbN9s2q54z
-CJh6m3zKKqQHAOtxKCbHuxO70D+A7N/BHh8NmkiKvAdqn+9ohscf06oGnm8Zo1PS
-uOAP+R1IFbpJa5oPjKN3pKTrfR3Yj0hoImaYyXXyyuhH1LvAZmDqHjTh24hfoLIa
-PIE/eAckNx4YuxuYiO8n58b2sIdwPQgh9P8JKTwbE+H6wApF8O+5PYtSc8wWeOhn
-kM3wcefkQ/TZzGC8kcc34knbOhQmWUHQ2kXb0g8QMKPJl+DhOeDYkM/QLeYiXVey
-AFwnPcywC9QBY+uF3hlTFEjZ+j+u9IvpbWIb9g7fs7Q96l1hp2p998nuVmwfTvxZ
-yYIBbCrC0XNKN5GQtYhSjtXQZ2ynNw6Etgiysmty4mYfuIZDLIspw9e2oCErfle+
-MxmLpjbR+UhA/oaagD8hqs720Er0SMVa1RbJwZeu+JjPm1JOetToFszaNrmXuR4Y
-xqAJzpkSdPNx0ehpr8rw
-=+gFQ
------END PGP SIGNATURE-----
+http://googleonlinesecurity.blogspot.com/2013/10/going-beyond-vulnerability-rewards.html
+
+... but finding a vulnerability would probably not fall under the latter
+program.
+
+Alexander
