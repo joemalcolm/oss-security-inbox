@@ -1,42 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/23/8
-Message-ID: <53A8414B.1080607@enovance.com>
-Date: Mon, 23 Jun 2014 11:01:31 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/18
+Message-ID: <20140131180623.GA20526@openwall.com>
+Date: Fri, 31 Jan 2014 22:06:23 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for vulnerability in OpenStack Neutron, Ceilometer and pyCADF library
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although
-an advisory was not sent yet.
+On Fri, Jan 31, 2014 at 06:54:17PM +0100, rf@...eap.de wrote:
+> >>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
+>     SD> The "assigned" date seen on CVE IDs often indicates when a pool
+>     SD> of CVE IDs was created and then assigned to a CNA (Red Hat in
+>     SD> this case), not when individual CVE IDs are assigned to actual
+>     SD> issues.  It is perfectly normal (albeit confusing) for the
+>     SD> "assigned" date to be earlier than the vulnerability discovery
+>     SD> date.  This was discussed in here before:
+> 
+>     SD> http://www.openwall.com/lists/oss-security/2012/01/23/4
+> 
+>     SD> CNAs:
+> 
+>     SD> http://cve.mitre.org/cve/cna.html
+> 
+> Sorry for the repetition,
 
-Title: User token leak to message queue in pyCADF notifier middleware
-Reporter: Zhi Kun Liu (IBM)
-Products: Neutron    (2014.1 versions up to 2014.1.1)
-          Ceilometer (2013.2 versions up to 2013.2.3,
-                      2014.1 versions up to 2014.1.1)
-          pyCADF library (all versions up to 0.5.0)
+That's OK.
 
-Description:
-Zhi Kun Liu from IBM reported a vulnerability in the notifier middleware
-available in the PyCADF library and formerly copied into Neutron and
-Ceilometer code. An attacker with read access to the message queue may
-obtain authentication tokens used in REST requests (X_AUTH_TOKEN) that
-goes through the notifier middleware. All services using the notifier
-middleware configured after the auth_token middleware pipeline are impacted.
+> but I wasn't subscribed yet at the time
 
-References:
-https://launchpad.net/bugs/1321080
+I think you were in fact not subscribed in 2012.
 
-Thanks in advance,
+> or is this a FAQ?
 
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+This is not a very frequent question, but I've seen this sort of
+confusion several times, in different places.  I don't know if it's
+addressed in some sort of FAQ list.
 
+I think there's room for improvement for the language used on CVE ID
+pages like https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0038 ,
+which currently says:
 
+"Date Entry Created
+20131203	 Disclaimer: The entry creation date may reflect when
+the CVE-ID was allocated or reserved, and does not necessarily indicate
+when this vulnerability was discovered, shared with the affected vendor,
+publicly disclosed, or updated in CVE."
 
+but follows this with:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
+"Phase (Legacy)
+Assigned (20131203)"
+
+I'm not surprised the latter continues to confuse people, as it appears
+not to fall under the disclaimer.  I think the disclaimer should be
+worded such that it'd clearly apply to "Phase (Legacy) \n Assigned" as
+well.  (And even then some confusion will remain, just maybe less of it.)
+
+Alexander
