@@ -1,47 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/02/1
-Message-ID: <CAA7hUgFXavT_aOBHHin63=Dnq+7VCZ1torfycCVZhKnHvck+WQ@mail.gmail.com>
-Date: Wed, 2 Apr 2014 10:31:52 +0200
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/4
+Message-ID: <20140131010744.GA18619@openwall.com>
+Date: Fri, 31 Jan 2014 05:07:44 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Information on CVE-2014-0158, openjpeg
+Subject: responsible use of distros and linux-distros lists (was: Linux kernel: fs: fix get_dumpable() incorrect tests (CVE-2013-2929))
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Jan 31, 2014 at 04:51:55AM +0400, Solar Designer wrote:
+> I'm afraid the issue below was never brought to oss-security (as it must
+> have been).  The fix was committed on November 13:
+> 
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=d049f74f2dbe71354d43d393ac3a188947811348
+> 
+> including detailed description and the CVE-2013-2929 reference.  So it
+> was clearly disclosed as a security issue, yet bringing it to
+> oss-security specifically seems to have falled through the cracks. :-(
 
-I just became aware of CVE-2014-0158[1], which was recently assigned
-to openjpeg.
-Looking at the proposed patch (as the description is rather brief), it
-seems to me that it is a dup of one of the bugs covered by
-CVE-2013-1447.
+Unfortunately, I was not watching closely enough to notice this did
+not(?) get to oss-security in time, so we got a nasty violation of
+linux-distros list policy here.  Can those distros and linux-distros
+members who would like the lists to stay around please help police the
+lists, detecting and correcting such instances of negligence much
+sooner?  Thanks!
 
-Quoting from my post to oss-security:
-> 5. null pointer dereferences, division by zero, and anything that
-would just fit as DoS (CVE-2013-1447)
+Timely posting to oss-security (yes, this one specific place) is
+important, because that way a distro (or anyone) who chooses not to join
+linux-distros (or distros, as appropriate) or is not accepted may
+nevertheless be confident they receive info on all the same issues once
+the issues are publicly disclosed, by being subscribed to oss-security.
 
-> [listing the group of issues and attachments]
-> 5.
-> [...]
-> segfault6.patch
+Fire-and-forget use of distros and linux-distros lists is inappropriate.
+By posting to one of these lists, you accept certain responsibility:
 
-Which is exactly what is being commented about in [2], a copy of which
-is also available at [3].
+http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists
 
-IIRC without that patch some of the structures were not initialized
-and applications (like the ones shipped by openjpeg itself) would try
-to dereference NULL pointers, and just crash - no memory write was
-involved.
+"When the security issue is finally to be made public, it is your (the
+original reporter's) responsibility to post about it to oss-security
+(indeed, you and others may also post to any other mailing lists, etc.)"
 
-Or is there more into CVE-2014-0158 that I might be missing?
+If you're unwilling to accept that responsibility, please refrain from
+posting to those lists.
 
-P.S. testing the encoding functions would probably be like opening
-another can of worms, if anyone is interested in that.
+Unfortunately, people sometimes don't read or ignore or forget about
+this requirement, or forget that they have sent something to the distros
+or linux-distros lists but not yet to oss-security - so let's be
+watching and reminding!  (Or maybe we should automate the reminders.
+Or maybe we should automate the public disclosure.  Or maybe we should
+shutdown the lists.)
 
-[1]https://bugzilla.redhat.com/CVE-2014-0158
-[2]https://bugzilla.redhat.com/show_bug.cgi?id=1082925#c8
-[3]https://bugzilla.redhat.com/show_bug.cgi?id=1037945#c11
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Alexander
