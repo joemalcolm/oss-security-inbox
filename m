@@ -1,33 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/5
-Message-ID: <20141203154849.00e6cc66@pc>
-Date: Wed, 3 Dec 2014 15:48:49 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/9
+Message-ID: <CAEDdjHemNu_tYxqPN02jEN_yymF-XYV6=qq3A20uAsL92dSY3A@mail.gmail.com>
+Date: Fri, 31 Jan 2014 13:25:41 +0000
+From: Pedro Ribeiro <pedrib@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: out-of-bounds memory access flaw in unrtf
+Cc: Steve Kenow <skenow@...resscms.org>, ImpressCMS Security <security@...resscms.org>
+Subject: CVE request: impressCMS 1.3.5 arbitrary file deletion and XSS
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 03 Dec 2014 07:37:54 -0700
-"Vincent Danen" <vdanen@...hat.com> wrote:
+Hi,
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1170233
+I have discovered two vulnerabilities in ImpressCMS. These have been fixed
+in the new 1.3.6 version, which you can get at
+https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Official%20Releases/ImpressCMS%201.3%20Branch/ImpressCMS%201.3.6/
+.
 
-You mixed up Michal and me :-)
+One is an arbitrary file deletion and the other is two cross site scripting
+issues.
+Note that I was unable to exploit the XSS issues due to the inbuilt
+protection module, so I'm not sure if it qualifies for a CVE.
 
-But appart from that: It's really not a single issue. I just fuzzed one
-and reported it to check whether there is any reaction. But you easily
-get dozends if you run afl on it.
-
-If you want to fix unrtf there's more to it than that. Basically you'd
-have to fork it and take over development. Same is true for a whole
-bunch of other tools (catdoc, antiword, latex2rtf, ...)
+The tickets containing the information are available here
+https://www.assembla.com/spaces/dW4voyNP0r4ldbeJe5cbLr/tickets?report%5Bestimate_show%5D=true&report%5Bid%5D=0&report%5Bmilestone_id_cond%5D=1&report%5Bmilestone_id_val%5D=4129593&report%5Btitle%5D=All+Tickets+for+%27ImpressCMS+1.3.6%27&report%5Btotal_estimate_show%5D=true&report%5Btotal_invested_hours_show%5D=true&report%5Bworking_hours_show%5D=true.
 
 
--- 
-Hanno Böck
-http://hboeck.de/
+Unfortunately I can't paste the full report in this email as the Android
+Gmail client will mangle it. Please see the text file at
+https://github.com/pedrib/PoC/blob/master/ImpressCMS/impresscms-1.3.5.txtfor
+more details.
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+Thanks in advance,  and thanks to the ImpressCMS team for being so
+responsive.
 
-Content of type "application/pgp-signature" skipped
+Regards,
+Pedro Ribeiro
+Agile Information Security
+
