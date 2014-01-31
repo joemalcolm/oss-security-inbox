@@ -1,35 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/29/1
-Message-ID: <54503953.9070105@mccme.ru>
-Date: Wed, 29 Oct 2014 03:48:19 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/6
+Message-ID: <CACYkhxjdO=94++PWErZyMRzj4jW3JB8XaqXbt82d1-=PWGwtrg@mail.gmail.com>
+Date: Fri, 31 Jan 2014 13:03:58 +1100
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: list policy (Re: Truly scary SSL 3.0 vuln to be revealed soon:)
+Cc: Florian octo Forster <octo@...plant.org>, sh@...kee.org
+Subject: Re: Re: collectd security contact
 Content-Type: text/plain; charset=utf-8
 
-On 2014-10-29 02:47, Kurt Seifried wrote:
-> On 28/10/14 07:47 AM, Alexander Cherepanov wrote:
->> On 2014-10-15 12:30, Solar Designer wrote:
->>> - Please don't send fully working exploits (but testcases that exercise
->>> the flaw are welcome)
->>>
->>> FWIW, I've always been tempted to remove the latter guideline,
->>
->> Then perhaps just remove it? It always seemed to me a strange
->> restriction. Other guidelines are either technical in nature or they are
->> intended to reduce the amount of noise. This restriction seems to be
->> neither.
->>
->> Of you can replace it with something like this:
->> - Please only send fully working exploits which themselves are open-source.
->>
-> Will someone/people vet the exploits to make sure they are not trojan
-> horses/self harming (e.g. the rm -rf * embedded in it somewhere?).
-> Strikes me as a heck of a watering hole attack potentially (and yes,
-> list members should know better, but ... yeah).
+Thanks for the responses, I've sent the details over to octo.
 
-This is an interesting question but how "fully working exploits" differ 
-from "testcases that exercise the flaw" in this regard?
+Sebastian - I think the reference to ovsdb was not the old vulnerability,
+but that the contact details are all empty.
 
--- 
-Alexander Cherepanov
+Regards,
+  Michael
+
+
+On 30 January 2014 20:58, Sebastian Harl <sh@...kee.org> wrote:
+
+> Hi,
+>
+> > On 01/29/2014 02:28 PM, Michael Samuel wrote:
+> > > Hi,
+> > >
+> > > Does anyone here know who the security contact for collectd is?
+> > >
+> > > Thanks, Michael
+> > >
+> >
+> > - From AUTHORS file:
+> >
+> > Permanent project members
+> > =========================
+> >
+> > Florian "octo" Forster <octo at verplant.org>
+> >  - Initial author.
+> >
+> > Sebastian "tokkee" Harl <sh at tokkee.org>
+> >  - Bugfixes and enhancments in many places all around the project.
+> >  - perl plugin.
+> >  - users plugin.
+> >  - vserver plugin.
+> >  - Debian package.
+> >
+> > so one of them would be my guess.
+>
+> Yup, we're good candidates for that :-)
+>
+> > If you figure it out can you send an
+> > update to:
+> >
+> > http://osvdb.org/vendor/89051-collectd/1
+>
+> This seems to be fixed long ago. Is there anything else that should be
+> done?
+>
+> Cheers,
+> Sebastian
+>
+> PS: Please Cc me on replies, I'm not on this list.
+>
+> --
+> Sebastian "tokkee" Harl +++ GnuPG-ID: 0x8501C7FC +++ http://tokkee.org/
+>
+> Those who would give up Essential Liberty to purchase a little Temporary
+> Safety, deserve neither Liberty nor Safety.         -- Benjamin Franklin
+>
+>
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.10 (GNU/Linux)
+>
+> iEYEARECAAYFAlLqIk8ACgkQEFEKc4UBx/wQ0gCfX7JD/vmuWxEYdKBmkKDZFEb8
+> JgcAn3NF69RCN0gFU4zz5SRRK5JNFUGI
+> =xYzV
+> -----END PGP SIGNATURE-----
+>
+>
+
