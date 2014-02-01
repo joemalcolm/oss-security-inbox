@@ -1,36 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/14
-Message-Id: <201402201744.s1KHiSqL015703@linus.mitre.org>
-Date: Thu, 20 Feb 2014 12:44:28 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux kernel: s390: crash due to linkage stack instruction
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/01/5
+Message-ID: <21228.64763.42882.936524@gargle.gargle.HOWL>
+Date: Sat, 1 Feb 2014 14:56:11 +0100
+From: rf@...eap.de
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros membership
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+>>>>> "AC" == Alexander Cherepanov <cherepan@...me.ru> writes:
+    >>>>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
 
-> Linux kernel built for the s390 architecture(CONFIG_S390) is vulnerable to a
-> crash due to low-address protection exception.
+    SD> For example, how do I find your most recent security updates in
+    SD> that tree, for these two advisories? -
 
-> https://git.kernel.org/linus/8d7f6690cedb83456edd41c9bd583783f0703bf0
+    SD> https://qlustar.com/news/qsa-0131141-linux-kernel-vulnerabilities
+    SD> https://qlustar.com/news/qsa-0131142-security-bundle
 
-Use CVE-2014-2039.
+    AC> The advisories don't mention the release of Qlustar which they
+    AC> apply to but it seems to be Qlustar 8.1. Then, I think, you look
+    AC> into
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+    AC> http://repo.qlustar.com/repo/ubuntu/dists/8.1-precise/main/binary-amd64/Packages.gz
+    AC> http://repo.qlustar.com/repo/ubuntu/dists/8.1-precise-proposed-updates/main/binary-amd64/Packages.gz
 
-iQEcBAEBAgAGBQJTBj1tAAoJEKllVAevmvmso2AIAMEt7q6Jqm21PZYKFzZV9Jh3
-qZSbK6pN65y6V5CrrtlrlW0C3apOUMN+6LPS+F58cLkBjYOB4d16ERGtbutY8v2G
-ntuxY2YB7zt4kShDOqN5crGaEWO3G0MUxvOxYlH+OZIPqxHWlq7U4LC6FyEQ9qfH
-4CZCDuI5L9LGRyQb/g17cjFf6JcC1ogCJbFFTadGgGCSo+cv1YaAoa3ModFsM8x1
-YB0H286wpMhsPvAVXxniDATc7Ib7EDLhD4rXqlTZsyvuQHx3jDEUvkly03rx1b1l
-p6BaWOlSEXmH6gU1jd6iKwIOclTYFrYCEa7yGknH0227/OhNjpVOIlK6FE9c2Xo=
-=UXcC
------END PGP SIGNATURE-----
+    AC> and locate the interesting files. Here they are:
+
+    AC> $ curl -I
+    AC> http://repo.qlustar.com/repo/ubuntu/pool/main/q/qlustar-kernel/linux-image-ql-generic_3.12.9-ql-generic-18_amd64.deb ...
+
+Absolutely correct. Thanks for stepping in and explaining :)
+Of course on an installed system apt is taking care of this. See our
+update guide [1] for Qlustar specifics.
+
+Roland
+
+[1] https://qlustar.com/book/docs/qlustar-update-procedure
