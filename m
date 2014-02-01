@@ -1,48 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/28/3
-Message-Id: <20140728231034.60C4F1F1BFB@smtpksrv1.mitre.org>
-Date: Mon, 28 Jul 2014 19:10:34 -0400 (EDT)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: WordPress plugin vitamin traversal arbitrary file access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/01/1
+Message-ID: <52EC3F6A.2050207@redhat.com>
+Date: Fri, 31 Jan 2014 17:27:22 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> Can I get 2012 CVE for WordPress plugin vitamin path parameter traversal
-> arbitrary file access vulnerability, thanks. Files: add_headers.php, minify.php
+On 01/31/2014 09:34 AM, rf@...eap.de wrote:
+>>>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
 > 
-> Affected: 1.0
-> Fixed in: 1.1
+> SD> Hi, This issue was brought to linux-distros and security@k.o 2 
+> SD> days ago via the message quoted below, and it was just made SD>
+> public at 22:00 UTC today (two hours ago) via grsecurity and PaX 
+> SD> (who were the ones to find the issue).  Normally, the person
+> who SD> brought this to linux-distros would be the one responsible
+> to SD> bring the issue to oss-security as soon as the issue is
+> public, SD> but Kees does not appear to be around at the moment and
+> the SD> issue is critical enough that I find it inappropriate to
+> delay SD> this posting by a few hours more, hence I am doing Kees'
+> job by SD> posting this in here.
 > 
-> Changelog: http://wordpress.org/plugins/vitamin/changelog/
-> SCM: https://plugins.trac.wordpress.org/changeset/582232/vitamin
+> SD> This is CVE-2014-0038 (assigned shortly after Kees sent the SD>
+> message below).  I will also include PaX Team's revised patch SD>
+> below.
+> 
+> Are you sure this is the correct CVE? It was assigned already
+> beginning of Dec. last year.
+> 
+> Roland
+> 
 
-Use CVE-2012-6651. The scope of this CVE ID is the directory
-traversal. It isn't directly about the ability to access .php
-and .phtml files in unpatched versions, apparently corrected with
-lines such as:
+According to the Wikipedia entry on CVE (which I rewrote =):
 
-  if( 'php' == strtolower($ext) ) { die("Adding headers to php files is forbidden"); }
+http://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures#Date_Entry_Created
 
-We did not research that in depth, but suspect that it may be a
-usability fix rather than a security fix.
+=======
+Date Entry Created
+
+This is the date the entry was created. Please note that for CVEs
+assigned directly by Mitre this is the date Mitre created the CVE
+entry. For CVEs assigned by CNAs (e.g. Microsoft, Oracle, HP, Red Hat,
+etc.) this is also the date the entry was create by Mitre, not by the
+CNA. So in the case where a CNA requests a block of CVE numbers in
+advance (e.g. Red Hat currently requests CVEs in blocks of 500) the
+entry date would be when that CVE is assigned to the CNA. The CVE
+itself may not be used for days, weeks, months or even possibly years
+(e.g. Red Hat maintains blocks of CVEs for older security issues in
+Open Source software that were not assigned a CVEs yet).
+=======
+
+So late last year I asked for and received a block of 2014 CVE's from
+Mitre which we are now assigning as issues come to light. So yeah,
+we're all good.
+
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJT1tc9AAoJEKllVAevmvmsbRwIAJhf/l3HLBx5f4HgY2yEozXF
-alxy3DonvvENWr05OlFwLZI90MsYV+V4bvtFA9Qpnsun/Q202qu+/xWfhj6/2LKf
-7FRS/7gSsdjUQSuSmyjgO8NpfW7y41D8Zt/+O9hjGj8K5FCuDjoBkuSblJvfW8x7
-Lo/mZPrvyrjcSL5ZhUpff++IiLUo0yBWVddu2ehii2o9fjtPTQA2PCa6wZIdgoHv
-Mv7p2QRVPvVubfM83WoxmpUq7uukNFYTnPivVgaqw9VqMKHNw6gJlD9o877AJOTk
-HCTYa8cL16P85OlVqC2KR/0K+jwcyrtrIQGPBlR9px69TXa/HVsmzmsJSdD/Bzs=
-=cnlx
+iQIcBAEBAgAGBQJS7D9qAAoJEBYNRVNeJnmTX4gQAKok67l2lqOoXWA60ov4NZX2
+J+Y714dqOo7hOH08AaERkr+OXft1oDH4mTfR9FFXEIyyqOOquxeaJHguUBtITZSv
+53eWBoQXsZVaU33gCwjEL/HlmoBLV5PyB6wyzNquwCMQjVH7S7Ch3oq45n44OJ8l
+9cnUpIkGOpAIVD8dGxpc4ANmYYIsDCS4NkZKYxILJl90VPMBK5Kd4lZtY9SSvZuE
+dpeg/JlNFSFdS4UJrfJekjIJyT28Z46DvJ4Q8y9YRW5te6eTKIn6N178taMGAmUc
+lkmKU7A0zrPET+uegy3hTZFh8NZK8DzTK6q7+BDzyU6+R+Y19M+lxmGgOvM/Ddwr
+scoWeS6K8XGfMKG5J/20m0k4WQMe2IUyBay1VuC1LfbGVZGWCUVadeFKM9i+bKUx
+F5atdFtXkjtxSvbxbeAAIM8t+GIYbPeklvgP50nKwyDNkvz4dYOIJklxsqVJWoDy
+5Ns0vQ2ZPCCL4GE9D4i9A8xBU2i1O0DDSWpi1Lsvho7l3TmL5XSDdN49QYQLpVYq
+rvtibr62vPlN92b013UwVvZwtN3BWG6p/5eVxPwYicesDgRFOontTxTBULC2olQX
+pfpmMInkZ2BKz5ZN4I6odJWOZ5LgN/cyJW/nvY7QXzwwrb0FSUchEjjJvOveJkEo
+xscCJrVfQl67y7FF2k1v
+=ypIU
 -----END PGP SIGNATURE-----
