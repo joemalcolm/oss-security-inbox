@@ -1,103 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/15/4
-Message-ID: <20140215210350.GA19040@openwall.com>
-Date: Sun, 16 Feb 2014 01:03:50 +0400
-From: Solar Designer <solar@...nwall.com>
-To: "CERT(R) Coordination Center" <cert@...t.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/01/4
+Message-ID: <20140201092747.GC30729@scapa.corsac.net>
+Date: Sat, 1 Feb 2014 10:27:47 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
-Hi Will and all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-On Tue, Feb 11, 2014 at 04:37:21PM -0500, CERT(R) Coordination Center wrote:
-> We had originally notified Linux vendors individually through our
-> normal channels, but it has come to our attention that this could
-> perhaps be a better forum to have a discussion about the topic.
+On Sat, Feb 01, 2014 at 03:45:14AM +0100, PaX Team wrote:
+> > http://googleonlinesecurity.blogspot.com/2013/10/going-beyond-vulnerability-rewards.html
+> > 
+> > ... but finding a vulnerability would probably not fall under the latter
+> > program.
+> 
+> yes, that's a somewhat different kettle of fish though bugfixes may
+> be eligible if it's about fixing or mitigating entire classes (not
+> the case here obviously).
 
-I agree.
+But I'm pretty sure one of your “pet projet” would qualify (multiple
+time), should you want to go that road :)
 
-> We recently published a blog post about the state of ASLR/PIE on Linux
-> compared to how it is on Windows:
-> <https://www.cert.org/blogs/certcc/post.cfm?EntryID=191>
+Regards,
+- -- 
+Yves-Alexis Perez
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-It's nice to see that you're looking into these issues now.
-
-> tl;dr: On x86 Linux, there's a significant performance impact to PIE,
-> however on the x86_64 platform it's not so clear whether the
-> performance impact is significant enough to stop widespread use of
-> PIE.
-
-Right, although even 32-bit x86's performance impact might not be bad
-enough to stop widespread use for programs that are not CPU-bound.
-
-> This is where we are looking for input from the Linux vendors.  It has
-> been reported <http://nebelwelt.net/publications/12TRpie/gccPIE-TR120614.pdf>:
-> 2.4 PIE and x64
-> <snip>  
-> ... "A quick evaluation for x64 reports an average overhead of 3.61%
-> and a geometric mean of 2.34% for an -O3 optimization level on the
-> same system using the "test" dataset of SPEC CPU2006."
-
-The performance impact given for 32-bit x86 in this paper is very high,
-up to 25% (seen on a couple of benchmarks) and e.g. 16.89% for bzip2.
-
-With bzip2, the irony is that most(?) distros incur this performance
-impact anyway, because most processing occurs in libbz2, which is
-typically linked to bzip2 dynamically, and the dynamic library is built
-as PIC (should be same performance impact as PIE).  I deliberately
-changed this for Owl in 2002:
-
-* Fri Feb 01 2002 Solar Designer <solar-at-owl.openwall.com> 1.0.2-owl1
-[...]
-- Package the bzip2 binary that is statically-linked against libbz2 for
-better performance on register-starved architectures such as the x86.
-
-IIRC, I measured a performance impact of a few percent on a Pentium 3 at
-the time (yet I felt it was significant enough to bother).  So I am
-surprised to see the 16.89% figure.  Is the performance impact on new
-gcc or/and on new CPUs higher, or is it a side-effect of how bzip2 is
-modified in the SPEC CPU2006 tree, or did the paper author do something
-wrong (is it possible that some of the measured performance difference
-is actually from a side-effect rather than from PIE?)
-
-I think we'll need to re-test, and do so on actual distros' packages.
-
-A relevant past posting/thread:
-
-http://www.openwall.com/lists/oss-security/2012/05/15/1
-
-This links to two other sources, which give sort of contradictory
-performance impact percentages for 32-bit x86 (30% vs 5.8%).
-
-> For those environments that put a high value on security, it would
-> seem that a 2-3% overhead might be acceptable.  Though being a
-> compile-time option, it would seem that the "faster" vs. "more secure"
-> decision would need to be made ahead of time by the vendor.  And
-> obviously, one size does not fit all.
-
-I'd expect nearly zero performance impact for x86_64.  The paper says
-there's "average overhead of 3.61% and a geometric mean of 2.34%", but
-given this arch's PC-relative addressing it is unclear to me where the
-impact is coming from.  Having manually changed some x86_64 assembly
-code in JtR -jumbo from absolute to PC-relative addressing, I saw no
-performance impact at all (although I tested only on a handful of CPU
-types) - and this is for 100% CPU-bound code.  Is gcc doing something
-dumb, or are there CPUs where PC-relative addressing has performance
-impact, or is it indirect effect via code size increase (did it
-increase? why? IIRC, it didn't for me), or was the test flawed?
-
-> Thoughts?  What is stopping you from enabling PIE for everything, at
-> least on the x86_64 platform?
-
-Laziness, other priorities.  We should do it.
-
-There might be examples of runtime generated (JIT) code or
-bytecode-alike caching across program invocations, where the generated
-code would reference functions/callbacks in the main program and would
-thus depend on the program staying where it was during code generation -
-but I am unaware of specific examples of that.  Anyhow, this is going to
-be very rare and it's not a reason not to build a distro's packages as
-PIE by default (exceptions may then be made).
-
-Alexander
+iQEcBAEBCgAGBQJS7L4QAAoJEG3bU/KmdcCldt4H/RuMevjw5wglr83nfTkxNGio
+boepSFmDfycX2jk+sBrPb1jFpY1xLW+KRTzsvedKb1CTCSmKLvnhHeU9ZC5FdTao
+7AxoJq3C7JQuelB9eElmHAtzgTynF3nvKaKYqWJVHg1Htjs4FpH1gCvRz3iv1VpI
+gJ7sPdeiCxc7GM8VCA5yX593avCMIaYm1O3wdfMwSOv7fE+hbCs0U+3y/+9THmIT
+uLGUf0AjWLFH0z3NhUrx5yaNO+R9+0hEnk8Nlq1l1PEOI+5sH5hk7OwBEyD6EVYd
+E4X4s82/JEcDbKNV0HAUUX/hR7VrWmGkMA6E0BEMOLhQLdTeyIxGplSIiCDF3PY=
+=6PpH
+-----END PGP SIGNATURE-----
