@@ -1,76 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/23/3
-Message-Id: <E1Wcws9-0005ae-0x@xenbits.xen.org>
-Date: Wed, 23 Apr 2014 13:05:57 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 94 - ARM hypervisor crash on guest interrupt controller access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/01/3
+Message-ID: <52ECB323.7080506@mccme.ru>
+Date: Sat, 01 Feb 2014 12:41:07 +0400
+From: Alexander Cherepanov <cherepan@...me.ru>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros membership
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 2014-02-01 03:27, Solar Designer wrote:
+> On Fri, Jan 31, 2014 at 08:28:11PM +0100, rf@...eap.de wrote:
+>>>>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
+>>     SD> On Wed, Jan 22, 2014 at 11:51:39AM +0100, rf@...eap.de wrote:
+>>     >> >>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
+>>     SD> Are Qlustar's security updates (not just security advisories)
+>>     SD> publicly available?
+>>     >>
+>>     >> Yes, all our packages are publicly available from our website.
+>>
+>>     SD> Where do I find them?  Somehow I only found "Qlustar Installer
+>>     SD> 8.1.0-3/precise Size: 705MB".
+>>
+>> http://repo.qlustar.com/repo/ubuntu
+> 
+> For example, how do I find your most recent security updates in that
+> tree, for these two advisories? -
+> 
+> https://qlustar.com/news/qsa-0131141-linux-kernel-vulnerabilities
+> https://qlustar.com/news/qsa-0131142-security-bundle
 
-                    Xen Security Advisory XSA-94
+The advisories don't mention the release of Qlustar which they apply to
+but it seems to be Qlustar 8.1. Then, I think, you look into
 
-      ARM hypervisor crash on guest interrupt controller access
+http://repo.qlustar.com/repo/ubuntu/dists/8.1-precise/main/binary-amd64/Packages.gz
+http://repo.qlustar.com/repo/ubuntu/dists/8.1-precise-proposed-updates/main/binary-amd64/Packages.gz
 
-ISSUE DESCRIPTION
-=================
+and locate the interesting files. Here they are:
 
-When handling a guest access to the virtual GIC distributor (interrupt
-controller) Xen could dereference a pointer before checking it for
-validity leading to a hypervisor crash and host Denial of Service.
+$ curl -I
+http://repo.qlustar.com/repo/ubuntu/pool/main/q/qlustar-kernel/linux-image-ql-generic_3.12.9-ql-generic-18_amd64.deb
+HTTP/1.1 200 OK
+Date: Sat, 01 Feb 2014 08:31:14 GMT
+Server: Apache/2.2.22 (Ubuntu)
+Last-Modified: Fri, 31 Jan 2014 14:41:32 GMT
+ETag: "5c090b-418-4f1452b84bf00"
+Accept-Ranges: bytes
+Content-Length: 1048
+Content-Type: application/x-debian-package
 
-IMPACT
-======
+$ curl -I
+http://repo.qlustar.com/repo/ubuntu/pool/main/i/image-generator/qlustar-module-core-precise-amd64-8.1.0_8.1.0.7-b431f855_all.deb
+HTTP/1.1 200 OK
+Date: Sat, 01 Feb 2014 08:31:27 GMT
+Server: Apache/2.2.22 (Ubuntu)
+Last-Modified: Fri, 31 Jan 2014 16:54:21 GMT
+ETag: "5e0aa8-426d9ba-4f14706820940"
+Accept-Ranges: bytes
+Content-Length: 69654970
+Content-Type: application/x-debian-package
 
-A buggy or malicious guest can crash the host.
-
-VULNERABLE SYSTEMS
-==================
-
-Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onward.
-
-x86 systems are not vulnerable.
-
-MITIGATION
-==========
-
-None.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This bug was publicly reported on xen-devel, before it was appreciated
-that there was a security problem.
-
-CREDITS
-=======
-
-The initial bug was discovered by Thomas Leonard and the security
-aspect was diagnosed by Julien Grall.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa94.patch        xen-unstable, Xen 4.4.x
-
-$ sha256sum xsa94*.patch
-ad0f20577400756a1786daeafef86fa870727ec35b48f71f565e4a30dcbda58d  xsa94.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJTV7qTAAoJEIP+FMlX6CvZ08EH/3pIhD1lCXex3pbvo0BFIc2y
-+XqJmLQ8QVeuk1Q9etEVbJxC8YvbmunefyCyfXIYQpL5jWqJdOAGzSktLOuaGrrM
-ENG6kFyiC6pxLouJb+BAm3qOfe3vVCdkWh9ouWQGC/3FqbSM+2QGI0vUyxtfmmga
-IDeQ+CjyWVVhmR7Tb76Gc/pMLnrfD1HTZSgTe8NacqbnZuXzPMrxkKw8BleK/boH
-L5r/0Y/GqqOe5LRqCOZt8U7jlcfwAs+rqUI0UDz70YvokcBH7RwaRiolZxicLdjP
-4lFJH8q9d45EA9JI+Xifv2QZ9tJMRNhRtTQpqIS8swAROOM/SblpPUPlOiPvyaE=
-=RGUg
------END PGP SIGNATURE-----
-
-Download attachment "xsa94.patch" of type "application/octet-stream" (1164 bytes)
+-- 
+Alexander Cherepanov
