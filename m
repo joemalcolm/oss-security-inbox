@@ -1,49 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/4
-Message-ID: <alpine.LFD.2.10.1402201228140.18439@javelin.pnq.redhat.com>
-Date: Thu, 20 Feb 2014 12:44:25 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: cve-assign@...re.org
-cc: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE request New-djbdns: dnscache: possible DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/02/1
+Message-ID: <20140202041444.GA27556@openwall.com>
+Date: Sun, 2 Feb 2014 08:14:44 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
-+-- On Wed, 19 Feb 2014, cve-assign@...re.org wrote --+
-| Changing the TCP read approach can be considered a performance
-| improvement (and, somewhat marginally, a security improvement), with
-| no CVE assignment. The commit mentions "making slight gain in
-| performance" and "could also lead to potential denial of service."
+On Fri, Jan 31, 2014 at 04:11:16AM +0400, Solar Designer wrote:
+> <grsecurity> I would not be surprised to see an exploit for this within the next few days
 
-  Yes, slight gain because it reduces 'read(2)' calls. And potential DoS 
-because:
+Just off Twitter:
 
-  On Tuesday, 11 February 2014 5:22 AM, Frank Denis wrote:
-  >
-  > ...
-  > The spike of CPU between the first query for a name/type and
-  > its resolution is an old standing bug.
-  >
-  > ... We spawn dnscache threads to balance the load on all CPU cores.
-  > And when running the PoC, the whole system starts crawling because
-  > of the high number of system calls.
+<noptrix> recvmmsg.c - linux 3.4+ local root (CONFIG_X86_X32=y) expl0it - http://pastebin.com/DH3Lbg54
 
-'Frank Denis' is the author of the PoC and earlier article about the SipHash 
-issue.
+SHA-256(recvmmsg.c.txt) = 4603acf96e845cecd2c5877a68fa5b5c591ba00c52859ded2a31a9daf48a457d
 
+for the version I just downloaded (but did not review, although it looks
+sane at first glance).  The exploit includes offsets for 3 Ubuntu kernels.
 
-| The original implementation might have chosen its approach for 
-| design-for-auditability reasons, i.e., it may not have been a "mistake" at 
-| all. It seems impractical to assign CVE IDs to all opportunities to speed up 
-| the processing of untrusted input in all products. The situation would be 
-| different if it were clearly a logic error in the code, e.g., processing the 
-| first byte once, the second byte four times, the third byte nine times, etc.
-
-  I don't understand why is it relevant whether it's a genuine mistake or 
-logic error or an intentional bug?
-
-  The behaviour opens room for a practical DoS attack. That is a security 
-issue. There is a PoC available for it. There is fix available for it, which 
-has been applied. Why not a CVE?
-
---
-Prasad J Pandit / Red Hat Security Response Team
+Alexander
