@@ -1,71 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/14
-Message-ID: <20141015083042.GA26797@openwall.com>
-Date: Wed, 15 Oct 2014 12:30:42 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/02/4
+Message-ID: <52EEDB9E.4050908@redhat.com>
+Date: Mon, 03 Feb 2014 10:58:22 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: list policy (Re: Truly scary SSL 3.0 vuln to be revealed soon:)
+Subject: CVE-2014-0039: fwsnort loaded configuration file from cwd when run as a non-root user
 Content-Type: text/plain; charset=utf-8
 
-Looks like I need to comment on the specific questions on list policy:
+Good morning,
 
-On Tue, Oct 14, 2014 at 10:48:00PM -0700, Walter Parker wrote:
-> What is this list's policy on Full Disclosure?
+When fwsnort was run as a non-root user, it opened the fwsnort.conf file
+from the current working directory if a configuration file was not
+explicitly specified. The configuration file can specify a directory to
+load libraries from, so this would have been an issue if running fwsnort
+in an attacker-controlled directory.
 
-Whatever is sent to the list, if on-topic and otherwise appropriate
-(e.g., not some non-English HTML-only message), is posted with no
-artificial delay.  In this respect, the only difference from the
-Full-Disclosure mailing list (as far as I understand how it's run) is
-that oss-security is limited to / focused on Open Source.
+Michael Rash has released fwsnort-1.6.4 to fix this issue:
 
-While the charter does discourage some kinds of postings, this is only
-being enforced for off-topic or technically inappropriate postings.
+http://www.cipherdyne.org/fwsnort/download/
+https://github.com/mrash/fwsnort/blob/master/ChangeLog
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+The patch (with further issue details) for CVE-2014-0039 is:
 
-Specifically, this says (among other things):
+https://github.com/mrash/fwsnort/commit/fa977453120cc48e1654f373311f9cac468d3348
 
-- Public security issues only please.  What you say here is public for
-the world to see - keep that in mind.  Some kinds of embargoed
-information (intended for public disclosure in at most 2 weeks) may be
-disclosed to distros.
+For the affected versions, I had only tested 1.6.3 (on Fedora and EPEL).
 
-- Please don't send fully working exploits (but testcases that exercise
-the flaw are welcome)
+Cheers,
 
-FWIW, I've always been tempted to remove the latter guideline, but as
-you can see I left it around for now.  (Someone else in this community
-wrote it.)
-
-Like I said, these two guidelines above are not actually being enforced
-during message moderation.  They're merely polite requests/reminders.
-
-> What is this list's policy on sourced/unsourced security rumors?
-
-No specific policy - I don't think it's ever been discussed so far.
-Personally, I'd like on-topic rumors to be posted in here, with due
-warnings on how unreliable the information might be.
-
-> Why do people on lists like this seem to think that censoring themselves
-> and others will actually do any good.
-
-There are a lot of people in here (as well as "on lists like this"),
-with different opinions.  In this thread, we've only seen one person
-suggest anything like you describe.
-
-> On Tue, Oct 14, 2014 at 10:28 PM, Sona Sarmadi <sona.sarmadi@...a.com> wrote:
-> > A reflection: Maybe we shouldn't post  information like this here or
-> > somewhere else which is not published yet even if the information has leak
-> > out? Although all members here are reliable but it is still an open mailing
-> > list and we should be careful and act more responsible.
-
-Personally, I find this ridiculous, as do many others.  (No offense
-intended.)  Just off Twitter:
-
-<i0n1c> Seriously? People are discussing on OSS if it is irresponsible to discuss SSL3 vulnerability while someone kept it under embargo.
-
-Of course, even having this sort of discussion makes us look ridiculous.
-Yet if a list member wanted to post this "reflection", it should have
-been posted, and it was.
-
-Alexander
+--
+Murray McAllister / Red Hat Security Response Team
