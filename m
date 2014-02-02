@@ -1,54 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/17
-Message-Id: <201402031802.s13I2pPN020308@linus.mitre.org>
-Date: Mon, 3 Feb 2014 13:02:51 -0500 (EST)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE needed for libotr's support for OTR v1?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/02/2
+Message-id: <CEA9AF9E-3001-46EB-8032-D89EB21F5CF2@me.com>
+Date: Sun, 02 Feb 2014 09:56:42 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: oss-security@...ts.openwall.com
+Subject: Persistent XSS in Wordpress 3.3.1+dfsg-1 (Packaged with Ubuntu 12.04.4)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Title: Persistent XSS in Wordpress 3.3.1+dfsg-1 (Packaged with Ubuntu 12.04.4)
 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=725779
+Author: Larry W. Cashdollar, @_larry0
 
-> as you are surely aware of, it's been known since 2006 that
-> clients supporting both OTRv1 and v2 (such as libotr 3.x) are subject
-> to protocol downgrade attacks clients. It's also been known for
-> a while that OTRv1 has serious security issues
+Date: 2/1/2014
 
-There may be multiple perspectives on this, but it might be preferable
-to cover these "serious security issues" with CVEs that are about the
-OTRv1 protocol itself, and not specifically about protocol downgrade
-attacks. If the vulnerabilities in the OTRv1 protocol were completely
-resolved (perhaps this is, in practice, essentially impossible), then
-the downgrade would probably not be considered a security problem.
-That would mean that a separate CVE assignment would not be made,
-because of the lack of an independent vulnerability.
+Vendor: Not notified yet.
 
-Occasionally a vendor who is the original author of software chooses
-to describe a protocol-downgrade issue as a software mistake,
-requiring a CVE, such as CVE-2013-0013 and CVE-2013-1654. In other
-cases, a protocol-downgrade capability was an intentional aspect of a
-design, and had some importance for compatibility, but became
-problematic once the earlier protocol was documented as insecure. In
-that case, preventing a downgrade could be seen as a security
-enhancement.
+Download: http://wordpress.org/download 
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Versions Impacted: 3.3.1 -> 3.8.1 tested 2/2/2014.
 
-iQEcBAEBAgAGBQJS79jEAAoJEKllVAevmvmsbsAH/iB8NiijqXTvEBLpCoTMfB2Y
-QUzeLS32uBwqMjCnm6HV7GDbw/vzjvB5CkmO2x+/jo1OBKCBxVyOc+09BaDjx9Cp
-qxlRG/+Z3Aue8QCPWefe0ymWuuUHinMCQnok8H6YgFSWhRIjx/MlWHEwSye37MN4
-lMQYlHRR2HsLHNOlroOSap28vo9Q4YVtG3lt1ZQQVqLOR9brWPt1Y70xYxXVO6er
-BHmpJFpY7lKoHZrdWJ5DmOy1Sn1e8zN6oWpqV7TVGlFYyp3EkIeBCo8cxfIF2A/s
-H885J1mCdjoeJG4yWbgmQOdBW8sls6MPV/TbkglHGB8sAOAcBufspTD3rsLrVEY=
-=jNKp
------END PGP SIGNATURE-----
+CVE: Please assign.
+
+Persistent XSS injection description field in Media Library.
+
+Description: A persistent cross site scripting vulnerability exists in the latest version of WordPress in the Media Library.  It appears the Description field is not properly sanitized when viewed.  The malicious code is stored when the description field is saved.
+
+Full Advisory: http://vapid.dhs.org/advisories/wordpress/XSS/xss_wordpress.html
