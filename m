@@ -1,38 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/1
-Message-Id: <201404300641.s3U6f7wR011084@linus.mitre.org>
-Date: Wed, 30 Apr 2014 02:41:07 -0400 (EDT)
-From: cve-assign@...re.org
-To: marc.deslauriers@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: indicator-datetime issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/02/3
+Message-id: <C06FBF89-4FD8-44B3-8CC8-345E21F4920C@me.com>
+Date: Sun, 02 Feb 2014 13:36:25 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Persistent XSS in Wordpress 3.3.1+dfsg-1 (Packaged with Ubuntu 12.04.4)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Nevermind,  This is invalid.  The WP admin can use javascript while a regular user can not.
 
-> It was discovered that indicator-datetime 13.10.0+13.10.x would incorrectly
-> allow Evolution to be opened while at the greeter screen. A local attacker could
-> possibly use this issue to obtain unconfined local access.
+
+On Feb 2, 2014, at 9:56 AM, Larry W. Cashdollar <larry0@...com> wrote:
+
+> Title: Persistent XSS in Wordpress 3.3.1+dfsg-1 (Packaged with Ubuntu 12.04.4)
 > 
-> https://bugs.launchpad.net/ubuntu/+source/indicator-datetime/+bug/1246812
-> http://bazaar.launchpad.net/~indicator-applet-developers/indicator-datetime/trunk.13.10/revision/282
+> Author: Larry W. Cashdollar, @_larry0
+> 
+> Date: 2/1/2014
+> 
+> Vendor: Not notified yet.
+> 
+> Download: http://wordpress.org/download 
+> 
+> Versions Impacted: 3.3.1 -> 3.8.1 tested 2/2/2014.
+> 
+> CVE: Please assign.
+> 
+> Persistent XSS injection description field in Media Library.
+> 
+> Description: A persistent cross site scripting vulnerability exists in the latest version of WordPress in the Media Library.  It appears the Description field is not properly sanitized when viewed.  The malicious code is stored when the description field is saved.
+> 
+> Full Advisory: http://vapid.dhs.org/advisories/wordpress/XSS/xss_wordpress.html
 
-Use CVE-2013-7374.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTYJqjAAoJEKllVAevmvmskUsH/0q0hq5NYBrlPB1KMzNChYjt
-42TN4f0KbfKNDGUH9m4rufFqoS9T+/lkQBbSRGEyCk4X29cvmS3AKlQLyH74WM9z
-H62Yxp80EuNcyQG8FKXdRK11dQuHBibU+pOb5+oMmh1y0cFqp99ud7lNVo+nJGJO
-stnwLRO0lDXj5B4+UMGPgCjY6Ds/QdGCVzQUR3QK4phWrX2LtAq+TomHDgPZ1ZfF
-wYaI+d+6G50yGzVVFRD4h9FydkNC+7ApqzKhf6Gx5WoKKKhqzd90yAExmDR7PF6/
-Qjd822dXXRUzAHiQag7i2kWKndaT3PIccFQXZKBATzlZlGVTj3/LZUaydV9H8zc=
-=ZJwt
------END PGP SIGNATURE-----
