@@ -1,22 +1,129 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/01/4
-Message-ID: <53DBA899.1060904@reser.org>
-Date: Fri, 01 Aug 2014 07:47:53 -0700
-From: Ben Reser <ben@...er.org>
-To: Marcus Meissner <meissner@...e.de>,  OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: Possible CVE request: subversion MD5 collision authentication leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/11
+Message-ID: <loom.20140203T100248-740@post.gmane.org>
+Date: Mon, 3 Feb 2014 09:12:16 +0000 (UTC)
+From: mancha <mancha1@...h.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
-On 8/1/14 3:12 AM, Marcus Meissner wrote:
-> The subversion list has fixed a md5 collision attack possibility.
+mancha <mancha1@...> writes:
 > 
-> http://mail-archives.apache.org/mod_mbox/subversion-dev/201407.mbox/%3C53DAB4A7.8030004%40reser.org%3E
+> On Mon, 03 Feb 2014 03:45:27 +0000 "Solar Designer" wrote:
 > 
-> http://svn.apache.org/r1550691
-> http://svn.apache.org/r1550772
+> >Rather than post via Gmane's NNTP gateway, can you please reply
+> >to this message with the files MIME-attached, or include the files
+> >in message body with some sort of delimiters (e.g. Phrack-style)?
+> >
+> >Thanks,
+> >
+> >Alexander
 > 
-> The referenced E-Mail speaks about CVE request, so not sure who will assign
-> one.
+> Hushmail screws up replies so this will likely not show up in the
+> right hierarchy. Nonetheless, files promised attached.
+> 
+> --mancha
+> Attachment (Makefile): application/octet-stream, 224 bytes
+> Attachment (nox32recvmmsg.c): application/octet-stream, 2287 bytes
 
-Already got one (the request was directed at security@...che.org who hand them
-out to us): CVE-2014-3528.
+I made a change to the kernel module to minimize the amount of time
+things are rw. Please use this version (not the one attached in my
+first post).
+
+New version also uploaded to:
+http://sf.net/projects/mancha/file/sec/nox32recvmmsg.tar.bz2.
+
+--mancha
+
+========= nox32recvmmsg.c =========
+#define _GNU_SOURCE
+#include <linux/init.h>
+#include <linux/socket.h>
+#include <linux/module.h>
+#include <linux/kernel.h> 
+#include <linux/errno.h> 
+#include <linux/types.h>
+#include <linux/unistd.h>
+#include <asm/cacheflush.h>  
+#include <asm/page.h>  
+#include <asm/current.h>
+#include <linux/sched.h>
+#include <linux/kallsyms.h>
+#include <linux/syscalls.h>
+#include <asm/string.h>
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("mancha <mancha1@...h.com>");
+MODULE_DESCRIPTION("disable x32 recvmmsg()");
+
+unsigned long **syscall_table;
+
+#define __NR_x32_recvmmsg 537
+
+asmlinkage int (*orig_recvmmsg)(int sockfd, struct mmsghdr *msgvec, unsigned
+int vlen, unsigned int flags, struct timespec *timeout);
+
+static unsigned long **aquire_syscall_table(void)
+{
+  unsigned long int offset = PAGE_OFFSET;
+  unsigned long **sct;
+
+  while (offset < ULLONG_MAX) {
+    sct = (unsigned long **)offset;
+    if (sct[__NR_close] == (unsigned long *) sys_close) 
+      return sct;
+    offset += sizeof(void *);
+  }
+  printk(KERN_ALERT "Unable to get syscall table\n");
+  return NULL;
+}
+
+void set_addr_rw(long unsigned int _addr)
+{
+    unsigned int level;
+    pte_t *pte = lookup_address(_addr, &level);
+    if (pte->pte &~ _PAGE_RW) pte->pte |= _PAGE_RW;
+}
+
+void set_addr_ro(long unsigned int _addr)
+{
+    unsigned int level;
+    pte_t *pte = lookup_address(_addr, &level);
+    pte->pte = pte->pte &~_PAGE_RW;
+}
+
+asmlinkage int norecvmmsg(int sockfd, struct mmsghdr *msgvec, unsigned int
+vlen, unsigned int flags, struct timespec *timeout) {
+
+    printk(KERN_ALERT "x32 recvmmsg call intercepted\n");
+    return -1;
+}
+
+static int __init init_recvmmsg(void) {
+
+    if(!(syscall_table = aquire_syscall_table())) {
+      printk(KERN_INFO "Unable to acquire syscall table\n");
+      return -1;
+    }
+    printk(KERN_ALERT "x32 recvmmsg disabled\n");
+    set_addr_rw((unsigned long)syscall_table);
+    orig_recvmmsg = (void*)syscall_table[__NR_x32_recvmmsg];
+    syscall_table[__NR_x32_recvmmsg] = (unsigned long*)norecvmmsg;  
+    set_addr_ro((unsigned long)syscall_table);
+    return 0;
+}
+
+static void __exit exit_recvmmsg(void) {
+
+    set_addr_rw((unsigned long)syscall_table);
+    syscall_table[__NR_x32_recvmmsg] = (unsigned long*)orig_recvmmsg;  
+    set_addr_ro((unsigned long)syscall_table);
+    printk(KERN_ALERT "x32 recvmmsg restored\n");
+}
+
+module_init(init_recvmmsg);
+module_exit(exit_recvmmsg);
+===================================
+
+
+
