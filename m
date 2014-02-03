@@ -1,69 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/10
-Message-ID: <20141009044724.GH12633@sentinelchicken.org>
-Date: Wed, 8 Oct 2014 21:47:24 -0700
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/1
+Message-ID: <CAEDdjHeGavmJFGhHTPqX0MXMoYornLRpBiixKWAA_yoyB-3rqA@mail.gmail.com>
+Date: Mon, 3 Feb 2014 00:19:47 +0000
+From: Pedro Ribeiro <pedrib@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com,  ImpressCMS Security <security@...resscms.org>, Steve Kenow <skenow@...resscms.org>
+Subject: Re: CVE request: impressCMS 1.3.5 arbitrary file deletion and XSS
 Content-Type: text/plain; charset=utf-8
 
-
-> > I think you're taking on a too rigid mindset here.
-> 
-> Well, I just honestly don't understand how adding the prefix to
-> environment variable fits in the mold of the rule you cite ("When an
-> existing construct in a system is widely expected to be used for
-> storing data, avoid overloading it for use of storing code"). It
-> strikes me as the epitome of overloaded, in-band transmission of code
-> alongside with data - pretty close to the menace of HTML + JS, just
-> done in a slightly smarter way.
-
-What I was trying to do was work with you to refine that statement to
-make it more clear to both you and me and hopefully as solid advice
-for developers.  That quote above wasn't the final draft.  But it
-seems like you're a little too fixated right now on the specific
-vulnerability at hand.
-
-Yes, of course designating a single environment namespace or single
-environment variable for exports is a kind of overloading.  But at
-least it is distinguishable, if a tad hacky feeling.  Before the fix,
-there was no reasonable way to distinguish because any variable could
-have code or data.
-
-This is very much analogous to putting code in memory.  You can put
-either instructions or data in memory, but these days we designate
-certain chunks of it as code and mark it read-only, with data
-non-executable.  But it's all data.
-
-In the case of HTML + JS, it would be easier to defend against XSS if
-JS were only included through <link>-like tag in the <head>.  The
-scripts could use the DOM to register event handlers and whatever else
-throughout the document.  In this situation, would JS technically
-embedded in part of the HTML?  Sure, it is there in the head block and
-could be tampered with if an attacker could inject a <head> tag.  But
-it is a lot easier for developers to exclude that possibility, rather
-than worry about crazy things like &{...}; (remember that one?).
-Would JavaScript have caught on as quickly as it did if it were done
-that way from the beginning?  Who the hell knows.  I think it might
-have, just because there weren't other options, at least for a short
-time.
+On 31 January 2014 15:14,  <cve-assign@...re.org> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>> https://github.com/pedrib/PoC/blob/master/ImpressCMS/impresscms-1.3.5.txt
+>> ImpressCMS 1.3.5 vulnerabilities
+>
+>> Vulnerability: Deletion of arbitrary files in the system
+>> File(line): /impresscms/htdocs/libraries/image-editor/image-edit.php(62)
+>>    if (file_exists ( $image_path )) {
+>>       @unlink ( $image_path );
+>> 192.168.56.101/impresscms/htdocs/libraries/image-editor/image-edit.php?op=cancel&image_path=/path
+>
+> Use CVE-2014-1836 for this deletion issue.
+>
+> CVE assignment for the XSS issues requires that there is a possible
+> configuration in which the issues are exploitable. (If they are not
+> exploitable, but the vendor made applicable code changes anyway for
+> security hardening, a CVE assignment won't be made.)
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+>
+> iQEcBAEBAgAGBQJS67y5AAoJEKllVAevmvmszHUH/21NY3Vv27aVdUxIxy9H7gV5
+> f/nTg+D/exE7PX1Z7WHnt+cQNDCPDcMUZJcNTa9ZWHHrBNHOGjbKHDczPmPhcxs/
+> WhDlgrWOgJJ/DXWg49MSXOWPHD3NlBzvrd/XthjncgQbj0xZ4wHlQ/8JNKklppHU
+> v8OH1KoaVeX2SwDIIpe/kZWYatxRKWZ2m8I7JrPKmCkJVx1ksoqW3Q1p5s2PXmoP
+> FW5FAiGMlu1kansIQxiJXIMswZbzULD76l2dp4cSYls9EYMrptrrbxlWD8zqwPHA
+> jou3xOS8UoDDxUB7hil/lR4vXwpF5O/PIGqmAd3Ie4vPCSnUunNNnYprmnGwafU=
+> =YGh+
+> -----END PGP SIGNATURE-----
 
 
-> If what Florian has implemented embodies the spirit of the rule we're
-> preaching here, I'm all for it, but not sure if most developers would
-> interpret it this way. A natural interpretation would be, "don't put
-> functions in the environment", which is fine, except that there aren't
-> many other places to put them if you really want to implement exports
-> in the first place.
+Thank you.
 
-Yes, I believe what Florian put forth does embody the spririt of the
-rule.  Would I like the separation to be stronger?  Yes.  But in
-practice, it is probably difficult with all of the constraints.  You
-guys have looked at that far more closely than I have.
+If anyone cares, the advisory is now at
+https://github.com/pedrib/PoC/blob/master/impresscms-1.3.5.txt.
 
-But I don't believe we need to restrict any rule of thumb to
-environment variables.  Most developers don't even "get" environment
-variables these days, so it's not particularly helpful to a broad
-audience. 
-
-tim
+Regards,
+Pedro
