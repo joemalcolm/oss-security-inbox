@@ -1,60 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/5
-Message-ID: <540E99B6.10408@redhat.com>
-Date: Tue, 09 Sep 2014 00:09:58 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: ioflo tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/18
+Message-ID: <loom.20140203T194406-369@post.gmane.org>
+Date: Mon, 3 Feb 2014 19:19:06 +0000 (UTC)
+From: mancha <mancha1@...h.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSH J-PAKE vulnerability (no cause for panic! remain calm!)
 Content-Type: text/plain; charset=utf-8
 
-Easier one:
+Kurt Seifried <kseifried@...> writes:
+> On 01/29/2014 06:50 AM, cve-assign@... wrote:
+> > Use CVE-2014-1692. The CVE description will indicate that the
+> > issue requires an unusual installation.
+> > 
+> >> As I understand it this can be enabled via code edit/gcc command
+> >> line options, so not sure if this qualified for a CVE or not
+> >> (vuln in code, yes, is code reachable? not under any default
+> >> setup, and even on non-default you have to go pretty far off to
+> >> enable it).
+> > 
+> > An impact on the default installation isn't necessary.
+> > Vulnerabilities that occur only after the user modifies code aren't
+> > eligible for a CVE. However, if there's some type of "installation
+> > option" mentioned by the vendor, someone may have chosen that
+> > option, and it may be worthwhile to track the issue with a CVE. The
+> > nature of an "installation option" obviously varies widely across
+> > both open-source and closed-source products.
+> > 
+> > In this case, there's:
+> > 
+> >> http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/Makefile.inc
+> >
+> >>  Add support for an experimental zero-knowledge password
+> >> authentication method using the J-PAKE protocol ...
+> > 
+> >> This is experimental, work-in-progress code and is presently 
+> >> compiled-time disabled (turn on -DJPAKE in Makefile.inc).
+> > 
+> >>
+http://www.openbsd.org/cgi-bin/cvsweb/~checkout~/src/usr.bin/ssh/Makefile.inc?rev=1.41;content-type=text%2Fplain
+> >
+> >>  #CFLAGS+=	-DJPAKE
+> > 
+> > This is close to the edge of what "installation option" means, but
+> > our feeling is that the vendor wouldn't have provided that #CFLAGS
+> > line at all unless it were expected that an end user might want to
+> > make the one-character change.
+> 
+> Just to close this email thread, Mitre assigned one:
+> 
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-1692
+> 
 
-https://pypi.python.org/pypi/ioflo
-ioflo-0.9.39/ioflo/app/run.py:
+This CVE assignment puzzles me. Relevant code was: 1) never enabled,
+2) never advertised in release notes, and 3) never had a
+configuration option. To enable it, a user would have to pro-actively
+edit code (more than merely a configure flag). Note: I *did* read
+MITRE's justification on this last point.
 
-    p.add_argument('-S', '--statistics',
-            action='store',
-            nargs='?',
-            const=True,
-            default=False,
-            help=("Profile and compute performance statistics. "
-            "Put statistics into file path given by optional argument. "
-            "Default statistics file path is /tmp/ioflo/profile/NAME. "))
+Also, an attacker would need to make EVP_Digest* fail. Is there
+a known way to achieve this?
 
-Then later we have:
+Finally, the NVD entry
+(https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-1692)
+doesn't make sense. J-PAKE experimental code wasn't in the code-base
+until OpenSSH 5.2 (iirc) yet versions back to 1.2 are listed as
+vulnerable. Also, a CVSS score of 7.5 (High)? I know this is 
+orthogonal to the actual CVE assignment. Still...weird.
 
-        else:
-            import cProfile
-            import pstats
-            if isinstance(statistics, bool):  # use default
-                statistics = os.path.join('/tmp', 'ioflo', 'profiles',
-'name')
-#
-# Which is "/tmp/ioflo/profiles/name"
-#
-            try:
-                statfilepath =
-os.path.abspath(os.path.expanduser(statistics))
-                if not os.path.exists(statfilepath):
-                    os.makedirs(os.path.dirname(statfilepath))
-            except OSError as ex:
-                console.terse("Error: creating server profile statistics
-file"
-                              " '{0}'\n{1}'\n".format(statfilepath, ex))
-                raise
+I don't have a horse in this race but the entire situation strikes
+me incongruent.
 
-            cProfile.runctx('skedder.run()', globals(), locals(),
-statfilepath)
-            p = pstats.Stats(statfilepath)
-            p.sort_stats('time').print_stats()
-            p.print_callers()
-            p.print_callees()
-
-And boom goes the file that got linked to.
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+--mancha
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+
+
+
