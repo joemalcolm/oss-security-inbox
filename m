@@ -1,52 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/11
-Message-ID: <mpro.n92ies014eut609mb.taviso@cmpxchg8b.com>
-Date: Mon, 21 Jul 2014 08:16:05 -0700
-From: Tavis Ormandy <taviso@...xchg8b.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/13
+Message-ID: <20140203145948.134213a3@redhat.com>
+Date: Mon, 3 Feb 2014 14:59:48 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: glibc locale issues
+Cc: cve-assign@...re.org, vdanen@...hat.com, geissert@...ian.org, support@...sion.nl, jwilk@...ian.org, 736958@...s.debian.org
+Subject: Re: Re: CVE request: temporary file issue in Passenger rubygem
 Content-Type: text/plain; charset=utf-8
 
-Florian Weimer <fweimer@...hat.com> wrote:
+On Thu, 30 Jan 2014 09:26:33 -0500 (EST) cve-assign@...re.org wrote:
 
-> On 07/14/2014 04:15 AM, Tavis Ormandy wrote:
-> > Tavis Ormandy <taviso@...xchg8b.com> wrote:
-> >
-> > > I just remembered another charset issues I had looked into but
-> > > abandoned.
-> >>
-> > > First of all, I think the need_so logic in gconv_trans is broken, but
-> > > even if it worked there is an off by one error in
-> > > __gconv_translit_find() (it does + 3 instead of + 3 + 1 in the
-> > > allocation.
-> >
-> > To be clear, I suspect this is exploitable. It would be nice if you
-> > could modify the buffer such that gconv will open a path with a string
-> > you've appended it (e.g. CHARSET=//. pkexec ./../../../../tmp/foo.so),
+> > If a local attacker can predict this filename, and precreates a
+> > symlink with the same filename that points to an arbitrary directory
+> > with mode 755, owner root and group root, then the attacker will
+> > succeed in making Phusion Passenger write files and create
+> > subdirectories inside that target directory.
+> > 
+> > It is fixed in upstream version 4.0.33.
+> > 
+> > https://github.com/phusion/passenger/commit/34b1087870c2bf85ebfd72c30b78577e10ab9744
+
+...
+
+> Use CVE-2014-1831 for the vulnerability with the "before 4.0.33"
+> affected versions.
 > 
-> This is about the glib part and the alias processing, right?
+> Use CVE-2014-1832 for the vulnerability with the "4.0.33 and earlier"
+> affected versions.
 
-No, it's nothing to do with glib.
+Note that while the original CVE request mentions version 4.0.33, that
+seems like a typo as upstream NEWS file indicates: Fixed versions:
+4.0.37.  Consequently, the above should be "before 4.0.37" and "4.0.37
+and earlier" (or "before 4.0.38").
 
-> 
-> iconv/gconv_charset.h:strip() normalizes the transliteration argument to
-> iconv_open, so the resulting file names follow a particular pattern, and
-> there cannot be enough slashes to ascend to a writable directory.
-
-Is it possible you're thinking of the LC_ALL thing? (the questionable
-ForceCommand bypass with path traversal if you're forcecommand'd to an
-application that does something odd with localized strings and you can
-create a file and your sshd has been configured with AcceptEnv LC_*). This
-is an unrelated heap overflow - not a path traversal.
-
-> 
-> > if not maybe the one byte overflow is still exploitable.
-> 
-> Hmm.  How likely is that?  It overflows in to malloc metadata, and the
-> glibc malloc hardening should catch that these days.
-> 
-
-No, it's quite definitely possible, I'm really close but was busy this week.
-
-Tavis.
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
