@@ -1,39 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/15
-Message-Id: <201407222231.s6MMVJ6b005465@linus.mitre.org>
-Date: Tue, 22 Jul 2014 18:31:19 -0400 (EDT)
-From: cve-assign@...re.org
-To: geissert@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: GLPI: unprivileged users can access cost information
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/16
+Message-ID: <52EFBAA8.4070509@redhat.com>
+Date: Tue, 04 Feb 2014 02:50:00 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: 737385@...s.debian.org
+Subject: Re: CVE request: a2ps insecure temporary file use
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 02/03/2014 05:12 PM, Murray McAllister wrote:
+> Hello,
+>
+> Jakub Wilk found that a2ps, a tool to convert text and other types of
+> files to PostScript, insecurely used a temporary file in spy_user(). A
+> local attacker could use this flaw to perform a symbolic link attack to
+> modify an arbitrary file accessible to the user running a2ps:
+>
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737385
+>
+> The original report notes there are calls to tempname_ensure(). If any
+> of those are found to be vulnerable, would they use the same CVE number,
+> or require a different one?
+>
+> References:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737385
+> https://bugzilla.redhat.com/show_bug.cgi?id=1060630
+>
+> Thanks,
+>
+> --
+> Murray McAllister / Red Hat Security Response Team
+>
 
-> a user without access to cost information can in fact see the
-> information when selecting cost as a search criteria. This is fixed by
-> commit which appears to have been included for version 0.84.7.
-> 
-> https://forge.indepnet.net/issues/4984
-> https://forge.indepnet.net/projects/glpi/repository/revisions/23061
-> http://www.glpi-project.org/spip.php?page=annonce&id_breve=326&lang=en
+Tim Waugh pointed out this was fixed in 2001:
 
-Use CVE-2014-5032.
+https://bugzilla.redhat.com/show_bug.cgi?id=1060630#c5
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+And notes 
+http://pkgs.fedoraproject.org/cgit/a2ps.git/plain/a2ps-4.13-security.patch 
+is the patch.
 
-iQEcBAEBAgAGBQJTzuWXAAoJEKllVAevmvmsTUYIALGINZBT+2sBe1llbZwdzM/E
-0h5AeMQeP1jJ7TDPBeeLyU4r0ZYcBbuk+o6sLwKSiJGn27rgRSaH7a+mlMN7S+Ax
-wausrHZsPwLl0xN8m9LvDJZvOExkC1mEFwm644BQ2AKrC4LikP5bisP0BKPeI0re
-YFwBduU52Q0nt97VCR32/euaTQ6/dmfVoPo/M20U8U33qfSgZ5eAOx2ZDCk3GnlY
-xVy4vNLVJ+3o0Bx8jWIyhav43alwbd4GjqpOSiRSSI9I7O10R3pmdtAxrlbGpJbY
-bnHLyaXpUMe75/4etszIoW+ZWvuxVVYcMcuXlUU0tRDrSYaJiL6FIxiaEcD/sfc=
-=KVBH
------END PGP SIGNATURE-----
+Cheers,
+
+--
+Murray McAllister / Red Hat Security Response Team
