@@ -1,31 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/36
-Message-ID: <543314F7.4040002@edwardprevost.info>
-Date: Mon, 06 Oct 2014 15:17:27 -0700
-From: Ed Prevost <me@...ardprevost.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/20
+Message-ID: <loom.20140203T214939-590@post.gmane.org>
+Date: Mon, 3 Feb 2014 20:55:35 +0000 (UTC)
+From: mancha <mancha1@...h.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Who named shellshock?
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
-On 10/6/2014 3:12 PM, Larry W. Cashdollar wrote:
-> I thought it was https://twitter.com/ErrataRob
->
-> On Oct 6, 2014, at 5:04 PM, Michal Zalewski <lcamtuf@...edump.cx> wrote:
->
->> I don't think it happened on Twitter - using advanced search with date
->> ranges, I don't see any mentions that would predate this article,
->> which already seems to be using the term:
->>
->> http://www.csoonline.com/article/2687265/application-security/remote-exploit-in-bash-cve-2014-6271.html
->>
->> It's odd that an article posted at 8 AM on Sept 24 would have any idea
->> of how the bug is already being called by the security community,
->> especially ahead of any Twitter buzz. But both Stephane and Florian
->> implied that some of the pre-notified parties apparently started
->> leaking details to the press and were getting ready to make a splash
->> the moment it goes public, so maybe that's the explanation.
->>
->> /mz
->
->
-I'm still calling it BASHINGA! :0)
+mancha <mancha1@...> writes:
+> 
+[SNIP]
+> I made a change to the kernel module to minimize the amount of time
+> things are rw. Please use this version (not the one attached in my
+> first post).
+> 
+> New version also uploaded to:
+> http://sf.net/projects/mancha/file/sec/nox32recvmmsg.tar.bz2.
+> 
+> --mancha
+> 
+
+I made one more change so it works with protected-mode enabled
+procs.
+
+SourceForge tarball also updated. Check against this hash:
+
+SHA256(nox32recvmmsg.tar.bz2)=
+8c822d55a0a45f0fa994c73921701e2bb035bdaeb169c2355ed8d767414c4f73
+
+========= nox32recvmmsg.c =========
+#define _GNU_SOURCE
+#include <linux/init.h>
+#include <linux/socket.h>
+#include <linux/module.h>
+#include <linux/kernel.h> 
+#include <linux/errno.h> 
+#include <linux/types.h>
+#include <linux/unistd.h>
+#include <asm/cacheflush.h>  
+#include <asm/page.h>  
+#include <asm/current.h>
+#include <linux/sched.h>
+#include <linux/kallsyms.h>
+#include <linux/syscalls.h>
+#include <asm/string.h>
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("mancha <mancha1@...h.com>");
+MODULE_DESCRIPTION("disable x32 recvmmsg()");
+
+unsigned long **syscall_table;
+
+#define __NR_x32_recvmmsg 537
+
+asmlinkage int (*orig_recvmmsg)(int sockfd, struct mmsghdr *msgvec, unsigned
+int vlen, unsigned int flags, struct timespec *timeout);
+
+static unsigned long **aquire_syscall_table(void)
+{
+  unsigned long int offset = PAGE_OFFSET;
+  unsigned long **sct;
+
+  while (offset < ULLONG_MAX) {
+    sct = (unsigned long **)offset;
+    if (sct[__NR_close] == (unsigned long *) sys_close) 
+      return sct;
+    offset += sizeof(void *);
+  }
+  printk(KERN_ALERT "Unable to get syscall table\n");
+  return NULL;
+}
+
+void set_addr_rw(long unsigned int _addr)
+{
+    unsigned int level;
+    pte_t *pte = lookup_address(_addr, &level);
+    if (pte->pte &~ _PAGE_RW) pte->pte |= _PAGE_RW;
+    write_cr0(read_cr0() & (~ 0x10000));
+}
+
+void set_addr_ro(long unsigned int _addr)
+{
+    unsigned int level;
+    pte_t *pte = lookup_address(_addr, &level);
+    pte->pte = pte->pte &~_PAGE_RW;
+    write_cr0(read_cr0() | 0x10000);
+}
+
+asmlinkage int norecvmmsg(int sockfd, struct mmsghdr *msgvec, unsigned int
+vlen, unsigned int flags, struct timespec *timeout) {
+
+    printk(KERN_ALERT "x32 recvmmsg call intercepted\n");
+    return -1;
+}
+
+static int __init init_recvmmsg(void) {
+
+    if(!(syscall_table = aquire_syscall_table())) {
+      printk(KERN_INFO "Unable to acquire syscall table\n");
+      return -1;
+    }
+    printk(KERN_ALERT "x32 recvmmsg disabled\n");
+    set_addr_rw((unsigned long)syscall_table);
+    orig_recvmmsg = (void*)syscall_table[__NR_x32_recvmmsg];
+    syscall_table[__NR_x32_recvmmsg] = (unsigned long*)norecvmmsg;  
+    set_addr_ro((unsigned long)syscall_table);
+    return 0;
+}
+
+static void __exit exit_recvmmsg(void) {
+
+    set_addr_rw((unsigned long)syscall_table);
+    syscall_table[__NR_x32_recvmmsg] = (unsigned long*)orig_recvmmsg;  
+    set_addr_ro((unsigned long)syscall_table);
+    printk(KERN_ALERT "x32 recvmmsg restored\n");
+}
+
+module_init(init_recvmmsg);
+module_exit(exit_recvmmsg);
+=================================== 
+
+
+
+
+
