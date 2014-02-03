@@ -1,50 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/30/4
-Message-Id: <20141230060236.D1C1852E01B@smtpvbsrv1.mitre.org>
-Date: Tue, 30 Dec 2014 01:02:36 -0500 (EST)
-From: cve-assign@...re.org
-To: oss@...ernot.info
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Double Free in PHP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/9
+Message-ID: <52EF3360.90306@redhat.com>
+Date: Mon, 03 Feb 2014 17:12:48 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: 737385@...s.debian.org
+Subject: CVE request: a2ps insecure temporary file use
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-> I found in total I believe 5(don't quote me on that)
-> double-free's/use-after-frees/invalid-free's in PHP. Should I use the
-> same CVE-ID for all of them?
+Jakub Wilk found that a2ps, a tool to convert text and other types of
+files to PostScript, insecurely used a temporary file in spy_user(). A
+local attacker could use this flaw to perform a symbolic link attack to
+modify an arbitrary file accessible to the user running a2ps:
 
-No, CVE-2014-9425 is only for the Zend/zend_ts_hash.c issue with:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737385
 
-  142        tsrm_mutex_free(ht->mx_reader);
-  143        tsrm_mutex_free(ht->mx_reader);
+The original report notes there are calls to tempname_ensure(). If any
+of those are found to be vulnerable, would they use the same CVE number,
+or require a different one?
 
-We generally can't change the scope of a CVE ID to include additional
-bugs after that CVE ID has been sent to oss-security. Otherwise,
-anyone developing a remediation for a CVE would typically see their
-remediation suddenly become incomplete because the meaning of the CVE
-changed.
+References:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737385
+https://bugzilla.redhat.com/show_bug.cgi?id=1060630
 
-Also, for example, information showing a double-free issue (aka
-CWE-415) would not be combined with information showing a
-use-after-free issue (aka CWE-416). That situation would have two CVE
-IDs even if the reports were sent together and were, say, specifically
-about PHP 5.6.4.
+Thanks,
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUoj9VAAoJEKllVAevmvmsjZAIAIiB2XLN1HEx0qnqGoTTxRFe
-s1pRLB48bsLRrxixLOw4dS1ueawH2ss4t0M37IiAbEtu+OBnOrdSSVDLqtmVC7FJ
-06vFIZIs0E+CArmo7FbgwBDwf36SOkrxB4XtuBHMXoDFh1OQAhcAeaig1lQaLOmU
-OBIOoYj9FTiZF5vYcKBqoeKP6Y3B4T7AEQLgqoiSL0MHd2pZWiiTHRm2afQXf8MD
-BeGnPJvIsf1ouh3yVG+j4ON+GbtX9J1jAwS6Blf2oIsin6f7uobPq7bqr+VeFxUl
-Vg3BoWPdL1Vxsv5F2Id6R8bERh4ORqBCFksTQeC9EP3pVFftP++pHzjJxEtXa0Q=
-=J3p7
------END PGP SIGNATURE-----
+--
+Murray McAllister / Red Hat Security Response Team
