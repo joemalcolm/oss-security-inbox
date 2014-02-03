@@ -1,17 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/08/5
-Message-Id: <A16F2469-DB16-458A-B979-BCE764ECB420@gmail.com>
-Date: Mon, 8 Sep 2014 15:03:00 +0300
-From: Mikko Korpela <mikko.korpela@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Python robotframework - tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/6
+Message-Id: <20140203035536.11599200F2@smtp.hushmail.com>
+Date: Mon, 03 Feb 2014 03:55:35 +0000
+From: "mancha" <mancha1@...h.com>
+To: solar@...nwall.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt
+On Mon, 03 Feb 2014 03:45:27 +0000 "Solar Designer" wrote:
 
-I'm the developer of robotframework-pabot package.
+>Rather than post via Gmane's NNTP gateway, can you please reply
+>to this message with the files MIME-attached, or include the files
+>in message body with some sort of delimiters (e.g. Phrack-style)?
+>
+>Thanks,
+>
+>Alexander
 
-Could you elaborate what is the security issue in pabot?
+Hushmail screws up replies so this will likely not show up in the
+right hierarchy. Nonetheless, files promised attached.
 
--- 
-Mikko Korpela
+--mancha
+Download attachment "Makefile" of type "application/octet-stream" (224 bytes)
+
+Download attachment "nox32recvmmsg.c" of type "application/octet-stream" (2287 bytes)
