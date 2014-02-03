@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/30/2
-Message-ID: <20140730133846.GB9168@kludge.henri.nerv.fi>
-Date: Wed, 30 Jul 2014 16:38:46 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/4
+Message-ID: <lcn3bt$6t7$4@ger.gmane.org>
+Date: Mon, 3 Feb 2014 03:45:02 +0000 (UTC)
+From: mancha <mancha1@...h.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: WordPress plugin wppageflip index.php pageflipbook_language parameter traversal local file inclusion
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2012 CVE for following vulnerability in A Page Flip Book plugin for
-WordPress (wppageflip), thanks.
+On Mon, 03 Feb 2014 03:16:13 +0000, mancha wrote:
+> On Sun, 02 Feb 2014 08:14:44 +0400, Solar Designer wrote:
+> 
+[SNIP]
+> 
+> The exploit by Rebel works as advertised. I've confirmed on a non-Ubuntu box 
+> after making some changes.
+> 
+> Attached find a kernel module I've authored that protects from the attack.
+> 
+> I'm sharing it for folks currently on vulnerable systems still waiting on
+> patches from their upstream.
+> 
+>  # make
+>  # insmod nox32recvmmsg.ko
+> 
+> note: rmmod'ing restores original (vulnerable) state.
+> 
+> --mancha
 
-Description:
+Having issues attaching via this client. So, posted kernel module here:
 
-A Page Flip Book Plugin for WordPress contains a flaw that may allow a remote
-attacker to execute arbitrary commands or code. This issue is triggered when
-input passed to the wp-content/plugins/wppageflip/pageflipbook.php script from
-index.php is not properly sanitizing user input, specifically directory
-traversal style attacks (e.g., ../../) supplied to the 'pageflipbook_language'
-parameter. This may allow an attacker to include a file from the targeted host
-that contains arbitrary commands or code that will be executed by the vulnerable
-script. Such attacks are limited due to the script only calling files already on
-the target host. In addition, this flaw can potentially be used to disclose the
-contents of any file on the system accessible by the web server.
+http://sf.net/projects/mancha/files/sec/nox32recvmmsg.tar.bz2
 
-Plugin page: http://wordpress.org/plugins/wppageflip/
-Discussion:
-http://wordpress.org/support/topic/pageflipbook-pageflipbook_language-parameter-local-file-inclusion
-Related:
-http://ceriksen.com/2012/07/10/wordpress-a-page-flip-book-plugin-local-file-inclusion-vulnerability/
-http://secunia.com/advisories/49505/
 
-I was unable to reproduce this vulnerability in version 3.0 of this plugin so
-fixed in the latest version at least. Other versions not tested.
-
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
