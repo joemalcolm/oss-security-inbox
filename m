@@ -1,31 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/33
-Message-ID: <54299D1E.6060302@redhat.com>
-Date: Mon, 29 Sep 2014 19:55:42 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Array importing in bash 4.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/21
+Message-ID: <142BCE00-6581-4515-A8A1-E2C25CAFD923@redhat.com>
+Date: Mon, 03 Feb 2014 15:02:27 -0700
+From: "Vincent Danen" <vdanen@...hat.com>
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Cc: secalert_us@...cle.com
+Subject: CVE request and heads-up on insecure temp file handling in unpack200 (OpenJDK, Oracle Java)
 Content-Type: text/plain; charset=utf-8
 
-On 09/29/2014 05:47 PM, Kobrin, Eric wrote:
-> This code also reveals a difference from the function export code.
->
-> The ARRAY_EXPORT code frees temp_string after using it. The function export code mallocs, but never frees it. That behavior predates the recent patches.
+I don't believe a CVE has been assigned or requested for this yet.  Spotted this on Debian's bug tracker and filed our own bug, the description of which follows which should serve to describe the issue.  I'm not sure if this affects IBM's JDK, but it seems to affect Oracle's (based on a quick test on my mac), so cc'ing Oracle here.
 
-That's because parse_and_execute takes ownership of the string by 
-default.  See the comment in builtins/evalstring.c:
+I'm not sure if MITRE will be handling the assignment or if Oracle will, but as this had already been reported publicly to the Debian BTS, I didn't think there was a point in _not_ sending this to oss-sec.
 
-/* Parse and execute the commands in STRING.  Returns whatever
-    execute_command () returns.  This frees STRING.  FLAGS is a
-    flags word; look in common.h for the possible values.  Actions
-    are:
-         (flags & SEVAL_NONINT) -> interactive = 0;
-         (flags & SEVAL_INTERACT) -> interactive = 1;
-         (flags & SEVAL_NOHIST) -> call bash_history_disable ()
-         (flags & SEVAL_NOFREE) -> don't free STRING when finished
-         (flags & SEVAL_RESETLINE) -> reset line_number to 1
-*/
+Thanks.
 
+
+
+Jakub Wilk reported in a Debian bug report that the unpack200 program included in OpenJDK did not properly handle the logfile properly.  If the the log file was unable to be opened, it would create /tmp/unpack.log instead as the fallback, but do so in an insecure manner, as shown in unpack.cpp (the below is from OpenJDK 6):
+
+4732 void unpacker::redirect_stdio() {
+...
+4757 #else
+4758     sprintf(tmpdir,"/tmp");
+4759     sprintf(log_file_name, "/tmp/unpack.log");
+4760 #endif
+4761     if ((errstrm = fopen(log_file_name, "a+")) != NULL) {
+4762       log_file = errstrm_name = saveStr(log_file_name);
+4763       return ;
+4764     }
+4765
+4766     char *tname = tempnam(tmpdir,"#upkg");
+4767     sprintf(log_file_name, "%s", tname);
+4768     if ((errstrm = fopen(log_file_name, "a+")) != NULL) {
+4769       log_file = errstrm_name = saveStr(log_file_name);
+4770       return ;
+4771     }
+
+The same exists in OpenJDK 7 and 8.
+
+This could allow a malicious local attacker to conduct local attacks, such as symlink attacks, where a file could be overwritten if the user running unpack200 had write permissions.
+
+
+References:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737562
+https://bugzilla.redhat.com/show_bug.cgi?id=1060907
 
 -- 
-Florian Weimer / Red Hat Product Security
+Vincent Danen / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
