@@ -1,46 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/28
-Message-ID: <542ACCC6.7040100@edwardprevost.info>
-Date: Tue, 30 Sep 2014 08:31:18 -0700
-From: Ed Prevost <me@...ardprevost.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/2
+Message-ID: <pan$a3b9e$193e86d8$76828b48$3d526062$1@hush.com>
+Date: Mon, 3 Feb 2014 03:16:13 +0000 (UTC)
+From: mancha <mancha1@...h.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
-On 9/30/2014 8:08 AM, Tavis Ormandy wrote:
-> On Tue, Sep 30, 2014 at 8:02 AM, Mark R Bannister
-> <mark@...seconsulting.co.uk> wrote:
->>>> Florian's prefix/suffix patch is not going to protect against the setuid/setgid exploit that I reported to this list last week.> >
->>>> I discuss the setuid/setgid vulnerability at the following site, including demonstrating how Florian's prefix/suffix patch provides no protection:
->>>>
->>>> http://technicalprose.blogspot.co.uk/2014/09/shellshock-bug-third-vulnerability.html
->>> You do realize that your setuid program is patently unsafe, right? Say:
->>>
->>> $ echo -e '#!/bin/sh\necho pwn3d' >date;chmod 755 date;PATH=.:$PWD
->>> ../setuid_program
->>> pwn3d
->> Glad my over-simplified example has raised a few smirks.  Now for a slightly less simplified version:
->>
->> putenv("PATH=/bin:/usr/bin");
->> setreuid(0, 0);
->> system("date");
-> Keep going, eventually you're going to have to stop blacklisting
-> variables and use execve ;-)
->
-> $ env SHELLOPTS=xtrace PS4='$(id)' ./foo
->
->
->> But the point is I've tried to boil down a relatively complex program by studying endless strace outputs to attempt to demonstrate a real world exploit.  It wasn't actually "date" that was being called, but you get the point.
-> Yes, but it's not safe to use system() or popen() from setuid
-> programs, no bash patch is going to change that. In fact, bash already
-> does more than most other shells by dropping privileges if euid !=
-> uid, i.e. "privileged mode".
->
->> In the past, i.e. pre-Shellshock, the above code may have raised eyebrows, but as PATH was sanitised it would have passed numerous security audits.
->>
-> No, it's not safe to use system() or popen() in this context.
->
-> Tavis.
->
->
-I believe the term following this is 'Mansplained'
+On Sun, 02 Feb 2014 08:14:44 +0400, Solar Designer wrote:
+
+> On Fri, Jan 31, 2014 at 04:11:16AM +0400, Solar Designer wrote:
+>> <grsecurity> I would not be surprised to see an exploit for this within the next few days
+> 
+> Just off Twitter:
+> 
+> <noptrix> recvmmsg.c - linux 3.4+ local root (CONFIG_X86_X32=y) expl0it - http://pastebin.com/DH3Lbg54
+> 
+> SHA-256(recvmmsg.c.txt) = 4603acf96e845cecd2c5877a68fa5b5c591ba00c52859ded2a31a9daf48a457d
+> 
+> for the version I just downloaded (but did not review, although it looks
+> sane at first glance).  The exploit includes offsets for 3 Ubuntu kernels.
+> 
+> Alexander
+
+The exploit by Rebel works as advertised. I've confirmed on a non-Ubuntu box 
+after making some changes.
+
+Attached find a kernel module I've authored that protects from the attack.
+
+I'm sharing it for folks currently on vulnerable systems still waiting on
+patches from their upstream.
+
+ # make
+ # insmod nox32recvmmsg.ko
+
+note: rmmod'ing restores original (vulnerable) state.
+
+--mancha
+
