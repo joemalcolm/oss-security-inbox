@@ -1,44 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/3
-Message-ID: <CADk+mPA4-fZNgp6qxOa4cY+jS9oSs=OLsjQ7bYunY0twPkggaw@mail.gmail.com>
-Date: Mon, 6 Oct 2014 08:40:07 +0200
-From: Rainer Gerhards <rgerhards@...adiscon.com>
-To: Sven Kieske <s.kieske@...twald.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: vulnerability in rsyslog
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/8
+Message-ID: <20140203061046.GA773@openwall.com>
+Date: Mon, 3 Feb 2014 10:10:46 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
-2014-10-06 8:31 GMT+02:00 Sven Kieske <s.kieske@...twald.de>:
+On Sun, Feb 02, 2014 at 08:14:44AM +0400, Solar Designer wrote:
+> Just off Twitter:
+> 
+> <noptrix> recvmmsg.c - linux 3.4+ local root (CONFIG_X86_X32=y) expl0it - http://pastebin.com/DH3Lbg54
+> 
+> SHA-256(recvmmsg.c.txt) = 4603acf96e845cecd2c5877a68fa5b5c591ba00c52859ded2a31a9daf48a457d
+> 
+> for the version I just downloaded (but did not review, although it looks
+> sane at first glance).  The exploit includes offsets for 3 Ubuntu kernels.
 
->
->
-> On 30/09/14 18:41, Rainer Gerhards wrote:
-> > 2014-09-30 18:28 GMT+02:00 Solar Designer <solar@...nwall.com>:
-> >
-> >> On Tue, Sep 30, 2014 at 01:55:12PM +0200, Sven Kieske wrote:
-> >>> I don't understand the following statement in the
-> >>> pri-vuln.txt in section "Patches":
-> >>>
-> >>> "Version 7.4.6, while no longer being project
-> >>> supported received a patch and is also not vulnerable."
-> >>>
-> >>> What was patched when this version is not vulnerable?
-> >>> Or do you mean it is not vulnerable after the patch got applied?
-> >>
-> >>
-> > My apologies, this is a type that skipped past all proof-reading. It
-> should
-> > say "7.6.6", which is the v7 version released today. v7.4.x is not only
-> > non-project supported, it's also heavily outdated and missing many other
-> > patches as well (just to point this out).
->
-> This still does not answer the above questions, it just changes the
-> version number in your statement which led to my question.
->
->
-you can view the complete patch set here:
+Another exploit:
 
-https://github.com/rsyslog/rsyslog/commits/v7-stable
+https://github.com/saelo/cve-2014-0038
 
-Rainer
-
+Alexander
