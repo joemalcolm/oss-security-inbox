@@ -1,28 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/3
-Message-Id: <20140927042902.ED08A72E405@smtpvbsrv1.mitre.org>
-Date: Sat, 27 Sep 2014 00:29:02 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/17
+Message-Id: <201402031802.s13I2pPN020308@linus.mitre.org>
+Date: Mon, 3 Feb 2014 13:02:51 -0500 (EST)
 From: cve-assign@...re.org
-To: henri@...v.fi
+To: mmcallis@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: TYPO3-EXT-SA-2014-012
+Subject: Re: CVE needed for libotr's support for OTR v1?
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-012/
-> 
-> the extension "JobControl" (dmmjobcontrol)
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=725779
 
-> Cross-Site Scripting
+> as you are surely aware of, it's been known since 2006 that
+> clients supporting both OTRv1 and v2 (such as libotr 3.x) are subject
+> to protocol downgrade attacks clients. It's also been known for
+> a while that OTRv1 has serious security issues
 
-Use CVE-2014-7200.
+There may be multiple perspectives on this, but it might be preferable
+to cover these "serious security issues" with CVEs that are about the
+OTRv1 protocol itself, and not specifically about protocol downgrade
+attacks. If the vulnerabilities in the OTRv1 protocol were completely
+resolved (perhaps this is, in practice, essentially impossible), then
+the downgrade would probably not be considered a security problem.
+That would mean that a separate CVE assignment would not be made,
+because of the lack of an independent vulnerability.
 
-
-> SQL Injection.
-
-Use CVE-2014-7201.
+Occasionally a vendor who is the original author of software chooses
+to describe a protocol-downgrade issue as a software mistake,
+requiring a CVE, such as CVE-2013-0013 and CVE-2013-1654. In other
+cases, a protocol-downgrade capability was an intentional aspect of a
+design, and had some importance for compatibility, but became
+problematic once the earlier protocol was documented as insecure. In
+that case, preventing a downgrade could be seen as a security
+enhancement.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -32,11 +44,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUJjyqAAoJEKllVAevmvmsxmcIAJ7ALeJZwa2wybzfNdzIrAHu
-yypYZkLcUreAo7kKaRJfjIjNJcqLI2DtGb3xQBdBkOKaIqiBWAX0f+T4H1oOxL0+
-Yu0KBWCzprR3EJygH3Ba48BjQcoXJ6Zasjlt/uWJgha38Jxy8/6fJd99/7ObZhvu
-jL4CJEDZulhbR23yEL2NbNUEPX9EYhb2XCc+ZJOBgkT76g8PVAHTULhuuMk5dt3P
-gIWsOmFJ+5N5m9ziYmcDGknmqf4GYcPqP+AVO3gPXT7QsRlff1HlUQEOSUiePSFf
-lHb1eX7CktKkpi5TwVfw9olYaTM5aXMDQzGcIFzdLH1ZKwjY4BhjuaHSFplt1aI=
-=jnmE
+iQEcBAEBAgAGBQJS79jEAAoJEKllVAevmvmsbsAH/iB8NiijqXTvEBLpCoTMfB2Y
+QUzeLS32uBwqMjCnm6HV7GDbw/vzjvB5CkmO2x+/jo1OBKCBxVyOc+09BaDjx9Cp
+qxlRG/+Z3Aue8QCPWefe0ymWuuUHinMCQnok8H6YgFSWhRIjx/MlWHEwSye37MN4
+lMQYlHRR2HsLHNOlroOSap28vo9Q4YVtG3lt1ZQQVqLOR9brWPt1Y70xYxXVO6er
+BHmpJFpY7lKoHZrdWJ5DmOy1Sn1e8zN6oWpqV7TVGlFYyp3EkIeBCo8cxfIF2A/s
+H885J1mCdjoeJG4yWbgmQOdBW8sls6MPV/TbkglHGB8sAOAcBufspTD3rsLrVEY=
+=jNKp
 -----END PGP SIGNATURE-----
