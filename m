@@ -1,53 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/20
-Message-ID: <CACYkhxg4r2ju6V4C4az+MOXGXrBWukC32M6so0Bfe6DfUh42mA@mail.gmail.com>
-Date: Fri, 21 Feb 2014 10:59:40 +1100
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/5
+Message-Id: <201402030350.s133oTil015991@linus.mitre.org>
+Date: Sun, 2 Feb 2014 22:50:29 -0500 (EST)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: temp file issues in python's logilab-common module
 Content-Type: text/plain; charset=utf-8
 
-On 21 February 2014 03:21, <cve-assign@...re.org> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> > So, if original author says it's a flaw then it's a flaw, otherwise not?
->
-> Otherwise MITRE attempts to use the best available information in
-> deciding whether "security improvement" is a better categorization.
-> Across all types of products and problems, the original author is
-> generally allowed to admit that they made a mistake when writing the
-> code in a certain way.
+> In logilab/common/pdf_ext.py it uses fully predictable names:
+> lines = file('/tmp/toto.fdf').readlines()
+> write_fields(file('/tmp/toto.fdf', 'w'), fields)
+
+Use CVE-2014-1838.
 
 
-This is flawed reasoning.  The question is: if there is a patch for software
-that addresses an attack, will users expect to get this pushed out to them
-via their distribution outside of the release cycle?
+> And in logilab/common/shellutils.py:
+>         outfile = tempfile.mktemp()
+>         errfile = tempfile.mktemp()
+> tempfile.mktemp() should be replaced with tempfile.mkstemp() as it is documented as insecure.
 
-In this case, the clear answer is yes.
+> http://docs.python.org/2/library/tempfile.html
 
- > So now SipHash is 'the only' way to avoid hash collision ever?
+Use CVE-2014-1839.
 
->
-> At present, introducing SipHash is a type of patch that's very likely
-> to be considered when a software maintainer is responding to
-> hash-collision problems. Certainly other patch approaches are
-> possible. Not all code originated with an implicit functional
-> specification that the code would do a good job at resisting all types
-> of intentional hash-collision attacks. So, in general, when a
-> description of a new attack is published, any resulting patches can be
-> considered security improvements.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-
-This is not true. When a new attack is published, patches are made for
-software that are vulnerable to the attack. This is what CVE numbers
-track.
-
-Also, this isn't a standard unbalanced hashtable CPU DoS flaw - this is
-causing fundamental changes in the software's behaviour based on
-hashtable collisions.
-
-Regards,
-  Michael
-
+iQEcBAEBAgAGBQJS7xGDAAoJEKllVAevmvmsNNEIAJSprr1QxmFg9K4naoR7DpVb
+ZW3yoemuklcx371AQhiBcqLIau4FbJqWLEl0GAhzCNgMwT1hVEcDAYJoDxbL+GJe
+n+JtwXJOY8oJc4c/DODjw3E+NYMo0Rh/FHn3xNBaLl5gTbex9s3/u6E3/bCT4W6+
+G4e/S4rhbd5cbibrwQEzbnwXPeQIkpcG0FZP/5/Vdripsgjm1YoTA1gXSe4leAnQ
+NMHDhvIyKR4BSrAKYZzx4PgC1wjQKvJsL8RHyRT0W9lr2UIiDWsdumY/R8m+AxvA
+eRpM9jZbbDH0K4IsSlUd/Jf0ozFXZQAPXcQxhafNf/q8LMRY9F5sb4OyIxB34bA=
+=lKoz
+-----END PGP SIGNATURE-----
