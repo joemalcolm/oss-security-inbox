@@ -1,22 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/25/2
-Message-ID: <CALx_OUABf0RbdwgAejX09Sj8V8C00_Yu-mGzhW=ufEAMjOS0hw@mail.gmail.com>
-Date: Sat, 25 Oct 2014 10:36:25 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: cve request: libbfd?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/12
+Message-ID: <CAEDdjHdXnyR-7=72xNTFScZArx_sK06k2KoXwYi0zvVL47voqA@mail.gmail.com>
+Date: Mon, 3 Feb 2014 10:54:54 +0000
+From: Pedro Ribeiro <pedrib@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Leo Feyer <leo@...tao.org>, Andreas Schempp <andreas.schempp@...minal42.ch>
+Subject: CVE request: PHP object insertion in Contao CMS <= 3.2.5
 Content-Type: text/plain; charset=utf-8
 
-Hey,
+Hi,
 
-You may want to assign something to:
+I have discovered a vulnerability that might lead to code execution in
+Contao CMS <= 3.2.4
+Contao CMS <= 3.2.4 does not properly validate user input in several
+locations which is then passed directly into PHP's unserialize.
 
-http://lcamtuf.blogspot.com/2014/10/psa-dont-run-strings-on-untrusted-files.html
-http://sourceware.org/bugzilla/show_bug.cgi?id=17510
+This has been fixed in Contao 2.3.5 as per commit:
+https://github.com/contao/core/commit/8c9cb044bdc887a8202bb65a64545c025664f957
+and
+https://github.com/contao/core/commit/1717336598fdcf1ed3f4ad488e140147cb31516d
 
-This is slightly complicated by the fact that libbfd is just bad in
-general and there likely are dozens of individual bugs, but the
-write-to-arbitrary-pointer issues with ELF section parsing in elf.c
-sort of stand out.
+Announcements can be found at
 
-/mz
+https <https://contao.org/en/news/contao-3_2_5.html>://<https://contao.org/en/news/contao-3_2_5.html>
+contao.org <https://contao.org/en/news/contao-3_2_5.html>/<https://contao.org/en/news/contao-3_2_5.html>
+en <https://contao.org/en/news/contao-3_2_5.html>/news/<https://contao.org/en/news/contao-3_2_5.html>
+contao <https://contao.org/en/news/contao-3_2_5.html>-3_2_5.<https://contao.org/en/news/contao-3_2_5.html>
+html <https://contao.org/en/news/contao-3_2_5.html>
+
+https <https://contao.org/en/news/contao-2_11_14.html>://<https://contao.org/en/news/contao-2_11_14.html>
+contao.org <https://contao.org/en/news/contao-2_11_14.html>/<https://contao.org/en/news/contao-2_11_14.html>
+en <https://contao.org/en/news/contao-2_11_14.html>/news/<https://contao.org/en/news/contao-2_11_14.html>
+contao <https://contao.org/en/news/contao-2_11_14.html>-2_11_14.<https://contao.org/en/news/contao-2_11_14.html>
+html <https://contao.org/en/news/contao-2_11_14.html>
+
+Thanks to the Contao developers for being so responsive.
+The full report can be found at my repo in
+https://github.com/pedrib/PoC/blob/master/contao-3.2.4.txt
+
+Can you please assign a CVE for the vulnerability described above?
+
+Thanks in advance.
+
+Regards,
+
+Pedro Ribeiro
+Agile Information Security
+
