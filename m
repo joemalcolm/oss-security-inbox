@@ -1,58 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/13
-Message-ID: <20141119002129.4f88e733@pc>
-Date: Wed, 19 Nov 2014 00:21:29 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: RE: [security-vendor] Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/14
+Message-Id: <201402031504.s13F4ovE023405@linus.mitre.org>
+Date: Mon, 3 Feb 2014 10:04:50 -0500 (EST)
+From: cve-assign@...re.org
+To: pedrib@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: PHP object insertion in Contao CMS <= 3.2.5
 Content-Type: text/plain; charset=utf-8
 
-Am Tue, 18 Nov 2014 13:32:09 -0800
-schrieb Seth Arnold <seth.arnold@...onical.com>:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Adding a fuzzer or two to the process might be worthwhile; the
-> downside is that most fuzzers seem to require a certain amount of
-> preperation work before they start giving good results, and depending
-> upon the program, a fuzzer may not reliably represent the attack
-> surfaces available. (Consider trying to fuzz e.g. openssh or nginx.)
-> I don't think it'd be easy to automate.
+> passed directly into PHP's unserialize
 
-It'd already be a good start to do this for format-parsing tools. So
-stuff that runs on files. Everything else is more complicated, fuzzing
-file formats is the easiest.
+> https://github.com/contao/core/commit/8c9cb044bdc887a8202bb65a64545c025664f957
+> https://github.com/contao/core/commit/1717336598fdcf1ed3f4ad488e140147cb31516d
+> https://github.com/pedrib/PoC/blob/master/contao-3.2.4.txt
 
-> Getting AFL to work with every package suggested for Ubuntu main is
-> probably too much work.
+Use CVE-2014-1860.
 
-You may overestimate the complexity of afl. Once you get used to it it
-basically takes minutes to start a fuzzing job.
-And Michal is very open to suggestions to improve it (and it is
-improving on a daily basis right now).
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-A bit sad is that afl+asan is somewhat tricky business, because that'd
-be the ultimate combo.
-
-> The results of a fuzzing project would not greatly influence our
-> decision to support a package. I don't believe surviving a fuzzer is
-> the best proxy for code quality, though it would be nice to have more
-> information when making a decision to support a package.
-
-I agree that it's not the best proxy for code quality. But for me what
-is a good proxy for *project* quality is how they handle the bugs that
-result from fuzzing.
-While libbfd was in a terrible state, Nick did a marvellous job in
-fixing everythin we reported in a timely manner.
-Whilst for others you simply don't get a reply (or there is noone to
-report to).
-
-That's the difference between a healthy and an unhealthy project.
-
-
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJS76+sAAoJEKllVAevmvmsVkAH/jWjzo9XfaTN3YR7XQO1xdZH
+6vTlzWlSMfSICA2wIjLBvWC7rexXbAfXDr28yic7Ah/ECD4wGvoS2b5dzQJ7c4Ev
+8h5tRYt4XhEi4QgeNg+izqw5R5pxxyq+vjYA7QAudSSc6hCcqDiNFnEPlTJiUDXK
+LChGrJUz0K+lWnPYYZqU5phBaI2yiQ5eGsCCgVGxBcS8e8qNFfPhpIt5xASLA8RD
+cPDPN/QK642DjlJ3PBriozi/ECUn6QDvRDrs9K6gOKQHP3WCUET/os2ZyCbSHIcN
+JBuDCsWguy4BPOJX1cLU1gn5yoECRtIk87OwOsF0kuKpqdoN2Os4yTxiB5pXYaU=
+=pl0i
+-----END PGP SIGNATURE-----
