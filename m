@@ -1,24 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/04/9
-Message-Id: <201402041448.s14EmcsP003242@linus.mitre.org>
-Date: Tue, 4 Feb 2014 09:48:38 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/19
+Message-Id: <201402032028.s13KSO3q008461@linus.mitre.org>
+Date: Mon, 3 Feb 2014 15:28:24 -0500 (EST)
 From: cve-assign@...re.org
-To: vdanen@...hat.com
+To: mcarpenter@...e.fr
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request and heads-up on insecure temp file handling in unpack200 (OpenJDK, Oracle Java)
+Subject: Re: CVE request: enlightenment sysactions
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> I'm not sure if MITRE will be handling the assignment or if Oracle
-> will,
+> Red Hat Security suggested I request a CVE here since this potentially
+> effects multiple distros/maintainers.
 
-We don't want to rule out the possibility that someone from Oracle
-will reply to the list and mention that this issue was the topic
-of an earlier private report to Oracle, and already has a CVE ID
-assigned. In general, MITRE will coordinate with Oracle to avoid a
-duplicate assignment.
+> https://bugzilla.redhat.com/show_bug.cgi?id=1059410
+
+> These aren't security flaws, precisely, due to some of the other
+> defaults that Fedora has that other distros/vendors may not, but
+> upstream recently did some hardening to the defaults they provide (and
+> we don't change) based on Martin Carpenter's report.
+
+No one from another distribution responded with specific details that were
+different from this "aren't security flaws, precisely" statement.
+So, we will make the CVE assignments on the basis of the original report.
+
+> The Enlightenment window manager (enlightenment.org) was found to ship
+> with (a) a setuid root helper that did not effectively sanitize its
+> environment and (b) a weak default configuration. Users in select
+> groups could exploit this to execute arbitrary programs as root.
+
+> add more environment variables to nuke and add alternate envrionment
+> nuke method to raise security level.
+
+>  1. clear out environment as best is possible before executing
+>     anything. especially PATH and IFS are set to minimal base defaults.
+>     also use clearenv() if available and unsetenv()
+
+Use CVE-2014-1845 for this issue in which the environment isn't
+properly restricted.
+
+
+> 2. remove gdb method as it's just too dangerous. run it as normal as
+>    the user and if the kernel / distro dny that - then sorry. too bad.
+
+Use CVE-2014-1846 for this issue in which gdb is available unsafely in
+the unpatched codebase.
+
+
+In this interpretation, "and (b) a weak default configuration. Users
+in select groups could exploit this to execute arbitrary programs as
+root" means that at least one not-equivalent-to-root user is able to
+execute the helper program. In other words, it is not an independent
+vulnerability.
+
+A specific Linux distribution might, for example, have an
+implementation error in determining who is allowed to execute the
+helper program. If anything like that is reported, additional CVE
+assignments would be possible.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -28,11 +67,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJS8Pz/AAoJEKllVAevmvms22kH/3seljXSIQBQc4RHGdXASiNp
-iAuFo0RbOWUpASGKX0Roo0aL3XVJGiieffeOtmbV1D434tffB5cuCdlUnQ7kE/Pw
-Q54JO778WDzNhOyeV/AKITYKHcEmjpw/f2Qtoig2Y5FEoOAlI+c2rE4i/sIJ84kD
-cfuTD6DCxNEWwf9XCHS9Ee1bxCZNnI1od+CDk+B6dcIrW9fXytoZiUO5caaWDtmC
-QfS7ok2m3ykkCTWdABnl+ix8nqu3KtOWGtAa/6rvprt4wzw2jP7r3Jno//qjiVVf
-0K50+tSByIHvC1PdZHUiFavne1CefI2W+KOAdXh2fTi9Aa4z8/aq7gS8HTCngS4=
-=fvTN
+iQEcBAEBAgAGBQJS7/sjAAoJEKllVAevmvmsEo4H/3HyolVbgVNo1tMqauZkBaNB
+lEusuivKLl1J0gn5dpWpFIur1DmQIyceg1cyCghW0IWzJRCK2y4a1OSQw3syQUie
+HUY3iHgeogwYBKwFAZfB9+Z+uIN4rgqOFIJJksQEh/02g//f7scVIuG+dY7/eW3T
+ZjyaFZzt/UeleHJXD9bXTFSHe0YkEuyGCGSrXptW+q9qZaNSfHZlJ1umH9VWMNN/
+sAr4HFQ8n1Dk+fzdYlIL1UpSFaAYq41bm0dzBJr4RNL9VO9xc8mNvwCvmBFtUvMu
+qKQ+XbxGl+8gvslLQHC1GV/YbuhzdLOj7yMAvr2aqagmHHiFbK4+tYmqlIn1BKY=
+=Ft+z
 -----END PGP SIGNATURE-----
