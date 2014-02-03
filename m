@@ -1,45 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/21
-Message-ID: <5480CD52.3010509@uu.nl>
-Date: Thu, 4 Dec 2014 22:08:34 +0100
-From: Dawa Ometto <d.l.a.ometto@...nl>
-To: <oss-security@...ts.openwall.com>
-Subject: CVE request: remote code execution vulnerability in gollum < 4.0.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/15
+Message-id: <9844B65D-96D7-4D5A-8437-C0763F7DEFF2@me.com>
+Date: Mon, 03 Feb 2014 10:43:53 -0500
+From: larry Cashdollar <larry0@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Persistent XSS in Wordpress 3.3.1+dfsg-1 (Packaged with Ubuntu 12.04.4)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+This issue was reported 17 months ago https://core.trac.wordpress.org/ticket/21917
+and can be mitigated by changing the wordpress default configuration.
 
-I just released a fix for a remote code execution vulnerability in
-gollum [1]. The vulnerable code was in the gollum-grit_adapter [2] ruby
-gem dependency as of gollum v3.1.0, but the exploitable code was also
-present before that version, in the gollum-lib [3] gem dependency (code
-was abstracted from gollum-lib to the new dependency).
+Sorry folks, I just wanted everyone to know the full story.
 
-Type of vulnerability: remote code execution
-Attack outcome: run arbitrary commands, shell access
-Vulnerable versions: gollum < 3.1.1, gollum-lib < 4.0.1,
-gollum-grit_adapter < 0.1.1
-Fix: `gem update gollum` will update the dependencies.
-Link to vulnerability/fix diff:
-https://github.com/gollum/grit_adapter/commit/4520d973c81fecfebbeacd2ef2f1849d763951c7
-Link to project issue: https://github.com/gollum/gollum/issues/913
+Larry C$
 
-Description: The bug exploits the fact that gollum uses the grit gem for
-git repository access, which makes command-line calls to `git grep` to
-search files. `git grep` has an `-O` or `--open-files-in-pager` option
-which can spawn an arbitrary process (to act as pager). In vulnerable
-versions of gollum, searching for the string `-O<arbitrary command>` or
-`--open-files-in-pager <arbritary command>` in the wiki's search field
-will execute an arbitrary shell command. However, this will only work if
-the string "master" (or more precisely, the name of the git branch that
-gollum is using) is found in one of the wiki's files: "master" is then
-interpreted as the search query, `-O<arbitary code>` as a command line
-option to `git grep`.
-
-The fix in the `gollum-grit_adapter` gem v.0.1.1 shell-escapes the
-user's query and removes any -O or --open-file-in-pager option from it.
-
-[1] https://github.com/gollum/gollum, https://rubygems.org/gems/gollum
-[2] https://github.com/gollum/grit_adapter
-[3] https://github.com/gollum/gollum-lib
-
+> On Feb 2, 2014, at 1:36 PM, "Larry W. Cashdollar" <larry0@...com> wrote:
+> 
+> Nevermind,  This is invalid.  The WP admin can use javascript while a regular user can not.
+> 
+> 
+>> On Feb 2, 2014, at 9:56 AM, Larry W. Cashdollar <larry0@...com> wrote:
+>> 
+>> Title: Persistent XSS in Wordpress 3.3.1+dfsg-1 (Packaged with Ubuntu 12.04.4)
+>> 
+>> Author: Larry W. Cashdollar, @_larry0
+>> 
+>> Date: 2/1/2014
+>> 
+>> Vendor: Not notified yet.
+>> 
+>> Download: http://wordpress.org/download 
+>> 
+>> Versions Impacted: 3.3.1 -> 3.8.1 tested 2/2/2014.
+>> 
+>> CVE: Please assign.
+>> 
+>> Persistent XSS injection description field in Media Library.
+>> 
+>> Description: A persistent cross site scripting vulnerability exists in the latest version of WordPress in the Media Library.  It appears the Description field is not properly sanitized when viewed.  The malicious code is stored when the description field is saved.
+>> 
+>> Full Advisory: http://vapid.dhs.org/advisories/wordpress/XSS/xss_wordpress.html
+> 
