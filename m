@@ -1,31 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/2
-Message-ID: <5440669E.1070601@redhat.com>
-Date: Thu, 16 Oct 2014 18:45:18 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: attacking hsts through ntp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/3
+Message-ID: <20140203034520.GA31457@openwall.com>
+Date: Mon, 3 Feb 2014 07:45:20 +0400
+From: Solar Designer <solar@...nwall.com>
+To: mancha <mancha1@...h.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Feb 03, 2014 at 03:16:13AM +0000, mancha wrote:
+> Attached find a kernel module I've authored that protects from the attack.
 
+Unfortunately, your two attached files - nox32recvmmsg.c and Makefile -
+arrived each in a separate message, with the content yEnc encoded:
 
-On 16/10/14 06:32 PM, Michael Samuel wrote:
-> On 16 October 2014 23:03, Hanno Böck <hanno@...eck.de> wrote:
->> Same should work for HPKP. The idea of setting some security feature
->> through a header needs a revisit.
->> The solution would be to have a more reliable PC time. How do we do
->> that?
-> 
-> A Date: header?
-> 
+http://en.wikipedia.org/wiki/YEnc
 
-You can't trust remote servers you're getting the content from... what
-if I send wonky times to try and screw with your browser? Or header
-injection attacks? No thanks.
+Moreover, at least nox32recvmmsg.c definitely looks wrong - only 5 bytes
+of the encoding are present:
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+=ybegin part=1 line=128 size=2287 name=nox32recvmmsg.c
+=ypart begin=0 end=5
+M<8E><8F><90><93>
+=yend size=5 part=1 pcrc32=bdd2de8b
 
+(where the <8E><8F><90><93> portion is literal 8-bit characters).  The
+rest of nox32recvmmsg.c is nowhere to be seen.  The Makefile could be
+OK, but without the .c file it's useless.  As a moderator, I'll reject
+those other two messages since they're of little use.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Rather than post via Gmane's NNTP gateway, can you please reply to this
+message with the files MIME-attached, or include the files in message
+body with some sort of delimiters (e.g. Phrack-style)?
+
+Thanks,
+
+Alexander
