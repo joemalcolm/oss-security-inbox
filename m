@@ -1,25 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/8
-Message-ID: <87tx7aivsw.fsf@vigenere.g10code.de>
-Date: Tue, 24 Jun 2014 09:57:51 +0200
-From: Werner Koch <wk@...pg.org>
-To: mancha <mancha1@...o.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: GnuPG-1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/04/3
+Message-ID: <52F0BEAD.7080103@redhat.com>
+Date: Tue, 04 Feb 2014 11:19:25 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 24 Jun 2014 07:53, mancha1@...o.com said:
+On 02/04/2014 11:04 AM, Henri Salo wrote:
+> On Tue, Feb 04, 2014 at 10:35:46AM +0100, Hanno Böck wrote:
+>> python-gnupg 0.3.5 lists in the changelog:
+>> "Added improved shell quoting to guard against shell injection."
+>>
+>> Sounds like a severe security issue, but further info is lacking.
+>
+> Diff attached. New function shell_quote() seems to represent major changes to
+> shell input quoting against unsafe input.
+>
+> +# We use the test below because it works for Jython as well as CPython
+> +if os.path.__name__ == 'ntpath':
+> +    # On Windows, we don't need shell quoting, other than worrying about
+> +    # paths with spaces in them.
+> +    def shell_quote(s):
+> +        return '"%s"' % s
+> +else:
+> +    # Section copied from sarge
+> +
+> +    # This regex determines which shell input needs quoting
+> +    # because it may be unsafe
+> +    UNSAFE = re.compile(r'[^\w%+,./:=@-]')
+> +
+> +    def shell_quote(s):
+> +        """
+> +        Quote text so that it is safe for Posix command shells.
+> +
+> +        For example, "*.py" would be converted to "'*.py'". If the text is
+> +        considered safe it is returned unquoted.
+> +
+> +        :param s: The value to quote
+> +        :type s: str (or unicode on 2.x)
+> +        :return: A safe version of the input, from the point of view of Posix
+> +                 command shells
+> +        :rtype: The passed-in type
+> +        """
+> +        if not isinstance(s, string_types):
+> +            raise TypeError('Expected string type, got %s' % type(s))
+> +        if not s:
+> +            result = "''"
+> +        elif len(s) >= 2 and (s[0], s[-1]) == ("'", "'"):
+> +            result = '"%s"' % s.replace('"', r'\"')
+> +        elif not UNSAFE.search(s):
+> +            result = s
+> +        else:
+> +            result = "'%s'" % s.replace("'", "'\"'\"'")
+> +        return result
+> +
+> +    # end of sarge code
 
-> This issue has also been corrected in the GnuPG-2 branch [3] though
-> there is not yet a point release which includes the fix. Contrary to my
+This fix appears to be incomplete:
 
-I am working on a 2.0.24 release.  Should be released today.
+ >>> print shell_quote("'$(touch /tmp/I_was_here'")
+"'$(touch /tmp/I_was_here'"
 
 
-Salam-Shalom,
+[fweimer@...enburg ~]$ echo "'$(touch /tmp/I_was_here)'"
+''
+[fweimer@...enburg ~]$ ls -l /tmp/I_was_here
+-rw-rw-r--. 1 fweimer fweimer 0 Feb  4 11:12 /tmp/I_was_here
 
-   Werner
+The proper way (at least if your shell runs in a UTF-8 or ISO-8859 
+locale) to escape shell arguments is to wrap them in '', after replacing 
+embedded ' characters with the four character sequence '\''.  However, 
+using the subprocess module with shell=False (the default) is strongly 
+preferred.
+
+In both cases, you need to make sure that you prevent option injection 
+through positional arguments.  With a GNU getopt-derived command line 
+parser, option processing can be terminated with a -- argument. 
+(Warning: GnuPG does not strictly follow GNU command line processing 
+conventions.)
+
+Is anyone in touch with the python-gpg folks and can rely this 
+information?  Thanks.
 
 -- 
-Die Gedanken sind frei.  Ausnahmen regelt ein Bundesgesetz.
-
+Florian Weimer / Red Hat Product Security Team
