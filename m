@@ -1,43 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/12/1
-Message-ID: <20140412063313.GA8352@zoho.com>
-Date: Sat, 12 Apr 2014 06:33:13 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/04/6
+Message-ID: <20140204135030.GC27676@kludge.henri.nerv.fi>
+Date: Tue, 4 Feb 2014 15:50:30 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Cauterizing OpenSSL's heartbleed (the aftermath)
+Cc: Matthew Daley <mattd@...fuzz.com>, Florian Weimer <fweimer@...hat.com>
+Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 09, 2014 at 04:20:14PM -0700, Seth Arnold wrote:
-> On Wed, Apr 09, 2014 at 10:47:48PM +0000, mancha wrote:
-> > Mustafa Al-Bassam's work assists a great deal with this taxonomy. He
-> > ran PoC code against Alexa top 100, 1000, and 10000 sites beginning
-> > about 18 hours after OpenSSL's first public announcement [1].
-> > 
-> > Specifically, his scans began circa: 1396956600 (top 100); 1396958400
-> > (top 1000); and 1396972800 (top 10000). Did any major vendors deploy
-> > upgrades prior to this?
-> 
-> Ubuntu's updates were released around 1396907296 [2], roughly 13 hours
-> before Mustafa's awesome scans.
-> 
-> Thanks
-> 
-> > [1] https://github.com/musalbas/heartbleed-masstest
-> 
-> [2] https://launchpad.net/ubuntu/+source/openssl/+publishinghistory
+Upstream has made new version for testing. Please do comment if you have time. I
+will also test that later and maybe provide more unit tests.
 
-Thanks Seth (and Yves-Alexis) and kudos on the very fast reaction times.
+https://code.google.com/p/python-gnupg/issues/detail?id=98#c4
 
-Unfortunately for this exercise, your efficiency waters down the meaning
-of "not vulnerable" in Mustafa's scans. His "vulnerable" category is
-still of value, though. Maybe scans closer to time-zero will pop up.
+---
+Henri Salo
 
-FYI, there is confirmation of private key compromise (aside from
-Codenomicon's):
-
-https://www.cloudflarechallenge.com/heartbleed
-
---mancha
-
-
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
