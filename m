@@ -1,44 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/21/1
-Message-Id: <201404210537.s3L5aq9L020133@linus.mitre.org>
-Date: Mon, 21 Apr 2014 01:36:52 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/04/9
+Message-Id: <201402041448.s14EmcsP003242@linus.mitre.org>
+Date: Tue, 4 Feb 2014 09:48:38 -0500 (EST)
 From: cve-assign@...re.org
-To: pedrib@...il.com
+To: vdanen@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Remote code execution in Pimcore CMS
+Subject: Re: CVE request and heads-up on insecure temp file handling in unpack200 (OpenJDK, Oracle Java)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> It's all the same flaw and the same attack methodology
+> I'm not sure if MITRE will be handling the assignment or if Oracle
+> will,
 
-Probably "attack methodology" wasn't the best phrase to use in the
-http://openwall.com/lists/oss-security/2014/04/19/5 post because there
-might be multiple common definitions.
-
-The currently available exploit information is that an attack against
-versions 1.4.9 to 2.0.0 (inclusive) can use
-Zend_Pdf_ElementFactory_Proxy.
-
-Also, an attack against versions 1.4.9 to 2.1.0 (inclusive) can use
-Zend_Http_Response_Stream.
-
-The details of a successful attack are not identical for these two
-sets of versions. CVE's practice here is to assign two different IDs:
-
-  1.4.9 to 2.0.0: Zend_Pdf_ElementFactory_Proxy = CVE-2014-2921
-  1.4.9 to 2.1.0: Zend_Http_Response_Stream =     CVE-2014-2922
-
-The impacts are also different but a difference in impact does not, by
-itself, affect the number of CVE IDs. The detailed reason for why
-there are different sets of affected versions (e.g., a code change in
-2.0.1 to enforce use of certain PHP versions, with some PHP versions
-not allowing a malicious.php\0 filename) also does not affect the
-number of CVE IDs in this case.
-
-Each CVE depends on the unserialize problem in the context of whether
-the version-enforcement code is present or absent.
+We don't want to rule out the possibility that someone from Oracle
+will reply to the list and mention that this issue was the topic
+of an earlier private report to Oracle, and already has a CVE ID
+assigned. In general, MITRE will coordinate with Oracle to avoid a
+duplicate assignment.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -48,11 +28,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTVK2rAAoJEKllVAevmvmsmqEIALm75zXacwRz6P+tdvvHrrUw
-DjeKcGx6ursnX2N3skFLDE0TBA9zZ3lnAzl26pOuRR6rDsAyHb3blWxb1Wd1GTQk
-vzKTU4cBNUzhKjBn0v+l/fepvV1JH7uPVJoI+dUU4wV0Y0z79g1hNKrEOshfetSr
-SDLCfh7Qxk9bCIWkJ2jJ+e1iiiF75fd132/skMaZWth/aO8/sh6M9H9T5Re51ikE
-UymvKFElYjHRnH5MMBCDxDu9JOR/E82BBxREy3pz7b4iQXwuuBc+gL5KXXe+ZLwf
-NsaJ25LjvP5Fe+OYoGcPVKN9d8GehAD8Yj0vwZ69Kn6f0yqijBwDwhnDkBLPl54=
-=+ro7
+iQEcBAEBAgAGBQJS8Pz/AAoJEKllVAevmvms22kH/3seljXSIQBQc4RHGdXASiNp
+iAuFo0RbOWUpASGKX0Roo0aL3XVJGiieffeOtmbV1D434tffB5cuCdlUnQ7kE/Pw
+Q54JO778WDzNhOyeV/AKITYKHcEmjpw/f2Qtoig2Y5FEoOAlI+c2rE4i/sIJ84kD
+cfuTD6DCxNEWwf9XCHS9Ee1bxCZNnI1od+CDk+B6dcIrW9fXytoZiUO5caaWDtmC
+QfS7ok2m3ykkCTWdABnl+ix8nqu3KtOWGtAa/6rvprt4wzw2jP7r3Jno//qjiVVf
+0K50+tSByIHvC1PdZHUiFavne1CefI2W+KOAdXh2fTi9Aa4z8/aq7gS8HTCngS4=
+=fvTN
 -----END PGP SIGNATURE-----
