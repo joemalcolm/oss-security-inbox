@@ -1,179 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/17
-Message-Id: <201407082234.s68MYmLf043264@freefall.freebsd.org>
-Date: Tue, 8 Jul 2014 22:34:48 GMT
-From: FreeBSD Security Advisories <security-advisories@...ebsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/04/2
+Message-ID: <20140204100401.GA27676@kludge.henri.nerv.fi>
+Date: Tue, 4 Feb 2014 12:04:01 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: FreeBSD Security Advisory FreeBSD-SA-14:17.kmem
+Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+On Tue, Feb 04, 2014 at 10:35:46AM +0100, Hanno Böck wrote:
+> python-gnupg 0.3.5 lists in the changelog:
+> "Added improved shell quoting to guard against shell injection."
+> 
+> Sounds like a severe security issue, but further info is lacking.
 
-=============================================================================
-FreeBSD-SA-14:17.kmem                                       Security Advisory
-                                                          The FreeBSD Project
+Diff attached. New function shell_quote() seems to represent major changes to
+shell input quoting against unsafe input.
 
-Topic:          Kernel memory disclosure in control messages and SCTP
-		notifications
++# We use the test below because it works for Jython as well as CPython
++if os.path.__name__ == 'ntpath':
++    # On Windows, we don't need shell quoting, other than worrying about
++    # paths with spaces in them.
++    def shell_quote(s):
++        return '"%s"' % s
++else:
++    # Section copied from sarge
++
++    # This regex determines which shell input needs quoting
++    # because it may be unsafe
++    UNSAFE = re.compile(r'[^\w%+,./:=@-]')
++
++    def shell_quote(s):
++        """
++        Quote text so that it is safe for Posix command shells.
++
++        For example, "*.py" would be converted to "'*.py'". If the text is
++        considered safe it is returned unquoted.
++
++        :param s: The value to quote
++        :type s: str (or unicode on 2.x)
++        :return: A safe version of the input, from the point of view of Posix
++                 command shells
++        :rtype: The passed-in type
++        """
++        if not isinstance(s, string_types):
++            raise TypeError('Expected string type, got %s' % type(s))
++        if not s:
++            result = "''"
++        elif len(s) >= 2 and (s[0], s[-1]) == ("'", "'"):
++            result = '"%s"' % s.replace('"', r'\"')
++        elif not UNSAFE.search(s):
++            result = s
++        else:
++            result = "'%s'" % s.replace("'", "'\"'\"'")
++        return result
++
++    # end of sarge code
 
-Category:       core
-Module:         kern, sctp
-Announced:      2014-07-08
-Credits:        Michael Tuexen
-Affects:        All supported versions of FreeBSD.
-Corrected:      2014-07-08 21:54:50 UTC (stable/10, 10.0-STABLE)
-                2014-07-08 21:55:27 UTC (releng/10.0, 10.0-RELEASE-p7)
-                2014-07-08 21:54:50 UTC (stable/9, 9.3-PRERELEASE)
-                2014-07-08 21:55:27 UTC (releng/9.3, 9.3-RC3-p1)
-                2014-07-08 21:55:27 UTC (releng/9.3, 9.3-RC2-p1)
-                2014-07-08 21:55:27 UTC (releng/9.3, 9.3-RC1-p2)
-                2014-07-08 21:55:27 UTC (releng/9.3, 9.3-BETA3-p2)
-                2014-07-08 21:55:27 UTC (releng/9.2, 9.2-RELEASE-p10)
-                2014-07-08 21:55:27 UTC (releng/9.1, 9.1-RELEASE-p17)
-                2014-07-08 21:54:50 UTC (stable/8, 8.4-STABLE)
-                2014-07-08 21:55:39 UTC (releng/8.4, 8.4-RELEASE-p14)
-CVE Name:       CVE-2014-3952, CVE-2014-3953
+---
+Henri Salo
 
-For general information regarding FreeBSD Security Advisories,
-including descriptions of the fields above, security branches, and the
-following sections, please visit <URL:http://security.FreeBSD.org/>.
+View attachment "python-gnupg.diff" of type "text/x-diff" (17476 bytes)
 
-I.   Background
-
-The control message API is used to construct ancillary data objects for
-use in control messages sent and received across sockets and passed via
-the recvmsg(2) and sendmsg(2) system calls.
-
-II.  Problem Description
-
-Buffer between control message header and data may not be completely
-initialized before being copied to userland. [CVE-2014-3952]
-
-Three SCTP cmsgs, SCTP_SNDRCV, SCTP_EXTRCV and SCTP_RCVINFO, have implicit
-padding that may not be completely initialized before being copied to
-userland.  In addition, three SCTP notifications, SCTP_PEER_ADDR_CHANGE,
-SCTP_REMOTE_ERROR and SCTP_AUTHENTICATION_EVENT, have padding in the
-returning data structure that may not be completely initialized before
-being copied to userland.  [CVE-2014-3953]
-
-III. Impact
-
-An unprivileged local process may be able to retrieve portion of kernel
-memory.
-
-For the generic control message, the process may be able to retrieve a
-maximum of 4 bytes of kernel memory.
-
-For SCTP, the process may be able to retrieve 2 bytes of kernel memory
-for all three control messages, plus 92 bytes for SCTP_SNDRCV and 76
-bytes for SCTP_EXTRCV.  If the local process is permitted to receive
-SCTP notification, a maximum of 112 bytes of kernel memory may be
-returned to userland.
-
-This information might be directly useful, or it might be leveraged to
-obtain elevated privileges in some way.  For example, a terminal buffer
-might include a user-entered password.
-
-IV.  Workaround
-
-No workaround is available.
-
-V.   Solution
-
-Perform one of the following:
-
-1) Upgrade your vulnerable system to a supported FreeBSD stable or
-release / security branch (releng) dated after the correction date.
-
-2) To update your vulnerable system via a source code patch:
-
-The following patches have been verified to apply to the applicable
-FreeBSD release branches.
-
-a) Download the relevant patch from the location below, and verify the
-detached PGP signature using your PGP utility.
-
-[FreeBSD 10.0]
-# fetch http://security.FreeBSD.org/patches/SA-14:17/kmem.patch
-# fetch http://security.FreeBSD.org/patches/SA-14:17/kmem.patch.asc
-# gpg --verify kmem.patch.asc
-
-[FreeBSD 8.4, 9.2 and 9.3-RC]
-# fetch http://security.FreeBSD.org/patches/SA-14:17/kmem-89.patch
-# fetch http://security.FreeBSD.org/patches/SA-14:17/kmem-89.patch.asc
-# gpg --verify kmem.patch.asc
-
-[FreeBSD 9.1]
-# fetch http://security.FreeBSD.org/patches/SA-14:17/kmem-9.1.patch
-# fetch http://security.FreeBSD.org/patches/SA-14:17/kmem-9.1.patch.asc
-# gpg --verify kmem.patch.asc
-
-b) Apply the patch.  Execute the following commands as root:
-
-# cd /usr/src
-# patch < /path/to/patch
-
-c) Recompile your kernel as described in
-<URL:http://www.FreeBSD.org/handbook/kernelconfig.html> and reboot the
-system.
-
-3) To update your vulnerable system via a binary patch:
-
-Systems running a RELEASE version of FreeBSD on the i386 or amd64
-platforms can be updated via the freebsd-update(8) utility:
-
-# freebsd-update fetch
-# freebsd-update install
-
-VI.  Correction details
-
-The following list contains the correction revision numbers for each
-affected branch.
-
-Branch/path                                                      Revision
-- -------------------------------------------------------------------------
-stable/8/                                                         r268432
-releng/8.4/                                                       r268435
-stable/9/                                                         r268432
-releng/9.1/                                                       r268434
-releng/9.2/                                                       r268434
-releng/9.3/                                                       r268433
-stable/10/                                                        r268432
-releng/10.0/                                                      r268434
-- -------------------------------------------------------------------------
-
-To see which files were modified by a particular revision, run the
-following command, replacing NNNNNN with the revision number, on a
-machine with Subversion installed:
-
-# svn diff -cNNNNNN --summarize svn://svn.freebsd.org/base
-
-Or visit the following URL, replacing NNNNNN with the revision number:
-
-<URL:http://svnweb.freebsd.org/base?view=revision&revision=NNNNNN>
-
-VII. References
-
-<URL:http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3952>
-<URL:http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3953>
-
-The latest revision of this advisory is available at
-<URL:http://security.FreeBSD.org/advisories/FreeBSD-SA-14:17.kmem.asc>
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCgAGBQJTvHEtAAoJEO1n7NZdz2rnbRcP+gJ9CIH2kch1kXgs94McM1L+
-uSnUQsv30OQFe/J//q65HUINVwCMwyRZRFZ238sVsJ6jpft6UTaDxDSdJAqR2opi
-hew/KEYYQhrrFXCHAgyaXh7Ph1B9URBJ5/MOkDWIBYOei3bxPZRP4ordrtclq/bA
-qFRvov9gXUah6imbnRMvmC68tzt9v7I/vE2VwsC9fE/yL25IvP5ZunEATegOm4IQ
-w+fk2VB/6GNFbTsWW1aR6FM60mWXVj2uJfHenEG1K381AXXQb4lSzo8E2SsdkI3B
-x+MJkxBhNrpSm6tV/zndtYRoDtFseuTHBjKxe7liTyJcFuztkZqmdHaNzbeBSVON
-P/fIqMHt2f143028ZZZEFqHzuqiEWrWB3WcgQnfsp3HrhMPnhnwkfo8TuC5NiKYx
-6CsdnWLdPb1ix9RqX4MqnbFBHDKCoK28nuCKcxJB/OXanikGzcIBazpLsqFmTcm6
-9bZ79zuMWU7wiU8p5qdGURmjTJQx9eF5UHcyfIPX6wZLyx8WVltbF5zVJa0nw0LC
-OEf5KmmgEbPhfdkJ5R2UyHffwQDCNs+vixNLRSJS9/D/6lczT8qPxpDEkjQCsSKw
-YxmLubDOjnqR57yrh4kKEj2V5ZJcRu2G1q1EKdLfD98VJOrot8p4qa4sCL+o9sbw
-nII906M+PVUAnsa9synp
-=nTZs
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
