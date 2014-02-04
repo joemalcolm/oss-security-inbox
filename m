@@ -1,73 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/10
-Message-ID: <CAC9YFzd_TOLvMkevM1UXAPU6gM86TqZX3zn+9DHos9+YmFe6qw@mail.gmail.com>
-Date: Mon, 18 Aug 2014 14:11:26 -0300
-From: Rafael Mendonça França <rafaelmfranca@...il.com>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com,  ruby-security-ann@...glegroups.com
-Subject: [Ruby on Rails] [CVE-2014-3514] Strong Parameter bypass with create_with
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/04/5
+Message-ID: <20140204103449.GB27676@kludge.henri.nerv.fi>
+Date: Tue, 4 Feb 2014 12:34:49 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
 Content-Type: text/plain; charset=utf-8
 
-There is a vulnerability in the create_with method in Active Record. This
-vulnerability has been assigned the CVE identifier CVE-2014-3514.
+On Tue, Feb 04, 2014 at 11:19:25AM +0100, Florian Weimer wrote:
+> Is anyone in touch with the python-gpg folks and can rely this
+> information?  Thanks.
 
-Versions Affected:  4.0.0 and All Later Versions.
-Not affected:       Versions earlier than 4.0.0
-Fixed Versions:     4.0.9 4.1.5
+I'll create new issue to upstream tracker about this.
 
-Impact
-------
-The create_with functionality in Active Record was implemented incorrectly
-and completely bypasses the strong parameters protection.  Applications
-which pass user-controlled values to create_with could allow attackers to
-set arbitrary attributes on models.
+---
+Henri Salo
 
-All users running an affected release should either upgrade or use one of
-the workarounds immediately.
-
-Releases
---------
-The 4.0.9 and 4.1.5 releases are available at the normal locations.
-
-Workarounds
------------
-To avoid this vulnerability you will have to either remove all calls to
-create_with, or carefully audit your codebase to ensure it sanitizes the
-input first.  For example you should replace code like this:
-
-  user.blog_posts.create_with(params[:blog_post]).create
-
-with either:
-
-  user.blog_posts.create(params[:blog_post])
-
-or:
-
-  user.blog_posts.create_with(params[:blog_post].permit(:title, :body,
-:etc)).create
-
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided
-patches for the two supported release series.  They are in git-am format
-and consist of a single changeset.
-
-* 4-1-create_with.patch - Patch for 4.1 series
-* 4-0-create_with.patch - Patch for 4.0 series
-
-Please note that only the 4.0.x and 4.1.x series receive regular security
-updates at present.  Users of earlier unsupported releases are advised to
-upgrade as soon as possible as we cannot guarantee the continued
-availability of security fixes for earlier releases.
-
-Credits
--------
-
-Thanks to Stephen Touset of Square for reporting the vulnerability to us,
-and to Jeff Jarmoc of Matasano and Charlie Somerville of GitHub for helping
-verify the patches and advisories.
-
-Rafael Mendonça França
-http://twitter.com/rafaelfranca
-https://github.com/rafaelfranca
-
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
