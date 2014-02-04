@@ -1,40 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/27/4
-Message-Id: <20140827221432.152E3C00FB@smtp.hushmail.com>
-Date: Wed, 27 Aug 2014 23:14:31 +0100
-From: "Benjamin Harris" <bch@...h.ai>
-To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
-Subject: XRMS SQLi to RCE 0day
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/04/7
+Message-ID: <52F0F944.6050600@redhat.com>
+Date: Tue, 04 Feb 2014 15:29:24 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: Henri Salo <henri@...v.fi>, oss-security@...ts.openwall.com
+CC: Matthew Daley <mattd@...fuzz.com>
+Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 02/04/2014 02:50 PM, Henri Salo wrote:
+> Upstream has made new version for testing. Please do comment if you have time. I
+> will also test that later and maybe provide more unit tests.
+>
+> https://code.google.com/p/python-gnupg/issues/detail?id=98#c4
 
-OSS-Security: Can I request a CVE for this please?
+I can't create a Google account right now.
 
-XRMS Description:
-----------------------
+This:
+         if not s:
+             result = "''"
+         elif len(s) >= 2 and (s[0], s[-1]) == ("'", "'"):
+             result = '"%s"' % s.replace('"', r'\"').replace("'", r"'\''")
+         elif not UNSAFE.search(s):
+             result = s
+         else:
+             result = "'%s'" % s.replace("'", r"'\''")
+         return result
 
-The most advanced open source customer relationship management 
-(CRM), Sales Force Automation (SFA) suite: also features business 
-intelligence (BI) tools, Computer Telephony Integration (CTI), and 
-advanced plugin architecture. PHP/ADOdb/LAMP
+should be:
 
-Brief:
--------------------------------
+	return "'" + s.replace("'"', r"'\''")  + "'"
 
-I tried to report this to the developers/get it fixed a month ago, 
-although I've had no response from the developers. This should work 
-against latest, was found a long time ago, and I recently found it 
-while brushing off some hard drives.
+If I write "wrap them in ''", I mean single quotes, not double quotes. 
+Those behave differently in shell.
 
-Details:
-------------------------
+If upstream really wants to strip the outer '', it can use this instead:
 
-We get SQL injection via $_SESSION poisoning which we use to 
-retrieve admin credentials. We then authenticate with these 
-credentials and exploit a trivial command injection. Attached is a 
-working POC.
+	if s[:1] == "'" and s[-1:] == "'":
+	    s = s[1:-1]
+	return "'" + s.replace("'"', r"'\''")  + "'"
 
-Many thanks,
-Ben
-View attachment "release.py" of type "text/x-python" (8063 bytes)
+Again, this may or may not be safe in some Far-Eastern locales.
+
+-- 
+Florian Weimer / Red Hat Product Security Team
