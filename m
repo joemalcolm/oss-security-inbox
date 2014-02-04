@@ -1,30 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/2
-Message-ID: <1395998626.7188.3.camel@neutron.trustmatta.com>
-Date: Fri, 28 Mar 2014 09:23:46 +0000
-From: Florent Daigniere <florent.daigniere@...stmatta.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: MediaWiki 1.22.5 login csrf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/04/8
+Message-Id: <201402041440.s14EeakG002993@linus.mitre.org>
+Date: Tue, 4 Feb 2014 09:40:36 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 737385@...s.debian.org
+Subject: Re: CVE request: a2ps insecure temporary file use
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2014-03-27 at 18:37 -0700, Chris Steipp wrote:
-> Hi, we just patched a login CSRF in MediaWiki today. An attacker could
-> login a victim as the attacker. Can we get a cve assigned for this?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> https://bugzilla.redhat.com/show_bug.cgi?id=1060630#c5
 > 
-> Patch:
-> https://gerrit.wikimedia.org/r/#/c/121517/1/includes/specials/SpecialChangePassword.php
+> * Fri Jan 05 2001 Preston Brown <pbrown@...hat.com>
+> - security patch for tmpfile creation from Olaf Kirch <okir@....de>
 > 
-> Release announcement:
-> http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-March/000145.html
+> followed the next month by a fix to that patch:
 > 
-> Wikimedia bug:
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=62497
+> * Mon Feb 12 2001 Tim Waugh <twaugh@...hat.com>
+> - Fix tmpfile security patch so that it actually _works_ (bug #27155).
 
+Does anyone have information indicating that two CVE-2001-#### IDs are
+needed to cover the discoveries by Olaf Kirch and Tim Waugh 13 years
+ago? This would be the case if, for example, there was a January 2001
+a2ps package that fixed part of the problem with temporary files.
+Admittedly, the practical value of two CVE-2001-#### IDs at present
+may be extremely small.
 
-That looks like a session-fixation bug to me; not a CSRF... and
-therefore it's the wrong control: the session-id should be "renewed",
-that's all.
+The information does not seem to be in a2ps.git because data before
+2004 is unavailable, e.g.,
 
-Florent
+  http://pkgs.fedoraproject.org/cgit/a2ps.git/log/?ofs=100
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Also:
+
+  https://bugzilla.redhat.com/show_bug.cgi?id=27155
+  You are not authorized to access bug #27155.
+
+If (as we would expect) nobody is interested in checking that, we will
+assign one CVE-2001-#### ID.
+
+Finally, the earlier abstraction question is no longer relevant
+because Jakub Wilk is apparently not the original discoverer of any
+part of the problem. Specifically, this question:
+
+  The original report notes there are calls to tempname_ensure(). If any
+  of those are found to be vulnerable, would they use the same CVE number,
+  or require a different one?
+
+would only apply to a situation in which the spyname problem was a new
+discovery in 2014.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS8PuRAAoJEKllVAevmvmsavAH/35erOpFeVh3fjUXXGdlJBVN
+XzXwdKV6e+joCBJ2hYQ8+os5c19zFNdYcoAz8ay4DKdD9wEHUUiDjZDAhG1rWmDW
+ji3I8Bbi3aMmZwaKqJwv3GYWVAOr6QzTuvKJoPVl835jF7Od1FUWeEaMPPqZmI9s
+mwPp4eC4CjlVz8ldCgZdU+tiUZojJjl5wFBn/lnYsdfLisJ5mCi1YScMt3p5zZVE
+FkXNu5MhFLEtfeQF2BUe3HLsk/UtNEq8T0cMsaNdIbckkFGKxiNiRfK8QGBHGRIp
+KuFEoEufFAT0BNRMvHix4MFbYT+a2SKuC5lbrRa7jbyMWh9meRxze/s9UePtEno=
+=cx5F
+-----END PGP SIGNATURE-----
