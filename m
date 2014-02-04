@@ -1,77 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/3
-Message-Id: <201405060807.s4687Whq022296@linus.mitre.org>
-Date: Tue, 6 May 2014 04:07:32 -0400 (EDT)
-From: cve-assign@...re.org
-To: zanchey@....gu.uwa.edu.au
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Upcoming security release of fish 2.1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/04/10
+Message-ID: <5463F3A3-379B-46F1-AF85-5C7668D8013A@redhat.com>
+Date: Tue, 04 Feb 2014 09:09:28 -0700
+From: "Vincent Danen" <vdanen@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request and heads-up on insecure temp file handling in unpack200 (OpenJDK, Oracle Java)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 02/04/2014, at 7:48 AM, cve-assign@...re.org wrote:
 
-> There is also a symlink attack that doesn't depend on a race condition, so we'll
-> include a patch for that as well.
-> 
-> Could we have an additional CVE-ID assigned, please?
+>> I'm not sure if MITRE will be handling the assignment or if Oracle
+>> will,
+>
+> We don't want to rule out the possibility that someone from Oracle
+> will reply to the list and mention that this issue was the topic
+> of an earlier private report to Oracle, and already has a CVE ID
+> assigned. In general, MITRE will coordinate with Oracle to avoid a
+> duplicate assignment.
 
-First, we should mention that a single CVE ID cannot be used for a set
-of related issues that have different affected versions. For the
-earlier message that mentioned CVE-2014-2906 and CVE-2014-2914,
-approximately two more CVE IDs will be needed. We will send those
-later.
+Fair enough.  That's why I had included Oracle on the cc list, just in case.
 
-For "a symlink attack that doesn't depend on a race condition,"
-ultimately the answer is yes, you can have a separate CVE ID - use
-CVE-2014-3219. Probably at least a few oss-security readers would want
-us to explain why, so here's the explanation for them.
+Thanks.
 
-When there are discoveries of two instances of essentially the same
-composite, and there's any difference in the set of weaknesses for
-those two instances, we might want to have a general rule that two
-separate CVE IDs are always assigned. In practice, the Symlink
-Following composite is treated as somewhat of a special case in CVE.
-If we have one Symlink Following instance associated with two
-weaknesses, and a different Symlink Following instance associated with
-three weaknesses, we sometimes assign only one CVE ID. Possibly we
-will reevaluate that. (There's also often a complication that the
-available information is only that distinct Symlink Following
-instances exist; the information about the weaknesses is missing.)
-
-For the code fixed in the
-https://github.com/fish-shell/fish-shell/commit/c0989dce2d882c94eb3183e7b94402ba53534abb
-commit, an additional factor is that the Symlink Following composite
-exists and is relevant, but there's a more important attack that does
-not rely on Symlink Following. In between when the temporary filename
-is chosen and when the temporary filename is used, the attacker can
-place something at the temporary pathname. One option is a symlink,
-and fish will follow that symlink and perhaps overwrite an important
-file. Another option is a plain world writable file. In that case,
-fish writes to the file, but the attacker can change the contents of
-the file immediately before fish proceeds to execute the file. Thus,
-even if we did the abstraction based on "same commonly used composite
-name," we would still end up with a different CVE ID than for the new
-"symlink attack that doesn't depend on a race condition" report,
-because the pre-c0989dce2d882c94eb3183e7b94402ba53534abb code isn't
-solely characterized by a Symlink Following composite. Finally, we
-probably don't want to have two CVE IDs for a single case where mktemp
-is introduced - even when both Symlink Following and (roughly
-speaking) code injection are possible from the same set of weaknesses.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTaJe2AAoJEKllVAevmvmsY9sH/16M8V8sd3hQcGuTUQOqm1Zs
-jXH8T1xsy+Jof6NWJLzS+hcRS6LQOd02KMEyKow5Zr0kKICuJhU/eUTPiU+Uc9Da
-tkVz7sRv+GqJ1rect5JrwaygWLvjMG7ohZ0qtRhuqHJL3oVjwTyQlbfrITBRVfzy
-JtG3C0Pgx5q0w7kgcTLt99DZNrCnqY6xH765XBdL5Xr9J644qRRXX/u5hBgCoN9L
-xhgSkvMghvwzL1lpZjMWMIys4RuQqk73xfQ+OxEoo8Fz2czhvwH/poU51hvdpbRs
-1c9Hl/M8OWOVfCNKmVi9ejFYK1QME74LlkPI6kjjepDRagkuFYHpPEZZuWoenD4=
-=FOxU
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
