@@ -1,49 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/6
-Message-Id: <201407110746.s6B7kEj0015983@linus.mitre.org>
-Date: Fri, 11 Jul 2014 03:46:14 -0400 (EDT)
-From: cve-assign@...re.org
-To: matthieu.herrb@...s.fr
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: X.Org intel driver dev snapshots, backlight helper issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/05/1
+Message-ID: <52F1EE61.2020105@redhat.com>
+Date: Wed, 05 Feb 2014 18:55:13 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org, 737385@...s.debian.org
+Subject: Re: Re: CVE request: a2ps insecure temporary file use
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 02/05/2014 01:40 AM, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1060630#c5
+>>
+>> * Fri Jan 05 2001 Preston Brown <pbrown@...hat.com>
+>> - security patch for tmpfile creation from Olaf Kirch <okir@....de>
+>>
+>> followed the next month by a fix to that patch:
+>>
+>> * Mon Feb 12 2001 Tim Waugh <twaugh@...hat.com>
+>> - Fix tmpfile security patch so that it actually _works_ (bug #27155).
+>
+> Does anyone have information indicating that two CVE-2001-#### IDs are
+> needed to cover the discoveries by Olaf Kirch and Tim Waugh 13 years
+> ago? This would be the case if, for example, there was a January 2001
+> a2ps package that fixed part of the problem with temporary files.
+> Admittedly, the practical value of two CVE-2001-#### IDs at present
+> may be extremely small.
+>
+> The information does not seem to be in a2ps.git because data before
+> 2004 is unavailable, e.g.,
+>
+>    http://pkgs.fedoraproject.org/cgit/a2ps.git/log/?ofs=100
+>
+> Also:
+>
+>    https://bugzilla.redhat.com/show_bug.cgi?id=27155
+>    You are not authorized to access bug #27155.
+>
+> If (as we would expect) nobody is interested in checking that, we will
+> assign one CVE-2001-#### ID.
 
-> http://lists.x.org/archives/xorg-commit/2014-July/036840.html
+Hello,
 
-> xf86_video_intel_backlight_helper will be installed setuid
+I spent a little time looking but could not determine if a release was 
+made to fix only part of the problem. So one ID is fine by us.
 
-> (only beta versions have it)
+bug #27155 just contains some gdb output. Therefore I assumed it was 
+public and didn't check before sending it here.
 
-Use CVE-2014-4910 for the
+Thanks for looking at this.
 
-    - don't allow '/' in the interface name to avoid escaping the /sys
-      hierarchy
-
-issue.
-
-At present, there is no CVE ID for the
-
-    - check snprintf() return value for overflow.
-
-issue. We are not sure whether this has any impact beyond triggering
-an attempt to use an unintended filename under /sys/class/backlight/.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTv5WIAAoJEKllVAevmvms4YUH/3LASmq6IpPVfcmHgFwVliaF
-V3IAD2OrD5G+7YjkC0qCFAoazleHJfTJziP8Qkz1OpZe9GIKhCLhyEyicwwIzgpQ
-pcETqlPBuV4xPD3l0aSJLuYQC36sAWCACS+GIPZm26ZozWs7z2WTDzDcP9eyzFe1
-mvOuRo28leuR+3qhyoNotjxgB+JbMr8jw8stx2qgbeIdJ9Dw+X2sfq9QG5UAF4ZM
-Ob5NeBHfynXT1LpL0ZM1kYdY6BzJGdhcsKtNyMPkf/6RmmfKDLxgHXUHd6y6gtr1
-GjpQn1gcKjAhCr+3e57aHsTZa8oUxDSAW0FKeHMJeOPZx5omg4Yg6CZvGA3xOYw=
-=IXgK
------END PGP SIGNATURE-----
+--
+Murray McAllister / Red Hat Security Response Team
