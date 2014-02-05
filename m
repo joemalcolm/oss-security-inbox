@@ -1,43 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/3
-Message-ID: <20141222073925.3ac4e58d@pc>
-Date: Mon, 22 Dec 2014 07:39:25 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: can we talk about secure time?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/05/4
+Message-ID: <loom.20140205T131303-563@post.gmane.org>
+Date: Wed, 5 Feb 2014 12:14:44 +0000 (UTC)
+From: Vinay Sajip <vinay_sajip@...oo.co.uk>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 21 Dec 2014 23:30:10 -0700
-Kurt Seifried <kseifried@...hat.com> wrote:
+Florian Weimer <fweimer@...> writes:
 
-> Having to reconcile multiple logs/events across widely distributed
-> systems, especially in high volume situations, 1-2 seconds is a deal
-> breaker. Or people running SCADA systems for industrial plants. Or
-> people that run financial systems.
+> 
+> This looks better now, thanks.
+> 
 
-I don't think this contradicts my statement that average consumer hw
-doesn't need the high accuracy of ntp :-)
+I'll assume it's good enough to release, which I plan to do later today, 
+unless I hear otherwise.
 
-> So it's not an either/or situation (care about security, or have
-> accurate time, sometimes we need both).
+Regards,
 
-Yeah, I totally agree that this would be the desired thing to have.
-However the facts are that at the moment we don't. And imho for
-consumer HW the slight inaccuracy of tlsdate doesn't matter, while the
-insecurity of ntp does (as the very practical hsts attack has shown).
+Vinay Sajip
 
-I read these days that the Linux foundation is sponsoring some work on
-NTP. Anyone involved in this and can comment whether secure
-authentication for NTP is something that's being looked at or if it is
-only about creating a better implementation of the ntp software?
-
-
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
