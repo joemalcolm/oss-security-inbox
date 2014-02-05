@@ -1,39 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/7
-Message-ID: <53E4D917.1090500@fifthhorseman.net>
-Date: Fri, 08 Aug 2014 10:05:11 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/1
+Message-ID: <CAFFTvXg4UXxwteZ-fpC7w8oATQ7oM-yB=7z1jYk-mwQHtBAO5Q@mail.gmail.com>
+Date: Thu, 6 Feb 2014 00:15:16 +0800
+From: Gunther <deviant.beta@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+Subject: Dokeos 2.1.1 Multiple Stored XSS Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 08/08/2014 10:00 AM, Greg KH wrote:
-> On Fri, Aug 08, 2014 at 09:56:34AM -0400, Daniel Kahn Gillmor wrote:
->>
->> For example, you could register keyboards by serial number with the
->> system,
-> 
-> Most USB keyboards in the system do not have a unique serial number.
-> Heck, most USB devices in the system do not have a unique serial number,
-> the only USB device that is required to do so is a USB printer,
-> everything else is free to not have one at all, or have the same serial
-> number for all devices made of that type.
-> 
-> Never treat a USB serial number as "unique", except for a USB printer,
-> sorry.
+Hi,
 
-ugh, that's a shame.  are there any other characteristics we could use
-to gin up a phony serial number for this kind of use?  Even making an
-allowlist by model number would raise the bar a little bit for a generic
-attacker.
+I have discovered several Stored XSS vulnerabilities in Dokeos, which you
+can grab them
+http://downloads.sourceforge.net/project/dokeos/dokeos-2.1.1.zip?r=http://sourceforge.net/projects/dokeos/&ts=1391616505&use_mirror=nchc
 
-Though i suppose you could create a device that claims to be 400
-different keyboards at once -- or in a rapid hotplug succession until it
-finds the common model that you've already allowed :(
+*Tested Versions*
+Dokeos <http://sourceforge.net/projects/dokeos/> Version 2.1.1.
 
-ugh,
+*Details*
 
-	--dkg
+*Severity:* Stored XSS
+*Confidence:* Certain
+*Host:* http://localhost/
+*Path:* /dokeos-2.1.1/main/auth/profile.php
+
+*Issue detail:*
+The problem is script does not sanitise the following parameters, *“Phone”*
+, *“Street”*,*“Address line”*, *“Zip code”*, *“City”* before storing them
+in the database.
+If i were to enter the following XSS vector as a value to either of these
+parameters, whomever is going to browse the profile of this user will be
+subjected to a Stored XSS.
+
+1
+<![CDATA["><iframe/onload=alert(document.domain)>]]>
+
+As you can see here that i’ve used the above-mentioned XSS vector on the
+“Zip Code” field as shown below.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+[image: dokeos_01]<http://www.xchg.info/wp-content/uploads/2014/02/dokeos_01.png>
+
+After you have validated the entered values, simply login as another user
+or view as current user the profile of this user. In my test case, the url
+will be like this
+
+http://localhost/dokeos-2.1.1/main/social/profile.php?u=3
+
+The profile.php script does not sanitise the parameters before using them
+after getting them from the database. This makes it possible for an
+anonymous attacker to manipulate the values passed to these parameters to
+create Stored XSS.
+Upon visiting the above-mentioned URL, the visitor will be subjected to the
+Stored XSS as shown below:
+
+[image: dokeos_02]<http://www.xchg.info/wp-content/uploads/2014/02/dokeos_02.png>
+
+The 2nd issue which is also a Stored XSS.
+
+*Severity:* Stored XSS
+*Confidence:* Certain
+*Host:* http://localhost/
+*Path:* /dokeos-2.1.1/main/social/groups.php?id=1
+
+*Issue detail:*
+The problem is that if attacker were to enter the following XSS vector as
+the “Subject Topic”.
+
+1
+"><video><source onerror=alert(domain)>
+
+[image: dokeos_03]<http://www.xchg.info/wp-content/uploads/2014/02/dokeos_03.png>
+
+Whomever clicks “Reply” to that “Topic” will be subjected “Stored XSS” as
+shown below.
+
+[image: dokeos_04]<http://www.xchg.info/wp-content/uploads/2014/02/dokeos_04.png>
+
+The 3rd issue which is also a Stored XSS.
+
+*Severity:* Stored XSS
+*Confidence:* Certain
+*Host:* http://localhost/
+*Path:* /dokeos-2.1.1/main/messages/view_message.php?id=6&f=social
+
+*Issue detail:*
+The problem is similar to issue #2 if attacker were to enter the following
+XSS vector in the Message itself.
+
+1
+"><video><source onerror=alert(domain)>
+
+[image: dokeos_05]<http://www.xchg.info/wp-content/uploads/2014/02/dokeos_05.png>
+
+Whomever clicks “Reply” to that “Message” will be subjected “Stored XSS” as
+shown below.
+
+[image: dokeos_06]<http://www.xchg.info/wp-content/uploads/2014/02/dokeos_06.png>
+
+*POC / Test Code*
+All the examples here were provided to the vendor.
+
+*Disclosure Timeline*
+2013-12-31 – Vulnerability Discovered.
+2014-01-01 – Initial Vendor Notification (no reply).
+2014-01-01 – Vulnerability Details Sent to Vendor.
+2014-01-08 – Second Vendor Notification (no reply).
+2014-01-15 – Third Vendor Notification (no reply).
+2014-02-05 – Public Release.
+Please see the full report at http://www.xchg.info/?p=381 for more details
+if the images won't show
+
+BR,
+[ Gunther ]
+
