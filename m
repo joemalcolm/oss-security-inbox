@@ -1,93 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/12/1
-Message-ID: <20140812120629.GJ30701@core.inversepath.com>
-Date: Tue, 12 Aug 2014 14:06:29 +0200
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2014-006] Ganeti insecure archive permission
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/05/5
+Message-Id: <201402051239.s15CdI6Y021951@linus.mitre.org>
+Date: Wed, 5 Feb 2014 07:39:18 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 737385@...s.debian.org
+Subject: Re: CVE request: a2ps insecure temporary file use
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-#2014-006 Ganeti insecure archive permission
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1060630#c5
 
-Description:
+>> * Mon Feb 12 2001 Tim Waugh <twaugh@...hat.com>
+>> - Fix tmpfile security patch so that it actually _works_ (bug #27155).
 
-Ganeti, an open source virtualisation manager, suffers from an insecure file
-permission vulnerability that leads to sensitive information disclosure.
+>> And notes 
+>> http://pkgs.fedoraproject.org/cgit/a2ps.git/plain/a2ps-4.13-security.patch 
+>> is the patch.
 
-The Ganeti upgrade command 'gnt-cluster upgrade' creates an archive of the
-current configuration of the cluster (e.g. the contents of
-'/var/lib/ganeti').  The archive is named following the pattern ganet*.tar
-and is written to '/var/lib/'. Such archives are written with too lax
-permissions that make it possible to access them as unprivileged user.
+> I spent a little time looking but could not determine if a release was 
+> made to fix only part of the problem. So one ID is fine by us.
 
-The configuration archive contains sensitive information, including SSL keys
-for the inter-node RPC communication as well as the credentials for the
-remote API (RAPI). Such information can be used to control various operations
-of the cluster, including shutting down and removing instances and nodes from
-the cluster, or assuming the identity of the cluster in a MITM attack.
+Use CVE-2001-1593.
 
-This vulnerability only affects Ganeti clusters meeting the following
-criterias:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-  * The cluster is running Ganeti version 2.10.0 or higher.
-  * The upgrade command was run, for example when upgrading from 2.10 to
-    2.11.
-  * Unprivileged users have access to the host machines and in particular
-    to the cluster master.
-
-In the fixed releases the upgrade command sets the permissions of the
-archives properly. However, in case previous versions have created an unsafe
-archive already, the following mitigations are advised:
-
-  * Remove the access to the archive for unprivileged users (for example
-    by running 'chmod 400 /var/lib/ganeti*.tar').
-  * Renew the SSL keys by running 'gnt-cluster renew-crypto'. You may need
-    to pass the --new-cluster-certificate, --new-confd-hmac-key,
-    --new-rapi-certificate, --new-spice-certificate and
-    --new-cluster-domain-secret flags.
-  * Renew the RAPI credentials by editing the '/var/lib/ganeti/rapi_users'
-    file. Note that this will need to be updated in any out-of-the-cluster
-    RAPI client.
-  * Look for any other information regarded as secret in '/var/lib/ganeti'
-    and change it. For example VNC and SPICE passwords are not by default
-    kept there, but could, if Ganeti is so configured.
-
-Affected version:
-
-Ganeti >= 2.10.0, <= 2.10.6
-
-Ganeti >= 2.11.0, <= 2.11.4
-
-Fixed version:
-
-Ganeti >= 2.10.7
-
-Ganeti >= 2.11.5
-
-Credit: vulnerability report, PoC received from Ganeti authors Helga Velroyen
-       <helgav AT google.com> and Guido Trotter <ultrotter AT google.com>,
-       patch created by Apollon Oikonomopoulos.
-
-CVE: N/A
-
-Timeline:
-
-2014-08-07: vulnerability report received
-2014-08-07: disclosure coordinated on 2014-08-12
-2014-08-08: contacted affected vendors
-2014-08-12: advisory release
-
-References:
-http://git.ganeti.org/?p=ganeti.git;a=commit;h=a89f62e2db9ccf715d64d1a6322474b54d2d9ae0
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2014-006.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+iQEcBAEBAgAGBQJS8jCQAAoJEKllVAevmvmsYOsH/ip2JAUT4e/oQ9/TjFuOtR7E
+QbmXDrv18am2/MCQ8phfXIelF8CAByXdvbdj1KNwyTSxqTcs+6HZDNNsTt66wIsI
+H6Yajsc3HPdAITKOvL6oiS1kl0d/Ndbk36+KBrCmwCqp09tHKIU3UoN5jiZXMQIr
+A3RaQ6/MdWyd9QQ9MsgwclLwvkzBzlbgc76N/TCaIv/hEf+gKkeOF6S+el1pJdQ4
+XTZ9FDlaRv6kRUO+fePLCU0CANmZj5vJNDA1JicElUly/lFTpTxB8ZB/1JAyeEC9
+eD8KQ7RjUrUiwXKDTbm33ekGLPY6wpNfSEtM9e7N26omhnCeENwxMU2ePoVA7ws=
+=LDwH
+-----END PGP SIGNATURE-----
