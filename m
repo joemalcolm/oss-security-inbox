@@ -1,43 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/15
-Message-id: <9844B65D-96D7-4D5A-8437-C0763F7DEFF2@me.com>
-Date: Mon, 03 Feb 2014 10:43:53 -0500
-From: larry Cashdollar <larry0@...com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Persistent XSS in Wordpress 3.3.1+dfsg-1 (Packaged with Ubuntu 12.04.4)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/05/2
+Message-ID: <loom.20140205T113825-589@post.gmane.org>
+Date: Wed, 5 Feb 2014 10:41:00 +0000 (UTC)
+From: Vinay Sajip <vinay_sajip@...oo.co.uk>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
 Content-Type: text/plain; charset=utf-8
 
-This issue was reported 17 months ago https://core.trac.wordpress.org/ticket/21917
-and can be mitigated by changing the wordpress default configuration.
+Florian Weimer <fweimer@...> writes:
 
-Sorry folks, I just wanted everyone to know the full story.
+> I can't create a Google account right now.
 
-Larry C$
+I've updated the implementation and attached gnupg.py and test_gnupg.py to 
+the ticket:
 
-> On Feb 2, 2014, at 1:36 PM, "Larry W. Cashdollar" <larry0@...com> wrote:
-> 
-> Nevermind,  This is invalid.  The WP admin can use javascript while a regular user can not.
-> 
-> 
->> On Feb 2, 2014, at 9:56 AM, Larry W. Cashdollar <larry0@...com> wrote:
->> 
->> Title: Persistent XSS in Wordpress 3.3.1+dfsg-1 (Packaged with Ubuntu 12.04.4)
->> 
->> Author: Larry W. Cashdollar, @_larry0
->> 
->> Date: 2/1/2014
->> 
->> Vendor: Not notified yet.
->> 
->> Download: http://wordpress.org/download 
->> 
->> Versions Impacted: 3.3.1 -> 3.8.1 tested 2/2/2014.
->> 
->> CVE: Please assign.
->> 
->> Persistent XSS injection description field in Media Library.
->> 
->> Description: A persistent cross site scripting vulnerability exists in the latest version of WordPress in the Media Library.  It appears the Description field is not properly sanitized when viewed.  The malicious code is stored when the description field is saved.
->> 
->> Full Advisory: http://vapid.dhs.org/advisories/wordpress/XSS/xss_wordpress.html
-> 
+https://code.google.com/p/python-gnupg/issues/detail?id=98#c7
+
+Please verify that this version deals with the issue, and if not please let 
+me know the failures so that I can add them to the tests.
+
+Regards,
+
+Vinay Sajip
+
