@@ -1,18 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/21
-Message-ID: <542CD7C7.9020202@edwardprevost.info>
-Date: Wed, 01 Oct 2014 21:42:47 -0700
-From: Ed Prevost <me@...ardprevost.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/05/3
+Message-ID: <52F21FFD.8020205@redhat.com>
+Date: Wed, 05 Feb 2014 12:26:53 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+Subject: Re: Re: CVE request: python-gnupg before 0.3.5 shell injection
 Content-Type: text/plain; charset=utf-8
 
-On 10/1/2014 8:00 PM, Michal Zalewski wrote:
->> What else could I say? A POC already released and a bunch of
->> customer's machines are waiting...
-> You should install Florian's patch / bash43-027.
+On 02/05/2014 11:41 AM, Vinay Sajip wrote:
+
+> I've updated the implementation and attached gnupg.py and test_gnupg.py to
+> the ticket:
 >
-> /mz
+> https://code.google.com/p/python-gnupg/issues/detail?id=98#c7
 >
->
-+10
+> Please verify that this version deals with the issue, and if not please let
+> me know the failures so that I can add them to the tests.
+
+This looks better now, thanks.
+
+-- 
+Florian Weimer / Red Hat Product Security Team
