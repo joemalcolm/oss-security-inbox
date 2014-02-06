@@ -1,43 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/22/1
-Message-Id: <20140822033412.B31F61F067E@smtpksrv1.mitre.org>
-Date: Thu, 21 Aug 2014 23:34:12 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/11
+Message-Id: <201402061723.s16HNeb9013898@linus.mitre.org>
+Date: Thu, 6 Feb 2014 12:23:40 -0500 (EST)
 From: cve-assign@...re.org
-To: henri@...v.fi
+To: security@....org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Enigmail warning
+Subject: Re: Xen Security Advisory 84 - integer overflow in several XSM/Flask hypercalls
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://sourceforge.net/p/enigmail/forum/support/thread/3e7268a4/
+We can provide the three CVE assignments for XSA-84 (as well as the
+one CVE assignment for XSA-85 and the one CVE assignment for XSA-86).
+However, could you please clarify:
 
-This seems to discuss at least two non-identical issues.
+> http://xenbits.xen.org/xsa/advisory-84.html
 
-http://sourceforge.net/p/enigmail/forum/support/thread/3e7268a4/#b315
-and http://sourceforge.net/p/enigmail/bugs/294/ are about "an email
-with only Bcc recipients is sent in plain text." This is assigned
-CVE-2014-5369.
+> UPDATES IN VERSION 2
+> ====================
+> 
+> Public release.
+> 
+> The patch for 4.1 was extended to cover a few further similar issues.
 
-http://sourceforge.net/p/enigmail/forum/support/thread/3e7268a4/#10f1
-and
-http://sourceforge.net/p/enigmail/forum/support/thread/3e7268a4/#0a5a
-are about one or more issues in which there is unexpected cleartext
-e-mail transmission unrelated to use of Bcc. This perhaps requires a
-non-default configuration. It is conceivable -- although perhaps
-unlikely -- that the problem is a UI bug (e.g., an encryption choice
-is presented even when the product is configured to never use
-encryption). In any case, none of this has a CVE assignment yet. There
-isn't enough information to determine whether to assign zero, one, or
-two additional CVE IDs. The scope of CVE-2014-5369 is only the
-behavior that occurs when all recipients are Bcc recipients.
+Here, was the original scope of "The patch for 4.1" (before it was
+extended) exclusively:
 
-Finally, these are additional (possibly related) references that
-haven't yet been mentioned on oss-security:
+  "a different overflow issue on FLASK_{GET,SET}BOOL and expose
+   unreasonably large memory allocation to arbitrary guests"
 
-  http://sourceforge.net/p/enigmail/bugs/290/
-  http://twitter.com/mtigas/statuses/494228366028210176/photo/1
+? Or do you mean that, originally, the "patch for 4.1" addressed
+another vulnerability, and this "different overflow issue" was one of
+the version-2 extensions to the scope of XSA-84?
+
+Incidentally, we believe we need three CVE IDs for the current XSA-84
+content because of:
+
+> The FLASK_{GET,SET}BOOL, FLASK_USER and FLASK_CONTEXT_TO_SID
+> suboperations of the flask hypercall are vulnerable to an integer
+> overflow on the input size. The hypercalls attempt to allocate a
+> buffer which is 1 larger than this size and is therefore vulnerable to
+> integer overflow and an attempt to allocate then access a zero byte
+> buffer.
+
+the first CVE assignment will cover this
+
+
+> Xen 3.3 through 4.1, while not affected by the above overflow, have a
+> different overflow issue on FLASK_{GET,SET}BOOL and expose unreasonably
+> large memory allocation to arbitrary guests.
+
+a second CVE assignment will cover this second integer overflow (with
+different affected versions than the first)
+
+
+> Xen 3.2 (and presumably earlier) exhibit both problems, with the
+> overflow issue being present for more than just the suboperations
+> listed above.
+
+the part of the 3.2 vulnerability associated with the first overflow,
+for FLASK_{GET,SET}BOOL, FLASK_USER and FLASK_CONTEXT_TO_SID, is
+within the scope of the first CVE
+
+the part of the 3.2 vulnerability associated with the second overflow,
+for FLASK_{GET,SET}BOOL, is within the scope of the second CVE
+
+all other vectors (e.g., other suboperations) that are applicable in
+3.2, even if they are related to the first overflow or related to the
+second overflow, will be covered by a third CVE
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -47,11 +78,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJT9rkoAAoJEKllVAevmvmsBKUH/23mh9gvRZfW64TJtc6cj2Wa
-1l6Gv6bpqAh0hSdhhQGEC25+C3YR8TTzJaUcIciyUGidCQ/p3rF/ORRcAx4Ptsae
-N5cvXFT6/Ep2lpaJF+Opi3buoJ1O0w6P2PQN+qif6mcIQFjH2GFRdGwKqEFlcW9j
-Of4a1vMC2YCDfqk8hTWdsqCzgCi1eOOe3xmQOTL/uUR3ilgdk1KkqhBaHUqhYX+x
-JaEVPyVZPRJqH+8QZJNYmKbU5JV1UUMK5IvuQoT+eKyYLIvY+Z1PVRYQPVITOxTZ
-hSiBXBrhRbmgixDb05IBHamuE83nXDEkm/j7sx6ezaEEl7Xv0DwMLYwxVl155sc=
-=x0nf
+iQEcBAEBAgAGBQJS88RMAAoJEKllVAevmvmsHswIAMj0ZV70iAQsQPFw88gK8CfH
+1l6e9PovP48waIROyLbsrJhlSe4ql5IWzMRVNosMrq/WStcF/bGXIKISV/VV5oEg
+50AxrOI0U+aFNhIlkuOSfC+yuvMzwydPUPNCNZg/Oqxj0C9fzLkkWVlzvosqbwGm
+24KuCbgKQKvFWHtadpLTSW3DNjfTS+YAol5PM1W4fJD2rLgYVyaOy/sh1JI2kdKy
+RpsHH0uEmdf/8YdimJ4beFoxIzJVdnRbqsNIbJVudb9C4GpOK5NLdC+DNrUSIncP
+hE2US1pv5W/VbAbUuy3kvEDe9HWW70yVkyXrWB9vDWhUDsLjiTgGN3doMtI1vds=
+=xd2a
 -----END PGP SIGNATURE-----
