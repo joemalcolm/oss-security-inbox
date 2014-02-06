@@ -1,43 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/25/3
-Message-ID: <20140525145608.00005303@openflare.org>
-Date: Sun, 25 May 2014 14:56:08 +0300
-From: Dolev Farhi <dolev@...nflare.org>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: CVE Request: userCake <= 2.0.2 CSRF vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/10
+Message-ID: <20140206160409.GA12336@eldamar.local>
+Date: Thu, 6 Feb 2014 17:04:09 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Jakub Wilk <jwilk@...ian.org>, 737835@...s.debian.org
+Subject: CVE Request: Capture::Tiny: insecure use of /tmp
 Content-Type: text/plain; charset=utf-8
 
-hi,
+Hi
 
-I would like to request a CVE for the following issue:
+Jakub Wilk reported the following insecure use of /tmp on the Debian
+BTS at [1].
 
-Date: 21.5.2014
+ [1] http://bugs.debian.org/737835
+ 
+On Thu, Feb 06, 2014 at 12:52:21PM +0100, Jakub Wilk wrote:
+> $ strace -f -o '| grep -E open.*/tmp' perl test.pl
+> 11181 open("/tmp/8NDe_c4S_N", O_RDWR|O_CREAT|O_EXCL|O_LARGEFILE|O_NOFOLLOW, 0600) = 5
+> 11183 open("/tmp/5KKGPDNyy0", O_WRONLY|O_CREAT|O_TRUNC|O_LARGEFILE, 0666) = 3
+> 
+> The first temporary file is created securely, but the second open(2)
+> call lacks the O_EXCL flag. The vulnerable code appears to be:
+> 
+>   # flag file is used to signal the child is ready
+>   $stash->{flag_files}{$which} = scalar tmpnam();
+> 
+> The File::temp::tmpnam documentation reads: “When called in scalar
+> context, returns the full name (including path) of a temporary file
+> (uses mktemp()). The only check is that the file does not already
+> exist, but there is no guarantee that that condition will continue
+> to apply.”
 
-Title: Cross-Site Request Forgery vulnerability in userCake
+There is no upstream commit to fix this issue yet.
 
-Vendor: userCake.com - notified & confirmed
+Could a CVE be assigned for this insecure use of /tmp for the
+Capture::Tiny module?
 
-homepage https://usercake.com
-
-Brief:
-
-A cross-site request forgery issue was found in the latest
-version of userCake 2.0.2, which most probably affects versions prior to
-the latest as well. 
-userCake is an open source user management system.
-
-
-The vulnerability allows resetting a logged on admin account password
-via the passwordc and passwordcheck parameters in user_settings.php
-
-
-
-Full advisory and proof of concept can be found in this link:
-http://research.openflare.org/advisories/OF-2014-11/usercake_csrf.txt
-
-
-Can a CVE please be assigned? 
-
-
-Tx
-
+Regards,
+Salvatore
