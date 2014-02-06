@@ -1,51 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/26
-Message-ID: <20141209203259.GA21007@eldamar.local>
-Date: Tue, 9 Dec 2014 21:32:59 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: MiniUPnPd: several issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/5
+Message-ID: <20140206095207.05d3d868@hboeck.de>
+Date: Thu, 6 Feb 2014 09:52:07 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Upstream has now released 0.3.6:
+Fixed  Issue #98 : Rectified problems with earlier fix for shell
+injection.
+https://code.google.com/p/python-gnupg/
 
-Quoting from the Bug in the Debian bugtracker at
-https://bugs.debian.org/772644 several issues were found in in
-MiniUPnP:
+CVE request is still pending. I think we now need two:
+1. Shell injection partly fixed in 0.3.5.
+2. Incomplete fix for shell injection fixed in 0.3.6.
 
-On Tue, Dec 09, 2014 at 10:20:32PM +0800, Thomas Goirand wrote:
-> Stephen Röttger from Google did a security audit of MiniUPnPd, and found a few
-> issues, all now fixed upstream.
-> 
-> Extract from private messages who were forwarded to me (but which is fine to
-> disclose since there's already some public commits.
-> 
-> > MiniUPnP is vulnerable to DNS rebinding attacks which allows an attacker to
-> > trigger upnp actions through a malicious website. Wikipedia describes the
-> > attack quite well: http://en.wikipedia.org/wiki/DNS_rebinding.
-> > To mitigate this attack, MiniUPnP should check if the request's host header
-> > either contains an IP address or the hostname of the device.
-> > 
-> > Besides that, I found a few memory corruption vulnerabilities in the code.
-> 
-> Fixes:
-> 
-> https://github.com/miniupnp/miniupnp/commit/d00b75782e7d73e78d0b935cee6f4873bc48c9e8
-> https://github.com/miniupnp/miniupnp/commit/7c91c4e933e96b913b72685d093126d282b87db6
-> 
-> Some memory corruption fix:
-> 
-> https://github.com/miniupnp/miniupnp/commit/e6bc04aa06341fa4df3ccae87a167e9adf816911
-> 
-> A buffer overrun in ParseHttpHeaders() fix:
-> 
-> https://github.com/miniupnp/miniupnp/commit/dd39ecaa935a9c23176416b38a3b80d577f21048
-> 
-> Added check if BuildHeader_upnphttp() failed to allocate memory:
-> 
-> https://github.com/miniupnp/miniupnp/commit/ec94c5663fe80dd6ceea895c73e2be66b1ef6bf4
+-- 
+Hanno Böck
+http://hboeck.de/
 
-Can CVEs be assigned for these issues?
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Regards,
-Salvatore
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
