@@ -1,24 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/28/1
-Message-ID: <535DB698.9090502@redhat.com>
-Date: Mon, 28 Apr 2014 12:02:00 +1000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/3
+Message-ID: <52F308A4.3060408@redhat.com>
+Date: Thu, 06 Feb 2014 14:59:32 +1100
 From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-0190: NULL pointer dereference in GIF image handler in QtGui
+CC: 737778@...s.debian.org
+Subject: CVE request: f2py insecure temporary file use
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+Hello,
 
-CVE-2014-0190 describes a NULL pointer dereference flaw in the GIF image 
-handler in QtGui. This could cause applications using that library to crash.
+Jakub Wilk reported insecure temporary file use in f2py. From 
+<http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737778>:
 
-Upstream announcement and patches:
+""
+numpy/f2py/__init__.py contains this code:
 
-http://lists.qt-project.org/pipermail/announce/2014-April/000045.html
+      from numpy.distutils.exec_command import exec_command
+      import tempfile
+      if source_fn is None:
+          fname = os.path.join(tempfile.mktemp()+'.f')
+      else:
+          fname = source_fn
 
-(CVE assigned by Red Hat.)
+      f = open(fname,'w')
+""
 
-Cheers,
+Can a CVE please be assigned if one hasn't been already?
+
+References:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737778
+https://bugzilla.redhat.com/show_bug.cgi?id=1062009
+
+Thanks,
 
 --
 Murray McAllister / Red Hat Security Response Team
