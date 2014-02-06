@@ -1,134 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/1
-Message-ID: <5338BC0B.7060002@redhat.com>
-Date: Mon, 31 Mar 2014 10:51:23 +1000
-From: David Jorm <djorm@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: JBoss EJBInvokerServlet/JMXInvokerServlet confusion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/7
+Message-Id: <E1WBOEf-0000s1-Tq@xenbits.xen.org>
+Date: Thu, 06 Feb 2014 12:39:17 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 86 - libvchan failure handling malicious ring indexes
 Content-Type: text/plain; charset=utf-8
 
-On 03/29/2014 12:02 AM, Steven M. Christey wrote:
->
-> There are several CVEs related to the lack of authentication for JBoss
-> invoker servlets, but there's a bit of confusion and a likely
-> duplicate.
->
-> CVE-2012-0874 is associated with various Red Hat advisories that
-> mention JMXInvokerHAServlet and EJBInvokerHAServlet - with "HA" in the
-> name - in JBoss.
->
-> The description for CVE-2013-4810 is currently focused on HP products,
-> but it mentions EJBInvokerServlet and JMXInvokerServlet (different
-> servlets without "HA" in the name).  Through the associated ZDI
-> advisory, this issue is associated with some exploit(s) authored by
-> Andrea Micalizzi (rgod), who reported the issue in various products
-> that utilize JBoss.  In addition,
-> https://access.redhat.com/site/articles/545183 - "Does CVE-2013-4810
-> affect Red Hat JBoss products?" - clarifies that these servlets are
-> "exposed without authentication on older, unsupported community
-> releases of JBoss AS (WildFly) 4.x and 5.x."
->
-> CVE-2013-4810 is used heavily with references to ZDI-13-229.
->
-> The openness of JMXInvokerServlet is covered in a 2011-era disclosure
-> in http://www.matasano.com/research/OWASP3011_Luca.pdf, although
-> EJBInvokerServlet is not mentioned then.
->
-> The key question is whether CVE-2013-4810 is a duplicate of an
-> existing CVE that covers EJBInvokerServlet and JMXInvokerServlet, and
-> if so, which CVE is it a duplicate of.
->
-> It is not a duplicate of CVE-2012-0874, since that deals with the
-> exposure of different servlets - the "HA" servlets - so is effectively
-> a variant of the original issue.
->
-> CVE-2007-1036 is heavily used.  Although it does not mention 
-> EJBInvokerServlet or JMXInvokerServlet, it is related to insecure 
-> JBoss configuration.  None of the commonly-associated references 
-> mention EJBInvokerServlet and JMXInvokerServlet, either.  If we can 
-> clearly link CVE-2007-1036 with those servlets, then it becomes 
-> possible to reject CVE-2013-4810 as a duplicate.
->
-> Original links such as
-> http://wiki.jboss.org/wiki/Wiki.jsp?page=SecureJBoss are now gone,
-> which is unfortunate because this is a "bridge reference" that is
-> included in both CVE-2007-1036 and Red Hat's "Does CVE-2013-4810
-> affect Red Hat JBoss products?" article.
-> https://community.jboss.org/wiki/securethejmxconsole doesn't name the
-> servlets.
->
-> There is, at least, a Metasploit module that maps to CVE-2007-1036 and
-> calls JMXInvokerServlet:
->
-> https://www.rapid7.com/db/modules/exploit/multi/http/jboss_invoke_deploy
->
-> There's still a question of EJBInvokerServlet - I haven't seen it
-> mentioned in conjunction with CVE-2007-1036 yet.
->
-> Also, it appears that there are mentions of other vectors besides
-> servlets, e.g.
-> http://archives.neohapsis.com/archives/bugtraq/2007-02/0356.html
->
-> Red Hat, can you confirm that the scope of CVE-2007-1036 is the lack
-> of authentication for both JMXInvokerServlet and EJBInvokerServlet?
->
->
-> - Steve
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hi All
+                     Xen Security Advisory XSA-86
+                              version 2
 
-CVE-2007-1036 describes complete lack of authentication on JBoss admin 
-interfaces. CVE-2010-0738 describes the more specialized case of missing 
-authentication for the HEAD verb, and could be considered an incomplete 
-fix of CVE-2007-1036. CVE-2012-0874 describes the more specialized case 
-of missing authentication on some invoker servlets, and could be 
-considered an incomplete fix of CVE-2007-1036. To clarify the timeline 
-of CVE IDs:
+           libvchan failure handling malicious ring indexes
 
-CVE-2007-1036: By default, all admin interfaces in JBoss AS do not 
-require authentication. This includes all invoker servlets, HA or not.
+UPDATES IN VERSION 2
+====================
 
-Following this, supported JBoss products had authentication applied to 
-all admin interfaces by default. From the unsupported community release 
-of JBoss AS 7 onwards, authentication is also applied by default. 
-Unsupported community releases of JBoss AS <= 6.x never had 
-authentication applied by default, and they could be accurately said to 
-be vulnerable to CVE-2007-1036.
+Public release.
 
-CVE-2010-0738: It was found that the authentication applied in supported 
-JBoss products does not cover the HEAD verb, allowing a HTTP verb 
-tampering attack.
+ISSUE DESCRIPTION
+=================
 
-CVE-2012-0874: It was found that the authentication applied in supported 
-JBoss products does not cover the HA servlets. This is not directly 
-exploitable, as a security interceptor still blocks unauthenticated access.
+libvchan (a library for inter-domain communication) does not correctly
+handle unusual or malicious contents in the xenstore ring.  A
+malicious guest can exploit this to cause a libvchan-using facility to
+read or write past the end of the ring.
 
-CVE-2013-4810: HP has been picking up unsupported JBoss AS releases that 
-expose CVE-2007-1036 [and by extension CVE-2010-0738 and CVE-2012-0874], 
-and did not ship patches for any of these CVE IDs. Once the issue was 
-reported via ZDI, CVE-2013-4810 was assigned.
+IMPACT
+======
 
-Therefore CVE-2013-4810 does not relate to either unsupported JBoss AS 
-releases or supported JBoss products. It only relates to unsupported 
-JBoss AS releases as a duplicate of either CVE-2012-0874 or 
-CVE-2007-1036. Since the CVE-2013-4810 description pertains to invoker 
-servlets, I think it is a dupe of CVE-2012-0874, but I can see a 
-rational argument for considering it to be a dupe of the more general 
-case described by CVE-2007-1036.
+libvchan-using facilities are vulnerable to denial of service and
+perhaps privilege escalation.
 
-Unfortunately the original "Secure JBoss" and "Secure the JMX Console" 
-links are now dead, but the content lives on here:
+There are no such services provided in the upstream Xen Project
+codebase.
 
-https://community.jboss.org/wiki/SecureJBoss
-https://community.jboss.org/wiki/SecureTheJmxConsole
+VULNERABLE SYSTEMS
+==================
 
-Note that one of the steps documented is to secure the invoker:
+All versions of libvchan are vulnerable.  Only installations which use
+libvchan for communication involving untrusted domains are vulnerable.
 
-https://community.jboss.org/servlet/JiveServlet/download/12190-52-6400/jboss-securejmx.html
+libvirt, xapi, xend, libxl and xl do not use libvchan.  If your
+installation contains other Xen-related software components it is
+possible that they use libvchan and might be vulnerable.
 
-Although this content does not explicitly mention the EJB/JMX 
-InvokerServlets, it covers securing them.
+Xen versions 4.1 and earlier do not contain libvchan.
 
-Thanks
---
-David Jorm / Red Hat Security Response Team
+MITIGATION
+==========
+
+Disabling libvchan-based facilities could be used to mitigate the
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Marek Marczykowski-Górecki of Invisible
+Things Lab.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+After the patch is applied to the Xen tree and built, any software
+which is statically linked against libvchan will need to be relinked
+against the new libvchan.a for the fix to take effect.
+
+xsa86.patch        Xen 4.2.x, 4.3.x, 4.4-RC series, and xen-unstable
+
+$ sha256sum xsa86*.patch
+cd2df017e42717dd2a1b6f2fdd3ad30a38d3c0fbdd9d08b5f56ee0a01cd87b51  xsa86.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJS84JeAAoJEIP+FMlX6CvZsvYH/3HbxPvs42Al1gncMsc4uh+R
+V+j48ENTQzSNhVTtXQq9bUgNk5Dp/kok7RpZbxCWIBl79UUP/fpPUT/FjD5egMOX
+NU8FslhmalOkkpmyeX0Kt1SvhQt6FvaozTTOdR47wHerfd+mKkYchFRrkCBvllBU
+/UIVItU6fA5xyXSsFy8quT66g2a88OTlv30YTsg3jhDo48FxO7A54ay4xVAIyOFK
+4Wl+hpEgTSE47VRSIGriAvjOMSSQjiMFPjR/DSbUMj8FaVhwVSitIEG9cRhn+3HE
+I6HqPFzy2jP+Lzj/WFkkZrt/k12GL4cZafg7th3/YcmABfR23QMN5SwfYDLKqqw=
+=XbpF
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa86.patch" of type "application/octet-stream" (6024 bytes)
