@@ -1,40 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/2
-Message-ID: <20140709051631.GA22935@inutil.org>
-Date: Wed, 9 Jul 2014 07:16:31 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/8
+Message-ID: <20140206132703.GB16118@jwilk.net>
+Date: Thu, 6 Feb 2014 14:27:04 +0100
+From: Jakub Wilk <jwilk@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, zf-security@...d.com
-Subject: Re: Zend Framework CVEs
+Subject: Re: [notification] CVE-2013-6888: uscan: remote code execution
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 08, 2014 at 04:52:46PM -0600, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> As I understand Zend it's a BSD style license, so Open Source, so
-> posting here, CC'ing upstream and Mitre. Can we please get CVE's for:
-> 
-> http://framework.zend.com/security/advisory/ZF2014-04
-> ZF2014-04: Potential SQL injection in the ORDER implementation of
-> Zend_Db_Select
-> 
-> http://framework.zend.com/security/advisory/ZF2014-03
-> ZF2014-03: Potential XSS vector in multiple view helpers
+* Raphael Geissert <geissert@...ian.org>, 2014-01-06, 11:57:
+>Two other changes were made that IMO should be considered as hardening:
+>http://anonscm.debian.org/gitweb/?p=collab-maint/devscripts.git;a=commitdiff;h=4b7e58ee6000cdefac0682601cec6ecce0137467
 
-These two still need CVE IDs.
- 
-> http://framework.zend.com/security/advisory/ZF2014-02
-> ZF2014-02: Potential security issue in login mechanism of ZendOpenId
-> and Zend_OpenId consumer
+I believe that untarring files to a direct subdirectory of /tmp (at 
+least without --keep-old-files) is a vulnerability, although admittedly 
+with very low severity. If the tarball contained a "." file, then tar 
+would change permissions of the destination directory, possibly making 
+the directly accessible to other users. This is (similar to?) CWE-378.
 
-That's CVE-2014-2684 and CVE-2014-2685
- 
-> http://framework.zend.com/security/advisory/ZF2014-01
-> ZF2014-01: Potential XXE/XEE attacks using PHP functions:
-> simplexml_load_*, DOMDocument::loadXML, and xml_parse
+>http://anonscm.debian.org/gitweb/?p=collab-maint/devscripts.git;a=commitdiff;h=b815aa438f018b5afc566eb403b0319a99a32995
 
-That's CVE-2014-2681, CVE-2014-2682 and CVE-2014-2683
+As far as I can tell, this one is indeed hardening only.
 
-Cheers,
-        Moritz
+-- 
+Jakub Wilk
