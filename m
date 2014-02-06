@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/9
-Message-Id: <5B402C50-41A3-48F9-AB0A-2ED0CA934C3C@saltstack.com>
-Date: Thu, 21 Aug 2014 10:44:55 -0600
-From: "C. R. Oldham" <cr@...tstack.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/14
+Message-ID: <52F410E9.7090907@redhat.com>
+Date: Fri, 07 Feb 2014 09:47:05 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Revised: Salt 2014.1.10 released
+CC: 737778@...s.debian.org
+Subject: Re: CVE request: f2py insecure temporary file use
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+On 02/06/2014 02:59 PM, Murray McAllister wrote:
+> Hello,
+>
+> Jakub Wilk reported insecure temporary file use in f2py. From
+> <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737778>:
+>
+> ""
+> numpy/f2py/__init__.py contains this code:
+>
+>       from numpy.distutils.exec_command import exec_command
+>       import tempfile
+>       if source_fn is None:
+>           fname = os.path.join(tempfile.mktemp()+'.f')
+>       else:
+>           fname = source_fn
+>
+>       f = open(fname,'w')
+> ""
+>
+> Can a CVE please be assigned if one hasn't been already?
+>
+> References:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737778
+> https://bugzilla.redhat.com/show_bug.cgi?id=1062009
+>
+> Thanks,
 
-We are pleased to announce the 2014.1.10 release of Salt. The release notes can be found here: 
+Thomas Spura noted in the Red Hat Bugzilla that a patch has been merged 
+upstream:
 
-http://docs.saltstack.com/en/latest/topics/releases/2014.1.10.html
-
-The sources are available on pypi:
-
-https://pypi.python.org/pypi/salt/2014.1.10
-
-Salt 2014.1.10 fixes security issues documented by CVE-2014-3563: Insecure tmp-file creation in seed.py, salt-ssh, and salt-cloud. Upgrading is recommended.
-
-Special thanks to Kurt Seifried at Red Hat for investigating these issues and bringing them to our attention (and also letting me know that my first post got mangled somehow).
-
--- 
-C. R. Oldham, Platform Engineer, SaltStack, Inc.
-801-564-4673 / cr@...tstack.com / https://github.com/cro
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
+https://github.com/numpy/numpy/pull/4262
