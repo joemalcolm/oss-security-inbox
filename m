@@ -1,34 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/46
-Message-ID: <5429F05C.6060807@case.edu>
-Date: Mon, 29 Sep 2014 19:50:52 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Eric Blake <eblake@...hat.com>, Tavis Ormandy <taviso@...xchg8b.com>, Florian Weimer <fw@...eb.enyo.de>
-CC: chet.ramey@...e.edu, Michal Zalewski <lcamtuf@...edump.cx>, Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/6
+Message-ID: <CAD6CYKOctTeL+c2zz0yi__A5MMfiGyPDNXHEJArfDNKwC-0Siw@mail.gmail.com>
+Date: Fri, 7 Feb 2014 15:42:10 +0100
+From: Alexandre Dulaunoy <a@....be>
+To: oss-security@...ts.openwall.com
+Subject: contao vulnerability - CVE assigned?
 Content-Type: text/plain; charset=utf-8
 
-On 9/27/14, 10:15 PM, Eric Blake wrote:
+Hi All,
+
+Following this "full disclosure" paste:
+
+http://pastebin.com/DFh1FVdb
+
+Do you know if cantao already requested a CVE?
+
+Cheers.
 
 
-> 
-> Are you 100% sure that posixly_correct is correctly initialized at this
-> point in parsing the incoming environment variables, regardless of
-> whether you invoked '/bin/sh', 'bash -o posix', or 'POSIXLY_CORRECT=1
-> bash'?  
-
-For POSIXLY_CORRECT: yes.  Very early on in main() the shell looks for
-POSIXLY_CORRECT and POSIX_PEDANTIC in the environment and sets
-posixly_correct to 1 if either one is found.
-
-For bash -o posix: yes.  Options (including long options like --posix)
-are parsed well before the environment is read.
-
-For /bin/sh: no.  As documented, the shell enters posix mode after it
-reads the startup files.
-
-Chet
 -- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+--                   Alexandre Dulaunoy (adulau) -- http://www.foo.be/
+--                             http://www.foo.be/cgi-bin/wiki.pl/Diary
+--         "Knowledge can create problems, it is not through ignorance
+--                                that we can solve them" Isaac Asimov
