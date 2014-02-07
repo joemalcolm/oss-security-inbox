@@ -1,36 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/40
-Message-ID: <CALx_OUCdcWGgJp_tXMXiann4Z4p_LO6BZ0+BNabPk4zhruhi4w@mail.gmail.com>
-Date: Wed, 24 Sep 2014 15:37:03 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/13
+Message-Id: <201402072354.12275.geissert@debian.org>
+Date: Fri, 7 Feb 2014 23:54:11 +0100
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Tavis Ormandy <taviso@...xchg8b.com>
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Subject: CVE request? buffer overflow in socket.recvfrom_into
 Content-Type: text/plain; charset=utf-8
 
-> Tavis Ormandy just tweetet this:
-> https://twitter.com/taviso/status/514887394294652929
+Hi,
 
-> $ env X='() { (a)=>\' sh -c "echo date"; cat echo
+A bug has been reported in python, where socket.recvfrom_into "fails to 
+check that the supplied buffer object is big enough for the requested read 
+and so will happily write off the end"[1]. Ryan Smith-Roberts goes on to say 
+"while very highly unlikely it's technically remotely exploitable".
 
-This can be simplified as:
+Does anyone with a better python fu tell whether this should get a CVE id? A 
+quick search on Debian's code doesn't really tell me much [2]
 
-$ X='() { function a a>\' bash -c echo
-$ ls echo
-echo
+I've been able to reproduce the bug in python 2.5 and greater, which 
+confirms what the bug report says.
 
-And the core parsing problem is illustrated by this:
 
-$ function a a>\ [RETURN]
-> foo
-$ whatever
-$ ls
-whatever
+[1] http://bugs.python.org/issue20246
+[2] 
+http://codesearch.debian.net/search?q=recvfrom_into%5C%28%5B%5E%5C%29%5D%2B%2C+filetype%3Apython+-
+package%3Apython2.7+-package%3Apython3.3+-package%3Apython3.4
 
-Tavis and I spent a fair amount of time trying to figure out if this
-poses a more immediate risk, but so far, no dice. It strongly suggests
-that the parser is fragile and that there may be unexpected side
-effects, though; parsing functions seen in HTTP_* and such seems like
-a very risky proposition.
-
-/mz
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
