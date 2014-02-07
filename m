@@ -1,42 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/6
-Message-Id: <20140911073628.3F6A333200D@smtpvbsrv1.mitre.org>
-Date: Thu, 11 Sep 2014 03:36:28 -0400 (EDT)
-From: cve-assign@...re.org
-To: moritz.heidkamp@...uta.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for select() buffer overrun in CHICKEN Scheme on the Android platform
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/8
+Message-ID: <8761oqnbav.fsf@mid.deneb.enyo.de>
+Date: Fri, 07 Feb 2014 17:21:28 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: oath-toolkit PAM module OTP token invalidation issue
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Bas van Schaik discovered that commented-out lines in /etc/users.oath
+have an undesired side effect:
 
-> http://lists.nongnu.org/archive/html/chicken-users/2014-08/msg00055.html
-> http://lists.nongnu.org/archive/html/chicken-hackers/2014-08/msg00017.html
-> http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commit;h=bbf5c1d5839970c17b37406155180853c325c710
+http://lists.nongnu.org/archive/html/oath-toolkit-help/2013-12/msg00000.html
 
-Use CVE-2014-6310.
-
-
-> A patch which changes the default to be POSIX poll() so that platforms
-> added in the future will be more likely not to be affected by this issue
-
-This type of additional development work (anticipatory hardening) is
-not eligible for a CVE ID.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUEVCaAAoJEKllVAevmvmsO1IH/jt+OKCgiJpYGYEdfQVjp+oP
-clXybzQEuz4GzcB0FM5pdMBp5boVDSh6CfvXiZh3ojAxbF1/akODxPjoUOZktKzk
-B0DsXHQfJQtliDyO478Kbmsf6fMirqZHZ6hcWy8PiceY8iC4zZo1/oSkddktFx5c
-CnR3u0VwG1xmRj4CZHlDQLwtQLCwjpuBhZxdm2le2UnJNsHncBUX6jDjaUfsvdWB
-mukXscmSqLqTerZhb0f/TY/TSlkUQT+yXJqZwmNt6Q1/mAAxRgCC0N8omfgCbX8Z
-0AcPR21LgEzPINDkgPOKNRoqpoIUqgalLOn+xKN66UyqdBk9PDS9Ctmm8bvDww0=
-=XVQj
------END PGP SIGNATURE-----
+There is a test file with comments in the distribution, so I believe
+this is an actual bug with security implications, not accidental
+misuse of the file format.
