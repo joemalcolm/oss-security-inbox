@@ -1,83 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/11
-Message-ID: <53F24A1E.4080409@redhat.com>
-Date: Mon, 18 Aug 2014 12:46:54 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, rubyonrails-security@...glegroups.com, ruby-security-ann@...glegroups.com
-Subject: Re: [Ruby on Rails] [CVE-2014-3514] Strong Parameter bypass with create_with
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/1
+Message-Id: <201402070437.s174bQ3W028329@linus.mitre.org>
+Date: Thu, 6 Feb 2014 23:37:26 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, jwilk@...ian.org, 737835@...s.debian.org
+Subject: Re: CVE Request: Capture::Tiny: insecure use of /tmp
 Content-Type: text/plain; charset=utf-8
 
-Can you provide a URL or a copy of the patches? Thanks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 18/08/14 11:11 AM, Rafael Mendonça França wrote:
-> There is a vulnerability in the create_with method in Active Record. This
-> vulnerability has been assigned the CVE identifier CVE-2014-3514.
-> 
-> Versions Affected:  4.0.0 and All Later Versions.
-> Not affected:       Versions earlier than 4.0.0
-> Fixed Versions:     4.0.9 4.1.5
-> 
-> Impact
-> ------
-> The create_with functionality in Active Record was implemented incorrectly
-> and completely bypasses the strong parameters protection.  Applications
-> which pass user-controlled values to create_with could allow attackers to
-> set arbitrary attributes on models.
-> 
-> All users running an affected release should either upgrade or use one of
-> the workarounds immediately.
-> 
-> Releases
-> --------
-> The 4.0.9 and 4.1.5 releases are available at the normal locations.
-> 
-> Workarounds
-> -----------
-> To avoid this vulnerability you will have to either remove all calls to
-> create_with, or carefully audit your codebase to ensure it sanitizes the
-> input first.  For example you should replace code like this:
-> 
->   user.blog_posts.create_with(params[:blog_post]).create
-> 
-> with either:
-> 
->   user.blog_posts.create(params[:blog_post])
-> 
-> or:
-> 
->   user.blog_posts.create_with(params[:blog_post].permit(:title, :body,
-> :etc)).create
-> 
-> 
-> Patches
-> -------
-> To aid users who aren't able to upgrade immediately we have provided
-> patches for the two supported release series.  They are in git-am format
-> and consist of a single changeset.
-> 
-> * 4-1-create_with.patch - Patch for 4.1 series
-> * 4-0-create_with.patch - Patch for 4.0 series
-> 
-> Please note that only the 4.0.x and 4.1.x series receive regular security
-> updates at present.  Users of earlier unsupported releases are advised to
-> upgrade as soon as possible as we cannot guarantee the continued
-> availability of security fixes for earlier releases.
-> 
-> Credits
-> -------
-> 
-> Thanks to Stephen Touset of Square for reporting the vulnerability to us,
-> and to Jeff Jarmoc of Matasano and Charlie Somerville of GitHub for helping
-> verify the patches and advisories.
-> 
-> Rafael Mendonça França
-> http://twitter.com/rafaelfranca
-> https://github.com/rafaelfranca
-> 
+> open("/tmp/5KKGPDNyy0", O_WRONLY|O_CREAT|O_TRUNC|O_LARGEFILE,
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Use CVE-2014-1875.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJS9GHnAAoJEKllVAevmvms3t0IAKqhldJQYiAv3EwHVYI5hL7b
+CaIDJ4wIQXfSoqs9ewV1phqNVSnKsgYS6WOp5AjqZZ3+CqSDLS2Jz7kThx7g7mo4
+fOFcftX4tjrVrZ4dyoiKuCCGL8R/4Mo3ObmomZ1SbaVb4jtFVqxCOc4Kh52Ca/88
+C9peyeQqpWV3kzM9+1sEgQatNTVNIonJiTg23XGSAY3wzLMiGP+teVfygZOO6Xxj
+4S4IAx1PNg8GFR/qOEywPE3baWNttTL2RejwoqxUZn908+GXfWZdlCJn+Ku5xOeO
+Wwawwv4lRRgrPGCPil5rhSdlIeSs08HCoEbcrOLMb5RFsI9FceOpCv7QUt5/gog=
+=5gFh
+-----END PGP SIGNATURE-----
