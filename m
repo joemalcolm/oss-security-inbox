@@ -1,31 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/9
-Message-ID: <CAA7hUgFQd8YTaQ2suEBOU5EcjxuoyaK63UMkHjabTgKG_nYs8g@mail.gmail.com>
-Date: Thu, 18 Dec 2014 11:36:28 +0100
-From: Raphael Geissert <geissert@...ian.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: Embargoes for secondary issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/5
+Message-ID: <CAH72vijwgZ9hb7DNnVNYMwjV0a7qiD6Fwh7iUEWRUSxXX=FFcg@mail.gmail.com>
+Date: Fri, 7 Feb 2014 10:13:15 +0100
+From: Źmicier Januszkiewicz <gauri@....by>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Xen Security Advisory 84 - integer overflow in several XSM/Flask hypercalls
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+The 4.1 patch also notes:
 
-On 18 December 2014 at 10:52, Florian Weimer <fweimer@...hat.com> wrote:
-> Suppose we have an unfixed, public issue, and while working on a fix, other
-> issues in the same code are discovered which are different flaws, but have
-> similar impact than the original issue.
+> The index of boolean variables in FLASK_{GET,SET}BOOL was not always checked against the bounds of the array.
+> Reported-by: John McDermott <john.mcdermott@....navy.mil>
+
+I wonder, is this something exploitable we should care about (e.g., a
+crash triggered by out-of-bounds reads), or it is only some sort of
+preventive measure?
+
+
+2014/2/7 Jan Beulich <JBeulich@...e.com>:
+>>>> On 06.02.14 at 18:23, <cve-assign@...re.org> wrote:
+>> -----BEGIN PGP SIGNED MESSAGE-----
+>> Hash: SHA1
+>>
+>> We can provide the three CVE assignments for XSA-84 (as well as the
+>> one CVE assignment for XSA-85 and the one CVE assignment for XSA-86).
+>> However, could you please clarify:
+>>
+>>> http://xenbits.xen.org/xsa/advisory-84.html
+>>
+>>> UPDATES IN VERSION 2
+>>> ====================
+>>>
+>>> Public release.
+>>>
+>>> The patch for 4.1 was extended to cover a few further similar issues.
+>>
+>> Here, was the original scope of "The patch for 4.1" (before it was
+>> extended) exclusively:
+>>
+>>   "a different overflow issue on FLASK_{GET,SET}BOOL and expose
+>>    unreasonably large memory allocation to arbitrary guests"
+>>
+>> ? Or do you mean that, originally, the "patch for 4.1" addressed
+>> another vulnerability, and this "different overflow issue" was one of
+>> the version-2 extensions to the scope of XSA-84?
 >
-> Do we need an embargo for the secondary issues, or can we just make them
-> public immediately?  I would strongly prefer the latter.
-
-Based on experience, I'd say the latter is the best course of action.
-Known issues tend to attract more eyes and make the discovery of the
-secondary issues more likely.
-
-The line is probably going to be more difficult to be drawn if the
-CVSS score of the secondary issues bump due to, say, easier
-exploitability.
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+> The original patch was dealing with just the unbounded memory
+> allocation. The missing bounds checking was what the incremental
+> addition dealt with.
+>
+> Jan
+>
