@@ -1,32 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/10
-Message-Id: <201404101152.s3ABqNvF011294@linus.mitre.org>
-Date: Thu, 10 Apr 2014 07:52:23 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/2
+Message-Id: <201402070440.s174eF4c028344@linus.mitre.org>
+Date: Thu, 6 Feb 2014 23:40:15 -0500 (EST)
 From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2013-7353 CVE-2013-7354 libpng integer overflows
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux kernel: SELinux local DoS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-http://sourceforge.net/p/libpng/bugs/199/
+> a crash caused by an empty SELinux security context
 
-Use CVE-2013-7353 for "png_set_unknown_chunks in libpng/pngset.c ...
-Fixed in libpng-1.5.14beta08"
-
-("has four integer overflow bugs" is apparently a typo of "has one
-integer overflow bug")
-
-Use CVE-2013-7354 for "The png_set_sPLT() and png_set_text_2()
-functions have a similar bug, which is fixed in libpng-1.5.14rc03" --
-this has a different discoverer.
-
-The vendor mentions that internal calls use safe values. These issues
-could potentially affect applications that use the libpng API.
-Apparently no such applications were identified as part of the work on
-bug 199.
+Use CVE-2014-1874.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -36,11 +23,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTRoV4AAoJEKllVAevmvmsNLsH/A5nbaRfwAC28nkR6WkYTCwS
-yhsnl6x4Ns3I60HGoZBrUolPd15hlACJyR4YMzd9gwuh8vMIrWr5t5P+m+wRKhaM
-eyrr9z66zw/KPyVe6ZhU8Ev9O3stoSR5wm26awIpGPeV9NhfKg4FNyHDoSU7Ii5y
-4RapXaJRkKirzU7pEBt4fjNjAnikWoJew9Acc/aeNpwJ0lV9pk5+eNVmxghyPwQi
-UfccNfEXnxmnsET0u5n29a2QgxMRGhCeBZkbtFRzCgU9Od1YLO56wtb82sJEwBTK
-WCKZ1f8ko9hdGNjt3sNXhrrmXqaOHvuUszjg3NCk596b+73eBgA+TvPI2EG2Dp8=
-=zAbJ
+iQEcBAEBAgAGBQJS9GHfAAoJEKllVAevmvmsW2MH/Apde3wwHYWYF8RFque5/jHX
+N6DyOq0IVZeh0S3z5Ar2KM+qBXzPyWs/u18oUQOf4pgVRpFT/TzAQuBdOErR20Vl
+951ZMHGhWooWr9KahBjDAM+W5MrKbDIQK1n3SZV1sTy5YxQFC2eYFKICjuxXTeuv
+Foujy/Ubgj4sBFFZ8QaxbubWGJo4tv6YMHgAz+TkwvfU8cJyfqc9jL6QwsnIc28+
+ejqnTxcgNb6LEu9zlJ5rlP1e6VUjig/ODCcsnBnWNIqSWgxfM/WhaAH1wSwCUvUX
+nMhAFzC62ED3MHHYmzXyil/Z5pHByNGkwItdeZVcPb2jv5wQcdu0jz8qZT9hJtQ=
+=G7md
 -----END PGP SIGNATURE-----
