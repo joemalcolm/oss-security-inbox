@@ -1,29 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/35
-Message-ID: <20140926211441.GB31108@openwall.com>
-Date: Sat, 27 Sep 2014 01:14:41 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/7
+Message-ID: <20140207154958.3b79ad0c@hboeck.de>
+Date: Fri, 7 Feb 2014 15:49:58 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Subject: Re: contao vulnerability - CVE assigned?
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 25, 2014 at 07:40:50PM -0400, Chet Ramey wrote:
-> On 9/25/14, 12:19 PM, Solar Designer wrote:
-> 
-> > I think Florian's prefix-suffix patch is actually a better way to go
-> > (right now, unless there's some drawback I am not yet aware of), and at
-> > a later time function imports should require to be enabled with a
-> > non-default option.
-> 
-> Yes, some variant of that will be the next thing to work on.
+On Fri, 7 Feb 2014 15:42:10 +0100
+Alexandre Dulaunoy <a@....be> wrote:
 
-I suggest that you use Florian's prefix-suffix convention as-is (not
-necessarily the code, but same prefixes and suffixes, so that your
-official change would be compatible with Florian's patch).  This is
-because multiple distros have adopted Florian's patch already.  While
-we'll be breaking compatibility for function exports/imports across
-pre-patch and post-patch bash versions anyway, at least you can maintain
-compatibility between distros' bash packages and your official releases.
+> Following this "full disclosure" paste:
+> 
+> http://pastebin.com/DFh1FVdb
+> 
+> Do you know if cantao already requested a CVE?
 
-Alexander
+Should be CVE-2014-1860
+
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
