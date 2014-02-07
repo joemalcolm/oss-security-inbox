@@ -1,61 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/20/8
-Message-ID: <53A40646.5000204@redhat.com>
-Date: Fri, 20 Jun 2014 06:00:38 -0400
-From: Daniel J Walsh <dwalsh@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: docker VMM breakout
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/4
+Message-Id: <52F4A6A6020000780011A10D@nat28.tlf.novell.com>
+Date: Fri, 07 Feb 2014 08:25:58 +0000
+From: "Jan Beulich" <JBeulich@...e.com>
+To: <cve-assign@...re.org>
+Cc: <oss-security@...ts.openwall.com>,<security@....org>
+Subject: Re: Xen Security Advisory 84 - integer overflow in several XSM/Flask hypercalls
 Content-Type: text/plain; charset=utf-8
 
+>>> On 06.02.14 at 18:23, <cve-assign@...re.org> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> We can provide the three CVE assignments for XSA-84 (as well as the
+> one CVE assignment for XSA-85 and the one CVE assignment for XSA-86).
+> However, could you please clarify:
+> 
+>> http://xenbits.xen.org/xsa/advisory-84.html 
+> 
+>> UPDATES IN VERSION 2
+>> ====================
+>> 
+>> Public release.
+>> 
+>> The patch for 4.1 was extended to cover a few further similar issues.
+> 
+> Here, was the original scope of "The patch for 4.1" (before it was
+> extended) exclusively:
+> 
+>   "a different overflow issue on FLASK_{GET,SET}BOOL and expose
+>    unreasonably large memory allocation to arbitrary guests"
+> 
+> ? Or do you mean that, originally, the "patch for 4.1" addressed
+> another vulnerability, and this "different overflow issue" was one of
+> the version-2 extensions to the scope of XSA-84?
 
-On 06/19/2014 01:38 AM, gremlin@...mlin.ru wrote:
-> On 18-Jun-2014 10:05:35 -0400, Daniel J Walsh wrote:
->
->  > CONTAINERS DO NOT CONTAIN. Root inside the container == Root
->  > outside the container.
->
-> Really? :-)
->
->  > This is true in both libvirt-sandbox/libvirt-lxc and docker.
->
-> Have you checked that for anything else?
->
->  > We have a long way to go before we can run anything within a
->  > container without this rule. User Namespace, SELinux or other
->  > MAC are all required to get us near the point where Container
->  > Contain.
->
-> Have you ever seen OpenVZ?
-I am talking about standard Linux Kernel.  I have not played with OpenVZ
-so I can not comment on its security.
->
->  > People who run services within a container should continue to
->  > drop privs in the services and run them as UID!=0
->
-> Look at this trivial code example...
->
-> Classic kernel:
->
-> if (!uid)
-> {
-> 	// perform privileged operation here
-> }
->
-> Containers-enabled kernel:
->
-> if ( !uid && !container_id )	// container_id: 0 for host
-> {
-> 	// perform privileged operation here
-> }
->
-> How would you bypass this check to get privileged access to anything
-> outside the container?
->
->
-My point being that any process on a Linux System that has lots of linux
-capabilities (DAC*, SYS_ADMIN, and many others) can not be contained. 
+The original patch was dealing with just the unbounded memory
+allocation. The missing bounds checking was what the incremental
+addition dealt with.
 
-I think it is premature to treat breakouts against Docker Containers
-with CVE's because of this.  If people stop making claims about the
-security of a docker process with privs being isolated from the host
-system, we can prevent the flood of CVE's, that are likely to come.
+Jan
+
