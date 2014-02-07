@@ -1,36 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/6
-Message-ID: <CAOp4FwSFBoSMj1yFB8pv9qq47t=-=GLwMFBOOTM=GH__GSgYRA@mail.gmail.com>
-Date: Mon, 21 Jul 2014 12:53:04 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request for Drupal Core
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/12
+Message-Id: <201402072111.s17LBWm7028357@linus.mitre.org>
+Date: Fri, 7 Feb 2014 16:11:32 -0500 (EST)
+From: cve-assign@...re.org
+To: security@....org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 84 - integer overflow in several XSM/Flask hypercalls
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 21, 2014 at 12:29 PM, Jorge Manuel B. S. Vicetto
-<jmbsvicetto@...il.com> wrote:
-> Hi.
->
-> Has a CVE request been made for the following Drupal Security Advisory?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I think that it's better that the request is made for 4 CVE entries,
-as these are 4 different issues, even
-if Drupal issued a single Security advisory.
+Here are the four CVE assignments for XSA-84 (as well as the
+one CVE assignment for XSA-85 and the one CVE assignment for XSA-86).
 
+> http://xenbits.xen.org/xsa/advisory-84.html
+> XSA-84
 
->
-> SA-CORE-2014-003 - Drupal core - Multiple vulnerabilities
-> https://www.drupal.org/SA-CORE-2014-003
->
-> Regards,
->
-> Jorge Manuel B. S. Vicetto
-> Gentoo Developer
->
-> https://bugs.gentoo.org/show_bug.cgi?id=517364
+> The FLASK_{GET,SET}BOOL, FLASK_USER and FLASK_CONTEXT_TO_SID
+> suboperations of the flask hypercall are vulnerable to an integer
+> overflow on the input size. The hypercalls attempt to allocate a
+> buffer which is 1 larger than this size and is therefore vulnerable to
+> integer overflow and an attempt to allocate then access a zero byte
+> buffer.
+
+Use CVE-2014-1891.
 
 
+> Xen 3.3 through 4.1 ... expose unreasonably large memory allocation
+> to arbitrary guests.
 
--- 
-This message is strictly personal and the opinions expressed do not
-represent those of my employers, either past or present.
+Use CVE-2014-1892.
+
+
+> Xen 3.3 through 4.1, while not affected by the above overflow, have a
+> different overflow issue on FLASK_{GET,SET}BOOL
+
+Use CVE-2014-1893.
+
+
+> Xen 3.2 (and presumably earlier) exhibit both problems, with the
+> overflow issue being present for more than just the suboperations
+> listed above.
+
+the part of the 3.2 problems associated with the first overflow, for
+FLASK_{GET,SET}BOOL, FLASK_USER and FLASK_CONTEXT_TO_SID, is within
+the scope of CVE-2014-1891
+
+the part of the 3.2 problems associated with unreasonably large memory
+allocation is within the scope of CVE-2014-1892
+
+the part of the 3.2 problems associated with the second overflow, for
+FLASK_{GET,SET}BOOL, is within the scope of CVE-2014-1893
+
+all other vectors (e.g., other suboperations) that can lead to integer
+overflows in 3.2, even if they are related to the first overflow or
+related to the second overflow, have CVE-2014-1894 assigned now
+
+
+> http://xenbits.xen.org/xsa/advisory-85.html
+> XSA-85
+> Off-by-one error in FLASK_AVC_CACHESTAT hypercall
+
+Use CVE-2014-1895.
+
+
+> http://xenbits.xen.org/xsa/advisory-86.html
+> XSA-86
+> libvchan failure handling malicious ring indexes
+
+Use CVE-2014-1896.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS9UueAAoJEKllVAevmvms9ssIALQ0vssHk8Uuf85hjGAYF7O5
+UsetuaIyFYwy7U1xRxpwW9YEWoMELtylpOHViZUBpjMAPjmO4rXNs4J/avcfnh/J
+PPD3vl9aoUfA0hFqaR0jAIPld89SbOZA6Fvs23KcU3F9KOVvaD//3RBe3ticeSNQ
+N4QlRw1Cu9pQSveu3B9a6yt4OmQkuuWPSRu7KBUACohRF73JCZCN3TeUe7RqGp/L
+r9uN5hbsPCqnW2W4FPmQVGaD5BmrlETYcJM1YkdUoLVCeR+Fi0iyPZtrKMTUZ4h8
+XzAEovLRX7un3BbzxTifyls4Z/oQrD0cQ1QE1cGAA6kqYphK8h1VMUFGwXMpZDE=
+=yP8u
+-----END PGP SIGNATURE-----
