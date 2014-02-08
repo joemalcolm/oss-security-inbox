@@ -1,90 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/16/4
-Message-Id: <20140816074318.04AF31BE00D@smtpvbsrv1.mitre.org>
-Date: Sat, 16 Aug 2014 03:43:18 -0400 (EDT)
-From: cve-assign@...re.org
-To: forest.monsen@...il.com, nacin@...dpress.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for Drupal core, and contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/5
+Message-Id: <201402081217.32134.geissert@debian.org>
+Date: Sat, 8 Feb 2014 12:17:31 +0100
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Vulnerability Information Managers <vim@...rition.org>
+Subject: Fwd: Old CVE ids, public, but still "RESERVED"
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Sending a copy to oss-sec, in case there are people interested in this kind 
+of information.
 
-> SA-CORE-2014-004 - Drupal core - Denial of service
-> https://www.drupal.org/SA-CORE-2014-004
+----------  Forwarded Message  ----------
 
-[ as mentioned in the
-http://openwall.com/lists/oss-security/2014/08/07/3 post, "It was
-fixed by Michael Adams and Andrew Nacin of the WordPress security team
-and David Rothstein of the Drupal security team ... the code was the
-same and our patches differed only in coding standards" ]
+Subject: Old CVE ids, public, but still "RESERVED"
+Date: Friday 24 January 2014
+From: Raphael Geissert <geissert@...ian.org>
+To: Vulnerability Information Managers <vim@...rition.org>
 
-> http://cgit.drupalcode.org/drupal/diff/includes/xmlrpc.inc?id=1849830
-> https://core.trac.wordpress.org/changeset/29405/branches/3.9
+Hi,
 
-Use CVE-2014-5265 for the code changes in xmlrpc.inc (Drupal) and
-class-IXR.php (WordPress) to prevent entity declarations and therefore
-address the "vulnerable to an XML entity expansion attack ... can
-cause CPU and memory exhaustion" concern.
+Attached are a list of CVE ids which are still marked as RESERVED
+(i.e. no description/links/etc have been set) yet our security tracker
+knows about them. The tracker only containing public data, it means
+that the ids are not embargoed.
 
+Hopefully these lists can be useful to MITRE to catch up on those, or
+to anyone else.
+I can generate these and other reports regularly if desired.
 
-> http://cgit.drupalcode.org/drupal/diff/includes/xmlrpc.inc?id=1849830
-> http://cgit.drupalcode.org/drupal/diff/modules/openid/xrds.inc?id=1849830
-> https://core.trac.wordpress.org/changeset/29405/branches/3.9
+Notes:
+* The year in the file name corresponds to the year in the CVE id, not
+necessarily the year of assignment.
+* The lists only contain the CVE id, probably a short description, and
+one line of data from our tracker. The full data can be obtained
+either by going to
+https://security-tracker.debian.org/tracker/CVE-YYYY-XXXX or by
+looking up on our text database.
 
-Use CVE-2014-5266 for the "Skip parsing if there is an unreasonably
-large number of tags" in both xmlrpc.inc and xrds.inc (Drupal) and the
-"Bail if there are too many elements to parse" in class-IXR.php
-(WordPress).
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
 
+View attachment "still-reserved-2011-CVEs.txt" of type "text/plain" (14368 bytes)
 
-> http://cgit.drupalcode.org/drupal/diff/modules/openid/xrds.inc?id=1849830
+View attachment "still-reserved-2012-CVEs.txt" of type "text/plain" (18434 bytes)
 
-Use CVE-2014-5267 for the code change to reject any XRDS document with
-a /<!DOCTYPE/i match. (This is not really identical to CVE-2014-5265,
-although part of the goal is the same.)
-
-
-> And the appropriate number for the following Drupal contributed modules:
-
-> SA-CONTRIB-2014-075 - Biblio Autocomplete - SQL Injection and Access Bypass
-> https://www.drupal.org/node/2316717
-
-> SQL Injection
-
-Use CVE-2014-5249. See http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-5249
-
-
-> Additionally, the AJAX autocompletion callback itself was not properly
-> secured, thus potentially allowing any visitor access to the data,
-> including the anonymous user.
-
-Use CVE-2014-5250. See http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-5250
-
-
-
-> SA-CONTRIB-2014-076 - Fasttoggle - Access bypass
-> https://www.drupal.org/node/2316747
-
-Use CVE-2014-5268. We think this means that, in the vulnerable
-version, an unauthorized person could change an arbitrary user account
-from "allow" status to "block" status, or change an arbitrary user
-account from "block" status to "allow" status.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJT7wsYAAoJEKllVAevmvmsW34H/R+NgzTuSggQlC8D654fZD3j
-RL37cUifwHUPj4Vfm2LoNlUJDtkpLRFGgj2cpb2T7lgtth45m2SVtVgPteqcztYK
-vQSEmQxMXt6yxdTahWWGAWFf254glI4OJiG8mpeuqZPByD2T/SiesB0SbzInusqm
-JYcPH8/0w3jkVkIx7lSz4x2H79+dXIyY1xe9trWVy69X13yz+hMpnjs2i34pWHpe
-EEr+1gr9H0f+rhfi99nqnT6o1JPRptj/PcFaaR0FNaCwT9SW8h6H5faAhp8urTde
-qd4SkFTNFOz3PqbwUD+bxbrfC1QlTiFpKqZpsS2qSikBbhU90r58xQjhlF42atY=
-=dbkG
------END PGP SIGNATURE-----
+View attachment "still-reserved-2013-CVEs.txt" of type "text/plain" (34008 bytes)
