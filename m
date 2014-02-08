@@ -1,105 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/6
-Message-ID: <20140929084120.GA8464@openwall.com>
-Date: Mon, 29 Sep 2014 12:41:20 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Chester Ramey <chet.ramey@...e.edu>, Antti Louko <alo@....fi>
-Subject: Re: binary-patching bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/2
+Message-Id: <201402080137.s181b0BG004602@linus.mitre.org>
+Date: Fri, 7 Feb 2014 20:37:00 -0500 (EST)
+From: cve-assign@...re.org
+To: deviant.beta@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Dokeos 2.1.1 Multiple Stored XSS Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 29, 2014 at 04:44:05AM +0400, Solar Designer wrote:
-> I've just tweeted some crazy stuff, and it is even crazier to talk about
-> this on a mailing list focused on Open Source, but ...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> I have discovered several Stored XSS vulnerabilities in Dokeos ...
+> Version 2.1.1.
 > 
-> <solardiz> cp -ip bash{,~} && env - perl -pe 's/\((\) {\0)/\0\1/g' bash > bash~ && test `cmp -l bash{,~} | wc -l` = 1 && ln bash{,-} && mv -v bash{~,}
-
-I just did a Google web search for "bash binary patch" and found (on
-page 2 of search results) that this very approach had been suggested
-before, by Antti Louko:
-
-https://www.schneier.com/blog/archives/2014/09/nasty_vulnerabi.html#c6679473
-
-| alo  September 25, 2014 5:41 PM 
-| 
-| It is actually quite easy to binary patch bash. Open bash with eg. emacs
-| and search for string "() {" and replace "(" with a null character. This
-| disables the horrible "function definition from the environment" feature
-| altogether.
-
-https://www.schneier.com/blog/archives/2014/09/nasty_vulnerabi.html#c6679613
-
-| alo  September 27, 2014 7:06 AM 
-| 
-| As I wrote earlier, simple binary patch removes whole "automagic
-| function definitions from the environment". I made a simple Python
-| script to make the patch. It simply finds null-ending string "() {" and
-| writes null over first "(".
-| 
-| The script assumes that the first occurrence is the correct one. At
-| least bash shells I have, that is the only and correct one. This can be
-| also used to disable the feature in already patched vendor supplied bash
-| binaries.
-
-No analysis as to why this patch works was included in the comments,
-though.  Also, patching the first occurrence is riskier than making sure
-there's exactly one occurrence, as my one-liner does.  (For extra
-safety, my one-liner can be further improved to check the actual output
-from "cmp -l" with e.g. "egrep -c ' 50[[:space:]]+0$'" in place of
-"wc -l", but that didn't fit in the tweet and is less portable.)
-
-The Python script is:
-
-http://alo.fi/bash/Patch-bash.py
-
-SHA-256 of Patch-bash.py above as of the time of this writing:
-
-4de321a4fb8c1787f983b754d434c1dde6fe58e3c76f2f6b3b77f10a3d0ea171  Patch-bash.py
-
-Antti, you could want to enhance the Python script with an "exactly one
-match" check, and post the new SHA-256 in here.  While not tweetable, I
-do see some advantage in this being written in just one language, as
-opposed to my mix of shell and Perl.
-
-I thought of doing the same in Perl or sed alone, and it'd fit in a
-tweet easily (e.g., using "perl -pi.orig -e"), but not with the kind of
-safety I wanted to include - the "exactly one match" check, and creating
-a backup and updating bash atomically ("perl -i" unfortunately writes
-over the file, so it'd bump into "Text file busy" or have bash broken
-for new invocations for a while, and would keep bash broken if patching
-fails).  Hence the mix.
-
-> <solardiz> Previous tweet disables function imports in bash due to strncmp(..., 4). Tested on some Linux & FreeBSD, from bash & csh. At your own risk.
-> <solardiz> perl -pe 's/\(\) {\0/(){\0\0/g' followed by an "exactly one match" check may be safer e.g. for an Internet-wide scan^Wpatch. ;-) #shellshock
-> <solardiz> bash 1.14.7 and bash 4.3 (and all inbetween?) use STREQN ("() {", string, 4) and define STREQN via strncmp(). Allows portable binary patch.
+> *Path:* /dokeos-2.1.1/main/auth/profile.php
 > 
-> The idea is that the length 4 STREQN() aka !strncmp() when invoked on a
-> shorter constant string will require that the entire env var value be
-> that string - that is, either empty (in my first tweet above) or a
-> 3-char string (in my third tweet above).  Neither case leaves any room
-> for an attacker to provide arbitrary input to the parser via the former
-> function imports feature.
+> *Issue detail:*
+> The problem is script does not sanitise the following parameters, "Phone"
+> "Street" "Address line" "Zip code" "City"
 > 
-> This dirty hack may be handy for patching otherwise unmaintained systems.
 > 
-> The primary risk I see here is that some build of bash might include
-> custom patches where this check had been changed to use something other
-> than (an equivalent of) strncmp().  I am not aware of any such cases.
+> *Path:* /dokeos-2.1.1/main/social/groups.php?id=1
 > 
-> Here's how to test that the feature is indeed disabled (or at least
-> broken, although that is an insufficient test for security).  Before the
-> binary patch:
+> *Issue detail:*
+> The problem is that if attacker were to enter the following XSS vector as
+> the "Subject Topic".
 > 
-> $ testfunc() { echo test; }
-> $ export -f testfunc
-> $ bash -c testfunc
-> test
 > 
-> After the binary patch (first tweet):
+> *Path:* /dokeos-2.1.1/main/messages/view_message.php?id=6&f=social
 > 
-> $ testfunc() { echo test; }
-> $ export -f testfunc
-> $ bash -c testfunc
-> bash: testfunc: command not found
+> The problem is similar to issue #2 if attacker were to enter the following
+> XSS vector in the Message itself.
+> 
+> 2014-01-15 - Third Vendor Notification (no reply).
+> Please see the full report at http://www.xchg.info/?p=381
 
-Alexander
+Use CVE-2014-1877.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS9YlaAAoJEKllVAevmvms7vAIAMFBjcin6+PpSaEPEtCPZ9Pg
+YzJaLhwkLs8p84agFepywNokm1zbQXxAgQcI5vrljXBb6SOMlatCINxCLWg1M7ml
+ndMKgiLoZF3m4a/S54VxGLIdnG3+JBu6kAfJKhTWU6eHYAtDCHKIKLFpkx8ESvl2
+ksJaBN2kaTI5iT0FnmThc23GarhNuL5GTSf0kk+9HQw87eDarJzEfO9n4/4t7gLO
+QouDv+JzBeohq1VaHa97d0nLgq1y/4SResQsltlUkE0zj6K0ILflKCKl5/OF5MUl
+x9nj1ocHe9uc2XD/kcSr+PjcWXKmJUhx3FloUoPdZA8q7WhxP+aibLSLUkczD5o=
+=6Mg2
+-----END PGP SIGNATURE-----
