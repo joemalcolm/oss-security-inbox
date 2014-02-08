@@ -1,25 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/24/8
-Message-ID: <20140224225642.GE14947@kludge.henri.nerv.fi>
-Date: Tue, 25 Feb 2014 00:56:42 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: hexchat buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/8
+Message-Id: <201402081408.s18E8IFH004046@linus.mitre.org>
+Date: Sat, 8 Feb 2014 09:08:18 -0500 (EST)
+From: cve-assign@...re.org
+To: oss-sec-addjsif@...p.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, djorm@...hat.com
+Subject: Re: CVEs for Android addJavascriptInterface issues (was: multiple issues in Apache Cordova/PhoneGap)
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2013 CVE for buffer overflow issue in hexchat, thanks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Bug report: https://github.com/hexchat/hexchat/issues/463
-Fixed in commit: https://github.com/hexchat/hexchat/commit/8996baa35ee12556a7bf402e3568193dbafec5f1
-Exploit: http://packetstorm.igor.onlinedirect.bg/1304-exploits/hexchat-overflow.txt
-More information: http://osvdb.org/92115
+> Is the intent here to assign CVE-2012-6636 to all issues rooted in
+> reliance on an incorrectly exposed Javascript bridge?
+> 
+> If so, please keep in mind that this issue is not as simple as
+> pointing at Android itself.
 
-hexchat was recently accepted to Debian unstable:
-http://packages.qa.debian.org/h/hexchat.html
+The scope of CVE-2012-6636 is the following description of a specific
+change made by a vendor in response to a vulnerability:
 
-I haven't verified this vulnerability or exploit.
+  On Android prior to API level 17, these interfaces are
+  generically insecure. Malicious JavaScript executing inside
+  WebView can use the Java reflection API to invoke any method
+  of any Java object exposed via 'addJavascriptInterface' and
+  take control over the local side of the application.
+  Starting from Android API level 17, only the methods explicitly
+  annotated with @JavascriptInterface are visible in the Java
+  objects exposed to WebView via 'addJavascriptInterface'.
 
----
-Henri Salo
+Our expectation is that a number of issues "rooted in
+reliance on an incorrectly exposed Javascript bridge" could
+have their own separate CVEs.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+> You may have seen recently released Metasploit module that allows a
+> remote compromise of the Google Glass browser using an incorrectly
+> exposed Javascript bridge ...
+> 
+> If this issue should have the same CVE assignment, please ack.
+> Otherwise, please assign a new CVE.
+
+We'll send a separate message soon about this Google Glass CVE
+request. We don't want to have CVE assignments for separately reported
+issues in this thread.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS9jexAAoJEKllVAevmvmsFuYIAMBZyO761Rr1k6Euyxm2/fPJ
+FJ+N4kB9GEh4v+1y3RPxejhGct2g9FN5X57z67OB2jyvQu/GcdyZqU4bw1v5X8zn
+UAEehDJeHWQtqFTO+BWuCFiO4gi4eHO+DHpgKWTo42FWQQxvKoYeY9I8rPYloZve
+ij4pWEuWhU4Mh/iZICqk3JNcdxrrKws1/2IAMVACb9z9g//ZDL8uhbR7rSJEomFJ
+eXGQSl9ye6/fcN6sECvUvfmXko7dalGd3rFXy9RDRQg1t5PxDi1h74xya+jdIpl6
+aWHOEhYLNvtCvnAIUpzDymUDqKZzOZ749h4EH2pxLTCTqUiqT297zrFsI3NrhlI=
+=STCe
+-----END PGP SIGNATURE-----
