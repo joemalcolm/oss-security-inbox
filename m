@@ -1,35 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/7
-Message-ID: <20140409052840.GA6223@openwall.com>
-Date: Wed, 9 Apr 2014 09:28:40 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Jussi Eronen <juhani.eronen@...ora.fi>
-Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/3
+Message-Id: <201402080206.s18260Gd005187@linus.mitre.org>
+Date: Fri, 7 Feb 2014 21:06:00 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 737778@...s.debian.org
+Subject: Re: CVE request: f2py insecure temporary file use
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 08, 2014 at 10:28:24PM +0200, Yves-Alexis Perez wrote:
-> Well, as I put in my tentative timeline, and according to Jussi Eronen
-> (from NCSC-FI, afaict) mail in that thread, NCSC-FI only reported to
-> OpenSSL ???a couple of hours before the advisory???, so my understand is
-> that NCSC-FI was not aware of the vulnerability last week.  Maybe
-> Codenomicon was, though. Jussi, could you confirm that?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Codenomicon definitely was:
+> Jakub Wilk reported insecure temporary file use in f2py.
+> 
+> numpy/f2py/__init__.py contains this code:
+> 
+>           fname = os.path.join(tempfile.mktemp()+'.f')
+> 
+>       f = open(fname,'w')
+> 
+> Can a CVE please be assigned if one hasn't been already?
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737778
+> https://bugzilla.redhat.com/show_bug.cgi?id=1062009
 
-Domain Name: HEARTBLEED.COM
-Creation Date: 2014-04-05 15:13:33
-Registrant Name: Marko Laakso
-Registrant Organization: Codenomicon Oy
+Use CVE-2014-1858 only for the issue in the __init__.py file.
 
-Jarkko Lamsa (@lampska), "Fuzzing and threat intel @codenomicon, martial
-arts", made some comments on Twitter:
+Use CVE-2014-1859 for the other temporary-file issues fixed by the
+vendor in the
+https://github.com/numpy/numpy/commit/0bb46c1448b0d3f5453d5182a17ea7ac5854ee15
+commit.
 
-<@lampska> @cynicalsecurity It was independent co-discovery. Plan was for responsible disclosure but it leaked (dunno where) forcing openssl go public
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-<_snagg> Wait, CloudFare fixed the OpenSSL bug 1week ago?somebody is getting the hang of this 'responsible disclosure' thing http://blog.cloudflare.com/staying-ahead-of-openssl-vulnerabilities
-<@lampska> @_snagg Independent co-discovery. Plan was a responsible disclosure, but it went public too soon http://www.heartbeat.com
-<@ysaw> @lampska @_snagg why did some get notified last week, but other didn't get notified until it went public?
-<@lampska> @ysaw @_snagg I do not have visibility to what happened there. I do know we had just started conversations with CERTs when this went public
-
-Alexander
+iQEcBAEBAgAGBQJS9Y9iAAoJEKllVAevmvmsmUgH/jW37Wa7Wp52niRfZ+5B3IR+
+emZwCRGRhJKZVZKB3yWDPOLv7WPGsXMQUgRzNLI81U2ukGX5+ZDQCAvm2o5fed25
+z90k82ER5lwmbosp87p/kKNtCTuLegijDczduBIV73fO3PwC1d+/JM5I4/DnTSM6
+OWLRquY7giwDPiF5NvBrmDR6JocWOPVlbAHoIvLuxRFcYdFbqDaJe8Bt8hf2saQB
+Phw/nIaladkNJOKR5sZM9+E3tVdP1MPCjmiMdASWktTP0fNrGMoBS24zTAQY5hgT
+ApAW+6Y88igBbZ/aci5kvIo7ocdmw+ld7YNK46PMX8Cr4MsTJZX0X6V85HCzAJM=
+=XwId
+-----END PGP SIGNATURE-----
