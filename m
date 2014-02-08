@@ -1,63 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/17/1
-Message-Id: <67991BCF-9449-4116-B6C9-585B483CC9E0@adamcaudill.com>
-Date: Thu, 17 Apr 2014 01:25:03 -0400
-From: Adam Caudill <adam@...mcaudill.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request - XXS in phpMyID (openid_error)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/9
+Message-ID: <52F668EB.5020608@oracle.com>
+Date: Sat, 08 Feb 2014 09:27:07 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com
+CC: Raphael Geissert <geissert@...ian.org>, Vulnerability Information Managers <vim@...rition.org>
+Subject: Re: Fwd: Old CVE ids, public, but still "RESERVED"
 Content-Type: text/plain; charset=utf-8
 
+On 02/ 8/14 03:17 AM, Raphael Geissert wrote:
+> CVE-2012-0064 [xorg screen lockers bypassed via key combo]
+> 	- xorg-server 2:1.11.3.901-2 (high; bug #656410)
 
-There is a XXS vulnerability in phpMyID v0.9, in the openid_error parameter. The value passed into openid_error is passed through to the output without modification when openid.mode is “error”.
-
-Example:
-
-https://example.com/MyID.config.php?openid.mode=error&openid_error=%3Cscript%3Ealert(1)%3C/script%3E
-
-Here is the code at fault:
-
-MyID.php Line 569:
-  function error_mode () {
-  	isset($_REQUEST['openid_error']) 
-  		? wrap_html($_REQUEST['openid_error'])
-  		: error_500();
-  }
-
-MyID.php Line 1559:
-  function wrap_html ( $message ) {
-  	global $charset, $profile;
-
-  	header('Content-Type: text/html; charset=' . $charset);
-  	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-  <html>
-  <head>
-  <title>phpMyID</title>
-  <link rel="openid.server" href="' . $profile['req_url'] . '" />
-  <link rel="openid.delegate" href="' . $profile['idp_url'] . '" />
-  ' . implode("\n", $profile['opt_headers']) . '
-  <meta name="charset" content="' . $charset . '" />
-  <meta name="robots" content="noindex,nofollow" />
-  </head>
-  <body>
-  <p>' . $message . '</p>
-  </body>
-  </html>
-  ';
-
-  	exit(0);
-  }
-
-
-Project Page: http://siege.org/phpmyid
-Code: https://www.siege.org/oss/phpMyID/trunk/MyID.php
-
-The author has stated that the project is no longer maintained, so hasn’t been notified, and thus there is no fixed version. This is being submitted to raise awareness among those that use this application, and in hopes that a new maintainer will take the project over and address the outstanding issues.
+If it helps anyone cleaning these up, I can confirm on behalf of X.Org that
+we've published this one - it's on http://www.x.org/wiki/Development/Security/
+but we may have missed mailing it to oss-security.  It appears the person who
+found it took care of that though:
+http://www.openwall.com/lists/oss-security/2012/01/19/6
 
 -- 
-Adam Caudill
-adam@...mcaudill.com
-http://adamcaudill.com/
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	  X.Org Security Response Team - xorg-security@...ts.x.org
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
