@@ -1,41 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/12
-Message-ID: <542A784C.3050508@redhat.com>
-Date: Tue, 30 Sep 2014 11:30:52 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/4
+Message-ID: <20140208064704.GA17711@dq>
+Date: Sat, 8 Feb 2014 00:47:05 -0600
+From: "Joshua J. Drake" <oss-sec-addjsif@...p.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+Cc: djorm@...hat.com, cve-assign@...re.org
+Subject: Re: CVEs for Android addJavascriptInterface issues (was: multiple issues in Apache Cordova/PhoneGap)
 Content-Type: text/plain; charset=utf-8
 
-On 09/30/2014 05:11 AM, gremlin@...mlin.ru wrote:
-> On 29-Sep-2014 22:34:20 -0400, Chet Ramey wrote:
+Hello,
+
+I apologize for hijacking the thread, but it seemed prudent to reply
+inline with the relevant facts close by. 
+
+On Fri, Feb 07, 2014 at 12:49:00PM -0500, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> > Multiple issues have been reported in Apache Cordova:
+> > 
+> > http://packetstormsecurity.com/files/124954/apachecordovaphonegap-bypass.txt
+> 
+> We have been looking at this report, and have this initial response.
+
+[..snip..]
+
+> Page 5 of the NDSS paper says:
+> 
+> > On Android prior to API level 17, these interfaces are generically
+> > insecure. Malicious JavaScript executing inside WebView can use the
+> > Java reflection API to invoke any method of any Java object exposed
+> > via 'addJavascriptInterface' and take control over the local side of
+> > the application
+> 
+> This Android vulnerability is CVE-2012-6636. The available information
+> about the point of original disclosure is
+> http://50.56.33.56/blog/?p=314 and we don't happen to know if the
+> researcher has a personal domain name for 50.56.33.56 that should be
+> used instead.
 >
->   >> What is the motivation to not store executable code (functions)
->   >> differently from standard variables?
->
->   > What would you use for such a store, considering the environment
->   > is the only portable way to pass this information from one process
->   > to another in the general case, and support the current set of
->   > use cases?
->
-> C.O. to the rescue: temporary file.
+> In this p=314 post, the researcher says "Prior to Android 4.2, if an
+> application uses the addJavascriptInterface and allows an attacker to
+> control the content rendered in a WebView, then an attacker can take
+> control over the parent application regardless of the type of
+> interface exposed." This seems to be a different finding than in the
+> referenced
+> http://www.cis.syr.edu/~wedu/Research/paper/webview_acsac2011.pdf
+> paper. (Yes, webview_acsac2011.pdf can have CVE-2011-#### ID
+> assignments but we are not working on that at the moment.)
 
-You cannot use a named temporary file because the creator does not know 
-its required lifetime.  That's a challenge all solutions not based on 
-the process environment will face.
+Is the intent here to assign CVE-2012-6636 to all issues rooted in
+reliance on an incorrectly exposed Javascript bridge?
 
-Theoretically, you could pass an unnamed temporary file via a file 
-descriptor, and communicate the descriptor number in some safe way (but 
-what's that, if you don't trust the environment?).  But that's going to 
-be far less interoperable than what we currently have, and barely more 
-secure.
+If so, please keep in mind that this issue is not as simple as
+pointing at Android itself. If a vulnerable app is compiled against a
+vulnerable API level of the SDK (even today) it would be vulnerable.
+At least that is my current understanding. As such, additional
+assignments on a per-app or per-ad-network-SDK may be necessary due to
+these exposure lifetime complications.
 
-> If one shell instance needs to pass some functions to another, it
-> could dump those functions to a temporary file and pass the --load
-> (or, better, --load-functions) options with a filename parameter.
+You may have seen recently released Metasploit module that allows a
+remote compromise of the Google Glass browser using an incorrectly
+exposed Javascript bridge via the "searchBoxJavaBridge_" object. This
+exposes an instance of android.webkit.SearchBoxImpl in older versions
+of the Android browser.
 
-We need to keep support exporting functions to grandchildren through 
-non-bash processes (that is, bash -> some-other-program -> bash).
+If this issue should have the same CVE assignment, please ack.
+Otherwise, please assign a new CVE.
 
--- 
-Florian Weimer / Red Hat Product Security
+Joshua J. Drake
+http://www.droidsec.org/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (829 bytes)
