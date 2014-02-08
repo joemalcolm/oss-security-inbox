@@ -1,32 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/8
-Message-ID: <5481B377.8020109@redhat.com>
-Date: Fri, 05 Dec 2014 14:30:31 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/7
+Message-Id: <201402081401.s18E1p2I003994@linus.mitre.org>
+Date: Sat, 8 Feb 2014 09:01:51 -0500 (EST)
+From: cve-assign@...re.org
+To: abn@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Multiple security issues in Android Debug Bridge (Android SDK Tools)
 Content-Type: text/plain; charset=utf-8
 
-On 12/05/2014 01:54 PM, Hanno Böck wrote:
-> Most distros don't ship pic/pie executables by default. Why? I haven't
-> done benchmarks, the saying is that this has a notable performance hit
-> on 32 bit but almost none on 64 bit. If this is true then could we at
-> least have all major distros enable it on 64 bit?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Copy relocations support has still be added to GCC.  For x86_64, a patch 
-exists:
+> http://www.droidsec.org/advisories/2014/02/04/two-security-issues-found-in-the-android-sdk-tools.html
 
-   https://gcc.gnu.org/ml/gcc-patches/2014-05/msg01215.html
+> First, the integer "n" is signed. Second, the "strtoul" function
+> allows specifying whether or not the number is negative
 
-Without that, there is still a performance impact.
+> results in a vanilla stack buffer overflow.
 
-> What i found notable: diff-ing two function offsets from different
-> libraries (I use printf-sin) is alway static, even on Pax. Is this by
-> design?
+Use CVE-2014-1909 for this issue with incorrect use of an integer
+value.
 
-Yes, the address you get is the PLT stub, not the actual implementation. 
-  The reason for this is somewhat complex, but related to the way lazy 
-binding and symbol interposition are implemented.
 
--- 
-Florian Weimer / Red Hat Product Security
+> no authentication is required between the Client and Server
+> 
+> 2.The ADB Server ... Among other things, it implements port forwarding
+> and maintaining a persistent connection to devices connected to the
+> host computer.
+> 
+> these design decisions leave much to be desired.
+
+There is no CVE assignment for this. Here, "no authentication is
+required" is probably best considered an opportunity for security
+enhancement. (For example, there are many other applications that
+provide other types of port forwarding in other contexts, and don't
+implement authentication.)
+
+
+> Issue #2 - Lack of hardening when compiling for a host
+> 
+> When investigating whether or not this particular issue was
+> exploitable, it was determined that the "adb" binary supplied by
+> Google does not contain two crucial modern protection mechanisms.
+> Those are: non-executable stack protection and binary base
+> randomization (PIE). Since these two protections are absent,
+> exploiting this issue is trivial. A patch that adds these protections
+> when compiling host binaries is included, though its is not well
+> tested.
+> 
+> It should also be noted that host compilation also seems to
+> intentionally opt out of the FORTIFY_SOURCE protections. It's not
+> clear why this is the case since the comment near this line of code
+> references an internal only bug number.
+
+There is currently no CVE assignment for this. Absense of these types
+of protection mechanisms can have a CVE ID in some cases, but the CVE
+project typically proceeds only in instances where an upstream vendor
+chooses to make an announcement that this was a software mistake. An
+example is CVE-2013-5057. A third-party report could be used in a
+limited set of scenarios, e.g., a build process that has a list of
+files requiring safe compilation options, with a typo in one of the
+filenames. Similarly, if the available information is that the vendor
+intentionally disabled this type of a protection mechanism, a CVE
+assignment can't be made.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS9jfCAAoJEKllVAevmvmsiqUIAMUIIWCkDc4ECZB7Ic2AM6VB
+TKRl+AB5ZwBxvJzdr1IOvx1yg0dVdwHq6A/Fe+MGFr/SlVTGHOu4tIbBYCAmFlkM
+QCtSEuIwLYaIo63Qw/SM7HDIcvmPDlcY9hqcH5g3GOHTA6s0j/nNG/w7N9uGjZrK
+kw9CqjniX32cTUJdL2X1wrLlbc+BJlply5HkTMFseCRCd9WT4RBsENhPgBPOB64p
+LZ0MzOTOD+l8uN6CDblURnP5uq7eZ8dyOJm3PVNA/xdyMe4i0wj7BaL83zHrCrya
+JxKtEKTbNzt7SE++VXhv0HpZuy4BvH3A9QlWpJcbBg2mB3BCsp/kSzbr1fDLYbw=
+=Nfx1
+-----END PGP SIGNATURE-----
