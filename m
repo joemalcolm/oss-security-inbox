@@ -1,45 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/21
-Message-Id: <20141126171655.7F01052E0C8@smtpvbsrv1.mitre.org>
-Date: Wed, 26 Nov 2014 12:16:55 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/1
+Message-Id: <201402080052.s180qkHq003809@linus.mitre.org>
+Date: Fri, 7 Feb 2014 19:52:46 -0500 (EST)
 From: cve-assign@...re.org
-To: krahmer@...e.de
+To: vdanen@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: blkid command injection
+Subject: Re: CVE request and heads-up on insecure temp file handling in unpack200 (OpenJDK, Oracle Java)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> There is a command injection inside blkid.
+> I'm not sure if this affects IBM's JDK, but it seems to affect
+> Oracle's (based on a quick test on my mac)
 > 
-> Given an USB stick with /dev/sdb1 you can: ...
+> the unpack200 program included in OpenJDK did not properly handle the
+> logfile properly. If the the log file was unable to be opened, it
+> would create /tmp/unpack.log instead as the fallback, but do so in an
+> insecure manner, as shown in unpack.cpp (the below is from OpenJDK 6):
 > 
-> ID_FS_`/tmp/foo` "" UUID=...
+> 4732 void unpacker::redirect_stdio() {
+> ...
+> 4759     sprintf(log_file_name, "/tmp/unpack.log");
+
+> 4761     if ((errstrm = fopen(log_file_name, "a+")) != NULL) {
 > 
-> "blkid -o udev" is often used in root context via udev or in automounters
-> (uam-pmount) to construct key=value environment variables inside shell scripts
-> which are then evaluated.
+> The same exists in OpenJDK 7 and 8.
+> 
+> This could allow a malicious local attacker to conduct local attacks,
+> such as symlink attacks, where a file could be overwritten if the user
+> running unpack200 had write permissions.
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737562
+> https://bugzilla.redhat.com/show_bug.cgi?id=1060907
 
-Use CVE-2014-9114.
-
-It seems fairly clear that "blkid -o udev" is attempting to create
-lines that are safe sh input. Or, more specifically, the expectation
-is that the lines would be directly usable. We currently don't see a
-reasonable alternative interpretation that blkid is simply attempting
-to provide output lines that accurately reflect strings found on
-device media, and is expecting that other components will make a
-security determination about each line, before using that line as sh
-input. Also, the blkid maintainer has apparently made other changes
-relating to quoting of strings found on device media:
-
-  http://git.kernel.org/cgit/utils/util-linux/util-linux.git/commit/?id=1c9885cde853a458b5abe5ce0804abc27caf4fd4
-
-(we understand that it's not completely analogous). Finally,
-http://git.kernel.org/cgit/utils/util-linux/util-linux.git/tree/misc-utils/blkid.8
-says 'print key="value" pairs for easy import into the udev
-environment' and those security determinations would probably not be
-considered "easy import."
+Use CVE-2014-1876.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -49,11 +44,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUdgo0AAoJEKllVAevmvms/vEH/Rt5DBzngbJz8CFPoomJbQyv
-NSK59hcK0iWcvEf62RVRfD3S1jvqSUGZeFIILujK0vOrEMbiuyyqgKUjqnarcF8W
-ofwEonzPQofKjaT5TmrlGjuhSCJcyM8VrD4yg4ctGfIWcr4MID6BoPUC4T2wLxq6
-8z4T2dfa8FhOlCDO7WcjQGX0N72tbc9ptD5ISCo7QiPJdkX8mdlABariB5u9FTap
-/FoBfwlx+/R64grEqvHB7SM4DKqJLE/6OBOVuESIDeh32uIPtZ69Y+gM7t5h6H2E
-Tq232BVj9+uvdJsFouWxDMi/GXWeCqrcrTIa6EvuepKJ5a7LcWi/UJvswzQvsy8=
-=1Rws
+iQEcBAEBAgAGBQJS9X4vAAoJEKllVAevmvmsY18H/jhe8ReMewYm51zFXb3Ma5vg
+hzG5hmArGvX6DaEXj8qwtT1ifUys2KFq/EaIYcQVtoivWeZgXh5LERfjUybl0aPY
+4pr9U1quWra7QJtTTr49mi48mJS/Ef1Lj0yQ2GxwYyOVN7250SuUMjkT6euXWBxd
+ol6/Y/rYzabU+k/1OXRSU1auHvjX3nj++vontWv5clIDDDTPMacStLn5JbYImcoi
+UQJjuVFhAwu2Ue9ztpC0+OBpftFkMsX+y3Xzx92c2+orerDPioqdE5JzVBSp8Ei1
+F7Ai06g0QOjxZc9SUFdgGAzQyLyM3gPfk2P8HnMVvNeps9u9Wt8DiEWM8/xKCkg=
+=d/PB
 -----END PGP SIGNATURE-----
