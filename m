@@ -1,46 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/13
-Message-ID: <CALx_OUDCb-ho1P4dR-ABeRBBBWT=LxXSWMK6yjLP1qsty98UOA@mail.gmail.com>
-Date: Mon, 17 Nov 2014 07:54:54 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/6
+Message-ID: <20140208134950.GI10484@core.inversepath.com>
+Date: Sat, 8 Feb 2014 14:49:50 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2014-001] MantisBT input sanitization errors
 Content-Type: text/plain; charset=utf-8
 
-> I know that this sounds awfully impractical (at least for the time
-> being, because the landscape here is changing pretty rapidly), but
-> some would say that the best advice they can give to "average users"
-> now is to watch "untrusted" movies with web browsers which are
-> employing well-reviewed and tested sandboxing technologies and their
-> media decoders are well tested (also: fuzzed). I guess "regular" media
-> players will follow with this approach in some time.
 
-Well, but that's a tough argument.
+#2014-001 MantisBT input sanitization errors
 
-First, as you note, the primary way that things like ffmpeg have
-improved is fuzzing. In fact, if anything, ffmpeg has been
-*exceptionally* bad before that, would definitely fail the "designed
-for security" test, and by that criteria, should not have been used in
-any browser to begin with. So, it's probably not a very good argument
-against fuzzing bad software =)
+Description:
 
-Secondly - as most people on this list know, sandboxing is a tricky
-beast. Firefox doesn't have it. Safari and Opera don't have it (that I
-know of). MSIE has a fairly limited one. Chrome has a good sandbox on
-most platforms, but today, it is certainly far from being a silver
-bullet - an RCE in a sandboxed renderer still gives access to many of
-your online assets (doubly so if you advise people to conduct their
-business in browser-accessible VMs, cloud services, or so).
+The MantisBT web-based bugtracking system suffers from SQL injection
+vulnerabilities caused by insufficient input sanitization.
 
-They are working on something better, but the difficulty of making
-that happen for a fairly specific use case certainly emphasizes how
-tricky sandboxing can be with today's monolithic, multi-purpose apps.
-People have been talking about lightweight, dynamic
-compartmentalization-on-the-fly for other tools for a very long time,
-but not much has gained widespread acceptance so far. Most OSes ship
-with a dizzying array of containment mechanisms, most of which are
-completely unused spare for a handful binaries built by teams
-passionate about infosec. I'm not sure if we have the power to change
-that.
+The MantisBT SOAP API uses the unsafe db_query() function allowing a
+specially crafted tag within the envelope of a mc_issue_attachment_get SOAP
+request to inject arbitrary SQL queries.
 
-/mz
+The reporting of this specific issue was followed by an investigation that
+lead to additional cases of unsafe db_query() function use, being found by
+MantisBT maintainers, throughout MantisBT code.
+
+Affected version:
+
+MantisBT >= 1.1.0a4, <= 1.2.15
+
+Fixed version:
+
+MantisBT >= 1.2.16
+
+Credit: vulnerability report received from Martin Herfurt <martin.herfurt AT
+nruns.com>.
+
+CVE: CVE-2014-1608 (SOAP), CVE-2014-1609 (additional SQL injections)
+
+Timeline:
+
+2014-01-17: vulnerability report received
+2014-01-17: contacted MantisBT maintainer
+2014-01-17: maintainer provides patch for review
+2014-01-18: contacted affected vendors
+2014-01-19: assigned CVEs
+2014-02-08: MantisBT 1.2.16 released
+2014-02-08: advisory release
+
+References:
+http://www.mantisbt.org
+http://www.mantisbt.org/bugs/view.php?id=16879
+http://www.mantisbt.org/bugs/view.php?id=16880
+http://github.com/mantisbt/mantisbt/commit/00b4c17088fa56594d85fe46b6c6057bb3421102
+http://github.com/mantisbt/mantisbt/commit/7efe0175f0853e18ebfacedfd2374c4179028b3f
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2014-001.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
