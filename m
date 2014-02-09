@@ -1,86 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/18/4
-Message-ID: <f378e837-0173-4113-ac0f-e5bb5bcb527f@email.android.com>
-Date: Sat, 18 Oct 2014 09:01:55 +0200
-From: Nikos Mavrogiannopoulos <n.mavrogiannopoulos@...il.com>
-To: mancha <mancha1@...o.com>,oss-security@...ts.openwall.com
-CC: Nikos Mavrogiannopoulos <nmav@...tls.org>,dkg@...thhorseman.net
-Subject: Re: neuter the poodle (was: Re: Truly scary SSL 3.0 vuln to be revealed soon:)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/09/1
+Message-Id: <201402092140.s19LeOuA013343@linus.mitre.org>
+Date: Sun, 9 Feb 2014 16:40:24 -0500 (EST)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-The attack that you describe below is not an attack on tls negotiation. If you would be using the gnutls api as documented it wouldn't work. It is an attack on the insecure negotiation used by firefox, which as it seems it shares code with thunderbird. The text in my description is accurate, the attack affects mostly browsers, and if you are using the tls protocol negotiation you are safe.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 18 October 2014 00:58:46 CEST, mancha <mancha1@...o.com> wrote:
->On Fri, Oct 17, 2014 at 03:40:31PM -0400, Daniel Kahn Gillmor wrote:
->> Please see: http://www.gnutls.org/security.html#GNUTLS-SA-2014-4
->> 
->> and Nikos' writeup here:
->> 
->>  http://nmav.gnutls.org/2014/10/what-about-poodle.html
->> 
->> From the latter link:
->> 
->> >>> The good news is, that only browsers use this construct, and no
->> >>> other applications should be affected.
->> 
->> Nikos (or anyone else on OSS-security), are you sure that only
->> browsers do this?  what about mail clients like Thunderbird or
->> Mail.app making IMAPS or POPS or submission connections?
->
->SSLv3 is vulnerable to padding oracle attacks on CBC-mode ciphers. This
->vulnerability, tagged CVE-2014-3566, exists independently of types of
->clients, servers, or protocols being layered over SSL/TLS.
->
->POODLE is a specific attack vector that leverages "protocol fallback"
->in
->order to exploit CVE-2014-3566.
->
->Notwithstanding reports like "The good news is, that only browsers use
->this construct, and no other applications should be affected." [1] and
->"Currently, only HTTPs clients perform out-of-band protocol fallback."
->[2], I can confirm what you're hinting at.
->
->Browsers are not the only client-side applications that implement
->"protocol fallback". The below transcript shows an MITM-triggered
->Thunderbird 24.7.0 IMAPS protocol downgrade to SSLv3 even though both
->peers speak TLSv1.
->
->--mancha
->
->[1] http://nmav.gnutls.org/2014/10/what-about-poodle.html
->[2] https://access.redhat.com/node/1232123
->
->========= transcript ============
->Setting up mancha-in-the-middle...
->
->127.0.0.1:44366 -> 127.0.0.1:993
->handshake               [tls1.0]        (client_hello)
->
->Start protocol downgrade attack...
->
->127.0.0.1:44371 -> 127.0.0.1:993
->handshake               [ssl3.0]        (client_hello)
->
->127.0.0.1:993 -> 127.0.0.1:44371
->handshake               [ssl3.0]        (server_hello)
->handshake               [ssl3.0]        (certificate)
->handshake               [ssl3.0]        (server_key_exchange)
->handshake               [ssl3.0]        (server_hello_done)
->
->127.0.0.1:44371 -> 127.0.0.1:993
->handshake               [ssl3.0]        (client_key_exchange)
->change_cipher_spec      [ssl3.0]
->handshake               [ssl3.0]        (encrypted)
->
->127.0.0.1:993 -> 127.0.0.1:44371
->change_cipher_spec      [ssl3.0]
->handshake               [ssl3.0]        (encrypted)
->
->127.0.0.1:993 -> 127.0.0.1:44371
->application_data        [ssl3.0]
->application_data        [ssl3.0]
->=================================
+> CVE request is still pending. I think we now need two:
+> 1. Shell injection partly fixed in 0.3.5.
+> 2. Incomplete fix for shell injection fixed in 0.3.6.
 
--- 
-Sent fron my mobile. Please excuse my brevity.
+We think either 3 or 4 may be a better number of CVEs.
+
+First, it seems that the shell_quote function in version 0.3.5 has two
+fundamentally different problems with different flaw types and
+different discoverers. The code in question is:
+
+  elif len(s) >= 2 and (s[0], s[-1]) == ("'", "'"):
+      result = '"%s"' % s.replace('"', r'\"')
+
+The first problem, noted by Florian Weimer, is that this type of
+attempt to quote ' characters by using " characters is inherently
+wrong because the " and ' characters are not equivalent in the shell.
+In his example, the input ends up surrounded by " characters, but the
+string inside has a $( command substitution, and thus the command will
+be executed. In other words, using " characters simply cannot work
+correctly because "$(command)" is unsafe whereas '$(command)' is safe.
+
+The second problem, noted by Matthew Daley, is that arbitrary
+insertion of a \ character into a string is unsafe because it can
+convert a single command into a list. This is independent of the
+non-equivalence of " and ' in the shell. In particular, the same list
+vulnerability can be seen with this 0.3.5 code variant:
+
+  elif len(s) >= 2 and (s[0], s[-1]) == ('"', '"'):
+      result = "'%s'" % s.replace("'", r"\'")
+
+along with the analogous variant of the Python input. The only
+difference is that the shell prints a different number of \
+characters. In each case, the erroneous \ insertion separates the
+string into a list of two commands, and the touch command is executed.
+
+Specifically, using the original 0.3.5 code:
+
+  >>> print shell_quote("'\\\"; touch foo #'")
+  "'\\"; touch foo #'"
+
+  % ls foo
+  ls: cannot access foo: No such file or directory
+  % echo "'\\"; touch foo #'"
+  '\
+  % ls foo
+  foo
+
+Using the above 0.3.5 code variant:
+
+  >>> print shell_quote('"\\\'; touch foo #"')
+  '"\\'; touch foo #"'
+
+  % rm foo
+  % ls foo
+  ls: cannot access foo: No such file or directory
+  % echo '"\\'; touch foo #"'
+  "\\
+  % ls foo
+  foo
+
+So, the CVE assignments for these issues are:
+
+  CVE-2013-7323 Unrestricted use of unquoted strings in a shell,
+                within version 0.3.4
+
+  CVE-2014-1927 Erroneous assumptions about the usability of "
+                characters within version 0.3.5, leading to attacks
+                such as $( command substitution within a "-quoted
+                string
+
+  CVE-2014-1928 Erroneous insertion of a \ character within version
+                0.3.5, leading to attacks involving command lists
+                (such as lists separated by a ; character)
+
+Second, 0.3.5 and 0.3.6 have a series of differences in handling of
+command-line arguments. This seems to be most likely a reaction to
+Florian Weimer's observation of "you need to make sure that you
+prevent option injection through positional arguments." Does anyone
+believe that option injection was impossible in 0.3.5? If not, we will
+make a fourth CVE assignment.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS9/R/AAoJEKllVAevmvms2KEIAL8fK5oUKE0AKsgy2yDka8dn
+uPBgXFVnls9/SIPrX3d+Zc1ouGerBvEQlaTIv+CgN6e9NzH3YTeec9KIVnCvCunf
+wgaSe0xFzRTWf+qviEpe0vbc9wgz2wmct0qHLoE0i9vsrYhn4x+2+xEoliD38d12
+QSNu93KLhZJ1VqQMaROrjKuv1jIkR27yEdf5JLSflBvyu3mxR6dlBByqLOdBbfHG
+rj4MMJfcwsD6fvWrk22clX2ZLVZsZAUvuSzcuD0kWiCHABcn00DWFYv1cC0plxDI
+GnlGPeHg5+2lQUVt5QHy/0MYiJ7g4h7gxXeB8w1JH0DL7ASYaF3wDLkdBrrJT8I=
+=G9KN
+-----END PGP SIGNATURE-----
