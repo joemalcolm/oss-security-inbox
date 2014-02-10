@@ -1,24 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/23
-Message-ID: <21227.63819.629767.375269@gargle.gargle.HOWL>
-Date: Fri, 31 Jan 2014 20:28:11 +0100
-From: rf@...eap.de
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/6
+Message-Id: <E1WCp0J-0004NW-OI@xenbits.xen.org>
+Date: Mon, 10 Feb 2014 11:26:23 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 85 (CVE-2014-1895) - Off-by-one error in FLASK_AVC_CACHESTAT hypercall
 Content-Type: text/plain; charset=utf-8
 
->>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-    SD> On Wed, Jan 22, 2014 at 11:51:39AM +0100, rf@...eap.de wrote:
-    >> >>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
-    SD> Are Qlustar's security updates (not just security advisories)
-    SD> publicly available?
-    >>
-    >> Yes, all our packages are publicly available from our website.
+             Xen Security Advisory CVE-2014-1895 / XSA-85
+                              version 3
 
-    SD> Where do I find them?  Somehow I only found "Qlustar Installer
-    SD> 8.1.0-3/precise Size: 705MB".
+          Off-by-one error in FLASK_AVC_CACHESTAT hypercall
 
-http://repo.qlustar.com/repo/ubuntu
+UPDATES IN VERSION 3
+====================
 
-Roland
+CVE assigned.
+
+ISSUE DESCRIPTION
+=================
+
+The FLASK_AVC_CACHESTAT hypercall, which provides access to per-cpu
+statistics on the Flask security policy, incorrectly validates the
+CPU for which statistics are being requested.
+
+IMPACT
+======
+
+An attacker can cause the hypervisor to read past the end of an
+array. This may result in either a host crash, leading to a denial of
+service, or access to a small and static region of hypervisor memory,
+leading to an information leak.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen version 4.2 and later are vulnerable to this issue when built with
+XSM/Flask support. XSM support is disabled by default and is enabled
+by building with XSM_ENABLE=y.
+
+Only systems with the maximum supported number of physical CPUs are
+vulnerable. Systems with a greater number of physical CPUs will only
+make use of the maximum supported number and are therefore vulnerable.
+
+By default the following maximums apply:
+ * x86_32: 128 (only until Xen 4.2.x)
+ * x86_64: 256
+These defaults can be overridden at build time via max_phys_cpus=N.
+
+The vulnerable hypercall is exposed to all domains.
+
+MITIGATION
+==========
+
+Rebuilding Xen with more supported physical CPUs can avoid the
+vulnerability; provided that the supported number is strictly greater
+than the actual number of CPUs on any host on which the hypervisor is
+to run.
+
+If XSM is compiled in, but not actually in use, compiling it out (with
+XSM_ENABLE=n) will avoid the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Matthew Daley.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa85.patch        xen-unstable, Xen 4.3.x, Xen 4.2.x
+
+$ sha256sum xsa85*.patch
+20571024e6815eeb40d2f92a3d70ae699047cffafb5431ec74b652e0843a5315  xsa85.patch
+$
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJS+LcqAAoJEIP+FMlX6CvZPk8H/iA8bLP81SKPT6IUlaw8RjzU
+ZECj3ord+tLAcjvu93RmI5WVANNscwNdxhBIVQApzFOqMC5LGho5HHXgvi2WuRo4
+zc3b4djT0PN6tTMAhJZU9WwZxIQx+60VSDpIJbVGyLrEjGHxS/l/liM3cOuj5FZs
+ZpT3cQ47yHskkgCXGhdR4keAaXEA9qBtQ6EbraMWt/ynjXmZ2UGQyRB+md3IaG38
+FOhzVIVvsGJ0ZrxhByrBrNYN04Fdnqx707dNIg5fYflqzuTJkuMiL4dLlBJBMeiP
+aVEIAW1TD3ObiXNbC3/AjrXdgttA5e1JIHGJb9LV0RO1rhjuyZGLiLNp+Omx3KI=
+=wpcu
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa85.patch" of type "application/octet-stream" (948 bytes)
