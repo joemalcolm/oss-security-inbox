@@ -1,45 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/10/3
-Message-ID: <54107C6C.9080209@redhat.com>
-Date: Wed, 10 Sep 2014 10:29:32 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/2
+Message-Id: <201402100034.s1A0Ylq1002226@linus.mitre.org>
+Date: Sun, 9 Feb 2014 19:34:47 -0500 (EST)
+From: cve-assign@...re.org
+To: fw@...eb.enyo.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: oath-toolkit PAM module OTP token invalidation issue
 Content-Type: text/plain; charset=utf-8
 
-Technically speaking Oracle is a CNA and should be handling this, I have
-no idea how to contact them though, Mitre, can you guys reach out to
-them? Also does this affect MariaDB?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 10/09/14 10:00 AM, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference to
-> the following issue, which could be exploited by a local user to run
-> arbitrary code in context of the mysqld server.
-> 
-> MyISAM temporary files could be used to mount a code-execution attack.
-> (Bug #18045646).
-> 
-> This is also tracked in[3] and [4] mentioning as relevant fix [5].
-> 
-> Was a CVE already requested for this issue? If not, could one be
-> assigned?
-> 
-> Regards,
-> Salvatore
-> 
->  [1] https://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-39.html
->  [2] https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-20.html
->  [3] https://bugzilla.redhat.com/show_bug.cgi?id=1126271
->  [4] https://bugs.gentoo.org/show_bug.cgi?id=518718
->  [5] https://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/4638
-> 
+> http://lists.nongnu.org/archive/html/oath-toolkit-help/2013-12/msg00000.html
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> There is a test file with comments in the distribution, so I believe
+> this is an actual bug with security implications
 
+> leaving it vulnerable to replay of OTPs
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+> It will keep on updating the commented-out entry, whilst leaving the
+> entry for secret "efgh" untouched.
+
+> because skipped_users wasn't incremented, writes the update to the
+> commented out line.
+
+Use CVE-2013-7322.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS+B46AAoJEKllVAevmvmsO2YIAJSIxibnCt7XB5FsnFJcBuF9
+7annA5UGUk75GAEo9t4aSZ/DwbFpnEdlhLmxkOB4GZev2qtHCcue3K5q/eFxVn4M
+oivsISYzL+9rt0w1uEADIsxBb47cEXckEYSOQDOsHB5nO0CXo2+iNzkrqf5Z0oCo
+BhiVM2rxX14QH69L0u1NxFJELgZRixEv13VdJwLuIblkElYqASK9G+rjQeYGpQta
+7PA6+7uQQILZ6NmRE/Ypd97XE6/5LREizbFBso/ww1CfTwfCDkANDdNLNaz13Io8
+2ZPIt6WNJQ1ToR5E+BE7tuyIvIkrRhZNLyqX0aXXBZyYMeTDOozRuNouXx0ucr8=
+=NIuV
+-----END PGP SIGNATURE-----
