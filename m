@@ -1,39 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/15/1
-Message-ID: <539D343E.5040105@ai2.upv.es>
-Date: Sun, 15 Jun 2014 07:50:54 +0200
-From: Salva Peiró <speiro@....upv.es>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE-2014-1739: Kernel Infoleak vulnerability in,media_enum_entities()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/8
+Message-Id: <E1WCp3H-0004it-7u@xenbits.xen.org>
+Date: Mon, 10 Feb 2014 11:29:27 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 84 (CVE-2014-1891,CVE-2014-1892,CVE-2014-1893,CVE-2014-1894) - integer overflow in several XSM/Flask hypercalls
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We found an infoleak vulnerability in the ioctl media_enum_entities()
-that allows to disclose 200 bytes the kernel process' stack.
-The vulnerability is exploitable on versions up to linux-3.15-rc3 by
-local users with read access to `/dev/media0`.
-Linux distributions ship with `chmod 600 /dev/media0` preventing
-unprivileged local users from exploiting the vulnerability.
-However, some Android devices are known to be shipped with both read
-and/or write permissions for all: chmod 666 /dev/media0.
+ Xen Security Advisory CVE-2014-1891,CVE-2014-1892,CVE-2014-1893,CVE-2014-1894 / XSA-84
+                              version 3
 
-A detailed analysis, proof of concept and fixes are at:
-http://speirofr.appspot.com/cve-2014-1739-kernel-infoleak-vulnerability-in-media_enum_entities.html
+           integer overflow in several XSM/Flask hypercalls
 
-This has been fixed in Linux Kernel commit:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=e6a623460e5fc960ac3ee9f946d3106233fd28d8
+UPDATES IN VERSION 3
+====================
 
-e6a623460e5fc960ac3ee9f946d3106233fd28d8
-Author	Salva Peiró <speiro@....upv.es>
-Date    Thu, 1 May 2014 12:53:28 +0000
-Commit [media] media-device: fix infoleak in ioctl media_enum_entities()
+CVE numbers have been assigned.
 
-    This fixes CVE-2014-1739.
+ISSUE DESCRIPTION
+=================
 
-    Signed-off-by: Salva Peiró <speiro@....upv.es>
-    Acked-by: Laurent Pinchart <laurent.pinchart@...asonboard.com>
-    Cc: stable@...r.kernel.org
-    Signed-off-by: Mauro Carvalho Chehab <m.chehab@...sung.com>
+The FLASK_{GET,SET}BOOL, FLASK_USER and FLASK_CONTEXT_TO_SID
+suboperations of the flask hypercall are vulnerable to an integer
+overflow on the input size. The hypercalls attempt to allocate a
+buffer which is 1 larger than this size and is therefore vulnerable to
+integer overflow and an attempt to allocate then access a zero byte
+buffer.  (CVE-2014-1891)
 
-Salva Peiró
+Xen 3.3 through 4.1, while not affected by the above overflow, have a
+different overflow issue on FLASK_{GET,SET}BOOL (CVE-2014-1893) and
+expose unreasonably large memory allocation to aribitrary guests
+(CVE-2014-1892).
+
+Xen 3.2 (and presumably earlier) exhibit both problems with the
+overflow issue being present for more than just the suboperations
+listed above.  (CVE-2014-1894 for the subops not covered above.)
+
+The FLASK_GETBOOL op is available to all domains.
+
+The FLASK_SETBOOL op is only available to domains which are granted
+access via the Flask policy.  However the permissions check is
+performed only after running the vulnerable code and the vulnerability
+via this subop is exposed to all domains.
+
+The FLASK_USER and FLASK_CONTEXT_TO_SID ops are only available to
+domains which are granted access via the Flask policy.
+
+IMPACT
+======
+
+Attempting to access the result of a zero byte allocation results in
+a processor fault leading to a denial of service.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions back to at least 3.2 are vulnerable to this issue when
+built with XSM/Flask support. XSM support is disabled by default and is
+enabled by building with XSM_ENABLE=y.
+
+We have not checked earlier versions of Xen, but it is likely that
+they are vulnerable to this or related vulnerabilities.
+
+All Xen versions built with XSM_ENABLE=y are vulnerable.
+
+MITIGATION
+==========
+
+There is no useful mitigation available in installations where XSM
+support is actually in use.
+
+In other systems, compiling it out (with XSM_ENABLE=n) will avoid the
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Matthew Daley.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa84-unstable-4.3.patch        xen-unstable,Xen 4.3.x
+xsa84-4.2.patch                 Xen 4.2.x
+xsa84-4.1.patch                 Xen 4.1.x
+
+
+$ sha256sum xsa84*.patch
+e33dd94499959363ad01bebefda9733683c49fd42a9641cf2d7edcd87f853d55  xsa84-4.1.patch
+433f3c8a202482c51a48dc0e9e47ac8751d1c0d0759b7bcd22804e1856279a89  xsa84-4.2.patch
+64ae433eb606c5446184c08e6fceb9f660ed9a9c28ec112c8cc529251b3b49fb  xsa84-unstable-4.3.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJS+LgGAAoJEIP+FMlX6CvZH1MH/00JKMYdEyaSA3oVGRTeV3Wk
+/ZgZl0dTuEBYLWTh/sE8txPGVb7jOvc4pzuhZ8Z0rvh4J10EKjqIUutSs0QR6m3U
++3H+C/eHW98oselKT1csUoIZuf+3oTkZeryVeTyUi7g04xoYHpljT/u+gku8Twuz
+G8D3ckchHx5Zi40u0hQWAIOyJxwlpXD74mv2hnHa7X30anpLgGhsBxGLoghJSJwd
+x+i82krxbs0Ac7zKQBeVpPhVHE7QHR5Em1BqkxxtT8c93aujeD0Lkdw2H2ki1uOc
++XOEwl/kT9TqiiHy+D+wZwY08xwijC4MZrxvVW35M6DupAG/4i9mv/ICs1GGfK8=
+=GrAi
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa84-4.1.patch" of type "application/octet-stream" (2943 bytes)
+
+Download attachment "xsa84-4.2.patch" of type "application/octet-stream" (4943 bytes)
+
+Download attachment "xsa84-unstable-4.3.patch" of type "application/octet-stream" (4955 bytes)
