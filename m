@@ -1,64 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/12
-Message-Id: <201406061153.s56Brh0q021937@linus.mitre.org>
-Date: Fri, 6 Jun 2014 07:53:43 -0400 (EDT)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: PHP configure script and Lynis tool /tmp/ issues reported on full disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/5
+Message-ID: <52F89EEA.40106@redhat.com>
+Date: Mon, 10 Feb 2014 10:42:02 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 02/10/2014 08:34 AM, P J P wrote:
 
-> http://seclists.org/fulldisclosure/2014/Jun/21
-> https://bugzilla.redhat.com/show_bug.cgi?id=1104978
+> ===
+> ...
+> By exploiting a hash table collision, an attacker has no way to trigger
+> a DoS, but he can actually do something way more interesting: force the
+> resolver to send the same query for the same TLD, over and over again,
+> always to the same set of servers, no matter what the intended TTL is
+> and no matter what the cache size is.
+>
+> And suddenly, poisoning dnscache with a malicious TLD much, much, much
+> easier and faster.
+> ===
+>
+> Not sure if it qualifies for a CVE; the excerpt above deems it a likely
+> candidate.
 
-Use CVE-2014-3981 for this issue in PHP.
+How it is possible to poison the cache if the response is not cached?
 
+If dnscache updates the cache with additional or authoritative data, 
+overriding existing data (as most resolvers do), then it is possible to 
+do so without relying on the implementation anomaly quoted above.
 
-> The second issue is Lynis ...
-> 2 runs on Fedora 20 revealed the following file being used each time:
-> 
-> /tmp/ffiYFc1nZ
-> 
-> I cannot find that in the source. I do not know if lynsis exec()'s any
-> other scripts or programs.
+In short, I'm not convinced at all that the alleged security implication 
+exist.
 
-We probably can't make a CVE assignment for this because the primary
-affected product is unknown, and this /tmp/ffiYFc1nZ observation might
-already be covered by a previous CVE. Lynis apparently runs many other
-scripts and programs; for example, there are hundreds of
+(This message shall not be interpreted as an endorsement of dnscache.)
 
-  FIND=`
-
-lines.
-
-> The full disclosure report might be referring to the following in
-> include/tests_webservers:
-> 
->   39     if [ "${OS}" = "AIX" ]; then
->   40         TMPFILE=/tmp/lynis.$$
-
-We can make a CVE assignment corresponding to your disclosure of this
-lynis.$$ issue on oss-security. Use CVE-2014-3982. A CVE for this most
-likely won't (or shouldn't) have a
-http://seclists.org/fulldisclosure/2014/Jun/21 reference unless the
-original fulldisclosure author confirms the association.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTkat2AAoJEKllVAevmvmsYoYIAISk5kSEkjIDI0d1Ky3udkJm
-/gzIpiKm4gWudGac9z4D0rhxJmCy6JaGIN87n46CxgWUDCJoTCdgNx4HOs4czC7b
-CsLagZfSdcFH4rkKxfWMsoB4Kyc3kMNK2sVc+TgKY8Vbk2oY7S54to/mAcmMxN9I
-pT4KtMTK6w+XKIcMszD3reIgoxG35tRhvpqh8C/fZMY2H7XQgzn1Us2GqNV8emDG
-ckkZJgLvlgLIGn+NArogzd2noBhpR4MqhDfLNL7y5LV0mXbV7b0MSwYLB5Da8qU1
-tkODpivVlr49oDU50jznAVV/1Eg/KWqswY2ldTOy9k3jN4hw/1mp7wTBE4nTvCA=
-=Ltzt
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security Team
