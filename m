@@ -1,23 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/05/3
-Message-ID: <52F21FFD.8020205@redhat.com>
-Date: Wed, 05 Feb 2014 12:26:53 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: python-gnupg before 0.3.5 shell injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/3
+Message-Id: <201402100049.s1A0nGET009913@linus.mitre.org>
+Date: Sun, 9 Feb 2014 19:49:16 -0500 (EST)
+From: cve-assign@...re.org
+To: gmc@...library.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: multiple issues in Koha
 Content-Type: text/plain; charset=utf-8
 
-On 02/05/2014 11:41 AM, Vinay Sajip wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> I've updated the implementation and attached gnupg.py and test_gnupg.py to
-> the ticket:
->
-> https://code.google.com/p/python-gnupg/issues/detail?id=98#c7
->
-> Please verify that this version deals with the issue, and if not please let
-> me know the failures so that I can add them to the tests.
+> http://koha-community.org/security-release-february-2014/
+> 
+> Issues fixed with the release:
 
-This looks better now, thanks.
+> [1] tools/pdfViewer.pl could be used to read arbitrary files on the server
+> (http://bugs.koha-community.org/bugzilla3/show_bug.cgi?id=11660)
 
--- 
-Florian Weimer / Red Hat Product Security Team
+> my $tmpFileName = $cgi->param('tmpFileName');
+> open FH, "<$tmpFileName";
+
+Use CVE-2014-1922 for this issue involving absolute path traversal.
+
+
+> [2] the staff interface help editor could be used to modify or create
+> arbitrary files on the server
+> (http://bugs.koha-community.org/bugzilla3/show_bug.cgi?id=11661)
+
+> edithelp.pl can be used to write arbitrary files to the server
+
+> To get it to write to /tmp, I had to count the number of directories
+> upward and add a few ..-s in order to get to the root of the server
+> and than to /tmp.
+
+> Included in the following releases: 3.8.23, 3.10.13, 3.12.10, and 3.14.3.
+
+
+> [3] member-picupload.pl could be used to write to arbitrary files on the server
+> (http://bugs.koha-community.org/bugzilla3/show_bug.cgi?id=11662)
+
+> open (my $upload_fh, '>', "$upload_dir/$filename");
+
+> Included in the following releases: 3.8.23, 3.10.13, 3.12.10, and 3.14.3.
+
+Use CVE-2014-1923 for both the edithelp.pl issue (Bug 11661) and the
+member-picupload.pl issue (Bug 11662), apparently directory traversal
+issues.
+
+
+> [4] the MARC framework import/export function did not require
+> authentication, ...
+> (http://bugs.koha-community.org/bugzilla3/show_bug.cgi?id=11666)
+
+Use CVE-2014-1924.
+
+
+> [4] the MARC framework import/export function ... could be used to
+> perform unexpected SQL commands
+> (http://bugs.koha-community.org/bugzilla3/show_bug.cgi?id=11666)
+
+Use CVE-2014-1925.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS+CGoAAoJEKllVAevmvmsqa4H/09BePODbfBm7UtPX/NTXeqh
+K1W8Lrwy5nPotr129X8LPAxlXTGvpIZ/IFtrz+NpfoMSE1g8OEZcDiofZzlqDQ0d
+FJ8032wXVCVRzLgOz/nQkMXdn8Koe0FgesPsXdivKFF3bGROnJ4O8DlIrk6NWoN0
+P+dH7jL2u97KWIGzBoJaCw+9pYlKr2LHm+o7kyBINI9sYdqFdC6awrCVn4jnTrvg
+5fGhGlIDdrIoQ3KD7lkR/rJRq0jLP3G8cb0W7kNyNQt4so9KzBJqrqb2Ix7TUJKk
+mJhIaUua6SB2xtJI11ejCwVohphklCkbpow7G7mIvGbAufvzNeJY07AWhbnkb3w=
+=Ru/L
+-----END PGP SIGNATURE-----
