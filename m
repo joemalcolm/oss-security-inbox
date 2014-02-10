@@ -1,61 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/22/7
-Message-ID: <53565112.6030004@redhat.com>
-Date: Tue, 22 Apr 2014 13:22:58 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-CC: oss-security@...ts.openwall.com
-Subject: Re: X.509 name constraints and potential interpretation conflict
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/9
+Message-ID: <52F8C199.9070005@debian.org>
+Date: Mon, 10 Feb 2014 12:10:01 +0000
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request: python-gnupg before 0.3.5 shell injection
 Content-Type: text/plain; charset=utf-8
 
-On 08/20/2013 06:40 PM, Ludwig Nussel wrote:
-> Florian Weimer wrote:
->> NSS CA roots are widely reused, but the implementation deviates from
->> RFC 5280 in such a way that NSS can safely accept additional root
->> certificates as long as they have name constraints.  I think this is a
->> bug in RFC 5280, and the fix in NSS is sound, but it could still
->> result in surprising behavior if the root store is used unfiltered
->> with TLS implementations that lack this bug fix.
->>
->> For reference, here is the RFC 5280 errata I submitted:
->>
->> --------------------------------------
->> Type: Technical
->> Reported by: Florian Weimer <fweimer@...hat.com>
->>
->> Section: 4.2.1.10
->>
->> Original Text
->> -------------
->>     DNS name restrictions are expressed as host.example.com.  Any DNS
->>     name that can be constructed by simply adding zero or more labels to
->>     the left-hand side of the name satisfies the name constraint.  For
->>     example, www.host.example.com would satisfy the constraint but
->>     host1.example.com would not.
->>
->>
->> Corrected Text
->> --------------
->> [Add this to the paragraph]
->>
->>     If an implementation extracts DNS names from the subject
->>     distinguished name, DNS name restrictions MUST be applied
->>     to these names as well.
->
-> Do you have an idea in mind how to do that in practice? E.g with
-> openssl?
+On 09/02/14 21:40, cve-assign@...re.org wrote:
+> First, it seems that the shell_quote function in version 0.3.5 has
+> two fundamentally different problems with different flaw types and 
+> different discoverers.
 
-OpenSSL does not really care about host names, so you have to look at 
-the chain more or less manually.  I suspect it's okay to look at subject 
-alternative names of the end entity certificate exclusively if one 
-certificate in the chain has a name constraint.  The PKIX validation 
-code in OpenSSL should enforce the name constraints, and ignoring the 
-subject distinguished name should be sufficient to give these checks teeth.
+I think the underlying problem here is that a library for interacting
+with GNUPG from Python is trying to implement Unix shell escaping.
+Unix shell escaping is subtle and easy to get wrong, so libraries
+whose intended scope does not include "miscellaneous OS/runtime
+utilities" should be delegating this to a better-tested and
+better-audited implementation.
 
-It is, however, against the RFC.  The PKIX WG says that we should just 
-assume that CAs issue compliant certificates, which completely misses 
-the point of name constraints (at least what they mean to me, I expected 
-them to contain the impact of non-compliant CAs).
+If possible, the preferred way to start a subprocess should be without
+going via /bin/sh: in Python, using functions from the subprocess
+module, without using the argument shell=True, achieves this. This is
+analogous to posix_spawn() (or fork()/exec()) in plain C,
+g_spawn_[a]sync() in GLib and so on.
 
--- 
-Florian Weimer / Red Hat Product Security Team
+If python-gnupg really does need to go via a shell, analogous to
+system() in plain C or g_spawn_command_line_[a]sync() in GLib, then it
+should use a library function analogous to GLib's g_shell_quote().
+
+Python's shlex.quote() seems ideal for this, but unfortunately it's
+new in version 3.3. Python 2.7 does document pipes.quote(), and the
+documentation indicates that pipes.quote() may have been
+present-but-undocumented in previous versions.
+
+As a worst case, as much as I hate to encourage embedded code copies,
+copying the implementation of shlex.quote() or pipes.quote() seems
+likely to yield better results than reimplementing it.
+
+    S
