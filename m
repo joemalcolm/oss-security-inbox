@@ -1,18 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/05/9
-Message-ID: <1427195.TjDRnJ7Qhg@glannarmor>
-Date: Mon, 05 May 2014 19:40:02 +0200
-From: RbN <r.b.n@...eup.net>
-To: oss-security@...ts.openwall.com
-Subject: *Possible* ssh vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/7
+Message-Id: <E1WCp0d-0004Oa-VA@xenbits.xen.org>
+Date: Mon, 10 Feb 2014 11:26:43 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 86 (CVE-2014-1896) - libvchan failure handling malicious ring indexes
 Content-Type: text/plain; charset=utf-8
 
-Looks like a fake, but I prefer to post it here anyway:
-http://pastebin.com/gjkivAf3
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-If anybody gets more info about it, please share ;)
+             Xen Security Advisory CVE-2014-1896 / XSA-86
+                              version 3
 
+           libvchan failure handling malicious ring indexes
 
---
-RbN
-Archlinux CVE monitoring team
+UPDATES IN VERSION 3
+====================
+
+CVE assigned.
+
+ISSUE DESCRIPTION
+=================
+
+libvchan (a library for inter-domain communication) does not correctly
+handle unusual or malicious contents in the xenstore ring.  A
+malicious guest can exploit this to cause a libvchan-using facility to
+read or write past the end of the ring.
+
+IMPACT
+======
+
+libvchan-using facilities are vulnerable to denial of service and
+perhaps privilege escalation.
+
+There are no such services provided in the upstream Xen Project
+codebase.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of libvchan are vulnerable.  Only installations which use
+libvchan for communication involving untrusted domains are vulnerable.
+
+libvirt, xapi, xend, libxl and xl do not use libvchan.  If your
+installation contains other Xen-related software components it is
+possible that they use libvchan and might be vulnerable.
+
+Xen versions 4.1 and earlier do not contain libvchan.
+
+MITIGATION
+==========
+
+Disabling libvchan-based facilities could be used to mitigate the
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Marek Marczykowski-Górecki of Invisible
+Things Lab.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+After the patch is applied to the Xen tree and built, any software
+which is statically linked against libvchan will need to be relinked
+against the new libvchan.a for the fix to take effect.
+
+xsa86.patch        Xen 4.2.x, 4.3.x, 4.4-RC series, and xen-unstable
+
+$ sha256sum xsa86*.patch
+cd2df017e42717dd2a1b6f2fdd3ad30a38d3c0fbdd9d08b5f56ee0a01cd87b51  xsa86.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJS+LcuAAoJEIP+FMlX6CvZBjgH/RdmdarkaX/Bravq46egUtWT
+OohBLoP+tnkg3w3DSvWlD45dlnwH2ptD/PTxyoH7XMoiajX0h3WRYf8ddu63Nwtl
+qghb6EDuYF+iLf9nthdYqreVLdKQOJYXCv6c3i6odHRzGadb3cWTIv1xSDZcn+Qw
+djSk2huXpuRVkpJeX05PNCkBktRe0Shwy0zgTUNC0GjWItma+NIKdvRODkON1Ai9
+ilRsmlQXc2BJ7RcJGmvtcHEdIgLMJ8MzRZWspFPTuqRbQ1+XUJUxxQvJBAqIYRQ3
+29iS0GxqXZDSWtTlY4xwAEdwtzsqVZx8VMQioxLUSB4fqm1s4XEfQEkH5VwoBs8=
+=HSDt
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa86.patch" of type "application/octet-stream" (6024 bytes)
