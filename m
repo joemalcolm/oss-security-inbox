@@ -1,47 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/15
-Message-ID: <F2E65F92-32B5-484C-8455-702FE3452901@redhat.com>
-Date: Fri, 27 Jun 2014 10:35:33 -0600
-From: "Vincent Danen" <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/12
+Message-ID: <52F8FBCC.6080102@gmail.com>
+Date: Mon, 10 Feb 2014 22:18:20 +0600
+From: "Alexander E. Patrakov" <patrakov@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Question regarding CVE applicability of missing HttpOnly flag
+CC: kseifried@...hat.com
+Subject: Re: CVE request: WebKit-GTK + Puseaudio: unexpectedly high sound volume
 Content-Type: text/plain; charset=utf-8
 
-On 06/26/2014, at 10:00 AM, Kurt Seifried wrote:
-
-> On 26/06/14 05:45 AM, Jamie Strandboge wrote:
->> Based on this email and the one this is in response to, I find this
->> comment unclear. Is MITRE saying that:
->>
->> a) lack of implementing SELinux, AppArmor, virus scanner, firewall,
->> <insert hardening software here> does not justify a CVE because of
->> the complexity? b) lack of implementing SELinux, AppArmor, virus
->> scanner, firewall, <insert hardening software here> does not
->> justify a CVE and also cannot be considered an implementation error
->> because of the complexity? c) implementing SELinux, AppArmor, virus
->> scanner, firewall, and/or <insert hardening software here> is not
->> worth it because the added complexity intrinsically makes the
->> system less secure? d) something else?
->>
->> Thanks
+23.10.2013 00:48, I wrote:
+> Hello.
 >
-> So one comment on this, replace the above with "DAC"
-> (http://en.wikipedia.org/wiki/Discretionary_access_control) and I bet
-> we'd hand it a CVE =).
+> Some time ago I have reported an issue:
+> http://seclists.org/oss-sec/2013/q4/35 , but decided not to request
+> CVE at that time, because I wanted to collect opinions on the topic
+> "who should fix what". I have collected them from both involved
+> parties and thus now request a CVE ID for this coordination issue /
+> case of contradicting requirements. Please let me know if I have
+> omitted any of the required information.
 >
-> Security lines move, I would expect most modern system of any type
-> (Windows, Linux, router, maybe not my bathroom scale that talks
-> wifi... yet) to have some sort of firewall enabled by default and not
-> simply leave everything exposed to the world. So in that case not
-> having a fire enabled by default would definitely violate the
-> principle of least surprise and maybe even qualify for a CVE.
+> Let me reproduce the most important part of my initial report.
+>
+> ======
+> The following combination of software has a nasty bug when used
+> together, that I personally consider to be a vulnerability:
+>
+> * PulseAudio (any version, especially when used in flat-volume mode
+> that is the default everywhere except Ubuntu).
+>   * Any browser based on Webkit-GTK 2.x (any version with HTML5
+> audio/video support based on GStreamer).
+>
+> The bug is that a malicious piece of javascript on the web page can
+> cause an audio file to play at an unexpectedly high volume, not
+> obeying the volume that the user has set for the web browser in
+> pavucontrol or gnome-volume-control, and effectively not letting the
+> user move the volume slider corresponding to the web browser [1]. When
+> flat volumes are in effect, the web page can play that audio file at
+> the full volume that the sound card is capable of, which can in some
+> cases damage loudspeakers (especially tweeters) or the user's hearing
+> [2].
+>
+> The reproducer (that just sets the volume at regular intervals using a
+> timer) is already public at http://jsfiddle.net/bteam/FbkGD/ and can
+> be trivially enhanced to also prevent muting of the audio stream. View
+> that in Epiphany or Midori on any Linux distribution except Ubuntu.
+> ======
+>
+> Personally, I classify [1] as an annoyance-class bug (but still a bug)
+> and [2] as a security issue.
+>
+> Relevant links:
+>
+> https://bugs.webkit.org/show_bug.cgi?id=118974
+> https://bugzilla.gnome.org/show_bug.cgi?id=675217
+> https://bugs.freedesktop.org/show_bug.cgi?id=46466
+> https://bugzilla.gnome.org/show_bug.cgi?id=680779
 
-Wait.  You're saying that not having a firewall enabled by default qualifies for a CVE?  I mean, firewalls are pretty common sense and should definitely be used/available/whatever but to say that an operating system or device doesn't have a firewall enabled by default should have a CVE assigned seems... excessive, doesn't it?
+Given the recent news story about VLC and Dell, I want to bump this 
+topic (because it is relevant, exploitable automatically, and because I 
+have warned about hardware damage) and maybe get a CVE ID.
 
-How is not having a firewall enabled by default a _vulnerability_?  If we look at it this way, it's a good thing CVEs go past 9999 per year because we need to change everything we used to call "hardening" to be a vulnerability, do we not?
-
+http://hardware.slashdot.org/story/14/02/09/1828229/customer-dell-denies-speaker-repair-under-warranty-blames-vlc
 
 -- 
-Vincent Danen / Red Hat Product Security
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+Alexander E. Patrakov
+
