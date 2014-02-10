@@ -1,71 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/28
-Message-ID: <546E172C.5080108@treenet.co.nz>
-Date: Fri, 21 Nov 2014 05:30:36 +1300
-From: Amos Jeffries <squid3@...enet.co.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/11
+Message-Id: <8538jrx8vx.fsf@boum.org>
+Date: Mon, 10 Feb 2014 16:52:34 +0100
+From: intrigeri <intrigeri@...m.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing project brainstorming
+Cc: Holger Levsen <holger@...er-acht.org>
+Subject: CVE request: parcimonie (0.6 to 0.8, included) possible correlation between key fetches
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 21/11/2014 4:50 a.m., Hanno Böck wrote:
-> Am Thu, 20 Nov 2014 08:38:38 -0700 schrieb Kurt Seifried:
-> 
->> The most important part of all: who's going to interpret the
->> fuzzing results and then co-ordinate with upstreams to make
->> source code fixes?
-> 
-> Well, the answer to that is: the people who do the fuzzing.
-> 
-> My main aim is to make more transparent what's already going on.
-> That's not going to change who does the fuzzing and how it gets
-> reported.
-> 
-> There lays deeper a question that I asked myself already: What's
-> an "okay" way of reporting these things? Basically what I usually
-> did is just sending crash samples to upstream devs and add some
-> valgrind/asan output. One could argue that I'm offloading the real
-> work to the upstream devs, however I feel they know their code
-> better than I do (and often I'm just not qualified to create the
-> fix). Until now I feel most upstreams were okay with that.
+Holger Levsen <holger@...er-acht.org> discovered that parcimonie [1],
+a privacy-friendly helper to refresh a GnuPG keyring, before version
+0.8.1, is affected by a design problem that undermines the usefulness
+of this piece of software, in the intended threat model. I am upstream
+for parcimonie, and I maintain it in Debian.
 
-Speaking as an upstream maintainer...
+Type of the vulnerability: information disclosure.
 
-So long as the report has a full crash trace with symbols and values
-they are usually easy enough for someone upstream to fix or at least
-understand what is the underlying problem to be worked on.
+Description: when using parcimonie with a large keyring (1000 public
+keys or more), it would always sleep exactly 10 minutes between two
+key fetches. This is likely to be fingerprintable by an adversary who
+can watch enough key fetches, who can then correlate multiple key
+fetches with each other, which is the exact situation that parcimonie
+aims at protecting against. It happens that such an adversary is part
+of the threat model parcimonie is meant to cope with. This problem is
+slightly mitigated by the fact that most users likely use a HKP(s)
+pool as their configured GnuPG keyserver (so their successive requests
+have good chances to be sent to different keyservers), and the fact
+that each key fetch is done using a different Tor circuit.
 
-The biggest problems we (upstreams) have with trace reports is often
-submissions are made with just long lists of raw memory address
-references for functions on the stack/heap, critical variable symbols
-and values optimized away by the compiler etc. Traces like that are
-pretty much wasted reports of "it crashes" ... um.
+Upstream bugfix: commit 8931fdcf868c37e2e8d44324d5514d235a6d5c89 in
+git://gaffer.ptitcanardnoir.org/App-Parcimonie.git
 
-- From a security perspective, if you are going to push these traces
-upstream as a vulnerability (or not) then there had better have been
-some triage to see if it actually is one. That analysis will give you
-some more details to add to the report in the way of ideas about what
-should be expected to happen instead of crash. Anything like that
-which can save upstream time is useful.
+Versions affected: from parcimonie 0.6 to 0.8, included. Fixed in
+parcimonie 0.8.1.
 
-Since they are coming from fuzzing a copy of the exact input which led
-to it is also valuable. There is nothing worse than having to guess at
-what might have led to a crash when the input could literally have
-been anything at all.
+This problem was made public in Debian bug #738134 [2], and was
+described in details in the commit message for the upstream bugfix.
 
-HTH
-AYJ
+Could you please allocated a CVE id for this?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
+References:
+[1] http://gaffer.ptitcanardnoir.org/intrigeri/code/parcimonie/
+[2] https://bugs.debian.org/738134
 
-iQEcBAEBAgAGBQJUbhcsAAoJELJo5wb/XPRjZgcIAKrX9zOPTyQ47E2afbj+02IB
-B5NFHOjKQ1gJEz/9bVD31h7OBIiOjrjKy5JDGmuKKn+SeST64SxgE89bcpriBCeg
-wbAzZ427D1yHss+K1BbnXi8+qqSxY//iZLGu2zQ/USF2b5spt9TRKt+HiCaWhXRW
-hoWkmv+1ntkCuffjJ1oWrSRiqpbEsL3+dki+kN9/2Nvm99s/i2jRTg9X/jhs25Gz
-sVgpyACJDAboBKxZH8BJbMb7cm1wG/KVfm831qnjOOTlXaUqLJ0Ghii56WeVzMgX
-8gPU1WHVM6kGGkMZ9qQYibYk6x82y+vZNRoxs5o4jJ/x+yf8kmpFM3OnktbINdo=
-=GY/m
------END PGP SIGNATURE-----
+Cheers,
+-- 
+  intrigeri
+  | GnuPG key @ https://gaffer.ptitcanardnoir.org/intrigeri/intrigeri.asc
+  | OTR fingerprint @ https://gaffer.ptitcanardnoir.org/intrigeri/otr.asc
