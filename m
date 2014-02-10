@@ -1,50 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/7
-Message-ID: <58840461.1427.1392198508442.JavaMail.root@xenoworld.de>
-Date: Wed, 12 Feb 2014 10:48:28 +0100 (CET)
-From: Clemens Fries <clemens@...oworld.de>
-To: oss-security@...ts.openwall.com
-Subject: cinnamon-screensaver lock bypass (tested on Fedora 20)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/13
+Message-Id: <201402101840.s1AIenJG025444@linus.mitre.org>
+Date: Mon, 10 Feb 2014 13:40:49 -0500 (EST)
+From: cve-assign@...re.org
+To: patrakov@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: WebKit-GTK + Puseaudio: unexpectedly high sound volume
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It is possible to circumvent the screen lock on a cinnamon session under Fedora
-20 using the 'Menu' key on a keyboard. I'm posting this here, because I assume
-that this is not limited to the version shipped with Fedora.
+> http://openwall.com/lists/oss-security/2013/10/08/4
 
-Steps to reproduce:
-
-* Start cinnamon session
-* Lock the screen (Ctrl+Alt+L)
-* Press the 'Menu' key on the keyboard
-* A menu appears for a brief moment
-* Press 'Escape'
-* Focus is now beneath the screensaver
-* Press Alt+F2
-* Start 'gnome-terminal'
-* Type 'killall cinnamon-screensaver'
-
-Seen on a fully patched Fedora 20 (February 12th, 2014). I had a brief look at
-bugzilla.redhat.com, but it seems this has not been reported. I also tested
-this on a second machine with the same outcome.
-
-Some version information:
-
-$ rpm -qi cinnamon
-Name        : cinnamon
-Version     : 2.0.14
-Release     : 4.fc20
-Architecture: x86_64
-[...]
-
-$ rpm -qi cinnamon-screensaver
-Name        : cinnamon-screensaver
-Version     : 2.0.3
-Release     : 1.fc20
-Architecture: x86_64
-[...]
+> The following combination of software has a nasty bug when used 
+> together, that I personally consider to be a vulnerability:
+> 
+> * PulseAudio (any version, especially when used in flat-volume mode that 
+> is the default everywhere except Ubuntu).
+> * Any browser based on Webkit-GTK 2.x (any version with HTML5 
+> audio/video support based on GStreamer).
 
 
-Kind regards,
-Clemens
+> http://openwall.com/lists/oss-security/2013/10/21/7
+
+> For each of the two points below, there is a (non-100%) majority
+> supporting it.
+> 
+> 1. This is not an audio issue. It is a sandboxing issue in Webkit-GTK.
+> 
+> (that's the statement that Arun needs to think about a bit more, but
+> which, I think, captures the most essential component of the problem,
+> even without flat volumes, due to disobeying sliders in pavucontrol if
+> a web app resets the volume using a periodic timer)
+> 
+> 2. There is nothing to fix in PulseAudio code.
+
+
+> https://www.w3.org/Bugs/Public/show_bug.cgi?id=23642
+> Comment 1
+
+> WebKitGtk+ is ok as it is now and complies with the standard, though I
+> agree with you that there's a security issue with the volume and I
+> think the problem is with the standard.
+
+It is conceivable for a CVE assignment to apply to a combination of
+two products, and not apply to either product alone, but we prefer not
+to do that if there's any type of (partial) agreement that one product
+could be chosen.
+
+Use CVE-2013-7324 for this issue in WebKit-GTK. When the issue is
+later listed on the
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-7324 web page,
+we will try to include a note that the WebKit-GTK behavior complies
+with existing W3C standards and existing practices for GNOME desktop
+integration.
+
+
+> PulseAudio's security model is based on clients not sending malicious
+> requests to change the stream volume
+
+If there ever happens to be a later vendor announcement that this
+model is incorrect, and that a different model is required as a
+security fix, then a second CVE assignment could be made.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS+RxLAAoJEKllVAevmvmsbocIAMkf8XGhegKtNyseitiL19FK
+G9Ap7h2kVTUEC8QP3B02YZ+8ti1C3B8Tbx6O4k5GhTFSOgsr1uDX81vhmSFSY9or
+3CskFqsNoe/c+LEZeeW0lThr6AG35EBzmIBuIpmxOHk52raWi/KEviM58I0GijzU
+1JbsI6FtnOfCOXGXeScl3yBigiEX66uAi0ZcHuhJanJuye+wk/JUaB/GZxyL/tu+
+srHc6bi55sZ2/52nv7qViug+Y9uUkUTdvfTJzyQ4/XBwsvlE2tp7k7Q0JD8qrXbb
+JENELCwpDfN4bNS7hCj8y/De0dEH9WXtIuNM6GXRe1gLaoDJcMWhmWYp5A0wi+I=
+=pkWX
+-----END PGP SIGNATURE-----
