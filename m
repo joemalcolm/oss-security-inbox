@@ -1,38 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/7
-Message-ID: <5418460F.1050202@canonical.com>
-Date: Tue, 16 Sep 2014 10:15:43 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com,  Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
-CC: CVE Assignments MITRE <cve-assign@...re.org>, secalert_us@...cle.com
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/14
+Message-Id: <201402101845.s1AIjBXQ025513@linus.mitre.org>
+Date: Mon, 10 Feb 2014 13:45:11 -0500 (EST)
+From: cve-assign@...re.org
+To: intrigeri@...m.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: parcimonie (0.6 to 0.8, included) possible correlation between key fetches
 Content-Type: text/plain; charset=utf-8
 
-On 14-09-11 10:39 AM, Tomas Hoger wrote:
-> On Wed, 10 Sep 2014 10:28:53 -0700 Ritwik Ghoshal wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> problem that undermines the usefulness of this piece of software, in
+> the intended threat model
 > 
->> Please use CVE-2014-4274 for this issue.
->>
->> Please send an email to secalert_us@...cle.com to contact Oracle for
->> any security vulnerability related issues.
-> 
-> As pointed out in this Gentoo bug, release notes for the mentioned
-> MySQL versions list another issue that seems to be security:
-> 
-> https://bugs.gentoo.org/show_bug.cgi?id=518718
-> 
-> 3) An off-by-one error related to certificate decoding in yaSSL can be
-> exploited to cause a buffer overflow.
+> always sleep exactly 10 minutes
 
-There is also mention of:
+Use CVE-2014-1921.
 
-"Clients could determine based on connection error message content whether an
-account existed. (Bug #16513435, Bug #17357528, Bug #19273967)"
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-I believe this is the fix for CVE-2012-5615, and is fixed with the following commit:
-
-http://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/4676
-
-Marc.
-
-
+iQEcBAEBAgAGBQJS+R3oAAoJEKllVAevmvmsTDwH/0QXSZYy7fT/LPjH2F3Q5FQg
+V9YrueBsmmK5tqoB63Uhjoq7Jexo9Z7eGIjKRpZHeM/H9WTPovmngGln0jBBa9qw
+cxiqHPAJ/p6PJnlxtC3e0+s6yD8PA/veCl6zQrqW11FjbXAkxD54HgAww61DTXJb
+x4c4/sBYck74kb86pN0YcbhuYiG+Dy2ChhfaiMIwElJ0cC5ocwkL9NWKD54mTugZ
+e9pi2A5I/tslFz9UFDFBofKW9TSouBlmw4wg1Qrq3ENqAz6PpjXrS7iWWMSSNpDt
+mxSIuupvOyGT341kVTrwiLRau7f+AEUsmXVgNKqBGEDU4Wi265RLHs0s8eW5l+A=
+=UGhh
+-----END PGP SIGNATURE-----
