@@ -1,46 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/14
-Message-Id: <201406041500.s54F0G7P012354@linus.mitre.org>
-Date: Wed, 4 Jun 2014 11:00:16 -0400 (EDT)
-From: cve-assign@...re.org
-To: security@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 98 - insufficient permissions checks accessing guest memory on ARM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/4
+Message-ID: <alpine.LFD.2.10.1402101256050.2145@javelin.pnq.redhat.com>
+Date: Mon, 10 Feb 2014 13:04:48 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+   Hello,
 
-> XSA-98
+Please see -> https://00f.net/2012/06/26/dnscache-poisoning-and-siphash/
 
-> When accessing guest memory Xen does not correctly perform permissions
-> checks on the (possibly guest provided) virtual address ... This
-> allows a guest to write to memory which it should only be able to
-> read.
+===
+...
+By exploiting a hash table collision, an attacker has no way to trigger a DoS, 
+but he can actually do something way more interesting: force the resolver to 
+send the same query for the same TLD, over and over again, always to the same 
+set of servers, no matter what the intended TTL is and no matter what the 
+cache size is.
 
-> In the event that a guest executes code from a page which has been
-> shared read-only with another guest it would be possible to mount a
-> take over attack on that guest.
+And suddenly, poisoning dnscache with a malicious TLD much, much, much easier 
+and faster.
+===
 
-Use CVE-2014-3969.
+Not sure if it qualifies for a CVE; the excerpt above deems it a likely 
+candidate.
 
-Our understanding is that "executes code from a page which has been
-shared read-only" depends on the permissions issue (lack of a check
-for execute permission), and is not an independent problem.
+Upstream fix:
+-------------
+   -> https://github.com/pjps/ndjbdns/commit/16cb625eccbd68045737729792f09b4945a4b508
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTjzQrAAoJEKllVAevmvmsAYQH/1c5OC4rp6+bZvWaV6eM0INm
-PP2t2rOZhNjbc25Swzm7E0lnV7ZMk1Tsz8rnhd+jnf72abro9t0B87QIUGEjRIo+
-mTz7CJJohynIT785wXFDTZaUJuJefi6me7KaIVKQPV37St26g0xY8O1uXLmBxxqh
-av0oF+ImYNZbFaTZEeGLF2gN4V54W2CZe2T3de5dn1oWemdKceJI6DWEX4NHoV/l
-zzAG/6/6+t/lnwSMQhfYYOgacs4u8kkrXzPCzzEZWf3ScJilawToIDU0wAO5ya5e
-//kLQs+PD8ENUPS41L1GjC172szfmMUmDqsDfuaJTkddmBnsXZzd50cSf24yiVc=
-=eSfY
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
+
