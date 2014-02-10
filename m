@@ -1,41 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/14
-Message-ID: <FDEFF68B-3510-4A68-BE5A-82A2696655E7@redhat.com>
-Date: Fri, 27 Jun 2014 10:45:48 -0600
-From: "Vincent Danen" <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: jamie@...onical.com, cve-assign@...re.org
-Subject: Re: Question regarding CVE applicability of missing HttpOnly flag
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/1
+Message-Id: <201402100030.s1A0UB78002182@linus.mitre.org>
+Date: Sun, 9 Feb 2014 19:30:11 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 736969@...s.debian.org
+Subject: Re: (possible) CVE request: suPHP 0.7.2 release fixed a possible arbitrary code execution
 Content-Type: text/plain; charset=utf-8
 
-On 06/26/2014, at 9:59 AM, cve-assign@...re.org wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> It is closest to b. It would be very rare to assign a CVE for a design
-> choice by a system integrator. Suppose a new operating-system
-> distribution ships tomorrow without a virus scanner. Often the best
-> model for this would be a set of tasks that hasn't happened. For
-> example, the vendor hasn't yet investigated customer requirements for
-> what a virus scanner should do. The vendor hasn't performed the
-> release-engineering work of packaging a virus scanner. There are other
-> tasks as well. We don't think that CVE consumers are looking for us to
-> tag cases where a product lacks complete subsystem parity with all
-> possible competitors.
+> suPHP 0.7.2 has been released.
+> This release fixes a security issue that was introduced with the 0.7.0
+> release. This issue affected the source-highlighting feature and could
+> only be exploited, if the suPHP_PHPPath option was set. In this case
+> local users which could create or edit .htaccess files could possibly
+> execute arbitrary code with the privileges of the user the webserver
+> was running as.
 
-I'm not sure that I understand or agree with this.  The above sounds to me like not having a virus scanner in an OS is a security flaw, but the only reason it's not being described as such is a technicality.
+Use CVE-2014-1867. A commit reference isn't strictly necessary, but
+without one we sometimes wait a short time for further information
+before sending a CVE assignment, in case the issue (for example)
+actually had multiple vulnerability types.
 
-Virus scanners are useful proactive security, but I don't think that means the _lack_ of one exposes a vulnerability.  The vulnerability (which should be what gets a CVE) is exposed regardless of the presence of a virus scanner -- all the scanner does is make detection easier and possibly prevent something from being executed that may otherwise be unwittingly executed (or may not, the vendor cannot make that determination).
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-I suppose maybe there is a CWE for not having a virus scanner, which makes sense as that could be considered an overall system weakness.  So I guess the next question is whether or not there is a 1:1 mapping for CWE and CVE (i.e. if something has a weakness (software, OS, configuration) does that automatically make it an actual vulnerability).
-
-I'm also really confused on how any of these tasks have any bearing on what constitutes a vulnerability because they seem irrelevant as far as determining whether or not an actual flaw exists:
-
-- lack of a proactive security mechanism (virus scanner, etc.)
-- customer requirements (I fail to see how this impacts whether or not something is a flaw)
-- release engineering work (or, possibly, "how hard is this to fix?")
-- feature parity with other competitors
-
-All of these sound like marketing issues, not factors to determine whether or not a flaw is a flaw.
-
--- 
-Vincent Danen / Red Hat Product Security
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+iQEcBAEBAgAGBQJS+BvwAAoJEKllVAevmvmsl7QH/jw1FQDZ72Y6+iFXRxoNH/zF
+vFWiTpi7G6TG9vM9H25iPn8tqwhWZLvHRrxmdjQ3E95PaRE7kNgNTs0ju9HuCein
+1+JZ+PGZvCuTcKQgesW2/0XgEIX1OK0eTXsvS4joZ1FS2m4ODzZ7eoEX02fn5rqB
+VWiV+X80MAv0HO/SAcf4mhuAz6iofEjVbEL+1+/QCMpO12CGFCIZRF0nXoFvjdRh
+gWNIhVn88IifPP4Vvo3sfIinAMEcN/7CeMiRZ2nf4hkuTQlIaKD6SEfKFQK+T20c
+9mBKxA0Mj0P4fDkqm7EZk612OP9pi2cox0V3+GaIzbQQpaP3RAEpkmyJZNY9zSU=
+=IuVz
+-----END PGP SIGNATURE-----
