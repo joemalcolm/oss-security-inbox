@@ -1,19 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/20/1
-Message-ID: <20140720082359.GA3614@pisco.westfalen.local>
-Date: Sun, 20 Jul 2014 10:23:59 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/11/11
+Message-ID: <CACYkhxh3X6bLGr61eqY78+C_da3u-=zD_FPp667ghzQU5CcGKQ@mail.gmail.com>
+Date: Wed, 12 Feb 2014 10:13:57 +1100
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: Status of CVE-2012-4542/Linux?
+Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-I'm wondering on the status of CVE-2012-4542 in the mainline Linux kernel:
+On 12 February 2014 00:05, P J P <ppandit@...hat.com> wrote:
 
-The patches referenced in https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4542
-(https://lkml.org/lkml/2013/1/24/279) haven't been merged,
-so I'm wondering whether this is fixed upstream in a different manner
-or still unfixed?
+> | The security flaw is in the DNS protocol, and (apart from protocol
+> upgrade
+> | fantasies) the only practical way to mitigate this is to have a pool of
+> IP
+> | addresses to initiate recursive requests from.
+>
+>   That is accept requests from predefined networks? djbdns/ndjbdns already
+> does
+> that. Still, that network could be very large. There are also open
+> resolvers.
 
-Cheers,
-        Moritz
+
+That helps too (assuming no malware outbreak), but I was referring to
+having a pool
+of IP addresses attached to the DNS server for the purpose of sending
+outbound
+requests, in order to multiply the number of available address+port+ID sets.
+
+
+>   Hmmn..true; DNS is suppose to recycle cached records. But does that mean
+> all
+> DNS implementations are vulnerable to cache poisoning? (given enough
+> efforts)
+
+
+Yes.  That effort isn't necessarily trivial, but as bandwidth and CPU
+resources
+increase, these attacks become easier and less overt.  If the attacker is
+able to sniff
+the DNS traffic before it reaches the target server, it's game over no
+matter how big
+a space of ports/IDs you have.
+
+Regards,
+  Michael
+
