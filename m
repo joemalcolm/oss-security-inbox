@@ -1,48 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/24/7
-Message-ID: <53D14D19.1060603@amacapital.net>
-Date: Thu, 24 Jul 2014 11:14:49 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux peer_cred Mischmasch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/11/2
+Message-Id: <201402110432.s1B4WNow023110@linus.mitre.org>
+Date: Mon, 10 Feb 2014 23:32:23 -0500 (EST)
+From: cve-assign@...re.org
+To: oss-sec-addjsif@...p.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: CVE-2014-1939 searchBoxJavaBridge_ in Android Jelly Bean
 Content-Type: text/plain; charset=utf-8
 
-On 07/22/2014 11:43 PM, Sebastian Krahmer wrote:
-> On Tue, Jul 22, 2014 at 12:22:30PM -0700, Andy Lutomirski wrote:
->> On 07/22/2014 04:17 AM, Florian Weimer wrote:
->>> On 07/22/2014 12:15 PM, Sebastian Krahmer wrote:
->>>> While maybe_add_creds() (via SOCK_PASSCRED) and scm_send()
->>>> (via unix_{stream,dgram}_sendmsg()) use the real UID,
->>>>
->>>> cred_to_ucred() (via SO_PEERCRED) passes the EUID (this time
->>>> also kuid_munged()).
->>>
->>> There should also be a discrepancy regarding when the credentials are
->>> captured (time of send for SOCK_PASSCRED, time of socket creation for
->>> SO_PEERCRED).  The latter is required because privileged processes
->>> assume that they can safely write to stderr, so picking the current
->>> process credentials may well introduce vulnerabilities.
-> 
-> It does, and that should be ok.
-> 
->>>
->>
->> Indeed.  IMO both of these interfaces are flawed, but PASSCRED is
->> terminally broken and should never be used.  See, for example,
->> CVE-2013-1979, which is the immediate cause of the ruid thing.
-> 
-> Thats what I was wondering whether CVE-2013-1979 only fixed SCM_CREDENTIALS
-> case and missed to fix SO_PEERCRED.
-> I am not fully convinced thats OK to get one time the euid and another time
-> the uid (even though I liked the spy example:)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-SO_PEERCRED is at least less bad: you'd need to convince someone to call
-socket(2) (or maybe connect(2)) on your behalf, which is hopefully much
-harder than getting them to call write(2) on your behalf.
+> From: "Joshua J. Drake" <oss-sec-addjsif@...p.org>
+> Subject: Re: CVEs for Android addJavascriptInterface issues (was: multiple issues in Apache Cordova/PhoneGap)
+> Date: Sat, 8 Feb 2014 00:47:05 -0600
+> Message-ID: <20140208064704.GA17711@dq>
+>
+> You may have seen recently released Metasploit module that allows a
+> remote compromise of the Google Glass browser using an incorrectly
+> exposed Javascript bridge via the "searchBoxJavaBridge_" object. This
+> exposes an instance of android.webkit.SearchBoxImpl in older versions
+> of the Android browser.
 
-I still don't like it, but that ship sailed a long, long time ago.
+Use CVE-2014-1939. For example, see:
 
-> 
-> Sebastian
-> 
+https://android.googlesource.com/platform/frameworks/base/+/jb-release/core/java/android/webkit/
+https://android.googlesource.com/platform/frameworks/base/+/jb-release/core/java/android/webkit/SearchBoxImpl.java
 
+versus:
+
+https://android.googlesource.com/platform/frameworks/base/+/kitkat-release/core/java/android/webkit/
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS+acoAAoJEKllVAevmvmssJYIAKETcBfP8SJYDEY7bPoC8Ivc
+oJgTS05tzQMb+w+sju0vl0Ph19TTp225AfMrrB6gD1V5MlkZvPcSF7YsyuDvWON1
+sBoz93bmnVe54+1potTAa6ECkWNbILOx7ZHFxwM5vj+Iyd7jE5RjAnRl/2bYQUvo
+eRneKDuI+Ayc7Uq8Jk8HblaNgHVqW6oxrREKotiLJnP8kbaBAqQBgZdoE5PYsGvj
+KVMU+2WrgDTb3eD6SZUvumF7WNaQ08iUSbhgED2Yv79JXs3jerWQ4gbdSd1YXgwO
+PWY3OcU/iyMNfZZqgxZypk483tVo8FkEftDsHA/5b9/HMMbf/NSS62Gn9sVHmJk=
+=E2Z7
+-----END PGP SIGNATURE-----
