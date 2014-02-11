@@ -1,56 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/2
-Message-ID: <CALCETrUcG6+FHcSVMr+wCRQxiJAaF+zCapLwPStBsbunnTbqZw@mail.gmail.com>
-Date: Wed, 28 May 2014 18:31:56 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: Steve Grubb <sgrubb@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux kernel DoS with syscall auditing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/11/8
+Message-ID: <52FA25CE.1030000@redhat.com>
+Date: Wed, 12 Feb 2014 00:29:50 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2013-6401 Jansson hash collision issue
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 28, 2014 at 6:06 PM, Steve Grubb <sgrubb@...hat.com> wrote:
-> On Wednesday, May 28, 2014 02:45:59 PM Andy Lutomirski wrote:
->> Issuing a system call with a random large number will OOPS, depending
->> on configuration.  A configuration that will enable this bug is:
->>
->> # auditctl -a exit,always -S open
->>
->> No privilege whatsoever is required to trigger the OOPS.
->
-> Do you have more information about this? I don't get an oops and I run with
-> the audit system on all the time.
+On 02/12/2014 12:20 AM, Murray McAllister wrote:
+> As reported to the distros mailing list:
+> 
+> Hi all,
+> 
+> Florian Weimer of the Red Hat Product Security Team found that the
+> hashing implementation in Jansson, a library for encoding, decoding and
+> manipulating JSON data, was susceptible to predictable hash collisions.
+> A remote attacker could use this flaw to cause an application using
+> Jansson to use an excessive amount of CPU time by sending a crafted JSON
+> document containing a large number of parameters whose names map to the
+> same hash value. (CVE-2013-6401)
+> 
+> With regards to affected versions, I am guessing only 2.4-2 and 2.4-3
+> were checked (by Red Hat).
+> 
+> Many thanks to Florian Weimer and Petri Lehtinen (upstream) for their
+> extensive work on the patch:
+> 
+> https://github.com/akheron/jansson/commit/8f80c2d83808150724d31793e6ade92749b1faa4
+> 
+> (Feel free to copy the above CVE-2013-6401 description paragraph in any
+> of your bugs or advisories.)
+> 
+> Red Hat bug: https://bugzilla.redhat.com/show_bug.cgi?id=1035538 (to be
+> opened shortly)
+> 
+> Cheers,
+> 
+> --
+> Murray McAllister / Red Hat Security Response Team
+> 
 
-It's on lkml -- see:
+This commit is also needed:
 
-http://thread.gmane.org/gmane.linux.kernel/1713178/focus=1713179
-
-http://thread.gmane.org/gmane.linux.kernel/1712799/focus=1713161
-
-You need to pass a fairly large bogus syscall number.  The auditsc
-code is completely missing any bounds checking on the syscall numbers.
-
->
->
->> It's possible that this can be extended to more than just a DoS --
->> with some care and willingness to exploit timing attacks, this is a
->> read of arbitrary single bits in kernel memory.
->
-> What platform? Where do the arbitrary bits go? What syscall are we talking
-> about?
-
-The audit system decides whether to log a syscall depending on a bit
-in the audit_krule mask.  Since the mask read isn't bounds-checked,
-the caller can force it to read any bit, relative to the audit_krule.
-Anything that can tell the attacker the outcome of the filter decision
-will reveal the value of that bit.
-
->
-> There is a linux-audit mail list which seems to not have any emails about this
-> problem. That is really the best place to discuss any issues with this
-> subsystem and get it fixed.
-
-There's already a patch on lkml.
-
-I'll cc linux-audit for the v2 patches.
-
---Andy
+https://github.com/akheron/jansson/commit/42016a35c8907e477be73b0b5d06cc09af231ee4
