@@ -1,68 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/01/1
-Message-Id: <201404010333.s313XNTY021908@linus.mitre.org>
-Date: Mon, 31 Mar 2014 23:33:23 -0400 (EDT)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE requests: Zend Framework issues fixed in ZF2014-01 and ZF2014-02
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/11/7
+Message-ID: <52FA239E.2090407@redhat.com>
+Date: Wed, 12 Feb 2014 00:20:30 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2013-6401 Jansson hash collision issue
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+As reported to the distros mailing list:
 
-This is somewhat complex in the sense that all of the issues are
-within the scope of CVE but the disclosures only marginally have
-enough information to determine the correct number of CVE IDs. We did
-not want to combine independent discoveries into the same CVE ID.
+Hi all,
 
+Florian Weimer of the Red Hat Product Security Team found that the
+hashing implementation in Jansson, a library for encoding, decoding and
+manipulating JSON data, was susceptible to predictable hash collisions.
+A remote attacker could use this flaw to cause an application using
+Jansson to use an excessive amount of CPU time by sending a crafted JSON
+document containing a large number of parameters whose names map to the
+same hash value. (CVE-2013-6401)
 
-http://framework.zend.com/security/advisory/ZF2014-01
+With regards to affected versions, I am guessing only 2.4-2 and 2.4-3
+were checked (by Red Hat).
 
-CVE-2014-2681 - This CVE is for the lack of protection against XML
-External Entity injection attacks in some functions, because of the
-incomplete fix in CVE-2012-5657. It appears that this only affects
-Zend Framework 1.x, although that isn't critical to determining the
-number of CVE IDs.
+Many thanks to Florian Weimer and Petri Lehtinen (upstream) for their
+extensive work on the patch:
 
-CVE-2014-2682 - This CVE is for the failure to consider that the
-libxml_disable_entity_loader setting is shared among threads in the
-PHP-FPM case. Again, the existence of this CVE means that the
-CVE-2012-5657 fix was incomplete. It appears that this affects more
-than just Zend Framework 1.x, although that isn't critical to
-determining the number of CVE IDs.
+https://github.com/akheron/jansson/commit/8f80c2d83808150724d31793e6ade92749b1faa4
 
-CVE-2014-2683 - This CVE is for the lack of protection against XML
-Entity Expansion attacks in some functions, because of the incomplete
-fix in CVE-2012-6532. It appears that this also affects more than just
-Zend Framework 1.x, although that isn't critical to determining the
-number of CVE IDs.
+(Feel free to copy the above CVE-2013-6401 description paragraph in any
+of your bugs or advisories.)
 
+Red Hat bug: https://bugzilla.redhat.com/show_bug.cgi?id=1035538 (to be
+opened shortly)
 
-http://framework.zend.com/security/advisory/ZF2014-02
+Cheers,
 
-CVE-2014-2684 - This CVE is for the error in the consumer's verify
-method that leads to acceptance of wrongly sourced tokens. The same
-CVE is used for Zend Framework 1.x and ZendOpenId 2.x, even though the
-code is not identical.
-
-CVE-2014-2685 - This CVE is for the specification violation in which
-signing of a single parameter is incorrectly considered sufficient.
-Again, this CVE is for both Zend Framework 1.x and ZendOpenId 2.x.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTOjKAAAoJEKllVAevmvmsQTwH/jHloIXxpsbVGuNkGo7PyECc
-jGOQJH24syG+P7camYEpTrLM2mz8OHALjaWlR1ySUI+pDhDWCqVy1JaxEFTjan+E
-bFMPASXQIEqptEe25fERTaELcmyN7mhhCFKYejuInORd2fawL0OO4HuDiP8vjxyb
-oKSCx4o/Le2A6L3q05VWVYvHFsZHSPTBQ1RwLmhiPPBk69b0BC0VP8rchgqU3IlK
-g67b0x6v1x9WnNFa3Nr5eFtdYsuRS/8XYS6hbE5wX9cdZ04InO+fqX3EsXmygamI
-X+tvKlm4u+CvJtNtTFOVPc7jJ4yLYD/x2ZZ7X+3a0dG+oJ+Z/C32wuOnxrKA0KQ=
-=LGQc
------END PGP SIGNATURE-----
+--
+Murray McAllister / Red Hat Security Response Team
