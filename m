@@ -1,56 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/22/3
-Message-Id: <201404220412.s3M4Btns002191@linus.mitre.org>
-Date: Tue, 22 Apr 2014 00:11:55 -0400 (EDT)
-From: cve-assign@...re.org
-To: propolice@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Nagios Remote Plugin Executor <= 2.15 Remote Command Execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/11/4
+Message-ID: <20140211080529.GA13430@dq>
+Date: Tue, 11 Feb 2014 02:05:29 -0600
+From: "Joshua J. Drake" <oss-sec-addjsif@...p.org>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-1939 searchBoxJavaBridge_ in Android Jelly Bean
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Feb 10, 2014 at 11:32:23PM -0500, cve-assign@...re.org wrote:
+> 
+> Use CVE-2014-1939. For example, see:
+> 
+> https://android.googlesource.com/platform/frameworks/base/+/jb-release/core/java/android/webkit/
+> https://android.googlesource.com/platform/frameworks/base/+/jb-release/core/java/android/webkit/SearchBoxImpl.java
+> 
+> versus:
+> 
+> https://android.googlesource.com/platform/frameworks/base/+/kitkat-release/core/java/android/webkit/
 
-> http://seclists.org/fulldisclosure/2014/Apr/240
+Thanks for the CVE assignment.
 
-> src/nrpe.c
+For interested parties, I consider the actual issue to be the use of
+the unsafe addJavascriptInterface API at all. This happens in
+BrowserFrame.java (not in SearchBoxImpl.java) See use of the
+javascriptInterfaces and mJavaScriptObjects variables and the
+nativeAddJavascriptInterface JNI function.
 
-> Despite these checks the code is vulnerable to command injection as bash shell allows
-> for multiple command execution if commands are separated by a new line.
+Joshua
 
-Use CVE-2014-2913.
-
-
-> From: gremlin@...mlin.ru
-> Date: Fri, 18 Apr 2014 10:16:14 +0400
-> Message-ID: <20140418061614.GA16766@...mlin.ru>
-
-> Adding \r here may be a good idea as well...
-
-We have not seen additional comments about whether \r would prevent an
-alternate attack approach. If it does, a separate CVE ID would be
-assigned. We do not know of a version of Bash in which \r separates
-commands in the same way that \n does. For example:
-
-  % /bin/bash -c "`echo -e "echo a\x0aecho b"`" | cat -v
-  a
-  b
-  % /bin/bash -c "`echo -e "echo a\x0decho b"`" | cat -v
-  a^Mecho b
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTVetTAAoJEKllVAevmvms/44H/3ZWzK46mWsp/xuIWS7yhsP/
-wcCPcekjZfp3azr+gY9cMHMiW685CSxptfB/rFLZDB2lb2OJrF9yqGgix5XKDR5e
-cNJXiZZwQMh2vFs8ZlWQcX7ndHFs5DR8RSpqGW35u+LmVNHjFSPj2+ZwrIWhKvwA
-T6rr825ge9DQKsuqrD7gTbH0t2ld3Z6/Q8r709pqYXDrTSjDMwUkbpe95i9N1NSl
-mSdIghtLG/0yOnn6GcRQYGRRCsU6F1CZjPsRb87jxGpGsAFP8nkYgMlWZPIjEud1
-lt/Oe5Si/QPymqkawelm6PBAcbdVmmkbhcCr7cDPdLKJeG5PTC6ywQDoRFr8Yb0=
-=Sg8i
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (829 bytes)
