@@ -1,24 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/7
-Message-ID: <53CFA4C6.4090205@redhat.com>
-Date: Wed, 23 Jul 2014 14:04:22 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: [CVE request] Array allocation fixes in libgfortran
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/11/6
+Message-ID: <alpine.LFD.2.10.1402111731310.4307@javelin.pnq.redhat.com>
+Date: Tue, 11 Feb 2014 18:35:58 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
-Janne Blomqvist fixed several CVE-2002-0391-style integer overflows in 
-array allocation in libgfortran, the run-time support library for the 
-Fortran compiler which is part of the GNU Compiler Collection.  The 
-upstream Subversion commit is here:
+   Hello Michael,
 
++-- On Tue, 11 Feb 2014, Michael Samuel wrote --+
+| This response doesn't address the original claim.
+|
+| The author of the original link made the (probably true) claim that requests 
+| could be made to authoritative sources (records under the control of the 
+| attacker) which would deliberately collide with results for some other 
+| domain such as .com.
+
+  'Frank Denis' is an author of the original link/post.
  
-<https://gcc.gnu.org/viewcvs/gcc?limit_changes=0&view=revision&revision=211721>
+| Since each bucket has a limit of 100 records, this would make it easier to 
+| push a record from the cache, giving the attacker another chance at spoofing 
+| a reply a little bit sooner.  Each time this happened, the attacker would 
+| have just under 1 in 2^32 chance of succeeding.
+| 
+| The simplest strategy for this would be to constantly send replies to a 
+| specific port with a specific ID, and waiting for the server to randomly use 
+| this combination, in which case the attacker would surely beat the server.
 
-These changes will be part of the next version of GCC (whose version 
-number is still to be decided).
+  That's correct.
+ 
+| The security flaw is in the DNS protocol, and (apart from protocol upgrade 
+| fantasies) the only practical way to mitigate this is to have a pool of IP 
+| addresses to initiate recursive requests from.
 
-I think this warrants a CVE assignment.
+  That is accept requests from predefined networks? djbdns/ndjbdns already does 
+that. Still, that network could be very large. There are also open resolvers.
 
--- 
-Florian Weimer / Red Hat Product Security
+| Using siphash would make this attack slightly harder, but a large number of 
+| random names would presumably have a similar effect for only slightly more 
+| traffic (how many buckets are there?).
+
+  No of buckets depend on the cache size. For default cache size of 5MB, it 
+would have about 262144 buckets.
+ 
+| In short, the hashtable is not a DNS cache poisoning protection mechanism, 
+| DNS cache is supposed to expire or be pushed out by "hotter" records, so I'd 
+| say it's not a vulnerability.
+
+  Hmmn..true; DNS is suppose to recycle cached records. But does that mean all 
+DNS implementations are vulnerable to cache poisoning? (given enough efforts)
+
+| I'd still recommend switching hash algorithms.
+
+  That's done.
+
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
