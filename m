@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/2
-Message-Id: <20140924060320.9575C72E066@smtpvbsrv1.mitre.org>
-Date: Wed, 24 Sep 2014 02:03:20 -0400 (EDT)
-From: cve-assign@...re.org
-To: security@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 104 - Race condition in HVMOP_track_dirty_vram
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/11/3
+Message-ID: <alpine.LFD.2.10.1402111219460.19485@javelin.pnq.redhat.com>
+Date: Tue, 11 Feb 2014 12:24:21 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+   Hi,
 
-> Xen Security Advisory XSA-104
-> 
-> The routine controlling the setup of dirty video RAM tracking latches
-> the value of a pointer before taking the respective guarding lock, thus
-> making it possible for a stale pointer to be used
++-- On Mon, 10 Feb 2014, P J P wrote --+
+| I'll check with the upstream author for more clarification.
 
-Use CVE-2014-7154.
+Upstream author's reply:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+ > On Tuesday, 11 February 2014 4:28 AM, Frank Denis wrote:
+ >
+ > The shorter the TTL of a record is, the easier a cache can be poisoned.
+ > It is when a record is NOT cached that spoofed authoritative replies
+ > can be sent and get a chance to reach the resolver before the
+ > legitimate one.
+ > 
+ > As soon as a valid response is received, dnscache invalidates the state, 
+ > discarding further responses, even if these are valid.
 
-iQEcBAEBAgAGBQJUIl34AAoJEKllVAevmvmsbdkH/1DkA7TpowOy5CN0Pceb5fm8
-xOCXJ3fUu2bR/z8xKGS2wi8QtuiisWngeKNnCLeT50PTZZxiTEuulpAwCHLDxcMM
-h4ndULD2+pE0YrieZv8rqNIPW1kt0RNNAEYYH4dzoWjasTxbbwkiz8c9EMmcVCAK
-90CNUon8lhONYsClae4/NGnIVyyTsQ7Oe2gkTVn7fGWD66L701gjJBCsFH3kysZH
-+ZnaRamHfo1ucZU6Z099i5LqGWDNn4yeNIkPknGEeX/SWCksFCpWU80n2pA0RHo6
-jCiSk6NqUi1wB3/EzBHurfopAc7/l1L6A/jraitL0kahcTj6s5Go4ZheDIvjiRA=
-=Qdj8
------END PGP SIGNATURE-----
+
+Hope it helps. Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
