@@ -1,43 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/15
-Message-ID: <20141003213059.GB4115@chaz.gmail.com>
-Date: Fri, 3 Oct 2014 22:30:59 +0100
-From: Stephane Chazelas <stephane.chazelas@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/11/5
+Message-ID: <CACYkhxjeyLYjSUzvMLAkTKQVKg9r5-aL+yv38jALZJTa=UGsfA@mail.gmail.com>
+Date: Tue, 11 Feb 2014 22:28:35 +1100
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shellshock timeline (was: CVE-2014-6271: remote code execution through bash)
+Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
-2014-10-03 14:48:19 -0500, Kobrin, Eric:
-> I've found the shellshock vulnerable code in archives claiming to contain bash 1.05, which also claim to be from 1990 or 1989.
-> I was unable to find the source for anything claiming older than 1.05.
-[...]
+On 11 February 2014 17:54, P J P <ppandit@...hat.com> wrote:
 
-Sorry, I said in the other email that it was not in 1.12. That's
-my memory failing. I remember checking that it was not in 1.05
-and it was, which is even more than my memory failing. Chet did
-tell me that it was added in 1.13 though. I've now found 1.12
-(ftp://ftp.it.xemacs.org/%7BD/unix/packages/NCSA/DEC_Alpha/bash-1.12.tar.Z)
+> Upstream author's reply:
+>
+>  > On Tuesday, 11 February 2014 4:28 AM, Frank Denis wrote:
+>  >
+>  > The shorter the TTL of a record is, the easier a cache can be poisoned.
+>  > It is when a record is NOT cached that spoofed authoritative replies
+>  > can be sent and get a chance to reach the resolver before the
+>  > legitimate one.
+>  >
+>  > As soon as a valid response is received, dnscache invalidates the state,
+>  > discarding further responses, even if these are valid.
+>
 
-and it was there indeed and the ChangeLog also in 1.05 has:
+This response doesn't address the original claim.
 
-Sat Aug  5 08:32:05 1989  Brian Fox  (bfox at aurel)
+The author of the original link made the (probably true) claim that
+requests could
+be made to authoritative sources (records under the control of the attacker)
+which would deliberately collide with results for some other domain such as
+.com.
 
-        * variables.c: make_var_array (), initialize_shell_variables ()
-          Added exporting of functions.
+Since each bucket has a limit of 100 records, this would make it easier to
+push
+a record from the cache, giving the attacker another chance at spoofing a
+reply
+a little bit sooner.  Each time this happened, the attacker would have just
+under
+1 in 2^32 chance of succeeding.
 
+The simplest strategy for this would be to constantly send replies to a
+specific
+port with a specific ID, and waiting for the server to randomly use this
+combination, in which case the attacker would surely beat the server.
 
-And:
+The security flaw is in the DNS protocol, and (apart from protocol upgrade
+fantasies) the only practical way to mitigate this is to have a pool of IP
+addresses to initiate recursive requests from.  Using siphash would make
+this
+attack slightly harder, but a large number of random names would presumably
+have a similar effect for only slightly more traffic (how many buckets are
+there?).
 
-Fri Sep  1 18:52:08 1989  Brian Fox  (bfox at aurel)
-[...]
-        * I update this too irregularly.
-          Released 1.03.
+In short, the hashtable is not a DNS cache poisoning protection mechanism,
+DNS
+cache is supposed to expire or be pushed out by "hotter" records, so I'd
+say it's not
+a vulnerability.  I'd still recommend switching hash algorithms.
 
-
-So the feature has indeed been there for over a quarter of a
-century since 1.03, and Chet and I have spread misconceptions by
-saying that it was added circa 1993.
-
--- 
-Stephane
+Regards,
+  Michael
 
