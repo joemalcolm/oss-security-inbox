@@ -1,71 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/14/1
-Message-ID: <52FD672B.5000807@redhat.com>
-Date: Fri, 14 Feb 2014 11:45:31 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/11/10
+Message-Id: <201402112150.s1BLo3wg006708@sirius.blue.cert.org>
+Date: Tue, 11 Feb 2014 16:37:21 -0500
+From: "CERT(R) Coordination Center" <cert@...t.org>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: information on "ImageMagick PSD Images Processing RLE Decoding Buffer Overflow Vulnerability"
+CC: "CERT(R) Coordination Center" <cert@...t.org>
+Subject: Vendor adoption of PIE INFO#934476 oss-security
 Content-Type: text/plain; charset=utf-8
 
-On 02/14/2014 06:05 AM, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
->> The Secunia advisory (http://secunia.com/advisories/56844/) is referring
->> to this commit:
->>
->> http://trac.imagemagick.org/changeset/14801
->>
->> Which as far as I know does not have a CVE yet.
->
-> Use CVE-2014-1958 for changeset 14801.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks
+Hi folks,
 
->
-> There are at least two ways to handle the CVE assignments for the
-> other issues. The problem is that CVE-2014-1947 was originally bound
-> to the disclosure of "that's still 4 bytes too many" (in ImageMagick
-> 6.5.4) but this is apparently not an accurate description of the
-> problem. (Possibly "4 bytes too many" was based on an incorrect
-> interpretation that "L%02ld" meant two four-byte integer values, going
-> into a single four-byte buffer.)
->
-> Option 1:
->
-> 1a. REJECT CVE-2014-1947.
->
-> 1b. Assign one new CVE-2014-#### ID for the vulnerability in older
-> ImageMagick versions that use the "L%02ld" string. The root cause here
-> is that the code did not cover the case of more than 99 layers, which
-> is apparently allowable but relatively uncommon. This has a resultant
-> buffer overflow, e.g, L99\0 is safe but L100\0 is unsafe. When the
-> overflow occurs, it can be described as "1 or more bytes too many."
->
-> 1c. Assign another new CVE-2014-#### ID for the vulnerability in newer
-> ImageMagick versions that use the "L%06ld" string. The root cause here
-> is that the code did not recognize the relationship between the 8 (or
-> more) characters in "L%06ld" and the actual buffer size. This has a
-> resultant buffer overflow of "4 or more bytes too many."
->
-> Option 2:
->
-> 2a. Keep CVE-2014-1947 for the above-mentioned vulnerability in older
-> ImageMagick versions. This preserves the original meaning of
-> CVE-2014-1947 as a vulnerability affecting (for example) ImageMagick
-> 6.5.4.
->
-> 2b. Assign a new CVE-2014-#### ID for the above-mentioned
-> vulnerability in newer ImageMagick versions.
->
-> (We will proceed with option 2 unless option 1 is substantially better
-> for someone.)
+We had originally notified Linux vendors individually through our
+normal channels, but it has come to our attention that this could
+perhaps be a better forum to have a discussion about the topic.
 
-I do not have a preference. To clarify and prevent myself making more 
-messes, 2a is referring to "L%02ld", and 2b is referring to "L%06ld"?
+We recently published a blog post about the state of ASLR/PIE on Linux
+compared to how it is on Windows:
+<https://www.cert.org/blogs/certcc/post.cfm?EntryID=191>
 
-Cheers,
+tl;dr: On x86 Linux, there's a significant performance impact to PIE,
+however on the x86_64 platform it's not so clear whether the
+performance impact is significant enough to stop widespread use of
+PIE.
 
---
-Murray McAllister / Red Hat Security Response Team
+This is where we are looking for input from the Linux vendors.  It has
+been reported <http://nebelwelt.net/publications/12TRpie/gccPIE-TR120614.pdf>:
+2.4 PIE and x64
+<snip>  
+... "A quick evaluation for x64 reports an average overhead of 3.61%
+and a geometric mean of 2.34% for an -O3 optimization level on the
+same system using the "test" dataset of SPEC CPU2006."
+
+For those environments that put a high value on security, it would
+seem that a 2-3% overhead might be acceptable.  Though being a
+compile-time option, it would seem that the "faster" vs. "more secure"
+decision would need to be made ahead of time by the vendor.  And
+obviously, one size does not fit all.
+
+Thoughts?  What is stopping you from enabling PIE for everything, at
+least on the x86_64 platform?
+
+
+Thank you,
+   Will Dormann
+
+=============================
+Vulnerability Analyst
+CERT Coordination Center
+4500 Fifth Ave.
+Pittsburgh, PA 15213
+1-412-268-7090
+=============================
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iQEVAwUBUvqa/0FiFe3xVPtiAQKUWggAkQwJLYVuQAS0AWJzTLQzdIswqdsujP5C
+oqrF9N+aNWv1PNRjHbHBbGT5eDhepjkau9z90KHhHhYke5X17V47aEFb7HV5M3xN
+2KmJkOAYr870S1xD1swL80lryc0w3QqHuCHDfoJ5n316zx87wk/wVF0uYUwtufVY
+qeBv8ZXAlfX1hjEat5yRutEb+/ryNr6uzQkLgW9bzZcVsndDLDxzpqxO1k+Rv6mp
+X/12Vi0bE2/tZUv7MIaXzG5bpqU1wWqHXXzqzvdYVY4R6tUdvRTCPM6qjHdm63nE
+eEHFRj426tGNAnZtKMBzW52Mtloc2IFRTO6guvSBcn+ueLFZYVmXow==
+=SNne
+-----END PGP SIGNATURE-----
