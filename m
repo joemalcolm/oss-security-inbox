@@ -1,33 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/4
-Message-Id: <201406260028.s5Q0S51k001763@linus.mitre.org>
-Date: Wed, 25 Jun 2014 20:28:05 -0400 (EDT)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: WordPress plugin wp-gpx-maps wp-gpx-maps_admin_tracks.php Improper Admin Verification File Upload PHP Code Execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/3
+Message-ID: <20140212045342.GX2348@openstack.org>
+Date: Wed, 12 Feb 2014 04:53:42 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request for vulnerability in OpenStack Glance
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public,
+although an advisory was not sent yet.
 
-> https://plugins.trac.wordpress.org/changeset/556274/wp-gpx-maps
+Title: Glance Swift store backend password leak
+Reporter: Nikhil Komawar (Rackspace)
+Products: Glance
+Versions: 2013.2 versions up to 2013.2.1
 
-Use CVE-2012-6649.
+Description:
+Nikhil Komawar from Rackspace reported an information leak in Glance
+logs. The password for the Swift store backend is logged at WARNING
+level as part of the URL when authentication to a store fails if
+image location is not disabled by policy or the store is a
+single-tenant configuration. An attacker with access to the logs
+(local shell, log aggregation system access, or accidental leak) may
+leverage this vulnerability to elevate privileges and gain direct
+full access to the Glance Swift store backend. Only Glance setups
+using the Swift store backend are affected.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+References:
+https://launchpad.net/bugs/1275062
 
-iQEcBAEBAgAGBQJTq2i2AAoJEKllVAevmvms8owH/0DCPhfy2udhQXpsMpzpDcC+
-lL5Z0kx7ACyYiWxn8SZyjRYJ/aB/DSEkH1yRTnjgeJ9ysJewMq2hvB6ezXD2DWjz
-Es9of5x+ZehOkqggzOLiDp5RyIhMogwlEFCRI7OmDY6X++UIO3iGwTRpgPN1afgh
-bKR97s05jVl7vT3M1Gi240YqZGtquzyYURx3e0mbh8HlOPKrFRe+jHC4o/2oCX1p
-f6iS/96Vt8K4+orFad+wDc33Ukub2si6mR5/rYYhJ9Vg/PcU/MRa/abshmuAqS0m
-8pD0Llve0UD9aZOUEP8FugelxL9Et07ROlk2YSjkipcL01we5RBupJRqfgx5HMw=
-=Op+o
------END PGP SIGNATURE-----
+Thanks in advance,
+
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
