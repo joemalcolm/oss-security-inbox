@@ -1,115 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/16/5
-Message-ID: <20140216152556.GA3974@eldamar.local>
-Date: Sun, 16 Feb 2014 16:25:56 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Possible CVE Requests: several issues fixed in Jenkins (Advisory 2014-02-14)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/15
+Message-Id: <201402121621.s1CGLIwL013645@linus.mitre.org>
+Date: Wed, 12 Feb 2014 11:21:18 -0500 (EST)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Jenkins Advisory from 2014-02-14[1] mentions several security fixes,
-where for SECURITY-76 and SECURITY-88 CVE-2013-5573 was assigned.
+> Second, 0.3.5 and 0.3.6 have a series of differences in handling of
+> command-line arguments. This seems to be most likely a reaction to
+> Florian Weimer's observation of "you need to make sure that you
+> prevent option injection through positional arguments." Does anyone
+> believe that option injection was impossible in 0.3.5? If not, we will
+> make a fourth CVE assignment.
 
- [1] https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-02-14
+Use CVE-2014-1929.
 
-Do some of the following need also a CVE assignment?
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-----cut---------cut---------cut---------cut---------cut---------cut-----
-SECURITY-105
-| In some places, Jenkins XML API uses XStream to deserialize arbitrary
-| content, which is affected by CVE-2013-7285 reported against XStream.
-| This allows malicious users of Jenkins with a limited set of permissions
-| to execute arbitrary code inside Jenkins master.
-
-https://github.com/jenkinsci/jenkins/commit/d030fbbaeeb5ee8980b5680b26217930834387f4
-
-SECURITY-76 & SECURITY-88 / CVE-2013-5573
-| Restrictions of HTML tags for user-editable contents are too lax. This
-| allows malicious users of Jenkins to trick other unsuspecting users into
-| providing sensitive information.
-
-https://github.com/jenkinsci/jenkins/commit/7541e83cc9812afc2b464f0a3254a2453da53f4c
-https://github.com/jenkinsci/jenkins/commit/535c1115bbf07f8a57d509f2d00598d6e21870d4
-
-SECURITY-109
-| Plugging a hole in the earlier fix to SECURITY-55. Under some
-| circimstances, a malicious user of Jenkins can configure job X to
-| trigger another job Y that the user has no access to.
-
-https://github.com/jenkinsci/jenkins/commit/b6b2a367a7976be80a799c6a49fa6c58d778b50e
-
-SECURITY-108
-| CLI job creation had a directory traversal vulnerability. This allows a
-| malicious user of Jenkins with a limited set of permissions to overwrite
-| files in the Jenkins master and escalate privileges.
-
-https://github.com/jenkinsci/jenkins/commit/ad38d8480f20ce3cbf8fec3e2003bc83efda4f7d
-
-SECURITY-106
-| The embedded Winstone servlet container is susceptive to session
-| hijacking attack.
-
-https://github.com/jenkinsci/jenkins/commit/29351af4bd01f61715418916fc12c52be46bd9b0
-(issue in jenkins-winstone?)
-
-SECURITY-93
-| The password input control in the password parameter definition in the
-| Jenkins UI was serving the actual value of the password in HTML, not an
-| encrypted one. If a sensitive value is set as the default value of such
-| a parameter definition, it can be exposed to unintended audience.
-
-https://github.com/jenkinsci/jenkins/commit/bf539198564a1108b7b71a973bf7de963a6213ef
-
-SECURITY-89
-| Deleting the user was not invalidating the API token, allowing users to
-| access Jenkins when they shouldn't be allowed to do so.
-
-https://github.com/jenkinsci/jenkins/commit/5548b5220cfd496831b5721124189ff18fbb12a3
-
-SECURITY-80
-| Jenkins UI was vulnerable to click jacking attacks.
-
-https://github.com/jenkinsci/jenkins/commit/16931bd7bf7560e26ef98328b8e95e803d0e90f6
-
-SECURITY-79
-| "Jenkins' own user database" was revealing the presence/absence of users
-| when login attempts fail.
-
-https://github.com/jenkinsci/jenkins/commit/fbf96734470caba9364f04e0b77b0bae7293a1ec
-
-SECURITY-77
-| Jenkins had a cross-site scripting vulnerability in one of its cookies.
-| If Jenkins is deployed in an environment that allows an attacker to
-| override Jenkins cookies in victim's browser, this vulnerability can be
-| exploited.
-
-https://github.com/jenkinsci/jenkins/commit/a0b00508eeb74d7033dc4100eb382df4e8fa72e7
-
-SECURITY-75
-| Jenkins was vulnerable to session fixation attack. If Jenkins is
-| deployed in an environment that allows an attacker to override Jenkins
-| cookies in victim's browser, this vulnerability can be exploited.
-
-https://github.com/jenkinsci/jenkins/commit/8ac74c350779921598f9d5edfed39dd35de8842a
-
-SECURITY-74
-| Stored XSS vulnerability. A malicious user of Jenkins with a certain set
-| of permissions can cause Jenkins to store arbitrary HTML fragment.
-
-https://github.com/jenkinsci/jenkins/commit/5d57c855f3147bfc5e7fda9252317b428a700014
-
-SECURITY-73
-| Some of the system diagnostic functionalities were checking a lesser
-| permission than it should have. In a very limited circumstances, this
-| can cause an attacker to gain information that he shouldn't have
-| access to.
-
-https://github.com/jenkinsci/jenkins/commit/0530a6645aac10fec005614211660e98db44b5eb
-----cut---------cut---------cut---------cut---------cut---------cut-----
-
-Do some of these issue need a CVE assigned?
-
-Regards,
-Salvatore
+iQEcBAEBAgAGBQJS+57hAAoJEKllVAevmvmshgoH/i9CI0xncK8FfQE2t8dA96Cc
+3u94LLYzD+hqLMKSuNdArk7ekx00M/53p6ntFqff+neZWGLqVteo4ZPUFspWIv0W
+P7u1GWAMZl75KamqgRXrcp5mPbE5axe7FrEW0Z3Wd0PdT4xWMa9GUALypqGrOYNr
+zHehk+eLhqqapD4Z2xBFDjMEAzHobTeOHXP7tOL7e7+ut3UMmGAlG/i6FIBn3XKq
+/X2mHQ8EykDyb09oyih20NuttOtNr9aOkTJyODJK6Yqdr7gPu3tD3TVogqYvYNRm
+qwPZZLfEqvH4rlMsua/exySvQSMp+eOl+NJ720YRU8XPRzZGzxqZguaayAryT+U=
+=Pt+A
+-----END PGP SIGNATURE-----
