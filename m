@@ -1,65 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/03/1
-Message-Id: <201404030424.s334OGBP017273@linus.mitre.org>
-Date: Thu, 3 Apr 2014 00:24:16 -0400 (EDT)
-From: cve-assign@...re.org
-To: krahmer@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: KAuth security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/7
+Message-ID: <58840461.1427.1392198508442.JavaMail.root@xenoworld.de>
+Date: Wed, 12 Feb 2014 10:48:28 +0100 (CET)
+From: Clemens Fries <clemens@...oworld.de>
+To: oss-security@...ts.openwall.com
+Subject: cinnamon-screensaver lock bypass (tested on Fedora 20)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-It seems that, from the current
-https://bugzilla.novell.com/show_bug.cgi?id=864716 progress, this
-issue is not yet fixed, but possibly the primary affected "product"
-has been established.
+It is possible to circumvent the screen lock on a cinnamon session under Fedora
+20 using the 'Menu' key on a keyboard. I'm posting this here, because I assume
+that this is not limited to the version shipped with Fedora.
 
-Two different products have been discussed:
+Steps to reproduce:
 
-1. KAuth
-2. PolicyKit Library Qt Bindings (aka polkit-qt-1)
+* Start cinnamon session
+* Lock the screen (Ctrl+Alt+L)
+* Press the 'Menu' key on the keyboard
+* A menu appears for a brief moment
+* Press 'Escape'
+* Focus is now beneath the screensaver
+* Press Alt+F2
+* Start 'gnome-terminal'
+* Type 'killall cinnamon-screensaver'
 
-The discussion seems to suggest that the issue can't be properly fixed
-by changing only polkit-qt-1, and letting KAuth continue to use
-polkit-qt-1 in exactly the current way. Thus, the issue apparently
-should be considered a KAuth vulnerability, not a polkit-qt-1
-vulnerability.
+Seen on a fully patched Fedora 20 (February 12th, 2014). I had a brief look at
+bugzilla.redhat.com, but it seems this has not been reported. I also tested
+this on a second machine with the same outcome.
 
-Also, based on the information provided in the
-http://www.openwall.com/lists/oss-security/2013/09/18/6 post, a
-separate CVE ID is needed, not CVE-2013-4288.
+Some version information:
 
-Finally, there is apparently only one underlying problem in KAuth. The
-problem is restated in
-https://bugzilla.novell.com/show_bug.cgi?id=864716#c14 with an
-example, i.e.,
+$ rpm -qi cinnamon
+Name        : cinnamon
+Version     : 2.0.14
+Release     : 4.fc20
+Architecture: x86_64
+[...]
 
-  Consider org.kde.fontinst.service DBUS service, that is activated on
-  behalf of users request as a root service. It will therefore run with
-  uid 0, even if triggered by user. For now it is just using the pid of
-  user requesting the service. Thats racy and the thing we want to fix.
+$ rpm -qi cinnamon-screensaver
+Name        : cinnamon-screensaver
+Version     : 2.0.3
+Release     : 1.fc20
+Architecture: x86_64
+[...]
 
-but this seems equivalent to the original problem statement in the
-http://www.openwall.com/lists/oss-security/2014/03/24/2 post.
 
-So, would it be best to assign one CVE ID now, even though the final
-approach to fixing the vulnerability is unknown?
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTPOH3AAoJEKllVAevmvmsoc4H/iAjcWjMCeRNAAcgMu9uCOyC
-rY7Se/TLWr3IswLAhB0W9ypyPkkO/vlO0lBocnoK5dzHCXhQK+SyqTUwcIBIeEsf
-mhNH+NTY6ezYDjBq/l++HZtx4ATbGhgSQq/RRzduAFBDJ/fX72Yk8zkKLqVUBjUi
-oUdEq0LyGzzs17094vgFUy4f5JpCXX4/5CjXJgMpQmTWz3DiA3heE1HS/CmJOWiq
-3lxpX5zgdvsHOeK94KFFnnMdNs74h9KNYu89CWZn1/KOl8Ty5rvBterPOrlEHzb1
-D4cnhxtMBBDFjmQpSpEIDJMv3rHTVg6oD8wb0SjpVCI/K8Ntyoc1FsjCN3cinzc=
-=WB0D
------END PGP SIGNATURE-----
+Kind regards,
+Clemens
