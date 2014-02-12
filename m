@@ -1,30 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/6
-Message-ID: <87d2k2s8k1.fsf@windlord.stanford.edu>
-Date: Wed, 08 Jan 2014 09:11:10 -0800
-From: Russ Allbery <eagle@...ie.org>
-To: oss-security@...ts.openwall.com
-Cc: ratulg@...hat.com,  erg@...m.mit.edu
-Subject: Re: Re: CVE Request: graphviz: stack-based buffer overflow in yyerror()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/16
+Message-Id: <201402121625.s1CGPoPj013740@linus.mitre.org>
+Date: Wed, 12 Feb 2014 11:25:50 -0500 (EST)
+From: cve-assign@...re.org
+To: geissert@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request? buffer overflow in socket.recvfrom_into
 Content-Type: text/plain; charset=utf-8
 
-Sebastian Krahmer <krahmer@...e.de> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Funny enough that tools like graphviz qualify for CVE assignments :)
+> A bug has been reported in python, where socket.recvfrom_into "fails to
+> check that the supplied buffer object is big enough for the requested read
+> and so will happily write off the end". Ryan Smith-Roberts goes on to say
+> "while very highly unlikely it's technically remotely exploitable".
 
-> Do not get me wrong, I really like graphviz, its a great tool and I use
-> it myself; but probably like 2 scientists or 1 anti-terror fed plotting
-> his graphs in the whole world would be targeted attacked using dot files
-> sent via mail I guess.
+> http://bugs.python.org/issue20246
 
-I wouldn't be so certain.  :)  I've gotten dot files in email a fair bit
-while working on free software projects since it's a really useful way of
-expressing dependency trees and similar structures.  So the possibility of
-a targetted exploit is there, particularly given that mailing list traffic
-is generally completely unauthenticated.  It's not hard for someone to
-pretend to be another participant and mail a doctored dot file to a
-development team.  The deception would probably be discovered reasonably
-quickly, but possibly not before damage was done.
+Use CVE-2014-1912.
 
--- 
-Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS+6AqAAoJEKllVAevmvmsiYAIAId5xbsDyWv0ePAFbmlhaWRn
+sswPyMCmN1hDNi+LOL0RoArS2PvgLRYr89ye9oYLAmAvwObcfq2hko2k1mgKsMwM
+BcZs/xjEKQMQy57PdSoAf3NSYvY7QLwxRobtY0UqTUMHERVtgSsxNGp7XqBpZLHu
+wbY2e5sJf0vIPKuIvUkgONhouE8fzVeaolHCkKGKvAvlseuohn08NLNjNx9r5gWD
+SN0tmqckRgLhV5PO6RLjv+6Jm5aaTxM7v6fhvix8oYGuMA8kY8pj9j6v2KTOGrKZ
+AKlQE16EdUCthDV87cM9Kyynqf4jwlc1thoJfv6rcKXv9/V2LNLGy8RL86YtjWU=
+=8tWP
+-----END PGP SIGNATURE-----
