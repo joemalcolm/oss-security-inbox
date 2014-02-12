@@ -1,30 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/27/1
-Message-ID: <53338A12.6040903@redhat.com>
-Date: Thu, 27 Mar 2014 13:16:50 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE requests: Zend Framework issues fixed in ZF2014-01 and ZF2014-02
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/13
+Message-Id: <201402121611.s1CGB6We013412@linus.mitre.org>
+Date: Wed, 12 Feb 2014 11:11:06 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: information on "ImageMagick PSD Images Processing RLE Decoding Buffer Overflow Vulnerability"
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-http://framework.zend.com/security/advisory/ZF2014-01 fixes XML eXternal 
-Entity (XXE) and XML Entity Expansion (XEE) flaws in the Zend Framework.
+> that's still 4 bytes too many
 
-http://framework.zend.com/security/advisory/ZF2014-02 fixes an issue 
-where an OpenID identity provider could be used to spoof other identity 
-providers.
+Use CVE-2014-1947.
 
-Could CVEs please be assigned if they have not been already?
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-References:
-https://bugs.gentoo.org/show_bug.cgi?id=505276
-https://secunia.com/advisories/57276/
-https://bugzilla.redhat.com/show_bug.cgi?id=1081287
-https://bugzilla.redhat.com/show_bug.cgi?id=1081288
-
-Cheers,
-
---
-Murray McAllister / Red Hat Security Response Team
+iQEcBAEBAgAGBQJS+5y4AAoJEKllVAevmvmsIWEIALFbHQ54/qebyTcMY7e/HwEM
+daQGR0Eo2u9rrP+XzNPHr+MDX7GgG2YVyai6uloZ5d+18o/pEn0WnpIYfHLTT+R5
+U0TOj4drUFaL4so9xAv2UiW4cKHvSG2Ol96a/aeQzyT5pjuocYwiip+X2o4efo8/
+aNycBs1XcZQsZY5rxj4tFRPkk20nUXnMrsx5IU/N11Ph1wCe7YELgCQS24c976BC
+B80noQp168isrz8YLtoOTcFPG80gHrHVEhd8Gl1b8o7uTl0ZCYfxN8rwCHkbWkHq
+YIOp+c0ccqAFEeEFuIKbgcHes22SkkaadwMLFmevj+GNHW/ykbhHTmy23nNh8iY=
+=r8N9
+-----END PGP SIGNATURE-----
