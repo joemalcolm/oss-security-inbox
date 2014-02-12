@@ -1,42 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/17
-Message-ID: <53B5B53E.9070500@redhat.com>
-Date: Thu, 03 Jul 2014 13:55:42 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/8
+Message-ID: <CAA7hUgGMPhS6TocZD6Mrte3OUm20do5k1HzXzA=Z-NFDRoYiZQ@mail.gmail.com>
+Date: Wed, 12 Feb 2014 15:18:17 +0100
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: SaltStack - how to report security flaw?
+Cc: Vulnerability Information Managers <vim@...rition.org>
+Subject: Re: Old CVE ids, public, but still "RESERVED"
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi again,
 
-So I looked through the saltstack.org site and their github page
-https://github.com/saltstack and checked OSVDB
-(http://osvdb.com/vendor/271316-saltstack-inc/1) but I can't find any
-security contact or way to privately submit a security issue. Does
-anyone know if there is a way t privately report a security issue to
-saltstack or should I just submit a public issue in github? This is
-potentially remote code execution so I'd really prefer to submit it
-privately.
+It appears that some of the issues in the lists I previously sent have
+been processed lately, so I figured I could provide the list of issues
+with a year between 2001 and 2010.
 
-- -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+This batch contains the ids followed by any information that can be
+found in our text database.
 
-iQIcBAEBAgAGBQJTtbU9AAoJEBYNRVNeJnmTSWMP/RtMK+TXbVP1PuwgtBJBAbQp
-QSpVOtDF4Upqa/S4AC+BcCe3kWpT0MvBSgUIRATUoyhCfGKrXZGuTF/+doQgUbZo
-JbsNVqjrh4rxr98A4muOvNLLM3KVLngV62ESbYCHZnYOVUsgEVgZRj3cQxT4QRZZ
-A4DSjU5i4zUYpc97mOk3TFyliZBc0ktL5X6WAbZsaJDgjpv55EVieACAE/JSkUPK
-/5hFg9mKrUr/QMUcSnjk2/00lE7vM7Tj0pd/2pP5QjWexYit7ZBBe5ADQK24ZvQL
-nI3XdgbQJl22KS4SxlhpX1zT5w+S75KR9f4wILHapM8v12D+MyvtQXgZoHEbJe6J
-OnRzpvo2Vje7MXCnXg1pYEx9UU4htgrv2CpEHt8oA0b4x13pY9m86kILhLxy0zt6
-xgOIYAoF7VwWxGrd72pMgU7wC/0oTK/BDX3O3i5CPooS+zp87mABEuR8zHV8GCJ7
-DUq9xSBfq0IhjQZKdLvWfHzC2rIWZQeCSd68phC5iDfO+GZlA4d7jy1CofYY5AHd
-qUjDqNFZN7P9H2GjywsoPYLYcqV4b/xrJWX3BkaudsEG/0wZrVhIYnDBRUViiRyp
-Elm/Uk9XVDNSEtUoVD4rzFqqUh2lgssxhgGiK7nr3dU1XnIanwXKl57sGCQxAZHP
-4pHI1t9fixNGbI9nPl/0
-=WOeS
------END PGP SIGNATURE-----
+HTH.
+
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
+
+View attachment "still-reserved-2001-6-CVEs.txt" of type "text/plain" (3715 bytes)
+
+View attachment "still-reserved-2007-CVEs.txt" of type "text/plain" (679 bytes)
+
+View attachment "still-reserved-2008-CVEs.txt" of type "text/plain" (474 bytes)
+
+View attachment "still-reserved-2009-CVEs.txt" of type "text/plain" (4209 bytes)
+
+View attachment "still-reserved-2010-CVEs.txt" of type "text/plain" (13824 bytes)
