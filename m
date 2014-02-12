@@ -1,26 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/2
-Message-ID: <m47nbn$8a7$1@ger.gmane.org>
-Date: Sat, 15 Nov 2014 15:18:31 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: XSS vulnerability in MantisBT 1.2.13
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/9
+Message-Id: <E1WDazc-0002Lp-Nh@xenbits.xen.org>
+Date: Wed, 12 Feb 2014 14:40:52 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 88 - use-after-free in xc_cpupool_getinfo() under memory pressure
 Content-Type: text/plain; charset=utf-8
 
-On 2014-11-15 02:26, P Richards wrote:
-> We fixed this issue in Master with the following commit
- > 
-https://github.com/mantisbt/mantisbt/commit/cabacdc291c251bfde0dc2a2c945c02cef41bf40, 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- > and I believe I requested this to be back-ported at the time. You
- > modified the code not to trigger an error with the commit
- > 
-https://github.com/mantisbt/mantisbt/commit/3d0625d84d5d08a998673713df1711e1d46b0b86 
+                    Xen Security Advisory XSA-88
+                              version 2
 
- > and to fall back to the default of no value selected.
+      use-after-free in xc_cpupool_getinfo() under memory pressure
 
-I don't think we're talking about the same issue here. The one you 
-describe was about the selection list in the filters, this one is in the 
-"set configuration" box.
+UPDATES IN VERSION 2
+====================
 
+Public release.
 
+ISSUE DESCRIPTION
+=================
+
+If xc_cpumap_alloc() fails then xc_cpupool_getinfo() will free and incorrectly
+return the then-free pointer to the result structure.
+
+IMPACT
+======
+
+An attacker may be able to cause a multi-threaded toolstack using this
+function to race against itself leading to heap corruption and a
+potential DoS.
+
+Depending on the malloc implementation, privilege escalation cannot be
+ruled out.
+
+VULNERABLE SYSTEMS
+==================
+
+The flaw is present in Xen 4.1 onwards.  Only multithreaded toolstacks
+are vulnerable.  Only systems where management functions (such as
+domain creation) are exposed to untrusted users are vulnerable.
+
+xl is not multithreaded, so is not vulnerable.  However, multithreaded
+toolstacks using libxl as a library are vulnerable.  xend is
+vulnerable.
+
+MITIGATION
+==========
+
+Not allowing untrusted users access to toolstack functionality will
+avoid this issue.
+
+CREDITS
+=======
+
+This issue was discovered by Coverity Scan and diagnosed by Andrew
+Cooper.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa88.patch        xen-unstable, Xen 4.3.x, Xen 4.2.x, Xen 4.1.x
+
+$ sha256sum xsa88*.patch
+7a73ca9db19a9ffe6e8cd259fa71dc1299738f26fa024303f4ab38931db75f14  xsa88.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJS+4fOAAoJEIP+FMlX6CvZfUUH/2wyYKHOkEaEmcjUbuyUM3CT
+8V9VgW4dhq/sk9p5SqR0xGB6N+f2XytCAFXI3kNmYjrs+jGK5cQgLjxMOwMKrpwm
+PsHCAZnGNzYMy48JtEUieEfwZqH/jNci7qJWNVdPoKnULOEd9X0hTri7vg1CoDI2
+DUBeLvmC5mCFBej4pcDGX++XsdL90EnGa0RfrrVfIVf16EfBjgr8KzLKXd1uBueC
+yWKg5z24+HoRqFp3n3+Q9T6GN+npOj/78mrlXJ7onKepONAmLqg0J6g/1hHuc4hY
+pwUnbSf0452FKTFs7KUodXoJNNX1i3IuOch9pBcKlrbT6K/g/qwMZ/Pl2Ir8a20=
+=vA6e
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa88.patch" of type "application/octet-stream" (851 bytes)
