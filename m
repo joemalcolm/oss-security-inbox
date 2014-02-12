@@ -1,46 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/18/1
-Message-ID: <5441B50D.2070708@amacapital.net>
-Date: Fri, 17 Oct 2014 17:32:13 -0700
-From: Andy Lutomirski <luto@...capital.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/2
+Message-ID: <52FAD5B9.1060603@redhat.com>
+Date: Wed, 12 Feb 2014 13:00:25 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-7970: Linux VFS denial of service
+Subject: information on "ImageMagick PSD Images Processing RLE Decoding Buffer Overflow Vulnerability"
 Content-Type: text/plain; charset=utf-8
 
-On 10/08/2014 12:48 PM, Andy Lutomirski wrote:
-> pivot_root has a bug.  Exploiting it at all is tricky, but it can be
-> done.  I'm reasonably confident that this is just denial of service.
-> (There's also probably an information disclosure in there, but I think
-> that it's only available to root, so it's not a big deal.)
-> 
-> I'm posting this a little bit early, since a patch is publicly
-> available, the impact is low, and hitting the bad code path at all is
-> quite tedious.  I'll send a proof of concept later on.
-> 
-> Distros: if you need a test case to validate the fix, let me know.
-> Although, for validation, it should be sufficient to just chroot
-> somewhere as root, escape the chroot (while still chrooted), and then
-> pivot_root(".", ".") on a mountpoint.
-> 
-> Candidate patch here:
-> 
-> http://news.gmane.org/find-root.php?message_id=87bnpmihks.fsf%40x220.int.ebiederm.org
-> 
+Good morning,
 
-The mitre.org description is:
+Does anyone have further information about 
+<http://secunia.com/advisories/56844/>? (I could not get the 
+http://freecode.com/projects/imagemagick/tags/bugfixes link to show 
+anything useful.)
 
-The pivot_root implementation in fs/namespace.c in the Linux kernel
-through 3.17 does not properly interact with certain locations of a
-chroot directory, which allows local users to cause a denial of service
-(mount-tree loop) via . (dot) values in both arguments to the pivot_root
-system call.
+diffing ImageMagick-6.8.7/coders/psd.c ImageMagick-6.8.8/coders/psd.c:
 
-This is a bit misleading.  Passing "." to both arguments of the
-pivot_root system call is a perfectly fine (albeit brain-bending) thing
-to do.
+""
+@@ -1224,7 +1224,7 @@
+                Allocate layered image.
+              */
+              layer_info[i].image=CloneImage(image,layer_info[i].page.width,
+-              layer_info[i].page.height == ~0U ? 1 : 
+layer_info[i].page.height,
++              layer_info[i].page.height == ~0UL ? 1 : 
+layer_info[i].page.height,
+                MagickFalse,&image->exception);
+              if (layer_info[i].image == (Image *) NULL)
+                {
+@@ -2112,9 +2112,6 @@
+    StringInfo
+      *bim_profile;
 
-The bug was that, if either argument to pivot_root referred to a
-directory outside of the calling processes's chroot, then pivot_root
-would malfunction, corrupting the mount tree.
+-  unsigned char
+-    layer_name[4];
+-
+    /*
+      Open image file.
+    */
+@@ -2372,12 +2369,15 @@
+          property=(const char *) GetImageProperty(next_image,"label");
+          if (property == (const char *) NULL)
+            {
++            char
++              layer_name[MaxTextExtent];
++
+              (void) WriteBlobMSBLong(image,16);
+              (void) WriteBlobMSBLong(image,0);
+              (void) WriteBlobMSBLong(image,0);
+-            (void) FormatLocaleString((char *) layer_name,MaxTextExtent,
+-              "L%06ld",(long) layer_count++);
+-            WritePascalString( image, (char*)layer_name, 4 );
++            (void) 
+FormatLocaleString(layer_name,MaxTextExtent,"L%06ld",(long)
++              layer_count++);
++            WritePascalString(image,layer_name,4);
+            }
+          else
+            {
 
---Andy
+""
+
+Would the issue have been writing the amount of 6 long ints into the 4 
+byte layer_name buffer?
+
+Having a (very brief) look at ImageMagick-6.5.4 on RHEL 6, it's using 
+"L%02ld" instead of "L%06ld", but that's still 4 bytes too many before 
+the layer_name[MaxTextExtent]; change.
+
+Could a CVE please be assigned if it has not been already?
+
+Sorry for missing anything obvious.
+
+--
+Murray McAllister / Red Hat Security Response Team
