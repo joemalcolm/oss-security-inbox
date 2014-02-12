@@ -1,45 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/10
-Message-Id: <201407211400.s6LE07sa026477@linus.mitre.org>
-Date: Mon, 21 Jul 2014 10:00:07 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/1
+Message-ID: <CACYkhxgoUzwicNm5onhV3Wscu35NzzLZzjTp7VUCp0Wa41dSyQ@mail.gmail.com>
+Date: Wed, 12 Feb 2014 11:23:54 +1100
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Moodle security notifications public
+Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 12 February 2014 01:51, P J P <ppandit@...hat.com> wrote:
 
->> MSA-14-0029: Cross-site scripting vulnerability in exception dialogues
+>   Hi,
+>
+>  -> http://www.openwall.com/lists/oss-security/2014/02/11/7
+>
+> This looks like the same issue - predictable hash collision.
 
->> CVE identifier:    CVE-2014-354
 
-> What is the correct CVE ID for the
-> https://moodle.org/mod/forum/discuss.php?d=264270 page? CVE-2014-354
-> is malformed.
+The same issue, different result.
 
-We're not sure why the reply to this message didn't have a Cc to the
-oss-security list, but (in any case) the correct CVE ID for a publicly
-known vulnerability isn't private information, so we can directly
-forward the ID here.
+CVE-2013-6401 is a DoS vulnerability, which would result in excess
+CPU usage per hash lookup.
 
-CVE-2014-3548 is correct, and
-https://moodle.org/mod/forum/discuss.php?d=264270 has been updated.
+The described issue would result in expiring attacker-specified (but
+not more) cache entries at approximately the same CPU cost.  So
+this is something else.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Regards,
+  Michael
 
-iQEcBAEBAgAGBQJTzRxwAAoJEKllVAevmvmsedwH/RXmxlVNMjeb4jlFJ/pEqfEW
-JDoHvNAajBTZHOAyWhfVEHG1OdMUWtY8FvMtRqV1Yu5+Lhiyatm61860I1X/+4Bm
-SPFaAHp+J/U67VWLra+u+E64usAUAKRIb8Nkhm0XrM70D7oBUX8zny4dXC/nc7gC
-f2Eb2WPFYcWWKs8cM/gPeQv0gJotAO+ethPeiwZM+E7qRTuxu1Bny/j4d5f+BrAn
-3g8ci3lCIrzKz6ulmYsxh9yEMYxlIH8awDTGRX31HryUGNFbGEr0rIY5gT2ETMlF
-nCWuphKaAyI20LkUywbi+++w2KNzeUJxLwI7ZUOpp7PmwEfIYRVOF5ALxRO9Ib0=
-=x+Vl
------END PGP SIGNATURE-----
