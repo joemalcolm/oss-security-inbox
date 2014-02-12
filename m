@@ -1,88 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/5
-Message-ID: <20140108101547.GA27200@suse.de>
-Date: Wed, 8 Jan 2014 11:15:47 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: ratulg@...hat.com, erg@...m.mit.edu
-Subject: Re: Re: CVE Request: graphviz: stack-based buffer overflow in yyerror()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/5
+Message-ID: <alpine.LFD.2.10.1402121202230.10524@javelin.pnq.redhat.com>
+Date: Wed, 12 Feb 2014 12:04:21 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
-Hi
++-- On Wed, 12 Feb 2014, Michael Samuel wrote --+
+| >  -> http://www.openwall.com/lists/oss-security/2014/02/11/7
+| The same issue, different result.
 
-Funny enough that tools like graphviz qualify for CVE assignments :)
+  Yes, true. Thank you for confirming.
+ 
+| The described issue would result in expiring attacker-specified (but
+| not more) cache entries at approximately the same CPU cost.  So
+| this is something else.
 
-Do not get me wrong, I really like graphviz, its a great tool and I use it myself;
-but probably like 2 scientists or 1 anti-terror fed plotting his graphs
-in the whole world would be targeted attacked using dot files sent via mail I guess.
+  Agreed.
 
-Seems like the initial fix:
-
-https://github.com/ellson/graphviz/commit/7aaddf52cd98589fb0c3ab72a393f8411838438a
-
-also contains a sprintf() which is also later removed by commit
-
-d266bb2b4154d11c27252b56d86963aef4434750 just for safety reasons.
-
-And finally there also is:
-
-
-/* chkNum:
- * The regexp for NUMBER allows a terminating letter.
- * This way we can catch a number immediately followed by a name
- * and report this to the user.
- */
-static int chkNum(void) {
-  unsigned char c = (unsigned char)yytext[yyleng-1];   /* last character */
-  if (!isdigit(c) && (c != '.')) {  /* c is letter */
-        char    buf[BUFSIZ];
-        sprintf(buf,"syntax error - badly formed number '%s' in line %d of %s\n",yytext,line_num, InputFile);
-    strcat (buf, "splits into two name tokens\n");
-        agerr(AGWARN,buf);
-    return 1;
-  }
-  else return 0;
-}
-
-
-which also looks like a buffer overflow from user input; yet unfixed.
-(the regex seems to accept arbitrary long digit list)
-
-So for the 3 potential victims, we need to fix that too :)
-
-Sebastian
-
-
-On Tue, Jan 07, 2014 at 05:19:07PM -0500, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> >an error within the "yyerror()"
-> >function (lib/cgraph/scan.l) and can be exploited to cause a stack-based
-> >buffer overflow via a specially crafted file.
-> 
-> Use CVE-2014-0978.
-> 
-> - -- 
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
-> 
-> iQEcBAEBAgAGBQJSzH0dAAoJEKllVAevmvmsdcAIALBfNun5cNjVGVEVmWYQIncL
-> cZIWWhasJDtZoSSP7sEqSWUnTvIft/9Ke6O6dCykngQo6kIEQYqUfxeKpB2c+Asi
-> b144u4i7nLyustXMCAHkJ58Z2sr5+IfvrjY8g7MzCQU3eRVw4O4NcNGK7qmU3nyv
-> D3YX3b4ON2a6FWmGNFYmo9aJ7x1suMIjXKPqM7m//+6qpEdSH7kETMvLR86lJZuj
-> L2FBvbPVvpN8VgAMrASONQBMsVAaqXDSuizQgfAxqktqBCO/8lSsJ+0kE4ybMHkr
-> gN1hL4z+mo7gkVqeaemtds41ZaM51pAQvp+vkUGx3y35SppqcxiSr55GqjZTBts=
-> =F0p9
-> -----END PGP SIGNATURE-----
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
