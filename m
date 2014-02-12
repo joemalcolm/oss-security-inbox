@@ -1,37 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/09/7
-Message-Id: <201405092048.s49KmIGT025295@linus.mitre.org>
-Date: Fri, 9 May 2014 16:48:18 -0400 (EDT)
-From: cve-assign@...re.org
-To: mprpic@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: python-lxml clean_html() input sanitization flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/18
+Message-ID: <20140212171443.GB2348@openstack.org>
+Date: Wed, 12 Feb 2014 17:14:44 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2014-004] Glance Swift store backend password leak (CVE-2014-1948)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+OpenStack Security Advisory: 2014-004
+CVE: CVE-2014-1948
+Date: February 12, 2014
+Title: Glance Swift store backend password leak
+Reporter: Nikhil Komawar (Rackspace)
+Products: Glance
+Versions: 2013.2 versions up to 2013.2.1
 
-> did not properly clean HTML input if it included non-printed characters (\x01-\x08)
-> 
-> http://seclists.org/fulldisclosure/2014/Apr/210
-> https://mailman-mail5.webfaction.com/pipermail/lxml/2014-April/007128.html
-> https://github.com/lxml/lxml/commit/e86b294f1f81b899a59925123560ff924a72f1cc
+Description:
+Nikhil Komawar from Rackspace reported an information leak in Glance
+logs. The password for the Swift store backend is logged at WARNING
+level as part of the URL when authentication to a store fails if
+image location is not disabled by policy or the store is a
+single-tenant configuration. An attacker with access to the logs
+(local shell, log aggregation system access, or accidental leak) may
+leverage this vulnerability to elevate privileges and gain direct
+full access to the Glance Swift store backend. Only Glance setups
+using the Swift store backend are affected.
 
-Use CVE-2014-3146.
+Icehouse (development branch) fix:
+https://review.openstack.org/71419
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Havana fix:
+https://review.openstack.org/72473
 
-iQEcBAEBAgAGBQJTbT7BAAoJEKllVAevmvmszKAH/RoFAduih1OOXRMF3KVMWmzw
-r/OhlVkZ94b+Ow04L/lPZqoPzWoTNSjw2zLJhmGtRYK+yy/DZ+ikzW/xdDuPhCPX
-IVx294mDUC9BGolU6l0UGGHu8NhZYTqBP06BOewITM7j/qJgr4STdNhe9G2IiI6b
-kINaC+Ol1wHPUZWK5HnOXb3M3Z6XIlVyMfYy+V3KYMId7ozGZtj2TMqs2Zv42Vv+
-ao8dnBY7vI8T+VUIqUvI67zqERQZO228+uuoLv/OQ4lC8zcFtltqMvAqx2XQ7CqG
-vBB28Fisn6DeIiZMrDra4Vh/skRH/h8crIYEWQPh2LWhOpbeyLmNWP6JusIoXlE=
-=uk15
------END PGP SIGNATURE-----
+Notes:
+This fix will be included in the icehouse-2 development milestone
+and the upcoming 2013.2.2 release.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-1948
+https://launchpad.net/bugs/1275062
+
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
