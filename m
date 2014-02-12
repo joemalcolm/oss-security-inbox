@@ -1,66 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/24/2
-Message-ID: <20140324092723.GA13408@suse.de>
-Date: Mon, 24 Mar 2014 10:27:23 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: KAuth security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/14
+Message-Id: <201402121616.s1CGG3AP013525@linus.mitre.org>
+Date: Wed, 12 Feb 2014 11:16:03 -0500 (EST)
+From: cve-assign@...re.org
+To: jwilk@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: [notification] CVE-2013-6888: uscan: remote code execution
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I sent this to security@....org last week and to some KDE
-developers one more week ago. No response so far, so here we go.
+> untarring files to a direct subdirectory of /tmp (at least without
+> --keep-old-files) is a vulnerability, although admittedly with very
+> low severity. If the tarball contained a "." file, then tar would
+> change permissions of the destination directory
 
-regards,
-Sebastian
+Use CVE-2013-7325.
 
---------8<--------------------
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Hi
-
-I sent this mail to the KAuth author a week ago. So far no reply, so
-I am trying it here again.
-
-When I looked at the KAuth framework it seems like it is using
-
-PolkitQt1::UnixProcessSubject subject(pid)
-
-(i.e. unix process subjects) for the polkit auth, which is always racy.
-Please refer to:
-
-CVE-2013-4288 polkit: unix-process subject for authorization is racy
-CVE-2013-4311 libvirt: insecure calling of polkit via libgobject API
-CVE-2013-4324 spice-gtk: use of insecure polkit libgobject-1 API
-CVE-2013-4325 hplip: use of insecure polkit DBUS API
-CVE-2013-4326 rtkit: use of insecure polkit DBUS API
-CVE-2013-4327 systemd: use of insecure polkit DBUS API
-
-which were using exactly this vulnerable way auf authenticating
-via polkit.
-
-The bug is semi-public:
-
-https://bugzilla.novell.com/show_bug.cgi?id=864716
-
-A non-racy way would be to use system-bus subject for authentication.
-(Yet I dont know how this fits in the KAuth API).
-Nevertheless, there needs to be done something, as basically
-the KAuth authentication is non-existing if using process subjects.
-
-regards,
-Sebastian
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
------ End forwarded message -----
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+iQEcBAEBAgAGBQJS+527AAoJEKllVAevmvmsm2AIAI2p//1rhtqKktDuW8v6q9li
+yESYOumwFjqyWm2yf/NUrtXjPB9kWBIApyy/vdEkC9MFn3B3WdB1MY59mb8hGymP
+hsZ52QAg8yShbXBmL1ewAuVi70/hDEoGuX7RKEv5fqTyDfZb3QoKgHF6MGXMF+rJ
+z8NeU8LnAqSk9ooglgEFjK66NmJhovNFd9KqGTsAmWPPkJtVjM7w9jGgkFwHk8u6
+CCHn2NTisfLD7ceN408EfPMY1JGWaMuBRSODhYRGIEe4m+OKRHWNroXPlwyqX90Y
+MlM7u7QpNWU/PHlaokrWT2TmeWqFEhnu7L3sjPytlCRSV/AHHtJlCScWek8Yio8=
+=MVot
+-----END PGP SIGNATURE-----
