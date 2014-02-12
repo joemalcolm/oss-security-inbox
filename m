@@ -1,47 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/09/6
-Message-Id: <201405092044.s49KiMNN025205@linus.mitre.org>
-Date: Fri, 9 May 2014 16:44:22 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request Linux kernel: filter: prevent nla extensions to peek beyond the end of the message
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/17
+Message-Id: <E1WDdEw-00070S-Fk@xenbits.xen.org>
+Date: Wed, 12 Feb 2014 17:04:50 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 88 (CVE-2014-1950) - use-after-free in xc_cpupool_getinfo() under memory pressure
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=05ab8f2647e4221cbdb3856dd7d32bd5407316b3
+              Xen Security Advisory CVE-2014-1950 / XSA-88
+                              version 3
 
-> The BPF_S_ANC_NLATTR and BPF_S_ANC_NLATTR_NEST extensions fail to
-> check for a minimal message length
+      use-after-free in xc_cpupool_getinfo() under memory pressure
 
-Use CVE-2014-3144.
+UPDATES IN VERSION 3
+====================
 
-(The _NEST variant was introduced at a later time, but the affected
-code is somewhat analogous, and the lack of an skb->len check for the
-_NEST variant probably can't be considered an independent mistake
-relative to the lack of an skb->len check in the earlier code.)
+CVE assigned.
 
+ISSUE DESCRIPTION
+=================
 
-> The remainder calculation for the BPF_S_ANC_NLATTR_NEST extension is
-> also wrong. It has the minuend and subtrahend mixed up
+If xc_cpumap_alloc() fails then xc_cpupool_getinfo() will free and incorrectly
+return the then-free pointer to the result structure.
 
-Use CVE-2014-3145.
+IMPACT
+======
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+An attacker may be able to cause a multi-threaded toolstack using this
+function to race against itself leading to heap corruption and a
+potential DoS.
+
+Depending on the malloc implementation, privilege escalation cannot be
+ruled out.
+
+VULNERABLE SYSTEMS
+==================
+
+The flaw is present in Xen 4.1 onwards.  Only multithreaded toolstacks
+are vulnerable.  Only systems where management functions (such as
+domain creation) are exposed to untrusted users are vulnerable.
+
+xl is not multithreaded, so is not vulnerable.  However, multithreaded
+toolstacks using libxl as a library are vulnerable.  xend is
+vulnerable.
+
+MITIGATION
+==========
+
+Not allowing untrusted users access to toolstack functionality will
+avoid this issue.
+
+CREDITS
+=======
+
+This issue was discovered by Coverity Scan and diagnosed by Andrew
+Cooper.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa88.patch        xen-unstable, Xen 4.3.x, Xen 4.2.x, Xen 4.1.x
+
+$ sha256sum xsa88*.patch
+7a73ca9db19a9ffe6e8cd259fa71dc1299738f26fa024303f4ab38931db75f14  xsa88.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJTbT2+AAoJEKllVAevmvmsr2AH/ihcjVIL8rg9t7OIyI/+4Ht2
-qR9sEO7tkHP4GUMKI1FodU94HMhtdAO4PNzAx4jKyPiaFBNvKK4QP5/1Mhy0dFf4
-ytuARfTkCMmWnkK/Z5OC4XQHfQWeZkjrdp14B81t0E2RrPv+FrScTTP68A6Ytd5h
-l9x2cf0U1ahOHqzX9r/ZyhEn0RPWSdc0RGZfcuLJP/QhcktCTmaJehFjq+K2UvAi
-AkVgeXhQZTXtF7lPBDAL4sHiFVwbtHmOnRuk9CuXClV1/D0fbFSV34tyaR8cQ5Sv
-XAEI96yT+QZ3jMQW1FNhkYpNSoikTOb/vatOrCYqxJgP8wtF2KWc9Y1A98XoO5I=
-=0cjW
+iQEcBAEBAgAGBQJS+6mbAAoJEIP+FMlX6CvZjhAH/j9PI7N93lhkTiVZiD3noh9e
+czgskoQ1ge1zHSzYVXvLZvVEaEVCSMQpql37gSAeWl7rfjdFxv6xQQ3OIla2Xyqm
+xfoaQhP8ZMbBX6RAWRWC99wCB8ki67VA3ZqHEqNPz72FxnaT9Y0bQ0Wg4cVcq69q
+hNtidmtRfX8yD5o/ACpiuCHL0miD9GxZGjGVy1EAjMxKgfDR8fBkI2hoHe4v6V4v
+XzeiXW7/xyLtXausFsTdUI/gTO+2UCWlaBPS5eobCnXFP+agmJfhTAzHU9gNQajv
+AATAlka1y9WMWnLBvp+UMDqJ2w5XhwwVQAW17mAyipLi0vco6gcp1F80UTKmtVc=
+=1It2
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa88.patch" of type "application/octet-stream" (851 bytes)
