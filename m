@@ -1,47 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/11
-Message-ID: <20140331161019.GG2642@sentinelchicken.org>
-Date: Mon, 31 Mar 2014 09:10:20 -0700
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVEs, Crypto and "vulnerabilities"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/12
+Message-Id: <201402121607.s1CG7A0x013384@linus.mitre.org>
+Date: Wed, 12 Feb 2014 11:07:10 -0500 (EST)
+From: cve-assign@...re.org
+To: jeremy@...nstack.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for vulnerability in OpenStack Glance
 Content-Type: text/plain; charset=utf-8
 
-> I understand CVE guidance as "security issue in CVE sense, when
-> assumptions for code are not met by the implementation"
-> 
-> It is not clear what the assumption is here, what should be the result of the encryption
-> and where should it be stored?
-> 
-> Is it mostly obfuscation? Or secure storage of content?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+> The password for the Swift store backend is logged at WARNING level
 
-This is a good way to frame the question.
+Use CVE-2014-1948.
 
-It isn't clear to me, in this specific instance, how the tokens are
-used or how an attacker could mess with the ciphertext.  This is
-simply because I'm too busy to read up on the issue.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-However, in general, here's the typical assumptions developers make
-about encryption (with ECB mode) and how the implementation fails to
-meet those:
-
-1. ECB mode encryption provides secrecy
-
-   - Partially fails this assumption since repeated plaintext blocks
-     result in repeated ciphertext blocks
-
-
-2. ECB mode encryption provides integrity
-
-   - Badly fails this assumption since ciphertext blocks can be
-     duplicated/swapped, rearranged at will.  If due to the context of
-     the encryption, if an attacker can conduct a partial
-     chosen-plaintext attack, typically whole ciphertexts can be
-     forged.
-
-
-So depending on the context, it is clear that this could qualify for a
-CVE in a well-defined way.
-
-tim
+iQEcBAEBAgAGBQJS+5u+AAoJEKllVAevmvms05QIAJ66dN7jStKOCx62CzcGsVkA
+fVQdKRiyf/NHo5aGeOpvc6aKge37z8SgDCyeiaVZNq00pkmGqY/l6wDvDey7K5ig
+sw/73fG7tfpFj/rYDPSdQgrdotLpy+qOuJHuGm90Wv21nQZ+vQP0D+lsjM+sXOZ+
+T+sLdJEi24fNcHOwWxQ/ZJumcPDCqIf74P51OinzTL3f6c3FfSzOfZrCJXyKhVhA
+nMxg6l/q6OkocYNIBxkMUMKe0r1nCeupnbXAInoc7Yy1+dh829xtoZatho3y8f4N
+6yXARrWBQ1M0e4Mb48hh9zqqY5sAaMWlXKkCJUxewuJmcG4S9D2N2CoXKd5On18=
+=XsiR
+-----END PGP SIGNATURE-----
