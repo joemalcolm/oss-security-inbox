@@ -1,27 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/09/8
-Message-Id: <201405092055.s49KtC6i025402@linus.mitre.org>
-Date: Fri, 9 May 2014 16:55:12 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/10
+Message-Id: <201402121558.s1CFwExm012909@linus.mitre.org>
+Date: Wed, 12 Feb 2014 10:58:14 -0500 (EST)
 From: cve-assign@...re.org
-To: henri@...v.fi
+To: security@....org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Denial of Service attacks against Dovecot v1.1+
+Subject: Re: Xen Security Advisory 88 - use-after-free in xc_cpupool_getinfo() under memory pressure
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> This "destroy oldest connection" however hasn't been working in v1.1+
-> releases for connections that have started SSL/TLS handshake
+> If xc_cpumap_alloc() fails then xc_cpupool_getinfo() will free and incorrectly
+> return the then-free pointer to the result structure.
 > 
-> http://permalink.gmane.org/gmane.mail.imap.dovecot/77499
-> http://hg.dovecot.org/dovecot-2.2/rev/41622541a7a3
-> http://hg.dovecot.org/dovecot-2.1/rev/b7ac23b4d339
-> http://hg.dovecot.org/dovecot-2.0/rev/48f90e7e92dc
-> http://hg.dovecot.org/dovecot-1.2/rev/8ba4253adc9b
-> http://hg.dovecot.org/dovecot-1.1/rev/fe0e6550585c
+> An attacker may be able to cause a multi-threaded toolstack using this
+> function to race against itself
 
-Use CVE-2014-3430.
+Use CVE-2014-1950.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -31,11 +27,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTbUBwAAoJEKllVAevmvmsIgAH+wQ9ncZEPXDAjJq3w+6r1zxG
-P2Sb1emKfynjlYwhYd1fIH/RAV3nOqneQRwAfeUmJ3PjKTmswkmkt7H++kfcx1Kk
-JI3ZHf6Ao+1vgcm1hGzmkhwpi/FHZqzTCfu/AWOTt0R2xk0WGx2z+2C8ai/z+3xy
-qW3llZ0QY61am9leFdbq70c9RtJkOkV2sZBMGjh1hgacVilCw9MuqNEMXhmE4qvu
-y2i0x1WHbxosedC3iZ45K/PeypnA11Z587KVrRClfe/8aUAnixiSKnvZKhO/gk34
-q3RNUX2lEWaQqTu8qk95iu6rpajG/1/HhUyRLR93hE7J3AvExe2PTcY/l+yJDa0=
-=2pQZ
+iQEcBAEBAgAGBQJS+5jAAAoJEKllVAevmvmsbXIIALonk+ClfcttLGQ7UI8kv4tu
+sTWSC9f/XEpL5/73sufoYnl3UIZQeVeHaJQjccgTbZpkvhoREPdrTrjR/CHpfC0K
+jIJm5r69eAaCrasqpCP89yYjk3MUj6wKyKGh62NGv+G28ccW1JtcEp63FVKHSVgC
+nTOq5UMxYDu8MXmjmPUIqC/vSNdBiLm/01tiyuc6OBHTYp+GKIAnFhDt5iarvCO6
+eD1z8uNew62u5Gi6WlPl6WWZhylLyWqmnv9Yu78jGye6/FnRrg33fs3U1Vtfhwt8
+8crA6xwqEUoxNr8mmUjxyk57WPRigWL7etr8ZlDi9XbXY03JvFT/Iwxnixno2Lc=
+=8vt+
 -----END PGP SIGNATURE-----
