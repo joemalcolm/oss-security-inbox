@@ -1,45 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/13
-Message-ID: <20140710201432.GA8341@openwall.com>
-Date: Fri, 11 Jul 2014 00:14:32 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/13/3
+Message-ID: <52FC6299.6090700@redhat.com>
+Date: Thu, 13 Feb 2014 17:13:45 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
+Subject: Re: cinnamon-screensaver lock bypass (tested on Fedora 20)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 10, 2014 at 09:50:02PM +0200, Florian Weimer wrote:
-> * Solar Designer:
-> 
-> > The default sshd_config found in openssh-6.6p1.tar.gz does not list
-> > AcceptEnv, so presumably by default OpenSSH portable does not accept any
-> > environment variables.
-> 
-> I expected it to accept TERM,
+On 02/12/2014 08:48 PM, Clemens Fries wrote:
+> Hello,
+>
+> It is possible to circumvent the screen lock on a cinnamon session under Fedora
+> 20 using the 'Menu' key on a keyboard. I'm posting this here, because I assume
+> that this is not limited to the version shipped with Fedora.
+>
+> Steps to reproduce:
+>
+> * Start cinnamon session
+> * Lock the screen (Ctrl+Alt+L)
+> * Press the 'Menu' key on the keyboard
+> * A menu appears for a brief moment
+> * Press 'Escape'
+> * Focus is now beneath the screensaver
+> * Press Alt+F2
+> * Start 'gnome-terminal'
+> * Type 'killall cinnamon-screensaver'
+>
+> Seen on a fully patched Fedora 20 (February 12th, 2014). I had a brief look at
+> bugzilla.redhat.com, but it seems this has not been reported. I also tested
+> this on a second machine with the same outcome.
 
-Good point.  Perhaps the documentation of AcceptEnv needs to be revised
-to mention this exception.
+Thanks for report and testing! Filed 
+https://bugzilla.redhat.com/show_bug.cgi?id=1064695 for this issue.
 
-> which is sort of unavoidable.
+Cheers,
 
-Actually, it is avoidable.  Yes, there is:
-
-	if (s->term)
-		child_set_env(&env, &envsize, "TERM", s->term);
-
-but there's also:
-
-static int
-session_pty_req(Session *s)
-{
-[...]
-	if (no_pty_flag || !options.permit_tty) {
-		debug("Allocating a pty not permitted for this authentication.");
-		return 0;
-	}
-[...]
-	s->term = packet_get_string(&len);
-
-So it looks like listing "no-pty" in authorized_keys prevents not only
-allocation of a pty, but also passing of TERM.  And this makes sense.
-
-Alexander
+--
+Murray McAllister / Red Hat Security Response Team
