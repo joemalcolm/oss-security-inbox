@@ -1,23 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/6
-Message-ID: <52CED0B7.1020609@redhat.com>
-Date: Thu, 09 Jan 2014 17:39:19 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/13/2
+Message-ID: <52FC49E8.4060105@redhat.com>
+Date: Thu, 13 Feb 2014 15:28:24 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: tmux local denial of service (2009)
+CC: cve-assign@...re.org
+Subject: Re: information on "ImageMagick PSD Images Processing RLE Decoding Buffer Overflow Vulnerability"
 Content-Type: text/plain; charset=utf-8
 
-Alexander Wirt discovered that local users can block other users from 
-using tmux by creating suitably named directories in /tmp:
+On 02/13/2014 03:11 AM, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>> that's still 4 bytes too many
+>
+> Use CVE-2014-1947.
 
-<http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529082>
+Thanks to everyone who explained this to me off-list.
 
-This is a minor local denial of service issue.  This was reported 
-publicly in 2009, so it receive an ID for that year.
+Peter Hutterer of Red Hat has added some information about all of this 
+to https://bugzilla.redhat.com/show_bug.cgi?id=1064098#c4
 
-Corresponding Red Hat bug:
+To summarize, what I posted here originally is 
+http://trac.imagemagick.org/changeset/13736 and has been assigned 
+CVE-2014-1947
 
-<https://bugzilla.redhat.com/show_bug.cgi?id=1036136>
+The Secunia advisory (http://secunia.com/advisories/56844/) is referring 
+to this commit:
 
--- 
-Florian Weimer / Red Hat Product Security Team
+http://trac.imagemagick.org/changeset/14801
+
+Which as far as I know does not have a CVE yet.
+
+Cheers,
+
+--
+Murray McAllister / Red Hat Security Response Team
