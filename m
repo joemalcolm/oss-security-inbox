@@ -1,84 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/3
-Message-ID: <53460C5F.5050508@amazon.com>
-Date: Wed, 9 Apr 2014 20:13:35 -0700
-From: Anthony Liguori <aliguori@...zon.com>
-To: <kseifried@...hat.com>, <oss-security@...ts.openwall.com>
-CC: Matt Wilson <msw@...zon.com>, Max Spevack <spevack@...zon.com>
-Subject: Re: Request for linux-distros list membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/13/4
+Message-ID: <CAHmME9qFxSkLYp1w2FUPU5rELJCbAacWGRdV2VPRMxE3w890HA@mail.gmail.com>
+Date: Thu, 13 Feb 2014 16:48:07 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: weechat-dev@...gnu.org
+Subject: Possible CVE Request for Weechat -- Mutex potentially not held for random number generation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hey folks,
 
-On 04/09/14 19:04, Kurt Seifried wrote:
-> On 04/09/2014 09:23 AM, Anthony Liguori wrote:
->> Hi,
-> 
->> I would like to request membership to the closed linux-distros
->> mailing list on behalf of the Amazon Linux AMI distribution.  We
->> do not currently have anyone on this list from Amazon but we
->> would like to change that.  The Amazon Linux AMI distribution is
->> RPM based, optimized for EC2, and tracks a number of packages
->> (including the kernel) directly from upstream.
-> 
->> Here is my GPG fingerprint:
-> 
->> pub   2048R/5682E5FF 2013-07-30 Key fingerprint = EF0F 60F4 390F
->> A270 BC30  4A93 1AAD C710 5682 E5FF uid                  Anthony
->> Liguori <anthony@...emonkey.ws> sub   2048R/44FFA77F 2013-07-30
-> 
->> I'm sending this from my personal account since this is the uid 
->> associated with my GPG key but I would prefer to be subscribed to
->> my @amazon.com (CC'd here).
-> 
->> If anyone has any questions, please don't hestitate to ask.
->> Thanks for your consideration!
-> 
->> Regards,
-> 
->> Anthony Liguori
-> 
-> I find it a bit odd you can't send this from your work email
-> address. Would it be possible to add that email address to your key
-> and then use your work email address?
+I've just fixed a bit of an odd bug in Weechat, that may or may not be
+security-related in certain circumstances, and I was hoping to have
+some other eyeballs take a poke at it. The patch for it is here [1]
+and my original gentoo bug report is here [2].
 
-We use DKIM which doesn't work very well with all mailing lists.  You
-should receive this okay since you are on CC but I'm not sure everyone
-will get this through the mailing list.  If it doesn't make it, I'll
-send this same (signed) message via the @codemonkey.ws address.
+The basic problem is that Weechat did not link against libpthread on
+Linux. However, gnutls uses libpthread. The glibc developers were
+clever and set things up such that if you don't explicitly link
+against libpthread, and library code still uses the functions from it,
+you'll instead wind up using functions that all return 0. This is so
+that single-threaded programs aren't burdened with the overhead of
+mutexes and such, when they aren't needed. So when weechat was loaded,
+it would also load gnutls. Gnutls would then make several calls to
+pthread_mutex_init. Since libpthread wasn't loaded, this function
+would be hitting the code inside libc, which would simply return 0. So
+the mutex would never be initialized and instead it would contain
+uninitialized junk from malloc(). This was fine, since all the other
+pthread functions that libc implements do the same - return 0 - so
+nothing bad happens since that data is never touched. However, later
+in the weechat initialization, the various plugins are loaded. Some
+plugins directly or indirectly link the proper libpthread. This means
+that after this point, all function calls to pthread_mutex_lock and
+pthread_mutex_unlock are hitting the real pthread code, that actually
+works with the data and does a lot more than simply return 0. But
+because these mutexes were not initialized before with the
+zero-returning pthread_mutex_init, the lock and unlock functions are
+dealing with uninitialized random malloc() data. And so, in lots of
+cases, we crash, or abort().
 
-I also added this address as a uid to my key.  Here it is again:
+So I guess there could be an issue in cases in which this doesn't
+crash -- when malloc() returns zeros; this seems to be happening on
+some machines. In that case, weechat runs fine, but if any other
+threads use gnutls, a mutex isn't kept for the random number
+generator. I haven't had time to analyze lib/nettle/rnd.c -- this is
+what I was hoping to receive some help with -- but I suppose there's
+potential for the lack of a working mutex to result in degraded random
+number generation security. But maybe not. I'm not sure.
 
-pub   2048R/5682E5FF 2013-07-30
-      Key fingerprint = EF0F 60F4 390F A270 BC30  4A93 1AAD C710 5682 E5FF
-uid                  Anthony Liguori <aliguori@...zon.com>
-uid                  Anthony Liguori <anthony@...emonkey.ws>
-sub   2048R/44FFA77F 2013-07-30
+Thanks,
+Jason
 
-> I guess I'm wondering is this an official request on behalf of
-> Amazon or some random Amazon (employee? contractor?) asking for
-> access to distros@.
 
-Yes, this is an official request on behalf of Amazon.  I am requesting
-access on behalf of the Amazon Linux AMI team[1].
-
-[1] http://aws.amazon.com/amazon-linux-ami/
-
-Regards,
-
-Anthony Liguori
-
-> 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQEcBAEBAgAGBQJTRgxfAAoJEBqtxxBWguX/+5MIAJ5+qaFE8Um36q8qZsAcIRAh
-QtGzxQvmcea8EPqVEdLfqUJ1WikqhmCMIX7Qrcw5aa9uWqS1p9BrWoXsGjV8tb2o
-02SlXHsJPkKPGDgw8xD2yBao8ZEaWGUtcKRPIBZdKtiehEdxcW4fAkWWUKFTKkDa
-iqIJBWptrp341jtSlLifrXizcQPBUFIm2C1pKffJ3rLnEQRRTUJ5Lg/UqxF2H6Y+
-fea8AQZaAwGbHHOmf5DZhxO53Cl3+egLhWnql7tOTVSNiK1eZK6IFNqb9TeCwJh0
-F0BHv/wBCxaFUVGAG5q+ZlfWdodtqtHwT6az3712zywLebXEYneC42u+aFy9PTk=
-=lgBn
------END PGP SIGNATURE-----
+[1] http://git.savannah.gnu.org/gitweb/?p=weechat.git;a=commitdiff;h=c324610226cef15ecfb1235113c8243b068084c8;hp=f821a94cc412bc4afc7fc751cf040e88603c6b98#patch3
+[2] https://bugs.gentoo.org/show_bug.cgi?id=501078
