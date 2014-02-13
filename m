@@ -1,24 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/25
-Message-ID: <20141008215343.GZ22696@tracyreed.org>
-Date: Wed, 8 Oct 2014 14:53:44 -0700
-From: Tracy Reed <treed@...raviolet.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/13/5
+Message-Id: <201402131905.s1DJ5Brw016839@linus.mitre.org>
+Date: Thu, 13 Feb 2014 14:05:11 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: information on "ImageMagick PSD Images Processing RLE Decoding Buffer Overflow Vulnerability"
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 08, 2014 at 02:39:23PM PDT, David A. Wheeler spake thusly:
-> If there was some ironclad rule that "data and code must be totally isolated
-> at all times" then I agree it's absurdly impractical.  Compilers
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-While it is too late for our hardware etc. perhaps strong type systems such as
-found in Haskell can help here? It is known to be very good at avoiding
-undefined or unexpected runtime behavior. Too late also for current languages
-to have this bolted on but if anyone wanted to write "secure" software I'd be
-looking at languages which provide some more guarantees. Too late for bash
-also, of course which I suppose points us back at the original problem.
+> The Secunia advisory (http://secunia.com/advisories/56844/) is referring
+> to this commit:
+> 
+> http://trac.imagemagick.org/changeset/14801
+> 
+> Which as far as I know does not have a CVE yet.
 
--- 
-Tracy Reed
+Use CVE-2014-1958 for changeset 14801.
 
-Content of type "application/pgp-signature" skipped
+There are at least two ways to handle the CVE assignments for the
+other issues. The problem is that CVE-2014-1947 was originally bound
+to the disclosure of "that's still 4 bytes too many" (in ImageMagick
+6.5.4) but this is apparently not an accurate description of the
+problem. (Possibly "4 bytes too many" was based on an incorrect
+interpretation that "L%02ld" meant two four-byte integer values, going
+into a single four-byte buffer.)
+
+Option 1:
+
+1a. REJECT CVE-2014-1947.
+
+1b. Assign one new CVE-2014-#### ID for the vulnerability in older
+ImageMagick versions that use the "L%02ld" string. The root cause here
+is that the code did not cover the case of more than 99 layers, which
+is apparently allowable but relatively uncommon. This has a resultant
+buffer overflow, e.g, L99\0 is safe but L100\0 is unsafe. When the
+overflow occurs, it can be described as "1 or more bytes too many."
+
+1c. Assign another new CVE-2014-#### ID for the vulnerability in newer
+ImageMagick versions that use the "L%06ld" string. The root cause here
+is that the code did not recognize the relationship between the 8 (or
+more) characters in "L%06ld" and the actual buffer size. This has a
+resultant buffer overflow of "4 or more bytes too many."
+
+Option 2:
+
+2a. Keep CVE-2014-1947 for the above-mentioned vulnerability in older
+ImageMagick versions. This preserves the original meaning of
+CVE-2014-1947 as a vulnerability affecting (for example) ImageMagick
+6.5.4.
+
+2b. Assign a new CVE-2014-#### ID for the above-mentioned
+vulnerability in newer ImageMagick versions.
+
+(We will proceed with option 2 unless option 1 is substantially better
+for someone.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJS/RcdAAoJEKllVAevmvmsFEAH/R/cAm9u7IGz//9qvH9tqlJn
+KIB+95ZCz0DBJDWTlyXot3TkvEdd8dnfKNLMfSYdWnTCMMNwOKLhO+2cYd1RJ/Fp
+U8T0vgRIXywrzkXHkdMmxDOrL+5GC1WEUb2ibGlsTRpbtycQOcHyevOkr2o01HwR
+f6Imq8s15Uf/R519ZYdAvrLSfrq/i8cB9seHcXhz81ZxGBkUXiznSOCnwjg+tbLv
+HWjHl75eid5PTs2Zh1dZ9pty949Az23FqhDF1n8uFSk44FuNCpZiNCPICqO+eRrc
+8Ib6PIKfqzelHz9Q2wBQW3I2vxvKxlCm6ohf699TrhypgHjI0O0IlshnrmqntpA=
+=2sDp
+-----END PGP SIGNATURE-----
