@@ -1,60 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/28/6
-Message-ID: <52E817E5.6010107@redhat.com>
-Date: Tue, 28 Jan 2014 13:49:41 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request Linux kernel: netfilter: nf_nat: leakage of uninitialized buffer in IRC NAT helper
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/13/7
+Message-Id: <201402132031.s1DKUrXs026209@linus.mitre.org>
+Date: Thu, 13 Feb 2014 15:30:53 -0500 (EST)
+From: cve-assign@...re.org
+To: mancha1@...h.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request - GnuTLS corrects flaw in certificate verification (3.1.x/3.2.x)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/28/2014 01:48 PM, Kurt Seifried wrote:
-> On 01/28/2014 06:30 AM, P J P wrote:
->> Hello,
-> 
->> Linux kernel built with the NetFilter Connection 
->> Tracking(NF_CONNTRACK) support for IRC protocol(NF_NAT_IRC), is 
->> vulnerable to an information leakage flaw. It could occur when 
->> communicating over direct client-to-client IRC connection(/dcc)
->> via a NAT-ed network. Kernel attempts to mangle IRC TCP packet's 
->> content, wherein an uninitialised 'buffer' object is copied to a
->>  socket buffer and sent over to the other end of a connection.
-> 
->> Upstream fix: ------------- -> 
->> https://git.kernel.org/linus/2690d97ade05c5325cbf7c72b94b90d265659886
->
->>  Reference: ---------- -> 
->> https://bugzilla.redhat.com/show_bug.cgi?id=1058748
-> 
-> 
->> Thank you -- Prasad J Pandit / Red Hat Security Response Team
-> 
-> Please use CVE-2014-0025 for this issue.
+> http://gnutls.org/security.html
+> GNUTLS-SA-2014-1
 
+> https://www.gitorious.org/gnutls/gnutls/commit/b1abfe3d18
 
-Argh please reject  CVE-2014-0025 and use CVE-2014-1690 for this
-issue, I got the email from Mitre after I hit send (and resynched my
-email).
+Use CVE-2014-1959.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJS6BflAAoJEBYNRVNeJnmTroYP/jPBxlPGs6O5N3jrz1qfGVli
-cE99UxFFWh1HV6fumnNXFqXLuSCzPMO/uGj4bHMZy/b/uJZGHqkew0W/Al2CfS7R
-yiJBHkgZNb0ZtfzmkU1sMcs8WrL8YD87yAxJ54zu4pmbelHhEdnMgwbUjZajhVHL
-v+whW62HJxKDdUtIWOZbMj3Yl9rLopDYKGsEoYN1NCrDuzz7oZF0Nx6ybuHFTLDL
-I4rltoLGzQPnWsTDxAo4WQ8b65bFrvcF4M1J7u+AUIJ8nIxdSsdhwZKc2IXuKFjh
-SctPFKni7r7QU8thTCzb1QNDKTsXUza4lTXhWOuSBJRb8Unrln73rucqxeOYQMR5
-dynKslbB4bIBPk6Lh3BBsm01NxAedUablI92qYjgSy+mlB7Si+LGQxEg32caeDuE
-ZAxuX9bnlj4BxP21e2jgnfH6TKLRBUWUBoc4i6VSUEjdys/xh6RVw8esWlHU3jKS
-ZGQX671AAYCrRukf8zq5ElDNlgqeSm9iUfoAfgrNVEgaE97D2N+cTBYKOwhjFMI7
-dLLnni1McHPmJ64Vwr24CIAjoV3X3vftYVmWNedALDfF29+vCaLSc9WcwRY9Iu76
-xvOm3evYCKAfphU65kuL+dww0DSNF7vLsYu6hYb6fZd5s5gUxrpxednfKsf4FSV3
-SrY6piDmrOZnVOGlyjq/
-=S7F3
+iQEcBAEBAgAGBQJS/StWAAoJEKllVAevmvmscoYH+gMmjfDYdO8hsJNTgggYXd4X
+r5YVb+6Pylo7bnp7PWVuWguh/tHpWi+yfGKG6/XgZtgWiflDHkb4BGQBVUjWamS8
+b3UQyOvU3O1nCtSIMQPFCrxWrkoT0Escrv128usmNZkVEi80Mqo9oD7bZtdYU6md
+Pp8zS47NLpyRl1hDRctTi6ct13djmZJjFR5lSNydFKpjni9+IyPNsH73anXO94b3
+pAUkcNvDqFzWs+kPPlkSVyKWgXtyVwDXK0yz3nHgN6L1gytri6tVxbPs3eXwaIT1
+mvNanl8IEbMlvYwBQbjvDx7E7tOl873k1RnAHrSuHMaAGjY2DC0rCSwpFMNXHlM=
+=HHow
 -----END PGP SIGNATURE-----
