@@ -1,36 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/12
-Message-Id: <20140912145431.2EA823AE011@smtpvbsrv1.mitre.org>
-Date: Fri, 12 Sep 2014 10:54:31 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/14/3
+Message-Id: <201402140221.s1E2LLCK011852@linus.mitre.org>
+Date: Thu, 13 Feb 2014 21:21:21 -0500 (EST)
 From: cve-assign@...re.org
-To: helmut@...divi.de
+To: mmcallis@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: /tmp file vulnerability in ace
+Subject: Re: information on "ImageMagick PSD Images Processing RLE Decoding Buffer Overflow Vulnerability"
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> I point out that said bin/g++-dep file can be found within
-> http://download.dre.vanderbilt.edu/previous_versions/ACE-6.2.7.tar.bz2.
+> 2a is referring to "L%02ld", and 2b is referring to "L%06ld"?
 
-In our download, the filename is g++dep (without the '-').
-
-If anyone is later requesting a CVE ID for that, we can mention:
-
-  ACE_wrappers/debian/debian.changelog
-
-  ace (5.6.3-4) unstable; urgency=low
-  
-    * Add the following missing programs to libace-dev:
-      o $ACE_ROOT/bin/generate_export_file.pl
-      o $ACE_ROOT/bin/split-cpp
-      o $ACE_ROOT/bin/g++dep
-      o $ACE_ROOT/bin/add_rel_link.sh
-
-This apparently means that at least one version of libace-dev was
-shipped with the generate_doxygen.pl file but without the g++dep file,
-and thus we'd have a situation of "different affected versions."
+Yes.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -40,11 +23,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUEwi8AAoJEKllVAevmvmsgC4IAK0MJIS6xqVkszWvLOx91ec0
-o9z7NTem7ywTWhv8X9Herbcb9fbev8SfEb3uFSZd+iFylzAgwKSD3VhPcdADjBVS
-C71GBpbDwzqE8+vVN8BalMdGu7D29cANALHng1U1gMYbKd0O2Bxv62yccuKf543X
-ilX2WDacFKimTi6yJoEAM31FzHQqQlKJ7ePvbPYal8tbtrtDnbNLcPbJGhoztqLO
-8ReheWMkHdCRjIaFqiaFxcfcsK5cTn/RqFkD5gDi+WnFBFvKkdhM4WqRhNWwJvqS
-c6qBwzP0oMX6/s3BSPHWtjbPJ06ZmVgLAbkLWLPyKQ8+UuXd6JmMKNgR0S17Ddg=
-=1vFr
+iQEcBAEBAgAGBQJS/XuxAAoJEKllVAevmvms8e0H/jHlbBSepEEMEqRaF19veN4B
+FyrvZjzMW0Utd7HgjvuEHGVIHnhHIpKlgioqVGdYzQlslk/ZUxGhcCcfG2sJQ7ij
+x+ceL7zQbVrMJuhWLHFFdXwgyAnJOordlbkb1h2Qcf4ZoOuv2kqaCwrZ/5NuDrLT
+rim7x/ty+m/SFtvMARIZmJMvSkrLmksPO5hf6+z8MXeWo9MlS/5OaBm9PP0MnhUW
+4YcK7YdG9Fmwh4XlM/mUPmNg4/MgPCFXiAV6gqRV2WnL13S+q6o55ythGY+geTTP
+xwg/Bfx/po6ckPUIf5DZYcyEIkPLBPwChTaZ5oHEFGUu3Hb0PLLtW1U5qfeOvh0=
+=uvBg
 -----END PGP SIGNATURE-----
