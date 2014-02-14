@@ -1,144 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/08/6
-Message-ID: <20140308060621.GA29594@openwall.com>
-Date: Sat, 8 Mar 2014 10:06:21 +0400
-From: Solar Designer <solar@...nwall.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux-PAM pam_unix/unix_chkpwd is fail-open
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/14/4
+Message-ID: <20140214081819.GA8547@alf.mars>
+Date: Fri, 14 Feb 2014 09:18:19 +0100
+From: Helmut Grohne <helmut@...divi.de>
+To: Dimitri John Ledkov <xnox@...ian.org>
+Cc: 738855@...s.debian.org, oss-security@...ts.openwall.com
+Subject: Re: Bug#738855: initscripts: Skip killing root-owned process starting with @
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Feb 14, 2014 at 12:28:52AM +0000, Dimitri John Ledkov wrote:
+> Thanks a lot for the review!
 
-FWIW, my posting was not a CVE request.  It was a suggestion for making
-Linux-PAM safer to use.
+Hmm. Maybe you can hold this patch off for a little longer?
 
-That said, I appreciate your comments, and I am happy to clarify:
+Pulling in oss-sec, because I am no longer sure that the remedy
+addresses all relevant aspects. Summary of previous discussion follows
+for oss-sec:
 
-On Fri, Mar 07, 2014 at 11:53:11PM -0500, cve-assign@...re.org wrote:
->   (1) part of the PAM software needs to run a helper program by using
->       execve
-> 
->   (2) the purpose of the helper program is to check whether a password
->       is correct
-> 
->   (3) the helper program is inherently a trusted program (it is under
->       the same administrative control as the PAM software)
+Dimitri Ledkov asked for the initscripts package to exempt root-owned
+processes whose process name starts with an '@' from being killed in the
+sendsigs script during shutdown. This support would make initscripts a
+little more compatible with systemd, which is a good thing! The relevant
+systemd documentation can be found at:
+http://www.freedesktop.org/wiki/Software/systemd/RootStorageDaemons/
 
-Correct so far.
+However, I doubt that the proposed restriction (effective UID of process
+equals 0) is sufficient. For example in a SELinux context being root may
+mean significantly less. Russel Coker runs a machine where you can log
+into as root remotely, see http://www.coker.com.au/selinux/play.html. In
+this context allowing user processes to not be killed merely by changing
+their name could cause data loss during shutdown by blocking umount. I
+do not understand the consequences of the above technique in other
+security extension contexts, so I am asking here for help.
 
->   (4) the helper program could use a simple programming model in which
->       a zero exit status confirms that the password is correct, and no
->       other exit status confirms that
+The alternative mechanism currently used by initscripts is to allow
+daemons to write their PID to /run/sendsigs.omit.d/$daemon. Being a
+file-based approach, it can be easily controlled in the SELinux context
+using restorecon.
 
-Linux-PAM's helper program does use this programming model, yes.  As to
-whether this is an acceptable choice, opinions may vary.
+Another aspect of interest could be processes running as root with their
+capability bounding set cleared or reduced.
 
->   (5) if the helper program is correctly written, and the operating
->       system is behaving normally, this programming model is
->       sufficient
+So dear oss-sec readers, do you think that allowing processes whose
+effective UID is 0 to not being killed during shutdown is a good idea?
 
-Sort of.  The issue here is that this programming model turns
-non-security bugs/peculiarities in multiple parts of the operating system
-into security holes, or it may be more appropriate to say that if/when
-this happens, this programming model itself is a security hole.
+If the answer is no, then please assign a CVE identifier for systemd
+(version 38+, src/core/killall.c).
 
-Process termination (or failed startup) may happen for a lot of reasons,
-and with this programming model it is sufficient for any one of those to
-look like normal termination with zero exit code, for there to be a
-vulnerability.  For example, does the dynamic linker always exit
-non-zero if it fails to start the program up (in one of many ways)?
-Do all libc functions that might happen to terminate the program
-guarantee a non-zero exit code?  And indeed, does the kernel guarantee
-indication of abnormal process termination in all the many cases that it
-may have to refuse to start or to kill a process?  I'd expect bugs of
-this nature to be introduced once in a while, and it'd be a pity (and
-unjustified risk) for them to be escalated to security bugs via a poorly
-chosen programming model in Linux-PAM (or elsewhere, for that matter).
-
->   (6) however, some people feel that this is not good enough.
->       Specifically, they feel that the PAM software must have a
->       defense against the possibility that the helper program has a
->       minor logic error in which it sometimes has an unintended zero
->       exit status.
-
-Yes, but mostly not against errors in the (tiny) program itself, but
-against errors in the (much larger, more complicated, and changing)
-system components that the program's exit code also depends upon.
-
->   (7) there are two examples of ways to have this defense: (A) the
->       exit status of the helper program is not used, and instead the
->       helper program must print "authorized" or (B) the helper program
->       must exit with the status 0x0a00ff7f, which is less likely to
->       occur with a logic error
-
-No, (A) and (B) are actually the same.  The magic value 0x0a00ff7f is
-passed via a file descriptor, just like the "authorized" word is.  This
-is in addition to the exit status check.  (We couldn't pass a value this
-large via the exit code.)
-
-> Is (5) above inaccurate? In other words, is the threat model that the
-> PAM software is realistically sometimes used on systems in which
-> waitpid determines that WIFEXITED was true and WEXITSTATUS was zero,
-> even though the actual code path of the helper program provided a
-> nonzero exit status? Are we, for example, anticipating kernel bugs or
-> hardware bugs that cause this?
-
-Kernel and dynamic linker and libc bugs mostly.  With such bugs, the
-problem may appear before control would reach one of the helper
-program's normal exit() calls.
-
-> If not, then why is 0x0a00ff7f implemented only for this
-> interprocess-communication case, and not for in-process function
-> calls? In other words, any time that a C program calls a
-> security-critical function and tests for a return value of zero,
-> shouldn't this be changed to a return value of, for example,
-> 0x0a00ff7f? Any function might have a minor logic error in which it
-> calls "return;" or reaches the end, even though "return -1" was
-> intended.
-
-We obviously need to draw the paranoia line somewhere.  The problem
-needs to be somewhat likely to occur, the defense likely to be
-effective, and the complexity increase affordable and not likely to
-cause additional bugs (especially not security bugs).
-
-This approach might be reasonable for some especially critical functions
-in a C program as well, but it is less obviously the right thing to do.
-If used within a program, it'd protect mostly against different risks -
-such as improper use of APIs within the program itself, out of bounds
-writes, and/or hardware errors that would otherwise result in fail-open
-or otherwise risky behavior.  Magic values are in fact sometimes used
-within (production builds of) programs.
-
-Also, a function is very unlikely to be made to return control back to
-the caller other than through reaching a return statement or the end of
-its body.  This isn't something the kernel or a libc function would be
-likely to cause an application's function to do.  In contrast, the
-kernel and libc are likely to terminate a process on many conditions.
-
-Here's a test question: was this communication channel meant to carry
-security-critical information (as well as possibly other information)?
-I think that for C function return values, the answer is "yes", whereas
-for process exit status the answer might be "no".
-
-> Going back to the execve case, one downside of the Owl change is that
-> a custom helper program designed for another distribution apparently
-> has to be modified before it is used on Owl. In other words,
-> maintainability is reduced a little, apparently in favor of a
-> defense-in-depth security improvement.
-
-Theoretically, yes, although this protocol was and remains internal to
-each implementation (Linux-PAM's pam_unix and its helper, or our pam_tcb
-and its helper).
-
-> This is not the type of scenario that would typically have a CVE ID.
-
-Yes, I didn't expect it would be.
-
-(I guess a CVE ID would need to be assigned to some piece of software if
-this problem is demonstrated in practice on a specific combination of
-software versions later.)
-
-Thanks,
-
-Alexander
+Helmut
