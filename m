@@ -1,108 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/11
-Message-ID: <87d2alf4co.fsf@mid.deneb.enyo.de>
-Date: Wed, 24 Sep 2014 17:03:19 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/14/1
+Message-ID: <52FD672B.5000807@redhat.com>
+Date: Fri, 14 Feb 2014 11:45:31 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+CC: cve-assign@...re.org
+Subject: Re: information on "ImageMagick PSD Images Processing RLE Decoding Buffer Overflow Vulnerability"
 Content-Type: text/plain; charset=utf-8
 
-* Florian Weimer:
+On 02/14/2014 06:05 AM, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>> The Secunia advisory (http://secunia.com/advisories/56844/) is referring
+>> to this commit:
+>>
+>> http://trac.imagemagick.org/changeset/14801
+>>
+>> Which as far as I know does not have a CVE yet.
+>
+> Use CVE-2014-1958 for changeset 14801.
 
-> Chet Ramey, the GNU bash upstream maintainer, will soon release
-> official upstream patches.
+Thanks
 
-http://ftp.gnu.org/pub/gnu/bash/bash-3.0-patches/bash30-017
-http://ftp.gnu.org/pub/gnu/bash/bash-3.1-patches/bash31-018
-http://ftp.gnu.org/pub/gnu/bash/bash-3.2-patches/bash32-052
-http://ftp.gnu.org/pub/gnu/bash/bash-4.0-patches/bash40-039
-http://ftp.gnu.org/pub/gnu/bash/bash-4.1-patches/bash41-012
-http://ftp.gnu.org/pub/gnu/bash/bash-4.2-patches/bash42-048
-http://ftp.gnu.org/pub/gnu/bash/bash-4.3-patches/bash43-025
+>
+> There are at least two ways to handle the CVE assignments for the
+> other issues. The problem is that CVE-2014-1947 was originally bound
+> to the disclosure of "that's still 4 bytes too many" (in ImageMagick
+> 6.5.4) but this is apparently not an accurate description of the
+> problem. (Possibly "4 bytes too many" was based on an incorrect
+> interpretation that "L%02ld" meant two four-byte integer values, going
+> into a single four-byte buffer.)
+>
+> Option 1:
+>
+> 1a. REJECT CVE-2014-1947.
+>
+> 1b. Assign one new CVE-2014-#### ID for the vulnerability in older
+> ImageMagick versions that use the "L%02ld" string. The root cause here
+> is that the code did not cover the case of more than 99 layers, which
+> is apparently allowable but relatively uncommon. This has a resultant
+> buffer overflow, e.g, L99\0 is safe but L100\0 is unsafe. When the
+> overflow occurs, it can be described as "1 or more bytes too many."
+>
+> 1c. Assign another new CVE-2014-#### ID for the vulnerability in newer
+> ImageMagick versions that use the "L%06ld" string. The root cause here
+> is that the code did not recognize the relationship between the 8 (or
+> more) characters in "L%06ld" and the actual buffer size. This has a
+> resultant buffer overflow of "4 or more bytes too many."
+>
+> Option 2:
+>
+> 2a. Keep CVE-2014-1947 for the above-mentioned vulnerability in older
+> ImageMagick versions. This preserves the original meaning of
+> CVE-2014-1947 as a vulnerability affecting (for example) ImageMagick
+> 6.5.4.
+>
+> 2b. Assign a new CVE-2014-#### ID for the above-mentioned
+> vulnerability in newer ImageMagick versions.
+>
+> (We will proceed with option 2 unless option 1 is substantially better
+> for someone.)
 
-Someone has posted large parts of the prenotification as a news
-article, so in the interest of full disclosure, here is what we wrote
-to the non-vendors (vendors also received patches):
+I do not have a preference. To clarify and prevent myself making more 
+messes, 2a is referring to "L%02ld", and 2b is referring to "L%06ld"?
 
-Debian and other GNU/Linux vendors plan to disclose a critical,
-remotely exploitable security vulnerability in bash this week, related
-to the processing of environment variables.  Stephane Chazelas
-discovered it, and CVE-2014-6271 has been assigned to it.
+Cheers,
 
-The issue is currently under embargo (not public), and you receive
-this message as a courtesy notification because we assume that you
-have network-based filtering capabilities, so that you can work on
-ways to protect a significant number of customers.  However, you
-should not yet distribute IPS/IDS signatures, publicly or to
-customers.
-
-At present, public disclosure is scheduled for Wednesday, 2014-09-24
-14:00 UTC.  We do not expect the schedule to change, but we may be
-forced to revise it.
-
-
-The technical details of the vulnerability follow.
-
-Bash supports exporting not just shell variables, but also shell
-functions to other bash instances, via the process environment to
-(indirect) child processes.  Current bash versions use an environment
-variable named by the function name, and a function definition
-starting with “() {” in the variable value to propagate function
-definitions through the environment.  The vulnerability occurs because
-bash does not stop after processing the function definition; it
-continues to parse and execute shell commands following the function
-definition.  For example, an environment variable setting of
-
-  VAR=() { ignored; }; /bin/id
-
-will execute /bin/id when the environment is imported into the bash
-process.  (The process is in a slightly undefined state at this point.
-The PATH variable may not have been set up yet, and bash could crash
-after executing /bin/id, but the damage has already happened at this
-point.)
-
-The fact that an environment variable with an arbitrary name can be
-used as a carrier for a malicious function definition containing
-trailing commands makes this vulnerability particularly severe; it
-enables network-based exploitation.
-
-
-
-So far, HTTP requests to CGI scripts have been identified as the major
-attack vector.
-
-A typical HTTP request looks like this:
-
-GET /path?query-param-name=query-param-value HTTP/1.1
-Host: www.example.com
-Custom: custom-header-value
-
-The CGI specification maps all parts to environment variables.  With
-Apache httpd, the magic string “() {” can appear in these places:
-
-* Host (“www.example.com”, as REMOTE_HOST)
-* Header value (“custom-header-value”, as HTTP_CUSTOM in this example)
-* Server protocol (“HTTP/1.1”, as SERVER_PROTOCOL)
-
-The user name embedded in an Authorization header could be a vector as
-well, but the corresponding REMOTE_USER variable is only set if the
-user name corresponds to a known account according to the
-authentication configuration, and a configuration which accepts the
-magic string appears somewhat unlikely.
-
-In addition, with other CGI implementations, the request method
-(“GET”), path (“/path”) and query string
-(“query-param-name=query-param-value”) may be vectors, and it is
-conceivable for “query-param-value” as well, and perhaps even
-“query-param-name”.
-
-The other vector is OpenSSH, either through AcceptEnv variables, TERM
-or SSH_ORIGINAL_COMMAND.
-
-Other vectors involving different environment variable set by
-additional programs are expected.
-
-
-
-Again, please do not disclose this issue to customers or the general
-public until the embargo has expired.
+--
+Murray McAllister / Red Hat Security Response Team
