@@ -1,43 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/22/5
-Message-Id: <20140321215324.11BFCA0158@smtp.hushmail.com>
-Date: Sat, 22 Mar 2014 08:53:23 +1100
-From: dawgystyle@...hmail.com
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request - Uhuru Mobile Davfi Multiple Vulnerabilites
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/14/2
+Message-ID: <52FD771E.9090805@redhat.com>
+Date: Fri, 14 Feb 2014 12:53:34 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: 738857@...s.debian.org
+Subject: CVE request: MuPDF Stack-based Buffer Overflow in xps_parse_color()
 Content-Type: text/plain; charset=utf-8
 
-Title: Uhuru Mobile Davfi Multiple VulnerabilitiesProduct: Uhuru
-MobileEnterprise: Nov'IT
 Hello,
-Multiple vulnerabilities were found in the Uhuru Mobile ROM. These
-vulnerabilities were detailed in a blogpost [1].
-Vulnerability #1 - Whitelist of executable applications
-bypass:----------------------------The Android kernel was modified and
-"hardened". A feature was implemented to only allow a whitelist of
-binaries to be executed. This can be bypassed by using, for example,
-the LD_PRELOAD environment variable.
-Vulnerability #2 - Embedded kernel vulnerable to CVE-2013-6282 (local
-root)----------------------------The embedded Android kernel version
-is 3.4.0, which is vulnerable to CVE-2013-6282. This can be exploited
-to obtain root rights.
-Vulnerability #3 - Embedded kernel vulnerable to CVE-2013-4787 (master
-key)----------------------------The embedded Android kernel is
-vulnerable to CVE-2013-4787. This can be exploited to bypass the APK
-signature system of Android.
-Vulnerability #4 - Local escape shell
-vulnerability----------------------------When the phone is encrypted,
-it uses the passcode entered by the user to decrypt/encrypt files. The
-passcode entered by the user is executed as root inside a shell
-command without being filtered. An attacker just have to reboot the
-phone, and once the phone asks for the passcode, enter the payload aka
-s/Please enter your passcode/Please enter your payload/ . This can be
-exploited to gain local code execution as root.
-Eric Filiol, the main creator of the project, responded [2] (in
-french) to the reported vulnerabilities.
-Refs:[1]
-http://esec-lab.sogeti.com/post/A-quick-security-review-of-the-Uhuru-Mobile-demo-ROM[2]
-https://www.davfi.fr/news/News_2014_03_21.pdf?b=ull&sh=it&over=flow
-Can a CVE be assigned for these vulnerabilities ?Thanks.
-Antoine de Gaulle,Securely sent using SMS Perseus
+
+A stack-based buffer overflow in MuPDF's xps_parse_color() function was 
+reported. Full details in http://www.hdwsec.fr/blog/mupdf.html
+
+Upstream bug: http://bugs.ghostscript.com/show_bug.cgi?id=694957
+Upstream fix: 
+http://git.ghostscript.com/?p=mupdf.git;a=commitdiff;h=60dabde18d7fe12b19da8b509bdfee9cc886aafc
+Red Hat bug: https://bugzilla.redhat.com/show_bug.cgi?id=1056699
+
+Thanks,
+
+--
+Murray McAllister / Red Hat Security Response Team
