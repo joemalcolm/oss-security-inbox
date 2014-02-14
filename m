@@ -1,41 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/9
-Message-Id: <201405062021.s46KKrfg020243@linus.mitre.org>
-Date: Tue, 6 May 2014 16:20:53 -0400 (EDT)
-From: cve-assign@...re.org
-To: pnigos70@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request ---- SOAPpy 0.12.5 Multiple Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/14/6
+Message-ID: <CAJSfAy4zCgLzWn-Ka78VAPHqZO6Z+gXsRBp+OG78hwexBNaurQ@mail.gmail.com>
+Date: Fri, 14 Feb 2014 10:05:12 -0800
+From: Tom Dale <tom@...dale.net>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2014-0046] XSS Vulnerability With {{link-to}} Helper in Non-block Form
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+XSS Vulnerability With {{link-to}} Helper in Non-block Form
 
-> http://www.pnigos.com/?p=260
+There is a vulnerability in the {{link-to}} helper in Ember.js. This
+vulnerability
+has been assigned CVE-2014-0046.
 
-> <!ENTITY xxe SYSTEM "file:///etc/passwd">
+Versions Affected: 1.2.0, 1.2.1, 1.3.0, 1.3.1
+Not affected: Versions prior to 1.2
+Fixed Versions: 1.2.2, 1.3.2
 
-Use CVE-2014-3242.
+Impact
+-------
 
+In general, Ember.js escapes or strips any user-supplied content before
+inserting it in strings that will be sent to innerHTML.  However, a change
+made
+to the implementation of the {{link-to}} helper means that any user-supplied
+data bound to the {{link-to}} helper's title attribute will not be escaped
+correctly.
 
-> <!ENTITY lol2
->  "&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;">
+In applications that use the {{link-to}} helper in non-block form and bind
+the title attribute to user-supplied content, a specially-crafted payload
+could execute arbitrary JavaScript in the context of the current domain
+("XSS").
 
-Use CVE-2014-3243.
+All users running an affected release and binding user-supplied data to the
+{{link-to}} helper's title attribute should either upgrade or use one of the
+workarounds immediately.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Releases
+--------
 
-iQEcBAEBAgAGBQJTaUDDAAoJEKllVAevmvmsFrsH/jWsJ/LyyMnOb2oVR3KoFlhZ
-qBUpqc0X9dUTlHHKkx0ztrNd9FoWwjqbSzwiLgIaYumEYHMJYluPQ9quqrUZai38
-VAFMyTosVuaOHI9ml9JUvXcpr3RfxdG1Pxe/CAUuUl9iFtk+sAD1eVC57R1LUx4w
-r/Eg028CCUX/wzqgALAsu/FZMtL9waT1TS8/LgpXskaV7+sRAjd8Sb/aOmANR3JZ
-0E53iVMaNSiogT7BVfJgr3zVGmH3XIpGSopGb8WqUdJD2ufLzGBcQtdkEQHXMUA/
-V7Df/hPG/6dBrPW9VoSEwVxlMTKPoc0P3VYdNmMv06OEtkWLEoo3bBfu8PoO3Ds=
-=syp0
------END PGP SIGNATURE-----
+Releases are available on emberjs.com/builds/#/tagged
+
+Workarounds
+-----------
+
+Ensure that you escape any user-supplied value that you bind to the
+{{link-to}}
+helper's title attribute. For example, if you bind a value named userTitle:
+
+ {{link-to "user" title=userTitle}}
+
+Ensure that you escape the value of userTitle using
+Ember.Handlebars.Utils.escapeExpression:
+
+ var userTitle = this.get('userTitle');
+ var safeUserTitle = Ember.Handlebars.Utils.escapeExpression(userTitle);
+ this.set('userTitle', safeUserTitle);
+
+Patches
+-------
+
+Patches are available as an attachment to the announcement on the
+emberjs-security list:
+
+https://groups.google.com/forum/#!topic/ember-security/1h6FRgr8lXQ
+
+Credits
+-------
+
+This vulnerability was reported to us by Hyder Ali of Zoho. Many thanks for
+working with us on the patches and advisory.
+
