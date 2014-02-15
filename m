@@ -1,45 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/11/8
-Message-ID: <52FA25CE.1030000@redhat.com>
-Date: Wed, 12 Feb 2014 00:29:50 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2013-6401 Jansson hash collision issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/15/3
+Message-ID: <20140215201042.GA18914@openwall.com>
+Date: Sun, 16 Feb 2014 00:10:43 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Petter Reinholdtsen <pere@...gry.com>
+Cc: Dimitri John Ledkov <xnox@...ian.org>, 738855@...s.debian.org, oss-security@...ts.openwall.com
+Subject: Re: Bug#738855: initscripts: Skip killing root-owned process starting with @
 Content-Type: text/plain; charset=utf-8
 
-On 02/12/2014 12:20 AM, Murray McAllister wrote:
-> As reported to the distros mailing list:
-> 
-> Hi all,
-> 
-> Florian Weimer of the Red Hat Product Security Team found that the
-> hashing implementation in Jansson, a library for encoding, decoding and
-> manipulating JSON data, was susceptible to predictable hash collisions.
-> A remote attacker could use this flaw to cause an application using
-> Jansson to use an excessive amount of CPU time by sending a crafted JSON
-> document containing a large number of parameters whose names map to the
-> same hash value. (CVE-2013-6401)
-> 
-> With regards to affected versions, I am guessing only 2.4-2 and 2.4-3
-> were checked (by Red Hat).
-> 
-> Many thanks to Florian Weimer and Petri Lehtinen (upstream) for their
-> extensive work on the patch:
-> 
-> https://github.com/akheron/jansson/commit/8f80c2d83808150724d31793e6ade92749b1faa4
-> 
-> (Feel free to copy the above CVE-2013-6401 description paragraph in any
-> of your bugs or advisories.)
-> 
-> Red Hat bug: https://bugzilla.redhat.com/show_bug.cgi?id=1035538 (to be
-> opened shortly)
-> 
-> Cheers,
-> 
-> --
-> Murray McAllister / Red Hat Security Response Team
-> 
+Hi,
 
-This commit is also needed:
+I am a moderator for oss-security, and I am unsure whether we want to
+accept or reject postings made to the Debian bug and merely CC'ed to
+oss-security by people who haven't participated in the discussion thread
+on oss-security (and most likely have not even looked at it), and where
+such postings are not security focused.  I feel that they'd be partially
+out-of-context, and I feel that the discussion on the Debian bug might
+go for a long while (this is fine on its own, but not for having it all
+CC'ed to oss-security).
 
-https://github.com/akheron/jansson/commit/42016a35c8907e477be73b0b5d06cc09af231ee4
+I reluctantly approved Petter's posting, although it was unclear if it
+was CC'ed to oss-security on purpose or accidentally.
+
+FYI, the thread on oss-security started here:
+
+http://www.openwall.com/lists/oss-security/2014/02/14/4
+
+and you may see follow-ups (which were _not_ CC'ed to the Debian bug)
+via the "thread-next" link.
+
+Dimitri, since you were the one to add the CC:, what would you like us
+to do?  So far, Petter's is the only such comment CC'ed to oss-security
+after yours, but I suspect that many more comments will be posted to the
+Debian bug later (since there's no consensus), and many may/would be
+CC'ed to oss-security without specific reason (OK, maybe my bringing the
+question up will affect this and it won't be happening).
+
+I think it may be appropriate to discuss non-security/development
+aspects of this issue on the Debian bug and maybe on the Distributions
+list:
+
+http://lists.freedesktop.org/archives/distributions/
+
+and security aspects on oss-security.  Or is this separation not
+justified?  Maybe I am imagining the threat of this turning into a
+lengthy thread that is only tangential for oss-security?
+
+I don't intend to spam the Debian bug by CC'ing it on many more messages
+like this, yet I felt I should keep it in the loop this time.
+
+Thanks,
+
+Alexander
+
+P.S. This is a rare occasion where I think top-posting works best, so
+here's the quoted message:
+
+On Sat, Feb 15, 2014 at 08:20:12PM +0100, Petter Reinholdtsen wrote:
+> I am not convinced this is something we should implement in
+> init.d/sendsigs.  If we are going to implement this systemd
+> compatibility, it might be better to implement it as a option for
+> killall5, instead of faking omitpid values.  Anyone willing to write
+> such implementation?  killall5 already know about all processes and
+> their names, and asking it to ignore processes matching some regular
+> expression should not be very hard.
+> 
+> -- 
+> Happy hacking
+> Petter Reinholdtsen
