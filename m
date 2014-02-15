@@ -1,22 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/23
-Message-ID: <547615CE.4000008@mozilla.com>
-Date: Wed, 26 Nov 2014 10:02:54 -0800
-From: Daniel Veditz <dveditz@...illa.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: firefox: integer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/15/2
+Message-ID: <20140215192012.GB566@ulrik.uio.no>
+Date: Sat, 15 Feb 2014 20:20:12 +0100
+From: Petter Reinholdtsen <pere@...gry.com>
+To: Dimitri John Ledkov <xnox@...ian.org>, 738855@...s.debian.org, oss-security@...ts.openwall.com
+Subject: Re: Bug#738855: initscripts: Skip killing root-owned process starting with @
 Content-Type: text/plain; charset=utf-8
 
-On 11/24/2014 6:19 AM, Vasyl Kaigorodov wrote:
-> And integer overflow was discovered in Firefox when processing a
-> crafted webm files [1].
-> Upstream commits are in [1] as well.
-> 
-> [1]: https://bugzilla.mozilla.org/show_bug.cgi?id=1090405
-> 
-> Can a CVE be assigned to this issue please?
+I am not convinced this is something we should implement in
+init.d/sendsigs.  If we are going to implement this systemd
+compatibility, it might be better to implement it as a option for
+killall5, instead of faking omitpid values.  Anyone willing to write
+such implementation?  killall5 already know about all processes and
+their names, and asking it to ignore processes matching some regular
+expression should not be very hard.
 
-Mozilla does not believe this is an exploitable security issue.
-
--Dan Veditz
-
+-- 
+Happy hacking
+Petter Reinholdtsen
