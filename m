@@ -1,37 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/20/1
-Message-ID: <CALCETrVuwhQ1CST8dbaUYTDFtOn36Nts-SzPV+Uwz=qiXoiTtg@mail.gmail.com>
-Date: Thu, 19 Jun 2014 18:26:38 -0700
-From: Andy Lutomirski <luto@...capital.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/16/7
+Message-Id: <20140216160141.2A56117FDA0@rebar.astron.com>
+Date: Sun, 16 Feb 2014 11:01:41 -0500
+From: christos@...las.com (Christos Zoulas)
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Another Linux syscall auditing bug
+Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
 Content-Type: text/plain; charset=utf-8
 
-On a 32-bit x86 kernel with syscall auditing enabled, syscall(1000)
-will cause an OOPS.  This problem goes at least as far back as Linux
-3.11 and appears to be present in Linux 3.15 as well.  I suspect that
-this bug is very old.
+On Feb 16,  2:28pm, stu@...cehopper.org (Stuart Henderson) wrote:
+-- Subject: Re: [oss-security] Vendor adoption of PIE INFO#934476 oss-securit
 
-In order to see this bug, you'll need syscall auditing on (auditctl -e
-1 will do that) and you'll need 'sep' in flags in /proc/cpuinfo.  That
-means that qemu -cpu qemu64 will not be exposed to this bug, but qemu
--cpu host will on any recent CPU.
+| By the way, OpenBSD has switched compilers to generating PIE code by
+| default on the majority of architectures, various arch's over the last
+| couple of releases, but as of a couple of months ago we've also done
+| this for i386 (x86) too, so I can give some specific examples of
+| where you can expect to run into problems.
+| 
+| On amd64 (x86_64) fallout has been mostly limited to compilers and a
+| couple of other programs, e.g. emacs, qemu, clisp, erlang, ghc, sbcl,
+| which we are building with PIE disabled.
+| 
+| Additionally for i386 there have been problems with register pressure
+| on programs with their own asm code (mostly games), in particular
+| code doing cpuid checks often doesn't save/restore %ebx, but there
+| have been some others. In one case there was code for x86 OSX which
+| avoids scribbling on %ebx which we've been able to borrow, and I think
+| there were one or two where we've switched from asm to a generic C
+| implementation. Of course, shared libraries already have to take
+| this into account so not too much trouble there.
+| 
+| Everything else, base system and ports, is built with PIE.
+| On the whole, experiences have been pretty good. Obviously there is
+| some performance impact but we haven't yet had any reports of this
+| causing major problems (though we will probably know more about this
+| after 5.5 is released when the average user will first see i386
+| packages built with PIE by default).
 
-Mitigations include:
- - Running under ptrace or strace.
- - Using any seccomp filter at all (phew!)
- - Turning off SEP (which is a big slowdown on all syscalls)
- - auditctl -a task,never
+Are you doing any RELRO work?
 
-I'd be rather surprised if this can be used for anything other than
-DoS, although the same underlying bug could potentially have more
-serious consequences.
-
-This bug was found (inadvertently, I presume) by Toralf Förster.  The
-patch here:
-
-http://lkml.kernel.org/g/CALCETrW7U4AHG-a9oPbOt31z3wgzhjSu8b+yGpdM4+vNinKgsA@mail.gmail.com
-
-is reported to fix the bug, but it should not be considered to be well-tested.
-
---Andy
+christos
