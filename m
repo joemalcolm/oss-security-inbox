@@ -1,70 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/5
-Message-ID: <1396018424.18257.11.camel@neutron.trustmatta.com>
-Date: Fri, 28 Mar 2014 14:53:44 +0000
-From: Florent Daigniere <florent.daigniere@...stmatta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/16/2
+Message-ID: <20140216132649.GA12853@alf.mars>
+Date: Sun, 16 Feb 2014 14:26:49 +0100
+From: Helmut Grohne <helmut@...divi.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: MediaWiki 1.22.5 login csrf
+Cc: 738855@...s.debian.org
+Subject: Re: Re: Bug#738855: initscripts: Skip killing root-owned process starting with @
 Content-Type: text/plain; charset=utf-8
 
-Sorry to be thick here but it still doesn't make any sense to me...
-
-The session-id should be renewed upon login AND any credential/privilege
-change (that includes password changes). This protects against session
-fixation attacks (where the attacker coerce a user into using a session
-he controls).
-
-On these pages, there's usually no need for anti-CSRF protection as they
-tend to require credentials (something the attacker, by definition,
-doesn't have).
-
-Are you saying that Mediawiki has a logic bug (some form of
-authorization bypass) allowing any authenticated user to change someone
-else's credentials without knowing them? If so, it's a different
-category of bug and there again, the control is unlikely to be "adding
-an anti-CSRF token".
-
-Florent
-PS: While we're at it: yes you should be comparing anti-CSRF tokens in
-constant-time, unlike what
-https://bugzilla.wikimedia.org/show_bug.cgi?id=62497#c13 is suggesting.
-
-
-On Fri, 2014-03-28 at 07:19 -0700, Chris Steipp wrote:
-> The session-id is renewed when the user successfully logs in with a
-> password reset. The issue that we patched was that the anti-CSRF token for
-> non-authenticated users on the password change form was guessable, and
-> would remain that way even if we regenerated the user's session-id each
-> time they accessed the password rest / login form.
+On Sat, Feb 15, 2014 at 05:22:15PM +0100, Florian Weimer wrote:
+> * Helmut Grohne:
 > 
+> > In this context allowing user processes to not be killed merely by
+> > changing their name could cause data loss during shutdown by
+> > blocking umount.
 > 
-> 
-> 
-> On Fri, Mar 28, 2014 at 2:23 AM, Florent Daigniere <
-> florent.daigniere@...stmatta.com> wrote:
-> 
-> > On Thu, 2014-03-27 at 18:37 -0700, Chris Steipp wrote:
-> > > Hi, we just patched a login CSRF in MediaWiki today. An attacker could
-> > > login a victim as the attacker. Can we get a cve assigned for this?
-> > >
-> > > Patch:
-> > >
-> > https://gerrit.wikimedia.org/r/#/c/121517/1/includes/specials/SpecialChangePassword.php
-> > >
-> > > Release announcement:
-> > >
-> > http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-March/000145.html
-> > >
-> > > Wikimedia bug:
-> > > https://bugzilla.wikimedia.org/show_bug.cgi?id=62497
-> >
-> >
-> > That looks like a session-fixation bug to me; not a CSRF... and
-> > therefore it's the wrong control: the session-id should be "renewed",
-> > that's all.
-> >
-> > Florent
-> >
+> Does that actually work?  If so, it's a funcitonality bug that should
+> be fixed.
 
+Usually, user processes are killed by sendsigs and that is why they
+cannot block umount. For instance, if a processes ends up being
+unkillable (e.g. due to a kernel oops), you can experience data loss
+(been there, done that). What is new here is that systemd proposed a
+generic exemption mechanism for processes with effective UID 0.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Judging from the responses received so far, I think that the consensus
+is that effective UID 0 should be considered fully privileged no matter
+how restricted such a process is. That is a perfectly fine choice
+(especially in the presence of user namespaces), but we'll have to keep
+it in mind when looking at other system components that may violate this
+assumption (e.g. SELinux, Linux capabilities).
+
+I conclude that the implementation in systemd is not considered
+vulnerable.
+
+Helmut
