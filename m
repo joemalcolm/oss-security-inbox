@@ -1,37 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/22/10
-Message-Id: <201404221946.s3MJjtRw005458@linus.mitre.org>
-Date: Tue, 22 Apr 2014 15:45:55 -0400 (EDT)
-From: cve-assign@...re.org
-To: security@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 93 - Hardware features unintentionally exposed to guests on ARM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/16/8
+Message-ID: <CAFJ0LnFwEZL4st7yX50Aeu79oHhvanDyUDhuFp=0=gCx+fyB9A@mail.gmail.com>
+Date: Sun, 16 Feb 2014 11:54:59 -0800
+From: Nick Kralevich <nnk@...gle.com>
+To: oss-security@...ts.openwall.com
+Cc: "CERT(R) Coordination Center" <cert@...t.org>
+Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sun, Feb 16, 2014 at 6:28 AM, Stuart Henderson <stu@...cehopper.org> wrote:
+>
+> Everything else, base system and ports, is built with PIE.
+> On the whole, experiences have been pretty good. Obviously there is
+> some performance impact but we haven't yet had any reports of this
+> causing major problems (though we will probably know more about this
+> after 5.5 is released when the average user will first see i386
+> packages built with PIE by default).
+>
 
-> XSA-93
+On Android, third party applications have always been compiled with
+-fPIC, ever since the initial release of Android. As mentioned earlier
+in this thread, the performance impacts of PIC and PIE are similar.
 
-> did not prevent guests from accessing various hardware features
-> including cache control, coprocessors, debug registers and various
-> processor specific registers.
+Starting in Android 4.1, all dynamically linked ARM [1] and x86 [2]
+executables are compiled with PIE. Compiling with PIE on MIPS was
+added in Android 4.3 [3]. Statically linked executables with PIE are
+not supported today [4], although I'd love to see it in the future.
 
-Use CVE-2014-2915.
+I have yet to hear any complaint, on x86 or ARM, about any real world
+performance impact of PIE on Android, even though the code has been
+live and in user's hands for almost 2 years.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+[1] https://android.googlesource.com/platform/build/+/026a85b129e4540a4d8d40aace47aa0c69f609da
+[2] https://android.googlesource.com/platform/build/+/d9d2e7a42c18a997ae47e4174713b5e2942044b5
+[3] https://android.googlesource.com/platform/build/+/f1e4df72651f38208f209f8c60ee18213a38d21d
+[4] http://comments.gmane.org/gmane.comp.gnu.binutils/56324
 
-iQEcBAEBAgAGBQJTVsZnAAoJEKllVAevmvmsGckH/isRQ50J5iqC+aiqA8FfePkz
-UEI0wkssyAHj5ONn2tHQJj3nPTK/B6tLO2zBEfg+te9vGFKApI3FJUQfyeIXsEvh
-yTLknDonhnmUTa1V/+WuayxxHzpq/IF5rZzcDPGAAs6synX3HrGNeS5S1UfeHaFd
-xLTy4Ikh6TlsRZHavBFYgLkHNocLihq/igfEc81vQnXCyGLQ9Uncwgy+KKpU6RB4
-QyiTvPnAgmMlIXMzT5lgloHE8daKsAlW6ngGEx3QACiuyYK0FU8tHteCQLJfS0wa
-17gaqIgSBa/U7X6xET7JfF3W0N+xguvQkLejUnx/ucAQyO0dAvVDsc4Mf0Z6Fjw=
-=NFw4
------END PGP SIGNATURE-----
+
+-- 
+Nick Kralevich | Android Security | nnk@...gle.com | 650.214.4037
