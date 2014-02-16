@@ -1,33 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/14/3
-Message-Id: <201402140221.s1E2LLCK011852@linus.mitre.org>
-Date: Thu, 13 Feb 2014 21:21:21 -0500 (EST)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: information on "ImageMagick PSD Images Processing RLE Decoding Buffer Overflow Vulnerability"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/16/4
+Message-ID: <20140216142844.GC8901@symphytum.spacehopper.org>
+Date: Sun, 16 Feb 2014 14:28:44 +0000
+From: Stuart Henderson <stu@...cehopper.org>
+To: oss-security@...ts.openwall.com
+Cc: "CERT(R) Coordination Center" <cert@...t.org>
+Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 2014/02/16 01:03, Solar Designer wrote:
+> Hi Will and all,
+> 
+> On Tue, Feb 11, 2014 at 04:37:21PM -0500, CERT(R) Coordination Center wrote:
+> > Thoughts?  What is stopping you from enabling PIE for everything, at
+> > least on the x86_64 platform?
+> 
+> Laziness, other priorities.  We should do it.
+> 
+> There might be examples of runtime generated (JIT) code or
+> bytecode-alike caching across program invocations, where the generated
+> code would reference functions/callbacks in the main program and would
+> thus depend on the program staying where it was during code generation -
+> but I am unaware of specific examples of that.  Anyhow, this is going to
+> be very rare and it's not a reason not to build a distro's packages as
+> PIE by default (exceptions may then be made).
 
-> 2a is referring to "L%02ld", and 2b is referring to "L%06ld"?
+By the way, OpenBSD has switched compilers to generating PIE code by
+default on the majority of architectures, various arch's over the last
+couple of releases, but as of a couple of months ago we've also done
+this for i386 (x86) too, so I can give some specific examples of
+where you can expect to run into problems.
 
-Yes.
+On amd64 (x86_64) fallout has been mostly limited to compilers and a
+couple of other programs, e.g. emacs, qemu, clisp, erlang, ghc, sbcl,
+which we are building with PIE disabled.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Additionally for i386 there have been problems with register pressure
+on programs with their own asm code (mostly games), in particular
+code doing cpuid checks often doesn't save/restore %ebx, but there
+have been some others. In one case there was code for x86 OSX which
+avoids scribbling on %ebx which we've been able to borrow, and I think
+there were one or two where we've switched from asm to a generic C
+implementation. Of course, shared libraries already have to take
+this into account so not too much trouble there.
 
-iQEcBAEBAgAGBQJS/XuxAAoJEKllVAevmvms8e0H/jHlbBSepEEMEqRaF19veN4B
-FyrvZjzMW0Utd7HgjvuEHGVIHnhHIpKlgioqVGdYzQlslk/ZUxGhcCcfG2sJQ7ij
-x+ceL7zQbVrMJuhWLHFFdXwgyAnJOordlbkb1h2Qcf4ZoOuv2kqaCwrZ/5NuDrLT
-rim7x/ty+m/SFtvMARIZmJMvSkrLmksPO5hf6+z8MXeWo9MlS/5OaBm9PP0MnhUW
-4YcK7YdG9Fmwh4XlM/mUPmNg4/MgPCFXiAV6gqRV2WnL13S+q6o55ythGY+geTTP
-xwg/Bfx/po6ckPUIf5DZYcyEIkPLBPwChTaZ5oHEFGUu3Hb0PLLtW1U5qfeOvh0=
-=uvBg
------END PGP SIGNATURE-----
+Everything else, base system and ports, is built with PIE.
+On the whole, experiences have been pretty good. Obviously there is
+some performance impact but we haven't yet had any reports of this
+causing major problems (though we will probably know more about this
+after 5.5 is released when the average user will first see i386
+packages built with PIE by default).
+
