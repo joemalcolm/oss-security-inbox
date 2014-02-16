@@ -1,43 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/15
-Message-Id: <201401092346.s09NkJGn003693@linus.mitre.org>
-Date: Thu, 9 Jan 2014 18:46:19 -0500 (EST)
-From: cve-assign@...re.org
-To: djorm@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: remote code execution via deserialization in XStream
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/16/3
+Message-ID: <20140216133617.GB12853@alf.mars>
+Date: Sun, 16 Feb 2014 14:36:17 +0100
+From: Helmut Grohne <helmut@...divi.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Bug#738855: initscripts: Skip killing root-owned process starting with @
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sun, Feb 16, 2014 at 12:10:43AM +0400, Solar Designer wrote:
+> I reluctantly approved Petter's posting, although it was unclear if it
+> was CC'ed to oss-security on purpose or accidentally.
 
-> http://blog.diniscruz.com/2013/12/xstream-remote-code-execution-exploit.html
+It is common practise on bugs.d.o. to just reply to everyone. I should
+have made clear that oss-sec should only be included for security
+relevant aspects.
 
-Use CVE-2013-7285.
+> FYI, the thread on oss-security started here:
+> 
+> http://www.openwall.com/lists/oss-security/2014/02/14/4
+> 
+> and you may see follow-ups (which were _not_ CC'ed to the Debian bug)
+> via the "thread-next" link.
+> 
+> Dimitri, since you were the one to add the CC:, what would you like us
+> to do?  So far, Petter's is the only such comment CC'ed to oss-security
+> after yours, but I suspect that many more comments will be posted to the
+> Debian bug later (since there's no consensus), and many may/would be
+> CC'ed to oss-security without specific reason (OK, maybe my bringing the
+> question up will affect this and it won't be happening).
 
-At least initially, the scope of this CVE is "XStream is an
-'reflection-based XML-to-Object conversion'" in that file, and all of
-the implications of unrestricted conversion, including "allows the
-creation of server side objects based on reflection (which means that
-you could have all sorts of business-logic sensitive objects being
-created)" -- which is mentioned separately in that file.
+As the one who moved this discussion to oss-sec, I intended only the
+security implications of the approach chosen by systemd (and proposed
+for initscripts) to be discussed here.
 
-If this does not make sense, and multiple CVEs are needed, please let
-us know.
+>From my POV, please block future messages to the bug discussing
+implementation details from oss-sec. 
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSzzPZAAoJEKllVAevmvms3cEH/3MBAH57R/LhQfI5ZMUm9FOD
-eZm7p9IGl3PpSMtrwqSNwXS6InpfAmc04P0xX/HM4yFSRX6yHVaTZA9vbNGRs6PV
-VdZg/A+WiUwdBdGhsFfXCb82QvCthdxyv6AAK5uNpVqQTqmikVPNk8gYxcHXZz3+
-xUmUGLxwlCtImSZ1WiZMSCMYul3jsFsuOiVlqHF2NBoXh+55xmy8hLTOCUijILeG
-lAXfMo25S971OJalr5pzGUC2EPUclV5D08+jv3KCNqryNphsepa3+14OKrvvz1yX
-Q19c3+suDKWOUDvur9ENeHkf//Va881GNGZkcvppfvIkYCMI3vKFaWGMYRWR+jE=
-=Jkgd
------END PGP SIGNATURE-----
+Helmut
