@@ -1,21 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/7
-Message-ID: <CACYkhxhGVjNw-VvWMC65-5y0t8GBQvu2qBurNMTE8N0RQ3gWmw@mail.gmail.com>
-Date: Tue, 5 Aug 2014 16:17:41 +1000
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/16/10
+Message-ID: <20140216212314.GF8901@symphytum.spacehopper.org>
+Date: Sun, 16 Feb 2014 21:23:14 +0000
+From: Stuart Henderson <stu@...cehopper.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE Requests] rsync and librsync collisions
+Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
 Content-Type: text/plain; charset=utf-8
 
-On 5 August 2014 16:12, Loganaden Velvindron <loganaden@...il.com> wrote:
-> Can you please post at least a PoC or steps that others can use to
-> reproduce the issues in rsync and librsync ?
->
-> IMHO, that would *really* help.
+On 2014/02/16 11:01, Christos Zoulas wrote:
+> On Feb 16,  2:28pm, stu@...cehopper.org (Stuart Henderson) wrote:
+> -- Subject: Re: [oss-security] Vendor adoption of PIE INFO#934476 oss-securit
+> 
+> | By the way, OpenBSD has switched compilers to generating PIE code by
+> | default on the majority of architectures, various arch's over the last
+> | couple of releases, but as of a couple of months ago we've also done
+> | this for i386 (x86) too, so I can give some specific examples of
+> | where you can expect to run into problems.
+> | 
+> | On amd64 (x86_64) fallout has been mostly limited to compilers and a
+> | couple of other programs, e.g. emacs, qemu, clisp, erlang, ghc, sbcl,
+> | which we are building with PIE disabled.
+> | 
+> | Additionally for i386 there have been problems with register pressure
+> | on programs with their own asm code (mostly games), in particular
+> | code doing cpuid checks often doesn't save/restore %ebx, but there
+> | have been some others. In one case there was code for x86 OSX which
+> | avoids scribbling on %ebx which we've been able to borrow, and I think
+> | there were one or two where we've switched from asm to a generic C
+> | implementation. Of course, shared libraries already have to take
+> | this into account so not too much trouble there.
+> | 
+> | Everything else, base system and ports, is built with PIE.
+> | On the whole, experiences have been pretty good. Obviously there is
+> | some performance impact but we haven't yet had any reports of this
+> | causing major problems (though we will probably know more about this
+> | after 5.5 is released when the average user will first see i386
+> | packages built with PIE by default).
+> 
+> Are you doing any RELRO work?
+> 
+> christos
 
-I have provided a privileged few with PoC to help grease the wheels.
+AIUI this was added in binutils 2.16, so I don't believe we have
+support for it in our toolchain yet (we're currently using 2.15 on
+most architectures, the last attempt at updating had to be backed
+out due to a number of problems experienced in ports).
 
-My plan was to wait for fixes before releasing the full write-up and code.
-
-Regards,
-  Michael
