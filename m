@@ -1,115 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/24
-Message-ID: <21227.64994.76012.685709@gargle.gargle.HOWL>
-Date: Fri, 31 Jan 2014 20:47:46 +0100
-From: rf@...eap.de
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/16/5
+Message-ID: <20140216152556.GA3974@eldamar.local>
+Date: Sun, 16 Feb 2014 16:25:56 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+Subject: Possible CVE Requests: several issues fixed in Jenkins (Advisory 2014-02-14)
 Content-Type: text/plain; charset=utf-8
 
->>>>> "SD1" == Solar Designer <solar@...nwall.com> writes:
+Hi
 
-    SD1> On Fri, Jan 31, 2014 at 07:18:33PM +0100, rf@...eap.de wrote:
-    >> >>>>> "SD0" == Solar Designer <solar@...nwall.com> writes:
-    SD0> Even though the issue was easy to patch, I nevertheless find
-    SD0> this impressively quick for a major distro like Ubuntu, and this
-    SD0> probably justifies the extra day of embargo.
-    >>
-    >> Yup, was good for us too, so we could double-check that the
-    >> proposed fix from your mail is working OK for others as well,
-    >> since it hasn't arrived in the kernel.org stable-queue git yet.
+Jenkins Advisory from 2014-02-14[1] mentions several security fixes,
+where for SECURITY-76 and SECURITY-88 CVE-2013-5573 was assigned.
 
-    SD1> I think there's some confusion here.  By "the extra day of
-    SD1> embargo" I was referring to the second day of the issue being
-    SD1> known to linux-distros and security@...nel.org, but not made
-    SD1> public yet.  So it's the day right before the oss-security
-    SD1> posting.
+ [1] https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-02-14
 
-    SD1> You're probably referring to the half-day delay between the
-    SD1> oss-security posting and the upstream commit by Linus.
+Do some of the following need also a CVE assignment?
 
-I'm referring to the following part of your message in [1]:
+----cut---------cut---------cut---------cut---------cut---------cut-----
+SECURITY-105
+| In some places, Jenkins XML API uses XStream to deserialize arbitrary
+| content, which is affected by CVE-2013-7285 reported against XStream.
+| This allows malicious users of Jenkins with a limited set of permissions
+| to execute arbitrary code inside Jenkins master.
 
-Would having about 7 days of advance notice (and at most 19 on some
-occasions, per list policy) on a small subset of Linux kernel
-vulnerabilities be of much help in preparing update packages?
+https://github.com/jenkinsci/jenkins/commit/d030fbbaeeb5ee8980b5680b26217930834387f4
 
-    >> By the way, Ubuntu used the longer original patch, which we used
-    >> [1] in the end as well (saw too late that Linus already committed
-    >> the shorter one).
+SECURITY-76 & SECURITY-88 / CVE-2013-5573
+| Restrictions of HTML tags for user-editable contents are too lax. This
+| allows malicious users of Jenkins to trick other unsuspecting users into
+| providing sensitive information.
 
-    SD1> That's curious, but not surprising: I guess Ubuntu was already
-    SD1> in the process of testing kernels built with the longer patch
-    SD1> when PaX Team came up with the shorter patch.  Since either
-    SD1> patch was considered good enough and the proposed embargo
-    SD1> period was very short, it made sense for them not to restart
-    SD1> the process.
+https://github.com/jenkinsci/jenkins/commit/7541e83cc9812afc2b464f0a3254a2453da53f4c
+https://github.com/jenkinsci/jenkins/commit/535c1115bbf07f8a57d509f2d00598d6e21870d4
 
-Exactly, same for us in the end.
+SECURITY-109
+| Plugging a hole in the earlier fix to SECURITY-55. Under some
+| circimstances, a malicious user of Jenkins can configure job X to
+| trigger another job Y that the user has no access to.
 
-    >> Coming back to our earlier discussion about linux-distros
-    >> membership [2]: It definitely helped being on the list.
+https://github.com/jenkinsci/jenkins/commit/b6b2a367a7976be80a799c6a49fa6c58d778b50e
 
-    SD1> Do you mean being on oss-security?
+SECURITY-108
+| CLI job creation had a directory traversal vulnerability. This allows a
+| malicious user of Jenkins with a limited set of permissions to overwrite
+| files in the Jenkins master and escalate privileges.
 
-Yes.
+https://github.com/jenkinsci/jenkins/commit/ad38d8480f20ce3cbf8fec3e2003bc83efda4f7d
 
-    >> Since the patch was trivial, we didn't suffer a significant time
-    >> delay compared to other distros. In case of more complicated
-    >> patches, this could have gotten tough though given the fact that
-    >> the new builds need a significant amount of testing as well.
-    >>
-    >> It would be nice, if we (and others in a similar boat) could get
-    >> a head-start of at least a couple of days (that's how I
-    >> understood your question in [2]). Maybe a "second-class citizen"
-    >> list could complement the linux-distros list with notifications
-    >> slightly earlier than on oss-security.
+SECURITY-106
+| The embedded Winstone servlet container is susceptive to session
+| hijacking attack.
 
-    SD1> In this case, it was 2 days of advance notice to all on
-    SD1> linux-distros.  I see no point in splitting this further.
+https://github.com/jenkinsci/jenkins/commit/29351af4bd01f61715418916fc12c52be46bd9b0
+(issue in jenkins-winstone?)
 
-Definitely true in this case.
+SECURITY-93
+| The password input control in the password parameter definition in the
+| Jenkins UI was serving the actual value of the password in HTML, not an
+| encrypted one. If a sensitive value is set as the default value of such
+| a parameter definition, it can be exposed to unintended audience.
 
-    >> [1] https://qlustar.com/news/qsa-0131141-linux-kernel-vulnerabilities
-    >> [2] http://www.openwall.com/lists/oss-security/2014/01/22/1
+https://github.com/jenkinsci/jenkins/commit/bf539198564a1108b7b71a973bf7de963a6213ef
 
-    SD1> OK, you have demonstrated nicely that you're able to issue
-    SD1> advisories and updates promptly.  Well done!
+SECURITY-89
+| Deleting the user was not invalidating the API token, allowing users to
+| access Jenkins when they shouldn't be allowed to do so.
 
-    SD1> However, since you ended up updating your kernel based on which
-    SD1> fixes went into Ubuntu's, would you do that any quicker if you
-    SD1> were on linux-distros?
+https://github.com/jenkinsci/jenkins/commit/5548b5220cfd496831b5721124189ff18fbb12a3
 
-This time I was lucky in that a) Ubuntu was fast, b) the patch was
-trivial and c) the patch was identical to the one needed for our kernel.
-None of these are guaranteed. Usually I would take the upstream
-kernel.org patch or if not yet available the original patch and adapt it
-to our kernel. We will run/support 3.12 longer than kernel.org will
-provide updates, so at some stage, we need to start porting patches
-ourselves. Note that since we're providing Lustre/ZFS support, we have some
-restrictions in what kernel versions we use.
+SECURITY-80
+| Jenkins UI was vulnerable to click jacking attacks.
 
-    SD1> Ubuntu's kernel updates became available only after public
-    SD1> disclosure anyway.  Would you approach fixing this issue in
-    SD1> your kernels differently if you had advance notice (but no
-    SD1> access to Ubuntu's work-in-progress on their updates)?  Of
-    SD1> course, you could, by applying one of PaX Team's patches posted
-    SD1> to linux-distros directly, or:
+https://github.com/jenkinsci/jenkins/commit/16931bd7bf7560e26ef98328b8e95e803d0e90f6
 
-Yes, see above.
+SECURITY-79
+| "Jenkins' own user database" was revealing the presence/absence of users
+| when login attempts fail.
 
-    SD1> Given the specialized nature of your distro, I think it'd be
-    SD1> best for you to disable x32 support until you possibly include
-    SD1> an x32 userland.
+https://github.com/jenkinsci/jenkins/commit/fbf96734470caba9364f04e0b77b0bae7293a1ec
 
-Sure, I know.
+SECURITY-77
+| Jenkins had a cross-site scripting vulnerability in one of its cookies.
+| If Jenkins is deployed in an environment that allows an attacker to
+| override Jenkins cookies in victim's browser, this vulnerability can be
+| exploited.
 
-    SD1> BTW, Ubuntu's advisory text (and thus also yours) is slightly
-    SD1> wrong:
+https://github.com/jenkinsci/jenkins/commit/a0b00508eeb74d7033dc4100eb382df4e8fa72e7
 
-    SD1> <grsecurity> Ubuntu's advisory says the vulnerability is in
-    SD1> recvmsg.  It should say recvmmsg (newer syscall).
+SECURITY-75
+| Jenkins was vulnerable to session fixation attack. If Jenkins is
+| deployed in an environment that allows an attacker to override Jenkins
+| cookies in victim's browser, this vulnerability can be exploited.
 
-Thanks, fixed.
+https://github.com/jenkinsci/jenkins/commit/8ac74c350779921598f9d5edfed39dd35de8842a
 
-Roland
+SECURITY-74
+| Stored XSS vulnerability. A malicious user of Jenkins with a certain set
+| of permissions can cause Jenkins to store arbitrary HTML fragment.
+
+https://github.com/jenkinsci/jenkins/commit/5d57c855f3147bfc5e7fda9252317b428a700014
+
+SECURITY-73
+| Some of the system diagnostic functionalities were checking a lesser
+| permission than it should have. In a very limited circumstances, this
+| can cause an attacker to gain information that he shouldn't have
+| access to.
+
+https://github.com/jenkinsci/jenkins/commit/0530a6645aac10fec005614211660e98db44b5eb
+----cut---------cut---------cut---------cut---------cut---------cut-----
+
+Do some of these issue need a CVE assigned?
+
+Regards,
+Salvatore
