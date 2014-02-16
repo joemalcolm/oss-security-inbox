@@ -1,86 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/10
-Message-ID: <545C4DEF.5030600@mccme.ru>
-Date: Fri, 07 Nov 2014 07:43:27 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: binutils@...rceware.org
-CC: oss-security@...ts.openwall.com
-Subject: Fuzzing objdump (PR 17512) and readelf (PR 17531)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/16/9
+Message-ID: <CAFJ0LnE6f_qVvBdV9jWJOJ3jsce=1-_zKuzUHiGjbXuM-14ZeQ@mail.gmail.com>
+Date: Sun, 16 Feb 2014 12:19:23 -0800
+From: Nick Kralevich <nnk@...gle.com>
+To: oss-security@...ts.openwall.com
+Cc: "CERT(R) Coordination Center" <cert@...t.org>
+Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Sun, Feb 16, 2014 at 11:54 AM, Nick Kralevich <nnk@...gle.com> wrote:
+> Statically linked executables with PIE are
+> not supported today [4], although I'd love to see it in the future.
+>
+> [4] http://comments.gmane.org/gmane.comp.gnu.binutils/56324
 
-I was privately asked how I fuzzed objdump in PR 17512 and I figured it 
-could be interesting to others too. So here it is.
+Expanding on what I wrote earlier...
 
-Short version: I used the most naive way.
+The Google security patch rewards program [5] rewards security
+improvements in open source projects, such as GCC, llvm, and Android.
+While I can't speak for the committee which approves these rewards,
+I'd be happy to support and recommend rewards to any security
+researcher who implements statically linked PIE support. In my mind,
+there are three possible rewards here, one for GCC, llvm, and Android.
 
-Longer version: I started with the most simple approach I could get 
-results with and improved it only a little bit so far. There was just no 
-need for improvements -- until recently I was getting more crashes than 
-I can analyze (i.e. run through valgrind:-). Thanks to the excellent 
-work of Nick Clifton, crashes are harder to get now. But there is a long 
-way to go.
-
-Hardware resources: one several years old desktop. Previous batches of 
-crashes required from minutes to half an hour to get. The last one is 
-the result of one night.
-
-binutils was built like `./configure && make`. Using address-sanitizer 
-would probably improve the process.
-
-Commands fuzzed: `objdump -x $file` in PR 17512[1] and `readelf -a 
-$file` in PR 17531. Someone more familiar with binutils could choose a 
-command involving more parsing and hence improve code coverage.
-
-[1] https://sourceware.org/bugzilla/show_bug.cgi?id=17512
-[2] https://sourceware.org/bugzilla/show_bug.cgi?id=17531
-
-Fuzzer: zzuf with more-or-less default options. It was used like this:
-
-   zzuf -s 0:1000000 -c -C 0 -q -T 5 -M 100 -j 4 objdump -x "$file" 2> log
-
-Options:
-
-   -s 0:1000000 -- seeds to try, change as you wish
-   -c           -- only fuzz files specified in command line (just in case)
-   -C 0         -- don't stop after the first crash
-   -q           -- suppress output from objdump
-   -T 5         -- limit cputime to not hang on infinite loops
-   -M 100       -- limit memory to not eat all of it
-   -j 4         -- number of simultaneous jobs
-
-Another option of interest is -r -- ratio of changed bits.
-
-After you get a crash like this:
-
-   zzuf[s=1448,r=0.004]: signal 11 (SIGSEGV)
-
-you can get a fuzzed sample with the following command:
-
-   zzuf -s 1448 -r 0.004 < "$file" > fuzzed-file
-
-In fact, I run zzuf from a script against different samples in batches 
-of 10K seeds, then run random selection from found crashes under 
-valgrind and collect unique errors. When crashes are rare it's possible 
-to run all of them through valgrind. This part of the process is also 
-quite naive but it you are fixing crashes as you find them it's not 
-needed at all.
-
-Samples: I started with clam.exe from ClamAV, then used 'main() { return 
-0; }' compiled in different ways and then switched to samples from 
-https://github.com/radare/radare2-regressions . Looking at code coverage 
-and optimizing the set of samples could improve the process. My uploaded 
-samples named as (\d+)-(0.004) are clam.exe zzufed with seed $1 and 
-ratio $2, samples named as (\d+)-(\d+)-(0.004) are from 
-radare2-regressions zzufed in the same way. If someone is interested I 
-can provide a precise list.
-
-License -- short version: AFAICT clam.exe is under GPLv2 and "was 
-entirely written by hand using HIEW"[1], radare2-regressions is under 
-GPLv3+. Feel free to use in testsuites etc.
-
-[1] http://lurker.clamav.net/message/20071225.173819.0255a1c0.en.html
+[5] https://www.google.com/about/appsecurity/patch-rewards/
 
 -- 
-Alexander Cherepanov
+Nick Kralevich | Android Security | nnk@...gle.com | 650.214.4037
