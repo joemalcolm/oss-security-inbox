@@ -1,46 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/15/6
-Message-Id: <201406151708.s5FH8lGR001717@linus.mitre.org>
-Date: Sun, 15 Jun 2014 13:08:47 -0400 (EDT)
-From: cve-assign@...re.org
-To: rich@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, henri@...v.fi
-Subject: Re: CVE Request for KIO/kmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/17/7
+Message-ID: <53022238.6020504@enovance.com>
+Date: Mon, 17 Feb 2014 15:52:40 +0100
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2014-005] Missing SSL certificate check in Python Swift client (CVE-2013-6396)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+OpenStack Security Advisory: 2014-005
+CVE: CVE-2013-6396
+Date: February 17, 2014
+Title: Missing SSL certificate check in Python Swift client
+Reporter: Thomas Leaman (HP)
+Products: python-swiftclient
+Versions: 1.0 version up to 1.9.0
 
-We have no objection at all to your using distros@...openwall.org
-for this kio report.
+Description:
+Thomas Leaman from HP reported that the Python Swift client was failing
+to properly check certificates during the establishment of HTTPS
+connections. A remote attacker with access over segments of the network
+between client and server could potentially set up a man-in-the-middle
+attack and access the contents of the Swift client's communication with
+the server, including any used credentials.
 
-> In the past when I've tried to use the cve-assign address it has basically
-> been a black hole.
+python-swiftclient fix (included in 2.0 release):
+https://review.openstack.org/#/c/69187
 
-Thanks for noting this, but we haven't been able to find why that
-happened. We did a complete search and there's never been any e-mail
-received at the cve-assign@...re.org address from any kde.org sender
-or the name Richard Moore or Rich Moore. Before October 2011, we
-advertised a different address, cve@...re.org, reaching different
-people at MITRE, but unfortunately do not have the full archive of
-that online. We sent one reply in December 2011 from
-cve-assign@...re.org to a kde.org address in response to e-mail sent
-to cve@...re.org (it was related to the
-http://openwall.com/lists/oss-security/2011/12/07/3 post).
+References:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6396
+https://bugs.launchpad.net/bugs/1199783
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
-iQEcBAEBAgAGBQJTndKBAAoJEKllVAevmvmsuuwH/1ueA7GZW8SCOmTltx5hvQXT
-0QFg8kaTk+I1whCLJosOHweIej8MMNOWbC/kx5jENsFmhNCh57m/klFVwVQ4PBYO
-kj/cEHp7exRWyzvNJLU2KQlWLl6Yrg/qpGwYDAOR/ggcRfFySP6lXYbQ6MgDMjn0
-ExU9VryQsCrj/DbuNl1yIPZKUxq4JXCp/C3ZZ7v7jJPlIl1sgDlXRU1zBAdRz5/L
-aN9OYz6PaA98ENDrCg1MPQR0hoUpGo9s1xeGFENFiImoqjtWEQbt7G7LlviloIov
-tZ34FmJ4v/ckVJXiD39L+/icZ/7OyYE/Gt1Zh3E9BYf7tkeLr/+qGDGVuESXylc=
-=7E3L
------END PGP SIGNATURE-----
+
+Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
