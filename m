@@ -1,41 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/19/6
-Message-Id: <201405190709.s4J78uY5026465@linus.mitre.org>
-Date: Mon, 19 May 2014 03:08:56 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/17/6
+Message-ID: <CACYkhxi6-E=iUUFaT+fHbF5BKuznFjkpaKuF44vm1-yc6axEKw@mail.gmail.com>
+Date: Mon, 17 Feb 2014 21:54:02 +1100
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request for buffer overrun in CHICKEN Scheme
+Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 17 February 2014 19:33, P J P <ppandit@...hat.com> wrote:
 
-> I would like to request a CVE for a buffer overrun bug in CHICKEN Scheme
-> which is very similar to CVE-2013-4385.  It affects a very particular,
-> not very common use of the read-u8vector! procedure.  If given a buffer
-> and #f (the Scheme value for "false") as the buffer's size (which should
-> trigger automatic size detection but doesn't), it will read beyond the
-> buffer, until the input port (file, socket, etc) is exhausted.  This may
-> result in the typical potential remote code execution or denial of
-> service
+>   Hello,
+>
+> +-- On Wed, 12 Feb 2014, P J P wrote --+
+> | +-- On Wed, 12 Feb 2014, Michael Samuel wrote --+
+> | | >  -> http://www.openwall.com/lists/oss-security/2014/02/11/7
+> | | The same issue, different result.
+> |
+> |   Yes, true. Thank you for confirming.
+>
+>   So, does this qualify for a CVE?
 
-Use CVE-2014-3776 for this "should trigger automatic size detection
-but doesn't" issue that has a resultant buffer overflow.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+I think I've come around to a yes for this one. Pushing attacker-chosen
+entries
+out of the cache after only 100 packets is clearly not what the admin
+wants.  It
+makes a secondary attack (DNS over UDP blind cache poisoning) much more
+viable than it was.
 
-iQEcBAEBAgAGBQJTea2nAAoJEKllVAevmvmsDLcIAJdrjm3SKzzVZNSil/uS5O8R
-L4AisRKJlVBvsCG3QcYeabzo8EbmLLDFqOlmISAi/MPhU0mX1ShXJ4luENfHxCBp
-FrHjXnnpS3oppIbSdcl5o3at1PnVGJevSNVHnMBK4Ou3qgnMlwWJWD8n5GC3/YaH
-YaHyFUvaObvuEMaFBIZw6wBMk5+dIerW6ElMh8GvBkWecqovKdDC+YsrH0tnYDUN
-K3ICeWx8LY7M1eeIdfvhbCHhOYamogJ4ws/V4rbG+5kzeHwSFhRSxAUNIUU1WbZV
-1k45rmStE35kIFFxzmTH/dAuLk7Fn3B3+vbSDvCsyhFwhSYOLb01wuG+UYnSlAs=
-=sBKu
------END PGP SIGNATURE-----
+I can think of some DoS scenarios where this vector would assist another
+attack.
+
+Regards,
+  Michael
+
