@@ -1,29 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/6
-Message-ID: <20140506205558.37a107d1@redhat.com>
-Date: Tue, 6 May 2014 20:55:58 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: nicolas.gregoire@...rri.fr
-Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/17/2
+Message-ID: <alpine.LFD.2.10.1402171402380.21151@javelin.pnq.redhat.com>
+Date: Mon, 17 Feb 2014 14:03:49 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 06 May 2014 20:21:28 +0200 Nicolas Grégoire wrote:
+  Hello,
 
-> > libxml2 [...] incorrectly performs entity substituton in the doctype
-> > prolog, even if the application using libxml2 disabled any entity
-> > substitution. 
-> 
-> I'm not sure that I understand this bug. Do you have a PoC?
++-- On Wed, 12 Feb 2014, P J P wrote --+
+| +-- On Wed, 12 Feb 2014, Michael Samuel wrote --+
+| | >  -> http://www.openwall.com/lists/oss-security/2014/02/11/7
+| | The same issue, different result.
+| 
+|   Yes, true. Thank you for confirming.
 
-The new issue is very similar to the one fixed by:
+  So, does this qualify for a CVE?
 
-https://git.gnome.org/browse/libxml2/commit/?id=4629ee02ac649c27f9c0cf98ba017c6b5526070f
-
-which is linked to the infamous CVE-2013-0339.  4629ee0 fixed the issue
-for general entities, while the 9cd1c3c fixes the same type of problem
-for parameter entities.  Even when parsing without NOENT, external
-parameter entities are fetched.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
