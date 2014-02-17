@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/4
-Message-ID: <20140304105848.GM12584@dhcp-25-225.brq.redhat.com>
-Date: Tue, 4 Mar 2014 11:58:48 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/17/4
+Message-ID: <20140217085857.GF23689@dhcp-25-225.brq.redhat.com>
+Date: Mon, 17 Feb 2014 09:58:58 +0100
 From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-0100 -- Linux kernel: net: inet frag code race condition leading to user-after-free
+Subject: CVE-2014-0069 -- kernel: cifs: incorrect handling of bogus user pointers during uncached writes
 Content-Type: text/plain; charset=utf-8
 
-A very subtle race condition between inet_frag_evictor,
-inet_frag_intern and the IPv4/6 frag_queue and expire functions
-(basically the users of inet_frag_kill/inet_frag_put) was found.
+A flaw was found in the way cifs handled iovecs with bogus pointers
+userland passed down via writev() during uncached writes.
 
-What happens is that after a fragment has been added to the hash chain
-but before it's been added to the lru_list (inet_frag_lru_add), it may
-get deleted (either by an expired timer if the system load is high or
-the timer sufficiently low, or by the fraq_queue function for different
-reasons) before it's added to the lru_list, then after it gets added
-it's a matter of time for the evictor to get to a piece of memory which
-has been freed leading to a number of different bugs depending on what's
-left there.
-
-Introduced by:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=3ef0eb0d
-
-Upstream patch submission:
-http://patchwork.ozlabs.org/patch/325844/
+An unprivileged local user with access to cifs share could use this flaw
+to crash the system or leak kernel memory. Privilege escalation cannot
+be ruled out (since memory corruption is involved), but is unlikely.
 
 References:
-https://bugzilla.redhat.com/show_bug.cgi?id=1070618
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-0069
 
+Upstream patch:
+
+Patches have been reported to the linux-cifs mailing list:
+
+http://article.gmane.org/gmane.linux.kernel.cifs/9401
+http://article.gmane.org/gmane.linux.kernel.cifs/9402
+
+Only the first patch is required to fix the flaw.  The second patch is
+to ensure that this does not get hit again in the future by adding
+extra protection. 
+
+Thanks,
 -- 
 Petr Matousek / Red Hat Security Response Team
 PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
