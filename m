@@ -1,81 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/13
-Message-ID: <20141017225846.GA25470@zoho.com>
-Date: Fri, 17 Oct 2014 22:58:46 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/17/5
+Message-ID: <486220758.7797712.1392628327179.JavaMail.zimbra@redhat.com>
+Date: Mon, 17 Feb 2014 04:12:07 -0500 (EST)
+From: Arun Neelicattu <abn@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Nikos Mavrogiannopoulos <nmav@...tls.org>, dkg@...thhorseman.net
-Subject: neuter the poodle (was: Re: Truly scary SSL 3.0 vuln to be revealed soon:)
+Cc: cve-assign@...re.org
+Subject: Re: CVE Split: CVE-2014-0050 Apache Commons FileUpload and Apache Tomcat DoS
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 17, 2014 at 03:40:31PM -0400, Daniel Kahn Gillmor wrote:
-> Please see: http://www.gnutls.org/security.html#GNUTLS-SA-2014-4
+Hi,
+
+Checking to see if there has been a decision regarding this? Will there be a split?
+
+-arun
+
+----- Original Message -----
+> From: "Arun Neelicattu" <abn@...hat.com>
+> To: oss-security@...ts.openwall.com
+> Cc: cve-assign@...re.org
+> Sent: Friday, February 7, 2014 11:09:49 AM
+> Subject: [oss-security] CVE Split: CVE-2014-0050 Apache Commons FileUpload and Apache Tomcat DoS
 > 
-> and Nikos' writeup here:
+> Hi,
 > 
->  http://nmav.gnutls.org/2014/10/what-about-poodle.html
+> CVE-2014-0050 was assigned to a flaw that affects both Apache Commons
+> FileUpload and Apache Tomcat DoS [1].
 > 
-> From the latter link:
+> Although Commons FileUpload and Tomcat are affected by this flaw and the
+> vulnerable classes share the same ancestry, the code bases for them have
+> been maintained in separate source trees for a long while now.
 > 
-> >>> The good news is, that only browsers use this construct, and no
-> >>> other applications should be affected.
+> Can this CVE be split?
 > 
-> Nikos (or anyone else on OSS-security), are you sure that only
-> browsers do this?  what about mail clients like Thunderbird or
-> Mail.app making IMAPS or POPS or submission connections?
-
-SSLv3 is vulnerable to padding oracle attacks on CBC-mode ciphers. This
-vulnerability, tagged CVE-2014-3566, exists independently of types of
-clients, servers, or protocols being layered over SSL/TLS.
-
-POODLE is a specific attack vector that leverages "protocol fallback" in
-order to exploit CVE-2014-3566.
-
-Notwithstanding reports like "The good news is, that only browsers use
-this construct, and no other applications should be affected." [1] and
-"Currently, only HTTPs clients perform out-of-band protocol fallback."
-[2], I can confirm what you're hinting at.
-
-Browsers are not the only client-side applications that implement
-"protocol fallback". The below transcript shows an MITM-triggered
-Thunderbird 24.7.0 IMAPS protocol downgrade to SSLv3 even though both
-peers speak TLSv1.
-
---mancha
-
-[1] http://nmav.gnutls.org/2014/10/what-about-poodle.html
-[2] https://access.redhat.com/node/1232123
-
-========= transcript ============
-Setting up mancha-in-the-middle...
-
-127.0.0.1:44366 -> 127.0.0.1:993
-handshake               [tls1.0]        (client_hello)
-
-Start protocol downgrade attack...
-
-127.0.0.1:44371 -> 127.0.0.1:993
-handshake               [ssl3.0]        (client_hello)
-
-127.0.0.1:993 -> 127.0.0.1:44371
-handshake               [ssl3.0]        (server_hello)
-handshake               [ssl3.0]        (certificate)
-handshake               [ssl3.0]        (server_key_exchange)
-handshake               [ssl3.0]        (server_hello_done)
-
-127.0.0.1:44371 -> 127.0.0.1:993
-handshake               [ssl3.0]        (client_key_exchange)
-change_cipher_spec      [ssl3.0]
-handshake               [ssl3.0]        (encrypted)
-
-127.0.0.1:993 -> 127.0.0.1:44371
-change_cipher_spec      [ssl3.0]
-handshake               [ssl3.0]        (encrypted)
-
-127.0.0.1:993 -> 127.0.0.1:44371
-application_data        [ssl3.0]
-application_data        [ssl3.0]
-=================================
-
-
-Content of type "application/pgp-signature" skipped
+> -arun
+> 
+> [1] http://seclists.org/fulldisclosure/2014/Feb/41
+> 
+> --
+> Arun Neelicattu / Red Hat Security Response Team
+> PGP: 0xC244393B 5229 F596 474F 00A1 E416  CF8B 36F5 5054 C244 393B
+> 
