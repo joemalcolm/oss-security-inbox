@@ -1,36 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/10
-Message-Id: <201402282007.s1SK7fUp001845@linus.mitre.org>
-Date: Fri, 28 Feb 2014 15:07:41 -0500 (EST)
-From: cve-assign@...re.org
-To: tristan.cacqueray@...vance.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for vulnerability in OpenStack Keystone
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/1
+Message-ID: <5302DF4A.6010607@redhat.com>
+Date: Mon, 17 Feb 2014 23:19:22 -0500
+From: Paul Wouters <pwouters@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request for unfixed CVE-2013-6466 in openswan-2.6.40
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> https://launchpad.net/bugs/1260080
+openswan-2.6.40 (released Feb 14) was supposed to address CVE-2013-6466 (which also affected libreswan as per CVE-2013-6467) but the fix is incomplete and
+openswan can still crashed using mangled or missing IKEv2 payloads.
 
-> This results in the trust token not being invalidated by the trustee's
-> token revocation (bulk revocation).
+libreswan-3.8 that properly addressed this issue was released on January 15. Exploit code has been available as part of the libreswan test suite at
+https://github.com/libreswan/libreswan/tree/master/testing/pluto/ikev2-15-fuzzer
 
-Use CVE-2014-2237.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000000000 in ?? ()
+(gdb) bt
+#0  0x0000000000000000 in ?? ()
+#1  0x00007f6f17b89477 in process_v2_packet (mdp=0x7f6f17e504a0 <md.16140>)
+    at /root/openswan-2.6.40/programs/pluto/ikev2.c:541
+#2  0x00007f6f17ba5c6f in process_packet (mdp=<optimized out>) at /root/openswan-2.6.40/programs/pluto/demux.c:175
+#3  0x00007f6f17ba5dbc in comm_handle (ifp=ifp@...ry=0x7f6f182abb30) at /root/openswan-2.6.40/programs/pluto/demux.c:220
+#4  0x00007f6f17b73bc8 in call_server () at /root/openswan-2.6.40/programs/pluto/server.c:764
+#5  0x00007f6f17b5b46d in main (argc=29, argv=0x7fffc5817a18) at /root/openswan-2.6.40/programs/pluto/plutomain.c:1110
+(gdb) f 1
+#1  0x00007f6f17b89477 in process_v2_packet (mdp=0x7f6f17e504a0 <md.16140>)
+    at /root/openswan-2.6.40/programs/pluto/ikev2.c:541
+541		stf = (svm->processor)(md);
+(gdb) p svm->processor
+$2 = (state_transition_fn *) 0x0
 
-iQEcBAEBAgAGBQJTEOrhAAoJEKllVAevmvmsa2cH/AiKdvUmbpV91w59hZU6QDGA
-0dJtg5uq+siXUXO3OwK4/20KDPvLffiA9LoOJkhBjtQDA6HKiLA8Vs/HIxCaUFXI
-bDuJ37wAnVrwWdNpY6QYgPLE34Zxm7j8N/LnAI70IAD6wyUyIn+bpZ5Ct6nTnntI
-pge99EgUz6MOBnnmBtTCRvviQzz3KEjSHvVT2OnR1/ebBvtHja/TaI7GQNWBfVb6
-p9+o2eDvdu6+mA/WVKK5hYzgXQluE7x/1uDNawr6f2w9kONtNEXZKylT0oUqTTts
-XyFRDcm4tu7Jz1yVjJ7zi28ZvpPo8siz42+vQTMPlM+459AvTwu6s5sI2MuDBGg=
-=/z/h
------END PGP SIGNATURE-----
+
+I would like a new CVE number to track the openswan-2.6.40 vulnerability.
+
+Regards,
+
+Paul
