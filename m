@@ -1,49 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/11/2
-Message-Id: <201404110613.s3B6Dgxd010964@linus.mitre.org>
-Date: Fri, 11 Apr 2014 02:13:42 -0400 (EDT)
-From: cve-assign@...re.org
-To: krahmer@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: pam_cifscreds stack overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/10
+Message-ID: <20140218190658.GC16793@higgins.local>
+Date: Tue, 18 Feb 2014 11:06:58 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, secalert@...hat.com
+Subject: Denial of Service Vulnerability in Action View when using render :text (CVE-2014-0082)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Denial of Service Vulnerability in Action View when using render :text
 
-> We are tracking a patch at:
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=870168
-> 
-> Fixing buffer overflow in cifskey, maybe also used in samba itself?
+There is a denial of service vulnerability in the text rendering component of
+Action View. This vulnerability has been assigned the CVE identifier
+CVE-2014-0082.
 
-Use CVE-2014-2830 for any product that is exploitable because of
-the use of sprintf as shown in:
+Versions Affected: 3.0.x, 3.1.x, 3.2.x
+Not affected: 4.0.x
+Fixed Versions: 3.2.17
 
-  http://bugzillafiles.novell.org/attachment.cgi?id=585460
+Impact
+------
 
-Apparently one exploitable case is the pam_cifscreds product. We do not
-know whether there is an exploitable case in the cifs-utils package
-because of the:
+Strings sent in specially crafted headers will be converted to symbols. This can
+cause a denial of service since symbols are not removed by the garbage collector.
+All users running an affected release should either upgrade or use one of the work
+arounds immediately.
 
-  https://git.samba.org/?p=cifs-utils.git;a=blob;f=cifskey.c
+Releases
+--------
 
-code. There might be other products using an essentially identical
-cifskey.c file.
+The FIXED releases are available at the normal locations.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Workarounds
+-----------
 
-iQEcBAEBAgAGBQJTR4e+AAoJEKllVAevmvmsXnkIAK1AI1cXGWICxk/efLoDVCTH
-hkyy/hFYpPa5/qsGoH9sbnHTCtFcHA/rwm2NLLuDCVNzw9C50e/w9mDWI21M4uN3
-ogRjeghZjz1ut1TpH6JFD9dnpcUI/JSdFl7vgWlWwmyNcYQowWlUMX/dR5lLnj14
-GMUZrHJXuutLUxnsGxX6MOStWRcC3QkOJZREJAdTsru9blhKYZHDsCtdaGQJpnIh
-ivAEOeYpKY5f+9lfEBbfelNh/G6p6gKjZtPMO0HXdfLXB5iUxLpx8gKNiRrRmzZw
-EM+s/XfzTnS+3OOy7iQyE1kLN44jPh0S85UuDZ9xxdkEQdEeUszr7TrLgF9s0cA=
-=5G8d
------END PGP SIGNATURE-----
+Users who cannot upgrade may apply this monkey patch as an initializer to work around
+the issue:
+
+```
+ActiveSupport.on_load(:action_view) do
+  ActionView::Template::Text.class_eval do
+    def formats
+      [@mime_type.respond_to?(:ref) ? @mime_type.ref : @mime_type.to_s]
+    end
+  end
+end
+```
+
+Patches
+-------
+
+To aid users who aren't able to upgrade immediately we have provided patches for the
+supported release series. They are in git-am format and consist of a single changeset.
+
+ * 3-2-render_text_dos.patch - Patch for 3.2 series
+ * 3-1-render_text_dos.patch - Patch for 3.1 series
+ * 3-0-render_text_dos.patch - Patch for 3.0 series
+
+Please note that only the 4.0.x and 3.2.x series are supported at present. Users of
+earlier unsupported releases are advised to upgrade as soon as possible as we cannot
+guarantee the continued availability of security fixes for unsupported releases.
+
+Credits
+-------
+
+Thanks to Toby Hsieh of SlideShare for reporting the issue to us and working in
+the patch with us.
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "3-0-render_text_dos.patch" of type "text/plain" (1952 bytes)
+
+View attachment "3-1-render_text_dos.patch" of type "text/plain" (1946 bytes)
+
+View attachment "3-2-render_text_dos.patch" of type "text/plain" (1947 bytes)
+
+Content of type "application/pgp-signature" skipped
