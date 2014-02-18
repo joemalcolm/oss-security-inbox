@@ -1,50 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/16
-Message-ID: <5315FEA9.4040400@enovance.com>
-Date: Tue, 04 Mar 2014 17:26:17 +0100
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-006] Trustee token revocation does not work with memcache backend (CVE-2014-2237)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/8
+Message-ID: <20140218190309.GA16793@higgins.local>
+Date: Tue, 18 Feb 2014 11:03:09 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, secalert@...hat.com
+Subject: XSS Vulnerability in number_to_currency, number_to_percentage and number_to_human (CVE-2014-0081)
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-006
-CVE: CVE-2014-2237
-Date: March 04, 2014
-Title: Trustee token revocation does not work with memcache backend
-Reporter: Morgan Fainberg (Metacloud)
-Products: Keystone
-Versions: 2013.1 up to 2013.1.4 and 2013.2 versions up to 2013.2.2
+XSS Vulnerability in number_to_currency, number_to_percentage and number_to_human
 
-Description:
-Morgan Fainberg from Metacloud reported a vulnerability in the Keystone
-memcache token backend. When a trustor issues a trust token with
-impersonation enabled, the token is only added to the trustor's token
-list and not to the trustee's token list. This results in the trust
-token not being invalidated by the trustee's token revocation (bulk
-revocation). This is most noticeable when the trustee user is disabled
-or the trustee changes a password. Only setups using the memcache
-backend for tokens in Keystone are affected.
+There is an XSS vulnerability in the number_to_currency, number_to_percentage
+and number_to_human helpers in Ruby on Rails. This vulnerability has been
+assigned the CVE identifier CVE-2014-0081.
 
-Icehouse (development branch) fix:
-https://review.openstack.org/60743
+Versions Affected:  All.
+Fixed Versions:     4.1.0.beta2, 4.0.3, 3.2.17.
 
-Havana fix:
-https://review.openstack.org/75521
+Impact
+------
+These helpers allows users to nicely format a numeric value. Some of the parameters
+to the helper (format, negative_format and units) are not escaped correctly.
+Application which pass user controlled data as one of these parameters are
+vulnerable to an XSS attack.
 
-Grizzly fix:
-https://review.openstack.org/75526
+All users passing user controlled data to these parameters of the number helpers
+should either upgrade or use one of the workarounds immediately.
 
-Notes:
-This fix will be included in the icehouse-3 development milestone and in
-future 2013.1.5 and 2013.2.3 releases.
+Releases
+--------
+The 4.1.0.rc1, 4.0.3 and 3.2.17 releases are available at the normal locations.
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-2237
-https://launchpad.net/bugs/1260080
+Workarounds
+-----------
 
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+The workaround for this issue is to escape the value passed to the parameter.
+For example, replace code like this:
 
+```
+<%= number_to_currency(1.02, format: params[:format]) %>
+```
 
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
+With code like this
+
+```
+<%= number_to_currency(1.02, format: h(params[:format])) %>
+```
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
+
+* 4-1-beta-number_helpers_xss.patch - Patch for 4.1-beta series
+* 4-0-number_helpers_xss.patch - Patch for 4.0 series
+* 3-2-number_helpers_xss.patch - Patch for 3.2 series
+
+Please note that only the 4.0.x and 3.2.x series are supported at present. Users
+of earlier unsupported releases are advised to upgrade as soon as possible as we
+cannot guarantee the continued availability of security fixes for unsupported
+releases.
+
+Credits
+-------
+
+Thanks to Kevin Reintjes for reporting the issue to us.
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "3-2-number_helpers_xss.patch" of type "text/plain" (9151 bytes)
+
+View attachment "4-0-number_helpers_xss.patch" of type "text/plain" (10930 bytes)
+
+View attachment "4-1-beta-number_helpers_xss.patch" of type "text/plain" (8295 bytes)
+
+Content of type "application/pgp-signature" skipped
