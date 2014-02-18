@@ -1,44 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/21
-Message-ID: <CAA7UWsW7jo9fE3NTv7QbRLHt33BpBPyuwX_b_2fU2P+Ce+P5ZQ@mail.gmail.com>
-Date: Fri, 10 Oct 2014 15:15:46 -0400
-From: David Leon Gil <coruus@...il.com>
-To: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
-Cc: Daniel Kahn Gillmor <dkg@...thhorseman.net>, oss-security@...ts.openwall.com,  "gnupg-devel@...pg.org" <gnupg-devel@...pg.org>, Werner Koch <wk@...pg.org>, thijs@...ian.org
-Subject: Re: HKPS [was 0xdeadbeef]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/5
+Message-Id: <201402181403.s1IE39Rt022285@linus.mitre.org>
+Date: Tue, 18 Feb 2014 09:03:09 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: "imapsync ignores the --tls switch and sends my authentication plaintext."
 Content-Type: text/plain; charset=utf-8
 
-So this doesn't get lost: I'm convinced by dkg and Kristian's
-arguments: Use hkps with hkps.pool.sks-keyservers.net
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-GnuPG 2.1 will ship with hkps enabled by default, I believe, and
-Kristian's CA. (I don't think 2.0 does yet.)
+> https://github.com/imapsync/imapsync/issues/15
 
-On Fri, Oct 10, 2014 at 12:27 PM, Kristian Fiskerstrand
-<kristian.fiskerstrand@...ptuouscapital.com> wrote:
-> You are quite correct that I probably wouldn't, and my primary income
-> is from another industry, but at the same time that does bring a
-> protection as I wouldn't be discouraged to fight any oppression.
+There seems to be a possibility of at least two separate issues.
+First, the product ends up trying a cleartext login even though
+the --tls option is provided on the command line. This is assigned
+CVE-2014-2014. (Moving to a cleartext session in reaction to a
+certificate-verification failure would typically always be wrong for
+any product.)
 
-I do agree about that.
+Second, the product is trying a cleartext login even though the server
+sent LOGINDISABLED. RFC 3501 section 6.2.3 says "A client
+implementation MUST NOT send a LOGIN command if the LOGINDISABLED
+capability is advertised."
 
-And, in fact: I failed to thank you! I've used the SKS pool you
-operate for many years. You provide a critical public service.
+(The discussion also reported a third problem: "The user is never
+notified of the certificate issue." That one is most likely, by
+itself, outside the scope of CVE. If a product refused to operate in
+an unsafe certificate situation, and did not tell the user why it was
+refusing, that would potentially be a usability problem. That would
+not be an independent vulnerability that could have a CVE ID.)
 
-> Although for the root
-> CAs the major problem is simply the amount of CAs accepted by standard
-> implementations, several of which are run by various governments. In
-> the end it comes down to what the threat model is and whom you're
-> protecting yourself from.
+The patch in:
 
-Very much agreed; my particular threat model for this *isn't*
-protection against the NSA. (Aside from perhaps protection from
-traffic analysis.) It's protection against much weaker threats.
+  https://github.com/imapsync/imapsync/commit/7d2043f95f42122c2ae3340053f893095efe1550
 
-> Currently the only criteria for whether someone gets a certificate for
-> a server in the pool is based on technical merits . . .
+seems to change:
 
-One thing that one can do (which I do when I don't have a copy of a
-key in one of my local keydumps) is use the strategy of Tor's
-"tlsdate": use a set of servers which are unlikely to be controlled by
-the same adversary.
+   $imap->starttls(  ) if ( $imap->Tls(  ) ) ;
+
+to:
+
+   if ( $imap->Tls(  ) ) {
+          $imap->starttls(  )
+          or die_clean("Can not go to tls encryption on [$host]:", $imap->LastError, "\n" ) ;
+   }
+
+in two places.
+
+The second issue (proceeding when LOGINDISABLED is advertised) would
+also be relevant if it occurred when the client did not include --tls
+on the command line. If anyone has observed that, a second CVE ID
+could be assigned. This is a protocol violation with security
+implications. Compliant client software is supposed to look for
+LOGINDISABLED in all cases, presumably including cases in which the
+end user is not explicitly requesting a TLS session.
+
+Finally, https://github.com/imapsync/imapsync/issues/15 ends with
+
+   there's still something weird, since I found that:
+   
+   --ssl1 --tls2 fails on host2 login with "Unable to start TLS: Cannot determine peer hostname for verification"
+   --tls1 --tls2 succeeds
+   --tls2 succeeds
+   --tls1 --ssl2 succeeds
+
+We couldn't immediately determine if that's simply a functionality
+problem, or whether another vulnerability exists (e.g., if the correct
+behavior were "fails" in all four cases, but with some combinations of
+command-line options, there's no attempt to check a server hostname).
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTA2caAAoJEKllVAevmvmsjh0IAIfLB/+evn3Cb3/MXfe3h+W2
+K2IUwXZACCqEx2jXOKzc3bG2ns3YlVzkvtxtmzZ0Vg6KAPb/SKEki4szcwu+hPbI
+KCKRBGJR6Q/+42VGyks+56WtRoG7YhaAA7lhldULpzsXBaSvqe3pcuC1MGx2J1LL
+Zia+++79c7JySlgXtMGc90/X2lKKYGdTgfKgWH3cmKTw0duNkA96i3QIeLm9ArUL
+yYSEBsz5PFxeDBozFijIQUkf9cyjbHF9X5TIJkzL9UJ6U76qwMAUZelrAgFfHqVe
+zoXMKCZKHzf5R1bhEjJU2V2cofp58JKX3rsKlVgupkBLIvaRU4beIAf1eGlESFw=
+=aR5P
+-----END PGP SIGNATURE-----
