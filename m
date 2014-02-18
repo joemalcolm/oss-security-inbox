@@ -1,30 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/3
-Message-ID: <alpine.LFD.2.10.1401080900400.27637@javelin.pnq.redhat.com>
-Date: Wed, 8 Jan 2014 09:05:30 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: cve@...re.org
-Subject: Re: CVE split and a missed file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/3
+Message-Id: <201402181209.s1IC9bX2004678@linus.mitre.org>
+Date: Tue, 18 Feb 2014 07:09:37 -0500 (EST)
+From: cve-assign@...re.org
+To: fw@...eb.enyo.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: freeradius denial of service in rlm_pap hash processing
 Content-Type: text/plain; charset=utf-8
 
-+-- On Tue, 7 Jan 2014, P J P wrote --+
-| But the 3 new CVEs do not seem to cover patch to a file
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The same applies to 'CVE-2013-6463' too. It is split into 6 new CVEs covering 
-6 files of the 35 that are patched by commit - 'f3d3342602f8'.
+> SSHA (and presumably SSHA) processing runs into a stack-based buffer
+> overflow in the freeradius rlm_pap module if the password source uses
+> an unusually long hashed password
 
- -> https://git.kernel.org/linus/f3d3342602f8bcbf37d7c46641cb9bca7618eb1c
+> http://lists.freebsd.org/pipermail/freebsd-bugbusters/2014-February/000610.html
+> https://github.com/FreeRADIUS/freeradius-server/commit/0d606cfc29a.patch
+> https://github.com/FreeRADIUS/freeradius-server/commit/ff5147c9e5088c7.patch
+> https://github.com/FreeRADIUS/freeradius-server/commit/f610864d4c8f51d.patch
 
-CVE-2013-6463 =>
+Use CVE-2014-2015.
 
-   - CVE-2013-7266 (drivers/isdn/mISDN/socket.c),
-   - CVE-2013-7267 (net/appletalk/ddp.c),
-   - CVE-2013-7268 (net/ipx/af_ipx.c),
-   - CVE-2013-7269 (net/netrom/af_netrom.c),
-   - CVE-2013-7270 (net/packet/af_packet.c),
-   - CVE-2013-7271 (net/x25/af_x25.c)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+iQEcBAEBAgAGBQJTA0vZAAoJEKllVAevmvmsO1AH/2JorTtiL73XUWNRXRCkwPTb
+TVSio3o53e8lUJfYdqRt0qG9KkjUSnPwHkQgWZTRZwyrFBJznqJ3bvFYSLYZXq3y
+XdtUQ256wpW8vyGWxJtRCx0N+OGWpN2Y/bDh6TuMVGALCPm7avRrMUUFWOSMp+Jo
+nwVw5raIzssFFQigSL7MxO/Pg9kns1fZuOkA3hZLGdEEc5cnldIdXr+LyuBkkDiL
+WPuzSly2flWXWmnZFk5Ki1lAm6rVcL8hz4HvF6WYuLgL68MNfsBSmaNs7bgJBLnP
+h1PcOKOCkyQMgPZflPhgQkFHUtirX2DEz3AyGN1qux6BFbIATZIu0OAyYbDhT/Q=
+=KOVs
+-----END PGP SIGNATURE-----
