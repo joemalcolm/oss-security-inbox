@@ -1,39 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/16
-Message-Id: <20141002032525.DE79CC50991@smtptsrv1.mitre.org>
-Date: Wed,  1 Oct 2014 23:25:25 -0400 (EDT)
-From: cve-assign@...re.org
-To: hannes@...essinduktion.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: xfs directory hash ordering bug / Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/7
+Message-ID: <CAFJ0LnHqPABQy8hO=v4wWBAauau6_KT2RMBcGkR6nfxzUKnkQA@mail.gmail.com>
+Date: Tue, 18 Feb 2014 10:43:43 -0800
+From: Nick Kralevich <nnk@...gle.com>
+To: oss-security@...ts.openwall.com
+Cc: oss-sec-addjsif@...p.org, cve-assign@...re.org
+Subject: Re: CVE-2014-1939 searchBoxJavaBridge_ in Android Jelly Bean
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+This particular issue was previously assigned a CVE by JPCERT,
+specifically, CVE-2013-4710. See
+https://jvn.jp/en/jp/JVN53768697/index.html for additional
+information.
 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c88547a8119e3b581318ab65e9b72f27f23e641d
-> http://marc.info/?l=linux-xfs&m=139590613002926&w=2
-> http://oss.sgi.com/cgi-bin/gitweb.cgi?p=xfs/cmds/xfstests.git;a=commitdiff;h=947ee8bd4b59770534297572b14c695e9c6e001e
-> 
-> Basically it allows a local user to corrupt a xfs filesystem by just
-> creating directories. Depending on whether it is the root filesystem or
-> not the kernel panics or just oopses
+CVE-2014-1939 should be marked as a DUPLICATE of CVE-2013-4710.
 
-Use CVE-2014-7283.
+-- Nick
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+On Mon, Feb 10, 2014 at 8:32 PM,  <cve-assign@...re.org> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>> From: "Joshua J. Drake" <oss-sec-addjsif@...p.org>
+>> Subject: Re: CVEs for Android addJavascriptInterface issues (was: multiple issues in Apache Cordova/PhoneGap)
+>> Date: Sat, 8 Feb 2014 00:47:05 -0600
+>> Message-ID: <20140208064704.GA17711@dq>
+>>
+>> You may have seen recently released Metasploit module that allows a
+>> remote compromise of the Google Glass browser using an incorrectly
+>> exposed Javascript bridge via the "searchBoxJavaBridge_" object. This
+>> exposes an instance of android.webkit.SearchBoxImpl in older versions
+>> of the Android browser.
+>
+> Use CVE-2014-1939. For example, see:
+>
+> https://android.googlesource.com/platform/frameworks/base/+/jb-release/core/java/android/webkit/
+> https://android.googlesource.com/platform/frameworks/base/+/jb-release/core/java/android/webkit/SearchBoxImpl.java
+>
+> versus:
+>
+> https://android.googlesource.com/platform/frameworks/base/+/kitkat-release/core/java/android/webkit/
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+>
+> iQEcBAEBAgAGBQJS+acoAAoJEKllVAevmvmssJYIAKETcBfP8SJYDEY7bPoC8Ivc
+> oJgTS05tzQMb+w+sju0vl0Ph19TTp225AfMrrB6gD1V5MlkZvPcSF7YsyuDvWON1
+> sBoz93bmnVe54+1potTAa6ECkWNbILOx7ZHFxwM5vj+Iyd7jE5RjAnRl/2bYQUvo
+> eRneKDuI+Ayc7Uq8Jk8HblaNgHVqW6oxrREKotiLJnP8kbaBAqQBgZdoE5PYsGvj
+> KVMU+2WrgDTb3eD6SZUvumF7WNaQ08iUSbhgED2Yv79JXs3jerWQ4gbdSd1YXgwO
+> PWY3OcU/iyMNfZZqgxZypk483tVo8FkEftDsHA/5b9/HMMbf/NSS62Gn9sVHmJk=
+> =E2Z7
+> -----END PGP SIGNATURE-----
 
-iQEcBAEBAgAGBQJULMUnAAoJEKllVAevmvmsiX8IALazBQ0FNLaT54gkqx8N9BSx
-aR22Kja/EDenK39O6LBg2Cf98XXmvGaiGmsQZbFkcdTt5iuQG5SnUE4Y1zyP6PDC
-rLiuzPTqyuAXvtn80qOigPDJWG4P/TZICckpQIix1Tiu2OFNcqJggOT6quuJ53ci
-3YjSJyEv+T0AuaBxKxyFnBMyH8r/3IvEU8uNZlYK3+mxuPmGqLj2iZaDKK3XX+iy
-QcokNsyOaS9UIDdf06zdWQGO3hXz+Md2D4JZ57myZQJOTFh/6FtPpn3jcgNP7i6c
-RIVfFfaLh5j58VOXOeL3qrvoiw00o9IZfsKYKZl9UqTAHOxNzrJ3qrK9j/xlPgY=
-=M1u6
------END PGP SIGNATURE-----
+
+
+-- 
+Nick Kralevich | Android Security | nnk@...gle.com | 650.214.4037
