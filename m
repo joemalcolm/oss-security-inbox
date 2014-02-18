@@ -1,45 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/15
-Message-ID: <53A19CAF.8040408@redhat.com>
-Date: Wed, 18 Jun 2014 10:05:35 -0400
-From: Daniel J Walsh <dwalsh@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/6
+Message-ID: <87r4705mka.fsf@redhat.com>
+Date: Tue, 18 Feb 2014 18:59:33 +0100
+From: Martin Prpic <mprpic@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: docker VMM breakout
+Subject: CVE request: MaraDNS DoS due to incorrect bounds checking on certain strings
 Content-Type: text/plain; charset=utf-8
 
+Hi, can a CVE be assigned to the following issue?
 
-On 06/18/2014 09:39 AM, Sven Kieske wrote:
-> Am 18.06.2014 12:15, schrieb David Jorm:
->> I tested libvirt via virsh and by default both CAP_DAC_READ_SEARCH and
->> CAP_DAC_OVERRIDE are available (and thus the PoC does run). However,
->> this default is well documented as is the general insecurity of libvirt
->> in regards to DAC, so I don't think a CVE ID is required for libvirt.
-> I fail to see why this should be true.
-> On most distributions libvirt spawned vms do not run as root but as user
-> qemu or similar.
-> according to the documentation at:
-> http://libvirt.org/drvqemu.html#securitycap
->
-> this should imply that libvirt drops these capabilities.
->
-> Please correct me if I'm wrong.
->
->
-Why is this assumed a problem. 
+It was reported that MaraDNS's recursive resolver, Deadwood, suffers
+from a flaw where string bounds checking was not done correctly under
+certain circumstances. As a result, it was possible for a remote
+attacker to send Deadwood a "packet of death", which would cause
+Deadwood to crash. Upstream notes that it currently appears that this
+attack can only be exploited by an IP address with a permission to
+perform recursive queries against Deadwood.
 
-CONTAINERS DO NOT CONTAIN.  Root inside the container == Root outside
-the container.
+It looks like these are the appropriate patches in git:
 
-This is true in both libvirt-sandbox/libvirt-lxc and docker.
+https://github.com/samboy/MaraDNS/commit/f015495d221f1c2b2f10db38e87cecf3839d6093
+https://github.com/samboy/MaraDNS/commit/2cfcd2397cb8168d4aa4594839fabe88420d03c3
 
-We have a long way to go before we can run anything within a container
-without this rule.
+References:
 
-User Namespace, SELinux or other MAC are all required to get us near the
-point where Container Contain. 
+http://samiam.org/blog/2014-02-12.html
+http://secunia.com/advisories/57033/
+https://bugzilla.redhat.com/show_bug.cgi?id=1066609
 
-People who run services within a container should continue to drop privs
-in the services and run them as UID!=0
-
-
-
+-- 
+Martin Prpič / Red Hat Security Response Team
