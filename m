@@ -1,27 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/13/2
-Message-ID: <CALCETrWiPOM40ucrk_YWiYTY=3yk4RhCSBUQ=0s=gXR-tgiMUQ@mail.gmail.com>
-Date: Tue, 12 Aug 2014 22:43:00 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: ro bind mount bypass using user namespaces
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/11
+Message-Id: <201402181925.s1IJP8IE007255@linus.mitre.org>
+Date: Tue, 18 Feb 2014 14:25:08 -0500 (EST)
+From: cve-assign@...re.org
+To: nnk@...gle.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, oss-sec-addjsif@...p.org
+Subject: Re: CVE-2014-1939 searchBoxJavaBridge_ in Android Jelly Bean
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 12, 2014 at 10:04 PM, Andy Lutomirski <luto@...capital.net> wrote:
-> On Tue, Aug 12, 2014 at 4:54 PM, Andy Lutomirski <luto@...capital.net> wrote:
->> On 08/12/2014 02:48 PM, Kenton Varda wrote:
->>> Due to a bug in the Linux kernel's implementation of remount, on systems
->>> with unprivileged user namespaces enabled, it is possible for an
->>> unprivileged user to gain write access to any visible read-only bind mount.
->>> It is also possible to bypass flags like nodev, nosuid, and noexec.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-...
+> This particular issue was previously assigned a CVE by JPCERT,
+> specifically, CVE-2013-4710. See
+> https://jvn.jp/en/jp/JVN53768697/index.html for additional
+> information.
+> 
+> CVE-2014-1939 should be marked as a DUPLICATE of CVE-2013-4710.
 
->
-> Yup.  I have a fairly reliable exploit now.  Will post the code in a
-> couple of weeks.
+Thanks for sending this note. To provide an initial response to this:
+MITRE will look into the relationships among CVE-2013-4710,
+CVE-2012-6636, and CVE-2014-1939, but at this point has not accepted
+the statement that CVE-2014-1939 must be marked as a duplicate.
 
-To clarify: my exploit has nothing to do with sandboxing.  It roots
-default-ish configurations of Fedora 20 and Ubuntu 14.04.
+Again, from:
 
---Andy
+  http://openwall.com/lists/oss-security/2014/02/08/8
+  http://www.cs.utexas.edu/~shmat/shmat_ndss14nofrak.pdf
+
+The scope of CVE-2012-6636 is the following description of a specific
+change made by a vendor in response to a vulnerability:
+
+  On Android prior to API level 17, these interfaces are
+  generically insecure. Malicious JavaScript executing inside
+  WebView can use the Java reflection API to invoke any method
+  of any Java object exposed via 'addJavascriptInterface' and
+  take control over the local side of the application.
+  Starting from Android API level 17, only the methods explicitly
+  annotated with @JavascriptInterface are visible in the Java
+  objects exposed to WebView via 'addJavascriptInterface'.
+
+The scope of CVE-2014-1939 is only the role of the
+searchBoxJavaBridge_ object as a specific attackable object.
+
+The outcome with respect to CVE-2013-4710 will depend on several
+factors, including MITRE's assessment of whether the wider community
+has been using CVE-2013-4710 for purposes other than tracking updates
+offered by Japanese handset manufacturers.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTA7LvAAoJEKllVAevmvmsoXcIAJNmDl9GfZdeidK/dIFPNxe3
+UP3W5zlu1oOWTf9/zqNc+VHFQiTAcKNwLQ4Ri35Y7ZEX33QUX4+YPsjWxMJKZGbG
+Sp+yRK6JZD4uA5JrlBH12RwGuus+O8Kx1fAvED2pbHxQqiqiISWdxhwtFh6y86G5
+91GWmD8Y2QLlRE5jSG8eZXf8QsiLrLGsAohgQBmAeFMNk7zfiZUXI9xF5Hq0n8Xq
+l/JVti84lMyR8dFwTbg99+ZjrVJA2f29q7ZUt1k9vfDCtg7Meo/X9GcenKzvG8tr
+970AHWZMb9cxEf+7fvprRJ/wXIaAri4wJyqc58/jT0cb972u7iTt2Lvq9/axOYc=
+=TFYk
+-----END PGP SIGNATURE-----
