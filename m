@@ -1,31 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/44
-Message-ID: <CAJ_zFkKbDjzmK0F_+t6Qzeoh94ktrxLU_kfei_FehhGmUOS=GA@mail.gmail.com>
-Date: Thu, 25 Sep 2014 12:39:21 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/9
+Message-ID: <20140218190447.GB16793@higgins.local>
+Date: Tue, 18 Feb 2014 11:04:47 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, secalert@...hat.com
+Subject: Data Injection Vulnerability in Active Record (CVE-2014-0080)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 25, 2014 at 12:18 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
-> On 9/25/14, 12:15 PM, Solar Designer wrote:
->
->> What do you think of distros' going with Florian's prefix-suffix patch
->> right now?  I think it breaks function imports/exports between
->> pre-patch and post-patch bash versions, but keeps them intact for
->> patched versions.  Right?  If so, this sounds acceptable for immediate
->> use by distros.  Do you agree?
->
-> I haven't looked at that particular patch in detail yet, but I am wondering
-> why adding both a prefix and a suffix is better than just adding a prefix.
->
+Data Injection Vulnerability in Active Record
 
-I think it's just paranoia, it demonstrates significant enough control
-over the environment that it's unlikely someone could construct it via
-a naive cgi environment or similar. If someone can create variables
-with an arbitrary suffix and prefix, then there are likely bigger
-problems to worry about than what bash is doing. FWIW, I like
-Florian's approach.
+There is a data injection vulnerability in Active Record. Specially
+crafted strings can be used to save data in PostgreSQL array columns that may
+not be intended. This vulnerability has been assigned the CVE identifier
+CVE-2014-0080.
 
-Tavis.
+Versions Affected:  4.0.x, 4.1.0.beta1
+Not affected:       3.2.x and older
+Fixed Versions:     4.0.3, 4.1.0.beta2
+
+Impact
+------
+Specially crafted strings may be used to save data to array columns in
+PostgreSQL databases. This vulnerability cannot be used to delete data or
+execute arbitrary SQL statements, but *can* be used to add data that could
+have an impact on the application (such as setting an admin flag). Only array
+type columns in PostgreSQL are impacted.
+
+All users running an affected release should either upgrade or use one of the
+work arounds immediately.
+
+Releases
+--------
+The FIXED releases are available at the normal locations.
+
+Workarounds
+-----------
+To work around this issue, apply this monkey patch:
+
+```ruby
+module ActiveRecord
+  module ConnectionAdapters
+    class PostgreSQLColumn
+      module Cast
+        alias :old_quote_and_escape :quote_and_escape
+
+        ARRAY_ESCAPE = "\\" * 2 * 2 # escape the backslash twice for PG arrays
+        def quote_and_escape(value)
+          case value
+          when "NULL", Numeric
+            value
+          else
+            value = value.gsub(/\\/, ARRAY_ESCAPE)
+            value.gsub!(/"/,"\\\"")
+            "\"#{value}\""
+          end
+        end
+      end
+    end
+  end
+end
+```
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
+
+* 4-1-beta-array_injection.patch - Patch for 4.1-beta series
+* 4-0-array_injection.patch - Patch for 4.0 series
+
+Credits
+-------
+
+Thanks Godfrey Chan for reporting this!
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "4-0-array_injection.patch" of type "text/plain" (2193 bytes)
+
+View attachment "4-1-beta-array_injection.patch" of type "text/plain" (2255 bytes)
+
+Content of type "application/pgp-signature" skipped
