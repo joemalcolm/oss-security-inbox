@@ -1,36 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/15
-Message-ID: <20140131172039.GA19351@openwall.com>
-Date: Fri, 31 Jan 2014 21:20:39 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/4
+Message-ID: <20140218123633.GC21825@suse.de>
+Date: Tue, 18 Feb 2014 13:36:33 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: Percona Toolkit automatic version check - remote code execution / information leak
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 31, 2014 at 05:34:05PM +0100, rf@...eap.de wrote:
-> >>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
->     SD> This is CVE-2014-0038 (assigned shortly after Kees sent the
->     SD> message below).
+Hi,
 
-> Are you sure this is the correct CVE?
+https://bugs.launchpad.net/percona-toolkit/+bug/1279502
+https://bugzilla.novell.com/show_bug.cgi?id=864194
 
-Pretty sure, yes.  I am not aware of a reason to think otherwise.
+Quoting launchpad we have this gem:
+-------------------------------------------------------------------------------
+Percona Toolkit 2.1 introduced --version-check to warn user about
+known vulnerabilities in the local MySQL instance and to check for PT
+updates. When this option is enabled - and it is enabled by default(!) -
+various information about local MySQL as well as other system binaries and
+packages are submitted to Percona along with the server's IP address. This
+not only exposes possibly sensitive information, but also does so without
+bringing it to user's attention or asking for their consent.
 
-It was kindly assigned by Petr Matousek (of Red Hat, even though their
-products are not affected) on Wed, 29 Jan 2014 10:01:59 +0100.
+It gets worse. The configuration for what information PT tools should
+collect is not hardcoded in the scripts. Instead, every time it's
+downloaded from http://v.percona.com/. One of the possible parameters
+is a binary file name to be executed, i.e. Percona can remotely execute
+arbitrary command - again, without making user aware of what or when
+is being executed. To be fair, the ability to run commands is limited
+to running "command -v", however that's only under the assumption that
+the command filters will always work. The configuration can also ask
+for any MySQL variable - not just the version string.
 
-> It was assigned already beginning of Dec. last year.
+In my opinion --version-check should never be enabled by default and
+if user wants to keep it enabled, the configuration (i.e. the list of
+checks) should be hardcoded and explicitly listed, and not downloaded
+from a remote location.
 
-The "assigned" date seen on CVE IDs often indicates when a pool of CVE
-IDs was created and then assigned to a CNA (Red Hat in this case), not
-when individual CVE IDs are assigned to actual issues.  It is perfectly
-normal (albeit confusing) for the "assigned" date to be earlier than the
-vulnerability discovery date.  This was discussed in here before:
+Current workaround: To avoid confidential information being exposed,
+always use --no-version-check with every PT tool that includes
+'version-check' feature (e.g. pt-query-digest, pt-diskstats).
+-------------------------------------------------------------------------------
 
-http://www.openwall.com/lists/oss-security/2012/01/23/4
+Basically it is not just information leakage, but remote code execution if
+you can overtake the v.percona.com host or just be man in the middle.
 
-CNAs:
-
-http://cve.mitre.org/cve/cna.html
-
-Alexander
+Ciao, Marcus
