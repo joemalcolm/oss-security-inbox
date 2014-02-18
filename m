@@ -1,26 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/25/3
-Message-ID: <549C1F78.3040309@river.com>
-Date: Thu, 25 Dec 2014 07:30:16 -0700
-From: Richard Johnson <rdump@...er.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: can we talk about secure time?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/2
+Message-Id: <201402181140.s1IBeQsT004031@linus.mitre.org>
+Date: Tue, 18 Feb 2014 06:40:26 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: MuPDF Stack-based Buffer Overflow in xps_parse_color()
 Content-Type: text/plain; charset=utf-8
 
-On 2014-12-21 22:51, Hanno Böck wrote:
-> I perfectly understand that some people need more accuracy than tlsdate
-> can give. However it's probably rare, right? I don't see any reason why
-> average consumer hardware (Desktop, smartphone etc.) would have any
-> problem with the 1-2 sec max inaccuracy of tlsdate.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It's typical to require at least 1/2 second accuracy for log correlation. 
-This is not just for some people, but (for an example) at academic 
-institutions where the staff is running average consumer hardware.
+> http://www.hdwsec.fr/blog/mupdf.html
+> http://bugs.ghostscript.com/show_bug.cgi?id=694957
+> http://git.ghostscript.com/?p=mupdf.git;a=commit;h=60dabde18d7fe12b19da8b509bdfee9cc886aafc
+> https://bugzilla.redhat.com/show_bug.cgi?id=1056699
 
-tlsdate is certainly an OK boundary sanity check on more accurate time, or for 
-initial stepping on a new boot or new clock start.
+Use CVE-2014-2013.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Richard
-
-
+iQEcBAEBAgAGBQJTA0V/AAoJEKllVAevmvmssbwH/j2ldwwaJsPLjTSBR6+2J3tj
+8EoFWqxSH8hkZNRFAEe62GqEQZZwMsjq2XMSNK/IPtikTotRW/IIUp/wPDJ03b0H
+CEN0jkYXSzynGyDCSMbL7YoRmBFKB1yoawU0G0DtVR9pS65vt06qeqd9VK11YaG6
+Kr2pwdyyRjP2h9IGSE/93vgwlWXswQAzWigiOez2TVJ+CDqCzR7GAUEPrYGaW2wK
+JHl5v9NnkIjtJ4TGMqL4EWfZRygH7zLB3+D/7mPC6kgKVGh0Ad7OEa5/4Bv+wLC6
+1nL3YeSoN5HIV6PO5yrwCZbv/8j1sTtywkAR1jc1H3+ZoPvEtCMpsGaaUTSngxc=
+=1pBw
+-----END PGP SIGNATURE-----
