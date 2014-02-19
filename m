@@ -1,72 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/20
-Message-ID: <20140808164918.GA13621@kroah.com>
-Date: Fri, 8 Aug 2014 09:49:18 -0700
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/5
+Message-Id: <E1WGAQa-0003OO-4k@xenbits.xen.org>
+Date: Wed, 19 Feb 2014 16:55:20 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 60 (CVE-2013-2212) - Excessive time to disable caching with HVM guests with PCI passthrough
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 08, 2014 at 09:23:21AM -0700, Dean Pierce wrote:
-> Being able to "infect" a USB device (allowing unsigned firmware to be
-> flashed on) is bad.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-"bad"?  Why is that?  Loads of devices work this way, a whole class of
-USB controller chips work exactly in this manner, they require the
-firmware to be dowloaded to the device from the host operating system
-before they work at all.  They are really common and cheap and used all
-over the place and have been on the market since the early 1990's.
+             Xen Security Advisory CVE-2013-2212 / XSA-60
+                             version 6
 
-> Being able to "infect" a host controller is bad.
+   Excessive time to disable caching with HVM guests with PCI passthrough
 
-And is something that I have never seen anyone say is possible, have
-you?  If so, details would be great to have.
+UPDATES IN VERSION 6
+====================
 
-> Using a USB device to get DMA, memory dumps, files, etc via loaded drivers
-> is bad, whether they are using legitimate code paths or kernel bugs.
+Since the issue of this advisory, various fixes have been applied to
+the public Xen trees.
 
-How can a USB device get any of those things without the Host operating
-system give them to it the device?
+ISSUE DESCRIPTION
+=================
 
-> I'm not so worried about the keyboard thing.  That's only interesting
-> because it's the automation of exploiting a machine that has already been
-> compromised.
-> 
-> Personally I would prefer disabling USB hotplug while a machine is locked
-> (or while there are no active TTYs or something for servers).  Even if HID
-> was whitelisted while the machine is locked, it would be a great start.
+HVM guests are able to manipulate their physical address space such that
+processing a subsequent request by that guest to disable caches takes an
+extended amount of time changing the cachability of the memory pages assigned
+to this guest. This applies only when the guest has been granted access to
+some memory mapped I/O region (typically by way of assigning a passthrough
+PCI device).
 
-Then do just that, Linux has allowed you to do this for years, again,
-but very few people take advantage of it.
+This can cause the CPU which processes the request to become unavailable,
+possibly causing the hypervisor or a guest kernel (including the domain 0 one)
+to halt itself ("panic").
 
-> In regards to the PCI stuff, don't miss Joe's talk at DEFCON on Sunday.
-> 
-> https://www.defcon.org/html/defcon-22/dc-22-speakers.html#FitzPatrick
-> 
-> People have much more exposed PCI on their laptops and servers than they
-> realize.  It's super cheap, super easy, and when we start selling kits this
-> afternoon, it's going to be super accessible.
+IMPACT
+======
 
-express card and thunderbolt are pcie, it's fun to play with, glad to
-see some "kits" to make it more accessable.
+A malicious domain, given access to a device with memory mapped I/O
+regions, can cause the host to become unresponsive for a period of
+time, potentially leading to a DoS affecting the whole system.
 
-> VTd/IOMMU would be nice to have if implemented properly, but it seems like
-> even OSX, the only OS currently using VTd as a security feature, still
-> hasn't gotten it quite right.
+VULNERABLE SYSTEMS
+==================
 
-What exactly do you mean by "get it right"?
+Xen version 3.3 onwards is vulnerable.
 
-> Also firewire attacks are still a thing.  What's up with that?
+Only systems using the Intel variant of Hardware Assisted Paging (aka EPT) are
+vulnerable.
 
-The hardware is designed to do this, the host operating system can't do
-much about bad hardware, sorry.
+MITIGATION
+==========
 
-> ExpressCard and Thunderbolt adapters are super cheap, and Inception is
-> still being actively maintained with new targets being added
-> regularly.
+This issue can be avoided by not assigning PCI devices to untrusted guests, or
+by running HVM guests with shadow mode paging (through adding "hap=0" to the
+domain configuration file).
 
-It makes it easy to back up laptops :)
+CREDITS
+=======
 
-thanks,
+Zhenzhong Duan found the issue as a bug, which on examination by the
+Xenproject.org Security Team turned out to be a security problem.
 
-greg k-h
+RESOLUTION
+==========
+
+This issue has been fixed in the public xen.git trees.
+
+For xen-unstable (#staging, #master), in these git commits:
+  c13b0d65ddedd745 VMX: disable EPT when !cpu_has_vmx_pat
+  1c84d046735102e0 VMX: remove the problematic set_uc_mode logic
+  62652c00efa55fb4 VMX: fix cr0.cd handling
+  86d60e855fe118df VMX: flush cache when vmentry back to UC guest
+  f1c9658d6802c433 Revert "VMX: flush cache when vmentry back to UC guest"
+(Earliest commit is listed first.  Note that f1c9658d reverts
+not only 86d60e85 but also part of 62652c00.)
+
+For Xen 4.2 (#staging-4.2, #stable-4.2):
+  f1e0df14412c VMX: disable EPT when !cpu_has_vmx_pat
+  644e6c5c7106 VMX: remove the problematic set_uc_mode logic
+  0fffcffeb594 VMX: fix cr0.cd handling
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJTBOHLAAoJEIP+FMlX6CvZOZsIAI1JT1S+76kGilCSef5r2XUx
+uQ/cFVNjlcACeIF9/ejglQzlfaUcB3fjERdHVuYdiURgiPOwUErJV+0Xg3avFTIj
+hE9KeUnBl9+vS8OwmO7va4LEZf3xl8LVhirbsepL6eubvmgtmxqf/MeV6kMF5xUU
+9t65V80qPNYpA+2SzUnRZFuzGHLd5IkTFUQXfKEzGH3lWu35qvGqyhYWRXHVmz9c
+4e49pqO6QenjSlLxvpiW/FpeUxothpq4xxrSom4XsZrBULp4EywU9EkaF5tuFnpg
+dyzfz3Ap7k0H+5NoHTfof+N7rzaEOyR/QtXIerpcwuf5qMIN0c2HSZBzGdrvlfw=
+=SC2T
+-----END PGP SIGNATURE-----
+
