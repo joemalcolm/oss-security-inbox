@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/9
-Message-ID: <53513001.7010407@amazon.com>
-Date: Fri, 18 Apr 2014 07:00:33 -0700
-From: Anthony Liguori <aliguori@...zon.com>
-To: Solar Designer <solar@...nwall.com>, <oss-security@...ts.openwall.com>
-CC: Matt Wilson <msw@...zon.com>, Max Spevack <spevack@...zon.com>
-Subject: Re: Request for linux-distros list membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/3
+Message-ID: <CAEDdjHfq=SfTVzaeqpKSCeF-NWpv-K08qzNnYSWOA6GPOQcO7w@mail.gmail.com>
+Date: Wed, 19 Feb 2014 10:08:37 +0000
+From: Pedro Ribeiro <pedrib@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Ralf Becker <rb@...lite.de>
+Subject: CVE request: remote code execution in egroupware <= 1.8.005
 Content-Type: text/plain; charset=utf-8
 
-On 04/09/14 23:25, Solar Designer wrote:
-> On Wed, Apr 09, 2014 at 11:57:33PM -0600, Kurt Seifried wrote:
->> So first off I'm inclined to have Amazon on the distros list (same
->> reasons as Oracle basically).
->>
->> My only concern is are you the correct person, I have no clue who is
->> on the Amazon security team for their Linux distribution, I've never
->> seen you post anything anywhere.
->>
->> Your search - site:aws.amazon.com Anthony Liguori - did not match any
->> documents.
->>
->> Your search - site:aws.amazon.com aliguori@...zon.com - did not match
->> any documents.
->>
->> Can we somehow get confirmation from Amazon that this is the right
->> person to have on distros? Thanks.
-> 
-> Yes, we need this sort of confirmation.  My other concerns are:
+Hi
 
-Ping.  Apologies if this is being discussed in private but I just wanted
-to make sure it wasn't forgotten.  I believe we have provided all of the
-information requested.
+I have discovered a remote code execution via php unserialize in egroupware
+<= 1.8.005.
+Can you please assign a CVE for this vulnerability?
 
-Regards,
+The full report can be obtained from my repo in
+https://github.com/pedrib/PoC/raw/master/egroupware-1.8.005.txt
 
-Anthony Liguori
+The changelog can be seen at http://www.egroupware.org/changelog and new
+versions can be obtained from http://www.egroupware.org/download
+
+Thanks in advance.
+
+Regards
+Pedro
 
