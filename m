@@ -1,60 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/7
-Message-ID: <8BA522FD-61AB-4A69-B80B-B3F4B705372E@akamai.com>
-Date: Mon, 29 Sep 2014 22:26:33 -0500
-From: "Kobrin, Eric" <ekobrin@...mai.com>
-To: "chet.ramey@...e.edu" <chet.ramey@...e.edu>
-CC: "dwheeler@...eeler.com" <dwheeler@...eeler.com>, oss-security <oss-security@...ts.openwall.com>, solar <solar@...nwall.com>, lcamtuf <lcamtuf@...edump.cx>, fweimer <fweimer@...hat.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/12
+Message-ID: <1470974623.11810985.1392850156115.JavaMail.zimbra@redhat.com>
+Date: Wed, 19 Feb 2014 17:49:16 -0500 (EST)
+From: David Jorm <djorm@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Possible CVE Requests: several issues fixed in Jenkins (Advisory 2014-02-14)
 Content-Type: text/plain; charset=utf-8
 
-On Sep 29, 2014, at 10:34 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
-
-> On 9/29/14, 6:06 PM, Kobrin, Eric wrote:
+> Hi
 > 
->> What is the motivation to not store executable code (functions) differently from standard variables?
+> Jenkins Advisory from 2014-02-14[1] mentions several security fixes,
+> where for SECURITY-76 and SECURITY-88 CVE-2013-5573 was assigned.
 > 
-> What would you use for such a store, considering the environment is the
-> only portable way to pass this information from one process to another in
-> the general case, and support the current set of use cases?
+>  [1]
+>  https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-02-14
+> 
+> Do some of the following need also a CVE assignment?
+> 
+> ----cut---------cut---------cut---------cut---------cut---------cut-----
+> SECURITY-105
+> | In some places, Jenkins XML API uses XStream to deserialize arbitrary
+> | content, which is affected by CVE-2013-7285 reported against XStream.
+> | This allows malicious users of Jenkins with a limited set of permissions
+> | to execute arbitrary code inside Jenkins master.
+> 
+> https://github.com/jenkinsci/jenkins/commit/d030fbbaeeb5ee8980b5680b26217930834387f4
+> 
+> SECURITY-76 & SECURITY-88 / CVE-2013-5573
+> | Restrictions of HTML tags for user-editable contents are too lax. This
+> | allows malicious users of Jenkins to trick other unsuspecting users into
+> | providing sensitive information.
+> 
+> https://github.com/jenkinsci/jenkins/commit/7541e83cc9812afc2b464f0a3254a2453da53f4c
+> https://github.com/jenkinsci/jenkins/commit/535c1115bbf07f8a57d509f2d00598d6e21870d4
+> 
+> SECURITY-109
+> | Plugging a hole in the earlier fix to SECURITY-55. Under some
+> | circimstances, a malicious user of Jenkins can configure job X to
+> | trigger another job Y that the user has no access to.
+> 
+> https://github.com/jenkinsci/jenkins/commit/b6b2a367a7976be80a799c6a49fa6c58d778b50e
+> 
+> SECURITY-108
+> | CLI job creation had a directory traversal vulnerability. This allows a
+> | malicious user of Jenkins with a limited set of permissions to overwrite
+> | files in the Jenkins master and escalate privileges.
+> 
+> https://github.com/jenkinsci/jenkins/commit/ad38d8480f20ce3cbf8fec3e2003bc83efda4f7d
+> 
+> SECURITY-106
+> | The embedded Winstone servlet container is susceptive to session
+> | hijacking attack.
+> 
+> https://github.com/jenkinsci/jenkins/commit/29351af4bd01f61715418916fc12c52be46bd9b0
+> (issue in jenkins-winstone?)
+> 
+> SECURITY-93
+> | The password input control in the password parameter definition in the
+> | Jenkins UI was serving the actual value of the password in HTML, not an
+> | encrypted one. If a sensitive value is set as the default value of such
+> | a parameter definition, it can be exposed to unintended audience.
+> 
+> https://github.com/jenkinsci/jenkins/commit/bf539198564a1108b7b71a973bf7de963a6213ef
+> 
+> SECURITY-89
+> | Deleting the user was not invalidating the API token, allowing users to
+> | access Jenkins when they shouldn't be allowed to do so.
+> 
+> https://github.com/jenkinsci/jenkins/commit/5548b5220cfd496831b5721124189ff18fbb12a3
+> 
+> SECURITY-80
+> | Jenkins UI was vulnerable to click jacking attacks.
+> 
+> https://github.com/jenkinsci/jenkins/commit/16931bd7bf7560e26ef98328b8e95e803d0e90f6
+> 
+> SECURITY-79
+> | "Jenkins' own user database" was revealing the presence/absence of users
+> | when login attempts fail.
+> 
+> https://github.com/jenkinsci/jenkins/commit/fbf96734470caba9364f04e0b77b0bae7293a1ec
+> 
+> SECURITY-77
+> | Jenkins had a cross-site scripting vulnerability in one of its cookies.
+> | If Jenkins is deployed in an environment that allows an attacker to
+> | override Jenkins cookies in victim's browser, this vulnerability can be
+> | exploited.
+> 
+> https://github.com/jenkinsci/jenkins/commit/a0b00508eeb74d7033dc4100eb382df4e8fa72e7
+> 
+> SECURITY-75
+> | Jenkins was vulnerable to session fixation attack. If Jenkins is
+> | deployed in an environment that allows an attacker to override Jenkins
+> | cookies in victim's browser, this vulnerability can be exploited.
+> 
+> https://github.com/jenkinsci/jenkins/commit/8ac74c350779921598f9d5edfed39dd35de8842a
+> 
+> SECURITY-74
+> | Stored XSS vulnerability. A malicious user of Jenkins with a certain set
+> | of permissions can cause Jenkins to store arbitrary HTML fragment.
+> 
+> https://github.com/jenkinsci/jenkins/commit/5d57c855f3147bfc5e7fda9252317b428a700014
+> 
+> SECURITY-73
+> | Some of the system diagnostic functionalities were checking a lesser
+> | permission than it should have. In a very limited circumstances, this
+> | can cause an attacker to gain information that he shouldn't have
+> | access to.
+> 
+> https://github.com/jenkinsci/jenkins/commit/0530a6645aac10fec005614211660e98db44b5eb
+> ----cut---------cut---------cut---------cut---------cut---------cut-----
+> 
+> Do some of these issue need a CVE assigned?
+> 
+> Regards,
+> Salvatore
+> 
 
+It looks to me as though at least some of these issues definitely need CVE IDs assigned. I reported SECURITY-105, and it is my opinion that this flaw needs a separate CVE ID to CVE-2013-7285. The Jenkins patch blocks DynamicProxyConverter from the Jenkins wrapper class XStream2, without changing the XStream library at all. This implements a less-general solution than the XStream patch for CVE-2013-7285, and the patch applies to a completely separate codebase (i.e. Jenkins itself,not XStream). Therefore it is my understanding that this flaw as it affects Jenkins qualifies for a unique CVE ID. When reporting this flaw to upstream, the Jenkins engineers agreed that it qualified for a unique CVE ID, and I offered to assign a CVE ID from the Red Hat CNA. This offer was refused, but then the advisory was released without a unique CVE ID, which is puzzling indeed.
 
-The most portable transmission method is the environment. I'm
-interested in thinking through scenarios where it is not deemed
-necessary to have one environment variable per function, to store
-functions text, to support all environment variable manipulations on
-functions, or to support easy creation of functions in non-bash
-processes.
+Could someone from MITRE please weigh in and assign CVE IDs as appropriate for these flaws?
 
-What are the current set of use cases? I can think of a few, but I'm
-not sure they are all required; some may be accidental but still
-widely used, others may be unused and undesired. Here's the list so
-far, posed as questions:
-
-1. Is it necessary that functions exported in one version of bash be
-   imported into other versions?
-
-2. Is it necessary for exported functions to be able to transition
-   through other processes and back into bash, or is function export
-   intended to support bash-invoked-from-bash only?
-
-3. Is it necessary for non-bash processes to be able to define
-   functions for a bash child?
-
-4. Is it necessary for non-bash processes to be able to import
-   functions from a bash parent?
-
-5. Once a function is defined or imported, is it important that we be
-   able to reproduce byte-for-byte the input that was used to define
-   it?
-
-6. Is it important that bash be required to import every function
-   defined in the parent process?
-
-7. Is it important to signal function import failure at startup time,
-   or is it ok to defer parsing until the first attempt to invoke the
-   function?
-
-Does anyone have further use cases to discuss?
-
--- Eric Kobrin
+Thanks
+--
+David Jorm / Red Hat Security Response Team
