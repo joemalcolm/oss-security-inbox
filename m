@@ -1,38 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/38
-Message-ID: <5429ADF1.2000800@edwardprevost.info>
-Date: Mon, 29 Sep 2014 12:07:29 -0700
-From: Ed Prevost <me@...ardprevost.info>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: Non-upstream patches for bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/14
+Message-Id: <201402192345.s1JNjawL029606@linus.mitre.org>
+Date: Wed, 19 Feb 2014 18:45:36 -0500 (EST)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Percona Toolkit automatic version check - remote code execution / information leak
 Content-Type: text/plain; charset=utf-8
 
-On 9/29/2014 11:52 AM, Bernhard Hermann wrote:
-> On 29 Sep 2014 08:40, "Sven Kieske" <s.kieske@...twald.de> wrote:
->> On 27/09/14 17:06, Solar Designer wrote:
->>> Of course, what input is trusted vs. not may be unclear.  Apparently, 20
->>> years ago bash developers considered all env vars to be trusted input,
->>> regardless of the names, which is how we got here.
->> 'Input sanitization: “you can suppress ‘bad
->> stuff’ in input+output to make it safe”
->>
->> Reality: Halting problem. Deal with it.'
-> This seems to me to be the good old CODE vs. DATA issue.
->
-> IMHO, ENV vars are supposed to always be DATA, never CODE.
-> If code is allowed, the parser might always fail. Judging by the recently
-> dug up dirt, it most certainly will.
-> Passing code as ENV is an ugly hack, probably born out of necessity arising
-> when trying to implicitly propagate code, because no alernatives are
-> apparent, are they?
->
-> If it's done at all, it should at least be explicit.
->
-> That's why I'm voting for having the *BSD approach in upstream: make the
-> parsing of ENV vars optional, default OFF.
->
-> br,
-> Bernhard Hermann
->
-+1 I find this akin to Eric Kobrin's recommendation "using a separate
-store for functions"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> The configuration for what information PT tools should collect is not
+> hardcoded in the scripts. Instead, every time it's downloaded from
+> http://v.percona.com/. One of the possible parameters is a binary file
+> name to be executed ... The configuration can also ask for any MySQL
+> variable - not just the version string.
+
+Use CVE-2014-2029 for this issue in which a plain HTTP session is
+used, and a man-in-the-middle attack can lead to remote code execution
+(or retrieving sensitive configuration information).
+
+
+> When this option is enabled - and it is enabled by default(!) -
+> various information ... are submitted to Percona along with the
+> server's IP address ... without bringing it to user's attention or
+> asking for their consent.
+
+There is no CVE assignment specifically for the transmission of data
+to Percona without user confirmation. This is potentially unwanted
+behavior, but it does not seem that this a mistake (in the sense that
+a developer was trying to implement a different behavior).
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTBUGWAAoJEKllVAevmvmsrgwH/1J2KvABlDmoC71Zz6KALdgc
+/L/F6c8GpAR8A8tBlPf+J/O3vZfZMMZ7ey3sId5Ht8HvRxRiGoA/6mAE7/FCCd1y
+pVq9ndmK5zUQ0VLeuHXXxDusyXdBB3PEcGefSMS5ZdzKv6ESQ7FgxoMX8IuvFF0p
+sGZyJQUl/ZECzzHU4qxksAnuqatSlcfKVY4sGUP1j7DXhv6GLzlHPJke+6aRsIuU
+Wrbh6/uL/8tDxctJCx0dn/7iSIjlV5XkgbLbR6aNiGrxIOmPNTqDLcJq8xzX5/+G
+arXEuopxCc5O3pfix0PrnvzxjwfnFLNpoMop9hPVhsww9t2HimIj2YcCRZ/aQ2Q=
+=s5z5
+-----END PGP SIGNATURE-----
