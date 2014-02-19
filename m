@@ -1,16 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/26/4
-Message-ID: <CABob6ioX4qNyid_1EjCeHAC6W+V=dtQG3CU=why_qLOuAE++Yw@mail.gmail.com>
-Date: Fri, 26 Dec 2014 16:25:13 +0100
-From: Lukas Odzioba <lukas.odzioba@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request Linux kernel: fs: isofs: infinite loop in CE records
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/13
+Message-Id: <201402192340.s1JNe4eM029545@linus.mitre.org>
+Date: Wed, 19 Feb 2014 18:40:04 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: information on "ImageMagick PSD Images Processing RLE Decoding Buffer Overflow Vulnerability"
 Content-Type: text/plain; charset=utf-8
 
-2014-12-26 8:47 GMT+01:00 P J P <ppandit@...hat.com>:
->   IIUC, cont_loops ranges from 0 to 31, and at 32 it goes to 'out' and
-> returns.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Apparently you're right, sorry for distraction.
+> (We will proceed with option 2 unless option 1 is substantially better
+> for someone.)
 
-Lukas
+Option 2 has now been chosen.
+
+The clarified meaning of CVE-2014-1947 is now the vulnerability in
+older ImageMagick versions (such as 6.5.4) that use the "L%02ld"
+string. The root cause here is that the code did not cover the case of
+more than 99 layers, which is apparently allowable but relatively
+uncommon. This has a resultant buffer overflow, e.g, L99\0 is safe but
+L100\0 is unsafe. When the overflow occurs, it can be described as "1
+or more bytes too many."
+
+A new ID of CVE-2014-2030 is now assigned for the vulnerability in
+newer ImageMagick versions that use the "L%06ld" string. The root
+cause here is that the code did not recognize the relationship between
+the 8 (or more) characters in "L%06ld" and the actual buffer size.
+This has a resultant buffer overflow of "4 or more bytes too many."
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTBUBdAAoJEKllVAevmvms6DMIAKIPMAVIsUycaTjAgTdFoUmj
+aDrKyOIAWMLWNE4wOUBDLQkrObjwwptbh7AptBr2L1bscUPiLao1A2CQwXLtZDVV
+RX41OJ62YlZFZnPRay997+4oM5tbHa27UIc60paPFK8FBfMthf4JLWvuVUxWnFXl
+CI+9XYRvkW6bdEQng9UDA9xTjuUJWPzemjscbS4+WvixU3+iCwhZF5lCSjICarXU
+ZB5bmTnKqJPPhLvUB/6xIAhfGzXF7XuriGQL1jS1gllIZ59MKpOreRPNWgsWTVEs
+HfFxtx1OvfdDPB/twSeK7viVJiKm9fNHZYCYCKoQooxd6Ks84MDzGP835c2yLvU=
+=WQsh
+-----END PGP SIGNATURE-----
