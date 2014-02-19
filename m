@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/8
-Message-Id: <201401091839.s09IddGu015258@linus.mitre.org>
-Date: Thu, 9 Jan 2014 13:39:39 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/9
+Message-Id: <201402192212.s1JMCmvN011265@linus.mitre.org>
+Date: Wed, 19 Feb 2014 17:12:48 -0500 (EST)
 From: cve-assign@...re.org
-To: fweimer@...hat.com
+To: ppandit@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: PlRPC Perl module: pre-auth remote code execution, weak crypto
+Subject: Re: CVE request New-djbdns: dnscache: possible DoS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> it uses Storable, which is known to be insecure when deserializing
-> (thawing) untrusted data.  User name and password are transmitted using
-> Storable, so code execution can happen before authentication.
+> dnscache(8) resolver reads messages over a TCP connection one byte at a time.
+> For long messages, it'll trigger as many read(2) calls as the length of a
+> message. Thus consuming extra CPU cycles. A malicious remote user could use
+> this to cause a DoS.
 
-Use CVE-2013-7284 for this code-execution issue.
+> https://github.com/pjps/ndjbdns/commit/a67293ce12832b55ec4271536282290ed17863f6
 
-
-> The cryptographic hook built into PlRPC is limited ...
-> It's not really PlRPC's fault
-
-At this point, we will postpone deciding on the number of CVE IDs
-needed for cryptographic issues in PlRPC, pending a possible upstream
-response that might clarify whether the product had been specifically
-trying to achieve the associated cryptographic goals.
+Changing the TCP read approach can be considered a performance
+improvement (and, somewhat marginally, a security improvement), with
+no CVE assignment. The commit mentions "making slight gain in
+performance" and "could also lead to potential denial of service." The
+original implementation might have chosen its approach for
+design-for-auditability reasons, i.e., it may not have been a
+"mistake" at all. It seems impractical to assign CVE IDs to all
+opportunities to speed up the processing of untrusted input in all
+products. The situation would be different if it were clearly a logic
+error in the code, e.g., processing the first byte once, the second
+byte four times, the third byte nine times, etc.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -34,11 +38,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJSzux7AAoJEKllVAevmvmsEggIAKdQdJ8bkiEhPfzE4O92TPUt
-Ul6X21WCn+n6+OYowFYiN30bb/wuYjB9suMcfk7S1JJZAH4F2Cv8jZNvgUT3ca5E
-Ekgdoy3Rl2O4o6nsF2oi+vdqRg7nRSkrgNud4aqNM4HCuWLbCr+5rMIpF4M/Z8Ai
-XOHZguxtujuEhFkkTLsskBqYZEM7qoZZQdV/JhXdb/+uyd5kTIACRAc5BDnZcIaV
-kRfb6/I+jMXCY4H6S7Cv39Uw2h+zCS75KCr1NGILQp0HKaz1MfILO2vvejogIudB
-ZKBULvtDlWDiIq+l5zatbhUdNW8yt3CK1mmToTuDJBpEhet8bc3Gx+UqIG//Yy4=
-=Ood1
+iQEcBAEBAgAGBQJTBSsHAAoJEKllVAevmvmsuAEIAIeUgu7aq8joD+a0bHBhoHed
+Un8pGhWyjvPxYVbn6odNRfuT2nNanF2zL3MYOY5ZtXVWZQmqJVI/FSYVms9hrLhQ
+CVOyWTKltDbeh/AqgZSadMPmsprcT7XlIazDsJsL9YacGDLkM4cxraZXYP0rluUN
+tMLSQIlo83bVCUv4+cH2qP9dTDhGyXLuIUz5v4L8ni9blW0VC7SEvEzk6pLTvkn2
+zPgI/X+dVRyxtEMk1T2ri4QObiL6NaZ2Eerd+I9Y8rGYpQH2XGyj3puhGroSmEuQ
+N1HKOkfyZqGH8JaAv5Y6Rz+Bgo+lMh1wT4Px4xXs9Rttgt3P0Ak8RGrKnTeTBGU=
+=6Jj8
 -----END PGP SIGNATURE-----
