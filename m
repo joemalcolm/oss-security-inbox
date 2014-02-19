@@ -1,48 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/08/4
-Message-ID: <alpine.LFD.2.10.1409081209470.31417@javelin.pnq.redhat.com>
-Date: Mon, 8 Sep 2014 12:39:19 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2014-3615 Qemu: information leakage when guest sets high resolution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/8
+Message-Id: <201402192211.s1JMBFI1011203@linus.mitre.org>
+Date: Wed, 19 Feb 2014 17:11:15 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-    Hello,
+> https://00f.net/2012/06/26/dnscache-poisoning-and-siphash/
+> https://github.com/pjps/ndjbdns/commit/16cb625eccbd68045737729792f09b4945a4b508
 
-An information leakage flaw was found in Qemu's VGA emulator. It could lead to
-leaking host memory bytes to a VNC client. It could occur when a guest GOP
-driver attempts to set a high display resolution.
+This issue (or, in particular, its fix) is probably best considered a
+security improvement, with no CVE assignment. As far as we can tell,
+the code was attempting to implement and use djb33, and did actually
+implement and use djb33 without a "software mistake" in the
+traditional sense. Yes, we realize that there's a potentially
+important and potentially simple attack possibility that could have
+been avoided by not choosing djb33. That's not sufficient, however.
+Also, in this case, some aspects of making a better choice (e.g., with
+sufficiently fast and auditable pseudorandom hashing code) were
+probably not even understood in the research community at the time the
+software was originally written.
 
-A privileged user/program able to set such high resolution could use this flaw
-to leak host memory bytes.
+CVE does, as a secondary form of inclusion, cover vulnerability
+advisories from a vendor who was the original author of a piece of
+software and publishes a change as a required security update. That is
+unlikely here; nobody is anticipating djbdns-1.06.
 
-Upstream fixes:
-- ---------------
-    -> http://git.qemu.org/?p=qemu.git;a=commit;h=c1b886c45dc70f247300f549dce9833f3fa2def5
-    -> http://git.qemu.org/?p=qemu.git;a=commit;h=ab9509cceabef28071e41bdfa073083859c949a7
-
-Thank you.
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJUDVYfAAoJEN0TPTL+WwQf3qsQALTsOCpDNXMBnRJ8ziz7pVLA
-Uoepy8fFeCxMELy7ZleGRDThCGzDeH4XCoHZ0prnV17I8imwHXvzWJKktzQSfXos
-y1LUvhxLpbUUwxyiGD/3iNXCzKLDdIXIUJd2+VB5BQUmJ5INhy25Za2/qFV3jhhb
-JHrYlzFJYD7LKnFzLlGtlYjRa6VF5+yCP0MlGmYV9ENbKOiFOhc+aB7MJkab2dYQ
-3qQd0LRXoU4Ms8cvh51EPes3nUy6UlfQhBnbfc97M5lvm/1hnRN6UN/UDCNpsjZ/
-yJT7rSqpEmAEk5UrhLOE52jZMdthFMz2Z84DVbu48dLrwg/ei0wXslV3ROpQmvsU
-jsxjyw/fzMAL2XXjqiqCe31X5dFmEPRJjROJcNE68xoifS+7y4VDRzHUNOK/jJAS
-cp4bHJii7p96aF2ACBbu16M13ax83q9/cH+HmKib7qGRgAnyfqRrn3kVn3PdIFJD
-yCji5dlmczLmrYG8NFYW9edB6XD9evX5RZijWHkMYdf9Q0FJcWL1eQnvWtNelvKC
-96PcZaXlYzgyy1Qd1+1zdmO2r/G45FplsG6VX0cRXEz8e6/sDRGd2IoEFKmkoQcA
-AU+wsPn8d3sZ0YDHAgFkn3g9O5RRAtR5fh2jSWQRjuVXyqaKfEAeVWr3utupAuf3
-P47T1YbVkKCXbnQQoDCq
-=Q6KC
+iQEcBAEBAgAGBQJTBSr/AAoJEKllVAevmvmslOcH/2B+Q7ZkFkn9thNarntNHzCF
+XNL5RXHb5vV5XA8KGdIrlzjFg5AisdUqQ+h+AzmWDrEHedm9jpuHkSBlH6iYvxFH
+s0wfbeP0T5kWHe//OHdniuQbVXGGztF1qKeKTeaVlzFpcTUdOgD4UomzYf8Uwbyk
+9VbaJVP4tSZoN572Lf94LBUVthiV/KAm+57BjGrNFZ9K4tniKvGVceVjuab7yDRE
+6160Dxpow7nD4ZWh/wJfxv6/Pr/6qrwjnps75rtfYGDhnp6JF1noRHZq/nxoAjN1
+9vP19dZsXla0dXAxFjLz9d4e8Dbcl/53XNUg7wP3JfSinOoc+lzwtHYFwQ+ghXo=
+=cfE8
 -----END PGP SIGNATURE-----
