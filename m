@@ -1,61 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/9
-Message-Id: <20141128203627.602386C0014@smtpvmsrv1.mitre.org>
-Date: Fri, 28 Nov 2014 15:36:27 -0500 (EST)
-From: cve-assign@...re.org
-To: covener@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: "LuaAuthzProvider" in Apache HTTP Server mixes up arguments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/7
+Message-ID: <5304F37E.3030404@stylite.de>
+Date: Wed, 19 Feb 2014 19:10:06 +0100
+From: Ralf Becker <rb@...lite.de>
+To: cve-assign@...re.org, pedrib@...il.com
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE request: remote code execution in egroupware <= 1.8.005
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> https://issues.apache.org/bugzilla/show_bug.cgi?id=57204
+my remarks to your questions as developer of EGroupware and the fixes
+included in 1.8.006:
 
-We're not sure that this crosses privilege boundaries.
-http://httpd.apache.org/docs/2.4/mod/mod_lua.html#luaauthzprovider
-says
+Am 19.02.14 16:41, schrieb cve-assign@...re.org:
+>> I have discovered a remote code execution via php unserialize in egroupware
+>> <= 1.8.005.
+> 
+> Use CVE-2014-2027.
+> 
+>> https://github.com/pedrib/PoC/raw/master/egroupware-1.8.005.txt
+>> http://www.egroupware.org/changelog
+> 
+>> Security: fixed arbitrary file overwrite and remote code execution
+>> reported by Pedro Ribeiro (pedrib@...il.com) of Agile Information
+>> Security
+> 
+> We could not immediately determine whether the egroupware-1.8.005.txt
+> disclosure means that:
+> 
+>   Arbitrary file overwrite in __destruct:
+> 
+>   Remote code execution in __destruct:
+> 
+> are both exploitable only as a consequence of unsafe unserialize use.
 
-  Context: server config
+Removing PHP unserialization removes the thread, as all these values got
+not stored. So passing PHP serialized data to 1.8.006 code only gives an
+error, as json_unserialize does not understand it.
 
-Apparently you're trying to use it in a directory context and finding
-that it doesn't work correctly. At least in theory, this could have
-been resolved by reporting an error when LuaAuthzProvider is found in
-a directory context, rather than by using the actual
-https://issues.apache.org/bugzilla/show_bug.cgi?id=57204#c2 approach
-to add the functionality.
+> If eliminating the unsafe unserialize use would not completely address
+> those issues, additional CVE IDs may be needed.
+> 
+> There are no new CVE assignments yet for possible other issues in the
+> 1.8.006.20140217 changelog entry, such as:
+> 
+>   CalDAV/Calendar: fixed permanent auth request in iCal, if
+>   accountselection is set to "selectbox with groupmembers" and rights
+>   granted from group without being a member
 
-So, it may be reasonable to interpret this as a non-security bug that
-occurs when an administrator intentionally enters httpd.conf content
-that is, according to the documentation, invalid.
+This is NOT security relevant, server-side errors / exceptions cause
+basic auth requests as a means to show to user something went wrong.
 
-We notice that
-https://issues.apache.org/bugzilla/show_bug.cgi?id=57204#c4 says
-"waiting to see if a CVE should be assigned." The usual process for
-CVE assignments for Apache Software Foundation products is:
+>   SiteMgr: fixed not working anonymous user and using now a random
+>   password
 
-  http://www.apache.org/security/committers.html
+This is a hardening included in 1.8.005 by no longer using a static
+password for anonymous user, but setting up a random one during
+installation time.
 
-Here, we realize that the issue was sent directly to the oss-security
-list, but MITRE doesn't have enough information to make a final
-decision. The Apache Software Foundation can decide whether the
-erroneous LuaAuthzProvider handling is a vulnerability from the
-perspective of their security policy.
+So I dont think further CVE's are needed.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Ralf
+-- 
+Ralf Becker
+Director Software Development
 
-iQEcBAEBAgAGBQJUeNxsAAoJEKllVAevmvmsk0EH/jbz+IQmwX2D+htr3yIdS77p
-Wk2jlSG+qjJC1it4YLlYR/lbKkRub6V4w7asFslw0oP0+Ex+PcGlO661ucTxHcIi
-CGFhiWNXXq6XhiY1027hhcEvJ2rKGWmsctmN1XmqR2OlGPtSicrKVYLuujLQOJsE
-fvFDVYbEhXQzw+PEfSgTXBBEUbqiVAJp6r6xyJKyiwd1hf3EumSI80g4x1xKPaEc
-CKYv9SmSvGs5VOTueEsZuMgQPUv0/Q7ED9FmVlNhl5sZKMA2SuWX1wzsa1zSu1eL
-6DGWoHJoP4+WFQeRxCxZa+bdskf7P3joGJ/GwrJfDYYX46x4y9wi+lTB7I1piow=
-=cmIE
------END PGP SIGNATURE-----
+Stylite AG
+
+Morschheimer Strasse 15 | Tel. +49 6352 70629 0
+D-67292 Kirchheimbolanden | Fax. +49 6352 70629 30
+
+Email: rb@...lite.de
+
+www.stylite.de | www.egroupware.org
+
+Managing Directors: Andre Keller | Ralf Becker | Gudrun Mueller
+Chairman of the supervisory board: Prof. Dr. Birger Leon Kropshofer
+
+VAT DE214280951 | Registered HRB 31158 Kaiserslautern Germany
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (899 bytes)
