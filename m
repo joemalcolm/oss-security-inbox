@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/31/9
-Message-ID: <20140731193507.GA31389@eldamar.local>
-Date: Thu, 31 Jul 2014 21:35:07 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Possible CVE Request: MediaWiki Security and Maintenance Releases: 1.19.18, 1.22.9 and 1.23.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/11
+Message-ID: <7412B80A-E1BB-4630-BC68-2FEBBD2FD6A5@redhat.com>
+Date: Wed, 19 Feb 2014 15:18:43 -0700
+From: "Vincent Danen" <vdanen@...hat.com>
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Subject: CVE request for CGI::Application information disclosure flaw
 Content-Type: text/plain; charset=utf-8
 
-Hi
+I don't believe a CVE was requested for this issue.  Looks like it requires a 2013 CVE.  Copying-and-pasting from our bug [5]:
 
-New Security and maintenance releases for mediawiki (1.19.18, 1.22.9
-and 1.23.2) were released:
 
-http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-July/000157.html
+It was reported [1],[2] that the CGI::Application perl module suffered from a flaw where, in certain cases, it would unexpectedly dump a complete set of web query data and server environment information as an error page.  This could allow unintended disclosure of sensitive information.
 
->From the announcement, three SECURITY tagged bugs were fixed.
+A suggested fix is available [3] and the commit that caused the problem [4] was most likely introduced in version 4.19.
 
-Are CVE assignments for those already been requested, or if not, could
-you assign CVEs for these?
 
-Regards,
-Salvatore
+[1] https://rt.cpan.org/Public/Bug/Display.html?id=84403
+[2] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=739505
+[3] https://github.com/markstos/CGI--Application/pull/15
+[4] https://github.com/markstos/CGI--Application/commit/61d327646f01fe
+[5] https://bugzilla.redhat.com/show_bug.cgi?id=1067180
+
+
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
