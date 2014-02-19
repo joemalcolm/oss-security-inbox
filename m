@@ -1,67 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/5
-Message-ID: <20140319134813.GG2551@sivokote.iziade.m$>
-Date: Wed, 19 Mar 2014 15:48:13 +0200
-From: Georgi Guninski <guninski@...inski.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/2
+Message-ID: <alpine.LFD.2.10.1402191227060.30795@javelin.pnq.redhat.com>
+Date: Wed, 19 Feb 2014 12:29:04 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 19, 2014 at 05:31:30PM +0400, Solar Designer wrote:
-> On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
-> > Apologies for posting on list mainly dedicated to CVE's.
-> 
-> I guess you're (partially) kidding.  This list is not meant to be
-> "mainly dedicated to CVE's", it just happened to be that way.  Other
-> on-topic postings are very welcome, and I find postings about other
-> related mailing lists (dis)appearing to be on topic, in part because it
-> affects what topics we choose to discuss in here (and what topics to
-> discuss in other places).
-> 
+   Hello,
 
-lol. I was partially kidding and in addition have low
-opinion of CVE.
++-- On Mon, 17 Feb 2014, Michael Samuel wrote --+
+| I think I've come around to a yes for this one. Pushing attacker-chosen 
+| entries out of the cache after only 100 packets is clearly not what the 
+| admin wants.  It makes a secondary attack (DNS over UDP blind cache 
+| poisoning) much more viable than it was.
+|
+| I can think of some DoS scenarios where this vector would assist another
+| attack.
 
-> > The Full Disclosure mailing list died today:
-> > http://lists.grok.org.uk/
-> > http://seclists.org/fulldisclosure/2014/Mar/332
-> > 
-> > I suppose it is time for a new list.
-> > 
-> > Any ideas?
-> 
-> Arrigo Triulzi and I just had this conversation on Twitter:
-> 
-> <solardiz> Hosting unofficial Full-Disclosure archive http://lists.openwall.net/full-disclosure/ we received few message removal requests and no threats that I recall
-> <@cynicalsecurity> @solardiz shall we reboot FD?
-> <@solardiz> @cynicalsecurity Maybe, but I don't intend to be involved. I wasn't even subscribed except hosting this archive and sometimes looking at it.
-> <@cynicalsecurity> @solardiz perhaps we need a different FD, without the automated security bulletins and the trolls. FD with kickbans?
-> <@solardiz> @cynicalsecurity With "unmoderated" "full disclosure" list, it's tricky to draw the trolling vs. free speech line. I'll let others do it.
-> <@cynicalsecurity> @solardiz yes, agreed.
-> 
-> So I think someone else should setup the new FD, somewhere.  Openwall
-> might host an unofficial archive of it again (with no promises of it
-> staying up), and that's it.
-> 
-> I just recalled another way in which I found FD useful: as a moderator
-> for oss-security, I sometimes rejected off-topic yet not totally crappy
-> postings with a comment suggesting that the person posts to FD instead.
-> We won't be able to continue doing that.  In some cases (mostly for bugs
-> in proprietary software) we'll be able to continue to redirect people to
-> Bugtraq, but there are in fact not totally crappy postings that I think
-> aren't appropriate for either oss-security or Bugtraq - e.g., someone
-> wanted to conduct a research survey in the security community recently,
-> and I redirected them to FD (I don't know if they posted, nor if their
-> posting to FD was approved).  I felt that a posting like that would be
-> "too crappy" for Bugtraq (although that sentiment is in part based on
-> "the old Bugtraq" of 1990s), but OK given the overall low SNR on FD.
-> 
-> Alexander
+  Could we have a CVE for this please?
 
-
-If you ask me there should be no moderation/kickbans.
-IMHO this isn't effective against alleged trolls.
-Back in the time I was against banning n3td3v.
-
-Maybe some sound daily quota is reasonable though.
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
