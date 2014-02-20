@@ -1,58 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/9
-Message-ID: <20140331115307.GC8904@suse.de>
-Date: Mon, 31 Mar 2014 13:53:07 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/20
+Message-ID: <CACYkhxg4r2ju6V4C4az+MOXGXrBWukC32M6so0Bfe6DfUh42mA@mail.gmail.com>
+Date: Fri, 21 Feb 2014 10:59:40 +1100
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: pam_timestamp internals
+Subject: Re: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 21 February 2014 03:21, <cve-assign@...re.org> wrote:
 
-On Mon, Mar 31, 2014 at 03:37:02PM +0400, Dmitry V. Levin wrote:
-> On Mon, Mar 31, 2014 at 12:57:11PM +0200, Sebastian Krahmer wrote:
-> > On Mon, Mar 31, 2014 at 02:32:09PM +0400, Dmitry V. Levin wrote:
-> > > On Mon, Mar 24, 2014 at 01:46:43PM +0100, Sebastian Krahmer wrote:
-> > > > When playing with some PAM modules for my own projects, I came
-> > > > across some implications of pam_timestamp (which is part of
-> > > > upstream linux-pam) that should probably be addressed.
-> > > > 
-> > > > Most importantly, there seems to be a path traversal issue:
-> > > 
-> > > Thanks, Sebastian!  The issue has been fixed in upstream linux-pam by commit
-> > > https://git.fedorahosted.org/cgit/linux-pam.git/commit/?id=Linux-PAM-1_1_8-32-g9dcead8
-> > 
-> > Thanks for taking care. I was about to write a patch on my own, but seems
-> > not necessary anymore.
-> > 
-> > However, I think that
-> > 
-> > +	if (!strlen(tty) || !strcmp(tty, ".") || !strcmp(tty, "..")) {
-> > 
-> > could be insufficient.
-> 
-> There is a code in check_tty() that handles '/':
-> 	if (strchr(tty, '/') != NULL) {
-> 		...
-> 		tty = strrchr(tty, '/') + 1;
-> 	}
-
-Ok, I was missing this; so it makes sense to just use strcmp().
-
-> 
-> > Any occurence of "." inside tty name should be evil.
-> 
-> Strange - yes, but why evil?
-
-Any strange input in authentication code considered evil. :)
-
-thx,
-Sebastian
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> > So, if original author says it's a flaw then it's a flaw, otherwise not?
+>
+> Otherwise MITRE attempts to use the best available information in
+> deciding whether "security improvement" is a better categorization.
+> Across all types of products and problems, the original author is
+> generally allowed to admit that they made a mistake when writing the
+> code in a certain way.
 
 
--- 
+This is flawed reasoning.  The question is: if there is a patch for software
+that addresses an attack, will users expect to get this pushed out to them
+via their distribution outside of the release cycle?
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+In this case, the clear answer is yes.
+
+ > So now SipHash is 'the only' way to avoid hash collision ever?
+
+>
+> At present, introducing SipHash is a type of patch that's very likely
+> to be considered when a software maintainer is responding to
+> hash-collision problems. Certainly other patch approaches are
+> possible. Not all code originated with an implicit functional
+> specification that the code would do a good job at resisting all types
+> of intentional hash-collision attacks. So, in general, when a
+> description of a new attack is published, any resulting patches can be
+> considered security improvements.
+
+
+This is not true. When a new attack is published, patches are made for
+software that are vulnerable to the attack. This is what CVE numbers
+track.
+
+Also, this isn't a standard unbalanced hashtable CPU DoS flaw - this is
+causing fundamental changes in the software's behaviour based on
+hashtable collisions.
+
+Regards,
+  Michael
 
