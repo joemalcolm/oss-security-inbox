@@ -1,58 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/21
-Message-ID: <53B5E174.3050000@redhat.com>
-Date: Fri, 04 Jul 2014 09:04:20 +1000
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifrie@...hat.com>
-Subject: Re: SaltStack - how to report security flaw?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/2
+Message-Id: <201402200515.s1K5FBrk013119@linus.mitre.org>
+Date: Thu, 20 Feb 2014 00:15:11 -0500 (EST)
+From: cve-assign@...re.org
+To: pwouters@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for unfixed CVE-2013-6466 in openswan-2.6.40
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I have security@...tstack.com saved from a private thread. I do not know 
-who has access to read that.
+> openswan-2.6.40 (released Feb 14) was supposed to address
+> CVE-2013-6466 (which also affected libreswan as per CVE-2013-6467) but
+> the fix is incomplete and openswan can still crashed using mangled or
+> missing IKEv2 payloads.
 
-If that does not work let me know!
+Use CVE-2014-2037.
 
-Cheers,
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
---
-Murray McAllister / Red Hat Product Security
-
-On 07/04/2014 05:55 AM, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> So I looked through the saltstack.org site and their github page
-> https://github.com/saltstack and checked OSVDB
-> (http://osvdb.com/vendor/271316-saltstack-inc/1) but I can't find any
-> security contact or way to privately submit a security issue. Does
-> anyone know if there is a way t privately report a security issue to
-> saltstack or should I just submit a public issue in github? This is
-> potentially remote code execution so I'd really prefer to submit it
-> privately.
->
-> - --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
-> Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
->
-> iQIcBAEBAgAGBQJTtbU9AAoJEBYNRVNeJnmTSWMP/RtMK+TXbVP1PuwgtBJBAbQp
-> QSpVOtDF4Upqa/S4AC+BcCe3kWpT0MvBSgUIRATUoyhCfGKrXZGuTF/+doQgUbZo
-> JbsNVqjrh4rxr98A4muOvNLLM3KVLngV62ESbYCHZnYOVUsgEVgZRj3cQxT4QRZZ
-> A4DSjU5i4zUYpc97mOk3TFyliZBc0ktL5X6WAbZsaJDgjpv55EVieACAE/JSkUPK
-> /5hFg9mKrUr/QMUcSnjk2/00lE7vM7Tj0pd/2pP5QjWexYit7ZBBe5ADQK24ZvQL
-> nI3XdgbQJl22KS4SxlhpX1zT5w+S75KR9f4wILHapM8v12D+MyvtQXgZoHEbJe6J
-> OnRzpvo2Vje7MXCnXg1pYEx9UU4htgrv2CpEHt8oA0b4x13pY9m86kILhLxy0zt6
-> xgOIYAoF7VwWxGrd72pMgU7wC/0oTK/BDX3O3i5CPooS+zp87mABEuR8zHV8GCJ7
-> DUq9xSBfq0IhjQZKdLvWfHzC2rIWZQeCSd68phC5iDfO+GZlA4d7jy1CofYY5AHd
-> qUjDqNFZN7P9H2GjywsoPYLYcqV4b/xrJWX3BkaudsEG/0wZrVhIYnDBRUViiRyp
-> Elm/Uk9XVDNSEtUoVD4rzFqqUh2lgssxhgGiK7nr3dU1XnIanwXKl57sGCQxAZHP
-> 4pHI1t9fixNGbI9nPl/0
-> =WOeS
-> -----END PGP SIGNATURE-----
->
-
+iQEcBAEBAgAGBQJTBY7oAAoJEKllVAevmvmsWv4IAMg8NTfLA7HMt7U2ADHuVLpX
+htKO2JV7dXuFgiHj6WCjs5DCIlVALDLFqjbqC0MjDFEX/NPRuMxq+C+yYIurq+mS
+YXsIZqsJaPm5sX4aJ1KlFlt1eWpPjdpBicaxE5g83kc38Cip0DxER0ZSPuPt8+o7
+302LY4lIkRLbTcrNCGjJjatj1VVskaWqMDTZSzS4tqIuBmGBUjaEBr+3BDHy6k4q
+6hUMzpIf/slDG9d+NUTxu2tx1tcuPRvHC8R22W6MVd/zKegYcNfGpczBe0upRpz3
+1UkzZCKN5Zo7TuOKSByV82QGp7md/HBuL+Jmvw3ZQB0tr0MgvoOC2r3i5iYGtU8=
+=X4Ym
+-----END PGP SIGNATURE-----
