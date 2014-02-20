@@ -1,60 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/28
-Message-ID: <1407530485.29725.27.camel@scapa>
-Date: Fri, 08 Aug 2014 22:41:25 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/9
+Message-ID: <alpine.LFD.2.10.1402202028360.31891@javelin.pnq.redhat.com>
+Date: Thu, 20 Feb 2014 20:31:45 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: cve-assign@...re.org
+Subject: Re: Re: CVE request New-djbdns: dnscache: possible DoS
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2014-08-08 at 09:49 -0700, Greg KH wrote:
-> > 
-> > Personally I would prefer disabling USB hotplug while a machine is locked
-> > (or while there are no active TTYs or something for servers).  Even if HID
-> > was whitelisted while the machine is locked, it would be a great start.
-> 
-> Then do just that, Linux has allowed you to do this for years, again,
-> but very few people take advantage of it.
++-- On Thu, 20 Feb 2014, cve-assign@...re.org wrote --+
+| There would be too many CVEs if every case of "does not read data as fast as 
+| possible" were classified as a DoS problem.
 
-Reading that thread, that's exactly what I thought about that. I guess
-it could be a good idea to set usbcore.authorized_default to 0 when the
-systems is locked (logind could provide that information). There's still
-the issue that it's then not possible to unlock the system in some
-situation (for example because you had to unplug the keyboard while
-logged out, or stuff like that). But at least that would be a
-possibility.
-> 
-> > In regards to the PCI stuff, don't miss Joe's talk at DEFCON on Sunday.
-> > 
-> > https://www.defcon.org/html/defcon-22/dc-22-speakers.html#FitzPatrick
-> > 
-> > People have much more exposed PCI on their laptops and servers than they
-> > realize.  It's super cheap, super easy, and when we start selling kits this
-> > afternoon, it's going to be super accessible.
-> 
-> express card and thunderbolt are pcie, it's fun to play with, glad to
-> see some "kits" to make it more accessable.
-> 
-> > VTd/IOMMU would be nice to have if implemented properly, but it seems like
-> > even OSX, the only OS currently using VTd as a security feature, still
-> > hasn't gotten it quite right.
-> 
-> What exactly do you mean by "get it right"?
+  It is not - 'does not read data as fast as possible', but 'reads data as 
+slow as possible', and that is why has a DoS problem.
 
-I lost track of the current OSX status, but I had the impression that
-they would only enable Vt-d (where present) when the systems was locked,
-not always.
-
-Note that on Linux, you can boot intel_iommu=on (or force it at compile
-time). I do that since a long time now (actually since I myself found
-bugs in network cards firmwares which I then used to bounce to the host,
-that raised my own paranoïa quite a lot). I also discovered that I/OMMU
-(like any firmware) can be buggy too (for example on my ironlake system
-I need intel_iommu=on,igfx_off for it to work), but it's apparently
-better on more recent Intel systems.
-
-Regards,
--- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+--
+Prasad J Pandit / Red Hat Security Response Team
