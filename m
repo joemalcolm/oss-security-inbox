@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/8
-Message-ID: <20140710190930.GV179@oevtugenva.nrevsny.pk>
-Date: Thu, 10 Jul 2014 15:09:30 -0400
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/18
+Message-ID: <alpine.LNX.2.00.1402201435310.2318@forced.attrition.org>
+Date: Thu, 20 Feb 2014 14:38:50 -0600 (CST)
+From: security curmudgeon <jericho@...rition.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
+Subject: Request regarding posts to the lists
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 10, 2014 at 08:52:24PM +0200, Florian Weimer wrote:
-> Stephane Chazelas discovered that directory traversal issue in locale
-> handling in glibc.  glibc accepts relative paths with ".." components
-> in the LC_* and LANG variables.  Together with typical OpenSSH
-> configurations (with suitable AcceptEnv settings in sshd_config), this
-> could conceivably be used to bypass ForceCommand restrictions (or
-> restricted shells), assuming the attacker has sufficient level of
-> access to a file system location on the host to create crafted locale
-> definitions there.
 
-Am I correct in assuming this affects most typical git setups (e.g.
-gitolite) using ssh authorized_keys files with forced commands, where
-the malicious file could simply be created as part of the git
-repository? Or are these usually setup to filter the environment?
+This mail list deals with vulnerabilities in several hundred pieces of 
+software any given month. Please remember that many subscribers to this 
+list are not part of your project or company. As such, please clearly 
+identify the product in the subject line.
 
-Rich
+Just including a sub-component or vulnerable functions and/or a CVE does 
+not tell us what software the mail is about. This has gotten out of hand 
+and in at least one case in the past few days, the entire mail never 
+clearly stated the software that was vulnerable. Sure, most of us know the 
+poster and it followed other advisories, but to newcomers or anyone 
+reaching that post via a Google search it is not very friendly.
+
+Thanks,
+
+jericho / OSVDB.org
+
+
