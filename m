@@ -1,52 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/28/7
-Message-Id: <201406281340.s5SDentZ005391@linus.mitre.org>
-Date: Sat, 28 Jun 2014 09:40:49 -0400 (EDT)
-From: cve-assign@...re.org
-To: mattd@...fuzz.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request / advisory: Cherokee
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/10
+Message-ID: <alpine.LFD.2.10.1402202147001.466@javelin.pnq.redhat.com>
+Date: Thu, 20 Feb 2014 21:48:53 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE Request: Linux kernel: s390: crash due to linkage stack instruction
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+    Hello,
 
-For reference, here is the URL mentioned on this list during the last
-discussion of a CVE assignment related to LDAP and an empty string:
+Linux kernel built for the s390 architecture(CONFIG_S390) is vulnerable to a 
+crash due to low-address protection exception. It occurs when an application 
+uses a linkage stack instruction.
 
-  http://securitysynapse.blogspot.ca/2013/09/dangers-of-ldap-null-base-and-bind.html
+An unprivileged user/application could use this flaw to crash the system 
+resulting in DoS.
 
-The Cherokee vulnerability here is essentially a misinterpretation of
-an LDAP server response. Cherokee should be expecting the semantics:
+Upstream fix:
+-------------
+   -> https://git.kernel.org/linus/8d7f6690cedb83456edd41c9bd583783f0703bf0
 
-  - If I send a username and a non-empty password, a successful bind means
-    that that's the correct password for the user
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1067558
 
-  - If I send a username and an empty password, a successful bind means
-    that (A) that's not the correct password for the user and (B)
-    the LDAP server probably happens to allow unauthenticated information
-    retrieval that might or might not be intentional
 
-Instead, Cherokee incorrectly assumes that the semantics are:
-
-  - If I send a username and any password (empty or non-empty), a
-    successful bind means that that's the correct password for the user
-
-Use CVE-2014-4668.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTrsWJAAoJEKllVAevmvms4xsH/2Mp62a/D0Sfnbj2xFBCkt6I
-fz/F0zC9Vue06vegJ/liSMJvpcJOxdO60lm1pEYAEXMdwM4OcewZ8+kRYhzCvOlf
-ibEZlIi6YSh9AceI34NxGTzqhh2yVFApdm7uEdItr+ZT9g4uNejtjUdU+wQN5Ozx
-8I4RJ5eYZPYNfrvru0RqvYW7iUOW2FG9nibhfZRSQ2NvsoJKXgMlz4GvknjqEijt
-Mv0cyZ1PSNopcGcfdjyz568fEBy+0HWaEkx9EnQq1ni757B5D2iycSjleWsBRrgi
-vQMOtmOEvVIC1RCVZuy8ZuTUIY8Lnfxxwmr7W+KjmiXtr2lUUhUZWHnM4s9d9bY=
-=ukMd
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
