@@ -1,24 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/24/3
-Message-ID: <549AB330.9030404@internot.info>
-Date: Wed, 24 Dec 2014 23:36:00 +1100
-From: Joshua Rogers <honey@...ernot.info>
-To: oss-security@...ts.openwall.com
-Subject: libsndfile DoS/divide-by-zero
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/3
+Message-ID: <alpine.LFD.2.10.1402201123001.18439@javelin.pnq.redhat.com>
+Date: Thu, 20 Feb 2014 11:57:19 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: cve-assign@...re.org
+Subject: Re: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
-Hi,
++-- On Wed, 19 Feb 2014, cve-assign@...re.org wrote --+
+| traditional sense. Yes, we realize that there's a potentially
+| important and potentially simple attack possibility that could have
+| been avoided by not choosing djb33. That's not sufficient, however.
 
-I found a divide by zero bug in libsndfile.
-https://github.com/erikd/libsndfile/commit/725c7dbb95bfaf8b4bb7b04820e3a00cceea9ce6
-is the fix commit.
+  What do you mean not sufficient?
 
-Could I get a CVE-ID for this?
+| Also, in this case, some aspects of making a better choice (e.g., with
+| sufficiently fast and auditable pseudorandom hashing code) were
+| probably not even understood in the research community at the time the
+| software was originally written.
 
+  I don't understand. How is it relevant that it was not well understood at 
+the time when software was written? It is still an issue. And that argument 
+could be true for many other issues. Like the JSON library example earlier 
+in this thread, or
 
-Thanks,
--- 
--- Joshua Rogers <https://internot.info/>
+ -> http://www.cvedetails.com/cve/CVE-2012-0770
+ -> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4885
 
+| CVE does, as a secondary form of inclusion, cover vulnerability
+| advisories from a vendor who was the original author of a piece of
+| software and publishes a change as a required security update. That is
+| unlikely here; nobody is anticipating djbdns-1.06.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (885 bytes)
+  Woh..woh..woh!!! Please note that the CVE is requested for 'New-djbdns'. 
+New-djbdns is a fully fledged, production quality, fast growing fork of 
+the 'djbdns'.
+
+  New-djbdns -> http://pjp.dgplug.org/ndjbdns/
+
+I am the upstream developer and Fedora package maintainer of this project. I 
+assure you, version 1.06 is brewing and brewing good. It'll be served when it 
+is ready.
+
+I request you to kindly assign a CVE for this and the other issue in 
+New-djbdns. Lot of users depend of it.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
