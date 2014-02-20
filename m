@@ -1,58 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/28
-Message-ID: <m3jjf5$ooe$2@ger.gmane.org>
-Date: Sat, 08 Nov 2014 00:09:26 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-8598: MantisBT XML Import/Export plugin unrestricted access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/13
+Message-Id: <201402201742.s1KHg2BD015659@linus.mitre.org>
+Date: Thu, 20 Feb 2014 12:42:02 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Linux kernel: nfs: information leakage
 Content-Type: text/plain; charset=utf-8
 
-Mitre assigned CVE-2014-8598 to this issue.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
+This is definitely a problem that can have a CVE ID; use
+CVE-2014-2038.
 
-The XML Import/Export "official" plugin (i.e. bundled with MantisBT 
-releases) currently does not perform any access level checks in the 
-import and export pages. This leads to the following vulnerabilities:
+However, is "A user/program could use this flaw to leak kernel memory
+bytes" the only impact? In
 
-1) import
+  https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=263b4509ec4d47e0da3e753f85a39ea12d1eff24
 
-Any user of a MantisBT instance with the XML plugin enabled and knowing 
-the URL to the plugin's import page could upload an XML file and insert 
-data without restriction, regardless of their access level.
+is there also an opportunity for Client B to conduct a DoS attack
+against Client A (i.e., causing Client A's data to be completely lost)
+if the NFSv4 ACL on /mnt/file gives Client B APPEND_DATA access but
+not WRITE_DATA access?
 
-This vulnerability is particularly dangerous when used in combination 
-with the one described in issue #17725 [1] (CVE-2014-7146) as it makes 
-for a very simple and easily accessible vector for PHP code injection 
-attacks.
+Our understanding is that you mean the "extra" bytes printed by the
+cat command, i.e.,
 
-2) export
+   0 \357 \277 \275 D 0 \357 \277 \275
 
-There was also no access check when exporting data, which could allow an 
-attacker to gain access to confidential information (disclosure of all 
-bug-related data, including usernames).
+are the leaked kernel memory bytes.
 
-Systems where the patch described below cannot be applied are strongly 
-advised to uninstall the plugin.
+Unless someone has an alternative interpretation, this would most
+likely be covered by a single CVE (i.e., "does not always verify that
+the cached page is up-to-date" is the root cause; information
+disclosure and a possible DoS are the impacts).
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Affected versions:
->= 1.2.0a3, <= 1.2.17
-
-Fixed in versions:
-1.2.18 (not yet released)
-
-Patch:
-See Github [3]
-
-Credit:
-Issue was discovered and fixed by Damien Regad (MantisBT Developer)
-
-References:
-Further details available in our issue tracker [2]
-
-
-[1] http://www.mantisbt.org/bugs/view.php?id=17725
-[2] http://www.mantisbt.org/bugs/view.php?id=17780
-[3] https://github.com/mantisbt/mantisbt/commit/80a15487
-
+iQEcBAEBAgAGBQJTBj2PAAoJEKllVAevmvms+f4H/iv05BaZSO4Uekg29J+rocqd
+cG3tjUVOa9/3+9AMJooAtY8kUIDqrZ55q7WvuQPsMli6gE1ibGKGBTMVAyXtIj57
+lI9PQBPOx8i6b31Mfxo/Gb+TbsXOQzAgMTs3OKtuYeUUrY6wt0tVikMpYHrr7/J2
+LvMAZP6ZmG5aTYkvFJamnkmyH+U0rjk2arhZz4YOWFPuTPPFhqrMX/wivulDoDqT
+MZDPLK7lo7QJuSXCxtsA8xYOSBIB9HPY11E5M11qFErG7CZhgPINxg/KG4HQmjLO
+4p1Tvnz37pjLvD3XkHPXTVRCMFROST/uwoH/L9lOctsr3+Dt8OT62MZ/yp2/p88=
+=NFAO
+-----END PGP SIGNATURE-----
