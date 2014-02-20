@@ -1,48 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/38
-Message-ID: <54345F12.3050503@redhat.com>
-Date: Tue, 07 Oct 2014 15:45:54 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/19
+Message-ID: <20140220221019.GA4737@openwall.com>
+Date: Fri, 21 Feb 2014 02:10:19 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: Re: Discussion: information leakage from server and client software - CVE/hardening/other?
+Subject: Re: Request regarding posts to the lists
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Feb 20, 2014 at 02:38:50PM -0600, security curmudgeon wrote:
+> please clearly identify the product in the subject line.
 
+I support this request.  Luckily, most of the time this is already the case.
 
-On 07/10/14 02:35 PM, cve-assign@...re.org wrote:
-> The main cases in which a CVE could exist are:
-> 
-> 1. The author of the software states that the information-leakage
-> behavior was a violation of the product's security policy.
-> 
-> 2. The information-leakage behavior directly contradicts the product's
-> documentation stating that the specific information leakage doesn't
-> occur.
-> 
-> 3. The author of the software makes no statement, but all (or nearly
-> all) similar products follow a standard practice in which the
-> information-leakage behavior doesn't occur. For example: common web
-> browsers don't send a file: URL in a Referer header.
-> 
-> 4. The author of the software makes no statement, and disclosing the
-> information results in no benefit to the user, and the information
-> would not be useful to the vendor in further developing the product or
-> complying with restrictions on the data that the vendor offers in
-> conjunction with the product.
+> Just including a sub-component or vulnerable functions and/or a CVE does 
+> not tell us what software the mail is about. This has gotten out of hand 
+> and in at least one case in the past few days, the entire mail never 
+> clearly stated the software that was vulnerable. Sure, most of us know the 
+> poster and it followed other advisories, but to newcomers or anyone 
+> reaching that post via a Google search it is not very friendly.
 
-So for example the
-http://boingboing.net/2014/10/07/adobe-ebook-drm-secretly-build.html
-article would indicate to me that this is CVE worthy under #4 for
-example. I also assume that "makes no statement" means the company
-actually has to make it easily viewed/available, e.g. not buried in some
-huge 60 screen long EULA/TOS, or in some random source code file ("# and
-here is where we send information back").
+I am a bit puzzled.  Are you possibly referring to the three Ruby
+advisories posted on 2014/02/18?
 
+http://www.openwall.com/lists/oss-security/2014/02/18/
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+If so, I doubt Aaron will notice your request - I think he's not
+subscribed.  You might want to e-mail him privately, in case he intends
+to post more advisories in the future.
 
+Or maybe you were referring to Vincent's CVE request for
+CGI::Application, which didn't mention Perl in the Subject line (but did
+in the message body)?  This one actually looks OK with respect to your
+request, since CGI::Application appears to be a product on its own (not
+bundled with Perl).
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+http://www.openwall.com/lists/oss-security/2014/02/19/11
+
+I find no other examples of this problem "in the past few days",
+although of course we've seen it numerous times before.
+
+Alexander
