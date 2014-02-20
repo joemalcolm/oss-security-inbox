@@ -1,47 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/18
-Message-ID: <20140212171443.GB2348@openstack.org>
-Date: Wed, 12 Feb 2014 17:14:44 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-004] Glance Swift store backend password leak (CVE-2014-1948)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/5
+Message-ID: <alpine.LFD.2.10.1402201501580.22280@javelin.pnq.redhat.com>
+Date: Thu, 20 Feb 2014 15:04:11 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request: Linux kernel: nfs: information leakage
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-004
-CVE: CVE-2014-1948
-Date: February 12, 2014
-Title: Glance Swift store backend password leak
-Reporter: Nikhil Komawar (Rackspace)
-Products: Glance
-Versions: 2013.2 versions up to 2013.2.1
+    Hello,
 
-Description:
-Nikhil Komawar from Rackspace reported an information leak in Glance
-logs. The password for the Swift store backend is logged at WARNING
-level as part of the URL when authentication to a store fails if
-image location is not disabled by policy or the store is a
-single-tenant configuration. An attacker with access to the logs
-(local shell, log aggregation system access, or accidental leak) may
-leverage this vulnerability to elevate privileges and gain direct
-full access to the Glance Swift store backend. Only Glance setups
-using the Swift store backend are affected.
+Linux kernel build with the NFS file system(CONFIG_NFS_FS) along with the 
+support for NFSv4 protocol(CONFIG_NFS_V4) is vulnerable to an information 
+leakage flaw. It could occur while writing to a file wherein NFS server has 
+offered write delegation to the client. Such delegation allows NFS client to 
+perform the said operation locally without instant interaction with the 
+server.
 
-Icehouse (development branch) fix:
-https://review.openstack.org/71419
+A user/program could use this flaw to leak kernel memory bytes.
 
-Havana fix:
-https://review.openstack.org/72473
+Upstream fix:
+-------------
+   -> https://git.kernel.org/linus/263b4509ec4d47e0da3e753f85a39ea12d1eff24
 
-Notes:
-This fix will be included in the icehouse-2 development milestone
-and the upcoming 2013.2.2 release.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1067341
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-1948
-https://launchpad.net/bugs/1275062
 
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
