@@ -1,78 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/18
-Message-ID: <loom.20140203T194406-369@post.gmane.org>
-Date: Mon, 3 Feb 2014 19:19:06 +0000 (UTC)
-From: mancha <mancha1@...h.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH J-PAKE vulnerability (no cause for panic! remain calm!)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/15
+Message-Id: <201402201800.s1KI0gOI016314@linus.mitre.org>
+Date: Thu, 20 Feb 2014 13:00:42 -0500 (EST)
+From: cve-assign@...re.org
+To: larry0@...com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Persistent XSS in Media File Renamer V1.7.0
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...> writes:
-> On 01/29/2014 06:50 AM, cve-assign@... wrote:
-> > Use CVE-2014-1692. The CVE description will indicate that the
-> > issue requires an unusual installation.
-> > 
-> >> As I understand it this can be enabled via code edit/gcc command
-> >> line options, so not sure if this qualified for a CVE or not
-> >> (vuln in code, yes, is code reachable? not under any default
-> >> setup, and even on non-default you have to go pretty far off to
-> >> enable it).
-> > 
-> > An impact on the default installation isn't necessary.
-> > Vulnerabilities that occur only after the user modifies code aren't
-> > eligible for a CVE. However, if there's some type of "installation
-> > option" mentioned by the vendor, someone may have chosen that
-> > option, and it may be worthwhile to track the issue with a CVE. The
-> > nature of an "installation option" obviously varies widely across
-> > both open-source and closed-source products.
-> > 
-> > In this case, there's:
-> > 
-> >> http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/Makefile.inc
-> >
-> >>  Add support for an experimental zero-knowledge password
-> >> authentication method using the J-PAKE protocol ...
-> > 
-> >> This is experimental, work-in-progress code and is presently 
-> >> compiled-time disabled (turn on -DJPAKE in Makefile.inc).
-> > 
-> >>
-http://www.openbsd.org/cgi-bin/cvsweb/~checkout~/src/usr.bin/ssh/Makefile.inc?rev=1.41;content-type=text%2Fplain
-> >
-> >>  #CFLAGS+=	-DJPAKE
-> > 
-> > This is close to the edge of what "installation option" means, but
-> > our feeling is that the vendor wouldn't have provided that #CFLAGS
-> > line at all unless it were expected that an end user might want to
-> > make the one-character change.
-> 
-> Just to close this email thread, Mitre assigned one:
-> 
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-1692
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This CVE assignment puzzles me. Relevant code was: 1) never enabled,
-2) never advertised in release notes, and 3) never had a
-configuration option. To enable it, a user would have to pro-actively
-edit code (more than merely a configure flag). Note: I *did* read
-MITRE's justification on this last point.
+> http://www.vapid.dhs.org/advisories/wordpress/plugins/MediaFileRenamer-1.7.0/
+> Download: http://www.meow.fr/media-file-renamer/
 
-Also, an attacker would need to make EVP_Digest* fail. Is there
-a known way to achieve this?
+> mfrh_class.settings-api.php
+> function callback_multicheck
+> function callback_radio
+> function callback_wysiwyg
 
-Finally, the NVD entry
-(https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-1692)
-doesn't make sense. J-PAKE experimental code wasn't in the code-base
-until OpenSSH 5.2 (iirc) yet versions back to 1.2 are listed as
-vulnerable. Also, a CVSS score of 7.5 (High)? I know this is 
-orthogonal to the actual CVE assignment. Still...weird.
+> If a user with permission to add media or edit media uploads a file
 
-I don't have a horse in this race but the entire situation strikes
-me incongruent.
+> the title
 
---mancha
+> can XSS the site admin
 
+Use CVE-2014-2040.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-
-
+iQEcBAEBAgAGBQJTBkJtAAoJEKllVAevmvms3jAIALKsp0q1fkWAPIkGYwnFzMzS
+mpitvFIGpXCb/7MflVzCfo2AkVHT7/7F4sWiPMVDduTnjHGuWRDQhJu6B6t3csS4
+D9CmYtY3IIYpLZ5CwtU2QWN2B4ThIiRzQDSLIDl9zmjzvuZJ88fB/p0g2RUOF4vw
+26hNokJflz3rO7EavufeDbjXffIOsbCX4Xmjy1dQEwq35IMwrlRogSFnvuFu7fcA
+2IReU1oRPmGs7Ly8btzGIRZ1IEzP0sxFYBYmP3wnuUgMKlmQGH9ISAS3tNWaXamg
+CwWPP5DnlyJ/5kEWoyABWZaOXDMu/Z9fQraIw3VjlvKj6iIjT2wMPoZc8YV/AdQ=
+=xBmt
+-----END PGP SIGNATURE-----
