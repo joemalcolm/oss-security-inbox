@@ -1,26 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/8
-Message-ID: <53E08028.7090602@reser.org>
-Date: Mon, 04 Aug 2014 23:56:40 -0700
-From: Ben Reser <ben@...er.org>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: Re: Possible CVE request: subversion MD5 collision authentication leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/7
+Message-Id: <201402201405.s1KE5klm008877@linus.mitre.org>
+Date: Thu, 20 Feb 2014 09:05:46 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request New-djbdns: dnscache: possible DoS
 Content-Type: text/plain; charset=utf-8
 
-On 8/4/14 6:38 PM, Michael Samuel wrote:
-> Just to clarify - does the attacker have control of both $REALM parameters?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Only their own server.  If they had access to the server they were attacking
-they would presumably have access to the repository directly and could do
-anything they wanted already.
+> I don't understand why is it relevant whether it's a genuine mistake or
+> logic error or an intentional bug?
 
-> A chosen prefix collision still requires the attacker provide both
-> inputs (or at-least the suffix to both inputs).
+There would be too many CVEs if every case of "does not read data as
+fast as possible" were classified as a DoS problem.
 
-I stand corrected.  Re-read the documentation at the link I shared earlier and
-you're right you need to be able to modify the suffix on both sides of the
-collision.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Which means that yes this is theoretical.
-
-Thanks for setting me right.
+iQEcBAEBAgAGBQJTBgtKAAoJEKllVAevmvmsOocIAK0ZllaiL6eW4GxzxPTGZRDs
+IPfsZCButrWZxtUW1DehkFzxvlqDDF3fS6oS01Qfd/fEpji7vzew7Xv8JGHykWYA
+BMRws8zy9FRmE3/eBXpLp/gxrZ8VqtZ19qc8AdD5UyF3Tdb5YJXOOVdRiFKBFuxY
+We6MIo7hCHDC3yylgqNJpaFMv51Vro7KK/p3ylkNZmi0hwordEmL5RhGUPYWo/P1
+IvuU5n4E7bB9gSJtWnT20vsjWYj0eZNAKMPDuC+GluadC89SVlvqmBFLtDZvkOOf
+BasxTeVEXPPDIQf+7ojP+RZcCzfHOtu/auK3qijXwy8PMwa2ZjRqyFWg8xi0O4E=
+=AA8Q
+-----END PGP SIGNATURE-----
