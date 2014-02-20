@@ -1,18 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/18
-Message-ID: <CALx_OUDbS_mgxc8ypD30y-kcXQ0OUtjPUXzDw7Jk04QDws=S8A@mail.gmail.com>
-Date: Mon, 29 Sep 2014 08:04:17 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/11
+Message-Id: <201402201622.s1KGLv5T028016@linus.mitre.org>
+Date: Thu, 20 Feb 2014 11:21:57 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
-> So, I don't think there's a lot of value in making random accusations.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Err, OK, might have misread Giles' comment as the opposite of what he
-wanted to say - apologies to Giles!
+> So, if original author says it's a flaw then it's a flaw, otherwise not?
 
-There have been some other fairly confrontational responses in the
-various threads, and I sort of read it through such lens.
+Otherwise MITRE attempts to use the best available information in
+deciding whether "security improvement" is a better categorization.
+Across all types of products and problems, the original author is
+generally allowed to admit that they made a mistake when writing the
+code in a certain way.
 
-/mz
+> So now SipHash is 'the only' way to avoid hash collision ever?
+
+At present, introducing SipHash is a type of patch that's very likely
+to be considered when a software maintainer is responding to
+hash-collision problems. Certainly other patch approaches are
+possible. Not all code originated with an implicit functional
+specification that the code would do a good job at resisting all types
+of intentional hash-collision attacks. So, in general, when a
+description of a new attack is published, any resulting patches can be
+considered security improvements.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTBiraAAoJEKllVAevmvmskowH/i6JQKtvJttMqHORSRz78Q0b
+cDs+ho9ha3IfW72JDESqpnuZN5MmD5RANj95h/kVuuwxRZQoaZuBz7TrcXqkJB5a
+Jj4t/41o2/9MDtR+13w2EF4K2OHOVehiv+cH2uWOgTcxl0iY3frCpUXsl5uhMOX7
+ComvccRVrKgG0U6kdQxQClKKrjvQ+9jXNM1lP1cQbyMtsk6wSbvw9AuC8KNAHoL/
+IAWor0yu3GQ9fW/i5bnHJixQx9Yj32XcoiLkrYIxL7M8lB6TZ9SBw1PyWqWSEorc
+2xPONazJ0TE5QEOpMwgaJrhSQyznQFQQfn4aWbyrgfjC05K0VE/5bsfssnRCm8A=
+=Ycsb
+-----END PGP SIGNATURE-----
