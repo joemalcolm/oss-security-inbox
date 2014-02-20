@@ -1,40 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/2
-Message-ID: <53105551.5050406@enovance.com>
-Date: Fri, 28 Feb 2014 10:22:25 +0100
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request for vulnerability in OpenStack Keystone
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/4
+Message-ID: <alpine.LFD.2.10.1402201228140.18439@javelin.pnq.redhat.com>
+Date: Thu, 20 Feb 2014 12:44:25 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: cve-assign@...re.org
+cc: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE request New-djbdns: dnscache: possible DoS
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although
-an advisory was not sent yet.
++-- On Wed, 19 Feb 2014, cve-assign@...re.org wrote --+
+| Changing the TCP read approach can be considered a performance
+| improvement (and, somewhat marginally, a security improvement), with
+| no CVE assignment. The commit mentions "making slight gain in
+| performance" and "could also lead to potential denial of service."
 
-Title: Trustee token revocation does not work with memcache backend
-Reporter: Morgan Fainberg (Metacloud)
-Products: Keystone
-Versions: 2013.1 up to 2013.1.4 and 2013.2 versions up to 2013.2.2
+  Yes, slight gain because it reduces 'read(2)' calls. And potential DoS 
+because:
 
-Description:
-Morgan Fainberg from Metacloud reported a vulnerability in the Keystone
-memcache token backend. When a trustor issues a trust token with
-impersonation enabled, the token is only added to the trustor's token
-list and not to the trustee's token list. This results in the trust
-token not being invalidated by the trustee's token revocation (bulk
-revocation). This is most noticeable when the trustee user is disabled
-or the trustee changes a password. Only setups using the memcache
-backend for tokens in Keystone are affected.
+  On Tuesday, 11 February 2014 5:22 AM, Frank Denis wrote:
+  >
+  > ...
+  > The spike of CPU between the first query for a name/type and
+  > its resolution is an old standing bug.
+  >
+  > ... We spawn dnscache threads to balance the load on all CPU cores.
+  > And when running the PoC, the whole system starts crawling because
+  > of the high number of system calls.
 
-References:
-https://launchpad.net/bugs/1260080
-
-Thanks in advance,
-
---·
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+'Frank Denis' is the author of the PoC and earlier article about the SipHash 
+issue.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
+| The original implementation might have chosen its approach for 
+| design-for-auditability reasons, i.e., it may not have been a "mistake" at 
+| all. It seems impractical to assign CVE IDs to all opportunities to speed up 
+| the processing of untrusted input in all products. The situation would be 
+| different if it were clearly a logic error in the code, e.g., processing the 
+| first byte once, the second byte four times, the third byte nine times, etc.
+
+  I don't understand why is it relevant whether it's a genuine mistake or 
+logic error or an intentional bug?
+
+  The behaviour opens room for a practical DoS attack. That is a security 
+issue. There is a PoC available for it. There is fix available for it, which 
+has been applied. Why not a CVE?
+
+--
+Prasad J Pandit / Red Hat Security Response Team
