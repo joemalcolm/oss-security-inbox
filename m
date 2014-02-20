@@ -1,34 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/01/2
-Message-ID: <52EC5FBA.30956.2F7D740B@pageexec.freemail.hu>
-Date: Sat, 01 Feb 2014 03:45:14 +0100
-From: "PaX Team" <pageexec@...email.hu>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/16
+Message-ID: <alpine.LFD.2.10.1402210016170.2844@javelin.pnq.redhat.com>
+Date: Fri, 21 Feb 2014 00:20:36 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: cve-assign@...re.org
+Subject: Re: Re: CVE request: Linux kernel: nfs: information leakage
 Content-Type: text/plain; charset=utf-8
 
-On 1 Feb 2014 at 3:02, Solar Designer wrote:
++-- On Thu, 20 Feb 2014, cve-assign@...re.org wrote --+
+| This is definitely a problem that can have a CVE ID; use
+| CVE-2014-2038.
 
-> Google is offering bounties for responsible disclosure of bugs in
-> Google's software, and I guess this includes use of Linux kernel by
-> Chromium OS.
+  Thank you.
+ 
+| is there also an opportunity for Client B to conduct a DoS attack
+| against Client A (i.e., causing Client A's data to be completely lost)
+| if the NFSv4 ACL on /mnt/file gives Client B APPEND_DATA access but
+| not WRITE_DATA access?
 
-exactly, and the same bugtracker is used for all chrom* products
-(somewhat confusingly btw, as there's no kernel category for example
-when one opens a bug ;).
+  Ummn, I wonder if with only APPEND_DATA client would be able to 
+delete/over-write file data. It needs to be verified.
+ 
+| Our understanding is that you mean the "extra" bytes printed by the
+| cat command, i.e.,
+| 
+|    0 \357 \277 \275 D 0 \357 \277 \275
+| 
+| are the leaked kernel memory bytes.
 
->  (I don't know if this specific vulnerability was relevant
-> to Google's products,
+  Yes, that's correct.
 
-i was told that x32 wasn't enabled anywhere (yet, anyway) so they
-aren't affected. 
-
-> http://googleonlinesecurity.blogspot.com/2013/10/going-beyond-vulnerability-rewards.html
-> 
-> ... but finding a vulnerability would probably not fall under the latter
-> program.
-
-yes, that's a somewhat different kettle of fish though bugfixes may
-be eligible if it's about fixing or mitigating entire classes (not
-the case here obviously).
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
