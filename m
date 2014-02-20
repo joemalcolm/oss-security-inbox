@@ -1,22 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/06/2
-Message-ID: <CAOp4FwSYvyF34qkdq7uqeRGwdB9uebpWsRqdRRoH702i+-uyJA@mail.gmail.com>
-Date: Sun, 6 Jul 2014 08:33:48 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Possible CVE request: php5: phpinfo() Type Confusion Information Leak Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/17
+Message-ID: <alpine.LFD.2.10.1402210021060.2844@javelin.pnq.redhat.com>
+Date: Fri, 21 Feb 2014 00:24:00 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: cve-assign@...re.org
+cc: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: Linux kernel: s390: crash due to linkage stack instruction
 Content-Type: text/plain; charset=utf-8
 
-Stefan Esser has written a blog post about a PoC that can be used
-to disclose the SSL private key.
++-- On Thu, 20 Feb 2014, cve-assign@...re.org wrote --+
+| > https://git.kernel.org/linus/8d7f6690cedb83456edd41c9bd583783f0703bf0
+| Use CVE-2014-2039.
 
-https://www.sektioneins.de/en/blog/14-07-04-phpinfo-infoleak.html
+  Thank you.
 
-Kind regards,
-//Logan
-C-x-C-c
+May I request you to please remove my email when replying 'oss-sec' list? I 
+get each mail twice.
 
 
--- 
-This message is strictly personal and the opinions expressed do not
-represent those of my employers, either past or present.
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
