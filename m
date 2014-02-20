@@ -1,30 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/6
-Message-ID: <20140606051614.GP507@oevtugenva.nrevsny.pk>
-Date: Fri, 6 Jun 2014 01:16:14 -0400
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Cc: Thomas Gleixner <tglx@...utronix.de>
-Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/6
+Message-Id: <201402201401.s1KE1XIu008770@linus.mitre.org>
+Date: Thu, 20 Feb 2014 09:01:33 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 06, 2014 at 07:51:17AM +0400, Solar Designer wrote:
-> I've added CC to Thomas.
-> 
-> On Thu, Jun 05, 2014 at 11:38:27PM -0400, Rich Felker wrote:
-> > On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer wrote:
-> > > I've attached patches by Thomas Gleixner (four e-mails, in mbox format),
-> > > as well as back-ports of those by John Johansen of Canonical, who wrote:
-> > 
-> > Maybe I'm missing something, but I can't find any statement of what
-> > version these patches are intended to apply cleanly to. They don't
-> > apply to latest stable.
-> 
-> Thomas - can you answer Rich's question?  This is about patches you sent
-> on June 3 to linux-distros, which Kees then saved into an mbox file.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It does apply cleanly against 3.15-rc8 (with a few offsets). After
-applying, the resulting futex.c differs from the current version in
-the mainline repo by a single-byte typo in a comment.
+> What do you mean not sufficient?
 
-Rich
+It means that existence of an opportunity for security improvement is
+not sufficient for a CVE assignment.
+
+> How is it relevant that it was not well understood at the time when
+> software was written? It is still an issue.
+
+CVE is, in the context of this inclusion question, about software
+mistakes. Sometimes it is easy to identify a software mistake (e.g.,
+off-by-one) and sometimes it is more difficult. If there's a software
+deficiency at the layer of algorithm choice, one of the relevant
+criteria is the context in which the software was originally
+developed. Without that, the entire history of software development
+could be reconsidered to assign CVE labels to development choices that
+would not have been made today. Typically, for algorithm choices, the
+"mistake" versus "not a mistake" question needs to be evaluated in the
+environment in which the software was written, not the environment in
+which the software is used.
+
+SipHash is a somewhat important advance in computing. There are many,
+many products that would be better in some way if SipHash were
+introduced. Typically, at the first level, the product would be better
+because it would be more resistant to DoS attacks. (We realize that
+the New-djbdns case is a little different because the DoS attack
+denies intended caching and indirectly facilitates a spoofing attack.
+It starts with the DoS against caching, however.) It seems impractical
+to assign CVE IDs for all opportunities to use SipHash in all
+products, or even for the relatively more important opportunities.
+Neither SipHash nor a reasonable equivalent existed when many products
+were developed. Because SipHash was unavailable, the product used
+alternative development choices that, in practice, may have opened the
+product to important threats. However, lack of use of SipHash was not
+a "mistake." Almost any product can be improved by addressing more
+classes of threats, but this does not establish that a mistake
+occurred.
+
+> Like the JSON library example earlier in this thread, or
+> 
+>  -> http://www.cvedetails.com/cve/CVE-2012-0770
+>  -> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4885
+
+Those CVEs were based on announcements by vendors who were original
+authors of pieces of software. Our first reply already mentioned that
+those are an entirely separate case of CVE inclusion.
+
+> Please note that the CVE is requested for 'New-djbdns'. New-djbdns is
+> a fully fledged, production quality, fast growing fork
+
+Creation of a fork doesn't change the status of every development
+decision from historical to present-day. Otherwise, every "mistake"
+versus "not a mistake" question would need to be reevaluated every
+time anyone chooses to publish a fork. A very popular reason for
+creating a fork is that something is substantially wrong with the
+original product. It is common to see ways to make security
+improvements, as well as other improvements. Codebase relationships
+are, in general, a major complication for CVE. However, at this point,
+keeping "algorithm-choice improvement after a fork" outside the scope
+of CVE seems to be, on balance, the better alternative.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTBgp4AAoJEKllVAevmvmsZJwH/Az3nfxT3gwIKLXneQ8H3aLI
+eHX+Z9o09nJn/0tix/B1SbfENZi5uZ/PCvNJfrzS8M7jysfqeyVSgSL5Xm51yFZe
+slTmd9/dyzZw63JJwITeNsEBpVCNmsB/ucHrblTeYeYy4CUoB9/iNTlFSdkoj7x3
+uhQrI9wt2hsF+dBeFyXOugdeg6PlGp9v8tS1IOhhiOaZiHyZSsff25NyGo4Z+7Hh
+7KPOZJ+eEftkJ+w+xqohgJhvch7ivATfDGorEmPFy9VlpsW9PWnPulHSAm+hjC7y
+3Z07N10rpQc/IvrTNribMHNK6SR5JbdVg3FsQStgldK4FoQKLrpjcesdapA0qRQ=
+=6xI0
+-----END PGP SIGNATURE-----
