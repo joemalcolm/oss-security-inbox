@@ -1,29 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/22/4
-Message-ID: <53F78168.8000102@kenwilliams.us>
-Date: Fri, 22 Aug 2014 12:44:08 -0500
-From: ken <ken@...williams.us>
-To: oss-security@...ts.openwall.com
-Subject: FYI, change to Secunia vuln db EULA
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/8
+Message-ID: <alpine.LFD.2.10.1402202013340.31891@javelin.pnq.redhat.com>
+Date: Thu, 20 Feb 2014 20:28:02 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: cve-assign@...re.org
+cc: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
++-- On Thu, 20 Feb 2014, cve-assign@...re.org wrote --+
+| However, lack of use of SipHash was not a "mistake." Almost any product can 
+| be improved by addressing more classes of threats, but this does not 
+| establish that a mistake occurred.
 
-FYI, Secunia has clarified what they mean by “commercial use” in a 
-revised EULA.  In short, only “students, the press (if the use is for 
-media coverage), private persons and hobby researchers” can 
-use/view/access Secunia vulnerability data.
+  So now SipHash is 'the only' way to avoid hash collision ever?
 
-Non-profit organizations, private companies, and public authorities and 
-entities are NOT allowed to access or use any Secunia data, for any reason.
+| Those CVEs were based on announcements by vendors who were original
+| authors of pieces of software. Our first reply already mentioned that
+| those are an entirely separate case of CVE inclusion.
 
-The revised EULA can be found here:
-http://secunia.com/community/profile/
-under the “Create Profile” tab.
+  So, if original author says it's a flaw then it's a flaw, otherwise not? 
+ 
+| are, in general, a major complication for CVE. However, at this point,
+| keeping "algorithm-choice improvement after a fork" outside the scope
+| of CVE seems to be, on balance, the better alternative.
 
-You may wish to review their EULA to ensure that you're in compliance.
+  That's not convincing, but anyways, I'm sure you know better than me. Thank 
+you for the explanation. I appreciate it.
 
-Regards,
-Ken
-
-
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
