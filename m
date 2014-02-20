@@ -1,71 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/5
-Message-ID: <543240F1.4060701@mittwald.de>
-Date: Mon, 6 Oct 2014 09:12:49 +0200
-From: Sven Kieske <s.kieske@...twald.de>
-To: Rainer Gerhards <rgerhards@...adiscon.com>
-CC: <oss-security@...ts.openwall.com>
-Subject: Re: vulnerability in rsyslog
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/14
+Message-Id: <201402201744.s1KHiSqL015703@linus.mitre.org>
+Date: Thu, 20 Feb 2014 12:44:28 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux kernel: s390: crash due to linkage stack instruction
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+> Linux kernel built for the s390 architecture(CONFIG_S390) is vulnerable to a
+> crash due to low-address protection exception.
 
-On 06/10/14 08:40, Rainer Gerhards wrote:
-> 2014-10-06 8:31 GMT+02:00 Sven Kieske <s.kieske@...twald.de>:
-> 
->>
->>
->> On 30/09/14 18:41, Rainer Gerhards wrote:
->>> 2014-09-30 18:28 GMT+02:00 Solar Designer <solar@...nwall.com>:
->>>
->>>> On Tue, Sep 30, 2014 at 01:55:12PM +0200, Sven Kieske wrote:
->>>>> I don't understand the following statement in the
->>>>> pri-vuln.txt in section "Patches":
->>>>>
->>>>> "Version 7.4.6, while no longer being project
->>>>> supported received a patch and is also not vulnerable."
->>>>>
->>>>> What was patched when this version is not vulnerable?
->>>>> Or do you mean it is not vulnerable after the patch got applied?
->>>>
->>>>
->>> My apologies, this is a type that skipped past all proof-reading. It
->> should
->>> say "7.6.6", which is the v7 version released today. v7.4.x is not only
->>> non-project supported, it's also heavily outdated and missing many other
->>> patches as well (just to point this out).
->>
->> This still does not answer the above questions, it just changes the
->> version number in your statement which led to my question.
->>
->>
-> you can view the complete patch set here:
-> 
-> https://github.com/rsyslog/rsyslog/commits/v7-stable
+> https://git.kernel.org/linus/8d7f6690cedb83456edd41c9bd583783f0703bf0
 
-This web page does list all commits to v7-stable.
-So I think you want me to dig through the code to find the answer to my
-question?
-I knew I could answer my question by going through the code, but I
-figured it would be easier to ask someone who is already familiar with it.
+Use CVE-2014-2039.
 
-It turned out I was wrong.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-> Rainer
-> 
-
--- 
-Mit freundlichen Grüßen / Regards
-
-Sven Kieske
-
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+iQEcBAEBAgAGBQJTBj1tAAoJEKllVAevmvmso2AIAMEt7q6Jqm21PZYKFzZV9Jh3
+qZSbK6pN65y6V5CrrtlrlW0C3apOUMN+6LPS+F58cLkBjYOB4d16ERGtbutY8v2G
+ntuxY2YB7zt4kShDOqN5crGaEWO3G0MUxvOxYlH+OZIPqxHWlq7U4LC6FyEQ9qfH
+4CZCDuI5L9LGRyQb/g17cjFf6JcC1ogCJbFFTadGgGCSo+cv1YaAoa3ModFsM8x1
+YB0H286wpMhsPvAVXxniDATc7Ib7EDLhD4rXqlTZsyvuQHx3jDEUvkly03rx1b1l
+p6BaWOlSEXmH6gU1jd6iKwIOclTYFrYCEa7yGknH0227/OhNjpVOIlK6FE9c2Xo=
+=UXcC
+-----END PGP SIGNATURE-----
