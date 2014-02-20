@@ -1,34 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/8
-Message-ID: <20141006080113.GA24136@zoho.com>
-Date: Mon, 6 Oct 2014 08:02:08 +0000
-From: mancha <mancha1@...o.com>
-To: Rainer Gerhards <rgerhards@...adiscon.com>
-Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, joey@...odrom.org
-Subject: Re: sysklogd vulnerability (CVE-2014-3634)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/1
+Message-Id: <201402200510.s1K5APxn013085@linus.mitre.org>
+Date: Thu, 20 Feb 2014 00:10:25 -0500 (EST)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for CGI::Application information disclosure flaw
 Content-Type: text/plain; charset=utf-8
 
-By way of update, the sysklogd maintainer (Joey) has been in touch with
-me and let me know sysklogd 1.5.1 which fixes the PRI/OOB issue is
-forthcoming.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Sun, Oct 05, 2014 at 05:01:48PM +0200, Rainer Gerhards wrote:
-> I have had a pretty deep look at it. Bottom line is that I couldn't
-> reproduce it manually either. So I checked the test environment. As it
-> turns out, the root cause for my ability to crash was that the test
-> scripts did not setup things properly for v3 ... some v5 binary
-> modules kept be used. Digging deeper in the old code, a crash seems as
-> unlikely as said in the initial report. The reason is that some
-> masking happens, which in turn prevents most problems with the
-> negative PRIs. I'll update the advisory soon. Sorry for the noise and
-> thanks for keeping this straight.
-> 
-> Rainer
+> it would unexpectedly dump a complete set of web query data and server
+> environment information as an error page
 
-Many thanks Rainer for re-doing your tests on rsyslog v3. They're
-consistent with my own findings on sysklogd as well as my limited
-testing on rsyslog 3.22.3 (after my brief $ModLoad learning curve).
+> https://rt.cpan.org/Public/Bug/Display.html?id=84403
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=739505
+> https://github.com/markstos/CGI--Application/pull/15
+> https://github.com/markstos/CGI--Application/commit/61d327646f01fe
+> https://bugzilla.redhat.com/show_bug.cgi?id=1067180
 
---mancha
+> until 2008, if you overloaded setup() - which everyone does - you had
+> NO start->dump_html default at all in run_mode!
+>
+> After the change, you ALWAYS have dump_html as a default run_mode
+> unless you explicitly redefine it in your code.
+>
+> Behaviour of an otherwise unmodified application changed due to an
+> update of Application.pm. Data that should not be shown AND was not
+> shown when using versions before v4.19 was now on screen. Customers
+> were not amused.
 
-Content of type "application/pgp-signature" skipped
+Use CVE-2013-7329.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTBYznAAoJEKllVAevmvms7eIH/2A2wmKR1/15a9WPmC2pgyFD
+Ees3KWHHcKXGf/5gXy+ci2e0BPTH61R+k5sJqk3ljHfKGDjsy+4bdFvzoaroM/q5
+NduEjXJHC/+RIsYoZ1ZdXUZbjwa7zDqeaqvcPjy6kQmeinYT4VYHkYioxvveCCZ6
+KomoKkpSfFt01ddsPumw99CVB44yFuhBqfTjCilyJAFqHpMzqxq2JSMbcXwIB1v6
+EBsUnFS0f6mG5iR1yNJbfpUCD5xoOtyty7GtIaGFAvB8jxZn3JZFQzGQ4rTZLh8J
+Xs0IGtMEVA6jP3vdo8LTlQAzvrzgMkMPdbGn0ICSr0O2CW0U1unEMSeG4VugJUA=
+=Ge6r
+-----END PGP SIGNATURE-----
