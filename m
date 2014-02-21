@@ -1,55 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/26/5
-Message-Id: <20141226160059.D5FE26C0038@smtpvmsrv1.mitre.org>
-Date: Fri, 26 Dec 2014 11:00:59 -0500 (EST)
-From: cve-assign@...re.org
-To: renorobert@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: PIE bypass using VDSO ASLR weakness
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/21/1
+Message-ID: <5306A872.2030401@redhat.com>
+Date: Fri, 21 Feb 2014 12:14:26 +1100
+From: Garth Mollett <gmollett@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: coley@...re.org
+Subject: Re: Possible CVE Requests: several issues fixed in Jenkins (Advisory 2014-02-14)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 02/20/2014 09:49 AM, David Jorm wrote:
+>>
+>> Do some of these issue need a CVE assigned?
+>>
+>> Regards,
+>> Salvatore
+>>
+> 
+> It looks to me as though at least some of these issues definitely need CVE IDs assigned. I reported SECURITY-105, and it is my opinion that this flaw needs a separate CVE ID to CVE-2013-7285. The Jenkins patch blocks DynamicProxyConverter from the Jenkins wrapper class XStream2, without changing the XStream library at all. This implements a less-general solution than the XStream patch for CVE-2013-7285, and the patch applies to a completely separate codebase (i.e. Jenkins itself,not XStream). Therefore it is my understanding that this flaw as it affects Jenkins qualifies for a unique CVE ID. When reporting this flaw to upstream, the Jenkins engineers agreed that it qualified for a unique CVE ID, and I offered to assign a CVE ID from the Red Hat CNA. This offer was refused, but then the advisory was released without a unique CVE ID, which is puzzling indeed.
+> 
+> Could someone from MITRE please weigh in and assign CVE IDs as appropriate for these flaws?
+> 
 
-> Given that ASLR is not effective in VDSO and comes down to 11 quality bits
-> as per pax test making return-to-vdso feasible even for PIE binary, whether
-> this should be considered as a bug and CVE be assigned?
+Hi,
 
-Yes, we can proceed to CVE assignment. The more recent discussion
-hasn't been on oss-security with, for example:
+Is there any movement on this? The original request for CVE's came to
+oss-sec on the 17th.
 
-   https://git.kernel.org/cgit/linux/kernel/git/luto/linux.git/commit/?h=x86/vdso&id=bc3b94c31d65e761ddfe150d02932c65971b74e2
-   http://marc.info/?l=linux-kernel&m=141911002822659&w=2
+Thanks.
 
-This apparently mentions both the original discovery:
 
-   The current algorithm is buggy: the vdso has about a 50%
-   probability of being at the very end of a PMD.
 
-and a second discovery that was made separately:
 
-   The current algorithm also has a decent chance of failing outright
-   due to incorrect handling of the case where the top of the stack is
-   near the top of its PMD.
-
-Here, our question, for anyone, is: is there a security impact from
-the "failing outright" outcome? Or is there only a performance impact
-(e.g., any correctly written application will continue to work, but
-will not benefit from any vDSO functionality)?
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUnYXEAAoJEKllVAevmvmsyc0H/ReEutiGsw2aw+sfLPmeGvTK
-pf1pWcDyVOOllHQvPD4aF5ZwIWNDIjFV17nKq9TVg6VLr509HifeCyAdgNuU7xEU
-7UWTL8JqvRmVVPz4nTqwTcF3nd4kcjdXbLvqAKah6UL2XvOikqNlJWBjqo74BRuA
-a8GcSU2UbudcOlMmc0+ryueB32YLaZ7xk1rvU+7FLIP/A+tKkY8Lt0B/cJvaLVGc
-QDokgodKmtm68BRw6T1jKhyY9BDH0t7Hk+t1rpHx4ArIRDboBT+wnY5v2r5o4YlJ
-7wa96vAslhxzU/RnQ7m3xvlYCCpNGtNF7Kb27KtuN2nZStFwSryY7ybj8YjJs2A=
-=inW/
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
