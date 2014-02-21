@@ -1,54 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/5
-Message-ID: <20141002012140.GA24898@openwall.com>
-Date: Thu, 2 Oct 2014 05:21:40 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/21/3
+Message-ID: <CAA7hUgGR-=M_QkOyO4PFXciF=veQfeNLQBv8vbELpSLmS7=BOg@mail.gmail.com>
+Date: Fri, 21 Feb 2014 09:45:01 +0100
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Chet Ramey <chet.ramey@...e.edu>
-Subject: Re: More parser odities
+Subject: Re: Request regarding posts to the lists
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 01, 2014 at 05:53:45PM -0700, Tavis Ormandy wrote:
-> Eric - the prefix you're specifying _is_ the long-term solution, it
-> may be a bug, but it's a non-security bug.
+On 20 February 2014 23:10, Solar Designer <solar@...nwall.com> wrote:
+[...]
+> I find no other examples of this problem "in the past few days",
+> although of course we've seen it numerous times before.
 
-I fully agree with Tavis and Michal on this.  The only reason I brought
-this to Chet's attention is that Chet appears to want to take this
-opportunity to make the parser more robust in general (great!), beyond
-fixing the security problems.
+There was also this one from me, but that was an oversight when
+writing the subject.
 
-Unfortunately, a lot of people are confused.
+http://openwall.com/lists/oss-security/2014/02/07/13
 
-Some people want urgent fixes for each and every new parser bug.  They
-don't actually need those fixes much!  These are not security issues
-anymore, as long as a variation of the prefix/suffix patch is applied -
-and this patch is now available upstream (for several days already).
-It's the only patch people need (or alternatively a patch disabling
-function imports altogether, for the same security effect).  Even the
-original CVE-2014-6271 fix becomes unimportant with the prefix/suffix
-patch in place.
-
-In that sense, it's a pity we have several CVEs assigned to issues the
-patches for which are relatively unimportant to have, whereas we can't
-get a CVE assigned that would somehow correspond to the only important
-fix (removing the parser from being exposed via arbitrarily-named env
-vars), because it's not strictly fixing a vulnerability - it "just"
-hardens the code so greatly that multiple separately patched
-vulnerabilities stop being such.  I guess this could fall under some CWE
-rather than a CVE... or maybe we can in fact get a CVE assigned to "bash
-exposes its code parser, which is unprepared to handling untrusted code
-fragments, to untrusted input via arbitrarily-named env vars"?  Like I
-just said, we already have a fix for this upstream.  Maybe it's just the
-right opportunity to do that, instead of assigning yet another CVE to
-Michal's latest finding?  Oh, I think Michal's latest already got a CVE
-too?  Does this once again render the (previously) exposed parser not
-CVE-worthy? ;-(
-
-Then, some people somehow think that bash sort-of trusting BASH_FUNC_*
-env vars is somehow a security problem or that it somehow leaves much
-room for security hardening, even though bash and dynamic linker and
-libc also trust many other fixed-name env vars.  I think this is just
-another kind of confusion.  Several of us said so before, but I felt I
-needed to add my +1 here: not a security problem.
-
-Alexander
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
