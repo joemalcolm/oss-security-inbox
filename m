@@ -1,37 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/15
-Message-ID: <1417862602.3104.1.camel@trustmatta.com>
-Date: Sat, 06 Dec 2014 11:43:22 +0100
-From: Florent Daigniere <florent.daigniere@...stmatta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/22/1
+Message-ID: <20140222203535.GA32311@mhcomputing.net>
+Date: Sat, 22 Feb 2014 12:35:35 -0800
+From: Matthew Hall <mhall@...omputing.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+Subject: Fwd: temporary file creation vulnerability in Redis
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2014-12-05 at 14:15 -0800, Reed Loden wrote:
-> On Fri, Dec 5, 2014 at 7:09 AM, Daniel Micay <danielmicay@...il.com> wrote:
-> 
-> >
-> > Mozilla has no excuse for not enabling PIE for Firefox, because 99% of
-> > the code is in dynamic libraries already. It has no performance impact.
-> >
-> 
-> For the record, Mozilla tried it several months ago and had to back it out.
-> 
-> "Nautilus (the file manager) can't open PIE executables, which makes
-> distributing PIE executable essentially impossible."
-> 
-> https://bugzilla.mozilla.org/show_bug.cgi?id=857628#c6 (which caused
-> https://bugzilla.mozilla.org/show_bug.cgi?id=1076892)
-> 
-> ~reed
+Hello,
 
+Could someone please assign me a CVE for the below Redis vulnerability?
 
-Here's one of the tickets where the information about compiler hardening
-flags is centralized... They have an endless supply of excuses not to
-enable any (not even -D_FORTIFY_SOURCE=2 or -Wformat-security)!
+Thanks,
+Matthew Hall
 
-https://bugzilla.mozilla.org/show_bug.cgi?id=620058
+----- Forwarded message from Matthew Hall <mhall@...omputing.net> -----
 
-Florent
+Date: Fri, 21 Feb 2014 17:33:27 -0800
+From: Matthew Hall <mhall@...omputing.net>
+To: full-disclosure@...ts.grok.org.uk
+Subject: temporary file creation vulnerability in Redis
+User-Agent: Mutt/1.5.21 (2010-09-15)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+See also: https://github.com/antirez/redis/issues/1560 .
+
+I have been trying to reach the Redis maintainers since 2013-09-13 regarding 
+this report, but I could not find a good security contact for Redis, and the 
+lead maintainer, Salvatore Sanfilippo <antirez@...il.com> is not replying to 
+my private report to him about the issue and his opinion of it. I also 
+contacted US-CERT for help and they could not reach anyone by 2014-01-24.
+
+Therefore I would like to encourage the Redis team to be more 
+security-friendly and establish some contact procedures on their website. 
+Given how many places this software is now being used these days, I think it 
+is very critical to make these changes before someone finds something more 
+serious than the one I could spot.
+
+I think I might have discovered a security vulnerability in Redis 2.6.16. This 
+code is from the function int rdbSave(char *filename) in rdb.c:
+
+   630  int rdbSave(char *filename) {
+   631      dictIterator *di =3D NULL;
+   632      dictEntry *de;
+   633      char tmpfile[256];
+   634      char magic[10];
+   635      int j;
+   636      long long now =3D mstime();
+   637      FILE *fp;
+   638      rio rdb;
+   639      uint64_t cksum;
+   640
+   641      snprintf(tmpfile,256,"temp-%d.rdb", (int) getpid());
+   642      fp =3D fopen(tmpfile,"w");
+   643      if (!fp) {
+   644          redisLog(REDIS_WARNING, "Failed opening .rdb for saving: %s",
+   645              strerror(errno));
+   646          return REDIS_ERR;
+   647      }
+...
+   692      /* Make sure data will not remain on the OS's output buffers */
+   693      fflush(fp);
+   694      fsync(fileno(fp));
+   695      fclose(fp);
+   696
+   697      /* Use RENAME to make sure the DB file is changed atomically only
+   698       * if the generate DB file is ok. */
+   699      if (rename(tmpfile,filename) =3D=3D -1) {
+   700          redisLog(REDIS_WARNING,"Error moving temp DB file on the final destination: %s", strerror(errno));
+   701          unlink(tmpfile);
+   702          return REDIS_ERR;
+   703      }
+
+In line 641, the function does not use a security temporary file creation 
+routine such as mkstemp. This is vulnerable to a wide range of attacks which 
+could result in overwriting (in line 693-695) and unlinking (in line 701) any 
+file / hard link / symlink placed in temp-PID.rdb by an attacker.
+
+https://www.owasp.org/index.php/Improper_temp_file_opening
+https://www.owasp.org/index.php/Insecure_Temporary_File
+
+The code should be creating the temporary file using some kind of safe 
+function like mkstemp, O_EXCL open, etc. instead of just using a PID value 
+which does not have enough entropy and protection from race conditions. It 
+should also be sure it has set the CWD of itself to a known-safe location that 
+should have permissions which are only open to the redis daemon / redis user 
+and not to other users or processes.
+
+Thanks,
+Matthew Hall
+
+----- End forwarded message -----
