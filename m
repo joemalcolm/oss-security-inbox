@@ -1,17 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/22
-Message-ID: <004101d010db$be406d80$3ac14880$@mantisforge.org>
-Date: Fri, 5 Dec 2014 22:35:15 -0000
-From: "P Richards" <paul@...tisforge.org>
-To: <oss-security@...ts.openwall.com>, "'Damien Regad'" <dregad@...tisbt.org>, <cve-assign@...re.org>
-Subject: RE: CVE-2014-6316: URL redirection issue in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/24/4
+Message-Id: <201402241403.s1OE2wHl015606@linus.mitre.org>
+Date: Mon, 24 Feb 2014 09:02:58 -0500 (EST)
+From: cve-assign@...re.org
+To: mhall@...omputing.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Fwd: temporary file creation vulnerability in Redis
 Content-Type: text/plain; charset=utf-8
 
-"Paul Richards also found another redirection issue in permalink_page.php, which turned out to have the same root cause."
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-And nik-picking here, but the issue that I identified in permalink_page.php I believe was a cross site scripting issue and not a URL redirection vulnerability so should probably be allocated a separate CVE identifier?
+> I can understand and accept this view even though I might see it a
+> differently.
 
-The http request headers of the permalink_page.php issue that I recall are at http://tinypic.com/r/2dh8y1f/8 and relate to a XSS vulnerability and not a URL Redirection as shown in the image linked.
+We recognize that there's a significant number of issues that fall
+into the general category of "it could be useful to draw attention to
+this aspect of a security model, because the documentation is arguably
+inconsistent or obscure, and this may result in risks to end users."
+Currently, the scope of CVE identifiers doesn't really extend to these
+types of "useful to draw attention" identifiers.
 
+What we can do is assign a CVE ID if any vendor bundles a copy of
+Redis with a default directory of /tmp, and decides to make a security
+announcement about that. We feel there's a distinction between
+"there's nothing stopping an end user from choosing a world-writable
+dataset directory" and "it ships world-writable."
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
+iQEcBAEBAgAGBQJTC0+NAAoJEKllVAevmvmsMqwH/j7Kwt5y6kN92u2JFeb/irRH
+NLXMhSMS+tLwrFlOdHDT+6P/pz7MqR+3qH5aSQoV38F92UvMD5VsSjYufczFJjBv
+8uerZbJRZ3pE+07zgAoqI0DmWGqbCEHRDjCwuWiOh7Mc1Ww9Uvvz9Ubrze5QKB2t
+6TlAMWuWkfqAlJDCjXjhN+vXhAyfpjl4HHlIYSJj0VQhC0gr14Ygp0FQWR/e75/h
+mzrOi3/9YKJIodN3T9kDk3BoSBBXhXmWxpXIOjGahEAZteWAiPmHZkYTXiJWhSRo
+EhTqrItQyJk8AxNXrojhnPQaFe3b04UPH+fs85FLCfRkH6orWTBfYVgYo6qXf30=
+=Gvye
+-----END PGP SIGNATURE-----
