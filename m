@@ -1,62 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/18
-Message-ID: <52E991C7.8030703@redhat.com>
-Date: Wed, 29 Jan 2014 16:41:59 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: collectd security contact
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/24/5
+Message-Id: <201402241405.s1OE5fMp016152@linus.mitre.org>
+Date: Mon, 24 Feb 2014 09:05:41 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 739536@...s.debian.org
+Subject: Re: xfe: directory masks ignored when creating new files on Samba and NFS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/29/2014 02:28 PM, Michael Samuel wrote:
-> Hi,
-> 
-> Does anyone here know who the security contact for collectd is?
-> 
-> Thanks, Michael
-> 
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=739536
 
-- From AUTHORS file:
+> From brief testing on Fedora with Samba and the "create mask" smb.conf 
+> option, this issue only presented when running xfe as the root user. The 
+> intended mask was used when running xfe as an unprivileged user.
 
-Permanent project members
-=========================
+This seems to be an implementation error. It seems extremely unlikely
+that this type of product would want to provide "weaker than normal"
+file restrictions only in the special case of files created by root.
 
-Florian "octo" Forster <octo at verplant.org>
- - Initial author.
-
-Sebastian "tokkee" Harl <sh at tokkee.org>
- - Bugfixes and enhancments in many places all around the project.
- - perl plugin.
- - users plugin.
- - vserver plugin.
- - Debian package.
-
-so one of them would be my guess. If you figure it out can you send an
-update to:
-
-http://osvdb.org/vendor/89051-collectd/1
-
-
+Use CVE-2014-2079.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJS6ZHHAAoJEBYNRVNeJnmTU9gP/3sk3VUbUvfXjBWwJFyprIOt
-at/xzJgh2Axaf+BW2PdIhaI0sKWDFg+Y1p5SOduhu/t7baIj0MGfAFJey+JFTl38
-eHQT+ydy8ghwvJ5LP8KDTbL7tG7U8KtgZsX0zw0iDtYqP42/eQM8YXZtqMstOwPP
-ttos34+mjuRp7Fqc1h2yWDRnreALcZsF7agm9KU8hWiSY6uUXWcsq/lJpWyLBAt2
-GEU7OAWJln7uL/zHJloNJ9kzL1wbYvgRmS6Q7NaOSSOYNNwaYD2HmwWMcu+mQtZ1
-P2yfzo0Nid+wUYUM/dSWvLAHbFphhCKgu5/RmzZLZtZNaS8RRvzq7+4zNarygbLZ
-HPCMxmAH9tNqBDHomgPgDfwP4hz7a5M83TFfUxtY7FbT96IoEcXBbB4Rly0AQ83j
-JVa4xPA8VwVzJzom7UAcnnwJMy7pWNDZ475LHrnR6eyIpyjPyDSVlWnwRjkZ6SuX
-6Ci7z/Qwdpd7rc3NV34TsN9LZzx6AfWX6y47EzAVYEhpdNDsy/mpHJ7mrUZihGa9
-Y7+j7BySD26C62USH001wMVE14E44A+SzKydL9yLJnPsbL4tR1utMRnCXNulAbpM
-g/GZjIS5j2vXm+4N12yHsI4EnYmBSvqt5HiIDfqAoWMK8kAhukeYRviY27+OhF5s
-E7hJ6ma6AVukvmw1eU45
-=vKd+
+iQEcBAEBAgAGBQJTC0/qAAoJEKllVAevmvms3wUIAMcSqFbqmazX+KGiKmLFovm6
+sRzXXyn49eBJ59fabqQx6eE1As5GeUolx35N+oe7O+U+XwRHdxGLcp5KoL4cxigq
+TVvsLqtJGMyVEXKPLlqWlXyCAMhdGL4VzYTvdqbR+e8aRyZGNPn0Mt5sQ3hf+xck
+mMK0AGFdRp89pVraZALMXfY4r5z331TOOfWThPnMKbWa1NzNrfoBaqbamO8BiRNF
+oy94rzrPNUfgu5mYvvZtQCKyFRQKr0eB3jkb0Bq8p+spSZvWKSV1sxZbxTU55izh
+0FtWgEH3yYJGq2DBrSJl/O5Q2uqbO9vrU3TwNdWTTkChYvUAYMHVXtUbjP1cw5A=
+=LIWq
 -----END PGP SIGNATURE-----
