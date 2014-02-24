@@ -1,56 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/6
-Message-ID: <20140709063813.GA12973@openwall.com>
-Date: Wed, 9 Jul 2014 10:38:13 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/24/2
+Message-ID: <530ADB7B.6000701@redhat.com>
+Date: Mon, 24 Feb 2014 16:41:15 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-4699: Linux ptrace bug
+CC: 739536@...s.debian.org
+Subject: xfe: directory masks ignored when creating new files on Samba and NFS
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 08, 2014 at 03:15:47PM -0700, Andy Lutomirski wrote:
-> In the event that anyone changes TASK_SIZE_MAX to equal the first
-> non-canonical address, then this is the least of your worries: someone
-> can put a syscall instruction at the very last canonical address, and
-> game over.
+Hello,
 
-You're right.
+Robert Rottscholl reported that when creating a new file via X File 
+Explorer (xfe) on a Samba or NFS share, the user's mask was used for the 
+permissions instead of that specified by the Samba or NFS configuration. 
+Full details and patches are available from the following:
 
-> This bug affected a lot of operating systems a few years ago, but AFAIK
-> Linux was never vulnerable.
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=739536
 
-Looks like it was until 2.6.11.11:
+ From brief testing on Fedora with Samba and the "create mask" smb.conf 
+option, this issue only presented when running xfe as the root user. The 
+intended mask was used when running xfe as an unprivileged user. I don't 
+the equivalent NFS option.
 
-http://lwn.net/Articles/137821/
+Can a CVE please be assigned if one has not been already?
 
-Andi Kleen:
-[...]
-  o x86_64: Add a guard page at the end of the 47bit address space
-  o x86_64: Fix canonical checking for segment registers in ptrace
-  o x86_64: check if ptrace RIP is canonical
+Thanks,
 
-http://www.x86-64.org/pipermail/discuss/2005-May/006031.html
-https://kernel.googlesource.com/pub/scm/linux/kernel/git/stable/stable-queue/+/9cb395089b0a1aeaabd7900437c146a45a7ff067/2.6.11.11/x86_64-add-guard-page.patch
+--
+Murray McAllister / Red Hat Security Response Team
 
-"Add a guard page at the end of the 47bit address space.
-
-This works around a bug in the AMD K8 CPUs."
-
-https://access.redhat.com/security/cve/CVE-2005-1762
-
-"The ptrace call in the Linux kernel 2.6.8.1 and 2.6.10 for the AMD64
-platform allows local users to cause a denial of service (kernel crash)
-via a "non-canonical" address."
-
-So apparently the ptrace attack vector was tracked as CVE-2005-1762 at
-the time, whereas TASK_SIZE being equal to the first non-canonical
-address and triggering "a bug in the AMD K8 CPUs" (the known impact at
-the time, whatever it was) wasn't tracked as a security issue.
-
-Also related:
-
-"Bug 437712 - ptrace: PTRACE_SETREGS does not set RIP"
-https://bugzilla.redhat.com/show_bug.cgi?id=437712
-
-(some discussion of an earlier fix at ptrace level, NOTABUG by that time).
-
-Alexander
+https://bugzilla.redhat.com/show_bug.cgi?id=1069066
