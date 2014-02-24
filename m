@@ -1,87 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/04/3
-Message-ID: <52F0BEAD.7080103@redhat.com>
-Date: Tue, 04 Feb 2014 11:19:25 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/24/1
+Message-ID: <20140224035256.GA11529@mhcomputing.net>
+Date: Sun, 23 Feb 2014 19:52:56 -0800
+From: Matthew Hall <mhall@...omputing.net>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Fwd: temporary file creation vulnerability in Redis
 Content-Type: text/plain; charset=utf-8
 
-On 02/04/2014 11:04 AM, Henri Salo wrote:
-> On Tue, Feb 04, 2014 at 10:35:46AM +0100, Hanno Böck wrote:
->> python-gnupg 0.3.5 lists in the changelog:
->> "Added improved shell quoting to guard against shell injection."
->>
->> Sounds like a severe security issue, but further info is lacking.
->
-> Diff attached. New function shell_quote() seems to represent major changes to
-> shell input quoting against unsafe input.
->
-> +# We use the test below because it works for Jython as well as CPython
-> +if os.path.__name__ == 'ntpath':
-> +    # On Windows, we don't need shell quoting, other than worrying about
-> +    # paths with spaces in them.
-> +    def shell_quote(s):
-> +        return '"%s"' % s
-> +else:
-> +    # Section copied from sarge
-> +
-> +    # This regex determines which shell input needs quoting
-> +    # because it may be unsafe
-> +    UNSAFE = re.compile(r'[^\w%+,./:=@-]')
-> +
-> +    def shell_quote(s):
-> +        """
-> +        Quote text so that it is safe for Posix command shells.
-> +
-> +        For example, "*.py" would be converted to "'*.py'". If the text is
-> +        considered safe it is returned unquoted.
-> +
-> +        :param s: The value to quote
-> +        :type s: str (or unicode on 2.x)
-> +        :return: A safe version of the input, from the point of view of Posix
-> +                 command shells
-> +        :rtype: The passed-in type
-> +        """
-> +        if not isinstance(s, string_types):
-> +            raise TypeError('Expected string type, got %s' % type(s))
-> +        if not s:
-> +            result = "''"
-> +        elif len(s) >= 2 and (s[0], s[-1]) == ("'", "'"):
-> +            result = '"%s"' % s.replace('"', r'\"')
-> +        elif not UNSAFE.search(s):
-> +            result = s
-> +        else:
-> +            result = "'%s'" % s.replace("'", "'\"'\"'")
-> +        return result
-> +
-> +    # end of sarge code
+On Sun, Feb 23, 2014 at 12:02:38PM -0500, cve-assign@...re.org wrote:
+> The vendor considers this intended behavior because of the "trusted
+> clients inside trusted environments" statement in the security model.
+> Because of this, it seems most likely that the trusted-environment
+> constraint also means that direct filesystem write access to the
+> product's data directory is also outside the scope of the security
+> model. So, we are not planning to assign a CVE ID unless the vendor
+> decides to announce the temp-%d.rdb issue as a vulnerability.
 
-This fix appears to be incomplete:
+Hello,
 
- >>> print shell_quote("'$(touch /tmp/I_was_here'")
-"'$(touch /tmp/I_was_here'"
+As I'm sure you'd expect, I partly agree and disagree with this. I believe 
+this security model is not very realistic because it disagrees with some of 
+the product's own configuration file directives and popular usage.
 
+Throughout the example configuration file are various directives and their 
+default socket listen parameters whose descriptions and defaults appear to 
+contradict their own security model's theories, and these are a default part 
+of the product, while the security model is separate, and not part of the 
+product.
 
-[fweimer@...enburg ~]$ echo "'$(touch /tmp/I_was_here)'"
-''
-[fweimer@...enburg ~]$ ls -l /tmp/I_was_here
--rw-rw-r--. 1 fweimer fweimer 0 Feb  4 11:12 /tmp/I_was_here
+1. The "requirepass" directive is intended to, "be useful in environments in 
+which you do not trust others with access to the host running redis-server."
 
-The proper way (at least if your shell runs in a UTF-8 or ISO-8859 
-locale) to escape shell arguments is to wrap them in '', after replacing 
-embedded ' characters with the four character sequence '\''.  However, 
-using the subprocess module with shell=False (the default) is strongly 
-preferred.
+2. The "command renaming" feature is intended to, "[rename commands] into 
+something hard to guess so that it will still be available for internal-use 
+tools but not available for general clients."
 
-In both cases, you need to make sure that you prevent option injection 
-through positional arguments.  With a GNU getopt-derived command line 
-parser, option processing can be terminated with a -- argument. 
-(Warning: GnuPG does not strictly follow GNU command line processing 
-conventions.)
+3. They also note that, "[b]y default Redis listens for connections from all 
+the network interfaces available on the server," i.e. with 0.0.0.0 (and ::/0 
+in newer versions), which contravenes the trusted client trusted server model. 
+If they are really expecting a high level of trust against the network, much 
+less malicious users, this should be 127.0.0.1 (and perhaps ::1/128).
 
-Is anyone in touch with the python-gpg folks and can rely this 
-information?  Thanks.
+To me, in open source, things which are part of the code normally take 
+supremacy over external documentation which often doesn't keep up with the 
+rapid evolution of usage and featuresets which can happen in emerging open 
+source products.
 
--- 
-Florian Weimer / Red Hat Product Security Team
+However, if you feel the security model still takes precedence over these 
+other configuration directives and default communication parameters, I can 
+understand and accept this view even though I might see it a differently.
+
+But in that instance, it's important to clearly point out that many popular 
+uses of the product, for any data than more sensitive than general public 
+domain knowledge, could easily be unsafe and against the product's intent.
+
+Regards,
+Matthew Hall
