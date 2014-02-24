@@ -1,56 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/14
-Message-ID: <20141017201721.GA84519@tower.spodhuis.org>
-Date: Fri, 17 Oct 2014 20:17:21 +0000
-From: Phil Pennock <oss-security-phil@...dhuis.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/24/3
+Message-ID: <20140224125251.21841689@hboeck.de>
+Date: Mon, 24 Feb 2014 12:52:51 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: attacking hsts through ntp
+Cc: cve-assign@...re.org
+Subject: CVE request: XSS in MODX Revolution before 2.2.11
 Content-Type: text/plain; charset=utf-8
 
-On 2014-10-17 at 08:50 -0700, Tim wrote:
-> It seems to be a better place to put HSTS-like information is the DNS.
-> If we ever got to the point where DNSSEC were actually deployed and
-> not downgradable, then a record of some kind indicating which services
-> should be "secure" could solve this.
+Hi,
 
-That's called "DANE" and it uses TLSA records in DNS.  It's slowly
-bootstrapping into use in SMTP and server-server XMPP as an
-opportunistic TLS latch, providing the correct trust anchors too.
+Can I get a CVE for this issue?
 
-Various feature-request bugs against browsers have eventually gotten
-closed as will-not-fix or equivalent, because verified DNSSEC is not
-seen as something which is likely to be widely deployed in clients;
-there's a chicken/egg problem here.
+MODX Revolution 2.2.11 release announcement:
+http://modx.com/blog/2014/01/21/revolution-2.2.11%E2%80%94security-fixes-and-prevent-change-loss/
+says
+"Prevent XSS on actionVar in header.tpl in the Manager"
 
-By contrast, servers are more likely to be placed with care and
-attention to DNS resolution, so someone running an SMTP or XMPP server
-who wants to use DANE can fix their DNS setup, once.  So it's seeing
-more use there.  Postfix has DANE support; Exim has it as an
-experimental feature (which just means that the API might change); the
-Prosody XMPP client can be set up to use DANE.
+This is the git commit:
+https://github.com/modxcms/revolution/commit/77463eb6a8090f474b04fdc1b72225cb93c558ea
 
-(For clarity: the server/receiver side of any connection requires no
-code changes to support DANE, although having SNI support probably
-helps; the initiator which verifies the peer is the only one which needs
-changes, but they're currently ugly ones).
+I haven't found any other public sources / advisories for the XSS, so I
+assume it was detected by the MODX devs themselves.
 
 
-> wouldn't be MitM-able since there should be a full chain of trust from
-> the root servers.
+cu,
+-- 
+Hanno Böck
+http://hboeck.de/
 
-You're ignoring the attack vectors against DNSSEC.
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-If someone can get an uncompromised copy of the root signing keys, then
-DNSSEC is good; but most validators bootstrap via Trust On First Use and
-any defense against the sorts of acronym agencies who have been abusing
-mal-issued certificates needs to also defend against local legislating
-dictating that a national alternative root zone-signing key be used,
-with alternative root servers.  Inline resigning can re-delegate to
-the elsewhere-valid subsidiary keys where a domain is not "of interest"
-while replacing the trust keys for domains which are of interest.
-
-ie, DNSSEC does *not* protect against nation-state actors who are
-willing to have their actions be visible and can legislate controls on
-their nation's ISPs.
-
--Phil
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
