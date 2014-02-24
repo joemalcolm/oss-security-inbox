@@ -1,20 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/15/2
-Message-ID: <20140215192012.GB566@ulrik.uio.no>
-Date: Sat, 15 Feb 2014 20:20:12 +0100
-From: Petter Reinholdtsen <pere@...gry.com>
-To: Dimitri John Ledkov <xnox@...ian.org>, 738855@...s.debian.org, oss-security@...ts.openwall.com
-Subject: Re: Bug#738855: initscripts: Skip killing root-owned process starting with @
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/24/8
+Message-ID: <20140224225642.GE14947@kludge.henri.nerv.fi>
+Date: Tue, 25 Feb 2014 00:56:42 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: hexchat buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-I am not convinced this is something we should implement in
-init.d/sendsigs.  If we are going to implement this systemd
-compatibility, it might be better to implement it as a option for
-killall5, instead of faking omitpid values.  Anyone willing to write
-such implementation?  killall5 already know about all processes and
-their names, and asking it to ignore processes matching some regular
-expression should not be very hard.
+Can I get 2013 CVE for buffer overflow issue in hexchat, thanks.
 
--- 
-Happy hacking
-Petter Reinholdtsen
+Bug report: https://github.com/hexchat/hexchat/issues/463
+Fixed in commit: https://github.com/hexchat/hexchat/commit/8996baa35ee12556a7bf402e3568193dbafec5f1
+Exploit: http://packetstorm.igor.onlinedirect.bg/1304-exploits/hexchat-overflow.txt
+More information: http://osvdb.org/92115
+
+hexchat was recently accepted to Debian unstable:
+http://packages.qa.debian.org/h/hexchat.html
+
+I haven't verified this vulnerability or exploit.
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
