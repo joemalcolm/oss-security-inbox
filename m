@@ -1,31 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/21
-Message-ID: <CAE2SPAYOhhb95+8wygCE4bXvcCujVEV+LpZgXz-r6v66+0HcPQ@mail.gmail.com>
-Date: Fri, 7 Nov 2014 20:59:37 +0100
-From: Bastien ROUCARIES <roucaries.bastien@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Asking for CVE for imagemagick
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/24/6
+Message-Id: <201402241407.s1OE7hu4016236@linus.mitre.org>
+Date: Mon, 24 Feb 2014 09:07:43 -0500 (EST)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: XSS in MODX Revolution before 2.2.11
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 7, 2014 at 8:41 PM, Bastien ROUCARIES
-<roucaries.bastien@...il.com> wrote:
-> Hi,
->
-> I am asking for two CVE for imagemagick (two DOS):
-> - Converting some specially crafted jpeg could lead to a dos (see
-> http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26456)
-> - Converting some dcm file could lead to crash then DOS:
-> Fix last value in dicom_info and added missing != NULL check.
->
-> Fix a buffer overflow in dcm reader by checking the dcm file.
-> This problem was discovered by fuzzing some dcm file.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Sorry the DCM problem was CVE-2014-8562 ImageMagick: out-of-bounds
-memory error in DCM decode
+> MODX Revolution 2.2.11 release announcement:
+> http://modx.com/blog/2014/01/21/revolution-2.2.11%E2%80%94security-fixes-and-prevent-change-loss/
+> says
+> "Prevent XSS on actionVar in header.tpl in the Manager"
+> 
+> https://github.com/modxcms/revolution/commit/77463eb6a8090f474b04fdc1b72225cb93c558ea
 
-The jpeg one is new.
+Use CVE-2014-2080.
 
-Bastien
-> Thanks
->
-> Bastien
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTC1A6AAoJEKllVAevmvmsxM0H/jAfv9SsQmSQYpihJ+ONHjuZ
+7nbiaPaNZ8yTY4gnlXQD7r8aV8CT3k/tQ36jPd7zOWzuadszTWlYe6BjHDPXO9F9
+qI4fMQal3w1piqa3q8dpQFgAOjBNXdwmMlKZ+oALrJ4iu5456HQexNRzmGyLJXdy
+pe0BfHAnGCv1mzXhFqaP4Txqq2uI/1DchVoS9Poz+b7CboTz20UbvOOe9PnpLhju
++eKhz33rD8neS/u/OS+O8RbAVOVSZIl2Fbl+bXmjfhLT5xdyJQW49sSMNe0FIMjn
+JzvbkGJhvVL5+SMoJIdJMTvqnSzTvzMExvnSBTa2KVgvDXcRl7CdYPTOwany0xU=
+=wOIY
+-----END PGP SIGNATURE-----
