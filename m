@@ -1,91 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/18
-Message-ID: <54273E5D.4040602@case.edu>
-Date: Sat, 27 Sep 2014 18:46:53 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: John Haxby <john.haxby@...cle.com>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu, christos@...las.com
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/25/3
+Message-ID: <BB0C119B-2DD4-426D-9073-0F96909CAB69@redhat.com>
+Date: Tue, 25 Feb 2014 09:10:53 -0700
+From: "Vincent Danen" <vdanen@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request for catfish program
 Content-Type: text/plain; charset=utf-8
 
-On 9/26/14, 8:47 AM, John Haxby wrote:
-> On 26/09/14 12:33, Florian Weimer wrote:
->> On 09/26/2014 10:54 AM, Mark R Bannister wrote:
->>> Testing patch 25 and 26 from Chet, it looks to me like this is still
->>> an incomplete fix.  The third vulnerability I'd like to report is the
->>> feature itself in bash that allows functions to be passed in the
->>> environment, e.g.
->>> $ env ls='() { echo vulnerable; }' bash -c ls
->>>
->>> This allows an attacker to replace a command used by a bash script
->>> with arbitrary code.  It is then down to an attacker to find a
->>> suitable command that the bash script (or any child shells) might call
->>> without a path component.
->>>
->>> I can't see this being a problem for Apache custom headers (the
->>> variable name is turned to uppercase and prefixed by HTTP_), nor sudo
->>> commands if env_reset is on (the default), but this continues to be a
->>> major vulnerability for setuid/setgid scripts (S_ISUID or S_ISGID)
->>> where the environment is preserved.
->>
->> I agree this looks scary at first glance, but we discussed this
->> previously, see for example:
->>
->>   <http://www.openwall.com/lists/oss-security/2014/09/24/20>
->>
->> Shell scripts derive part of their power and flexibility from their
->> openness to the execution environment.  You can tweak PATH, BASH_ENV (or
->> ENV for other Bourne-like shells), IFS, HOME, and many other variables
->> to change behavior.  There are even more knobs to affect the behavior of
->> the external commands almost all shell scripts call when they run.
->>
->> This makes them not suitable at all for writing SUID programs or other
->> code that runs in untrusted environments.  This is well-documented, and
->> given the amount of shell scripts out there which rely on these aspects
->> of the UNIX shell design, it's not something we can change, particularly
->> not as part of a security update which system administrators are more or
->> less forced to install.
->>
->> In your specific example, you can achieve the same effect by setting
->> PATH to a directory with a customer ls program, or by setting BASH_ENV
->> to a file which contains a definition of a function called ls.
->>
->> Overriding external programs with shell functions in such a way has to
->> be supported.  Otherwise, scripts which define shell functions would
->> break if the system administrator installs new software which happens to
->> include a program of the same name of the shell function.
->>
-> 
-> 
-> It's not so much the known attacks -- redefining ls, unset, command,
-> typeset, declare, etc -- it's the future parser bugs that we don't yet
-> know about.
-> 
-> A friend of mine said this could be a vulnerability gift that keeps on
-> giving.
-> 
-> CVE-2014-7169 was discovered very quickly after CVE-2014-6271.  Do you
-> think that's the end of it?   (Just in case: I'm not getting at anyone
-> here, certainly not Chet, Florian or anyone else who has been working
-> overtime on these.)
-> 
-> Importing functions from the environment is relatively unusual.  I'd
-> probably go so far as to say very unusual.
-> 
-> Sufficiently unusual, I'd venture, that it should not be done
-> implicitly.   Florian's "BASH_FUNC_x()" makes it easier to blacklist
-> these environment variables and ensures that a web server's HTTP_ prefix
-> will not just create an oddly named function ... is that enough?  Should
-> bash simply make importing functions something that one has to ask for
-> explicitly as Christos Zoulas (and others) suggested[1]?
+On 02/25/2014, at 7:56 AM, cve-assign@...re.org wrote:
 
-I think function exports are used more widely than you think, and I am not
-willing to break backwards compatibility that much by disabling function
-exports by default.
+>> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=739958
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1069396
+>
+>> This script intentionally looks to load catfish.py in the current
+>> working directory.
+>
+> "intentionally" tends to be a complicating factor for a CVE
+> assignment; one could possibly instead express this as: the author
+> didn't consider that catfish would sometimes be executed with cwd
+> outside of the user's home directory. The nature of the program
+> suggests that it could be started interactively by any user at any
+> time, and there's no documentation indicating that the cwd could or
+> should be constrained.
 
-Chet
+Well, given that they wrote what they did, I think "intentionally" is a correct observation (I mean, someone wrote this).  Whether or not they knew this would lead to any kind of security consequence is the question.
+
+> We couldn't immediately figure out where your quoted source code came
+> from.
+
+I was looking at the installed script on a Fedora 19 box, so that is catfish 0.4.0.2.  Sorry, I should have been a bit clearer.
+
+> http://ftp.de.debian.org/debian/pool/main/c/catfish/catfish_0.3.2.orig.tar.gz
+> has a catfish.in that looks for $APPNAME.pyc before $APPNAME.py. The
+> quoted code has duplicate checks for $APPNAME.py. This affects the
+> number of CVEs. Apparently, "a crafted catfish.py file in the current
+> working directory" is an attack vector with a certain set of affected
+> versions, and "a crafted catfish.pyc file in the current working
+> directory" is an attack vector with a different set of affected
+> versions. Also, the Debian bug report specifically names a much later
+> package (1.0.0-2) that might be considered an independent codebase,
+> and at least has different attack vectors. The ChangeLog says "v0.6.0
+> Complete rewrite from the ground-up." The problematic 1.0.0 code is
+> distributed in bin/catfish.in.in and has attack vectors of "a crafted
+> bin/catfish.pyc or bin/catfish.py file under the current working
+> directory."
+>
+> The primary Red Hat bug report refers to
+> https://bugzilla.redhat.com/show_bug.cgi?id=1069398 which is for
+> "Product: Fedora ... Component: catfish ... Version: 20" but
+> http://dl.fedoraproject.org/pub/fedora/linux/releases/20/Everything/source/SRPMS/c/catfish-0.8.2-1.fc20.src.rpm
+> is essentially the same as 1.0.0: the code is found in
+> bin/catfish.in.in in the distribution, and bin/catfish.pyc and
+> bin/catfish.py are the attack vectors. So, apparently your quoted code
+> isn't the Fedora 20 code.
+
+No.  But, to be honest, I didn't think this would receive two separate CVEs for "./script" vs "./bin/script" so there was one tracking bug to fix this in all versions of Fedora versus one per version of Fedora.  This isn't an exceptional thing and we do it pretty much all the time unless there are differing CVEs or other special reasons.
+
+> Finally, we didn't find any evidence of a case where only
+> bin/catfish.py is checked within the post-complete-rewrite codebase.
+>
+> catfish.py in the current working directory - Use CVE-2014-2093.
+>
+> catfish.pyc in the current working directory - Use CVE-2014-2094.
+>
+> bin/catfish.pyc and bin/catfish.py file under the current working
+> directory - Use CVE-2014-2095.
+
+So many...
+
+Thanks for this.
 
 -- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+Vincent Danen / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
