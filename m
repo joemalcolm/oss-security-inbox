@@ -1,43 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/2
-Message-ID: <1411952951.6106.20.camel@bonedaddy.net>
-Date: Mon, 29 Sep 2014 09:09:11 +0800
-From: Paul Wise <pabs3@...edaddy.net>
-To: oss-security@...ts.openwall.com, contact@...tsecurity.io
-Subject: CVE request: various NodeJS module vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/25/1
+Message-Id: <201402251308.s1PD7tCB020251@linus.mitre.org>
+Date: Tue, 25 Feb 2014 08:07:55 -0500 (EST)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: hexchat buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This is a request for CVEs for the following vulnerabilities discovered
-by the Node Security Project. I left out their advisories where I could
-find an assigned CVE.
+Are there realistic circumstances in which this crosses privilege
+boundaries? The primary reference is mentioned at the top of
+hexchat-overflow.txt but wasn't directly listed in the CVE request:
 
-https://nodesecurity.io/advisories
+> http://www.mattandreko.com/2013/04/06/buffer-overflow-in-hexchat-294/
 
-Arbitrary JavaScript Execution in Bassmaster
-https://nodesecurity.io/advisories/bassmaster_js_injection
+> It was super low severity
 
-qs Denial-of-Service Memory Exhaustion
-https://nodesecurity.io/advisories/qs_dos_memory_exhaustion
+> I decided to try to make a working exploit out of this for fun.
 
-qs Denial-of-Service Extended Event Loop Blocking
-https://nodesecurity.io/advisories/qs_dos_extended_event_loop_blocking
+> sometimes you just need to escalate privileges locally. If the HexChat
+> process is running as a privileged user, you can exploit it to gain
+> access to that user's permissions.
+> 
+> This exploit was mostly just a fun experience to create. However, did
+> you think of other attack vectors, such as web links using the irc://
+> handler? Perhaps an attacker could fabricate a url that when the user
+> clicks it, it exploits HexChat.
 
-syntax-error potential for script injection
-https://nodesecurity.io/advisories/syntax-error-potential-script-injection
+> of course the irc:// handler has nothing to do with the input box
+> AFAIK, which you "exploited" here.
 
-send Directory Traversal
-https://nodesecurity.io/advisories/send-directory-traversal
+We generally haven't been making CVE assignments for cases of desktop
+applications in which crafted input is entered interactively in the
+UI. The existence of a well-known flaw type (e.g., buffer overflow)
+and the existence of code to generate the crafted input haven't been
+considered relevant in the past.
 
-Crumb CORS Token Disclosure
-https://nodesecurity.io/advisories/crumb_cors_token_disclosure
+Is the nature of the attack different here?
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
--- 
-bye,
-pabs
-
-http://bonedaddy.net/pabs3/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJTDJSwAAoJEKllVAevmvmshvEIAJvW7EHnYSuHbJJ8O3WZTfKn
+cuR/O+4LYq7lEHAhpDB3eD4tPPbvfTj57OfHt/LAH4Wk517N9/AVecWcnqh8i6tG
+8Aq1a63bFd86tGkpqkJswcFS0VGrGXAFvvPuoVDe3CJZfcSLv+zaNW1B2kOYeGg8
+0ZQTolo3itjA50zEpB8fHHRkKHRPL9D0H/WGG0wDimvNvnwYlIlYHmXBQcUrIgAg
+HmHo5VSnWvRudiSSnh1NCPtGiAsBCCC9DgtFepEnd/XiogL/7fQ3FvCap14pjVGe
+BMV+tUD47aEBHnwEj18Tl6NlbmdKgOLxUDULLso0XZMdoSZpL6Q+MyDVYqdghTA=
+=OhXv
+-----END PGP SIGNATURE-----
