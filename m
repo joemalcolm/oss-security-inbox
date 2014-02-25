@@ -1,20 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/33
-Message-ID: <alpine.BSF.2.00.1410100744160.31844@aneurin.horsfall.org>
-Date: Fri, 10 Oct 2014 07:51:11 +1100 (EST)
-From: Dave Horsfall <dave@...sfall.org>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: Of Shellshock and logfiles
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/25/4
+Message-Id: <201402251819.s1PIIxBp014045@linus.mitre.org>
+Date: Tue, 25 Feb 2014 13:18:59 -0500 (EST)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for catfish program
 Content-Type: text/plain; charset=utf-8
 
-I don't *think* I've seen this mentioned here (and apologies if so), but 
-somebody posited on another list that Shellshock attempts in one's Apache 
-logs are not directed against PHP or its scripts, but rather against those 
-Bash scripts that analyse the Apache logs in turn...  I've heard of 
-similar things in mail logs, which *could* be the result of attempting to 
-target either Procmail or logfile analysers.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Then again, maybe the spammers really are that desperate that they'll try 
-anything that they think might work.
+> I was looking at the installed script on a Fedora 19 box
 
--- Dave
+Apparently the situation is that the Fedora catfish.spec file
+generates the duplicate checks for $APPNAME.py. It's uncommon to have
+different CVE mappings for Fedora-shipped versions versus upstream
+versions, but in this case we'll proceed to do that because the CVE
+abstraction was already stated that way, and the attack vectors are
+actually different.
+
+catfish.py in the current working directory - Use CVE-2014-2093.
+
+catfish.pyc in the current working directory - Use CVE-2014-2094.
+
+bin/catfish.pyc under the current working directory - Use
+CVE-2014-2095.
+
+bin/catfish.py under the current working directory - Use
+CVE-2014-2096.
+
+If someone installs the upstream version of either catfish 0.4.0.2 or
+catfish 0.8.2, they get a script that unsafely looks for both
+catfish.pyc and catfish.py.
+
+If someone installs either the Fedora 19 catfish-0.4.0.2-2 package or
+the Fedora 20 catfish-0.8.2-1 package, they get a script that unsafely
+looks for only catfish.py (twice).
+
+This apparently occurs because of:
+
+[Fedora 19 catfish.spec]
+%{__sed} -i.byte \
+        -e 's|pyc|py|' \
+        %{name}.in
+
+[Fedora 20 catfish.spec]
+%{__sed} -i.byte \
+        -e 's|pyc|py|' \
+        bin/%{name}.in.in
+
+We don't know why that was done. (Maybe Fedora has a policy against
+certain uses of .pyc files, and this policy is implemented in
+the .spec files of various packages?)
+
+This specific case isn't very interesting because every one of the
+mentioned versions of catfish on every platform is actually
+vulnerable. However, probably no Fedora advisory should map to either
+CVE-2014-2094 or CVE-2014-2095.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTDN2+AAoJEKllVAevmvmsPDcIAKLt8d3r+Olt8pIdmwopfY02
+DwiRNxpYjheWVGboN9z5daSaCFkVjAT6SRFrXJKF4l/mQF1RtBSk2LpRgs7v4x9B
+4ttIx3/agJO5nPXLrHW4BNNrcjni42GInvUQa29YyZbFN19Z2YjQJbMeFDEjqE1F
+cY8sR0ZEQKPhrb60Njk+QY7ATe25eMHMOm9KyrEvggj/EvPthq24nbf3uhvfB60A
+oQByal7gfCy0oOaOdoAB2ub9b2Gz0n2PfOKeoCFqgHgvlBzVRkM+EKNsYGbLBq28
+xaBrzf0byXKOGlL1FPYt9TyHsXRqGuRXsrxihpxiygOffJT+3a7TN+p3lnsMa1k=
+=3v2f
+-----END PGP SIGNATURE-----
