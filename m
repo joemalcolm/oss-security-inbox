@@ -1,48 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/13/8
-Message-ID: <53EB8E29.1070606@mittwald.de>
-Date: Wed, 13 Aug 2014 16:08:04 +0000
-From: Sven Kieske <S.Kieske@...twald.de>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: ro bind mount bypass using user namespaces
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/25/5
+Message-ID: <20140225220016.3a315054@redhat.com>
+Date: Tue, 25 Feb 2014 22:00:16 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org, mancha1@...h.com
+Subject: Re: Re: CVE Request - GnuTLS corrects flaw in certificate verification (3.1.x/3.2.x)
 Content-Type: text/plain; charset=utf-8
 
+On Thu, 13 Feb 2014 15:30:53 -0500 (EST) cve-assign@...re.org wrote:
 
+> > http://gnutls.org/security.html
+> > GNUTLS-SA-2014-1
+> 
+> > https://www.gitorious.org/gnutls/gnutls/commit/b1abfe3d18
+> 
+> Use CVE-2014-1959.
 
-Am 12.08.2014 23:48, schrieb Kenton Varda:
-> Due to a bug in the Linux kernel's implementation of remount, on systems
-> with unprivileged user namespaces enabled, it is possible for an
-> unprivileged user to gain write access to any visible read-only bind mount.
-> It is also possible to bypass flags like nodev, nosuid, and noexec.
+GnuTLS versions before 2.7.6 contained different bug that caused GnuTLS
+to accept V1 intermediate CAs by default, while no V1 CAs were meant to
+be accepted unless GNUTLS_VERIFY_ALLOW_ANY_X509_V1_CA_CRT or
+GNUTLS_VERIFY_ALLOW_X509_V1_CA_CRT verification flags were used.
 
-Hi,
+https://bugzilla.redhat.com/show_bug.cgi?id=1069301
 
-does someone happen to know in which released kernel version this bug
-got introduced?
-
-Was it always there since remounting of bind mounts was possible?
-
-according to debian this at least affects 2.6.32 kernels
-in oldstable:
-
-https://security-tracker.debian.org/tracker/CVE-2014-5206
-https://security-tracker.debian.org/tracker/CVE-2014-5207
-
-Sadly I can't find any other public available bugtracker
-from redhat, gentoo etc. who track these.
+This should get a separate CVE.
 
 -- 
-Mit freundlichen Grüßen / Regards
-
-Sven Kieske
-
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+Tomas Hoger / Red Hat Security Response Team
