@@ -1,80 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/15/7
-Message-ID: <2ECE9D9EEF1F524185270138AE23265947D5881D@S0MSMAIL112.arc.local>
-Date: Mon, 15 Dec 2014 18:33:12 +0000
-From: Fiedler Roman <Roman.Fiedler@....ac.at>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: AW: Re: AW: O_CREAT|O_DIRECTORY on nonexisting file expected behaviour?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/25/2
+Message-Id: <201402251456.s1PEu3DP013121@linus.mitre.org>
+Date: Tue, 25 Feb 2014 09:56:03 -0500 (EST)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for catfish program
 Content-Type: text/plain; charset=utf-8
 
-> Von: Andy Lutomirski [mailto:luto@...capital.net]
->
-> On 11/26/2014 11:32 AM, Fiedler Roman wrote:
-> >> Von: Matthew Daley [mailto:mattd-
-> Lyx97FHGs0pBDgjK7y7TUQ@...lic.gmane.org]
-> >>
-> >> On Thu, Nov 27, 2014 at 4:28 AM, Fiedler Roman <Roman.Fiedler-
-> c/U4JCCwIJZeoWH0uzbU5w@...lic.gmane.org>
-> >> wrote:
-> >>> (...)
-> >>> My test program was:
-> >>>
-> >>> #include <fcntl.h>
-> >>> #include <stdio.h>
-> >>> #include <sys/stat.h>
-> >>>
-> >>> int main(int argc, char **argv) {
-> >>>   int fd;
-> >>>   struct stat statBuf;
-> >>>   int result;
-> >>>
-> >>>   fd=open("xxx", O_RDWR|O_CREAT|O_DIRECTORY, 0600);
-> >>>   result=fstat(fd, &statBuf);
-> >>>   if(result) {
-> >>>     fprintf(stderr, "Stat failed\n");
-> >>>     return(1);
-> >>>   }
-> >>>   fprintf(stderr, "New element type is %d\n", S_ISDIR(fd));
-> >>
-> >> FWIW, this should probably be S_ISDIR(statBuf.st_mode).
-> >
-> > You are completely right, how stupid to miss that. I did not challenge the
-> > result, since it was the same as with "ls -al".
-> >
-> > Also with S_ISDIR(statBuf.st_mode), result is the same, at least on my
-> > side.
-> >
-> >
-> >
-> > #include <fcntl.h>
-> > #include <stdio.h>
-> > #include <sys/stat.h>
-> >
-> > int main(int argc, char **argv) {
-> >   int fd;
-> >   struct stat statBuf;
-> >   int result;
-> >
-> >   fd=open("xxx", O_RDWR|O_CREAT|O_DIRECTORY, 0600);
-> >   result=fstat(fd, &statBuf);
-> >   if(result) {
-> >     fprintf(stderr, "Stat failed\n");
-> >     return(1);
-> >   }
-> >   fprintf(stderr, "New element type is %d\n", S_ISDIR(statBuf.st_mode));
-> >   return(0);
-> > }
-> >
-> >
-> > $ ./test
-> > New element type is 0
-> >
->
-> Report it to linux-fsdevel@...r.kernel.org?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-As not regarded as security problem, I just reported it as normal bug to devs,
-see http://marc.info/?l=linux-fsdevel&m=141866588432265&w=2
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=739958
+> https://bugzilla.redhat.com/show_bug.cgi?id=1069396
 
+> This script intentionally looks to load catfish.py in the current
+> working directory.
 
+"intentionally" tends to be a complicating factor for a CVE
+assignment; one could possibly instead express this as: the author
+didn't consider that catfish would sometimes be executed with cwd
+outside of the user's home directory. The nature of the program
+suggests that it could be started interactively by any user at any
+time, and there's no documentation indicating that the cwd could or
+should be constrained.
 
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (6344 bytes)
+We couldn't immediately figure out where your quoted source code came
+from.
+
+http://ftp.de.debian.org/debian/pool/main/c/catfish/catfish_0.3.2.orig.tar.gz
+has a catfish.in that looks for $APPNAME.pyc before $APPNAME.py. The
+quoted code has duplicate checks for $APPNAME.py. This affects the
+number of CVEs. Apparently, "a crafted catfish.py file in the current
+working directory" is an attack vector with a certain set of affected
+versions, and "a crafted catfish.pyc file in the current working
+directory" is an attack vector with a different set of affected
+versions. Also, the Debian bug report specifically names a much later
+package (1.0.0-2) that might be considered an independent codebase,
+and at least has different attack vectors. The ChangeLog says "v0.6.0
+Complete rewrite from the ground-up." The problematic 1.0.0 code is
+distributed in bin/catfish.in.in and has attack vectors of "a crafted
+bin/catfish.pyc or bin/catfish.py file under the current working
+directory."
+
+The primary Red Hat bug report refers to
+https://bugzilla.redhat.com/show_bug.cgi?id=1069398 which is for
+"Product: Fedora ... Component: catfish ... Version: 20" but
+http://dl.fedoraproject.org/pub/fedora/linux/releases/20/Everything/source/SRPMS/c/catfish-0.8.2-1.fc20.src.rpm
+is essentially the same as 1.0.0: the code is found in
+bin/catfish.in.in in the distribution, and bin/catfish.pyc and
+bin/catfish.py are the attack vectors. So, apparently your quoted code
+isn't the Fedora 20 code.
+
+Finally, we didn't find any evidence of a case where only
+bin/catfish.py is checked within the post-complete-rewrite codebase.
+
+catfish.py in the current working directory - Use CVE-2014-2093.
+
+catfish.pyc in the current working directory - Use CVE-2014-2094.
+
+bin/catfish.pyc and bin/catfish.py file under the current working
+directory - Use CVE-2014-2095.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTDK5yAAoJEKllVAevmvms33cH/AvvurPhW6Myf3IQ+l9VPGvy
+EB5Jzz1MIT3GZ5iC80Gol2zseShZzaxaVORlvpEeQNVDLH0g3XkV8QsEyFudhwcj
+YDK5FhJJWZhkefS6CoMXawKKE4QgLTnkyUsyVbtE0vQOaDGVGZM0ISu6EhHlnCBS
+3lyjkVBRHEpn0pixkiplCwYpBsyghJfLdeKsix5RxATfT+vfFcSMq73nnreDab3p
+hj1mcj1DVXQIWbuMT4LfgfCs1TeY84zt3OLopApfkR0+T6M66ZkzXVvJbI6nlLJU
+QA5KnInO3hxXwIQqgrtGpyINIqsrR9dZ2gF37t7NJzrMY3AajiUp3LsfQQTS+UM=
+=97F+
+-----END PGP SIGNATURE-----
