@@ -1,42 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/28/4
-Message-ID: <20140828111330.GA5036@hurricane.linuxnetz.de>
-Date: Thu, 28 Aug 2014 13:13:30 +0200
-From: Robert Scheck <robert@...oraproject.org>
-To: Open Source Security Mailing List <oss-security@...ts.openwall.com>
-Subject: Zarafa WebApp < 1.6 affected by CVE-2010-4207 or CVE-2012-5881
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/25/6
+Message-ID: <79D410D6-6EF4-4308-818C-3EAE8D9B5D19@redhat.com>
+Date: Tue, 25 Feb 2014 16:28:47 -0700
+From: "Vincent Danen" <vdanen@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request for catfish program
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 02/25/2014, at 11:18 AM, cve-assign@...re.org wrote:
 
-I discovered that Zarafa WebApp < 1.6 is affected by CVE-2010-4207 or
-CVE-2012-5881 (depends on WebApp version) as it bundles charts.swf by
-YUI, see http://yuilibrary.com/support/20121030-vulnerability/ for the
-list of affected md5sums.
+>> I was looking at the installed script on a Fedora 19 box
+>
+> Apparently the situation is that the Fedora catfish.spec file
+> generates the duplicate checks for $APPNAME.py. It's uncommon to have
+> different CVE mappings for Fedora-shipped versions versus upstream
+> versions, but in this case we'll proceed to do that because the CVE
+> abstraction was already stated that way, and the attack vectors are
+> actually different.
+>
+> catfish.py in the current working directory - Use CVE-2014-2093.
+>
+> catfish.pyc in the current working directory - Use CVE-2014-2094.
+>
+> bin/catfish.pyc under the current working directory - Use
+> CVE-2014-2095.
+>
+> bin/catfish.py under the current working directory - Use
+> CVE-2014-2096.
+>
+> If someone installs the upstream version of either catfish 0.4.0.2 or
+> catfish 0.8.2, they get a script that unsafely looks for both
+> catfish.pyc and catfish.py.
+>
+> If someone installs either the Fedora 19 catfish-0.4.0.2-2 package or
+> the Fedora 20 catfish-0.8.2-1 package, they get a script that unsafely
+> looks for only catfish.py (twice).
+>
+> This apparently occurs because of:
+>
+> [Fedora 19 catfish.spec]
+> %{__sed} -i.byte \
+>       -e 's|pyc|py|' \
+>       %{name}.in
+>
+> [Fedora 20 catfish.spec]
+> %{__sed} -i.byte \
+>       -e 's|pyc|py|' \
+>       bin/%{name}.in.in
+>
+> We don't know why that was done. (Maybe Fedora has a policy against
+> certain uses of .pyc files, and this policy is implemented in
+> the .spec files of various packages?)
+>
+> This specific case isn't very interesting because every one of the
+> mentioned versions of catfish on every platform is actually
+> vulnerable. However, probably no Fedora advisory should map to either
+> CVE-2014-2094 or CVE-2014-2095.
 
-[root@tux ~]# rpm -q zarafa-webapp
-zarafa-webapp-1.5-44025.noarch
-[root@tux ~]#
+AFAIK there is no policy.  This may be something the maintainer chose to do for some unknown reason.
 
-[root@tux ~]# rpm -ql zarafa-webapp | grep charts.swf | xargs md5sum
-923c8afe50fc45ed42d92d6ab83b11f6 /usr/share/zarafa-webapp/client/extjs/resources/charts.swf
-[root@tux ~]#
+Thanks for all this extra analysis.  I've updated our bug with the new and proper CVEs for this issue.
 
-I don't know how to abuse this but upstream notice "This defect allows
-JavaScript injection exploits to be created against domains that host
-these affected .swf files, whether or not the .swf files are embedded
-in your application." seems to be important enough for this heads up.
-
-Given that Zarafa WebApp 1.6 (final release) happened on 2014-07-21
-there might be distributions/downstreams still shipping Zarafa WebApp
-1.5. Zarafa WebApp does not use that file so removing it on packaging
-level is fine. Fedora is not affected; it doesn't ship Zarafa WebApp.
-
-
-With kind regards
-
-Robert Scheck
 -- 
-Fedora Project * Fedora Ambassador * Fedora Mentor * Fedora Packager
-
-Content of type "application/pgp-signature" skipped
+Vincent Danen / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
