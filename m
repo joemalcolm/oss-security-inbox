@@ -1,32 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/24
-Message-ID: <20140304205453.GA12419@openwall.com>
-Date: Wed, 5 Mar 2014 00:54:53 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/26/1
+Message-ID: <530DE614.7070403@sysdream.com>
+Date: Wed, 26 Feb 2014 14:03:16 +0100
+From: Damien Cauquil <d.cauquil@...dream.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux-PAM pam_unix/unix_chkpwd is fail-open
+Subject: CVE request: POSH multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+We recently found four vulnerabilities in POSH web application, including:
 
-Just off Twitter, but relevant to this list:
+1. Unauthenticated SQL injection vulnerability affecting all POSH 3.X
+versions prior to 3.3.0
 
-<kragen> http://www.tedunangst.com/flak/post/thoughts-on-style-the-TLS-and-errors thoughts on #gotofail and how it's too easy for TLS software to "fail open".
+An unauthenticated SQL injection is present and can be exploited to
+extract data stored in database.
 
-<@solardiz> @kragen @tedunangst Re: BSD auth not relying on exit code, it's relevant that Linux-PAM's pam_unix/unix_chkpwd does: https://git.fedorahosted.org/cgit/linux-pam.git/tree/modules/pam_unix/support.c?id=b0ec5d1e472a0cd74972bfe9575dcf6a3d0cad1c#n634
 
-<@solardiz> @kragen @tedunangst We avoided this in our pam_tcb/tcb_chkpwd since its initial version in 2002: http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/tcb/tcb/pam_tcb/support.c?annotate=1.13 lines 441-451
+2. Design vulnerability affecting all POSH 3.X versions (no fix yet)
 
-TCB_MAGIC is 0x0a00ff7fUL
+There is a design vulnerability in the way POSH stores users credentials
+in the browser's cookie (POSH stores every user's password md5 hash
+inside an unsecure cookie)
 
-This might not be viewed as a vulnerability in pam_unix/unix_chkpwd, but
-an authentication service being fail-open is against best practices.
+3. Arbitrary url redirection affecting all POSH 3.X versions (no fix yet)
 
-The issue is mitigated by the fact that unix_chkpwd is only used to
-check the user's own password, when unlocking an X desktop or GNU screen
-(when it's patched to use PAM).  Another "mitigation" is that X desktop
-locking is generally fail-open anyway. ;-(
+This vulnerability is hardly exploitable but shows a lack of user input
+validation.
 
-Someone might want to patch this issue in Linux-PAM.
+4. Cross-Site scripting vulnerability affecting all POSH 3.X versions
+(no fix yet)
 
-Alexander
+
+References:
+
+* advisory: http://www.sysdream.com/system/files/POSH-3.2.1-advisory.pdf
+* POSH 3.3.0 release:
+http://sourceforge.net/projects/posh/files/Posh%20portal/posh%203.3.0/
+* svn commit url: http://sourceforge.net/p/posh/svn/3540/
+
+
+We would like to request 4 CVEs for these vulnerabilities.
+
+-- 
+Damien Cauquil
+R&D Director
+CHFI | CEH | ECSA | CEI
+
+Sysdream
+108 avenue Gabriel Péri
+93400 Saint Ouen
+Tel: +33 (0) 1 78 76 58 21
+www.sysdream.com
