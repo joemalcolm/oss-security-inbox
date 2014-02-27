@@ -1,48 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/10
-Message-ID: <548069AE.1060407@tillo.ch>
-Date: Thu, 04 Dec 2014 15:03:26 +0100
-From: Martino Dell'Ambrogio <tillo@...lo.ch>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: procmail heap overflow in getlline()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/13
+Message-ID: <20140227214455.7b00220e@redhat.com>
+Date: Thu, 27 Feb 2014 21:44:55 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE request: askbot xss
 Content-Type: text/plain; charset=utf-8
 
-On 12/04/2014 01:02 PM, Florian Weimer wrote:
-> On 12/04/2014 11:26 AM, Martino Dell'Ambrogio wrote:
->> For what is worth, I strongly believe this is a security bug for the
->> same reason.
->> As soon as there is an undocumented way to execute code, it will be
->> impossible for a .procmailrc file generator to avoid execution of code.
->> Workaround measures like security capabilities can not be taken into
->> account as they are not implicit.
->
-> There are many documented code execution opportunities (some of them 
-> still rather subtle), so I find any arguments based on the existence 
-> of a hypothetical secure procmailrc file generator not very convincing.
+Hi!
 
-If you mean documented, then you can have a secure .procmailrc file 
-generator by taking into account each possibility.
-It's exactly what you do when you sanitize input in any software: you 
-need a structure defining contexts, and you need to know how to 
-encode/filter things to be safe and not get out of context.
+askbot version 0.7.49 fixes reflected XSS in question, tag and user
+search forms.  Further links in our bugzilla:
 
-If you mean undocumented (the phrase makes more sense), they all have to 
-be either documented or, if they weren't the intention of the 
-developers, they should be fixed.
-In my opinion, in both cases, there is a security bug because there is 
-unexpected execution.
+https://bugzilla.redhat.com/show_bug.cgi?id=1070852
 
->
-> :0
-> |echo code execution >/dev/tty
->
-> :0
-> * ?echo code execution >/dev/tty
-> /dev/null
->
-> … and so on.
->
-
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4234 bytes)
+-- 
+Tomas Hoger / Red Hat Security Response Team
