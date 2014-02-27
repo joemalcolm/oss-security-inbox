@@ -1,41 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/11
-Message-ID: <CALx_OUB2-TWCkWVawO=JS8HhY7_dX1jdpGTyGVctOVLXtXdhiw@mail.gmail.com>
-Date: Fri, 24 Oct 2014 12:50:40 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: strings / libbfd crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/8
+Message-Id: <201402271329.s1RDTjeO017468@linus.mitre.org>
+Date: Thu, 27 Feb 2014 08:29:45 -0500 (EST)
+From: cve-assign@...re.org
+To: d.cauquil@...dream.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: PLOGGER 1.0RC1 multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Filed this as:
-https://sourceware.org/bugzilla/show_bug.cgi?id=17510
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Fri, Oct 24, 2014 at 12:10 PM, Michal Zalewski <lcamtuf@...edump.cx> wrote:
-> I do have a bunch more that seem exploitable, though - for example:
->
-> http://lcamtuf.coredump.cx/strings-bfd-badfree - does this repro for
-> people (I tried with binutils 2.24)?
->
-> I think that given the expectations people have around what strings
-> does and whether it's safe to run on untrusted binaries, I'd seriously
-> question the wisdom of making it use libbfd, at least by default;
-> perhaps distros want to consider non-upstream patches that default to
-> the -a mode, instead?
->
-> I don't understand the user benefit of extracting strings only from
-> certain sections of executables, and I almost feel like it's a side
-> effect of strings being a part of binutils more than anything else.
->
->
-> On Fri, Oct 24, 2014 at 5:00 AM, Hanno Böck <hanno@...eck.de> wrote:
->> I've now put this in upstream's bugtracker:
->> https://sourceware.org/bugzilla/show_bug.cgi?id=17509
->>
->> Hope noone else has already done this.
->>
->> --
->> Hanno Böck
->> http://hboeck.de/
->>
->> mail/jabber: hanno@...eck.de
->> GPG: BBB51E42
+> The zip file must at least contains a non-empty image file with a name
+> including a valid extension, and of course the exploit php file.
+
+Maybe your reply means that if this "must at least" requirement is not
+satisfied, then a race condition occurs. But what is the race condition:
+what action is in a race against what other action?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTDzzMAAoJEKllVAevmvmshhsH/0fHaA/VLUW0vW5KOfCBSn3W
+znt6hvEGyLxmDndY2HYO2VaCju3IPH40ZWcPT+52aNqWWcmC/CiKc1M+f7WLryMy
+2cUFy31uTrwEqP2KsTNxT5zk8lmsXbQVw18rpZsos5UwOy4VVx7NnzrpUDd9oedz
+o8z958N4LCgtapXN7DUgohtFCBWIEqCkXI/zsPMxAuYe0NMrG8tq0N6j+NAYkRec
+29mUoq/XAc2PWYK2chAQhNwduN1bj3k3W2feyeiVH0TuLlE9sSDKBQJDojxxP0CU
+Ws8uySHoorgzAUcHVK6VzWBtq0G8VLHWaAcuxYMtrHe6naA2xKhSwDPmpi9IaRU=
+=eaNy
+-----END PGP SIGNATURE-----
