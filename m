@@ -1,28 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/11/3
-Message-ID: <20140411115633.GA325@dhcp-25-225.brq.redhat.com>
-Date: Fri, 11 Apr 2014 13:56:34 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/3
+Message-ID: <530EE0AD.30204@sysdream.com>
+Date: Thu, 27 Feb 2014 07:52:29 +0100
+From: Damien Cauquil <d.cauquil@...dream.com>
 To: oss-security@...ts.openwall.com
-Cc: Mateusz Guzik <mguzik@...hat.com>
-Subject: CVE request -- Linux kernel: net: ping: refcount issue in ping_init_sock() function
+Subject: CVE request: PLOGGER 1.0RC1 multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-A flaw was found in the way ping_init_sock() function handled group_info
-struct reference counter. Since group_info refcounter is only
-incremented but never decremented in this codepath, it could lead to
-refcounter overflow and possibly to use-after-free issue later.
+We found two vulnerabilities in PLOGGER version 1.0RC1, including:
 
-An unprivileged local user could use this flaw to crash the system or,
-potentially, escalate their privileges on the system.
+1. Authenticated Arbitrary file upload vulnerability affecting PLOGGER
+version 1.0RC1
 
-Upstream patch proposal:
-https://lkml.org/lkml/2014/4/10/736
+This vulnerability allows an authenticated user to upload an arbitrary
+PHP file on the remote web server in an accessible path, by sending a
+specifically crafted zip file.
+
+2. CAPTCHA bypass vulnerability
+
+A theme called "Lucid" provided in PLOGGER version 1.0RC1 implements a
+weak CAPTCHA prone to a replay attack. By abusing this vulnerability, an
+unauthenticated user may be able to post a huge number of comments.
+
+
+Vendor was notified and answered this software is no more maintained.
+
 
 References:
-https://bugzilla.redhat.com/show_bug.cgi?id=1086730
 
-Thanks,
+* advisory: http://www.sysdream.com/system/files/PLOGGER-1.0RC1-advisory.pdf
+* PLOGGER 1.0 RC1 release: http://www.plogger.org/
+
+We would like to request 2 CVEs for these vulnerabilities.
+
 -- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+Damien Cauquil
+Directeur Recherche & Développement
+CHFI | CEH | ECSA | CEI
+
+Sysdream
+108 avenue Gabriel Péri
+93400 Saint Ouen
+Tel: +33 (0) 1 78 76 58 21
+www.sysdream.com
