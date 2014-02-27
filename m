@@ -1,30 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/14/2
-Message-ID: <534B575A.6070905@redhat.com>
-Date: Mon, 14 Apr 2014 13:34:50 +1000
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: cross-site scripting issue fixed in CUPS 1.7.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/4
+Message-ID: <530EE333.8030906@sysdream.com>
+Date: Thu, 27 Feb 2014 08:03:15 +0100
+From: Damien Cauquil <d.cauquil@...dream.com>
+To: cve-assign@...re.org
+CC: oss-security@...ts.openwall.com
+Subject: [CVE assignment notification] Multiple vulnerabilities in POSH
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+We updated our original advisory about POSH application with the CVE-IDs
+provided;
 
-As reported in <https://bugs.mageia.org/show_bug.cgi?id=13196>, the CUPS 
-1.7.2 release (<http://www.cups.org/blog.php?L717>) fixes a cross-site 
-scripting issue:
+> 1. Unauthenticated SQL injection vulnerability affecting all
+> POSH 3.X versions prior to 3.3.0
 
-http://www.cups.org/str.php?L4356
-http://www.cups.org/strfiles.php/3268/str4356.patch
+CVE-2014-2211 is assigned to this vulnerability
 
-It may only affect certain configurations - I was not able to reproduce 
-the issue on Fedora 19 and 20. Also, the patch may not be sufficient to 
-cover all different encodings, other special characters of interest etc.
+> 2. Design vulnerability affecting all POSH 3.X versions
 
-Can a CVE please be assigned if one has not been already?
+CVE-2014-2212 is assigned to this vulnerability
 
-Thanks,
+> 3. Arbitrary url redirection affecting all POSH 3.X versions
 
---
-Murray McAllister / Red Hat Security Response Team
+CVE-2014-2213 is assigned to this vulnerability
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1087122
+> 4. Cross-Site scripting vulnerability affecting all POSH 3.X versions
+
+CVE-2014-2214 is assigned to this vulnerability
+
+
+References:
+
+* Updated advisory:
+http://www.sysdream.com/system/files/POSH-3.2.1-advisory_0.pdf
+
+
+
+-- 
+Damien Cauquil
+Directeur Recherche & Développement
+CHFI | CEH | ECSA | CEI
+
+Sysdream
+108 avenue Gabriel Péri
+93400 Saint Ouen
+Tel: +33 (0) 1 78 76 58 21
+www.sysdream.com
