@@ -1,20 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/5
-Message-ID: <3230301C09DEF9499B442BBE162C5E48257594A2@SESTOEX04.enea.se>
-Date: Sun, 5 Oct 2014 11:38:51 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/12
+Message-ID: <20140227173054.GO21958@suse.de>
+Date: Thu, 27 Feb 2014 18:30:54 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request?: konqueror - https uses all ciphers, even weak ones
 Content-Type: text/plain; charset=utf-8
 
-> I think this is reasonable. I regret that previous versions of my script showed
-> a  more scary output even if people weren't really in any danger because
-> prefixing was already enabled.It was even referenced in a number of
-> inaccurate media reports.
-> 
+Hi,
 
-Thanks a lot Hanno.  
+I am wondering a bit ...
 
-Cheers
-/Sona
+We received this bugreport for the KDE default webbrowser Konqueror:
+https://bugzilla.novell.com/show_bug.cgi?id=865241
 
+Basically https://www.howsmyssl.com reports that even the weak
+EXPORT ciphera are in use by konqueror.
+
+And yes, it is right...
+DES40, RC2, DES_CBC  (single DES) ... should definitely not be used these days anymore.
+
+
+Do you think use of export ciphers should get CVEs these days?
+
+It does not seem intentional, konqueror just uses everything openssl has without
+explicit filtering by default.
+
+I also failed to find a module to configure the ciphers in the KDE configuration
+module jungle.
+
+Ciao, Marcus
