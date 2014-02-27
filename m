@@ -1,59 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/15/6
-Message-Id: <20140915152812.40B77336003@smtpvbsrv1.mitre.org>
-Date: Mon, 15 Sep 2014 11:28:12 -0400 (EDT)
-From: cve-assign@...re.org
-To: kristian.fiskerstrand@...ptuouscapital.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE assignment for c-icap Server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/10
+Message-ID: <20140227145833.3cb1e385@redhat.com>
+Date: Thu, 27 Feb 2014 14:58:33 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: jwilk@...ian.org
+Subject: Re: CVE requests: Pacemaker, Python Imaging Library, eyeD3, 9base, rc, Gamera, RPLY - insecure use of /tmp
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, 10 Feb 2014 23:21:00 +0100 Jakub Wilk wrote:
 
-> http://sourceforge.net/p/c-icap/bugs/59/
-> i found the bug in the parse_request() function.
-> Please see the details in the attachment.
+> * Pacemaker:
+> https://bugs.debian.org/633964
+> This needs a CVE-2011-#### id.
 
-> <Peter Berestov> pberestov@...il.com
-> If a buffer doesn't contain " " or "?" then the *end pointer will increase
-> The pointer can leave the area of memory allocated for the buffer.
+This should be fixed upstream for a while:
+https://github.com/ClusterLabs/pacemaker/commit/23ad834
 
-Use CVE-2013-7401 for this specific issue discovered by Peter
-Berestov.
-
-
-> chtsanti 2013-10-02
-> 
-> This bug and many other related fixed in trunk with patches:
-> r1018 and r1021.
-> 
-> http://sourceforge.net/p/c-icap/code/1018/
-> 
-> Fix multiple problems on parsing ICAP requests. In many cases the c-icap may
-> crash if not found a normal ICAP request.
-
-Use CVE-2013-7402 for the chtsanti discoveries, i.e., the other issues
-in the pre-r1018 code that made a remote crash possible. This might,
-for example, include attack vectors with invalid method names.
-
-There is no CVE ID for the http://sourceforge.net/p/c-icap/code/1021
-issue. This seems to be a usability problem that was introduced by the
-first version of the security fixes.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUFwT6AAoJEKllVAevmvmsIoEH/AnEdl+oKCBmSfWw/ixQonyY
-pKmh4HF1OTh3AsC1tJ88hbDasvr3ZpvPcmPbFtLoRkB5IgFBrCfiAWMAbp3h3gp8
-HyCaaz/im7D+gJuDDf1fxCyCqt8pG+Haffk0QGMAVnmbkCyk4NWMt20OXXj/lV/k
-G0sXNLwl3J4f/BdjzcjMISZzq1qYq785epzyDycNKynpYA7z3e1fjesJyZ/wB2T5
-O9bkjXRuhmjzbSTxYLAwXURVl4c7BWqJJASPq84UDg+R/pW5y3/OUMRrGJ2t79Rp
-bAPDDp3mo47PutGcbKTJsZqg2Lu/UJmxvxk+ximP5VeB4MqFcwZv0tVi4byxPx8=
-=WCEN
------END PGP SIGNATURE-----
+-- 
+Tomas Hoger / Red Hat Security Response Team
