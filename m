@@ -1,28 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/6
-Message-ID: <20141210134550.GE10499@mail.corp.redhat.com>
-Date: Wed, 10 Dec 2014 14:45:50 +0100
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Possible CVE request: freetype: out-of-bounds stack-based read/write in cf2_hintmap_build() (incomplete fix for CVE-2014-2240)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/6
+Message-Id: <201402271307.s1RD7L6H017030@linus.mitre.org>
+Date: Thu, 27 Feb 2014 08:07:21 -0500 (EST)
+From: cve-assign@...re.org
+To: d.cauquil@...dream.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: PLOGGER 1.0RC1 multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Freetype version 2.5.4 fixes another out-of-bounds stack-based
-read/write which is similar to CVE-2014-2240.
-Does it deserve a separate CVE? If so - please assign one.
+> We found two vulnerabilities in PLOGGER version 1.0RC1, including:
 
-Upstream bug: http://savannah.nongnu.org/bugs/?43661
 
-References:
-http://sourceforge.net/projects/freetype/files/freetype2/2.5.4/
-https://bugs.mageia.org/show_bug.cgi?id=14771
-https://bugzilla.redhat.com/show_bug.cgi?id=1172633
+> 1. Authenticated Arbitrary file upload vulnerability affecting PLOGGER
+> version 1.0RC1
+> 
+> This vulnerability allows an authenticated user to upload an arbitrary
+> PHP file on the remote web server in an accessible path, by sending a
+> specifically crafted zip file.
 
-Thanks.
--- 
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+> session.post('http://' + HOST + "/plog-admin/plog-upload.php",
 
-Content of type "application/pgp-signature" skipped
+> ## Add true image file to block the race condition (mandatory not
+> null)
+
+Use CVE-2014-2223.
+
+Can you explain the race condition? For example: without the true
+image file, would the product extract the .php file but then delete it
+very soon afterward?
+
+
+
+> 2. CAPTCHA bypass vulnerability
+> 
+> A theme called "Lucid" provided in PLOGGER version 1.0RC1 implements a
+> weak CAPTCHA prone to a replay attack. By abusing this vulnerability,
+> an unauthenticated user may be able to post a huge number of comments.
+
+> The script generating the CAPTCHA image inserts a code in the current
+> user session, but this value is not unset while processing the form,
+> thus allowing an attacker to submit multiple times the form with
+> always the same captcha and associated code.
+
+> The vulnerable code is located in plog-comment.php, line 106.
+
+Use CVE-2014-2224.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTDzfpAAoJEKllVAevmvmsVc8H/j06CzXpU0k8lHndLB4b18Dm
+G52S617mi8nRVmx9ksLjSMuWNpFBUqTqoAAQLsnYZsoeOuQH+ijhByQ9AGkHmx3O
+kxfIoEAY8Dj2zulPAg62UiI8XkyWbAZwRR+pMzKEb0Ch8IHCm3P0wZBOWIxd1gWB
+wUhxkKp4KgZGGW9eX420vOQMMZuSMkr/KfiM+2y+RibMG3twQJn64rcFxtYTwx3V
+KrosI7vSdb0YLEvP/QpAtqB7Am+IHUTcNEa0dFqvV/iVZjyQ7Frb/8RPf1u8acKC
+XSZAYYWzZOqoqGypccKFCv36GF2y5OYctrqdY1OUz5x1zQ9pSHdGsdiSlkHbkDg=
+=VRHX
+-----END PGP SIGNATURE-----
