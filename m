@@ -1,23 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/19/5
-Message-Id: <85tx6dr3bx.fsf@boum.org>
-Date: Sat, 19 Jul 2014 13:32:50 +0200
-From: intrigeri <intrigeri@...m.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE's for intersection vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/1
+Message-ID: <530E8B93.4050905@redhat.com>
+Date: Wed, 26 Feb 2014 17:49:23 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: REJECT CVE-2014-0070
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Kurt Seifried wrote (19 Jul 2014 00:33:38 GMT) :
-> So long story short: we have a program called sosreport that is used
-> to send system information back to Red Hat so we can help customers
-> troubleshoot their problems. It would appear we have three main
-> classes of (potential) security vulnerabilities:
+Please REJECT CVE-2014-0070, turns out it's not a vuln. It was used
+outside of Red Hat so we can't recycle it safely. Thanks.
 
-The severity of these potential vulnerabilities may partly depend on
-how well sosreport authenticates the server it sends information to.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Cheers,
---
-intrigeri
+iQIcBAEBAgAGBQJTDouTAAoJEBYNRVNeJnmTX30QANbd5gyMJhK6aa1/snfdY+lJ
+PaEBRb6KLW2bHVKj2xhSp/mALry9QDg+8uypqS/QwSMqGRkQuJ1n3GdM65uqHHsh
+EkeTokyEfGoH7zY4ksk631bWGFfzgGTY1m/+AZp9j0ltjR0OLtv/D0f2j4EeEp3b
+SWW1pCcxYTh4oP1tx9buk4u4M4wzwP7ruDaZJiwLzraLpQpE5RfiVnfI6dgF48qX
+Z4tGIJRUdJ+upaVE2IaLa6Pg75z7wVG4cptzVyFpo+KB9ieZ6fTISfWsl+3o+6D/
+5yFslzSxj30zgJLfLDB6FyKvmUS4KSd2hDgW2dOgv3tKZegZ8vka1Z72QkxXgMYH
+SGOMT84nkjx90KMukGeSe9d4WN+vUXH9bbW8TraNhN4t8CEUnDalkI5X55JxPy6V
+lnhKNNRmkK6jbA618/zrsiEbwTcmaCGD67QTaa1nVXub0xNvxVmqUNbCh8767gKr
+t9WHM5pys+39hDdj6gsXANMbLtL0ULWwFgtsnzDacbGNt8u2cq+PeVXcQiXWAYLG
+N96bAU46RCnhz/7beiRbLgKFEhdqrF6bIOemtxE2eGmhr5K8hQVcBUesmA5uO9FY
+kH7Nx4GLkhYLiYYBnufRVxSO7yaJn3EpxMb2Q8QOO0RYRderALJfedAHFjZvL6Rr
+EbA3fQY28Ph0k0NHYmTv
+=kdx9
+-----END PGP SIGNATURE-----
