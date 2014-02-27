@@ -1,26 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/14/5
-Message-ID: <6AC1B82F-6F47-4D95-8445-3FA01268B520@redhat.com>
-Date: Fri, 14 Nov 2014 08:29:42 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: old CVE assignments for JQuery 1.10.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/11
+Message-ID: <530F643F.9040707@redhat.com>
+Date: Thu, 27 Feb 2014 17:13:51 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
 Content-Type: text/plain; charset=utf-8
 
-A title XSS was fixed in JQuery 1.10.0 back in November 2012 (with the 
-release of 1.10.0 in January 2013):
+On 02/11/2014 07:54 AM, P J P wrote:
+>     Hi,
+>
+> +-- On Mon, 10 Feb 2014, P J P wrote --+
+> | I'll check with the upstream author for more clarification.
+>
+> Upstream author's reply:
+>
+>   > On Tuesday, 11 February 2014 4:28 AM, Frank Denis wrote:
+>   >
+>   > The shorter the TTL of a record is, the easier a cache can be poisoned.
+>   > It is when a record is NOT cached that spoofed authoritative replies
+>   > can be sent and get a chance to reach the resolver before the
+>   > legitimate one.
+>   >
+>   > As soon as a valid response is received, dnscache invalidates the state,
+>   > discarding further responses, even if these are valid.
 
-http://bugs.jqueryui.com/ticket/6016
-https://github.com/jquery/jquery-ui/commit/7e9060c109b928769a664dbcc2c17bd21231b6f3
-http://jqueryui.com/changelog/1.10.0/
+Hannes Sowa pointed out to me that djbdns deliberately does not prevent 
+cache eviction by crafted queries/responses:
 
-Looking at the changelog it also seems like there are others:
+"dnscache doesn't discriminate against additional records. Valid records 
+are accepted whether they're additional records in one packet or answer 
+records in the next; timing doesn't affect the semantics."
 
-* Fixed: XSS in combobox demo. (#8859, 5fee6fd)
-* Fixed: Title XSS Vulnerability. (#6016, 7e9060c)
-* Fixed: XSS vulnerability in default content. (#8861, f285440)
+<http://cr.yp.to/djbdns/notes.html>
 
-I don't believe CVEs were assigned to any of these as far as I can tell.
+The issue raised in this thread only allows to carry out "attacks" that 
+are also possible by relying on a documented design decision, so it's 
+doubtful this qualifies as a security bug.
+
+(Note that most resolver implementations also lack protection against 
+cache eviction.  Several vendors reviewed this topic in 2008 and deemed 
+it too difficult to implement as a general security feature.)
 
 -- 
-Vincent Danen / Red Hat Product Security
+Florian Weimer / Red Hat Product Security Team
