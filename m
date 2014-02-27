@@ -1,73 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/23/6
-Message-ID: <CABoQFUC05AbzR1BU=GDywYYGSjf2L0Cq02viUtsE3oscaw50_Q@mail.gmail.com>
-Date: Tue, 23 Sep 2014 23:47:05 +0200
-From: Nicolas RUFF <nicolas.ruff@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Multiple issues in libVNCserver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/2
+Message-Id: <201402270538.s1R5busf001393@linus.mitre.org>
+Date: Thu, 27 Feb 2014 00:37:56 -0500 (EST)
+From: cve-assign@...re.org
+To: thoger@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request - GnuTLS corrects flaw in certificate verification (3.1.x/3.2.x)
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I am currently reviewing libVNCserver for potential security issues.
+Use CVE-2009-5138 for the
 
-Project home is: https://github.com/LibVNC/libvncserver
+  https://gitorious.org/gnutls/gnutls/commit/c8dcbedd1fdc312f5b1a70fcfbc1afe235d800cd
 
-Here are my findings so far. Found bugs are either client- or server-side
-(libVNCserver provides both). All bugs require authentication. However they
-still pose a significant issue in the following scenarios:
-* VNC server is running in password-less mode because authentication is
-required afterwards (e.g. X11 login screen).
-* Attacker is located in a man-in-the-middle position.
-* Attacker has legitimate access to the VNC server but possibly not to the
-host server (e.g. virtual machine, remote assistance to a customer).
+issue. This says "Initialy reported by Daniel Kahn Gillmor on 9/1/2008" but
+that seems to be a typo of 9/1/2009 (aka 2009-01-09), because the actual
+report was in:
 
-Fixes are being committed - a few of them are still pending in the pull
-request.
+  http://lists.gnutls.org/pipermail/gnutls-devel/2009-January/002888.html
 
-CVE-2014-6051 Integer overflow in MallocFrameBuffer() on client side.
 
-A malicious VNC server could advertise a very large screen size (by RFB
-protocol, width and height are 16-bit integers), resulting in an integer
-overflow during malloc() on client-side. Heap corruption, and possibly
-remote code execution on client-side could ensue.
+> https://bugzilla.redhat.com/show_bug.cgi?id=1069301
 
-CVE-2014-6052 Lack of malloc() return value checking on client side.
+> This did not affect applications that used
+> GNUTLS_VERIFY_ALLOW_X509_V1_CA_CRT verification flag, which instructs
+> GnuTLS to allow root CA certificates to be version 1 certificates.
+> This was set by e.g. gnutls-cli client application in GnuTLS versions
+> affected by this bug.
 
-malloc() return value was not checked on client-side during framebuffer
-setup. A malicious VNC server that advertises a large enough screen size to
-make malloc() fail could basically map the framebuffer at address 0, and
-write anything-anywhere in client process memory using selective
-FramebufferUpdate messages. This could certainly turn into remote code
-execution on client-side.
+Is this setting in gnutls-cli itself a vulnerability, because
+GNUTLS_VERIFY_ALLOW_X509_V1_CA_CRT is an unsafe flag for any general-purpose
+application? For example,
 
-CVE-2014-6053 Server crash on a very large ClientCutText message.
+  http://lists.gnutls.org/pipermail/gnutls-devel/2009-January/002892.html
 
-A malicious client could advertise a very large ClientCutText message size
-(by RFB protocol, size is encoded on a 32-bit integer). malloc() is likely
-to fail in that case; as malloc() return value is not checked, this will
-most likely result in a server crash.
+says:
 
-Note: this issue also affects RealVNC as per CVE-2010-5304.
-http://www.iss.net/security_center/reference/vuln/VNC_Client_Cut_Text_DoS.htm
-http://packetstormsecurity.com/files/89160/RealVNC-VNC-Server-Free-Edition-4.1.3-Denial-Of-Service.html
+  GNUTLS_VERIFY_ALLOW_ANY_X509_V1_CA_CRT
 
-CVE-2014-6054 Server crash when scaling factor is set to zero.
+  This one is quite dangerous. It allows any intermediate V1 certificate
+  to be used as a signer. This means that if I manage to get a CA to give
+  me a V1 personal certificate, I can act as a CA if this flag is set.
 
-A malicious client could set the scaling factor to 0, which will result in
-a server crash (division by zero).
 
-CVE-2014-6055 Multiple stack overflows in File Transfer feature.
+(In other words, all three CVEs would have the same impact -- something
+roughly like "allows remote attackers to have an unintended ability
+to issue new certificates by using an arbitrary X.509 V1 certificate --
+but two of the CVEs [CVE-2014-1959, CVE-2009-5138] have a root cause
+of logic errors in flag operations, whereas the proposed third CVE has a
+root cause of a hardcoded unsafe configuration choice in gnutls-cli.)
 
-1/ The non-standard file transfer messages (UltraVNC feature) will blindly
-strcpy() client-provided file and directory names into a stack-based buffer
-of size MAX_PATH, resulting in multiple stack-based buffer overflows on
-server-side.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-2/ Client-supplied FileTime attribute is copied into a stack-based
-buffer of size 64 during rfbFileTransferOffer message parsing, resulting in
-a stack-based buffer overflow on server-side.
-
-Regards,
-- Nicolas RUFF
-
+iQEcBAEBAgAGBQJTDs4QAAoJEKllVAevmvms6CMH/0tir5Aw5SnbdXqGgY02Nstv
+40x7v2MOmjWGnt1Z7RYVs6oCK4Cht9TH+CPA2sHX59z3WqplP2cW4y65tOmBJoe6
+va9yITRxP+U8qittNOjcRC3wmIrHG0DxqX9qMdmc88rx9aVryWq5aEz5VGtk1E1k
+r/L8eF/fAL+Bl67/Vp0xthsciRcSJvuoAyUXnlzhvdRxCtgwG1v1yh5POpHZz5qR
+8m3/4hN05xhVQjYrTzCc5NuoCyYm7gcQ57UjuIF5zwAcsrfnHEsGKotBfw/dEgc9
+8z3le9HqAvQ/mGd782sikVSsZdkclzRHIfAScQ6Gplv7fgwsItu9/esJMl1EjT4=
+=a0uN
+-----END PGP SIGNATURE-----
