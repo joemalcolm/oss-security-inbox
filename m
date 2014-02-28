@@ -1,76 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/15
-Message-Id: <20140912183958.D1DA96C000A@smtpvmsrv1.mitre.org>
-Date: Fri, 12 Sep 2014 14:39:58 -0400 (EDT)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: [CVE Requests] rsync and librsync collisions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/2
+Message-ID: <53105551.5050406@enovance.com>
+Date: Fri, 28 Feb 2014 10:22:25 +0100
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request for vulnerability in OpenStack Keystone
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public, although
+an advisory was not sent yet.
 
-> The below still require a CVE or two (unless MITRE disagrees).
+Title: Trustee token revocation does not work with memcache backend
+Reporter: Morgan Fainberg (Metacloud)
+Products: Keystone
+Versions: 2013.1 up to 2013.1.4 and 2013.2 versions up to 2013.2.2
 
->> I think there should be CVEs assigned for this:
->>
->> rsync: MD5 collision DoS attack or limited file corruption
->> librsync: MD4 collision file corruption
->>
->> Note: librsync is not the same code, protocol or maintainer as rsync.
+Description:
+Morgan Fainberg from Metacloud reported a vulnerability in the Keystone
+memcache token backend. When a trustor issues a trust token with
+impersonation enabled, the token is only added to the trustor's token
+list and not to the trustee's token list. This results in the trust
+token not being invalidated by the trustee's token revocation (bulk
+revocation). This is most noticeable when the trustee user is disabled
+or the trustee changes a password. Only setups using the memcache
+backend for tokens in Keystone are affected.
 
-The short answer is that we neither agree nor disagree at present; we
-think that either any required CVE assignment can be made by us after
-a full public disclosure, or any required CVE assignment can be made
-by a different CNA now.
+References:
+https://launchpad.net/bugs/1260080
 
-Further details: MITRE has been contacted about this rsync and
-librsync report through multiple channels. The reply that we sent
-wasn't previously copied here because it didn't seem to be about a
-publicly known vulnerability.
+Thanks in advance,
 
-MITRE has no role in determining the list charter, but
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security says
-"List Content Guidelines ... Public security issues only please."
+--·
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
-http://www.openwall.com/lists/oss-security/2014/07/28/1 says "my last
-response from Wayne was effectively denying that this is a
-vulnerability" and "I won't provide full details yet, but if any
-distributions would like some collisions to perform specific tests
-(perhaps on Openstack Swift), please get in contact privately."
 
-http://www.openwall.com/lists/oss-security/2014/08/05/7 adds "I have
-provided a privileged few with PoC" and "My plan was to wait for fixes
-before releasing the full write-up and code."
-
-Our feeling is that, if the issue is not really public, sending a CVE
-request to the oss-security list is not a standard procedure. It seems
-that the simplest way forward would occur if one of the
-above-mentioned "privileged few" is a CNA on the
-http://cve.mitre.org/cve/cna.html list. They can evaluate the
-information that they have and make one or more CVE assignments. If
-the meaning of the CVE assignments is understandable without referring
-to the non-public details, then it might be useful to send the CVE
-assignments here, even before the full public disclosure.
-
-MITRE is not currently interested in receiving an advance copy of the
-full public disclosure or any related PoC information from anyone.
-We'll see whether the CNA process above can work.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUEz2bAAoJEKllVAevmvmspzoH/j4aV6Ce69mB8+g2WKRptewL
-UpFZGzQF8dJWn0s1JWYYFLK+RA3iNUPdKLH+5j517xYhySq/lAOWtivJf8nhWM6O
-0/3NKvKYDGJO/6lAOV15YvxDYKMfoyvV6/koGwrenegHcLbtAukTk6XT1bwK1nKO
-XTy3ZaGipi5csyq2qGIkLGFIqGxOQRPXgv1Byjo4J412esCJDwgEhoTOqxo73pWC
-fV235YYG8l/bKWIBGpQwUh7De4slhrz0lycGghxcOj5PpE2Blp9UyoOHlb2coJxu
-jeaWTZhsa6TpFeFh1xL/MoZCSLm2ag5y/2wq/HBaIKcezRZp37K9yTbRoJqYAlQ=
-=FTO9
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
