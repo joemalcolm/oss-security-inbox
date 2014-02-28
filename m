@@ -1,58 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/17
-Message-ID: <54772464.1040008@redhat.com>
-Date: Fri, 28 Nov 2014 00:17:24 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/7
+Message-ID: <5310EAE5.6000104@debian.org>
+Date: Fri, 28 Feb 2014 20:00:37 +0000
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: blkid command injection
+Subject: Re: Re: CVE requests: MediaWiki 1.22.3, 1.21.6 and 1.19.12 release
 Content-Type: text/plain; charset=utf-8
 
-On 11/27/2014 02:25 AM, Sebastian Krahmer wrote:
-> Hi
->
-> There is a command injection inside blkid. It uses caching
-> files (/dev/.blkid.tab or /run/blkid/blkid.tab) to store info about the
-> UUID, LABEL etc it finds on certain devices.
->
-> However, it does not strip " character, so it can be confused to
-> build variable names containing embedded shell metas, which it would usually
-> encode inside the value.
->
-> Given an USB stick with /dev/sdb1 you can:
->
-> # mkfs.ext4 -L 'X"`/tmp/foo` "' /dev/sdb1
-> # blkid -o udev /dev/sdb1
-> ID_FS_LABEL=X__/tmp/foo___
-> [...]
->
-> Seems to be OK, but invoking blkid a second time, taking the cache in effect:
->
-> # blkid -o udev /dev/sdb1
-> ID_FS_LABEL=X
-> ID_FS_LABEL_ENC=X
-> ID_FS_`/tmp/foo` "" UUID=...
-> [...]
->
->
-> "blkid -o udev" is often used in root context via udev or in automounters
-> (uam-pmount) to construct key=value environment variables inside shell scripts
-> which are then evaluated.
-> Might be possible to construct an embedded LD_PRELOAD= as well for the binary
-> case.
->
-> By injecting > character one can probably construct whole fake cache entries.
->
-> Sebastian
->
->
->
->
+On 28/02/14 18:26, cve-assign@...re.org wrote:
+> The first CVE would, roughly, have a root cause of "does not
+> recognize that a trust relationship with a specific external site
+> is reasonably required for use of a namespace."
 
-Karel Zak has committed a patch:
+Please note that (unless XML is being used very weirdly here) these
+URLs are not going to be dereferenced: "XML elements in namespace
+'http://ns.adobe.com/Flows/1.0/'" merely describes a set of elements,
+in the same way that "XML elements whose name starts with 'abc'"
+describes a set of elements. The trust relationship that seems to have
+been applied here goes something like this:
 
-https://github.com/karelzak/util-linux/commit/89e90ae7b2826110ea28c1c0eb8e7c56c3907bdc
+    I trust that none of my users' SVG viewers will ever execute
+    JavaScript (etc.) as a result of seeing arbitrary
+    XML elements in the namespace <http://ns.adobe.com/Flows/1.0/>,
+    excluding any that I have specifically filtered out
 
-Cheers,
+which doesn't seem like a great approach.
 
---
-Murray McAllister / Red Hat Product Security
+(Analogously, you could say "my HTML sanitizer is going to allow all
+HTML elements that start with abc, because I'm pretty sure nobody will
+implement an element containing JavaScript that starts with abc"; that
+also seems an undesirable way to go about it, because as soon as some
+browser vendor decides that an <abcScript> element is their next great
+new feature, you have cross-site scripting.)
+
+If element is defined in the current SVG standard not to cause code
+execution, it's reasonable to think that all non-faulty SVG viewers
+will not execute arbitrary code for them; but extensibility means that
+it is not reasonable to believe that no SVG viewer will ever execute
+arbitrary code as a result of encountering elements that are *not* in
+the current SVG standard. Counter-example; imagine that SVG 2.0 is
+published tomorrow and adds a <javascript> element and an
+onGyroscopeMotion attribute to the SVG namespace, and browser vendors
+implement them. A blacklist-based sanitizer will not protect you from
+that instance of XSS.
+
+As with any extensible format that can contain scripting and will be
+interpreted by browsers, if untrusted SVG needs to be made safe, then
+sanitizing via a whitelist of known-good elements and attributes is
+the only safe way to deal with it. In the case of SVG, that whitelist
+is likely to be inconveniently long.
+
+    S
