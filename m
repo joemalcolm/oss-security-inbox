@@ -1,59 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/25/8
-Message-Id: <201406252307.s5PN7RRD020627@linus.mitre.org>
-Date: Wed, 25 Jun 2014 19:07:27 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/8
+Message-Id: <201402282002.s1SK2kAG001735@linus.mitre.org>
+Date: Fri, 28 Feb 2014 15:02:46 -0500 (EST)
 From: cve-assign@...re.org
-To: vdanen@...hat.com
+To: thoger@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Question regarding CVE applicability of missing HttpOnly flag
+Subject: Re: CVE request: askbot xss
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-There admittedly isn't a precise distinction between "opportunity for
-security improvement" (a CVE ID cannot be assigned) and "exposure" (a
-CVE ID can be assigned in some cases).
+> https://bugzilla.redhat.com/show_bug.cgi?id=1070852
 
-In web applications that function correctly with the HTTPOnly flag for
-a cookie, absence of this flag might be categorized as a CWE-668
-("Exposure of Resource to Wrong Sphere") issue. In general, factors
-that can be considered include:
+> askbot: multiple XSS issues fixed in 0.7.49
 
-  -- are there compatibility downsides to setting the flag? (An
-     example of a downside might be: a popular but noncompliant
-     browser completely ignores the cookie if the flag is set.)
+> The question search XSS was reported by Kamil Sevi (@kamilsevi) for
+> askbot running on https://ask.fedoraproject.org/
 
-     [ Obviously each CVE assignment is on a per-product basis, and
-       there wouldn't be a CVE about HTTPOnly if a product's design
-       relies on script access to a cookie. ]
+Use CVE-2014-2235 for this specific discovery.
 
-  -- does the flag interfere with plausible use cases? (An example of
-     a use case might be: script code that doesn't need to know the
-     value of a cookie, but was designed to read the cookie anyway to
-     assess whether an attack involving long cookie values is
-     occurring.)
 
-  -- are there vendors who recommend against the flag?
+> Additional issues were noticed when investigating the report.
 
-  -- compared to the development cost in arranging for the flag to be
-     set, is it possible that the real-life benefit is too small?
-
-  -- are there other known or potential costs to setting the flag?
-     (There might not be a good example here, e.g., there probably
-     aren't bandwidth considerations where 9 or 10 more bytes is a
-     deal breaker.)
-
-If the answer to all of these questions is no, then it starts becoming
-reasonable to argue that absence of the flag is an implementation
-error.
-
-> like running SELinux (or AppArmor), running a virus scanner, and
-> having a firewall
-
-All of those seem to, in practice, have a relatively much greater
-chance of introducing new vulnerabilities because of the required
-implementation complexity.
+Use CVE-2014-2236 for all of the other XSS issues.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -63,11 +33,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTq1TxAAoJEKllVAevmvmsyjwH/1x0dPNXz53WnUklU1uzNLNt
-h7SGdpfpiwjsiPADMj4aJNhJEQsZWcmmyDqgc7NINOyh1C0eUyG5y9zB8Sn+MAgy
-MnaVvNfhiP1MWFZ5fZdJ1WCY2stCyTDYlvYpxVPQtxdIKqpSlCS6wBEqDmripWx+
-y7sTK1iShNUYc0TQMcYmy6STChjscxZixInLxOA7LZqAksKrQuKH4n8R1vnZ7YU8
-m5CKE0sPXiNasijf2UPUTyTEe3wYVFInbkV2TDYmaPQol9Ym749tdb5913l+LfBT
-dYUHJRighPzWjxw0lxjlQgRovk1vsCtc4y4c+uKSA3lb03tWIr+Cwobt1GS47gs=
-=MYyX
+iQEcBAEBAgAGBQJTEOr9AAoJEKllVAevmvmsdp8IAMVkIgguv6Qbv7M9/ZqVcutq
+aLy1sPvONJ0UnmZ9+02k0yHCRHO4vZjQBX3ocMg03s1D25zXeRIYO6BeQPpXxUUd
+BPJkkulO5DjJ23DrL8mlFeQbS66DgtZnJwf9NhAUXjKjfJnjRpBz1FamfeTBYWiQ
+ZmqM7/og5Bat30cgA7y1oHiR0OVkWIdMYbnLzs/y6k6RmS+bmC7iE5N3TjUob3co
+qn/jvwxA3sTs0sF0Mc0dqUIWly762g7Otss+wrNp/+V+8YPJRYACRJxKfrS776Nn
+GnLrj3q4E+4ImgxEcJjg+fj9E/Hksgr8hOVuPymLHb5DwKUhVJNbR+fQ29p0t6Y=
+=rFHx
 -----END PGP SIGNATURE-----
