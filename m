@@ -1,61 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/05/3
-Message-ID: <44356.1404571012@critter.freebsd.dk>
-Date: Sat, 05 Jul 2014 14:36:52 +0000
-From: "Poul-Henning Kamp" <phk@....freebsd.dk>
-cc: Marek Kroemeke <kroemeke@...il.com>, Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, varnish-misc@...nish-cache.org
-Subject: Re: Varnish - no CVE == bug regression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/5
+Message-ID: <548AF731-EA0A-40C6-9F1D-A3DE86880AAC@redhat.com>
+Date: Fri, 28 Feb 2014 11:55:02 -0700
+From: "Vincent Danen" <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: mmcallis@...hat.com, cve-assign@...re.org, "Markus Glaser" <glaser@...lowelt.biz>
+Subject: Re: CVE requests: MediaWiki 1.22.3, 1.21.6 and 1.19.12 release
 Content-Type: text/plain; charset=utf-8
 
-I have just read the followup discussion and will add these comments:
+Seems odd to be asking these questions without asking someone from the MediaWiki team involved (I doubt they are subscribed to oss-sec).  Given that Murray just posting what was written by upstream and even asked "if CVE worthy" I doubt he has the answers you're looking for.  =)
 
-First of all, if you want an overview of the security design of
-Varnish, it is here:
+I've cc'd Markus Glaser to this as he sent out the notification to the mediawiki-announce list so he may have the insight you're looking for.
 
-	https://www.varnish-cache.org/docs/trunk/phk/barriers.html
 
-Second, since Varnish serves HTTP, a DoS is not something out of
-the ordinary.  It happens all the time to our users, we consider
-DoS attacks a fact of life.  The better we handle them, the better we
-handle them, but we will never be able to cope with them all,
-not in a world where Evil botnets or Good authors can point millions
-of browsers at the same web property in an instant.
+On 02/28/2014, at 11:26 AM, cve-assign@...re.org wrote:
 
-Third, with respect to "never trusting input":  Varnish doesn't.
-But in some cases we distust with an assert.  Either because it is
-an utterly pathological situation where no sane handling or recovery
-is possible or because the condition is so rare that our time is
-better spent improving quality and error handling elsewhere.
+> Some of this seems straightforward and we will send CVE assignments a
+> little later. Our first question is about the UploadBase.php diff in:
+>
+> https://gerrit.wikimedia.org/r/#/q/7d923a6b53f7fbcb0cbc3a19797d741bf6f440eb,n,z
+>
+> Our first thought is that it might be best to have separate CVEs for
+> "Disallow uploading non-whitelisted namespaces" and "disallow iframe
+> elements" because they are distinct types of problems. The first one
+> seems similar to what is discussed in:
+>
+> http://en.wikipedia.org/wiki/User:Aarchiba/SVG_sanitizer
+>
+> The first CVE would, roughly, have a root cause of "does not recognize
+> that a trust relationship with a specific external site is reasonably
+> required for use of a namespace." The second CVE would, roughly, have
+> a root cause of "does not block IFRAME elements."
+>
+> Does anyone have an opposing view: for example, that adding the
+> hardcoded $validNamespaces list can't be interpreted as a "normal"
+> vulnerability fix? Across all products, adding a list of off-site URLs
+> maintained by various third parties is rarely the essence of a
+> security patch.
+>
+> (As a side issue, SVG_sanitizer allows
+> http://www.w3.org/XML/1998/namespace but the patched UploadBase.php
+> does not.)
+>
+>
+> Our second question is about
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=61346 Comment 9. Do all
+> valid tokens have the same length, and thus an attacker (if he looked
+> at the source code) would already know that the wrong-length attempts
+> would always fail?
+>
+> If not, a separate CVE would be needed on the basis of different
+> affected versions.
+>
+> (This question is only about MediaWiki as shipped. If a system
+> administrator would need to modify the source code to use a different
+> length, and an attacker could detect that more easily because of
+> 'strlen( $answer ) !== strlen( $test )' tests, that doesn't qualify
+> for a CVE.)
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 
-Fourth, comparisons to root-shells and OpenSSL ciphers ?  Really ?
-Has nobody told you that a bad analogy is like a wet screwdriver ?
-
-Fifth, some of you have a really weird definition of "DoS", and
-since the same people seem very fond of analogies, I'll answer with
-one:  When I say "Varnish trust the backend backend", I mean that
-it does so because that is its job.  The backend is the guitar,
-Varnish is the PA system.  If you plug the guitar cable into 110VAC,
-you don't expect the PA to generate an 60Hz earthquake, you expect
-it to blow a fuse.  In Varnish that "fuse" is an assert.  If, like
-most PA systems, such abuse left Varnish as an irepairable smoking
-environmental hazard, *then* I would agree that it constituted a
-DoS, but the "fuse" in Varnish self-repairs in a fraction of a
-second, and as soon as you plug a working microphone back in again,
-Varnish will keep on rocking with you.  Would it be better not to
-blow the fuse ? Sure.  Does it matter ?  Not really.
-
-Sixth, people building CDNs for third party traffic with Varnish
-had better know what they're doing, since that is (slightly) outside
-Varnish security and authority design.  The CDNs I know about do
-know what they're doing.  (There may be others.)
-
-(If there are any questions, please keep me in the CC: I'm not
-on the oss-sec list).
-
-Poul-Henning
 
 -- 
-Poul-Henning Kamp       | UNIX since Zilog Zeus 3.20
-phk@...eBSD.ORG         | TCP/IP since RFC 956
-FreeBSD committer       | BSD since 4.3-tahoe    
-Never attribute to malice what can adequately be explained by incompetence.
+Vincent Danen / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
