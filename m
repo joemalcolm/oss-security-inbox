@@ -1,23 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/11
-Message-ID: <8738b0fhin.fsf@mid.deneb.enyo.de>
-Date: Tue, 07 Oct 2014 09:47:28 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/11
+Message-ID: <CAKcmtDwgazRxxrFK2gMxexw=0oAFXdyT+qMyPpJxg=w94DF-uQ@mail.gmail.com>
+Date: Fri, 28 Feb 2014 13:05:51 -0800
+From: Chris Steipp <csteipp@...imedia.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Who named shellshock?
+Subject: Re: Re: CVE requests: MediaWiki 1.22.3, 1.21.6 and 1.19.12 release
 Content-Type: text/plain; charset=utf-8
 
-* Solar Designer:
+On Feb 28, 2014 12:01 PM, "Simon McVittie" <smcv@...ian.org> wrote:
+>
+> On 28/02/14 18:26, cve-assign@...re.org wrote:
+> > The first CVE would, roughly, have a root cause of "does not
+> > recognize that a trust relationship with a specific external site
+> > is reasonably required for use of a namespace."
+>
+> Please note that (unless XML is being used very weirdly here) these
+> URLs are not going to be dereferenced: "XML elements in namespace
+> 'http://ns.adobe.com/Flows/1.0/'" merely describes a set of elements,
+> in the same way that "XML elements whose name starts with 'abc'"
+> describes a set of elements. The trust relationship that seems to have
+> been applied here goes something like this:
+>
+>     I trust that none of my users' SVG viewers will ever execute
+>     JavaScript (etc.) as a result of seeing arbitrary
+>     XML elements in the namespace <http://ns.adobe.com/Flows/1.0/>,
+>     excluding any that I have specifically filtered out
+>
+> which doesn't seem like a great approach.
 
-> It is insufficient that "it was an honest mistake" and that "apologies
-> were made and accepted."
+Correct. The whitelist of namespaces is an attempt to limit the scope of
+what we have to blacklist.
 
-Why?  Who determines what is appropriate in such cases, anyway?
+>
+> (Analogously, you could say "my HTML sanitizer is going to allow all
+> HTML elements that start with abc, because I'm pretty sure nobody will
+> implement an element containing JavaScript that starts with abc"; that
+> also seems an undesirable way to go about it, because as soon as some
+> browser vendor decides that an <abcScript> element is their next great
+> new feature, you have cross-site scripting.)
+>
+> If element is defined in the current SVG standard not to cause code
+> execution, it's reasonable to think that all non-faulty SVG viewers
+> will not execute arbitrary code for them; but extensibility means that
+> it is not reasonable to believe that no SVG viewer will ever execute
+> arbitrary code as a result of encountering elements that are *not* in
+> the current SVG standard. Counter-example; imagine that SVG 2.0 is
+> published tomorrow and adds a <javascript> element and an
+> onGyroscopeMotion attribute to the SVG namespace, and browser vendors
+> implement them. A blacklist-based sanitizer will not protect you from
+> that instance of XSS.
+>
+> As with any extensible format that can contain scripting and will be
+> interpreted by browsers, if untrusted SVG needs to be made safe, then
+> sanitizing via a whitelist of known-good elements and attributes is
+> the only safe way to deal with it. In the case of SVG, that whitelist
+> is likely to be inconveniently long.
 
-> The article has "Sep 24, 2014 8:35 AM PT" on it, which is 15:35 UTC.
-> Did the article's author receive the information before or after 14:00,
-> and when exactly?
+It's very long. I've been working on it.
 
-The author does not work for the news organization in question, and he
-had legitimate and need-to-know access to the information as part of
-his regular employment.  I hope this clarifies things.
+
+>
+>     S
+
