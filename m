@@ -1,54 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/13
-Message-Id: <201402201742.s1KHg2BD015659@linus.mitre.org>
-Date: Thu, 20 Feb 2014 12:42:02 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux kernel: nfs: information leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/6
+Message-ID: <CAKcmtDwvTw9NvttPtfimS5=15HiphGuLnq0ejddB1juLVGmhBg@mail.gmail.com>
+Date: Fri, 28 Feb 2014 11:46:24 -0800
+From: Chris Steipp <csteipp@...imedia.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org, mmcallis@...hat.com,  Markus Glaser <glaser@...lowelt.biz>
+Subject: Re: CVE requests: MediaWiki 1.22.3, 1.21.6 and 1.19.12 release
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I'm from the foundation, and I'm on the list. Let me try to answer.
 
-This is definitely a problem that can have a CVE ID; use
-CVE-2014-2038.
+On Feb 28, 2014 10:55 AM, "Vincent Danen" <vdanen@...hat.com> wrote:
+>
+> Seems odd to be asking these questions without asking someone from the
+MediaWiki team involved (I doubt they are subscribed to oss-sec).  Given
+that Murray just posting what was written by upstream and even asked "if
+CVE worthy" I doubt he has the answers you're looking for.  =)
+>
+> I've cc'd Markus Glaser to this as he sent out the notification to the
+mediawiki-announce list so he may have the insight you're looking for.
+>
+>
+> On 02/28/2014, at 11:26 AM, cve-assign@...re.org wrote:
+>
+> > Some of this seems straightforward and we will send CVE assignments a
+> > little later. Our first question is about the UploadBase.php diff in:
+> >
+> >
+https://gerrit.wikimedia.org/r/#/q/7d923a6b53f7fbcb0cbc3a19797d741bf6f440eb,n,z
+> >
+> > Our first thought is that it might be best to have separate CVEs for
+> > "Disallow uploading non-whitelisted namespaces" and "disallow iframe
+> > elements" because they are distinct types of problems. The first one
+> > seems similar to what is discussed in:
+> >
+> > http://en.wikipedia.org/wiki/User:Aarchiba/SVG_sanitize of
+> >
+> > The first CVE would, roughly, have a root cause of "does not recognize
+> > that a trust relationship with a specific external site is reasonably
+> > required for use of a namespace." The second CVE would, roughly, have
+> > a root cause of "does not block IFRAME elements."
 
-However, is "A user/program could use this flaw to leak kernel memory
-bytes" the only impact? In
+With the whitelisted set of namespaces, iirc, iframe doesn't have a valid
+definition. It was the combination of the iframe and the namespace that
+allowed the js to execute.
 
-  https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=263b4509ec4d47e0da3e753f85a39ea12d1eff24
+> >
+> > Does anyone have an opposing view: for example, that adding the
+> > hardcoded $validNamespaces list can't be interpreted as a "normal"
+> > vulnerability fix? Across all products, adding a list of off-site URLs
+> > maintained by various third parties is rarely the essence of a
+> > security patch.
+> >
+> > (As a side issue, SVG_sanitizer allows
+> > http://www.w3.org/XML/1998/namespace but the patched UploadBase.php
+> > does not.)
+> >
+> >
+> > Our second question is about
+> > https://bugzilla.wikimedia.org/show_bug.cgi?id=61346 Comment 9. Do all
+> > valid tokens have the same length, and thus an attacker (if he looked
+> > at the source code) would already know that the wrong-length attempts
+> > would always fail?
 
-is there also an opportunity for Client B to conduct a DoS attack
-against Client A (i.e., causing Client A's data to be completely lost)
-if the NFSv4 ACL on /mnt/file gives Client B APPEND_DATA access but
-not WRITE_DATA access?
+Yes, the token length has been defined by a constant in the code
+(USER_TOKEN_LENGTH) for as far back as I've traced it (Tim's 2004 commit).
 
-Our understanding is that you mean the "extra" bytes printed by the
-cat command, i.e.,
+> >
+> > If not, a separate CVE would be needed on the basis of different
+> > affected versions.
+> >
+> > (This question is only about MediaWiki as shipped. If a system
+> > administrator would need to modify the source code to use a different
+> > length, and an attacker could detect that more easily because of
+> > 'strlen( $answer ) !== strlen( $test )' tests, that doesn't qualify
+> > for a CVE.)
+> >
+> > - --
+> > CVE assignment team, MITRE CVE Numbering Authority
+> > M/S M300
+> > 202 Burlington Road, Bedford, MA 01730 USA
+> > [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+>
+>
+> --
+> Vincent Danen / Red Hat Security Response Team
 
-   0 \357 \277 \275 D 0 \357 \277 \275
-
-are the leaked kernel memory bytes.
-
-Unless someone has an alternative interpretation, this would most
-likely be covered by a single CVE (i.e., "does not always verify that
-the cached page is up-to-date" is the root cause; information
-disclosure and a possible DoS are the impacts).
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTBj2PAAoJEKllVAevmvms+f4H/iv05BaZSO4Uekg29J+rocqd
-cG3tjUVOa9/3+9AMJooAtY8kUIDqrZ55q7WvuQPsMli6gE1ibGKGBTMVAyXtIj57
-lI9PQBPOx8i6b31Mfxo/Gb+TbsXOQzAgMTs3OKtuYeUUrY6wt0tVikMpYHrr7/J2
-LvMAZP6ZmG5aTYkvFJamnkmyH+U0rjk2arhZz4YOWFPuTPPFhqrMX/wivulDoDqT
-MZDPLK7lo7QJuSXCxtsA8xYOSBIB9HPY11E5M11qFErG7CZhgPINxg/KG4HQmjLO
-4p1Tvnz37pjLvD3XkHPXTVRCMFROST/uwoH/L9lOctsr3+Dt8OT62MZ/yp2/p88=
-=NFAO
------END PGP SIGNATURE-----
