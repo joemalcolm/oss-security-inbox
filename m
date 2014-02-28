@@ -1,30 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/9
-Message-ID: <5437FF90.7030404@fifthhorseman.net>
-Date: Fri, 10 Oct 2014 11:47:28 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: David Leon Gil <coruus@...il.com>, oss-security@...ts.openwall.com
-CC: "gnupg-devel@...pg.org" <gnupg-devel@...pg.org>, Werner Koch <wk@...pg.org>, thijs@...ian.org
-Subject: Re: 0xdeadbeef comes of age: making keysteak with GnuPG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/1
+Message-ID: <531039E2.6010502@redhat.com>
+Date: Fri, 28 Feb 2014 18:25:22 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE requests: MediaWiki 1.22.3, 1.21.6 and 1.19.12 release
 Content-Type: text/plain; charset=utf-8
 
-On 10/10/2014 11:06 AM, David Leon Gil wrote:
-> (In summary: If you don't use the WoT, get OpenPGP keys via HTTPS.
-> E.g.: keybase.io or pgp.mit.edu (the latter thanks to Yan Zhu's
-> lobbying).)
+Good morning,
 
-If we're going to advocate for accessing keyservers via https (which i
-think is a lovely idea, even if it doesn't mitigate all possible
-attacks), it's worth advocating for the well-curated
-hkps.pool.sks-keyservers.net [0], rather than encouraging everyone to
-flood either https://keybase.io or https://pgp.mit.edu with traffic.
+As noted in https://bugs.gentoo.org/show_bug.cgi?id=503012 a few 
+security bugs are fixed in the 1.22.3, 1.21.6 and 1.19.12 MediaWiki release:
 
-I agree with David and Thijs that OpenPGP v3 keys are long overdue for
-the chopping block.
+http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-February/000141.html
 
-	--dkg
+Can CVEs be assigned to the following (if they are all CVE worthy)?
 
-[0] https://sks-keyservers.net/overview-of-pools.php#pool_hkps
+https://bugzilla.redhat.com/show_bug.cgi?id=1071135
+The MediaWiki 1.22.3, 1.21.6 and 1.19.12 release announcement notes:
+
+* (bug 60771) SECURITY: Disallow uploading SVG files using non-whitelisted
+   namespaces. Also disallow iframe elements. User will get an error
+   including the namespace name if they use a non- whitelisted namespace.
+
+An attacker could perform cross-site scripting attacks by uploading 
+crafted SVG images.
+
+The versions of MediaWiki in Fedora and EPEL 6 are affected. I have not 
+tested EPEL 5.
+
+References:
+http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-February/000141.html
+https://bugzilla.wikimedia.org/show_bug.cgi?id=60771
+https://gerrit.wikimedia.org/r/#/q/7d923a6b53f7fbcb0cbc3a19797d741bf6f440eb,n,z
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1071136
+The MediaWiki 1.22.3, 1.21.6 and 1.19.12 release announcement notes:
+
+* (bug 61346) SECURITY: Make token comparison use constant time. It 
+seems like
+   our token comparison would be vulnerable to timing attacks. This will 
+take
+   constant time.
+
+The versions of MediaWiki in Fedora and EPEL 6 are affected. I have not 
+tested EPEL 5.
+
+References:
+http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-February/000141.html
+https://bugzilla.wikimedia.org/show_bug.cgi?id=61346
+https://gerrit.wikimedia.org/r/#/q/I2a9e89120f7092015495e638c6fa9f67adc9b84f,n,z
+
+
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1071139
+The MediaWiki 1.22.3, 1.21.6 and 1.19.12 release announcement notes:
+
+* (bug 61362) SECURITY: API: Don't find links in the middle of api.php 
+links.
+
+An attacker could perform cross-site scripting attacks.
+
+The versions of MediaWiki in Fedora and EPEL 6 are affected. I have not 
+tested EPEL 5.
+
+References:
+http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-February/000141.html
+https://bugzilla.wikimedia.org/show_bug.cgi?id=61362
+https://gerrit.wikimedia.org/r/#/q/Idf985e4e69c2f11778a8a90503914678441cb3fb,n,z
+
+Thanks,
+
+--
+Murray McAllister / Red Hat Security Response Team
