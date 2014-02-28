@@ -1,46 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/15
-Message-ID: <1412840978.16319.3.camel@debian.org>
-Date: Thu, 09 Oct 2014 09:49:38 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: openssh on linux rce in sftp-only mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/10
+Message-Id: <201402282007.s1SK7fUp001845@linus.mitre.org>
+Date: Fri, 28 Feb 2014 15:07:41 -0500 (EST)
+From: cve-assign@...re.org
+To: tristan.cacqueray@...vance.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for vulnerability in OpenStack Keystone
 Content-Type: text/plain; charset=utf-8
 
-On jeu., 2014-10-09 at 01:05 +0200, Jann Horn wrote:
-> On Wed, Oct 08, 2014 at 06:44:32PM -0400, Josh Bressers wrote:
-> > > > 
-> > > > I think one has to assume if a user has unrestricted sftp access, they can
-> > > > figure out how to do most anything. Even with the upstream hardening patch,
-> > > > it really only protects the sftpd process. Any other processes the user may
-> > > > own could be modified.
-> > > 
-> > > Not that easily - /proc/$pid/mem requires you to either be the same process
-> > > or be attached to it via ptrace, I think.
-> > > 
-> > 
-> > I can't speak for other systems (I don't understand the details), but I can
-> > read arbitrary process memory for processes I own in Fedora 20.
-> 
-> Hmm, just tried it on Debian Testing, I can reproduce that.
-> 
-> 
-> > Does someone know what the typical default is?
-> 
-> I looked through the git history of fs/proc/base.c now, looks like commit
-> e268337dfe26dfc7efd422a804dbb27977a3cccc ("proc: clean up and fix
-> /proc/<pid>/mem handling") changed the behavior to be more permissive. That commit
-> is between kernel 3.2 and 3.3. Meh. :(
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Note that you can somehow restrict ptrace using Yama with
-kernel.yama.ptrace_scope (see
-https://www.kernel.org/doc/Documentation/security/Yama.txt)
+> https://launchpad.net/bugs/1260080
 
-If would like to restrict sftp users on a somehow hardened box, it might
-make sense to set ptrace_scope to 1+.
+> This results in the trust token not being invalidated by the trustee's
+> token revocation (bulk revocation).
 
-Regards,
--- 
-Yves-Alexis
+Use CVE-2014-2237.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTEOrhAAoJEKllVAevmvmsa2cH/AiKdvUmbpV91w59hZU6QDGA
+0dJtg5uq+siXUXO3OwK4/20KDPvLffiA9LoOJkhBjtQDA6HKiLA8Vs/HIxCaUFXI
+bDuJ37wAnVrwWdNpY6QYgPLE34Zxm7j8N/LnAI70IAD6wyUyIn+bpZ5Ct6nTnntI
+pge99EgUz6MOBnnmBtTCRvviQzz3KEjSHvVT2OnR1/ebBvtHja/TaI7GQNWBfVb6
+p9+o2eDvdu6+mA/WVKK5hYzgXQluE7x/1uDNawr6f2w9kONtNEXZKylT0oUqTTts
+XyFRDcm4tu7Jz1yVjJ7zi28ZvpPo8siz42+vQTMPlM+459AvTwu6s5sI2MuDBGg=
+=/z/h
+-----END PGP SIGNATURE-----
