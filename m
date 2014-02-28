@@ -1,30 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/29
-Message-ID: <20141008225517.GD12633@sentinelchicken.org>
-Date: Wed, 8 Oct 2014 15:55:17 -0700
-From: Tim <tim-security@...tinelchicken.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/3
+Message-ID: <leqhb6$nk8$1@ger.gmane.org>
+Date: Fri, 28 Feb 2014 18:34:44 +0100
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+Subject: CVE request: MantisBT 1.2.13 SQL injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Greetings
 
-> While it is too late for our hardware etc. perhaps strong type systems such as
-> found in Haskell can help here? It is known to be very good at avoiding
-> undefined or unexpected runtime behavior. Too late also for current languages
-> to have this bolted on but if anyone wanted to write "secure" software I'd be
-> looking at languages which provide some more guarantees. Too late for bash
-> also, of course which I suppose points us back at the original problem.
+Jakub Galczyk (HauntIT blog http://hauntit.blogspot.com/) discovered an 
+SQL injection vulnerability issue affecting MantisBT >= 1.2.13.
 
+admin_config_report.php relied on unsanitized, inlined query parameters, 
+enabling a malicious user to perform an SQL injection attack.
 
-I agree significant security benefit can be gained from these kinds of
-approaches.  The trick is, convincing people to use such a language.  
+The criticality of this issue is compounded by the fact that typically a 
+high-privilege account (i.e. having an access level >= 
+$g_view_configuration_threshold, which is set to ADMINISTRATOR by 
+default) is required to access this page.
 
-Things like JavaScript and PHP are wildly popular because they are so
-easy to get started with.  Minimal learning curve counts for a lot.
-That, and rapid development of new functionality is king in business.
-How can strongly typed functional language compete?
+Patches are attached to [1]. Can you please assign a CVE ID to this issue ?
 
-tim
+Thank you
 
+D. Regad
+MantisBT Developer
+http://mantisbt.org/
 
+[1] http://www.mantisbt.org/bugs/view.php?id=17055
 
