@@ -1,82 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/04/11
-Message-Id: <20140904165112.B321E6C001E@smtpvmsrv1.mitre.org>
-Date: Thu,  4 Sep 2014 12:51:12 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/01/3
+Message-Id: <201403011953.s21JqqPe008633@linus.mitre.org>
+Date: Sat, 1 Mar 2014 14:52:52 -0500 (EST)
 From: cve-assign@...re.org
 To: henri@...v.fi
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: TYPO3-EXT-SA-2014-10
+Subject: Re: CVE request: CMS Made Simple SQL injection fixed in 1.11.10
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-010/
+> Can I get 2014 CVE for CMS Made Simple News sortby Parameter SQL
+> injection vulnerability.
+> 
+> http://www.cmsmadesimple.org/2014/02/Announcing-CMSMS-1-11-10-Pinzon/
+> http://dev.cmsmadesimple.org/project/changelog/4602
 
-> Extension: CWT Frontend Edit (cwt_feedit)
-> Vulnerability Type: Arbitrary Code Execution
-
-Use CVE-2014-6231.
-
-
-> Extension: LDAP (eu_ldap)
-> Vulnerability Type: Information Disclosure
-
-Use CVE-2014-6232.
-
-
-> Extension: Flat Manager (flatmgr)
-> Vulnerability Type: SQL Injection
-
-Use CVE-2014-6233.
-
-
-> Extension: Open Graph protocol (jh_opengraphprotocol)
-> Vulnerability Type: Cross-Site Scripting
-
-Use CVE-2014-6234.
-
-
-> Extension: ke DomPDF (ke_dompdf)
-> Vulnerability Type: Remote Code Execution
-
-Use CVE-2014-6235.
-
-
-> Extension: LumoNet PHP Include (lumophpinclude)
-> Vulnerability Type: Arbitrary Code Execution
-
-Use CVE-2014-6236.
-
-
-> Extension: News Pack (news_pack)
-> Vulnerability Type: Cross-Site Scripting
-
-Use CVE-2014-6237.
-
-
-> Extension: SB Folderdownload (sb_akronymmanager)
-> Vulnerability Type: Cross-Site Scripting
-
-Use CVE-2014-6238.
-
-
-> Extension: Address visualization with Google Maps (st_address_map)
-> Vulnerability Type: SQL Injection
-
-Use CVE-2014-6239.
-
-
-> Extension: Google Sitemap (weeaar_googlesitemap)
-> Vulnerability Type: Cross-Site Scripting
-
-Use CVE-2014-6240.
-
-
-> Extension: wt_directory (wt_directory)
-> Vulnerability Type: SQL Injection
-
-Use CVE-2014-6241.
+Use CVE-2014-2245.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -86,11 +27,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUCJgfAAoJEKllVAevmvmsbpEIAJ7o4LND+1RaXpl1I+mBaVby
-jxG6TT8+3C52aL2Ih8Z+zeo2j8LCQWyADMaXfHBxqrBsLm+JC5S6NlDNr968THwt
-yfar1R261YrB53XZeErww1Ng5RUQnPLHFVIX6sPB1YaMwIr78Rks8J7tnY3tx3MF
-FdQDqfJifVyXhgEGRbnDrCOiujb0bTWr0ZXzh+FS+SZEDvTNok3Em3mvwd8HqwI2
-9upJ0+hCosZZXfiwtZrI39VJ5q4EUIHMSQlMJHhBGpYuaNHS1/Zs6xftfop4uW9/
-usUmapZTqqj4BpCQlR36bsigi82UrDmrF+h1uXsYHfJfuRxhZzIF37+k+46kCAQ=
-=Q7A4
+iQEbBAEBAgAGBQJTEjnnAAoJEKllVAevmvmsmP4H+NcDLAzkxhCwnmOy255sv9a9
+cYc0/cfT45GJgaDWiRJ65d8zqVVjeLCSFQM/JwX8PI0uTvqvrIM/uGqvZwB+My6a
+swjCDjF/UKgJxsJrl84OJNhsZJ5ZXUeLYmVL0g7WibWn7GULKwsxwZQ4FCeHQWuQ
+kgNb14BJ5xSAWNttaafdY9j3JR68vr0md2lUthNI9baSSJrNwLltTQIx6MHeTfD6
+WyRNsMf6L9b1lJ+an8qKlQgzVLtPVLNFW+LCLzBB8fBSHv1eh8zlS1v54q3WXwTQ
+qYHs2tFXJ2s+14bHwvDC/AAYfkF0wLsB5cnH5BzW0UXlcTUdNx0vrRWm6uBPwA==
+=JpoX
 -----END PGP SIGNATURE-----
