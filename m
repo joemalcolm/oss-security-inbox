@@ -1,20 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/21/3
-Message-ID: <52DE8417.1040902@fifthhorseman.net>
-Date: Tue, 21 Jan 2014 09:28:39 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com, 736247@...s.debian.org
-Subject: Fwd: [Python-modules-team] Bug#736247: python-xdg: get_runtime_dir(strict=False): insecure use of /tmp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/01/1
+Message-ID: <20140301184516.GA29128@kludge.henri.nerv.fi>
+Date: Sat, 1 Mar 2014 20:45:16 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: CMS Made Simple SQL injection fixed in 1.11.10
 Content-Type: text/plain; charset=utf-8
 
-as reported by Jakub Wilk in http://bugs.debian.org/736247, there is a
-TOCTOU failure in python's xdg module (see attached message).
+Hello,
 
-Could a CVE be assigned to this?
+Can I get 2014 CVE for CMS Made Simple News sortby Parameter SQL injection vulnerability.
 
-	--dkg
+http://www.cmsmadesimple.org/2014/02/Announcing-CMSMS-1-11-10-Pinzon/
+http://dev.cmsmadesimple.org/project/changelog/4602
+http://osvdb.org/103854
+Fixed in latest stable: 1.11.10
 
-Download attachment "[Python-modules-team] Bug#736247: python-xdg: get_runtime_dir(strict=False):
- insecure use of /tmp.eml" of type "message/rfc822" (5796 bytes)
+---
+Henri Salo
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1011 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
