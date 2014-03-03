@@ -1,115 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/1
-Message-ID: <CAFFTvXg4UXxwteZ-fpC7w8oATQ7oM-yB=7z1jYk-mwQHtBAO5Q@mail.gmail.com>
-Date: Thu, 6 Feb 2014 00:15:16 +0800
-From: Gunther <deviant.beta@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/03/2
+Message-ID: <20140303110527.1292bce1@redhat.com>
+Date: Mon, 3 Mar 2014 11:05:27 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Dokeos 2.1.1 Multiple Stored XSS Vulnerabilities
+Subject: GnuTLS GNUTLS-SA-2014-2
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi!
 
-I have discovered several Stored XSS vulnerabilities in Dokeos, which you
-can grab them
-http://downloads.sourceforge.net/project/dokeos/dokeos-2.1.1.zip?r=http://sourceforge.net/projects/dokeos/&ts=1391616505&use_mirror=nchc
+New versions of GnuTLS were released today fixing incorrect error
+handling during X.509 certificate verification.  This issue could cause
+GnuTLS to accept crafted certificate as valid, even if it wasn't issue
+by a trusted CA.
 
-*Tested Versions*
-Dokeos <http://sourceforge.net/projects/dokeos/> Version 2.1.1.
+http://lists.gnutls.org/pipermail/gnutls-devel/2014-March/006794.html
+http://lists.gnutls.org/pipermail/gnutls-devel/2014-March/006795.html
+http://gnutls.org/security.html#GNUTLS-SA-2014-2
 
-*Details*
+This got CVE-2014-0092 (not mentioned in the gnutls-devel list release
+announcements, but mentioned on the security page).
 
-*Severity:* Stored XSS
-*Confidence:* Certain
-*Host:* http://localhost/
-*Path:* /dokeos-2.1.1/main/auth/profile.php
-
-*Issue detail:*
-The problem is script does not sanitise the following parameters, *“Phone”*
-, *“Street”*,*“Address line”*, *“Zip code”*, *“City”* before storing them
-in the database.
-If i were to enter the following XSS vector as a value to either of these
-parameters, whomever is going to browse the profile of this user will be
-subjected to a Stored XSS.
-
-1
-<![CDATA["><iframe/onload=alert(document.domain)>]]>
-
-As you can see here that i’ve used the above-mentioned XSS vector on the
-“Zip Code” field as shown below.
-
-
-[image: dokeos_01]<http://www.xchg.info/wp-content/uploads/2014/02/dokeos_01.png>
-
-After you have validated the entered values, simply login as another user
-or view as current user the profile of this user. In my test case, the url
-will be like this
-
-http://localhost/dokeos-2.1.1/main/social/profile.php?u=3
-
-The profile.php script does not sanitise the parameters before using them
-after getting them from the database. This makes it possible for an
-anonymous attacker to manipulate the values passed to these parameters to
-create Stored XSS.
-Upon visiting the above-mentioned URL, the visitor will be subjected to the
-Stored XSS as shown below:
-
-[image: dokeos_02]<http://www.xchg.info/wp-content/uploads/2014/02/dokeos_02.png>
-
-The 2nd issue which is also a Stored XSS.
-
-*Severity:* Stored XSS
-*Confidence:* Certain
-*Host:* http://localhost/
-*Path:* /dokeos-2.1.1/main/social/groups.php?id=1
-
-*Issue detail:*
-The problem is that if attacker were to enter the following XSS vector as
-the “Subject Topic”.
-
-1
-"><video><source onerror=alert(domain)>
-
-[image: dokeos_03]<http://www.xchg.info/wp-content/uploads/2014/02/dokeos_03.png>
-
-Whomever clicks “Reply” to that “Topic” will be subjected “Stored XSS” as
-shown below.
-
-[image: dokeos_04]<http://www.xchg.info/wp-content/uploads/2014/02/dokeos_04.png>
-
-The 3rd issue which is also a Stored XSS.
-
-*Severity:* Stored XSS
-*Confidence:* Certain
-*Host:* http://localhost/
-*Path:* /dokeos-2.1.1/main/messages/view_message.php?id=6&f=social
-
-*Issue detail:*
-The problem is similar to issue #2 if attacker were to enter the following
-XSS vector in the Message itself.
-
-1
-"><video><source onerror=alert(domain)>
-
-[image: dokeos_05]<http://www.xchg.info/wp-content/uploads/2014/02/dokeos_05.png>
-
-Whomever clicks “Reply” to that “Message” will be subjected “Stored XSS” as
-shown below.
-
-[image: dokeos_06]<http://www.xchg.info/wp-content/uploads/2014/02/dokeos_06.png>
-
-*POC / Test Code*
-All the examples here were provided to the vendor.
-
-*Disclosure Timeline*
-2013-12-31 – Vulnerability Discovered.
-2014-01-01 – Initial Vendor Notification (no reply).
-2014-01-01 – Vulnerability Details Sent to Vendor.
-2014-01-08 – Second Vendor Notification (no reply).
-2014-01-15 – Third Vendor Notification (no reply).
-2014-02-05 – Public Release.
-Please see the full report at http://www.xchg.info/?p=381 for more details
-if the images won't show
-
-BR,
-[ Gunther ]
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
