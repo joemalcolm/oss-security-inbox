@@ -1,27 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/19
-Message-ID: <54256634.1040405@debian.org>
-Date: Fri, 26 Sep 2014 14:12:20 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/03/4
+Message-ID: <lf1et8$n2h$1@ger.gmane.org>
+Date: Mon, 03 Mar 2014 09:36:04 +0100
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Subject: Re: CVE request: MantisBT 1.2.13 SQL injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 26/09/14 00:43, Chet Ramey wrote:
->> I'm arguing that privilege boundaries should take responsibility for
->> their nature as a privilege boundary, and not pass the buck to the
->> code that they call into.
+On 28.02.2014 21:05, cve-assign@...re.org 
+wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 >
-> It doesn't help if some process sets ruid = euid and execs bash,
-> but bash doesn't import functions from the environment if
-> ruid != euid.
+>> http://www.mantisbt.org/bugs/view.php?id=17055
+>
+>> admin_config_report.php relied on unsanitized, inlined query parameters,
+>> enabling a malicious user to perform an SQL injection attack.
+>
+> Use CVE-2014-2238.
 
-Yes, what I'm saying is that in that situation, we should blame the
-"some process", not bash. It is the "some process" that opted to act as
-a privilege boundary (by being setuid or whatever), so it should be
-responsible for taking extra care when it executes non-trivial code
-(e.g. bash) with its elevated privileges.
+Thank you.
 
-    S
+FYI, the reporter confirmed that the patch indeed resolves the issue.
+
+On 1 March 2014 09:46, Jakub Galczyk wrote:
+ >
+ > 2014-02-28 18:52 GMT+01:00 Damien Regad wrote:
+ >
+ >> You may have gone for the weekend and not seen my last message
+ >> asking you to test the patch, so I went ahead and committed it. Let
+ >> me know if the issue persists, I'll research further and make an
+ >> additional fix as required.
+ >>
+ >> We'll probably release 1.2.17 next week, please try and confirm that
+ >> the vulnerability is indeed gone on Monday if you can.
+ >
+ > Hi Damien,
+ >
+ > it works. Thank you once again!
+ >
+ > Best regards,
+ > Jakub
+
+
+
+---
+This email is free from viruses and malware because avast! Antivirus protection is active.
+http://www.avast.com
+
 
