@@ -1,65 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/04/2
-Message-ID: <53B65410.4070705@mittwald.de>
-Date: Fri, 4 Jul 2014 07:10:48 +0000
-From: Sven Kieske <S.Kieske@...twald.de>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Varnish - no CVE == bug regression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/03/1
+Message-ID: <20140303093849.GA12584@dhcp-25-225.brq.redhat.com>
+Date: Mon, 3 Mar 2014 10:38:50 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Paolo Bonzini <pbonzini@...hat.com>, gleb <gleb@...hat.com>, Lars Bull <larsbull@...gle.com>, Andrew Honig <ahonig@...gle.com>
+Subject: CVE-2014-0049 -- Linux kernel: kvm: mmio_fragments out-of-the-bounds access
 Content-Type: text/plain; charset=utf-8
 
-Am 03.07.2014 22:17, schrieb Stefan Bühler:> And again "user controlled
-input"... a root shell also uses "user
-> controlled input".
+The problem occurs when the guest performs a pusha with the stack
+address
+pointing to an mmio address (or an invalid guest physical address) to
+start with, but then extending into an ordinary guest physical address.
+When doing repeated emulated pushes emulator_read_write sets mmio_needed
+to 1 on the first one.  On a later push when the stack points to regular
+memory, mmio_nr_fragments is set to 0, but mmio_is_needed is not set
+to 0.
 
-A shell differs very much from varnish:
-you can configure the shell user to be just able to e.g. run
-certain commands, you almost never just use the plain "shell".
-you use it in the context of the operating system, which allows
-you to enforce additional security boundaries, and often does this by
-default.
-you can restrict certain shells to allow just specific commands.
-and after all, a shell is build to execute code/commands, varnish
-is there to serve cached web documents and to speed things up.
+As a result, KVM exits to userspace, and then returns to
+complete_emulated_mmio.  In complete_emulated_mmio
+vcpu->mmio_cur_fragment is incremented.  The termination condition of
+vcpu->mmio_cur_fragment == vcpu->mmio_nr_fragments is never achieved.
+The code bounces back and fourth to userspace incrementing
+mmio_cur_fragment past it's buffer.  If the guest does nothing else it
+eventually leads to a a crash on a memcpy from invalid memory address.
 
-So I really think:
+However if a guest code can cause the vm to be destoryed in another
+vcpu with excellent timing, then kvm_clear_async_pf_completion_queue
+can be used by the guest to control the data that's pointed to by the
+call to cancel_work_item, which can be used to gain execution.
 
-With different intended usecases come different security models
-and different considerations what is a flaw or breach in this
-model.
+Introduced by:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=f78146b0f
 
-if you think the use case for varnish is to get crashed, well
-I just have to wonder what's that use case for?
+Upstream patch:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a08d3b3b
 
-Even the varnish devs seem to agree this is unwanted behaviour
-or why do they fix it?
+Acknowledgements:
 
-This is merely about if(in general) and which(specific)
-"unwanted behaviour" is considered a security vulnerability.
-
-And today, the tendency is most times to not tolerate any
-"unwanted behaviour" in any software.
-
-Keep in mind this opens up more unexplored codepaths and can
-boil down, to what is widely known as "weird machines".
-(visit langsec.org for many interesting papers on input validation ;) )
-
-Also Kurt did really sum it up very well, imho, so this will be my
-last post to this thread.
-
-
+Red Hat would like to thank Lars Bull of Google for reporting this
+issue.
 
 -- 
-Mit freundlichen Grüßen / Regards
-
-Sven Kieske
-
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+Petr Matousek / Red Hat Security Response Team
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
