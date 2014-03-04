@@ -1,43 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/30
-Message-ID: <54340E5A.1060600@redhat.com>
-Date: Tue, 07 Oct 2014 18:01:30 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/1
+Message-ID: <53153F3F.1040807@redhat.com>
+Date: Tue, 04 Mar 2014 13:49:35 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+CC: 740670@...s.debian.org
+Subject: possible CVE requests: perltidy insecure temporary file usage
 Content-Type: text/plain; charset=utf-8
 
-On 10/07/2014 05:45 PM, Michal Zalewski wrote:
->>>     What class of bug is Shellshock? "Weird feature invented in
->>>     pre-Internet era"? How do you conquer this class of bugs?
->>
->> There are two bugs: Calling “eval” on untrusted input (a relatively common
->> issue), and the fact that this particular code path should never have been
->> exposed to the network at all.  The second part is not strictly a bash bug,
->> even if we addressed that with a change in bash. If this issue had been
->> discovered when the first CGI-enabled web server was implemented, maybe it
->> would not have been called a bash bug, but a bug in how CGI used environment
->> variables.
->
-> Possibly, but it probably wouldn't have stayed that way for long. Even
-> though the bug was introduced long before the arrival of Apache, I
-> would guess that it had affected Sendmail from day one.
+Good morning,
 
-I suspect sendmail had to run on systems where setenv was not even 
-remotely binary-transparent.
+Jakub Wilk and Don Armstrong are discussing in 
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=740670 1) perltidy 
+creating a temporary file with default permissions instead of 0600 2) 
+the use of tmpnam().
 
-> In practice, it's usually counterproductive to try to precisely pin
-> the blame; bash is the place where we can fix it more easily and
-> produce more intuitive behavior with one less things for other
-> developers to worry about it.
+ From that bug:
 
-Absolutely agreed.  It was possible to fix in bash in a relatively clean 
-way (certainly cleaner than in the kernel or glibc), so we fixed it 
-there.  I don't see this kind of analysis as putting the blame—we need 
-to investigate vulnerabilities and see if there are any ways to squash 
-large classes of bugs.  Not sure if there is anything that would work 
-here (you can rewrite the shell in SPARK, prove it correct, and still 
-have the bug).  But it's still a topic worth exploring in general.
+     my $name = "perltidy.TMP";
+     if ( $^O =~ /win32|dos/i || $^O eq 'VMS' || $^O eq 'MacOs' ) {
+         return $name;
+     }
 
--- 
-Florian Weimer / Red Hat Product Security
+Would this be a separate issue on those platforms (predictable temporary 
+file in current working directory, run perltidy in attacker-controlled 
+directory...)? On perltidy-20090616-2.1.el6.src.rpm this was only called 
+when using the "-html" option and a pod file as input, and looks to then 
+possibly open it insecurely:
+
+     else {
+         $tmpfile = Perl::Tidy::make_temporary_filename();
+     }
+     my $fh_tmp = IO::File->new( $tmpfile, 'w' );
+
+Trying with a much newer version on Fedora, I received errors about 
+tmpnam not working and it didn't appear to be called, but haven't spent 
+time debugging that yet.
+
+Regarding other platforms:
+
+     my $name = "perltidy.TMP";
+     if ( $^O =~ /win32|dos/i || $^O eq 'VMS' || $^O eq 'MacOs' ) {
+         return $name;
+     }
+     eval "use POSIX qw(tmpnam)";
+     if ($@) { return $name }
+
+Is the POSIX module a core part of Perl, as in, the "return $name" part 
+will never be called?
+
+Regarding the use of tmpnam, is it safe/not an issue if you open the 
+resulting filename with O_CREAT and O_EXCL (as perltidy does)?
+
+I am not sure if these 	qualify for CVEs but I believe the 
+"perltidy.TMP" on Windows or Mac OS X etc would.
+
+Thanks,
+
+--
+Murray McAllister / Red Hat Security Response Team
