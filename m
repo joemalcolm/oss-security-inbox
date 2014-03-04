@@ -1,20 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/12
-Message-Id: <E1XbsC5-0000nw-Rz@rmm6prod02.runbox.com>
-Date: Wed, 08 Oct 2014 10:26:21 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "stephane.chazelas" <stephane.chazelas@...il.com>
-CC: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Stéphane Chazelas: How *DID* you find Shellshock?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/23
+Message-ID: <53163B24.5030204@redhat.com>
+Date: Tue, 04 Mar 2014 13:44:20 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, security@...gle.com
+Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
 Content-Type: text/plain; charset=utf-8
 
-This is a question for Stéphane Chazelas, but I'm "cc"ing oss-security because I think many of us want to know the answer.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Stéphane: How *DID* you find Shellshock, in as much detail as you can recall?
+On 03/04/2014 04:12 AM, John Haxby wrote:
+> 
+> On 4 Mar 2014, at 11:01, Daniel Kahn Gillmor
+> <dkg@...thhorseman.net> wrote:
+> 
+>> Here is another situation where konqueror successfully indicates
+>> a "secure" connection to a server that has a known-insecure
+>> configuration: point konqueror at: https://demo.cmrg.net/ --
+>> you'll see a successful connection, though that server only
+>> offers DHE over a trivially-crackable 16-bit group.
+> 
+> I suspect that this problem is fairly wide-ranging.   Apple’s
+> Safari also permits the link.   Google Chrome doesn’t permit the
+> link though, it just crashes :)
+> 
+> jch
 
-I'm told you found the bug after "reflecting on an earlier bug" you found in bash "a few months earlier." (http://www.smh.com.au/it-pro/security-it/stephane-chazelas-the-man-who-found-the-webs-most-dangerous-internet-security-bug-20140927-10mixr.html)
+Confirmed on Google Chrome in Linux (33.0.1750.117 and 33.0.1750.146),
+Windows (33.0.1750.146 m) and Mac OS X (33.0.1750.146). Firefox
+actually handles it really nicely, clear description in the error page
+and refuses to let you connect because it's to weak.
 
-What I'm hoping is that we can learn some lessons and re-apply them elsewhere.
 
---- David A. Wheeler
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
+iQIcBAEBAgAGBQJTFjskAAoJEBYNRVNeJnmThWwP/2joiR0gJRzr9IGN7g4JtZHc
+yi0LmwScsKE87s5Tr+eq4zC8R1Xp0IpgtNnN7aymnlJO/nuiLGi9tkG0m30pEfqr
+U/NhyguYVM9+DJKHqwJmQZnrS+mbERemEUteviGA16gi93MY6q9B275/Ny3Cmc4+
+JzFTBvUdLnpWm40chL7BWYDUCVKg3tzR4IXW610OY+qtqhoAHtN9cAwW7u8yNMCo
+CXfMPvlcbsErE5t4cGuRX7BmPuznJol1YE+lenOUgXLsbTuvZs65WaJx5WaT8m+1
+2NLhN6jb04PDX6Oge1hLwAaFKVO7cRvfjohv3iyuxvxX0VSWUZhGi0B2FjYQdLbb
+u3MFruqgXAh84HRuQZBbf3zD8m7V8joyf5NmJlGOiSH6UyYxa5xYZIzDVClkENV1
+unTbTpsjtX7SnR1zMGSmBscYHvx5KMcIkcjb4GIzXaJfm3Wj4Wnb5DPGZ7Vqo4WT
+10ejwoW5gGI6PsLSG+QKGDVSWvvfPs7r6AfktWe7MvnnoUa0/FWUFTLGzDvzoRN4
+//dzTb6BlOlm6pjv7B61MvtumNsoRbrn1BZ3uCv2DjXByANc40Vm2VbQl125a3lA
+Tl2O6zSEMuMHQAw8OXxGL78VTiGqLnGuk8S3cEKUf4ZgS5gUa6Miar+EdE3c124z
+n0lTKZkj8kEcPyjQxC4M
+=DjCu
+-----END PGP SIGNATURE-----
