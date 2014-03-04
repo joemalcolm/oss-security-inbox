@@ -1,25 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/13
-Message-ID: <20140328190408.GA28852@openwall.com>
-Date: Fri, 28 Mar 2014 23:04:08 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/10
+Message-Id: <F5675C51-856C-45A3-A237-3BFE777AA3AE@oracle.com>
+Date: Tue, 4 Mar 2014 12:28:21 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Cc: Adam Zabrocki <pi3@....com.pl>
-Subject: Re: Adventure with Stack Smashing Protector (SSP)
+Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
 Content-Type: text/plain; charset=utf-8
 
-All -
 
-On Thu, Mar 27, 2014 at 04:08:10AM +0100, Adam Zabrocki wrote:
-> One weekend I decided to analyze Stack Smashing Protector (SSP) code. I believe some of the observations I've made might also be interesting to others.
+On 4 Mar 2014, at 11:24, Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
 
-Adam also posted this to the rebooted Full Disclosure list, and there
-are follow-ups:
+>> Google Chrome doesn’t permit the link though, it just crashes :)
+> 
+> On what platform?  Is this for any connection, or just for a primary
+> connection?  That is, can any web site can crash google chrome with <img
+> src="https://demo.cmrg.net/" /> ?
+> 
+> (sorry, i don't have either chrome or safari handy to test it myself
+> right now)
 
-http://lists.openwall.net/full-disclosure/2014/03/27/21
-http://lists.openwall.net/full-disclosure/2014/03/28/2
+Chrome crashes on both Linux and Mavericks.
 
-Oh, and yes I've updated the archive at Openwall to receive/archive
-mail from the rebooted list, just like Fyodor did for his archive.
+openssl s_client doesn’t report problems, but I wouldn’t expect it to.
 
-Alexander
+wget just downloads index.html without any issue.
+
+Firefox, elinks, midori and curl all refuse one way or another.
+
+I didn’t test any more.  Apart from chrome, those are all on Fedora 20.
+
+I agree that the connections being so trivially decryptable represents a flaw that should be fixed.
+
+jch
+
+Download attachment "signature.asc" of type "application/pgp-signature" (236 bytes)
