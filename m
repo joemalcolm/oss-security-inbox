@@ -1,21 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/6
-Message-ID: <3230301C09DEF9499B442BBE162C5E482575A066@SESTOEX04.enea.se>
-Date: Mon, 6 Oct 2014 07:15:22 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/7
+Message-Id: <ECBBB455-9EFD-4EFE-A055-2D799E8B2CE6@oracle.com>
+Date: Tue, 4 Mar 2014 11:12:57 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
 Content-Type: text/plain; charset=utf-8
 
-> To be clear I'm not a list admin or in control of it in any way shape or form (at
-> least that I'm aware of, Solar if I am in charge you should probably let me
-> know ;). I simply voiced concerns (e.g. lack of security advisories/etc.
 
-Kurt,
+On 4 Mar 2014, at 11:01, Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
 
-I am not  criticizing or blaming  anyone, I think your concern was very good :) I realize now that at that time we were not ready, today I would definitively do the same if I was in your situation. 
+> Here is another situation where konqueror successfully indicates a
+> "secure" connection to a server that has a known-insecure configuration:
+> point konqueror at: https://demo.cmrg.net/ -- you'll see a successful
+> connection, though that server only offers DHE over a
+> trivially-crackable 16-bit group.
 
-Cheers
-Sona
- 
+I suspect that this problem is fairly wide-ranging.   Apple’s Safari also permits the link.   Google Chrome doesn’t permit the link though, it just crashes :)
 
+jch
+
+Download attachment "signature.asc" of type "application/pgp-signature" (236 bytes)
