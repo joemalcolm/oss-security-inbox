@@ -1,41 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/30
-Message-ID: <542322F1.2080707@case.edu>
-Date: Wed, 24 Sep 2014 16:00:49 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: mancha <mancha1@...o.com>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/19
+Message-ID: <20140304123322.GD5757@debjann.fritz.box>
+Date: Tue, 4 Mar 2014 13:33:22 +0100
+From: Jann Horn <jann@...jh.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 9/24/14, 3:12 PM, mancha wrote:
-
-> Hello Chet et al.
+On Tue, Mar 04, 2014 at 12:28:21PM +0000, John Haxby wrote:
 > 
-> While taking a closer look at this issue on Bash 4.2, I noticed a
-> potential NULL deref. i.e.
+> On 4 Mar 2014, at 11:24, Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
 > 
->   $ FOO='() { :;}; blah4242' bash -c "echo bleh"
+> >> Google Chrome doesn’t permit the link though, it just crashes :)
+> > 
+> > On what platform?  Is this for any connection, or just for a primary
+> > connection?  That is, can any web site can crash google chrome with <img
+> > src="https://demo.cmrg.net/" /> ?
+> > 
+> > (sorry, i don't have either chrome or safari handy to test it myself
+> > right now)
 > 
-> This occurs in bgp_prune() where, because bgpids.npid=0 and
-> js_c_childmax=-1, the code in the loop executes but bgpids.list=NULL.
+> Chrome crashes on both Linux and Mavericks.
 
-Thanks for the report.  This is a problem, but the patch closes off
-that code path.
+Could this be https://code.google.com/p/chromium/issues/detail?id=91341 or so?
 
-Chet
-
-- -- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (Darwin)
-
-iEYEARECAAYFAlQjIvAACgkQu1hp8GTqdKulqgCeKgb8enVUZMM9qQgmCAEgjpg0
-C2QAnRGtrZb9Uh9kMTAiDvtI9E6U5BSp
-=Fxrx
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
