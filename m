@@ -1,39 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/18
-Message-ID: <20140605124325.GA21351@openwall.com>
-Date: Thu, 5 Jun 2014 16:43:25 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/21
+Message-ID: <20140304165955.GT12584@dhcp-25-225.brq.redhat.com>
+Date: Tue, 4 Mar 2014 17:59:56 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL seven security fixes
+Subject: CVE-2014-0102 -- Linux kernel: security: keyring cycle detector DoS
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 05, 2014 at 04:31:33PM +0400, Solar Designer wrote:
-> This OpenSSL Security Advisory was just made public, along with new
-> OpenSSL releases 0.9.8za, 1.0.0m, 1.0.1h:
-> 
-> http://www.openssl.org/news/secadv_20140605.txt
-> 
-> More info on CVE-2014-0224 (one of the vulns fixed):
-> 
-> http://ccsinjection.lepidum.co.jp
+The problem is that search_nested_keyrings() sees two keyrings that have
+matching type and description, so keyring_compare_object() returns true.
+s_n_k() then passes the key to the iterator function -
+keyring_detect_cycle_iterator() - which *should* check to see whether
+this is
+the keyring of interest, not just one with the same name and, leads to
+BUG_ON.
 
-Even more:
+An unprivileged local user could use this flaw to crash the system. 
 
-https://www.imperialviolet.org/2014/06/05/earlyccs.html
+Introduced by:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b2a4df200d570b2c33a57e1ebfa5896e4bc81b69
 
-Adam must have prepared (but not published) this blog post in advance,
-which is fine. :-)
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=1072419
+https://lkml.org/lkml/2014/2/27/507
 
-The distros list was informed of the upcoming OpenSSL release a few days
-in advance, but detail on the vulnerabilities was being provided
-separately, on request from each specific distro individually (PGP
-encrypted).  Overall, I'd say the advance notification to distros was
-just right - not too much (only a few days), not too little (just
-enough), and without unnecessarily exposing the detail to distros who
-wouldn't need it.
+Upstream patch:
+http://www.kernelhub.org/?msg=425013&p=2
 
-A bit worrying is the statement that the "issue was reported to OpenSSL
-on 1st May 2014", though, but I appreciate the OpenSSL team making that
-statement (it's in the advisory).
-
-Alexander
+-- 
+Petr Matousek / Red Hat Security Response Team
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
