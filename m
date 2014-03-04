@@ -1,56 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/9
-Message-ID: <20141204140011.GS26336@core.inversepath.com>
-Date: Thu, 4 Dec 2014 15:00:11 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2014-009] JasPer input sanitization errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/18
+Message-ID: <7f3608ca32a7f91b6ba300a18c4e2e49@tribut.de>
+Date: Tue, 04 Mar 2014 13:00:21 +0100
+From: Felix Eckhofer <felix@...but.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
 Content-Type: text/plain; charset=utf-8
 
+Hi.
 
-#2014-009 JasPer input sanitization errors
+Am 04.03.2014 12:24, schrieb Daniel Kahn Gillmor:
+>>  Google Chrome doesn’t permit the link though, it just crashes :)
+> 
+> On what platform?  Is this for any connection, or just for a primary
+> connection?  That is, can any web site can crash google chrome with 
+> <img
+> src="https://demo.cmrg.net/" /> ?
 
-Description:
+On Ubuntu, both Google Chrome 33.0.1750.146 from the official Google 
+repo as well as Chromium 32.0.1700.107 from Ubuntu's repo crashes when 
+trying to open the demo site and also when trying to open a page with an 
+image embedded such as https://dump.tribut.de/democmrgnet.html
 
-The JasPer project is an open source implementation for the JPEG-2000 codec.
 
-The library is affected by two heap-based buffer overflows which can lead to
-arbitrary code execution. The vulnerability is present in functions
-jpc_dec_cp_setfromcox() and jpc_dec_cp_setfromrgn().
-
-A specially crafted jp2 file, can be used to trigger the overflows.
-
-Affected version:
-
-JasPer <= 1.900.1
-
-Fixed version:
-
-JasPer, N/A
-
-Credit: vulnerability report received from the Google Security Team.
-
-CVE: CVE-2014-9029
-
-Timeline:
-
-2014-11-19: vulnerability report received
-2014-11-20: contacted affected vendors
-2014-11-21: assigned CVE
-2014-11-27: patch contributed by Tomas Hoger from Red Hat Product Security
-2014-12-04: advisory release
-
-References:
-http://www.ece.uvic.ca/~frodo/jasper
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-9029
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2014-009.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+felix
