@@ -1,48 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/29/7
-Message-ID: <545177FF.4050901@amacapital.net>
-Date: Wed, 29 Oct 2014 16:27:59 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-3690: KVM DoS triggerable by malicious host userspace
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/20
+Message-Id: <201403041735.s24HZ6EH004806@linus.mitre.org>
+Date: Tue, 4 Mar 2014 12:35:06 -0500 (EST)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-2013-6800 is a dup of CVE-2013-1418
 Content-Type: text/plain; charset=utf-8
 
-On 10/21/2014 01:48 PM, Andy Lutomirski wrote:
-> [sorry for somewhat late notice -- I didn't notice that the patch was
-> public until just now]
-> 
-> KVM has a bug that allows malicious host user code that can open the
-> /dev/kvm device on a VMX (Intel) machine to DoS the system.  (In my
-> proof of concept, the DoS is a rather spectacular failure of the whole
-> system, although I haven't checked whether the kernel panics.  A more
-> refined exploit *might* be able to kill targetted user processes, but
-> it would be tricky and is subject to possibly unavoidable races that
-> are likely to take down the whole system.)
-> 
-> This is *not* triggerable by a guest, although a guest that can
-> compromise its host QEMU could use this bug to take down everything
-> else running on the host.
-> 
-> I would guess that all kernels that support VMX are vulnerable, but I
-> haven't tested old kernels.
-> 
-> The fix is here:
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=d974baa398f34393db76be45f7d4d04fbdbb4a0a
-> 
-> PoC available upon request, and I'll post it publicly in a few days,
-> because it's kind of fun to watch the fireworks.
-> 
-> --Andy
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-As promised, here's the exploit.
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6800
+> is the same issue as 
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1418
+> 
+> (basically the same code fix for the same issue,
 
-I didn't really feel like writing a self-contained test case to
-initialize a KVM vCPU, so I turned QEMU into an exploit instead.  Apply
-the attached patch to QEMU, build it, and run it (qemu-system-x86_64
--machine accel=kvm).
+The scope of CVE-2013-1418 is this part of
+c2ccf4197f697c4ff143b8a786acdd875e70a89d:
 
---Andy
+  Multi-realm KDC null deref [CVE-2013-1418] ... If a KDC serves
+  multiple realms, certain requests can cause setup_server_realm() to
+  dereference a null pointer, crashing the KDC.
 
-View attachment "0001-Evil-QEMU-hack-to-exploit-a-KVM-CR4-bug.patch" of type "text/x-patch" (1792 bytes)
+  CVSSv2: AV:N/AC:M/Au:N/C:N/I:N/A:P/E:POC/RL:OF/RC:C
+
+
+The scope of CVE-2013-6800 is this part of
+c2ccf4197f697c4ff143b8a786acdd875e70a89d:
+
+  A related but more minor vulnerability requires authentication to
+  exploit, and is only present if a third-party KDC database module can
+  dereference a null pointer under certain conditions.
+
+
+The practical relevance of the second CVE is that, based on the
+available information, a KDC apparently can be vulnerable to
+CVE-2013-6800 even if the CVE-2013-1418 exploitation conditions are
+not met. The vendor's disclosure binds the CVE-2013-1418 ID only to a
+subset of the c2ccf4197f697c4ff143b8a786acdd875e70a89d comment. This
+was accompanied by a similar binding within third-party references
+such as 1026942 in the Red Hat Bugzilla. It is conceivable that
+someone would want to track CVE-2013-6800 even if they determined that
+CVE-2013-1418 was not relevant to their installation.
+
+In general, even if a single patch could address two distinct types of
+attacks, that does not necessarily mean that two CVEs are duplicates.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTFgz+AAoJEKllVAevmvmsg2AIAK3YEISuzaCFszqZIUMc7xTu
+c19WulvIAzWTzCplCiYsq/y9y146PKCNSKeYZM9pLx/Nk5kz0m9627YmqCOxbzMx
+7xQw0fn5F07/wOn2HFGdh6MxC1J7qGK+2EyBeL6yYdTEY4aNdLNGTZZP5YzQAP7O
+yHL7Bh2ko3WWZKZ2f4qTGzRvbN7G5ZDQzTsTYDJUhqQUuvMCnP8NpnTb7qC/RGNH
+k+u7lkohA/1gst476tb/uVSAYfwH/8zPkhygC6WlSRwrs3DoP+T6Ycle+6+1hH4z
+7dlr1GXmAx989KG6TsjY+gmM9DHAnAOTM9wMA1ext8OWX7a40qVFlhZbQMr+M8Q=
+=oIex
+-----END PGP SIGNATURE-----
