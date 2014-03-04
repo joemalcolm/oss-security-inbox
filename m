@@ -1,24 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/52
-Message-ID: <5424A802.5030203@case.edu>
-Date: Thu, 25 Sep 2014 19:40:50 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/15
+Message-ID: <20140304154558.GK17483@suse.de>
+Date: Tue, 4 Mar 2014 16:45:58 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE-2013-6800 is a dup of CVE-2013-1418
 Content-Type: text/plain; charset=utf-8
 
-On 9/25/14, 12:19 PM, Solar Designer wrote:
+Hi,
 
-> I think Florian's prefix-suffix patch is actually a better way to go
-> (right now, unless there's some drawback I am not yet aware of), and at
-> a later time function imports should require to be enabled with a
-> non-default option.
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6800
+is the same issue as 
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1418
 
-Yes, some variant of that will be the next thing to work on.
+(basically the same code fix for the same issue, but that it
+was in 2 different github branches seems to have confused someone).
 
-Chet
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+Ciao, Marcus
