@@ -1,36 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/16
-Message-ID: <alpine.LFD.2.10.1402210016170.2844@javelin.pnq.redhat.com>
-Date: Fri, 21 Feb 2014 00:20:36 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: cve-assign@...re.org
-Subject: Re: Re: CVE request: Linux kernel: nfs: information leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/17
+Message-ID: <lf41ci$7sa$1@ger.gmane.org>
+Date: Tue, 04 Mar 2014 09:03:42 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: MantisBT 1.2.13 SQL injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-+-- On Thu, 20 Feb 2014, cve-assign@...re.org wrote --+
-| This is definitely a problem that can have a CVE ID; use
-| CVE-2014-2038.
+On 28.02.2014 21:05, cve-assign@...re.org
+wrote:
+>> http://www.mantisbt.org/bugs/view.php?id=17055
+> 
+>> admin_config_report.php relied on unsanitized, inlined query
+>> parameters, enabling a malicious user to perform an SQL injection
+>> attack.
+> 
+> Use CVE-2014-2238.
+> 
 
-  Thank you.
- 
-| is there also an opportunity for Client B to conduct a DoS attack
-| against Client A (i.e., causing Client A's data to be completely lost)
-| if the NFSv4 ACL on /mnt/file gives Client B APPEND_DATA access but
-| not WRITE_DATA access?
+MantisBT 1.2.17 has been released [1] and is available for download [2].
 
-  Ummn, I wonder if with only APPEND_DATA client would be able to 
-delete/over-write file data. It needs to be verified.
- 
-| Our understanding is that you mean the "extra" bytes printed by the
-| cat command, i.e.,
-| 
-|    0 \357 \277 \275 D 0 \357 \277 \275
-| 
-| are the leaked kernel memory bytes.
+[1] http://www.mantisbt.org/blog/?p=288
+[2] https://sourceforge.net/projects/mantisbt/files/mantis-stable/1.2.17/
 
-  Yes, that's correct.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+---
+This email is free from viruses and malware because avast! Antivirus protection is active.
+http://www.avast.com
+
+
