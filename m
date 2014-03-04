@@ -1,77 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/1
-Message-ID: <etPan.53cefe1e.5cc4ca6f.13beb@varia.chipx86.com>
-Date: Tue, 22 Jul 2014 17:13:18 -0700
-From: Christian Hammond <christian@...nbaginc.com>
-To: cve-assign@...re.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE requests for Review Board
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/8
+Message-ID: <5315B7EF.4040305@fifthhorseman.net>
+Date: Tue, 04 Mar 2014 11:24:31 +0000
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
 Content-Type: text/plain; charset=utf-8
 
-My apologies. We usually go through someone else for CVEs, and he directed us this time to contact this address. We’ll be more careful in the future.
+On 03/04/2014 11:12 AM, John Haxby wrote:
+> 
+> On 4 Mar 2014, at 11:01, Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
+> 
+>> Here is another situation where konqueror successfully indicates a
+>> "secure" connection to a server that has a known-insecure configuration:
+>> point konqueror at: https://demo.cmrg.net/ -- you'll see a successful
+>> connection, though that server only offers DHE over a
+>> trivially-crackable 16-bit group.
+> 
+> I suspect that this problem is fairly wide-ranging.
 
-Thanks!
+Perhaps this needs more than one RFC, then?
 
-- Christian
+>   Apple’s Safari also permits the link.
 
--- 
-Christian Hammond - christian@...nbaginc.com
-Review Board - http://www.reviewboard.org
-Beanbag, Inc. - http://www.beanbaginc.com
+I consider this a flaw in Safari.  These connections are trivially
+decryptable by any passive eavesdropper.  An active attacker can tamper
+with the content of the session.
 
-On July 22, 2014 at 2:40:58 PM, cve-assign@...re.org (cve-assign@...re.org) wrote:
+>  Google Chrome doesn’t permit the link though, it just crashes :)
 
------BEGIN PGP SIGNED MESSAGE-----  
-Hash: SHA1  
+On what platform?  Is this for any connection, or just for a primary
+connection?  That is, can any web site can crash google chrome with <img
+src="https://demo.cmrg.net/" /> ?
 
-> https://www.reviewboard.org/news/2014/07/22/review-board-1-7-27-and-2-0-3-security-releases/  
-> July 22, 2014 - 2:07 AM  
-> Review Board 1.7.27 and 2.0.3 security releases  
+(sorry, i don't have either chrome or safari handy to test it myself
+right now)
 
-> One of the security vulnerabilities allowed an attacker to construct a  
-> URL that would inject custom JavaScript into the page, which could  
-> then be passed to a user, allowing the custom code to run in their  
-> session.  
-
-Use CVE-2014-5027.  
+	--dkg
 
 
-> The other vulnerability allowed users without access to a private  
-> review request to construct a URL for accessing original or patched  
-> files from the repository, if they knew the right series of database  
-> IDs.  
-
-Use CVE-2014-5028.  
-
-(Incidentally, we're not sure whether the original request sent July 21  
-was within the oss-security list charter. MITRE does not control the list  
-charter, but  
-
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security  
-
-says "List Content Guidelines ... Public security issues only please"  
-whereas the original request said "two security vulnerabilities ...  
-Neither are publicly disclosed." If you want a CVE ID for an  
-undisclosed vulnerability in the future -- for example, because you  
-want to include the CVE ID number when the  
-https://www.reviewboard.org/news/ entry first becomes public -- there  
-are other options, such as sending the CVE request directly to  
-cve-assign@...re.org instead.)  
-
-- --  
-CVE assignment team, MITRE CVE Numbering Authority  
-M/S M300  
-202 Burlington Road, Bedford, MA 01730 USA  
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]  
------BEGIN PGP SIGNATURE-----  
-Version: GnuPG v1.4.14 (SunOS)  
-
-iQEcBAEBAgAGBQJTztl7AAoJEKllVAevmvmsFjEH/i3c93xE5j9OKoAH9pgUkAkV  
-9VOoEgRoGaHXR2YDxPkEfapYhV7RZhjTcoQlW5oftH7QXE0FsyY7VhXbetn4GMv7  
-bEhpzmkfz2kZN0YlBRHZr9FtuOsX8zqe77fHK3lsZsy/nBEh+W8onxZWCvThZvnA  
-pucywbiGjkSAIgjKzLBF2YRRs0Xv660td8zZWHz9PunJPH5yWGLi6WywUmtkCidC  
-pF22tWpvwJmGorN1kQFYjwavXSeE9jXRFt9kacFmWibA/z2srtMnx8EGgbbV9IrT  
-ENjapy6bzUo7oTO0UoALRBnGj2IbO4CvQlKMK0kwudDsplFpb7i/nrTO77uFjQw=  
-=STIj  
------END PGP SIGNATURE-----  
-
+Download attachment "signature.asc" of type "application/pgp-signature" (1011 bytes)
