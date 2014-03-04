@@ -1,33 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/11
-Message-ID: <52CEF328.4070404@redhat.com>
-Date: Thu, 09 Jan 2014 20:06:16 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: cve-assign@...re.org, guido+openwall.com@...hoerster.name
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE request: tmux local denial of service (2009)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/13
+Message-ID: <20140304160548.6be3f152@hboeck.de>
+Date: Tue, 4 Mar 2014 16:05:48 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
 Content-Type: text/plain; charset=utf-8
 
-On 01/09/2014 07:44 PM, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
->> allows users to override the socket path using the -S command line option.
->
-> We'd like to consider this ineligible for a CVE unless there's new
-> information. In many cases, "ability to cause an inconvenience" is not
-> sufficient for a CVE assignment. The nature of the application
-> apparently makes it unlikely that this would, for example, disrupt
-> unattended root-executed scripts that have a hardcoded tmux command
-> line.
+On Tue, 4 Mar 2014 11:12:57 +0000
+John Haxby <john.haxby@...cle.com> wrote:
 
-I reported this here because tmux is sometimes used to start servers on 
-system boot:
+> I suspect that this problem is fairly wide-ranging.   Apple’s Safari
+> also permits the link.   Google Chrome doesn’t permit the link
+> though, it just crashes :)
 
-http://unix.stackexchange.com/questions/71372/using-tmux-on-boot-up-of-linux-centos
-http://askubuntu.com/questions/62434/why-does-upstart-keep-respawning-my-process
-https://bowerstudios.com/node/953
-http://code.google.com/p/webrtc2sip/issues/detail?id=80
+I added this to the chromium bug tracker:
+https://code.google.com/p/chromium/issues/detail?id=348987
+
+There's however something interesting: I couldn't reproduce the crash
+setup. I created my own test server with a 16 bit exchange and it
+doesn't crash. I haven't found out yet what the difference is that's
+causing this.
+https://dh16.dosdriver.de
 
 -- 
-Florian Weimer / Red Hat Product Security Team
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
