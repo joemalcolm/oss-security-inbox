@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/29/6
-Message-ID: <20140729232610.GD21596@openwall.com>
-Date: Wed, 30 Jul 2014 03:26:10 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/24
+Message-ID: <20140304205453.GA12419@openwall.com>
+Date: Wed, 5 Mar 2014 00:54:53 +0400
 From: Solar Designer <solar@...nwall.com>
-To: Martin Schwidefsky <schwidefsky@...ibm.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Subscribtion request to linux-distros
+To: oss-security@...ts.openwall.com
+Subject: Linux-PAM pam_unix/unix_chkpwd is fail-open
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 29, 2014 at 05:03:38PM +0200, Martin Schwidefsky wrote:
-> our friends from SuSE suggested that it might make sense that
-> I in my role as maintainer for Linux on System z (alias s390)
-> get added to the linux-distros mailing list.
-> If you agree that this indeed makes sense could you subscribe
-> me please?
+Hi,
 
-I've been meaning to post a follow-up on the other request by IBM to
-join (linux-)distros.  Unfortunately, I am in too bad a lack of time
-right now.  So no changes in subscriber lists in August.  I intend to
-revisit this topic in September.
+Just off Twitter, but relevant to this list:
 
-I do feel that IBM joining one of these lists makes sense, but this and
-the details need to be discussed.
+<kragen> http://www.tedunangst.com/flak/post/thoughts-on-style-the-TLS-and-errors thoughts on #gotofail and how it's too easy for TLS software to "fail open".
+
+<@solardiz> @kragen @tedunangst Re: BSD auth not relying on exit code, it's relevant that Linux-PAM's pam_unix/unix_chkpwd does: https://git.fedorahosted.org/cgit/linux-pam.git/tree/modules/pam_unix/support.c?id=b0ec5d1e472a0cd74972bfe9575dcf6a3d0cad1c#n634
+
+<@solardiz> @kragen @tedunangst We avoided this in our pam_tcb/tcb_chkpwd since its initial version in 2002: http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/tcb/tcb/pam_tcb/support.c?annotate=1.13 lines 441-451
+
+TCB_MAGIC is 0x0a00ff7fUL
+
+This might not be viewed as a vulnerability in pam_unix/unix_chkpwd, but
+an authentication service being fail-open is against best practices.
+
+The issue is mitigated by the fact that unix_chkpwd is only used to
+check the user's own password, when unlocking an X desktop or GNU screen
+(when it's patched to use PAM).  Another "mitigation" is that X desktop
+locking is generally fail-open anyway. ;-(
+
+Someone might want to patch this issue in Linux-PAM.
 
 Alexander
