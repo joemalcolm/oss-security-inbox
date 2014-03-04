@@ -1,16 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/14
-Message-ID: <CALx_OUB7wJ==fwXFEFKMKk0gWUmj71DpE8TOomY0XO7AAMckBg@mail.gmail.com>
-Date: Wed, 1 Oct 2014 20:00:44 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Chet Ramey <chet.ramey@...e.edu>
-Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/4
+Message-ID: <20140304105848.GM12584@dhcp-25-225.brq.redhat.com>
+Date: Tue, 4 Mar 2014 11:58:48 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2014-0100 -- Linux kernel: net: inet frag code race condition leading to user-after-free
 Content-Type: text/plain; charset=utf-8
 
-> What else could I say? A POC already released and a bunch of
-> customer's machines are waiting...
+A very subtle race condition between inet_frag_evictor,
+inet_frag_intern and the IPv4/6 frag_queue and expire functions
+(basically the users of inet_frag_kill/inet_frag_put) was found.
 
-You should install Florian's patch / bash43-027.
+What happens is that after a fragment has been added to the hash chain
+but before it's been added to the lru_list (inet_frag_lru_add), it may
+get deleted (either by an expired timer if the system load is high or
+the timer sufficiently low, or by the fraq_queue function for different
+reasons) before it's added to the lru_list, then after it gets added
+it's a matter of time for the evictor to get to a piece of memory which
+has been freed leading to a number of different bugs depending on what's
+left there.
 
-/mz
+Introduced by:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=3ef0eb0d
+
+Upstream patch submission:
+http://patchwork.ozlabs.org/patch/325844/
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=1070618
+
+-- 
+Petr Matousek / Red Hat Security Response Team
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
