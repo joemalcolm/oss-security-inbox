@@ -1,46 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/34
-Message-ID: <542D6A7B.9000709@enovance.com>
-Date: Thu, 02 Oct 2014 11:08:43 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/11
+Message-ID: <5315CE61.2060702@fifthhorseman.net>
+Date: Tue, 04 Mar 2014 13:00:17 +0000
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-032] Nova VMware driver still leaks rescued images (CVE-2014-3608)
+Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-032
-CVE: CVE-2014-3608
-Date: October 2, 2014
-Title: Nova VMware driver still leaks rescued images
-Reporter: Garth Mollett (Red Hat)
-Products: Nova
-Versions: up to 2014.1.2
+On 03/04/2014 12:28 PM, John Haxby wrote:
 
-Description:
-Garth Mollett from Red Hat reported an incomplete fix to OSSA-2014-017
-(CVE-2014-2573), a vulnerability affecting Nova. If an authenticated
-user places an instance into rescue, and then issues a suspend command
-it will cause the instance to enter an ERROR state. Nova does not clean
-up an instance in this state correctly upon deletion. An attacker can
-use this to launch a denial of service attack. Only setups using the
-Nova VMware driver are affected by this flaw.
+> openssl s_client doesn’t report problems, but I wouldn’t expect it to.
 
-Juno (development branch) fix:
-https://review.openstack.org/94281/
+it should; its peers do:
 
-Icehouse fix:
-https://review.openstack.org/109624/
+  gnutls-cli demo.cmrg.net
 
-Notes:
-This fix will be included in the Juno release 2014.2.0 and in
-the upcoming 2014.1.3 release.
+fails safely closed with:
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3608
-https://launchpad.net/bugs/1338830
+ GnuTLS error: The Diffie-Hellman prime sent by the server is not
+acceptable (not long enough).
 
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+and (from libnss3-tools):
+
+  tstclnt -h demo.cmrg.net
+
+fails safely closed with:
+
+tstclnt: read from socket failed:
+SSL_ERROR_WEAK_SERVER_EPHEMERAL_DH_KEY: SSL received a weak ephemeral
+Diffie-Hellman key in Server Key Exchange handshake message.
+
+> wget just downloads index.html without any issue.
+
+i also consider this a flaw in wget.  i suspect you've got wget compiled
+against openssl, because for me (debian testing), wget fails safely
+closed with:
+
+GnuTLS: The Diffie-Hellman prime sent by the server is not acceptable
+(not long enough).
+Unable to establish SSL connection.
+
+while curl (built against OpenSSL) accepts the insecure connection and
+proceeds (even leaking cookie information across the weak connection if
+i ask it to send cookies).
+
+fwiw, i reported this problem on the openssl-dev mailing list back in
+november, following private discussion with openssl upstream.:
+
+http://marc.info/?l=openssl-dev&m=138386738312983&w=2
+
+Regards,
+
+	--dkg
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (1011 bytes)
