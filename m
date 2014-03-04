@@ -1,28 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/17
-Message-ID: <20140928002744.079ef259@pc>
-Date: Sun, 28 Sep 2014 00:27:44 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/5
+Message-ID: <5315B2A0.4000201@fifthhorseman.net>
+Date: Tue, 04 Mar 2014 11:01:52 +0000
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-Subject: test script for various bash vulns
+Subject: Re: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 03/04/2014 05:38 AM, cve-assign@...re.org wrote:
+>   - The server can support strong cipher suites, but is misconfigured
+>     to select only 40-bit cipher suites. This is a similar situation.
+>     If the user must use the server immediately (i.e., he doesn't have
+>     time to contact the server operator and ask for a
+>     reconfiguration), a 40-bit cipher suite is the right choice.
 
-I thought I'd share this:
-https://github.com/hannob/bashcheck
+A misconfigured server might only offer a 40-bit cipher to a peer that
+offers a 40-bit cipher, but might offer a stronger cipher to a peer that
+does *not* offer any 40-bit ciphers.
 
-Will be updated once further issues appear if they're testable.
+arguably, this involves two different misconfigurations (both server and
+client), but the issue would be mitigated if the client was not offering
+a weak cipher and claiming it was a successfully secure connection.
 
-(if there's a reliable test for CVE-2014-7187 without fsanitize-address
-that'd be handy, suggestions welcome)
+Here is another situation where konqueror successfully indicates a
+"secure" connection to a server that has a known-insecure configuration:
+ point konqueror at: https://demo.cmrg.net/ -- you'll see a successful
+connection, though that server only offers DHE over a
+trivially-crackable 16-bit group.
 
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
+NSS-based browsers will throw an ssl_error_weak_server_ephemeral_dh_key
+error and refuse the connection; konqueror claims it is a secure connection.
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+	--dkg
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (1011 bytes)
