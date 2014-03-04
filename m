@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/13
-Message-ID: <21227.53373.394779.921199@gargle.gargle.HOWL>
-Date: Fri, 31 Jan 2014 17:34:05 +0100
-From: rf@...eap.de
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/6
+Message-ID: <20140304110013.GN12584@dhcp-25-225.brq.redhat.com>
+Date: Tue, 4 Mar 2014 12:00:13 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+Subject: CVE-2014-0101 -- Linux kernel: net: sctp: null pointer dereference when processing authenticated cookie_echo chunk
 Content-Type: text/plain; charset=utf-8
 
->>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
+A flaw was found in the way Linux kernel processed authenticated
+COOKIE_ECHO chunks.
 
-    SD> Hi, This issue was brought to linux-distros and security@k.o 2
-    SD> days ago via the message quoted below, and it was just made
-    SD> public at 22:00 UTC today (two hours ago) via grsecurity and PaX
-    SD> (who were the ones to find the issue).  Normally, the person who
-    SD> brought this to linux-distros would be the one responsible to
-    SD> bring the issue to oss-security as soon as the issue is public,
-    SD> but Kees does not appear to be around at the moment and the
-    SD> issue is critical enough that I find it inappropriate to delay
-    SD> this posting by a few hours more, hence I am doing Kees' job by
-    SD> posting this in here.
+A remote attacker could use this flaw to crash the system by sending a
+maliciously prepared SCTP handshake in order to trigger a NULL pointer
+dereference on the server.
 
-    SD> This is CVE-2014-0038 (assigned shortly after Kees sent the
-    SD> message below).  I will also include PaX Team's revised patch
-    SD> below.
+Introduced by:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=bbd0d59809f9
 
-Are you sure this is the correct CVE? It was assigned already beginning
-of Dec. last year.
+Upstream patch submission:
+http://patchwork.ozlabs.org/patch/325898/
 
-Roland
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=1070705
+
+-- 
+Petr Matousek / Red Hat Security Response Team
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
