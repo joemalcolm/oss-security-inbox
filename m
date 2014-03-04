@@ -1,45 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/15
-Message-ID: <Pine.LNX.4.64.1412041331360.1687@beijing.mitre.org>
-Date: Thu, 4 Dec 2014 13:32:17 -0500 (EST)
-From: cve-assign@...re.org
-To: OSS Security List <oss-security@...ts.openwall.com>
-cc: cve-assign@...re.org
-Subject: Re: CVE request: out-of-bounds memory access flaw in unrtf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/22
+Message-ID: <53161E8E.90907@moritz-naumann.com>
+Date: Tue, 04 Mar 2014 18:42:22 +0000
+From: Moritz Naumann <info@...itz-naumann.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
 Content-Type: text/plain; charset=utf-8
 
-
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA512
 
-> An out-of-bounds memory access flaw was reported in unrtf:
-> 
-> https://lists.gnu.org/archive/html/bug-unrtf/2014-11/msg00000.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1170233
+Felix Eckhofer:
+> On Ubuntu, both Google Chrome 33.0.1750.146 from the official
+> Google repo as well as Chromium 32.0.1700.107 from Ubuntu's repo
+> crashes when trying to open the demo site and also when trying to
+> open a page with an image embedded such as
+> https://dump.tribut.de/democmrgnet.html
 
-Use CVE-2014-9274 for the unrtf issue found by Michal Zalewski:
 
-https://lists.gnu.org/archive/html/bug-unrtf/2014-11/msg00001.html
+Ubuntu 13.10 x86_64 backtrace (incomplete due to missing
+net/ssl/ssl_info.cc):
 
-Use CVE-2014-9275 for the "additional crashes" as demonstrated by
-crashers-unrtf.tar.xz.  The stack traces suggest the same type of
-issue in the same location.
+http://pastebin.com/JKbGez4n
 
-https://lists.gnu.org/archive/html/bug-unrtf/2014-11/msg00000.html
 
-- ---
+Here's a "test" with various web browsers and operating systems (I do
+not expect all of these systems to have the latest security updates
+installed):
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+http://browsershots.org/https://demo.cmrg.net:443/
+
+According to this, Safari 6.1.2 (AppleWebKit 537.74.9) on Mac OS X
+10.8 (Mountain Lion), connects without a warning, too:
+http://browsershots.org/screenshots/ba96ee74531204523d00c6becc1911af
+
+Moritz
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEVAwUBVICnv6llVAevmvmsAQJI1Af/TAcQIFsv2pbjvQzDwDX+J8pTkuByT9Fz
-7CPVfQbwVU8H9tO/Z6z5hM0I0n/lIg9X2taOk+O76LO9RlHimGKlQp7vOPGifQPO
-myc5OiYMgQC3IiPoHwezYoVkRLcR57+dkFBCSyh+6n7WPD7zePpuHfBDR2p1lx5Z
-XMfeGwble7sNpYy/xlBBO2F5sv+LU8zOuvqjQrHW/G6oE0KMui4fQiQGEk61KSkE
-G7UnX5Ixyadp2Q6KQ/qeMYemxlixNOy3tTBK10CBcgJDRRytRgj+bU53xg40ZpZp
-QbPtUl/HZHstqMa4wCzHWXGjl/78Dce/0sYiPnX1EUQsSY1jIgcBSQ==
-=zsmM
+iQJ8BAEBCgBmBQJTFh6CXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXREMEEwRkYzMTUwODdEMEUzQkU0QzVGMkVC
+RDk2RUNBRDkzNDUwMEIwAAoJEL2W7K2TRQCwrfQP/A1hCDortjSfTgUMBptXJLVi
+bsc0vc87LDmM4Wq5tJ9JEt5r11aZPNwP9xcL3sXPfrg1WIRhFh2E+utCkXTCsXcP
+eHP7rJlAjpo1nIO2DI3sjZozkPdiW5d/8clKY37cziQq4PnO6PgWhJwd/sftDWnX
+edH3ZG2//BYL9ueSy8LXaPjjTQ+WHKNJ+SleFLz57Pc7vGQuc3bgdwRmjoZFQfMc
+wfBrqau2jnoIDCksHTGzZXaJQSkjtHc/UIsIdr/qYSaL/qUxbu9iDoMsmjqVLIEr
+4zlSPZudoddoaR1SEUdQMGRgz+/pN4jLjEz8iK1YufDFyMrYx6kJNoQgCeh0VKe5
+vpiU+6H/UTRKnOF6HvNXhe+cikL2aFbax94JCP5NxjFCwlY3/fdn/scN2r73eJih
+GkXrMqEQdjvYERDm89zjKAm7HG9MHZgTzrbZaG0Txfsd/sxvh30Y0nwcd4TSB1KO
+P6lumzBi2SYTucJPF5f6dsYiL3yapYDjBa51uxQasDUtUqYtjps+RZjPsBFA7SVn
+YmSRGxquMXkUsKEa0cDfRGF3CTIx99YOOGKeZXG0RBUU/xkcP9NK602MudSqLvuE
+PIUWoggf/58CjnF7cJkYg19q7OInmX9uig6EOLV6wE0IyJeoNBwz54X7/gQIjOJU
+c9bmPcCcqkeRDWFSTJV3
+=d0oK
 -----END PGP SIGNATURE-----
