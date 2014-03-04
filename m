@@ -1,40 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/10
-Message-ID: <CALx_OUBbfQp+z+M0XiQU3a8s5CjGzfY+ZowFy+W6cYCtHJZyOQ@mail.gmail.com>
-Date: Thu, 6 Nov 2014 14:25:04 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Stack smashing in libjpeg-turbo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/12
+Message-ID: <5315E723.9060904@redhat.com>
+Date: Tue, 04 Mar 2014 15:45:55 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: XML entity processing hardening
 Content-Type: text/plain; charset=utf-8
 
-Is this a bug in libjpeg-turbo or in ImageMagick? I can't really repro
-this with up-to-date versions:
+I'm in contact with an upstream for an XML processing library who do not 
+want to disable entity processing for the embedded DTD subset.
 
-[lcamtuf@...coon libjpeg-turbo-1.3.1]$ ./djpeg 003632r270.jpg
-Corrupt JPEG data: 1056 extraneous bytes before marker 0xd8
-Invalid JPEG file structure: two SOI markers
-[lcamtuf@...coon libjpeg-turbo-1.3.1]$
+What are recommended practices if you have to do full entity processing, 
+but still want to avoid DoS (CPU and memory issues)?
 
-[lcamtuf@...coon ImageMagick-6.8.9-9]$ utilities/convert -rotate 270
-003632r270.jpg foo.jpg
-[lcamtuf@...coon ImageMagick-6.8.9-9]$
+Here's what I came up with:
 
-On Thu, Nov 6, 2014 at 1:27 PM, Bastien ROUCARIES
-<roucaries.bastien@...il.com> wrote:
-> Hi,
->
-> Passing special crafted jpeg file to imagemagick (convert -rotate 270
-> 003632r270.jpg junk.jpg) could lead to stack smashing in libjpeg.so.62
-> (libjpeg-turbo).
->
-> This bug is triggered  by setting the optimize coding member of the
-> JPEG initialization structure to TRUE. If this flag set it to FALSE,
-> ImageMagick completes without complaint.
->
-> Wokarround could consist to turn off compression optimization in
-> imagemagick to prevent the stack smash.
->
-> Please assing me CVE and make a cc to  768369@...s.debian.org.
->
->
-> Bastien
+CPU and memory are separate concerns because depending on the 
+implementation, empty entity references may not result in memory 
+consumption, but they may still need impossible large amounts of CPU 
+time to process.  However, I think it is possible to address the CPU 
+aspect purely with memory accounting if we pretend that every entity 
+reference expands to at least one character, even if it is empty.
+
+Apart from that, I think it is sufficient to approximate the character 
+count in fully-expanded serialized XML content.  This "memory cost" 
+would have to memoized for each entity, and counted during entity 
+expansion itself and eventual document generation.  During parsing, the 
+cost encountered is compared against a pre-computed limit.
+
+The upper cost limit I suggest is 10 times the document size (perhaps 
+including the content of external entities, if enabled and parsed, not 
+entirely sure about that), plus a fixed baseline of (say) 1 MiB.  These 
+numbers are obviously totally arbitrary, but hopefully, they grant 
+sufficient flexibility.
+
+-- 
+Florian Weimer / Red Hat Product Security Team
