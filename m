@@ -1,45 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/17
-Message-ID: <CAOp4FwRL3xC2O=ApGOZTEk2Cr7QGaU0ZytEupHmCgLjRo6Vf_Q@mail.gmail.com>
-Date: Sat, 6 Dec 2014 20:48:04 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: How GNU/Linux distros deal with offset2lib attack?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/9
+Message-Id: <201403051908.s25J8Vm0002159@linus.mitre.org>
+Date: Wed, 5 Mar 2014 14:08:31 -0500 (EST)
+From: cve-assign@...re.org
+To: huzaifas@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for two net-snmp remote DoS flaws
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Dec 6, 2014 at 7:35 PM, Greg KH <greg@...ah.com> wrote:
-> On Sat, Dec 06, 2014 at 03:22:58PM +0800, Shawn wrote:
->>
->> 2, ASLRv3? Hector Marco( the dude who disclosured offset2lib attack)
->> sent a patch to the upstream:
->> https://lkml.org/lkml/2014/12/4/839
->>
->> Even the upstream don't accept the patch, is this possible to backport
->> it & maintain it for distro community?
->
-> Upstream asked for some basic fixes to the patch (i.e. it wasn't
-> submitted in the needed format) before it could accept it, so I doubt
-> it's rejected yet.
->
-> And of course a distro could backport and maintain it, it's a very tiny
-> patch, much smaller than what they normall backport.  Take it up with
-> the distros if you want this.
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Going through the LKML mailing discussion, it seems that there's
-interest in improving the diff according to the comment by Andy.
+> 1. net-snmp: denial of service flaw in Linux implementation of ICMP-MIB
 
-There also seems to be concern with 32-bit architectures.
+> https://bugzilla.redhat.com/show_bug.cgi?id=1070396
+> http://sourceforge.net/p/net-snmp/code/ci/a1fd64716f6794c55c34d77e618210238a73bfa1/
+
+A first look at the patch suggests that it's about missing input
+validation, and not also about independently exploitable off-by-one
+errors in the sizes of data structures. In other words, although
+something like:
+
+  - struct icmp_msg_mib vals[255];
+  + struct icmp_msg_mib vals[256];
+
+would often be an independent security fix (255 is an unusual size),
+here it's not a security fix relative to the original code. If other
+analysis shows that that's incorrect, we'll add another CVE ID.
+
+Use CVE-2014-2284 for the missing input validation.
 
 
+> 2. net-snmp: snmptrapd crash when using a trap with empty community string
+> https://bugzilla.redhat.com/show_bug.cgi?id=1072778
+> https://bugzilla.redhat.com/show_bug.cgi?id=1072044
+> http://sourceforge.net/p/net-snmp/patches/1275/
 
+Use CVE-2014-2285.
 
-> thanks,
->
-> greg k-h
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-
-
--- 
-This message is strictly personal and the opinions expressed do not
-represent those of my employers, either past or present.
+iQEcBAEBAgAGBQJTF3S0AAoJEKllVAevmvms15wH/A2vbg+phBFo/ChivsN7fVRJ
+iVCRCFG7b81xVeZmnMPE0EM1YXaGefG9cYdKmRtnaCO5p2anuuJgzpjB+rE37C7a
+T2+rZIrhmkyOYmxUoebGrzwAqU7l0IqLfP5GOZJ8vbuaVyMWd8VJ6nlzmq8kF1yZ
+fGToucAz2jsDKOctGs6R8GGkKjNI5WdpgxkgQ6rrEdW0VfQzW7uz0AcgdXtmHjx1
+DerxDuhQxTGGrT+salAa3n8eNV7kBmfsroR72gv7agdW2hZ7E74c5CZG8hfwmNgN
+qcijF53zMJ46+u5nbm84ic7Rtopms/edABSd/DmZVHRGEs+ZILpvcWX47nX3wAM=
+=BxeE
+-----END PGP SIGNATURE-----
