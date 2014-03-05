@@ -1,21 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/4
-Message-ID: <1409316613.15452232.1391659788573.JavaMail.root@redhat.com>
-Date: Wed, 5 Feb 2014 23:09:48 -0500 (EST)
-From: Arun Neelicattu <abn@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/2
+Message-ID: <5316E247.7000404@redhat.com>
+Date: Wed, 05 Mar 2014 14:07:27 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Multiple security issues in Android Debug Bridge (Android SDK Tools)
+Subject: CVE request for two net-snmp remote DoS flaws
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi All,
 
-Two security issues pertaining to the Android Debug Bridge (part of Android SDK Tools) have been detailed on droidsec by jduck [1]. Can we please get CVE(s) assigned for these issues, if none exist?
+Two remote denial of service flaws were found in net-snmp details as below:
 
-Regards,
-Arun
+1. net-snmp: denial of service flaw in Linux implementation of ICMP-MIB
+https://bugzilla.redhat.com/show_bug.cgi?id=1070396
+http://sourceforge.net/p/net-snmp/code/ci/a1fd64716f6794c55c34d77e618210238a73bfa1/
 
-[1] http://www.droidsec.org/advisories/2014/02/04/two-security-issues-found-in-the-android-sdk-tools.html
+2.net-snmp: snmptrapd crash when using a trap with empty community string
+https://bugzilla.redhat.com/show_bug.cgi?id=1072778
+https://bugzilla.redhat.com/show_bug.cgi?id=1072044
+http://sourceforge.net/p/net-snmp/patches/1275/
+
+Can 2 CVE be please assigned to these issues?
+
+Thanks!
 
 -- 
-Arun Neelicattu / Red Hat Security Response Team 
-PGP: 0xC244393B 5229 F596 474F 00A1 E416  CF8B 36F5 5054 C244 393B
+Huzaifa Sidhpurwala / Red Hat Security Response Team
