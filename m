@@ -1,26 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/10
-Message-ID: <20140711104721.GA1931@mail.corp.redhat.com>
-Date: Fri, 11 Jul 2014 12:47:21 +0200
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/10
+Message-ID: <20140305212217.GA30920@eldamar.local>
+Date: Wed, 5 Mar 2014 22:22:17 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: XSS in PNP4Nagios
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE Request: file: crashes when checking softmagic for some corrupt PE executables
 Content-Type: text/plain; charset=utf-8
 
-> We need to REJECT CVE-2014-4740 because of the multiple conflicting
-> uses.
+Hi,
+
+On Wed, Mar 05, 2014 at 12:07:25PM -0500, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-4740 says
-> that CVE-2014-4740 is only about
-> f846a6c9d007ca2bee05359af747619151195fc9. The correct CVE ID for
-> f846a6c9d007ca2bee05359af747619151195fc9 is CVE-2014-4907.
+> > file can be made to crash when checking some corrupt PE executables,
+> > and so could be used to mount a denial of service for file, or an
+> > application using file/libmagic.
+> 
+> > http://bugs.gw.com/view.php?id=313
+> 
+> > https://github.com/glensc/file/commit/447558595a3650db2886cd2f416ad0beba965801
+> 
+> Use CVE-2014-2270.
+> 
+> A CVE ID seems worthwhile because of possible libmagic use cases.
+> 
+> "file can be made to crash" is typically not security-relevant on its
+> own (a user can recover from this by not continuing to run file on the
+> same crafted file). We're not sure whether any distribution has
+> packages that rely on server-side use of libmagic, or whether it's
+> common to have long-running processes that use libmagic with untrusted
+> input.
+[...]
 
-I suppose that CVE-2014-4740 will be used for something else in the future, right?
-I have corrected CVE ID in https://bugzilla.redhat.com/show_bug.cgi?id=1115983
+Thanks for the CVE assignment and also for the clarification about
+when a CVE might be assigned. I do not have a concrete example of such
+an application, although php5 for example is embedding a copy of
+libmagic/file which is used.
 
-Thanks.
--- 
-Vasyl Kaigorodov | Red Hat Product Security Team
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+One question about the CVE ID, as the bug was submitted on 2013-12-20
+should that have recieved a 2013 CVE?
 
-Content of type "application/pgp-signature" skipped
+Regards,
+Salvatore
