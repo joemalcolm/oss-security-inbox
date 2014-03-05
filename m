@@ -1,20 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/4
-Message-ID: <1470513.8fdomhgFzK@arcadia>
-Date: Fri, 05 Dec 2014 12:10:51 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: Hector Marco <hecmargi@....es>, full-disclosure@...ts.grok.org.uk, fulldisclosure@...lists.org, bugtraq@...urityfocus.com, bugs@...uritytracker.com, submissions@...ketstormsecurity.org
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/11
+Message-Id: <201403052136.s25LaHPU020698@linus.mitre.org>
+Date: Wed, 5 Mar 2014 16:36:17 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: file: crashes when checking softmagic for some corrupt PE executables
 Content-Type: text/plain; charset=utf-8
 
-On Gentoo (Hardened) I always get form 
-./get_offset2lib:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Offset2lib (libc): 0x0
+> One question about the CVE ID, as the bug was submitted on 2013-12-20
+> should that have recieved a 2013 CVE?
 
+The year portion of a CVE ID is typically for when the issue is
+first publicly identified as a security problem, not when the issue is
+first reported in a possibly different context.
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
+iQEcBAEBAgAGBQJTF5gVAAoJEKllVAevmvmswDUH/2s8Jjn1dIwTdT1YAMVI5OLt
+hTox7n32EWIqIELqm0iTVgxXUknDZfXfIOUFxMQSN+1Ib55Aa8WSkJB75Sh1LLPq
+zaKLX+PeE/wWOJOjgXCwLKVQkWCrJBDEtp4gRF74Ob9YsUvBvaIdYN31IG/cs1Dk
+LY/3r3XOrAwGmo46kKfycBTp2wBEPfDlCzFq4jtvOXxGozJuaA+uxp5tfOEHRZvk
+KY6VIyxtJqeRge0NPPU5shSEgmJUI1viRfEEtGtl+R9YIyBGfUiyCiBV+bLnZCs2
+f0FjEbEhm7esQ2oJPEpq5qiz2zTPbz+qQX6HyVTnS/ZgdwQXV0mO9To3kqRS2w0=
+=N7n/
+-----END PGP SIGNATURE-----
