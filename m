@@ -1,60 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/12
-Message-Id: <201406191709.s5JH8qMh018449@linus.mitre.org>
-Date: Thu, 19 Jun 2014 13:08:52 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/7
+Message-Id: <201403051707.s25H7Pve014007@linus.mitre.org>
+Date: Wed, 5 Mar 2014 12:07:25 -0500 (EST)
 From: cve-assign@...re.org
-To: jamie@...onical.com, thoger@...hat.com
+To: carnil@...ian.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: cups-browsed remote exploit
+Subject: Re: CVE Request: file: crashes when checking softmagic for some corrupt PE executables
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-The vulnerability that remains in cups-filters 1.0.51 (in the
-generate_local_queue function, the input sanitization also needs to be
-used for the host variable, but wasn't used for that) is assigned
-CVE-2014-4336. This is fixed in cups-filters 1.0.53. This is the
-vulnerability that exists because of an incomplete fix for
-CVE-2014-2707.
+> file can be made to crash when checking some corrupt PE executables,
+> and so could be used to mount a denial of service for file, or an
+> application using file/libmagic.
 
-The second vulnerability addressed in cups-filters 1.0.53 (OOB
-accesses in the process_browse_data function when reading the packet
-variable, leading to a crash after a remote attack) is assigned
-CVE-2014-4337.
+> http://bugs.gw.com/view.php?id=313
 
-For the third vulnerability addressed in cups-filters 1.0.53:
+> https://github.com/glensc/file/commit/447558595a3650db2886cd2f416ad0beba965801
 
-> - cups-browsed: SECURITY FIX: Fix on usage of the
->   "BrowseAllow" directive in cups-browsed.conf. Before, if the
->   argument of a "BrowseAllow" directive is not understood it
->   is treated as the directive not having been there, allowing
->   any host if this was the only "BrowseAllow" directive. Now
->   we treat this as a directive which no host can fulfill, not
->   allowing any host if it was the only one.
+Use CVE-2014-2270.
 
-the vendor is announcing it as a security fix, so it is assigned
-CVE-2014-4338. It also seems likely that the previous behavior was
-actually an implementation error. (Apparently, this only allows
-attacks against systems for which the administrator created a
-malformed configuration file. A vendor could instead choose to have an
-explicit security policy that the product's behavior is undefined in
-the case of a malformed configuration file.)
+A CVE ID seems worthwhile because of possible libmagic use cases.
 
-Two additional notes:
+"file can be made to crash" is typically not security-relevant on its
+own (a user can recover from this by not continuing to run file on the
+same crafted file). We're not sure whether any distribution has
+packages that rely on server-side use of libmagic, or whether it's
+common to have long-running processes that use libmagic with untrusted
+input.
 
-> This issue was reported as fixed in 1.0.51:
-> http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7188
+"apt-rdepends --reverse file" gave some hints that resulted in these
+possibilities, but the actual use of file (or libmagic) within these
+packages was not investigated:
 
-The code fix itself seems to be
+  https://packages.debian.org/wheezy/bacula-director-sqlite3
 
-  http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7189
+  network backup service - SQLite 3 storage for Director
 
-instead. Also, https://bugzilla.novell.com/show_bug.cgi?id=871327
-mentions CVE-2014-2707, but the attachment in 871327 is apparently
-only the CVE-2014-4336 and CVE-2014-4337 patch, not the CVE-2014-2707
-patch. However, 871327 isn't directly trying to define what
-CVE-2014-2707 means, so this can be considered a minor anomaly.
+  The Bacula Director service supervises all the backup, restore,
+  verify, and archive operations. It can run as a daemon
+
+  dep: file
+
+
+  https://packages.debian.org/wheezy/guestfsd
+
+  This package contains a standalone version the back-end daemon that
+  carries out file system access on behalf of libguestfs applications.
+
+  dep: file
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -64,11 +59,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJToxitAAoJEKllVAevmvmsR4IH/0XLDQd6TouMqkwHjj86tv8D
-mn3CVcZovqZRQIWBRYj4OlH5sgPyzTGrHR1KVw7FLfe81T3Qwj6eMptZD7qXXbRP
-ABkTEf+N2HP/7BAh46kCZhpgSvS7QSa9UX41thh1WmBSBSd2cdL2wvdcmkaeapVZ
-Ip2nT21w/ou1B3yS8NYlVwiAXWj84GclNTbLY31bKVSTd3KSKDKsHa4kCkfEGAlG
-4VKGioh4Y1aiBOxnYjerAxBg+nL3Vhq+mH21hTTfPifpg6vKBmtqVMuXuOVQ60Kb
-uE7MT8HA+SPGSE+84s7fjUVvx95M0j+MQHUEr/Y+QLM2j6qj96/xy1BED6ZxkwA=
-=1ezq
+iQEcBAEBAgAGBQJTF1kXAAoJEKllVAevmvmscocH/RQlnUoI+5ycxSb4/Y9iqkwq
+Fn4zG/6pMR5kcoJPI4e45kkKRlMcJgrYI+2toaye9+/zcRrzY7XKKMVp6uFWM1Hp
+FiE2Kui3jP1gXrX2vahpZ9eSSpg16cTrXUux6H8iZPsButaLP6+2gx8UhUTYcTkB
+KCmF04sfozVhU8rruJP8gOK/VzF9rAgc1bnQMJCEsWsrAGCdNcIVVLLD/SxrWA62
+Visc8xH4ChW0jxDvVr7Y07aVmG2ncfKYoc7wR6KKyfeksBEIK1Evl6uGai4yZHf1
+VU81TnGwpSqFZ1L5+XChPPQP9Z+pjnuy1c0qXdy7/1Ml4ioTn5LknI8+yGJ5syE=
+=a0pY
 -----END PGP SIGNATURE-----
