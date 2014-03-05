@@ -1,19 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/20/4
-Message-ID: <20140520145643.GA17982@inutil.org>
-Date: Tue, 20 May 2014 16:56:43 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/4
+Message-ID: <CAPLrYEQJdfX6REi6zdtA2JTj+BdWdphzF_LgaLDC4YzGGZc3GA@mail.gmail.com>
+Date: Wed, 5 Mar 2014 17:30:53 +0100
+From: Daniel Cegiełka <daniel.cegielka@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: balint@...intreczey.hu
-Subject: CVE request: xbmc
+Subject: Re: Linux-PAM pam_unix/unix_chkpwd is fail-open
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign a CVE ID for this information leak in XBMC:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=747428
+2014-03-04 21:54 GMT+01:00 Solar Designer <solar@...nwall.com>:
 
-Upstream bug report:
-http://trac.xbmc.org/ticket/15198
+> Someone might want to patch this issue in Linux-PAM.
+>
+> Alexander
 
-Cheers,
-        Moritz
+Hi Alexander,
+
+I know it's not realistic, but it may be easier to go to the OpenPAM.
+The code is much smaller and easier to audit (and tcb works with
+OpenPAM). OpenBSD is doing well with the BSD auth and gain the same as
+with PAM (plugins via /usr/libexec/auth/*). BSD auth is only three C
+core files:
+
+http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/gen/auth_subr.c?rev=1.39;content-type=text%2Fplain
+http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/gen/authenticate.c?rev=1.20;content-type=text%2Fplain
+http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/gen/login_cap.c?rev=1.29;content-type=text%2Fplain
+
+So it might be a better 'patch' than bloated Linux-PAM.
+
+btw. I'm thinking about porting BSD auth API to Linux/tcb.
+
+Daniel
