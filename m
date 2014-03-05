@@ -1,111 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/11
-Message-ID: <OF91331781.7DD5BC2E-ON87257CED.0041AB0A-85257CED.00424213@us.ibm.com>
-Date: Wed, 4 Jun 2014 08:03:40 -0400
-From: Lisa Bradley <lbradley@...ibm.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/6
+Message-ID: <20140305170434.GA6487@kroah.com>
+Date: Wed, 5 Mar 2014 09:04:34 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Operating system distribution security contact lists
+Subject: Re: CVE Request: staging/cxt1e1/linux.c: Correct arbitrary memory write in c4_ioctl()
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Mar 05, 2014 at 05:30:22PM +0100, Moritz Muehlenhoff wrote:
+> On Wed, Mar 05, 2014 at 08:23:53AM +0100, Salva Peiró wrote:
+> > Hi,
+> > 
+> > I've found a vulnerability in the staging kernel tree,
+> > Can anyone assign a CVE ID for this?
+> > 
+> > - staging/cxt1e1/linux.c: Correct arbitrary memory write in c4_ioctl()
+> > https://git.kernel.org/cgit/linux/kernel/git/gregkh/staging.git/commit/?h=staging-linus&id=084b6e7765b9554699afa23a50e702a3d0ae4b24
+> 
+> I don't think CVE IDs should be assigned for vulnerabilities
+> in the staging tree. 
 
-Hi
+I'm happy to agree with that (as the maintainer of the drivers/staging/
+tree).  Please note, that if a user does use a staging tree driver, it
+will "taint" the kernel with the "TAINT_CRAP" flag, and tell the user
+that they are on their own.
 
-Thanks for the wiki suggestion I will look into it. As for my LinkedIn, it
-is extremely out of date, guess you just helped encourage me to move that
-up on my priority list :o)
+But I'm not in charge of CVEs, if people are looking to create a ton of
+them, feel free to assign them to staging tree driver issues... :)
 
-~Lisa
+thanks,
 
-Lisa Marie Wood Bradley, PhD
-Product Security Incident Response Team (PSIRT), SWG Master Inventor
-lbradley<at> us <dot> ibm <dot> com
-
-
-From:	Solar Designer <solar@...nwall.com>
-To:	oss-security@...ts.openwall.com,
-Date:	06/04/2014 02:55 AM
-Subject:	Re: [oss-security] Operating system distribution security
-            contact lists
-
-
-
-Hi Lisa,
-
-On Tue, Jun 03, 2014 at 09:13:41AM -0600, Lisa Bradley wrote:
-> I would like to request membership to the closed "Operating system
-> distribution security contact lists" mailing list on behalf of the IBM
-> Product Security Incident Response Team (PSIRT). I am part of the PSIRT
-> team where I help manage the receipt, investigation and internal
-> coordination of security vulnerability information related to IBM
-> offerings. You can read more about PSIRT here:
-> http://www-03.ibm.com/security/secure-engineering/process.html.  I am the
-> main coordinator of Open Source vulnerabilities that affect IBM products.
-> We have products that utilize Open Source software, so being part of this
-> list will be beneficial. I do not plan on posting any IBM product
-specific
-> issues as we do that through Security Bulletins (see
-> http://www-03.ibm.com/security/secure-engineering/bulletins.html).
->
-> You can verify that I am part of the PSIRT team by emailing PSIRT
-directly
-> at IBM PSIRT<slash>Somers<slash>IBM or psirt<at>us<dot>ibm<dot>com.
-
-Thank you for bringing this to oss-security.  Besides the above, if this
-community says that IBM should be on the distros list, we'll need
-someone already active on oss-security to vouch for you - or I think it
-could be Troy Bollinger, who was active on Bugtraq.  Per LinkedIn, he
-left IBM when you were already at IBM (for some years), so possibly he
-could vouch for you?  Your LinkedIn profile, if I found the right one,
-does not mention security, though, so I don't know if you were in
-contact with Troy back then or not.
-
-Would it be reasonable to include IBM security advisory/contact details
-on our wiki?
-
-http://oss-security.openwall.org/wiki/vendors
-
-If there are specific OSS products with their own advisory/contact
-details (different from IBM PSIRT's catch-all), they may be added to:
-
-http://oss-security.openwall.org/wiki/software
-
-(Yes, this is the same suggestion I just made to VMware.)
-
-Anyone can register for an account and edit the wiki, so please do if
-you find this desirable.
-
-What do others in this community think?  To remind, on vendor-sec we had
-representatives from Apple and SGI.  We "lost" them when, after
-vendor-sec ceased to exist, I setup only a linux-distros list initially.
-At a later time, we also got the distros list, to which Apple and SGI
-would probably be welcome again - but that issue was not brought up
-again at that time.
-
-Both the Apple folks and the vendor-sec member from SGI were helpful to
-the rest of the community on vendor-sec, so it was not one-way
-communication.  IIRC, Red Hat folks actually said that I was wrong in
-limiting the initial membership to Linux distros only, leaving Apple out
-despite of their valuable contributions to vendor-sec and them having
-some Open Source products (they're upstream for CUPS, etc.)  Perhaps we
-should have explicitly invited Apple and SGI folks to join distros when
-that list was finally setup.  Perhaps it's not too late to do that now.
-
-I'd appreciate comments from the community.  I have no strong feelings
-for, nor against, expanding the distros list membership to include
-(mostly/partially) closed-source vendors.
-
-As yet another option, if the community wants that, I may setup an
-open-distros list that would include Linux and Open Source *BSDs
-(initially just the current members of distros), but not the
-(mostly/partially) closed-source vendors (who would be on distros only).
-That way, any folks who are possibly uncomfortable about notifying
-closed-source vendors would have the option to still use our PGP
-re-encrypting setup to notify just the Open Source distro vendors.
-Or maybe I am imagining that a significant number of people reporting
-vulnerabilities would be uncomfortable providing advance notification to
-closed-source vendors?
-
-Alexander
-
-
-Content of type "text/html" skipped
+greg k-h
