@@ -1,38 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/12
-Message-Id: <D657D1CD-45D4-47E8-9DD7-8D0EC4C4491B@omniti.com>
-Date: Thu, 11 Dec 2014 17:46:07 -0500
-From: Dan McDonald <danmcd@...iti.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request for illumos distributions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/1
+Message-ID: <5316B8F3.60706@redhat.com>
+Date: Wed, 05 Mar 2014 11:11:07 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: libssh and stunnel PRNG flaws
 Content-Type: text/plain; charset=utf-8
 
-Ping?
+Hi All,
 
-Sent from my iPhone (typos, autocorrect, and all)
+Aris Adamantiadis reported the following to us:
 
-> On Dec 9, 2014, at 1:43 AM, Dan McDonald <danmcd@...iti.com> wrote:
-> 
-> I believe this will be the first time the illumos project (http://www.illumos.org/) has requested a CVE number.  I apologize for any newbie mistakes.  PLEASE NOTE:  We are the open-source inheritor of what was once OpenSolaris's OS/Net consolidation (i.e. the kernel, system libraries, and system commands).  WE ARE NOT RELATED TO ORACLE or ORACLE SOLARIS.
-> 
-> Illumos bug #5421 - http://illumos.org/issues/5421  which is now fixed in the upstream illumos-gate, is an innocuous fix to a serious problem that allows an arbitrary user in the global zone (non-global zones are not able to panic the machine) to panic the machine.
-> 
-> Illumos has various distributions from various parties.  These include, but are not limited to:
-> 
->    OmniOS from OmniTI
->    SmartOS from Joyent
->    NexentaStor from Nexenta
->    The OpenIndiana project
->    Coraid
-> 
-> Because SmartOS presents non-global zones to its non-administrative users, it is not a high-priority for them.  For OmniOS and OpenIndiana, it is more critical.
-> 
-> OmniOS has updated its packaging servers for all supported releases:  r151006/LTS, r151010/old-Stable, r151012/current-stable, and bloody.  Merely issuing "pkg update" and rebooting will fix the problem.  Users still on r151008 should upgrade to r151012 ASAP.
-> 
-> SmartOS has standard upgrade procedures.
-> 
-> Other distros' contacts are Bcc:ed here.  They will contact me if they have updates.
-> 
-> Thank you!
-> Daniel L. McDonald -- Illumos RTI Advocate, and unofficial Security Coordinator
-> 
+I have found a vulnerability in stunnel (fork mode) and libssh server
+(if implemented with fork) that is similar to problems found in
+postgresql [1]. When accepting a new connection, the server forks and
+the child process handles the request. The RAND_bytes() function of
+openssl doesn't reset its state after the fork, but simply adds the
+current process id (getpid) to the PRNG state, which is not guaranteed
+to be unique.
+
+stunnel uses libssl, which also seeds the PRNG with the output of
+time(NULL), which means that vulnerability has to be exploited under a
+second. I have exploit code that can reproduce the issue on OpenBSD 5.4
+(thanks to random PIDs) but I think it may be exploitable on other unix
+systems as well.
+
+The following CVEs have been assigned:
+
+CVE-2014-0016 stunnel PRNG vulnerability
+CVE-2014-0017 libssh PRNG vulnerability
+
+Mitigations implemented into openssl-0.9.8j (2009) makes the
+vulnerability not exploitable in stock openssl. The signing code for
+ECDSA and DSA explicitly seeds the pool with the digest to sign.
+
+
+References:
+
+libssh:
+https://bugzilla.redhat.com/show_bug.cgi?id=1072191
+http://www.libssh.org/2014/03/04/libssh-0-6-3-security-release/
+http://git.libssh.org/projects/libssh.git/commit/?id=e99246246b4061f7e71463f8806b9dcad65affa0
+
+stunnel:
+https://bugzilla.redhat.com/show_bug.cgi?id=1072180
+There is no upstream patch yet
+
+
+Regards,
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
