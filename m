@@ -1,92 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/16/6
-Message-ID: <CAHw3cgTH8xpW9iXUxoc5_A0M7FwqG0pt+qrOZebnSzP_6SQWpQ@mail.gmail.com>
-Date: Tue, 16 Dec 2014 18:00:49 +0100
-From: Ryan Dewhurst <ryandewhurst@...il.com>
-To: Henri Salo <henri@...v.fi>
-Cc: oss-security@...ts.openwall.com, "WordPress.org" <plugins@...dpress.org>,  moderators@...db.org, "wpscanteam@...il.com" <wpscanteam@...il.com>
-Subject: Re: CVE-2014-9119: DB Backup plugin for WordPress download.php file Parameter Remote Path Traversal File Access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/5
+Message-ID: <20140305163022.GC27746@inutil.org>
+Date: Wed, 5 Mar 2014 17:30:22 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: staging/cxt1e1/linux.c: Correct arbitrary memory write in c4_ioctl()
 Content-Type: text/plain; charset=utf-8
 
-https://wpvulndb.com/vulnerabilities/7726 thanks!
+On Wed, Mar 05, 2014 at 08:23:53AM +0100, Salva Peiró wrote:
+> Hi,
+> 
+> I've found a vulnerability in the staging kernel tree,
+> Can anyone assign a CVE ID for this?
+> 
+> - staging/cxt1e1/linux.c: Correct arbitrary memory write in c4_ioctl()
+> https://git.kernel.org/cgit/linux/kernel/git/gregkh/staging.git/commit/?h=staging-linus&id=084b6e7765b9554699afa23a50e702a3d0ae4b24
 
-On Tue, Dec 16, 2014 at 5:51 PM, Henri Salo <henri@...v.fi> wrote:
+I don't think CVE IDs should be assigned for vulnerabilities
+in the staging tree. 
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> Product: WordPress plugin db-backup
-> Plugin page: https://wordpress.org/plugins/db-backup/
-> Developer: Syed Amir Hussain "syedamirhussain91"
-> Vulnerability Type: Remote Path Traversal File Access
-> CWE-23: Relative Path Traversal
-> Vulnerable Versions: 4.5 and earlier
-> Fixed Version: N/A
-> Vendor Notification: 2014-11-27
-> Public Disclosure: 2014-12-16
-> CVE Reference: CVE-2014-9119
-> Criticality: High
->
-> Vulnerability details:
->
-> DB Backup plugin for WordPress contains a flaw that allows traversing
-> outside of
-> a restricted path. The issue is due to the download.php script not properly
-> sanitizing user input, specifically path traversal style attacks (e.g.
-> '../').
-> With a specially crafted request, a remote attacker can gain read access to
-> arbitrary files, limited by system operational access control. This
-> vulnerability can be used to get WordPress authentication keys and salts,
-> database address and credentials, which can be used in certain
-> environments to
-> elevate privileges and execute malicious PHP code.
->
-> Root cause:
->
-> Unsanitized user input to readfile() function.
->
-> Proof-of-concept:
->
-> /wp-content/plugins/db-backup/download.php?file=../../../wp-config.php
->
-> Timeline:
->
-> 2014-11-27: Reported to developer and WordPress plugins team.
-> 2014-11-27: CVE assigned and reported to developer.
-> 2014-11-28: Communication with developer and he said this will be fixed.
-> 2014-12-02: Asked status from developer.
-> 2014-12-03: Developer says this will be fixed by 7th.
-> 2014-12-07: Asked status from developer.
-> 2014-12-08: Developer responds.
-> 2014-12-09: Asked more details from developer.
-> 2014-12-10: More discussion about the solution and new disclosure date set.
-> 2014-12-16: Agreed disclosure date was 15th, I don't understand issue with
-> patching so public disclosure. Please note that there are hundreds of
-> backup
-> plugins in WordPress Plugin Directory.
->
-> Notes:
->
-> - - Remove plugin "db-backup" as deactivation does not fix the issue.
-> - - Use another plugin until patch is available and new version is
-> published.
-> - - Sites I know using this plugin will be notified via abuse emails today.
->
-> References:
-> http://cwe.mitre.org/data/definitions/23.html
-> https://scapsync.com/cwe/CWE-23
-> https://www.owasp.org/index.php/Path_Traversal
->
-> https://www.owasp.org/index.php/Testing_for_Path_Traversal_%28OTG-AUTHZ-001%29
->
-> - --
-> Henri Salo
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
->
-> iEYEARECAAYFAlSQYwcACgkQXf6hBi6kbk8uHwCeJfQd1Vjc2Rr6kzyFxF8rC4NW
-> zbMAoKG4tidQkLM5qrnyIfHTVZPXbOdk
-> =5Nmf
-> -----END PGP SIGNATURE-----
->
-
+Cheers,
+        Moritz
