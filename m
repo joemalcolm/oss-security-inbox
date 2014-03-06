@@ -1,79 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/12
-Message-Id: <4796dbe4-a8e8-44d6-9e6d-6b78570a5d18@googlegroups.com>
-Date: Tue, 6 May 2014 09:20:15 -0700 (PDT)
-From: Rafael Mendonça França <rafaelmfranca@...il.com>
-To: rubyonrails-security@...glegroups.com
-Cc: oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2014-0130] Directory Traversal Vulnerability With Certain Route Configurations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/06/9
+Message-Id: <201403062032.s26KWO2n024018@linus.mitre.org>
+Date: Thu, 6 Mar 2014 15:32:24 -0500 (EST)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: konqueror not providing any protection against clickjacking
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+> It may be debatable if that's a CVE issue, because it's basically a
+> "there's a general vulnerability in the way HTML/JS is done, there's a
+> protection mechanism and product X doesn't have it".
 
-There is a vulnerability in the 'implicit render' functionality in Ruby on Rails. This vulnerability has been assigned the CVE identifier CVE-2014-0130.
+Comprehensively tracking the introduction of new protection mechanisms
+and new security features across all browsers is not directly in the
+scope of CVE. There are a number of cases described either in older
+documents such as http://code.google.com/p/browsersec or newer
+documents such as
+http://www.strews.eu/results/5-web-platform-security-guide in which
+some browsers have chosen to block a type of attack whereas others
+have not. At the moment, these types of "competitive analysis" CVE
+requests may be deferred. In other words, CVE isn't really "about" a
+product suddenly transitioning from non-vulnerable to vulnerable
+solely because its development effort has lagged behind its
+competitors in a sufficiently important way for a sufficiently long
+period of time. The author of a product is free to announce software
+mistakes, and there may be opportunities for CVE assignments in cases
+of new codebases lacking a security feature that was already
+more-or-less ubiquitous before the software was written.
 
-Versions Affected:  All Supported
-Not affected:       None
-Fixed Versions:     4.1.1, 4.0.5, 3.2.18
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Impact
-------
-The implicit render functionality allows controllers to render a template, even if there is no explicit action with the corresponding name.  This module does not perform adequate input sanitization which could allow an attacker to use a specially crafted request to retrieve arbitrary files from the rails application server.
-
-In order to be vulnerable an application must specifically use globbing routes[1] in combination with the :action parameter.  The purpose of the route globbing feature is to allow parameters to contain characters which would otherwise be regarded as separators, for example '/' and '.'.  As these characters have semantic meaning within template filenames, it is highly unlikely that applications are deliberately combining these functions.
-
-To determine if you are vulnerable, search your application's routes files for '*action' and if you find any, use one of the work arounds below.
-
-Releases
---------
-The 4.1.1, 4.0.5 and 3.2.18 releases are available at the normal locations.
-
-Workarounds
------------
-The simplest workaround is to simply not use globbing matches for the :action parameter.  As action methods cannot contain a '/' character, the simple matching should be sufficient. So replace
-
-  get 'my_url/*action', controller: 'asdf'
-
-with
-
-  get 'my_url/:action', controller: 'asdf'
-
-If your application depends on this functionality, you will need to rename the route parameter and add an explicit action:
-
-  get 'my_url/*template_path', controller: 'asdf', action: 'display'
-
-Then add an action which renders explicitly:
-
-  def display
-    if !params[:template_path].index('.')
-      render file: params[:template_path]
-    end
-  end
-
-Note: The path check in this example may not be suitable for your application, take care
-
-
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
-
-* 4-1-directory_traversal.patch - Patch for 4.1 series
-* 4-0-directory_traversal.patch - Patch for 4.0 series
-* 3-2-directory_traversal.patch - Patch for 3.2 series
-
-Please note that only the 4.1.x, 4.0.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
-Credits 
-------- 
-Thanks to Ville Lautanala of Flowdock for reporting the vulnerability to us, and working with us on a fix.
-
-[1] http://guides.rubyonrails.org/routing.html#route-globbing-and-wildcard-segments
-
-
-Content of type "text/html" skipped
-
-View attachment "3-2-directory_traversal.patch" of type "text/x-diff" (5040 bytes)
-
-View attachment "4-0-directory_traversal.patch" of type "text/x-diff" (4988 bytes)
-
-View attachment "4-1-directory_traversal.patch" of type "text/x-diff" (4989 bytes)
+iQEcBAEBAgAGBQJTGNq6AAoJEKllVAevmvmshoIH/A6sHp+gzIB2HxknclfLVEgr
+CbNFRRAykrxCthQbAM8IzET941ZdxT0vFu8ctT95o/+aT3R0pXVsGckjdqFqUwzf
+UEXmrtXYjCGY9RJBs+M20R3ZCWHrx9HCJ88MOEGc8G/JQy/mcumETn3XZ0+PixQA
+KOqbHLsD5T8HwFM2K2qP3gYefAc/PUYumcFmxfbw9k+MP/vvmCNsFRXlUnJJkIWX
+thdCpz9WTK9ihuJY99EUCAdAkWJHyrlz9px5j5lojHfC4ZY1gLUc2+fYJSPJbqMX
+Qc4UMTvuomelxl9hJZh1PTKvPVu+gK+xQXe1/kqXNex3zHM0rx+ueXgk6W4QEkM=
+=1SBL
+-----END PGP SIGNATURE-----
