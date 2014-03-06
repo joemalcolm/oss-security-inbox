@@ -1,53 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/12
-Message-ID: <CALx_OUDPKtyyb=cyKjqVw9hR8Z5o_BGzbA_SUE5r_+BoQp6U9Q@mail.gmail.com>
-Date: Wed, 1 Oct 2014 19:44:38 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Chet Ramey <chet.ramey@...e.edu>
-Subject: Re: More parser odities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/06/5
+Message-ID: <CAA7hUgH_2zmu5FxD_oEMBqFDuDryiosJS=Ra8SJyPQCLnaHyWQ@mail.gmail.com>
+Date: Thu, 6 Mar 2014 15:22:07 +0100
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: net-snmp agentx incorrect handling of multi-object requests DoS
 Content-Type: text/plain; charset=utf-8
 
-> Maybe it's just the right opportunity to do that, instead of assigning
-> yet another CVE to Michal's latest finding?  Oh, I think Michal's
-> latest already got a CVE too?  Does this once again render the
-> (previously) exposed parser not CVE-worthy? ;-(
+Hi,
 
-Whoa :-) So to be clear, I felt that it makes sense to ask for CVEs
-and report these externally because up until that point, we had no
-conclusive evidence that the original patch is truly inadequate, and
-that Florian's patch is anything more than a nice-to-have that several
-people on oss-security are fond of. Tavis' EOL find was troubling, but
-fixed upstream with a one-liner in bash43-026, not with Florian's
-patch.
+It was found that the AgentX subagent of net-snmp can be stalled when
+a manager sends a multi-object request with a different number of
+subids. From the Debian bug report:
 
-(In fact, Florian's patch wasn't upstreamed when I started fuzzing the
-parser and hit the bugs.)
+> This happens if one of the requested OID is larger than the previous one:
+>
+> agentx/master: request for variable (iso.3.6.1.2.1.2.2.1.7.7)
+> agentx/master: request for variable (iso.3.6.1.2.1.2.2.1.2.10)
+> agentx/master: request for variable (iso.3.6.1.2.1.2.2.1.8.7)
+> agentx/master: request for variable (iso.3.6.1.3.53.5.5.2.1.3.101)
+>
+> First three OID contain 11 subid while the next one has 12 subid.
 
-Anyway, I think that the confusion stemmed mostly from fairly
-inaccurate "vanity" pages, news articles, and "vulnerability checkers"
-that pulled off stuff like this
-(https://shellshocker.net/shellshock_test.sh):
+Resulting error message from the subagent:
+> agentx: Oversized Object ID
 
--- snip! --
-# CVE-2014-7186
-CVE20147186=$((bash -c 'true <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF
-<<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF' 2>/dev/null || echo
-"vulnerable") | grep 'vulnerable' | wc -l)
+The bug is fixed upstream for the 5.4 branch in 5.4.4. From the
+upstream bug report this was also fixed in the 5.3 branch but I don't
+know on what specific version.
 
-echo -n "CVE-2014-7186 (redir_stack bug): "
-if [ $CVE20147186 -gt 0 ]; then
-        echo -e "\033[91mVULNERABLE\033[39m"
-else
-        echo -e "\033[92mnot vulnerable\033[39m"
-fi
--- snip! --
+Could a CVE id be assigned?
 
-Assigning CVEs + maximum CVSS scores to the two probably non-risk
-one-off bugs probably didn't help.
+Thanks
 
-At this point, it definitely makes no sense to keep assigning CVEs to
-additional prefix-requiring problems in the parser at this point,
-since hopefully everybody got the message to upgrade.
+Upstream bug report:
+http://sourceforge.net/p/net-snmp/patches/1113/
+More explicit impact:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=684388
 
-/mz
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
