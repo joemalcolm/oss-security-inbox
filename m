@@ -1,48 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/4
-Message-ID: <530EE333.8030906@sysdream.com>
-Date: Thu, 27 Feb 2014 08:03:15 +0100
-From: Damien Cauquil <d.cauquil@...dream.com>
-To: cve-assign@...re.org
-CC: oss-security@...ts.openwall.com
-Subject: [CVE assignment notification] Multiple vulnerabilities in POSH
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/06/2
+Message-Id: <201403060329.s263TAGK004652@core.courtesan.com>
+Date: Wed, 05 Mar 2014 20:29:10 -0700
+From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
+To: oss-security@...ts.openwall.com
+Subject: sudo: security policy bypass when env_reset is disabled
 Content-Type: text/plain; charset=utf-8
 
-We updated our original advisory about POSH application with the CVE-IDs
-provided;
+Summary:
+    If the env_reset option is disabled in the sudoers file, a
+    malicious user with sudo permissions may be able to run arbitrary
+    commands with elevated privileges by manipulating the environment
+    of a command the user is legitimately allowed to run.
 
-> 1. Unauthenticated SQL injection vulnerability affecting all
-> POSH 3.X versions prior to 3.3.0
+Sudo versions affected:
+    Sudo 1.6.9 through 1.8.4p5 inclusive.  Sudo 1.8.5 and higher
+    are not affected.
 
-CVE-2014-2211 is assigned to this vulnerability
+CVE ID:
+    This vulnerability has been assigned CVE-2014-0106 in the Common
+    Vulnerabilities and Exposures database.
 
-> 2. Design vulnerability affecting all POSH 3.X versions
+Details:
+    Sudo has two methods of constructing the environment that the
+    command run by it will use.  The default method (since sudo
+    1.6.9) is to execute the command with a new, minimal environment.
+    The new environment contains the TERM, PATH, HOME, MAIL, SHELL,
+    LOGNAME, USER, USERNAME, SUDO_COMMAND, SUDO_USER, SUDO_UID and
+    SUDO_GID variables in addition to variables from the invoking
+    process permitted by the env_check and env_keep options.  This
+    is effectively a whitelist for environment variables.
 
-CVE-2014-2212 is assigned to this vulnerability
+    If, however, the env_reset option is disabled, any variables
+    not explicitly denied by the env_check and env_delete options
+    are inherited from the invoking process.  In this case, env_check
+    and env_delete behave like a blacklist.  Since it is not possible
+    to blacklist all potentially dangerous environment variables,
+    use of the default env_reset behavior is encouraged.
 
-> 3. Arbitrary url redirection affecting all POSH 3.X versions
+    Beginning with sudo 1.6.9, it is also possible to specify extra
+    environment variables on the command line.  These variables are
+    supposed to be subject to the same restrictions as the invoking
+    user's environment, unless the user is allowed to set arbitrary
+    variables either via the SETENV attribute or by virtue of having
+    sudo "ALL".
 
-CVE-2014-2213 is assigned to this vulnerability
+    Due to a logic bug in the validate_env_vars() function, if the
+    env_reset option is disabled, environment variables specified
+    on the command line are permitted when they should not be (and
+    vice versa).  This can be used by a malicious user to run
+    arbitrary programs by manipulating the environment of a command
+    the user is legitimately allowed to run.  For example, on many
+    systems the LD_PRELOAD environment variable is used to load a
+    dynamic shared object before any shared libraries are loaded.
+    By either replacing a library function called by the program,
+    or by including an _init() function in the shared object, the
+    user can execute arbitrary commands with elevated privileges.
 
-> 4. Cross-Site scripting vulnerability affecting all POSH 3.X versions
+    The code that contains the bug was rewritten for sudo 1.8.5,
+    which does not suffer from the same security issue.
 
-CVE-2014-2214 is assigned to this vulnerability
+Impact:
+    For sudo versions prior to 1.8.5, if the env_reset option is
+    explicitly disabled in the sudoers file, a malicious user with
+    sudo permissions may be able to run arbitrary commands with
+    elevated privileges.  There is no impact for sudo 1.8.5 and
+    higher, or when the sudoers file does not disable env_reset.
 
+Fix:
+    A fix for the sudo 1.7.x branch is included in sudo 1.7.10p8.
+    The actual fix is a single line change to env.c:
+	http://www.sudo.ws/repos/sudo/rev/748cefb49422
+    Sudo versions 1.8.5 and higher are not vulnerable.
 
-References:
+Workaround:
+    Only systems with sudoers files that explicitly disable env_reset
+    are affected.  As such, a simple workaround is to simply not
+    disable env_reset, which is the default behavior.
 
-* Updated advisory:
-http://www.sysdream.com/system/files/POSH-3.2.1-advisory_0.pdf
-
-
-
--- 
-Damien Cauquil
-Directeur Recherche & Développement
-CHFI | CEH | ECSA | CEI
-
-Sysdream
-108 avenue Gabriel Péri
-93400 Saint Ouen
-Tel: +33 (0) 1 78 76 58 21
-www.sysdream.com
+Credit:
+    I'd like to thank Sebastien Macke for reporting this bug and
+    providing a fix.
