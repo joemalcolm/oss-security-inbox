@@ -1,55 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/8
-Message-ID: <542382EF.4020806@redhat.com>
-Date: Thu, 25 Sep 2014 08:20:23 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/06/3
+Message-Id: <20140306044550.B9C0920106@smtp.hushmail.com>
+Date: Thu, 06 Mar 2014 04:45:50 +0000
+From: "mancha" <mancha1@...h.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Subject: CVE Request/Clarification - PHP
 Content-Type: text/plain; charset=utf-8
 
-On 09/25/2014 07:35 AM, Huzaifa Sidhpurwala wrote:
-> On 09/25/2014 07:07 AM, Chet Ramey wrote:
->> On 9/24/14, 9:30 PM, Solar Designer wrote:
->>> On Wed, Sep 24, 2014 at 06:26:53PM -0700, Anthony Liguori wrote:
->>>> On Wed, Sep 24, 2014 at 6:23 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
->>>>> On 9/24/14, 5:32 PM, Solar Designer wrote:
->>>>>> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
->>>>>>> Tavis Ormandy just tweetet this:
->>>>>>> https://twitter.com/taviso/status/514887394294652929
->>>>>>>
->>>>>>> The bash patch seems incomplete to me, function parsing is still
->>>>>>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
->>>>>>
->>>>>> Thanks for bringing this to oss-security.  I've added CC to Chet and
->>>>>> Tavis on this "reply".
->>>>>
->>>>> I have a fix for this.
->>>>
->>>> Can you provide a pointer to the patch?  I put together a patch that
->>>> changed the report_error() to fatal_error() as I wasn't able to see
->>>> how to reset the parser state.  Was just about to send it out...
->>>
->>> I think Chet is not on oss-security - we should be CC'ing him where
->>> appropriate.  (I've added the CC on this reply.)
->>
->> I haven't sent the patch out.  It's not related to this problem -- this
->> is just the easiest way to get to that code path -- and I still have
->> some investigating to do.
->>
-> 
-> Please note, We have assigned CVE-2014-3659 to this issue.
-> 
-> 
+Hello.
 
-I got this message from MITRE some time back:
+Two issues were recently identified as security concerns in
+libmagic: CVE-2014-1943 (infinite recursion flaw) &
+CVE-2014-2270 (improper bounds checking).
 
-"No, we are keeping CVE-2014-7169. CVE-2014-7169 was already public at
-nvd.nist.gov before 1146319 was created. Also, the nvd.nist.gov entry
-most likely has a much wider audience. We will enter a REJECT entry
-for CVE-2014-3659."
+What is the policy regarding CVE allocation for products
+vulnerable by virtue of bundling copies of vulnerable products
+(as opposed to, say, linking vulnerable system libraries)?
 
-So CVE-2014-3659 stands rejected and we will use CVE-2014-7169 for this
-issue.
+I bring this up because PHP embeds a copy of libmagic which
+it uses in its fileinfo extension. PHP has since patched its
+embedded libmagic to address above-mentioned issues: [1],[2].
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+In the event this merits separate CVEs, please allocate.
+
+If not, this thread can serve to clarify MITRE policy regarding
+inherited vulnerabilities as well as provide a heads up for
+vendors shipping PHP.
+
+Thanks.
+
+--mancha
+
+Upstream PHP Fixes:
+[1] http://git.php.net/?p=php-src.git;a=commitdiff;h=89f864c547 
+(CVE-2014-1943)
+[2] http://git.php.net/?p=php-src.git;a=commitdiff;h=a33759fd27 
+(CVE-2014-2270)
+
