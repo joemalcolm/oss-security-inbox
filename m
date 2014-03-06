@@ -1,45 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/30/6
-Message-ID: <1391121051.4051.34.camel@juliet.mcarpenter.org>
-Date: Thu, 30 Jan 2014 23:30:51 +0100
-From: Martin Carpenter <mcarpenter@...e.fr>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: enlightenment sysactions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/06/7
+Message-Id: <201403061751.s26Hp0e0004955@linus.mitre.org>
+Date: Thu, 6 Mar 2014 12:51:00 -0500 (EST)
+From: cve-assign@...re.org
+To: fweimer@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: cloud-init DNS resolution fix
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Red Hat Security suggested I request a CVE here since this potentially
-effects multiple distros/maintainers. The Enlightenment window manager
-(enlightenment.org) was found to ship with (a) a setuid root helper that
-did not effectively sanitize its environment and (b) a weak default
-configuration. Users in select groups could exploit this to execute
-arbitrary programs as root.
+> https://bugs.launchpad.net/cloud-init/+bug/1040200
+> http://bazaar.launchpad.net/~cloud-init-dev/cloud-init/trunk/revision/635
+> 
+> This could allow someone who has control over a suitable domain name to 
+> obtain root rights on an affected system.
 
-This was fixed upstream in 3 commits each for both e17 and e18 branches,
-with two new releases shipped shortly after:
-  0.17.6, Dec  4th 2013: [1], [2], [3]
-  0.18.0, Dec 21st 2013: [4], [5], [6]
+Use CVE-2012-6639.
 
-Fedora has a bug filed against it at [7] referencing the e18 commits.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Thanks,
-
-Martin.
-
-[1]
-https://git.enlightenment.org/core/enlightenment.git/commit/?id=ea605237bb64ee09341121461b3d2c0f5dbe832d 
-[2]
-https://git.enlightenment.org/core/enlightenment.git/commit/?id=126afd0fda493deec8398088e6e928b4d2e5f463 
-[3]
-https://git.enlightenment.org/core/enlightenment.git/commit/?id=8cabf2708520539cf25ca0a876f9c044f6d56a77 
-[4]
-https://git.enlightenment.org/core/enlightenment.git/commit/?id=9456e88504cb5daddbac3f49373a3a9a8577e27a
-[5]
-https://git.enlightenment.org/core/enlightenment.git/commit/?id=666df815cd86a50343859bce36c5cf968c5f38b0
-[6]
-https://git.enlightenment.org/core/enlightenment.git/commit/?id=bb4a21e98656fe2c7d98ba2163e6defe9a630e2b
-[7] https://bugzilla.redhat.com/show_bug.cgi?id=1059410
-
-
-
+iQEcBAEBAgAGBQJTGLStAAoJEKllVAevmvmspV0H/AwYqpWcjDY7UV+SvzqzrdwX
+eWbpTWvNLgko1EU72yiDNkZGgvhmElScC7SROJr/cWQRqewMsWAulUgGApWrBq+o
+EoNV5zX/OFNCXNXyHawDCKnrIawVPv1CI2Vr+YmmMFZ+K3QRjU54E0miR2dOjXMX
+Bbh+ebx/Zrwj8+7rE7t6B7XAxVSF0VByyoOEJaFySgFkhRpo7oerTbhFfwX3E6wp
+BbcesgthBDie7fPSDRxMrbPS98N+dfrrHDCicoRc4tEwZpSrCVCb5z/9Fdoa3vBK
+irXTAN8c6H0QuS2V3pAHMFTypWn7VqC/3LDJ+G9ZXu1pTR1jL6DHtEz7sQXNnx8=
+=IK/X
+-----END PGP SIGNATURE-----
