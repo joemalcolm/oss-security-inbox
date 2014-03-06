@@ -1,19 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/2
-Message-ID: <20140710124311.13a07851@redhat.com>
-Date: Thu, 10 Jul 2014 12:43:11 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: Ramon de C Valle <rdecvalle@...are.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Fwd: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/06/4
+Message-ID: <53180D03.3060906@fedoraproject.org>
+Date: Thu, 06 Mar 2014 06:52:03 +0100
+From: Remi Collet <remi@...oraproject.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request: file: crashes when checking softmagic for some corrupt PE executables
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 9 Jul 2014 15:45:10 +0000 Ramon de C Valle wrote:
+Le 05/03/2014 19:29, mancha a écrit :
 
-> I believe this should have a CVE assigned.
+> The initial fix for this problem [1] had an off-by-one flaw
+> that has since been corrected [2].
+> 
+> I am unsure of the policy regarding the issuance of new CVE 
+> identifiers associated with incomplete/flawed fixes associated
+> with previously allocated CVEs. But, in this particular case
+> file 5.17 shipped with [1] and not [2].
 
-Can you post more details of your analysis of the issue to clarify what
-the issue is here?
+[1] fix a security risk.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+[2] don't fix any security risk. It's only a regression noticed when
+analysis some files (used in PHP test suite, p.e.). I don't think this
+need a new CVE.
+
+> 
+> --mancha
+> 
+> [1] https://github.com/file/file/commit/447558595a36
+> [2] https://github.com/file/file/commit/70c65d2e1841
+> 
+> 
+
