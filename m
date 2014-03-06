@@ -1,84 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/6
-Message-ID: <CAC9YFze=aTm4W-O05DUFcb81x1OJpzaTbv8SqZ3i_a7rwGobhg@mail.gmail.com>
-Date: Wed, 2 Jul 2014 14:31:26 -0300
-From: Rafael Mendonça França <rafaelmfranca@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2014-3482] [CVE-2014-3483] Ruby on Rails: Two Active Record SQL Injection Vulnerabilities Affecting PostgreSQL
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/06/8
+Message-Id: <201403062027.s26KRKqp023921@linus.mitre.org>
+Date: Thu, 6 Mar 2014 15:27:20 -0500 (EST)
+From: cve-assign@...re.org
+To: speiro@....upv.es
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: staging/cxt1e1/linux.c: Correct arbitrary memory write in c4_ioctl()
 Content-Type: text/plain; charset=utf-8
 
-Now with the attached patches.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Rafael Mendonça França
-http://twitter.com/rafaelfranca
-https://github.com/rafaelfranca
+The scope of CVE doesn't exclude issues that exist only in software
+that's at a beta level or similar level. See for example "Attendees
+agreed that CVE should include problems in beta software, provided
+that the beta code was intended for public dissemination" in the
+http://cve.mitre.org/data/board/archives/2000-03/msg00007.html post.
 
+The CVEs of interest to the community tend to be ones that are
+"common" -- in other words, they are present at multiple sites, and a
+CVE ID would actually be used (typically in multiple contexts) as the
+mechanism for naming and tracking the vulnerability.
 
-On Wed, Jul 2, 2014 at 2:11 PM, Rafael Mendonça França <
-rafaelmfranca@...il.com> wrote:
+For the specific case of staging drivers, a relevant example is "this
+driver is enabled in the Debian 6.0 kernel" for:
 
-> There are two distinct but related vulnerabilities in PostgreSQL adapter for Active Record. These vulnerabilities have been assigned the CVE identifiers CVE-2014-3482 and CVE-2014-3483.
->
-> Versions Affected:  All Versions > 2.0
-> Not affected:       Databases other than PostgreSQL
-> Fixed Versions:     3.2.19, 4.0.7 & 4.1.3
->
-> Impact
-> ------
-> PostgreSQL supports a number of unique data types which are not present in other supported databases.  A bug in the SQL quoting code in ActiveRecord can allow an attacker to inject arbitrary SQL using carefully crafted values.
->
-> Only applications which query against either bitstring or range types are vulnerable. The particular data types affected depend on the version of Rails you're using, but the vulnerable code will look the same.  Vulnerable code will take either take the form of:
->
->   Model.where(bitstring: params[:some_value])
->   Model.where(range: params[:from]..params[:to])
->
-> The specific versions affected is included below, however all users running an affected release should upgrade immediately.
->
-> SQL Injection Vulnerability in 'bitstring' quoting
-> ==================================================
-> Versions Affected: 2.0.0-3.2.18
-> Not Affected: 4.0 and Later
-> Identifier: CVE-2014-3482
->
-> SQL Injection Vulnerability in 'range' quoting
-> ==============================================
-> Versions Affected: 4.0.0-4.1.2
-> Not Affected: All versions prior to 4.0.0
-> Identifier: CVE-2014-3483
->
-> Releases
-> --------
-> The 3.2.19, 4.0.7 & 4.1.3 releases are available at the normal locations.
->
-> Workarounds
-> -----------
-> The only feasible workaround for this issue is to not allow user controlled values to be used in queries with the affected data types.  Given the difficulty of ensuring this, upgrading is strongly advised.
->
-> Patches
-> -------
-> To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series and the last major release series.  They are in git-am format and consist of a single changeset.
->
-> * 4-1-postgres-sqli.patch - Patch for 4.1 series
-> * 4-0-postgres-sqli.patch - Patch for 4.0 series
-> * 3-2-postgres-sqli.patch - Patch for 3.2 series
->
-> Please note that only the 4.0.x and 4.1.x series receive regular security updates at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for earlier releases.
->
-> Credits
-> -------
->
-> Thanks to Sean Griffin of thoughtbot for reporting the vulnerability to us, and to Jeff Jarmoc of Matasano and Charlie Somerville of GitHub for working with us to review the patches and advisories.
->
-> Rafael Mendonça França
-> http://twitter.com/rafaelfranca
-> https://github.com/rafaelfranca
->
->
+  http://www.openwall.com/lists/oss-security/2011/08/09/7
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2909
 
-Content of type "text/html" skipped
+So, any background about the discovery would be helpful, e.g., is the
+driver enabled in a distribution, or is someone shipping a Linux-based
+appliance or device that relies on the driver. The full list is
+substantial -- http://cateee.net/lkddb/web-lkddb/STAGING.html seems
+relevant although that's a third-party presentation and not directly
+the primary source.
 
-Download attachment "3-2-postgres-sqli.patch" of type "application/octet-stream" (2298 bytes)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Download attachment "4-0-postgres-sqli.patch" of type "application/octet-stream" (3234 bytes)
-
-Download attachment "4-1-postgres-sqli.patch" of type "application/octet-stream" (3370 bytes)
+iQEcBAEBAgAGBQJTGNlEAAoJEKllVAevmvmsaAYIAMlV3r9YhS0rD2kb3PCenoT6
+PVcAYWuyIu+IDWp74V2r6Bg6mKZzyyVMiqpw8CgNsK2zfHtcEDsrIcttIWK6VbJj
+Pxkc0jQUdfqNhg/Z6gtqhUZ4Wnee9vBQo4cFfKBhlqQuPz/wV/kHqMic57n4RcCS
+/n2KufYn2mB5bZMUkxM0Ky7DJslrUtyIsG7APpgPT0adcv/XhFYVAo54bvfyZIqo
+RczpMPQRq9ke/xbM5x0e6UMSU43337GcRZs8w8Cb5Tr1/7vNX+7G/PqFxo5RjRz7
+vVjVF/5pgna+dWzcREARCMrqTp6QrBTFVeuiNPC2Re8fczxNByZCwx2q9Xn3Ji4=
+=wMyp
+-----END PGP SIGNATURE-----
