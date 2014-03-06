@@ -1,25 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/12
-Message-ID: <3230301C09DEF9499B442BBE162C5E48257688B7@SESTOEX04.enea.se>
-Date: Wed, 15 Oct 2014 07:22:17 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Truly scary SSL 3.0 vuln to be revealed soon:
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/06/10
+Message-ID: <20140306214738.GA7638@kroah.com>
+Date: Thu, 6 Mar 2014 13:47:38 -0800
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: speiro@....upv.es, cve-assign@...re.org
+Subject: Re: Re: CVE Request: staging/cxt1e1/linux.c: Correct arbitrary memory write in c4_ioctl()
 Content-Type: text/plain; charset=utf-8
 
-> > A reflection: Maybe we shouldn't post  information like this here or
-> > somewhere else which is not published yet even if the information has
-> > leak out? Although all members here are reliable but it is still an
-> > open mailing list and we should be careful and act more responsible.
+On Thu, Mar 06, 2014 at 03:27:20PM -0500, cve-assign@...re.org wrote:
+> The scope of CVE doesn't exclude issues that exist only in software
+> that's at a beta level or similar level. See for example "Attendees
+> agreed that CVE should include problems in beta software, provided
+> that the beta code was intended for public dissemination" in the
+> http://cve.mitre.org/data/board/archives/2000-03/msg00007.html post.
 > 
-> Are you saying that as a reflection on your part?
+> The CVEs of interest to the community tend to be ones that are
+> "common" -- in other words, they are present at multiple sites, and a
+> CVE ID would actually be used (typically in multiple contexts) as the
+> mechanism for naming and tracking the vulnerability.
+> 
+> For the specific case of staging drivers, a relevant example is "this
+> driver is enabled in the Debian 6.0 kernel" for:
+> 
+>   http://www.openwall.com/lists/oss-security/2011/08/09/7
+>   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2909
 
+Thanks a lot for this information, I'll remember it for next time.
 
-Yes, it was only a reflection on my part/post. Hanno's reply included a good background which was publically know and a workaround for the vulnerability: Disable SSLv3.
+> So, any background about the discovery would be helpful, e.g., is the
+> driver enabled in a distribution, or is someone shipping a Linux-based
+> appliance or device that relies on the driver. The full list is
+> substantial -- http://cateee.net/lkddb/web-lkddb/STAGING.html seems
+> relevant although that's a third-party presentation and not directly
+> the primary source.
 
-I was just thinking we who are responsible for security in the open source products, should act more responsible and be careful. 
+The driver was merged into the 2.6.35 kernel release, so odds are, lots
+of distros are enabling it and shipping it.
 
-Thanks for all your comments on this.
+Note that you need to have CAP_SYS_ADMIN rights in order to cause this
+problem, I don't know if that matters in the CVE assignment or not.
 
--- Sona
+thanks,
 
+greg k-h
