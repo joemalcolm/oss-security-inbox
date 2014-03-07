@@ -1,18 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/20/4
-Message-ID: <20140720091059.GA2726@pisco.westfalen.local>
-Date: Sun, 20 Jul 2014 11:10:59 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/07/1
+Message-ID: <5319545E.5090502@redhat.com>
+Date: Fri, 07 Mar 2014 10:38:46 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Additional information on CVE-2014-2469?
+Subject: Re: CVE request: net-snmp agentx incorrect handling of multi-object requests DoS
 Content-Type: text/plain; charset=utf-8
 
-Is there anyone from Oracle on the list? Does anyone have further 
-information on CVE-2014-2469?
-https://blogs.oracle.com/sunsecurity/entry/cve_2014_2469_denial_of
+On 03/06/2014 07:52 PM, Raphael Geissert wrote:
+> Hi,
+> 
+> It was found that the AgentX subagent of net-snmp can be stalled when
+> a manager sends a multi-object request with a different number of
+> subids. From the Debian bug report:
+> 
+>> This happens if one of the requested OID is larger than the previous one:
+>>
+>> agentx/master: request for variable (iso.3.6.1.2.1.2.2.1.7.7)
+>> agentx/master: request for variable (iso.3.6.1.2.1.2.2.1.2.10)
+>> agentx/master: request for variable (iso.3.6.1.2.1.2.2.1.8.7)
+>> agentx/master: request for variable (iso.3.6.1.3.53.5.5.2.1.3.101)
+>>
+>> First three OID contain 11 subid while the next one has 12 subid.
+> 
+> Resulting error message from the subagent:
+>> agentx: Oversized Object ID
+> 
+> The bug is fixed upstream for the 5.4 branch in 5.4.4. From the
+> upstream bug report this was also fixed in the 5.3 branch but I don't
+> know on what specific version.
+> 
+> Could a CVE id be assigned?
+> 
 
-I assume that's a typo in the advisory and was meant to say lighttpd
-instead of lighthttpd? If so, Is this Solaris/Oracle-specific?
+Isnt this same as:
+https://bugzilla.redhat.com/show_bug.cgi?id=1038007 ?
 
-Cheers,
-        Moritz
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
