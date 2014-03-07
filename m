@@ -1,44 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/12
-Message-ID: <5475ED36.3090503@redhat.com>
-Date: Wed, 26 Nov 2014 08:09:42 -0700
-From: Eric Blake <eblake@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/07/4
+Message-ID: <CAA7hUgGbd96jJOxU_Qi=UUJzZDLZ5kpSAj3A9Sv7dzUWvfaPZg@mail.gmail.com>
+Date: Fri, 7 Mar 2014 10:17:12 +0100
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: O_CREAT|O_DIRECTORY on nonexisting file expected behaviour?
+Subject: Re: CVE request: net-snmp agentx incorrect handling of multi-object requests DoS
 Content-Type: text/plain; charset=utf-8
 
-On 11/26/2014 06:45 AM, Fiedler Roman wrote:
-> Hello,
-> 
-> While trying to write a small python helper library for secure opening of
-> files, I found behaviour of following call unexpected because it created a
-> file instead of creating/failing in opening a directory:
-> 
-> open("xxx", O_RDONLY|O_CREAT|O_DIRECTORY, 0600) = 3
+Hi,
 
-What does fstat say about the file type of the just-created fd 3?
+On 7 March 2014 06:08, Huzaifa Sidhpurwala <huzaifas@...hat.com> wrote:
+[...]
+> Isnt this same as:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1038007 ?
 
-Here's what POSIX has to say about the matter:
-http://austingroupbugs.net/view.php?id=847
+No, it's not the 2411 bug upstream, it's a different bug.
 
-If the combination is supported, it MUST create a directory.  This is
-actually a nice extension if it is provided, as there is no other
-standard interface that can atomically create AND open a directory;
-remember, there is a minor TOCTTOU race between mkdir()/open(), although
-the effects of that race are not too horrible (it is sufficient to use
-O_DIRECTORY during the open as well as a quick readdir to confirm that
-the just-opened directory is still empty, to be reasonably sure that the
-race was not won by someone replacing the directory with something
-unintended).  On the other hand, the behavior is an extension, and
-historical implementations would fail (probably with EINVAL for invalid
-flag combination), so portable applications cannot rely on it working.
+Apologies for not mentioning it before.
 
-But if it succeeds, and did NOT create a directory, then it is in
-violation of POSIX.
-
+Cheers,
 -- 
-Eric Blake   eblake redhat com    +1-919-301-3266
-Libvirt virtualization library http://libvirt.org
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
