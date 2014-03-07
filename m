@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/25/4
-Message-ID: <20140625110054.GA634@kludge.henri.nerv.fi>
-Date: Wed, 25 Jun 2014 14:00:54 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/07/3
+Message-ID: <20140307085615.GA23180@openwall.com>
+Date: Fri, 7 Mar 2014 12:56:15 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: MediaWiki releases 1.19.17, 1.21.11, 1.22.8 and 1.23.1
+Subject: Re: IMAP STARTTLS sniff tool
 Content-Type: text/plain; charset=utf-8
 
-http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-June/000154.html
+Hi,
 
-"""
-this is a notice that on Wednesday, June 25th, between 20:00-22:00 UTC we will
-release security and maintenance updates for all current and supported branches
-of the MediaWiki software. Downloads and patches will be available at that time.
-"""
+On Fri, Mar 07, 2014 at 09:37:01AM +0100, Bob Ezrin wrote:
+> Hi all. We managed succesfully to sniff inside POP3S, SMTPS, IMAPS & HTTPS tunnels using arpspoof, iptables & sslsplit to make MITM. Now we want to sniff inside STARTTLS tunnels (specifically IMAP) but unfortunately sslsplit doesn't supports STARTTLS. Is there/do you know another SSL/TLS tool supporting IMAP over STARTTLS to make MITM? Many thanks B.
 
-I'm not sure if those vulnerabilities already have CVEs. I asked from Markus G.
+Sorry for not addressing your (mostly off-topic) question directly (I
+don't know the answer), but it got me wondering what the most
+appropriate mailing list would be for this sort of topics.  We mostly
+haven't been using the oss-security list for such topics so far, and it
+is unclear whether such broader scope is desirable or not.  In part,
+this might depend on whether there exists a more suitable list or not.
 
-Also please note End of lifetime announcement for MediaWiki 1.21
-http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-June/000153.html
+I'd think that maybe the Penetration Testing list could be it:
 
----
-Henri Salo
+http://www.securityfocus.com/archive/101/description
+http://seclists.org/pen-test/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+but it appears rather inactive lately.  Yet I think it's worth posting
+the question in there, at least to see if the list is currently usable
+(would anyone reply?)  Bob, can you try that?
+
+Opinions?
+
+Alexander
