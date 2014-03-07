@@ -1,18 +1,11 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/27/3
-Message-ID: <549E9C85.30807@mccme.ru>
-Date: Sat, 27 Dec 2014 14:48:21 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/07/2
+Message-ID: <20140307083701.305490@gmx.com>
+Date: Fri, 07 Mar 2014 09:37:01 +0100
+From: "Bob Ezrin" <bezrin@....com>
 To: oss-security@...ts.openwall.com
-Subject: Re: libbfd / bfd
+Subject: IMAP STARTTLS sniff tool
 Content-Type: text/plain; charset=utf-8
 
-On 2014-12-27 07:34, Joshua Rogers wrote:
-> So, was it worked out where exactly bfd bugs/vulns should be reported to?
-> I've got some new ones to report.
+Hi all. We managed succesfully to sniff inside POP3S, SMTPS, IMAPS & HTTPS tunnels using arpspoof, iptables & sslsplit to make MITM. Now we want to sniff inside STARTTLS tunnels (specifically IMAP) but unfortunately sslsplit doesn't supports STARTTLS. Is there/do you know another SSL/TLS tool supporting IMAP over STARTTLS to make MITM? Many thanks B.
 
-I'm using https://sourceware.org/bugzilla/ , product "binutils", 
-component "binutils".
-
--- 
-Alexander Cherepanov
