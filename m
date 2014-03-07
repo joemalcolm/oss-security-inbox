@@ -1,64 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/18/7
-Message-ID: <20140118094614.GA21235@kludge.henri.nerv.fi>
-Date: Sat, 18 Jan 2014 11:46:14 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests / advisory: cxxtools <= 2.2, Tntnet <= 2.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/07/5
+Message-Id: <201403071530.s27FUQg0020637@linus.mitre.org>
+Date: Fri, 7 Mar 2014 10:30:26 -0500 (EST)
+From: cve-assign@...re.org
+To: mancha1@...h.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request/Clarification - PHP
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jan 18, 2014 at 02:43:23PM +1300, Matthew Daley wrote:
-> Hi,
-> 
-> I'd like to request CVE IDs for these 2 issues. They were found in
-> software from the Tntnet Project (www.tntnet.org), which develop
-> Tntnet, an open-source web server for C++ web applications.
-> 
-> This is the first such request and the issues are (now) public; this
-> message serves as an advisory as well.
-> 
-> 
-> * Issue #1
-> 
-> Affected software: cxxtools
-> Description: By sending a crafted HTTP query parameter containing two
-> percent signs in a row, URL parsing would enter an infinite recursive
-> loop, leading to a crash. This allows a remote attacker to DOS the
-> server.
-> Affected versions: current releases (<= 2.2)
-> Fixed in version: 2.2.1
-> Fix: https://github.com/maekitalo/cxxtools/commit/142bb2589dc184709857c08c1e10570947c444e3
-> Release notes: http://www.tntnet.org/download/cxxtools-2.2.1/Releasenotes-2.2.1.markdown
-> Reported by: Julian Wiesener
-> 
-> 
-> * Issue #2
-> 
-> Affected software: Tntnet
-> Description: By sending a crafted HTTP request that uses "\n" to end
-> its headers instead of the expected "\r\n", it is possible that
-> headers from a previous unrelated request will seemingly be appended
-> to the crafted request (due to a missing null termination). This
-> allows a remote attacker to use sensitive headers from other users'
-> requests in their own requests, such as cookies or HTTP authentication
-> credentials.
-> Affected versions: current releases  (<= 2.2)
-> Fixed in version: 2.2.1
-> Fix: https://github.com/maekitalo/tntnet/commit/9bd3b14042e12d84f39ea9f55731705ba516f525
-> and https://github.com/maekitalo/tntnet/commit/9d1a859e28b78bfbf769689454b529ac7709dee4
-> Release notes: http://www.tntnet.org/download/tntnet-2.2.1/Releasenotes-2.2.1.markdown
-> Reported by: Matthew Daley
-> 
-> Please let me know if you need any further information.
-> 
-> Thanks,
-> 
-> - Matthew Daley
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Just a small note for assigner. These were fixed last year so should get 2013
-CVE IDs if I'm correct.
+> Two issues were recently identified as security concerns in
+> libmagic: CVE-2014-1943 (infinite recursion flaw) &
+> CVE-2014-2270 (improper bounds checking).
+> 
+> What is the policy regarding CVE allocation for products
+> vulnerable by virtue of bundling copies of vulnerable products
+> (as opposed to, say, linking vulnerable system libraries)?
+> 
+> I bring this up because PHP embeds a copy of libmagic
 
----
-Henri Salo
+A CVE assignment for libmagic (in the file product) can be used by all
+vendors who bundle libmagic. Different copies of libmagic in different
+products do not have separate CVE IDs.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTGeW2AAoJEKllVAevmvmsPe8IAKbPUTbrekNSfAiGbJqu/wi4
+iyastVoV0mdPbFw7zLBwkUHsFOWlijdwCZE2nCgqkKtz6qL9F8Qkc6bgpj4D+SvO
+4y69akfMOqpGzXjJbB+VGMvhcszPAB5vehbbkEKg9ZO/OD+x0bVHzpbtv2O1eTIQ
+BzM2syQ1/mr0cQTOn6ife6+8u5ljv0M+FvAS7xmBI9cUVe1aivXSPTXNOfCUpzwd
+HX4JWMWV2d96gj/Rsf/AIZbkHwpWaeemh9IuisVaFYFcjDqo1S7Py1n0fcGgYhjB
+Ak+E57lFo+KPHr1ytnoVpAQJFW7AD/Tf29v95MwmjD8H9QLDBR13TnBDRDn9J38=
+=9fOg
+-----END PGP SIGNATURE-----
