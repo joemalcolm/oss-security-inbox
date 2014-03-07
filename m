@@ -1,52 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/04/2
-Message-ID: <545831A7.3040402@redhat.com>
-Date: Tue, 04 Nov 2014 12:53:43 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/07/6
+Message-ID: <20140307124510.GA28555@kria>
+Date: Fri, 7 Mar 2014 13:45:10 +0100
+From: Sabrina Dubroca <sd@...asysnail.net>
 To: oss-security@...ts.openwall.com
-CC: olav.morken@...nett.no
-Subject: CVE-2014-8566 and CVE-2014-8567: mod_auth_mellon issues affecting users of 0.8.0
+Cc: hannes@...essinduktion.org
+Subject: CVE Request: Linux kernel: IPv6: crash due to router advertisement flooding
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+The Linux kernel is vulnerable to a crash on hosts that accept router
+advertisements. An unlimited number of routes can be created from
+router advertisements.
 
-mod_auth_mellon provides a SAML 2.0 authentication module for the Apache 
-HTTP Server.
+A remote attacker in the same layer 2 segment can cause a crash from
+memory exhaustion by flooding router advertisements to a target
+machine.
 
-The below issues were fixed in the 0.9.0 and
-0.9.1 releases, but not marked as security issues at the time. (An 0.8.1 
-security update has been released too, 
-<https://github.com/UNINETT/mod_auth_mellon/releases/tag/v0.8.1>)
+Upstream fix:
+https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=c88507fbad8055297c1d1e21e599f46960cbee39
 
-While Red Hat ship version 0.8.0, it is expected that very few others 
-would have been using this version (if any).
+The patch is pending for stable.
+http://patchwork.ozlabs.org/patch/327515/
 
- From 
-<https://postlister.uninett.no/sympa/arc/modmellon/2014-11/msg00000.html>:
+Introduced by:
+https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=957c665f37007de93ccbe45902a23143724170d0
 
-""
-It turned out that session overflow bugs fixes in version 0.9.0 and
-0.9.1 can lead to information disclosure, where data from one session
-is leaked to another session. Depending on how this data is used by the
-web application, this may lead to data from one session being disclosed
-to an user in a different session. (CVE-2014-8566)
+This commit appeared in 3.0.
 
-In addition to the information disclosure, this release contains some
-fixes for logout processing, where logout requests would crash the
-Apache web server. (CVE-2014-8567)
-""
 
-You may also come across 
-<https://bugzilla.redhat.com/show_bug.cgi?id=1157955>. I originally 
-thought 
-<https://github.com/UNINETT/mod_auth_mellon/commit/47a767d5f37d1d3a1c004abbf8bb80d1b7eab328>/<http://jbp.io/2014/01/16/openssl-rand-api/#recommendations-and-patches> 
-could lead to a predictable session cookie being returned, but it turns 
-out that is not the case (and MITRE did not assign a CVE for this change).
+Thanks,
 
-Cheers,
-
---
-Murray McAllister / Red Hat Product Security
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1157281
-https://bugzilla.redhat.com/show_bug.cgi?id=1157954
+-- 
+Sabrina Dubroca
