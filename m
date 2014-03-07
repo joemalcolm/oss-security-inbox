@@ -1,39 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/15
-Message-ID: <87eh272k5l.fsf@windlord.stanford.edu>
-Date: Wed, 12 Mar 2014 14:15:34 -0700
-From: Russ Allbery <eagle@...ie.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Cookie Reuse
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/07/7
+Message-Id: <20140307200028.7EA9D20106@smtp.hushmail.com>
+Date: Fri, 07 Mar 2014 20:00:28 +0000
+From: "mancha" <mancha1@...h.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request/Clarification - PHP
 Content-Type: text/plain; charset=utf-8
 
-Thomas Williams <thomas@...illiams.me.uk> writes:
+On Fri, 07 Mar 2014 15:31:00 +0000 cve-assign@...re.org wrote:
+>> Two issues were recently identified as security concerns in
+>> libmagic: CVE-2014-1943 (infinite recursion flaw) &
+>> CVE-2014-2270 (improper bounds checking).
+>> 
+>> What is the policy regarding CVE allocation for products
+>> vulnerable by virtue of bundling copies of vulnerable products
+>> (as opposed to, say, linking vulnerable system libraries)?
+>> 
+>> I bring this up because PHP embeds a copy of libmagic
+>
+>A CVE assignment for libmagic (in the file product) can be used
+>by all vendors who bundle libmagic. Different copies of libmagic
+>in different products do not have separate CVE IDs.
+>
+>-- 
+>CVE assignment team, MITRE CVE Numbering Authority
 
-> Would you consider the following scenario a security flaw:
+Many thanks for that clarification.
 
-> - User can login to an authenticated system
-> - User copies the cookies that are set after they are authenticated
-> - User logs out and the cookies are therefore deleted from their system
-> - User can paste the previously copied cookies allowing them to re-auth
->   without re-entering credentials
+--mancha
 
-> Personally, I would feel that given the user has logged out, their
-> expectation is that not only should the cookies be removed from their
-> end, but essentially those cookies should no longer be accepted by the
-> server at a later stage to re-authenticate.
-
-Many bearer token systems have this security property, which is also
-shared with (e.g.) Kerberos tickets.  I think it's a security property to
-be aware of, but I don't think it's a vulnerability unless the software
-advertises otherwise.
-
-Invalidating issued tokens prior to their expiration time requires storing
-central session state or some revocation list equivalent, which may be an
-undesireable or burdensome requirement for the security system as a whole.
-Bearer tokens with expirations but without central session state
-(Kerberos, for example) have some useful properties that cannot be easily
-replicated by state-tracking systems, at the cost of making logout prior
-to token expiration require destruction of all session keys.
-
--- 
-Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
