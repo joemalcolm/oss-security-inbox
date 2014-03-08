@@ -1,88 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/2
-Message-ID: <CAOfWR+Fq0BZ96Qq3tzsjMvdRAC_EfJ8Jyk3xdxk_NayxCmLs4A@mail.gmail.com>
-Date: Mon, 17 Nov 2014 22:37:27 -0500
-From: Robert Watson <robertcwatson1@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/08/3
+Message-ID: <20140308023940.GZ22749@teltox.donarmstrong.com>
+Date: Fri, 7 Mar 2014 18:39:40 -0800
+From: Don Armstrong <don@...ian.org>
+To: mmcallis@...hat.com, 740670@...s.debian.org
+Cc: oss-security@...ts.openwall.com, Jakub Wilk <jwilk@...ian.org>
+Subject: Re: Bug#740670: possible CVE requests: perltidy insecure temporary file usage
 Content-Type: text/plain; charset=utf-8
 
-Solutions to the most difficult problems are often found by approaching it
-from the opposite direction...
+On Tue, 04 Mar 2014, Murray McAllister wrote:
+> Jakub Wilk and Don Armstrong are discussing in
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=740670 1) perltidy
+> creating a temporary file with default permissions instead of 0600
+> 2) the use of tmpnam().
 
-What about using fuzzing to find those tools withOUT vulnerabilities and
-"certifying them" in some way as safe for all inputs?
+The following trivial patch fixes this issue by just using File::Temp
+instead:
 
-If a tool has too many problems or no champion to fix them, then there lies
-a need to be filled for a programmer to produce a better tool.
+http://git.donarmstrong.com/?p=perltidy.git;a=blob;f=debian/patches/fix_insecure_tmpnam_usage_740670
+ 
+I'm currently preparing an upload which will resolve this issue for
+Debian in unstable and testing; I'm not certain if it necessitates a CVE
+or security update in stable, but if anyone feels that way, I don't mind
+preparing one.
 
-On passing audit, the new tool would become the preferred tool for new
-distro releases, especially for systems running websites.
+-- 
+Don Armstrong                      http://www.donarmstrong.com
 
-Robert "DocSalvager" Watson
-
-
-*Trust in truth keeps hope alive*
-
-*     iCare for AffordableCare
-<http://www.nationalpartnership.org/issues/health/HIT/>*
-
-*robertcwatson1@...il.com <robertcwatson1@...il.com>*
-
-*www.docsalvage.info <http://www.docsalvage.info/>*
-*www.softwarerevisions.net <http://www.softwarerevisions.net/>*
-*www.CivicChorale.org <http://www.civicchorale.org/>*
-
-<http://www.charliecrist.com/> <https://www.healthcare.gov/>
-<http://www.wunderground.com/cgi-bin/findweather/getForecast?query=Tallahassee,%20FL>
-
-
-On Mon, Nov 17, 2014 at 4:30 PM, Daniel Kahn Gillmor <dkg@...thhorseman.net>
-wrote:
-
-> On 11/16/2014 07:15 AM, Robert Święcki wrote:
-> > To sum up: If somebody uses 'file' in an unconstrained OS environment
-> > on untrusted inputs, and he gets pwnd in the result, then it's not a
-> > security problem, it's an incompetence problem - and IMO it should be
-> > discussed elsewhere.
->
-> I think other people have made good points already that tools like
-> "file" and "strings" are routinely used on untrusted input, and so
-> deserve to be treated as part of the attack surface in a normal free
-> software operating system (and therefore vulnerabilities in them warrant
-> mention here on oss-security).
->
-> I'd like to present one other argument against the kind of distinction
-> that Robert suggests making here, though.
->
-> If "file" or "strings" (or libmagic or libbfd, respectively) are
-> considered as "private" tools that should only be run on trusted inputs,
-> then we are effectively creating an entirely new class of
-> vulnerabilities that we need to report and fix, which may not have any
-> resolution.  In particular, we would need to report vulnerabilities in
-> tools that use these "private" tools on public data.
->
-> For example:
->
->  * roundcube (a webmail client) relies on libmagic1
->
->  * rox-filer (a graphical filesystem browser) relies on /usr/bin/file
->
->  * rkhunter (a tool for scanning potentially-malicious files for
-> rootkits) relies on /usr/bin/file.
->
-> The composable nature of unix-style tools means that a bug in one
-> component is very likely to be a security vulnerability.
->
-> And if our interest is in not overwhelming the list with vulnerability
-> assignments, then declaring certain tools "off-limits" or "only to be
-> run on trusted inputs" is actually likely to *increase* instead of
-> decrease the total number of vulnerability counts (since we would now
-> need to report vulnerabilities in packages like roundcube and rkhunter
-> and rox-filer for exposing file and libmagic to untrusted input), while
-> still not leaving our users any safer.
->
->         --dkg
->
->
-
+listen, what you do in the privacy
+of your neighbour's house while they're away
+is your own business
+ -- a softer world #511
+    http://www.asofterworld.com/index.php?id=511
