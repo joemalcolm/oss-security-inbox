@@ -1,85 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/8
-Message-ID: <CAAnPYQ6KeJmEZ4=8rGi1mf5VXtJ8CrAmOkyARPzSTHvd3KA0rQ@mail.gmail.com>
-Date: Fri, 21 Nov 2014 08:27:14 +0100
-From: Gynvael Coldwind <gynvael@...dwind.pl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/08/7
+Message-ID: <20140308105137.7b0ac8ac@hboeck.de>
+Date: Sat, 8 Mar 2014 10:51:37 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Mateusz Jurczyk <j00ru.vx@...il.com>
-Subject: Re: Fuzzing project brainstorming
+Cc: cve-assign@...re.org
+Subject: CVE request: SQL injection in MODX Revolution before 2.2.13
 Content-Type: text/plain; charset=utf-8
 
-> > If it came from a mutation-based fuzzer, the original (not-mutated) sample
-> > can be useful too.
-> You mean the closest non-crashing parent (in case there is a chain of samples as in AFL)?
-Generally yes, but I guess in cases where the bug was caused by
-multiple changes (vs a fully properly formatted base sample) in
-different areas and different generations both the base sample and
-previous-generation sample would be useful to have (as well as the
-crashing sample ofc).
+Hello,
 
-> And while we are at it, would you mind describing your experience in case of ffmpeg.
-> Your blogpost -- http://gynvael.coldwind.pl/?id=524 -- gives only high level review of the
-> work. The fuzzer and specific methods of fuzzing seems to be proprietary. That's fine.
-> But perhaps you can describe other sides of the work:
-(+j00ru as he might have additional insight or patches to the text I'm
-about to write)
+I'd like to have a CVE for the following issue:
+http://forums.modx.com/thread/89486/modx-revolution-2-x-sql-injection#dis-post-492046
 
-Well, the fuzzing/mutation methods were pretty much described in the blogpost:
-"simple algorithms (such as bitflipping, swapping bytes, truncating
-the files and so forth)"
-Later in the process we got to some more interesting stuff, though not
-super magical either.
+Release notes for fixed version:
+http://modx.com/blog/2014/03/07/revolution-2.2.13/
 
-> - how did you deduplicate crashes (full stacktrace, some frames only or some other way);
-We used de-ASLRed call stack traces as keys. It wasn't perfect, but we
-did a lot of iterations so even if we missed something because of that
-we would still find it in the next iteration (hehe OK, I realize
-that's not totally true; it's like saying "oh, we forgot to claim the
-prize from this lottery ticket; no matter, we'll just win the lottery
-again next week", but it was "good enough" I would say).
+I tried to find the corresponding git commit, but I was not successful.
+It may be this one:
+https://github.com/modxcms/revolution/commit/11a913feda16c99703dbf4d27328af888e698c5c
+but I'm not sure. The bug and the commit indicate no sign of an SQL
+injection fixed and I am not motivated to dig deeper into the code.
+However, it is the right file and the right date.
 
-> - how did you decide which issues are security-sensitive and which are not;
-We didn't, mostly due to the sheer amount of the unique (deduplicated)
-crashes we were getting. In ffmpeg case (as well as other cases that
-were/are getting tons of unique crashes) we kinda delegate this to the
-teams that are maintaining the project - I know it's far from perfect
-from the maintainers point of view, but we just didn't have the
-manpower to analyze everything, especially that ffmpeg isn't the only
-thing we're fuzzing.
-So, generally in this case the ffmpeg team has done all the work in
-this area (though we might occasionally say 'this looks bad' and 'this
-look meh').
 
-> - how did you requested CVEs (for which issues, which info was required);
-No magic here either - the issue selection for CVEs was done by ffmpeg
-maintainers as well (I believe in some minor cases we might also point
-out crashes that looked bad and would probably need a CVE). So
-basically after the fixes were done (and ffmpeg team has always fixed
-stuff super fast - we were always really amazed by their dedication to
-this, just wow! I wish some commercial vendors would be as fast) the
-ones that looked exploitable (as in "exploitable into RCE", not just
-"triggerable" / "DoS") from the "fix perspective" got a CVE.
-As for info required, it's best to ask the MITRE guys, but afair the
-information we sent them consisted of a link to the commit/patch that
-also had some very brief text describing the bug.
-
-> - (if you know) how security fixes were released by ffmpeg.
-You would have to ask the maintainers for details about it, but afair
-there is no special release process (please correct me if I'm wrong).
-The fixes are committed to the repository and later get a CVE. This
-doesn't sound perfect, but please note that in our blog post we did
-mention that the recommendation for ffmpeg is a privilege-separated
-(sandbox) environment anyway. TBH my personal opinion is that this
-applies to any media player with C/C++ parsing code out there - I'm
-yet to spot one that has no bugs.
-
-> This kind of questions.
-> Given the sheer number of findings you probably did everything automatically?
-On our side most of the stuff (fuzzing, deduplication, reproduction,
-initially also crash report generation) was done automatically (we
-used 2,000 cores or so for this).
-The manual part was coding the fuzzing system / mutators / etc of course ;)
-
-Cheers,
+cu,
 -- 
-Gynvael Coldwind
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
