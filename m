@@ -1,17 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/29/6
-Message-ID: <20140329141016.GY17725@betterave.cristau.org>
-Date: Sat, 29 Mar 2014 16:10:16 +0200
-From: Julien Cristau <jcristau@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/08/4
+Message-ID: <20140308030017.GA31505@hunt>
+Date: Fri, 7 Mar 2014 19:00:17 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Adventure with Stack Smashing Protector (SSP)
+Cc: security@...ntu.com
+Subject: CVE Request: thermald
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Mar 29, 2014 at 16:04:07 +0200, Georgi Guninski wrote:
+Hello,
 
-> Not that I care.
-> 
-Then can you stop making so much noise already?
+I discovered that the thermald temperature management daemon opens a file
+with predictable filename in /tmp unsafely. Please assign a CVE number for
+this issue:
 
-Thanks,
-Julien
+https://github.com/01org/thermal_daemon/blob/master/src/android_main.cpp#L117
+
+
+In short:
+
+int main(int argc, char *argv[]) {
+	/* ... */
+	if (!no_daemon) {
+		daemonize((char *) "/tmp/", (char *) "/tmp/thermald.pid");
+	} else
+
+/* ... */
+
+static void daemonize(char *rundir, char *pidfile) {
+	/* ... */
+
+	pid_file_handle = open(pidfile, O_RDWR | O_CREAT, 0600);
+
+
+thermald runs as root; on systems that lack the Openwall-inspired symlink
+and hardlink protections in world-writable directories this can be used to
+write the process's pid to a file of the attacker's choosing.
+
+Note that this affects only the main() function provided in the
+android_main.cpp file; the main() routine in main.cpp does not have this
+issue.
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
