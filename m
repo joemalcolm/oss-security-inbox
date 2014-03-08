@@ -1,27 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/3
-Message-ID: <20140418061614.GA16766@gremlin.ru>
-Date: Fri, 18 Apr 2014 10:16:14 +0400
-From: gremlin@...mlin.ru
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Nagios Remote Plugin Executor <= 2.15 Remote Command Execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/08/2
+Message-Id: <201403080139.s281dYgI020004@linus.mitre.org>
+Date: Fri, 7 Mar 2014 20:39:34 -0500 (EST)
+From: cve-assign@...re.org
+To: geissert@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: net-snmp agentx incorrect handling of multi-object requests DoS
 Content-Type: text/plain; charset=utf-8
 
-On 18-Apr-2014 10:14:16 +0800, Eduardo Tongson wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- > Details: http://seclists.org/fulldisclosure/2014/Apr/240
- > Fix:
+> It was found that the AgentX subagent of net-snmp can be stalled when
+> a manager sends a multi-object request with a different number of
+> subids.
+> 
+> http://sourceforge.net/p/net-snmp/patches/1113/
+> 
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=684388
 
- > --- nrpe/src/nrpe.c
- > +++ nrpe/src/nrpe.c
- > -#define NASTY_METACHARS         "|`&><'\"\\[]{};"
- > +#define NASTY_METACHARS         "|`&><'\"\\[]{};\n"
+> it's not the 2411 bug upstream, it's a different bug.
 
-Adding \r here may be a good idea as well...
+Use CVE-2014-2310.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
-
-Content of type "application/pgp-signature" skipped
+iQEcBAEBAgAGBQJTGnHWAAoJEKllVAevmvmsQggIAIzJogDVt6+QWRItKFP7XrwN
+C2lR6kW0dfzYS0Ya/1UkdMFaBf452O7eSbpzUqDQFcM1HPocIFrQ5NVPdnVukYdZ
+9CgbWieyUUby+HJ2FIqtcDLvOGs7paH9JTc49Z07AWj739XMNh34m+rST9hOn59+
+YlW2ZloHB7eXoSBxjjJB5uPMvezTVJKuurUkthkLsct1HkMSCaWrLeKF9upXqQV+
+SpEnWsc7kmtIORBN+dgxFzDPxcuMFBAjkZcFnHanVaY0IF6QXtVvbH+tLjfm8oux
+Kq/rj9Ca+dW1xpft3INfJojL1wk9xLIf4ShTZP840d46lcHJPZ7kTeHw3C7qhYI=
+=sMhG
+-----END PGP SIGNATURE-----
